@@ -1019,7 +1019,7 @@ class InotifySocket : public Socket
 {
 public:
     InotifySocket():
-        Socket(inotify_init1(IN_NONBLOCK))
+        Socket(inotify_init1(IN_NONBLOCK), Socket::Type::Unix)
         , m_stopOnConfigChange(true)
     {
         if (getFD() == -1)
@@ -5464,7 +5464,7 @@ std::map<std::string, std::string> ClientRequestDispatcher::StaticFileContentCac
 
 class PlainSocketFactory final : public SocketFactory
 {
-    std::shared_ptr<Socket> create(const int physicalFd) override
+    std::shared_ptr<Socket> create(const int physicalFd, Socket::Type type) override
     {
         int fd = physicalFd;
 #if !MOBILEAPP
@@ -5477,15 +5477,16 @@ class PlainSocketFactory final : public SocketFactory
                 fd = delayfd;
         }
 #endif
-        return StreamSocket::create<StreamSocket>(std::string(), fd, false,
-                                                  std::make_shared<ClientRequestDispatcher>());
+        return StreamSocket::create<StreamSocket>(
+            std::string(), fd, type, false,
+            std::make_shared<ClientRequestDispatcher>());
     }
 };
 
 #if ENABLE_SSL
 class SslSocketFactory final : public SocketFactory
 {
-    std::shared_ptr<Socket> create(const int physicalFd) override
+    std::shared_ptr<Socket> create(const int physicalFd, Socket::Type type) override
     {
         int fd = physicalFd;
 
@@ -5494,7 +5495,7 @@ class SslSocketFactory final : public SocketFactory
             fd = Delay::create(SimulatedLatencyMs, physicalFd);
 #endif
 
-        return StreamSocket::create<SslStreamSocket>(std::string(), fd, false,
+        return StreamSocket::create<SslStreamSocket>(std::string(), fd, type, false,
                                                      std::make_shared<ClientRequestDispatcher>());
     }
 };
@@ -5502,10 +5503,10 @@ class SslSocketFactory final : public SocketFactory
 
 class PrisonerSocketFactory final : public SocketFactory
 {
-    std::shared_ptr<Socket> create(const int fd) override
+    std::shared_ptr<Socket> create(const int fd, Socket::Type type) override
     {
         // No local delay.
-        return StreamSocket::create<StreamSocket>(std::string(), fd, false,
+        return StreamSocket::create<StreamSocket>(std::string(), fd, type, false,
                                                   std::make_shared<PrisonerRequestDispatcher>(),
                                                   StreamSocket::ReadType::UseRecvmsgExpectFD);
     }
