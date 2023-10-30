@@ -37,16 +37,17 @@ void FileServeTests::testUIDefaults()
 
     std::string uiMode;
     std::string uiTheme;
+    std::string savedUIState;
 
     LOK_ASSERT_EQUAL(
         std::string("{\"uiMode\":\"classic\"}"),
-        FileServerRequestHandler::uiDefaultsToJSON("UIMode=classic;huh=bleh;", uiMode, uiTheme));
+        FileServerRequestHandler::uiDefaultsToJSON("UIMode=classic;huh=bleh;", uiMode, uiTheme, savedUIState));
     LOK_ASSERT_EQUAL(std::string("classic"), uiMode);
 
     LOK_ASSERT_EQUAL(
         std::string("{\"spreadsheet\":{\"ShowSidebar\":false},\"text\":{\"ShowRuler\":true}}"),
         FileServerRequestHandler::uiDefaultsToJSON("TextRuler=true;SpreadsheetSidebar=false",
-                                                   uiMode, uiTheme));
+                                                   uiMode, uiTheme, savedUIState));
     LOK_ASSERT_EQUAL(std::string(""), uiMode);
 
     LOK_ASSERT_EQUAL(
@@ -55,7 +56,7 @@ void FileServeTests::testUIDefaults()
         FileServerRequestHandler::uiDefaultsToJSON(
             ";;UIMode=notebookbar;;PresentationStatusbar=false;;TextRuler=true;;bah=ugh;;"
             "SpreadsheetSidebar=false",
-            uiMode, uiTheme));
+            uiMode, uiTheme, savedUIState));
 
     LOK_ASSERT_EQUAL(std::string("{\"drawing\":{\"ShowStatusbar\":true},\"presentation\":{"
                                  "\"ShowStatusbar\":false},\"spreadsheet\":{\"ShowSidebar\":false},"
@@ -63,7 +64,7 @@ void FileServeTests::testUIDefaults()
                      FileServerRequestHandler::uiDefaultsToJSON(
                          ";;UIMode=notebookbar;;PresentationStatusbar=false;;TextRuler=true;;bah="
                          "ugh;;SpreadsheetSidebar=false;;DrawingStatusbar=true",
-                         uiMode, uiTheme));
+                         uiMode, uiTheme, savedUIState));
 
     LOK_ASSERT_EQUAL(std::string("notebookbar"), uiMode);
 }
