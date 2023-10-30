@@ -185,17 +185,19 @@ private:
 public:
     DumpSocketFactory(bool isSSL) : _isSSL(isSSL) {}
 
-    std::shared_ptr<Socket> create(const int physicalFd) override
+    std::shared_ptr<Socket> create(const int physicalFd, Socket::Type type) override
     {
 #if ENABLE_SSL
         if (_isSSL)
             return StreamSocket::create<SslStreamSocket>(
-                std::string(), physicalFd, false, std::make_shared<ClientRequestDispatcher>());
+                std::string(), physicalFd, type, false,
+                std::make_shared<ClientRequestDispatcher>());
 #else
         (void)_isSSL;
 #endif
-        return StreamSocket::create<StreamSocket>(std::string(), physicalFd, false,
-                                                  std::make_shared<ClientRequestDispatcher>());
+        return StreamSocket::create<StreamSocket>(
+            std::string(), physicalFd, type, false,
+            std::make_shared<ClientRequestDispatcher>());
     }
 };
 

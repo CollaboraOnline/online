@@ -114,7 +114,7 @@ public:
 
     class ServerSocketFactory final : public SocketFactory
     {
-        std::shared_ptr<Socket> create(const int physicalFd) override
+        std::shared_ptr<Socket> create(const int physicalFd, Socket::Type type) override
         {
             int fd = physicalFd;
 
@@ -125,12 +125,12 @@ public:
 #if ENABLE_SSL
             if (helpers::haveSsl())
                 return StreamSocket::create<SslStreamSocket>(
-                    std::string(), fd, false, std::make_shared<ServerRequestHandler>());
+                    std::string(), fd, type, false, std::make_shared<ServerRequestHandler>());
             else
-                return StreamSocket::create<StreamSocket>(std::string(), fd, false,
+                return StreamSocket::create<StreamSocket>(std::string(), fd, type, false,
                                                           std::make_shared<ServerRequestHandler>());
 #else
-            return StreamSocket::create<StreamSocket>(std::string(), fd, false,
+            return StreamSocket::create<StreamSocket>(std::string(), fd, type, false,
                                                       std::make_shared<ServerRequestHandler>());
 #endif
         }
@@ -179,7 +179,7 @@ void HttpRequestTests::testSslHostname()
     {
         const std::string host = "localhost";
         std::shared_ptr<SslStreamSocket> socket = StreamSocket::create<SslStreamSocket>(
-            host, _port, false, std::make_shared<ServerRequestHandler>());
+            host, _port, Socket::Type::All, false, std::make_shared<ServerRequestHandler>());
         LOK_ASSERT_EQUAL(host, socket->getSslServername());
     }
 #endif

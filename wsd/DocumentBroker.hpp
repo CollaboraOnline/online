@@ -91,8 +91,12 @@ public:
         int urpToKitFD = socket->getIncomingFD(URPToKit);
         if (urpFromKitFD != -1 && urpToKitFD != -1)
         {
-            _urpFromKit = StreamSocket::create<StreamSocket>(std::string(), urpFromKitFD, false, std::make_shared<UrpHandler>(this));
-            _urpToKit = StreamSocket::create<StreamSocket>(std::string(), urpToKitFD, false, std::make_shared<UrpHandler>(this));
+            _urpFromKit = StreamSocket::create<StreamSocket>(
+                std::string(), urpFromKitFD, Socket::Type::Unix,
+                false, std::make_shared<UrpHandler>(this));
+            _urpToKit = StreamSocket::create<StreamSocket>(
+                std::string(), urpToKitFD, Socket::Type::Unix,
+                false, std::make_shared<UrpHandler>(this));
         }
     }
 

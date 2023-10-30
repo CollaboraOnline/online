@@ -608,7 +608,8 @@ bool SocketPoll::insertNewUnixSocket(
     }
 
     std::shared_ptr<StreamSocket> socket
-        = StreamSocket::create<StreamSocket>(std::string(), fd, true, websocketHandler);
+        = StreamSocket::create<StreamSocket>(std::string(), fd, Socket::Type::Unix,
+                                             true, websocketHandler);
     if (!socket)
     {
         LOG_ERR("Failed to create socket unix socket at " << location);
@@ -664,7 +665,7 @@ void SocketPoll::insertNewFakeSocket(
     else
     {
         std::shared_ptr<StreamSocket> socket;
-        socket = StreamSocket::create<StreamSocket>(std::string(), fd, true, websocketHandler);
+        socket = StreamSocket::create<StreamSocket>(std::string(), fd, Socket::Type::Unix, true, websocketHandler);
         if (socket)
         {
             LOG_TRC("Sending 'hello' instead of HTTP GET for now");
@@ -893,22 +894,25 @@ std::shared_ptr<Socket> ServerSocket::accept()
         // Create a socket object using the factory.
         if (rc != -1)
         {
-            std::shared_ptr<Socket> _socket = createSocketFromAccept(rc);
-
 #if !MOBILEAPP
             char addrstr[INET6_ADDRSTRLEN];
 
+            Socket::Type type;
             const void *inAddr;
             if (clientInfo.sin6_family == AF_INET)
             {
                 auto ipv4 = (struct sockaddr_in *)&clientInfo;
                 inAddr = &(ipv4->sin_addr);
+                type = Socket::Type::IPv4;
             }
             else
             {
                 auto ipv6 = (struct sockaddr_in6 *)&clientInfo;
                 inAddr = &(ipv6->sin6_addr);
+                type = Socket::Type::IPv6;
             }
+
+            std::shared_ptr<Socket> _socket = createSocketFromAccept(rc, type);
 
             inet_ntop(clientInfo.sin6_family, inAddr, addrstr, sizeof(addrstr));
             _socket->setClientAddress(addrstr);
@@ -916,6 +920,8 @@ std::shared_ptr<Socket> ServerSocket::accept()
             LOG_TRC("Accepted socket #" << _socket->getFD() << " has family "
                                         << clientInfo.sin6_family << " address "
                                         << _socket->clientAddress());
+#else
+            std::shared_ptr<Socket> _socket = createSocketFromAccept(rc, Socket::Type::Unix);
 #endif
             return _socket;
         }
@@ -978,7 +984,7 @@ std::shared_ptr<Socket> LocalServerSocket::accept()
         if (rc < 0)
             return std::shared_ptr<Socket>(nullptr);
 
-        std::shared_ptr<Socket> _socket = createSocketFromAccept(rc);
+        std::shared_ptr<Socket> _socket = createSocketFromAccept(rc, Socket::Type::Unix);
         // Sanity check this incoming socket
 #ifndef __FreeBSD__
 #define CREDS_UID(c) c.uid
