@@ -39,7 +39,8 @@ class FileServerRequestHandler
     /// UIMode=classic;TextRuler=true;PresentationStatusbar=false
     /// that is passed as "ui_defaults" hidden input during the iframe setup.
     /// Also returns the UIMode from uiDefaults in uiMode output param
-    static std::string uiDefaultsToJSON(const std::string& uiDefaults, std::string& uiMode, std::string& uiTheme);
+    /// and SavedUIState as a stringified boolean (default "true")
+    static std::string uiDefaultsToJSON(const std::string& uiDefaults, std::string& uiMode, std::string& uiTheme, std::string& savedUIState);
 
     static std::string checkFileInfoToJSON(const std::string& checkfileFileInfo);
 

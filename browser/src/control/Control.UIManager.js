@@ -1498,7 +1498,7 @@ L.Control.UIManager = L.Control.extend({
 		// we request compactMode very early, no info about doctype so unify all the calls
 		var docType = (name === 'compactMode') ? null : this.map.getDocType();
 		var state = null;
-		if (window.isLocalStorageAllowed)
+		if (window.savedUIState && window.isLocalStorageAllowed)
 			state = localStorage.getItem('UIDefaults_' + docType + '_' + name);
 		switch (state) {
 		case 'true':
