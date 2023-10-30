@@ -1,6 +1,6 @@
 <p align="right"><a href="#gitpod"><img alt="Open in Gitpod" src="https://gitpod.io/button/open-in-gitpod.svg"></a></p>
 
-# Collabora Online
+# Collabora Onlin
 <!--
 [![Master: Pull request policy](https://img.shields.io/badge/Master-PRs%20can%20be%20merge%20without%20approval-42BC00?logoColor=42BC00&logo=git "Main release is still distant. Thanks for your support and contributions! :)")](https://github.com/CollaboraOnline/online/blob/master/CONTRIBUTING.md#contributing-to-source-code)
 -->
@@ -39,7 +39,7 @@ For many more details, build instructions, downloads and more please visit https
 
 ## Developer assistance
 Please ask your questions on any of the bridged IRC/Matrix/Telegram rooms
-* IRC: `#cool-dev` on `irc.libera.chat` 
+* IRC: `#cool-dev` on `irc.libera.chat`
 * Matrix: [#cool-dev:libera.chat](https://app.element.io/#/room/#cool-dev:libera.chat)
 * Telegram: [CollaboraOnline](https://t.me/CollaboraOnline)
 
