@@ -791,6 +791,11 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	border-radius: var(--border-radius);
 }
 
+.modalpopup[id$='-dropdown'] {
+	/* submenu is inserted into the same overlay, dont make it relative to parent */
+	position: absolute !important;
+}
+
 .modalpopup[id$='-dropdown'] .ui-dialog-content {
 	padding: 0px;
 }

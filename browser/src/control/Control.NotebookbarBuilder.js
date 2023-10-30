@@ -842,19 +842,17 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		var dropdownId = data.id;
 		var clickFunction = function () {
 			var callback = function(objectType, eventType, object, data, entry) {
-				if (eventType === 'selected') {
+				if ((eventType === 'selected' || eventType === 'showsubmenu') && entry.id) {
 					var pos = data.substr(0, parseInt(data.indexOf(';')));
-					if (entry.id) {
-						var subDropdownId = dropdownId + '-' + pos;
-						var dropdown = JSDialog.GetDropdown(subDropdownId);
-						var container = dropdown.querySelector('.ui-grid');
-						container.innerHTML = getMenuHtml(entry.id);
-						JSDialog.MakeFocusCycle(container);
-						JSDialog.GetFocusableElements(container)[0].focus();
-					} else if (entry.uno) {
-						builder.map.sendUnoCommand(entry.uno);
-						JSDialog.CloseDropdown(dropdownId);
-					}
+					var subDropdownId = dropdownId + '-' + pos;
+					var dropdown = JSDialog.GetDropdown(subDropdownId);
+					var container = dropdown.querySelector('.ui-grid');
+					container.innerHTML = getMenuHtml(entry.id);
+					JSDialog.MakeFocusCycle(container);
+					JSDialog.GetFocusableElements(container)[0].focus();
+				} else if (eventType === 'selected' && entry.uno) {
+					builder.map.sendUnoCommand(entry.uno);
+					JSDialog.CloseDropdown(dropdownId);
 				}
 
 				return true;
