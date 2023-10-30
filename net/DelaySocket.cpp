@@ -48,7 +48,7 @@ class DelaySocket : public Socket {
     std::vector<std::shared_ptr<WriteChunk>> _chunks;
 public:
     DelaySocket(int delayMs, int fd) :
-        Socket (fd), _delayMs(delayMs),
+        Socket (fd, Socket::Type::Unix), _delayMs(delayMs),
         _state(ReadWrite)
 	{
 //        setSocketBufferSize(Socket::DefaultSendBufferSize);

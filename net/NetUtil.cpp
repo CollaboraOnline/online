@@ -130,12 +130,13 @@ connect(const std::string& host, const std::string& port, const bool isSSL,
                 }
                 else
                 {
+                    Socket::Type type = ai->ai_family == AF_INET ? Socket::Type::IPv4 : Socket::Type::IPv6;
 #if ENABLE_SSL
                     if (isSSL)
-                        socket = StreamSocket::create<SslStreamSocket>(host, fd, true, protocolHandler);
+                        socket = StreamSocket::create<SslStreamSocket>(host, fd, type, true, protocolHandler);
 #endif
                     if (!socket && !isSSL)
-                        socket = StreamSocket::create<StreamSocket>(host, fd, true, protocolHandler);
+                        socket = StreamSocket::create<StreamSocket>(host, fd, type, true, protocolHandler);
 
                     if (socket)
                     {
