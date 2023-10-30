@@ -519,13 +519,13 @@ function clipboardTextShouldBeDifferentThan(text) {
 // This is called during a test to reload the same document after
 // some modification. The purpose is typically to verify that
 // said changes were preserved in the document upon closing.
-function reload(fileName, subFolder, noFileCopy, subsequentLoad) {
+function reload(fileName, subFolder, noFileCopy, isMultiUser, subsequentLoad, hasInteractionBeforeLoad) {
 	cy.log('Reloading document: ' + subFolder + '/' + fileName);
 	cy.log('Reloading document - noFileCopy: ' + noFileCopy);
 	cy.log('Reloading document - subsequentLoad: ' + subsequentLoad);
 	closeDocument(fileName, '');
 	var noRename = true;
-	return loadTestDoc(fileName, subFolder, noFileCopy, subsequentLoad, noRename);
+	return loadTestDoc(fileName, subFolder, noFileCopy, isMultiUser, subsequentLoad, hasInteractionBeforeLoad, noRename);
 }
 
 // noRename - whether or not to give the file a unique name, if noFileCopy is false.
