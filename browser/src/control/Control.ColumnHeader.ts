@@ -254,7 +254,7 @@ export class ColumnHeader extends Header {
 			const entry = this._mouseOverEntry;
 			let modifier = 0;
 
-			if (this._startSelectionEntry && this._startSelectionEntry.index !== entry.index) {
+			if (entry && this._startSelectionEntry && this._startSelectionEntry.index !== entry.index) {
 				this._selectColumn(this._startSelectionEntry.index, modifier);
 				modifier += UNOModifier.SHIFT;
 				this._selectColumn(entry.index, modifier);
