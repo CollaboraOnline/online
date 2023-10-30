@@ -270,7 +270,8 @@ JSDialog.combobox = function (parentContainer, data, builder) {
 
 	container.onSelect = function (pos) {
 		resetSelection();
-		entries[pos].selected = true;
+		if (pos >= 0)
+			entries[pos].selected = true;
 	};
 
 	container.onSetText = function (text) {
