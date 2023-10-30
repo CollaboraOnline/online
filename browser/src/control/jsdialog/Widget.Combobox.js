@@ -68,8 +68,10 @@ JSDialog.comboboxEntry = function (parentContainer, data, builder) {
 		}
 	}
 
+	var entryData = data.pos + ';' + data.text;
+
 	var clickFunction = function () {
-		builder.callback('combobox', 'selected', {id: data.comboboxId}, data.pos + ';' + data.text, builder);
+		builder.callback('combobox', 'selected', {id: data.comboboxId}, entryData, builder);
 	};
 
 	entry.addEventListener('click', clickFunction);
@@ -79,6 +81,12 @@ JSDialog.comboboxEntry = function (parentContainer, data, builder) {
 			event.preventDefault();
 		}
 	});
+
+	if (data.hasSubMenu) {
+		entry.addEventListener('mouseover', function () {
+			builder.callback('combobox', 'showsubmenu', {id: data.comboboxId}, entryData, builder);
+		});
+	}
 
 	return false;
 };

@@ -61,7 +61,7 @@ L.Control.JSDialog = L.Control.extend({
 
 		L.DomUtil.remove(this.dialogs[id].container);
 
-		if (this.dialogs[id].overlay)
+		if (this.dialogs[id].overlay && !this.dialogs[id].isSubmenu)
 			L.DomUtil.remove(this.dialogs[id].overlay);
 
 		delete this.dialogs[id];
@@ -71,7 +71,7 @@ L.Control.JSDialog = L.Control.extend({
 
 	close: function(id, sendCloseEvent) {
 		if (id && this.dialogs[id]) {
-			if (!sendCloseEvent && this.dialogs[id].overlay)
+			if (!sendCloseEvent && this.dialogs[id].overlay && !this.dialogs[id].isSubmenu)
 				L.DomUtil.remove(this.dialogs[id].overlay);
 
 			if (this.dialogs[id].timeoutId)
@@ -201,6 +201,12 @@ L.Control.JSDialog = L.Control.extend({
 	},
 
 	getOrCreateOverlay: function(instance) {
+		// Submenu is created inside the same overlay as parent dropdown
+		if (instance.isDropdown && instance.isSubmenu) {
+			instance.overlay = document.body.querySelector('.jsdialog-overlay');
+			return;
+		}
+
 		// Dialogue overlay which will allow automatic positioning and cancellation of the dialogue if cancellable.
 		var overlay = L.DomUtil.get(instance.id + '-overlay');
 		if (!overlay) {
@@ -378,6 +384,12 @@ L.Control.JSDialog = L.Control.extend({
 				firstFocusable[0].focus();
 			else
 				console.error('cannot get focus for widget: "' + instance.init_focus_id + '"');
+		}
+
+		if (instance.isDropdown && instance.isSubmenu) {
+			instance.container.addEventListener('mouseleave', function () {
+				instance.builder.callback('combobox', 'hidedropdown', {id: instance.id}, null, instance.builder);
+			});
 		}
 	},
 
