@@ -1306,7 +1306,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	_refreshTilesInBackground: function() {
 		for (var key in this._tiles) {
 			this._tiles[key].wireId = 1;
-			this._tiles[key].invalidFrom = 0;
+			this._tiles[key].invalidFrom = 1;
 		}
 	},
 
