@@ -1888,3 +1888,8 @@ kbd,
 #modal-dialog-online-help-content-box {
 	min-width: 75%;
 }
+
+/* Calc -> Insert -> Pivot Table */
+#PivotTableLayout #box2 {
+	grid-gap: 12px; /* make space for vertical separator */
+}
