@@ -278,6 +278,11 @@ L.Map.include({
 	},
 
 	insertPage: function(nPos) {
+		// Make sure we exit cell edit mode.
+		if (this._docLayer.insertMode) {
+			this._docLayer.postKeyboardEvent('input', 0, 1280);
+		}
+
 		if (this.isPresentationOrDrawing()) {
 			app.socket.sendMessage('uno .uno:InsertPage');
 		}
