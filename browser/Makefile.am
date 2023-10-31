@@ -485,7 +485,6 @@ $(DIST_FOLDER)/soffice%: $(abs_top_builddir)/wasm/soffice%
 	@cp $< $@
 
 WASM_FILES= \
-	$(DIST_FOLDER)/online.data \
 	$(DIST_FOLDER)/online.js \
 	$(DIST_FOLDER)/online.wasm \
 	$(DIST_FOLDER)/online.wasm.debug.wasm \
