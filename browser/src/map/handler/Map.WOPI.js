@@ -343,6 +343,14 @@ L.Map.WOPI = L.Handler.extend({
 			this._map.sendUnoCommand(msg.Values.Command, msg.Values.Args || '');
 			return;
 		}
+		else if (msg.MessageId === 'Hint_OnscreenKeyboard') {
+			window.keyboard.hintOnscreenKeyboard(true);
+			return;
+		}
+		else if (msg.MessageId === 'Hint_NoOnscreenKeyboard') {
+			window.keyboard.hintOnscreenKeyboard(false);
+			return;
+		}
 		else if (msg.MessageId === 'Disable_Default_UIAction') {
 			// Disable the default handler and action for a UI command.
 			// When set to true, the given UI command will issue a postmessage

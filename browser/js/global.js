@@ -255,6 +255,26 @@ window.app = {
 		lang: navigatorLang
 	};
 
+	global.keyboard = {
+		onscreenKeyboardHint: undefined,
+		// If there's an onscreen keyboard, we don't want to trigger it with innocuous actions like panning around a spreadsheet
+		// on the other hand, if there is a hardware keyboard we want to do things like focusing contenteditables so that typing is
+		// recognized without tapping again. This is an impossible problem, because browsers do not give us enough information
+		// Instead, let's just guess
+		guessOnscreenKeyboard: function() {
+			if (global.keyboard.onscreenKeyboardHint != undefined) return global.keyboard.onscreenKeyboardHint;
+			return window.ThisIsAMobileApp || global.mode.isMobile() || global.mode.isTablet();
+			// It's better to guess that more devices will have an onscreen keyboard than reality,
+			// because calc becomes borderline unusable if you miss a device that pops up an onscreen keyboard which covers
+			// a sizeable portion of the screen
+		},
+		// alternatively, maybe someone else (e.g. an integrator) knows more about the situation than we do. In this case, let's
+		// let them override our default
+		hintOnscreenKeyboard: function(hint) {
+			global.keyboard.onscreenKeyboardHint = hint;
+		},
+	};
+
 	global.mode = {
 		isChromebook: function() {
 			return chromebook;
