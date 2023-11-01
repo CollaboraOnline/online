@@ -8,6 +8,7 @@
 #include "wasmapp.hpp"
 
 #include "base64.hpp"
+#include <emscripten/fetch.h>
 
 int coolwsd_server_socket_fd = -1;
 
@@ -219,9 +220,15 @@ void closeDocument()
     LOG_DBG("COOLWSD has finished.");
 }
 
-int main(int, char*[])
+int main(int argc, char* argv_main[])
 {
     std::cout << "================ Here is main()" << std::endl;
+
+    if (argc < 2)
+    {
+        std::cout << "Error: expected argument with document URL not found" << std::endl;
+        return 1;
+    }
 
     Log::initialize("WASM", "error", false, false, {});
     Util::setThreadName("main");
@@ -239,12 +246,39 @@ int main(int, char*[])
     fakeClientFd = fakeSocketSocket();
 
     // We run COOOLWSD::run() in a thread of its own so that main() can return.
-    std::thread([&]
-                {
-                    coolwsd = new COOLWSD();
-                    coolwsd->run(1, argv);
-                    delete coolwsd;
-                }).detach();
+    std::thread(
+        [&]
+        {
+            // Download the document given its URL, writing it to the filesystem.
+            const std::string url = std::string(argv_main[1]) + "/contents";
+
+            emscripten_fetch_attr_t attr;
+            emscripten_fetch_attr_init(&attr);
+            strcpy(attr.requestMethod, "GET");
+            attr.attributes = EMSCRIPTEN_FETCH_LOAD_TO_MEMORY | EMSCRIPTEN_FETCH_SYNCHRONOUS;
+            emscripten_fetch_t* fetch = emscripten_fetch(
+                &attr, url.data()); // Blocks here until the operation is complete.
+            if (fetch->status == 200)
+            {
+                printf("Finished downloading %llu bytes from URL %s.\n", fetch->numBytes,
+                       fetch->url);
+                // For now, we have a hard-coded filename that we open. Clobber it.
+                FILE* f = fopen("/sample.docx", "w");
+                fwrite(fetch->data, fetch->numBytes, 1, f);
+                fclose(f);
+            }
+            else
+            {
+                printf("Downloading %s failed, HTTP failure status code: %d.\n", fetch->url,
+                       fetch->status);
+            }
+            emscripten_fetch_close(fetch);
+
+            coolwsd = new COOLWSD();
+            coolwsd->run(1, argv);
+            delete coolwsd;
+        })
+        .detach();
 
     std::cout << "================ main() is returning" << std::endl;
     return 0;
