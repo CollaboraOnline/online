@@ -594,6 +594,10 @@ export class Header extends CanvasSectionObject {
 	onNewDocumentTopLeft(): void {
 		return;
 	}
+
+	shouldDrawForTileBounds (tileBounds: cool.Bounds) : boolean {
+		return tileBounds === null;
+	}
 }
 
 export interface HeaderEntryData {

@@ -66,6 +66,10 @@ export class CornerHeader extends CanvasSectionObject {
 	onMouseLeave(): void {
 		this.containerObject.getCanvasStyle().cursor = 'default';
 	}
+
+	shouldDrawForTileBounds (tileBounds: cool.Bounds) : boolean {
+		return tileBounds === null;
+	}
 }
 
 }

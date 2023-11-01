@@ -28,6 +28,7 @@ interface SectionCallbacks {
 	onCursorPositionChanged?: (newPosition: Array<number>) => void;
 	onCellAddressChanged?: (cursorInfo: any) => void;
 	onAnimationEnded?: (frameCount: number, elapsedTime: number) => void;
+	shouldDrawForTileBounds?: (tileBounds: cool.Bounds) => boolean;
 }
 
 /// Used to initialize a new anonymous CanvasSectionObject from its properties.
@@ -349,6 +350,14 @@ class CanvasSectionObject {
 			return this.callbacks.onRemove();
 	}
 
+	/// return if this section should be drawn to redraw the tile bounded
+	/// by tileBounds. Defaults to true.
+	shouldDrawForTileBounds (tileBounds: cool.Bounds) : boolean {
+		if (this.callbacks.shouldDrawForTileBounds)
+			return this.callbacks.shouldDrawForTileBounds(tileBounds);
+		return true;
+	}
+
 	/// Parameters: integer.
 	public setDrawingOrder(drawingOrder: number): void {
 		this.drawingOrder = drawingOrder;
@@ -461,6 +470,7 @@ class CanvasSectionObject {
 			onNewDocumentTopLeft: options.onNewDocumentTopLeft?.bind(this),
 			onRemove: options.onRemove?.bind(this),
 			onAnimationEnded: options.onAnimationEnded?.bind(this),
+			shouldDrawForTileBounds: options.shouldDrawForTileBounds?.bind(this),
 		};
 	}
 }
@@ -2081,7 +2091,9 @@ class CanvasSectionContainer {
 
 		this.context.font = String(20 * app.dpiScale) + 'px Verdana';
 		for (var i: number = 0; i < this.sections.length; i++) {
-			if (this.shouldDrawSection(this.sections[i])) {
+			if (this.shouldDrawSection(this.sections[i]) &&
+			    this.sections[i].shouldDrawForTileBounds(subsetBounds)) {
+
 				this.context.translate(this.sections[i].myTopLeft[0], this.sections[i].myTopLeft[1]);
 				if (this.sections[i].backgroundColor) {
 					this.context.globalAlpha = this.sections[i].backgroundOpacity;
