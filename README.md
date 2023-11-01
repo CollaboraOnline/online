@@ -24,7 +24,7 @@
 
 * [📋 Forum](https://forum.collaboraonline.com/)
 * [👥 Facebook](https://www.facebook.com/collaboraoffice/)
-* [🐣 Twitter](https://twitter.com/CollaboraOffice)
+* [🐣 𝕏(Twitter)](https://twitter.com/CollaboraOffice)
 * [🐘 Mastodon](https://mastodon.social/@CollaboraOffice)
 
 ## Key features
