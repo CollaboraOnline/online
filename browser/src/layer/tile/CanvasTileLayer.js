@@ -373,7 +373,10 @@ L.TileSectionManager = L.Class.extend({
 				strokeStyle: '#c0c0c0'
 			},
 			onDraw: that._onDrawGridSection,
-			onDrawArea: that._drawGridSectionArea
+			onDrawArea: that._drawGridSectionArea,
+			// where there are tileBounds present the tileLayer calls grid-drawing
+			// directly, so we can omit drawing this grid layer in that scenario
+			shouldDrawForTileBounds: function(tileBounds) { return tileBounds === null; }
 		}, 'tiles'); // Its size and position will be copied from 'tiles' section.
 		this._calcGridSection = this._sectionContainer.getSectionWithName(L.CSections.CalcGrid.name);
 	},
