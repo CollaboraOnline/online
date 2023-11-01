@@ -1,8 +1,8 @@
 /* -*- Mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4; fill-column: 100 -*- */
 /*
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ * Copyright the Collabora Online contributors.
+ *
+ * SPDX-License-Identifier: MPL-2.0
  */
 
 #pragma once
@@ -91,8 +91,12 @@ public:
         int urpToKitFD = socket->getIncomingFD(URPToKit);
         if (urpFromKitFD != -1 && urpToKitFD != -1)
         {
-            _urpFromKit = StreamSocket::create<StreamSocket>(std::string(), urpFromKitFD, false, std::make_shared<UrpHandler>(this));
-            _urpToKit = StreamSocket::create<StreamSocket>(std::string(), urpToKitFD, false, std::make_shared<UrpHandler>(this));
+            _urpFromKit = StreamSocket::create<StreamSocket>(
+                std::string(), urpFromKitFD, Socket::Type::Unix,
+                false, std::make_shared<UrpHandler>(this));
+            _urpToKit = StreamSocket::create<StreamSocket>(
+                std::string(), urpToKitFD, Socket::Type::Unix,
+                false, std::make_shared<UrpHandler>(this));
         }
     }
 

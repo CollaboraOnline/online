@@ -165,7 +165,7 @@ L.Map.include({
 			mobileTopBar.show('undo');
 			mobileTopBar.show('redo');
 
-			$('#AutoSumMenuimg').css('margin-inline', '0');
+			$('#AutoSumMenu-button').css('margin-inline', '0');
 			$('#AutoSumMenu .unoarrow').css('margin', '0');
 
 			jsdialogFormulabar.show('startformula');

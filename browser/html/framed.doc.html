@@ -120,6 +120,12 @@
             });
       }
 
+      function HintOnscreenKeyboard(hint) {
+        post({'MessageId': hint ? 'Hint_OnscreenKeyboard' : 'Hint_NoOnscreenKeyboard',
+              'Values': null
+            });
+      }
+
       function ShowMenubar(visible) {
         var messageId = visible ? 'Show_Menubar' : 'Hide_Menubar';
         post({'MessageId': 'Host_PostmessageReady'});
@@ -137,6 +143,12 @@
         post({'MessageId': 'Host_PostmessageReady'});
         post({'MessageId': 'Action_ChangeUIMode',
               'Values': {'Mode': value}});
+      }
+
+      function CollapseNotebookbar(collapse) {
+        post({'MessageId': collapse ? 'Collapse_Notebookbar' : 'Extend_Notebookbar',
+              'Values': null
+            });
       }
 
       function Execute(messageId, values) {
@@ -334,6 +346,8 @@
       <button onclick="show_commands('print'); return false;">Show Print Commands</button></br></br>
       <button onclick="disable_default_uiaction('UI_Save', true); return false;">Disable default save action</button></br>
       <button onclick="disable_default_uiaction('UI_Save', false); return false;">Enable default save action</button></br></br>
+      <button onclick="HintOnscreenKeyboard(true); return false;">Hint that there is an onscreen keyboard</button>
+      <button onclick="HintOnscreenKeyboard(false); return false;">Hint that there is not an onscreen keyboard</button><br/><br/>
       <label for="new-access-token"><b>New Access-Token</b>: </label><br>
       <textarea name="new-access-token" id="new-access-token" value="" rows="1" cols="30">123456789AA</textarea><br>
       <button onclick="reset_access_token(document.getElementById('new-access-token').value); return false;">Reset Access-Token</button>
@@ -361,6 +375,8 @@
       <p>
       <button onclick="ShowNotebookbar(false); return false;">Compact Toolbar</button>
       <button onclick="ShowNotebookbar(true); return false;">Tabbed Toolbar</button>
+      <button onclick="CollapseNotebookbar(true); return false;">Collapse Tabbed Toolbar</button>
+      <button onclick="CollapseNotebookbar(false); return false;">Extend Tabbed Toolbar</button>
     </form>
 
     <h3>Send UNO Commands</h3>

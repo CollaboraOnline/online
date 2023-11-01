@@ -218,6 +218,9 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 
 /* Separator */
 
+.jsdialog:focus-visible + .jsdialog.ui-separator.vertical {
+	background-color: transparent;
+}
 .jsdialog.ui-separator.vertical {
 	height: 100%;
 	padding-right: 6px;
@@ -232,6 +235,9 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 .jsdialog.ui-separator.horizontal {
 	width: 100%;
 	margin: 0px;
+	background-color: var(--color-border-lighter);
+	border: none;
+	height: 1px;
 }
 
 /* Tabs */
@@ -791,6 +797,11 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	border-radius: var(--border-radius);
 }
 
+.modalpopup[id$='-dropdown'] {
+	/* submenu is inserted into the same overlay, dont make it relative to parent */
+	position: absolute !important;
+}
+
 .modalpopup[id$='-dropdown'] .ui-dialog-content {
 	padding: 0px;
 }
@@ -804,8 +815,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 }
 
 .ui-combobox-entry span:hover {
-	border: 1px solid var(--color-border-darker);
-	background-color: var(--color-background-darker);
+	background-color: var(--color-background-dark);
 }
 
 .ui-combobox-entry.selected span:not(:hover) {
@@ -842,16 +852,27 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	filter: invert(1);
 }
 
+/* Combobox entry with menu and thus arrow/chevron */
 .ui-combobox-entry.ui-has-menu {
 	display: grid;
 	grid-template-columns: 1fr 25px;
 	align-items: center;
 }
-
+/* Arrow/chevron */
 .ui-combobox-entry.ui-has-menu::after {
-	content: '>';
+	content: '';
 	display: inline-block;
-	width: 25px;
+	width: 9px;
+	background: url('images/lc_menu_chevron.svg') no-repeat;
+	height: 9px;
+	margin-inline-start: -9px;
+}
+
+.ui-combobox-entry.ui-has-menu > span {
+	/* menu entries have 5px all around padding,
+	 add extra 9px at the horizontal end = 14px
+	 so we can re-position the arrow/chevron  */
+	padding-inline-end: 14px;
 }
 
 /* Apply style always show real colors */
@@ -1867,3 +1888,7 @@ kbd,
 	min-width: 75%;
 }
 
+/* Calc -> Insert -> Pivot Table */
+#PivotTableLayout #box2 {
+	grid-gap: 12px; /* make space for vertical separator */
+}

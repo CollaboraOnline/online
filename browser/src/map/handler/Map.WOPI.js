@@ -306,6 +306,14 @@ L.Map.WOPI = L.Handler.extend({
 			this._map.uiManager.hideRuler();
 			return;
 		}
+		else if (msg.MessageId === 'Collapse_Notebookbar') {
+			this._map.uiManager.collapseNotebookbar();
+			return;
+		}
+		else if (msg.MessageId === 'Extend_Notebookbar') {
+			this._map.uiManager.extendNotebookbar();
+			return;
+		}
 		else if (msg.MessageId === 'Show_Menu_Item' || msg.MessageId === 'Hide_Menu_Item') {
 			if (!msg.Values) {
 				window.app.console.error('Property "Values" not set');
@@ -333,6 +341,14 @@ L.Map.WOPI = L.Handler.extend({
 			return;
 		} else if (msg.MessageId === 'Send_UNO_Command' && msg.Values && msg.Values.Command) {
 			this._map.sendUnoCommand(msg.Values.Command, msg.Values.Args || '');
+			return;
+		}
+		else if (msg.MessageId === 'Hint_OnscreenKeyboard') {
+			window.keyboard.hintOnscreenKeyboard(true);
+			return;
+		}
+		else if (msg.MessageId === 'Hint_NoOnscreenKeyboard') {
+			window.keyboard.hintOnscreenKeyboard(false);
 			return;
 		}
 		else if (msg.MessageId === 'Disable_Default_UIAction') {

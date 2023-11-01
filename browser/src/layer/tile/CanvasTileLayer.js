@@ -1306,7 +1306,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	_refreshTilesInBackground: function() {
 		for (var key in this._tiles) {
 			this._tiles[key].wireId = 1;
-			this._tiles[key].invalidFrom = 0;
+			this._tiles[key].invalidFrom = 1;
 		}
 	},
 
@@ -6419,7 +6419,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		// Don't paint the tile, only dirty the sectionsContainer if it is in the visible area.
 		// _emitSlurpedTileEvents() will repaint canvas (if it is dirty).
 		if (this._painter.coordsIntersectVisible(coords)) {
-			this._painter._sectionContainer.setDirty();
+			this._painter._sectionContainer.setDirty(coords);
 		}
 	},
 

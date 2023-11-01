@@ -248,7 +248,40 @@ function assertImageSize(expectedWidth, expectedHeight) {
 		});
 }
 
-function insertMultipleComment(docType, numberOfComments = 1, isMobile = false, selector) {
+function createComment(docType, text, isMobile, selector) {
+	if (docType === 'draw') {
+		cy.cGet('#menu-insert').click();
+		cy.cGet('#menu-insertcomment').click();
+	}
+	else if (!selector) {
+		actionOnSelector('insertAnnotation', (selector) => {
+			cy.cGet(selector).click();
+		});
+	}
+	else
+		cy.cGet(selector).click();
+
+	cy.wait(100);
+
+	cy.cGet('.cool-annotation-table').should('exist');
+
+	if (isMobile) {
+		cy.cGet('#input-modal-input').type(text);
+	} else {
+		cy.cGet('#annotation-modify-textarea-new').type(text);
+		cy.wait(500);
+	}
+}
+
+function saveComment(isMobile) {
+	if (isMobile) {
+		cy.cGet('#response-ok').click();
+	} else {
+		cy.cGet('#annotation-save-new').click();
+	}
+}
+
+function setupUIforCommentInsert(docType) {
 	var mode = Cypress.env('USER_INTERFACE');
 
 	if (docType === 'calc') {
@@ -280,32 +313,14 @@ function insertMultipleComment(docType, numberOfComments = 1, isMobile = false, 
 			}
 		});
 	}
+}
+
+function insertMultipleComment(docType, numberOfComments = 1, isMobile = false, selector) {
+	setupUIforCommentInsert(docType);
 
 	for (var n = 0; n < numberOfComments; n++) {
-		if (docType === 'draw') {
-			cy.cGet('#menu-insert').click();
-			cy.cGet('#menu-insertcomment').click();
-		}
-		else if (!selector) {
-			actionOnSelector('insertAnnotation', (selector) => {
-				cy.cGet(selector).click();
-			});
-		}
-		else
-			cy.cGet(selector).click();
-
-		cy.wait(100);
-
-		cy.cGet('.cool-annotation-table').should('exist');
-
-		if (isMobile) {
-			cy.cGet('#input-modal-input').type('some text' + n);
-			cy.cGet('#response-ok').click();
-		} else {
-			cy.cGet('#annotation-modify-textarea-new').type('some text' + n);
-			cy.wait(500);
-			cy.cGet('#annotation-save-new').click();
-		}
+		createComment(docType, 'some text' + n, isMobile, selector);
+		saveComment(isMobile);
 	}
 }
 
@@ -478,3 +493,6 @@ module.exports.switchUIToNotebookbar = switchUIToNotebookbar;
 module.exports.switchUIToCompact = switchUIToCompact;
 module.exports.checkAccessibilityEnabledToBe = checkAccessibilityEnabledToBe;
 module.exports.setAccessibilityState = setAccessibilityState;
+module.exports.setupUIforCommentInsert = setupUIforCommentInsert;
+module.exports.createComment = createComment;
+module.exports.saveComment = saveComment;

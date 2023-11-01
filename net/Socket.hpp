@@ -139,7 +139,7 @@ public:
     Socket(Type type)
         : _fd(createSocket(type))
     {
-        init();
+        init(type);
     }
 
     virtual ~Socket()
@@ -363,15 +363,19 @@ public:
 protected:
     /// Construct based on an existing socket fd.
     /// Used by accept() only.
-    Socket(const int fd)
+    Socket(const int fd, Type type)
         : _fd(fd)
     {
-        init();
+        init(type);
     }
 
-    void init()
+    inline void logPrefix(std::ostream& os) const { os << '#' << _fd << ": "; }
+
+private:
+    void init(Type type)
     {
-        setNoDelay();
+        if (type != Type::Unix)
+            setNoDelay();
         _ignoreInput = false;
         _sendBufferSize = DefaultSendBufferSize;
         _owner = std::this_thread::get_id();
@@ -388,8 +392,6 @@ protected:
 #endif
 #endif
     }
-
-    inline void logPrefix(std::ostream& os) const { os << '#' << _fd << ": "; }
 
 private:
     std::string _clientAddress;
@@ -921,10 +923,10 @@ public:
     };
 
     /// Create a StreamSocket from native FD.
-    StreamSocket(std::string host, const int fd, bool /* isClient */,
+    StreamSocket(std::string host, const int fd, Type type, bool /* isClient */,
                  std::shared_ptr<ProtocolHandlerInterface> socketHandler,
                  ReadType readType = NormalRead) :
-        Socket(fd),
+        Socket(fd, type),
         _hostname(std::move(host)),
         _socketHandler(std::move(socketHandler)),
         _bytesSent(0),
@@ -1194,12 +1196,12 @@ public:
     /// We need this helper since the handler needs a shared_ptr to the socket
     /// but we can't have a shared_ptr in the ctor.
     template <typename TSocket>
-    static std::shared_ptr<TSocket> create(std::string hostname, const int fd, bool isClient,
+    static std::shared_ptr<TSocket> create(std::string hostname, const int fd, Type type, bool isClient,
                                            std::shared_ptr<ProtocolHandlerInterface> handler,
                                            ReadType readType = NormalRead)
     {
         ProtocolHandlerInterface* pHandler = handler.get();
-        auto socket = std::make_shared<TSocket>(std::move(hostname), fd, isClient,
+        auto socket = std::make_shared<TSocket>(std::move(hostname), fd, type, isClient,
                                                 std::move(handler), readType);
         pHandler->onConnect(socket);
         return socket;
