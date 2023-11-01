@@ -135,21 +135,6 @@ export class TilesSection extends CanvasSectionObject {
 		return bounds;
 	}
 
-	public clipSubsetBounds(canvasCtx: CanvasRenderingContext2D, subsetBounds: cool.Bounds): void {
-
-		var ctx = this.sectionProperties.tsManager._paintContext();
-		ctx.viewBounds.round();
-
-		canvasCtx.beginPath();
-		var rect = subsetBounds.toRectangle();
-
-		this.beforeDraw(canvasCtx);
-		canvasCtx.rect(rect[0] - ctx.viewBounds.min.x, rect[1] - ctx.viewBounds.min.y, rect[2], rect[3]);
-		this.afterDraw(canvasCtx);
-
-		canvasCtx.clip();
-	}
-
 	drawTileInPane (tile: any, tileBounds: any, paneBounds: any, paneOffset: any, canvasCtx: CanvasRenderingContext2D, clearBackground: boolean, now: Date) {
 		// intersect - to avoid state thrash through clipping
 		var crop = new L.Bounds(tileBounds.min, tileBounds.max);
@@ -398,10 +383,12 @@ export class TilesSection extends CanvasSectionObject {
 		// Calculate all this here intead of doing it per tile.
 		var ctx = this.sectionProperties.tsManager._paintContext();
 
+		var clearTileBackground: boolean = subsetBounds !== null;
+
 		if (this.sectionProperties.tsManager.waitForTiles()) {
 			if (!this.haveAllTilesInView(zoom, part, mode, ctx))
 				return;
-		} else if (!this.containerObject.isZoomChanged()) {
+		} else if (!this.containerObject.isZoomChanged() && !clearTileBackground) {
 			// Don't show page border and page numbers (drawn by drawPageBackgrounds) if zoom is changing
 			// after a zoom animation.
 			this.drawPageBackgrounds(ctx);
@@ -411,7 +398,6 @@ export class TilesSection extends CanvasSectionObject {
 		var doneTiles = new Set();
 		var now = new Date();
 		var debugForcePaint = this.sectionProperties.docLayer._debug;
-		var clearTileBackground: boolean = subsetBounds !== null;
 		this.forEachTileInView(zoom, part, mode, ctx, function (tile: any, coords: any): boolean {
 
 			if (doneTiles.has(coords.key()))

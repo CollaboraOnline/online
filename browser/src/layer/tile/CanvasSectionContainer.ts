@@ -2076,16 +2076,10 @@ class CanvasSectionContainer {
 			if (tileSection && this.shouldDrawSection(tileSection)) {
 				subsetBounds = tileSection.getSubsetBounds(this.context, tileSubset);
 			}
-			if (subsetBounds) {
-				this.context.save();
-
-				this.context.translate(tileSection.myTopLeft[0], tileSection.myTopLeft[1]);
-				tileSection.clipSubsetBounds(this.context, subsetBounds);
-				this.context.translate(-tileSection.myTopLeft[0], -tileSection.myTopLeft[1]);
-			}
 		}
 
-		if (!this.zoomChanged) {
+		// if zooming, or using subsetBounds, we draw the background behind each individual tile we redraw
+		if (!this.zoomChanged && !subsetBounds) {
 			this.clearCanvas();
 		}
 
@@ -2112,10 +2106,6 @@ class CanvasSectionContainer {
 
 				this.context.translate(-this.sections[i].myTopLeft[0], -this.sections[i].myTopLeft[1]);
 			}
-		}
-
-		if (subsetBounds) {
-			this.context.restore();
 		}
 
 		this.paintedEver = true;
