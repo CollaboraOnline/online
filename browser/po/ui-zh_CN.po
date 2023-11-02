@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-26 09:36+0200\n"
-"PO-Revision-Date: 2023-10-09 07:55+0000\n"
-"Last-Translator: BY <alucard_118@163.com>\n"
+"PO-Revision-Date: 2023-10-27 20:10+0000\n"
+"Last-Translator: Qiao Yifeng <qiaoyifeng@promc.cn>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
 "collabora-online/ui/zh_Hans/>\n"
-"Language: \n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.1-dev\n"
+"X-Generator: Weblate 5.2-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -1232,9 +1232,8 @@ msgstr "文件(~F)"
 #: src/control/Control.NotebookbarDraw.js:64
 #: src/control/Control.NotebookbarImpress.js:79
 #: src/control/Control.NotebookbarWriter.js:38
-#, fuzzy
 msgid "Home"
-msgstr "主页(~H)"
+msgstr "Home"
 
 #: src/control/Control.NotebookbarCalc.js:32
 #: src/control/Control.NotebookbarDraw.js:71
