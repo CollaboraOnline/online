@@ -710,11 +710,7 @@ a.leaflet-control-zoom-in {
 	text-align: end;
 	vertical-align: bottom;
 }
-#DeleteTable{
-	background-color: #fbf4f5;
-	border-radius: var(--border-radius);
-	padding-right: 4% !important;
-}
+
 #DeleteTable > span{
 	font-weight: bold;
 	color: var(--color-error);
