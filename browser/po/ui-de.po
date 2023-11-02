@@ -13,7 +13,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-26 09:36+0200\n"
 "PO-Revision-Date: 2023-10-30 06:02+0000\n"
-"Last-Translator: Ettore Atalan <atalanttore@googlemail.com>\n"
+"Last-Translator: m4skedbyte <weblate@m4skedbyte.xyz>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "ui/de/>\n"
 "Language: de\n"
@@ -545,12 +545,12 @@ msgstr "Anzahl"
 #: src/control/Control.JSDialogBuilder.js:202
 #: src/control/Control.Menubar.js:675
 msgid "Active sheet"
-msgstr ""
+msgstr "Aktive Seite"
 
 #: src/control/Control.JSDialogBuilder.js:203
 #: src/control/Control.Menubar.js:676 src/control/Control.TopToolbar.js:99
 msgid "All Sheets"
-msgstr ""
+msgstr "Alle Seiten"
 
 #: src/control/Control.JSDialogBuilder.js:568
 msgid "Solid"
