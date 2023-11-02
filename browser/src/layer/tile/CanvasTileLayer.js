@@ -7144,7 +7144,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			if (!img)
 			{
 				tile.updateCount++;
-				this._debugUpdates++;
+				this._debugLoadUpdate++;
 			}
 			else if (img.rawData && !img.isKeyframe)
 				this._debugLoadDelta++;
