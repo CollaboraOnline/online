@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-26 09:36+0200\n"
-"PO-Revision-Date: 2023-10-26 01:45+0000\n"
+"PO-Revision-Date: 2023-10-27 20:10+0000\n"
 "Last-Translator: Rob Pearson <rob.dunedin@gmail.com>\n"
 "Language-Team: English (United Kingdom) <https://hosted.weblate.org/projects/"
 "collabora-online/ui/en_GB/>\n"
-"Language: \n"
+"Language: en_GB\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.1.1\n"
+"X-Generator: Weblate 5.2-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -1077,32 +1077,32 @@ msgstr "CSV file (.csv)"
 #: src/control/Control.Menubar.js:802
 #: src/control/Control.NotebookbarBuilder.js:808
 msgid "Condition..."
-msgstr ""
+msgstr "Condition..."
 
 #: src/control/Control.Menubar.js:803
 #: src/control/Control.NotebookbarBuilder.js:809
 msgid "Greater than..."
-msgstr ""
+msgstr "Greater than..."
 
 #: src/control/Control.Menubar.js:804
 #: src/control/Control.NotebookbarBuilder.js:810
 msgid "Less than..."
-msgstr ""
+msgstr "Less than..."
 
 #: src/control/Control.Menubar.js:805
 #: src/control/Control.NotebookbarBuilder.js:811
 msgid "Equal to..."
-msgstr ""
+msgstr "Equal to..."
 
 #: src/control/Control.Menubar.js:806
 #: src/control/Control.NotebookbarBuilder.js:812
 msgid "Between..."
-msgstr ""
+msgstr "Between..."
 
 #: src/control/Control.Menubar.js:808
 #: src/control/Control.NotebookbarBuilder.js:814
 msgid "More conditions..."
-msgstr ""
+msgstr "More conditions..."
 
 #: src/control/Control.Menubar.js:916 src/control/Control.Menubar.js:983
 #: src/control/Control.Menubar.js:1048 src/control/Control.Menubar.js:1103
@@ -2362,6 +2362,10 @@ msgid ""
 "administrator. For more info on proxy configuration please checkout https://"
 "sdk.collaboraonline.com/docs/installation/Proxy_settings.html"
 msgstr ""
+"Failed to establish socket connection or socket connection closed "
+"unexpectedly. The reverse proxy might be misconfigured, please contact the "
+"administrator. For more info on proxy configuration please checkout "
+"https://sdk.collaboraonline.com/docs/installation/Proxy_settings.html"
 
 #: src/errormessages.js:33
 msgid "Failed to load document."
