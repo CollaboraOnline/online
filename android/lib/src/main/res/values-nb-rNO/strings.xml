@@ -19,4 +19,8 @@
     <string name="view_only">Kun visning</string>
     <string name="restarting">Starter på ny…</string>
     <string name="cant_open_the_document">Kunne ikke åpne dokumentet</string>
+    <string name="convert_odf_message">Dette dokumentet kan inneholde formatering eller innhold som ikke kan lagres i det for øyeblikket valgte filformatet \"Tekst\".</string>
+    <string name="use_odf">Bruk ODF format</string>
+    <string name="ask_for_convert_odf">Bekreft filformat</string>
+    <string name="use_text">Bruk tekstformat</string>
 </resources>
