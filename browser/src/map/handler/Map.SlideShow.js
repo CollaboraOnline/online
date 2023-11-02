@@ -110,13 +110,17 @@ L.Map.SlideShow = L.Handler.extend({
 			document.mozFullScreen ||
 			document.msFullscreenElement;
 		if (!this.fullscreen) {
-			L.DomUtil.remove(this._slideShow);
-			this._slideShow = null;
-			// #7102 on exit from fullscreen we don't get a 'focus' event
-			// in chome so a later second attempt at launching a presentation
-			// fails
-			this._map.focus();
+			this._stopFullScreen();
 		}
+	},
+
+	_stopFullScreen: function () {
+		L.DomUtil.remove(this._slideShow);
+		this._slideShow = null;
+		// #7102 on exit from fullscreen we don't get a 'focus' event
+		// in chome so a later second attempt at launching a presentation
+		// fails
+		this._map.focus();
 	},
 
 	_onSlideDownloadReady: function (e) {
@@ -135,19 +139,38 @@ L.Map.SlideShow = L.Handler.extend({
 	},
 
 	_startPlaying: function() {
+		// Windowed Presentation
 		if (this._presentInWindow) {
 			this._slideShowWindowProxy = window.open(this._slideURL, '_blank', 'popup'); // do we need to set this to null when closed or is that already done?
 			if (!this._slideShowWindowProxy) {
-				// handle popup blocked
+				this._map.uiManager.showInfoModal('popup-blocked-modal',
+			_('Windowed Presentation Blocked'),
+			_('Presentation was blocked. Please allow pop-ups in your browser. This lets slide shows to be displayed in separated windows, allowing for easy screen sharing.'), '',
+			_('OK'), null, false);
 			}
+
 			this._slideShowWindowProxy.focus();
 			this._slideShowWindowProxy.addEventListener('keydown', this._onCloseSlideWindow);
+
+			var slideShowWindow = this._slideShowWindowProxy;
+			this._map.uiManager.showSnackbar(_('Presenting in window'),
+				_('Close Presentation'), 
+				function() {slideShowWindow.close();},
+				null /*5000*/, false, true);
 			return;
 		}
+		// Cypress Presentation
 		if (this._cypressSVGPresentationTest || !this._slideShow) {
 			window.open(this._slideURL, '_self');
 			return;
 		}
+		// Fullscreen Presentation
+
+		this._map.uiManager.showSnackbar(_('Presenting in fullscreen'),
+			_('End Presentation'),
+			function() {this._stopFullScreen();},
+			null, false, true, this._slideShow.contentWindow.body /*Need to pass the html not the object */);
+
 		var separator = (this._slideURL.indexOf('?') === -1) ? '?' : '&';
 		this._slideShow.src = this._slideURL + separator + 'StartSlideNumber=' + this._startSlideNumber;
 		this._slideShow.contentWindow.focus();
@@ -209,6 +232,7 @@ L.Map.SlideShow = L.Handler.extend({
 		if (e.code === 'Escape') {
 			this.opener.focus();
 			this.close();
+			this._map.uiManager.closeSnackbar();
 		}
 	}
 });
