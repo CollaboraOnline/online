@@ -14,16 +14,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-26 09:36+0200\n"
-"PO-Revision-Date: 2023-10-25 15:34+0000\n"
+"PO-Revision-Date: 2023-10-27 20:10+0000\n"
 "Last-Translator: \"PhD. Ayhan YALÇINSOY\" <ayhanyalcinsoy@pisilinux.org>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/tr/>\n"
-"Language: \n"
+"Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.1.1\n"
+"X-Generator: Weblate 5.2-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -1085,32 +1085,32 @@ msgstr "CSV dosyası (.csv)"
 #: src/control/Control.Menubar.js:802
 #: src/control/Control.NotebookbarBuilder.js:808
 msgid "Condition..."
-msgstr ""
+msgstr "Koşul..."
 
 #: src/control/Control.Menubar.js:803
 #: src/control/Control.NotebookbarBuilder.js:809
 msgid "Greater than..."
-msgstr ""
+msgstr "Daha büyük..."
 
 #: src/control/Control.Menubar.js:804
 #: src/control/Control.NotebookbarBuilder.js:810
 msgid "Less than..."
-msgstr ""
+msgstr "Daha küçük..."
 
 #: src/control/Control.Menubar.js:805
 #: src/control/Control.NotebookbarBuilder.js:811
 msgid "Equal to..."
-msgstr ""
+msgstr "Eşit..."
 
 #: src/control/Control.Menubar.js:806
 #: src/control/Control.NotebookbarBuilder.js:812
 msgid "Between..."
-msgstr ""
+msgstr "Arasında..."
 
 #: src/control/Control.Menubar.js:808
 #: src/control/Control.NotebookbarBuilder.js:814
 msgid "More conditions..."
-msgstr ""
+msgstr "Daha fazla koşul..."
 
 #: src/control/Control.Menubar.js:916 src/control/Control.Menubar.js:983
 #: src/control/Control.Menubar.js:1048 src/control/Control.Menubar.js:1103
@@ -2371,6 +2371,11 @@ msgid ""
 "administrator. For more info on proxy configuration please checkout https://"
 "sdk.collaboraonline.com/docs/installation/Proxy_settings.html"
 msgstr ""
+"Soket bağlantısı kurulamadı veya soket bağlantısı beklenmedik şekilde "
+"kapandı. Ters proxy yanlış yapılandırılmış olabilir, lütfen yöneticiye "
+"başvurun. Proxy yapılandırması hakkında daha fazla bilgi için lütfen "
+"https://sdk.collaboraonline.com/docs/installation/Proxy_settings.html "
+"adresine göz atın."
 
 #: src/errormessages.js:33
 msgid "Failed to load document."
