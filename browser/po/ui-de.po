@@ -12,8 +12,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-26 09:36+0200\n"
-"PO-Revision-Date: 2023-10-26 11:01+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"PO-Revision-Date: 2023-10-30 06:02+0000\n"
+"Last-Translator: Ettore Atalan <atalanttore@googlemail.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "ui/de/>\n"
 "Language: de\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.1.1\n"
+"X-Generator: Weblate 5.2-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -457,6 +457,8 @@ msgid ""
 "If you want to share large elements outside of %productName it's necessary "
 "to first download them."
 msgstr ""
+"Wenn Sie große Elemente außerhalb von %productName freigeben möchten, müssen "
+"Sie diese zunächst herunterladen."
 
 #: src/control/Control.DownloadProgress.js:61
 #: src/control/Control.NotebookbarCalc.js:204
@@ -478,19 +480,22 @@ msgstr "Kopieren"
 #: src/control/Control.DownloadProgress.js:110
 msgid "Download completed and ready to be copied to clipboard."
 msgstr ""
+"Herunterladen abgeschlossen und bereit zum Kopieren in die Zwischenablage."
 
 #: src/control/Control.DownloadProgress.js:111
 msgid ""
 "From now on clipboard notifications will discreetly appear at the bottom."
 msgstr ""
+"Von nun an werden Benachrichtigungen über die Zwischenablage diskret am "
+"unteren Rand angezeigt."
 
 #: src/control/Control.DownloadProgress.js:257
 msgid "Content copied to clipboard"
-msgstr ""
+msgstr "Inhalt in die Zwischenablage kopiert"
 
 #: src/control/Control.DownloadProgress.js:301
 msgid "Download failed"
-msgstr ""
+msgstr "Herunterladen fehlgeschlagen"
 
 #: src/control/Control.FormulaBar.js:45
 msgid "cell address"
@@ -2089,7 +2094,7 @@ msgstr "Konfigurationswarnung für Cluster"
 
 #: src/core/Socket.js:587
 msgid "Wrong server, reconnecting..."
-msgstr ""
+msgstr "Falscher Server, Verbindung wird neu aufgebaut ..."
 
 #: src/core/Socket.js:594
 msgid "COOLWSD version:"
@@ -2379,6 +2384,12 @@ msgid ""
 "storage and/or copy/paste problems. Expected serverId %0 for routeToken %1 "
 "but connected to serverId %2"
 msgstr ""
+"Ihr %productName-Cluster scheint falsch konfiguriert zu sein oder schnell zu "
+"skalieren - bitte wenden Sie sich an Ihren Systemadministrator. Wenn Sie die "
+"Bearbeitung fortsetzen, kann dies dazu führen, dass sich mehrere Benutzer "
+"nicht sehen können, dass es zu Konflikten in der Dokumentenablage kommt und/"
+"oder dass Probleme beim Kopieren/Einfügen auftreten. Erwartete serverId %0 "
+"für routeToken %1, aber verbunden mit serverId %2"
 
 #: src/errormessages.js:30
 msgid ""
@@ -2387,6 +2398,11 @@ msgid ""
 "administrator. For more info on proxy configuration please checkout https://"
 "sdk.collaboraonline.com/docs/installation/Proxy_settings.html"
 msgstr ""
+"Socket-Verbindung konnte nicht hergestellt werden oder Socket-Verbindung "
+"wurde unerwartet geschlossen. Der Reverse-Proxy ist möglicherweise falsch "
+"konfiguriert. Bitte wenden Sie sich an den Administrator. Weitere "
+"Informationen zur Proxy-Konfiguration finden Sie unter https://sdk."
+"collaboraonline.com/docs/installation/Proxy_settings.html"
 
 #: src/errormessages.js:33
 msgid "Failed to load document."
@@ -2567,7 +2583,7 @@ msgstr "Kopieren aus dem Dokument deaktiviert"
 
 #: src/map/Clipboard.js:238
 msgid "warning: copy/paste request timed out"
-msgstr ""
+msgstr "Warnung: Zeitüberschreitung der Kopieren/Einfügen-Anforderung"
 
 #: src/map/Clipboard.js:301
 msgid "Failed to download clipboard, please re-copy"
