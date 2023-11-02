@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-26 09:36+0200\n"
-"PO-Revision-Date: 2023-10-13 05:01+0000\n"
+"PO-Revision-Date: 2023-10-31 01:45+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: Croatian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/hr/>\n"
-"Language: \n"
+"Language: hr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
-"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 5.1-dev\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 5.2-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -446,13 +446,15 @@ msgstr "Poništi"
 
 #: src/control/Control.DownloadProgress.js:43
 msgid "Download Selection"
-msgstr ""
+msgstr "Preuzmi odabir"
 
 #: src/control/Control.DownloadProgress.js:48
 msgid ""
 "If you want to share large elements outside of %productName it's necessary "
 "to first download them."
 msgstr ""
+"Ako želiš dijeliti velike elemente izvan %productName, moraš ih najprije "
+"preuzeti."
 
 #: src/control/Control.DownloadProgress.js:61
 #: src/control/Control.NotebookbarCalc.js:204
@@ -463,7 +465,7 @@ msgstr "Preuzmi"
 
 #: src/control/Control.DownloadProgress.js:80
 msgid "Downloading clipboard content"
-msgstr ""
+msgstr "Preuzimanje sadržaja međuspremnika"
 
 #: src/control/Control.DownloadProgress.js:87
 #: src/control/Control.DownloadProgress.js:112
@@ -473,20 +475,20 @@ msgstr "Kopiraj"
 
 #: src/control/Control.DownloadProgress.js:110
 msgid "Download completed and ready to be copied to clipboard."
-msgstr ""
+msgstr "Preuzimanje je dovršeno i spremno je za kopiranje u međuspremnik."
 
 #: src/control/Control.DownloadProgress.js:111
 msgid ""
 "From now on clipboard notifications will discreetly appear at the bottom."
-msgstr ""
+msgstr "Od sada će se obavijesti međuspremnika diskretno pojavljivati na dnu."
 
 #: src/control/Control.DownloadProgress.js:257
 msgid "Content copied to clipboard"
-msgstr ""
+msgstr "Sadržaj je kopiran u međuspremnik"
 
 #: src/control/Control.DownloadProgress.js:301
 msgid "Download failed"
-msgstr ""
+msgstr "Preuzimanje nije uspjelo"
 
 #: src/control/Control.FormulaBar.js:45
 msgid "cell address"
@@ -1080,32 +1082,32 @@ msgstr "CSV datoteka (.csv)"
 #: src/control/Control.Menubar.js:802
 #: src/control/Control.NotebookbarBuilder.js:808
 msgid "Condition..."
-msgstr ""
+msgstr "Stanje …"
 
 #: src/control/Control.Menubar.js:803
 #: src/control/Control.NotebookbarBuilder.js:809
 msgid "Greater than..."
-msgstr ""
+msgstr "Veće od …"
 
 #: src/control/Control.Menubar.js:804
 #: src/control/Control.NotebookbarBuilder.js:810
 msgid "Less than..."
-msgstr ""
+msgstr "Manje od …"
 
 #: src/control/Control.Menubar.js:805
 #: src/control/Control.NotebookbarBuilder.js:811
 msgid "Equal to..."
-msgstr ""
+msgstr "Jednako …"
 
 #: src/control/Control.Menubar.js:806
 #: src/control/Control.NotebookbarBuilder.js:812
 msgid "Between..."
-msgstr ""
+msgstr "Između …"
 
 #: src/control/Control.Menubar.js:808
 #: src/control/Control.NotebookbarBuilder.js:814
 msgid "More conditions..."
-msgstr ""
+msgstr "Više stanja …"
 
 #: src/control/Control.Menubar.js:916 src/control/Control.Menubar.js:983
 #: src/control/Control.Menubar.js:1048 src/control/Control.Menubar.js:1103
@@ -1489,7 +1491,6 @@ msgid "Image (.png)"
 msgstr "Slika (.png)"
 
 #: src/control/Control.NotebookbarDraw.js:1028
-#, fuzzy
 msgid "Page Layout"
 msgstr "Rapored stranice"
 
@@ -2373,6 +2374,11 @@ msgid ""
 "administrator. For more info on proxy configuration please checkout https://"
 "sdk.collaboraonline.com/docs/installation/Proxy_settings.html"
 msgstr ""
+"Neuspjelo uspostavljanje veze s utičnicom ili je veza s utičnicom "
+"neočekivano zatvorena. Obrnuti proxy je možda krivo konfiguriran. Obrati se "
+"administratoru. Za daljnje informacije o konfiguraciji proxy poslužitelja "
+"pogledaj https://sdk.collaboraonline.com/docs/installation/Proxy_settings."
+"html"
 
 #: src/errormessages.js:33
 msgid "Failed to load document."
