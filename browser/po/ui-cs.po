@@ -12,17 +12,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-26 09:36+0200\n"
-"PO-Revision-Date: 2023-10-11 16:23+0000\n"
-"Last-Translator: Pedro Silva <pedro.silva@collabora.com>\n"
+"PO-Revision-Date: 2023-10-27 20:10+0000\n"
+"Last-Translator: Stanislav Horáček <stanislav.horacek@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/collabora-online/"
 "ui/cs/>\n"
-"Language: \n"
+"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <="
-" 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
-"X-Generator: Weblate 5.1-dev\n"
+"Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n "
+"<= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
+"X-Generator: Weblate 5.2-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -447,13 +447,14 @@ msgstr "Zpět"
 
 #: src/control/Control.DownloadProgress.js:43
 msgid "Download Selection"
-msgstr ""
+msgstr "Stáhnout výběr"
 
 #: src/control/Control.DownloadProgress.js:48
 msgid ""
 "If you want to share large elements outside of %productName it's necessary "
 "to first download them."
 msgstr ""
+"Chcete-li sdílet velké prvky mimo %productName, je nutné je nejprve stáhnout."
 
 #: src/control/Control.DownloadProgress.js:61
 #: src/control/Control.NotebookbarCalc.js:204
@@ -464,7 +465,7 @@ msgstr "Stahování"
 
 #: src/control/Control.DownloadProgress.js:80
 msgid "Downloading clipboard content"
-msgstr ""
+msgstr "Stahování obsahu schránky"
 
 #: src/control/Control.DownloadProgress.js:87
 #: src/control/Control.DownloadProgress.js:112
@@ -475,19 +476,22 @@ msgstr "Kopírovat"
 #: src/control/Control.DownloadProgress.js:110
 msgid "Download completed and ready to be copied to clipboard."
 msgstr ""
+"Stahování bylo dokončeno a obsah je připraven ke zkopírování do schránky."
 
 #: src/control/Control.DownloadProgress.js:111
 msgid ""
 "From now on clipboard notifications will discreetly appear at the bottom."
 msgstr ""
+"Od této chvíle se budou oznámení schránky zobrazovat nenápadněji v dolní "
+"části."
 
 #: src/control/Control.DownloadProgress.js:257
 msgid "Content copied to clipboard"
-msgstr ""
+msgstr "Obsah byl zkopírován do schránky"
 
 #: src/control/Control.DownloadProgress.js:301
 msgid "Download failed"
-msgstr ""
+msgstr "Stahování se nezdařilo"
 
 #: src/control/Control.FormulaBar.js:45
 msgid "cell address"
@@ -1081,32 +1085,32 @@ msgstr "Soubor CSV (.csv)"
 #: src/control/Control.Menubar.js:802
 #: src/control/Control.NotebookbarBuilder.js:808
 msgid "Condition..."
-msgstr ""
+msgstr "Podmínka..."
 
 #: src/control/Control.Menubar.js:803
 #: src/control/Control.NotebookbarBuilder.js:809
 msgid "Greater than..."
-msgstr ""
+msgstr "Větší než..."
 
 #: src/control/Control.Menubar.js:804
 #: src/control/Control.NotebookbarBuilder.js:810
 msgid "Less than..."
-msgstr ""
+msgstr "Menší než..."
 
 #: src/control/Control.Menubar.js:805
 #: src/control/Control.NotebookbarBuilder.js:811
 msgid "Equal to..."
-msgstr ""
+msgstr "Rovno..."
 
 #: src/control/Control.Menubar.js:806
 #: src/control/Control.NotebookbarBuilder.js:812
 msgid "Between..."
-msgstr ""
+msgstr "Mezi..."
 
 #: src/control/Control.Menubar.js:808
 #: src/control/Control.NotebookbarBuilder.js:814
 msgid "More conditions..."
-msgstr ""
+msgstr "Další podmínky..."
 
 #: src/control/Control.Menubar.js:916 src/control/Control.Menubar.js:983
 #: src/control/Control.Menubar.js:1048 src/control/Control.Menubar.js:1103
@@ -1490,7 +1494,6 @@ msgid "Image (.png)"
 msgstr "Obrázek (.png)"
 
 #: src/control/Control.NotebookbarDraw.js:1028
-#, fuzzy
 msgid "Page Layout"
 msgstr "Rozvržení stránky"
 
@@ -2372,6 +2375,11 @@ msgid ""
 "administrator. For more info on proxy configuration please checkout https://"
 "sdk.collaboraonline.com/docs/installation/Proxy_settings.html"
 msgstr ""
+"Nepodařilo se navázat spojení pomocí socketů nebo toto spojení bylo nečekaně "
+"ukončeno. Příčinou může být chybná konfigurace reverzního proxy serveru, "
+"obraťte se na správce systému. Další informace o konfiguraci proxy serveru "
+"naleznete na https://sdk.collaboraonline.com/docs/installation/Proxy_settings"
+".html"
 
 #: src/errormessages.js:33
 msgid "Failed to load document."
