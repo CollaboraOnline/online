@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-26 09:36+0200\n"
-"PO-Revision-Date: 2023-10-11 16:23+0000\n"
-"Last-Translator: Pedro Silva <pedro.silva@collabora.com>\n"
+"PO-Revision-Date: 2023-10-27 20:10+0000\n"
+"Last-Translator: SC <lalocas@protonmail.com>\n"
 "Language-Team: Portuguese <https://hosted.weblate.org/projects/"
 "collabora-online/ui/pt/>\n"
-"Language: \n"
+"Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.1-dev\n"
+"X-Generator: Weblate 5.2-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -445,13 +445,15 @@ msgstr "Desfazer"
 
 #: src/control/Control.DownloadProgress.js:43
 msgid "Download Selection"
-msgstr ""
+msgstr "Descarregar seleção"
 
 #: src/control/Control.DownloadProgress.js:48
 msgid ""
 "If you want to share large elements outside of %productName it's necessary "
 "to first download them."
 msgstr ""
+"Se quiser partilhar grandes elementos fora de %productName é necessário "
+"primeiro descarregá-los."
 
 #: src/control/Control.DownloadProgress.js:61
 #: src/control/Control.NotebookbarCalc.js:204
@@ -462,7 +464,7 @@ msgstr "Descarregar"
 
 #: src/control/Control.DownloadProgress.js:80
 msgid "Downloading clipboard content"
-msgstr ""
+msgstr "A descarregar o conteúdo da área de transferência"
 
 #: src/control/Control.DownloadProgress.js:87
 #: src/control/Control.DownloadProgress.js:112
@@ -473,19 +475,23 @@ msgstr "Copiar"
 #: src/control/Control.DownloadProgress.js:110
 msgid "Download completed and ready to be copied to clipboard."
 msgstr ""
+"Descarregamento terminado e pronto para ser copiado para a área de "
+"transferência."
 
 #: src/control/Control.DownloadProgress.js:111
 msgid ""
 "From now on clipboard notifications will discreetly appear at the bottom."
 msgstr ""
+"A partir de agora as notificações da área de transferência aparecerão "
+"discretamente na parte inferior."
 
 #: src/control/Control.DownloadProgress.js:257
 msgid "Content copied to clipboard"
-msgstr ""
+msgstr "Conteúdo copiado para a área de transferência"
 
 #: src/control/Control.DownloadProgress.js:301
 msgid "Download failed"
-msgstr ""
+msgstr "Falha ao descarregar"
 
 #: src/control/Control.FormulaBar.js:45
 msgid "cell address"
@@ -729,7 +735,7 @@ msgstr "EPUB (.epub)"
 
 #: src/control/Control.Menubar.js:76
 msgid "Rename Document"
-msgstr "Renomear documento"
+msgstr "Alterar nome do documento"
 
 #: src/control/Control.Menubar.js:77 src/control/Control.Menubar.js:384
 #: src/control/Control.Menubar.js:533 src/control/Control.Menubar.js:663
@@ -1079,32 +1085,32 @@ msgstr "CSV file (.csv)"
 #: src/control/Control.Menubar.js:802
 #: src/control/Control.NotebookbarBuilder.js:808
 msgid "Condition..."
-msgstr ""
+msgstr "Condição..."
 
 #: src/control/Control.Menubar.js:803
 #: src/control/Control.NotebookbarBuilder.js:809
 msgid "Greater than..."
-msgstr ""
+msgstr "Maior que..."
 
 #: src/control/Control.Menubar.js:804
 #: src/control/Control.NotebookbarBuilder.js:810
 msgid "Less than..."
-msgstr ""
+msgstr "Menor que..."
 
 #: src/control/Control.Menubar.js:805
 #: src/control/Control.NotebookbarBuilder.js:811
 msgid "Equal to..."
-msgstr ""
+msgstr "Igual a..."
 
 #: src/control/Control.Menubar.js:806
 #: src/control/Control.NotebookbarBuilder.js:812
 msgid "Between..."
-msgstr ""
+msgstr "Entre..."
 
 #: src/control/Control.Menubar.js:808
 #: src/control/Control.NotebookbarBuilder.js:814
 msgid "More conditions..."
-msgstr ""
+msgstr "Mais condições..."
 
 #: src/control/Control.Menubar.js:916 src/control/Control.Menubar.js:983
 #: src/control/Control.Menubar.js:1048 src/control/Control.Menubar.js:1103
@@ -1326,14 +1332,14 @@ msgstr "Folha de cálculo ODF (.ods)"
 #: src/control/Control.NotebookbarImpress.js:355
 #: src/control/Control.NotebookbarWriter.js:302
 msgid "PDF Document (.pdf) - Expert"
-msgstr "Documento PDF (.pdf) - Especialista"
+msgstr "Documento PDF (.pdf) - avançado"
 
 #: src/control/Control.NotebookbarCalc.js:314
 #: src/control/Control.NotebookbarDraw.js:315
 #: src/control/Control.NotebookbarImpress.js:416
 #: src/control/Control.NotebookbarWriter.js:369
 msgid "Rename"
-msgstr "Renomear"
+msgstr "Alterar nome"
 
 #: src/control/Control.NotebookbarCalc.js:650
 msgid "General"
@@ -1452,7 +1458,7 @@ msgstr "Vista compacta"
 #: src/control/Control.NotebookbarImpress.js:507
 #: src/control/Control.NotebookbarWriter.js:1452
 msgid "Collapse Tabs"
-msgstr "Recolher Abas"
+msgstr "Recolher abas"
 
 #: src/control/Control.NotebookbarCalc.js:1281
 #: src/control/Control.NotebookbarDraw.js:409
@@ -1488,9 +1494,8 @@ msgid "Image (.png)"
 msgstr "Imagem (.png)"
 
 #: src/control/Control.NotebookbarDraw.js:1028
-#, fuzzy
 msgid "Page Layout"
-msgstr "Layout da página"
+msgstr "Esquema da página"
 
 #: src/control/Control.NotebookbarImpress.js:124
 msgid "Master"
@@ -1663,7 +1668,7 @@ msgstr "Definir idioma para todo o texto"
 
 #: src/control/Control.StatusBar.js:569
 msgid "Set Language for Paragraph"
-msgstr "Definir linguagem para Parágrafo"
+msgstr "Definir idioma para parágrafo"
 
 #: src/control/Control.StatusBar.js:570
 msgid "Set Language for Selection"
@@ -1719,7 +1724,7 @@ msgstr ""
 
 #: src/control/Control.TopToolbar.js:98
 msgid "Active Sheet"
-msgstr "Folha Ativa"
+msgstr "Folha ativa"
 
 #: src/control/Control.TopToolbar.js:111
 msgid "Default Style"
@@ -2080,7 +2085,7 @@ msgstr "Aviso de configuração de cluster"
 
 #: src/core/Socket.js:587
 msgid "Wrong server, reconnecting..."
-msgstr "Servidor errado, reconectando..."
+msgstr "Servidor errado, a reconectar..."
 
 #: src/core/Socket.js:594
 msgid "COOLWSD version:"
@@ -2358,11 +2363,11 @@ msgid ""
 "storage and/or copy/paste problems. Expected serverId %0 for routeToken %1 "
 "but connected to serverId %2"
 msgstr ""
-"Seu %productName cluster parece ser mis-configurável ou escalonamento "
-"rapidamente - entre em contato com seu administrador do sistema. Continuando "
-"com a edição pode resultar em vários usuários que não se vêem, conflitos no "
-"armazenamento de documentos e/ou problemas de cópia/paste. Esperado serverId "
-"%0 para routeToken %1 mas ligado a serverId %2"
+"O cluster de %productName parece estar mal configurado ou escalonando "
+"rapidamente - entre em contacto com o administrador do sistema. Se continuar "
+"com a edição pode resultar em vários utilizadores que não se veem, conflitos "
+"no armazenamento de documentos e/ou problemas de copiar/colar. Era esperado "
+"o serverId %0 para o routeToken %1 mas foi conectado ao serverId %2"
 
 #: src/errormessages.js:30
 msgid ""
@@ -2371,6 +2376,11 @@ msgid ""
 "administrator. For more info on proxy configuration please checkout https://"
 "sdk.collaboraonline.com/docs/installation/Proxy_settings.html"
 msgstr ""
+"Ocorreu uma falha ao estabelecer a conexão de soquet ou a conexão de soquet "
+"foi fechada inesperadamente. O proxy reverso pode estar mal configurado, "
+"entre em contacto com o administrador. Para mais informações sobre a "
+"configuração do proxy veja https://sdk.collaboraonline.com/docs/installation/"
+"Proxy_settings.html"
 
 #: src/errormessages.js:33
 msgid "Failed to load document."
@@ -2545,7 +2555,7 @@ msgstr "Cópia a partir do documento desativada"
 
 #: src/map/Clipboard.js:238
 msgid "warning: copy/paste request timed out"
-msgstr "aviso: cópia/paste pedido cronometrado"
+msgstr "aviso: o tempo de espera do pedido de copiar/colar expirou"
 
 #: src/map/Clipboard.js:301
 msgid "Failed to download clipboard, please re-copy"
