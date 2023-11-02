@@ -46,6 +46,28 @@ function logLoadingParameters(fileName, subFolder, noFileCopy, isMultiUser, subs
 	cy.log('Param - noRename: ' + noRename);
 }
 
+function applog() {
+	cy.window().then(win => {
+		cy.log('applog - start');
+		var container = win['0'];
+		cy.log('applog: container: ' + container);
+		cy.log('applog: typeof cylog: ' + typeof container._cylog);
+		if (container && container._cylog) {
+			var cylog = container._cylog;
+			cy.log('applog: cylog.length: ' + cylog.length);
+			while (cylog.length > 0) {
+				cy.log(cylog.shift());
+			}
+		}
+		cy.log('applog - end');
+	});
+}
+
+function makeTestFail() {
+	cy.log('makeTestFail');
+	cy.window().should('have.attr', 'xyz');
+}
+
 function generateDocumentURL() {
 	var URI = '';
 	if (Cypress.env('INTEGRATION') === 'php-proxy') {
@@ -394,6 +416,8 @@ function checkIfDocIsLoaded(isMultiUser) {
 		cy.frameLoaded('#coolframe');
 		checkCoolFrameGlobal();
 		cy.cSetActiveFrame('#coolframe');
+		cy.wait(1000);
+		applog();
 		documentChecks();
 	}
 
@@ -1267,3 +1291,5 @@ module.exports.getCoolFrameWindow = getCoolFrameWindow;
 module.exports.loadTestDocNoIntegration = loadTestDocNoIntegration;
 module.exports.getBlinkingCursorPosition = getBlinkingCursorPosition;
 module.exports.clickAt = clickAt;
+module.exports.applog = applog;
+module.exports.makeTestFail = makeTestFail;

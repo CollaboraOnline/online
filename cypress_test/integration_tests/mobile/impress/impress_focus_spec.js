@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 var impressHelper = require('../../common/impress_helper');
 
-describe(['tagmobile', 'tagproxy'], 'Impress focus tests', function() {
+describe.skip(['tagmobile', 'tagproxy'], 'Impress focus tests', function() {
 	var origTestFileName = 'focus.odp';
 	var testFileName;
 

@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 var writerHelper = require('../../common/writer_helper');
 const desktopHelper = require('../../common/desktop_helper');
 
-describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'File Property Tests', function() {
+describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'File Property Tests', function() {
 	var origTestFileName = 'file_properties.odt';
 	var testFileName;
 

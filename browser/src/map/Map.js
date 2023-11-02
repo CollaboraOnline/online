@@ -3,7 +3,7 @@
  * L.Map is the central class of the API - it is used to create a map.
  */
 
-/* global app _ Cursor */
+/* global app _ applog Cursor */
 
 L.Map = L.Evented.extend({
 
@@ -321,6 +321,7 @@ L.Map = L.Evented.extend({
 		var hasAccessibilitySupport = window.enableAccessibility && this._accessibilityState;
 		hasAccessibilitySupport = hasAccessibilitySupport &&
 			(docType === 'text' || docType === 'presentation'|| docType === 'spreadsheet');
+		applog('', 'initTextInput: hasAccessibilitySupport: ' + hasAccessibilitySupport);
 		this._textInput = hasAccessibilitySupport ? L.a11yTextInput() : L.textInput();
 		this.addLayer(this._textInput);
 	},

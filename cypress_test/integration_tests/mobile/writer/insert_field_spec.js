@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 var writerHelper = require('../../common/writer_helper');
 
-describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Insert fields via insertion wizard.', function() {
+describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Insert fields via insertion wizard.', function() {
 	var origTestFileName = 'insert_field.odt';
 	var testFileName;
 

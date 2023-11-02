@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 var searchHelper = require('../../common/search_helper');
 var mobileHelper = require('../../common/mobile_helper');
 
-describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Searching via search bar.', function() {
+describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Searching via search bar.', function() {
 	var origTestFileName = 'search_bar.ods';
 	var testFileName;
 

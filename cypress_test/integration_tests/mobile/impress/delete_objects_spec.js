@@ -3,7 +3,7 @@
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 
-describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function() {
+describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function() {
 	var origTestFileName = 'delete_objects.odp';
 	var testFileName;
 

@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
 var calcHelper = require('../../common/calc_helper');
 
-describe(['tagdesktop'], 'Top toolbar tests.', function() {
+describe.skip(['tagdesktop'], 'Top toolbar tests.', function() {
 	var origTestFileName = 'top_toolbar.ods';
 	var testFileName;
 

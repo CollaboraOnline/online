@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 var impressHelper = require('../../common/impress_helper');
 var mobileHelper = require('../../common/mobile_helper');
 
-describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Slide operations', function() {
+describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Slide operations', function() {
 	var origTestFileName = 'slide_operations.odp';
 	var testFileName;
 

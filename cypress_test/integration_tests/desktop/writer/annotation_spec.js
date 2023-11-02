@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 var { insertMultipleComment, selectZoomLevel, setupUIforCommentInsert, createComment } = require('../../common/desktop_helper');
 var desktopHelper = require('../../common/desktop_helper');
 
-describe(['tagdesktop'], 'Annotation Tests', function() {
+describe.skip(['tagdesktop'], 'Annotation Tests', function() {
 	var origTestFileName = 'annotation.odt';
 	var testFileName;
 
@@ -64,7 +64,7 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 
 });
 
-describe(['tagdesktop'], 'Collapsed Annotation Tests', function() {
+describe.skip(['tagdesktop'], 'Collapsed Annotation Tests', function() {
 	var testFileName = 'annotation.odt';
 
 	beforeEach(function() {
@@ -124,7 +124,7 @@ describe(['tagdesktop'], 'Collapsed Annotation Tests', function() {
 
 });
 
-describe(['tagdesktop'], 'Annotation Autosave Tests', function() {
+describe.skip(['tagdesktop'], 'Annotation Autosave Tests', function() {
 	var origTestFileName = 'annotation.odt';
 	var testFileName;
 

@@ -3,7 +3,7 @@
  * L.Socket contains methods for the communication with the server
  */
 
-/* global app _ $ errorMessages Uint8Array brandProductName */
+/* global app applog _ $ errorMessages Uint8Array brandProductName */
 
 app.definitions.Socket = L.Class.extend({
 	ProtocolVersionNumber: '0.1',
@@ -28,6 +28,7 @@ app.definitions.Socket = L.Class.extend({
 
 	initialize: function (map) {
 		window.app.console.debug('socket.initialize:');
+		applog('','socket.initialize.');
 		this._map = map;
 		this._msgQueue = [];
 		this._delayedMessages = [];

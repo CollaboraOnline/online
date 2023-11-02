@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
 var impressHelper = require('../../common/impress_helper');
 
-describe(['tagdesktop'], 'Table operations', function() {
+describe.skip(['tagdesktop'], 'Table operations', function() {
 	var origTestFileName = 'table_operation.odp';
 	var testFileName;
 

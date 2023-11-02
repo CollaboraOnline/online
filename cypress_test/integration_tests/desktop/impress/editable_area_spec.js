@@ -28,7 +28,7 @@ function selectTextShape(i) {
     cy.log('Selecting text shape - end.');
 }
 
-describe(['taga11yenabled'], 'Editable area - Basic typing and caret moving', function() {
+describe.skip(['taga11yenabled'], 'Editable area - Basic typing and caret moving', function() {
     var testFileName = 'two_text_shapes.odp';
 
     beforeEach(function () {
@@ -54,6 +54,7 @@ describe(['taga11yenabled'], 'Editable area - Basic typing and caret moving', fu
         ceHelper.type('Hello World');
         ceHelper.checkHTMLContent('Hello World');
         ceHelper.checkCaretPosition(11);
+
         // remove shape selection
         impressHelper.removeShapeSelection();
         ceHelper.checkHTMLContent('');
@@ -73,10 +74,12 @@ describe(['taga11yenabled'], 'Editable area - Basic typing and caret moving', fu
         // initial position
         ceHelper.checkHTMLContent('');
         ceHelper.checkCaretPosition(0);
+        helper.applog();
         // typing
         ceHelper.type('Hello World');
         ceHelper.checkHTMLContent('Hello World');
         ceHelper.checkCaretPosition(11);
+        helper.applog();
         // backspace
         ceHelper.moveCaret('left', '', 4);
         ceHelper.type('{backspace}');

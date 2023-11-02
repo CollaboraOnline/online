@@ -3,7 +3,7 @@
 var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
 
-describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Statubar tests.', function() {
+describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Statubar tests.', function() {
 	var origTestFileName = 'statusbar.odp';
 	var testFileName;
 

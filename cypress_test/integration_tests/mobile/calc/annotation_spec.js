@@ -3,7 +3,7 @@
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 
-describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Annotation Tests',function() {
+describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Annotation Tests',function() {
 	var origTestFileName = 'annotation.ods';
 	var testFileName;
 

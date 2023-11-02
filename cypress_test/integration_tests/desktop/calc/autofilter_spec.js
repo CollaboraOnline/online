@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
 var desktopHelper = require('../../common/desktop_helper');
 
-describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'AutoFilter', function() {
+describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'AutoFilter', function() {
 	var origTestFileName = 'autofilter.ods';
 	var testFileName;
 

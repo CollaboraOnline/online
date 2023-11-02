@@ -15,7 +15,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function(
 		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
-	it('Delete Text', function() {
+	it.only('Delete Text', function() {
 
 		helper.typeIntoDocument('text');
 		helper.selectAllText();

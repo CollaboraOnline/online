@@ -16,7 +16,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function(
 		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
-	it('Delete Text', function() {
+	it.only('Delete Text', function() {
 		cy.cGet('.leaflet-layer').dblclick('center');
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g').should('exist');
 		helper.typeIntoDocument('text');

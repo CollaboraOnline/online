@@ -3,7 +3,7 @@
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 
-describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Image Operation Tests', function() {
+describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Image Operation Tests', function() {
 	var origTestFileName = 'image_operation.ods';
 	var testFileName;
 

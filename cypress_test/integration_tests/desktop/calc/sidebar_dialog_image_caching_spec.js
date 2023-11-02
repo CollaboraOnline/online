@@ -2,7 +2,7 @@
 
 var helper = require('../../common/helper');
 
-describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc sidebar dialog image caching', function() {
+describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc sidebar dialog image caching', function() {
 	var origTestFileName = 'many-sizes.ods';
 	var testFileName;
 

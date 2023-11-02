@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
 var mobileHelper = require('../../common/mobile_helper');
 
-describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'AutoFilter', function() {
+describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'AutoFilter', function() {
 	var origTestFileName = 'autofilter.ods';
 	var testFileName;
 

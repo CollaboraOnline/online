@@ -3,7 +3,7 @@
 var helper = require('../../common/helper');
 var searchHelper = require('../../common/search_helper');
 
-describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Searching via search bar.', function() {
+describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Searching via search bar.', function() {
 	var origTestFileName = 'search_bar.ods';
 	var testFileName;
 

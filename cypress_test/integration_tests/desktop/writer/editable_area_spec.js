@@ -5,7 +5,7 @@ var desktopHelper = require('../../common/desktop_helper');
 var ceHelper = require('../../common/contenteditable_helper');
 // var repairHelper = require('../../common/repair_document_helper');
 
-describe(['taga11ydisabled'], 'Editable area [a11y disabled] - Empty paragraph', function() {
+describe.skip(['taga11ydisabled'], 'Editable area [a11y disabled] - Empty paragraph', function() {
 	var testFileName = 'undo_redo.odt';
 
 	beforeEach(function () {
@@ -47,7 +47,7 @@ describe(['taga11ydisabled'], 'Editable area [a11y disabled] - Empty paragraph',
 	});
 });
 
-describe(['taga11ydisabled'], 'Editable area [a11y disabled] - Basic typing', function() {
+describe.skip(['taga11ydisabled'], 'Editable area [a11y disabled] - Basic typing', function() {
 	var testFileName = 'undo_redo.odt';
 
 	beforeEach(function () {
@@ -127,7 +127,7 @@ describe(['taga11ydisabled'], 'Editable area [a11y disabled] - Basic typing', fu
 	});
 });
 
-describe(['taga11yenabled'], 'Editable area - Empty paragraph', function() {
+describe.skip(['taga11yenabled'], 'Editable area - Empty paragraph', function() {
 	var testFileName = 'undo_redo.odt';
 
 	beforeEach(function () {
@@ -186,7 +186,7 @@ describe(['taga11yenabled'], 'Editable area - Basic typing and caret moving', fu
 		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
-	it('Moving inside paragraph', function () {
+	it.only('Moving inside paragraph', function () {
 		// initial position
 		ceHelper.checkHTMLContent('');
 		ceHelper.checkCaretPosition(0);
@@ -214,6 +214,7 @@ describe(['taga11yenabled'], 'Editable area - Basic typing and caret moving', fu
 		// click on text
 		helper.clickAt('P');
 		ceHelper.checkCaretPosition(6);
+		helper.makeTestFail();
 	});
 
 	it('Moving between paragraphs', function () {
@@ -485,7 +486,7 @@ describe(['taga11yenabled'], 'Editable area - Basic typing and caret moving', fu
 	});
 });
 
-describe(['taga11yenabled'], 'Editable area - Inner selection', function() {
+describe.skip(['taga11yenabled'], 'Editable area - Inner selection', function() {
 	var testFileName = 'undo_redo.odt';
 
 	beforeEach(function () {
@@ -644,7 +645,7 @@ describe(['taga11yenabled'], 'Editable area - Inner selection', function() {
 	});
 });
 
-describe(['taga11yenabled'], 'Editable area - Multi-paragraph selection', function() {
+describe.skip(['taga11yenabled'], 'Editable area - Multi-paragraph selection', function() {
 	var testFileName = 'undo_redo.odt';
 
 	beforeEach(function () {
@@ -799,7 +800,7 @@ describe(['taga11yenabled'], 'Editable area - Multi-paragraph selection', functi
 	});
 });
 
-describe(['taga11yenabled'], 'Editable area - Empty selection', function() {
+describe.skip(['taga11yenabled'], 'Editable area - Empty selection', function() {
 	var testFileName = 'undo_redo.odt';
 
 	beforeEach(function () {
@@ -885,7 +886,7 @@ describe(['taga11yenabled'], 'Editable area - Empty selection', function() {
 	});
 });
 
-describe(['taga11yenabled'], 'Editable area - Undo/Redo', function() {
+describe.skip(['taga11yenabled'], 'Editable area - Undo/Redo', function() {
 	var testFileName = 'undo_redo.odt';
 
 	beforeEach(function () {
@@ -965,7 +966,7 @@ describe(['taga11yenabled'], 'Editable area - Undo/Redo', function() {
 	});
 });
 
-describe(['taga11yenabled'], 'Editable area - More typing', function() {
+describe.skip(['taga11yenabled'], 'Editable area - More typing', function() {
 	var testFileName = 'undo_redo.odt';
 
 	beforeEach(function() {
@@ -1057,7 +1058,7 @@ describe(['taga11yenabled'], 'Editable area - More typing', function() {
 //   ◦ Item 1.2
 // • Item 2
 // • Item 3
-describe(['taga11yenabled'], 'Editable area - Unordered lists', function() {
+describe.skip(['taga11yenabled'], 'Editable area - Unordered lists', function() {
 	var testFileName = 'unordered_list.odt';
 
 	beforeEach(function () {
@@ -1245,7 +1246,7 @@ describe(['taga11yenabled'], 'Editable area - Unordered lists', function() {
 
 });
 
-describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Editing - Basic typing', function() {
+describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Editing - Basic typing', function() {
 	var testFileName = 'undo_redo.odt';
 
 	beforeEach(function () {

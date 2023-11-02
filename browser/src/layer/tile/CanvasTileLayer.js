@@ -3,7 +3,7 @@
  * L.CanvasTileLayer is a layer with canvas based rendering.
  */
 
-/* global app L CanvasSectionContainer CanvasOverlay CDarkOverlay CSplitterLine CStyleData $ _ CPointSet CPolyUtil CPolygon Cursor CCellCursor CCellSelection PathGroupType UNOKey UNOModifier Uint8ClampedArray Uint8Array Uint32Array */
+/* global app applog L CanvasSectionContainer CanvasOverlay CDarkOverlay CSplitterLine CStyleData $ _ CPointSet CPolyUtil CPolygon Cursor CCellCursor CCellSelection PathGroupType UNOKey UNOModifier Uint8ClampedArray Uint8Array Uint32Array */
 
 /*eslint no-extend-native:0*/
 if (typeof String.prototype.startsWith !== 'function') {
@@ -1915,6 +1915,10 @@ L.CanvasTileLayer = L.Layer.extend({
 			var json = JSON.parse(textMsg.substring('colorpalettes:'.length + 1));
 			app.colorPalettes['ThemeColors'].colors = json.ThemeColors;
 		}
+		else if (textMsg.startsWith('corelog:')) {
+			var msg = textMsg.substring('corelog:'.length + 1);
+			applog('corelog', msg);
+		}
 	},
 
 	_onTabStopListUpdate: function (textMsg) {
@@ -2147,7 +2151,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	_onErrorMsg: function (textMsg) {
 		var command = app.socket.parseServerCmd(textMsg);
-
+		applog('_onErrorMsg: textMsg: ' + textMsg);
 		// let's provide some convenience error codes for the UI
 		var errorId = 1; // internal error
 		if (command.errorCmd === 'load') {
@@ -2958,6 +2962,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_onViewInfoMsg: function(textMsg) {
+		applog('', textMsg);
 		textMsg = textMsg.substring('viewinfo: '.length);
 		var viewInfo = JSON.parse(textMsg);
 		this._map.fire('viewinfo', viewInfo);

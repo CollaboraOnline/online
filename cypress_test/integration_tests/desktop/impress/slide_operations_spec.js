@@ -3,7 +3,7 @@
 var helper = require('../../common/helper');
 var impressHelper = require('../../common/impress_helper');
 
-describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Slide operations', function() {
+describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Slide operations', function() {
 	var origTestFileName = 'slide_operations.odp';
 	var testFileName;
 

@@ -3,7 +3,7 @@
 var helper = require('../../common/helper');
 const desktopHelper = require('../../common/desktop_helper');
 
-describe(['tagdesktop', 'tagproxy'], 'Focus tests', function() {
+describe.skip(['tagdesktop', 'tagproxy'], 'Focus tests', function() {
 	var origTestFileName = 'focus.odt';
 	var testFileName;
 

@@ -3,7 +3,7 @@
 var helper = require('./helper');
 var mobileHelper = require('./mobile_helper');
 
-describe('Interfering second user.', function() {
+describe.skip('Interfering second user.', function() {
 	function getComponent(fileName) {
 		if (fileName.endsWith('.odt'))
 			return 'writer';

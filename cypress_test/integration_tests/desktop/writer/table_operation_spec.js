@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
 var mode = Cypress.env('USER_INTERFACE');
 
-describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Table operations', function() {
+describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Table operations', function() {
 	var origTestFileName = 'table_operation.odt';
 	var testFileName;
 

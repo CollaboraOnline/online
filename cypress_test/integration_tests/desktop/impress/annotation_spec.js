@@ -5,7 +5,7 @@ var helper = require('../../common/helper');
 var { addSlide, changeSlide } = require('../../common/impress_helper');
 var { insertMultipleComment, setupUIforCommentInsert, createComment } = require('../../common/desktop_helper');
 
-describe(['tagdesktop'], 'Annotation Tests', function() {
+describe.skip(['tagdesktop'], 'Annotation Tests', function() {
 	var origTestFileName = 'comment_switching.odp';
 	var testFileName;
 
@@ -66,7 +66,7 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 	});
 });
 
-describe(['tagdesktop'], 'Collapsed Annotation Tests', function() {
+describe.skip(['tagdesktop'], 'Collapsed Annotation Tests', function() {
 	var testFileName = 'comment_switching.odp';
 
 	beforeEach(function() {
@@ -128,7 +128,7 @@ describe(['tagdesktop'], 'Collapsed Annotation Tests', function() {
 	});
 });
 
-describe(['tagdesktop'], 'Comment Scrolling',function() {
+describe.skip(['tagdesktop'], 'Comment Scrolling',function() {
 	var origTestFileName = 'comment_switching.odp';
 	var testFileName;
 

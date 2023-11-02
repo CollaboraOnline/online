@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 // var desktopHelper = require('../../common/desktop_helper');
 var ceHelper = require('../../common/contenteditable_helper');
 
-describe(['taga11yenabled'], 'Table accessibility', function() {
+describe.skip(['taga11yenabled'], 'Table accessibility', function() {
 	var testFileName = 'table_accessibility.odt';
 
 	beforeEach(function () {

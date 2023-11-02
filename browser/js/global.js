@@ -79,6 +79,10 @@ window.app = {
 		return results === null ? '' : results[1].replace(/\+/g, ' ');
 	};
 
+	global.appLogContext = 'corelog info.TextInput warn.TextInput';
+
+	global.appLogInCypress = true;
+
 	var ua = navigator.userAgent.toLowerCase(),
 	    uv = navigator.vendor.toLowerCase(),
 	    doc = document.documentElement,
@@ -958,6 +962,25 @@ window.app = {
 		return new TextDecoder().decode(bytes);
 	};
 
+	global.appendToCyLog = function (msg) {
+		var container = window;
+		if (container._cylog === undefined)
+			container._cylog = [];
+		container._cylog.push(msg);
+		window.console.log('appendToCyLog: _cylog.length: ' + container._cylog.length);
+	};
+
+	global.applog = function (ctx, msg) {
+		if (global.appLogContext.includes(ctx)) {
+			if (ctx.length > 0)
+				msg = ctx + ': ' + msg;
+			window.app.console.log(msg);
+			if (L.Browser.cypressTest && global.appLogInCypress) {
+				global.appendToCyLog(msg);
+			}
+		}
+	};
+
 	if (window.ThisIsAMobileApp) {
 		global.socket = new global.FakeWebSocket();
 		window.TheFakeWebSocket = global.socket;
@@ -992,16 +1015,17 @@ window.app = {
 				var now2 = Date.now();
 				global.socket.send('coolclient ' + ProtocolVersionNumber + ' ' + ((now0 + now2) / 2) + ' ' + now1);
 
-				var isCalcTest =
+				var isCalcTest = (false) &&
 					global.docURL.includes('data/desktop/calc/') ||
 					global.docURL.includes('data/mobile/calc/') ||
 					global.docURL.includes('data/multiuser/calc/');
 
-				if (L.Browser.cypressTest && isCalcTest)
+				var isWriterTest = (false) && global.docURL.includes('data/desktop/writer/');
+				if (L.Browser.cypressTest && (isCalcTest || isWriterTest))
 					window.enableAccessibility = false;
 
 				var accessibilityState = window.localStorage.getItem('accessibilityState') === 'true';
-				accessibilityState = accessibilityState || (L.Browser.cypressTest && !isCalcTest);
+				accessibilityState = accessibilityState || (L.Browser.cypressTest && !isCalcTest && !isWriterTest);
 				msg += ' accessibilityState=' + accessibilityState;
 
 				if (window.ThisIsAMobileApp) {

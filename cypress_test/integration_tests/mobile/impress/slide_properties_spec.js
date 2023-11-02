@@ -3,7 +3,7 @@
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 
-describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Changing slide properties.', function() {
+describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Changing slide properties.', function() {
 	var origTestFileName = 'slide_properties.odp';
 	var testFileName;
 

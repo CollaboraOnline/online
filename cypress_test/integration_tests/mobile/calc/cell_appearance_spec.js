@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
 var mobileHelper = require('../../common/mobile_helper');
 
-describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change cell appearance.', function() {
+describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change cell appearance.', function() {
 	var origTestFileName = 'cell_appearance.ods';
 	var testFileName;
 

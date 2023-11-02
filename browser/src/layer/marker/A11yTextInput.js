@@ -87,7 +87,7 @@ L.A11yTextInput = L.TextInput.extend({
 	} ,
 
 	_updateSelection: function(pos, start, end, forced) {
-		window.app.console.log('_updateSelection: pos: ' + pos + ', start: ' + start + ', end: ' + end);
+		this._log('_updateSelection: pos: ' + pos + ', start: ' + start + ', end: ' + end);
 		if (typeof pos !== 'number' || typeof start !== 'number' || typeof end !== 'number')
 			return;
 
@@ -115,7 +115,7 @@ L.A11yTextInput = L.TextInput.extend({
 	},
 
 	_setFocusedParagraph: function(content, pos, start, end) {
-		window.app.console.log('_setFocusedParagraph:'
+		this._log('_setFocusedParagraph:'
 			+ '\n    content "' + content + '"'
 			+ '\n    pos: ' + pos
 			+ '\n    start: ' + start + ', end: ' + end);
@@ -148,7 +148,7 @@ L.A11yTextInput = L.TextInput.extend({
 	onAccessibilityFocusChanged: function(content, pos, start, end, listPrefixLength, force) {
 		this._listPrefixLength = listPrefixLength;
 		if (!this.hasFocus() || (this._isComposing && !force)) {
-			this._log('onAccessibilityFocusChanged: skipped updating: '
+			this._warn('onAccessibilityFocusChanged: skipped updating: '
 				+ '\n  hasFocus: ' + this.hasFocus()
 				+ '\n  _isComposing: ' + this._isComposing
 				+ '\n  force: ' + force);
@@ -157,6 +157,7 @@ L.A11yTextInput = L.TextInput.extend({
 			this._remoteSelectionStart = start;
 			this._remoteSelectionEnd = end;
 		} else {
+			this._log('onAccessibilityFocusChanged: content: "' + content + '"');
 			this._setFocusedParagraph(content, pos, start, end);
 		}
 	},
@@ -170,7 +171,7 @@ L.A11yTextInput = L.TextInput.extend({
 			'    position: ' + nPos + '\n' +
 			'    _isComposing: ' + this._isComposing);
 		if (this._isLeftRightArrow || !this.hasFocus() || this._isComposing) {
-			this._log('onAccessibilityCaretChanged: skip updating');
+			this._warn('onAccessibilityCaretChanged: skip updating');
 			this._remotePosition = nPos;
 		}
 		else if (!this._hasFormulaBarFocus()) {
@@ -348,7 +349,7 @@ L.A11yTextInput = L.TextInput.extend({
 		if (L.Browser.gecko && (!this._hasSelection || this._isLastSelectionEmpty()) &&
 			this._getLastCursorPosition() === this.getPlainTextContent().length &&
 			this._deleteHint === 'delete') {
-			window.app.console.log('Sending delete');
+			this._log('Sending delete');
 			this._removeEmptySelectionIfAny();
 			this._removeTextContent(0, 1);
 		}
@@ -397,7 +398,7 @@ L.A11yTextInput = L.TextInput.extend({
 		app.idleHandler.notifyActive();
 
 		if (this._ignoreInputCount > 0) {
-			window.app.console.log('ignoring synthetic input ' + this._ignoreInputCount);
+			this._warn('ignoring synthetic input ' + this._ignoreInputCount);
 			return;
 		}
 
@@ -419,7 +420,7 @@ L.A11yTextInput = L.TextInput.extend({
 		// We use a different leading and terminal space character
 		// to differentiate backspace from delete, then replace the character.
 		if (!this._hasPreSpace()) { // missing initial space
-			window.app.console.log('Sending backspace');
+			this._log('Sending backspace');
 			if (!ignoreBackspace) {
 				this._removeEmptySelectionIfAny();
 				this._removeTextContent(1, 0);
@@ -432,7 +433,7 @@ L.A11yTextInput = L.TextInput.extend({
 			return;
 		}
 		if (!this._hasPostSpace()) { // missing trailing space.
-			window.app.console.log('Sending delete');
+			this._log('Sending delete');
 			this._removeTextContent(0, this._hasSelection && this._isLastSelectionEmpty() ? 2 : 1);
 			this._appendSpace();
 			var pos = this._getLastCursorPosition();
@@ -470,7 +471,7 @@ L.A11yTextInput = L.TextInput.extend({
 		var lastContentEnd = this._lastContent.length - guessedBackMatchTo;
 		var lastContent = this._lastContent.slice(0, lastContentEnd);
 
-		window.app.console.log('_onInput: cursorPosition: ' + cursorPosition + ', lastContentEnd: ' + lastContentEnd);
+		this._log('_onInput: cursorPosition: ' + cursorPosition + ', lastContentEnd: ' + lastContentEnd);
 
 		var matchTo = 0;
 		var compareUpTo = Math.min(content.length, lastContent.length);
@@ -483,7 +484,7 @@ L.A11yTextInput = L.TextInput.extend({
 		while (matchTo < compareUpTo && content[matchTo] === lastContent[matchTo])
 			matchTo++;
 
-		window.app.console.log('Comparison matchAt ' + matchTo + '\n' +
+		this._log('Comparison matchAt ' + matchTo + '\n' +
 			'\tnew "' + this.codePointsToString(content) + '" (' + content.length + ')' + '\n' +
 			'\told "' + this.codePointsToString(lastContent) + '" (' + lastContent.length + ')');
 
@@ -544,7 +545,7 @@ L.A11yTextInput = L.TextInput.extend({
 		var head = this._lastContent.slice(0, matchTo);
 		var tail = this._lastContent.slice(lastContentEnd);
 		this._lastContent = head.concat(newText, tail);
-		window.app.console.log('_onInput: \n'
+		this._log('_onInput: \n'
 			+ 'head: "' + this.codePointsToString(head) + '"\n'
 			+ 'newText: "' + this.codePointsToString(newText) + '"\n'
 			+ 'tail: "' + this.codePointsToString(tail) + '"');

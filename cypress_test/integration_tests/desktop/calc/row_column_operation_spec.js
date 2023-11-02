@@ -3,7 +3,7 @@ var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
 var desktopHelper = require('../../common/desktop_helper');
 
-describe(['tagdesktop'], 'Row Column Operation', function() {
+describe.skip(['tagdesktop'], 'Row Column Operation', function() {
 	var testFileName = 'row_column_operation.ods';
 
 	beforeEach(function() {

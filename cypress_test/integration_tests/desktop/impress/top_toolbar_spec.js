@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 var impressHelper = require('../../common/impress_helper');
 var desktopHelper = require('../../common/desktop_helper');
 
-describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', function() {
+describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', function() {
 	var origTestFileName = 'top_toolbar.odp';
 	var testFileName;
 

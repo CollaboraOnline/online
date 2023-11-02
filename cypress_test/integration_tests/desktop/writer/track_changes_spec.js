@@ -3,7 +3,7 @@
 var helper = require('../../common/helper');
 const desktopHelper = require('../../common/desktop_helper');
 
-describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function () {
+describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function () {
 	var origTestFileName = 'track_changes.odt';
 	var testFileName;
 

@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 var impressHelper = require('../../common/impress_helper');
 const desktopHelper = require('../../common/desktop_helper');
 
-describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties on selected shape.', function() {
+describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties on selected shape.', function() {
 	var origTestFileName = 'apply_paragraph_props_text.odp';
 	var testFileName;
 

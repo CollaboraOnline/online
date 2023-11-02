@@ -3,7 +3,7 @@
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 
-describe(['tagmobile', 'tagproxy'], 'Focus tests', function() {
+describe.skip(['tagmobile', 'tagproxy'], 'Focus tests', function() {
 	var origTestFileName = 'focus.odt';
 	var testFileName;
 

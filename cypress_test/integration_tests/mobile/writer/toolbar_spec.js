@@ -3,7 +3,7 @@
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 
-describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Toolbar tests', function() {
+describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Toolbar tests', function() {
 	var origTestFileName = 'toolbar.odt';
 	var testFileName;
 

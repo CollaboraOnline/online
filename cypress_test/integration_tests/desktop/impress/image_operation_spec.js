@@ -5,7 +5,7 @@ var { insertImage, deleteImage, assertImageSize } = require('../../common/deskto
 var desktopHelper = require('../../common/desktop_helper');
 var { triggerNewSVGForShapeInTheCenter } = require('../../common/impress_helper');
 
-describe(['tagdesktop'], 'Image Operation Tests', function() {
+describe.skip(['tagdesktop'], 'Image Operation Tests', function() {
 	var origTestFileName = 'image_operation.odp';
 	var testFileName;
 

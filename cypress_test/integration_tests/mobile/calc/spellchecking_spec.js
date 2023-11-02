@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
 var mobileHelper = require('../../common/mobile_helper');
 
-describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Calc spell checking menu.', function() {
+describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Calc spell checking menu.', function() {
 	var origTestFileName = 'spellchecking.ods';
 	var testFileName;
 

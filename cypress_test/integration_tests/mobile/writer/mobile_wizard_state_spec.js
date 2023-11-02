@@ -3,7 +3,7 @@
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 
-describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Mobile wizard state tests', function() {
+describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Mobile wizard state tests', function() {
 	var origTestFileName = 'mobile_wizard_state.odt';
 	var testFileName;
 

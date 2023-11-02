@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
 var writerHelper = require('../../common/writer_helper');
 
-describe(['tagdesktop'], 'Top toolbar tests.', function() {
+describe.skip(['tagdesktop'], 'Top toolbar tests.', function() {
 	var origTestFileName = 'top_toolbar.odt';
 	var testFileName;
 

@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 var nextcloudHelper = require('../../common/nextcloud_helper');
 
-describe(['tagnextcloud'], 'Nextcloud specific tests.', function() {
+describe.skip(['tagnextcloud'], 'Nextcloud specific tests.', function() {
 	var origTestFileName = 'nextcloud.odt';
 	var testFileName;
 

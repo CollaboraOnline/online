@@ -3,7 +3,7 @@
  * Toolbar handler
  */
 
-/* global app $ window sanitizeUrl brandProductName brandProductURL _ w2ui */
+/* global app applog $ window sanitizeUrl brandProductName brandProductURL _ w2ui */
 L.Map.include({
 
 	// a mapping of uno commands to more readable toolbar items
@@ -920,6 +920,7 @@ L.Map.include({
 	},
 
 	setAccessibilityState: function(enable) {
+		applog('', 'setAccessibilityState: enable: ' + enable);
 		if (this._accessibilityState === enable)
 			return;
 		this._accessibilityState = enable;

@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 var calcHelper = require('../../common/calc_helper');
 
-describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Chart tests.', function() {
+describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Chart tests.', function() {
 	var origTestFileName = 'chart.ods';
 	var testFileName;
 

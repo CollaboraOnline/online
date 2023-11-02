@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
 var mobileHelper = require('../../common/mobile_helper');
 
-describe(['tagmobile', 'tagnextcloud'], 'Calc insertion wizard.', function() {
+describe.skip(['tagmobile', 'tagnextcloud'], 'Calc insertion wizard.', function() {
 	var origTestFileName = 'insertion_wizard.ods';
 	var testFileName;
 

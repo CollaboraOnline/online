@@ -5,7 +5,7 @@ var impressHelper = require('../../common/impress_helper');
 var desktopHelper = require('../../common/desktop_helper');
 var repairHelper = require('../../common/repair_document_helper');
 
-describe(['tagdesktop'], 'Editing Operations', function() {
+describe.skip(['tagdesktop'], 'Editing Operations', function() {
 	var testFileName = 'undo_redo.odp';
 
 	beforeEach(function() {

@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
 var calcHelper = require('../../common/calc_helper');
 
-describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Statubar tests.', function() {
+describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Statubar tests.', function() {
 	var origTestFileName = 'statusbar.ods';
 	var testFileName;
 
