@@ -1535,15 +1535,15 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	padding: 2px 8px;
 }
 
-#mobile-wizard.popup.snackbar #button,
-.snackbar.jsdialog-container #button.ui-pushbutton.jsdialog {
+#mobile-wizard.popup.snackbar [id$='button'],
+.snackbar.jsdialog-container [id$='button'].ui-pushbutton.jsdialog {
 	padding-right: 12px;
 	background-color: transparent !important;
 	border: none !important;
 	margin: 0 !important;
 }
 
-.snackbar.jsdialog-container #button.ui-pushbutton.jsdialog {
+.snackbar.jsdialog-container [id$='button'].ui-pushbutton.jsdialog {
 	padding: 8px;
 }
 
@@ -1557,14 +1557,14 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	grid-template-columns: repeat(2, auto);
 }
 
-#mobile-wizard.popup.snackbar #button,
-.snackbar.jsdialog-container #button {
+#mobile-wizard.popup.snackbar [id$='button'],
+.snackbar.jsdialog-container [id$='button'] {
 	color: #469cff !important;
 	font-weight: 600;
 	font-size: var(--header-font-size) !important;
 	padding: 8px;
 }
-.snackbar.jsdialog-container #button:hover {
+.snackbar.jsdialog-container [id$='button']:hover {
 	background-color: #ffffff15 !important;
 }
 
