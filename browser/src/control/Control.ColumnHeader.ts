@@ -143,8 +143,6 @@ export class ColumnHeader extends Header {
 		this.context.strokeStyle = this._borderColor;
 		this.context.lineWidth = app.dpiScale;
 		this.context.strokeRect(startX - 0.5, 0.5, entry.size, this.size[1]);
-
-        this._map._contextMenu.stopRightMouseUpEvent();
 	}
 
 	getHeaderEntryBoundingClientRect (index: number): Partial<DOMRect> {
