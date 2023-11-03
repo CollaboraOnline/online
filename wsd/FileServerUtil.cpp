@@ -74,6 +74,11 @@ std::string FileServerRequestHandler::uiDefaultsToJSON(const std::string& uiDefa
             }
             continue;
         }
+        if (keyValue.equals(0, "OnscreenKeyboardHint"))
+        {
+            json.set("onscreenKeyboardHint", keyValue.equals(1, "true"));
+            continue;
+        }
         else if (keyValue.startsWith(0, "Text"))
         {
             currentDef = &textDefs;
