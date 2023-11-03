@@ -953,7 +953,11 @@ window.app = {
 	}
 
 	var lang = encodeURIComponent(global.getParameterByName('lang'));
-	window.langParam = lang;
+	if (lang)
+		window.langParam = lang;
+	else
+		window.langParam = 'en-US';
+	window.langParamLocale = new Intl.Locale(window.langParam);
 	global.queueMsg = [];
 	if (window.ThisIsTheEmscriptenApp)
 		// Temporary hack

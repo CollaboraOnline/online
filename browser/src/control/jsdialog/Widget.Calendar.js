@@ -24,7 +24,7 @@ function _calendarControl(parentContainer, data, builder) {
 	var container = L.DomUtil.create('div', 'ui-calendar ' + builder.options.cssClass, parentContainer);
 	container.id = data.id;
 
-	$.datepicker.setDefaults($.datepicker.regional[window.langParam]);
+	$.datepicker.setDefaults($.datepicker.regional[window.langParamLocale.language]);
 	$(container).datepicker({
 		defaultDate: new Date(data.year, data.month - 1, data.day),
 		dateFormat: 'mm/dd/yy',
