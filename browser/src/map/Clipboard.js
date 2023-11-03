@@ -787,6 +787,14 @@ L.Clipboard = L.Class.extend({
 
 	// sets the selection to some (cell formula) text)
 	setTextSelectionText: function(text) {
+		// Usually 'text' is what we see in the formulabar
+		// In case of actual formula we don't wish to put forumla into client clipboard
+		// Putting formula in clipboard means user will paste formula outside of online
+		// Pasting inside online is handled by internal paste
+		if (this._map.getDocType() === 'spreadsheet' && text.startsWith('=')) {
+			app.socket.sendMessage('gettextselection mimetype=text/html');
+			return;
+		}
 		this._selectionType = 'text';
 		this._selectionContent = this._originWrapBody(
 			'<body>' + text + '</body>');
