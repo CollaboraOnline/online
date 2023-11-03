@@ -3057,11 +3057,7 @@ void lokit_main(
         {
             const char *instdir = instdir_path.c_str();
             const char *userdir = userdir_url.c_str();
-#ifndef KIT_IN_PROCESS
             kit = UnitKit::get().lok_init(instdir, userdir);
-#else
-            kit = nullptr;
-#endif
             if (!kit)
             {
                 kit = (initFunction ? initFunction(instdir, userdir)

@@ -146,7 +146,7 @@ coolwsd_sources = common/Crypto.cpp \
 
 coolwsd_SOURCES = $(coolwsd_sources) \
                   $(shared_sources) \
-		  wsd/COOLWSD-main.cpp
+                  wsd/COOLWSD-main.cpp
 
 EXTRA_coolwsd_DEPENDENCIES = browser/node_modules
 
@@ -189,14 +189,17 @@ coolforkit_sources = kit/ChildSession.cpp \
 
 coolforkit_SOURCES = $(coolforkit_sources) \
                      $(shared_sources) \
-		     kit/ForKitMain.cpp
+                     kit/ForKitMain.cpp
 
 coolforkit_LDADD = libsimd.a
 
+coolwsddebug_CPPFLAGS = -DKIT_IN_PROCESS=1 \
+                        $(AM_CPPFLAGS)
+
 coolwsddebug_SOURCES = $(coolwsd_sources) \
-                  $(shared_sources) \
-	 	  $(coolforkit_sources) \
-		  wsd/debug-main.cpp
+                       $(shared_sources) \
+                       $(coolforkit_sources) \
+                       wsd/debug-main.cpp
 
 if ENABLE_LIBFUZZER
 coolforkit_SOURCES += \
@@ -500,6 +503,17 @@ run-one: setup-wsd
 			--o:security.capabilities="$(CAPABILITIES)" \
 			--o:logging.file[@enable]=true --o:logging.level=trace \
 			--singlekit
+
+run-kitinprocess: setup-wsd
+	@echo "Launching coolwsddebug"
+	./coolwsddebug $(COMMON_PARAMS) \
+			--o:logging.file[@enable]=false --o:logging.level=trace
+
+run-valgrind-kitinprocess: setup-wsd
+	@echo "Launching coolwsd under valgrind for single KIT IN PROCESS"
+	valgrind --tool=memcheck --leak-check=full --trace-children=no -v --read-var-info=yes \
+		./coolwsddebug $(COMMON_PARAMS) \
+			--o:logging.file[@enable]=false --o:logging.level=trace
 endif
 
 sync-writer:
@@ -516,13 +530,6 @@ run-trace: setup-wsd
 			--o:logging.file[@enable]=false --o:logging.level=trace \
 			--o:trace[@enable]=true --o:trace.path=${builddir}/trace.txt.gz \
 			--o:trace.outgoing.record=false
-
-run-valgrind-kitinprocess: setup-wsd
-	@echo "Launching coolwsd under valgrind for single KIT IN PROCESS"
-	KIT_IN_PROCESS=true valgrind --tool=memcheck --leak-check=full --trace-children=no -v --read-var-info=yes \
-   ./coolwsddebug $(COMMON_PARAMS) \
-   --o:logging.file[@enable]=false --o:logging.level=trace
-
 
 run-valgrind: setup-wsd
 	@echo "Launching coolwsd under valgrind (but not forkit/coolkit, yet)"

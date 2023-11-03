@@ -416,17 +416,10 @@ std::string LocalStorage::downloadStorageFileToLocal(const Authorization& /*auth
     setDownloaded(true);
 
     // Now return the jailed path.
-    if (!Util::isKitInProcess())
-    {
-        if (COOLWSD::NoCapsForKit)
-            return getRootFilePath();
-        else
-            return Poco::Path(getJailPath(), filename).toString();
-    }
-    else
-    {
+    if (COOLWSD::NoCapsForKit)
         return getRootFilePath();
-    }
+    else
+        return Poco::Path(getJailPath(), filename).toString();
 #else // MOBILEAPP
 
     // In the mobile app we use no jail

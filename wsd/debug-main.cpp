@@ -28,7 +28,6 @@ char** convertStringVectorToCharArray(StringVector stringVector)
 
 extern "C" int createForkit(const std::string forKitPath, const StringVector args)
 {
-
     LOG_INF(forKitPath);
     char** argv = convertStringVectorToCharArray(args);
 
