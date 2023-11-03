@@ -1619,7 +1619,8 @@ input[type='number']:hover::-webkit-outer-spin-button {
 }
 
 /* Writer - Table of Contents, Index or Bibliography dialog, Columns tab */
-[data-theme='dark'] #ColumnPage #pageexample-img, #ColumnPage #valueset-img {
+[data-theme='dark'] #ColumnPage #pageexample-img,
+[data-theme='dark'] #ColumnPage #valueset-img {
 	filter: invert(.9)
 }
 
