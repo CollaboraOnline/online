@@ -140,8 +140,6 @@ export class RowHeader extends cool.Header {
 		this.context.strokeStyle = this._borderColor;
 		this.context.lineWidth = app.dpiScale;
 		this.context.strokeRect(0.5, startY - 0.5, this.size[0], entry.size);
-
-        this._map._contextMenu.stopRightMouseUpEvent();
 	}
 
 	getHeaderEntryBoundingClientRect (index: number): Partial<DOMRect> {

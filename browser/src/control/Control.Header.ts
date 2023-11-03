@@ -477,6 +477,7 @@ export class Header extends CanvasSectionObject {
 			callback: function() { return; }
 		});
 		$('#document-canvas').contextMenu('update');
+		this._map._contextMenu.stopRightMouseUpEvent();
 	}
 
 	_unBindContextMenu(): void {
