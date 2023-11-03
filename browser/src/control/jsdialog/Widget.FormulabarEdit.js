@@ -101,12 +101,11 @@ function _appendNewLine(cursorLayer) {
 function _appendCursor(cursorLayer) {
 	var cursor = L.DomUtil.create('span', 'cursor');
 	cursorLayer.appendChild(cursor);
-	var blockOption = JSDialog._scrollIntoViewBlockOption('nearest');
-	cursor.scrollIntoView({behavior: 'smooth', block: blockOption, inline: 'nearest'});
+	return cursor;
 }
 
 function _setSelection(cursorLayer, text, startX, endX, startY, endY) {
-	cursorLayer.innerHTML = '';
+	var newCursorLayer = document.createDocumentFragment();
 
 	var reversedSelection = false;
 	if (endY == startY && endX < startX) {
@@ -133,39 +132,48 @@ function _setSelection(cursorLayer, text, startX, endX, startY, endY) {
 		var line = text[i];
 
 		if (i < startY) {
-			_appendText(cursorLayer, line, '');
-			_appendNewLine(cursorLayer);
+			_appendText(newCursorLayer, line, '');
+			_appendNewLine(newCursorLayer);
 		} else if (i == startY) {
-			_appendText(cursorLayer, line.substr(0, startX), '');
+			_appendText(newCursorLayer, line.substr(0, startX), '');
 
 			if (reversedSelection)
-				_appendCursor(cursorLayer);
+				var cursor = _appendCursor(newCursorLayer);
 
-			_appendText(cursorLayer,
+			_appendText(newCursorLayer,
 				line.substr(startX, startY == endY ? endX - startX : undefined),
 				((startX != endX || startY != endY) ? 'selection' : ''));
 
 			if (startY == endY) {
 				if (!reversedSelection)
-					_appendCursor(cursorLayer);
+					cursor = _appendCursor(newCursorLayer);
 
-				_appendText(cursorLayer, line.substr(endX), '');
-				_appendNewLine(cursorLayer);
+				_appendText(newCursorLayer, line.substr(endX), '');
+				_appendNewLine(newCursorLayer);
 			} else
-				_appendNewLine(cursorLayer);
+				_appendNewLine(newCursorLayer);
 		} else if (i > startY && i < endY) {
-			_appendText(cursorLayer, line, 'selection');
-			_appendNewLine(cursorLayer);
+			_appendText(newCursorLayer, line, 'selection');
+			_appendNewLine(newCursorLayer);
 		} else if (i == endY && endY != startY) {
-			_appendText(cursorLayer, line.substr(0, endX), 'selection');
+			_appendText(newCursorLayer, line.substr(0, endX), 'selection');
 			if (!reversedSelection)
-				_appendCursor(cursorLayer);
-			_appendText(cursorLayer, line.substr(endX), '');
-			_appendNewLine(cursorLayer);
+				cursor = _appendCursor(newCursorLayer);
+			_appendText(newCursorLayer, line.substr(endX), '');
+			_appendNewLine(newCursorLayer);
 		} else if (i > endY) {
-			_appendText(cursorLayer, line, '');
-			_appendNewLine(cursorLayer);
+			_appendText(newCursorLayer, line, '');
+			_appendNewLine(newCursorLayer);
 		}
+	}
+
+	cursorLayer.textContent = '';
+	cursorLayer.appendChild(newCursorLayer);
+
+	// possible after cursor is added to the DOM
+	if (cursor) {
+		var blockOption = JSDialog._scrollIntoViewBlockOption('nearest');
+		cursor.scrollIntoView({behavior: 'smooth', block: blockOption, inline: 'nearest'});
 	}
 }
 
@@ -181,13 +189,16 @@ function _formulabarEditControl(parentContainer, data, builder) {
 	var cursorLayer = L.DomUtil.create('div', 'ui-custom-textarea-cursor-layer ' + builder.options.cssClass, container);
 
 	container.setText = function(text, selection) {
-		textLayer.innerHTML = '';
+		var newTextLayer = document.createDocumentFragment();
 		for (var c = 0; c < text.length; c++) {
 			if (text[c] == '\n')
-				_appendNewLine(textLayer);
+				_appendNewLine(newTextLayer);
 			else
-				_appendText(textLayer, text[c], '');
+				_appendText(newTextLayer, text[c], '');
 		}
+
+		textLayer.textContent = '';
+		textLayer.appendChild(newTextLayer);
 
 		var startX = parseInt(selection[0]);
 		var endX = parseInt(selection[1]);
