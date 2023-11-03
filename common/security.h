@@ -24,7 +24,6 @@
 #  error "include config.h for user id";
 #endif
 
-#ifndef KIT_IN_PROCESS
 inline int hasUID(const char *userId)
 {
     struct passwd *pw = getpwuid(getuid());
@@ -104,6 +103,5 @@ inline int hasAnyCapability()
     return 0;
 #endif
 }
-#endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

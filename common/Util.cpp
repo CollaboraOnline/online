@@ -328,8 +328,11 @@ namespace Util
 
     bool isKitInProcess()
     {
-        const char* kitInProcess = std::getenv("KIT_IN_PROCESS");
-        return (kitInProcess != nullptr && strcmp(kitInProcess, "true") == 0);
+#ifdef KIT_IN_PROCESS
+        return true;
+#else
+        return false;
+#endif
     }
 
 #if !MOBILEAPP

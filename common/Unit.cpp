@@ -685,6 +685,11 @@ UnitKit& UnitKit::get()
     if (!GlobalKit)
         GlobalKit = new UnitKit("UnitKit");
 #endif
+    if (Util::isKitInProcess())
+    {
+        if (!GlobalKit)
+            GlobalKit = new UnitKit("UnitKit");
+    }
 
     assert(GlobalKit);
     return *GlobalKit;

@@ -438,13 +438,17 @@ static int forkChildren(const int number)
     {
         COOLWSD::checkDiskSpaceAndWarnClients(false);
 
-#ifndef KIT_IN_PROCESS
-        createLibreOfficeKit(COOLWSD::ChildRoot, COOLWSD::SysTemplate, COOLWSD::LoTemplate, number);
-#else
-        const std::string aMessage = "spawn " + std::to_string(number) + '\n';
-        LOG_DBG("MasterToForKit: " << aMessage.substr(0, aMessage.length() - 1));
-        COOLWSD::sendMessageToForKit(aMessage);
-#endif
+        if (Util::isKitInProcess())
+        {
+            createLibreOfficeKit(COOLWSD::ChildRoot, COOLWSD::SysTemplate, COOLWSD::LoTemplate, number);
+        }
+        else
+        {
+            const std::string aMessage = "spawn " + std::to_string(number) + '\n';
+            LOG_DBG("MasterToForKit: " << aMessage.substr(0, aMessage.length() - 1));
+            COOLWSD::sendMessageToForKit(aMessage);
+        }
+
         OutstandingForks += number;
         LastForkRequestTime = std::chrono::steady_clock::now();
         return number;
@@ -872,10 +876,8 @@ void sendLoadResult(std::shared_ptr<ClientSession> clientSession, bool success,
 std::atomic<uint64_t> COOLWSD::NextConnectionId(1);
 
 #if !MOBILEAPP
-#ifndef KIT_IN_PROCESS
 std::atomic<int> COOLWSD::ForKitProcId(-1);
 std::shared_ptr<ForKitProcess> COOLWSD::ForKitProc;
-#endif
 bool COOLWSD::NoCapsForKit = false;
 bool COOLWSD::NoSeccomp = false;
 bool COOLWSD::AdminEnabled = true;
@@ -6293,7 +6295,7 @@ std::set<pid_t> COOLWSD::getKitPids()
     return pids;
 }
 
-#if !defined(BUILDING_TESTS) && !defined(KIT_IN_PROCESS)
+#if !defined(BUILDING_TESTS)
 namespace Util
 {
 
