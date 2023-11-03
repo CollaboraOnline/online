@@ -257,7 +257,7 @@ window.app = {
 	};
 
 	global.keyboard = {
-		onscreenKeyboardHint: undefined,
+		onscreenKeyboardHint: window.uiDefaults['onscreenKeyboardHint'],
 		// If there's an onscreen keyboard, we don't want to trigger it with innocuous actions like panning around a spreadsheet
 		// on the other hand, if there is a hardware keyboard we want to do things like focusing contenteditables so that typing is
 		// recognized without tapping again. This is an impossible problem, because browsers do not give us enough information
