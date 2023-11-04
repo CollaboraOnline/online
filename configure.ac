@@ -977,7 +977,7 @@ if test "x$with_sanitizer" != "x"; then
     for flag in -static-libasan -static-libsan ; do
         AC_MSG_CHECKING([whether to use $flag])
         save_CXXFLAGS=$CXXFLAGS
-        CXXFLAGS="$CXXFLAGS -O1 -fno-omit-frame-pointer -fsanitize=$with_sanitizer -frtti $flag -Werror"
+        CXXFLAGS="$CXXFLAGS -O1 -fno-omit-frame-pointer -fsanitize=$with_sanitizer -frtti $flag"
         AC_LANG_PUSH([C++])
         AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
             ]])],[CXXFLAGS_CXXSTD=$flag])
@@ -991,8 +991,8 @@ if test "x$with_sanitizer" != "x"; then
             AC_MSG_RESULT([no])
         fi
     done
-    SANITIZER_FLAGS="-O1 -fno-omit-frame-pointer -fsanitize=$with_sanitizer -frtti $LIBSAN"
-    CXXFLAGS="$CXXFLAGS $SANITIZER_FLAGS"
+    SANITIZER_FLAGS="-O1 -fno-omit-frame-pointer -fsanitize=$with_sanitizer $LIBSAN"
+    CXXFLAGS="$CXXFLAGS -frtti $SANITIZER_FLAGS"
     CFLAGS="$CFLAGS $SANITIZER_FLAGS"
 else
     AC_MSG_RESULT([no])
