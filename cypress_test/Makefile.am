@@ -67,7 +67,7 @@ SPACE :=$(EMPTY) $(EMPTY)
 CORE_VERSION := $(subst $(SPACE),_,$(shell "@LO_PATH@"/program/soffice.bin --version 2> /dev/null))
 
 BROWSER:=$(if $(CYPRESS_BROWSER),$(CYPRESS_BROWSER),$(CHROME))
-A11Y_ENABLE:=$(if $(CYPRESS_A11Y),$(CYPRESS_A11Y),true)
+A11Y_ENABLE:=$(if $(CYPRESS_A11Y),$(CYPRESS_A11Y),false)
 A11Y_TAG:=$(if $(findstring true,$(A11Y_ENABLE)),taga11yenabled,taga11ydisabled)
 
 if ENABLE_DEBUG

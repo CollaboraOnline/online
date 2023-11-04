@@ -997,11 +997,12 @@ window.app = {
 					global.docURL.includes('data/mobile/calc/') ||
 					global.docURL.includes('data/multiuser/calc/');
 
-				if (L.Browser.cypressTest && isCalcTest)
+				var isWriterTest = global.docURL.includes('data/desktop/writer/');
+				if (L.Browser.cypressTest && (isCalcTest || isWriterTest))
 					window.enableAccessibility = false;
 
 				var accessibilityState = window.localStorage.getItem('accessibilityState') === 'true';
-				accessibilityState = accessibilityState || (L.Browser.cypressTest && !isCalcTest);
+				accessibilityState = accessibilityState || (L.Browser.cypressTest && !isCalcTest && !isWriterTest);
 				msg += ' accessibilityState=' + accessibilityState;
 
 				if (window.ThisIsAMobileApp) {
