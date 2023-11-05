@@ -23,6 +23,8 @@
 
 /* global JSDialog */
 
+var scrollToCursorTimeout = null;
+
 function _sendSelection(edit, builder, id, event) {
 	if (document.activeElement != edit)
 		return;
@@ -172,8 +174,17 @@ function _setSelection(cursorLayer, text, startX, endX, startY, endY) {
 
 	// possible after cursor is added to the DOM
 	if (cursor) {
-		var blockOption = JSDialog._scrollIntoViewBlockOption('nearest');
-		cursor.scrollIntoView({behavior: 'smooth', block: blockOption, inline: 'nearest'});
+		if (scrollToCursorTimeout)
+			clearTimeout(scrollToCursorTimeout);
+
+		// put scrol at the end of the task queue so we will not scroll multiple times
+		// during one session of processing events where multiple setSelection actions
+		// can be found, profiling shows it is heavy operation
+		scrollToCursorTimeout = setTimeout(function () {
+			var blockOption = JSDialog._scrollIntoViewBlockOption('nearest');
+			cursor.scrollIntoView({behavior: 'smooth', block: blockOption, inline: 'nearest'});
+			scrollToCursorTimeout = null;
+		}, 0);
 	}
 }
 
