@@ -13,7 +13,7 @@ Vendor:         Collabora Productivity Ltd.
 Summary:        Collabora Online WebSocket Daemon
 License:        EULA
 Source0:        coolwsd-@PACKAGE_VERSION@.tar.gz
-BuildRequires:  libcap-devel pam-devel gcc-c++ cppunit-devel pam-devel fontconfig make
+BuildRequires:  libcap-devel pam-devel cppunit-devel python3-lxml python3-polib nodejs
 Requires:       collaboraoffice collaboraoffice-ure collaboraofficebasis-core collaboraofficebasis-writer collaboraofficebasis-impress collaboraofficebasis-graphicfilter collaboraofficebasis-en-US collaboraofficebasis-calc collaboraofficebasis-ooofonts collaboraofficebasis-images collaboraofficebasis-draw collaboraofficebasis-extension-pdf-import collaboraofficebasis-ooolinguistic collaboraofficebasis-math
 Requires(post): coreutils grep sed cpio /usr/sbin/setcap
 Provides: loolwsd
