@@ -27,6 +27,7 @@ export class ContentControlSection extends CanvasSectionObject {
 		this.onClickDropdown = this.onClickDropdown.bind(this);
 		this.sectionProperties.dropdownButton.addEventListener('click', this.onClickDropdown, false);
 		this.map.on('dropdownmarkertapped', this.onClickDropdown, this);
+		this.map.on('darkmodechanged', this.changeBorderStyle, this);
 
 		var container = L.DomUtil.createWithId('div', 'datepicker');
 		container.style.zIndex = '12';
@@ -152,6 +153,7 @@ export class ContentControlSection extends CanvasSectionObject {
 
 		if (!this.sectionProperties.frame) {
 			this.sectionProperties.frame = new CPolygon(this.sectionProperties.pointSet, this.sectionProperties.polyAttri);
+			this.changeBorderStyle();
 			this.map._docLayer._canvasOverlay.initPath(this.sectionProperties.frame);
 		}
 		this.sectionProperties.frame.setPointSet(this.sectionProperties.pointSet);
@@ -358,6 +360,11 @@ export class ContentControlSection extends CanvasSectionObject {
 			}
 		}
 		return rectangles;
+	}
+
+	private changeBorderStyle(): void {
+		var borderColor = this.map.uiManager.getDarkModeState() ? 'white' : 'black';
+		this.sectionProperties.frame.color = borderColor;
 	}
 }
 
