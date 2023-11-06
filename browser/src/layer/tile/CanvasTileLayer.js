@@ -970,6 +970,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		this._moveInProgress = false;
 		this._canonicalIdInitialized = false;
+		this._nullDeltaUpdate = 0;
 	},
 
 	_initContainer: function () {
@@ -1007,6 +1008,10 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._selectionsDataDiv = L.DomUtil.create('div', 'selections-data', this._canvasContainer);
 		this._splittersDataDiv = L.DomUtil.create('div', 'splitters-data', this._canvasContainer);
 		this._cursorOverlayDiv = L.DomUtil.create('div', 'cursor-overlay', this._canvasContainer);
+		if (L.Browser.cypressTest) {
+			this._emptyDeltaDiv = L.DomUtil.create('div', 'empty-deltas', this._canvasContainer);
+			this._emptyDeltaDiv.innerText = 0;
+		}
 		this._splittersStyleData = new CStyleData(this._splittersDataDiv);
 
 		this._painter = new L.TileSectionManager(this);
@@ -6875,6 +6880,10 @@ L.CanvasTileLayer = L.Layer.extend({
 			else if (rawDelta.length === 0)
 			{
 				tile.updateCount++;
+				this._nullDeltaUpdate++;
+				if (this._emptyDeltaDiv) {
+					this._emptyDeltaDiv.innerText = this._nullDeltaUpdate;
+				}
 				return; // that was easy
 			}
 			else
