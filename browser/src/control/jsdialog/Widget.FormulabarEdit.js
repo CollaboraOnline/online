@@ -23,7 +23,7 @@
 
 /* global JSDialog */
 
-var scrollToCursorTimeout = null;
+var cursor = null; // used to indicate we need to scrollIntoView
 
 function _sendSelection(edit, builder, id, event) {
 	if (document.activeElement != edit)
@@ -108,6 +108,7 @@ function _appendCursor(cursorLayer) {
 
 function _setSelection(cursorLayer, text, startX, endX, startY, endY) {
 	var newCursorLayer = document.createDocumentFragment();
+	cursor = null;
 
 	var reversedSelection = false;
 	if (endY == startY && endX < startX) {
@@ -140,7 +141,7 @@ function _setSelection(cursorLayer, text, startX, endX, startY, endY) {
 			_appendText(newCursorLayer, line.substr(0, startX), '');
 
 			if (reversedSelection)
-				var cursor = _appendCursor(newCursorLayer);
+				cursor = _appendCursor(newCursorLayer);
 
 			_appendText(newCursorLayer,
 				line.substr(startX, startY == endY ? endX - startX : undefined),
@@ -171,21 +172,6 @@ function _setSelection(cursorLayer, text, startX, endX, startY, endY) {
 
 	cursorLayer.textContent = '';
 	cursorLayer.appendChild(newCursorLayer);
-
-	// possible after cursor is added to the DOM
-	if (cursor) {
-		if (scrollToCursorTimeout)
-			clearTimeout(scrollToCursorTimeout);
-
-		// put scrol at the end of the task queue so we will not scroll multiple times
-		// during one session of processing events where multiple setSelection actions
-		// can be found, profiling shows it is heavy operation
-		scrollToCursorTimeout = setTimeout(function () {
-			var blockOption = JSDialog._scrollIntoViewBlockOption('nearest');
-			cursor.scrollIntoView({behavior: 'smooth', block: blockOption, inline: 'nearest'});
-			scrollToCursorTimeout = null;
-		}, 0);
-	}
 }
 
 function _formulabarEditControl(parentContainer, data, builder) {
@@ -257,6 +243,14 @@ function _formulabarEditControl(parentContainer, data, builder) {
 		var cursor = cursorLayer.querySelector('.cursor');
 		if (cursor)
 			L.DomUtil.addClass(cursor, 'hidden');
+	});
+
+	var blockOption = JSDialog._scrollIntoViewBlockOption('nearest');
+	builder.map.on('messagesdone', function() {
+		if (cursor) {
+			cursor.scrollIntoView({behavior: 'smooth', block: blockOption, inline: 'nearest'});
+			cursor = null;
+		}
 	});
 
 	var text = builder._cleanText(data.text);
