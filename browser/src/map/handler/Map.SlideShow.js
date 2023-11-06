@@ -88,6 +88,7 @@ L.Map.SlideShow = L.Handler.extend({
 		if ('processCoolUrl' in window) {
 			this._processSlideshowLinks();
 		}
+		this._processSlideshowVideoForSafari();
 
 		this._startPlaying();
 	},
@@ -103,9 +104,8 @@ L.Map.SlideShow = L.Handler.extend({
 	},
 
 	_processSlideshowLinks: function() {
-		var that = this;
-		this._slideShow.onload = function onLoadSlideshow() {
-			var linkElements = [].slice.call(that._slideShow.contentDocument.querySelectorAll('a'))
+		this._slideShow.addEventListener('load', (function onLoadSlideshow() {
+			var linkElements = [].slice.call(this._slideShow.contentDocument.querySelectorAll('a'))
 				.filter(function(el) {
 					return el.getAttribute('href') || el.getAttribute('xlink:href');
 				})
@@ -136,7 +136,75 @@ L.Map.SlideShow = L.Handler.extend({
 				item.parent.parentNode.insertBefore(item.parent.cloneNode(true), item.parent.nextSibling);
 				item.parent.parentNode.removeChild(item.parent);
 			});
-		};
+		}).bind(this));
+	},
+
+
+	_processSlideshowVideoForSafari: function() {
+		// There is an issue where Safari without LBSE renders the video in the wrong place, so we
+		// must move it back into frame
+		// GH#7399 fixed the same issue, but not in presentation mode
+		if (!L.Browser.safari) {
+			return;
+		}
+
+		if (!this._slideShow) {
+			console.error('In Safari without fixing slideshow videos, this may cause videos to be offset');
+			return;
+		}
+
+		this._slideShow.addEventListener('load', (function onLoadSlideshow() {
+			var videos = this._slideShow.contentDocument.querySelectorAll('video');
+
+			var fixSVGPos = function(video) {
+				var videoContainer = video.parentNode;
+				var foreignObject = videoContainer.parentNode;
+				var svg = foreignObject.closest('svg');
+
+				return function() {
+					var widthRatio = svg.width.baseVal.value / svg.viewBox.baseVal.width;
+					var heightRatio = svg.height.baseVal.value / svg.viewBox.baseVal.height;
+					var minRatio = Math.min(widthRatio, heightRatio);
+
+					var leftRightBorders = svg.width.baseVal.value - minRatio * svg.viewBox.baseVal.width;
+					var topBottomBorders = svg.height.baseVal.value - minRatio * svg.viewBox.baseVal.height;
+
+					// revert the scaling positioning to center (back to top-left) by subtracting at 1/2 of width
+					var offsetX = -foreignObject.width.baseVal.value / 2.0;
+					var offsetY = -foreignObject.height.baseVal.value / 2.0;
+
+					// revert the object position
+					offsetX = offsetX - foreignObject.x.baseVal.value + (leftRightBorders / 4.0);
+					offsetY = offsetY - foreignObject.y.baseVal.value + (topBottomBorders / 4.0);
+
+					// reapply the scaling positioning to center by adding 1/2 of the non-scaled width
+					offsetX = offsetX + (foreignObject.width.baseVal.value * widthRatio / 2.0);
+					offsetY = offsetY + (foreignObject.height.baseVal.value * heightRatio / 2.0);
+
+					// reapply the object positioning
+					offsetX = offsetX + foreignObject.x.baseVal.value * widthRatio;
+					offsetY = offsetY + foreignObject.y.baseVal.value * heightRatio;
+
+					var scaleString = 'scale(' + minRatio + ')';
+					var translateString = 'translate(' + offsetX + 'px, ' + offsetY + 'px)';
+
+					videoContainer.style.transform = translateString + ' ' + scaleString;
+				};
+			};
+
+			for (var i = 0; i < videos.length; i++) {
+				var fixThisVideoPos = fixSVGPos(videos[i]);
+
+				fixThisVideoPos();
+				var observer = new MutationObserver(fixThisVideoPos);
+
+				observer.observe(this._slideShow, {
+					attributes: true
+				});
+
+				this._slideShow.contentDocument.defaultView.addEventListener('resize', fixThisVideoPos);
+			}
+		}).bind(this));
 	}
 });
 
