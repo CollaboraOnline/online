@@ -143,7 +143,8 @@ coolwsd_sources = common/Crypto.cpp \
                   wsd/HostUtil.cpp \
                   wsd/TileCache.cpp \
                   wsd/ProofKey.cpp \
-                  wsd/QuarantineUtil.cpp
+                  wsd/QuarantineUtil.cpp \
+                  wsd/WopiProxy.cpp
 
 coolwsd_SOURCES = $(coolwsd_sources) \
                   $(shared_sources)
@@ -292,7 +293,8 @@ wsd_headers = wsd/Admin.hpp \
               wsd/TraceFile.hpp \
               wsd/UserMessages.hpp \
               wsd/QuarantineUtil.hpp \
-              wsd/HostUtil.hpp
+              wsd/HostUtil.hpp \
+              wsd/WopiProxy.hpp
 
 shared_headers = common/Common.hpp \
                  common/Clipboard.hpp \

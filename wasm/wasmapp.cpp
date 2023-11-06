@@ -19,7 +19,8 @@ int coolwsd_server_socket_fd = -1;
 const char* user_name;
 const int SHOW_JS_MAXLEN = 200;
 
-static std::string fileURL = "file:///sample.docx";
+#define FILE_PATH "/sample.docx"
+static std::string fileURL = "file://" FILE_PATH;
 static COOLWSD *coolwsd = nullptr;
 static int fakeClientFd;
 static int closeNotificationPipeForForwardingThread[2] = {-1, -1};
@@ -141,6 +142,7 @@ void handle_cool_message(const char *string_value)
         // First we simply send it the URL. This corresponds to the GET request with Upgrade to
         // WebSocket.
         LOG_TRC_NOFILE("Actually sending to Online:" << fileURL);
+        std::cout << "Loading file [" << fileURL << "]" << std::endl;
 
         std::thread([]
                     {
@@ -253,8 +255,19 @@ int main(int argc, char* argv_main[])
     std::thread(
         [&]
         {
-            // Download the document given its URL, writing it to the filesystem.
-            const std::string url = std::string(argv_main[1]) + "/contents";
+            // const std::string url = "/wasm/" + std::string(argv_main[1]);
+            // const std::string url =
+            //     "/wasm/"
+            //     "https%3A%2F%2Flocalhost%2Fnextcloud%2Findex.php%2Fapps%2Frichdocuments%2Fwopi%"
+            //     "2Ffiles%2F8725_ocqiesh0cngs%3Faccess_token%3Daz5tjYv83wvhtpVbhuFXrTkss6gB1GDZ%"
+            //     "26access_token_ttl%3D0";
+
+            //DOCX
+            const std::string url =
+                "/wasm/"
+                "https%3A%2F%2Flocalhost%2Fnextcloud%2Findex.php%2Fapps%2Frichdocuments%2Fwopi%"
+                "2Ffiles%2F8991_ocqiesh0cngs%3Faccess_token%3Dz4N7CViCj1pps28EVlG4dmxEMe62P7yo%"
+                "26access_token_ttl%3D0";
 
             emscripten_fetch_attr_t attr;
             emscripten_fetch_attr_init(&attr);
@@ -267,9 +280,10 @@ int main(int argc, char* argv_main[])
                 printf("Finished downloading %llu bytes from URL %s.\n", fetch->numBytes,
                        fetch->url);
                 // For now, we have a hard-coded filename that we open. Clobber it.
-                FILE* f = fopen("/sample.docx", "w");
-                fwrite(fetch->data, fetch->numBytes, 1, f);
+                FILE* f = fopen(FILE_PATH, "w");
+                const int wrote = fwrite(fetch->data, 1, fetch->numBytes, f);
                 fclose(f);
+                printf("Wrote %d bytes into " FILE_PATH "\n", wrote);
             }
             else
             {
