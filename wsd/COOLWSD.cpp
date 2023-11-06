@@ -154,6 +154,7 @@ using Poco::Net::PartHandler;
 #include <common/SigUtil.hpp>
 
 #include <ServerSocket.hpp>
+#include <WopiProxy.hpp>
 
 #if MOBILEAPP
 #ifdef IOS
@@ -4259,6 +4260,22 @@ private:
                 // is 'lool' e.g. when integrations use the old /lool/convert-to endpoint
                 handlePostRequest(requestDetails, request, message, disposition, socket);
             }
+            else if (requestDetails.equals(RequestDetails::Field::Type, "wasm"))
+            {
+                if (COOLWSD::WASMState == COOLWSD::WASMActivationState::Disabled)
+                {
+                    LOG_ERR("WASM document request while WASM is disabled: "
+                            << requestDetails.toString());
+
+                    // Bad request.
+                    HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, socket);
+                    return;
+                }
+
+                // Tunnel to WASM.
+                _wopiProxy = std::make_unique<WopiProxy>(_id, requestDetails, socket);
+                _wopiProxy->handleRequest(*WebServerPoll, disposition);
+            }
             else
             {
                 LOG_ERR("Unknown resource: " << requestDetails.toString());
@@ -5459,6 +5476,9 @@ private:
     // The socket that owns us (we can't own it).
     std::weak_ptr<StreamSocket> _socket;
     std::string _id;
+
+    /// WASM document request handler. Used only when WASM is enabled.
+    std::unique_ptr<WopiProxy> _wopiProxy;
 
     /// Cache for static files, to avoid reading and processing from disk.
     static std::map<std::string, std::string> StaticFileContentCache;
