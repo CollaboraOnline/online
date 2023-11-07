@@ -293,6 +293,10 @@ L.Control.UIManager = L.Control.extend({
 			// makeSpaceForNotebookbar call in onUpdatePermission
 		}
 
+		if (window.uiDefaults[docType] && window.uiDefaults[docType]['ShowToolbar'] === false) {
+			this.collapseNotebookbar();
+		}
+
 		this.initDarkModeFromSettings();
 
 		if (docType === 'spreadsheet') {
