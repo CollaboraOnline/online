@@ -67,7 +67,7 @@ This will install into `/opt/poco.emsc.3.1.30`.
 
     ./autogen.sh
 	emconfigure ./configure --disable-werror --with-lokit-path=/home/tml/lo/core-cool-wasm/include --with-lo-path=/home/tml/lo/core-cool-wasm/instdir --with-lo-builddir=/home/tml/lo/core-cool-wasm --with-zstd-includes=/opt/zstd.emsc.3.1.30/include --with-zstd-libs=/opt/zstd.emsc.3.1.30/lib --with-poco-includes=/opt/poco.emsc.3.1.30/include --with-poco-libs=/opt/poco.emsc.3.1.30/lib --host=wasm32-local-emscripten --with-wasm-additional-files=/home/tml/lo/online-hacking/my-sample-docs
-    emmake make
+    emmake make CC=emcc CXX=em++
 
 ## Running WASM Online
 
