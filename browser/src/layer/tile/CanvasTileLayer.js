@@ -7078,6 +7078,14 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._debugShowTileData();
 	},
 
+	_queueAcknowledgement: function (tileMsgObj) {
+		// Queue acknowledgment, that the tile message arrived
+		var mode = (tileMsgObj.mode !== undefined) ? tileMsgObj.mode : 0;
+		var tileID = tileMsgObj.part + ':' + mode + ':' + tileMsgObj.x + ':' + tileMsgObj.y + ':'
+		    + tileMsgObj.tileWidth + ':' + tileMsgObj.tileHeight + ':' + tileMsgObj.nviewid;
+		this._queuedProcessed.push(tileID);
+	},
+
 	_onTileMsg: function (textMsg, img) {
 		var tileMsgObj = app.socket.parseServerCmd(textMsg);
 		this._checkTileMsgObject(tileMsgObj);
@@ -7093,6 +7101,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				mode: (tileMsgObj.mode !== undefined) ? tileMsgObj.mode : 0,
 				docType: this._docType
 			});
+			this._queueAcknowledgement(tileMsgObj);
 			return;
 		}
 
@@ -7152,11 +7161,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._tileReady(coords);
 		}
 
-		// Queue acknowledgment, that the tile message arrived
-		var mode = (tileMsgObj.mode !== undefined) ? tileMsgObj.mode : 0;
-		var tileID = tileMsgObj.part + ':' + mode + ':' + tileMsgObj.x + ':' + tileMsgObj.y + ':'
-		    + tileMsgObj.tileWidth + ':' + tileMsgObj.tileHeight + ':' + tileMsgObj.nviewid;
-		this._queuedProcessed.push(tileID);
+		this._queueAcknowledgement(tileMsgObj);
 	},
 
 	_sendProcessedResponse: function() {
