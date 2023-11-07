@@ -108,7 +108,8 @@ window.app = {
 	var chromebook = window.ThisIsTheAndroidApp && window.COOLMessageHandler.isChromeOS();
 
 	var touch = !window.L_NO_TOUCH && (pointer || 'ontouchstart' in window ||
-			(window.DocumentTouch && document instanceof window.DocumentTouch)) && !chromebook;
+			(window.DocumentTouch && document instanceof window.DocumentTouch) ||
+			window.matchMedia('(pointer: coarse)').matches) && !chromebook;
 
 	var isInternetExplorer = (navigator.userAgent.toLowerCase().indexOf('msie') != -1 ||
 				  navigator.userAgent.toLowerCase().indexOf('trident') != -1);
