@@ -2062,7 +2062,7 @@ class CanvasSectionContainer {
 		var subsetBounds: cool.Bounds = null;
 		// if there is a tileSubset we only want to draw the miniumum region of its bounds
 		if (tileSubset) {
-			var tileSection = <TilesSection>(this.getSectionWithName(L.CSections.Tiles.name));
+			var tileSection = this.getSectionWithName(L.CSections.Tiles.name) as cool.TilesSection;
 			if (tileSection && this.shouldDrawSection(tileSection)) {
 				subsetBounds = tileSection.getSubsetBounds(this.context, tileSubset);
 			}
