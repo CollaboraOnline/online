@@ -143,7 +143,7 @@ class Cursor {
 	}
 
 	private update() {
-		if (!this.container || !this.map)
+		if (!this.container || !this.map || !this.map.hasDocBounds())
 			return;
 
 		var docBounds = <cool.Bounds>this.map.getCorePxDocBounds();
