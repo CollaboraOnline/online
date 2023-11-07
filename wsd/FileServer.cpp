@@ -556,7 +556,8 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
         }
 
         // Is this a file we read at startup - if not; it's not for serving.
-        if (FileHash.find(relPath) == FileHash.end())
+        if (FileHash.find(relPath) == FileHash.end() &&
+            FileHash.find(relPath + ".br") == FileHash.end())
             throw Poco::FileNotFoundException("Invalid URI request: [" + requestUri.toString() + "].");
 
         if (endPoint == "welcome.html")
@@ -803,6 +804,32 @@ void FileServerRequestHandler::readDirToHash(const std::string &basePath, const 
         if (S_ISDIR(fileStat.st_mode))
             readDirToHash(basePath, relPath);
 
+        else if (S_ISREG(fileStat.st_mode) && Util::endsWith(relPath, ".br"))
+        {
+            // Only cache without compressing.
+            fileCount++;
+            filesRead.append(currentFile->d_name);
+            filesRead += ' ';
+
+            std::ifstream file(basePath + relPath, std::ios::binary);
+
+            std::string uncompressedFile;
+            uncompressedFile.resize(fileStat.st_size);
+            long unsigned int pos = 0;
+            do
+            {
+                file.read(&uncompressedFile[pos], fileStat.st_size);
+                const long unsigned int size = file.gcount();
+                if (size == 0)
+                    break;
+
+                pos += size;
+
+            } while (true);
+
+            FileHash.emplace(prefix + relPath,
+                             std::make_pair(std::move(uncompressedFile), std::string()));
+        }
         else if (S_ISREG(fileStat.st_mode))
         {
             z_stream strm;
@@ -858,7 +885,8 @@ void FileServerRequestHandler::readDirToHash(const std::string &basePath, const 
 
             } while(true);
 
-            FileHash.emplace(prefix + relPath, std::make_pair(uncompressedFile, compressedFile));
+            FileHash.emplace(prefix + relPath, std::make_pair(std::move(uncompressedFile),
+                                                              std::move(compressedFile)));
             deflateEnd(&strm);
         }
     }
