@@ -1487,9 +1487,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		};
 
 		$(checkboxLabel).click(function () {
-			var status = $(checkbox).is(':checked');
-			$(checkbox).prop('checked', !status);
-			toggleFunction.bind({checked: !status})();
+			if (data.enabled) {
+				var status = $(checkbox).is(':checked');
+				$(checkbox).prop('checked', !status);
+				toggleFunction.bind({checked: !status})();
+			}
 		});
 
 		if (data.enabled === 'false' || data.enabled === false) {
