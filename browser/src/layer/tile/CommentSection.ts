@@ -622,7 +622,7 @@ export class Comment extends CanvasSectionObject {
 	}
 
 	private showMarker (): void {
-		if (this.sectionProperties.annotationMarker != null) {
+		if (this.sectionProperties.annotationMarker != null && !this.sectionProperties.isRemoved) {
 			this.map.addLayer(this.sectionProperties.annotationMarker);
 		}
 	}

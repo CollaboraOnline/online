@@ -119,7 +119,7 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 	},
 
 	onUpdateParts: function () {
-		if (this._map.uiManager.isAnyDialogOpen()) // Need this check else dialog loses focus
+		if (this._map.uiManager.isAnyDialogOpen() || app.view.commentAutoAdded || app.view.commentAutoSave) // Need this check else dialog loses focus
 			return;
 
 		app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).onPartChange();
