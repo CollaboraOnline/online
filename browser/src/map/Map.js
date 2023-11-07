@@ -737,7 +737,14 @@ L.Map = L.Evented.extend({
 		this.options.docBounds = bounds;
 	},
 
+	hasDocBounds: function () {
+		return this.options.docBounds;
+	},
+
 	getCorePxDocBounds: function () {
+		if (!this.options.docBounds)
+			return new L.Bounds(0, 0);
+
 		var topleft = this.project(this.options.docBounds.getNorthWest());
 		var bottomRight = this.project(this.options.docBounds.getSouthEast());
 		return new L.Bounds(this._docLayer._cssPixelsToCore(topleft),
