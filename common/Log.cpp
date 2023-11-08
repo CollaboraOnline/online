@@ -470,7 +470,7 @@ namespace Log
         to_ascii_fixed<4>(pos, tm.tm_year + 1900);
         pos[4] = '-';
         pos += 5;
-        to_ascii_fixed<2>(pos, tm.tm_mon);
+        to_ascii_fixed<2>(pos, tm.tm_mon + 1);
         pos[2] = '-';
         pos += 3;
         to_ascii_fixed<2>(pos, tm.tm_mday);
