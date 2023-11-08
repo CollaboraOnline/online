@@ -484,7 +484,6 @@ L.Clipboard = L.Class.extend({
 		this._checkSelection();
 
 		var text = this._getHtmlForClipboard();
-		//this._stopHideDownload(); - this confuses the browser ruins copy/cut on iOS
 
 		var plainText = this.stripHTML(text);
 		if (ev.clipboardData) { // Standard
@@ -525,7 +524,7 @@ L.Clipboard = L.Class.extend({
 			&& !this.isPasteSpecialDialogOpen())
 			return true;
 
-		if ($('.annotation-active').length && $('.cool-annotation-edit').is(':visible'))
+		if (app.view.commentHasFocus)
 		    return true;
 
 		return false;
@@ -609,7 +608,7 @@ L.Clipboard = L.Class.extend({
 
 		this._unoCommandForCopyCutPaste = cmd;
 		if (document.execCommand(operation) &&
-		    serial !== this._clipboardSerial) {
+			serial !== this._clipboardSerial) {
 			window.app.console.log('copied successfully');
 			this._unoCommandForCopyCutPaste = null;
 			return;
