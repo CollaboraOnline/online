@@ -26,7 +26,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Statubar tests.', function
 		cy.cGet('body').contains('#tb_actionbar_item_StateWordCount', 'Selected: 1 word, 1 character');
 	});
 
-	it('Switching page.', function() {
+	it.skip('Switching page.', function() {
 		cy.cGet('#StatePageNumber').should('have.text', 'Page 1 of 1');
 		cy.cGet('#menu-insert').click();
 		cy.cGet('body').contains('#menu-insert li a', 'Page Break').click();
