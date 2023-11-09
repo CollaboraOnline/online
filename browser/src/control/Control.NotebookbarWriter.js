@@ -1250,11 +1250,34 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'accessibility': { focusBack: false,	combination: 'FM',	de: null }
 			},
 			{
-				'id': 'insert-QrCode',
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:InsertQrCode', 'text'),
-				'command': '.uno:InsertQrCode',
-				'accessibility': { focusBack: false,	combination: 'IQ',	de: null }
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'insert-QrCode',
+								'type': 'toolitem',
+								'text': _UNO('.uno:InsertQrCode', 'text'),
+								'command': '.uno:InsertQrCode',
+								'accessibility': { focusBack: false,	combination: 'IQ',	de: null }
+							},
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'insert-frame',
+								'type': 'toolitem',
+								'text': _UNO('.uno:InsertFrame', 'text'),
+								'command': '.uno:InsertFrame',
+								'accessibility': { focusBack: false,	combination: 'PT',	de: null }
+							}
+						]
+					}
+				],
+				'vertical': 'true'
 			},
 			{
 				'type': 'container',

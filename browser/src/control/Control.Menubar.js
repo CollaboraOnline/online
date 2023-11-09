@@ -143,6 +143,7 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:InsertObjectChart'},
 				{name: _UNO('.uno:FontworkGalleryFloater'), uno: '.uno:FontworkGalleryFloater', id: 'fontworkgalleryfloater'},
 				{name: _UNO('.uno:DrawText'), uno: '.uno:DrawText'},
+				{name: _UNO('.uno:InsertFrame', 'text'), uno: '.uno:InsertFrame'},
 				{name: _UNO('.uno:VerticalText'), uno: '.uno:VerticalText'},
 				{type: 'separator'},
 				{uno: '.uno:InsertSection', id: 'insertsection'},
