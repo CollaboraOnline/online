@@ -195,6 +195,8 @@ export class Comment extends CanvasSectionObject {
 		var isRTL = document.documentElement.dir === 'rtl';
 		this.sectionProperties.container = L.DomUtil.create('div', 'cool-annotation' + (isRTL ? ' rtl' : ''));
 		this.sectionProperties.container.id = 'comment-container-' + this.sectionProperties.data.id;
+		this.sectionProperties.container.addEventListener('focusin', this.onContainerGotFocus.bind(this));
+		this.sectionProperties.container.addEventListener('focusout', this.onContainerLostFocus.bind(this));
 
 		var mobileClass = (<any>window).mode.isMobile() ? ' wizard-comment-box': '';
 
@@ -206,6 +208,14 @@ export class Comment extends CanvasSectionObject {
 
 		if (!(<any>window).mode.isMobile())
 			document.getElementById('document-container').appendChild(this.sectionProperties.container);
+	}
+
+	private onContainerGotFocus() {
+		app.view.commentHasFocus = true;
+	}
+
+	private onContainerLostFocus() {
+		app.view.commentHasFocus = false;
 	}
 
 	private createAuthorTable (): void {
@@ -251,7 +261,6 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.menu.tabIndex = 0;
 		this.sectionProperties.menu.onclick = this.menuOnMouseClick.bind(this);
 		this.sectionProperties.menu.onkeypress = this.menuOnKeyPress.bind(this);
-		this.sectionProperties.menu.onfocus = function() { app.view.commentHasFocus = true; };
 		var divMenuTooltipText = _('Open menu');
 		this.sectionProperties.menu.dataset.title = divMenuTooltipText;
 		this.sectionProperties.menu.setAttribute('aria-label', divMenuTooltipText);
@@ -872,7 +881,6 @@ export class Comment extends CanvasSectionObject {
 				}
 			}
 		}
-		app.view.commentHasFocus = false;
 	}
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -885,14 +893,12 @@ export class Comment extends CanvasSectionObject {
 		else {
 			this.sectionProperties.nodeReply.style.display = 'none';
 		}
-		app.view.commentHasFocus = false;
 	}
 
 	public focus (): void {
 		this.sectionProperties.container.classList.add('annotation-active');
 		this.sectionProperties.nodeModifyText.focus();
 		this.sectionProperties.nodeReplyText.focus();
-		app.view.commentHasFocus = true;
 	}
 
 	public reply (): Comment {
@@ -1038,7 +1044,6 @@ export class Comment extends CanvasSectionObject {
 			}
 			else if (this.isSelected()) {
 				this.hide();
-				app.view.commentHasFocus = false;
 				this.sectionProperties.commentListSection.sectionProperties.calcCurrentComment = null;
 			}
 			else if (this.sectionProperties.commentListSection.sectionProperties.calcCurrentComment == this)
