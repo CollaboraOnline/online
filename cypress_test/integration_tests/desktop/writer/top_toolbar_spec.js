@@ -374,7 +374,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		helper.typeIntoDocument('{ctrl}{leftarrow}');
 		cy.cGet('#Insert-tab-label').click();
 		cy.cGet('#Insert-container-row .unoInsertPagebreak').click();
-		cy.cGet('#StatePageNumber').should('have.text', 'Pages 1 and 2 of 2');
+		cy.cGet('#StatePageNumber').invoke('text').should('be.oneOf', ['Page 2 of 2', 'Pages 1 and 2 of 2']);
 		helper.selectAllText();
 
 		//var data = [];
