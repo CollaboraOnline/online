@@ -12,11 +12,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-11-09 13:41+0100\n"
-"PO-Revision-Date: 2023-10-30 06:02+0000\n"
-"Last-Translator: m4skedbyte <weblate@m4skedbyte.xyz>\n"
+"PO-Revision-Date: 2023-11-09 12:49+0000\n"
+"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "ui/de/>\n"
-"Language: \n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2258,11 +2258,11 @@ msgstr "Die Verbindung zum Server wurde unterbrochen."
 
 #: src/docstate.js:71
 msgid "Standard"
-msgstr ""
+msgstr "Standard"
 
 #: src/docstate.js:82
 msgid "Theme colors"
-msgstr ""
+msgstr "Themenfarben"
 
 #: src/errormessages.js:13
 msgid "No disk space left on server."
