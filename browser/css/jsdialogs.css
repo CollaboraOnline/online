@@ -469,7 +469,7 @@ input[type='checkbox'].autofilter, .jsdialog input[type='checkbox'] {
 }
 
 [data-theme='dark'] input[type='checkbox'].autofilter, [data-theme='dark'] .jsdialog input[type='checkbox'] {
-	background: url('images/dark/lc_checkboxoff.svg') no-repeat center;
+	filter: invert(1) hue-rotate(180deg) !important;
 }
 
 input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:checked {
@@ -478,7 +478,7 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 }
 
 [data-theme='dark'] input[type='checkbox']:checked.autofilter, [data-theme='dark'] .jsdialog input[type='checkbox']:checked {
-	background-image: url('images/dark/lc_checkbox.svg');
+	filter: invert(1) hue-rotate(180deg) !important;
 }
 
 .ui-treeview-entry span {
@@ -993,7 +993,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 
 [data-theme='dark'] #mobile-wizard #toggle_all.checkbutton + #select_current,
 .autofilter-container #select_current {
-	background: url('images/dark/lc_checkbox.svg') no-repeat center;
+	filter: invert(1) hue-rotate(180deg) !important;
 }
 
 .autofilter-container #select_current {
@@ -1011,7 +1011,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 
 [data-theme='dark'] #mobile-wizard #toggle_all.checkbutton + #select_current + #unselect_current,
 .autofilter-container #unselect_current {
-	background: url('images/dark/lc_checkboxoff.svg') no-repeat center;
+	filter: invert(1) hue-rotate(180deg) !important;
 }
 
 .autofilter-container #unselect_current {

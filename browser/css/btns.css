@@ -10,6 +10,9 @@
 button.jsdialog img {
 	max-height: 100%;
 }
+[data-theme='dark'] button.jsdialog img {
+	filter: invert(1) hue-rotate(180deg) !important;
+}
 
 .annotation-btns-container {
 	display: flex;

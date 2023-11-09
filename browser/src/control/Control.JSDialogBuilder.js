@@ -2802,7 +2802,13 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			var icon = builder._createIconURL(data.command);
 			var buttonId = data.id ? data.id: id + '-button';
 			var button = L.DomUtil.create('button', 'ui-content unobutton', div);
-			button.style.background = 'url(' + L.LOUtil.getImageURL(icon.split('/').pop(), builder.map.getDocType()) + ')';
+			// Create an img element
+			var iconImg = document.createElement('img');
+			// Set the src attribute of the img element to the image URL
+			iconImg.src = L.LOUtil.getImageURL(icon.split('/').pop(), builder.map.getDocType());
+
+			// Append the img element to the button
+			button.appendChild(iconImg);
 			button.id = buttonId;
 			button.setAttribute('alt', id);
 

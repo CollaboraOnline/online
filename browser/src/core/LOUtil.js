@@ -112,27 +112,12 @@ L.LOUtil = {
 		img.src = this.getImageURL(name, doctype);
 		this.checkIfImageExists(img);
 	},
-	getImageURL: function(imgName, docType) {
+	getImageURL: function(imgName) {
 		var defaultImageURL = this.getURL('images/' + imgName);
-		if (window.isLocalStorageAllowed) {
-			var state = localStorage.getItem('UIDefaults_' + docType + '_darkTheme');
-			if ((state && (/true/).test(state.toLowerCase())) || (state === null &&  window.uiDefaults['darkTheme'])) {
-				return this.getURL('images/dark/' + imgName);
-			}
-		}
 		return defaultImageURL;
 	},
 	checkIfImageExists : function(imageElement) {
 		imageElement.addEventListener('error', function() {
-			if (imageElement.src && imageElement.src.includes('images/branding/dark')) {
-				imageElement.src = imageElement.src.replace('images/branding/dark', 'images/dark');
-				return;
-			}
-			if (imageElement.src && (imageElement.src.includes('images/dark')|| imageElement.src.includes('images/branding'))) {
-				imageElement.src = imageElement.src.replace('images/dark', 'images');
-				imageElement.src = imageElement.src.replace('images/branding', 'images');
-				return;
-			}
 			imageElement.style.display = 'none';
 			});
 		},

@@ -94,6 +94,10 @@ button.ui-tab.notebookbar {
 	height: var(--btn-size);
 }
 
+[data-theme='dark'] .ui-content .unobutton img {
+	filter: invert(1) hue-rotate(180deg) !important;
+}
+
 .notebookbar-shortcuts-bar .notebookbar.unotoolbutton {
 	margin: 0px !important;
 }

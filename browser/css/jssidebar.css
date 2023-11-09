@@ -11,6 +11,10 @@ img.sidebar.ui-image {
 	padding: 6px;
 }
 
+[data-theme='dark'] img.sidebar.ui-image {
+	filter: invert(1) hue-rotate(180deg) !important;
+}
+
 /* Impress -> Master Slides images should fit in the visible width */
 img.sidebar.ui-drawing-area {
 	width: 300px;
@@ -29,6 +33,10 @@ img.sidebar.ui-drawing-area {
 .sidebar .unobutton > img {
 	width: var(--btn-size);
 	height: var(--btn-size);
+}
+
+[data-theme='dark'] .sidebar .unobutton > img {
+	filter: invert(1) hue-rotate(180deg) !important;
 }
 
 #document-container:not(.mobile) + #sidebar-dock-wrapper {
