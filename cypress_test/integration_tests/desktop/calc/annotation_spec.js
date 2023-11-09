@@ -224,7 +224,7 @@ describe(['tagdesktop'], 'Annotation Autosave Tests', function() {
 		cy.cGet('#annotation-content-area-1').should('have.text','some other text, some text0');
 	});
 
-	it.skip('Modify autosave cancel',function() {
+	it('Modify autosave cancel',function() {
 		insertMultipleComment('calc', 1, false, '[id=insert-insert-annotation]');
 
 		cy.cGet('#comment-container-1').should('exist');

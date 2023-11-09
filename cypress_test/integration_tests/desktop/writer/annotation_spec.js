@@ -225,7 +225,7 @@ describe(['tagdesktop'], 'Annotation Autosave Tests', function() {
 		cy.cGet('#annotation-content-area-1').should('have.text','some other text, some text0');
 	});
 
-	it.skip('Modify autosave cancel', function() {
+	it('Modify autosave cancel', function() {
 		insertMultipleComment('writer', 1, false, '[id=insert-insert-annotation]');
 
 		cy.cGet('.cool-annotation-content-wrapper').should('exist');
@@ -265,11 +265,11 @@ describe(['tagdesktop'], 'Annotation Autosave Tests', function() {
 		cy.cGet('#annotation-content-area-2').should('have.text','some reply text');
 	});
 
-	it.skip('Reply autosave save', function() {
+	it('Reply autosave save', function() {
 		insertMultipleComment('writer', 1, false, '[id=insert-insert-annotation]');
 
 		cy.cGet('.cool-annotation-content-wrapper').should('exist');
-		cy.cGet('#annotation-content-area-1').should('have.text','some text');
+		cy.cGet('#annotation-content-area-1').should('have.text','some text0');
 		cy.cGet('#comment-annotation-menu-1').click();
 		cy.cGet('body').contains('.context-menu-item', 'Reply').click();
 		cy.cGet('#annotation-reply-textarea-1').type('some reply text');
@@ -288,7 +288,7 @@ describe(['tagdesktop'], 'Annotation Autosave Tests', function() {
 		cy.cGet('#annotation-content-area-2').should('have.text','some reply text');
 	});
 
-	it.skip('Reply autosave cancel', function() {
+	it('Reply autosave cancel', function() {
 		insertMultipleComment('writer', 1, false, '[id=insert-insert-annotation]');
 
 		cy.cGet('.cool-annotation-content-wrapper').should('exist');
