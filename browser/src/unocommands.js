@@ -253,6 +253,7 @@ var unoCommandsArray = {
 	'InsertField':{text:{menu:_('~More Fields...'),},},
 	'InsertFieldCtrl':{text:{context:_('Insert Field'),menu:_('Fiel~d'),},},
 	'InsertFootnote':{text:{context:_('Insert Footnote'),menu:_('~Footnote'),},},
+	'InsertFrame':{text:{context:_('Insert Frame'),menu:_('Frame...'),},},
 	'InsertGraphic':{global:{context:_('Insert Image...'),menu:_('~Image...'),},},
 	'InsertHardHyphen':{global:{menu:_('Insert non-br~eaking hyphen'),},},
 	'InsertHeaderFooterMenu':{text:{menu:_('He~ader and Footer'),},},
