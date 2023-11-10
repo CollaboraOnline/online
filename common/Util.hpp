@@ -248,6 +248,15 @@ namespace Util
     /// Returns the total physical memory (in kB) available in the system
     size_t getTotalSystemMemoryKb();
 
+    /// Returns the numerical content of a file at @path
+    std::size_t getFromFile(const char *path);
+
+    /// Returns the cgroup's memory limit, or 0 if not available in bytes
+    std::size_t getCGroupMemLimit();
+
+    /// Returns the cgroup's soft memory limit, or 0 if not available in bytes
+    std::size_t getCGroupMemSoftLimit();
+
     /// Returns the process PSS in KB (works only when we have perms for /proc/pid/smaps).
     size_t getMemoryUsagePSS(const pid_t pid);
 

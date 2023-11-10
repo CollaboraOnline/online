@@ -5846,9 +5846,29 @@ int COOLWSD::innerMain()
     Util::getVersionInfo(version, hash);
     LOG_INF("Coolwsd version details: " << version << " - " << hash << " - id " << Util::getProcessIdentifier() << " - on " << Util::getLinuxVersion());
 
-    LOG_INF("available memory: " << Util::getTotalSystemMemoryKb()/1024 << " MB");
+    std::size_t availableMemoryMb = Util::getTotalSystemMemoryKb()/1024;
+    LOG_INF("available memory: " << availableMemoryMb << " MB");
+    std::size_t cgroupMemLimitMb = Util::getCGroupMemLimit()/(1024*1024);
+    if (cgroupMemLimitMb > 0 && cgroupMemLimitMb < availableMemoryMb)
+    {
+        LOG_INF("cgroup memory limit: " << cgroupMemLimitMb << " MB");
+        availableMemoryMb = cgroupMemLimitMb;
+    }
+    else
+        LOG_INF("no cgroup memory limit");
+
+    std::size_t cgroupMemSoftLimitMb = Util::getCGroupMemSoftLimit()/(1024*1024);
+    if (cgroupMemSoftLimitMb > 0 && cgroupMemSoftLimitMb < availableMemoryMb)
+    {
+        LOG_INF("cgroup memory soft limit: " << cgroupMemSoftLimitMb << " MB");
+        availableMemoryMb = cgroupMemSoftLimitMb;
+    }
+    else
+        LOG_INF("no cgroup memory soft limit");
     LOG_INF("hardware threads: " << std::thread::hardware_concurrency());
 
+    if (availableMemoryMb < 1000)
+        LOG_WRN("Low memory condition detected: only " << availableMemoryMb << " MB of RAM available");
 #endif
 
     initializeSSL();

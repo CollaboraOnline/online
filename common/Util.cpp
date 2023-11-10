@@ -381,7 +381,7 @@ namespace Util
                 const char* value;
                 if ((value = startsWith(line, "MemTotal:", 9)))
                 {
-                    totalMemKb = atoi(value);
+                    totalMemKb = atoll(value);
                     break;
                 }
             }
@@ -389,6 +389,64 @@ namespace Util
         }
 
         return totalMemKb;
+    }
+
+    std::size_t getFromCGroup(const std::string &group, const std::string &key)
+    {
+        std::size_t num = 0;
+
+        std::string groupPath;
+        FILE* cg = fopen("/proc/self/cgroup", "r");
+        if (cg != nullptr)
+        {
+
+            char line[4096] = { 0 };
+            while (fgets(line, sizeof(line), cg))
+            {
+                StringVector bits = StringVector::tokenize(line, strlen (line), ':');
+                if (bits.size() > 2 && bits[1] == group)
+                {
+                    groupPath = "/sys/fs/cgroup/" + group + bits[2];
+                    break;
+                }
+            }
+            LOG_TRC("control group path for " << group << " is " << groupPath);
+            fclose(cg);
+        }
+
+        if (groupPath.empty())
+            return 0;
+
+        std::string path = groupPath + "/" + key;
+        LOG_TRC("Read from " << path);
+        FILE* file = fopen(path.c_str(), "r");
+        if (file != nullptr)
+        {
+            char line[4096] = { 0 };
+            if (fgets(line, sizeof(line), file))
+                num = atoll(line);
+            fclose(file);
+        }
+
+        return num;
+    }
+
+    std::size_t getCGroupMemLimit()
+    {
+#ifdef __linux__
+        return getFromCGroup("memory", "memory.limit_in_bytes");
+#else
+        return 0;
+#endif
+     }
+
+    std::size_t getCGroupMemSoftLimit()
+    {
+#ifdef __linux__
+        return getFromCGroup("memory", "memory.soft_limit_in_bytes");
+#else
+        return 0;
+#endif
     }
 
     std::pair<std::size_t, std::size_t> getPssAndDirtyFromSMaps(FILE* file)
