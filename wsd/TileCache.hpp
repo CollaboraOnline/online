@@ -221,9 +221,9 @@ public:
     TileCache(const TileCache&) = delete;
     TileCache& operator=(const TileCache&) = delete;
 
-    /// Subscribes if no subscription exists and returns the version number.
-    /// Otherwise returns 0 to signify a subscription exists.
-    void subscribeToTileRendering(const TileDesc& tile, const std::shared_ptr<ClientSession>& subscriber,
+    /// Subscribes if no subscription exists and returns true.
+    /// Otherwise returns false to signify a subscription already exists.
+    bool subscribeToTileRendering(const TileDesc& tile, const std::shared_ptr<ClientSession>& subscriber,
                                   const std::chrono::steady_clock::time_point& now);
 
     /// Cancels all tile requests by the given subscriber.

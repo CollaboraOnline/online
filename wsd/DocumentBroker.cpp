@@ -3411,8 +3411,8 @@ void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& se
                     tilesNeedsRendering.push_back(tile);
                     _debugRenderedTileCount++;
                 }
-                tileCache().subscribeToTileRendering(tile, session, now);
-                beingRendered++;
+                if (tileCache().subscribeToTileRendering(tile, session, now))
+                    beingRendered++;
             }
             requestedTiles.pop_front();
         }
