@@ -1177,7 +1177,8 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
                 Poco::DigestEngine::digestToHex(sha1.digest()));
 
         std::string localPathEncoded;
-        Poco::URI::encode(localPath, "#?", localPathEncoded);
+        LOG_ERR("MEEKS HACK- here ...");
+        Poco::URI::encode(localFilePath, "#?", localPathEncoded);
         _uriJailed = Poco::URI(Poco::URI("file://"), localPathEncoded).toString();
         _uriJailedAnonym = Poco::URI(Poco::URI("file://"), COOLWSD::anonymizeUrl(localPathEncoded)).toString();
 
