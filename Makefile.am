@@ -87,11 +87,13 @@ if !HAVE_CLANG
 AM_LDFLAGS += -pthread
 endif
 
+coolwsddebug_LDADD=
+
 if ENABLE_SSL
 AM_LDFLAGS += ${OPENSSL_LIBS}
 else
 coolwsd_LDADD = ${OPENSSL_LIBS}
-coolwsddebug_LDADD = ${OPENSSL_LIBS} libsimd.a
+coolwsddebug_LDADD += ${OPENSSL_LIBS}
 coolconfig_LDADD = ${OPENSSL_LIBS}
 endif
 
@@ -200,6 +202,8 @@ coolwsddebug_SOURCES = $(coolwsd_sources) \
                        $(shared_sources) \
                        $(coolforkit_sources) \
                        wsd/debug-main.cpp
+
+coolwsddebug_LDADD += libsimd.a
 
 if ENABLE_LIBFUZZER
 coolforkit_SOURCES += \
