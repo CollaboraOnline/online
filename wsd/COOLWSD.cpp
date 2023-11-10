@@ -135,6 +135,7 @@ using Poco::Net::PartHandler;
 #include <common/JailUtil.hpp>
 #if defined KIT_IN_PROCESS || MOBILEAPP
 #  include <Kit.hpp>
+#  include <SetupKitEnvironment.hpp>
 #endif
 #include <Log.hpp>
 #include <MobileApp.hpp>
@@ -3369,6 +3370,8 @@ void PrisonPoll::wakeupHook()
 bool COOLWSD::createForKit()
 {
 #if defined KIT_IN_PROCESS
+    setupKitEnvironment("notebookbar");
+    // FIXME: Expect this code to run - at least more of it ...
     return true;
 #else
     LOG_INF("Creating new forkit process.");

@@ -9,6 +9,7 @@
 #include "Log.hpp"
 #include "Common.hpp"
 #include "Kit.hpp"
+#include "SetupKitEnvironment.hpp"
 
 extern "C" int forkit_main(int argc, char** argv);
 
@@ -32,6 +33,8 @@ extern "C" int createForkit(const std::string forKitPath, const StringVector arg
     char** argv = convertStringVectorToCharArray(args);
 
     LOG_INF("Run forkit main on a separate thread");
+
+    setupKitEnvironment("notebookbar");
 
     int result = 0;
     std::thread worker = std::thread(
