@@ -411,6 +411,8 @@ static int createLibreOfficeKit(const std::string& childRoot,
         if (!lokitProcessIsRunning)
         {
             lokitProcessIsRunning = true;
+            setupKitEnvironment("notebookbar");
+
             std::thread(
                 [childRoot, jailId, sysTemplate, loTemplate, queryVersion]
                 {
