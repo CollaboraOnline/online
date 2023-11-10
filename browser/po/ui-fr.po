@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-11-09 13:41+0100\n"
-"PO-Revision-Date: 2023-10-11 16:23+0000\n"
-"Last-Translator: Pedro Silva <pedro.silva@collabora.com>\n"
+"PO-Revision-Date: 2023-11-10 16:39+0000\n"
+"Last-Translator: Louis Chance <contact@louischance.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/collabora-online/"
 "ui/fr/>\n"
-"Language: \n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.1-dev\n"
+"X-Generator: Weblate 5.2-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -449,13 +449,15 @@ msgstr "Annuler"
 
 #: src/control/Control.DownloadProgress.js:43
 msgid "Download Selection"
-msgstr ""
+msgstr "Télécharger la sélection"
 
 #: src/control/Control.DownloadProgress.js:48
 msgid ""
 "If you want to share large elements outside of %productName it's necessary "
 "to first download them."
 msgstr ""
+"Si vous souhaitez partager de grands éléments en dehors de %productName, il "
+"est nécessaire de les télécharger d'abord."
 
 #: src/control/Control.DownloadProgress.js:61
 #: src/control/Control.NotebookbarCalc.js:204
@@ -466,7 +468,7 @@ msgstr "Télécharger"
 
 #: src/control/Control.DownloadProgress.js:80
 msgid "Downloading clipboard content"
-msgstr ""
+msgstr "Télécharger le contenu du presse-papiers"
 
 #: src/control/Control.DownloadProgress.js:87
 #: src/control/Control.DownloadProgress.js:112
@@ -476,20 +478,22 @@ msgstr "Copier"
 
 #: src/control/Control.DownloadProgress.js:110
 msgid "Download completed and ready to be copied to clipboard."
-msgstr ""
+msgstr "Téléchargement terminé et prêt à être copié vers le presse-papiers."
 
 #: src/control/Control.DownloadProgress.js:111
 msgid ""
 "From now on clipboard notifications will discreetly appear at the bottom."
 msgstr ""
+"À partir de maintenant les notifications du presse-papiers apparaîtront dans "
+"la partie inférieure."
 
 #: src/control/Control.DownloadProgress.js:257
 msgid "Content copied to clipboard"
-msgstr ""
+msgstr "Contenu copié vers le presse-papiers"
 
 #: src/control/Control.DownloadProgress.js:301
 msgid "Download failed"
-msgstr ""
+msgstr "Téléchargement échoué"
 
 #: src/control/Control.FormulaBar.js:45
 msgid "cell address"
@@ -1083,32 +1087,32 @@ msgstr "Fichier CSV (.csv)"
 #: src/control/Control.Menubar.js:803
 #: src/control/Control.NotebookbarBuilder.js:808
 msgid "Condition..."
-msgstr ""
+msgstr "Condition..."
 
 #: src/control/Control.Menubar.js:804
 #: src/control/Control.NotebookbarBuilder.js:809
 msgid "Greater than..."
-msgstr ""
+msgstr "Supérieur à..."
 
 #: src/control/Control.Menubar.js:805
 #: src/control/Control.NotebookbarBuilder.js:810
 msgid "Less than..."
-msgstr ""
+msgstr "Inférieur à..."
 
 #: src/control/Control.Menubar.js:806
 #: src/control/Control.NotebookbarBuilder.js:811
 msgid "Equal to..."
-msgstr ""
+msgstr "Égal à..."
 
 #: src/control/Control.Menubar.js:807
 #: src/control/Control.NotebookbarBuilder.js:812
 msgid "Between..."
-msgstr ""
+msgstr "Entre..."
 
 #: src/control/Control.Menubar.js:809
 #: src/control/Control.NotebookbarBuilder.js:814
 msgid "More conditions..."
-msgstr ""
+msgstr "Autres conditions..."
 
 #: src/control/Control.Menubar.js:917 src/control/Control.Menubar.js:984
 #: src/control/Control.Menubar.js:1049 src/control/Control.Menubar.js:1104
@@ -1492,9 +1496,8 @@ msgid "Image (.png)"
 msgstr "Image (.png)"
 
 #: src/control/Control.NotebookbarDraw.js:1028
-#, fuzzy
 msgid "Page Layout"
-msgstr "Disposition de la page"
+msgstr "Mise en page"
 
 #: src/control/Control.NotebookbarImpress.js:124
 msgid "Master"
@@ -2247,11 +2250,11 @@ msgstr "Le serveur a été déconnecté."
 
 #: src/docstate.js:71
 msgid "Standard"
-msgstr ""
+msgstr "Standard"
 
 #: src/docstate.js:82
 msgid "Theme colors"
-msgstr ""
+msgstr "Couleurs du thème"
 
 #: src/errormessages.js:13
 msgid "No disk space left on server."
@@ -2390,6 +2393,11 @@ msgid ""
 "administrator. For more info on proxy configuration please checkout https://"
 "sdk.collaboraonline.com/docs/installation/Proxy_settings.html"
 msgstr ""
+"Échec d'établissement de connexion par socket ou fermeture inattendue de la "
+"connexion par socket. Le proxy inverse pourrait être mal configuré, veuillez "
+"contacter l'administrateur. Pour plus d'informations sur la configuration du "
+"proxy, veuillez consulter https://sdk.collaboraonline.com/docs/installation/"
+"Proxy_settings.html"
 
 #: src/errormessages.js:33
 msgid "Failed to load document."
