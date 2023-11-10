@@ -203,6 +203,7 @@ var unoCommandsArray = {
 	'FormatYErrorBars':{global:{menu:_('Format Y Error Bars...'),},},
 	'FormattingMarkMenu':{global:{menu:_('Formatting Mark'),},},
 	'FourierAnalysisDialog':{spreadsheet:{menu:_('F~ourier Analysis...'),},},
+	'FrameDialog':{text:{menu:_('~Properties...'),},},
 	'FreezeCellsMenu':{spreadsheet:{menu:_('Freeze ~Cells'),},},
 	'FreezePanes':{spreadsheet:{menu:_('Freeze ~Rows and Columns'),},},
 	'FreezePanesColumn':{spreadsheet:{menu:_('Freeze First Column'),},},
