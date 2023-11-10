@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-11-09 13:41+0100\n"
-"PO-Revision-Date: 2023-10-27 20:10+0000\n"
-"Last-Translator: Qiao Yifeng <qiaoyifeng@promc.cn>\n"
+"PO-Revision-Date: 2023-11-10 16:39+0000\n"
+"Last-Translator: TUCAOEVER5023416dba724da7 <814697582@qq.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
 "collabora-online/ui/zh_Hans/>\n"
-"Language: \n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -440,13 +440,13 @@ msgstr "撤消"
 
 #: src/control/Control.DownloadProgress.js:43
 msgid "Download Selection"
-msgstr ""
+msgstr "下载选中项目"
 
 #: src/control/Control.DownloadProgress.js:48
 msgid ""
 "If you want to share large elements outside of %productName it's necessary "
 "to first download them."
-msgstr ""
+msgstr "如果你想在 %productName 以外分享大型项目，有必要先下载他们。"
 
 #: src/control/Control.DownloadProgress.js:61
 #: src/control/Control.NotebookbarCalc.js:204
@@ -457,30 +457,30 @@ msgstr "下载"
 
 #: src/control/Control.DownloadProgress.js:80
 msgid "Downloading clipboard content"
-msgstr ""
+msgstr "下载剪切板内容"
 
 #: src/control/Control.DownloadProgress.js:87
 #: src/control/Control.DownloadProgress.js:112
 #: src/control/Control.PartsPreview.js:270
 msgid "Copy"
-msgstr ""
+msgstr "复制"
 
 #: src/control/Control.DownloadProgress.js:110
 msgid "Download completed and ready to be copied to clipboard."
-msgstr ""
+msgstr "下载完成并准备好复制到剪切板中。"
 
 #: src/control/Control.DownloadProgress.js:111
 msgid ""
 "From now on clipboard notifications will discreetly appear at the bottom."
-msgstr ""
+msgstr "从现在开始，剪切板提示信息将显示在底部。"
 
 #: src/control/Control.DownloadProgress.js:257
 msgid "Content copied to clipboard"
-msgstr ""
+msgstr "内容已拷贝至剪切板"
 
 #: src/control/Control.DownloadProgress.js:301
 msgid "Download failed"
-msgstr ""
+msgstr "下载失败"
 
 #: src/control/Control.FormulaBar.js:45
 msgid "cell address"
@@ -530,12 +530,12 @@ msgstr "计数"
 #: src/control/Control.JSDialogBuilder.js:202
 #: src/control/Control.Menubar.js:676
 msgid "Active sheet"
-msgstr ""
+msgstr "活动表格"
 
 #: src/control/Control.JSDialogBuilder.js:203
 #: src/control/Control.Menubar.js:677 src/control/Control.TopToolbar.js:99
 msgid "All Sheets"
-msgstr ""
+msgstr "所有表格"
 
 #: src/control/Control.JSDialogBuilder.js:568
 msgid "Solid"
@@ -862,7 +862,7 @@ msgstr "所有"
 #: src/control/Control.NotebookbarImpress.js:1241
 #: src/control/Control.NotebookbarWriter.js:1087
 msgid "Smart Picker"
-msgstr ""
+msgstr "智能拾取器"
 
 #: src/control/Control.Menubar.js:216
 msgid "Text orientation"
@@ -870,9 +870,8 @@ msgstr "文字方向"
 
 #: src/control/Control.Menubar.js:278
 #: src/control/Control.NotebookbarWriter.js:57
-#, fuzzy
 msgid "References"
-msgstr "引用(~S)"
+msgstr "引用"
 
 #: src/control/Control.Menubar.js:281
 #: src/control/Control.NotebookbarWriter.js:1841
@@ -897,18 +896,18 @@ msgstr "添加参考文献"
 #: src/control/Control.Menubar.js:294
 #: src/control/Control.NotebookbarWriter.js:1967
 msgid "Refresh Citations"
-msgstr ""
+msgstr "刷新引用链接"
 
 #: src/control/Control.Menubar.js:295
 #: src/control/Control.NotebookbarWriter.js:1979
 #: src/control/Control.Zotero.js:1442
 msgid "Unlink Citations"
-msgstr ""
+msgstr "取消引用链接"
 
 #: src/control/Control.Menubar.js:296
 #: src/control/Control.NotebookbarWriter.js:1991
 msgid "Citation Preferences"
-msgstr ""
+msgstr "引用链接偏好"
 
 #: src/control/Control.Menubar.js:324 src/control/Control.Menubar.js:1220
 msgid "Insert Rich Text"
@@ -937,12 +936,12 @@ msgstr "插入日期"
 #: src/control/Control.NotebookbarWriter.js:355
 #: src/control/Control.NotebookbarWriter.js:1358
 msgid "Properties"
-msgstr ""
+msgstr "属性"
 
 #: src/control/Control.Menubar.js:349 src/control/Control.Menubar.js:969
 #: src/control/Control.NotebookbarWriter.js:430
 msgid "Accessibility Support"
-msgstr ""
+msgstr "辅助功能支持"
 
 #: src/control/Control.Menubar.js:362
 #: src/control/Control.NotebookbarWriter.js:396
@@ -1075,17 +1074,17 @@ msgstr "CSV文件(.csv)"
 #: src/control/Control.Menubar.js:803
 #: src/control/Control.NotebookbarBuilder.js:808
 msgid "Condition..."
-msgstr ""
+msgstr "条件..."
 
 #: src/control/Control.Menubar.js:804
 #: src/control/Control.NotebookbarBuilder.js:809
 msgid "Greater than..."
-msgstr ""
+msgstr "大于..."
 
 #: src/control/Control.Menubar.js:805
 #: src/control/Control.NotebookbarBuilder.js:810
 msgid "Less than..."
-msgstr ""
+msgstr "小于..."
 
 #: src/control/Control.Menubar.js:806
 #: src/control/Control.NotebookbarBuilder.js:811
@@ -1224,9 +1223,8 @@ msgstr "非常松的"
 #: src/control/Control.NotebookbarDraw.js:58
 #: src/control/Control.NotebookbarImpress.js:73
 #: src/control/Control.NotebookbarWriter.js:32
-#, fuzzy
 msgid "File"
-msgstr "文件(~F)"
+msgstr "文件"
 
 #: src/control/Control.NotebookbarCalc.js:25
 #: src/control/Control.NotebookbarDraw.js:64
@@ -1239,51 +1237,44 @@ msgstr "Home"
 #: src/control/Control.NotebookbarDraw.js:71
 #: src/control/Control.NotebookbarImpress.js:86
 #: src/control/Control.NotebookbarWriter.js:45
-#, fuzzy
 msgid "Insert"
-msgstr "插入(~I)"
+msgstr "插入"
 
 #: src/control/Control.NotebookbarCalc.js:38
 #: src/control/Control.NotebookbarDraw.js:77
 #: src/control/Control.NotebookbarImpress.js:92
 #: src/control/Control.NotebookbarWriter.js:51
-#, fuzzy
 msgid "Layout"
-msgstr "布局(~L)"
+msgstr "布局"
 
 #: src/control/Control.NotebookbarCalc.js:44
-#, fuzzy
 msgid "Data"
-msgstr "数据(~D)"
+msgstr "数据"
 
 #: src/control/Control.NotebookbarCalc.js:50
 #: src/control/Control.NotebookbarDraw.js:83
 #: src/control/Control.NotebookbarImpress.js:98
 #: src/control/Control.NotebookbarWriter.js:63
-#, fuzzy
 msgid "Review"
-msgstr "审阅(~R)"
+msgstr "审阅"
 
 #: src/control/Control.NotebookbarCalc.js:56
 #: src/control/Control.NotebookbarDraw.js:89
 #: src/control/Control.NotebookbarImpress.js:104
 #: src/control/Control.NotebookbarWriter.js:69
-#, fuzzy
 msgid "Format"
 msgstr "格式"
 
 #: src/control/Control.NotebookbarCalc.js:62
 #: src/control/Control.NotebookbarDraw.js:102
 #: src/control/Control.NotebookbarWriter.js:88
-#, fuzzy
 msgid "Draw"
-msgstr "下拉（~D）"
+msgstr "下拉"
 
 #: src/control/Control.NotebookbarCalc.js:69
 #: src/control/Control.NotebookbarDraw.js:109
 #: src/control/Control.NotebookbarImpress.js:131
 #: src/control/Control.NotebookbarWriter.js:95
-#, fuzzy
 msgid "View"
 msgstr "查看"
 
@@ -1291,9 +1282,8 @@ msgstr "查看"
 #: src/control/Control.NotebookbarDraw.js:115
 #: src/control/Control.NotebookbarImpress.js:137
 #: src/control/Control.NotebookbarWriter.js:101
-#, fuzzy
 msgid "Help"
-msgstr "帮助(~H)"
+msgstr "帮助"
 
 #: src/control/Control.NotebookbarCalc.js:121
 #: src/control/Control.NotebookbarImpress.js:186
@@ -1305,7 +1295,6 @@ msgstr "保存为"
 #: src/control/Control.NotebookbarDraw.js:175
 #: src/control/Control.NotebookbarImpress.js:205
 #: src/control/Control.NotebookbarWriter.js:186
-#, fuzzy
 msgid "Export As"
 msgstr "导出为"
 
@@ -1450,9 +1439,8 @@ msgstr ""
 #: src/control/Control.NotebookbarDraw.js:384
 #: src/control/Control.NotebookbarImpress.js:493
 #: src/control/Control.NotebookbarWriter.js:1435
-#, fuzzy
 msgid "Compact view"
-msgstr "使用紧凑视图"
+msgstr "紧凑视图"
 
 #: src/control/Control.NotebookbarCalc.js:1270
 #: src/control/Control.NotebookbarDraw.js:397
@@ -1487,9 +1475,8 @@ msgstr ""
 #: src/control/Control.NotebookbarDraw.js:95
 #: src/control/Control.NotebookbarImpress.js:110
 #: src/control/Control.NotebookbarWriter.js:81
-#, fuzzy
 msgid "Table"
-msgstr "表格(~T)"
+msgstr "表格"
 
 #: src/control/Control.NotebookbarDraw.js:241
 msgid "Image (.png)"
@@ -1513,9 +1500,8 @@ msgid "Presentation"
 msgstr ""
 
 #: src/control/Control.NotebookbarWriter.js:75
-#, fuzzy
 msgid "Form"
-msgstr "论坛"
+msgstr "形式"
 
 #: src/control/Control.NotebookbarWriter.js:259
 msgid "ODF Text Document (.odt)"
@@ -1806,9 +1792,8 @@ msgid "Loading..."
 msgstr "正在载入..."
 
 #: src/control/Control.Zotero.js:261
-#, fuzzy
 msgid "Language:"
-msgstr "语言"
+msgstr "语言："
 
 #: src/control/Control.Zotero.js:276
 msgid "Store as:"
@@ -1855,7 +1840,6 @@ msgid "Citation Style"
 msgstr ""
 
 #: src/control/Control.Zotero.js:752
-#, fuzzy
 msgid "Styles"
 msgstr "样式"
 
@@ -2278,19 +2262,19 @@ msgid "Wrong or missing WOPISrc parameter, please contact support."
 msgstr "错误或缺少WOPISrc参数，请联系支持。"
 
 #: src/errormessages.js:21
-#, fuzzy
 msgid ""
 "Your session will expire in %time. Please save your work and refresh the "
 "session (or webpage) to continue. You might need to login again."
-msgstr "您的会话将在 %time 内过期，请保存您的工作并刷新会话（或页面）来继续。"
+msgstr "您的会话将在 %time "
+"内过期，请保存您的工作并刷新会话（或页面）以继续。您可能并不需要重新登录。"
 
 #: src/errormessages.js:22
-#, fuzzy
 msgid ""
 "Your session has expired. Further changes to the document might not be "
 "saved. Please refresh the session (or webpage) to continue. You might need "
 "to login again."
-msgstr "您的会话已过期，文档后续变更可能无法保存，请刷新会话（或页面）来继续。"
+msgstr "您的会话已过期，文档后续变更可能无法保存，请刷新会话（或页面）以继续。您可能"
+"并不需要重新登录。"
 
 #: src/errormessages.js:23
 msgid ""
