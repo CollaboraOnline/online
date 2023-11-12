@@ -443,7 +443,7 @@ L.TextInput = L.Layer.extend({
 				_('Screen reader support for text content is disabled. ') +
 				_('You need to enable it both at server level and in the UI. ') +
 				_('Look for the accessibility section in coolwsd.xml for server setting. ') +
-				_('Also check the accessibility support toggle under %parentControl.').replace(
+				_('Also check the voice over toggle under %parentControl.').replace(
 					'%parentControl',
 					window.userInterfaceMode === 'notebookbar' ? _('the Help tab') : _('the View menu')
 				);
