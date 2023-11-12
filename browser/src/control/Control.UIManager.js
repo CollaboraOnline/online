@@ -294,8 +294,6 @@ L.Control.UIManager = L.Control.extend({
 
 		this.initDarkModeFromSettings();
 
-		this.map.fire('a11ystatechanged');
-
 		if (docType === 'spreadsheet') {
 			this.map.addControl(L.control.sheetsBar({shownavigation: isDesktop || window.mode.isTablet()}));
 			this.map.addControl(L.control.formulaBar());
@@ -442,7 +440,7 @@ L.Control.UIManager = L.Control.extend({
 
 		this.notebookbar = notebookbar;
 		this.map.addControl(notebookbar);
-
+		this.map.fire('a11ystatechanged');
 		app.UI.notebookbarAccessibility.initialize();
 	},
 
