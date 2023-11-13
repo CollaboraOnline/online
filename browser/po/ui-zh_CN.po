@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-11-09 13:41+0100\n"
-"PO-Revision-Date: 2023-11-10 16:39+0000\n"
+"PO-Revision-Date: 2023-11-13 11:26+0000\n"
 "Last-Translator: TUCAOEVER5023416dba724da7 <814697582@qq.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
 "collabora-online/ui/zh_Hans/>\n"
@@ -530,12 +530,12 @@ msgstr "计数"
 #: src/control/Control.JSDialogBuilder.js:202
 #: src/control/Control.Menubar.js:676
 msgid "Active sheet"
-msgstr "活动表格"
+msgstr "活动工作表"
 
 #: src/control/Control.JSDialogBuilder.js:203
 #: src/control/Control.Menubar.js:677 src/control/Control.TopToolbar.js:99
 msgid "All Sheets"
-msgstr "所有表格"
+msgstr "所有工作表"
 
 #: src/control/Control.JSDialogBuilder.js:568
 msgid "Solid"
@@ -1065,7 +1065,7 @@ msgstr "Excel 2003 电子表格 (.xls)"
 #: src/control/Control.NotebookbarBuilder.js:653
 #: src/control/Control.NotebookbarCalc.js:244
 msgid "Excel Spreadsheet (.xlsx)"
-msgstr "Excel 电子表格 (.xlsx)"
+msgstr "Excel 电子表格 （.xlsx）"
 
 #: src/control/Control.Menubar.js:672
 msgid "CSV file (.csv)"
@@ -1089,17 +1089,17 @@ msgstr "小于..."
 #: src/control/Control.Menubar.js:806
 #: src/control/Control.NotebookbarBuilder.js:811
 msgid "Equal to..."
-msgstr ""
+msgstr "等于..."
 
 #: src/control/Control.Menubar.js:807
 #: src/control/Control.NotebookbarBuilder.js:812
 msgid "Between..."
-msgstr ""
+msgstr "介于..."
 
 #: src/control/Control.Menubar.js:809
 #: src/control/Control.NotebookbarBuilder.js:814
 msgid "More conditions..."
-msgstr ""
+msgstr "更多条件..."
 
 #: src/control/Control.Menubar.js:917 src/control/Control.Menubar.js:984
 #: src/control/Control.Menubar.js:1049 src/control/Control.Menubar.js:1104
@@ -1321,7 +1321,7 @@ msgstr "ODF 电子表格 （.ods）"
 #: src/control/Control.NotebookbarImpress.js:355
 #: src/control/Control.NotebookbarWriter.js:302
 msgid "PDF Document (.pdf) - Expert"
-msgstr ""
+msgstr "PDF 文档 （.pdf） - 导出"
 
 #: src/control/Control.NotebookbarCalc.js:314
 #: src/control/Control.NotebookbarDraw.js:315
@@ -1378,11 +1378,11 @@ msgstr "默认"
 
 #: src/control/Control.NotebookbarCalc.js:829
 msgid "Heading 1"
-msgstr ""
+msgstr "标题 1"
 
 #: src/control/Control.NotebookbarCalc.js:836
 msgid "Heading 2"
-msgstr ""
+msgstr "标题 2"
 
 #: src/control/Control.NotebookbarCalc.js:849
 msgid "Good"
@@ -1390,19 +1390,19 @@ msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:856
 msgid "Neutral"
-msgstr ""
+msgstr "中立"
 
 #: src/control/Control.NotebookbarCalc.js:863
 msgid "Bad"
-msgstr ""
+msgstr "不好"
 
 #: src/control/Control.NotebookbarCalc.js:969
 msgid "Row Height"
-msgstr ""
+msgstr "行高"
 
 #: src/control/Control.NotebookbarCalc.js:977
 msgid "Column Width"
-msgstr ""
+msgstr "列宽"
 
 #: src/control/Control.NotebookbarCalc.js:990
 msgid "Insert Rows Above"
@@ -1433,7 +1433,7 @@ msgstr "删除列"
 #: src/control/Control.NotebookbarImpress.js:431
 #: src/control/Control.NotebookbarWriter.js:1374
 msgid "Read mode"
-msgstr ""
+msgstr "阅读模式"
 
 #: src/control/Control.NotebookbarCalc.js:1256
 #: src/control/Control.NotebookbarDraw.js:384
@@ -1447,18 +1447,18 @@ msgstr "紧凑视图"
 #: src/control/Control.NotebookbarImpress.js:507
 #: src/control/Control.NotebookbarWriter.js:1475
 msgid "Collapse Tabs"
-msgstr ""
+msgstr "折叠标签页"
 
 #: src/control/Control.NotebookbarCalc.js:1282
 #: src/control/Control.NotebookbarDraw.js:409
 #: src/control/Control.NotebookbarImpress.js:519
 #: src/control/Control.NotebookbarWriter.js:1462
 msgid "Status Bar"
-msgstr ""
+msgstr "状态栏"
 
 #: src/control/Control.NotebookbarCalc.js:1368
 msgid "Sparkline"
-msgstr ""
+msgstr "迷你图"
 
 #: src/control/Control.NotebookbarCalc.js:1500
 #: src/control/Control.NotebookbarCalc.js:2288
@@ -1470,7 +1470,7 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:1043
 #: src/control/Control.NotebookbarWriter.js:2799
 msgid "Shapes"
-msgstr ""
+msgstr "形状"
 
 #: src/control/Control.NotebookbarDraw.js:95
 #: src/control/Control.NotebookbarImpress.js:110
@@ -1484,20 +1484,20 @@ msgstr "图片（.png）"
 
 #: src/control/Control.NotebookbarDraw.js:1028
 msgid "Page Layout"
-msgstr ""
+msgstr "页面布局"
 
 #: src/control/Control.NotebookbarImpress.js:124
 msgid "Master"
-msgstr ""
+msgstr "主要"
 
 #: src/control/Control.NotebookbarImpress.js:300
 msgid "ODF Presentation (.odp)"
-msgstr "ODF 演示文稿 (.odp)"
+msgstr "ODF 演示文稿 （.odp）"
 
 #: src/control/Control.NotebookbarImpress.js:438
 #: src/control/Control.NotebookbarImpress.js:1050
 msgid "Presentation"
-msgstr ""
+msgstr "演示文稿"
 
 #: src/control/Control.NotebookbarWriter.js:75
 msgid "Form"
@@ -1513,35 +1513,35 @@ msgstr "EPUB 文档（.epub）"
 
 #: src/control/Control.NotebookbarWriter.js:1323
 msgid "Rich Text"
-msgstr ""
+msgstr "富文本"
 
 #: src/control/Control.NotebookbarWriter.js:1330
 msgid "Checkbox"
-msgstr ""
+msgstr "复选框"
 
 #: src/control/Control.NotebookbarWriter.js:1337
 msgid "Dropdown"
-msgstr ""
+msgstr "下拉"
 
 #: src/control/Control.NotebookbarWriter.js:1344
 msgid "Picture"
-msgstr ""
+msgstr "图片"
 
 #: src/control/Control.NotebookbarWriter.js:1449
 msgid "Ruler"
-msgstr ""
+msgstr "标尺"
 
 #: src/control/Control.PartsPreview.js:177
 msgid "preview of page "
-msgstr ""
+msgstr "页面预览 "
 
 #: src/control/Control.PartsPreview.js:236
 msgid "Paste Slide"
-msgstr ""
+msgstr "粘贴幻灯片"
 
 #: src/control/Control.PartsPreview.js:279
 msgid "Paste"
-msgstr ""
+msgstr "粘贴"
 
 #: src/control/Control.Scroll.Annotation.js:10
 msgid "Scroll up annotations"
@@ -1633,7 +1633,7 @@ msgstr "幻灯片数"
 
 #: src/control/Control.StatusBar.js:443 src/control/Control.StatusBar.js:447
 msgid "Permission Mode"
-msgstr ""
+msgstr "权限模式"
 
 #: src/control/Control.StatusBar.js:447
 msgid "Edit"
@@ -1653,15 +1653,15 @@ msgstr "插入模式: 未激活"
 
 #: src/control/Control.StatusBar.js:566
 msgid "Set Language for All text"
-msgstr ""
+msgstr "为所有文本设置语言"
 
 #: src/control/Control.StatusBar.js:569
 msgid "Set Language for Paragraph"
-msgstr ""
+msgstr "为段落设置语言"
 
 #: src/control/Control.StatusBar.js:570
 msgid "Set Language for Selection"
-msgstr ""
+msgstr "为选中部分设置语言"
 
 #: src/control/Control.Tabs.js:54
 msgid "Insert sheet before this"
@@ -1681,7 +1681,7 @@ msgstr "向右移动工作表"
 
 #: src/control/Control.Tabs.js:102
 msgid "Copy Sheet..."
-msgstr ""
+msgstr "复制工作表..."
 
 #: src/control/Control.Tabs.js:309
 msgid "Are you sure you want to delete sheet, %sheet%?"
@@ -1689,7 +1689,7 @@ msgstr "您确定要删除工作表 %sheet% 吗？"
 
 #: src/control/Control.Tabs.js:320
 msgid "Rename sheet"
-msgstr ""
+msgstr "重命名工作表"
 
 #: src/control/Control.Tabs.js:320
 msgid "Enter new sheet name"
@@ -1711,7 +1711,7 @@ msgstr "多个用户之间的「撤销」「恢复」操作发生冲突。请使
 
 #: src/control/Control.TopToolbar.js:98
 msgid "Active Sheet"
-msgstr ""
+msgstr "活动工作表"
 
 #: src/control/Control.TopToolbar.js:111
 msgid "Default Style"
@@ -1731,7 +1731,7 @@ msgstr "插入连接器"
 
 #: src/control/Control.TopToolbar.js:253
 msgid "Hide Menu"
-msgstr ""
+msgstr "隐藏菜单"
 
 #: src/control/Control.UserList.js:11
 msgid "%user has joined"
@@ -1755,7 +1755,7 @@ msgstr "0 位用户"
 
 #: src/control/Control.UserList.js:195
 msgid "Following"
-msgstr ""
+msgstr "正在关注"
 
 #: src/control/Control.UserList.js:223 src/control/Control.UserList.js:389
 msgid "Always follow the editor"
@@ -1771,21 +1771,22 @@ msgstr "当前"
 
 #: src/control/Control.Zotero.js:135
 msgid "Zotero API key is not configured"
-msgstr ""
+msgstr "Zotero API 秘钥未配置"
 
 #: src/control/Control.Zotero.js:159
 msgid "Zotero API key is incorrect"
-msgstr ""
+msgstr "Zotero API 秘钥不正确"
 
 #: src/control/Control.Zotero.js:186
 msgid "Zotero Warning"
-msgstr ""
+msgstr "Zotero 警告"
 
 #: src/control/Control.Zotero.js:187
 msgid ""
 "The document contains some citations which may be unreachable through web "
 "API. It may cause some problems while editing citations or bibliography."
-msgstr ""
+msgstr "该文档包含一些可能无法通过 Web API 访问的引用。 "
+"编辑引文或参考书目时可能会导致一些问题。"
 
 #: src/control/Control.Zotero.js:243 src/core/Socket.js:1085
 msgid "Loading..."
@@ -1797,47 +1798,47 @@ msgstr "语言："
 
 #: src/control/Control.Zotero.js:276
 msgid "Store as:"
-msgstr ""
+msgstr "另存为："
 
 #: src/control/Control.Zotero.js:282 src/control/Control.Zotero.js:406
 msgid "Fields"
-msgstr ""
+msgstr "字段"
 
 #: src/control/Control.Zotero.js:283 src/control/Control.Zotero.js:406
 msgid "Bookmarks"
-msgstr ""
+msgstr "书签"
 
 #: src/control/Control.Zotero.js:404
 msgid "Footnotes"
-msgstr ""
+msgstr "脚注"
 
 #: src/control/Control.Zotero.js:404
 msgid "Endnotes"
-msgstr ""
+msgstr "尾注"
 
 #: src/control/Control.Zotero.js:468
 msgid "My Publications"
-msgstr ""
+msgstr "我的出版物"
 
 #: src/control/Control.Zotero.js:474 src/control/Control.Zotero.js:699
 msgid "My Library"
-msgstr ""
+msgstr "我的书架"
 
 #: src/control/Control.Zotero.js:475
 msgid "Group Libraries"
-msgstr ""
+msgstr "群组书架"
 
 #: src/control/Control.Zotero.js:715
 msgid "Failed to load groups"
-msgstr ""
+msgstr "无法加载群组"
 
 #: src/control/Control.Zotero.js:733 src/control/Control.Zotero.js:1051
 msgid "Failed to load collections"
-msgstr ""
+msgstr "无法加载集合"
 
 #: src/control/Control.Zotero.js:747
 msgid "Citation Style"
-msgstr ""
+msgstr "引文格式"
 
 #: src/control/Control.Zotero.js:752
 msgid "Styles"
@@ -1845,11 +1846,11 @@ msgstr "样式"
 
 #: src/control/Control.Zotero.js:752
 msgid "An error occurred while fetching style list"
-msgstr ""
+msgstr "获取样式列表错误"
 
 #: src/control/Control.Zotero.js:760
 msgid "Failed to load styles"
-msgstr ""
+msgstr "无法加载格式"
 
 #: src/control/Control.Zotero.js:1079 src/control/Control.Zotero.js:1515
 msgid "Title"
@@ -1857,63 +1858,63 @@ msgstr "标题"
 
 #: src/control/Control.Zotero.js:1079 src/control/Control.Zotero.js:1515
 msgid "Creator(s)"
-msgstr ""
+msgstr "作者"
 
 #: src/control/Control.Zotero.js:1079 src/control/Control.Zotero.js:1515
 msgid "Your library is empty"
-msgstr ""
+msgstr "你的书架是空的"
 
 #: src/control/Control.Zotero.js:1090
 msgid "Failed to load items"
-msgstr ""
+msgstr "无法加载项目"
 
 #: src/control/Control.Zotero.js:1140
 msgid "Citation warning"
-msgstr ""
+msgstr "引文警告"
 
 #: src/control/Control.Zotero.js:1141
 msgid ""
 "Once citations are entered their storage and display type can not be "
 "changed."
-msgstr ""
+msgstr "一旦输入引文，其存储以及显示方式便无法更改。"
 
 #: src/control/Control.Zotero.js:1142 src/control/Control.Zotero.js:1444
 msgid "Confirm"
-msgstr ""
+msgstr "确认"
 
 #: src/control/Control.Zotero.js:1248
 msgid "Add Note"
-msgstr ""
+msgstr "添加注释"
 
 #: src/control/Control.Zotero.js:1251
 msgid "Notes"
-msgstr ""
+msgstr "注释"
 
 #: src/control/Control.Zotero.js:1251
 msgid "An error occurred while fetching notes"
-msgstr ""
+msgstr "获取注释时出现错误"
 
 #: src/control/Control.Zotero.js:1382
 msgid "Updated citations"
-msgstr ""
+msgstr "更新引文"
 
 #: src/control/Control.Zotero.js:1384
 msgid "Citations update failed"
-msgstr ""
+msgstr "引文更新失败"
 
 #: src/control/Control.Zotero.js:1388
 msgid "Updating citations"
-msgstr ""
+msgstr "更新引文"
 
 #: src/control/Control.Zotero.js:1443
 msgid ""
 "Unlinking citations will prevent Collabora Online from updating citations "
 "and bibliography in this document."
-msgstr ""
+msgstr "取消引用链接将阻止 Collabora Online 更新本文档中的引用和参考书目。"
 
 #: src/control/Permission.js:18 src/control/Permission.js:19
 msgid "Edit document"
-msgstr ""
+msgstr "编辑文档"
 
 #: src/control/Permission.js:76
 msgid "The document could not be locked, and is opened in read-only mode."
@@ -1929,25 +1930,25 @@ msgstr "无法锁定文档。"
 
 #: src/control/Permission.js:140
 msgid "Enter a file name"
-msgstr ""
+msgstr "输入文件名"
 
 #: src/control/Permission.js:159
 msgid "Save as ODF format"
-msgstr ""
+msgstr "以 ODF 格式保存"
 
 #: src/control/Permission.js:160
 msgid "Continue editing"
-msgstr ""
+msgstr "继续编辑"
 
 #: src/control/Permission.js:160
 msgid "Continue read only"
-msgstr ""
+msgstr "继续只读"
 
 #: src/control/Permission.js:173
 msgid ""
 "This document may contain formatting or content that cannot be saved in the "
 "current file format."
-msgstr ""
+msgstr "该文档可能包含以当前文件无法保存的格式或内容。"
 
 #: src/control/Ruler.js:364
 msgid "Left Margin"
@@ -1989,7 +1990,7 @@ msgstr "签名没有问题，但文档仅被部分签名。"
 msgid ""
 "The signature is OK, but the certificate could not be validated and the "
 "document is only partially signed."
-msgstr ""
+msgstr "签名正常，但无法验证证书，文档仅进行了部分签名。"
 
 #: src/control/Toolbar.js:45
 msgid "Font"
@@ -2017,7 +2018,7 @@ msgstr "“慢速代理”"
 
 #: src/control/Toolbar.js:668
 msgid "Copy all version information in English"
-msgstr ""
+msgstr "复制所有英文版本信息"
 
 #: src/control/Toolbar.js:751
 msgid "Insert hyperlink"
@@ -2037,7 +2038,7 @@ msgstr "您确定要删除该页面吗？"
 
 #: src/control/jsdialog/Widget.TreeView.js:619
 msgid "Headings and objects that you add to the document will appear here"
-msgstr ""
+msgstr "您添加到文档中的标题和对象将显示在此处"
 
 #: src/core/Socket.js:56
 msgid "Oops, there is a problem connecting to %productName: "
@@ -2045,27 +2046,27 @@ msgstr "糟糕，连接到 %productName 时出现问题： "
 
 #: src/core/Socket.js:565
 msgid "Server is now reachable. We have to refresh the page now."
-msgstr ""
+msgstr "服务器已恢复。我们现在需要刷新你的页面。"
 
 #: src/core/Socket.js:567
 msgid "Server is now reachable..."
-msgstr ""
+msgstr "服务器已上线..."
 
 #: src/core/Socket.js:571
 msgid "RELOAD"
-msgstr ""
+msgstr "重载"
 
 #: src/core/Socket.js:584
 msgid "Cluster configuration warning"
-msgstr ""
+msgstr "集群配置警告"
 
 #: src/core/Socket.js:587
 msgid "Wrong server, reconnecting..."
-msgstr ""
+msgstr "服务器错误，正在重连..."
 
 #: src/core/Socket.js:594
 msgid "COOLWSD version:"
-msgstr ""
+msgstr "COOLWSD 版本："
 
 #: src/core/Socket.js:606
 msgid "Served by:"
@@ -2077,11 +2078,11 @@ msgstr "不被支持的服务器版本。"
 
 #: src/core/Socket.js:616
 msgid "LOKit version:"
-msgstr ""
+msgstr "LOKit 版本："
 
 #: src/core/Socket.js:725
 msgid "Document is getting migrated"
-msgstr ""
+msgstr "文档正在迁移"
 
 #: src/core/Socket.js:752
 msgid "Session terminated by document owner"
@@ -2121,7 +2122,7 @@ msgstr "恢复老版本。任何未保存的更改可在版本历史中查看"
 
 #: src/core/Socket.js:815
 msgid "Reloading the document after rename"
-msgstr ""
+msgstr "重命名后重新加载文档"
 
 #: src/core/Socket.js:955
 msgid "Document requires password to view."
@@ -2141,19 +2142,19 @@ msgstr "密码错误。请重试。"
 
 #: src/core/Socket.js:1002
 msgid "Only the document owner can change the password."
-msgstr ""
+msgstr "只有文档作者可以修改密码。"
 
 #: src/core/Socket.js:1033 src/core/Socket.js:1038
 msgid "Missing Fonts"
-msgstr ""
+msgstr "缺失字体"
 
 #: src/core/Socket.js:1075
 msgid "Someone"
-msgstr ""
+msgstr "某人"
 
 #: src/core/Socket.js:1076
 msgid "%userName saved this document as %fileName. Do you want to join?"
-msgstr ""
+msgstr "%userName 将此文档保存为 %fileName。 你想要加入吗？"
 
 #: src/core/Socket.js:1085
 msgid "Connecting..."
@@ -2161,15 +2162,15 @@ msgstr "正在连接..."
 
 #: src/core/Socket.js:1102
 msgid "The document is being renamed and will reload shortly"
-msgstr ""
+msgstr "文档正被重命名，即可将被重载"
 
 #: src/core/Socket.js:1203
 msgid "Exported to storage"
-msgstr ""
+msgstr "导出到存储"
 
 #: src/core/Socket.js:1203
 msgid "Successfully exported: "
-msgstr ""
+msgstr "成功导出： "
 
 #: src/core/Socket.js:1231
 msgid "Discard"
@@ -2185,7 +2186,7 @@ msgstr "保存为新文档"
 
 #: src/core/Socket.js:1253
 msgid "Document has been changed"
-msgstr ""
+msgstr "文档已被修改"
 
 #: src/core/Socket.js:1254
 msgid ""
@@ -2205,19 +2206,19 @@ msgstr "正在重连…"
 
 #: src/core/Socket.js:1587
 msgid "The server has been disconnected."
-msgstr ""
+msgstr "服务器连接中断。"
 
 #: src/docstate.js:71
 msgid "Standard"
-msgstr ""
+msgstr "标准"
 
 #: src/docstate.js:82
 msgid "Theme colors"
-msgstr ""
+msgstr "主题颜色"
 
 #: src/errormessages.js:13
 msgid "No disk space left on server."
-msgstr ""
+msgstr "服务器空间不足。"
 
 #: src/errormessages.js:14
 msgid ""
@@ -2290,7 +2291,7 @@ msgstr "无效链接: 「%url」"
 msgid ""
 "You are leaving the document. The following web page will open in a new "
 "tab: "
-msgstr ""
+msgstr "您正要离开该文档。接下来的页面将在新的标签页打开： "
 
 #: src/errormessages.js:26
 msgid ""
@@ -2300,13 +2301,13 @@ msgstr "载入文档失败。可能是文档格式损坏，也可能是文档需
 
 #: src/errormessages.js:27
 msgid "Cleaning up the document from the last session."
-msgstr ""
+msgstr "清理上一会话的文档"
 
 #: src/errormessages.js:28
 msgid ""
 "We are in the process of cleaning up this document from the last session, "
 "please try again later."
-msgstr ""
+msgstr "我们正在清理上一会话的文档，请稍后重试。"
 
 #: src/errormessages.js:29
 msgid ""
@@ -2316,6 +2317,9 @@ msgid ""
 "storage and/or copy/paste problems. Expected serverId %0 for routeToken %1 "
 "but connected to serverId %2"
 msgstr ""
+"您的 %productName 集群似乎配置错误或扩展迅速 - 请联系您的系统管理员。 "
+"继续编辑可能会导致多个用户看不到对方、文档存储冲突和/或复制/粘贴问题。 "
+"RouteToken %1 预期为 serverId %0，但已连接到 serverId %2"
 
 #: src/errormessages.js:30
 msgid ""
