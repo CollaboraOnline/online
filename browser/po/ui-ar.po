@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-11-09 13:41+0100\n"
-"PO-Revision-Date: 2022-02-11 21:22+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"PO-Revision-Date: 2023-11-13 11:26+0000\n"
+"Last-Translator: meshari alnaim <malnaim@safedecision.com.sa>\n"
 "Language-Team: Arabic <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ar/>\n"
-"Language: \n"
+"Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
-"X-Generator: Weblate 4.11-dev\n"
+"X-Generator: Weblate 5.2-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -116,7 +116,7 @@ msgstr "عُدّل"
 
 #: admin/admin.strings.js:29
 msgid "Uploaded"
-msgstr ""
+msgstr "تم الرفع"
 
 #: admin/admin.strings.js:30
 msgid "WOPI host"
@@ -310,7 +310,7 @@ msgstr "فشلت مصادقة هذه الجلسة عبر البروتوكول٪ 
 
 #: admin/src/AdminSocketOverview.js:420
 msgid "Warning"
-msgstr ""
+msgstr "تحذير"
 
 #: admin/src/AdminSocketSettings.js:35
 msgid "Are you sure you want to shut down the server?"
@@ -378,7 +378,7 @@ msgstr "لون تلقائي"
 
 #: src/control/Control.AlertDialog.js:42
 msgid "External link"
-msgstr ""
+msgstr "روابط خارجية"
 
 #: src/control/Control.AlertDialog.js:43
 msgid "Open link"
@@ -420,19 +420,19 @@ msgstr "النوع"
 
 #: src/control/Control.DocumentRepair.js:131
 msgid "What?"
-msgstr ""
+msgstr "ماذا؟"
 
 #: src/control/Control.DocumentRepair.js:131
 msgid "Who?"
-msgstr ""
+msgstr "من؟"
 
 #: src/control/Control.DocumentRepair.js:131
 msgid "When?"
-msgstr ""
+msgstr "متى؟"
 
 #: src/control/Control.DocumentRepair.js:150
 msgid "You have not done anything to rollback yet..."
-msgstr ""
+msgstr "لم تفعل أي شيء للتراجع حتى الآن..."
 
 #: src/control/Control.DocumentRepair.js:160
 msgid "Redo"
@@ -444,47 +444,49 @@ msgstr "تراجع"
 
 #: src/control/Control.DownloadProgress.js:43
 msgid "Download Selection"
-msgstr ""
+msgstr "تنزيل الاختيار"
 
 #: src/control/Control.DownloadProgress.js:48
 msgid ""
 "If you want to share large elements outside of %productName it's necessary "
 "to first download them."
 msgstr ""
+"إذا كنت ترغب في مشاركة عناصر كبيرة خارج%productName ، فمن الضروري تنزيلها "
+"أولا."
 
 #: src/control/Control.DownloadProgress.js:61
 #: src/control/Control.NotebookbarCalc.js:204
 #: src/control/Control.NotebookbarImpress.js:270
 #: src/control/Control.NotebookbarWriter.js:248
 msgid "Download"
-msgstr ""
+msgstr "تنزيل"
 
 #: src/control/Control.DownloadProgress.js:80
 msgid "Downloading clipboard content"
-msgstr ""
+msgstr "تنزيل محتوى الحافظة"
 
 #: src/control/Control.DownloadProgress.js:87
 #: src/control/Control.DownloadProgress.js:112
 #: src/control/Control.PartsPreview.js:270
 msgid "Copy"
-msgstr ""
+msgstr "نسخ"
 
 #: src/control/Control.DownloadProgress.js:110
 msgid "Download completed and ready to be copied to clipboard."
-msgstr ""
+msgstr "اكتمل التنزيل وجاهز للنسخ إلى الحافظة."
 
 #: src/control/Control.DownloadProgress.js:111
 msgid ""
 "From now on clipboard notifications will discreetly appear at the bottom."
-msgstr ""
+msgstr "من الآن فصاعدا ، ستظهر إشعارات الحافظة بتكتم في الأسفل."
 
 #: src/control/Control.DownloadProgress.js:257
 msgid "Content copied to clipboard"
-msgstr ""
+msgstr "المحتوى المنسوخ إلى الحافظة"
 
 #: src/control/Control.DownloadProgress.js:301
 msgid "Download failed"
-msgstr ""
+msgstr "فشل التنزيل"
 
 #: src/control/Control.FormulaBar.js:45
 msgid "cell address"
@@ -497,7 +499,7 @@ msgstr "معالج الوظائف"
 
 #: src/control/Control.FormulaBarJSDialog.js:61
 msgid "Formula"
-msgstr ""
+msgstr "المعادلة"
 
 #: src/control/Control.FormulaBarJSDialog.js:67
 #: src/control/Control.MobileTopBar.js:42
@@ -520,11 +522,11 @@ msgstr "المتوسّط"
 
 #: src/control/Control.JSDialogBuilder.js:167
 msgid "Min"
-msgstr ""
+msgstr "الحد الأدنى"
 
 #: src/control/Control.JSDialogBuilder.js:168
 msgid "Max"
-msgstr ""
+msgstr "الحد الاعلى"
 
 #: src/control/Control.JSDialogBuilder.js:169
 #: src/control/Control.StatusBar.js:331
@@ -534,12 +536,12 @@ msgstr "الحساب"
 #: src/control/Control.JSDialogBuilder.js:202
 #: src/control/Control.Menubar.js:676
 msgid "Active sheet"
-msgstr ""
+msgstr "الورقة النشطة"
 
 #: src/control/Control.JSDialogBuilder.js:203
 #: src/control/Control.Menubar.js:677 src/control/Control.TopToolbar.js:99
 msgid "All Sheets"
-msgstr ""
+msgstr "جميع الأوراق"
 
 #: src/control/Control.JSDialogBuilder.js:568
 msgid "Solid"
@@ -624,7 +626,7 @@ msgstr "إدراج تعليق"
 
 #: src/control/Control.JSDialogBuilder.js:2870
 msgid "Automatic"
-msgstr ""
+msgstr "تلقائي"
 
 #: src/control/Control.JSDialogBuilder.js:3009
 #: src/control/Control.Menubar.js:819
@@ -649,11 +651,11 @@ msgstr "بلا (لا تدقّق الإملاء)"
 
 #: src/control/Control.LanguageDialog.js:78
 msgid "Select language"
-msgstr ""
+msgstr "اختر لغة"
 
 #: src/control/Control.LanguageDialog.js:99
 msgid "Language"
-msgstr ""
+msgstr "لغه"
 
 #: src/control/Control.Menubar.js:67 src/control/Control.Menubar.js:82
 #: src/control/Control.Menubar.js:935
@@ -684,7 +686,7 @@ msgstr "مستند وورد (‎.docx)"
 #: src/control/Control.NotebookbarBuilder.js:634
 #: src/control/Control.NotebookbarWriter.js:265
 msgid "Rich Text (.rtf)"
-msgstr "نص غنيّ (‎.rtf)"
+msgstr "نص منسق (‎.rtf)"
 
 #: src/control/Control.Menubar.js:72 src/control/Control.Menubar.js:79
 #: src/control/Control.Menubar.js:381 src/control/Control.Menubar.js:387
@@ -727,9 +729,8 @@ msgid "EPUB (.epub)"
 msgstr "EPUB (.epub)"
 
 #: src/control/Control.Menubar.js:76
-#, fuzzy
 msgid "Rename Document"
-msgstr "أصلح المستند"
+msgstr "إعادة تسمية المستند"
 
 #: src/control/Control.Menubar.js:77 src/control/Control.Menubar.js:385
 #: src/control/Control.Menubar.js:534 src/control/Control.Menubar.js:664
@@ -759,9 +760,8 @@ msgstr "نزّل ك‍"
 #: src/control/Control.NotebookbarBuilder.js:552
 #: src/control/Control.NotebookbarBuilder.js:581
 #: src/control/Control.NotebookbarBuilder.js:610
-#, fuzzy
 msgid "PDF Document (.pdf) as..."
-msgstr "ملف ‪PDF ‏(.pdf)"
+msgstr "ملف بي دي إف (.pdf) كما..."
 
 #: src/control/Control.Menubar.js:90 src/control/Control.Menubar.js:397
 #: src/control/Control.Menubar.js:544 src/control/Control.Menubar.js:679
@@ -813,7 +813,7 @@ msgstr "صفّر مستوى التكبير"
 #: src/control/Control.NotebookbarImpress.js:494
 #: src/control/Control.NotebookbarWriter.js:1436
 msgid "Toggle UI Mode"
-msgstr ""
+msgstr "تبديل وضع واجهة المستخدم"
 
 #: src/control/Control.Menubar.js:129 src/control/Control.Menubar.js:424
 #: src/control/Control.NotebookbarWriter.js:1450
@@ -836,7 +836,7 @@ msgstr "أظهر شريط الحالة"
 #: src/control/Control.Menubar.js:131 src/control/Control.Menubar.js:426
 #: src/control/Control.Menubar.js:575 src/control/Control.Menubar.js:707
 msgid "Hide Menu Bar"
-msgstr ""
+msgstr "إخفاء شريط القوائم"
 
 #: src/control/Control.Menubar.js:132 src/control/Control.Menubar.js:427
 #: src/control/Control.Menubar.js:571 src/control/Control.Menubar.js:708
@@ -847,7 +847,7 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:539
 #: src/control/Control.NotebookbarWriter.js:1481
 msgid "Dark Mode"
-msgstr ""
+msgstr "الوضع المظلم"
 
 #: src/control/Control.Menubar.js:140 src/control/Control.Menubar.js:438
 #: src/control/Control.Menubar.js:578 src/control/Control.Menubar.js:718
@@ -868,7 +868,7 @@ msgstr "الكل"
 #: src/control/Control.NotebookbarImpress.js:1241
 #: src/control/Control.NotebookbarWriter.js:1087
 msgid "Smart Picker"
-msgstr ""
+msgstr "المنتقى الذكي"
 
 #: src/control/Control.Menubar.js:216
 msgid "Text orientation"
@@ -876,66 +876,64 @@ msgstr "اتجاه النص"
 
 #: src/control/Control.Menubar.js:278
 #: src/control/Control.NotebookbarWriter.js:57
-#, fuzzy
 msgid "References"
-msgstr "المرجع ~ ق"
+msgstr "مراجع"
 
 #: src/control/Control.Menubar.js:281
 #: src/control/Control.NotebookbarWriter.js:1841
 msgid "Update Index"
-msgstr ""
+msgstr "تحديث الفهرس"
 
 #: src/control/Control.Menubar.js:290
 #: src/control/Control.NotebookbarWriter.js:1937
 msgid "Add Citation"
-msgstr ""
+msgstr "إضافة الاقتباس"
 
 #: src/control/Control.Menubar.js:291
 #: src/control/Control.NotebookbarWriter.js:1949
 msgid "Add Citation Note"
-msgstr ""
+msgstr "إضافة ملاحظة الاقتباس"
 
 #: src/control/Control.Menubar.js:292
 #: src/control/Control.NotebookbarWriter.js:1924
 msgid "Add Bibliography"
-msgstr ""
+msgstr "إضافة فهرس"
 
 #: src/control/Control.Menubar.js:294
 #: src/control/Control.NotebookbarWriter.js:1967
 msgid "Refresh Citations"
-msgstr ""
+msgstr "تحديث الاقتباسات"
 
 #: src/control/Control.Menubar.js:295
 #: src/control/Control.NotebookbarWriter.js:1979
 #: src/control/Control.Zotero.js:1442
 msgid "Unlink Citations"
-msgstr ""
+msgstr "إلغاء ربط الاقتباسات"
 
 #: src/control/Control.Menubar.js:296
 #: src/control/Control.NotebookbarWriter.js:1991
 msgid "Citation Preferences"
-msgstr ""
+msgstr "تفضيلات الاقتباس"
 
 #: src/control/Control.Menubar.js:324 src/control/Control.Menubar.js:1220
 msgid "Insert Rich Text"
-msgstr ""
+msgstr "ادخل نص منسق"
 
 #: src/control/Control.Menubar.js:325 src/control/Control.Menubar.js:1221
 msgid "Insert Checkbox"
-msgstr ""
+msgstr "أدخل خانة الاختيار"
 
 #: src/control/Control.Menubar.js:326 src/control/Control.Menubar.js:1222
 msgid "Insert Dropdown"
-msgstr ""
+msgstr "أدخل القائمة المنسدلة"
 
 #: src/control/Control.Menubar.js:327 src/control/Control.Menubar.js:1223
 msgid "Insert Picture"
-msgstr ""
+msgstr "أدخل صورة"
 
 #: src/control/Control.Menubar.js:328 src/control/Control.Menubar.js:1224
-#, fuzzy
 msgid "Insert Date"
-msgstr "إدراج جدول"
+msgstr "أدخل جدول"
 
 #: src/control/Control.Menubar.js:329 src/control/Control.Menubar.js:1225
 #: src/control/Control.NotebookbarCalc.js:301
@@ -944,12 +942,12 @@ msgstr "إدراج جدول"
 #: src/control/Control.NotebookbarWriter.js:355
 #: src/control/Control.NotebookbarWriter.js:1358
 msgid "Properties"
-msgstr ""
+msgstr "الخصائص"
 
 #: src/control/Control.Menubar.js:349 src/control/Control.Menubar.js:969
 #: src/control/Control.NotebookbarWriter.js:430
 msgid "Accessibility Support"
-msgstr ""
+msgstr "دعم إمكانية الوصول لذوي الهمم"
 
 #: src/control/Control.Menubar.js:362
 #: src/control/Control.NotebookbarWriter.js:396
@@ -1033,7 +1031,7 @@ msgstr "حفظ التعليقات"
 #: src/control/Control.Menubar.js:428
 #: src/control/Control.NotebookbarImpress.js:531
 msgid "Master View"
-msgstr ""
+msgstr "عرض رئيسي"
 
 #: src/control/Control.Menubar.js:503 src/control/Control.Menubar.js:1042
 #: src/control/Control.PresentationBar.js:64
@@ -1082,32 +1080,32 @@ msgstr "ملف (.csv) CSV"
 #: src/control/Control.Menubar.js:803
 #: src/control/Control.NotebookbarBuilder.js:808
 msgid "Condition..."
-msgstr ""
+msgstr "حالة..."
 
 #: src/control/Control.Menubar.js:804
 #: src/control/Control.NotebookbarBuilder.js:809
 msgid "Greater than..."
-msgstr ""
+msgstr "أكثر من..."
 
 #: src/control/Control.Menubar.js:805
 #: src/control/Control.NotebookbarBuilder.js:810
 msgid "Less than..."
-msgstr ""
+msgstr "أقل من..."
 
 #: src/control/Control.Menubar.js:806
 #: src/control/Control.NotebookbarBuilder.js:811
 msgid "Equal to..."
-msgstr ""
+msgstr "يساوي..."
 
 #: src/control/Control.Menubar.js:807
 #: src/control/Control.NotebookbarBuilder.js:812
 msgid "Between..."
-msgstr ""
+msgstr "بين..."
 
 #: src/control/Control.Menubar.js:809
 #: src/control/Control.NotebookbarBuilder.js:814
 msgid "More conditions..."
-msgstr ""
+msgstr "المزيد من الشروط..."
 
 #: src/control/Control.Menubar.js:917 src/control/Control.Menubar.js:984
 #: src/control/Control.Menubar.js:1049 src/control/Control.Menubar.js:1104
@@ -1125,11 +1123,11 @@ msgstr "اعداد الصفحة"
 
 #: src/control/Control.Menubar.js:1115
 msgid "Define print area"
-msgstr ""
+msgstr "تحديد منطقة الطباعة"
 
 #: src/control/Control.Menubar.js:1116
 msgid "Remove print area"
-msgstr ""
+msgstr "قم بإزالة منطقة الطباعة"
 
 #: src/control/Control.Menubar.js:1395 src/control/Control.StatusBar.js:544
 msgid "Reset to Default Language"
@@ -1143,15 +1141,15 @@ msgstr "أكثر..."
 
 #: src/control/Control.Menubar.js:1726
 msgid "Use Compact view"
-msgstr ""
+msgstr "استخدم العرض المضغوط"
 
 #: src/control/Control.Menubar.js:1728
 msgid "Use Tabbed view"
-msgstr ""
+msgstr "استخدم العرض المبوب"
 
 #: src/control/Control.Menubar.js:1786 src/control/Control.Menubar.js:1799
 msgid "Read-only mode"
-msgstr ""
+msgstr "وضع القراءة فقط"
 
 #: src/control/Control.Menubar.js:1820
 msgid "Insert Shape"
@@ -1190,12 +1188,12 @@ msgstr "نهاية التدرج"
 
 #: src/control/Control.NotebookbarBuilder.js:307
 msgid "Tap to expand"
-msgstr ""
+msgstr "انقر للتوسيع"
 
 #: src/control/Control.NotebookbarBuilder.js:308
 #: src/control/Control.NotebookbarBuilder.js:352
 msgid "Tap to collapse"
-msgstr ""
+msgstr "انقر لطي"
 
 #: src/control/Control.NotebookbarBuilder.js:572
 #: src/control/Control.NotebookbarCalc.js:223
@@ -1307,7 +1305,7 @@ msgstr "~ مساعدة"
 #: src/control/Control.NotebookbarImpress.js:186
 #: src/control/Control.NotebookbarWriter.js:167
 msgid "Save As"
-msgstr ""
+msgstr "حفظ باسم"
 
 #: src/control/Control.NotebookbarCalc.js:139
 #: src/control/Control.NotebookbarDraw.js:175
@@ -1340,14 +1338,14 @@ msgstr "جدول بيانات ODF (.ods)"
 #: src/control/Control.NotebookbarImpress.js:355
 #: src/control/Control.NotebookbarWriter.js:302
 msgid "PDF Document (.pdf) - Expert"
-msgstr ""
+msgstr "مستند PDF (.pdf) - خبير"
 
 #: src/control/Control.NotebookbarCalc.js:314
 #: src/control/Control.NotebookbarDraw.js:315
 #: src/control/Control.NotebookbarImpress.js:416
 #: src/control/Control.NotebookbarWriter.js:369
 msgid "Rename"
-msgstr ""
+msgstr "إعادة تسمية"
 
 #: src/control/Control.NotebookbarCalc.js:650
 msgid "General"
@@ -1417,11 +1415,11 @@ msgstr "سيئ"
 
 #: src/control/Control.NotebookbarCalc.js:969
 msgid "Row Height"
-msgstr ""
+msgstr "ارتفاع الصف"
 
 #: src/control/Control.NotebookbarCalc.js:977
 msgid "Column Width"
-msgstr ""
+msgstr "عرض العمود"
 
 #: src/control/Control.NotebookbarCalc.js:990
 msgid "Insert Rows Above"
@@ -1452,32 +1450,32 @@ msgstr "حذف الأعمدة"
 #: src/control/Control.NotebookbarImpress.js:431
 #: src/control/Control.NotebookbarWriter.js:1374
 msgid "Read mode"
-msgstr ""
+msgstr "وضع القراءة"
 
 #: src/control/Control.NotebookbarCalc.js:1256
 #: src/control/Control.NotebookbarDraw.js:384
 #: src/control/Control.NotebookbarImpress.js:493
 #: src/control/Control.NotebookbarWriter.js:1435
 msgid "Compact view"
-msgstr ""
+msgstr "عرض مدمج (بسيط)"
 
 #: src/control/Control.NotebookbarCalc.js:1270
 #: src/control/Control.NotebookbarDraw.js:397
 #: src/control/Control.NotebookbarImpress.js:507
 #: src/control/Control.NotebookbarWriter.js:1475
 msgid "Collapse Tabs"
-msgstr ""
+msgstr "طي علامات التبويب"
 
 #: src/control/Control.NotebookbarCalc.js:1282
 #: src/control/Control.NotebookbarDraw.js:409
 #: src/control/Control.NotebookbarImpress.js:519
 #: src/control/Control.NotebookbarWriter.js:1462
 msgid "Status Bar"
-msgstr ""
+msgstr "شريط الحالة"
 
 #: src/control/Control.NotebookbarCalc.js:1368
 msgid "Sparkline"
-msgstr ""
+msgstr "خط التألق"
 
 #: src/control/Control.NotebookbarCalc.js:1500
 #: src/control/Control.NotebookbarCalc.js:2288
@@ -1489,7 +1487,7 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:1043
 #: src/control/Control.NotebookbarWriter.js:2799
 msgid "Shapes"
-msgstr ""
+msgstr "الأشكال"
 
 #: src/control/Control.NotebookbarDraw.js:95
 #: src/control/Control.NotebookbarImpress.js:110
@@ -1509,7 +1507,7 @@ msgstr "تخطيط الصفحة"
 
 #: src/control/Control.NotebookbarImpress.js:124
 msgid "Master"
-msgstr ""
+msgstr "رئيسي"
 
 #: src/control/Control.NotebookbarImpress.js:300
 msgid "ODF Presentation (.odp)"
@@ -1535,23 +1533,23 @@ msgstr "مستند EPUB (.epub)"
 
 #: src/control/Control.NotebookbarWriter.js:1323
 msgid "Rich Text"
-msgstr ""
+msgstr "نص منسق"
 
 #: src/control/Control.NotebookbarWriter.js:1330
 msgid "Checkbox"
-msgstr ""
+msgstr "خانة الاختيار"
 
 #: src/control/Control.NotebookbarWriter.js:1337
 msgid "Dropdown"
-msgstr ""
+msgstr "قائمة منسدلة"
 
 #: src/control/Control.NotebookbarWriter.js:1344
 msgid "Picture"
-msgstr ""
+msgstr "صورة"
 
 #: src/control/Control.NotebookbarWriter.js:1449
 msgid "Ruler"
-msgstr ""
+msgstr "مسطرة"
 
 #: src/control/Control.PartsPreview.js:177
 msgid "preview of page "
@@ -1559,11 +1557,11 @@ msgstr "معاينة الصفحة "
 
 #: src/control/Control.PartsPreview.js:236
 msgid "Paste Slide"
-msgstr ""
+msgstr "لصق الشريحة"
 
 #: src/control/Control.PartsPreview.js:279
 msgid "Paste"
-msgstr ""
+msgstr "لصق"
 
 #: src/control/Control.Scroll.Annotation.js:10
 msgid "Scroll up annotations"
@@ -1675,15 +1673,15 @@ msgstr "وضع التحديد: غير نشط"
 
 #: src/control/Control.StatusBar.js:566
 msgid "Set Language for All text"
-msgstr ""
+msgstr "ضبط اللغة لكل النص"
 
 #: src/control/Control.StatusBar.js:569
 msgid "Set Language for Paragraph"
-msgstr ""
+msgstr "ضبط لغة الفقرة"
 
 #: src/control/Control.StatusBar.js:570
 msgid "Set Language for Selection"
-msgstr ""
+msgstr "ضبط اللغة للمختارة"
 
 #: src/control/Control.Tabs.js:54
 msgid "Insert sheet before this"
@@ -1711,7 +1709,7 @@ msgstr "أمتأكّد من حذف الورقة، %الورقة% ؟"
 
 #: src/control/Control.Tabs.js:320
 msgid "Rename sheet"
-msgstr ""
+msgstr "إعادة تسمية الورقة"
 
 #: src/control/Control.Tabs.js:320
 msgid "Enter new sheet name"
@@ -1735,7 +1733,7 @@ msgstr ""
 
 #: src/control/Control.TopToolbar.js:98
 msgid "Active Sheet"
-msgstr ""
+msgstr "الورقة النشطة"
 
 #: src/control/Control.TopToolbar.js:111
 msgid "Default Style"
@@ -1755,7 +1753,7 @@ msgstr "إدراج الموصلات"
 
 #: src/control/Control.TopToolbar.js:253
 msgid "Hide Menu"
-msgstr ""
+msgstr "إخفاء القائمة"
 
 #: src/control/Control.UserList.js:11
 msgid "%user has joined"
@@ -1779,7 +1777,7 @@ msgstr "لا مستخدمين"
 
 #: src/control/Control.UserList.js:195
 msgid "Following"
-msgstr ""
+msgstr "متابع"
 
 #: src/control/Control.UserList.js:223 src/control/Control.UserList.js:389
 msgid "Always follow the editor"
@@ -1795,21 +1793,23 @@ msgstr "حالي"
 
 #: src/control/Control.Zotero.js:135
 msgid "Zotero API key is not configured"
-msgstr ""
+msgstr "لم يتم تكوين مفتاح Zotero API"
 
 #: src/control/Control.Zotero.js:159
 msgid "Zotero API key is incorrect"
-msgstr ""
+msgstr "مفتاح Zotero API غير صحيح"
 
 #: src/control/Control.Zotero.js:186
 msgid "Zotero Warning"
-msgstr ""
+msgstr "تحذير زوتيرو Zotero"
 
 #: src/control/Control.Zotero.js:187
 msgid ""
 "The document contains some citations which may be unreachable through web "
 "API. It may cause some problems while editing citations or bibliography."
 msgstr ""
+"يحتوي المستند على بعض الاستشهادات التي قد لا يمكن الوصول إليها من خلال واجهة "
+"برمجة تطبيقات الويب. قد يسبب بعض المشاكل أثناء تحرير الاستشهادات أو المراجع."
 
 #: src/control/Control.Zotero.js:243 src/core/Socket.js:1085
 msgid "Loading..."
@@ -1817,51 +1817,51 @@ msgstr "يحمّل..."
 
 #: src/control/Control.Zotero.js:261
 msgid "Language:"
-msgstr ""
+msgstr "لغة:"
 
 #: src/control/Control.Zotero.js:276
 msgid "Store as:"
-msgstr ""
+msgstr "تخزين باسم:"
 
 #: src/control/Control.Zotero.js:282 src/control/Control.Zotero.js:406
 msgid "Fields"
-msgstr ""
+msgstr "حقول"
 
 #: src/control/Control.Zotero.js:283 src/control/Control.Zotero.js:406
 msgid "Bookmarks"
-msgstr ""
+msgstr "إشارات مرجعية"
 
 #: src/control/Control.Zotero.js:404
 msgid "Footnotes"
-msgstr ""
+msgstr "الحواشي"
 
 #: src/control/Control.Zotero.js:404
 msgid "Endnotes"
-msgstr ""
+msgstr "الحواشي الختامية"
 
 #: src/control/Control.Zotero.js:468
 msgid "My Publications"
-msgstr ""
+msgstr "منشوراتي"
 
 #: src/control/Control.Zotero.js:474 src/control/Control.Zotero.js:699
 msgid "My Library"
-msgstr ""
+msgstr "مكتبتي"
 
 #: src/control/Control.Zotero.js:475
 msgid "Group Libraries"
-msgstr ""
+msgstr "مكتبات المجموعة"
 
 #: src/control/Control.Zotero.js:715
 msgid "Failed to load groups"
-msgstr ""
+msgstr "فشل تحميل المجموعات"
 
 #: src/control/Control.Zotero.js:733 src/control/Control.Zotero.js:1051
 msgid "Failed to load collections"
-msgstr ""
+msgstr "فشل تحميل المجموعات"
 
 #: src/control/Control.Zotero.js:747
 msgid "Citation Style"
-msgstr ""
+msgstr "نمط الاقتباس"
 
 #: src/control/Control.Zotero.js:752
 #, fuzzy
@@ -1870,11 +1870,11 @@ msgstr "النمط"
 
 #: src/control/Control.Zotero.js:752
 msgid "An error occurred while fetching style list"
-msgstr ""
+msgstr "حدث خطأ أثناء جلب قائمة الأنماط"
 
 #: src/control/Control.Zotero.js:760
 msgid "Failed to load styles"
-msgstr ""
+msgstr "فشل تحميل الانماط"
 
 #: src/control/Control.Zotero.js:1079 src/control/Control.Zotero.js:1515
 msgid "Title"
@@ -1882,63 +1882,65 @@ msgstr "العنوان"
 
 #: src/control/Control.Zotero.js:1079 src/control/Control.Zotero.js:1515
 msgid "Creator(s)"
-msgstr ""
+msgstr "منشئ (منشئون)"
 
 #: src/control/Control.Zotero.js:1079 src/control/Control.Zotero.js:1515
 msgid "Your library is empty"
-msgstr ""
+msgstr "مكتبتك فارغة"
 
 #: src/control/Control.Zotero.js:1090
 msgid "Failed to load items"
-msgstr ""
+msgstr "فشل تحميل العناصر"
 
 #: src/control/Control.Zotero.js:1140
 msgid "Citation warning"
-msgstr ""
+msgstr "تحذير الاقتباس"
 
 #: src/control/Control.Zotero.js:1141
 msgid ""
 "Once citations are entered their storage and display type can not be "
 "changed."
-msgstr ""
+msgstr "بمجرد إدخال الاستشهادات، لا يمكن تغيير مساحة التخزين ونوع العرض."
 
 #: src/control/Control.Zotero.js:1142 src/control/Control.Zotero.js:1444
 msgid "Confirm"
-msgstr ""
+msgstr "أكد"
 
 #: src/control/Control.Zotero.js:1248
 msgid "Add Note"
-msgstr ""
+msgstr "اضف ملاحظة"
 
 #: src/control/Control.Zotero.js:1251
 msgid "Notes"
-msgstr ""
+msgstr "ملاحظات"
 
 #: src/control/Control.Zotero.js:1251
 msgid "An error occurred while fetching notes"
-msgstr ""
+msgstr "حدث خطأ أثناء جلب الملاحظات"
 
 #: src/control/Control.Zotero.js:1382
 msgid "Updated citations"
-msgstr ""
+msgstr "الاقتباسات المحدثة"
 
 #: src/control/Control.Zotero.js:1384
 msgid "Citations update failed"
-msgstr ""
+msgstr "فشل تحديث الاقتباسات"
 
 #: src/control/Control.Zotero.js:1388
 msgid "Updating citations"
-msgstr ""
+msgstr "تحديث الاقتباسات"
 
 #: src/control/Control.Zotero.js:1443
 msgid ""
 "Unlinking citations will prevent Collabora Online from updating citations "
 "and bibliography in this document."
 msgstr ""
+"سيؤدي إلغاء ربط الاستشهادات إلى منع Collabora Online من تحديث الاستشهادات "
+"والمراجع في هذا المستند."
 
 #: src/control/Permission.js:18 src/control/Permission.js:19
 msgid "Edit document"
-msgstr ""
+msgstr "تحرير المستند"
 
 #: src/control/Permission.js:76
 msgid "The document could not be locked, and is opened in read-only mode."
@@ -2044,7 +2046,7 @@ msgstr "\"وكيل بطيء\""
 
 #: src/control/Toolbar.js:668
 msgid "Copy all version information in English"
-msgstr ""
+msgstr "انسخ جميع معلومات الإصدار باللغة الإنجليزية"
 
 #: src/control/Toolbar.js:751
 msgid "Insert hyperlink"
@@ -2064,7 +2066,7 @@ msgstr "أمتأكد من حذف هذه الصفحة؟"
 
 #: src/control/jsdialog/Widget.TreeView.js:619
 msgid "Headings and objects that you add to the document will appear here"
-msgstr ""
+msgstr "ستظهر هنا العناوين والكائنات التي تضيفها إلى المستند"
 
 #: src/core/Socket.js:56
 msgid "Oops, there is a problem connecting to %productName: "
@@ -2084,11 +2086,11 @@ msgstr "إعادة التحميل"
 
 #: src/core/Socket.js:584
 msgid "Cluster configuration warning"
-msgstr ""
+msgstr "تحذير تكوين الكتلة"
 
 #: src/core/Socket.js:587
 msgid "Wrong server, reconnecting..."
-msgstr ""
+msgstr "خطأ في الخادم، جارٍ إعادة الاتصال..."
 
 #: src/core/Socket.js:594
 msgid "COOLWSD version:"
@@ -2108,7 +2110,7 @@ msgstr "إصدار LOKit:"
 
 #: src/core/Socket.js:725
 msgid "Document is getting migrated"
-msgstr ""
+msgstr "جارٍ ترحيل المستند"
 
 #: src/core/Socket.js:752
 msgid "Session terminated by document owner"
@@ -2169,11 +2171,11 @@ msgstr "وُفّرت كلمة سر خاطئة. رجاءً أعد المحاول�
 
 #: src/core/Socket.js:1002
 msgid "Only the document owner can change the password."
-msgstr ""
+msgstr "يمكن لمالك المستند فقط تغيير كلمة المرور."
 
 #: src/core/Socket.js:1033 src/core/Socket.js:1038
 msgid "Missing Fonts"
-msgstr ""
+msgstr "الخطوط المفقودة"
 
 #: src/core/Socket.js:1075
 msgid "Someone"
@@ -2181,7 +2183,7 @@ msgstr "شخصا ما"
 
 #: src/core/Socket.js:1076
 msgid "%userName saved this document as %fileName. Do you want to join?"
-msgstr ""
+msgstr "قام %userName بحفظ هذا المستند باسم %fileName. هل تود الانضمام؟"
 
 #: src/core/Socket.js:1085
 msgid "Connecting..."
@@ -2193,11 +2195,11 @@ msgstr "تتم إعادة تسمية المستند وسيعاد تحميله ق
 
 #: src/core/Socket.js:1203
 msgid "Exported to storage"
-msgstr ""
+msgstr "تصديرها إلى المخزن"
 
 #: src/core/Socket.js:1203
 msgid "Successfully exported: "
-msgstr ""
+msgstr "تم التصدير بنجاح: "
 
 #: src/core/Socket.js:1231
 msgid "Discard"
@@ -2238,15 +2240,15 @@ msgstr "تم قطع اتصال الخادم."
 
 #: src/docstate.js:71
 msgid "Standard"
-msgstr ""
+msgstr "معيار"
 
 #: src/docstate.js:82
 msgid "Theme colors"
-msgstr ""
+msgstr "ألوان الموضوع"
 
 #: src/errormessages.js:13
 msgid "No disk space left on server."
-msgstr ""
+msgstr "لا توجد مساحة متبقية على الخادم."
 
 #: src/errormessages.js:14
 msgid ""
@@ -2335,7 +2337,7 @@ msgstr "الرابط غير صالح: '٪url'"
 msgid ""
 "You are leaving the document. The following web page will open in a new "
 "tab: "
-msgstr ""
+msgstr "أنت تترك المستند. سيتم فتح صفحة الويب التالية في علامة تبويب جديدة: "
 
 #: src/errormessages.js:26
 msgid ""
@@ -2365,6 +2367,11 @@ msgid ""
 "storage and/or copy/paste problems. Expected serverId %0 for routeToken %1 "
 "but connected to serverId %2"
 msgstr ""
+"يبدو أن مجموعة %productName الخاصة بك قد تم تكوينها بشكل خاطئ أو أنها تتغير "
+"بسرعة - يرجى الاتصال بمسؤول النظام لديك. قد يؤدي الاستمرار في التحرير إلى "
+"عدم رؤية العديد من المستخدمين لبعضهم البعض، وحدوث تعارضات في تخزين المستندات "
+"و/أو حدوث مشكلات في النسخ/اللصق. معرف الخادم المتوقع %0 للرمز المميز %1 "
+"ولكنه متصل بالخادم %2"
 
 #: src/errormessages.js:30
 msgid ""
@@ -2373,6 +2380,10 @@ msgid ""
 "administrator. For more info on proxy configuration please checkout https://"
 "sdk.collaboraonline.com/docs/installation/Proxy_settings.html"
 msgstr ""
+"فشل إنشاء اتصال مأخذ توصيل أو تم إغلاق اتصال مأخذ التوصيل بشكل غير متوقع. "
+"ربما تم تكوين الوكيل العكسي بشكل خاطئ، يرجى الاتصال بالمسؤول. لمزيد من "
+"المعلومات حول تكوين الوكيل، يرجى الخروج https://sdk.collaboraonline.com/docs/"
+"installation/Proxy_settings.html"
 
 #: src/errormessages.js:33
 msgid "Failed to load document."
@@ -2389,6 +2400,8 @@ msgid ""
 "The document is too large or no disk space left to save. Document will now "
 "be read-only."
 msgstr ""
+"المستند كبير جدًا أو لا توجد مساحة على القرص لحفظه. سيصبح المستند الآن "
+"للقراءة فقط."
 
 #: src/errormessages.js:36 src/errormessages.js:45
 msgid "Document cannot be saved due to expired or invalid access token."
@@ -2405,13 +2418,15 @@ msgstr "لا يمكن إعادة تسمية المستند."
 #: src/errormessages.js:42
 msgid ""
 "Failed to read document from storage, please try to load the document again."
-msgstr ""
+msgstr "فشلت قراءة المستند من وحدة التخزين، يرجى محاولة تحميل المستند مرة أخرى."
 
 #: src/errormessages.js:43
 msgid ""
 "Save failed due to no storage space left. Document will now be read-only. "
 "Please make sure enough disk space is available and try to save again."
 msgstr ""
+"فشل الحفظ بسبب عدم وجود مساحة تخزين متبقية. سيصبح المستند الآن للقراءة فقط. "
+"الرجاء التأكد من توفر مساحة كافية على القرص ومحاولة الحفظ مرة أخرى."
 
 #: src/errormessages.js:44
 msgid ""
@@ -2419,18 +2434,21 @@ msgid ""
 "storage space. The document will now be read-only but you may still "
 "download it now to preserve a copy locally."
 msgstr ""
+"فشل الحفظ لأن المستند كبير جدًا أو يتجاوز مساحة التخزين المتبقية. سيصبح "
+"المستند الآن للقراءة فقط ولكن لا يزال بإمكانك تنزيله الآن للاحتفاظ بنسخة "
+"محليًا."
 
 #: src/errormessages.js:46
 msgid "Document cannot be saved, please check your permissions."
-msgstr ""
+msgstr "لا يمكن حفظ المستند، يرجى التحقق من الأذونات الخاصة بك."
 
 #: src/errormessages.js:47
 msgid "Document cannot be renamed, please check your permissions."
-msgstr ""
+msgstr "لا يمكن إعادة تسمية المستند، يرجى التحقق من الأذونات الخاصة بك."
 
 #: src/errormessages.js:48
 msgid "Document cannot be exported. Please try again."
-msgstr ""
+msgstr "لا يمكن تصدير المستند. حاول مرة اخرى."
 
 #: src/errormessages.js:53
 msgid "Uploading file to server failed, file not found."
@@ -2446,15 +2464,15 @@ msgstr "الدوال"
 
 #: src/layer/tile/CanvasTileLayer.js:2588
 msgid "Copy link location"
-msgstr ""
+msgstr "انسخ موقع الرابط"
 
 #: src/layer/tile/CanvasTileLayer.js:2596
 msgid "Edit link"
-msgstr ""
+msgstr "تعديل الرابط"
 
 #: src/layer/tile/CanvasTileLayer.js:2604
 msgid "Remove link"
-msgstr ""
+msgstr "إزالة الرابط"
 
 #: src/layer/tile/CanvasTileLayer.js:5316
 msgid "No Comments"
@@ -2496,7 +2514,7 @@ msgstr "مؤشر ترابط محلول"
 #: src/layer/tile/CommentListSection.ts:1141
 #: src/layer/tile/CommentListSection.ts:1178
 msgid "Autosaved"
-msgstr ""
+msgstr "تم الحفظ تلقائيًا"
 
 #: src/layer/tile/CommentSection.ts:264
 msgid "Open menu"
@@ -2530,7 +2548,7 @@ msgstr "النسخ من المستند غير مفعل"
 
 #: src/map/Clipboard.js:238
 msgid "warning: copy/paste request timed out"
-msgstr ""
+msgstr "تحذير: انتهت مهلة طلب النسخ/اللصق"
 
 #: src/map/Clipboard.js:301
 msgid "Failed to download clipboard, please re-copy"
@@ -2589,7 +2607,7 @@ msgstr "آخر حفظ:"
 
 #: src/map/handler/Map.Feedback.js:82
 msgid "Please send us your feedback"
-msgstr ""
+msgstr "الرجاء ارسال لنا ملاحظاتك"
 
 #: src/map/handler/Map.FileInserter.js:105
 #, javascript-format
@@ -2617,11 +2635,11 @@ msgstr "إنشاء ملف جديد من القالب ..."
 
 #: src/map/handler/Map.WOPI.js:536
 msgid "Error"
-msgstr ""
+msgstr "خطأ"
 
 #: src/map/handler/Map.WOPI.js:536
 msgid "File name should contain an extension."
-msgstr ""
+msgstr "يجب أن يحتوي اسم الملف على امتداد."
 
 #: src/map/handler/Map.WOPI.js:544
 msgid "Creating copy..."
@@ -2629,7 +2647,7 @@ msgstr "يتم الآن إنشاء نسخة..."
 
 #: welcome/welcome.html%2Bhtml.head.title:9-3
 msgid "Collabora Online Welcome"
-msgstr ""
+msgstr "مرحبا بكم في Collabora Online"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:26-7
 #, fuzzy
@@ -2648,6 +2666,10 @@ msgid ""
 "\" href=\"https://www.collaboraoffice.com/solutions/collabora-office-"
 "android-ios/\">apps</a> are also available for mobile."
 msgstr ""
+"استمتع بأحدث التطورات في الإنتاجية عبر الإنترنت، والتي يمكنك استخدامها مجانً"
+"ا واستكشافها واستخدامها مع الآخرين في المتصفح. تتوفر أيضًا العديد من <a "
+"target=\"_blank\" href=\"https://www.collaboraoffice.com/solutions/"
+"collabora-office-android-ios/\">التطبيقات</a> للجوال."
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:37-7
 #, fuzzy
@@ -2661,14 +2683,18 @@ msgid ""
 "latest Collabora Online Development Edition, aimed at home users and small "
 "teams."
 msgstr ""
+"تحقق من <a target=\"_blank\" href=\"https://www.collaboraoffice.com/"
+"code-23-05-release-notes/\">ملاحظات الإصدار</a> وتعرف على كل شيء حول: أحدث "
+"تطوير لـ Collabora عبر الإنترنت النسخة تستهدف المستخدمين المنزليين والفرق "
+"الصغيرة."
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:48-7
 msgid "Get Involved"
-msgstr ""
+msgstr "شارك معنا"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:49-7
 msgid "https://collaboraonline.github.io/"
-msgstr ""
+msgstr "https://collaboraonline.github.io/"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:50-7
 msgid ""
@@ -2681,6 +2707,13 @@ msgid ""
 "\">filing a bug report</a> with all the essential steps on how to reproduce "
 "it."
 msgstr ""
+"هل أنت مهتم بالمساهمة ولكنك لا تعرف من أين تبدأ؟ انتقل إلى <a target=\"_blank"
+"\" href=\"https://collaboraonline.github.io/post/build-code/\">تعليمات خطوة "
+"بخطوة</a> وقم بإنشاء CODE من البداية. يمكنك أيضًا المساعدة في <a target="
+"\"_blank\" href=\"https://collaboraonline.github.io/post/translate/\""
+">الترجمات</a> أو عن طريق <a target=\"_blank\" href=\"https://collaboraonline."
+"github.io/post/filebugs/\">تقديم تقرير خطأ</a> مع جميع الخطوات الأساسية حول "
+"كيفية إعادة إنتاج الخطأ."
 
 #~ msgid "Start download"
 #~ msgstr "بدء التحميل"
