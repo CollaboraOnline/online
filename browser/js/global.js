@@ -107,13 +107,6 @@ window.app = {
 
 	var chromebook = window.ThisIsTheAndroidApp && window.COOLMessageHandler.isChromeOS();
 
-	if (window.uiDefaults['touchscreenHint'] !== undefined)
-		var touch = window.uiDefaults['touchscreenHint'];
-	else
-		var touch = !window.L_NO_TOUCH && (pointer || 'ontouchstart' in window ||
-				(window.DocumentTouch && document instanceof window.DocumentTouch) ||
-				window.matchMedia('(pointer: coarse)').matches) && !chromebook;
-
 	var isInternetExplorer = (navigator.userAgent.toLowerCase().indexOf('msie') != -1 ||
 				  navigator.userAgent.toLowerCase().indexOf('trident') != -1);
 
@@ -238,10 +231,6 @@ window.app = {
 		// `true` when the browser run by cypress
 		cypressTest: cypressTest,
 
-		// @property touch: Boolean
-		// `true` for all browsers supporting [touch events](https://developer.mozilla.org/docs/Web/API/Touch_events).
-		touch: !!touch,
-
 		// @property msPointer: Boolean
 		// `true` for browsers implementing the Microsoft touch events model (notably IE10).
 		msPointer: !!msPointer,
@@ -277,6 +266,51 @@ window.app = {
 		hintOnscreenKeyboard: function(hint) {
 			global.keyboard.onscreenKeyboardHint = hint;
 		},
+	};
+
+	global.touch = {
+		/// a touchscreen event handler, supports both DOM and hammer.js events
+		isTouchEvent: function(e) {
+			if (L.Browser.cypressTest && global.L.Browser.mobile) {
+				return true; // As cypress tests on mobile tend to use "click" events instead of touches... we cheat to get them recognized as touch events
+			}
+
+			if (!e.pointerType) {
+				return !(e instanceof MouseEvent);
+			}
+
+			return e.pointerType === 'touch' || e.pointerType == 'pen' || e.pointerType == 'kinect';
+		},
+
+		/// a decorator that only runs the function if the event is a touch event
+		touchOnly: function(f) {
+			return function(e) {
+				if (!global.touch.isTouchEvent(e)) return;
+				return f.apply(this, arguments);
+			};
+		},
+
+		/// a decorator that only runs the function if the event is not a touch event
+		mouseOnly: function(f) {
+			return function(e) {
+				if (global.touch.isTouchEvent(e)) return;
+				return f.apply(this, arguments);
+			};
+		},
+
+		/// detect if the primary pointing device is of limited accuracy (generally a touchscreen)
+		/// you shouldn't use this for determining the behavior of an event (use isTouchEvent instead), but this may
+		///   be useful for determining what UI to show (e.g. the draggable teardrops under the cursor)
+		hasPrimaryTouchscreen: function() {
+			return window.matchMedia('(pointer: coarse)').matches;
+		},
+		/// detect any pointing device is of limited accuracy (generally a touchscreen)
+		/// you shouldn't use this for determining the behavior of an event (use isTouchEvent instead), but this may
+		///   be useful for determining what UI to show (e.g. the draggable teardrops under the cursor)
+		hasAnyTouchscreen: function() {
+			return window.matchMedia('(any-pointer: coarse)').matches;
+		},
+
 	};
 
 	global.mode = {

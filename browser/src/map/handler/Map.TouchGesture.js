@@ -54,28 +54,26 @@ L.Map.TouchGesture = L.Handler.extend({
 			this._hammer.add(tripleTap);
 			tripleTap.recognizeWith([doubleTap, singleTap]);
 			var hammer = this._hammer;
-			if (L.Browser.touch) {
-				L.DomEvent.on(this._map._mapPane, 'touchstart touchmove touchcancel', L.DomEvent.preventDefault);
-				L.DomEvent.on(this._map._mapPane, 'touchend', function(e) {
-					// sometimes inputs get stuck in hammer and further events get mixed with the old ones
-					// this causes to a failure to use all the gestures properly.
-					// This is a workaround until it is fixed by hammer.js
-					if (hammer.input) {
-						if (hammer.input.store)  {
-							hammer.input.store = [];
-						}
+			L.DomEvent.on(this._map._mapPane, 'touchstart touchmove touchcancel', window.touch.touchOnly(L.DomEvent.preventDefault));
+			L.DomEvent.on(this._map._mapPane, 'touchend', window.touch.touchOnly(function(e) {
+				// sometimes inputs get stuck in hammer and further events get mixed with the old ones
+				// this causes to a failure to use all the gestures properly.
+				// This is a workaround until it is fixed by hammer.js
+				if (hammer.input) {
+					if (hammer.input.store)  {
+						hammer.input.store = [];
 					}
-					L.DomEvent.preventDefault(e);
-				});
-			}
+				}
+				L.DomEvent.preventDefault(e);
+			}));
 
 			if (Hammer.prefixed(window, 'PointerEvent') !== undefined) {
-				L.DomEvent.on(this._map._mapPane, 'pointerdown pointermove pointerup pointercancel', L.DomEvent.preventDefault);
+				L.DomEvent.on(this._map._mapPane, 'pointerdown pointermove pointerup pointercancel', window.touch.touchOnly(L.DomEvent.preventDefault));
 			}
 
 			// IE10 has prefixed support, and case-sensitive
 			if (window.MSPointerEvent && !window.PointerEvent) {
-				L.DomEvent.on(this._map._mapPane, 'MSPointerDown MSPointerMove MSPointerUp MSPointerCancel', L.DomEvent.preventDefault);
+				L.DomEvent.on(this._map._mapPane, 'MSPointerDown MSPointerMove MSPointerUp MSPointerCancel', window.touch.touchOnly(L.DomEvent.preventDefault));
 			}
 
 			L.DomEvent.on(this._map._mapPane, 'mousedown mousemove mouseup', L.DomEvent.preventDefault);
@@ -101,43 +99,43 @@ L.Map.TouchGesture = L.Handler.extend({
 	},
 
 	addHooks: function () {
-		this._hammer.on('hammer.input', L.bind(this._onHammer, this));
-		this._hammer.on('tap', L.bind(this._onTap, this));
-		this._hammer.on('panstart', L.bind(this._onPanStart, this));
-		this._hammer.on('pan', L.bind(this._onPan, this));
-		this._hammer.on('panend', L.bind(this._onPanEnd, this));
-		this._hammer.on('pinchstart', L.bind(this._onPinchStart, this));
-		this._hammer.on('pinchmove', L.bind(this._onPinch, this));
-		this._hammer.on('pinchend', L.bind(this._onPinchEnd, this));
-		this._hammer.on('tripletap', L.bind(this._onTripleTap, this));
-		this._hammer.on('swipe', L.bind(this._onSwipe, this));
+		this._hammer.on('hammer.input', L.bind(window.touch.touchOnly(this._onHammer), this));
+		this._hammer.on('tap', L.bind(window.touch.touchOnly(this._onTap), this));
+		this._hammer.on('panstart', L.bind(window.touch.touchOnly(this._onPanStart), this));
+		this._hammer.on('pan', L.bind(window.touch.touchOnly(this._onPan), this));
+		this._hammer.on('panend', L.bind(window.touch.touchOnly(this._onPanEnd), this));
+		this._hammer.on('pinchstart', L.bind(window.touch.touchOnly(this._onPinchStart), this));
+		this._hammer.on('pinchmove', L.bind(window.touch.touchOnly(this._onPinch), this));
+		this._hammer.on('pinchend', L.bind(window.touch.touchOnly(this._onPinchEnd), this));
+		this._hammer.on('tripletap', L.bind(window.touch.touchOnly(this._onTripleTap), this));
+		this._hammer.on('swipe', L.bind(window.touch.touchOnly(this._onSwipe), this));
 		this._map.on('updatepermission', this._onPermission, this);
 		this._onPermission({perm: this._map._permission});
 	},
 
 	removeHooks: function () {
-		this._hammer.off('hammer.input', L.bind(this._onHammer, this));
-		this._hammer.off('tap', L.bind(this._onTap, this));
-		this._hammer.off('panstart', L.bind(this._onPanStart, this));
-		this._hammer.off('pan', L.bind(this._onPan, this));
-		this._hammer.off('panend', L.bind(this._onPanEnd, this));
-		this._hammer.off('pinchstart', L.bind(this._onPinchStart, this));
-		this._hammer.off('pinchmove', L.bind(this._onPinch, this));
-		this._hammer.off('pinchend', L.bind(this._onPinchEnd, this));
-		this._hammer.off('doubletap', L.bind(this._onDoubleTap, this));
-		this._hammer.off('press', L.bind(this._onPress, this));
-		this._hammer.off('tripletap', L.bind(this._onTripleTap, this));
-		this._hammer.off('swipe', L.bind(this._onSwipe, this));
+		this._hammer.off('hammer.input', L.bind(window.touch.touchOnly(this._onHammer), this));
+		this._hammer.off('tap', L.bind(window.touch.touchOnly(this._onTap), this));
+		this._hammer.off('panstart', L.bind(window.touch.touchOnly(this._onPanStart), this));
+		this._hammer.off('pan', L.bind(window.touch.touchOnly(this._onPan), this));
+		this._hammer.off('panend', L.bind(window.touch.touchOnly(this._onPanEnd), this));
+		this._hammer.off('pinchstart', L.bind(window.touch.touchOnly(this._onPinchStart), this));
+		this._hammer.off('pinchmove', L.bind(window.touch.touchOnly(this._onPinch), this));
+		this._hammer.off('pinchend', L.bind(window.touch.touchOnly(this._onPinchEnd), this));
+		this._hammer.off('doubletap', L.bind(window.touch.touchOnly(this._onDoubleTap), this));
+		this._hammer.off('press', L.bind(window.touch.touchOnly(this._onPress), this));
+		this._hammer.off('tripletap', L.bind(window.touch.touchOnly(this._onTripleTap), this));
+		this._hammer.off('swipe', L.bind(window.touch.touchOnly(this._onSwipe), this));
 		this._map.off('updatepermission', this._onPermission, this);
 	},
 
 	_onPermission: function (e) {
 		if (e.perm == 'edit') {
-			this._hammer.on('doubletap', L.bind(this._onDoubleTap, this));
-			this._hammer.on('press', L.bind(this._onPress, this));
+			this._hammer.on('doubletap', L.bind(window.touch.touchOnly(this._onDoubleTap), this));
+			this._hammer.on('press', L.bind(window.touch.touchOnly(this._onPress), this));
 		} else {
-			this._hammer.off('doubletap', L.bind(this._onDoubleTap, this));
-			this._hammer.off('press', L.bind(this._onPress, this));
+			this._hammer.off('doubletap', L.bind(window.touch.touchOnly(this._onDoubleTap), this));
+			this._hammer.off('press', L.bind(window.touch.touchOnly(this._onPress), this));
 		}
 	},
 

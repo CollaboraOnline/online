@@ -25,7 +25,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Sheet Operation', function 
 		var eventOptions = {
 			force: true,
 			button: 0,
-			pointerType: 'mouse'
+			pointerType: 'touch'
 		};
 
 		cy.cGet('.spreadsheet-tab.spreadsheet-tab-selected')

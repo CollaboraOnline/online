@@ -56,8 +56,8 @@ L.DomEvent = {
 		if (L.Browser.pointer && type.indexOf('touch') === 0) {
 			this.addPointerListener(obj, type, handler, id);
 
-		} else if (L.Browser.touch && (type === 'dblclick') && this.addDoubleTapListener) {
-			this.addDoubleTapListener(obj, handler, id);
+		} else if ((type === 'dblclick') && this.addDoubleTapListener) {
+			this.addDoubleTapListener(obj, window.touch.touchOnly(handler), id);
 
 		} else if (type === 'trplclick' || type === 'qdrplclick') {
 			this.addMultiClickListener(obj, handler, id, type);
@@ -106,7 +106,7 @@ L.DomEvent = {
 		if (L.Browser.pointer && type.indexOf('touch') === 0) {
 			this.removePointerListener(obj, type, id);
 
-		} else if (L.Browser.touch && (type === 'dblclick') && this.removeDoubleTapListener) {
+		} else if ((type === 'dblclick') && this.removeDoubleTapListener) {
 			this.removeDoubleTapListener(obj, id);
 
 		} else if (type === 'trplclick' || type === 'qdrplclick') {
@@ -143,6 +143,17 @@ L.DomEvent = {
 		L.DomEvent._skipped(e);
 
 		return this;
+	},
+
+	disableMouseClickPropagation: function (el) {
+		var stop = window.touch.mouseOnly(L.DomEvent.stopPropagation);
+
+		L.DomEvent.on(el, L.Draggable.START.join(' '), stop);
+
+		return L.DomEvent.on(el, {
+			click: window.touch.mouseOnly(L.DomEvent._fakeStop),
+			dblclick: stop
+		});
 	},
 
 	disableScrollPropagation: function (el) {
