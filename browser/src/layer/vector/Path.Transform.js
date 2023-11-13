@@ -112,7 +112,7 @@ L.Handler.PathTransform = L.Handler.extend({
 		shapeType: 0,
 		// edge handlers
 		handlerOptions: {
-			radius:      L.Browser.touch && !L.Browser.pointer ? 10 : 5,
+			radius:      window.touch.hasAnyTouchscreen() ? 10 : 5,
 			fillColor:   '#ffffff',
 			color:       '#202020',
 			fillOpacity: 1,
@@ -122,7 +122,7 @@ L.Handler.PathTransform = L.Handler.extend({
 		},
 
 		gluePointOptions: {
-			radius:      L.Browser.touch && !L.Browser.pointer ? 10 : 5,
+			radius:      window.touch.hasAnyTouchscreen() ? 10 : 5,
 			fillColor:   '#EE3E3E',
 			color:       '#202020',
 			fillOpacity: 1,
@@ -156,7 +156,7 @@ L.Handler.PathTransform = L.Handler.extend({
 			interactive: false
 		},
 		// rotation handle length
-		handleLength: L.Browser.touch && !L.Browser.pointer ? 40 : 20,
+		handleLength: window.touch.hasAnyTouchscreen() ? 40 : 20,
 
 		// maybe I'll add skewing in the future
 		edgesCount:   4,

@@ -48,13 +48,10 @@ L.Control.Layers = L.Control.extend({
 		// makes this work on IE touch devices by stopping it from firing a mouseout event when the touch is released
 		container.setAttribute('aria-haspopup', true);
 
-		if (!L.Browser.touch) {
-			L.DomEvent
-				.disableClickPropagation(container)
-				.disableScrollPropagation(container);
-		} else {
-			L.DomEvent.on(container, 'click', L.DomEvent.stopPropagation);
-		}
+		L.DomEvent
+			.disableMouseClickPropagation(container)
+			.disableScrollPropagation(container);
+		L.DomEvent.on(container, 'click', window.touch.touchOnly(L.DomEvent.stopPropagation));
 
 		var form = this._form = L.DomUtil.create('form', className + '-list');
 
@@ -70,13 +67,10 @@ L.Control.Layers = L.Control.extend({
 			link.href = '#';
 			link.title = 'Layers';
 
-			if (L.Browser.touch) {
-				L.DomEvent
-				    .on(link, 'click', L.DomEvent.stop)
-				    .on(link, 'click', this._expand, this);
-			} else {
-				L.DomEvent.on(link, 'focus', this._expand, this);
-			}
+			L.DomEvent
+				.on(link, 'click', window.touch.touchOnly(L.DomEvent.stop))
+				.on(link, 'click', window.touch.touchOnly(this._expand), this);
+			L.DomEvent.on(link, 'focus', window.touch.mouseOnly(this._expand), this);
 
 			// work around for Firefox Android issue https://github.com/Leaflet/Leaflet/issues/2033
 			L.DomEvent.on(form, 'click', function () {

@@ -89,60 +89,57 @@ L.Control.Ruler = L.Control.extend({
 
 		// Now we have indentation markers. Next we should bind drag initializers to them..
 		// We will use 3 hammers. 1 hammer is not usable for this case.
-		if (L.Browser.touch) {
-			// Hammer for first line indentation..
-			this._firstLineHammer = new Hammer(this._firstLineMarker);
-			this._firstLineHammer.add(new Hammer.Pan({ threshold: 0, pointers: 0 }));
-			this._firstLineHammer.get('press').set({
-				time: 500
-			});
-			this._firstLineHammer.on('panstart', function (event) {
-				self._initiateIndentationDrag(event);
-			});
-			this._firstLineHammer.on('panmove', function (event) {
-				self._moveIndentation(event);
-			});
-			this._firstLineHammer.on('panend', function (event) {
-				self._moveIndentationEnd(event);
-			});
+		// Hammer for first line indentation..
+		this._firstLineHammer = new Hammer(this._firstLineMarker);
+		this._firstLineHammer.add(new Hammer.Pan({ threshold: 0, pointers: 0 }));
+		this._firstLineHammer.get('press').set({
+			time: 500
+		});
+		this._firstLineHammer.on('panstart', window.touch.touchOnly(function (event) {
+			self._initiateIndentationDrag(event);
+		}));
+		this._firstLineHammer.on('panmove', window.touch.touchOnly(function (event) {
+			self._moveIndentation(event);
+		}));
+		this._firstLineHammer.on('panend', window.touch.touchOnly(function (event) {
+			self._moveIndentationEnd(event);
+		}));
 
-			// Hammer for paragraph start indentation..
-			this._pStartHammer = new Hammer(this._pStartMarker);
-			this._pStartHammer.add(new Hammer.Pan({ threshold: 0, pointers: 0 }));
-			this._pStartHammer.get('press').set({
-				time: 500
-			});
-			this._pStartHammer.on('panstart', function (event) {
-				self._initiateIndentationDrag(event);
-			});
-			this._pStartHammer.on('panmove', function (event) {
-				self._moveIndentation(event);
-			});
-			this._pStartHammer.on('panend', function (event) {
-				self._moveIndentationEnd(event);
-			});
+		// Hammer for paragraph start indentation..
+		this._pStartHammer = new Hammer(this._pStartMarker);
+		this._pStartHammer.add(new Hammer.Pan({ threshold: 0, pointers: 0 }));
+		this._pStartHammer.get('press').set({
+			time: 500
+		});
+		this._pStartHammer.on('panstart', window.touch.touchOnly(function(event) {
+			self._initiateIndentationDrag(event);
+		}));
+		this._pStartHammer.on('panmove', window.touch.touchOnly(function(event) {
+			self._moveIndentation(event);
+		}));
+		this._pStartHammer.on('panend', window.touch.touchOnly(function(event) {
+			self._moveIndentationEnd(event);
+		}));
 
-			// Hammer for paragraph end indentation..
-			this._pEndHammer = new Hammer(this._pEndMarker);
-			this._pEndHammer.add(new Hammer.Pan({ threshold: 0, pointers: 0 }));
-			this._pEndHammer.get('press').set({
-				time: 500
-			});
-			this._pEndHammer.on('panstart', function (event) {
-				self._initiateIndentationDrag(event);
-			});
-			this._pEndHammer.on('panmove', function (event) {
-				self._moveIndentation(event);
-			});
-			this._pEndHammer.on('panend', function (event) {
-				self._moveIndentationEnd(event);
-			});
-		}
-		else {
-			L.DomEvent.on(this._firstLineMarker, 'mousedown', this._initiateIndentationDrag, this);
-			L.DomEvent.on(this._pStartMarker, 'mousedown', this._initiateIndentationDrag, this);
-			L.DomEvent.on(this._pEndMarker, 'mousedown', this._initiateIndentationDrag, this);
-		}
+		// Hammer for paragraph end indentation..
+		this._pEndHammer = new Hammer(this._pEndMarker);
+		this._pEndHammer.add(new Hammer.Pan({ threshold: 0, pointers: 0 }));
+		this._pEndHammer.get('press').set({
+			time: 500
+		});
+		this._pEndHammer.on('panstart', window.touch.touchOnly(function(event) {
+			self._initiateIndentationDrag(event);
+		}));
+		this._pEndHammer.on('panmove', window.touch.touchOnly(function(event) {
+			self._moveIndentation(event);
+		}));
+		this._pEndHammer.on('panend', window.touch.touchOnly(function(event) {
+			self._moveIndentationEnd(event);
+		}));
+
+		L.DomEvent.on(this._firstLineMarker, 'mousedown', this._initiateIndentationDrag, this);
+		L.DomEvent.on(this._pStartMarker, 'mousedown', this._initiateIndentationDrag, this);
+		L.DomEvent.on(this._pEndMarker, 'mousedown', this._initiateIndentationDrag, this);
 	},
 
 	_initLayout: function() {
@@ -167,25 +164,23 @@ L.Control.Ruler = L.Control.extend({
 
 		var self = this;
 
-		if (L.Browser.touch) {
-			this._hammer = new Hammer(this._rTSContainer);
-			this._hammer.add(new Hammer.Pan({ threshold: 0, pointers: 0 }));
-			this._hammer.get('press').set({
-				time: 500
-			});
-			this._hammer.on('panstart', function (event) {
-				self._initiateTabstopDrag(event);
-			});
-			this._hammer.on('panmove', function (event) {
-				self._moveTabstop(event);
-			});
-			this._hammer.on('panend', function (event) {
-				self._endTabstopDrag(event);
-			});
-			this._hammer.on('press', function (event) {
-				self._onTabstopContainerLongPress(event);
-			});
-		}
+		this._hammer = new Hammer(this._rTSContainer);
+		this._hammer.add(new Hammer.Pan({ threshold: 0, pointers: 0 }));
+		this._hammer.get('press').set({
+			time: 500
+		});
+		this._hammer.on('panstart', window.touch.touchOnly(function (event) {
+			self._initiateTabstopDrag(event);
+		}));
+		this._hammer.on('panmove', window.touch.touchOnly(function (event) {
+			self._moveTabstop(event);
+		}));
+		this._hammer.on('panend', window.touch.touchOnly(function (event) {
+			self._endTabstopDrag(event);
+		}));
+		this._hammer.on('press', window.touch.touchOnly(function (event) {
+			self._onTabstopContainerLongPress(event);
+		}));
 
 		this._initiateIndentationMarkers();
 
@@ -439,7 +434,7 @@ L.Control.Ruler = L.Control.extend({
 	_moveIndentationEnd: function(e) {
 		this._map.rulerActive = false;
 
-		if (e.type !== 'panend') { // The screen may support touch and click at the same time, so we do not use L.Browser.touch while checking the event type in order to support both.
+		if (e.type !== 'panend') {
 			L.DomEvent.off(this._rFace, 'mousemove', this._moveIndentation, this);
 			L.DomEvent.off(this._map, 'mouseup', this._moveIndentationEnd, this);
 		}

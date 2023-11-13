@@ -193,9 +193,7 @@ L.Map.include({
 	_enterEditMode: function (perm) {
 		this._permission = perm;
 
-		if (!L.Browser.touch) {
-			this.dragging.disable();
-		}
+		this.dragging.disable();
 
 		if ((window.mode.isMobile() || window.mode.isTablet()) && this._textInput && this.getDocType() === 'text') {
 			this._textInput.setSwitchedToEditMode();

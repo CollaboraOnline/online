@@ -86,10 +86,8 @@ L.Handler.PathDrag = L.Handler.extend(/** @lends  L.Path.Drag.prototype */ {
 
 		this._path.removeClass(L.Handler.PathDrag.DRAGGING_CLS);
 
-		if (!this._path.options.manualDrag) {
-			L.DomEvent.off(document, 'mousemove touchmove', this._onDrag,    this);
-			L.DomEvent.off(document, 'mouseup touchend',    this._onDragEnd, this);
-		}
+		L.DomEvent.off(document, 'mousemove touchmove', this._onDrag,    this);
+		L.DomEvent.off(document, 'mouseup touchend',    this._onDragEnd, this);
 	},
 
 	/**
@@ -118,11 +116,9 @@ L.Handler.PathDrag = L.Handler.extend(/** @lends  L.Path.Drag.prototype */ {
 
 		this._path._renderer.addContainerClass('leaflet-interactive');
 
-		if (!this._path.options.manualDrag) {
-			L.DomEvent
-				.on(document, MOVE[eventType], this._onDrag,    this)
-				.on(document, END[eventType],  this._onDragEnd, this);
-		}
+		L.DomEvent
+			.on(document, MOVE[eventType], this._onDrag,    this)
+			.on(document, END[eventType],  this._onDragEnd, this);
 
 		if (this._path._map.dragging.enabled()) {
 			// I guess it's required because mousedown gets simulated with a delay
@@ -234,10 +230,8 @@ L.Handler.PathDrag = L.Handler.extend(/** @lends  L.Path.Drag.prototype */ {
 			this._path._transform(null);
 		}
 
-		if (!this._path.options.manualDrag) {
-			L.DomEvent.off(document, 'mousemove touchmove', this._onDrag,    this);
-			L.DomEvent.off(document, 'mouseup touchend',    this._onDragEnd, this);
-		}
+		L.DomEvent.off(document, 'mousemove touchmove', this._onDrag,    this);
+		L.DomEvent.off(document, 'mouseup touchend',    this._onDragEnd, this);
 
 		this._restoreCoordGetters();
 
@@ -266,7 +260,7 @@ L.Handler.PathDrag = L.Handler.extend(/** @lends  L.Path.Drag.prototype */ {
 			this._path._map.dragging.enable();
 		}
 
-		if (!this._path.options.manualDrag && !moved && this._mouseDown) {
+		if (!moved && this._mouseDown && !window.touch.isTouchEvent(this._mouseDown)) {
 			this._path._map._handleDOMEvent(this._mouseDown);
 			this._path._map._handleDOMEvent(evt);
 		}

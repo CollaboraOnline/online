@@ -6,7 +6,7 @@
 L.Draggable = L.Evented.extend({
 
 	statics: {
-		START: L.Browser.touch ? ['touchstart', 'mousedown'] : ['mousedown'],
+		START: ['touchstart', 'mousedown'],
 		END: {
 			mousedown: 'mouseup',
 			touchstart: 'touchend',
@@ -89,11 +89,9 @@ L.Draggable = L.Evented.extend({
 		// for scrolling during cursor dragging.
 		this.startOffset = this._startPoint.subtract(new L.Point(startBoundingRect.left, startBoundingRect.top));
 
-		if (!this._manualDrag) {
-			L.DomEvent
-				.on(document, L.Draggable.MOVE[e.type], this._onMove, this)
-				.on(document, L.Draggable.END[e.type], this._onUp, this);
-		}
+		L.DomEvent
+			.on(document, L.Draggable.MOVE[e.type], window.touch.mouseOnly(this._onMove), this)
+			.on(document, L.Draggable.END[e.type], window.touch.mouseOnly(this._onUp), this);
 	},
 
 	_onMove: function (e) {
@@ -132,7 +130,7 @@ L.Draggable = L.Evented.extend({
 			}
 		}
 		if (!offset.x && !offset.y) { return; }
-		if (L.Browser.touch && Math.abs(offset.x) + Math.abs(offset.y) < 3 && !e.autoscroll) { return; }
+		if (window.touch.isTouchEvent(e) && Math.abs(offset.x) + Math.abs(offset.y) < 3 && !e.autoscroll) { return; }
 
 		L.DomEvent.preventDefault(e);
 

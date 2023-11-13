@@ -31,7 +31,6 @@ abstract class CPath extends CEventsHandler {
 	zIndex: number = 0;
 
 	static countObjects: number = 0;
-	static isTouchDevice: boolean = false; // Need to set this from current L.Browser.touch
 	private id: number;
 	private isDeleted: boolean = false;
 	private testDiv: HTMLDivElement;
@@ -238,7 +237,7 @@ abstract class CPath extends CEventsHandler {
 
 	clickTolerance(): number {
 		// used when doing hit detection for Canvas layers
-		return (this.stroke ? this.weight / 2 : 0) + (CPath.isTouchDevice ? 10 : 0);
+		return (this.stroke ? this.weight / 2 : 0) + ((window as typeof window & { touch: any; }).touch.hasAnyTouchscreen() ? 10 : 0);
 	}
 
 	setCursorType(cursorType: string) {

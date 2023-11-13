@@ -500,7 +500,8 @@ L.TextInput = L.Layer.extend({
 		this._map._docLayer._cursorMarker.setMouseCursorForTextBox();
 
 		// Move and display under-caret marker
-		if (L.Browser.touch) {
+
+		if (window.touch.hasAnyTouchscreen()) {
 			if (this._map._docLayer._textCSelections.empty()) {
 				this._cursorHandler.setLatLng(bottom).addTo(this._map);
 			} else {

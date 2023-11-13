@@ -10,7 +10,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function()
 	var eventOptions = {
 		force: true,
 		button: 0,
-		pointerType: 'mouse'
+		pointerType: 'touch'
 	};
 
 	beforeEach(function() {

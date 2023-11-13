@@ -47,12 +47,12 @@ L.Map.Scroll = L.Handler.extend({
 		}
 	},
 
-	_onTouchScrollStart: function (e) {
+	_onTouchScrollStart: this.touch.mouseOnly(function (e) {
 		this.lastX = e.touches[0].clientX;
 		this.lastY = e.touches[0].clientY;
-	},
+	}),
 
-	_onTouchScroll: function (e) {
+	_onTouchScroll: this.touch.mouseOnly(function (e) {
 		var top = e.touches[0].clientY;
 		var start = e.touches[0].clientX;
 		var deltaX = (start - this.lastX);
@@ -73,9 +73,9 @@ L.Map.Scroll = L.Handler.extend({
 			this._vertical = 1;
 		}
 		this._timer = setTimeout(L.bind(this._performScroll, this), left);
-	},
+	}),
 
-	_onWheelScroll: function (e) {
+	_onWheelScroll: this.touch.mouseOnly(function (e) {
 		var delta =  -1 * e.deltaY; // L.DomEvent.getWheelDelta(e);
 		var debounce = this._map.options.wheelDebounceTime;
 
@@ -116,7 +116,7 @@ L.Map.Scroll = L.Handler.extend({
 		}
 
 		L.DomEvent.stop(e);
-	},
+	}),
 
 	_performScroll: function () {
 		var map = this._map,

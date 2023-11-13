@@ -28,7 +28,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Image Operation Tests', fun
 		var eventOptions = {
 			force: true,
 			button: 0,
-			pointerType: 'mouse'
+			pointerType: 'touch'
 		};
 
 		cy.cGet('.bottomright-svg-pane > .leaflet-control-buttons-disabled > .leaflet-interactive')
