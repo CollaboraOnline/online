@@ -477,9 +477,10 @@ p.mobile-wizard.ui-combobox-text.selected {
 .ui-tabs.mobile-wizard {
 	text-align: center;
 	height: 42px;
-	display: table;
+	display: flex;
 	width: 100%;
 	padding: 0px;
+	overflow-x: auto;
 }
 
 #mobile-wizard-tabs {
@@ -490,12 +491,12 @@ p.mobile-wizard.ui-combobox-text.selected {
 }
 
 .ui-tab.mobile-wizard {
+	flex: auto;
 	display: table-cell;
-	width: 49%;
 	height: 36px;
 	line-height: 36px;
 	vertical-align: middle;
-	margin: 0px 1%;
+	margin: 0px 5%;
 	border-radius: 10px;
 	border: none;
 	color: var(--color-text-lighter);
