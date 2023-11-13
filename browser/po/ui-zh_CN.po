@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-11-09 13:41+0100\n"
 "PO-Revision-Date: 2023-11-13 11:26+0000\n"
-"Last-Translator: TUCAOEVER5023416dba724da7 <814697582@qq.com>\n"
+"Last-Translator: poi <erbaotao@outlook.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
 "collabora-online/ui/zh_Hans/>\n"
 "Language: zh_CN\n"
@@ -1386,7 +1386,7 @@ msgstr "标题 2"
 
 #: src/control/Control.NotebookbarCalc.js:849
 msgid "Good"
-msgstr ""
+msgstr "好"
 
 #: src/control/Control.NotebookbarCalc.js:856
 msgid "Neutral"
