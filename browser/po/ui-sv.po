@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-11-09 13:41+0100\n"
-"PO-Revision-Date: 2023-10-27 20:10+0000\n"
+"PO-Revision-Date: 2023-11-11 09:02+0000\n"
 "Last-Translator: bittin1ddc447d824349b2 <bittin@reimu.nl>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/sv/>\n"
-"Language: \n"
+"Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2234,11 +2234,11 @@ msgstr "Tjänsten är bortkopplad."
 
 #: src/docstate.js:71
 msgid "Standard"
-msgstr ""
+msgstr "Standard"
 
 #: src/docstate.js:82
 msgid "Theme colors"
-msgstr ""
+msgstr "Tema färger"
 
 #: src/errormessages.js:13
 msgid "No disk space left on server."
