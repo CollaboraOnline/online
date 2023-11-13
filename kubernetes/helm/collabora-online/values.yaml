@@ -54,16 +54,8 @@ prometheus:
     additionalLabels: {}
     defaults:
       enabled: true
-      errorServiceUnavailable:
-        critical: 50
-        warning: 2
-        info: 0
-      errorStorageConnections:
-        critical: 50
-        warning: 2
-        info: 0
       docs:
-        duplicated: 50
+        duplicated: 0
         pod:
           critical: 10
           warning: 8
@@ -72,6 +64,14 @@ prometheus:
           critical: 500
           warning: 200
           info: 50
+      errorServiceUnavailable:
+        critical: 50
+        warning: 2
+        info: 0
+      errorStorageConnections:
+        critical: 50
+        warning: 2
+        info: 0
       viewers:
         pod:
           critical: 100
