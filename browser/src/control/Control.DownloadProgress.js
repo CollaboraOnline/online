@@ -58,7 +58,7 @@ L.Control.DownloadProgress = L.Control.extend({
 		var modalId = this._getDownloadProgressDialogId();
 
 		var msg = this._getLargeCopyPasteMessage();
-		var buttonText = _('Download') + ' (Ctrl + C)'; // TODO: on Mac Ctrl == Command
+		var buttonText = _('Download') + L.Util.replaceCtrlAltInMac(' (Ctrl + C)');
 
 		if (inSnackbar) {
 			this._map.uiManager.showSnackbar(
@@ -84,7 +84,7 @@ L.Control.DownloadProgress = L.Control.extend({
 			this._map.uiManager.showProgressBar(msg, buttonText, this._onClose.bind(this));
 		} else if (this._isLargeCopy) {
 			// downloading for copy, next: show download complete dialog
-			buttonText = _('Copy') + ' (Ctrl + C)'; // TODO: on Mac Ctrl == Command?
+			buttonText = _('Copy') + L.Util.replaceCtrlAltInMac(' (Ctrl + C)');
 
 			this._map.uiManager.showProgressBarDialog(modalId, this._getDialogTitle(), msg,
 				buttonText, this._onConfirmCopyAction.bind(this), 0, this._onClose.bind(this));
@@ -109,7 +109,7 @@ L.Control.DownloadProgress = L.Control.extend({
 		var modalId = this._getDownloadProgressDialogId();
 		var snackbarMsg = _('Download completed and ready to be copied to clipboard.');
 		var dialogMsg = snackbarMsg + ' ' + _('From now on clipboard notifications will discreetly appear at the bottom.');
-		var buttonText = _('Copy') + ' (Ctrl + C)'; // TODO: on Mac Ctrl == Command?
+		var buttonText = _('Copy') + L.Util.replaceCtrlAltInMac(' (Ctrl + C)');
 
 		if (inSnackbar) {
 			this._map.uiManager.showProgressBar(snackbarMsg, buttonText,
@@ -127,7 +127,14 @@ L.Control.DownloadProgress = L.Control.extend({
 
 	_setupKeyboardShortcutForElement: function (eventTargetId, buttonId) {
 		var keyDownCallback = function(e) {
-			if (!e.altKey && !e.shiftKey && e.ctrlKey && e.key === 'c') { // CTRL + C
+			var modifierKeys = !e.altKey && !e.shiftKey;
+			if (navigator.appVersion.indexOf('Mac') != -1 || navigator.userAgent.indexOf('Mac') != -1) {
+				modifierKeys = modifierKeys && e.metaKey && !e.ctrlKey;
+			} else {
+				modifierKeys = modifierKeys && e.ctrlKey && !e.metaKey;
+			}
+			// CTRL + C / Command + C
+			if (modifierKeys && e.key === 'c') {
 				document.getElementById(buttonId).click();
 				e.preventDefault();
 			}
