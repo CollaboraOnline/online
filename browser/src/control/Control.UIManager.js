@@ -674,11 +674,19 @@ L.Control.UIManager = L.Control.extend({
 		obj.removeClass('w2ui-icon unfold');
 		obj.addClass('w2ui-icon fold');
 		$('#tb_editbar_item_fold').prop('title', _('Hide Menu'));
+
+		if (this._notebookbarShouldBeCollapsed)
+			this.collapseNotebookbar();
 	},
 
 	hideMenubar: function() {
 		if (this.isMenubarHidden())
 			return;
+
+		var notebookbarWasCollapsed = this.isNotebookbarCollapsed();
+		this.extendNotebookbar();  // The notebookbar has the button to show the menu bar, so having it hidden at the same time softlocks you
+		this._notebookbarShouldBeCollapsed = notebookbarWasCollapsed;
+
 		$('.main-nav').hide();
 		if (L.Params.closeButtonEnabled) {
 			$('#closebuttonwrapper').hide();
@@ -752,7 +760,9 @@ L.Control.UIManager = L.Control.extend({
 	},
 
 	collapseNotebookbar: function() {
-		if (this.isNotebookbarCollapsed())
+		this._notebookbarShouldBeCollapsed = true;
+
+		if (this.isNotebookbarCollapsed() || this.isMenubarHidden())
 			return;
 
 		this.moveObjectVertically($('#formulabar'), -1);
@@ -764,6 +774,8 @@ L.Control.UIManager = L.Control.extend({
 	},
 
 	extendNotebookbar: function() {
+		this._notebookbarShouldBeCollapsed = false;
+
 		if (!this.isNotebookbarCollapsed())
 			return;
 
