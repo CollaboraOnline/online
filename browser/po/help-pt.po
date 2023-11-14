@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-11-09 13:41+0200\n"
-"PO-Revision-Date: 2023-07-27 16:05+0000\n"
+"PO-Revision-Date: 2023-11-15 11:07+0000\n"
 "Last-Translator: SC <lalocas@protonmail.com>\n"
 "Language-Team: Portuguese <https://hosted.weblate.org/projects/"
 "collabora-online/help/pt/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 5.2-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:19-5
 msgid "Keyboard Shortcuts"
@@ -1172,29 +1172,27 @@ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Seta para baixo"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:147-18
 msgid "Go to next sheet."
-msgstr ""
+msgstr "Ir para a folha seguinte."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:147-62
-#, fuzzy
 msgid ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
 "plus\">+</span><kbd>Page Up"
 msgstr ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>5"
+"plus\">+</span><kbd>Page Up"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:148-18
 msgid "Go to previous sheet."
-msgstr ""
+msgstr "Ir para a folha anterior."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:148-66
-#, fuzzy
 msgid ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
 "plus\">+</span><kbd>Page Down"
 msgstr ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>D"
+"plus\">+</span><kbd>Page Down"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:149-18
 msgid ""
