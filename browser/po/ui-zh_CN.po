@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-11-09 13:41+0100\n"
-"PO-Revision-Date: 2023-11-13 11:26+0000\n"
-"Last-Translator: poi <erbaotao@outlook.com>\n"
+"PO-Revision-Date: 2023-11-15 11:07+0000\n"
+"Last-Translator: TUCAOEVER5023416dba724da7 <814697582@qq.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
 "collabora-online/ui/zh_Hans/>\n"
 "Language: zh_CN\n"
@@ -1192,7 +1192,7 @@ msgstr "点击折叠"
 #: src/control/Control.NotebookbarBuilder.js:572
 #: src/control/Control.NotebookbarCalc.js:223
 msgid "CSV File (.csv)"
-msgstr "CSV文件(.csv)"
+msgstr "CSV文件（.csv）"
 
 #: src/control/Control.NotebookbarBuilder.js:894
 #: src/control/Control.TopToolbar.js:232
@@ -1231,7 +1231,7 @@ msgstr "文件"
 #: src/control/Control.NotebookbarImpress.js:79
 #: src/control/Control.NotebookbarWriter.js:38
 msgid "Home"
-msgstr "Home"
+msgstr "开始"
 
 #: src/control/Control.NotebookbarCalc.js:32
 #: src/control/Control.NotebookbarDraw.js:71
@@ -1501,7 +1501,7 @@ msgstr "演示文稿"
 
 #: src/control/Control.NotebookbarWriter.js:75
 msgid "Form"
-msgstr "形式"
+msgstr "表单"
 
 #: src/control/Control.NotebookbarWriter.js:259
 msgid "ODF Text Document (.odt)"
@@ -2301,7 +2301,7 @@ msgstr "载入文档失败。可能是文档格式损坏，也可能是文档需
 
 #: src/errormessages.js:27
 msgid "Cleaning up the document from the last session."
-msgstr "清理上一会话的文档"
+msgstr "清理上一会话的文档。"
 
 #: src/errormessages.js:28
 msgid ""
@@ -2328,6 +2328,9 @@ msgid ""
 "administrator. For more info on proxy configuration please checkout https://"
 "sdk.collaboraonline.com/docs/installation/Proxy_settings.html"
 msgstr ""
+"无法建立网络连接或网络连接被意外关闭。反向代理可能配置错误，请联系管理员。有"
+"关反向代理的更多信息，请查阅 https://sdk.collaboraonline.com/docs/"
+"installation/Proxy_settings.html"
 
 #: src/errormessages.js:33
 msgid "Failed to load document."
@@ -2341,7 +2344,7 @@ msgstr "磁盘空间不足导致保存失败。文档现在处于只读模式。
 msgid ""
 "The document is too large or no disk space left to save. Document will now "
 "be read-only."
-msgstr ""
+msgstr "文档过大或服务器空间不足以保存该文档。文档将只读。"
 
 #: src/errormessages.js:36 src/errormessages.js:45
 msgid "Document cannot be saved due to expired or invalid access token."
@@ -2358,32 +2361,34 @@ msgstr "无法重命名文档。"
 #: src/errormessages.js:42
 msgid ""
 "Failed to read document from storage, please try to load the document again."
-msgstr ""
+msgstr "无法从存储中读取该文档，请尝试重新加载该文档。"
 
 #: src/errormessages.js:43
 msgid ""
 "Save failed due to no storage space left. Document will now be read-only. "
 "Please make sure enough disk space is available and try to save again."
-msgstr ""
+msgstr "无法保存该文档，服务器空间不足。文档将只读。请确保有足够的存储空间并重新尝试"
+"保存。"
 
 #: src/errormessages.js:44
 msgid ""
 "Save failed because the document is too large or exceeds the remaining "
 "storage space. The document will now be read-only but you may still "
 "download it now to preserve a copy locally."
-msgstr ""
+msgstr "无法保存该文档或该文档超出剩余存储空间。文档将只读，但是你可能仍可以下载它以"
+"保留一份拷贝。"
 
 #: src/errormessages.js:46
 msgid "Document cannot be saved, please check your permissions."
-msgstr ""
+msgstr "文档无法保存，请检查你的权限。"
 
 #: src/errormessages.js:47
 msgid "Document cannot be renamed, please check your permissions."
-msgstr ""
+msgstr "文档无法重命名，请检查你的权限。"
 
 #: src/errormessages.js:48
 msgid "Document cannot be exported. Please try again."
-msgstr ""
+msgstr "文档无法导出。请重试。"
 
 #: src/errormessages.js:53
 msgid "Uploading file to server failed, file not found."
@@ -2399,15 +2404,15 @@ msgstr "函数"
 
 #: src/layer/tile/CanvasTileLayer.js:2588
 msgid "Copy link location"
-msgstr ""
+msgstr "复制链接"
 
 #: src/layer/tile/CanvasTileLayer.js:2596
 msgid "Edit link"
-msgstr ""
+msgstr "修改链接"
 
 #: src/layer/tile/CanvasTileLayer.js:2604
 msgid "Remove link"
-msgstr ""
+msgstr "移除链接"
 
 #: src/layer/tile/CanvasTileLayer.js:5316
 msgid "No Comments"
@@ -2428,7 +2433,7 @@ msgstr "删除"
 
 #: src/layer/tile/CommentListSection.ts:906
 msgid "Remove Thread"
-msgstr ""
+msgstr "移除主题"
 
 #: src/layer/tile/CommentListSection.ts:912
 msgid "Resolve"
@@ -2440,16 +2445,16 @@ msgstr "未解决"
 
 #: src/layer/tile/CommentListSection.ts:918
 msgid "Unresolve Thread"
-msgstr ""
+msgstr "未解决的主题"
 
 #: src/layer/tile/CommentListSection.ts:918
 msgid "Resolve Thread"
-msgstr ""
+msgstr "已解决的主题"
 
 #: src/layer/tile/CommentListSection.ts:1141
 #: src/layer/tile/CommentListSection.ts:1178
 msgid "Autosaved"
-msgstr ""
+msgstr "自动保存"
 
 #: src/layer/tile/CommentSection.ts:264
 msgid "Open menu"
@@ -2469,7 +2474,7 @@ msgstr "已解决"
 
 #: src/main.js:110
 msgid "Warning! The browser you are using is not supported."
-msgstr ""
+msgstr "警告！你的浏览器不受支持。"
 
 #: src/map/Clipboard.js:125
 msgid ""
@@ -2478,11 +2483,11 @@ msgstr "想要向 %productName 以外粘贴，请先点击「下载」按钮"
 
 #: src/map/Clipboard.js:135
 msgid "Copying from the document disabled"
-msgstr ""
+msgstr "禁止从文档内复制"
 
 #: src/map/Clipboard.js:238
 msgid "warning: copy/paste request timed out"
-msgstr ""
+msgstr "警告：复制/粘贴请求超时"
 
 #: src/map/Clipboard.js:301
 msgid "Failed to download clipboard, please re-copy"
@@ -2501,6 +2506,12 @@ msgid ""
 "kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd></td></tr><tr><td>Copy</"
 "td><td>Cut</td><td>Paste</td></tr></table>"
 msgstr ""
+"<p>剪贴板访问受限，请使用以下键盘快捷键：</p><table class=\"warn-copy-paste\""
+"><tr><td><kbd>Ctrl</kbd><span class=\"kbd--plus\""
+">+</span><kbd>C</kbd></td><td><kbd>Ctrl</kbd><span class=\"kbd--plus\">+ "
+"</span><kbd>X</kbd></td><td><kbd>Ctrl</kbd><span class=\"kbd--plus\""
+">+</span><kbd>V</kbd "
+"></td></tr><tr><td>复制</td><td>剪切</td><td>粘贴</td></tr></table>"
 
 #: src/map/Clipboard.js:866
 msgid ""
@@ -2515,6 +2526,8 @@ msgid ""
 "now: <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to see "
 "more options</p><p>Close popup to ignore paste special</p>"
 msgstr ""
+"<p>剪切板访问受限</p><p>请按住：<kbd>Ctrl</kbd><span class=\"kbd--plus\""
+">+</span><kbd>V</kbd>以插件更多选项</p><p>关闭弹出窗口以忽略特殊粘贴</p>"
 
 #: src/map/Map.js:221
 msgid "Initializing..."
@@ -2522,11 +2535,11 @@ msgstr "正在初始化..."
 
 #: src/map/Map.js:446 src/map/Map.js:449 src/map/Map.js:452 src/map/Map.js:455
 msgid "Last saved:"
-msgstr ""
+msgstr "上次保存："
 
 #: src/map/handler/Map.Feedback.js:82
 msgid "Please send us your feedback"
-msgstr ""
+msgstr "向我们提供您的反馈意见"
 
 #: src/map/handler/Map.FileInserter.js:105
 #, javascript-format
@@ -2554,11 +2567,11 @@ msgstr "从模版创建新文件..."
 
 #: src/map/handler/Map.WOPI.js:536
 msgid "Error"
-msgstr ""
+msgstr "错误"
 
 #: src/map/handler/Map.WOPI.js:536
 msgid "File name should contain an extension."
-msgstr ""
+msgstr "文件名应当包含扩展名。"
 
 #: src/map/handler/Map.WOPI.js:544
 msgid "Creating copy..."
@@ -2566,16 +2579,16 @@ msgstr "正在创建副本…"
 
 #: welcome/welcome.html%2Bhtml.head.title:9-3
 msgid "Collabora Online Welcome"
-msgstr ""
+msgstr "Collabora Online 欢迎"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:26-7
 msgid "Explore The New %coolVersion"
-msgstr ""
+msgstr "体验新版本 %coolVersion"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:27-7
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:38-7
 msgid "Collabora Online Development Edition"
-msgstr ""
+msgstr "Collabora Online 开发版本"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:28-7
 msgid ""
@@ -2584,10 +2597,13 @@ msgid ""
 "\" href=\"https://www.collaboraoffice.com/solutions/collabora-office-"
 "android-ios/\">apps</a> are also available for mobile."
 msgstr ""
+"享受在线生产力的最新发展，您可以在浏览器中免费使用、探索并与其他人一起使用。 "
+"各种<a target=\"_blank\" href=\"https://www.collaboraoffice.com/solutions/"
+"collabora-office-android-ios/\">应用</a>也可用于移动设备。"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:37-7
 msgid "Discover All The Changes"
-msgstr ""
+msgstr "检查所有更新"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:39-7
 msgid ""
@@ -2596,14 +2612,17 @@ msgid ""
 "latest Collabora Online Development Edition, aimed at home users and small "
 "teams."
 msgstr ""
+"请查阅<a target=\"_blank\" href=\"https://www.collaboraoffice.com/"
+"code-23-05-release-notes/\">发布说明</a>，了解有关最新的Collabora Online "
+"开发版本（针对家庭用户和小团队）的所有信息。"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:48-7
 msgid "Get Involved"
-msgstr ""
+msgstr "加入"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:49-7
 msgid "https://collaboraonline.github.io/"
-msgstr ""
+msgstr "https://collaboraonline.github.io/"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:50-7
 msgid ""
@@ -2616,6 +2635,12 @@ msgid ""
 "\">filing a bug report</a> with all the essential steps on how to reproduce "
 "it."
 msgstr ""
+"如果您有兴趣参与项目但不知道从何开始，请查看<a target=\"_blank\" href=\"https"
+"://collaboraonline.github.io/post/build-code/\""
+">逐步说明</a>，从头开始构建CODE。您也可以通过参与<a target=\"_blank\" href="
+"\"https://collaboraonline.github.io/post/translate/\">翻译</a>或通过<a "
+"target=\"_blank\" href=\"https://collaboraonline.github.io/post/filebugs/\""
+">提交错误报告</a>（报告中应包含问题如何重现的关键步骤）来加入到项目中来。"
 
 #~ msgid "Start download"
 #~ msgstr "开始下载"
