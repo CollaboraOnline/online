@@ -65,6 +65,14 @@ find etc/fonts \
      usr/lib/*/libsqlite* \
 	-type l 2>/dev/null
 
+# Find the first of these that exist to fulfill ssltls
+# via openssl requirements
+find etc/pki/tls/certs/ca-bundle.crt \
+     etc/pki/tls/certs/ca-bundle.trust.crt \
+     etc/ssl/certs/ca-certificates.crt \
+     var/lib/ca-certificates/ca-bundle.pem \
+	-type l,f -print -quit 2>/dev/null
+
 # Go through the LO shared objects and check what system libraries
 # they link to.
 find $INSTDIR -name 'xpdfimport' |
