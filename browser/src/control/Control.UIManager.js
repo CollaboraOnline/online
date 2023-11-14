@@ -429,6 +429,9 @@ L.Control.UIManager = L.Control.extend({
 		this.map._docLayer._requestNewTiles();
 
 		this.map.topToolbar.updateControlsState();
+
+		if (this._menubarShouldBeHidden)
+			this.hideMenubar();
 	},
 
 	createNotebookbarControl: function(docType) {
@@ -496,6 +499,9 @@ L.Control.UIManager = L.Control.extend({
 		this.refreshNotebookbar();
 		this.map._docLayer._resetClientVisArea();
 		this.map._docLayer._requestNewTiles();
+		var menubarWasHidden = this.isMenubarHidden();
+		this.showMenubar();
+		this._menubarShouldBeHidden = menubarWasHidden;
 	},
 
 	removeNotebookbarUI: function() {
@@ -663,6 +669,7 @@ L.Control.UIManager = L.Control.extend({
 	// Menubar
 
 	showMenubar: function() {
+		this._menubarShouldBeHidden = false;
 		if (!this.isMenubarHidden())
 			return;
 		$('.main-nav').show();
@@ -680,7 +687,8 @@ L.Control.UIManager = L.Control.extend({
 	},
 
 	hideMenubar: function() {
-		if (this.isMenubarHidden())
+		this._menubarShouldBeHidden = true;
+		if (this.isMenubarHidden() || this.shouldUseNotebookbarMode())
 			return;
 
 		var notebookbarWasCollapsed = this.isNotebookbarCollapsed();
