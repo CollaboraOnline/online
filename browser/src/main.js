@@ -85,6 +85,16 @@ if (window.ThisIsTheEmscriptenApp) {
 		onRuntimeInitialized: function() {
 			map.loadDocument(global.socket);
 		},
+		print: function (text) {
+			if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(' ');
+			console.warn(text);
+		},
+		printErr: function (text) {
+			if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(' ');
+			console.error(text);
+		},
+		arguments_: [docURL],
+		arguments: [docURL],
 	};
 	createOnlineModule(Module);
 	app.HandleCOOLMessage = Module['_handle_cool_message'];
