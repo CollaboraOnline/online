@@ -690,6 +690,11 @@ bool ClientSession::_handleInput(const char *buffer, int length)
                                 << "] has no write permissions in Storage and cannot save.");
             sendTextFrameAndLogError("error: cmd=save kind=savefailed");
         }
+        else if (_wopiFileInfo && _wopiFileInfo->getHideSaveOption())
+        {
+            LOG_WRN("Session [" << getId() << "] on document [" << docBroker->getDocKey()
+                            << "] has HideSaveOption set to true by CheckFileInfo, cannot save");
+        }
         else
         {
             // Don't save unmodified docs by default.
