@@ -1,5 +1,8 @@
 <config>
 
+    <!-- For more detailed documentation on typical configuration options please see:
+         https://sdk.collaboraonline.com/docs/installation/Configuration.html -->
+
     <!-- Note: 'default' attributes are used to document a setting's default value as well as to use as fallback. -->
     <!-- Note: When adding a new entry, a default must be set in WSD in case the entry is missing upon deployment. -->
 
@@ -44,6 +47,7 @@
     </per_document>
 
     <per_view desc="View-specific settings.">
+        <group_download_as desc="If set to true, groups download as icons into a dropdown for the notebookbar view." type="bool" default="true">true</group_download_as>
         <out_of_focus_timeout_secs desc="The maximum number of seconds before dimming and stopping updates when the browser tab is no longer in focus. Defaults to 120 seconds." type="uint" default="120">120</out_of_focus_timeout_secs>
         <idle_timeout_secs desc="The maximum number of seconds before dimming and stopping updates when the user is no longer active (even if the browser is in focus). Defaults to 15 minutes." type="uint" default="900">900</idle_timeout_secs>
     </per_view>
@@ -134,7 +138,8 @@
     </welcome>
 
     <user_interface>
-      <mode type="string" desc="Controls the user interface style (classic|notebookbar)" default="classic">classic</mode>
+      <mode type="string" desc="Controls the user interface style. The 'default' means: Take the value from ui_defaults, or decide for one of compact or tabbed (default|compact|tabbed)" default="default">default</mode>
+      <use_integration_theme desc="Use theme from the integrator" type="bool" default="true">true</use_integration_theme>
     </user_interface>
 
     <storage desc="Backend storage">
@@ -177,5 +182,17 @@
 
     <monitors desc="Addresses of servers we connect to on start for monitoring">
     </monitors>
+
+    <fonts_missing>
+        <handling desc="How to handle fonts mising in a document: 'report', 'log', 'both', or 'ignore'" type="string" default="log">both</handling>
+    </fonts_missing>
+
+    <zotero desc="Zotero plugin configuration. For more details about Zotero visit https://www.zotero.org/">
+        <enable desc="Enable Zotero plugin." type="bool" default="true">true</enable>
+    </zotero>
+
+   <overwrite_mode>
+        <enable desc="Enable overwrite mode (user can use insert key)" type="bool" default="true">true</enable>
+    </overwrite_mode>
 
 </config>
