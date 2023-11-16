@@ -554,7 +554,7 @@ L.Control.JSDialog = L.Control.extend({
 		instance.updatePos = null;
 		instance.canHaveFocus = !instance.isSnackbar && instance.id !== 'busypopup' && !instance.isMention;
 		instance.isDocumentAreaPopup = instance.popupParent === '_POPOVER_' && instance.posx !== undefined && instance.posy !== undefined;
-		instance.isPopUp = instance.isModalPopUp || instance.isDocumentAreaPopup || instance.isSnackbar;
+		instance.isPopup = instance.isModalPopUp || instance.isDocumentAreaPopup || instance.isSnackbar;
 		instance.containerParent = instance.isDocumentAreaPopup ? document.getElementById('document-container'): document.body;
 		instance.isAutofilter = instance.isDocumentAreaPopup && this.map._docLayer.isCalc();
 		instance.haveTitlebar = (!instance.isModalPopUp && !instance.isSnackbar) || (instance.hasClose && instance.title && instance.title !== '');
