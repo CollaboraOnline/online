@@ -1113,6 +1113,12 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     {
         return forwardToChild(std::string(buffer, length), docBroker);
     }
+#if !MOBILEAPP
+    else if (tokens.equals(0, "routetokensanitycheck"))
+    {
+        Admin::instance().routeTokenSanityCheck();
+    }
+#endif
     else
     {
         LOG_ERR("Session [" << getId() << "] got unknown command [" << tokens[0] << ']');
