@@ -574,9 +574,6 @@ L.TextInput = L.Layer.extend({
 		else if (payload === null)
 			payload = 'null';
 
-		// Save to downloadable log
-		L.Log.log(payload.toString(), 'INPUT');
-
 		// Pretty-print on console (but only if "tile layer debug mode" is active)
 		if (this._isDebugOn) {
 			var state = this._isComposing ? 'C' : 'N';

@@ -271,9 +271,6 @@ app.definitions.Socket = L.Class.extend({
 		if (fullDebug)
 			this._map._docLayer._debugSetPostMessage(type,msg);
 
-		if (!window.protocolDebug && !fullDebug)
-			return;
-
 		if (!fullDebug && msg.length > 256) // for reasonable performance.
 			msg = msg.substring(0,256) + '<truncated ' + (msg.length - 256) + 'chars>';
 
@@ -282,6 +279,11 @@ app.definitions.Socket = L.Class.extend({
 			status += '[!fullyLoadedAndReady]';
 		if (!window.bundlejsLoaded)
 			status += '[!bundlejsLoaded]';
+
+		L.Log.log(msg, type + status);
+
+		if (!window.protocolDebug && !fullDebug)
+			return;
 
 		var color = type === 'OUTGOING' ? 'color:red' : 'color:#2e67cf';
 		window.app.console.log(+new Date() + ' %c' + type + status + '%c: ' + msg.concat(' ').replace(' ', '%c '),
