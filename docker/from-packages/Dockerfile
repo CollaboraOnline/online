@@ -5,7 +5,19 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 FROM debian:stable-slim
-MAINTAINER Andras Timar <andras.timar@collabora.com>
+
+# some descriptive metadata - docker image inspect
+ARG author
+LABEL author=${author:-"Collabora Productivity Ltd."}
+LABEL description="Collabora Online is a powerful collaborative Office suite that supports all major document, spreadsheet and presentation file formats, which you can integrate into your own infrastructure. Collabora Online provides data security and sovereignty, and is ideally suited to the demands of a modern distributed working environment. Delivering a familiar look and feel, Collabora Online represents a real alternative to other big-brands solutions, giving you control and flexibility."
+ARG releasenotes
+LABEL release.notes=${releasenotes:-"https://www.collaboraoffice.com/code-23-05-release-notes/"}
+ARG version
+LABEL version=${version:-"23.05.5.4"}
+ARG coretag
+LABEL commit.history.core="https://git.libreoffice.org/core/+log/${coretag}"
+ARG onlinetag
+LABEL commit.history.online="https://github.com/CollaboraOnline/online/commits/${onlinetag}"
 
 # repo: can be 'repos', 'repos-staging', 'repos-snapshot'
 # Optional. The default is 'repos'.
