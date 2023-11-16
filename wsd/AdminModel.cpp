@@ -1342,4 +1342,13 @@ std::string AdminModel::getFilename(int pid)
     return std::string();
 }
 
+void AdminModel::routeTokenSanityCheck()
+{
+    ASSERT_CORRECT_THREAD_OWNER(_owner);
+
+    std::ostringstream oss;
+    oss << "routetoken_sanity_check";
+    notify(oss.str());
+}
+
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
