@@ -440,6 +440,7 @@ public:
     void sendMigrateMsgAfterSave(bool lastSaveSuccessful, const std::string& docKey);
     std::string getWopiSrcMap();
     std::string getFilename(int pid);
+    void routeTokenSanityCheck();
 
 private:
     void doRemove(std::map<std::string, std::unique_ptr<Document>>::iterator &docIt);

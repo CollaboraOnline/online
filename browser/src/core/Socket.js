@@ -587,7 +587,9 @@ app.definitions.Socket = L.Class.extend({
 						this.IndirectSocketReconnectCount = 0;
 					} else {
 						this._map.showBusy(_('Wrong server, reconnecting...'), false);
-						this.manualReconnect(2000);
+						this.manualReconnect(3000);
+						// request to indirection server to sanity check the tokens
+						this.sendMessage('routetokensanitycheck');
 						return;
 					}
 				}
