@@ -131,8 +131,8 @@ L.Draggable = L.Evented.extend({
 				offset.y = 0;
 			}
 		}
-		if (!offset.x && !offset.y) { return; }
-		if (L.Browser.touch && Math.abs(offset.x) + Math.abs(offset.y) < 3 && !e.autoscroll) { return; }
+		if (!offset.x && !offset.y && !this._map._docLayer.isCalcRTL()) { return; }
+		if (L.Browser.touch && Math.abs(offset.x) + Math.abs(offset.y) < 3 && !e.autoscroll && !this._map._docLayer.isCalcRTL()) { return; }
 
 		L.DomEvent.preventDefault(e);
 
@@ -155,6 +155,7 @@ L.Draggable = L.Evented.extend({
 		if (this._freezeX)
 			this._newPos.x = this._startPos.x;
 
+		this._newPos.x = this._map._docLayer.isCalcRTL() ?  this._startPos.x - offset.x : this._newPos.x;
 		this._moving = true;
 
 		L.Util.cancelAnimFrame(this._animRequest);
