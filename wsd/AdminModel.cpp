@@ -1193,7 +1193,8 @@ void AdminModel::getMetrics(std::ostringstream &oss)
         Poco::URI::encode(doc.getFilename(), " ", encodedFilename);
         oss << "doc_pid{host=\"" << doc.getHostName() << "\","
                "key=\"" << doc.getDocKey() << "\","
-               "filename=\"" << encodedFilename << "\"} " << pid << "\n";
+               "filename=\"" << encodedFilename << "\","
+               "pid=\"" << pid << "\"} 1\n";
 
         std::string suffix = "{pid=\"" + pid + "\"} ";
         oss << "doc_views" << suffix << doc.getViews().size() << "\n";
