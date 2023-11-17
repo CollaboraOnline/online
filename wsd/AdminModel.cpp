@@ -1187,7 +1187,7 @@ void AdminModel::getMetrics(std::ostringstream &oss)
 
         std::string encodedFilename;
         Poco::URI::encode(doc.getFilename(), " ", encodedFilename);
-        oss << "doc_pid{host=\"" << doc.getHostName() << "\","
+        oss << "doc_info{host=\"" << doc.getHostName() << "\","
                "key=\"" << doc.getDocKey() << "\","
                "filename=\"" << encodedFilename << "\","
                "pid=\"" << pid << "\"} 1\n";

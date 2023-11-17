@@ -173,11 +173,11 @@ SELECTED ERRORS - all integer counts
     error_parse_error - badly formed data provided for us to parse.
 
 PER DOCUMENT DETAILS - suffixed by {pid=<pid>} for each document:
-
-    doc_pid - define the pid of the related document with these labels:
+    doc_info - define the info of the related document with these data as labels:
         host= - host this document was fetched from
         key= - key often WOPISrc used to fetch the document
 	filename= - filename of the document
+        pid= - processid of the open document
     doc_active_views - number of views/users currently
     doc_is_modified - is the document modified, or not ie. saved/readonly
     doc_memory_used_bytes - bytes of memory dirtied by this process
