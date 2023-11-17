@@ -79,7 +79,7 @@ spec:
         `}}
       {{- end }}
       - alert: "Collabora same Document open Multiple time"
-        expr: 'count(doc_pid) by (key) > 1'
+        expr: 'count(doc_info) by (key) > 1'
         labels:
           severity: "warning"
         {{`
@@ -87,7 +87,7 @@ spec:
           summary: "a key/document is open multiple times in namespace: {{ $labels.namespace }}"
         `}}
       - alert: "Collabora same Document open Multiple time"
-        expr: 'count(count(doc_pid)by(key)>1) > {{ .Values.prometheus.rules.defaults.docs.duplicated }}'
+        expr: 'count(count(doc_info)by(key)>1) > {{ .Values.prometheus.rules.defaults.docs.duplicated }}'
         labels:
           severity: "critical"
         {{`

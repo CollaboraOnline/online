@@ -458,7 +458,7 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "count(doc_pid{env_id=~\"$env_id\"})by(host,env_id)",
+          "expr": "count(doc_info{env_id=~\"$env_id\"})by(host,env_id)",
           "legendFormat": "{{env_id}}: {{host}}",
           "range": true,
           "refId": "A"
@@ -1267,7 +1267,7 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "avg(count(doc_pid{env_id=~\"$env_id\"})by(key)>1)",
+          "expr": "avg(count(doc_info{env_id=~\"$env_id\"})by(key)>1)",
           "hide": false,
           "legendFormat": "Avg",
           "range": true,
@@ -1279,7 +1279,7 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "max(count(doc_pid{env_id=~\"$env_id\"})by(key)>1)",
+          "expr": "max(count(doc_info{env_id=~\"$env_id\"})by(key)>1)",
           "hide": false,
           "legendFormat": "Max",
           "range": true,
@@ -1291,7 +1291,7 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "count(count(doc_pid{env_id=~\"$env_id\"})by(key)>1)",
+          "expr": "count(count(doc_info{env_id=~\"$env_id\"})by(key)>1)",
           "hide": false,
           "legendFormat": "Count",
           "range": true,
@@ -1366,7 +1366,7 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "count(count(doc_pid{env_id=~\"$env_id\"})by(key,env_id)>1)by(env_id)",
+          "expr": "count(count(doc_info{env_id=~\"$env_id\"})by(key,env_id)>1)by(env_id)",
           "legendFormat": "{{env_id}}",
           "range": true,
           "refId": "A"
