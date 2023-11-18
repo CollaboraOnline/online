@@ -2081,7 +2081,11 @@ private:
     {
         flushTraceEventRecordings();
         _pngPool.stop();
+#if 0 // MEEKS - in process don't exit let the 'parent' thread/forkit do it =)
         Util::forcedExit(code);
+        // FIXME: we need a way to terminate our parent 'runLoo'
+        // FIXME: this will need a new LOK method to exit that loop.
+#endif
     }
 #endif
 
@@ -2615,7 +2619,10 @@ protected:
             LOG_INF("Terminating immediately due to parent 'exit' command.");
             flushTraceEventRecordings();
             _document.reset();
+#if 0 // MEEKS - in process don't exit let the 'parent' thread/forkit do it =)
             Util::forcedExit(EX_OK);
+#endif
+
 #else
 #ifdef IOS
             LOG_INF("Setting our KitSocketPoll's termination flag due to 'exit' command.");

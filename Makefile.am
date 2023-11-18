@@ -513,9 +513,9 @@ run-kitinprocess: setup-wsd
 	./coolwsddebug $(COMMON_PARAMS) \
 			--o:logging.file[@enable]=false --o:logging.level=trace
 
-run-valgrind-kitinprocess: setup-wsd
-	@echo "Launching coolwsd under valgrind for single KIT IN PROCESS"
-	valgrind --tool=memcheck --leak-check=full --trace-children=no -v --read-var-info=yes \
+run-massif-kitinprocess: setup-wsd
+	@echo "Launching coolwsd under valgrind for single process"
+	valgrind --tool=massif --num-callers=64 --trace-children=no -v \
 		./coolwsddebug $(COMMON_PARAMS) \
 			--o:logging.file[@enable]=false --o:logging.level=trace
 endif
