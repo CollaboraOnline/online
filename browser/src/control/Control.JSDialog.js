@@ -606,7 +606,8 @@ L.Control.JSDialog = L.Control.extend({
 			// They are displayed before the document is loaded
 			// Spinning should be happening until the 1st interaction with the user
 			// which is the dialog opening in this case
-			this.map._progressBar.end();
+			if (this.map)
+				this.map._progressBar.end();
 
 			this.createContainer(instance, instance.overlay ? instance.overlay: instance.containerParent);
 			this.createDialog(instance);
