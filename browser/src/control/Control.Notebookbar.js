@@ -22,7 +22,6 @@ L.Control.Notebookbar = L.Control.extend({
 	HOME_TAB_ID: 'Home-tab-label',
 
 	additionalShortcutButtons: [],
-	hiddenShortcutButtons: [],
 
 	onAdd: function (map) {
 		// log and test window.ThisIsTheiOSApp = true;
@@ -281,14 +280,11 @@ L.Control.Notebookbar = L.Control.extend({
 			toolitems.push(item);
 		}
 
-		for (i in this.hiddenShortcutButtons) {
-			var toHide = this.hiddenShortcutButtons[i];
-			for (var j in toolitems) {
-				item = toolitems[j];
-				if (item.id == toHide) {
-					toolitems.splice(j, 1);
-					break;
-				}
+		for (var j in toolitems) {
+			item = toolitems[j];
+			if (!this.map.uiManager.isButtonVisible(item.id)) {
+				toolitems.splice(j, 1);
+				break;
 			}
 		}
 
@@ -327,18 +323,13 @@ L.Control.Notebookbar = L.Control.extend({
 		this.reloadShortcutsBar();
 	},
 
-	showShortcutsButton: function(buttonId, show) {
-		var i = this.hiddenShortcutButtons.indexOf(buttonId);
-		if (i > -1) {
-			if (show === true)
-				this.hiddenShortcutButtons.splice(i, 1);
-
-			this.reloadShortcutsBar();
-			return;
+	showNotebookbarButton: function(buttonId, show) {
+		var button = $('.notebookbar-scroll-wrapper #' + buttonId);
+		if (show) {
+			button.show();
+		} else {
+			button.hide();
 		}
-
-		this.hiddenShortcutButtons.push(buttonId);
-		this.reloadShortcutsBar();
 	},
 
 	setCurrentScrollPosition: function() {
