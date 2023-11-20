@@ -3267,8 +3267,9 @@ void lokit_main(
     flushTraceEventRecordings();
     // Wait for the signal handler, if invoked, to prevent exiting until done.
     SigUtil::waitSigHandlerTrap();
-    Util::forcedExit(EX_OK);
 
+    if (!Util::isKitInProcess())
+        Util::forcedExit(EX_OK);
 #endif
 }
 
