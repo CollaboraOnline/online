@@ -470,12 +470,8 @@ void forkLibreOfficeKit(const std::string& childRoot,
     // Cleanup first, to reduce disk load.
     cleanupChildren();
 
-#ifndef KIT_IN_PROCESS
-    (void) limit;
-#else
-    if (limit > 0)
+    if (Util::isKitInProcess() && limit > 0)
         ForkCounter = limit;
-#endif
 
     if (ForkCounter > 0)
     {
