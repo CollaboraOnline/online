@@ -30,10 +30,12 @@ class ThreadPool {
     std::vector<std::thread> _threads;
     size_t _working;
     bool   _shutdown;
+    std::atomic<bool> _running;
 public:
     ThreadPool()
         : _working(0),
-          _shutdown(false)
+          _shutdown(false),
+          _running(false)
     {
         int maxConcurrency = 2;
 #ifdef __EMSCRIPTEN__
@@ -73,12 +75,14 @@ public:
     void pushWork(const ThreadFn &fn)
     {
         std::unique_lock< std::mutex > lock(_mutex);
+        assert(!_running);
         assert(_working == 0);
         _work.push(fn);
     }
 
     void runOne(std::unique_lock< std::mutex >& lock)
     {
+        assert(_running);
         assert(!_work.empty());
 
         ThreadFn fn = _work.front();
@@ -101,7 +105,10 @@ public:
     void run()
     {
         std::unique_lock< std::mutex > lock(_mutex);
+        assert(!_running);
         assert(_working == 0);
+
+        _running = true;
 
         // Avoid notifying threads if we don't need to.
         bool useThreads = _threads.size() > 1 && _work.size() > 1;
@@ -114,6 +121,8 @@ public:
         if (useThreads && (_working > 0 || !_work.empty()))
             _complete.wait(lock, [this]() { return _working == 0 && _work.empty(); } );
 
+        _running = false;
+
         assert(_working==0);
         assert(_work.empty());
     }
@@ -124,7 +133,7 @@ public:
         while (!_shutdown)
         {
             _cond.wait(lock);
-            while (!_shutdown && !_work.empty())
+            while (!_shutdown && !_work.empty() && _running)
                 runOne(lock);
         }
     }
