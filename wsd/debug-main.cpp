@@ -63,5 +63,7 @@ extern "C" void createLibreOfficeKit(const std::string& childRoot,
                         const std::string& loTemplate,
                         int limit)
 {
-    forkLibreOfficeKit(childRoot, sysTemplate, loTemplate, limit);
+    static int nCreated = 0;
+    if (!nCreated++)
+        forkLibreOfficeKit(childRoot, sysTemplate, loTemplate, limit);
 }

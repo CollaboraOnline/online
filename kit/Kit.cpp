@@ -2077,7 +2077,7 @@ private:
 
 #if !MOBILEAPP
     /// Stops theads, flushes buffers, and exits the process.
-    void flushAndExit(int code)
+    void flushAndExit(int /* code */)
     {
         flushTraceEventRecordings();
         _pngPool.stop();
@@ -2086,6 +2086,7 @@ private:
         // FIXME: we need a way to terminate our parent 'runLoo'
         // FIXME: this will need a new LOK method to exit that loop.
 #endif
+        SigUtil::setTerminationFlag();
     }
 #endif
 
@@ -2622,6 +2623,7 @@ protected:
 #if 0 // MEEKS - in process don't exit let the 'parent' thread/forkit do it =)
             Util::forcedExit(EX_OK);
 #endif
+            SigUtil::setTerminationFlag();
 
 #else
 #ifdef IOS

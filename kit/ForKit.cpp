@@ -814,6 +814,7 @@ extern "C" int forkit_main(int argc, char** argv)
 #if ENABLE_DEBUG
         if (!SingleKit)
 #endif
+        if (!SigUtil::getTerminationFlag())
             forkLibreOfficeKit(childRoot, sysTemplate, loTemplate);
     }
 
