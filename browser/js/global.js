@@ -756,9 +756,9 @@ window.app = {
 		this.sendPostMsg = function(errorCode) {
 			var errorMsg;
 			if (errorCode === 0) {
-				errorMsg = _('Cluster is scaling, please retry after few seconds');
+				errorMsg = _('Cluster is scaling, retrying...');
 			} else if (errorCode === 1) {
-				errorMsg = _('Document is migrating to new server, please retry after few seconds');
+				errorMsg = _('Document is migrating to new server, retrying...');
 			} else {
 				errorMsg = _('Failed to get RouteToken from controller');
 			}
@@ -768,6 +768,7 @@ window.app = {
 				'Values': {
 					success: false,
 					errorMsg: errorMsg,
+					errorType: 'clusterscaling'
 				}
 			};
 			window.parent.postMessage(JSON.stringify(msg), '*');
@@ -811,7 +812,7 @@ window.app = {
 					this.open('GET', indirectionUrl + '?Uri=' + encodeURIComponent(uri), true);
 					this.send();
 				}.bind(this);
-				setTimeout(timeoutFn, 10000, global.indirectionUrl, that.uri);
+				setTimeout(timeoutFn, 3000, global.indirectionUrl, that.uri);
 			} else {
 				window.app.console.error('Indirection url: error on incoming response ' + this.status);
 				that.sendPostMsg(-1);
