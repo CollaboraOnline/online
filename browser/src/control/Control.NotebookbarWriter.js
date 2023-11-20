@@ -2876,11 +2876,19 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 
 	// filter out empty children options so that the HTML isn't cluttered
 	// and individual items missaligned
+	// Also remove the hidden items / commands.
 	cleanOpts: function(children) {
 		var that = this;
 
 		return children.map(function(c) {
-			if (!c.type) { return null; }
+			if (!c.type) {
+				return null;
+			}
+
+			var uiManager = that._map.uiManager;
+			if (!uiManager.isButtonVisible(c.id)) {
+				return null;
+			}
 
 			var opts = Object.assign(c, {});
 

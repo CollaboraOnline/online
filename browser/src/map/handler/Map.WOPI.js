@@ -325,6 +325,9 @@ L.Map.WOPI = L.Handler.extend({
 			}
 			if (!this._map.menubar || !this._map.menubar.hasItem(msg.Values.id)) {
 				window.app.console.error('Menu item with id "' + msg.Values.id + '" not found.');
+				if (this._map.uiManager.getCurrentMode() === 'notebookbar') {
+					window.app.console.error('No menu items in notebookbar');
+				}
 				return;
 			}
 

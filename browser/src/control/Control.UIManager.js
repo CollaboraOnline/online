@@ -17,6 +17,7 @@ L.Control.UIManager = L.Control.extend({
 	blockedUI: false,
 	busyPopupTimer: null,
 	customButtons: [], // added by WOPI InsertButton
+	hiddenButtons: {},
 	previousTheme: null,
 
 	onAdd: function (map) {
@@ -656,10 +657,21 @@ L.Control.UIManager = L.Control.extend({
 	},
 
 	showButton: function(buttonId, show) {
-		if (!this.notebookbar)
+		if (!this.notebookbar) {
 			this.showButtonInClassicToolbar(buttonId, show);
-		else
-			this.notebookbar.showShortcutsButton(buttonId, show);
+		} else {
+			if (show) {
+				delete this.hiddenButtons[buttonId];
+			} else {
+				this.hiddenButtons[buttonId] = true;
+			}
+			this.notebookbar.reloadShortcutsBar();
+			this.notebookbar.showNotebookbarButton(buttonId, show);
+		}
+	},
+
+	isButtonVisible: function(buttonId) {
+		return !(buttonId in this.hiddenButtons);
 	},
 
 	// Menubar
