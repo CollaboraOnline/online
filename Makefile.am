@@ -39,6 +39,7 @@ man_MANS = man/coolwsd.1 \
            man/coolwsd-systemplate-setup.1 \
            man/coolmount.1
 
+
 dist_doc_DATA = wsd/README \
                 wsd/README.vars \
                 wsd/protocol.txt \
@@ -87,13 +88,10 @@ if !HAVE_CLANG
 AM_LDFLAGS += -pthread
 endif
 
-coolwsddebug_LDADD=
-
 if ENABLE_SSL
 AM_LDFLAGS += ${OPENSSL_LIBS}
 else
 coolwsd_LDADD = ${OPENSSL_LIBS}
-coolwsddebug_LDADD += ${OPENSSL_LIBS}
 coolconfig_LDADD = ${OPENSSL_LIBS}
 endif
 
@@ -202,8 +200,7 @@ coolwsddebug_SOURCES = $(coolwsd_sources) \
                        $(shared_sources) \
                        $(coolforkit_sources) \
                        wsd/debug-main.cpp
-
-coolwsddebug_LDADD += libsimd.a
+coolwsddebug_LDADD = ${coolwsd_LDADD} libsimd.a
 
 if ENABLE_LIBFUZZER
 coolforkit_SOURCES += \
