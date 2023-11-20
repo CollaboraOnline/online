@@ -3214,9 +3214,8 @@ void COOLWSD::displayHelp()
 
 bool COOLWSD::checkAndRestoreForKit()
 {
-#ifdef KIT_IN_PROCESS
-    return false;
-#else
+    if (Util::isKitInProcess())
+        return false;
 
 // clang issues warning for WIF*() macro usages below:
 // "equality comparison with extraneous parentheses [-Werror,-Wparentheses-equality]"
@@ -3307,8 +3306,6 @@ bool COOLWSD::checkAndRestoreForKit()
 
 #if defined __clang__
 #pragma clang diagnostic pop
-#endif
-
 #endif
 }
 
@@ -3765,8 +3762,9 @@ private:
             LOG_TRC("Child connection with URI [" << COOLWSD::anonymizeUrl(request.getUrl())
                                                   << ']');
             Poco::URI requestURI(request.getUrl());
-#ifndef KIT_IN_PROCESS
-            if (requestURI.getPath() == FORKIT_URI)
+            if (Util::isKitInProcess())
+                LOG_TRC("Avoid spawning forkit for kit-in-process");
+            else if (requestURI.getPath() == FORKIT_URI)
             {
                 if (socket->getPid() != COOLWSD::ForKitProcId)
                 {
@@ -3780,8 +3778,7 @@ private:
                 PrisonerPoll->setForKitProcess(COOLWSD::ForKitProc);
                 return;
             }
-#endif
-            if (requestURI.getPath() != NEW_CHILD_URI)
+            else if (requestURI.getPath() != NEW_CHILD_URI)
             {
                 LOG_ERR("Invalid incoming child URI [" << requestURI.getPath() << ']');
                 return;
@@ -5942,7 +5939,7 @@ int COOLWSD::innerMain()
 // No need to "have at least one child" beforehand on mobile
 #if !MOBILEAPP
 
-#ifndef KIT_IN_PROCESS
+    if (!Util::isKitInProcess())
     {
         // Make sure we have at least one child before moving forward.
         std::unique_lock<std::mutex> lock(NewChildrenMutex);
@@ -5981,7 +5978,6 @@ int COOLWSD::innerMain()
 
         assert(NewChildren.size() > 0);
     }
-#endif
 
     if (LogLevel != "trace")
     {
@@ -6240,14 +6236,15 @@ int COOLWSD::innerMain()
     NewChildren.clear();
 
 #if !MOBILEAPP
-#ifndef KIT_IN_PROCESS
-    // Wait for forkit process finish.
-    LOG_INF("Waiting for forkit process to exit");
-    int status = 0;
-    waitpid(ForKitProcId, &status, WUNTRACED);
-    ForKitProcId = -1;
-    ForKitProc.reset();
-#endif
+    if (!Util::isKitInProcess())
+    {
+        // Wait for forkit process finish.
+        LOG_INF("Waiting for forkit process to exit");
+        int status = 0;
+        waitpid(ForKitProcId, &status, WUNTRACED);
+        ForKitProcId = -1;
+        ForKitProc.reset();
+    }
 
     JailUtil::cleanupJails(CleanupChildRoot);
 #endif // !MOBILEAPP
@@ -6427,13 +6424,11 @@ void forwardSigUsr2()
     std::lock_guard<std::mutex> newChildLock(NewChildrenMutex);
 
 #if !MOBILEAPP
-#ifndef KIT_IN_PROCESS
-    if (COOLWSD::ForKitProcId > 0)
+    if (!Util::isKitInProcess() && COOLWSD::ForKitProcId > 0)
     {
         LOG_INF("Sending SIGUSR2 to forkit " << COOLWSD::ForKitProcId);
         ::kill(COOLWSD::ForKitProcId, SIGUSR2);
     }
-#endif
 #endif
 
     for (const auto& child : NewChildren)

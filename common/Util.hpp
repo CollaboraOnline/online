@@ -1316,6 +1316,8 @@ int main(int argc, char**argv)
      */
     bool isFuzzing();
 
+    bool isKitInProcess();
+
     /**
      * Splits string into vector<string>. Does not accept referenced variables for easy
      * usage like (splitString("test", ..)) or (splitString(getStringOnTheFly(), ..))
