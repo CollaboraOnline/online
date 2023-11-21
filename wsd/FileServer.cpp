@@ -1252,14 +1252,19 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
         "X-XSS-Protection: 1; mode=block\r\n"
         "Referrer-Policy: no-referrer\r\n";
 
+    // if we have richdocuments with:
+    // addHeader('Cross-Origin-Opener-Policy', 'same-origin');
+    // addHeader('Cross-Origin-Embedder-Policy', 'require-corp');
+    // then we seem to have to have this to avoid
+    // NS_ERROR_DOM_CORP_FAILED
+    oss << "Cross-Origin-Opener-Policy: same-origin\r\n";
+    oss << "Cross-Origin-Embedder-Policy: require-corp\r\n";
+    oss << "Cross-Origin-Resource-Policy: cross-origin\r\n";
+
     const bool wasm = (relPath.find("wasm") != std::string::npos);
     if (wasm)
     {
         LOG_ASSERT(COOLWSD::WASMState != COOLWSD::WASMActivationState::Disabled);
-        oss << "Cross-Origin-Opener-Policy: same-origin\r\n";
-        oss << "Cross-Origin-Embedder-Policy: require-corp\r\n";
-        oss << "Cross-Origin-Resource-Policy: cross-origin\r\n";
-
         csp.appendDirective("script-src", "'unsafe-eval'");
     }
 
