@@ -255,19 +255,17 @@ int main(int argc, char* argv_main[])
     std::thread(
         [&]
         {
-            // const std::string url = "/wasm/" + std::string(argv_main[1]);
-            // const std::string url =
-            //     "/wasm/"
-            //     "https%3A%2F%2Flocalhost%2Fnextcloud%2Findex.php%2Fapps%2Frichdocuments%2Fwopi%"
-            //     "2Ffiles%2F8725_ocqiesh0cngs%3Faccess_token%3Daz5tjYv83wvhtpVbhuFXrTkss6gB1GDZ%"
-            //     "26access_token_ttl%3D0";
+            const std::string docURL = std::string(argv_main[1]);
+            const std::string encodedWOPI = std::string(argv_main[2]);
+            const std::string isWOPI = std::string(argv_main[3]);
 
-            //DOCX
-            const std::string url =
-                "/wasm/"
-                "https%3A%2F%2Flocalhost%2Fnextcloud%2Findex.php%2Fapps%2Frichdocuments%2Fwopi%"
-                "2Ffiles%2F8991_ocqiesh0cngs%3Faccess_token%3Dz4N7CViCj1pps28EVlG4dmxEMe62P7yo%"
-                "26access_token_ttl%3D0";
+            std::string url;
+            if (isWOPI == "true")
+                url = "/wasm/" + encodedWOPI;
+            else
+                url = docURL + "/contents";
+
+            printf("isWOPI is %s: Fetching from url %s\n", isWOPI.c_str(), url.c_str());
 
             emscripten_fetch_attr_t attr;
             emscripten_fetch_attr_init(&attr);

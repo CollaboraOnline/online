@@ -1,6 +1,6 @@
 /* -*- js-indent-level: 8 -*- */
 /* global errorMessages getParameterByName accessToken accessTokenTTL accessHeader createOnlineModule */
-/* global app L host idleTimeoutSecs outOfFocusTimeoutSecs _ */
+/* global app $ L host idleTimeoutSecs outOfFocusTimeoutSecs _ */
 /*eslint indent: [error, "tab", { "outerIIFEBody": 0 }]*/
 (function (global) {
 
@@ -81,6 +81,11 @@ app.map = map;
 app.idleHandler.map = map;
 
 if (window.ThisIsTheEmscriptenApp) {
+	var docParamsString = $.param(docParams);
+	// The URL may already contain a query (e.g., 'http://server.tld/foo/wopi/files/bar?desktop=baz') - then just append more params
+	var docParamsPart = docParamsString ? (docURL.includes('?') ? '&' : '?') + docParamsString : '';
+	var encodedWOPI = encodeURIComponent(docURL + docParamsPart);
+
 	var Module = {
 		onRuntimeInitialized: function() {
 			map.loadDocument(global.socket);
@@ -93,8 +98,8 @@ if (window.ThisIsTheEmscriptenApp) {
 			if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(' ');
 			console.error(text);
 		},
-		arguments_: [docURL],
-		arguments: [docURL],
+		arguments_: [docURL, encodedWOPI, isWopi ? 'true' : 'false'],
+		arguments: [docURL, encodedWOPI, isWopi ? 'true' : 'false'],
 	};
 	createOnlineModule(Module);
 	app.HandleCOOLMessage = Module['_handle_cool_message'];
