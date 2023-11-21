@@ -334,9 +334,14 @@ m4_ifelse(MOBILEAPP,[true],
       // would expand the %FOO% things. But it seems that window.versionPath is not used in the
       // mobile apps anyway.
       // window.versionPath = 'UNKNOWN';
-      window.accessToken = '';
-      window.accessTokenTTL = '';
-      window.accessHeader = '';
+      m4_ifelse(EMSCRIPTENAPP,[true],
+              [window.accessToken = '%ACCESS_TOKEN%';
+              window.accessTokenTTL = '%ACCESS_TOKEN_TTL%';
+              window.accessHeader = '%ACCESS_HEADER%';],
+              [window.accessToken = '';
+              window.accessTokenTTL = '';
+              window.accessHeader = '';]
+      )
       window.postMessageOriginExt = '';
       window.coolLogging = 'true';
       window.enableWelcomeMessage = false;
