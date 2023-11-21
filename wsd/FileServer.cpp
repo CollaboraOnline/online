@@ -660,6 +660,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
             {
                 response.add("Cross-Origin-Opener-Policy", "same-origin");
                 response.add("Cross-Origin-Embedder-Policy", "require-corp");
+                response.add("Cross-Origin-Resource-Policy", "cross-origin");
             }
 
             const bool brotli = request.hasToken("Accept-Encoding", "br");
@@ -1257,6 +1258,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
         LOG_ASSERT(COOLWSD::WASMState != COOLWSD::WASMActivationState::Disabled);
         oss << "Cross-Origin-Opener-Policy: same-origin\r\n";
         oss << "Cross-Origin-Embedder-Policy: require-corp\r\n";
+        oss << "Cross-Origin-Resource-Policy: cross-origin\r\n";
 
         csp.appendDirective("script-src", "'unsafe-eval'");
     }
