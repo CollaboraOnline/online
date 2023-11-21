@@ -475,6 +475,7 @@ var unoCommandsArray = {
 	'Underline':{global:{menu:_('Underline'),},},
 	'UnderlineDouble':{global:{menu:_('Double Underline'),},},
 	'Undo':{global:{menu:_('~Undo'),},},
+	'UnfloatFrame':{text:{menu:_('Unfloat Frame Content'),},},
 	'Ungroup':{global:{menu:_('~Ungroup...'),},},
 	'UngroupSparklines':{spreadsheet:{menu:_('Ungroup Sparklines'),},},
 	'UnsetCellsReadOnly':{text:{menu:_('Unprotect Cells'),},},
