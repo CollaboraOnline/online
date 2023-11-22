@@ -112,6 +112,30 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'AutoFilter', function() {
 		assertDataOnFilter(['Cypress Test', 'Status', 'Test 1', 'Pass', 'Test 2', 'Fail', 'Test 3', 'Pass', 'Test 5', 'Fail']);
 	});
 
+	it('Close autofilter popup by click outside', function() {
+		calcHelper.openAutoFilterMenu();
+
+		cy.cGet('.autofilter .vertical').should('be.visible');
+
+		cy.cGet('div.jsdialog-overlay').should('be.visible');
+
+		cy.cGet('div.jsdialog-overlay').click();
+
+		cy.cGet('.jsdialog.autofilter').should('not.exist');
+
+		// check if spreadsheet is interactive - prevent core block by hanging popup
+
+		calcHelper.dblClickOnFirstCell();
+
+		helper.typeIntoDocument('New content{enter}');
+
+		calcHelper.selectEntireSheet();
+
+		helper.waitUntilIdle('#copy-paste-container tbody');
+
+		calcHelper.assertDataClipboardTable(['CNew contentypress Test', 'Status', 'Test 1', 'Pass', 'Test 2', 'Fail', 'Test 3', 'Pass', 'Test 4', '', 'Test 5', 'Fail']);
+	});
+
 	// check if filter by color applied or not
 	it('Filter by color', function() {
 		// apply background color to some cells

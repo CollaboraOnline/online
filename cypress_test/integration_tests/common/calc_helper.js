@@ -223,17 +223,15 @@ function selectCellsInRange(range) {
 }
 
 function openAutoFilterMenu(secondColumn) {
-	let x = 95;
+	let XPos = 95;
+	let YPos = 10;
+
 	if (secondColumn) {
-		x += 105;
+		XPos += 105;
 	}
-	cy.cGet('#map')
-		.then(function(items) {
-			expect(items).to.have.lengthOf(1);
-			var XPos = items[0].getBoundingClientRect().left + x;
-			var YPos = items[0].getBoundingClientRect().top + 10;
-			cy.cGet('body').click(XPos, YPos);
-		});
+
+	cy.cGet('#map').then(function(items) { expect(items).to.have.lengthOf(1); });
+	cy.cGet('#map').click(XPos, YPos);
 }
 
 module.exports.clickOnFirstCell = clickOnFirstCell;
