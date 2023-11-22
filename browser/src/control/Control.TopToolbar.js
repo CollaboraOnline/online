@@ -227,6 +227,7 @@ L.Control.TopToolbar = L.Control.extend({
 			{type: 'break',   id: 'break-number', hidden: true},
 			{type: 'drop',  id: 'inserttable',  img: 'inserttable', hint: _('Insert table'), hidden: true, overlay: {onShow: window.insertTable}, html: window.getInsertTablePopupHtml(), lockUno: '.uno:InsertTable'},
 			{type: 'button',  id: 'insertgraphic',  img: 'insertgraphic', hint: _UNO('.uno:InsertGraphic', '', true), lockUno: '.uno:InsertGraphic'},
+			{type: 'button',  id: 'insertremotegraphic',  img: 'insertgraphic', hint: _UNO('.uno:InsertGraphic', '', true),  hidden: true, lockUno: '.uno:InsertGraphic'},
 			{type: 'menu', id: 'menugraphic', img: 'insertgraphic', hint: _UNO('.uno:InsertGraphic', '', true), hidden: true, lockUno: '.uno:InsertGraphic',
 				items: [
 					{id: 'localgraphic', text: _('Insert Local Image')},
@@ -434,9 +435,24 @@ L.Control.TopToolbar = L.Control.extend({
 			w2ui['editbar'].hide('savebreak');
 		}
 
-		if (e.EnableInsertRemoteImage === true && w2ui['editbar']) {
-			w2ui['editbar'].hide('insertgraphic');
-			w2ui['editbar'].show('menugraphic');
+		if (w2ui['editbar']) {
+			if (e.EnableInsertRemoteImage && !e.DisableInsertLocalImage) {
+				w2ui['editbar'].hide('insertgraphic');
+				w2ui['editbar'].hide('insertremotegraphic');
+				w2ui['editbar'].show('menugraphic');
+			} else {
+				w2ui['editbar'].hide('menugraphic');
+				if (e.EnableInsertRemoteImage) {
+					w2ui['editbar'].show('insertremotegraphic');
+				} else {
+					w2ui['editbar'].hide('insertremotegraphic');
+				}
+				if (e.DisableInsertLocalImage) {
+					w2ui['editbar'].hide('insertgraphic');
+				} else {
+					w2ui['editbar'].show('insertgraphic');
+				}
+			}
 		}
 	},
 

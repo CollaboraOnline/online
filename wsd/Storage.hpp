@@ -610,6 +610,7 @@ public:
         bool getDownloadAsPostMessage() const { return _downloadAsPostMessage; }
         bool getUserCanNotWriteRelative() const { return _userCanNotWriteRelative; }
         bool getEnableInsertRemoteImage() const { return _enableInsertRemoteImage; }
+        bool getDisableInsertLocalImage() const { return _disableInsertLocalImage; }
         bool getEnableRemoteLinkPicker() const { return _enableRemoteLinkPicker; }
         bool getEnableShare() const { return _enableShare; }
         bool getSupportsRename() const { return _supportsRename; }
@@ -681,6 +682,8 @@ public:
         bool _userCanNotWriteRelative = true;
         /// If set to true, users can access the insert remote image functionality
         bool _enableInsertRemoteImage = false;
+        /// If set to true, users can't insert an image from the local machine
+        bool _disableInsertLocalImage = false;
         /// If set to true, users can access the remote link picker functionality
         bool _enableRemoteLinkPicker = false;
         /// If set to true, users can access the file share functionality

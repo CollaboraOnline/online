@@ -884,12 +884,16 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 	},
 
 	_insertGraphicControl: function(parentContainer, data, builder) {
-		var options = {hasDropdownArrow: builder.map['wopi'].EnableInsertRemoteImage};
+		var options = {
+			hasDropdownArrow: builder.map['wopi'].EnableInsertRemoteImage && !builder.map['wopi'].DisableInsertLocalImage
+		};
 		var control = builder._unoToolButton(parentContainer, data, builder, options);
 
 		$(control.container).unbind('click.toolbutton');
 		$(control.container).click(function () {
-			if (builder.map['wopi'].EnableInsertRemoteImage) {
+			var hasRemote = builder.map['wopi'].EnableInsertRemoteImage;
+			var hasLocal = !builder.map['wopi'].DisableInsertLocalImage;
+			if (hasRemote && hasLocal) {
 				var menu = [
 					{id: 'localgraphic', text: _('Insert Local Image')},
 					{id: 'remotegraphic', text: _UNO('.uno:InsertGraphic', '', true)}
@@ -909,8 +913,10 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 					onSelect: itemCallback
 				});
 				builder._makeW2MenuFocusable(builder, 'w2ui-overlay-insert-graphic-menu', menu, data.id, itemCallback);
-			} else {
+			} else if (hasLocal) {
 				L.DomUtil.get('insertgraphic').click();
+			} else if (hasRemote) {
+				builder.map.fire('postMessage', {msgId: 'UI_InsertGraphic'});
 			}
 		});
 		builder._preventDocumentLosingFocusOnClick(control.container);
