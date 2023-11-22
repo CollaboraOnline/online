@@ -126,7 +126,7 @@ function onClick(e, id, item) {
 	else if (id === 'insertgraphic' || item.id === 'localgraphic') {
 		L.DomUtil.get('insertgraphic').click();
 	}
-	else if (item.id === 'remotegraphic') {
+	else if (item.id === 'remotegraphic' || item.id === 'insertremotegraphic') {
 		map.fire('postMessage', {msgId: 'UI_InsertGraphic'});
 	}
 	else if (id === 'fontcolor' && typeof e.color === 'undefined') {

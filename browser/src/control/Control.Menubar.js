@@ -2118,6 +2118,9 @@ L.Control.Menubar = L.Control.extend({
 		if (menuItem.id === 'insertgraphicremote' && !this._map['wopi'].EnableInsertRemoteImage)
 			return false;
 
+		if (menuItem.id === 'insertgraphic' && this._map['wopi'].DisableInsertLocalImage)
+			return false;
+
 		if (menuItem.id && menuItem.id.startsWith('fullscreen-presentation') && this._map['wopi'].HideExportOption)
 			return false;
 
