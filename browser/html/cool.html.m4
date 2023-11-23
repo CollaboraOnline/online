@@ -230,7 +230,7 @@ m4_ifelse(MOBILEAPP,[true],
         <div class="document-title">
           <!-- visuallyhidden: hide it visually but keep it available to screen reader and other assistive technology -->
           <label class="visuallyhidden" for="document-name-input" aria-hidden="false">Document name</label>
-          <input id="document-name-input" type="text" disabled="true" style="display: none"/>
+          <input id="document-name-input" type="text" spellcheck="false" disabled="true" style="display: none"/>
         </div>
       </div>
 
