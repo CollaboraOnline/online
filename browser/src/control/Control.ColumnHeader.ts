@@ -251,15 +251,7 @@ export class ColumnHeader extends Header {
 		super.onMouseUp();
 
 		if (!(this.containerObject.isDraggingSomething() && this._dragEntry)) {
-			const entry = this._mouseOverEntry;
-			let modifier = 0;
-
-			if (entry && this._startSelectionEntry && this._startSelectionEntry.index !== entry.index) {
-				this._selectColumn(this._startSelectionEntry.index, modifier);
-				modifier += UNOModifier.SHIFT;
-				this._selectColumn(entry.index, modifier);
-			}
-
+			this._lastSelectedIndex = null;
 			this._startSelectionEntry = null;
 		}
 	}
@@ -296,6 +288,10 @@ export class ColumnHeader extends Header {
 
 	_getOrthogonalPos (point: cool.Point): number {
 		return point.y;
+	}
+
+	selectIndex(index: number, modifier: number): void {
+		this._selectColumn(index, modifier);
 	}
 }
 
