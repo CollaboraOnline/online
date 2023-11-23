@@ -395,6 +395,8 @@ button#button2.ui-pushbutton.jsdialog.sidebar {
 	/* Move this whole block away and fix in the main control */
 	display: flex;
 	align-items: center;
+	width: 200px;
+	word-break: break-word;
 }
 
 span.jsdialog.sidebar.ui-treeview-entry.ui-treeview-notexpandable {
