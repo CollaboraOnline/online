@@ -34,6 +34,7 @@ export class Header extends CanvasSectionObject {
 	_dragEntry: HeaderEntryData;
 	_mouseOverEntry: HeaderEntryData;
 	_startSelectionEntry: HeaderEntryData;
+	_lastSelectedIndex: number;
 	_hitResizeArea: boolean;
 	_menuItem: any;
 	_dragDistance: number[];
@@ -543,7 +544,17 @@ export class Header extends CanvasSectionObject {
 		else { // We are in dragging mode.
 			this._dragDistance = dragDistance;
 			this.containerObject.requestReDraw(); // Remove previously drawn line and paint a new one.
+
+			if (this._lastSelectedIndex == this._mouseOverEntry.index)
+				return;
+			const modifier = this._lastSelectedIndex ? UNOModifier.SHIFT : 0;
+			this._lastSelectedIndex = this._mouseOverEntry.index;
+			this.selectIndex(this._mouseOverEntry.index, modifier);
 		}
+	}
+
+	selectIndex(index: number, modifier: number): void {
+		return;
 	}
 
 	setOptimalWidthAuto(): void {
@@ -579,6 +590,7 @@ export class Header extends CanvasSectionObject {
 		}
 
 		this._startSelectionEntry = this._mouseOverEntry;
+		this._lastSelectedIndex = null;
 	}
 
 	onMouseUp(): void {

@@ -239,15 +239,7 @@ export class RowHeader extends cool.Header {
 		super.onMouseUp();
 
 		if (!(this.containerObject.isDraggingSomething() && this._dragEntry)) {
-			const entry = this._mouseOverEntry;
-			let modifier = 0;
-
-			if (entry && this._startSelectionEntry && this._startSelectionEntry.index !== entry.index) {
-				this._selectRow(this._startSelectionEntry.index, modifier);
-				modifier += UNOModifier.SHIFT;
-				this._selectRow(entry.index, modifier);
-			}
-
+			this._lastSelectedIndex = null;
 			this._startSelectionEntry = null;
 		}
 	}
@@ -284,6 +276,10 @@ export class RowHeader extends cool.Header {
 
 	_getOrthogonalPos (point: cool.Point): number {
 		return point.x;
+	}
+
+	selectIndex(index: number, modifier: number): void {
+		this._selectRow(index, modifier);
 	}
 }
 
