@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-11-09 13:41+0100\n"
-"PO-Revision-Date: 2023-11-09 12:49+0000\n"
+"PO-Revision-Date: 2023-11-23 10:19+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "ui/de/>\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.2-dev\n"
+"X-Generator: Weblate 5.2.1-rc\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -886,7 +886,7 @@ msgstr "Textausrichtung"
 #: src/control/Control.Menubar.js:278
 #: src/control/Control.NotebookbarWriter.js:57
 msgid "References"
-msgstr "Bezüge"
+msgstr "Referenzen"
 
 #: src/control/Control.Menubar.js:281
 #: src/control/Control.NotebookbarWriter.js:1841
