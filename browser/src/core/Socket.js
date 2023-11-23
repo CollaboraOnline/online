@@ -1529,7 +1529,7 @@ app.definitions.Socket = L.Class.extend({
 
 	_onSocketClose: function () {
 		window.app.console.debug('_onSocketClose:');
-		if (!this._map._docLoadedOnce) {
+		if (!this._map._docLoadedOnce && this.ReconnectCount === 0) {
 			var postMessageObj = {
 				errorType: 'websocketconnectionfailed',
 				success: false,
