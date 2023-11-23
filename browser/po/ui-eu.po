@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-11-09 13:41+0100\n"
-"PO-Revision-Date: 2023-08-28 09:54+0000\n"
+"PO-Revision-Date: 2023-11-23 06:43+0000\n"
 "Last-Translator: Alexander Gabilondo <alexgabi@openmailbox.org>\n"
 "Language-Team: Basque <https://hosted.weblate.org/projects/collabora-online/"
 "ui/eu/>\n"
-"Language: \n"
+"Language: eu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.0.1-dev\n"
+"X-Generator: Weblate 5.2.1-rc\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -444,13 +444,15 @@ msgstr "Desegin"
 
 #: src/control/Control.DownloadProgress.js:43
 msgid "Download Selection"
-msgstr ""
+msgstr "Deskargatu hautaketa"
 
 #: src/control/Control.DownloadProgress.js:48
 msgid ""
 "If you want to share large elements outside of %productName it's necessary "
 "to first download them."
 msgstr ""
+"%productNametik kanpo elementu handiak partekatu nahi badituzu, beharrezkoa "
+"da lehenik deskargatzea."
 
 #: src/control/Control.DownloadProgress.js:61
 #: src/control/Control.NotebookbarCalc.js:204
@@ -461,7 +463,7 @@ msgstr "Deskargatu"
 
 #: src/control/Control.DownloadProgress.js:80
 msgid "Downloading clipboard content"
-msgstr ""
+msgstr "Arbeleko edukia deskargatzen"
 
 #: src/control/Control.DownloadProgress.js:87
 #: src/control/Control.DownloadProgress.js:112
@@ -471,20 +473,21 @@ msgstr "Kopiatu"
 
 #: src/control/Control.DownloadProgress.js:110
 msgid "Download completed and ready to be copied to clipboard."
-msgstr ""
+msgstr "Deskarga amaituta eta arbelean kopiatzeko prest."
 
 #: src/control/Control.DownloadProgress.js:111
 msgid ""
 "From now on clipboard notifications will discreetly appear at the bottom."
 msgstr ""
+"Hemendik aurrera arbeleko jakinarazpenak zuhurki agertuko dira behealdean."
 
 #: src/control/Control.DownloadProgress.js:257
 msgid "Content copied to clipboard"
-msgstr ""
+msgstr "Edukia arbelean kopiatu da"
 
 #: src/control/Control.DownloadProgress.js:301
 msgid "Download failed"
-msgstr ""
+msgstr "Ezin izan da deskargatu"
 
 #: src/control/Control.FormulaBar.js:45
 msgid "cell address"
@@ -534,12 +537,12 @@ msgstr "Zenbatu"
 #: src/control/Control.JSDialogBuilder.js:202
 #: src/control/Control.Menubar.js:676
 msgid "Active sheet"
-msgstr ""
+msgstr "Fitxa aktiboa"
 
 #: src/control/Control.JSDialogBuilder.js:203
 #: src/control/Control.Menubar.js:677 src/control/Control.TopToolbar.js:99
 msgid "All Sheets"
-msgstr ""
+msgstr "Orri guztiak"
 
 #: src/control/Control.JSDialogBuilder.js:568
 msgid "Solid"
@@ -1078,32 +1081,32 @@ msgstr "CSV fitxategia (.csv)"
 #: src/control/Control.Menubar.js:803
 #: src/control/Control.NotebookbarBuilder.js:808
 msgid "Condition..."
-msgstr ""
+msgstr "Baldintza..."
 
 #: src/control/Control.Menubar.js:804
 #: src/control/Control.NotebookbarBuilder.js:809
 msgid "Greater than..."
-msgstr ""
+msgstr "Hau baino handiagoa..."
 
 #: src/control/Control.Menubar.js:805
 #: src/control/Control.NotebookbarBuilder.js:810
 msgid "Less than..."
-msgstr ""
+msgstr "Hau baino txikiagoa..."
 
 #: src/control/Control.Menubar.js:806
 #: src/control/Control.NotebookbarBuilder.js:811
 msgid "Equal to..."
-msgstr ""
+msgstr "Honen berdina..."
 
 #: src/control/Control.Menubar.js:807
 #: src/control/Control.NotebookbarBuilder.js:812
 msgid "Between..."
-msgstr ""
+msgstr "Tartean..."
 
 #: src/control/Control.Menubar.js:809
 #: src/control/Control.NotebookbarBuilder.js:814
 msgid "More conditions..."
-msgstr ""
+msgstr "Baldintza gehiago..."
 
 #: src/control/Control.Menubar.js:917 src/control/Control.Menubar.js:984
 #: src/control/Control.Menubar.js:1049 src/control/Control.Menubar.js:1104
@@ -1487,7 +1490,6 @@ msgid "Image (.png)"
 msgstr "Irudia (.png)"
 
 #: src/control/Control.NotebookbarDraw.js:1028
-#, fuzzy
 msgid "Page Layout"
 msgstr "Orriaren diseinua"
 
@@ -1718,7 +1720,7 @@ msgstr ""
 
 #: src/control/Control.TopToolbar.js:98
 msgid "Active Sheet"
-msgstr ""
+msgstr "Orri aktiboa"
 
 #: src/control/Control.TopToolbar.js:111
 msgid "Default Style"
@@ -1926,7 +1928,7 @@ msgstr ""
 
 #: src/control/Permission.js:18 src/control/Permission.js:19
 msgid "Edit document"
-msgstr ""
+msgstr "Editatu dokumentua"
 
 #: src/control/Permission.js:76
 msgid "The document could not be locked, and is opened in read-only mode."
@@ -2076,11 +2078,11 @@ msgstr "BIRKARGATU"
 
 #: src/core/Socket.js:584
 msgid "Cluster configuration warning"
-msgstr ""
+msgstr "Klusterraren konfigurazioaren abisua"
 
 #: src/core/Socket.js:587
 msgid "Wrong server, reconnecting..."
-msgstr ""
+msgstr "Zerbitzari okerra, berriro konektatzen..."
 
 #: src/core/Socket.js:594
 msgid "COOLWSD version:"
@@ -2099,9 +2101,8 @@ msgid "LOKit version:"
 msgstr "LOKit bertsioa:"
 
 #: src/core/Socket.js:725
-#, fuzzy
 msgid "Document is getting migrated"
-msgstr "Dokumentua migratzen ari da..."
+msgstr "Dokumentua migratzen ari da"
 
 #: src/core/Socket.js:752
 msgid "Session terminated by document owner"
@@ -2240,11 +2241,11 @@ msgstr "Zerbitzaria deskonektatu da."
 
 #: src/docstate.js:71
 msgid "Standard"
-msgstr ""
+msgstr "Estandarra"
 
 #: src/docstate.js:82
 msgid "Theme colors"
-msgstr ""
+msgstr "Gaiaren koloreak"
 
 #: src/errormessages.js:13
 msgid "No disk space left on server."
@@ -2367,6 +2368,12 @@ msgid ""
 "storage and/or copy/paste problems. Expected serverId %0 for routeToken %1 "
 "but connected to serverId %2"
 msgstr ""
+"Zure %productName klusterra gaizki konfiguratuta dagoela edo azkar "
+"eskalatzen ari dela dirudi. Jarri harremanetan zure sistema-"
+"administratzailearekin. Editatzen jarraitzeak hainbat erabiltzailek elkar ez "
+"ikustea, dokumentuak biltegiratzeko gatazkak edota kopiatu/itsatsi arazoak "
+"sor ditzake. %0 zerbitzariaren IDa espero zen %1 routeTokenerako baina %2 "
+"zerbitzariaren IDarekin konektatu da"
 
 #: src/errormessages.js:30
 msgid ""
@@ -2375,6 +2382,11 @@ msgid ""
 "administrator. For more info on proxy configuration please checkout https://"
 "sdk.collaboraonline.com/docs/installation/Proxy_settings.html"
 msgstr ""
+"Ezin izan da socket konexioa ezarri edo socket konexioa itxi da ustekabean. "
+"Baliteke alderantzizko proxya gaizki konfiguratuta egotea, mesedez jarri "
+"administratzailearekin harremanetan. Proxyaren konfigurazioari buruzko "
+"informazio gehiago lortzeko, begiratu https://sdk.collaboraonline.com/docs/"
+"installation/Proxy_settings.html"
 
 #: src/errormessages.js:33
 msgid "Failed to load document."
@@ -2511,7 +2523,7 @@ msgstr "Konpondu haria"
 #: src/layer/tile/CommentListSection.ts:1141
 #: src/layer/tile/CommentListSection.ts:1178
 msgid "Autosaved"
-msgstr ""
+msgstr "Automatikoki gordeta"
 
 #: src/layer/tile/CommentSection.ts:264
 msgid "Open menu"
