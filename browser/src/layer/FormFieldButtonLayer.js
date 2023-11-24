@@ -90,7 +90,7 @@ L.FormFieldButton = L.Layer.extend({
 		button.style.width = container.style.height;
 
 		var image = L.DomUtil.create('img', 'form-field-button-image', button);
-		L.LOUtil.setImage(image, 'unfold.svg', this.map._docLayer._docType);
+		L.LOUtil.setImage(image, 'unfold.svg', this.map);
 		button.addEventListener('click', this._onClickDropDown);
 
 		// Stop propagation to the main document

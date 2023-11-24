@@ -191,8 +191,8 @@ function _treelistboxEntry(parentContainer, treeViewData, entry, builder, isTree
 
 			var iconId = _getCellIconId(entry.columns[i]);
 			L.DomUtil.addClass(icon, iconId + 'img');
-			var iconURL = builder._createIconURL(iconId, true);
-			L.LOUtil.setImage(icon, iconURL.split('/').pop(), builder.map.getDocType());
+			var iconName = builder._createIconURL(iconId, true);
+			L.LOUtil.setImage(icon, iconName, builder.map);
 			L.DomUtil.addClass(span, 'ui-listview-expandable-with-icon');
 		} else if (entry.columns[i].text) {
 			var innerText = L.DomUtil.create('span', builder.options.cssClass + ' ui-treeview-cell-text', text);
@@ -347,8 +347,8 @@ function _headerlistboxEntry(parentContainer, treeViewData, entry, builder) {
 			var icon = L.DomUtil.create('img', 'ui-listview-icon', td);
 			var iconId = _getCellIconId(entry.columns[i]);
 			L.DomUtil.addClass(icon, iconId + 'img');
-			var iconURL = builder._createIconURL(iconId, true);
-			L.LOUtil.setImage(icon, iconURL.split('/').pop(), builder.map.getDocType());
+			var iconName = builder._createIconURL(iconId, true);
+			L.LOUtil.setImage(icon, iconName, builder.map);
 		} else if (entry.columns[i].text)
 			td.innerText = entry.columns[i].text;
 

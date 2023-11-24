@@ -822,12 +822,12 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		case 'SdTableDesignPanel':
 		case 'ChartTypePanel':
 		case 'rotation':
-			iconURL = L.LOUtil.getImageURL('lc_'+ sectionTitle.id.toLowerCase() +'.svg', builder.map.getDocType());
+			iconURL = 'lc_'+ sectionTitle.id.toLowerCase() +'.svg';
 			break;
 		}
 		if (iconURL) {
 			var icon = L.DomUtil.create('img', 'menu-entry-icon', leftDiv);
-			L.LOUtil.setImage(icon, iconURL.split('/').pop(), builder.map.getDocType());
+			L.LOUtil.setImage(icon, iconURL, builder.map);
 			icon.alt = '';
 			titleClass = 'menu-entry-with-icon';
 
@@ -1034,9 +1034,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (commandName && commandName.length && L.LOUtil.existsIconForCommand(commandName, builder.map.getDocType())) {
 			var iconName = builder._generateMenuIconName(commandName);
 			var iconSpan = L.DomUtil.create('span', 'menu-entry-icon ' + iconName, sectionTitle);
-			var iconURL = builder._createIconURL(iconName, true);
+			iconName = builder._createIconURL(iconName, true);
 			icon = L.DomUtil.create('img', '', iconSpan);
-			L.LOUtil.setImage(icon, iconURL.split('/').pop(), builder.map.getDocType());
+			L.LOUtil.setImage(icon, iconName, builder.map);
 			icon.alt = '';
 			var titleSpan2 = L.DomUtil.create('span', 'menu-entry-with-icon flex-fullwidth', sectionTitle);
 			titleSpan2.innerHTML = title;
@@ -1747,7 +1747,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		} else if (data.symbol) {
 			L.DomUtil.addClass(pushbutton, 'has-img d-flex align-content-center justify-content-center align-items-center');
 			image = L.DomUtil.create('img', '', pushbutton);
-			L.LOUtil.setImage(image, 'symbol_' + data.symbol + '.svg', builder.map.getDocType());
+			L.LOUtil.setImage(image, 'symbol_' + data.symbol + '.svg', builder.map);
 		} else {
 			pushbutton.innerText = pushbuttonText;
 			builder._stressAccessKey(pushbutton, pushbutton.accessKey);
@@ -2113,7 +2113,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		L.DomUtil.addClass(parentContainer, 'content-has-no-comments');
 		var emptyCommentWizard = L.DomUtil.create('figure', 'empty-comment-wizard-container', parentContainer);
 		var imgNode = L.DomUtil.create('img', 'empty-comment-wizard-img', emptyCommentWizard);
-		L.LOUtil.setImage(imgNode, 'lc_showannotations.svg', builder.map.getDocType());
+		L.LOUtil.setImage(imgNode, 'lc_showannotations.svg', builder.map);
 		imgNode.alt = data.text;
 
 		var textNode = L.DomUtil.create('figcaption', 'empty-comment-wizard', emptyCommentWizard);
@@ -2316,7 +2316,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			cleanName = iconURLAliases[cleanName];
 		}
 
-		return L.LOUtil.getImageURL('lc_' + cleanName + '.svg', this.map.getDocType());
+		return 'lc_' + cleanName + '.svg';
 	},
 
 	// make a class identifier from parent's id by walking up the tree
@@ -2409,17 +2409,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			if (hasPopUp)
 				button.setAttribute('aria-haspopup', true);
 
-			var setupIcon = function () {
-				var icon = data.icon ? data.icon : builder._createIconURL(data.command);
-				var imagePath = (data.image && !isUnoCommand) ? data.image : icon;
-				buttonImage.src = imagePath;
-				L.LOUtil.checkIfImageExists(buttonImage);
-			};
-
 			var buttonImage = L.DomUtil.create('img', '', button);
-			setupIcon();
-
-			builder.map.on('themechanged', setupIcon);
+			var icon = data.icon ? data.icon : builder._createIconURL(data.command);
+			L.LOUtil.setImage(buttonImage, icon.split('/').pop(), builder.map);
 
 			controls['button'] = button;
 			if (builder.options.noLabelsForUnoButtons !== true) {
@@ -2803,12 +2795,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			var buttonId = data.id ? data.id: id + '-button';
 			var button = L.DomUtil.create('button', 'ui-content unobutton', div);
 			// Create an img element
-			var iconImg = document.createElement('img');
+			var buttonImage = L.DomUtil.create('img', '', button);
 			// Set the src attribute of the img element to the image URL
-			iconImg.src = L.LOUtil.getImageURL(icon.split('/').pop(), builder.map.getDocType());
-
-			// Append the img element to the button
-			button.appendChild(iconImg);
+			L.LOUtil.setImage(buttonImage, icon, builder.map);
+			
 			button.id = buttonId;
 			button.setAttribute('alt', id);
 
@@ -2957,9 +2947,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (commandName && commandName.length && L.LOUtil.existsIconForCommand(commandName, builder.map.getDocType())) {
 			var iconName = builder._generateMenuIconName(commandName);
 			var iconSpan = L.DomUtil.create('span', 'menu-entry-icon ' + iconName, menuEntry);
-			var iconURL = builder._createIconURL(iconName, true);
+			iconName = builder._createIconURL(iconName, true);
 			icon = L.DomUtil.create('img', '', iconSpan);
-			L.LOUtil.setImage(icon, iconURL.split('/').pop(), builder.map.getDocType());
+			L.LOUtil.setImage(icon, iconName, builder.map);
 			icon.alt = '';
 		}
 		if (data.checked && data.checked === true) {
