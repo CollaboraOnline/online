@@ -230,7 +230,7 @@ function _formulabarEditControl(parentContainer, data, builder) {
 		textLayer.setAttribute('contenteditable', 'false');
 	};
 
-	['click', 'dblclick'].forEach(function (ev) {
+	['click', 'dblclick', 'mouseleave'].forEach(function (ev) {
 		textLayer.addEventListener(ev, function(event) {
 			if (L.DomUtil.hasClass(container, 'disabled')) {
 				event.preventDefault();
@@ -250,6 +250,8 @@ function _formulabarEditControl(parentContainer, data, builder) {
 
 	// hide old selection when user starts to select something else
 	textLayer.addEventListener('mousedown', function() {
+		builder.callback('edit', 'grab_focus', container, null, builder);
+
 		cursorLayer.querySelectorAll('.selection').forEach(function (element) {
 			L.DomUtil.addClass(element, 'hidden');
 		});
