@@ -935,8 +935,9 @@ export class Comment extends CanvasSectionObject {
 		for (var i in commentList) {
 			var modifyNode = commentList[i].sectionProperties.nodeModify;
 			var replyNode = commentList[i].sectionProperties.nodeReply;
-			if ((modifyNode && modifyNode.style.display !== 'none') ||
-				(replyNode && replyNode.style.display !== 'none'))
+			if (!commentList[i].pendingInit &&
+				((modifyNode && modifyNode.style.display !== 'none') ||
+				(replyNode && replyNode.style.display !== 'none')))
 				return true;
 		}
 		return false;
