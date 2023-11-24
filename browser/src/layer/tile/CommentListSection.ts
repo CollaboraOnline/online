@@ -473,7 +473,11 @@ export class CommentSection extends CanvasSectionObject {
 			$(contentDate).text(isNaN(d.getTime()) ? comment.dateTime: d.toLocaleDateString((<any>String).locale, <any>dateOptions));
 		}
 
-		var parent = document.getElementById('new-annotation-dialog').parentElement;
+		var newAnnotationDialog = document.getElementById('new-annotation-dialog');
+		$(newAnnotationDialog).css('width', '100%');
+		var dialogInput = newAnnotationDialog.children[0];
+		$(dialogInput).css('height', '30vh');
+		var parent = newAnnotationDialog.parentElement;
 		parent.insertBefore(author, parent.childNodes[0]);
 		document.getElementById('input-modal-input').focus();
 	}
