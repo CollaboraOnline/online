@@ -108,9 +108,15 @@ L.LOUtil = {
 		url += path;
 		return url;
 	},
-	setImage: function(img, name, doctype) {
-		img.src = this.getImageURL(name, doctype);
-		this.checkIfImageExists(img);
+	setImage: function(img, name, map) {
+		var setupIcon = function () {
+			var docType = map.getDocType();
+			img.src = this.getImageURL(name, docType);
+			this.checkIfImageExists(img);
+		}.bind(this);
+		setupIcon();
+
+		map.on('themechanged', setupIcon, this);
 	},
 	getImageURL: function(imgName, docType) {
 		var defaultImageURL = this.getURL('images/' + imgName);
@@ -135,7 +141,7 @@ L.LOUtil = {
 			}
 			imageElement.style.display = 'none';
 			});
-		},
+	},
 	/// oldFileName = Example.odt, suffix = new
 	/// returns: Example_new.odt
 	generateNewFileName: function(oldFileName, suffix) {

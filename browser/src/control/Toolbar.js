@@ -668,7 +668,7 @@ L.Map.include({
 		copyversion.setAttribute('id', 'modal-dialog-about-dialog-box-copybutton');
 		copyversion.setAttribute('title', _('Copy all version information in English'));
 		var img = L.DomUtil.create('img', null, null);
-		L.LOUtil.setImage(img, 'lc_copy.svg', this._docLayer._docType);
+		L.LOUtil.setImage(img, 'lc_copy.svg', map);
 		copyversion.innerHTML = '<img src="' + img.src +'" width="18px" height="18px">';
 		copyversion.addEventListener('click', this.copyVersionInfoToClipboard.bind(this));
 		map.uiManager.enableTooltip(copyversion);
@@ -728,9 +728,9 @@ L.Map.include({
 		var timeout = 1000;
 		this.uiManager.showSnackbar('Version information has been copied', null, null, timeout);
 		var copybutton = document.querySelector('#modal-dialog-about-dialog-box-copybutton > img');
-		L.LOUtil.setImage(copybutton, 'lc_clipboard-check.svg', this._docLayer._docType);
+		L.LOUtil.setImage(copybutton, 'lc_clipboard-check.svg', this);
 		setTimeout(function () {
-			L.LOUtil.setImage(copybutton, 'lc_copy.svg', this._docLayer._docType);
+			L.LOUtil.setImage(copybutton, 'lc_copy.svg', this);
 		}.bind(this), timeout);
 	},
 
