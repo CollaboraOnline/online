@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-09 13:41+0100\n"
+"POT-Creation-Date: 2023-11-24 19:14+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -138,7 +138,7 @@ msgstr ""
 msgid "Network Graph"
 msgstr ""
 
-#: admin/admin.strings.js:36 src/control/Control.Notebookbar.js:263
+#: admin/admin.strings.js:36 src/control/Control.Notebookbar.js:262
 #: src/control/Control.NotebookbarCalc.js:108
 #: src/control/Control.NotebookbarDraw.js:25
 #: src/control/Control.NotebookbarDraw.js:149
@@ -227,7 +227,7 @@ msgstr ""
 #: admin/admin.strings.js:55 src/control/Control.AlertDialog.js:21
 #: src/control/Control.AlertDialog.js:27 src/control/Control.AlertDialog.js:58
 #: src/control/Control.Zotero.js:188 src/control/Parts.js:441
-#: src/core/Socket.js:1033 src/core/Socket.js:1038
+#: src/core/Socket.js:1035 src/core/Socket.js:1040
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.div:51-7
 msgid "Close"
 msgstr ""
@@ -260,13 +260,13 @@ msgstr ""
 #: src/control/Control.Tabs.js:320 src/control/Control.Zotero.js:334
 #: src/control/Control.Zotero.js:372 src/control/Permission.js:80
 #: src/control/Permission.js:90 src/control/Permission.js:140
-#: src/control/Toolbar.js:554 src/control/Toolbar.js:655
-#: src/control/Toolbar.js:791 src/control/Toolbar.js:1082
-#: src/core/Socket.js:584 src/core/Socket.js:1003 src/core/Socket.js:1078
-#: src/core/Socket.js:1203 src/core/Socket.js:1207 src/main.js:70
-#: src/main.js:73 src/main.js:110 src/map/Clipboard.js:852
-#: src/map/Clipboard.js:891 src/map/handler/Map.Feedback.js:83
-#: src/map/handler/Map.WOPI.js:536
+#: src/control/Toolbar.js:555 src/control/Toolbar.js:656
+#: src/control/Toolbar.js:792 src/control/Toolbar.js:1083
+#: src/core/Socket.js:586 src/core/Socket.js:1005 src/core/Socket.js:1080
+#: src/core/Socket.js:1205 src/core/Socket.js:1209 src/main.js:70
+#: src/main.js:73 src/main.js:110 src/map/Clipboard.js:860
+#: src/map/Clipboard.js:899 src/map/handler/Map.Feedback.js:83
+#: src/map/handler/Map.WOPI.js:539
 msgid "OK"
 msgstr ""
 
@@ -288,7 +288,7 @@ msgstr ""
 #: src/control/Control.DownloadProgress.js:81
 #: src/control/Control.LanguageDialog.js:109
 #: src/control/Control.MobileTopBar.js:43 src/control/Control.Zotero.js:329
-#: src/control/Toolbar.js:786 src/core/Socket.js:1228
+#: src/control/Toolbar.js:787 src/core/Socket.js:1230
 #: src/layer/tile/CommentListSection.ts:390
 #: src/layer/tile/CommentSection.ts:119 src/layer/tile/CommentSection.ts:122
 msgid "Cancel"
@@ -386,7 +386,7 @@ msgstr ""
 msgid "Unlock"
 msgstr ""
 
-#: src/control/Control.ContextMenu.js:187 src/control/Toolbar.js:1081
+#: src/control/Control.ContextMenu.js:187 src/control/Toolbar.js:1082
 msgid "Delete"
 msgstr ""
 
@@ -606,9 +606,9 @@ msgid "replies"
 msgstr ""
 
 #: src/control/Control.JSDialogBuilder.js:2060
-#: src/layer/tile/CanvasTileLayer.js:5288
-#: src/layer/tile/CanvasTileLayer.js:5299
-#: src/layer/tile/CommentListSection.ts:945
+#: src/layer/tile/CanvasTileLayer.js:5294
+#: src/layer/tile/CanvasTileLayer.js:5305
+#: src/layer/tile/CommentListSection.ts:967
 msgid "Comment"
 msgstr ""
 
@@ -650,14 +650,14 @@ msgid "Language"
 msgstr ""
 
 #: src/control/Control.Menubar.js:67 src/control/Control.Menubar.js:82
-#: src/control/Control.Menubar.js:935
+#: src/control/Control.Menubar.js:933
 #: src/control/Control.NotebookbarBuilder.js:526
 #: src/control/Control.NotebookbarBuilder.js:630
 msgid "ODF text document (.odt)"
 msgstr ""
 
 #: src/control/Control.Menubar.js:68 src/control/Control.Menubar.js:83
-#: src/control/Control.Menubar.js:936
+#: src/control/Control.Menubar.js:934
 #: src/control/Control.NotebookbarBuilder.js:538
 #: src/control/Control.NotebookbarBuilder.js:642
 #: src/control/Control.NotebookbarWriter.js:277
@@ -665,7 +665,7 @@ msgid "Word 2003 Document (.doc)"
 msgstr ""
 
 #: src/control/Control.Menubar.js:69 src/control/Control.Menubar.js:84
-#: src/control/Control.Menubar.js:937
+#: src/control/Control.Menubar.js:935
 #: src/control/Control.NotebookbarBuilder.js:534
 #: src/control/Control.NotebookbarBuilder.js:638
 #: src/control/Control.NotebookbarWriter.js:283
@@ -673,7 +673,7 @@ msgid "Word Document (.docx)"
 msgstr ""
 
 #: src/control/Control.Menubar.js:70 src/control/Control.Menubar.js:85
-#: src/control/Control.Menubar.js:938
+#: src/control/Control.Menubar.js:936
 #: src/control/Control.NotebookbarBuilder.js:530
 #: src/control/Control.NotebookbarBuilder.js:634
 #: src/control/Control.NotebookbarWriter.js:265
@@ -684,10 +684,10 @@ msgstr ""
 #: src/control/Control.Menubar.js:381 src/control/Control.Menubar.js:387
 #: src/control/Control.Menubar.js:530 src/control/Control.Menubar.js:537
 #: src/control/Control.Menubar.js:661 src/control/Control.Menubar.js:666
-#: src/control/Control.Menubar.js:921 src/control/Control.Menubar.js:932
-#: src/control/Control.Menubar.js:988 src/control/Control.Menubar.js:997
-#: src/control/Control.Menubar.js:1053 src/control/Control.Menubar.js:1061
-#: src/control/Control.Menubar.js:1108 src/control/Control.Menubar.js:1119
+#: src/control/Control.Menubar.js:921 src/control/Control.Menubar.js:930
+#: src/control/Control.Menubar.js:986 src/control/Control.Menubar.js:994
+#: src/control/Control.Menubar.js:1050 src/control/Control.Menubar.js:1057
+#: src/control/Control.Menubar.js:1104 src/control/Control.Menubar.js:1114
 msgid "Export as"
 msgstr ""
 
@@ -695,10 +695,10 @@ msgstr ""
 #: src/control/Control.Menubar.js:382 src/control/Control.Menubar.js:388
 #: src/control/Control.Menubar.js:531 src/control/Control.Menubar.js:538
 #: src/control/Control.Menubar.js:662 src/control/Control.Menubar.js:667
-#: src/control/Control.Menubar.js:922 src/control/Control.Menubar.js:933
-#: src/control/Control.Menubar.js:989 src/control/Control.Menubar.js:998
-#: src/control/Control.Menubar.js:1054 src/control/Control.Menubar.js:1062
-#: src/control/Control.Menubar.js:1109 src/control/Control.Menubar.js:1120
+#: src/control/Control.Menubar.js:922 src/control/Control.Menubar.js:931
+#: src/control/Control.Menubar.js:987 src/control/Control.Menubar.js:995
+#: src/control/Control.Menubar.js:1051 src/control/Control.Menubar.js:1058
+#: src/control/Control.Menubar.js:1105 src/control/Control.Menubar.js:1115
 #: src/control/Control.NotebookbarBuilder.js:547
 #: src/control/Control.NotebookbarBuilder.js:576
 #: src/control/Control.NotebookbarBuilder.js:605
@@ -714,7 +714,7 @@ msgid "PDF Document (.pdf)"
 msgstr ""
 
 #: src/control/Control.Menubar.js:74 src/control/Control.Menubar.js:86
-#: src/control/Control.Menubar.js:923 src/control/Control.Menubar.js:939
+#: src/control/Control.Menubar.js:923 src/control/Control.Menubar.js:937
 #: src/control/Control.NotebookbarBuilder.js:542
 #: src/control/Control.NotebookbarBuilder.js:695
 msgid "EPUB (.epub)"
@@ -726,29 +726,29 @@ msgstr ""
 
 #: src/control/Control.Menubar.js:77 src/control/Control.Menubar.js:385
 #: src/control/Control.Menubar.js:534 src/control/Control.Menubar.js:664
-#: src/control/Control.Menubar.js:925 src/control/Control.Menubar.js:991
-#: src/control/Control.Menubar.js:1056 src/control/Control.Menubar.js:1111
+#: src/control/Control.Menubar.js:925 src/control/Control.Menubar.js:989
+#: src/control/Control.Menubar.js:1053 src/control/Control.Menubar.js:1107
 msgid "Share..."
 msgstr ""
 
 #: src/control/Control.Menubar.js:78 src/control/Control.Menubar.js:386
 #: src/control/Control.Menubar.js:536 src/control/Control.Menubar.js:665
-#: src/control/Control.Menubar.js:926 src/control/Control.Menubar.js:992
-#: src/control/Control.Menubar.js:1058 src/control/Control.Menubar.js:1112
+#: src/control/Control.Menubar.js:926 src/control/Control.Menubar.js:990
+#: src/control/Control.Menubar.js:1055 src/control/Control.Menubar.js:1108
 msgid "See revision history"
 msgstr ""
 
 #: src/control/Control.Menubar.js:79 src/control/Control.Menubar.js:387
 #: src/control/Control.Menubar.js:537 src/control/Control.Menubar.js:666
-#: src/control/Control.Menubar.js:932 src/control/Control.Menubar.js:997
-#: src/control/Control.Menubar.js:1061 src/control/Control.Menubar.js:1119
+#: src/control/Control.Menubar.js:930 src/control/Control.Menubar.js:994
+#: src/control/Control.Menubar.js:1057 src/control/Control.Menubar.js:1114
 msgid "Download as"
 msgstr ""
 
 #: src/control/Control.Menubar.js:81 src/control/Control.Menubar.js:389
 #: src/control/Control.Menubar.js:539 src/control/Control.Menubar.js:668
-#: src/control/Control.Menubar.js:934 src/control/Control.Menubar.js:999
-#: src/control/Control.Menubar.js:1063 src/control/Control.Menubar.js:1121
+#: src/control/Control.Menubar.js:932 src/control/Control.Menubar.js:996
+#: src/control/Control.Menubar.js:1059 src/control/Control.Menubar.js:1116
 #: src/control/Control.NotebookbarBuilder.js:552
 #: src/control/Control.NotebookbarBuilder.js:581
 #: src/control/Control.NotebookbarBuilder.js:610
@@ -763,8 +763,8 @@ msgstr ""
 
 #: src/control/Control.Menubar.js:95 src/control/Control.Menubar.js:402
 #: src/control/Control.Menubar.js:549 src/control/Control.Menubar.js:684
-#: src/control/Control.Menubar.js:944 src/control/Control.Menubar.js:1008
-#: src/control/Control.Menubar.js:1069 src/control/Control.Menubar.js:1129
+#: src/control/Control.Menubar.js:942 src/control/Control.Menubar.js:1005
+#: src/control/Control.Menubar.js:1065 src/control/Control.Menubar.js:1124
 #: src/control/Control.NotebookbarCalc.js:285
 #: src/control/Control.NotebookbarCalc.js:286
 #: src/control/Control.NotebookbarDraw.js:287
@@ -832,9 +832,9 @@ msgstr ""
 
 #: src/control/Control.Menubar.js:132 src/control/Control.Menubar.js:427
 #: src/control/Control.Menubar.js:571 src/control/Control.Menubar.js:708
-#: src/control/Control.Menubar.js:965 src/control/Control.Menubar.js:1018
-#: src/control/Control.Menubar.js:1079 src/control/Control.Menubar.js:1139
-#: src/control/Control.NotebookbarCalc.js:1294
+#: src/control/Control.Menubar.js:963 src/control/Control.Menubar.js:1015
+#: src/control/Control.Menubar.js:1075 src/control/Control.Menubar.js:1134
+#: src/control/Control.NotebookbarCalc.js:1295
 #: src/control/Control.NotebookbarDraw.js:421
 #: src/control/Control.NotebookbarImpress.js:539
 #: src/control/Control.NotebookbarWriter.js:1481
@@ -843,19 +843,19 @@ msgstr ""
 
 #: src/control/Control.Menubar.js:140 src/control/Control.Menubar.js:438
 #: src/control/Control.Menubar.js:578 src/control/Control.Menubar.js:718
-#: src/control/Control.Menubar.js:1181 src/control/Control.Menubar.js:1231
-#: src/control/Control.Menubar.js:1245 src/control/Control.Menubar.js:1268
+#: src/control/Control.Menubar.js:1176 src/control/Control.Menubar.js:1226
+#: src/control/Control.Menubar.js:1240 src/control/Control.Menubar.js:1263
 msgid "Local Image..."
 msgstr ""
 
 #: src/control/Control.Menubar.js:164 src/control/Control.Menubar.js:166
-#: src/control/Control.Menubar.js:1198 src/control/Control.Menubar.js:1200
+#: src/control/Control.Menubar.js:1193 src/control/Control.Menubar.js:1195
 msgid "All"
 msgstr ""
 
 #: src/control/Control.Menubar.js:175 src/control/Control.Menubar.js:448
 #: src/control/Control.Menubar.js:585 src/control/Control.Menubar.js:730
-#: src/control/Control.NotebookbarCalc.js:1417
+#: src/control/Control.NotebookbarCalc.js:1418
 #: src/control/Control.NotebookbarDraw.js:1234
 #: src/control/Control.NotebookbarImpress.js:1241
 #: src/control/Control.NotebookbarWriter.js:1087
@@ -907,27 +907,27 @@ msgstr ""
 msgid "Citation Preferences"
 msgstr ""
 
-#: src/control/Control.Menubar.js:324 src/control/Control.Menubar.js:1220
+#: src/control/Control.Menubar.js:324 src/control/Control.Menubar.js:1215
 msgid "Insert Rich Text"
 msgstr ""
 
-#: src/control/Control.Menubar.js:325 src/control/Control.Menubar.js:1221
+#: src/control/Control.Menubar.js:325 src/control/Control.Menubar.js:1216
 msgid "Insert Checkbox"
 msgstr ""
 
-#: src/control/Control.Menubar.js:326 src/control/Control.Menubar.js:1222
+#: src/control/Control.Menubar.js:326 src/control/Control.Menubar.js:1217
 msgid "Insert Dropdown"
 msgstr ""
 
-#: src/control/Control.Menubar.js:327 src/control/Control.Menubar.js:1223
+#: src/control/Control.Menubar.js:327 src/control/Control.Menubar.js:1218
 msgid "Insert Picture"
 msgstr ""
 
-#: src/control/Control.Menubar.js:328 src/control/Control.Menubar.js:1224
+#: src/control/Control.Menubar.js:328 src/control/Control.Menubar.js:1219
 msgid "Insert Date"
 msgstr ""
 
-#: src/control/Control.Menubar.js:329 src/control/Control.Menubar.js:1225
+#: src/control/Control.Menubar.js:329 src/control/Control.Menubar.js:1220
 #: src/control/Control.NotebookbarCalc.js:301
 #: src/control/Control.NotebookbarDraw.js:302
 #: src/control/Control.NotebookbarImpress.js:404
@@ -936,9 +936,9 @@ msgstr ""
 msgid "Properties"
 msgstr ""
 
-#: src/control/Control.Menubar.js:349 src/control/Control.Menubar.js:969
+#: src/control/Control.Menubar.js:349 src/control/Control.Menubar.js:967
 #: src/control/Control.NotebookbarWriter.js:430
-msgid "Accessibility Support"
+msgid "Voice Over"
 msgstr ""
 
 #: src/control/Control.Menubar.js:362
@@ -966,24 +966,24 @@ msgstr ""
 
 #: src/control/Control.Menubar.js:366 src/control/Control.Menubar.js:519
 #: src/control/Control.Menubar.js:646 src/control/Control.Menubar.js:909
-#: src/control/Control.Menubar.js:978 src/control/Control.Menubar.js:1043
-#: src/control/Control.Menubar.js:1098 src/control/Control.Menubar.js:1173
+#: src/control/Control.Menubar.js:976 src/control/Control.Menubar.js:1040
+#: src/control/Control.Menubar.js:1094 src/control/Control.Menubar.js:1168
 #: src/control/Control.NotebookbarWriter.js:459
 msgid "Latest Updates"
 msgstr ""
 
 #: src/control/Control.Menubar.js:367 src/control/Control.Menubar.js:520
 #: src/control/Control.Menubar.js:647 src/control/Control.Menubar.js:910
-#: src/control/Control.Menubar.js:979 src/control/Control.Menubar.js:1044
-#: src/control/Control.Menubar.js:1099 src/control/Control.Menubar.js:1174
+#: src/control/Control.Menubar.js:977 src/control/Control.Menubar.js:1041
+#: src/control/Control.Menubar.js:1095 src/control/Control.Menubar.js:1169
 #: src/control/Control.NotebookbarWriter.js:471
 msgid "Send Feedback"
 msgstr ""
 
 #: src/control/Control.Menubar.js:368 src/control/Control.Menubar.js:521
 #: src/control/Control.Menubar.js:648 src/control/Control.Menubar.js:911
-#: src/control/Control.Menubar.js:980 src/control/Control.Menubar.js:1045
-#: src/control/Control.Menubar.js:1100 src/control/Control.Menubar.js:1175
+#: src/control/Control.Menubar.js:978 src/control/Control.Menubar.js:1042
+#: src/control/Control.Menubar.js:1096 src/control/Control.Menubar.js:1170
 #: src/control/Control.NotebookbarWriter.js:483
 msgid "About"
 msgstr ""
@@ -994,14 +994,14 @@ msgid "Last modification"
 msgstr ""
 
 #: src/control/Control.Menubar.js:377 src/control/Control.Menubar.js:390
-#: src/control/Control.Menubar.js:1000
+#: src/control/Control.Menubar.js:997
 #: src/control/Control.NotebookbarBuilder.js:589
 #: src/control/Control.NotebookbarBuilder.js:664
 msgid "ODF presentation (.odp)"
 msgstr ""
 
 #: src/control/Control.Menubar.js:378 src/control/Control.Menubar.js:391
-#: src/control/Control.Menubar.js:1001
+#: src/control/Control.Menubar.js:998
 #: src/control/Control.NotebookbarBuilder.js:601
 #: src/control/Control.NotebookbarBuilder.js:672
 #: src/control/Control.NotebookbarImpress.js:323
@@ -1009,7 +1009,7 @@ msgid "PowerPoint 2003 Presentation (.ppt)"
 msgstr ""
 
 #: src/control/Control.Menubar.js:379 src/control/Control.Menubar.js:392
-#: src/control/Control.Menubar.js:1002
+#: src/control/Control.Menubar.js:999
 #: src/control/Control.NotebookbarBuilder.js:597
 #: src/control/Control.NotebookbarBuilder.js:668
 #: src/control/Control.NotebookbarImpress.js:331
@@ -1025,7 +1025,7 @@ msgstr ""
 msgid "Master View"
 msgstr ""
 
-#: src/control/Control.Menubar.js:503 src/control/Control.Menubar.js:1042
+#: src/control/Control.Menubar.js:503 src/control/Control.Menubar.js:1039
 #: src/control/Control.PresentationBar.js:64
 msgid "Fullscreen presentation"
 msgstr ""
@@ -1034,8 +1034,8 @@ msgstr ""
 msgid "Present current slide"
 msgstr ""
 
-#: src/control/Control.Menubar.js:540 src/control/Control.Menubar.js:1003
-#: src/control/Control.Menubar.js:1064
+#: src/control/Control.Menubar.js:540 src/control/Control.Menubar.js:1000
+#: src/control/Control.Menubar.js:1060
 #: src/control/Control.NotebookbarBuilder.js:593
 #: src/control/Control.NotebookbarDraw.js:233
 #: src/control/Control.NotebookbarImpress.js:308
@@ -1043,14 +1043,14 @@ msgid "ODF Drawing (.odg)"
 msgstr ""
 
 #: src/control/Control.Menubar.js:657 src/control/Control.Menubar.js:669
-#: src/control/Control.Menubar.js:1122
+#: src/control/Control.Menubar.js:1117
 #: src/control/Control.NotebookbarBuilder.js:560
 #: src/control/Control.NotebookbarBuilder.js:649
 msgid "ODF spreadsheet (.ods)"
 msgstr ""
 
 #: src/control/Control.Menubar.js:658 src/control/Control.Menubar.js:670
-#: src/control/Control.Menubar.js:1123
+#: src/control/Control.Menubar.js:1118
 #: src/control/Control.NotebookbarBuilder.js:568
 #: src/control/Control.NotebookbarBuilder.js:657
 #: src/control/Control.NotebookbarCalc.js:237
@@ -1058,7 +1058,7 @@ msgid "Excel 2003 Spreadsheet (.xls)"
 msgstr ""
 
 #: src/control/Control.Menubar.js:659 src/control/Control.Menubar.js:671
-#: src/control/Control.Menubar.js:1124
+#: src/control/Control.Menubar.js:1119
 #: src/control/Control.NotebookbarBuilder.js:564
 #: src/control/Control.NotebookbarBuilder.js:653
 #: src/control/Control.NotebookbarCalc.js:244
@@ -1099,8 +1099,8 @@ msgstr ""
 msgid "More conditions..."
 msgstr ""
 
-#: src/control/Control.Menubar.js:917 src/control/Control.Menubar.js:984
-#: src/control/Control.Menubar.js:1049 src/control/Control.Menubar.js:1104
+#: src/control/Control.Menubar.js:917 src/control/Control.Menubar.js:982
+#: src/control/Control.Menubar.js:1046 src/control/Control.Menubar.js:1100
 #: src/control/Control.NotebookbarCalc.js:882
 #: src/control/Control.NotebookbarDraw.js:945
 #: src/control/Control.NotebookbarImpress.js:1064
@@ -1109,45 +1109,45 @@ msgstr ""
 msgid "Search"
 msgstr ""
 
-#: src/control/Control.Menubar.js:971
+#: src/control/Control.Menubar.js:969
 msgid "Page Setup"
 msgstr ""
 
-#: src/control/Control.Menubar.js:1115
+#: src/control/Control.Menubar.js:1111
 msgid "Define print area"
 msgstr ""
 
-#: src/control/Control.Menubar.js:1116
+#: src/control/Control.Menubar.js:1112
 msgid "Remove print area"
 msgstr ""
 
-#: src/control/Control.Menubar.js:1395 src/control/Control.StatusBar.js:544
+#: src/control/Control.Menubar.js:1390 src/control/Control.StatusBar.js:544
 msgid "Reset to Default Language"
 msgstr ""
 
-#: src/control/Control.Menubar.js:1426 src/control/Control.Menubar.js:1427
-#: src/control/Control.Menubar.js:1428 src/control/Control.Toolbar.js:240
+#: src/control/Control.Menubar.js:1421 src/control/Control.Menubar.js:1422
+#: src/control/Control.Menubar.js:1423 src/control/Control.Toolbar.js:240
 #: src/control/Control.Toolbar.js:287
 msgid "More..."
 msgstr ""
 
-#: src/control/Control.Menubar.js:1726
+#: src/control/Control.Menubar.js:1721
 msgid "Use Compact view"
 msgstr ""
 
-#: src/control/Control.Menubar.js:1728
+#: src/control/Control.Menubar.js:1723
 msgid "Use Tabbed view"
 msgstr ""
 
-#: src/control/Control.Menubar.js:1786 src/control/Control.Menubar.js:1799
+#: src/control/Control.Menubar.js:1781 src/control/Control.Menubar.js:1794
 msgid "Read-only mode"
 msgstr ""
 
-#: src/control/Control.Menubar.js:1820
+#: src/control/Control.Menubar.js:1815
 msgid "Insert Shape"
 msgstr ""
 
-#: src/control/Control.Menubar.js:2039
+#: src/control/Control.Menubar.js:2034
 msgid "file type icon"
 msgstr ""
 
@@ -1366,7 +1366,7 @@ msgstr ""
 msgid "Boolean Value"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:659 src/control/Toolbar.js:758
+#: src/control/Control.NotebookbarCalc.js:659 src/control/Toolbar.js:759
 msgid "Text"
 msgstr ""
 
@@ -1454,12 +1454,12 @@ msgstr ""
 msgid "Status Bar"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:1368
+#: src/control/Control.NotebookbarCalc.js:1369
 msgid "Sparkline"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:1500
-#: src/control/Control.NotebookbarCalc.js:2288
+#: src/control/Control.NotebookbarCalc.js:1501
+#: src/control/Control.NotebookbarCalc.js:2289
 #: src/control/Control.NotebookbarDraw.js:830
 #: src/control/Control.NotebookbarDraw.js:1319
 #: src/control/Control.NotebookbarImpress.js:941
@@ -1785,7 +1785,7 @@ msgid ""
 "API. It may cause some problems while editing citations or bibliography."
 msgstr ""
 
-#: src/control/Control.Zotero.js:243 src/core/Socket.js:1085
+#: src/control/Control.Zotero.js:243 src/core/Socket.js:1087
 msgid "Loading..."
 msgstr ""
 
@@ -1947,19 +1947,19 @@ msgid ""
 "current file format."
 msgstr ""
 
-#: src/control/Ruler.js:364
+#: src/control/Ruler.js:359
 msgid "Left Margin"
 msgstr ""
 
-#: src/control/Ruler.js:365
+#: src/control/Ruler.js:360
 msgid "Right Margin"
 msgstr ""
 
-#: src/control/Ruler.js:626
+#: src/control/Ruler.js:621
 msgid "Insert tabstop"
 msgstr ""
 
-#: src/control/Ruler.js:633
+#: src/control/Ruler.js:628
 msgid "Delete tabstop"
 msgstr ""
 
@@ -2005,31 +2005,31 @@ msgstr ""
 msgid "Renaming..."
 msgstr ""
 
-#: src/control/Toolbar.js:637
+#: src/control/Toolbar.js:638
 msgid "This version of %productName is powered by"
 msgstr ""
 
-#: src/control/Toolbar.js:649
+#: src/control/Toolbar.js:650
 msgid "\"Slow Proxy\""
 msgstr ""
 
-#: src/control/Toolbar.js:668
+#: src/control/Toolbar.js:669
 msgid "Copy all version information in English"
 msgstr ""
 
-#: src/control/Toolbar.js:751
+#: src/control/Toolbar.js:752
 msgid "Insert hyperlink"
 msgstr ""
 
-#: src/control/Toolbar.js:770
+#: src/control/Toolbar.js:771
 msgid "Link"
 msgstr ""
 
-#: src/control/Toolbar.js:1076
+#: src/control/Toolbar.js:1077
 msgid "Are you sure you want to delete this slide?"
 msgstr ""
 
-#: src/control/Toolbar.js:1079
+#: src/control/Toolbar.js:1080
 msgid "Are you sure you want to delete this page?"
 msgstr ""
 
@@ -2041,167 +2041,167 @@ msgstr ""
 msgid "Oops, there is a problem connecting to %productName: "
 msgstr ""
 
-#: src/core/Socket.js:565
+#: src/core/Socket.js:567
 msgid "Server is now reachable. We have to refresh the page now."
 msgstr ""
 
-#: src/core/Socket.js:567
+#: src/core/Socket.js:569
 msgid "Server is now reachable..."
 msgstr ""
 
-#: src/core/Socket.js:571
+#: src/core/Socket.js:573
 msgid "RELOAD"
 msgstr ""
 
-#: src/core/Socket.js:584
+#: src/core/Socket.js:586
 msgid "Cluster configuration warning"
 msgstr ""
 
-#: src/core/Socket.js:587
+#: src/core/Socket.js:589
 msgid "Wrong server, reconnecting..."
 msgstr ""
 
-#: src/core/Socket.js:594
+#: src/core/Socket.js:596
 msgid "COOLWSD version:"
 msgstr ""
 
-#: src/core/Socket.js:606
+#: src/core/Socket.js:608
 msgid "Served by:"
 msgstr ""
 
-#: src/core/Socket.js:612
+#: src/core/Socket.js:614
 msgid "Unsupported server version."
 msgstr ""
 
-#: src/core/Socket.js:616
+#: src/core/Socket.js:618
 msgid "LOKit version:"
 msgstr ""
 
-#: src/core/Socket.js:725
+#: src/core/Socket.js:727
 msgid "Document is getting migrated"
 msgstr ""
 
-#: src/core/Socket.js:752
+#: src/core/Socket.js:754
 msgid "Session terminated by document owner"
 msgstr ""
 
-#: src/core/Socket.js:757
+#: src/core/Socket.js:759
 msgid "Idle document - please click to reload and resume editing"
 msgstr ""
 
-#: src/core/Socket.js:759
+#: src/core/Socket.js:761
 msgid "Idle document - please tap to reload and resume editing"
 msgstr ""
 
-#: src/core/Socket.js:768
+#: src/core/Socket.js:770
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr ""
 
-#: src/core/Socket.js:772
+#: src/core/Socket.js:774
 msgid "Oops, there is a problem connecting the document"
 msgstr ""
 
-#: src/core/Socket.js:776
+#: src/core/Socket.js:778
 msgid "Server is down, restarting automatically. Please wait."
 msgstr ""
 
-#: src/core/Socket.js:803
+#: src/core/Socket.js:805
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
 msgstr ""
 
-#: src/core/Socket.js:809
+#: src/core/Socket.js:811
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
 msgstr ""
 
-#: src/core/Socket.js:815
+#: src/core/Socket.js:817
 msgid "Reloading the document after rename"
 msgstr ""
 
-#: src/core/Socket.js:955
+#: src/core/Socket.js:957
 msgid "Document requires password to view."
 msgstr ""
 
-#: src/core/Socket.js:958
+#: src/core/Socket.js:960
 msgid "Document requires password to modify."
 msgstr ""
 
-#: src/core/Socket.js:960
+#: src/core/Socket.js:962
 msgid "Hit Cancel to open in view-only mode."
 msgstr ""
 
-#: src/core/Socket.js:964
+#: src/core/Socket.js:966
 msgid "Wrong password provided. Please try again."
 msgstr ""
 
-#: src/core/Socket.js:1002
+#: src/core/Socket.js:1004
 msgid "Only the document owner can change the password."
 msgstr ""
 
-#: src/core/Socket.js:1033 src/core/Socket.js:1038
+#: src/core/Socket.js:1035 src/core/Socket.js:1040
 msgid "Missing Fonts"
 msgstr ""
 
-#: src/core/Socket.js:1075
+#: src/core/Socket.js:1077
 msgid "Someone"
 msgstr ""
 
-#: src/core/Socket.js:1076
+#: src/core/Socket.js:1078
 msgid "%userName saved this document as %fileName. Do you want to join?"
 msgstr ""
 
-#: src/core/Socket.js:1085
+#: src/core/Socket.js:1087
 msgid "Connecting..."
 msgstr ""
 
-#: src/core/Socket.js:1102
+#: src/core/Socket.js:1104
 msgid "The document is being renamed and will reload shortly"
 msgstr ""
 
-#: src/core/Socket.js:1203
+#: src/core/Socket.js:1205
 msgid "Exported to storage"
 msgstr ""
 
-#: src/core/Socket.js:1203
+#: src/core/Socket.js:1205
 msgid "Successfully exported: "
 msgstr ""
 
-#: src/core/Socket.js:1231
+#: src/core/Socket.js:1233
 msgid "Discard"
 msgstr ""
 
-#: src/core/Socket.js:1232
+#: src/core/Socket.js:1234
 msgid "Overwrite"
 msgstr ""
 
-#: src/core/Socket.js:1243
+#: src/core/Socket.js:1245
 msgid "Save to new file"
 msgstr ""
 
-#: src/core/Socket.js:1253
+#: src/core/Socket.js:1255
 msgid "Document has been changed"
 msgstr ""
 
-#: src/core/Socket.js:1254
+#: src/core/Socket.js:1256
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
 msgstr ""
 
-#: src/core/Socket.js:1560
+#: src/core/Socket.js:1562
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 msgstr ""
 
-#: src/core/Socket.js:1577
+#: src/core/Socket.js:1579
 msgid "Reconnecting..."
 msgstr ""
 
-#: src/core/Socket.js:1587
+#: src/core/Socket.js:1589
 msgid "The server has been disconnected."
 msgstr ""
 
@@ -2383,61 +2383,61 @@ msgstr ""
 msgid "Uploading file to server failed, the file is too large."
 msgstr ""
 
-#: src/layer/tile/CanvasTileLayer.js:2015
+#: src/layer/tile/CanvasTileLayer.js:2020
 msgid "Functions"
 msgstr ""
 
-#: src/layer/tile/CanvasTileLayer.js:2588
+#: src/layer/tile/CanvasTileLayer.js:2593
 msgid "Copy link location"
 msgstr ""
 
-#: src/layer/tile/CanvasTileLayer.js:2596
+#: src/layer/tile/CanvasTileLayer.js:2601
 msgid "Edit link"
 msgstr ""
 
-#: src/layer/tile/CanvasTileLayer.js:2604
+#: src/layer/tile/CanvasTileLayer.js:2609
 msgid "Remove link"
 msgstr ""
 
-#: src/layer/tile/CanvasTileLayer.js:5316
+#: src/layer/tile/CanvasTileLayer.js:5322
 msgid "No Comments"
 msgstr ""
 
-#: src/layer/tile/CommentListSection.ts:888
+#: src/layer/tile/CommentListSection.ts:910
 msgid "Modify"
 msgstr ""
 
-#: src/layer/tile/CommentListSection.ts:894
+#: src/layer/tile/CommentListSection.ts:916
 #: src/layer/tile/CommentSection.ts:123
 msgid "Reply"
 msgstr ""
 
-#: src/layer/tile/CommentListSection.ts:900
+#: src/layer/tile/CommentListSection.ts:922
 msgid "Remove"
 msgstr ""
 
-#: src/layer/tile/CommentListSection.ts:906
+#: src/layer/tile/CommentListSection.ts:928
 msgid "Remove Thread"
 msgstr ""
 
-#: src/layer/tile/CommentListSection.ts:912
+#: src/layer/tile/CommentListSection.ts:934
 msgid "Resolve"
 msgstr ""
 
-#: src/layer/tile/CommentListSection.ts:912
+#: src/layer/tile/CommentListSection.ts:934
 msgid "Unresolve"
 msgstr ""
 
-#: src/layer/tile/CommentListSection.ts:918
+#: src/layer/tile/CommentListSection.ts:940
 msgid "Unresolve Thread"
 msgstr ""
 
-#: src/layer/tile/CommentListSection.ts:918
+#: src/layer/tile/CommentListSection.ts:940
 msgid "Resolve Thread"
 msgstr ""
 
-#: src/layer/tile/CommentListSection.ts:1141
-#: src/layer/tile/CommentListSection.ts:1178
+#: src/layer/tile/CommentListSection.ts:1166
+#: src/layer/tile/CommentListSection.ts:1202
 msgid "Autosaved"
 msgstr ""
 
@@ -2478,11 +2478,11 @@ msgstr ""
 msgid "Failed to download clipboard, please re-copy"
 msgstr ""
 
-#: src/map/Clipboard.js:845
+#: src/map/Clipboard.js:853
 msgid "<p>Please use the copy/paste buttons on your on-screen keyboard.</p>"
 msgstr ""
 
-#: src/map/Clipboard.js:847
+#: src/map/Clipboard.js:855
 msgid ""
 "<p>Your browser has very limited access to the clipboard, so use these "
 "keyboard shortcuts:</p><table class=\"warn-copy-paste\"><tr><td><kbd>Ctrl</"
@@ -2492,25 +2492,25 @@ msgid ""
 "td><td>Cut</td><td>Paste</td></tr></table>"
 msgstr ""
 
-#: src/map/Clipboard.js:866
+#: src/map/Clipboard.js:874
 msgid ""
 "<p>A download due to a large copy/paste operation has already started. "
 "Please, wait for the current download or cancel it before starting a new "
 "one</p>"
 msgstr ""
 
-#: src/map/Clipboard.js:884
+#: src/map/Clipboard.js:892
 msgid ""
 "<p>Your browser has very limited access to the clipboard</p><p>Please press "
 "now: <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to see "
 "more options</p><p>Close popup to ignore paste special</p>"
 msgstr ""
 
-#: src/map/Map.js:221
+#: src/map/Map.js:217
 msgid "Initializing..."
 msgstr ""
 
-#: src/map/Map.js:446 src/map/Map.js:449 src/map/Map.js:452 src/map/Map.js:455
+#: src/map/Map.js:442 src/map/Map.js:445 src/map/Map.js:448 src/map/Map.js:451
 msgid "Last saved:"
 msgstr ""
 
@@ -2542,15 +2542,15 @@ msgstr ""
 msgid "Creating new file from template..."
 msgstr ""
 
-#: src/map/handler/Map.WOPI.js:536
+#: src/map/handler/Map.WOPI.js:539
 msgid "Error"
 msgstr ""
 
-#: src/map/handler/Map.WOPI.js:536
+#: src/map/handler/Map.WOPI.js:539
 msgid "File name should contain an extension."
 msgstr ""
 
-#: src/map/handler/Map.WOPI.js:544
+#: src/map/handler/Map.WOPI.js:547
 msgid "Creating copy..."
 msgstr ""
 
