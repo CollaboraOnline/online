@@ -238,7 +238,7 @@ export class Comment extends CanvasSectionObject {
 		if (this.sectionProperties.commentListSection.sectionProperties.commentsAreListed)
 			tdImg.style.visibility = 'visible';
 
-		L.LOUtil.setImage(imgAuthor, 'user.svg', this.sectionProperties.docLayer._docType);
+		L.LOUtil.setImage(imgAuthor, 'user.svg', this.map);
 		imgAuthor.setAttribute('width', this.sectionProperties.imgSize[0]);
 		imgAuthor.setAttribute('height', this.sectionProperties.imgSize[1]);
 

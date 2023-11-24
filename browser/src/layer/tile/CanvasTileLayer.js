@@ -2585,7 +2585,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		L.DomUtil.addClass(copyBtn, 'hyperlink-popup-btn');
 		copyBtn.setAttribute('title', _('Copy link location'));
 		var imgCopyBtn = L.DomUtil.create('img', 'hyperlink-pop-up-copyimg', copyBtn);
-		L.LOUtil.setImage(imgCopyBtn, 'lc_copyhyperlinklocation.svg', this._docType);
+		L.LOUtil.setImage(imgCopyBtn, 'lc_copyhyperlinklocation.svg', this._map);
 		imgCopyBtn.setAttribute('width', 18);
 		imgCopyBtn.setAttribute('height', 18);
 		imgCopyBtn.setAttribute('style', 'padding: 4px');
@@ -2593,7 +2593,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		L.DomUtil.addClass(editBtn, 'hyperlink-popup-btn');
 		editBtn.setAttribute('title', _('Edit link'));
 		var imgEditBtn = L.DomUtil.create('img', 'hyperlink-pop-up-editimg', editBtn);
-		L.LOUtil.setImage(imgEditBtn, 'lc_edithyperlink.svg', this._docType);
+		L.LOUtil.setImage(imgEditBtn, 'lc_edithyperlink.svg', this._map);
 		imgEditBtn.setAttribute('width', 18);
 		imgEditBtn.setAttribute('height', 18);
 		imgEditBtn.setAttribute('style', 'padding: 4px');
@@ -2601,7 +2601,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		L.DomUtil.addClass(removeBtn, 'hyperlink-popup-btn');
 		removeBtn.setAttribute('title', _('Remove link'));
 		var imgRemoveBtn = L.DomUtil.create('img', 'hyperlink-pop-up-removeimg', removeBtn);
-		L.LOUtil.setImage(imgRemoveBtn, 'lc_removehyperlink.svg', this._docType);
+		L.LOUtil.setImage(imgRemoveBtn, 'lc_removehyperlink.svg', this._map);
 		imgRemoveBtn.setAttribute('width', 18);
 		imgRemoveBtn.setAttribute('height', 18);
 		imgRemoveBtn.setAttribute('style', 'padding: 4px');
