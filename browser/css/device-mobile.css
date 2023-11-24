@@ -681,14 +681,21 @@ td[id^='tb_spreadsheet-toolbar_item']:focus table.w2ui-button div.w2ui-icon, td[
 /* busy popup */
 
 #mobile-wizard.popup:not(.snackbar) {
-	border-radius: 16px 16px 0 0;
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100vh !important;
 }
 #mobile-wizard.popup #mobile-wizard-content,
 #mobile-wizard.popup .mobile-wizard-content {
 	display: flex;
-	align-items: center;
+	align-items: start;
 	justify-content: center;
 	flex-wrap: wrap;
+}
+#mobile-wizard.snackbar #mobile-wizard-content,
+#mobile-wizard.snackbar .mobile-wizard-content {
+	align-items: center;
 }
 #mobile-wizard.popup.potrait #mobile-wizard-content {
 	flex-direction: column;
