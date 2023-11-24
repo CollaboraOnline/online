@@ -41,7 +41,7 @@ In order for Collaborative Editing and copy/paste to function correctly on kuber
       annotations:
          haproxy.org/timeout-tunnel: "3600s"
          haproxy.org/backend-config-snippet: |
-            balance url_param WOPISrc check_post
+            balance url_param WOPISrc
             hash-type consistent
       hosts:
          - host: chart-example.local
