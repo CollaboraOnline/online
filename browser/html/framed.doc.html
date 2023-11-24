@@ -15,6 +15,10 @@
     <title>Online Editor</title>
 
     <style>
+      :root {
+          font-family: "sans-serif";
+      }
+
       .alert {
         font-size: large;
         padding: 20px;
@@ -22,6 +26,38 @@
         color: white;
         margin-bottom: 15px;
       }
+
+      .framed {
+          padding: 15px;
+          border: 1px black dashed;
+          border-radius: 6px;
+      }
+
+      .vbox {
+          display: flex;
+          flex-direction: column;
+          gap: 1em;
+      }
+
+      .hbox {
+          display: flex;
+          flex-direction: row;
+          gap: 1em;
+      }
+
+      .grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          grid-gap: 0.5em;
+          gap: 0.5em;
+      }
+
+      .spaced {
+          gap: 15px;
+          grid-gap: 15px;
+      }
+
+
     </style>
 
     <script>
@@ -320,76 +356,122 @@
       </p>
     </div>
 
-    <h3>PostMessage test harness</h3>
+    <div id="post-message-test-harness" class="vbox">
+      <h2>PostMessage test harness</h2>
 
-    <h4>Run python scripts</h4>
-    <form id="insert-text-form">
-      <label for="fname"><b>InsertText.py</b>: inserts text into the document</label><br>
-      <textarea name="source" value="" rows="5" cols="50">Type your text and press Insert text</textarea><br>
-      <button onclick="insertText(document.forms['insert-text-form'].elements['source'].value); return false;">Insert text</button>
-    </form>
-    <br>
-    <form id="insert-text-form">
-      <label for="fname"><b>Capitalize.py</b>: capitalize selected text in the document</label><br>
-      <button onclick="capitalize(); return false;">Capitalize selected text</button></br></br>
-    </form>
+      <div class="grid spaced">
+        <div class="vbox framed">
+          <h3>Run python scripts</h3>
+          <form id="insert-text-form" class="vbox">
+            <label for="fname"><b>InsertText.py</b>: inserts text into the document</label>
+            <textarea name="source" value="" rows="5" cols="50">Type your text and press Insert text</textarea>
+            <div>
+              <button onclick="insertText(document.forms['insert-text-form'].elements['source'].value); return false;">Insert text</button>
+            </div>
+          </form>
 
-    <h4>Various other messages to post</h4>
-    <form>
-      <button onclick="save(); return false;">Save</button>
-      <button onclick="closeDocument(); return false;">Close</button></br></br>
-      <button onclick="exportAsHtml(); return false;">Export as HTML</button></br></br>
-      <button onclick="getExportFormats(); return false;">Get export formats</button>
-      <button onclick="hide_commands('save'); return false;">Hide Save Commands</button>
-      <button onclick="show_commands('save'); return false;">Show Save Commands</button></br>
-      <button onclick="hide_commands('print'); return false;">Hide Print Commands</button>
-      <button onclick="show_commands('print'); return false;">Show Print Commands</button></br></br>
-      <button onclick="disable_default_uiaction('UI_Save', true); return false;">Disable default save action</button></br>
-      <button onclick="disable_default_uiaction('UI_Save', false); return false;">Enable default save action</button></br></br>
-      <button onclick="HintOnscreenKeyboard(true); return false;">Hint that there is an onscreen keyboard</button>
-      <button onclick="HintOnscreenKeyboard(false); return false;">Hint that there is not an onscreen keyboard</button><br/><br/>
-      <label for="new-access-token"><b>New Access-Token</b>: </label><br>
-      <textarea name="new-access-token" id="new-access-token" value="" rows="1" cols="30">123456789AA</textarea><br>
-      <button onclick="reset_access_token(document.getElementById('new-access-token').value); return false;">Reset Access-Token</button>
-    </form>
+          <form id="insert-text-form" class="vbox">
+            <label for="fname"><b>Capitalize.py</b>: capitalize selected text in the document</label>
+            <div>
+              <button onclick="capitalize(); return false;">Capitalize selected text</button>
+            </div>
+          </form>
+        </div>
 
-    <h3>Send a message</h3>
+        <div class="vbox framed">
+          <h3>Various other messages to post</h3>
 
-    <form>
-      <label for="execute-message"><b>Message</b>: </label><br>
-      <input type="text" name="execute-message" id="execute-message" /><br>
-      <label for="execute-param"><b>Values</b>: </label><br>
-      <p>This is the JSON format 'Values'.</p>
-      <textarea name="execute-param" id="execute-param">{}</textarea>
-      <br>
-      <button onclick="Execute(document.getElementById('execute-message').value, JSON.parse(document.getElementById('execute-param').value)); return false;">Execute</button>
-    </form>
+          <div class="grid">
+            <button onclick="save(); return false;">Save</button>
+            <button onclick="closeDocument(); return false;">Close</button>
 
-    <h3>Modified Status: <span id="ModifiedStatus">Saved</span></h3>
+            <button onclick="exportAsHtml(); return false;">Export as HTML</button>
+            <button onclick="getExportFormats(); return false;">Get export formats</button>
 
-    <h3>UI modification</h3>
-    <form id="menubar-toggle">
-      <button onclick="ShowMenubar(false); return false;">Hide Menubar</button>
-      <button onclick="ShowMenubar(true); return false;">Show Menubar</button>
-      <button onclick="ShowInsertButton(); return false;" title="via Insert_Button">Insert custom button</button>
-      <p>
-      <button onclick="ShowNotebookbar(false); return false;">Compact Toolbar</button>
-      <button onclick="ShowNotebookbar(true); return false;">Tabbed Toolbar</button>
-      <button onclick="CollapseNotebookbar(true); return false;">Collapse Tabbed Toolbar</button>
-      <button onclick="CollapseNotebookbar(false); return false;">Extend Tabbed Toolbar</button>
-    </form>
+            <button onclick="hide_commands('save'); return false;">Hide Save Commands</button>
+            <button onclick="show_commands('save'); return false;">Show Save Commands</button>
 
-    <h3>Send UNO Commands</h3>
-    <form id="menubar-toggle">
-      <button onclick="sendBoldUNOCommand(); return false;">Send Bold UNO Command (and example without args)</button>
-      <button onclick="sendInsertBookMarkUNOCommand(); return false;">Send InsertBookmark UNO Command (an example with args)</button>
-    </form>
+            <button onclick="hide_commands('print'); return false;">Hide Print Commands</button>
+            <button onclick="show_commands('print'); return false;">Show Print Commands</button>
+
+            <button onclick="disable_default_uiaction('UI_Save', true); return false;">Disable default save action</button>
+            <button onclick="disable_default_uiaction('UI_Save', false); return false;">Enable default save action</button>
+
+            <button onclick="HintOnscreenKeyboard(true); return false;">Hint that there is an onscreen keyboard</button>
+            <button onclick="HintOnscreenKeyboard(false); return false;">Hint that there is not an onscreen keyboard</button>
+          </div>
+        </div>
+
+        <form class="vbox framed">
+          <h3>New Access-Token</h3>
+          <textarea name="new-access-token" id="new-access-token" value="" rows="1" cols="30">123456789AA</textarea>
+          <div>
+            <button onclick="reset_access_token(document.getElementById('new-access-token').value); return false;">Reset Access-Token</button>
+          </div>
+        </form>
+
+        <div class="vbox framed">
+          <h3>Send a message</h3>
+
+          <form>
+            <div class="hbox">
+              <div>
+                <label for="execute-message"><b>Message</b>: </label><br>
+                <input type="text" name="execute-message" id="execute-message" />
+              </div>
+              <div>
+                <label for="execute-param"><b>Values</b>: </label>
+                <p>This is the JSON format 'Values'.</p>
+                <textarea name="execute-param" id="execute-param">{}</textarea>
+              </div>
+            </div>
+            <button onclick="Execute(document.getElementById('execute-message').value, JSON.parse(document.getElementById('execute-param').value)); return false;">Execute</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="vbox">
+      <h3>Modified Status: <span id="ModifiedStatus">Saved</span></h3>
+    </div>
+
+    <div class="grid spaced">
+      <div class="framed">
+        <h3>UI modification</h3>
+        <div class="hbox">
+          <div class="vbox">
+            <button onclick="ShowMenubar(false); return false;">Hide Menubar</button>
+            <button onclick="ShowMenubar(true); return false;">Show Menubar</button>
+          </div>
+          <div class="vbox">
+            <button onclick="ShowInsertButton(); return false;" title="via Insert_Button">Insert custom button</button>
+          </div>
+          <div class="vbox">
+            <button onclick="ShowNotebookbar(false); return false;">Compact Toolbar</button>
+            <button onclick="ShowNotebookbar(true); return false;">Tabbed Toolbar</button>
+          </div>
+          <div class="vbox">
+            <button onclick="CollapseNotebookbar(true); return false;">Collapse Tabbed Toolbar</button>
+            <button onclick="CollapseNotebookbar(false); return false;">Extend Tabbed Toolbar</button>
+          </div>
+        </div>
+      </div>
+      <div class="vbox framed">
+        <h3>Send UNO Commands</h3>
+        <div class="hbox">
+          <button onclick="sendBoldUNOCommand(); return false;">Send Bold UNO Command (an example without args)</button>
+          <button onclick="sendInsertBookMarkUNOCommand(); return false;">Send InsertBookmark UNO Command (an example with args)</button>
+        </div>
+      </div>
+    </div>
 
     <h3>Document frame</h3>
     <h4>If the frame fails to load click <a id="link">here and accept security bits</a></h4>
     <h4>If the frame still fails to load ensure you have <code>localhost:*</code> included in your <code>net.frame_ancestors</code> in coolwsd.xml</h4>
-    <iframe id="frame" height="1000" width="1000"></iframe>
 
+    <div class="vbox">
+    <iframe id="frame" height="1000"></iframe>
+    </div>
     <script>
       if (document.location.protocol == 'file:' || window.location.search == '') {
         document.getElementById("usage").style.display = "block";
