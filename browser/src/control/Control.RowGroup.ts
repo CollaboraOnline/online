@@ -185,7 +185,7 @@ export class RowGroup extends GroupBase {
 						const startY = this.getRelativeY(group_.startPos);
 						const endX = startX + this._groupHeadSize;
 						const endY = startY + this._groupHeadSize;
-						if (this.isPointInRect(point, startX, startY, endX, endY, mirrorX)) {
+						if (this._isPreviousGroupVisible(group_.index, group_.level) && this.isPointInRect(point, startX, startY, endX, endY, mirrorX)) {
 							return group_;
 						}
 					}
