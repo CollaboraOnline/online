@@ -184,8 +184,8 @@ export class ColumnGroup extends GroupBase {
 						const startX = this.getRelativeX(group_.startPos);
 						const startY = this._levelSpacing + (this._groupHeadSize + this._levelSpacing) * group_.level;
 						const endX = startX + this._groupHeadSize;
-						const endY = group_.endPos + this._cornerHeaderWidth - this.documentTopLeft[1];
-						if (this.isPointInRect(point, startX, startY, endX, endY, mirrorX)) {
+						const endY = startY + this._groupHeadSize;
+						if (this._isPreviousGroupVisible(group_.index, group_.level) && this.isPointInRect(point, startX, startY, endX, endY, mirrorX)) {
 							return group_;
 						}
 					}
