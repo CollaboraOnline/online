@@ -4235,6 +4235,69 @@ void DocumentBroker::onUrpMessage(const char* data, size_t len)
     }
 }
 
+void DocumentBroker::switchMode(const std::string& mode)
+{
+    if (mode == "online")
+    {
+        //TODO: Sanity check that we aren't running in WASM, otherwise we can't do anything.
+        startSwitchingToOnline();
+    }
+    else if (mode == "offline")
+    {
+        // We must be in Collaborative mode.
+
+        startSwitchingToOffline();
+    }
+}
+
+void DocumentBroker::startSwitchingToOffline()
+{
+    LOG_DBG("Starting switching to Offline mode");
+
+    // Transition.
+    if (!startActivity(DocumentState::Activity::SwitchingToOffline))
+    {
+        // The issue is logged.
+        return;
+    }
+
+    // Block the UI to prevent further changes and notify the user.
+    blockUI("switchingtooffline");
+}
+
+void DocumentBroker::endSwitchingToOffline()
+{
+    LOG_DBG("Ending switching to Offline mode");
+
+    unblockUI();
+
+    endActivity();
+}
+
+void DocumentBroker::startSwitchingToOnline()
+{
+    LOG_DBG("Starting switching to Online mode");
+
+    // Transition.
+    if (!startActivity(DocumentState::Activity::SwitchingToOnline))
+    {
+        // The issue is logged.
+        return;
+    }
+
+    // Block the UI to prevent further changes and notify the user.
+    blockUI("switchingtoonline");
+}
+
+void DocumentBroker::endSwitchingToOnline()
+{
+    LOG_DBG("Ending switching to Online mode");
+
+    unblockUI();
+
+    endActivity();
+}
+
 // not beautiful - but neither is editing mobile project files.
 #if MOBILEAPP
 #  include "Exceptions.cpp"
