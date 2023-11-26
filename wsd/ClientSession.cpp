@@ -1060,7 +1060,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
             return false;
         }
 
-        docBroker->switchMode(tokens[1]);
+        docBroker->switchMode(client_from_this(), tokens[1]);
         return true;
     }
 #endif // !MOBILEAPP && !WASMAPP
