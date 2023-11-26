@@ -213,7 +213,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				],
 				'vertical': true
 			});
-		
+
 		if (hasPrint) {
 			content.push(
 			{
@@ -368,6 +368,19 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 					'type': 'bigcustomtoolitem',
 					'text': _('Rename'),
 					'accessibility': { focusBack: true,	combination: 'RN' }
+				}
+			]
+		});
+
+		content.push({
+			'type': 'container',
+			'children': [
+				{
+					'id': 'togglewasm',
+					'class': 'togglewasm',
+					'type': 'bigcustomtoolitem',
+					'text': _(window.ThisIsTheEmscriptenApp ? 'Go Online' : 'Go Offline'),
+					'accessibility': { focusBack: true, combination: 'RN' }
 				}
 			]
 		});
