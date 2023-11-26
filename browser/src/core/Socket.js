@@ -1105,6 +1105,9 @@ app.definitions.Socket = L.Class.extend({
 			if (textMsg === 'rename') {
 				msg = _('The document is being renamed and will reload shortly');
 			}
+			else if (textMsg === 'switchingtooffline') {
+				msg = _('The document is switching to Offline mode and will reload shortly');
+			}
 
 			this._map.fire('blockUI', {message: msg});
 			return;
@@ -1137,6 +1140,10 @@ app.definitions.Socket = L.Class.extend({
 			window.routeToken = textMsg.split(' ')[1];
 			window.app.console.log('updated routeToken: ' + window.routeToken);
 		}
+		else if (textMsg.startsWith('reload')) {
+			// Switching modes.
+			window.location.reload(false);
+		}
 		else if (!textMsg.startsWith('tile:') && !textMsg.startsWith('delta:') &&
 			 !textMsg.startsWith('renderfont:') && !textMsg.startsWith('windowpaint:')) {
 
@@ -1160,10 +1167,6 @@ app.definitions.Socket = L.Class.extend({
 				// on here, please replace this comment with an explanation.
 				textMsg = decodeURIComponent(window.escape(textMsg));
 			}
-		}
-		else if (textMsg.startsWith('reload')) {
-			// Switching modes.
-			location.reload();
 		}
 
 		if (textMsg.startsWith('status:')) {
