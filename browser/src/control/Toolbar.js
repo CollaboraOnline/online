@@ -1116,6 +1116,9 @@ L.Map.include({
 		case 'renamedocument':
 			this.uiManager.renameDocument();
 			break;
+		case 'togglewasm':
+			this.uiManager.toggleWasm();
+			break;
 		case 'print-active-sheet':
 			this.sendUnoCommand('.uno:DeletePrintArea');
 			var currentSheet = this._docLayer._selectedPart + 1;

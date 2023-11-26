@@ -1161,6 +1161,10 @@ app.definitions.Socket = L.Class.extend({
 				textMsg = decodeURIComponent(window.escape(textMsg));
 			}
 		}
+		else if (textMsg.startsWith('reload')) {
+			// Switching modes.
+			location.reload();
+		}
 
 		if (textMsg.startsWith('status:')) {
 			this._onStatusMsg(textMsg, command);
