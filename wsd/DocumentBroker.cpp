@@ -4237,7 +4237,8 @@ void DocumentBroker::onUrpMessage(const char* data, size_t len)
 
 #if !MOBILEAPP && !WASMAPP
 
-void DocumentBroker::switchMode(const std::string& mode)
+void DocumentBroker::switchMode(const std::shared_ptr<ClientSession>& session,
+                                const std::string& mode)
 {
     if (mode == "online")
     {
@@ -4248,11 +4249,17 @@ void DocumentBroker::switchMode(const std::string& mode)
     {
         // We must be in Collaborative mode.
 
-        startSwitchingToOffline();
+        if (_sessions.size() > 1)
+        {
+            session->sendTextFrame("error: cmd=switch kind=multiviews");
+            return;
+        }
+
+        startSwitchingToOffline(session);
     }
 }
 
-void DocumentBroker::startSwitchingToOffline()
+void DocumentBroker::startSwitchingToOffline(const std::shared_ptr<ClientSession>& session)
 {
     LOG_DBG("Starting switching to Offline mode");
 
@@ -4265,6 +4272,11 @@ void DocumentBroker::startSwitchingToOffline()
 
     // Block the UI to prevent further changes and notify the user.
     blockUI("switchingtooffline");
+
+    constexpr bool dontTerminateEdit = false; // We will save and reload: terminate.
+    constexpr bool dontSaveIfUnmodified = true;
+    constexpr bool isAutosave = false;
+    sendUnoSave(session, dontTerminateEdit, dontSaveIfUnmodified, isAutosave);
 }
 
 void DocumentBroker::endSwitchingToOffline()
