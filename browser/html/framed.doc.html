@@ -156,6 +156,16 @@
             });
       }
 
+      function ShowSave(show) {
+          if (show) {
+              show_commands('save');
+              show_commands('file-save');
+          } else {
+              hide_commands('save');
+              hide_commands('file-save');
+          }
+      }
+
       function HintOnscreenKeyboard(hint) {
         post({'MessageId': hint ? 'Hint_OnscreenKeyboard' : 'Hint_NoOnscreenKeyboard',
               'Values': null
@@ -388,8 +398,8 @@
             <button onclick="exportAsHtml(); return false;">Export as HTML</button>
             <button onclick="getExportFormats(); return false;">Get export formats</button>
 
-            <button onclick="hide_commands('save'); return false;">Hide Save Commands</button>
-            <button onclick="show_commands('save'); return false;">Show Save Commands</button>
+            <button onclick="ShowSave(false); return false;">Hide Save Commands</button>
+            <button onclick="ShowSave(true); return false;">Show Save Commands</button>
 
             <button onclick="hide_commands('print'); return false;">Hide Print Commands</button>
             <button onclick="show_commands('print'); return false;">Show Print Commands</button>
