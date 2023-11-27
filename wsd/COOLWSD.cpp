@@ -975,6 +975,7 @@ bool COOLWSD::SingleKit = false;
 bool COOLWSD::ForceCaching = false;
 #endif
 COOLWSD::WASMActivationState COOLWSD::WASMState = COOLWSD::WASMActivationState::Disabled;
+std::unordered_map<std::string, std::chrono::steady_clock::time_point> COOLWSD::Uri2WasmModeMap;
 #endif
 std::string COOLWSD::SysTemplate;
 std::string COOLWSD::LoTemplate = LO_PATH;

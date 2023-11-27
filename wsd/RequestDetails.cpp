@@ -247,6 +247,17 @@ Poco::URI RequestDetails::sanitizeURI(const std::string& uri)
     return uriPublic;
 }
 
+std::string RequestDetails::getLineModeKey(const std::string& /*access_token*/) const
+{
+    // This key is based on the WOPISrc and the access_token only.
+    // However, we strip the host:port and scheme from the WOPISrc.
+    const std::string wopiSrc = Poco::URI(getField(RequestDetails::Field::WOPISrc)).getPath();
+
+    //FIXME: For now, just use the path.
+    // return wopiSrc + "?access_token=" + access_token;
+    return wopiSrc;
+}
+
 #if !defined(BUILDING_TESTS)
 std::string RequestDetails::getDocKey(const Poco::URI& uri)
 {

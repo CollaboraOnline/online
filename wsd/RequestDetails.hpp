@@ -156,7 +156,24 @@ public:
         return sanitizeURI(getField(Field::DocumentURI)).toString();
     }
 
+    /// Returns a key to be used with Online/Offline mode.
+    /// This is based on the WOPISrc path + access_token.
+    std::string getLineModeKey(const std::string& access_token) const;
+
     const std::map<std::string, std::string>& getDocumentURIParams() const { return _docUriParams; }
+
+    /// Returns a param, if it exists.
+    bool getParamByName(const std::string& name, std::string& value) const
+    {
+        const auto it = _docUriParams.find(name);
+        if (it != _docUriParams.end())
+        {
+            value = it->second;
+            return true;
+        }
+
+        return false;
+    }
 
     std::string getURI() const
     {

@@ -25,7 +25,8 @@ class FileServerRequestHandler
 {
     friend class FileServeTests; // for unit testing
 
-    static std::string getRequestPathname(const Poco::Net::HTTPRequest& request);
+    static std::string getRequestPathname(const Poco::Net::HTTPRequest& request,
+                                          const RequestDetails& requestDetails);
 
     static void preprocessFile(const Poco::Net::HTTPRequest& request,
                                const RequestDetails &requestDetails,
