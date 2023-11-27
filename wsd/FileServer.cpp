@@ -931,7 +931,6 @@ std::string FileServerRequestHandler::getRequestPathname(const HTTPRequest& requ
         Poco::replaceInPlace(path, std::string("/browser" + gitHash), std::string("/browser/dist/"));
     }
 
-#if ENABLE_DEBUG
     if (COOLWSD::WASMState == COOLWSD::WASMActivationState::Forced)
     {
         if (path.find("/browser/dist/wasm/") == std::string::npos)
@@ -940,7 +939,6 @@ std::string FileServerRequestHandler::getRequestPathname(const HTTPRequest& requ
                                  std::string("/browser/dist/wasm/"));
         }
     }
-#endif
 
     return path;
 }

@@ -2393,7 +2393,6 @@ void COOLWSD::innerInitialize(Application& self)
                              ? COOLWSD::WASMActivationState::Enabled
                              : COOLWSD::WASMActivationState::Disabled;
 
-#if ENABLE_DEBUG
     if (getConfigValue<bool>(conf, "wasm.force", false))
     {
         if (COOLWSD::WASMState != COOLWSD::WASMActivationState::Enabled)
@@ -2407,7 +2406,6 @@ void COOLWSD::innerInitialize(Application& self)
         LOG_INF("WASM is force-enabled. All documents will be loaded through WASM");
         COOLWSD::WASMState = COOLWSD::WASMActivationState::Forced;
     }
-#endif
 
     // Get anonymization settings.
 #if COOLWSD_ANONYMIZE_USER_DATA
