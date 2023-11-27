@@ -40,4 +40,18 @@ describe(['tagdesktop'], 'JSDialog unit test', function() {
 				expect(fnClosePopup).to.be.called;
 			});
 	});
+
+	it('JSDialog dropdown', function() {
+		// Open conditional format menu
+		cy.cGet('#toolbar-up .w2ui-scroll-right').click();
+		cy.cGet('#toolbar-up .w2ui-scroll-right').click();
+		cy.cGet('#toolbar-up #home-conditional-format-menu-button').click();
+
+		// Click on overlay to close
+		cy.cGet('.jsdialog-overlay').click();
+
+		// Dropdown should be closed
+		cy.cGet('.jsdialog-overlay').should('not.exist');
+		cy.cGet('#home-conditional-format-menu-dropdown').should('not.exist');
+	});
 });
