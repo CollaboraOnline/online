@@ -487,10 +487,15 @@ $(DIST_FOLDER)/soffice%: $(abs_top_builddir)/wasm/soffice%
 WASM_FILES= \
 	$(DIST_FOLDER)/online.js \
 	$(DIST_FOLDER)/online.wasm \
-	$(DIST_FOLDER)/online.wasm.debug.wasm \
 	$(DIST_FOLDER)/online.worker.js \
 	$(DIST_FOLDER)/soffice.data \
 	$(DIST_FOLDER)/soffice.data.js.metadata
+
+if ENABLE_DEBUG
+WASM_FILES += \
+	$(DIST_FOLDER)/online.wasm.debug.wasm
+endif
+
 endif
 
 $(TYPESCRIPT_JS_DIR)/%.js: $(srcdir)/%.ts
