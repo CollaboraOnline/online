@@ -340,6 +340,7 @@ void WopiProxy::download(SocketPoll& poll, const std::string& url, const Poco::U
         std::chrono::milliseconds callDurationMs =
             std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() -
                                                                   startTime);
+        (void)callDurationMs;
 
         // Note: we don't log the response if obfuscation is enabled, except for failures.
         std::string wopiResponse = httpResponse->getBody();
@@ -381,3 +382,5 @@ void WopiProxy::download(SocketPoll& poll, const std::string& url, const Poco::U
     // Run the CheckFileInfo request on the WebServer Poll.
     _httpSession->asyncRequest(httpRequest, poll);
 }
+
+/* vim:set shiftwidth=4 softtabstop=4 expandtab: */
