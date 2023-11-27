@@ -123,7 +123,10 @@ L.Control.PresentationBar = L.Control.extend({
 		}
 
 		if (!window.mode.isMobile()) {
-			$('#presentation-toolbar').show();
+			var toolbar = $('#presentation-toolbar');
+			var container = toolbar.parent();
+			$(container.children()[0]).height(container.height() - toolbar.outerHeight());
+			toolbar.show();
 		}
 	},
 
