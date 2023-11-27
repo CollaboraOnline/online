@@ -1,4 +1,5 @@
-/* global describe it cy require afterEach beforeEach*/
+/* -*- js-indent-level: 8 -*- */
+/* global describe it cy require expect afterEach beforeEach*/
 
 var helper = require('../../common/helper');
 var impressHelper = require('../../common/impress_helper');
@@ -46,5 +47,28 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Slide operations', functio
 
 		impressHelper.assertNumberOfSlidePreviews(2);
 
+	});
+
+	it('Slide pane height test', function() {
+		var container, content, toolbar;
+
+		cy.cGet('#slide-sorter')
+			.then(function(items) {
+				expect(items).to.have.lengthOf(1);
+				content = items[0].getBoundingClientRect();
+			});
+
+		cy.cGet('#presentation-toolbar')
+			.then(function(items) {
+				expect(items).to.have.lengthOf(1);
+				toolbar = items[0].getBoundingClientRect();
+			});
+
+		cy.cGet('#presentation-controls-wrapper')
+			.then(function(items) {
+				expect(items).to.have.lengthOf(1);
+				container = items[0].getBoundingClientRect();
+				expect(container.height).equal(content.height + toolbar.height);
+			});
 	});
 });
