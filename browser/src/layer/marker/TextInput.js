@@ -263,23 +263,14 @@ L.TextInput = L.Layer.extend({
 			return;
 		}
 
-
-		var isCalc = this._map._docLayer.isCalc();
-
 		// Trick to avoid showing the software keyboard: Set the textarea
 		// read-only before focus() and reset it again after the blur()
 		if (!window.ThisIsTheiOSApp && navigator.platform !== 'iPhone' && !window.mode.isChromebook()) {
-			if ((
-				(isCalc && window.keyboard.guessOnscreenKeyboard())
-				|| (!isCalc && (window.ThisIsAMobileApp || window.mode.isMobile()))
-			) && acceptInput !== true)
+			if (window.keyboard.guessOnscreenKeyboard() && acceptInput !== true)
 				this._textArea.setAttribute('readonly', true);
 		}
 
-		if (!window.ThisIsTheiOSApp && navigator.platform !== 'iPhone' && (
-			(isCalc && !window.keyboard.guessOnscreenKeyboard())
-			|| (!isCalc && !window.ThisIsAMobileApp && !window.mode.isMobile())
-		)) {
+		if (!window.ThisIsTheiOSApp && navigator.platform !== 'iPhone' && !window.keyboard.guessOnscreenKeyboard()) {
 			this._textArea.focus();
 		} else if (acceptInput === true) {
 			// On the iPhone, only call the textarea's focus() when we get an explicit
@@ -302,10 +293,7 @@ L.TextInput = L.Layer.extend({
 		}
 
 		if (!window.ThisIsTheiOSApp && navigator.platform !== 'iPhone' && !window.mode.isChromebook()) {
-			if ((
-				(isCalc && window.keyboard.guessOnscreenKeyboard())
-				|| (!isCalc && (window.ThisIsAMobileApp || window.mode.isMobile()))
-			) && acceptInput !== true) {
+			if (window.keyboard.guessOnscreenKeyboard() && acceptInput !== true) {
 				this._setAcceptInput(false);
 				this._textArea.blur();
 				this._textArea.removeAttribute('readonly');
