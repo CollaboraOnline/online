@@ -45,9 +45,9 @@ class HttpRequestTests final
 
     class ServerSocketFactory final : public SocketFactory
     {
-        std::shared_ptr<Socket> create(const int physicalFd) override
+        std::shared_ptr<Socket> create(const int physicalFd, Socket::Type type) override
         {
-            return StreamSocket::create<StreamSocket>("localhost", physicalFd, false,
+            return StreamSocket::create<StreamSocket>("localhost", physicalFd, type, false,
                                                       std::make_shared<ServerRequestHandler>());
         }
     };
