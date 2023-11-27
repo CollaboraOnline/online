@@ -276,16 +276,6 @@ public:
     static std::string LOKitVersion;
     static bool EnableTraceEventLogging;
     static bool EnableAccessibility;
-    enum class WASMActivationState
-    {
-        Disabled,
-        Enabled
-#ifdef ENABLE_DEBUG
-        ,
-        Forced //< When Forced, only WASM is served.
-#endif
-    };
-    static WASMActivationState WASMState;
     static FILE *TraceEventFile;
     static void writeTraceEventRecording(const char *data, std::size_t nbytes);
     static void writeTraceEventRecording(const std::string &recording);
@@ -304,6 +294,23 @@ public:
 
     /// The file request handler used for file-serving.
     static std::unique_ptr<FileServerRequestHandler> FileRequestHandler;
+
+    /// The WASM support/activation state.
+    enum class WASMActivationState
+    {
+        Disabled,
+        Enabled
+#ifdef ENABLE_DEBUG
+        ,
+        Forced //< When Forced, only WASM is served.
+#endif
+    };
+    static WASMActivationState WASMState;
+
+    /// Tracks the URIs that are switching to Disconnected (WASM) Mode.
+    /// The time is when the switch request was made. We expire the request after a certain
+    /// time, in case the user fails to load WASM, it will revert to Collaborative mode.
+    static std::unordered_map<std::string, std::chrono::steady_clock::time_point> Uri2WasmModeMap;
 #endif
 
     static std::unordered_set<std::string> EditFileExtensions;

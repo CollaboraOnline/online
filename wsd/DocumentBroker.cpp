@@ -29,6 +29,7 @@
 #include <Poco/Path.h>
 #include <Poco/SHA1Engine.h>
 #include <Poco/StreamCopier.h>
+#include <Poco/URI.h>
 
 #include "Admin.hpp"
 #include "ClientSession.hpp"
@@ -4342,13 +4343,21 @@ void DocumentBroker::switchToOffline()
                    "Unexpected number of sessions for SwitchingToOffline in post-upload");
     LOG_DBG("Switch to Offline post uploading");
 
+    std::shared_ptr<ClientSession> session = _sessions.begin()->second;
+
+    RequestDetails details(session->getPublicUri().toString());
+    std::string access_token;
+    details.getParamByName("access_token", access_token);
+    // const std::string wopiSrc = session->getPublicUri().getPath() + "?access_token=" + access_token;
+    const std::string wopiSrc = session->getPublicUri().getPath();
+    COOLWSD::Uri2WasmModeMap[wopiSrc] = std::chrono::steady_clock::now();
+
     // End activity to allow for unloading.
     endActivity();
 
     // We are done with this instance. The user will reconnect; don't reuse.
     _docState.markToDestroy();
 
-    std::shared_ptr<ClientSession> session = _sessions.begin()->second;
     session->sendTextFrame("reload");
 }
 
