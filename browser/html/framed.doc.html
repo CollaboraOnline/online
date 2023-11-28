@@ -184,6 +184,12 @@
           post({'MessageId': messageId});
       }
 
+      function ShowStatusBar(visible) {
+          var messageId = visible ? 'Show_StatusBar' : 'Hide_StatusBar';
+          post({'MessageId': 'Host_PostmessageReady'});
+          post({'MessageId': messageId});
+      }
+
       function ShowInsertButton() {
         post({'MessageId': 'Insert_Button',
               'Values': { 'id': 'Save', 'imgurl': 'images/lc_save.svg', 'hint': '', 'mobile': false, 'label': 'Show additional btns via Insert_Button', 'insertBefore': 'Save', 'unoCommand': '.uno:Save'}
@@ -469,6 +475,10 @@
           <div class="vbox">
             <button onclick="CollapseNotebookbar(true); return false;">Collapse Tabbed Toolbar</button>
             <button onclick="CollapseNotebookbar(false); return false;">Extend Tabbed Toolbar</button>
+          </div>
+          <div class="vbox">
+            <button onclick="ShowStatusBar(false); return false;">Hide Status Bar</button>
+            <button onclick="ShowStatusBar(true); return false;">Show Status Bar</button>
           </div>
           <div class="vbox">
             <button onclick="ShowRuler(false); return false;">Hide Ruler</button>

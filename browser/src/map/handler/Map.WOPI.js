@@ -306,6 +306,14 @@ L.Map.WOPI = L.Handler.extend({
 			this._map.uiManager.hideRuler();
 			return;
 		}
+		else if (msg.MessageId === 'Show_StatusBar') {
+			this._map.uiManager.showStatusBar();
+			return;
+		}
+		else if (msg.MessageId === 'Hide_StatusBar') {
+			this._map.uiManager.hideStatusBar(false);
+			return;
+		}
 		else if (msg.MessageId === 'Collapse_Notebookbar') {
 			this._map.uiManager.collapseNotebookbar();
 			return;
