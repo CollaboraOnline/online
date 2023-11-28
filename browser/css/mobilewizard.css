@@ -836,7 +836,8 @@ div#mobile-wizard-content .spinfieldcontainer .spinfieldimage.disabled {
 #mobile-wizard #top{background: url('images/sc_aligntop.svg') no-repeat center;}
 #mobile-wizard #bottom{background: url('images/sc_alignbottom.svg') no-repeat center;}
 #mobile-wizard #standard{background: url('images/sc_alignverticalcenter.svg') no-repeat center;}
-.checkbutton{
+.checkbutton,
+.radiobutton{
 	clear: both;
 }
 .checkbutton label {
