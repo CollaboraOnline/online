@@ -178,6 +178,12 @@
         post({'MessageId': messageId});
       }
 
+      function ShowRuler(visible) {
+          var messageId = visible ? 'Show_Ruler' : 'Hide_Ruler';
+          post({'MessageId': 'Host_PostmessageReady'});
+          post({'MessageId': messageId});
+      }
+
       function ShowInsertButton() {
         post({'MessageId': 'Insert_Button',
               'Values': { 'id': 'Save', 'imgurl': 'images/lc_save.svg', 'hint': '', 'mobile': false, 'label': 'Show additional btns via Insert_Button', 'insertBefore': 'Save', 'unoCommand': '.uno:Save'}
@@ -319,8 +325,8 @@
             dummyUserDatabase.forEach(element => {
               if (element.username.includes(text))
                 users.push(element);
-            });      
-            
+            });
+
             if (type === 'autocomplete')
             {
               setTimeout(post, 0,
@@ -463,6 +469,10 @@
           <div class="vbox">
             <button onclick="CollapseNotebookbar(true); return false;">Collapse Tabbed Toolbar</button>
             <button onclick="CollapseNotebookbar(false); return false;">Extend Tabbed Toolbar</button>
+          </div>
+          <div class="vbox">
+            <button onclick="ShowRuler(false); return false;">Hide Ruler</button>
+            <button onclick="ShowRuler(true); return false;">Show Ruler</button>
           </div>
         </div>
       </div>
