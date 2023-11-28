@@ -16,7 +16,7 @@ data:
   {{- range $k,$v := .Values.collabora.aliasgroups }}
   {{- $alias := $v.host }}
   {{- if $v.aliases }}
-  {{- $alias := printf "%s,%s" $alias (join "," $v.aliases) }}
+  {{- $alias := printf "%s|%s" $alias (join "|" $v.aliases) }}
   aliasgroup{{ add $k 1 }}: {{ $alias }}
   {{- else }}
   aliasgroup{{ add $k 1 }}: {{ $alias }}
