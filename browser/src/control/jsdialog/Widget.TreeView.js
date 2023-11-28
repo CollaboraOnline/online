@@ -80,21 +80,25 @@ function _createCheckbox(parentContainer, treeViewData, builder, entry) {
 
 	if (treeViewData.enabled !== false && treeViewData.enabled !== 'false') {
 		$(checkbox).change(function() {
-			if (this.checked) {
-				var foundEntry = _findEntryWithRow(treeViewData.entries, entry.row);
-				if (foundEntry)
-					foundEntry.state = true;
-				builder.callback('treeview', 'change', treeViewData, {row: entry.row, value: true}, builder);
-			} else {
-				var foundEntry = _findEntryWithRow(treeViewData.entries, entry.row);
-				if (foundEntry)
-					foundEntry.state = false;
-				builder.callback('treeview', 'change', treeViewData, {row: entry.row, value: false}, builder);
-			}
+			_changeCheckboxStateOnClick(this, treeViewData, builder, entry);
 		});
 	}
 
 	return checkbox;
+}
+
+function _changeCheckboxStateOnClick(checkbox, treeViewData, builder, entry) {
+	if (checkbox.checked) {
+		var foundEntry = _findEntryWithRow(treeViewData.entries, entry.row);
+		if (foundEntry)
+			foundEntry.state = true;
+		builder.callback('treeview', 'change', treeViewData, {row: entry.row, value: true}, builder);
+	} else {
+		var foundEntry = _findEntryWithRow(treeViewData.entries, entry.row);
+		if (foundEntry)
+			foundEntry.state = false;
+		builder.callback('treeview', 'change', treeViewData, {row: entry.row, value: false}, builder);
+	}
 }
 
 function _selectEntry(span, checkbox) {
@@ -121,6 +125,10 @@ function _createClickFunction(entryClass, parentContainer, span, checkbox, selec
 			.forEach(function (item) { _unselectEntry(item); });
 
 		_selectEntry(span, checkbox);
+		if (checkbox) {
+			checkbox.checked = !checkbox.checked;
+			_changeCheckboxStateOnClick(checkbox, treeViewData, builder, entry);
+		}
 
 		if (select)
 			builder.callback('treeview', 'select', treeViewData, entry.row, builder);
