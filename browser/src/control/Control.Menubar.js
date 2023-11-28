@@ -2271,6 +2271,51 @@ L.Control.Menubar = L.Control.extend({
 		}
 	},
 
+	_getItemsForCommand: function(commandId) {
+		var items = this._getItems();
+		var found = $(items).filter(function() {
+			var item = $(this.children[0]);
+			var type = item.data('type');
+			var id = null;
+			if (type == 'unocommand') {
+				id = $(item).data('uno');
+			} else if (type == 'action') {
+				id = $(item).data('id');
+			}
+			if (id && id == commandId) {
+				return true;
+			}
+			return false;
+		});
+		return found.length ? found : null;
+	},
+
+	hideUnoItem: function(targetId) {
+		var items = this._getItemsForCommand(targetId);
+		var menubar = this;
+		if (items) {
+			$(items).each(function() {
+				if ($.inArray(this.id, menubar._hiddenItems) == -1) {
+					menubar._hiddenItems.push(this.id);
+				}
+			});
+			$(items).css('display', 'none');
+		}
+	},
+
+	showUnoItem: function(targetId) {
+		var items = this._getItemsForCommand(targetId);
+		var menubar = this;
+		if (items) {
+			$(items).each(function() {
+				if ($.inArray(this.id, menubar._hiddenItems) !== -1) {
+					menubar._hiddenItems.splice(menubar._hiddenItems.indexOf(this.id), 1);
+				}
+			});
+			$(items).css('display', '');
+		}
+	},
+
 	_initializeMenu: function(menu) {
 		this._isFileODF = L.LOUtil.isFileODF(this._map);
 		var menuHtml = this._createMenu(menu);

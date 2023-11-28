@@ -282,6 +282,17 @@ L.Control.Notebookbar = L.Control.extend({
 
 		for (var j in toolitems) {
 			item = toolitems[j];
+			var hidden = false;
+			var commands = this.map._extractCommand(item);
+			commands.forEach(function(command) {
+				if (!this.map.uiManager.isCommandVisible(command)) {
+					toolitems.splice(j, 1);
+					hidden = true;
+				}
+			}.bind(this));
+			if (hidden) {
+				break;
+			}
 			if (!this.map.uiManager.isButtonVisible(item.id)) {
 				toolitems.splice(j, 1);
 				break;
@@ -325,6 +336,21 @@ L.Control.Notebookbar = L.Control.extend({
 
 	showNotebookbarButton: function(buttonId, show) {
 		var button = $('.notebookbar-scroll-wrapper #' + buttonId);
+		if (show) {
+			button.show();
+		} else {
+			button.hide();
+		}
+	},
+
+        showNotebookbarCommand: function(commandId, show) {
+		var cssClass;
+		if (commandId.indexOf('.uno:') == 0) {
+			cssClass = 'uno' + commandId.substring(5);
+		} else {
+			cssClass = commandId;
+		}
+		var button = $('.notebookbar-scroll-wrapper div.' + cssClass);
 		if (show) {
 			button.show();
 		} else {

@@ -274,6 +274,20 @@ L.Map.WOPI = L.Handler.extend({
 			this._map.uiManager.showButton(msg.Values.id, show);
 			return;
 		}
+		else if (msg.MessageId === 'Show_Command' || msg.MessageId === 'Hide_Command') {
+			if (!msg.Values) {
+				window.app.console.error('Property "Values" not set');
+				return;
+			}
+
+			if (!msg.Values.id) {
+				window.app.console.error('Property "Values.id" not set');
+				return;
+			}
+			var show = msg.MessageId === 'Show_Command';
+			this._map.uiManager.showCommand(msg.Values.id, show);
+			return;
+		}
 		else if (msg.MessageId === 'Remove_Statusbar_Element') {
 			if (!msg.Values) {
 				window.app.console.error('Property "Values" not set');
