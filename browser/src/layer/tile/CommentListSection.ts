@@ -234,8 +234,8 @@ export class CommentSection extends CanvasSectionObject {
 		var openArray = [];
 
 		for (var i = 0; i < this.sectionProperties.commentList.length; i++) {
-			openArray.push(this.sectionProperties.commentList[i]);
-			if (this.sectionProperties.commentList[i].sectionProperties.data.parentId === '0') {
+			if (this.sectionProperties.commentList[i].sectionProperties.data.parent === '0') {
+				openArray.push(this.sectionProperties.commentList[i]);
 				if (this.sectionProperties.commentList[i].sectionProperties.children.length > 0)
 					this.getChildren(this.sectionProperties.commentList[i], openArray);
 			}
@@ -1123,10 +1123,20 @@ export class CommentSection extends CanvasSectionObject {
 	public adjustParentRemove (comment: any): void {
 		var parentIdx = this.getIndexOf(comment.sectionProperties.data.parent);
 
+		// If a child comment is removed.
 		var parentComment = this.sectionProperties.commentList[parentIdx];
-		if (parentComment && parentComment.sectionProperties.children.includes(comment.sectionProperties.data.id)) {
-			var index = parentComment.sectionProperties.children.indexOf(comment.sectionProperties.data.id);
+		if (parentComment && parentComment.sectionProperties.children.includes(comment)) {
+			var index = parentComment.sectionProperties.children.indexOf(comment);
 			parentComment.sectionProperties.children.splice(index, 1);
+		}
+
+		// If a parent comment is removed.
+		for (var i = 0; i < comment.sectionProperties.children.length; i++) {
+			if (comment.sectionProperties.children[i]) {
+				comment.sectionProperties.children[i].sectionProperties.data.parent = '0';
+				if (this.sectionProperties.docLayer._docType === 'text')
+					comment.sectionProperties.children[i].sectionProperties.data.parentId = '0';
+			}
 		}
 	}
 
@@ -1141,7 +1151,7 @@ export class CommentSection extends CanvasSectionObject {
 
 		if (!changetrack && obj.comment.parent === undefined) {
 			if (obj.comment.parentId)
-				obj.comment.parent = obj.comment.parentId;
+				obj.comment.parent = String(obj.comment.parentId);
 			else
 				obj.comment.parent = '0';
 		}
@@ -1677,14 +1687,18 @@ export class CommentSection extends CanvasSectionObject {
 	// Returns the sub-root comment index of given id
 	private getSubRootIndexOf (id: any): number {
 		var index = this.getIndexOf(id);
-		var comment = this.sectionProperties.commentList[index];
-		var parentId = comment.sectionProperties.data.parent;
 
-		while (index >= 0) {
-			if (this.sectionProperties.commentList[index].sectionProperties.data.id !== parentId && this.sectionProperties.commentList[index].sectionProperties.data.parent !== '0')
-				index--;
-			else
-				break;
+		if (index !== -1)
+		{
+			var comment = this.sectionProperties.commentList[index];
+			var parentId = comment.sectionProperties.data.parent;
+
+			while (index >= 0) {
+				if (this.sectionProperties.commentList[index].sectionProperties.data.id !== parentId && this.sectionProperties.commentList[index].sectionProperties.data.parent !== '0')
+					index--;
+				else
+					break;
+			}
 		}
 
 		return index;
