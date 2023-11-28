@@ -18,6 +18,7 @@ L.Control.UIManager = L.Control.extend({
 	busyPopupTimer: null,
 	customButtons: [], // added by WOPI InsertButton
 	hiddenButtons: {},
+	hiddenCommands: {},
 	previousTheme: null,
 
 	onAdd: function (map) {
@@ -670,6 +671,62 @@ L.Control.UIManager = L.Control.extend({
 
 	isButtonVisible: function(buttonId) {
 		return !(buttonId in this.hiddenButtons);
+	},
+
+	// Commands
+
+	showCommandInMenubar: function(command, show) {
+		var menubar = this._map.menubar;
+		if (show) {
+			menubar.showUnoItem(command);
+		} else {
+			menubar.hideUnoItem(command);
+		}
+	},
+
+	showCommandInClassicToolbar: function(command, show) {
+		var toolbars = [w2ui['toolbar-up'], w2ui['actionbar'], w2ui['editbar']];
+		var found = false;
+
+		toolbars.forEach(function(toolbar) {
+			if (!toolbar)
+				return;
+			toolbar.items.forEach(function(item) {
+				var commands = this.map._extractCommand(item);
+				if (commands.indexOf(command) != -1) {
+					found = true;
+					if (show) {
+						toolbar.show(item.id);
+					} else {
+						toolbar.hide(item.id);
+					}
+				}
+			}.bind(this));
+		}.bind(this));
+
+		if (!found) {
+			window.app.console.error('Toolbar item with command "' + command + '" not found.');
+			return;
+		}
+	},
+
+	showCommand: function(command, show) {
+		if (show) {
+			delete this.hiddenCommands[command];
+		} else {
+			this.hiddenCommands[command] = true;
+		}
+		if (!this.notebookbar) {
+			this.showCommandInClassicToolbar(command, show);
+			this.showCommandInMenubar(command, show);
+		} else {
+			this.notebookbar.reloadShortcutsBar();
+			this.notebookbar.showNotebookbarCommand(command, show);
+		}
+	},
+
+	isCommandVisible: function(command) {
+		return !(command in this.hiddenCommands);
 	},
 
 	// Menubar
