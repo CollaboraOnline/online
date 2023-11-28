@@ -1228,6 +1228,7 @@ export class Comment extends CanvasSectionObject {
 		this.show();
 
 		if (this.isRootComment() || this.sectionProperties.docLayer._docType === 'presentation' || this.sectionProperties.docLayer._docType === 'drawing') {
+			this.sectionProperties.container.style.display = '';
 			this.sectionProperties.container.style.visibility = 'hidden';
 
 			if (this.sectionProperties.docLayer._docType === 'text') {
