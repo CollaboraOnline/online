@@ -234,7 +234,7 @@ export class CommentSection extends CanvasSectionObject {
 		var openArray = [];
 
 		for (var i = 0; i < this.sectionProperties.commentList.length; i++) {
-			if (this.sectionProperties.commentList[i].sectionProperties.data.parent === '0') {
+			if (this.sectionProperties.commentList[i].isRootComment()) {
 				openArray.push(this.sectionProperties.commentList[i]);
 				if (this.sectionProperties.commentList[i].sectionProperties.children.length > 0)
 					this.getChildren(this.sectionProperties.commentList[i], openArray);
@@ -254,7 +254,7 @@ export class CommentSection extends CanvasSectionObject {
 		}
 
 		for (var i = 0; i < commentList.length; i++) {
-			if (commentList[i].sectionProperties.data.parent === '0' || commentList[i].sectionProperties.data.trackchange) {
+			if (commentList[i].isRootComment() || commentList[i].sectionProperties.data.trackchange) {
 				var commentThread = [];
 				do {
 					comment = {
@@ -464,7 +464,7 @@ export class CommentSection extends CanvasSectionObject {
 		while (true && lastChild >= 0) {
 			commentList[lastChild].highlight();
 
-			if (commentList[lastChild].sectionProperties.data.parent === '0')
+			if (commentList[lastChild].isRootComment())
 				break;
 
 			lastChild = this.getIndexOf(commentList[lastChild].sectionProperties.data.parent);
@@ -1085,22 +1085,21 @@ export class CommentSection extends CanvasSectionObject {
 
 	// Adjust parent-child relationship, if required, after `comment` is removed
 	public adjustParentRemove (comment: any): void {
-		var parentIdx = this.getIndexOf(comment.sectionProperties.data.parent);
+		var parentIdx = this.getIndexOf(comment.getParentCommentId());
 
 		// If a child comment is removed.
 		var parentComment = this.sectionProperties.commentList[parentIdx];
-		if (parentComment && parentComment.sectionProperties.children.includes(comment)) {
-			var index = parentComment.sectionProperties.children.indexOf(comment);
-			parentComment.sectionProperties.children.splice(index, 1);
+		if (parentComment) {
+			var index = parentComment.getIndexOfChild(comment);
+			if (index >= 0)
+				parentComment.removeChildByIndex(index); // Removed comment has a parent. Remove the comment also from its parent's list.
 		}
 
 		// If a parent comment is removed.
-		for (var i = 0; i < comment.sectionProperties.children.length; i++) {
-			if (comment.sectionProperties.children[i]) {
-				comment.sectionProperties.children[i].sectionProperties.data.parent = '0';
-				if (this.sectionProperties.docLayer._docType === 'text')
-					comment.sectionProperties.children[i].sectionProperties.data.parentId = '0';
-			}
+		for (var i = 0; i < comment.getChildrenLength(); i++) { // Loop over removed comment's children.
+			var childComment = comment.getChildByIndex(i);
+			if (childComment)
+				childComment.setAsRootComment(); // The children have no parent comment any more.
 		}
 	}
 
@@ -1609,7 +1608,7 @@ export class CommentSection extends CanvasSectionObject {
 			var comment = this.sectionProperties.commentList[i];
 			var replyCount = 0;
 
-			if (comment && comment.sectionProperties.data.parent === '0') {
+			if (comment && comment.isRootComment()) {
 				var lastIndex = this.getLastChildIndexOf(comment.sectionProperties.data.id);
 				var j = i;
 				while (this.sectionProperties.commentList[j] && j <= lastIndex) {
@@ -1776,7 +1775,7 @@ export class CommentSection extends CanvasSectionObject {
 		for (var i = 0; i < this.sectionProperties.commentList.length; i++) {
 			var comment = this.sectionProperties.commentList[i];
 
-			if (comment.sectionProperties.data.parent === '0') {
+			if (comment.isRootComment()) {
 				newOrder.push(comment);
 
 				if (comment.sectionProperties.children.length > 0)

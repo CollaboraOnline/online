@@ -1199,8 +1199,41 @@ export class Comment extends CanvasSectionObject {
 		}
 	}
 
-	private isRootComment() {
+	public isRootComment() {
 		return this.sectionProperties.data.parent === '0';
+	}
+
+	public setAsRootComment() {
+		this.sectionProperties.data.parent = '0';
+		if (this.sectionProperties.docLayer._docType === 'text')
+			this.sectionProperties.data.parentId = '0';
+	}
+
+	public getChildrenLength() {
+		return this.sectionProperties.children.length;
+	}
+
+	public getChildByIndex(index: number) {
+		if (this.sectionProperties.children.length > index)
+			return this.sectionProperties.children[index];
+		else
+			return null;
+	}
+
+	public removeChildByIndex(index: number) {
+		if (this.sectionProperties.children.length > index)
+			this.sectionProperties.children.splice(index, 1);
+	}
+
+	public getParentCommentId() {
+		if (this.sectionProperties.data.parent && this.sectionProperties.data.parent !== '0')
+			return this.sectionProperties.data.parent;
+		else
+			return null;
+	}
+
+	public getIndexOfChild(comment: Comment) {
+		return this.sectionProperties.children.indexOf(comment);
 	}
 
 	public setCollapsed(): void {
