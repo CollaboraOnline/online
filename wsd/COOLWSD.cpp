@@ -133,7 +133,7 @@ using Poco::Net::PartHandler;
 #include <common/JsonUtil.hpp>
 #include <common/FileUtil.hpp>
 #include <common/JailUtil.hpp>
-#if defined KIT_IN_PROCESS || MOBILEAPP
+#if MOBILEAPP
 #  include <Kit.hpp>
 #endif
 #include <Log.hpp>
@@ -334,31 +334,6 @@ void COOLWSD::writeTraceEventRecording(const std::string &recording)
 {
     writeTraceEventRecording(recording.data(), recording.length());
 }
-
-#if !LIBFUZZER
-// FIXME: Somewhat idiotically, the parameter to emitOneRecordingIfEnabled() should end with a
-// newline, while the paramter to emitOneRecording() should not.
-
-void TraceEvent::emitOneRecordingIfEnabled(const std::string &recording)
-{
-    if (COOLWSD::TraceEventFile == NULL)
-        return;
-
-    COOLWSD::writeTraceEventRecording(recording);
-}
-
-void TraceEvent::emitOneRecording(const std::string &recording)
-{
-    if (COOLWSD::TraceEventFile == NULL)
-        return;
-
-    if (!TraceEvent::isRecordingOn())
-        return;
-
-    COOLWSD::writeTraceEventRecording(recording + "\n");
-}
-
-#endif //!LIBFUZZER
 
 void COOLWSD::checkSessionLimitsAndWarnClients()
 {
@@ -3387,9 +3362,6 @@ void PrisonPoll::wakeupHook()
 
 bool COOLWSD::createForKit()
 {
-#if defined KIT_IN_PROCESS
-    return true;
-#else
     LOG_INF("Creating new forkit process.");
 
     // Creating a new forkit is always a slow process.
@@ -3477,6 +3449,8 @@ bool COOLWSD::createForKit()
     // Always reap first, in case we haven't done so yet.
     if (ForKitProcId != -1)
     {
+        if (Util::isKitInProcess())
+            return true;
         int status;
         waitpid(ForKitProcId, &status, WUNTRACED | WNOHANG);
         ForKitProcId = -1;
@@ -3493,7 +3467,7 @@ bool COOLWSD::createForKit()
     LOG_INF("Launching forkit process: " << forKitPath << ' ' << args.cat(' ', 0));
 
     LastForkRequestTime = std::chrono::steady_clock::now();
-    int child = Util::spawnProcess(forKitPath, args);
+    int child = createForkit(forKitPath, args);
     ForKitProcId = child;
 
     LOG_INF("Forkit process launched: " << ForKitProcId);
@@ -3506,7 +3480,6 @@ bool COOLWSD::createForKit()
         rebalanceChildren(balance);
 
     return ForKitProcId != -1;
-#endif
 }
 
 void COOLWSD::sendMessageToForKit(const std::string& message)

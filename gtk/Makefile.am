@@ -44,6 +44,7 @@ wsd_sources = ../wsd/ClientSession.cpp \
               ../wsd/COOLWSD.cpp \
               ../wsd/RequestDetails.cpp \
               ../wsd/Storage.cpp \
-              ../wsd/TileCache.cpp
+              ../wsd/TileCache.cpp \
+              ../wsd/coolwsd-fork.cpp
 
 mobile_SOURCES = mobile.cpp $(common_sources) $(kit_sources) $(net_sources) $(wsd_sources)

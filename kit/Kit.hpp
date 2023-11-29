@@ -151,6 +151,9 @@ void forkLibreOfficeKit(const std::string& childRoot,
                         const std::string& loTemplate,
                         int limit = 0);
 
+/// main function of the forkit process or thread
+int forkit_main(int argc, char** argv);
+
 /// Anonymize the basename of filenames, preserving the path and extension.
 std::string anonymizeUrl(const std::string& url);
 

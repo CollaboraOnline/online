@@ -646,4 +646,8 @@ public:
 #endif
 };
 
+#if !MOBILEAPP
+int createForkit(const std::string& forKitPath, const StringVector& args);
+#endif
+
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
