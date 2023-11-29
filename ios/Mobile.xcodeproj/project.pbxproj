@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1FCFA28A2B2AF13F007EE2DF /* coolwsd-fork.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1FCFA2892B2AF13C007EE2DF /* coolwsd-fork.cpp */; };
 		3F3B54DD2A3928D100063C01 /* HttpRequest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F3B54DB2A39288500063C01 /* HttpRequest.cpp */; };
 		3F3B54E02A392CCB00063C01 /* NetUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F3B54DE2A392C9C00063C01 /* NetUtil.cpp */; };
 		A5C2FA5A2AC1BB3900265946 /* Simd.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5C2FA592AC1BB3800265946 /* Simd.cpp */; };
@@ -80,6 +81,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1FCFA2892B2AF13C007EE2DF /* coolwsd-fork.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "coolwsd-fork.cpp"; sourceTree = "<group>"; };
 		3F3B54DB2A39288500063C01 /* HttpRequest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HttpRequest.cpp; sourceTree = "<group>"; };
 		3F3B54DC2A39288500063C01 /* HttpRequest.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = HttpRequest.hpp; sourceTree = "<group>"; };
 		3F3B54DE2A392C9C00063C01 /* NetUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NetUtil.cpp; sourceTree = "<group>"; };
@@ -2203,6 +2205,7 @@
 		BE5EB5B7213FE21600E0826C /* wsd */ = {
 			isa = PBXGroup;
 			children = (
+				1FCFA2892B2AF13C007EE2DF /* coolwsd-fork.cpp */,
 				BEBF3EAF246EB1C800415E87 /* RequestDetails.cpp */,
 				BEBF3EAE246EB1C800415E87 /* RequestDetails.hpp */,
 				BE5EB5CC213FE2D000E0826C /* ClientSession.cpp */,
@@ -3653,6 +3656,7 @@
 				BEA28360214ACA8500848631 /* FakeSocket.cpp in Sources */,
 				BE80E45821B68F5700859C97 /* TemplateCollectionViewController.mm in Sources */,
 				BE8D77352136762500AC58EA /* CODocument.mm in Sources */,
+				1FCFA28A2B2AF13F007EE2DF /* coolwsd-fork.cpp in Sources */,
 				BE5EB5C7213FE29900E0826C /* Protocol.cpp in Sources */,
 				BE8D772F2136762500AC58EA /* DocumentBrowserViewController.mm in Sources */,
 				BE9ADE3F265D046600BC034A /* TraceEvent.cpp in Sources */,

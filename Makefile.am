@@ -147,7 +147,8 @@ coolwsd_sources = common/Crypto.cpp \
                   wsd/WopiProxy.cpp
 
 coolwsd_SOURCES = $(coolwsd_sources) \
-                  $(shared_sources)
+                  $(shared_sources) \
+                  wsd/coolwsd-fork.cpp
 
 EXTRA_coolwsd_DEPENDENCIES = browser/node_modules
 
@@ -189,7 +190,8 @@ coolforkit_sources = kit/ChildSession.cpp \
                      kit/Kit.cpp
 
 coolforkit_SOURCES = $(coolforkit_sources) \
-                     $(shared_sources)
+                     $(shared_sources) \
+                     kit/forkit-main.cpp
 
 coolforkit_LDADD = libsimd.a
 
@@ -200,6 +202,7 @@ coolforkit_SOURCES += \
 common_fuzzer_sources = \
 		       common/DummyTraceEventEmitter.cpp \
 		       $(coolwsd_sources) \
+		       wsd/coolwsd-inproc.cpp \
 		       $(coolforkit_sources) \
 		       $(shared_sources)
 
