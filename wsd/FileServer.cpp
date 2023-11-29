@@ -711,6 +711,8 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
                         << "compressed : file [" << relPath << "]: " << response.header());
 
             socket->send(response);
+            if (content->size() > 50L * 1024 * 1024)
+                LOG_WRN("Serving oversized file: " << relPath << " which is larger than the typical browser 50M max file cache size");
             socket->send(*content);
             // shutdown by caller
         }
