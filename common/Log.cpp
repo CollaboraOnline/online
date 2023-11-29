@@ -611,8 +611,9 @@ namespace Log
     void shutdown()
     {
 #if !MOBILEAPP
-        assert(ThreadLocalBufferCount <= 1 &&
-               "Unstopped threads may have unflushed buffered log entries");
+        if (!Util::isKitInProcess())
+            assert(ThreadLocalBufferCount <= 1 &&
+                   "Unstopped threads may have unflushed buffered log entries");
 
         IsShutdown = true;
 
