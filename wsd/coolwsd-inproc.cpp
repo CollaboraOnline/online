@@ -15,5 +15,22 @@
 int createForkit(const std::string& forKitPath, const StringVector& args)
 {
     // create forkit in a thread
+    int argc = args.size() + 1;
+    char** argv = new char*[argc];
+
+    argv[0] = new char[forKitPath.size() + 1];
+    std::strcpy(argv[0], forKitPath.c_str());
+    for (size_t i = 0; i < args.size(); ++i)
+    {
+        argv[i + 1] = new char[args[i].size() + 1];
+        std::strcpy(argv[i + 1], args[i].c_str());
+    }
+
+    std::thread([argc, argv] {
+        Util::setThreadName("forkit");
+        forkit_main(argc, argv);
+    })
+        .detach();
+
     return 0;
 }
