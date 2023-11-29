@@ -39,6 +39,12 @@ function _drawingAreaControl (parentContainer, data, builder) {
 	image.ondragstart = function() { return false; };
 	builder.map.uiManager.enableTooltip(image);
 
+	// If the image render is delayed, use width and height of the data
+	if (image.width == 0 && image.height == 0) {
+		image.width = data.imagewidth;
+		image.height = data.imageheight;
+	}
+
 	if (data.loading && data.loading === 'true') {
 		var loaderContainer = L.DomUtil.create('div', 'ui-drawing-area-loader-container', container);
 		L.DomUtil.create('div', 'ui-drawing-area-loader', loaderContainer);
