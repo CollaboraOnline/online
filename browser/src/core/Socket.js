@@ -40,6 +40,9 @@ app.definitions.Socket = L.Class.extend({
 
 	connect: function(socket) {
 		var map = this._map;
+		if (map.options.docParams == null) {
+			map.options.docParams = {}
+		}
 		map.options.docParams['permission'] = app.file.permission;
 		if (this.socket) {
 			this.close();
