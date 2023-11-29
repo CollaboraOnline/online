@@ -145,11 +145,9 @@ private:
 enum class DocumentPasswordType { ToView, ToModify };
 
 /// Check the ForkCounter, and if non-zero, fork more of them accordingly.
-/// @param limit If non-zero, set the ForkCounter to this limit.
 void forkLibreOfficeKit(const std::string& childRoot,
                         const std::string& sysTemplate,
-                        const std::string& loTemplate,
-                        int limit = 0);
+                        const std::string& loTemplate);
 
 /// main function of the forkit process or thread
 int forkit_main(int argc, char** argv);

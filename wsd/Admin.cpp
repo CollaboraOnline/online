@@ -913,6 +913,9 @@ void Admin::cleanupResourceConsumingDocs()
 
 void Admin::cleanupLostKits()
 {
+    if (Util::isKitInProcess())
+        return; // we might look lost ourselves.
+
     static std::map<pid_t, std::time_t> mapKitsLost;
     std::set<pid_t> internalKitPids;
     std::vector<int> kitPids;
