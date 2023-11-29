@@ -3045,14 +3045,29 @@ void lokit_main(
             LOG_WRN("Security warning: running without chroot jails is insecure.");
             LOG_INF("Using template ["
                     << loTemplate << "] as install subpath directly, without chroot jail setup.");
-            userdir_url = "file:///" + jailPathStr + "/tmp/user";
+            userdir_url = "file://" + jailPathStr + "tmp/user";
             instdir_path = '/' + loTemplate + "/program";
-            allowedPaths += ":r:/" + loTemplate;
+            allowedPaths += ":r:" + loTemplate;
             JailRoot = jailPathStr;
 
-            std::string tmpPath = jailPathStr + "/tmp";
+            std::string tmpPath = jailPathStr + "tmp";
             ::setenv("TMPDIR", tmpPath.c_str(), 1);
             allowedPaths += ":w:" + tmpPath;
+            LOG_DBG("Using tmpdir [" << tmpPath << "]");
+
+            // used by LO Migration::migrateSettingsIfNecessary() in startup code as config dir
+            ::setenv("XDG_CONFIG_HOME", (tmpPath + "/.config").c_str(), 1);
+            ::setenv("HOME", tmpPath.c_str(), 1);
+            // overwrite coolkitconfig.xcu setting to fit into allowed paths
+            ::setenv("LOK_WORKDIR", ("file://" + tmpPath).c_str(), 1);
+
+            // Setup the OSL sandbox
+            allowedPaths += ":r:" + pathFromFileURL(userdir_url);
+            ::setenv("SAL_ALLOWED_PATHS", allowedPaths.c_str(), 1);
+
+#if ENABLE_DEBUG
+            ::setenv("SAL_ABORT_ON_FORBIDDEN", "1", 1);
+#endif
         }
 
         LOG_DBG("Initializing LOK with instdir [" << instdir_path << "] and userdir ["
@@ -3060,10 +3075,6 @@ void lokit_main(
 
         UserDirPath = pathFromFileURL(userdir_url);
         InstDirPath = instdir_path;
-
-        // Setup the OSL sandbox
-        allowedPaths += ":r:" + UserDirPath;
-        ::setenv("SAL_ALLOWED_PATHS", allowedPaths.c_str(), 1);
 
         LibreOfficeKit *kit;
         {
