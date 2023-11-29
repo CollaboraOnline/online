@@ -197,7 +197,7 @@ namespace Util
 
     bool windowingAvailable();
 
-#if !defined(BUILDING_TESTS) && !defined(KIT_IN_PROCESS) && !MOBILEAPP
+#if !defined(BUILDING_TESTS) && !MOBILEAPP
 
     /// Send a message to all clients.
     void alertAllUsers(const std::string& msg);
@@ -1316,6 +1316,7 @@ int main(int argc, char**argv)
      */
     bool isFuzzing();
 
+    void setKitInProcess(bool value);
     bool isKitInProcess();
 
     /**

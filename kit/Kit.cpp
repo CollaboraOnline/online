@@ -2082,7 +2082,10 @@ private:
     {
         flushTraceEventRecordings();
         _pngPool.stop();
-        Util::forcedExit(code);
+        if (!Util::isKitInProcess())
+            Util::forcedExit(code);
+        else
+            SigUtil::setTerminationFlag();
     }
 #endif
 
@@ -2616,7 +2619,10 @@ protected:
             LOG_INF("Terminating immediately due to parent 'exit' command.");
             flushTraceEventRecordings();
             _document.reset();
-            Util::forcedExit(EX_OK);
+            if (!Util::isKitInProcess())
+                Util::forcedExit(EX_OK);
+            else
+                SigUtil::setTerminationFlag();
 #else
 #ifdef IOS
             LOG_INF("Setting our KitSocketPoll's termination flag due to 'exit' command.");
@@ -2825,8 +2831,12 @@ void lokit_main(
 {
 #if !MOBILEAPP
 
-    SigUtil::setFatalSignals("kit startup of " COOLWSD_VERSION " " COOLWSD_VERSION_HASH);
-    SigUtil::setUserSignals();
+    if (!Util::isKitInProcess())
+    {
+        // Already set by COOLWSD.cpp
+        SigUtil::setFatalSignals("kit startup of " COOLWSD_VERSION " " COOLWSD_VERSION_HASH);
+        SigUtil::setUserSignals();
+    }
 
     Util::setThreadName("kit_spare_" + Util::encodeId(numericIdentifier, 3));
 
@@ -3077,15 +3087,12 @@ void lokit_main(
         UserDirPath = pathFromFileURL(userdir_url);
         InstDirPath = instdir_path;
 
-        LibreOfficeKit *kit;
+        LibreOfficeKit* kit = nullptr;
         {
             const char *instdir = instdir_path.c_str();
             const char *userdir = userdir_url.c_str();
-#ifndef KIT_IN_PROCESS
-            kit = UnitKit::get().lok_init(instdir, userdir);
-#else
-            kit = nullptr;
-#endif
+            if (!Util::isKitInProcess())
+                kit = UnitKit::get().lok_init(instdir, userdir);
             if (!kit)
             {
                 kit = (initFunction ? initFunction(instdir, userdir)
@@ -3286,7 +3293,8 @@ void lokit_main(
     flushTraceEventRecordings();
     // Wait for the signal handler, if invoked, to prevent exiting until done.
     SigUtil::waitSigHandlerTrap();
-    Util::forcedExit(EX_OK);
+    if (!Util::isKitInProcess())
+        Util::forcedExit(EX_OK);
 
 #endif
 }

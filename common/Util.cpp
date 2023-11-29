@@ -325,15 +325,9 @@ namespace Util
         return std::getenv("DISPLAY") != nullptr;
     }
 
-
-    bool isKitInProcess()
-    {
-#ifdef KIT_IN_PROCESS
-        return true;
-#else
-        return false;
-#endif
-    }
+    bool kitInProcess = false;
+    void setKitInProcess(bool value) { kitInProcess = value; }
+    bool isKitInProcess() { return kitInProcess || isFuzzing(); }
 
 #if !MOBILEAPP
 

@@ -53,15 +53,10 @@
 #include <common/ConfigUtil.hpp>
 #include <kit/DeltaSimd.h>
 
-#ifndef KIT_IN_PROCESS
 static bool NoCapsForKit = false;
 static bool NoSeccomp = false;
 #if ENABLE_DEBUG
 static bool SingleKit = false;
-#endif
-#else
-static const bool NoCapsForKit = true; // NoCaps for in-process kit.
-static const bool NoSeccomp = true; // NoSeccomp for in-process kit.
 #endif
 
 static std::string UserInterface;
@@ -87,12 +82,10 @@ void dump_forkit_state()
         << "  LogLevel: " << LogLevel << "\n"
         << "  LogLevelStartup: " << LogLevelStartup << "\n"
         << "  unit test: " << UnitTestLibrary << "\n"
-#ifndef KIT_IN_PROCESS
         << "  NoCapsForKit: " << NoCapsForKit << "\n"
         << "  NoSeccomp: " << NoSeccomp << "\n"
-#  if ENABLE_DEBUG
+#if ENABLE_DEBUG
         << "  SingleKit: " << SingleKit << "\n"
-#  endif
 #endif
         << "  ClientPortNumber: " << ClientPortNumber << "\n"
         << "  MasterLocation: " << MasterLocation
@@ -200,7 +193,6 @@ protected:
     }
 };
 
-#ifndef KIT_IN_PROCESS
 #ifndef __FreeBSD__
 static bool haveCapability(cap_value_t capability)
 {
@@ -279,11 +271,13 @@ static bool haveCorrectCapabilities()
     return getuid() == 0;
 }
 #endif // __FreeBSD__
-#endif
 
 /// Check if some previously forked kids have died.
 static void cleanupChildren()
 {
+    if (Util::isKitInProcess())
+        return;
+
     pid_t exitedChildPid;
     int status = 0;
     int segFaultCount = 0;
@@ -338,11 +332,6 @@ static void cleanupChildren()
 
     if (segFaultCount)
     {
-#ifdef KIT_IN_PROCESS
-#if !MOBILEAPP
-        Admin::instance().addSegFaultCount(segFaultCount);
-#endif
-#else
         if (WSHandler)
         {
             std::stringstream stream;
@@ -357,7 +346,6 @@ static void cleanupChildren()
                 LOG_WRN("Successfully sent 'segfaultcount' message " << stream.str());
             }
         }
-#endif
     }
 
     // Now delete the jails.
@@ -471,16 +459,10 @@ static int createLibreOfficeKit(const std::string& childRoot,
 
 void forkLibreOfficeKit(const std::string& childRoot,
                         const std::string& sysTemplate,
-                        const std::string& loTemplate,
-                        int limit)
+                        const std::string& loTemplate)
 {
-    LOG_TRC("forkLibreOfficeKit limit: " << limit);
-
     // Cleanup first, to reduce disk load.
     cleanupChildren();
-
-    if (Util::isKitInProcess() && limit > 0)
-        ForkCounter = limit;
 
     if (ForkCounter > 0)
     {
@@ -576,12 +558,26 @@ int forkit_main(int argc, char** argv)
         }
     }
 
-    SigUtil::setFatalSignals("forkit startup of " COOLWSD_VERSION " " COOLWSD_VERSION_HASH);
+    if (!Util::isKitInProcess())
+    {
+        // Already set by COOLWSD.cpp in kit in process
+        SigUtil::setFatalSignals("forkit startup of " COOLWSD_VERSION " " COOLWSD_VERSION_HASH);
+    }
+    else
+    {
+        // No capabilities by default for kit in process
+        NoCapsForKit = true;
+        NoSeccomp = true;
+#if ENABLE_DEBUG
+        SingleKit = true;
+#endif
+    }
 
     if (simd::init())
         simd_deltaInit();
 
-    Util::setApplicationPath(Poco::Path(argv[0]).parent().toString());
+    if (!Util::isKitInProcess())
+        Util::setApplicationPath(Poco::Path(argv[0]).parent().toString());
 
     // Initialization
     const bool logToFile = std::getenv("COOL_LOGFILE");
@@ -708,7 +704,7 @@ int forkit_main(int argc, char** argv)
         return EX_USAGE;
     }
 
-    if (!UnitBase::init(UnitBase::UnitType::Kit, UnitTestLibrary))
+    if (!Util::isKitInProcess() && !UnitBase::init(UnitBase::UnitType::Kit, UnitTestLibrary))
     {
         LOG_FTL("Failed to load kit unit test library");
         return EX_USAGE;
@@ -744,10 +740,13 @@ int forkit_main(int argc, char** argv)
     JailUtil::SysTemplate::setupRandomDeviceLinks(sysTemplate);
 
 #if !MOBILEAPP
-    // Parse the configuration.
-    const auto conf = std::getenv("COOL_CONFIG");
-    config::initialize(std::string(conf ? conf : std::string()));
-    EnableExperimental = config::getBool("experimental_features", false);
+    if (!Util::isKitInProcess())
+    {
+        // Parse the configuration.
+        const auto conf = std::getenv("COOL_CONFIG");
+        config::initialize(std::string(conf ? conf : std::string()));
+        EnableExperimental = config::getBool("experimental_features", false);
+    }
 #endif
 
     Util::setThreadName("forkit");
@@ -808,7 +807,8 @@ int forkit_main(int argc, char** argv)
 #if ENABLE_DEBUG
         if (!SingleKit)
 #endif
-            forkLibreOfficeKit(childRoot, sysTemplate, loTemplate);
+            if (!Util::isKitInProcess() && !SigUtil::getTerminationFlag())
+                forkLibreOfficeKit(childRoot, sysTemplate, loTemplate);
     }
 
     const int returnValue = UnitBase::uninit();
