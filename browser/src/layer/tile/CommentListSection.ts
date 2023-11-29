@@ -1074,6 +1074,7 @@ export class CommentSection extends CanvasSectionObject {
 
 		// transform change tracking index into an id
 		redline.id = 'change-' + redline.index;
+		redline.parent = '0'; // Redlines don't have parents, we need to specify this for consistency.
 		redline.anchorPos = this.stringToRectangles(redline.textRange)[0];
 		redline.anchorPix = this.numberArrayToCorePixFromTwips(redline.anchorPos, 0, 2);
 		redline.trackchange = true;
