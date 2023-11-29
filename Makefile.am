@@ -27,6 +27,9 @@ bin_PROGRAMS = \
 if ENABLE_LIBFUZZER
 else
 bin_PROGRAMS += coolwsd
+if ENABLE_DEBUG
+bin_PROGRAMS += coolwsd-inproc
+endif
 endif
 
 dist_bin_SCRIPTS = coolwsd-systemplate-setup
@@ -195,6 +198,16 @@ coolforkit_SOURCES = $(coolforkit_sources) \
 
 coolforkit_LDADD = libsimd.a
 
+if ENABLE_DEBUG
+coolwsd_inproc_SOURCES = $(coolwsd_sources) \
+                         $(shared_sources) \
+                         $(coolforkit_sources) \
+                         wsd/coolwsd-inproc.cpp
+
+coolwsd_inproc_LDADD = ${coolwsd_LDADD} \
+                       ${coolforkit_LDADD}
+endif
+
 if ENABLE_LIBFUZZER
 coolforkit_SOURCES += \
 		       common/DummyTraceEventEmitter.cpp
@@ -207,7 +220,6 @@ common_fuzzer_sources = \
 		       $(shared_sources)
 
 admin_fuzzer_CPPFLAGS = \
-			-DKIT_IN_PROCESS=1 \
 			$(AM_CPPFLAGS)
 admin_fuzzer_SOURCES = \
 		       $(common_fuzzer_sources) \
@@ -216,7 +228,6 @@ admin_fuzzer_LDFLAGS = -fsanitize=fuzzer $(AM_LDFLAGS)
 admin_fuzzer_LDADD = libsimd.a
 
 clientsession_fuzzer_CPPFLAGS = \
-				-DKIT_IN_PROCESS=1 \
 				$(AM_CPPFLAGS)
 clientsession_fuzzer_SOURCES = \
 			       $(common_fuzzer_sources) \
@@ -225,7 +236,6 @@ clientsession_fuzzer_LDFLAGS = -fsanitize=fuzzer $(AM_LDFLAGS)
 clientsession_fuzzer_LDADD = libsimd.a
 
 httpresponse_fuzzer_CPPFLAGS = \
-				-DKIT_IN_PROCESS=1 \
 				$(AM_CPPFLAGS)
 httpresponse_fuzzer_SOURCES = \
 			       $(common_fuzzer_sources) \
@@ -234,7 +244,6 @@ httpresponse_fuzzer_LDFLAGS = -fsanitize=fuzzer $(AM_LDFLAGS)
 httpresponse_fuzzer_LDADD = libsimd.a
 
 httpecho_fuzzer_CPPFLAGS = \
-				-DKIT_IN_PROCESS=1 \
 				$(AM_CPPFLAGS) \
         -I${top_srcdir}/test
 httpecho_fuzzer_SOURCES = \
@@ -500,6 +509,17 @@ run-one: setup-wsd
 			--o:security.capabilities="$(CAPABILITIES)" \
 			--o:logging.file[@enable]=true --o:logging.level=trace \
 			--singlekit
+
+run-inproc: setup-wsd
+	@echo "Launching coolwsd-inproc"
+	./coolwsd-inproc $(COMMON_PARAMS) \
+			--o:logging.file[@enable]=true --o:logging.level=trace
+
+run-massif-inproc: setup-wsd
+	@echo "Launching coolwsd under valgrind for single process"
+	valgrind --tool=massif --num-callers=64 --trace-children=no -v \
+		./coolwsd-inproc $(COMMON_PARAMS) \
+			--o:logging.file[@enable]=false --o:logging.level=trace
 endif
 
 sync-writer:
