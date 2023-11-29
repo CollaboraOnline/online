@@ -174,19 +174,16 @@
 
       function ShowMenubar(visible) {
         var messageId = visible ? 'Show_Menubar' : 'Hide_Menubar';
-        post({'MessageId': 'Host_PostmessageReady'});
         post({'MessageId': messageId});
       }
 
       function ShowRuler(visible) {
           var messageId = visible ? 'Show_Ruler' : 'Hide_Ruler';
-          post({'MessageId': 'Host_PostmessageReady'});
           post({'MessageId': messageId});
       }
 
       function ShowStatusBar(visible) {
           var messageId = visible ? 'Show_StatusBar' : 'Hide_StatusBar';
-          post({'MessageId': 'Host_PostmessageReady'});
           post({'MessageId': messageId});
       }
 
@@ -198,7 +195,6 @@
 
       function ShowNotebookbar(notebookbar) {
         var value = notebookbar ? 'notebookbar' : 'classic';
-        post({'MessageId': 'Host_PostmessageReady'});
         post({'MessageId': 'Action_ChangeUIMode',
               'Values': {'Mode': value}});
       }
