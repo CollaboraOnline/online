@@ -1169,8 +1169,9 @@ export class CommentSection extends CanvasSectionObject {
 		}
 		if (action === 'Add') {
 			if (app.view.commentAutoSave) {
-				// preserve original Id, can be used in case of reply to find parent comment, or revert the id in case comment insertion is cancelled
-				app.view.commentAutoSave.sectionProperties.data.oldId = app.view.commentAutoSave.sectionProperties.data.id;
+				// preserve the id of the root comment and use it when reply button is clicked
+				if (app.view.commentAutoSave.sectionProperties.data.reply)
+					app.view.commentAutoSave.sectionProperties.data.oldId = app.view.commentAutoSave.sectionProperties.data.id;
 				app.view.commentAutoSave.sectionProperties.data.id = obj.comment.id;
 				app.view.commentAutoSave.sectionProperties.autoSave.innerText = _('Autosaved') ;
 				app.view.commentAutoSave = null;

@@ -826,8 +826,6 @@ export class Comment extends CanvasSectionObject {
 			return;
 		if (app.view.commentAutoAdded) {
 			this.sectionProperties.commentListSection.remove(this.sectionProperties.data.id);
-			app.view.commentAutoAdded = false;
-			this.sectionProperties.data.id = this.sectionProperties.data.oldId;
 			if (this.sectionProperties.commentListSection.sectionProperties.selectedComment.sectionProperties.container.classList.contains('reply-annotation-container')) {
 				this.show();
 				return;
