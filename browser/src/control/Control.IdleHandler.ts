@@ -52,12 +52,9 @@ class IdleHandler {
 			}
 		}
 
-		var section = app.sectionContainer ?
-			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name) : null;
-		var hasActiveComment = section && section.sectionProperties.selectedComment;
-
-		if (window.mode.isDesktop() && !this.map.uiManager.isAnyDialogOpen() && !hasActiveComment)
+		if (window.mode.isDesktop() && !this.map.uiManager.isAnyDialogOpen()) {
 			this.map.focus();
+		}
 
 		return false;
 	}

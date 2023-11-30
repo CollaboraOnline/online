@@ -825,6 +825,24 @@ export class Comment extends CanvasSectionObject {
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	public onLostFocus (e: any): void {
+		if (!this.sectionProperties.isRemoved) {
+			$(this.sectionProperties.container).removeClass('annotation-active reply-annotation-container modify-annotation-container');
+			if (this.sectionProperties.contentText.origText !== this.sectionProperties.nodeModifyText.value) {
+				this.onSaveComment(e);
+			}
+			else {
+				if (!this.containerObject.testing) // eslint-disable-line no-lonely-if
+					this.onCancelClick(e);
+				else {
+					var insertButton = document.getElementById('menu-insertcomment');
+					if (insertButton) {
+						if (window.getComputedStyle(insertButton).display === 'none') {
+							this.onCancelClick(e);
+						}
+					}
+				}
+			}
+		}
 		app.view.commentHasFocus = false;
 	}
 
