@@ -729,43 +729,21 @@ export class CommentSection extends CanvasSectionObject {
 	}
 
 	public saveReply (annotation: any): void {
-		var comment;
-		if (annotation.sectionProperties.data.newReply) {
-			comment = {
-				Id: {
-					type: 'string',
-					value: annotation.sectionProperties.data.id
-				},
-				Text: {
-					type: 'string',
-					value: annotation.sectionProperties.data.reply
-				}
-			};
-			if (this.sectionProperties.docLayer._docType === 'text')
-				this.map.sendUnoCommand('.uno:ReplyComment', comment);
-			else if (this.sectionProperties.docLayer._docType === 'presentation')
-				this.map.sendUnoCommand('.uno:ReplyToAnnotation', comment);
-			annotation.sectionProperties.data.newReply = false;
-		} else {
-			comment = {
-				Id: {
-					type: 'string',
-					value: annotation.sectionProperties.data.id
-				},
-			        Author: {
-					type: 'string',
-					value: annotation.sectionProperties.data.author
-				},
-				Text: {
-					type: 'string',
-					value: annotation.sectionProperties.data.reply
-				}
-			};
-			this.map.sendUnoCommand('.uno:EditAnnotation', comment, true /* force */);
+		var comment = {
+			Id: {
+				type: 'string',
+				value: annotation.sectionProperties.data.id
+			},
+			Text: {
+				type: 'string',
+				value: annotation.sectionProperties.data.reply
+			}
+		};
 
-			if (!app.view.commentAutoSave)
-				annotation.sectionProperties.data.id = annotation.sectionProperties.data.oldId;
-		}
+		if (this.sectionProperties.docLayer._docType === 'text' || this.sectionProperties.docLayer._docType === 'spreadsheet')
+			this.map.sendUnoCommand('.uno:ReplyComment', comment);
+		else if (this.sectionProperties.docLayer._docType === 'presentation')
+			this.map.sendUnoCommand('.uno:ReplyToAnnotation', comment);
 
 		if (app.view.commentAutoSave)
 			return;
@@ -1169,9 +1147,6 @@ export class CommentSection extends CanvasSectionObject {
 		}
 		if (action === 'Add') {
 			if (app.view.commentAutoSave) {
-				// preserve the id of the root comment and use it when reply button is clicked
-				if (app.view.commentAutoSave.sectionProperties.data.reply)
-					app.view.commentAutoSave.sectionProperties.data.oldId = app.view.commentAutoSave.sectionProperties.data.id;
 				app.view.commentAutoSave.sectionProperties.data.id = obj.comment.id;
 				app.view.commentAutoSave.sectionProperties.autoSave.innerText = _('Autosaved') ;
 				app.view.commentAutoSave = null;
