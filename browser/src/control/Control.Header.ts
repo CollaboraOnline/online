@@ -606,6 +606,12 @@ export class Header extends CanvasSectionObject {
 	onNewDocumentTopLeft(): void {
 		return;
 	}
+
+	// This doesn't overlap tiles at all, so if there are tile bounds we
+	// can skip redrawing it entirely
+	shouldDrawForTileBounds (tileBounds: cool.Bounds) : boolean {
+		return tileBounds === null;
+	}
 }
 
 export interface HeaderEntryData {

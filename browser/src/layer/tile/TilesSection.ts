@@ -70,7 +70,7 @@ export class TilesSection extends CanvasSectionObject {
 		// empty: probably safe to remove this method and use parent CanvasSectionObject::onResize
 	}
 
-	paintWithPanes (tile: any, ctx: any, async: boolean, now: Date) {
+	paintWithPanes (tile: any, ctx: any, clearBackground: boolean, now: Date) {
 		var tileTopLeft = tile.coords.getPos();
 		var tileBounds = new L.Bounds(tileTopLeft, tileTopLeft.add(ctx.tileSize));
 
@@ -90,7 +90,7 @@ export class TilesSection extends CanvasSectionObject {
 				paneOffset.x = Math.min(paneOffset.x, viewBounds.min.x);
 				paneOffset.y = Math.min(paneOffset.y, viewBounds.min.y);
 
-				this.drawTileInPane(tile, tileBounds, paneBounds, paneOffset, this.context, async, now);
+				this.drawTileInPane(tile, tileBounds, paneBounds, paneOffset, this.context, clearBackground, now);
 			}
 		}
 	}
@@ -133,21 +133,6 @@ export class TilesSection extends CanvasSectionObject {
 		}
 
 		return bounds;
-	}
-
-	public clipSubsetBounds(canvasCtx: CanvasRenderingContext2D, subsetBounds: cool.Bounds): void {
-
-		var ctx = this.sectionProperties.tsManager._paintContext();
-		ctx.viewBounds.round();
-
-		canvasCtx.beginPath();
-		var rect = subsetBounds.toRectangle();
-
-		this.beforeDraw(canvasCtx);
-		canvasCtx.rect(rect[0] - ctx.viewBounds.min.x, rect[1] - ctx.viewBounds.min.y, rect[2], rect[3]);
-		this.afterDraw(canvasCtx);
-
-		canvasCtx.clip();
 	}
 
 	drawTileInPane (tile: any, tileBounds: any, paneBounds: any, paneOffset: any, canvasCtx: CanvasRenderingContext2D, clearBackground: boolean, now: Date) {
@@ -195,15 +180,14 @@ export class TilesSection extends CanvasSectionObject {
 		this.context.fillText(tile.coords.x + ' ' + tile.coords.y + ' ' + tile.coords.part, Math.round(offset.x + tileSize * 0.5), Math.round(offset.y + tileSize * 0.5));
 	}
 
-	paintSimple (tile: any, ctx: any, async: boolean, now: Date) {
+	paintSimple (tile: any, ctx: any, clearBackground: boolean, now: Date) {
 		ctx.viewBounds.round();
 		var offset = new L.Point(tile.coords.getPos().x - ctx.viewBounds.min.x, tile.coords.getPos().y - ctx.viewBounds.min.y);
 
-		if ((async || this.containerObject.isZoomChanged()) && !app.file.fileBasedView) {
+		if ((clearBackground || this.containerObject.isZoomChanged()) && !app.file.fileBasedView) {
 			// Non Calc tiles(handled by paintSimple) can have transparent pixels,
-			// so clear before paint if the call is an async one.
-			// For the full view area repaint, whole canvas is cleared by section container.
-			// Whole canvas is not cleared after zoom has changed, so clear it per tile as they arrive even if not async.
+			// Normally, for the full view area repaint, whole canvas is cleared by section container.
+			// But whole canvas is not cleared after zoom has changed, so clear it per tile as they arrive.
 			this.context.fillStyle = this.containerObject.getClearColor();
 			this.context.fillRect(offset.x, offset.y, ctx.tileSize.x, ctx.tileSize.y);
 		}
@@ -224,7 +208,7 @@ export class TilesSection extends CanvasSectionObject {
 		this.drawTileToCanvas(tile, now, this.context, offset.x, offset.y, tileSizeX, tileSizeY);
 	}
 
-	public paint (tile: any, ctx: any, async: boolean, now: Date) {
+	public paint (tile: any, ctx: any, clearBackground: boolean, now: Date) {
 		if (this.containerObject.isInZoomAnimation() || this.sectionProperties.tsManager.waitForTiles())
 			return;
 
@@ -234,9 +218,9 @@ export class TilesSection extends CanvasSectionObject {
 		this.containerObject.setPenPosition(this);
 
 		if (ctx.paneBoundsActive === true)
-			this.paintWithPanes(tile, ctx, async, now);
+			this.paintWithPanes(tile, ctx, clearBackground, now);
 		else
-			this.paintSimple(tile, ctx, async, now);
+			this.paintSimple(tile, ctx, clearBackground, now);
 	}
 
 	private forEachTileInView(zoom: number, part: number, mode: number, ctx: any,
@@ -399,10 +383,12 @@ export class TilesSection extends CanvasSectionObject {
 		// Calculate all this here intead of doing it per tile.
 		var ctx = this.sectionProperties.tsManager._paintContext();
 
+		var clearTileBackground: boolean = subsetBounds !== null;
+
 		if (this.sectionProperties.tsManager.waitForTiles()) {
 			if (!this.haveAllTilesInView(zoom, part, mode, ctx))
 				return;
-		} else if (!this.containerObject.isZoomChanged()) {
+		} else if (!this.containerObject.isZoomChanged() && !clearTileBackground) {
 			// Don't show page border and page numbers (drawn by drawPageBackgrounds) if zoom is changing
 			// after a zoom animation.
 			this.drawPageBackgrounds(ctx);
@@ -424,14 +410,17 @@ export class TilesSection extends CanvasSectionObject {
 			// Ensure tile is within document bounds.
 			if (tile && docLayer._isValidTile(coords)) {
 				if (!this.isJSDOM) { // perf-test code
+					// On redrawing just a subset of tiles the full canvas wasn't
+					// erased, which is similar to what we do for zooming. In this case
+					// explicitly clear/draw-calc-grid before each tile we need to redraw.
 					if (tile.hasContent() || debugForcePaint) { // Ensure tile is loaded
-						this.paint(tile, ctx, false /* async? */, now);
+						this.paint(tile, ctx, clearTileBackground, now);
 					}
 					else if (this.sectionProperties.docLayer._debug) {
 						// when debugging draw a checkerboard for the missing tile
 						var oldcanvas = tile.canvas;
 						tile.canvas = this.checkpattern;
-						this.paint(tile, ctx, false /* async? */, now);
+						this.paint(tile, ctx, clearTileBackground, now);
 						tile.canvas = oldcanvas;
 					}
 				}
