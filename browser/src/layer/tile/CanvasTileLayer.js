@@ -5712,6 +5712,14 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._requestNewTiles();
 
 		map.setZoom();
+
+		// This is called when page size is increased
+		// the content of the page that become visible may stay empty
+		// unless we have the tiles in the cache already
+		// This will only fetch the tiles which are invalid or does not exist
+		map.on('sizeincreased', function() {
+			this._update();
+		}.bind(this));
 	},
 
 	onRemove: function (map) {
