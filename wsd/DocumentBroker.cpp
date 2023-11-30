@@ -1717,7 +1717,11 @@ void DocumentBroker::uploadToStorageInternal(const std::shared_ptr<ClientSession
         Util::mapAnonymized(newFilename, fileId);
     }
 
-    assert(_storage && "Must have a valid Storage instance");
+    if (!_storage)
+    {
+        LOG_WRN("Expected to have a valid Storage instance, but doesn't have one");
+        return;
+    }
 
     const std::string uriAnonym = COOLWSD::anonymizeUrl(uri);
 
