@@ -708,7 +708,6 @@ export class Comment extends CanvasSectionObject {
 			this.showImpressDraw();
 		else if (this.sectionProperties.docLayer._docType === 'spreadsheet')
 			this.showCalc();
-		this.sectionProperties.autoSave.innerText = '';
 	}
 
 	private hideWriter() {
@@ -825,10 +824,8 @@ export class Comment extends CanvasSectionObject {
 			return;
 		if (app.view.commentAutoAdded) {
 			this.sectionProperties.commentListSection.remove(this.sectionProperties.data.id);
-			if (this.sectionProperties.commentListSection.sectionProperties.selectedComment.sectionProperties.container.classList.contains('reply-annotation-container')) {
+			if (this.sectionProperties.commentListSection.sectionProperties.selectedComment.sectionProperties.container.classList.contains('reply-annotation-container'))
 				this.show();
-				return;
-			}
 			else
 				this.onRemove();
 		}
