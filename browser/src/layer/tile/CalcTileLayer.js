@@ -79,14 +79,6 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			}
 		}.bind(this));
 
-		// This is called when page size is increased
-		// the content of the cells that become visible may stay empty
-		// unless we have the tiles in the cache already
-		// This will only fetch the tiles which are invalid or does not exist
-		map.on('sizeincreased', function() {
-			this._update();
-		}.bind(this));
-
 		app.sectionContainer.addSection(new app.definitions.AutoFillMarkerSection());
 
 		this.insertMode = false;
