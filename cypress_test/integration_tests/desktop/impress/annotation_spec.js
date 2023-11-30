@@ -224,7 +224,7 @@ describe(['tagdesktop'], 'Annotation Autosave Tests', function() {
 		cy.cGet('#map').focus();
 		cy.cGet('.cool-annotation-autosavelabel').should('be.visible');
 		cy.cGet('.cool-annotation-edit.modify-annotation').should('be.visible');
-		cy.cGet('#annotation-save-new').click();
+		cy.cGet('#annotation-save-1').click();
 		cy.cGet('.cool-annotation-autosavelabel').should('be.not.visible');
 		cy.cGet('.cool-annotation-edit.modify-annotation').should('be.not.visible');
 		cy.cGet('.leaflet-marker-icon').should('exist');
@@ -242,7 +242,7 @@ describe(['tagdesktop'], 'Annotation Autosave Tests', function() {
 		cy.cGet('#map').focus();
 		cy.cGet('.cool-annotation-autosavelabel').should('be.visible');
 		cy.cGet('.cool-annotation-edit.modify-annotation').should('be.visible');
-		cy.cGet('#annotation-cancel-new').click();
+		cy.cGet('#annotation-cancel-1').click();
 		cy.cGet('.cool-annotation-autosavelabel').should('not.exist');
 		cy.cGet('.cool-annotation-edit.modify-annotation').should('not.exist');
 		cy.cGet('.leaflet-marker-icon').should('not.exist');
@@ -323,7 +323,9 @@ describe(['tagdesktop'], 'Annotation Autosave Tests', function() {
 		cy.cGet('#annotation-reply-textarea-1').type('some reply text');
 		cy.cGet('#map').focus();
 		cy.cGet('.cool-annotation-autosavelabel').should('be.visible');
-		cy.cGet('.cool-annotation-edit.reply-annotation').should('be.visible');
+		cy.cGet('#annotation-modify-textarea-1').should('be.visible');
+		cy.cGet('#annotation-modify-textarea-1').should('include.text', 'some text0');
+		cy.cGet('#annotation-modify-textarea-1').should('include.text', 'some reply text');
 
 		helper.closeDocument(testFileName, '');
 		helper.beforeAll(testFileName, 'impress', true, false, false, true);
@@ -340,10 +342,13 @@ describe(['tagdesktop'], 'Annotation Autosave Tests', function() {
 		cy.cGet('#annotation-reply-textarea-1').type('some reply text');
 		cy.cGet('#map').focus();
 		cy.cGet('.cool-annotation-autosavelabel').should('be.visible');
-		cy.cGet('.cool-annotation-edit.reply-annotation').should('be.visible');
-		cy.cGet('#annotation-reply-1').click();
+		cy.cGet('#annotation-modify-textarea-1').should('be.visible');
+		cy.cGet('#annotation-modify-textarea-1').should('include.text', 'some text0');
+		cy.cGet('#annotation-modify-textarea-1').should('include.text', 'some reply text');
+		cy.cGet('#annotation-save-1').click();
 		cy.cGet('.cool-annotation-autosavelabel').should('be.not.visible');
 		cy.cGet('.cool-annotation-edit.reply-annotation').should('be.not.visible');
+		cy.cGet('.cool-annotation-content > div').should('include.text','some text0');
 		cy.cGet('.cool-annotation-content > div').should('include.text','some reply text');
 
 		helper.closeDocument(testFileName, '');
@@ -352,7 +357,7 @@ describe(['tagdesktop'], 'Annotation Autosave Tests', function() {
 		cy.cGet('.cool-annotation-content > div').should('include.text','some reply text');
 	});
 
-	it.skip('Reply autosave cancel',function() {
+	it('Reply autosave cancel',function() {
 		insertMultipleComment('impress', 1, false, '#insert-insert-annotation-button');
 		cy.cGet('.leaflet-marker-icon').should('exist');
 		cy.cGet('.cool-annotation-content > div').should('have.text','some text0');
@@ -361,8 +366,10 @@ describe(['tagdesktop'], 'Annotation Autosave Tests', function() {
 		cy.cGet('#annotation-reply-textarea-1').type('some reply text');
 		cy.cGet('#map').focus();
 		cy.cGet('.cool-annotation-autosavelabel').should('be.visible');
-		cy.cGet('.cool-annotation-edit.reply-annotation').should('be.visible');
-		cy.cGet('#annotation-cancel-reply-1').click();
+		cy.cGet('#annotation-modify-textarea-1').should('be.visible');
+		cy.cGet('#annotation-modify-textarea-1').should('include.text', 'some text0');
+		cy.cGet('#annotation-modify-textarea-1').should('include.text', 'some reply text');
+		cy.cGet('#annotation-cancel-1').click();
 		cy.cGet('.cool-annotation-autosavelabel').should('be.not.visible');
 		cy.cGet('.cool-annotation-edit.reply-annotation').should('be.not.visible');
 		cy.cGet('.cool-annotation-content > div').should('have.text','some text0');

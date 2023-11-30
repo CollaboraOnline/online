@@ -122,7 +122,7 @@ describe(['tagdesktop'], 'Annotation Autosave Tests', function() {
 		cy.cGet('#map').focus();
 		cy.cGet('.cool-annotation-autosavelabel').should('be.visible');
 		cy.cGet('.cool-annotation-edit.modify-annotation').should('be.visible');
-		cy.cGet('#annotation-save-new').click();
+		cy.cGet('#annotation-save-1').click();
 		cy.cGet('.cool-annotation').should('exist');
 		cy.cGet('#comment-container-1').then(function (element) {
 			element[0].style.visibility = '';
@@ -149,7 +149,7 @@ describe(['tagdesktop'], 'Annotation Autosave Tests', function() {
 		cy.cGet('#map').focus();
 		cy.cGet('.cool-annotation-autosavelabel').should('be.visible');
 		cy.cGet('.cool-annotation-edit.modify-annotation').should('be.visible');
-		cy.cGet('#annotation-cancel-new').click();
+		cy.cGet('#annotation-cancel-1').click();
 		cy.cGet('.cool-annotation').should('not.exist');
 		cy.cGet('.cool-annotation-autosavelabel').should('not.exist');
 
@@ -224,7 +224,7 @@ describe(['tagdesktop'], 'Annotation Autosave Tests', function() {
 		cy.cGet('#annotation-content-area-1').should('have.text','some other text, some text0');
 	});
 
-	it.skip('Modify autosave cancel',function() {
+	it('Modify autosave cancel',function() {
 		insertMultipleComment('calc', 1, false, '[id=insert-insert-annotation]');
 
 		cy.cGet('#comment-container-1').should('exist');

@@ -16,7 +16,7 @@ L.PosAnimation = L.Class.extend({
 
 		this.fire('start');
 
-		el.style[L.DomUtil.TRANSITION] = 'all ' + (duration || 0.25) +
+		el.style[L.DomUtil.TRANSITION] = 'all ' + (isNaN(duration) ? 0.25 : 0) +
 		        's cubic-bezier(0,0,' + (easeLinearity || 0.5) + ',1)';
 
 		L.DomEvent.on(el, L.DomUtil.TRANSITION_END, this._onTransitionEnd, this);
