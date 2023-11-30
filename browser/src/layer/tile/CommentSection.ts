@@ -855,15 +855,22 @@ export class Comment extends CanvasSectionObject {
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	public onLostFocus (e: any): void {
 		if (!this.sectionProperties.isRemoved) {
+			if (!this.sectionProperties.nodeModifyText.value &&
+				!this.sectionProperties.contentText.origText)
+				return;
+			app.view.commentAutoSave = this;
 			if (this.sectionProperties.contentText.origText !== this.sectionProperties.nodeModifyText.value) {
-				app.view.commentAutoSave = this;
 				this.onSaveComment(e);
 			}
-			else if (this.containerObject.testing) {
-				var insertButton = document.getElementById('menu-insertcomment');
-				if (insertButton) {
-					if (window.getComputedStyle(insertButton).display === 'none') {
-						this.onCancelClick(e);
+			else {
+				if (!this.containerObject.testing) // eslint-disable-line no-lonely-if
+					this.onCancelClick(e);
+				else {
+					var insertButton = document.getElementById('menu-insertcomment');
+					if (insertButton) {
+						if (window.getComputedStyle(insertButton).display === 'none') {
+							this.onCancelClick(e);
+						}
 					}
 				}
 			}
