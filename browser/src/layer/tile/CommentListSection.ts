@@ -1861,7 +1861,7 @@ export class CommentSection extends CanvasSectionObject {
 	public onCommentsDataUpdate(): void {
 		for (var i: number = this.sectionProperties.commentList.length -1; i > -1; i--) {
 			var comment = this.sectionProperties.commentList[i];
-			if (!comment.valid &&  (!$(comment.sectionProperties.container).hasClass('reply-annotation-container') && !$(comment.sectionProperties.container).hasClass('modify-annotation-container'))) {
+			if (!comment.valid) {
 				comment.sectionProperties.commentListSection.removeItem(comment.sectionProperties.data.id);
 			}
 			comment.onCommentDataUpdate();
