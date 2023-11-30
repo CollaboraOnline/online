@@ -917,7 +917,7 @@ export class Comment extends CanvasSectionObject {
 	}
 
 	public isAnyEdit (): boolean {
-		var commentList = app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).sectionProperties.commentList;
+		var commentList = this.sectionProperties.commentList;
 		for (var i in commentList) {
 			var modifyNode = commentList[i].sectionProperties.nodeModify;
 			var replyNode = commentList[i].sectionProperties.nodeReply;
