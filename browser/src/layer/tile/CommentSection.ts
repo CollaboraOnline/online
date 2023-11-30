@@ -831,13 +831,6 @@ export class Comment extends CanvasSectionObject {
 		}
 		if (e)
 			L.DomEvent.stopPropagation(e);
-
-		if (this.sectionProperties.nodeModify.originalText &&
-			this.sectionProperties.nodeModify.originalText !== this.sectionProperties.data.text) {
-				this.sectionProperties.nodeModifyText.value = this.sectionProperties.nodeModify.originalText;
-				this.handleSaveCommentButton(e);
-				return;
-		}
 		this.sectionProperties.nodeModifyText.value = this.sectionProperties.contentText.origText;
 		this.sectionProperties.nodeReplyText.value = '';
 		if (this.sectionProperties.docLayer._docType !== 'spreadsheet')
@@ -914,7 +907,6 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.nodeReply.style.display = 'none';
 		this.sectionProperties.container.style.visibility = '';
 		this.sectionProperties.contentNode.style.display = 'none';
-		this.sectionProperties.nodeModify.originalText = this.sectionProperties.nodeModify.textContent;
 		return this;
 	}
 
