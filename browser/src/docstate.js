@@ -51,9 +51,7 @@ window.app = { // Shouldn't have any functions defined.
 		commentHasFocus: false,
 		size: {
 			pixels: [0, 0] // This can be larger than the document's size.
-		},
-		commentAutoSave: null, // if comment lost focus it is automatically saved (modified, new comment or reply)
-		commentAutoAdded: false // if the comment/reply was newly added as the result of an autosaving comment
+		}
 	},
 	tile: {
 		size: {
