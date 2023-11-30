@@ -114,11 +114,13 @@ export class Comment extends CanvasSectionObject {
 		var button = L.DomUtil.create('div', 'annotation-btns-container', this.sectionProperties.nodeModify);
 		L.DomEvent.on(this.sectionProperties.nodeModifyText, 'blur', this.onLostFocus, this);
 		L.DomEvent.on(this.sectionProperties.nodeReplyText, 'blur', this.onLostFocusReply, this);
-		this.createButton(button, 'annotation-cancel-' + this.sectionProperties.data.id, 'annotation-button button-secondary', _('Cancel'), this.onCancelClick);
-		this.createButton(button, 'annotation-save-' + this.sectionProperties.data.id, 'annotation-button button-primary',_('Save'), this.onSaveComment);
+		L.DomEvent.on(this.sectionProperties.nodeModifyText, 'input', this.textAreaInput, this);
+		L.DomEvent.on(this.sectionProperties.nodeReplyText, 'input', this.textAreaInput, this);
+		this.createButton(button, 'annotation-cancel-' + this.sectionProperties.data.id, 'annotation-button button-secondary', _('Cancel'), this.handleCancelCommentButton);
+		this.createButton(button, 'annotation-save-' + this.sectionProperties.data.id, 'annotation-button button-primary',_('Save'), this.handleSaveCommentButton);
 		button = L.DomUtil.create('div', '', this.sectionProperties.nodeReply);
-		this.createButton(button, 'annotation-cancel-reply-' + this.sectionProperties.data.id, 'annotation-button button-secondary', _('Cancel'), this.onCancelClick);
-		this.createButton(button, 'annotation-reply-' + this.sectionProperties.data.id, 'annotation-button button-primary', _('Reply'), this.onReplyClick);
+		this.createButton(button, 'annotation-cancel-reply-' + this.sectionProperties.data.id, 'annotation-button button-secondary', _('Cancel'), this.handleCancelCommentButton);
+		this.createButton(button, 'annotation-reply-' + this.sectionProperties.data.id, 'annotation-button button-primary', _('Reply'), this.handleReplyCommentButton);
 		L.DomEvent.disableScrollPropagation(this.sectionProperties.container);
 
 		// Since this is a late called function, if the width is enough, we shouldn't collapse the comments.
@@ -206,6 +208,10 @@ export class Comment extends CanvasSectionObject {
 
 		if (!(<any>window).mode.isMobile())
 			document.getElementById('document-container').appendChild(this.sectionProperties.container);
+
+		// We make comment directly visible when its transitioned to its determined position
+		if (app.view.commentAutoSave)
+			this.sectionProperties.container.style.visibility = 'hidden';
 	}
 
 	private onContainerGotFocus() {
@@ -249,6 +255,7 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.authorAvatartdImg = tdImg;
 		this.sectionProperties.contentAuthor = L.DomUtil.create('div', 'cool-annotation-content-author', tdAuthor);
 		this.sectionProperties.contentDate = L.DomUtil.create('div', 'cool-annotation-date', tdAuthor);
+		this.sectionProperties.autoSave = L.DomUtil.create('div', 'cool-annotation-autosavelabel', tdAuthor);
 	}
 
 	private createMenu (): void {
@@ -310,6 +317,10 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.resolvedTextElement.innerText = state === 'true' ? _('Resolved') : '';
 	}
 
+	private textAreaInput (): void {
+		this.sectionProperties.autoSave.innerText = '';
+	}
+
 	private updateContent (): void {
 		this.sectionProperties.contentText.innerText = this.sectionProperties.data.text ? this.sectionProperties.data.text: '';
 		// Get the escaped HTML out and find for possible, useful links
@@ -321,6 +332,7 @@ export class Comment extends CanvasSectionObject {
 		// Original unlinked text
 		this.sectionProperties.contentText.origText = this.sectionProperties.data.text ? this.sectionProperties.data.text: '';
 		this.sectionProperties.nodeModifyText.textContent = this.sectionProperties.data.text ? this.sectionProperties.data.text: '';
+		this.sectionProperties.nodeModifyText.value = this.sectionProperties.data.text ? this.sectionProperties.data.text: '';
 		this.sectionProperties.contentAuthor.innerText = this.sectionProperties.data.author;
 
 		this.updateResolvedField(this.sectionProperties.data.resolved);
@@ -740,6 +752,10 @@ export class Comment extends CanvasSectionObject {
 			return;
 		}
 
+		if (this.isAnyEdit()) {
+			return;
+		}
+
 		if (this.sectionProperties.docLayer._docType === 'text')
 			this.hideWriter();
 		else if (this.sectionProperties.docLayer._docType === 'spreadsheet')
@@ -786,6 +802,13 @@ export class Comment extends CanvasSectionObject {
 		}
 	}
 
+	public handleReplyCommentButton (e: any): void {
+		app.view.commentAutoSave = null;
+		app.view.commentAutoAdded = false;
+		this.textAreaInput();
+		this.onReplyClick(e);
+	}
+
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	public onReplyClick (e: any): void {
 		L.DomEvent.stopPropagation(e);
@@ -803,6 +826,33 @@ export class Comment extends CanvasSectionObject {
 		}
 	}
 
+	public handleCancelCommentButton (e: any): void {
+		if (app.view.commentAutoAdded) {
+			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).remove(this.sectionProperties.data.id);
+		}
+
+		if (app.view.commentAutoSave) {
+			this.sectionProperties.contentText.origText = this.sectionProperties.contentText.unedited;
+			this.sectionProperties.contentText.unedited = null;
+		}
+
+		// These lines are repeated in onCancelClick,
+		// it makes things simple by not adding so many condition for different apps and different situation
+		// It is mandatory to change these values before handleSaveCommentButton is called
+		// calling handleSaveCommentButton in onCancelClick causes problem because that is also called from many other events/function (i.e: onPartChange)
+		this.sectionProperties.nodeModifyText.value = this.sectionProperties.contentText.origText;
+		this.sectionProperties.nodeReplyText.value = '';
+
+		if (app.view.commentAutoSave)
+			this.handleSaveCommentButton(e);
+
+		this.onCancelClick(e);
+		if (this.sectionProperties.docLayer._docType === 'spreadsheet')
+			this.hideCalc();
+		app.view.commentAutoAdded = false;
+		app.view.commentAutoSave = null;
+	}
+
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	public onCancelClick (e: any): void {
 		if (e)
@@ -814,12 +864,21 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.commentListSection.cancel(this);
 	}
 
+	public handleSaveCommentButton (e: any): void {
+		app.view.commentAutoSave = null;
+		app.view.commentAutoAdded = false;
+		this.sectionProperties.contentText.unedited = null;
+		this.textAreaInput();
+		this.onSaveComment(e);
+	}
+
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	public onSaveComment (e: any): void {
 		L.DomEvent.stopPropagation(e);
 		this.sectionProperties.data.text = this.sectionProperties.nodeModifyText.value;
 		this.updateContent();
-		this.show();
+		if (!app.view.commentAutoSave)
+			this.show();
 		this.sectionProperties.commentListSection.save(this);
 	}
 
@@ -828,17 +887,16 @@ export class Comment extends CanvasSectionObject {
 		if (!this.sectionProperties.isRemoved) {
 			$(this.sectionProperties.container).removeClass('annotation-active reply-annotation-container modify-annotation-container');
 			if (this.sectionProperties.contentText.origText !== this.sectionProperties.nodeModifyText.value) {
+				if (!this.sectionProperties.contentText.unedited)
+					this.sectionProperties.contentText.unedited = this.sectionProperties.contentText.origText;
+				app.view.commentAutoSave = this;
 				this.onSaveComment(e);
 			}
-			else {
-				if (!this.containerObject.testing) // eslint-disable-line no-lonely-if
-					this.onCancelClick(e);
-				else {
-					var insertButton = document.getElementById('menu-insertcomment');
-					if (insertButton) {
-						if (window.getComputedStyle(insertButton).display === 'none') {
-							this.onCancelClick(e);
-						}
+			else if (this.containerObject.testing) {
+				var insertButton = document.getElementById('menu-insertcomment');
+				if (insertButton) {
+					if (window.getComputedStyle(insertButton).display === 'none') {
+						this.onCancelClick(e);
 					}
 				}
 			}
@@ -849,6 +907,9 @@ export class Comment extends CanvasSectionObject {
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	public onLostFocusReply (e: any): void {
 		if (this.sectionProperties.nodeReplyText.value !== '') {
+			if (!this.sectionProperties.contentText.unedited)
+				this.sectionProperties.contentText.unedited = this.sectionProperties.contentText.origText;
+			app.view.commentAutoSave = this;
 			this.onReplyClick(e);
 		}
 		else {
@@ -884,6 +945,19 @@ export class Comment extends CanvasSectionObject {
 	public isEdit (): boolean {
 		return (this.sectionProperties.nodeModify && this.sectionProperties.nodeModify.style.display !== 'none') ||
 		       (this.sectionProperties.nodeReply && this.sectionProperties.nodeReply.style.display !== 'none');
+	}
+
+	public isAnyEdit (): boolean {
+		var commentList = app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).sectionProperties.commentList;
+		for (var i in commentList) {
+			var modifyNode = commentList[i].sectionProperties.nodeModify;
+			var replyNode = commentList[i].sectionProperties.nodeReply;
+			if (!commentList[i].pendingInit &&
+				((modifyNode && modifyNode.style.display !== 'none') ||
+				(replyNode && replyNode.style.display !== 'none')))
+				return true;
+		}
+		return false;
 	}
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -1196,6 +1270,8 @@ export class Comment extends CanvasSectionObject {
 	}
 
 	public setCollapsed(): void {
+		if (this.isEdit())
+			return;
 		this.isCollapsed = true;
 
 		this.show();

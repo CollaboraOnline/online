@@ -520,7 +520,10 @@ export class CommentSection extends CanvasSectionObject {
 				this.map.sendUnoCommand('.uno:InsertAnnotation', comment, true /* force */);
 			}
 
-			this.removeItem(annotation.sectionProperties.data.id);
+			// Object is later removed in onACKComment when newly inserted comment object is available
+			// It's to reduce the flicker when using comment autosave
+			if (!app.view.commentAutoSave)
+				this.removeItem(annotation.sectionProperties.data.id);
 		} else if (annotation.sectionProperties.data.trackchange) {
 			comment = {
 				ChangeTrackingId: {
@@ -996,6 +999,7 @@ export class CommentSection extends CanvasSectionObject {
 
 		this.sectionProperties.commentList.push(annotation);
 
+		this.adjustParentAdd(annotation);
 		this.orderCommentList();
 		this.updateIdIndexMap();
 		this.checkSize();
@@ -1133,6 +1137,24 @@ export class CommentSection extends CanvasSectionObject {
 				this.adjustParentAdd(annotation);
 				if (this.sectionProperties.docLayer._docType === 'spreadsheet')
 					annotation.hide();
+
+				if (app.view.commentAutoSave) {
+					// Some layout updates are async, we can't proceed further or reset commentAutoSave variable before layout is done
+					var interval = setInterval(() => {
+						if (!app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).sectionProperties.layoutTimer) {
+							clearInterval(interval);
+							annotation.sectionProperties.container.style.visibility = 'visible';
+							annotation.sectionProperties.autoSave.innerText = _('Autosaved');
+							if (this.sectionProperties.docLayer._docType === 'spreadsheet')
+								annotation.show();
+							annotation.edit();
+							if (app.view.commentAutoSave.sectionProperties.data.id === 'new')
+								this.removeItem(app.view.commentAutoSave.sectionProperties.data.id);
+							app.view.commentAutoSave = null;
+							app.view.commentAutoAdded = true;
+						}
+					}, 15);
+				}
 			}
 			if (this.sectionProperties.selectedComment && !this.sectionProperties.selectedComment.isEdit()) {
 				this.map.focus();
@@ -1169,6 +1191,13 @@ export class CommentSection extends CanvasSectionObject {
 				modified.setData(modifiedObj);
 				modified.update();
 				this.update();
+
+				if (app.view.commentAutoSave) {
+					app.view.commentAutoSave.sectionProperties.autoSave.innerText = _('Autosaved');
+					if (this.sectionProperties.docLayer._docType === 'spreadsheet')
+						modified.show();
+					modified.edit();
+				}
 			}
 		} else if (action === 'Resolve') {
 			id = obj[dataroot].id;
@@ -1363,8 +1392,9 @@ export class CommentSection extends CanvasSectionObject {
 		for (var i = 0; i < subList.length; i++) {
 			height = subList[i].sectionProperties.container.getBoundingClientRect().height;
 			lastY = subList[i].sectionProperties.data.anchorPix[1] + height < lastY ? subList[i].sectionProperties.data.anchorPix[1]: lastY - height;
-			(new L.PosAnimation()).run(subList[i].sectionProperties.container, {x: Math.round(actualPosition[0] / app.dpiScale), y: Math.round(lastY / app.dpiScale)});
-			subList[i].show();
+			(new L.PosAnimation()).run(subList[i].sectionProperties.container, {x: Math.round(actualPosition[0] / app.dpiScale), y: Math.round(lastY / app.dpiScale)}, app.view.commentAutoSave ? 0 : undefined);
+			if (!subList[i].isEdit())
+				subList[i].show(); // show() get's comment out of edit mode, which shouldn't be the case with autosaving
 		}
 		return lastY;
 	}
@@ -1408,7 +1438,7 @@ export class CommentSection extends CanvasSectionObject {
 			var isRTL = document.documentElement.dir === 'rtl';
 
 			if (selectedComment)
-				(new L.PosAnimation()).run(subList[i].sectionProperties.container, {x: Math.round(actualPosition[0] / app.dpiScale) - this.sectionProperties.deflectionOfSelectedComment * (isRTL ? -1 : 1), y: Math.round(lastY / app.dpiScale)});
+				(new L.PosAnimation()).run(subList[i].sectionProperties.container, {x: Math.round(actualPosition[0] / app.dpiScale) - this.sectionProperties.deflectionOfSelectedComment * (isRTL ? -1 : 1), y: Math.round(lastY / app.dpiScale)}, app.view.commentAutoSave ? 0 : undefined);
 			else
 				(new L.PosAnimation()).run(subList[i].sectionProperties.container, {x: Math.round(actualPosition[0] / app.dpiScale), y: Math.round(lastY / app.dpiScale)});
 

@@ -766,6 +766,11 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	font-size: var(--default-font-size);
 }
 
+.cool-annotation-autosavelabel {
+	font-size: var(--default-font-size);
+	opacity: 75%;
+}
+
 .cool-annotation-menubar {
 	margin: 0;
 	padding: 0;
