@@ -804,7 +804,6 @@ export class Comment extends CanvasSectionObject {
 	public onReplyClick (e: any): void {
 		L.DomEvent.stopPropagation(e);
 		if ((<any>window).mode.isMobile()) {
-			this.sectionProperties.data.newReply = true;
 			this.sectionProperties.data.reply = this.sectionProperties.data.text;
 			this.sectionProperties.commentListSection.saveReply(this);
 		} else {
@@ -908,7 +907,6 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.contentNode.style.display = '';
 		this.sectionProperties.nodeModify.style.display = 'none';
 		this.sectionProperties.nodeReply.style.display = '';
-		this.sectionProperties.data.newReply = true;
 		return this;
 	}
 
