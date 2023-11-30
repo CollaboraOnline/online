@@ -1370,7 +1370,7 @@ export class CommentSection extends CanvasSectionObject {
 	// Returns the last comment id of comment thread containing the given id
 	private getLastChildIndexOf (id: any): number {
 		var index = this.getIndexOf(id);
-		index = index === -1 ? -1 : this.getRootIndexOf(this.sectionProperties.commentList[index].sectionProperties.data.id);
+		index = this.getRootIndexOf(this.sectionProperties.commentList[index].sectionProperties.data.id);
 
 		while
 		(
