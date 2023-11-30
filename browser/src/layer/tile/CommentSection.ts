@@ -855,9 +855,6 @@ export class Comment extends CanvasSectionObject {
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	public onLostFocus (e: any): void {
 		if (!this.sectionProperties.isRemoved) {
-			if (!this.sectionProperties.nodeModifyText.value &&
-				!this.sectionProperties.contentText.origText)
-				return;
 			app.view.commentAutoSave = this;
 			if (this.sectionProperties.contentText.origText !== this.sectionProperties.nodeModifyText.value) {
 				this.onSaveComment(e);
