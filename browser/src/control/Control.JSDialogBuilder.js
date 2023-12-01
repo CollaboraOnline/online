@@ -2925,6 +2925,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 	_menuItemHandler: function(parentContainer, data, builder) {
 		var title = data.text;
+		var cssClassHeader = 'ui-header';
 		// separator
 		if (title === '') {
 			return false;
@@ -2932,6 +2933,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		var id = data.id;
 		if (id) {
+			cssClassHeader += ' ui-header-' + id;
 			var handler = builder._menuItemHandlers[id];
 			if (handler) {
 				handler(parentContainer, data, builder);
@@ -2939,7 +2941,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			}
 		}
 
-		var menuEntry = L.DomUtil.create('div', 'ui-header level-' + builder._currentDepth + ' ' + builder.options.cssClass + ' ui-widget', parentContainer);
+		var menuEntry = L.DomUtil.create('div', cssClassHeader + ' level-' + builder._currentDepth + ' ' + builder.options.cssClass + ' ui-widget', parentContainer);
 
 		if (data.hyperlink) {
 			menuEntry = L.DomUtil.create('a', 'context-menu-link', menuEntry);
