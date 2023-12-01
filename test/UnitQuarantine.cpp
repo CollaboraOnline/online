@@ -190,17 +190,8 @@ public:
         std::vector<std::string> files;
         Poco::File(_quarantinePath).list(files);
 
-        // VerifyOverwrite doesn't modify the document.
-        if (_scenario == Scenario::VerifyOverwrite)
-        {
-            LOK_ASSERT_MESSAGE("Expected no quaratined files in [" << _quarantinePath << ']',
-                               files.empty());
-        }
-        else
-        {
-            LOK_ASSERT_MESSAGE("Expected quaratined files in [" << _quarantinePath << ']',
-                               !files.empty());
-        }
+        LOK_ASSERT_MESSAGE("Expected 1 quaratined files in [" << _quarantinePath << ']',
+                           files.size() == 1);
 
         Base::onDocBrokerDestroy(docKey);
     }

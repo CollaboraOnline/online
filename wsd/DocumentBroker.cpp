@@ -674,12 +674,6 @@ void DocumentBroker::pollThread()
             }
         }
     }
-    else if (_quarantine)
-    {
-        // Gracefully unloaded.
-        LOG_DBG("Cleaning up quarantined files for [" << getDocKey() << ']');
-        _quarantine->removeQuarantinedFiles();
-    }
 
     // Async cleanup.
     COOLWSD::doHousekeeping();

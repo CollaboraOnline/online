@@ -31,7 +31,7 @@ public:
     /// Returns the last quarantined file's path.
     std::string lastQuarantinedFilePath() const;
 
-    /// Removes the quarantined files for the given DocKey when we unload gracefully.
+    /// Removes the quarantined files for our DocKey.
     void removeQuarantinedFiles();
 
 private:
