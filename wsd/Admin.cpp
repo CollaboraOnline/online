@@ -231,7 +231,7 @@ void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
     else if (tokens.equals(0, "shutdown"))
     {
         LOG_INF("Setting ShutdownRequestFlag: Shutdown requested by admin.");
-        if (Admin::instance().logAdminAction())
+        if (Admin::instance().logAdminAction() && Log::logger().getChannel())
         {
             LOG_ANY("Shutdown requested by admin with source IPAddress [" << _clientIPAdress
                                                                           << ']');
