@@ -1252,19 +1252,7 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/,
         sendRestrictionInfo();
 #endif
 
-        bool result = forwardToChild(oss.str(), docBroker);
-#if ENABLE_FEATURE_LOCK || ENABLE_FEATURE_RESTRICTION
-        if (result)
-        {
-            forwardToChild(
-                std::string("blockingcommandstatus isRestrictedUser=") +
-                    (CommandControl::RestrictionManager::isRestrictedUser() ? "true" : "false") +
-                    std::string(" isLockedUser=") +
-                    (CommandControl::LockManager::isLockedUser() ? "true" : "false"),
-                docBroker);
-        }
-#endif
-        return result;
+        return forwardToChild(oss.str(), docBroker);;
     }
     catch (const Poco::SyntaxException&)
     {
@@ -2016,7 +2004,18 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
             _canonicalViewId = canonicalId;
         }
     }
-
+#if ENABLE_FEATURE_LOCK || ENABLE_FEATURE_RESTRICTION
+    else if (tokens.equals(0, "statusindicatorfinish:"))
+    {
+        std::ostringstream blockingCommandStatus;
+        blockingCommandStatus << "blockingcommandstatus isRestrictedUser="
+                              << (CommandControl::RestrictionManager::isRestrictedUser() ? "true"
+                                                                                         : "false")
+                              << " isLockedUser="
+                              << (CommandControl::LockManager::isLockedUser() ? "true" : "false");
+        docBroker->forwardToChild(client_from_this(), blockingCommandStatus.str());
+    }
+#endif
     if (!isDocPasswordProtected())
     {
         if (tokens.equals(0, "tile:"))
