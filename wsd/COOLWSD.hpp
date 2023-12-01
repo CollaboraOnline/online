@@ -636,6 +636,9 @@ private:
         return path;
     }
 
+    static void appendAllowedHostsFrom(Poco::Util::LayeredConfiguration& conf, const std::string& root, std::vector<std::string>& allowed);
+    static void appendAllowedAliasGroups(Poco::Util::LayeredConfiguration& conf, std::vector<std::string>& allowed);
+
 private:
     /// Settings passed from the command-line to override those in the config file.
     std::map<std::string, std::string> _overrideSettings;
