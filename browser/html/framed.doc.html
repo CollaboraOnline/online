@@ -248,9 +248,9 @@
           }
         } else if (msg.MessageId === 'UI_Mention') {
           var dummyUserDatabase = [ {
-                                      username:'Abigail', 
+                                      username:'Abigail',
                                       profile: 'Abigail profile link'
-                                    }, 
+                                    },
                                     {
                                       username: 'Alexandra',
                                       profile: 'Alexandra profile link'
@@ -318,7 +318,7 @@
                                     {
                                       username: 'xyz abc',
                                       profile: 'xyz abc profile link'
-                                    } ]; 
+                                    } ];
           if (msg.Values) {
             var type = msg.Values.type;
             var text = msg.Values.text;
@@ -353,6 +353,37 @@
       // 'main' code of this <script> block, run when page is being
       // rendered. Install the message listener.
       window.addEventListener("message", receiveMessage, false);
+
+      var frameUrl = new URL(window.location);
+      frameUrl.pathname = frameUrl.pathname.substr(0, window.location.pathname.lastIndexOf('/') + 1) + 'cool.html';
+      frameUrl.searchParams.append('NotWOPIButIframe', 'true');
+
+      function startCool(url, file_path) {
+          var coolUrl = new URL(url);
+          if (file_path) {
+              coolUrl.searchParams.set('file_path', file_path);
+          }
+          var iframe = document.getElementById('frame');
+          iframe.src = coolUrl.href;
+          link.href = coolUrl.href;
+      }
+
+      // Select the app with extension.
+      function selectApp(ext) {
+          switch (ext) {
+          case 'odt':
+          case 'ods':
+          case 'odp':
+          case 'odg':
+              var params = frameUrl.searchParams;
+              var file_path = params.get('file_path');
+              file_path = file_path.substr(0, file_path.length - 3) + ext;
+              startCool(frameUrl, file_path)
+              break;
+          default:
+              console.error('Invalid app ', ext);
+          }
+      }
 
     </script>
 
@@ -491,6 +522,19 @@
       </div>
     </div>
 
+    <div class="vbox">
+      <h3>Document type</h3>
+    </div>
+
+    <div class="vbox framed">
+      <div class="hbox">
+        <button onclick="selectApp('odt');">Writer</button>
+        <button onclick="selectApp('ods');">Calc</button>
+        <button onclick="selectApp('odp');">Impress</button>
+        <button onclick="selectApp('odg');">Draw</button>
+      </div>
+    </div>
+
     <h3>Document frame</h3>
     <h4>If the frame fails to load click <a id="link">here and accept security bits</a></h4>
     <h4>If the frame still fails to load ensure you have <code>localhost:*</code> included in your <code>net.frame_ancestors</code> in coolwsd.xml</h4>
@@ -504,16 +548,10 @@
         alert('Incorrect usage, please follow the instructions at the top of this page.');
       }
 
-      var query = '?';
-      if (window.location.search !== '')
-        query = window.location.search + '&';
-      query += 'NotWOPIButIframe=true';
+      var url = new URL(window.location);
+      var params = url.searchParams;
 
-      var path = window.location.pathname.substr(0, window.location.pathname.lastIndexOf('/') + 1) + 'cool.html';
-      var uriBase = window.location.protocol + '//' + window.location.host + path + query;
-      var iframe = document.getElementById("frame");
-      iframe.src = uriBase;
-      link.href = uriBase;
+      startCool(frameUrl, params.get("file_path"));
     </script>
   </body>
 </html>
