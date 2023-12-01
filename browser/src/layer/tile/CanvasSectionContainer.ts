@@ -718,7 +718,10 @@ class CanvasSectionContainer {
 	private setDirty(coords: any) {
 		if (this.dirty == DirtyType.All)
 			return;
-		if (coords === null) {
+		if (coords === null ||
+		    // multi-clip needed for split-panes in drawSections.
+		    app.map._docLayer.getSplitPanesContext())
+		{
 			this.dirty = DirtyType.All;
 			this.dirtySubset = null;
 		}
@@ -2069,6 +2072,7 @@ class CanvasSectionContainer {
 			if (subsetBounds) {
 				this.context.save();
 
+				// FIXME: needs re-thinking for split-panes
 				this.context.translate(tileSection.myTopLeft[0], tileSection.myTopLeft[1]);
 				tileSection.clipSubsetBounds(this.context, subsetBounds);
 				this.context.translate(-tileSection.myTopLeft[0], -tileSection.myTopLeft[1]);
@@ -2091,7 +2095,6 @@ class CanvasSectionContainer {
 				}
 
 				this.sections[i].onDraw(frameCount, elapsedTime, subsetBounds);
-
 				if (this.sections[i].borderColor) { // If section's border is set, draw its borders after section's "onDraw" function is called.
 					this.context.lineWidth = app.dpiScale;
 					this.context.strokeStyle = this.sections[i].borderColor;
