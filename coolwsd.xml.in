@@ -160,6 +160,21 @@
         <host desc="The IPv4 private 10.0.0.0/8 subnet (Podman).">10\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}</host>
         <host desc="Ditto, but as IPv4-mapped IPv6 addresses">::ffff:10\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}</host>
       </post_allow>
+      <lok_allow desc="Allowed hosts as an external data source inside edited files. All allowed post_allow.host and storage.wopi entries are also considered to be allowed as a data source. Used for example in: PostMessage Action_InsertGraphics, =WEBSERVICE() function, external reference in the cell.">
+        <host desc="The IPv4 private 192.168 block as plain IPv4 dotted decimal addresses.">192\.168\.[0-9]{1,3}\.[0-9]{1,3}</host>
+        <host desc="Ditto, but as IPv4-mapped IPv6 addresses">::ffff:192\.168\.[0-9]{1,3}\.[0-9]{1,3}</host>
+        <host desc="The IPv4 loopback (localhost) address.">127\.0\.0\.1</host>
+        <host desc="Ditto, but as IPv4-mapped IPv6 address">::ffff:127\.0\.0\.1</host>
+        <host desc="The IPv6 loopback (localhost) address.">::1</host>
+        <host desc="The IPv4 private 172.16.0.0/12 subnet part 1.">172\.1[6789]\.[0-9]{1,3}\.[0-9]{1,3}</host>
+        <host desc="Ditto, but as IPv4-mapped IPv6 addresses">::ffff:172\.1[6789]\.[0-9]{1,3}\.[0-9]{1,3}</host>
+        <host desc="The IPv4 private 172.16.0.0/12 subnet part 2.">172\.2[0-9]\.[0-9]{1,3}\.[0-9]{1,3}</host>
+        <host desc="Ditto, but as IPv4-mapped IPv6 addresses">::ffff:172\.2[0-9]\.[0-9]{1,3}\.[0-9]{1,3}</host>
+        <host desc="The IPv4 private 172.16.0.0/12 subnet part 3.">172\.3[01]\.[0-9]{1,3}\.[0-9]{1,3}</host>
+        <host desc="Ditto, but as IPv4-mapped IPv6 addresses">::ffff:172\.3[01]\.[0-9]{1,3}\.[0-9]{1,3}</host>
+        <host desc="The IPv4 private 10.0.0.0/8 subnet (Podman).">10\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}</host>
+        <host desc="Ditto, but as IPv4-mapped IPv6 addresses">::ffff:10\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}</host>
+      </lok_allow>
       <content_security_policy desc="Customize the CSP header by specifying one or more policy-directive, separated by semicolons. See w3.org/TR/CSP2"></content_security_policy>
       <frame_ancestors desc="OBSOLETE: Use content_security_policy. Specify who is allowed to embed the Collabora Online iframe (coolwsd and WOPI host are always allowed). Separate multiple hosts by space."></frame_ancestors>
       <connection_timeout_secs desc="Specifies the connection, send, recv timeout in seconds for connections initiated by coolwsd (such as WOPI connections)." type="int" default="30"></connection_timeout_secs>

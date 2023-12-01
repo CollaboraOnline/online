@@ -286,6 +286,66 @@ inline void shutdownLimitReached(const std::shared_ptr<ProtocolHandlerInterface>
 
 } // end anonymous namespace
 
+void COOLWSD::appendAllowedHostsFrom(LayeredConfiguration& conf, const std::string& root, std::vector<std::string>& allowed)
+{
+    for (size_t i = 0; ; ++i)
+    {
+        const std::string path = root + ".host[" + std::to_string(i) + ']';
+        if (!conf.has(path))
+        {
+            break;
+        }
+        const std::string host = getConfigValue<std::string>(conf, path, "");
+        if (!host.empty())
+        {
+            LOG_INF_S("Adding trusted LOK_ALLOW host: [" << host << ']');
+            allowed.push_back(host);
+        }
+    }
+}
+
+void COOLWSD::appendAllowedAliasGroups(LayeredConfiguration& conf, std::vector<std::string>& allowed)
+{
+    for (size_t i = 0;; i++)
+    {
+        const std::string path = "storage.wopi.alias_groups.group[" + std::to_string(i) + ']';
+        if (!conf.has(path + ".host"))
+        {
+            break;
+        }
+
+        const std::string host = conf.getString(path + ".host", "");
+        bool allow = conf.getBool(path + ".host[@allow]", false);
+        if (!allow)
+        {
+            break;
+        }
+
+        if (!host.empty())
+        {
+            LOG_INF_S("Adding trusted LOK_ALLOW host: [" << host << ']');
+            allowed.push_back(host);
+        }
+
+        for (size_t j = 0;; j++)
+        {
+            const std::string aliasPath = path + ".alias[" + std::to_string(j) + ']';
+            if (!conf.has(aliasPath))
+            {
+                break;
+            }
+
+            const std::string alias = getConfigValue<std::string>(conf, aliasPath, "");
+
+            if (!aliasPath.empty())
+            {
+                LOG_INF_S("Adding trusted LOK_ALLOW alias: [" << alias << ']');
+                allowed.push_back(alias);
+            }
+        }
+    }
+}
+
 #if !MOBILEAPP
 /// Internal implementation to alert all clients
 /// connected to any document.
@@ -2832,6 +2892,30 @@ void COOLWSD::innerInitialize(Application& self)
         const auto takeSnapshot = getConfigValue<bool>(conf, "trace.path[@snapshot]", false);
         TraceDumper = std::make_unique<TraceFileWriter>(path, recordOutgoing, compress,
                                                         takeSnapshot, filters);
+    }
+
+    // Allowed hosts for being external data source in the documents
+    std::vector<std::string> lokAllowedHosts;
+    appendAllowedHostsFrom(conf, "net.lok_allow", lokAllowedHosts);
+    // For backward compatibility post_allow hosts are also allowed
+    bool postAllowed = conf.getBool("net.post_allow[@allow]", false);
+    if (postAllowed)
+        appendAllowedHostsFrom(conf, "net.post_allow", lokAllowedHosts);
+    // For backward compatibility wopi hosts are also allowed
+    bool wopiAllowed = conf.getBool("storage.wopi[@allow]", false);
+    if (wopiAllowed)
+    {
+        appendAllowedHostsFrom(conf, "storage.wopi", lokAllowedHosts);
+        appendAllowedAliasGroups(conf, lokAllowedHosts);
+    }
+
+    if (lokAllowedHosts.size())
+    {
+        std::string sRegex;
+        for (size_t i = 0; i < lokAllowedHosts.size(); i++)
+            sRegex += (i != 0 ? "|" : "") + lokAllowedHosts[i];
+
+        setenv("LOK_HOST_ALLOWLIST", sRegex.c_str(), true);
     }
 
 #if !MOBILEAPP
