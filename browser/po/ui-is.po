@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-11-24 19:14+0100\n"
-"PO-Revision-Date: 2023-07-20 15:07+0000\n"
+"PO-Revision-Date: 2023-11-30 15:31+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <https://hosted.weblate.org/projects/"
 "collabora-online/ui/is/>\n"
-"Language: \n"
+"Language: is\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n % 10 != 1 || n % 100 == 11;\n"
-"X-Generator: Weblate 5.0-dev\n"
+"X-Generator: Weblate 5.3-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -441,13 +441,15 @@ msgstr "Afturkalla"
 
 #: src/control/Control.DownloadProgress.js:43
 msgid "Download Selection"
-msgstr ""
+msgstr "Hlaða niður vali"
 
 #: src/control/Control.DownloadProgress.js:48
 msgid ""
 "If you want to share large elements outside of %productName it's necessary "
 "to first download them."
 msgstr ""
+"Ef þú ætlar að deila stórum atriðum utan %productName er nauðsynlegt að "
+"sækja þau fyrst."
 
 #: src/control/Control.DownloadProgress.js:61
 #: src/control/Control.NotebookbarCalc.js:204
@@ -458,7 +460,7 @@ msgstr "Sækja"
 
 #: src/control/Control.DownloadProgress.js:80
 msgid "Downloading clipboard content"
-msgstr ""
+msgstr "Sæki efni af klippispjaldi"
 
 #: src/control/Control.DownloadProgress.js:87
 #: src/control/Control.DownloadProgress.js:112
@@ -468,20 +470,22 @@ msgstr "Afrita"
 
 #: src/control/Control.DownloadProgress.js:110
 msgid "Download completed and ready to be copied to clipboard."
-msgstr ""
+msgstr "Niðurhali er lokið og er tilbúið til að vera afritað á klippispjald."
 
 #: src/control/Control.DownloadProgress.js:111
 msgid ""
 "From now on clipboard notifications will discreetly appear at the bottom."
 msgstr ""
+"Héðan í frá munu tilkynningar frá klippispjaldi birtast lítið áberandi neðst "
+"á skjánum."
 
 #: src/control/Control.DownloadProgress.js:257
 msgid "Content copied to clipboard"
-msgstr ""
+msgstr "Efni afritað á klippispjald"
 
 #: src/control/Control.DownloadProgress.js:301
 msgid "Download failed"
-msgstr ""
+msgstr "Niðurhal mistókst"
 
 #: src/control/Control.FormulaBar.js:45
 msgid "cell address"
@@ -531,12 +535,12 @@ msgstr "Fjöldi"
 #: src/control/Control.JSDialogBuilder.js:202
 #: src/control/Control.Menubar.js:676
 msgid "Active sheet"
-msgstr ""
+msgstr "Virkt blað"
 
 #: src/control/Control.JSDialogBuilder.js:203
 #: src/control/Control.Menubar.js:677 src/control/Control.TopToolbar.js:99
 msgid "All Sheets"
-msgstr ""
+msgstr "Öll blöð"
 
 #: src/control/Control.JSDialogBuilder.js:568
 msgid "Solid"
@@ -724,9 +728,8 @@ msgid "EPUB (.epub)"
 msgstr "EPUB (.epub)"
 
 #: src/control/Control.Menubar.js:76
-#, fuzzy
 msgid "Rename Document"
-msgstr "Gera við skjal"
+msgstr "Endurnefna skjal"
 
 #: src/control/Control.Menubar.js:77 src/control/Control.Menubar.js:385
 #: src/control/Control.Menubar.js:534 src/control/Control.Menubar.js:664
@@ -832,7 +835,7 @@ msgstr "Sýna stöðustiku"
 #: src/control/Control.Menubar.js:131 src/control/Control.Menubar.js:426
 #: src/control/Control.Menubar.js:575 src/control/Control.Menubar.js:707
 msgid "Hide Menu Bar"
-msgstr ""
+msgstr "Fela valmyndastiku"
 
 #: src/control/Control.Menubar.js:132 src/control/Control.Menubar.js:427
 #: src/control/Control.Menubar.js:571 src/control/Control.Menubar.js:708
@@ -943,7 +946,7 @@ msgstr "Eiginleikar"
 #: src/control/Control.Menubar.js:349 src/control/Control.Menubar.js:967
 #: src/control/Control.NotebookbarWriter.js:430
 msgid "Voice Over"
-msgstr ""
+msgstr "Tal yfir"
 
 #: src/control/Control.Menubar.js:362
 #: src/control/Control.NotebookbarWriter.js:396
@@ -1076,32 +1079,32 @@ msgstr "CSV-skrá (.csv)"
 #: src/control/Control.Menubar.js:803
 #: src/control/Control.NotebookbarBuilder.js:808
 msgid "Condition..."
-msgstr ""
+msgstr "Skilyrði..."
 
 #: src/control/Control.Menubar.js:804
 #: src/control/Control.NotebookbarBuilder.js:809
 msgid "Greater than..."
-msgstr ""
+msgstr "Stærra en..."
 
 #: src/control/Control.Menubar.js:805
 #: src/control/Control.NotebookbarBuilder.js:810
 msgid "Less than..."
-msgstr ""
+msgstr "Minna en..."
 
 #: src/control/Control.Menubar.js:806
 #: src/control/Control.NotebookbarBuilder.js:811
 msgid "Equal to..."
-msgstr ""
+msgstr "Jafnt og..."
 
 #: src/control/Control.Menubar.js:807
 #: src/control/Control.NotebookbarBuilder.js:812
 msgid "Between..."
-msgstr ""
+msgstr "Milli..."
 
 #: src/control/Control.Menubar.js:809
 #: src/control/Control.NotebookbarBuilder.js:814
 msgid "More conditions..."
-msgstr ""
+msgstr "Fleiri skilyrði..."
 
 #: src/control/Control.Menubar.js:917 src/control/Control.Menubar.js:982
 #: src/control/Control.Menubar.js:1046 src/control/Control.Menubar.js:1100
@@ -1225,77 +1228,67 @@ msgstr "Mjög laust"
 #: src/control/Control.NotebookbarDraw.js:58
 #: src/control/Control.NotebookbarImpress.js:73
 #: src/control/Control.NotebookbarWriter.js:32
-#, fuzzy
 msgid "File"
-msgstr "~Skrá"
+msgstr "Skrá"
 
 #: src/control/Control.NotebookbarCalc.js:25
 #: src/control/Control.NotebookbarDraw.js:64
 #: src/control/Control.NotebookbarImpress.js:79
 #: src/control/Control.NotebookbarWriter.js:38
-#, fuzzy
 msgid "Home"
-msgstr "H~eim"
+msgstr "Heim"
 
 #: src/control/Control.NotebookbarCalc.js:32
 #: src/control/Control.NotebookbarDraw.js:71
 #: src/control/Control.NotebookbarImpress.js:86
 #: src/control/Control.NotebookbarWriter.js:45
-#, fuzzy
 msgid "Insert"
-msgstr "Setja ~inn"
+msgstr "Setja inn"
 
 #: src/control/Control.NotebookbarCalc.js:38
 #: src/control/Control.NotebookbarDraw.js:77
 #: src/control/Control.NotebookbarImpress.js:92
 #: src/control/Control.NotebookbarWriter.js:51
-#, fuzzy
 msgid "Layout"
-msgstr "Fra~msetning"
+msgstr "Framsetning"
 
 #: src/control/Control.NotebookbarCalc.js:44
-#, fuzzy
 msgid "Data"
-msgstr "~Gögn"
+msgstr "Gögn"
 
 #: src/control/Control.NotebookbarCalc.js:50
 #: src/control/Control.NotebookbarDraw.js:83
 #: src/control/Control.NotebookbarImpress.js:98
 #: src/control/Control.NotebookbarWriter.js:63
-#, fuzzy
 msgid "Review"
-msgstr "Yfirfa~ra"
+msgstr "Yfirferð"
 
 #: src/control/Control.NotebookbarCalc.js:56
 #: src/control/Control.NotebookbarDraw.js:89
 #: src/control/Control.NotebookbarImpress.js:104
 #: src/control/Control.NotebookbarWriter.js:69
-#, fuzzy
 msgid "Format"
-msgstr "S~nið"
+msgstr "Snið"
 
 #: src/control/Control.NotebookbarCalc.js:62
 #: src/control/Control.NotebookbarDraw.js:102
 #: src/control/Control.NotebookbarWriter.js:88
-#, fuzzy
 msgid "Draw"
-msgstr "Tei~kna"
+msgstr "Draw"
 
 #: src/control/Control.NotebookbarCalc.js:69
 #: src/control/Control.NotebookbarDraw.js:109
 #: src/control/Control.NotebookbarImpress.js:131
 #: src/control/Control.NotebookbarWriter.js:95
-#, fuzzy
 msgid "View"
-msgstr "Skoðanir"
+msgstr "Skoða"
 
 #: src/control/Control.NotebookbarCalc.js:75
 #: src/control/Control.NotebookbarDraw.js:115
 #: src/control/Control.NotebookbarImpress.js:137
 #: src/control/Control.NotebookbarWriter.js:101
-#, fuzzy
 msgid "Help"
-msgstr "~Hjálp"
+msgstr "Hjálp"
 
 #: src/control/Control.NotebookbarCalc.js:121
 #: src/control/Control.NotebookbarImpress.js:186
@@ -1333,14 +1326,14 @@ msgstr "ODF-töflureikniskjal (.ods)"
 #: src/control/Control.NotebookbarImpress.js:355
 #: src/control/Control.NotebookbarWriter.js:302
 msgid "PDF Document (.pdf) - Expert"
-msgstr ""
+msgstr "PDF-skjal (.pdf) - Ítarlegt"
 
 #: src/control/Control.NotebookbarCalc.js:314
 #: src/control/Control.NotebookbarDraw.js:315
 #: src/control/Control.NotebookbarImpress.js:416
 #: src/control/Control.NotebookbarWriter.js:369
 msgid "Rename"
-msgstr ""
+msgstr "Endurnefna"
 
 #: src/control/Control.NotebookbarCalc.js:650
 msgid "General"
@@ -1459,7 +1452,7 @@ msgstr "Þjöppuð ásýnd"
 #: src/control/Control.NotebookbarImpress.js:507
 #: src/control/Control.NotebookbarWriter.js:1475
 msgid "Collapse Tabs"
-msgstr ""
+msgstr "Fella flipa saman"
 
 #: src/control/Control.NotebookbarCalc.js:1282
 #: src/control/Control.NotebookbarDraw.js:409
@@ -1487,23 +1480,20 @@ msgstr "Laganir"
 #: src/control/Control.NotebookbarDraw.js:95
 #: src/control/Control.NotebookbarImpress.js:110
 #: src/control/Control.NotebookbarWriter.js:81
-#, fuzzy
 msgid "Table"
-msgstr "~Tafla"
+msgstr "Tafla"
 
 #: src/control/Control.NotebookbarDraw.js:241
 msgid "Image (.png)"
 msgstr "Mynd (.png)"
 
 #: src/control/Control.NotebookbarDraw.js:1028
-#, fuzzy
 msgid "Page Layout"
 msgstr "Framsetning síðu"
 
 #: src/control/Control.NotebookbarImpress.js:124
-#, fuzzy
 msgid "Master"
-msgstr "~Yfirsíða"
+msgstr "Yfirsíða"
 
 #: src/control/Control.NotebookbarImpress.js:300
 msgid "ODF Presentation (.odp)"
@@ -1515,9 +1505,8 @@ msgid "Presentation"
 msgstr "Kynning"
 
 #: src/control/Control.NotebookbarWriter.js:75
-#, fuzzy
 msgid "Form"
-msgstr "Spjallsvæði"
+msgstr "Innfylliform"
 
 #: src/control/Control.NotebookbarWriter.js:259
 msgid "ODF Text Document (.odt)"
@@ -1669,15 +1658,15 @@ msgstr "Valhamur: óvirkur"
 
 #: src/control/Control.StatusBar.js:566
 msgid "Set Language for All text"
-msgstr ""
+msgstr "Stilla tungumál fyrir allan texta"
 
 #: src/control/Control.StatusBar.js:569
 msgid "Set Language for Paragraph"
-msgstr ""
+msgstr "Stilla tungumál fyrir málsgrein"
 
 #: src/control/Control.StatusBar.js:570
 msgid "Set Language for Selection"
-msgstr ""
+msgstr "Stilla tungumál á vali"
 
 #: src/control/Control.Tabs.js:54
 msgid "Insert sheet before this"
@@ -1729,7 +1718,7 @@ msgstr ""
 
 #: src/control/Control.TopToolbar.js:98
 msgid "Active Sheet"
-msgstr ""
+msgstr "Virkt blað"
 
 #: src/control/Control.TopToolbar.js:111
 msgid "Default Style"
@@ -1749,7 +1738,7 @@ msgstr "Setja inn tengilínur"
 
 #: src/control/Control.TopToolbar.js:253
 msgid "Hide Menu"
-msgstr ""
+msgstr "Fela valmynd"
 
 #: src/control/Control.UserList.js:11
 msgid "%user has joined"
@@ -1938,7 +1927,7 @@ msgstr ""
 
 #: src/control/Permission.js:18 src/control/Permission.js:19
 msgid "Edit document"
-msgstr ""
+msgstr "Breyta skjali"
 
 #: src/control/Permission.js:76
 msgid "The document could not be locked, and is opened in read-only mode."
@@ -2086,11 +2075,11 @@ msgstr "ENDURLESA"
 
 #: src/core/Socket.js:586
 msgid "Cluster configuration warning"
-msgstr ""
+msgstr "Aðvörun varðandi uppsetningu klasa"
 
 #: src/core/Socket.js:589
 msgid "Wrong server, reconnecting..."
-msgstr ""
+msgstr "Rangur netþjónn, endurtengist..."
 
 #: src/core/Socket.js:596
 msgid "COOLWSD version:"
@@ -2109,9 +2098,8 @@ msgid "LOKit version:"
 msgstr "LOKit útgáfa:"
 
 #: src/core/Socket.js:727
-#, fuzzy
 msgid "Document is getting migrated"
-msgstr "Verið er að yfirfæra skjal..."
+msgstr "Verið er að yfirfæra skjal"
 
 #: src/core/Socket.js:754
 msgid "Session terminated by document owner"
@@ -2248,11 +2236,11 @@ msgstr "Netþjónninn hefur verið aftengdur."
 
 #: src/docstate.js:71
 msgid "Standard"
-msgstr ""
+msgstr "Staðlað"
 
 #: src/docstate.js:82
 msgid "Theme colors"
-msgstr ""
+msgstr "Litir í þema"
 
 #: src/errormessages.js:13
 msgid "No disk space left on server."
@@ -2517,7 +2505,7 @@ msgstr "Leysa athugasemdarunu"
 #: src/layer/tile/CommentListSection.ts:1166
 #: src/layer/tile/CommentListSection.ts:1202
 msgid "Autosaved"
-msgstr ""
+msgstr "Vistað sjálfvirkt"
 
 #: src/layer/tile/CommentSection.ts:264
 msgid "Open menu"
@@ -2550,7 +2538,7 @@ msgstr "Afritun úr skjalinu er ekki virk"
 
 #: src/map/Clipboard.js:238
 msgid "warning: copy/paste request timed out"
-msgstr ""
+msgstr "aðvörun: afrita/líma beiðni rann út á tíma"
 
 #: src/map/Clipboard.js:301
 msgid "Failed to download clipboard, please re-copy"
