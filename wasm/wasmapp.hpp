@@ -9,22 +9,6 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include <config.h>
-
-#include <chrono>
-#include <thread>
-
-#include <FakeSocket.hpp>
-#include <Kit.hpp>
-#include <Log.hpp>
-#include <COOLWSD.hpp>
-#include <Protocol.hpp>
-#include <SetupKitEnvironment.hpp>
-#include <Util.hpp>
-
-#include <LibreOfficeKit/LibreOfficeKit.hxx>
-#include <Poco/Base64Encoder.h>
-
 #if WASMAPP
 #include <emscripten.h>
 #include <emscripten/bind.h>
