@@ -9,7 +9,14 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#include <config.h>
+
 #include "wasmapp.hpp"
+
+#include <FakeSocket.hpp>
+#include <Log.hpp>
+#include <COOLWSD.hpp>
+#include <Util.hpp>
 
 #include "base64.hpp"
 #include <emscripten/fetch.h>
