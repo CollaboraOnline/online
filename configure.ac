@@ -866,6 +866,9 @@ dnl ENABLE_WASM means that we are building the WASM "app" that will run locally 
 dnl client when necessary. ENABLE_WASM_FALLBACK and ENABLE_WASM can't both be on simultaneously.
 
 AM_CONDITIONAL([ENABLE_WASM], [test "$host_os" = "emscripten"])
+AS_IF([test "$host_os" = "emscripten"],
+      [AC_DEFINE([WASMAPP],1,[Define to 1 if this is the WASM app build.])],
+      [AC_DEFINE([WASMAPP],0,[Define to 1 if this is the WASM app build.])])
 
 MAX_CONNECTIONS=9999
 AS_IF([test -n "$with_max_connections" && test "$with_max_connections" -gt "0"],

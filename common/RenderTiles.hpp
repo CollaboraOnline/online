@@ -42,7 +42,7 @@ public:
           _running(false)
     {
         int maxConcurrency = 2;
-#ifdef __EMSCRIPTEN__
+#if WASMAPP
         // Leave it at that.
 #elif MOBILEAPP && !defined(GTKAPP)
         maxConcurrency = std::max<int>(std::thread::hardware_concurrency(), 2);
