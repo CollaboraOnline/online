@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-11-24 19:14+0200\n"
-"PO-Revision-Date: 2023-06-12 08:54+0000\n"
+"PO-Revision-Date: 2023-11-29 05:17+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <https://hosted.weblate.org/projects/"
 "collabora-online/help/is/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n % 10 != 1 || n % 100 == 11;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 5.3-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:19-5
 msgid "Keyboard Shortcuts"
@@ -590,7 +590,7 @@ msgstr "Fara í byrjun línu"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:222-68
 #: html/cool-help.html%2Bdiv.div.table.tr.td:279-68
 msgid "Home"
-msgstr "Home"
+msgstr "Heim"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:80-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:223-18
