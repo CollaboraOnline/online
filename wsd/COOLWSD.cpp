@@ -11,10 +11,12 @@
 
 #include <config.h>
 #include <config_version.h>
-#include <stdexcept>
+
 #include "COOLWSD.hpp"
 #include "ProofKey.hpp"
+#if ENABLE_FEATURE_LOCK
 #include "CommandControl.hpp"
+#endif
 #include "HostUtil.hpp"
 
 /* Default host used in the start test URI */
@@ -63,6 +65,7 @@
 #include <map>
 #include <mutex>
 #include <sstream>
+#include <stdexcept>
 #include <string>
 #include <thread>
 #include <unordered_map>
