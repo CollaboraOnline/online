@@ -25,7 +25,7 @@
 #include <LibreOfficeKit/LibreOfficeKit.hxx>
 #include <Poco/Base64Encoder.h>
 
-#ifdef __EMSCRIPTEN__
+#if WASMAPP
 #include <emscripten.h>
 #include <emscripten/bind.h>
 #include <emscripten/html5.h>
