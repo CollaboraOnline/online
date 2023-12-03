@@ -2358,6 +2358,13 @@ void COOLWSD::innerInitialize(Application& self)
     setenv("SAL_LOG", salLog.c_str(), 0);
 #endif
 
+#if WASMAPP
+    // In WASM, we want to log to the Log Console.
+    // Disable logging to file to log to stdout and
+    // disable color since this isn't going to the terminal.
+    constexpr bool withColor = false;
+    constexpr bool logToFile = false;
+#else
     const bool withColor = getConfigValue<bool>(conf, "logging.color", true) && isatty(fileno(stderr));
     if (withColor)
     {
@@ -2393,6 +2400,7 @@ void COOLWSD::innerInitialize(Application& self)
                       << std::endl;
         }
     }
+#endif
 
     // Log at trace level until we complete the initialization.
     LogLevelStartup = getConfigValue<std::string>(conf, "logging.level_startup", "trace");
