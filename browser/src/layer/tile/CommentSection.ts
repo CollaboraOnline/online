@@ -146,13 +146,6 @@ export class Comment extends CanvasSectionObject {
 			},
 			this);
 
-		if ((<any>window).mode.isDesktop()) {
-			L.DomEvent.on(this.sectionProperties.container, {
-				mousewheel: this.map.scrollHandler._onWheelScroll,
-				MozMousePixelScroll: L.DomEvent.preventDefault
-			}, this.map.scrollHandler);
-		}
-
 		this.update();
 
 		this.pendingInit = false;
