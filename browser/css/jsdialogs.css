@@ -1893,3 +1893,8 @@ kbd,
 #PivotTableLayout #box2 {
 	grid-gap: 12px; /* make space for vertical separator */
 }
+
+/* Modal info with 2 line message*/
+.jsdialog-container [id^='info-modal-label'] {
+	display: flex;
+}
