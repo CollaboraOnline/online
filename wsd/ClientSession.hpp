@@ -190,6 +190,7 @@ public:
     void addTileOnFly(const TileDesc& tile);
     void clearTilesOnFly();
     size_t getTilesOnFlyCount() const { return _tilesOnFly.size(); }
+    size_t getTilesOnFlyUpperLimit() const;
     void removeOutdatedTilesOnFly();
     size_t countIdenticalTilesOnFly(const TileDesc& tile) const;
 

@@ -43,6 +43,7 @@
 
 using namespace COOLProtocol;
 
+static constexpr float TILES_ON_FLY_MIN_UPPER_LIMIT = 10.0;
 static constexpr int SYNTHETIC_COOL_PID_OFFSET = 10000000;
 
 using Poco::Path;
@@ -2346,6 +2347,29 @@ void ClientSession::clearTilesOnFly()
     _tilesOnFly.clear();
 }
 
+size_t ClientSession::getTilesOnFlyUpperLimit() const
+{
+    // How many tiles we have on the visible area, set the upper limit accordingly
+    Util::Rectangle normalizedVisArea = getNormalizedVisibleArea();
+
+    float tilesOnFlyUpperLimit = 0;
+    if (normalizedVisArea.hasSurface() && getTileWidthInTwips() != 0 && getTileHeightInTwips() != 0)
+    {
+        const int tilesFitOnWidth = std::ceil(normalizedVisArea.getRight() / getTileWidthInTwips()) -
+                                    std::ceil(normalizedVisArea.getLeft() / getTileWidthInTwips()) + 1;
+        const int tilesFitOnHeight = std::ceil(normalizedVisArea.getBottom() / getTileHeightInTwips()) -
+                                     std::ceil(normalizedVisArea.getTop() / getTileHeightInTwips()) + 1;
+        const int tilesInVisArea = tilesFitOnWidth * tilesFitOnHeight;
+
+        tilesOnFlyUpperLimit = std::max(TILES_ON_FLY_MIN_UPPER_LIMIT, tilesInVisArea * 1.1f);
+    }
+    else
+    {
+        tilesOnFlyUpperLimit = 200; // Have a big number here to get all tiles requested by file opening
+    }
+    return tilesOnFlyUpperLimit;
+}
+
 void ClientSession::removeOutdatedTilesOnFly()
 {
     // Check only the beginning of the list, tiles are ordered by timestamp
@@ -2454,6 +2478,7 @@ void ClientSession::onDisconnect()
 void ClientSession::dumpState(std::ostream& os)
 {
     Session::dumpState(os);
+    const std::shared_ptr<DocumentBroker> docBroker = _docBroker.lock();
 
     os << "\t\tisLive: " << isLive()
        << "\n\t\tisViewLoaded: " << isViewLoaded()
@@ -2471,7 +2496,11 @@ void ClientSession::dumpState(std::ostream& os)
        << "\n\t\tclipboardKeys[1]: " << _clipboardKeys[1]
        << "\n\t\tclip sockets: " << _clipSockets.size()
        << "\n\t\tproxy access:: " << _proxyAccess
-       << "\n\t\tclientSelectedMode: " << _clientSelectedMode;
+       << "\n\t\tclientSelectedMode: " << _clientSelectedMode
+       << "\n\t\tonFlyCount: " << getTilesOnFlyCount()
+       << "\n\t\tonFlyUpperLimit: " << getTilesOnFlyUpperLimit()
+       << "\n\t\trequestedTiles: " << getRequestedTiles().size()
+       << "\n\t\tbeingRendered: " << (!docBroker ? -1 : docBroker->tileCache().countTilesBeingRenderedForSession(client_from_this(), std::chrono::steady_clock::now()));
 
     if (_protocol)
     {
