@@ -3610,8 +3610,11 @@ bool DocumentBroker::forwardToChild(const std::shared_ptr<ClientSession>& sessio
 
     ASSERT_CORRECT_THREAD();
     LOG_ASSERT_MSG(session, "Must have a valid ClientSession");
-    LOG_ASSERT_MSG(_sessions.find(session->getId()) != _sessions.end(),
-                   "ClientSession must be known");
+    if (_sessions.find(session->getId()) == _sessions.end())
+    {
+        LOG_WRN("ClientSession must be known");
+        return false;
+    }
 
     // Ignore userinactive, useractive message until document is loaded
     if (!isLoaded() && (message == "userinactive" || message == "useractive"))
