@@ -3,7 +3,7 @@
  * L.Control.Dialog used for displaying alerts
  */
 
-/* global _ sanitizeUrl */
+/* global _ sanitizeUrl JSDialog */
 L.Control.AlertDialog = L.Control.extend({
 	onAdd: function (map) {
 		// TODO: Better distinction between warnings and errors
@@ -49,6 +49,18 @@ L.Control.AlertDialog = L.Control.extend({
 
 					window.open(url, '_blank');
 				});
+		} else if (e.cmd == 'paste' && e.kind == 'network' && e.code == 24581) {
+			var id = 'paste_network_access_error';
+			if (JSDialog.shouldShowAgain(id)) {
+				this._map.uiManager.showInfoModal(id, '',
+					_('It seems you have copied a selection that includes external images.'),
+					_('Downloading external resources is forbidden but pasting images is still possible. Please right click in the image, choose "Copy Image" and paste it into the document instead.'),
+					_('Don\'t show this again'), function() {
+						JSDialog.setShowAgain(id, false);
+						return false; // Close modal
+					},
+					/* with cancel */ true);
+			}
 		} else if (e.cmd && e.kind) {
 			this._map.fire('hidebusy');
 

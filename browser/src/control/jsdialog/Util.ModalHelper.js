@@ -60,7 +60,25 @@ function enableButtonInModal(id, buttonId, enable) {
 	sendJSON(json);
 }
 
+// check if user already set 'do not show again' option for a modal
+function shouldShowAgain(id) {
+	var showAgain = true;
+	if (window.isLocalStorageAllowed) {
+		var state = localStorage.getItem('UIShowAgain_' + id);
+		if (state === 'false')
+			showAgain = false;
+	}
+	return showAgain;
+}
+
+function setShowAgain(id, state) {
+	if (window.isLocalStorageAllowed)
+		localStorage.setItem('UIShowAgain_' + id, !state ? 'false' : 'true');
+}
+
 JSDialog.generateModalId = generateModalId;
 JSDialog.sendJSON = sendJSON;
 JSDialog.setMessageInModal = setMessageInModal;
 JSDialog.enableButtonInModal = enableButtonInModal;
+JSDialog.shouldShowAgain = shouldShowAgain;
+JSDialog.setShowAgain = setShowAgain;
