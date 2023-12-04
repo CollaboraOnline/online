@@ -3198,6 +3198,12 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined, bool 
     // Drop duplicated tiles, but use newer version number
     else
     {
+        // Make sure that the old request has the same normalizedviewid with the new request.
+        for (size_t i = 0; i < requestedTiles.size(); i++) {
+            if (requestedTiles[i].getNormalizedViewId() != session->getCanonicalViewId())
+                requestedTiles[i].setNormalizedViewId(session->getCanonicalViewId());
+        }
+
         for (const auto& newTile : tileCombined.getTiles())
         {
             bool tileFound = false;
