@@ -44,6 +44,14 @@ namespace
 /// Tracks the number of thread-local buffers (for debugging purposes).
 std::atomic_int32_t ThreadLocalBufferCount(0);
 
+#if WASMAPP
+/// In WASM, stdout works best.
+constexpr int LOG_FILE_FD = STDOUT_FILENO;
+#else
+/// By default, write to stderr.
+constexpr int LOG_FILE_FD = STDERR_FILENO;
+#endif
+
 } // namespace
 
 namespace Log
@@ -64,7 +72,7 @@ namespace Log
             for (; i < size;)
             {
                 int wrote;
-                while ((wrote = ::write(STDERR_FILENO, data + i, size - i)) < 0 && errno == EINTR)
+                while ((wrote = ::write(LOG_FILE_FD, data + i, size - i)) < 0 && errno == EINTR)
                 {
                 }
 
