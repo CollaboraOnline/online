@@ -213,6 +213,8 @@ var unoCommandsArray = {
 	'FunctionDialog':{spreadsheet:{menu:_('~Function...'),},},
 	'GoalSeekDialog':{spreadsheet:{menu:_('~Goal Seek...'),},},
 	'GraphicDialog':{text:{menu:_('~Properties...'),},},
+	'GridUse':{global:{menu:_('Snap to Grid'),},},
+	'GridVisible':{global:{context:_('Display Grid'),menu:_('~Display Grid'),},},
 	'Group':{global:{menu:_('~Group...'),},},
 	'GroupOutlineMenu':{spreadsheet:{menu:_('~Group and Outline'),},},
 	'GroupSparklines':{spreadsheet:{menu:_('Group Sparklines'),},},

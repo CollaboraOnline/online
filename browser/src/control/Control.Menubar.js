@@ -429,6 +429,9 @@ L.Control.Menubar = L.Control.extend({
 				   {name: _('Reset zoom'), id: 'zoomreset', type: 'action'},
 				]).concat([
 				   {type: 'separator'},
+				   {uno: '.uno:GridVisible', name: _UNO('.uno:GridVisible')},
+				   {uno: '.uno:GridUse', name: _UNO('.uno:GridUse')},
+				   {type: 'separator'},
 				   {name: _('Toggle UI Mode'), id: 'toggleuimode', type: 'action'},
 				   {name: _('Show Ruler'), id: 'showruler', type: 'action'},
 				   {name: _('Show Status Bar'), id: 'showstatusbar', type: 'action'},
@@ -576,6 +579,9 @@ L.Control.Menubar = L.Control.extend({
 					{name: _UNO('.uno:ZoomMinus', 'presentation'), id: 'zoomout', type: 'action'},
 					{name: _('Reset zoom'), id: 'zoomreset', type: 'action'},
 				]).concat([
+					{type: 'separator'},
+					{uno: '.uno:GridVisible', name: _UNO('.uno:GridVisible')},
+					{uno: '.uno:GridUse', name: _UNO('.uno:GridUse')},
 					{type: 'separator'},
 					{name: _('Toggle UI Mode'), id: 'toggleuimode', type: 'action'},
 					{name: _('Dark Mode'), id: 'toggledarktheme', type: 'action'},

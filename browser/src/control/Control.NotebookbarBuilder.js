@@ -127,7 +127,6 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 
 		/*Draw Home Tab*/
 		this._toolitemHandlers['.uno:ObjectAlign'] = function() {};
-		this._toolitemHandlers['.uno:GridVisible'] = function() {};
 
 		/*Graphic Tab*/
 		this._toolitemHandlers['.uno:Crop'] = function() {};

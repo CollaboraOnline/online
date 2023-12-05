@@ -4202,6 +4202,10 @@ L.CanvasTileLayer = L.Layer.extend({
 					this._graphicSelectionTwips.min.x + deltaPos.x,
 					this._graphicSelectionTwips.min.y + deltaPos.y);
 
+				if (this._snapToGrid) {
+					console.log('SnapToGrid');
+				}
+
 				var size = this._graphicSelectionTwips.getSize();
 
 				if (calcRTL) {
