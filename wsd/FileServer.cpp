@@ -1254,10 +1254,16 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     // addHeader('Cross-Origin-Opener-Policy', 'same-origin');
     // addHeader('Cross-Origin-Embedder-Policy', 'require-corp');
     // then we seem to have to have this to avoid
-    // NS_ERROR_DOM_CORP_FAILED
-    oss << "Cross-Origin-Opener-Policy: same-origin\r\n";
-    oss << "Cross-Origin-Embedder-Policy: require-corp\r\n";
-    oss << "Cross-Origin-Resource-Policy: cross-origin\r\n";
+    // NS_ERROR_DOM_CORP_FAILED.
+    //
+    // We expect richdocuments to require these headers if our
+    // capabilities shows hasWASMSupport
+    if (COOLWSD::WASMState != COOLWSD::WASMActivationState::Disabled)
+    {
+        oss << "Cross-Origin-Opener-Policy: same-origin\r\n";
+        oss << "Cross-Origin-Embedder-Policy: require-corp\r\n";
+        oss << "Cross-Origin-Resource-Policy: cross-origin\r\n";
+    }
 
     const bool wasm = (relPath.find("wasm") != std::string::npos);
     if (wasm)
