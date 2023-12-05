@@ -2336,6 +2336,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			parentContainer);
 	},
 
+	_isStringCloseToURL : function(str) {
+		return str.indexOf('http') !== -1;
+	},
+
 	_makeIdUnique: function(id) {
 		var counter = 0;
 		var found = document.querySelector('[id="' + id + '"]');
@@ -2410,8 +2414,15 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				button.setAttribute('aria-haspopup', true);
 
 			var buttonImage = L.DomUtil.create('img', '', button);
-			var icon = data.icon ? data.icon : builder._createIconURL(data.command);
-			L.LOUtil.setImage(buttonImage, icon.split('/').pop(), builder.map);
+			if (data.icon) {
+				this._isStringCloseToURL(data.icon) ? buttonImage.src = data.icon : L.LOUtil.setImage(buttonImage, data.icon, builder.map);
+			}
+			else if (data.image) {
+				buttonImage.src =  data.image;
+			}
+			else {
+				L.LOUtil.setImage(buttonImage, builder._createIconURL(data.command), builder.map);
+			}
 
 			controls['button'] = button;
 			if (builder.options.noLabelsForUnoButtons !== true) {
