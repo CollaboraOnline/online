@@ -205,6 +205,18 @@
             });
       }
 
+      // Wrap the message execution to catch exceptions
+      function executeMessage() {
+          try {
+              Execute(
+                  document.getElementById('execute-message').value,
+                  JSON.parse(document.getElementById('execute-param').value)
+              );
+          } catch(e) {
+              console.error("Execute message error:", e);
+          }
+      }
+
       function Execute(messageId, values) {
         post({'MessageId': messageId, 'Values': values});
       }
@@ -474,7 +486,7 @@
                 <textarea name="execute-param" id="execute-param">{}</textarea>
               </div>
             </div>
-            <button onclick="Execute(document.getElementById('execute-message').value, JSON.parse(document.getElementById('execute-param').value)); return false;">Execute</button>
+            <button onclick="executeMessage(); return false;">Execute</button>
           </form>
         </div>
       </div>
