@@ -752,7 +752,7 @@ export class Comment extends CanvasSectionObject {
 			return;
 		}
 
-		if (this.isAnyEdit()) {
+		if (Comment.isAnyEdit()) {
 			return;
 		}
 
@@ -947,7 +947,7 @@ export class Comment extends CanvasSectionObject {
 		       (this.sectionProperties.nodeReply && this.sectionProperties.nodeReply.style.display !== 'none');
 	}
 
-	public isAnyEdit (): boolean {
+	public static isAnyEdit (): boolean {
 		var commentList = app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).sectionProperties.commentList;
 		for (var i in commentList) {
 			var modifyNode = commentList[i].sectionProperties.nodeModify;
