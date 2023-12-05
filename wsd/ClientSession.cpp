@@ -2379,8 +2379,7 @@ size_t ClientSession::getTilesOnFlyUpperLimit() const
 void ClientSession::removeOutdatedTilesOnFly()
 {
     // Check only the beginning of the list, tiles are ordered by timestamp
-    bool continueLoop = true;
-    while(!_tilesOnFly.empty() && continueLoop)
+    while(!_tilesOnFly.empty())
     {
         auto tileIter = _tilesOnFly.begin();
         const auto elapsedTimeMs = std::chrono::duration_cast<std::chrono::milliseconds>(
@@ -2393,7 +2392,7 @@ void ClientSession::removeOutdatedTilesOnFly()
             _tilesOnFly.erase(tileIter);
         }
         else
-            continueLoop = false;
+            break;
     }
 }
 
