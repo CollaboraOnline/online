@@ -737,7 +737,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 									},
 									{
 										'id': 'home-color',
-										'class': '.unospan-FontColor',
+										'class': 'unospan-FontColor',
 										'type': 'toolitem',
 										'text': _UNO('.uno:Color'),
 										'command': '.uno:Color',
