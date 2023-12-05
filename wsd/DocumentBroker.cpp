@@ -3353,8 +3353,7 @@ void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& se
         std::size_t delayedTiles = 0;
         std::vector<TileDesc> tilesNeedsRendering;
         bool allSamePartAndSize = true;
-        std::size_t beingRendered = _tileCache->countTilesBeingRenderedForSession(session, now);
-        while (session->getTilesOnFlyCount() + beingRendered < tilesOnFlyUpperLimit &&
+        while (session->getTilesOnFlyCount() < tilesOnFlyUpperLimit &&
               !requestedTiles.empty() &&
               // If we delayed all tiles we don't send any tile (we will when next tileprocessed message arrives)
               delayedTiles < requestedTiles.size())
@@ -3405,8 +3404,7 @@ void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& se
                     tilesNeedsRendering.push_back(tile);
                     _debugRenderedTileCount++;
                 }
-                if (tileCache().subscribeToTileRendering(tile, session, now))
-                    beingRendered++;
+                tileCache().subscribeToTileRendering(tile, session, now);
             }
             requestedTiles.pop_front();
         }
