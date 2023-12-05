@@ -78,10 +78,10 @@ TRACEEVENT name=<name> ph=<letter> ts=<timestamp> <more parameters>... [ args=<J
     between the beginning of the thing being timed and the time when
     the 'X' message was emitted, also in microseconds.
 
-tileprocessed tile=<tileid1,tileid2,...>
+tileprocessed wids=<wid1,wid2,...>
 
     Previously sent tile (server -> client) arrived and processed by the client.
-    Each tileid has the next structure : <selected part>:<tile x coord>:<tile y coord>:<tile width in twips>:<tile height in twips>
+    We send a list of wire-ids back for tiles that have been received.
 
 downloadas name=<fileName> id=<id> format=<document format> options=<SkipImages, etc>
 
