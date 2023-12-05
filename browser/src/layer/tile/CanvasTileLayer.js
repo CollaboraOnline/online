@@ -7092,10 +7092,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	_queueAcknowledgement: function (tileMsgObj) {
 		// Queue acknowledgment, that the tile message arrived
-		var mode = (tileMsgObj.mode !== undefined) ? tileMsgObj.mode : 0;
-		var tileID = tileMsgObj.part + ':' + mode + ':' + tileMsgObj.x + ':' + tileMsgObj.y + ':'
-		    + tileMsgObj.tileWidth + ':' + tileMsgObj.tileHeight + ':' + tileMsgObj.nviewid;
-		this._queuedProcessed.push(tileID);
+		this._queuedProcessed.push(+tileMsgObj.wireId);
 	},
 
 	_onTileMsg: function (textMsg, img) {
@@ -7177,12 +7174,8 @@ L.CanvasTileLayer = L.Layer.extend({
 	_sendProcessedResponse: function() {
 		var toSend = this._queuedProcessed;
 		this._queuedProcessed = [];
-		if (toSend.length > 0) {
-			var msg = 'tileprocessed tile=' + toSend[0];
-			for (var i = 1; i < toSend.length; ++i)
-				msg += ',' + toSend[i];
-			app.socket.sendMessage(msg);
-		}
+		if (toSend.length > 0)
+			app.socket.sendMessage('tileprocessed wids=' + toSend.join(','));
 		if (this._fetchKeyframeQueue.length > 0)
 		{
 			window.app.console.warn('re-fetching prematurely GCd keyframes');

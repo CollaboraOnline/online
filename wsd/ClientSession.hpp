@@ -187,11 +187,11 @@ public:
     std::deque<TileDesc>& getRequestedTiles() { return _requestedTiles; }
 
     /// Mark a new tile as sent
-    void addTileOnFly(const TileDesc& tile);
+    void addTileOnFly(TileWireId wireId);
     size_t getTilesOnFlyCount() const { return _tilesOnFly.size(); }
     size_t getTilesOnFlyUpperLimit() const;
     void removeOutdatedTilesOnFly();
-    size_t countIdenticalTilesOnFly(const TileDesc& tile) const;
+    void onTileProcessed(TileWireId wireId);
 
     Util::Rectangle getVisibleArea() const { return _clientVisibleArea; }
     /// Visible area can have negative value as position, but we have tiles only in the positive range
@@ -323,8 +323,6 @@ private:
     /// ClientSession::postProcessCopyPayload().
     void preProcessSetClipboardPayload(std::string& payload);
 
-    void onTileProcessed(const std::string_view tileID);
-
 private:
     std::weak_ptr<DocumentBroker> _docBroker;
 
@@ -398,8 +396,8 @@ private:
     /// Rotating clipboard remote access identifiers - protected by GlobalSessionMapMutex
     std::string _clipboardKeys[2];
 
-    /// TileID's of the sent tiles. Push by sending and pop by tileprocessed message from the client.
-    std::vector<std::pair<std::string, std::chrono::steady_clock::time_point>> _tilesOnFly;
+    /// wire-ids's of the in-flight tiles. Push by sending and pop by tileprocessed message from the client.
+    std::vector<std::pair<TileWireId, std::chrono::steady_clock::time_point>> _tilesOnFly;
 
     /// Requested tiles are stored in this list, before we can send them to the client
     std::deque<TileDesc> _requestedTiles;

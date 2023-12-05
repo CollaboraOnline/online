@@ -332,18 +332,18 @@ void ClientSession::handleClipboardRequest(DocumentBroker::ClipboardRequest     
     }
 }
 
-void ClientSession::onTileProcessed(const std::string_view tileID)
+void ClientSession::onTileProcessed(TileWireId wireId)
 {
     auto iter = std::find_if(_tilesOnFly.begin(), _tilesOnFly.end(),
-    [&tileID](const std::pair<std::string, std::chrono::steady_clock::time_point>& curTile)
+    [wireId](const std::pair<TileWireId, std::chrono::steady_clock::time_point>& curTile)
     {
-        return curTile.first == tileID;
+        return curTile.first == wireId;
     });
 
     if(iter != _tilesOnFly.end())
         _tilesOnFly.erase(iter);
     else
-        LOG_INF("Tileprocessed message with an unknown tile ID '" << tileID << "' from session " << getId());
+        LOG_INF("Tileprocessed message with an unknown wire-id '" << wireId << "' from session " << getId());
 }
 
 bool ClientSession::_handleInput(const char *buffer, int length)
@@ -852,9 +852,9 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     }
     else if (tokens.equals(0, "tileprocessed"))
     {
-        std::string tileIDs;
+        std::string wids;
         if (tokens.size() != 2 ||
-            !getTokenString(tokens[1], "tile", tileIDs))
+            !getTokenString(tokens[1], "wids", wids))
         {
             // Be forgiving and log instead of disconnecting.
             // sendTextFrameAndLogError("error: cmd=tileprocessed kind=syntax");
@@ -864,10 +864,15 @@ bool ClientSession::_handleInput(const char *buffer, int length)
 
         // call onTileProcessed on each tileID of tileid1, tileid2, ...
         auto lambda = [this](size_t /*nIndex*/, const std::string_view token){
-            onTileProcessed(token);
+            std::string copy(token);
+            TileWireId wireId = 0; bool res;
+            std::tie(wireId, res) = Util::i32FromString(copy);
+            if (!res)
+                LOG_WRN("Invalid syntax for tileprocessed wireid '" << token << "'");
+            onTileProcessed(wireId);
             return false;
         };
-        StringVector::tokenize_foreach(lambda, tileIDs.data(), tileIDs.size(), ',');
+        StringVector::tokenize_foreach(lambda, wids.data(), wids.size(), ',');
 
         docBroker->sendRequestedTiles(client_from_this());
         return true;
@@ -2317,7 +2322,8 @@ void ClientSession::enqueueSendMessage(const std::shared_ptr<Message>& data)
     if (data->firstTokenMatches("tile:") ||
         data->firstTokenMatches("delta:"))
     {
-        // Avoid sending tile if it has the same wireID as the previously sent tile
+        // Avoid sending tile or delta if it has the same wireID as the
+        // previously sent tile
         tile = std::make_unique<TileDesc>(TileDesc::parse(data->firstLine()));
     }
 
@@ -2327,12 +2333,12 @@ void ClientSession::enqueueSendMessage(const std::shared_ptr<Message>& data)
 
     // Track sent tile
     if (tile && sizeBefore != newSize)
-        addTileOnFly(*tile);
+        addTileOnFly(tile->getWireId());
 }
 
-void ClientSession::addTileOnFly(const TileDesc& tile)
+void ClientSession::addTileOnFly(TileWireId wireId)
 {
-    _tilesOnFly.emplace_back(tile.generateID(), std::chrono::steady_clock::now());
+    _tilesOnFly.emplace_back(wireId, std::chrono::steady_clock::now());
 }
 
 size_t ClientSession::getTilesOnFlyUpperLimit() const
@@ -2376,18 +2382,6 @@ void ClientSession::removeOutdatedTilesOnFly()
         else
             break;
     }
-}
-
-std::size_t ClientSession::countIdenticalTilesOnFly(const TileDesc& tile) const
-{
-    std::size_t count = 0;
-    const std::string tileID = tile.generateID();
-    for (const auto& tileItem : _tilesOnFly)
-    {
-        if (tileItem.first == tileID)
-            ++count;
-    }
-    return count;
 }
 
 Util::Rectangle ClientSession::getNormalizedVisibleArea() const
@@ -2496,10 +2490,17 @@ void ClientSession::dumpState(std::ostream& os)
         os << "\n\t\tsent/keystroke: " << (double)sent/_keyEvents << "bytes";
     }
 
+    os << "\n\t\ttilesOnFly: " << _tilesOnFly.size();
+    for (auto const &it : _tilesOnFly) {
+        const auto elapsedTimeMs = std::chrono::duration_cast<std::chrono::milliseconds>(
+            std::chrono::steady_clock::now() - it.second);
+        os << "\n\t\t\t" << it.first << " - since " << elapsedTimeMs << " ms";
+    }
+
     os << '\n';
     _senderQueue.dumpState(os);
 
-    // FIXME: need to dump the _tilesOnFly and other bits ...
+    // FIXME: need to dump other bits ...
 }
 
 const std::string &ClientSession::getOrCreateProxyAccess()

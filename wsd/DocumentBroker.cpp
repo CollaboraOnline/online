@@ -3350,26 +3350,12 @@ void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& se
     std::deque<TileDesc>& requestedTiles = session->getRequestedTiles();
     if (!requestedTiles.empty() && hasTileCache())
     {
-        std::size_t delayedTiles = 0;
         std::vector<TileDesc> tilesNeedsRendering;
         bool allSamePartAndSize = true;
-        while (session->getTilesOnFlyCount() < tilesOnFlyUpperLimit &&
-              !requestedTiles.empty() &&
-              // If we delayed all tiles we don't send any tile (we will when next tileprocessed message arrives)
-              delayedTiles < requestedTiles.size())
+        while (!requestedTiles.empty() &&
+               session->getTilesOnFlyCount() < tilesOnFlyUpperLimit)
         {
             TileDesc& tile = *(requestedTiles.begin());
-
-            // We already sent out two versions of the same tile, let's not send the third one
-            // until we get a tileprocessed message for this specific tile.
-            if (session->countIdenticalTilesOnFly(tile) >= 2)
-            {
-                LOG_DBG("Requested tile " << tile.getWireId() << " was delayed (already sent a version)!");
-                requestedTiles.push_back(requestedTiles.front());
-                requestedTiles.pop_front();
-                delayedTiles += 1;
-                continue;
-            }
 
             // Satisfy as many tiles from the cache.
             Tile cachedTile = _tileCache->lookupTile(tile);
