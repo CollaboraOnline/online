@@ -2863,6 +2863,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						{
 							'id': 'ContextContainer',
 							'type': 'tabcontrol',
+							'noCoreEvents': true,
 							'text': '',
 							'enabled': 'true',
 							'selected': selectedPage,
