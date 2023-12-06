@@ -4235,6 +4235,8 @@ void DocumentBroker::onUrpMessage(const char* data, size_t len)
     }
 }
 
+#if !MOBILEAPP && !WASMAPP
+
 void DocumentBroker::switchMode(const std::string& mode)
 {
     if (mode == "online")
@@ -4297,6 +4299,8 @@ void DocumentBroker::endSwitchingToOnline()
 
     endActivity();
 }
+
+#endif // !MOBILEAPP && !WASMAPP
 
 // not beautiful - but neither is editing mobile project files.
 #if MOBILEAPP
