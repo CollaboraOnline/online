@@ -367,7 +367,7 @@ L.Map.include({
 		var allowedCommands = ['.uno:Save', '.uno:WordCountDialog',
 			'.uno:Signature', '.uno:ShowResolvedAnnotations',
 			'.uno:ToolbarMode?Mode:string=notebookbar_online.ui', '.uno:ToolbarMode?Mode:string=Default',
-			'.uno:ExportToEPUB', '.uno:ExportToPDF', '.uno:ExportDirectToPDF'];
+			'.uno:ExportToEPUB', '.uno:ExportToPDF', '.uno:ExportDirectToPDF', '.uno:MoveKeepInsertMode'];
 		if (this.isPermissionEditForComments()) {
 			allowedCommands.push('.uno:InsertAnnotation','.uno:DeleteCommentThread', '.uno:DeleteAnnotation', '.uno:DeleteNote',
 				'.uno:DeleteComment', '.uno:ReplyComment', '.uno:ReplyToAnnotation', '.uno:ResolveComment',
