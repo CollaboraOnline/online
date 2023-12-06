@@ -86,7 +86,7 @@ void ProxyRequestHandler::handleRequest(const std::string& relPath,
                 }
             };
 
-    sessionProxy->setFinishedHandler(proxyCallback);
+    sessionProxy->setFinishedHandler(std::move(proxyCallback));
     if (!sessionProxy->asyncRequest(requestProxy, *COOLWSD::getWebServerPoll()))
     {
         HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, socket);
