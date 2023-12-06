@@ -1371,7 +1371,7 @@ void WopiStorage::uploadLocalFileToStorageAsync(const Authorization& auth, LockC
             asyncUploadCallback(AsyncUpload(AsyncUpload::State::Complete, res));
         };
 
-        _uploadHttpSession->setFinishedHandler(finishedCallback);
+        _uploadHttpSession->setFinishedHandler(std::move(finishedCallback));
 
         LOG_DBG(wopiLog << " async upload request: " << httpRequest.header().toString());
 

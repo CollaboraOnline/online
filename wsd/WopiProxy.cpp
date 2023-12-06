@@ -281,7 +281,7 @@ void WopiProxy::checkFileInfo(SocketPoll& poll, const std::string& url, const Po
         }
     };
 
-    _httpSession->setFinishedHandler(finishedCallback);
+    _httpSession->setFinishedHandler(std::move(finishedCallback));
 
     // Run the CheckFileInfo request on the WebServer Poll.
     _httpSession->asyncRequest(httpRequest, poll);
@@ -377,7 +377,7 @@ void WopiProxy::download(SocketPoll& poll, const std::string& url, const Poco::U
         _socket->sendAndShutdown(response);
     };
 
-    _httpSession->setFinishedHandler(finishedCallback);
+    _httpSession->setFinishedHandler(std::move(finishedCallback));
 
     // Run the CheckFileInfo request on the WebServer Poll.
     _httpSession->asyncRequest(httpRequest, poll);
