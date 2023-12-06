@@ -67,6 +67,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		map.on('splitposchanged', this.setSplitCellFromPos, this);
 		map.on('commandstatechanged', this._onCommandStateChanged, this);
 		map.uiManager.initializeSpecializedUI('spreadsheet');
+		window.keyboard.hintOnscreenKeyboard(window.keyboard.onscreenKeyboardHint);
 	},
 
 	onAdd: function (map) {
@@ -391,6 +392,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			if (app.socket._reconnecting) {
 				app.socket.sendMessage('setclientpart part=' + this._selectedPart);
 				this._resetInternalState();
+				window.keyboard.hintOnscreenKeyboard(window.keyboard.onscreenKeyboardHint);
 			} else {
 				this._selectedPart = command.selectedPart;
 			}

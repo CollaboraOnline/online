@@ -264,6 +264,18 @@ window.app = {
 		// alternatively, maybe someone else (e.g. an integrator) knows more about the situation than we do. In this case, let's
 		// let them override our default
 		hintOnscreenKeyboard: function(hint) {
+			if (global.app
+					&& global.L.Map
+					&& global.L.Map.THIS._docLayer.isCalc()
+					&& hint !== undefined) {
+				var command = {
+					Enable: {
+						type: 'boolean',
+						value: hint
+					}
+				};
+				global.L.Map.THIS.sendUnoCommand('.uno:MoveKeepInsertMode', command);
+			}
 			global.keyboard.onscreenKeyboardHint = hint;
 		},
 	};
