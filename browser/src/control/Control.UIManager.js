@@ -1134,6 +1134,7 @@ L.Control.UIManager = L.Control.extend({
 		};
 	},
 
+	/// DEPRECATED: use JSDialog.showInfoModalWithOptions instead
 	/// shows simple info modal (message + ok button)
 	/// id - id of a dialog
 	/// title - title of a dialog
