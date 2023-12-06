@@ -1050,6 +1050,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         _auth.resetAccessToken(tokens[1]);
         return true;
     }
+#if !MOBILEAPP && !WASMAPP
     else if (tokens.equals(0, "switch_request"))
     {
         if (tokens.size() != 2)
@@ -1062,6 +1063,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         docBroker->switchMode(tokens[1]);
         return true;
     }
+#endif // !MOBILEAPP && !WASMAPP
     else if (tokens.equals(0, "outlinestate") ||
              tokens.equals(0, "downloadas") ||
              tokens.equals(0, "getchildid") ||

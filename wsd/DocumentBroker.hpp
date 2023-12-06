@@ -562,8 +562,10 @@ public:
 
     void onUrpMessage(const char* data, size_t len);
 
+#if !MOBILEAPP && !WASMAPP
     /// Switch between Online and Offline modes.
     void switchMode(const std::string& mode);
+#endif // !MOBILEAPP && !WASMAPP
 
 private:
     /// Get the session that can write the document for save / locking / uploading.
@@ -605,6 +607,7 @@ private:
     /// with the child and cleans up ChildProcess etc.
     void terminateChild(const std::string& closeReason);
 
+#if !MOBILEAPP && !WASMAPP
     /// Invoked to switch from Online to Offline mode.
     void startSwitchingToOffline();
     /// Finish switching to Offline.
@@ -614,6 +617,7 @@ private:
     void startSwitchingToOnline();
     /// Finish switching to Online.
     void endSwitchingToOnline();
+#endif // !MOBILEAPP && !WASMAPP
 
     /// Encodes whether or not saving is possible
     /// (regardless of whether we need to or not).
@@ -1342,8 +1346,10 @@ private:
                    Conflict, //< The document is conflicted in storaged.
                    Save, //< The document is being saved, manually or auto-save.
                    Upload, //< The document is being uploaded to storage.
+#if !MOBILEAPP && !WASMAPP
                    SwitchingToOffline, //< The document will switch to Offline mode.
                    SwitchingToOnline, //< The document will switch to Online mode.
+#endif // !MOBILEAPP && !WASMAPP
         );
 
         STATE_ENUM(Disconnected,
