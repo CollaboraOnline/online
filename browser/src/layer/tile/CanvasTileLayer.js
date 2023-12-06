@@ -5157,8 +5157,8 @@ L.CanvasTileLayer = L.Layer.extend({
 				} else if (e.layer === this._debugTrace) {
 					app.socket.setTraceEventLogging(true);
 				} else if (e.layer === this._debugLogging) {
-					L.Log.print();
 					window.setLogging(true);
+					L.Log.print();
 				} else if (e.layer === this._debugTileDumping) {
 					app.socket.sendMessage('toggletiledumping true');
 				}
