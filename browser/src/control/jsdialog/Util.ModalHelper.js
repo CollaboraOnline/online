@@ -76,9 +76,29 @@ function setShowAgain(id, state) {
 		localStorage.setItem('UIShowAgain_' + id, !state ? 'false' : 'true');
 }
 
+// helper to avoid using long list of optional parameters
+function showInfoModalWithOptions(id, options) {
+	if (app.map) {
+		var title = options.title;
+		var message1 = options.messages.length ? options.messages[0] : undefined;
+		var message2 = options.messages.length > 1 ? options.messages[1] : undefined;
+		//TODO: handle dynamic number of options.messages
+		var buttonText = options.buttons.length ? options.buttons[0].text : undefined;
+		var callback = options.buttons.length ? options.buttons[0].callback : undefined;
+		//TODO: handle dynamic number of buttons with callback
+		var withCancel = options.withCancel;
+		var focusId = options.focusId;
+
+		// TODO: move showInfoModal internals here
+		app.map.uiManager.showInfoModal(id, title, message1, message2, buttonText,
+			callback, withCancel, focusId);
+	}
+}
+
 JSDialog.generateModalId = generateModalId;
 JSDialog.sendJSON = sendJSON;
 JSDialog.setMessageInModal = setMessageInModal;
 JSDialog.enableButtonInModal = enableButtonInModal;
 JSDialog.shouldShowAgain = shouldShowAgain;
 JSDialog.setShowAgain = setShowAgain;
+JSDialog.showInfoModalWithOptions = showInfoModalWithOptions;
