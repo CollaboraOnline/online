@@ -785,6 +785,7 @@ inline bool svgMatch(const std::string& testname, const std::vector<char>& respo
         TST_LOG_END;
 
         FILE *of = fopen(Poco::Path(TDOC, newName).toString().c_str(), "w");
+        LOK_ASSERT(of != nullptr);
         LOK_ASSERT(fwrite(response.data(), response.size(), 1, of) == response.size());
         fclose(of);
         return false;
