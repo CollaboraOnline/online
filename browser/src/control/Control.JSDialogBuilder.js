@@ -1210,9 +1210,12 @@ L.Control.JSDialogBuilder = L.Control.extend({
 					builder.wizard.setTabs(tabsContainer, builder);
 
 				tabs.forEach(function (tab, index) {
+					var eventHandler = builder._createTabClick(builder, index, tabs, contentDivs, tabIds);
 					tab.addEventListener('click', function(event) {
-						builder._createTabClick(builder, index, tabs, contentDivs, tabIds)(event);
-						builder.callback('tabcontrol', 'selecttab', tabWidgetRootContainer, index, builder);
+						eventHandler(event);
+						if (!data.noCoreEvents) {
+							builder.callback('tabcontrol', 'selecttab', tabWidgetRootContainer, index, builder);
+						}
 					});
 				});
 
