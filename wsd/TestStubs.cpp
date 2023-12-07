@@ -21,8 +21,6 @@
 
 void DocumentBroker::assertCorrectThread(const char*, int) const {}
 
-void ClientSession::traceTileBySend(const TileDesc& /*tile*/, bool /*deduplicated = false*/) {}
-
 void ClientSession::enqueueSendMessage(const std::shared_ptr<Message>& /*data*/) {};
 
 ClientSession::~ClientSession() = default;
