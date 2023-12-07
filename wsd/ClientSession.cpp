@@ -2378,14 +2378,14 @@ size_t ClientSession::getTilesOnFlyUpperLimit() const
     return tilesOnFlyUpperLimit;
 }
 
-void ClientSession::removeOutdatedTilesOnFly()
+void ClientSession::removeOutdatedTilesOnFly(const std::chrono::steady_clock::time_point &now)
 {
     // Check only the beginning of the list, tiles are ordered by timestamp
     while(!_tilesOnFly.empty())
     {
         auto tileIter = _tilesOnFly.begin();
-        const auto elapsedTimeMs = std::chrono::duration_cast<std::chrono::milliseconds>(
-            std::chrono::steady_clock::now() - tileIter->second);
+        const auto elapsedTimeMs = std::chrono::duration_cast<
+            std::chrono::milliseconds>(now - tileIter->second);
         if (elapsedTimeMs > std::chrono::milliseconds(TILE_ROUNDTRIP_TIMEOUT_MS))
         {
             LOG_WRN("Tracker tileID " << tileIter->first << " was dropped because of time out ("

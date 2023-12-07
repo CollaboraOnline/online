@@ -190,7 +190,7 @@ public:
     void addTileOnFly(TileWireId wireId);
     size_t getTilesOnFlyCount() const { return _tilesOnFly.size(); }
     size_t getTilesOnFlyUpperLimit() const;
-    void removeOutdatedTilesOnFly();
+    void removeOutdatedTilesOnFly(const std::chrono::steady_clock::time_point &now);
     void onTileProcessed(TileWireId wireId);
 
     Util::Rectangle getVisibleArea() const { return _clientVisibleArea; }
