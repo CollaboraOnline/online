@@ -768,7 +768,6 @@ bool ClientSession::_handleInput(const char *buffer, int length)
             }
 
             _clientVisibleArea = Util::Rectangle(x, y, width, height);
-            resetWireIdMap();
             return forwardToChild(std::string(buffer, length), docBroker);
         }
     }
@@ -786,7 +785,6 @@ bool ClientSession::_handleInput(const char *buffer, int length)
             else
             {
                 _clientSelectedPart = temp;
-                resetWireIdMap();
                 return forwardToChild(std::string(buffer, length), docBroker);
             }
         }
@@ -849,7 +847,6 @@ bool ClientSession::_handleInput(const char *buffer, int length)
             _tileHeightPixel = tilePixelHeight;
             _tileWidthTwips = tileTwipWidth;
             _tileHeightTwips = tileTwipHeight;
-            resetWireIdMap();
             return forwardToChild(std::string(buffer, length), docBroker);
         }
     }
@@ -1716,12 +1713,10 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
             if(getTokenInteger(tokens[1], "part", setPart))
             {
                 _clientSelectedPart = setPart;
-                resetWireIdMap();
             }
             else if (stringToInteger(tokens[1], setPart))
             {
                 _clientSelectedPart = setPart;
-                resetWireIdMap();
             }
             else
                 return false;
@@ -2099,7 +2094,6 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
                 if(getTokenInteger(tokens.getParam(token), "current", part))
                 {
                     _clientSelectedPart = part;
-                    resetWireIdMap();
                 }
 
                 int mode = 0;
@@ -2334,16 +2328,11 @@ void ClientSession::enqueueSendMessage(const std::shared_ptr<Message>& data)
     docBroker->ASSERT_CORRECT_THREAD();
 
     std::unique_ptr<TileDesc> tile;
-    if (data->firstTokenMatches("tile:"))
+    if (data->firstTokenMatches("tile:") ||
+        data->firstTokenMatches("delta:"))
     {
         // Avoid sending tile if it has the same wireID as the previously sent tile
         tile = std::make_unique<TileDesc>(TileDesc::parse(data->firstLine()));
-        auto iter = _oldWireIds.find(tile->generateID());
-        if(iter != _oldWireIds.end() && tile->getWireId() != 0 && tile->getWireId() == iter->second)
-        {
-            LOG_INF("WSD filters out a tile with the same wireID: " << tile->serialize("tile:"));
-            return;
-        }
     }
 
     LOG_TRC("Enqueueing client message " << data->id());
@@ -2351,10 +2340,8 @@ void ClientSession::enqueueSendMessage(const std::shared_ptr<Message>& data)
     std::size_t newSize = _senderQueue.enqueue(data);
 
     // Track sent tile
-    if (tile)
-    {
-        traceTileBySend(*tile, sizeBefore == newSize);
-    }
+    if (tile && sizeBefore != newSize)
+        addTileOnFly(*tile);
 }
 
 void ClientSession::addTileOnFly(const TileDesc& tile)
@@ -2627,12 +2614,13 @@ void ClientSession::handleTileInvalidation(const std::string& message,
                         {
                             invalidTiles.push_back(desc);
 
-                            TileWireId oldWireId = 0;
-                            auto iter = _oldWireIds.find(invalidTiles.back().generateID());
-                            if(iter != _oldWireIds.end())
-                                oldWireId = iter->second;
-
-                            invalidTiles.back().setOldWireId(oldWireId);
+                            TileWireId makeDelta = 1;
+                            // FIXME: mobile with no TileCache & flushed kit cache
+                            // FIXME: out of (a)sync kit vs. TileCache re: keyframes ?
+                            if (getDocumentBroker()->hasTileCache() &&
+                                !getDocumentBroker()->tileCache().lookupTile(desc))
+                                makeDelta = 0; // force keyframe
+                            invalidTiles.back().setOldWireId(makeDelta);
                             invalidTiles.back().setWireId(0);
                         }
                     }
@@ -2721,35 +2709,6 @@ bool ClientSession::isTileInsideVisibleArea(const TileDesc& tile) const
     }
 
     return false;
-}
-
-void ClientSession::resetWireIdMap()
-{
-    _oldWireIds.clear();
-}
-
-void ClientSession::traceTileBySend(const TileDesc& tile, bool deduplicated)
-{
-    const std::string tileID = tile.generateID();
-
-    // Store wireId first
-    auto iter = _oldWireIds.find(tileID);
-    if(iter != _oldWireIds.end())
-    {
-        iter->second = tile.getWireId();
-    }
-    else
-    {
-        // Track only tile inside the visible area
-        if(_clientVisibleArea.hasSurface() && isTileInsideVisibleArea(tile))
-        {
-            _oldWireIds.insert(std::pair<std::string, TileWireId>(tileID, tile.getWireId()));
-        }
-    }
-
-    // Record that the tile is sent
-    if (!deduplicated)
-        addTileOnFly(tile);
 }
 
 // This removes the <meta name="origin" ...> tag which was added in

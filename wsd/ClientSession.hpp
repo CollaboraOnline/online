@@ -214,13 +214,6 @@ public:
     int getTileWidthInTwips() const { return _tileWidthTwips; }
     int getTileHeightInTwips() const { return _tileHeightTwips; }
 
-    /// This method updates internal data related to sent tiles (wireID and tiles-on-fly)
-    /// Call this method anytime when a new tile is sent to the client
-    void traceTileBySend(const TileDesc& tile, bool deduplicated = false);
-
-    /// Clear wireId map anytime when client visible area changes (visible area, zoom, part number)
-    void resetWireIdMap();
-
     bool isTextDocument() const { return _isTextDocument; }
 
     void setThumbnailSession(const bool val) { _thumbnailSession = val; }
@@ -410,9 +403,6 @@ private:
 
     /// Requested tiles are stored in this list, before we can send them to the client
     std::deque<TileDesc> _requestedTiles;
-
-    /// Store wireID's of the sent tiles inside the actual visible area
-    std::map<std::string, TileWireId> _oldWireIds;
 
     /// Sockets to send binary selection content to
     std::vector<std::weak_ptr<StreamSocket>> _clipSockets;
