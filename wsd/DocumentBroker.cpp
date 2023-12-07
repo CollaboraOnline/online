@@ -3340,10 +3340,10 @@ void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& se
 
     size_t tilesOnFlyUpperLimit = session->getTilesOnFlyUpperLimit();
 
-    // Drop tiles which we are waiting for too long
-    session->removeOutdatedTilesOnFly();
-
     auto now = std::chrono::steady_clock::now();
+
+    // Drop tiles which we are waiting for too long
+    session->removeOutdatedTilesOnFly(now);
 
     // All tiles were processed on client side that we sent last time, so we can send
     // a new batch of tiles which was invalidated / requested in the meantime
