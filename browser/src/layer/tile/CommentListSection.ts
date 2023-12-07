@@ -1723,8 +1723,12 @@ export class CommentSection extends CanvasSectionObject {
 		}
 
 		lastY += this.containerObject.getDocumentTopLeft()[1];
-		if (lastY > app.file.size.pixels[1])
-			app.view.size.pixels[1] = lastY;
+		if (lastY > app.file.size.pixels[1]) {
+			if (app.view.size.pixels[1] !== lastY) {
+				app.view.size.pixels[1] = lastY;
+				this.onResize(); // Annotation goes beyond document and can't be scrolled further unless resized
+			  }
+		}
 		else
 			app.view.size.pixels[1] = app.file.size.pixels[1];
 	}
