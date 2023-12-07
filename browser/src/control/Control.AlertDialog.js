@@ -53,7 +53,7 @@ L.Control.AlertDialog = L.Control.extend({
 			var alertId = 'paste_network_access_error';
 			if (JSDialog.shouldShowAgain(alertId)) {
 				var alertOptions = {
-					title: '',
+					title: _('Copied external sources are not allowed'),
 					messages: [
 						_('It seems you have copied a selection that includes external images.'),
 						_('Downloading external resources is forbidden but pasting images is still possible. Please right click in the image, choose "Copy Image" and paste it into the document instead.')
@@ -67,7 +67,7 @@ L.Control.AlertDialog = L.Control.extend({
 							}
 						}
 					],
-					withCancel: true,
+					withCancel: false,
 					focusId: JSDialog.generateModalId(alertId) + '-cancel'
 				};
 
