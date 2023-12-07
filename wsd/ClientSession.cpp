@@ -2362,11 +2362,6 @@ void ClientSession::addTileOnFly(const TileDesc& tile)
     _tilesOnFly.emplace_back(tile.generateID(), std::chrono::steady_clock::now());
 }
 
-void ClientSession::clearTilesOnFly()
-{
-    _tilesOnFly.clear();
-}
-
 size_t ClientSession::getTilesOnFlyUpperLimit() const
 {
     // How many tiles we have on the visible area, set the upper limit accordingly

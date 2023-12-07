@@ -188,7 +188,6 @@ public:
 
     /// Mark a new tile as sent
     void addTileOnFly(const TileDesc& tile);
-    void clearTilesOnFly();
     size_t getTilesOnFlyCount() const { return _tilesOnFly.size(); }
     size_t getTilesOnFlyUpperLimit() const;
     void removeOutdatedTilesOnFly();
