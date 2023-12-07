@@ -1606,6 +1606,8 @@ export class CommentSection extends CanvasSectionObject {
 	}
 
 	private update (): void {
+		if (this.sectionProperties.commentList.length === 0)
+			return;
 		if (this.sectionProperties.docLayer._docType === 'text')
 			this.updateReplyCount();
 		this.layout();
