@@ -3,7 +3,7 @@
  * L.SVGGroup
  */
 
-/* global _ */
+/* global _ $ */
 
 L.SVGGroup = L.Layer.extend({
 
@@ -165,7 +165,7 @@ L.SVGGroup = L.Layer.extend({
 	_onDragStart: function(evt) {
 		if (!this._map || !this._dragShapePresent || !this.dragging)
 			return;
-		if (this._map._docLayer._cursorMarker && this._map._docLayer._cursorMarker.isVisible())
+		if (this._map._docLayer._cursorMarker && $('.leaflet-pane.leaflet-map-pane').css('cursor') === 'text')
 			return;
 		this._dragStarted = true;
 		this._moved = false;
