@@ -87,7 +87,7 @@ L.Control.JSDialog = L.Control.extend({
 	closeAll: function(leaveSnackbar) {
 		var dialogs = Object.keys(this.dialogs);
 		for (var i = 0; i < dialogs.length; i++) {
-			if (leaveSnackbar && dialogs[i] && dialogs[i].isSnackbar)
+			if (leaveSnackbar && dialogs[i] && dialogs[i] === 'snackbar')
 				continue;
 
 			this.close(dialogs[i], true);
