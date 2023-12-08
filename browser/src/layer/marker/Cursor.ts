@@ -74,7 +74,7 @@ class Cursor {
 	setMouseCursor() {
 		if (this.domAttached && this.container && this.container.querySelector('.blinking-cursor') !== null) {
 			if (this.map._docLayer._docType === 'presentation') {
-				$('.leaflet-interactive').css('cursor', 'text');
+				$('.leaflet-interactive').css('cursor', 'inherit');
 			} else {
 				$('.leaflet-pane.leaflet-map-pane').css('cursor', 'text');
 			}
@@ -82,7 +82,7 @@ class Cursor {
 	}
 	setMouseCursorForTextBox() {
 		if (this.domAttached && this.container && this.container.querySelector('.blinking-cursor') !== null) {
-			$('.leaflet-interactive').css('cursor', 'text');
+			$('.leaflet-interactive').css('cursor', 'inherit');
 		}
 	}
 

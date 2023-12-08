@@ -187,9 +187,6 @@
 
 /* cursors */
 
-.leaflet-interactive {
-	cursor: move;
-}
 .leaflet-crosshair,
 .leaflet-crosshair .leaflet-interactive {
 	cursor: crosshair;

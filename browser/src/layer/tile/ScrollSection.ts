@@ -552,7 +552,7 @@ export class ScrollSection extends CanvasSectionObject {
 	private hideVerticalScrollBar (): void {
 		if (this.sectionProperties.mouseIsOnVerticalScrollBar) {
 			this.sectionProperties.mouseIsOnVerticalScrollBar = false;
-			this.sectionProperties.mapPane.style.cursor = this.sectionProperties.defaultCursorStyle;
+			this.sectionProperties.mapPane.style.cursor = this.sectionProperties.mapPane.style.Lastcursor;
 
 			this.decreaseScrollBarThickness();
 
@@ -575,6 +575,7 @@ export class ScrollSection extends CanvasSectionObject {
 		if (!this.sectionProperties.mouseIsOnVerticalScrollBar) {
 			this.sectionProperties.drawVerticalScrollBar = true;
 			this.sectionProperties.mouseIsOnVerticalScrollBar = true;
+			this.sectionProperties.mapPane.style.Lastcursor = this.sectionProperties.mapPane.style.cursor;
 			this.sectionProperties.mapPane.style.cursor = 'pointer';
 
 			// Prevent Instant Mouse hover
@@ -592,7 +593,7 @@ export class ScrollSection extends CanvasSectionObject {
 	private hideHorizontalScrollBar (): void {
 		if (this.sectionProperties.mouseIsOnHorizontalScrollBar) {
 			this.sectionProperties.mouseIsOnHorizontalScrollBar = false;
-			this.sectionProperties.mapPane.style.cursor = this.sectionProperties.defaultCursorStyle;
+			this.sectionProperties.mapPane.style.cursor = this.sectionProperties.mapPane.style.Lastcursor;
 
 			this.decreaseScrollBarThickness();
 
@@ -615,6 +616,7 @@ export class ScrollSection extends CanvasSectionObject {
 		if (!this.sectionProperties.mouseIsOnHorizontalScrollBar) {
 			this.sectionProperties.drawHorizontalScrollBar = true;
 			this.sectionProperties.mouseIsOnHorizontalScrollBar = true;
+			this.sectionProperties.mapPane.style.Lastcursor = this.sectionProperties.mapPane.style.cursor;
 			this.sectionProperties.mapPane.style.cursor = 'pointer';
 
 			// Prevent Instant Mouse hover

@@ -2572,8 +2572,8 @@ L.CanvasTileLayer = L.Layer.extend({
 		textMsg = textMsg.substring(14); // "mousepointer: "
 		textMsg = Cursor.getCustomCursor(textMsg) || textMsg;
 		var mapPane = $('.leaflet-pane.leaflet-map-pane');
-		if (mapPane.css('cursor') !== textMsg) {
-			mapPane.css('cursor', textMsg);
+		if (mapPane[0].style.cursor !== textMsg) {
+			mapPane[0].style.setProperty('cursor', textMsg, 'important');
 		}
 	},
 
