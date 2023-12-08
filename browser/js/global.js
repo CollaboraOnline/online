@@ -256,7 +256,7 @@ window.app = {
 		// Instead, let's just guess
 		guessOnscreenKeyboard: function() {
 			if (global.keyboard.onscreenKeyboardHint != undefined) return global.keyboard.onscreenKeyboardHint;
-			return window.ThisIsAMobileApp || global.mode.isMobile() || global.mode.isTablet();
+			return (window.ThisIsAMobileApp && !window.ThisIsTheEmscriptenApp) || global.mode.isMobile() || global.mode.isTablet();
 			// It's better to guess that more devices will have an onscreen keyboard than reality,
 			// because calc becomes borderline unusable if you miss a device that pops up an onscreen keyboard which covers
 			// a sizeable portion of the screen
