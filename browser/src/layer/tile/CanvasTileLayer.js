@@ -25,6 +25,11 @@ function hex2string(inData)
 	return hexified.join('');
 }
 
+function clamp(num, min, max)
+{
+	return Math.min(Math.max(num, min), max);
+}
+
 // CStyleData is used to obtain CSS property values from style data
 // stored in DOM elements in the form of custom CSS properties/variables.
 var CStyleData = L.Class.extend({
@@ -3835,7 +3840,6 @@ L.CanvasTileLayer = L.Layer.extend({
 			return;
 		}
 
-		var cursorPos = this._visibleCursor.getNorthWest();
 		var docLayer = this._map._docLayer;
 
 		if (!zoom
@@ -3850,13 +3854,28 @@ L.CanvasTileLayer = L.Layer.extend({
 			// Cursor invalidation should take most precedence among all the scrolling to follow the cursor
 			// so here we disregard all the pending scrolling
 			this._map._docLayer._painter._sectionContainer.getSectionWithName(L.CSections.Scroll.name).pendingScrollEvent = null;
+			var correctedCursor = this._visibleCursor;
+
+			if (this._docType === 'text') {
+				// For Writer documents, disallow scrolling to cursor outside of the page (horizontally)
+				// Use document dimensions to approximate page width
+				var documentLatLngBounds = new L.LatLngBounds(
+					this._twipsToLatLng(new L.Point(0, 0), this._map.getZoom()),
+					this._twipsToLatLng(new L.Point(this._docWidthTwips - 1, 0), this._map.getZoom()));
+				var correctedWest = clamp(correctedCursor.getWest(), documentLatLngBounds.getWest(), documentLatLngBounds.getEast());
+				var correctedEast = clamp(correctedCursor.getEast(), documentLatLngBounds.getWest(), documentLatLngBounds.getEast());
+				correctedCursor = new L.LatLngBounds(
+					new L.LatLng(correctedCursor.getSouth(), correctedWest),
+					new L.LatLng(correctedCursor.getNorth(), correctedEast));
+			}
+
 			var paneRectsInLatLng = this.getPaneLatLngRectangles();
-			if (!this._visibleCursor.isInAny(paneRectsInLatLng)) {
+			if (!correctedCursor.isInAny(paneRectsInLatLng)) {
 				if (!(this._selectionHandles.start && this._selectionHandles.start.isDragged) &&
 				    !(this._selectionHandles.end && this._selectionHandles.end.isDragged) &&
 				    !(docLayer._followEditor || docLayer._followUser) &&
 				    !this._map.calcInputBarHasFocus()) {
-					this.scrollToPos(cursorPos);
+					this.scrollToPos(correctedCursor.getNorthWest());
 				}
 			}
 		}
