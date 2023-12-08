@@ -9,14 +9,14 @@ L.Map.mergeOptions({
 
 L.Map.DoubleClickZoom = L.Handler.extend({
 	addHooks: function () {
-		this._map.on('dblclick', window.touch.mouseOnly(this._onDoubleClick), this);
+		this._map.on('dblclick', this._onDoubleClick, this);
 	},
 
 	removeHooks: function () {
-		this._map.off('dblclick', window.touch.mouseOnly(this._onDoubleClick), this);
+		this._map.off('dblclick', this._onDoubleClick, this);
 	},
 
-	_onDoubleClick: function (e) {
+	_onDoubleClick: window.touch.mouseOnly(function (e) {
 		var map = this._map,
 		    oldZoom = map.getZoom(),
 		    zoom = e.originalEvent.shiftKey ? Math.ceil(oldZoom) - 1 : Math.floor(oldZoom) + 1;
@@ -26,5 +26,5 @@ L.Map.DoubleClickZoom = L.Handler.extend({
 		} else {
 			map.setZoomAround(e.containerPoint, zoom);
 		}
-	}
+	})
 });

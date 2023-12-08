@@ -137,9 +137,9 @@ L.Control.Ruler = L.Control.extend({
 			self._moveIndentationEnd(event);
 		}));
 
-		L.DomEvent.on(this._firstLineMarker, 'mousedown', this._initiateIndentationDrag, this);
-		L.DomEvent.on(this._pStartMarker, 'mousedown', this._initiateIndentationDrag, this);
-		L.DomEvent.on(this._pEndMarker, 'mousedown', this._initiateIndentationDrag, this);
+		L.DomEvent.on(this._firstLineMarker, 'mousedown', window.touch.mouseOnly(this._initiateIndentationDrag), this);
+		L.DomEvent.on(this._pStartMarker, 'mousedown', window.touch.mouseOnly(this._initiateIndentationDrag), this);
+		L.DomEvent.on(this._pEndMarker, 'mousedown', window.touch.mouseOnly(this._initiateIndentationDrag), this);
 	},
 
 	_initLayout: function() {

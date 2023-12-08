@@ -48,7 +48,7 @@ function longPressOnDocument(posX, posY) {
 			var eventOptions = {
 				force: true,
 				button: 0,
-				pointerType: 'touch',
+				pointerType: 'mouse',
 				x: posX - items[0].getBoundingClientRect().left,
 				y: posY - items[0].getBoundingClientRect().top
 			};
@@ -348,7 +348,7 @@ function deleteImage() {
 	var eventOptions = {
 		force: true,
 		button: 0,
-		pointerType: 'touch'
+		pointerType: 'mouse'
 	};
 
 	cy.cGet('.leaflet-control-buttons-disabled > .leaflet-interactive')

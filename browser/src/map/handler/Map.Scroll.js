@@ -14,11 +14,12 @@ L.Map.mergeOptions({
 });
 
 L.Map.Scroll = L.Handler.extend({
+	_mouseOnlyPreventDefault: window.touch.mouseOnly(L.DomEvent.preventDefault),
 	addHooks: function () {
 		L.DomEvent.on(this._map._container, {
 			wheel: this._onWheelScroll,
 			mousewheel: this._onWheelScroll,
-			MozMousePixelScroll: L.DomEvent.preventDefault
+			MozMousePixelScroll: this._mouseOnlyPreventDefault
 		}, this);
 
 		this._delta = 0;
@@ -37,7 +38,7 @@ L.Map.Scroll = L.Handler.extend({
 	removeHooks: function () {
 		L.DomEvent.off(this._map._container, {
 			mousewheel: this._onWheelScroll,
-			MozMousePixelScroll: L.DomEvent.preventDefault
+			MozMousePixelScroll: this._mouseOnlyPreventDefault
 		}, this);
 		if (!this._map.touchGesture) {
 			L.DomEvent.off(this._map._container, {
@@ -47,12 +48,12 @@ L.Map.Scroll = L.Handler.extend({
 		}
 	},
 
-	_onTouchScrollStart: this.touch.mouseOnly(function (e) {
+	_onTouchScrollStart: window.touch.mouseOnly(function (e) {
 		this.lastX = e.touches[0].clientX;
 		this.lastY = e.touches[0].clientY;
 	}),
 
-	_onTouchScroll: this.touch.mouseOnly(function (e) {
+	_onTouchScroll: window.touch.mouseOnly(function (e) {
 		var top = e.touches[0].clientY;
 		var start = e.touches[0].clientX;
 		var deltaX = (start - this.lastX);
@@ -75,7 +76,7 @@ L.Map.Scroll = L.Handler.extend({
 		this._timer = setTimeout(L.bind(this._performScroll, this), left);
 	}),
 
-	_onWheelScroll: this.touch.mouseOnly(function (e) {
+	_onWheelScroll: window.touch.mouseOnly(function (e) {
 		var delta =  -1 * e.deltaY; // L.DomEvent.getWheelDelta(e);
 		var debounce = this._map.options.wheelDebounceTime;
 

@@ -9,7 +9,16 @@ L.SVGGroup = L.Layer.extend({
 
 	options: {
 		noClip: true,
+		manualDrag: window.touch.isTouchEvent,
 	},
+
+	noManualDrag: window.memo.decorator(function(f) {
+		return function(e) {
+			if (!this.options.manualDrag(e)) {
+				return f.apply(this, arguments);
+			}
+		};
+	}),
 
 	initialize: function (bounds, options) {
 		L.setOptions(this, options);
@@ -171,10 +180,10 @@ L.SVGGroup = L.Layer.extend({
 		this._moved = false;
 
 		this._forEachDragShape(function (dragShape) {
-			L.DomEvent.on(dragShape, 'mousemove', this._onDrag, this);
-			L.DomEvent.on(dragShape, 'mouseup', this._onDragEnd, this);
+			L.DomEvent.on(dragShape, 'mousemove', this.noManualDrag(this._onDrag), this);
+			L.DomEvent.on(dragShape, 'mouseup', this.noManualDrag(this._onDragEnd), this);
 			if (this.dragging.constraint)
-				L.DomEvent.on(dragShape, 'mouseout', this._onDragEnd, this);
+				L.DomEvent.on(dragShape, 'mouseout', this.noManualDrag(this._onDragEnd), this);
 		}.bind(this));
 
 		var data = {
@@ -207,10 +216,10 @@ L.SVGGroup = L.Layer.extend({
 			return;
 
 		this._forEachDragShape(function (dragShape) {
-			L.DomEvent.off(dragShape, 'mousemove', this._onDrag, this);
-			L.DomEvent.off(dragShape, 'mouseup', this._onDragEnd, this);
+			L.DomEvent.off(dragShape, 'mousemove', this.noManualDrag(this._onDrag), this);
+			L.DomEvent.off(dragShape, 'mouseup', this.noManualDrag(this._onDragEnd), this);
 			if (this.dragging.constraint)
-				L.DomEvent.off(dragShape, 'mouseout', this._onDragEnd, this);
+				L.DomEvent.off(dragShape, 'mouseout', this.noManualDrag(this._onDragEnd), this);
 		}.bind(this));
 
 		this._moved = false;
@@ -224,7 +233,7 @@ L.SVGGroup = L.Layer.extend({
 			this.fire('graphicmoveend', {pos: pos});
 		}
 
-		if (window.touch.isTouchEvent(evt) || evt.type === 'mouseup')
+		if (this.options.manualDrag(evt) || evt.type === 'mouseup')
 			this.dragging._onDragEnd(evt);
 		this._dragStarted = false;
 	},
@@ -284,7 +293,7 @@ L.SVGGroup = L.Layer.extend({
 			nodeData.setCustomField('dragShape', rectNode);
 			this._dragShapePresent = true;
 
-			L.DomEvent.on(rectNode, 'mousedown', this._onDragStart, this);
+			L.DomEvent.on(rectNode, 'mousedown', this.noManualDrag(this._onDragStart), this);
 		}.bind(this));
 
 		this.sizeSVG();

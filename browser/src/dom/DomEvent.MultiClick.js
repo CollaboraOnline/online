@@ -41,7 +41,9 @@ L.extend(L.DomEvent, {
 					clientX: e.clientX,
 					clientY: e.clientY,
 					button: e.button,
-					target: e.target
+					target: e.target,
+					pointerType: e.pointerType,
+					isMouseEvent: e instanceof MouseEvent
 				};
 
 				handler(eOut);
