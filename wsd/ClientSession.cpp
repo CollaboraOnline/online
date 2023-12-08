@@ -335,9 +335,9 @@ void ClientSession::handleClipboardRequest(DocumentBroker::ClipboardRequest     
 void ClientSession::onTileProcessed(TileWireId wireId)
 {
     auto iter = std::find_if(_tilesOnFly.begin(), _tilesOnFly.end(),
-    [wireId](const std::pair<TileWireId, std::chrono::steady_clock::time_point>& curTile)
+        [wireId](const TileInFlight& curTile)
     {
-        return curTile.first == wireId;
+        return curTile._wireId == wireId;
     });
 
     if(iter != _tilesOnFly.end())
@@ -2333,8 +2333,8 @@ void ClientSession::enqueueSendMessage(const std::shared_ptr<Message>& data)
     docBroker->ASSERT_CORRECT_THREAD();
 
     std::unique_ptr<TileDesc> tile;
-    if (data->firstTokenMatches("tile:") ||
-        data->firstTokenMatches("delta:"))
+    bool isDelta = data->firstTokenMatches("delta:");
+    if (isDelta || data->firstTokenMatches("tile:"))
     {
         // Avoid sending tile or delta if it has the same wireID as the
         // previously sent tile
@@ -2347,12 +2347,10 @@ void ClientSession::enqueueSendMessage(const std::shared_ptr<Message>& data)
 
     // Track sent tile
     if (tile && sizeBefore != newSize)
-        addTileOnFly(tile->getWireId());
-}
-
-void ClientSession::addTileOnFly(TileWireId wireId)
-{
-    _tilesOnFly.emplace_back(wireId, std::chrono::steady_clock::now());
+    {
+        TileInFlight tif = { tile->getWireId(), (int)data->size(), isDelta, std::chrono::steady_clock::now() };
+        _tilesOnFly.emplace_back(tif);
+    }
 }
 
 size_t ClientSession::getTilesOnFlyUpperLimit() const
@@ -2383,18 +2381,16 @@ void ClientSession::removeOutdatedTilesOnFly(const std::chrono::steady_clock::ti
     // Check only the beginning of the list, tiles are ordered by timestamp
     while(!_tilesOnFly.empty())
     {
-        auto tileIter = _tilesOnFly.begin();
+        auto it = _tilesOnFly.begin();
         const auto elapsedTimeMs = std::chrono::duration_cast<
-            std::chrono::milliseconds>(now - tileIter->second);
-        if (elapsedTimeMs > std::chrono::milliseconds(TILE_ROUNDTRIP_TIMEOUT_MS))
-        {
-            LOG_WRN("Tracker tileID " << tileIter->first << " was dropped because of time out ("
-                                      << elapsedTimeMs
-                                      << "). Tileprocessed message did not arrive in time.");
-            _tilesOnFly.erase(tileIter);
-        }
-        else
+            std::chrono::milliseconds>(now - it->_sentTime);
+        if (elapsedTimeMs <= std::chrono::milliseconds(TILE_ROUNDTRIP_TIMEOUT_MS))
             break;
+
+        LOG_WRN("Tracker tileID " << it->_wireId << " of size " << it->_size <<
+                " was dropped because of time out (" << elapsedTimeMs <<
+                "). Tileprocessed message did not arrive in time.");
+        _tilesOnFly.erase(it);
     }
 }
 
@@ -2507,8 +2503,9 @@ void ClientSession::dumpState(std::ostream& os)
     os << "\n\t\ttilesOnFly: " << _tilesOnFly.size();
     for (auto const &it : _tilesOnFly) {
         const auto elapsedTimeMs = std::chrono::duration_cast<std::chrono::milliseconds>(
-            std::chrono::steady_clock::now() - it.second);
-        os << "\n\t\t\t" << it.first << " - since " << elapsedTimeMs << " ms";
+            std::chrono::steady_clock::now() - it._sentTime);
+        os << "\n\t\t\t" << it._wireId << " " << it._size << " bytes "
+           << (it._isDelta ? "delta":"tile") << " since " << elapsedTimeMs << " ms";
     }
 
     os << '\n';

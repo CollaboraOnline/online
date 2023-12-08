@@ -187,7 +187,6 @@ public:
     std::deque<TileDesc>& getRequestedTiles() { return _requestedTiles; }
 
     /// Mark a new tile as sent
-    void addTileOnFly(TileWireId wireId);
     size_t getTilesOnFlyCount() const { return _tilesOnFly.size(); }
     size_t getTilesOnFlyUpperLimit() const;
     void removeOutdatedTilesOnFly(const std::chrono::steady_clock::time_point &now);
@@ -396,8 +395,15 @@ private:
     /// Rotating clipboard remote access identifiers - protected by GlobalSessionMapMutex
     std::string _clipboardKeys[2];
 
-    /// wire-ids's of the in-flight tiles. Push by sending and pop by tileprocessed message from the client.
-    std::vector<std::pair<TileWireId, std::chrono::steady_clock::time_point>> _tilesOnFly;
+    /// Details of in-flight tiles being sent to the client browser
+    struct TileInFlight {
+        TileWireId _wireId;
+        int        _size : 31;
+        bool       _isDelta : 1;
+        std::chrono::steady_clock::time_point _sentTime;
+    };
+    /// Pushed by sending and pop by tileprocessed message from the client.
+    std::vector<TileInFlight> _tilesOnFly;
 
     /// Requested tiles are stored in this list, before we can send them to the client
     std::deque<TileDesc> _requestedTiles;
