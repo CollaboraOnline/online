@@ -38,7 +38,7 @@ These examples assume that the git repo is in $GITREPO, the build
 directory in $BUILDDIR and the tarball download cache in
 $EXTSOURCES - adjust these to your preferences.
 
-    podman run -v $GITREPO:$GITREPO:ro -v $BUILDDIR:$BUILDDIR -v $EXTSOURCES:/ext_sources:rw --security-opt=label=disable -ti public.ecr.aws/allotropia/libo-builders/wasm /bin/bash -c "source /home/builder/emsdk/emsdk_env.sh && cd $BUILDDIR/ && $GITREPO/autogen.sh --with-external-tar=/ext_sources --with-distro=LibreOfficeWASM32"
+    podman run -v $GITREPO:$GITREPO:ro -v $BUILDDIR:$BUILDDIR -v $EXTSOURCES:/ext_sources:rw --security-opt=label=disable -ti public.ecr.aws/allotropia/libo-builders/wasm /bin/bash -c "source /home/builder/emsdk/emsdk_env.sh && cd $BUILDDIR/ && $GITREPO/autogen.sh --with-external-tar=/ext_sources --with-distro=CPWASM-LOKit"
 
     podman run -v $GITREPO:$GITREPO:ro -v $BUILDDIR:$BUILDDIR -v $EXTSOURCES:/ext_sources:rw --security-opt=label=disable -ti public.ecr.aws/allotropia/libo-builders/wasm /bin/bash -c "source /home/builder/emsdk/emsdk_env.sh && cd $BUILDDIR/ && make -rj8"
 
