@@ -193,7 +193,8 @@ L.Map.include({
 	_enterEditMode: function (perm) {
 		this._permission = perm;
 
-		this.dragging.disable();
+		this.dragging.disable(); // FIXME: before unification, this was only called when not on a touch device.
+		// It would be better to split dragging.disable into a touch version and a mouse version but this looks like it will require a major rework of its own...
 
 		if ((window.mode.isMobile() || window.mode.isTablet()) && this._textInput && this.getDocType() === 'text') {
 			this._textInput.setSwitchedToEditMode();

@@ -268,35 +268,95 @@ window.app = {
 		},
 	};
 
+	global.memo = {
+		_lastId: 0,
+
+		/// This does pretty much the same as L.stamp. We can't use L.stamp because it's not yet in-scope by the first time we want to call global.memo.decorator
+		/// If you are able to use L.stamp instead, you probably should
+		_getId: function(obj) {
+			if (obj === null || obj === undefined) {
+				return '' + obj;
+			}
+			if (!('_coolMemoId' in obj)) {
+				obj['_coolMemoId'] = ++global.memo._lastId;
+			}
+			return obj._coolMemoId;
+		},
+
+		_decoratorMemo: {},
+
+		/// A decorator factory, which takes a decorator and prevents it from creating new instances when wrapping the same function
+		/// This is particularly useful for functions that take events, say, as .on and .off won't work properly if you don't provide the same function instance
+		decorator: function(decorator, context) {
+			var decoratorId = global.memo._getId(decorator);
+			var contextId = global.memo._getId(context);
+
+			return function(f) {
+				var functionId = global.memo._getId(f);
+
+				if (global.memo._decoratorMemo[decoratorId + ' ' + contextId + ' ' + functionId] === undefined) {
+					global.memo._decoratorMemo[decoratorId + ' ' + contextId + ' ' + functionId] = decorator.apply(this, arguments);
+
+					if (context !== null && context !== undefined) {
+						global.memo._decoratorMemo[decoratorId + ' ' + contextId + ' ' + functionId] = global.memo._decoratorMemo[decoratorId + ' ' + contextId + ' ' + functionId].bind(context);
+					}
+				}
+
+				return global.memo._decoratorMemo[decoratorId + ' ' + contextId + ' ' + functionId];
+			};
+		},
+
+		_bindMemo: {},
+
+		/// A decorator, which takes a function and binds it to an object
+		/// Similar to L.bind, but when given the same function and context we will return the previously bound function
+		bind: function(f, context) {
+			var functionId = global.memo._getId(f);
+			var contextId = global.memo._getId(context);
+			if (global.memo._bindMemo[functionId + ' ' + contextId] === undefined) {
+				global.memo._bindMemo[functionId + ' ' + contextId] = f.bind(context);
+			}
+			return global.memo._bindMemo[functionId + ' ' + contextId];
+		}
+	};
+
 	global.touch = {
 		/// a touchscreen event handler, supports both DOM and hammer.js events
 		isTouchEvent: function(e) {
+			if (e.originalEvent) {
+				e = e.originalEvent;
+			}
+
 			if (L.Browser.cypressTest && global.L.Browser.mobile) {
 				return true; // As cypress tests on mobile tend to use "click" events instead of touches... we cheat to get them recognized as touch events
 			}
 
-			if (!e.pointerType) {
-				return !(e instanceof MouseEvent);
+			if (e.pointerType) {
+				return e.pointerType === 'touch' || e.pointerType === 'kinect';
 			}
 
-			return e.pointerType === 'touch' || e.pointerType == 'pen' || e.pointerType == 'kinect';
+			if (e.isMouseEvent !== undefined) {
+				return !e.isMouseEvent;
+			}
+
+			return !(e instanceof MouseEvent);
 		},
 
 		/// a decorator that only runs the function if the event is a touch event
-		touchOnly: function(f) {
+		touchOnly: global.memo.decorator(function(f) {
 			return function(e) {
 				if (!global.touch.isTouchEvent(e)) return;
 				return f.apply(this, arguments);
 			};
-		},
+		}),
 
 		/// a decorator that only runs the function if the event is not a touch event
-		mouseOnly: function(f) {
+		mouseOnly: global.memo.decorator(function(f) {
 			return function(e) {
 				if (global.touch.isTouchEvent(e)) return;
 				return f.apply(this, arguments);
 			};
-		},
+		}),
 
 		/// detect if the primary pointing device is of limited accuracy (generally a touchscreen)
 		/// you shouldn't use this for determining the behavior of an event (use isTouchEvent instead), but this may

@@ -39,7 +39,7 @@ L.Map.Mouse = L.Handler.extend({
 		right: 2
 	},
 
-	_onMouseEvent: function (e) {
+	_onMouseEvent: window.touch.mouseOnly(function (e) {
 		if (this._map.uiManager.isUIBlocked())
 			return;
 
@@ -233,7 +233,7 @@ L.Map.Mouse = L.Handler.extend({
 			L.DomEvent.on(document, 'mousemove', this._onMouseMoveOutside, this);
 			L.DomEvent.on(document, 'mouseup', this._onMouseUpOutside, this);
 		}
-	},
+	}),
 
 	_executeMouseEvents: function () {
 		this._holdMouseEvent = null;
@@ -243,14 +243,14 @@ L.Map.Mouse = L.Handler.extend({
 		this._mouseEventsQueue = [];
 	},
 
-	_onMouseMoveOutside: function (e) {
+	_onMouseMoveOutside: window.touch.mouseOnly(function (e) {
 		this._map._handleDOMEvent(e);
 		if (this._map.dragging.enabled()) {
 			this._map.dragging._draggable._onMove(e);
 		}
-	},
+	}),
 
-	_onMouseUpOutside: function (e) {
+	_onMouseUpOutside: window.touch.mouseOnly(function (e) {
 		this._mouseDown = false;
 		L.DomEvent.off(document, 'mousemove', this._onMouseMoveOutside, this);
 		L.DomEvent.off(document, 'mouseup', this._onMouseUpOutside, this);
@@ -263,5 +263,5 @@ L.Map.Mouse = L.Handler.extend({
 		if (this._map.dragging.enabled()) {
 			this._map.dragging._draggable._onUp(e);
 		}
-	}
+	})
 });

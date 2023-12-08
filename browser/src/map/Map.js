@@ -137,12 +137,13 @@ L.Map = L.Evented.extend({
 
 		this.addHandler('keyboard', L.Map.Keyboard);
 		this.addHandler('dragging', L.Map.Drag);
-
-		this.addHandler('touchGesture', L.Map.TouchGesture);
-
+		this.dragging.disable(); // FIXME: before unification, this was only called when on a touch device or in a mobile cypress test
+		// It would be better to split dragging.disable into a touch version and a mouse version but this looks like it will require a major rework of its own...
 		this.addHandler('mouse', L.Map.Mouse);
 		this.addHandler('scrollHandler', L.Map.Scroll);
 		this.addHandler('doubleClickZoom', L.Map.DoubleClickZoom);
+		this.addHandler('touchGesture', L.Map.TouchGesture);
+		this.dragging._draggable._manualDrag = window.touch.isTouchEvent;
 
 		if (this.options.imagePath) {
 			L.Icon.Default.imagePath = this.options.imagePath;
@@ -1221,7 +1222,8 @@ L.Map = L.Evented.extend({
 
 		this._fadeAnimated = this.options.fadeAnimation && L.Browser.any3d;
 
-		L.DomUtil.addClass(container, 'leaflet-container leaflet-touch' +
+		L.DomUtil.addClass(container, 'leaflet-container' +
+			(window.touch.hasAnyTouchscreen() ? ' leaflet-touch' : '') +
 			(L.Browser.retina ? ' leaflet-retina' : '') +
 			(L.Browser.ielt9 ? ' leaflet-oldie' : '') +
 			(L.Browser.safari ? ' leaflet-safari' : '') +

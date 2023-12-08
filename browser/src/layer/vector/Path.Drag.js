@@ -62,6 +62,14 @@ L.Handler.PathDrag = L.Handler.extend(/** @lends  L.Path.Drag.prototype */ {
 
 	},
 
+	noManualDrag: function(f) {
+		if ('noManualDrag' in this._path) {
+			return this._path.noManualDrag(f);
+		} else {
+			return f;
+		}
+	},
+
 	/**
 	* Enable dragging
 	*/
@@ -86,8 +94,8 @@ L.Handler.PathDrag = L.Handler.extend(/** @lends  L.Path.Drag.prototype */ {
 
 		this._path.removeClass(L.Handler.PathDrag.DRAGGING_CLS);
 
-		L.DomEvent.off(document, 'mousemove touchmove', this._onDrag,    this);
-		L.DomEvent.off(document, 'mouseup touchend',    this._onDragEnd, this);
+		L.DomEvent.off(document, 'mousemove touchmove', this.noManualDrag(this._onDrag),    this);
+		L.DomEvent.off(document, 'mouseup touchend',    this.noManualDrag(this._onDragEnd), this);
 	},
 
 	/**
@@ -117,8 +125,8 @@ L.Handler.PathDrag = L.Handler.extend(/** @lends  L.Path.Drag.prototype */ {
 		this._path._renderer.addContainerClass('leaflet-interactive');
 
 		L.DomEvent
-			.on(document, MOVE[eventType], this._onDrag,    this)
-			.on(document, END[eventType],  this._onDragEnd, this);
+		 .on(document, MOVE[eventType], this.noManualDrag(this._onDrag),    this)
+		 .on(document, END[eventType],  this.noManualDrag(this._onDragEnd), this);
 
 		if (this._path._map.dragging.enabled()) {
 			// I guess it's required because mousedown gets simulated with a delay
@@ -230,8 +238,8 @@ L.Handler.PathDrag = L.Handler.extend(/** @lends  L.Path.Drag.prototype */ {
 			this._path._transform(null);
 		}
 
-		L.DomEvent.off(document, 'mousemove touchmove', this._onDrag,    this);
-		L.DomEvent.off(document, 'mouseup touchend',    this._onDragEnd, this);
+		L.DomEvent.off(document, 'mousemove touchmove', this.noManualDrag(this._onDrag),    this);
+		L.DomEvent.off(document, 'mouseup touchend',    this.noManualDrag(this._onDragEnd), this);
 
 		this._restoreCoordGetters();
 
@@ -260,7 +268,7 @@ L.Handler.PathDrag = L.Handler.extend(/** @lends  L.Path.Drag.prototype */ {
 			this._path._map.dragging.enable();
 		}
 
-		if (!moved && this._mouseDown && !window.touch.isTouchEvent(this._mouseDown)) {
+		if (!moved && this._mouseDown && !this._path.options.manualDrag(this._mouseDown)) {
 			this._path._map._handleDOMEvent(this._mouseDown);
 			this._path._map._handleDOMEvent(evt);
 		}

@@ -99,43 +99,43 @@ L.Map.TouchGesture = L.Handler.extend({
 	},
 
 	addHooks: function () {
-		this._hammer.on('hammer.input', L.bind(window.touch.touchOnly(this._onHammer), this));
-		this._hammer.on('tap', L.bind(window.touch.touchOnly(this._onTap), this));
-		this._hammer.on('panstart', L.bind(window.touch.touchOnly(this._onPanStart), this));
-		this._hammer.on('pan', L.bind(window.touch.touchOnly(this._onPan), this));
-		this._hammer.on('panend', L.bind(window.touch.touchOnly(this._onPanEnd), this));
-		this._hammer.on('pinchstart', L.bind(window.touch.touchOnly(this._onPinchStart), this));
-		this._hammer.on('pinchmove', L.bind(window.touch.touchOnly(this._onPinch), this));
-		this._hammer.on('pinchend', L.bind(window.touch.touchOnly(this._onPinchEnd), this));
-		this._hammer.on('tripletap', L.bind(window.touch.touchOnly(this._onTripleTap), this));
-		this._hammer.on('swipe', L.bind(window.touch.touchOnly(this._onSwipe), this));
+		this._hammer.on('hammer.input', window.memo.bind(window.touch.touchOnly(this._onHammer), this));
+		this._hammer.on('tap', window.memo.bind(window.touch.touchOnly(this._onTap), this));
+		this._hammer.on('panstart', window.memo.bind(window.touch.touchOnly(this._onPanStart), this));
+		this._hammer.on('pan', window.memo.bind(window.touch.touchOnly(this._onPan), this));
+		this._hammer.on('panend', window.memo.bind(window.touch.touchOnly(this._onPanEnd), this));
+		this._hammer.on('pinchstart', window.memo.bind(window.touch.touchOnly(this._onPinchStart), this));
+		this._hammer.on('pinchmove', window.memo.bind(window.touch.touchOnly(this._onPinch), this));
+		this._hammer.on('pinchend', window.memo.bind(window.touch.touchOnly(this._onPinchEnd), this));
+		this._hammer.on('tripletap', window.memo.bind(window.touch.touchOnly(this._onTripleTap), this));
+		this._hammer.on('swipe', window.memo.bind(window.touch.touchOnly(this._onSwipe), this));
 		this._map.on('updatepermission', this._onPermission, this);
 		this._onPermission({perm: this._map._permission});
 	},
 
 	removeHooks: function () {
-		this._hammer.off('hammer.input', L.bind(window.touch.touchOnly(this._onHammer), this));
-		this._hammer.off('tap', L.bind(window.touch.touchOnly(this._onTap), this));
-		this._hammer.off('panstart', L.bind(window.touch.touchOnly(this._onPanStart), this));
-		this._hammer.off('pan', L.bind(window.touch.touchOnly(this._onPan), this));
-		this._hammer.off('panend', L.bind(window.touch.touchOnly(this._onPanEnd), this));
-		this._hammer.off('pinchstart', L.bind(window.touch.touchOnly(this._onPinchStart), this));
-		this._hammer.off('pinchmove', L.bind(window.touch.touchOnly(this._onPinch), this));
-		this._hammer.off('pinchend', L.bind(window.touch.touchOnly(this._onPinchEnd), this));
-		this._hammer.off('doubletap', L.bind(window.touch.touchOnly(this._onDoubleTap), this));
-		this._hammer.off('press', L.bind(window.touch.touchOnly(this._onPress), this));
-		this._hammer.off('tripletap', L.bind(window.touch.touchOnly(this._onTripleTap), this));
-		this._hammer.off('swipe', L.bind(window.touch.touchOnly(this._onSwipe), this));
+		this._hammer.off('hammer.input', window.memo.bind(window.touch.touchOnly(this._onHammer), this));
+		this._hammer.off('tap', window.memo.bind(window.touch.touchOnly(this._onTap), this));
+		this._hammer.off('panstart', window.memo.bind(window.touch.touchOnly(this._onPanStart), this));
+		this._hammer.off('pan', window.memo.bind(window.touch.touchOnly(this._onPan), this));
+		this._hammer.off('panend', window.memo.bind(window.touch.touchOnly(this._onPanEnd), this));
+		this._hammer.off('pinchstart', window.memo.bind(window.touch.touchOnly(this._onPinchStart), this));
+		this._hammer.off('pinchmove', window.memo.bind(window.touch.touchOnly(this._onPinch), this));
+		this._hammer.off('pinchend', window.memo.bind(window.touch.touchOnly(this._onPinchEnd), this));
+		this._hammer.off('doubletap', window.memo.bind(window.touch.touchOnly(this._onDoubleTap), this));
+		this._hammer.off('press', window.memo.bind(window.touch.touchOnly(this._onPress), this));
+		this._hammer.off('tripletap', window.memo.bind(window.touch.touchOnly(this._onTripleTap), this));
+		this._hammer.off('swipe', window.memo.bind(window.touch.touchOnly(this._onSwipe), this));
 		this._map.off('updatepermission', this._onPermission, this);
 	},
 
 	_onPermission: function (e) {
 		if (e.perm == 'edit') {
-			this._hammer.on('doubletap', L.bind(window.touch.touchOnly(this._onDoubleTap), this));
-			this._hammer.on('press', L.bind(window.touch.touchOnly(this._onPress), this));
+			this._hammer.on('doubletap', window.memo.bind(window.touch.touchOnly(this._onDoubleTap), this));
+			this._hammer.on('press', window.memo.bind(window.touch.touchOnly(this._onPress), this));
 		} else {
-			this._hammer.off('doubletap', L.bind(window.touch.touchOnly(this._onDoubleTap), this));
-			this._hammer.off('press', L.bind(window.touch.touchOnly(this._onPress), this));
+			this._hammer.off('doubletap', window.memo.bind(window.touch.touchOnly(this._onDoubleTap), this));
+			this._hammer.off('press', window.memo.bind(window.touch.touchOnly(this._onPress), this));
 		}
 	},
 
