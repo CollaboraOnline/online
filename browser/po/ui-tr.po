@@ -14,16 +14,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-11-24 19:14+0100\n"
-"PO-Revision-Date: 2023-11-11 09:02+0000\n"
-"Last-Translator: Oğuz Ersen <oguz@ersen.moe>\n"
+"PO-Revision-Date: 2023-12-07 23:44+0000\n"
+"Last-Translator: Zeki Tuman <ztuman@gmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/tr/>\n"
-"Language: \n"
+"Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.2-dev\n"
+"X-Generator: Weblate 5.3-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -952,7 +952,7 @@ msgstr "Özellikler"
 #: src/control/Control.Menubar.js:349 src/control/Control.Menubar.js:967
 #: src/control/Control.NotebookbarWriter.js:430
 msgid "Voice Over"
-msgstr ""
+msgstr "Seslendirme"
 
 #: src/control/Control.Menubar.js:362
 #: src/control/Control.NotebookbarWriter.js:396
@@ -2103,7 +2103,7 @@ msgstr "LOKit sürümü:"
 
 #: src/core/Socket.js:727
 msgid "Document is getting migrated"
-msgstr "Belge taşınıyor..."
+msgstr "Belge taşınıyor"
 
 #: src/core/Socket.js:754
 msgid "Session terminated by document owner"
@@ -2370,7 +2370,7 @@ msgstr ""
 "Kullanıcıların birbirlerini belge üzerinde görememelerine veya belgenin "
 "depolandığı alanda aynı belgenin farklı sürümlerinin çakışmasına neden "
 "olabilir. routeToken %1 için beklenen sunucu ID: %0 ancak bağlanılan sunucu: "
-"%2."
+"%2"
 
 #: src/errormessages.js:30
 msgid ""
