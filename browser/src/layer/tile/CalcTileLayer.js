@@ -405,6 +405,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 				this.requestSheetGeometryData();
 			}
 			this._viewId = parseInt(command.viewid);
+			console.assert(this._viewId >= 0, 'Incorrect viewId received: ' + this._viewId);
 			var mapSize = this._map.getSize();
 			var sizePx = this._twipsToPixels(new L.Point(this._docWidthTwips, this._docHeightTwips));
 			var width = sizePx.x;

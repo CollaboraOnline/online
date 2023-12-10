@@ -255,6 +255,7 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 			this._updateMaxBounds(true);
 			this._documentInfo = textMsg;
 			this._viewId = parseInt(command.viewid);
+			console.assert(this._viewId >= 0, 'Incorrect viewId received: ' + this._viewId);
 			if (app.socket._reconnecting) {
 				app.socket.sendMessage('setclientpart part=' + this._selectedPart);
 			} else {

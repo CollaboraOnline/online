@@ -143,6 +143,12 @@ L.WriterTileLayer = L.CanvasTileLayer.extend({
 			return;
 
 		var sizeChanged = command.width !== this._docWidthTwips || command.height !== this._docHeightTwips;
+
+		if (command.viewid) {
+			this._viewId = parseInt(command.viewid);
+		}
+		console.assert(this._viewId >= 0, 'Incorrect viewId received: ' + this._viewId);
+
 		if (sizeChanged) {
 			this._docWidthTwips = command.width;
 			this._docHeightTwips = command.height;
@@ -150,7 +156,6 @@ L.WriterTileLayer = L.CanvasTileLayer.extend({
 			app.file.size.pixels = [Math.round(this._tileSize * (this._docWidthTwips / this._tileWidthTwips)), Math.round(this._tileSize * (this._docHeightTwips / this._tileHeightTwips))];
 			app.view.size.pixels = app.file.size.pixels.slice();
 			this._docType = command.type;
-			this._viewId = parseInt(command.viewid);
 			this._updateMaxBounds(true);
 		}
 
