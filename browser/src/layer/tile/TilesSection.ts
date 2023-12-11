@@ -62,15 +62,16 @@ export class TilesSection extends CanvasSectionObject {
 		return canvas;
 	}
 
-	public onInitialize () {
+	public onInitialize (): void {
 		this.onResize();
 	}
 
-	public onResize () {
+	public onResize (): void {
 		// empty: probably safe to remove this method and use parent CanvasSectionObject::onResize
 	}
 
-	paintWithPanes (tile: any, ctx: any, async: boolean, now: Date) {
+	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+	paintWithPanes (tile: any, ctx: any, async: boolean, now: Date): void {
 		var tileTopLeft = tile.coords.getPos();
 		var tileBounds = new L.Bounds(tileTopLeft, tileTopLeft.add(ctx.tileSize));
 
@@ -150,7 +151,8 @@ export class TilesSection extends CanvasSectionObject {
 		canvasCtx.clip();
 	}
 
-	drawTileInPane (tile: any, tileBounds: any, paneBounds: any, paneOffset: any, canvasCtx: CanvasRenderingContext2D, clearBackground: boolean, now: Date) {
+	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+	drawTileInPane (tile: any, tileBounds: any, paneBounds: any, paneOffset: any, canvasCtx: CanvasRenderingContext2D, clearBackground: boolean, now: Date): void {
 		// intersect - to avoid state thrash through clipping
 		var crop = new L.Bounds(tileBounds.min, tileBounds.max);
 		crop.min.x = Math.max(paneBounds.min.x, tileBounds.min.x);
@@ -187,7 +189,8 @@ export class TilesSection extends CanvasSectionObject {
 		}
 	}
 
-	pdfViewDrawTileBorders (tile: any, offset: any, tileSize: number) {
+	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+	pdfViewDrawTileBorders (tile: any, offset: any, tileSize: number): void {
 		this.context.strokeStyle = 'red';
 		this.context.strokeRect(offset.x, offset.y, tileSize, tileSize);
 		this.context.font = '20px Verdana';
@@ -195,7 +198,8 @@ export class TilesSection extends CanvasSectionObject {
 		this.context.fillText(tile.coords.x + ' ' + tile.coords.y + ' ' + tile.coords.part, Math.round(offset.x + tileSize * 0.5), Math.round(offset.y + tileSize * 0.5));
 	}
 
-	paintSimple (tile: any, ctx: any, async: boolean, now: Date) {
+	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+	paintSimple (tile: any, ctx: any, async: boolean, now: Date): void {
 		ctx.viewBounds.round();
 		var offset = new L.Point(tile.coords.getPos().x - ctx.viewBounds.min.x, tile.coords.getPos().y - ctx.viewBounds.min.y);
 
@@ -224,7 +228,8 @@ export class TilesSection extends CanvasSectionObject {
 		this.drawTileToCanvas(tile, now, this.context, offset.x, offset.y, tileSizeX, tileSizeY);
 	}
 
-	public paint (tile: any, ctx: any, async: boolean, now: Date) {
+	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+	public paint (tile: any, ctx: any, async: boolean, now: Date): void {
 		if (this.containerObject.isInZoomAnimation() || this.sectionProperties.tsManager.waitForTiles())
 			return;
 
@@ -277,6 +282,7 @@ export class TilesSection extends CanvasSectionObject {
 		}
 	}
 
+	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	public haveAllTilesInView(zoom?: number, part?: number, mode?: number, ctx?: any): boolean {
 		zoom = zoom || Math.round(this.map.getZoom());
 		part = part || this.sectionProperties.docLayer._selectedPart;
@@ -384,7 +390,7 @@ export class TilesSection extends CanvasSectionObject {
 		}
 	}
 
-	public onDraw (frameCount: number = null, elapsedTime: number = null, subsetBounds: cool.Bounds = null) {
+	public onDraw (frameCount: number = null, elapsedTime: number = null, subsetBounds: cool.Bounds = null): void {
 		if (this.containerObject.isInZoomAnimation())
 			return;
 
@@ -441,7 +447,7 @@ export class TilesSection extends CanvasSectionObject {
 		}.bind(this));
 	}
 
-	public onClick(point: Array<number>, e: MouseEvent) {
+	public onClick(point: Array<number>, e: MouseEvent): void {
 		// Slides pane is not focusable, we are using a variable to follow its focused state.
 		// Until the pane is focusable, we will need to keep below check here.
 		if (this.map._docLayer._docType === 'presentation' || this.map._docLayer._docType === 'drawing')
@@ -449,6 +455,7 @@ export class TilesSection extends CanvasSectionObject {
 	}
 
 	// Return the fraction of intersection area with area1.
+	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	static getTileIntersectionAreaFraction(tileBounds: any, viewBounds: any): number {
 
 		var size = tileBounds.getSize();
@@ -583,13 +590,15 @@ export class TilesSection extends CanvasSectionObject {
 		return bestZoomLevel;
 	}
 
-	public ensureCanvas(tile: any, now: Date)
+	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+	public ensureCanvas(tile: any, now: Date): void
 	{
 		this.sectionProperties.docLayer.ensureCanvas(tile, now);
 	}
 
+	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	public drawTileToCanvas(tile: any, now: Date, canvas: CanvasRenderingContext2D,
-							dx: number, dy: number, dWidth: number, dHeight: number)
+							dx: number, dy: number, dWidth: number, dHeight: number): void
 	{
 		this.ensureCanvas(tile, now);
 		this.drawTileToCanvasCrop(tile, now, canvas,
@@ -629,9 +638,10 @@ export class TilesSection extends CanvasSectionObject {
 				canvas.fillRect(x, y + rowBlock * deltaSize + deltaSize, rowLeft * deltaSize, deltaSize);
 	}
 
+	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	public drawTileToCanvasCrop(tile: any, now: Date, canvas: CanvasRenderingContext2D,
 								sx: number, sy: number, sWidth: number, sHeight: number,
-								dx: number, dy: number, dWidth: number, dHeight: number)
+								dx: number, dy: number, dWidth: number, dHeight: number): void
 	{
 		this.ensureCanvas(tile, now);
 
@@ -719,7 +729,8 @@ export class TilesSection extends CanvasSectionObject {
 	}
 
 	// Called by tsManager to draw a zoom animation frame.
-	public drawZoomFrame(ctx?: any) {
+	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+	public drawZoomFrame(ctx?: any): void {
 		var tsManager = this.sectionProperties.tsManager;
 		if (!tsManager._inZoomAnim)
 			return;
