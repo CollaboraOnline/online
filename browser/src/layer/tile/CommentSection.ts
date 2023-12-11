@@ -795,6 +795,7 @@ export class Comment extends CanvasSectionObject {
 		}
 	}
 
+	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	public handleReplyCommentButton (e: any): void {
 		app.view.commentAutoSave = null;
 		app.view.commentAutoAdded = false;
@@ -819,6 +820,7 @@ export class Comment extends CanvasSectionObject {
 		}
 	}
 
+	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	public handleCancelCommentButton (e: any): void {
 		if (app.view.commentAutoAdded) {
 			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).remove(this.sectionProperties.data.id);
@@ -857,6 +859,7 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.commentListSection.cancel(this);
 	}
 
+	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	public handleSaveCommentButton (e: any): void {
 		app.view.commentAutoSave = null;
 		app.view.commentAutoAdded = false;
@@ -1048,6 +1051,7 @@ export class Comment extends CanvasSectionObject {
 	}
 
 	/// This event is Calc-only. Fired by CanvasSectionContainer.
+	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	public onCellAddressChanged(cursorInfo: any): void {
 		if (cursorInfo.rectangle.pixels && this.sectionProperties.data.rectangles) {
 			var midX = this.containerObject.getDocumentAnchor()[0] + Math.round(cursorInfo.rectangle.pixels[0] + (cursorInfo.rectangle.pixels[2]) * 0.5);
@@ -1225,40 +1229,40 @@ export class Comment extends CanvasSectionObject {
 		}
 	}
 
-	public isRootComment() {
+	public isRootComment(): boolean {
 		return this.sectionProperties.data.parent === '0';
 	}
 
-	public setAsRootComment() {
+	public setAsRootComment(): void {
 		this.sectionProperties.data.parent = '0';
 		if (this.sectionProperties.docLayer._docType === 'text')
 			this.sectionProperties.data.parentId = '0';
 	}
 
-	public getChildrenLength() {
+	public getChildrenLength(): number {
 		return this.sectionProperties.children.length;
 	}
 
-	public getChildByIndex(index: number) {
+	public getChildByIndex(index: number): Comment {
 		if (this.sectionProperties.children.length > index)
 			return this.sectionProperties.children[index];
 		else
 			return null;
 	}
 
-	public removeChildByIndex(index: number) {
+	public removeChildByIndex(index: number): void {
 		if (this.sectionProperties.children.length > index)
 			this.sectionProperties.children.splice(index, 1);
 	}
 
-	public getParentCommentId() {
+	public getParentCommentId(): string {
 		if (this.sectionProperties.data.parent && this.sectionProperties.data.parent !== '0')
 			return this.sectionProperties.data.parent;
 		else
 			return null;
 	}
 
-	public getIndexOfChild(comment: Comment) {
+	public getIndexOfChild(comment: Comment): number {
 		return this.sectionProperties.children.indexOf(comment);
 	}
 
