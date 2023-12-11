@@ -971,12 +971,10 @@ std::string FileServerRequestHandler::getRequestPathname(const HTTPRequest& requ
         {
             isWasm = true;
         }
-#if ENABLE_DEBUG
         else if (endPoint == "online.wasm.debug.wasm" || endPoint == "soffice.data.js.metadata")
         {
             isWasm = true;
         }
-#endif
     }
 
     if (isWasm)
