@@ -59,6 +59,21 @@ export class Comment extends CanvasSectionObject {
 			data.parent = '0';
 
 		this.sectionProperties.data = data;
+
+		/*
+			possibleParentCommentId:
+				* User deletes a parent comment.
+				* User deletes also its child comment.
+				* User reverts the last change (deletion of child comment).
+				* A comment "Add" action is sent from the core side.
+				* The child comment has also its parent id.
+				* But there is no such parent at the moment.
+				* So we will remember its possible parent comment in case user also reverts the deletion of parent comment.
+				* In that case, parent comment will come with its old id.
+				* Child comment can now find its parent.
+				* We will check child comment to see if its parent has also been revived.
+		*/
+		this.sectionProperties.possibleParentCommentId = null;
 		this.sectionProperties.annotationMarker = null;
 		this.sectionProperties.wrapper = null;
 		this.sectionProperties.container = null;

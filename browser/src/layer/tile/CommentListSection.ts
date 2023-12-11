@@ -999,14 +999,21 @@ export class CommentSection extends CanvasSectionObject {
 	public add (comment: any): cool.Comment {
 		var annotation = new cool.Comment(comment, comment.id === 'new' ? {noMenu: true} : {}, this);
 
-		if (!this.containerObject.addSection(annotation))
-			return;
+		/*
+			Remove if a comment with the same id exists.
+			When user deletes a parent and a child of that parent and undoes the operation respectively:
+				* The first undo: Core side sends the deleted child - this is fine.
+				* The second undo: Core side sends parent and child together - which is not fine. We already had the child with the first undo command.
+			So, delete if a comment already exists and trust core side about the ids of the comments.
+		*/
+		if (this.containerObject.doesSectionExist(annotation.name))
+			this.removeItem(annotation.name);
 
+		this.containerObject.addSection(annotation);
 		this.sectionProperties.commentList.push(annotation);
 
 		this.adjustParentAdd(annotation);
-		this.orderCommentList();
-		this.updateIdIndexMap();
+		this.orderCommentList(); // Also updates the index map.
 		this.checkSize();
 
 		if (this.isCollapsed && comment.id !== 'new')
@@ -1019,7 +1026,6 @@ export class CommentSection extends CanvasSectionObject {
 		const authorName = this.map.getViewName(this.sectionProperties.docLayer._viewId);
 		const newComment = annotation.sectionProperties.data.id === 'new';
 		if (!newComment && (authorName === annotation.sectionProperties.data.author)) {
-			this.unselect();
 			this.select(annotation);
 		}
 
@@ -1062,6 +1068,18 @@ export class CommentSection extends CanvasSectionObject {
 		return index == -1 ? null : this.sectionProperties.commentList[index];
 	}
 
+	private checkIfCommentHasPreAssignedChildren(comment: CommentSection) {
+		for (var i = 0; i < this.sectionProperties.commentList.length; i++) {
+			var possibleChild: CommentSection = this.sectionProperties.commentList[i];
+			if (possibleChild.sectionProperties.possibleParentCommentId !== null) {
+				if (possibleChild.sectionProperties.possibleParentCommentId === comment.sectionProperties.data.id) {
+					if (!comment.sectionProperties.children.includes(possibleChild))
+						comment.sectionProperties.children.push(possibleChild);
+				}
+			}
+		}
+	}
+
 	// Adjust parent-child relationship, if required, after `comment` is added
 	public adjustParentAdd (comment: any): void {
 		if (comment.sectionProperties.data.parent === undefined)
@@ -1071,14 +1089,19 @@ export class CommentSection extends CanvasSectionObject {
 			var parentIdx = this.getIndexOf(comment.sectionProperties.data.parent);
 			if (parentIdx === -1) {
 				console.warn('adjustParentAdd: No parent comment to attach received comment to. ' +
-				             'Parent comment ID sought is :' + comment.sectionProperties.data.parent + ' for current comment with ID : ' + comment.sectionProperties.data.id);
-				return;
+					'Parent comment ID sought is :' + comment.sectionProperties.data.parent + ' for current comment with ID : ' + comment.sectionProperties.data.id);
+				comment.sectionProperties.possibleParentCommentId = comment.sectionProperties.data.parent; // Save the proposed parentId so we can remember if such parent appears.
+				comment.setAsRootComment(); // Set this to default since there is no such parent at the moment.
 			}
-
-			var parentComment = this.sectionProperties.commentList[parentIdx];
-			if (parentComment && !parentComment.sectionProperties.children.includes(comment))
-				parentComment.sectionProperties.children.push(comment);
+			else {
+				var parentComment = this.sectionProperties.commentList[parentIdx];
+				if (parentComment && !parentComment.sectionProperties.children.includes(comment))
+					parentComment.sectionProperties.children.push(comment);
+			}
 		}
+
+		// Check if any of the child comments targets the newly added comment as parent.
+		this.checkIfCommentHasPreAssignedChildren(comment);
 	}
 
 	// Adjust parent-child relationship, if required, after `comment` is removed
@@ -1139,7 +1162,6 @@ export class CommentSection extends CanvasSectionObject {
 			} else {
 				this.adjustComment(obj.comment);
 				annotation = this.add(obj.comment);
-				this.adjustParentAdd(annotation);
 				if (this.sectionProperties.docLayer._docType === 'spreadsheet')
 					annotation.hide();
 
@@ -1170,11 +1192,12 @@ export class CommentSection extends CanvasSectionObject {
 			var removed = this.getComment(id);
 			if (removed) {
 				this.adjustParentRemove(removed);
-				this.removeItem(id);
 				if (this.sectionProperties.selectedComment === removed) {
 					this.unselect();
+					this.removeItem(id);
 				}
 				else {
+					this.removeItem(id);
 					this.update();
 				}
 			}
