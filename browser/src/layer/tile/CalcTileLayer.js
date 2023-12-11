@@ -81,10 +81,14 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		app.sectionContainer.addSection(new app.definitions.AutoFillMarkerSection());
 
 		this.insertMode = false;
+		this._resetInternalState();
+		this._sheetSwitch = new L.SheetSwitchViewRestore(map);
+	},
+
+	_resetInternalState: function() {
 		this._cellSelections = Array(0);
 		this._cellCursorXY = new L.Point(-1, -1);
 		this._gotFirstCellCursor = false;
-		this._sheetSwitch = new L.SheetSwitchViewRestore(map);
 		this._lastColumn = 0; // with data
 		this._lastRow = 0; // with data
 		this.requestCellCursor();
@@ -382,8 +386,6 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 				this._map.setPermission('readonly');
 			this._docWidthTwips = command.width;
 			this._docHeightTwips = command.height;
-			this._lastColumn = command.lastcolumn;
-			this._lastRow = command.lastrow;
 			app.file.size.twips = [this._docWidthTwips, this._docHeightTwips];
 			app.file.size.pixels = [Math.round(this._tileSize * (this._docWidthTwips / this._tileWidthTwips)), Math.round(this._tileSize * (this._docHeightTwips / this._tileHeightTwips))];
 			app.view.size.pixels = app.file.size.pixels.slice();
@@ -391,9 +393,12 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			this._parts = command.parts;
 			if (app.socket._reconnecting) {
 				app.socket.sendMessage('setclientpart part=' + this._selectedPart);
+				this._resetInternalState();
 			} else {
 				this._selectedPart = command.selectedPart;
 			}
+			this._lastColumn = command.lastcolumn;
+			this._lastRow = command.lastrow;
 			this._selectedMode = (command.mode !== undefined) ? command.mode : 0;
 			if (this.sheetGeometry && this._selectedPart != this.sheetGeometry.getPart()) {
 				// Core initiated sheet switch, need to get full sheetGeometry data for the selected sheet.
