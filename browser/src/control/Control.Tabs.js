@@ -3,7 +3,7 @@
  * L.Control.Tabs is used to switch sheets in Calc
  */
 
-/* global $ _ _UNO Hammer */
+/* global $ _ _UNO Hammer cool */
 L.Control.Tabs = L.Control.extend({
 	onAdd: function(map) {
 		map.on('updatepermission', this._onUpdatePermission, this);
@@ -271,6 +271,11 @@ L.Control.Tabs = L.Control.extend({
 	},
 
 	_setPart: function (e) {
+		if (cool.Comment.isAnyEdit()) {
+			cool.CommentSection.showCommentEditingWarning();
+			return;
+		}
+
 		var part =  e.target.id.match(/\d+/g)[0];
 		if (part !== null) {
 			this._map._docLayer._clearReferences();
