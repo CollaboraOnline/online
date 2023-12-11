@@ -3,7 +3,7 @@
  * L.Control.PartsPreview
  */
 
-/* global _ app $ Hammer w2ui _UNO */
+/* global _ app $ Hammer w2ui _UNO cool */
 L.Control.PartsPreview = L.Control.extend({
 	options: {
 		fetchThumbnail: true,
@@ -499,6 +499,11 @@ L.Control.PartsPreview = L.Control.extend({
 	},
 
 	_setPart: function (e) {
+		if (cool.Comment.isAnyEdit()) {
+			cool.CommentSection.showCommentEditingWarning();
+			return;
+		}
+
 		var part = this._findClickedPart(e.target.parentNode);
 		if (part !== null) {
 			var partId = parseInt(part) - 1; // The first part is just a drop-site for reordering.

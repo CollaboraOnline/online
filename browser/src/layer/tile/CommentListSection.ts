@@ -5,8 +5,7 @@
 L.Map.include({
 	insertComment: function() {
 		if (cool.Comment.isAnyEdit()) {
-			this.uiManager.showInfoModal('annotation-editing', _('A comment is being edited'),
-			_('Please save or discard the comment currently being edited.'), null, _('Close'));
+			cool.CommentSection.showCommentEditingWarning();
 			return;
 		}
 		var avatar = undefined;
@@ -109,6 +108,11 @@ export class CommentSection extends CanvasSectionObject {
 			this.showSection = false;
 			this.size[0] = 0;
 		}
+	}
+
+	public static showCommentEditingWarning (): void {
+		L.Map.THIS.uiManager.showInfoModal('annotation-editing', _('A comment is being edited'),
+		_('Please save or discard the comment currently being edited.'), null, _('Close'));
 	}
 
 	private checkCollapseState(): void {
