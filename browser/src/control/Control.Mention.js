@@ -3,7 +3,7 @@
 * Control.Mention
 */
 L.Control.Mention = L.Control.extend({
-	onAdd: function (map) {
+	onAdd: function(map) {
 		this.map = map;
 		this.map.on('openmentionpopup', this.openMentionPopup, this);
 		this.map.on('closementionpopup', this.closeMentionPopup, this);
@@ -32,7 +32,7 @@ L.Control.Mention = L.Control.extend({
 		this.itemList = null;
 	},
 
-	sendMentionText: function (ev) {
+	sendMentionText: function(ev) {
 		var text = ev.data.join('').substring(1);
 		if (text.length === 1 && this.firstChar !== text[0]) {
 			this.map.fire('postMessage', { msgId: 'UI_Mention', args: { type: 'autocomplete', text: text } });
@@ -42,14 +42,14 @@ L.Control.Mention = L.Control.extend({
 		}
 	},
 
-	getCurrentCursorPosition: function () {
+	getCurrentCursorPosition: function() {
 		var currPos = this.map._docLayer._corePixelsToCss(this.map._docLayer._cursorCorePixels.getBottomLeft());
 		var origin = this.map.getPixelOrigin();
 		var panePos = this.map._getMapPanePos();
 		return new L.Point(Math.round(currPos.x + panePos.x - origin.x), Math.round(currPos.y + panePos.y - origin.y));
 	},
 
-	openMentionPopup: function (ev) {
+	openMentionPopup: function(ev) {
 		var framePos = this.getCurrentCursorPosition();
 		this.users = ev.data;
 		if (this.users === null)
@@ -58,7 +58,7 @@ L.Control.Mention = L.Control.extend({
 		var text = this.map._docLayer._mentionText.join('').substring(1);
 		// filterout the users from list according to the text
 		if (text.length > 1) {
-			this.itemList = this.users.filter(function (element) {
+			this.itemList = this.users.filter(function(element) {
 				// case insensitive
 				return element.username.toLowerCase().includes(text.toLowerCase());
 			});
@@ -137,7 +137,7 @@ L.Control.Mention = L.Control.extend({
 		this.map.fire('jsdialog', { data: data, callback: this.callback.bind(this) });
 	},
 
-	closeMentionPopup: function (ev) {
+	closeMentionPopup: function(ev) {
 		var closePopupData = {
 			'jsontype': 'dialog',
 			'type': 'modalpopup',
@@ -151,10 +151,10 @@ L.Control.Mention = L.Control.extend({
 		}
 	},
 
-	callback: function (objectType, eventType, object, index) {
+	callback: function(objectType, eventType, object, index) {
 		if (eventType === 'close') {
 			this.closeMentionPopup({ 'typingMention': false });
-		} else if (eventType === 'select') {
+		} else if (eventType === 'select' || eventType === 'activate') {
 			var command = {
 				'Hyperlink.Text': {
 					type: 'string',
@@ -170,7 +170,7 @@ L.Control.Mention = L.Control.extend({
 				}
 			};
 			this._map.sendUnoCommand('.uno:SetHyperlink', command, true);
-			this.map.fire('postMessage', { msgId: 'UI_Mention', args: { type: 'selected', username: this.itemList[index].username }});
+			this.map.fire('postMessage', { msgId: 'UI_Mention', args: { type: 'selected', username: this.itemList[index].username } });
 			this.closeMentionPopup({ 'typingMention': false });
 		} else if (eventType === 'keydown') {
 			if (object.key !== 'Tab' && object.key !== 'Shift') {
@@ -181,6 +181,6 @@ L.Control.Mention = L.Control.extend({
 		return false;
 	},
 });
-L.control.mention = function () {
+L.control.mention = function() {
 	return new L.Control.Mention();
 };
