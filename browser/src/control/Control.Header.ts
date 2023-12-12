@@ -545,7 +545,7 @@ export class Header extends CanvasSectionObject {
 			this._dragDistance = dragDistance;
 			this.containerObject.requestReDraw(); // Remove previously drawn line and paint a new one.
 
-			if (this._lastSelectedIndex == this._mouseOverEntry.index)
+			if (this._lastSelectedIndex == this._mouseOverEntry.index || this._dragEntry)
 				return;
 			const modifier = this._lastSelectedIndex ? UNOModifier.SHIFT : 0;
 			this._lastSelectedIndex = this._mouseOverEntry.index;
