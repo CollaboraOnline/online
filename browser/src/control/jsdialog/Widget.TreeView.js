@@ -247,7 +247,7 @@ function _treelistboxEntry(parentContainer, treeViewData, entry, builder, isTree
 	}
 
 	if (!disabled) {
-		var singleClick = treeViewData.singleclickactivate === 'true' || treeViewData.singleclickactivate === true;
+		var singleClick = _isSingleClickActivate(treeViewData);
 		var clickFunction = _createClickFunction('.ui-treeview-entry', treeRoot, span, checkbox,
 			true, singleClick, builder, treeViewData, entry);
 		var doubleClickFunction = _createClickFunction('.ui-treeview-entry', treeRoot, span, checkbox,
@@ -327,6 +327,7 @@ function _expandTreeGrid(element) {
 
 function _headerlistboxEntry(parentContainer, treeViewData, entry, builder) {
 	var disabled = treeViewData.enabled === 'false' || treeViewData.enabled === false;
+	var singleClick = _isSingleClickActivate(treeViewData);
 
 	if (entry.state !== undefined) {
 		var td = L.DomUtil.create('td', '', parentContainer);
@@ -337,7 +338,7 @@ function _headerlistboxEntry(parentContainer, treeViewData, entry, builder) {
 		_selectEntry(parentContainer, checkbox);
 
 	var clickFunction = _createClickFunction('.ui-listview-entry', parentContainer.parentNode,
-		parentContainer, checkbox, true, false, builder, treeViewData, entry);
+		parentContainer, checkbox, true, singleClick, builder, treeViewData, entry);
 
 	var expander = null; // present in TreeGrid
 
@@ -393,6 +394,9 @@ function _hasIcon(columns) {
 	return false;
 }
 
+function _isSingleClickActivate (treeViewData) {
+	return treeViewData.singleclickactivate === 'true' || treeViewData.singleclickactivate === true;
+}
 // returns 0 in case of flat list
 function _calulateTreeDepth(entries) {
 	var depth = 0;
