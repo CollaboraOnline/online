@@ -2771,6 +2771,9 @@ void COOLWSD::innerInitialize(Application& self)
         setenv("MAX_CONCURRENCY", std::to_string(maxConcurrency).c_str(), 1);
     }
     LOG_INF("MAX_CONCURRENCY set to " << maxConcurrency << '.');
+#elif defined(__EMSCRIPTEN__)
+    // disable threaded image scaling for wasm for now
+    setenv("VCL_NO_THREAD_SCALE", "1", 1);
 #endif
 
     const auto redlining = getConfigValue<bool>(conf, "per_document.redlining_as_comments", false);
