@@ -159,6 +159,13 @@ button.ui-tab.notebookbar {
 	transition: all 0.25s;
 }
 
+#Open_Local_Editor img {
+	opacity: .8;
+}
+[data-theme='dark'] #Open_Local_Editor img {
+	filter: invert(1);
+}
+
 /* options section */
 .notebookbar-options-section .cell.notebookbar {
 	padding: 0;
