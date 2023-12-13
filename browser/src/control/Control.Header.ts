@@ -137,16 +137,21 @@ export class Header extends CanvasSectionObject {
 	}
 
 	_reInitRowColumnHeaderStylesAfterModeChange(): void {
-		// update column DOM element info
-		this._initHeaderEntryStyles('spreadsheet-header-column');
-		this._initHeaderEntryHoverStyles('spreadsheet-header-column-hover');
-		this._initHeaderEntrySelectedStyles('spreadsheet-header-column-selected');
-		this._initHeaderEntryResizeStyles('spreadsheet-header-column-resize');
-		// update column DOM element info
-		this._initHeaderEntryStyles('spreadsheet-header-row');
-		this._initHeaderEntryHoverStyles('spreadsheet-header-row-hover');
-		this._initHeaderEntrySelectedStyles('spreadsheet-header-row-selected');
-		this._initHeaderEntryResizeStyles('spreadsheet-header-row-resize');
+		// add a separation to update row/column DOM element info
+		if (this._isColumn) {
+			// update column DOM element info
+			this._initHeaderEntryStyles('spreadsheet-header-column');
+			this._initHeaderEntryHoverStyles('spreadsheet-header-column-hover');
+			this._initHeaderEntrySelectedStyles('spreadsheet-header-column-selected');
+			this._initHeaderEntryResizeStyles('spreadsheet-header-column-resize');
+		}
+		else {
+			// update row DOM element info
+			this._initHeaderEntryStyles('spreadsheet-header-row');
+			this._initHeaderEntryHoverStyles('spreadsheet-header-row-hover');
+			this._initHeaderEntrySelectedStyles('spreadsheet-header-row-selected');
+			this._initHeaderEntryResizeStyles('spreadsheet-header-row-resize');
+		}
 	}
 
 	optimalHeight (index: number): void {
