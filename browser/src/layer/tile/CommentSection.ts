@@ -754,6 +754,17 @@ export class Comment extends CanvasSectionObject {
 		}
 	}
 
+	// check if this is "our" autosaved comment
+	// core is not aware it's autosaved one so use this simplified detection based on content
+	public isAutoSaved (): boolean {
+		var autoSavedComment = app.view.commentAutoSave;
+		if (!autoSavedComment)
+			return false;
+
+		var authorMatch = autoSavedComment.sectionProperties.data.author === this.sectionProperties.data.author;
+		return authorMatch;
+	}
+
 	private hide (): void {
 		if (this.sectionProperties.data.id === 'new') {
 			this.sectionProperties.commentListSection.removeItem(this.sectionProperties.data.id);

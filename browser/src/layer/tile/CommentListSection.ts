@@ -1177,22 +1177,20 @@ export class CommentSection extends CanvasSectionObject {
 				if (this.sectionProperties.docLayer._docType === 'spreadsheet')
 					annotation.hide();
 
-				if (app.view.commentAutoSave) {
-					// Some layout updates are async, we can't proceed further or reset commentAutoSave variable before layout is done
-					var interval = setInterval(() => {
-						if (!app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).sectionProperties.layoutTimer) {
-							clearInterval(interval);
-							annotation.sectionProperties.container.style.visibility = 'visible';
-							annotation.sectionProperties.autoSave.innerText = _('Autosaved');
-							if (this.sectionProperties.docLayer._docType === 'spreadsheet')
-								annotation.show();
-							annotation.edit();
-							if (app.view.commentAutoSave.sectionProperties.data.id === 'new')
-								this.removeItem(app.view.commentAutoSave.sectionProperties.data.id);
-							app.view.commentAutoSave = null;
-							app.view.commentAutoAdded = true;
-						}
-					}, 15);
+				var autoSavedComment = app.view.commentAutoSave;
+				if (autoSavedComment) {
+					var isOurComment = annotation.isAutoSaved();
+					if (isOurComment) {
+						annotation.sectionProperties.container.style.visibility = 'visible';
+						annotation.sectionProperties.autoSave.innerText = _('Autosaved');
+						if (this.sectionProperties.docLayer._docType === 'spreadsheet')
+							annotation.show();
+						annotation.edit();
+						if (autoSavedComment.sectionProperties.data.id === 'new')
+							this.removeItem(autoSavedComment.sectionProperties.data.id);
+						app.view.commentAutoSave = null;
+						app.view.commentAutoAdded = true;
+					}
 				}
 			}
 			if (this.sectionProperties.selectedComment && !this.sectionProperties.selectedComment.isEdit()) {
