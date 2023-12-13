@@ -1441,6 +1441,14 @@ button.leaflet-control-search-next
 	background: url('images/dark/lc_nextrecord.svg') no-repeat center/24px;
 }
 
+[data-theme='dark'] .Open_Local_Editor {
+	filter: invert(1);
+}
+
+.Open_Local_Editor {
+	opacity: 0.8;
+}
+
 .inserttable-pop {
 	z-index: 1000;
 }
