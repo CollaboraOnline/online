@@ -720,6 +720,7 @@ pot:
 		admin/src/AdminSocketOverview.js \
 		admin/src/AdminSocketSettings.js \
 		admin/src/Util.js \
+		js/global.js \
 		js/w2ui-1.5.rc1.js \
 		src/control/ColorPicker.js \
 		src/control/Control.AlertDialog.js \
