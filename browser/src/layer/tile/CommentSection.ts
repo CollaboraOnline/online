@@ -760,7 +760,7 @@ export class Comment extends CanvasSectionObject {
 			return;
 		}
 
-		if (Comment.isAnyEdit()) {
+		if (this.isEdit()) {
 			return;
 		}
 
