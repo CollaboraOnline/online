@@ -715,6 +715,8 @@ export class Comment extends CanvasSectionObject {
 		if ((<any>window).mode.isMobile() && this.sectionProperties.container.parentElement === document.getElementById('document-container'))
 			this.sectionProperties.container.style.visibility = 'hidden';
 
+		if (cool.CommentSection.commentWasAutoAdded)
+			return;
 		if (this.sectionProperties.docLayer._docType === 'text')
 			this.showWriter();
 		else if (this.sectionProperties.docLayer._docType === 'presentation' || this.sectionProperties.docLayer._docType === 'drawing')
