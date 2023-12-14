@@ -523,8 +523,11 @@ L.Control.JSDialog = L.Control.extend({
 		instance.posy = top + offsetY;
 
 		var width = instance.form.getBoundingClientRect().width;
+		var height = instance.form.getBoundingClientRect().height;
 		if (instance.posx + width > window.innerWidth)
 			instance.posx = window.innerWidth - width;
+		if (instance.posy + height > window.innerHeight)
+			instance.posy = window.innerHeight - height;
 
 		this.updatePosition(instance.container, instance.posx, instance.posy);
 	},
