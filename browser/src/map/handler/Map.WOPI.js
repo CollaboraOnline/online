@@ -465,6 +465,25 @@ L.Map.WOPI = L.Handler.extend({
 		else if (msg.MessageId === 'Action_Close') {
 			this._map.remove();
 		}
+		else if (msg.MessageId === 'Action_Fullscreen') {
+			L.toggleFullScreen();
+		}
+		else if (msg.MessageId === 'Action_FullscreenPresentation' && this._map.getDocType() === 'presentation') {
+			if (msg.Values) {
+				var slideNumber;
+				if (typeof msg.Values.StartSlideNumber != 'undefined') {
+					slideNumber = msg.Values.StartSlideNumber;
+				} else if (msg.Values.CurrentSlide) {
+					slideNumber = this._map.getCurrentPartNumber();
+				}
+				this._map.fire('fullscreen',
+					       {
+						       startSlideNumber: slideNumber
+					       });
+			} else {
+				this._map.fire('fullscreen');
+			}
+		}
 		else if (msg.MessageId === 'Action_Print') {
 			this._map.print();
 		}
