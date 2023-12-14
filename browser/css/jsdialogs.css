@@ -12,6 +12,7 @@
 	max-height: 100%;
 	z-index: 2000;
 	display: flex;
+	overflow: hidden;
 }
 
 .jsdialog-overlay.cancellable {
