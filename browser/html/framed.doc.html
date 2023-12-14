@@ -120,6 +120,18 @@
             });
       }
 
+      function fullscreenDocument() {
+        post({'MessageId': 'Action_Fullscreen',
+              'Values': null
+            });
+      }
+
+      function startPresentation() {
+        post({'MessageId': 'Action_FullscreenPresentation',
+              'Values': null
+            });
+      }
+
       function exportAsHtml() {
         post({'MessageId': 'Action_Export',
               'Values': { 'Format': 'html', }
@@ -445,6 +457,9 @@
           <div class="grid">
             <button onclick="save(); return false;">Save</button>
             <button onclick="closeDocument(); return false;">Close</button>
+
+            <button onclick="fullscreenDocument(); return false;">Fullscreen</button>
+            <button onclick="startPresentation(); return false;">Start presentation</button>
 
             <button onclick="exportAsHtml(); return false;">Export as HTML</button>
             <button onclick="getExportFormats(); return false;">Get export formats</button>
