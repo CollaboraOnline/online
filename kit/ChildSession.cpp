@@ -112,6 +112,7 @@ ChildSession::ChildSession(const std::shared_ptr<ProtocolHandlerInterface>& prot
     , _viewId(-1)
     , _isDocLoaded(false)
     , _copyToClipboard(false)
+    , _viewRenderState(";Light") // default RenderState
     , _canonicalViewId(-1)
     , _isDumpingTiles(false)
     , _clientVisibleArea(0, 0, 0, 0)
