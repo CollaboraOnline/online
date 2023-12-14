@@ -144,7 +144,7 @@ L.WriterTileLayer = L.CanvasTileLayer.extend({
 
 		var sizeChanged = command.width !== this._docWidthTwips || command.height !== this._docHeightTwips;
 
-		if (command.viewid) {
+		if (command.viewid !== undefined) {
 			this._viewId = parseInt(command.viewid);
 		}
 		console.assert(this._viewId >= 0, 'Incorrect viewId received: ' + this._viewId);
