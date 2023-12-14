@@ -169,7 +169,7 @@ namespace RenderTiles
         void allocate(size_t x, size_t y)
         {
             assert(!_data);
-            _data = static_cast<unsigned char *>(calloc(x * y, 4));
+            _data = static_cast<unsigned char *>(malloc(x * y * 4));
         }
         ~Buffer()
         {
