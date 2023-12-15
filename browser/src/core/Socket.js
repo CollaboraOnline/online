@@ -1542,17 +1542,36 @@ app.definitions.Socket = L.Class.extend({
 		// Let onclose (_onSocketClose) report errors.
 	},
 
-	_onSocketClose: function () {
+	_onSocketClose: function (event) {
 		window.app.console.debug('_onSocketClose:');
 		if (!this._map._docLoadedOnce && this.ReconnectCount === 0) {
+			var errorMsg, errorType = '';
+			var reason = event.reason;
+			if (reason && reason.startsWith('error:')) {
+				var command = this.parseServerCmd(reason);
+				if (command.errorCmd === 'internal' && command.errorKind === 'unauthorized') {
+					errorType = 'websocketunauthorized';
+					errorMsg = errorMessages.unauthorized;
+				} else if (command.errorCmd === 'storage' && command.errorKind === 'loadfailed') {
+					errorType = 'websocketloadfailed';
+					errorMsg = errorMessages.storage.loadfailed;
+				} else {
+					errorType = 'websocketgenericfailure';
+					errorMsg = errorMessages.websocketgenericfailure;
+				}
+			} else {
+				errorType = 'websocketproxyfailure';
+				errorMsg = errorMessages.websocketproxyfailure;
+			}
+			this._map.fire('error', { msg: errorMsg, cmd: 'socket', kind: 'closed', id: 4 });
 			var postMessageObj = {
-				errorType: 'websocketconnectionfailed',
+				errorType: errorType,
 				success: false,
-				errorMsg: errorMessages.websocketconnectionfailed,
+				errorMsg: errorMsg,
 				result: '',
 			};
-			this._map.fire('postMessage', {msgId: 'Action_Load_Resp', args: postMessageObj});
-			this._map.fire('error', {msg: errorMessages.websocketconnectionfailed, cmd: 'socket', kind: 'closed', id: 4});
+			this._map.fire('postMessage', { msgId: 'Action_Load_Resp', args: postMessageObj });
+			return;
 		}
 		if (this.ReconnectCount > 0)
 			return;
