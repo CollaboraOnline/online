@@ -14,7 +14,6 @@
 **/.cache
 Makefile
 Makefile.in
-coolkitconfig.xcu
 coolwsd.spec
 coolwsd.xml
 aclocal.m4
