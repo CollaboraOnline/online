@@ -180,14 +180,14 @@ L.Control.Tabs = L.Control.extend({
 					var menuData = L.Control.JSDialogBuilder.getMenuStructureForMobileWizard(menuItemMobile, true, '');
 				}
 
-				var frame = L.DomUtil.create('div', '', ssTabScroll);
-				frame.setAttribute('draggable', false);
-				frame.setAttribute('id', 'first-tab-drop-site');
-				this._addDnDHandlers(frame);
-
 				for (var i = 0; i < parts; i++) {
 					if (e.hiddenParts.indexOf(i) !== -1)
 						continue;
+
+					// create a drop zone indicator for the sheet tab
+					// put the indicator on the left of the tab
+					var dropZoneIndicator = L.DomUtil.create('div', 'tab-drop-area', ssTabScroll);
+					dropZoneIndicator.id = 'drop-zone-' + i;
 					var id = 'spreadsheet-tab' + i;
 					var tab = L.DomUtil.create('button', 'spreadsheet-tab', ssTabScroll);
 					if (window.mode.isMobile() || window.mode.isTablet()) {
@@ -235,6 +235,18 @@ L.Control.Tabs = L.Control.extend({
 					this._addDnDHandlers(tab);
 					this._spreadsheetTabs[id] = tab;
 				}
+
+				// add an additional dropZoneIndicator for the last sheet tab
+				// put the indicator on the right of the last tab
+				var dropZoneIndicatorForTheLastTab = L.DomUtil.create('div', 'tab-drop-area', ssTabScroll);
+				dropZoneIndicatorForTheLastTab.id = 'drop-zone-end';
+
+				// create drop zone container for the last drop zone indicator
+				// when a tab is over this container, dropZoneIndicatorForTheLastTab will be shown
+				var dropZoneEndContainer = L.DomUtil.create('div', '', ssTabScroll);
+				dropZoneEndContainer.id = 'drop-zone-end-container';
+				this._addDnDHandlers(dropZoneEndContainer);
+				dropZoneEndContainer.setAttribute('draggable', false);
 			}
 			for (var key in this._spreadsheetTabs) {
 				var part =  parseInt(key.match(/\d+/g)[0]);
@@ -354,26 +366,26 @@ L.Control.Tabs = L.Control.extend({
 		// support duplication with ctrl in the future.
 		e.dataTransfer.dropEffect = 'move';
 
-		this.classList.add('tab-dropsite');
+		e.target.previousElementSibling.classList.add('tab-drop-area-active');
+
 		return false;
 	},
 
-	_handleDragLeave: function() {
-		this.classList.remove('tab-dropsite');
+	_handleDragLeave: function (e) {
+		e.target.previousElementSibling.classList.remove('tab-drop-area-active');
 	},
 
 	_handleDrop: function(e) {
 		if (e.stopPropagation) {
 			e.stopPropagation();
 		}
-		e.target.classList.remove('tab-dropsite');
-		var targetIndex = this._map._docLayer._partNames.indexOf(e.target.innerText);
 
-		this._moveSheet(targetIndex+2);
+		var targetIndex = this._map._docLayer._partNames.indexOf(e.target.innerText);
+		this._moveSheet(targetIndex + 1); // drop to left side of the tab
 	},
 
-	_handleDragEnd: function() {
-		this.classList.remove('tab-dropsite');
+	_handleDragEnd: function (e) {
+		e.target.previousElementSibling.classList.remove('tab-drop-area-active');
 	}
 });
 

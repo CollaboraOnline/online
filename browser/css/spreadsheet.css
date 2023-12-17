@@ -20,7 +20,7 @@
 }
 
 .spreadsheet-tab {
-	margin: 5px 4px 0px 0px !important;
+	margin: 5px 0px 0px !important;
 	padding: 6px 9px 4px !important;
 	text-decoration: none;
 
@@ -44,9 +44,9 @@
 	color: var(--color-text-darker) !important;
 }
 
-#first-tab-drop-site {
-	height: 20px;
-	width: 3px;
+.tab-drop-area {
+	height: 32px;
+	width: 4px;
 	opacity: 0;
 	margin-top: 4px;
 	padding-top: 8px;
@@ -56,13 +56,21 @@
 	padding-bottom: 5px;
 }
 
-.tab-dropsite {
-	border-right: 5px solid var(--color-border);
+.tab-drop-area-active {
+	background-color: rgb(109, 109, 211);
 }
 
-#first-tab-drop-site.tab-dropsite {
-	width: 0 !important;
+.tab-drop-area.tab-drop-area-active {
 	opacity: 100% !important;
+}
+
+#drop-zone-end-container {
+	height: 32px;
+	width: 128px;
+	opacity: 0;
+	vertical-align: bottom;
+	display: inline-block;
+	background-color: var(--color-main-background);
 }
 
 #spreadsheet-header-corner-container {
