@@ -640,6 +640,22 @@ eslint: browser/node_modules
 		--no-eslintrc \
 		--config browser/.eslintrc
 
+prettier: browser/node_modules
+	browser/node_modules/.bin/prettier \
+		--config browser/.prettierrc \
+		--ignore-path browser/.prettierignore \
+		--ignore-path browser/.beforeprettier \
+		--check \
+		browser/src browser/js browser/admin/src
+
+prettier-write: browser/node_modules
+	browser/node_modules/.bin/prettier \
+		--config browser/.prettierrc \
+		--ignore-path browser/.prettierignore \
+		--ignore-path browser/.beforeprettier \
+		--write \
+		browser/src browser/js browser/admin/src
+
 install-exec-hook:
 	cd $(DESTDIR)$(bindir) && \
 	$(LN_S) coolconfig loolconfig && \
@@ -681,7 +697,7 @@ check-for-system-nss:
 		fi \
 	fi
 
-check: check-for-system-nss check-recursive eslint
+check: check-for-system-nss check-recursive eslint prettier
 	$(GEN_COVERAGE_COMMAND)
 
 coverage-report:
