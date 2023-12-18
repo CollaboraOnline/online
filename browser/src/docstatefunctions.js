@@ -15,30 +15,29 @@
 
 /* global app */
 
-app.isReadOnly = function() {
+app.isReadOnly = function () {
 	return app.file.readOnly;
 };
 
-app.isCommentEditingAllowed = function() {
+app.isCommentEditingAllowed = function () {
 	return app.file.editComment;
 };
 
-app.setPermission = function(permission) {
-    app.file.permission = permission;
-    if (permission === 'edit') {
-        app.file.readOnly = false;
-        app.file.editComment = true;
-    }
-    else if (permission === 'readonly') {
-        app.file.readOnly = true;
-        app.file.editComment = false;
-    }
+app.setPermission = function (permission) {
+	app.file.permission = permission;
+	if (permission === 'edit') {
+		app.file.readOnly = false;
+		app.file.editComment = true;
+	} else if (permission === 'readonly') {
+		app.file.readOnly = true;
+		app.file.editComment = false;
+	}
 };
 
-app.setCommentEditingPermission = function(isAllowed) {
-    app.file.editComment = isAllowed;
+app.setCommentEditingPermission = function (isAllowed) {
+	app.file.editComment = isAllowed;
 };
 
-app.getPermission = function() {
-    return app.file.permission;
+app.getPermission = function () {
+	return app.file.permission;
 };
