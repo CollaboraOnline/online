@@ -230,26 +230,29 @@ function _formulabarEditControl(parentContainer, data, builder) {
 		textLayer.setAttribute('contenteditable', 'false');
 	};
 
-	['click', 'dblclick', 'mouseleave'].forEach(function (ev) {
-		textLayer.addEventListener(ev, function(event) {
-			if (L.DomUtil.hasClass(container, 'disabled')) {
-				event.preventDefault();
-				return;
-			}
-
-			builder.callback('edit', 'grab_focus', container, null, builder);
-			_sendSelection(textLayer, builder, container.id, event);
-
-			builder.map.setWinId(0);
-			builder.map._textInput._emptyArea();
-			builder.map._textInput.focus(true);
-
+	var textSelectionHandler = function(event) {
+		if (L.DomUtil.hasClass(container, 'disabled')) {
 			event.preventDefault();
-		});
+			return;
+		}
+
+		builder.callback('edit', 'grab_focus', container, null, builder);
+		_sendSelection(textLayer, builder, container.id, event);
+
+		builder.map.setWinId(0);
+		builder.map._textInput._emptyArea();
+		builder.map._textInput.focus(true);
+
+		event.preventDefault();
+	};
+
+	['click', 'dblclick'].forEach(function (ev) {
+		textLayer.addEventListener(ev, textSelectionHandler);
 	});
 
 	// hide old selection when user starts to select something else
 	textLayer.addEventListener('mousedown', function() {
+		textLayer.addEventListener('mouseleave', textSelectionHandler, {once: true});
 		builder.callback('edit', 'grab_focus', container, null, builder);
 
 		cursorLayer.querySelectorAll('.selection').forEach(function (element) {
