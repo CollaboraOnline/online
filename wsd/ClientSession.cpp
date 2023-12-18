@@ -1117,6 +1117,10 @@ bool ClientSession::_handleInput(const char *buffer, int length)
             return forwardToChild(std::string(buffer, length), docBroker);
         }
     }
+    else if (tokens.equals(0, "readonlyclick"))
+    {
+        return forwardToChild(std::string(buffer, length), docBroker);
+    }
     else if (tokens.equals(0, "attemptlock"))
     {
         return attemptLock(docBroker);
