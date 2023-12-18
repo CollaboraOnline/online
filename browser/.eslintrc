@@ -20,7 +20,11 @@
     "no-control-regex": 0,
     "no-useless-escape": 0,
     "semi": 2,
-    "no-redeclare": 0
+    "no-redeclare": 0,
+    /// Rules that are set to warn will fail in CI but not when building for development:
+    "no-debugger": 1,
+    "no-unreachable": 1,
+    "no-unused-vars": 1,
   },
   "globals": {
     "L": true,
