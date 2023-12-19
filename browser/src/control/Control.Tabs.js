@@ -380,6 +380,7 @@ L.Control.Tabs = L.Control.extend({
 			e.stopPropagation();
 		}
 
+		e.target.previousElementSibling.classList.remove('tab-drop-area-active');
 		var targetIndex = this._map._docLayer._partNames.indexOf(e.target.innerText);
 		this._moveSheet(targetIndex + 1); // drop to left side of the tab
 	},
