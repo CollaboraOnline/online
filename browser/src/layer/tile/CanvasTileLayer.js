@@ -2682,7 +2682,10 @@ L.CanvasTileLayer = L.Layer.extend({
 			this.persistCursorPositionInWriter = false;
 			return;
 		}
+
+		// tells who trigerred cursor invalidation, but recCursors is stil "our"
 		var modifierViewId = parseInt(obj.viewId);
+		var weAreModifier = (modifierViewId === this._viewId);
 
 		this._cursorAtMispelledWord = obj.mispelledWord ? Boolean(parseInt(obj.mispelledWord)).valueOf() : false;
 
@@ -2718,7 +2721,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._showURLPopUp(cursorPos, obj.hyperlink.link);
 		}
 
-		if (!this._map.editorHasFocus() && this._map._isCursorVisible && (modifierViewId === this._viewId) && (this._map.isEditMode())) {
+		if (!this._map.editorHasFocus() && this._map._isCursorVisible && weAreModifier && (this._map.isEditMode())) {
 			// Regain cursor if we had been out of focus and now have input.
 			// Unless the focus is in the Calc Formula-Bar, don't steal the focus.
 			if (!this._map.calcInputBarHasFocus())
@@ -2735,8 +2738,13 @@ L.CanvasTileLayer = L.Layer.extend({
 			this.lastCursorPos = recCursor.getTopLeft();
 		}
 
-		// If modifier view is different than the current view, then set last variable to "true". We'll keep the caret position at the same point relative to screen.
-		this._onUpdateCursor(updateCursor && (modifierViewId === this._viewId), undefined /* zoom */, !(this._viewId === modifierViewId));
+		// If modifier view is different than the current view
+		// we'll keep the caret position at the same point relative to screen.
+		this._onUpdateCursor(
+			/* scroll */ updateCursor && weAreModifier,
+			/* zoom */ undefined,
+			/* keepCaretPositionRelativeToScreen */ !weAreModifier);
+
 		// Only for reference equality comparison.
 		this._lastVisibleCursorRef = this._visibleCursor;
 	},
