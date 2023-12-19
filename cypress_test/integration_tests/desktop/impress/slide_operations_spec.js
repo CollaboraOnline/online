@@ -3,6 +3,7 @@
 
 var helper = require('../../common/helper');
 var impressHelper = require('../../common/impress_helper');
+var desktopHelper = require('../../common/desktop_helper');
 
 describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Slide operations', function() {
 	var origTestFileName = 'slide_operations.odp';
@@ -10,6 +11,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Slide operations', functio
 
 	beforeEach(function() {
 		testFileName = helper.beforeAll(origTestFileName, 'impress');
+		desktopHelper.switchUIToNotebookbar();
 	});
 
 	afterEach(function() {
@@ -42,10 +44,16 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Slide operations', functio
 
 	});
 
-	it('Duplicate slide', function() {
+	it.only('Duplicate slide', function() {
+		// Also check if comments are getting duplicated
+		cy.cGet('#options-modify-page').click();
+		desktopHelper.insertMultipleComment('impress', 1, false, '#insert-insert-annotation-button');
+		cy.cGet('#annotation-content-area-1').should('include.text', 'some text0');
 		helper.clickOnIdle('#tb_presentation-toolbar_item_duplicatepage');
 
 		impressHelper.assertNumberOfSlidePreviews(2);
+		cy.cGet('#PageStatus').should('have.text', 'Slide 2 of 2');
+		cy.cGet('#annotation-content-area-2').should('include.text', 'some text0');
 
 	});
 
