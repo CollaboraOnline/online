@@ -62,13 +62,13 @@ L.Handler.PathDrag = L.Handler.extend(/** @lends  L.Path.Drag.prototype */ {
 
 	},
 
-	noManualDrag: function(f) {
+	noManualDrag: window.memo.decorator(function(f) {
 		if ('noManualDrag' in this._path) {
-			return this._path.noManualDrag(f);
+			return this._path.noManualDrag.bind(this._path)(f).bind(this._path);
 		} else {
 			return f;
 		}
-	},
+	}),
 
 	/**
 	* Enable dragging
@@ -94,8 +94,8 @@ L.Handler.PathDrag = L.Handler.extend(/** @lends  L.Path.Drag.prototype */ {
 
 		this._path.removeClass(L.Handler.PathDrag.DRAGGING_CLS);
 
-		L.DomEvent.off(document, 'mousemove touchmove', this.noManualDrag(this._onDrag),    this);
-		L.DomEvent.off(document, 'mouseup touchend',    this.noManualDrag(this._onDragEnd), this);
+		L.DomEvent.off(document, 'mousemove touchmove', this.noManualDrag(window.memo.bind(this._onDrag, this)),    this);
+		L.DomEvent.off(document, 'mouseup touchend',    this.noManualDrag(window.memo.bind(this._onDragEnd, this)), this);
 	},
 
 	/**
@@ -125,8 +125,8 @@ L.Handler.PathDrag = L.Handler.extend(/** @lends  L.Path.Drag.prototype */ {
 		this._path._renderer.addContainerClass('leaflet-interactive');
 
 		L.DomEvent
-		 .on(document, MOVE[eventType], this.noManualDrag(this._onDrag),    this)
-		 .on(document, END[eventType],  this.noManualDrag(this._onDragEnd), this);
+		 .on(document, MOVE[eventType], this.noManualDrag(window.memo.bind(this._onDrag, this)),    this)
+		 .on(document, END[eventType],  this.noManualDrag(window.memo.bind(this._onDragEnd, this)), this);
 
 		if (this._path._map.dragging.enabled()) {
 			// I guess it's required because mousedown gets simulated with a delay
@@ -238,8 +238,8 @@ L.Handler.PathDrag = L.Handler.extend(/** @lends  L.Path.Drag.prototype */ {
 			this._path._transform(null);
 		}
 
-		L.DomEvent.off(document, 'mousemove touchmove', this.noManualDrag(this._onDrag),    this);
-		L.DomEvent.off(document, 'mouseup touchend',    this.noManualDrag(this._onDragEnd), this);
+		L.DomEvent.off(document, 'mousemove touchmove', this.noManualDrag(window.memo.bind(this._onDrag, this)),    this);
+		L.DomEvent.off(document, 'mouseup touchend',    this.noManualDrag(window.memo.bind(this._onDragEnd, this)), this);
 
 		this._restoreCoordGetters();
 
