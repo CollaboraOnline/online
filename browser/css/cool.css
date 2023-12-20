@@ -1156,3 +1156,8 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	-ms-user-select: none;
 	user-select: none;
 }
+
+[contenteditable] { /* in old Safari, omitting this prevents editing */
+	-webkit-user-select: text;
+	user-select: text;
+}
