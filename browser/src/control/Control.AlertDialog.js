@@ -49,14 +49,26 @@ L.Control.AlertDialog = L.Control.extend({
 
 					window.open(url, '_blank');
 				});
-		} else if (e.cmd == 'paste' && e.kind == 'network' && e.code == 24581) {
-			var alertId = 'paste_network_access_error';
+		} else if (e.kind == 'network' && e.code == 24581) {
+			if (e.cmd == 'paste') {
+				var alertId = 'paste_network_access_error';
+				var title = _('Copied external sources are not allowed');
+				var message1 = _('It seems you have copied a selection that includes external images.');
+				var message2 = _('Downloading external resources is forbidden but pasting images is still possible. Please right click in the image, choose "Copy Image" and paste it into the document instead.');
+			} else {
+				// insert image for example, it should not happen with correct coolwsd.xml configuration of net.lok_allow
+				alertId = 'insert_network_access_error';
+				title = _('External data source not allowed');
+				message1 = _('It seems you have tried to insert external data.');
+				message2 = _('Selected external data source is forbidden. Please contact the system administrator.');
+			}
+
 			if (JSDialog.shouldShowAgain(alertId)) {
 				var alertOptions = {
-					title: _('Copied external sources are not allowed'),
+					title: title,
 					messages: [
-						_('It seems you have copied a selection that includes external images.'),
-						_('Downloading external resources is forbidden but pasting images is still possible. Please right click in the image, choose "Copy Image" and paste it into the document instead.')
+						message1,
+						message2
 					],
 					buttons: [
 						{
