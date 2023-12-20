@@ -516,6 +516,7 @@ button.leaflet-control-search-next
 	background-color: var(--color-background-lighter);
 	border: 1px solid var(--color-border);
 	border-radius: var(--border-radius);
+	color: var(--color-text-dark);
 }
 .select2-container--default .select2-results__option[aria-disabled='true'] {
 	color: var(--color-border-lighter);
