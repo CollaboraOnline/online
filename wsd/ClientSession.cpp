@@ -2583,12 +2583,13 @@ void ClientSession::handleTileInvalidation(const std::string& message,
         for(int paneIdx = 0; paneIdx < numPanes; ++paneIdx)
         {
             const Util::Rectangle& normalizedVisArea = paneRects[paneIdx];
+            int lastVertTile = std::ceil(normalizedVisArea.getBottom() / static_cast<double>(_tileHeightTwips));
+            int lastHoriTile = std::ceil(normalizedVisArea.getRight() / static_cast<double>(_tileWidthTwips));
+
             // Iterate through visible tiles
-            for(int i = std::ceil(normalizedVisArea.getTop() / _tileHeightTwips);
-                        i <= std::ceil(normalizedVisArea.getBottom() / _tileHeightTwips); ++i)
+            for(int i = normalizedVisArea.getTop() / _tileHeightTwips; i <= lastVertTile; ++i)
             {
-                for(int j = std::ceil(normalizedVisArea.getLeft() / _tileWidthTwips);
-                    j <= std::ceil(normalizedVisArea.getRight() / _tileWidthTwips); ++j)
+                for(int j = normalizedVisArea.getLeft() / _tileWidthTwips; j <= lastHoriTile; ++j)
                 {
                     // Find tiles affected by invalidation
                     Util::Rectangle tileRect (j * _tileWidthTwips, i * _tileHeightTwips, _tileWidthTwips, _tileHeightTwips);
