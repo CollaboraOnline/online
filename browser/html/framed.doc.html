@@ -239,6 +239,18 @@
             });
       }
 
+      function GetUserState() {
+        post({'MessageId': 'Get_User_State',
+              'Values': null
+            });
+      }
+
+      function DisplayUserState(msg) {
+          var display = document.getElementById("DisplayUserState");
+          display.querySelector("#UserState_State").textContent = msg.Values.State;
+          display.querySelector("#UserState_Elapsed").textContent = msg.Values.Elapsed;
+      }
+
       // This function is invoked when the iframe posts a message back.
 
       function receiveMessage(event) {
@@ -262,6 +274,8 @@
               document.getElementById("ModifiedStatus").innerHTML = "Saved";
             }
           }
+        } else if (msg.MessageId == 'Get_User_State_Resp') {
+          DisplayUserState(msg);
         } else if (msg.MessageId == 'Action_Save_Resp') {
           if (msg.Values) {
             if (msg.Values.success == true) {
@@ -484,6 +498,14 @@
           <div>
             <button onclick="reset_access_token(document.getElementById('new-access-token').value); return false;">Reset Access-Token</button>
           </div>
+	  <h3>User State</h3>
+	  <div class="hbox">
+	    <button onclick="GetUserState(); return false;">Get User State</button>
+	    <div id="DisplayUserState">
+	      <p>State: <span id="UserState_State">unknown</span>
+		Elapsed: <span id="UserState_Elapsed">0</span> sec.</p>
+	    </div>
+	  </div>
         </form>
 
         <div class="vbox framed">
