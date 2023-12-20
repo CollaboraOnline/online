@@ -3,7 +3,7 @@
  * L.Map is the central class of the API - it is used to create a map.
  */
 
-/* global app _ Cursor */
+/* global app _ Cursor JSDialog */
 
 L.Map = L.Evented.extend({
 
@@ -1387,7 +1387,9 @@ L.Map = L.Evented.extend({
 
 	// Our browser tab lost focus.
 	_onLostFocus: function () {
-		app.idleHandler._deactivate();
+		// don't deactivate view while Drag and Drop in Pivot table dialog
+		if (!JSDialog.isDnDActive())
+			app.idleHandler._deactivate();
 	},
 
 	// The editor got focus (probably a dialog closed or user clicked to edit).
