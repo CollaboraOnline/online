@@ -2363,10 +2363,10 @@ size_t ClientSession::getTilesOnFlyUpperLimit() const
     float tilesOnFlyUpperLimit = 0;
     if (normalizedVisArea.hasSurface() && getTileWidthInTwips() != 0 && getTileHeightInTwips() != 0)
     {
-        const int tilesFitOnWidth = std::ceil(normalizedVisArea.getRight() / getTileWidthInTwips()) -
-                                    std::ceil(normalizedVisArea.getLeft() / getTileWidthInTwips()) + 1;
-        const int tilesFitOnHeight = std::ceil(normalizedVisArea.getBottom() / getTileHeightInTwips()) -
-                                     std::ceil(normalizedVisArea.getTop() / getTileHeightInTwips()) + 1;
+        const int tilesFitOnWidth = (normalizedVisArea.getRight() / getTileWidthInTwips()) -
+                                    (normalizedVisArea.getLeft() / getTileWidthInTwips()) + 1;
+        const int tilesFitOnHeight = (normalizedVisArea.getBottom() / getTileHeightInTwips()) -
+                                     (normalizedVisArea.getTop() / getTileHeightInTwips()) + 1;
         const int tilesInVisArea = tilesFitOnWidth * tilesFitOnHeight;
 
         tilesOnFlyUpperLimit = std::max(TILES_ON_FLY_MIN_UPPER_LIMIT, tilesInVisArea * 1.1f);
