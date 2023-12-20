@@ -781,3 +781,8 @@ JSDialog.treeView = function (parentContainer, data, builder) {
 	var buildInnerData = _treelistboxControl(parentContainer, data, builder);
 	return buildInnerData;
 };
+
+JSDialog.isDnDActive = function () {
+	var dndElements = document.querySelectorAll('.droptarget');
+	return (dndElements && dndElements.length);
+};
