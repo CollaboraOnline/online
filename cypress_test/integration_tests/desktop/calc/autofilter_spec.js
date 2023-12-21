@@ -111,4 +111,37 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'AutoFilter', function() {
 
 		assertDataOnFilter(['Cypress Test', 'Status', 'Test 1', 'Pass', 'Test 2', 'Fail', 'Test 3', 'Pass', 'Test 5', 'Fail']);
 	});
+
+	// check if filter by color applied or not
+	it('Filter by color', function() {
+		// apply background color to some cells
+		calcHelper.selectCellsInRange('A2:A2');
+		cy.cGet('#tb_editbar_item_backgroundcolor').click();
+		desktopHelper.selectColorFromPalette('8E7CC3');
+
+		calcHelper.openAutoFilterMenu();
+		
+		//Click on `Filter by Color`
+		cy.cGet('body').contains('.autofilter', 'Filter by Color').click();
+
+		//wait after apply filter by color filter
+		cy.wait(500);
+
+		// Find the table element with ID "background"
+		cy.cGet('table#background')
+		.find('input') // Find all input elements inside the table
+		.each(($input) => { // Iterate through each input element
+			// Assert that each input is of type radio
+			cy.wrap($input).should('have.attr', 'type', 'radio');
+		});
+
+		// Find the table element with ID "background"
+		cy.cGet('table#background')
+		.find('input') // Find all input elements inside the table
+		.first() // Select the first input element
+		.click(); // Click on the first input element
+
+		assertDataOnFilter(['Cypress Test', 'Status', 'Test 1', 'Pass']);
+
+	});
 });
