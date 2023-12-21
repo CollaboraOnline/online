@@ -176,6 +176,9 @@ L.Map.Mouse = L.Handler.extend({
 			this._map.fire('scrollvelocity', {vx: 0, vy: 0});
 		}
 		else if (e.type === 'mousemove' && this._mouseDown) {
+			if (this._mouseOverTimeout)
+				clearTimeout(this._mouseOverTimeout);
+
 			if (this._holdMouseEvent) {
 				clearTimeout(this._holdMouseEvent);
 				this._holdMouseEvent = null;
