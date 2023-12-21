@@ -1098,6 +1098,22 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			return scroll; // no scroll needed.
 		}
 
+		var noSplit = !this._splitPanesContext
+			|| this._splitPanesContext.getSplitPos().equals(new L.Point(0, 0));
+
+		if (noSplit && this._cellCursor.intersects(paneRectsInLatLng[0])) {
+			// Check if target cell is bigger than screen but partially visible
+			// TODO: handle with split panes
+			var cellWidth = this._cellCursor.getWidth();
+			var paneWidth = paneRectsInLatLng[0].getWidth();
+
+			var cellHeight = this._cellCursor.getHeight();
+			var paneHeight = paneRectsInLatLng[0].getHeight();
+
+			if (cellWidth > paneWidth || cellHeight > paneHeight)
+				return scroll; // no scroll needed.
+		}
+
 		var freePaneBounds = paneRectsInLatLng[paneRectsInLatLng.length - 1];
 		var splitPoint = map.unproject(this._splitPanesContext ? this._splitPanesContext.getSplitPos() : new L.Point(0, 0));
 

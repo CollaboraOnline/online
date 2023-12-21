@@ -30,7 +30,7 @@ function clickFormulaBar() {
 //              one makes the document to step in cell editing.
 // dblClick - to do a double click or not. The result of double click is that the cell
 //            editing it triggered both on desktop and mobile.
-function clickOnFirstCell(firstClick = true, dblClick = false) {
+function clickOnFirstCell(firstClick = true, dblClick = false, isA1 = true) {
 	cy.log('Clicking on first cell - start.');
 	cy.log('Param - firstClick: ' + firstClick);
 	cy.log('Param - dblClick: ' + dblClick);
@@ -62,7 +62,8 @@ function clickOnFirstCell(firstClick = true, dblClick = false) {
 		});
 	}
 
-	cy.cGet('input#addressInput').should('have.prop', 'value', 'A1');
+	if (isA1)
+		cy.cGet('input#addressInput').should('have.prop', 'value', 'A1');
 
 	cy.log('Clicking on first cell - end.');
 }

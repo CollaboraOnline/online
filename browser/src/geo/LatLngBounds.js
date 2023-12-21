@@ -97,6 +97,14 @@ L.LatLngBounds.prototype = {
 		return this._northEast.lat;
 	},
 
+	getWidth: function () {
+		return this.getEast() - this.getWest();
+	},
+
+	getHeight: function () {
+		return this.getNorth() - this.getSouth();
+	},
+
 	contains: function (obj) { // (LatLngBounds) or (LatLng) -> Boolean
 		if (typeof obj[0] === 'number' || obj instanceof L.LatLng) {
 			obj = L.latLng(obj);
