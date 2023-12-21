@@ -4586,6 +4586,8 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._updateCursorAndOverlay();
 	},
 
+	// TODO: unused variables: horizontalDirection, verticalDirection
+	// TODO: used only in calc: move to CalcTileLayer
 	_onUpdateCellCursor: function (horizontalDirection, verticalDirection, onPgUpDn, scrollToCursor) {
 		this._onUpdateCellResizeMarkers();
 		if (this._cellCursor && !this._isEmptyRectangle(this._cellCursor)) {
