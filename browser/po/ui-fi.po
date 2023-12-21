@@ -2,12 +2,12 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-24 19:14+0100\n"
+"POT-Creation-Date: 2023-12-21 21:04+0100\n"
 "PO-Revision-Date: 2022-08-01 11:22+0000\n"
 "Last-Translator: Tor Lillqvist <tml@collabora.com>\n"
 "Language-Team: Finnish <https://hosted.weblate.org/projects/collabora-online/"
@@ -147,8 +147,8 @@ msgstr "Verkkograafi"
 #: src/control/Control.NotebookbarImpress.js:25
 #: src/control/Control.NotebookbarImpress.js:172
 #: src/control/Control.NotebookbarWriter.js:154
-#: src/layer/tile/CommentListSection.ts:395
-#: src/layer/tile/CommentSection.ts:120
+#: src/layer/tile/CommentListSection.ts:406
+#: src/layer/tile/CommentSection.ts:135
 msgid "Save"
 msgstr "Tallenna"
 
@@ -227,9 +227,10 @@ msgid "Log Levels"
 msgstr "Lokitaso"
 
 #: admin/admin.strings.js:55 src/control/Control.AlertDialog.js:21
-#: src/control/Control.AlertDialog.js:27 src/control/Control.AlertDialog.js:58
-#: src/control/Control.Zotero.js:188 src/control/Parts.js:441
-#: src/core/Socket.js:1035 src/core/Socket.js:1040
+#: src/control/Control.AlertDialog.js:27 src/control/Control.AlertDialog.js:94
+#: src/control/Control.Zotero.js:188 src/control/Parts.js:451
+#: src/core/Socket.js:1046 src/core/Socket.js:1051
+#: src/layer/tile/CommentListSection.ts:117
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.div:51-7
 msgid "Close"
 msgstr "Sulje"
@@ -258,17 +259,17 @@ msgstr "Palvelin on sammutettu, ole hyvä ja lataa sivu uudelleen."
 #: admin/src/AdminSocketOverview.js:99 admin/src/AdminSocketOverview.js:422
 #: admin/src/AdminSocketSettings.js:36 src/control/Control.AlertDialog.js:43
 #: src/control/Control.DocumentRepair.js:68
-#: src/control/Control.LanguageDialog.js:115 src/control/Control.Tabs.js:311
-#: src/control/Control.Tabs.js:320 src/control/Control.Zotero.js:334
+#: src/control/Control.LanguageDialog.js:115 src/control/Control.Tabs.js:328
+#: src/control/Control.Tabs.js:337 src/control/Control.Zotero.js:334
 #: src/control/Control.Zotero.js:372 src/control/Permission.js:80
 #: src/control/Permission.js:90 src/control/Permission.js:140
 #: src/control/Toolbar.js:555 src/control/Toolbar.js:656
 #: src/control/Toolbar.js:792 src/control/Toolbar.js:1083
-#: src/core/Socket.js:586 src/core/Socket.js:1005 src/core/Socket.js:1080
-#: src/core/Socket.js:1205 src/core/Socket.js:1209 src/main.js:70
-#: src/main.js:73 src/main.js:110 src/map/Clipboard.js:860
+#: src/core/Socket.js:595 src/core/Socket.js:1016 src/core/Socket.js:1091
+#: src/core/Socket.js:1223 src/core/Socket.js:1227 src/main.js:79
+#: src/main.js:82 src/main.js:134 src/map/Clipboard.js:860
 #: src/map/Clipboard.js:899 src/map/handler/Map.Feedback.js:83
-#: src/map/handler/Map.WOPI.js:539
+#: src/map/handler/Map.WOPI.js:582
 msgid "OK"
 msgstr "OK"
 
@@ -290,9 +291,9 @@ msgstr "Haluatko varmasti lopettaa tämän istunnon?"
 #: src/control/Control.DownloadProgress.js:81
 #: src/control/Control.LanguageDialog.js:109
 #: src/control/Control.MobileTopBar.js:43 src/control/Control.Zotero.js:329
-#: src/control/Toolbar.js:787 src/core/Socket.js:1230
-#: src/layer/tile/CommentListSection.ts:390
-#: src/layer/tile/CommentSection.ts:119 src/layer/tile/CommentSection.ts:122
+#: src/control/Toolbar.js:787 src/core/Socket.js:1248
+#: src/layer/tile/CommentListSection.ts:401
+#: src/layer/tile/CommentSection.ts:134 src/layer/tile/CommentSection.ts:137
 msgid "Cancel"
 msgstr "Peruuta"
 
@@ -362,6 +363,18 @@ msgstr " min"
 msgid " s"
 msgstr " s"
 
+#: js/global.js:865
+msgid "Cluster is scaling, retrying..."
+msgstr ""
+
+#: js/global.js:867
+msgid "Document is migrating to new server, retrying..."
+msgstr ""
+
+#: js/global.js:869
+msgid "Failed to get RouteToken from controller"
+msgstr ""
+
 #: js/w2ui-1.5.rc1.js:3003
 msgid "Recent"
 msgstr "Viimeaikainen"
@@ -383,6 +396,39 @@ msgid "Open link"
 msgstr "Avaa linkki"
 
 #: src/control/Control.AlertDialog.js:55
+msgid "Copied external sources are not allowed"
+msgstr ""
+
+#: src/control/Control.AlertDialog.js:56
+msgid "It seems you have copied a selection that includes external images."
+msgstr ""
+
+#: src/control/Control.AlertDialog.js:57
+msgid ""
+"Downloading external resources is forbidden but pasting images is still "
+"possible. Please right click in the image, choose \"Copy Image\" and paste "
+"it into the document instead."
+msgstr ""
+
+#: src/control/Control.AlertDialog.js:61
+msgid "External data source not allowed"
+msgstr ""
+
+#: src/control/Control.AlertDialog.js:62
+msgid "It seems you have tried to insert external data."
+msgstr ""
+
+#: src/control/Control.AlertDialog.js:63
+msgid ""
+"Selected external data source is forbidden. Please contact the system "
+"administrator."
+msgstr ""
+
+#: src/control/Control.AlertDialog.js:75
+msgid "Don't show this again"
+msgstr ""
+
+#: src/control/Control.AlertDialog.js:91
 msgid "The server encountered a %0 error while parsing the %1 command."
 msgstr "Palvelin kohtasi virheen %0 jäsennellessään komentoa %1."
 
@@ -476,11 +522,11 @@ msgid ""
 "From now on clipboard notifications will discreetly appear at the bottom."
 msgstr ""
 
-#: src/control/Control.DownloadProgress.js:257
+#: src/control/Control.DownloadProgress.js:264
 msgid "Content copied to clipboard"
 msgstr ""
 
-#: src/control/Control.DownloadProgress.js:301
+#: src/control/Control.DownloadProgress.js:308
 msgid "Download failed"
 msgstr ""
 
@@ -571,70 +617,70 @@ msgstr "Neliö"
 msgid "Fixed size"
 msgstr "Kiinteämittainen"
 
-#: src/control/Control.JSDialogBuilder.js:1601
+#: src/control/Control.JSDialogBuilder.js:1604
 msgid "From"
 msgstr "Aloitus"
 
-#: src/control/Control.JSDialogBuilder.js:1604
+#: src/control/Control.JSDialogBuilder.js:1607
 msgid "To"
 msgstr "Loppu"
 
-#: src/control/Control.JSDialogBuilder.js:1607
+#: src/control/Control.JSDialogBuilder.js:1610
 msgid "Color"
 msgstr "Väri"
 
-#: src/control/Control.JSDialogBuilder.js:1721
+#: src/control/Control.JSDialogBuilder.js:1724
 msgid "Select range"
 msgstr "Valitse väli"
 
-#: src/control/Control.JSDialogBuilder.js:1775
+#: src/control/Control.JSDialogBuilder.js:1778
 #: src/control/Control.NotebookbarBuilder.js:237
 msgid "Font Name"
 msgstr "Kirjasinlaji"
 
-#: src/control/Control.JSDialogBuilder.js:1777 src/control/Toolbar.js:123
+#: src/control/Control.JSDialogBuilder.js:1780 src/control/Toolbar.js:123
 msgid "Font Size"
 msgstr "Kirjasinkoko"
 
-#: src/control/Control.JSDialogBuilder.js:1779
-#: src/control/Control.TopToolbar.js:508
+#: src/control/Control.JSDialogBuilder.js:1782
+#: src/control/Control.TopToolbar.js:524
 msgid "Style"
 msgstr "Tyyli"
 
-#: src/control/Control.JSDialogBuilder.js:2046
+#: src/control/Control.JSDialogBuilder.js:2049
 msgid "reply"
 msgstr "vastaa"
 
-#: src/control/Control.JSDialogBuilder.js:2049
+#: src/control/Control.JSDialogBuilder.js:2052
 msgid "replies"
 msgstr "vastaukset"
 
-#: src/control/Control.JSDialogBuilder.js:2060
-#: src/layer/tile/CanvasTileLayer.js:5294
-#: src/layer/tile/CanvasTileLayer.js:5305
-#: src/layer/tile/CommentListSection.ts:967
+#: src/control/Control.JSDialogBuilder.js:2063
+#: src/layer/tile/CanvasTileLayer.js:5321
+#: src/layer/tile/CanvasTileLayer.js:5332
+#: src/layer/tile/CommentListSection.ts:942
 msgid "Comment"
 msgstr "Huomautus"
 
-#: src/control/Control.JSDialogBuilder.js:2124
+#: src/control/Control.JSDialogBuilder.js:2127
 msgid "Insert Comment"
 msgstr "Lisää Kommentti"
 
-#: src/control/Control.JSDialogBuilder.js:2870
+#: src/control/Control.JSDialogBuilder.js:2880
 msgid "Automatic"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:3009
+#: src/control/Control.JSDialogBuilder.js:3021
 #: src/control/Control.Menubar.js:819
 msgid "Rows"
 msgstr "Rivejä"
 
-#: src/control/Control.JSDialogBuilder.js:3010
+#: src/control/Control.JSDialogBuilder.js:3022
 #: src/control/Control.Menubar.js:822
 msgid "Columns"
 msgstr "Sarakkeita"
 
-#: src/control/Control.JSDialogBuilder.js:3030
+#: src/control/Control.JSDialogBuilder.js:3042
 msgid "Insert Table"
 msgstr "Lisää taulukko"
 
@@ -798,8 +844,8 @@ msgstr "Korjaa"
 #: src/control/Control.NotebookbarDraw.js:345
 #: src/control/Control.NotebookbarImpress.js:453
 #: src/control/Control.NotebookbarImpress.js:454
-#: src/control/Control.NotebookbarWriter.js:1395
-#: src/control/Control.NotebookbarWriter.js:1396
+#: src/control/Control.NotebookbarWriter.js:1408
+#: src/control/Control.NotebookbarWriter.js:1409
 #: src/control/Control.StatusBar.js:209
 msgid "Reset zoom"
 msgstr "Nollaa zoomaus"
@@ -809,12 +855,12 @@ msgstr "Nollaa zoomaus"
 #: src/control/Control.NotebookbarCalc.js:1257
 #: src/control/Control.NotebookbarDraw.js:385
 #: src/control/Control.NotebookbarImpress.js:494
-#: src/control/Control.NotebookbarWriter.js:1436
+#: src/control/Control.NotebookbarWriter.js:1449
 msgid "Toggle UI Mode"
 msgstr ""
 
 #: src/control/Control.Menubar.js:129 src/control/Control.Menubar.js:424
-#: src/control/Control.NotebookbarWriter.js:1450
+#: src/control/Control.NotebookbarWriter.js:1463
 msgid "Show Ruler"
 msgstr "Näytä viivotin"
 
@@ -826,8 +872,8 @@ msgstr "Näytä viivotin"
 #: src/control/Control.NotebookbarDraw.js:946
 #: src/control/Control.NotebookbarImpress.js:520
 #: src/control/Control.NotebookbarImpress.js:1065
-#: src/control/Control.NotebookbarWriter.js:889
-#: src/control/Control.NotebookbarWriter.js:1463
+#: src/control/Control.NotebookbarWriter.js:902
+#: src/control/Control.NotebookbarWriter.js:1476
 msgid "Show Status Bar"
 msgstr "Näytä tilapalkki"
 
@@ -843,7 +889,7 @@ msgstr ""
 #: src/control/Control.NotebookbarCalc.js:1295
 #: src/control/Control.NotebookbarDraw.js:421
 #: src/control/Control.NotebookbarImpress.js:539
-#: src/control/Control.NotebookbarWriter.js:1481
+#: src/control/Control.NotebookbarWriter.js:1494
 msgid "Dark Mode"
 msgstr ""
 
@@ -864,7 +910,7 @@ msgstr "Kaikki"
 #: src/control/Control.NotebookbarCalc.js:1418
 #: src/control/Control.NotebookbarDraw.js:1234
 #: src/control/Control.NotebookbarImpress.js:1241
-#: src/control/Control.NotebookbarWriter.js:1087
+#: src/control/Control.NotebookbarWriter.js:1100
 msgid "Smart Picker"
 msgstr ""
 
@@ -879,38 +925,38 @@ msgid "References"
 msgstr "Viittaukset"
 
 #: src/control/Control.Menubar.js:281
-#: src/control/Control.NotebookbarWriter.js:1841
+#: src/control/Control.NotebookbarWriter.js:1854
 msgid "Update Index"
 msgstr ""
 
 #: src/control/Control.Menubar.js:290
-#: src/control/Control.NotebookbarWriter.js:1937
+#: src/control/Control.NotebookbarWriter.js:1950
 msgid "Add Citation"
 msgstr ""
 
 #: src/control/Control.Menubar.js:291
-#: src/control/Control.NotebookbarWriter.js:1949
+#: src/control/Control.NotebookbarWriter.js:1962
 msgid "Add Citation Note"
 msgstr ""
 
 #: src/control/Control.Menubar.js:292
-#: src/control/Control.NotebookbarWriter.js:1924
+#: src/control/Control.NotebookbarWriter.js:1937
 msgid "Add Bibliography"
 msgstr ""
 
 #: src/control/Control.Menubar.js:294
-#: src/control/Control.NotebookbarWriter.js:1967
+#: src/control/Control.NotebookbarWriter.js:1980
 msgid "Refresh Citations"
 msgstr ""
 
 #: src/control/Control.Menubar.js:295
-#: src/control/Control.NotebookbarWriter.js:1979
+#: src/control/Control.NotebookbarWriter.js:1992
 #: src/control/Control.Zotero.js:1442
 msgid "Unlink Citations"
 msgstr ""
 
 #: src/control/Control.Menubar.js:296
-#: src/control/Control.NotebookbarWriter.js:1991
+#: src/control/Control.NotebookbarWriter.js:2004
 msgid "Citation Preferences"
 msgstr ""
 
@@ -940,35 +986,35 @@ msgstr "Lisää taulukko"
 #: src/control/Control.NotebookbarDraw.js:302
 #: src/control/Control.NotebookbarImpress.js:404
 #: src/control/Control.NotebookbarWriter.js:355
-#: src/control/Control.NotebookbarWriter.js:1358
+#: src/control/Control.NotebookbarWriter.js:1371
 msgid "Properties"
 msgstr ""
 
 #: src/control/Control.Menubar.js:349 src/control/Control.Menubar.js:967
-#: src/control/Control.NotebookbarWriter.js:430
+#: src/control/Control.NotebookbarWriter.js:443
 msgid "Voice Over"
 msgstr ""
 
 #: src/control/Control.Menubar.js:362
-#: src/control/Control.NotebookbarWriter.js:396
+#: src/control/Control.NotebookbarWriter.js:409
 msgid "Forum"
 msgstr "Foorumi"
 
 #: src/control/Control.Menubar.js:363 src/control/Control.Menubar.js:516
 #: src/control/Control.Menubar.js:643 src/control/Control.Menubar.js:906
-#: src/control/Control.NotebookbarWriter.js:408
+#: src/control/Control.NotebookbarWriter.js:421
 msgid "Online Help"
 msgstr "Online-avustus"
 
 #: src/control/Control.Menubar.js:364 src/control/Control.Menubar.js:517
 #: src/control/Control.Menubar.js:644 src/control/Control.Menubar.js:907
-#: src/control/Control.NotebookbarWriter.js:420
+#: src/control/Control.NotebookbarWriter.js:433
 msgid "Keyboard shortcuts"
 msgstr "Pikanäppäimet"
 
 #: src/control/Control.Menubar.js:365 src/control/Control.Menubar.js:518
 #: src/control/Control.Menubar.js:645 src/control/Control.Menubar.js:908
-#: src/control/Control.NotebookbarWriter.js:446
+#: src/control/Control.NotebookbarWriter.js:459
 msgid "Report an issue"
 msgstr "Ilmoita virhe"
 
@@ -976,7 +1022,7 @@ msgstr "Ilmoita virhe"
 #: src/control/Control.Menubar.js:646 src/control/Control.Menubar.js:909
 #: src/control/Control.Menubar.js:976 src/control/Control.Menubar.js:1040
 #: src/control/Control.Menubar.js:1094 src/control/Control.Menubar.js:1168
-#: src/control/Control.NotebookbarWriter.js:459
+#: src/control/Control.NotebookbarWriter.js:472
 msgid "Latest Updates"
 msgstr "Viimeisimmät päivitykset"
 
@@ -984,7 +1030,7 @@ msgstr "Viimeisimmät päivitykset"
 #: src/control/Control.Menubar.js:647 src/control/Control.Menubar.js:910
 #: src/control/Control.Menubar.js:977 src/control/Control.Menubar.js:1041
 #: src/control/Control.Menubar.js:1095 src/control/Control.Menubar.js:1169
-#: src/control/Control.NotebookbarWriter.js:471
+#: src/control/Control.NotebookbarWriter.js:484
 msgid "Send Feedback"
 msgstr "Lähetä palautetta"
 
@@ -992,7 +1038,7 @@ msgstr "Lähetä palautetta"
 #: src/control/Control.Menubar.js:648 src/control/Control.Menubar.js:911
 #: src/control/Control.Menubar.js:978 src/control/Control.Menubar.js:1042
 #: src/control/Control.Menubar.js:1096 src/control/Control.Menubar.js:1170
-#: src/control/Control.NotebookbarWriter.js:483
+#: src/control/Control.NotebookbarWriter.js:496
 msgid "About"
 msgstr "Tietoja"
 
@@ -1112,7 +1158,7 @@ msgstr ""
 #: src/control/Control.NotebookbarCalc.js:882
 #: src/control/Control.NotebookbarDraw.js:945
 #: src/control/Control.NotebookbarImpress.js:1064
-#: src/control/Control.NotebookbarWriter.js:888
+#: src/control/Control.NotebookbarWriter.js:901
 #: src/control/Control.StatusBar.js:194 src/control/Control.Zotero.js:217
 msgid "Search"
 msgstr "Etsi"
@@ -1200,28 +1246,28 @@ msgstr ""
 msgid "CSV File (.csv)"
 msgstr "CSV-tiedosto (.csv)"
 
-#: src/control/Control.NotebookbarBuilder.js:894
-#: src/control/Control.TopToolbar.js:232
+#: src/control/Control.NotebookbarBuilder.js:898
+#: src/control/Control.TopToolbar.js:233
 msgid "Insert Local Image"
 msgstr "Lisää paikallinen kuva"
 
-#: src/control/Control.NotebookbarBuilder.js:996
+#: src/control/Control.NotebookbarBuilder.js:1002
 msgid "Very Tight"
 msgstr "Hyvin tiivis"
 
-#: src/control/Control.NotebookbarBuilder.js:997
+#: src/control/Control.NotebookbarBuilder.js:1003
 msgid "Tight"
 msgstr "Tiivis"
 
-#: src/control/Control.NotebookbarBuilder.js:998
+#: src/control/Control.NotebookbarBuilder.js:1004
 msgid "Normal"
 msgstr "Normaali"
 
-#: src/control/Control.NotebookbarBuilder.js:999
+#: src/control/Control.NotebookbarBuilder.js:1005
 msgid "Loose"
 msgstr "Väljä"
 
-#: src/control/Control.NotebookbarBuilder.js:1000
+#: src/control/Control.NotebookbarBuilder.js:1006
 msgid "Very Loose"
 msgstr "Hyvin väljä"
 
@@ -1364,7 +1410,7 @@ msgid "Currency"
 msgstr "Valuutta"
 
 #: src/control/Control.NotebookbarCalc.js:654
-#: src/control/Control.NotebookbarWriter.js:1351
+#: src/control/Control.NotebookbarWriter.js:1364
 #: src/control/Control.Zotero.js:1079 src/control/Control.Zotero.js:1515
 msgid "Date"
 msgstr "Päivämäärä"
@@ -1448,28 +1494,28 @@ msgstr "Poista sarakkeet"
 #: src/control/Control.NotebookbarCalc.js:1202
 #: src/control/Control.NotebookbarDraw.js:330
 #: src/control/Control.NotebookbarImpress.js:431
-#: src/control/Control.NotebookbarWriter.js:1374
+#: src/control/Control.NotebookbarWriter.js:1387
 msgid "Read mode"
 msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:1256
 #: src/control/Control.NotebookbarDraw.js:384
 #: src/control/Control.NotebookbarImpress.js:493
-#: src/control/Control.NotebookbarWriter.js:1435
+#: src/control/Control.NotebookbarWriter.js:1448
 msgid "Compact view"
 msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:1270
 #: src/control/Control.NotebookbarDraw.js:397
 #: src/control/Control.NotebookbarImpress.js:507
-#: src/control/Control.NotebookbarWriter.js:1475
+#: src/control/Control.NotebookbarWriter.js:1488
 msgid "Collapse Tabs"
 msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:1282
 #: src/control/Control.NotebookbarDraw.js:409
 #: src/control/Control.NotebookbarImpress.js:519
-#: src/control/Control.NotebookbarWriter.js:1462
+#: src/control/Control.NotebookbarWriter.js:1475
 msgid "Status Bar"
 msgstr ""
 
@@ -1484,8 +1530,8 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:941
 #: src/control/Control.NotebookbarImpress.js:1326
 #: src/control/Control.NotebookbarImpress.js:2357
-#: src/control/Control.NotebookbarWriter.js:1043
-#: src/control/Control.NotebookbarWriter.js:2799
+#: src/control/Control.NotebookbarWriter.js:1056
+#: src/control/Control.NotebookbarWriter.js:2812
 msgid "Shapes"
 msgstr ""
 
@@ -1531,23 +1577,27 @@ msgstr "ODF-tekstiasiakirja (.odt)"
 msgid "EPUB Document (.epub)"
 msgstr "EPUB-tiedosto (.epub)"
 
-#: src/control/Control.NotebookbarWriter.js:1323
+#: src/control/Control.NotebookbarWriter.js:382
+msgid "Go Online"
+msgstr ""
+
+#: src/control/Control.NotebookbarWriter.js:1336
 msgid "Rich Text"
 msgstr ""
 
-#: src/control/Control.NotebookbarWriter.js:1330
+#: src/control/Control.NotebookbarWriter.js:1343
 msgid "Checkbox"
 msgstr ""
 
-#: src/control/Control.NotebookbarWriter.js:1337
+#: src/control/Control.NotebookbarWriter.js:1350
 msgid "Dropdown"
 msgstr ""
 
-#: src/control/Control.NotebookbarWriter.js:1344
+#: src/control/Control.NotebookbarWriter.js:1357
 msgid "Picture"
 msgstr ""
 
-#: src/control/Control.NotebookbarWriter.js:1449
+#: src/control/Control.NotebookbarWriter.js:1462
 msgid "Ruler"
 msgstr ""
 
@@ -1703,15 +1753,15 @@ msgstr "Siirrä taulukkoa oikealle"
 msgid "Copy Sheet..."
 msgstr "Kopioi taulukko..."
 
-#: src/control/Control.Tabs.js:309
+#: src/control/Control.Tabs.js:326
 msgid "Are you sure you want to delete sheet, %sheet%?"
 msgstr "Haluatko varmasti poistaa taulukon %sheet%?"
 
-#: src/control/Control.Tabs.js:320
+#: src/control/Control.Tabs.js:337
 msgid "Rename sheet"
 msgstr ""
 
-#: src/control/Control.Tabs.js:320
+#: src/control/Control.Tabs.js:337
 msgid "Enter new sheet name"
 msgstr "Anna taulukon uusi nimi"
 
@@ -1743,15 +1793,15 @@ msgstr "Oletustyyli"
 msgid "Insert table"
 msgstr "Lisää taulukko"
 
-#: src/control/Control.TopToolbar.js:236
+#: src/control/Control.TopToolbar.js:237
 msgid "Insert shapes"
 msgstr "Lisää muotoja"
 
-#: src/control/Control.TopToolbar.js:238
+#: src/control/Control.TopToolbar.js:239
 msgid "Insert connectors"
 msgstr "Lisää liittimet"
 
-#: src/control/Control.TopToolbar.js:253
+#: src/control/Control.TopToolbar.js:254
 msgid "Hide Menu"
 msgstr ""
 
@@ -1809,7 +1859,7 @@ msgid ""
 "API. It may cause some problems while editing citations or bibliography."
 msgstr ""
 
-#: src/control/Control.Zotero.js:243 src/core/Socket.js:1087
+#: src/control/Control.Zotero.js:243 src/core/Socket.js:1098
 msgid "Loading..."
 msgstr "Ladataan..."
 
@@ -2069,82 +2119,82 @@ msgstr "Haluatko varmasti poistaa tämän dian?"
 msgid "Are you sure you want to delete this page?"
 msgstr "Haluatko varmasti poistaa tämän sivun?"
 
-#: src/control/jsdialog/Widget.TreeView.js:619
+#: src/control/jsdialog/Widget.TreeView.js:654
 msgid "Headings and objects that you add to the document will appear here"
 msgstr ""
 
-#: src/core/Socket.js:56
+#: src/core/Socket.js:65
 msgid "Oops, there is a problem connecting to %productName: "
 msgstr "Virhe yhdistettäessä kohteeseen %productName: "
 
-#: src/core/Socket.js:567
+#: src/core/Socket.js:576
 msgid "Server is now reachable. We have to refresh the page now."
 msgstr "Palvelin on nyt saavutettavissa. Sivu päivitetään nyt."
 
-#: src/core/Socket.js:569
+#: src/core/Socket.js:578
 msgid "Server is now reachable..."
 msgstr "Palvelin on nyt saavutettavissa..."
 
-#: src/core/Socket.js:573
+#: src/core/Socket.js:582
 msgid "RELOAD"
 msgstr "PÄIVITÄ"
 
-#: src/core/Socket.js:586
+#: src/core/Socket.js:595
 msgid "Cluster configuration warning"
 msgstr ""
 
-#: src/core/Socket.js:589
+#: src/core/Socket.js:598
 msgid "Wrong server, reconnecting..."
 msgstr ""
 
-#: src/core/Socket.js:596
+#: src/core/Socket.js:607
 msgid "COOLWSD version:"
 msgstr "COOLWSD-versio:"
 
-#: src/core/Socket.js:608
+#: src/core/Socket.js:619
 msgid "Served by:"
 msgstr "Palvelin:"
 
-#: src/core/Socket.js:614
+#: src/core/Socket.js:625
 msgid "Unsupported server version."
 msgstr "Palvelimen versiota ei tueta."
 
-#: src/core/Socket.js:618
+#: src/core/Socket.js:629
 msgid "LOKit version:"
 msgstr "LOKit-versio:"
 
-#: src/core/Socket.js:727
+#: src/core/Socket.js:738
 msgid "Document is getting migrated"
 msgstr ""
 
-#: src/core/Socket.js:754
+#: src/core/Socket.js:765
 msgid "Session terminated by document owner"
 msgstr "Asiakirjan omistaja katkaisi istunnon"
 
-#: src/core/Socket.js:759
+#: src/core/Socket.js:770
 msgid "Idle document - please click to reload and resume editing"
 msgstr "Asiakirja jouten - klikkaa jatkaaksesi editointia"
 
-#: src/core/Socket.js:761
+#: src/core/Socket.js:772
 msgid "Idle document - please tap to reload and resume editing"
 msgstr "Asiakirja jouten - klikkaa jatkaaksesi editointia"
 
-#: src/core/Socket.js:770
+#: src/core/Socket.js:781
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr ""
 "Palvelinta ajetaan alas huoltoa varten (asiakirja tallentuu automaattisesti)"
 
-#: src/core/Socket.js:774
+#: src/core/Socket.js:785
 msgid "Oops, there is a problem connecting the document"
 msgstr "Virhe asiakirjaan yhdistäessä"
 
-#: src/core/Socket.js:778
+#: src/core/Socket.js:789
 msgid "Server is down, restarting automatically. Please wait."
 msgstr ""
 "Palvelin on sammuksissa, käynnistetään automaattisesti uudelleen. Ole hyvä "
 "ja odota."
 
-#: src/core/Socket.js:805
+#: src/core/Socket.js:816
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
@@ -2152,82 +2202,86 @@ msgstr ""
 "Asiakirjan sisältöä on muutettu tallennustilassa. Luetaan uusi sisältö. "
 "Sinun versioisi on saatavana versiohistoriassa."
 
-#: src/core/Socket.js:811
+#: src/core/Socket.js:822
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
 msgstr ""
 "Palautetaan vanha versio. Tähänastiset muutokset tallentuvat versiohistoriaan"
 
-#: src/core/Socket.js:817
+#: src/core/Socket.js:828
 msgid "Reloading the document after rename"
 msgstr "Päivitetään asiakirjaa uudelleennimeämisen jälkeen"
 
-#: src/core/Socket.js:957
+#: src/core/Socket.js:968
 msgid "Document requires password to view."
 msgstr "Asiakirjan katselu edellyttää salasanaa."
 
-#: src/core/Socket.js:960
+#: src/core/Socket.js:971
 msgid "Document requires password to modify."
 msgstr "Asiakirjan muokkaaminen edellyttää salasanaa."
 
-#: src/core/Socket.js:962
+#: src/core/Socket.js:973
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Napsauta Peruuta avataksesi katselutilassa."
 
-#: src/core/Socket.js:966
+#: src/core/Socket.js:977
 msgid "Wrong password provided. Please try again."
 msgstr "Väärä salasana, yritä uudelleen."
 
-#: src/core/Socket.js:1004
+#: src/core/Socket.js:1015
 msgid "Only the document owner can change the password."
 msgstr ""
 
-#: src/core/Socket.js:1035 src/core/Socket.js:1040
+#: src/core/Socket.js:1046 src/core/Socket.js:1051
 msgid "Missing Fonts"
 msgstr ""
 
-#: src/core/Socket.js:1077
+#: src/core/Socket.js:1088
 msgid "Someone"
 msgstr "Joku"
 
-#: src/core/Socket.js:1078
+#: src/core/Socket.js:1089
 msgid "%userName saved this document as %fileName. Do you want to join?"
 msgstr ""
 
-#: src/core/Socket.js:1087
+#: src/core/Socket.js:1098
 msgid "Connecting..."
 msgstr "Yhdistetään..."
 
-#: src/core/Socket.js:1104
+#: src/core/Socket.js:1115
 msgid "The document is being renamed and will reload shortly"
 msgstr "Asiakirjaa nimetään uudelleen ja se päivittyy piakkoin"
 
-#: src/core/Socket.js:1205
+#: src/core/Socket.js:1118
+msgid "The document is switching to Offline mode and will reload shortly"
+msgstr ""
+
+#: src/core/Socket.js:1223
 msgid "Exported to storage"
 msgstr ""
 
-#: src/core/Socket.js:1205
+#: src/core/Socket.js:1223
 msgid "Successfully exported: "
 msgstr ""
 
-#: src/core/Socket.js:1233
+#: src/core/Socket.js:1251
 msgid "Discard"
 msgstr "Hylkää ne"
 
-#: src/core/Socket.js:1234
+#: src/core/Socket.js:1252
 msgid "Overwrite"
 msgstr "Korvaa"
 
-#: src/core/Socket.js:1245
+#: src/core/Socket.js:1263
 msgid "Save to new file"
 msgstr "Tallenna uuteen tiedostoon"
 
-#: src/core/Socket.js:1255
+#: src/core/Socket.js:1273
 msgid "Document has been changed"
 msgstr "Asiakirjaa on muutettu"
 
-#: src/core/Socket.js:1256
+#: src/core/Socket.js:1274
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
@@ -2235,7 +2289,7 @@ msgstr ""
 "Asiakirjaa on muokattu tallennustilassa. Mitä haluat tehdä omille "
 "tallentamattomille muutoksillesi?"
 
-#: src/core/Socket.js:1562
+#: src/core/Socket.js:1581
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -2243,27 +2297,27 @@ msgstr ""
 "Harmillista kyllä, asiakirjaasi ei saada yhteyttä. Ole hyvä ja yritä "
 "uudelleen."
 
-#: src/core/Socket.js:1579
+#: src/core/Socket.js:1598
 msgid "Reconnecting..."
 msgstr "Yhdistetään..."
 
-#: src/core/Socket.js:1589
+#: src/core/Socket.js:1608
 msgid "The server has been disconnected."
 msgstr "Palvelimen yhteys on katkennut."
 
-#: src/docstate.js:71
+#: src/docstate.js:78
 msgid "Standard"
 msgstr ""
 
-#: src/docstate.js:82
+#: src/docstate.js:89
 msgid "Theme colors"
 msgstr ""
 
-#: src/errormessages.js:13
+#: src/errormessages.js:22
 msgid "No disk space left on server."
 msgstr ""
 
-#: src/errormessages.js:14
+#: src/errormessages.js:23
 msgid ""
 "The host URL is empty. The coolwsd server is probably misconfigured, please "
 "contact the administrator."
@@ -2271,7 +2325,7 @@ msgstr ""
 "Palvelimen URL on tyhjä. coolwsd-palvelin on luultavasti konfiguroitu "
 "väärin, ota yhteyttä ylläpitäjään."
 
-#: src/errormessages.js:15
+#: src/errormessages.js:24
 #, fuzzy
 msgid ""
 "This is an unsupported version of {productname}. To avoid the impression "
@@ -2284,11 +2338,11 @@ msgstr ""
 "näytetään kun samanaikaisesti käsiteltävien asiakirjojen lukumäärä ylittää "
 "{docs} tai kun samanaikaisten käyttäjien lukumäärä ylittää {connections}"
 
-#: src/errormessages.js:16
+#: src/errormessages.js:25
 msgid "More information and support"
 msgstr "Lisätietoja ja tukea"
 
-#: src/errormessages.js:17
+#: src/errormessages.js:26
 msgid ""
 "This service is limited to %0 documents, and %1 connections total by the "
 "admin. This limit has been reached. Please try again later."
@@ -2296,7 +2350,7 @@ msgstr ""
 "Ylläpitäjä on rajannut tämän palvelun %0 asiakirjaan ja %1 yhteyteen. Raja "
 "on saavutettu. Yritä myöhemmin uudelleen."
 
-#: src/errormessages.js:18
+#: src/errormessages.js:27
 msgid ""
 "Service is unavailable. Please try again later and report to your "
 "administrator if the issue persists."
@@ -2304,7 +2358,7 @@ msgstr ""
 "Palvelu ei ole käytettävissä. Yritä myöhemmin uudelleen ja ota yhteyttä "
 "ylläpitäjääsi, mikäli ongelma toistuu."
 
-#: src/errormessages.js:19
+#: src/errormessages.js:28
 msgid ""
 "Unauthorized WOPI host. Please try again later and report to your "
 "administrator if the issue persists."
@@ -2312,11 +2366,11 @@ msgstr ""
 "WOPI-oikeuksissa puutteita. Yritä myöhemmin uudelleen ja ota yhteyttä "
 "ylläpitoon, mikäli ongelma toistuu."
 
-#: src/errormessages.js:20
+#: src/errormessages.js:29
 msgid "Wrong or missing WOPISrc parameter, please contact support."
 msgstr "WOPISrc-parametri puuttuu tai on virheellien, ota yhteys tukeen."
 
-#: src/errormessages.js:21
+#: src/errormessages.js:30
 #, fuzzy
 msgid ""
 "Your session will expire in %time. Please save your work and refresh the "
@@ -2325,7 +2379,7 @@ msgstr ""
 "Istuntosi vanhenee ajassa %time. Tallenna työsi ja virkistä istunto (tai "
 "lataa webbisivu uudelleen) jatkaaksesi."
 
-#: src/errormessages.js:22
+#: src/errormessages.js:31
 #, fuzzy
 msgid ""
 "Your session has expired. Further changes to the document might not be "
@@ -2335,7 +2389,7 @@ msgstr ""
 "Istuntosi on vanhentunut. Mahdolliset lisämuutokset asiakirjaan saattavat "
 "mennä hukkaan. Virkistä istunto (tai lataa webbisivu uudelleen) jatkaaksesi."
 
-#: src/errormessages.js:23
+#: src/errormessages.js:32
 msgid ""
 "Failed to load the document. Please ensure the file type is supported and "
 "not corrupted, and try again."
@@ -2343,27 +2397,27 @@ msgstr ""
 "Asiakirjaa ei voitu ladata. Varmista että asiakirjan tiedostolaji on tuettu "
 "eikä tiedosto ole virheellien, ja yritä uudelleen."
 
-#: src/errormessages.js:24
+#: src/errormessages.js:33
 msgid "Invalid link: '%url'"
 msgstr "Virheellinen linkki: '%url'"
 
-#: src/errormessages.js:25
+#: src/errormessages.js:34
 msgid ""
 "You are leaving the document. The following web page will open in a new "
 "tab: "
 msgstr ""
 
-#: src/errormessages.js:26
+#: src/errormessages.js:35
 msgid ""
 "Failed to load the document. This document is either malformed or is taking "
 "more resources than allowed. Please contact the administrator."
 msgstr "Asiakirjaa ei voitu ladata. Ota yhteys yläpitoon."
 
-#: src/errormessages.js:27
+#: src/errormessages.js:36
 msgid "Cleaning up the document from the last session."
 msgstr "Siivotaan asiakirjaa viime kerralta."
 
-#: src/errormessages.js:28
+#: src/errormessages.js:37
 msgid ""
 "We are in the process of cleaning up this document from the last session, "
 "please try again later."
@@ -2371,7 +2425,7 @@ msgstr ""
 "Olemme siivoamassa tätä asiakirjaa viime istunnolta, ole hyvä ja yritä "
 "myöhemmin uudelleen."
 
-#: src/errormessages.js:29
+#: src/errormessages.js:38
 msgid ""
 "Your %productName cluster appear to be mis-configured or scaling rapidly - "
 "please contact your system administrator. Continuing with editing may "
@@ -2380,7 +2434,7 @@ msgid ""
 "but connected to serverId %2"
 msgstr ""
 
-#: src/errormessages.js:30
+#: src/errormessages.js:39
 msgid ""
 "Failed to establish socket connection or socket connection closed "
 "unexpectedly. The reverse proxy might be misconfigured, please contact the "
@@ -2388,148 +2442,156 @@ msgid ""
 "sdk.collaboraonline.com/docs/installation/Proxy_settings.html"
 msgstr ""
 
-#: src/errormessages.js:33
+#: src/errormessages.js:42
 msgid "Failed to load document."
 msgstr "Asiakirjaa ei voitu ladata."
 
-#: src/errormessages.js:34
+#: src/errormessages.js:43
 msgid "Save failed due to no disk space left. Document will now be read-only."
 msgstr ""
 "Tallennus epäonnistui koska tila loppui. Asiakirjaa ei voi enää muokata."
 
-#: src/errormessages.js:35
+#: src/errormessages.js:44
 msgid ""
 "The document is too large or no disk space left to save. Document will now "
 "be read-only."
 msgstr ""
 
-#: src/errormessages.js:36 src/errormessages.js:45
+#: src/errormessages.js:45 src/errormessages.js:54
 msgid "Document cannot be saved due to expired or invalid access token."
 msgstr ""
 "Asiakirjaa ei voi tallentaa epäkelvon tai vanhentuneen käyttöoikeuden takia."
 
-#: src/errormessages.js:37
+#: src/errormessages.js:46
 msgid "Document cannot be saved."
 msgstr "Asiakirjaa ei voi tallentaa."
 
-#: src/errormessages.js:38
+#: src/errormessages.js:47
 msgid "Document cannot be renamed."
 msgstr "Asiakirjaa ei voi nimetä uudelleen."
 
-#: src/errormessages.js:42
+#: src/errormessages.js:51
 msgid ""
 "Failed to read document from storage, please try to load the document again."
 msgstr ""
 
-#: src/errormessages.js:43
+#: src/errormessages.js:52
 msgid ""
 "Save failed due to no storage space left. Document will now be read-only. "
 "Please make sure enough disk space is available and try to save again."
 msgstr ""
 
-#: src/errormessages.js:44
+#: src/errormessages.js:53
 msgid ""
 "Save failed because the document is too large or exceeds the remaining "
 "storage space. The document will now be read-only but you may still "
 "download it now to preserve a copy locally."
 msgstr ""
 
-#: src/errormessages.js:46
+#: src/errormessages.js:55
 msgid "Document cannot be saved, please check your permissions."
 msgstr ""
 
-#: src/errormessages.js:47
+#: src/errormessages.js:56
 msgid "Document cannot be renamed, please check your permissions."
 msgstr ""
 
-#: src/errormessages.js:48
+#: src/errormessages.js:57
 msgid "Document cannot be exported. Please try again."
 msgstr ""
 
-#: src/errormessages.js:53
+#: src/errormessages.js:62
 msgid "Uploading file to server failed, file not found."
 msgstr "Asiakirjan lähetys palvelimelle epäonnistui, tiedostoa ei löytynyt."
 
-#: src/errormessages.js:54
+#: src/errormessages.js:63
 msgid "Uploading file to server failed, the file is too large."
 msgstr "Asiakirjan lähetys palvelimelle epäonnistui, tiedosto on liian iso."
 
-#: src/layer/tile/CanvasTileLayer.js:2020
+#: src/layer/tile/CanvasTileLayer.js:2025
 msgid "Functions"
 msgstr "Funktiot"
 
-#: src/layer/tile/CanvasTileLayer.js:2593
+#: src/layer/tile/CanvasTileLayer.js:2598
 msgid "Copy link location"
 msgstr ""
 
-#: src/layer/tile/CanvasTileLayer.js:2601
+#: src/layer/tile/CanvasTileLayer.js:2606
 msgid "Edit link"
 msgstr ""
 
-#: src/layer/tile/CanvasTileLayer.js:2609
+#: src/layer/tile/CanvasTileLayer.js:2614
 msgid "Remove link"
 msgstr ""
 
-#: src/layer/tile/CanvasTileLayer.js:5322
+#: src/layer/tile/CanvasTileLayer.js:5349
 msgid "No Comments"
 msgstr "Ei kommentteja"
 
-#: src/layer/tile/CommentListSection.ts:910
+#: src/layer/tile/CommentListSection.ts:116
+msgid "A comment is being edited"
+msgstr ""
+
+#: src/layer/tile/CommentListSection.ts:117
+msgid "Please save or discard the comment currently being edited."
+msgstr ""
+
+#: src/layer/tile/CommentListSection.ts:885
 msgid "Modify"
 msgstr "Muokkaa"
 
-#: src/layer/tile/CommentListSection.ts:916
-#: src/layer/tile/CommentSection.ts:123
+#: src/layer/tile/CommentListSection.ts:891
+#: src/layer/tile/CommentSection.ts:138
 msgid "Reply"
 msgstr "Vastaa"
 
-#: src/layer/tile/CommentListSection.ts:922
+#: src/layer/tile/CommentListSection.ts:897
 msgid "Remove"
 msgstr "Poista"
 
-#: src/layer/tile/CommentListSection.ts:928
+#: src/layer/tile/CommentListSection.ts:903
 msgid "Remove Thread"
 msgstr "Poista lanka"
 
-#: src/layer/tile/CommentListSection.ts:934
+#: src/layer/tile/CommentListSection.ts:909
 msgid "Resolve"
 msgstr "Ratkaise"
 
-#: src/layer/tile/CommentListSection.ts:934
+#: src/layer/tile/CommentListSection.ts:909
 msgid "Unresolve"
 msgstr "Jatka"
 
-#: src/layer/tile/CommentListSection.ts:940
+#: src/layer/tile/CommentListSection.ts:915
 msgid "Unresolve Thread"
 msgstr "Jatka lankaa"
 
-#: src/layer/tile/CommentListSection.ts:940
+#: src/layer/tile/CommentListSection.ts:915
 msgid "Resolve Thread"
 msgstr "Päätä lanka"
 
-#: src/layer/tile/CommentListSection.ts:1166
-#: src/layer/tile/CommentListSection.ts:1202
+#: src/layer/tile/CommentListSection.ts:1187
+#: src/layer/tile/CommentListSection.ts:1236
 msgid "Autosaved"
 msgstr ""
 
-#: src/layer/tile/CommentSection.ts:264
+#: src/layer/tile/CommentSection.ts:276
 msgid "Open menu"
 msgstr "Avaa valikko"
 
-#: src/layer/tile/CommentSection.ts:282 src/layer/tile/CommentSection.ts:283
+#: src/layer/tile/CommentSection.ts:294 src/layer/tile/CommentSection.ts:295
 msgid "Accept change"
 msgstr "Hyväksy muutos"
 
-#: src/layer/tile/CommentSection.ts:289 src/layer/tile/CommentSection.ts:290
+#: src/layer/tile/CommentSection.ts:301 src/layer/tile/CommentSection.ts:302
 msgid "Reject change"
 msgstr "Hylkää muutos"
 
-#: src/layer/tile/CommentSection.ts:313
+#: src/layer/tile/CommentSection.ts:325
 #, fuzzy
 msgid "Resolved"
 msgstr "Ratkaise"
 
-#: src/main.js:110
+#: src/main.js:134
 msgid "Warning! The browser you are using is not supported."
 msgstr "Varoitus! Käyttämääsi selainta ei tueta."
 
@@ -2594,11 +2656,11 @@ msgstr ""
 "lisää vaihtoehtoja. </p><p class=\"vex-footnote\">Sulje ilmoitus hylätäksesi "
 "erikoisliittämisen</p>"
 
-#: src/map/Map.js:217
+#: src/map/Map.js:218
 msgid "Initializing..."
 msgstr "Alustetaan..."
 
-#: src/map/Map.js:442 src/map/Map.js:445 src/map/Map.js:448 src/map/Map.js:451
+#: src/map/Map.js:443 src/map/Map.js:446 src/map/Map.js:449 src/map/Map.js:452
 msgid "Last saved:"
 msgstr "Tallennettu viimeksi:"
 
@@ -2630,19 +2692,19 @@ msgstr "Lähetetään..."
 msgid "Uploading file to server failed with status: %0"
 msgstr "Tiedoston lähetys palvelumelle epäonnistui, tila: %0"
 
-#: src/map/handler/Map.WOPI.js:147
+#: src/map/handler/Map.WOPI.js:149
 msgid "Creating new file from template..."
 msgstr "Luodaan uusi tiedosto mallista..."
 
-#: src/map/handler/Map.WOPI.js:539
+#: src/map/handler/Map.WOPI.js:582
 msgid "Error"
 msgstr ""
 
-#: src/map/handler/Map.WOPI.js:539
+#: src/map/handler/Map.WOPI.js:582
 msgid "File name should contain an extension."
 msgstr ""
 
-#: src/map/handler/Map.WOPI.js:547
+#: src/map/handler/Map.WOPI.js:590
 msgid "Creating copy..."
 msgstr "Luodaan kopiota..."
 
@@ -2663,9 +2725,9 @@ msgstr "Collabora Onlinen kehitysversio"
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:28-7
 msgid ""
 "Enjoy the latest developments in online productivity, free for you to use, "
-"to explore and to use with others in the browser. Various <a target=\"_blank"
-"\" href=\"https://www.collaboraoffice.com/solutions/collabora-office-"
-"android-ios/\">apps</a> are also available for mobile."
+"to explore and to use with others in the browser. Various <a "
+"target=\"_blank\" href=\"https://www.collaboraoffice.com/solutions/"
+"collabora-office-android-ios/\">apps</a> are also available for mobile."
 msgstr ""
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:37-7
@@ -2699,6 +2761,13 @@ msgid ""
 "target=\"_blank\" href=\"https://collaboraonline.github.io/post/filebugs/"
 "\">filing a bug report</a> with all the essential steps on how to reproduce "
 "it."
+msgstr ""
+
+#: welcome/welcome.html%2Bhtml.body.div.div:55-5
+msgid ""
+"<a id=\"slide-1-indicator\" class=\"active\" href=\"#slide-1\">1</a> <a "
+"id=\"slide-2-indicator\" href=\"#slide-2\">2</a> <a id=\"slide-3-"
+"indicator\" href=\"#slide-3\">3</a>"
 msgstr ""
 
 #~ msgid "Start download"
