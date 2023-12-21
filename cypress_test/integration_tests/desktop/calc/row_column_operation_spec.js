@@ -39,7 +39,7 @@ describe(['tagdesktop'], 'Row Column Operation', function() {
 		//calcHelper.assertDataClipboardTable(['Hello','Hi','','','World','Bye']);
 	});
 
-	it.only('Insert/Delete Column', function() {
+	it('Insert/Delete Column', function() {
 		//insert column before
 		cy.cGet('#home-insert-columns-before-button').click();
 		calcHelper.selectEntireSheet();
