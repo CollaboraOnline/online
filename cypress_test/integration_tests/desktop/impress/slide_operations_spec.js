@@ -44,7 +44,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Slide operations', functio
 
 	});
 
-	it.only('Duplicate slide', function() {
+	it('Duplicate slide', function() {
 		// Also check if comments are getting duplicated
 		cy.cGet('#options-modify-page').click();
 		desktopHelper.insertMultipleComment('impress', 1, false, '#insert-insert-annotation-button');
