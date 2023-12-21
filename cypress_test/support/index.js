@@ -71,22 +71,50 @@ Cypress.Commands.overwrite('waitUntil', function(originalFn, subject, checkFunct
 });
 
 Cypress.Commands.add('cSetActiveFrame', function(frameID) {
+	Cypress.log();
 	cy.cActiveFrame = frameID;
 });
 
 Cypress.Commands.add('cSetLevel', function(level) {
+	Cypress.log();
 	cy.cLevel = level;
 });
 
 Cypress.Commands.add('cGet', function(selector, options) {
+	if (options) {
+		if (options.log != false) {
+			Cypress.log();
+		}
+	} else {
+		Cypress.log();
+	}
+
+	var optionsWithLogFalse;
+	if (options) {
+		optionsWithLogFalse = options;
+		optionsWithLogFalse.log = false;
+	} else {
+		optionsWithLogFalse = {log: false};
+	}
+
 	if (cy.cLevel === '1') {
 		if (selector)
-			return cy.get(cy.cActiveFrame).its('0.contentDocument').should('exist').then(cy.wrap).find(selector, options);
+			return cy.get(cy.cActiveFrame, {log: false})
+				.its('0.contentDocument', {log: false})
+				.find(selector, optionsWithLogFalse);
 		else
-			return cy.get(cy.cActiveFrame, options).its('0.contentDocument').should('exist').then(cy.wrap);
+			return cy.get(cy.cActiveFrame, optionsWithLogFalse)
+				.its('0.contentDocument', {log: false});
 	}
 	else if (selector) // This is not cool frame and there is a selector.
-		return cy.get(cy.cActiveFrame).its('0.contentDocument').find('#coolframe').its('0.contentDocument').then(cy.wrap).find(selector, options);
+		return cy.get(cy.cActiveFrame, {log: false})
+			.its('0.contentDocument', {log: false})
+			.find('#coolframe', {log: false})
+			.its('0.contentDocument', {log: false})
+			.find(selector, optionsWithLogFalse);
 	else // Not cool frame without a selector.
-		return cy.get(cy.cActiveFrame, options).its('0.contentDocument').find('#coolframe').its('0.contentDocument').then(cy.wrap);
+		return cy.get(cy.cActiveFrame, optionsWithLogFalse)
+			.its('0.contentDocument', {log: false})
+			.find('#coolframe', {log: false})
+			.its('0.contentDocument', {log: false});
 });
