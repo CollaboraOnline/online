@@ -70,6 +70,10 @@ Cypress.Commands.overwrite('waitUntil', function(originalFn, subject, checkFunct
 	return originalFn(subject, checkFunction, options);
 });
 
+/**
+ * Set the current iFrame
+ * Example: cy.cSetActiveFrame('#coolframe');
+ */
 Cypress.Commands.add('cSetActiveFrame', function(frameID) {
 	Cypress.log();
 	cy.cActiveFrame = frameID;
@@ -80,6 +84,44 @@ Cypress.Commands.add('cSetLevel', function(level) {
 	cy.cLevel = level;
 });
 
+/**
+ * Get the current iFrame body to be chained with other queries.
+ * Example: cy.getFrame().find('#my-item');
+ * It is not necessary to chain .should('exist') after this.
+ * Use cy.cSetActiveFrame to set the active frame first.
+ */
+Cypress.Commands.add('getFrame', function(options) {
+	if (!cy.cActiveFrame) {
+		throw new Error('getFrame: Active frame not set');
+	}
+
+	if (options && options.log) {
+		Cypress.log({message: 'Current iFrame: ' + cy.cActiveFrame});
+	}
+	return cy.get(cy.cActiveFrame, {log: false})
+		.its('0.contentDocument', {log: false});
+});
+
+/**
+ * Get the current iFrame window to be chained with other queries.
+ * Use cy.cSetActiveFrame to set the active frame first.
+ */
+Cypress.Commands.add('getFrameWindow', function(options) {
+	if (!cy.cActiveFrame) {
+		throw new Error('getFrame: Active frame not set');
+	}
+
+	if (options && options.log) {
+		Cypress.log({message: 'Current iFrame: ' + cy.cActiveFrame});
+	}
+	return cy.get(cy.cActiveFrame, {log: false})
+		.its('0.contentWindow', {log: false});
+});
+
+/**
+ * Find an element within the current iFrame
+ * Note: Use cy.getFrame().find() instead, which offers better logging on failure
+ */
 Cypress.Commands.add('cGet', function(selector, options) {
 	if (options) {
 		if (options.log != false) {
