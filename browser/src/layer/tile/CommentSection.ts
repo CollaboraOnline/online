@@ -967,8 +967,8 @@ export class Comment extends CanvasSectionObject {
 	}
 
 	public isEdit (): boolean {
-		return (this.sectionProperties.nodeModify && this.sectionProperties.nodeModify.style.display !== 'none') ||
-		       (this.sectionProperties.nodeReply && this.sectionProperties.nodeReply.style.display !== 'none');
+		return !this.pendingInit && ((this.sectionProperties.nodeModify && this.sectionProperties.nodeModify.style.display !== 'none') ||
+		       (this.sectionProperties.nodeReply && this.sectionProperties.nodeReply.style.display !== 'none'));
 	}
 
 	public static isAnyEdit (): boolean {
