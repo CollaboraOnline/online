@@ -41,6 +41,19 @@ namespace cool {
 
 export class CommentSection extends CanvasSectionObject {
 	map: any;
+	sectionProperties: {
+		commentList: Array<Comment>;
+		selectedComment: Comment | null;
+		calcCurrentComment: Comment | null;
+		marginY: number;
+		offset: number;
+		width: number;
+		commentWidth: number;
+		collapsedMarginToTheEdge: number;
+		deflectionOfSelectedComment: number;
+		commentsAreListed: boolean;
+		[key: string]: any;
+	};
 	static autoSavedComment: cool.Comment;
 	static commentWasAutoAdded: boolean;
 
@@ -1084,7 +1097,7 @@ export class CommentSection extends CanvasSectionObject {
 
 	private checkIfCommentHasPreAssignedChildren(comment: CommentSection) {
 		for (var i = 0; i < this.sectionProperties.commentList.length; i++) {
-			var possibleChild: CommentSection = this.sectionProperties.commentList[i];
+			var possibleChild: Comment = this.sectionProperties.commentList[i];
 			if (possibleChild.sectionProperties.possibleParentCommentId !== null) {
 				if (possibleChild.sectionProperties.possibleParentCommentId === comment.sectionProperties.data.id) {
 					if (!comment.sectionProperties.children.includes(possibleChild))
