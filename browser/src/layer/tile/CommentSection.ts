@@ -636,7 +636,7 @@ export class Comment extends CanvasSectionObject {
 			);
 	}
 
-	private update (): void {
+	public update (): void {
 		this.updateContent();
 		this.updateLayout();
 		this.updatePosition();
@@ -707,7 +707,7 @@ export class Comment extends CanvasSectionObject {
 		}
 	}
 
-	private show(): void {
+	public show(): void {
 		this.doPendingInitializationInView(true /* force */);
 		this.showMarker();
 
@@ -767,7 +767,7 @@ export class Comment extends CanvasSectionObject {
 		return authorMatch;
 	}
 
-	private hide (): void {
+	public hide (): void {
 		if (this.sectionProperties.data.id === 'new') {
 			this.sectionProperties.commentListSection.removeItem(this.sectionProperties.data.id);
 			return;
