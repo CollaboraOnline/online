@@ -28,6 +28,18 @@ window.app = { // Shouldn't have any functions defined.
 		readOnly: true,
 		permission: 'readonly',
 		disableSidebar: false,
+		cursor: {
+			visible: false,
+
+			/*
+				Starts as null, so we can see if the first invalidation happened or not.
+				This is a rectangle: [x, y, w, h].
+				One should consider this as a document object coordinate as in CanvasSectionContainer.
+				This gives the coordinate relative to the document, not relative to the UI.
+				In core pixels.
+			*/
+			rectangle: null
+		},
 		size: {
 			pixels: [0, 0], // This can change according to the zoom level and document's size.
 			twips: [0, 0]
@@ -46,14 +58,6 @@ window.app = { // Shouldn't have any functions defined.
 		},
 		writer: {
 			pageRectangleList: [], // Array of arrays: [x, y, w, h] (as usual) // twips only. Pixels will be calculated on the fly. Corresponding pixels may change too ofte
-
-			/*
-				Starts as null, so we can see if the first invalidation happened or not.
-				This is a rectangle: [x, y, w, h].
-				One should consider this as a document object coordinate  as in CanvasSectionContainer.
-				This gives the coordinate relative to the document, not relative to the UI.
-			*/
-			cursorPosition: null,
 		},
 	},
 	view: {
