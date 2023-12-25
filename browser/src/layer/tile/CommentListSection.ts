@@ -685,7 +685,7 @@ export class CommentSection extends CanvasSectionObject {
 	}
 
 	public select (annotation: any): void {
-		if (annotation && annotation !== this.sectionProperties.selectedComment) {
+		if (annotation && !annotation.pendingInit && annotation !== this.sectionProperties.selectedComment) {
 			// Unselect first if there anything selected.
 			if (this.sectionProperties.selectedComment)
 				this.unselect();
@@ -701,11 +701,12 @@ export class CommentSection extends CanvasSectionObject {
 			if (this.sectionProperties.selectedComment && !$(this.sectionProperties.selectedComment.sectionProperties.container).hasClass('annotation-active')) {
 				$(this.sectionProperties.selectedComment.sectionProperties.container).addClass('annotation-active');
 				if (this.sectionProperties.docLayer._docType === 'text') {
-					// check it is visible in the screen and not a new comment
-					const id = this.sectionProperties.selectedComment.sectionProperties.data.id;
-					const position = this.sectionProperties.selectedComment.getPosition();
-					if (id.indexOf('new') < 0 && !this.isInViewPort(this.sectionProperties.selectedComment) && position[1] !== 0) {
-						this.map.scrollTop(position[1] < 0 ? 0 : position[1]);
+					const position = this.numberArrayToCorePixFromTwips(annotation.sectionProperties.data.anchorPos, 0, 2);
+					if (!this.isInViewPort(this.sectionProperties.selectedComment) && position[1] !== 0) {
+						const scrollSection = app.sectionContainer.getSectionWithName(L.CSections.Scroll.name);
+						const screenTopBottom = this.getScreenTopBottom();
+						const rect = this.sectionProperties.selectedComment.sectionProperties.container.getBoundingClientRect();
+						scrollSection.scrollVerticalWithOffset(position[1] < 0 ? 0 : position[1] - screenTopBottom[1] + rect.height);
 					}
 				}
 			}
@@ -720,18 +721,24 @@ export class CommentSection extends CanvasSectionObject {
 		}
 	}
 
-	private isInViewPort(annotation: any): boolean {
-		const rect = annotation.sectionProperties.container.getBoundingClientRect();
+	public getScreenTopBottom(): Array<number> {
 		const scrollSection = app.sectionContainer.getSectionWithName(L.CSections.Scroll.name);
 		const screenTop = scrollSection.containerObject.getDocumentTopLeft()[1];
-		const screenBottom = screenTop + (window.innerHeight || document.documentElement.clientHeight);
-		const position = annotation.getPosition();
+		const screenBottom = screenTop + $('#main-document-content').height();
+
+		return [screenTop, screenBottom];
+	}
+
+	private isInViewPort(annotation: any): boolean {
+		const rect = annotation.sectionProperties.container.getBoundingClientRect();
+		const screenTopBottom = this.getScreenTopBottom();
+		const position = this.numberArrayToCorePixFromTwips(annotation.sectionProperties.data.anchorPos, 0, 2);
 		const annotationTop = position[1];
-		const annotationBottom = position[1] + rect.bottom - rect.top;
+		const annotationBottom = position[1] + rect.height;
 
 		return (
-			screenTop <= annotationTop &&
-			screenBottom >= annotationBottom
+			screenTopBottom[0] <= annotationTop &&
+			screenTopBottom[1] >= annotationBottom
 		);
 	}
 
