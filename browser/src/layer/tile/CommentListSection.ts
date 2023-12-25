@@ -633,7 +633,7 @@ export class CommentSection extends CanvasSectionObject {
 			}.bind(this), /* isMod */ true);
 		}
 		else {
-			if (this.sectionProperties.docLayer._docType !== 'spreadsheet' && this.sectionProperties.selectedComment !== annotation) {
+			if (this.sectionProperties.docLayer._docType !== 'spreadsheet') {
 				this.unselect();
 				this.select(annotation);
 			}
