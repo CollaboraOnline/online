@@ -2103,12 +2103,14 @@ L.CanvasTileLayer = L.Layer.extend({
 	_onCursorVisibleMsg: function(textMsg) {
 		var command = textMsg.match('cursorvisible: true');
 		this._map._isCursorVisible = command ? true : false;
+		app.file.cursor.visible = this._map.isCursorVisible;
 		this._removeSelection();
 		this._onUpdateCursor();
 	},
 
 	_setCursorVisible: function() {
 		this._map._isCursorVisible = true;
+		app.file.cursor.visible = true;
 	},
 
 	_onDownloadAsMsg: function (textMsg) {
@@ -2725,14 +2727,16 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._visibleCursor = new L.LatLngBounds(
 			this._twipsToLatLng(recCursor.getTopLeft(), this._map.getZoom()),
 			this._twipsToLatLng(recCursor.getBottomRight(), this._map.getZoom()));
+
 		this._cursorCorePixels = this._twipsToCorePixelsBounds(recCursor);
+		app.file.cursor.rectangle = [
+			Math.round(this._cursorCorePixels.getTopLeft().x), // x
+			Math.round(this._cursorCorePixels.getTopLeft().y), // y
+			Math.round(this._cursorCorePixels.getSize().x), // width
+			Math.round(this._cursorCorePixels.getSize().y) // height
+		];
+
 		if (this._docType === 'text') {
-			app.file.writer.cursorPosition = [
-				Math.round(this._cursorCorePixels.getTopLeft().x), // x
-				Math.round(this._cursorCorePixels.getTopLeft().y), // y
-				Math.round(this._cursorCorePixels.getSize().x), // width
-				Math.round(this._cursorCorePixels.getSize().y) // height
-			];
 			app.sectionContainer.onCursorPositionChanged();
 		}
 

@@ -989,7 +989,7 @@ class CanvasSectionContainer {
 		for (var j: number = 0; j < this.windowSectionList.length; j++) {
 			var windowSection = this.windowSectionList[j];
 			if (windowSection.interactable)
-				windowSection.onCursorPositionChanged(app.file.writer.cursorPosition);
+				windowSection.onCursorPositionChanged(app.file.cursor.rectangle);
 
 			if (this.lowestPropagatedBoundSection === windowSection.name)
 				propagate = false; // Window sections can not stop the propagation of the event for other window sections.
@@ -998,7 +998,7 @@ class CanvasSectionContainer {
 		if (propagate) {
 			for (var i: number = this.sections.length - 1; i > -1; i--) {
 				if (this.sections[i].interactable)
-					this.sections[i].onCursorPositionChanged(app.file.writer.cursorPosition);
+					this.sections[i].onCursorPositionChanged(app.file.cursor.rectangle);
 			}
 		}
 	}
@@ -1343,7 +1343,7 @@ class CanvasSectionContainer {
 	*/
 	public onCursorPositionChanged() {
 		if (app.map._docLayer._docType === 'text') {
-			// Global state holder should already have the latest information: app.file.writer.cursorPosition.
+			// Global state holder should already have the latest information: app.file.cursor.rectangle.
 			this.propagateCursorPositionChanged();
 		}
 	}
