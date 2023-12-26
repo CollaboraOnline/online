@@ -3209,6 +3209,11 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
         sendTextFrame("corelog: " + payload);
         break;
     }
+    case LOK_CALLBACK_TOOLTIP:
+    {
+        sendTextFrame("tooltip: " + payload);
+        break;
+    }
     default:
         LOG_ERR("Unknown callback event (" << lokCallbackTypeToString(type) << "): " << payload);
     }
