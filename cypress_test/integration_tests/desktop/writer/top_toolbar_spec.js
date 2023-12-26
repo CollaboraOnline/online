@@ -259,17 +259,15 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Print', function() {
 		// A new window should be opened with the PDF.
-		helper.getCoolFrameWindow()
+		cy.getFrameWindow()
 			.then(function(win) {
-				cy.stub(win, 'open');
+				cy.stub(win, 'open').as('windowOpen');
 			});
 
 		cy.cGet('#File-tab-label').click();
 		cy.cGet('#File-container .unoPrint').click();
-		helper.getCoolFrameWindow()
-			.then(function(win) {
-				cy.wrap(win).its('open').should('be.called');
-			});
+
+		cy.get('@windowOpen').should('be.called');
 	});
 
 	it('Apply Undo/Redo.', function() {

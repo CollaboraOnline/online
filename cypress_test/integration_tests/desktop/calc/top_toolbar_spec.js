@@ -55,7 +55,8 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Print', function() {
 		// A new window should be opened with the PDF.
-		helper.getCoolFrameWindow().then(function(win) {
+		cy.getFrameWindow()
+			.then(function(win) {
 				cy.stub(win, 'open').as('windowOpen');
 			});
 

@@ -106,14 +106,13 @@ Cypress.Commands.add('getFrame', function(options) {
  * Get the current iFrame window to be chained with other queries.
  * Use cy.cSetActiveFrame to set the active frame first.
  */
-Cypress.Commands.add('getFrameWindow', function(options) {
+Cypress.Commands.add('getFrameWindow', function() {
 	if (!cy.cActiveFrame) {
 		throw new Error('getFrame: Active frame not set');
 	}
 
-	if (options && options.log) {
-		Cypress.log({message: 'Current iFrame: ' + cy.cActiveFrame});
-	}
+	Cypress.log({message: 'Current iFrame: ' + cy.cActiveFrame});
+
 	return cy.get(cy.cActiveFrame, {log: false})
 		.its('0.contentWindow', {log: false});
 });

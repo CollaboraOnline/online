@@ -15,8 +15,8 @@ describe(['tagdesktop'], 'JSDialog unit test', function() {
 	});
 
 	it('JSDialog popup dialog', function() {
-		cy.get(cy.cActiveFrame)
-			.its('0.contentWindow.L')
+		cy.getFrameWindow()
+			.its('L')
 			.then(function(L) {
 				var jsonDialog = {
 					id: 'testpopup',
