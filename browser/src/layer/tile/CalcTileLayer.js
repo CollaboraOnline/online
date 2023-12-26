@@ -62,7 +62,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 				app.sectionContainer.removeSection('new comment');
 
 			comment = app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).add(newComment);
-			comment.show();
+			comment.positionCalcComment();
 		}
 		app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).modify(comment);
 		comment.focus();

@@ -685,6 +685,12 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.nodeModify.style.display = 'none';
 		this.sectionProperties.nodeReply.style.display = 'none';
 
+		this.positionCalcComment();
+		if (!(<any>window).mode.isMobile())
+			this.sectionProperties.commentListSection.select(this);
+	}
+
+	public positionCalcComment(): void {
 		if (!(<any>window).mode.isMobile()) {
 			var ratio: number = (app.tile.size.pixels[0] / app.tile.size.twips[0]);
 			var cellPos = this.map._docLayer._cellRangeToTwipRect(this.sectionProperties.data.cellRange).toRectangle();
@@ -697,7 +703,6 @@ export class Comment extends CanvasSectionObject {
 
 			var pos: Array<number> = [Math.round(startX / app.dpiScale), Math.round(this.myTopLeft[1] / app.dpiScale)];
 			this.sectionProperties.container.style.transform = 'translate3d(' + pos[0] + 'px, ' + pos[1] + 'px, 0px)';
-			this.sectionProperties.commentListSection.select(this);
 		}
 	}
 
@@ -777,12 +782,12 @@ export class Comment extends CanvasSectionObject {
 	}
 
 	public hide (): void {
-		if (this.sectionProperties.data.id === 'new') {
-			this.sectionProperties.commentListSection.removeItem(this.sectionProperties.data.id);
+		if (this.isEdit()) {
 			return;
 		}
 
-		if (this.isEdit()) {
+		if (this.sectionProperties.data.id === 'new') {
+			this.sectionProperties.commentListSection.removeItem(this.sectionProperties.data.id);
 			return;
 		}
 
@@ -988,7 +993,7 @@ export class Comment extends CanvasSectionObject {
 			if (!commentList[i].pendingInit &&
 				((modifyNode && modifyNode.style.display !== 'none') ||
 				(replyNode && replyNode.style.display !== 'none')))
-				return true;
+					return true;
 		}
 		return false;
 	}
