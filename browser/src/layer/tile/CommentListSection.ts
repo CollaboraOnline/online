@@ -700,13 +700,17 @@ export class CommentSection extends CanvasSectionObject {
 
 			if (this.sectionProperties.selectedComment && !$(this.sectionProperties.selectedComment.sectionProperties.container).hasClass('annotation-active')) {
 				$(this.sectionProperties.selectedComment.sectionProperties.container).addClass('annotation-active');
-				if (this.sectionProperties.docLayer._docType === 'text') {
-					const position = this.numberArrayToCorePixFromTwips(annotation.sectionProperties.data.anchorPos, 0, 2);
-					if (!this.isInViewPort(this.sectionProperties.selectedComment) && position[1] !== 0) {
-						const scrollSection = app.sectionContainer.getSectionWithName(L.CSections.Scroll.name);
-						const screenTopBottom = this.getScreenTopBottom();
-						const rect = this.sectionProperties.selectedComment.sectionProperties.container.getBoundingClientRect();
-						scrollSection.scrollVerticalWithOffset(position[1] < 0 ? 0 : position[1] - screenTopBottom[1] + rect.height);
+			}
+			if (this.sectionProperties.docLayer._docType === 'text' || this.sectionProperties.docLayer._docType === 'spreadsheet') {
+				const position = this.numberArrayToCorePixFromTwips(annotation.sectionProperties.data.anchorPos, 0, 2);
+				if (!this.isInViewPort(this.sectionProperties.selectedComment) && position[1] !== 0) {
+					const scrollSection = app.sectionContainer.getSectionWithName(L.CSections.Scroll.name);
+					const screenTopBottom = this.getScreenTopBottom();
+					const rect = this.sectionProperties.selectedComment.sectionProperties.container.getBoundingClientRect();
+					scrollSection.scrollVerticalWithOffset(position[1] < 0 ? 0 : position[1] - screenTopBottom[1] + rect.height);
+					if (this.sectionProperties.docLayer._docType === 'spreadsheet') {
+						this.sectionProperties.selectedComment.positionCalcComment();
+						this.sectionProperties.selectedComment.focus();
 					}
 				}
 			}

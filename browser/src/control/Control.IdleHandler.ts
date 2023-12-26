@@ -52,7 +52,9 @@ class IdleHandler {
 			}
 		}
 
-		if (window.mode.isDesktop() && !this.map.uiManager.isAnyDialogOpen()) {
+		// Ideally instead of separate isAnyEdit check here, we could check isAnyEdit inside isAnyDialogOpen,
+		// but unfortunatly that causes problem in _deactivate and unnecessary 'userinactive' message is sent
+		if (window.mode.isDesktop() && !this.map.uiManager.isAnyDialogOpen() && !cool.Comment.isAnyEdit()) {
 			this.map.focus();
 		}
 
