@@ -43,17 +43,14 @@ describe.skip(['tagmobile'], 'Trigger hamburger menu options.', function() {
 		before('hamburger_menu.ods');
 
 		// A new window should be opened with the PDF.
-		helper.getCoolFrameWindow()
+		cy.getFrameWindow()
 			.then(function(win) {
 				cy.stub(win, 'open');
 			});
 
 		mobileHelper.selectHamburgerMenuItem(['File', 'Print']);
 
-		helper.getCoolFrameWindow()
-			.then(function(win) {
-				cy.wrap(win).its('open').should('be.called');
-			});
+		cy.getFrameWindow().its('open').should('be.called');
 	});
 
 	it('Download as PDF', function() {
