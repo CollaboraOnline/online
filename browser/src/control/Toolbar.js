@@ -577,7 +577,7 @@ L.Map.include({
 
 	aboutDialogKeyHandler: function(event) {
 		if (event.key === 'd') {
-			this._docLayer.toggleTileDebugMode();
+			this._docLayer.toggleDebugMode();
 		} else if (event.key === 'l') {
 			// L toggges the Online logging level between the default (whatever
 			// is set in coolwsd.xml or on the coolwsd command line) and the
@@ -610,7 +610,7 @@ L.Map.include({
 
 	aboutDialogClickHandler: function(event) {
 		if (event.detail === 3)
-			this._docLayer.toggleTileDebugMode();
+			this._docLayer.toggleDebugMode();
 	},
 
 	showLOAboutDialog: function() {

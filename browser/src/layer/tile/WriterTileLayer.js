@@ -85,7 +85,7 @@ L.WriterTileLayer = L.CanvasTileLayer.extend({
 		var topLeftTwips = new L.Point(command.x, command.y);
 		var offset = new L.Point(command.width, command.height);
 		var bottomRightTwips = topLeftTwips.add(offset);
-		if (this._debug) {
+		if (this._debugTiles) {
 			this._debugAddInvalidationRectangle(topLeftTwips, bottomRightTwips, textMsg);
 		}
 		var invalidBounds = new L.Bounds(topLeftTwips, bottomRightTwips);
@@ -105,7 +105,7 @@ L.WriterTileLayer = L.CanvasTileLayer.extend({
 			}
 		}
 
-		if (needsNewTiles && this._debug)
+		if (needsNewTiles && this._debugTiles)
 		{
 			this._debugAddInvalidationMessage(textMsg);
 		}
