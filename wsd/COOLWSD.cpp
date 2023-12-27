@@ -64,6 +64,7 @@
 #include <iostream>
 #include <map>
 #include <mutex>
+#include <regex>
 #include <sstream>
 #include <stdexcept>
 #include <string>
@@ -316,6 +317,18 @@ std::string removeProtocol(const std::string& host)
         return host.substr(nPos + 2);
 
     return host;
+}
+
+bool isValidRegex(const std::string& expression)
+{
+    try
+    {
+        std::regex regex(expression);
+        return true;
+    }
+    catch (const std::regex_error& e) {}
+
+    return false;
 }
 }
 
@@ -2945,11 +2958,16 @@ void COOLWSD::innerInitialize(Application& self)
 
     if (lokAllowedHosts.size())
     {
-        std::string sRegex;
+        std::string allowedRegex;
         for (size_t i = 0; i < lokAllowedHosts.size(); i++)
-            sRegex += (i != 0 ? "|" : "") + lokAllowedHosts[i];
+        {
+            if (isValidRegex(lokAllowedHosts[i]))
+                allowedRegex += (i != 0 ? "|" : "") + lokAllowedHosts[i];
+            else
+                LOG_ERR("Invalid regular expression for allowed host: \"" << lokAllowedHosts[i] << "\"");
+        }
 
-        setenv("LOK_HOST_ALLOWLIST", sRegex.c_str(), true);
+        setenv("LOK_HOST_ALLOWLIST", allowedRegex.c_str(), true);
     }
 
 #if !MOBILEAPP
