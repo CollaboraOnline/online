@@ -39,11 +39,16 @@ function logError(event) {
 function logLoadingParameters(fileName, subFolder, noFileCopy, isMultiUser, subsequentLoad, hasInteractionBeforeLoad, noRename) {
 	cy.log('Param - fileName: ' + fileName);
 	cy.log('Param - subFolder: ' + subFolder);
-	cy.log('Param - noFileCopy: ' + noFileCopy);
-	cy.log('Param - isMultiUser: ' + isMultiUser);
-	cy.log('Param - subsequentLoad: ' + subsequentLoad);
-	cy.log('Param - hasInteractionBeforeLoad: ' + hasInteractionBeforeLoad);
-	cy.log('Param - noRename: ' + noRename);
+	if (noFileCopy !== undefined)
+		cy.log('Param - noFileCopy: ' + noFileCopy);
+	if (isMultiUser !== undefined)
+		cy.log('Param - isMultiUser: ' + isMultiUser);
+	if (subsequentLoad !== undefined)
+		cy.log('Param - subsequentLoad: ' + subsequentLoad);
+	if (hasInteractionBeforeLoad !== undefined)
+		cy.log('Param - hasInteractionBeforeLoad: ' + hasInteractionBeforeLoad);
+	if (noRename !== undefined)
+		cy.log('Param - noRename: ' + noRename);
 }
 
 function generateDocumentURL() {
@@ -71,24 +76,6 @@ function generateDocumentURI(URL, subFolder, newFileName) {
 	return URI;
 }
 
-function checkCoolFrameGlobal() {
-	cy.log('checkCoolFrameGlobal - start.');
-	cy.get('#coolframe').its('0.contentDocument').should('exist').its('body').should('not.be.undefined');
-	cy.log('checkCoolFrameGlobal - end.');
-}
-
-function checkFirstCoolFrameGlobal() {
-	cy.log('checkFirstCoolFrameGlobal - start.');
-	cy.get('#iframe1').its('0.contentDocument').should('exist').its('body').should('not.be.undefined');
-	cy.log('checkFirstCoolFrameGlobal - end.');
-}
-
-function checkSecondCoolFrameGlobal() {
-	cy.log('checkSecondCoolFrameGlobal - start.');
-	cy.get('#iframe2').its('0.contentDocument').should('exist').its('body').should('not.be.undefined');
-	cy.log('checkSecondCoolFrameGlobal - end.');
-}
-
 /*
 Loading the test document directly in Collabora Online.
 Parameters:
@@ -96,7 +83,7 @@ Parameters:
 	subFolder - sub folder inside data folder (e.g. writer, calc, impress)
 	noFileCopy - whether to create a copy of the test file before run the test.
 					By default, we create a copy to have a clear test document but
-					but when we test saving functionality we need to open same docuement
+					but when we test saving functionality we need to open same document
 	isMultiUser - whether the test is for multiuser
 	noRename - whether or not to give the file a unique name, if noFileCopy is false.
  */
@@ -299,7 +286,7 @@ function waitForInterferingUser() {
 // subFolder - sub folder inside data folder (e.g. writer, calc, impress)
 // noFileCopy - whether to create a copy of the test file before run the test.
 //				By default, we create a copy to have a clear test document but
-//				but when we test saving functionality we need to open same docueme
+//				but when we test saving functionality we need to open same document
 // isMultiUser - whether test is a multiuser test
 // subsequentLoad - whether we load a test document for the first time in the
 //                  test case or not. It's important for nextcloud because we need to sign in
@@ -331,13 +318,14 @@ function loadTestDoc(fileName, subFolder, noFileCopy, isMultiUser, subsequentLoa
 
 	checkIfDocIsLoaded(isMultiUser);
 
+	cy.log('Loading test document - end.');
 	return destFileName;
 }
 
 function documentChecks() {
 	cy.log('documentChecks - start.');
 
-	cy.cGet('#document-canvas', {timeout : Cypress.config('defaultCommandTimeout') * 2.0}).should('exist');
+	cy.getFrame().find('#document-canvas', {timeout : Cypress.config('defaultCommandTimeout') * 2.0});
 
 	// With php-proxy the client is irresponsive for some seconds after load, because of the incoming messages.
 	if (Cypress.env('INTEGRATION') === 'php-proxy') {
@@ -348,12 +336,12 @@ function documentChecks() {
 	if (Cypress.env('INTEGRATION') !== 'nextcloud') {
 		doIfOnDesktop(function() {
 			if (Cypress.env('pdf-view') !== true)
-				cy.cGet('#sidebar-panel').should('exist').should('be.visible');
+				cy.getFrame().find('#sidebar-panel').should('be.visible');
 
 			// Check that the document does not take the whole window width.
 			cy.window()
 				.then(function(win) {
-					cy.cGet('#document-container')
+					cy.getFrame().find('#document-container')
 						.should(function(doc) {
 							expect(doc).to.have.lengthOf(1);
 							if (Cypress.env('pdf-view') !== true)
@@ -363,7 +351,7 @@ function documentChecks() {
 
 			// Check also that the inputbar is drawn in Calc.
 			doIfInCalc(function() {
-				cy.cGet('#sc_input_window.formulabar').should('exist');
+				cy.getFrame().find('#sc_input_window.formulabar');
 			});
 		});
 	}
@@ -379,27 +367,21 @@ function checkIfDocIsLoaded(isMultiUser) {
 	cy.log('checkIfDocIsLoaded - start.');
 
 	if (isMultiUser) {
-		cy.frameLoaded('#iframe1');
-		cy.frameLoaded('#iframe2');
-
-		checkFirstCoolFrameGlobal();
-		checkSecondCoolFrameGlobal();
-
 		cy.cSetActiveFrame('#iframe1');
+		cy.getFrame().its('body').should('not.be.undefined');
 		documentChecks();
+
 		cy.cSetActiveFrame('#iframe2');
+		cy.getFrame().its('body').should('not.be.undefined');
 		documentChecks();
 	}
 	else {
-		cy.frameLoaded('#coolframe');
-		checkCoolFrameGlobal();
 		cy.cSetActiveFrame('#coolframe');
+		cy.getFrame().its('body').should('not.be.undefined');
 		documentChecks();
 	}
 
 	cy.log('checkIfDocIsLoaded - end.');
-
-	cy.log('Loading test document - end.');
 }
 
 // Assert that NO keyboard input is accepted (i.e. keyboard should be HIDDEN).
@@ -651,7 +633,8 @@ function initAliasToNegative(aliasName) {
 
 // Run a code snippet if we are inside Calc.
 function doIfInCalc(callback) {
-	cy.cGet('#document-container').then(function(doc) {
+	cy.getFrame().find('#document-container', {log: false})
+		.then(function(doc) {
 		if (doc.hasClass('spreadsheet-doctype')) {
 			callback();
 		}
@@ -660,7 +643,7 @@ function doIfInCalc(callback) {
 
 // Run a code snippet if we are *NOT* inside Calc.
 function doIfNotInCalc(callback) {
-	cy.cGet('#document-container')
+	cy.getFrame().find('#document-container', {log: false})
 		.then(function(doc) {
 			if (!doc.hasClass('spreadsheet-doctype')) {
 				callback();
@@ -670,7 +653,7 @@ function doIfNotInCalc(callback) {
 
 // Run a code snippet if we are inside Impress.
 function doIfInImpress(callback) {
-	cy.cGet('#document-container')
+	cy.getFrame().find('#document-container', {log: false})
 		.then(function(doc) {
 			if (doc.hasClass('presentation-doctype')) {
 				callback();
@@ -680,7 +663,7 @@ function doIfInImpress(callback) {
 
 // Run a code snippet if we are *NOT* inside Impress.
 function doIfNotInImpress(callback) {
-	cy.cGet('#document-container')
+	cy.getFrame().find('#document-container', {log: false})
 		.then(function(doc) {
 			if (!doc.hasClass('presentation-doctype')) {
 				callback();
@@ -690,7 +673,7 @@ function doIfNotInImpress(callback) {
 
 // Run a code snippet if we are inside Writer.
 function doIfInWriter(callback) {
-	cy.cGet('#document-container')
+	cy.getFrame().find('#document-container', {log: false})
 		.then(function(doc) {
 			if (doc.hasClass('text-doctype')) {
 				callback();
@@ -700,7 +683,7 @@ function doIfInWriter(callback) {
 
 // Run a code snippet if we are *NOT* inside Writer.
 function doIfNotInWriter(callback) {
-	cy.cGet('#document-container')
+	cy.getFrame().find('#document-container', {log: false})
 		.then(function(doc) {
 			if (!doc.hasClass('text-doctype')) {
 				callback();
@@ -898,7 +881,7 @@ function inputOnIdle(selector, input, waitingTime = mobileWizardIdleTime) {
 
 // Run a code snippet if we are in a mobile test.
 function doIfOnMobile(callback) {
-	cy.window()
+	cy.window({log: false})
 		.then(function(win) {
 			if (win.navigator.userAgent === 'cypress-mobile') {
 				callback();
@@ -908,7 +891,7 @@ function doIfOnMobile(callback) {
 
 // Run a code snippet if we are in a desktop test.
 function doIfOnDesktop(callback) {
-	cy.window()
+	cy.window({log: false})
 		.then(function(win) {
 			if (win.navigator.userAgent === 'cypress') {
 				callback();
