@@ -284,7 +284,7 @@
     <quarantine_files desc="Files are stored here to be examined later in cases of crashes or similar situation." default="false" enable="false">
         <limit_dir_size_mb desc="Maximum directory size. On exceeding the specified limit, older files will be deleted." default="250" type="uint"></limit_dir_size_mb>
         <max_versions_to_maintain desc="How many versions of the same file to keep." default="2" type="uint"></max_versions_to_maintain>
-        <path desc="Path to directory under which quarantined files will be stored" type="path" relative="true" default="quarantine"></path>
+        <path desc="Absolute path of the directory under which quarantined files will be stored. Do not use a relative path." type="path" relative="false"></path>
         <expiry_min desc="Time in mins after quarantined files will be deleted." type="int" default="30"></expiry_min>
     </quarantine_files>
 
