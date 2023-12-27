@@ -417,7 +417,6 @@ export class TilesSection extends CanvasSectionObject {
 		var docLayer = this.sectionProperties.docLayer;
 		var doneTiles = new Set();
 		var now = new Date();
-		var debugForcePaint = this.sectionProperties.docLayer._debug;
 		this.forEachTileInView(zoom, part, mode, ctx, function (tile: any, coords: any): boolean {
 
 			if (doneTiles.has(coords.key()))
@@ -430,16 +429,16 @@ export class TilesSection extends CanvasSectionObject {
 			// Ensure tile is within document bounds.
 			if (tile && docLayer._isValidTile(coords)) {
 				if (!this.isJSDOM) { // perf-test code
-					if (tile.hasContent() || debugForcePaint) { // Ensure tile is loaded
+					if (tile.hasContent() || docLayer._debugTileOverlays) { // Ensure tile is loaded
 						this.paint(tile, ctx, false /* async? */, now);
 					}
-					else if (this.sectionProperties.docLayer._debug) {
-						// when debugging draw a checkerboard for the missing tile
-						var oldcanvas = tile.canvas;
-						tile.canvas = this.checkpattern;
-						this.paint(tile, ctx, false /* async? */, now);
-						tile.canvas = oldcanvas;
-					}
+					// else if (docLayer._debugTileOverlays) {
+						// // when debugging draw a checkerboard for the missing tile
+						// var oldcanvas = tile.canvas;
+						// tile.canvas = this.checkpattern;
+						// this.paint(tile, ctx, false /* async? */, now);
+						// tile.canvas = oldcanvas;
+					// }
 				}
 			}
 			doneTiles.add(coords.key());
@@ -650,7 +649,7 @@ export class TilesSection extends CanvasSectionObject {
 		else */
 		canvas.drawImage(tile.canvas, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
 
-		if (this.sectionProperties.docLayer._debug)
+		if (this.sectionProperties.docLayer._debugTileOverlays)
 		{
 			this.beforeDraw(canvas);
 

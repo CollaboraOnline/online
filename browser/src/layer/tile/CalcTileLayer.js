@@ -185,7 +185,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		var topLeftTwips = new L.Point(command.x, command.y);
 		var offset = new L.Point(command.width, command.height);
 		var bottomRightTwips = topLeftTwips.add(offset);
-		if (this._debugTiles) {
+		if (this._debugTileInvalidations) {
 			this._debugAddInvalidationRectangle(topLeftTwips, bottomRightTwips, textMsg);
 		}
 
@@ -215,7 +215,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		}
 
 		if (needsNewTiles && command.part === this._selectedPart
-			&& command.mode === this._selectedMode && this._debugTiles)
+			&& command.mode === this._selectedMode && this._debugTileInvalidations)
 		{
 			this._debugAddInvalidationMessage(textMsg);
 		}
