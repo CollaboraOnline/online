@@ -663,7 +663,7 @@ L.Map.Keyboard = L.Handler.extend({
 					keyCode = 0;
 					unoKeyCode = this._toUNOKeyCode(keyCode);
 				}
-				if (docLayer._debug) {
+				if (docLayer._debugTileInvalidations) {
 					// key press times will be paired with the invalidation messages
 					docLayer._debugKeypressQueue.push(+new Date());
 				}

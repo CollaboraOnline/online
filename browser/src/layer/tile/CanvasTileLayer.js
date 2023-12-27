@@ -5129,31 +5129,36 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_debugInit: function() {
-		this._debugControl = L.control.layers({}, {}, {collapsed: false}).addTo(this._map);
+		this._debugControls = {};
 		this._debugLayers = [];
 		this._addDebugTools();
-		//this._debugControl.addTo(this._map);
 
-		if (this._map._docLayer._docType === 'spreadsheet') {
-			this._map._docLayer._painter._addSplitsSection();
-			this._map._docLayer._painter._sectionContainer.reNewAllSections(true /* redraw */);
+		if (this.isCalc()) {
+			this._painter._addSplitsSection();
+			this._painter._sectionContainer.reNewAllSections(true /* redraw */);
 		}
 	},
 
 	_debugStop: function () {
-		for (var i=0; i<this._debugLayers.length; i++) {
+		// Remove layers
+		for (var i in this._debugLayers) { 
 			this._map.removeLayer(this._debugLayers[i]);
 		}
-		this._debugControl.remove();
 
-		if (this._map._docLayer._docType === 'spreadsheet') {
-			var section = this._map._docLayer._painter._sectionContainer.getSectionWithName('calc grid');
+		// Remove controls
+		for (var category in this._debugControls) {
+			this._debugControls[category].remove();
+		}
+		this._debugControls = {};
+
+		if (this.isCalc()) {
+			var section = this._painter._sectionContainer.getSectionWithName('calc grid');
 			if (section) {
 				section.setDrawingOrder(L.CSections.CalcGrid.drawingOrder);
 				section.sectionProperties.strokeStyle = '#c0c0c0';
 			}
-			this._map._docLayer._painter._sectionContainer.removeSection('splits');
-			this._map._docLayer._painter._sectionContainer.reNewAllSections(true /* redraw */);
+			this._painter._sectionContainer.removeSection('splits');
+			this._painter._sectionContainer.reNewAllSections(true /* redraw */);
 		}
 	},
 
@@ -5169,9 +5174,20 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_addDebugTool: function (tool) {
+		// Create control if it doesn't exist
+		if (!(tool.category in this._debugControls)) {
+			this._debugControls[tool.category] = L.control.layers({}, {}, {collapsed: false, sortLayers: true}).addTo(this._map);
+			// Add a title
+			var b = document.createElement('b');
+			b.append(tool.category);
+			this._debugControls[tool.category]._container.prepend(b);
+		}
+
+		// Create layer
 		var layer = new L.LayerGroup();
 		this._debugLayers.push(layer);
-		this._debugControl._addLayer(layer, tool.name, true);
+		this._debugControls[tool.category]._addLayer(layer, tool.name, true);
+		this._debugControls[tool.category]._update();
 
 		this._map.on('layeradd', function(e) {
 			if (e.layer === layer) {
@@ -5186,7 +5202,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (tool.startsOn) {
 			this._map.addLayer(layer);
 		}
-		return layer;
 	},
 
 	_addDebugTools: function () {
@@ -5194,6 +5209,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		this._addDebugTool({
 			name: 'Screen Overlays',
+			category: 'Display',
 			startsOn: true,
 			onAdd: function () {
 				self._debugData = {};
@@ -5213,11 +5229,26 @@ L.CanvasTileLayer = L.Layer.extend({
 			},
 		});
 
-		this._debugTileLayer = this._addDebugTool({
+		this._addDebugTool({
 			name: 'Tile Overlays',
-			startsOn: true,
+			category: 'Display',
+			startsOn: false,
 			onAdd: function () {
-				self._debugTiles = true;
+				self._debugTileOverlays = true;
+				self._painter.update();
+			},
+			onRemove: function () {
+				self._debugTileOverlays = false;
+				self._painter.update();
+			},
+		});
+
+		this._addDebugTool({
+			name: 'Tile Invalidations',
+			category: 'Display',
+			startsOn: false,
+			onAdd: function () {
+				self._debugTileInvalidations = true;
 				self._debugInvalidBounds = {};
 				self._debugInvalidBoundsMessage = {};
 				self._debugId = 0;
@@ -5227,29 +5258,23 @@ L.CanvasTileLayer = L.Layer.extend({
 				self._debugInvalidateCount = 0;
 				self._debugTimeKeypress = self._debugGetTimeArray();
 				self._debugKeypressQueue = [];
-				self._debugTimeout();
+				self._debugTileInvalidationTimeout();
+				self._debugTileLayer = new L.LayerGroup();
+				self._map.addLayer(self._debugTileLayer);
 			},
 			onRemove: function () {
-				self._debugTiles = false;
-			},
-		});
-
-		this._addDebugTool({
-			name: 'Typer',
-			startsOn: false,
-			onAdd: function () {
-				self._debugLorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
-				self._debugLorem += ' ' + self._debugLorem + '\n';
-				self._debugLoremPos = 0;
-				self._debugTypeTimeout();
-			},
-			onRemove: function () {
+				self._debugTileInvalidations = false;
 				clearTimeout(self._debugTyperTimeoutId);
+				self._map.removeLayer(self._debugTileLayer);
+				self._painter.update();
 			},
 		});
 
+		/*
+		 * Doesn't seem to do anything
 		this._addDebugTool({
 			name: 'Always Active',
+			category: 'Functionality',
 			startsOn: false,
 			onAdd: function () {
 				self._map._debugAlwaysActive = true;
@@ -5258,9 +5283,11 @@ L.CanvasTileLayer = L.Layer.extend({
 				self._map._debugAlwaysActive = false;
 			},
 		});
+		*/
 
 		this._addDebugTool({
 			name: 'Show Clipboard',
+			category: 'Display',
 			startsOn: false,
 			onAdd: function () {
 				self._map._textInput.debug(true);
@@ -5272,6 +5299,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		this._addDebugTool({
 			name: 'Tiles device pixel grid',
+			category: 'Display',
 			startsOn: false,
 			onAdd: function () {
 				self._map._docLayer._painter._addTilePixelGridSection();
@@ -5283,8 +5311,11 @@ L.CanvasTileLayer = L.Layer.extend({
 			},
 		});
 
+		/*
+		 * Doesn't seem to do anything
 		this._addDebugTool({
-			name: 'Sidebard Rendering',
+			name: 'Sidebar Rerendering',
+			category: 'Display',
 			startsOn: false,
 			onAdd: function () {
 				self._map._debugSidebar = true;
@@ -5293,9 +5324,11 @@ L.CanvasTileLayer = L.Layer.extend({
 				self._map._debugSidebar = false;
 			},
 		});
+		*/
 
 		this._addDebugTool({
 			name: 'Performance Tracing',
+			category: 'Logging',
 			startsOn: app.socket.traceEventRecordingToggle,
 			onAdd: function () {
 				app.socket.setTraceEventLogging(true);
@@ -5307,6 +5340,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		this._addDebugTool({
 			name: 'Protocol Logging',
+			category: 'Logging',
 			startsOn: true,
 			onAdd: function () {
 				window.setLogging(true);
@@ -5319,6 +5353,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		this._addDebugTool({
 			name: 'Tile Dumping',
+			category: 'Logging',
 			startsOn: false,
 			onAdd: function () {
 				app.socket.sendMessage('toggletiledumping true');
@@ -5330,7 +5365,8 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		this._addDebugTool({
 			name: 'Debug Deltas',
-			startsOn: true,
+			category: 'Logging',
+			startsOn: false,
 			onAdd: function () {
 				self._debugDeltas = true;
 				self._debugDeltasDetail = true;
@@ -5340,6 +5376,22 @@ L.CanvasTileLayer = L.Layer.extend({
 				self._debugDeltasDetail = true;
 			},
 		});
+
+		this._addDebugTool({
+			name: 'Typer',
+			category: 'Input',
+			startsOn: false,
+			onAdd: function () {
+				self._debugLorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
+				self._debugLorem += ' ' + self._debugLorem + '\n';
+				self._debugLoremPos = 0;
+				self._debugTypeTimeout();
+			},
+			onRemove: function () {
+				clearTimeout(self._debugTyperTimeoutId);
+			},
+		});
+
 	},
 
 	_debugSetPostMessage: function(type,msg) {
@@ -5393,7 +5445,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._debugShowTileData();
 	},
 
-	_debugTimeout: function() {
+	_debugTileInvalidationTimeout: function() {
 		if (this._debug) {
 			for (var key in this._debugInvalidBounds) {
 				var rect = this._debugInvalidBounds[key];
@@ -5410,13 +5462,15 @@ L.CanvasTileLayer = L.Layer.extend({
 					rect.setStyle({fillOpacity: opac - 0.04});
 				}
 			}
-			this._debugTimeoutId = setTimeout(L.bind(this._debugTimeout, this), 50);
+			this._debugTileInvalidationTimeoutId = setTimeout(L.bind(this._debugTileInvalidationTimeout, this), 50);
 		}
 	},
 
 	_debugTypeTimeout: function() {
 		var letter = this._debugLorem.charCodeAt(this._debugLoremPos % this._debugLorem.length);
-		this._debugKeypressQueue.push(+new Date());
+		if (this._debugTileInvalidations) {
+			this._debugKeypressQueue.push(+new Date());
+		}
 		if (letter === '\n'.charCodeAt(0)) {
 			this.postKeyboardEvent('input', 0, 1280);
 		} else {
@@ -6472,7 +6526,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			app.socket.sendMessage(newClientVisibleArea);
 			if (!this._map._fatal && app.idleHandler._active && app.socket.connected())
 				this._clientVisibleArea = newClientVisibleArea;
-			if (this._debug)
+			if (this._debugTileInvalidations)
 				this._debugTileLayer.clearLayers();
 		}
 	},
@@ -6760,7 +6814,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		tile.invalidateCount++;
 
-		if (this._debug)
+		if (this._debugTileInvalidations)
 			this._debugInvalidateCount++;
 
 		if (!tile.hasContent())
