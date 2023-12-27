@@ -113,6 +113,7 @@ L.Map.Mouse = L.Handler.extend({
 		else if (e.type === 'mousedown') {
 			docLayer._resetPreFetching();
 			this._mouseDown = true;
+			this._buttonDown = buttons;
 			if (this._holdMouseEvent) {
 				clearTimeout(this._holdMouseEvent);
 			}
@@ -130,6 +131,13 @@ L.Map.Mouse = L.Handler.extend({
 					return;
 				}
 			}
+
+			// Core side is handling the mouseup by itself when the right button is down.
+			// If we fire mouseup for right button, there will be duplicate.
+			// Without this, selected text in a text box is un-selected via a right click. Therefore, copy / cut operations are disabled.
+			if (this._buttonDown === this.LOButtons.right && modifier === 0)
+				return;
+
 			clearTimeout(this._holdMouseEvent);
 			this._holdMouseEvent = null;
 			var timeDiff = Date.now() - this._clickTime;
