@@ -79,7 +79,7 @@ void Quarantine::initialize(const std::string& path)
               });
 
     std::vector<StringToken> tokens;
-    for (const auto& file : files)
+    for (const std::string& file : files)
     {
         StringVector::tokenize(file.c_str(), file.size(), Delimiter, tokens);
         if (tokens.size() >= 3)
