@@ -608,6 +608,8 @@ export class Comment extends CanvasSectionObject {
 		this.convertRectanglesToViewCoordinates();
 		this.convertRectanglesToCoreCoordinates();
 		this.setPositionAndSize();
+		if (this.sectionProperties.docLayer._docType === 'spreadsheet')
+			this.positionCalcComment();
 	}
 
 	private updateAnnotationMarker (): void {
