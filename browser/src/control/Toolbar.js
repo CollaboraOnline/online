@@ -360,9 +360,6 @@ L.Map.include({
 			}
 		}
 
-		// To exercise the Trace Event functionality, uncomment this
-		// app.socket.emitInstantTraceEvent('cool-unocommand:' + command);
-
 		var isAllowedInReadOnly = false;
 		var allowedCommands = ['.uno:Save', '.uno:WordCountDialog',
 			'.uno:Signature', '.uno:ShowResolvedAnnotations',

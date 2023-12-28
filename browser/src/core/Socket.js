@@ -161,6 +161,18 @@ app.definitions.Socket = L.Class.extend({
 		}
 	},
 
+	sendTraceEvent: function(name, ph, timeRange, args, id, tid) {
+		if (timeRange === undefined)
+			timeRange = 'ts=' + Math.round(performance.now() * 1000);
+		if (!id)
+			id = 1;
+		if (!tid)
+			tid = 1;
+		this.sendMessage('TRACEEVENT name=' + JSON.stringify(name) + ' ph=' + ph +
+				 ' ' + timeRange + ' id=' + id + ' tid=' + tid +
+				 this._stringifyArgs(args));
+	},
+
 	_doSend: function(msg) {
 		// Only attempt to log text frames, not binary ones.
 		if (typeof msg === 'string')
@@ -328,9 +340,8 @@ app.definitions.Socket = L.Class.extend({
 						var delta = now - that._renderEventTimerStart;
 						if (delta >= 2 /* ms */) // significant
 						{
-							that.sendMessage('TRACEEVENT name=browser-render' +
-									 ' ph=X ts=' + Math.round(that._renderEventTimerStart * 1000) +
-									 ' dur=' + Math.round((now - that._renderEventTimerStart) * 1000));
+							that.sendTraceEvent(name, 'X', 'ts=' + Math.round(that._renderEventTimerStart * 1000) +
+									    ' dur=' + Math.round((now - that._renderEventTimerStart) * 1000));
 							that._renderEventTimerStart = undefined;
 						}
 						that._renderEventTimer = undefined;
@@ -1817,13 +1828,6 @@ app.definitions.Socket = L.Class.extend({
 		return (args == null ? '' : (' args=' + JSON.stringify(args)));
 	},
 
-	// The args parameter, if present, should be an object where both keys and values are strings that don't contain any spaces.
-	emitInstantTraceEvent: function (name, args) {
-		if (this.traceEventRecordingToggle)
-			this.sendMessage('TRACEEVENT name=' + name + ' ph=i ts=' + Math.round(performance.now() * 1000)
-					 + this._stringifyArgs(args));
-	},
-
 	asyncTraceEventCounter: 0,
 
 	// simulate a threads per live async event to help the chrome renderer
@@ -1840,19 +1844,13 @@ app.definitions.Socket = L.Class.extend({
 		result.args = args;
 
 		if (this.traceEventRecordingToggle)
-			this.sendMessage('TRACEEVENT name=' + name +
-					 ' ph=S ts=' + Math.round(performance.now() * 1000) +
-					 ' id=' + result.id + ' tid=' + result.tid +
-					 this._stringifyArgs(args));
+			this.sendTraceEvent(name, 'S', undefined, args, result.id, result.tid);
 
 		var that = this;
 		result.finish = function () {
 			that.asyncTracePseudoThread--;
 			if (this.active) {
-				that.sendMessage('TRACEEVENT name=' + name +
-						 ' ph=F ts=' + Math.round(performance.now() * 1000) +
-						 ' id=' + this.id + ' tid=' + this.tid +
-						 that._stringifyArgs(this.args));
+				that.sendTraceEvent(name, 'F', undefined, this.args, this.id, this.tid);
 				this.active = false;
 			}
 		};
@@ -1875,10 +1873,9 @@ app.definitions.Socket = L.Class.extend({
 		result.finish = function () {
 			if (this.active) {
 				var now = performance.now();
-				that.sendMessage('TRACEEVENT name=' + name +
-						 ' ph=X ts=' + Math.round(this.begin * 1000) +
-						 ' dur=' + Math.round((now - this.begin) * 1000)
-						 + that._stringifyArgs(args));
+				that.sendTraceEvent(name, 'X', 'ts=' + Math.round(this.begin * 1000) +
+						    ' dur=' + Math.round((now - this.begin) * 1000),
+						    args);
 				this.active = false;
 			}
 		};
