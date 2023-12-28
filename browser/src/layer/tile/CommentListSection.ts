@@ -659,7 +659,7 @@ export class CommentSection extends CanvasSectionObject {
 					}
 					else {
 						annotation.edit();
-						this.select(annotation);
+						this.select(annotation, true);
 						annotation.focus();
 					}
 				}.bind(this), 1);
@@ -684,8 +684,8 @@ export class CommentSection extends CanvasSectionObject {
 			this.sectionProperties.commentList[i].sectionProperties.container.style.display = 'none';
 	}
 
-	public select (annotation: any): void {
-		if (annotation && !annotation.pendingInit && annotation !== this.sectionProperties.selectedComment) {
+	public select (annotation: Comment, force: boolean = false): void {
+		if (force || (annotation && !annotation.pendingInit && annotation !== this.sectionProperties.selectedComment)) {
 			// Unselect first if there anything selected.
 			if (this.sectionProperties.selectedComment)
 				this.unselect();
