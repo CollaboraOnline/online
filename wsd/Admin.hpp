@@ -206,6 +206,12 @@ private:
     void connectToMonitorSync(const std::string &uri);
 
 private:
+    /// The total installed system memory (RAM).
+    /// Technically, can be augmented at runtime, but we don't update it.
+    const size_t _totalSysMemKb;
+    /// The total available memory to our process, per memproportion.
+    size_t _totalAvailMemKb;
+
     /// The model is accessed only during startup & in
     /// the Admin Poll thread.
     AdminModel _model;
@@ -214,8 +220,6 @@ private:
     size_t _lastJiffies;
     uint64_t _lastSentCount;
     uint64_t _lastRecvCount;
-    size_t _totalSysMemKb;
-    size_t _totalAvailMemKb;
     std::string _forkitLogLevel;
 
     struct MonitorConnectRecord
