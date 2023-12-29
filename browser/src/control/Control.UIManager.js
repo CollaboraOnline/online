@@ -505,8 +505,10 @@ L.Control.UIManager = L.Control.extend({
 
 	},
 	refreshToolbar: function() {
-		w2ui['editbar'].refresh();
-		w2ui['actionbar'].refresh();
+		if (w2ui['editbar'])
+			w2ui['editbar'].refresh();
+		if (w2ui['actionbar'])
+			w2ui['actionbar'].refresh();
 	},
 	addNotebookbarUI: function() {
 		this.refreshNotebookbar();
