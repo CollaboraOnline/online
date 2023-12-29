@@ -140,7 +140,10 @@ var Base64ToArrayBuffer = function(base64Str) {
     window.fullyLoadedAndReady = true;
   }, false);
 
-window.savedUIState = %SAVED_UI_STATE%;
+m4_ifelse(IOSAPP,[true],
+  [   window.savedUIState = false;],
+  [   window.savedUIState = %SAVED_UI_STATE%;])
+
 window.isLocalStorageAllowed = (function() {
   var str = 'localstorage_test';
   try {
