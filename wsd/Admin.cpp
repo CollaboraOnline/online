@@ -496,26 +496,26 @@ bool AdminSocketHandler::handleInitialRequest(
 }
 
 /// An admin command processor.
-Admin::Admin() :
-    SocketPoll("admin"),
-    _forKitPid(-1),
-    _lastTotalMemory(0),
-    _lastJiffies(0),
-    _lastSentCount(0),
-    _lastRecvCount(0),
-    _cpuStatsTaskIntervalMs(DefStatsIntervalMs),
-    _memStatsTaskIntervalMs(DefStatsIntervalMs * 2),
-    _netStatsTaskIntervalMs(DefStatsIntervalMs * 2),
-    _cleanupIntervalMs(DefStatsIntervalMs * 10)
+Admin::Admin()
+    : SocketPoll("admin")
+    , _totalSysMemKb(Util::getTotalSystemMemoryKb())
+    , _totalAvailMemKb(_totalSysMemKb)
+    , _forKitPid(-1)
+    , _lastTotalMemory(0)
+    , _lastJiffies(0)
+    , _lastSentCount(0)
+    , _lastRecvCount(0)
+    , _cpuStatsTaskIntervalMs(DefStatsIntervalMs)
+    , _memStatsTaskIntervalMs(DefStatsIntervalMs * 2)
+    , _netStatsTaskIntervalMs(DefStatsIntervalMs * 2)
+    , _cleanupIntervalMs(DefStatsIntervalMs * 10)
 {
-    LOG_INF("Admin ctor.");
+    LOG_INF("Admin ctor");
 
-    _totalSysMemKb = Util::getTotalSystemMemoryKb();
-    LOG_TRC("Total system memory:  " << _totalSysMemKb << " KB.");
+    LOG_TRC("Total system memory:  " << _totalSysMemKb << " KB");
 
     const auto memLimit = COOLWSD::getConfigValue<double>("memproportion", 0.0);
-    _totalAvailMemKb = _totalSysMemKb;
-    if (memLimit != 0.0)
+    if (memLimit > 0.0)
         _totalAvailMemKb = _totalSysMemKb * memLimit / 100.;
 
     LOG_TRC("Total available memory: " << _totalAvailMemKb << " KB (memproportion: " << memLimit << "%).");
