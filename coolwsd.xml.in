@@ -43,7 +43,7 @@
     <hexify_embedded_urls desc="Enable to protect encoded URLs from getting decoded by intermediate hops. Particularly useful on Azure deployments" type="bool" default="false"></hexify_embedded_urls>
     <experimental_features desc="Enable/Disable experimental features" type="bool" default="@ENABLE_EXPERIMENTAL@">@ENABLE_EXPERIMENTAL@</experimental_features>
 
-    <memproportion desc="The maximum percentage of system memory consumed by all of the @APP_NAME@, after which we start cleaning up idle documents" type="double" default="80.0"></memproportion>
+    <memproportion desc="The maximum percentage of available memory consumed by all of the @APP_NAME@ processes, after which we start cleaning up idle documents. If cgroup memory limits are set, this is the maximum percentage of that limit to consume." type="double" default="80.0"></memproportion>
     <num_prespawn_children desc="Number of child processes to keep started in advance and waiting for new clients." type="uint" default="1">1</num_prespawn_children>
     <!-- <fetch_update_check desc="Every number of hours will fetch latest version data. Defaults to 10 hours." type="uint" default="10">10</fetch_update_check> -->
     <per_document desc="Document-specific settings, including LO Core settings.">
