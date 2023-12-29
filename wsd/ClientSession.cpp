@@ -1481,7 +1481,8 @@ bool ClientSession::filterMessage(const std::string& message) const
             if (tokens.size() > 1 && (tokens.equals(1, ".uno:ExecuteSearch") || tokens.equals(1, ".uno:Signature")
                  || tokens.equals(1, ".uno:ExportToPDF")
                  || tokens.equals(1,".uno:ExportDirectToPDF")
-                 || tokens.equals(1,".uno:ExportToEPUB")))
+                 || tokens.equals(1,".uno:ExportToEPUB")
+                 || tokens.equals(1,".uno:ChangeTheme")))
             {
                 allowed = true;
             }
