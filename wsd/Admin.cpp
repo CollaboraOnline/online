@@ -514,15 +514,62 @@ Admin::Admin()
 
     LOG_TRC("Total system memory:  " << _totalSysMemKb << " KB");
 
-    const auto memLimit = COOLWSD::getConfigValue<double>("memproportion", 0.0);
+    // If there is a cgroup limit that is smaller still, apply it.
+    const std::size_t cgroupMemLimitKb = Util::getCGroupMemLimit() / 1024;
+    if (cgroupMemLimitKb > 0 && cgroupMemLimitKb < _totalAvailMemKb)
+    {
+        LOG_TRC("cgroup memory limit: " << cgroupMemLimitKb << " KB");
+        _totalAvailMemKb = cgroupMemLimitKb;
+    }
+    else
+        LOG_TRC("no cgroup memory limit");
+
+    // If there is a cgroup soft-limit that is smaller still, apply that.
+    const std::size_t cgroupMemSoftLimitKb = Util::getCGroupMemSoftLimit() / 1024;
+    if (cgroupMemSoftLimitKb > 0 && cgroupMemSoftLimitKb < _totalAvailMemKb)
+    {
+        LOG_TRC("cgroup memory soft limit: " << cgroupMemSoftLimitKb << " KB");
+        _totalAvailMemKb = cgroupMemSoftLimitKb;
+    }
+    else
+        LOG_TRC("no cgroup memory soft limit");
+
+    // Reserve some minimum memory (1 MB, arbitrarily)
+    // as headroom. Otherwise, coolwsd might fail to
+    // clean-up Kits when we run out, and by then we die.
+    // This should be enough to update DocBroker containers,
+    // take locks, print logs, etc. during cleaning up.
+    std::size_t minHeadroomKb = 1024;
+
+    // If we have a manual percentage cap, apply it.
+    const double memLimit = COOLWSD::getConfigValue<double>("memproportion", 0.0);
     if (memLimit > 0.0)
-        _totalAvailMemKb = _totalSysMemKb * memLimit / 100.;
+    {
+        const double headroom = _totalAvailMemKb * (100. - memLimit) / 100.;
+        if (minHeadroomKb < headroom)
+            minHeadroomKb = static_cast<std::size_t>(headroom);
+    }
 
-    LOG_TRC("Total available memory: " << _totalAvailMemKb << " KB (memproportion: " << memLimit << "%).");
+    if (_totalAvailMemKb > minHeadroomKb)
+    {
+        _totalAvailMemKb -= minHeadroomKb;
+    }
 
-    const size_t totalMem = getTotalMemoryUsage();
-    LOG_TRC("Total memory used: " << totalMem << " KB.");
-    _model.addMemStats(totalMem);
+    const size_t totalUsedMemKb = getTotalMemoryUsage();
+    _model.addMemStats(totalUsedMemKb);
+
+    LOG_INF("Total available memory: "
+            << _totalAvailMemKb << " KB, System memory: " << _totalSysMemKb
+            << " KB, configured memproportion: " << memLimit
+            << "%, actual percentage of system total: " << std::setprecision(2)
+            << _totalAvailMemKb * 100. / _totalSysMemKb << "%, current usage: " << totalUsedMemKb
+            << " KB (" << totalUsedMemKb * 100. / _totalAvailMemKb << "% of limit)");
+
+    if (_totalAvailMemKb < 1000 * 1024)
+        LOG_WRN("Low memory condition detected: only " << _totalAvailMemKb / 1024
+                                                       << " MB of RAM available");
+
+    LOG_INF("hardware threads: " << std::thread::hardware_concurrency());
 }
 
 Admin::~Admin()
