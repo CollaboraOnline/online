@@ -114,7 +114,7 @@ L.Control.DocumentRepair = L.Control.extend({
 			if (parseInt(actions[iterator].viewId) === this._map._docLayer._viewId) {
 				userName = _('You');
 			}
-			this.createAction(type, actions[iterator].index, actions[iterator].comment, userName, actions[iterator].dateTime);
+			this.createAction(type, actions[iterator].index, actions[iterator].comment, userName, this.transformTimestamp(actions[iterator].dateTime));
 		}
 	},
 
@@ -197,6 +197,14 @@ L.Control.DocumentRepair = L.Control.extend({
 			value: index + 1
 		};
 		this._map.sendUnoCommand('.uno:' + action, command, true);
+	},
+
+	// Transform timestamp from ISO8601 to human readable format with Local time
+	transformTimestamp: function (timestamp) {
+		var d = new Date(timestamp.split(',')[0] + 'Z');
+		var dateOptions = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
+		var formattedDateTime = d.toLocaleString(String.locale, dateOptions);
+		return formattedDateTime;
 	}
 });
 
