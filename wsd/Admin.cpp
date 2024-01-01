@@ -563,14 +563,16 @@ Admin::Admin()
     const size_t totalUsedMemKb = getTotalMemoryUsage();
     _model.addMemStats(totalUsedMemKb);
 
-    LOG_INF("Total available memory: "
-            << _totalAvailMemKb << " KB, System memory: " << _totalSysMemKb
-            << " KB, configured memproportion: " << memLimit
-            << "%, actual percentage of system total: " << std::setprecision(2)
-            << (_totalSysMemKb ? (_totalAvailMemKb * 100. / _totalSysMemKb) : 100)
-            << "%, current usage: " << totalUsedMemKb << " KB ("
-            << (_totalAvailMemKb ? (totalUsedMemKb * 100. / _totalAvailMemKb) : 100)
-            << "% of limit)");
+    LOG_INF(
+        std::setprecision(2)
+        << "Total available memory: " << _totalAvailMemKb << " KB ("
+        << _totalAvailMemKb / (1024 * 1024.) << " GB), System memory: " << _totalSysMemKb << " KB ("
+        << _totalSysMemKb / (1024 * 1024.) << " GB), cgroup limit: " << cgroupMemLimitKb
+        << " KB, cgroup soft-limit: " << cgroupMemSoftLimitKb
+        << " KB, configured memproportion: " << memLimit << "%, actual percentage of system total: "
+        << (_totalSysMemKb ? (_totalAvailMemKb * 100. / _totalSysMemKb) : 100)
+        << "%, current usage: " << totalUsedMemKb << " KB ("
+        << (_totalAvailMemKb ? (totalUsedMemKb * 100. / _totalAvailMemKb) : 100) << "% of limit)");
 
     if (_totalAvailMemKb < 1000 * 1024)
         LOG_WRN("Low memory condition detected: only " << _totalAvailMemKb / 1024
