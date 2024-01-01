@@ -646,8 +646,10 @@ void DocumentBroker::pollThread()
     if (dataLoss || _docState.disconnected() == DocumentState::Disconnected::Unexpected)
     {
         // Quarantine the last copy, if different.
-        LOG_WRN((dataLoss ? "Data loss " : "Crash ") << "detected, will quarantine last version of ["
-                << getDocKey() << "] if necessary. Quarantine enabled: " << bool(_quarantine)
+        LOG_WRN((dataLoss ? "Data loss " : "Crash ")
+                << "detected, will quarantine last version of [" << getDocKey()
+                << "] if necessary. Quarantine enabled: "
+                << (_quarantine && _quarantine->isEnabled())
                 << ", Storage available: " << bool(_storage));
         if (_storage && _quarantine)
         {
