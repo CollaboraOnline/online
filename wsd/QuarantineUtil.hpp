@@ -25,6 +25,8 @@ public:
 
     static void initialize(const std::string& path);
 
+    bool isEnabled() const { return !QuarantinePath.empty(); }
+
     /// Quarantines a new version of the document.
     bool quarantineFile(const std::string& docName);
 
@@ -35,8 +37,6 @@ public:
     void removeQuarantinedFiles();
 
 private:
-    bool isQuarantineEnabled() const { return !QuarantinePath.empty(); }
-
     /// Returns quarantine directory size in bytes.
     std::size_t quarantineSize();
 

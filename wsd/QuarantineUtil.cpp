@@ -100,7 +100,7 @@ void Quarantine::initialize(const std::string& path)
 
 void Quarantine::removeQuarantine()
 {
-    if (!isQuarantineEnabled())
+    if (!isEnabled())
         return;
 
     FileUtil::removeFile(QuarantinePath, true);
@@ -108,7 +108,7 @@ void Quarantine::removeQuarantine()
 
 std::size_t Quarantine::quarantineSize()
 {
-    if (!isQuarantineEnabled())
+    if (!isEnabled())
         return 0;
 
     std::vector<std::string> files;
@@ -125,7 +125,7 @@ std::size_t Quarantine::quarantineSize()
 
 void Quarantine::makeQuarantineSpace()
 {
-    if (!isQuarantineEnabled())
+    if (!isEnabled())
         return;
 
     LOG_ASSERT_MSG(!Mutex.try_lock(), "Quarantine Mutex must be taken");
@@ -181,7 +181,7 @@ void Quarantine::makeQuarantineSpace()
 
 void Quarantine::clearOldQuarantineVersions()
 {
-    if (!isQuarantineEnabled())
+    if (!isEnabled())
         return;
 
     LOG_ASSERT_MSG(!Mutex.try_lock(), "Quarantine Mutex must be taken");
@@ -208,7 +208,7 @@ void Quarantine::clearOldQuarantineVersions()
 
 bool Quarantine::quarantineFile(const std::string& docPath)
 {
-    if (!isQuarantineEnabled())
+    if (!isEnabled())
         return false;
 
     const std::string linkedFilePath =
@@ -250,7 +250,7 @@ bool Quarantine::quarantineFile(const std::string& docPath)
 
 std::string Quarantine::lastQuarantinedFilePath() const
 {
-    if (!isQuarantineEnabled())
+    if (!isEnabled())
         return std::string();
 
     std::lock_guard<std::mutex> lock(Mutex);
