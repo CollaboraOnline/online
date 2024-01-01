@@ -180,6 +180,9 @@ export class ColumnHeader extends Header {
 		if (!this._mouseOverEntry)
 			return;
 
+		if (this._hitResizeArea)
+			return;
+
 		const col = this._mouseOverEntry.index;
 
 		let modifier = 0;
@@ -259,16 +262,19 @@ export class ColumnHeader extends Header {
 	setOptimalWidthAuto(): void {
 		if (this._mouseOverEntry) {
 			const column = this._mouseOverEntry.index;
-			const command = {
-				Column: {
-					type: 'long',
-					value: column
-				},
-				Modifier: {
-					type: 'unsigned short',
-					value: 0
-				}
-			};
+			if (!this._hitResizeArea) {
+				const command = {
+					Column: {
+						type: 'long',
+						value: column
+					},
+					Modifier: {
+						type: 'unsigned short',
+						value: 0
+					}
+				};
+				this._map.sendUnoCommand('.uno:SelectColumn', command);
+			}
 
 			const extra = {
 				aExtraHeight: {
@@ -277,7 +283,6 @@ export class ColumnHeader extends Header {
 				}
 			};
 
-			this._map.sendUnoCommand('.uno:SelectColumn', command);
 			this._map.sendUnoCommand('.uno:SetOptimalColumnWidthDirect', extra);
 		}
 	}
