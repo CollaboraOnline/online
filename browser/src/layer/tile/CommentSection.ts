@@ -688,8 +688,10 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.nodeReply.style.display = 'none';
 
 		this.positionCalcComment();
-		if (!(<any>window).mode.isMobile())
+		if (!(<any>window).mode.isMobile()) {
 			this.sectionProperties.commentListSection.select(this);
+			this.sectionProperties.container.style.visibility = '';
+		}
 	}
 
 	public positionCalcComment(): void {
@@ -697,8 +699,6 @@ export class Comment extends CanvasSectionObject {
 			var ratio: number = (app.tile.size.pixels[0] / app.tile.size.twips[0]);
 			var cellPos = this.map._docLayer._cellRangeToTwipRect(this.sectionProperties.data.cellRange).toRectangle();
 			var originalSize = [Math.round((cellPos[2]) * ratio), Math.round((cellPos[3]) * ratio)];
-
-			this.sectionProperties.container.style.visibility = '';
 
 			const commentWidth = parseFloat(getComputedStyle(this.sectionProperties.container).width) * app.dpiScale;
 			const startX = this.isCalcRTL() ? this.myTopLeft[0] - commentWidth : this.myTopLeft[0] + originalSize[0] - 3;
