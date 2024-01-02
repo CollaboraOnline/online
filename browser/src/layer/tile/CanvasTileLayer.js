@@ -5132,6 +5132,19 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._debugControls = {};
 		this._debugLayers = [];
 		this._addDebugTools();
+		// initialize state that we build in debug mode whether visible or not
+		this._debugInvalidBounds = {};
+		this._debugInvalidBoundsMessage = {};
+		this._debugId = 0;
+		this._debugLoadTile = 0;
+		this._debugLoadDelta = 0;
+		this._debugLoadUpdate = 0;
+		this._debugInvalidateCount = 0;
+		this._debugTimeKeypress = this._debugGetTimeArray();
+		this._debugKeypressQueue = [];
+		this._debugRenderCount = 0;
+		this._debugTimePING = self._debugGetTimeArray();
+		this._debugPINGQueue = [];
 
 		if (this.isCalc()) {
 			this._painter._addSplitsSection();
@@ -5141,7 +5154,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	_debugStop: function () {
 		// Remove layers
-		for (var i in this._debugLayers) { 
+		for (var i in this._debugLayers) {
 			this._map.removeLayer(this._debugLayers[i]);
 		}
 
@@ -5214,9 +5227,6 @@ L.CanvasTileLayer = L.Layer.extend({
 			onAdd: function () {
 				self._debugData = {};
 				self._debugDataNames = ['canonicalViewId', 'tileCombine', 'fromKeyInputToInvalidate', 'ping', 'loadCount', 'postMessage'];
-				self._debugRenderCount = 0;
-				self._debugTimePING = self._debugGetTimeArray();
-				self._debugPINGQueue = [];
 				for (var i = 0; i < self._debugDataNames.length; i++) {
 					self._debugData[self._debugDataNames[i]] = L.control.attribution({prefix: '', position: 'bottomleft'}).addTo(self._map);
 					self._debugData[self._debugDataNames[i]].addTo(self._map);
@@ -5226,6 +5236,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				for (var i in self._debugData) {
 					self._debugData[i].remove();
 				}
+				delete self._debugData;
 			},
 		});
 
@@ -5249,15 +5260,6 @@ L.CanvasTileLayer = L.Layer.extend({
 			startsOn: false,
 			onAdd: function () {
 				self._debugTileInvalidations = true;
-				self._debugInvalidBounds = {};
-				self._debugInvalidBoundsMessage = {};
-				self._debugId = 0;
-				self._debugLoadTile = 0;
-				self._debugLoadDelta = 0;
-				self._debugLoadUpdate = 0;
-				self._debugInvalidateCount = 0;
-				self._debugTimeKeypress = self._debugGetTimeArray();
-				self._debugKeypressQueue = [];
 				self._debugTileInvalidationTimeout();
 				self._debugTileLayer = new L.LayerGroup();
 				self._map.addLayer(self._debugTileLayer);
