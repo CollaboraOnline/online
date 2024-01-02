@@ -1843,8 +1843,7 @@ app.definitions.Socket = L.Class.extend({
 		result.active = true;
 		result.args = args;
 
-		if (this.traceEventRecordingToggle)
-			this.sendTraceEvent(name, 'S', undefined, args, result.id, result.tid);
+		this.sendTraceEvent(name, 'S', undefined, args, result.id, result.tid);
 
 		var that = this;
 		result.finish = function () {
