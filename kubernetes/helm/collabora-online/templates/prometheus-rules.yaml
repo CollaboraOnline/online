@@ -87,7 +87,7 @@ spec:
           summary: '{{ printf "%.0f" $value }}% of all documents are opened simultaneously on different pods in namespace {{ $labels.namespace }}. Viewers can not see each others.'
         `}}
       - alert: "Collabora DocumentsOpenSimultaneously"
-        expr: 'count(doc_info) by (key, namespace) > 1'
+        expr: 'count(doc_info) by (key, namespace, filename, host) > 1'
         labels:
           severity: "warning"
         {{`
