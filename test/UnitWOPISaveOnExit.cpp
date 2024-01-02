@@ -13,6 +13,7 @@
 
 #include "WOPIUploadConflictCommon.hpp"
 
+#include <atomic>
 #include <string>
 #include <memory>
 
@@ -167,6 +168,149 @@ public:
 };
 
 /// Test upload behavior with always_save_on_exit.
+/// The test verifies that a modified document that
+/// is manually saved and uploaded, still gets
+/// uploaded due to always_save_on_exit=true.
+class UnitSaveOnExitSaved : public WopiTestServer
+{
+    using Base = WopiTestServer;
+
+    STATE_ENUM(Phase, Load, WaitLoadStatus, WaitModifiedStatus, WaitUploadAfterSave,
+               WaitUploadOnExit, Done)
+    _phase;
+
+    std::atomic_bool _saved;
+    std::atomic_bool _uploaded;
+
+public:
+    UnitSaveOnExitSaved()
+        : WopiTestServer("UnitSaveOnExitSaved")
+        , _phase(Phase::Load)
+        , _saved(false)
+        , _uploaded(false)
+    {
+    }
+
+    void configure(Poco::Util::LayeredConfiguration& config) override
+    {
+        WopiTestServer::configure(config);
+
+        // Make it more likely to force uploading.
+        config.setBool("per_document.always_save_on_exit", true);
+    }
+
+    std::unique_ptr<http::Response>
+    assertPutFileRequest(const Poco::Net::HTTPRequest& /*request*/) override
+    {
+        if (_phase != Phase::WaitUploadAfterSave)
+        {
+            LOK_ASSERT_STATE(_phase, Phase::WaitUploadOnExit);
+        }
+
+        return nullptr;
+    }
+
+    /// The document is loaded.
+    bool onDocumentLoaded(const std::string& message) override
+    {
+        LOG_TST("onDocumentLoaded: [" << message << ']');
+        LOK_ASSERT_STATE(_phase, Phase::WaitLoadStatus);
+
+        LOG_TST("Modifying the document");
+        TRANSITION_STATE(_phase, Phase::WaitModifiedStatus);
+
+        // Modify the currently opened document; type 'a'.
+        WSD_CMD("key type=input char=97 key=0");
+        WSD_CMD("key type=up char=0 key=512");
+
+        return true;
+    }
+
+    bool onDocumentModified(const std::string& message) override
+    {
+        LOG_TST("onDocumentModified: [" << message << ']');
+        LOK_ASSERT_STATE(_phase, Phase::WaitModifiedStatus);
+
+        TRANSITION_STATE(_phase, Phase::WaitUploadAfterSave);
+
+        // Save.
+        LOG_TST("Saving the document");
+        WSD_CMD("save dontTerminateEdit=0 dontSaveIfUnmodified=0");
+
+        return true;
+    }
+
+    void onDocumentUploaded(bool success) override
+    {
+        LOK_ASSERT_MESSAGE("Upload failed unexpectedly", success);
+
+        if (_phase == Phase::WaitUploadAfterSave)
+        {
+            _uploaded = true;
+            if (_saved && _uploaded)
+            {
+                // Just disconnect.
+                TRANSITION_STATE(_phase, Phase::WaitUploadOnExit);
+                LOG_TST("Disconnecting");
+                deleteSocketAt(0);
+            }
+        }
+        else
+        {
+            LOK_ASSERT_STATE(_phase, Phase::WaitUploadOnExit);
+
+            TRANSITION_STATE(_phase, Phase::Done);
+            passTest("Uploaded on exit as expected");
+        }
+    }
+
+    /// Wait for ModifiedStatus=false before disconnecting.
+    bool onDocumentUnmodified(const std::string& message) override
+    {
+        LOG_TST("Got: [" << message << ']');
+
+        LOK_ASSERT_STATE(_phase, Phase::WaitUploadAfterSave);
+
+        _saved = true;
+        if (_saved && _uploaded)
+        {
+            // Just disconnect.
+            TRANSITION_STATE(_phase, Phase::WaitUploadOnExit);
+            LOG_TST("Disconnecting");
+            deleteSocketAt(0);
+        }
+
+        return true;
+    }
+
+    void invokeWSDTest() override
+    {
+        switch (_phase)
+        {
+            case Phase::Load:
+            {
+                TRANSITION_STATE(_phase, Phase::WaitLoadStatus);
+
+                LOG_TST("Load: initWebsocket.");
+                initWebsocket("/wopi/files/0?access_token=anything");
+
+                WSD_CMD("load url=" + getWopiSrc());
+                break;
+            }
+            case Phase::WaitLoadStatus:
+            case Phase::WaitModifiedStatus:
+            case Phase::WaitUploadAfterSave:
+            case Phase::WaitUploadOnExit:
+            case Phase::Done:
+            {
+                // just wait for the results
+                break;
+            }
+        }
+    }
+};
+
+/// Test upload behavior with always_save_on_exit.
 /// The test verifies that an unmodified document
 /// is *not* uploaded when always_save_on_exit=true.
 class UnitSaveOnExitUnmodified : public WopiTestServer
@@ -257,7 +401,9 @@ public:
 
 UnitBase** unit_create_wsd_multi(void)
 {
-    return new UnitBase* [3] { new UnitWOPISaveOnExit(), new UnitSaveOnExitUnmodified(), nullptr };
+    return new UnitBase* [4] {
+        new UnitWOPISaveOnExit(), new UnitSaveOnExitSaved(), new UnitSaveOnExitUnmodified(), nullptr
+    };
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

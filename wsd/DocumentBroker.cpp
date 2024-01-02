@@ -2751,9 +2751,10 @@ std::size_t DocumentBroker::removeSession(const std::shared_ptr<ClientSession>& 
 
         // If last editable, save (if not saving already) and
         // don't remove until after uploading to storage.
+        // If always_save_on_exit=true, issue a save to guarantee uploading if necessary.
         if (!lastEditableSession ||
             (!_saveManager.isSaving() &&
-             !autoSave(/*force=*/isPossiblyModified(), dontSaveIfUnmodified)))
+             !autoSave(/*force=*/_alwaysSaveOnExit || isPossiblyModified(), dontSaveIfUnmodified)))
         {
             disconnectSessionInternal(session);
         }
