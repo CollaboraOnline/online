@@ -56,6 +56,14 @@ const int ProxyAccessTokenLengthBytes = 32;
 static std::mutex GlobalSessionMapMutex;
 static std::unordered_map<std::string, std::weak_ptr<ClientSession>> GlobalSessionMap;
 
+namespace
+{
+void logSyntaxErrorDetails(const StringVector& tokens, const std::string& firstLine)
+{
+    LOG_WRN("Invalid syntax for '" << tokens[0] << "' message: [" << firstLine << ']');
+}
+}
+
 ClientSession::ClientSession(
     const std::shared_ptr<ProtocolHandlerInterface>& ws,
     const std::string& id,
@@ -748,7 +756,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         {
             // Be forgiving and log instead of disconnecting.
             // sendTextFrameAndLogError("error: cmd=clientvisiblearea kind=syntax");
-            LOG_WRN("Invalid syntax for '" << tokens[0] << "' message: [" << firstLine << ']');
+            logSyntaxErrorDetails(tokens, firstLine);
             return true;
         }
         else
@@ -759,7 +767,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
                 if (!getTokenInteger(tokens[5], "splitx", splitX) ||
                     !getTokenInteger(tokens[6], "splity", splitY))
                 {
-                    LOG_WRN("Invalid syntax for '" << tokens[0] << "' message: [" << firstLine << ']');
+                    logSyntaxErrorDetails(tokens, firstLine);
                     return true;
                 }
 
@@ -779,7 +787,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
             if (tokens.size() != 2 ||
                 !getTokenInteger(tokens[1], "part", temp))
             {
-                sendTextFrameAndLogError("error: cmd=setclientpart kind=syntax");
+                logSyntaxErrorDetails(tokens, firstLine);
                 return false;
             }
             else
@@ -838,7 +846,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         {
             // Be forgiving and log instead of disconnecting.
             // sendTextFrameAndLogError("error: cmd=clientzoom kind=syntax");
-            LOG_WRN("Invalid syntax for '" << tokens[0] << "' message: [" << firstLine << ']');
+            logSyntaxErrorDetails(tokens, firstLine);
             return true;
         }
         else
@@ -858,7 +866,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         {
             // Be forgiving and log instead of disconnecting.
             // sendTextFrameAndLogError("error: cmd=tileprocessed kind=syntax");
-            LOG_WRN("Invalid syntax for '" << tokens[0] << "' message: [" << firstLine << ']');
+            logSyntaxErrorDetails(tokens, firstLine);
             return true;
         }
 
