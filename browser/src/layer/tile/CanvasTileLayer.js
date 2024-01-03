@@ -5210,7 +5210,6 @@ L.CanvasTileLayer = L.Layer.extend({
 			},
 			onRemove: function () {
 				self._debugTileInvalidations = false;
-				clearTimeout(self._debugTyperTimeoutId);
 				self._map.removeLayer(self._debugTileLayer);
 				self._painter.update();
 			},
@@ -5331,14 +5330,120 @@ L.CanvasTileLayer = L.Layer.extend({
 				self._debugLorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
 				self._debugLorem += ' ' + self._debugLorem + '\n';
 				self._debugLoremPos = 0;
-				self._debugTypeTimeout();
+				self._debugTyperTimeout();
 			},
 			onRemove: function () {
 				clearTimeout(self._debugTyperTimeoutId);
 			},
 		});
 
+		if (this.isCalc()) {
+			this._addDebugTool({
+				name: 'Move around sheet',
+				category: 'Input',
+				startsOn: false,
+				onAdd: function () {
+					self._debugMoveSheetTimeout();
+				},
+				onRemove: function () {
+					clearTimeout(self._debugMoveSheetTimeoutId);
+				},
+			});
+		}
+
+		this._addDebugTool({
+			name: 'Toggle dark mode',
+			category: 'Input',
+			startsOn: false,
+			onAdd: function () {
+				self._debugToggleDarkModeTimeout();
+			},
+			onRemove: function () {
+				clearTimeout(self._debugToggleDarkModeTimeoutId);
+			},
+		});
+
+		this._addDebugTool({
+			name: 'Add/Remove shapes',
+			category: 'Input',
+			startsOn: false,
+			onAdd: function () {
+				self._debugAddRemoveShapesTimeout();
+			},
+			onRemove: function () {
+				clearTimeout(self._debugAddRemoveShapesTimeoutId);
+			},
+		});
+
+		this._addDebugTool({
+			name: 'Zoomer',
+			category: 'Input',
+			startsOn: false,
+			onAdd: function () {
+				self._debugZoomerTimeout();
+			},
+			onRemove: function () {
+				clearTimeout(self._debugZoomerTimeoutId);
+			},
+		});
 	},
+
+	_debugMoveSheetTimeout: function () {
+		// Select random position
+		var docSize = this._map.getDocSize();
+		var maxX = docSize.x; //Math.min(docSize.x, 10000);
+		var maxY = docSize.y; //Math.min(docSize.y, 10000);
+		var positions = [
+			{x: 0, y: 0}, // top left
+			{x: maxX, y: 0}, // top right
+			{x: 0, y: maxY}, // bottom left
+			{x: maxX, y: maxY}, // bottom right
+			{x: maxX/2, y: maxY/2}, // center
+		];
+		var pos = positions[Math.floor(Math.random()*positions.length)];
+
+		// Calculate mouse click position
+		var viewSize = this._map.getSize();
+		var centerPos = {x: pos.x + viewSize.x/2, y: pos.y + viewSize.y/2};
+		var centerTwips = this._pixelsToTwips(centerPos);
+
+		// Perform action
+		console.log('_debugMoveSheetTimeout move to ',pos,' click at ', centerPos, centerTwips);
+		this._map.fire('scrollto', pos);
+		this._postMouseEvent('buttondown', centerTwips.x, centerTwips.y, 1, 1, 0);
+		this._postMouseEvent('buttonup', centerTwips.x, centerTwips.y, 1, 1, 0);
+
+		// Loop
+		this._debugMoveSheetTimeoutId = setTimeout(L.bind(this._debugMoveSheetTimeout, this), 1000);
+	},
+
+	_debugToggleDarkModeTimeout: function () {
+		this._map.uiManager.toggleDarkMode();
+
+		// Loop
+		this._debugToggleDarkModeTimeoutId = setTimeout(L.bind(this._debugToggleDarkModeTimeout, this), 3000);
+	},
+
+	_debugAddRemoveShapesTimeout: function () {
+		var shapes = ['smiley','sun','moon','lightning','heart','flower'];
+		var shape = shapes[Math.floor(Math.random() * shapes.length)];
+		this._map.sendUnoCommand('.uno:SymbolShapes.'+shape);
+
+		setTimeout(L.bind(function() {app.socket.sendMessage('removetextcontext id=0 before=0 after=1');},this), 2000);
+
+		// Loop
+		this._debugAddRemoveShapesTimeoutId = setTimeout(L.bind(this._debugAddRemoveShapesTimeout, this), 4000);
+	},
+
+	_debugZoomerTimeout: function () {
+		var targetZoom = Math.floor(Math.random() * 18) + 1;
+		this._map.setZoom(targetZoom, null, false);
+		this._painter.update();
+
+		// Loop
+		this._debugZoomerTimeoutId = setTimeout(L.bind(this._debugZoomerTimeout, this), 1000);
+	},
+
 
 	_debugSetPostMessage: function(type,msg) {
 		this._debugData['postMessage'].setPrefix(type+': '+ msg);
@@ -5412,7 +5517,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 	},
 
-	_debugTypeTimeout: function() {
+	_debugTyperTimeout: function() {
 		var letter = this._debugLorem.charCodeAt(this._debugLoremPos % this._debugLorem.length);
 		if (this._debugTileInvalidations) {
 			this._debugKeypressQueue.push(+new Date());
@@ -5423,7 +5528,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			this.postKeyboardEvent('input', this._debugLorem.charCodeAt(this._debugLoremPos % this._debugLorem.length), 0);
 		}
 		this._debugLoremPos++;
-		this._debugTyperTimeoutId = setTimeout(L.bind(this._debugTypeTimeout, this), 50);
+		this._debugTyperTimeoutId = setTimeout(L.bind(this._debugTyperTimeout, this), 50);
 	},
 
 	/// onlyThread - takes annotation indicating which thread will be generated
