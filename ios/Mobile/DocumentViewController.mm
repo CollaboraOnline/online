@@ -98,6 +98,18 @@ static IMP standardImpOfInputAccessoryView = nil;
     // so the problem is still there when using Online from Mobile Safari.
     self.webView.scrollView.scrollEnabled = NO;
 
+    // Reenable debugging from Safari
+    // The new WKWebView.inspectable property must be set to YES in order
+    // for Safari to connect to a debug version of the iOS app whether the
+    // app is running on an iOS device or on macOS.
+    if (@available(macOS 13.3, iOS 16.4, tvOS 16.4, *)) {
+#if ENABLE_DEBUG == 1
+        self.webView.inspectable = YES;
+#else
+        self.webView.inspectable = NO;
+#endif
+    }
+
     // Prevent the user from zooming the WebView by assigning ourselves as the delegate, and
     // stopping any zoom attempt in scrollViewWillBeginZooming: below. (The zooming of the document
     // contents is handled fully in JavaScript, the WebView has no knowledge of that.)
