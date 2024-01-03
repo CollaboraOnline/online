@@ -1134,11 +1134,12 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 	},
 
-	_reset: function (center, zoom, hard, noPrune, noUpdate) {
-		var tileZoom = Math.round(zoom),
+	_reset: function (hard) {
+		var tileZoom = Math.round(this._map.getZoom()),
 		    tileZoomChanged = this._tileZoom !== tileZoom;
+		this._tileSize = this._getTileSize();
 
-		if (!noUpdate && (hard || tileZoomChanged)) {
+		if (hard || tileZoomChanged) {
 			this._resetClientVisArea();
 
 			this._tileZoom = tileZoom;
@@ -1146,19 +1147,25 @@ L.CanvasTileLayer = L.Layer.extend({
 				this._updateTileTwips();
 				this._updateMaxBounds();
 			}
-			this._updateLevels();
-			this._resetGrid();
 
-			if (!L.Browser.mobileWebkit) {
-				this._update(center, tileZoom);
+			app.tile.size.pixels = [this._tileSize, this._tileSize];
+			if (this._tileWidthTwips === undefined) {
+				this._tileWidthTwips = this.options.tileWidthTwips;
+				app.tile.size.twips[0] = this.options.tileWidthTwips;
+			}
+			if (this._tileHeightTwips === undefined) {
+				this._tileHeightTwips = this.options.tileHeightTwips;
+				app.tile.size.twips[1] = this.options.tileHeightTwips;
 			}
 
-			if (!noPrune) {
-				this._pruneTiles();
-			}
+			app.twipsToPixels = app.tile.size.pixels[0] / app.tile.size.twips[0];
+			app.pixelsToTwips = app.tile.size.twips[0] / app.tile.size.pixels[0];
+
+			if (!L.Browser.mobileWebkit)
+				this._update(this._map.getCenter(), tileZoom);
+
+			this._pruneTiles();
 		}
-
-		this._setZoomTransforms(center, zoom);
 	},
 
 	// These variables indicates the clientvisiblearea sent to the server and stored by the server
@@ -1223,35 +1230,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		var x = Math.round(newScrollPos.x < 0 ? 0 : newScrollPos.x);
 		var y = Math.round(newScrollPos.y < 0 ? 0 : newScrollPos.y);
 		this._map.fire('updatescrolloffset', {x: x, y: y, updateHeaders: true});
-	},
-
-	_resetGrid: function () {
-		var map = this._map,
-		    crs = map.options.crs,
-		    tileSize = this._tileSize = this._getTileSize(),
-		    tileZoom = this._tileZoom;
-
-		app.tile.size.pixels = [this._tileSize, this._tileSize];
-		if (this._tileWidthTwips === undefined) {
-			this._tileWidthTwips = this.options.tileWidthTwips;
-			app.tile.size.twips[0] = this.options.tileWidthTwips;
-		}
-		if (this._tileHeightTwips === undefined) {
-			this._tileHeightTwips = this.options.tileHeightTwips;
-			app.tile.size.twips[1] = this.options.tileHeightTwips;
-		}
-
-		app.twipsToPixels = app.tile.size.pixels[0] / app.tile.size.twips[0];
-		app.pixelsToTwips = app.tile.size.twips[0] / app.tile.size.pixels[0];
-
-		this._wrapX = crs.wrapLng && [
-			Math.floor(map.project([0, crs.wrapLng[0]], tileZoom).x / tileSize),
-			Math.ceil(map.project([0, crs.wrapLng[1]], tileZoom).x / tileSize)
-		];
-		this._wrapY = crs.wrapLat && [
-			Math.floor(map.project([crs.wrapLat[0], 0], tileZoom).y / tileSize),
-			Math.ceil(map.project([crs.wrapLat[1], 0], tileZoom).y / tileSize)
-		];
 	},
 
 	_getTileSize: function () {
@@ -5991,7 +5969,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_viewReset: function (e) {
-		this._reset(this._map.getCenter(), this._map.getZoom(), e && e.hard);
+		this._reset(e && e.hard);
 		if (this._docType === 'spreadsheet' && this._annotations !== 'undefined') {
 			app.socket.sendMessage('commandvalues command=.uno:ViewAnnotationsPosition');
 		}
@@ -6013,12 +5991,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._pruneTiles();
 	},
 
-	_updateLevels: function () {
-	},
-
-	_initTile: function () {
-	},
-
 	_pruneTiles: function () {
 		// update tile.current for the view
 		if (app.file.fileBasedView)
@@ -6027,23 +5999,8 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._garbageCollect();
 	},
 
-	_setZoomTransforms: function () {
-	},
-
-	_setZoomTransform: function () {
-	},
-
 	_getTilePos: function (coords) {
 		return coords.getPos();
-	},
-
-	_wrapCoords: function (coords) {
-		return new L.TileCoordData(
-			this._wrapX ? L.Util.wrapNum(coords.x, this._wrapX) : coords.x,
-			this._wrapY ? L.Util.wrapNum(coords.y, this._wrapY) : coords.y,
-			coords.z,
-			coords.part,
-			coords.mode);
 	},
 
 	_pxBoundsToTileRanges: function (bounds) {
