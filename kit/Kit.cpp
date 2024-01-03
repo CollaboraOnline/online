@@ -3025,9 +3025,14 @@ void lokit_main(
                 std::chrono::steady_clock::now() - jailSetupStartTime);
             LOG_DBG("Initialized jail files in " << ms);
 
-            ProcSMapsFile = open("/proc/self/smaps", O_RDONLY);
+            ProcSMapsFile = open("/proc/self/smaps_rollup", O_RDONLY);
             if (ProcSMapsFile < 0)
-                LOG_SYS("Failed to open /proc/self/smaps. Memory stats will be missing.");
+            {
+                LOG_WRN("Failed to open /proc/self/smaps_rollup. Memory stats will be slower");
+                ProcSMapsFile = open("/proc/self/smaps", O_RDONLY);
+                if (ProcSMapsFile < 0)
+                    LOG_SYS("Failed to open /proc/self/smaps. Memory stats will be missing.");
+            }
 
             LOG_INF("chroot(\"" << jailPathStr << "\")");
             if (chroot(jailPathStr.c_str()) == -1)

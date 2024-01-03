@@ -498,8 +498,15 @@ namespace Util
     {
         if (pid > 0)
         {
-            const auto cmd = "/proc/" + std::to_string(pid) + "/smaps";
-            FILE* fp = fopen(cmd.c_str(), "r");
+            // beautifully aggregated data in a single entry:
+            const auto cmd_rollup = "/proc/" + std::to_string(pid) + "/smaps_rollup";
+            FILE* fp = fopen(cmd_rollup.c_str(), "r");
+            if (!fp)
+            {
+                const auto cmd = "/proc/" + std::to_string(pid) + "/smaps";
+                fp = fopen(cmd.c_str(), "r");
+            }
+
             if (fp != nullptr)
             {
                 const std::size_t pss = getPssAndDirtyFromSMaps(fp).first;
