@@ -2522,22 +2522,16 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			var arrowbackground = L.DomUtil.create('div', 'arrowbackground', div);
 			var arrow = L.DomUtil.create('i', 'unoarrow', arrowbackground);
 			controls['arrow'] = arrow;
-			var menuIsOpened = false;
 			$(arrowbackground).click(function (event) {
 				if (!$(div).hasClass('disabled')) {
-					if (menuIsOpened) {
-						builder.callback('toolbox', 'closemenu', parentContainer, data.command, builder);
-						menuIsOpened = false;
-						$(div).removeClass('menu-opened');
-					} else {
-						menuIsOpened = true;
-						builder.callback('toolbox', 'openmenu', parentContainer, data.command, builder);
-						$(div).addClass('menu-opened');
-					}
-
+					builder.callback('toolbox', 'openmenu', parentContainer, data.command, builder);
 					event.stopPropagation();
 				}
 			});
+
+			div.closeDropdown = function() {
+				builder.callback('toolbox', 'closemenu', parentContainer, data.command, builder);
+			};
 		}
 
 		$(div).on('click.toolbutton',function (e) {
