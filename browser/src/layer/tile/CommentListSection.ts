@@ -708,7 +708,7 @@ export class CommentSection extends CanvasSectionObject {
 					const screenTopBottom = this.getScreenTopBottom();
 					const rect = this.sectionProperties.selectedComment.sectionProperties.container.getBoundingClientRect();
 					scrollSection.scrollVerticalWithOffset(position[1] < 0 ? 0 : position[1] - screenTopBottom[1] + rect.height);
-					if (this.sectionProperties.docLayer._docType === 'spreadsheet') {
+					if (this.sectionProperties.docLayer._docType === 'spreadsheet' && this.sectionProperties.selectedComment) {
 						this.sectionProperties.selectedComment.positionCalcComment();
 						this.sectionProperties.selectedComment.focus();
 					}
