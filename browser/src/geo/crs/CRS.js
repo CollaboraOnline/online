@@ -35,18 +35,6 @@ L.CRS = {
 		return 256 * Math.pow(2, zoom);
 	},
 
-	// returns the bounds of the world in projected coords if applicable
-	getProjectedBounds: function (zoom) {
-		if (this.infinite) { return null; }
-
-		var b = this.projection.bounds,
-		    s = this.scale(zoom),
-		    min = this.transformation.transform(b.min, s),
-		    max = this.transformation.transform(b.max, s);
-
-		return L.bounds(min, max);
-	},
-
 	// whether a coordinate axis wraps in a given range (e.g. longitude from -180 to 180); depends on CRS
 	// wrapLng: [min, max],
 	// wrapLat: [min, max],

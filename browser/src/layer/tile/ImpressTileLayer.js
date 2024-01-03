@@ -16,8 +16,8 @@
 
 L.ImpressTileLayer = L.CanvasTileLayer.extend({
 
-	initialize: function (url, options) {
-		L.CanvasTileLayer.prototype.initialize.call(this, url, options);
+	initialize: function (options) {
+		L.CanvasTileLayer.prototype.initialize.call(this, options);
 		// If this is mobile view, we we'll change the layout position of 'presentation-controls-wrapper'.
 		if (window.mode.isMobile()) {
 			this._putPCWOutsideFlex();
@@ -172,7 +172,7 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 		}
 	},
 
-	// TODO: shre code with WriterTileLayer
+	// TODO: share code with WriterTileLayer
 	/* jscpd:ignore-start */
 	_onInvalidateTilesMsg: function (textMsg) {
 		var command = app.socket.parseServerCmd(textMsg);

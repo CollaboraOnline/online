@@ -1386,27 +1386,17 @@ app.definitions.Socket = L.Class.extend({
 			}
 
 			var docLayer = null;
-			if (command.type === 'text') {
-				docLayer = new L.WriterTileLayer('', {
-					tileWidthTwips: tileWidthTwips / app.dpiScale,
-					tileHeightTwips: tileHeightTwips / app.dpiScale,
-					docType: command.type
-				});
-			}
-			else if (command.type === 'spreadsheet') {
-				docLayer = new L.CalcTileLayer('', {
-					tileWidthTwips: tileWidthTwips / app.dpiScale,
-					tileHeightTwips: tileHeightTwips / app.dpiScale,
-					docType: command.type
-				});
-			}
-			else if (command.type === 'presentation' || command.type === 'drawing') {
-				docLayer = new L.ImpressTileLayer('', {
-					tileWidthTwips: tileWidthTwips / app.dpiScale,
-					tileHeightTwips: tileHeightTwips / app.dpiScale,
-					docType: command.type
-				});
-			}
+			var options = {
+				tileWidthTwips: tileWidthTwips / app.dpiScale,
+				tileHeightTwips: tileHeightTwips / app.dpiScale,
+				docType: command.type
+			};
+			if (command.type === 'text')
+				docLayer = new L.WriterTileLayer(options);
+			else if (command.type === 'spreadsheet')
+				docLayer = new L.CalcTileLayer(options);
+			else if (command.type === 'presentation' || command.type === 'drawing')
+				docLayer = new L.ImpressTileLayer(options);
 
 			this._map._docLayer = docLayer;
 			this._map.addLayer(docLayer);
