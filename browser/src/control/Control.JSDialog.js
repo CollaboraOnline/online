@@ -147,6 +147,8 @@ L.Control.JSDialog = L.Control.extend({
 		}
 		else {
 			this.clearDialog(id);
+			if (L.DomUtil.hasClass(clickToClose, 'menu-opened'))
+				L.DomUtil.removeClass(clickToClose, 'menu-opened');
 		}
 
 		this.focusToLastElement(id);
