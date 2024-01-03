@@ -4,7 +4,7 @@ type: "application"
 name: collabora-online
 description: Collabora Online helm chart
 
-version: 1.1.8
+version: 1.1.9
 appVersion: "23.05.6.4.1"
 
 home: "https://www.collaboraoffice.com/code/"
