@@ -240,8 +240,8 @@ L.Map.TouchGesture = L.Handler.extend({
 		};
 
 		var rightClick = function () {
+			// We will only send "buttondown" event because core side fires "buttonup" event internally.
 			docLayer._postMouseEvent('buttondown', mousePos.x, mousePos.y, 1, 4, 0);
-			docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1, 4, 0);
 		};
 
 		var waitForSelectionMsg = function () {
