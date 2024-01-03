@@ -308,17 +308,19 @@ public:
 
 /// Test upload behavior with always_save_on_exit.
 /// The test verifies that an unmodified document
-/// is *not* uploaded when always_save_on_exit=true.
-class UnitSaveOnExitUnmodified : public WopiTestServer
+/// is *not* uploaded when always_save_on_exit=true
+/// and is closed (ownertermination).
+class UnitSaveOnExitUnmodifiedClosed : public WopiTestServer
 {
     using Base = WopiTestServer;
 
+protected:
     STATE_ENUM(Phase, Load, WaitLoadStatus, WaitDestroy, Done)
     _phase;
 
 public:
-    UnitSaveOnExitUnmodified()
-        : Base("UnitSaveOnExitUnmodified")
+    UnitSaveOnExitUnmodifiedClosed(const std::string& name = "UnitSaveOnExitUnmodifiedClosed")
+        : Base(name)
         , _phase(Phase::Load)
     {
     }
@@ -340,13 +342,16 @@ public:
         return nullptr;
     }
 
-    /// The document is loaded.
-    bool onDocumentLoaded(const std::string& message) override
+    /// Wait for ModifiedStatus=false before closing.
+    /// This is sent right after loading.
+    bool onDocumentUnmodified(const std::string& message) override
     {
         LOG_TST("Got: [" << message << ']');
         LOK_ASSERT_STATE(_phase, Phase::WaitLoadStatus);
 
         TRANSITION_STATE(_phase, Phase::WaitDestroy);
+
+        LOG_TST("Closing document");
         WSD_CMD("closedocument");
 
         return true;
@@ -395,10 +400,41 @@ public:
     }
 };
 
+/// Test upload behavior with always_save_on_exit.
+/// The test verifies that an unmodified document
+/// is *not* uploaded when always_save_on_exit=true
+/// and is disconnected.
+class UnitSaveOnExitUnmodifiedDisconnect : public UnitSaveOnExitUnmodifiedClosed
+{
+public:
+    UnitSaveOnExitUnmodifiedDisconnect()
+        : UnitSaveOnExitUnmodifiedClosed("UnitSaveOnExitUnmodifiedDisconnect")
+    {
+    }
+
+    /// Wait for ModifiedStatus=false before disconnecting.
+    /// This is sent right after loading.
+    bool onDocumentUnmodified(const std::string& message) override
+    {
+        LOG_TST("Got: [" << message << ']');
+        LOK_ASSERT_STATE(_phase, Phase::WaitLoadStatus);
+
+        TRANSITION_STATE(_phase, Phase::WaitDestroy);
+
+        // Disconnect to trigger the auto-save logic.
+        LOG_TST("Disconnecting");
+        deleteSocketAt(0);
+
+        return true;
+    }
+};
+
 UnitBase** unit_create_wsd_multi(void)
 {
-    return new UnitBase* [4] {
-        new UnitWOPISaveOnExit(), new UnitSaveOnExitSaved(), new UnitSaveOnExitUnmodified(), nullptr
+    return new UnitBase* [5]
+    {
+        new UnitWOPISaveOnExit(), new UnitSaveOnExitSaved(), new UnitSaveOnExitUnmodifiedClosed(),
+            new UnitSaveOnExitUnmodifiedDisconnect(), nullptr
     };
 }
 

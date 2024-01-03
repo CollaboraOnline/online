@@ -2725,7 +2725,12 @@ std::size_t DocumentBroker::removeSession(const std::shared_ptr<ClientSession>& 
         const std::size_t activeSessionCount = countActiveSessions();
 
         const bool lastEditableSession = session->isEditable() && !haveAnotherEditableSession(id);
-        const bool dontSaveIfUnmodified = !_alwaysSaveOnExit;
+        // Forcing a save when always_save_on_exit=true creates a new
+        // file on disk, with a new timestamp, which makes it hard to
+        // avoid uploading when there really isn't any modifications.
+        // Instead, we rely on always issuing a save through forced
+        // auto-save and expect Core has the correct modified flag.
+        constexpr bool dontSaveIfUnmodified = true;
 
         LOG_INF("Removing session [" << id << "] on docKey [" << _docKey << "]. Have "
                                      << _sessions.size() << " sessions (" << activeSessionCount
