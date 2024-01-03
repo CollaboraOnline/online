@@ -129,16 +129,10 @@ L.Control.JSDialog = L.Control.extend({
 		var builder = this.dialogs[id].builder;
 
 		if (sendCloseEvent) {
-			var isDropdownToolItem =
-				clickToClose && L.DomUtil.hasClass(clickToClose, 'has-dropdown');
-
-			// try to toggle the dropdown first
-			if (isDropdownToolItem) {
-				var dropdownArrow = clickToClose.querySelector('.arrowbackground');
-				dropdownArrow.click();
-			}
-
-			if (clickToClose && !isDropdownToolItem && L.DomUtil.hasClass(clickToClose, 'menubutton'))
+			// first try to close the dropdown if exists
+			if (clickToClose && typeof clickToClose.closeDropdown === 'function')
+				clickToClose.closeDropdown();
+			if (clickToClose && L.DomUtil.hasClass(clickToClose, 'menubutton'))
 				clickToClose.click();
 			else if (builder)
 				builder.callback('popover', 'close', {id: '__POPOVER__'}, null, builder);
