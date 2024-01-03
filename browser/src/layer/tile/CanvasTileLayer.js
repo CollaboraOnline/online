@@ -823,36 +823,16 @@ L.CanvasTileLayer = L.Layer.extend({
 		zIndex: null,
 		bounds: null,
 
-		minZoom: 0,
-
-		maxZoom: 18,
-
-		subdomains: 'abc',
-		errorTileUrl: '',
-
-		detectRetina: true,
-		crossOrigin: false,
 		previewInvalidationTimeout: 1000,
 	},
 
 	_pngCache: [],
 
-	initialize: function (url, options) {
-		this._url = url;
+	initialize: function (options) {
 		options = L.setOptions(this, options);
 
 		this._tileWidthPx = options.tileSize;
 		this._tileHeightPx = options.tileSize;
-
-		// Detecting retina displays, adjusting zoom levels
-		if (options.detectRetina && L.Browser.retina && options.maxZoom > 0) {
-			options.minZoom = Math.max(0, options.minZoom);
-			options.maxZoom--;
-		}
-
-		if (typeof options.subdomains === 'string') {
-			options.subdomains = options.subdomains.split('');
-		}
 
 		// text, presentation, spreadsheet, etc
 		this._docType = options.docType;
@@ -1264,11 +1244,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		app.twipsToPixels = app.tile.size.pixels[0] / app.tile.size.twips[0];
 		app.pixelsToTwips = app.tile.size.twips[0] / app.tile.size.pixels[0];
 
-		var bounds = this._map.getPixelWorldBounds(this._tileZoom);
-		if (bounds) {
-			this._globalTileRange = this._pxBoundsToTileRange(bounds);
-		}
-
 		this._wrapX = crs.wrapLng && [
 			Math.floor(map.project([0, crs.wrapLng[0]], tileZoom).x / tileSize),
 			Math.ceil(map.project([0, crs.wrapLng[1]], tileZoom).x / tileSize)
@@ -1513,15 +1488,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (duplicate == false) {
 			this._exportFormats.push({label: label, format: format});
 		}
-	},
-
-	setUrl: function (url, noRedraw) {
-		this._url = url;
-
-		if (!noRedraw) {
-			this.redraw();
-		}
-		return this;
 	},
 
 	createTile: function (coords, key) {

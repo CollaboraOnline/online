@@ -954,10 +954,6 @@ L.Map = L.Evented.extend({
 		return this._pixelOrigin;
 	},
 
-	getPixelWorldBounds: function (zoom) {
-		return this.options.crs.getProjectedBounds(zoom === undefined ? this.getZoom() : zoom);
-	},
-
 	getPane: function (pane) {
 		return typeof pane === 'string' ? this._panes[pane] : pane;
 	},

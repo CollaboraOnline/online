@@ -247,7 +247,6 @@ COOL_JS_LST =\
 	src/layer/tile/CalcTileLayer.js \
 	src/layer/tile/ContentControlSection.ts \
 	src/layer/BackgroundColor.js \
-	src/layer/ImageOverlay.js \
 	src/layer/marker/ProgressOverlay.js \
 	src/layer/marker/TextInput.js \
 	src/layer/marker/A11yTextInput.js \
@@ -354,7 +353,6 @@ COOL_JS_LST =\
 	src/control/Control.LanguageDialog.js \
 	src/control/Control.Attribution.js \
 	src/control/Control.MobileSlide.js \
-	src/control/Control.Scale.js \
 	src/control/Control.StatusBar.js \
 	src/control/Control.SearchBar.js \
 	src/control/Control.MobileTopBar.js \
