@@ -58,7 +58,7 @@ spec:
       {{- end }}
       {{- range $key, $value := .Values.prometheus.rules.defaults.viewers.doc }}
       - alert: "Collabora Viewers by Document"
-        expr: 'doc_views_active > {{ $value }}'
+        expr: 'doc_views_active  * on(pid, namespace, job, service, pod, container, endpoint, instance) group_left(key, host, filename) doc_info > {{ $value }}'
         for: "1m"
         labels:
           severity: "{{ $key }}"
