@@ -1442,6 +1442,9 @@ void DocumentBroker::handleSaveResponse(const std::shared_ptr<ClientSession>& se
 {
     ASSERT_CORRECT_THREAD();
 
+    // When dontSaveIfUnmodified=true, there is a shortcut in LOKit
+    // that shortcuts saving when the document is not modified.
+    // In that case, success=false and result=unmodified.
     const bool success = json->get("success").toString() == "true";
     std::string result;
     if (json->has("result"))
@@ -1452,6 +1455,12 @@ void DocumentBroker::handleSaveResponse(const std::shared_ptr<ClientSession>& se
             result = resultObj->get("value").toString();
     }
 
+    // wasModified is only set when LOKit saves the document.
+    // If the document was modified before saving, it would
+    // be true. Otherwise, it's false. Meaningful when forced
+    // saving (i.e. dontSaveIfUnmodified=false), otherwise
+    // result is blank in that case and we can't know if
+    // the document saved was modified or not.
     if (json->has("wasModified"))
     {
         // If Core reports the modified state before saving,
@@ -1499,12 +1508,12 @@ void DocumentBroker::handleSaveResponse(const std::shared_ptr<ClientSession>& se
         const auto onrre = errno;
         if (success || onrre != ENOENT)
             LOG_ERR("Failed to rename [" << oldName << "] to [" << newName << "] ("
-                                          << Util::symbolicErrno(onrre) << ": "
-                                          << std::strerror(onrre) << ')');
+                                         << Util::symbolicErrno(onrre) << ": "
+                                         << std::strerror(onrre) << ')');
         else
             LOG_DBG("Failed to rename [" << oldName << "] to [" << newName << "] ("
-                                          << Util::symbolicErrno(onrre) << ": "
-                                          << std::strerror(onrre) << ')');
+                                         << Util::symbolicErrno(onrre) << ": "
+                                         << std::strerror(onrre) << ')');
     }
     else
     {
@@ -1539,7 +1548,7 @@ void DocumentBroker::checkAndUploadToStorage(const std::shared_ptr<ClientSession
     const NeedToUpload needToUploadState = needToUploadToStorage();
 
     LOG_TRC("checkAndUploadToStorage with session ["
-            << session->getId() << "], justSaved: " << justSaved
+            << sessionId << "], justSaved: " << justSaved
             << ", activity: " << DocumentState::name(_docState.activity())
             << ", needToUpload: " << name(needToUploadState));
 
