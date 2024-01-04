@@ -14,16 +14,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-12-21 21:04+0100\n"
-"PO-Revision-Date: 2023-12-07 23:44+0000\n"
-"Last-Translator: Zeki Tuman <ztuman@gmail.com>\n"
+"PO-Revision-Date: 2024-01-01 02:08+0000\n"
+"Last-Translator: \"PhD. Ayhan YALÇINSOY\" <ayhanyalcinsoy@pisilinux.org>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/tr/>\n"
-"Language: \n"
+"Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.3-dev\n"
+"X-Generator: Weblate 5.4-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -370,15 +370,15 @@ msgstr " s"
 
 #: js/global.js:865
 msgid "Cluster is scaling, retrying..."
-msgstr ""
+msgstr "Küme ölçekleniyor, yeniden deneniyor..."
 
 #: js/global.js:867
 msgid "Document is migrating to new server, retrying..."
-msgstr ""
+msgstr "Belge yeni sunucuya taşınıyor, yeniden deneniyor..."
 
 #: js/global.js:869
 msgid "Failed to get RouteToken from controller"
-msgstr ""
+msgstr "Denetleyiciden RouteToken alınamadı"
 
 #: js/w2ui-1.5.rc1.js:3003
 msgid "Recent"
@@ -402,7 +402,7 @@ msgstr "Bağlantıyı aç"
 
 #: src/control/Control.AlertDialog.js:55
 msgid "Copied external sources are not allowed"
-msgstr ""
+msgstr "Kopyalanmış harici kaynaklara izin verilmez"
 
 #: src/control/Control.AlertDialog.js:56
 msgid "It seems you have copied a selection that includes external images."
