@@ -11,6 +11,46 @@ entries:
           image: docker.io/twostoryrobot/simple-file-upload@sha256:547fc4360b31d8604b7a26202914e87cd13609cc938fd83f412c77eb44aa1cc4
     apiVersion: v2
     appVersion: 23.05.6.4.1
+    created: "2024-01-04T07:45:42.462372801Z"
+    description: Collabora Online helm chart
+    digest: a2ba291cf3fed514d31b4935a0cc74e5bd045febaf41471dded08b2cc68a1c5b
+    home: https://www.collaboraoffice.com/code/
+    icon: https://avatars0.githubusercontent.com/u/22418908?s=200&v=4
+    keywords:
+    - collabora-online
+    - collabora
+    - code
+    - nextcloud
+    - office
+    maintainers:
+    - email: k.erber@erber-freelance.de
+      name: Klaus Erber
+      url: https://www.erber-freelance.de/
+    - email: martin.mueller@dataport.de
+      name: Martin Müller
+      url: https://dphoenixsuite.de
+    - email: geno+dev@fireorbit.de
+      name: Geno
+      url: https://fireorbit.de
+    name: collabora-online
+    sources:
+    - https://github.com/CollaboraOnline/online
+    - https://github.com/CollaboraOnline/online/tree/master/docker
+    - https://github.com/CollaboraOnline/online/tree/master/kubernetes/helm/collabora-online
+    type: application
+    urls:
+    - https://github.com/CollaboraOnline/online/releases/download/helm-collabora-online-1.1.9/collabora-online-1.1.9.tgz
+    version: 1.1.9
+  - annotations:
+      artifacthub.io/images: |
+        - name: collabora
+          image: docker.io/collabora/code:23.05.6.4.1
+        - name: nginx
+          image: docker.io/nginx:1.25
+        - name: twostoryrobot/simple-file-upload
+          image: docker.io/twostoryrobot/simple-file-upload@sha256:547fc4360b31d8604b7a26202914e87cd13609cc938fd83f412c77eb44aa1cc4
+    apiVersion: v2
+    appVersion: 23.05.6.4.1
     created: "2024-01-03T09:44:40.881948416Z"
     description: Collabora Online helm chart
     digest: 5c5232886f84a3ebf054d83fafb676f67570c13f560a4554d01171a0127036fa
@@ -431,4 +471,4 @@ entries:
     urls:
     - https://github.com/CollaboraOnline/online/releases/download/helm-collabora-online-1.0.1/collabora-online-1.0.1.tgz
     version: 1.0.1
-generated: "2024-01-03T09:44:40.881994792Z"
+generated: "2024-01-04T07:45:42.462424829Z"
