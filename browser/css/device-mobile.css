@@ -679,15 +679,19 @@ td[id^='tb_spreadsheet-toolbar_item']:focus table.w2ui-button div.w2ui-icon, td[
 }
 
 /* busy popup */
-
-#mobile-wizard.popup:not(.snackbar) {
+#mobile-wizard.popup:not(.snackbar):not(.busypopup) {
 	position: fixed;
 	top: 0;
 	left: 0;
 	height: 100vh !important;
 }
+#mobile-wizard.busypopup {
+	border-radius: 16px 16px 0 0;
+}
 #mobile-wizard.popup #mobile-wizard-content,
-#mobile-wizard.popup .mobile-wizard-content {
+#mobile-wizard.snackbar .mobile-wizard-content,
+#mobile-wizard.busypopup #mobile-wizard-content,
+#mobile-wizard.busypopup .mobile-wizard-content {
 	display: flex;
 	align-items: start;
 	justify-content: center;
