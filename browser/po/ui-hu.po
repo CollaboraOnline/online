@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-12-21 21:04+0100\n"
-"PO-Revision-Date: 2023-11-25 01:30+0000\n"
+"PO-Revision-Date: 2023-12-21 21:11+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/hu/>\n"
-"Language: \n"
+"Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.2.1-rc\n"
+"X-Generator: Weblate 5.4-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -369,15 +369,15 @@ msgstr " s"
 
 #: js/global.js:865
 msgid "Cluster is scaling, retrying..."
-msgstr ""
+msgstr "A klaszter átméreteződik, újrapróbálkozás..."
 
 #: js/global.js:867
 msgid "Document is migrating to new server, retrying..."
-msgstr ""
+msgstr "A dokumentum új kiszolgálóra migrálódik, újrapróbálkozás..."
 
 #: js/global.js:869
 msgid "Failed to get RouteToken from controller"
-msgstr ""
+msgstr "Nem sikerült megszerezni a RouteTokent a kontrollertől."
 
 #: js/w2ui-1.5.rc1.js:3003
 msgid "Recent"
@@ -401,11 +401,11 @@ msgstr "Hivatkozás megnyitása"
 
 #: src/control/Control.AlertDialog.js:55
 msgid "Copied external sources are not allowed"
-msgstr ""
+msgstr "Másolt külső források nem engedélyezettek"
 
 #: src/control/Control.AlertDialog.js:56
 msgid "It seems you have copied a selection that includes external images."
-msgstr ""
+msgstr "Úgy tűnik, hogy a vágólapon levő kijelölés külső képeket tartalmaz."
 
 #: src/control/Control.AlertDialog.js:57
 msgid ""
@@ -413,24 +413,28 @@ msgid ""
 "possible. Please right click in the image, choose \"Copy Image\" and paste "
 "it into the document instead."
 msgstr ""
+"A külső erőforrások letöltése tiltva van, de a kép beillesztése ettől még "
+"lehetséges. Kattintson a jobb egérgombbal a képen, válassza a „Kép másolása” "
+"lehetőséget, és illessze be így a dokumentumba."
 
 #: src/control/Control.AlertDialog.js:61
 msgid "External data source not allowed"
-msgstr ""
+msgstr "Külső adatforrás nem engedélyezett"
 
 #: src/control/Control.AlertDialog.js:62
 msgid "It seems you have tried to insert external data."
-msgstr ""
+msgstr "Úgy tűnik, hogy külső adat beillesztásét próbálta meg."
 
 #: src/control/Control.AlertDialog.js:63
 msgid ""
 "Selected external data source is forbidden. Please contact the system "
 "administrator."
 msgstr ""
+"A kijelölt külső adatforrás nem engedélyezett. Forduljon a rendszergazdához."
 
 #: src/control/Control.AlertDialog.js:75
 msgid "Don't show this again"
-msgstr ""
+msgstr "Ne jelenjen meg újra"
 
 #: src/control/Control.AlertDialog.js:91
 msgid "The server encountered a %0 error while parsing the %1 command."
@@ -1569,7 +1573,7 @@ msgstr "EPUB dokumentum (.epub)"
 
 #: src/control/Control.NotebookbarWriter.js:382
 msgid "Go Online"
-msgstr ""
+msgstr "Online üzemmódba váltás"
 
 #: src/control/Control.NotebookbarWriter.js:1336
 msgid "Rich Text"
@@ -2248,7 +2252,7 @@ msgstr "A dokumentum átnevezése folyamatban van, és hamarosan újratöltődik
 
 #: src/core/Socket.js:1118
 msgid "The document is switching to Offline mode and will reload shortly"
-msgstr ""
+msgstr "A dokumentum az Offline módra vált, és hamarosan újratöltődik"
 
 #: src/core/Socket.js:1223
 msgid "Exported to storage"
@@ -2549,11 +2553,11 @@ msgstr "Nincsenek megjegyzések"
 
 #: src/layer/tile/CommentListSection.ts:116
 msgid "A comment is being edited"
-msgstr ""
+msgstr "A megjegyzés jelenleg szerkesztés alatt áll"
 
 #: src/layer/tile/CommentListSection.ts:117
 msgid "Please save or discard the comment currently being edited."
-msgstr ""
+msgstr "Mentse vagy vesse el a jelenleg szerkesztés alatt álló megjegyzést."
 
 #: src/layer/tile/CommentListSection.ts:885
 msgid "Modify"
@@ -2797,6 +2801,9 @@ msgid ""
 "id=\"slide-2-indicator\" href=\"#slide-2\">2</a> <a id=\"slide-3-"
 "indicator\" href=\"#slide-3\">3</a>"
 msgstr ""
+"<a id=\"slide-1-indicator\" class=\"active\" href=\"#slide-1\">1</a> <a id="
+"\"slide-2-indicator\" href=\"#slide-2\">2</a> <a id=\"slide-3-indicator\" "
+"href=\"#slide-3\">3</a>"
 
 #~ msgid "Accessibility Support"
 #~ msgstr "Kisegítő lehetőségek"
