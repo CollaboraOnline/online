@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-12-21 21:04+0100\n"
-"PO-Revision-Date: 2023-12-06 11:22+0000\n"
-"Last-Translator: Leif-Jöran Olsson <info@friprogramvarusyndikatet.se>\n"
+"PO-Revision-Date: 2023-12-27 06:06+0000\n"
+"Last-Translator: bittin1ddc447d824349b2 <bittin@reimu.nl>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/sv/>\n"
-"Language: \n"
+"Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.3-dev\n"
+"X-Generator: Weblate 5.4-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -366,15 +366,15 @@ msgstr " sekunder"
 
 #: js/global.js:865
 msgid "Cluster is scaling, retrying..."
-msgstr ""
+msgstr "Klustret skalas, försöker igen..."
 
 #: js/global.js:867
 msgid "Document is migrating to new server, retrying..."
-msgstr ""
+msgstr "Dokumentet migreras till en ny server, försöker igen..."
 
 #: js/global.js:869
 msgid "Failed to get RouteToken from controller"
-msgstr ""
+msgstr "Misslyckades att hämta Vägtoken från kontrollern"
 
 #: js/w2ui-1.5.rc1.js:3003
 msgid "Recent"
@@ -398,11 +398,12 @@ msgstr "Öppna länk"
 
 #: src/control/Control.AlertDialog.js:55
 msgid "Copied external sources are not allowed"
-msgstr ""
+msgstr "Kopierade externa källor är inte tillåtna"
 
 #: src/control/Control.AlertDialog.js:56
 msgid "It seems you have copied a selection that includes external images."
 msgstr ""
+"Det verkar som om du har kopierat ett urval som innehåller externa bilder."
 
 #: src/control/Control.AlertDialog.js:57
 msgid ""
@@ -410,24 +411,27 @@ msgid ""
 "possible. Please right click in the image, choose \"Copy Image\" and paste "
 "it into the document instead."
 msgstr ""
+"Det är förbjudet att ladda ner externa resurser men det är fortfarande "
+"möjligt att klistra in bilder. Högerklicka på bilden, välj \"Kopiera bild\" "
+"och klistra in den i dokumentet istället."
 
 #: src/control/Control.AlertDialog.js:61
 msgid "External data source not allowed"
-msgstr ""
+msgstr "Extern datakälla är inte tillåten"
 
 #: src/control/Control.AlertDialog.js:62
 msgid "It seems you have tried to insert external data."
-msgstr ""
+msgstr "Det verkar som om du har försökt infoga extern data."
 
 #: src/control/Control.AlertDialog.js:63
 msgid ""
 "Selected external data source is forbidden. Please contact the system "
 "administrator."
-msgstr ""
+msgstr "Vald extern datakälla är förbjuden. Kontakta systemadministratören."
 
 #: src/control/Control.AlertDialog.js:75
 msgid "Don't show this again"
-msgstr ""
+msgstr "Visa inte detta igen"
 
 #: src/control/Control.AlertDialog.js:91
 msgid "The server encountered a %0 error while parsing the %1 command."
@@ -1564,7 +1568,7 @@ msgstr "EPUB-dokument (.epub)"
 
 #: src/control/Control.NotebookbarWriter.js:382
 msgid "Go Online"
-msgstr ""
+msgstr "Gå Online"
 
 #: src/control/Control.NotebookbarWriter.js:1336
 msgid "Rich Text"
@@ -2238,7 +2242,7 @@ msgstr "Dokumentet byter namn och laddas snart om"
 
 #: src/core/Socket.js:1118
 msgid "The document is switching to Offline mode and will reload shortly"
-msgstr ""
+msgstr "Dokumentet växlar till offlineläge och kommer att laddas om inom kort"
 
 #: src/core/Socket.js:1223
 msgid "Exported to storage"
@@ -2530,11 +2534,11 @@ msgstr "Inga kommentarer"
 
 #: src/layer/tile/CommentListSection.ts:116
 msgid "A comment is being edited"
-msgstr ""
+msgstr "En kommentar håller på att redigeras"
 
 #: src/layer/tile/CommentListSection.ts:117
 msgid "Please save or discard the comment currently being edited."
-msgstr ""
+msgstr "Vänligen spara eller släng kommentaren som redigeras för närvarande."
 
 #: src/layer/tile/CommentListSection.ts:885
 msgid "Modify"
@@ -2778,6 +2782,9 @@ msgid ""
 "id=\"slide-2-indicator\" href=\"#slide-2\">2</a> <a id=\"slide-3-"
 "indicator\" href=\"#slide-3\">3</a>"
 msgstr ""
+"<a id=\"slide-1-indicator\" class=\"active\" href=\"#slide-1\">1</a><a id="
+"\"slide-2-indicator\" href=\"#slide-2\">2</a><a id=\"slide-3-indicator\" "
+"href=\"#slide-3\">3</a>"
 
 #~ msgid "Accessibility Support"
 #~ msgstr "Tillgänglighetsstöd"
