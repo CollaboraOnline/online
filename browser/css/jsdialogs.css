@@ -649,6 +649,7 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 
 .ui-dialog-content .jsdialog.ui-text {
 	padding-inline-start: 0;
+	margin: auto 5px;
 }
 
 .jsdialog.ui-text {
@@ -656,6 +657,12 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 }
 
 /* spinfield */
+
+.spinfieldcontainer {
+	margin-right: 5px;
+	min-width: 70px;
+	width: 100%;
+}
 
 .spinfieldcontainer input {
 	border: 1px solid var(--color-border-dark);
