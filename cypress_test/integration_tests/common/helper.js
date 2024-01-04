@@ -325,7 +325,7 @@ function loadTestDoc(fileName, subFolder, noFileCopy, isMultiUser, subsequentLoa
 function documentChecks() {
 	cy.log('documentChecks - start.');
 
-	cy.getFrame().find('#document-canvas', {timeout : Cypress.config('defaultCommandTimeout') * 2.0});
+	cy.cframe().find('#document-canvas', {timeout : Cypress.config('defaultCommandTimeout') * 2.0});
 
 	// With php-proxy the client is irresponsive for some seconds after load, because of the incoming messages.
 	if (Cypress.env('INTEGRATION') === 'php-proxy') {
@@ -336,12 +336,12 @@ function documentChecks() {
 	if (Cypress.env('INTEGRATION') !== 'nextcloud') {
 		doIfOnDesktop(function() {
 			if (Cypress.env('pdf-view') !== true)
-				cy.getFrame().find('#sidebar-panel').should('be.visible');
+				cy.cframe().find('#sidebar-panel').should('be.visible');
 
 			// Check that the document does not take the whole window width.
 			cy.window()
 				.then(function(win) {
-					cy.getFrame().find('#document-container')
+					cy.cframe().find('#document-container')
 						.should(function(doc) {
 							expect(doc).to.have.lengthOf(1);
 							if (Cypress.env('pdf-view') !== true)
@@ -351,7 +351,7 @@ function documentChecks() {
 
 			// Check also that the inputbar is drawn in Calc.
 			doIfInCalc(function() {
-				cy.getFrame().find('#sc_input_window.formulabar');
+				cy.cframe().find('#sc_input_window.formulabar');
 			});
 		});
 	}
@@ -368,16 +368,16 @@ function checkIfDocIsLoaded(isMultiUser) {
 
 	if (isMultiUser) {
 		cy.cSetActiveFrame('#iframe1');
-		cy.getFrame().its('body').should('not.be.undefined');
+		cy.cframe('#iframe1').its('body').should('not.be.undefined');
 		documentChecks();
 
 		cy.cSetActiveFrame('#iframe2');
-		cy.getFrame().its('body').should('not.be.undefined');
+		cy.cframe('#iframe2').its('body').should('not.be.undefined');
 		documentChecks();
 	}
 	else {
 		cy.cSetActiveFrame('#coolframe');
-		cy.getFrame().its('body').should('not.be.undefined');
+		cy.cframe().its('body').should('not.be.undefined');
 		documentChecks();
 	}
 
@@ -633,7 +633,7 @@ function initAliasToNegative(aliasName) {
 
 // Run a code snippet if we are inside Calc.
 function doIfInCalc(callback) {
-	cy.getFrame().find('#document-container', {log: false})
+	cy.cframe().find('#document-container', {log: false})
 		.then(function(doc) {
 		if (doc.hasClass('spreadsheet-doctype')) {
 			callback();
@@ -643,7 +643,7 @@ function doIfInCalc(callback) {
 
 // Run a code snippet if we are *NOT* inside Calc.
 function doIfNotInCalc(callback) {
-	cy.getFrame().find('#document-container', {log: false})
+	cy.cframe().find('#document-container', {log: false})
 		.then(function(doc) {
 			if (!doc.hasClass('spreadsheet-doctype')) {
 				callback();
@@ -653,7 +653,7 @@ function doIfNotInCalc(callback) {
 
 // Run a code snippet if we are inside Impress.
 function doIfInImpress(callback) {
-	cy.getFrame().find('#document-container', {log: false})
+	cy.cframe().find('#document-container', {log: false})
 		.then(function(doc) {
 			if (doc.hasClass('presentation-doctype')) {
 				callback();
@@ -663,7 +663,7 @@ function doIfInImpress(callback) {
 
 // Run a code snippet if we are *NOT* inside Impress.
 function doIfNotInImpress(callback) {
-	cy.getFrame().find('#document-container', {log: false})
+	cy.cframe().find('#document-container', {log: false})
 		.then(function(doc) {
 			if (!doc.hasClass('presentation-doctype')) {
 				callback();
@@ -673,7 +673,7 @@ function doIfNotInImpress(callback) {
 
 // Run a code snippet if we are inside Writer.
 function doIfInWriter(callback) {
-	cy.getFrame().find('#document-container', {log: false})
+	cy.cframe().find('#document-container', {log: false})
 		.then(function(doc) {
 			if (doc.hasClass('text-doctype')) {
 				callback();
@@ -683,7 +683,7 @@ function doIfInWriter(callback) {
 
 // Run a code snippet if we are *NOT* inside Writer.
 function doIfNotInWriter(callback) {
-	cy.getFrame().find('#document-container', {log: false})
+	cy.cframe().find('#document-container', {log: false})
 		.then(function(doc) {
 			if (!doc.hasClass('text-doctype')) {
 				callback();
