@@ -86,40 +86,51 @@ Cypress.Commands.add('cSetLevel', function(level) {
 
 /**
  * Get the current iFrame body to be chained with other queries.
- * Example: cy.getFrame().find('#my-item');
+ * Example: cy.cframe().find('#my-item');
  * It is not necessary to chain .should('exist') after this.
- * Use cy.cSetActiveFrame to set the active frame first.
  */
-Cypress.Commands.add('getFrame', function(options) {
-	if (!cy.cActiveFrame) {
-		throw new Error('getFrame: Active frame not set');
+Cypress.Commands.add('cframe', function(frameID, options) {
+	// Set frameID
+	if (!frameID) {
+		if (!cy.cActiveFrame) {
+			throw new Error('getFrame: Active frame not set');
+		}
+		frameID = cy.cActiveFrame;
 	}
 
+	// Log
 	if (options && options.log) {
-		Cypress.log({message: 'Current iFrame: ' + cy.cActiveFrame});
+		Cypress.log({message: frameID});
 	}
-	return cy.get(cy.cActiveFrame, {log: false})
+
+	// Execute
+	return cy.get(frameID, {log: false})
 		.its('0.contentDocument', {log: false});
 });
 
 /**
  * Get the current iFrame window to be chained with other queries.
- * Use cy.cSetActiveFrame to set the active frame first.
  */
-Cypress.Commands.add('getFrameWindow', function() {
-	if (!cy.cActiveFrame) {
-		throw new Error('getFrame: Active frame not set');
+Cypress.Commands.add('getFrameWindow', function(frameID) {
+	// Set frameID
+	if (!frameID) {
+		if (!cy.cActiveFrame) {
+			throw new Error('getFrame: Active frame not set');
+		}
+		frameID = cy.cActiveFrame;
 	}
 
-	Cypress.log({message: 'Current iFrame: ' + cy.cActiveFrame});
+	// Log
+	Cypress.log({message: frameID});
 
-	return cy.get(cy.cActiveFrame, {log: false})
+	// Execute
+	return cy.get(frameID, {log: false})
 		.its('0.contentWindow', {log: false});
 });
 
 /**
  * Find an element within the current iFrame
- * Note: Use cy.getFrame().find() instead, which offers better logging on failure
+ * Note: Use cy.cframe().find() instead, which offers better logging on failure
  */
 Cypress.Commands.add('cGet', function(selector, options) {
 	if (options) {
