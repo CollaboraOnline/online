@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-12-21 21:04+0200\n"
-"PO-Revision-Date: 2023-10-30 06:02+0000\n"
+"PO-Revision-Date: 2023-12-27 06:06+0000\n"
 "Last-Translator: Ettore Atalan <atalanttore@googlemail.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "help/de/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.4-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:20-5
 msgid "Keyboard Shortcuts"
@@ -27,89 +27,82 @@ msgid "Undo"
 msgstr "Rückgängig"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:24-49
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z</kbd>"
-msgstr "Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
+msgstr "<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Z</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:25-18
 msgid "Redo"
 msgstr "Wiederherstellen"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:25-49
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Y</kbd>"
-msgstr "Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Y"
+msgstr "<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Y</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:26-18
 msgid "Cut"
 msgstr "Ausschneiden"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:26-48
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>X</kbd>"
-msgstr "Strg</kbd><span class=\"kbd--plus\">+</span><kbd>X"
+msgstr "<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>X</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:27-18
 msgid "Paste as unformatted text"
 msgstr "Unformatierten Text einfügen"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:27-70
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>V</kbd>"
 msgstr ""
-"Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Umschalt</kbd><span class="
-"\"kbd--plus\">+</span><kbd>V"
+"<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Umschalt</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>V</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:28-18
 msgid "Paste special"
 msgstr "Inhalte einfügen"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:28-58
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd--plus\""
 ">+</span><kbd>V</kbd>"
 msgstr ""
-"Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>Umschalt</kbd><span class=\"kbd--plus\">+</span><kbd>V"
+"<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Umschalt</kbd><span class=\"kbd--plus\""
+">+</span><kbd>V</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:29-18
 msgid "Print (Download as PDF)"
 msgstr "Drucken (als PDF herunterladen)"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:29-68
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>P</kbd>"
-msgstr "Strg</kbd><span class=\"kbd--plus\">+</span><kbd>P"
+msgstr "<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>P</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:30-18
 msgid "Display the Keyboard shortcuts help"
 msgstr "Zeigt die Hilfe für Tastenkombinationen an"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:30-80
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>?</kbd>"
 msgstr ""
-"Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Umschalt</kbd><span class="
-"\"kbd--plus\">+</span><kbd>?"
+"<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Umschalt</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>?</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:31-18
 msgid "Focus to notebookbar menu"
 msgstr "Fokus auf das Notebookbar-Menü"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:31-70
-#, fuzzy
 msgid ""
 "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>F1</kbd>"
 msgstr ""
-"Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Umschalt</kbd><span class="
-"\"kbd--plus\">+</span><kbd>F1"
+"<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Umschalt</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>F1</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:32-18
 msgid "Focus to document from menu"
@@ -124,9 +117,8 @@ msgid "Focus to selected comment's menu"
 msgstr "Fokus auf das Menü des ausgewählten Kommentars"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:33-77
-#, fuzzy
 msgid "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd>"
-msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>C"
+msgstr "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.h2:37-9
 #: html/cool-help.html%2Bdiv.div.h2:185-9
@@ -145,11 +137,8 @@ msgstr "Fett"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:162-49
 #: html/cool-help.html%2Bdiv.div.table.tr.td:187-49
 #: html/cool-help.html%2Bdiv.div.table.tr.td:244-49
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>B</kbd>"
-msgstr ""
-"Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Umschalt</kbd><span class="
-"\"kbd--plus\">+</span><kbd>F"
+msgstr "<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>B</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:40-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:163-18
@@ -162,9 +151,8 @@ msgstr "Kursiv"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:163-51
 #: html/cool-help.html%2Bdiv.div.table.tr.td:188-51
 #: html/cool-help.html%2Bdiv.div.table.tr.td:245-51
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>I</kbd>"
-msgstr "Strg</kbd><span class=\"kbd--plus\">+</span><kbd>I"
+msgstr "<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>I</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:41-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:164-18
@@ -177,9 +165,8 @@ msgstr "Unterstrichen"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:164-54
 #: html/cool-help.html%2Bdiv.div.table.tr.td:189-54
 #: html/cool-help.html%2Bdiv.div.table.tr.td:246-54
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>U</kbd>"
-msgstr "Strg</kbd><span class=\"kbd--plus\">+</span><kbd>U"
+msgstr "<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>U</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:42-18
 msgid "Double Underline"
@@ -187,11 +174,8 @@ msgstr "Doppelt unterstreichen"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:42-61
 #: html/cool-help.html%2Bdiv.div.table.tr.td:169-54
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>D</kbd>"
-msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>D"
+msgstr "<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>D</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:43-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:165-18
@@ -204,13 +188,12 @@ msgstr "Durchgestrichen"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:165-58
 #: html/cool-help.html%2Bdiv.div.table.tr.td:190-58
 #: html/cool-help.html%2Bdiv.div.table.tr.td:247-58
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
 "\"kbd--plus\">+</span><kbd>5</kbd>"
 msgstr ""
-"Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>5"
+"<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
+"\"kbd--plus\">+</span><kbd>5</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:44-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:191-18
@@ -221,13 +204,12 @@ msgstr "Hochgestellt"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:44-56
 #: html/cool-help.html%2Bdiv.div.table.tr.td:191-56
 #: html/cool-help.html%2Bdiv.div.table.tr.td:248-56
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>P</kbd>"
 msgstr ""
-"Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Umschalt</kbd><span class="
-"\"kbd--plus\">+</span><kbd>P"
+"<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Umschalt</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>P</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:45-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:192-18
@@ -238,13 +220,12 @@ msgstr "Tiefgestellt"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:45-54
 #: html/cool-help.html%2Bdiv.div.table.tr.td:192-54
 #: html/cool-help.html%2Bdiv.div.table.tr.td:249-54
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>B</kbd>"
 msgstr ""
-"Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Umschalt</kbd><span class="
-"\"kbd--plus\">+</span><kbd>B"
+"<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Umschalt</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>B</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:46-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:166-18
@@ -253,9 +234,8 @@ msgstr "Direkte Formatierung entfernen"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:46-69
 #: html/cool-help.html%2Bdiv.div.table.tr.td:166-69
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>M</kbd>"
-msgstr "Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Leertaste"
+msgstr "<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>M</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.h2:48-9
 #: html/cool-help.html%2Bdiv.div.h2:195-9
@@ -274,9 +254,8 @@ msgstr "Zentriert"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:171-57
 #: html/cool-help.html%2Bdiv.div.table.tr.td:197-57
 #: html/cool-help.html%2Bdiv.div.table.tr.td:254-57
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>E</kbd>"
-msgstr "Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Ende"
+msgstr "<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>E</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:51-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:172-18
@@ -289,9 +268,8 @@ msgstr "Linksbündig"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:172-55
 #: html/cool-help.html%2Bdiv.div.table.tr.td:198-55
 #: html/cool-help.html%2Bdiv.div.table.tr.td:255-55
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>L</kbd>"
-msgstr "Strg</kbd><span class=\"kbd--plus\">+</span><kbd>L"
+msgstr "<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>L</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:52-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:173-18
@@ -304,9 +282,8 @@ msgstr "Rechtsbündig"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:173-56
 #: html/cool-help.html%2Bdiv.div.table.tr.td:199-56
 #: html/cool-help.html%2Bdiv.div.table.tr.td:256-56
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>R</kbd>"
-msgstr "Strg</kbd><span class=\"kbd--plus\">+</span><kbd>R"
+msgstr "<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>R</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:53-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:174-18
@@ -319,36 +296,32 @@ msgstr "Blocksatz"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:174-52
 #: html/cool-help.html%2Bdiv.div.table.tr.td:200-52
 #: html/cool-help.html%2Bdiv.div.table.tr.td:257-52
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>J</kbd>"
-msgstr "Strg</kbd><span class=\"kbd--plus\">+</span><kbd>J"
+msgstr "<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>J</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:54-18
 msgid "Apply Default paragraph style"
 msgstr "Absatzvorlage Standard zuweisen"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:54-74
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>0</kbd>"
-msgstr "Strg</kbd><span class=\"kbd--plus\">+</span><kbd>0"
+msgstr "<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>0</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:55-18
 msgid "Apply Heading 1 paragraph style"
 msgstr "Absatzvorlage Überschrift 1 zuweisen"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:55-76
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>1</kbd>"
-msgstr "Strg</kbd><span class=\"kbd--plus\">+</span><kbd>1"
+msgstr "<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>1</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:56-18
 msgid "Apply Heading 2 paragraph style"
 msgstr "Absatzvorlage Überschrift 2 zuweisen"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:56-76
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>2</kbd>"
-msgstr "Strg</kbd><span class=\"kbd--plus\">+</span><kbd>2"
+msgstr "<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>2</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:57-18
 msgid "Apply Heading 3 paragraph style"
@@ -356,27 +329,24 @@ msgstr "Absatzvorlage Überschrift 3 zuweisen"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:57-76
 #: html/cool-help.html%2Bdiv.div.table.tr.td:175-69
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>3</kbd>"
-msgstr "Strg</kbd><span class=\"kbd--plus\">+</span><kbd>3"
+msgstr "<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>3</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:58-18
 msgid "Apply Heading 4 paragraph style"
 msgstr "Absatzvorlage Überschrift 4 zuweisen"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:58-76
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>4</kbd>"
-msgstr "Strg</kbd><span class=\"kbd--plus\">+</span><kbd>4"
+msgstr "<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>4</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:59-18
 msgid "Apply Heading 5 paragraph style"
 msgstr "Absatzvorlage Überschrift 5 zuweisen"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:59-76
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>5</kbd>"
-msgstr "Strg</kbd><span class=\"kbd--plus\">+</span><kbd>5"
+msgstr "<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>5</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.h2:61-9
 msgid "Text selection and navigation in document"
@@ -400,9 +370,8 @@ msgstr "Alle auswählen"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:250-55
 #: html/cool-help.html%2Bdiv.div.table.tr.td:263-55
 #: html/cool-help.html%2Bdiv.div.table.tr.td:295-71
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>A</kbd>"
-msgstr "Strg</kbd><span class=\"kbd--plus\">+</span><kbd>A"
+msgstr "<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>A</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:64-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:207-18
@@ -425,9 +394,10 @@ msgstr "Die Auswahl nach links verändern"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:65-83
 #: html/cool-help.html%2Bdiv.div.table.tr.td:208-83
 #: html/cool-help.html%2Bdiv.div.table.tr.td:265-83
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Left</kbd>"
-msgstr "Umschalt</kbd><span class=\"kbd--plus\">+</span><kbd>Pfeil nach links"
+msgstr ""
+"<kbd>Umschalt</kbd><span class=\"kbd--plus\">+</span><kbd>Pfeil nach "
+"links</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:66-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:209-18
@@ -438,9 +408,9 @@ msgstr "Den Cursor zum vorherigen Wortanfang bewegen"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:66-70
 #: html/cool-help.html%2Bdiv.div.table.tr.td:209-70
 #: html/cool-help.html%2Bdiv.div.table.tr.td:266-70
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Left</kbd>"
-msgstr "Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Pfeil nach links"
+msgstr ""
+"<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Pfeil nach links</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:67-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:210-18
@@ -451,13 +421,12 @@ msgstr "Die Auswahl wortweise nach links verändern"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:67-76
 #: html/cool-help.html%2Bdiv.div.table.tr.td:210-76
 #: html/cool-help.html%2Bdiv.div.table.tr.td:267-76
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Arrow Left</kbd>"
 msgstr ""
-"Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Umschalt</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Pfeil nach links"
+"<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Umschalt</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>Pfeil nach links</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:68-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:211-18
@@ -480,10 +449,11 @@ msgstr "Die Auswahl nach rechts verändern"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:69-84
 #: html/cool-help.html%2Bdiv.div.table.tr.td:212-84
 #: html/cool-help.html%2Bdiv.div.table.tr.td:269-84
-#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Right</kbd>"
-msgstr "Umschalt</kbd><span class=\"kbd--plus\">+</span><kbd>Pfeil nach rechts"
+msgstr ""
+"<kbd>Umschalt</kbd><span class=\"kbd--plus\">+</span><kbd>Pfeil nach "
+"rechts</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:70-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:213-18
@@ -494,9 +464,9 @@ msgstr "Den Cursor zum nächsten Wortanfang bewegen"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:70-73
 #: html/cool-help.html%2Bdiv.div.table.tr.td:213-73
 #: html/cool-help.html%2Bdiv.div.table.tr.td:270-73
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Right</kbd>"
-msgstr "Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Pfeil nach rechts"
+msgstr ""
+"<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Pfeil nach rechts</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:71-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:214-18
@@ -507,13 +477,12 @@ msgstr "Die Auswahl wortweise nach rechts verändern"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:71-77
 #: html/cool-help.html%2Bdiv.div.table.tr.td:214-77
 #: html/cool-help.html%2Bdiv.div.table.tr.td:271-77
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Arrow Right</kbd>"
 msgstr ""
-"Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Umschalt</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Pfeil nach rechts"
+"<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Umschalt</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>Pfeil nach rechts</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:72-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:215-18
@@ -536,9 +505,10 @@ msgstr "Die Auswahl um eine Zeile nach oben verändern"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:73-78
 #: html/cool-help.html%2Bdiv.div.table.tr.td:216-78
 #: html/cool-help.html%2Bdiv.div.table.tr.td:273-78
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Up</kbd>"
-msgstr "Umschalt</kbd><span class=\"kbd--plus\">+</span><kbd>Pfeil nach oben"
+msgstr ""
+"<kbd>Umschalt</kbd><span class=\"kbd--plus\">+</span><kbd>Pfeil nach "
+"oben</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:74-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:217-18
@@ -549,9 +519,9 @@ msgstr "Den Cursor zum vorherigen Anfang eines Absatzes bewegen"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:74-95
 #: html/cool-help.html%2Bdiv.div.table.tr.td:217-95
 #: html/cool-help.html%2Bdiv.div.table.tr.td:274-95
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Up</kbd>"
-msgstr "Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Pfeil nach oben"
+msgstr ""
+"<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Pfeil nach oben</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:75-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:218-18
@@ -562,13 +532,12 @@ msgstr "Die Auswahl zum vorherigen Anfang eines Absatzes verändern"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:75-77
 #: html/cool-help.html%2Bdiv.div.table.tr.td:218-77
 #: html/cool-help.html%2Bdiv.div.table.tr.td:275-77
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Arrow Up</kbd>"
 msgstr ""
-"Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Umschalt</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Pfeil nach oben"
+"<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Umschalt</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>Pfeil nach oben</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:76-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:219-18
@@ -591,9 +560,10 @@ msgstr "Die Auswahl um eine Zeile nach unten verändern"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:77-80
 #: html/cool-help.html%2Bdiv.div.table.tr.td:220-80
 #: html/cool-help.html%2Bdiv.div.table.tr.td:277-80
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Down</kbd>"
-msgstr "Umschalt</kbd><span class=\"kbd--plus\">+</span><kbd>Pfeil nach unten"
+msgstr ""
+"<kbd>Umschalt</kbd><span class=\"kbd--plus\">+</span><kbd>Pfeil nach "
+"unten</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:78-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:221-18
@@ -604,9 +574,9 @@ msgstr "Den Cursor zum nächsten Anfang eines Absatzes bewegen"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:78-91
 #: html/cool-help.html%2Bdiv.div.table.tr.td:221-91
 #: html/cool-help.html%2Bdiv.div.table.tr.td:278-91
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Down</kbd>"
-msgstr "Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Pfeil nach unten"
+msgstr ""
+"<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Pfeil nach unten</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:79-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:222-18
@@ -617,13 +587,12 @@ msgstr "Die Auswahl zum nächsten Anfang eines Absatzes verändern"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:79-71
 #: html/cool-help.html%2Bdiv.div.table.tr.td:222-71
 #: html/cool-help.html%2Bdiv.div.table.tr.td:279-71
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Arrow Down</kbd>"
 msgstr ""
-"Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Umschalt</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Pfeil nach unten"
+"<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Umschalt</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>Pfeil nach unten</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:80-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:223-18
@@ -648,9 +617,8 @@ msgstr "Die Auswahl zum Zeilenanfang verändern"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:140-118
 #: html/cool-help.html%2Bdiv.div.table.tr.td:224-85
 #: html/cool-help.html%2Bdiv.div.table.tr.td:281-85
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Home</kbd>"
-msgstr "Umschalt</kbd><span class=\"kbd--plus\">+</span><kbd>Pos1"
+msgstr "<kbd>Umschalt</kbd><span class=\"kbd--plus\">+</span><kbd>Pos1</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:82-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:225-18
@@ -663,9 +631,8 @@ msgstr "Den Cursor zum Dokumentanfang bewegen"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:136-98
 #: html/cool-help.html%2Bdiv.div.table.tr.td:225-68
 #: html/cool-help.html%2Bdiv.div.table.tr.td:282-68
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Home</kbd>"
-msgstr "Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Pos1"
+msgstr "<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Pos1</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:83-18
 msgid "Go and select text to start of document"
@@ -674,13 +641,12 @@ msgstr "Die Auswahl bis zum Dokumentanfang verändern"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:83-84
 #: html/cool-help.html%2Bdiv.div.table.tr.td:226-83
 #: html/cool-help.html%2Bdiv.div.table.tr.td:283-83
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Home</kbd>"
 msgstr ""
-"Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Umschalt</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Pos1"
+"<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Umschalt</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>Pos1</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:84-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:227-18
@@ -705,9 +671,8 @@ msgstr "Die Auswahl zum Zeilenende verändern"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:141-117
 #: html/cool-help.html%2Bdiv.div.table.tr.td:228-79
 #: html/cool-help.html%2Bdiv.div.table.tr.td:285-79
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>End</kbd>"
-msgstr "Umschalt</kbd><span class=\"kbd--plus\">+</span><kbd>Ende"
+msgstr "<kbd>Umschalt</kbd><span class=\"kbd--plus\">+</span><kbd>Ende</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:86-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:229-18
@@ -720,9 +685,8 @@ msgstr "Den Cursor zum Dokumentende bewegen"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:137-111
 #: html/cool-help.html%2Bdiv.div.table.tr.td:229-66
 #: html/cool-help.html%2Bdiv.div.table.tr.td:286-66
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>End</kbd>"
-msgstr "Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Ende"
+msgstr "<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Ende</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:87-18
 msgid "Go and select text to end of document"
@@ -731,13 +695,12 @@ msgstr "Die Auswahl bis zum Dokumentende verändern"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:87-82
 #: html/cool-help.html%2Bdiv.div.table.tr.td:230-81
 #: html/cool-help.html%2Bdiv.div.table.tr.td:287-81
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>End</kbd>"
 msgstr ""
-"Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Umschalt</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Ende"
+"<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Umschalt</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>Ende</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:88-18
 msgid "Move the view up one page"
@@ -745,25 +708,24 @@ msgstr "Den Cursor um eine Bildschirmseite nach oben bewegen"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:88-70
 msgid "PageUp"
-msgstr "Bild nach oben"
+msgstr "Bild auf"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:89-18
 msgid "Switch cursor between text and header"
 msgstr "Den Cursor zwischen Text und Kopfzeile wechseln"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:89-82
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp</kbd>"
-msgstr "Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Bild nach oben"
+msgstr "<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Bild auf</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:90-18
 msgid "Extend the selection up one page"
 msgstr "Die Auswahl um eine Bildschirmseite nach oben verändern"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:90-77
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp</kbd>"
-msgstr "Umschalt</kbd><span class=\"kbd--plus\">+</span><kbd>Bild nach oben"
+msgstr ""
+"<kbd>Umschalt</kbd><span class=\"kbd--plus\">+</span><kbd>Bild auf</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:91-18
 msgid "Move the view down one page"
@@ -771,69 +733,63 @@ msgstr "Den Cursor um eine Bildschirmseite nach unten bewegen"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:91-72
 msgid "PageDown"
-msgstr "Bild nach unten"
+msgstr "Bild ab"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:92-18
 msgid "Switch cursor between text and footer"
 msgstr "Den Cursor zwischen Text und Fußzeile wechseln"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:92-82
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown</kbd>"
-msgstr "Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Bild nach unten"
+msgstr "<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Bild ab</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:93-18
 msgid "Extend the selection down one page"
 msgstr "Die Auswahl um eine Bildschirmseite nach unten verändern"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:93-79
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown</kbd>"
-msgstr "Umschalt</kbd><span class=\"kbd--plus\">+</span><kbd>Bild nach unten"
+msgstr "<kbd>Umschalt</kbd><span class=\"kbd--plus\">+</span><kbd>Bild ab</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:94-18
 msgid "Delete to beginning of word"
 msgstr "Bis zum Wortanfang löschen"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:94-72
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Backspace</kbd>"
-msgstr "Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Rücktaste"
+msgstr "<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Rücktaste</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:95-18
 msgid "Delete to end of word"
 msgstr "Bis zum Wortende löschen"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:95-66
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Del</kbd>"
-msgstr "Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Entf"
+msgstr "<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Entf</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:96-18
 msgid "Delete to beginning of sentence"
 msgstr "Bis zum Satzanfang löschen"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:96-76
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Backspace</kbd>"
 msgstr ""
-"Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Umschalt</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Rücktaste"
+"<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Umschalt</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>Rücktaste</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:97-18
 msgid "Delete to end of sentence"
 msgstr "Bis zum Satzende löschen"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:97-70
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Del</kbd>"
 msgstr ""
-"Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Umschalt</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Entf"
+"<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Umschalt</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>Entf</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.h2:99-9
 msgid "Shortcut Keys for Tables"
@@ -871,9 +827,8 @@ msgstr ""
 "Dokumentende."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:104-18
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Tab</kbd>"
-msgstr "Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Tabulator"
+msgstr "<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Tabulator</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:104-107
 msgid ""
@@ -886,9 +841,8 @@ msgstr ""
 "\"kbd--plus\">+</span><kbd>Tabulator</kbd> funktionieren."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:105-18
-#, fuzzy
 msgid "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Keys</kbd>"
-msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Pfeiltasten"
+msgstr "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Pfeiltasten</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:105-113
 msgid ""
@@ -897,13 +851,12 @@ msgstr ""
 "Vergrößert/Verkleinert die Spalte/Zeile an der rechten/unteren Zellenkante"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:106-18
-#, fuzzy
 msgid ""
 "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Arrow Keys</kbd>"
 msgstr ""
-"Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Umschalt</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Pfeiltasten"
+"<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Umschalt</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>Pfeiltasten</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:106-161
 msgid "Increase/decrease the size of the column/row on the left/top cell edge"
@@ -911,13 +864,12 @@ msgstr ""
 "Vergrößert/Verkleinert die Spalte/Zeile an der linken/oberen Zellenkante"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:107-18
-#, fuzzy
 msgid ""
 "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Arrow Keys</kbd>"
 msgstr ""
-"Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Strg</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>Pfeiltasten"
+"<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Strg</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Pfeiltasten</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:107-160
 #: html/cool-help.html%2Bdiv.div.table.tr.td:108-208
@@ -925,20 +877,18 @@ msgid "Like Alt, but only the active cell is modified"
 msgstr "Wie Alt, aber nur die aktuelle Zelle wird verändert"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:108-18
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd--plus\">+</"
 "span><kbd>Arrow Keys</kbd>"
 msgstr ""
-"Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>Umschalt</kbd><span class=\"kbd--plus\""
-">+</span><kbd>Pfeiltasten"
+"<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Umschalt</kbd><span class=\"kbd--plus\""
+">+</span><kbd>Pfeiltasten</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:109-18
-#, fuzzy
 msgid "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Insert</kbd>"
-msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Einfg"
+msgstr "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Einfg</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:109-109
 msgid ""
@@ -950,9 +900,8 @@ msgstr ""
 "Zellen ein"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:110-18
-#, fuzzy
 msgid "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Del</kbd>"
-msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Entf"
+msgstr "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Entf</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:110-106
 msgid ""
@@ -965,13 +914,12 @@ msgstr ""
 "verbindet mit Nachbarzellen"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:111-18
-#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Del</kbd>"
 msgstr ""
-"Umschalt</kbd><span class=\"kbd--plus\">+</span><kbd>Strg</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Entf"
+"<kbd>Umschalt</kbd><span class=\"kbd--plus\">+</span><kbd>Strg</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>Entf</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td.p:111-177
 msgid ""
@@ -1013,26 +961,24 @@ msgid "Insert footnote"
 msgstr "Fußnote einfügen"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:118-60
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
 "\"kbd--plus\">+</span><kbd>F</kbd>"
 msgstr ""
-"Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>F"
+"<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
+"\"kbd--plus\">+</span><kbd>F</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:119-18
 msgid "Insert endnote"
 msgstr "Endnote einfügen"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:119-59
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
 "\"kbd--plus\">+</span><kbd>D</kbd>"
 msgstr ""
-"Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>D"
+"<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
+"\"kbd--plus\">+</span><kbd>D</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:120-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:167-18
@@ -1041,57 +987,53 @@ msgstr "Kommentar einfügen"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:120-59
 #: html/cool-help.html%2Bdiv.div.table.tr.td:167-59
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
 "\"kbd--plus\">+</span><kbd>C</kbd>"
 msgstr ""
-"Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>C"
+"<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
+"\"kbd--plus\">+</span><kbd>C</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:122-18
 msgid "Insert soft hyphen"
 msgstr "Weiches Trennzeichen einfügen"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:122-63
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>-</kbd>"
-msgstr "Strg</kbd><span class=\"kbd--plus\">+</span><kbd>-"
+msgstr "<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>-</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:123-18
 msgid "Insert non-breaking hyphen"
 msgstr "Geschützten Bindestrich einfügen"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:123-71
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>-</kbd>"
 msgstr ""
-"Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Umschalt</kbd><span class="
-"\"kbd--plus\">+</span><kbd>-"
+"<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Umschalt</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>-</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:125-18
 msgid "Insert non-breaking space"
 msgstr "Geschütztes Leerzeichen einfügen"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:125-70
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Space</kbd>"
 msgstr ""
-"Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Umschalt</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Leertaste"
+"<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Umschalt</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>Leertaste</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:126-18
 msgid "Insert line break"
 msgstr "Zeilenumbruch einfügen"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:126-62
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Enter</kbd>"
-msgstr "Umschalt</kbd><span class=\"kbd--plus\">+</span><kbd>Eingabetaste"
+msgstr ""
+"<kbd>Umschalt</kbd><span class=\"kbd--plus\">+</span><kbd>Eingabetaste</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:127-18
 msgid "Manual page break"
@@ -1100,22 +1042,21 @@ msgstr "Manueller Seitenumbruch"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:127-62
 #: html/cool-help.html%2Bdiv.div.table.tr.td:237-78
 #: html/cool-help.html%2Bdiv.div.table.tr.td:294-85
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Enter</kbd>"
-msgstr "Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Eingabetaste"
+msgstr ""
+"<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Eingabetaste</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:128-18
 msgid "Column break (in multicolumnar text)"
 msgstr "Spaltenumbruch (in mehrspaltigem Text)"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:128-81
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Enter</kbd>"
 msgstr ""
-"Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Umschalt</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Eingabetaste"
+"<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Umschalt</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>Eingabetaste</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:129-18
 msgid ""
@@ -1126,9 +1067,8 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:129-119
 #: html/cool-help.html%2Bdiv.div.table.tr.td:130-155
-#, fuzzy
 msgid "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Enter</kbd>"
-msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Eingabetaste"
+msgstr "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Eingabetaste</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:130-18
 msgid ""
@@ -1181,9 +1121,9 @@ msgstr ""
 "Spalte aus oder erweitert die bestehende Auswahl um eine Seite nach oben."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:142-164
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up</kbd>"
-msgstr "Umschalt</kbd><span class=\"kbd--plus\">+</span><kbd>Bild nach oben"
+msgstr ""
+"<kbd>Umschalt</kbd><span class=\"kbd--plus\">+</span><kbd>Bild auf</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:143-18
 msgid ""
@@ -1194,9 +1134,8 @@ msgstr ""
 "Spalte aus oder erweitert die bestehende Auswahl um eine Seite nach unten."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:143-168
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down</kbd>"
-msgstr "Umschalt</kbd><span class=\"kbd--plus\">+</span><kbd>Bild nach unten"
+msgstr "<kbd>Umschalt</kbd><span class=\"kbd--plus\">+</span><kbd>Bild ab</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:144-18
 msgid ""
@@ -1209,9 +1148,9 @@ msgstr ""
 "Cursor nach rechts in die nächste Spalte, die Daten enthält"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:144-245
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Left Arrow</kbd>"
-msgstr "Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Pfeil nach Links"
+msgstr ""
+"<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Pfeil nach links</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:145-18
 msgid ""
@@ -1224,9 +1163,9 @@ msgstr ""
 "Cursor nach rechts in die nächste Spalte, die Daten enthält."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:145-249
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Right Arrow</kbd>"
-msgstr "Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Pfeil nach links"
+msgstr ""
+"<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Pfeil nach rechts</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:146-18
 msgid ""
@@ -1239,9 +1178,9 @@ msgstr ""
 "nach oben in die nächste Zeile, die Daten enthält."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:146-221
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Up Arrow</kbd>"
-msgstr "Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Pfeil nach oben"
+msgstr ""
+"<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Pfeil nach oben</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:147-18
 msgid ""
@@ -1254,35 +1193,33 @@ msgstr ""
 "nach oben in die nächste Zeile, die Daten enthält."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:147-226
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Down Arrow</kbd>"
-msgstr "Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Pfeil nach unten"
+msgstr ""
+"<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Pfeil nach unten</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:148-18
 msgid "Go to next sheet."
 msgstr "Zur nächsten Tabelle gehen."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:148-62
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Page Up</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>Bild auf"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Bild auf</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:149-18
 msgid "Go to previous sheet."
 msgstr "Zur vorherigen Tabelle gehen."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:149-66
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Page Down</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>Bild ab"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Bild ab</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:150-18
 msgid ""
@@ -1297,31 +1234,28 @@ msgstr ""
 "rechteckiger Zellbereich ausgewählt."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:150-272
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Arrow</kbd>"
 msgstr ""
-"Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Umschalt</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Pfeil nach oben"
+"<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Umschalt</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>Pfeil</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:151-18
 msgid "Moves one sheet to the left."
 msgstr "Verschiebt ein Tabellenblatt nach links."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:151-73
-#, fuzzy
 msgid "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up</kbd>"
-msgstr "Umschalt</kbd><span class=\"kbd--plus\">+</span><kbd>Bild nach oben"
+msgstr "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Bild auf</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:152-18
 msgid "Moves one screen page to the right."
 msgstr "Verschiebt ein Tabellenblatt nach rechts."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:152-80
-#, fuzzy
 msgid "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down</kbd>"
-msgstr "Umschalt</kbd><span class=\"kbd--plus\">+</span><kbd>Bild nach unten"
+msgstr "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Bild ab</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:153-18
 msgid ""
@@ -1335,13 +1269,12 @@ msgstr ""
 "Tabellenblatt zum aktuellen Blatt."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:153-260
-#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Page Up</kbd>"
 msgstr ""
-"Umschalt</kbd><span class=\"kbd--plus\">+</span><kbd>Strg</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Bild nach oben"
+"<kbd>Umschalt</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>Bild ab</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:154-18
 msgid ""
@@ -1355,13 +1288,12 @@ msgstr ""
 "zum aktuellen Blatt."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:154-248
-#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Page Down</kbd>"
 msgstr ""
-"Umschalt</kbd><span class=\"kbd--plus\">+</span><kbd>Strg</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Bild nach unten"
+"<kbd>Umschalt</kbd><span class=\"kbd--plus\">+</span><kbd>Strg</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>Bild ab</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:155-18
 msgid ""
@@ -1375,9 +1307,8 @@ msgstr ""
 "Spalten begrenzt ist."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:155-249
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>*</kbd>"
-msgstr "Strg</kbd><span class=\"kbd--plus\">+</span><kbd>*"
+msgstr "<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>*</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:156-18
 msgid ""
@@ -1388,27 +1319,24 @@ msgstr ""
 "Bereich der Matrixformel aus, der den Cursor enthält."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:156-158
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>/</kbd>"
-msgstr "Strg</kbd><span class=\"kbd--plus\">+</span><kbd>/"
+msgstr "<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>/</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:157-18
 msgid "Insert cells (as in menu Insert - Cells)"
 msgstr "Zellen einfügen (wie im Menü Einfügen - Zellen)"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:157-85
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Plus key</kbd>"
-msgstr "Strg</kbd><span class=\"kbd--plus\">+</span><kbd>+"
+msgstr "<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Plus-Taste</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:158-18
 msgid "Delete cells (as in menu Edit - Delete Cells)"
 msgstr "Zellen löschen (wie im Menü Bearbeiten - Zellen löschen)"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:158-90
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Minus key</kbd>"
-msgstr "Strg</kbd><span class=\"kbd--plus\">+</span><kbd>-"
+msgstr "<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Minus-Taste</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.h2:160-9
 msgid "Cell formatting"
@@ -1419,9 +1347,8 @@ msgid "Display comment"
 msgstr "Kommentar anzeigen"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:168-60
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>F1</kbd>"
-msgstr "Strg</kbd><span class=\"kbd--plus\">+</span><kbd>F1"
+msgstr "<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>F1</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:169-18
 msgid "Fill Down"
@@ -1436,78 +1363,72 @@ msgid "Two decimal places, thousands separator"
 msgstr "Zwei Nachkommastellen, Tausendertrenner"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:176-84
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>1</kbd>"
 msgstr ""
-"Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Umschalt</kbd><span class="
-"\"kbd--plus\">+</span><kbd>1"
+"<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Umschalt</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>1</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:177-18
 msgid "Standard exponential format"
 msgstr "Standard-Exponentialformat"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:177-72
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>2</kbd>"
 msgstr ""
-"Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Umschalt</kbd><span class="
-"\"kbd--plus\">+</span><kbd>2"
+"<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Umschalt</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>2</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:178-18
 msgid "Standard date format"
 msgstr "Standard-Datumsformat"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:178-65
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>3</kbd>"
 msgstr ""
-"Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Umschalt</kbd><span class="
-"\"kbd--plus\">+</span><kbd>3"
+"<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Umschalt</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>3</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:179-18
 msgid "Standard currency format"
 msgstr "Standard-Währungsformat"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:179-69
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>4</kbd>"
 msgstr ""
-"Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Umschalt</kbd><span class="
-"\"kbd--plus\">+</span><kbd>4"
+"<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Umschalt</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>4</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:180-18
 msgid "Standard percentage format (two decimal places)"
 msgstr "Standard-Prozentformat (mit 2 Nachkommastellen)"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:180-92
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>5</kbd>"
 msgstr ""
-"Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Umschalt</kbd><span class="
-"\"kbd--plus\">+</span><kbd>5"
+"<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Umschalt</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>5</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:181-18
 msgid "Standard format"
 msgstr "Standardformat"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:181-60
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>6</kbd>"
 msgstr ""
-"Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Umschalt</kbd><span class="
-"\"kbd--plus\">+</span><kbd>6"
+"<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Umschalt</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>6</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:201-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:258-18
@@ -1530,9 +1451,9 @@ msgstr "Listenebene erhöhen (Eintrag muss ausgewählt sein)"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:236-107
 #: html/cool-help.html%2Bdiv.div.table.tr.td:259-93
 #: html/cool-help.html%2Bdiv.div.table.tr.td:293-107
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Tab</kbd>"
-msgstr "Umschalt</kbd><span class=\"kbd--plus\">+</span><kbd>Tabulator"
+msgstr ""
+"<kbd>Umschalt</kbd><span class=\"kbd--plus\">+</span><kbd>Tabulator</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.h2:204-9
 #: html/cool-help.html%2Bdiv.div.h2:261-9
