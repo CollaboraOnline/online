@@ -12,17 +12,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-12-21 21:04+0100\n"
-"PO-Revision-Date: 2023-11-28 07:13+0000\n"
+"PO-Revision-Date: 2024-01-02 19:06+0000\n"
 "Last-Translator: Stanislav Horáček <stanislav.horacek@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/collabora-online/"
 "ui/cs/>\n"
-"Language: \n"
+"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n "
 "<= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
-"X-Generator: Weblate 5.3-dev\n"
+"X-Generator: Weblate 5.4-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -370,15 +370,15 @@ msgstr " s"
 
 #: js/global.js:865
 msgid "Cluster is scaling, retrying..."
-msgstr ""
+msgstr "Cluster je škálován, zkouší se znovu..."
 
 #: js/global.js:867
 msgid "Document is migrating to new server, retrying..."
-msgstr ""
+msgstr "Dokument je migrován na nový server, zkouší se znovu..."
 
 #: js/global.js:869
 msgid "Failed to get RouteToken from controller"
-msgstr ""
+msgstr "Z controlleru se nepodařilo získat RouteToken"
 
 #: js/w2ui-1.5.rc1.js:3003
 msgid "Recent"
@@ -402,11 +402,11 @@ msgstr "Otevřít hypertextový odkaz"
 
 #: src/control/Control.AlertDialog.js:55
 msgid "Copied external sources are not allowed"
-msgstr ""
+msgstr "Kopírování externích zdrojů není povoleno"
 
 #: src/control/Control.AlertDialog.js:56
 msgid "It seems you have copied a selection that includes external images."
-msgstr ""
+msgstr "Zřejmě jste zkopírovali výběr, který obsahuje externí obrázky."
 
 #: src/control/Control.AlertDialog.js:57
 msgid ""
@@ -414,24 +414,28 @@ msgid ""
 "possible. Please right click in the image, choose \"Copy Image\" and paste "
 "it into the document instead."
 msgstr ""
+"Stahování externích zdrojů je zakázáno, ale obrázky je stále možné vkládat. "
+"Klikněte pravým tlačítkem na obrázek, zvolte „Zkopírovat obrázek“ a vložte "
+"jej do dokumentu."
 
 #: src/control/Control.AlertDialog.js:61
 msgid "External data source not allowed"
-msgstr ""
+msgstr "Externí zdroj dat není povolen"
 
 #: src/control/Control.AlertDialog.js:62
 msgid "It seems you have tried to insert external data."
-msgstr ""
+msgstr "Zřejmě jste se pokusili vložit externí data."
 
 #: src/control/Control.AlertDialog.js:63
 msgid ""
 "Selected external data source is forbidden. Please contact the system "
 "administrator."
 msgstr ""
+"Vybrané externí zdroje dat jsou zakázané. Obraťte se na správce systému."
 
 #: src/control/Control.AlertDialog.js:75
 msgid "Don't show this again"
-msgstr ""
+msgstr "Nezobrazovat toto znovu"
 
 #: src/control/Control.AlertDialog.js:91
 msgid "The server encountered a %0 error while parsing the %1 command."
@@ -1570,7 +1574,7 @@ msgstr "Dokument EPUB (.epub)"
 
 #: src/control/Control.NotebookbarWriter.js:382
 msgid "Go Online"
-msgstr ""
+msgstr "Přejít na online režim"
 
 #: src/control/Control.NotebookbarWriter.js:1336
 msgid "Rich Text"
@@ -2247,7 +2251,7 @@ msgstr "Dokument se právě přejmenovává a brzy se znovu načte"
 
 #: src/core/Socket.js:1118
 msgid "The document is switching to Offline mode and will reload shortly"
-msgstr ""
+msgstr "Dokument se přepíná do režimu offline a za chvíli bude znovu načten"
 
 #: src/core/Socket.js:1223
 msgid "Exported to storage"
@@ -2539,11 +2543,11 @@ msgstr "Bez komentářů"
 
 #: src/layer/tile/CommentListSection.ts:116
 msgid "A comment is being edited"
-msgstr ""
+msgstr "Komentář je právě upravován"
 
 #: src/layer/tile/CommentListSection.ts:117
 msgid "Please save or discard the comment currently being edited."
-msgstr ""
+msgstr "Uložte nebo zrušte aktuálně upravovaný komentář."
 
 #: src/layer/tile/CommentListSection.ts:885
 msgid "Modify"
@@ -2784,6 +2788,9 @@ msgid ""
 "id=\"slide-2-indicator\" href=\"#slide-2\">2</a> <a id=\"slide-3-"
 "indicator\" href=\"#slide-3\">3</a>"
 msgstr ""
+"<a id=\"slide-1-indicator\" class=\"active\" href=\"#slide-1\">1</a> <a id="
+"\"slide-2-indicator\" href=\"#slide-2\">2</a> <a id=\"slide-3-indicator\" "
+"href=\"#slide-3\">3</a>"
 
 #~ msgid "Accessibility Support"
 #~ msgstr "Podpora zpřístupnění"
