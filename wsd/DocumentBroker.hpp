@@ -1012,12 +1012,21 @@ private:
         /// Sets whether the last save was successful or not.
         void setLastSaveResult(bool success, bool newVersion)
         {
-            LOG_DBG("Saving version #" << version() + 1 << (success ? " succeeded" : " failed")
-                                       << " after " << _request.timeSinceLastRequest());
-            _request.setLastRequestResult(success);
-
             if (newVersion)
+            {
                 ++_version; // Bump the version.
+                LOG_DBG("Saving of new version #"
+                        << _version << (success ? " succeeded" : " failed") << " after "
+                        << _request.timeSinceLastRequest());
+            }
+            else
+            {
+                LOG_DBG("Saving" << (success ? " succeeded" : " failed") << " after "
+                                 << _request.timeSinceLastRequest()
+                                 << " but no newer version than #" << _version << " is produced");
+            }
+
+            _request.setLastRequestResult(success);
         }
 
         /// Returns the last save request time.
