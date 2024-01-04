@@ -52,7 +52,7 @@
     <string name="close_document_locations">Zatvori lokacije dokumenata</string>
     <string name="local_documents">Mapa dokumenata</string>
     <string name="local_file_system">Lokalni datotečni sustav</string>
-    <string name="external_sd_file_system">Vanjska SD kartica</string>
+    <string name="external_sd_file_system">Eksterna SD kartica</string>
     <string name="otg_file_system">OTG uređaj (eksperimentalno)</string>
     <string name="remote_server">Udaljeni poslužitelju</string>
     <string name="usb_connected_configure">USB povezan, konfiguriraj uređaj.</string>
@@ -63,7 +63,7 @@
     <string name="otg_missing_error">Nevažeća root datoteka. Provjeri OTG uređaj i/ili konfiguraciju.</string>
     <string name="owncloud_settings">Postavke poslužitelja oblaka</string>
     <string name="physical_storage_settings">Postavke fizičkog spremišta</string>
-    <string name="external_sd_path">Staza vanjske SD kartice</string>
+    <string name="external_sd_path">Staza eksterne SD kartice</string>
     <string name="otg_device_path">Staza OTG uređaja</string>
     <string name="otg_warning">Eksperimentalna funkcija: koristi samo, ako je na OTG uređaju dozvoljeno pisanje.</string>
     <string name="server_url">URL poslužitelja</string>

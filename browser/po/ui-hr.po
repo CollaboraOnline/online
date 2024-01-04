@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-12-21 21:04+0100\n"
-"PO-Revision-Date: 2023-11-10 16:39+0000\n"
+"PO-Revision-Date: 2023-12-24 14:21+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: Croatian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/hr/>\n"
-"Language: \n"
+"Language: hr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 5.2-dev\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Weblate 5.4-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -54,7 +54,7 @@ msgstr "Kontrolna ploča"
 
 #: admin/admin.strings.js:14
 msgid "Users online"
-msgstr "Online korisnici"
+msgstr "Korisnici koji su online"
 
 #: admin/admin.strings.js:15
 msgid "User Name"
@@ -369,15 +369,15 @@ msgstr " s"
 
 #: js/global.js:865
 msgid "Cluster is scaling, retrying..."
-msgstr ""
+msgstr "Cluster raste. Pokušaj se ponavlja …"
 
 #: js/global.js:867
 msgid "Document is migrating to new server, retrying..."
-msgstr ""
+msgstr "Dokument se migrira na novi poslužitelj. Pokušaj se ponavlja …"
 
 #: js/global.js:869
 msgid "Failed to get RouteToken from controller"
-msgstr ""
+msgstr "Neuspjelo dohvaćanje RouteTokena od kontrolera"
 
 #: js/w2ui-1.5.rc1.js:3003
 msgid "Recent"
@@ -401,11 +401,11 @@ msgstr "Otvori poveznicu"
 
 #: src/control/Control.AlertDialog.js:55
 msgid "Copied external sources are not allowed"
-msgstr ""
+msgstr "Kopirani eksterni izvori nisu dozvoljeni"
 
 #: src/control/Control.AlertDialog.js:56
 msgid "It seems you have copied a selection that includes external images."
-msgstr ""
+msgstr "Čini se da si kopirao/la odabir koji uključuje eksterne slike."
 
 #: src/control/Control.AlertDialog.js:57
 msgid ""
@@ -413,24 +413,29 @@ msgid ""
 "possible. Please right click in the image, choose \"Copy Image\" and paste "
 "it into the document instead."
 msgstr ""
+"Preuzimanje eksternih izvora je zabranjeno, ali umetanje slika je i dalje "
+"moguće. Pritisni sliku desnom tipkom miša, odaberi „Kopiraj sliku” i umetni "
+"je u dokument."
 
 #: src/control/Control.AlertDialog.js:61
 msgid "External data source not allowed"
-msgstr ""
+msgstr "Eksterni izvor podataka nije dozvoljen"
 
 #: src/control/Control.AlertDialog.js:62
 msgid "It seems you have tried to insert external data."
-msgstr ""
+msgstr "Čini se da si pokušao/la umetnuti eksterne podatke."
 
 #: src/control/Control.AlertDialog.js:63
 msgid ""
 "Selected external data source is forbidden. Please contact the system "
 "administrator."
 msgstr ""
+"Odabrani eksterni izvor podataka je zabranjen. Kontaktiraj administratora "
+"sustava."
 
 #: src/control/Control.AlertDialog.js:75
 msgid "Don't show this again"
-msgstr ""
+msgstr "Ovo više nemoj prikazivati"
 
 #: src/control/Control.AlertDialog.js:91
 msgid "The server encountered a %0 error while parsing the %1 command."
@@ -995,7 +1000,7 @@ msgstr "Svojstva"
 #: src/control/Control.Menubar.js:349 src/control/Control.Menubar.js:967
 #: src/control/Control.NotebookbarWriter.js:443
 msgid "Voice Over"
-msgstr ""
+msgstr "Glas pripovjedača"
 
 #: src/control/Control.Menubar.js:362
 #: src/control/Control.NotebookbarWriter.js:409
@@ -1012,7 +1017,7 @@ msgstr "Pomoć na internetu"
 #: src/control/Control.Menubar.js:644 src/control/Control.Menubar.js:907
 #: src/control/Control.NotebookbarWriter.js:433
 msgid "Keyboard shortcuts"
-msgstr "Tipkovničke kratice"
+msgstr "Tipkovnički prečaci"
 
 #: src/control/Control.Menubar.js:365 src/control/Control.Menubar.js:518
 #: src/control/Control.Menubar.js:645 src/control/Control.Menubar.js:908
@@ -1567,7 +1572,7 @@ msgstr "EPUB dokument (.epub)"
 
 #: src/control/Control.NotebookbarWriter.js:382
 msgid "Go Online"
-msgstr ""
+msgstr "Prebaci na mrežni način rada"
 
 #: src/control/Control.NotebookbarWriter.js:1336
 msgid "Rich Text"
@@ -2027,11 +2032,11 @@ msgstr "Desna margina"
 
 #: src/control/Ruler.js:621
 msgid "Insert tabstop"
-msgstr "Umetni mjesto tabulatora"
+msgstr "Umetni tabulator"
 
 #: src/control/Ruler.js:628
 msgid "Delete tabstop"
-msgstr "Izbriši mjesto tabulatora"
+msgstr "Izbriši tabulator"
 
 #: src/control/Signing.js:18
 msgid "This document is digitally signed and the signature is valid."
@@ -2245,6 +2250,7 @@ msgstr "Dokument se preimenuje i uskoro će se ponovo učitati"
 #: src/core/Socket.js:1118
 msgid "The document is switching to Offline mode and will reload shortly"
 msgstr ""
+"Dokument se prebacuje u izvanmrežni način rada i uskoro će se ponovo učitati"
 
 #: src/core/Socket.js:1223
 msgid "Exported to storage"
@@ -2426,8 +2432,8 @@ msgstr ""
 "Čini se da je tvoj %productName klaster pogrešno konfiguriran ili se brzo "
 "skalira – obrati se svom administratoru sustava. Nastavljanje s uređivanjem "
 "može dovesti do toga da više korisnika neće vidjeti jedni druge, do problema "
-"u spremanju dokumenata i/ili do problema s kopiranjem/umetanjem. Očekivan je "
-"serverId %0 za routeToken %1, ali je povezan na serverId %2"
+"sa spremanjem dokumenata i/ili s kopiranjem/umetanjem. Očekivan je serverId "
+"%0 za routeToken %1, ali je povezan na serverId %2"
 
 #: src/errormessages.js:39
 msgid ""
@@ -2539,11 +2545,11 @@ msgstr "Bez komentara"
 
 #: src/layer/tile/CommentListSection.ts:116
 msgid "A comment is being edited"
-msgstr ""
+msgstr "Jedan se komentar uređuje"
 
 #: src/layer/tile/CommentListSection.ts:117
 msgid "Please save or discard the comment currently being edited."
-msgstr ""
+msgstr "Spremi ili odbaci komentar koji se trenutačno uređuje."
 
 #: src/layer/tile/CommentListSection.ts:885
 msgid "Modify"
@@ -2634,11 +2640,12 @@ msgid ""
 "td><td>Cut</td><td>Paste</td></tr></table>"
 msgstr ""
 "<p>Tvoj preglednik ima vrlo ograničen pristup međuspremniku, stoga koristi "
-"ove tipkovne prečace:</p><table class=\"warn-copy-paste\"><tr><td><kbd>Ctrl</"
-"kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd></td><td><kbd>Ctrl</"
-"kbd><span class=\"kbd--plus\">+</span><kbd>X</kbd></td><td><kbd>Ctrl</"
-"kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd></td></tr><tr><td>Kopiraj</"
-"td><td>Izreži</td><td>Umetni</td></tr></table>"
+"ove tipkovničke prečace:</p><table class=\"warn-copy-paste\""
+"><tr><td><kbd>Ctrl</kbd><span class=\"kbd--plus\""
+">+</span><kbd>C</kbd></td><td><kbd>Ctrl</kbd><span class=\"kbd--plus\""
+">+</span><kbd>X</kbd></td><td><kbd>Ctrl</kbd><span class=\"kbd--plus\">+</spa"
+"n><kbd>V</kbd></td></tr><tr><td>Kopiraj</td><td>Izreži</td><td>Umetni</td></t"
+"r></table>"
 
 #: src/map/Clipboard.js:874
 msgid ""
@@ -2733,9 +2740,9 @@ msgid ""
 "target=\"_blank\" href=\"https://www.collaboraoffice.com/solutions/"
 "collabora-office-android-ios/\">apps</a> are also available for mobile."
 msgstr ""
-"Uživaj u najnovijim dostignućima u online produktivnosti, besplatnima za "
-"korištenje, istraživanje i korištenje s drugima u pregledniku. Razni <a "
-"target=\"_blank\" href=\"https://www.collaboraoffice.com/solutions/"
+"Uživaj u najnovijim dostignućima u online produktivnosti, koje možeš "
+"besplatno koristiti, istraživati i koristiti s drugima u pregledniku. Razni "
+"<a target=\"_blank\" href=\"https://www.collaboraoffice.com/solutions/"
 "collabora-office-android-ios/\">programi</a> su dostupni i za mobilne "
 "uređaje."
 
@@ -2751,9 +2758,9 @@ msgid ""
 "teams."
 msgstr ""
 "Pregledaj <a target=\"_blank\" href=\"https://www.collaboraoffice.com/"
-"code-23-05-release-notes/\">napomene uz izdanje</a> i saznaj sve o: "
-"Najnovije Collabora Online izdanje za razvoj, namijenjen kućnim korisnicima "
-"i malim timovima."
+"code-23-05-release-notes/\">napomene uz izdanje</a> i saznaj sve o "
+"najnovijem Collabora Online izdanju za razvoj, koje je prikladno za obične "
+"korisnike i male timove."
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:48-7
 msgid "Get Involved"
@@ -2779,7 +2786,7 @@ msgstr ""
 ">uputama</a> i programiraj KOD od nule. Možeš pomoći <a target=\"_blank\" "
 "href=\"https://collaboraonline.github.io/post/translate/\">prevoditi</a> ili "
 "<a target=\"_blank\" href=\"https ://collaboraonline.github.io/post/filebugs/"
-"\">poslati izvještaj o grešci</a> sa svim bitnim koracima za reproduciranje "
+"\">slati izvještaje o greškama</a> sa svim bitnim koracima za reproduciranje "
 "greške."
 
 #: welcome/welcome.html%2Bhtml.body.div.div:55-5
@@ -2788,6 +2795,9 @@ msgid ""
 "id=\"slide-2-indicator\" href=\"#slide-2\">2</a> <a id=\"slide-3-"
 "indicator\" href=\"#slide-3\">3</a>"
 msgstr ""
+"<a id=\"slide-1-indicator\" class=\"active\" href=\"#slide-1\">1</a> <a id="
+"\"slide-2-indicator\" href=\"#slide-2\">2</a> <a id=\"slide-3-indicator\" "
+"href=\"#slide-3\">3</a>"
 
 #~ msgid "Accessibility Support"
 #~ msgstr "Podrška za pristupačnost"
