@@ -140,8 +140,10 @@ app.definitions.Socket = L.Class.extend({
 			if (typeof msg !== 'string')
 				return;
 
-			if (!msg.startsWith('useractive') && !msg.startsWith('userinactive'))
+			if (!msg.startsWith('useractive') && !msg.startsWith('userinactive')) {
+				window.app.console.log('Ignore outgoing message due to inactivity: "' + msg + '"');
 				return;
+			}
 		}
 
 		if (this._map.uiManager && this._map.uiManager.isUIBlocked())
