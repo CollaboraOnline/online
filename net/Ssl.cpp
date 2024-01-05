@@ -11,7 +11,6 @@
 
 #include <config.h>
 
-#include <assert.h>
 #include <unistd.h>
 #include "Ssl.hpp"
 

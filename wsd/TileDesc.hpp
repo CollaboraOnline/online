@@ -11,15 +11,15 @@
 
 #pragma once
 
+#include <Exceptions.hpp>
+#include <Protocol.hpp>
+#include <StringVector.hpp>
+
 #include <cassert>
 #include <unordered_map>
 #include <sstream>
 #include <string>
-
-
-#include "Exceptions.hpp"
-#include <Protocol.hpp>
-#include <StringVector.hpp>
+#include <string_view>
 
 #define TILE_WIRE_ID
 using TileWireId = uint32_t;

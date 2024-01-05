@@ -12,7 +12,6 @@
 #include <config.h>
 
 #include "HttpRequest.hpp"
-#include "Util.hpp"
 #include "lokassert.hpp"
 
 #include <WopiTestServer.hpp>

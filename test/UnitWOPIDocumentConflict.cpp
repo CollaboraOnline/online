@@ -18,10 +18,6 @@
 
 #include <Poco/Net/HTTPRequest.h>
 
-#include "Util.hpp"
-#include "Log.hpp"
-#include "UnitHTTP.hpp"
-#include "helpers.hpp"
 #include "lokassert.hpp"
 
 class UnitWOPIDocumentConflict : public WOPIUploadConflictCommon

@@ -13,13 +13,11 @@
 
 #include <chrono>
 
-#include <cassert>
 #include <sysexits.h>
 
 #include <Log.hpp>
 #include <Util.hpp>
 #include <Unit.hpp>
-#include "lokassert.hpp"
 
 class UnitTimeout : public UnitWSD
 {

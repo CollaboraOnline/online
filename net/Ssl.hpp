@@ -13,12 +13,9 @@
 
 #include <common/Util.hpp>
 
-#include <atomic>
 #include <cassert>
 #include <memory>
-#include <mutex>
 #include <string>
-#include <vector>
 
 #include <openssl/ssl.h>
 #include <openssl/rand.h>

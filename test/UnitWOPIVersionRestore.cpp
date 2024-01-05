@@ -12,10 +12,7 @@
 #include "config.h"
 
 #include "WopiTestServer.hpp"
-#include "Log.hpp"
 #include "Unit.hpp"
-#include "UnitHTTP.hpp"
-#include "helpers.hpp"
 #include "lokassert.hpp"
 
 #include <Poco/Net/HTTPRequest.h>

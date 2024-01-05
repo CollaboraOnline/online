@@ -11,7 +11,6 @@
 
 #pragma once
 
-#include <memory>
 #include <sstream>
 
 #include <Poco/Net/HTTPClientSession.h>

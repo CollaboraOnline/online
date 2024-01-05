@@ -8,17 +8,12 @@
 #pragma once
 
 #include <memory>
-#include <set>
 #include <string>
-#include <chrono>
 
 #include <Poco/URI.h>
 #include <Poco/Util/Application.h>
 
 #include "Authorization.hpp"
-#include "COOLWSD.hpp"
-#include "Log.hpp"
-#include "Util.hpp"
 
 /// A Storage Manager is responsible for the settings
 /// of Storage and the creation of http::Session and

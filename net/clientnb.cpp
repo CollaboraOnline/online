@@ -11,12 +11,9 @@
 
 #include <config.h>
 
-#include <atomic>
-#include <cerrno>
 #include <cstdlib>
 #include <cstring>
 #include <iostream>
-#include <mutex>
 #include <thread>
 #include <assert.h>
 
@@ -39,12 +36,10 @@
 
 #include <Util.hpp>
 
-using Poco::Net::HTTPClientSession;
+using Poco::Runnable;
 using Poco::Net::HTTPRequest;
 using Poco::Net::HTTPResponse;
 using Poco::Net::WebSocket;
-using Poco::Runnable;
-using Poco::Util::Application;
 
 const char *HostName = "127.0.0.1";
 constexpr int HttpPortNumber = 9191;

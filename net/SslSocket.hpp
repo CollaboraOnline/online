@@ -11,14 +11,13 @@
 
 #pragma once
 
+#include "Ssl.hpp"
+#include "Socket.hpp"
+
 #include <cerrno>
 #include <memory>
 #include <sstream>
 #include <string>
-
-#include "Common.hpp"
-#include "Ssl.hpp"
-#include "Socket.hpp"
 
 /// An SSL/TSL, non-blocking, data streaming socket.
 class SslStreamSocket final : public StreamSocket

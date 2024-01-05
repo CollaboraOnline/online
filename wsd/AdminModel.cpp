@@ -14,6 +14,7 @@
 #include "AdminModel.hpp"
 
 #include <chrono>
+#include <cmath>
 #include <memory>
 #include <set>
 #include <sstream>

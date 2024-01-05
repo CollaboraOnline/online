@@ -13,15 +13,13 @@
 
 #include <test/testlog.hpp>
 
-#include <cstdlib>
-#include <mutex>
-#include <thread>
-
 #include <Poco/Net/WebSocket.h>
 
 #include <Common.hpp>
 #include <Protocol.hpp>
 #include <Log.hpp>
+
+#include <iomanip>
 
 /// Deprecated: do not use ... replaced by net/Socket.hpp
 ///

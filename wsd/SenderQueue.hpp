@@ -11,20 +11,17 @@
 
 #pragma once
 
-#include <deque>
-#include <memory>
-#include <mutex>
-#include <thread>
-#include <vector>
+#include "common/SigUtil.hpp"
+#include "Log.hpp"
+#include "TileDesc.hpp"
 
 #include <Poco/Dynamic/Var.h>
 #include <Poco/JSON/JSON.h>
 #include <Poco/JSON/Object.h>
 #include <Poco/JSON/Parser.h>
 
-#include "common/SigUtil.hpp"
-#include "Log.hpp"
-#include "TileDesc.hpp"
+#include <deque>
+#include <mutex>
 
 /// A queue of data to send to certain Session's WS.
 template <typename Item>

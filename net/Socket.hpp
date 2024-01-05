@@ -22,25 +22,23 @@
 #include <cassert>
 #include <cerrno>
 #include <chrono>
-#include <climits>
 #include <cstdlib>
 #include <cstring>
-#include <fstream>
 #include <functional>
 #include <iostream>
 #include <memory>
 #include <mutex>
-#include <sstream>
 #include <thread>
 
-#include "Common.hpp"
 #include <common/StateEnum.hpp>
-#include "FakeSocket.hpp"
 #include "Log.hpp"
 #include "Util.hpp"
-#include "Protocol.hpp"
 #include "Buffer.hpp"
 #include "SigUtil.hpp"
+
+#if MOBILEAPP
+#include "FakeSocket.hpp"
+#endif
 
 #ifdef __linux__
 #define HAVE_ABSTRACT_UNIX_SOCKETS

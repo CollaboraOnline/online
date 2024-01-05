@@ -23,8 +23,9 @@
 
 #include <Common.hpp>
 #include "Util.hpp"
+#include "lokassert.hpp"
 #include "test.hpp"
-#include "helpers.hpp"
+#include "testlog.hpp"
 
 static int countCoolKitProcesses(const int expected,
                                  std::chrono::milliseconds timeoutMs

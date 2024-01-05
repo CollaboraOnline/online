@@ -16,17 +16,13 @@
 #include <Poco/MemoryStream.h>
 #include <Poco/Net/HTTPResponse.h>
 
-#include <chrono>
 #include <cstdint>
-#include <fstream>
 #include <memory>
-#include <sstream>
 #include <stdexcept>
 #include <string>
 #include <sys/types.h>
 #include <netdb.h>
 
-#include "Common.hpp"
 #include <utility>
 #include "Log.hpp"
 #include "Util.hpp"

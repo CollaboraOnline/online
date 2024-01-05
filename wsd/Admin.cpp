@@ -9,10 +9,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include <chrono>
 #include <config.h>
 
-#include <cassert>
+#include <chrono>
+#include <iomanip>
 #include <sys/poll.h>
 #include <unistd.h>
 
@@ -24,11 +24,8 @@
 #include "AdminModel.hpp"
 #include "Auth.hpp"
 #include <Common.hpp>
-#include "FileServer.hpp"
 #include <Log.hpp>
 #include <Protocol.hpp>
-#include "Storage.hpp"
-#include "TileCache.hpp"
 #include <StringVector.hpp>
 #include <Unit.hpp>
 #include <Util.hpp>
