@@ -3074,7 +3074,9 @@ L.CanvasTileLayer = L.Layer.extend({
 		var isPureJSON = textMsg.indexOf('=') === -1 && textMsg.indexOf('{') !== -1;
 		if (isPureJSON) {
 			var json = JSON.parse(textMsg);
-			if (json.commandName && json.state) {
+			// json.state as empty string is fine, for example it means no selection
+			// when json.commandName is '.uno:RowColSelCount'.
+			if (json.commandName && json.state !== undefined) {
 				this._map.fire('commandstatechanged', json);
 			}
 		} else {
