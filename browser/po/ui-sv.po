@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-01-05 13:07+0100\n"
-"PO-Revision-Date: 2023-12-27 06:06+0000\n"
+"PO-Revision-Date: 2024-01-05 14:17+0000\n"
 "Last-Translator: bittin1ddc447d824349b2 <bittin@reimu.nl>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/sv/>\n"
-"Language: \n"
+"Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1799,11 +1799,11 @@ msgstr "Dölj meny"
 
 #: src/control/Control.UIManager.js:164
 msgid "Enter new name"
-msgstr ""
+msgstr "Ange nytt namn"
 
 #: src/control/Control.UIManager.js:792
 msgid "Show Menu"
-msgstr ""
+msgstr "Visa meny"
 
 #: src/control/Control.UserList.js:11
 msgid "%user has joined"
@@ -2452,6 +2452,8 @@ msgid ""
 "Failed to establish socket connection or socket connection closed "
 "unexpectedly."
 msgstr ""
+"Misslyckades att upprätta socketanslutning eller socketanslutning stängdes "
+"oväntat."
 
 #: src/errormessages.js:43
 msgid "Failed to load document."
@@ -2539,7 +2541,7 @@ msgstr "Kopiera länkplats"
 
 #: src/layer/tile/CanvasTileLayer.js:2520
 msgid "Select link text"
-msgstr ""
+msgstr "Välj länktext"
 
 #: src/layer/tile/CanvasTileLayer.js:2531
 msgid "Edit link"
