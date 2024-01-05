@@ -376,18 +376,20 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			]
 		});
 
-		content.push({
-			'type': 'container',
-			'children': [
-				{
-					'id': 'togglewasm',
-					'class': 'togglewasm',
-					'type': 'bigcustomtoolitem',
-					'text': _(window.ThisIsTheEmscriptenApp ? _('Go Online') : _('Go Offline')),
-					'accessibility': { focusBack: true, combination: 'RN' }
-				}
-			]
-		});
+		if (window.wasmEnabled) {
+			content.push({
+				'type': 'container',
+				'children': [
+					{
+						'id': 'togglewasm',
+						'class': 'togglewasm',
+						'type': 'bigcustomtoolitem',
+						'text': _(window.ThisIsTheEmscriptenApp ? _('Go Online') : _('Go Offline')),
+						'accessibility': { focusBack: true, combination: 'RN' }
+					}
+				]
+			});
+		}
 
 		return this.getTabPage(fileTabName, content);
 	},
