@@ -759,6 +759,7 @@ pot:
 		src/control/Control.Tabs.js \
 		src/control/Control.Toolbar.js \
 		src/control/Control.TopToolbar.js \
+		src/control/Control.UIManager.js \
 		src/control/Control.UserList.js \
 		src/control/Control.Zotero.js \
 		src/control/Parts.js \
