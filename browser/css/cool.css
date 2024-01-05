@@ -753,6 +753,14 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	display: inline-block !important;
 }
 
+.cool-annotation-tracked-remove {
+	opacity: 50%;
+}
+
+.cool-annotation-tracked-remove .cool-annotation-menubar {
+	visibility: hidden;
+}
+
 .cool-redline-accept-button {
 	background: url('images/lc_acceptchanges.svg') no-repeat center !important;
 }

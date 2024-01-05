@@ -1239,7 +1239,9 @@ export class CommentSection extends CanvasSectionObject {
 
 			id = obj[dataroot].id;
 			var removed = this.getComment(id);
-			if (removed) {
+			if (this.map['stateChangeHandler'].getItemValue('.uno:TrackChanges') === 'true' && removed) {
+				$(removed.sectionProperties.container).addClass('cool-annotation-tracked-remove');
+			} else if (removed) {
 				this.adjustParentRemove(removed);
 				if (this.sectionProperties.selectedComment === removed) {
 					this.unselect();
