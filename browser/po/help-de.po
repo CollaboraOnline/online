@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-01-05 13:07+0200\n"
-"PO-Revision-Date: 2023-12-27 06:06+0000\n"
-"Last-Translator: Ettore Atalan <atalanttore@googlemail.com>\n"
+"PO-Revision-Date: 2024-01-05 14:17+0000\n"
+"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "help/de/>\n"
 "Language: de\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.4-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:20-5
 msgid "Keyboard Shortcuts"
@@ -1698,7 +1698,6 @@ msgstr ""
 "Präsentationen."
 
 #: html/cool-help.html%2Bdiv.p:349-5
-#, fuzzy
 msgid ""
 "<span class=\"def\">The menu bar:</span> The main menu is placed on the top "
 "and includes many options, commands for printing, editing, viewing and other "
@@ -1710,10 +1709,10 @@ msgstr ""
 "<span class=\"def\">Der Menüleiste:</span> Das Hauptmenü befindet sich oben "
 "und enthält viele Optionen, Befehle zum Drucken, Bearbeiten, Anzeigen und "
 "andere erweiterte Befehle. Sie können die Menüleiste ausblenden, indem Sie "
-"auf das Symbol <img style=\"height:0.6cm;width:0.6cm;\" src=\"images/fold."
-"svg\"> ganz rechts klicken. Klicken Sie auf das Symbol <img style=\"height:0."
-"6cm;width:0.6cm;\" src=\"images/unfold.svg\">, um das Menü wieder "
-"einzublenden."
+"auf das Symbol <span style=\"height:0.6cm;width:0.6cm; margin: 0px;\" class"
+"=\"w2ui-icon fold\"></span> ganz rechts klicken. Klicken Sie auf das Symbol "
+"<span style=\"height:0.6cm;width:0.6cm; margin: 0px;\" class=\"w2ui-icon "
+"unfold\"></span>, um das Menü wieder einzublenden."
 
 #: html/cool-help.html%2Bdiv.p:350-5
 msgid ""
@@ -2165,6 +2164,9 @@ msgid ""
 "Click on the submenu (<span class=\"cool-annotation-menu\" style=\"height:0."
 "6cm;width:0.6cm;\"></span>) icon to reply, move and delete comments."
 msgstr ""
+"Klicken Sie auf das Submenu (<span class=\"cool-annotation-menu\" style="
+"\"height:0.6cm;width:0.6cm;\"></span>) Ikone, um Kommentare zu beantworten, "
+"zu verschieben und zu löschen."
 
 #: html/cool-help.html%2Bdiv.h4:419-5
 msgid "Spellchecking"
@@ -3004,7 +3006,6 @@ msgstr ""
 "ändert."
 
 #: html/cool-help.html%2Bdiv.div.p:587-5
-#, fuzzy
 msgid ""
 "To display or hide track changes choose <span class=\"ui\">Edit</span> → "
 "<span class=\"ui\">Track Changes </span> → <span class=\"ui\">Show</span>. "
@@ -3313,6 +3314,9 @@ msgid ""
 "Screen Presentation</span> or click on the left-most icon in the bottom of "
 "the slide panel:"
 msgstr ""
+"Entweder wählen Sie <span class=\"ui\">Folie</span> → <span class=\"ui\""
+">Vollbild Präsentation</span> oder klicken Sie auf das linkeste Ikone im "
+"unteren Bereich des Dia-Panels:"
 
 #: html/cool-help.html%2Bdiv.div.h4:658-5
 msgid "How can I change the line, area and position of a shape in my slides?"
