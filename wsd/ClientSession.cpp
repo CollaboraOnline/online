@@ -2393,22 +2393,30 @@ size_t ClientSession::getTilesOnFlyUpperLimit() const
 
 void ClientSession::removeOutdatedTilesOnFly(const std::chrono::steady_clock::time_point &now)
 {
+    size_t dropped = 0;
+    const auto highTimeoutMs = std::chrono::milliseconds(TILE_ROUNDTRIP_TIMEOUT_MS);
+    const auto lowTimeoutMs = std::chrono::milliseconds((int)(0.9 * TILE_ROUNDTRIP_TIMEOUT_MS));
     // Check only the beginning of the list, tiles are ordered by timestamp
     while(!_tilesOnFly.empty())
     {
         auto tileIter = _tilesOnFly.begin();
         const auto elapsedTimeMs = std::chrono::duration_cast<
             std::chrono::milliseconds>(now - tileIter->second);
-        if (elapsedTimeMs > std::chrono::milliseconds(TILE_ROUNDTRIP_TIMEOUT_MS))
+        if (elapsedTimeMs > highTimeoutMs ||
+            // once we start dropping - drop lots in a similar range of time
+            (dropped > 0 && elapsedTimeMs > lowTimeoutMs))
         {
-            LOG_WRN("Tracker tileID " << tileIter->first << " was dropped because of time out ("
-                                      << elapsedTimeMs
-                                      << "). Tileprocessed message did not arrive in time.");
+            LOG_TRC("Tracker tileID " << tileIter->first << " was dropped because of time out ("
+                    << elapsedTimeMs
+                    << "). Tileprocessed message did not arrive in time.");
+            dropped++;
             _tilesOnFly.erase(tileIter);
         }
         else
             break;
     }
+    if (dropped > 0)
+        LOG_WRN("client not consuming tiles; stalled for " << (TILE_ROUNDTRIP_TIMEOUT_MS/1000) << " seconds: removed tracking for " << dropped << " on the fly tiles");
 }
 
 Util::Rectangle ClientSession::getNormalizedVisibleArea() const
