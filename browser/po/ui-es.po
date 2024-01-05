@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-01-05 13:07+0100\n"
-"PO-Revision-Date: 2024-01-05 14:17+0000\n"
-"Last-Translator: Eloy Crespo <eloy.crespo@collabora.com>\n"
+"PO-Revision-Date: 2024-01-05 18:03+0000\n"
+"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/es/>\n"
 "Language: es\n"
@@ -117,7 +117,7 @@ msgstr "Cargado"
 
 #: admin/admin.strings.js:30
 msgid "WOPI host"
-msgstr "Servidor WOPI"
+msgstr "Anfitrión WOPI"
 
 #: admin/admin.strings.js:31
 msgid "Kill"
@@ -374,11 +374,11 @@ msgstr "El clúster está escalando, reintentando..."
 
 #: js/global.js:867
 msgid "Document is migrating to new server, retrying..."
-msgstr "El documento está migrando a un nuevo servidor, reintentando..."
+msgstr "Se está migrando el documento a un servidor nuevo; reintentando…"
 
 #: js/global.js:869
 msgid "Failed to get RouteToken from controller"
-msgstr "Error al obtener RouteToken del controlador"
+msgstr "No se pudo obtener «RouteToken» del controlador"
 
 #: js/w2ui-1.5.rc1.js:3003
 msgid "Recent"
@@ -402,7 +402,7 @@ msgstr "Abrir enlace"
 
 #: src/control/Control.AlertDialog.js:64
 msgid "Copied external sources are not allowed"
-msgstr "No se permite copiar fuentes externas"
+msgstr "No se permite copiar orígenes externos"
 
 #: src/control/Control.AlertDialog.js:65
 msgid "It seems you have copied a selection that includes external images."
@@ -415,28 +415,28 @@ msgid ""
 "it into the document instead."
 msgstr ""
 "Está prohibido descargar recursos externos, pero sí es posible pegar "
-"imágenes. Haga clic con el botón derecho en la imagen, seleccione \"Copiar "
-"imagen\" y péguela en el documento."
+"imágenes. Pulse con el botón secundario del ratón en la imagen, elija «"
+"Copiar imagen» y péguela en el documento."
 
 #: src/control/Control.AlertDialog.js:70
 msgid "External data source not allowed"
-msgstr "Fuente de datos externa no permitida"
+msgstr "No se permite el origen de datos externo"
 
 #: src/control/Control.AlertDialog.js:71
 msgid "It seems you have tried to insert external data."
-msgstr "Parece que has intentado insertar datos externos."
+msgstr "Parece que ha intentado insertar datos externos."
 
 #: src/control/Control.AlertDialog.js:72
 msgid ""
 "Selected external data source is forbidden. Please contact the system "
 "administrator."
 msgstr ""
-"La fuente de datos externa seleccionada está prohibida. Por favor, póngase "
-"en contacto con el administrador del sistema."
+"El origen de datos externo seleccionado está prohibido. Póngase en contacto "
+"con el personal de sistemas."
 
 #: src/control/Control.AlertDialog.js:84
 msgid "Don't show this again"
-msgstr "No mostar esto de nuevo"
+msgstr "No volver a mostrar"
 
 #: src/control/Control.AlertDialog.js:100
 msgid "The server encountered a %0 error while parsing the %1 command."
@@ -1377,7 +1377,7 @@ msgstr "Ver historial"
 
 #: src/control/Control.NotebookbarCalc.js:220
 msgid "ODF Spreadsheet (.ods)"
-msgstr "Hoja de cálculo ODF (.ods)"
+msgstr "Libro ODF (.ods)"
 
 #: src/control/Control.NotebookbarCalc.js:270
 #: src/control/Control.NotebookbarDraw.js:272
@@ -1569,7 +1569,7 @@ msgstr "Formulario"
 
 #: src/control/Control.NotebookbarWriter.js:263
 msgid "ODF Text Document (.odt)"
-msgstr "Documento de texto ODT (.odt)"
+msgstr "Documento de texto ODF (.odt)"
 
 #: src/control/Control.NotebookbarWriter.js:319
 msgid "EPUB Document (.epub)"
@@ -1577,7 +1577,7 @@ msgstr "Documento EPUB (.epub)"
 
 #: src/control/Control.NotebookbarWriter.js:386
 msgid "Go Online"
-msgstr "Conéctate"
+msgstr "Conectarse"
 
 #: src/control/Control.NotebookbarWriter.js:1340
 msgid "Rich Text"
@@ -1805,11 +1805,11 @@ msgstr "Ocultar menú"
 
 #: src/control/Control.UIManager.js:164
 msgid "Enter new name"
-msgstr "Añde nuevo nombre"
+msgstr "Introduzca un nombre nuevo"
 
 #: src/control/Control.UIManager.js:792
 msgid "Show Menu"
-msgstr "Mostrar Menú"
+msgstr "Mostrar menú"
 
 #: src/control/Control.UserList.js:11
 msgid "%user has joined"
@@ -2325,8 +2325,8 @@ msgid ""
 "The host URL is empty. The coolwsd server is probably misconfigured, please "
 "contact the administrator."
 msgstr ""
-"El URL del equipo anfitrión está vacío. Es probable que el servidor coolwsd "
-"esté mal configurado. Póngase en contacto con el personal técnico."
+"El URL del anfitrión está vacío. Es probable que el servidor coolwsd esté "
+"mal configurado. Póngase en contacto con el personal de sistemas."
 
 #: src/errormessages.js:24
 msgid ""
@@ -2359,15 +2359,15 @@ msgid ""
 "administrator if the issue persists."
 msgstr ""
 "El servicio no está disponible. Inténtelo de nuevo más tarde e informe al "
-"personal técnico en caso de que persista el problema."
+"personal de sistemas si persiste el problema."
 
 #: src/errormessages.js:28
 msgid ""
 "Unauthorized WOPI host. Please try again later and report to your "
 "administrator if the issue persists."
 msgstr ""
-"El servidor WOPI no está autorizado. Inténtelo de nuevo más tarde e informe "
-"al personal técnico en caso de que persista el problema."
+"El anfitrión WOPI no está autorizado. Inténtelo de nuevo más tarde e informe "
+"al personal de sistemas si persiste el problema."
 
 #: src/errormessages.js:29
 msgid "Wrong or missing WOPISrc parameter, please contact support."
@@ -2458,9 +2458,9 @@ msgid ""
 "sdk.collaboraonline.com/docs/installation/Proxy_settings.html"
 msgstr ""
 "No se pudo establecer la conexión con el socket o la conexión con el socket "
-"se cerró inesperadamente. El proxy inverso puede estar mal configurado, por "
-"favor contacte con el administrador. Para más información sobre la "
-"configuración del proxy, consulte https://sdk.collaboraonline.com/docs/"
+"se cerró inesperadamente. El proxy inverso puede estar mal configurado; "
+"póngase en contacto con el personal de sistemas. Para más información sobre "
+"la configuración del proxy, consulte https://sdk.collaboraonline.com/docs/"
 "installation/Proxy_settings.html"
 
 #: src/errormessages.js:40
@@ -2525,7 +2525,7 @@ msgid ""
 "storage space. The document will now be read-only but you may still "
 "download it now to preserve a copy locally."
 msgstr ""
-"No se pudo guardar porque el documento es demasiado grande o supera el "
+"No se pudo guardar porque el documento es demasiado grande o sobrepasa el "
 "espacio de almacenamiento restante. El documento ahora será de solo lectura, "
 "pero puede descargarlo ahora para conservar una copia local."
 
@@ -2543,11 +2543,11 @@ msgstr "No se puede exportar el documento. Inténtelo de nuevo."
 
 #: src/errormessages.js:63
 msgid "Uploading file to server failed, file not found."
-msgstr "Falló la carga del archivo al servidor; no se encontró el archivo."
+msgstr "No se pudo cargar el archivo al servidor; no se encontró."
 
 #: src/errormessages.js:64
 msgid "Uploading file to server failed, the file is too large."
-msgstr "Falló la carga del archivo al servidor; el archivo es demasiado grande."
+msgstr "No se pudo cargar el archivo al servidor; es demasiado grande."
 
 #: src/layer/tile/CanvasTileLayer.js:1941
 msgid "Functions"
@@ -2559,7 +2559,7 @@ msgstr "Copiar ubicación del enlace"
 
 #: src/layer/tile/CanvasTileLayer.js:2520
 msgid "Select link text"
-msgstr "Selecciona texto del link"
+msgstr "Seleccionar texto de enlace"
 
 #: src/layer/tile/CanvasTileLayer.js:2531
 msgid "Edit link"
@@ -2567,11 +2567,11 @@ msgstr "Editar enlace"
 
 #: src/layer/tile/CanvasTileLayer.js:2540
 msgid "Remove link"
-msgstr "Eliminar enlace"
+msgstr "Quitar enlace"
 
 #: src/layer/tile/CanvasTileLayer.js:5567
 msgid "No Comments"
-msgstr "Sin comentarios"
+msgstr "Ningún comentario"
 
 #: src/layer/tile/CommentListSection.ts:138
 msgid "A comment is being edited"
@@ -2579,7 +2579,7 @@ msgstr "Se está editando un comentario"
 
 #: src/layer/tile/CommentListSection.ts:139
 msgid "Please save or discard the comment currently being edited."
-msgstr "Por favor, guarde o descarte el comentario que se está editando."
+msgstr "Guarde o descarte el comentario que se está editando."
 
 #: src/layer/tile/CommentListSection.ts:922
 msgid "Modify"
