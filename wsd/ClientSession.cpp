@@ -2513,8 +2513,6 @@ void ClientSession::dumpState(std::ostream& os)
        << "\n\t\tclip sockets: " << _clipSockets.size()
        << "\n\t\tproxy access:: " << _proxyAccess
        << "\n\t\tclientSelectedMode: " << _clientSelectedMode
-       << "\n\t\tonFlyCount: " << getTilesOnFlyCount()
-       << "\n\t\tonFlyUpperLimit: " << getTilesOnFlyUpperLimit()
        << "\n\t\trequestedTiles: " << getRequestedTiles().size()
        << "\n\t\tbeingRendered: " << (!docBroker ? -1 : docBroker->tileCache().countTilesBeingRenderedForSession(client_from_this(), std::chrono::steady_clock::now()));
 
@@ -2522,15 +2520,18 @@ void ClientSession::dumpState(std::ostream& os)
     {
         uint64_t sent = 0, recv = 0;
         _protocol->getIOStats(sent, recv);
-        os << "\n\t\tsent/keystroke: " << (double)sent/_keyEvents << "bytes";
+        os << "\n\t\tsent/keystroke: " << (double)sent/_keyEvents << " bytes";
     }
 
-    os << "\n\t\ttilesOnFly: " << _tilesOnFly.size();
-    for (auto const &it : _tilesOnFly) {
-        const auto elapsedTimeMs = std::chrono::duration_cast<std::chrono::milliseconds>(
-            std::chrono::steady_clock::now() - it.second);
-        os << "\n\t\t\t" << it.first << " - since " << elapsedTimeMs << " ms";
-    }
+    os << "\n\t\tonFlyUpperLimit: " << getTilesOnFlyUpperLimit();
+    os << "\n\t\tonFlyCount: " << getTilesOnFlyCount();
+    if (_tilesOnFly.size() > 0)
+        os << " between wid: " << _tilesOnFly.front().first << " as of " <<
+            std::chrono::duration_cast<std::chrono::milliseconds>(
+                std::chrono::steady_clock::now() - _tilesOnFly.front().second) << " ms "
+           << " and wid: " << _tilesOnFly.back().first << " as of " <<
+            std::chrono::duration_cast<std::chrono::milliseconds>(
+                std::chrono::steady_clock::now() - _tilesOnFly.back().second) << " ms ";
 
     os << '\n';
     _senderQueue.dumpState(os);
