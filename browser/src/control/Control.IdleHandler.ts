@@ -108,8 +108,7 @@ class IdleHandler {
 			return;
 		}
 
-		var hasDimDialog = !!document.getElementById(this.dimId);
-		if (window.mode.isDesktop() && (!this._active || hasDimDialog)) {
+		if (window.mode.isDesktop() && (!this._active || this.isDimActive())) {
 			// A dialog is already dimming the screen and probably
 			// shows an error message. Leave it alone.
 			this._active = false;
