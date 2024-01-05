@@ -34,6 +34,12 @@ DESKTOP_DATA_FOLDER = $(abs_srcdir)/data/desktop/
 DESKTOP_DATA_WORKDIR = $(if $(coolwsd),$(DESKTOP_DATA_FOLDER),$(abs_builddir)/workdir/data/desktop/)
 DESKTOP_TRACK_FOLDER = $(abs_builddir)/workdir/track/desktop
 
+IDLE_USER_AGENT = "cypress"
+IDLE_TEST_FOLDER = $(abs_srcdir)/integration_tests/idle
+IDLE_DATA_FOLDER = $(abs_srcdir)/data/idle/
+IDLE_DATA_WORKDIR = $(if $(coolwsd),$(IDLE_DATA_FOLDER),$(abs_builddir)/workdir/data/idle/)
+IDLE_TRACK_FOLDER = $(abs_builddir)/workdir/track/idle
+
 MOBILE_USER_AGENT = "cypress-mobile"
 MOBILE_TEST_FOLDER = $(abs_srcdir)/integration_tests/mobile
 MOBILE_DATA_FOLDER = $(abs_srcdir)/data/mobile/
@@ -81,6 +87,8 @@ MOBILE_TEST_FILES=$(subst $(MOBILE_TEST_FOLDER)/,,$(wildcard $(MOBILE_TEST_FOLDE
 
 DESKTOP_TEST_FILES=$(subst $(DESKTOP_TEST_FOLDER)/,,$(wildcard $(DESKTOP_TEST_FOLDER)/*_spec.js) $(wildcard $(DESKTOP_TEST_FOLDER)/*/*_spec.js))
 
+IDLE_TEST_FILES=$(subst $(IDLE_TEST_FOLDER)/,,$(wildcard $(IDLE_TEST_FOLDER)/*_spec.js) $(wildcard $(IDLE_TEST_FOLDER)/*/*_spec.js))
+
 MULTIUSER_TEST_FILES=$(subst $(MULTIUSER_TEST_FOLDER)/,,$(wildcard $(MULTIUSER_TEST_FOLDER)/*_spec.js) $(wildcard $(MULTIUSER_TEST_FOLDER)/*/*_spec.js))
 
 MOBILE_TEST_FILES_DONE= \
@@ -89,18 +97,35 @@ MOBILE_TEST_FILES_DONE= \
 DESKTOP_TEST_FILES_DONE= \
 	$(foreach test_file,$(DESKTOP_TEST_FILES),$(DESKTOP_TRACK_FOLDER)/$(test_file).done)
 
+IDLE_TEST_FILES_DONE= \
+	$(foreach test_file,$(IDLE_TEST_FILES),$(IDLE_TRACK_FOLDER)/$(test_file).done)
+
 MULTIUSER_TESTS_DONE= \
 	$(MULTIUSER_TRACK_FOLDER)/multiuser_tests.done
 
 check-local: do-check
 	$(if $(wildcard $(ERROR_LOG)),$(error CypressError: some tests failed!))
 
-do-check: $(DESKTOP_TEST_FILES_DONE) $(MOBILE_TEST_FILES_DONE) $(MULTIUSER_TESTS_DONE)
+do-check: $(DESKTOP_TEST_FILES_DONE) $(MOBILE_TEST_FILES_DONE) $(IDLE_TEST_FILES_DONE) $(MULTIUSER_TESTS_DONE)
 	$(V)$(KILL_COMMAND) || true
 	$(if $(HEADLESS_BUILD),$(V)pkill Xvfb,)
 	$(if $(wildcard $(ERROR_LOG)),$(V)cat $(ERROR_LOG))
 
 $(PID_FILE): @JAILS_PATH@ $(NODE_BINS)
+	$(call cleanup_before_run)
+	$(call run_JS_error_check)
+	$(if $(HEADLESS_BUILD),$(call start_Xvfb),)
+	$(call start_coolwsd)
+
+setup_short_idle:
+	$(eval SHORT_IDLE=1)
+
+setup_regular_idle:
+	$(eval SHORT_IDLE=)
+
+start_short_idle_coolwsd: @JAILS_PATH@ $(NODE_BINS) setup_short_idle
+	$(V)$(KILL_COMMAND) || true
+	$(if $(HEADLESS_BUILD),$(V)pkill Xvfb,)
 	$(call cleanup_before_run)
 	$(call run_JS_error_check)
 	$(if $(HEADLESS_BUILD),$(call start_Xvfb),)
@@ -129,6 +154,16 @@ $(DESKTOP_TEST_FILES_DONE): $(PID_FILE)
 $(MULTIUSER_TESTS_DONE): $(PID_FILE) $(MOBILE_TEST_FILES_DONE)
 	$(call run_all_multiuser_tests)
 	$(V)mkdir -p $(dir $@) && touch $@
+
+$(IDLE_TEST_FILES_DONE): $(MULTIUSER_TESTS_DONE) start_short_idle_coolwsd $(PID_FILE)
+	$(if $(PARALLEL_BUILD),\
+		$(call run_idle_tests,$(subst $(IDLE_TRACK_FOLDER)/,,$(basename $@)),$(basename $@).log),\
+		$(call run_idle_tests))
+	$(if $(PARALLEL_BUILD),\
+		$(V)mkdir -p $(dir $@) && touch $@\
+		,\
+		$(V)$(foreach done_file,$(IDLE_TEST_FILES_DONE),mkdir -p $(dir $(done_file)) && touch $(done_file) &&) true\
+	)
 
 @JAILS_PATH@:
 	mkdir -p $@
@@ -171,6 +206,8 @@ define start_coolwsd_instance
 			--o:user_interface.mode=$(USER_INTERFACE) \
 			--o:accessibility.enable=$(A11Y_ENABLE) \
 			--o:security.enable_macros_execution=true \
+			$(if $(SHORT_IDLE),--o:per_view.out_of_focus_timeout_secs=1) \
+			$(if $(SHORT_IDLE),--o:per_view.idle_timeout_secs=7) \
 			--port=$(FREE_PORT) \
 			--pidfile=$(PID_FILE) \
 			--o:logging.file.property[0]=$(COOLWSD_LOG) \
@@ -348,6 +385,71 @@ define run_desktop_tests
 		$(if $(1),$(call check_spec_existence,$(1),desktop))\
 		$(call run_test_headless,\
 			$(DESKTOP_CONFIG),$(ENV_EXTENDED),$(SPEC_FILE))\
+	)
+endef
+
+################
+# Idle tests.
+################
+
+check-idle: @JAILS_PATH@ $(NODE_BINS) start_short_idle_coolwsd $(PID_FILE)
+	$(call run_idle_tests,$(spec))
+	$(if $(HEADLESS_BUILD),$(V)pkill Xvfb,)
+	$(V)$(KILL_COMMAND) || true
+
+run-idle: @JAILS_PATH@ $(NODE_BINS) start_short_idle_coolwsd $(PID_FILE)
+	$(call run_interactive_idle,$(spec)) || true
+	$(V)$(KILL_COMMAND) || true
+
+IDLE_CONFIG = \
+	specPattern=$(IDLE_TEST_FOLDER)/**/*_spec.js,supportFile=$(SUPPORT_FILE),userAgent=$(IDLE_USER_AGENT)
+
+IDLE_ENV = \
+	DATA_FOLDER=$(IDLE_DATA_FOLDER),DATA_WORKDIR=$(IDLE_DATA_WORKDIR),WSD_VERSION_HASH=$(COOLWSD_VERSION_HASH),SERVER=$(COOLWSD_SERVER),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION),SCREENSHOT_FOLDER=$(abs_srcdir)/cypress/screenshots,IMAGES_FOLDER=$(abs_top_srcdir)/browser/images/help/en/
+
+IDLE_INCLUDE_TAGS = \
+	tagdesktop,$(A11Y_TAG)
+
+# Run one idle test / all idle tests in interactive test runner.
+# Parameters:
+# 1 - spec (optional):	test file to run, if not specified all idle tests are run.
+define run_interactive_idle
+	$(V)echo "Open cypress with idle tests..."
+	$(V)echo
+	$(eval CYPRESS_INCLUDE_TAGS=$(IDLE_INCLUDE_TAGS))
+	$(V)echo Cypress tags: $(CYPRESS_INCLUDE_TAGS)
+	$(V)echo
+	$(eval export CYPRESS_INCLUDE_TAGS)
+	$(if $(1),\
+		$(eval SPEC_FILE=$(IDLE_TEST_FOLDER)/$(1))\
+		$(call check_spec_existence,$(1),idle)\
+		$(call run_interactive_single,$(IDLE_CONFIG),$(IDLE_ENV),$(SPEC_FILE))\
+	,\
+		$(call run_interactive_all,$(IDLE_CONFIG),$(IDLE_ENV))\
+	)
+endef
+
+# Run one idle test / all idle tests in headless mode.
+# Parameters:
+# 1 - spec (optional):	test file to run, if not specified all idle tests are run.
+# 2 - log (optional):	log file for cypress run, needed for parallel build only.
+# 3 - +env (optional):	additional env variables (will be appended to $(IDLE_ENV).
+define run_idle_tests
+	$(V)echo $(if $(1),"Running cypress idle test: $(1)","Running cypress idle tests...")
+	$(V)echo
+	$(eval CYPRESS_INCLUDE_TAGS=$(IDLE_INCLUDE_TAGS))
+	$(V)echo Cypress tags: $(CYPRESS_INCLUDE_TAGS)
+	$(V)echo
+	$(eval export CYPRESS_INCLUDE_TAGS)
+	$(eval ENV_EXTENDED=$(IDLE_ENV)$(if $(3),$(COMMA)$(3)))
+	$(if $(and $(PARALLEL_BUILD), $(1)),\
+		$(V)$(call run_test_parallel,\
+			$(IDLE_CONFIG),$(ENV_EXTENDED),$(1),idle,$(2))\
+	,\
+		$(eval SPEC_FILE=$(if $(1),$(IDLE_TEST_FOLDER)/$(1)))\
+		$(if $(1),$(call check_spec_existence,$(1),idle))\
+		$(call run_test_headless,\
+			$(IDLE_CONFIG),$(ENV_EXTENDED),$(SPEC_FILE))\
 	)
 endef
 
@@ -586,6 +688,8 @@ do-run-cov: @JAILS_PATH@ $(NODE_BINS)
 	$(call run_mobile_tests,,,COVERAGE_RUN="1")
 	$(call run_all_multiuser_tests,COVERAGE_RUN="1")
 	$(V)$(KILL_COMMAND) || true
+	$(call run_idle_tests,,,COVERAGE_RUN="1")
+	$(V)$(KILL_COMMAND) || true
 
 ####################
 # General functions.
@@ -669,11 +773,12 @@ endef
 #
 # Parameters:
 # 1 - spec:	      test file path (e.g. make check-mobile spec=...)
-# 2 - test type:      mobile, desktop or multi test.
+# 2 - test type:      mobile, desktop, idle or multi test.
 define check_spec_existence
 	$(eval TEST_FILES=$(if $(filter mobile,$(2)),$(MOBILE_TEST_FILES),\
 				$(if $(filter desktop,$(2)),$(DESKTOP_TEST_FILES),\
-				$(if $(filter multi,$(2)),$(MULTIUSER_TEST_FILES)))))
+				$(if $(filter idle,$(2)),$(IDLE_TEST_FILES),\
+				$(if $(filter multi,$(2)),$(MULTIUSER_TEST_FILES))))))
 	$(if $(filter $(1),$(TEST_FILES)),,$(error CypressError: Can't find the given spec file!))
 
 endef
