@@ -359,6 +359,7 @@ m4_ifelse(MOBILEAPP,[true],
       window.deeplEnabled = false;
       window.zoteroEnabled = false;
       window.savedUIState = false;
+      window.wasmEnabled = false;
       window.indirectionUrl='';],
      [window.host = '%HOST%';
       window.serviceRoot = '%SERVICE_ROOT%';
@@ -389,6 +390,7 @@ m4_ifelse(MOBILEAPP,[true],
       window.deeplEnabled = %DEEPL_ENABLED%;
       window.zoteroEnabled = %ZOTERO_ENABLED%;
       window.savedUIState = %SAVED_UI_STATE%;
+      window.wasmEnabled = %WASM_ENABLED%;
       window.indirectionUrl='%INDIRECTION_URL%';])
 
 // This is GLOBAL_JS:

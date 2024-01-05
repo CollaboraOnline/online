@@ -97,6 +97,7 @@ data = data.replace(/%HEXIFY_URL%/g, '""');
 data = data.replace(/%CHECK_FILE_INFO_OVERRIDE%/g, 'false');
 data = data.replace(/%DEEPL_ENABLED%/g, 'false');
 data = data.replace(/%ZOTERO_ENABLED%/g, 'false');
+data = data.replace(/%WASM_ENABLED%/g, 'false');
 data = data.replace(/%INDIRECTION_URL%/g, '');
 
 window = new JSDOM(data, {
