@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-01-05 13:07+0200\n"
-"PO-Revision-Date: 2024-01-01 02:08+0000\n"
+"PO-Revision-Date: 2024-01-05 14:17+0000\n"
 "Last-Translator: \"PhD. Ayhan YALÇINSOY\" <ayhanyalcinsoy@pisilinux.org>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/collabora-online/"
 "help/tr/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.4-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:20-5
 msgid "Keyboard Shortcuts"
@@ -511,9 +511,8 @@ msgstr "İmleci bir önceki paragrafın başlangıcına taşı"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:74-95
 #: html/cool-help.html%2Bdiv.div.table.tr.td:217-95
 #: html/cool-help.html%2Bdiv.div.table.tr.td:274-95
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Up</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Yukarı Ok"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Yukarı Ok</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:75-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:218-18
@@ -524,13 +523,12 @@ msgstr "Paragrafın başlangıcına kadar seç"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:75-77
 #: html/cool-help.html%2Bdiv.div.table.tr.td:218-77
 #: html/cool-help.html%2Bdiv.div.table.tr.td:275-77
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Arrow Up</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>Yukarı Ok"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Yukarı Ok</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:76-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:219-18
