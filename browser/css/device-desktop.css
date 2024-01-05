@@ -29,8 +29,8 @@
 .button-secondary:hover,
 button:not(.ui-corner-all):not(.button-primary):not(.unobutton):not(.form-field-button):hover {
 	cursor: pointer;
-	color: var(--color-text-darker) !important;
-	background-color: var(--color-background-lighter) !important;
+	color: var(--color-text-darker);
+	background-color: var(--color-background-lighter);
 	border: 1px solid var(--color-border-darker);
 }
 
