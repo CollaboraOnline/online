@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-01-05 13:07+0100\n"
-"PO-Revision-Date: 2023-10-09 13:26+0000\n"
-"Last-Translator: Mike Kaganski <mikekaganski@gmail.com>\n"
+"PO-Revision-Date: 2024-01-05 14:17+0000\n"
+"Last-Translator: Mike Kaganski <mikekaganski@hotmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ru/>\n"
-"Language: \n"
+"Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 5.1-dev\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Weblate 5.4-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -373,15 +373,15 @@ msgstr " с"
 
 #: js/global.js:865
 msgid "Cluster is scaling, retrying..."
-msgstr ""
+msgstr "Кластер масштабируется, повторная попытка..."
 
 #: js/global.js:867
 msgid "Document is migrating to new server, retrying..."
-msgstr ""
+msgstr "Документ переносится на новый сервер, повторная попытка..."
 
 #: js/global.js:869
 msgid "Failed to get RouteToken from controller"
-msgstr ""
+msgstr "Не удалось получить RouteToken от контроллера"
 
 #: js/w2ui-1.5.rc1.js:3003
 msgid "Recent"
@@ -405,11 +405,11 @@ msgstr "Открыть ссылку"
 
 #: src/control/Control.AlertDialog.js:64
 msgid "Copied external sources are not allowed"
-msgstr ""
+msgstr "Скопированные внешние источники не разрешены"
 
 #: src/control/Control.AlertDialog.js:65
 msgid "It seems you have copied a selection that includes external images."
-msgstr ""
+msgstr "Похоже, Вы скопировали выделение, включающее внешние изображения."
 
 #: src/control/Control.AlertDialog.js:66
 msgid ""
@@ -417,24 +417,29 @@ msgid ""
 "possible. Please right click in the image, choose \"Copy Image\" and paste "
 "it into the document instead."
 msgstr ""
+"Загрузка внешних ресурсов запрещена, но можно вставлять изображения. "
+"Пожалуйста, щёлкните правой кнопкой мыши по изображению, выберите "
+"\"Скопировать изображение\", и вставьте в документ."
 
 #: src/control/Control.AlertDialog.js:70
 msgid "External data source not allowed"
-msgstr ""
+msgstr "Внешний источник данных не разрешён"
 
 #: src/control/Control.AlertDialog.js:71
 msgid "It seems you have tried to insert external data."
-msgstr ""
+msgstr "Похоже, Вы пытаетесь вставить внешние данные."
 
 #: src/control/Control.AlertDialog.js:72
 msgid ""
 "Selected external data source is forbidden. Please contact the system "
 "administrator."
 msgstr ""
+"Выделенный внешний источник данных запрещён. Пожалуйста, обратитесь к "
+"системному администратору."
 
 #: src/control/Control.AlertDialog.js:84
 msgid "Don't show this again"
-msgstr ""
+msgstr "Не показывать снова"
 
 #: src/control/Control.AlertDialog.js:100
 msgid "The server encountered a %0 error while parsing the %1 command."
@@ -496,13 +501,15 @@ msgstr "Отменить"
 
 #: src/control/Control.DownloadProgress.js:52
 msgid "Download Selection"
-msgstr ""
+msgstr "Загрузить выделение"
 
 #: src/control/Control.DownloadProgress.js:57
 msgid ""
 "If you want to share large elements outside of %productName it's necessary "
 "to first download them."
 msgstr ""
+"Если Вы хотите предоставить доступ к большим элементам вне %productName, "
+"необходимо сначала загрузить их."
 
 #: src/control/Control.DownloadProgress.js:70
 #: src/control/Control.NotebookbarCalc.js:208
@@ -513,7 +520,7 @@ msgstr "Скачать"
 
 #: src/control/Control.DownloadProgress.js:89
 msgid "Downloading clipboard content"
-msgstr ""
+msgstr "Загрузить содержимое буфера обмена"
 
 #: src/control/Control.DownloadProgress.js:96
 #: src/control/Control.DownloadProgress.js:121
@@ -523,20 +530,20 @@ msgstr "Копировать"
 
 #: src/control/Control.DownloadProgress.js:119
 msgid "Download completed and ready to be copied to clipboard."
-msgstr ""
+msgstr "Данные загружены и готовы для копирования в буфер обмена."
 
 #: src/control/Control.DownloadProgress.js:120
 msgid ""
 "From now on clipboard notifications will discreetly appear at the bottom."
-msgstr ""
+msgstr "Теперь сообщения буфера обмена будут кратковременно появляться внизу."
 
 #: src/control/Control.DownloadProgress.js:273
 msgid "Content copied to clipboard"
-msgstr ""
+msgstr "Содержимое скопировано в буфер обмена"
 
 #: src/control/Control.DownloadProgress.js:317
 msgid "Download failed"
-msgstr ""
+msgstr "Сбой загрузки"
 
 #: src/control/Control.FormulaBar.js:54
 msgid "cell address"
@@ -997,7 +1004,7 @@ msgstr "Свойства"
 #: src/control/Control.Menubar.js:349 src/control/Control.Menubar.js:967
 #: src/control/Control.NotebookbarWriter.js:447
 msgid "Voice Over"
-msgstr ""
+msgstr "Чтение вслух"
 
 #: src/control/Control.Menubar.js:362
 #: src/control/Control.NotebookbarWriter.js:413
@@ -1130,32 +1137,32 @@ msgstr "Файл CSV (.csv)"
 #: src/control/Control.Menubar.js:803
 #: src/control/Control.NotebookbarBuilder.js:812
 msgid "Condition..."
-msgstr ""
+msgstr "Условие..."
 
 #: src/control/Control.Menubar.js:804
 #: src/control/Control.NotebookbarBuilder.js:813
 msgid "Greater than..."
-msgstr ""
+msgstr "Больше чем..."
 
 #: src/control/Control.Menubar.js:805
 #: src/control/Control.NotebookbarBuilder.js:814
 msgid "Less than..."
-msgstr ""
+msgstr "Меньше чем..."
 
 #: src/control/Control.Menubar.js:806
 #: src/control/Control.NotebookbarBuilder.js:815
 msgid "Equal to..."
-msgstr ""
+msgstr "Равно..."
 
 #: src/control/Control.Menubar.js:807
 #: src/control/Control.NotebookbarBuilder.js:816
 msgid "Between..."
-msgstr ""
+msgstr "Между..."
 
 #: src/control/Control.Menubar.js:809
 #: src/control/Control.NotebookbarBuilder.js:818
 msgid "More conditions..."
-msgstr ""
+msgstr "Другие условия..."
 
 #: src/control/Control.Menubar.js:917 src/control/Control.Menubar.js:982
 #: src/control/Control.Menubar.js:1046 src/control/Control.Menubar.js:1100
@@ -1540,7 +1547,6 @@ msgid "Image (.png)"
 msgstr "Изображение (.png)"
 
 #: src/control/Control.NotebookbarDraw.js:1032
-#, fuzzy
 msgid "Page Layout"
 msgstr "Разметка страницы"
 
@@ -1571,7 +1577,7 @@ msgstr "Документ EPUB (.epub)"
 
 #: src/control/Control.NotebookbarWriter.js:386
 msgid "Go Online"
-msgstr ""
+msgstr "Переключиться в режим онлайн"
 
 #: src/control/Control.NotebookbarWriter.js:1340
 msgid "Rich Text"
@@ -1799,11 +1805,11 @@ msgstr "Скрыть меню"
 
 #: src/control/Control.UIManager.js:164
 msgid "Enter new name"
-msgstr ""
+msgstr "Введите новое имя"
 
 #: src/control/Control.UIManager.js:792
 msgid "Show Menu"
-msgstr ""
+msgstr "Показать меню"
 
 #: src/control/Control.UserList.js:11
 msgid "%user has joined"
@@ -1991,7 +1997,7 @@ msgstr ""
 
 #: src/control/Permission.js:18 src/control/Permission.js:19
 msgid "Edit document"
-msgstr ""
+msgstr "Редактировать документ"
 
 #: src/control/Permission.js:76
 msgid "The document could not be locked, and is opened in read-only mode."
@@ -2256,7 +2262,7 @@ msgstr "Документ переименовывается и вскоре пе
 
 #: src/core/Socket.js:1131
 msgid "The document is switching to Offline mode and will reload shortly"
-msgstr ""
+msgstr "Документ переключается в режим офлайн и скоро будет перезагружен"
 
 #: src/core/Socket.js:1236
 msgid "Exported to storage"
@@ -2306,11 +2312,11 @@ msgstr "Сервер был отключен."
 
 #: src/docstate.js:82
 msgid "Standard"
-msgstr ""
+msgstr "Стандартная"
 
 #: src/docstate.js:93
 msgid "Theme colors"
-msgstr ""
+msgstr "Цвета темы"
 
 #: src/errormessages.js:22
 msgid "No disk space left on server."
@@ -2447,12 +2453,17 @@ msgid ""
 "administrator. For more info on proxy configuration please checkout https://"
 "sdk.collaboraonline.com/docs/installation/Proxy_settings.html"
 msgstr ""
+"Не удалось установить соединение, или соединение было неожиданно прервано. "
+"Конфигурация обратного прокси может быть некорректна; пожалуйста, обратитесь "
+"к администратору. Дополнительные сведения о конфигурации прокси можно найти "
+"на https://sdk.collaboraonline.com/docs/installation/Proxy_settings.html"
 
 #: src/errormessages.js:40
 msgid ""
 "Failed to establish socket connection or socket connection closed "
 "unexpectedly."
 msgstr ""
+"Не удалось установить соединение, или соединение было неожиданно прервано."
 
 #: src/errormessages.js:43
 msgid "Failed to load document."
@@ -2542,7 +2553,7 @@ msgstr "Копировать ссылку"
 
 #: src/layer/tile/CanvasTileLayer.js:2520
 msgid "Select link text"
-msgstr ""
+msgstr "Выделить текст ссылки"
 
 #: src/layer/tile/CanvasTileLayer.js:2531
 msgid "Edit link"
@@ -2558,11 +2569,12 @@ msgstr "Нет комментариев"
 
 #: src/layer/tile/CommentListSection.ts:138
 msgid "A comment is being edited"
-msgstr ""
+msgstr "Комментарий редактируется"
 
 #: src/layer/tile/CommentListSection.ts:139
 msgid "Please save or discard the comment currently being edited."
 msgstr ""
+"Пожалуйста, сохраните или отмените изменения редактируемых комментариев."
 
 #: src/layer/tile/CommentListSection.ts:922
 msgid "Modify"
