@@ -57,6 +57,10 @@
 #include <string>
 #include <CommandControl.hpp>
 
+#ifdef IOS
+#include "DocumentViewController.h"
+#endif
+
 using Poco::JSON::Object;
 using Poco::JSON::Parser;
 using Poco::URI;
@@ -3162,6 +3166,13 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
 
         // it was download request
 
+#ifdef IOS
+        NSURL *payloadURL = [NSURL URLWithString:[NSString stringWithUTF8String:payload.c_str()]];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            CODocument *document = DocumentData::get(_docManager->getMobileAppDocId()).coDocument;
+            [[document viewController] exportFileURL:payloadURL];
+        });
+#else
         // Register download id -> URL mapping in the DocumentBroker
         auto url = std::string("../../") + payload.substr(payload.find_last_of("/"));
         auto downloadId = Util::rng::getFilename(64);
@@ -3169,6 +3180,7 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
         _docManager->sendFrame(docBrokerMessage.c_str(), docBrokerMessage.length());
         std::string message = "downloadas: downloadid=" + downloadId + " port=" + std::to_string(ClientPortNumber) + " id=export";
         sendTextFrame(message);
+#endif
         break;
     }
     case LOK_CALLBACK_A11Y_FOCUS_CHANGED:
