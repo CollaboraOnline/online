@@ -249,7 +249,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'id': 'downloadas',
 				'class': 'unodownloadas',
 				'type': 'bigmenubartoolitem',
-				'text': _('Download'),
+				'text': !window.ThisIsAMobileApp ? _('Download') : _('Save As'),
 				'accessibility': { focusBack: true,	combination: 'A', de: 'M' }
 			});
 		} else if (!hideDownload) {
