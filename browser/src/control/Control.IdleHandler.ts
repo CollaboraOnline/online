@@ -18,6 +18,16 @@ class IdleHandler {
     map: any;
 	dimId: string = 'inactive_user_message';
 
+	getIdleMessage(): string {
+		if (this.map['wopi'] && this.map['wopi'].DisableInactiveMessages) {
+			return '';
+		} else if (window.mode.isDesktop()) {
+			return _('Idle document - please click to reload and resume editing');
+		} else {
+			return _('Idle document - please tap to reload and resume editing');
+		}
+	}
+
 	isDimActive(): boolean {
 		return !!document.getElementById(this.map.uiManager.generateModalId(this.dimId));
 	}
@@ -28,6 +38,8 @@ class IdleHandler {
 	}
 
 	_activate() {
+		window.app.console.debug('IdleHandler: _activate()');
+
 		if (this._serverRecycling || this._documentIdle) {
 			return false;
 		}
@@ -59,7 +71,11 @@ class IdleHandler {
 		return false;
 	}
 
-	_dim(message: string) {
+	_dim() {
+		const message = this.getIdleMessage();
+
+		window.app.console.debug('IdleHandler: _dim(' + message + ')');
+
 		this._active = false;
 		var map = this.map;
 
@@ -102,6 +118,8 @@ class IdleHandler {
 	}
 
 	_deactivate() {
+		window.app.console.debug('IdleHandler: _deactivate()');
+
 		if (this._serverRecycling || this._documentIdle || !this.map._docLoaded) {
 			return;
 		}
