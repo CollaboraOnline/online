@@ -383,7 +383,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 					'id': 'togglewasm',
 					'class': 'togglewasm',
 					'type': 'bigcustomtoolitem',
-					'text': _(window.ThisIsTheEmscriptenApp ? 'Go Online' : 'Go Offline'),
+					'text': _(window.ThisIsTheEmscriptenApp ? _('Go Online') : _('Go Offline')),
 					'accessibility': { focusBack: true, combination: 'RN' }
 				}
 			]
