@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-01-05 13:07+0100\n"
-"PO-Revision-Date: 2023-12-23 15:06+0000\n"
+"PO-Revision-Date: 2024-01-05 18:03+0000\n"
 "Last-Translator: Sebastiaan Veld <sebastiaan.veld@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/collabora-online/"
 "ui/nl/>\n"
-"Language: \n"
+"Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1808,11 +1808,11 @@ msgstr "Menu verbergen"
 
 #: src/control/Control.UIManager.js:164
 msgid "Enter new name"
-msgstr ""
+msgstr "Geef nieuwe naam op"
 
 #: src/control/Control.UIManager.js:792
 msgid "Show Menu"
-msgstr ""
+msgstr "Menu weergeven"
 
 #: src/control/Control.UserList.js:11
 msgid "%user has joined"
@@ -1979,15 +1979,15 @@ msgstr "Er is een fout opgetreden tijdens het ophalen notities"
 
 #: src/control/Control.Zotero.js:1386
 msgid "Updated citations"
-msgstr "Geactualiseerde citaten"
+msgstr "Citaten zijn bijgewerkt"
 
 #: src/control/Control.Zotero.js:1388
 msgid "Citations update failed"
-msgstr "Actualiseren citaten mislukt"
+msgstr "Bijwerken citaten mislukt"
 
 #: src/control/Control.Zotero.js:1392
 msgid "Updating citations"
-msgstr "Citaten actualiseren"
+msgstr "Citaten worden bijgewerkt"
 
 #: src/control/Control.Zotero.js:1447
 msgid ""
@@ -2469,6 +2469,8 @@ msgid ""
 "Failed to establish socket connection or socket connection closed "
 "unexpectedly."
 msgstr ""
+"Socketverbinding kon niet tot stand worden gebracht of socketverbinding "
+"onverwacht gesloten."
 
 #: src/errormessages.js:43
 msgid "Failed to load document."
@@ -2562,7 +2564,7 @@ msgstr "Linklocatie kopiëren"
 
 #: src/layer/tile/CanvasTileLayer.js:2520
 msgid "Select link text"
-msgstr ""
+msgstr "Selecteer linktekst"
 
 #: src/layer/tile/CanvasTileLayer.js:2531
 msgid "Edit link"
