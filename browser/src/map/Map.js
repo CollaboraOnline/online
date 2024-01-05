@@ -424,6 +424,24 @@ L.Map = L.Evented.extend({
 		}
 	},
 
+	showDocumentTooltip: function(tooltipInfo, elem) {
+		var split = tooltipInfo.rectangle.split(',');
+		var latlng = this._docLayer._twipsToLatLng(new L.Point(+split[0], +split[1]));
+		var pt = this.latLngToContainerPoint(latlng);
+
+		elem.tooltip();
+		elem.tooltip('enable');
+		elem.tooltip('option', 'content', tooltipInfo.text);
+		elem.tooltip('option', 'items', elem[0]);
+		elem.tooltip('option', 'position', { my: 'left bottom',  at: 'left+' + pt.x + ' top+' + pt.y, collision: 'fit fit' });
+		elem.tooltip('open');
+		document.addEventListener('mousemove', function closeTooltip() {
+			elem.tooltip('close');
+			elem.tooltip('disable');
+			document.removeEventListener('mousemove', closeTooltip);
+		});
+	},
+
 	updateModificationIndicator: function(newModificationTime) {
 		var timeout;
 
