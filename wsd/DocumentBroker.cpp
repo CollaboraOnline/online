@@ -4204,7 +4204,7 @@ void DocumentBroker::dumpState(std::ostream& os)
 
 #if !MOBILEAPP
     // Bit nasty - need a cleaner way to dump state.
-    os << "\n  Sessions [" << _sessions.size() << "]:";
+    os << "\n  Document broker sessions [" << _sessions.size() << "], should duplicate the above:";
     for (const auto &it : _sessions)
     {
         auto proto = it.second->getProtocol();
