@@ -734,7 +734,7 @@ pot:
 		src/control/Control.DownloadProgress.js \
 		src/control/Control.FormulaBar.js \
 		src/control/Control.FormulaBarJSDialog.js \
-		src/control/jsdialog/Widget.MobileBorderSelector.js \
+		src/control/Control.IdleHandler.ts \
 		src/control/Control.JSDialogBuilder.js \
 		src/control/Control.LanguageDialog.js \
 		src/control/Control.Menubar.js \
@@ -767,6 +767,7 @@ pot:
 		src/control/Ruler.js \
 		src/control/Signing.js \
 		src/control/Toolbar.js \
+		src/control/jsdialog/Widget.MobileBorderSelector.js \
 		src/control/jsdialog/Widget.TreeView.js \
 		src/core/Socket.js \
 		src/docstate.js \
