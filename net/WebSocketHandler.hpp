@@ -11,13 +11,9 @@
 
 #pragma once
 
-#include <chrono>
-#include <memory>
-#include <vector>
-
+#include "common/Protocol.hpp"
 #include "common/Common.hpp"
 #include "common/Log.hpp"
-#include "common/TraceEvent.hpp"
 #include "common/Unit.hpp"
 #include "common/Util.hpp"
 #include "Socket.hpp"
@@ -27,6 +23,10 @@
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPResponse.h>
 #include <Poco/Net/WebSocket.h>
+
+#include <chrono>
+#include <memory>
+#include <vector>
 
 class WebSocketHandler : public ProtocolHandlerInterface
 {

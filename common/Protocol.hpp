@@ -11,19 +11,16 @@
 
 #pragma once
 
+#include <StringVector.hpp>
+#include <Util.hpp>
+
 #include <cstdint>
 #include <cstdlib>
 #include <cstring>
-#include <iomanip>
 #include <map>
-#include <regex>
-#include <sstream>
 #include <string>
 #include <string_view>
 #include <vector>
-
-#include <StringVector.hpp>
-#include <Util.hpp>
 
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKitEnums.h>

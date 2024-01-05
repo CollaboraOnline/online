@@ -11,17 +11,16 @@
 
 #pragma once
 
-#include <cmath>
 #include <ctime>
 #include <list>
 #include <memory>
+#include <regex>
 #include <set>
 #include <string>
 #include <utility>
 #include <Poco/URI.h>
 
 #include <common/Log.hpp>
-#include "Util.hpp"
 #include "net/WebSocketHandler.hpp"
 
 struct DocumentAggregateStats;

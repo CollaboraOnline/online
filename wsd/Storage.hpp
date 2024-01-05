@@ -14,7 +14,6 @@
 #pragma once
 
 #include <memory>
-#include <set>
 #include <string>
 #include <chrono>
 
@@ -22,7 +21,6 @@
 #include <Poco/Util/Application.h>
 #include <Poco/JSON/Object.h>
 
-#include "Auth.hpp"
 #include "HttpRequest.hpp"
 #include "COOLWSD.hpp"
 #include "Log.hpp"

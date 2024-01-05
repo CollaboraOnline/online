@@ -11,8 +11,6 @@
 
 #include <config.h>
 
-#include <cassert>
-
 #include <helpers.hpp>
 #include <Poco/Util/Application.h>
 #include <Poco/Net/StreamSocket.h>

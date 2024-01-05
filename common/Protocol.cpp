@@ -13,10 +13,10 @@
 
 #include "Protocol.hpp"
 
-#include <cassert>
 #include <cstring>
 #include <map>
 #include <string>
+#include <string_view>
 
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKitEnums.h>

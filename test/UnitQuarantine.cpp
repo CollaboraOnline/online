@@ -13,10 +13,7 @@
 
 #include "WopiTestServer.hpp"
 #include "WOPIUploadConflictCommon.hpp"
-#include "Log.hpp"
 #include "Unit.hpp"
-#include "UnitHTTP.hpp"
-#include "helpers.hpp"
 #include "lokassert.hpp"
 #include "testlog.hpp"
 #include "FileUtil.hpp"

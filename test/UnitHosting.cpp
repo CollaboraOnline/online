@@ -14,8 +14,6 @@
 #include <net/HttpRequest.hpp>
 
 #include <memory>
-#include <ostream>
-#include <set>
 #include <string>
 
 #include <Poco/DOM/AutoPtr.h>

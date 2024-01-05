@@ -14,21 +14,17 @@
 #include <chrono>
 #include <cstdint>
 #include <iostream>
-#include <fstream>
 #include <memory>
 #include <condition_variable>
 #include <mutex>
-#include <sstream>
 #include <string>
 
-#include "Common.hpp"
 #include <common/MessageQueue.hpp>
 #include "NetUtil.hpp"
 #include "SigUtil.hpp"
 #include <net/Socket.hpp>
 #include <net/HttpRequest.hpp>
 #include <net/WebSocketHandler.hpp>
-#include <utility>
 #if ENABLE_SSL
 #include <net/SslSocket.hpp>
 #endif

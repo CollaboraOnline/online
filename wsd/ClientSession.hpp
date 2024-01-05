@@ -13,15 +13,12 @@
 
 #include "Session.hpp"
 #include "Storage.hpp"
-#include "MessageQueue.hpp"
 #include "SenderQueue.hpp"
 #include "ServerURL.hpp"
 #include "DocumentBroker.hpp"
 #include <Poco/URI.h>
 #include <Rectangle.hpp>
 #include <deque>
-#include <map>
-#include <list>
 #include <utility>
 #include "Util.hpp"
 

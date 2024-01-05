@@ -11,19 +11,14 @@
 
 #pragma once
 
-#include <csignal>
-
 #include <atomic>
 #include <chrono>
-#include <condition_variable>
 #include <cstddef>
-#include <deque>
 #include <map>
 #include <memory>
 #include <mutex>
 #include <sstream>
 #include <string>
-#include <thread>
 #include <utility>
 
 #include <Poco/URI.h>

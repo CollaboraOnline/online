@@ -20,9 +20,7 @@
 #include <chrono>
 #include <memory>
 #include <ostream>
-#include <set>
 #include <string>
-#include <thread>
 
 #include <Poco/Exception.h>
 #include <Poco/URI.h>

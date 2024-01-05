@@ -15,7 +15,6 @@
 #pragma once
 
 #include <atomic>
-#include <exception>
 #include <stdexcept>
 #include <string>
 
