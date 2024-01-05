@@ -4,7 +4,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-01-05 13:07+0200\n"
 "PO-Revision-Date: 2024-01-05 18:03+0000\n"
-"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
+"Last-Translator: gallegonovato <fran-carro@hotmail.es>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/collabora-online/"
 "help/es/>\n"
 "Language: es\n"
@@ -673,9 +673,8 @@ msgstr "Ir al final del documento"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:137-111
 #: html/cool-help.html%2Bdiv.div.table.tr.td:229-66
 #: html/cool-help.html%2Bdiv.div.table.tr.td:286-66
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>End</kbd>"
-msgstr "Ctrl + Fin"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>End</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:87-18
 msgid "Go and select text to end of document"
@@ -684,11 +683,12 @@ msgstr "Ir y seleccionar texto hasta el final del documento"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:87-82
 #: html/cool-help.html%2Bdiv.div.table.tr.td:230-81
 #: html/cool-help.html%2Bdiv.div.table.tr.td:287-81
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>End</kbd>"
-msgstr "Ctrl + Mayús + Fin"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>End</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:88-18
 msgid "Move the view up one page"
@@ -703,18 +703,16 @@ msgid "Switch cursor between text and header"
 msgstr "Desplazar el cursor entre el texto y la cabecera"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:89-82
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp</kbd>"
-msgstr "Ctrl + Re Pág"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:90-18
 msgid "Extend the selection up one page"
 msgstr "Ampliar la selección una página hacia arriba"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:90-77
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp</kbd>"
-msgstr "Mayús + Re Pág"
+msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:91-18
 msgid "Move the view down one page"
@@ -729,27 +727,24 @@ msgid "Switch cursor between text and footer"
 msgstr "Desplazar el cursor entre el texto y el pie de página"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:92-82
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Av Pág"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:93-18
 msgid "Extend the selection down one page"
 msgstr "Ampliar la selección una página hacia abajo"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:93-79
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown</kbd>"
-msgstr "Mayús</kbd><span class=\"kbd--plus\">+</span><kbd>Av Pág"
+msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:94-18
 msgid "Delete to beginning of word"
 msgstr "Eliminar hasta el principio de una palabra"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:94-72
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Backspace</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Retroceso"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Retroceso</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:95-18
 msgid "Delete to end of word"
