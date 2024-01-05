@@ -630,6 +630,26 @@ static IMP standardImpOfInputAccessoryView = nil;
                    });
 }
 
+- (void)exportFileURL:(NSURL *)fileURL {
+    if (!fileURL || ![fileURL isFileURL])
+        return;
+
+    struct stat statBuf;
+    if (stat([[fileURL path] UTF8String], &statBuf) == -1) {
+        LOG_ERR("Could apparently export '" <<  [[fileURL path] UTF8String] << "'");
+        return;
+    }
+
+    downloadAsTmpURL = fileURL;
+
+    // Use a UIDocumentPickerViewController to ask the user where to store
+    // the exported document.
+    UIDocumentPickerViewController *picker =
+        [[UIDocumentPickerViewController alloc] initForExportingURLs:[NSArray arrayWithObject:fileURL] asCopy:YES];
+    picker.delegate = self;
+    [self presentViewController:picker animated:YES completion:nil];
+}
+
 @end
 
 // vim:set shiftwidth=4 softtabstop=4 expandtab:
