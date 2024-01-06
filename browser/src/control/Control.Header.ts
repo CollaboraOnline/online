@@ -42,6 +42,7 @@ export class Header extends CanvasSectionObject {
 	_headerInfo: HeaderInfo;
 	_dragEntry: HeaderEntryData;
 	_mouseOverEntry: HeaderEntryData;
+	_prevMouseOverEntry: HeaderEntryData;
 	_startSelectionEntry: HeaderEntryData;
 	_lastSelectedIndex: number;
 	_hitResizeArea: boolean;
@@ -61,7 +62,7 @@ export class Header extends CanvasSectionObject {
 		const baseElem = document.getElementsByTagName('body')[0];
 		const elem = L.DomUtil.create('div', className, baseElem);
 		this._textColor = L.DomUtil.getStyle(elem, 'color');
-		this._backgroundColor = L.DomUtil.getStyle(elem, 'background-color');
+		this._backgroundColor = getComputedStyle(document.body).getPropertyValue('--color-background-darker');
 		const fontFamily = L.DomUtil.getStyle(elem, 'font-family');
 		this.getFont = function() {
 			const selectedSize = this._getFontSize();
@@ -88,7 +89,7 @@ export class Header extends CanvasSectionObject {
 	_initHeaderEntryHoverStyles (className: string): void {
 		const baseElem = document.getElementsByTagName('body')[0];
 		const elem = L.DomUtil.create('div', className, baseElem);
-		this._hoverColor = L.DomUtil.getStyle(elem, 'background-color');
+		this._hoverColor = getComputedStyle(document.body).getPropertyValue('--color-background-lighter');
 		L.DomUtil.remove(elem);
 	}
 
@@ -475,6 +476,7 @@ export class Header extends CanvasSectionObject {
 
 		if (this._mouseOverEntry) {
 			this.containerObject.setPenPosition(this);
+			this._mouseOverEntry.isOver = false;
 			this.drawHeaderEntry(this._mouseOverEntry);
 			this._mouseOverEntry = null;
 		}
@@ -522,28 +524,28 @@ export class Header extends CanvasSectionObject {
 
 	onMouseMove (point: number[], dragDistance?: number[]): void {
 		const result = this._entryAtPoint(point); // Data related to current entry that the mouse is over now.
-		if (result) // Is mouse over an entry.
+		if (result) { // Is mouse over an entry.
+			this._prevMouseOverEntry = this._mouseOverEntry;
 			this._mouseOverEntry = result.entry;
+		}
 
 		if (!this.containerObject.isDraggingSomething()) { // If we are not dragging anything.
 			this._dragDistance = null;
 
 			// If mouse was over another entry previously, we draw that again (without mouse-over effect).
-			if (this._mouseOverEntry && (!result || result.entry.index !== this._mouseOverEntry.index)) {
+			if (this._prevMouseOverEntry && (result && result.entry.index !== this._prevMouseOverEntry.index)) {
 				this.containerObject.setPenPosition(this);
-				this._mouseOverEntry.isOver = false;
-				this.drawHeaderEntry(this._mouseOverEntry);
+				this._prevMouseOverEntry.isOver = false;
+				this.drawHeaderEntry(this._prevMouseOverEntry);
 			}
 
 			let isMouseOverResizeArea = false;
 
-			if (result) { // Is mouse over an entry.
-				this._mouseOverEntry.isOver = true;
-				this._lastMouseOverIndex = this._mouseOverEntry.index; // used by context menu
-				this.containerObject.setPenPosition(this);
-				this.drawHeaderEntry(result.entry);
-				isMouseOverResizeArea = result.hit;
-			}
+			this._mouseOverEntry.isOver = true;
+			this._lastMouseOverIndex = this._mouseOverEntry.index; // used by context menu
+			this.containerObject.setPenPosition(this);
+			this.drawHeaderEntry(result.entry);
+			isMouseOverResizeArea = result.hit;
 
 			// cypress mobile emulation sometimes triggers resizing unintentionally.
 			if (L.Browser.cypressTest)
@@ -559,7 +561,7 @@ export class Header extends CanvasSectionObject {
 			this._dragDistance = dragDistance;
 			this.containerObject.requestReDraw(); // Remove previously drawn line and paint a new one.
 
-			if (this._lastSelectedIndex == this._mouseOverEntry.index || this._dragEntry)
+			if (this._lastSelectedIndex == this._prevMouseOverEntry.index || this._dragEntry)
 				return;
 			const modifier = this._lastSelectedIndex ? UNOModifier.SHIFT : 0;
 			this._lastSelectedIndex = this._mouseOverEntry.index;
