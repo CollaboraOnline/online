@@ -152,36 +152,79 @@ export abstract class GroupBase extends CanvasSectionObject {
 		}
 	}
 
-	// If previous group is visible (expanded), current group's plus sign etc. will be drawn. If previous group is not expanded, current group's plus sign etc. won't be drawn.
-	_isPreviousGroupVisible (index: number, level: number): boolean {
-		if (level === 0) // First group's drawings are always drawn.
-			return true;
+	_isParentGroupVisible(group_: GroupEntry): boolean {
+		if (group_.hidden === false) {
+			if (group_.level > 0) {
+				// This recursive call is needed.
+				// Because first upper group may have been expanded and second upper group may have been collapsed.
+				// If one of the upper groups is not expanded, this function should return false.
+				if (this._isPreviousGroupVisible(group_.level, group_.startPos, group_.endPos, group_.hidden)) {
+					return true;
+				}
+				else {
+					return false;
+				}
+			}
+			else {
+				return true;
+			}
+		}
+		else {
+			return false;
+		}
+	}
 
+	// If previous group is visible (expanded), current group's plus sign etc. will be drawn. If previous group is not expanded, current group's plus sign etc. won't be drawn.
+	_isPreviousGroupVisible(level: number, startPos: number, endPos: number, hidden: boolean): boolean {
 		for (let i = 0; i < this._groups.length; i++) {
-			for (const group in this._groups[i]) {
-				if (Object.prototype.hasOwnProperty.call(this._groups[i], group)) {
-					const group_ = this._groups[i][group];
-					if (group_.level === level - 1 && group_.index === index) {
-						if (group_.hidden === false) {
-							if (group_.level > 0) {
-								// This recursive call is needed.
-								// Because first upper group may have been expanded and second upper group may have been collapsed.
-								// If one of the upper groups is not expanded, this function should return false.
-								if (this._isPreviousGroupVisible(group_.index, group_.level)) {
-									return true;
-								}
-								else {
-									return false;
-								}
+			var parentGroup;
+
+			// find the correct parent group level
+			if (i == level - 1) {
+				for (const group in this._groups[i]) {
+					if (Object.prototype.hasOwnProperty.call(this._groups[i], group)) {
+						const group_ = this._groups[i][group];
+
+						// parent group is expanded
+						if ((startPos != endPos) && (startPos >= group_.startPos && endPos <= group_.endPos)) {
+							return this._isParentGroupVisible(group_);
+						}
+						// parent group is collapsed and has a '-' sign
+						else if ((startPos == endPos) && hidden == false) {
+							if ((startPos == group_.startPos && endPos == group_.endPos)) {
+								parentGroup = group_;
+								// special condition: parent group is found, return.
+								return this._isParentGroupVisible(parentGroup);
 							}
-							else {
-								return true;
+							else if ((startPos == group_.startPos && endPos != group_.endPos)) {
+								parentGroup = group_;
+							}
+							else if ((startPos != group_.startPos && endPos == group_.endPos)) {
+								parentGroup = group_;
+							}
+							else if ((startPos > group_.startPos && endPos < group_.endPos)) {
+								parentGroup = group_;
 							}
 						}
-						else {
-							return false;
+						// parent group is collapsed and has a '+' sign
+						else if ((startPos == endPos) && hidden == true) {
+							if ((startPos == group_.startPos && endPos == group_.endPos)) {
+								parentGroup = group_;
+							}
+							else if ((startPos == group_.startPos && endPos != group_.endPos)) {
+								parentGroup = group_;
+							}
+							else if ((startPos != group_.startPos && endPos == group_.endPos)) {
+								parentGroup = group_;
+							}
+							else if ((startPos > group_.startPos && endPos < group_.endPos)) {
+								parentGroup = group_;
+							}
 						}
 					}
+				}
+				if (parentGroup !== undefined) {
+					return this._isParentGroupVisible(parentGroup);
 				}
 			}
 		}
@@ -198,8 +241,13 @@ export abstract class GroupBase extends CanvasSectionObject {
 				if (this._groups[i]) {
 					for (const group in this._groups[i]) {
 						if (Object.prototype.hasOwnProperty.call(this._groups[i], group)) {
-							if (this._isPreviousGroupVisible(this._groups[i][group].index, this._groups[i][group].level))
+							// always draw the first level
+							if (this._groups[i][group].level == 0) {
 								this.drawGroupControl(this._groups[i][group]);
+							}
+							else if (this._isPreviousGroupVisible(this._groups[i][group].level, this._groups[i][group].startPos, this._groups[i][group].endPos, this._groups[i][group].hidden)) {
+								this.drawGroupControl(this._groups[i][group]);
+							}
 						}
 					}
 				}
