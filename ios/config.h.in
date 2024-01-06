@@ -124,5 +124,8 @@
 /* Define to 1 if you have the ANSI C header files. */
 #define STDC_HEADERS 1
 
+/* Makes config variables conditionally static, only in non-debug builds, to allow for overriding them in unit-tests. */
+#undef CONFIG_STATIC
+
 /* Version number of package */
 /* #undef VERSION */
