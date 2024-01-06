@@ -12,11 +12,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-01-05 13:07+0100\n"
-"PO-Revision-Date: 2024-01-02 19:06+0000\n"
+"PO-Revision-Date: 2024-01-07 12:06+0000\n"
 "Last-Translator: Stanislav Horáček <stanislav.horacek@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/collabora-online/"
 "ui/cs/>\n"
-"Language: \n"
+"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1805,11 +1805,11 @@ msgstr "Skrýt nabídku"
 
 #: src/control/Control.UIManager.js:164
 msgid "Enter new name"
-msgstr ""
+msgstr "Zadejte nový název"
 
 #: src/control/Control.UIManager.js:792
 msgid "Show Menu"
-msgstr ""
+msgstr "Zobrazit nabídku"
 
 #: src/control/Control.UserList.js:11
 msgid "%user has joined"
@@ -2463,6 +2463,8 @@ msgid ""
 "Failed to establish socket connection or socket connection closed "
 "unexpectedly."
 msgstr ""
+"Nepodařilo se navázat spojení pomocí socketů nebo toto spojení bylo nečekaně "
+"ukončeno."
 
 #: src/errormessages.js:43
 msgid "Failed to load document."
@@ -2548,7 +2550,7 @@ msgstr "Zkopírovat umístění odkazu"
 
 #: src/layer/tile/CanvasTileLayer.js:2520
 msgid "Select link text"
-msgstr ""
+msgstr "Vyberte text odkazu"
 
 #: src/layer/tile/CanvasTileLayer.js:2531
 msgid "Edit link"
