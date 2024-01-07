@@ -23,7 +23,12 @@ L.ProgressOverlay = L.Layer.extend({
 		this._spinner = L.DomUtil.create('div', 'leaflet-progress-spinner', this._container);
 		this._spinnerCanvas = L.DomUtil.create('canvas', 'leaflet-progress-spinner-canvas', this._spinner);
 
-		var productName = (typeof brandProductName !== 'undefined') ? brandProductName : 'Collabora Online Development Edition (unbranded)';
+		var productName;
+		if (window.ThisIsAMobileApp) {
+			productName = window.MobileAppName;
+		} else {
+			productName = (typeof brandProductName !== 'undefined') ? brandProductName : 'Collabora Online Development Edition (unbranded)';
+		}
 		this._brandLabel = L.DomUtil.create('div', 'leaflet-progress-label brand-label', this._container);
 		this._brandLabel.innerHTML = productName;
 
