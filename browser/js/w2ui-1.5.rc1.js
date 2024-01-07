@@ -2915,22 +2915,18 @@ w2utils.event = {
 
         bindEvents(pal);
 
-        var hasPaletteSelector = window.app.map._docLayer._docType === 'text';
-
-        if (hasPaletteSelector) {
-            var updatePalette = function () {
-                var palette = $('#w2ui-overlay .color-palette-selector option:selected').get(0).value;
-                localStorage.setItem('colorPalette', palette);
-                var pal = generatePalette(palette, options);
-                $('#w2ui-overlay .w2ui-color').parent().html(getColorHTML(pal, options));
-                bindEvents(pal);
-                $('#w2ui-overlay .color-palette-selector')
-                    .on('change', updatePalette);
-            };
-
+        var updatePalette = function () {
+            var palette = $('#w2ui-overlay .color-palette-selector option:selected').get(0).value;
+            localStorage.setItem('colorPalette', palette);
+            var pal = generatePalette(palette, options);
+            $('#w2ui-overlay .w2ui-color').parent().html(getColorHTML(pal, options));
+            bindEvents(pal);
             $('#w2ui-overlay .color-palette-selector')
                 .on('change', updatePalette);
-        }
+        };
+
+        $('#w2ui-overlay .color-palette-selector')
+            .on('change', updatePalette);
 
         el.nav = function (direction) {
             switch (direction) {
@@ -2960,15 +2956,12 @@ w2utils.event = {
         function getColorHTML(pal, options) {
             var html = '';
 
-            var hasPaletteSelector = window.app.map._docLayer._docType === 'text';
             var currentPalette = localStorage && localStorage.colorPalette ? localStorage.colorPalette : 'StandardColors';
 
-            if (hasPaletteSelector) {
-                html += '<select class="color-palette-selector">';
-                for (var i in window.app.colorPalettes)
-                    html += '<option value="' + i + '" ' + (i === currentPalette ? 'selected="selected"' : '') + '>' + window.app.colorPalettes[i].name + '</option>';
-                html += '</select>';
-            }
+            html += '<select class="color-palette-selector">';
+            for (var i in window.app.colorPalettes)
+                html += '<option value="' + i + '" ' + (i === currentPalette ? 'selected="selected"' : '') + '>' + window.app.colorPalettes[i].name + '</option>';
+            html += '</select>';
 
             var detailedPalette = window.app.colorPalettes[currentPalette].colors
 
