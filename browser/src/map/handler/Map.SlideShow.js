@@ -156,7 +156,7 @@ L.Map.SlideShow = L.Handler.extend({
 			this._map.uiManager.showSnackbar(_('Presenting in window'),
 				_('Close Presentation'), 
 				function() {slideShowWindow.close();},
-				null /*5000*/, false, true);
+				-1, false, true);
 			return;
 		}
 		// Cypress Presentation
@@ -228,11 +228,12 @@ L.Map.SlideShow = L.Handler.extend({
 			_('OK'), null, false);
 	},
 
+
 	_onCloseSlideWindow: function(e) {
 		if (e.code === 'Escape') {
 			this.opener.focus();
 			this.close();
-			this._map.uiManager.closeSnackbar();
+			L.Map.uiManager.closeSnackbar();
 		}
 	}
 });
