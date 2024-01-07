@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-01-05 13:07+0200\n"
-"PO-Revision-Date: 2024-01-07 12:06+0000\n"
-"Last-Translator: gallegonovato <fran-carro@hotmail.es>\n"
+"PO-Revision-Date: 2024-01-08 23:06+0000\n"
+"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/collabora-online/"
 "help/es/>\n"
 "Language: es\n"
@@ -1106,7 +1106,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:142-164
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up</kbd>"
-msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up</kbd>"
+msgstr "<kbd>Mayús</kbd><span class=\"kbd--plus\">+</span><kbd>Re Pág</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:143-18
 msgid ""
@@ -1118,7 +1118,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:143-168
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down</kbd>"
-msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down</kbd>"
+msgstr "<kbd>Mayús</kbd><span class=\"kbd--plus\">+</span><kbd>Av Pág</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:144-18
 msgid ""
@@ -1132,9 +1132,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:144-245
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Left Arrow</kbd>"
-msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Flecha a la "
-"izquierda</kbd>"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>←</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:145-18
 msgid ""
@@ -1148,9 +1146,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:145-249
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Right Arrow</kbd>"
-msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Flecha a la "
-"derecha</kbd>"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>→</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:146-18
 msgid ""
@@ -1164,9 +1160,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:146-221
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Up Arrow</kbd>"
-msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Flecha hacia "
-"arriba</kbd>"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>↑</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:147-18
 msgid ""
@@ -1180,9 +1174,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:147-226
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Down Arrow</kbd>"
-msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Flecha hacia "
-"abajo</kbd>"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>↓</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:148-18
 msgid "Go to next sheet."
@@ -1194,7 +1186,7 @@ msgid ""
 "\"kbd--plus\">+</span><kbd>Page Up</kbd>"
 msgstr ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Page Up</kbd>"
+"\"kbd--plus\">+</span><kbd>Re Pág</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:149-18
 msgid "Go to previous sheet."
@@ -1206,7 +1198,7 @@ msgid ""
 "\"kbd--plus\">+</span><kbd>Page Down</kbd>"
 msgstr ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Page Down</kbd>"
+"\"kbd--plus\">+</span><kbd>Av Pág</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:150-18
 msgid ""
@@ -1234,7 +1226,7 @@ msgstr "Se mueve una hoja hacia la izquierda."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:151-73
 msgid "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up</kbd>"
-msgstr "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up</kbd>"
+msgstr "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Re Pág</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:152-18
 msgid "Moves one screen page to the right."
@@ -1242,7 +1234,7 @@ msgstr "Se mueve una página en pantalla hacia la derecha."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:152-80
 msgid "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down</kbd>"
-msgstr "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down</kbd>"
+msgstr "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Av Pág</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:153-18
 msgid ""
@@ -1259,8 +1251,8 @@ msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Page Up</kbd>"
 msgstr ""
-"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Page Up</kbd>"
+"<kbd>Mayús</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Re Pág</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:154-18
 msgid ""
@@ -1277,8 +1269,8 @@ msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Page Down</kbd>"
 msgstr ""
-"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Page Down</kbd>"
+"<kbd>Mayús</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Av Pág</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:155-18
 msgid ""
@@ -1689,13 +1681,13 @@ msgid ""
 "icon on the far right. Click on the <span style=\"height:0.6cm;width:0.6cm; "
 "margin: 0px;\" class=\"w2ui-icon unfold\"></span> icon to show the menu."
 msgstr ""
-"<span class=\"def\">La barra de menús:</span> El menú principal está situado "
-"en la parte superior e incluye muchas opciones, comandos para imprimir, "
-"editar, visualizar y otros comandos avanzados. Puede ocultar la barra de "
-"menús haciendo clic en el icono <span style=\"height:0.6cm;width:0.6cm; "
-"margin: 0px;\" class=\"w2ui-icon fold\"></span> situado en el extremo "
-"derecho. Haga clic en el icono <span style=\"height:0.6cm;width:0.6cm; "
-"margin: 0px;\" class=\"w2ui-icon unfold\"></span> para mostrar el menú."
+"<span class=\"def\">La barra de menús:</span> el menú principal se ubica en "
+"la parte superior e incluye numerosas opciones y órdenes para imprimir, "
+"editar y visualizar el documento, así como algunas funciones avanzadas. "
+"Puede ocultar la barra de menús pulsando en el icono <span style=\"height:0."
+"6cm;width:0.6cm; margin: 0px;\" class=\"w2ui-icon fold\"></span> en la parte "
+"derecha. Pulse en el icono <span style=\"height:0.6cm;width:0.6cm; margin: "
+"0px;\" class=\"w2ui-icon unfold\"></span> para mostrar el menú."
 
 #: html/cool-help.html%2Bdiv.p:350-5
 msgid ""
@@ -2988,11 +2980,11 @@ msgid ""
 "Beware that if track changes are enabled but hidden, you still record "
 "changes and may inadvertently leave unwanted text available in the document."
 msgstr ""
-"Para mostrar u ocultar los cambios de pista, seleccione <span class=\"ui\""
-">Edición</span> → <span class=\"ui\">Cambios de pista </span> → <span class="
-"\"ui\">Mostrar</span>. Tenga en cuenta que si el seguimiento de cambios está "
-"activado pero oculto, seguirá registrando los cambios y puede dejar, sin "
-"querer, texto no deseado disponible en el documento."
+"Para mostrar u ocultar los cambios en seguimiento, diríjase a <span class="
+"\"ui\">Editar</span> ▸ <span class=\"ui\">Control de cambios</span> ▸ <span "
+"class=\"ui\">Mostrar</span>. Observe que si el control de cambios está "
+"activado pero oculto, los cambios se siguen registrando y es posible que "
+"deje texto no deseado almacenado en el documento."
 
 #: html/cool-help.html%2Bdiv.div.p:588-5
 msgid ""
