@@ -12,11 +12,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-01-05 13:07+0100\n"
-"PO-Revision-Date: 2023-12-27 06:06+0000\n"
+"PO-Revision-Date: 2024-01-07 12:06+0000\n"
 "Last-Translator: Ettore Atalan <atalanttore@googlemail.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "ui/de/>\n"
-"Language: \n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1813,11 +1813,11 @@ msgstr "Menü ausblenden"
 
 #: src/control/Control.UIManager.js:164
 msgid "Enter new name"
-msgstr ""
+msgstr "Neuen Namen eingeben"
 
 #: src/control/Control.UIManager.js:792
 msgid "Show Menu"
-msgstr ""
+msgstr "Menü anzeigen"
 
 #: src/control/Control.UserList.js:11
 msgid "%user has joined"
@@ -2492,6 +2492,8 @@ msgid ""
 "Failed to establish socket connection or socket connection closed "
 "unexpectedly."
 msgstr ""
+"Socket-Verbindung konnte nicht hergestellt werden oder Socket-Verbindung "
+"wurde unerwartet geschlossen."
 
 #: src/errormessages.js:43
 msgid "Failed to load document."
