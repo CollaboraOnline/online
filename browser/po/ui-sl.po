@@ -5,16 +5,16 @@ msgstr ""
 "Project-Id-Version: Collabora Online UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-01-05 13:07+0100\n"
-"PO-Revision-Date: 2024-01-01 02:08+0000\n"
+"PO-Revision-Date: 2024-01-08 23:06+0000\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/sl/>\n"
-"Language: \n"
+"Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
-"%100==4 ? 2 : 3;\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3;\n"
 "X-Accelerator-Marker: ~\n"
 "X-Generator: Weblate 5.4-dev\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -1803,11 +1803,11 @@ msgstr "Skrij meni"
 
 #: src/control/Control.UIManager.js:164
 msgid "Enter new name"
-msgstr ""
+msgstr "Vnesite novo ime"
 
 #: src/control/Control.UIManager.js:792
 msgid "Show Menu"
-msgstr ""
+msgstr "Pokaži meni"
 
 #: src/control/Control.UserList.js:11
 msgid "%user has joined"
@@ -2462,6 +2462,8 @@ msgid ""
 "Failed to establish socket connection or socket connection closed "
 "unexpectedly."
 msgstr ""
+"Ni uspelo vzpostaviti povezave z vtičnico ali pa se je vtičnica "
+"nepričakovano zaprla."
 
 #: src/errormessages.js:43
 msgid "Failed to load document."
@@ -2550,7 +2552,7 @@ msgstr "Kopiraj mesto povezave"
 
 #: src/layer/tile/CanvasTileLayer.js:2520
 msgid "Select link text"
-msgstr ""
+msgstr "Izberite besedilo povezave"
 
 #: src/layer/tile/CanvasTileLayer.js:2531
 msgid "Edit link"
