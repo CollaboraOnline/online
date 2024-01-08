@@ -660,6 +660,12 @@ L.Control.LokDialog = L.Control.extend({
 		// Override default minHeight, which can be too large for thin dialogs.
 		L.DomUtil.setStyle(dialogContainer, 'minHeight', height + 'px');
 
+		// Title bar may overflow due to range name. So we should have max width
+		var titleBar = dialogContainer.previousSibling;
+		var leftPadding = window.getComputedStyle(titleBar).getPropertyValue('padding-left').slice(0, -2);
+		var rightPadding = window.getComputedStyle(titleBar).getPropertyValue('padding-right').slice(0, -2);
+		L.DomUtil.setStyle(titleBar, 'maxWidth', width - (+leftPadding + +rightPadding) + 'px');
+
 		this._dialogs[id] = {
 			id: id,
 			strId: strId,
