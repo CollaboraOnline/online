@@ -3636,15 +3636,14 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		this._sendClientVisibleArea();
 
-		// Writer only for now.
+		app.socket.sendMessage('mouse type=' + type +
+			' x=' + x + ' y=' + y + ' count=' + count +
+			' buttons=' + buttons + ' modifier=' + modifier);
+
 		if (app.file.permission === 'readonly' && type === 'buttonup' && this._docType === 'text') {
-			this._closeURLPopUp();
+			if (this._map.hyperlinkPopup !== null)
+				this._closeURLPopUp();
 			app.socket.sendMessage('readonlyclick x=' + x + ' y=' + y);
-		}
-		else {
-			app.socket.sendMessage('mouse type=' + type +
-					' x=' + x + ' y=' + y + ' count=' + count +
-					' buttons=' + buttons + ' modifier=' + modifier);
 		}
 
 		if (type === 'buttondown') {
