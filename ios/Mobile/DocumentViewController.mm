@@ -634,16 +634,18 @@ static IMP standardImpOfInputAccessoryView = nil;
     if (!fileURL || ![fileURL isFileURL])
         return;
 
-    struct stat statBuf;
-    if (stat([[fileURL path] UTF8String], &statBuf) == -1) {
-        LOG_ERR("Could apparently export '" <<  [[fileURL path] UTF8String] << "'");
+    // Verify that a file was successfully exported
+    BOOL bIsDir;
+    if (![[NSFileManager defaultManager] fileExistsAtPath:[fileURL path] isDirectory:&bIsDir] || bIsDir) {
+        LOG_ERR("Could apparently not export '" << [[fileURL path] UTF8String] << "'");
         return;
     }
 
     downloadAsTmpURL = fileURL;
 
     // Use a UIDocumentPickerViewController to ask the user where to store
-    // the exported document.
+    // the exported document and, when the picker is dismissed, have the
+    // picker delete the original file.
     UIDocumentPickerViewController *picker =
         [[UIDocumentPickerViewController alloc] initForExportingURLs:[NSArray arrayWithObject:fileURL] asCopy:YES];
     picker.delegate = self;
