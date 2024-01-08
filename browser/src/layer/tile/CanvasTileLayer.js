@@ -1867,7 +1867,21 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 		else if (textMsg.startsWith('colorpalettes:')) {
 			var json = JSON.parse(textMsg.substring('colorpalettes:'.length + 1));
-			app.colorPalettes['ThemeColors'].colors = json.ThemeColors;
+
+			for (var key in json) {
+				if (app.colorPalettes[key]) {
+					app.colorPalettes[key].colors = json[key];
+				} else {
+					window.app.console.warn('Unknown palette: "' + key + '"');
+				}
+			}
+
+			// Remove empty palettes, eg. Document colors in Impress are empty
+			for (var key in app.colorPalettes) {
+				if (!app.colorPalettes[key].colors || !app.colorPalettes[key].colors.length) {
+					delete app.colorPalettes[key];
+				}
+			}
 		}
 		else if (textMsg.startsWith('readonlyhyperlinkclicked: ')) {
 			var json = JSON.parse(textMsg.replace('readonlyhyperlinkclicked: ', ''));

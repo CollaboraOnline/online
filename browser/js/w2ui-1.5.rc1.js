@@ -2778,6 +2778,10 @@ w2utils.event = {
 
     var toW2Palette = function (corePalette) {
         var pal = [];
+
+        if (!corePalette)
+            return pal;
+
         for (var i = 0; i < corePalette.length; i++) {
             var row = [];
             for (var j = 0; j < corePalette[i].length; j++) {
@@ -2826,6 +2830,12 @@ w2utils.event = {
     $.fn.w2color = function (options, callBack) {
         var el    = $(this)[0];
         var index = [-1, -1];
+
+        function getCurrentPaletteName() {
+            return (localStorage && localStorage.colorPalette
+                && window.app.colorPalettes[localStorage.colorPalette])
+                ? localStorage.colorPalette : 'StandardColors';
+        };
 
         function bindEvents(pal) {
             $('#w2ui-overlay .color')
@@ -2892,8 +2902,7 @@ w2utils.event = {
                 .w2field('hex');
         }
 
-        var currentPalette = (localStorage && localStorage.colorPalette) ? localStorage.colorPalette : 'StandardColors';
-
+        var currentPalette = getCurrentPaletteName();
         var pal = generatePalette(currentPalette, options);
 
         if (options.color) options.color = String(options.color).toUpperCase();
@@ -2955,8 +2964,7 @@ w2utils.event = {
 
         function getColorHTML(pal, options) {
             var html = '';
-
-            var currentPalette = localStorage && localStorage.colorPalette ? localStorage.colorPalette : 'StandardColors';
+            var currentPalette = getCurrentPaletteName();
 
             html += '<select class="color-palette-selector">';
             for (var i in window.app.colorPalettes)

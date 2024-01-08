@@ -91,6 +91,7 @@ window.app = { // Shouldn't have any functions defined.
 			// ['660205', '783F0B', '7F6011', '274E12', '0C343D', '063762', '20124D', '4C1030'],
 		] },
 		'ThemeColors': { name: _('Theme colors'), colors: [] },
+		'DocumentColors': { name: _('Document colors'), colors: [] },
 	},
 };
 
