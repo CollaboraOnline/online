@@ -903,7 +903,7 @@ L.Map.Keyboard = L.Handler.extend({
 						var partToSelect = 0;
 						this._map._docLayer._clearReferences();
 
-						if (e.keyCode === this.keyCodes.pageUp) {
+						if (e.keyCode === this.keyCodes.pageDown) {
 							partToSelect = currentSelectedPart != parts - 1 ? currentSelectedPart + 1 : 0;
 						}
 						else {
