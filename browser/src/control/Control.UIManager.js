@@ -291,7 +291,7 @@ L.Control.UIManager = L.Control.extend({
 	initializeSpecializedUI: function(docType) {
 		var isDesktop = window.mode.isDesktop();
 		var currentMode = this.getCurrentMode();
-		var enableNotebookbar = currentMode === 'notebookbar';
+		var enableNotebookbar = currentMode === 'notebookbar' && app.file.permission !== 'readonly';
 		var hasShare = this.map.wopi.EnableShare;
 
 		document.body.setAttribute('data-userInterfaceMode', currentMode);
