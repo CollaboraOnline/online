@@ -147,8 +147,9 @@ export class RowHeader extends cool.Header {
 
 		// draw row borders.
 		this.context.strokeStyle = this._borderColor;
-		this.context.lineWidth = app.dpiScale;
-		this.context.strokeRect(0.5, startY - 0.5, this.size[0], entry.size);
+		var offset = this.getLineOffset();
+		this.context.lineWidth = this.getLineWidth();
+		this.context.strokeRect(offset, startY - offset, this.size[0], entry.size);
 	}
 
 	getHeaderEntryBoundingClientRect (index: number): Partial<DOMRect> {

@@ -436,6 +436,22 @@ class CanvasSectionObject {
 		return false;
 	}
 
+	public getLineWidth(): number {
+		if (app.dpiScale > 1.0) {
+			return app.roundedDpiScale;
+		} else {
+			return app.dpiScale;
+		}
+	}
+
+	public getLineOffset(): number {
+		if (app.dpiScale > 1.0) {
+			return app.roundedDpiScale % 2 === 0 ? 0 : 0.5;
+		} else {
+			return 0.5;
+		}
+	}
+
 	constructor (options: SectionInitProperties) {
 		this.name = options.name;
 		this.backgroundColor = options.backgroundColor ? options.backgroundColor: null;
@@ -2106,9 +2122,10 @@ class CanvasSectionContainer {
 
 				this.sections[i].onDraw(frameCount, elapsedTime, subsetBounds);
 				if (this.sections[i].borderColor) { // If section's border is set, draw its borders after section's "onDraw" function is called.
-					this.context.lineWidth = app.dpiScale;
+					var offset = this.sections[i].getLineOffset();
+					this.context.lineWidth = this.sections[i].getLineWidth();
 					this.context.strokeStyle = this.sections[i].borderColor;
-					this.context.strokeRect(0.5, 0.5, this.sections[i].size[0], this.sections[i].size[1]);
+					this.context.strokeRect(offset, offset, this.sections[i].size[0], this.sections[i].size[1]);
 				}
 
 				this.context.translate(-this.sections[i].myTopLeft[0], -this.sections[i].myTopLeft[1]);
