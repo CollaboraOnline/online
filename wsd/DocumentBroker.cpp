@@ -2868,7 +2868,8 @@ void DocumentBroker::disconnectSessionInternal(const std::shared_ptr<ClientSessi
                 LOG_INF("Session [" << session->getName() << "] disconnected but DocKey ["
                                     << _docKey
                                     << "] isn't loaded yet. Terminating the child roughly");
-                _childProcess->terminate();
+                if (_childProcess)
+                    _childProcess->terminate();
             }
 #endif
         }
