@@ -150,8 +150,9 @@ export class ColumnHeader extends Header {
 
 		// draw column borders.
 		this.context.strokeStyle = this._borderColor;
-		this.context.lineWidth = app.dpiScale;
-		this.context.strokeRect(startX - 0.5, 0.5, entry.size, this.size[1]);
+		var offset = this.getLineOffset();
+		this.context.lineWidth = this.getLineWidth();
+		this.context.strokeRect(startX - offset, offset, entry.size, this.size[1]);
 	}
 
 	getHeaderEntryBoundingClientRect (index: number): Partial<DOMRect> {
