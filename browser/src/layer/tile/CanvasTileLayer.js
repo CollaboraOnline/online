@@ -5089,7 +5089,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._debugTimeKeypress = this._debugGetTimeArray();
 		this._debugKeypressQueue = [];
 		this._debugRenderCount = 0;
-		this._debugTimePING = self._debugGetTimeArray();
+		this._debugTimePING = this._debugGetTimeArray();
 		this._debugPINGQueue = [];
 
 		if (this.isCalc()) {
