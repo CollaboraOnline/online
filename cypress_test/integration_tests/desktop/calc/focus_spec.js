@@ -16,39 +16,38 @@ describe(['tagdesktop'], 'Calc focus tests', function() {
 	});
 
 	it('Formula-bar focus', function() {
-
-		// Select the first cell to edit the same one.
-		// Use the tile's edge to find the first cell's position
+		// Select first cell
 		calcHelper.clickOnFirstCell();
-
-		// Click in the formula-bar.
-		calcHelper.clickFormulaBar();
-		//helper.assertCursorAndFocus();
+		cy.wait(200);
 
 		// Type some text.
 		var text1 = 'Hello from Calc';
 		calcHelper.typeIntoFormulabar(text1);
 		calcHelper.typeIntoFormulabar('{enter}');
 
-		// Select the first cell to edit the same one.
+		// Unselect formulabar and reselect cell
 		calcHelper.clickOnFirstCell();
-		calcHelper.clickFormulaBar();
-		// Validate.
+		cy.wait(200);
+
+		// Check text in formulabar
 		calcHelper.typeIntoFormulabar('{ctrl}a');
 		helper.expectTextForClipboard(text1);
-		// End editing.
+		// Clear selection
 		calcHelper.typeIntoFormulabar('{enter}');
 
+
 		// Type some more text, at the end.
-		cy.log('Appending text at the end.');
 		calcHelper.clickOnFirstCell();
-		calcHelper.clickFormulaBar();
-		//var text2 = ', this is a test.';
-		//helper.typeText('textarea.clipboard', text2);
-		// Validate.
-		//calcHelper.typeIntoFormulabar('{ctrl}a');
-		//helper.expectTextForClipboard(text1 + text2);
-		// End editing.
-		//calcHelper.typeIntoFormulabar('{enter}');
+		cy.wait(200);
+		var text2 = ', this is a test.';
+		calcHelper.typeIntoFormulabar('{end}'+text2);
+		calcHelper.typeIntoFormulabar('{enter}');
+
+		// Check text in formulabar
+		calcHelper.clickOnFirstCell();
+		cy.wait(200);
+		calcHelper.typeIntoFormulabar('{ctrl}a');
+		helper.expectTextForClipboard(text1+text2);
+		calcHelper.typeIntoFormulabar('{enter}');
 	});
 });
