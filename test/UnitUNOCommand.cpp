@@ -41,8 +41,19 @@ void testStateChanged(const std::string& filename, std::set<std::string>& comman
         [&](const std::string& msg)
         {
             Poco::RegularExpression::MatchVec matches;
-            if (reUno.match(msg, 0, matches) > 0 && matches.size() == 1)
+            if (Util::startsWith(msg, "statechanged: {"))
             {
+                // Payload is JSON, the commandName key has the command name.
+                Poco::JSON::Parser parser;
+                std::string json = msg.substr(strlen("statechanged: "));
+                const Poco::Dynamic::Var var = parser.parse(json);
+                const auto& root = var.extract<Poco::JSON::Object::Ptr>();
+                std::string commandName = root->get("commandName").toString();
+                commands.erase(commandName + "=");
+            }
+            else if (reUno.match(msg, 0, matches) > 0 && matches.size() == 1)
+            {
+                // Payload is a commandName=...status... plain text format.
                 commands.erase(msg.substr(matches[0].offset, matches[0].length));
             }
 
