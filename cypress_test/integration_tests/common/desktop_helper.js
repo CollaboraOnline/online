@@ -278,6 +278,8 @@ function saveComment(isMobile) {
 		cy.cGet('#response-ok').click();
 	} else {
 		cy.cGet('#annotation-save-new').click();
+		// Wait for animation
+		cy.wait(500);
 	}
 }
 

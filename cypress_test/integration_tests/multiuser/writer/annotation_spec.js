@@ -34,7 +34,6 @@ describe(['tagmultiuser'], 'Multiuser Annotation Test', function () {
 		cy.cSetActiveFrame('#iframe2');
 		cy.cGet('.cool-annotation-content-wrapper').should('exist');
 		cy.cGet('#annotation-content-area-1').should('contain','some text0');
-
 	});
 
 	it('Modify', function() {
