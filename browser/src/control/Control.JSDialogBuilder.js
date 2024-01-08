@@ -387,14 +387,22 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				 (objectType === 'responsebutton' && (data == 0 || data == 7)))) {
 				window.onClose();
 			}
-			data = typeof data === 'string' ? data.replaceAll('"', '\\"') : data;
+			switch (typeof data) {
+			case 'string':
+				// escape backspaces, quotes, newlines, and so on; remove added quotes
+				data = JSON.stringify(data).slice(1, -1);
+				break;
+			case 'object':
+				data = encodeURIComponent(JSON.stringify(data));
+				break;
+			}
 			var windowId = builder.windowId !== null && builder.windowId !== undefined ? builder.windowId :
 				(window.mobileDialogId !== undefined ? window.mobileDialogId :
 					(window.sidebarId !== undefined ? window.sidebarId : -1));
 			var message = 'dialogevent ' + windowId
 					+ ' {\"id\":\"' + object.id
 				+ '\", \"cmd\": \"' + eventType
-				+ '\", \"data\": \"' + (typeof(data) === 'object' ? encodeURIComponent(JSON.stringify(data)) : data)
+				+ '\", \"data\": \"' + data
 				+ '\", \"type\": \"' + objectType + '\"}';
 			app.socket.sendMessage(message);
 			window._firstDialogHandled = true;
