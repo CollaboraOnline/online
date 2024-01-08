@@ -31,12 +31,21 @@ jobs:
         with:
           version: v3.12.1
 
+      - name: Import GPG key
+        run: |
+          echo "${{ secrets.GPG_PRIVATE_KEY }}" | gpg --dearmor --output keyring.gpg
+          echo "${{ secrets.GPG_PASSPHRASE }}" > passphrase-file.txt
+
       - name: Run chart-releaser
         # for use with make-release-latest
         uses: helm/chart-releaser-action@v1.6.0
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
           CR_SKIP_EXISTING: true
+          CR_KEY: Collabora Productivity
+          CR_KEYRING: keyring.gpg
+          CR_PASSPHRASE_FILE: passphrase-file.txt
+          CR_SIGN: true
         with:
           charts_dir: "kubernetes/helm"
           config: kubernetes/helm/cr.yaml
@@ -55,6 +64,13 @@ jobs:
           for pkg in .cr-release-packages/*; do
             if [ -z "${pkg:-}" ]; then
               break
+            fi
+
+            # Check if the package has a ".prov" extension and skip if true
+            # prov doesn't need to be pushed they are already pushed as layer in manifest
+            if [[ "${pkg}" == *.prov ]]; then
+              echo "Skipping package - ${pkg} with '.prov' extension"
+              continue
             fi
 
             # convert uppercase->lowercase to make sure it follows oci rules
