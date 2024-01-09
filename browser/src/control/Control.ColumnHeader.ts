@@ -116,6 +116,8 @@ export class ColumnHeader extends Header {
 
 		// draw background
 		this.context.beginPath();
+		// Clear background and erase text - own fillStyle may be transparent!
+		this.containerObject.fillRect(startX, 0, entry.size, this.size[1]);
 		this.context.fillStyle = highlight ? selectionBackgroundGradient : entry.isOver ? this._hoverColor : this._backgroundColor;
 		this.context.fillRect(startX, 0, entry.size, this.size[1]);
 

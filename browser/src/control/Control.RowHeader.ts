@@ -119,6 +119,8 @@ export class RowHeader extends cool.Header {
 
 		// draw background
 		this.context.beginPath();
+		// Clear background and erase text - own fillStyle may be transparent!
+		this.containerObject.fillRect(0, startY, this.size[0], entry.size);
 		this.context.fillStyle = highlight ? selectionBackgroundGradient : entry.isOver ? this._hoverColor : this._backgroundColor;
 		this.context.fillRect(0, startY, this.size[0], entry.size);
 

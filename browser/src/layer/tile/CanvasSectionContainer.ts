@@ -587,10 +587,14 @@ class CanvasSectionContainer {
 		}
 	}
 
-	private clearCanvas() {
+	fillRect(x: number, y: number, w: number, h: number) {
 		this.context.fillStyle = this.clearColor;
-		this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-		this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
+		this.context.clearRect(x, y, w, h);
+		this.context.fillRect(x, y, w, h);
+	}
+
+	private clearCanvas() {
+		this.fillRect(0, 0, this.canvas.width, this.canvas.height);
 	}
 
 	getContext () {
