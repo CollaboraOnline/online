@@ -700,6 +700,10 @@ export class HeaderInfo {
 			currentIndex = this._isColumn ? this._map._docLayer._cellCursorXY.x: this._map._docLayer._cellCursorXY.y;
 		}
 
+		if (currentIndex === -1 && this._map._docLayer._prevCellCursorXY) {
+			currentIndex = this._isColumn ? this._map._docLayer._prevCellCursorXY.x : this._map._docLayer._prevCellCursorXY.y;
+		}
+
 		const startPx = this._isColumn === true ? section.documentTopLeft[0]: section.documentTopLeft[1];
 		this._docVisStart = startPx;
 		const endPx = startPx + (this._isColumn === true ? section.size[0]: section.size[1]);
