@@ -1152,7 +1152,7 @@ L.Control.UIManager = L.Control.extend({
 		return JSDialog.generateModalId(givenId);
 	},
 
-	_modalDialogJSON: function(id, title, cancellable, widgets, focusId) {
+	_modalDialogJSON: function(id, title, cancellable, widgets, focusId, clickToDismiss) {
 		var dialogId = this.generateModalId(id);
 		focusId = focusId ? focusId : 'response';
 		return {
@@ -1165,6 +1165,7 @@ L.Control.UIManager = L.Control.extend({
 			cancellable: cancellable,
 			jsontype: 'dialog',
 			'init_focus_id': focusId,
+			clickToDismiss: clickToDismiss,
 			children: [
 				{
 					id: 'info-modal-container',
@@ -1178,6 +1179,7 @@ L.Control.UIManager = L.Control.extend({
 
 	/// DEPRECATED: use JSDialog.showInfoModalWithOptions instead
 	/// shows simple info modal (message + ok button)
+	/// When called with just an id (one argument), the popup will be click dismissable.
 	/// id - id of a dialog
 	/// title - title of a dialog
 	/// message1 - 1st line of message
@@ -1189,6 +1191,8 @@ L.Control.UIManager = L.Control.extend({
 		var dialogId = this.generateModalId(id);
 		var responseButtonId = id + '-response';
 		var cancelButtonId = id + '-cancel';
+		// If called with only id, then we want clickToDismiss.
+		var clickToDismiss = arguments.length < 2;
 
 		var json = this._modalDialogJSON(id, title, true, [
 			{
@@ -1229,7 +1233,7 @@ L.Control.UIManager = L.Control.extend({
 				vertical: false,
 				layoutstyle: 'end'
 			},
-		], focusId);
+		], focusId, clickToDismiss);
 
 		var that = this;
 		this.showModal(json, [

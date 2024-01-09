@@ -227,8 +227,12 @@ L.Control.JSDialog = L.Control.extend({
 
 		instance.form = L.DomUtil.create('form', 'jsdialog-container ui-dialog ui-widget-content lokdialog_container', instance.container);
 
-		// Prevent overlay from getting the click.
-		instance.container.onclick = function(e) { e.stopPropagation(); };
+		// Prevent overlay from getting the click, except if we want click to dismiss
+		// Like in the case of the inactivity message.
+		// https://github.com/CollaboraOnline/online/issues/7403
+		if (!instance.clickToDismiss) {
+			instance.container.onclick = function(e) { e.stopPropagation(); };
+		}
 
 		if (instance.collapsed && (instance.collapsed === 'true' || instance.collapsed === true))
 			L.DomUtil.addClass(instance.container, 'collapsed');
