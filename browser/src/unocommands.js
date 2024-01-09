@@ -117,6 +117,7 @@ var unoCommandsArray = {
 	'DrawText':{global:{context:_('Insert Text Box'),menu:_('~Text Box'),},},
 	'DuplicatePage':{presentation:{menu:_('Duplicate Page'),},},
 	'DuplicateSlide':{presentation:{menu:_('Duplicate ~Slide'),},},
+	'EditCurrentRegion':{text:{menu:_('Edit Section...'),},},
 	'EditHeaderAndFooter':{spreadsheet:{menu:_('~Headers and Footers...'),},},
 	'EditHyperlink':{global:{context:_('Edit Hyperlink...'),menu:_('~Hyperlink'),},},
 	'EditMenu':{global:{menu:_('~Edit'),},},
