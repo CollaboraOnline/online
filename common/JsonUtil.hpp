@@ -34,9 +34,16 @@ inline bool parseJSON(const std::string& json, Poco::JSON::Object::Ptr& object)
     {
         const std::string stringJSON = json.substr(index);
         Poco::JSON::Parser parser;
-        const Poco::Dynamic::Var result = parser.parse(stringJSON);
-        object = result.extract<Poco::JSON::Object::Ptr>();
-        return true;
+        try
+        {
+            const Poco::Dynamic::Var result = parser.parse(stringJSON);
+            object = result.extract<Poco::JSON::Object::Ptr>();
+            return true;
+        }
+        catch (const Poco::JSON::JSONException& exception)
+        {
+            LOG_WRN("parseJSON: failed to parse '" << stringJSON << "': '" << exception.what() << "'");
+        }
     }
 
     return false;
