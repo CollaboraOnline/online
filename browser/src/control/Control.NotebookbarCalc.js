@@ -673,12 +673,13 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 						'type': 'container',
 						'children': [
 							{
-								'id': 'second9',
+								'id': 'WeldedToolbar', // has to match core .ui file toolbox id!
 								'type': 'toolbox',
 								'children': [
 									{
 										'id': 'home-number-format-currency',
 										'type': 'toolitem',
+										'dropdown': true,
 										'text': _UNO('.uno:NumberFormatCurrency', 'spreadsheet'),
 										'command': '.uno:NumberFormatCurrency',
 										'accessibility': { focusBack: true,	combination: 'P', de: null }
