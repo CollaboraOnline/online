@@ -200,18 +200,18 @@ button.ui-tab.notebookbar {
 	z-index: 11;
 }
 
-.cell.notebookbar {
-	display: table-cell;
-	vertical-align: middle;
-	padding: 2px;
-}
-
-.row.notebookbar {
-	display: table-row;
-}
-
 .vertical.notebookbar {
 	width: max-content;
+	display: grid;
+	grid-auto-flow: row;
+	grid-gap: 4px;
+}
+
+.horizontal.notebookbar {
+	display: grid;
+	grid-auto-flow: column;
+	grid-gap: 4px;
+	align-items: center;
 }
 
 /* unobuttons */

@@ -1132,13 +1132,11 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._updateWidgetImpl(container, data, this.buildControl);
 	},
 
-	build: function(parent, data, hasVerticalParent, parentHasManyChildren) {
+	build: function(parent, data, hasVerticalParent) {
 		if (hasVerticalParent === undefined) {
 			parent = L.DomUtil.create('div', 'root-container ' + this.options.cssClass, parent);
 			parent = L.DomUtil.create('div', 'vertical ' + this.options.cssClass, parent);
 		}
-
-		var containerToInsert = parent;
 
 		for (var childIndex in data) {
 			var childData = data[childIndex];
@@ -1146,18 +1144,6 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 				continue;
 
 			var childType = childData.type;
-
-			if (parentHasManyChildren) {
-				if (!hasVerticalParent)
-					var td = L.DomUtil.create('div', 'cell ' + this.options.cssClass, containerToInsert);
-				else {
-					containerToInsert = L.DomUtil.create('div', 'row ' + this.options.cssClass, parent);
-					td = L.DomUtil.create('div', 'cell ' + this.options.cssClass, containerToInsert);
-				}
-			} else {
-				td = containerToInsert;
-			}
-
 			var isVertical = (childData.vertical === 'true' || childData.vertical === true) ? true : false;
 
 			this._parentize(childData);
@@ -1170,14 +1156,18 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 
 			var hasManyChildren = childData.children && childData.children.length > 1;
 			if (hasManyChildren) {
+				if (childData.id && childData.id.indexOf(' ') >= 0)
+					console.error('notebookbar: space in the id: "' + childData.id + '"');
 				var tableId = childData.id ? childData.id.replace(' ', '') : '';
-				var table = L.DomUtil.createWithId('div', tableId, td);
-				$(table).addClass(this.options.cssClass);
-				$(table).addClass('vertical');
-				var childObject = L.DomUtil.create('div', 'row ' + this.options.cssClass, table);
-				childObject.id = tableId ? tableId + '-row' : '';
+				var table = L.DomUtil.createWithId('div', tableId, parent);
+				L.DomUtil.addClass(table, this.options.cssClass);
+				if (isVertical)
+					L.DomUtil.addClass(table, 'vertical');
+				else
+					L.DomUtil.addClass(table, 'horizontal');
+				var childObject = table;
 			} else {
-				childObject = td;
+				childObject = parent;
 			}
 
 			var handler = this._controlHandlers[childType];
