@@ -55,7 +55,7 @@ L.Control.ContextMenu = L.Control.extend({
 			text: ['TableInsertMenu',
 				   'InsertRowsBefore', 'InsertRowsAfter', 'InsertColumnsBefore', 'InsertColumnsAfter',
 				   'TableDeleteMenu', 'SetObjectToBackground', 'SetObjectToForeground',
-				   'DeleteRows', 'DeleteColumns', 'DeleteTable',
+				   'DeleteRows', 'DeleteColumns', 'DeleteTable', 'EditCurrentRegion',
 				   'MergeCells', 'SetOptimalColumnWidth', 'SetOptimalRowHeight',
 				   'UpdateCurIndex','RemoveTableOf',
 				   'ReplyComment', 'DeleteComment', 'DeleteAuthor', 'DeleteAllNotes',
