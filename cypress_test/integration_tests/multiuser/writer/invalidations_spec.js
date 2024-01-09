@@ -86,8 +86,11 @@ describe(['tagmultiuser'], 'Joining a document should not trigger an invalidatio
 			cy.cGet('#File-tab-label').click();
 			cy.cGet('.cell.notebookbar > .unoSave > button').click();
 
+			// Reload page
 			cy.cSetActiveFrame('#iframe2');
 			cy.get('#form2').submit();
+			// Wait for page to finish loading
+			helper.checkIfDocIsLoaded(true);
 
 			cy.cSetActiveFrame('#iframe1');
 			writerHelper.selectAllTextOfDoc();
