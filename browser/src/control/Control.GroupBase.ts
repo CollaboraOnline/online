@@ -127,8 +127,8 @@ export abstract class GroupBase extends CanvasSectionObject {
 				if (!moved && lastGroupIndex[level] !== undefined) {
 					const prevGroupEntry = this._groups[level][lastGroupIndex[level]];
 					if (prevGroupEntry.hidden) {
-						if (startPos > prevGroupEntry.startPos && startPos < prevGroupEntry.endPos) {
-							startPos = prevGroupEntry.endPos;
+						if (startPos <= prevGroupEntry.endPos) {
+							startPos = prevGroupEntry.endPos + this._groupHeadSize;
 						}
 					}
 				}
