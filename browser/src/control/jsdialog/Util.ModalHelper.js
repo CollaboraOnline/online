@@ -99,6 +99,21 @@ function showInfoModalWithOptions(id, options) {
 	}
 }
 
+// check the widget is a modalpopup or in a modalpopup parent.
+function isWidgetInModalPopup(widgetData) {
+
+	if (widgetData.type == 'modalpopup')
+		return true;
+
+	while (widgetData.parent) {
+		widgetData = widgetData.parent;
+		if (widgetData.type == 'modalpopup')
+			return true;
+	}
+
+	return false;
+}
+
 JSDialog.generateModalId = generateModalId;
 JSDialog.sendJSON = sendJSON;
 JSDialog.setMessageInModal = setMessageInModal;
@@ -106,3 +121,4 @@ JSDialog.enableButtonInModal = enableButtonInModal;
 JSDialog.shouldShowAgain = shouldShowAgain;
 JSDialog.setShowAgain = setShowAgain;
 JSDialog.showInfoModalWithOptions = showInfoModalWithOptions;
+JSDialog.isWidgetInModalPopup = isWidgetInModalPopup;

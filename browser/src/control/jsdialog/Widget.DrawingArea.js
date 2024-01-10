@@ -43,8 +43,9 @@ function _drawingAreaControl (parentContainer, data, builder) {
 	image.ondragstart = function() { return false; };
 	builder.map.uiManager.enableTooltip(image);
 
-	// If the image render is delayed, use width and height of the data
-	if (image.width == 0 && image.height == 0) {
+	// Line width dialog is affected from delay on image render.
+	// So If the image render is delayed, use width and height of the data
+	if (JSDialog.isWidgetInModalPopup(data) && image.width == 0 && image.height == 0) {
 		image.width = data.imagewidth;
 		image.height = data.imageheight;
 	}
