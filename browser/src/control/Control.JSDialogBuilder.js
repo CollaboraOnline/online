@@ -2882,9 +2882,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 					});
 
 					if (data.command === '.uno:FontColor' || data.command === '.uno:Color') {
-						var autoColorButton = document.createElement('button');
-						autoColorButton.textContent = _('Automatic');
-						autoColorButton.classList.add('auto-color-button');
+						var colorDiv = document.getElementById('w2ui-overlay');
+						var autoColorButton = colorDiv.querySelector('.auto-color-button');
 
 						autoColorButton.onclick = function() {
 							updateFunction(-1);
@@ -2898,9 +2897,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 							builder.map.sendUnoCommand(data.command, parameters);
 							document.getElementById('document-container').click();
 						}.bind(this);
-
-						var colorDiv = document.getElementById('w2ui-overlay');
-						colorDiv.insertBefore(autoColorButton, colorDiv.firstChild);
 					}
 				}
 			};

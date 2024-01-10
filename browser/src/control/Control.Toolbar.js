@@ -825,7 +825,7 @@ function showColorPicker(id) {
 	var it = w2ui['editbar'].get(id);
 	var obj = w2ui['editbar'];
 	var el = '#tb_editbar_item_' + id;
-	if (it.transparent == null) it.transparent = true;
+	if (it.transparent == null && id !== 'fontcolor') it.transparent = true;
 	$(el).w2color({ color: it.color, transparent: it.transparent }, function (color, themeData) {
 		if (color != null) {
 			obj.colorClick({ name: obj.name, item: it, color: color, themeData: themeData });

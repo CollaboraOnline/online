@@ -132,14 +132,21 @@
 }
 
 .auto-color-button {
-	width: 100% !important;
+	width: calc(100% - 10px) !important;
 	padding: 0;
-	margin: auto !important;
+	margin: 5px !important;
 }
 
 .color-palette-selector {
+	margin: 0 5px !important;
+}
+
+.color-palette-selector > select {
 	width: 100% !important;
-	margin-top: 8px !important;
+	padding: 0 14px 0 4px;
+	height: 28px;
+	font-size: var(--default-font-size);
+	font-family: var(--jquery-ui-font);
 }
 
 #toolbar-wrapper.readonly {

@@ -2814,15 +2814,6 @@ w2utils.event = {
             color: options,
             transparent: true
         };
-        // add remove transparent color
-        if (options.transparent && pal[0][1] == '555555') {
-            pal[0].splice(1, 1);
-            pal[0].push('');
-        }
-        if (!options.transparent && pal[0][1] != '555555') {
-            pal[0].splice(1, 0, '555555');
-            pal[0].pop();
-        }
 
         return pal;
     };
@@ -2900,6 +2891,12 @@ w2utils.event = {
                     setTimeout(function() { $('#w2ui-overlay input')[0].focus(); }, 100);
                 })
                 .w2field('hex');
+
+                $('#transparent-color-button')
+                    .on('mousedown.w2color keydown.w2color', function () {
+                        $(el).data('_color', '');
+                        $(el).data('_theme', undefined);
+                    });
         }
 
         var currentPalette = getCurrentPaletteName();
@@ -2925,16 +2922,16 @@ w2utils.event = {
         bindEvents(pal);
 
         var updatePalette = function () {
-            var palette = $('#w2ui-overlay .color-palette-selector option:selected').get(0).value;
+            var palette = $('#w2ui-overlay .color-palette-selector select option:selected').get(0).value;
             localStorage.setItem('colorPalette', palette);
             var pal = generatePalette(palette, options);
             $('#w2ui-overlay .w2ui-color').parent().html(getColorHTML(pal, options));
             bindEvents(pal);
-            $('#w2ui-overlay .color-palette-selector')
+            $('#w2ui-overlay .color-palette-selector select')
                 .on('change', updatePalette);
         };
 
-        $('#w2ui-overlay .color-palette-selector')
+        $('#w2ui-overlay .color-palette-selector select')
             .on('change', updatePalette);
 
         el.nav = function (direction) {
@@ -2965,11 +2962,17 @@ w2utils.event = {
         function getColorHTML(pal, options) {
             var html = '';
             var currentPalette = getCurrentPaletteName();
+            var hasTransparent = options.transparent;
 
-            html += '<select class="color-palette-selector">';
-            for (var i in window.app.colorPalettes)
+            var buttonText = hasTransparent ? _('No fill') : _('Automatic');
+            html += '<button id="transparent-color-button" onmousedown="event.stopPropagation(); event.preventDefault()" class="jsdialog ui-pushbutton auto-color-button">' + buttonText + '</button>';
+
+            html += '<div class="jsdialog ui-listbox-container color-palette-selector">'
+                + '<select class="jsdialog ui-listbox">';
+            for (var i in window.app.colorPalettes) {
                 html += '<option value="' + i + '" ' + (i === currentPalette ? 'selected="selected"' : '') + '>' + window.app.colorPalettes[i].name + '</option>';
-            html += '</select>';
+            }
+            html += '</select><span class="jsdialog ui-listbox-arrow"/></div>';
 
             var detailedPalette = window.app.colorPalettes[currentPalette].colors
 
