@@ -1783,7 +1783,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			if (!this._canonicalIdInitialized) {
 				this._canonicalIdInitialized = true;
 				this._update();
-			} else if (viewRenderedState !== this._map.uiManager.previousTheme) {
+			} else {
 				this._requestNewTiles();
 				this._invalidateAllPreviews();
 				this.redraw();
