@@ -2997,6 +2997,24 @@ void COOLWSD::innerInitialize(Application& self)
     StorageBase::initialize();
 
 #if !MOBILEAPP
+    // Check for smaps_rollup bug where rewinding and rereading gives
+    // bogus doubled results
+    if (FILE* fp = fopen("/proc/self/smaps_rollup", "r"))
+    {
+        std::size_t memoryDirty1 = Util::getPssAndDirtyFromSMaps(fp).second;
+        (void)Util::getPssAndDirtyFromSMaps(fp); // interleave another rewind+read to margin
+        std::size_t memoryDirty2 = Util::getPssAndDirtyFromSMaps(fp).second;
+        LOG_TRC("Comparing smaps_rollup read and rewind+read: " << memoryDirty1 << " vs " << memoryDirty2);
+        if (memoryDirty2 >= memoryDirty1 * 2)
+        {
+            // Believed to be fixed in >= v4.19, bug seen in 4.15.0 and not in 6.5.10
+            // https://github.com/torvalds/linux/commit/258f669e7e88c18edbc23fe5ce00a476b924551f
+            LOG_WRN("Reading smaps_rollup twice reports Private_Dirty doubled, smaps_rollup is unreliable on this kernel");
+            setenv("COOL_DISABLE_SMAPS_ROLLUP", "1", true);
+        }
+        fclose(fp);
+    }
+
     ServerApplication::initialize(self);
 
     DocProcSettings docProcSettings;

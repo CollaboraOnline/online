@@ -3025,7 +3025,10 @@ void lokit_main(
                 std::chrono::steady_clock::now() - jailSetupStartTime);
             LOG_DBG("Initialized jail files in " << ms);
 
-            ProcSMapsFile = open("/proc/self/smaps_rollup", O_RDONLY);
+            // The bug is that rewinding and rereading /proc/self/smaps_rollup doubles the previous
+            // values, so it only affects the case where we reuse the fd from opening smaps_rollup
+            const bool bBrokenSmapsRollup = (std::getenv("COOL_DISABLE_SMAPS_ROLLUP") != nullptr);
+            ProcSMapsFile = !bBrokenSmapsRollup ? open("/proc/self/smaps_rollup", O_RDONLY) : -1;
             if (ProcSMapsFile < 0)
             {
                 LOG_WRN("Failed to open /proc/self/smaps_rollup. Memory stats will be slower");
