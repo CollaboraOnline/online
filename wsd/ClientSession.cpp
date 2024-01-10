@@ -2040,7 +2040,7 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
         }
     }
 #if ENABLE_FEATURE_LOCK || ENABLE_FEATURE_RESTRICTION
-    else if (tokens.equals(0, "statusindicatorfinish:"))
+    else if (tokens.equals(0, "status:") && !isViewLoaded())
     {
         std::ostringstream blockingCommandStatus;
         blockingCommandStatus << "blockingcommandstatus isRestrictedUser="
