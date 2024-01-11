@@ -380,6 +380,7 @@ namespace Util
         if (file != nullptr)
         {
             char line[4096] = { 0 };
+            // coverity[tainted_data_argument : FALSE] - we trust the kernel-provided data
             while (fgets(line, sizeof(line), file))
             {
                 const char* value;
