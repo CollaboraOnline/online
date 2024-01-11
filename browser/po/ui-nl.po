@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-01-10 14:00+0100\n"
-"PO-Revision-Date: 2024-01-05 18:03+0000\n"
+"PO-Revision-Date: 2024-01-10 21:37+0000\n"
 "Last-Translator: Sebastiaan Veld <sebastiaan.veld@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/collabora-online/"
 "ui/nl/>\n"
-"Language: \n"
+"Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1444,7 +1444,7 @@ msgstr "Tekst"
 
 #: src/control/Control.NotebookbarCalc.js:826
 msgid "Default"
-msgstr "Standaard"
+msgstr "Standaardinstelling"
 
 #: src/control/Control.NotebookbarCalc.js:833
 msgid "Heading 1"
@@ -1588,9 +1588,8 @@ msgid "Go Online"
 msgstr "Ga Online"
 
 #: src/control/Control.NotebookbarWriter.js:387
-#, fuzzy
 msgid "Go Offline"
-msgstr "Ga Online"
+msgstr "Ga Offline"
 
 #: src/control/Control.NotebookbarWriter.js:1342
 msgid "Rich Text"
@@ -2330,7 +2329,7 @@ msgstr "Themakleuren"
 
 #: src/docstate.js:94
 msgid "Document colors"
-msgstr ""
+msgstr "Documentkleuren"
 
 #: src/errormessages.js:22
 msgid "No disk space left on server."
