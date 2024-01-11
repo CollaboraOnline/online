@@ -559,8 +559,10 @@ Admin::Admin()
             << _totalAvailMemKb << " KB, System memory: " << _totalSysMemKb
             << " KB, configured memproportion: " << memLimit
             << "%, actual percentage of system total: " << std::setprecision(2)
-            << _totalAvailMemKb * 100. / _totalSysMemKb << "%, current usage: " << totalUsedMemKb
-            << " KB (" << totalUsedMemKb * 100. / _totalAvailMemKb << "% of limit)");
+            << (_totalSysMemKb ? (_totalAvailMemKb * 100. / _totalSysMemKb) : 100)
+            << "%, current usage: " << totalUsedMemKb << " KB ("
+            << (_totalAvailMemKb ? (totalUsedMemKb * 100. / _totalAvailMemKb) : 100)
+            << "% of limit)");
 
     if (_totalAvailMemKb < 1000 * 1024)
         LOG_WRN("Low memory condition detected: only " << _totalAvailMemKb / 1024
