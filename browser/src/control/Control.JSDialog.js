@@ -487,6 +487,8 @@ L.Control.JSDialog = L.Control.extend({
 			this.updatePosition(instance.container, instance.posx, instance.posy);
 	},
 
+	parentAutofilter : null,
+
 	calculateAutoFilterPosition: function(instance) {
 		// this is autofilter popup
 
@@ -501,6 +503,11 @@ L.Control.JSDialog = L.Control.extend({
 		var offsetX = isSpreadsheetRTL ? 0 : app.sectionContainer.getSectionWithName(L.CSections.RowHeader.name).size[0];
 		var offsetY = app.sectionContainer.getSectionWithName(L.CSections.ColumnHeader.name).size[1];
 
+		if (this.isChildAutoFilter(instance)) {
+			this.calculateSubmenuAutoFilterPosition(instance, this.parentAutofilter);
+			return;
+		}
+		this.parentAutofilter = instance.form;
 		var left = parseInt(instance.posx) * scale;
 		var top = parseInt(instance.posy) * scale;
 
@@ -525,9 +532,48 @@ L.Control.JSDialog = L.Control.extend({
 		instance.posy = top + offsetY;
 
 		var width = instance.form.getBoundingClientRect().width;
-		var height = instance.form.getBoundingClientRect().height;
+		var canvasEl = this.map._docLayer._canvas.getBoundingClientRect();
+		var autoFilterBottom = instance.posy + canvasEl.top + instance.form.getBoundingClientRect().height;
+		var canvasBottom = canvasEl.bottom;
 		if (instance.posx + width > window.innerWidth)
 			instance.posx = window.innerWidth - width;
+
+		// at this point we have un updated potion of autofilter instance.
+		// so to handle overlapping case of autofiler and toolbar we need some complex calculation
+		if (autoFilterBottom > canvasBottom)
+			instance.posy = instance.posy - (autoFilterBottom - canvasBottom);
+
+		this.updatePosition(instance.container, instance.posx, instance.posy);
+	},
+
+	isChildAutoFilter: function(instance) {
+		// JSON structure suggest that if children array's first element has id='menu' and widgetType = 'treelistbox' then it will definatly a child autofilter popup
+		var rootChild = instance.children[0];
+		if (rootChild) {
+			var firstWidget = rootChild.children[0];
+			return firstWidget ? (firstWidget.id === 'menu' && firstWidget.type === 'treelistbox') : false;
+		}
+		return false;
+	},
+
+	calculateSubmenuAutoFilterPosition: function(instance, parentAutofilter) {
+		var parentAutofilter = parentAutofilter.getBoundingClientRect();
+		instance.posx = parentAutofilter.right;
+		instance.posy = parentAutofilter.top - this.map._docLayer._canvas.getBoundingClientRect().top;
+
+		// set marding start for child popup in rtl mode
+		var isSpreadsheetRTL = this.map._docLayer.isCalcRTL();
+		if (isSpreadsheetRTL) {
+			var rtlPosx = parentAutofilter.left - instance.form.getBoundingClientRect().width;
+			instance.posx = rtlPosx < 0 ? 0 : rtlPosx;
+		}
+		// set posx of instance (submenufilter) based on window width 
+		var width = instance.content.clientWidth;
+		if (instance.posx + width > window.innerWidth)
+			instance.posx -= instance.posx + width - window.innerWidth;
+
+		// submenu filter popup should not go below toolbar element. Adjust height according to window height and bottom toolbar element so it will not overlap with each other 
+		var height = instance.form.getBoundingClientRect().height;
 		if (instance.posy + height > window.innerHeight)
 			instance.posy = window.innerHeight - height;
 
