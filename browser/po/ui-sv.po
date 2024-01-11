@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-01-10 14:00+0100\n"
-"PO-Revision-Date: 2024-01-05 14:17+0000\n"
+"PO-Revision-Date: 2024-01-10 21:37+0000\n"
 "Last-Translator: bittin1ddc447d824349b2 <bittin@reimu.nl>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/sv/>\n"
-"Language: \n"
+"Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1581,9 +1581,8 @@ msgid "Go Online"
 msgstr "Gå Online"
 
 #: src/control/Control.NotebookbarWriter.js:387
-#, fuzzy
 msgid "Go Offline"
-msgstr "Gå Online"
+msgstr "Gå Offline"
 
 #: src/control/Control.NotebookbarWriter.js:1342
 msgid "Rich Text"
@@ -2317,7 +2316,7 @@ msgstr "Tema färger"
 
 #: src/docstate.js:94
 msgid "Document colors"
-msgstr ""
+msgstr "Dokumentfärger"
 
 #: src/errormessages.js:22
 msgid "No disk space left on server."
