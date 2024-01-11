@@ -1050,7 +1050,7 @@ L.Control.UIManager = L.Control.extend({
 					type: 'container',
 					children: [
 						action ? {id: labelId, type: 'fixedtext', text: label, labelFor: buttonId} : {id: 'label-no-action', type: 'fixedtext', text: label},
-						withDismiss ? {id: 'snackbar-dismiss-button'/*only id:'button' gives correct style */, type: 'pushbutton', text: _('Dismiss')} : {},
+						withDismiss ? {id: 'snackbar-dismiss-button', type: 'pushbutton', text: _('Dismiss')} : {},
 						hasProgress ? {id: 'progress', type: 'progressbar', value: 0, maxValue: 100} : {},
 						action ? {id: buttonId, type: 'pushbutton', text: action, labelledBy: labelId} : {}
 					]
