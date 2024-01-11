@@ -12,11 +12,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-01-10 14:00+0100\n"
-"PO-Revision-Date: 2024-01-07 12:06+0000\n"
-"Last-Translator: Ettore Atalan <atalanttore@googlemail.com>\n"
+"PO-Revision-Date: 2024-01-10 21:37+0000\n"
+"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "ui/de/>\n"
-"Language: \n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1019,7 +1019,7 @@ msgstr "Eigenschaften"
 #: src/control/Control.Menubar.js:358 src/control/Control.Menubar.js:976
 #: src/control/Control.NotebookbarWriter.js:449
 msgid "Voice Over"
-msgstr ""
+msgstr "Stimme Über"
 
 #: src/control/Control.Menubar.js:371
 #: src/control/Control.NotebookbarWriter.js:415
@@ -1596,9 +1596,8 @@ msgid "Go Online"
 msgstr "Online gehen"
 
 #: src/control/Control.NotebookbarWriter.js:387
-#, fuzzy
 msgid "Go Offline"
-msgstr "Online gehen"
+msgstr "Online Modus"
 
 #: src/control/Control.NotebookbarWriter.js:1342
 msgid "Rich Text"
@@ -2347,7 +2346,7 @@ msgstr "Themenfarben"
 
 #: src/docstate.js:94
 msgid "Document colors"
-msgstr ""
+msgstr "Dokumentenfarben"
 
 #: src/errormessages.js:22
 msgid "No disk space left on server."
@@ -2603,7 +2602,7 @@ msgstr "Linkspeicherort kopieren"
 
 #: src/layer/tile/CanvasTileLayer.js:2534
 msgid "Select link text"
-msgstr ""
+msgstr "Wählen Sie den Link"
 
 #: src/layer/tile/CanvasTileLayer.js:2545
 msgid "Edit link"
