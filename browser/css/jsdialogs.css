@@ -1915,6 +1915,13 @@ kbd,
 	display: flex;
 }
 
+/* DocumentPropertiesDialog Custom props */
+#DocumentPropertiesDialog #customprops .jsdialog .ui-grid .menubutton {
+	line-height: 16px;
+}
+
+#DocumentPropertiesDialog #customprops div.jsdialog.ui-grid-cell,
+#DocumentPropertiesDialog #customprops .spinfieldcontainer,
 #DocumentPropertiesDialog #customprops input.ui-timefield {
 	margin-top: auto;
 	margin-bottom: auto;
