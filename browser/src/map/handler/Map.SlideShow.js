@@ -154,7 +154,7 @@ L.Map.SlideShow = L.Handler.extend({
 
 			var slideShowWindow = this._slideShowWindowProxy;
 			this._map.uiManager.showSnackbar(_('Presenting in window'),
-				_('Close Presentation'), 
+				_('Close Presentation'),
 				function() {slideShowWindow.close();},
 				-1, false, true);
 			return;
@@ -169,7 +169,7 @@ L.Map.SlideShow = L.Handler.extend({
 		this._map.uiManager.showSnackbar(_('Presenting in fullscreen'),
 			_('End Presentation'),
 			function() {this._stopFullScreen();},
-			null, false, true, this._slideShow.contentWindow.body /*Need to pass the html not the object */);
+			null, false, true);
 
 		var separator = (this._slideURL.indexOf('?') === -1) ? '?' : '&';
 		this._slideShow.src = this._slideURL + separator + 'StartSlideNumber=' + this._startSlideNumber;
