@@ -1913,3 +1913,14 @@ kbd,
 .jsdialog-container [id^='info-modal-label'] {
 	display: flex;
 }
+
+/* Custom props */
+#DocumentPropertiesDialog #customprops .jsdialog .ui-grid .menubutton {
+	line-height: 16px;
+}
+
+#DocumentPropertiesDialog #customprops div.jsdialog.ui-grid-cell,
+#DocumentPropertiesDialog #customprops .spinfieldcontainer {
+	margin-top: auto;
+	margin-bottom: auto;
+}
