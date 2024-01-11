@@ -355,7 +355,7 @@ L.Control.Menubar = L.Control.extend({
 				]},
 				{uno: '.uno:WordCountDialog'},
 				window.enableAccessibility ?
-					{name: _('Voice Over'), id: 'togglea11ystate', type: 'action'} : {},
+					{name: _('Screen Reading'), id: 'togglea11ystate', type: 'action'} : {},
 				{uno: '.uno:AccessibilityCheck'},
 				{type: 'separator'},
 				{name: _UNO('.uno:AutoFormatMenu', 'text'), type: 'menu', menu: [
@@ -973,7 +973,7 @@ L.Control.Menubar = L.Control.extend({
 			]
 			},
 			window.enableAccessibility ?
-				{name: _('Voice Over'), id: 'togglea11ystate', type: 'action'} : {},
+				{name: _('Screen Reading'), id: 'togglea11ystate', type: 'action'} : {},
 			{id: 'watermark', uno: '.uno:Watermark'},
 			{name: _('Page Setup'), id: 'pagesetup', type: 'action'},
 			{uno: '.uno:WordCountDialog'},

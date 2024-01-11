@@ -1000,8 +1000,8 @@ msgstr "Properties"
 
 #: src/control/Control.Menubar.js:358 src/control/Control.Menubar.js:976
 #: src/control/Control.NotebookbarWriter.js:449
-msgid "Voice Over"
-msgstr "Voice Over"
+msgid "Screen Reading"
+msgstr "Screen Reading"
 
 #: src/control/Control.Menubar.js:371
 #: src/control/Control.NotebookbarWriter.js:415

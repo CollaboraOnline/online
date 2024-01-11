@@ -1009,7 +1009,7 @@ msgstr "Svojstva"
 
 #: src/control/Control.Menubar.js:358 src/control/Control.Menubar.js:976
 #: src/control/Control.NotebookbarWriter.js:449
-msgid "Voice Over"
+msgid "Screen Reading"
 msgstr "Glas pripovjedača"
 
 #: src/control/Control.Menubar.js:371

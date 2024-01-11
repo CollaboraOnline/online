@@ -288,7 +288,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		cy.cGet('#copy-paste-container p i').should('exist');
 	});
 
-	it('Enable/Disable Voice Over', function() {
+	it('Enable/Disable Screen Reading', function() {
 		// when accessibility is disabled at server level
 		// this unit passes but doesn't perform any check
 		desktopHelper.switchUIToNotebookbar();
