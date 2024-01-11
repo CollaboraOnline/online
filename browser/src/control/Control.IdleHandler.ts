@@ -156,8 +156,7 @@ class IdleHandler {
 			L.LOUtil.onRemoveHTMLElement(document.getElementById(overlayId), function() { restartConnectionFn(); }.bind(this));
 		}
 
-		this.map._doclayer && this.map._docLayer._onMessage('textselection:', null);
-		this.map.fire('postMessage', {msgId: 'User_Idle'});
+		this._sendInactiveMessage();
 	}
 
 	notifyActive() {
@@ -165,6 +164,14 @@ class IdleHandler {
 
 		if (window.ThisIsTheAndroidApp) {
 			window.postMobileMessage('LIGHT_SCREEN');
+		}
+	}
+
+	_sendInactiveMessage() {
+		this.map._doclayer && this.map._docLayer._onMessage('textselection:', null);
+		this.map.fire('postMessage', {msgId: 'User_Idle'});
+		if (app.socket.connected()) {
+			app.socket.sendMessage('userinactive');
 		}
 	}
 
@@ -179,10 +186,7 @@ class IdleHandler {
 			// A dialog is already dimming the screen and probably
 			// shows an error message. Leave it alone.
 			this._active = false;
-			this.map._docLayer && this.map._docLayer._onMessage('textselection:', null);
-			if (app.socket.connected()) {
-				app.socket.sendMessage('userinactive');
-			}
+			this._sendInactiveMessage();
 
 			return;
 		}
