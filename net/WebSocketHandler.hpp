@@ -252,8 +252,9 @@ public:
             if (!_shuttingDown)
                 sendCloseFrame(statusCode, statusMessage);
             socket->closeConnection();
-            socket->getInBuffer().clear();
             socket->ignoreInput();
+            assert(socket->getInBuffer().empty() &&
+                   "Socket buffer must be empty after ignoreInput");
         }
 
         _wsPayload.clear();
