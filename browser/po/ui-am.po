@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-10 14:00+0100\n"
+"POT-Creation-Date: 2024-01-12 17:13+0100\n"
 "PO-Revision-Date: 2020-12-08 13:30+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Amharic <https://hosted.weblate.org/projects/collabora-online/"
@@ -296,8 +296,8 @@ msgstr "በ እርግጥ ይህን ክፍል ጊዜ ማጥፋት ይፈልጋሉ
 #: src/control/Control.DownloadProgress.js:90
 #: src/control/Control.LanguageDialog.js:113
 #: src/control/Control.MobileTopBar.js:52
-#: src/control/Control.UIManager.js:1223 src/control/Control.UIManager.js:1290
-#: src/control/Control.UIManager.js:1425 src/control/Control.UIManager.js:1567
+#: src/control/Control.UIManager.js:1228 src/control/Control.UIManager.js:1295
+#: src/control/Control.UIManager.js:1430 src/control/Control.UIManager.js:1572
 #: src/control/Control.Zotero.js:333 src/control/Toolbar.js:793
 #: src/core/Socket.js:1251 src/layer/tile/CommentListSection.ts:423
 #: src/layer/tile/CommentSection.ts:143 src/layer/tile/CommentSection.ts:146
@@ -380,7 +380,15 @@ msgstr ""
 msgid "Failed to get RouteToken from controller"
 msgstr ""
 
-#: js/w2ui-1.5.rc1.js:3004
+#: js/w2ui-1.5.rc1.js:2967
+msgid "No fill"
+msgstr ""
+
+#: js/w2ui-1.5.rc1.js:2967
+msgid "Automatic"
+msgstr ""
+
+#: js/w2ui-1.5.rc1.js:3007
 msgid "Recent"
 msgstr ""
 
@@ -587,12 +595,12 @@ msgid "Count"
 msgstr "መቁጠሪያ"
 
 #: src/control/Control.JSDialogBuilder.js:206
-#: src/control/Control.Menubar.js:685
+#: src/control/Control.Menubar.js:686
 msgid "Active sheet"
 msgstr ""
 
 #: src/control/Control.JSDialogBuilder.js:207
-#: src/control/Control.Menubar.js:686 src/control/Control.TopToolbar.js:108
+#: src/control/Control.Menubar.js:687 src/control/Control.TopToolbar.js:108
 msgid "All Sheets"
 msgstr ""
 
@@ -671,8 +679,8 @@ msgid "replies"
 msgstr ""
 
 #: src/control/Control.JSDialogBuilder.js:2075
-#: src/layer/tile/CanvasTileLayer.js:5554
-#: src/layer/tile/CanvasTileLayer.js:5565
+#: src/layer/tile/CanvasTileLayer.js:5555
+#: src/layer/tile/CanvasTileLayer.js:5566
 #: src/layer/tile/CommentListSection.ts:979
 msgid "Comment"
 msgstr "አስተያየት"
@@ -681,29 +689,25 @@ msgstr "አስተያየት"
 msgid "Insert Comment"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2886
-msgid "Automatic"
-msgstr ""
-
-#: src/control/Control.JSDialogBuilder.js:3027
-#: src/control/Control.Menubar.js:828
+#: src/control/Control.JSDialogBuilder.js:3023
+#: src/control/Control.Menubar.js:829
 msgid "Rows"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:3028
-#: src/control/Control.Menubar.js:831
+#: src/control/Control.JSDialogBuilder.js:3024
+#: src/control/Control.Menubar.js:832
 msgid "Columns"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:3048
+#: src/control/Control.JSDialogBuilder.js:3044
 #, fuzzy
 msgid "Insert Table"
 msgstr "ሰንጠረዥ ማስገቢያ"
 
 #: src/control/Control.LanguageDialog.js:64 src/control/Control.Menubar.js:350
 #: src/control/Control.Menubar.js:352 src/control/Control.Menubar.js:354
-#: src/control/Control.Menubar.js:519 src/control/Control.Menubar.js:649
-#: src/control/Control.Menubar.js:909 src/control/Control.StatusBar.js:554
+#: src/control/Control.Menubar.js:520 src/control/Control.Menubar.js:650
+#: src/control/Control.Menubar.js:910 src/control/Control.StatusBar.js:554
 msgid "None (Do not check spelling)"
 msgstr "ምንም (ፊደሉን አታርም)"
 
@@ -716,14 +720,14 @@ msgid "Language"
 msgstr ""
 
 #: src/control/Control.Menubar.js:76 src/control/Control.Menubar.js:91
-#: src/control/Control.Menubar.js:942
+#: src/control/Control.Menubar.js:943
 #: src/control/Control.NotebookbarBuilder.js:530
 #: src/control/Control.NotebookbarBuilder.js:634
 msgid "ODF text document (.odt)"
 msgstr "የ ODF ጽሁፍ ሰነድ (.odt)"
 
 #: src/control/Control.Menubar.js:77 src/control/Control.Menubar.js:92
-#: src/control/Control.Menubar.js:943
+#: src/control/Control.Menubar.js:944
 #: src/control/Control.NotebookbarBuilder.js:542
 #: src/control/Control.NotebookbarBuilder.js:646
 #: src/control/Control.NotebookbarWriter.js:281
@@ -731,7 +735,7 @@ msgid "Word 2003 Document (.doc)"
 msgstr "Word 2003 Document (.doc)"
 
 #: src/control/Control.Menubar.js:78 src/control/Control.Menubar.js:93
-#: src/control/Control.Menubar.js:944
+#: src/control/Control.Menubar.js:945
 #: src/control/Control.NotebookbarBuilder.js:538
 #: src/control/Control.NotebookbarBuilder.js:642
 #: src/control/Control.NotebookbarWriter.js:287
@@ -739,7 +743,7 @@ msgid "Word Document (.docx)"
 msgstr "Word Document (.docx)"
 
 #: src/control/Control.Menubar.js:79 src/control/Control.Menubar.js:94
-#: src/control/Control.Menubar.js:945
+#: src/control/Control.Menubar.js:946
 #: src/control/Control.NotebookbarBuilder.js:534
 #: src/control/Control.NotebookbarBuilder.js:638
 #: src/control/Control.NotebookbarWriter.js:269
@@ -748,23 +752,23 @@ msgstr "ሀብታም ጽሁፍ (.rtf)"
 
 #: src/control/Control.Menubar.js:81 src/control/Control.Menubar.js:88
 #: src/control/Control.Menubar.js:390 src/control/Control.Menubar.js:396
-#: src/control/Control.Menubar.js:539 src/control/Control.Menubar.js:546
-#: src/control/Control.Menubar.js:670 src/control/Control.Menubar.js:675
-#: src/control/Control.Menubar.js:930 src/control/Control.Menubar.js:939
-#: src/control/Control.Menubar.js:995 src/control/Control.Menubar.js:1003
-#: src/control/Control.Menubar.js:1059 src/control/Control.Menubar.js:1066
-#: src/control/Control.Menubar.js:1113 src/control/Control.Menubar.js:1123
-msgid "Export as"
-msgstr ""
-
-#: src/control/Control.Menubar.js:82 src/control/Control.Menubar.js:89
-#: src/control/Control.Menubar.js:391 src/control/Control.Menubar.js:397
 #: src/control/Control.Menubar.js:540 src/control/Control.Menubar.js:547
 #: src/control/Control.Menubar.js:671 src/control/Control.Menubar.js:676
 #: src/control/Control.Menubar.js:931 src/control/Control.Menubar.js:940
 #: src/control/Control.Menubar.js:996 src/control/Control.Menubar.js:1004
 #: src/control/Control.Menubar.js:1060 src/control/Control.Menubar.js:1067
 #: src/control/Control.Menubar.js:1114 src/control/Control.Menubar.js:1124
+msgid "Export as"
+msgstr ""
+
+#: src/control/Control.Menubar.js:82 src/control/Control.Menubar.js:89
+#: src/control/Control.Menubar.js:391 src/control/Control.Menubar.js:397
+#: src/control/Control.Menubar.js:541 src/control/Control.Menubar.js:548
+#: src/control/Control.Menubar.js:672 src/control/Control.Menubar.js:677
+#: src/control/Control.Menubar.js:932 src/control/Control.Menubar.js:941
+#: src/control/Control.Menubar.js:997 src/control/Control.Menubar.js:1005
+#: src/control/Control.Menubar.js:1061 src/control/Control.Menubar.js:1068
+#: src/control/Control.Menubar.js:1115 src/control/Control.Menubar.js:1125
 #: src/control/Control.NotebookbarBuilder.js:551
 #: src/control/Control.NotebookbarBuilder.js:580
 #: src/control/Control.NotebookbarBuilder.js:609
@@ -780,7 +784,7 @@ msgid "PDF Document (.pdf)"
 msgstr "PDF ሰነድ (.pdf)"
 
 #: src/control/Control.Menubar.js:83 src/control/Control.Menubar.js:95
-#: src/control/Control.Menubar.js:932 src/control/Control.Menubar.js:946
+#: src/control/Control.Menubar.js:933 src/control/Control.Menubar.js:947
 #: src/control/Control.NotebookbarBuilder.js:546
 #: src/control/Control.NotebookbarBuilder.js:699
 msgid "EPUB (.epub)"
@@ -792,30 +796,30 @@ msgid "Rename Document"
 msgstr "ሰነድ መጠገኛ"
 
 #: src/control/Control.Menubar.js:86 src/control/Control.Menubar.js:394
-#: src/control/Control.Menubar.js:543 src/control/Control.Menubar.js:673
-#: src/control/Control.Menubar.js:934 src/control/Control.Menubar.js:998
-#: src/control/Control.Menubar.js:1062 src/control/Control.Menubar.js:1116
+#: src/control/Control.Menubar.js:544 src/control/Control.Menubar.js:674
+#: src/control/Control.Menubar.js:935 src/control/Control.Menubar.js:999
+#: src/control/Control.Menubar.js:1063 src/control/Control.Menubar.js:1117
 msgid "Share..."
 msgstr "ማካፈያ..."
 
 #: src/control/Control.Menubar.js:87 src/control/Control.Menubar.js:395
-#: src/control/Control.Menubar.js:545 src/control/Control.Menubar.js:674
-#: src/control/Control.Menubar.js:935 src/control/Control.Menubar.js:999
-#: src/control/Control.Menubar.js:1064 src/control/Control.Menubar.js:1117
+#: src/control/Control.Menubar.js:546 src/control/Control.Menubar.js:675
+#: src/control/Control.Menubar.js:936 src/control/Control.Menubar.js:1000
+#: src/control/Control.Menubar.js:1065 src/control/Control.Menubar.js:1118
 msgid "See revision history"
 msgstr "የ ክለሳ ታሪኩን ይመልከቱ"
 
 #: src/control/Control.Menubar.js:88 src/control/Control.Menubar.js:396
-#: src/control/Control.Menubar.js:546 src/control/Control.Menubar.js:675
-#: src/control/Control.Menubar.js:939 src/control/Control.Menubar.js:1003
-#: src/control/Control.Menubar.js:1066 src/control/Control.Menubar.js:1123
+#: src/control/Control.Menubar.js:547 src/control/Control.Menubar.js:676
+#: src/control/Control.Menubar.js:940 src/control/Control.Menubar.js:1004
+#: src/control/Control.Menubar.js:1067 src/control/Control.Menubar.js:1124
 msgid "Download as"
 msgstr "የወረዱ"
 
 #: src/control/Control.Menubar.js:90 src/control/Control.Menubar.js:398
-#: src/control/Control.Menubar.js:548 src/control/Control.Menubar.js:677
-#: src/control/Control.Menubar.js:941 src/control/Control.Menubar.js:1005
-#: src/control/Control.Menubar.js:1068 src/control/Control.Menubar.js:1125
+#: src/control/Control.Menubar.js:549 src/control/Control.Menubar.js:678
+#: src/control/Control.Menubar.js:942 src/control/Control.Menubar.js:1006
+#: src/control/Control.Menubar.js:1069 src/control/Control.Menubar.js:1126
 #: src/control/Control.NotebookbarBuilder.js:556
 #: src/control/Control.NotebookbarBuilder.js:585
 #: src/control/Control.NotebookbarBuilder.js:614
@@ -824,15 +828,15 @@ msgid "PDF Document (.pdf) as..."
 msgstr "PDF ሰነድ (.pdf)"
 
 #: src/control/Control.Menubar.js:99 src/control/Control.Menubar.js:406
-#: src/control/Control.Menubar.js:553 src/control/Control.Menubar.js:688
-#: src/control/Control.Toolbar.js:1418
+#: src/control/Control.Menubar.js:554 src/control/Control.Menubar.js:689
+#: src/control/Control.Toolbar.js:1421
 msgid "Close document"
 msgstr "ሰነድ መዝጊያ"
 
 #: src/control/Control.Menubar.js:104 src/control/Control.Menubar.js:411
-#: src/control/Control.Menubar.js:558 src/control/Control.Menubar.js:693
-#: src/control/Control.Menubar.js:951 src/control/Control.Menubar.js:1014
-#: src/control/Control.Menubar.js:1074 src/control/Control.Menubar.js:1133
+#: src/control/Control.Menubar.js:559 src/control/Control.Menubar.js:694
+#: src/control/Control.Menubar.js:952 src/control/Control.Menubar.js:1015
+#: src/control/Control.Menubar.js:1075 src/control/Control.Menubar.js:1134
 #: src/control/Control.NotebookbarCalc.js:289
 #: src/control/Control.NotebookbarCalc.js:290
 #: src/control/Control.NotebookbarDraw.js:291
@@ -852,14 +856,14 @@ msgstr "መጠገኛ"
 
 #: src/control/Control.Menubar.js:128 src/control/Control.Menubar.js:134
 #: src/control/Control.Menubar.js:423 src/control/Control.Menubar.js:429
-#: src/control/Control.Menubar.js:570 src/control/Control.Menubar.js:576
-#: src/control/Control.Menubar.js:705 src/control/Control.Menubar.js:711
+#: src/control/Control.Menubar.js:571 src/control/Control.Menubar.js:577
+#: src/control/Control.Menubar.js:706 src/control/Control.Menubar.js:712
 #: src/control/Control.NotebookbarCalc.js:1220
 #: src/control/Control.NotebookbarCalc.js:1221
 #: src/control/Control.NotebookbarDraw.js:348
 #: src/control/Control.NotebookbarDraw.js:349
-#: src/control/Control.NotebookbarImpress.js:457
-#: src/control/Control.NotebookbarImpress.js:458
+#: src/control/Control.NotebookbarImpress.js:464
+#: src/control/Control.NotebookbarImpress.js:465
 #: src/control/Control.NotebookbarWriter.js:1414
 #: src/control/Control.NotebookbarWriter.js:1415
 #: src/control/Control.StatusBar.js:218
@@ -867,10 +871,10 @@ msgid "Reset zoom"
 msgstr "እንደነበር መመለሻ ማሳያውን"
 
 #: src/control/Control.Menubar.js:137 src/control/Control.Menubar.js:432
-#: src/control/Control.Menubar.js:579 src/control/Control.Menubar.js:714
+#: src/control/Control.Menubar.js:580 src/control/Control.Menubar.js:715
 #: src/control/Control.NotebookbarCalc.js:1261
 #: src/control/Control.NotebookbarDraw.js:389
-#: src/control/Control.NotebookbarImpress.js:498
+#: src/control/Control.NotebookbarImpress.js:505
 #: src/control/Control.NotebookbarWriter.js:1455
 msgid "Toggle UI Mode"
 msgstr ""
@@ -881,51 +885,51 @@ msgid "Show Ruler"
 msgstr ""
 
 #: src/control/Control.Menubar.js:139 src/control/Control.Menubar.js:434
-#: src/control/Control.Menubar.js:583 src/control/Control.Menubar.js:715
+#: src/control/Control.Menubar.js:584 src/control/Control.Menubar.js:716
 #: src/control/Control.NotebookbarCalc.js:887
 #: src/control/Control.NotebookbarCalc.js:1287
 #: src/control/Control.NotebookbarDraw.js:414
 #: src/control/Control.NotebookbarDraw.js:950
-#: src/control/Control.NotebookbarImpress.js:524
-#: src/control/Control.NotebookbarImpress.js:1069
+#: src/control/Control.NotebookbarImpress.js:531
+#: src/control/Control.NotebookbarImpress.js:1076
 #: src/control/Control.NotebookbarWriter.js:908
 #: src/control/Control.NotebookbarWriter.js:1482
 msgid "Show Status Bar"
 msgstr ""
 
 #: src/control/Control.Menubar.js:140 src/control/Control.Menubar.js:435
-#: src/control/Control.Menubar.js:584 src/control/Control.Menubar.js:716
+#: src/control/Control.Menubar.js:585 src/control/Control.Menubar.js:717
 msgid "Hide Menu Bar"
 msgstr ""
 
 #: src/control/Control.Menubar.js:141 src/control/Control.Menubar.js:436
-#: src/control/Control.Menubar.js:580 src/control/Control.Menubar.js:717
-#: src/control/Control.Menubar.js:972 src/control/Control.Menubar.js:1024
-#: src/control/Control.Menubar.js:1084 src/control/Control.Menubar.js:1143
+#: src/control/Control.Menubar.js:581 src/control/Control.Menubar.js:718
+#: src/control/Control.Menubar.js:973 src/control/Control.Menubar.js:1025
+#: src/control/Control.Menubar.js:1085 src/control/Control.Menubar.js:1144
 #: src/control/Control.NotebookbarCalc.js:1299
 #: src/control/Control.NotebookbarDraw.js:425
-#: src/control/Control.NotebookbarImpress.js:543
+#: src/control/Control.NotebookbarImpress.js:550
 #: src/control/Control.NotebookbarWriter.js:1500
 msgid "Dark Mode"
 msgstr ""
 
 #: src/control/Control.Menubar.js:149 src/control/Control.Menubar.js:447
-#: src/control/Control.Menubar.js:587 src/control/Control.Menubar.js:727
-#: src/control/Control.Menubar.js:1185 src/control/Control.Menubar.js:1235
-#: src/control/Control.Menubar.js:1249 src/control/Control.Menubar.js:1272
+#: src/control/Control.Menubar.js:588 src/control/Control.Menubar.js:728
+#: src/control/Control.Menubar.js:1186 src/control/Control.Menubar.js:1236
+#: src/control/Control.Menubar.js:1250 src/control/Control.Menubar.js:1273
 msgid "Local Image..."
 msgstr "የ አካባቢ ምስል..."
 
 #: src/control/Control.Menubar.js:173 src/control/Control.Menubar.js:175
-#: src/control/Control.Menubar.js:1202 src/control/Control.Menubar.js:1204
+#: src/control/Control.Menubar.js:1203 src/control/Control.Menubar.js:1205
 msgid "All"
 msgstr "ሁሉንም"
 
 #: src/control/Control.Menubar.js:184 src/control/Control.Menubar.js:457
-#: src/control/Control.Menubar.js:594 src/control/Control.Menubar.js:739
+#: src/control/Control.Menubar.js:595 src/control/Control.Menubar.js:740
 #: src/control/Control.NotebookbarCalc.js:1422
 #: src/control/Control.NotebookbarDraw.js:1238
-#: src/control/Control.NotebookbarImpress.js:1245
+#: src/control/Control.NotebookbarImpress.js:1252
 #: src/control/Control.NotebookbarWriter.js:1106
 msgid "Smart Picker"
 msgstr ""
@@ -975,28 +979,28 @@ msgstr ""
 msgid "Citation Preferences"
 msgstr ""
 
-#: src/control/Control.Menubar.js:333 src/control/Control.Menubar.js:1224
+#: src/control/Control.Menubar.js:333 src/control/Control.Menubar.js:1225
 msgid "Insert Rich Text"
 msgstr ""
 
-#: src/control/Control.Menubar.js:334 src/control/Control.Menubar.js:1225
+#: src/control/Control.Menubar.js:334 src/control/Control.Menubar.js:1226
 msgid "Insert Checkbox"
 msgstr ""
 
-#: src/control/Control.Menubar.js:335 src/control/Control.Menubar.js:1226
+#: src/control/Control.Menubar.js:335 src/control/Control.Menubar.js:1227
 msgid "Insert Dropdown"
 msgstr ""
 
-#: src/control/Control.Menubar.js:336 src/control/Control.Menubar.js:1227
+#: src/control/Control.Menubar.js:336 src/control/Control.Menubar.js:1228
 msgid "Insert Picture"
 msgstr ""
 
-#: src/control/Control.Menubar.js:337 src/control/Control.Menubar.js:1228
+#: src/control/Control.Menubar.js:337 src/control/Control.Menubar.js:1229
 #, fuzzy
 msgid "Insert Date"
 msgstr "ሰንጠረዥ ማስገቢያ"
 
-#: src/control/Control.Menubar.js:338 src/control/Control.Menubar.js:1229
+#: src/control/Control.Menubar.js:338 src/control/Control.Menubar.js:1230
 #: src/control/Control.NotebookbarCalc.js:305
 #: src/control/Control.NotebookbarDraw.js:306
 #: src/control/Control.NotebookbarImpress.js:408
@@ -1005,7 +1009,7 @@ msgstr "ሰንጠረዥ ማስገቢያ"
 msgid "Properties"
 msgstr ""
 
-#: src/control/Control.Menubar.js:358 src/control/Control.Menubar.js:976
+#: src/control/Control.Menubar.js:358 src/control/Control.Menubar.js:977
 #: src/control/Control.NotebookbarWriter.js:449
 msgid "Screen Reading"
 msgstr ""
@@ -1015,62 +1019,62 @@ msgstr ""
 msgid "Forum"
 msgstr ""
 
-#: src/control/Control.Menubar.js:372 src/control/Control.Menubar.js:525
-#: src/control/Control.Menubar.js:652 src/control/Control.Menubar.js:915
+#: src/control/Control.Menubar.js:372 src/control/Control.Menubar.js:526
+#: src/control/Control.Menubar.js:653 src/control/Control.Menubar.js:916
 #: src/control/Control.NotebookbarWriter.js:427
 msgid "Online Help"
 msgstr ""
 
-#: src/control/Control.Menubar.js:373 src/control/Control.Menubar.js:526
-#: src/control/Control.Menubar.js:653 src/control/Control.Menubar.js:916
+#: src/control/Control.Menubar.js:373 src/control/Control.Menubar.js:527
+#: src/control/Control.Menubar.js:654 src/control/Control.Menubar.js:917
 #: src/control/Control.NotebookbarWriter.js:439
 msgid "Keyboard shortcuts"
 msgstr "የ ፊደል ገበታ አቋራጭ"
 
-#: src/control/Control.Menubar.js:374 src/control/Control.Menubar.js:527
-#: src/control/Control.Menubar.js:654 src/control/Control.Menubar.js:917
+#: src/control/Control.Menubar.js:374 src/control/Control.Menubar.js:528
+#: src/control/Control.Menubar.js:655 src/control/Control.Menubar.js:918
 #: src/control/Control.NotebookbarWriter.js:465
 msgid "Report an issue"
 msgstr ""
 
-#: src/control/Control.Menubar.js:375 src/control/Control.Menubar.js:528
-#: src/control/Control.Menubar.js:655 src/control/Control.Menubar.js:918
-#: src/control/Control.Menubar.js:985 src/control/Control.Menubar.js:1049
-#: src/control/Control.Menubar.js:1103 src/control/Control.Menubar.js:1177
+#: src/control/Control.Menubar.js:375 src/control/Control.Menubar.js:529
+#: src/control/Control.Menubar.js:656 src/control/Control.Menubar.js:919
+#: src/control/Control.Menubar.js:986 src/control/Control.Menubar.js:1050
+#: src/control/Control.Menubar.js:1104 src/control/Control.Menubar.js:1178
 #: src/control/Control.NotebookbarWriter.js:478
 msgid "Latest Updates"
 msgstr ""
 
-#: src/control/Control.Menubar.js:376 src/control/Control.Menubar.js:529
-#: src/control/Control.Menubar.js:656 src/control/Control.Menubar.js:919
-#: src/control/Control.Menubar.js:986 src/control/Control.Menubar.js:1050
-#: src/control/Control.Menubar.js:1104 src/control/Control.Menubar.js:1178
+#: src/control/Control.Menubar.js:376 src/control/Control.Menubar.js:530
+#: src/control/Control.Menubar.js:657 src/control/Control.Menubar.js:920
+#: src/control/Control.Menubar.js:987 src/control/Control.Menubar.js:1051
+#: src/control/Control.Menubar.js:1105 src/control/Control.Menubar.js:1179
 #: src/control/Control.NotebookbarWriter.js:490
 msgid "Send Feedback"
 msgstr ""
 
-#: src/control/Control.Menubar.js:377 src/control/Control.Menubar.js:530
-#: src/control/Control.Menubar.js:657 src/control/Control.Menubar.js:920
-#: src/control/Control.Menubar.js:987 src/control/Control.Menubar.js:1051
-#: src/control/Control.Menubar.js:1105 src/control/Control.Menubar.js:1179
+#: src/control/Control.Menubar.js:377 src/control/Control.Menubar.js:531
+#: src/control/Control.Menubar.js:658 src/control/Control.Menubar.js:921
+#: src/control/Control.Menubar.js:988 src/control/Control.Menubar.js:1052
+#: src/control/Control.Menubar.js:1106 src/control/Control.Menubar.js:1180
 #: src/control/Control.NotebookbarWriter.js:502
 msgid "About"
 msgstr "ስለ"
 
-#: src/control/Control.Menubar.js:379 src/control/Control.Menubar.js:532
-#: src/control/Control.Menubar.js:659 src/control/Control.Menubar.js:922
+#: src/control/Control.Menubar.js:379 src/control/Control.Menubar.js:533
+#: src/control/Control.Menubar.js:660 src/control/Control.Menubar.js:923
 msgid "Last modification"
 msgstr "መጨረሻ የ ተሻሻለው"
 
 #: src/control/Control.Menubar.js:386 src/control/Control.Menubar.js:399
-#: src/control/Control.Menubar.js:1006
+#: src/control/Control.Menubar.js:1007
 #: src/control/Control.NotebookbarBuilder.js:593
 #: src/control/Control.NotebookbarBuilder.js:668
 msgid "ODF presentation (.odp)"
 msgstr "የ ODF ማቅረቢያ (.odp)"
 
 #: src/control/Control.Menubar.js:387 src/control/Control.Menubar.js:400
-#: src/control/Control.Menubar.js:1007
+#: src/control/Control.Menubar.js:1008
 #: src/control/Control.NotebookbarBuilder.js:605
 #: src/control/Control.NotebookbarBuilder.js:676
 #: src/control/Control.NotebookbarImpress.js:327
@@ -1078,24 +1082,24 @@ msgid "PowerPoint 2003 Presentation (.ppt)"
 msgstr "PowerPoint 2003 Presentation (.ppt)"
 
 #: src/control/Control.Menubar.js:388 src/control/Control.Menubar.js:401
-#: src/control/Control.Menubar.js:1008
+#: src/control/Control.Menubar.js:1009
 #: src/control/Control.NotebookbarBuilder.js:601
 #: src/control/Control.NotebookbarBuilder.js:672
 #: src/control/Control.NotebookbarImpress.js:335
 msgid "PowerPoint Presentation (.pptx)"
 msgstr "PowerPoint Presentation (.pptx)"
 
-#: src/control/Control.Menubar.js:393 src/control/Control.Menubar.js:542
+#: src/control/Control.Menubar.js:393 src/control/Control.Menubar.js:543
 #, fuzzy
 msgid "Save Comments"
 msgstr "አስተያየት"
 
 #: src/control/Control.Menubar.js:437
-#: src/control/Control.NotebookbarImpress.js:535
+#: src/control/Control.NotebookbarImpress.js:542
 msgid "Master View"
 msgstr ""
 
-#: src/control/Control.Menubar.js:512 src/control/Control.Menubar.js:1048
+#: src/control/Control.Menubar.js:512 src/control/Control.Menubar.js:1049
 #: src/control/Control.PresentationBar.js:73
 msgid "Fullscreen presentation"
 msgstr "በ ሙሉ መመልከቻ ማቅረቢያ"
@@ -1104,8 +1108,12 @@ msgstr "በ ሙሉ መመልከቻ ማቅረቢያ"
 msgid "Present current slide"
 msgstr ""
 
-#: src/control/Control.Menubar.js:549 src/control/Control.Menubar.js:1009
-#: src/control/Control.Menubar.js:1069
+#: src/control/Control.Menubar.js:514
+msgid "Present in new window"
+msgstr ""
+
+#: src/control/Control.Menubar.js:550 src/control/Control.Menubar.js:1010
+#: src/control/Control.Menubar.js:1070
 #: src/control/Control.NotebookbarBuilder.js:597
 #: src/control/Control.NotebookbarDraw.js:237
 #: src/control/Control.NotebookbarImpress.js:312
@@ -1113,113 +1121,113 @@ msgstr ""
 msgid "ODF Drawing (.odg)"
 msgstr "የ ODF ማቅረቢያ (.odp)"
 
-#: src/control/Control.Menubar.js:666 src/control/Control.Menubar.js:678
-#: src/control/Control.Menubar.js:1126
+#: src/control/Control.Menubar.js:667 src/control/Control.Menubar.js:679
+#: src/control/Control.Menubar.js:1127
 #: src/control/Control.NotebookbarBuilder.js:564
 #: src/control/Control.NotebookbarBuilder.js:653
 msgid "ODF spreadsheet (.ods)"
 msgstr "የ ODF ሰንጠረዥ (.ods)"
 
-#: src/control/Control.Menubar.js:667 src/control/Control.Menubar.js:679
-#: src/control/Control.Menubar.js:1127
+#: src/control/Control.Menubar.js:668 src/control/Control.Menubar.js:680
+#: src/control/Control.Menubar.js:1128
 #: src/control/Control.NotebookbarBuilder.js:572
 #: src/control/Control.NotebookbarBuilder.js:661
 #: src/control/Control.NotebookbarCalc.js:241
 msgid "Excel 2003 Spreadsheet (.xls)"
 msgstr "Excel 2003 Spreadsheet (.xls)"
 
-#: src/control/Control.Menubar.js:668 src/control/Control.Menubar.js:680
-#: src/control/Control.Menubar.js:1128
+#: src/control/Control.Menubar.js:669 src/control/Control.Menubar.js:681
+#: src/control/Control.Menubar.js:1129
 #: src/control/Control.NotebookbarBuilder.js:568
 #: src/control/Control.NotebookbarBuilder.js:657
 #: src/control/Control.NotebookbarCalc.js:248
 msgid "Excel Spreadsheet (.xlsx)"
 msgstr "Excel Spreadsheet (.xlsx)"
 
-#: src/control/Control.Menubar.js:681
+#: src/control/Control.Menubar.js:682
 msgid "CSV file (.csv)"
 msgstr ""
 
-#: src/control/Control.Menubar.js:812
+#: src/control/Control.Menubar.js:813
 #: src/control/Control.NotebookbarBuilder.js:812
 msgid "Condition..."
 msgstr ""
 
-#: src/control/Control.Menubar.js:813
+#: src/control/Control.Menubar.js:814
 #: src/control/Control.NotebookbarBuilder.js:813
 msgid "Greater than..."
 msgstr ""
 
-#: src/control/Control.Menubar.js:814
+#: src/control/Control.Menubar.js:815
 #: src/control/Control.NotebookbarBuilder.js:814
 msgid "Less than..."
 msgstr ""
 
-#: src/control/Control.Menubar.js:815
+#: src/control/Control.Menubar.js:816
 #: src/control/Control.NotebookbarBuilder.js:815
 msgid "Equal to..."
 msgstr ""
 
-#: src/control/Control.Menubar.js:816
+#: src/control/Control.Menubar.js:817
 #: src/control/Control.NotebookbarBuilder.js:816
 msgid "Between..."
 msgstr ""
 
-#: src/control/Control.Menubar.js:818
+#: src/control/Control.Menubar.js:819
 #: src/control/Control.NotebookbarBuilder.js:818
 msgid "More conditions..."
 msgstr ""
 
-#: src/control/Control.Menubar.js:926 src/control/Control.Menubar.js:991
-#: src/control/Control.Menubar.js:1055 src/control/Control.Menubar.js:1109
+#: src/control/Control.Menubar.js:927 src/control/Control.Menubar.js:992
+#: src/control/Control.Menubar.js:1056 src/control/Control.Menubar.js:1110
 #: src/control/Control.NotebookbarCalc.js:886
 #: src/control/Control.NotebookbarDraw.js:949
-#: src/control/Control.NotebookbarImpress.js:1068
+#: src/control/Control.NotebookbarImpress.js:1075
 #: src/control/Control.NotebookbarWriter.js:907
 #: src/control/Control.StatusBar.js:203 src/control/Control.Zotero.js:221
 msgid "Search"
 msgstr "መፈለጊያ:"
 
-#: src/control/Control.Menubar.js:978
+#: src/control/Control.Menubar.js:979
 msgid "Page Setup"
 msgstr ""
 
-#: src/control/Control.Menubar.js:1120
+#: src/control/Control.Menubar.js:1121
 msgid "Define print area"
 msgstr ""
 
-#: src/control/Control.Menubar.js:1121
+#: src/control/Control.Menubar.js:1122
 msgid "Remove print area"
 msgstr ""
 
-#: src/control/Control.Menubar.js:1399 src/control/Control.StatusBar.js:553
+#: src/control/Control.Menubar.js:1400 src/control/Control.StatusBar.js:553
 msgid "Reset to Default Language"
 msgstr "ነባሩን ቋንቋ እንደ ነበረ መመለሻ"
 
-#: src/control/Control.Menubar.js:1430 src/control/Control.Menubar.js:1431
-#: src/control/Control.Menubar.js:1432 src/control/Control.Toolbar.js:249
-#: src/control/Control.Toolbar.js:296
+#: src/control/Control.Menubar.js:1431 src/control/Control.Menubar.js:1432
+#: src/control/Control.Menubar.js:1433 src/control/Control.Toolbar.js:252
+#: src/control/Control.Toolbar.js:299
 msgid "More..."
 msgstr "ተጨማሪ..."
 
-#: src/control/Control.Menubar.js:1730
+#: src/control/Control.Menubar.js:1731
 msgid "Use Compact view"
 msgstr ""
 
-#: src/control/Control.Menubar.js:1732
+#: src/control/Control.Menubar.js:1733
 msgid "Use Tabbed view"
 msgstr ""
 
-#: src/control/Control.Menubar.js:1790 src/control/Control.Menubar.js:1803
+#: src/control/Control.Menubar.js:1791 src/control/Control.Menubar.js:1804
 msgid "Read-only mode"
 msgstr ""
 
-#: src/control/Control.Menubar.js:1824
+#: src/control/Control.Menubar.js:1825
 #, fuzzy
 msgid "Insert Shape"
 msgstr "ቅርጾች ማስገቢያ"
 
-#: src/control/Control.Menubar.js:2043
+#: src/control/Control.Menubar.js:2046
 msgid "file type icon"
 msgstr ""
 
@@ -1520,21 +1528,21 @@ msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:1260
 #: src/control/Control.NotebookbarDraw.js:388
-#: src/control/Control.NotebookbarImpress.js:497
+#: src/control/Control.NotebookbarImpress.js:504
 #: src/control/Control.NotebookbarWriter.js:1454
 msgid "Compact view"
 msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:1274
 #: src/control/Control.NotebookbarDraw.js:401
-#: src/control/Control.NotebookbarImpress.js:511
+#: src/control/Control.NotebookbarImpress.js:518
 #: src/control/Control.NotebookbarWriter.js:1494
 msgid "Collapse Tabs"
 msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:1286
 #: src/control/Control.NotebookbarDraw.js:413
-#: src/control/Control.NotebookbarImpress.js:523
+#: src/control/Control.NotebookbarImpress.js:530
 #: src/control/Control.NotebookbarWriter.js:1481
 msgid "Status Bar"
 msgstr ""
@@ -1547,9 +1555,9 @@ msgstr ""
 #: src/control/Control.NotebookbarCalc.js:2293
 #: src/control/Control.NotebookbarDraw.js:834
 #: src/control/Control.NotebookbarDraw.js:1323
-#: src/control/Control.NotebookbarImpress.js:945
-#: src/control/Control.NotebookbarImpress.js:1330
-#: src/control/Control.NotebookbarImpress.js:2361
+#: src/control/Control.NotebookbarImpress.js:952
+#: src/control/Control.NotebookbarImpress.js:1337
+#: src/control/Control.NotebookbarImpress.js:2368
 #: src/control/Control.NotebookbarWriter.js:1062
 #: src/control/Control.NotebookbarWriter.js:2818
 msgid "Shapes"
@@ -1579,8 +1587,12 @@ msgid "ODF Presentation (.odp)"
 msgstr "የ ODF ማቅረቢያ (.odp)"
 
 #: src/control/Control.NotebookbarImpress.js:442
-#: src/control/Control.NotebookbarImpress.js:1054
+#: src/control/Control.NotebookbarImpress.js:1061
 msgid "Presentation"
+msgstr ""
+
+#: src/control/Control.NotebookbarImpress.js:449
+msgid "Present in Window"
 msgstr ""
 
 #: src/control/Control.NotebookbarWriter.js:79
@@ -1791,15 +1803,15 @@ msgstr ""
 msgid "Enter new sheet name"
 msgstr "አዲስ የ ወረቀት ስም ያስገቡ"
 
-#: src/control/Control.Toolbar.js:1211
+#: src/control/Control.Toolbar.js:1214
 msgid "Previous slide"
 msgstr "ቀደም ያለው ተንሸራታች"
 
-#: src/control/Control.Toolbar.js:1212
+#: src/control/Control.Toolbar.js:1215
 msgid "Next slide"
 msgstr "የሚቀጥለው ተንሸራታች"
 
-#: src/control/Control.Toolbar.js:1273
+#: src/control/Control.Toolbar.js:1276
 msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to "
 "resolve"
@@ -1835,6 +1847,10 @@ msgstr ""
 
 #: src/control/Control.UIManager.js:792
 msgid "Show Menu"
+msgstr ""
+
+#: src/control/Control.UIManager.js:1053
+msgid "Dismiss"
 msgstr ""
 
 #: src/control/Control.UserList.js:20
@@ -2522,28 +2538,28 @@ msgstr ""
 msgid "Uploading file to server failed, the file is too large."
 msgstr ""
 
-#: src/layer/tile/CanvasTileLayer.js:1955
+#: src/layer/tile/CanvasTileLayer.js:1956
 #, fuzzy
 msgid "Functions"
 msgstr "ተግባር"
 
-#: src/layer/tile/CanvasTileLayer.js:2532
+#: src/layer/tile/CanvasTileLayer.js:2533
 msgid "Copy link location"
 msgstr ""
 
-#: src/layer/tile/CanvasTileLayer.js:2534
+#: src/layer/tile/CanvasTileLayer.js:2535
 msgid "Select link text"
 msgstr ""
 
-#: src/layer/tile/CanvasTileLayer.js:2545
+#: src/layer/tile/CanvasTileLayer.js:2546
 msgid "Edit link"
 msgstr ""
 
-#: src/layer/tile/CanvasTileLayer.js:2554
+#: src/layer/tile/CanvasTileLayer.js:2555
 msgid "Remove link"
 msgstr ""
 
-#: src/layer/tile/CanvasTileLayer.js:5582
+#: src/layer/tile/CanvasTileLayer.js:5583
 msgid "No Comments"
 msgstr ""
 
