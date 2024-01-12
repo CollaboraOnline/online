@@ -99,7 +99,7 @@ void RequestVettingStation::handleRequest([[maybe_unused]] SocketPoll& poll,
         case StorageBase::StorageType::Unauthorized:
             LOG_ERR("No authorized hosts found matching the target host [" << uriPublic.getHost()
                                                                            << "] in config");
-            sendErrorAndShutdown(_ws, _socket, "error: cmd=internal kind=unauthorized",
+            sendErrorAndShutdown(_ws, "error: cmd=internal kind=unauthorized",
                                  WebSocketHandler::StatusCodes::POLICY_VIOLATION);
             break;
 
@@ -223,13 +223,13 @@ void RequestVettingStation::checkFileInfo(SocketPoll& poll, const std::string& u
             if (httpResponse->statusLine().statusCode() == http::StatusCode::Forbidden)
             {
                 LOG_ERR("Access denied to [" << uriAnonym << ']');
-                sendErrorAndShutdown(_ws, _socket, "error: cmd=storage kind=unauthorized",
+                sendErrorAndShutdown(_ws, "error: cmd=storage kind=unauthorized",
                                      WebSocketHandler::StatusCodes::POLICY_VIOLATION);
                 return;
             }
 
             LOG_ERR("Invalid URI or access denied to [" << uriAnonym << ']');
-            sendErrorAndShutdown(_ws, _socket, "error: cmd=storage kind=unauthorized",
+            sendErrorAndShutdown(_ws, "error: cmd=storage kind=unauthorized",
                                  WebSocketHandler::StatusCodes::POLICY_VIOLATION);
             return;
         }
@@ -253,8 +253,8 @@ void RequestVettingStation::checkFileInfo(SocketPoll& poll, const std::string& u
                        "Original response: ["
                     << wopiResponse << ']');
 
-            throw UnauthorizedRequestException("Access denied. WOPI::CheckFileInfo failed on: " +
-                                               uriAnonym);
+            sendErrorAndShutdown(_ws, "error: cmd=storage kind=unauthorized",
+                                 WebSocketHandler::StatusCodes::POLICY_VIOLATION);
         }
 
         createDocBroker(docKey, url, uriPublic, isReadOnly, std::move(wopiInfo));
@@ -278,7 +278,7 @@ void RequestVettingStation::createDocBroker(const std::string& docKey, const std
     if (!docBroker)
     {
         LOG_ERR("Failed to create DocBroker [" << docKey << ']');
-        sendErrorAndShutdown(_ws, _socket, "error: cmd=internal kind=load",
+        sendErrorAndShutdown(_ws, "error: cmd=internal kind=load",
                              WebSocketHandler::StatusCodes::UNEXPECTED_CONDITION);
         return;
     }
@@ -289,7 +289,7 @@ void RequestVettingStation::createDocBroker(const std::string& docKey, const std
     if (!clientSession)
     {
         LOG_ERR("Failed to create Client Session [" << _id << "] on docKey [" << docKey << ']');
-        sendErrorAndShutdown(_ws, _socket, "error: cmd=internal kind=load",
+        sendErrorAndShutdown(_ws, "error: cmd=internal kind=load",
                              WebSocketHandler::StatusCodes::UNEXPECTED_CONDITION);
         return;
     }
@@ -353,7 +353,7 @@ void RequestVettingStation::createDocBroker(const std::string& docKey, const std
                 LOG_ERR_S("Unauthorized Request while starting session on "
                           << docBroker->getDocKey() << " for socket #" << moveSocket->getFD()
                           << ". Terminating connection. Error: " << exc.what());
-                sendErrorAndShutdown(ws, moveSocket, "error: cmd=internal kind=unauthorized",
+                sendErrorAndShutdown(ws, "error: cmd=internal kind=unauthorized",
                                      WebSocketHandler::StatusCodes::POLICY_VIOLATION);
             }
             catch (const StorageConnectionException& exc)
@@ -361,7 +361,7 @@ void RequestVettingStation::createDocBroker(const std::string& docKey, const std
                 LOG_ERR_S("Storage error while starting session on "
                           << docBroker->getDocKey() << " for socket #" << moveSocket->getFD()
                           << ". Terminating connection. Error: " << exc.what());
-                sendErrorAndShutdown(ws, moveSocket, "error: cmd=storage kind=loadfailed",
+                sendErrorAndShutdown(ws, "error: cmd=storage kind=loadfailed",
                                      WebSocketHandler::StatusCodes::POLICY_VIOLATION);
             }
             catch (const StorageSpaceLowException& exc)
@@ -369,7 +369,7 @@ void RequestVettingStation::createDocBroker(const std::string& docKey, const std
                 LOG_ERR_S("Disk-Full error while starting session on "
                           << docBroker->getDocKey() << " for socket #" << moveSocket->getFD()
                           << ". Terminating connection. Error: " << exc.what());
-                sendErrorAndShutdown(ws, moveSocket, "error: cmd=internal kind=diskfull",
+                sendErrorAndShutdown(ws, "error: cmd=internal kind=diskfull",
                                      WebSocketHandler::StatusCodes::UNEXPECTED_CONDITION);
             }
             catch (const std::exception& exc)
@@ -377,18 +377,16 @@ void RequestVettingStation::createDocBroker(const std::string& docKey, const std
                 LOG_ERR_S("Error while starting session on "
                           << docBroker->getDocKey() << " for socket #" << moveSocket->getFD()
                           << ". Terminating connection. Error: " << exc.what());
-                sendErrorAndShutdown(ws, moveSocket, "error: cmd=storage kind=loadfailed",
+                sendErrorAndShutdown(ws, "error: cmd=storage kind=loadfailed",
                                      WebSocketHandler::StatusCodes::POLICY_VIOLATION);
             }
         });
 }
 
 void RequestVettingStation::sendErrorAndShutdown(const std::shared_ptr<WebSocketHandler>& ws,
-                                                 const std::shared_ptr<Socket>& socket,
                                                  const std::string& msg,
                                                  WebSocketHandler::StatusCodes statusCode)
 {
     ws->sendMessage(msg);
-    ws->shutdown(statusCode, msg);
-    socket->ignoreInput();
+    ws->shutdown(statusCode, msg); // And ignore input (done in shutdown()).
 }

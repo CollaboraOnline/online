@@ -49,7 +49,7 @@ private:
 
     /// Send an error to the client and disconnect the socket.
     static void sendErrorAndShutdown(const std::shared_ptr<WebSocketHandler>& ws,
-                                     const std::shared_ptr<Socket>& socket, const std::string& msg,
+                                     const std::string& msg,
                                      WebSocketHandler::StatusCodes statusCode);
 
 private:
