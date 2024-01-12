@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-01-10 14:00+0100\n"
-"PO-Revision-Date: 2023-12-17 19:03+0000\n"
+"PO-Revision-Date: 2024-01-12 16:08+0000\n"
 "Last-Translator: Rob Pearson <rob.dunedin@gmail.com>\n"
 "Language-Team: English (New Zealand) <https://hosted.weblate.org/projects/"
 "collabora-online/ui/en_NZ/>\n"
-"Language: \n"
+"Language: en_NZ\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.3\n"
+"X-Generator: Weblate 5.4-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -365,15 +365,15 @@ msgstr " s"
 
 #: js/global.js:865
 msgid "Cluster is scaling, retrying..."
-msgstr ""
+msgstr "Cluster is scaling, retrying..."
 
 #: js/global.js:867
 msgid "Document is migrating to new server, retrying..."
-msgstr ""
+msgstr "Document is migrating to new server, retrying..."
 
 #: js/global.js:869
 msgid "Failed to get RouteToken from controller"
-msgstr ""
+msgstr "Failed to get RouteToken from controller"
 
 #: js/w2ui-1.5.rc1.js:3004
 msgid "Recent"
@@ -397,11 +397,11 @@ msgstr "Open link"
 
 #: src/control/Control.AlertDialog.js:64
 msgid "Copied external sources are not allowed"
-msgstr ""
+msgstr "Copied external sources are not allowed"
 
 #: src/control/Control.AlertDialog.js:65
 msgid "It seems you have copied a selection that includes external images."
-msgstr ""
+msgstr "It seems you have copied a selection that includes external images."
 
 #: src/control/Control.AlertDialog.js:66
 msgid ""
@@ -409,24 +409,29 @@ msgid ""
 "possible. Please right click in the image, choose \"Copy Image\" and paste "
 "it into the document instead."
 msgstr ""
+"Downloading external resources is forbidden but pasting images is still "
+"possible. Please right click in the image, choose \"Copy Image\" and paste "
+"it into the document instead."
 
 #: src/control/Control.AlertDialog.js:70
 msgid "External data source not allowed"
-msgstr ""
+msgstr "External data source not allowed"
 
 #: src/control/Control.AlertDialog.js:71
 msgid "It seems you have tried to insert external data."
-msgstr ""
+msgstr "It seems you have tried to insert external data."
 
 #: src/control/Control.AlertDialog.js:72
 msgid ""
 "Selected external data source is forbidden. Please contact the system "
 "administrator."
 msgstr ""
+"Selected external data source is forbidden. Please contact the system "
+"administrator."
 
 #: src/control/Control.AlertDialog.js:84
 msgid "Don't show this again"
-msgstr ""
+msgstr "Don't show this again"
 
 #: src/control/Control.AlertDialog.js:100
 msgid "The server encountered a %0 error while parsing the %1 command."
@@ -1570,11 +1575,11 @@ msgstr "EPUB Document (.epub)"
 
 #: src/control/Control.NotebookbarWriter.js:387
 msgid "Go Online"
-msgstr ""
+msgstr "Go Online"
 
 #: src/control/Control.NotebookbarWriter.js:387
 msgid "Go Offline"
-msgstr ""
+msgstr "Go Offline"
 
 #: src/control/Control.NotebookbarWriter.js:1342
 msgid "Rich Text"
@@ -1801,11 +1806,11 @@ msgstr "Hide Menu"
 
 #: src/control/Control.UIManager.js:164
 msgid "Enter new name"
-msgstr ""
+msgstr "Enter new name"
 
 #: src/control/Control.UIManager.js:792
 msgid "Show Menu"
-msgstr ""
+msgstr "Show Menu"
 
 #: src/control/Control.UserList.js:20
 msgid "%user has joined"
@@ -2248,7 +2253,7 @@ msgstr "The document is being renamed and will reload shortly"
 
 #: src/core/Socket.js:1121
 msgid "The document is switching to Offline mode and will reload shortly"
-msgstr ""
+msgstr "The document is switching to Offline mode and will reload shortly"
 
 #: src/core/Socket.js:1226
 msgid "Exported to storage"
@@ -2308,7 +2313,7 @@ msgstr "Theme colours"
 
 #: src/docstate.js:94
 msgid "Document colors"
-msgstr ""
+msgstr "Document colors"
 
 #: src/errormessages.js:22
 msgid "No disk space left on server."
@@ -2454,6 +2459,8 @@ msgid ""
 "Failed to establish socket connection or socket connection closed "
 "unexpectedly."
 msgstr ""
+"Failed to establish socket connection or socket connection closed "
+"unexpectedly."
 
 #: src/errormessages.js:43
 msgid "Failed to load document."
@@ -2537,7 +2544,7 @@ msgstr "Copy link location"
 
 #: src/layer/tile/CanvasTileLayer.js:2534
 msgid "Select link text"
-msgstr ""
+msgstr "Select link text"
 
 #: src/layer/tile/CanvasTileLayer.js:2545
 msgid "Edit link"
@@ -2553,11 +2560,11 @@ msgstr "No Comments"
 
 #: src/layer/tile/CommentListSection.ts:138
 msgid "A comment is being edited"
-msgstr ""
+msgstr "A comment is being edited"
 
 #: src/layer/tile/CommentListSection.ts:139
 msgid "Please save or discard the comment currently being edited."
-msgstr ""
+msgstr "Please save or discard the comment currently being edited."
 
 #: src/layer/tile/CommentListSection.ts:922
 msgid "Modify"
@@ -2798,6 +2805,9 @@ msgid ""
 "id=\"slide-2-indicator\" href=\"#slide-2\">2</a> <a id=\"slide-3-"
 "indicator\" href=\"#slide-3\">3</a>"
 msgstr ""
+"<a id=\"slide-1-indicator\" class=\"active\" href=\"#slide-1\">1</a> <a id="
+"\"slide-2-indicator\" href=\"#slide-2\">2</a> <a id=\"slide-3-indicator\" "
+"href=\"#slide-3\">3</a>"
 
 #~ msgid "Accessibility Support"
 #~ msgstr "Accessibility Support"

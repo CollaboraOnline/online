@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-01-10 14:00+0100\n"
-"PO-Revision-Date: 2024-01-02 19:06+0000\n"
+"PO-Revision-Date: 2024-01-12 16:08+0000\n"
 "Last-Translator: Rob Pearson <rob.dunedin@gmail.com>\n"
 "Language-Team: English (South Africa) <https://hosted.weblate.org/projects/"
 "collabora-online/ui/en_ZA/>\n"
-"Language: \n"
+"Language: en_ZA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1578,9 +1578,8 @@ msgid "Go Online"
 msgstr "Go Online"
 
 #: src/control/Control.NotebookbarWriter.js:387
-#, fuzzy
 msgid "Go Offline"
-msgstr "Go Online"
+msgstr "Go Offline"
 
 #: src/control/Control.NotebookbarWriter.js:1342
 msgid "Rich Text"
@@ -1807,11 +1806,11 @@ msgstr "Hide Menu"
 
 #: src/control/Control.UIManager.js:164
 msgid "Enter new name"
-msgstr ""
+msgstr "Enter new name"
 
 #: src/control/Control.UIManager.js:792
 msgid "Show Menu"
-msgstr ""
+msgstr "Show Menu"
 
 #: src/control/Control.UserList.js:20
 msgid "%user has joined"
@@ -2314,7 +2313,7 @@ msgstr "Theme colours"
 
 #: src/docstate.js:94
 msgid "Document colors"
-msgstr ""
+msgstr "Document colours"
 
 #: src/errormessages.js:22
 msgid "No disk space left on server."
@@ -2460,6 +2459,8 @@ msgid ""
 "Failed to establish socket connection or socket connection closed "
 "unexpectedly."
 msgstr ""
+"Failed to establish socket connection or socket connection closed "
+"unexpectedly."
 
 #: src/errormessages.js:43
 msgid "Failed to load document."
@@ -2543,7 +2544,7 @@ msgstr "Copy link location"
 
 #: src/layer/tile/CanvasTileLayer.js:2534
 msgid "Select link text"
-msgstr ""
+msgstr "Select link text"
 
 #: src/layer/tile/CanvasTileLayer.js:2545
 msgid "Edit link"
