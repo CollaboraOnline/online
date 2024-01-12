@@ -1,9 +1,21 @@
 /* -*- js-indent-level: 8 -*- */
 /*
-	Utility class
-*/
+ * Copyright the Collabora Online contributors.
+ *
+ * SPDX-License-Identifier: MPL-2.0
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+/*
+ * Utility class
+ */
+
 /* global Base _ */
+
 /* eslint no-unused-vars:0 */
+
 var Util = Base.extend({
 	constructor: null
 
