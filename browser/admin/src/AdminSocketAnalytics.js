@@ -1,8 +1,17 @@
 /* -*- js-indent-level: 8 -*- */
 /*
-	Socket to be intialized on opening the analytics page in Admin console
-	containing various graphs to show to the user on specified interval
-*/
+ * Copyright the Collabora Online contributors.
+ *
+ * SPDX-License-Identifier: MPL-2.0
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+/*
+ * Socket to be intialized on opening the analytics page in Admin console
+ * containing various graphs to show to the user on specified interval
+ */
 
 /* global _ d3 Util AdminSocketBase $ Admin */
 var AdminSocketAnalytics = AdminSocketBase.extend({
