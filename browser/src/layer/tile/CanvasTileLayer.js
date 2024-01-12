@@ -5462,7 +5462,9 @@ L.CanvasTileLayer = L.Layer.extend({
 
 
 	_debugSetPostMessage: function(type,msg) {
-		this._debugData['postMessage'].setPrefix(type+': '+ msg);
+		if (this._debugData) {
+			this._debugData['postMessage'].setPrefix(type+': '+ msg);
+		}
 	},
 
 	_debugSetTimes: function(times, value) {
@@ -5508,8 +5510,10 @@ L.CanvasTileLayer = L.Layer.extend({
 				messages += '' + i + ': ' + this._debugInvalidBoundsMessage[i] + ' <br>';
 			}
 		}
-		this._debugData['tileCombine'].setPrefix(messages);
-		this._debugShowTileData();
+		if (this._debugData) {
+			this._debugData['tileCombine'].setPrefix(messages);
+			this._debugShowTileData();
+		}
 	},
 
 	_debugTileInvalidationTimeout: function() {

@@ -1073,9 +1073,11 @@ app.definitions.Socket = L.Class.extend({
 		else if (textMsg.startsWith('pong ') && this._map._docLayer && this._map._docLayer._debug) {
 			var times = this._map._docLayer._debugTimePING;
 			var timeText = this._map._docLayer._debugSetTimes(times, +new Date() - this._map._docLayer._debugPINGQueue.shift());
-			this._map._docLayer._debugData['ping'].setPrefix('Server ping time: ' + timeText +
-					'. Rendered tiles: ' + command.rendercount +
-					', last: ' + (command.rendercount - this._map._docLayer._debugRenderCount));
+			if (this._map._docLayer._debugData) {
+				this._map._docLayer._debugData['ping'].setPrefix('Server ping time: ' + timeText +
+						'. Rendered tiles: ' + command.rendercount +
+						', last: ' + (command.rendercount - this._map._docLayer._debugRenderCount));
+			}
 			this._map._docLayer._debugRenderCount = command.rendercount;
 		}
 		else if (textMsg.startsWith('saveas:') || textMsg.startsWith('renamefile:')) {
