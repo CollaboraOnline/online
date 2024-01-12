@@ -787,9 +787,14 @@ public:
             + '/');
         LOG_TRC("Created temporary convert-to/insert path: " << tempPath.toString());
 
-        // Prevent user inputting anything funny here.
+        // Prevent user inputing anything funny here.
+        std::string fileParam = params.get("filename");
+        std::string cleanFilename = Util::cleanupFilename(fileParam);
+        if (fileParam != cleanFilename)
+            LOG_DBG("Unexpected characters in conversion filename '" << fileParam << "' cleaned to '" << cleanFilename << "'");
+
         // A "filename" should always be a filename, not a path
-        const Path filenameParam(params.get("filename"));
+        const Path filenameParam(cleanFilename);
         if (filenameParam.getFileName() == "callback:")
             tempPath.setFileName("incoming_file"); // A sensible name.
         else
