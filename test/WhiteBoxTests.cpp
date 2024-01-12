@@ -46,6 +46,7 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testPathPrefixTrimming);
     CPPUNIT_TEST(testMessageAbbreviation);
     CPPUNIT_TEST(testReplace);
+    CPPUNIT_TEST(testReplaceAllOf);
     CPPUNIT_TEST(testRegexListMatcher);
     CPPUNIT_TEST(testRegexListMatcher_Init);
     CPPUNIT_TEST(testEmptyCellCursor);
@@ -77,6 +78,7 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     void testPathPrefixTrimming();
     void testMessageAbbreviation();
     void testReplace();
+    void testReplaceAllOf();
     void testRegexListMatcher();
     void testRegexListMatcher_Init();
     void testEmptyCellCursor();
@@ -461,6 +463,14 @@ void WhiteBoxTests::testReplace()
     LOK_ASSERT_EQUAL(std::string("tete one two flee"), Util::replace("tettet one two flee", "tet", "te"));
     LOK_ASSERT_EQUAL(std::string("t one two flee"), Util::replace("test one two flee", "tes", ""));
     LOK_ASSERT_EQUAL(std::string("test one two flee"), Util::replace("test one two flee", "", "X"));
+}
+
+void WhiteBoxTests::testReplaceAllOf()
+{
+    constexpr auto testname = __func__;
+
+    LOK_ASSERT_EQUAL(std::string("humvee"), Util::replaceAllOf("humans","san", "eve"));
+    LOK_ASSERT_EQUAL(std::string("simple.odt"), Util::replaceAllOf("s#&-le.odt", "#&-", "imp"));
 }
 
 void WhiteBoxTests::testRegexListMatcher()

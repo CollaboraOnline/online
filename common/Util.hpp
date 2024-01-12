@@ -282,6 +282,9 @@ namespace Util
     /// Replace substring @a in string @s with string @b.
     std::string replace(std::string s, const std::string& a, const std::string& b);
 
+    /// Replace any characters in @a matching characters in @b with replacement chars in @c and return
+    std::string replaceAllOf(const std::string &str, const std::string& match, const std::string& repl);
+
     std::string formatLinesForLog(const std::string& s);
 
     void setThreadName(const std::string& s);
@@ -1095,6 +1098,10 @@ int main(int argc, char**argv)
 
     /// Decode a URI encoded with encodeURIComponent.
     std::string decodeURIComponent(const std::string& uri);
+
+    /// Cleanup a filename replacing anything potentially problematic
+    /// either for a URL or for a file path
+    std::string cleanupFilename(const std::string &filename);
 
     /// Anonymize a sensitive string to avoid leaking it.
     /// Called on strings to be logged or exposed.

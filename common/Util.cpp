@@ -608,6 +608,34 @@ namespace Util
         return result;
     }
 
+    std::string replaceAllOf(const std::string &str, const std::string& match, const std::string& repl)
+    {
+        std::ostringstream os;
+
+        assert(match.size() == repl.size());
+        if (match.size() != repl.size())
+            return std::string("replaceAllOf failed");
+
+        const std::size_t strSize = str.size();
+        for (size_t i = 0; i < strSize; ++i)
+        {
+            auto pos = match.find(str[i]);
+            if (pos != std::string::npos)
+                os << repl[pos];
+            else
+                os << str[i];
+        }
+
+        return os.str();
+    }
+
+    std::string cleanupFilename(const std::string &filename)
+    {
+        static const std::string mtch(",/?:@&=+$#'\"");
+        static const std::string repl("------------");
+        return replaceAllOf(filename, mtch, repl);
+    }
+
     std::string formatLinesForLog(const std::string& s)
     {
         std::string r;
