@@ -131,7 +131,7 @@ export class TilesSection extends CanvasSectionObject {
 		var ctx = this.sectionProperties.tsManager._paintContext();
 
 		var bounds: cool.Bounds;
-		for (const coords of tileSubset.values()) {
+		for (const coords of Array.from(tileSubset)) {
 			var topLeft = new L.Point(coords.getPos().x, coords.getPos().y);
 			var rightBottom = new L.Point(topLeft.x + ctx.tileSize.x, topLeft.y + ctx.tileSize.y);
 
