@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include <chrono>
 #include <memory>
 #include <string>
 
@@ -14,6 +15,7 @@
 #include <Poco/Util/Application.h>
 
 #include "Authorization.hpp"
+#include "HttpRequest.hpp"
 
 /// A Storage Manager is responsible for the settings
 /// of Storage and the creation of http::Session and
@@ -35,7 +37,10 @@ public:
     }
 
     /// Create an http::Session from a URI.
-    static std::shared_ptr<http::Session> getHttpSession(const Poco::URI& uri);
+    /// The configured timeout (net.connection_timeout_secs) is used when 0 is given.
+    static std::shared_ptr<http::Session>
+    getHttpSession(const Poco::URI& uri,
+                   std::chrono::seconds timeout = std::chrono::seconds::zero());
 
     /// Create an http::Request with the common headers.
     static http::Request createHttpRequest(const Poco::URI& uri, const Authorization& auth);

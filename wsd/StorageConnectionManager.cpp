@@ -118,7 +118,8 @@ http::Request StorageConnectionManager::createHttpRequest(const Poco::URI& uri,
     return httpRequest;
 }
 
-std::shared_ptr<http::Session> StorageConnectionManager::getHttpSession(const Poco::URI& uri)
+std::shared_ptr<http::Session>
+StorageConnectionManager::getHttpSession(const Poco::URI& uri, std::chrono::seconds timeout)
 {
     bool useSSL = false;
     if (SSLAsScheme)
@@ -141,8 +142,14 @@ std::shared_ptr<http::Session> StorageConnectionManager::getHttpSession(const Po
     // Create the session.
     auto httpSession = http::Session::create(uri.getHost(), protocol, uri.getPort());
 
-    static int timeoutSec = COOLWSD::getConfigValue<int>("net.connection_timeout_secs", 30);
-    httpSession->setTimeout(std::chrono::seconds(timeoutSec));
+    if (timeout == std::chrono::seconds::zero())
+    {
+        static std::chrono::seconds defTimeout =
+            std::chrono::seconds(COOLWSD::getConfigValue<int>("net.connection_timeout_secs", 30));
+        timeout = defTimeout;
+    }
+
+    httpSession->setTimeout(timeout);
 
     return httpSession;
 }
