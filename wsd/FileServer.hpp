@@ -72,15 +72,40 @@ inline std::ostream& operator<<(std::ostream& os, const PreProcessedFile::Segmen
 /// Handles file requests over HTTP(S).
 class FileServerRequestHandler
 {
+public:
+    /// The WOPI URL and authentication details,
+    /// as extracted from the cool.html file-serving request.
+    class ResourceAccessDetails
+    {
+    public:
+        ResourceAccessDetails() = default;
+
+        ResourceAccessDetails(std::string wopiSrc, std::string accessToken)
+            : _wopiSrc(std::move(wopiSrc))
+            , _accessToken(std::move(accessToken))
+        {
+        }
+
+        bool isValid() const { return !_wopiSrc.empty() && !_accessToken.empty(); }
+
+        const std::string wopiSrc() const { return _wopiSrc; }
+        const std::string accessToken() const { return _accessToken; }
+
+    private:
+        std::string _wopiSrc;
+        std::string _accessToken;
+    };
+
+private:
     friend class FileServeTests; // for unit testing
 
     static std::string getRequestPathname(const Poco::Net::HTTPRequest& request,
                                           const RequestDetails& requestDetails);
 
-    static void preprocessFile(const Poco::Net::HTTPRequest& request,
-                               const RequestDetails &requestDetails,
-                               Poco::MemoryInputStream& message,
-                               const std::shared_ptr<StreamSocket>& socket);
+    static ResourceAccessDetails preprocessFile(const Poco::Net::HTTPRequest& request,
+                                                const RequestDetails& requestDetails,
+                                                Poco::MemoryInputStream& message,
+                                                const std::shared_ptr<StreamSocket>& socket);
     static void preprocessWelcomeFile(const Poco::Net::HTTPRequest& request,
                                       const RequestDetails &requestDetails,
                                       Poco::MemoryInputStream& message,
@@ -113,9 +138,10 @@ public:
     static bool isAdminLoggedIn(const Poco::Net::HTTPRequest& request, http::Response& response);
 
     static void handleRequest(const Poco::Net::HTTPRequest& request,
-                              const RequestDetails &requestDetails,
+                              const RequestDetails& requestDetails,
                               Poco::MemoryInputStream& message,
-                              const std::shared_ptr<StreamSocket>& socket);
+                              const std::shared_ptr<StreamSocket>& socket,
+                              ResourceAccessDetails& accessDetails);
 
     static void readDirToHash(const std::string &basePath, const std::string &path, const std::string &prefix = std::string());
 
