@@ -1,5 +1,9 @@
 /* -*- Mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4; fill-column: 100 -*- */
 /*
+ * Copyright the Collabora Online contributors.
+ *
+ * SPDX-License-Identifier: MPL-2.0
+ *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -14,7 +18,6 @@
 
 #include "Util.hpp"
 
-#include <csignal>
 #include <poll.h>
 
 #ifdef HAVE_SYS_RANDOM_H
@@ -70,7 +73,6 @@
 #include <Poco/Util/Application.h>
 #include <Poco/URI.h>
 
-#include "Common.hpp"
 #include "Log.hpp"
 #include "Protocol.hpp"
 #include "TraceEvent.hpp"
