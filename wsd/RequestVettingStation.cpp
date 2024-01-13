@@ -49,9 +49,16 @@ void sendLoadResult(const std::shared_ptr<ClientSession>& clientSession, bool su
 
 } // anonymous namespace
 
-void RequestVettingStation::handleRequest([[maybe_unused]] SocketPoll& poll,
-                                          SocketDisposition& disposition)
+void RequestVettingStation::handleRequest(const std::string& id,
+                                          const std::shared_ptr<WebSocketHandler>& ws,
+                                          const std::shared_ptr<StreamSocket>& socket,
+                                          unsigned mobileAppDocId, SocketDisposition& disposition)
 {
+    _id = id;
+    _ws = ws;
+    _socket = socket;
+    _mobileAppDocId = mobileAppDocId;
+
     const std::string url = _requestDetails.getDocumentURI();
 
     LOG_INF("URL [" << url << "] for WS Request.");
@@ -127,7 +134,7 @@ void RequestVettingStation::handleRequest([[maybe_unused]] SocketPoll& poll,
                             << docKey << "] is for a WOPI document");
             // Remove from the current poll and transfer.
             disposition.setMove(
-                [this, &poll, docKey, url, uriPublic,
+                [this, docKey, url, uriPublic,
                  isReadOnly](const std::shared_ptr<Socket>& moveSocket)
                 {
                     LOG_TRC_S('#' << moveSocket->getFD()
@@ -136,7 +143,7 @@ void RequestVettingStation::handleRequest([[maybe_unused]] SocketPoll& poll,
                                   << docKey << ']');
 
                     // CheckFileInfo and only when it's good create DocBroker.
-                    checkFileInfo(poll, url, uriPublic, docKey, isReadOnly, RedirectionLimit);
+                    checkFileInfo(url, uriPublic, docKey, isReadOnly, RedirectionLimit);
                 });
             break;
 #endif //!MOBILEAPP
@@ -144,9 +151,9 @@ void RequestVettingStation::handleRequest([[maybe_unused]] SocketPoll& poll,
 }
 
 #if !MOBILEAPP
-void RequestVettingStation::checkFileInfo(SocketPoll& poll, const std::string& url,
-                                          const Poco::URI& uriPublic, const std::string& docKey,
-                                          bool isReadOnly, int redirectLimit)
+void RequestVettingStation::checkFileInfo(const std::string& url, const Poco::URI& uriPublic,
+                                          const std::string& docKey, bool isReadOnly,
+                                          int redirectLimit)
 {
     ProfileZone profileZone("WopiStorage::getWOPIFileInfo", { { "url", url } }); // Move to ctor.
 
@@ -163,7 +170,7 @@ void RequestVettingStation::checkFileInfo(SocketPoll& poll, const std::string& u
                                                            << httpRequest.header());
 
     http::Session::FinishedCallback finishedCallback =
-        [this, &poll, docKey, startTime, url, uriPublic, isReadOnly, uriAnonym,
+        [this, docKey, startTime, url, uriPublic, isReadOnly, uriAnonym,
          redirectLimit](const std::shared_ptr<http::Session>& session)
     {
         if (SigUtil::getShutdownRequestFlag())
@@ -187,8 +194,7 @@ void RequestVettingStation::checkFileInfo(SocketPoll& poll, const std::string& u
                 LOG_TRC("WOPI::CheckFileInfo redirect to URI [" << COOLWSD::anonymizeUrl(location)
                                                                 << "]");
 
-                checkFileInfo(poll, location, Poco::URI(location), docKey, isReadOnly,
-                              redirectLimit - 1);
+                checkFileInfo(location, Poco::URI(location), docKey, isReadOnly, redirectLimit - 1);
                 return;
             }
             else
@@ -263,7 +269,7 @@ void RequestVettingStation::checkFileInfo(SocketPoll& poll, const std::string& u
     _httpSession->setFinishedHandler(std::move(finishedCallback));
 
     // Run the CheckFileInfo request on the WebServer Poll.
-    _httpSession->asyncRequest(httpRequest, poll);
+    _httpSession->asyncRequest(httpRequest, *_poll);
 }
 #endif //!MOBILEAPP
 

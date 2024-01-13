@@ -20,24 +20,19 @@
 class RequestVettingStation
 {
 public:
-    RequestVettingStation(const std::string& id, const std::shared_ptr<WebSocketHandler>& ws,
-                          const RequestDetails& requestDetails,
-                          const std::shared_ptr<StreamSocket>& socket, unsigned mobileAppDocId)
-        : _id(id)
-        , _ws(ws)
+    /// Create an instance with a SocketPoll and a RequestDetails instance.
+    RequestVettingStation(const std::shared_ptr<TerminatingPoll>& poll,
+                          const RequestDetails& requestDetails)
+        : _poll(poll)
         , _requestDetails(requestDetails)
-        , _socket(socket)
-        , _mobileAppDocId(mobileAppDocId)
     {
-        // Indicate to the client that document broker is searching.
-        static constexpr const char* const status = "statusindicator: find";
-        LOG_TRC("Sending to Client [" << status << ']');
-        _ws->sendMessage(status);
     }
 
     inline void logPrefix(std::ostream& os) const { os << '#' << _socket->getFD() << ": "; }
 
-    void handleRequest(SocketPoll& poll, SocketDisposition& disposition);
+    void handleRequest(const std::string& id, const std::shared_ptr<WebSocketHandler>& ws,
+                       const std::shared_ptr<StreamSocket>& socket, unsigned mobileAppDocId,
+                       SocketDisposition& disposition);
 
 private:
     void createDocBroker(const std::string& docKey, const std::string& url,
@@ -45,7 +40,7 @@ private:
                          Poco::JSON::Object::Ptr wopiInfo = nullptr);
 
 #if !MOBILEAPP
-    void checkFileInfo(SocketPoll& poll, const std::string& url, const Poco::URI& uriPublic,
+    void checkFileInfo(const std::string& url, const Poco::URI& uriPublic,
                        const std::string& docKey, bool isReadOnly, int redirectionLimit);
 #endif //!MOBILEAPP
 
@@ -55,12 +50,13 @@ private:
                                      WebSocketHandler::StatusCodes statusCode);
 
 private:
-    const std::string _id;
+    std::shared_ptr<TerminatingPoll> _poll;
+    std::string _id;
     std::shared_ptr<WebSocketHandler> _ws;
-    const RequestDetails _requestDetails;
-    const std::shared_ptr<StreamSocket> _socket;
+    RequestDetails _requestDetails;
+    std::shared_ptr<StreamSocket> _socket;
     std::shared_ptr<http::Session> _httpSession;
-    const unsigned _mobileAppDocId;
+    unsigned _mobileAppDocId;
     std::unique_ptr<WopiStorage::WOPIFileInfo> _wopiInfo;
     LockContext _lockCtx;
 };

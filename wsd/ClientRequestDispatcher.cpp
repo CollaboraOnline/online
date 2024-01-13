@@ -1635,10 +1635,16 @@ void ClientRequestDispatcher::handleClientWsUpgrade(const Poco::Net::HTTPRequest
 #endif
         }
 
-        auto rvs = std::make_shared<RequestVettingStation>(_id, ws, requestDetails, socket,
-                                                           mobileAppDocId);
+        auto rvs =
+            std::make_shared<RequestVettingStation>(COOLWSD::getWebServerPoll(), requestDetails);
         _requestVettingStations.emplace(_id, rvs);
-        rvs->handleRequest(*COOLWSD::getWebServerPoll(), disposition);
+
+        // Indicate to the client that document broker is searching.
+        static constexpr const char* const status = "statusindicator: find";
+        LOG_TRC("Sending to Client [" << status << ']');
+        ws->sendMessage(status);
+
+        rvs->handleRequest(_id, ws, socket, mobileAppDocId, disposition);
     }
     catch (const std::exception& exc)
     {

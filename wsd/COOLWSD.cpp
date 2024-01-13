@@ -4138,7 +4138,6 @@ int COOLWSD::innerMain()
     std::string version, hash;
     Util::getVersionInfo(version, hash);
     LOG_INF("Coolwsd version details: " << version << " - " << hash << " - id " << Util::getProcessIdentifier() << " - on " << Util::getLinuxVersion());
-
 #endif
 
     initializeSSL();
