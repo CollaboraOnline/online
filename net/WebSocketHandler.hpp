@@ -653,6 +653,11 @@ public:
         return sendTextMessage(msg.c_str(), msg.size());
     }
 
+    template <std::size_t N> int sendMessage(const char (&msg)[N]) const
+    {
+        return sendTextMessage(msg, N - 1); // Minus the null-terminator.
+    }
+
     /// Implementation of the ProtocolHandlerInterface.
     int sendTextMessage(const char* msg, const size_t len, bool flush = false) const override
     {
