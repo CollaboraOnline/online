@@ -113,6 +113,10 @@ private:
     /// WASM document request handler. Used only when WASM is enabled.
     std::unique_ptr<WopiProxy> _wopiProxy;
 
+    /// The private RequestVettingStation. Held privately after the
+    /// WS is created and as long as it is connected.
+    std::shared_ptr<RequestVettingStation> _rvs;
+
     /// External requests are first vetted before allocating DocBroker and Kit process.
     /// This is a map of the request URI to the RequestVettingStation for vetting.
     std::unordered_map<std::string, std::shared_ptr<RequestVettingStation>> _requestVettingStations;
