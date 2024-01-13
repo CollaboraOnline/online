@@ -18,18 +18,18 @@
 class RequestVettingStation
 {
 public:
-    RequestVettingStation(std::string id, std::shared_ptr<WebSocketHandler> ws,
+    RequestVettingStation(const std::string& id, const std::shared_ptr<WebSocketHandler>& ws,
                           const RequestDetails& requestDetails,
                           const std::shared_ptr<StreamSocket>& socket, unsigned mobileAppDocId)
-        : _id(std::move(id))
+        : _id(id)
         , _ws(ws)
         , _requestDetails(requestDetails)
         , _socket(socket)
         , _mobileAppDocId(mobileAppDocId)
     {
         // Indicate to the client that document broker is searching.
-        static const std::string status("statusindicator: find");
-        LOG_TRC("Sending to Client [" << status << "].");
+        static constexpr const char* const status = "statusindicator: find";
+        LOG_TRC("Sending to Client [" << status << ']');
         _ws->sendMessage(status);
     }
 
