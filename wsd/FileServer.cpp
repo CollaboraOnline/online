@@ -491,9 +491,10 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
 #endif
 
 void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
-                                             const RequestDetails &requestDetails,
+                                             const RequestDetails& requestDetails,
                                              Poco::MemoryInputStream& message,
-                                             const std::shared_ptr<StreamSocket>& socket)
+                                             const std::shared_ptr<StreamSocket>& socket,
+                                             ResourceAccessDetails& accessDetails)
 {
     try
     {
@@ -511,9 +512,10 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
         {
             if (config.getBool("ssl.sts.enabled", false))
             {
-                const auto maxAge = config.getInt("ssl.sts.max_age", 31536000); // Default 1 year.
+                const auto maxAge =
+                    config.getInt("ssl.sts.max_age", 31536000); // Default 1 year.
                 response.add("Strict-Transport-Security",
-                             "max-age=" + std::to_string(maxAge) + "; includeSubDomains");
+                                "max-age=" + std::to_string(maxAge) + "; includeSubDomains");
             }
         }
 #endif
@@ -587,7 +589,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
             endPoint == "uno-localizations.json" ||
             endPoint == "uno-localizations-override.json")
         {
-            preprocessFile(request, requestDetails, message, socket);
+            accessDetails = preprocessFile(request, requestDetails, message, socket);
             return;
         }
 
@@ -1129,10 +1131,9 @@ private:
     const std::string _blank;
 };
 
-void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
-                                              const RequestDetails &requestDetails,
-                                              Poco::MemoryInputStream& message,
-                                              const std::shared_ptr<StreamSocket>& socket)
+FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::preprocessFile(
+    const HTTPRequest& request, const RequestDetails& requestDetails,
+    Poco::MemoryInputStream& message, const std::shared_ptr<StreamSocket>& socket)
 {
     const ServerURL cnxDetails(requestDetails);
 
@@ -1358,16 +1359,19 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     if (uriHost.getHost() != configFrameAncestor)
         frameAncestors += ' ' + uriHost.getHost() + ":*";
 
+    std::string wopiSrc;
     for (const auto& param : params)
     {
         if (param.first == "WOPISrc")
         {
             if (!HttpHelper::verifyWOPISrc(request.getURI(), param.second, socket))
             {
-                return;
+                return ResourceAccessDetails();
             }
 
             const Poco::URI uriWopiFrameAncestor(Util::decodeURIComponent(param.second));
+            wopiSrc = uriWopiFrameAncestor.toString();
+
             // Remove parameters from URL
             const std::string& wopiFrameAncestor = uriWopiFrameAncestor.getHost();
             if (wopiFrameAncestor != uriHost.getHost() && wopiFrameAncestor != configFrameAncestor)
@@ -1499,6 +1503,8 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
 
     socket->send(oss.str());
     LOG_TRC("Sent file: " << relPath << ": " << preprocess);
+
+    return ResourceAccessDetails(wopiSrc, urv[ACCESS_TOKEN]);
 }
 
 

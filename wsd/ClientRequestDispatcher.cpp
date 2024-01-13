@@ -556,8 +556,9 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
             }
             else
             {
-                COOLWSD::FileRequestHandler->handleRequest(request, requestDetails, message,
-                                                           socket);
+                FileServerRequestHandler::ResourceAccessDetails accessDetails;
+                COOLWSD::FileRequestHandler->handleRequest(request, requestDetails, message, socket,
+                                                           accessDetails);
                 socket->shutdown();
             }
         }
