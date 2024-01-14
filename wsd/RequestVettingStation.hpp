@@ -36,8 +36,7 @@ public:
 
 private:
     void createDocBroker(const std::string& docKey, const std::string& url,
-                         const Poco::URI& uriPublic, const bool isReadOnly,
-                         Poco::JSON::Object::Ptr wopiInfo = nullptr);
+                         const Poco::URI& uriPublic, const bool isReadOnly);
 
 #if !MOBILEAPP
     void checkFileInfo(const std::string& url, const Poco::URI& uriPublic,
@@ -57,6 +56,6 @@ private:
     std::shared_ptr<StreamSocket> _socket;
     std::shared_ptr<http::Session> _httpSession;
     unsigned _mobileAppDocId;
-    std::unique_ptr<WopiStorage::WOPIFileInfo> _wopiInfo;
+    Poco::JSON::Object::Ptr _wopiInfo;
     LockContext _lockCtx;
 };

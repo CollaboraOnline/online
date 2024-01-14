@@ -240,8 +240,7 @@ void RequestVettingStation::checkFileInfo(const std::string& url, const Poco::UR
             return;
         }
 
-        Poco::JSON::Object::Ptr wopiInfo;
-        if (JsonUtil::parseJSON(wopiResponse, wopiInfo))
+        if (JsonUtil::parseJSON(wopiResponse, _wopiInfo))
         {
             if (COOLWSD::AnonymizeUserData)
                 LOG_DBG("WOPI::CheckFileInfo (" << callDurationMs << "): anonymizing...");
@@ -263,7 +262,7 @@ void RequestVettingStation::checkFileInfo(const std::string& url, const Poco::UR
                                  WebSocketHandler::StatusCodes::POLICY_VIOLATION);
         }
 
-        createDocBroker(docKey, url, uriPublic, isReadOnly, std::move(wopiInfo));
+        createDocBroker(docKey, url, uriPublic, isReadOnly);
     };
 
     _httpSession->setFinishedHandler(std::move(finishedCallback));
@@ -274,8 +273,7 @@ void RequestVettingStation::checkFileInfo(const std::string& url, const Poco::UR
 #endif //!MOBILEAPP
 
 void RequestVettingStation::createDocBroker(const std::string& docKey, const std::string& url,
-                                            const Poco::URI& uriPublic, const bool isReadOnly,
-                                            Poco::JSON::Object::Ptr wopiInfo)
+                                            const Poco::URI& uriPublic, const bool isReadOnly)
 {
     // Request a kit process for this doc.
     std::shared_ptr<DocumentBroker> docBroker = findOrCreateDocBroker(
@@ -305,6 +303,7 @@ void RequestVettingStation::createDocBroker(const std::string& docKey, const std
 
     // Transfer the client socket to the DocumentBroker when we get back to the poll:
     const auto ws = _ws;
+    auto wopiInfo = _wopiInfo;
     docBroker->setupTransfer(
         _socket,
         [clientSession, uriPublic, wopiInfo=std::move(wopiInfo), ws,
