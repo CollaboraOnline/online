@@ -86,6 +86,8 @@ export class RowGroup extends GroupBase {
 	drawGroupControl (group: GroupEntry): void {
 		let startX = this._levelSpacing + (this._groupHeadSize + this._levelSpacing) * group.level;
 		let startY = this.getRelativeY(group.startPos);
+		startX = Math.round(startX);
+		startY = Math.round(startY);
 		const endY = this.getEndPosition(group.endPos);
 
 		if (this.isGroupHeaderVisible(startY, group.startPos)) {
@@ -100,20 +102,20 @@ export class RowGroup extends GroupBase {
 			if (!group.hidden) {
 				// draw '-'
 				this.context.beginPath();
-				this.context.moveTo(this.transformX(startX + this._groupHeadSize * 0.25), startY + this._groupHeadSize / 2 + 0.5);
-				this.context.lineTo(this.transformX(startX + this._groupHeadSize * 0.75 + app.roundedDpiScale), startY + this._groupHeadSize / 2 + 0.5);
+				this.context.moveTo(startX + 0.5 + this._groupHeadSize * 0.25, startY + 0.5 + this._groupHeadSize / 2);
+				this.context.lineTo(startX + 0.5 + this._groupHeadSize * 0.75, startY + 0.5 + this._groupHeadSize / 2);
 				this.context.stroke();
 			}
 			else {
 				// draw '+'
 				this.context.beginPath();
-				this.context.moveTo(this.transformX(startX + this._groupHeadSize * 0.25), startY + this._groupHeadSize / 2 + 0.5);
-				this.context.lineTo(this.transformX(startX + this._groupHeadSize * 0.75 + app.roundedDpiScale), startY + this._groupHeadSize / 2 + 0.5);
+				this.context.moveTo(startX + 0.5 + this._groupHeadSize * 0.25, startY + 0.5 + this._groupHeadSize / 2);
+				this.context.lineTo(startX + 0.5 + this._groupHeadSize * 0.75, startY + 0.5 + this._groupHeadSize / 2);
 
 				this.context.stroke();
 
-				this.context.moveTo(this.transformX(startX + this._groupHeadSize * 0.50 + 0.5), startY + this._groupHeadSize * 0.25);
-				this.context.lineTo(this.transformX(startX + this._groupHeadSize * 0.50 + 0.5), startY + this._groupHeadSize * 0.75 + app.roundedDpiScale);
+				this.context.moveTo(startX + 0.5 + this._groupHeadSize / 2, startY + this._groupHeadSize * 0.25);
+				this.context.lineTo(startX + 0.5 + this._groupHeadSize / 2, startY + this._groupHeadSize * 0.75 + 1.0);
 
 				this.context.stroke();
 			}

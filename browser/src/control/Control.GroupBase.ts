@@ -54,8 +54,8 @@ export abstract class GroupBase extends app.definitions.canvasSectionObject {
 		this._groups = null;
 
 		// group control styles
-		this._groupHeadSize = Math.round(12 * app.dpiScale);
-		this._levelSpacing = app.roundedDpiScale;
+		this._groupHeadSize = 12;
+		this._levelSpacing = 1;
 
 		this._map.on('sheetgeometrychanged', this.update, this);
 		this._map.on('viewrowcolumnheaders', this.update, this);
