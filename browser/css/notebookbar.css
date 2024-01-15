@@ -351,10 +351,11 @@ button.ui-tab.notebookbar {
 /* unobuttons with inline labels */
 
 .inline.notebookbar {
-	float: inline-start;
 	width: max-content;
 	white-space: nowrap;
-	display: inline-table;
+	display: grid;
+	grid-auto-flow: column;
+	align-items: center;
 }
 
 #FormatPaintbrush span
