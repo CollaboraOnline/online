@@ -777,7 +777,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 .ui-combobox-content {
 	width: 100%;
 	border: none;
-	border-radius: var(--border-radius);
+	border-radius: var(--border-radius) 0px 0px var(--border-radius);
 	color: var(--color-text-dark);
 	background-color: var(--color-background-lighter);
 }
@@ -1898,14 +1898,4 @@ kbd,
 /* Modal info with 2 line message*/
 .jsdialog-container [id^='info-modal-label'] {
 	display: flex;
-}
-
-/* Custom props */
-#customprops .jsdialog .ui-grid .menubutton {
-	line-height: 16px;
-}
-
-#customprops div.jsdialog.ui-grid-cell, #customprops .spinfieldcontainer {
-	margin-top: auto;
-	margin-bottom: auto;
 }
