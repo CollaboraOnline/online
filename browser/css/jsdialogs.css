@@ -659,7 +659,7 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 /* spinfield */
 
 .spinfieldcontainer {
-	margin-right: 5px;
+	margin-inline-end: 5px;
 	min-width: 70px;
 	width: 100%;
 }
