@@ -115,7 +115,7 @@ L.Clipboard = L.Class.extend({
 	_originWrapBody: function(body, isStub) {
 		var encodedOrigin = encodeURIComponent(this.getMetaURL());
 		var text =  '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">\n' +
-		            '<html>\n' +
+		            '<div id="meta-origin" data-coolorigin="' + encodedOrigin + '"><html>\n' +
 		            '  <head>\n';
 		if (isStub)
 			text += '    ' + this._getHtmlStubMarker() + '\n';
@@ -123,7 +123,7 @@ L.Clipboard = L.Class.extend({
 			    '    <meta name="origin" content="' + encodedOrigin + '"/>\n' +
 			    '  </head>\n'
 			    + body +
-			'</html>';
+			'</html></div>';
 		return text;
 	},
 
@@ -147,17 +147,16 @@ L.Clipboard = L.Class.extend({
 		));
 	},
 
-	_getMetaOrigin: function (html) {
-		var match = '<meta name="origin" content="';
-		var start = html.indexOf(match);
+	_getMetaOrigin: function (html, prefix) {
+		var start = html.indexOf(prefix);
 		if (start < 0) {
 			return '';
 		}
-		var end = html.indexOf('"', start + match.length);
+		var end = html.indexOf('"', start + prefix.length);
 		if (end < 0) {
 			return '';
 		}
-		var meta = html.substring(start + match.length, end);
+		var meta = html.substring(start + prefix.length, end);
 
 		// quick sanity checks that it one of ours.
 		if (meta.indexOf('%2Fclipboard%3FWOPISrc%3D') >= 0 &&
@@ -360,7 +359,13 @@ L.Clipboard = L.Class.extend({
 		// Look for our HTML meta magic.
 		//   cf. ClientSession.cpp /textselectioncontent:/
 
-		var meta = this._getMetaOrigin(htmlText);
+		var meta = this._getMetaOrigin(htmlText, '<div id="meta-origin" data-coolorigin="');
+		var newStyle = true;
+		if (meta === '')
+		{
+			meta = this._getMetaOrigin(htmlText, '<meta name="origin" content="');
+			newStyle = false;
+		}
 		var id = this.getMetaPath(0);
 		var idOld = this.getMetaPath(1);
 
@@ -369,7 +374,7 @@ L.Clipboard = L.Class.extend({
 		    (meta.indexOf(id) >= 0 || meta.indexOf(idOld) >= 0))
 		{
 			// Home from home: short-circuit internally.
-			window.app.console.log('short-circuit, internal paste');
+			window.app.console.log('short-circuit, internal paste, new style? ' + newStyle);
 			this._doInternalPaste(this._map, usePasteKeyEvent);
 			return true;
 		}
