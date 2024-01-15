@@ -1624,6 +1624,33 @@ void ClientSession::postProcessCopyPayload(const std::shared_ptr<Message>& paylo
                 return false;
             }
         });
+
+    // New-style: <div> around <html>, that is not sanitized by Chrome.
+    payload->rewriteDataBody([=](std::vector<char>& data) {
+            std::size_t pos = Util::findInVector(data, "<html>");
+
+            if (pos != std::string::npos)
+            {
+                const std::string meta = getClipboardURI();
+                LOG_TRC("Inject clipboard cool origin of '" << meta << "'");
+                std::string origin = "<div id=\"meta-origin\" data-coolorigin=\"" + meta + "\">\n";
+                data.insert(data.begin() + pos, origin.begin(), origin.end());
+
+                const char* end = "</html>";
+                pos = Util::findInVector(data, end);
+                if (pos != std::string::npos)
+                {
+                    origin = "</div>";
+                    data.insert(data.begin() + pos + strlen(end), origin.begin(), origin.end());
+                }
+                return true;
+            }
+            else
+            {
+                LOG_DBG("Missing <html> in textselectioncontent/clipboardcontent payload.");
+                return false;
+            }
+        });
 }
 
 bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& payload)
