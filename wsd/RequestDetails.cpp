@@ -19,6 +19,7 @@
 #endif // !MOBILEAPP
 
 #include <Poco/URI.h>
+#include <sstream>
 #include <stdexcept>
 #include "Exceptions.hpp"
 
@@ -88,6 +89,37 @@ RequestDetails::RequestDetails(const std::string &mobileURI)
 {
     _uriString = mobileURI;
     dehexify();
+    processURI();
+}
+
+RequestDetails::RequestDetails(const std::string& wopiSrc, const std::vector<std::string>& options,
+                               const std::string& compat)
+{
+    // /cool/<encoded-document-URI+options>/ws?WOPISrc=<encoded-document-URI>&compat=/ws[/<sessionId>/<command>/<serial>]
+
+    const std::string decodedWopiSrc = Util::decodeURIComponent(wopiSrc);
+    std::string wopiSrcWithOptions = decodedWopiSrc;
+    if (!options.empty())
+    {
+        wopiSrcWithOptions += '?';
+    }
+
+    for (const std::string& option : options)
+    {
+        wopiSrcWithOptions += option;
+        wopiSrcWithOptions += '&';
+    }
+
+    // To avoid duplicating the complex logic in processURI(),
+    // and to have a single canonical implementation, we
+    // create a valid URI and let it parse and set the various
+    // members, as necessary.
+    std::ostringstream oss;
+    oss << "/cool/" << Util::encodeURIComponent(wopiSrcWithOptions);
+    oss << "/ws?WOPISrc=" << Util::encodeURIComponent(decodedWopiSrc);
+    oss << "&compat=/ws" << compat;
+    _uriString = oss.str();
+
     processURI();
 }
 
