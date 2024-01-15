@@ -5336,7 +5336,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		this._addDebugTool({
 			name: 'Typer',
-			category: 'Input',
+			category: 'Automated User',
 			startsOn: false,
 			onAdd: function () {
 				self._debugLorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
@@ -5349,35 +5349,9 @@ L.CanvasTileLayer = L.Layer.extend({
 			},
 		});
 
-		if (this.isCalc()) {
-			this._addDebugTool({
-				name: 'Move around sheet',
-				category: 'Input',
-				startsOn: false,
-				onAdd: function () {
-					self._debugMoveSheetTimeout();
-				},
-				onRemove: function () {
-					clearTimeout(self._debugMoveSheetTimeoutId);
-				},
-			});
-		}
-
-		this._addDebugTool({
-			name: 'Toggle dark mode',
-			category: 'Input',
-			startsOn: false,
-			onAdd: function () {
-				self._debugToggleDarkModeTimeout();
-			},
-			onRemove: function () {
-				clearTimeout(self._debugToggleDarkModeTimeoutId);
-			},
-		});
-
 		this._addDebugTool({
 			name: 'Add/Remove shapes',
-			category: 'Input',
+			category: 'Automated User',
 			startsOn: false,
 			onAdd: function () {
 				self._debugAddRemoveShapesTimeout();
@@ -5388,52 +5362,76 @@ L.CanvasTileLayer = L.Layer.extend({
 		});
 
 		this._addDebugTool({
-			name: 'Zoomer',
-			category: 'Input',
+			name: 'Randomize user settings',
+			category: 'Automated User',
 			startsOn: false,
 			onAdd: function () {
-				self._debugZoomerTimeout();
+				self._debugRandomizeSettings();
 			},
 			onRemove: function () {
-				clearTimeout(self._debugZoomerTimeoutId);
 			},
 		});
 	},
 
-	_debugMoveSheetTimeout: function () {
-		// Select random position
-		var docSize = this._map.getDocSize();
-		var maxX = docSize.x; //Math.min(docSize.x, 10000);
-		var maxY = docSize.y; //Math.min(docSize.y, 10000);
-		var positions = [
-			{x: 0, y: 0}, // top left
-			{x: maxX, y: 0}, // top right
-			{x: 0, y: maxY}, // bottom left
-			{x: maxX, y: maxY}, // bottom right
-			{x: maxX/2, y: maxY/2}, // center
-		];
-		var pos = positions[Math.floor(Math.random()*positions.length)];
+	_debugRandomizeSettings: function() {
+		// Toggle dark mode
+		var isDark = this._map.uiManager.getDarkModeState();
+		if (Math.random() < 0.5) {
+			console.log('Randomize Settings: Toggle dark mode to ' + (isDark?'Light':'Dark'));
+			this._map.uiManager.toggleDarkMode();
+		} else {
+			console.log('Randomize Settings: Leave dark mode as ' + (isDark?'Dark':'Light'));
+		}
 
-		// Calculate mouse click position
-		var viewSize = this._map.getSize();
-		var centerPos = {x: pos.x + viewSize.x/2, y: pos.y + viewSize.y/2};
-		var centerTwips = this._pixelsToTwips(centerPos);
+		// Set zoom
+		var targetZoom = Math.floor(Math.random() * 18) + 1;
+		console.log('Randomize Settings: Set zoom to '+targetZoom);
+		this._map.setZoom(targetZoom, null, false);
 
-		// Perform action
-		console.log('_debugMoveSheetTimeout move to ',pos,' click at ', centerPos, centerTwips);
-		this._map.fire('scrollto', pos);
-		this._postMouseEvent('buttondown', centerTwips.x, centerTwips.y, 1, 1, 0);
-		this._postMouseEvent('buttonup', centerTwips.x, centerTwips.y, 1, 1, 0);
+		// Toggle spell check
+		var isSpellCheck = this._map['stateChangeHandler'].getItemValue('.uno:SpellOnline');
+		if (Math.random() < 0.5) {
+			console.log('Randomize Settings: Toggle spell check to ' + (isSpellCheck=='true'?'off':'on'));
+			this._map.sendUnoCommand('.uno:SpellOnline');
+		} else {
+			console.log('Randomize Settings: Leave spell check as ' + (isSpellCheck=='true'?'on':'off'));
+		}
 
-		// Loop
-		this._debugMoveSheetTimeoutId = setTimeout(L.bind(this._debugMoveSheetTimeout, this), 1000);
-	},
+		// Move to different part of sheet
+		if (this.isCalc()) {
+			// Select random position
+			var docSize = this._map.getDocSize();
+			var maxX = docSize.x; //Math.min(docSize.x, 10000);
+			var maxY = docSize.y; //Math.min(docSize.y, 10000);
+			var positions = [
+				{x: maxX, y: 0}, // top right
+				{x: 0, y: maxY}, // bottom left
+				{x: maxX, y: maxY}, // bottom right
+				{x: maxX/2, y: maxY/2}, // center
+			];
+			var pos = positions[Math.floor(Math.random()*positions.length)];
 
-	_debugToggleDarkModeTimeout: function () {
-		this._map.uiManager.toggleDarkMode();
+			// Calculate mouse click position
+			var viewSize = this._map.getSize();
+			var centerPos = {x: pos.x + viewSize.x/2, y: pos.y + viewSize.y/2};
+			var centerTwips = this._pixelsToTwips(centerPos);
 
-		// Loop
-		this._debugToggleDarkModeTimeoutId = setTimeout(L.bind(this._debugToggleDarkModeTimeout, this), 3000);
+			// Perform action
+			console.log('Randomize Settings: Move to ',pos,' click at ', centerPos, centerTwips);
+			this._map.fire('scrollto', pos);
+			this._postMouseEvent('buttondown', centerTwips.x, centerTwips.y, 1, 1, 0);
+			this._postMouseEvent('buttonup', centerTwips.x, centerTwips.y, 1, 1, 0);
+		}
+
+		// Toggle sidebar
+		if (Math.random() < 0.5) {
+			console.log('Randomize Settings: Toggle sidebar');
+			this._map.sendUnoCommand('.uno:SidebarDeck.PropertyDeck');
+		} else {
+			console.log('Randomize Settings: Leave sidebar');
+		}
+
+		this._painter.update();
 	},
 
 	_debugAddRemoveShapesTimeout: function () {
@@ -5446,16 +5444,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		// Loop
 		this._debugAddRemoveShapesTimeoutId = setTimeout(L.bind(this._debugAddRemoveShapesTimeout, this), 4000);
 	},
-
-	_debugZoomerTimeout: function () {
-		var targetZoom = Math.floor(Math.random() * 18) + 1;
-		this._map.setZoom(targetZoom, null, false);
-		this._painter.update();
-
-		// Loop
-		this._debugZoomerTimeoutId = setTimeout(L.bind(this._debugZoomerTimeout, this), 1000);
-	},
-
 
 	_debugSetPostMessage: function(type,msg) {
 		if (this._debugData) {
