@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-01-12 17:13+0100\n"
-"PO-Revision-Date: 2024-01-12 16:08+0000\n"
+"PO-Revision-Date: 2024-01-14 12:29+0000\n"
 "Last-Translator: Rob Pearson <rob.dunedin@gmail.com>\n"
 "Language-Team: English (New Zealand) <https://hosted.weblate.org/projects/"
 "collabora-online/ui/en_NZ/>\n"
-"Language: \n"
+"Language: en_NZ\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -377,7 +377,7 @@ msgstr "Failed to get RouteToken from controller"
 
 #: js/w2ui-1.5.rc1.js:2967
 msgid "No fill"
-msgstr ""
+msgstr "No fill"
 
 #: js/w2ui-1.5.rc1.js:2967
 msgid "Automatic"
@@ -1102,7 +1102,7 @@ msgstr "Present current slide"
 
 #: src/control/Control.Menubar.js:514
 msgid "Present in new window"
-msgstr ""
+msgstr "Present in new window"
 
 #: src/control/Control.Menubar.js:550 src/control/Control.Menubar.js:1010
 #: src/control/Control.Menubar.js:1070
@@ -1571,7 +1571,7 @@ msgstr "Presentation"
 
 #: src/control/Control.NotebookbarImpress.js:449
 msgid "Present in Window"
-msgstr ""
+msgstr "Present in Window"
 
 #: src/control/Control.NotebookbarWriter.js:79
 msgid "Form"
