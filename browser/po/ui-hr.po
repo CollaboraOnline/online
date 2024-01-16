@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-01-12 17:13+0100\n"
-"PO-Revision-Date: 2023-12-24 14:21+0000\n"
+"PO-Revision-Date: 2024-01-16 13:06+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: Croatian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/hr/>\n"
-"Language: \n"
+"Language: hr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Weblate 5.4-dev\n"
 
 #: admin/admin.strings.js:6
@@ -383,7 +383,7 @@ msgstr "Neuspjelo dohvaćanje RouteTokena od kontrolera"
 
 #: js/w2ui-1.5.rc1.js:2967
 msgid "No fill"
-msgstr ""
+msgstr "Bez ispune"
 
 #: js/w2ui-1.5.rc1.js:2967
 msgid "Automatic"
@@ -1111,7 +1111,7 @@ msgstr "Prikaži trenutačni slajd"
 
 #: src/control/Control.Menubar.js:514
 msgid "Present in new window"
-msgstr ""
+msgstr "Prikaži u novom prozoru"
 
 #: src/control/Control.Menubar.js:550 src/control/Control.Menubar.js:1010
 #: src/control/Control.Menubar.js:1070
@@ -1580,7 +1580,7 @@ msgstr "Prezentacija"
 
 #: src/control/Control.NotebookbarImpress.js:449
 msgid "Present in Window"
-msgstr ""
+msgstr "Prikaži u prozoru"
 
 #: src/control/Control.NotebookbarWriter.js:79
 msgid "Form"
@@ -1599,9 +1599,8 @@ msgid "Go Online"
 msgstr "Prebaci na mrežni način rada"
 
 #: src/control/Control.NotebookbarWriter.js:387
-#, fuzzy
 msgid "Go Offline"
-msgstr "Prebaci na mrežni način rada"
+msgstr "Prebaci na izvanmrežni način rada"
 
 #: src/control/Control.NotebookbarWriter.js:1342
 msgid "Rich Text"
@@ -1829,15 +1828,15 @@ msgstr "Sakrij izbornik"
 
 #: src/control/Control.UIManager.js:164
 msgid "Enter new name"
-msgstr ""
+msgstr "Upiši novo ime"
 
 #: src/control/Control.UIManager.js:792
 msgid "Show Menu"
-msgstr ""
+msgstr "Prikaži izbornik"
 
 #: src/control/Control.UIManager.js:1053
 msgid "Dismiss"
-msgstr ""
+msgstr "Odbaci"
 
 #: src/control/Control.UserList.js:20
 msgid "%user has joined"
@@ -2343,7 +2342,7 @@ msgstr "Boje tema"
 
 #: src/docstate.js:94
 msgid "Document colors"
-msgstr ""
+msgstr "Boje dokumenta"
 
 #: src/errormessages.js:22
 msgid "No disk space left on server."
@@ -2490,6 +2489,8 @@ msgid ""
 "Failed to establish socket connection or socket connection closed "
 "unexpectedly."
 msgstr ""
+"Neuspjelo uspostavljanje veze s utičnicom ili je veza s utičnicom "
+"neočekivano zatvorena."
 
 #: src/errormessages.js:43
 msgid "Failed to load document."
@@ -2576,7 +2577,7 @@ msgstr "Kopiraj lokaciju poveznice"
 
 #: src/layer/tile/CanvasTileLayer.js:2535
 msgid "Select link text"
-msgstr ""
+msgstr "Odaberi tekst poveznice"
 
 #: src/layer/tile/CanvasTileLayer.js:2546
 msgid "Edit link"
