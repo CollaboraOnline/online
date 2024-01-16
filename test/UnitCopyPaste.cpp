@@ -93,7 +93,9 @@ public:
                                      std::string("application/octet-stream"),
                                      httpResponse->header().getContentType());
 
-            std::istringstream responseStream(httpResponse->getBody());
+            std::string body = httpResponse->getBody();
+            removeSessionClipboardMeta(body);
+            std::istringstream responseStream(body);
             auto clipboard = std::make_shared<ClipboardData>();
             clipboard->read(responseStream);
             std::ostringstream oss;
@@ -206,21 +208,39 @@ public:
         return true;
     }
 
+    std::shared_ptr<ClientSession> getChildSession(size_t session)
+    {
+        std::shared_ptr<DocumentBroker> broker;
+        std::shared_ptr<ClientSession> clientSession;
+
+        std::vector<std::shared_ptr<DocumentBroker>> brokers = COOLWSD::getBrokersTestOnly();
+        assert(brokers.size() > 0);
+        broker = brokers[0];
+        auto sessions = broker->getSessionsTestOnlyUnsafe();
+        assert(sessions.size() > 0 && session < sessions.size());
+        return sessions[session];
+    }
+
     std::string getSessionClipboardURI(size_t session)
     {
-            std::shared_ptr<DocumentBroker> broker;
-            std::shared_ptr<ClientSession> clientSession;
-
-            std::vector<std::shared_ptr<DocumentBroker>> brokers = COOLWSD::getBrokersTestOnly();
-            assert(brokers.size() > 0);
-            broker = brokers[0];
-            auto sessions = broker->getSessionsTestOnlyUnsafe();
-            assert(sessions.size() > 0 && session < sessions.size());
-            clientSession = sessions[session];
+            std::shared_ptr<ClientSession> clientSession = getChildSession(session);
 
             std::string tag = clientSession->getClipboardURI(false); // nominally thread unsafe
             LOG_TST("Got tag '" << tag << "' for session " << session);
             return tag;
+    }
+
+    void removeSessionClipboardMeta(std::string& payload)
+    {
+        if (COOLWSD::getBrokersTestOnly().empty())
+        {
+            return;
+        }
+
+        // The removal doesn't depend on the clipboard URL, so just ask the first session to do the
+        // removal for us.
+        std::shared_ptr<ClientSession> clientSession = getChildSession(0);
+        clientSession->preProcessSetClipboardPayload(payload);
     }
 
     std::string buildClipboardText(const std::string &text)
