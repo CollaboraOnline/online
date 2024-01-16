@@ -5482,8 +5482,13 @@ L.CanvasTileLayer = L.Layer.extend({
 	_debugAddInvalidationRectangle: function(topLeftTwips, bottomRightTwips, command) {
 		var now = +new Date();
 
-		var invalidBoundCoords = new L.LatLngBounds(this._twipsToLatLng(topLeftTwips, this._tileZoom),
-			this._twipsToLatLng(bottomRightTwips, this._tileZoom));
+		var signX =  this.isCalcRTL() ? -1 : 1;
+
+		var absTopLeftTwips = L.point(topLeftTwips.x * signX, topLeftTwips.y);
+		var absBottomRightTwips = L.point(bottomRightTwips.x * signX, bottomRightTwips.y);
+
+		var invalidBoundCoords = new L.LatLngBounds(this._twipsToLatLng(absTopLeftTwips, this._tileZoom),
+			this._twipsToLatLng(absBottomRightTwips, this._tileZoom));
 		var rect = L.rectangle(invalidBoundCoords, {color: 'red', weight: 1, opacity: 1, fillOpacity: 0.4, pointerEvents: 'none'});
 		this._debugInvalidBounds[this._debugId] = rect;
 		this._debugInvalidBoundsMessage[this._debugId] = command;
