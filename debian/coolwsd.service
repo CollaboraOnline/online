@@ -8,7 +8,7 @@ ExecStart=/usr/bin/coolwsd --version --o:sys_template_path=/opt/cool/systemplate
 KillSignal=SIGINT
 TimeoutStopSec=120
 User=cool
-KillMode=control-group
+KillMode=mixed
 Restart=always
 LimitNOFILE=infinity:infinity
 
