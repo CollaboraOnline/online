@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-01-12 17:13+0100\n"
-"PO-Revision-Date: 2024-01-09 13:17+0000\n"
+"PO-Revision-Date: 2024-01-16 13:06+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://hosted.weblate.org/projects/collabora-online/"
 "ui/he/>\n"
-"Language: \n"
+"Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -378,7 +378,7 @@ msgstr "קבלת RouteToken (אסימון נתיב) מהבקר נכשלה"
 
 #: js/w2ui-1.5.rc1.js:2967
 msgid "No fill"
-msgstr ""
+msgstr "ללא מילוי"
 
 #: js/w2ui-1.5.rc1.js:2967
 msgid "Automatic"
@@ -1000,7 +1000,7 @@ msgstr "מאפיינים"
 #: src/control/Control.Menubar.js:358 src/control/Control.Menubar.js:977
 #: src/control/Control.NotebookbarWriter.js:449
 msgid "Screen Reading"
-msgstr ""
+msgstr "קריאת מסך"
 
 #: src/control/Control.Menubar.js:371
 #: src/control/Control.NotebookbarWriter.js:415
@@ -1097,7 +1097,7 @@ msgstr "הצגת השקופית הנוכחית"
 
 #: src/control/Control.Menubar.js:514
 msgid "Present in new window"
-msgstr ""
+msgstr "הצגה בחלון חדש"
 
 #: src/control/Control.Menubar.js:550 src/control/Control.Menubar.js:1010
 #: src/control/Control.Menubar.js:1070
@@ -1137,32 +1137,32 @@ msgstr "קובץ CSV‏ (‎.csv)"
 #: src/control/Control.Menubar.js:813
 #: src/control/Control.NotebookbarBuilder.js:812
 msgid "Condition..."
-msgstr ""
+msgstr "תנאי…"
 
 #: src/control/Control.Menubar.js:814
 #: src/control/Control.NotebookbarBuilder.js:813
 msgid "Greater than..."
-msgstr ""
+msgstr "גדול מ…"
 
 #: src/control/Control.Menubar.js:815
 #: src/control/Control.NotebookbarBuilder.js:814
 msgid "Less than..."
-msgstr ""
+msgstr "קטן מ…"
 
 #: src/control/Control.Menubar.js:816
 #: src/control/Control.NotebookbarBuilder.js:815
 msgid "Equal to..."
-msgstr ""
+msgstr "שווה ל…"
 
 #: src/control/Control.Menubar.js:817
 #: src/control/Control.NotebookbarBuilder.js:816
 msgid "Between..."
-msgstr ""
+msgstr "בין…"
 
 #: src/control/Control.Menubar.js:819
 #: src/control/Control.NotebookbarBuilder.js:818
 msgid "More conditions..."
-msgstr ""
+msgstr "תנאים נוספים…"
 
 #: src/control/Control.Menubar.js:927 src/control/Control.Menubar.js:992
 #: src/control/Control.Menubar.js:1056 src/control/Control.Menubar.js:1110
@@ -1548,7 +1548,6 @@ msgid "Image (.png)"
 msgstr "תמונה (‎.png)"
 
 #: src/control/Control.NotebookbarDraw.js:1032
-#, fuzzy
 msgid "Page Layout"
 msgstr "פריסת עמוד"
 
@@ -1567,7 +1566,7 @@ msgstr "מצגת"
 
 #: src/control/Control.NotebookbarImpress.js:449
 msgid "Present in Window"
-msgstr ""
+msgstr "הצגה בחלון"
 
 #: src/control/Control.NotebookbarWriter.js:79
 msgid "Form"
@@ -1583,11 +1582,11 @@ msgstr "מסמך EPUB‏ (‎.epub)"
 
 #: src/control/Control.NotebookbarWriter.js:387
 msgid "Go Online"
-msgstr ""
+msgstr "חיבור לאינטרנט"
 
 #: src/control/Control.NotebookbarWriter.js:387
 msgid "Go Offline"
-msgstr ""
+msgstr "ניתוק מהאינטרנט"
 
 #: src/control/Control.NotebookbarWriter.js:1342
 msgid "Rich Text"
@@ -1814,11 +1813,11 @@ msgstr "הסתרת תפריט"
 
 #: src/control/Control.UIManager.js:164
 msgid "Enter new name"
-msgstr ""
+msgstr "נא למלא שם חדש"
 
 #: src/control/Control.UIManager.js:792
 msgid "Show Menu"
-msgstr ""
+msgstr "הצגת תפריט"
 
 #: src/control/Control.UIManager.js:1053
 msgid "Dismiss"
@@ -2256,7 +2255,7 @@ msgstr "שם המסמך נערך והוא ירוענן בעוד זמן קצר"
 
 #: src/core/Socket.js:1121
 msgid "The document is switching to Offline mode and will reload shortly"
-msgstr ""
+msgstr "המסמך עובר למצב בלתי־מקוון והוא ייטען מחדש תכף"
 
 #: src/core/Socket.js:1226
 msgid "Exported to storage"
@@ -2304,15 +2303,15 @@ msgstr "השרת התנתק."
 
 #: src/docstate.js:82
 msgid "Standard"
-msgstr ""
+msgstr "תקני"
 
 #: src/docstate.js:93
 msgid "Theme colors"
-msgstr ""
+msgstr "צבעי ערכת עיצוב"
 
 #: src/docstate.js:94
 msgid "Document colors"
-msgstr ""
+msgstr "צבעי מסמך"
 
 #: src/errormessages.js:22
 msgid "No disk space left on server."
@@ -2526,7 +2525,7 @@ msgstr "העתקת מיקום הקישור"
 
 #: src/layer/tile/CanvasTileLayer.js:2535
 msgid "Select link text"
-msgstr ""
+msgstr "בחירת טקסט של קישור"
 
 #: src/layer/tile/CanvasTileLayer.js:2546
 msgid "Edit link"
@@ -2542,11 +2541,11 @@ msgstr "אין הערות"
 
 #: src/layer/tile/CommentListSection.ts:138
 msgid "A comment is being edited"
-msgstr ""
+msgstr "הערה נערכת"
 
 #: src/layer/tile/CommentListSection.ts:139
 msgid "Please save or discard the comment currently being edited."
-msgstr ""
+msgstr "נא לשמור או להתעלם מההערה שנערכת כרגע."
 
 #: src/layer/tile/CommentListSection.ts:922
 msgid "Modify"
@@ -2783,6 +2782,9 @@ msgid ""
 "id=\"slide-2-indicator\" href=\"#slide-2\">2</a> <a id=\"slide-3-"
 "indicator\" href=\"#slide-3\">3</a>"
 msgstr ""
+"<a id=\"slide-1-indicator\" class=\"active\" href=\"#slide-1\">1</a> <a id="
+"\"slide-2-indicator\" href=\"#slide-2\">2</a> <a id=\"slide-3-indicator\" "
+"href=\"#slide-3\">3</a>"
 
 #~ msgid "Accessibility Support"
 #~ msgstr "תמיכה בנגישות"
