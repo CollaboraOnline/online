@@ -2785,6 +2785,36 @@ void ClientSession::preProcessSetClipboardPayload(std::string& payload)
         std::size_t len = end - start + 4;
         payload.erase(start, len);
     }
+
+    start = payload.find("<div id=\"meta-origin\" data-coolorigin=\"");
+    if (start != std::string::npos)
+    {
+        std::size_t end = payload.find("\">\n", start);
+        if (end == std::string::npos)
+        {
+            LOG_DBG("Found unbalanced starting meta <div> tag in setclipboard payload.");
+            return;
+        }
+
+        std::size_t len = end - start + 3;
+        payload.erase(start, len);
+
+        static int counter = 0;
+        counter++;
+        std::string path("/tmp/debug/data");
+        path += std::to_string(counter);
+        std::ofstream out(path);
+        out << payload;
+        out.close();
+        start = payload.find("</html></div>");
+        if (start == std::string::npos)
+        {
+            LOG_DBG("Found unbalanced ending meta <div> tag in setclipboard payload.");
+            return;
+        }
+
+        payload.erase(start + strlen("</html>"), strlen("</div>"));
+    }
 }
 
 std::string ClientSession::processSVGContent(const std::string& svg)
