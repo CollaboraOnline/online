@@ -23,7 +23,6 @@
     "jscpd": "3.5.10",
     "l10n-for-node": "0.0.1",
     "mocha": "8.2.1",
-    "pako": "2.0.4",
     "select2": "4.0.13",
     "shrinkpack": "1.0.0-alpha",
     "smartmenus": "1.0.0",
