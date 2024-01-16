@@ -13,17 +13,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-01-12 17:13+0100\n"
-"PO-Revision-Date: 2024-01-10 21:37+0000\n"
+"PO-Revision-Date: 2024-01-14 12:29+0000\n"
 "Last-Translator: Matthaiks <kitynska@gmail.com>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/pl/>\n"
-"Language: \n"
+"Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n"
-"%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n"
-"%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && ("
+"n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && "
+"n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
 "X-Generator: Weblate 5.4-dev\n"
 
 #: admin/admin.strings.js:6
@@ -386,7 +386,7 @@ msgstr "Nie udało się pobrać RouteTokena z kontrolera"
 
 #: js/w2ui-1.5.rc1.js:2967
 msgid "No fill"
-msgstr ""
+msgstr "Brak wypełnienia"
 
 #: js/w2ui-1.5.rc1.js:2967
 msgid "Automatic"
@@ -1110,7 +1110,7 @@ msgstr "Prezentuj bieżący slajd"
 
 #: src/control/Control.Menubar.js:514
 msgid "Present in new window"
-msgstr ""
+msgstr "Wyświetl w nowym oknie"
 
 #: src/control/Control.Menubar.js:550 src/control/Control.Menubar.js:1010
 #: src/control/Control.Menubar.js:1070
@@ -1579,7 +1579,7 @@ msgstr "Prezentacja"
 
 #: src/control/Control.NotebookbarImpress.js:449
 msgid "Present in Window"
-msgstr ""
+msgstr "Wyświetl w oknie"
 
 #: src/control/Control.NotebookbarWriter.js:79
 msgid "Form"
