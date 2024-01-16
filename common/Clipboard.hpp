@@ -20,6 +20,8 @@
 
 #include <stdlib.h>
 #include <Log.hpp>
+#include <Common.hpp>
+#include <Protocol.hpp>
 #include <Exceptions.hpp>
 
 struct ClipboardData
@@ -90,11 +92,33 @@ class ClipboardCache
     struct Entry {
         std::chrono::steady_clock::time_point _inserted;
         std::shared_ptr<std::string> _rawData; // big.
+
+        bool hasExpired(const std::chrono::steady_clock::time_point &now)
+        {
+            return std::chrono::duration_cast<std::chrono::minutes>(
+                now - _inserted).count() >= CLIPBOARD_EXPIRY_MINUTES;
+        }
     };
     // clipboard key -> data
     std::unordered_map<std::string, Entry> _cache;
 public:
     ClipboardCache() = default;
+
+    void dumpState(std::ostream& os) const
+    {
+        os << "Saved clipboards: " << _cache.size() << "\n";
+        auto now = std::chrono::steady_clock::now();
+        for (auto &it : _cache)
+        {
+            std::string rawString = *it.second._rawData;
+            if (rawString.size() > 256)
+                rawString.resize(256);
+
+            os << "\t" << std::chrono::duration_cast<std::chrono::seconds>(
+                now - it.second._inserted).count() << " seconds\n";
+            Util::dumpHex(os, rawString, "", "\t");
+        }
+    }
 
     void insertClipboard(const std::string key[2],
                          const char *data, std::size_t size)
@@ -119,7 +143,18 @@ public:
 
         std::lock_guard<std::mutex> lock(_mutex);
         const auto it = _cache.find(key);
-        return (it != _cache.end()) ? it->second._rawData : nullptr;
+        if (it == _cache.end())
+        {
+            LOG_TRC("Clipboard key not present");
+            return nullptr;
+        }
+        else if (it->second.hasExpired(std::chrono::steady_clock::now()))
+        {
+            LOG_TRC("Clipboard item expired");
+            return nullptr;
+        }
+        else
+            return it->second._rawData;
     }
 
     void checkexpiry()
@@ -129,7 +164,7 @@ public:
         LOG_TRC("check expiry of cached clipboards");
         for (auto it = _cache.begin(); it != _cache.end();)
         {
-            if (std::chrono::duration_cast<std::chrono::minutes>(now - it->second._inserted).count() >= 10)
+            if (it->second.hasExpired(now))
             {
                 LOG_TRC("expiring expiry of cached clipboard: " + it->first);
                 it = _cache.erase(it);
