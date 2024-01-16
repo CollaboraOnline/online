@@ -14,6 +14,7 @@
 #include <RequestVettingStation.hpp>
 
 #include <COOLWSD.hpp>
+#include <RequestDetails.hpp>
 #include <TraceEvent.hpp>
 #if !MOBILEAPP
 #include <StorageConnectionManager.hpp>
@@ -49,12 +50,85 @@ void sendLoadResult(const std::shared_ptr<ClientSession>& clientSession, bool su
 
 } // anonymous namespace
 
+void RequestVettingStation::handleRequest(const std::string& id)
+{
+    _id = id;
+
+    const std::string url = _requestDetails.getDocumentURI();
+
+    LOG_INF("URL [" << url << "] will be proactively vetted");
+    const auto uriPublic = RequestDetails::sanitizeURI(url);
+    const auto docKey = RequestDetails::getDocKey(uriPublic);
+    const std::string fileId = Util::getFilenameFromURL(docKey);
+    Util::mapAnonymized(fileId, fileId); // Identity mapping, since fileId is already obfuscated
+
+    LOG_INF("Starting GET request handler for session [" << _id << "] on url ["
+                                                         << COOLWSD::anonymizeUrl(url) << ']');
+
+    LOG_INF("Sanitized URI [" << COOLWSD::anonymizeUrl(url) << "] to ["
+                              << COOLWSD::anonymizeUrl(uriPublic.toString())
+                              << "] and mapped to docKey [" << docKey << "] for session [" << _id
+                              << ']');
+
+    // Check if readonly session is required
+    bool isReadOnly = false;
+    for (const auto& param : uriPublic.getQueryParameters())
+    {
+        LOG_TRC("Query param: " << param.first << ", value: " << param.second);
+        if (param.first == "permission" && param.second == "readonly")
+        {
+            isReadOnly = true;
+        }
+    }
+
+    LOG_INF("URL [" << COOLWSD::anonymizeUrl(url) << "] is "
+                    << (isReadOnly ? "readonly" : "writable"));
+
+    // Before we create DocBroker with a SocketPoll thread, a ClientSession, and a Kit process,
+    // we need to vet this request by invoking CheckFileInfo.
+    // For that, we need the storage settings to create a connection.
+    const StorageBase::StorageType storageType =
+        StorageBase::validate(uriPublic, /*takeOwnership=*/false);
+    switch (storageType)
+    {
+        case StorageBase::StorageType::Unsupported:
+            LOG_ERR("Unsupported URI [" << COOLWSD::anonymizeUrl(uriPublic.toString())
+                                        << "] or no storage configured");
+            throw BadRequestException("No Storage configured or invalid URI " +
+                                      COOLWSD::anonymizeUrl(uriPublic.toString()) + ']');
+
+            break;
+        case StorageBase::StorageType::Unauthorized:
+            LOG_ERR("No authorized hosts found matching the target host [" << uriPublic.getHost()
+                                                                           << "] in config");
+            sendErrorAndShutdown(_ws, "error: cmd=internal kind=unauthorized",
+                                 WebSocketHandler::StatusCodes::POLICY_VIOLATION);
+            break;
+
+        case StorageBase::StorageType::FileSystem:
+            LOG_INF("URI [" << COOLWSD::anonymizeUrl(uriPublic.toString()) << "] on docKey ["
+                            << docKey << "] is for a FileSystem document");
+            break;
+#if !MOBILEAPP
+        case StorageBase::StorageType::Wopi:
+            LOG_INF("URI [" << COOLWSD::anonymizeUrl(uriPublic.toString()) << "] on docKey ["
+                            << docKey << "] is for a WOPI document");
+
+            // CheckFileInfo asynchronously.
+            checkFileInfo(url, uriPublic, docKey, isReadOnly, RedirectionLimit);
+            break;
+#endif //!MOBILEAPP
+    }
+}
+
 void RequestVettingStation::handleRequest(const std::string& id,
+                                          const RequestDetails& requestDetails,
                                           const std::shared_ptr<WebSocketHandler>& ws,
                                           const std::shared_ptr<StreamSocket>& socket,
                                           unsigned mobileAppDocId, SocketDisposition& disposition)
 {
     _id = id;
+    _requestDetails = requestDetails;
     _ws = ws;
     _socket = socket;
     _mobileAppDocId = mobileAppDocId;
@@ -143,7 +217,26 @@ void RequestVettingStation::handleRequest(const std::string& id,
                                   << docKey << ']');
 
                     // CheckFileInfo and only when it's good create DocBroker.
-                    checkFileInfo(url, uriPublic, docKey, isReadOnly, RedirectionLimit);
+                    if (_cfiState == CFIState::Active)
+                    {
+                        // Wait for CheckFileInfo result.
+                        LOG_DBG("CheckFileInfo request is in progress. Will resume when done");
+                    }
+                    else if (_cfiState == CFIState::Pass && _wopiInfo)
+                    {
+                        // We have a valid CheckFileInfo result; Create the DocBroker.
+                        createDocBroker(docKey, url, uriPublic, isReadOnly);
+                    }
+                    else if (_cfiState == CFIState::None)
+                    {
+                        // We don't have CheckFileInfo
+                        checkFileInfo(url, uriPublic, docKey, isReadOnly, RedirectionLimit);
+                    }
+                    else
+                    {
+                        sendErrorAndShutdown(_ws, "error: cmd=internal kind=unauthorized",
+                                             WebSocketHandler::StatusCodes::POLICY_VIOLATION);
+                    }
                 });
             break;
 #endif //!MOBILEAPP
@@ -226,17 +319,15 @@ void RequestVettingStation::checkFileInfo(const std::string& url, const Poco::UR
 
         if (failed)
         {
+            _cfiState = CFIState::Fail;
+
             if (httpResponse->statusLine().statusCode() == http::StatusCode::Forbidden)
             {
                 LOG_ERR("Access denied to [" << uriAnonym << ']');
-                sendErrorAndShutdown(_ws, "error: cmd=storage kind=unauthorized",
-                                     WebSocketHandler::StatusCodes::POLICY_VIOLATION);
                 return;
             }
 
             LOG_ERR("Invalid URI or access denied to [" << uriAnonym << ']');
-            sendErrorAndShutdown(_ws, "error: cmd=storage kind=unauthorized",
-                                 WebSocketHandler::StatusCodes::POLICY_VIOLATION);
             return;
         }
 
@@ -246,9 +337,17 @@ void RequestVettingStation::checkFileInfo(const std::string& url, const Poco::UR
                 LOG_DBG("WOPI::CheckFileInfo (" << callDurationMs << "): anonymizing...");
             else
                 LOG_DBG("WOPI::CheckFileInfo (" << callDurationMs << "): " << wopiResponse);
+
+            _cfiState = CFIState::Pass;
+            if (_ws)
+            {
+                createDocBroker(docKey, url, uriPublic, isReadOnly);
+            }
         }
         else
         {
+            _cfiState = CFIState::Fail;
+
             if (COOLWSD::AnonymizeUserData)
                 wopiResponse = "obfuscated";
 
@@ -261,14 +360,15 @@ void RequestVettingStation::checkFileInfo(const std::string& url, const Poco::UR
             sendErrorAndShutdown(_ws, "error: cmd=storage kind=unauthorized",
                                  WebSocketHandler::StatusCodes::POLICY_VIOLATION);
         }
-
-        createDocBroker(docKey, url, uriPublic, isReadOnly);
     };
 
     _httpSession->setFinishedHandler(std::move(finishedCallback));
 
     // Run the CheckFileInfo request on the WebServer Poll.
-    _httpSession->asyncRequest(httpRequest, *_poll);
+    if (_httpSession->asyncRequest(httpRequest, *_poll))
+    {
+        _cfiState = CFIState::Active;
+    }
 }
 #endif //!MOBILEAPP
 

@@ -13,24 +13,55 @@
 
 #include "RequestDetails.hpp"
 #include <Storage.hpp>
+#include "StateEnum.hpp"
 #include "WebSocketHandler.hpp"
 
 #include <string>
 
+/// RequestVettingStation is used to vet the request in the background.
+/// Vetting for a WOPI request is performed through CheckFileInfo.
+/// Once the request checks out, we can proceed to creating a
+/// DocBroker and a Kit process.
+/// There are two ways to use this class. One is to create it when
+/// serving cool.html, the other when the WebSocket is created
+/// (by upgrading the socket).
+/// Unfortunately, when serving cool.html the connection is not the one
+/// used for the WebSocket. As such, it cannot be used to create
+/// DocBroker. Therefore, we work in two modes: we do the CheckFileInfo
+/// as soon as we serve cool.html, but then we need to wait for the
+/// WebSocket to create DocBroker.
+/// A small complication is that CheckFileInfo might not be done by
+/// then. Or, it might have timed out. Alternatively, the WebSocket
+/// might never arrive (say, because the user clicked away).
+/// We take these possibilities into account and support them here.
 class RequestVettingStation
 {
+    /// The CheckFileInfo State.
+    STATE_ENUM(CFIState, None, Active, Timedout, Fail, Pass);
+
 public:
     /// Create an instance with a SocketPoll and a RequestDetails instance.
     RequestVettingStation(const std::shared_ptr<TerminatingPoll>& poll,
                           const RequestDetails& requestDetails)
         : _poll(poll)
         , _requestDetails(requestDetails)
+        , _cfiState(CFIState::None)
     {
     }
 
-    inline void logPrefix(std::ostream& os) const { os << '#' << _socket->getFD() << ": "; }
+    inline void logPrefix(std::ostream& os) const
+    {
+        if (_socket)
+        {
+            os << '#' << _socket->getFD() << ": ";
+        }
+    }
 
-    void handleRequest(const std::string& id, const std::shared_ptr<WebSocketHandler>& ws,
+    /// Called when cool.html is served, to start the vetting as early as possible.
+    void handleRequest(const std::string& id);
+
+    void handleRequest(const std::string& id, const RequestDetails& requestDetails,
+                       const std::shared_ptr<WebSocketHandler>& ws,
                        const std::shared_ptr<StreamSocket>& socket, unsigned mobileAppDocId,
                        SocketDisposition& disposition);
 
@@ -56,6 +87,7 @@ private:
     std::shared_ptr<StreamSocket> _socket;
     std::shared_ptr<http::Session> _httpSession;
     unsigned _mobileAppDocId;
+    CFIState _cfiState;
     Poco::JSON::Object::Ptr _wopiInfo;
     LockContext _lockCtx;
 };

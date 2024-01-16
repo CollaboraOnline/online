@@ -54,6 +54,9 @@
 #include <string>
 
 std::map<std::string, std::string> ClientRequestDispatcher::StaticFileContentCache;
+std::unordered_map<std::string, std::shared_ptr<RequestVettingStation>>
+    ClientRequestDispatcher::RequestVettingStations;
+
 extern std::map<std::string, std::shared_ptr<DocumentBroker>> DocBrokers;
 extern std::mutex DocBrokersMutex;
 
@@ -559,6 +562,31 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
                 FileServerRequestHandler::ResourceAccessDetails accessDetails;
                 COOLWSD::FileRequestHandler->handleRequest(request, requestDetails, message, socket,
                                                            accessDetails);
+                if (accessDetails.isValid())
+                {
+                    LOG_ASSERT_MSG(requestDetails.getField(RequestDetails::Field::WOPISrc) ==
+                                       accessDetails.wopiSrc(),
+                                   "Expected identical WOPISrc in the request as in cool.html");
+
+                    const std::string requestKey = RequestDetails::getRequestKey(
+                        accessDetails.wopiSrc(), accessDetails.accessToken());
+
+                    std::vector<std::string> options = {
+                        "access_token=" + accessDetails.accessToken(), "access_token_ttl=0"
+                    };
+
+                    const RequestDetails fullRequestDetails =
+                        RequestDetails(accessDetails.wopiSrc(), options, /*compat=*/std::string());
+                    LOG_TRC("Creating RVS with key: " << requestKey << ", for DocumentLoadURI: "
+                                                      << fullRequestDetails.getDocumentURI());
+
+                    auto it = RequestVettingStations.emplace(
+                        requestKey, std::make_shared<RequestVettingStation>(
+                                        COOLWSD::getWebServerPoll(), fullRequestDetails));
+
+                    it.first->second->handleRequest(_id);
+                }
+
                 socket->shutdown();
             }
         }
@@ -1637,14 +1665,31 @@ void ClientRequestDispatcher::handleClientWsUpgrade(const Poco::Net::HTTPRequest
 #endif
         }
 
-        _rvs = std::make_shared<RequestVettingStation>(COOLWSD::getWebServerPoll(), requestDetails);
+        const std::string requestKey = requestDetails.getRequestKey();
+        if (!requestKey.empty())
+        {
+            auto it = RequestVettingStations.find(requestKey);
+            if (it != RequestVettingStations.end())
+            {
+                LOG_TRC("Found RVS under key: " << requestKey);
+                _rvs = it->second;
+                RequestVettingStations.erase(it);
+            }
+        }
+
+        if (!_rvs)
+        {
+            LOG_TRC("Creating RVS");
+            _rvs = std::make_shared<RequestVettingStation>(COOLWSD::getWebServerPoll(),
+                                                           requestDetails);
+        }
 
         // Indicate to the client that document broker is searching.
         static constexpr const char* const status = "statusindicator: find";
         LOG_TRC("Sending to Client [" << status << ']');
         ws->sendMessage(status);
 
-        _rvs->handleRequest(_id, ws, socket, mobileAppDocId, disposition);
+        _rvs->handleRequest(_id, requestDetails, ws, socket, mobileAppDocId, disposition);
     }
     catch (const std::exception& exc)
     {
