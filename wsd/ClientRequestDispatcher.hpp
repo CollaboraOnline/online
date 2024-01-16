@@ -119,7 +119,8 @@ private:
 
     /// External requests are first vetted before allocating DocBroker and Kit process.
     /// This is a map of the request URI to the RequestVettingStation for vetting.
-    std::unordered_map<std::string, std::shared_ptr<RequestVettingStation>> _requestVettingStations;
+    static std::unordered_map<std::string, std::shared_ptr<RequestVettingStation>>
+        RequestVettingStations;
 
     /// Cache for static files, to avoid reading and processing from disk.
     static std::map<std::string, std::string> StaticFileContentCache;
