@@ -7344,7 +7344,9 @@ L.CanvasTileLayer = L.Layer.extend({
 		var tile = this._tiles[key];
 		tile._debugTime = this._debugGetTimeArray();
 
-		this._debugShowTileData();
+		if (this._debugData) {
+			this._debugShowTileData();
+		}
 	},
 
 	_queueAcknowledgement: function (tileMsgObj) {
