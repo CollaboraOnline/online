@@ -165,7 +165,6 @@ NODE_MODULES_JS =\
 	node_modules/jquery-ui/dist/jquery-ui.js \
 	$(shell find node_modules/jquery-ui/ui/i18n -name '*.js') \
 	node_modules/smartmenus/dist/jquery.smartmenus.js \
-	node_modules/pako/dist/pako_inflate.es5.js \
 	node_modules/fzstd/umd/index.js
 
 COOL_LIBS_JS =\
