@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-12 17:13+0100\n"
+"POT-Creation-Date: 2024-01-17 14:33+0100\n"
 "PO-Revision-Date: 2023-08-05 21:48+0000\n"
 "Last-Translator: Salif Mehmed <mail@salif.eu>\n"
 "Language-Team: Bulgarian <https://hosted.weblate.org/projects/"
@@ -19,128 +19,128 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 5.0-dev\n"
 
-#: admin/admin.strings.js:6
+#: admin/admin.strings.js:15
 msgid "Admin console"
 msgstr "Администраторска конзола"
 
-#: admin/admin.strings.js:7
+#: admin/admin.strings.js:16
 msgid "Settings"
 msgstr "Настройки"
 
-#: admin/admin.strings.js:8
+#: admin/admin.strings.js:17
 msgid "Overview"
 msgstr "Обзор"
 
-#: admin/admin.strings.js:9
+#: admin/admin.strings.js:18
 msgid "(current)"
 msgstr "(текущ)"
 
-#: admin/admin.strings.js:10
+#: admin/admin.strings.js:19
 msgid "Analytics"
 msgstr "Анализ"
 
-#: admin/admin.strings.js:11
+#: admin/admin.strings.js:20
 msgid "History"
 msgstr "Хронология"
 
-#: admin/admin.strings.js:12
+#: admin/admin.strings.js:21
 msgid "Log"
 msgstr "Дневник"
 
-#: admin/admin.strings.js:13
+#: admin/admin.strings.js:22
 msgid "Dashboard"
 msgstr "Табло"
 
-#: admin/admin.strings.js:14
+#: admin/admin.strings.js:23
 msgid "Users online"
 msgstr "Потребители онлайн"
 
-#: admin/admin.strings.js:15
+#: admin/admin.strings.js:24
 msgid "User Name"
 msgstr "Потребителско име"
 
-#: admin/admin.strings.js:16
+#: admin/admin.strings.js:25
 msgid "Documents open"
 msgstr "Отворени документи"
 
-#: admin/admin.strings.js:17 admin/src/AdminSocketOverview.js:73
-#: admin/src/AdminSocketOverview.js:122 admin/src/AdminSocketOverview.js:349
+#: admin/admin.strings.js:26 admin/src/AdminSocketOverview.js:82
+#: admin/src/AdminSocketOverview.js:131 admin/src/AdminSocketOverview.js:358
 msgid " user(s)."
 msgstr " потребител(и)."
 
-#: admin/admin.strings.js:18 admin/src/AdminSocketOverview.js:205
+#: admin/admin.strings.js:27 admin/src/AdminSocketOverview.js:214
 msgid " document(s) open."
 msgstr " отворен(и) документ(и)."
 
-#: admin/admin.strings.js:19
+#: admin/admin.strings.js:28
 msgid "Number of Documents"
 msgstr "Брой документи"
 
-#: admin/admin.strings.js:20
+#: admin/admin.strings.js:29
 msgid "Memory consumed"
 msgstr "Използвана памет"
 
-#: admin/admin.strings.js:21
+#: admin/admin.strings.js:30
 msgid "Bytes sent"
 msgstr "Изпратени байтове"
 
-#: admin/admin.strings.js:22
+#: admin/admin.strings.js:31
 msgid "Bytes received"
 msgstr "Получени байтове"
 
-#: admin/admin.strings.js:23
+#: admin/admin.strings.js:32
 msgid "PID"
 msgstr "Идентификатор на процеса"
 
-#: admin/admin.strings.js:24
+#: admin/admin.strings.js:33
 msgid "Document"
 msgstr "Документ"
 
-#: admin/admin.strings.js:25
+#: admin/admin.strings.js:34
 msgid "Views"
 msgstr "Изгледи"
 
-#: admin/admin.strings.js:26
+#: admin/admin.strings.js:35
 msgid "Elapsed time"
 msgstr "Изминало време"
 
-#: admin/admin.strings.js:27
+#: admin/admin.strings.js:36
 msgid "Idle time"
 msgstr "Време на престой"
 
-#: admin/admin.strings.js:28
+#: admin/admin.strings.js:37
 msgid "Modified"
 msgstr "Променен"
 
-#: admin/admin.strings.js:29
+#: admin/admin.strings.js:38
 msgid "Uploaded"
 msgstr ""
 
-#: admin/admin.strings.js:30
+#: admin/admin.strings.js:39
 msgid "WOPI host"
 msgstr ""
 
-#: admin/admin.strings.js:31
+#: admin/admin.strings.js:40
 msgid "Kill"
 msgstr "Прекратяване"
 
-#: admin/admin.strings.js:32
+#: admin/admin.strings.js:41
 msgid "Graphs"
 msgstr "Графики"
 
-#: admin/admin.strings.js:33
+#: admin/admin.strings.js:42
 msgid "Memory Graph"
 msgstr "Графика на паметта"
 
-#: admin/admin.strings.js:34
+#: admin/admin.strings.js:43
 msgid "CPU Graph"
 msgstr "Графика на ЦП"
 
-#: admin/admin.strings.js:35
+#: admin/admin.strings.js:44
 msgid "Network Graph"
 msgstr "Графика на мрежата"
 
-#: admin/admin.strings.js:36 src/control/Control.Notebookbar.js:266
+#: admin/admin.strings.js:45 src/control/Control.Notebookbar.js:266
 #: src/control/Control.NotebookbarCalc.js:112
 #: src/control/Control.NotebookbarDraw.js:29
 #: src/control/Control.NotebookbarDraw.js:153
@@ -152,81 +152,81 @@ msgstr "Графика на мрежата"
 msgid "Save"
 msgstr "Записване"
 
-#: admin/admin.strings.js:37
+#: admin/admin.strings.js:46
 msgid "Cache size of memory statistics"
 msgstr "Размер на кеша за статистика на паметта"
 
-#: admin/admin.strings.js:38
+#: admin/admin.strings.js:47
 msgid "Time interval of memory statistics (in ms)"
 msgstr "Интервал за статистика на паметта (мс)"
 
-#: admin/admin.strings.js:39
+#: admin/admin.strings.js:48
 msgid "Cache size of CPU statistics"
 msgstr "Размер на кеша за статистика на ЦП"
 
-#: admin/admin.strings.js:40
+#: admin/admin.strings.js:49
 msgid "Time interval of CPU statistics (in ms)"
 msgstr "Интервал за статистика на ЦП (мс)"
 
-#: admin/admin.strings.js:41 admin/src/AdminSocketOverview.js:91
+#: admin/admin.strings.js:50 admin/src/AdminSocketOverview.js:100
 msgid "Kill session."
 msgstr "Прекратяване на сесията."
 
-#: admin/admin.strings.js:42
+#: admin/admin.strings.js:51
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
 msgstr "Максимална виртуална памет за процес на документ (МБ) – само намаляване"
 
-#: admin/admin.strings.js:43
+#: admin/admin.strings.js:52
 msgid "Maximum Document process stack memory (in KB) - reduce only"
 msgstr "Максимална стекова памет за процес на документ (КБ) – само намаляване"
 
-#: admin/admin.strings.js:44
+#: admin/admin.strings.js:53
 msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
 msgstr "Максимален размер на файл за записване на диска (МБ) – само намаляване"
 
-#: admin/admin.strings.js:45
+#: admin/admin.strings.js:54
 msgid "Documents:"
 msgstr "Документи:"
 
-#: admin/admin.strings.js:46
+#: admin/admin.strings.js:55
 msgid "Expired:"
 msgstr "Изтекъл срок:"
 
-#: admin/admin.strings.js:47 admin/src/AdminSocketBase.js:52
+#: admin/admin.strings.js:56 admin/src/AdminSocketBase.js:61
 #: src/control/Control.Zotero.js:212
 msgid "Refresh"
 msgstr "Опресняване"
 
-#: admin/admin.strings.js:48
+#: admin/admin.strings.js:57
 msgid "Shutdown Server"
 msgstr "Изключване на сървъра"
 
-#: admin/admin.strings.js:49
+#: admin/admin.strings.js:58
 msgid "Server uptime"
 msgstr "Достъпност на сървъра"
 
-#: admin/admin.strings.js:50
+#: admin/admin.strings.js:59
 msgid "Refresh Log"
 msgstr "Опресняване на дневника"
 
-#: admin/admin.strings.js:51
+#: admin/admin.strings.js:60
 msgid "Channel Filter:"
 msgstr ""
 
-#: admin/admin.strings.js:52 src/control/Control.JSDialogBuilder.js:577
+#: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:577
 #: src/control/Control.StatusBar.js:345
 msgid "None"
 msgstr "Няма"
 
-#: admin/admin.strings.js:53
+#: admin/admin.strings.js:62
 msgid "Set Log Levels"
 msgstr "Задаване нива за дневника"
 
-#: admin/admin.strings.js:54
+#: admin/admin.strings.js:63
 msgid "Log Levels"
 msgstr "Нива за дневника"
 
-#: admin/admin.strings.js:55 src/control/Control.AlertDialog.js:30
+#: admin/admin.strings.js:64 src/control/Control.AlertDialog.js:30
 #: src/control/Control.AlertDialog.js:36
 #: src/control/Control.AlertDialog.js:103 src/control/Control.Zotero.js:192
 #: src/control/Parts.js:460 src/core/Socket.js:1049 src/core/Socket.js:1054
@@ -235,29 +235,29 @@ msgstr "Нива за дневника"
 msgid "Close"
 msgstr "Затваряне"
 
-#: admin/admin.strings.js:56
+#: admin/admin.strings.js:65
 msgid "Update Log Levels"
 msgstr "Обновяване нивата за дневника"
 
-#: admin/admin.strings.js:57
+#: admin/admin.strings.js:66
 msgid "Version Information"
 msgstr ""
 
-#: admin/src/AdminSocketAnalytics.js:205
+#: admin/src/AdminSocketAnalytics.js:214
 msgid "Received"
 msgstr "Получени"
 
-#: admin/src/AdminSocketAnalytics.js:209
+#: admin/src/AdminSocketAnalytics.js:218
 msgid "Sent"
 msgstr "Изпратени"
 
-#: admin/src/AdminSocketBase.js:53
+#: admin/src/AdminSocketBase.js:62
 msgid "Server has been shut down; please reload the page."
 msgstr ""
 
-#: admin/src/AdminSocketBase.js:54 admin/src/AdminSocketBase.js:65
-#: admin/src/AdminSocketOverview.js:99 admin/src/AdminSocketOverview.js:422
-#: admin/src/AdminSocketSettings.js:36 src/control/Control.AlertDialog.js:52
+#: admin/src/AdminSocketBase.js:63 admin/src/AdminSocketBase.js:74
+#: admin/src/AdminSocketOverview.js:108 admin/src/AdminSocketOverview.js:431
+#: admin/src/AdminSocketSettings.js:47 src/control/Control.AlertDialog.js:52
 #: src/control/Control.DocumentRepair.js:77
 #: src/control/Control.LanguageDialog.js:119 src/control/Control.Tabs.js:337
 #: src/control/Control.Tabs.js:346 src/control/Control.Zotero.js:338
@@ -265,102 +265,103 @@ msgstr ""
 #: src/control/Permission.js:99 src/control/Permission.js:149
 #: src/control/Toolbar.js:561 src/control/Toolbar.js:662
 #: src/control/Toolbar.js:798 src/control/Toolbar.js:1089
-#: src/core/Socket.js:608 src/core/Socket.js:1019 src/core/Socket.js:1094
-#: src/core/Socket.js:1226 src/core/Socket.js:1230 src/main.js:79
-#: src/main.js:82 src/main.js:134 src/map/Clipboard.js:860
-#: src/map/Clipboard.js:899 src/map/handler/Map.Feedback.js:83
-#: src/map/handler/Map.WOPI.js:582
+#: src/core/Socket.js:608 src/core/Socket.js:1019 src/core/Socket.js:1096
+#: src/core/Socket.js:1232 src/core/Socket.js:1236 src/main.js:79
+#: src/main.js:82 src/main.js:134 src/map/Clipboard.js:870
+#: src/map/Clipboard.js:909 src/map/handler/Map.Feedback.js:83
+#: src/map/handler/Map.SlideShow.js:51 src/map/handler/Map.SlideShow.js:149
+#: src/map/handler/Map.SlideShow.js:228 src/map/handler/Map.WOPI.js:582
 msgid "OK"
 msgstr "OK"
 
-#: admin/src/AdminSocketBase.js:63 admin/src/AdminSocketBase.js:64
+#: admin/src/AdminSocketBase.js:72 admin/src/AdminSocketBase.js:73
 msgid "Connection error"
 msgstr "Грешка при свързване"
 
-#: admin/src/AdminSocketOverview.js:97 admin/src/AdminSocketSettings.js:34
+#: admin/src/AdminSocketOverview.js:106 admin/src/AdminSocketSettings.js:45
 msgid "Confirmation"
 msgstr "Потвърждение"
 
-#: admin/src/AdminSocketOverview.js:98
+#: admin/src/AdminSocketOverview.js:107
 msgid "Are you sure you want to terminate this session?"
 msgstr "Наистина ли искате да приключите сесията?"
 
-#: admin/src/AdminSocketOverview.js:100 admin/src/AdminSocketOverview.js:423
-#: admin/src/AdminSocketSettings.js:37
+#: admin/src/AdminSocketOverview.js:109 admin/src/AdminSocketOverview.js:432
+#: admin/src/AdminSocketSettings.js:48
 #: src/control/Control.DocumentRepair.js:71
 #: src/control/Control.DownloadProgress.js:90
 #: src/control/Control.LanguageDialog.js:113
 #: src/control/Control.MobileTopBar.js:52
-#: src/control/Control.UIManager.js:1228 src/control/Control.UIManager.js:1295
-#: src/control/Control.UIManager.js:1430 src/control/Control.UIManager.js:1572
+#: src/control/Control.UIManager.js:1223 src/control/Control.UIManager.js:1290
+#: src/control/Control.UIManager.js:1425 src/control/Control.UIManager.js:1567
 #: src/control/Control.Zotero.js:333 src/control/Toolbar.js:793
-#: src/core/Socket.js:1251 src/layer/tile/CommentListSection.ts:423
+#: src/core/Socket.js:1257 src/layer/tile/CommentListSection.ts:423
 #: src/layer/tile/CommentSection.ts:143 src/layer/tile/CommentSection.ts:146
 msgid "Cancel"
 msgstr "Отказ"
 
-#: admin/src/AdminSocketOverview.js:411
+#: admin/src/AdminSocketOverview.js:420
 msgid "Failed to set jwt authentication cookie over insecure connection"
 msgstr ""
 "Неуспешно задаване на удостоверителна бисквитка за jwt през незащитена връзка"
 
-#: admin/src/AdminSocketOverview.js:415
+#: admin/src/AdminSocketOverview.js:424
 msgid "Failed to authenticate this session over protocol %0"
 msgstr "Неуспешно удостоверяване на тази сесия през протокол %0"
 
-#: admin/src/AdminSocketOverview.js:420
+#: admin/src/AdminSocketOverview.js:429
 msgid "Warning"
 msgstr ""
 
-#: admin/src/AdminSocketSettings.js:35
+#: admin/src/AdminSocketSettings.js:46
 msgid "Are you sure you want to shut down the server?"
 msgstr "Наистина ли искате да спрете сървъра?"
 
-#: admin/src/Util.js:14
+#: admin/src/Util.js:26
 msgid "kB"
 msgstr "КБ"
 
-#: admin/src/Util.js:14
+#: admin/src/Util.js:26
 msgid "MB"
 msgstr "МБ"
 
-#: admin/src/Util.js:14
+#: admin/src/Util.js:26
 msgid "GB"
 msgstr "ГБ"
 
-#: admin/src/Util.js:14
+#: admin/src/Util.js:26
 msgid "TB"
 msgstr "ТБ"
 
-#: admin/src/Util.js:14
+#: admin/src/Util.js:26
 msgid "PB"
 msgstr "ПБ"
 
-#: admin/src/Util.js:14
+#: admin/src/Util.js:26
 msgid "EB"
 msgstr "ЕБ"
 
-#: admin/src/Util.js:14
+#: admin/src/Util.js:26
 msgid "ZB"
 msgstr "ЗБ"
 
-#: admin/src/Util.js:14
+#: admin/src/Util.js:26
 msgid "YB"
 msgstr "ЙБ"
 
-#: admin/src/Util.js:14
+#: admin/src/Util.js:26
 msgid "BB"
 msgstr "ББ"
 
-#: admin/src/Util.js:43 admin/src/Util.js:45
+#: admin/src/Util.js:55 admin/src/Util.js:57
 msgid " hrs"
 msgstr " ч"
 
-#: admin/src/Util.js:49 admin/src/Util.js:51
+#: admin/src/Util.js:61 admin/src/Util.js:63
 msgid " mins"
 msgstr " мин"
 
-#: admin/src/Util.js:54
+#: admin/src/Util.js:66
 msgid " s"
 msgstr " с"
 
@@ -670,8 +671,8 @@ msgid "replies"
 msgstr ""
 
 #: src/control/Control.JSDialogBuilder.js:2075
-#: src/layer/tile/CanvasTileLayer.js:5555
-#: src/layer/tile/CanvasTileLayer.js:5566
+#: src/layer/tile/CanvasTileLayer.js:5560
+#: src/layer/tile/CanvasTileLayer.js:5571
 #: src/layer/tile/CommentListSection.ts:979
 msgid "Comment"
 msgstr "Коментар"
@@ -781,7 +782,7 @@ msgstr "PDF документ (.pdf)"
 msgid "EPUB (.epub)"
 msgstr "EPUB (.epub)"
 
-#: src/control/Control.Menubar.js:85 src/control/Control.UIManager.js:164
+#: src/control/Control.Menubar.js:85 src/control/Control.UIManager.js:159
 #, fuzzy
 msgid "Rename Document"
 msgstr "Поправяне на документ"
@@ -853,8 +854,8 @@ msgstr "Поправяне"
 #: src/control/Control.NotebookbarCalc.js:1221
 #: src/control/Control.NotebookbarDraw.js:348
 #: src/control/Control.NotebookbarDraw.js:349
-#: src/control/Control.NotebookbarImpress.js:464
 #: src/control/Control.NotebookbarImpress.js:465
+#: src/control/Control.NotebookbarImpress.js:466
 #: src/control/Control.NotebookbarWriter.js:1414
 #: src/control/Control.NotebookbarWriter.js:1415
 #: src/control/Control.StatusBar.js:218
@@ -865,7 +866,7 @@ msgstr "Нулиране на мащаба"
 #: src/control/Control.Menubar.js:580 src/control/Control.Menubar.js:715
 #: src/control/Control.NotebookbarCalc.js:1261
 #: src/control/Control.NotebookbarDraw.js:389
-#: src/control/Control.NotebookbarImpress.js:505
+#: src/control/Control.NotebookbarImpress.js:506
 #: src/control/Control.NotebookbarWriter.js:1455
 msgid "Toggle UI Mode"
 msgstr ""
@@ -881,8 +882,8 @@ msgstr "Показване на скалата"
 #: src/control/Control.NotebookbarCalc.js:1287
 #: src/control/Control.NotebookbarDraw.js:414
 #: src/control/Control.NotebookbarDraw.js:950
-#: src/control/Control.NotebookbarImpress.js:531
-#: src/control/Control.NotebookbarImpress.js:1076
+#: src/control/Control.NotebookbarImpress.js:532
+#: src/control/Control.NotebookbarImpress.js:1077
 #: src/control/Control.NotebookbarWriter.js:908
 #: src/control/Control.NotebookbarWriter.js:1482
 msgid "Show Status Bar"
@@ -899,7 +900,7 @@ msgstr ""
 #: src/control/Control.Menubar.js:1085 src/control/Control.Menubar.js:1144
 #: src/control/Control.NotebookbarCalc.js:1299
 #: src/control/Control.NotebookbarDraw.js:425
-#: src/control/Control.NotebookbarImpress.js:550
+#: src/control/Control.NotebookbarImpress.js:551
 #: src/control/Control.NotebookbarWriter.js:1500
 msgid "Dark Mode"
 msgstr ""
@@ -920,7 +921,7 @@ msgstr "Всичко"
 #: src/control/Control.Menubar.js:595 src/control/Control.Menubar.js:740
 #: src/control/Control.NotebookbarCalc.js:1422
 #: src/control/Control.NotebookbarDraw.js:1238
-#: src/control/Control.NotebookbarImpress.js:1252
+#: src/control/Control.NotebookbarImpress.js:1253
 #: src/control/Control.NotebookbarWriter.js:1106
 msgid "Smart Picker"
 msgstr ""
@@ -1086,7 +1087,7 @@ msgid "Save Comments"
 msgstr "Записване на коментарите"
 
 #: src/control/Control.Menubar.js:437
-#: src/control/Control.NotebookbarImpress.js:542
+#: src/control/Control.NotebookbarImpress.js:543
 msgid "Master View"
 msgstr ""
 
@@ -1172,7 +1173,7 @@ msgstr ""
 #: src/control/Control.Menubar.js:1056 src/control/Control.Menubar.js:1110
 #: src/control/Control.NotebookbarCalc.js:886
 #: src/control/Control.NotebookbarDraw.js:949
-#: src/control/Control.NotebookbarImpress.js:1075
+#: src/control/Control.NotebookbarImpress.js:1076
 #: src/control/Control.NotebookbarWriter.js:907
 #: src/control/Control.StatusBar.js:203 src/control/Control.Zotero.js:221
 msgid "Search"
@@ -1408,7 +1409,7 @@ msgstr ""
 #: src/control/Control.NotebookbarDraw.js:319
 #: src/control/Control.NotebookbarImpress.js:420
 #: src/control/Control.NotebookbarWriter.js:373
-#: src/control/Control.UIManager.js:164
+#: src/control/Control.UIManager.js:159
 msgid "Rename"
 msgstr ""
 
@@ -1521,21 +1522,21 @@ msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:1260
 #: src/control/Control.NotebookbarDraw.js:388
-#: src/control/Control.NotebookbarImpress.js:504
+#: src/control/Control.NotebookbarImpress.js:505
 #: src/control/Control.NotebookbarWriter.js:1454
 msgid "Compact view"
 msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:1274
 #: src/control/Control.NotebookbarDraw.js:401
-#: src/control/Control.NotebookbarImpress.js:518
+#: src/control/Control.NotebookbarImpress.js:519
 #: src/control/Control.NotebookbarWriter.js:1494
 msgid "Collapse Tabs"
 msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:1286
 #: src/control/Control.NotebookbarDraw.js:413
-#: src/control/Control.NotebookbarImpress.js:530
+#: src/control/Control.NotebookbarImpress.js:531
 #: src/control/Control.NotebookbarWriter.js:1481
 msgid "Status Bar"
 msgstr ""
@@ -1548,9 +1549,9 @@ msgstr "Блещукаща линия"
 #: src/control/Control.NotebookbarCalc.js:2293
 #: src/control/Control.NotebookbarDraw.js:834
 #: src/control/Control.NotebookbarDraw.js:1323
-#: src/control/Control.NotebookbarImpress.js:952
-#: src/control/Control.NotebookbarImpress.js:1337
-#: src/control/Control.NotebookbarImpress.js:2368
+#: src/control/Control.NotebookbarImpress.js:953
+#: src/control/Control.NotebookbarImpress.js:1338
+#: src/control/Control.NotebookbarImpress.js:2369
 #: src/control/Control.NotebookbarWriter.js:1062
 #: src/control/Control.NotebookbarWriter.js:2818
 msgid "Shapes"
@@ -1581,11 +1582,11 @@ msgid "ODF Presentation (.odp)"
 msgstr "ODF – презентация (.odp)"
 
 #: src/control/Control.NotebookbarImpress.js:442
-#: src/control/Control.NotebookbarImpress.js:1061
+#: src/control/Control.NotebookbarImpress.js:1062
 msgid "Presentation"
 msgstr ""
 
-#: src/control/Control.NotebookbarImpress.js:449
+#: src/control/Control.NotebookbarImpress.js:450
 msgid "Present in Window"
 msgstr ""
 
@@ -1831,19 +1832,19 @@ msgstr "Вмъкване на фигури"
 msgid "Insert connectors"
 msgstr ""
 
-#: src/control/Control.TopToolbar.js:263 src/control/Control.UIManager.js:769
+#: src/control/Control.TopToolbar.js:263 src/control/Control.UIManager.js:764
 msgid "Hide Menu"
 msgstr ""
 
-#: src/control/Control.UIManager.js:164
+#: src/control/Control.UIManager.js:159
 msgid "Enter new name"
 msgstr ""
 
-#: src/control/Control.UIManager.js:792
+#: src/control/Control.UIManager.js:787
 msgid "Show Menu"
 msgstr ""
 
-#: src/control/Control.UIManager.js:1053
+#: src/control/Control.UIManager.js:1048
 msgid "Dismiss"
 msgstr ""
 
@@ -1901,7 +1902,7 @@ msgid ""
 "API. It may cause some problems while editing citations or bibliography."
 msgstr ""
 
-#: src/control/Control.Zotero.js:247 src/core/Socket.js:1101
+#: src/control/Control.Zotero.js:247 src/core/Socket.js:1103
 msgid "Loading..."
 msgstr "Протича зареждане..."
 
@@ -2264,51 +2265,51 @@ msgstr ""
 msgid "Missing Fonts"
 msgstr ""
 
-#: src/core/Socket.js:1091
+#: src/core/Socket.js:1093
 msgid "Someone"
 msgstr ""
 
-#: src/core/Socket.js:1092
+#: src/core/Socket.js:1094
 msgid "%userName saved this document as %fileName. Do you want to join?"
 msgstr ""
 
-#: src/core/Socket.js:1101
+#: src/core/Socket.js:1103
 msgid "Connecting..."
 msgstr "Протича свързване..."
 
-#: src/core/Socket.js:1118
+#: src/core/Socket.js:1120
 msgid "The document is being renamed and will reload shortly"
 msgstr ""
 
-#: src/core/Socket.js:1121
+#: src/core/Socket.js:1123
 msgid "The document is switching to Offline mode and will reload shortly"
 msgstr ""
 
-#: src/core/Socket.js:1226
+#: src/core/Socket.js:1232
 msgid "Exported to storage"
 msgstr ""
 
-#: src/core/Socket.js:1226
+#: src/core/Socket.js:1232
 msgid "Successfully exported: "
 msgstr ""
 
-#: src/core/Socket.js:1254
+#: src/core/Socket.js:1260
 msgid "Discard"
 msgstr "Отхвърляне"
 
-#: src/core/Socket.js:1255
+#: src/core/Socket.js:1261
 msgid "Overwrite"
 msgstr "Презаписване"
 
-#: src/core/Socket.js:1266
+#: src/core/Socket.js:1272
 msgid "Save to new file"
 msgstr "Записване в нов файл"
 
-#: src/core/Socket.js:1276
+#: src/core/Socket.js:1282
 msgid "Document has been changed"
 msgstr ""
 
-#: src/core/Socket.js:1277
+#: src/core/Socket.js:1283
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
@@ -2316,18 +2317,18 @@ msgstr ""
 "Документът е бил променен в хранилището. Какво искате да направите с "
 "незаписаните си промени?"
 
-#: src/core/Socket.js:1594
+#: src/core/Socket.js:1599
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 msgstr "Не е възможно свързване с документа. Моля, опитайте отново."
 
-#: src/core/Socket.js:1611
+#: src/core/Socket.js:1616
 #, fuzzy
 msgid "Reconnecting..."
 msgstr "Протича свързване..."
 
-#: src/core/Socket.js:1621
+#: src/core/Socket.js:1626
 msgid "The server has been disconnected."
 msgstr ""
 
@@ -2547,27 +2548,27 @@ msgstr "Неуспешно качване на файл към сървъра, �
 msgid "Uploading file to server failed, the file is too large."
 msgstr "Неуспешно качване на файл към сървъра, файлът е твърде голям."
 
-#: src/layer/tile/CanvasTileLayer.js:1956
+#: src/layer/tile/CanvasTileLayer.js:1957
 msgid "Functions"
 msgstr "Функции"
 
-#: src/layer/tile/CanvasTileLayer.js:2533
+#: src/layer/tile/CanvasTileLayer.js:2534
 msgid "Copy link location"
 msgstr ""
 
-#: src/layer/tile/CanvasTileLayer.js:2535
+#: src/layer/tile/CanvasTileLayer.js:2536
 msgid "Select link text"
 msgstr ""
 
-#: src/layer/tile/CanvasTileLayer.js:2546
+#: src/layer/tile/CanvasTileLayer.js:2547
 msgid "Edit link"
 msgstr ""
 
-#: src/layer/tile/CanvasTileLayer.js:2555
+#: src/layer/tile/CanvasTileLayer.js:2556
 msgid "Remove link"
 msgstr ""
 
-#: src/layer/tile/CanvasTileLayer.js:5583
+#: src/layer/tile/CanvasTileLayer.js:5588
 msgid "No Comments"
 msgstr ""
 
@@ -2637,31 +2638,31 @@ msgstr "Разрешено"
 msgid "Warning! The browser you are using is not supported."
 msgstr ""
 
-#: src/map/Clipboard.js:125
+#: src/map/Clipboard.js:135
 msgid ""
 "To paste outside %productName, please first click the 'download' button"
 msgstr ""
 "За да поставяте извън %productName, първо щракнете върху бутона „Изтегляне“."
 
-#: src/map/Clipboard.js:135
+#: src/map/Clipboard.js:145
 msgid "Copying from the document disabled"
 msgstr ""
 
-#: src/map/Clipboard.js:238
+#: src/map/Clipboard.js:248
 msgid "warning: copy/paste request timed out"
 msgstr ""
 
-#: src/map/Clipboard.js:301
+#: src/map/Clipboard.js:311
 msgid "Failed to download clipboard, please re-copy"
 msgstr "Неуспешно изтегляне на клипборда – моля, копирайте отново."
 
-#: src/map/Clipboard.js:853
+#: src/map/Clipboard.js:863
 msgid "<p>Please use the copy/paste buttons on your on-screen keyboard.</p>"
 msgstr ""
 "<p>Моля, използвайте бутоните за копиране/поставяне на екранната "
 "клавиатура.</p>"
 
-#: src/map/Clipboard.js:855
+#: src/map/Clipboard.js:865
 msgid ""
 "<p>Your browser has very limited access to the clipboard, so use these "
 "keyboard shortcuts:</p><table class=\"warn-copy-paste\"><tr><td><kbd>Ctrl</"
@@ -2671,7 +2672,7 @@ msgid ""
 "td><td>Cut</td><td>Paste</td></tr></table>"
 msgstr ""
 
-#: src/map/Clipboard.js:874
+#: src/map/Clipboard.js:884
 msgid ""
 "<p>A download due to a large copy/paste operation has already started. "
 "Please, wait for the current download or cancel it before starting a new "
@@ -2681,7 +2682,7 @@ msgstr ""
 "поставяне. Моля изчакайте края му или го прекратете, преди да започнете "
 "ново.</p>"
 
-#: src/map/Clipboard.js:892
+#: src/map/Clipboard.js:902
 msgid ""
 "<p>Your browser has very limited access to the clipboard</p><p>Please press "
 "now: <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to see "
@@ -2692,7 +2693,7 @@ msgstr ""
 msgid "Initializing..."
 msgstr "Протича инициализиране..."
 
-#: src/map/Map.js:443 src/map/Map.js:446 src/map/Map.js:449 src/map/Map.js:452
+#: src/map/Map.js:461 src/map/Map.js:464 src/map/Map.js:467 src/map/Map.js:470
 msgid "Last saved:"
 msgstr ""
 
@@ -2719,6 +2720,45 @@ msgstr "Протича качване..."
 #: src/map/handler/Map.FileInserter.js:161
 msgid "Uploading file to server failed with status: %0"
 msgstr "Неуспешно качване към сървъра със статус: %0"
+
+#: src/map/handler/Map.SlideShow.js:50
+msgid "Empty Slide Show"
+msgstr ""
+
+#: src/map/handler/Map.SlideShow.js:147
+msgid "Windowed Presentation Blocked"
+msgstr ""
+
+#: src/map/handler/Map.SlideShow.js:148
+msgid ""
+"Presentation was blocked. Please allow pop-ups in your browser. This lets "
+"slide shows to be displayed in separated windows, allowing for easy screen "
+"sharing."
+msgstr ""
+
+#: src/map/handler/Map.SlideShow.js:156
+msgid "Presenting in window"
+msgstr ""
+
+#: src/map/handler/Map.SlideShow.js:157
+msgid "Close Presentation"
+msgstr ""
+
+#: src/map/handler/Map.SlideShow.js:169
+msgid "Presenting in fullscreen"
+msgstr ""
+
+#: src/map/handler/Map.SlideShow.js:170
+msgid "End Presentation"
+msgstr ""
+
+#: src/map/handler/Map.SlideShow.js:226
+msgid "Already presenting"
+msgstr ""
+
+#: src/map/handler/Map.SlideShow.js:227
+msgid "You are already presenting this document"
+msgstr ""
 
 #: src/map/handler/Map.WOPI.js:149
 msgid "Creating new file from template..."

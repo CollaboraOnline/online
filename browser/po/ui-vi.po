@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-12 17:13+0100\n"
+"POT-Creation-Date: 2024-01-17 14:33+0100\n"
 "PO-Revision-Date: 2023-10-10 08:40+0000\n"
 "Last-Translator: Nguyễn Hoàng Minh <mingu03@yandex.com>\n"
 "Language-Team: Vietnamese <https://hosted.weblate.org/projects/"
@@ -19,128 +19,128 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Weblate 5.1-dev\n"
 
-#: admin/admin.strings.js:6
+#: admin/admin.strings.js:15
 msgid "Admin console"
 msgstr "Bảng điều khiển dành cho quản trị viên"
 
-#: admin/admin.strings.js:7
+#: admin/admin.strings.js:16
 msgid "Settings"
 msgstr "Cài đặt"
 
-#: admin/admin.strings.js:8
+#: admin/admin.strings.js:17
 msgid "Overview"
 msgstr "Tổng quan"
 
-#: admin/admin.strings.js:9
+#: admin/admin.strings.js:18
 msgid "(current)"
 msgstr "(hiện tại)"
 
-#: admin/admin.strings.js:10
+#: admin/admin.strings.js:19
 msgid "Analytics"
 msgstr "Phân tích"
 
-#: admin/admin.strings.js:11
+#: admin/admin.strings.js:20
 msgid "History"
 msgstr "Lịch sử"
 
-#: admin/admin.strings.js:12
+#: admin/admin.strings.js:21
 msgid "Log"
 msgstr "Nhật ký"
 
-#: admin/admin.strings.js:13
+#: admin/admin.strings.js:22
 msgid "Dashboard"
 msgstr "Bảng điều khiển"
 
-#: admin/admin.strings.js:14
+#: admin/admin.strings.js:23
 msgid "Users online"
 msgstr "Người dùng trực tuyến"
 
-#: admin/admin.strings.js:15
+#: admin/admin.strings.js:24
 msgid "User Name"
 msgstr "Tên người dùng"
 
-#: admin/admin.strings.js:16
+#: admin/admin.strings.js:25
 msgid "Documents open"
 msgstr "Tài liệu đang mở"
 
-#: admin/admin.strings.js:17 admin/src/AdminSocketOverview.js:73
-#: admin/src/AdminSocketOverview.js:122 admin/src/AdminSocketOverview.js:349
+#: admin/admin.strings.js:26 admin/src/AdminSocketOverview.js:82
+#: admin/src/AdminSocketOverview.js:131 admin/src/AdminSocketOverview.js:358
 msgid " user(s)."
 msgstr " người dùng."
 
-#: admin/admin.strings.js:18 admin/src/AdminSocketOverview.js:205
+#: admin/admin.strings.js:27 admin/src/AdminSocketOverview.js:214
 msgid " document(s) open."
 msgstr " tài liệu đang mở."
 
-#: admin/admin.strings.js:19
+#: admin/admin.strings.js:28
 msgid "Number of Documents"
 msgstr "Số lượng tài liệu"
 
-#: admin/admin.strings.js:20
+#: admin/admin.strings.js:29
 msgid "Memory consumed"
 msgstr "Bộ nhớ đã dùng"
 
-#: admin/admin.strings.js:21
+#: admin/admin.strings.js:30
 msgid "Bytes sent"
 msgstr "Bytes đã gửi"
 
-#: admin/admin.strings.js:22
+#: admin/admin.strings.js:31
 msgid "Bytes received"
 msgstr "Bytes đã nhận"
 
-#: admin/admin.strings.js:23
+#: admin/admin.strings.js:32
 msgid "PID"
 msgstr "PID"
 
-#: admin/admin.strings.js:24
+#: admin/admin.strings.js:33
 msgid "Document"
 msgstr "Tài liệu"
 
-#: admin/admin.strings.js:25
+#: admin/admin.strings.js:34
 msgid "Views"
 msgstr "Lượt xem"
 
-#: admin/admin.strings.js:26
+#: admin/admin.strings.js:35
 msgid "Elapsed time"
 msgstr "Thời gian trôi qua"
 
-#: admin/admin.strings.js:27
+#: admin/admin.strings.js:36
 msgid "Idle time"
 msgstr "Thời gian chờ"
 
-#: admin/admin.strings.js:28
+#: admin/admin.strings.js:37
 msgid "Modified"
 msgstr "Đã chỉnh sửa"
 
-#: admin/admin.strings.js:29
+#: admin/admin.strings.js:38
 msgid "Uploaded"
 msgstr "Đã tải lên"
 
-#: admin/admin.strings.js:30
+#: admin/admin.strings.js:39
 msgid "WOPI host"
 msgstr "Máy chủ WOPI"
 
-#: admin/admin.strings.js:31
+#: admin/admin.strings.js:40
 msgid "Kill"
 msgstr "Kết thúc"
 
-#: admin/admin.strings.js:32
+#: admin/admin.strings.js:41
 msgid "Graphs"
 msgstr "Đồ thị"
 
-#: admin/admin.strings.js:33
+#: admin/admin.strings.js:42
 msgid "Memory Graph"
 msgstr "Đồ thị bộ nhớ"
 
-#: admin/admin.strings.js:34
+#: admin/admin.strings.js:43
 msgid "CPU Graph"
 msgstr "Đồ thị CPU"
 
-#: admin/admin.strings.js:35
+#: admin/admin.strings.js:44
 msgid "Network Graph"
 msgstr "Đồ thị Network"
 
-#: admin/admin.strings.js:36 src/control/Control.Notebookbar.js:266
+#: admin/admin.strings.js:45 src/control/Control.Notebookbar.js:266
 #: src/control/Control.NotebookbarCalc.js:112
 #: src/control/Control.NotebookbarDraw.js:29
 #: src/control/Control.NotebookbarDraw.js:153
@@ -152,81 +152,81 @@ msgstr "Đồ thị Network"
 msgid "Save"
 msgstr "Lưu"
 
-#: admin/admin.strings.js:37
+#: admin/admin.strings.js:46
 msgid "Cache size of memory statistics"
 msgstr "Kích thước bộ nhớ đệm của thống kê bộ nhớ"
 
-#: admin/admin.strings.js:38
+#: admin/admin.strings.js:47
 msgid "Time interval of memory statistics (in ms)"
 msgstr "Khoảng thời gian thống kê bộ nhớ (tính bằng mili giây)"
 
-#: admin/admin.strings.js:39
+#: admin/admin.strings.js:48
 msgid "Cache size of CPU statistics"
 msgstr "Kích thước bộ nhớ đệm của thống kê CPU"
 
-#: admin/admin.strings.js:40
+#: admin/admin.strings.js:49
 msgid "Time interval of CPU statistics (in ms)"
 msgstr "Khoảng thời gian thống kê CPU (tính bằng mili giây)"
 
-#: admin/admin.strings.js:41 admin/src/AdminSocketOverview.js:91
+#: admin/admin.strings.js:50 admin/src/AdminSocketOverview.js:100
 msgid "Kill session."
 msgstr "Kết thúc phiên."
 
-#: admin/admin.strings.js:42
+#: admin/admin.strings.js:51
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
 msgstr "Bộ nhớ ảo xử lý tài liệu tối đa (MB) - chỉ giảm"
 
-#: admin/admin.strings.js:43
+#: admin/admin.strings.js:52
 msgid "Maximum Document process stack memory (in KB) - reduce only"
 msgstr "Bộ nhớ ngăn xếp quy trình tài liệu tối đa (tính bằng KB) - chỉ giảm"
 
-#: admin/admin.strings.js:44
+#: admin/admin.strings.js:53
 msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
 msgstr "Kích thước tệp tối đa được phép ghi vào đĩa (tính bằng MB) - chỉ giảm"
 
-#: admin/admin.strings.js:45
+#: admin/admin.strings.js:54
 msgid "Documents:"
 msgstr "Tài liệu:"
 
-#: admin/admin.strings.js:46
+#: admin/admin.strings.js:55
 msgid "Expired:"
 msgstr "Đã hết hạn:"
 
-#: admin/admin.strings.js:47 admin/src/AdminSocketBase.js:52
+#: admin/admin.strings.js:56 admin/src/AdminSocketBase.js:61
 #: src/control/Control.Zotero.js:212
 msgid "Refresh"
 msgstr "Tải lại"
 
-#: admin/admin.strings.js:48
+#: admin/admin.strings.js:57
 msgid "Shutdown Server"
 msgstr "Tắt máy chủ"
 
-#: admin/admin.strings.js:49
+#: admin/admin.strings.js:58
 msgid "Server uptime"
 msgstr "Thời gian hoạt động của máy chủ"
 
-#: admin/admin.strings.js:50
+#: admin/admin.strings.js:59
 msgid "Refresh Log"
 msgstr "Tải lại nhật kí"
 
-#: admin/admin.strings.js:51
+#: admin/admin.strings.js:60
 msgid "Channel Filter:"
 msgstr "Bộ lọc kệnh:"
 
-#: admin/admin.strings.js:52 src/control/Control.JSDialogBuilder.js:577
+#: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:577
 #: src/control/Control.StatusBar.js:345
 msgid "None"
 msgstr "Không có"
 
-#: admin/admin.strings.js:53
+#: admin/admin.strings.js:62
 msgid "Set Log Levels"
 msgstr "Đặt cấp độ nhật kí"
 
-#: admin/admin.strings.js:54
+#: admin/admin.strings.js:63
 msgid "Log Levels"
 msgstr "Cấp độ nhật kí"
 
-#: admin/admin.strings.js:55 src/control/Control.AlertDialog.js:30
+#: admin/admin.strings.js:64 src/control/Control.AlertDialog.js:30
 #: src/control/Control.AlertDialog.js:36
 #: src/control/Control.AlertDialog.js:103 src/control/Control.Zotero.js:192
 #: src/control/Parts.js:460 src/core/Socket.js:1049 src/core/Socket.js:1054
@@ -235,29 +235,29 @@ msgstr "Cấp độ nhật kí"
 msgid "Close"
 msgstr "Đóng"
 
-#: admin/admin.strings.js:56
+#: admin/admin.strings.js:65
 msgid "Update Log Levels"
 msgstr "Cập nhật cấp độ nhật kí"
 
-#: admin/admin.strings.js:57
+#: admin/admin.strings.js:66
 msgid "Version Information"
 msgstr "Thông tin phiên bản"
 
-#: admin/src/AdminSocketAnalytics.js:205
+#: admin/src/AdminSocketAnalytics.js:214
 msgid "Received"
 msgstr "Đã nhận"
 
-#: admin/src/AdminSocketAnalytics.js:209
+#: admin/src/AdminSocketAnalytics.js:218
 msgid "Sent"
 msgstr "Đã gửi"
 
-#: admin/src/AdminSocketBase.js:53
+#: admin/src/AdminSocketBase.js:62
 msgid "Server has been shut down; please reload the page."
 msgstr "Máy chủ đã bị tắt; vui lòng tải lại trang."
 
-#: admin/src/AdminSocketBase.js:54 admin/src/AdminSocketBase.js:65
-#: admin/src/AdminSocketOverview.js:99 admin/src/AdminSocketOverview.js:422
-#: admin/src/AdminSocketSettings.js:36 src/control/Control.AlertDialog.js:52
+#: admin/src/AdminSocketBase.js:63 admin/src/AdminSocketBase.js:74
+#: admin/src/AdminSocketOverview.js:108 admin/src/AdminSocketOverview.js:431
+#: admin/src/AdminSocketSettings.js:47 src/control/Control.AlertDialog.js:52
 #: src/control/Control.DocumentRepair.js:77
 #: src/control/Control.LanguageDialog.js:119 src/control/Control.Tabs.js:337
 #: src/control/Control.Tabs.js:346 src/control/Control.Zotero.js:338
@@ -265,101 +265,102 @@ msgstr "Máy chủ đã bị tắt; vui lòng tải lại trang."
 #: src/control/Permission.js:99 src/control/Permission.js:149
 #: src/control/Toolbar.js:561 src/control/Toolbar.js:662
 #: src/control/Toolbar.js:798 src/control/Toolbar.js:1089
-#: src/core/Socket.js:608 src/core/Socket.js:1019 src/core/Socket.js:1094
-#: src/core/Socket.js:1226 src/core/Socket.js:1230 src/main.js:79
-#: src/main.js:82 src/main.js:134 src/map/Clipboard.js:860
-#: src/map/Clipboard.js:899 src/map/handler/Map.Feedback.js:83
-#: src/map/handler/Map.WOPI.js:582
+#: src/core/Socket.js:608 src/core/Socket.js:1019 src/core/Socket.js:1096
+#: src/core/Socket.js:1232 src/core/Socket.js:1236 src/main.js:79
+#: src/main.js:82 src/main.js:134 src/map/Clipboard.js:870
+#: src/map/Clipboard.js:909 src/map/handler/Map.Feedback.js:83
+#: src/map/handler/Map.SlideShow.js:51 src/map/handler/Map.SlideShow.js:149
+#: src/map/handler/Map.SlideShow.js:228 src/map/handler/Map.WOPI.js:582
 msgid "OK"
 msgstr "Đồng ý"
 
-#: admin/src/AdminSocketBase.js:63 admin/src/AdminSocketBase.js:64
+#: admin/src/AdminSocketBase.js:72 admin/src/AdminSocketBase.js:73
 msgid "Connection error"
 msgstr "Lỗi kết nối"
 
-#: admin/src/AdminSocketOverview.js:97 admin/src/AdminSocketSettings.js:34
+#: admin/src/AdminSocketOverview.js:106 admin/src/AdminSocketSettings.js:45
 msgid "Confirmation"
 msgstr "Sự xác nhận"
 
-#: admin/src/AdminSocketOverview.js:98
+#: admin/src/AdminSocketOverview.js:107
 msgid "Are you sure you want to terminate this session?"
 msgstr "Bạn có chắc chắn muốn kết thúc phiên này không?"
 
-#: admin/src/AdminSocketOverview.js:100 admin/src/AdminSocketOverview.js:423
-#: admin/src/AdminSocketSettings.js:37
+#: admin/src/AdminSocketOverview.js:109 admin/src/AdminSocketOverview.js:432
+#: admin/src/AdminSocketSettings.js:48
 #: src/control/Control.DocumentRepair.js:71
 #: src/control/Control.DownloadProgress.js:90
 #: src/control/Control.LanguageDialog.js:113
 #: src/control/Control.MobileTopBar.js:52
-#: src/control/Control.UIManager.js:1228 src/control/Control.UIManager.js:1295
-#: src/control/Control.UIManager.js:1430 src/control/Control.UIManager.js:1572
+#: src/control/Control.UIManager.js:1223 src/control/Control.UIManager.js:1290
+#: src/control/Control.UIManager.js:1425 src/control/Control.UIManager.js:1567
 #: src/control/Control.Zotero.js:333 src/control/Toolbar.js:793
-#: src/core/Socket.js:1251 src/layer/tile/CommentListSection.ts:423
+#: src/core/Socket.js:1257 src/layer/tile/CommentListSection.ts:423
 #: src/layer/tile/CommentSection.ts:143 src/layer/tile/CommentSection.ts:146
 msgid "Cancel"
 msgstr "Hủy"
 
-#: admin/src/AdminSocketOverview.js:411
+#: admin/src/AdminSocketOverview.js:420
 msgid "Failed to set jwt authentication cookie over insecure connection"
 msgstr "Không đặt được cookie xác thực jwt qua kết nối không an toàn"
 
-#: admin/src/AdminSocketOverview.js:415
+#: admin/src/AdminSocketOverview.js:424
 msgid "Failed to authenticate this session over protocol %0"
 msgstr "Không xác thực được phiên này qua giao thức %0"
 
-#: admin/src/AdminSocketOverview.js:420
+#: admin/src/AdminSocketOverview.js:429
 msgid "Warning"
 msgstr "Cảnh báo"
 
-#: admin/src/AdminSocketSettings.js:35
+#: admin/src/AdminSocketSettings.js:46
 msgid "Are you sure you want to shut down the server?"
 msgstr "Bạn có chắc chắn muốn tắt máy chủ không?"
 
-#: admin/src/Util.js:14
+#: admin/src/Util.js:26
 msgid "kB"
 msgstr "kB"
 
-#: admin/src/Util.js:14
+#: admin/src/Util.js:26
 msgid "MB"
 msgstr "MB"
 
-#: admin/src/Util.js:14
+#: admin/src/Util.js:26
 msgid "GB"
 msgstr "GB"
 
-#: admin/src/Util.js:14
+#: admin/src/Util.js:26
 msgid "TB"
 msgstr "TB"
 
-#: admin/src/Util.js:14
+#: admin/src/Util.js:26
 msgid "PB"
 msgstr "PB"
 
-#: admin/src/Util.js:14
+#: admin/src/Util.js:26
 msgid "EB"
 msgstr "EB"
 
-#: admin/src/Util.js:14
+#: admin/src/Util.js:26
 msgid "ZB"
 msgstr "ZB"
 
-#: admin/src/Util.js:14
+#: admin/src/Util.js:26
 msgid "YB"
 msgstr "YB"
 
-#: admin/src/Util.js:14
+#: admin/src/Util.js:26
 msgid "BB"
 msgstr "BB"
 
-#: admin/src/Util.js:43 admin/src/Util.js:45
+#: admin/src/Util.js:55 admin/src/Util.js:57
 msgid " hrs"
 msgstr " giờ"
 
-#: admin/src/Util.js:49 admin/src/Util.js:51
+#: admin/src/Util.js:61 admin/src/Util.js:63
 msgid " mins"
 msgstr " phút"
 
-#: admin/src/Util.js:54
+#: admin/src/Util.js:66
 msgid " s"
 msgstr " giây"
 
@@ -670,8 +671,8 @@ msgid "replies"
 msgstr "Phản hồi"
 
 #: src/control/Control.JSDialogBuilder.js:2075
-#: src/layer/tile/CanvasTileLayer.js:5555
-#: src/layer/tile/CanvasTileLayer.js:5566
+#: src/layer/tile/CanvasTileLayer.js:5560
+#: src/layer/tile/CanvasTileLayer.js:5571
 #: src/layer/tile/CommentListSection.ts:979
 msgid "Comment"
 msgstr "Chú thích"
@@ -780,7 +781,7 @@ msgstr "Tài liệu PDF (.pdf)"
 msgid "EPUB (.epub)"
 msgstr "Tài liệu định dạng EPUB (.epub)"
 
-#: src/control/Control.Menubar.js:85 src/control/Control.UIManager.js:164
+#: src/control/Control.Menubar.js:85 src/control/Control.UIManager.js:159
 msgid "Rename Document"
 msgstr "Đổi tên tài liệu"
 
@@ -850,8 +851,8 @@ msgstr "Sửa"
 #: src/control/Control.NotebookbarCalc.js:1221
 #: src/control/Control.NotebookbarDraw.js:348
 #: src/control/Control.NotebookbarDraw.js:349
-#: src/control/Control.NotebookbarImpress.js:464
 #: src/control/Control.NotebookbarImpress.js:465
+#: src/control/Control.NotebookbarImpress.js:466
 #: src/control/Control.NotebookbarWriter.js:1414
 #: src/control/Control.NotebookbarWriter.js:1415
 #: src/control/Control.StatusBar.js:218
@@ -862,7 +863,7 @@ msgstr "Đặt lại thu phóng"
 #: src/control/Control.Menubar.js:580 src/control/Control.Menubar.js:715
 #: src/control/Control.NotebookbarCalc.js:1261
 #: src/control/Control.NotebookbarDraw.js:389
-#: src/control/Control.NotebookbarImpress.js:505
+#: src/control/Control.NotebookbarImpress.js:506
 #: src/control/Control.NotebookbarWriter.js:1455
 msgid "Toggle UI Mode"
 msgstr "Chuyển đổi chế độ giao diện người dùng"
@@ -878,8 +879,8 @@ msgstr "Hiển thị thước"
 #: src/control/Control.NotebookbarCalc.js:1287
 #: src/control/Control.NotebookbarDraw.js:414
 #: src/control/Control.NotebookbarDraw.js:950
-#: src/control/Control.NotebookbarImpress.js:531
-#: src/control/Control.NotebookbarImpress.js:1076
+#: src/control/Control.NotebookbarImpress.js:532
+#: src/control/Control.NotebookbarImpress.js:1077
 #: src/control/Control.NotebookbarWriter.js:908
 #: src/control/Control.NotebookbarWriter.js:1482
 msgid "Show Status Bar"
@@ -896,7 +897,7 @@ msgstr "Ẩn thanh menu"
 #: src/control/Control.Menubar.js:1085 src/control/Control.Menubar.js:1144
 #: src/control/Control.NotebookbarCalc.js:1299
 #: src/control/Control.NotebookbarDraw.js:425
-#: src/control/Control.NotebookbarImpress.js:550
+#: src/control/Control.NotebookbarImpress.js:551
 #: src/control/Control.NotebookbarWriter.js:1500
 msgid "Dark Mode"
 msgstr "Chế độ tối"
@@ -917,7 +918,7 @@ msgstr "Tất cả"
 #: src/control/Control.Menubar.js:595 src/control/Control.Menubar.js:740
 #: src/control/Control.NotebookbarCalc.js:1422
 #: src/control/Control.NotebookbarDraw.js:1238
-#: src/control/Control.NotebookbarImpress.js:1252
+#: src/control/Control.NotebookbarImpress.js:1253
 #: src/control/Control.NotebookbarWriter.js:1106
 msgid "Smart Picker"
 msgstr "Bộ chọn thông minh"
@@ -1081,7 +1082,7 @@ msgid "Save Comments"
 msgstr "Lưu chú thích"
 
 #: src/control/Control.Menubar.js:437
-#: src/control/Control.NotebookbarImpress.js:542
+#: src/control/Control.NotebookbarImpress.js:543
 msgid "Master View"
 msgstr "Chế độ xem chính"
 
@@ -1167,7 +1168,7 @@ msgstr ""
 #: src/control/Control.Menubar.js:1056 src/control/Control.Menubar.js:1110
 #: src/control/Control.NotebookbarCalc.js:886
 #: src/control/Control.NotebookbarDraw.js:949
-#: src/control/Control.NotebookbarImpress.js:1075
+#: src/control/Control.NotebookbarImpress.js:1076
 #: src/control/Control.NotebookbarWriter.js:907
 #: src/control/Control.StatusBar.js:203 src/control/Control.Zotero.js:221
 msgid "Search"
@@ -1390,7 +1391,7 @@ msgstr "Tài liệu PDF (.pdf) - Chuyên nghiệp"
 #: src/control/Control.NotebookbarDraw.js:319
 #: src/control/Control.NotebookbarImpress.js:420
 #: src/control/Control.NotebookbarWriter.js:373
-#: src/control/Control.UIManager.js:164
+#: src/control/Control.UIManager.js:159
 msgid "Rename"
 msgstr "Đổi tên"
 
@@ -1501,21 +1502,21 @@ msgstr "Chế độ đọc"
 
 #: src/control/Control.NotebookbarCalc.js:1260
 #: src/control/Control.NotebookbarDraw.js:388
-#: src/control/Control.NotebookbarImpress.js:504
+#: src/control/Control.NotebookbarImpress.js:505
 #: src/control/Control.NotebookbarWriter.js:1454
 msgid "Compact view"
 msgstr "Chế độ xem nhỏ gọn"
 
 #: src/control/Control.NotebookbarCalc.js:1274
 #: src/control/Control.NotebookbarDraw.js:401
-#: src/control/Control.NotebookbarImpress.js:518
+#: src/control/Control.NotebookbarImpress.js:519
 #: src/control/Control.NotebookbarWriter.js:1494
 msgid "Collapse Tabs"
 msgstr "Thu gọn thẻ"
 
 #: src/control/Control.NotebookbarCalc.js:1286
 #: src/control/Control.NotebookbarDraw.js:413
-#: src/control/Control.NotebookbarImpress.js:530
+#: src/control/Control.NotebookbarImpress.js:531
 #: src/control/Control.NotebookbarWriter.js:1481
 msgid "Status Bar"
 msgstr "Thanh trạng thái"
@@ -1528,9 +1529,9 @@ msgstr "Biểu đồ thu nhỏ"
 #: src/control/Control.NotebookbarCalc.js:2293
 #: src/control/Control.NotebookbarDraw.js:834
 #: src/control/Control.NotebookbarDraw.js:1323
-#: src/control/Control.NotebookbarImpress.js:952
-#: src/control/Control.NotebookbarImpress.js:1337
-#: src/control/Control.NotebookbarImpress.js:2368
+#: src/control/Control.NotebookbarImpress.js:953
+#: src/control/Control.NotebookbarImpress.js:1338
+#: src/control/Control.NotebookbarImpress.js:2369
 #: src/control/Control.NotebookbarWriter.js:1062
 #: src/control/Control.NotebookbarWriter.js:2818
 msgid "Shapes"
@@ -1560,11 +1561,11 @@ msgid "ODF Presentation (.odp)"
 msgstr "Bản trình chiếu ODF (.odp)"
 
 #: src/control/Control.NotebookbarImpress.js:442
-#: src/control/Control.NotebookbarImpress.js:1061
+#: src/control/Control.NotebookbarImpress.js:1062
 msgid "Presentation"
 msgstr "Trình chiếu"
 
-#: src/control/Control.NotebookbarImpress.js:449
+#: src/control/Control.NotebookbarImpress.js:450
 msgid "Present in Window"
 msgstr ""
 
@@ -1808,19 +1809,19 @@ msgstr "Chèn hình dạng"
 msgid "Insert connectors"
 msgstr "Chèn các đầu nối"
 
-#: src/control/Control.TopToolbar.js:263 src/control/Control.UIManager.js:769
+#: src/control/Control.TopToolbar.js:263 src/control/Control.UIManager.js:764
 msgid "Hide Menu"
 msgstr "Ẩn Menu"
 
-#: src/control/Control.UIManager.js:164
+#: src/control/Control.UIManager.js:159
 msgid "Enter new name"
 msgstr ""
 
-#: src/control/Control.UIManager.js:792
+#: src/control/Control.UIManager.js:787
 msgid "Show Menu"
 msgstr ""
 
-#: src/control/Control.UIManager.js:1053
+#: src/control/Control.UIManager.js:1048
 msgid "Dismiss"
 msgstr "Bỏ qua"
 
@@ -1880,7 +1881,7 @@ msgstr ""
 "Tài liệu chứa một số trích dẫn có thể không truy cập được thông qua API web. "
 "Nó có thể gây ra một số vấn đề trong khi chỉnh sửa trích dẫn hoặc văn mục."
 
-#: src/control/Control.Zotero.js:247 src/core/Socket.js:1101
+#: src/control/Control.Zotero.js:247 src/core/Socket.js:1103
 msgid "Loading..."
 msgstr "Đang tải..."
 
@@ -2250,53 +2251,53 @@ msgstr "Chỉ chủ sở hữu tài liệu mới có thể thay đổi mật kh�
 msgid "Missing Fonts"
 msgstr "Thiếu phông chữ"
 
-#: src/core/Socket.js:1091
+#: src/core/Socket.js:1093
 msgid "Someone"
 msgstr "Ai đó"
 
-#: src/core/Socket.js:1092
+#: src/core/Socket.js:1094
 msgid "%userName saved this document as %fileName. Do you want to join?"
 msgstr ""
 "%userName đã lưu tài liệu này dưới dạng %fileName. Bạn có muốn tham gia "
 "không?"
 
-#: src/core/Socket.js:1101
+#: src/core/Socket.js:1103
 msgid "Connecting..."
 msgstr "Đang kết nối..."
 
-#: src/core/Socket.js:1118
+#: src/core/Socket.js:1120
 msgid "The document is being renamed and will reload shortly"
 msgstr "Tài liệu đang được đổi tên và sắp tải lại"
 
-#: src/core/Socket.js:1121
+#: src/core/Socket.js:1123
 msgid "The document is switching to Offline mode and will reload shortly"
 msgstr ""
 
-#: src/core/Socket.js:1226
+#: src/core/Socket.js:1232
 msgid "Exported to storage"
 msgstr "Đã xuất sang bộ nhớ"
 
-#: src/core/Socket.js:1226
+#: src/core/Socket.js:1232
 msgid "Successfully exported: "
 msgstr "Đã xuất thành công: "
 
-#: src/core/Socket.js:1254
+#: src/core/Socket.js:1260
 msgid "Discard"
 msgstr "Hủy bỏ"
 
-#: src/core/Socket.js:1255
+#: src/core/Socket.js:1261
 msgid "Overwrite"
 msgstr "Ghi đè"
 
-#: src/core/Socket.js:1266
+#: src/core/Socket.js:1272
 msgid "Save to new file"
 msgstr "Lưu vào tệp mới"
 
-#: src/core/Socket.js:1276
+#: src/core/Socket.js:1282
 msgid "Document has been changed"
 msgstr "Tài liệu đã được thay đổi"
 
-#: src/core/Socket.js:1277
+#: src/core/Socket.js:1283
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
@@ -2304,17 +2305,17 @@ msgstr ""
 "Tài liệu đã được thay đổi trong bộ nhớ. Bạn muốn làm gì với những thay đổi "
 "chưa được lưu của mình?"
 
-#: src/core/Socket.js:1594
+#: src/core/Socket.js:1599
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 msgstr "Chúng tôi không thể kết nối với tài liệu của bạn. Vui lòng thử lại."
 
-#: src/core/Socket.js:1611
+#: src/core/Socket.js:1616
 msgid "Reconnecting..."
 msgstr "Đang kết nối lại..."
 
-#: src/core/Socket.js:1621
+#: src/core/Socket.js:1626
 msgid "The server has been disconnected."
 msgstr "Máy chủ đã bị ngắt kết nối."
 
@@ -2542,27 +2543,27 @@ msgstr "Tải tệp lên máy chủ không thành công, không tìm thấy tệ
 msgid "Uploading file to server failed, the file is too large."
 msgstr "Tải tệp lên máy chủ không thành công, tệp quá lớn."
 
-#: src/layer/tile/CanvasTileLayer.js:1956
+#: src/layer/tile/CanvasTileLayer.js:1957
 msgid "Functions"
 msgstr "Chức năng"
 
-#: src/layer/tile/CanvasTileLayer.js:2533
+#: src/layer/tile/CanvasTileLayer.js:2534
 msgid "Copy link location"
 msgstr "Sao chép vị trí liên kết"
 
-#: src/layer/tile/CanvasTileLayer.js:2535
+#: src/layer/tile/CanvasTileLayer.js:2536
 msgid "Select link text"
 msgstr ""
 
-#: src/layer/tile/CanvasTileLayer.js:2546
+#: src/layer/tile/CanvasTileLayer.js:2547
 msgid "Edit link"
 msgstr "Chỉnh sửa liên kết"
 
-#: src/layer/tile/CanvasTileLayer.js:2555
+#: src/layer/tile/CanvasTileLayer.js:2556
 msgid "Remove link"
 msgstr "Xoá liên kết"
 
-#: src/layer/tile/CanvasTileLayer.js:5583
+#: src/layer/tile/CanvasTileLayer.js:5588
 msgid "No Comments"
 msgstr "Không có bình luận"
 
@@ -2632,30 +2633,30 @@ msgstr "Đã giải quyết"
 msgid "Warning! The browser you are using is not supported."
 msgstr "Cảnh báo! Trình duyệt bạn đang sử dụng không được hỗ trợ."
 
-#: src/map/Clipboard.js:125
+#: src/map/Clipboard.js:135
 msgid ""
 "To paste outside %productName, please first click the 'download' button"
 msgstr ""
 "Để dán bên ngoài %productName, trước tiên, vui lòng nhấp vào nút 'tải xuống'"
 
-#: src/map/Clipboard.js:135
+#: src/map/Clipboard.js:145
 msgid "Copying from the document disabled"
 msgstr "Việc sao chép từ tài liệu đã bị tắt"
 
-#: src/map/Clipboard.js:238
+#: src/map/Clipboard.js:248
 msgid "warning: copy/paste request timed out"
 msgstr "cảnh báo: yêu cầu sao chép/dán quá thời gian"
 
-#: src/map/Clipboard.js:301
+#: src/map/Clipboard.js:311
 msgid "Failed to download clipboard, please re-copy"
 msgstr "Không tải xuống được khay nhớ tạm, vui lòng sao chép lại"
 
-#: src/map/Clipboard.js:853
+#: src/map/Clipboard.js:863
 msgid "<p>Please use the copy/paste buttons on your on-screen keyboard.</p>"
 msgstr ""
 "<p> Vui lòng sử dụng các nút sao chép / dán trên bàn phím ảo của bạn. </p>"
 
-#: src/map/Clipboard.js:855
+#: src/map/Clipboard.js:865
 msgid ""
 "<p>Your browser has very limited access to the clipboard, so use these "
 "keyboard shortcuts:</p><table class=\"warn-copy-paste\"><tr><td><kbd>Ctrl</"
@@ -2672,7 +2673,7 @@ msgstr ""
 ">+</span><kbd>V</kbd></td></tr><tr><td>Sao "
 "chép</td><td>Cắt</td><td>Dán</td></tr></table>"
 
-#: src/map/Clipboard.js:874
+#: src/map/Clipboard.js:884
 msgid ""
 "<p>A download due to a large copy/paste operation has already started. "
 "Please, wait for the current download or cancel it before starting a new "
@@ -2681,7 +2682,7 @@ msgstr ""
 "<p> Quá trình tải xuống do thao tác sao chép / dán lớn đã bắt đầu. Vui lòng "
 "đợi tải xuống hiện tại hoặc hủy trước khi bắt đầu tải xuống mới </p>"
 
-#: src/map/Clipboard.js:892
+#: src/map/Clipboard.js:902
 msgid ""
 "<p>Your browser has very limited access to the clipboard</p><p>Please press "
 "now: <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to see "
@@ -2696,7 +2697,7 @@ msgstr ""
 msgid "Initializing..."
 msgstr "Đang khởi tạo..."
 
-#: src/map/Map.js:443 src/map/Map.js:446 src/map/Map.js:449 src/map/Map.js:452
+#: src/map/Map.js:461 src/map/Map.js:464 src/map/Map.js:467 src/map/Map.js:470
 msgid "Last saved:"
 msgstr "Lưu lần cuối:"
 
@@ -2723,6 +2724,46 @@ msgstr "Đang tải lên..."
 #: src/map/handler/Map.FileInserter.js:161
 msgid "Uploading file to server failed with status: %0"
 msgstr "Tải tệp lên máy chủ không thành công với trạng thái: %0"
+
+#: src/map/handler/Map.SlideShow.js:50
+msgid "Empty Slide Show"
+msgstr ""
+
+#: src/map/handler/Map.SlideShow.js:147
+msgid "Windowed Presentation Blocked"
+msgstr ""
+
+#: src/map/handler/Map.SlideShow.js:148
+msgid ""
+"Presentation was blocked. Please allow pop-ups in your browser. This lets "
+"slide shows to be displayed in separated windows, allowing for easy screen "
+"sharing."
+msgstr ""
+
+#: src/map/handler/Map.SlideShow.js:156
+msgid "Presenting in window"
+msgstr ""
+
+#: src/map/handler/Map.SlideShow.js:157
+msgid "Close Presentation"
+msgstr ""
+
+#: src/map/handler/Map.SlideShow.js:169
+msgid "Presenting in fullscreen"
+msgstr ""
+
+#: src/map/handler/Map.SlideShow.js:170
+#, fuzzy
+msgid "End Presentation"
+msgstr "Trình chiếu"
+
+#: src/map/handler/Map.SlideShow.js:226
+msgid "Already presenting"
+msgstr ""
+
+#: src/map/handler/Map.SlideShow.js:227
+msgid "You are already presenting this document"
+msgstr ""
 
 #: src/map/handler/Map.WOPI.js:149
 msgid "Creating new file from template..."
