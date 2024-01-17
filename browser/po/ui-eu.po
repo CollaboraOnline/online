@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-12 17:13+0100\n"
+"POT-Creation-Date: 2024-01-17 14:33+0100\n"
 "PO-Revision-Date: 2023-11-23 06:43+0000\n"
 "Last-Translator: Alexander Gabilondo <alexgabi@openmailbox.org>\n"
 "Language-Team: Basque <https://hosted.weblate.org/projects/collabora-online/"
@@ -19,128 +19,128 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 5.2.1-rc\n"
 
-#: admin/admin.strings.js:6
+#: admin/admin.strings.js:15
 msgid "Admin console"
 msgstr "Administrazio kontsola"
 
-#: admin/admin.strings.js:7
+#: admin/admin.strings.js:16
 msgid "Settings"
 msgstr "Ezarpenak"
 
-#: admin/admin.strings.js:8
+#: admin/admin.strings.js:17
 msgid "Overview"
 msgstr "Ikuspegi orokorra"
 
-#: admin/admin.strings.js:9
+#: admin/admin.strings.js:18
 msgid "(current)"
 msgstr "(unekoa)"
 
-#: admin/admin.strings.js:10
+#: admin/admin.strings.js:19
 msgid "Analytics"
 msgstr "Analitika"
 
-#: admin/admin.strings.js:11
+#: admin/admin.strings.js:20
 msgid "History"
 msgstr "Historia"
 
-#: admin/admin.strings.js:12
+#: admin/admin.strings.js:21
 msgid "Log"
 msgstr "Egunkaria"
 
-#: admin/admin.strings.js:13
+#: admin/admin.strings.js:22
 msgid "Dashboard"
 msgstr "Aginte-mahaia"
 
-#: admin/admin.strings.js:14
+#: admin/admin.strings.js:23
 msgid "Users online"
 msgstr "Konektatutako erabiltzaileak"
 
-#: admin/admin.strings.js:15
+#: admin/admin.strings.js:24
 msgid "User Name"
 msgstr "Erabiltzaile-izena"
 
-#: admin/admin.strings.js:16
+#: admin/admin.strings.js:25
 msgid "Documents open"
 msgstr "Irekitako dokumentuak"
 
-#: admin/admin.strings.js:17 admin/src/AdminSocketOverview.js:73
-#: admin/src/AdminSocketOverview.js:122 admin/src/AdminSocketOverview.js:349
+#: admin/admin.strings.js:26 admin/src/AdminSocketOverview.js:82
+#: admin/src/AdminSocketOverview.js:131 admin/src/AdminSocketOverview.js:358
 msgid " user(s)."
 msgstr " erabiltzaile."
 
-#: admin/admin.strings.js:18 admin/src/AdminSocketOverview.js:205
+#: admin/admin.strings.js:27 admin/src/AdminSocketOverview.js:214
 msgid " document(s) open."
 msgstr " dokumentu ireki."
 
-#: admin/admin.strings.js:19
+#: admin/admin.strings.js:28
 msgid "Number of Documents"
 msgstr "Dokumentu kopurua"
 
-#: admin/admin.strings.js:20
+#: admin/admin.strings.js:29
 msgid "Memory consumed"
 msgstr "Erabilitako memoria"
 
-#: admin/admin.strings.js:21
+#: admin/admin.strings.js:30
 msgid "Bytes sent"
 msgstr "Bidalitako byte-ak"
 
-#: admin/admin.strings.js:22
+#: admin/admin.strings.js:31
 msgid "Bytes received"
 msgstr "Jasotako byte-ak"
 
-#: admin/admin.strings.js:23
+#: admin/admin.strings.js:32
 msgid "PID"
 msgstr "PID"
 
-#: admin/admin.strings.js:24
+#: admin/admin.strings.js:33
 msgid "Document"
 msgstr "Dokumentua"
 
-#: admin/admin.strings.js:25
+#: admin/admin.strings.js:34
 msgid "Views"
 msgstr "Ikuspegiak"
 
-#: admin/admin.strings.js:26
+#: admin/admin.strings.js:35
 msgid "Elapsed time"
 msgstr "Igarotako denbora"
 
-#: admin/admin.strings.js:27
+#: admin/admin.strings.js:36
 msgid "Idle time"
 msgstr "Inaktibitate denbora"
 
-#: admin/admin.strings.js:28
+#: admin/admin.strings.js:37
 msgid "Modified"
 msgstr "Aldatua"
 
-#: admin/admin.strings.js:29
+#: admin/admin.strings.js:38
 msgid "Uploaded"
 msgstr "Igo da"
 
-#: admin/admin.strings.js:30
+#: admin/admin.strings.js:39
 msgid "WOPI host"
 msgstr "WOPI ostalaria"
 
-#: admin/admin.strings.js:31
+#: admin/admin.strings.js:40
 msgid "Kill"
 msgstr "Hil"
 
-#: admin/admin.strings.js:32
+#: admin/admin.strings.js:41
 msgid "Graphs"
 msgstr "Grafikoak"
 
-#: admin/admin.strings.js:33
+#: admin/admin.strings.js:42
 msgid "Memory Graph"
 msgstr "Memoriaren diagrama"
 
-#: admin/admin.strings.js:34
+#: admin/admin.strings.js:43
 msgid "CPU Graph"
 msgstr "CPUaren diagrama"
 
-#: admin/admin.strings.js:35
+#: admin/admin.strings.js:44
 msgid "Network Graph"
 msgstr "Sarearen diagrama"
 
-#: admin/admin.strings.js:36 src/control/Control.Notebookbar.js:266
+#: admin/admin.strings.js:45 src/control/Control.Notebookbar.js:266
 #: src/control/Control.NotebookbarCalc.js:112
 #: src/control/Control.NotebookbarDraw.js:29
 #: src/control/Control.NotebookbarDraw.js:153
@@ -152,85 +152,85 @@ msgstr "Sarearen diagrama"
 msgid "Save"
 msgstr "Gorde"
 
-#: admin/admin.strings.js:37
+#: admin/admin.strings.js:46
 msgid "Cache size of memory statistics"
 msgstr "Memoria estatistiken katxearen amaina"
 
-#: admin/admin.strings.js:38
+#: admin/admin.strings.js:47
 msgid "Time interval of memory statistics (in ms)"
 msgstr "Memoria estatistiken denbora tartea (ms-tan)"
 
-#: admin/admin.strings.js:39
+#: admin/admin.strings.js:48
 msgid "Cache size of CPU statistics"
 msgstr "PUZ estatistiken katxearen tamaina"
 
-#: admin/admin.strings.js:40
+#: admin/admin.strings.js:49
 msgid "Time interval of CPU statistics (in ms)"
 msgstr "PUZ eztatistiken denbora tartea (ms-tan)"
 
-#: admin/admin.strings.js:41 admin/src/AdminSocketOverview.js:91
+#: admin/admin.strings.js:50 admin/src/AdminSocketOverview.js:100
 msgid "Kill session."
 msgstr "Hil saioa."
 
-#: admin/admin.strings.js:42
+#: admin/admin.strings.js:51
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
 msgstr ""
 "Dokumentu-prozesuaren gehieneko memoria birtuala (MB) - gutxitu besterik ez"
 
-#: admin/admin.strings.js:43
+#: admin/admin.strings.js:52
 msgid "Maximum Document process stack memory (in KB) - reduce only"
 msgstr ""
 "Dokumentu-prozesuaren gehieneko pilako memoria (KB) - gutxitu besterik ez"
 
-#: admin/admin.strings.js:44
+#: admin/admin.strings.js:53
 msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
 msgstr ""
 "Diskora idazteko onartutako gehieneko fitxategi tamaina (MB) - gutxitu "
 "besterik ez"
 
-#: admin/admin.strings.js:45
+#: admin/admin.strings.js:54
 msgid "Documents:"
 msgstr "Dokumentuak:"
 
-#: admin/admin.strings.js:46
+#: admin/admin.strings.js:55
 msgid "Expired:"
 msgstr "Iraungita:"
 
-#: admin/admin.strings.js:47 admin/src/AdminSocketBase.js:52
+#: admin/admin.strings.js:56 admin/src/AdminSocketBase.js:61
 #: src/control/Control.Zotero.js:212
 msgid "Refresh"
 msgstr "Freskatu"
 
-#: admin/admin.strings.js:48
+#: admin/admin.strings.js:57
 msgid "Shutdown Server"
 msgstr "Itzali zerbitzaria"
 
-#: admin/admin.strings.js:49
+#: admin/admin.strings.js:58
 msgid "Server uptime"
 msgstr "Zerbitzariaren erabilgarritasun-denbora"
 
-#: admin/admin.strings.js:50
+#: admin/admin.strings.js:59
 msgid "Refresh Log"
 msgstr "Freskatu egunkaria"
 
-#: admin/admin.strings.js:51
+#: admin/admin.strings.js:60
 msgid "Channel Filter:"
 msgstr "Kanalaren iragazkia:"
 
-#: admin/admin.strings.js:52 src/control/Control.JSDialogBuilder.js:577
+#: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:577
 #: src/control/Control.StatusBar.js:345
 msgid "None"
 msgstr "Bat ere ez"
 
-#: admin/admin.strings.js:53
+#: admin/admin.strings.js:62
 msgid "Set Log Levels"
 msgstr "Ezarri egunkari-mailak"
 
-#: admin/admin.strings.js:54
+#: admin/admin.strings.js:63
 msgid "Log Levels"
 msgstr "Egunkari-mailak"
 
-#: admin/admin.strings.js:55 src/control/Control.AlertDialog.js:30
+#: admin/admin.strings.js:64 src/control/Control.AlertDialog.js:30
 #: src/control/Control.AlertDialog.js:36
 #: src/control/Control.AlertDialog.js:103 src/control/Control.Zotero.js:192
 #: src/control/Parts.js:460 src/core/Socket.js:1049 src/core/Socket.js:1054
@@ -239,29 +239,29 @@ msgstr "Egunkari-mailak"
 msgid "Close"
 msgstr "Itxi"
 
-#: admin/admin.strings.js:56
+#: admin/admin.strings.js:65
 msgid "Update Log Levels"
 msgstr "Eguneratu egunkari-mailak"
 
-#: admin/admin.strings.js:57
+#: admin/admin.strings.js:66
 msgid "Version Information"
 msgstr "Bertsioaren informazioa"
 
-#: admin/src/AdminSocketAnalytics.js:205
+#: admin/src/AdminSocketAnalytics.js:214
 msgid "Received"
 msgstr "Jasota"
 
-#: admin/src/AdminSocketAnalytics.js:209
+#: admin/src/AdminSocketAnalytics.js:218
 msgid "Sent"
 msgstr "Bidalita"
 
-#: admin/src/AdminSocketBase.js:53
+#: admin/src/AdminSocketBase.js:62
 msgid "Server has been shut down; please reload the page."
 msgstr "Zerbitzaria itzali egin da; kargatu orria berriro mesedez."
 
-#: admin/src/AdminSocketBase.js:54 admin/src/AdminSocketBase.js:65
-#: admin/src/AdminSocketOverview.js:99 admin/src/AdminSocketOverview.js:422
-#: admin/src/AdminSocketSettings.js:36 src/control/Control.AlertDialog.js:52
+#: admin/src/AdminSocketBase.js:63 admin/src/AdminSocketBase.js:74
+#: admin/src/AdminSocketOverview.js:108 admin/src/AdminSocketOverview.js:431
+#: admin/src/AdminSocketSettings.js:47 src/control/Control.AlertDialog.js:52
 #: src/control/Control.DocumentRepair.js:77
 #: src/control/Control.LanguageDialog.js:119 src/control/Control.Tabs.js:337
 #: src/control/Control.Tabs.js:346 src/control/Control.Zotero.js:338
@@ -269,101 +269,102 @@ msgstr "Zerbitzaria itzali egin da; kargatu orria berriro mesedez."
 #: src/control/Permission.js:99 src/control/Permission.js:149
 #: src/control/Toolbar.js:561 src/control/Toolbar.js:662
 #: src/control/Toolbar.js:798 src/control/Toolbar.js:1089
-#: src/core/Socket.js:608 src/core/Socket.js:1019 src/core/Socket.js:1094
-#: src/core/Socket.js:1226 src/core/Socket.js:1230 src/main.js:79
-#: src/main.js:82 src/main.js:134 src/map/Clipboard.js:860
-#: src/map/Clipboard.js:899 src/map/handler/Map.Feedback.js:83
-#: src/map/handler/Map.WOPI.js:582
+#: src/core/Socket.js:608 src/core/Socket.js:1019 src/core/Socket.js:1096
+#: src/core/Socket.js:1232 src/core/Socket.js:1236 src/main.js:79
+#: src/main.js:82 src/main.js:134 src/map/Clipboard.js:870
+#: src/map/Clipboard.js:909 src/map/handler/Map.Feedback.js:83
+#: src/map/handler/Map.SlideShow.js:51 src/map/handler/Map.SlideShow.js:149
+#: src/map/handler/Map.SlideShow.js:228 src/map/handler/Map.WOPI.js:582
 msgid "OK"
 msgstr "Ados"
 
-#: admin/src/AdminSocketBase.js:63 admin/src/AdminSocketBase.js:64
+#: admin/src/AdminSocketBase.js:72 admin/src/AdminSocketBase.js:73
 msgid "Connection error"
 msgstr "Konexio-errorea"
 
-#: admin/src/AdminSocketOverview.js:97 admin/src/AdminSocketSettings.js:34
+#: admin/src/AdminSocketOverview.js:106 admin/src/AdminSocketSettings.js:45
 msgid "Confirmation"
 msgstr "Berrespena"
 
-#: admin/src/AdminSocketOverview.js:98
+#: admin/src/AdminSocketOverview.js:107
 msgid "Are you sure you want to terminate this session?"
 msgstr "Ziur zaude saio hau itxi nahi duzula?"
 
-#: admin/src/AdminSocketOverview.js:100 admin/src/AdminSocketOverview.js:423
-#: admin/src/AdminSocketSettings.js:37
+#: admin/src/AdminSocketOverview.js:109 admin/src/AdminSocketOverview.js:432
+#: admin/src/AdminSocketSettings.js:48
 #: src/control/Control.DocumentRepair.js:71
 #: src/control/Control.DownloadProgress.js:90
 #: src/control/Control.LanguageDialog.js:113
 #: src/control/Control.MobileTopBar.js:52
-#: src/control/Control.UIManager.js:1228 src/control/Control.UIManager.js:1295
-#: src/control/Control.UIManager.js:1430 src/control/Control.UIManager.js:1572
+#: src/control/Control.UIManager.js:1223 src/control/Control.UIManager.js:1290
+#: src/control/Control.UIManager.js:1425 src/control/Control.UIManager.js:1567
 #: src/control/Control.Zotero.js:333 src/control/Toolbar.js:793
-#: src/core/Socket.js:1251 src/layer/tile/CommentListSection.ts:423
+#: src/core/Socket.js:1257 src/layer/tile/CommentListSection.ts:423
 #: src/layer/tile/CommentSection.ts:143 src/layer/tile/CommentSection.ts:146
 msgid "Cancel"
 msgstr "Utzi"
 
-#: admin/src/AdminSocketOverview.js:411
+#: admin/src/AdminSocketOverview.js:420
 msgid "Failed to set jwt authentication cookie over insecure connection"
 msgstr "Ezin izan da jwt autentifikazio-cookiea ezarri segurua ez den konexioan"
 
-#: admin/src/AdminSocketOverview.js:415
+#: admin/src/AdminSocketOverview.js:424
 msgid "Failed to authenticate this session over protocol %0"
 msgstr "Ezin izan da saio hau autentifikatu %0 protokoloa erabilita"
 
-#: admin/src/AdminSocketOverview.js:420
+#: admin/src/AdminSocketOverview.js:429
 msgid "Warning"
 msgstr "Abisua"
 
-#: admin/src/AdminSocketSettings.js:35
+#: admin/src/AdminSocketSettings.js:46
 msgid "Are you sure you want to shut down the server?"
 msgstr "Ziur zerbitzaria itzali nahi duzula?"
 
-#: admin/src/Util.js:14
+#: admin/src/Util.js:26
 msgid "kB"
 msgstr "kB"
 
-#: admin/src/Util.js:14
+#: admin/src/Util.js:26
 msgid "MB"
 msgstr "MB"
 
-#: admin/src/Util.js:14
+#: admin/src/Util.js:26
 msgid "GB"
 msgstr "GB"
 
-#: admin/src/Util.js:14
+#: admin/src/Util.js:26
 msgid "TB"
 msgstr "TB"
 
-#: admin/src/Util.js:14
+#: admin/src/Util.js:26
 msgid "PB"
 msgstr "PB"
 
-#: admin/src/Util.js:14
+#: admin/src/Util.js:26
 msgid "EB"
 msgstr "EB"
 
-#: admin/src/Util.js:14
+#: admin/src/Util.js:26
 msgid "ZB"
 msgstr "ZB"
 
-#: admin/src/Util.js:14
+#: admin/src/Util.js:26
 msgid "YB"
 msgstr "YB"
 
-#: admin/src/Util.js:14
+#: admin/src/Util.js:26
 msgid "BB"
 msgstr "BB"
 
-#: admin/src/Util.js:43 admin/src/Util.js:45
+#: admin/src/Util.js:55 admin/src/Util.js:57
 msgid " hrs"
 msgstr " ordu"
 
-#: admin/src/Util.js:49 admin/src/Util.js:51
+#: admin/src/Util.js:61 admin/src/Util.js:63
 msgid " mins"
 msgstr " minutu"
 
-#: admin/src/Util.js:54
+#: admin/src/Util.js:66
 msgid " s"
 msgstr " s"
 
@@ -676,8 +677,8 @@ msgid "replies"
 msgstr "erantzunak"
 
 #: src/control/Control.JSDialogBuilder.js:2075
-#: src/layer/tile/CanvasTileLayer.js:5555
-#: src/layer/tile/CanvasTileLayer.js:5566
+#: src/layer/tile/CanvasTileLayer.js:5560
+#: src/layer/tile/CanvasTileLayer.js:5571
 #: src/layer/tile/CommentListSection.ts:979
 msgid "Comment"
 msgstr "Iruzkina"
@@ -786,7 +787,7 @@ msgstr "PDF Dokumentua (.pdf)"
 msgid "EPUB (.epub)"
 msgstr "EPUB (.epub)"
 
-#: src/control/Control.Menubar.js:85 src/control/Control.UIManager.js:164
+#: src/control/Control.Menubar.js:85 src/control/Control.UIManager.js:159
 msgid "Rename Document"
 msgstr "Berrizendatu dokumentua"
 
@@ -856,8 +857,8 @@ msgstr "Konpondu"
 #: src/control/Control.NotebookbarCalc.js:1221
 #: src/control/Control.NotebookbarDraw.js:348
 #: src/control/Control.NotebookbarDraw.js:349
-#: src/control/Control.NotebookbarImpress.js:464
 #: src/control/Control.NotebookbarImpress.js:465
+#: src/control/Control.NotebookbarImpress.js:466
 #: src/control/Control.NotebookbarWriter.js:1414
 #: src/control/Control.NotebookbarWriter.js:1415
 #: src/control/Control.StatusBar.js:218
@@ -868,7 +869,7 @@ msgstr "Berrezarri zooma"
 #: src/control/Control.Menubar.js:580 src/control/Control.Menubar.js:715
 #: src/control/Control.NotebookbarCalc.js:1261
 #: src/control/Control.NotebookbarDraw.js:389
-#: src/control/Control.NotebookbarImpress.js:505
+#: src/control/Control.NotebookbarImpress.js:506
 #: src/control/Control.NotebookbarWriter.js:1455
 msgid "Toggle UI Mode"
 msgstr "Aldatu erabiltzailearen interfaze-modua"
@@ -884,8 +885,8 @@ msgstr "Erakutsi erregela"
 #: src/control/Control.NotebookbarCalc.js:1287
 #: src/control/Control.NotebookbarDraw.js:414
 #: src/control/Control.NotebookbarDraw.js:950
-#: src/control/Control.NotebookbarImpress.js:531
-#: src/control/Control.NotebookbarImpress.js:1076
+#: src/control/Control.NotebookbarImpress.js:532
+#: src/control/Control.NotebookbarImpress.js:1077
 #: src/control/Control.NotebookbarWriter.js:908
 #: src/control/Control.NotebookbarWriter.js:1482
 msgid "Show Status Bar"
@@ -902,7 +903,7 @@ msgstr "Ezkutatu menu-barra"
 #: src/control/Control.Menubar.js:1085 src/control/Control.Menubar.js:1144
 #: src/control/Control.NotebookbarCalc.js:1299
 #: src/control/Control.NotebookbarDraw.js:425
-#: src/control/Control.NotebookbarImpress.js:550
+#: src/control/Control.NotebookbarImpress.js:551
 #: src/control/Control.NotebookbarWriter.js:1500
 msgid "Dark Mode"
 msgstr "Modu iluna"
@@ -923,7 +924,7 @@ msgstr "Dena"
 #: src/control/Control.Menubar.js:595 src/control/Control.Menubar.js:740
 #: src/control/Control.NotebookbarCalc.js:1422
 #: src/control/Control.NotebookbarDraw.js:1238
-#: src/control/Control.NotebookbarImpress.js:1252
+#: src/control/Control.NotebookbarImpress.js:1253
 #: src/control/Control.NotebookbarWriter.js:1106
 msgid "Smart Picker"
 msgstr "Selektore adimenduna"
@@ -1087,7 +1088,7 @@ msgid "Save Comments"
 msgstr "Gorde iruzkinak"
 
 #: src/control/Control.Menubar.js:437
-#: src/control/Control.NotebookbarImpress.js:542
+#: src/control/Control.NotebookbarImpress.js:543
 msgid "Master View"
 msgstr "Ikuspegi nagusia"
 
@@ -1173,7 +1174,7 @@ msgstr "Baldintza gehiago..."
 #: src/control/Control.Menubar.js:1056 src/control/Control.Menubar.js:1110
 #: src/control/Control.NotebookbarCalc.js:886
 #: src/control/Control.NotebookbarDraw.js:949
-#: src/control/Control.NotebookbarImpress.js:1075
+#: src/control/Control.NotebookbarImpress.js:1076
 #: src/control/Control.NotebookbarWriter.js:907
 #: src/control/Control.StatusBar.js:203 src/control/Control.Zotero.js:221
 msgid "Search"
@@ -1396,7 +1397,7 @@ msgstr "PDF Dokumentua (.pdf) - Aditua"
 #: src/control/Control.NotebookbarDraw.js:319
 #: src/control/Control.NotebookbarImpress.js:420
 #: src/control/Control.NotebookbarWriter.js:373
-#: src/control/Control.UIManager.js:164
+#: src/control/Control.UIManager.js:159
 msgid "Rename"
 msgstr "Aldatu izena"
 
@@ -1507,21 +1508,21 @@ msgstr "Irakurtzeko modua"
 
 #: src/control/Control.NotebookbarCalc.js:1260
 #: src/control/Control.NotebookbarDraw.js:388
-#: src/control/Control.NotebookbarImpress.js:504
+#: src/control/Control.NotebookbarImpress.js:505
 #: src/control/Control.NotebookbarWriter.js:1454
 msgid "Compact view"
 msgstr "Ikuspegi trinkoa"
 
 #: src/control/Control.NotebookbarCalc.js:1274
 #: src/control/Control.NotebookbarDraw.js:401
-#: src/control/Control.NotebookbarImpress.js:518
+#: src/control/Control.NotebookbarImpress.js:519
 #: src/control/Control.NotebookbarWriter.js:1494
 msgid "Collapse Tabs"
 msgstr "Tolestu fitxak"
 
 #: src/control/Control.NotebookbarCalc.js:1286
 #: src/control/Control.NotebookbarDraw.js:413
-#: src/control/Control.NotebookbarImpress.js:530
+#: src/control/Control.NotebookbarImpress.js:531
 #: src/control/Control.NotebookbarWriter.js:1481
 msgid "Status Bar"
 msgstr "Egoera-barra"
@@ -1534,9 +1535,9 @@ msgstr "Grafiko txikia"
 #: src/control/Control.NotebookbarCalc.js:2293
 #: src/control/Control.NotebookbarDraw.js:834
 #: src/control/Control.NotebookbarDraw.js:1323
-#: src/control/Control.NotebookbarImpress.js:952
-#: src/control/Control.NotebookbarImpress.js:1337
-#: src/control/Control.NotebookbarImpress.js:2368
+#: src/control/Control.NotebookbarImpress.js:953
+#: src/control/Control.NotebookbarImpress.js:1338
+#: src/control/Control.NotebookbarImpress.js:2369
 #: src/control/Control.NotebookbarWriter.js:1062
 #: src/control/Control.NotebookbarWriter.js:2818
 msgid "Shapes"
@@ -1565,11 +1566,11 @@ msgid "ODF Presentation (.odp)"
 msgstr "ODF Aurkezpena (.odp)"
 
 #: src/control/Control.NotebookbarImpress.js:442
-#: src/control/Control.NotebookbarImpress.js:1061
+#: src/control/Control.NotebookbarImpress.js:1062
 msgid "Presentation"
 msgstr "Aurkezpena"
 
-#: src/control/Control.NotebookbarImpress.js:449
+#: src/control/Control.NotebookbarImpress.js:450
 msgid "Present in Window"
 msgstr ""
 
@@ -1813,19 +1814,19 @@ msgstr "Txertatu formak"
 msgid "Insert connectors"
 msgstr "Txertatu lokailuak"
 
-#: src/control/Control.TopToolbar.js:263 src/control/Control.UIManager.js:769
+#: src/control/Control.TopToolbar.js:263 src/control/Control.UIManager.js:764
 msgid "Hide Menu"
 msgstr "Ezkutatu menua"
 
-#: src/control/Control.UIManager.js:164
+#: src/control/Control.UIManager.js:159
 msgid "Enter new name"
 msgstr ""
 
-#: src/control/Control.UIManager.js:792
+#: src/control/Control.UIManager.js:787
 msgid "Show Menu"
 msgstr ""
 
-#: src/control/Control.UIManager.js:1053
+#: src/control/Control.UIManager.js:1048
 msgid "Dismiss"
 msgstr ""
 
@@ -1885,7 +1886,7 @@ msgstr ""
 "Dokumentuak web APIaren bidez eskuraezinak izan daitezkeen aipamen batzuk "
 "ditu. Arazo batzuk sor ditzake aipamenak edo bibliografia editatzerakoan."
 
-#: src/control/Control.Zotero.js:247 src/core/Socket.js:1101
+#: src/control/Control.Zotero.js:247 src/core/Socket.js:1103
 msgid "Loading..."
 msgstr "Kargatzen..."
 
@@ -2257,51 +2258,51 @@ msgstr "Dokumentuaren jabeak bakarrik alda dezake pasahitza."
 msgid "Missing Fonts"
 msgstr "Falta diren letra-motak"
 
-#: src/core/Socket.js:1091
+#: src/core/Socket.js:1093
 msgid "Someone"
 msgstr "Norbaitek"
 
-#: src/core/Socket.js:1092
+#: src/core/Socket.js:1094
 msgid "%userName saved this document as %fileName. Do you want to join?"
 msgstr "%userName-k dokumentu hau %fileName gisa gorde du. Sartu nahi duzu?"
 
-#: src/core/Socket.js:1101
+#: src/core/Socket.js:1103
 msgid "Connecting..."
 msgstr "Konektatzen..."
 
-#: src/core/Socket.js:1118
+#: src/core/Socket.js:1120
 msgid "The document is being renamed and will reload shortly"
 msgstr "Dokumentua izena aldatzen ari da eta laster berriro kargatuko da"
 
-#: src/core/Socket.js:1121
+#: src/core/Socket.js:1123
 msgid "The document is switching to Offline mode and will reload shortly"
 msgstr ""
 
-#: src/core/Socket.js:1226
+#: src/core/Socket.js:1232
 msgid "Exported to storage"
 msgstr "Biltegira esportatu da"
 
-#: src/core/Socket.js:1226
+#: src/core/Socket.js:1232
 msgid "Successfully exported: "
 msgstr "Behar bezala esportatu da: "
 
-#: src/core/Socket.js:1254
+#: src/core/Socket.js:1260
 msgid "Discard"
 msgstr "Baztertu"
 
-#: src/core/Socket.js:1255
+#: src/core/Socket.js:1261
 msgid "Overwrite"
 msgstr "Gainidatzi"
 
-#: src/core/Socket.js:1266
+#: src/core/Socket.js:1272
 msgid "Save to new file"
 msgstr "Gorde fitxategi berrian"
 
-#: src/core/Socket.js:1276
+#: src/core/Socket.js:1282
 msgid "Document has been changed"
 msgstr "Dokumentu aldatu egin da"
 
-#: src/core/Socket.js:1277
+#: src/core/Socket.js:1283
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
@@ -2309,7 +2310,7 @@ msgstr ""
 "Dokumentua aldatu egin da biltegian. Ez egin nahi duzu gorde ez diren "
 "aldaketekin?"
 
-#: src/core/Socket.js:1594
+#: src/core/Socket.js:1599
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -2317,11 +2318,11 @@ msgstr ""
 "Tira, hau lotsagarria da, ezin dugu zure dokumentuarekin konektatu. Saiatu "
 "berriro."
 
-#: src/core/Socket.js:1611
+#: src/core/Socket.js:1616
 msgid "Reconnecting..."
 msgstr "Birkonektatzen..."
 
-#: src/core/Socket.js:1621
+#: src/core/Socket.js:1626
 msgid "The server has been disconnected."
 msgstr "Zerbitzaria deskonektatu da."
 
@@ -2563,27 +2564,27 @@ msgstr ""
 msgid "Uploading file to server failed, the file is too large."
 msgstr "Huts egin du fitxategia zerbitzarira igotzeak, fitxategia handiegia da."
 
-#: src/layer/tile/CanvasTileLayer.js:1956
+#: src/layer/tile/CanvasTileLayer.js:1957
 msgid "Functions"
 msgstr "Funtzioak"
 
-#: src/layer/tile/CanvasTileLayer.js:2533
+#: src/layer/tile/CanvasTileLayer.js:2534
 msgid "Copy link location"
 msgstr "Kopiatu estekaren kokapena"
 
-#: src/layer/tile/CanvasTileLayer.js:2535
+#: src/layer/tile/CanvasTileLayer.js:2536
 msgid "Select link text"
 msgstr ""
 
-#: src/layer/tile/CanvasTileLayer.js:2546
+#: src/layer/tile/CanvasTileLayer.js:2547
 msgid "Edit link"
 msgstr "Editatu esteka"
 
-#: src/layer/tile/CanvasTileLayer.js:2555
+#: src/layer/tile/CanvasTileLayer.js:2556
 msgid "Remove link"
 msgstr "Kendu esteka"
 
-#: src/layer/tile/CanvasTileLayer.js:5583
+#: src/layer/tile/CanvasTileLayer.js:5588
 msgid "No Comments"
 msgstr "Iruzkinik gabe"
 
@@ -2653,29 +2654,29 @@ msgstr "Ebatzia"
 msgid "Warning! The browser you are using is not supported."
 msgstr "Abisua! Erabiltzen ari zaren nabigatzailea ez da onartzen."
 
-#: src/map/Clipboard.js:125
+#: src/map/Clipboard.js:135
 msgid ""
 "To paste outside %productName, please first click the 'download' button"
 msgstr "%productName kanpora itsasteko, lehenago egin klik 'deskarga' botoian"
 
-#: src/map/Clipboard.js:135
+#: src/map/Clipboard.js:145
 msgid "Copying from the document disabled"
 msgstr "Dokumentutik kopiatzea desgaituta dago"
 
-#: src/map/Clipboard.js:238
+#: src/map/Clipboard.js:248
 msgid "warning: copy/paste request timed out"
 msgstr "abisua: kopiatu/itsatsi eskaeraren denbora-muga gainditu da"
 
-#: src/map/Clipboard.js:301
+#: src/map/Clipboard.js:311
 msgid "Failed to download clipboard, please re-copy"
 msgstr "Ezin izan da arbela deskargatu, mesedez kopiatu berriro"
 
-#: src/map/Clipboard.js:853
+#: src/map/Clipboard.js:863
 msgid "<p>Please use the copy/paste buttons on your on-screen keyboard.</p>"
 msgstr ""
 "<p>Erabili zure pantailako teklatuaren kopiatzeko/itsasteko botoiak.</p>"
 
-#: src/map/Clipboard.js:855
+#: src/map/Clipboard.js:865
 msgid ""
 "<p>Your browser has very limited access to the clipboard, so use these "
 "keyboard shortcuts:</p><table class=\"warn-copy-paste\"><tr><td><kbd>Ctrl</"
@@ -2692,7 +2693,7 @@ msgstr ""
 "n><kbd>V</kbd></td></tr><tr><td>Kopiatu</td><td>Ebaki</td><td>Itsatsi</td></t"
 "r></table>"
 
-#: src/map/Clipboard.js:874
+#: src/map/Clipboard.js:884
 msgid ""
 "<p>A download due to a large copy/paste operation has already started. "
 "Please, wait for the current download or cancel it before starting a new "
@@ -2702,7 +2703,7 @@ msgstr ""
 "Itxaron deskarga burutu arte edo utzi bertan behera, beste deskarga bati "
 "ekin nahi badiozu</p>"
 
-#: src/map/Clipboard.js:892
+#: src/map/Clipboard.js:902
 msgid ""
 "<p>Your browser has very limited access to the clipboard</p><p>Please press "
 "now: <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to see "
@@ -2716,7 +2717,7 @@ msgstr ""
 msgid "Initializing..."
 msgstr "Hasieratzen..."
 
-#: src/map/Map.js:443 src/map/Map.js:446 src/map/Map.js:449 src/map/Map.js:452
+#: src/map/Map.js:461 src/map/Map.js:464 src/map/Map.js:467 src/map/Map.js:470
 msgid "Last saved:"
 msgstr "Gordetako azkenak:"
 
@@ -2743,6 +2744,46 @@ msgstr "Igotzen..."
 #: src/map/handler/Map.FileInserter.js:161
 msgid "Uploading file to server failed with status: %0"
 msgstr "Fitxategia zerbitzarira igotzeak huts egin du honako egoerarekin: %0"
+
+#: src/map/handler/Map.SlideShow.js:50
+msgid "Empty Slide Show"
+msgstr ""
+
+#: src/map/handler/Map.SlideShow.js:147
+msgid "Windowed Presentation Blocked"
+msgstr ""
+
+#: src/map/handler/Map.SlideShow.js:148
+msgid ""
+"Presentation was blocked. Please allow pop-ups in your browser. This lets "
+"slide shows to be displayed in separated windows, allowing for easy screen "
+"sharing."
+msgstr ""
+
+#: src/map/handler/Map.SlideShow.js:156
+msgid "Presenting in window"
+msgstr ""
+
+#: src/map/handler/Map.SlideShow.js:157
+msgid "Close Presentation"
+msgstr ""
+
+#: src/map/handler/Map.SlideShow.js:169
+msgid "Presenting in fullscreen"
+msgstr ""
+
+#: src/map/handler/Map.SlideShow.js:170
+#, fuzzy
+msgid "End Presentation"
+msgstr "Aurkezpena"
+
+#: src/map/handler/Map.SlideShow.js:226
+msgid "Already presenting"
+msgstr ""
+
+#: src/map/handler/Map.SlideShow.js:227
+msgid "You are already presenting this document"
+msgstr ""
 
 #: src/map/handler/Map.WOPI.js:149
 msgid "Creating new file from template..."

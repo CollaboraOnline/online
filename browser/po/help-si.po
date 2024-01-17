@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-12 17:13+0200\n"
+"POT-Creation-Date: 2024-01-17 14:33+0200\n"
 "PO-Revision-Date: 2021-04-26 23:46+0000\n"
 "Last-Translator: HelaBasa <R45XvezA@protonmail.ch>\n"
 "Language-Team: Sinhala <https://hosted.weblate.org/projects/collabora-online/"
@@ -1076,7 +1076,7 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.table.tr.td:148-62
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Page Up</kbd>"
+"\"kbd--plus\">+</span><kbd>Page Down</kbd>"
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:149-18
@@ -1086,7 +1086,7 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.table.tr.td:149-66
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Page Down</kbd>"
+"\"kbd--plus\">+</span><kbd>Page Up</kbd>"
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:150-18
