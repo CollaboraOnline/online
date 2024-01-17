@@ -782,6 +782,7 @@ pot:
 		src/map/handler/Map.Feedback.js \
 		src/map/handler/Map.FileInserter.js \
 		src/map/handler/Map.Keyboard.js \
+		src/map/handler/Map.SlideShow.js \
 		src/map/handler/Map.WOPI.js
 
 	html2po --pot --input=html/cool-help.html --output=po/templates/cool-help.pot --duplicates=merge
