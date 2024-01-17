@@ -2530,10 +2530,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		var copyBtn = L.DomUtil.createWithId('div', 'hyperlink-pop-up-copy', parent);
 		L.DomUtil.addClass(copyBtn, 'hyperlink-popup-btn');
 
-		if (app.file.permission !== 'readonly')
-			copyBtn.setAttribute('title', _('Copy link location'));
-		else
-			copyBtn.setAttribute('title', _('Select link text'));
+		copyBtn.setAttribute('title', _('Copy link location'));
 
 		var imgCopyBtn = L.DomUtil.create('img', 'hyperlink-pop-up-copyimg', copyBtn);
 		L.LOUtil.setImage(imgCopyBtn, 'lc_copyhyperlinklocation.svg', this._map);
@@ -2584,10 +2581,8 @@ L.CanvasTileLayer = L.Layer.extend({
 			if (app.file.permission !== 'readonly')
 				map_.sendUnoCommand('.uno:CopyHyperlinkLocation');
 			else {
-				document.getSelection().removeAllRanges();
-				var range = new Range();
-				range.selectNodeContents(link);
-				document.getSelection().addRange(range);
+				var json = { content: url, mimeType: 'text/plain' };
+				map_._docLayer._onMessage('clipboardchanged: ' + JSON.stringify(json));
 			}
 		});
 
