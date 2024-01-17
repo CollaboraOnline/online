@@ -631,6 +631,19 @@ L.Clipboard = L.Class.extend({
 			this._unoCommandForCopyCutPaste = null;
 			return;
 		}
+
+		if (operation == 'paste' && navigator.clipboard.read !== undefined) {
+			// execCommand(paste) failed, the new clipboard API is available, try that
+			// way.
+			var that = this;
+			navigator.clipboard.read().then(function(clipboardContents) {
+				that._navigatorClipboardReadCallback(clipboardContents);
+			}, function(error) {
+				window.app.console.log('navigator.clipboard.read() failed: ' + error.message);
+			});
+			return;
+		}
+
 		this._unoCommandForCopyCutPaste = null;
 
 		// try a hidden div
@@ -666,6 +679,58 @@ L.Clipboard = L.Class.extend({
 				that._warnCopyPaste();
 			}
 		}, 150 /* ms */);
+	},
+
+	// navigator.clipboard.read() callback
+	_navigatorClipboardReadCallback: function(clipboardContents) {
+		if (clipboardContents.length < 1) {
+			window.app.console.log('navigator.clipboard has no clipboard items');
+			return;
+		}
+
+		var clipboardContent = clipboardContents[0];
+		if (!clipboardContent.types.includes('text/html')) {
+			window.app.console.log('navigator.clipboard has no text/html');
+			return;
+		}
+
+		var that = this;
+		clipboardContent.getType('text/html').then(function(blob) {
+			that._navigatorClipboardGetTypeCallback(blob);
+		}, function(error) {
+			window.app.console.log('clipboardContent.getType() failed: ' + error.message);
+		});
+	},
+
+	// ClipboardContent.getType() callback
+	_navigatorClipboardGetTypeCallback: function(blob) {
+		var that = this;
+		blob.text().then(function(htmlText) {
+			that._navigatorClipboardHtmlTextCallback(htmlText);
+		}, function(error) {
+			window.app.console.log('blob.text() failed: ' + error.message);
+		});
+	},
+
+	// Clipboard blob text() callback for the text/html case
+	_navigatorClipboardHtmlTextCallback: function(htmlText) {
+		// paste() wants to work with a paste event, so construct one.
+		var ev = {
+			clipboardData: {
+				getData: function(type) {
+					if (type === 'text/html') {
+						return htmlText;
+					}
+
+					return '';
+				},
+			},
+			preventDefault: function() {
+			},
+		};
+
+		// Invoke paste(), which knows how to recognize our HTML vs external HTML.
+		this.paste(ev);
 	},
 
 	// Pull UNO clipboard commands out from menus and normal user input.
