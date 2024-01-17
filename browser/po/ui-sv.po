@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-01-17 14:33+0100\n"
-"PO-Revision-Date: 2024-01-14 12:29+0000\n"
+"PO-Revision-Date: 2024-01-17 16:02+0000\n"
 "Last-Translator: bittin1ddc447d824349b2 <bittin@reimu.nl>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/sv/>\n"
-"Language: \n"
+"Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2744,11 +2744,11 @@ msgstr "Uppladdning misslyckades med status: %0"
 
 #: src/map/handler/Map.SlideShow.js:50
 msgid "Empty Slide Show"
-msgstr ""
+msgstr "Tomt bildspel"
 
 #: src/map/handler/Map.SlideShow.js:147
 msgid "Windowed Presentation Blocked"
-msgstr ""
+msgstr "Fönsterpresentation blockerad"
 
 #: src/map/handler/Map.SlideShow.js:148
 msgid ""
@@ -2756,32 +2756,33 @@ msgid ""
 "slide shows to be displayed in separated windows, allowing for easy screen "
 "sharing."
 msgstr ""
+"Presentationen blockerades. Tillåt popup-fönster i din webbläsare. Detta gör "
+"att bildspel kan visas i separata fönster, vilket möjliggör enkel "
+"skärmdelning."
 
 #: src/map/handler/Map.SlideShow.js:156
-#, fuzzy
 msgid "Presenting in window"
-msgstr "Presentera i fönster"
+msgstr "Presenterar i fönster"
 
 #: src/map/handler/Map.SlideShow.js:157
 msgid "Close Presentation"
-msgstr ""
+msgstr "Stäng presentation"
 
 #: src/map/handler/Map.SlideShow.js:169
 msgid "Presenting in fullscreen"
-msgstr ""
+msgstr "Presenterar i fullskärm"
 
 #: src/map/handler/Map.SlideShow.js:170
-#, fuzzy
 msgid "End Presentation"
-msgstr "Presentation"
+msgstr "Avsluta presentation"
 
 #: src/map/handler/Map.SlideShow.js:226
 msgid "Already presenting"
-msgstr ""
+msgstr "Presenterar redan"
 
 #: src/map/handler/Map.SlideShow.js:227
 msgid "You are already presenting this document"
-msgstr ""
+msgstr "Du presenterar redan detta dokument"
 
 #: src/map/handler/Map.WOPI.js:149
 msgid "Creating new file from template..."
