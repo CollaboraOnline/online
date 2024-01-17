@@ -3642,7 +3642,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			' x=' + x + ' y=' + y + ' count=' + count +
 			' buttons=' + buttons + ' modifier=' + modifier);
 
-		if (app.file.permission === 'readonly' && type === 'buttonup' && (this._docType === 'text' || this._docType === 'spreadsheet')) {
+		if (app.file.permission === 'readonly' && type === 'buttonup') {
 			if (this._map.hyperlinkPopup !== null)
 				this._closeURLPopUp();
 			app.socket.sendMessage('readonlyclick x=' + x + ' y=' + y);
