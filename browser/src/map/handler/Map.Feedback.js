@@ -15,6 +15,8 @@ L.Map.Feedback = L.Handler.extend({
 	addHooks: function () {
 		this.initialized = false;
 
+		L.DomEvent.on(window.document, 'keydown', this.onGlobalKeyDown, this);
+
 		if (this._map.wopi)
 			this._map.on('updateviewslist', this.onUpdateList, this);
 		else
@@ -61,6 +63,13 @@ L.Map.Feedback = L.Handler.extend({
 
 			if (docCount > 15 && currentDate > laterDate && window.autoShowFeedback)
 				setTimeout(L.bind(this.onFeedback, this), this._map.options.feedbackTimeout);
+		}
+	},
+
+	onGlobalKeyDown: function(e) {
+		if (e.keyCode === 27 /* ESC */ && this._iframeDialog) {
+			this._iframeDialog.remove();
+			delete this._iframeDialog;
 		}
 	},
 
