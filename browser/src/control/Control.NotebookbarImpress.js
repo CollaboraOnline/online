@@ -443,13 +443,14 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'command': 'presentation',
 				'accessibility': { focusBack: true, combination: 'PR', de: null }
 			},
-			{
-				'id': 'view-presentation-in-window',
-				'type': 'bigcustomtoolitem',
-				'text': _('Present in Window'),
-				'command': 'presentinwindow',
-				'accessibility': { focusBack: true, combination: 'PW', de: null }
-			},
+			window.mode.isDesktop() ?
+				{
+					'id': 'view-presentation-in-window',
+					'type': 'bigcustomtoolitem',
+					'text': _('Present in Window'),
+					'command': 'presentinwindow',
+					'accessibility': { focusBack: true, combination: 'PW', de: null }
+				} : {},
 			{
 				'id': 'fullscreen',
 				'type': 'bigtoolitem',
