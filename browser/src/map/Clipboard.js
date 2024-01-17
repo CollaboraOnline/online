@@ -689,41 +689,51 @@ L.Clipboard = L.Class.extend({
 		}
 
 		var clipboardContent = clipboardContents[0];
-		if (!clipboardContent.types.includes('text/html')) {
-			window.app.console.log('navigator.clipboard has no text/html');
-			return;
-		}
 
 		var that = this;
-		clipboardContent.getType('text/html').then(function(blob) {
-			that._navigatorClipboardGetTypeCallback(blob);
-		}, function(error) {
-			window.app.console.log('clipboardContent.getType() failed: ' + error.message);
-		});
+		if (clipboardContent.types.includes('text/html')) {
+			clipboardContent.getType('text/html').then(function(blob) {
+				that._navigatorClipboardGetTypeCallback(blob, 'text/html');
+			}, function(error) {
+				window.app.console.log('clipboardContent.getType(text/html) failed: ' + error.message);
+			});
+		} else if (clipboardContent.types.includes('text/plain')) {
+			clipboardContent.getType('text/plain').then(function(blob) {
+				that._navigatorClipboardGetTypeCallback(blob, 'text/plain');
+			}, function(error) {
+				window.app.console.log('clipboardContent.getType(text/plain) failed: ' + error.message);
+			});
+		} else {
+			window.app.console.log('navigator.clipboard has no text/html or text/plain');
+			return;
+		}
 	},
 
 	// ClipboardContent.getType() callback
-	_navigatorClipboardGetTypeCallback: function(blob) {
+	_navigatorClipboardGetTypeCallback: function(blob, type) {
 		var that = this;
-		blob.text().then(function(htmlText) {
-			that._navigatorClipboardHtmlTextCallback(htmlText);
+		blob.text().then(function(text) {
+			that._navigatorClipboardTextCallback(text, type);
 		}, function(error) {
 			window.app.console.log('blob.text() failed: ' + error.message);
 		});
 	},
 
-	// Clipboard blob text() callback for the text/html case
-	_navigatorClipboardHtmlTextCallback: function(htmlText) {
+	// Clipboard blob text() callback for the text/html and text/plain cases
+	_navigatorClipboardTextCallback: function(text, textType) {
 		// paste() wants to work with a paste event, so construct one.
 		var ev = {
 			clipboardData: {
+				// Used early by paste().
 				getData: function(type) {
-					if (type === 'text/html') {
-						return htmlText;
+					if (type === textType) {
+						return text;
 					}
 
 					return '';
 				},
+				// Used by _readContentSyncToBlob().
+				types: [textType],
 			},
 			preventDefault: function() {
 			},
