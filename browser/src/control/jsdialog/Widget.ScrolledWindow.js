@@ -89,6 +89,8 @@ function _scrolledWindowControl(parentContainer, data, builder) {
 	if (horizontalSteps < 0 || noHorizontal)
 		horizontalSteps = 0;
 
+	var rowHeight = 0;
+	
 	var timeoutLimit = 2;
 	var updateSize = function () {
 		realContentHeight = content.clientHeight;
@@ -98,44 +100,67 @@ function _scrolledWindowControl(parentContainer, data, builder) {
 				setTimeout(updateSize, 100);
 			return;
 		}
+		
+		if (!noVertical && data.vertical.upper > 0) {
+			if (rowHeight == 0) {
+				// determine the height a row
+				rowHeight = content.clientHeight / Math.min(data.vertical.upper, data.vertical.page_size);
+				// the content height might not include a new row being added, take it into account with the -1
+				if (!Number.isInteger(rowHeight)) {
+					rowHeight = content.clientHeight / (Math.min(data.vertical.upper, data.vertical.page_size) - 1);
+				}
+			}
+			var viewHeight = data.vertical.page_size * rowHeight;
+			var totalContentHeight = (data.vertical.upper -1) * rowHeight;
 
-		if (!noVertical) {
-			content.style.height = (realContentHeight + verticalSteps) + 'px';
-			scrollwindow.style.height = (realContentHeight + margin) + 'px';
+			if (totalContentHeight != scrollwindow.scrollHeight) {
+				// only if view has changed
+				var marginTop = data.vertical.value * rowHeight;
+
+				content.style.marginBlockStart = marginTop + 'px';
+				content.style.height = (totalContentHeight - marginTop) + 'px';
+				scrollwindow.style.height = viewHeight + 'px';
+				scrollwindow.scrollTop = marginTop;
+			}
 		}
 		if (!noHorizontal) {
 			content.style.width = (realContentWidth + horizontalSteps) + 'px';
 			scrollwindow.style.width = (realContentWidth + margin) + 'px';
 		}
 
-		content.scrollTop = data.vertical.value * 10;
 		content.scrollLeft = data.horizontal.value * 10;
-
-		content.style.margin = content.scrollTop + 'px ' + margin + 'px ' + margin + 'px ' + content.scrollLeft + 'px';
+		content.style.marginInlineEnd = margin + 'px';
+		content.style.marginInlineStart = content.scrollLeft + 'px';
 	};
 
-	if (data.user_managed_scrolling !== false)
+	if (data.user_managed_scrolling !== false) {
 		setTimeout(updateSize, 0);
 
+		var resizeObserver = new ResizeObserver(function () {
+			updateSize();
+		});
+		resizeObserver.observe(content);
+	}
+
 	var sendTimer = null;
-
 	if ((!noVertical && verticalSteps) || (!noHorizontal && horizontalSteps)) {
-		scrollwindow.addEventListener('scroll', function () {
-			// keep content at the same place on the screen
-			var scrollTop = scrollwindow.scrollTop;
-			var scrollLeft = scrollwindow.scrollLeft;
-
+		scrollwindow.addEventListener('scroll', function() {
 			if (data.user_managed_scrolling !== false) {
-				content.style.margin = scrollTop + 'px ' + margin + 'px ' + margin + 'px ' + scrollLeft + 'px';
-				content.style.height = (realContentHeight - scrollTop + verticalSteps) + 'px';
-				content.style.width = (realContentWidth - scrollLeft + horizontalSteps) + 'px';
+				var viewHeight = data.vertical.page_size * rowHeight;
+				var totalContentHeight = Math.max((data.vertical.upper - 1) * rowHeight, viewHeight);
+				var marginTop = Math.round(scrollwindow.scrollTop / rowHeight) * rowHeight;
+	
+				content.style.marginBlockStart = marginTop + 'px';
+				content.style.height = (totalContentHeight - marginTop) + 'px';
+				content.style.width = (realContentWidth - scrollwindow.scrollLeft + horizontalSteps) + 'px';
+				content.style.marginInlineStart = scrollwindow.scrollLeft + 'px';
 			}
 
 			if (sendTimer)
 				clearTimeout(sendTimer);
 			sendTimer = setTimeout(function () {
-				builder.callback('scrolledwindow', 'scrollv', scrollwindow, Math.round(scrollTop / 10), builder);
-				builder.callback('scrolledwindow', 'scrollh', scrollwindow, Math.round(scrollLeft / 10), builder); }, 50);
+				builder.callback('scrolledwindow', 'scrollv', scrollwindow, Math.round(scrollwindow.scrollTop / rowHeight), builder);
+				builder.callback('scrolledwindow', 'scrollh', scrollwindow, Math.round(scrollwindow.scrollLeft / 10), builder); }, 50);
 		});
 	}
 
