@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-01-17 14:33+0100\n"
-"PO-Revision-Date: 2024-01-14 12:29+0000\n"
+"PO-Revision-Date: 2024-01-18 10:55+0000\n"
 "Last-Translator: Sebastiaan Veld <sebastiaan.veld@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/collabora-online/"
 "ui/nl/>\n"
-"Language: \n"
+"Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2766,11 +2766,11 @@ msgstr "Het uploaden van het bestand naar de server is mislukt met status: %0"
 
 #: src/map/handler/Map.SlideShow.js:50
 msgid "Empty Slide Show"
-msgstr ""
+msgstr "Lege diavoorstelling"
 
 #: src/map/handler/Map.SlideShow.js:147
 msgid "Windowed Presentation Blocked"
-msgstr ""
+msgstr "Vensterpresentatie geblokkeerd"
 
 #: src/map/handler/Map.SlideShow.js:148
 msgid ""
@@ -2778,32 +2778,33 @@ msgid ""
 "slide shows to be displayed in separated windows, allowing for easy screen "
 "sharing."
 msgstr ""
+"Presentatie is geblokkeerd. Sta pop-ups toe in uw browser. Hiermee kunnen "
+"diavoorstellingen in afzonderlijke vensters worden weergegeven, zodat het "
+"scherm gemakkelijk kan worden gedeeld."
 
 #: src/map/handler/Map.SlideShow.js:156
-#, fuzzy
 msgid "Presenting in window"
-msgstr "Presenteer in huidig venster"
+msgstr "Presenteren in venster"
 
 #: src/map/handler/Map.SlideShow.js:157
 msgid "Close Presentation"
-msgstr ""
+msgstr "Presentatie sluiten"
 
 #: src/map/handler/Map.SlideShow.js:169
 msgid "Presenting in fullscreen"
-msgstr ""
+msgstr "Presenteren in volledig scherm"
 
 #: src/map/handler/Map.SlideShow.js:170
-#, fuzzy
 msgid "End Presentation"
-msgstr "Presentatie"
+msgstr "Einde presentatie"
 
 #: src/map/handler/Map.SlideShow.js:226
 msgid "Already presenting"
-msgstr ""
+msgstr "Presenteren al gestart"
 
 #: src/map/handler/Map.SlideShow.js:227
 msgid "You are already presenting this document"
-msgstr ""
+msgstr "U presenteert dit document al"
 
 #: src/map/handler/Map.WOPI.js:149
 msgid "Creating new file from template..."
