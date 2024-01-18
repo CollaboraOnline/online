@@ -150,13 +150,21 @@ L.Map.SlideShow = L.Handler.extend({
 			}
 
 			this._slideShowWindowProxy.focus();
-			this._slideShowWindowProxy.addEventListener('keydown', this._onCloseSlideWindow);
+			this._slideShowWindowProxy.addEventListener('keydown', this._onCloseSlideWindow.bind(this));
 
 			var slideShowWindow = this._slideShowWindowProxy;
 			this._map.uiManager.showSnackbar(_('Presenting in window'),
 				_('Close Presentation'),
 				function() {slideShowWindow.close();},
 				-1, false, true);
+
+			this._windowCloseInterval = setInterval(function() {
+				if (slideShowWindow.closed) {
+					clearInterval(this._windowCloseInterval);
+					this._map.uiManager.closeSnackbar();
+					this._slideShowWindowProxy = null;
+				}
+			}.bind(this), 500);
 			return;
 		}
 		// Cypress Presentation
@@ -231,11 +239,11 @@ L.Map.SlideShow = L.Handler.extend({
 
 	_onCloseSlideWindow: function(e) {
 		if (e.code === 'Escape') {
-			this.opener.focus();
-			this.close();
-			L.Map.uiManager.closeSnackbar();
+			this._slideShowWindowProxy.opener.focus();
+			this._slideShowWindowProxy.close();
+			this._map.uiManager.closeSnackbar();
 		}
-	}
+	},
 });
 
 L.Map.addInitHook('addHandler', 'slideShow', L.Map.SlideShow);
