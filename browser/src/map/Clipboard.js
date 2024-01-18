@@ -60,14 +60,18 @@ L.Clipboard = L.Class.extend({
 		document.onbeforepaste = beforeSelect;
 	},
 
-	// We can do a much better job when we fetch text/plain too.
-	stripHTML: function(html) {
-		var tmp = new DOMParser().parseFromString(html, 'text/html').body;
-		// attempt to cleanup unwanted elements
-		var styles = tmp.querySelectorAll('style');
+	// Attempt to cleanup unwanted elements
+	stripStyle: function(domNode) {
+		var styles = domNode.querySelectorAll('style');
 		for (var i = 0; i < styles.length; i++) {
 			styles[i].parentNode.removeChild(styles[i]);
 		}
+	},
+
+	// We can do a much better job when we fetch text/plain too.
+	stripHTML: function(html) {
+		var tmp = new DOMParser().parseFromString(html, 'text/html').body;
+		this.stripStyle(tmp);
 		return tmp.textContent.trim() || tmp.innerText.trim() || '';
 	},
 
@@ -793,7 +797,9 @@ L.Clipboard = L.Class.extend({
 	// textselectioncontent: message
 	setTextSelectionHTML: function(html) {
 		this._selectionType = 'text';
-		this._selectionContent = html;
+		var tmp = new DOMParser().parseFromString(html, 'text/html').body;
+		this.stripStyle(tmp);
+		this._selectionContent = tmp.innerHTML;
 		if (L.Browser.cypressTest) {
 			this._dummyDiv.innerHTML = html;
 		}
