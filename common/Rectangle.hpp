@@ -13,6 +13,7 @@
 
 #include <algorithm> // std::min, std::max
 #include <limits>
+#include <sstream>
 
 namespace Util
 {
@@ -85,6 +86,12 @@ public:
         intersection._x2 = std::min(_x2, rOther._x2);
         intersection._y2 = std::min(_y2, rOther._y2);
         return intersection.isValid();
+    }
+    std::string toString()
+    {
+        std::ostringstream oss;
+        oss << _x1 << ", " << _y1 << " " << getWidth() << "x" << getHeight();
+        return oss.str();
     }
 };
 
