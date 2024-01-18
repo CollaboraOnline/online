@@ -339,11 +339,16 @@ L.Clipboard = L.Class.extend({
 	},
 
 	_onFileLoadFunc: function(file) {
-		var socket = app.socket;
+		var that = this;
 		return function(e) {
-			var blob = new Blob(['paste mimetype=' + file.type + '\n', e.target.result]);
-			socket.sendMessage(blob);
+			that._pasteTypedBlob(file.type, e.target.result);
 		};
+	},
+
+	// Sends a paste event with the specified mime type and content
+	_pasteTypedBlob: function(fileType, fileBlob) {
+		var blob = new Blob(['paste mimetype=' + fileType + '\n', fileBlob]);
+		app.socket.sendMessage(blob);
 	},
 
 	_asyncReadPasteImage: function(file) {
@@ -693,13 +698,13 @@ L.Clipboard = L.Class.extend({
 		var that = this;
 		if (clipboardContent.types.includes('text/html')) {
 			clipboardContent.getType('text/html').then(function(blob) {
-				that._navigatorClipboardGetTypeCallback(blob, 'text/html');
+				that._navigatorClipboardGetTypeCallback(clipboardContent, blob, 'text/html');
 			}, function(error) {
 				window.app.console.log('clipboardContent.getType(text/html) failed: ' + error.message);
 			});
 		} else if (clipboardContent.types.includes('text/plain')) {
 			clipboardContent.getType('text/plain').then(function(blob) {
-				that._navigatorClipboardGetTypeCallback(blob, 'text/plain');
+				that._navigatorClipboardGetTypeCallback(clipboardContent, blob, 'text/plain');
 			}, function(error) {
 				window.app.console.log('clipboardContent.getType(text/plain) failed: ' + error.message);
 			});
@@ -710,9 +715,24 @@ L.Clipboard = L.Class.extend({
 	},
 
 	// ClipboardContent.getType() callback
-	_navigatorClipboardGetTypeCallback: function(blob, type) {
+	_navigatorClipboardGetTypeCallback: function(clipboardContent, blob, type) {
 		var that = this;
+		if (type == 'image/png') {
+			this._pasteTypedBlob(type, blob);
+			return;
+		}
+
 		blob.text().then(function(text) {
+			if (type === 'text/html' && text.substring(0, 4) === '<img') {
+				// Got an image, work with that directly.
+				clipboardContent.getType('image/png').then(function(blob) {
+					that._navigatorClipboardGetTypeCallback(clipboardContent, blob, 'image/png');
+				}, function(error) {
+					window.app.console.log('clipboardContent.getType(image/png) failed: ' + error.message);
+				});
+				return;
+			}
+
 			that._navigatorClipboardTextCallback(text, type);
 		}, function(error) {
 			window.app.console.log('blob.text() failed: ' + error.message);
