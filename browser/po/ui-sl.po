@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Collabora Online UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-17 14:33+0100\n"
+"POT-Creation-Date: 2024-01-18 11:56+0100\n"
 "PO-Revision-Date: 2024-01-14 12:29+0000\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <https://hosted.weblate.org/projects/"
@@ -246,6 +246,19 @@ msgstr "Posodobi ravni beleženja"
 #: admin/admin.strings.js:66
 msgid "Version Information"
 msgstr "Podatki o različici"
+
+#: admin/admin.strings.js:67
+msgid "License"
+msgstr ""
+
+#: admin/admin.strings.js:68 src/control/Control.Menubar.js:377
+#: src/control/Control.Menubar.js:531 src/control/Control.Menubar.js:658
+#: src/control/Control.Menubar.js:921 src/control/Control.Menubar.js:988
+#: src/control/Control.Menubar.js:1052 src/control/Control.Menubar.js:1106
+#: src/control/Control.Menubar.js:1180
+#: src/control/Control.NotebookbarWriter.js:502
+msgid "About"
+msgstr "O programu"
 
 #: admin/src/AdminSocketAnalytics.js:214
 msgid "Received"
@@ -684,8 +697,8 @@ msgid "replies"
 msgstr "odgovorov"
 
 #: src/control/Control.JSDialogBuilder.js:2075
-#: src/layer/tile/CanvasTileLayer.js:5560
-#: src/layer/tile/CanvasTileLayer.js:5571
+#: src/layer/tile/CanvasTileLayer.js:5555
+#: src/layer/tile/CanvasTileLayer.js:5566
 #: src/layer/tile/CommentListSection.ts:979
 msgid "Comment"
 msgstr "Komentar"
@@ -1053,14 +1066,6 @@ msgstr "Najnovejše posodobitve"
 #: src/control/Control.NotebookbarWriter.js:490
 msgid "Send Feedback"
 msgstr "Pošlji odziv"
-
-#: src/control/Control.Menubar.js:377 src/control/Control.Menubar.js:531
-#: src/control/Control.Menubar.js:658 src/control/Control.Menubar.js:921
-#: src/control/Control.Menubar.js:988 src/control/Control.Menubar.js:1052
-#: src/control/Control.Menubar.js:1106 src/control/Control.Menubar.js:1180
-#: src/control/Control.NotebookbarWriter.js:502
-msgid "About"
-msgstr "O programu"
 
 #: src/control/Control.Menubar.js:379 src/control/Control.Menubar.js:533
 #: src/control/Control.Menubar.js:660 src/control/Control.Menubar.js:923
@@ -2572,23 +2577,19 @@ msgstr "Nalaganje datoteke na strežnik je spodletelo, datoteka je prevelika."
 msgid "Functions"
 msgstr "Funkcije"
 
-#: src/layer/tile/CanvasTileLayer.js:2534
+#: src/layer/tile/CanvasTileLayer.js:2533
 msgid "Copy link location"
 msgstr "Kopiraj mesto povezave"
 
-#: src/layer/tile/CanvasTileLayer.js:2536
-msgid "Select link text"
-msgstr "Izberite besedilo povezave"
-
-#: src/layer/tile/CanvasTileLayer.js:2547
+#: src/layer/tile/CanvasTileLayer.js:2544
 msgid "Edit link"
 msgstr "Uredi povezavo"
 
-#: src/layer/tile/CanvasTileLayer.js:2556
+#: src/layer/tile/CanvasTileLayer.js:2553
 msgid "Remove link"
 msgstr "Odstrani povezavo"
 
-#: src/layer/tile/CanvasTileLayer.js:5588
+#: src/layer/tile/CanvasTileLayer.js:5583
 msgid "No Comments"
 msgstr "Ni komentarjev"
 
@@ -2889,6 +2890,9 @@ msgstr ""
 "<a id=\"slide-1-indicator\" class=\"active\" href=\"#slide-1\">1</a> <a id="
 "\"slide-2-indicator\" href=\"#slide-2\">2</a> <a id=\"slide-3-indicator\" "
 "href=\"#slide-3\">3</a>"
+
+#~ msgid "Select link text"
+#~ msgstr "Izberite besedilo povezave"
 
 #~ msgid "Accessibility Support"
 #~ msgstr "Podpora za dostopnost"

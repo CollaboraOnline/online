@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-17 14:33+0100\n"
+"POT-Creation-Date: 2024-01-18 11:56+0100\n"
 "PO-Revision-Date: 2024-01-02 19:06+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <https://hosted.weblate.org/projects/"
@@ -243,6 +243,19 @@ msgstr "Uppfæra stig atvikaskráningar"
 #: admin/admin.strings.js:66
 msgid "Version Information"
 msgstr "Upplýsingar um útgáfu"
+
+#: admin/admin.strings.js:67
+msgid "License"
+msgstr ""
+
+#: admin/admin.strings.js:68 src/control/Control.Menubar.js:377
+#: src/control/Control.Menubar.js:531 src/control/Control.Menubar.js:658
+#: src/control/Control.Menubar.js:921 src/control/Control.Menubar.js:988
+#: src/control/Control.Menubar.js:1052 src/control/Control.Menubar.js:1106
+#: src/control/Control.Menubar.js:1180
+#: src/control/Control.NotebookbarWriter.js:502
+msgid "About"
+msgstr "Um hugbúnaðinn"
 
 #: admin/src/AdminSocketAnalytics.js:214
 msgid "Received"
@@ -674,8 +687,8 @@ msgid "replies"
 msgstr "svör"
 
 #: src/control/Control.JSDialogBuilder.js:2075
-#: src/layer/tile/CanvasTileLayer.js:5560
-#: src/layer/tile/CanvasTileLayer.js:5571
+#: src/layer/tile/CanvasTileLayer.js:5555
+#: src/layer/tile/CanvasTileLayer.js:5566
 #: src/layer/tile/CommentListSection.ts:979
 msgid "Comment"
 msgstr "Athugasemd"
@@ -1043,14 +1056,6 @@ msgstr "Nýjustu uppfærslur"
 #: src/control/Control.NotebookbarWriter.js:490
 msgid "Send Feedback"
 msgstr "Senda umsögn"
-
-#: src/control/Control.Menubar.js:377 src/control/Control.Menubar.js:531
-#: src/control/Control.Menubar.js:658 src/control/Control.Menubar.js:921
-#: src/control/Control.Menubar.js:988 src/control/Control.Menubar.js:1052
-#: src/control/Control.Menubar.js:1106 src/control/Control.Menubar.js:1180
-#: src/control/Control.NotebookbarWriter.js:502
-msgid "About"
-msgstr "Um hugbúnaðinn"
 
 #: src/control/Control.Menubar.js:379 src/control/Control.Menubar.js:533
 #: src/control/Control.Menubar.js:660 src/control/Control.Menubar.js:923
@@ -2551,23 +2556,19 @@ msgstr "Sending á skrá til þjónsins mistókst, skráin er of stór."
 msgid "Functions"
 msgstr "Föll"
 
-#: src/layer/tile/CanvasTileLayer.js:2534
+#: src/layer/tile/CanvasTileLayer.js:2533
 msgid "Copy link location"
 msgstr "Afrita staðsetningu tengils"
 
-#: src/layer/tile/CanvasTileLayer.js:2536
-msgid "Select link text"
-msgstr ""
-
-#: src/layer/tile/CanvasTileLayer.js:2547
+#: src/layer/tile/CanvasTileLayer.js:2544
 msgid "Edit link"
 msgstr "Breyta tengli"
 
-#: src/layer/tile/CanvasTileLayer.js:2556
+#: src/layer/tile/CanvasTileLayer.js:2553
 msgid "Remove link"
 msgstr "Fjarlægja tengil"
 
-#: src/layer/tile/CanvasTileLayer.js:5588
+#: src/layer/tile/CanvasTileLayer.js:5583
 msgid "No Comments"
 msgstr "Engar athugasemdir"
 
