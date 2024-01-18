@@ -5,6 +5,10 @@
 	top: 50%;
 }
 
+.iframe-dialog-wrap:focus {
+	outline: none;
+}
+
 .iframe-dialog-content {
 	margin-left: -50%;
 	margin-top: -50%;
