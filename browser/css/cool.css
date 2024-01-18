@@ -1042,9 +1042,9 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	border-style: solid; /* required for ie11 */
 	display: none; /* prevent cypress failure */
 
-	color: var(--color-background-dark); /* color */
+	color: var(--color-border); /* color */
 	opacity: 1; /* opacity */
-	border-top-width: 3px; /* weight */
+	border-top-width: 2px; /* weight */
 }
 
 #product-name {
