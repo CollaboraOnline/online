@@ -55,7 +55,8 @@ l10nstrings.strLogLevels = _('Log Levels');
 l10nstrings.strCloseModal = _('Close');
 l10nstrings.strUpdateLogLevels = _('Update Log Levels');
 l10nstrings.strVersionInfo = _('Version Information');
-
+l10nstrings.strLicense = _('License');
+l10nstrings.strAbout = _('About');
 if (module) {
 	module.exports = l10nstrings;
 }
