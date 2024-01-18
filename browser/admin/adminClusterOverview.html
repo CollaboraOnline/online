@@ -1,53 +1,21 @@
-<script>
-    if (typeof brandProductName !== 'undefined') {l10nstrings.strProductName = brandProductName}
-    document.title = l10nstrings.strProductName + ' - ' + l10nstrings.strAdminConsole;
-    var host = (window.location.protocol === 'https:' ? 'wss://': 'ws://') + window.location.host + '/controller/adminws';
-    Admin.ClusterOverview(host,'%ROUTE_TOKEN%');
-</script>
-
-<style>
-  .is-rounded {
-      border-radius: 8px;
-  }
-  .is-top-rounded {
-      border-top-right-radius: 8px;
-      border-top-left-radius: 8px;
-  }
-  /* Set to scroll otherwise tablets can spill over into other cards*/
-  .card {
-      overflow: auto;
-  }
-  /* Decrease left panel when on laptop  */
-  @media screen and (max-width: 1024px) {
-      #column-admin-panel {
-          width: 20% !important;
-      }
-  }
-  /* Hide left panel before reaching mobile (there is no space)  */
-  @media screen and (max-width: 960px) {
-      #column-admin-panel {
-          display: none !important;
-      }
-  }
-</style>
-
-<div class="is-fullwidth has-text-white" style="height:62px;background-color:#17191E;line-height:50px;">
-    <a style="margin-left:12px;color:#9D998D;"><script>document.write(l10nstrings.strProductName + ' - ' + l10nstrings.strAdminConsole)</script></a>
-</div>
-
-<div class="columns is-fullwidth" style="background-color: #F5F5F5; min-height: 100vh">
-    <nav class="column is-hidden-mobile is-narrow" id="column-admin-panel" style="width:350px;">
-        <div class="list is-hoverable" style="height:100%;">
-            <a class="list-item" id="button-admin-panel-collapse" href="#">&larr; Pods</a>
+<main>
+    <div class="columns is-fullwidth" style="background-color: #F5F5F5; min-height: 100vh">
+        <nav class="column is-hidden-mobile is-narrow" id="column-admin-panel" style="width:350px;">
+            <div class="list is-hoverable" style="height:100%;">
+                <a class="list-item" id="button-admin-panel-collapse" href="#">&larr; Pod</a>
+            </div>
+        </nav>
+        <div class="column is-narrow is-hidden-mobile" id="column-admin-panel-expand" style="width:70px;display:none;">
+            <div class="list is-hoverable">
+                <a class="list-item" id="button-admin-panel-expand" href="#">&rarr;</a>
+            </div>
         </div>
-    </nav>
-    <div class="column is-narrow is-hidden-mobile" id="column-admin-panel-expand" style="width:70px;display:none;">
-        <div class="list is-hoverable">
-            <a class="list-item" id="button-admin-panel-expand" href="#">&rarr;</a>
+        <div class="column">
+            <div class="tile is-ancestor" id="tileAncestor" style="flex-wrap: wrap;">
+                <script>
+                    Admin.ClusterOverview(host, '%ROUTE_TOKEN%');
+                </script>
+            </div>
         </div>
     </div>
-    <div class="column">
-        <div class="tile is-ancestor" id="tileAncestor" style="flex-wrap: wrap;">
-        </div>
-    </div>
-</div>
+</main>

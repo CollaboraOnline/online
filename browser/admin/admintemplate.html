@@ -65,15 +65,21 @@
     <script>
         window.jwtToken = '%JWT_TOKEN%';
         window.addEventListener('load', function () {
-            document.getElementById('button-admin-panel-expand').onclick = function () {
-                document.getElementById('column-admin-panel').style.display = 'block';
-                document.getElementById('column-admin-panel-expand').style.display = 'none';
-            };
+            var buttonAdminPanelExpand = document.getElementById('button-admin-panel-expand');
+            if (buttonAdminPanelExpand) {
+                buttonAdminPanelExpand.onclick = function () {
+                    document.getElementById('column-admin-panel').style.display = 'block';
+                    document.getElementById('column-admin-panel-expand').style.display = 'none';
+                };
+            }
 
-            document.getElementById('button-admin-panel-collapse').onclick = function () {
-                document.getElementById('column-admin-panel').style.display = 'none';
-                document.getElementById('column-admin-panel-expand').style.display = 'block';
-            };
+            var buttonAdminPanelCollapse = document.getElementById('button-admin-panel-collapse');
+            if (buttonAdminPanelCollapse) {
+                buttonAdminPanelCollapse.onclick = function () {
+                    document.getElementById('column-admin-panel').style.display = 'none';
+                    document.getElementById('column-admin-panel-expand').style.display = 'block';
+                };
+            }
         });
     </script>
 </body>

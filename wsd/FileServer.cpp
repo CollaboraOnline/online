@@ -581,12 +581,10 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
 
         if (request.getMethod() == HTTPRequest::HTTP_GET)
         {
-            if (endPoint == "admin.html" ||
-                endPoint == "adminSettings.html" ||
-                endPoint == "adminHistory.html" ||
-                endPoint == "adminAnalytics.html" ||
-                endPoint == "adminLog.html" ||
-                endPoint == "adminClusterOverview.html")
+            if (endPoint == "admin.html" || endPoint == "adminSettings.html" ||
+                endPoint == "adminHistory.html" || endPoint == "adminAnalytics.html" ||
+                endPoint == "adminLog.html" || endPoint == "adminClusterOverview.html" ||
+                endPoint == "adminClusterOverviewAbout.html")
             {
                 preprocessAdminFile(request, requestDetails, socket);
                 return;
@@ -1478,14 +1476,22 @@ void FileServerRequestHandler::preprocessAdminFile(const HTTPRequest& request,
 
     const std::string escapedJwtToken = Util::encodeURIComponent(jwtToken, "'");
     Poco::replaceInPlace(templateFile, std::string("%JWT_TOKEN%"), escapedJwtToken);
-    if (relPath == "/browser/dist/admin/adminClusterOverview.html") {
-        Poco::replaceInPlace(templateFile, std::string("<!--%BODY%-->"), adminFile);
+    if (relPath == "/browser/dist/admin/adminClusterOverview.html" ||
+        relPath == "/browser/dist/admin/adminClusterOverviewAbout.html")
+    {
+        std::string bodyPath = Poco::Path(relPath).setFileName("adminClusterBody.html").toString();
+        std::string bodyFile = *getUncompressedFile(bodyPath);
+        Poco::replaceInPlace(templateFile, std::string("<!--%BODY%-->"), bodyFile);
+        Poco::replaceInPlace(templateFile, std::string("<!--%MAIN_CONTENT%-->"), adminFile);
         Poco::replaceInPlace(templateFile, std::string("%ROUTE_TOKEN%"), COOLWSD::RouteToken);
-    } else {
+    }
+    else
+    {
         std::string bodyPath = Poco::Path(relPath).setFileName("adminBody.html").toString();
         std::string bodyFile = *getUncompressedFile(bodyPath);
         Poco::replaceInPlace(templateFile, std::string("<!--%BODY%-->"), bodyFile);
-        Poco::replaceInPlace(templateFile, std::string("<!--%MAIN_CONTENT%-->"), adminFile);  // Now template has the main content..
+        Poco::replaceInPlace(templateFile, std::string("<!--%MAIN_CONTENT%-->"),
+                             adminFile); // Now template has the main content..
     }
 
     std::string brandJS(Poco::format(scriptJS, responseRoot, std::string(BRANDING)));
