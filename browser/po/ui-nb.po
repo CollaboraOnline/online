@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-17 14:33+0100\n"
+"POT-Creation-Date: 2024-01-18 11:56+0100\n"
 "PO-Revision-Date: 2023-11-02 21:30+0000\n"
 "Last-Translator: DPE <danpe_jobo@hotmail.com>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
@@ -243,6 +243,19 @@ msgstr "Oppdater loggnivåer"
 #: admin/admin.strings.js:66
 msgid "Version Information"
 msgstr "Versjonsinfo"
+
+#: admin/admin.strings.js:67
+msgid "License"
+msgstr ""
+
+#: admin/admin.strings.js:68 src/control/Control.Menubar.js:377
+#: src/control/Control.Menubar.js:531 src/control/Control.Menubar.js:658
+#: src/control/Control.Menubar.js:921 src/control/Control.Menubar.js:988
+#: src/control/Control.Menubar.js:1052 src/control/Control.Menubar.js:1106
+#: src/control/Control.Menubar.js:1180
+#: src/control/Control.NotebookbarWriter.js:502
+msgid "About"
+msgstr "Om"
 
 #: admin/src/AdminSocketAnalytics.js:214
 msgid "Received"
@@ -673,8 +686,8 @@ msgid "replies"
 msgstr "Svar"
 
 #: src/control/Control.JSDialogBuilder.js:2075
-#: src/layer/tile/CanvasTileLayer.js:5560
-#: src/layer/tile/CanvasTileLayer.js:5571
+#: src/layer/tile/CanvasTileLayer.js:5555
+#: src/layer/tile/CanvasTileLayer.js:5566
 #: src/layer/tile/CommentListSection.ts:979
 msgid "Comment"
 msgstr "Kommentar"
@@ -1047,14 +1060,6 @@ msgstr "Siste opplastinger"
 #: src/control/Control.NotebookbarWriter.js:490
 msgid "Send Feedback"
 msgstr ""
-
-#: src/control/Control.Menubar.js:377 src/control/Control.Menubar.js:531
-#: src/control/Control.Menubar.js:658 src/control/Control.Menubar.js:921
-#: src/control/Control.Menubar.js:988 src/control/Control.Menubar.js:1052
-#: src/control/Control.Menubar.js:1106 src/control/Control.Menubar.js:1180
-#: src/control/Control.NotebookbarWriter.js:502
-msgid "About"
-msgstr "Om"
 
 #: src/control/Control.Menubar.js:379 src/control/Control.Menubar.js:533
 #: src/control/Control.Menubar.js:660 src/control/Control.Menubar.js:923
@@ -2555,23 +2560,19 @@ msgstr "Opplasting av fil til server mislyktes, filen er for stor."
 msgid "Functions"
 msgstr "Funksjoner"
 
-#: src/layer/tile/CanvasTileLayer.js:2534
+#: src/layer/tile/CanvasTileLayer.js:2533
 msgid "Copy link location"
 msgstr ""
 
-#: src/layer/tile/CanvasTileLayer.js:2536
-msgid "Select link text"
-msgstr ""
-
-#: src/layer/tile/CanvasTileLayer.js:2547
+#: src/layer/tile/CanvasTileLayer.js:2544
 msgid "Edit link"
 msgstr ""
 
-#: src/layer/tile/CanvasTileLayer.js:2556
+#: src/layer/tile/CanvasTileLayer.js:2553
 msgid "Remove link"
 msgstr ""
 
-#: src/layer/tile/CanvasTileLayer.js:5588
+#: src/layer/tile/CanvasTileLayer.js:5583
 msgid "No Comments"
 msgstr "Ingen kommentarer"
 

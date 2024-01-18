@@ -7,12 +7,12 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-17 14:33+0100\n"
+"POT-Creation-Date: 2024-01-18 11:56+0100\n"
 "PO-Revision-Date: 2024-01-18 10:55+0000\n"
 "Last-Translator: Sebastiaan Veld <sebastiaan.veld@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/collabora-online/"
 "ui/nl/>\n"
-"Language: nl\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -247,6 +247,19 @@ msgstr "Bijwerken gebeurtenisoverzicht nivo"
 #: admin/admin.strings.js:66
 msgid "Version Information"
 msgstr "Versie-informatie"
+
+#: admin/admin.strings.js:67
+msgid "License"
+msgstr ""
+
+#: admin/admin.strings.js:68 src/control/Control.Menubar.js:377
+#: src/control/Control.Menubar.js:531 src/control/Control.Menubar.js:658
+#: src/control/Control.Menubar.js:921 src/control/Control.Menubar.js:988
+#: src/control/Control.Menubar.js:1052 src/control/Control.Menubar.js:1106
+#: src/control/Control.Menubar.js:1180
+#: src/control/Control.NotebookbarWriter.js:502
+msgid "About"
+msgstr "Over"
 
 #: admin/src/AdminSocketAnalytics.js:214
 msgid "Received"
@@ -685,8 +698,8 @@ msgid "replies"
 msgstr "Antwoorden"
 
 #: src/control/Control.JSDialogBuilder.js:2075
-#: src/layer/tile/CanvasTileLayer.js:5560
-#: src/layer/tile/CanvasTileLayer.js:5571
+#: src/layer/tile/CanvasTileLayer.js:5555
+#: src/layer/tile/CanvasTileLayer.js:5566
 #: src/layer/tile/CommentListSection.ts:979
 msgid "Comment"
 msgstr "Opmerking"
@@ -1054,14 +1067,6 @@ msgstr "Versie informatie"
 #: src/control/Control.NotebookbarWriter.js:490
 msgid "Send Feedback"
 msgstr "Reactie sturen"
-
-#: src/control/Control.Menubar.js:377 src/control/Control.Menubar.js:531
-#: src/control/Control.Menubar.js:658 src/control/Control.Menubar.js:921
-#: src/control/Control.Menubar.js:988 src/control/Control.Menubar.js:1052
-#: src/control/Control.Menubar.js:1106 src/control/Control.Menubar.js:1180
-#: src/control/Control.NotebookbarWriter.js:502
-msgid "About"
-msgstr "Over"
 
 #: src/control/Control.Menubar.js:379 src/control/Control.Menubar.js:533
 #: src/control/Control.Menubar.js:660 src/control/Control.Menubar.js:923
@@ -2584,23 +2589,19 @@ msgstr ""
 msgid "Functions"
 msgstr "Functies"
 
-#: src/layer/tile/CanvasTileLayer.js:2534
+#: src/layer/tile/CanvasTileLayer.js:2533
 msgid "Copy link location"
 msgstr "Linklocatie kopiëren"
 
-#: src/layer/tile/CanvasTileLayer.js:2536
-msgid "Select link text"
-msgstr "Selecteer linktekst"
-
-#: src/layer/tile/CanvasTileLayer.js:2547
+#: src/layer/tile/CanvasTileLayer.js:2544
 msgid "Edit link"
 msgstr "Link bewerken"
 
-#: src/layer/tile/CanvasTileLayer.js:2556
+#: src/layer/tile/CanvasTileLayer.js:2553
 msgid "Remove link"
 msgstr "Link verwijderen"
 
-#: src/layer/tile/CanvasTileLayer.js:5588
+#: src/layer/tile/CanvasTileLayer.js:5583
 msgid "No Comments"
 msgstr "Geen notities"
 
@@ -2901,6 +2902,9 @@ msgstr ""
 "<a id=\"slide-1-indicator\" class=\"active\" href=\"#slide-1\">1</a> <a id="
 "\"slide-2-indicator\" href=\"#slide-2\">2</a> <a id=\"slide-3-indicator\" "
 "href=\"#slide-3\">3</a>"
+
+#~ msgid "Select link text"
+#~ msgstr "Selecteer linktekst"
 
 #~ msgid "Accessibility Support"
 #~ msgstr "Toegankelijkheidsondersteuning"
