@@ -1110,6 +1110,7 @@ window.app = {
 				var isCalcTest =
 					global.docURL.includes('data/desktop/calc/') ||
 					global.docURL.includes('data/mobile/calc/') ||
+					global.docURL.includes('data/idle/calc/') ||
 					global.docURL.includes('data/multiuser/calc/');
 
 				if (L.Browser.cypressTest && isCalcTest)

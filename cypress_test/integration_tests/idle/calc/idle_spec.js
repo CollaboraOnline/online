@@ -29,7 +29,7 @@ describe(['tagdesktop'], 'Idle', function() {
 		calcHelper.assertDataClipboardTable(['C' + content + 'ypress Test', 'Status', 'Test 1', 'Pass', 'Test 2', 'Fail', 'Test 3', 'Pass', 'Test 4', '', 'Test 5', 'Fail']);
 	}
 
-	it.skip('Check idle out of focus', function() {
+	it('Check idle out of focus', function() {
 		cy.getFrameWindow()
 			.its('L')
 			.then(function(L) {
@@ -43,7 +43,7 @@ describe(['tagdesktop'], 'Idle', function() {
 		checkIfIsInteractiveAgain();
 	});
 
-	it.skip('Check idle after inactivity', function() {
+	it('Check idle after inactivity', function() {
 		cy.cGet(dimDialogSelector).should('not.exist');
 		cy.wait(7100); // inactivity timeout is 7s
 		cy.cGet(dimDialogSelector).should('exist');
