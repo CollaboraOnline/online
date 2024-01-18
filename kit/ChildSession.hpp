@@ -191,6 +191,11 @@ public:
         _recordedEventsVector.emplace_back(type, payload);
     }
 
+    void dumpState(std::ostream&)
+    {
+        // TODO: the rest ...
+    }
+
     void clear()
     {
         _invalidate = false;
@@ -377,7 +382,23 @@ public:
     void dumpState(std::ostream& oss) override
     {
         Session::dumpState(oss);
-        // TODO: the rest ...
+
+        oss << "\n\tviewId: " << _viewId
+            << "\n\tcanonicalViewId: " << _canonicalViewId
+            << "\n\tisDocLoaded: " << _isDocLoaded
+            << "\n\tdocType: " << _docType
+            << "\n\tcopyingToClipboard: " << _copyToClipboard
+            << "\n\tdocType: " << _docType
+            // FIXME: _pixmapCache
+            << "\n\texportAsWopiUrl: " << _exportAsWopiUrl
+            << "\n\tviewRenderedState: " << _viewRenderState
+            << "\n\tisDumpingTiles: " << _isDocLoaded
+            << "\n\tclientVisibleArea: " << _clientVisibleArea.toString()
+            << "\n\thasURP: " << _hasURP
+            << "\n\tURPContext?: " << (_URPContext == nullptr)
+            << '\n';
+
+        _stateRecorder.dumpState(oss);
     }
 
 private:
@@ -426,6 +447,8 @@ private:
 
     /// whether there is a URP session created for this ChildSession
     bool _hasURP;
+
+    // When state is added - please update dumpState above.
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
