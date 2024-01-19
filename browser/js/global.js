@@ -1113,9 +1113,9 @@ window.app = {
 		}
 	}
 
-	var lang = encodeURIComponent(global.coolParams.get('lang'));
+	var lang = global.coolParams.get('lang');
 	if (lang)
-		global.langParam = lang;
+		global.langParam = encodeURIComponent(lang);
 	else
 		global.langParam = 'en-US';
 	global.langParamLocale = new Intl.Locale(global.langParam);
