@@ -5140,6 +5140,8 @@ L.CanvasTileLayer = L.Layer.extend({
 				this._debugInvalidateCount + ', recv-tiles: ' + this._debugLoadTile +
 						       ', recv-delta: ' + this._debugLoadDelta +
 						       ', recv-update: ' + this._debugLoadUpdate);
+		this._debugData['nullUpdateMetric'].setPrefix('<b>Tile update waste: ' +
+				Math.round(100.0 * this._debugLoadUpdate / (this._debugLoadDelta + this._debugLoadUpdate)) + '%</b>');
 	},
 
 	_addDebugTool: function (tool) {
@@ -5182,13 +5184,14 @@ L.CanvasTileLayer = L.Layer.extend({
 			startsOn: true,
 			onAdd: function () {
 				self._debugData = {};
-				self._debugDataNames = ['canonicalViewId', 'tileCombine', 'fromKeyInputToInvalidate', 'ping', 'postMessage'];
+				self._debugDataNames = ['canonicalViewId', 'tileCombine', 'fromKeyInputToInvalidate', 'ping', 'loadCount', 'postMessage'];
 				for (var i = 0; i < self._debugDataNames.length; i++) {
 					self._debugData[self._debugDataNames[i]] = L.control.attribution({prefix: '', position: 'bottomleft'}).addTo(self._map);
 					self._debugData[self._debugDataNames[i]].addTo(self._map);
 				}
-				self._debugData['loadCount'] = L.control.attribution({prefix: '', position: 'topleft'}).addTo(self._map);
-				self._debugData['loadCount'].addTo(self._map);
+				self._debugData['nullUpdateMetric'] = L.control.attribution({prefix: '', position: 'topleft'}).addTo(self._map);
+				self._debugData['nullUpdateMetric'].addTo(self._map);
+				self._debugData['nullUpdateMetric']._container.style.fontSize = '14px';
 			},
 			onRemove: function () {
 				for (var i in self._debugData) {
