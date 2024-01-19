@@ -5182,11 +5182,13 @@ L.CanvasTileLayer = L.Layer.extend({
 			startsOn: true,
 			onAdd: function () {
 				self._debugData = {};
-				self._debugDataNames = ['canonicalViewId', 'tileCombine', 'fromKeyInputToInvalidate', 'ping', 'loadCount', 'postMessage'];
+				self._debugDataNames = ['canonicalViewId', 'tileCombine', 'fromKeyInputToInvalidate', 'ping', 'postMessage'];
 				for (var i = 0; i < self._debugDataNames.length; i++) {
 					self._debugData[self._debugDataNames[i]] = L.control.attribution({prefix: '', position: 'bottomleft'}).addTo(self._map);
 					self._debugData[self._debugDataNames[i]].addTo(self._map);
 				}
+				self._debugData['loadCount'] = L.control.attribution({prefix: '', position: 'topleft'}).addTo(self._map);
+				self._debugData['loadCount'].addTo(self._map);
 			},
 			onRemove: function () {
 				for (var i in self._debugData) {
