@@ -7363,7 +7363,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (tile.invalidFrom == tile.wireId)
 			window.app.console.debug('Nasty - updated wireId matches old one');
 
-		var hasContent = true;
+		var hasContent = img != null;
 
 		// obscure case: we could have garbage collected the
 		// keyframe content in JS but coolwsd still thinks we have
