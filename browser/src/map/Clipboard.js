@@ -117,37 +117,36 @@ L.Clipboard = L.Class.extend({
 
 	// wrap some content with our stub magic
 	_originWrapBody: function(body, isStub) {
+		var lang = 'en_US'; // FIXME: l10n
 		var encodedOrigin = encodeURIComponent(this.getMetaURL());
 		var text =  '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">\n' +
-		            '<div id="meta-origin" data-coolorigin="' + encodedOrigin + '"><html>\n' +
+		            '<html>\n' +
 		            '  <head>\n';
 		if (isStub)
 			text += '    ' + this._getHtmlStubMarker() + '\n';
 		text +=     '    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>\n' +
 			    '    <meta name="origin" content="' + encodedOrigin + '"/>\n' +
-			    '  </head>\n'
-			    + body +
-			'</html></div>';
+			    '  </head>\n' +
+			    '  <body lang="' + lang + '" dir="ltr"><div id="meta-origin" data-coolorigin="' + encodedOrigin + '">\n' +
+			    body +
+			    '  </div></body>\n' +
+			'</html>';
 		return text;
 	},
 
 	// what an empty clipboard has on it
 	_getStubHtml: function() {
-		var lang = 'en_US'; // FIXME: l10n
 		return this._substProductName(this._originWrapBody(
-		    '  <body lang="' + lang + '" dir="ltr">\n' +
-		    '    <p>' + _('To paste outside %productName, please first click the \'download\' button') + '</p>\n' +
-		    '  </body>\n', true
+		    '    <p>' + _('To paste outside %productName, please first click the \'download\' button') + '</p>\n',
+		    true
 		));
 	},
 
 	// used for DisableCopy mode to fill the clipboard
 	_getDisabledCopyStubHtml: function() {
-		var lang = 'en_US'; // FIXME: l10n
 		return this._substProductName(this._originWrapBody(
-		    '  <body lang="' + lang + '" dir="ltr">\n' +
-		    '    <p>' + _('Copying from the document disabled') + '</p>\n' +
-		    '  </body>\n', true
+		    '    <p>' + _('Copying from the document disabled') + '</p>\n',
+		    true
 		));
 	},
 
@@ -797,9 +796,7 @@ L.Clipboard = L.Class.extend({
 	// textselectioncontent: message
 	setTextSelectionHTML: function(html) {
 		this._selectionType = 'text';
-		var tmp = new DOMParser().parseFromString(html, 'text/html').body;
-		this.stripStyle(tmp);
-		this._selectionContent = tmp.innerHTML;
+		this._selectionContent = html;
 		if (L.Browser.cypressTest) {
 			this._dummyDiv.innerHTML = html;
 		}
@@ -817,8 +814,7 @@ L.Clipboard = L.Class.extend({
 			return;
 		}
 		this._selectionType = 'text';
-		this._selectionContent = this._originWrapBody(
-			'<body>' + text + '</body>');
+		this._selectionContent = this._originWrapBody(text);
 		this._scheduleHideDownload();
 	},
 
