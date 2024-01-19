@@ -7403,7 +7403,12 @@ L.CanvasTileLayer = L.Layer.extend({
 				this._debugLoadUpdate++;
 			}
 			else if (img.rawData && !img.isKeyframe)
-				this._debugLoadDelta++;
+			{
+				if (img.rawData.length === 0)
+					this._debugLoadUpdate++;
+				else
+					this._debugLoadDelta++;
+			}
 			else if (img.rawData)
 				this._debugLoadTile++;
 		}
