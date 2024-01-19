@@ -1033,11 +1033,10 @@ L.Control.UIManager = L.Control.extend({
 		elem.tooltip('option', 'items', elem[0]);
 		elem.tooltip('option', 'position', { my: 'left bottom',  at: 'left+' + pt.x + ' top+' + pt.y, collision: 'fit fit' });
 		elem.tooltip('open');
-		document.addEventListener('mousemove', function closeTooltip() {
+		document.addEventListener('mousemove', function() {
 			elem.tooltip('close');
 			elem.tooltip('disable');
-			document.removeEventListener('mousemove', closeTooltip);
-		});
+		}, {once: true});
 	},
 
 	// Snack bar
