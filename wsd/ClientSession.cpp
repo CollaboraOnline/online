@@ -1625,29 +1625,35 @@ void ClientSession::postProcessCopyPayload(const std::shared_ptr<Message>& paylo
             }
         });
 
-    // New-style: <div> around <html>, that is not sanitized by Chrome.
+    // New-style: <div> inside <body>, that is not sanitized by Chrome.
     payload->rewriteDataBody([=](std::vector<char>& data) {
-            std::size_t pos = Util::findInVector(data, "<html>");
+            const char* pos = strstr(data.data(), "<body");
+            if (pos)
+            {
+                pos = strstr(pos, ">");
+            }
 
-            if (pos != std::string::npos)
+            if (pos)
             {
                 const std::string meta = getClipboardURI();
                 LOG_TRC("Inject clipboard cool origin of '" << meta << "'");
                 std::string origin = "<div id=\"meta-origin\" data-coolorigin=\"" + meta + "\">\n";
-                data.insert(data.begin() + pos, origin.begin(), origin.end());
+                size_t offset = pos - data.data();
+                data.insert(data.begin() + offset + strlen(">"), origin.begin(), origin.end());
 
-                const char* end = "</html>";
-                pos = Util::findInVector(data, end);
-                if (pos != std::string::npos)
+                const char* end = "</body>";
+                pos = strstr(data.data(), end);
+                if (pos)
                 {
                     origin = "</div>";
-                    data.insert(data.begin() + pos + strlen(end), origin.begin(), origin.end());
+                    offset = pos - data.data();
+                    data.insert(data.begin() + offset, origin.begin(), origin.end());
                 }
                 return true;
             }
             else
             {
-                LOG_DBG("Missing <html> in textselectioncontent/clipboardcontent payload.");
+                LOG_DBG("Missing <body> in textselectioncontent/clipboardcontent payload.");
                 return false;
             }
         });
@@ -2799,21 +2805,14 @@ void ClientSession::preProcessSetClipboardPayload(std::string& payload)
         std::size_t len = end - start + 3;
         payload.erase(start, len);
 
-        static int counter = 0;
-        counter++;
-        std::string path("/tmp/debug/data");
-        path += std::to_string(counter);
-        std::ofstream out(path);
-        out << payload;
-        out.close();
-        start = payload.find("</html></div>");
+        start = payload.find("</div></body>");
         if (start == std::string::npos)
         {
             LOG_DBG("Found unbalanced ending meta <div> tag in setclipboard payload.");
             return;
         }
 
-        payload.erase(start + strlen("</html>"), strlen("</div>"));
+        payload.erase(start, strlen("</div>"));
     }
 }
 
