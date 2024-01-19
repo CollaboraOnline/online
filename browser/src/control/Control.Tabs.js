@@ -259,6 +259,8 @@ L.Control.Tabs = L.Control.extend({
 				var part =  parseInt(key.match(/\d+/g)[0]);
 				L.DomUtil.removeClass(this._spreadsheetTabs[key], 'spreadsheet-tab-selected');
 				if (part === selectedPart) {
+					// close auto filter popups on sheet tab selected
+					this._map.fire('closeAutoFilterDialog');
 					L.DomUtil.addClass(this._spreadsheetTabs[key], 'spreadsheet-tab-selected');
 				}
 			}
