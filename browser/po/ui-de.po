@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-01-18 11:56+0100\n"
-"PO-Revision-Date: 2024-01-18 19:00+0000\n"
+"PO-Revision-Date: 2024-01-19 09:34+0000\n"
 "Last-Translator: Lily Logua <lily.logua@collabora.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "ui/de/>\n"
@@ -1127,7 +1127,7 @@ msgstr "Aktuelle Folie präsentieren"
 
 #: src/control/Control.Menubar.js:514
 msgid "Present in new window"
-msgstr ""
+msgstr "In neuem Fenster präsentieren"
 
 #: src/control/Control.Menubar.js:550 src/control/Control.Menubar.js:1010
 #: src/control/Control.Menubar.js:1070
@@ -1596,7 +1596,7 @@ msgstr "Präsentation"
 
 #: src/control/Control.NotebookbarImpress.js:450
 msgid "Present in Window"
-msgstr ""
+msgstr "Im Fenster anzeigen"
 
 #: src/control/Control.NotebookbarWriter.js:79
 msgid "Form"
@@ -2804,11 +2804,11 @@ msgstr ""
 
 #: src/map/handler/Map.SlideShow.js:50
 msgid "Empty Slide Show"
-msgstr ""
+msgstr "Leere Diashow"
 
 #: src/map/handler/Map.SlideShow.js:147
 msgid "Windowed Presentation Blocked"
-msgstr ""
+msgstr "Fensterpräsentation blockiert"
 
 #: src/map/handler/Map.SlideShow.js:148
 msgid ""
@@ -2816,31 +2816,33 @@ msgid ""
 "slide shows to be displayed in separated windows, allowing for easy screen "
 "sharing."
 msgstr ""
+"Die Präsentation wurde blockiert. Bitte erlauben Sie Pop-ups in Ihrem "
+"Browser. Dies ermöglicht die Anzeige von Diashows in separaten Fenstern und "
+"erleichtert das Teilen des Bildschirms."
 
 #: src/map/handler/Map.SlideShow.js:156
 msgid "Presenting in window"
-msgstr ""
+msgstr "Präsentation im Fenster"
 
 #: src/map/handler/Map.SlideShow.js:157
 msgid "Close Presentation"
-msgstr ""
+msgstr "Präsentation schließen"
 
 #: src/map/handler/Map.SlideShow.js:169
 msgid "Presenting in fullscreen"
-msgstr ""
+msgstr "Präsentation im Vollbildmodus"
 
 #: src/map/handler/Map.SlideShow.js:170
-#, fuzzy
 msgid "End Presentation"
-msgstr "Präsentation"
+msgstr "Präsentation beenden"
 
 #: src/map/handler/Map.SlideShow.js:226
 msgid "Already presenting"
-msgstr ""
+msgstr "Bereits am präsentieren"
 
 #: src/map/handler/Map.SlideShow.js:227
 msgid "You are already presenting this document"
-msgstr ""
+msgstr "Sie präsentieren dieses Dokument bereits"
 
 #: src/map/handler/Map.WOPI.js:149
 msgid "Creating new file from template..."
