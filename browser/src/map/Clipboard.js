@@ -29,6 +29,8 @@ L.Clipboard = L.Class.extend({
 		this._failedTimer = null;
 		this._dummyDivName = 'copy-paste-container';
 		this._unoCommandForCopyCutPaste = null;
+		// Tracks if we're in paste special mode for the navigator.clipboard case
+		this._navigatorClipboardPasteSpecial = false;
 
 		var div = document.createElement('div');
 		this._dummyDiv = div;
@@ -289,8 +291,7 @@ L.Clipboard = L.Class.extend({
 				that._doAsyncDownload(
 					'POST', dest, formData, false,
 					function() {
-						if (that.isPasteSpecialDialogOpen()) {
-							that._map.jsdialog.closeDialog(that.pasteSpecialDialogId, false);
+						if (that._checkAndDisablePasteSpecial()) {
 							window.app.console.log('up-load done, now paste special');
 							app.socket.sendMessage('uno .uno:PasteSpecial');
 						} else {
@@ -319,8 +320,7 @@ L.Clipboard = L.Class.extend({
 				that._doAsyncDownload(
 					'POST', dest, formData, false,
 					function() {
-						if (that.isPasteSpecialDialogOpen()) {
-							that._map.jsdialog.closeDialog(that.pasteSpecialDialogId, false);
+						if (that._checkAndDisablePasteSpecial()) {
 							window.app.console.log('up-load of fallback done, now paste special');
 							app.socket.sendMessage('uno .uno:PasteSpecial');
 						} else {
@@ -637,15 +637,9 @@ L.Clipboard = L.Class.extend({
 			return;
 		}
 
-		if (operation == 'paste' && navigator.clipboard.read !== undefined) {
-			// execCommand(paste) failed, the new clipboard API is available, try that
+		if (operation == 'paste' && this._navigatorClipboardRead(false)) {
+			// execCommand(paste) failed, the new clipboard API is available, tried that
 			// way.
-			var that = this;
-			navigator.clipboard.read().then(function(clipboardContents) {
-				that._navigatorClipboardReadCallback(clipboardContents);
-			}, function(error) {
-				window.app.console.log('navigator.clipboard.read() failed: ' + error.message);
-			});
 			return;
 		}
 
@@ -763,6 +757,24 @@ L.Clipboard = L.Class.extend({
 		this.paste(ev);
 	},
 
+	// Executes the navigator.clipboard.read() call, if it's available.
+	_navigatorClipboardRead: function(isSpecial) {
+		if (navigator.clipboard.read === undefined) {
+			return false;
+		}
+
+		if (isSpecial) {
+			this._navigatorClipboardPasteSpecial = true;
+		}
+		var that = this;
+		navigator.clipboard.read().then(function(clipboardContents) {
+			that._navigatorClipboardReadCallback(clipboardContents);
+		}, function(error) {
+			window.app.console.log('navigator.clipboard.read() failed: ' + error.message);
+		});
+		return true;
+	},
+
 	// Pull UNO clipboard commands out from menus and normal user input.
 	// We try to massage and re-emit these, to get good security event / credentials.
 	filterExecCopyPaste: function(cmd) {
@@ -784,6 +796,9 @@ L.Clipboard = L.Class.extend({
 		} else if (cmd === '.uno:Paste') {
 			this._execCopyCutPaste('paste', cmd);
 		} else if (cmd === '.uno:PasteSpecial') {
+			if (this._navigatorClipboardRead(true)) {
+				return;
+			}
 			this._openPasteSpecialPopup();
 		} else {
 			return false;
@@ -835,8 +850,7 @@ L.Clipboard = L.Class.extend({
 			// paste into dialog
 			var KEY_PASTE = 1299;
 			map._textInput._sendKeyEvent(0, KEY_PASTE);
-		} else if (this.isPasteSpecialDialogOpen()) {
-			this._map.jsdialog.closeDialog(this.pasteSpecialDialogId, false);
+		} else if (this._checkAndDisablePasteSpecial()) {
 			app.socket.sendMessage('uno .uno:PasteSpecial');
 		} else {
 			// paste into document
@@ -1013,6 +1027,21 @@ L.Clipboard = L.Class.extend({
 		var innerDiv = L.DomUtil.create('div', '', null);
 		box.insertBefore(innerDiv, box.firstChild);
 		innerDiv.innerHTML = msg;
+	},
+
+	// Check if the paste special mode is enabled, and if so disable it.
+	_checkAndDisablePasteSpecial: function() {
+		if (this._navigatorClipboardPasteSpecial) {
+			this._navigatorClipboardPasteSpecial = false;
+			return true;
+		}
+
+		if (this.isPasteSpecialDialogOpen()) {
+			this._map.jsdialog.closeDialog(this.pasteSpecialDialogId, false);
+			return true;
+		}
+
+		return false;
 	},
 });
 
