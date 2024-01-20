@@ -15,7 +15,9 @@
 
 #include <COOLWSD.hpp>
 #include <TraceEvent.hpp>
+#if !MOBILEAPP
 #include <StorageConnectionManager.hpp>
+#endif // !MOBILEAPP
 #include <Exceptions.hpp>
 #include <Log.hpp>
 #include <DocumentBroker.hpp>
@@ -47,7 +49,8 @@ void sendLoadResult(const std::shared_ptr<ClientSession>& clientSession, bool su
 
 } // anonymous namespace
 
-void RequestVettingStation::handleRequest(SocketPoll& poll, SocketDisposition& disposition)
+void RequestVettingStation::handleRequest([[maybe_unused]] SocketPoll& poll,
+                                          SocketDisposition& disposition)
 {
     const std::string url = _requestDetails.getDocumentURI();
 
@@ -118,6 +121,7 @@ void RequestVettingStation::handleRequest(SocketPoll& poll, SocketDisposition& d
                     createDocBroker(docKey, url, uriPublic, isReadOnly);
                 });
             break;
+#if !MOBILEAPP
         case StorageBase::StorageType::Wopi:
             LOG_INF("URI [" << COOLWSD::anonymizeUrl(uriPublic.toString()) << "] on docKey ["
                             << docKey << "] is for a WOPI document");
@@ -135,9 +139,11 @@ void RequestVettingStation::handleRequest(SocketPoll& poll, SocketDisposition& d
                     checkFileInfo(poll, url, uriPublic, docKey, isReadOnly, RedirectionLimit);
                 });
             break;
+#endif //!MOBILEAPP
     }
 }
 
+#if !MOBILEAPP
 void RequestVettingStation::checkFileInfo(SocketPoll& poll, const std::string& url,
                                           const Poco::URI& uriPublic, const std::string& docKey,
                                           bool isReadOnly, int redirectLimit)
@@ -259,6 +265,7 @@ void RequestVettingStation::checkFileInfo(SocketPoll& poll, const std::string& u
     // Run the CheckFileInfo request on the WebServer Poll.
     _httpSession->asyncRequest(httpRequest, poll);
 }
+#endif //!MOBILEAPP
 
 void RequestVettingStation::createDocBroker(const std::string& docKey, const std::string& url,
                                             const Poco::URI& uriPublic, const bool isReadOnly,
@@ -309,6 +316,7 @@ void RequestVettingStation::createDocBroker(const std::string& docKey, const std
                 LOG_DBG_S('#' << moveSocket->getFD() << " handler is " << clientSession->getName());
 
                 std::unique_ptr<WopiStorage::WOPIFileInfo> wopiFileInfo;
+#if !MOBILEAPP
                 if (wopiInfo)
                 {
                     std::size_t size = 0;
@@ -325,6 +333,9 @@ void RequestVettingStation::createDocBroker(const std::string& docKey, const std
                     wopiFileInfo =
                         std::make_unique<WopiStorage::WOPIFileInfo>(fileInfo, wopiInfo, uriPublic);
                 }
+#else // MOBILEAPP
+                assert(!wopiInfo && "Wopi is not used on mobile");
+#endif // MOBILEAPP
 
                 // Add and load the session.
                 // Will download synchronously, but in own docBroker thread.

@@ -300,11 +300,11 @@ std::unique_ptr<StorageBase> StorageBase::create(const Poco::URI& uri, const std
         case StorageBase::StorageType::FileSystem:
             return std::make_unique<LocalStorage>(uri, jailRoot, jailPath, takeOwnership);
             break;
-        case StorageBase::StorageType::Wopi:
 #if !MOBILEAPP
+        case StorageBase::StorageType::Wopi:
             return std::make_unique<WopiStorage>(uri, jailRoot, jailPath);
-#endif
             break;
+#endif //!MOBILEAPP
     }
 
     throw BadRequestException("No Storage configured or invalid URI " +
