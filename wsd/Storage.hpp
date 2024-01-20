@@ -422,7 +422,9 @@ public:
                Unsupported, //< An unsupported type.
                Unauthorized, //< The host is not allowed by the admin.
                FileSystem, //< File-System storage. Only for testing.
+#if !MOBILEAPP
                Wopi //< WOPI-like storage.
+#endif //!MOBILEAPP
     );
 
     /// Validates the given URI.
@@ -556,16 +558,6 @@ private:
 class WopiStorage : public StorageBase
 {
 public:
-    WopiStorage(const Poco::URI& uri, const std::string& localStorePath,
-                const std::string& jailPath)
-        : StorageBase(uri, localStorePath, jailPath)
-        , _wopiSaveDuration(std::chrono::milliseconds::zero())
-    {
-        LOG_INF("WopiStorage ctor with localStorePath: ["
-                << localStorePath << "], jailPath: [" << jailPath << "], uri: ["
-                << COOLWSD::anonymizeUrl(uri.toString()) << ']');
-    }
-
     class WOPIFileInfo : public FileInfo
     {
         void init();
@@ -695,6 +687,18 @@ public:
         bool _userCanRename = false;
     };
 
+#if !MOBILEAPP
+
+    WopiStorage(const Poco::URI& uri, const std::string& localStorePath,
+                const std::string& jailPath)
+        : StorageBase(uri, localStorePath, jailPath)
+        , _wopiSaveDuration(std::chrono::milliseconds::zero())
+    {
+        LOG_INF("WopiStorage ctor with localStorePath: ["
+                << localStorePath << "], jailPath: [" << jailPath << "], uri: ["
+                << COOLWSD::anonymizeUrl(uri.toString()) << ']');
+    }
+
     /// Returns the response of CheckFileInfo WOPI call for URI that was
     /// provided during the initial creation of the WOPI storage.
     /// Also extracts the basic file information from the response
@@ -771,6 +775,7 @@ private:
 
     /// The http::Session used for uploading asynchronously.
     std::shared_ptr<http::Session> _uploadHttpSession;
+#endif // !MOBILEAPP
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

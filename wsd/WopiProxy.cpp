@@ -19,7 +19,7 @@
 #include <common/JsonUtil.hpp>
 #include <Util.hpp>
 
-void WopiProxy::handleRequest(SocketPoll& poll, SocketDisposition& disposition)
+void WopiProxy::handleRequest([[maybe_unused]] SocketPoll& poll, SocketDisposition& disposition)
 {
     std::string url = _requestDetails.getDocumentURI();
     if (Util::startsWith(url, "/wasm/"))
@@ -91,6 +91,7 @@ void WopiProxy::handleRequest(SocketPoll& poll, SocketDisposition& disposition)
                     }
                 });
             break;
+#if !MOBILEAPP
         case StorageBase::StorageType::Wopi:
             LOG_INF("URI [" << COOLWSD::anonymizeUrl(uriPublic.toString()) << "] on docKey ["
                             << docKey << "] is for a WOPI document");
@@ -109,9 +110,11 @@ void WopiProxy::handleRequest(SocketPoll& poll, SocketDisposition& disposition)
                     checkFileInfo(poll, url, uriPublic, docKey, RedirectionLimit);
                 });
             break;
+#endif //!MOBILEAPP
     }
 }
 
+#if !MOBILEAPP
 void WopiProxy::checkFileInfo(SocketPoll& poll, const std::string& url, const Poco::URI& uriPublic,
                               const std::string& docKey, int redirectLimit)
 {
@@ -382,5 +385,6 @@ void WopiProxy::download(SocketPoll& poll, const std::string& url, const Poco::U
     // Run the CheckFileInfo request on the WebServer Poll.
     _httpSession->asyncRequest(httpRequest, poll);
 }
+#endif //!MOBILEAPP
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

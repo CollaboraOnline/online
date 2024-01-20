@@ -42,8 +42,10 @@ private:
                          const Poco::URI& uriPublic, const bool isReadOnly,
                          Poco::JSON::Object::Ptr wopiInfo = nullptr);
 
+#if !MOBILEAPP
     void checkFileInfo(SocketPoll& poll, const std::string& url, const Poco::URI& uriPublic,
                        const std::string& docKey, bool isReadOnly, int redirectionLimit);
+#endif //!MOBILEAPP
 
     /// Send an error to the client and disconnect the socket.
     static void sendErrorAndShutdown(const std::shared_ptr<WebSocketHandler>& ws,

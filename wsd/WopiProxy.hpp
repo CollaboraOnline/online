@@ -28,10 +28,12 @@ public:
 private:
     inline void logPrefix(std::ostream& os) const { os << '#' << _socket->getFD() << ": "; }
 
+#if !MOBILEAPP
     void checkFileInfo(SocketPoll& poll, const std::string& url, const Poco::URI& uriPublic,
                        const std::string& docKey, int redirectionLimit);
     void download(SocketPoll& poll, const std::string& url, const Poco::URI& uriPublic,
                   const std::string& docKey, int redirectionLimit);
+#endif //!MOBILEAPP
 
 private:
     const std::string _id;
