@@ -445,6 +445,12 @@ namespace FileUtil
         off_t off = 0;
         for (;;)
         {
+            if (st.st_size == 0)
+            {
+                // Nothing to read.
+                break;
+            }
+
             int n;
             while ((n = ::read(fd, &(*data)[off], st.st_size)) < 0 && errno == EINTR)
             {
