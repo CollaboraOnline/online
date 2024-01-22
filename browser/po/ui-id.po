@@ -12,16 +12,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-01-18 11:56+0100\n"
-"PO-Revision-Date: 2023-10-10 08:40+0000\n"
-"Last-Translator: Rizal Muttaqin <riz_17_oke@yahoo.co.id>\n"
+"PO-Revision-Date: 2024-01-21 16:42+0000\n"
+"Last-Translator: Andika Triwidada <andika@gmail.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/id/>\n"
-"Language: \n"
+"Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.1-dev\n"
+"X-Generator: Weblate 5.4-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -253,7 +253,7 @@ msgstr "Informasi Versi"
 
 #: admin/admin.strings.js:67
 msgid "License"
-msgstr ""
+msgstr "Lisensi"
 
 #: admin/admin.strings.js:68 src/control/Control.Menubar.js:377
 #: src/control/Control.Menubar.js:531 src/control/Control.Menubar.js:658
@@ -387,19 +387,19 @@ msgstr " d"
 
 #: js/global.js:865
 msgid "Cluster is scaling, retrying..."
-msgstr ""
+msgstr "Klaster sedang diskalakan, mencoba ulang..."
 
 #: js/global.js:867
 msgid "Document is migrating to new server, retrying..."
-msgstr ""
+msgstr "Dokumen sedang dimigrasi ke server baru, mencoba ulang..."
 
 #: js/global.js:869
 msgid "Failed to get RouteToken from controller"
-msgstr ""
+msgstr "Gagal mendapatkan RouteToken dari pengendali"
 
 #: js/w2ui-1.5.rc1.js:2967
 msgid "No fill"
-msgstr ""
+msgstr "Tidak ada isian"
 
 #: js/w2ui-1.5.rc1.js:2967
 msgid "Automatic"
@@ -427,11 +427,12 @@ msgstr "Buka tautan"
 
 #: src/control/Control.AlertDialog.js:64
 msgid "Copied external sources are not allowed"
-msgstr ""
+msgstr "Sumber-sumber eksternal yang disalin tidak diizinkan"
 
 #: src/control/Control.AlertDialog.js:65
 msgid "It seems you have copied a selection that includes external images."
 msgstr ""
+"Tampaknya Anda telah menyalin suatu pilihan yang termasuk gambar eksternal."
 
 #: src/control/Control.AlertDialog.js:66
 msgid ""
@@ -439,24 +440,29 @@ msgid ""
 "possible. Please right click in the image, choose \"Copy Image\" and paste "
 "it into the document instead."
 msgstr ""
+"Mengunduh sumber daya eksternal dilarang, tapi menempelkan gambar masih "
+"mungkin. Harap klik kanan pada gambar, pilih \"Salin Gambar\" dan tempelkan "
+"itu ke dokumen sebagai pengganti."
 
 #: src/control/Control.AlertDialog.js:70
 msgid "External data source not allowed"
-msgstr ""
+msgstr "Sumber data eksternal tidak diizinkan"
 
 #: src/control/Control.AlertDialog.js:71
 msgid "It seems you have tried to insert external data."
-msgstr ""
+msgstr "Tampaknya Anda telah mencoba untuk menyisipkan data eksternal."
 
 #: src/control/Control.AlertDialog.js:72
 msgid ""
 "Selected external data source is forbidden. Please contact the system "
 "administrator."
 msgstr ""
+"Sumber data eksternal yang dipilih dilarang. Harap hubungi administrator "
+"sistem."
 
 #: src/control/Control.AlertDialog.js:84
 msgid "Don't show this again"
-msgstr ""
+msgstr "Jangan tampilkan ini lagi"
 
 #: src/control/Control.AlertDialog.js:100
 msgid "The server encountered a %0 error while parsing the %1 command."
@@ -518,7 +524,7 @@ msgstr "Tak Jadi"
 
 #: src/control/Control.DownloadProgress.js:52
 msgid "Download Selection"
-msgstr ""
+msgstr "Unduh Pilihan"
 
 #: src/control/Control.DownloadProgress.js:57
 msgid ""
