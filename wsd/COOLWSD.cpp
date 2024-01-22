@@ -3669,10 +3669,9 @@ void COOLWSD::sendMessageToForKit(const std::string& message)
 /// Find the DocumentBroker for the given docKey, if one exists.
 /// Otherwise, creates and adds a new one to DocBrokers.
 /// May return null if terminating or MaxDocuments limit is reached.
-/// After returning a valid instance DocBrokers must be cleaned up after exceptions.
-std::shared_ptr<DocumentBroker>
-findOrCreateDocBroker(const std::shared_ptr<ProtocolHandlerInterface>& proto,
-                      DocumentBroker::ChildType type, const std::string& uri,
+/// Returns the error message, if any, when no DocBroker is created/found.
+std::pair<std::shared_ptr<DocumentBroker>, std::string>
+findOrCreateDocBroker(DocumentBroker::ChildType type, const std::string& uri,
                       const std::string& docKey, const std::string& id, const Poco::URI& uriPublic,
                       unsigned mobileAppDocId = 0)
 {
@@ -3689,14 +3688,8 @@ findOrCreateDocBroker(const std::shared_ptr<ProtocolHandlerInterface>& proto,
         // TerminationFlag implies ShutdownRequested.
         LOG_WRN((SigUtil::getTerminationFlag() ? "TerminationFlag" : "ShudownRequestedFlag")
                 << " set. Not loading new session [" << id << "] for docKey [" << docKey << ']');
-        if (proto)
-        {
-            const std::string msg("error: cmd=load kind=recycling");
-            proto->sendTextMessage(msg.data(), msg.size());
-            proto->shutdown(true, msg);
-        }
 
-        return nullptr;
+        return std::make_pair(nullptr, "error: cmd=load kind=recycling");
     }
 
     std::shared_ptr<DocumentBroker> docBroker;
@@ -3715,14 +3708,8 @@ findOrCreateDocBroker(const std::shared_ptr<ProtocolHandlerInterface>& proto,
             LOG_WRN("DocBroker [" << docKey
                                   << "] is unloading. Rejecting client request to load session ["
                                   << id << ']');
-            if (proto)
-            {
-                const std::string msg("error: cmd=load kind=docunloading");
-                proto->sendTextMessage(msg.data(), msg.size());
-                proto->shutdown(true, msg);
-            }
 
-            return nullptr;
+            return std::make_pair(nullptr, "error: cmd=load kind=docunloading");
         }
     }
     else
@@ -3736,22 +3723,8 @@ findOrCreateDocBroker(const std::shared_ptr<ProtocolHandlerInterface>& proto,
         // TerminationFlag implies ShutdownRequested.
         LOG_ERR((SigUtil::getTerminationFlag() ? "TerminationFlag" : "ShudownRequestedFlag")
                 << " set. Not loading new session [" << id << "] for docKey [" << docKey << ']');
-        if (proto)
-        {
-            const std::string msg("error: cmd=load kind=recycling");
-            proto->sendTextMessage(msg.data(), msg.size());
-            proto->shutdown(true, msg);
-        }
 
-        return nullptr;
-    }
-
-    // Indicate to the client that we're connecting to the docbroker.
-    if (proto)
-    {
-        const std::string statusConnect = "statusindicator: connect";
-        LOG_TRC("Sending to Client [" << statusConnect << ']');
-        proto->sendTextMessage(statusConnect.data(), statusConnect.size());
+        return std::make_pair(nullptr, "error: cmd=load kind=recycling");
     }
 
     if (!docBroker)
@@ -3775,7 +3748,43 @@ findOrCreateDocBroker(const std::shared_ptr<ProtocolHandlerInterface>& proto,
         LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after inserting [" << docKey << ']');
     }
 
-    return docBroker;
+    return std::make_pair(docBroker, std::string());
+}
+
+/// Find the DocumentBroker for the given docKey, if one exists.
+/// Otherwise, creates and adds a new one to DocBrokers.
+/// May return null if terminating or MaxDocuments limit is reached.
+/// After returning a valid instance DocBrokers must be cleaned up after exceptions.
+std::shared_ptr<DocumentBroker>
+findOrCreateDocBroker(const std::shared_ptr<ProtocolHandlerInterface>& proto,
+                      DocumentBroker::ChildType type, const std::string& uri,
+                      const std::string& docKey, const std::string& id, const Poco::URI& uriPublic,
+                      unsigned mobileAppDocId = 0)
+{
+    const auto& [docBroker, error] =
+        findOrCreateDocBroker(type, uri, docKey, id, uriPublic, mobileAppDocId);
+
+    if (docBroker)
+    {
+        // Indicate to the client that we're connecting to the docbroker.
+        if (proto)
+        {
+            const std::string statusConnect = "statusindicator: connect";
+            LOG_TRC("Sending to Client [" << statusConnect << ']');
+            proto->sendTextMessage(statusConnect.data(), statusConnect.size());
+        }
+
+        return docBroker;
+    }
+
+    // Failed.
+    if (proto)
+    {
+        proto->sendTextMessage(error.data(), error.size(), /*flush=*/true);
+        proto->shutdown(true, error);
+    }
+
+    return nullptr;
 }
 
 /// Handles the socket that the prisoner kit connected to WSD on.
