@@ -978,16 +978,16 @@ namespace Util
         return http_time;
     }
 
-    std::size_t findInVector(const std::vector<char>& tokens, const char *cstring)
+    std::size_t findInVector(const std::vector<char>& tokens, const char *cstring, std::size_t offset)
     {
         assert(cstring);
-        for (std::size_t i = 0; i < tokens.size(); ++i)
+        for (std::size_t i = 0; i < tokens.size() - offset; ++i)
         {
             std::size_t j;
-            for (j = 0; i + j < tokens.size() && cstring[j] != '\0' && tokens[i + j] == cstring[j]; ++j)
+            for (j = 0; i + j < tokens.size() - offset && cstring[j] != '\0' && tokens[i + j + offset] == cstring[j]; ++j)
                 ;
             if (cstring[j] == '\0')
-                return i;
+                return i + offset;
         }
         return std::string::npos;
     }

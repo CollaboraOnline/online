@@ -70,6 +70,7 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
 #if ENABLE_DEBUG
     CPPUNIT_TEST(testUtf8);
 #endif
+    CPPUNIT_TEST(testFindInVector);
     CPPUNIT_TEST_SUITE_END();
 
     void testCOOLProtocolFunctions();
@@ -100,6 +101,7 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     void testBytesToHex();
     void testJsonUtilEscapeJSONValue();
     void testUtf8();
+    void testFindInVector();
 };
 
 void WhiteBoxTests::testCOOLProtocolFunctions()
@@ -1382,6 +1384,28 @@ void WhiteBoxTests::testUtf8()
     LOK_ASSERT(Util::isValidUtf8("🏃 is not 🏊."));
     LOK_ASSERT(!Util::isValidUtf8("\xff\x03"));
 #endif
+}
+
+void WhiteBoxTests::testFindInVector()
+{
+    constexpr auto testname = __func__;
+    std::string s("fooBarfooBaz");
+    std::vector<char> v(s.begin(), s.end());
+
+    // Normal case, we find the first "foo".
+    std::size_t ret = Util::findInVector(v, "foo");
+    std::size_t expected = 0;
+    LOK_ASSERT_EQUAL(expected, ret);
+
+    // Offset, so we find the second "foo".
+    ret = Util::findInVector(v, "foo", 1);
+    expected = 6;
+    LOK_ASSERT_EQUAL(expected, ret);
+
+    // Negative testing.
+    ret = Util::findInVector(v, "blah");
+    expected = std::string::npos;
+    LOK_ASSERT_EQUAL(expected, ret);
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(WhiteBoxTests);
