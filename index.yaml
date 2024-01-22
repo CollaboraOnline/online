@@ -4,6 +4,46 @@ entries:
   - annotations:
       artifacthub.io/images: |
         - name: collabora
+          image: docker.io/collabora/code:23.05.7.5.1
+        - name: nginx
+          image: docker.io/nginx:1.25
+        - name: twostoryrobot/simple-file-upload
+          image: docker.io/twostoryrobot/simple-file-upload@sha256:547fc4360b31d8604b7a26202914e87cd13609cc938fd83f412c77eb44aa1cc4
+    apiVersion: v2
+    appVersion: 23.05.7.5.1
+    created: "2024-01-22T08:40:25.240199909Z"
+    description: Collabora Online helm chart
+    digest: 498c24dbf964b9cd87992cf35b4c5c220c8267dd9e340dcdcce376982656fec6
+    home: https://www.collaboraoffice.com/code/
+    icon: https://avatars0.githubusercontent.com/u/22418908?s=200&v=4
+    keywords:
+    - collabora-online
+    - collabora
+    - code
+    - nextcloud
+    - office
+    maintainers:
+    - email: k.erber@erber-freelance.de
+      name: Klaus Erber
+      url: https://www.erber-freelance.de/
+    - email: martin.mueller@dataport.de
+      name: Martin Müller
+      url: https://dphoenixsuite.de
+    - email: geno+dev@fireorbit.de
+      name: Geno
+      url: https://fireorbit.de
+    name: collabora-online
+    sources:
+    - https://github.com/CollaboraOnline/online
+    - https://github.com/CollaboraOnline/online/tree/master/docker
+    - https://github.com/CollaboraOnline/online/tree/master/kubernetes/helm/collabora-online
+    type: application
+    urls:
+    - https://github.com/CollaboraOnline/online/releases/download/helm-collabora-online-1.1.10/collabora-online-1.1.10.tgz
+    version: 1.1.10
+  - annotations:
+      artifacthub.io/images: |
+        - name: collabora
           image: docker.io/collabora/code:23.05.6.4.1
         - name: nginx
           image: docker.io/nginx:1.25
@@ -471,4 +511,4 @@ entries:
     urls:
     - https://github.com/CollaboraOnline/online/releases/download/helm-collabora-online-1.0.1/collabora-online-1.0.1.tgz
     version: 1.0.1
-generated: "2024-01-04T07:45:42.462424829Z"
+generated: "2024-01-22T08:40:25.240294775Z"
