@@ -66,8 +66,11 @@ public:
                        SocketDisposition& disposition);
 
 private:
-    void createDocBroker(const std::string& docKey, const std::string& url,
-                         const Poco::URI& uriPublic, const bool isReadOnly);
+    bool createDocBroker(const std::string& docKey, const std::string& url,
+                         const Poco::URI& uriPublic);
+
+    void createClientSession(const std::string& docKey, const std::string& url,
+                             const Poco::URI& uriPublic, const bool isReadOnly);
 
 #if !MOBILEAPP
     void checkFileInfo(const std::string& url, const Poco::URI& uriPublic,
@@ -89,5 +92,5 @@ private:
     unsigned _mobileAppDocId;
     CFIState _cfiState;
     Poco::JSON::Object::Ptr _wopiInfo;
-    LockContext _lockCtx;
+    std::shared_ptr<DocumentBroker> _docBroker;
 };
