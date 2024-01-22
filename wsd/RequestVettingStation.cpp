@@ -56,19 +56,10 @@ void RequestVettingStation::handleRequest(const std::string& id)
 
     const std::string url = _requestDetails.getDocumentURI();
 
-    LOG_INF("URL [" << url << "] will be proactively vetted");
     const auto uriPublic = RequestDetails::sanitizeURI(url);
     const auto docKey = RequestDetails::getDocKey(uriPublic);
     const std::string fileId = Util::getFilenameFromURL(docKey);
     Util::mapAnonymized(fileId, fileId); // Identity mapping, since fileId is already obfuscated
-
-    LOG_INF("Starting GET request handler for session [" << _id << "] on url ["
-                                                         << COOLWSD::anonymizeUrl(url) << ']');
-
-    LOG_INF("Sanitized URI [" << COOLWSD::anonymizeUrl(url) << "] to ["
-                              << COOLWSD::anonymizeUrl(uriPublic.toString())
-                              << "] and mapped to docKey [" << docKey << "] for session [" << _id
-                              << ']');
 
     // Check if readonly session is required
     bool isReadOnly = false;
@@ -81,8 +72,11 @@ void RequestVettingStation::handleRequest(const std::string& id)
         }
     }
 
-    LOG_INF("URL [" << COOLWSD::anonymizeUrl(url) << "] is "
-                    << (isReadOnly ? "readonly" : "writable"));
+    LOG_INF("URL [" << COOLWSD::anonymizeUrl(url)
+                    << "] will be proactively vetted. Sanitized uriPublic: ["
+                    << COOLWSD::anonymizeUrl(uriPublic.toString()) << "], docKey: [" << docKey
+                    << "], session: [" << _id << "], fileId: [" << fileId << "] "
+                    << (isReadOnly ? "(readonly)" : "(writable)"));
 
     // Before we create DocBroker with a SocketPoll thread, a ClientSession, and a Kit process,
     // we need to vet this request by invoking CheckFileInfo.
@@ -135,19 +129,10 @@ void RequestVettingStation::handleRequest(const std::string& id,
 
     const std::string url = _requestDetails.getDocumentURI();
 
-    LOG_INF("URL [" << url << "] for WS Request.");
     const auto uriPublic = RequestDetails::sanitizeURI(url);
     const auto docKey = RequestDetails::getDocKey(uriPublic);
     const std::string fileId = Util::getFilenameFromURL(docKey);
     Util::mapAnonymized(fileId, fileId); // Identity mapping, since fileId is already obfuscated
-
-    LOG_INF("Starting GET request handler for session [" << _id << "] on url ["
-                                                         << COOLWSD::anonymizeUrl(url) << ']');
-
-    LOG_INF("Sanitized URI [" << COOLWSD::anonymizeUrl(url) << "] to ["
-                              << COOLWSD::anonymizeUrl(uriPublic.toString())
-                              << "] and mapped to docKey [" << docKey << "] for session [" << _id
-                              << ']');
 
     // Check if readonly session is required
     bool isReadOnly = false;
@@ -160,8 +145,10 @@ void RequestVettingStation::handleRequest(const std::string& id,
         }
     }
 
-    LOG_INF("URL [" << COOLWSD::anonymizeUrl(url) << "] is "
-                    << (isReadOnly ? "readonly" : "writable"));
+    LOG_INF("URL [" << COOLWSD::anonymizeUrl(url) << "] for WS Request. Sanitized uriPublic: ["
+                    << COOLWSD::anonymizeUrl(uriPublic.toString()) << "], docKey: [" << docKey
+                    << "], session: [" << _id << "], fileId: [" << fileId << "] "
+                    << (isReadOnly ? "(readonly)" : "(writable)"));
 
     // Before we create DocBroker with a SocketPoll thread, a ClientSession, and a Kit process,
     // we need to vet this request by invoking CheckFileInfo.
