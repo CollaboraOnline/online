@@ -1627,27 +1627,25 @@ void ClientSession::postProcessCopyPayload(const std::shared_ptr<Message>& paylo
 
     // New-style: <div> inside <body>, that is not sanitized by Chrome.
     payload->rewriteDataBody([=](std::vector<char>& data) {
-            const char* pos = strstr(data.data(), "<body");
-            if (pos)
+            std::size_t pos = Util::findInVector(data, "<body");
+            if (pos != std::string::npos)
             {
-                pos = strstr(pos, ">");
+                pos = Util::findInVector(data, ">", pos);
             }
 
-            if (pos)
+            if (pos != std::string::npos)
             {
                 const std::string meta = getClipboardURI();
                 LOG_TRC("Inject clipboard cool origin of '" << meta << "'");
                 std::string origin = "<div id=\"meta-origin\" data-coolorigin=\"" + meta + "\">\n";
-                size_t offset = pos - data.data();
-                data.insert(data.begin() + offset + strlen(">"), origin.begin(), origin.end());
+                data.insert(data.begin() + pos + strlen(">"), origin.begin(), origin.end());
 
                 const char* end = "</body>";
-                pos = strstr(data.data(), end);
-                if (pos)
+                pos = Util::findInVector(data, end);
+                if (pos != std::string::npos)
                 {
                     origin = "</div>";
-                    offset = pos - data.data();
-                    data.insert(data.begin() + offset, origin.begin(), origin.end());
+                    data.insert(data.begin() + pos, origin.begin(), origin.end());
                 }
                 return true;
             }
