@@ -784,7 +784,8 @@ input[type='number']:hover::-webkit-outer-spin-button {
 .ui-combobox-content {
 	width: 100%;
 	border: none;
-	border-radius: var(--border-radius) 0px 0px var(--border-radius);
+	border-start-start-radius: var(--border-radius);
+	border-end-start-radius: var(--border-radius);
 	color: var(--color-text-dark);
 	background-color: var(--color-background-lighter);
 }
