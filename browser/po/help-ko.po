@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-01-18 11:56+0200\n"
-"PO-Revision-Date: 2020-10-08 12:25+0000\n"
-"Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
+"PO-Revision-Date: 2024-01-22 15:44+0000\n"
+"Last-Translator: Seungcheon Seo <seoseungcheon@gmail.com>\n"
 "Language-Team: Korean <https://hosted.weblate.org/projects/collabora-online/"
 "help/ko/>\n"
 "Language: ko\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.4-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:20-5
 msgid "Keyboard Shortcuts"
@@ -24,7 +24,7 @@ msgstr "표준 키보드 단축키"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:24-18
 msgid "Undo"
-msgstr "실행 취소"
+msgstr "되돌리기"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:24-49
 #, fuzzy
@@ -33,7 +33,7 @@ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:25-18
 msgid "Redo"
-msgstr "재실행"
+msgstr "다시하기"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:25-49
 #, fuzzy
@@ -632,7 +632,7 @@ msgstr "줄 시작으로 이동"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:223-68
 #: html/cool-help.html%2Bdiv.div.table.tr.td:280-68
 msgid "Home"
-msgstr "Home"
+msgstr "홈"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:81-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:224-18
@@ -1644,7 +1644,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.p:327-5
 msgid "General"
-msgstr ""
+msgstr "일반적인"
 
 #: html/cool-help.html%2Bdiv.div.p:329-9
 #: html/cool-help.html%2Bdiv.div.h3:560-5
