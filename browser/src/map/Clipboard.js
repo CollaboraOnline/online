@@ -759,6 +759,11 @@ L.Clipboard = L.Class.extend({
 
 	// Executes the navigator.clipboard.read() call, if it's available.
 	_navigatorClipboardRead: function(isSpecial) {
+		if (window.app.socket.WSDServer.Options.indexOf('E') === -1) {
+			// Experimental features are disabled, don't try to use navigator.clipboard.
+			return false;
+		}
+
 		if (navigator.clipboard.read === undefined) {
 			return false;
 		}
