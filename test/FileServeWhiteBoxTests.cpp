@@ -40,6 +40,9 @@ class FileServeTests : public CPPUNIT_NS::TestFixture
     void testPreProcessedFile();
     void testPreProcessedFileRoundtrip();
     void testPreProcessedFileSubstitution();
+
+    void preProcessedFileSubstitution(const std::string& testname,
+                                      std::unordered_map<std::string, std::string> variables);
 };
 
 void FileServeTests::testUIDefaults()
@@ -368,26 +371,10 @@ void FileServeTests::testPreProcessedFileRoundtrip()
     }
 }
 
-void FileServeTests::testPreProcessedFileSubstitution()
+void FileServeTests::preProcessedFileSubstitution(
+    const std::string& testname, std::unordered_map<std::string, std::string> variables)
 {
-    constexpr auto testname = __func__;
-
     const Poco::Path path(TDOC "/../../browser/dist");
-
-    std::unordered_map<std::string, std::string> variables = {
-        { "ACCESS_TOKEN", "alksjdfiwjksnsdkafnsdl" },
-        { "ACCESS_TOKEN_TTL", "123" },
-        { "ACCESS_HEADER", "8923rweyhjsnjfnwoejl" },
-        { "UI_DEFAULTS",
-          "{\"presentation\":{\"ShowStatusbar\":false},\"spreadsheet\":{\"ShowSidebar\":"
-          "false},\"text\":{\"ShowRuler\":true},\"uiMode\":\"notebookbar\"}" },
-        { "CSS_VARIABLES",
-          "<style>:root {--co-somestyle-text:#123456;--co-somestyle-size:15px;}</style>" },
-        { "POSTMESSAGE_ORIGIN", "https://www.example.com:8080" },
-        { "BRANDING_THEME", "cool_brand" },
-        { "CHECK_FILE_INFO_OVERRIDE", "DownloadAsPostMessage=true;blah=bleh" },
-        { "BUYPRODUCT_URL", "https://buy.ourproduct.com/'" }
-    };
 
     std::vector<std::string> files;
     Poco::File(path).list(files);
@@ -416,6 +403,9 @@ void FileServeTests::testPreProcessedFileSubstitution()
                                  variables["POSTMESSAGE_ORIGIN"]);
             Poco::replaceInPlace(orig, std::string("%BRANDING_THEME%"),
                                  variables["BRANDING_THEME"]);
+            Poco::replaceInPlace(orig, std::string("<!--%BRANDING_JS%-->"),
+                                 variables["BRANDING_JS"]);
+            Poco::replaceInPlace(orig, std::string("%FOOTER%"), variables["FOOTER"]);
             Poco::replaceInPlace(orig, std::string("%CHECK_FILE_INFO_OVERRIDE%"),
                                  variables["CHECK_FILE_INFO_OVERRIDE"]);
             Poco::replaceInPlace(orig, std::string("%BUYPRODUCT_URL%"),
@@ -424,6 +414,32 @@ void FileServeTests::testPreProcessedFileSubstitution()
             LOK_ASSERT_EQUAL(orig, recon);
         }
     }
+}
+
+void FileServeTests::testPreProcessedFileSubstitution()
+{
+    constexpr auto testname = __func__;
+
+    std::unordered_map<std::string, std::string> variables = {
+        { "ACCESS_TOKEN", "alksjdfiwjksnsdkafnsdl" },
+        { "ACCESS_TOKEN_TTL", "123" },
+        { "ACCESS_HEADER", "8923rweyhjsnjfnwoejl" },
+        { "UI_DEFAULTS",
+          "{\"presentation\":{\"ShowStatusbar\":false},\"spreadsheet\":{\"ShowSidebar\":"
+          "false},\"text\":{\"ShowRuler\":true},\"uiMode\":\"notebookbar\"}" },
+        { "CSS_VARIABLES",
+          "<style>:root {--co-somestyle-text:#123456;--co-somestyle-size:15px;}</style>" },
+        { "POSTMESSAGE_ORIGIN", "https://www.example.com:8080" },
+        { "BRANDING_THEME", "cool_brand" },
+        { "BRANDING_JS", "branding.js" },
+        { "FOOTER", "<div><b>blah blah footer</b></div>" },
+        { "CHECK_FILE_INFO_OVERRIDE", "DownloadAsPostMessage=true;blah=bleh" },
+        { "BUYPRODUCT_URL", "https://buy.ourproduct.com/'" }
+    };
+
+    preProcessedFileSubstitution(testname, variables);
+    preProcessedFileSubstitution(std::string(testname) + "_empty",
+                                 std::unordered_map<std::string, std::string>());
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(FileServeTests);
