@@ -1044,7 +1044,7 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 
 	color: var(--color-border); /* color */
 	opacity: 1; /* opacity */
-	border-top-width: 2px; /* weight */
+	border-top-width: 1px; /* weight */
 }
 
 #product-name {

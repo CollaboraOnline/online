@@ -30,6 +30,8 @@ abstract class CPath extends CEventsHandler {
 	point: cool.Point;
 	zIndex: number = 0;
 
+	isTopOrLeftOfSplitPane: boolean = true;
+
 	static countObjects: number = 0;
 	private id: number;
 	private isDeleted: boolean = false;
