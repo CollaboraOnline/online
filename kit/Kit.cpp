@@ -1202,6 +1202,13 @@ public:
         LOG_TRC("Document::ViewCallback end.");
     }
 
+    /// Notify all views with the given message
+    bool notifyAll(const std::string& msg) override
+    {
+        // Broadcast updated viewinfo to all clients.
+        return sendTextFrame("client-all " + msg);
+    }
+
 private:
 
     /// Helper method to broadcast callback and its payload to all clients
@@ -1337,13 +1344,6 @@ private:
     DocumentPasswordType getDocPasswordType() const override
     {
         return _docPasswordType;
-    }
-
-    /// Notify all views with the given message
-    bool notifyAll(const std::string& msg) override
-    {
-        // Broadcast updated viewinfo to all clients.
-        return sendTextFrame("client-all " + msg);
     }
 
     /// Notify all views of viewId and their associated usernames
@@ -2378,6 +2378,15 @@ public:
     // called from inside poll, inside a wakeup
     void wakeupHook() { _pollEnd = std::chrono::steady_clock::now(); }
 
+#if ENABLE_DEBUG
+    struct ReEntrancyGuard {
+        std::atomic<int> &_count;
+        ReEntrancyGuard(std::atomic<int> &count)
+            : _count(count) { count++; }
+        ~ReEntrancyGuard()  { _count--; }
+    };
+#endif
+
     // a LOK compatible poll function merging the functions.
     // returns the number of events signalled
     int kitPoll(int timeoutMicroS)
@@ -2389,6 +2398,21 @@ public:
             LOG_TRC("Termination of unipoll mainloop flagged");
             return -1;
         }
+
+#if ENABLE_DEBUG
+        static std::atomic<int> reentries = 0;
+        static int lastWarned = 1;
+        ReEntrancyGuard guard(reentries);
+        if (reentries != lastWarned)
+        {
+            LOG_ERR("non-async dialog triggered");
+#if !MOBILEAPP
+            if (singletonDocument && lastWarned < reentries)
+                singletonDocument->notifyAll("error: cmd=notasync kind=failure");
+#endif
+            lastWarned = reentries;
+        }
+#endif
 
         // The maximum number of extra events to process beyond the first.
         int maxExtraEvents = 15;

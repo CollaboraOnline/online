@@ -21,7 +21,7 @@ L.Control.AlertDialog = L.Control.extend({
 	},
 
 	_onError: function(e) {
-		if (!this._map._fatal) {
+		if (!this._map._fatal && e.cmd != 'notasync') {
 			this._map.uiManager.closeAll();
 		}
 
@@ -94,6 +94,9 @@ L.Control.AlertDialog = L.Control.extend({
 
 				JSDialog.showInfoModalWithOptions(alertId, alertOptions);
 			}
+		} else if (e.cmd == 'notasync') { // developer only no translation needed
+			this._map.uiManager.showInfoModal(
+				'cool_alert', '', 'This dialog is non-async', '', _('Close'), function() { /* Do nothing. */ }, false);
 		} else if (e.cmd && e.kind) {
 			this._map.fire('hidebusy');
 
