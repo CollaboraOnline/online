@@ -6906,6 +6906,13 @@ L.CanvasTileLayer = L.Layer.extend({
 					+ ' splitx=' + Math.round(splitPos.x)
 					+ ' splity=' + Math.round(splitPos.y);
 
+		// Set transparent gradient over the area where cells are concealed
+		if (this._ySplitter) {
+			this._setSpliterGradient(this._ySplitter, visibleTopLeft.y);
+		}
+		if (this._xSplitter) {
+			this._setSpliterGradient(this._xSplitter, visibleTopLeft.x);
+		}
 		if (this._clientVisibleArea !== newClientVisibleArea || forceUpdate) {
 			// Visible area is dirty, update it on the server
 			app.socket.sendMessage(newClientVisibleArea);
@@ -6914,6 +6921,16 @@ L.CanvasTileLayer = L.Layer.extend({
 			if (this._debugTileInvalidations)
 				this._debugTileLayer.clearLayers();
 		}
+	},
+
+	_setSpliterGradient: function (splitter, visibleTopLeft) {
+		if (Math.round(visibleTopLeft) == 0) {
+			splitter.isTopOrLeftOfSplitPane = true;
+		}
+		else {
+			splitter.isTopOrLeftOfSplitPane = false;
+		}
+		splitter.onPositionChange();
 	},
 
 	_updateOnChangePart: function () {
