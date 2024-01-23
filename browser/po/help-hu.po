@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-01-18 11:56+0200\n"
-"PO-Revision-Date: 2024-01-05 14:17+0000\n"
+"PO-Revision-Date: 2024-01-23 21:43+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/"
 "collabora-online/help/hu/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.4-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:20-5
 msgid "Keyboard Shortcuts"
@@ -255,7 +255,7 @@ msgstr "Középre igazítás"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:197-57
 #: html/cool-help.html%2Bdiv.div.table.tr.td:254-57
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>E</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>End</kbd>"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>E</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:51-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:172-18
@@ -304,27 +304,24 @@ msgid "Apply Default paragraph style"
 msgstr "Az Alapértelmezett bekezdésstílus alkalmazása"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:54-74
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>0</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>0"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>0</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:55-18
 msgid "Apply Heading 1 paragraph style"
 msgstr "A Címsor 1 bekezdésstílus alkalmazása"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:55-76
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>1</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>1"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>1</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:56-18
 msgid "Apply Heading 2 paragraph style"
 msgstr "A Címsor 2 bekezdésstílus alkalmazása"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:56-76
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>2</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>2"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>2</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:57-18
 msgid "Apply Heading 3 paragraph style"
@@ -332,27 +329,24 @@ msgstr "A Címsor 3 bekezdésstílus alkalmazása"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:57-76
 #: html/cool-help.html%2Bdiv.div.table.tr.td:175-69
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>3</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>3"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>3</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:58-18
 msgid "Apply Heading 4 paragraph style"
 msgstr "A Címsor 4 bekezdésstílus alkalmazása"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:58-76
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>4</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>4"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>4</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:59-18
 msgid "Apply Heading 5 paragraph style"
 msgstr "A Címsor 5 bekezdésstílus alkalmazása"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:59-76
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>5</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>5"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>5</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.h2:61-9
 msgid "Text selection and navigation in document"
@@ -376,9 +370,8 @@ msgstr "Mindent kijelöl"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:250-55
 #: html/cool-help.html%2Bdiv.div.table.tr.td:263-55
 #: html/cool-help.html%2Bdiv.div.table.tr.td:295-71
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>A</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>A"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>A</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:64-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:207-18
@@ -401,9 +394,8 @@ msgstr "Kurzor mozgatása balra, kijelöléssel"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:65-83
 #: html/cool-help.html%2Bdiv.div.table.tr.td:208-83
 #: html/cool-help.html%2Bdiv.div.table.tr.td:265-83
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Left</kbd>"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Balra nyíl"
+msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Balra nyíl</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:66-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:209-18
@@ -414,9 +406,8 @@ msgstr "Ugrás a szó elejére"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:66-70
 #: html/cool-help.html%2Bdiv.div.table.tr.td:209-70
 #: html/cool-help.html%2Bdiv.div.table.tr.td:266-70
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Left</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Balra nyíl"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Balra nyíl</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:67-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:210-18
@@ -427,13 +418,12 @@ msgstr "Szavak egyenkénti kijelölése balra"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:67-76
 #: html/cool-help.html%2Bdiv.div.table.tr.td:210-76
 #: html/cool-help.html%2Bdiv.div.table.tr.td:267-76
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Arrow Left</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>Balra nyíl"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Balra nyíl</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:68-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:211-18
@@ -456,10 +446,10 @@ msgstr "Kurzor mozgatása jobbra, kijelöléssel"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:69-84
 #: html/cool-help.html%2Bdiv.div.table.tr.td:212-84
 #: html/cool-help.html%2Bdiv.div.table.tr.td:269-84
-#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Right</kbd>"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Jobbra nyíl"
+msgstr ""
+"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Jobbra nyíl</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:70-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:213-18
@@ -470,9 +460,8 @@ msgstr "Ugrás a következő szó elejére"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:70-73
 #: html/cool-help.html%2Bdiv.div.table.tr.td:213-73
 #: html/cool-help.html%2Bdiv.div.table.tr.td:270-73
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Right</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Jobbra nyíl"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Jobbra nyíl</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:71-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:214-18
@@ -483,13 +472,12 @@ msgstr "Szavak egyenkénti kijelölése jobbra"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:71-77
 #: html/cool-help.html%2Bdiv.div.table.tr.td:214-77
 #: html/cool-help.html%2Bdiv.div.table.tr.td:271-77
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Arrow Right</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>Jobbra nyíl"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Jobbra nyíl</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:72-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:215-18
@@ -512,9 +500,9 @@ msgstr "Sorok kijelölése felfelé"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:73-78
 #: html/cool-help.html%2Bdiv.div.table.tr.td:216-78
 #: html/cool-help.html%2Bdiv.div.table.tr.td:273-78
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Up</kbd>"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Felfelé nyíl"
+msgstr ""
+"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Felfelé nyíl</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:74-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:217-18
@@ -525,9 +513,9 @@ msgstr "Kurzor mozgatása az előző bekezdés elejére"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:74-95
 #: html/cool-help.html%2Bdiv.div.table.tr.td:217-95
 #: html/cool-help.html%2Bdiv.div.table.tr.td:274-95
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Up</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Felfelé nyíl"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Felfelé nyíl</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:75-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:218-18
@@ -538,13 +526,12 @@ msgstr "Kijelölés a bekezdés elejéig"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:75-77
 #: html/cool-help.html%2Bdiv.div.table.tr.td:218-77
 #: html/cool-help.html%2Bdiv.div.table.tr.td:275-77
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Arrow Up</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>Felfelé nyíl"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Felfelé nyíl</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:76-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:219-18
@@ -567,9 +554,9 @@ msgstr "Sorok kijelölése felfelé"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:77-80
 #: html/cool-help.html%2Bdiv.div.table.tr.td:220-80
 #: html/cool-help.html%2Bdiv.div.table.tr.td:277-80
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Down</kbd>"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Lefelé nyíl"
+msgstr ""
+"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Lefelé nyíl</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:78-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:221-18
@@ -580,9 +567,8 @@ msgstr "Kurzor mozgatása a következő bekezdés elejére"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:78-91
 #: html/cool-help.html%2Bdiv.div.table.tr.td:221-91
 #: html/cool-help.html%2Bdiv.div.table.tr.td:278-91
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Down</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Lefelé nyíl"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Lefelé nyíl</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:79-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:222-18
@@ -593,13 +579,12 @@ msgstr "Kijelölés a bekezdés végéig"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:79-71
 #: html/cool-help.html%2Bdiv.div.table.tr.td:222-71
 #: html/cool-help.html%2Bdiv.div.table.tr.td:279-71
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Arrow Down</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>Lefelé nyíl"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Lefelé nyíl</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:80-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:223-18
@@ -624,9 +609,8 @@ msgstr "Ugrás a sor elejére kijelöléssel"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:140-118
 #: html/cool-help.html%2Bdiv.div.table.tr.td:224-85
 #: html/cool-help.html%2Bdiv.div.table.tr.td:281-85
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Home</kbd>"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Home"
+msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Home</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:82-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:225-18
@@ -639,9 +623,8 @@ msgstr "Ugrás a dokumentum elejére"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:136-98
 #: html/cool-help.html%2Bdiv.div.table.tr.td:225-68
 #: html/cool-help.html%2Bdiv.div.table.tr.td:282-68
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Home</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Home"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Home</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:83-18
 msgid "Go and select text to start of document"
@@ -650,13 +633,12 @@ msgstr "Ugrás a dokumentum elejére kijelöléssel"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:83-84
 #: html/cool-help.html%2Bdiv.div.table.tr.td:226-83
 #: html/cool-help.html%2Bdiv.div.table.tr.td:283-83
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Home</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>Home"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Home</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:84-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:227-18
@@ -681,9 +663,8 @@ msgstr "Ugrás a sor végére kijelöléssel"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:141-117
 #: html/cool-help.html%2Bdiv.div.table.tr.td:228-79
 #: html/cool-help.html%2Bdiv.div.table.tr.td:285-79
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>End</kbd>"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>End"
+msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>End</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:86-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:229-18
@@ -696,9 +677,8 @@ msgstr "Ugrás a dokumentum végére"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:137-111
 #: html/cool-help.html%2Bdiv.div.table.tr.td:229-66
 #: html/cool-help.html%2Bdiv.div.table.tr.td:286-66
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>End</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>End"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>End</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:87-18
 msgid "Go and select text to end of document"
@@ -707,13 +687,12 @@ msgstr "Ugrás a dokumentum végére kijelöléssel"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:87-82
 #: html/cool-help.html%2Bdiv.div.table.tr.td:230-81
 #: html/cool-help.html%2Bdiv.div.table.tr.td:287-81
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>End</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>End"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>End</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:88-18
 msgid "Move the view up one page"
@@ -728,18 +707,16 @@ msgid "Switch cursor between text and header"
 msgstr "Kurzor váltása a szöveg és az élőfej között"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:89-82
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:90-18
 msgid "Extend the selection up one page"
 msgstr "Kijelölés kiterjesztése egy oldallal felfelé"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:90-77
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp</kbd>"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp"
+msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:91-18
 msgid "Move the view down one page"
@@ -754,62 +731,56 @@ msgid "Switch cursor between text and footer"
 msgstr "Kurzor váltása a szöveg és az élőláb között"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:92-82
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:93-18
 msgid "Extend the selection down one page"
 msgstr "Kijelölés kiterjesztése egy oldallal lefelé"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:93-79
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown</kbd>"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown"
+msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:94-18
 msgid "Delete to beginning of word"
 msgstr "Szöveg törlése a szó elejéig"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:94-72
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Backspace</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Backspace"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Backspace</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:95-18
 msgid "Delete to end of word"
 msgstr "Szöveg törlése a szó végéig"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:95-66
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Del</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Del"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Del</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:96-18
 msgid "Delete to beginning of sentence"
 msgstr "Szöveg törlése a mondat elejéig"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:96-76
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Backspace</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>Backspace"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Backspace</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:97-18
 msgid "Delete to end of sentence"
 msgstr "Szöveg törlése a mondat végéig"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:97-70
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Del</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>Del"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Del</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.h2:99-9
 msgid "Shortcut Keys for Tables"
@@ -844,9 +815,8 @@ msgstr ""
 "táblázat végére, harmadszorra a dokumentum végére ugrik."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:104-18
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Tab</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Tab"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Tab</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:104-107
 msgid ""
@@ -859,9 +829,9 @@ msgstr ""
 "billentyűkombináció is használható."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:105-18
-#, fuzzy
 msgid "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Keys</kbd>"
-msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Nyílbillentyűk"
+msgstr ""
+"<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Nyílbillentyűk</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:105-113
 msgid ""
@@ -869,26 +839,24 @@ msgid ""
 msgstr "Növeli/csökkenti a sor/oszlop méretét a jobb/alsó cellaszélen."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:106-18
-#, fuzzy
 msgid ""
 "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Arrow Keys</kbd>"
 msgstr ""
-"Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>Nyílbillentyűk"
+"<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Nyílbillentyűk</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:106-161
 msgid "Increase/decrease the size of the column/row on the left/top cell edge"
 msgstr "Növeli/csökkenti a sor/oszlop méretét a bal/felső cellaszélen."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:107-18
-#, fuzzy
 msgid ""
 "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Arrow Keys</kbd>"
 msgstr ""
-"Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>Nyílbillentyűk"
+"<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Nyílbillentyűk</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:107-160
 #: html/cool-help.html%2Bdiv.div.table.tr.td:108-208
@@ -896,20 +864,18 @@ msgid "Like Alt, but only the active cell is modified"
 msgstr "Ugyanaz, mint az Alt, de csak az aktív cella módosul"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:108-18
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd--plus\">+</"
 "span><kbd>Arrow Keys</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>Shift</kbd><span class=\"kbd--plus\""
-">+</span><kbd>Nyílbillentyűk"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd--plus\""
+">+</span><kbd>Nyílbillentyűk</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:109-18
-#, fuzzy
 msgid "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Insert</kbd>"
-msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Insert"
+msgstr "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Insert</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:109-109
 msgid ""
@@ -921,9 +887,8 @@ msgstr ""
 "cellát szúrnak be"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:110-18
-#, fuzzy
 msgid "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Del</kbd>"
-msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Del"
+msgstr "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Del</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:110-106
 msgid ""
@@ -936,13 +901,12 @@ msgstr ""
 "összevonnak szomszédos cellákat"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:111-18
-#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Del</kbd>"
 msgstr ""
-"Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>Del"
+"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Del</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td.p:111-177
 msgid ""
@@ -983,26 +947,24 @@ msgid "Insert footnote"
 msgstr "Lábjegyzet beszúrása"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:118-60
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
 "\"kbd--plus\">+</span><kbd>F</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>F"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
+"\"kbd--plus\">+</span><kbd>F</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:119-18
 msgid "Insert endnote"
 msgstr "Végjegyzet beszúrása"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:119-59
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
 "\"kbd--plus\">+</span><kbd>D</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>D"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
+"\"kbd--plus\">+</span><kbd>D</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:120-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:167-18
@@ -1011,57 +973,52 @@ msgstr "Megjegyzés beszúrása"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:120-59
 #: html/cool-help.html%2Bdiv.div.table.tr.td:167-59
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
 "\"kbd--plus\">+</span><kbd>C</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>C"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
+"\"kbd--plus\">+</span><kbd>C</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:122-18
 msgid "Insert soft hyphen"
 msgstr "Feltételes elválasztójel beszúrása"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:122-63
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>-</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>-"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>-</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:123-18
 msgid "Insert non-breaking hyphen"
 msgstr "Nem törő elválasztójel beillesztése"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:123-71
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>-</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>-"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>-</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:125-18
 msgid "Insert non-breaking space"
 msgstr "Nem törő szóköz beszúrása"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:125-70
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Space</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>szóköz"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>szóköz</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:126-18
 msgid "Insert line break"
 msgstr "Sortörés beszúrása"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:126-62
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Enter</kbd>"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Enter"
+msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Enter</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:127-18
 msgid "Manual page break"
@@ -1070,22 +1027,20 @@ msgstr "Kézi oldaltörés"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:127-62
 #: html/cool-help.html%2Bdiv.div.table.tr.td:237-78
 #: html/cool-help.html%2Bdiv.div.table.tr.td:294-85
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Enter</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Enter"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Enter</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:128-18
 msgid "Column break (in multicolumnar text)"
 msgstr "Hasábtörés (többhasábos szövegben)"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:128-81
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Enter</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>Enter"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Enter</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:129-18
 msgid ""
@@ -1096,9 +1051,8 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:129-119
 #: html/cool-help.html%2Bdiv.div.table.tr.td:130-155
-#, fuzzy
 msgid "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Enter</kbd>"
-msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Enter"
+msgstr "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Enter</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:130-18
 msgid ""
@@ -1149,9 +1103,8 @@ msgstr ""
 "egy oldallal feljebb bővíti a meglévő kijelölést."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:142-164
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up</kbd>"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up"
+msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:143-18
 msgid ""
@@ -1162,9 +1115,8 @@ msgstr ""
 "egy oldallal lejjebb bővíti a meglévő kijelölést."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:143-168
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down</kbd>"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down"
+msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:144-18
 msgid ""
@@ -1177,9 +1129,8 @@ msgstr ""
 "adatot tartalmazó oszlopba mozog."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:144-245
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Left Arrow</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Balra nyíl"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Balra nyíl</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:145-18
 msgid ""
@@ -1192,9 +1143,8 @@ msgstr ""
 "adatot tartalmazó oszlopba mozog."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:145-249
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Right Arrow</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Jobbra nyíl"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Jobbra nyíl</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:146-18
 msgid ""
@@ -1207,9 +1157,9 @@ msgstr ""
 "tartalmazó oszlopba mozog."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:146-221
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Up Arrow</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Felfelé nyíl"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Felfelé nyíl</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:147-18
 msgid ""
@@ -1222,35 +1172,32 @@ msgstr ""
 "sorba mozog."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:147-226
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Down Arrow</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Lefelé nyíl"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Lefelé nyíl</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:148-18
 msgid "Go to next sheet."
-msgstr ""
+msgstr "Ugrás a következő munkalapra."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:148-62
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Page Down</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>D"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Page Down</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:149-18
 msgid "Go to previous sheet."
-msgstr ""
+msgstr "Ugrás az előző munkalapra."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:149-66
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Page Up</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>5"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Page Up</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:150-18
 msgid ""
@@ -1261,31 +1208,28 @@ msgid ""
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:150-272
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Arrow</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>Felfelé nyíl"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Nyíl</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:151-18
 msgid "Moves one sheet to the left."
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:151-73
-#, fuzzy
 msgid "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up</kbd>"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp"
+msgstr "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:152-18
 msgid "Moves one screen page to the right."
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:152-80
-#, fuzzy
 msgid "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down</kbd>"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown"
+msgstr "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:153-18
 msgid ""
@@ -1295,13 +1239,12 @@ msgid ""
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:153-260
-#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Page Up</kbd>"
 msgstr ""
-"Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>Del"
+"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Page Up</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:154-18
 msgid ""
@@ -1311,13 +1254,12 @@ msgid ""
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:154-248
-#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Page Down</kbd>"
 msgstr ""
-"Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>Del"
+"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Page Down</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:155-18
 msgid ""
@@ -1327,9 +1269,8 @@ msgid ""
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:155-249
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>*</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>*</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:156-18
 msgid ""
@@ -1338,27 +1279,24 @@ msgid ""
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:156-158
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>/</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>/</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:157-18
 msgid "Insert cells (as in menu Insert - Cells)"
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:157-85
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Plus key</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>P"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Plusz</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:158-18
 msgid "Delete cells (as in menu Edit - Delete Cells)"
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:158-90
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Minus key</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Enter"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Mínusz</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.h2:160-9
 msgid "Cell formatting"
@@ -1369,9 +1307,8 @@ msgid "Display comment"
 msgstr "Megjegyzés megjelenítése"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:168-60
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>F1</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>1"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>F1</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:169-18
 msgid "Fill Down"
@@ -1386,78 +1323,72 @@ msgid "Two decimal places, thousands separator"
 msgstr "Két tizedesjegy, ezreselválasztó"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:176-84
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>1</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>1"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>1</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:177-18
 msgid "Standard exponential format"
 msgstr "Szabványos exponenciális-formátum"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:177-72
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>2</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>2"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>2</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:178-18
 msgid "Standard date format"
 msgstr "Szabványos dátumformátum"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:178-65
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>3</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>3"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>3</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:179-18
 msgid "Standard currency format"
 msgstr "Szabványos pénznemformátum"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:179-69
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>4</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>4"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>4</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:180-18
 msgid "Standard percentage format (two decimal places)"
 msgstr "Szabványos százalékformátum (két tizedesjeggyel)"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:180-92
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>5</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>5"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>5</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:181-18
 msgid "Standard format"
 msgstr "Szabványos formátum"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:181-60
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>6</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>6"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>6</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:201-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:258-18
@@ -1480,9 +1411,8 @@ msgstr "Listaelem előléptetése (a listaelemet ki kell jelölni)"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:236-107
 #: html/cool-help.html%2Bdiv.div.table.tr.td:259-93
 #: html/cool-help.html%2Bdiv.div.table.tr.td:293-107
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Tab</kbd>"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Tab"
+msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Tab</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.h2:204-9
 #: html/cool-help.html%2Bdiv.div.h2:261-9
@@ -1726,7 +1656,6 @@ msgstr ""
 "dokumentumokat."
 
 #: html/cool-help.html%2Bdiv.p:349-5
-#, fuzzy
 msgid ""
 "<span class=\"def\">The menu bar:</span> The main menu is placed on the top "
 "and includes many options, commands for printing, editing, viewing and other "
@@ -1737,10 +1666,11 @@ msgid ""
 msgstr ""
 "<span class=\"def\">A menüsor:</span> A főmenü felül helyezkedik el, és "
 "számos lehetőséget, nyomtatási, szerkesztési, megtekintési és egyéb "
-"speciális parancsokat tartalmaz. Elrejtheti a menüsort a <img style=\"height"
-":0.6cm;width:0.6cm;\" src=\"images/fold.svg\"> ikonra kattintva a jobb "
-"szélen. Kattintson a <img style=\"height:0.6cm;width:0.6cm;\" src=\"images"
-"/unfold.svg\"> ikonra a menü megjelenítéséhez."
+"speciális parancsokat tartalmaz. Elrejtheti a menüsort a <span style=\"height"
+":0.6cm;width:0.6cm; margin: 0px;\" class=\"w2ui-icon fold\"></span> ikonra "
+"kattintva a jobb szélen. Kattintson a <span style=\"height:0.6cm;width:0.6cm;"
+" margin: 0px;\" class=\"w2ui-icon unfold\"></span> ikonra a menü "
+"megjelenítéséhez."
 
 #: html/cool-help.html%2Bdiv.p:350-5
 msgid ""
@@ -2548,7 +2478,6 @@ msgid ""
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.h4:553-5
-#, fuzzy
 msgid "Is there a thesaurus?"
 msgstr "Van szókincstár?"
 
