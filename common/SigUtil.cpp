@@ -64,7 +64,7 @@ static std::atomic<bool> ForwardSigUsr2Flag(false); //< Flags to forward SIG_USR
 #endif
 
 static size_t ActivityStringIndex = 0;
-static std::array<std::string, 8> ActivityStrings;
+static std::array<std::string, 16> ActivityStrings;
 static bool UnattendedRun = false;
 #if !MOBILEAPP
 static int SignalLogFD = STDERR_FILENO; //< The FD where signalLogs are dumped.
