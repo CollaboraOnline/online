@@ -128,6 +128,9 @@ class IdleHandler {
 
 		window.app.console.debug('IdleHandler: _dim()');
 
+		if (document.getElementById(this.dimId))
+			return;
+
 		this._active = false;
 		var map = this.map;
 
@@ -144,16 +147,22 @@ class IdleHandler {
 
 		this.map._textInput.hideCursor();
 
-		this.map.uiManager.showInfoModal(this.dimId);
+		var uiManager = this.map.uiManager;
+		var dialogId = uiManager.generateModalId(this.dimId);
+		uiManager.showInfoModal(this.dimId);
 		document.getElementById(this.dimId).textContent = message;
 
+		var restartConnection = function() { restartConnectionFn(); }.bind(this);
+
 		if (message === '') {
-			document.getElementById(this.map.uiManager.generateModalId(this.dimId)).style.display = 'none';
-			L.LOUtil.onRemoveHTMLElement(document.getElementById(this.dimId), function() { restartConnectionFn(); }.bind(this));
+			document.getElementById(dialogId).style.display = 'none';
+			L.LOUtil.onRemoveHTMLElement(document.getElementById(this.dimId), restartConnection);
 		}
 		else {
-			var overlayId = this.map.uiManager.generateModalId(this.dimId) + '-overlay';
-			L.LOUtil.onRemoveHTMLElement(document.getElementById(overlayId), function() { restartConnectionFn(); }.bind(this));
+			var overlayId = dialogId + '-overlay';
+			var overlay = document.getElementById(overlayId);
+			overlay.onmouseover = () => { restartConnection(); uiManager.closeModal(dialogId); };
+			L.LOUtil.onRemoveHTMLElement(overlay, restartConnection);
 		}
 
 		this._sendInactiveMessage();
