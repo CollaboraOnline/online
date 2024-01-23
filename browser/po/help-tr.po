@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-01-18 11:56+0200\n"
-"PO-Revision-Date: 2024-01-05 14:17+0000\n"
+"PO-Revision-Date: 2024-01-23 21:43+0000\n"
 "Last-Translator: \"PhD. Ayhan YALÇINSOY\" <ayhanyalcinsoy@pisilinux.org>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/collabora-online/"
 "help/tr/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.4-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:20-5
 msgid "Keyboard Shortcuts"
@@ -551,9 +551,8 @@ msgstr "Satırları aşağı doğru seç"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:77-80
 #: html/cool-help.html%2Bdiv.div.table.tr.td:220-80
 #: html/cool-help.html%2Bdiv.div.table.tr.td:277-80
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Down</kbd>"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Aşağı Ok"
+msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Aşağı Ok</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:78-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:221-18
@@ -564,9 +563,8 @@ msgstr "İmleci bir sonraki paragrafın başlangıcına taşı"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:78-91
 #: html/cool-help.html%2Bdiv.div.table.tr.td:221-91
 #: html/cool-help.html%2Bdiv.div.table.tr.td:278-91
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Down</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Aşağı Ok"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Aşağı Ok</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:79-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:222-18
@@ -577,13 +575,12 @@ msgstr "Paragrafın sonuna kadar seç"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:79-71
 #: html/cool-help.html%2Bdiv.div.table.tr.td:222-71
 #: html/cool-help.html%2Bdiv.div.table.tr.td:279-71
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Arrow Down</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>Aşağı Ok"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Aşağı Ok</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:80-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:223-18
@@ -608,9 +605,8 @@ msgstr "Satırın başlangıcına git ve seç"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:140-118
 #: html/cool-help.html%2Bdiv.div.table.tr.td:224-85
 #: html/cool-help.html%2Bdiv.div.table.tr.td:281-85
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Home</kbd>"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Home"
+msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Home</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:82-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:225-18
@@ -623,9 +619,8 @@ msgstr "Belgenin başına git"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:136-98
 #: html/cool-help.html%2Bdiv.div.table.tr.td:225-68
 #: html/cool-help.html%2Bdiv.div.table.tr.td:282-68
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Home</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Home"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Home</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:83-18
 msgid "Go and select text to start of document"
@@ -634,13 +629,12 @@ msgstr "Belgenin başına kadar git ve metni seç"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:83-84
 #: html/cool-help.html%2Bdiv.div.table.tr.td:226-83
 #: html/cool-help.html%2Bdiv.div.table.tr.td:283-83
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Home</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>Home"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Home</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:84-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:227-18
@@ -665,9 +659,8 @@ msgstr "Satırın sonuna git ve seç"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:141-117
 #: html/cool-help.html%2Bdiv.div.table.tr.td:228-79
 #: html/cool-help.html%2Bdiv.div.table.tr.td:285-79
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>End</kbd>"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>End"
+msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>End</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:86-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:229-18
@@ -680,9 +673,8 @@ msgstr "Belgenin sonuna git"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:137-111
 #: html/cool-help.html%2Bdiv.div.table.tr.td:229-66
 #: html/cool-help.html%2Bdiv.div.table.tr.td:286-66
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>End</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>End"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>End</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:87-18
 msgid "Go and select text to end of document"
@@ -691,13 +683,12 @@ msgstr "Belge sonuna kadar git ve metni seç"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:87-82
 #: html/cool-help.html%2Bdiv.div.table.tr.td:230-81
 #: html/cool-help.html%2Bdiv.div.table.tr.td:287-81
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>End</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>End"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>End</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:88-18
 msgid "Move the view up one page"
@@ -712,18 +703,16 @@ msgid "Switch cursor between text and header"
 msgstr "İmleci yazı ile başlık arasında değiştir"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:89-82
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:90-18
 msgid "Extend the selection up one page"
 msgstr "Seçimi bir sayfa yukarı genişlet"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:90-77
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp</kbd>"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp"
+msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:91-18
 msgid "Move the view down one page"
@@ -738,62 +727,56 @@ msgid "Switch cursor between text and footer"
 msgstr "İmleci yazı ile alt bilgi arasında değiştir"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:92-82
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:93-18
 msgid "Extend the selection down one page"
 msgstr "Seçimi bir sayfa aşağı genişlet"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:93-79
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown</kbd>"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown"
+msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:94-18
 msgid "Delete to beginning of word"
 msgstr "Kelimenin başlangıcına kadar sil"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:94-72
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Backspace</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Backspace"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Backspace</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:95-18
 msgid "Delete to end of word"
 msgstr "Kelimenin sonuna kadar sil"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:95-66
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Del</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Del"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Del</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:96-18
 msgid "Delete to beginning of sentence"
 msgstr "Cümlenin başlangıcına kadar sil"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:96-76
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Backspace</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>Backspace"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Backspace</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:97-18
 msgid "Delete to end of sentence"
 msgstr "Cümlenin sonuna kadar sil"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:97-70
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Del</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>Del"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Del</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.h2:99-9
 msgid "Shortcut Keys for Tables"
@@ -828,9 +811,8 @@ msgstr ""
 "basım belgenin sonuna gider."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:104-18
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Tab</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Tab"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Tab</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:104-107
 msgid ""
@@ -843,9 +825,8 @@ msgstr ""
 ">+</span><kbd>Tab</kbd> da kullanılabilir."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:105-18
-#, fuzzy
 msgid "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Keys</kbd>"
-msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Yön Tuşları"
+msgstr "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Yön Tuşları</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:105-113
 msgid ""
@@ -853,26 +834,24 @@ msgid ""
 msgstr "Satır/sütün boyutunu sağdaki/alttaki hücre kenarından artırır/azaltır"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:106-18
-#, fuzzy
 msgid ""
 "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Arrow Keys</kbd>"
 msgstr ""
-"Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>Yön Tuşları"
+"<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Yön Tuşları</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:106-161
 msgid "Increase/decrease the size of the column/row on the left/top cell edge"
 msgstr "Satır/sütün boyutunu sağdaki/alttaki hücre kenarından artırır/azaltır"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:107-18
-#, fuzzy
 msgid ""
 "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Arrow Keys</kbd>"
 msgstr ""
-"Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>Yön Tuşları"
+"<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Yön Tuşları</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:107-160
 #: html/cool-help.html%2Bdiv.div.table.tr.td:108-208
@@ -880,20 +859,18 @@ msgid "Like Alt, but only the active cell is modified"
 msgstr "Alt gibidir ama sadece etkin hücre düzenlendiğinde etkindir"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:108-18
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd--plus\">+</"
 "span><kbd>Arrow Keys</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Yön "
-"Tuşları"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd--plus\">+</"
+"span><kbd>Yön Tuşları</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:109-18
-#, fuzzy
 msgid "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Insert</kbd>"
-msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Insert"
+msgstr "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Insert</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:109-109
 msgid ""
@@ -904,9 +881,8 @@ msgstr ""
 "class=\"kbd--plus\">+</span><kbd>Yön Tuşları</kbd> hücre ekler"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:110-18
-#, fuzzy
 msgid "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Del</kbd>"
-msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Del"
+msgstr "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Del</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:110-106
 msgid ""
@@ -919,13 +895,12 @@ msgstr ""
 "hücreyle birleştirir"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:111-18
-#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Del</kbd>"
 msgstr ""
-"Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>Del"
+"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Del</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td.p:111-177
 msgid ""
@@ -965,26 +940,24 @@ msgid "Insert footnote"
 msgstr "Dipnot ekle"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:118-60
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
 "\"kbd--plus\">+</span><kbd>F</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>F"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
+"\"kbd--plus\">+</span><kbd>F</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:119-18
 msgid "Insert endnote"
 msgstr "Sonnot Ekle"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:119-59
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
 "\"kbd--plus\">+</span><kbd>D</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>D"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
+"\"kbd--plus\">+</span><kbd>D</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:120-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:167-18
@@ -993,57 +966,52 @@ msgstr "Yorum ekle"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:120-59
 #: html/cool-help.html%2Bdiv.div.table.tr.td:167-59
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
 "\"kbd--plus\">+</span><kbd>C</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>C"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
+"\"kbd--plus\">+</span><kbd>C</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:122-18
 msgid "Insert soft hyphen"
 msgstr "Yumuşak tire ekle"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:122-63
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>-</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>-"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>-</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:123-18
 msgid "Insert non-breaking hyphen"
 msgstr "Aralıksız tire ekle"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:123-71
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>-</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>-"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>-</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:125-18
 msgid "Insert non-breaking space"
 msgstr "Aralıksız boşluk ekle"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:125-70
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Space</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>Space"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Space</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:126-18
 msgid "Insert line break"
 msgstr "Satır sonu ekle"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:126-62
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Enter</kbd>"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Enter"
+msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Enter</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:127-18
 msgid "Manual page break"
@@ -1052,22 +1020,20 @@ msgstr "Elle sayfa sonlandırma"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:127-62
 #: html/cool-help.html%2Bdiv.div.table.tr.td:237-78
 #: html/cool-help.html%2Bdiv.div.table.tr.td:294-85
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Enter</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Enter"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Enter</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:128-18
 msgid "Column break (in multicolumnar text)"
 msgstr "Sütun kesmesi (çok sütunlu metinler için)"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:128-81
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Enter</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>Enter"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Enter</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:129-18
 msgid ""
@@ -1077,9 +1043,8 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:129-119
 #: html/cool-help.html%2Bdiv.div.table.tr.td:130-155
-#, fuzzy
 msgid "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Enter</kbd>"
-msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Enter"
+msgstr "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Enter</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:130-18
 msgid ""
@@ -1130,9 +1095,8 @@ msgstr ""
 "veya mevcut seçimi bir sayfa yukarıya genişletir."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:142-164
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up</kbd>"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up"
+msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:143-18
 msgid ""
@@ -1143,9 +1107,8 @@ msgstr ""
 "veya mevcut seçimi bir sayfa aşağıya genişletir."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:143-168
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down</kbd>"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down"
+msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:144-18
 msgid ""
@@ -1157,9 +1120,8 @@ msgstr ""
 "solundaki sütun boşsa, imleç veri içeren soldaki bir sonraki sütuna gider"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:144-245
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Left Arrow</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Sol Ok"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Sol Ok</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:145-18
 msgid ""
@@ -1171,9 +1133,8 @@ msgstr ""
 "sağındaki sütun boşsa, imleç veri içeren sağdaki bir sonraki sütuna gider."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:145-249
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Right Arrow</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Sağ Ok"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Sağ Ok</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:146-18
 msgid ""
@@ -1185,9 +1146,8 @@ msgstr ""
 "üstündeki satır boşsa, imleç veri içeren üstteki bir sonraki satıra gider."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:146-221
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Up Arrow</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Yukarı Ok"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Yukarı Ok</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:147-18
 msgid ""
@@ -1199,35 +1159,32 @@ msgstr ""
 "altındaki satır boşsa, imleç veri içeren alttaki bir sonraki satıra gider."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:147-226
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Down Arrow</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt Ok"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Aşağı Ok</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:148-18
 msgid "Go to next sheet."
 msgstr "Sonraki sayfaya git."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:148-62
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Page Down</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>Page Down"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Page Down</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:149-18
 msgid "Go to previous sheet."
 msgstr "Önceki sayfaya git."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:149-66
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Page Up</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>Page Up"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Page Up</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:150-18
 msgid ""
@@ -1241,31 +1198,28 @@ msgstr ""
 "seçmek için kullanılırsa, dikdörtgen bir hücre aralığı seçilir."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:150-272
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Arrow</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>Ok"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Ok</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:151-18
 msgid "Moves one sheet to the left."
 msgstr "Bir sayfa sola hareket eder."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:151-73
-#, fuzzy
 msgid "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up</kbd>"
-msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up"
+msgstr "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:152-18
 msgid "Moves one screen page to the right."
 msgstr "Bir ekran sayfasını sağa taşır."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:152-80
-#, fuzzy
 msgid "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down</kbd>"
-msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down"
+msgstr "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:153-18
 msgid ""
@@ -1278,13 +1232,12 @@ msgstr ""
 "seçer. Önceki sayfayı geçerli sayfa yapar."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:153-260
-#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Page Up</kbd>"
 msgstr ""
-"Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>Page Up"
+"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Page Up</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:154-18
 msgid ""
@@ -1297,13 +1250,12 @@ msgstr ""
 "Sonraki sayfayı geçerli sayfa yapar."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:154-248
-#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Page Down</kbd>"
 msgstr ""
-"Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>Page Down"
+"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Page Down</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:155-18
 msgid ""
@@ -1316,9 +1268,8 @@ msgstr ""
 "hücre aralığıdır."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:155-249
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>*</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>*"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>*</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:156-18
 msgid ""
@@ -1329,27 +1280,24 @@ msgstr ""
 "aralığını seçer."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:156-158
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>/</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>/"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>/</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:157-18
 msgid "Insert cells (as in menu Insert - Cells)"
 msgstr "Hücreleri ekle (Ekle - Hücreler menüsünde olduğu gibi)"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:157-85
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Plus key</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Artı tuşu"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Artı tuşu</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:158-18
 msgid "Delete cells (as in menu Edit - Delete Cells)"
 msgstr "Hücreleri sil (Düzenle - Hücreleri Sil menüsünde olduğu gibi)"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:158-90
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Minus key</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Eksi tuşu"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Ekşi tuşu</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.h2:160-9
 msgid "Cell formatting"
@@ -1360,9 +1308,8 @@ msgid "Display comment"
 msgstr "Yorumu görüntüle"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:168-60
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>F1</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>F1"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>F1</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:169-18
 msgid "Fill Down"
@@ -1377,78 +1324,72 @@ msgid "Two decimal places, thousands separator"
 msgstr "İki ondalık hane, binler ayracı"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:176-84
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>1</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>1"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>1</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:177-18
 msgid "Standard exponential format"
 msgstr "Standart üstel biçemi"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:177-72
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>2</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>2"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>2</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:178-18
 msgid "Standard date format"
 msgstr "Standart tarih biçimi"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:178-65
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>3</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>3"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>3</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:179-18
 msgid "Standard currency format"
 msgstr "Standart para birimi biçimi"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:179-69
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>4</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>4"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>4</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:180-18
 msgid "Standard percentage format (two decimal places)"
 msgstr "Standart yüzde biçimi (İki ondalık hane)"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:180-92
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>5</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>5"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>5</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:181-18
 msgid "Standard format"
 msgstr "Standart biçim"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:181-60
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>6</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>6"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>6</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:201-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:258-18
@@ -1471,9 +1412,8 @@ msgstr "Liste öğesini öne çıkar (liste öğesi seçilmiş olmalıdır)"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:236-107
 #: html/cool-help.html%2Bdiv.div.table.tr.td:259-93
 #: html/cool-help.html%2Bdiv.div.table.tr.td:293-107
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Tab</kbd>"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Tab"
+msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Tab</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.h2:204-9
 #: html/cool-help.html%2Bdiv.div.h2:261-9
@@ -2167,6 +2107,9 @@ msgid ""
 "Click on the submenu (<span class=\"cool-annotation-menu\" style=\"height:0."
 "6cm;width:0.6cm;\"></span>) icon to reply, move and delete comments."
 msgstr ""
+"Açıklamaları cevaplamak, taşınmak ve silmek için alt menü (<span class"
+"=\"cool-annotation-menu\" style=\"height:0.6cm;width:0.6cm;\"></span>) "
+"simgesine tıklayın."
 
 #: html/cool-help.html%2Bdiv.h4:419-5
 msgid "Spellchecking"
@@ -3267,6 +3210,8 @@ msgid ""
 "Screen Presentation</span> or click on the left-most icon in the bottom of "
 "the slide panel:"
 msgstr ""
+"<span class=\"ui\">Slayt Gösterisi</span> → <span class=\"ui\">Tam Ekran "
+"Sunum</span> ya da slayt panelinin alt kısmında en soldaki simgeye tıklayın:"
 
 #: html/cool-help.html%2Bdiv.div.h4:658-5
 msgid "How can I change the line, area and position of a shape in my slides?"
