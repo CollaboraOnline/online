@@ -702,8 +702,8 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
     // The URL is the publicly visible one, not visible in the chroot jail.
     // We need to map it to a jailed path and copy the file there.
 
-    // user/doc/jailId
-    const Poco::Path jailPath(JAILED_DOCUMENT_ROOT, jailId);
+    // /tmp/user/docs/<dirName>, root under getJailRoot()
+    const Poco::Path jailPath(JAILED_DOCUMENT_ROOT, Util::rng::getFilename(16));
     const std::string jailRoot = getJailRoot();
 
     LOG_INF("JailPath for docKey [" << _docKey << "]: [" << jailPath.toString() << "], jailRoot: ["
