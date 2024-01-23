@@ -1926,3 +1926,23 @@ kbd,
 	margin-top: auto;
 	margin-bottom: auto;
 }
+
+#DocumentPropertiesDialog #customprops #properties > .ui-grid {
+	display: flex;
+}
+
+#DocumentPropertiesDialog #customprops #properties > .ui-grid > div:nth-child(1) {
+	width: 150px;
+}
+
+#DocumentPropertiesDialog #customprops #properties > .ui-grid > div:nth-child(2) {
+	width: 100px;
+}
+
+#DocumentPropertiesDialog #customprops #properties > .ui-grid > div:nth-child(3) {
+	width: 100%;
+}
+
+#DocumentPropertiesDialog #customprops #properties > .ui-grid > div:nth-child(4) {
+	width: 45px;
+}
