@@ -56,6 +56,12 @@ L.Handler.PathDrag = L.Handler.extend(/** @lends  L.Path.Drag.prototype */ {
 		this._dragStartPoint = null;
 
 		/**
+		* Whether the drag is constrained (Shift key pressed)
+		* @type {Boolean}
+		*/
+		this.shiftConstraint = false;
+
+		/**
 		* @type {Boolean}
 		*/
 		this._mapDraggingWasEnabled = false;
@@ -177,6 +183,8 @@ L.Handler.PathDrag = L.Handler.extend(/** @lends  L.Path.Drag.prototype */ {
 		if (isNaN(dx) || isNaN(dy))
 			return;
 
+		this.shiftConstraint = evt.shiftKey;
+
 		if (this.constraint) {
 			if (this.constraint.dragMethod === 'PieSegmentDragging') {
 				var initialOffset = this.constraint.initialOffset;
@@ -198,6 +206,30 @@ L.Handler.PathDrag = L.Handler.extend(/** @lends  L.Path.Drag.prototype */ {
 				x = this._startPoint.x + dx;
 				y = this._startPoint.y + dy;
 			}
+		} else if (this.shiftConstraint) {
+			var ds = containerPoint.subtract(this._dragStartPoint);
+
+			var delta = L.Constraint.shiftConstraint(ds);
+
+			var angle = ds.angleOf();
+			if (L.Constraint.angleNear(angle, 0) || L.Constraint.angleNear(angle, Math.PI)) {
+				// Snap back the y to 0
+				delta.x = dx;
+				delta.y = -this._matrix[5];
+				y = this._startPoint.y;
+			} else if (L.Constraint.angleNear(angle, Math.PI / 2) || L.Constraint.angleNear(angle, -Math.PI / 2)) {
+				// Snap back the x to 0
+				delta.x = -this._matrix[4];
+				delta.y = dy;
+				x = this._startPoint.x;
+			} else {
+				delta.x -= this._matrix[4];
+				delta.y -= this._matrix[5];
+				x = this._startPoint.x + delta.x;
+				y = this._startPoint.y + delta.y;
+			}
+			dx = delta.x;
+			dy = delta.y;
 		}
 
 		// Send events only if point was moved
