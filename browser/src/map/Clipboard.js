@@ -127,7 +127,6 @@ L.Clipboard = L.Class.extend({
 		if (isStub)
 			text += '    ' + this._getHtmlStubMarker() + '\n';
 		text +=     '    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>\n' +
-			    '    <meta name="origin" content="' + encodedOrigin + '"/>\n' +
 			    '  </head>\n' +
 			    '  <body lang="' + lang + '" dir="ltr"><div id="meta-origin" data-coolorigin="' + encodedOrigin + '">\n' +
 			    body +
@@ -368,12 +367,6 @@ L.Clipboard = L.Class.extend({
 		//   cf. ClientSession.cpp /textselectioncontent:/
 
 		var meta = this._getMetaOrigin(htmlText, '<div id="meta-origin" data-coolorigin="');
-		var newStyle = true;
-		if (meta === '')
-		{
-			meta = this._getMetaOrigin(htmlText, '<meta name="origin" content="');
-			newStyle = false;
-		}
 		var id = this.getMetaPath(0);
 		var idOld = this.getMetaPath(1);
 
@@ -382,7 +375,7 @@ L.Clipboard = L.Class.extend({
 		    (meta.indexOf(id) >= 0 || meta.indexOf(idOld) >= 0))
 		{
 			// Home from home: short-circuit internally.
-			window.app.console.log('short-circuit, internal paste, new style? ' + newStyle);
+			window.app.console.log('short-circuit, internal paste');
 			this._doInternalPaste(this._map, usePasteKeyEvent);
 			return true;
 		}

@@ -1599,33 +1599,10 @@ void ClientSession::writeQueuedMessages(std::size_t capacity)
 
 // NB. also see browser/src/map/Clipboard.js that does this in JS for stubs.
 // See also ClientSession::preProcessSetClipboardPayload() which removes the
-// <meta name="origin"...>  tag added here.
+// <div id="meta-origin"...>  tag added here.
 void ClientSession::postProcessCopyPayload(const std::shared_ptr<Message>& payload)
 {
     // Insert our meta origin if we can
-    payload->rewriteDataBody([=](std::vector<char>& data) {
-            std::size_t pos = Util::findInVector(data, "<meta name=\"generator\" content=\"");
-
-            if (pos == std::string::npos)
-                pos = Util::findInVector(data, "<meta http-equiv=\"content-type\" content=\"text/html;");
-
-            // cf. TileLayer.js /_dataTransferToDocument/
-            if (pos != std::string::npos) // assume text/html
-            {
-                const std::string meta = getClipboardURI();
-                LOG_TRC("Inject clipboard meta origin of '" << meta << '\'');
-                const std::string origin = "<meta name=\"origin\" content=\"" + meta + "\"/>\n";
-                data.insert(data.begin() + pos, origin.begin(), origin.end());
-                return true;
-            }
-            else
-            {
-                LOG_DBG("Missing generator in textselectioncontent/clipboardcontent payload.");
-                return false;
-            }
-        });
-
-    // New-style: <div> inside <body>, that is not sanitized by Chrome.
     payload->rewriteDataBody([=](std::vector<char>& data) {
             std::size_t pos = Util::findInVector(data, "<body");
             if (pos != std::string::npos)
@@ -1633,6 +1610,7 @@ void ClientSession::postProcessCopyPayload(const std::shared_ptr<Message>& paylo
                 pos = Util::findInVector(data, ">", pos);
             }
 
+            // cf. TileLayer.js /_dataTransferToDocument/
             if (pos != std::string::npos)
             {
                 const std::string meta = getClipboardURI();
@@ -2767,7 +2745,7 @@ bool ClientSession::isTileInsideVisibleArea(const TileDesc& tile) const
     return false;
 }
 
-// This removes the <meta name="origin" ...> tag which was added in
+// This removes the <div id="meta-origin" ...> tag which was added in
 // ClientSession::postProcessCopyPayload(), else the payload parsing
 // in ChildSession::setClipboard() will fail.
 // To see why, refer
@@ -2776,21 +2754,7 @@ bool ClientSession::isTileInsideVisibleArea(const TileDesc& tile) const
 // 2. The clipboard payload parsing code in ClipboardData::read().
 void ClientSession::preProcessSetClipboardPayload(std::string& payload)
 {
-    std::size_t start = payload.find("<meta name=\"origin\" content=\"");
-    if (start != std::string::npos)
-    {
-        std::size_t end = payload.find("\"/>\n", start);
-        if (end == std::string::npos)
-        {
-            LOG_DBG("Found unbalanced <meta name=\"origin\".../> tag in setclipboard payload.");
-            return;
-        }
-
-        std::size_t len = end - start + 4;
-        payload.erase(start, len);
-    }
-
-    start = payload.find("<div id=\"meta-origin\" data-coolorigin=\"");
+    std::size_t start = payload.find("<div id=\"meta-origin\" data-coolorigin=\"");
     if (start != std::string::npos)
     {
         std::size_t end = payload.find("\">\n", start);
