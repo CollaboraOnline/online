@@ -32,8 +32,8 @@ var AdminClusterOverview = AdminSocketBase.extend({
     _graphMargins: {
         top: 10,
         right: 0,
-        bottom: 5,
-        left: 70
+        bottom: 10,
+        left: 80
     },
 
     _interval: 5000,
