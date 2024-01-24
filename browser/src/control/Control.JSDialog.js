@@ -398,6 +398,7 @@ L.Control.JSDialog = L.Control.extend({
 		}
 	},
 
+	/// if you use updatePos - instance param is binded automatically
 	setPosition: function(instance, updatedPos) {
 		var calculated = false;
 		var isRTL = document.documentElement.dir === 'rtl';
@@ -676,6 +677,7 @@ L.Control.JSDialog = L.Control.extend({
 				instance.startY = instance.posy = (window.innerHeight - height) / 2;
 			}
 
+			// FIXME: remove this auto-binded instance so it will be clear what is passed
 			instance.updatePos = this.setPosition.bind(this, instance);
 			instance.updatePos();
 
@@ -711,10 +713,17 @@ L.Control.JSDialog = L.Control.extend({
 
 		var dialogInfo = this.dialogs[data.id];
 		if (dialogInfo.isDocumentAreaPopup) {
+			// FIXME: suspicious false to remove, leftover from: 629b25b, updatePos rework: a2d666d
+			// FIXME: data here doesn't seem to have posx, posy in any case (only with full updates)
 			dialogInfo.updatePos(false, new L.Point(data.posx, data.posy));
 		}
 
-		setTimeout(function () { dialogInfo.updatePos(); }, 100);
+		// FIXME: remove 100 ms magic timing, drawing areas should request dialog position update
+		//        when they receive payload with bigger content
+		setTimeout(function () {
+			// reset position so it will be calculated again with new content
+			dialogInfo.updatePos({x: undefined, y: undefined});
+		}, 100);
 	},
 
 	onJSAction: function (e) {
