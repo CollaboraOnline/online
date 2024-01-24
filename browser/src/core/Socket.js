@@ -289,12 +289,12 @@ app.definitions.Socket = L.Class.extend({
 		if (window.ThisIsTheGtkApp)
 			window.postMobileDebug(type + ' ' + msg);
 
-		var fullDebug = this._map._docLayer && this._map._docLayer._debug;
+		var debugOn = this._map._debug.debugOn;
 
-		if (fullDebug)
-			this._map._docLayer._debugSetPostMessage(type,msg);
+		if (debugOn)
+			this._map._debug.setOverlayPostMessage(type,msg);
 
-		if (!fullDebug && msg.length > 256) // for reasonable performance.
+		if (!debugOn && msg.length > 256) // for reasonable performance.
 			msg = msg.substring(0,256) + '<truncated ' + (msg.length - 256) + 'chars>';
 
 		var status = '';
@@ -305,7 +305,7 @@ app.definitions.Socket = L.Class.extend({
 
 		L.Log.log(msg, type + status);
 
-		if (!window.protocolDebug && !fullDebug)
+		if (!window.protocolDebug && !debugOn)
 			return;
 
 		var color = type === 'OUTGOING' ? 'color:red' : 'color:#2e67cf';
@@ -1070,15 +1070,17 @@ app.definitions.Socket = L.Class.extend({
 					});
 			}
 		}
-		else if (textMsg.startsWith('pong ') && this._map._docLayer && this._map._docLayer._debug) {
-			var times = this._map._docLayer._debugTimePING;
-			var timeText = this._map._docLayer._debugSetTimes(times, +new Date() - this._map._docLayer._debugPINGQueue.shift());
-			if (this._map._docLayer._debugData) {
-				this._map._docLayer._debugData['ping'].setPrefix('Server ping time: ' + timeText +
-						'. Rendered tiles: ' + command.rendercount +
-						', last: ' + (command.rendercount - this._map._docLayer._debugRenderCount));
+		else if (textMsg.startsWith('pong ') && this._map._debug.debugOn) {
+			var times = this._map._debug._debugTimePING;
+			var timeText = this._map._debug.updateTimeArray(times, +new Date() - this._map._debug._debugPINGQueue.shift());
+			if (this._map._debug.overlayOn) {
+				this._map._debug.overlayData['ping'].setPrefix(
+					'Server ping time: ' + timeText + '. ' +
+					'Rendered tiles: ' + command.rendercount + ', ' + 
+					'last: ' + (command.rendercount - this._map._debug._debugRenderCount)
+				);
 			}
-			this._map._docLayer._debugRenderCount = command.rendercount;
+			this._map._debug._debugRenderCount = command.rendercount;
 		}
 		else if (textMsg.startsWith('saveas:') || textMsg.startsWith('renamefile:')) {
 			this._renameOrSaveAsCallback(textMsg, command);

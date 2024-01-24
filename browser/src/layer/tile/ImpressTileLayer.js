@@ -191,8 +191,8 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 		var topLeftTwips = new L.Point(command.x, command.y);
 		var offset = new L.Point(command.width, command.height);
 		var bottomRightTwips = topLeftTwips.add(offset);
-		if (this._debugTileInvalidations) {
-			this._debugAddInvalidationRectangle(topLeftTwips, bottomRightTwips, textMsg);
+		if (this._debug.tileInvalidationsOn) {
+			this._debug.addInvalidationRectangle(topLeftTwips, bottomRightTwips, textMsg);
 		}
 		var invalidBounds = new L.Bounds(topLeftTwips, bottomRightTwips);
 		var visibleTopLeft = this._latLngToTwips(this._map.getBounds().getNorthWest());
@@ -211,9 +211,8 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 			}
 		}
 
-		if (needsNewTiles && command.part === this._selectedPart && this._debugTileInvalidations)
-		{
-			this._debugAddInvalidationMessage(textMsg);
+		if (needsNewTiles && command.part === this._selectedPart && this._debug.tileInvalidationsOn) {
+			this._debug.addInvalidationMessage(textMsg);
 		}
 
 		if (command.part === this._selectedPart &&
