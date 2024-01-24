@@ -488,6 +488,15 @@ L.Control.JSDialog = L.Control.extend({
 			this.updatePosition(instance.container, instance.posx, instance.posy);
 	},
 
+	centerDialogPosition: function (instance) {
+		var isRTL = document.documentElement.dir === 'rtl';
+		var height = instance.form.getBoundingClientRect().height;
+		var width = instance.form.getBoundingClientRect().width;
+		instance.startX = instance.posx = (window.innerWidth - (isRTL ? (-1 * width) : width)) / 2;
+		instance.startY = instance.posy = (window.innerHeight - height) / 2;
+		instance.updatePos({x: instance.posx, y: instance.posy});
+	},
+
 	parentAutofilter : null,
 
 	calculateAutoFilterPosition: function(instance) {
@@ -668,18 +677,15 @@ L.Control.JSDialog = L.Control.extend({
 			this.createDialog(instance);
 			this.addHandlers(instance);
 
-			// Special case for nonModal dialogues. Core side doesn't send their initial coordinates. We need to center them.
-			if (instance.nonModal) {
-				var isRTL = document.documentElement.dir === 'rtl';
-				var height = instance.form.getBoundingClientRect().height;
-				var width = instance.form.getBoundingClientRect().width;
-				instance.startX = instance.posx = (window.innerWidth - (isRTL ? (-1 * width) : width)) / 2;
-				instance.startY = instance.posy = (window.innerHeight - height) / 2;
-			}
-
 			// FIXME: remove this auto-binded instance so it will be clear what is passed
 			instance.updatePos = this.setPosition.bind(this, instance);
-			instance.updatePos();
+
+			// Special case for nonModal dialogues. Core side doesn't send their initial coordinates. We need to center them.
+			if (instance.nonModal) {
+				this.centerDialogPosition(instance);
+			} else {
+				instance.updatePos();
+			}
 
 			if (instance.isAutofilter)
 				this.calculateAutoFilterPosition(instance);
@@ -720,27 +726,39 @@ L.Control.JSDialog = L.Control.extend({
 
 		// FIXME: remove 100 ms magic timing, drawing areas should request dialog position update
 		//        when they receive payload with bigger content
-		setTimeout(function () {
-			// reset position so it will be calculated again with new content
-			dialogInfo.updatePos({x: undefined, y: undefined});
-		}, 100);
+		setTimeout(function () { dialogInfo.updatePos(); }, 100);
 	},
 
 	onJSAction: function (e) {
 		var data = e.data;
+		var innerData = data.data;
 
 		if (data.jsontype !== 'dialog' && data.jsontype !== 'popup')
 			return;
 
-		var builder = this.dialogs[data.id] ? this.dialogs[data.id].builder : null;
-		if (!builder)
-			return;
-
-		var dialog = this.dialogs[data.id] ? this.dialogs[data.id].container : null;
+		var dialog = this.dialogs[data.id];
 		if (!dialog)
 			return;
 
-		builder.executeAction(dialog, data.data);
+		var builder = dialog.builder;
+		if (!builder)
+			return;
+
+		var dialogContainer = dialog.container;
+		if (!dialogContainer)
+			return;
+
+		// focus on element outside view will move viewarea leaving blank space on the bottom
+		if (innerData.action_type === 'grab_focus') {
+			var control = dialogContainer.querySelector('[id=\'' + innerData.control_id + '\']');
+			var controlPosition = control.getBoundingClientRect();
+			if (controlPosition.bottom > window.innerHeight ||
+				controlPosition.right > window.innerWidth) {
+				this.centerDialogPosition(dialog); // will center it
+			}
+		}
+
+		builder.executeAction(dialogContainer, innerData);
 	},
 
 	onPan: function (ev) {
