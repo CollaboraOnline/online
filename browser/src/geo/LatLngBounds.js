@@ -98,11 +98,11 @@ L.LatLngBounds.prototype = {
 	},
 
 	getWidth: function () {
-		return this.getEast() - this.getWest();
+		return Math.abs(this.getEast() - this.getWest());
 	},
 
 	getHeight: function () {
-		return this.getNorth() - this.getSouth();
+		return Math.abs(this.getNorth() - this.getSouth());
 	},
 
 	contains: function (obj) { // (LatLngBounds) or (LatLng) -> Boolean

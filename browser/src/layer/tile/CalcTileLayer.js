@@ -1110,13 +1110,12 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		var noSplit = !this._splitPanesContext
 			|| this._splitPanesContext.getSplitPos().equals(new L.Point(0, 0));
 
-		if (noSplit && this._cellCursor.intersects(paneRectsInLatLng[0])) {
-			// Check if target cell is bigger than screen but partially visible
-			// TODO: handle with split panes
-			var cellWidth = this._cellCursor.getWidth();
-			var paneWidth = paneRectsInLatLng[0].getWidth();
+		var cellWidth = this._cellCursor.getWidth();
+		var cellHeight = this._cellCursor.getHeight();
 
-			var cellHeight = this._cellCursor.getHeight();
+		// No split panes. Check if target cell is bigger than screen but partially visible.
+		if (noSplit && this._cellCursor.intersects(paneRectsInLatLng[0])) {
+			var paneWidth = paneRectsInLatLng[0].getWidth();
 			var paneHeight = paneRectsInLatLng[0].getHeight();
 
 			if (cellWidth > paneWidth || cellHeight > paneHeight)
@@ -1126,23 +1125,32 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		var freePaneBounds = paneRectsInLatLng[paneRectsInLatLng.length - 1];
 		var splitPoint = map.unproject(this._splitPanesContext ? this._splitPanesContext.getSplitPos() : new L.Point(0, 0));
 
+		// Horizontal split
 		if (this._cellCursor.getEast() > splitPoint.lng) {
+			var freePaneWidth = freePaneBounds.getWidth();
+			var cellWidth = this._cellCursor.getWidth();
 
-			var freePaneWidth = Math.abs(freePaneBounds.getEast() - freePaneBounds.getWest());
-			var cursorWidth = Math.abs(this._cellCursor.getEast() - this._cellCursor.getWest());
-			var spacingX = cursorWidth / 4.0;
+			if (cellWidth > freePaneWidth)
+				return scroll; // no scroll needed.
+
+			var spacingX = cellWidth / 4.0;
 
 			if (this._cellCursor.getWest() < freePaneBounds.getWest()) {
 				scroll.lng = this._cellCursor.getWest() - freePaneBounds.getWest() - spacingX;
 			}
-			else if (cursorWidth < freePaneWidth && this._cellCursor.getEast() > freePaneBounds.getEast()) {
+			else if (cellWidth < freePaneWidth && this._cellCursor.getEast() > freePaneBounds.getEast()) {
 				scroll.lng = this._cellCursor.getEast() - freePaneBounds.getEast() + spacingX;
 			}
 		}
 
+		// Vertical split
 		if (this._cellCursor.getSouth() < splitPoint.lat) {
+			var freePaneHeight = freePaneBounds.getHeight();
 
-			var spacingY = Math.abs((this._cellCursor.getSouth() - this._cellCursor.getNorth())) / 4.0;
+			if (cellHeight > freePaneHeight)
+				return scroll; // no scroll needed.
+
+			var spacingY = cellHeight / 4.0;
 			if (this._cellCursor.getNorth() > freePaneBounds.getNorth()) {
 				scroll.lat = this._cellCursor.getNorth() - freePaneBounds.getNorth() + spacingY;
 			}
