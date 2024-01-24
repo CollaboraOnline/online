@@ -663,9 +663,9 @@ L.Map.Keyboard = L.Handler.extend({
 					keyCode = 0;
 					unoKeyCode = this._toUNOKeyCode(keyCode);
 				}
-				if (docLayer._debugTileInvalidations) {
+				if (this._map._debug.tileInvalidationsOn) {
 					// key press times will be paired with the invalidation messages
-					docLayer._debugKeypressQueue.push(+new Date());
+					this._debug._debugKeypressQueue.push(+new Date());
 				}
 
 				if (keyEventFn) {
@@ -916,8 +916,8 @@ L.Map.Keyboard = L.Handler.extend({
 				}
 			} else if (e.altKey) {
 				switch (e.keyCode) {
-				case this.keyCodes.D: // Ctrl + Shift + Alt + d for tile debugging mode
-					this._map._docLayer.toggleDebugMode();
+					case this.keyCodes.D: // Ctrl + Shift + Alt + d for tile debugging mode
+						this._map._debug.toggle();
 				}
 			}
 

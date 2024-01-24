@@ -438,10 +438,10 @@ export class TilesSection extends CanvasSectionObject {
 			// Ensure tile is within document bounds.
 			if (tile && docLayer._isValidTile(coords)) {
 				if (!this.isJSDOM) { // perf-test code
-					if (tile.hasContent() || docLayer._debugTileOverlays) { // Ensure tile is loaded
+					if (tile.hasContent() || this.map._debug.tileOverlaysOn) { // Ensure tile is loaded
 						this.paint(tile, ctx, false /* async? */, now);
 					}
-					// else if (docLayer._debugTileOverlays) {
+					// else if (this.map._debug.tileOverlaysOn) {
 						// // when debugging draw a checkerboard for the missing tile
 						// var oldcanvas = tile.canvas;
 						// tile.canvas = this.checkpattern;
@@ -658,7 +658,7 @@ export class TilesSection extends CanvasSectionObject {
 		else */
 		canvas.drawImage(tile.canvas, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
 
-		if (this.sectionProperties.docLayer._debugTileOverlays)
+		if (this.map._debug.tileOverlaysOn)
 		{
 			this.beforeDraw(canvas);
 
@@ -717,7 +717,7 @@ export class TilesSection extends CanvasSectionObject {
 			];
 // FIXME: generate metrics of how long a tile has been visible & invalid for.
 //			if (tile._debugTime && tile._debugTime.date !== 0)
-//					lines.push(this.sectionProperties.docLayer._debugSetTimes(tile._debugTime, +new Date() - tile._debugTime.date));
+//					lines.push(this.map._debug.updateTimeArray(tile._debugTime, +new Date() - tile._debugTime.date));
 
 			const startY = tSize - 12 * lines.length;
 

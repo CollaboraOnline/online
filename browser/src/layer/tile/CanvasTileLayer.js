@@ -1773,10 +1773,12 @@ L.CanvasTileLayer = L.Layer.extend({
 		else if (textMsg.startsWith('canonicalidchange:')) {
 			var payload = textMsg.substring('canonicalidchange:'.length + 1);
 			var viewRenderedState = payload.split('=')[3].split(' ')[0];
-			if (this._debugData) {
+			if (this._debug.overlayOn) {
 				var viewId = payload.split('=')[1].split(' ')[0];
 				var canonicalId = payload.split('=')[2].split(' ')[0];
-				this._debugData['canonicalViewId'].setPrefix('Canonical id changed to: ' + canonicalId + ' for view id: ' + viewId + ' with view renderend state: ' + viewRenderedState);
+				this._debug.overlayData['canonicalViewId'].setPrefix(
+					'Canonical id changed to: ' + canonicalId + ' for view id: ' + viewId + ' with view renderend state: ' + viewRenderedState
+				);
 			}
 			if (!this._canonicalIdInitialized) {
 				this._canonicalIdInitialized = true;
@@ -5070,642 +5072,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		});
 	},
 
-	toggleDebugMode: function() {
-		this._debug = !this._debug;
-		if (this._debug) {
-			this._debugInit();
-		} else {
-			this._debugStop();
-		}
-
-		// redraw canvas with changed debug overlays
-		this._painter.update();
-	},
-
-	_debugInit: function() {
-		this._debugControls = {};
-		this._debugLayers = [];
-		this._addDebugTools();
-		// initialize state that we build in debug mode whether visible or not
-		this._debugInvalidBounds = {};
-		this._debugInvalidBoundsMessage = {};
-		this._debugId = 0;
-		this._debugLoadTile = 0;
-		this._debugLoadDelta = 0;
-		this._debugLoadUpdate = 0;
-		this._debugInvalidateCount = 0;
-		this._debugTimeKeypress = this._debugGetTimeArray();
-		this._debugKeypressQueue = [];
-		this._debugRenderCount = 0;
-		this._debugTimePING = this._debugGetTimeArray();
-		this._debugPINGQueue = [];
-		this._debugAutomatedUserQueue = [];
-		this._debugAutomatedUserTasks = {};
-
-		if (this.isCalc()) {
-			this._painter._addSplitsSection();
-			this._painter._sectionContainer.reNewAllSections(true /* redraw */);
-		}
-	},
-
-	_debugStop: function () {
-		// Remove layers
-		for (var i in this._debugLayers) {
-			this._map.removeLayer(this._debugLayers[i]);
-		}
-
-		// Remove controls
-		for (var category in this._debugControls) {
-			this._debugControls[category].remove();
-		}
-		this._debugControls = {};
-
-		if (this.isCalc()) {
-			var section = this._painter._sectionContainer.getSectionWithName('calc grid');
-			if (section) {
-				section.setDrawingOrder(L.CSections.CalcGrid.drawingOrder);
-				section.sectionProperties.strokeStyle = '#c0c0c0';
-			}
-			this._painter._sectionContainer.removeSection('splits');
-			this._painter._sectionContainer.reNewAllSections(true /* redraw */);
-		}
-	},
-
-	_debugGetTimeArray: function() {
-		return {count: 0, ms: 0, best: Number.MAX_SAFE_INTEGER, worst: 0, date: 0};
-	},
-
-	_debugShowTileData: function() {
-		this._debugData['loadCount'].setPrefix('Total of requested tiles: ' +
-				this._debugInvalidateCount + ', recv-tiles: ' + this._debugLoadTile +
-						       ', recv-delta: ' + this._debugLoadDelta +
-						       ', recv-update: ' + this._debugLoadUpdate);
-		var allDeltas = this._debugLoadDelta + this._debugLoadUpdate;
-		this._debugData['nullUpdateMetric'].setPrefix('<b>Tile update waste: ' +
-				Math.round(100.0 * this._debugLoadUpdate / allDeltas) + '%</b>');
-		this._debugData['newTileMetric'].setPrefix('<b>New Tile ratio: ' +
-				Math.round(100.0 * this._debugLoadTile / (allDeltas + this._debugLoadTile)) + '%</b>');
-	},
-
-	_addDebugTool: function (tool) {
-		// Create control if it doesn't exist
-		if (!(tool.category in this._debugControls)) {
-			this._debugControls[tool.category] = L.control.layers({}, {}, {collapsed: false, sortLayers: true}).addTo(this._map);
-			// Add a title
-			var b = document.createElement('b');
-			b.append(tool.category);
-			this._debugControls[tool.category]._container.prepend(b);
-		}
-
-		// Create layer
-		var layer = new L.LayerGroup();
-		this._debugLayers.push(layer);
-		this._debugControls[tool.category]._addLayer(layer, tool.name, true);
-		this._debugControls[tool.category]._update();
-
-		this._map.on('layeradd', function(e) {
-			if (e.layer === layer) {
-				tool.onAdd();
-			}
-		}, this);
-		this._map.on('layerremove', function(e) {
-			if (e.layer === layer) {
-				tool.onRemove();
-			}
-		}, this);
-		if (tool.startsOn) {
-			this._map.addLayer(layer);
-		}
-	},
-
-	_addDebugTools: function () {
-		var self = this; // easier than using (function (){}).bind(this) each time
-
-		this._addDebugTool({
-			name: 'Screen Overlays',
-			category: 'Display',
-			startsOn: true,
-			onAdd: function () {
-				self._debugData = {};
-				var _debugDataNames = ['canonicalViewId', 'tileCombine', 'fromKeyInputToInvalidate', 'ping', 'loadCount', 'postMessage'];
-				for (var i = 0; i < _debugDataNames.length; i++) {
-					self._debugData[_debugDataNames[i]] = L.control.attribution({prefix: '', position: 'bottomleft'}).addTo(self._map);
-					self._debugData[_debugDataNames[i]].addTo(self._map);
-				}
-				_debugDataNames = ['nullUpdateMetric', 'newTileMetric'];
-				for (var i = 0; i < _debugDataNames.length; i++) {
-					self._debugData[_debugDataNames[i]] = L.control.attribution({prefix: '', position: 'topleft'}).addTo(self._map);
-					self._debugData[_debugDataNames[i]].addTo(self._map);
-					self._debugData[_debugDataNames[i]]._container.style.fontSize = '14px';
-				}
-			},
-			onRemove: function () {
-				for (var i in self._debugData) {
-					self._debugData[i].remove();
-				}
-				delete self._debugData;
-			},
-		});
-
-		this._addDebugTool({
-			name: 'Tile Overlays',
-			category: 'Display',
-			startsOn: false,
-			onAdd: function () {
-				self._debugTileOverlays = true;
-				self._painter.update();
-			},
-			onRemove: function () {
-				self._debugTileOverlays = false;
-				self._painter.update();
-			},
-		});
-
-		this._addDebugTool({
-			name: 'Tile Invalidations',
-			category: 'Display',
-			startsOn: false,
-			onAdd: function () {
-				self._debugTileInvalidations = true;
-				self._debugTileInvalidationTimeout();
-				self._debugTileLayer = new L.LayerGroup();
-				self._map.addLayer(self._debugTileLayer);
-			},
-			onRemove: function () {
-				self._debugTileInvalidations = false;
-				self._map.removeLayer(self._debugTileLayer);
-				self._painter.update();
-			},
-		});
-
-		/*
-		 * Doesn't seem to do anything
-		this._addDebugTool({
-			name: 'Always Active',
-			category: 'Functionality',
-			startsOn: false,
-			onAdd: function () {
-				self._map._debugAlwaysActive = true;
-			},
-			onRemove: function () {
-				self._map._debugAlwaysActive = false;
-			},
-		});
-		*/
-
-		this._addDebugTool({
-			name: 'Show Clipboard',
-			category: 'Display',
-			startsOn: false,
-			onAdd: function () {
-				self._map._textInput.debug(true);
-			},
-			onRemove: function () {
-				self._map._textInput.debug(false);
-			},
-		});
-
-		this._addDebugTool({
-			name: 'Tiles device pixel grid',
-			category: 'Display',
-			startsOn: false,
-			onAdd: function () {
-				self._map._docLayer._painter._addTilePixelGridSection();
-				self._map._docLayer._painter._sectionContainer.reNewAllSections(true);
-			},
-			onRemove: function () {
-				self._map._docLayer._painter._sectionContainer.removeSection('tile pixel grid');
-				self._map._docLayer._painter._sectionContainer.reNewAllSections(true);
-			},
-		});
-
-		/*
-		 * Doesn't seem to do anything
-		this._addDebugTool({
-			name: 'Sidebar Rerendering',
-			category: 'Display',
-			startsOn: false,
-			onAdd: function () {
-				self._map._debugSidebar = true;
-			},
-			onRemove: function () {
-				self._map._debugSidebar = false;
-			},
-		});
-		*/
-
-		this._addDebugTool({
-			name: 'Performance Tracing',
-			category: 'Logging',
-			startsOn: app.socket.traceEventRecordingToggle,
-			onAdd: function () {
-				app.socket.setTraceEventLogging(true);
-			},
-			onRemove: function () {
-				app.socket.setTraceEventLogging(false);
-			},
-		});
-
-		this._addDebugTool({
-			name: 'Protocol Logging',
-			category: 'Logging',
-			startsOn: true,
-			onAdd: function () {
-				window.setLogging(true);
-				L.Log.print();
-			},
-			onRemove: function () {
-				window.setLogging(false);
-			},
-		});
-
-		this._addDebugTool({
-			name: 'Tile Dumping',
-			category: 'Logging',
-			startsOn: false,
-			onAdd: function () {
-				app.socket.sendMessage('toggletiledumping true');
-			},
-			onRemove: function () {
-				app.socket.sendMessage('toggletiledumping false');
-			},
-		});
-
-		this._addDebugTool({
-			name: 'Debug Deltas',
-			category: 'Logging',
-			startsOn: false,
-			onAdd: function () {
-				self._debugDeltas = true;
-				self._debugDeltasDetail = true;
-			},
-			onRemove: function () {
-				self._debugDeltas = true;
-				self._debugDeltasDetail = true;
-			},
-		});
-
-		this._addDebugTool({
-			name: 'Typer',
-			category: 'Automated User',
-			startsOn: false,
-			onAdd: function () {
-				self._debugLorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\n';
-				self._debugLoremPos = 0;
-				self._debugTyperTimeout();
-			},
-			onRemove: function () {
-				clearTimeout(self._debugTyperTimeoutId);
-			},
-		});
-
-		this._addDebugTool({
-			name: 'Randomize user settings',
-			category: 'Automated User',
-			startsOn: false,
-			onAdd: function () {
-				self._debugRandomizeSettings();
-			},
-			onRemove: function () {
-			},
-		});
-
-		this._addDebugTool({
-			name: 'Automated user input',
-			category: 'Automated User',
-			startsOn: false,
-			onAdd: function () {
-				self._debugAutomatedUserTimeout();
-			},
-			onRemove: function () {
-				clearTimeout(self._debugAutomatedUserTimeoutId);
-				self._debugAutomatedUserTask = undefined;
-				self._debugAutomatedUserPhase = 0;
-			},
-		});
-
-		if (this.isCalc()) {
-			this._addDebugTool({
-				name: 'Click, type, delete, cells & formulas',
-				category: 'Automated User',
-				startsOn: false,
-				onAdd: function () {
-					self._debugAutomatedUserAddTask(this.name, L.bind(self._debugAutomatedUserTypeCellFormula, self));
-				},
-				onRemove: function () {
-					self._debugAutomatedUserRemoveTask(this.name);
-				},
-			});
-		}
-
-		this._addDebugTool({
-			name: 'Insert and delete shape',
-			category: 'Automated User',
-			startsOn: false,
-			onAdd: function () {
-				self._debugAutomatedUserAddTask(this.name, L.bind(self._debugAutomatedUserInsertTypeShape, self));
-			},
-			onRemove: function () {
-				self._debugAutomatedUserRemoveTask(this.name);
-			},
-		});
-	},
-
-	_debugRandomizeSettings: function() {
-		// Toggle dark mode
-		var isDark = this._map.uiManager.getDarkModeState();
-		if (Math.random() < 0.5) {
-			console.log('Randomize Settings: Toggle dark mode to ' + (isDark?'Light':'Dark'));
-			this._map.uiManager.toggleDarkMode();
-		} else {
-			console.log('Randomize Settings: Leave dark mode as ' + (isDark?'Dark':'Light'));
-		}
-
-		// Set zoom
-		var targetZoom = Math.floor(Math.random() * 18) + 1;
-		console.log('Randomize Settings: Set zoom to '+targetZoom);
-		this._map.setZoom(targetZoom, null, false);
-
-		// Toggle spell check
-		var isSpellCheck = this._map['stateChangeHandler'].getItemValue('.uno:SpellOnline');
-		if (Math.random() < 0.5) {
-			console.log('Randomize Settings: Toggle spell check to ' + (isSpellCheck=='true'?'off':'on'));
-			this._map.sendUnoCommand('.uno:SpellOnline');
-		} else {
-			console.log('Randomize Settings: Leave spell check as ' + (isSpellCheck=='true'?'on':'off'));
-		}
-
-		// Move to different part of sheet
-		if (this.isCalc()) {
-			// Select random position
-			var docSize = this._map.getDocSize();
-			var maxX = docSize.x; //Math.min(docSize.x, 10000);
-			var maxY = docSize.y; //Math.min(docSize.y, 10000);
-			var positions = [
-				{x: maxX, y: 0}, // top right
-				{x: 0, y: maxY}, // bottom left
-				{x: maxX, y: maxY}, // bottom right
-				{x: maxX/2, y: maxY/2}, // center
-			];
-			var pos = positions[Math.floor(Math.random()*positions.length)];
-
-			// Calculate mouse click position
-			var viewSize = this._map.getSize();
-			var centerPos = {x: pos.x + viewSize.x/2, y: pos.y + viewSize.y/2};
-			var centerTwips = this._pixelsToTwips(centerPos);
-
-			// Perform action
-			console.log('Randomize Settings: Move to ',pos,' click at ', centerPos, centerTwips);
-			this._map.fire('scrollto', pos);
-			this._postMouseEvent('buttondown', centerTwips.x, centerTwips.y, 1, 1, 0);
-			this._postMouseEvent('buttonup', centerTwips.x, centerTwips.y, 1, 1, 0);
-		}
-
-		// Toggle sidebar
-		if (Math.random() < 0.5) {
-			console.log('Randomize Settings: Toggle sidebar');
-			this._map.sendUnoCommand('.uno:SidebarDeck.PropertyDeck');
-		} else {
-			console.log('Randomize Settings: Leave sidebar');
-		}
-
-		this._painter.update();
-	},
-
-	_debugAutomatedUserTypeCellFormula: function (phase) {
-		var waitTime = 0;
-		switch (phase) {
-			case 0:
-				console.log('Automated User: Click somewhere visible');
-				var pos = this._pixelsToTwips(this._map._getCenterLayerPoint());
-				this._postMouseEvent('buttondown',pos.x,pos.y,1,1,0);
-				this._postMouseEvent('buttonup',pos.x,pos.y,1,1,0);
-				waitTime = 500;
-				break;
-			case 1:
-				console.log('Automated User: Type text');
-				this._debugTypeText('asdf\nqwer\n', 100);
-				waitTime = 1000;
-				break;
-			case 2:
-				console.log('Automated User: Click formula bar');
-				this._map.sendUnoCommand('.uno:StartFormula');
-				waitTime = 500;
-				break;
-			case 3:
-				console.log('Automated User: Type formula');
-				this._debugTypeText('A1\n', 100);
-				waitTime = 1000;
-				break;
-			case 4:
-				console.log('Automated User: Delete row');
-				this.postKeyboardEvent('input', 0, 1025); //up
-				this.postKeyboardEvent('input', 0, 1025); //up
-				this._map.sendUnoCommand('.uno:DeleteRows');
-				waitTime = 1000;
-				break;
-			case 5:
-				console.log('Automated User: Delete cells');
-				app.socket.sendMessage('removetextcontext id=0 before=0 after=1'); //delete
-				this.postKeyboardEvent('input', 0, 1025); //up
-				app.socket.sendMessage('removetextcontext id=0 before=0 after=1'); //delete
-				waitTime = 500;
-				break;
-		}
-		return waitTime;
-	},
-
-	_debugAutomatedUserInsertTypeShape: function (phase) {
-		var waitTime = 0;
-		switch (phase) {
-			case 0:
-				console.log('Automated User: Insert Shape');
-				var shapes = ['rectangle','circle','diamond','pentagon'];
-				var shape = shapes[Math.floor(Math.random() * shapes.length)];
-				this._map.sendUnoCommand('.uno:BasicShapes.'+shape);
-				// app.socket.sendMessage('removetextcontext id=0 before=0 after=1');
-				waitTime = 1000;
-				break;
-			case 1:
-				console.log('Automated User: Type in Shape');
-				this.postKeyboardEvent('input',0, 1280); // enter to select text
-				this._debugTypeText('textinshape', 100);
-				waitTime = 1500;
-				break;
-			case 2:
-				console.log('Automated User: Type Escape');
-				this.postKeyboardEvent('input',0, 1281); // esc
-				waitTime = 500;
-				break;
-		}
-		return waitTime;
-	},
-
-
-	_debugAutomatedUserAddTask: function(name, taskFn) {
-		// Save taskFn
-		this._debugAutomatedUserTasks[name] = taskFn;
-		// Add to queue
-		if (!this._debugAutomatedUserQueue.includes(name)) {
-			this._debugAutomatedUserQueue.push(name);
-		}
-	},
-
-	_debugAutomatedUserRemoveTask: function(name) {
-		// Don't bother deleting function from _debugAutomatedUserTasks
-		// Remove from queue
-		if (this._debugAutomatedUserQueue.includes(name)) {
-			this._debugAutomatedUserQueue.splice(
-				this._debugAutomatedUserQueue.indexOf(name),
-				1);
-		}
-	},
-
-
-	// task function takes phase number, returns waitTime
-	// When waitTime =0, task is done.
-
-	_debugAutomatedUserTimeout: function () {
-		if (!this._debugAutomatedUserTask) {
-			// Not in the middle of a task, pick a new one
-			console.log('Automated User: Pick a new task. Current queue: ',this._debugAutomatedUserQueue);
-			this._debugAutomatedUserTask = this._debugAutomatedUserQueue.shift();
-			this._debugAutomatedUserPhase = 0;
-		}
-
-		if (this._debugAutomatedUserTask && this._debugAutomatedUserPhase == 0) {
-			console.log('Automated User: Starting task ' + this._debugAutomatedUserTask);
-			// Re-enqueue task
-			this._debugAutomatedUserQueue.push(this._debugAutomatedUserTask);
-		}
-
-		if (this._debugAutomatedUserTask) {
-			console.log('Automated User: Current task: ' + this._debugAutomatedUserTask + ' Current phase: ' + this._debugAutomatedUserPhase);
-			var taskFn = this._debugAutomatedUserTasks[this._debugAutomatedUserTask];
-			var waitTime = taskFn(this._debugAutomatedUserPhase);
-			this._debugAutomatedUserPhase++;
-			if (waitTime == 0) {
-				console.log('Automated User: Task complete: ' + this._debugAutomatedUserTask);
-				this._debugAutomatedUserTask = undefined;
-				this._debugAutomatedUserPhase = 0;
-			}
-			this._debugAutomatedUserTimeoutId = setTimeout(L.bind(this._debugAutomatedUserTimeout, this), waitTime);
-		} else {
-			console.log('Automated User: Waiting for tasks');
-			// Nothing in queue, check again in 1s
-			this._debugAutomatedUserTimeoutId = setTimeout(L.bind(this._debugAutomatedUserTimeout, this), 1000);
-		}
-	},
-
-	_debugSetPostMessage: function(type,msg) {
-		if (this._debugData) {
-			this._debugData['postMessage'].setPrefix(type+': '+ msg);
-		}
-	},
-
-	_debugSetTimes: function(times, value) {
-		if (value < times.best) {
-			times.best = value;
-		}
-		if (value > times.worst) {
-			times.worst = value;
-		}
-		times.ms += value;
-		times.count++;
-		return 'best: ' + times.best + ' ms, avg: ' + Math.round(times.ms/times.count) + ' ms, worst: ' + times.worst + ' ms, last: ' + value + ' ms';
-	},
-
-	_debugAddInvalidationRectangle: function(topLeftTwips, bottomRightTwips, command) {
-		var now = +new Date();
-
-		var signX =  this.isCalcRTL() ? -1 : 1;
-
-		var absTopLeftTwips = L.point(topLeftTwips.x * signX, topLeftTwips.y);
-		var absBottomRightTwips = L.point(bottomRightTwips.x * signX, bottomRightTwips.y);
-
-		var invalidBoundCoords = new L.LatLngBounds(this._twipsToLatLng(absTopLeftTwips, this._tileZoom),
-			this._twipsToLatLng(absBottomRightTwips, this._tileZoom));
-		var rect = L.rectangle(invalidBoundCoords, {color: 'red', weight: 1, opacity: 1, fillOpacity: 0.4, pointerEvents: 'none'});
-		this._debugInvalidBounds[this._debugId] = rect;
-		this._debugInvalidBoundsMessage[this._debugId] = command;
-		this._debugId++;
-		this._debugTileLayer.addLayer(rect);
-
-		var oldestKeypress = this._debugKeypressQueue.shift();
-		if (oldestKeypress) {
-			var timeText = this._debugSetTimes(this._debugTimeKeypress, now - oldestKeypress);
-			this._debugData['fromKeyInputToInvalidate'].setPrefix('Elapsed time between key input and next invalidate: ' + timeText);
-		}
-
-		// query server ping time after invalidation messages
-		// pings will be paired with the pong messages
-		this._debugPINGQueue.push(+new Date());
-		app.socket.sendMessage('ping');
-	},
-
-	_debugAddInvalidationMessage: function(message) {
-		this._debugInvalidBoundsMessage[this._debugId - 1] = message;
-		var messages = '';
-		for (var i = this._debugId - 1; i > this._debugId - 6; i--) {
-			if (i >= 0 && this._debugInvalidBoundsMessage[i]) {
-				messages += '' + i + ': ' + this._debugInvalidBoundsMessage[i] + ' <br>';
-			}
-		}
-		if (this._debugData) {
-			this._debugData['tileCombine'].setPrefix(messages);
-			this._debugShowTileData();
-		}
-	},
-
-	_debugTileInvalidationTimeout: function() {
-		if (this._debug) {
-			for (var key in this._debugInvalidBounds) {
-				var rect = this._debugInvalidBounds[key];
-				var opac = rect.options.fillOpacity;
-				if (opac <= 0.04) {
-					if (key < this._debugId - 5) {
-						this._debugTileLayer.removeLayer(rect);
-						delete this._debugInvalidBounds[key];
-						delete this._debugInvalidBoundsMessage[key];
-					} else {
-						rect.setStyle({fillOpacity: 0, opacity: 1 - (this._debugId - key) / 7});
-					}
-				} else {
-					rect.setStyle({fillOpacity: opac - 0.04});
-				}
-			}
-			this._debugTileInvalidationTimeoutId = setTimeout(L.bind(this._debugTileInvalidationTimeout, this), 50);
-		}
-	},
-
-	_debugTyperTimeout: function() {
-		var letter = this._debugLorem.charCodeAt(this._debugLoremPos % this._debugLorem.length);
-		this._debugTypeChar(letter);
-		this._debugLoremPos++;
-		this._debugTyperTimeoutId = setTimeout(L.bind(this._debugTyperTimeout, this), 50);
-	},
-
-	_debugTypeText: function(text, delayMs) {
-		for (var i=0; i<text.length; i++) {
-			if (delayMs) {
-				setTimeout(L.bind(this._debugTypeChar, this, text.charCodeAt(i)), i*delayMs);
-			} else {
-				this._debugTypeChar(text.charCodeAt(i));
-			}
-		}
-	},
-
-	_debugTypeChar: function(charCode) {
-		if (this._debugTileInvalidations) {
-			this._debugKeypressQueue.push(+new Date());
-		}
-		if (charCode === '\n'.charCodeAt(0)) {
-			this.postKeyboardEvent('input', 0, 1280);
-		} else {
-			this.postKeyboardEvent('input', charCode, 0);
-		}
-	},
-
 	/// onlyThread - takes annotation indicating which thread will be generated
 	getCommentWizardStructure: function(menuStructure, onlyThread) {
 		var customTitleBar = L.DomUtil.create('div');
@@ -6040,9 +5406,9 @@ L.CanvasTileLayer = L.Layer.extend({
 			map.addLayer(this._viewLayerGroup);
 		}
 
-		this._debug = map.options.debug;
-		if (this._debug) {
-			this._debugInit();
+		this._debug = map._debug;
+		if (map.options.debug && !this._debug.debugOn) {
+			this._debug.toggle();
 		}
 
 		this._searchResultsLayer = new L.LayerGroup();
@@ -6731,8 +6097,8 @@ L.CanvasTileLayer = L.Layer.extend({
 			app.socket.sendMessage(newClientVisibleArea);
 			if (!this._map._fatal && app.idleHandler._active && app.socket.connected())
 				this._clientVisibleArea = newClientVisibleArea;
-			if (this._debugTileInvalidations)
-				this._debugTileLayer.clearLayers();
+			if (this._debug.tileInvalidationsOn)
+				this._debug._tileInvalidationLayer.clearLayers();
 		}
 	},
 
@@ -7019,8 +6385,8 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		tile.invalidateCount++;
 
-		if (this._debugTileInvalidations)
-			this._debugInvalidateCount++;
+		if (this._debug.tileInvalidationsOn)
+			this._debug._debugInvalidateCount++;
 
 		if (!tile.hasContent())
 			this._removeTile(key);
@@ -7488,14 +6854,14 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	// Update debug overlay for a tile
 	_showDebugForTile: function(key) {
-		if (!this._debug)
+		if (!this._debug.debugOn)
 			return;
 
 		var tile = this._tiles[key];
-		tile._debugTime = this._debugGetTimeArray();
+		tile._debugTime = this._debug.getTimeArray();
 
-		if (this._debugData) {
-			this._debugShowTileData();
+		if (this._debug.overlayOn) {
+			this._debug._overlayShowTileData();
 		}
 	},
 
@@ -7557,21 +6923,19 @@ L.CanvasTileLayer = L.Layer.extend({
 			hasContent = false;
 		}
 
-		if (this._debug) {
-			if (!img)
-			{
+		if (this._debug.debugOn) {
+			if (!img) {
 				tile.updateCount++;
-				this._debugLoadUpdate++;
+				this._debug._debugLoadUpdate++;
+			} else if (img.rawData && !img.isKeyframe) {
+				if (img.rawData.length === 0) {
+					this._debug._debugLoadUpdate++;
+				} else {
+					this._debug._debugLoadDelta++;
+				}
+			} else if (img.rawData) {
+				this._debug._debugLoadTile++;
 			}
-			else if (img.rawData && !img.isKeyframe)
-			{
-				if (img.rawData.length === 0)
-					this._debugLoadUpdate++;
-				else
-					this._debugLoadDelta++;
-			}
-			else if (img.rawData)
-				this._debugLoadTile++;
 		}
 		this._showDebugForTile(key);
 

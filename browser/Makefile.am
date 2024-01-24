@@ -206,6 +206,7 @@ COOL_JS_LST =\
 	src/core/Events.js \
 	src/core/Socket.js \
 	src/core/Matrix.js \
+	src/core/Debug.js \
 	src/geometry/Point.ts \
 	src/geometry/Bounds.ts \
 	src/geometry/Transformation.ts \
@@ -772,6 +773,7 @@ pot:
 		src/control/jsdialog/Widget.MobileBorderSelector.js \
 		src/control/jsdialog/Widget.TreeView.js \
 		src/core/Socket.js \
+		src/core/Debug.js \
 		src/docstate.js \
 		src/errormessages.js \
 		src/layer/tile/CanvasTileLayer.js \

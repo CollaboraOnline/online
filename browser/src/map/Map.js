@@ -153,6 +153,8 @@ L.Map = L.Evented.extend({
 
 		this._progressBar = L.progressOverlay(new L.point(150, 25));
 
+		this._debug = new L.DebugManager(this);
+
 		// When all these conditions are met, fire statusindicator:initializationcomplete
 		this.initConditions = {
 			'doclayerinit': false,

@@ -227,6 +227,7 @@ L.Control.LokDialog = L.Control.extend({
 		this._sendPaintWindow(id, this._createRectStr(id, x, y, width, height));
 	},
 
+	// TODO: Extract to tool in Debug.js
 	_debugPaintWindow: function(id, rectangle) {
 		var strId = this._toStrId(id);
 		var canvas = document.getElementById(strId + '-canvas');
@@ -251,7 +252,7 @@ L.Control.LokDialog = L.Control.extend({
 		//window.app.console.log('_sendPaintWindow: rectangle: ' + rectangle + ', dpiscale: ' + dpiscale);
 		app.socket.sendMessage('paintwindow ' + id + ' rectangle=' + rectangle + ' dpiscale=' + app.roundedDpiScale);
 
-		if (this._map._docLayer && this._map._docLayer._debug)
+		if (this._map._debug.debugOn)
 			this._debugPaintWindow(id, rectangle);
 	},
 
