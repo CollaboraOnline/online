@@ -5101,6 +5101,8 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._debugRenderCount = 0;
 		this._debugTimePING = this._debugGetTimeArray();
 		this._debugPINGQueue = [];
+		this._debugAutomatedUserQueue = [];
+		this._debugAutomatedUserTasks = {};
 
 		if (this.isCalc()) {
 			this._painter._addSplitsSection();
@@ -5179,7 +5181,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_addDebugTools: function () {
-		var self = this;
+		var self = this; // easier than using (function (){}).bind(this) each time
 
 		this._addDebugTool({
 			name: 'Screen Overlays',
@@ -5350,25 +5352,12 @@ L.CanvasTileLayer = L.Layer.extend({
 			category: 'Automated User',
 			startsOn: false,
 			onAdd: function () {
-				self._debugLorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
-				self._debugLorem += ' ' + self._debugLorem + '\n';
+				self._debugLorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\n';
 				self._debugLoremPos = 0;
 				self._debugTyperTimeout();
 			},
 			onRemove: function () {
 				clearTimeout(self._debugTyperTimeoutId);
-			},
-		});
-
-		this._addDebugTool({
-			name: 'Add/Remove shapes',
-			category: 'Automated User',
-			startsOn: false,
-			onAdd: function () {
-				self._debugAddRemoveShapesTimeout();
-			},
-			onRemove: function () {
-				clearTimeout(self._debugAddRemoveShapesTimeoutId);
 			},
 		});
 
@@ -5380,6 +5369,46 @@ L.CanvasTileLayer = L.Layer.extend({
 				self._debugRandomizeSettings();
 			},
 			onRemove: function () {
+			},
+		});
+
+		this._addDebugTool({
+			name: 'Automated user input',
+			category: 'Automated User',
+			startsOn: false,
+			onAdd: function () {
+				self._debugAutomatedUserTimeout();
+			},
+			onRemove: function () {
+				clearTimeout(self._debugAutomatedUserTimeoutId);
+				self._debugAutomatedUserTask = undefined;
+				self._debugAutomatedUserPhase = 0;
+			},
+		});
+
+		if (this.isCalc()) {
+			this._addDebugTool({
+				name: 'Click, type, delete, cells & formulas',
+				category: 'Automated User',
+				startsOn: false,
+				onAdd: function () {
+					self._debugAutomatedUserAddTask(this.name, L.bind(self._debugAutomatedUserTypeCellFormula, self));
+				},
+				onRemove: function () {
+					self._debugAutomatedUserRemoveTask(this.name);
+				},
+			});
+		}
+
+		this._addDebugTool({
+			name: 'Insert and delete shape',
+			category: 'Automated User',
+			startsOn: false,
+			onAdd: function () {
+				self._debugAutomatedUserAddTask(this.name, L.bind(self._debugAutomatedUserInsertTypeShape, self));
+			},
+			onRemove: function () {
+				self._debugAutomatedUserRemoveTask(this.name);
 			},
 		});
 	},
@@ -5445,15 +5474,129 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._painter.update();
 	},
 
-	_debugAddRemoveShapesTimeout: function () {
-		var shapes = ['smiley','sun','moon','lightning','heart','flower'];
-		var shape = shapes[Math.floor(Math.random() * shapes.length)];
-		this._map.sendUnoCommand('.uno:SymbolShapes.'+shape);
+	_debugAutomatedUserTypeCellFormula: function (phase) {
+		var waitTime = 0;
+		switch (phase) {
+			case 0:
+				console.log('Automated User: Click somewhere visible');
+				var pos = this._pixelsToTwips(this._map._getCenterLayerPoint());
+				this._postMouseEvent('buttondown',pos.x,pos.y,1,1,0);
+				this._postMouseEvent('buttonup',pos.x,pos.y,1,1,0);
+				waitTime = 500;
+				break;
+			case 1:
+				console.log('Automated User: Type text');
+				this._debugTypeText('asdf\nqwer\n', 100);
+				waitTime = 1000;
+				break;
+			case 2:
+				console.log('Automated User: Click formula bar');
+				this._map.sendUnoCommand('.uno:StartFormula');
+				waitTime = 500;
+				break;
+			case 3:
+				console.log('Automated User: Type formula');
+				this._debugTypeText('A1\n', 100);
+				waitTime = 1000;
+				break;
+			case 4:
+				console.log('Automated User: Delete row');
+				this.postKeyboardEvent('input', 0, 1025); //up
+				this.postKeyboardEvent('input', 0, 1025); //up
+				this._map.sendUnoCommand('.uno:DeleteRows');
+				waitTime = 1000;
+				break;
+			case 5:
+				console.log('Automated User: Delete cells');
+				app.socket.sendMessage('removetextcontext id=0 before=0 after=1'); //delete
+				this.postKeyboardEvent('input', 0, 1025); //up
+				app.socket.sendMessage('removetextcontext id=0 before=0 after=1'); //delete
+				waitTime = 500;
+				break;
+		}
+		return waitTime;
+	},
 
-		setTimeout(L.bind(function() {app.socket.sendMessage('removetextcontext id=0 before=0 after=1');},this), 2000);
+	_debugAutomatedUserInsertTypeShape: function (phase) {
+		var waitTime = 0;
+		switch (phase) {
+			case 0:
+				console.log('Automated User: Insert Shape');
+				var shapes = ['rectangle','circle','diamond','pentagon'];
+				var shape = shapes[Math.floor(Math.random() * shapes.length)];
+				this._map.sendUnoCommand('.uno:BasicShapes.'+shape);
+				// app.socket.sendMessage('removetextcontext id=0 before=0 after=1');
+				waitTime = 1000;
+				break;
+			case 1:
+				console.log('Automated User: Type in Shape');
+				this.postKeyboardEvent('input',0, 1280); // enter to select text
+				this._debugTypeText('textinshape', 100);
+				waitTime = 1500;
+				break;
+			case 2:
+				console.log('Automated User: Type Escape');
+				this.postKeyboardEvent('input',0, 1281); // esc
+				waitTime = 500;
+				break;
+		}
+		return waitTime;
+	},
 
-		// Loop
-		this._debugAddRemoveShapesTimeoutId = setTimeout(L.bind(this._debugAddRemoveShapesTimeout, this), 4000);
+
+	_debugAutomatedUserAddTask: function(name, taskFn) {
+		// Save taskFn
+		this._debugAutomatedUserTasks[name] = taskFn;
+		// Add to queue
+		if (!this._debugAutomatedUserQueue.includes(name)) {
+			this._debugAutomatedUserQueue.push(name);
+		}
+	},
+
+	_debugAutomatedUserRemoveTask: function(name) {
+		// Don't bother deleting function from _debugAutomatedUserTasks
+		// Remove from queue
+		if (this._debugAutomatedUserQueue.includes(name)) {
+			this._debugAutomatedUserQueue.splice(
+				this._debugAutomatedUserQueue.indexOf(name),
+				1);
+		}
+	},
+
+
+	// task function takes phase number, returns waitTime
+	// When waitTime =0, task is done.
+
+	_debugAutomatedUserTimeout: function () {
+		if (!this._debugAutomatedUserTask) {
+			// Not in the middle of a task, pick a new one
+			console.log('Automated User: Pick a new task. Current queue: ',this._debugAutomatedUserQueue);
+			this._debugAutomatedUserTask = this._debugAutomatedUserQueue.shift();
+			this._debugAutomatedUserPhase = 0;
+		}
+
+		if (this._debugAutomatedUserTask && this._debugAutomatedUserPhase == 0) {
+			console.log('Automated User: Starting task ' + this._debugAutomatedUserTask);
+			// Re-enqueue task
+			this._debugAutomatedUserQueue.push(this._debugAutomatedUserTask);
+		}
+
+		if (this._debugAutomatedUserTask) {
+			console.log('Automated User: Current task: ' + this._debugAutomatedUserTask + ' Current phase: ' + this._debugAutomatedUserPhase);
+			var taskFn = this._debugAutomatedUserTasks[this._debugAutomatedUserTask];
+			var waitTime = taskFn(this._debugAutomatedUserPhase);
+			this._debugAutomatedUserPhase++;
+			if (waitTime == 0) {
+				console.log('Automated User: Task complete: ' + this._debugAutomatedUserTask);
+				this._debugAutomatedUserTask = undefined;
+				this._debugAutomatedUserPhase = 0;
+			}
+			this._debugAutomatedUserTimeoutId = setTimeout(L.bind(this._debugAutomatedUserTimeout, this), waitTime);
+		} else {
+			console.log('Automated User: Waiting for tasks');
+			// Nothing in queue, check again in 1s
+			this._debugAutomatedUserTimeoutId = setTimeout(L.bind(this._debugAutomatedUserTimeout, this), 1000);
+		}
 	},
 
 	_debugSetPostMessage: function(type,msg) {
@@ -5539,16 +5682,30 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	_debugTyperTimeout: function() {
 		var letter = this._debugLorem.charCodeAt(this._debugLoremPos % this._debugLorem.length);
+		this._debugTypeChar(letter);
+		this._debugLoremPos++;
+		this._debugTyperTimeoutId = setTimeout(L.bind(this._debugTyperTimeout, this), 50);
+	},
+
+	_debugTypeText: function(text, delayMs) {
+		for (var i=0; i<text.length; i++) {
+			if (delayMs) {
+				setTimeout(L.bind(this._debugTypeChar, this, text.charCodeAt(i)), i*delayMs);
+			} else {
+				this._debugTypeChar(text.charCodeAt(i));
+			}
+		}
+	},
+
+	_debugTypeChar: function(charCode) {
 		if (this._debugTileInvalidations) {
 			this._debugKeypressQueue.push(+new Date());
 		}
-		if (letter === '\n'.charCodeAt(0)) {
+		if (charCode === '\n'.charCodeAt(0)) {
 			this.postKeyboardEvent('input', 0, 1280);
 		} else {
-			this.postKeyboardEvent('input', this._debugLorem.charCodeAt(this._debugLoremPos % this._debugLorem.length), 0);
+			this.postKeyboardEvent('input', charCode, 0);
 		}
-		this._debugLoremPos++;
-		this._debugTyperTimeoutId = setTimeout(L.bind(this._debugTyperTimeout, this), 50);
 	},
 
 	/// onlyThread - takes annotation indicating which thread will be generated
