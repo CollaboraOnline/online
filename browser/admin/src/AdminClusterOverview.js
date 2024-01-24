@@ -532,6 +532,7 @@ var AdminClusterOverview = AdminSocketBase.extend({
             if (anchor) {
                 anchor.remove();
             }
+            location.reload();
         } else if (textMsg.startsWith('scaling')) {
             var msg = textMsg.split(' ')[1];
             if (msg == 'true') {
