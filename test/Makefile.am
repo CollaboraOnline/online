@@ -4,6 +4,8 @@ if ENABLE_TESTS
 export MAX_CONCURRENCY=4
 AUTOMAKE_OPTION = serial-tests
 
+DIST_FOLDER ?= $(abs_top_builddir)/browser/dist
+
 # unittest: tests that run a captive coolwsd as part of themselves.
 check_PROGRAMS = fakesockettest
 
@@ -14,7 +16,7 @@ if ENABLE_SSL
 include_paths += ${OPENSSL_CFLAGS}
 endif
 
-AM_CXXFLAGS = $(CPPUNIT_CFLAGS) -DTDOC=\"$(abs_top_srcdir)/test/data\" \
+AM_CXXFLAGS = $(CPPUNIT_CFLAGS) -DTDOC=\"$(abs_top_srcdir)/test/data\" -DTDIST=\"$(DIST_FOLDER)\" \
 	-I${top_srcdir}/common -I${top_srcdir}/net -I${top_srcdir}/wsd -I${top_srcdir}/kit \
 	-I${top_srcdir} -I${top_srcdir}/test \
 	-pthread -DCOOLWSD_DATADIR='"@COOLWSD_DATADIR@"' \

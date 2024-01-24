@@ -348,7 +348,7 @@ void FileServeTests::testPreProcessedFileRoundtrip()
 {
     constexpr auto testname = __func__;
 
-    const Poco::Path path(TDOC "/../../browser/dist");
+    const Poco::Path path(TDIST);
 
     std::vector<std::string> files;
     Poco::File(path).list(files);
@@ -374,7 +374,7 @@ void FileServeTests::testPreProcessedFileRoundtrip()
 void FileServeTests::preProcessedFileSubstitution(
     const std::string& testname, std::unordered_map<std::string, std::string> variables)
 {
-    const Poco::Path path(TDOC "/../../browser/dist");
+    const Poco::Path path(TDIST);
 
     std::vector<std::string> files;
     Poco::File(path).list(files);
