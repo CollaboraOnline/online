@@ -736,7 +736,7 @@ L.Map.Keyboard = L.Handler.extend({
 	},
 
 	_isCtrlKey: function (e) {
-		if (window.ThisIsTheiOSApp || navigator.appVersion.indexOf('Mac') != -1 || navigator.userAgent.indexOf('Mac') != -1)
+		if (window.ThisIsTheiOSApp || L.Browser.mac)
 			return e.metaKey;
 		else
 			return e.ctrlKey;

@@ -137,7 +137,7 @@ L.Control.DownloadProgress = L.Control.extend({
 	_setupKeyboardShortcutForElement: function (eventTargetId, buttonId) {
 		var keyDownCallback = function(e) {
 			var modifierKeys = !e.altKey && !e.shiftKey;
-			if (navigator.appVersion.indexOf('Mac') != -1 || navigator.userAgent.indexOf('Mac') != -1) {
+			if (L.Browser.mac) {
 				modifierKeys = modifierKeys && e.metaKey && !e.ctrlKey;
 			} else {
 				modifierKeys = modifierKeys && e.ctrlKey && !e.metaKey;
