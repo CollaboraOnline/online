@@ -227,7 +227,7 @@ L.Util = {
 	},
 
 	replaceCtrlAltInMac: function(msg) {
-		if (navigator.appVersion.indexOf('Mac') != -1 || navigator.userAgent.indexOf('Mac') != -1) {
+		if (L.Browser.mac) {
 			var ctrl = /Ctrl/g;
 			var alt = /Alt/g;
 			if (String.locale.startsWith('de') || String.locale.startsWith('dsb') || String.locale.startsWith('hsb')) {
