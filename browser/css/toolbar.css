@@ -1660,6 +1660,9 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 	filter: drop-shadow(0 1px 3px var(--color-box-shadow));
 	min-width: 150px;
 	font-size: var(--default-font-size);
+	max-height: 85vh;
+	overflow-y: auto;
+	overflow-x: hidden;
 }
 
 #userListPopover::after {
@@ -1731,6 +1734,25 @@ html[dir='rtl'] #userListPopover::after {
 
 #userListPopover .user-list-item.selected-user .user-list-item--name {
 	padding: 4px 0 0 8px;
+}
+/* Style for the scrollbar track */
+#userListPopover::-webkit-scrollbar {
+	width: 6px;
+}
+
+/* Style for the scrollbar handle (thumb) */
+#userListPopover::-webkit-scrollbar-thumb {
+	background-color: var(--color-border);
+}
+
+/* Style for the scrollbar track when handle is being dragged */
+#userListPopover::-webkit-scrollbar-thumb:hover {
+	width: 8px;
+}
+
+/* Style for the scrollbar track (not the handle) */
+#userListPopover::-webkit-scrollbar-track {
+	background: transparent;
 }
 
 @media only screen and (max-width: 600px) {
