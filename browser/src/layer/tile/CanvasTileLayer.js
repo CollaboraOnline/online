@@ -808,8 +808,6 @@ L.TileSectionManager = L.Class.extend({
 
 L.CanvasTileLayer = L.Layer.extend({
 
-	isMacClient: (navigator.appVersion.indexOf('Mac') != -1 || navigator.userAgent.indexOf('Mac') != -1),
-
 	options: {
 		pane: 'tilePane',
 
@@ -3660,7 +3658,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (!this._map._docLoaded)
 			return;
 
-		if (this.isMacClient) {
+		if (L.Browser.mac) {
 			// Map Mac standard shortcuts to the LO shortcuts for the corresponding
 			// functions when possible. Note that the Cmd modifier comes here as CTRL.
 

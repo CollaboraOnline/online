@@ -107,6 +107,7 @@ window.app = {
 	    gecko3d = 'MozPerspective' in doc.style,
 	    opera12 = 'OTransition' in doc.style;
 
+	var mac = navigator.appVersion.indexOf('Mac') != -1 || navigator.userAgent.indexOf('Mac') != -1;
 	var chromebook = global.ThisIsTheAndroidApp && global.COOLMessageHandler.isChromeOS();
 
 	var isInternetExplorer = (navigator.userAgent.toLowerCase().indexOf('msie') != -1 ||
@@ -183,6 +184,10 @@ window.app = {
 		// @property win: Boolean
 		// `true` when the browser is running in a Windows platform
 		win: win,
+
+		// @property mac: Boolean
+		// `true` when the browser is running in a Mac platform
+		mac: mac,
 
 		// @property ie3d: Boolean
 		// `true` for all Internet Explorer versions supporting CSS transforms.
