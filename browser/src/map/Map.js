@@ -295,7 +295,7 @@ L.Map = L.Evented.extend({
 				this.initializeModificationIndicator();
 
 			// Show sidebar.
-			if (this._docLayer) {
+			if (this._docLayer && !this._docLoadedOnce) {
 				// Let the first page finish loading then load the sidebar.
 				setTimeout(this.uiManager.initializeSidebar.bind(this.uiManager), 200);
 			}
