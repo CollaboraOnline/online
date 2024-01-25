@@ -303,7 +303,7 @@ L.DebugManager = L.Class.extend({
 		this._addDebugTool({
 			name: 'Randomize user settings',
 			category: 'Automated User',
-			startsOn: false,
+			startsOn: !!window.coolParams.get('randomUser'),
 			onAdd: function () {
 				self._randomizeSettings();
 			},
