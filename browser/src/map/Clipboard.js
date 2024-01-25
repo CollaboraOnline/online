@@ -34,6 +34,7 @@ L.Clipboard = L.Class.extend({
 
 		var div = document.createElement('div');
 		this._dummyDiv = div;
+		this._dummyClipboard = {};
 
 		div.setAttribute('id', this._dummyDivName);
 		div.setAttribute('style', 'user-select: text !important');
@@ -765,7 +766,11 @@ L.Clipboard = L.Class.extend({
 			this._navigatorClipboardPasteSpecial = true;
 		}
 		var that = this;
-		navigator.clipboard.read().then(function(clipboardContents) {
+		var clipboard = navigator.clipboard;
+		if (L.Browser.cypressTest) {
+			clipboard = this._dummyClipboard;
+		}
+		clipboard.read().then(function(clipboardContents) {
 			that._navigatorClipboardReadCallback(clipboardContents);
 		}, function(error) {
 			window.app.console.log('navigator.clipboard.read() failed: ' + error.message);
