@@ -26,7 +26,7 @@ describe(['tagmultiuser'], 'Joining a document should not trigger an invalidatio
 		// TODO: Grammar checking, when available, adds an extra empty update when
 		// it kicks in after a change
 		cy.cGet('#Review-tab-label').click();
-		cy.cGet('.cell.notebookbar > .unoSpellOnline > button').click();
+		cy.cGet('.notebookbar > .unoSpellOnline > button').click();
 
 		ceHelper.type('X');
 
@@ -66,7 +66,7 @@ describe(['tagmultiuser'], 'Joining a document should not trigger an invalidatio
 		// TODO: Grammar checking, when available, adds an extra empty update when
 		// it kicks in after a change
 		cy.cGet('#Review-tab-label').click();
-		cy.cGet('.cell.notebookbar > .unoSpellOnline > button').click();
+		cy.cGet('.notebookbar > .unoSpellOnline > button').click();
 
 		ceHelper.type('X');
 
@@ -84,7 +84,7 @@ describe(['tagmultiuser'], 'Joining a document should not trigger an invalidatio
 
 			// joins after a save triggered excessive invalidations on changes
 			cy.cGet('#File-tab-label').click();
-			cy.cGet('.cell.notebookbar > .unoSave > button').click();
+			cy.cGet('.notebookbar-shortcuts-bar .unoSave > button').click();
 
 			// Reload page
 			cy.cSetActiveFrame('#iframe2');
