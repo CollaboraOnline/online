@@ -176,7 +176,7 @@ describe(['tagdesktop'], 'Table operations', function() {
 		cy.cGet('.leaflet-marker-icon.table-column-resize-marker')
 			.should('have.length', 3);
 
-		selectOptionNotebookbar('#table-delete-columns');
+		selectOptionNotebookbar('#table-delete-columns-button');
 
 		cy.cGet('.leaflet-marker-icon.table-column-resize-marker')
 			.should('have.length', 2);
@@ -279,7 +279,7 @@ describe(['tagdesktop'], 'Table operations', function() {
 		cy.cGet('.leaflet-marker-icon.table-row-resize-marker')
 			.should('have.length', 3);
 
-		selectOptionNotebookbar('.cell.notebookbar #SplitCell');
+		selectOptionNotebookbar('.notebookbar #SplitCell');
 
 		cy.cGet('#SplitCellsDialog').should('be.visible');
 

@@ -51,7 +51,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Invalidation tests.', func
 
 		// Add a header with YY in it
 		cy.cGet('#Insert-tab-label').click();
-		cy.cGet('.cell.notebookbar > .unoInsertPageHeader > button').click();
+		cy.cGet('.notebookbar > .unoInsertPageHeader > button').click();
 		ceHelper.type('YY');
 
 		// Click back in main document
@@ -97,7 +97,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Invalidation tests.', func
 
 		// Add some main body text of X and bullet
 		ceHelper.type('XX');
-		cy.cGet('.cell.notebookbar > .unoDefaultBullet > button').click();
+		cy.cGet('.notebookbar > .unoDefaultBullet > button').click();
 		cy.cGet('#tb_actionbar_item_StateWordCount').should('have.text', '    2 words, 3 characters');
 
 		cy.cGet('.empty-deltas').then(($before) => {
