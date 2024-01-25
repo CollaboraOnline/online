@@ -15,11 +15,11 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', fu
 		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
-	function setDummyClipboard() {
+	function setDummyClipboard(html) {
 		cy.window().then(win => {
 			var app = win['0'].app;
 			var metaURL = encodeURIComponent(app.map._clip.getMetaURL());
-			var html = '<div id="meta-origin" data-coolorigin="' + metaURL + '">ignored</div>';
+			html = html.replace('%META_URL%', metaURL);
 			var blob = new Blob([html]);
 			var clipboard = app.map._clip;
 			var clipboardItem = {
@@ -55,7 +55,8 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', fu
 			var app = win['0'].app;
 			app.socket.sendMessage('uno .uno:Copy');
 		});
-		setDummyClipboard();
+		var html = '<div id="meta-origin" data-coolorigin="%META_URL%">ignored</div>';
+		setDummyClipboard(html);
 
 		// When pasting C1 to D1:
 		helper.typeIntoInputField('input#addressInput', 'D1');
@@ -68,5 +69,20 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', fu
 		// expected **#copy-paste-container table td:nth-of-type(1)** to have text **'5'**, but the text was **''**
 		// i.e. a popup dialog was shown, instead of working, like with Ctrl-V.
 		cy.cGet('#copy-paste-container table td:nth-of-type(1)').should('have.text', '5');
+	});
+
+	it('HTML paste, external case', function() {
+		// Given a Calc document:
+		cy.cGet('#map').focus();
+		calcHelper.clickOnFirstCell();
+		var html = '<div>clipboard</div>';
+		setDummyClipboard(html);
+
+		// When pasting the clipboard to A1:
+		cy.cGet('#home-paste-button').click();
+		cy.cGet('#w2ui-overlay-pastemenu tr[title="Ctrl + V"]').click();
+
+		// Then make sure we actually consider the content of the HTML:
+		cy.cGet('#sc_input_window.formulabar .ui-custom-textarea-text-layer').should('have.text', 'clipboard');
 	});
 });
