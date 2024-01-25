@@ -93,7 +93,7 @@ L.Map.Mouse = L.Handler.extend({
 		buttons |= e.originalEvent.button === this.JSButtons.right ? this.LOButtons.right : 0;
 
 		// Turn ctrl-left-click into right-click for browsers on macOS
-		if (navigator.appVersion.indexOf('Mac') != -1 || navigator.userAgent.indexOf('Mac') != -1) {
+		if (L.Browser.mac) {
 			if (modifier == UNOModifier.CTRL && buttons == this.LOButtons.left) {
 				modifier = 0;
 				buttons = this.LOButtons.right;
