@@ -5364,7 +5364,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._addDebugTool({
 			name: 'Randomize user settings',
 			category: 'Automated User',
-			startsOn: false,
+			startsOn: !!window.coolParams.get('randomUser'),
 			onAdd: function () {
 				self._debugRandomizeSettings();
 			},
@@ -5441,26 +5441,28 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (this.isCalc()) {
 			// Select random position
 			var docSize = this._map.getDocSize();
-			var maxX = docSize.x; //Math.min(docSize.x, 10000);
-			var maxY = docSize.y; //Math.min(docSize.y, 10000);
-			var positions = [
-				{x: maxX, y: 0}, // top right
-				{x: 0, y: maxY}, // bottom left
-				{x: maxX, y: maxY}, // bottom right
-				{x: maxX/2, y: maxY/2}, // center
-			];
-			var pos = positions[Math.floor(Math.random()*positions.length)];
+			if (docSize) { // undefined when run at startup with url parameter
+				var maxX = docSize.x; //Math.min(docSize.x, 10000);
+				var maxY = docSize.y; //Math.min(docSize.y, 10000);
+				var positions = [
+					{x: maxX, y: 0}, // top right
+					{x: 0, y: maxY}, // bottom left
+					{x: maxX, y: maxY}, // bottom right
+					{x: maxX/2, y: maxY/2}, // center
+				];
+				var pos = positions[Math.floor(Math.random()*positions.length)];
 
-			// Calculate mouse click position
-			var viewSize = this._map.getSize();
-			var centerPos = {x: pos.x + viewSize.x/2, y: pos.y + viewSize.y/2};
-			var centerTwips = this._pixelsToTwips(centerPos);
+				// Calculate mouse click position
+				var viewSize = this._map.getSize();
+				var centerPos = {x: pos.x + viewSize.x/2, y: pos.y + viewSize.y/2};
+				var centerTwips = this._pixelsToTwips(centerPos);
 
 			// Perform action
 			console.log('Randomize Settings: Move to ',pos,' click at ', centerPos, centerTwips);
 			this._map.fire('scrollto', pos);
 			this._postMouseEvent('buttondown', centerTwips.x, centerTwips.y, 1, 1, 0);
 			this._postMouseEvent('buttonup', centerTwips.x, centerTwips.y, 1, 1, 0);
+			}
 		}
 
 		// Toggle sidebar
