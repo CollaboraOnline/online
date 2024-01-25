@@ -57,25 +57,25 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 	});
 
 	it('Apply bold font.', function() {
-		cy.cGet('.cell.notebookbar > .unoBold > button').click();
+		cy.cGet('.notebookbar > .unoBold > button').click();
 		writerHelper.selectAllTextOfDoc();
 		cy.cGet('#copy-paste-container p b').should('exist');
 	});
 
 	it('Apply italic font.', function() {
-		cy.cGet('.cell.notebookbar > .unoItalic > button').click();
+		cy.cGet('.notebookbar > .unoItalic > button').click();
 		writerHelper.selectAllTextOfDoc();
 		cy.cGet('#copy-paste-container p i').should('exist');
 	});
 
 	it('Apply underline.', function() {
-		cy.cGet('.cell.notebookbar > .unoUnderline > button').click();
+		cy.cGet('.notebookbar > .unoUnderline > button').click();
 		writerHelper.selectAllTextOfDoc();
 		cy.cGet('#copy-paste-container p u').should('exist');
 	});
 
 	it('Apply strikethrough.', function() {
-		cy.cGet('.cell.notebookbar > .unoStrikeout > button').click();
+		cy.cGet('.notebookbar > .unoStrikeout > button').click();
 		writerHelper.selectAllTextOfDoc();
 		cy.cGet('#copy-paste-container p strike').should('exist');
 	});
@@ -88,55 +88,55 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 	});
 
 	it('Clear direct formatting', function() {
-		cy.cGet('.cell.notebookbar > .unoBold > button').click();
+		cy.cGet('.notebookbar > .unoBold > button').click();
 		writerHelper.selectAllTextOfDoc();
 		cy.cGet('#copy-paste-container p b').should('exist');
-		cy.cGet('.cell.notebookbar > .unoResetAttributes').click();
+		cy.cGet('.notebookbar > .unoResetAttributes').click();
 		writerHelper.selectAllTextOfDoc();
 		cy.cGet('#copy-paste-container p b').should('not.exist');
 	});
 
 	it('Apply left/right alignment.', function() {
-		cy.cGet('#Home .cell.notebookbar > .unoBold > button').click();
+		cy.cGet('#Home .notebookbar > .unoBold > button').click();
 		writerHelper.selectAllTextOfDoc();
 		//cy.cGet('#copy-paste-container p').should('have.attr', 'align', 'right');
-		cy.cGet('#Home .cell.notebookbar > .unoRightPara').click();
+		cy.cGet('#Home .notebookbar > .unoRightPara').click();
 		writerHelper.selectAllTextOfDoc();
 		//cy.cGet('#copy-paste-container p').should('have.attr', 'align', 'left');
 	});
 
 	it('Apply center alignment.', function() {
-		cy.cGet('#Home .cell.notebookbar > .unoCenterPara').click();
+		cy.cGet('#Home .notebookbar > .unoCenterPara').click();
 		writerHelper.selectAllTextOfDoc();
 		//cy.cGet('#copy-paste-container p').should('have.attr', 'align', 'center');
 	});
 
 	it('Apply justified.', function() {
-		cy.cGet('#Home .cell.notebookbar > div.unoJustifyPara > button.unobutton').click();
+		cy.cGet('#Home .notebookbar > div.unoJustifyPara > button.unobutton').click();
 		writerHelper.selectAllTextOfDoc();
 		cy.cGet('#copy-paste-container p').should('have.attr', 'align', 'justify');
 	});
 
 	it('Apply Line spacing: 1 and 1.5', function() {
-		cy.cGet('#Home .cell.notebookbar .unoLineSpacing button').click();
+		cy.cGet('#Home .notebookbar .unoLineSpacing button').click();
 		cy.cGet('[id$=line-spacing-menu]').contains('.menu-text', 'Line Spacing: 1.5').click();
 		writerHelper.selectAllTextOfDoc();
 		cy.cGet('#copy-paste-container p').should('have.attr', 'style').should('contain', 'line-height: 150%');
-		cy.cGet('#Home .cell.notebookbar .unoLineSpacing button').click();
+		cy.cGet('#Home .notebookbar .unoLineSpacing button').click();
 		cy.cGet('[id$=line-spacing-menu]').contains('.menu-text', 'Line Spacing: 1').click();
 		writerHelper.selectAllTextOfDoc();
 		cy.cGet('#copy-paste-container p').should('have.attr', 'style').should('contain', 'line-height: 100%');
 	});
 
 	it('Apply Line spacing: 2', function() {
-		cy.cGet('#Home .cell.notebookbar .unoLineSpacing button').click();
+		cy.cGet('#Home .notebookbar .unoLineSpacing button').click();
 		cy.cGet('[id$=line-spacing-menu]').contains('.menu-text', 'Line Spacing: 2').click();
 		writerHelper.selectAllTextOfDoc();
 		cy.cGet('#copy-paste-container p').should('have.attr', 'style').should('contain', 'line-height: 200%');
 	});
 
 	it('Increase/Decrease Paragraph spacing', function() {
-		cy.cGet('.cell.notebookbar .unoLineSpacing button').click();
+		cy.cGet('.notebookbar .unoLineSpacing button').click();
 		cy.cGet('[id$=line-spacing-menu]').contains('.menu-text', 'Increase Paragraph Spacing').click();
 
 		writerHelper.selectAllTextOfDoc();
@@ -146,7 +146,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 		writerHelper.selectAllTextOfDoc();
 
-		cy.cGet('.cell.notebookbar .unoLineSpacing button').click();
+		cy.cGet('.notebookbar .unoLineSpacing button').click();
 		cy.cGet('[id$=line-spacing-menu]').contains('.menu-text', 'Decrease Paragraph Spacing').click();
 
 		writerHelper.selectAllTextOfDoc();
@@ -248,7 +248,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 	});
 
 	it('Save.', { defaultCommandTimeout: 60000 }, function() {
-		cy.cGet('.cell.notebookbar > .unoBold > button').click();
+		cy.cGet('.notebookbar > .unoBold > button').click();
 		cy.cGet('.notebookbar-shortcuts-bar .unoSave').click();
 		helper.reload(testFileName, 'writer', true);
 		cy.wait(2000);
@@ -271,7 +271,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 	});
 
 	it('Apply Undo/Redo.', function() {
-		cy.cGet('.cell.notebookbar > .unoItalic > button').click();
+		cy.cGet('.notebookbar > .unoItalic > button').click();
 		writerHelper.selectAllTextOfDoc();
 		cy.cGet('#copy-paste-container p i').should('exist');
 
@@ -346,8 +346,8 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		helper.textSelectionShouldExist();
 
 		// Apply bold and try to clone it to the whole word.
-		cy.cGet('.cell.notebookbar > .unoBold > button').click();
-		cy.cGet('.cell.notebookbar > .unoFormatPaintbrush').click();
+		cy.cGet('.notebookbar > .unoBold > button').click();
+		cy.cGet('.notebookbar > .unoFormatPaintbrush').click();
 
 		// Click at the blinking cursor position.
 		cy.cGet('.leaflet-cursor.blinking-cursor')
@@ -401,7 +401,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Apply superscript.', function() {
 		writerHelper.selectAllTextOfDoc();
-		cy.cGet('.cell.notebookbar .unoSuperScript').click();
+		cy.cGet('.notebookbar .unoSuperScript').click();
 		cy.cGet('.leaflet-layer').click('center');
 		writerHelper.selectAllTextOfDoc();
 		cy.cGet('#copy-paste-container p sup').should('exist');
@@ -409,7 +409,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Apply subscript.', function() {
 		writerHelper.selectAllTextOfDoc();
-		cy.cGet('.cell.notebookbar .unoSubScript').click();
+		cy.cGet('.notebookbar .unoSubScript').click();
 		cy.cGet('.leaflet-layer').click('center');
 		writerHelper.selectAllTextOfDoc();
 		cy.cGet('#copy-paste-container p sub').should('exist');
