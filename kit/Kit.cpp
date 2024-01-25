@@ -1451,7 +1451,7 @@ private:
         std::string stateName;
         if (!viewRenderedState.empty())
         {
-            stateName = viewRenderedState.substr(viewRenderedState.find(';') + 1);
+            stateName = viewRenderedState;
         }
         else
         {
