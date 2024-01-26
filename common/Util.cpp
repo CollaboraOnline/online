@@ -38,6 +38,7 @@
 #include <unistd.h>
 #include <dirent.h>
 #include <fcntl.h>
+#include <spawn.h>
 
 #include <atomic>
 #include <cassert>
@@ -199,65 +200,8 @@ namespace Util
         return tasks;
     }
 
-    // close what we have - far faster than going up to a 1m open_max eg.
-    static bool closeFdsFromProc(std::map<int, int> *mapFdsToKeep = nullptr)
+    int spawnProcess(const std::string &cmd, const StringVector &args)
     {
-          DIR *fdDir = opendir("/proc/self/fd");
-          if (!fdDir)
-              return false;
-
-          struct dirent *i;
-
-          while ((i = readdir(fdDir))) {
-              if (i->d_name[0] == '.')
-                  continue;
-
-              char *e = NULL;
-              errno = 0;
-              long fd = strtol(i->d_name, &e, 10);
-              if (errno != 0 || !e || *e)
-                  continue;
-
-              if (fd == dirfd(fdDir))
-                  continue;
-
-              if (fd < 3)
-                  continue;
-
-              if (mapFdsToKeep && mapFdsToKeep->find(fd) != mapFdsToKeep->end())
-                  continue;
-
-              if (close(fd) < 0)
-                  std::cerr << "Unexpected failure to close fd " << fd << std::endl;
-          }
-
-          closedir(fdDir);
-          return true;
-    }
-
-    static void closeFds(std::map<int, int> *mapFdsToKeep = nullptr)
-    {
-        if (!closeFdsFromProc(mapFdsToKeep))
-        {
-            std::cerr << "Couldn't close fds efficiently from /proc" << std::endl;
-            for (int fd = 3; fd < sysconf(_SC_OPEN_MAX); ++fd)
-                if (mapFdsToKeep->find(fd) != mapFdsToKeep->end())
-                    close(fd);
-        }
-    }
-
-    int spawnProcess(const std::string &cmd, const StringVector &args, const std::vector<int>* fdsToKeep, int *stdInput)
-    {
-        int pipeFds[2] = { -1, -1 };
-        if (stdInput)
-        {
-            if (pipe2(pipeFds, O_NONBLOCK) < 0)
-            {
-                LOG_ERR("Out of file descriptors spawning " << cmd);
-                throw Poco::SystemException("Out of file descriptors");
-            }
-        }
-
         // Create a vector of zero-terminated strings.
         std::vector<std::string> argStrings;
         for (const auto& arg : args)
@@ -269,36 +213,14 @@ namespace Util
             params.push_back(const_cast<char *>(i.c_str()));
         params.push_back(nullptr);
 
-        std::map<int, int> mapFdsToKeep;
-
-        if (fdsToKeep)
-            for (const auto& i : *fdsToKeep)
-                mapFdsToKeep[i] = i;
-
-        int pid = fork();
-        if (pid < 0)
+        pid_t pid = -1;
+        int status = posix_spawn(&pid, params[0], nullptr, nullptr, params.data(), environ);
+        if (status < 0)
         {
-            LOG_ERR("Failed to fork for command '" << cmd);
-            throw Poco::SystemException("Failed to fork for command ", cmd);
+            LOG_ERR("Failed to posix_spawn for command '" << cmd);
+            throw Poco::SystemException("Failed to fork posix_spawn command ", cmd);
         }
-        else if (pid == 0) // child
-        {
-            if (stdInput)
-                dup2(pipeFds[0], STDIN_FILENO);
 
-            closeFds(&mapFdsToKeep);
-
-            int ret = execvp(params[0], &params[0]);
-            if (ret < 0)
-                LOG_SFL("Failed to exec command '" << cmd << '\'');
-            Util::forcedExit(42);
-        }
-        // else spawning process still
-        if (stdInput)
-        {
-            close(pipeFds[0]);
-            *stdInput = pipeFds[1];
-        }
         return pid;
     }
 

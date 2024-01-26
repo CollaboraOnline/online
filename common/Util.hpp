@@ -137,10 +137,8 @@ namespace Util
     /// Get number of threads in this process or -1 on error
     int getProcessThreadCount();
 
-    /// Spawn a process if stdInput is non-NULL it contains a writable descriptor
-    /// to send data to the child.
-    int spawnProcess(const std::string &cmd, const StringVector &args,
-                     const std::vector<int>* fdsToKeep = nullptr, int *stdInput = nullptr);
+    /// Spawn a process.
+    int spawnProcess(const std::string &cmd, const StringVector &args);
 
 #endif
 
