@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach require afterEach */
+/* global describe it cy beforeEach require afterEach Cypress */
 
 var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
@@ -15,7 +15,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', fu
 		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
-	function setDummyClipboard(type, content) {
+	function setDummyClipboard(type, content, image = false) {
 		cy.window().then(win => {
 			var app = win['0'].app;
 			var metaURL = encodeURIComponent(app.map._clip.getMetaURL());
@@ -25,14 +25,18 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', fu
 			var blob = new Blob([content]);
 			var clipboard = app.map._clip;
 			var clipboardItem = {
-				getType: function(/*type*/) {
+				getType: function(type) {
 					return {
 						then: function(resolve/*, reject*/) {
-							resolve(blob);
+							if (image && type === 'text/html') {
+								resolve(new Blob(['<img></img>']));
+							} else {
+								resolve(blob);
+							}
 						},
 					};
 				},
-				types: [type],
+				types: image ? [type, 'text/html'] : [type],
 			};
 			var clipboardItems = [clipboardItem];
 			clipboard._dummyClipboard = {
@@ -101,5 +105,22 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', fu
 
 		// Then make the paste happened:
 		cy.cGet('#sc_input_window.formulabar .ui-custom-textarea-text-layer').should('have.text', 'plain text');
+	});
+
+	it('Image paste', function() {
+		// Given a Calc document:
+		cy.cGet('#map').focus();
+		calcHelper.clickOnFirstCell();
+		var base64 = 'iVBORw0KGgoAAAANSUhEUgAAAQAAAAEAAQMAAABmvDolAAAAA1BMVEW10NBjBBbqAAAAH0lEQVRo';
+		base64 += 'ge3BAQ0AAADCoPdPbQ43oAAAAAAAAAAAvg0hAAABmmDh1QAAAABJRU5ErkJggg==';
+		var blob = Cypress.Blob.base64StringToBlob(base64, 'image/png');
+		setDummyClipboard('image/png', blob, /*image=*/true);
+
+		// When pasting the clipboard:
+		cy.cGet('#home-paste-button').click();
+		cy.cGet('#w2ui-overlay-pastemenu tr[title="Ctrl + V"]').click();
+
+		// Then make the paste happened:
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g').should('exist');
 	});
 });
