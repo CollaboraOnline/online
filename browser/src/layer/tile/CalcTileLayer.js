@@ -962,7 +962,8 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 	_onTextSelectionMsg: function (textMsg) {
 		L.CanvasTileLayer.prototype._onTextSelectionMsg.call(this, textMsg);
 		// If this is a cellSelection message, user shouldn't be editing a cell. Below check is for ensuring that.
-		if (this.insertMode === false && this._cellCursorXY && this._cellCursorXY.x !== -1) {
+		if ((this.insertMode === false || this._map._isCursorVisible == false) &&
+		    this._cellCursorXY && this._cellCursorXY.x !== -1) {
 			// When insertMode is false, this is a cell selection message.
 			textMsg = textMsg.replace('textselection:', '');
 			if (textMsg.trim() !== 'EMPTY' && textMsg.trim() !== '') {
