@@ -1776,7 +1776,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			if (this._debug.overlayOn) {
 				var viewId = payload.split('=')[1].split(' ')[0];
 				var canonicalId = payload.split('=')[2].split(' ')[0];
-				this._debug.overlayData['canonicalViewId'].setPrefix(
+				this._debug.setOverlayMessage('canonicalViewId',
 					'Canonical id changed to: ' + canonicalId + ' for view id: ' + viewId + ' with view renderend state: ' + viewRenderedState
 				);
 			}

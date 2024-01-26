@@ -291,8 +291,9 @@ app.definitions.Socket = L.Class.extend({
 
 		var debugOn = this._map._debug.debugOn;
 
-		if (debugOn)
-			this._map._debug.setOverlayPostMessage(type,msg);
+		if (this._map._debug.overlayOn) {
+			this._map._debug.setOverlayMessage('postMessage',type+': '+msg);
+		}
 
 		if (!debugOn && msg.length > 256) // for reasonable performance.
 			msg = msg.substring(0,256) + '<truncated ' + (msg.length - 256) + 'chars>';
@@ -1074,7 +1075,7 @@ app.definitions.Socket = L.Class.extend({
 			var times = this._map._debug._debugTimePING;
 			var timeText = this._map._debug.updateTimeArray(times, +new Date() - this._map._debug._debugPINGQueue.shift());
 			if (this._map._debug.overlayOn) {
-				this._map._debug.overlayData['ping'].setPrefix(
+				this._map._debug.setOverlayMessage('ping',
 					'Server ping time: ' + timeText + '. ' +
 					'Rendered tiles: ' + command.rendercount + ', ' + 
 					'last: ' + (command.rendercount - this._map._debug._debugRenderCount)
