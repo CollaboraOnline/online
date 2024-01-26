@@ -723,7 +723,8 @@ input[type='number']:hover::-webkit-outer-spin-button {
 }
 
 .ui-listbox,
-.ui-combobox {
+.ui-combobox,
+.ui-timefield  {
 	box-sizing: border-box;
 	-webkit-appearance: none;
 	-moz-appearance: none;
@@ -777,7 +778,8 @@ input[type='number']:hover::-webkit-outer-spin-button {
 }
 
 /* ui-combobox */
-.ui-combobox {
+.ui-combobox,
+.ui-timefield {
 	border: 1px solid var(--color-border);
 }
 
@@ -1906,4 +1908,9 @@ kbd,
 /* Modal info with 2 line message*/
 .jsdialog-container [id^='info-modal-label'] {
 	display: flex;
+}
+
+#DocumentPropertiesDialog #customprops input.ui-timefield {
+	margin-top: auto;
+	margin-bottom: auto;
 }
