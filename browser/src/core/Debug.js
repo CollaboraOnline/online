@@ -140,17 +140,6 @@ L.DebugManager = L.Class.extend({
 			onAdd: function () {
 				self.overlayOn = true;
 				self.overlayData = {};
-				var names = ['canonicalViewId', 'tileCombine', 'fromKeyInputToInvalidate', 'ping', 'loadCount', 'postMessage'];
-				for (var i = 0; i < names.length; i++) {
-					self.overlayData[names[i]] = L.control.attribution({prefix: '', position: 'bottomleft'}).addTo(self._map);
-					self.overlayData[names[i]].addTo(self._map);
-				}
-				names = ['nullUpdateMetric', 'newTileMetric'];
-				for (var i = 0; i < names.length; i++) {
-					self.overlayData[names[i]] = L.control.attribution({prefix: '', position: 'topleft'}).addTo(self._map);
-					self.overlayData[names[i]].addTo(self._map);
-					self.overlayData[names[i]]._container.style.fontSize = '14px';
-				}
 			},
 			onRemove: function () {
 				self.overlayOn = false;
@@ -565,9 +554,15 @@ L.DebugManager = L.Class.extend({
 		}
 	},
 
-	setOverlayPostMessage: function(type,msg) {
+	setOverlayMessage: function(id, message) {
 		if (this.overlayOn) {
-			this.overlayData['postMessage'].setPrefix(type+': '+ msg);
+			if (!this.overlayData[id]) {
+				var topLeftNames = ['nullUpdateMetric', 'newTileMetric'];
+				var position = topLeftNames.includes(id) ? 'topleft' : 'bottomleft';
+				this.overlayData[id] = L.control.attribution({prefix: '', position: position});
+				this.overlayData[id].addTo(this._map);
+			}
+			this.overlayData[id].setPrefix(message);
 		}
 	},
 
@@ -589,16 +584,16 @@ L.DebugManager = L.Class.extend({
 
 
 	_overlayShowTileData: function() {
-		this.overlayData['loadCount'].setPrefix(
+		this.setOverlayMessage('loadCount',
 			'Total of requested tiles: ' + this._debugInvalidateCount + ', ' +
 			'recv-tiles: ' + this._debugLoadTile + ', ' +
 			'recv-delta: ' + this._debugLoadDelta + ', ' +
 			'recv-update: ' + this._debugLoadUpdate);
 		var allDeltas = this._debugLoadDelta + this._debugLoadUpdate;
-		this.overlayData['nullUpdateMetric'].setPrefix(
+		this.setOverlayMessage('nullUpdateMetric',
 			'<b>Tile update waste: ' + Math.round(100.0 * this._debugLoadUpdate / allDeltas) + '%</b>'
 		);
-		this.overlayData['newTileMetric'].setPrefix(
+		this.setOverlayMessage('newTileMetric',
 			'<b>New Tile ratio: ' + Math.round(100.0 * this._debugLoadTile / (allDeltas + this._debugLoadTile)) + '%</b>'
 		);
 	},
@@ -631,7 +626,7 @@ L.DebugManager = L.Class.extend({
 			}
 		}
 		if (this.overlayOn) {
-			this.overlayData['tileCombine'].setPrefix(messages);
+			this.setOverlayMessage('tileCombine',messages);
 			this._overlayShowTileData();
 		}
 	},
@@ -658,7 +653,7 @@ L.DebugManager = L.Class.extend({
 		var oldestKeypress = this._debugKeypressQueue.shift();
 		if (oldestKeypress) {
 			var timeText = this.updateTimeArray(this._debugTimeKeypress, now - oldestKeypress);
-			this.overlayData['fromKeyInputToInvalidate'].setPrefix(
+			this.setOverlayMessage('fromKeyInputToInvalidate',
 				'Elapsed time between key input and next invalidate: ' + timeText
 			);
 		}
