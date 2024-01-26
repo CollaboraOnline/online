@@ -91,6 +91,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['basespinfield'] = this.baseSpinField;
 		this._controlHandlers['spinfield'] = this._spinfieldControl;
 		this._controlHandlers['metricfield'] = this._metricfieldControl;
+		this._controlHandlers['time'] = JSDialog.timeField;
 		this._controlHandlers['formattedfield'] = this._formattedfieldControl;
 		this._controlHandlers['edit'] = this._editControl;
 		this._controlHandlers['formulabaredit'] = JSDialog.formulabarEdit;
@@ -3272,7 +3273,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			&& data.type !== 'expander'
 			&& data.type !== 'panel'
 			&& data.type !== 'buttonbox'
-			&& data.type !== 'treelistbox')
+			&& data.type !== 'treelistbox'
+			&& data.type !== 'time'
+			)
 			control.setAttribute('tabIndex', '0');
 	},
 
