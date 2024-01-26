@@ -15,12 +15,14 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', fu
 		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
-	function setDummyClipboard(html) {
+	function setDummyClipboard(type, content) {
 		cy.window().then(win => {
 			var app = win['0'].app;
 			var metaURL = encodeURIComponent(app.map._clip.getMetaURL());
-			html = html.replace('%META_URL%', metaURL);
-			var blob = new Blob([html]);
+			if (type === 'text/html') {
+				content = content.replace('%META_URL%', metaURL);
+			}
+			var blob = new Blob([content]);
 			var clipboard = app.map._clip;
 			var clipboardItem = {
 				getType: function(/*type*/) {
@@ -30,7 +32,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', fu
 						},
 					};
 				},
-				types: ['text/html'],
+				types: [type],
 			};
 			var clipboardItems = [clipboardItem];
 			clipboard._dummyClipboard = {
@@ -56,7 +58,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', fu
 			app.socket.sendMessage('uno .uno:Copy');
 		});
 		var html = '<div id="meta-origin" data-coolorigin="%META_URL%">ignored</div>';
-		setDummyClipboard(html);
+		setDummyClipboard('text/html', html);
 
 		// When pasting C1 to D1:
 		helper.typeIntoInputField('input#addressInput', 'D1');
@@ -76,7 +78,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', fu
 		cy.cGet('#map').focus();
 		calcHelper.clickOnFirstCell();
 		var html = '<div>clipboard</div>';
-		setDummyClipboard(html);
+		setDummyClipboard('text/html', html);
 
 		// When pasting the clipboard to A1:
 		cy.cGet('#home-paste-button').click();
@@ -84,5 +86,20 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', fu
 
 		// Then make sure we actually consider the content of the HTML:
 		cy.cGet('#sc_input_window.formulabar .ui-custom-textarea-text-layer').should('have.text', 'clipboard');
+	});
+
+	it('Plain text paste', function() {
+		// Given a Calc document:
+		cy.cGet('#map').focus();
+		calcHelper.clickOnFirstCell();
+		var text = 'plain text';
+		setDummyClipboard('text/plain', text);
+
+		// When pasting the clipboard to A1:
+		cy.cGet('#home-paste-button').click();
+		cy.cGet('#w2ui-overlay-pastemenu tr[title="Ctrl + V"]').click();
+
+		// Then make the paste happened:
+		cy.cGet('#sc_input_window.formulabar .ui-custom-textarea-text-layer').should('have.text', 'plain text');
 	});
 });
