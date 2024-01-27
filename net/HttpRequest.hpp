@@ -1641,7 +1641,7 @@ public:
     /// Start an asynchronous upload of a whole file
     bool asyncUpload(std::string fromFile, std::string mimeType)
     {
-        return asyncUpload(fromFile, mimeType, 0, -1, false);
+        return asyncUpload(std::move(fromFile), std::move(mimeType), 0, -1, false);
     }
 
     /// Start a partial asynchronous upload from a file based on the contents of a "Range" header

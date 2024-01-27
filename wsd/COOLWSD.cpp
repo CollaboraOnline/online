@@ -4798,7 +4798,7 @@ private:
             LOG_TRC_S("Move media request " << tag << " to docbroker thread");
 
             std::string range = request.get("Range", "none");
-            docBroker->handleMediaRequest(range, socket, tag);
+            docBroker->handleMediaRequest(std::move(range), socket, tag);
         }
     }
 

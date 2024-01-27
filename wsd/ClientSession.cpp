@@ -2305,7 +2305,7 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
                     http::Response httpResponse(http::StatusCode::OK);
                     httpResponse.set("Last-Modified", Util::getHttpTimeNow());
                     httpResponse.set("X-Content-Type-Options", "nosniff");
-                    httpResponse.setBody(thumbnail, "image/png");
+                    httpResponse.setBody(std::move(thumbnail), "image/png");
                     _saveAsSocket->sendAndShutdown(httpResponse);
                 }
 
