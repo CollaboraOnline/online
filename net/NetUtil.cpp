@@ -119,7 +119,7 @@ connect(const std::string& host, const std::string& port, const bool isSSL,
 
             if (ai->ai_addrlen && ai->ai_addr)
             {
-                int fd = ::socket(ai->ai_addr->sa_family, SOCK_STREAM | SOCK_NONBLOCK, 0);
+                int fd = ::socket(ai->ai_addr->sa_family, SOCK_STREAM | SOCK_NONBLOCK | SOCK_CLOEXEC, 0);
                 if (fd < 0)
                 {
                     LOG_SYS("Failed to create socket");
