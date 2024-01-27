@@ -3413,7 +3413,7 @@ void DocumentBroker::handleMediaRequest(std::string range,
             const std::string path = root + url.substr(sizeof("file://") - 1);
 
             auto session = std::make_shared<http::server::Session>();
-            session->asyncUpload(path, "video/mp4", range);
+            session->asyncUpload(path, "video/mp4", std::move(range));
             auto handler = std::static_pointer_cast<ProtocolHandlerInterface>(session);
             streamSocket->setHandler(handler);
         }
@@ -4132,10 +4132,9 @@ bool RenderSearchResultBroker::handleInput(const std::shared_ptr<Message>& messa
                 _aResposeData.resize(messageData.size() - commandStringVector.size());
                 std::copy(messageData.begin() + commandStringVector.size(), messageData.end(), _aResposeData.begin());
 
-                std::string aDataString(_aResposeData.data(), _aResposeData.size());
-                // really not ideal that the response works only with std::string
                 http::Response httpResponse(http::StatusCode::OK);
-                httpResponse.setBody(aDataString, "image/png");
+                // really not ideal that the response works only with std::string
+                httpResponse.setBody(std::string(_aResposeData.data(), _aResposeData.size()), "image/png");
                 httpResponse.set("Connection", "close");
                 _socket->sendAndShutdown(httpResponse);
 
