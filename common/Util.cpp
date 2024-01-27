@@ -213,33 +213,13 @@ namespace Util
             params.push_back(const_cast<char *>(i.c_str()));
         params.push_back(nullptr);
 
-        // By default, all file descriptors are inherited by the new child process, except for
-        // those marked close-on-exec (FD_CLOEXEC). Since we don't know for sure that all the descriptors
-        // in our address are correctly tagged, close everything except the stdin/stdout/stderr descriptors.
-        posix_spawn_file_actions_t fileActions;
-        int status = posix_spawn_file_actions_init(&fileActions);
-        if (status < 0)
-        {
-            LOG_ERR("Failed to posix_spawn_file_actions_init for command '" << cmd);
-            throw Poco::SystemException("Failed to posix_spawn_file_actions_init for command ", cmd);
-        }
-        status = posix_spawn_file_actions_addclosefrom_np(&fileActions, STDERR_FILENO + 1);
-        if (status < 0)
-        {
-            LOG_ERR("Failed to posix_spawn_file_actions_addclosefrom_np stdout for command '" << cmd);
-            throw Poco::SystemException("Failed to posix_spawn_file_actions_addclosefrom_np stdout for command ", cmd);
-        }
-
-
         pid_t pid = -1;
-        status = posix_spawn(&pid, params[0], nullptr, nullptr, params.data(), environ);
+        int status = posix_spawn(&pid, params[0], nullptr, nullptr, params.data(), environ);
         if (status < 0)
         {
             LOG_ERR("Failed to posix_spawn for command '" << cmd);
             throw Poco::SystemException("Failed to fork posix_spawn command ", cmd);
         }
-
-        posix_spawn_file_actions_destroy(&fileActions);
 
         return pid;
     }
