@@ -348,7 +348,9 @@ L.A11yTextInput = L.TextInput.extend({
 		if (L.Browser.gecko && (!this._hasSelection || this._isLastSelectionEmpty()) &&
 			this._getLastCursorPosition() === this.getPlainTextContent().length &&
 			this._deleteHint === 'delete') {
-			window.app.console.log('Sending delete');
+			if (this._map._debug.logKeyboardEvents) {
+				window.app.console.log('Sending delete');
+			}
 			this._removeEmptySelectionIfAny();
 			this._removeTextContent(0, 1);
 		}
@@ -419,7 +421,9 @@ L.A11yTextInput = L.TextInput.extend({
 		// We use a different leading and terminal space character
 		// to differentiate backspace from delete, then replace the character.
 		if (!this._hasPreSpace()) { // missing initial space
-			window.app.console.log('Sending backspace');
+			if (this._map._debug.logKeyboardEvents) {
+				window.app.console.log('Sending backspace');
+			}
 			if (!ignoreBackspace) {
 				this._removeEmptySelectionIfAny();
 				this._removeTextContent(1, 0);
@@ -432,7 +436,9 @@ L.A11yTextInput = L.TextInput.extend({
 			return;
 		}
 		if (!this._hasPostSpace()) { // missing trailing space.
-			window.app.console.log('Sending delete');
+			if (this._map._debug.logKeyboardEvents) {
+				window.app.console.log('Sending delete');
+			}
 			this._removeTextContent(0, this._hasSelection && this._isLastSelectionEmpty() ? 2 : 1);
 			this._appendSpace();
 			var pos = this._getLastCursorPosition();
@@ -483,9 +489,11 @@ L.A11yTextInput = L.TextInput.extend({
 		while (matchTo < compareUpTo && content[matchTo] === lastContent[matchTo])
 			matchTo++;
 
-		window.app.console.log('Comparison matchAt ' + matchTo + '\n' +
-			'\tnew "' + this.codePointsToString(content) + '" (' + content.length + ')' + '\n' +
-			'\told "' + this.codePointsToString(lastContent) + '" (' + lastContent.length + ')');
+		if (this._map._debug.logKeyboardEvents) {
+			window.app.console.log('Comparison matchAt ' + matchTo + '\n' +
+				'\tnew "' + this.codePointsToString(content) + '" (' + content.length + ')' + '\n' +
+				'\told "' + this.codePointsToString(lastContent) + '" (' + lastContent.length + ')');
+		}
 
 		// no new content
 		if (matchTo === content.length && matchTo === lastContent.length)

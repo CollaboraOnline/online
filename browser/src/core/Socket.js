@@ -176,9 +176,11 @@ app.definitions.Socket = L.Class.extend({
 	},
 
 	_doSend: function(msg) {
-		// Only attempt to log text frames, not binary ones.
-		if (typeof msg === 'string')
-			this._logSocket('OUTGOING', msg);
+		if (this._map._debug.logOutgoingMessages) {
+			// Only attempt to log text frames, not binary ones.
+			if (typeof msg === 'string')
+				this._logSocket('OUTGOING', msg);
+		}
 
 		this.socket.send(msg);
 	},
@@ -561,7 +563,9 @@ app.definitions.Socket = L.Class.extend({
 		textMsg = e.textMsg;
 		imgBytes = e.imgBytes;
 
-		this._logSocket('INCOMING', textMsg);
+		if (this._map._debug.logIncomingMessages) {
+			this._logSocket('INCOMING', textMsg);
+		}
 
 		var command = this.parseServerCmd(textMsg);
 		if (textMsg.startsWith('coolserver ')) {

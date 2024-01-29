@@ -250,6 +250,42 @@ L.DebugManager = L.Class.extend({
 		});
 
 		this._addDebugTool({
+			name: 'Log incoming messages',
+			category: 'Logging',
+			startsOn: true,
+			onAdd: function () {
+				self.logIncomingMessages = true;
+			},
+			onRemove: function () {
+				self.logIncomingMessages = false;
+			},
+		});
+
+		this._addDebugTool({
+			name: 'Log outgoing messages',
+			category: 'Logging',
+			startsOn: true,
+			onAdd: function () {
+				self.logOutgoingMessages = true;
+			},
+			onRemove: function () {
+				self.logOutgoingMessages = false;
+			},
+		});
+
+		this._addDebugTool({
+			name: 'Log keyboard events',
+			category: 'Logging',
+			startsOn: true,
+			onAdd: function () {
+				self.logKeyboardEvents = true;
+			},
+			onRemove: function () {
+				self.logKeyboardEvents = false;
+			},
+		});
+
+		this._addDebugTool({
 			name: 'Tile Dumping',
 			category: 'Logging',
 			startsOn: false,
