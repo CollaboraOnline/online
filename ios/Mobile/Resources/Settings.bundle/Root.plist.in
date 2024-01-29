@@ -16,6 +16,16 @@
 			<key>Type</key>
 			<string>PSTitleValueSpecifier</string>
 			<key>Title</key>
+			<string>Version</string>
+			<key>Key</key>
+			<string>Version</string>
+			<key>DefaultValue</key>
+			<string>@COOLWSD_VERSION@</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSTitleValueSpecifier</string>
+			<key>Title</key>
 			<string>Online git hash</string>
 			<key>Key</key>
 			<string>onlineVersion</string>
