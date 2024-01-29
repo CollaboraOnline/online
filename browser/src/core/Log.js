@@ -35,6 +35,8 @@ L.Log = {
 	},
 
 	_getEntries: function () {
+		if (!this._logs)
+			this._logs = [];
 		this._logs.sort(function (a, b) {
 			if (a.time < b.time) { return -1; }
 			if (a.time > b.time) { return 1; }

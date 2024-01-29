@@ -658,7 +658,9 @@ L.TextInput = L.Layer.extend({
 		// Firefox is not able to delete the <img> post space. Since no 'input' event is generated,
 		// we need to handle a <delete> at the end of the paragraph, here.
 		if (L.Browser.gecko && this._isCursorAtEnd() && this._deleteHint === 'delete') {
-			window.app.console.log('Sending delete');
+			if (this._map._debug.logKeyboardEvents) {
+				window.app.console.log('Sending delete');
+			}
 			this._removeTextContent(0, 1);
 			this._emptyArea();
 		}
@@ -703,14 +705,18 @@ L.TextInput = L.Layer.extend({
 		// We use a different leading and terminal space character
 		// to differentiate backspace from delete, then replace the character.
 		if (!this._hasPreSpace()) { // missing initial space
-			window.app.console.log('Sending backspace');
+			if (this._map._debug.logKeyboardEvents) {
+				window.app.console.log('Sending backspace');
+			}
 			if (!ignoreBackspace)
 				this._removeTextContent(1, 0);
 			this._emptyArea();
 			return;
 		}
 		if (!this._hasPostSpace()) { // missing trailing space.
-			window.app.console.log('Sending delete');
+			if (this._map._debug.logKeyboardEvents) {
+				window.app.console.log('Sending delete');
+			}
 			this._removeTextContent(0, 1);
 			this._emptyArea();
 			return;
@@ -734,9 +740,11 @@ L.TextInput = L.Layer.extend({
 		while (matchTo < sharedLength && content[matchTo] === this._lastContent[matchTo])
 			matchTo++;
 
-		window.app.console.log('Comparison matchAt ' + matchTo + '\n' +
-			    '\tnew "' + this.codePointsToString(content) + '" (' + content.length + ')' + '\n' +
-			    '\told "' + this.codePointsToString(this._lastContent) + '" (' + this._lastContent.length + ')');
+		if (this._map._debug.logKeyboardEvents) {
+			window.app.console.log('Comparison matchAt ' + matchTo + '\n' +
+				'\tnew "' + this.codePointsToString(content) + '" (' + content.length + ')' + '\n' +
+				'\told "' + this.codePointsToString(this._lastContent) + '" (' + this._lastContent.length + ')');
+		}
 
 		var removeBefore = this._lastContent.length - matchTo;
 		var removeAfter = 0;
@@ -1159,7 +1167,9 @@ L.TextInput = L.Layer.extend({
 	// message.
 	// Will remove characters from the queue first, if there are any.
 	_removeTextContent: function(before, after) {
-		window.app.console.log('Remove ' + before + ' before, and ' + after + ' after');
+		if (this._map._debug.logKeyboardEvents) {
+			window.app.console.log('Remove ' + before + ' before, and ' + after + ' after');
+		}
 
 		/// TODO: rename the event to 'removetextcontent' as soon as coolwsd supports it
 		/// TODO: Ask Marco about it

@@ -374,8 +374,11 @@ L.Map.Keyboard = L.Handler.extend({
 		)
 			return;
 
+		if (this._map._debug.logKeyboardEvents) {
+			window.app.console.log('keyboard handler:', ev.type, ev.key, ev.charCode, this._expectingInput, ev);
+		}
+
 		var completeEvent = app.socket.createCompleteTraceEvent('L.Map.Keyboard._onKeyDown', { type: ev.type, charCode: ev.charCode });
-		window.app.console.log('keyboard handler:', ev.type, ev.key, ev.charCode, this._expectingInput, ev);
 
 		if (ev.charCode == 0) {
 			this._handleKeyEvent(ev);
