@@ -79,7 +79,12 @@ UnitBase::TestResult UnitBadDocLoad::testBadDocLoadFail()
         // Click "Ok"
         helpers::sendTextFrame(socket, "dialogevent 2 {\"id\":\"ok\", \"cmd\": \"click\", \"data\": \"1\", \"type\": \"responsebutton\"}", testname);
 
-        const auto response = helpers::getResponseString(socket, "error:", testname);
+        auto response = helpers::getResponseString(socket, "error:", testname);
+        if (Util::startsWith(response, "error: cmd=notasync"))
+        {
+            // Continue searching for the interesting failure.
+            response = helpers::getResponseString(socket, "error:", testname);
+        }
         StringVector tokens(StringVector::tokenize(response, ' '));
         LOK_ASSERT_EQUAL(static_cast<size_t>(3), tokens.size());
 
