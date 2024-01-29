@@ -333,8 +333,16 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		cy.cGet('#Home-container .unospan-CharmapControl').click();
 		cy.cGet('.jsdialog-container.ui-dialog.ui-widget-content.lokdialog_container').should('be.visible');
 		cy.cGet('.ui-dialog-title').should('have.text', 'Special Characters');
-		helper.clickOnIdle('#favchar1');
-		helper.clickOnIdle('.ui-pushbutton.jsdialog.button-primary');
+
+		// FIXME: dialog is not async, shows popup
+		helper.waitUntilIdle('#favchar1');
+		cy.cGet('#favchar1').click({force: true});
+		helper.waitUntilIdle('#SpecialCharactersDialog .ui-pushbutton.jsdialog.button-primary');
+		cy.cGet('#SpecialCharactersDialog .ui-pushbutton.jsdialog.button-primary').click({force: true});
+		// FIXME: CHANGE ABOVE TO:
+		// helper.clickOnIdle('#favchar1');
+		// helper.clickOnIdle('.ui-pushbutton.jsdialog.button-primary');
+
 		//helper.expectTextForClipboard('€');
 	});
 
