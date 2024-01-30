@@ -64,6 +64,12 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.margin = options.margin ? options.margin : [40, 40];
 		this.sectionProperties.noMenu = options.noMenu ? options.noMenu : false;
 
+		/*
+			data.layoutStatus: Enumartion sent from the core side.
+			0: INVISIBLE, 1: VISIBLE, 2: INSERTED, 3: DELETED, 4: NONE, 5: HIDDEN
+			Ex: "DELETED" means that the comment is deleted while the "track changes" is on.
+		*/
+
 		if (data.parent === undefined)
 			data.parent = '0';
 
@@ -723,6 +729,14 @@ export class Comment extends CanvasSectionObject {
 		}
 	}
 
+	public setLayoutClass(): void {
+		this.sectionProperties.container.classList.remove('greyed');
+
+		if (this.sectionProperties.data.layoutStatus === 3) {
+			this.sectionProperties.container.classList.add('greyed');
+		}
+	}
+
 	public show(): void {
 		this.doPendingInitializationInView(true /* force */);
 		this.showMarker();
@@ -739,6 +753,8 @@ export class Comment extends CanvasSectionObject {
 			this.showImpressDraw();
 		else if (this.sectionProperties.docLayer._docType === 'spreadsheet')
 			this.showCalc();
+
+		this.setLayoutClass();
 	}
 
 	private hideWriter() {
