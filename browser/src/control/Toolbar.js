@@ -1153,6 +1153,14 @@ L.Map.include({
 			this.sendUnoCommand('.uno:DeletePrintArea');
 			this.print();
 			break;
+		case 'savecomments':
+			if (this.isPermissionEditForComments()) {
+				this.fire('postMessage', {msgId: 'UI_Save'});
+				if (!this._disableDefaultAction['UI_Save']) {
+					this.save(false, false);
+				}
+			}
+			break;
 		default:
 			console.error('unknown dispatch: "' + action + '"');
 		}
