@@ -564,7 +564,11 @@ bool ClientSession::_handleInput(const char *buffer, int length)
 
         #if !MOBILEAPP
             // If it is not mobile, it must be Linux (for now).
-            sendTextFrame(std::string("osinfo ") + Util::getLinuxVersion());
+            std::string osVersionInfo(COOLWSD::getConfigValue<std::string>("per_view.custom_os_info", ""));
+            if (osVersionInfo.empty())
+                osVersionInfo = Util::getLinuxVersion();
+
+            sendTextFrame(std::string("osinfo ") + osVersionInfo);
         #endif
 
         // Send clipboard key

@@ -2211,6 +2211,7 @@ void COOLWSD::innerInitialize(Application& self)
         { "per_view.group_download_as", "true" },
         { "per_view.idle_timeout_secs", "900" },
         { "per_view.out_of_focus_timeout_secs", "120" },
+        { "per_view.custom_os_info", "" },
         { "security.capabilities", "true" },
         { "security.seccomp", "true" },
         { "security.jwt_expiry_secs", "1800" },
