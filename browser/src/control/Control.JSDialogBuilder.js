@@ -2536,7 +2536,15 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			controls['arrow'] = arrow;
 			$(arrowbackground).click(function (event) {
 				if (!$(div).hasClass('disabled')) {
-					builder.callback('toolbox', 'openmenu', parentContainer, data.command, builder);
+					// 23.05: notebookbar structure contains additional "table-xxx" containers
+					var realToolboxParent = parentContainer;
+					while (realToolboxParent && (!realToolboxParent.id
+						|| realToolboxParent.id.indexOf('table-') >= 0
+						|| realToolboxParent.id.indexOf('-row') >= 0)) {
+						realToolboxParent = realToolboxParent.parentNode;
+					}
+
+					builder.callback('toolbox', 'openmenu', realToolboxParent, data.command, builder);
 					event.stopPropagation();
 				}
 			});
