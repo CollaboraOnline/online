@@ -563,7 +563,7 @@ export class Header extends CanvasSectionObject {
 
 			if (this._lastSelectedIndex == this._prevMouseOverEntry.index || this._dragEntry)
 				return;
-			const modifier = this._lastSelectedIndex ? UNOModifier.SHIFT : 0;
+			const modifier = typeof this._lastSelectedIndex === 'number' && this._lastSelectedIndex >= 0 ? UNOModifier.SHIFT : 0;
 			this._lastSelectedIndex = this._mouseOverEntry.index;
 			this.selectIndex(this._mouseOverEntry.index, modifier);
 		}
