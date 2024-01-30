@@ -506,6 +506,10 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	max-width: 250px;
 }
 
+.cool-annotation.greyed {
+	opacity: 0.5;
+}
+
 .cool-annotation > .modalpopup {
 	max-height: initial !important;
 }
