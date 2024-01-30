@@ -118,6 +118,8 @@ export class CommentSection extends CanvasSectionObject {
 		this.map.on('commandstatechanged', function (event: any) {
 			if (event.commandName === '.uno:ShowResolvedAnnotations')
 				this.setViewResolved(event.state === 'true');
+			else if (event.commandName === '.uno:ShowTrackedChanges' && event.state === 'true')
+				app.socket.sendMessage('commandvalues command=.uno:ViewAnnotations');
 		}, this);
 
 		this.map.on('zoomend', function() {
@@ -1211,6 +1213,15 @@ export class CommentSection extends CanvasSectionObject {
 				}
 				this.add(obj.redline);
 			} else {
+				const currentComment = this.getComment(obj[dataroot].id);
+				if (currentComment !== null) {
+					if (obj[dataroot].layoutStatus !== undefined) {
+						currentComment.sectionProperties.data.layoutStatus = parseInt(obj[dataroot].layoutStatus);
+						currentComment.setLayoutClass();
+					}
+					return;
+				}
+
 				this.adjustComment(obj.comment);
 				annotation = this.add(obj.comment);
 				if (this.sectionProperties.docLayer._docType === 'spreadsheet')
@@ -1236,7 +1247,6 @@ export class CommentSection extends CanvasSectionObject {
 				this.map.focus();
 			}
 		} else if (action === 'Remove') {
-
 			id = obj[dataroot].id;
 			var removed = this.getComment(id);
 			if (removed) {
@@ -1249,6 +1259,13 @@ export class CommentSection extends CanvasSectionObject {
 					this.removeItem(id);
 					this.update();
 				}
+			}
+		} else if (action === 'RedlinedDeletion') {
+			id = obj[dataroot].id;
+			var _redlined = this.getComment(id);
+			if (_redlined) {
+				_redlined.sectionProperties.data.layoutStatus = 3;
+				_redlined.setLayoutClass();
 			}
 		} else if (action === 'Modify') {
 			id = obj[dataroot].id;
@@ -1422,6 +1439,8 @@ export class CommentSection extends CanvasSectionObject {
 		comment.anchorPix = this.numberArrayToCorePixFromTwips(comment.anchorPos, 0, 2);
 		comment.parthash = comment.parthash ? comment.parthash: null;
 		comment.tab = (comment.tab || comment.tab === 0) ? comment.tab: null;
+		comment.layoutStatus = comment.layoutStatus !== undefined ? parseInt(comment.layoutStatus): null;
+
 		if (comment.parentId)
 			comment.parent = String(comment.parentId);
 
