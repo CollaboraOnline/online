@@ -5138,15 +5138,17 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_debugShowTileData: function() {
-		this._debugData['loadCount'].setPrefix('Total of requested tiles: ' +
+		if (this._debugData) {
+			this._debugData['loadCount'].setPrefix('Total of requested tiles: ' +
 				this._debugInvalidateCount + ', recv-tiles: ' + this._debugLoadTile +
 						       ', recv-delta: ' + this._debugLoadDelta +
 						       ', recv-update: ' + this._debugLoadUpdate);
-		var allDeltas = this._debugLoadDelta + this._debugLoadUpdate;
-		this._debugData['nullUpdateMetric'].setPrefix('<b>Tile update waste: ' +
+			var allDeltas = this._debugLoadDelta + this._debugLoadUpdate;
+			this._debugData['nullUpdateMetric'].setPrefix('<b>Tile update waste: ' +
 				Math.round(100.0 * this._debugLoadUpdate / allDeltas) + '%</b>');
-		this._debugData['newTileMetric'].setPrefix('<b>New Tile ratio: ' +
+			this._debugData['newTileMetric'].setPrefix('<b>New Tile ratio: ' +
 				Math.round(100.0 * this._debugLoadTile / (allDeltas + this._debugLoadTile)) + '%</b>');
+		}
 	},
 
 	_addDebugTool: function (tool) {
@@ -5411,6 +5413,34 @@ L.CanvasTileLayer = L.Layer.extend({
 				self._debugAutomatedUserRemoveTask(this.name);
 			},
 		});
+
+		if (this.isCalc()) {
+			this._addDebugTool({
+				name: 'Resize rows and columns',
+				category: 'Automated User',
+				startsOn: false,
+				onAdd: function () {
+					self._debugAutomatedUserAddTask(this.name, L.bind(self._debugAutomatedUserResizeRowsColumns, self));
+				},
+				onRemove: function () {
+					self._debugAutomatedUserRemoveTask(this.name);
+				},
+			});
+		}
+
+		if (this.isCalc()) {
+			this._addDebugTool({
+				name: 'Delete rows and columns',
+				category: 'Automated User',
+				startsOn: false,
+				onAdd: function () {
+					self._debugAutomatedUserAddTask(this.name, L.bind(self._debugAutomatedUserDeleteRowsColumns, self));
+				},
+				onRemove: function () {
+					self._debugAutomatedUserRemoveTask(this.name);
+				},
+			});
+		}
 	},
 
 	_debugRandomizeSettings: function() {
@@ -5457,11 +5487,11 @@ L.CanvasTileLayer = L.Layer.extend({
 				var centerPos = {x: pos.x + viewSize.x/2, y: pos.y + viewSize.y/2};
 				var centerTwips = this._pixelsToTwips(centerPos);
 
-			// Perform action
-			console.log('Randomize Settings: Move to ',pos,' click at ', centerPos, centerTwips);
-			this._map.fire('scrollto', pos);
-			this._postMouseEvent('buttondown', centerTwips.x, centerTwips.y, 1, 1, 0);
-			this._postMouseEvent('buttonup', centerTwips.x, centerTwips.y, 1, 1, 0);
+				// Perform action
+				console.log('Randomize Settings: Move to ',pos,' click at ', centerPos, centerTwips);
+				this._map.fire('scrollto', pos);
+				this._postMouseEvent('buttondown', centerTwips.x, centerTwips.y, 1, 1, 0);
+				this._postMouseEvent('buttonup', centerTwips.x, centerTwips.y, 1, 1, 0);
 			}
 		}
 
@@ -5480,8 +5510,8 @@ L.CanvasTileLayer = L.Layer.extend({
 		var waitTime = 0;
 		switch (phase) {
 			case 0:
-				console.log('Automated User: Click somewhere visible');
-				var pos = this._pixelsToTwips(this._map._getCenterLayerPoint());
+				window.app.console.log('Automated User: Click in center');
+				var pos = this._latLngToTwips(this._map.getCenter());
 				this._postMouseEvent('buttondown',pos.x,pos.y,1,1,0);
 				this._postMouseEvent('buttonup',pos.x,pos.y,1,1,0);
 				waitTime = 500;
@@ -5527,7 +5557,6 @@ L.CanvasTileLayer = L.Layer.extend({
 				var shapes = ['rectangle','circle','diamond','pentagon'];
 				var shape = shapes[Math.floor(Math.random() * shapes.length)];
 				this._map.sendUnoCommand('.uno:BasicShapes.'+shape);
-				// app.socket.sendMessage('removetextcontext id=0 before=0 after=1');
 				waitTime = 1000;
 				break;
 			case 1:
@@ -5541,10 +5570,91 @@ L.CanvasTileLayer = L.Layer.extend({
 				this.postKeyboardEvent('input',0, 1281); // esc
 				waitTime = 500;
 				break;
+			case 3:
+				window.app.console.log('Automated User: Select Shape');
+				var pos = this._latLngToTwips(this._map.getCenter());
+				this._postMouseEvent('buttondown',pos.x,pos.y,1,1,0);
+				this._postMouseEvent('buttonup',pos.x,pos.y,1,1,0);
+				waitTime = 1500;
+				break;
+			case 4:
+				window.app.console.log('Automated User: Delete Shape');
+				app.socket.sendMessage('removetextcontext id=0 before=0 after=1');
+				waitTime = 1000;
+				break;
 		}
 		return waitTime;
 	},
 
+	_debugAutomatedUserResizeRowsColumns: function (phase) {
+		var waitTime = 0;
+		switch (phase) {
+			case 0:
+				window.app.console.log('Automated User: Resize row smaller');
+				// Not necessary here, but nice to highlight the row being changed
+				this._painter._sectionContainer.getSectionWithName('row header')._selectRow(1,0);
+				this._map.sendUnoCommand('.uno:RowHeight {"RowHeight":{"type":"unsigned short","value":200},"Row":{"type":"long","value":2}}');
+				waitTime = 2000;
+				break;
+			case 1:
+				window.app.console.log('Automated User: Resize row larger');
+				// Not necessary here, but nice to highlight the row being changed
+				this._painter._sectionContainer.getSectionWithName('row header')._selectRow(1,0);
+				this._map.sendUnoCommand('.uno:RowHeight {"RowHeight":{"type":"unsigned short","value":2000},"Row":{"type":"long","value":2}}');
+				waitTime = 2000;
+				break;
+			case 2:
+				window.app.console.log('Automated User: Resize row auto');
+				// Selecting row is necessary here
+				this._painter._sectionContainer.getSectionWithName('row header')._selectRow(1,0);
+				this._map.sendUnoCommand('.uno:SetOptimalRowHeight {"aExtraHeight":{"type":"unsigned short","value":0}}');
+				waitTime = 2000;
+				break;
+			case 3:
+				window.app.console.log('Automated User: Resize column smaller');
+				// Not necessary here, but nice to highlight the column being changed
+				this._painter._sectionContainer.getSectionWithName('column header')._selectColumn(1,0);
+				this._map.sendUnoCommand('.uno:ColumnWidth {"ColumnWidth":{"type":"unsigned short","value":400},"Column":{"type":"long","value":2}}');
+				waitTime = 2000;
+				break;
+			case 4:
+				window.app.console.log('Automated User: Resize column larger');
+				// Not necessary here, but nice to highlight the column being changed
+				this._painter._sectionContainer.getSectionWithName('column header')._selectColumn(1,0);
+				this._map.sendUnoCommand('.uno:ColumnWidth {"ColumnWidth":{"type":"unsigned short","value":8000},"Column":{"type":"long","value":2}}');
+				waitTime = 2000;
+				break;
+			case 5:
+				window.app.console.log('Automated User: Resize column auto');
+				// Selecting column is necessary here
+				this._painter._sectionContainer.getSectionWithName('column header')._selectColumn(1,0);
+				this._map.sendUnoCommand('.uno:SetOptimalColumnWidthDirect {"aExtraHeight":{"type":"unsigned short","value":0}}');
+				waitTime = 2000;
+				break;
+		}
+		return waitTime;
+	},
+
+	_debugAutomatedUserDeleteRowsColumns: function (phase) {
+		var waitTime = 0;
+		switch (phase) {
+			case 0:
+				window.app.console.log('Automated User: Delete row');
+				// Select just this row first, otherwise multiple rows could get deleted
+				this._painter._sectionContainer.getSectionWithName('row header')._selectRow(1,0);
+				this._painter._sectionContainer.getSectionWithName('row header').deleteRow(1);
+				waitTime = 2000;
+				break;
+			case 1:
+				window.app.console.log('Automated User: Delete column');
+				// Select just this column first, otherwise multiple columns could get deleted
+				this._painter._sectionContainer.getSectionWithName('column header')._selectColumn(1,0);
+				this._painter._sectionContainer.getSectionWithName('column header').deleteColumn(1);
+				waitTime = 2000;
+				break;
+		}
+		return waitTime;
+	},
 
 	_debugAutomatedUserAddTask: function(name, taskFn) {
 		// Save taskFn
