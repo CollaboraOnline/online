@@ -2525,6 +2525,14 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			controls['label'] = button;
 		}
 
+		// 23.05: notebookbar structure contains additional "table-xxx" containers
+		var realToolboxParent = parentContainer;
+		while (realToolboxParent && (!realToolboxParent.id
+			|| realToolboxParent.id.indexOf('table-') >= 0
+			|| realToolboxParent.id.indexOf('-row') >= 0)) {
+			realToolboxParent = realToolboxParent.parentNode;
+		}
+
 		if (options && options.hasDropdownArrow) {
 			$(div).addClass('has-dropdown');
 			var arrow = L.DomUtil.create('i', 'unoarrow', div);
@@ -2536,21 +2544,13 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			controls['arrow'] = arrow;
 			$(arrowbackground).click(function (event) {
 				if (!$(div).hasClass('disabled')) {
-					// 23.05: notebookbar structure contains additional "table-xxx" containers
-					var realToolboxParent = parentContainer;
-					while (realToolboxParent && (!realToolboxParent.id
-						|| realToolboxParent.id.indexOf('table-') >= 0
-						|| realToolboxParent.id.indexOf('-row') >= 0)) {
-						realToolboxParent = realToolboxParent.parentNode;
-					}
-
 					builder.callback('toolbox', 'openmenu', realToolboxParent, data.command, builder);
 					event.stopPropagation();
 				}
 			});
 
 			div.closeDropdown = function() {
-				builder.callback('toolbox', 'closemenu', parentContainer, data.command, builder);
+				builder.callback('toolbox', 'closemenu', realToolboxParent, data.command, builder);
 			};
 		}
 
@@ -2562,7 +2562,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				else if (isRealUnoCommand && data.dropdown !== true)
 					builder.callback('toolbutton', 'click', button, data.command, builder);
 				else
-					builder.callback('toolbox', 'click', parentContainer, data.command, builder);
+					builder.callback('toolbox', 'click', realToolboxParent, data.command, builder);
 			}
 			e.preventDefault();
 			e.stopPropagation();
