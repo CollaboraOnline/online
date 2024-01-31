@@ -220,3 +220,11 @@
 #toolbar-wrapper.spreadsheet.tablet.readonly {
 	z-index: -1;
 }
+
+/* Sidebar: Style: Hide dialog button
+   - There is no paragraph style dialog in calc
+   - The style sidebar pane visible on core side is not implemented in online
+*/
+.spreadsheet ~ #main-document-content #sidebar-dock-wrapper .unoEditStyle.sidebar {
+	display: none;
+}
