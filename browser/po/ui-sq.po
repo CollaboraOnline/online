@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-01-18 11:56+0100\n"
-"PO-Revision-Date: 2023-01-29 15:18+0000\n"
+"PO-Revision-Date: 2024-01-31 15:37+0000\n"
 "Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
 "Language-Team: Albanian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/sq/>\n"
-"Language: \n"
+"Language: sq\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.16-dev\n"
+"X-Generator: Weblate 5.4-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -114,7 +114,7 @@ msgstr "Ndryshuar më"
 
 #: admin/admin.strings.js:38
 msgid "Uploaded"
-msgstr ""
+msgstr "Ngarkuar më"
 
 #: admin/admin.strings.js:39
 msgid "WOPI host"
@@ -249,7 +249,7 @@ msgstr "Hollësi Versioni"
 
 #: admin/admin.strings.js:67
 msgid "License"
-msgstr ""
+msgstr "Licencë"
 
 #: admin/admin.strings.js:68 src/control/Control.Menubar.js:377
 #: src/control/Control.Menubar.js:531 src/control/Control.Menubar.js:658
@@ -329,7 +329,7 @@ msgstr "S’u arrit të mirëfilltësohej sesioni përmes protokolli %0"
 
 #: admin/src/AdminSocketOverview.js:429
 msgid "Warning"
-msgstr ""
+msgstr "Kujdes"
 
 #: admin/src/AdminSocketSettings.js:46
 msgid "Are you sure you want to shut down the server?"
@@ -389,19 +389,19 @@ msgstr ""
 
 #: js/global.js:867
 msgid "Document is migrating to new server, retrying..."
-msgstr ""
+msgstr "Dokumenti po migrohet te një shërbyes i ri, po riprovohet…"
 
 #: js/global.js:869
 msgid "Failed to get RouteToken from controller"
-msgstr ""
+msgstr "S’u arrit të merret RouteToken nga kontrollori"
 
 #: js/w2ui-1.5.rc1.js:2967
 msgid "No fill"
-msgstr ""
+msgstr "Pa mbushje"
 
 #: js/w2ui-1.5.rc1.js:2967
 msgid "Automatic"
-msgstr ""
+msgstr "I vetvetishëm"
 
 #: js/w2ui-1.5.rc1.js:3007
 msgid "Recent"
@@ -417,7 +417,7 @@ msgstr "Ngjyrë e automatizuar"
 
 #: src/control/Control.AlertDialog.js:51
 msgid "External link"
-msgstr ""
+msgstr "Lidhje e jashtme"
 
 #: src/control/Control.AlertDialog.js:52
 msgid "Open link"
@@ -425,11 +425,11 @@ msgstr "Hape lidhjen"
 
 #: src/control/Control.AlertDialog.js:64
 msgid "Copied external sources are not allowed"
-msgstr ""
+msgstr "Nuk lejohen burime të jashtme të kopjuar"
 
 #: src/control/Control.AlertDialog.js:65
 msgid "It seems you have copied a selection that includes external images."
-msgstr ""
+msgstr "Duhet sikur keni kopjuar një përzgjedhje që përmban figura të jashtme."
 
 #: src/control/Control.AlertDialog.js:66
 msgid ""
@@ -437,24 +437,29 @@ msgid ""
 "possible. Please right click in the image, choose \"Copy Image\" and paste "
 "it into the document instead."
 msgstr ""
+"Shkarkimi i burime të jashtme është i ndaluar, por ngjitja e figurave është "
+"ende e mundshme. Ju lutemi, djathtasklikoni te figura, zgjidhni “Kopjo "
+"Figurën” dhe ngjiteni te një dokument."
 
 #: src/control/Control.AlertDialog.js:70
 msgid "External data source not allowed"
-msgstr ""
+msgstr "Nuk lejohet burim i jashtëm të dhënash"
 
 #: src/control/Control.AlertDialog.js:71
 msgid "It seems you have tried to insert external data."
-msgstr ""
+msgstr "Duket sikur u përpoqët të futni të dhëna të jashtme."
 
 #: src/control/Control.AlertDialog.js:72
 msgid ""
 "Selected external data source is forbidden. Please contact the system "
 "administrator."
 msgstr ""
+"Burimi i përzgjedhur për të dhëna të jashtme është i ndaluar. Ju lutemi, "
+"lidhuni me përgjegjësin e sistemit."
 
 #: src/control/Control.AlertDialog.js:84
 msgid "Don't show this again"
-msgstr ""
+msgstr "Mos e rishfaq këtë"
 
 #: src/control/Control.AlertDialog.js:100
 msgid "The server encountered a %0 error while parsing the %1 command."
@@ -516,13 +521,15 @@ msgstr "Zhbëje"
 
 #: src/control/Control.DownloadProgress.js:52
 msgid "Download Selection"
-msgstr ""
+msgstr "Shkarko Përzgjedhjen"
 
 #: src/control/Control.DownloadProgress.js:57
 msgid ""
 "If you want to share large elements outside of %productName it's necessary "
 "to first download them."
 msgstr ""
+"Nëse doni të ndani me të tjerë elemente të mëdhenj jashtë %productName, "
+"është e nevojshme që fillimisht t’i shkarkoni ata."
 
 #: src/control/Control.DownloadProgress.js:70
 #: src/control/Control.NotebookbarCalc.js:208
@@ -533,30 +540,32 @@ msgstr "Shkarkim"
 
 #: src/control/Control.DownloadProgress.js:89
 msgid "Downloading clipboard content"
-msgstr ""
+msgstr "Po shkarkohet lëndë e papastre"
 
 #: src/control/Control.DownloadProgress.js:96
 #: src/control/Control.DownloadProgress.js:121
 #: src/control/Control.PartsPreview.js:279
 msgid "Copy"
-msgstr ""
+msgstr "Kopjoje"
 
 #: src/control/Control.DownloadProgress.js:119
 msgid "Download completed and ready to be copied to clipboard."
-msgstr ""
+msgstr "Shkarkimi u plotësua dhe është gati për t’u kopjuar në të papastër."
 
 #: src/control/Control.DownloadProgress.js:120
 msgid ""
 "From now on clipboard notifications will discreetly appear at the bottom."
 msgstr ""
+"Nga tani e tutje njoftimet lidhur me të papastrën do të shfaqen pa bujë te "
+"fundi."
 
 #: src/control/Control.DownloadProgress.js:273
 msgid "Content copied to clipboard"
-msgstr ""
+msgstr "Lënda u kopjua në të papastër"
 
 #: src/control/Control.DownloadProgress.js:317
 msgid "Download failed"
-msgstr ""
+msgstr "Shkarkimi dështoi"
 
 #: src/control/Control.FormulaBar.js:54
 msgid "cell address"
@@ -614,12 +623,12 @@ msgstr "Numër"
 #: src/control/Control.JSDialogBuilder.js:206
 #: src/control/Control.Menubar.js:686
 msgid "Active sheet"
-msgstr ""
+msgstr "Fletë aktive"
 
 #: src/control/Control.JSDialogBuilder.js:207
 #: src/control/Control.Menubar.js:687 src/control/Control.TopToolbar.js:108
 msgid "All Sheets"
-msgstr ""
+msgstr "Krejt Fletët"
 
 #: src/control/Control.JSDialogBuilder.js:580
 msgid "Solid"
@@ -725,12 +734,11 @@ msgstr "Asnjë (Mos bëj kontroll drejtshkrimi)"
 
 #: src/control/Control.LanguageDialog.js:82
 msgid "Select language"
-msgstr ""
+msgstr "Përzgjidhni gjuhë"
 
 #: src/control/Control.LanguageDialog.js:103
-#, fuzzy
 msgid "Language"
-msgstr "Gjuhë:"
+msgstr "Gjuhë"
 
 #: src/control/Control.Menubar.js:76 src/control/Control.Menubar.js:91
 #: src/control/Control.Menubar.js:943
@@ -804,9 +812,8 @@ msgid "EPUB (.epub)"
 msgstr "EPUB (.epub)"
 
 #: src/control/Control.Menubar.js:85 src/control/Control.UIManager.js:159
-#, fuzzy
 msgid "Rename Document"
-msgstr "Riparoje Dokumentin"
+msgstr "Riemërtojeni Dokumentin"
 
 #: src/control/Control.Menubar.js:86 src/control/Control.Menubar.js:394
 #: src/control/Control.Menubar.js:544 src/control/Control.Menubar.js:674
@@ -836,9 +843,8 @@ msgstr "Shkarkoje si"
 #: src/control/Control.NotebookbarBuilder.js:556
 #: src/control/Control.NotebookbarBuilder.js:585
 #: src/control/Control.NotebookbarBuilder.js:614
-#, fuzzy
 msgid "PDF Document (.pdf) as..."
-msgstr "Dokument PDF (.pdf)"
+msgstr "Dokument PDF (.pdf) si…"
 
 #: src/control/Control.Menubar.js:99 src/control/Control.Menubar.js:406
 #: src/control/Control.Menubar.js:554 src/control/Control.Menubar.js:689
@@ -913,7 +919,7 @@ msgstr "Shfaq Shtyllë Gjendjesh"
 #: src/control/Control.Menubar.js:140 src/control/Control.Menubar.js:435
 #: src/control/Control.Menubar.js:585 src/control/Control.Menubar.js:717
 msgid "Hide Menu Bar"
-msgstr ""
+msgstr "Fshihe Shtyllën e Menuve"
 
 #: src/control/Control.Menubar.js:141 src/control/Control.Menubar.js:436
 #: src/control/Control.Menubar.js:581 src/control/Control.Menubar.js:718
@@ -924,7 +930,7 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:551
 #: src/control/Control.NotebookbarWriter.js:1500
 msgid "Dark Mode"
-msgstr ""
+msgstr "Mënyra e Errët"
 
 #: src/control/Control.Menubar.js:149 src/control/Control.Menubar.js:447
 #: src/control/Control.Menubar.js:588 src/control/Control.Menubar.js:728
@@ -945,7 +951,7 @@ msgstr "Krejt"
 #: src/control/Control.NotebookbarImpress.js:1253
 #: src/control/Control.NotebookbarWriter.js:1106
 msgid "Smart Picker"
-msgstr ""
+msgstr "Zgjedhës i Mençur"
 
 #: src/control/Control.Menubar.js:225
 msgid "Text orientation"
@@ -1024,7 +1030,7 @@ msgstr "Veti"
 #: src/control/Control.Menubar.js:358 src/control/Control.Menubar.js:977
 #: src/control/Control.NotebookbarWriter.js:449
 msgid "Screen Reading"
-msgstr ""
+msgstr "Lexim Ekrani"
 
 #: src/control/Control.Menubar.js:371
 #: src/control/Control.NotebookbarWriter.js:415
@@ -1100,7 +1106,7 @@ msgstr "Ruaji Komentet"
 #: src/control/Control.Menubar.js:437
 #: src/control/Control.NotebookbarImpress.js:543
 msgid "Master View"
-msgstr ""
+msgstr "Pamje e Përgjithshme"
 
 #: src/control/Control.Menubar.js:512 src/control/Control.Menubar.js:1049
 #: src/control/Control.PresentationBar.js:73
@@ -1113,7 +1119,7 @@ msgstr "Paraqit diapozitivin aktual"
 
 #: src/control/Control.Menubar.js:514
 msgid "Present in new window"
-msgstr ""
+msgstr "Paraqite në dritare të re"
 
 #: src/control/Control.Menubar.js:550 src/control/Control.Menubar.js:1010
 #: src/control/Control.Menubar.js:1070
@@ -1153,32 +1159,32 @@ msgstr "Kartelë CSV (.csv)"
 #: src/control/Control.Menubar.js:813
 #: src/control/Control.NotebookbarBuilder.js:812
 msgid "Condition..."
-msgstr ""
+msgstr "Kusht…"
 
 #: src/control/Control.Menubar.js:814
 #: src/control/Control.NotebookbarBuilder.js:813
 msgid "Greater than..."
-msgstr ""
+msgstr "Më e madhe se…"
 
 #: src/control/Control.Menubar.js:815
 #: src/control/Control.NotebookbarBuilder.js:814
 msgid "Less than..."
-msgstr ""
+msgstr "Më e vogël se…"
 
 #: src/control/Control.Menubar.js:816
 #: src/control/Control.NotebookbarBuilder.js:815
 msgid "Equal to..."
-msgstr ""
+msgstr "Baras me…"
 
 #: src/control/Control.Menubar.js:817
 #: src/control/Control.NotebookbarBuilder.js:816
 msgid "Between..."
-msgstr ""
+msgstr "Mes…"
 
 #: src/control/Control.Menubar.js:819
 #: src/control/Control.NotebookbarBuilder.js:818
 msgid "More conditions..."
-msgstr ""
+msgstr "Më tepër kushte…"
 
 #: src/control/Control.Menubar.js:927 src/control/Control.Menubar.js:992
 #: src/control/Control.Menubar.js:1056 src/control/Control.Menubar.js:1110
@@ -1196,11 +1202,11 @@ msgstr "Ujdisje Faqeje"
 
 #: src/control/Control.Menubar.js:1121
 msgid "Define print area"
-msgstr ""
+msgstr "Përcakton zonë shtypjeje"
 
 #: src/control/Control.Menubar.js:1122
 msgid "Remove print area"
-msgstr ""
+msgstr "Hiqe zonën e shtypjes"
 
 #: src/control/Control.Menubar.js:1400 src/control/Control.StatusBar.js:553
 msgid "Reset to Default Language"
@@ -1302,66 +1308,58 @@ msgstr ""
 #: src/control/Control.NotebookbarDraw.js:62
 #: src/control/Control.NotebookbarImpress.js:77
 #: src/control/Control.NotebookbarWriter.js:36
-#, fuzzy
 msgid "File"
-msgstr "~Kartelë"
+msgstr "Kartelë"
 
 #: src/control/Control.NotebookbarCalc.js:29
 #: src/control/Control.NotebookbarDraw.js:68
 #: src/control/Control.NotebookbarImpress.js:83
 #: src/control/Control.NotebookbarWriter.js:42
-#, fuzzy
 msgid "Home"
-msgstr "~Shtëpi"
+msgstr "Shtëpi"
 
 #: src/control/Control.NotebookbarCalc.js:36
 #: src/control/Control.NotebookbarDraw.js:75
 #: src/control/Control.NotebookbarImpress.js:90
 #: src/control/Control.NotebookbarWriter.js:49
-#, fuzzy
 msgid "Insert"
-msgstr "~Futni"
+msgstr "Futni"
 
 #: src/control/Control.NotebookbarCalc.js:42
 #: src/control/Control.NotebookbarDraw.js:81
 #: src/control/Control.NotebookbarImpress.js:96
 #: src/control/Control.NotebookbarWriter.js:55
-#, fuzzy
 msgid "Layout"
-msgstr "~Skemë"
+msgstr "Skemë"
 
 #: src/control/Control.NotebookbarCalc.js:48
-#, fuzzy
 msgid "Data"
-msgstr "~Të dhëna"
+msgstr "Të dhëna"
 
 #: src/control/Control.NotebookbarCalc.js:54
 #: src/control/Control.NotebookbarDraw.js:87
 #: src/control/Control.NotebookbarImpress.js:102
 #: src/control/Control.NotebookbarWriter.js:67
-#, fuzzy
 msgid "Review"
-msgstr "~Shqyrtoni"
+msgstr "Shqyrtoni"
 
 #: src/control/Control.NotebookbarCalc.js:60
 #: src/control/Control.NotebookbarDraw.js:93
 #: src/control/Control.NotebookbarImpress.js:108
 #: src/control/Control.NotebookbarWriter.js:73
 msgid "Format"
-msgstr ""
+msgstr "Format"
 
 #: src/control/Control.NotebookbarCalc.js:66
 #: src/control/Control.NotebookbarDraw.js:106
 #: src/control/Control.NotebookbarWriter.js:92
-#, fuzzy
 msgid "Draw"
-msgstr "~Vizatoni"
+msgstr "Vizatoni"
 
 #: src/control/Control.NotebookbarCalc.js:73
 #: src/control/Control.NotebookbarDraw.js:113
 #: src/control/Control.NotebookbarImpress.js:135
 #: src/control/Control.NotebookbarWriter.js:99
-#, fuzzy
 msgid "View"
 msgstr "Parje"
 
@@ -1369,9 +1367,8 @@ msgstr "Parje"
 #: src/control/Control.NotebookbarDraw.js:119
 #: src/control/Control.NotebookbarImpress.js:141
 #: src/control/Control.NotebookbarWriter.js:105
-#, fuzzy
 msgid "Help"
-msgstr "~Ndihmë"
+msgstr "Ndihmë"
 
 #: src/control/Control.NotebookbarCalc.js:125
 #: src/control/Control.NotebookbarImpress.js:190
@@ -1384,9 +1381,8 @@ msgstr "Ruaje Si"
 #: src/control/Control.NotebookbarDraw.js:179
 #: src/control/Control.NotebookbarImpress.js:209
 #: src/control/Control.NotebookbarWriter.js:190
-#, fuzzy
 msgid "Export As"
-msgstr "Eksportoje si"
+msgstr "Eksportoje Si"
 
 #: src/control/Control.NotebookbarCalc.js:158
 #: src/control/Control.NotebookbarDraw.js:195
@@ -1411,7 +1407,7 @@ msgstr "Fletëllogaritje ODF (.ods)"
 #: src/control/Control.NotebookbarImpress.js:359
 #: src/control/Control.NotebookbarWriter.js:306
 msgid "PDF Document (.pdf) - Expert"
-msgstr ""
+msgstr "Dokument PDF (.pdf) - Ekspert"
 
 #: src/control/Control.NotebookbarCalc.js:318
 #: src/control/Control.NotebookbarDraw.js:319
@@ -1419,7 +1415,7 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:373
 #: src/control/Control.UIManager.js:159
 msgid "Rename"
-msgstr ""
+msgstr "Riemërtojeni"
 
 #: src/control/Control.NotebookbarCalc.js:654
 msgid "General"
@@ -1524,7 +1520,7 @@ msgstr "Fshini Shtylla"
 #: src/control/Control.NotebookbarImpress.js:435
 #: src/control/Control.NotebookbarWriter.js:1393
 msgid "Read mode"
-msgstr ""
+msgstr "Mënyrë lexim"
 
 #: src/control/Control.NotebookbarCalc.js:1260
 #: src/control/Control.NotebookbarDraw.js:388
@@ -1538,7 +1534,7 @@ msgstr "Pamje kompakte"
 #: src/control/Control.NotebookbarImpress.js:519
 #: src/control/Control.NotebookbarWriter.js:1494
 msgid "Collapse Tabs"
-msgstr ""
+msgstr "Tkurri Skedat"
 
 #: src/control/Control.NotebookbarCalc.js:1286
 #: src/control/Control.NotebookbarDraw.js:413
@@ -1566,18 +1562,16 @@ msgstr "Forma"
 #: src/control/Control.NotebookbarDraw.js:99
 #: src/control/Control.NotebookbarImpress.js:114
 #: src/control/Control.NotebookbarWriter.js:85
-#, fuzzy
 msgid "Table"
-msgstr "~Tabela"
+msgstr "Tabelë"
 
 #: src/control/Control.NotebookbarDraw.js:245
 msgid "Image (.png)"
 msgstr "Figurë (.png)"
 
 #: src/control/Control.NotebookbarDraw.js:1032
-#, fuzzy
 msgid "Page Layout"
-msgstr "Skemë faqeje"
+msgstr "Skemë Faqeje"
 
 #: src/control/Control.NotebookbarImpress.js:128
 msgid "Master"
@@ -1594,12 +1588,11 @@ msgstr "Paraqitje"
 
 #: src/control/Control.NotebookbarImpress.js:450
 msgid "Present in Window"
-msgstr ""
+msgstr "Paraqite Në Dritare"
 
 #: src/control/Control.NotebookbarWriter.js:79
-#, fuzzy
 msgid "Form"
-msgstr "Forum"
+msgstr "Formular"
 
 #: src/control/Control.NotebookbarWriter.js:263
 msgid "ODF Text Document (.odt)"
@@ -1611,11 +1604,11 @@ msgstr "Dokument EPUB (.epub)"
 
 #: src/control/Control.NotebookbarWriter.js:387
 msgid "Go Online"
-msgstr ""
+msgstr "Kalo Në Linjë"
 
 #: src/control/Control.NotebookbarWriter.js:387
 msgid "Go Offline"
-msgstr ""
+msgstr "Kalo Jashtë Linje"
 
 #: src/control/Control.NotebookbarWriter.js:1342
 msgid "Rich Text"
@@ -1643,11 +1636,11 @@ msgstr "paraparje e faqes "
 
 #: src/control/Control.PartsPreview.js:245
 msgid "Paste Slide"
-msgstr ""
+msgstr "Ngjitni Diapozitiv"
 
 #: src/control/Control.PartsPreview.js:288
 msgid "Paste"
-msgstr ""
+msgstr "Ngjite"
 
 #: src/control/Control.Scroll.Annotation.js:19
 msgid "Scroll up annotations"
@@ -1760,15 +1753,15 @@ msgstr "Mënyrë përzgjedhjeje: joaktive"
 
 #: src/control/Control.StatusBar.js:575
 msgid "Set Language for All text"
-msgstr ""
+msgstr "Caktoni Gjuhën për Krejt tekstin"
 
 #: src/control/Control.StatusBar.js:578
 msgid "Set Language for Paragraph"
-msgstr ""
+msgstr "Caktoni Gjuhën për Paragraf"
 
 #: src/control/Control.StatusBar.js:579
 msgid "Set Language for Selection"
-msgstr ""
+msgstr "Caktoni Gjuhën për Përzgjedhje"
 
 #: src/control/Control.Tabs.js:63
 msgid "Insert sheet before this"
@@ -1820,7 +1813,7 @@ msgstr ""
 
 #: src/control/Control.TopToolbar.js:107
 msgid "Active Sheet"
-msgstr ""
+msgstr "Fletë Aktive"
 
 #: src/control/Control.TopToolbar.js:120
 msgid "Default Style"
@@ -1840,19 +1833,19 @@ msgstr "Futni lidhës"
 
 #: src/control/Control.TopToolbar.js:263 src/control/Control.UIManager.js:764
 msgid "Hide Menu"
-msgstr ""
+msgstr "Fshihe Menunë"
 
 #: src/control/Control.UIManager.js:159
 msgid "Enter new name"
-msgstr ""
+msgstr "Jepni emër të ri"
 
 #: src/control/Control.UIManager.js:787
 msgid "Show Menu"
-msgstr ""
+msgstr "Shfaq Menu"
 
 #: src/control/Control.UIManager.js:1048
 msgid "Dismiss"
-msgstr ""
+msgstr "Hidhe tej"
 
 #: src/control/Control.UserList.js:20
 msgid "%user has joined"
@@ -1887,9 +1880,8 @@ msgid "Readonly"
 msgstr "Vetëm-lexim"
 
 #: src/control/Control.UserList.js:401
-#, fuzzy
 msgid "Current"
-msgstr "Monedhë"
+msgstr "I tanishmi"
 
 #: src/control/Control.Zotero.js:139
 msgid "Zotero API key is not configured"
@@ -1901,13 +1893,16 @@ msgstr "Kyçi për API-n e Zotero-s është i pasaktë"
 
 #: src/control/Control.Zotero.js:190
 msgid "Zotero Warning"
-msgstr ""
+msgstr "Sinjalizim nga Zotero"
 
 #: src/control/Control.Zotero.js:191
 msgid ""
 "The document contains some citations which may be unreachable through web "
 "API. It may cause some problems while editing citations or bibliography."
 msgstr ""
+"Dokumenti përmban disa citime të cilat mund të jenë të pakapshme përmes API-"
+"t web. Kjo mund të shkaktojë ca probleme teksa përpunohen citime, ose "
+"bibliografi."
 
 #: src/control/Control.Zotero.js:247 src/core/Socket.js:1103
 msgid "Loading..."
@@ -1931,11 +1926,11 @@ msgstr "Faqerojtës"
 
 #: src/control/Control.Zotero.js:408
 msgid "Footnotes"
-msgstr ""
+msgstr "Poshtëshënime"
 
 #: src/control/Control.Zotero.js:408
 msgid "Endnotes"
-msgstr ""
+msgstr "Poshtëshënime"
 
 #: src/control/Control.Zotero.js:472
 msgid "My Publications"
@@ -1947,7 +1942,7 @@ msgstr "Biblioteka Ime"
 
 #: src/control/Control.Zotero.js:479
 msgid "Group Libraries"
-msgstr ""
+msgstr "Gruponi Biblioteka"
 
 #: src/control/Control.Zotero.js:719
 msgid "Failed to load groups"
@@ -1991,13 +1986,14 @@ msgstr "S’u arrit të ngarkoheshin objekte"
 
 #: src/control/Control.Zotero.js:1144
 msgid "Citation warning"
-msgstr ""
+msgstr "Sinjalizim rreth citimi"
 
 #: src/control/Control.Zotero.js:1145
 msgid ""
 "Once citations are entered their storage and display type can not be "
 "changed."
 msgstr ""
+"Pasi citimet të jenë futur, lloji i depos dhe shfaqjes s’mund të ndryshohen."
 
 #: src/control/Control.Zotero.js:1146 src/control/Control.Zotero.js:1448
 msgid "Confirm"
@@ -2037,7 +2033,7 @@ msgstr ""
 
 #: src/control/Permission.js:27 src/control/Permission.js:28
 msgid "Edit document"
-msgstr ""
+msgstr "Përpunoni dokument"
 
 #: src/control/Permission.js:85
 msgid "The document could not be locked, and is opened in read-only mode."
@@ -2148,7 +2144,7 @@ msgstr "“Ndërmjetës i Ngadaltë”"
 
 #: src/control/Toolbar.js:675
 msgid "Copy all version information in English"
-msgstr ""
+msgstr "Kopjo krejt hollësitë e versionit në anglisht"
 
 #: src/control/Toolbar.js:758
 msgid "Insert hyperlink"
@@ -2172,7 +2168,7 @@ msgstr "Anë kutize"
 
 #: src/control/jsdialog/Widget.TreeView.js:658
 msgid "Headings and objects that you add to the document will appear here"
-msgstr ""
+msgstr "Krye dhe objekte që shtoni te dokumenti do të duken këtu"
 
 #: src/core/Socket.js:65
 msgid "Oops, there is a problem connecting to %productName: "
@@ -2192,11 +2188,11 @@ msgstr "RINGARKOJE"
 
 #: src/core/Socket.js:608
 msgid "Cluster configuration warning"
-msgstr ""
+msgstr "Sinjalizim formësimi cluster-i"
 
 #: src/core/Socket.js:611
 msgid "Wrong server, reconnecting..."
-msgstr ""
+msgstr "Shërbyes i gabuar, po rilidhet…"
 
 #: src/core/Socket.js:620
 msgid "COOLWSD version:"
@@ -2216,7 +2212,7 @@ msgstr "Version LOKit:"
 
 #: src/core/Socket.js:751
 msgid "Document is getting migrated"
-msgstr ""
+msgstr "Dokumenti po migrohet"
 
 #: src/core/Socket.js:778
 msgid "Session terminated by document owner"
@@ -2272,7 +2268,7 @@ msgstr "U dha fjalëkalim i gabuar. Ju lutemi, riprovoni."
 
 #: src/core/Socket.js:1018
 msgid "Only the document owner can change the password."
-msgstr ""
+msgstr "Fjalëkalimin mund ta ndryshojë vetëm i zoti i dokumentit."
 
 #: src/core/Socket.js:1049 src/core/Socket.js:1054
 msgid "Missing Fonts"
@@ -2297,14 +2293,15 @@ msgstr "Dokumenti po riemërtohet dhe do të ringarkohet pas pak"
 #: src/core/Socket.js:1123
 msgid "The document is switching to Offline mode and will reload shortly"
 msgstr ""
+"Dokumenti po kalohet nën mënyrën “Jashtë Linje” dhe do të ringarkohet pas pak"
 
 #: src/core/Socket.js:1232
 msgid "Exported to storage"
-msgstr ""
+msgstr "U eksportua në depozitim"
 
 #: src/core/Socket.js:1232
 msgid "Successfully exported: "
-msgstr ""
+msgstr "Eksportuar me sukses: "
 
 #: src/core/Socket.js:1260
 msgid "Discard"
@@ -2348,19 +2345,19 @@ msgstr "Shërbyesi është shkëputur."
 
 #: src/docstate.js:82
 msgid "Standard"
-msgstr ""
+msgstr "Standarde"
 
 #: src/docstate.js:93
 msgid "Theme colors"
-msgstr ""
+msgstr "Ngjyra teme"
 
 #: src/docstate.js:94
 msgid "Document colors"
-msgstr ""
+msgstr "Ngjyra dokumenti"
 
 #: src/errormessages.js:22
 msgid "No disk space left on server."
-msgstr ""
+msgstr "S’ka më hapësirë në shërbyes."
 
 #: src/errormessages.js:23
 msgid ""
@@ -2416,16 +2413,15 @@ msgstr ""
 "Parametër WOPISrc i gabuar, ose që mungon, ju lutemi, lidhuni me asistencën."
 
 #: src/errormessages.js:30
-#, fuzzy
 msgid ""
 "Your session will expire in %time. Please save your work and refresh the "
 "session (or webpage) to continue. You might need to login again."
 msgstr ""
 "Sesioni juaj do të skadojë pas %time. Ju lutemi, që të vazhdohet, ruani ç’"
-"keni bërë dhe rifreskoni sesionin (ose faqen web)."
+"keni bërë dhe rifreskoni sesionin (ose faqen web). Mund t’ju duhet të ribëni "
+"hyrjen."
 
 #: src/errormessages.js:31
-#, fuzzy
 msgid ""
 "Your session has expired. Further changes to the document might not be "
 "saved. Please refresh the session (or webpage) to continue. You might need "
@@ -2433,7 +2429,7 @@ msgid ""
 msgstr ""
 "Sesioni juaj ka skaduar. Mund të mos ruhen ndryshime të mëtejshme te "
 "dokumenti. Ju lutemi, që të vazhdohet, ruani ç’keni bërë dhe rifreskoni "
-"sesionin (ose faqen web)."
+"sesionin (ose faqen web). Mund t’ju duhet të ribëni hyrjen."
 
 #: src/errormessages.js:32
 msgid ""
@@ -2452,6 +2448,7 @@ msgid ""
 "You are leaving the document. The following web page will open in a new "
 "tab: "
 msgstr ""
+"Po e braktisni dokumentin. Faqja web vijuese do të hapet në një skedë të re: "
 
 #: src/errormessages.js:35
 msgid ""
@@ -2532,12 +2529,17 @@ msgstr "Dokumenti s’mund të riemërtohet."
 msgid ""
 "Failed to read document from storage, please try to load the document again."
 msgstr ""
+"S’u arrit të lexohej dokument prej depozite, ju lutemi, provoni të "
+"ringarkoni dokumentin."
 
 #: src/errormessages.js:53
 msgid ""
 "Save failed due to no storage space left. Document will now be read-only. "
 "Please make sure enough disk space is available and try to save again."
 msgstr ""
+"S’u arrit të ruhet, për shkak se s’ka më hapësirë të lirë. Dokumenti tani do "
+"të jetë vetëm lexim. Ju lutemi, sigurohuni se ka hapësirë të mjaftueshme dhe "
+"riprovoni ta ruani."
 
 #: src/errormessages.js:54
 msgid ""
@@ -2545,18 +2547,22 @@ msgid ""
 "storage space. The document will now be read-only but you may still "
 "download it now to preserve a copy locally."
 msgstr ""
+"S’u arrit të ruhet, ngaqë dokumenti është shumë i madh, ose tejkalon "
+"hapësirën e mbetur të depozitimit. Dokumenti tani do të jetë vetëm lexim, "
+"por mundeni prapëseprapë ta shkarkoni tani, për të ruajtur lokalisht një "
+"kopje."
 
 #: src/errormessages.js:56
 msgid "Document cannot be saved, please check your permissions."
-msgstr ""
+msgstr "Dokumenti s’mund të ruhet, ju lutemi, kontrolloni lejet tuaja."
 
 #: src/errormessages.js:57
 msgid "Document cannot be renamed, please check your permissions."
-msgstr ""
+msgstr "Dokumenti s’mund të riemërtohet, ju lutemi, kontrolloni lejet tuaja."
 
 #: src/errormessages.js:58
 msgid "Document cannot be exported. Please try again."
-msgstr ""
+msgstr "Dokumenti s’mund të eksportohet. Ju lutemi, riprovoni."
 
 #: src/errormessages.js:63
 msgid "Uploading file to server failed, file not found."
@@ -2588,11 +2594,11 @@ msgstr "S’ka Komente"
 
 #: src/layer/tile/CommentListSection.ts:138
 msgid "A comment is being edited"
-msgstr ""
+msgstr "Po përpunohet një koment"
 
 #: src/layer/tile/CommentListSection.ts:139
 msgid "Please save or discard the comment currently being edited."
-msgstr ""
+msgstr "Ju lutemi, ruajeni, ose hidhet tej komentin që po përpunoni aktualish."
 
 #: src/layer/tile/CommentListSection.ts:922
 msgid "Modify"
@@ -2630,7 +2636,7 @@ msgstr "Zgjidhe Rrjedhën"
 #: src/layer/tile/CommentListSection.ts:1224
 #: src/layer/tile/CommentListSection.ts:1273
 msgid "Autosaved"
-msgstr ""
+msgstr "U vetëruajt"
 
 #: src/layer/tile/CommentSection.ts:285
 msgid "Open menu"
@@ -2665,7 +2671,7 @@ msgstr "Kopjimi prej dokumenti është i çaktivizuar"
 
 #: src/map/Clipboard.js:248
 msgid "warning: copy/paste request timed out"
-msgstr ""
+msgstr "kujdes: kërkesës për kopjim/ngjitje i mbaroi koha"
 
 #: src/map/Clipboard.js:311
 msgid "Failed to download clipboard, please re-copy"
@@ -2704,7 +2710,6 @@ msgstr ""
 "shkarkimi i tanishëm, ose anulojeni</p>"
 
 #: src/map/Clipboard.js:902
-#, fuzzy
 msgid ""
 "<p>Your browser has very limited access to the clipboard</p><p>Please press "
 "now: <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to see "
@@ -2712,8 +2717,8 @@ msgid ""
 msgstr ""
 "<p>Shfletuesi juaj ka hyrje shumë të kufizuar te e papastra</p><p>Ju lutemi, "
 "shtypni tani: <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd>, "
-"që të shihni më tepër mundësi</p><p class=\"vex-footnote\">Që të shpërfillet "
-"ngjitja speciale, mbylleni flluskën</p>"
+"që të shihni më tepër mundësi</p><p>Që të shpërfillet ngjitja speciale, "
+"mbylleni flluskën</p>"
 
 #: src/map/Map.js:218
 msgid "Initializing..."
@@ -2752,11 +2757,11 @@ msgstr "Ngarkim i kartelës te shërbyesi dështoi me gjendjen: %0"
 
 #: src/map/handler/Map.SlideShow.js:50
 msgid "Empty Slide Show"
-msgstr ""
+msgstr "Shfaqje Diapozitivash e Zbrazët"
 
 #: src/map/handler/Map.SlideShow.js:147
 msgid "Windowed Presentation Blocked"
-msgstr ""
+msgstr "Paraqitje Në Dritare e Bllokuar"
 
 #: src/map/handler/Map.SlideShow.js:148
 msgid ""
@@ -2764,31 +2769,33 @@ msgid ""
 "slide shows to be displayed in separated windows, allowing for easy screen "
 "sharing."
 msgstr ""
+"Paraqitja u bllokua. Ju lutemi, lejoni flluska në shfletuesin tuaj. Kjo "
+"lejon që shfaqje diapozitivash të kryhen në dritare më vete, për tregim më "
+"të kollajtë ekrani."
 
 #: src/map/handler/Map.SlideShow.js:156
 msgid "Presenting in window"
-msgstr ""
+msgstr "Paraqitje në dritare"
 
 #: src/map/handler/Map.SlideShow.js:157
 msgid "Close Presentation"
-msgstr ""
+msgstr "Mbylle Paraqitjen"
 
 #: src/map/handler/Map.SlideShow.js:169
 msgid "Presenting in fullscreen"
-msgstr ""
+msgstr "Paraqitje sa krejt ekrani"
 
 #: src/map/handler/Map.SlideShow.js:170
-#, fuzzy
 msgid "End Presentation"
-msgstr "Paraqitje"
+msgstr "Përfundojeni Paraqitjen"
 
 #: src/map/handler/Map.SlideShow.js:226
 msgid "Already presenting"
-msgstr ""
+msgstr "Tashmë në paraqitje"
 
 #: src/map/handler/Map.SlideShow.js:227
 msgid "You are already presenting this document"
-msgstr ""
+msgstr "Po e paraqitni tashmë këtë dokument"
 
 #: src/map/handler/Map.WOPI.js:149
 msgid "Creating new file from template..."
@@ -2796,11 +2803,11 @@ msgstr "Po krijohet kartelë e re prej gjedheje…"
 
 #: src/map/handler/Map.WOPI.js:582
 msgid "Error"
-msgstr ""
+msgstr "Gabim"
 
 #: src/map/handler/Map.WOPI.js:582
 msgid "File name should contain an extension."
-msgstr ""
+msgstr "Emri i kartelës duhet të përmbajë një zgjatim."
 
 #: src/map/handler/Map.WOPI.js:590
 msgid "Creating copy..."
@@ -2881,6 +2888,9 @@ msgid ""
 "id=\"slide-2-indicator\" href=\"#slide-2\">2</a> <a id=\"slide-3-"
 "indicator\" href=\"#slide-3\">3</a>"
 msgstr ""
+"<a id=\"slide-1-indicator\" class=\"active\" href=\"#slide-1\">1</a> <a id="
+"\"slide-2-indicator\" href=\"#slide-2\">2</a> <a id=\"slide-3-indicator\" "
+"href=\"#slide-3\">3</a>"
 
 #~ msgid "Start download"
 #~ msgstr "Nis shkarkimin"
