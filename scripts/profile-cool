@@ -6,13 +6,18 @@
 # document, users and pids
 # c) prompts for which pid to profile
 # d) profiles, then generates flamegraph on ctrl+c
+if ! test `id -u` = 0; then
+    echo "not root, if this doesn't work try sudo profile-cool"
+fi
 if ! which flamegraph.pl > /dev/null 2>&1; then
-    PATH=$PATH:$HOME/FlameGraph
+    REAL_USER_HOME="$(getent passwd $SUDO_USER | cut -d: -f6)"
+    PATH=$PATH:$HOME/FlameGraph:$REAL_USER_HOME/FlameGraph
 fi
 if ! which flamegraph.pl > /dev/null 2>&1; then
     echo "no flamegraph.pl found"
     echo "On fedora install systemwide with: sudo dnf install flamegraph"
     echo "Otherwise install locally manually into ~/FlameGraph"
+    echo "    e.g. git clone https://github.com/brendangregg/FlameGraph ~/FlameGraph"
     exit 1
 fi
 # a deployment will log to journal, take current time to grep logs from that time point
