@@ -234,15 +234,29 @@ namespace FileUtil
     std::string getTempFileCopyPath(const std::string& srcDir, const std::string& srcFilename, const std::string& dstFilenamePrefix)
     {
         const std::string srcPath = srcDir + '/' + srcFilename;
-        const std::string dstFilename = dstFilenamePrefix + Util::encodeId(Util::rng::getNext()) + '_' + srcFilename;
 #if HAVE_STD_FILESYSTEM
-        // Don't const to allow for automatic move on return.
-        std::string dstPath = filesystem::temp_directory_path() / dstFilename;
-        filesystem::copy(srcPath, dstPath);
+        std::string dstPath;
+
+        bool retry;
+        do {
+            std::string dstFilename = dstFilenamePrefix + Util::encodeId(Util::rng::getNext()) + '_' + srcFilename;
+
+            retry = false;
+            dstPath = filesystem::temp_directory_path() / dstFilename;
+            try {
+                filesystem::copy(srcPath, dstPath);
+            }
+            catch (const std::exception& ex)
+            {
+                LOG_SYS("ERROR: unexpected conflict creating file: " << ex.what());
+                retry = true;;
+            }
+        } while (retry);
 
         static FileDeleter fileDeleter;
         fileDeleter.registerForDeletion(dstPath);
 #else
+        const std::string dstFilename = dstFilenamePrefix + Util::encodeId(Util::rng::getNext()) + '_' + srcFilename;
         const std::string dstPath = Poco::Path(Poco::Path::temp(), dstFilename).toString();
         copyFileTo(srcPath, dstPath);
         Poco::TemporaryFile::registerForDeletion(dstPath);
