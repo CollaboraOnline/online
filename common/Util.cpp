@@ -84,12 +84,22 @@ namespace Util
         static std::mutex _rngMutex;
         static Poco::RandomBuf _randBuf;
 
+        std::mt19937_64 foo()
+        {
+            std::cerr << "entropy is " << _rd.entropy() << std::endl;
+            bool hasEntropy = _rd.entropy() ? true : false;
+            assert(hasEntropy && "expected to have entropy");
+            if (!hasEntropy)
+                std::abort();
+            return std::mt19937_64(hasEntropy
+                                   ? _rd()
+                                   : (clock() + getpid()));
+        }
+
         // Create the prng with a random-device for seed.
         // If we don't have a hardware random-device, we will get the same seed.
         // In that case we are better off with an arbitrary, but changing, seed.
-        static std::mt19937_64 _rng = std::mt19937_64(_rd.entropy()
-                                                    ? _rd()
-                                                    : (clock() + getpid()));
+        static std::mt19937_64 _rng = foo();
 
         // A new seed is used to shuffle the sequence.
         // N.B. Always reseed after getting forked!
