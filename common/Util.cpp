@@ -60,7 +60,6 @@
 #include <Poco/JSON/JSON.h>
 #include <Poco/JSON/Object.h>
 #include <Poco/JSON/Parser.h>
-#include <Poco/RandomStream.h>
 #include <Poco/TemporaryFile.h>
 #include <Poco/Util/Application.h>
 #include <Poco/URI.h>
@@ -74,22 +73,25 @@ namespace Util
 {
     namespace rng
     {
-        static std::random_device _rd;
         static std::mutex _rngMutex;
-        static Poco::RandomBuf _randBuf;
 
         // Create the prng with a random-device for seed.
         // If we don't have a hardware random-device, we will get the same seed.
         // In that case we are better off with an arbitrary, but changing, seed.
-        static std::mt19937_64 _rng = std::mt19937_64(_rd.entropy()
-                                                    ? _rd()
-                                                    : (clock() + getpid()));
+        static std::mt19937_64 _rng = std::mt19937_64(rng::getSeed());
+
+        uint_fast64_t getSeed()
+        {
+            std::vector<char> hardRandom = getBytes(16);
+            uint_fast64_t seed = *reinterpret_cast<uint_fast64_t *>(hardRandom.data());
+            return seed;
+        }
 
         // A new seed is used to shuffle the sequence.
         // N.B. Always reseed after getting forked!
         void reseed()
         {
-            _rng.seed(_rd.entropy() ? _rd() : (clock() + getpid()));
+            _rng.seed(rng::getSeed());
         }
 
         // Returns a new random number.
@@ -102,7 +104,27 @@ namespace Util
         std::vector<char> getBytes(const std::size_t length)
         {
             std::vector<char> v(length);
-            _randBuf.readFromDevice(v.data(), v.size());
+
+            int len = 0;
+#ifdef HAVE_SYS_RANDOM_H
+            len = getrandom(v.data(), length, GRND_NONBLOCK);
+
+            // if getrandom() fails, we fall back to "/dev/[u]random" approach.
+            if (len != length)
+#endif
+            {
+                LOG_TRC("Lower performance fallback - missing getrandom function");
+                const int fd = open("/dev/urandom", O_RDONLY);
+                if (fd < 0 ||
+                    (len = read(fd, v.data(), length)) < 0 ||
+                    std::size_t(len) < length)
+                {
+                    LOG_ERR("failed to read " << length << " hard random bytes, got " << len << " for hash: " << errno);
+                }
+                if (fd >= 0)
+                    close(fd);
+            }
+
             return v;
         }
 
@@ -125,15 +147,6 @@ namespace Util
 
             // a poor fallback but something.
             std::vector<char> random = getBytes(length);
-            int fd = open("/dev/urandom", O_RDONLY);
-            int len = 0;
-            if (fd < 0 ||
-                (len = read(fd, random.data(), length)) < 0 ||
-                std::size_t(len) < length)
-            {
-                LOG_ERR("failed to read " << length << " hard random bytes, got " << len << " for hash: " << errno);
-            }
-            close(fd);
 
             hex.rdbuf()->setLineLength(0); // Don't insert line breaks.
             hex.write(random.data(), length);
