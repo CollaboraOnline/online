@@ -48,6 +48,18 @@
 #error TDOC must be defined (see Makefile.am)
 #endif
 
+#if HAVE_STD_FILESYSTEM
+# if HAVE_STD_FILESYSTEM_EXPERIMENTAL
+#  include <experimental/filesystem>
+namespace filesystem = ::std::experimental::filesystem;
+# else
+#  include <filesystem>
+namespace filesystem = ::std::filesystem;
+# endif
+#else
+# include <Poco/TemporaryFile.h>
+#endif
+
 // Sometimes we need to retry some commands as they can (due to timing or load) soft-fail.
 constexpr int COMMAND_RETRY_COUNT = 5;
 
@@ -114,6 +126,77 @@ std::vector<char> readDataFromFile(std::unique_ptr<std::fstream>& file)
     return v;
 }
 
+namespace
+{
+#if HAVE_STD_FILESYSTEM
+/// Class to delete files when the process ends.
+class FileDeleter
+{
+    std::vector<std::string> _filesToDelete;
+    std::mutex _lock;
+public:
+    FileDeleter() {}
+    ~FileDeleter()
+    {
+        std::unique_lock<std::mutex> guard(_lock);
+        for (const std::string& file: _filesToDelete)
+            filesystem::remove(file);
+    }
+
+    void registerForDeletion(const std::string& file)
+    {
+        std::unique_lock<std::mutex> guard(_lock);
+        _filesToDelete.push_back(file);
+    }
+};
+#endif
+}
+
+/// Make a temp copy of a file, and prepend it with a prefix.
+/// Used by tests to avoid tainting the originals.
+inline std::string getTempFileCopyPath(const std::string& srcDir, const std::string& srcFilename, const std::string& dstFilenamePrefix)
+{
+    const std::string srcPath = srcDir + '/' + srcFilename;
+#if HAVE_STD_FILESYSTEM
+    std::string dstPath;
+
+    bool retry;
+    do {
+        std::string dstFilename = dstFilenamePrefix + Util::encodeId(Util::rng::getNext()) + '_' + srcFilename;
+
+        retry = false;
+        dstPath = filesystem::temp_directory_path() / dstFilename;
+        try {
+            filesystem::copy(srcPath, dstPath);
+        }
+        catch (const std::exception& ex)
+        {
+            LOG_SYS("ERROR: unexpected conflict creating file: " << ex.what());
+            retry = true;;
+        }
+    } while (retry);
+
+    static FileDeleter fileDeleter;
+    fileDeleter.registerForDeletion(dstPath);
+#else
+    const std::string dstFilename = dstFilenamePrefix + Util::encodeId(Util::rng::getNext()) + '_' + srcFilename;
+    const std::string dstPath = Poco::Path(Poco::Path::temp(), dstFilename).toString();
+    copyFileTo(srcPath, dstPath);
+    Poco::TemporaryFile::registerForDeletion(dstPath);
+#endif
+
+    return dstPath;
+}
+
+/// Make a temp copy of a file.
+/// Used by tests to avoid tainting the originals.
+/// srcDir shouldn't end with '/' and srcFilename shouldn't contain '/'.
+/// Returns the created file path.
+inline std::string getTempFileCopyPath(const std::string& srcDir, const std::string& srcFilename)
+{
+    return getTempFileCopyPath(srcDir, srcFilename, std::string());
+}
+
 inline void getDocumentPathAndURL(const std::string& docFilename, std::string& documentPath,
                                   std::string& documentURL, std::string prefix)
 {
@@ -123,7 +206,7 @@ inline void getDocumentPathAndURL(const std::string& docFilename, std::string& d
     std::unique_lock<std::mutex> guard(lock);
 
     std::replace(prefix.begin(), prefix.end(), ' ', '_');
-    documentPath = FileUtil::getTempFileCopyPath(TDOC, docFilename, prefix);
+    documentPath = getTempFileCopyPath(TDOC, docFilename, prefix);
     std::string encodedUri;
     Poco::URI::encode("file://" + Poco::Path(documentPath).makeAbsolute().toString(), ":/?",
                       encodedUri);
