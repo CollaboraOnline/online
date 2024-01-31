@@ -2129,6 +2129,9 @@ L.Control.Menubar = L.Control.extend({
 		if (menuItem.id && (menuItem.id.startsWith('exportas')) && this._map['wopi'].UserCanNotWriteRelative)
 			return false;
 
+		if (menuItem.id && menuItem.id === 'exportpdf' && window.ThisIsTheAndroidApp)
+			return false;
+
 		if ((menuItem.id === 'shareas' || menuItem.id === 'ShareAs') && !this._map['wopi'].EnableShare)
 			return false;
 
