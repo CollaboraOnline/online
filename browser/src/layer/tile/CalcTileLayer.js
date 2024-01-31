@@ -194,7 +194,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		var topLeftTwips = new L.Point(command.x, command.y);
 		var offset = new L.Point(command.width, command.height);
 		var bottomRightTwips = topLeftTwips.add(offset);
-		if (this._debugTileInvalidations) {
+		if (this._debugTileInvalidations && command.part === this._selectedPart) {
 			this._debugAddInvalidationRectangle(topLeftTwips, bottomRightTwips, textMsg);
 		}
 
