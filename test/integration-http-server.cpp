@@ -334,7 +334,7 @@ void HTTPServerTest::testScriptsAndLinksPost()
 void HTTPServerTest::testConvertTo()
 {
     const char *testname = "testConvertTo";
-    const std::string srcPath = FileUtil::getTempFileCopyPath(TDOC, "hello.odt", "convertTo_");
+    const std::string srcPath = helpers::getTempFileCopyPath(TDOC, "hello.odt", "convertTo_");
     std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
     session->setTimeout(Poco::Timespan(COMMAND_TIMEOUT_SECS, 0)); // 5 seconds.
 
@@ -380,7 +380,7 @@ void HTTPServerTest::testConvertTo()
 void HTTPServerTest::testConvertTo2()
 {
     const char *testname = "testConvertTo2";
-    const std::string srcPath = FileUtil::getTempFileCopyPath(TDOC, "convert-to.xlsx", "convertTo_");
+    const std::string srcPath = helpers::getTempFileCopyPath(TDOC, "convert-to.xlsx", "convertTo_");
     std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
     session->setTimeout(Poco::Timespan(COMMAND_TIMEOUT_SECS * 2, 0)); // 10 seconds.
 
@@ -429,7 +429,7 @@ void HTTPServerTest::testConvertToWithForwardedIP_Deny()
     {
         TST_LOG("Converting from a disallowed IP.");
 
-        const std::string srcPath = FileUtil::getTempFileCopyPath(TDOC, "hello.odt", testname);
+        const std::string srcPath = helpers::getTempFileCopyPath(TDOC, "hello.odt", testname);
         std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
         session->setTimeout(Poco::Timespan(TimeoutSeconds, 0));
 
@@ -479,7 +479,7 @@ void HTTPServerTest::testConvertToWithForwardedIP_Allow()
     {
         TST_LOG("Converting from an allowed IP.");
 
-        const std::string srcPath = FileUtil::getTempFileCopyPath(TDOC, "hello.odt", testname);
+        const std::string srcPath = helpers::getTempFileCopyPath(TDOC, "hello.odt", testname);
         std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
         session->setTimeout(Poco::Timespan(TimeoutSeconds, 0));
 
@@ -537,7 +537,7 @@ void HTTPServerTest::testConvertToWithForwardedIP_DenyMulti()
     {
         TST_LOG("Converting from multiple IPs, on disallowed.");
 
-        const std::string srcPath = FileUtil::getTempFileCopyPath(TDOC, "hello.odt", testname);
+        const std::string srcPath = helpers::getTempFileCopyPath(TDOC, "hello.odt", testname);
         std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
         session->setTimeout(Poco::Timespan(TimeoutSeconds, 0));
 
@@ -582,8 +582,8 @@ void HTTPServerTest::testConvertToWithForwardedIP_DenyMulti()
 void HTTPServerTest::testRenderSearchResult()
 {
     const char* testname = "testRenderSearchResult";
-    const std::string srcPathDoc = FileUtil::getTempFileCopyPath(TDOC, "RenderSearchResultTest.odt", testname);
-    const std::string srcPathXml = FileUtil::getTempFileCopyPath(TDOC, "RenderSearchResultFragment.xml", testname);
+    const std::string srcPathDoc = helpers::getTempFileCopyPath(TDOC, "RenderSearchResultTest.odt", testname);
+    const std::string srcPathXml = helpers::getTempFileCopyPath(TDOC, "RenderSearchResultFragment.xml", testname);
     std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
     session->setTimeout(Poco::Timespan(COMMAND_TIMEOUT_SECS * 2, 0)); // 10 seconds.
 

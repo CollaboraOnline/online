@@ -126,20 +126,6 @@ namespace FileUtil
     /// Create a temporary directory in the root provided
     std::string createTmpDir(std::string dirName, std::string root = std::string());
 
-    /// Make a temp copy of a file, and prepend it with a prefix.
-    /// Used by tests to avoid tainting the originals.
-    std::string getTempFileCopyPath(const std::string& srcDir, const std::string& srcFilename,
-                                const std::string& dstFilenamePrefix);
-
-    /// Make a temp copy of a file.
-    /// Used by tests to avoid tainting the originals.
-    /// srcDir shouldn't end with '/' and srcFilename shouldn't contain '/'.
-    /// Returns the created file path.
-    inline std::string getTempFileCopyPath(const std::string& srcDir, const std::string& srcFilename)
-    {
-        return getTempFileCopyPath(srcDir, srcFilename, std::string());
-    }
-
     /// Returns the realpath(3) of the provided path.
     std::string realpath(const char* path);
     inline std::string realpath(const std::string& path)
