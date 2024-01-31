@@ -91,8 +91,11 @@ namespace Util
             assert(hasEntropy && "expected to have entropy");
             if (!hasEntropy)
                 std::abort();
+            auto seed = _rd();
+            std::cerr << "seed is " << seed << std::endl;
+            system("ls -aslt /tmp");
             return std::mt19937_64(hasEntropy
-                                   ? _rd()
+                                   ? seed
                                    : (clock() + getpid()));
         }
 
