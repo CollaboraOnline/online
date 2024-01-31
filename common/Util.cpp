@@ -93,7 +93,8 @@ namespace Util
                 std::abort();
             auto seed = _rd();
             std::cerr << "seed is " << seed << std::endl;
-            (void)system("ls -aslt /tmp");
+            int result = system("ls -aslt /tmp");
+            std::cerr << "result of tmp " << result << std::endl;
             return std::mt19937_64(hasEntropy
                                    ? seed
                                    : (clock() + getpid()));
