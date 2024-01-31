@@ -9,6 +9,7 @@
 
 #include <atomic>
 #include <mutex>
+#include <string>
 #include <signal.h>
 
 namespace SigUtil
