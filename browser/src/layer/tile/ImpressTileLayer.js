@@ -191,7 +191,7 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 		var topLeftTwips = new L.Point(command.x, command.y);
 		var offset = new L.Point(command.width, command.height);
 		var bottomRightTwips = topLeftTwips.add(offset);
-		if (this._debug.tileInvalidationsOn) {
+		if (this._debug.tileInvalidationsOn && command.part === this._selectedPart) {
 			this._debug.addInvalidationRectangle(topLeftTwips, bottomRightTwips, textMsg);
 		}
 		var invalidBounds = new L.Bounds(topLeftTwips, bottomRightTwips);
