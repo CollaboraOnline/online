@@ -119,13 +119,16 @@ namespace Util
             if (len != length)
 #endif
             {
-                LOG_TRC("Lower performance fallback - missing getrandom function");
                 const int fd = open("/dev/urandom", O_RDONLY);
                 if (fd < 0 ||
                     (len = read(fd, v.data(), length)) < 0 ||
                     std::size_t(len) < length)
                 {
-                    LOG_ERR("failed to read " << length << " hard random bytes, got " << len << " for hash: " << errno);
+                    fprintf(stderr, "No adequate source of randomness, "
+                            "failed to read %ld bytes: with error %s\n",
+                            (long int)length, strerror(errno));
+                    // Potentially dangerous to continue without randomness
+                    abort();
                 }
                 if (fd >= 0)
                     close(fd);
