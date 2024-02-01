@@ -1070,7 +1070,7 @@ public:
             // Put the message in the owner's thread queue to be send later
             // because WebSocketHandler is not thread safe and otherwise we
             // should synchronize inside WebSocketHandler.
-            addCallback([=]{
+            addCallback([this, msg]{
                 std::shared_ptr<ForKitProcess> forKitProc = _forKitProc.lock();
                 if (forKitProc)
                 {

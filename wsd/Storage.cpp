@@ -1339,7 +1339,7 @@ void WopiStorage::uploadLocalFileToStorageAsync(const Authorization& auth, LockC
         httpRequest.setBodyFile(filePath);
 
         http::Session::FinishedCallback finishedCallback =
-            [=](const std::shared_ptr<http::Session>& httpSession)
+            [this, startTime, wopiLog, filePathAnonym, uriAnonym, size, isSaveAs, isRename, asyncUploadCallback](const std::shared_ptr<http::Session>& httpSession)
         {
             // Retire.
             _uploadHttpSession.reset();
