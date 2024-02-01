@@ -1649,6 +1649,10 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 	margin-left: -10px;
 }
 
+.user-list-item .user-info {
+	margin: 0;
+}
+
 #userListPopover {
 	display: none;
 	position: absolute;
