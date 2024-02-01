@@ -4254,23 +4254,27 @@ L.CanvasTileLayer = L.Layer.extend({
 					this._graphicSelectionTwips.min.x + deltaPos.x,
 					this._graphicSelectionTwips.min.y + deltaPos.y);
 
-				var size = this._graphicSelectionTwips.getSize();
-
 				if (calcRTL) {
 					// make x coordinate of newPos +ve
 					newPos.x = -newPos.x;
 				}
 
-				// try to keep shape inside document
-				if (newPos.x + size.x > this._docWidthTwips)
-					newPos.x = this._docWidthTwips - size.x;
-				if (newPos.x < 0)
-					newPos.x = 0;
+				if (this.isWriter() || this.isCalc()) {
+					// try to keep shape inside document
+					// This is required in Writer, but Impress and Draw
+					// allow shapes outside of the page/slide boundaries.
+					var size = this._graphicSelectionTwips.getSize();
 
-				if (newPos.y + size.y > this._docHeightTwips)
-					newPos.y = this._docHeightTwips - size.y;
-				if (newPos.y < 0)
-					newPos.y = 0;
+					if (newPos.x + size.x > this._docWidthTwips)
+						newPos.x = this._docWidthTwips - size.x;
+					if (newPos.x < 0)
+						newPos.x = 0;
+
+					if (newPos.y + size.y > this._docHeightTwips)
+						newPos.y = this._docHeightTwips - size.y;
+					if (newPos.y < 0)
+						newPos.y = 0;
+				}
 
 				if (this.isCalc() && this.options.printTwipsMsgsEnabled) {
 					newPos = this.sheetGeometry.getPrintTwipsPointFromTile(newPos);
