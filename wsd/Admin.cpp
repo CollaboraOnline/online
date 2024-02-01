@@ -690,33 +690,33 @@ void Admin::pollingThread()
     }
 }
 
-void Admin::modificationAlert(const std::string& dockey, pid_t pid, bool value){
-    addCallback([=] { _model.modificationAlert(dockey, pid, value); });
+void Admin::modificationAlert(const std::string& docKey, pid_t pid, bool value){
+    addCallback([this, docKey, pid, value] { _model.modificationAlert(docKey, pid, value); });
 }
 
-void Admin::uploadedAlert(const std::string& dockey, pid_t pid, bool value)
+void Admin::uploadedAlert(const std::string& docKey, pid_t pid, bool value)
 {
-    addCallback([=] { _model.uploadedAlert(dockey, pid, value); });
+    addCallback([this, docKey, pid, value] { _model.uploadedAlert(docKey, pid, value); });
 }
 
 void Admin::addDoc(const std::string& docKey, pid_t pid, const std::string& filename,
                    const std::string& sessionId, const std::string& userName, const std::string& userId,
                    const int smapsFD, const std::string& wopiSrc, bool readOnly)
 {
-    addCallback([=] {
+    addCallback([this, docKey, pid, filename, sessionId, userName, userId, smapsFD, wopiSrc, readOnly] {
         _model.addDocument(docKey, pid, filename, sessionId, userName, userId, smapsFD, Poco::URI(wopiSrc), readOnly);
     });
 }
 
 void Admin::rmDoc(const std::string& docKey, const std::string& sessionId)
 {
-    addCallback([=] { _model.removeDocument(docKey, sessionId); });
+    addCallback([this, docKey, sessionId] { _model.removeDocument(docKey, sessionId); });
 }
 
 void Admin::rmDoc(const std::string& docKey)
 {
     LOG_INF("Removing complete doc [" << docKey << "] from Admin.");
-    addCallback([=]{ _model.removeDocument(docKey); });
+    addCallback([this, docKey]{ _model.removeDocument(docKey); });
 }
 
 void Admin::rescheduleMemTimer(unsigned interval)
@@ -866,43 +866,43 @@ AdminModel& Admin::getModel()
 
 void Admin::updateLastActivityTime(const std::string& docKey)
 {
-    addCallback([=]{ _model.updateLastActivityTime(docKey); });
+    addCallback([this, docKey]{ _model.updateLastActivityTime(docKey); });
 }
 
 
 void Admin::addBytes(const std::string& docKey, uint64_t sent, uint64_t recv)
 {
-    addCallback([=] { _model.addBytes(docKey, sent, recv); });
+    addCallback([this, docKey, sent, recv] { _model.addBytes(docKey, sent, recv); });
 }
 
 void Admin::setViewLoadDuration(const std::string& docKey, const std::string& sessionId, std::chrono::milliseconds viewLoadDuration)
 {
-    addCallback([=]{ _model.setViewLoadDuration(docKey, sessionId, viewLoadDuration); });
+    addCallback([this, docKey, sessionId, viewLoadDuration]{ _model.setViewLoadDuration(docKey, sessionId, viewLoadDuration); });
 }
 
 void Admin::setDocWopiDownloadDuration(const std::string& docKey, std::chrono::milliseconds wopiDownloadDuration)
 {
-    addCallback([=]{ _model.setDocWopiDownloadDuration(docKey, wopiDownloadDuration); });
+    addCallback([this, docKey, wopiDownloadDuration]{ _model.setDocWopiDownloadDuration(docKey, wopiDownloadDuration); });
 }
 
 void Admin::setDocWopiUploadDuration(const std::string& docKey, const std::chrono::milliseconds uploadDuration)
 {
-    addCallback([=]{ _model.setDocWopiUploadDuration(docKey, uploadDuration); });
+    addCallback([this, docKey, uploadDuration]{ _model.setDocWopiUploadDuration(docKey, uploadDuration); });
 }
 
 void Admin::addSegFaultCount(unsigned segFaultCount)
 {
-    addCallback([=]{ _model.addSegFaultCount(segFaultCount); });
+    addCallback([this, segFaultCount]{ _model.addSegFaultCount(segFaultCount); });
 }
 
 void Admin::addLostKitsTerminated(unsigned lostKitsTerminated)
 {
-    addCallback([=]{ _model.addLostKitsTerminated(lostKitsTerminated); });
+    addCallback([this, lostKitsTerminated]{ _model.addLostKitsTerminated(lostKitsTerminated); });
 }
 
 void Admin::routeTokenSanityCheck()
 {
-    addCallback([=] { _model.routeTokenSanityCheck(); });
+    addCallback([this] { _model.routeTokenSanityCheck(); });
 }
 
 void Admin::notifyForkit()
@@ -1184,7 +1184,7 @@ void Admin::startMonitors()
     for (const auto& monitor : getMonitorList())
     {
         addCallback(
-            [=]
+            [this, monitor]
             {
                 scheduleMonitorConnect(monitor.first + "?ServerId=" + Util::getProcessIdentifier(),
                                        std::chrono::steady_clock::now());

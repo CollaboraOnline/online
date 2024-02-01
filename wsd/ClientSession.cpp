@@ -1607,7 +1607,7 @@ void ClientSession::writeQueuedMessages(std::size_t capacity)
 void ClientSession::postProcessCopyPayload(const std::shared_ptr<Message>& payload)
 {
     // Insert our meta origin if we can
-    payload->rewriteDataBody([=](std::vector<char>& data) {
+    payload->rewriteDataBody([this](std::vector<char>& data) {
             std::size_t pos = Util::findInVector(data, "<body");
             if (pos != std::string::npos)
             {
