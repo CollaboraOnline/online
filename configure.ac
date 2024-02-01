@@ -1001,11 +1001,11 @@ else
     AC_MSG_RESULT([no])
 fi
 
-# Check for C++17 support.
+# Check for C++20 support.
 HAVE_CXXSTD=
 CXXFLAGS_CXXSTD=
-AC_MSG_CHECKING([whether $CXX supports C++17])
-for flag in -std=c++17 -std=c++1z ; do
+AC_MSG_CHECKING([whether $CXX supports C++20])
+for flag in -std=c++20 -std=c++2a ; do
     save_CXXFLAGS=$CXXFLAGS
     CXXFLAGS="$CXXFLAGS $flag -Werror"
     AC_LANG_PUSH([C++])
@@ -1028,7 +1028,7 @@ if test "$HAVE_CXXSTD" = TRUE; then
     AC_MSG_RESULT([yes ($CXXFLAGS_CXXSTD)])
 else
     AC_MSG_RESULT([no])
-    AC_MSG_ERROR(Compiler doesn't support C++17)
+    AC_MSG_ERROR(Compiler doesn't support C++20)
 fi
 
 # Check if we have clang, rather than gcc, which
