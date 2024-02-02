@@ -134,11 +134,15 @@ if [ $COOLWSD_IS_ACTIVE == "1" ]; then systemctl start coolwsd; fi
 
 
 %preun
-systemctl --no-reload disable coolwsd.service > /dev/null 2>&1 || :
-systemctl stop coolwsd.service > /dev/null 2>&1 || :
+if [ $1 -eq 0 ]; then
+    systemctl --no-reload disable coolwsd.service > /dev/null 2>&1 || :
+    systemctl stop coolwsd.service > /dev/null 2>&1 || :
+fi
 
 %postun
-systemctl daemon-reload >/dev/null 2>&1 || :
+if [ $1 -eq 0 ]; then
+    systemctl daemon-reload >/dev/null 2>&1 || :
+fi
 
 %changelog
 * Mon Aug 03 2015 Mihai Varga
