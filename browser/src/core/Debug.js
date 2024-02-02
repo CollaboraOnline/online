@@ -18,7 +18,7 @@
  * - Help > About > Triple Click (Toolbar.js aboutDialogClickHandler)
  */
 
-/* global app L */
+/* global app L _ */
 
 L.DebugManager = L.Class.extend({
 	initialize: function(map) {
@@ -42,7 +42,15 @@ L.DebugManager = L.Class.extend({
 		this._painter = this._map._docLayer._painter;
 
 		this.debugOn = true;
+
 		this._controls = {};
+		// Add header
+		this._controls['header'] = L.control.layers({}, {}, {collapsed: false}).addTo(this._map);
+		var b = document.createElement('b');
+		b.append(_('Debug Tools'));
+		this._controls['header']._container.prepend(b);
+		this._controls['header']._container.append(_('Ctrl+Shift+Alt+D to exit'));
+
 		this._toolLayers = [];
 		this._addDebugTools();
 
@@ -102,7 +110,7 @@ L.DebugManager = L.Class.extend({
 	_addDebugTool: function (tool) {
 		// Create control if it doesn't exist
 		if (!(tool.category in this._controls)) {
-			this._controls[tool.category] = L.control.layers({}, {}, {collapsed: false, sortLayers: true}).addTo(this._map);
+			this._controls[tool.category] = L.control.layers({}, {}, {collapsed: false}).addTo(this._map);
 			// Add a title
 			var b = document.createElement('b');
 			b.append(tool.category);
