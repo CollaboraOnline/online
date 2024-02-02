@@ -97,7 +97,7 @@ setcap cap_fowner,cap_chown,cap_mknod,cap_sys_chroot=ep /usr/bin/coolforkit
 setcap cap_sys_admin=ep /usr/bin/coolmount
 if [ -f /etc/loolwsd/loolwsd.xml ]; then /usr/bin/coolconfig migrateconfig --write; fi
 # compatibility with older systemd versions
-SYSTEMD_VERSION=$(busctl --system get-property org.freedesktop.systemd1 /org/freedesktop/systemd1 org.freedesktop.systemd1.Manager Version | grep -Eo [0-9]{3})
+SYSTEMD_VERSION=$(busctl --system get-property org.freedesktop.systemd1 /org/freedesktop/systemd1 org.freedesktop.systemd1.Manager Version | grep -Eo [0-9]{3} | head -n 1)
 if [[ "$SYSTEMD_VERSION" -lt "228" ]]; then
     sed -i "/^ProtectSystem/d" /usr/lib/systemd/system/coolwsd.service
 fi
