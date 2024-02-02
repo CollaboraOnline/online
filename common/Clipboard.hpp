@@ -145,16 +145,16 @@ public:
         const auto it = _cache.find(key);
         if (it == _cache.end())
         {
-            LOG_TRC("Clipboard key not present");
+            LOG_TRC("Clipboard key [" << key << "] is not present");
             return nullptr;
         }
         else if (it->second.hasExpired(std::chrono::steady_clock::now()))
         {
-            LOG_TRC("Clipboard item expired");
+            LOG_TRC("Clipboard item with key [" << key << "] is expired");
             return nullptr;
         }
-        else
-            return it->second._rawData;
+
+        return it->second._rawData;
     }
 
     void checkexpiry()
