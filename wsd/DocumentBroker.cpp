@@ -2743,6 +2743,22 @@ std::size_t DocumentBroker::removeSession(const std::shared_ptr<ClientSession>& 
                                      << ", DontSaveIfUnmodified: " << dontSaveIfUnmodified
                                      << ", IsPossiblyModified: " << isPossiblyModified());
 
+#ifndef IOS
+        if (activeSessionCount <= 1)
+        {
+            // rescue clipboard before shutdown.
+            // N.B. If the user selects then copies, most likely we will
+            // mark the document as possibly-modified. This will issue
+            // a save (below) before removing the session, guaranteeing
+            // that we wait for the save to complete, which is after
+            // rescuing the clipboard via getclipboard. Conversely,
+            // if there is no reason to think the document is possibly-
+            // modified, then it's unlikely there is anything in the clipboard.
+            LOG_TRC("request/rescue clipboard on disconnect for " << session->getId());
+            forwardToChild(session, "getclipboard");
+        }
+#endif
+
         // In theory, we almost could do this here:
 
         // #if MOBILEAPP
