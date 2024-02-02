@@ -430,6 +430,16 @@ L.DebugManager = L.Class.extend({
 			window.app.console.log('Randomize Settings: Leave spell check as ' + (isSpellCheck=='true'?'on':'off'));
 		}
 
+		// Toggle formatting marks
+		if (this._docLayer.isWriter()) {
+			if (Math.random() < 0.5) {
+				window.app.console.log('Randomize Settings: Toggle formatting marks');
+				this._map.sendUnoCommand('.uno:ControlCodes');
+			} else {
+				window.app.console.log('Randomize Settings: Leave formatting marks');
+			}
+		}
+
 		// Move to different part of sheet
 		if (this._docLayer.isCalc()) {
 			// Select random position
@@ -457,11 +467,31 @@ L.DebugManager = L.Class.extend({
 		}
 
 		// Toggle sidebar
-		if (Math.random() < 0.5) {
-			window.app.console.log('Randomize Settings: Toggle sidebar');
-			this._map.sendUnoCommand('.uno:SidebarDeck.PropertyDeck');
-		} else {
-			window.app.console.log('Randomize Settings: Leave sidebar');
+		var sidebars = ['none','.uno:SidebarDeck.PropertyDeck','.uno:Navigator'];
+		if (this._docLayer.isImpress()) {
+			sidebars = sidebars.concat(['.uno:SlideChangeWindow','.uno:CustomAnimation','.uno:MasterSlidesPanel','.uno:ModifyPage']);
+		}
+		var sidebar = sidebars[Math.floor(Math.random()*sidebars.length)];
+		window.app.console.log('Randomize Settings: Target sidebar: ' + sidebar);
+		if (this._map.sidebar && this._map.sidebar.isVisible()) {
+			var currentSidebar = this._map.sidebar.getTargetDeck();
+			if (sidebar == 'none') {
+				window.app.console.log('Randomize Settings: Remove sidebar');
+				// Send message for existing sidebar to remove it
+				this._map.sendUnoCommand(currentSidebar);
+			} else if (sidebar == currentSidebar) {
+				window.app.console.log('Randomize Settings: Leave sidebar as ' + sidebar);
+			} else {
+				window.app.console.log('Randomize Settings: Switch sidebar to ' + sidebar);
+				this._map.sendUnoCommand(sidebar);
+			}
+		} else { // eslint-disable-next-line no-lonely-if
+			if (sidebar == 'none') {
+				window.app.console.log('Randomize Settings: Leave sidebar off');
+			} else {
+				window.app.console.log('Randomize Settings: Open sidebar ' + sidebar);
+				this._map.sendUnoCommand(sidebar);
+			}
 		}
 
 		this._painter.update();
