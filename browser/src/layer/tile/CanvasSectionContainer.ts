@@ -1277,7 +1277,11 @@ class CanvasSectionContainer {
 				propagate = false; // Window sections can not stop the propagation of the event for other window sections.
 		}
 
-		if (propagate) {
+		if (!section.boundsList) {
+			console.error('propagateOnMouseWheel: no section.boundsList in section: "' + section.name + '"');
+		}
+
+		if (propagate && section.boundsList) {
 			for (var i: number = section.boundsList.length - 1; i > -1; i--) {
 				if (section.boundsList[i].interactable)
 					section.boundsList[i].onMouseWheel((position ? [position[0], position[1]]: null), delta, e);
