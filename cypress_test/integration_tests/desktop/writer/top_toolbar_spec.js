@@ -271,19 +271,18 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 	});
 
 	it('Apply Undo/Redo.', function() {
+		//Do
 		cy.cGet('.notebookbar > .unoItalic > button').click();
 		writerHelper.selectAllTextOfDoc();
 		cy.cGet('#copy-paste-container p i').should('exist');
 
 		//Undo
-		cy.cGet('#Home-container .unoUndo').click();
-
+		cy.cGet('#Home-container .unoUndo').should('not.have.class','disabled').click();
 		writerHelper.selectAllTextOfDoc();
 		cy.cGet('#copy-paste-container p i').should('not.exist');
 
 		//Redo
 		cy.cGet('#Home-container .unoRedo').click();
-
 		writerHelper.selectAllTextOfDoc();
 		cy.cGet('#copy-paste-container p i').should('exist');
 	});

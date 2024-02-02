@@ -25,22 +25,20 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'AutoFilter', function() {
 
 		//sort by descending order
 		cy.cGet('body').contains('.mobile-wizard', 'Sort Descending').click();
+		// Wait for autofilter dialog to close
+		cy.cGet('.mobile-wizard').should('not.exist');
 
-		helper.waitUntilIdle('#copy-paste-container tbody');
-
+		calcHelper.selectEntireSheet();
 		calcHelper.assertDataClipboardTable(['Cypress Test', 'Status', 'Test 5', 'Fail', 'Test 4', '', 'Test 3', 'Pass', 'Test 2', 'Fail', 'Test 1', 'Pass']);
 
 		//sort by ascending order
 		calcHelper.openAutoFilterMenu();
 
 		cy.cGet('body').contains('.mobile-wizard', 'Sort Ascending').click();
+		// Wait for autofilter dialog to close
+		cy.cGet('.mobile-wizard').should('not.exist');
 
-		// Without this the copy-paste-container doesn't seem to get updated although the table
-		// has correct values.
 		calcHelper.selectEntireSheet();
-
-		helper.waitUntilIdle('#copy-paste-container tbody');
-
 		calcHelper.assertDataClipboardTable(['Cypress Test', 'Status', 'Test 1', 'Pass', 'Test 2', 'Fail', 'Test 3', 'Pass', 'Test 4', '', 'Test 5', 'Fail']);
 	});
 });

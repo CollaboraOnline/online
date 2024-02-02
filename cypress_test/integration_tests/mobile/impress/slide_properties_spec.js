@@ -158,17 +158,19 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Changing slide properties.'
 	});
 
 	it('Remove slide fill.', function() {
+		// Wait for mobile wizard menu
+		cy.wait(500);
+
 		// Apply color fill first
 		cy.cGet('#fillstyle').click();
 		cy.cGet('#fillstyle').contains('Color').click();
+		cy.cGet('#fillstyle .ui-header-left').should('have.text', 'Color');
 
 		previewShouldBeFullWhite(false);
 
-		// Reopen mobile wizard
-		mobileHelper.closeMobileWizard();
-		mobileHelper.openMobileWizard();
-
-		cy.cGet('#fillstyle .ui-header-left').should('have.text', 'Color');
+		// Need to wait between background changes
+		// https://github.com/CollaboraOnline/online/issues/8096
+		cy.wait(2000);
 
 		// Remove fill
 		cy.cGet('#fillstyle').click();
@@ -184,6 +186,9 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Changing slide properties.'
 	});
 
 	it('Change master background.', function() {
+		// Wait for mobile wizard menu
+		cy.wait(500);
+
 		// The default master slide does not have background
 		// So switch to a different master slide first
 		cy.cGet('#masterslide').click();
@@ -191,22 +196,21 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Changing slide properties.'
 
 		previewShouldBeFullWhite(false);
 
-		// Reopen mobile wizard and change the setting
-		mobileHelper.closeMobileWizard();
-		mobileHelper.openMobileWizard();
+		// Need to wait between background changes
+		// https://github.com/CollaboraOnline/online/issues/8096
+		cy.wait(2000);
 
-		// Randomly fails
-		//cy.get('input#displaymasterbackground')
-		//	.should('have.prop', 'checked', true);
-
-		helper.clickOnIdle('input#displaymasterbackground');
-
+		cy.cGet('input#displaymasterbackground').should('have.prop', 'checked', true);
+		cy.cGet('input#displaymasterbackground').click();
 		cy.cGet('input#displaymasterbackground').should('not.have.prop', 'checked', true);
 
 		previewShouldBeFullWhite();
 	});
 
 	it('Change master objects visibility.', function() {
+		// Wait for mobile wizard menu
+		cy.wait(500);
+
 		previewShouldBeFullWhite();
 
 		// Master objects are disabled, enable the settings first
@@ -221,7 +225,10 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Changing slide properties.'
 
 		// Reopen mobile wizard and change the settings again
 		mobileHelper.closeMobileWizard();
+		cy.wait(100);
 		mobileHelper.openMobileWizard();
+		// Wait for mobile wizard menu
+		cy.wait(500);
 
 		// Randomly fails
 		//cy.get('input#displaymasterobjects')
@@ -292,6 +299,9 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Changing slide properties.'
 	});
 
 	it('Apply master slide layout.', function() {
+		// Wait for mobile wizard menu
+		cy.wait(500);
+
 		// We have white background by deafult checked by before() method
 		// Select a new master slide with a background color
 		cy.cGet('#masterslide .ui-header-left').should('have.text', 'Default');

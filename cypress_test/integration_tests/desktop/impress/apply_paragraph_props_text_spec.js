@@ -99,8 +99,11 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties
 			.should('have.attr', 'y', '6600');
 
 		impressHelper.selectTextOfShape();
+		// Need to wait for click to work, not sure why
+		cy.wait(500);
 		cy.cGet('#tb_editbar_item_linespacing').click();
 		cy.cGet('body').contains('td','Increase Paragraph Spacing').click();
+
 		impressHelper.triggerNewSVGForShapeInTheCenter();
 
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph:nth-of-type(2) tspan')

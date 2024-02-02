@@ -233,7 +233,9 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change cell appearance.', f
 		helper.clickOnIdle('#border-2');
 
 		// Then apply border color
-		helper.clickOnIdle('#FrameLineColor > .ui-header');
+		cy.cGet('#FrameLineColor > .ui-header')
+			.should('not.have.class','disabled')
+			.click();
 
 		mobileHelper.selectFromColorPicker('#FrameLineColor', 3);
 

@@ -19,7 +19,6 @@ function type(text, times = 1) {
 	}
 
 	cy.log('Clipboard - typing start.');
-	// cy.wait(50);
 	cy.get('@clipboard').type(input, {delay: 10, force: true});
 	cy.log('Clipboard - typing end.');
 }
@@ -77,14 +76,12 @@ function select(start, end) {
 }
 
 function checkHTMLContent(content) {
-	cy.wait(1000);
 	cy.get('@clipboard').should(($c) => {
 		expect($c).have.html($c.get(0)._wrapContent(content));
 	});
 }
 
 function checkPlainContent(content) {
-	cy.wait(1000);
 	cy.get('@clipboard').should('have.text', content);
 }
 
@@ -94,25 +91,21 @@ function checkSelectionRange(start, end) {
 		start = end;
 		end = t;
 	}
-	cy.wait(500);
 	cy.get('@clipboard').should('have.prop', 'isSelectionNull', false);
 	_checkSelectionStart(start);
 	_checkSelectionEnd(end);
 }
 
 function checkCaretPosition(pos) {
-	cy.wait(500);
 	_checkSelectionStart(pos);
 	_checkSelectionEnd(pos);
 }
 
 function checkSelectionIsNull() {
-	cy.wait(500);
 	cy.get('@clipboard').should('have.prop', 'isSelectionNull', true);
 }
 
 function checkSelectionIsEmpty(pos) {
-	cy.wait(500);
 	cy.get('@clipboard').should('have.prop', 'isSelectionNull', false);
 	_checkSelectionStart(pos);
 	_checkSelectionEnd(pos);

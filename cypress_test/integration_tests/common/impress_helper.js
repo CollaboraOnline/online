@@ -74,13 +74,21 @@ function selectTableInTheCenter() {
 	cy.log('Selecting table - start.');
 
 	// Click on the center of the slide to select the text shape there
-	cy.cGet('#document-container')
-		.then(function(items) {
-			expect(items).to.have.length(1);
-			var XPos = (items[0].getBoundingClientRect().left + items[0].getBoundingClientRect().right) / 2;
-			var YPos = (items[0].getBoundingClientRect().top + items[0].getBoundingClientRect().bottom) / 2;
-			cy.cGet('body').click(XPos, YPos);
-		});
+	// Retry until it works
+	cy.waitUntil(function() {
+		cy.cGet('#document-container')
+			.then(function(items) {
+				expect(items).to.have.length(1);
+				var XPos = (items[0].getBoundingClientRect().left + items[0].getBoundingClientRect().right) / 2;
+				var YPos = (items[0].getBoundingClientRect().top + items[0].getBoundingClientRect().bottom) / 2;
+				cy.cGet('body').click(XPos, YPos);
+			});
+
+		return cy.cGet('.leaflet-marker-pane')
+			.then(function (pane) {
+				return pane[0].children.length !== 0;
+			});
+	});
 
 	cy.cGet('.leaflet-marker-icon.table-row-resize-marker').should($el => { expect(Cypress.dom.isDetached($el)).to.eq(false); }).should('be.visible');
 	cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g.Page g').should('exist');
@@ -100,8 +108,6 @@ function removeShapeSelection() {
 				var YPos = items[0].getBoundingClientRect().top + 10;
 				cy.cGet('body').click(XPos, YPos);
 			});
-
-		cy.wait(2000);
 
 		return cy.cGet('.leaflet-overlay-pane svg')
 		.then(function(overlay) {
@@ -142,21 +148,9 @@ function selectTextOfShape(selectAllText = true) {
 	cy.log('Selecting text of shape - start.');
 
 	// Double click onto the selected shape
+	// Retry until the cursor appears
 	cy.waitUntil(function() {
-		cy.cGet('svg g .leaflet-interactive')
-			.then(function(items) {
-				expect(items).to.have.length(1);
-				// Slide does not fit the viewport in cypress.
-				// Use the center of the visible area of the svg group element else the click
-				// event could go to other elements like slide sorter.
-				const clientRect = helper.getVisibleBounds(items[0].getBoundingClientRect());
-				const XPos = (clientRect.left + clientRect.right) / 2;
-				const YPos = (clientRect.top + clientRect.bottom) / 2;
-				cy.cGet('body').dblclick(XPos, YPos);
-			});
-
-		cy.wait(2000);
-
+		cy.cGet('svg g .leaflet-interactive').dblclick({force: true});
 		return cy.cGet('.cursor-overlay')
 			.then(function(overlay) {
 				return overlay.children('.leaflet-cursor-container').length !== 0;
@@ -190,11 +184,16 @@ function dblclickOnSelectedShape() {
 
 //add multiple slides
 function addSlide(numberOfSlides) {
-	helper.waitUntilIdle('#tb_presentation-toolbar_item_insertpage');
-	var insertSlideButton = cy.cGet('#tb_presentation-toolbar_item_insertpage');
-	for (let i = 0; i < numberOfSlides; i++) {
-		insertSlideButton.should('not.have.class', 'disabled').click();
-	}
+	cy.cGet('.preview-frame').then(function (result) {
+		var origSlides = result.length;
+		for (let i = 0; i < numberOfSlides; i++) {
+			cy.cGet('#tb_presentation-toolbar_item_insertpage')
+				.should('not.have.class', 'disabled')
+				.click();
+		}
+		cy.cGet('.preview-frame')
+			.should('have.length',origSlides+numberOfSlides);
+	});
 }
 
 //change multiple slides
