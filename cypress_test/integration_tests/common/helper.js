@@ -1,8 +1,6 @@
 /* -*- js-indent-level: 8 -*- */
 /* global cy Cypress expect */
 
-var mobileWizardIdleTime = 1250;
-
 function copyFile(fileName, newFileName, subFolder) {
 	if (subFolder === undefined) {
 		cy.task('copyFile', {
@@ -521,8 +519,6 @@ function beforeAll(fileName, subFolder, noFileCopy, isMultiUser, subsequentLoad,
 }
 
 function afterAll(fileName, testState) {
-	if (Cypress.browser.isHeaded)
-		cy.wait(2000);
 	closeDocument(fileName, testState);
 	cy.log('Finished test: ' + Cypress.spec.relative + ' / ' + Cypress.currentTest.titlePath.join(' / '));
 }
@@ -589,6 +585,7 @@ function closeDocument(fileName, testState) {
 			'/browser/dist/admin/admin.html');
 
 		// https://github.com/cypress-io/cypress/issues/9207
+		// TODO reproduce or remove
 		if (testState === 'failed') {
 			cy.wait(5000);
 			return;
@@ -776,64 +773,16 @@ function isCanvasWhite(expectWhite = true) {
 // selector - a CSS selector to query a DOM element to wait on to be idle.
 // content - a string, a content selector used by cy.contains() to select the correct DOM element.
 // waitingTime - how much time to wait before we say the item is idle.
-function waitUntilIdle(selector, content, waitingTime = mobileWizardIdleTime) {
-	cy.log('Waiting item to be idle - start.');
-	cy.log('Param - selector: ' + selector);
-	cy.log('Param - content: ' + content);
-	cy.log('Param - waitingTime: ' + waitingTime);
-
-	var item;
-	// We check every 'waitOnce' time whether we are idle.
-	var waitOnce = 250;
-	// 'idleSince' variable counts the idle time so far.
-	var idleSince = 0;
+function waitUntilIdle(selector, content) {
+	// waitUntilIdle has been stubbed in order to reduce the number of calls to cy.wait().
+	// Find a specific condition to wait for using waitUntil, or even better use Cypress's
+	// built-in retrying functionality on find, should, and other functions.
+	cy.log('waitUntilIdle stubbed');
 	if (content) {
-		// We get the initial DOM item first.
-		cy.cGet().contains(selector, content, { log: false })
-			.then(function(itemToIdle) {
-				item = itemToIdle;
-			});
-
-		cy.waitUntil(function() {
-			cy.wait(waitOnce, { log: false });
-
-			return cy.cGet().contains(selector, content, { log: false })
-				.then(function(itemToIdle) {
-					if (Cypress.dom.isDetached(item[0])) {
-						cy.log('Item was detached after ' + (idleSince + waitOnce).toString() + ' ms.');
-						item = itemToIdle;
-						idleSince = 0;
-					} else {
-						idleSince += waitOnce;
-					}
-					return idleSince > waitingTime;
-				});
-		});
+		cy.cGet(selector, content);
 	} else {
-		// We get the initial DOM item first.
-		cy.cGet(selector, { log: false })
-			.then(function(itemToIdle) {
-				item = itemToIdle;
-			});
-
-		cy.waitUntil(function() {
-			cy.wait(waitOnce, { log: false });
-
-			return cy.cGet(selector, { log: false })
-				.then(function(itemToIdle) {
-					if (Cypress.dom.isDetached(item[0])) {
-						cy.log('Item was detached after ' + (idleSince + waitOnce).toString() + ' ms.');
-						item = itemToIdle;
-						idleSince = 0;
-					} else {
-						idleSince += waitOnce;
-					}
-					return idleSince > waitingTime;
-				});
-		});
+		cy.cGet(selector);
 	}
-
-	cy.log('Waiting item to be idle - end.');
 }
 
 // Waits for the DOM element to be idle and clicks on it afterward.
@@ -849,17 +798,17 @@ function waitUntilIdle(selector, content, waitingTime = mobileWizardIdleTime) {
 // selector - a CSS selector to query a DOM element to wait on to be idle.
 // content - a string, a content selector used by cy.contains() to select the correct DOM element.
 // waitingTime - how much time to wait before we say the item is idle.
-function clickOnIdle(selector, content, waitingTime = mobileWizardIdleTime) {
-	cy.log('Clicking on item when idle - start.');
-
-	waitUntilIdle(selector, content, waitingTime);
-
-	if (content)
-		cy.cGet('body').contains(selector, content).click();
-	else
+function clickOnIdle(selector, content) {
+	// waitUntilIdle has been stubbed and clickOnIdle will be removed soon.
+	// Find a specific condition to wait for using waitUntil, or even better use Cypress's
+	// built-in retrying functionality on find, should, and other functions.
+	// Then call .click() directly from the test
+	cy.log('clickOnIdle stubbed');
+	if (content) {
+		cy.cGet(selector, content).click();
+	} else {
 		cy.cGet(selector).click();
-
-	cy.log('Clicking on item when idle - end.');
+	}
 }
 
 // Waits for the DOM element to be idle and types into it afterward.
@@ -868,17 +817,17 @@ function clickOnIdle(selector, content, waitingTime = mobileWizardIdleTime) {
 // selector - a CSS selector to query a DOM element to wait on to be idle.
 // input - text to be typed into the selected DOM element.
 // waitingTime - how much time to wait before we say the item is idle.
-function inputOnIdle(selector, input, waitingTime = mobileWizardIdleTime) {
-	cy.log('Type into an input item when idle - start.');
-
-	waitUntilIdle(selector, undefined, waitingTime);
+function inputOnIdle(selector, input) {
+	// waitUntilIdle has been stubbed and inputOnIdle will be removed soon.
+	// Find a specific condition to wait for using waitUntil, or even better use Cypress's
+	// built-in retrying functionality on find, should, and other functions.
+	// Then call .type() directly from the test
+	cy.log('inputOnIdle stubbed');
 
 	cy.cGet(selector)
 		.clear()
 		.type(input)
 		.type('{enter}');
-
-	cy.log('Type into an input item when idle - end.');
 }
 
 // Run a code snippet if we are in a mobile test.
@@ -1145,12 +1094,13 @@ function typeIntoInputField(selector, text, clearBefore = true)
 {
 	cy.log('Typing into input field - start.');
 
-	if (clearBefore)
-		cy.cGet(selector).focus().clear().type(text + '{enter}');
-	else
-		cy.cGet(selector).type(text + '{enter}');
-
-	cy.cGet(selector).should('have.value', text);
+	cy.cGet(selector).as('input');
+	if (clearBefore) {
+		cy.get('@input').focus();
+		cy.get('@input').clear();
+	}
+	cy.get('@input').type(text + '{enter}');
+	cy.get('@input').should('have.value', text);
 
 	cy.log('Typing into input field - end.');
 }

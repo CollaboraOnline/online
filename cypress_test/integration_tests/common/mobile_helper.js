@@ -30,9 +30,6 @@ function enableEditingMobile() {
 			.should('be.visible');
 	});
 
-	// wait editable area for receiving paragraph content
-	cy.wait(500);
-
 	cy.log('Enabling editing mode - end.');
 }
 
@@ -57,6 +54,7 @@ function longPressOnDocument(posX, posY) {
 				.trigger('pointerdown', eventOptions)
 				.trigger('pointermove', eventOptions);
 
+			// Wait for long press
 			// This value is set in Map.TouchGesture.js.
 			cy.wait(500);
 
@@ -111,8 +109,6 @@ function openMobileWizard() {
 	cy.cGet('#tb_actionbar_item_mobile_wizard')
 		.should('not.have.class', 'disabled')
 		.click();
-
-	cy.wait(1000);
 
 	// Mobile wizard is opened and it has content
 	cy.cGet('#mobile-wizard-content')
@@ -213,11 +209,9 @@ function closeInsertionWizard() {
 function selectFromColorPalette(paletteNum, groupNum, paletteAfterChangeNum, colorNum) {
 	cy.log('Selecting a color from the color palette - start.');
 	cy.cGet('#color-picker-' + paletteNum.toString() + '-basic-color-' + groupNum.toString()).click();
-	cy.wait(1000);
 	if (paletteAfterChangeNum !== undefined && colorNum !== undefined) {
 		cy.cGet('#color-picker-' + paletteAfterChangeNum.toString() + '-tint-' + colorNum.toString()).click();
 	}
-	cy.wait(1000);
 	cy.cGet('#mobile-wizard-back').click();
 	cy.log('Selecting a color from the color palette - end.');
 }
@@ -228,14 +222,10 @@ function selectFromColorPicker(pickerId, groupNum, colorNum) {
 	cy.cGet(pickerId + ' [id^=color-picker-][id$=-basic-color-' + groupNum.toString() + ']')
 		.click();
 
-	cy.wait(1000);
-
 	if (colorNum !== undefined) {
 		cy.cGet(pickerId + ' [id^=color-picker-][id$=-tint-' + colorNum.toString() + ']')
 			.click();
 	}
-
-	cy.wait(1000);
 
 	cy.cGet('#mobile-wizard-back')
 		.click();
@@ -312,8 +302,6 @@ function selectListBoxItem2(listboxSelector, item) {
 
 	helper.clickOnIdle(parentId + ' .ui-combobox-text', item);
 
-	cy.wait(1000);
-
 	cy.cGet(listboxSelector + ' .ui-header-left')
 		.should('have.text', item);
 
@@ -353,7 +341,7 @@ function deleteImage() {
 
 	cy.cGet('.leaflet-control-buttons-disabled > .leaflet-interactive')
 		.trigger('pointerdown', eventOptions)
-		.wait(1000)
+		.wait(500) // Wait for long press
 		.trigger('pointerup', eventOptions);
 
 	cy.cGet('body').contains('.menu-entry-with-icon', 'Delete')

@@ -100,7 +100,7 @@ function selectFromJSDialogListbox(item, isImage) {
 	cy.cGet('[id$="-dropdown"].modalpopup').should('be.visible');
 	// We use force because the tooltip sometimes hides the items.
 	if (isImage) {
-		cy.wait(2000); // we need some time to render custom entries
+		cy.wait(1000); // We need some time to render custom entries
 		cy.cGet('[id$="-dropdown"].modalpopup img[alt="' + item + '"]').click({force: true});
 	} else
 		cy.cGet('[id$="-dropdown"].modalpopup').contains('span', item).click({force: true});
@@ -160,11 +160,10 @@ function doZoom(zoomIn) {
 
 	if (zoomIn) {
 		cy.cGet('.w2ui-tb-image.w2ui-icon.zoomin').click({force: true});
-		cy.wait(500);
 	} else {
 		cy.cGet('.w2ui-tb-image.w2ui-icon.zoomout').click({force: true});
-		cy.wait(500);
 	}
+	cy.wait(500); // Wait for animation to complete
 
 	cy.cGet('#tb_actionbar_item_zoom .w2ui-tb-caption')
 		.should(function(zoomLevel) {
@@ -230,9 +229,6 @@ function insertImage(docType) {
 
 function deleteImage() {
 	helper.typeIntoDocument('{del}');
-
-	helper.waitUntilIdle('.leaflet-pane.leaflet-overlay-pane');
-
 	cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g').should('not.exist');
 }
 
@@ -261,34 +257,29 @@ function createComment(docType, text, isMobile, selector) {
 	else
 		cy.cGet(selector).click();
 
-	cy.wait(100);
+	// Without this wait, the save button click sometimes fails.
+	cy.wait(500);
 
 	cy.cGet('.cool-annotation-table').should('exist');
 
-	if (isMobile) {
-		cy.cGet('#input-modal-input').type(text);
-	} else {
-		cy.cGet('#annotation-modify-textarea-new').type(text);
-		cy.wait(500);
-	}
+	cy.cGet('#annotation-modify-textarea-new').type(text);
+	// Cannot have any action between type and subsequent save button click
 }
 
 function saveComment(isMobile) {
 	if (isMobile) {
 		cy.cGet('#response-ok').click();
 	} else {
-		cy.cGet('#annotation-save-new').click();
+		// The button id is usually called #annotation-save-new,
+		// but sometimes it is #annotation-save-1
+		cy.cGet('[id^=annotation-save-]').last().click();
 		// Wait for animation
-		cy.wait(500);
+		cy.wait(100);
 	}
 }
 
 function setupUIforCommentInsert(docType) {
 	var mode = Cypress.env('USER_INTERFACE');
-
-	if (docType === 'calc') {
-		cy.wait(1000);
-	}
 
 	if (docType !== 'draw') {
 		cy.cGet('#toolbar-up .w2ui-scroll-right').then($button => {
@@ -299,8 +290,6 @@ function setupUIforCommentInsert(docType) {
 	}
 
 	if (mode === 'notebookbar') {
-		cy.wait(500);
-
 		cy.cGet('#Insert-tab-label').then($button => {
 			if (!$button.hasClass('selected')) {
 				$button.click();
@@ -368,10 +357,8 @@ function actionOnSelector(name, func) {
 //arr : In both cypress GUI and CLI the scrollposition are slightly different
 //so we are passing both in array and assert using oneOf
 function assertScrollbarPosition(type, lowerBound, upperBound) {
-	cy.wait(500);
-
 	cy.cGet('#test-div-' + type + '-scrollbar')
-		.then(function($item) {
+		.should(function($item) {
 			const x = parseInt($item.text());
 			expect(x).to.be.within(lowerBound, upperBound);
 		});
@@ -380,7 +367,6 @@ function assertScrollbarPosition(type, lowerBound, upperBound) {
 function pressKey(n, key) {
 	for (let i=0; i<n; i++) {
 		helper.typeIntoDocument('{' + key + '}');
-		cy.wait(500);
 	}
 }
 
@@ -458,7 +444,6 @@ function setAccessibilityState(enable) {
 					}
 				});
 			}
-			cy.wait(500);
 			cy.cGet('div.clipboard').then((clipboard) => {
 				expect(clipboard.get(0)._hasAccessibilitySupport()).to.eq(enable);
 			});

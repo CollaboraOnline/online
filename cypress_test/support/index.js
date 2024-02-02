@@ -66,7 +66,9 @@ Cypress.Commands.overwrite('waitUntil', function(originalFn, subject, checkFunct
 	if (!options)
 		options = {};
 	if (!options.interval)
-		options.interval = 10; // ms
+		options.interval = 100; // ms
+	if (!options.verbose)
+		options.verbose = true;
 	return originalFn(subject, checkFunction, options);
 });
 

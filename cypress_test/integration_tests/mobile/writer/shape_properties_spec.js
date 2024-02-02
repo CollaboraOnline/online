@@ -81,7 +81,6 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change shape properties via
 
 	function triggerNewSVG() {
 		mobileHelper.closeMobileWizard();
-		cy.wait(1000);
 		// Change width
 		openPosSizePanel();
 		cy.cGet('#selectwidth .plus').should('be.visible');
@@ -119,7 +118,6 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change shape properties via
 	it('Change shape width.', function() {
 		openPosSizePanel();
 		helper.typeIntoInputField('#selectwidth .spinfield', '4.2', true, false);
-		cy.wait(1000);
 		const matcher = new TriangleCoordinatesMatcher(defaultStartPoint, Math.floor(4.2 * unitScale) /* new base */, defaultAltitude);
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path').invoke('attr', 'd').should(matcher.match.bind(matcher));
 	});
@@ -127,7 +125,6 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change shape properties via
 	it('Change shape height.', function() {
 		openPosSizePanel();
 		helper.typeIntoInputField('#selectheight .spinfield', '5.2', true, false);
-		cy.wait(1000);
 		const matcher = new TriangleCoordinatesMatcher(defaultStartPoint, defaultBase, Math.ceil(5.2 * unitScale) /* new altitude */);
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path').invoke('attr', 'd').should(matcher.match.bind(matcher));
 	});
@@ -139,7 +136,6 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change shape properties via
 		cy.cGet('#ratio #ratio').should('have.prop', 'checked', true);
 		// Change height
 		helper.inputOnIdle('#selectheight .spinfield', '5.2');
-		cy.wait(1000);
 		const matcher = new TriangleCoordinatesMatcher(defaultStartPoint, Math.floor(5.2 * unitScale), Math.ceil(5.2 * unitScale));
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path').invoke('attr', 'd').should(matcher.match.bind(matcher));
 	});
@@ -147,7 +143,6 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change shape properties via
 	it('Vertical mirroring', function() {
 		openPosSizePanel();
 		helper.clickOnIdle('.unoFlipVertical');
-		cy.wait(1000);
 		const matcher = new TriangleCoordinatesMatcher(defaultStartPoint, defaultBase, defaultAltitude, false /* horiz mirroring */, true /* vert mirroring */);
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path').invoke('attr', 'd').should(matcher.match.bind(matcher));
 	});
@@ -156,7 +151,6 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change shape properties via
 		openPosSizePanel();
 		helper.clickOnIdle('.unoFlipHorizontal');
 		triggerNewSVG();
-		cy.wait(1000);
 		const matcher = new TriangleCoordinatesMatcher(defaultStartPoint, defaultBase, defaultAltitude, true /* horiz mirroring */, false /* vert mirroring */);
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path').invoke('attr', 'd').should(matcher.match.bind(matcher));
 	});

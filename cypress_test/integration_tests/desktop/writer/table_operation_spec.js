@@ -129,7 +129,6 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Table operations', functio
 	});
 
 	it('Merge cells.', function() {
-
 		// Select 2x2 part of the table.
 		helper.moveCursor('down', 'shift');
 		helper.moveCursor('right', 'shift');
@@ -141,7 +140,8 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Table operations', functio
 		// With merging two rows, the cursor is moved into the first row.
 		cy.get('@origCursorPos')
 			.then(function(origCursorPos) {
-				helper.clickOnIdle('#split_merge .unoMergeCells');
+				helper.clickOnIdle('#split_merge .unoMergeCells button');
+
 				cy.cGet('.blinking-cursor')
 					.should(function(cursor) {
 						expect(cursor.offset().top).to.be.lessThan(origCursorPos);
@@ -196,7 +196,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Table operations', functio
 		helper.moveCursor('down', 'shift');
 		helper.moveCursor('down', 'shift');
 		helper.moveCursor('right', 'shift');
-		helper.clickOnIdle('#rowsizing .unoSetOptimalRowHeight');
+		helper.clickOnIdle('#rowsizing .unoSetOptimalRowHeight button');
 		selectFullTable();
 
 		// Check new row height
@@ -218,7 +218,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Table operations', functio
 		helper.moveCursor('down', 'shift');
 		helper.moveCursor('right', 'shift');
 
-		helper.clickOnIdle('#rowsizing .unoDistributeRows');
+		helper.clickOnIdle('#rowsizing .unoDistributeRows button');
 
 		selectFullTable();
 

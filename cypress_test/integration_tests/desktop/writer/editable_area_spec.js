@@ -230,6 +230,9 @@ describe(['taga11yenabled'], 'Editable area - Basic typing and caret moving', fu
 		// typing paragraph 4
 		ceHelper.type('{enter}');
 		ceHelper.type('green red');
+		// Need to wait here after typing paragraph in
+		// order for caret position to stick later
+		cy.wait(200);
 		ceHelper.checkPlainContent('green red');
 		ceHelper.moveCaret('left', '', 4);
 		ceHelper.checkCaretPosition(5);
@@ -249,6 +252,8 @@ describe(['taga11yenabled'], 'Editable area - Basic typing and caret moving', fu
 		helper.clickAt('P1');
 		ceHelper.checkPlainContent('');
 		ceHelper.checkCaretPosition(0);
+		// Need to wait between clicks
+		cy.wait(200);
 		// click on paragraph 4
 		helper.clickAt('P2');
 		ceHelper.checkPlainContent('green red');

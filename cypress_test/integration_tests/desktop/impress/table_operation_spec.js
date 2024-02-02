@@ -37,14 +37,15 @@ describe(['tagdesktop'], 'Table operations', function() {
 		helper.typeIntoDocument('{ctrl}{a}');
 
 		impressHelper.selectTableInTheCenter();
-
 		cy.cGet('.leaflet-marker-icon.table-row-resize-marker')
 			.should('have.length', 3);
-
 		cy.cGet('.leaflet-marker-icon.table-column-resize-marker')
 			.should('have.length', 2);
 
+		// Click doesn't work without wait
+		cy.wait(500);
 		cy.cGet('text.SVGTextShape').click({force: true});
+
 	}
 
 	it('Insert Row Before', function() {

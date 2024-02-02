@@ -21,7 +21,10 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change table properties / l
 	function openTablePanel() {
 		mobileHelper.openMobileWizard();
 
-		helper.clickOnIdle('#TableEditPanel');
+		cy.cGet('#TableEditPanel > .ui-header')
+			.should('not.have.class','disabled')
+			.click();
+
 		cy.cGet('.unoInsertRowsBefore').should('be.visible');
 	}
 
@@ -170,6 +173,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change table properties / l
 	it('Change row height.', function() {
 		before('table_properties.odt');
 		openTablePanel();
+		cy.wait(500);
 		cy.cGet('#rowheight .spinfield').should('have.value', '0');
 		helper.typeIntoInputField('#rowheight .spinfield', '1.4', true, false);
 		selectFullTable();
@@ -180,6 +184,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change table properties / l
 	it('Change column width.', function() {
 		before('table_properties.odt');
 		openTablePanel();
+		cy.wait(500);
 		helper.typeIntoInputField('#columnwidth .spinfield', '1.6', true, false);
 		selectFullTable();
 		// Check column width
@@ -224,7 +229,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change table properties / l
 		openTablePanel();
 		selectFullTable();
 
-		helper.clickOnIdle('.unoDistributeRows');
+		helper.clickOnIdle('.unoDistributeRows button');
 
 		selectFullTable();
 
@@ -280,7 +285,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change table properties / l
 		openTablePanel();
 		selectFullTable();
 
-		helper.clickOnIdle('.unoDistributeColumns');
+		helper.clickOnIdle('.unoDistributeColumns button');
 
 		selectFullTable();
 

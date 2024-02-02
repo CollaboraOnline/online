@@ -43,6 +43,8 @@ describe(['tagmobile', 'tagproxy'], 'Focus tests', function() {
 		// Open paragraph properties
 		helper.clickOnIdle('#Paragraph');
 		cy.cGet('#aboveparaspacing .spinfield').should('have.value', '0');
+		// Need to wait before clicking on spinfield
+		cy.wait(500);
 		helper.clickOnIdle('#aboveparaspacing .spinfield');
 		// The spinfield should have the focus now.
 		helper.assertFocus('className', 'spinfield');

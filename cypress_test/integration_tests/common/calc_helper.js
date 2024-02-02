@@ -35,7 +35,6 @@ function clickOnFirstCell(firstClick = true, dblClick = false, isA1 = true) {
 	cy.log('Param - firstClick: ' + firstClick);
 	cy.log('Param - dblClick: ' + dblClick);
 
-	cy.wait(2000);
 	// Use the tile's edge to find the first cell's position
 	cy.cGet('#map')
 		.then(function(items) {
@@ -56,10 +55,6 @@ function clickOnFirstCell(firstClick = true, dblClick = false, isA1 = true) {
 			});
 	} else {
 		cy.cGet('.cursor-overlay .blinking-cursor').should('be.visible');
-
-		helper.doIfOnDesktop(function() {
-			cy.wait(500);
-		});
 	}
 
 	if (isA1)
@@ -204,6 +199,9 @@ function assertDataClipboardTable(expectedData) {
 		.should(function(cells) {
 			expect(cells).to.have.lengthOf(expectedData.length);
 		});
+
+	// Wait for clipboard to update anyways, in case previous contents were same length
+	cy.wait(200);
 
 	var data = [];
 

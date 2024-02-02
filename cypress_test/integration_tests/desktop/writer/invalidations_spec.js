@@ -62,6 +62,9 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Invalidation tests.', func
 		cy.cGet('.empty-deltas').then(($before) => {
 			const beforeCount = $before.text();
 
+			// Selects the wrong paragraph without this wait, not sure why
+			cy.wait(200);
+
 			// click in header area
 			cy.cGet('.leaflet-layer').click(200, 50);
 
