@@ -110,10 +110,12 @@ void HTTPWSTest::testExoticLang()
 
     try
     {
-        std::shared_ptr<http::WebSocketSession> socket
-            = loadDocAndGetSession(_socketPoll, _uri, documentURL,
-                                   "exoticlocale", true, true,
-                                   " lang=es-419");
+        // es-419 locale takes significantly longer than the default.
+        // 22+ seconds has been observed.
+        const auto timeout = std::chrono::seconds(COMMAND_TIMEOUT_SECS * 6);
+        std::shared_ptr<http::WebSocketSession> socket = loadDocAndGetSession(
+            _socketPoll, _uri, documentURL, "exoticlocale", /*isView=*/true, /*isAssert=*/true,
+            /*loadParams=*/" lang=es-419", timeout);
         socket->asyncShutdown();
     }
     catch (const Poco::Exception& exc)
