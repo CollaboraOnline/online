@@ -558,12 +558,12 @@ std::string assertNotInResponse(T& ws, const std::string& prefix, const std::str
     return res;
 }
 
-inline bool isDocumentLoaded(const std::shared_ptr<http::WebSocketSession>& ws,
-                             const std::string& testname, bool isView = true)
+inline bool isDocumentLoaded(
+    const std::shared_ptr<http::WebSocketSession>& ws, const std::string& testname,
+    bool isView = true,
+    const std::chrono::milliseconds timeout = std::chrono::seconds(COMMAND_TIMEOUT_SECS * 4))
 {
     const std::string prefix = isView ? "status:" : "statusindicatorfinish:";
-    constexpr auto timeout =
-        std::chrono::seconds(COMMAND_TIMEOUT_SECS * 4); // Allow longer for loading.
     const std::string message = getResponseString(ws, prefix, testname, timeout);
 
     const bool success = COOLProtocol::matchPrefix(prefix, message);
@@ -626,11 +626,13 @@ connectLOKit(const std::shared_ptr<SocketPoll>& socketPoll, const Poco::URI& uri
     throw std::runtime_error("Cannot connect to [" + uri.toString() + "].");
 }
 
-inline std::shared_ptr<http::WebSocketSession>
-loadDocAndGetSession(const std::shared_ptr<SocketPoll>& socketPoll, const Poco::URI& uri,
-                     const std::string& documentURL, const std::string& testname,
-                     bool isView = true, bool isAssert = true,
-                     const std::string& loadParams = std::string())
+/// Load a document and get the WS Session.
+/// By default, allow longer time for loading.
+inline std::shared_ptr<http::WebSocketSession> loadDocAndGetSession(
+    const std::shared_ptr<SocketPoll>& socketPoll, const Poco::URI& uri,
+    const std::string& documentURL, const std::string& testname, bool isView = true,
+    bool isAssert = true, const std::string& loadParams = std::string(),
+    const std::chrono::milliseconds timeout = std::chrono::seconds(COMMAND_TIMEOUT_SECS * 4))
 {
     try
     {
@@ -640,7 +642,7 @@ loadDocAndGetSession(const std::shared_ptr<SocketPoll>& socketPoll, const Poco::
         ws->asyncRequest(req, socketPoll);
 
         sendTextFrame(ws, "load url=" + documentURL + loadParams, testname);
-        const bool isLoaded = isDocumentLoaded(ws, testname, isView);
+        const bool isLoaded = isDocumentLoaded(ws, testname, isView, timeout);
         if (!isLoaded && !isAssert)
         {
             return nullptr;
