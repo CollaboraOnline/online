@@ -642,7 +642,8 @@ SourceMap=--allowJs true --sourceMap true --inlineSources true
 endif
 
 tscompile.done: $(COOL_JS_SRC) $(COOL_TS_SRC)
-	$(builddir)/node_modules/typescript/bin/tsc --typeRoots $(builddir)/node_modules/@types --outDir $(DIST_FOLDER)/src --rootDir $(srcdir)/src --checkJs false --project $(srcdir)/tsconfig.json $(SourceMap)
+	./node_modules/.bin/tsc # lint
+	$(builddir)/node_modules/.bin/esbuild $(COOL_JS_SRC) $(COOL_TS_SRC) --bundle --outdir=$(DIST_FOLDER)/src --target=chrome58,firefox57,safari11,edge16
 	@touch $@
 
 $(COOL_TS_JS_DST): tscompile.done

@@ -2,17 +2,19 @@
   "compileOnSave": false,
     "compilerOptions": {
       "target": "es5",
-      "module": "none",
+      "module": "ES2015",
       "lib": ["dom", "es2016"],
       "sourceMap": false,
-      "incremental": true,
 
-      "moduleResolution": "classic",
+      "moduleResolution": "Bundler",
+      "esModuleInterop": true,
+      "strict": false, // TODO: true
+      "allowJs": true,
+      "noEmit": true,
       "noImplicitAny": true,
       "removeComments": false,
       "preserveConstEnums": false,
       "downlevelIteration": true,
-      "watch": false,
     },
     "exclude": [
       "node_modules",
