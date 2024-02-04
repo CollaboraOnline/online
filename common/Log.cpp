@@ -29,13 +29,8 @@
 #include <unordered_map>
 
 #include <Poco/AutoPtr.h>
-#include <Poco/ConsoleChannel.h>
 #include <Poco/FileChannel.h>
-#include <Poco/FormattingChannel.h>
-#include <Poco/PatternFormatter.h>
-#include <Poco/SplitterChannel.h>
 
-#include "Common.hpp"
 #include "Log.hpp"
 #include "Util.hpp"
 
@@ -553,17 +548,11 @@ namespace Log
         }
         else if (withColor)
         {
-            if (EnableExperimental)
-                channel = static_cast<Poco::Channel*>(new Log::ColorConsoleChannel());
-            else
-                channel = static_cast<Poco::Channel*>(new Poco::ColorConsoleChannel());
+            channel = static_cast<Poco::Channel*>(new Log::ColorConsoleChannel());
         }
         else
         {
-            if (EnableExperimental)
-                channel = static_cast<Poco::Channel*>(new Log::BufferedConsoleChannel());
-            else
-                channel = static_cast<Poco::Channel*>(new Poco::ConsoleChannel());
+            channel = static_cast<Poco::Channel*>(new Log::BufferedConsoleChannel());
         }
 
         /**
