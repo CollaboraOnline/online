@@ -12,7 +12,10 @@
  * L.Control.PartsPreview
  */
 
-/* global _ app $ Hammer w2ui _UNO cool */
+import { Comment } from '../layer/tile/CommentSection';
+import { CommentSection } from '../layer/tile/CommentListSection';
+
+/* global _ app $ Hammer w2ui _UNO */
 L.Control.PartsPreview = L.Control.extend({
 	options: {
 		fetchThumbnail: true,
@@ -508,8 +511,8 @@ L.Control.PartsPreview = L.Control.extend({
 	},
 
 	_setPart: function (e) {
-		if (cool.Comment.isAnyEdit()) {
-			cool.CommentSection.showCommentEditingWarning();
+		if (Comment.isAnyEdit()) {
+			CommentSection.showCommentEditingWarning();
 			return;
 		}
 

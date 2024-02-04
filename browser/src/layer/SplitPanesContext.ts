@@ -8,10 +8,12 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
+import { Bounds } from '../geometry/Bounds';
+import { Point } from '../geometry/Point';
+
 declare var L: any;
 declare var app: any;
-
-namespace cool {
 
 export type SplitPanesOptions = {
 	maxHorizontalSplitPercent: number;
@@ -269,6 +271,4 @@ export class SplitPanesContext {
 	}
 }
 
-}
-
-L.SplitPanesContext = cool.SplitPanesContext;
+L.SplitPanesContext = SplitPanesContext;

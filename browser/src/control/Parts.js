@@ -12,12 +12,15 @@
  * Document parts switching and selecting handler
  */
 
-/* global app _ cool */
+/* global app _ */
+
+import { Comment } from '../layer/tile/CommentSection';
+import { CommentSection } from '../layer/tile/CommentListSection';
 
 L.Map.include({
 	setPart: function (part, external, calledFromSetPartHandler) {
-		if (cool.Comment.isAnyEdit()) {
-			cool.CommentSection.showCommentEditingWarning();
+		if (Comment.isAnyEdit()) {
+			CommentSection.showCommentEditingWarning();
 			return;
 		}
 
@@ -292,8 +295,8 @@ L.Map.include({
 	},
 
 	insertPage: function(nPos) {
-		if (cool.Comment.isAnyEdit()) {
-			cool.CommentSection.showCommentEditingWarning();
+		if (Comment.isAnyEdit()) {
+			CommentSection.showCommentEditingWarning();
 			return;
 		}
 

@@ -19,7 +19,13 @@
 
 	This class is an extended version of "CanvasSectionObject".
 */
-namespace cool {
+
+import { CanvasSectionObject } from '../layer/tile/CanvasSectionContainer';
+import { ColumnGroup } from './Control.ColumnGroup';
+import { RowGroup } from './Control.RowGroup';
+
+declare var L: any;
+declare var $: any;
 
 export class CornerGroup extends CanvasSectionObject {
 	_map: any;
@@ -93,9 +99,8 @@ export class CornerGroup extends CanvasSectionObject {
 
 	/* Only background and border drawings are needed for this section. And they are handled by CanvasSectionContainer. */
 }
-}
 
-L.Control.CornerGroup = cool.CornerGroup;
+L.Control.CornerGroup = CornerGroup;
 
 L.control.cornerGroup = function () {
 	return new L.Control.CornerGroup();

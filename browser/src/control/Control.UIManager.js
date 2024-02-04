@@ -14,7 +14,10 @@
  *			 and allows to controll them (show/hide)
  */
 
-/* global app cool $ setupToolbar w2ui toolbarUpMobileItems _ Hammer JSDialog */
+/* global app $ setupToolbar w2ui toolbarUpMobileItems _ Hammer JSDialog */
+
+import { Comment } from '../layer/tile/CommentSection';
+
 L.Control.UIManager = L.Control.extend({
 	mobileWizard: null,
 	documentNameInput: null,
@@ -1160,7 +1163,7 @@ L.Control.UIManager = L.Control.extend({
 	},
 
 	isAnyDialogOpen: function() {
-		if (cool.Comment.isAnyEdit())
+		if (Comment.isAnyEdit())
 			return true;
 
 		if (this.map.jsdialog)

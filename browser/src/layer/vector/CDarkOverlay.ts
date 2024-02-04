@@ -2,9 +2,13 @@
  * CDarkOverlay is used to render a dark overlay around an OLE object when selected
  */
 
-import Bounds = cool.Bounds;
+import { Bounds } from '../../geometry/Bounds';
+import { Point } from '../../geometry/Point';
+import { CPointSet } from './CPointSet';
+import { CPathGroup } from './CPath';
+import { CRectangle } from './CRectangle';
 
-class CDarkOverlay extends CPathGroup {
+export class CDarkOverlay extends CPathGroup {
 
 	private rectangles: CRectangle[] = [];
 	private options: any;
@@ -21,13 +25,13 @@ class CDarkOverlay extends CPathGroup {
 		if (!points) {
 			for (var i = 0; i < this.rectangles.length; i++) {
 				this.rectangles[i].setBounds(
-					new cool.Bounds(new cool.Point(0, 0), new cool.Point(0, 1)));
+					new Bounds(new Point(0, 0), new Point(0, 1)));
 				this.push(this.rectangles[i]);
 			}
 			return;
 		}
 
-		var rectangleBounds = this.invertOleBounds(new cool.Bounds(points[0], points[2]));
+		var rectangleBounds = this.invertOleBounds(new Bounds(points[0], points[2]));
 
 		for (var i = 0; i < this.rectangles.length; i++) {
 			this.rectangles[i].setBounds(rectangleBounds[i]);
@@ -35,18 +39,18 @@ class CDarkOverlay extends CPathGroup {
 		}
 	}
 
-	private invertOleBounds(oleBounds: cool.Bounds): cool.Bounds[] {
-		var rectanglesBounds: cool.Bounds[] = [];
+	private invertOleBounds(oleBounds: Bounds): Bounds[] {
+		var rectanglesBounds: Bounds[] = [];
 
 		var minWidth = 0;
 		var minHeight = 0;
 		var fullWidth = 1000000;
 		var fullHeight = 1000000;
 
-		rectanglesBounds.push(new cool.Bounds(new cool.Point(minWidth, minHeight), new cool.Point(fullWidth, oleBounds.min.y)));
-		rectanglesBounds.push(new cool.Bounds(new cool.Point(minWidth, oleBounds.min.y), oleBounds.getBottomLeft()));
-		rectanglesBounds.push(new cool.Bounds(oleBounds.getTopRight(), new cool.Point(fullWidth, oleBounds.max.y)));
-		rectanglesBounds.push(new cool.Bounds(new cool.Point(minWidth, oleBounds.max.y), new cool.Point(fullWidth, fullHeight)));
+		rectanglesBounds.push(new Bounds(new Point(minWidth, minHeight), new Point(fullWidth, oleBounds.min.y)));
+		rectanglesBounds.push(new Bounds(new Point(minWidth, oleBounds.min.y), oleBounds.getBottomLeft()));
+		rectanglesBounds.push(new Bounds(oleBounds.getTopRight(), new Point(fullWidth, oleBounds.max.y)));
+		rectanglesBounds.push(new Bounds(new Point(minWidth, oleBounds.max.y), new Point(fullWidth, fullHeight)));
 
 		return rectanglesBounds;
 	}
@@ -55,8 +59,8 @@ class CDarkOverlay extends CPathGroup {
 		var rectangles: CRectangle[] = [];
 		for (var i = 0; i < quantity; i++) {
 			rectangles.push(
-				new CRectangle(new cool.Bounds(
-					new cool.Point(0, 0), new cool.Point(0, 1)
+				new CRectangle(new Bounds(
+					new Point(0, 0), new Point(0, 1)
 				), this.options));
 		}
 

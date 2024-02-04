@@ -13,7 +13,14 @@
  */
 
 /* global _UNO app UNOModifier */
-namespace cool {
+
+import { Point } from '../geometry/Point';
+import { Header, HeaderInfo, HeaderEntryData, HeaderExtraProperties, SelectionRange } from './Control.Header';
+
+declare var L: any;
+declare var app: any;
+declare var _UNO: any;
+declare var UNOModifier: any;
 
 export class ColumnHeader extends Header {
 
@@ -89,7 +96,7 @@ export class ColumnHeader extends Header {
 		};
 
 		this._menuData = L.Control.JSDialogBuilder.getMenuStructureForMobileWizard(this._menuItem, true, '');
-		this._headerInfo = new cool.HeaderInfo(this._map, true /* isCol */);
+		this._headerInfo = new HeaderInfo(this._map, true /* isCol */);
 	}
 
 	drawHeaderEntry (entry: HeaderEntryData): void {
@@ -297,11 +304,11 @@ export class ColumnHeader extends Header {
 		}
 	}
 
-	_getParallelPos (point: cool.Point): number {
+	_getParallelPos (point: Point): number {
 		return point.x;
 	}
 
-	_getOrthogonalPos (point: cool.Point): number {
+	_getOrthogonalPos (point: Point): number {
 		return point.y;
 	}
 
@@ -310,10 +317,8 @@ export class ColumnHeader extends Header {
 	}
 }
 
-}
+L.Control.ColumnHeader = ColumnHeader;
 
-L.Control.ColumnHeader = cool.ColumnHeader;
-
-L.control.columnHeader = function (options?: cool.HeaderExtraProperties) {
+L.control.columnHeader = function (options?: HeaderExtraProperties) {
 	return new L.Control.ColumnHeader(options);
 };

@@ -3,7 +3,7 @@
 	This class is used for managing the accessibility keys of notebookbar control.
 */
 
-/* global app NotebookbarAccessibilityDefinitions _ */
+/* global app L _ */
 
 /*
 	This class relies on following id convention (example for "Home" tab):
@@ -20,7 +20,7 @@ var NotebookbarAccessibility = function() {
 		infoBoxList: []
 	},
 
-	this.definitions = new NotebookbarAccessibilityDefinitions();
+	this.definitions = new L.NotebookbarAccessibilityDefinitions();
 	this.tabInfoList = null; // This is to be fetched from NotebookbarAccessibilityDefinitions class at initialization.
 	this.combination = null;
 	this.filteredItem = null;

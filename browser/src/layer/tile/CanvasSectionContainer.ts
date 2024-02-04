@@ -8,6 +8,11 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
+import { Bounds } from '../../geometry/Bounds';
+import { Point } from '../../geometry/Point';
+import { TilesSection } from './TilesSection';
+
 declare var L: any;
 declare var app: any;
 
@@ -31,8 +36,8 @@ interface SectionCallbacks {
 	onMultiTouchMove?: (point: Array<number>, dragDistance: number, e: TouchEvent) => void;
 	onMultiTouchEnd?: (e: TouchEvent) => void;
 	onResize?: () => void;
-	onDraw?: (frameCount?: number, elapsedTime?: number, subsetBounds?: cool.Bounds) => void;
-	onDrawArea?: (area?: cool.Bounds, paneTopLeft?: cool.Point, canvasContext?: CanvasRenderingContext2D) => void;
+	onDraw?: (frameCount?: number, elapsedTime?: number, subsetBounds?: Bounds) => void;
+	onDrawArea?: (area?: Bounds, paneTopLeft?: Point, canvasContext?: CanvasRenderingContext2D) => void;
 	onNewDocumentTopLeft?: (size: Array<number>) => void;
 	onRemove?: () => void;
 	onCursorPositionChanged?: (newPosition: Array<number>) => void;
@@ -41,7 +46,7 @@ interface SectionCallbacks {
 }
 
 /// Used to initialize a new anonymous CanvasSectionObject from its properties.
-interface SectionInitProperties extends SectionCallbacks {
+export interface SectionInitProperties extends SectionCallbacks {
 	name: string;
 	backgroundColor?: string;
 	borderColor?: string;
@@ -199,7 +204,7 @@ interface SectionInitProperties extends SectionCallbacks {
 */
 
 // This class will be used internally by CanvasSectionContainer.
-class CanvasSectionObject {
+export class CanvasSectionObject {
 	context: CanvasRenderingContext2D = null;
 	myTopLeft: Array<number> = null;
 	documentTopLeft: Array<number> = null; // Document top left will be updated by container.
@@ -330,13 +335,13 @@ class CanvasSectionObject {
 	}
 
 	/// Parameters: null || (frameCount, elapsedTime)
-	onDraw(frameCount?: number, elapsedTime?: number, subsetBounds?: cool.Bounds): void {
+	onDraw(frameCount?: number, elapsedTime?: number, subsetBounds?: Bounds): void {
 		if (this.callbacks.onDraw)
 			return this.callbacks.onDraw(frameCount, elapsedTime, subsetBounds);
 	}
 
 	/// Optional Parameters: (area, paneTopLeft, canvasContext) - area is the area to be painted using canvasContext.
-	onDrawArea(area?: cool.Bounds, paneTopLeft?: cool.Point, canvasContext?: CanvasRenderingContext2D): void {
+	onDrawArea(area?: Bounds, paneTopLeft?: Point, canvasContext?: CanvasRenderingContext2D): void {
 		if (this.callbacks.onDrawArea)
 			return this.callbacks.onDrawArea(area, paneTopLeft, canvasContext);
 	}
@@ -497,7 +502,7 @@ enum DirtyType {
 	TileRange
 }
 
-class CanvasSectionContainer {
+export class CanvasSectionContainer {
 	/*
 		All events will be cached by this class and propagated to sections.
 		This class should work also mouse & touch enabled (at the same time) devices. Users should be able to use both.
@@ -2088,10 +2093,10 @@ class CanvasSectionContainer {
 	private drawSections (frameCount: number = null, elapsedTime: number = null, tileSubset: Set<any> = null) {
 		this.context.setTransform(1, 0, 0, 1, 0, 0);
 
-		var subsetBounds: cool.Bounds = null;
+		var subsetBounds: Bounds = null;
 		// if there is a tileSubset we only want to draw the miniumum region of its bounds
 		if (tileSubset) {
-			var tileSection = this.getSectionWithName(L.CSections.Tiles.name) as cool.TilesSection;
+			var tileSection = this.getSectionWithName(L.CSections.Tiles.name) as TilesSection;
 			if (tileSection && this.shouldDrawSection(tileSection)) {
 				subsetBounds = tileSection.getSubsetBounds(this.context, tileSubset);
 			}

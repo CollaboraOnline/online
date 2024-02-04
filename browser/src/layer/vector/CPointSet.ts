@@ -4,11 +4,14 @@
  * open/closed polygons respectively.
  */
 
-class CPointSet {
-	private points: Array<cool.Point>;
+import { Bounds } from '../../geometry/Bounds';
+import { Point } from '../../geometry/Point';
+
+export class CPointSet {
+	private points: Array<Point>;
 	private pointSets: Array<CPointSet>;
 
-	static fromPointArray(array: Array<cool.Point>) {
+	static fromPointArray(array: Array<Point>) {
 		var ps = new CPointSet();
 		ps.points = array;
 		return ps;
@@ -20,7 +23,7 @@ class CPointSet {
 		return ps;
 	}
 
-	static fromBounds(bounds: cool.Bounds) {
+	static fromBounds(bounds: Bounds) {
 		var ps = new CPointSet();
 		ps.points = [
 			bounds.getTopLeft(),
@@ -40,7 +43,7 @@ class CPointSet {
 			(this.pointSets === undefined && this.points.length == 0));
 	}
 
-	getPointArray(): Array<cool.Point> {
+	getPointArray(): Array<Point> {
 		return this.points;
 	}
 
@@ -48,7 +51,7 @@ class CPointSet {
 		return this.pointSets;
 	}
 
-	setPointArray(array: Array<cool.Point>) {
+	setPointArray(array: Array<Point>) {
 		this.points = array;
 		this.pointSets = undefined;
 	}
@@ -60,7 +63,7 @@ class CPointSet {
 
 	// This is used in CCellSelection to draw multiple polygons based on a "inner" point-set
 	// where we need to apply an additive offset to each point in the pointSet w.r.t each polygon's centroid.
-	applyOffset(offset: cool.Point, centroidSymmetry: boolean = false, preRound: boolean = true) {
+	applyOffset(offset: Point, centroidSymmetry: boolean = false, preRound: boolean = true) {
 		CPointSet.applyOffsetImpl(this, offset, centroidSymmetry, preRound);
 	}
 
@@ -87,12 +90,12 @@ class CPointSet {
 		return newPointSet;
 	}
 
-	private static applyOffsetImpl(pointSet: CPointSet, offset: cool.Point, centroidSymmetry: boolean, preRound: boolean) {
+	private static applyOffsetImpl(pointSet: CPointSet, offset: Point, centroidSymmetry: boolean, preRound: boolean) {
 		if (pointSet.empty())
 			return;
 
 		if (pointSet.isFlat()) {
-			const refPoint = new cool.Point(Infinity, Infinity);
+			const refPoint = new Point(Infinity, Infinity);
 			if (centroidSymmetry) {
 				refPoint.x = 0;
 				refPoint.y = 0;

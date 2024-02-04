@@ -1,18 +1,24 @@
+import { CPath, CPathGroup, PathGroupType } from './CPath';
+import { CPolygon } from './CPolygon';
+import { CPointSet } from './CPointSet';
+import { Bounds } from '../../geometry/Bounds';
+import { Point } from '../../geometry/Point';
+
 /*
  * CRectangle extends CPolygon and creates a rectangle of given bounds.
  */
 
-class CRectangle extends CPolygon {
+export class CRectangle extends CPolygon {
 
-	constructor(bounds: cool.Bounds, options: any) {
+	constructor(bounds: Bounds, options: any) {
 		super(CRectangle.boundsToPointSet(bounds), options);
 	}
 
-	setBounds(bounds: cool.Bounds) {
+	setBounds(bounds: Bounds) {
 		this.setPointSet(CRectangle.boundsToPointSet(bounds));
 	}
 
-	public static boundsToPointSet(bounds: cool.Bounds): CPointSet {
+	public static boundsToPointSet(bounds: Bounds): CPointSet {
 		if (!bounds.isValid()) {
 			return new CPointSet();
 		}
@@ -33,14 +39,14 @@ function getOptionsClone(baseOpts: any): any {
 }
 
 // CCellCursor is used for drawing of the self and view cell-cursor on the canvas.
-class CCellCursor extends CPathGroup {
+export class CCellCursor extends CPathGroup {
 
 	private cursorWeight: number = 2;
 	private borderPaths: CRectangle[] = [];
 	private innerContrastBorder: CRectangle;
 	private options: any;
 
-	constructor(bounds: cool.Bounds, options: any) {
+	constructor(bounds: Bounds, options: any) {
 		super([]);
 		if (options.weight != 1) {
 			this.cursorWeight = Math.round(options.weight);
@@ -55,25 +61,25 @@ class CCellCursor extends CPathGroup {
 		this.setBounds(bounds);
 	}
 
-	setBounds(bounds: cool.Bounds) {
-		const cellBounds = new cool.Bounds(
-			bounds.min.subtract(new cool.Point(0.5, 0.5)),
-			bounds.max.subtract(new cool.Point(0.5, 0.5))
+	setBounds(bounds: Bounds) {
+		const cellBounds = new Bounds(
+			bounds.min.subtract(new Point(0.5, 0.5)),
+			bounds.max.subtract(new Point(0.5, 0.5))
 		);
 
 		// Compute bounds for border path.
-		const boundsForBorder: cool.Bounds[] = [];
+		const boundsForBorder: Bounds[] = [];
 		for (let idx = 0; idx < this.cursorWeight; ++idx) {
 			const pixels = idx; // device pixels from real cell-border.
-			boundsForBorder.push(new cool.Bounds(
-				cellBounds.min.subtract(new cool.Point(pixels, pixels)),
-				cellBounds.max.add(new cool.Point(pixels, pixels))
+			boundsForBorder.push(new Bounds(
+				cellBounds.min.subtract(new Point(pixels, pixels)),
+				cellBounds.max.add(new Point(pixels, pixels))
 			));
 		}
 
-		const boundsForContrastBorder = new cool.Bounds(
-			cellBounds.min.add(new cool.Point(1.0, 1.0)),
-			cellBounds.max.subtract(new cool.Point(1.0, 1.0)));
+		const boundsForContrastBorder = new Bounds(
+			cellBounds.min.add(new Point(1.0, 1.0)),
+			cellBounds.max.subtract(new Point(1.0, 1.0)));
 
 		if (this.borderPaths && this.innerContrastBorder) {
 			console.assert(this.borderPaths.length === this.cursorWeight);
@@ -112,7 +118,7 @@ class CCellCursor extends CPathGroup {
 }
 
 // CCellSelection is used for drawing of the self and view cell-range selections on the canvas.
-class CCellSelection extends CPathGroup {
+export class CCellSelection extends CPathGroup {
 
 	private selectionWeight: number = 2;
 	private borderPaths: CPolygon[];
@@ -136,18 +142,18 @@ class CCellSelection extends CPathGroup {
 	// using CPointSet data-structure.
 	setPointSet(pointSet: CPointSet) {
 		const outerPointSet = pointSet;
-		outerPointSet.applyOffset(new cool.Point(0.5, 0.5), false /* centroidSymmetry */, true /* preRound */);
+		outerPointSet.applyOffset(new Point(0.5, 0.5), false /* centroidSymmetry */, true /* preRound */);
 
 		const borderPointSets: CPointSet[] = [];
 
 		for (let idx = 0; idx < this.selectionWeight; ++idx) {
 			const pixels = idx; // device pixels from real cell-border.
 			const borderPset = outerPointSet.clone();
-			borderPset.applyOffset(new cool.Point(-pixels, -pixels), true /* centroidSymmetry */, false /* preRound */);
+			borderPset.applyOffset(new Point(-pixels, -pixels), true /* centroidSymmetry */, false /* preRound */);
 			borderPointSets.push(borderPset);
 		}
 		const contrastBorderPointSet = outerPointSet.clone();
-		contrastBorderPointSet.applyOffset(new cool.Point(-this.selectionWeight, -this.selectionWeight), true /* centroidSymmetry */, false /* preRound */);
+		contrastBorderPointSet.applyOffset(new Point(-this.selectionWeight, -this.selectionWeight), true /* centroidSymmetry */, false /* preRound */);
 
 		if (this.borderPaths && this.innerContrastBorder) {
 			console.assert(this.borderPaths.length === this.selectionWeight);
@@ -179,13 +185,13 @@ class CCellSelection extends CPathGroup {
 		}
 	}
 
-	getBounds(): cool.Bounds {
+	getBounds(): Bounds {
 		if (!this.borderPaths || !this.borderPaths.length)
-			return new cool.Bounds(undefined);
+			return new Bounds(undefined);
 		return this.borderPaths[0].getBounds();
 	}
 
-	anyRingBoundContains(corePxPoint: cool.Point): boolean {
+	anyRingBoundContains(corePxPoint: Point): boolean {
 		if (!this.borderPaths || !this.borderPaths.length)
 			return false;
 

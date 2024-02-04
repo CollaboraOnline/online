@@ -1,6 +1,6 @@
-declare var L: any;
+import { Point, PointConvertable, PointLike } from  './Point';
 
-namespace cool {
+declare var L: any;
 
 function PointConstruct(x: number, y: number, round?: boolean): Point {
 	return new L.Point(x, y, round);
@@ -20,7 +20,7 @@ export class Bounds {
 		if (!a)
 			return;
 
-		var points = b ? [<PointConvertable>a, b] : <PointConvertable[]>a;
+		var points = b ? [<PointConvertable>a, b] : <PointConvertable[]>[a];
 
 		for (var i = 0, len = points.length; i < len; i++) {
 			this.extend(points[i]);
@@ -257,7 +257,5 @@ export class Bounds {
 	}
 }
 
-}
-
-L.Bounds = cool.Bounds;
-L.bounds = cool.Bounds.toBounds;
+L.Bounds = Bounds;
+L.bounds = Bounds.toBounds;

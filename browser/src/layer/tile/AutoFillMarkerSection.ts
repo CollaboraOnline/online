@@ -9,6 +9,8 @@
  */
 /* See CanvasSectionContainer.ts for explanations. */
 
+import { CanvasSectionObject } from './CanvasSectionContainer';
+
 declare var L: any;
 declare var app: any;
 

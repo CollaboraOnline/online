@@ -18,7 +18,11 @@
 
 /* global $ app */
 
-namespace cool {
+import { CanvasSectionObject } from '../layer/tile/CanvasSectionContainer';
+
+declare var app: any;
+declare var $: any;
+declare var L: any;
 
 export class CornerHeader extends CanvasSectionObject {
 
@@ -77,9 +81,7 @@ export class CornerHeader extends CanvasSectionObject {
 	}
 }
 
-}
-
-L.Control.CornerHeader = cool.CornerHeader;
+L.Control.CornerHeader = CornerHeader;
 
 L.control.cornerHeader = function () {
 	return new L.Control.CornerHeader();

@@ -3,7 +3,20 @@
  * L.CanvasTileLayer is a layer with canvas based rendering.
  */
 
-/* global app L CanvasSectionContainer CanvasOverlay CDarkOverlay CSplitterLine CStyleData $ _ CPointSet CPolyUtil CPolygon Cursor CCellCursor CCellSelection PathGroupType UNOKey UNOModifier Uint8ClampedArray Uint8Array Uint32Array */
+/* global app L $ _ UNOKey UNOModifier Uint8ClampedArray Uint8Array Uint32Array */
+
+import { Bounds } from '../../geometry/Bounds';
+import { Point } from '../../geometry/Point';
+import { CanvasSectionContainer } from './CanvasSectionContainer';
+import { CanvasOverlay } from '../vector/CanvasOverlay';
+import { CDarkOverlay } from '../vector/CDarkOverlay';
+import { CSplitterLine } from '../vector/CSplitterLine';
+import { PathGroupType } from '../vector/CPath';
+import { CPointSet } from '../vector/CPointSet';
+import { CPolygon } from '../vector/CPolygon';
+import { CPolyUtil } from '../vector/CPolyUtil';
+import { Cursor } from '../marker/Cursor';
+import { CCellCursor, CCellSelection } from '../vector/CRectangle';
 
 /*eslint no-extend-native:0*/
 if (typeof String.prototype.startsWith !== 'function') {
@@ -6964,9 +6977,9 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	_coordsToPixBounds: function (coords) {
 		// coords.x and coords.y are the pixel coordinates of the top-left corner of the tile.
-		var topLeft = new L.Point(coords.x, coords.y);
-		var bottomRight = topLeft.add(new L.Point(this._tileSize, this._tileSize));
-		return new L.Bounds(topLeft, bottomRight);
+		var topLeft = new Point(coords.x, coords.y);
+		var bottomRight = topLeft.add(new Point(this._tileSize, this._tileSize));
+		return new Bounds(topLeft, bottomRight);
 	},
 
 	updateHorizPaneSplitter: function () {

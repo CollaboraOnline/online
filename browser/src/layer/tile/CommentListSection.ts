@@ -11,10 +11,13 @@
 
 /* See CanvasSectionContainer.ts for explanations. */
 
+import { CanvasSectionObject } from './CanvasSectionContainer';
+import { Comment } from './CommentSection';
+
 L.Map.include({
 	insertComment: function() {
-		if (cool.Comment.isAnyEdit()) {
-			cool.CommentSection.showCommentEditingWarning();
+		if (Comment.isAnyEdit()) {
+			CommentSection.showCommentEditingWarning();
 			return;
 		}
 		var avatar = undefined;
@@ -46,8 +49,6 @@ declare var app: any;
 declare var $: any;
 declare var _: any;
 
-namespace cool {
-
 export class CommentSection extends CanvasSectionObject {
 	map: any;
 	sectionProperties: {
@@ -63,7 +64,7 @@ export class CommentSection extends CanvasSectionObject {
 		commentsAreListed: boolean;
 		[key: string]: any;
 	};
-	static autoSavedComment: cool.Comment;
+	static autoSavedComment: Comment;
 	static commentWasAutoAdded: boolean;
 
 	// To associate comment id with its index in commentList array.
@@ -595,8 +596,8 @@ export class CommentSection extends CanvasSectionObject {
 	}
 
 	public reply (annotation: any): void {
-		if (cool.Comment.isAnyEdit()) {
-			cool.CommentSection.showCommentEditingWarning();
+		if (Comment.isAnyEdit()) {
+			CommentSection.showCommentEditingWarning();
 			return;
 		}
 		if ((<any>window).mode.isMobile()) {
@@ -621,7 +622,7 @@ export class CommentSection extends CanvasSectionObject {
 					anchorPos: [annotation.sectionProperties.data.anchorPos[0], annotation.sectionProperties.data.anchorPos[1]],
 				};
 
-				var replyAnnotationSection = new cool.Comment(replyAnnotation, replyAnnotation.id === 'new' ? {noMenu: true} : {}, this);
+				var replyAnnotationSection = new Comment(replyAnnotation, replyAnnotation.id === 'new' ? {noMenu: true} : {}, this);
 				replyAnnotationSection.name += '-reply';
 
 				this.newAnnotationMobile(replyAnnotationSection, annotation.onReplyClick, /* isMod */ false);
@@ -636,8 +637,8 @@ export class CommentSection extends CanvasSectionObject {
 	}
 
 	public modify (annotation: any): void {
-		if (cool.Comment.isAnyEdit()) {
-			cool.CommentSection.showCommentEditingWarning();
+		if (Comment.isAnyEdit()) {
+			CommentSection.showCommentEditingWarning();
 			return;
 		}
 		if ((<any>window).mode.isMobile()) {
@@ -1047,8 +1048,8 @@ export class CommentSection extends CanvasSectionObject {
 		}
 	}
 
-	public add (comment: any): cool.Comment {
-		var annotation = new cool.Comment(comment, comment.id === 'new' ? {noMenu: true} : {}, this);
+	public add (comment: any): Comment {
+		var annotation = new Comment(comment, comment.id === 'new' ? {noMenu: true} : {}, this);
 
 		/*
 			Remove if a comment with the same id exists.
@@ -1878,7 +1879,7 @@ export class CommentSection extends CanvasSectionObject {
 				if (comment.author in this.map._viewInfoByUserName) {
 					comment.avatar = this.map._viewInfoByUserName[comment.author].userextrainfo.avatar;
 				}
-				var commentSection = new cool.Comment(comment, {}, this);
+				var commentSection = new Comment(comment, {}, this);
 				if (!this.containerObject.addSection(commentSection))
 					continue;
 				this.sectionProperties.commentList.push(commentSection);
@@ -1917,7 +1918,7 @@ export class CommentSection extends CanvasSectionObject {
 				if (changeComment.author in this.map._viewInfoByUserName) {
 					changeComment.avatar = this.map._viewInfoByUserName[changeComment.author].userextrainfo.avatar;
 				}
-				var commentSection = new cool.Comment(changeComment, {}, this);
+				var commentSection = new Comment(changeComment, {}, this);
 				if (!this.containerObject.addSection(commentSection))
 					continue;
 				this.sectionProperties.commentList.push(commentSection);
@@ -1975,6 +1976,4 @@ export class CommentSection extends CanvasSectionObject {
 	}
 }
 
-}
-
-app.definitions.CommentSection = cool.CommentSection;
+app.definitions.CommentSection = CommentSection;

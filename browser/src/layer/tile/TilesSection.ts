@@ -10,12 +10,14 @@
  */
 /* See CanvasSectionContainer.ts for explanations. */
 
+import { Bounds } from '../../geometry/Bounds';
+import { Point } from '../../geometry/Point';
+import { CanvasSectionObject } from './CanvasSectionContainer';
+
 declare var L: any;
 declare var $: any;
 declare var Hammer: any;
 declare var app: any;
-
-namespace cool {
 
 export class TilesSection extends CanvasSectionObject {
 	map: any;
@@ -122,7 +124,7 @@ export class TilesSection extends CanvasSectionObject {
 	}
 
 	// the bounding box of this set of tiles
-	public getSubsetBounds(canvasCtx: CanvasRenderingContext2D, tileSubset: Set<any>): cool.Bounds {
+	public getSubsetBounds(canvasCtx: CanvasRenderingContext2D, tileSubset: Set<any>): Bounds {
 
 		// don't do anything for this atypical varient
 		if (app.file.fileBasedView)
@@ -130,13 +132,13 @@ export class TilesSection extends CanvasSectionObject {
 
 		var ctx = this.sectionProperties.tsManager._paintContext();
 
-		var bounds: cool.Bounds;
+		var bounds: Bounds;
 		for (const coords of Array.from(tileSubset)) {
-			var topLeft = new L.Point(coords.getPos().x, coords.getPos().y);
-			var rightBottom = new L.Point(topLeft.x + ctx.tileSize.x, topLeft.y + ctx.tileSize.y);
+			var topLeft = new Point(coords.getPos().x, coords.getPos().y);
+			var rightBottom = new Point(topLeft.x + ctx.tileSize.x, topLeft.y + ctx.tileSize.y);
 
 			if (bounds === undefined)
-				bounds = new cool.Bounds(topLeft, rightBottom);
+				bounds = new Bounds(topLeft, rightBottom);
 			else {
 				bounds.extend(topLeft).extend(rightBottom);
 			}
@@ -145,7 +147,7 @@ export class TilesSection extends CanvasSectionObject {
 		return bounds;
 	}
 
-	public clipSubsetBounds(canvasCtx: CanvasRenderingContext2D, subsetBounds: cool.Bounds): void {
+	public clipSubsetBounds(canvasCtx: CanvasRenderingContext2D, subsetBounds: Bounds): void {
 
 		var ctx = this.sectionProperties.tsManager._paintContext();
 		ctx.viewBounds.round();
@@ -210,7 +212,7 @@ export class TilesSection extends CanvasSectionObject {
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	paintSimple (tile: any, ctx: any, async: boolean, now: Date): void {
 		ctx.viewBounds.round();
-		var offset = new L.Point(tile.coords.getPos().x - ctx.viewBounds.min.x, tile.coords.getPos().y - ctx.viewBounds.min.y);
+		var offset = new Point(tile.coords.getPos().x - ctx.viewBounds.min.x, tile.coords.getPos().y - ctx.viewBounds.min.y);
 
 		if ((async || this.containerObject.isZoomChanged()) && !app.file.fileBasedView) {
 			// Non Calc tiles(handled by paintSimple) can have transparent pixels,
@@ -399,7 +401,7 @@ export class TilesSection extends CanvasSectionObject {
 		}
 	}
 
-	public onDraw (frameCount: number = null, elapsedTime: number = null, subsetBounds: cool.Bounds = null): void {
+	public onDraw (frameCount: number = null, elapsedTime: number = null, subsetBounds: Bounds = null): void {
 		if (this.containerObject.isInZoomAnimation())
 			return;
 
@@ -471,10 +473,10 @@ export class TilesSection extends CanvasSectionObject {
 			return 0;
 
 		var intersection = new L.Bounds(
-			new L.Point(
+			new Point(
 				Math.max(tileBounds.min.x, viewBounds.min.x),
 				Math.max(tileBounds.min.y, viewBounds.min.y)),
-			new L.Point(
+			new Point(
 				Math.min(tileBounds.max.x, viewBounds.max.x),
 				Math.min(tileBounds.max.y, viewBounds.max.y))
 		);
@@ -769,7 +771,7 @@ export class TilesSection extends CanvasSectionObject {
 			// Calculate top-left in doc core-pixels for the frame.
 			var docPos = tsManager._getZoomDocPos(tsManager._newCenter, paneBounds, splitPos, scale, false /* findFreePaneCenter? */);
 
-			var destPos = new L.Point(0, 0);
+			var destPos = new Point(0, 0);
 			var docAreaSize = paneSize.divideBy(scale);
 			if (paneBoundsList.length > 1) {
 				if (paneBounds.min.x) {
@@ -889,8 +891,6 @@ export class TilesSection extends CanvasSectionObject {
 	}
 }
 
-}
-
 L.getNewTilesSection = function () {
-	return new cool.TilesSection();
+	return new TilesSection();
 };

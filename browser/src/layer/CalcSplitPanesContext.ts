@@ -8,9 +8,12 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-declare var L: any;
 
-namespace cool {
+import { Point } from '../geometry/Point';
+import { SplitPanesContext } from './SplitPanesContext';
+import { SheetGeometry } from '../layer/tile/SheetGeometry';
+
+declare var L: any;
 
 export class CalcSplitPanesContext extends SplitPanesContext {
 
@@ -61,6 +64,4 @@ export class CalcSplitPanesContext extends SplitPanesContext {
 	}
 }
 
-}
-
-L.CalcSplitPanesContext = cool.CalcSplitPanesContext;
+L.CalcSplitPanesContext = CalcSplitPanesContext;

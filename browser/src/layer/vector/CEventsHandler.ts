@@ -1,14 +1,15 @@
+import { Point } from '../../geometry/Point';
 
 // Type of the data passed to event handlers.
-interface EventData {
-	position?: cool.Point;
+export interface EventData {
+	position?: Point;
 }
 
 type EventHandlerType = (data: EventData) => void;
 
 // Used as base class for classes that needs to setup
 // event handlers for real or synthetic events.
-abstract class CEventsHandler {
+export abstract class CEventsHandler {
 
 	protected supportedEventNames = [
 		'add',

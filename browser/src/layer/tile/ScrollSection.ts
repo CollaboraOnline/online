@@ -9,11 +9,11 @@
  */
 /* See CanvasSectionContainer.ts for explanations. */
 
+import { CanvasSectionObject } from '../tile/CanvasSectionContainer';
+
 // We will keep below definitions until we use tsconfig.json.
 declare var L: any;
 declare var app: any;
-
-namespace cool {
 
 export class ScrollSection extends CanvasSectionObject {
 
@@ -748,7 +748,7 @@ export class ScrollSection extends CanvasSectionObject {
 		else {
 			// See if the scroll bar is on top or bottom.
 			var docAncSectionY = this.containerObject.getDocumentAnchorSection().myTopLeft[1];
-			if (scrollProps.startY < 30 * window.app.roundedDpiScale + docAncSectionY) {
+			if (scrollProps.startY < 30 * (<any>window).app.roundedDpiScale + docAncSectionY) {
 				pointerIsSyncWithScrollBar = scrollProps.startY + spacer < position[1];
 			}
 			else {
@@ -784,7 +784,7 @@ export class ScrollSection extends CanvasSectionObject {
 		else {
 			// See if the scroll bar is on left or right.
 			var docAncSectionX = this.containerObject.getDocumentAnchorSection().myTopLeft[0];
-			if (startX < 30 * window.app.roundedDpiScale + docAncSectionX) {
+			if (startX < 30 * (<any>window).app.roundedDpiScale + docAncSectionX) {
 				pointerIsSyncWithScrollBar = startX + spacer < position[0];
 			}
 			else {
@@ -1061,8 +1061,6 @@ export class ScrollSection extends CanvasSectionObject {
 	}
 }
 
-}
-
 L.getNewScrollSection = function () {
-	return new cool.ScrollSection();
+	return new ScrollSection();
 };

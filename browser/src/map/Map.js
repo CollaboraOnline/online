@@ -3,7 +3,7 @@
  * L.Map is the central class of the API - it is used to create a map.
  */
 
-/* global app _ Cursor JSDialog */
+/* global app _ JSDialog */
 
 L.Map = L.Evented.extend({
 
@@ -98,7 +98,7 @@ L.Map = L.Evented.extend({
 			this.setView(L.latLng(options.center), options.zoom, {reset: true});
 		}
 
-		Cursor.imagePath = options.cursorURL;
+		L.Cursor.imagePath = options.cursorURL;
 
 		/* private members */
 		this._handlers = [];
@@ -151,7 +151,7 @@ L.Map = L.Evented.extend({
 		this._addLayers(this.options.layers);
 		app.socket = new app.definitions.Socket(this);
 
-		this._progressBar = L.progressOverlay(new L.point(150, 25));
+		this._progressBar = L.progressOverlay(L.point(150, 25));
 
 		this._debug = new L.DebugManager(this);
 
