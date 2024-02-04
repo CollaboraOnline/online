@@ -2955,12 +2955,17 @@ void lokit_main(
 
                 // Mount loTemplate inside it.
                 LOG_INF("Mounting " << loTemplate << " -> " << loJailDestPath);
-                JailUtil::createJailPath(loJailDestPath);
+                if (!FileUtil::Stat(loJailDestPath).exists())
+                {
+                    LOG_DBG("The mount-point [" << loJailDestPath
+                                                << "] doesn't exist. Binding will likely fail");
+                }
+
                 if (!JailUtil::bind(loTemplate, loJailDestPath)
                     || !JailUtil::remountReadonly(loTemplate, loJailDestPath))
                 {
                     LOG_WRN("Failed to mount [" << loTemplate << "] -> [" << loJailDestPath
-                                                << "], will link/copy contents.");
+                                                << "], will link/copy contents");
                     return false;
                 }
 
