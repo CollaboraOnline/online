@@ -198,7 +198,7 @@ void ClientSession::rotateClipboardKey(bool notifyClient)
         return;
 
     _clipboardKeys[1] = _clipboardKeys[0];
-    _clipboardKeys[0] = Util::rng::getHardRandomHexString(
+    _clipboardKeys[0] = Util::rng::getHexString(
         ClipboardTokenLengthBytes);
     LOG_TRC("Clipboard key on [" << getId() << "] set to " << _clipboardKeys[0] <<
             " last was " << _clipboardKeys[1]);
@@ -2551,7 +2551,7 @@ void ClientSession::dumpState(std::ostream& os)
 const std::string &ClientSession::getOrCreateProxyAccess()
 {
     if (_proxyAccess.size() <= 0)
-        _proxyAccess = Util::rng::getHardRandomHexString(
+        _proxyAccess = Util::rng::getHexString(
             ProxyAccessTokenLengthBytes);
     return _proxyAccess;
 }
