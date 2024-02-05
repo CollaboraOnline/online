@@ -3,7 +3,6 @@
 
 require('cypress-wait-until');
 require('cypress-file-upload');
-require('cypress-iframe');
 import installLogsCollector from 'cypress-terminal-report/src/installLogsCollector';
 
 installLogsCollector();
