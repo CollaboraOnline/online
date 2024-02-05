@@ -263,12 +263,11 @@ namespace RenderTiles
                                 renderArea.getLeft(), renderArea.getTop(),
                                 renderArea.getWidth(), renderArea.getHeight());
         auto duration = std::chrono::steady_clock::now() - start;
-        const auto elapsedMs = std::chrono::duration_cast<std::chrono::milliseconds>(duration);
-        const double elapsedMics = elapsedMs.count() * 1000.; // Need MPixels/sec, use Pixels/mics.
-        LOG_DBG("paintPartTile at ("
+        const auto elapsedUs = std::chrono::duration_cast<std::chrono::microseconds>(duration);
+        LOG_DBG("paintPartTile      " << tileRecs.size() << " tiles at ("
                 << renderArea.getLeft() << ", " << renderArea.getTop() << "), ("
                 << renderArea.getWidth() << ", " << renderArea.getHeight() << ") "
-                << " rendered in " << elapsedMs << " (" << area / elapsedMics << " MP/s).");
+                << " took " << elapsedUs << " (" << area / elapsedUs.count() << " MP/s).");
 
         (void) mobileAppDocId;
 
@@ -365,11 +364,12 @@ namespace RenderTiles
         pngPool.run();
 
         duration = std::chrono::steady_clock::now() - start;
-        const auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(duration);
-        LOG_DBG("rendering tiles at (" << renderArea.getLeft() << ", " << renderArea.getTop()
-                                       << "), (" << renderArea.getWidth() << ", "
-                                       << renderArea.getHeight() << ") "
-                                       << " took " << elapsed << " (including the paintPartTile).");
+        const auto elapsed = std::chrono::duration_cast<std::chrono::microseconds>(duration);
+        LOG_DBG("paintPartTile+comp " << tileRecs.size() << " tiles at ("
+                << renderArea.getLeft() << ", " << renderArea.getTop()
+                << "), (" << renderArea.getWidth() << ", "
+                << renderArea.getHeight() << ") "
+                << " took " << elapsed << " (" << area / elapsed.count() << " MP/s).");
 
         if (tileIndex == 0)
             return false;

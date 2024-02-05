@@ -36,11 +36,11 @@ L.LatLng.prototype = {
 	},
 
 	distanceTo: function (other) {
-		return L.CRS.Earth.distance(this, L.latLng(other));
+		return 0;
 	},
 
 	wrap: function () {
-		return L.CRS.Earth.wrapLatLng(this);
+		return null;
 	},
 };
 
