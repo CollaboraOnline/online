@@ -9,6 +9,30 @@
 	background-color: transparent;
 }
 
+#document-name-input-loading-bar {
+	width: 100%;
+	height: 2px;
+	background-color: var(--color-background-dark);
+	overflow: hidden;
+	position: relative;
+	display: none;
+	margin-block-end: -7px;
+}
+
+#document-name-input-loading-bar::after {
+	content: '';
+	position: absolute;
+	height: 100%;
+	width: 25%;
+	background-color: var(--color-main-text);
+	animation: moveIndicator 2s linear infinite;
+}
+
+@keyframes moveIndicator {
+	from { left: -25%; }
+	to { left: 100%; }
+}
+
 #toolbar-down {
 	left: 0;
 	right: 0;
@@ -288,7 +312,6 @@ w2ui-toolbar {
 	background-color: transparent;
 	border-radius: var(--border-radius);
 	padding: 0px 2px;
-	transition: 0.5s;
 }
 
 #document-name-input.editable {
