@@ -848,11 +848,13 @@ app.definitions.Socket = L.Class.extend({
 				// Reload the document
 				app.idleHandler._active = false;
 				map = this._map;
+				var that = this;
 				clearTimeout(this.timer);
 				this.timer = setInterval(function() {
 					try {
 						// Activate and cancel timer and dialogs.
 						app.idleHandler._activate();
+						that._map.uiManager.documentNameInput.hideLoadingAnimation();
 					} catch (error) {
 						window.app.console.warn('Cannot activate map');
 					}
@@ -1298,6 +1300,7 @@ app.definitions.Socket = L.Class.extend({
 			window.wopiSrc = this._map.options.wopiSrc;
 
 			if (textMsg.startsWith('renamefile:')) {
+				this._map.uiManager.documentNameInput.showLoadingAnimation();
 				this._map.fire('postMessage', {
 					msgId: 'File_Rename',
 					args: {

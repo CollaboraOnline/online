@@ -40,8 +40,10 @@
 	height: 32px;
 	white-space: nowrap;
 	display: flex;
-	align-items: center;
-	justify-content: flex-start;
+	align-items: flex-start;
+	justify-content: center;
+	gap: 5px;
+	flex-direction: column;
 }
 
 .readonly .document-title {
