@@ -311,7 +311,7 @@ L.Clipboard = L.Class.extend({
 				if (that._isStubHtml(fallbackHtml))
 				{
 					// Let the user know they haven't really copied document content.
-					this._map.uiManager.showInfoModal('data transfer warning', '', _('Failed to download clipboard, please re-copy'));
+					that._map.uiManager.showInfoModal('data transfer warning', '', _('Failed to download clipboard, please re-copy'));
 					return;
 				}
 
