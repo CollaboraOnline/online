@@ -813,59 +813,68 @@ window.app = {
 		this.getSessionId();
 	};
 
+	global.iterateCSSImages = function(visitor) {
+		var visitUrls = function(rules, visitor, base) {
+			if (!rules)
+				return;
+
+			for (var r = 0; r < rules.length; ++r) {
+				// check subset of rules like @media or @import
+				if (rules[r] && rules[r].type != 1) {
+					visitUrls(rules[r].cssRules || rules[r].rules, visitor, base);
+					continue;
+				}
+				if (!rules[r] || !rules[r].style)
+					continue;
+				var img = rules[r].style.backgroundImage;
+				if (img === '' || img === undefined)
+					continue;
+
+				if (img.startsWith('url("images/'))
+				{
+					visitor(rules[r].style, img,
+						img.replace('url("images/', base + '/images/'));
+				}
+				if (img.startsWith('url("remote/'))
+				{
+					visitor(rules[r].style, img,
+						img.replace('url("remote/', base + '/remote/'));
+				}
+			}
+		};
+		var sheets = document.styleSheets;
+		for (var i = 0; i < sheets.length; ++i) {
+			var relBases;
+			try {
+				relBases = sheets[i].href.split('/');
+			} catch (err) {
+				global.app.console.log('Missing href from CSS number ' + i);
+				continue;
+			}
+			relBases.pop(); // bin last - css name.
+			var base = 'url("' + relBases.join('/');
+
+			var rules;
+			try {
+				rules = sheets[i].cssRules || sheets[i].rules;
+			} catch (err) {
+				global.app.console.log('Missing CSS from ' + sheets[i].href);
+				continue;
+			}
+			visitUrls(rules, visitor, base);
+		}
+	};
+
 	if (global.socketProxy)
 	{
 		// re-write relative URLs in CSS - somewhat grim.
 		global.addEventListener('load', function() {
-			var replaceUrls = function(rules, replaceBase) {
-				if (!rules)
-					return;
-
-				for (var r = 0; r < rules.length; ++r) {
-					// check subset of rules like @media or @import
-					if (rules[r] && rules[r].type != 1) {
-						replaceUrls(rules[r].cssRules || rules[r].rules, replaceBase);
-						continue;
-					}
-					if (!rules[r] || !rules[r].style)
-						continue;
-					var img = rules[r].style.backgroundImage;
-					if (img === '' || img === undefined)
-						continue;
-					if (img.startsWith('url("images/'))
-					{
-						rules[r].style.backgroundImage =
-							img.replace('url("images/', replaceBase + '/images/');
-					}
-					if (img.startsWith('url("remote/'))
-					{
-						rules[r].style.backgroundImage =
-							img.replace('url("remote/', replaceBase + '/remote/');
-					}
-				}
-			};
-			var sheets = document.styleSheets;
-			for (var i = 0; i < sheets.length; ++i) {
-				var relBases;
-				try {
-					relBases = sheets[i].href.split('/');
-				} catch (err) {
-					global.app.console.log('Missing href from CSS number ' + i);
-					continue;
-				}
-				relBases.pop(); // bin last - css name.
-				var replaceBase = 'url("' + relBases.join('/');
-
-				var rules;
-				try {
-					rules = sheets[i].cssRules || sheets[i].rules;
-				} catch (err) {
-					global.app.console.log('Missing CSS from ' + sheets[i].href);
-					continue;
-				}
-				replaceUrls(rules, replaceBase);
-			}
-		}, false);
+			global.iterateCSSImages(
+				function(style, img, fullUrl)
+				{
+					style.backgroundImage = fullUrl;
+				});
+		} , false);
 	}
 
 	// indirect socket to wrap the asyncness around fetching the routetoken from indirection url endpoint
