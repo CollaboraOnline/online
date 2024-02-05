@@ -1040,7 +1040,7 @@ window.app = {
 	global.makeDocAndWopiSrcUrl = function (root, docUrlParams, suffix, wopiSrcParam) {
 		var wopiSrc = '';
 		if (global.wopiSrc != '') {
-			wopiSrc = '?WOPISrc=' + global.wopiSrc;
+			wopiSrc = '?WOPISrc=' + encodeURIComponent(global.wopiSrc);
 			if (global.routeToken != '')
 				wopiSrc += '&RouteToken=' + global.routeToken;
 			wopiSrc += '&compat=';
