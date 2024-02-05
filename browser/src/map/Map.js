@@ -12,7 +12,7 @@ L.Map = L.Evented.extend({
 	},
 
 	options: {
-		crs: L.CRS.Simple,
+		crs: L.CRS,
 		center: [0, 0],
 		docParams: {},
 		// Default zoom level in which the document will be loaded.
@@ -1038,10 +1038,6 @@ L.Map = L.Evented.extend({
 	latLngToLayerPoint: function (latlng) { // (LatLng)
 		var projectedPoint = this.project(L.latLng(latlng))._round();
 		return projectedPoint._subtract(this.getPixelOrigin());
-	},
-
-	wrapLatLng: function (latlng) {
-		return this.options.crs.wrapLatLng(L.latLng(latlng));
 	},
 
 	distance: function (latlng1, latlng2) {

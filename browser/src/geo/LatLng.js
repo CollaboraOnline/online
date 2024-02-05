@@ -35,7 +35,7 @@ L.LatLng.prototype = {
 		        L.Util.formatNum(this.lng, precision) + ')';
 	},
 
-	distanceTo: function (other) {
+	distanceTo: function () {
 		return 0;
 	},
 

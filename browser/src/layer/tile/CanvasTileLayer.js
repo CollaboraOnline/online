@@ -6341,8 +6341,8 @@ L.CanvasTileLayer = L.Layer.extend({
 		nwPoint = this._corePixelsToCss(nwPoint);
 		sePoint = this._corePixelsToCss(sePoint);
 
-		var nw = map.wrapLatLng(map.unproject(nwPoint, coords.z));
-		var se = map.wrapLatLng(map.unproject(sePoint, coords.z));
+		var nw = map.unproject(nwPoint, coords.z);
+		var se = map.unproject(sePoint, coords.z);
 
 		return new L.LatLngBounds(nw, se);
 	},

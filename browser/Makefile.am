@@ -214,7 +214,6 @@ COOL_JS_LST =\
 	src/geo/LatLngBounds.js \
 	src/geo/projection/Projection.LonLat.js \
 	src/geo/crs/CRS.js \
-	src/geo/crs/CRS.Simple.js \
 	src/control/IFrameDialog.js \
 	src/map/Map.js \
 	src/control/Control.IdleHandler.ts \

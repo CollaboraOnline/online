@@ -4,6 +4,9 @@
  */
 
 L.CRS = {
+	projection: L.Projection.LonLat,
+	transformation: new L.Transformation(1, 0, -1, 0),
+
 	// converts geo coords to pixel ones
 	latLngToPoint: function (latlng, zoom) {
 		var projectedPoint = this.projection.project(latlng),
@@ -32,21 +35,16 @@ L.CRS = {
 
 	// defines how the world scales with zoom
 	scale: function (zoom) {
-		return 256 * Math.pow(2, zoom);
+		return Math.pow(1.2, zoom);
 	},
 
-	// whether a coordinate axis wraps in a given range (e.g. longitude from -180 to 180); depends on CRS
-	// wrapLng: [min, max],
-	// wrapLat: [min, max],
+	distance: function (latlng1, latlng2) {
+		var dx = latlng2.lng - latlng1.lng,
+		    dy = latlng2.lat - latlng1.lat;
 
-	// if true, the coordinate space will be unbounded (infinite in all directions)
-	// infinite: false,
+		return Math.sqrt(dx * dx + dy * dy);
+	},
 
-	// wraps geo coords in certain ranges if applicable
-	wrapLatLng: function (latlng) {
-		var lng = this.wrapLng ? L.Util.wrapNum(latlng.lng, this.wrapLng, true) : latlng.lng,
-		    lat = this.wrapLat ? L.Util.wrapNum(latlng.lat, this.wrapLat, true) : latlng.lat;
-
-		return L.latLng(lat, lng);
-	}
+	// coordinate space is unbounded (infinite in all directions)
+	infinite: true,
 };
