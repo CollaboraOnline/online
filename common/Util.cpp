@@ -148,21 +148,6 @@ namespace Util
             return ss.str().substr(0, length);
         }
 
-        /// Generate a string of harder random characters.
-        std::string getHardRandomHexString(const std::size_t length)
-        {
-            std::stringstream ss;
-            Poco::HexBinaryEncoder hex(ss);
-
-            // a poor fallback but something.
-            std::vector<char> random = getBytes(length);
-
-            hex.rdbuf()->setLineLength(0); // Don't insert line breaks.
-            hex.write(random.data(), length);
-            hex.close(); // Flush.
-            return ss.str().substr(0, length);
-        }
-
         /// Generates a random string in Base64.
         /// Note: May contain '/' characters.
         std::string getB64String(const std::size_t length)
