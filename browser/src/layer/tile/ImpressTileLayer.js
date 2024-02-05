@@ -328,4 +328,9 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 			return 0;
 		return this._hiddenSlides.size;
 	},
+
+	_invalidateAllPreviews: function () {
+		L.CanvasTileLayer.prototype._invalidateAllPreviews.call(this);
+		this._map.fire('invalidateparts');
+	}
 });
