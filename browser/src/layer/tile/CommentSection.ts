@@ -33,7 +33,7 @@ export class Comment extends CanvasSectionObject {
 		super({
 			name: L.CSections.Comment.name,
 			backgroundColor: '',
-			borderColor: null,
+			borderColor: undefined,
 			anchor: [],
 			position: [0, 0],
 			size: [],
@@ -227,7 +227,7 @@ export class Comment extends CanvasSectionObject {
 		}
 
 		if (!(<any>window).mode.isMobile())
-			document.getElementById('document-container').appendChild(this.sectionProperties.container);
+			document.getElementById('document-container')?.appendChild(this.sectionProperties.container);
 
 		// We make comment directly visible when its transitioned to its determined position
 		if (CommentSection.autoSavedComment)
@@ -458,7 +458,7 @@ export class Comment extends CanvasSectionObject {
 			this.sectionProperties.isHighlighted = false;
 		}
 		else if (this.sectionProperties.docLayer._docType === 'spreadsheet') {
-			this.backgroundColor = null;
+			this.backgroundColor = '';
 			this.backgroundOpacity = 1;
 		}
 	}
@@ -1296,7 +1296,7 @@ export class Comment extends CanvasSectionObject {
 		return this.sectionProperties.children.length;
 	}
 
-	public getChildByIndex(index: number): Comment {
+	public getChildByIndex(index: number): Comment | null {
 		if (this.sectionProperties.children.length > index)
 			return this.sectionProperties.children[index];
 		else
@@ -1308,7 +1308,7 @@ export class Comment extends CanvasSectionObject {
 			this.sectionProperties.children.splice(index, 1);
 	}
 
-	public getParentCommentId(): string {
+	public getParentCommentId(): string | null {
 		if (this.sectionProperties.data.parent && this.sectionProperties.data.parent !== '0')
 			return this.sectionProperties.data.parent;
 		else

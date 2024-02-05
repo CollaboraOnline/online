@@ -49,22 +49,23 @@ declare var app: any;
 declare var $: any;
 declare var _: any;
 
+type CommentSectionProperties = {
+	commentList: Array<Comment>;
+	selectedComment: Comment | null;
+	calcCurrentComment: Comment | null;
+	marginY: number;
+	offset: number;
+	width: number;
+	commentWidth: number;
+	collapsedMarginToTheEdge: number;
+	deflectionOfSelectedComment: number;
+	commentsAreListed: boolean;
+	[key: string]: any;
+};
+
 export class CommentSection extends CanvasSectionObject {
 	map: any;
-	sectionProperties: {
-		commentList: Array<Comment>;
-		selectedComment: Comment | null;
-		calcCurrentComment: Comment | null;
-		marginY: number;
-		offset: number;
-		width: number;
-		commentWidth: number;
-		collapsedMarginToTheEdge: number;
-		deflectionOfSelectedComment: number;
-		commentsAreListed: boolean;
-		[key: string]: any;
-	};
-	static autoSavedComment: Comment;
+	static autoSavedComment: Comment | null;
 	static commentWasAutoAdded: boolean;
 
 	// To associate comment id with its index in commentList array.
@@ -74,7 +75,7 @@ export class CommentSection extends CanvasSectionObject {
 		super({
 			name: L.CSections.CommentList.name,
 			backgroundColor: app.sectionContainer.clearColor,
-			borderColor: null,
+			borderColor: undefined,
 			anchor: [],
 			position: [0, 0],
 			size: [0, 0],
@@ -84,12 +85,12 @@ export class CommentSection extends CanvasSectionObject {
 			drawingOrder: L.CSections.CommentList.drawingOrder,
 			zIndex: L.CSections.CommentList.zIndex,
 			interactable: false,
-			sectionProperties: {},
+			sectionProperties: {} as CommentSectionProperties,
 		});
 		this.map = L.Map.THIS;
 		this.anchor = ['top', 'right'];
 		this.sectionProperties.docLayer = this.map._docLayer;
-		this.sectionProperties.commentList = new Array(0);
+		this.sectionProperties.commentList = new Array<Comment>(0);
 		this.sectionProperties.selectedComment = null;
 		this.sectionProperties.arrow = null;
 		this.sectionProperties.showResolved = null;
@@ -265,7 +266,7 @@ export class CommentSection extends CanvasSectionObject {
 	// Mobile.
 	private getCommentListOneDimensionalArray() {
 		// 1 dimensional array of ordered comments.
-		var openArray = [];
+		var openArray = Array<Comment>();
 
 		for (var i = 0; i < this.sectionProperties.commentList.length; i++) {
 			if (this.sectionProperties.commentList[i].isRootComment()) {
@@ -278,7 +279,7 @@ export class CommentSection extends CanvasSectionObject {
 	}
 
 	private createCommentStructureWriter (menuStructure: any, threadOnly: any): void {
-		var rootComment, comment;
+		var rootComment;
 		var commentList = this.getCommentListOneDimensionalArray();
 		var showResolved = this.sectionProperties.showResolved;
 
@@ -287,9 +288,21 @@ export class CommentSection extends CanvasSectionObject {
 				threadOnly = commentList[this.getIndexOf(threadOnly.sectionProperties.data.parent)];
 		}
 
+		type CommentData = {
+			id: string,
+			enable: boolean,
+			data: any,
+			type: string,
+			text: string,
+			annotation: Comment,
+			children: Array<CommentData>
+		};
+
+		var comment: CommentData;
+
 		for (var i = 0; i < commentList.length; i++) {
 			if (commentList[i].isRootComment() || commentList[i].sectionProperties.data.trackchange) {
-				var commentThread = [];
+				var commentThread = Array<CommentData>();
 				do {
 					comment = {
 						id: 'comment' + commentList[i].sectionProperties.data.id,
@@ -299,7 +312,7 @@ export class CommentSection extends CanvasSectionObject {
 						text: commentList[i].sectionProperties.data.text,
 						annotation: commentList[i],
 						children: []
-					};
+					} as CommentData;
 
 					if (showResolved || comment.data.resolved !== 'true') {
 						commentThread.unshift(comment);
@@ -485,11 +498,11 @@ export class CommentSection extends CanvasSectionObject {
 
 		var newAnnotationDialog = document.getElementById('new-annotation-dialog');
 		$(newAnnotationDialog).css('width', '100%');
-		var dialogInput = newAnnotationDialog.children[0];
+		var dialogInput = newAnnotationDialog?.children[0];
 		$(dialogInput).css('height', '30vh');
-		var parent = newAnnotationDialog.parentElement;
-		parent.insertBefore(author, parent.childNodes[0]);
-		document.getElementById('input-modal-input').focus();
+		var parent = newAnnotationDialog?.parentElement;
+		parent?.insertBefore(author, parent.childNodes[0]);
+		document.getElementById('input-modal-input')?.focus();
 	}
 
 	public highlightComment (comment: any): void {
@@ -907,6 +920,8 @@ export class CommentSection extends CanvasSectionObject {
 				return true;
 			}
 		}
+
+		return false;
 	}
 
 	private initializeContextMenus (): void {
@@ -1344,7 +1359,7 @@ export class CommentSection extends CanvasSectionObject {
 
 	// This converts the specified number of values into core pixels from twips.
 	// Returns a new array with the length of specified numbers.
-	private numberArrayToCorePixFromTwips (numberArray: Array<number>, startIndex: number = 0, length: number = null): Array<number> {
+	private numberArrayToCorePixFromTwips (numberArray: Array<number>, startIndex: number = 0, length: number = 0): Array<number> {
 		if (!length)
 			length = numberArray.length;
 
@@ -1482,7 +1497,7 @@ export class CommentSection extends CanvasSectionObject {
 		startY -= this.sectionProperties.marginY;
 		// Pass over all comments present
 		for (var i = startIndex; i > -1;) {
-			var subList = [];
+			var subList = Array<Comment>();
 			tmpIdx = i;
 			do {
 				this.sectionProperties.commentList[tmpIdx].sectionProperties.data.anchorPix = this.numberArrayToCorePixFromTwips(this.sectionProperties.commentList[tmpIdx].sectionProperties.data.anchorPos, 0, 2);
@@ -1531,7 +1546,7 @@ export class CommentSection extends CanvasSectionObject {
 		var checkSelectedPart: boolean = this.mustCheckSelectedPart();
 		// Pass over all comments present
 		for (var i = startIndex; i < this.sectionProperties.commentList.length;) {
-			var subList = [];
+			var subList = Array<Comment>();
 			tmpIdx = i;
 			do {
 				this.sectionProperties.commentList[tmpIdx].sectionProperties.data.anchorPix = this.numberArrayToCorePixFromTwips(this.sectionProperties.commentList[tmpIdx].sectionProperties.data.anchorPos, 0, 2);
@@ -1558,7 +1573,7 @@ export class CommentSection extends CanvasSectionObject {
 
 	public hideArrow (): void {
 		if (this.sectionProperties.arrow) {
-			document.getElementById('document-container').removeChild(this.sectionProperties.arrow);
+			document.getElementById('document-container')?.removeChild(this.sectionProperties.arrow);
 			this.sectionProperties.arrow = null;
 		}
 	}
@@ -1599,7 +1614,7 @@ export class CommentSection extends CanvasSectionObject {
 			line.setAttribute('stroke', 'darkblue');
 			line.setAttribute('stroke-width', '1');
 			svg.appendChild(line);
-			document.getElementById('document-container').appendChild(svg);
+			document.getElementById('document-container')?.appendChild(svg);
 			this.sectionProperties.arrow = svg;
 		}
 	}
@@ -1611,14 +1626,15 @@ export class CommentSection extends CanvasSectionObject {
 			return; // No adjustments for Calc, since only one comment can be shown at a time and that comment is shown at its belonging cell.
 		}
 
+		var lastY = 0;
 		if (this.sectionProperties.commentList.length > 0) {
 			this.orderCommentList();
 
 			var isRTL = document.documentElement.dir === 'rtl';
 
 			var topRight: Array<number> = [this.myTopLeft[0], this.myTopLeft[1] + this.sectionProperties.marginY - this.documentTopLeft[1]];
-			var yOrigin = null;
-			var selectedIndex = null;
+			var yOrigin: number = 0;
+			var selectedIndex: number = 0;
 			var x = isRTL ? 0 : topRight[0];
 			var availableSpace = this.calculateAvailableSpace();
 
@@ -1649,7 +1665,6 @@ export class CommentSection extends CanvasSectionObject {
 				app.sectionContainer.requestReDraw();
 			}
 
-			var lastY = 0;
 			if (selectedIndex) {
 				this.loopUp(selectedIndex - 1, x, yOrigin);
 				lastY = this.loopDown(selectedIndex, x, yOrigin);
@@ -1850,7 +1865,7 @@ export class CommentSection extends CanvasSectionObject {
 	}
 
 	private orderTextComments() {
-		var newOrder = [];
+		var newOrder = Array<Comment>();
 
 		for (var i = 0; i < this.sectionProperties.commentList.length; i++) {
 			var comment = this.sectionProperties.commentList[i];
