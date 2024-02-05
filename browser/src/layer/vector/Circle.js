@@ -33,9 +33,7 @@ L.Circle = L.CircleMarker.extend({
 
 	_project: function () {
 
-		var lng = this._latlng.lng,
-		    lat = this._latlng.lat,
-		    map = this._map,
+		var map = this._map,
 		    crs = map.options.crs;
 
 		var latlng2 = crs.unproject(crs.project(this._latlng).subtract([this._mRadius, 0]));
