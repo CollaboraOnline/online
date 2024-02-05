@@ -55,6 +55,7 @@ L.Control.PartsPreview = L.Control.extend({
 
 		map.on('updateparts', this._updateDisabled, this);
 		map.on('updatepart', this._updatePart, this);
+		map.on('invalidateparts', this._invalidateParts, this);
 		map.on('tilepreview', this._updatePreview, this);
 		map.on('insertpage', this._insertPreview, this);
 		map.on('deletepage', this._deletePreview, this);
@@ -876,8 +877,21 @@ L.Control.PartsPreview = L.Control.extend({
 
 	_handleDragEnd: function () {
 		this.classList.remove('preview-img-dropsite');
-	}
+	},
 
+	_invalidateParts: function () {
+		if (!this._container ||
+		    !this._partsPreviewCont ||
+		    !this._previewInitialized ||
+		    !this._previewTiles)
+			return;
+
+		for (var part = 0; part < this._previewTiles.length; part++) {
+			this._map.getPreview(part, part, this.options.maxWidth,
+					     this.options.maxHeight, {autoUpdate: this.options.autoUpdate});
+		}
+
+	},
 });
 
 L.control.partsPreview = function (container, preview, options) {
