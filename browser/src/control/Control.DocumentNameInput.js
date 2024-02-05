@@ -139,6 +139,15 @@ L.Control.DocumentNameInput = L.Control.extend({
 		}
 	},
 
+	showLoadingAnimation : function() {
+		$('#document-name-input').prop('disabled', true);
+		$('#document-name-input-loading-bar').css('display', 'block');	
+	},
+
+	hideLoadingAnimation : function() {
+		$('#document-name-input-loading-bar').css('display', 'none');
+	},
+
 	_getMaxAvailableWidth: function() {
 		var x = $('#document-titlebar').prop('offsetLeft') + $('.document-title').prop('offsetLeft') + $('#document-name-input').prop('offsetLeft');
 		var containerWidth = parseInt($('.main-nav').css('width'));
