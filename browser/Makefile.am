@@ -579,7 +579,11 @@ $(DIST_FOLDER)/bundle.js: $(INTERMEDIATE_DIR)/cool-src.js $(call prereq_all)
 	@mkdir -p $(dir $@)
 	$(call bundle_all)
 
-$(DIST_FOLDER)/global.js: $(srcdir)/js/global.js
+$(INTERMEDIATE_DIR)/global.js: $(srcdir)/src/global.ts
+	@mkdir -p $(dir $@)
+	$(builddir)/node_modules/.bin/tsc $(srcdir)/src/global.ts --outfile $(INTERMEDIATE_DIR)/global.js
+
+$(DIST_FOLDER)/global.js: $(INTERMEDIATE_DIR)/global.js
 	@mkdir -p $(dir $@)
 	$(call global_file)
 

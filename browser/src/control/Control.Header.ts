@@ -141,7 +141,7 @@ export class Header extends CanvasSectionObject {
 
 	onLongPress(): void {
 		if (this._map.isEditMode()) {
-			(window as any).contextMenuWizard = true;
+			window.contextMenuWizard = true;
 			this._map.fire('mobilewizard', {data: this._menuData});
 		}
 	}
@@ -451,7 +451,7 @@ export class Header extends CanvasSectionObject {
 			if (position >= start && position < end) {
 				// NOTE: From a geometric perspective resizeAreaStart is really "resizeAreaEnd" in RTL case.
 				let resizeAreaStart = isRTL ? Math.min(start + 3 * app.dpiScale, end) : Math.max(start, end - 3 * app.dpiScale);
-				if (entry.isCurrent || (window as any).mode.isMobile()) {
+				if (entry.isCurrent || window.mode.isMobile()) {
 					resizeAreaStart = isRTL ? start + this._resizeHandleSize : end - this._resizeHandleSize;
 				}
 				const isMouseOverResizeArea = isRTL ? (position < resizeAreaStart) : (position > resizeAreaStart);
