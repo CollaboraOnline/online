@@ -728,7 +728,7 @@ export class CommentSection extends CanvasSectionObject {
 	public getScreenTopBottom(): Array<number> {
 		const scrollSection = app.sectionContainer.getSectionWithName(L.CSections.Scroll.name);
 		const screenTop = scrollSection.containerObject.getDocumentTopLeft()[1];
-		const screenBottom = screenTop + $('#main-document-content').height();
+		const screenBottom = screenTop + $('#map').height();
 
 		return [screenTop, screenBottom];
 	}
