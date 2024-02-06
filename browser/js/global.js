@@ -968,7 +968,9 @@ window.app = {
 					that.onmessage(e);
 				};
 			} else if (this.status === 202) {
-				that.sendPostMsg(http.response.errorCode);
+				if (!(window.app && window.app.socket && window.app.socket._reconnecting)) {
+						that.sendPostMsg(http.response.errorCode);
+				}
 				var timeoutFn = function (indirectionUrl, uri) {
 					console.warn('Requesting again for routeToken');
 					this.open('GET', indirectionUrl + '?Uri=' + encodeURIComponent(uri), true);
