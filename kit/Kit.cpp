@@ -1046,10 +1046,8 @@ public:
             for (auto& it : self->_sessions)
             {
                 std::shared_ptr<ChildSession> session = it.second;
-                if (session && !session->isCloseFrame())
-                {
+                if (!session->isCloseFrame())
                     session->loKitCallback(type, payload);
-                }
             }
             return;
         }
@@ -1440,7 +1438,7 @@ private:
     {
         for (const auto& it : _sessions)
         {
-            if (it.second && it.second->getViewId() == viewId)
+            if (it.second->getViewId() == viewId)
                 return it.second;
         }
 
@@ -1990,9 +1988,6 @@ public:
                         bool isFound = false;
                         for (const auto& it : _sessions)
                         {
-                            if (!it.second)
-                                continue;
-
                             ChildSession& session = *it.second;
                             if (broadcast || (!broadcast && (session.getViewId() == viewId)))
                             {
