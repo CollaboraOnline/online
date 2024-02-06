@@ -17,6 +17,7 @@
 /* global app $ setupToolbar w2ui toolbarUpMobileItems _ Hammer JSDialog */
 
 import { Comment } from '../layer/tile/CommentSection';
+import { Point } from '../geometry/Point';
 
 L.Control.UIManager = L.Control.extend({
 	mobileWizard: null,
@@ -1027,7 +1028,7 @@ L.Control.UIManager = L.Control.extend({
 	/// elem has to be jQuery selector output eg. $('.leaflet-layer')
 	showDocumentTooltip: function(tooltipInfo, elem) {
 		var split = tooltipInfo.rectangle.split(',');
-		var latlng = this.map._docLayer._twipsToLatLng(new L.Point(+split[0], +split[1]));
+		var latlng = this.map._docLayer._twipsToLatLng(new Point(+split[0], +split[1]));
 		var pt = this.map.latLngToContainerPoint(latlng);
 
 		elem.tooltip();

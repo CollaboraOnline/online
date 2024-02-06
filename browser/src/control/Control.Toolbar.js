@@ -14,6 +14,9 @@
 
 /* global app $ w2ui _ JSDialog */
 /*eslint indent: [error, "tab", { "outerIIFEBody": 0 }]*/
+
+import { Point } from '../geometry/Point';
+
 (function(global) {
 
 var map;
@@ -1395,8 +1398,8 @@ function setupToolbar(e) {
 		if (e.url) {
 			if (e.coordinates) {
 				var strTwips = e.coordinates.match(/\d+/g);
-				var topLeftTwips = new L.Point(parseInt(strTwips[6]), parseInt(strTwips[1]));
-				var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
+				var topLeftTwips = new Point(parseInt(strTwips[6]), parseInt(strTwips[1]));
+				var offset = new Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
 				var bottomRightTwips = topLeftTwips.add(offset);
 				var cellCursor = new L.LatLngBounds(
 					map._docLayer._twipsToLatLng(topLeftTwips, map.getZoom()),

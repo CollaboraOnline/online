@@ -14,6 +14,8 @@
 
 /* global app $ L Hammer w2ui brandProductName UNOModifier */
 
+import { Point } from '../geometry/Point';
+
 L.WinUtil = {
 
 };
@@ -532,8 +534,8 @@ L.Control.LokDialog = L.Control.extend({
 			if (startRect.width < 1)
 				return;
 			startRect = {x: startRect.x, y: startRect.y, width: 1, height: startRect.height};
-			startPos = L.point(startRect.x, startRect.y + startRect.height);
-			startPos = startPos.subtract(L.point(0, 2));
+			startPos = Point.toPoint(startRect.x, startRect.y + startRect.height);
+			startPos = startPos.subtract(Point.toPoint(0, 2));
 			startHandle.lastPos = startPos;
 			startHandle.rowHeight = startRect.height;
 		}
@@ -544,8 +546,8 @@ L.Control.LokDialog = L.Control.extend({
 			if (endRect.width < 1)
 				return;
 			endRect = {x: endRect.x + endRect.width - 1, y: endRect.y, width: 1, height: endRect.height};
-			endPos = L.point(endRect.x, endRect.y + endRect.height);
-			endPos = endPos.subtract(L.point(0, 2));
+			endPos = Point.toPoint(endRect.x, endRect.y + endRect.height);
+			endPos = endPos.subtract(Point.toPoint(0, 2));
 			endHandle.lastPos = endPos;
 			endHandle.rowHeight = endRect.height;
 		}
@@ -639,7 +641,7 @@ L.Control.LokDialog = L.Control.extend({
 		if (leftTwips != null && topTwips != null) {
 			// magic to re-calculate the position in twips to absolute pixel
 			// position inside the #document-container
-			var pixels = this._map._docLayer._twipsToPixels(new L.Point(leftTwips, topTwips));
+			var pixels = this._map._docLayer._twipsToPixels(new Point(leftTwips, topTwips));
 			var origin = this._map.getPixelOrigin();
 			var panePos = this._map._getMapPanePos();
 

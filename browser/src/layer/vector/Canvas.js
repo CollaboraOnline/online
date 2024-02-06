@@ -3,6 +3,8 @@
  * L.Canvas handles Canvas vector layers rendering and mouse events handling. All Canvas-specific code goes here.
  */
 
+import { Bounds } from '../../geometry/Bounds';
+
 L.Canvas = L.Renderer.extend({
 
 	onAdd: function () {
@@ -73,7 +75,7 @@ L.Canvas = L.Renderer.extend({
 	_requestRedraw: function (layer) {
 		if (!this._map) { return; }
 
-		this._redrawBounds = this._redrawBounds || new L.Bounds();
+		this._redrawBounds = this._redrawBounds || new Bounds();
 		this._redrawBounds.extend(layer._pxBounds.min).extend(layer._pxBounds.max);
 
 		this._redrawRequest = this._redrawRequest || L.Util.requestAnimFrame(this._redraw, this);
@@ -256,7 +258,7 @@ L.Polyline.prototype._containsPoint = function (p, closed) {
 		for (j = 0, len2 = part.length, k = len2 - 1; j < len2; k = j++) {
 			if (!closed && (j === 0)) { continue; }
 
-			if (L.LineUtil.pointToSegmentDistance(p, part[k], part[j]) <= w) {
+			if (L.LineUtiPointToSegmentDistance(p, part[k], part[j]) <= w) {
 				return true;
 			}
 		}

@@ -11,8 +11,6 @@
 import { Bounds } from '../../geometry/Bounds';
 import { Point } from '../../geometry/Point';
 
-declare var L: any;
-
 export type GeometryUnit = 'corepixels' | 'tiletwips' | 'printtwips';
 
 export interface DimensionRange {
@@ -137,7 +135,7 @@ export class SheetGeometry {
 
 	public setViewArea(topLeftTwipsPoint: Point, sizeTwips: Point): boolean {
 
-		if (!(topLeftTwipsPoint instanceof L.Point) || !(sizeTwips instanceof L.Point)) {
+		if (!(topLeftTwipsPoint instanceof Point) || !(sizeTwips instanceof Point)) {
 			console.error('invalid argument types');
 			return false;
 		}
@@ -211,68 +209,68 @@ export class SheetGeometry {
 	// accepts a point in display twips coordinates at current zoom
 	// and returns the equivalent point in display-twips at the given zoom.
 	public getTileTwipsAtZoom(point: Point, zoomScale: number): Point {
-		if (!(point instanceof L.Point)) {
-			console.error('Bad argument type, expected L.Point');
+		if (!(point instanceof Point)) {
+			console.error('Bad argument type, expected Point');
 			return point;
 		}
 
-		return new L.Point(this._columns.getTileTwipsAtZoom(point.x, zoomScale),
+		return new Point(this._columns.getTileTwipsAtZoom(point.x, zoomScale),
 			this._rows.getTileTwipsAtZoom(point.y, zoomScale));
 	}
 
 	// accepts a point in core-pixel coordinates at current zoom
 	// and returns the equivalent point in core-pixels at the given zoomScale.
 	public getCorePixelsAtZoom(point: Point, zoomScale: number): Point {
-		if (!(point instanceof L.Point)) {
-			console.error('Bad argument type, expected L.Point');
+		if (!(point instanceof Point)) {
+			console.error('Bad argument type, expected Point');
 			return point;
 		}
 
-		return new L.Point(this._columns.getCorePixelsAtZoom(point.x, zoomScale),
+		return new Point(this._columns.getCorePixelsAtZoom(point.x, zoomScale),
 			this._rows.getCorePixelsAtZoom(point.y, zoomScale));
 	}
 
 	// accepts a point in core-pixel coordinates at *given* zoomScale
 	// and returns the equivalent point in core-pixels at the current zoom.
 	public getCorePixelsFromZoom(point: Point, zoomScale: number): Point {
-		if (!(point instanceof L.Point)) {
-			console.error('Bad argument type, expected L.Point');
+		if (!(point instanceof Point)) {
+			console.error('Bad argument type, expected Point');
 			return point;
 		}
 
-		return new L.Point(this._columns.getCorePixelsFromZoom(point.x, zoomScale),
+		return new Point(this._columns.getCorePixelsFromZoom(point.x, zoomScale),
 			this._rows.getCorePixelsFromZoom(point.y, zoomScale));
 	}
 
 	// accepts a point in print twips coordinates and returns the equivalent point
 	// in tile-twips.
 	public getTileTwipsPointFromPrint(point: Point): Point {
-		if (!(point instanceof L.Point)) {
-			console.error('Bad argument type, expected L.Point');
+		if (!(point instanceof Point)) {
+			console.error('Bad argument type, expected Point');
 			return point;
 		}
 
-		return new L.Point(this._columns.getTileTwipsPosFromPrint(point.x),
+		return new Point(this._columns.getTileTwipsPosFromPrint(point.x),
 			this._rows.getTileTwipsPosFromPrint(point.y));
 	}
 
 	// accepts a point in tile-twips coordinates and returns the equivalent point
 	// in print-twips.
 	public getPrintTwipsPointFromTile(point: Point): Point {
-		if (!(point instanceof L.Point)) {
-			console.error('Bad argument type, expected L.Point');
+		if (!(point instanceof Point)) {
+			console.error('Bad argument type, expected Point');
 			return point;
 		}
 
-		return new L.Point(this._columns.getPrintTwipsPosFromTile(point.x),
+		return new Point(this._columns.getPrintTwipsPosFromTile(point.x),
 			this._rows.getPrintTwipsPosFromTile(point.y));
 	}
 
 	// accepts a rectangle in print twips coordinates and returns the equivalent rectangle
 	// in tile-twips aligned to the cells.
 	public getTileTwipsSheetAreaFromPrint(rectangle: Bounds): Bounds {
-		if (!(rectangle instanceof L.Bounds)) {
-			console.error('Bad argument type, expected L.Bounds');
+		if (!(rectangle instanceof Bounds)) {
+			console.error('Bad argument type, expected Bounds');
 			return rectangle;
 		}
 
@@ -282,16 +280,16 @@ export class SheetGeometry {
 		var horizBounds = this._columns.getTileTwipsRangeFromPrint(topLeft.x, bottomRight.x);
 		var vertBounds = this._rows.getTileTwipsRangeFromPrint(topLeft.y, bottomRight.y);
 
-		topLeft = new L.Point(horizBounds.startpos, vertBounds.startpos);
-		bottomRight = new L.Point(horizBounds.endpos, vertBounds.endpos);
+		topLeft = new Point(horizBounds.startpos, vertBounds.startpos);
+		bottomRight = new Point(horizBounds.endpos, vertBounds.endpos);
 
-		return new L.Bounds(topLeft, bottomRight);
+		return new Bounds(topLeft, bottomRight);
 	}
 
-	// Returns full sheet size as L.Point in the given unit.
+	// Returns full sheet size as Point in the given unit.
 	// unit must be one of 'corepixels', 'tiletwips', 'printtwips'
 	public getSize(unit: GeometryUnit): Point {
-		return new L.Point(this._columns.getSize(unit),
+		return new Point(this._columns.getSize(unit),
 			this._rows.getSize(unit));
 	}
 
@@ -300,15 +298,15 @@ export class SheetGeometry {
 		var horizPosSize = this._columns.getElementData(columnIndex, zoomScale);
 		var vertPosSize = this._rows.getElementData(rowIndex, zoomScale);
 
-		var topLeft = new L.Point(horizPosSize.startpos, vertPosSize.startpos);
-		var size = new L.Point(horizPosSize.size, vertPosSize.size);
+		var topLeft = new Point(horizPosSize.startpos, vertPosSize.startpos);
+		var size = new Point(horizPosSize.size, vertPosSize.size);
 
-		return new L.Bounds(topLeft, topLeft.add(size));
+		return new Bounds(topLeft, topLeft.add(size));
 	}
 
 	public getCellFromPos(pos: Point, unit: GeometryUnit): Point {
-		console.assert(pos instanceof L.Point);
-		return new L.Point(
+		console.assert(pos instanceof Point);
+		return new Point(
 			this._columns.getIndexFromPos(pos.x, unit),
 			this._rows.getIndexFromPos(pos.y, unit)
 		);
@@ -1636,5 +1634,3 @@ function _findFirstMatch(array: any[], key: any, directionProvider: DirectionPro
 
 	return index + 1;
 }
-
-L.SheetGeometry = SheetGeometry;

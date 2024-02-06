@@ -10,6 +10,8 @@
  */
 /* global app */
 
+import { Point } from '../geometry/Point';
+
 L.Map.include({
 	search: function (text, backward, replaceString,  command, expand) {
 		if (backward === undefined) {
@@ -50,7 +52,7 @@ L.Map.include({
 		this.fire('clearselection');
 		var viewTopLeftpx = this.project(this.getBounds().getNorthWest());
 		var docBoundsTopLeft = this.project(this.options.maxBounds.getNorthWest());
-		var topLeft = this.unproject(new L.Point(
+		var topLeft = this.unproject(new Point(
 			Math.max(viewTopLeftpx.x, docBoundsTopLeft.x),
 			Math.max(viewTopLeftpx.y, docBoundsTopLeft.y)));
 		var topLeftTwips = this._docLayer._latLngToTwips(topLeft);

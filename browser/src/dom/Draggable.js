@@ -3,6 +3,8 @@
  * L.Draggable allows you to add dragging capabilities to any element. Supports mobile devices too.
  */
 
+import { Point } from '../geometry/Point';
+
 L.Draggable = L.Evented.extend({
 
 	statics: {
@@ -92,14 +94,14 @@ L.Draggable = L.Evented.extend({
 
 		var first = e.touches ? e.touches[0] : e;
 
-		this._startPoint = new L.Point(first.clientX, first.clientY);
+		this._startPoint = new Point(first.clientX, first.clientY);
 		this._startPos = this._newPos = L.DomUtil.getPosition(this._element);
 		var startBoundingRect = this._element.getBoundingClientRect();
 		// Store offset between mouse selection position, and top left
 		// We don't use this internally, but it is needed for external
 		// manipulation of the cursor position, e.g. when adjusting
 		// for scrolling during cursor dragging.
-		this.startOffset = this._startPoint.subtract(new L.Point(startBoundingRect.left, startBoundingRect.top));
+		this.startOffset = this._startPoint.subtract(new Point(startBoundingRect.left, startBoundingRect.top));
 
 		L.DomEvent
 		 .on(document, L.Draggable.MOVE[e.type], this.noManualDrag(this._onMove), this)
@@ -117,7 +119,7 @@ L.Draggable = L.Evented.extend({
 		}
 
 		var first = (e.touches && e.touches.length === 1 ? e.touches[0] : e),
-		    newPoint = new L.Point(first.clientX, first.clientY),
+		    newPoint = new Point(first.clientX, first.clientY),
 		    offset = newPoint.subtract(this._startPoint);
 
 		if (this._map) {
@@ -127,7 +129,7 @@ L.Draggable = L.Evented.extend({
 			if (e.currentTarget && e.currentTarget.frameElement
 				&& L.DomUtil.hasClass(e.currentTarget.frameElement, 'resize-detector')) {
 				var rect = this._map._container.getBoundingClientRect(),
-				    correction = new L.Point(rect.left, rect.top);
+				    correction = new Point(rect.left, rect.top);
 				offset = offset.add(correction);
 			}
 			if (this._map.getDocSize().x < this._map.getSize().x) {

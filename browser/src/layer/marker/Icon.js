@@ -3,6 +3,8 @@
  * L.Icon is an image-based icon class that you can use with L.Marker for custom markers.
  */
 
+import { Point } from '../../geometry/Point';
+
 L.Icon = L.Class.extend({
 	/*
 	options: {
@@ -49,8 +51,8 @@ L.Icon = L.Class.extend({
 
 	_setIconStyles: function (img, name) {
 		var options = this.options;
-		var size = L.point(options[name + 'Size']);
-		var anchor = L.point(name === 'shadow' && options.shadowAnchor || options.iconAnchor ||
+		var size = Point.toPoint(options[name + 'Size']);
+		var anchor = Point.toPoint(name === 'shadow' && options.shadowAnchor || options.iconAnchor ||
 		            size && size.x !== undefined && size.y !== undefined && size.divideBy(2, true));
 
 		img.className = 'leaflet-marker-' + name + ' ' + (options.className || '');

@@ -10,6 +10,7 @@
 /* See CanvasSectionContainer.ts for explanations. */
 
 import { CanvasSectionObject } from './CanvasSectionContainer';
+import { Point } from '../../geometry/Point';
 
 declare var L: any;
 declare var app: any;
@@ -185,14 +186,14 @@ class AutoFillMarkerSection extends CanvasSectionObject {
 		if (!this.sectionProperties.draggingStarted) { // Is it first move?
 			this.sectionProperties.draggingStarted = true;
 			this.sectionProperties.dragStartPosition = this.sectionProperties.docLayer._cellAutoFillAreaPixels.getCenter();
-			pos = new L.Point(this.sectionProperties.dragStartPosition[0], this.sectionProperties.dragStartPosition[1]);
+			pos = new Point(this.sectionProperties.dragStartPosition[0], this.sectionProperties.dragStartPosition[1]);
 			pos = this.sectionProperties.docLayer._corePixelsToTwips(pos);
 			this.sectionProperties.docLayer._postMouseEvent('buttondown', pos.x, pos.y, 1, 1, 0);
 		}
 
 		point[0] = this.sectionProperties.dragStartPosition[0] + dragDistance[0];
 		point[1] = this.sectionProperties.dragStartPosition[1] + dragDistance[1];
-		pos = this.sectionProperties.docLayer._corePixelsToTwips(new L.Point(point[0], point[1]));
+		pos = this.sectionProperties.docLayer._corePixelsToTwips(new Point(point[0], point[1]));
 
 		this.sectionProperties.docLayer._postMouseEvent('move', pos.x, pos.y, 1, 1, 0);
 
@@ -206,7 +207,7 @@ class AutoFillMarkerSection extends CanvasSectionObject {
 			this.sectionProperties.draggingStarted = false;
 			point[0] += this.myTopLeft[0] + this.size[0] * 0.5;
 			point[1] += this.myTopLeft[1] + this.size[1] * 0.5;
-			var pos = this.sectionProperties.docLayer._corePixelsToTwips(new L.Point(point[0], point[1]));
+			var pos = this.sectionProperties.docLayer._corePixelsToTwips(new Point(point[0], point[1]));
 			this.sectionProperties.docLayer._postMouseEvent('buttonup', pos.x, pos.y, 1, 1, 0);
 		}
 
@@ -262,7 +263,7 @@ class AutoFillMarkerSection extends CanvasSectionObject {
 	public onClick () { return; }
 	public onDoubleClick (point: Array<number>, e: MouseEvent) {
 		this.sectionProperties.dragStartPosition = this.sectionProperties.docLayer._cellAutoFillAreaPixels.getCenter();
-		var pos = new L.Point(this.sectionProperties.dragStartPosition[0], this.sectionProperties.dragStartPosition[1]);
+		var pos = new Point(this.sectionProperties.dragStartPosition[0], this.sectionProperties.dragStartPosition[1]);
 		pos = this.sectionProperties.docLayer._corePixelsToTwips(pos);
 		this.sectionProperties.docLayer._postMouseEvent('buttondown', pos.x, pos.y, 2, 1, 0);
 		this.stopPropagating(); // Stop propagating to sections.

@@ -1,13 +1,11 @@
 import { Point, PointConvertable, PointLike } from  './Point';
 
-declare var L: any;
-
 function PointConstruct(x: number, y: number, round?: boolean): Point {
-	return new L.Point(x, y, round);
+	return new Point(x, y, round);
 }
 
 function toPoint(x: PointConvertable | number, y?: number, round?: boolean): Point {
-	return L.point(x, y, round);
+	return Point.toPoint(x, y, round);
 }
 
 /// Bounds represents a rectangular area on the screen.
@@ -20,10 +18,11 @@ export class Bounds {
 		if (!a)
 			return;
 
-		var points = b ? [<PointConvertable>a, b] : <PointConvertable[]>[a];
+		var points = b ? [<PointConvertable>a, b] :
+			(Array.isArray(a) ? <PointConvertable[]>a : <PointConvertable[]>[a]);
 
 		for (var i = 0, len = points.length; i < len; i++) {
-			this.extend(points[i]);
+			this.extend(toPoint(points[i]));
 		}
 	}
 
@@ -123,12 +122,12 @@ export class Bounds {
 		return this.max.subtract(this.min);
 	}
 
-	public contains(obj: Bounds | PointConvertable): boolean {
+	public contains(obj: Bounds | PointConvertable | Point): boolean {
 		var min, max;
 
 		var bounds: Bounds;
 		var point: Point;
-		if (Array.isArray(obj) || obj instanceof L.Point) {
+		if (Array.isArray(obj) || obj instanceof Point) {
 			point = toPoint(<PointConvertable>obj);
 		} else {
 			bounds = Bounds.toBounds(obj);
@@ -208,7 +207,7 @@ export class Bounds {
 	}
 
 	public clamp(obj: Point | Bounds): Point | Bounds {
-		if (obj instanceof L.Point) {
+		if (obj instanceof Point) {
 			return PointConstruct(
 				this.clampX((obj as Point).x),
 				this.clampY((obj as Point).y)
@@ -256,6 +255,3 @@ export class Bounds {
 		return new Bounds(a, b);
 	}
 }
-
-L.Bounds = Bounds;
-L.bounds = Bounds.toBounds;

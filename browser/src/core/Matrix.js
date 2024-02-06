@@ -1,3 +1,5 @@
+import { Point } from '../geometry/Point';
+
 /**
  * @class  L.Matrix
  *
@@ -21,8 +23,8 @@ L.Matrix.prototype = {
 
 
 	/**
-	* @param  {L.Point} point
-	* @return {L.Point}
+	* @param  {Point} point
+	* @return {Point}
 	*/
 	transform: function(point) {
 		return this._transform(point.clone());
@@ -35,8 +37,8 @@ L.Matrix.prototype = {
 	* [ x ] = [ a  b  tx ] [ x ] = [ a * x + b * y + tx ]
 	* [ y ] = [ c  d  ty ] [ y ] = [ c * x + d * y + ty ]
 	*
-	* @param  {L.Point} point
-	* @return {L.Point}
+	* @param  {Point} point
+	* @return {Point}
 	*/
 	_transform: function(point) {
 		var matrix = this._matrix;
@@ -48,12 +50,12 @@ L.Matrix.prototype = {
 
 
 	/**
-	* @param  {L.Point} point
-	* @return {L.Point}
+	* @param  {Point} point
+	* @return {Point}
 	*/
 	untransform: function (point) {
 		var matrix = this._matrix;
-		return new L.Point(
+		return new Point(
 			(point.x / matrix[0] - matrix[4]) / matrix[0],
 			(point.y / matrix[2] - matrix[5]) / matrix[2]
 		);
@@ -73,12 +75,12 @@ L.Matrix.prototype = {
 
 
 	/**
-	* @param {L.Point=|Number=} translate
-	* @return {L.Matrix|L.Point}
+	* @param {Point=|Number=} translate
+	* @return {L.Matrix|Point}
 	*/
 	translate: function(translate) {
 		if (translate === undefined) {
-			return new L.Point(this._matrix[4], this._matrix[5]);
+			return new Point(this._matrix[4], this._matrix[5]);
 		}
 
 		var translateX, translateY;
@@ -94,16 +96,16 @@ L.Matrix.prototype = {
 
 
 	/**
-	* @param {L.Point=|Number=} scale
-	* @return {L.Matrix|L.Point}
+	* @param {Point=|Number=} scale
+	* @return {L.Matrix|Point}
 	*/
 	scale: function(scale, origin) {
 		if (scale === undefined) {
-			return new L.Point(this._matrix[0], this._matrix[3]);
+			return new Point(this._matrix[0], this._matrix[3]);
 		}
 
 		var scaleX, scaleY;
-		origin = origin || L.point(0, 0);
+		origin = origin || Point.toPoint(0, 0);
 		if (typeof scale === 'number') {
 			scaleX = scaleY = scale;
 		} else {
@@ -121,14 +123,14 @@ L.Matrix.prototype = {
 	* m00  m01  x - m00 * x - m01 * y
 	* m10  m11  y - m10 * x - m11 * y
 	* @param {Number}   angle
-	* @param {L.Point=} origin
+	* @param {Point=} origin
 	* @return {L.Matrix}
 	*/
 	rotate: function(angle, origin) {
 		var cos = Math.cos(angle);
 		var sin = Math.sin(angle);
 
-		origin = origin || new L.Point(0, 0);
+		origin = origin || new Point(0, 0);
 
 		return this
 			._add(cos, sin, -sin, cos, origin.x, origin.y)

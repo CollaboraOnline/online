@@ -64,7 +64,7 @@ Handler assigns `resize` cursors to handles. You can override that by setting `o
 Following events are fired on the transformed layer
 
 * **`rotatestart`, `rotate`, `rotateend`** - `{ rotation: <Radians> }`
-* **`scalestart`, `scale`, `scaleend`** - `{ scale: <L.Point> }`
+* **`scalestart`, `scale`, `scaleend`** - `{ scale: <Point> }`
 * **`transformstart`, `transform`, `transformed`** - `{ rotation: ..., scale: ..., matrix: <L.Matrix> }`
 
 

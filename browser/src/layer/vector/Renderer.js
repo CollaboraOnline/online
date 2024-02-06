@@ -4,6 +4,8 @@
  * handles renderer container, bounds and zoom animation.
  */
 
+import { Bounds } from '../../geometry/Bounds';
+
 L.Renderer = L.Layer.extend({
 
 	options: {
@@ -64,7 +66,7 @@ L.Renderer = L.Layer.extend({
 		    size = this._map.getSize(),
 		    min = this._map.containerPointToLayerPointIgnoreSplits(size.multiplyBy(-p)).round();
 
-		this._bounds = new L.Bounds(min, min.add(size.multiplyBy(1 + p * 2)).round());
+		this._bounds = new Bounds(min, min.add(size.multiplyBy(1 + p * 2)).round());
 		this._position = this._bounds.min;
 	},
 

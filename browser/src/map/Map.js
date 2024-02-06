@@ -5,6 +5,9 @@
 
 /* global app _ JSDialog */
 
+import { Bounds } from '../geometry/Bounds';
+import { Point } from '../geometry/Point';
+
 L.Map = L.Evented.extend({
 
 	statics: {
@@ -151,7 +154,7 @@ L.Map = L.Evented.extend({
 		this._addLayers(this.options.layers);
 		app.socket = new app.definitions.Socket(this);
 
-		this._progressBar = L.progressOverlay(L.point(150, 25));
+		this._progressBar = L.progressOverlay(Point.toPoint(150, 25));
 
 		this._debug = new L.DebugManager(this);
 
@@ -196,7 +199,7 @@ L.Map = L.Evented.extend({
 			if (window.mode.isMobile())
 			{
 				document.getElementById('document-container').classList.add('mobile');
-				this._size = new L.Point(0,0);
+				this._size = new Point(0,0);
 				this._onResize();
 			}
 		});
@@ -511,7 +514,7 @@ L.Map = L.Evented.extend({
 
 		var cursorInBounds = calcLayer._cursorCorePixels ?
 			cssBounds.contains(
-				L.point(calcLayer._cursorCorePixels.getTopLeft().divideBy(app.dpiScale))) : false;
+				Point.toPoint(calcLayer._cursorCorePixels.getTopLeft().divideBy(app.dpiScale))) : false;
 
 		var cursorActive = calcLayer.isCursorVisible();
 		if (cursorActive && cursorInBounds) {
@@ -520,7 +523,7 @@ L.Map = L.Evented.extend({
 			var newCursorCenter = sheetGeom.getTileTwipsAtZoom(cursorCenter, zoomScaleAbs);
 			// convert to css pixels at zoomScale.
 			newCursorCenter._multiplyBy(zoomScaleAbs / 15 / app.dpiScale)._round();
-			var newBounds = new L.Bounds(newTopLeftPx, newTopLeftPx.add(cssBoundsSize));
+			var newBounds = new Bounds(newTopLeftPx, newTopLeftPx.add(cssBoundsSize));
 
 			if (!newBounds.contains(newCursorCenter)) {
 				var margin = 10;
@@ -539,8 +542,8 @@ L.Map = L.Evented.extend({
 					diffY = Math.min(docSize.y, newCursorCenter.y + margin) - newBounds.max.y;
 				}
 
-				newTopLeftPx._add(new L.Point(diffX, diffY));
-				topLeftPx._add(new L.Point(diffX / zoomScaleAbs, diffY / zoomScaleAbs));
+				newTopLeftPx._add(new Point(diffX, diffY));
+				topLeftPx._add(new Point(diffX / zoomScaleAbs, diffY / zoomScaleAbs));
 				// FIXME: pan to topLeftPx before the animation ?
 			}
 		}
@@ -699,7 +702,7 @@ L.Map = L.Evented.extend({
 	setZoomAround: function (latlng, zoom, options) {
 		var scale = this.getZoomScale(zoom),
 		    viewHalf = this.getSize().divideBy(2),
-		    containerPoint = latlng instanceof L.Point ? latlng : this.latLngToContainerPointIgnoreSplits(latlng),
+		    containerPoint = latlng instanceof Point ? latlng : this.latLngToContainerPointIgnoreSplits(latlng),
 
 		    centerOffset = containerPoint.subtract(viewHalf).multiplyBy(1 - 1 / scale),
 		    newCenter = this.containerPointToLatLngIgnoreSplits(viewHalf.add(centerOffset));
@@ -715,7 +718,7 @@ L.Map = L.Evented.extend({
 		// replaced with animated panBy in Map.PanAnimation.js
 		this.fire('movestart');
 
-		this._rawPanBy(L.point(offset));
+		this._rawPanBy(Point.toPoint(offset));
 
 		this.fire('move');
 		return this.fire('moveend');
@@ -742,11 +745,11 @@ L.Map = L.Evented.extend({
 
 	getCorePxDocBounds: function () {
 		if (!this.options.docBounds)
-			return new L.Bounds(0, 0);
+			return new Bounds(0, 0);
 
 		var topleft = this.project(this.options.docBounds.getNorthWest());
 		var bottomRight = this.project(this.options.docBounds.getSouthEast());
-		return new L.Bounds(this._docLayer._cssPixelsToCore(topleft),
+		return new Bounds(this._docLayer._cssPixelsToCore(topleft),
 			this._docLayer._cssPixelsToCore(bottomRight));
 	},
 
@@ -919,18 +922,18 @@ L.Map = L.Evented.extend({
 	},
 
 	getLayerMaxBounds: function () {
-		return L.bounds(this.latLngToLayerPoint(this.options.maxBounds.getNorthWest()),
+		return Bounds.toBounds(this.latLngToLayerPoint(this.options.maxBounds.getNorthWest()),
 			this.latLngToLayerPoint(this.options.maxBounds.getSouthEast()));
 	},
 
 	getLayerDocBounds: function () {
-		return L.bounds(this.latLngToLayerPoint(this.options.docBounds.getNorthWest()),
+		return Bounds.toBounds(this.latLngToLayerPoint(this.options.docBounds.getNorthWest()),
 			this.latLngToLayerPoint(this.options.docBounds.getSouthEast()));
 	},
 
 	getSize: function () {
 		if (!this._size || this._sizeChanged) {
-			this._size = new L.Point(
+			this._size = new Point(
 				this._container.clientWidth,
 				this._container.clientHeight);
 
@@ -941,7 +944,7 @@ L.Map = L.Evented.extend({
 
 	getPixelBounds: function (center, zoom) {
 		var topLeftPoint = this._getTopLeftPoint(center, zoom);
-		return new L.Bounds(topLeftPoint, topLeftPoint.add(this.getSize()));
+		return new Bounds(topLeftPoint, topLeftPoint.add(this.getSize()));
 	},
 
 	getPixelBoundsCore: function (center, zoom) {
@@ -1010,12 +1013,12 @@ L.Map = L.Evented.extend({
 	project: function (latlng, zoom) { // (LatLng[, Number]) -> Point
 		zoom = zoom === undefined ? this.getZoom() : zoom;
 		var projectedPoint = this.options.crs.latLngToPoint(L.latLng(latlng), zoom);
-		return new L.Point(L.round(projectedPoint.x, 1e-6), L.round(projectedPoint.y, 1e-6));
+		return new Point(L.round(projectedPoint.x, 1e-6), L.round(projectedPoint.y, 1e-6));
 	},
 
 	unproject: function (point, zoom) { // (Point[, Number]) -> LatLng
 		zoom = zoom === undefined ? this.getZoom() : zoom;
-		return this.options.crs.pointToLatLng(L.point(point), zoom);
+		return this.options.crs.pointToLatLng(Point.toPoint(point), zoom);
 	},
 
 	/**
@@ -1031,7 +1034,7 @@ L.Map = L.Evented.extend({
 	},
 
 	layerPointToLatLng: function (point) { // (Point)
-		var projectedPoint = L.point(point).add(this.getPixelOrigin());
+		var projectedPoint = Point.toPoint(point).add(this.getPixelOrigin());
 		return this.unproject(projectedPoint);
 	},
 
@@ -1056,7 +1059,7 @@ L.Map = L.Evented.extend({
 		var splitPos = splitPanesContext.getSplitPos();
 		var pixelOrigin = this.getPixelOrigin();
 		var mapPanePos = this._getMapPanePos();
-		var result = L.point(point).clone();
+		var result = Point.toPoint(point).clone();
 		var pointX = point.x;
 		if (this._docLayer.isCalcRTL()) {
 			pointX = this._container.clientWidth - pointX;
@@ -1081,7 +1084,7 @@ L.Map = L.Evented.extend({
 	},
 
 	containerPointToLayerPointIgnoreSplits: function (point) { // (Point)
-		return L.point(point).subtract(this._getMapPanePos());
+		return Point.toPoint(point).subtract(this._getMapPanePos());
 	},
 
 	layerPointToContainerPoint: function (point) { // (Point)
@@ -1093,7 +1096,7 @@ L.Map = L.Evented.extend({
 		var splitPos = splitPanesContext.getSplitPos();
 		var pixelOrigin = this.getPixelOrigin();
 		var mapPanePos = this._getMapPanePos();
-		var result = L.point(point).add(pixelOrigin);
+		var result = Point.toPoint(point).add(pixelOrigin);
 
 		if (result.x > splitPos.x) {
 			result.x -= (pixelOrigin.x - mapPanePos.x);
@@ -1107,11 +1110,11 @@ L.Map = L.Evented.extend({
 	},
 
 	layerPointToContainerPointIgnoreSplits: function (point) { // (Point)
-		return L.point(point).add(this._getMapPanePos());
+		return Point.toPoint(point).add(this._getMapPanePos());
 	},
 
 	containerPointToLatLngIgnoreSplits: function (point) {
-		var layerPoint = this.containerPointToLayerPointIgnoreSplits(L.point(point));
+		var layerPoint = this.containerPointToLayerPointIgnoreSplits(Point.toPoint(point));
 		return this.layerPointToLatLng(layerPoint);
 	},
 
@@ -1277,7 +1280,7 @@ L.Map = L.Evented.extend({
 		this._zoom = zoom;
 
 		if (!preserveMapOffset) {
-			L.DomUtil.setPosition(this._mapPane, new L.Point(0, 0));
+			L.DomUtil.setPosition(this._mapPane, new Point(0, 0));
 		}
 
 		this._pixelOrigin = this._getNewPixelOrigin(center);
@@ -1566,7 +1569,7 @@ L.Map = L.Evented.extend({
 	// private methods for getting map state
 
 	_getMapPanePos: function () {
-		return L.DomUtil.getPosition(this._mapPane) || new L.Point(0, 0);
+		return L.DomUtil.getPosition(this._mapPane) || new Point(0, 0);
 	},
 
 	_getTopLeftPoint: function (center, zoom) {
@@ -1599,7 +1602,7 @@ L.Map = L.Evented.extend({
 
 		var centerPoint = this.project(center, zoom),
 		    viewHalf = this.getSize().divideBy(2),
-		    viewBounds = new L.Bounds(centerPoint.subtract(viewHalf), centerPoint.add(viewHalf)),
+		    viewBounds = new Bounds(centerPoint.subtract(viewHalf), centerPoint.add(viewHalf)),
 		    offset = this._getBoundsOffset(viewBounds, bounds, zoom);
 
 		return this.unproject(centerPoint.add(offset), zoom);
@@ -1613,7 +1616,7 @@ L.Map = L.Evented.extend({
 		    dx = this._rebound(nwOffset.x, -seOffset.x),
 		    dy = this._rebound(nwOffset.y, -seOffset.y);
 
-		return new L.Point(dx, dy);
+		return new Point(dx, dy);
 	},
 
 	_rebound: function (left, right) {

@@ -1,5 +1,3 @@
-declare var L: any;
-
 export interface PointLike {
 	x: number;
 	y: number;
@@ -163,7 +161,7 @@ export class Point {
 			Point.formatNum(this.y) + ')';
 	}
 
-	public static toPoint(x: PointConvertable | number, y?: number, round?: boolean): Point {
+	public static toPoint(x: PointConvertable | number | Point, y?: number, round?: boolean): Point {
 		if (x instanceof Point) {
 			return x;
 		}
@@ -177,7 +175,7 @@ export class Point {
 			return undefined;
 		}
 
-		// Detect L.Point like objects such as CPoint.
+		// Detect Point like objects such as CPoint.
 		if (Object.prototype.hasOwnProperty.call(x, 'x')
 			&& Object.prototype.hasOwnProperty.call(x, 'y')) {
 			x = <PointLike>x;
@@ -193,6 +191,3 @@ export class Point {
 		return Math.round(num * pow) / pow;
 	}
 }
-
-L.Point = Point;
-L.point = Point.toPoint;

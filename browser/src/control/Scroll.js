@@ -11,13 +11,16 @@
 /*
  * Scroll methods
  */
+
+import { Point } from '../geometry/Point';
+
 L.Map.include({
 	scroll: function (x, y, options) {
 		if (typeof (x) !== 'number' || typeof (y) !== 'number') {
 			return;
 		}
 		this._setUpdateOffsetEvt(options);
-		this.panBy(new L.Point(x, y), {animate: false});
+		this.panBy(new Point(x, y), {animate: false});
 	},
 
 	scrollOffset: function () {
@@ -33,13 +36,13 @@ L.Map.include({
 		this._setUpdateOffsetEvt(options);
 		var offset = this.scrollOffset();
 		window.app.console.debug('scrollTop: ' + y + ' ' + offset.y + ' ' + (y - offset.y));
-		this.panBy(new L.Point(0, y - offset.y), {animate: false});
+		this.panBy(new Point(0, y - offset.y), {animate: false});
 	},
 
 	scrollLeft: function (x, options) {
 		this._setUpdateOffsetEvt(options);
 		var offset = this.scrollOffset();
-		this.panBy(new L.Point(x - offset.x, 0), {animate: false});
+		this.panBy(new Point(x - offset.x, 0), {animate: false});
 	},
 
 	_setUpdateOffsetEvt: function (e) {

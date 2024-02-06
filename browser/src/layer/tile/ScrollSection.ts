@@ -10,6 +10,7 @@
 /* See CanvasSectionContainer.ts for explanations. */
 
 import { CanvasSectionObject } from '../tile/CanvasSectionContainer';
+import { Point } from '../../geometry/Point';
 
 // We will keep below definitions until we use tsconfig.json.
 declare var L: any;
@@ -155,7 +156,7 @@ export class ScrollSection extends CanvasSectionObject {
 			if (docTopLef[0] + diff < 0) {
 				e.x = Math.round(-1 * docTopLef[0] / app.dpiScale);
 			}
-			this.map.panBy(new L.Point(e.x, e.y), {animate: false});
+			this.map.panBy(new Point(e.x, e.y), {animate: false});
 		}
 	}
 

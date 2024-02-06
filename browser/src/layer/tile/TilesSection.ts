@@ -15,8 +15,6 @@ import { Point } from '../../geometry/Point';
 import { CanvasSectionObject } from './CanvasSectionContainer';
 
 declare var L: any;
-declare var $: any;
-declare var Hammer: any;
 declare var app: any;
 
 export class TilesSection extends CanvasSectionObject {
@@ -84,7 +82,7 @@ export class TilesSection extends CanvasSectionObject {
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	paintWithPanes (tile: any, ctx: any, async: boolean, now: Date): void {
 		var tileTopLeft = tile.coords.getPos();
-		var tileBounds = new L.Bounds(tileTopLeft, tileTopLeft.add(ctx.tileSize));
+		var tileBounds = new Bounds(tileTopLeft, tileTopLeft.add(ctx.tileSize));
 
 		for (var i = 0; i < ctx.paneBoundsList.length; ++i) {
 			// co-ordinates of this pane in core document pixels
@@ -165,7 +163,7 @@ export class TilesSection extends CanvasSectionObject {
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	drawTileInPane (tile: any, tileBounds: any, paneBounds: any, paneOffset: any, canvasCtx: CanvasRenderingContext2D, clearBackground: boolean, now: Date): void {
 		// intersect - to avoid state thrash through clipping
-		var crop = new L.Bounds(tileBounds.min, tileBounds.max);
+		var crop = new Bounds(tileBounds.min, tileBounds.max);
 		crop.min.x = Math.max(paneBounds.min.x, tileBounds.min.x);
 		crop.min.y = Math.max(paneBounds.min.y, tileBounds.min.y);
 		crop.max.x = Math.min(paneBounds.max.x, tileBounds.max.x);
@@ -472,7 +470,7 @@ export class TilesSection extends CanvasSectionObject {
 		if (size.x <= 0 || size.y <= 0)
 			return 0;
 
-		var intersection = new L.Bounds(
+		var intersection = new Bounds(
 			new Point(
 				Math.max(tileBounds.min.x, viewBounds.min.x),
 				Math.max(tileBounds.min.y, viewBounds.min.y)),
@@ -570,7 +568,7 @@ export class TilesSection extends CanvasSectionObject {
 						tilePos.y = coords.part * partHeightPixels + tilePos.y;
 					}
 
-					var tileBounds = new L.Bounds(tilePos, tilePos.add(ctx.tileSize));
+					var tileBounds = new Bounds(tilePos, tilePos.add(ctx.tileSize));
 					var interFrac = TilesSection.getTileIntersectionAreaFraction(tileBounds, areaAtZoom);
 
 					// Add to score how much of tile area is available.
@@ -793,7 +791,7 @@ export class TilesSection extends CanvasSectionObject {
 				}
 			}
 
-			var docRange = new L.Bounds(docPos.topLeft, docPos.topLeft.add(docAreaSize));
+			var docRange = new Bounds(docPos.topLeft, docPos.topLeft.add(docAreaSize));
 			if (tsManager._calcGridSection) {
 				tsManager._calcGridSection.onDrawArea(docRange, docRange.min.subtract(destPos), this.context);
 			}
@@ -823,9 +821,9 @@ export class TilesSection extends CanvasSectionObject {
 					var partHeightPixels = Math.round((docLayer._partHeightTwips + docLayer._spaceBetweenParts) * ratio);
 					tileCoords.y = tile.coords.part * partHeightPixels + tileCoords.y;
 				}
-				var tileBounds = new L.Bounds(tileCoords, tileCoords.add(ctx.tileSize));
+				var tileBounds = new Bounds(tileCoords, tileCoords.add(ctx.tileSize));
 
-				var crop = new L.Bounds(tileBounds.min, tileBounds.max);
+				var crop = new Bounds(tileBounds.min, tileBounds.max);
 				crop.min.x = Math.max(docRangeScaled.min.x, tileBounds.min.x);
 				crop.min.y = Math.max(docRangeScaled.min.y, tileBounds.min.y);
 				crop.max.x = Math.min(docRangeScaled.max.x, tileBounds.max.x);
@@ -878,13 +876,13 @@ export class TilesSection extends CanvasSectionObject {
 
 			var topLeft = this.scalePosForZoom(corePxBounds.min, toZoom, fromZoom);
 			var size = corePxBounds.getSize().multiplyBy(convScale);
-			return new L.Bounds(
+			return new Bounds(
 				topLeft,
 				topLeft.add(size)
 			);
 		}
 
-		return new L.Bounds(
+		return new Bounds(
 			corePxBounds.min.multiplyBy(convScale),
 			corePxBounds.max.multiplyBy(convScale)
 		);

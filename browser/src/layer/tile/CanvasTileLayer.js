@@ -17,6 +17,7 @@ import { CPolygon } from '../vector/CPolygon';
 import { CPolyUtil } from '../vector/CPolyUtil';
 import { Cursor } from '../marker/Cursor';
 import { CCellCursor, CCellSelection } from '../vector/CRectangle';
+import { createRectangle } from '../../core/Rectangle';
 
 /*eslint no-extend-native:0*/
 if (typeof String.prototype.startsWith !== 'function') {
@@ -230,7 +231,7 @@ L.TileCoordData = L.Class.extend({
 	},
 
 	getPos: function () {
-		return new L.Point(this.x, this.y);
+		return new Point(this.x, this.y);
 	},
 
 	key: function () {
@@ -272,7 +273,7 @@ L.TileSectionManager = L.Class.extend({
 
 		var splitPanesContext = this._layer.getSplitPanesContext();
 		this._splitPos = splitPanesContext ?
-			splitPanesContext.getSplitPos() : new L.Point(0, 0);
+			splitPanesContext.getSplitPos() : new Point(0, 0);
 		this._updatesRunning = false;
 		this._mirrorEventsFromSourceToCanvasSectionContainer(document.getElementById('map'));
 
@@ -329,19 +330,19 @@ L.TileSectionManager = L.Class.extend({
 		var splitPanesContext = this._layer.getSplitPanesContext();
 		return splitPanesContext ?
 			splitPanesContext.getSplitPos().multiplyBy(app.dpiScale) :
-			new L.Point(0, 0);
+			new Point(0, 0);
 	},
 
 	// Details of tile areas to render
 	_paintContext: function() {
-		var tileSize = new L.Point(this._layer._getTileSize(), this._layer._getTileSize());
+		var tileSize = new Point(this._layer._getTileSize(), this._layer._getTileSize());
 
 		var viewBounds = this._map.getPixelBoundsCore();
 		var splitPanesContext = this._layer.getSplitPanesContext();
 		var paneBoundsList = splitPanesContext ?
 		    splitPanesContext.getPxBoundList(viewBounds) :
 		    [viewBounds];
-		var canvasCorePx = new L.Point(this._pixWidth, this._pixHeight);
+		var canvasCorePx = new Point(this._pixWidth, this._pixHeight);
 
 		return { canvasSize: canvasCorePx,
 			 tileSize: tileSize,
@@ -355,7 +356,7 @@ L.TileSectionManager = L.Class.extend({
 	coordsIntersectVisible: function (coords) {
 		if (!app.file.fileBasedView) {
 			var ctx = this._paintContext();
-			var tileBounds = new L.Bounds(new L.Point(coords.x, coords.y), new L.Point(coords.x + ctx.tileSize.x, coords.y + ctx.tileSize.y));
+			var tileBounds = new Bounds(new Point(coords.x, coords.y), new Point(coords.x + ctx.tileSize.x, coords.y + ctx.tileSize.y));
 			return tileBounds.intersectsAny(ctx.paneBoundsList);
 		}
 		else {
@@ -648,7 +649,7 @@ L.TileSectionManager = L.Class.extend({
 			yMin = splitPos.y;
 
 		// Top left in document coordinates.
-		var docTopLeft = new L.Point(
+		var docTopLeft = new Point(
 			Math.max(xMin,
 				center.x - (center.x - paneBounds.min.x) / scale),
 			Math.max(yMin,
@@ -659,7 +660,7 @@ L.TileSectionManager = L.Class.extend({
 
 		// Assumes paneBounds is the bounds of the free pane.
 		var paneSize = paneBounds.getSize();
-		var newPaneCenter = new L.Point(
+		var newPaneCenter = new Point(
 			(docTopLeft.x - splitPos.x + (paneSize.x + splitPos.x) / (2 * scale)) * scale / app.dpiScale,
 			(docTopLeft.y - splitPos.y + (paneSize.y + splitPos.y) / (2 * scale)) * scale / app.dpiScale);
 
@@ -674,7 +675,7 @@ L.TileSectionManager = L.Class.extend({
 		var ctx = this._paintContext();
 		var splitPos = ctx.splitPos;
 		var viewBounds = ctx.viewBounds;
-		var freePaneBounds = new L.Bounds(viewBounds.min.add(splitPos), viewBounds.max);
+		var freePaneBounds = new Bounds(viewBounds.min.add(splitPos), viewBounds.max);
 
 		return this._getZoomDocPos(this._newCenter, freePaneBounds, splitPos, scale, true /* findFreePaneCenter */).center;
 	},
@@ -815,7 +816,7 @@ L.TileSectionManager = L.Class.extend({
 	},
 
 	getTileSectionPos : function () {
-		return new L.Point(this._tilesSection.myTopLeft[0], this._tilesSection.myTopLeft[1]);
+		return new Point(this._tilesSection.myTopLeft[0], this._tilesSection.myTopLeft[1]);
 	}
 });
 
@@ -855,19 +856,19 @@ L.CanvasTileLayer = L.Layer.extend({
 		// Are we zooming currently ? - if so, no cursor.
 		this._isZooming = false;
 		// Original rectangle graphic selection in twips
-		this._graphicSelectionTwips = new L.Bounds(new L.Point(0, 0), new L.Point(0, 0));
+		this._graphicSelectionTwips = new Bounds(new Point(0, 0), new Point(0, 0));
 		// Rectangle graphic selection
 		this._graphicSelection = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(0, 0));
 		// Rotation angle of selected graphic object
 		this._graphicSelectionAngle = 0;
 		// Original rectangle of cell cursor in twips
-		this._cellCursorTwips = new L.Bounds(new L.Point(0, 0), new L.Point(0, 0));
+		this._cellCursorTwips = new Bounds(new Point(0, 0), new Point(0, 0));
 		// Rectangle for cell cursor
 		this._cellCursor =  L.LatLngBounds.createDefault();
 		this._prevCellCursor = L.LatLngBounds.createDefault();
 		this._cellCursorOnPgUp = null;
 		this._cellCursorOnPgDn = null;
-		this._shapeGridOffset = new L.Point(0, 0);
+		this._shapeGridOffset = new Point(0, 0);
 
 		// Tile garbage collection counter
 		this._gcCounter = 0;
@@ -1223,8 +1224,8 @@ L.CanvasTileLayer = L.Layer.extend({
 			}
 			scale = this._map.options.crs.scale(1);
 			this._map.setMaxBounds(new L.LatLngBounds(
-				this._map.unproject(new L.Point(0, 0)),
-				this._map.unproject(new L.Point(width * scale, height * scale))));
+				this._map.unproject(new Point(0, 0)),
+				this._map.unproject(new Point(width * scale, height * scale))));
 		}
 		else if (this._map.options._origMaxBounds) {
 			// if after zoomimg the document becomes larger than the viewing area
@@ -1309,10 +1310,10 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (!strTwips) {
 			return null;
 		}
-		var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
-		var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
+		var topLeftTwips = new Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
+		var offset = new Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
 		var bottomRightTwips = topLeftTwips.add(offset);
-		return new L.Bounds(
+		return new Bounds(
 			this._twipsToPixels(topLeftTwips),
 			this._twipsToPixels(bottomRightTwips));
 	},
@@ -1534,7 +1535,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		var strTwips = cellRange.match(/\d+/g);
 		var startCellAddress = [parseInt(strTwips[0]), parseInt(strTwips[1])];
 		var endCellAddress = [parseInt(strTwips[2]), parseInt(strTwips[3])];
-		return new L.Bounds(startCellAddress, endCellAddress);
+		return new Bounds(startCellAddress, endCellAddress);
 	},
 
 	_cellRangeToTwipRect: function(cellRange) {
@@ -1544,7 +1545,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		var endCell = cellRange.getBottomRight();
 		var endCellRectPixel = this.sheetGeometry.getCellRect(endCell.x, endCell.y);
 		var bottomRightTwips = this._corePixelsToTwips(endCellRectPixel.max);
-		return new L.Bounds(topLeftTwips, bottomRightTwips);
+		return new Bounds(topLeftTwips, bottomRightTwips);
 	},
 
 	_onMessage: function (textMsg, img) {
@@ -2203,7 +2204,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_resetSelectionRanges: function() {
-		this._graphicSelectionTwips = new L.Bounds(new L.Point(0, 0), new L.Point(0, 0));
+		this._graphicSelectionTwips = new Bounds(new Point(0, 0), new Point(0, 0));
 		this._graphicSelection = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(0, 0));
 		this._hasActiveSelection = false;
 	},
@@ -2225,22 +2226,22 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (hasExtraInfo) {
 			extraInfo = messageJSON[5];
 			if (extraInfo.gridOffsetX || extraInfo.gridOffsetY) {
-				this._shapeGridOffset = new L.Point(signX * parseInt(extraInfo.gridOffsetX), parseInt(extraInfo.gridOffsetY));
+				this._shapeGridOffset = new Point(signX * parseInt(extraInfo.gridOffsetX), parseInt(extraInfo.gridOffsetY));
 				hasGridOffset = true;
 			}
 		}
 
 		// Calc RTL: Negate positive X coordinates from core if grid offset is available.
 		signX = hasGridOffset && calcRTL ? -1 : 1;
-		var topLeftTwips = new L.Point(signX * messageJSON[0], messageJSON[1]);
-		var offset = new L.Point(signX * messageJSON[2], messageJSON[3]);
+		var topLeftTwips = new Point(signX * messageJSON[0], messageJSON[1]);
+		var offset = new Point(signX * messageJSON[2], messageJSON[3]);
 		var bottomRightTwips = topLeftTwips.add(offset);
 
 		if (hasGridOffset) {
-			this._graphicSelectionTwips = new L.Bounds(topLeftTwips.add(this._shapeGridOffset), bottomRightTwips.add(this._shapeGridOffset));
+			this._graphicSelectionTwips = new Bounds(topLeftTwips.add(this._shapeGridOffset), bottomRightTwips.add(this._shapeGridOffset));
 		} else {
 			this._graphicSelectionTwips = this._getGraphicSelectionRectangle(
-				new L.Bounds(topLeftTwips, bottomRightTwips));
+				new Bounds(topLeftTwips, bottomRightTwips));
 		}
 		this._graphicSelection = new L.LatLngBounds(
 			this._twipsToLatLng(this._graphicSelectionTwips.getTopLeft(), this._map.getZoom()),
@@ -2263,7 +2264,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			southWestPoint.x = Math.abs(southWestPoint.x);
 		}
 
-		var bounds = new L.Bounds(northEastPoint, southWestPoint);
+		var bounds = new Bounds(northEastPoint, southWestPoint);
 
 		this._oleCSelections.setPointSet(CPointSet.fromBounds(bounds));
 	},
@@ -2313,7 +2314,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				if (dragInfo && dragInfo.dragMethod === 'PieSegmentDragging') {
 					dragInfo.initialOffset /= 100.0;
 					var dragDir = dragInfo.dragDirection;
-					dragInfo.dragDirection = this._twipsToPixels(new L.Point(dragDir[0], dragDir[1]));
+					dragInfo.dragDirection = this._twipsToPixels(new Point(dragDir[0], dragDir[1]));
 					dragDir = dragInfo.dragDirection;
 					dragInfo.range2 = dragDir.x * dragDir.x + dragDir.y * dragDir.y;
 				}
@@ -2394,11 +2395,11 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._graphicViewMarkers[viewId].part = parseInt(obj.part);
 		this._graphicViewMarkers[viewId].mode = (obj.mode !== undefined) ? parseInt(obj.mode) : 0;
 		if (strTwips != null) {
-			var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
-			var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
+			var topLeftTwips = new Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
+			var offset = new Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
 			var bottomRightTwips = topLeftTwips.add(offset);
 			var boundRectTwips = this._getGraphicSelectionRectangle(
-				new L.Bounds(topLeftTwips, bottomRightTwips));
+				new Bounds(topLeftTwips, bottomRightTwips));
 			this._graphicViewMarkers[viewId].bounds = new L.LatLngBounds(
 				this._twipsToLatLng(boundRectTwips.getTopLeft(), this._map.getZoom()),
 				this._twipsToLatLng(boundRectTwips.getBottomRight(), this._map.getZoom()));
@@ -2424,19 +2425,19 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._prevCellCursor = L.LatLngBounds.createDefault();
 		}
 		if (!this._cellCursorXY) {
-			this._cellCursorXY = new L.Point(-1, -1);
+			this._cellCursorXY = new Point(-1, -1);
 		}
 		if (!this._prevCellCursorXY) {
-			this._prevCellCursorXY = new L.Point(-1, -1);
+			this._prevCellCursorXY = new Point(-1, -1);
 		}
 
 		var oldCursorXY = this._cellCursorXY.clone();
 
 		if (textMsg.match('EMPTY') || !this._map.isEditMode()) {
 			app.file.calc.cellCursor.visible = false;
-			this._cellCursorTwips = new L.Bounds(new L.Point(0, 0), new L.Point(0, 0));
+			this._cellCursorTwips = new Bounds(new Point(0, 0), new Point(0, 0));
 			this._cellCursor = L.LatLngBounds.createDefault();
-			this._cellCursorXY = new L.Point(-1, -1);
+			this._cellCursorXY = new Point(-1, -1);
 			this._cellCursorPixels = null;
 			if (autofillMarkerSection)
 				autofillMarkerSection.calculatePositionViaCellCursor(null);
@@ -2446,18 +2447,18 @@ L.CanvasTileLayer = L.Layer.extend({
 		else {
 			var strTwips = textMsg.match(/\d+/g);
 
-			var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
-			var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
+			var topLeftTwips = new Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
+			var offset = new Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
 			var bottomRightTwips = topLeftTwips.add(offset);
 			this._cellCursorTwips = this._convertToTileTwipsSheetArea(
-				new L.Bounds(topLeftTwips, bottomRightTwips));
+				new Bounds(topLeftTwips, bottomRightTwips));
 			this._cellCursor = new L.LatLngBounds(
 				this._twipsToLatLng(this._cellCursorTwips.getTopLeft(), this._map.getZoom()),
 				this._twipsToLatLng(this._cellCursorTwips.getBottomRight(), this._map.getZoom()));
 
 			var start = this._twipsToCorePixels(this._cellCursorTwips.min);
 			var offsetPixels = this._twipsToCorePixels(this._cellCursorTwips.getSize());
-			this._cellCursorPixels = L.LOUtil.createRectangle(start.x, start.y, offsetPixels.x, offsetPixels.y);
+			this._cellCursorPixels = createRectangle(start.x, start.y, offsetPixels.x, offsetPixels.y);
 			app.file.calc.cellCursor.address = [parseInt(strTwips[4]), parseInt(strTwips[5])];
 			app.file.calc.cellCursor.rectangle.pixels = [Math.round(start.x), Math.round(start.y), Math.round(offsetPixels.x), Math.round(offsetPixels.y)];
 			app.file.calc.cellCursor.rectangle.twips = this._cellCursorTwips.toRectangle();
@@ -2466,7 +2467,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			if (autofillMarkerSection)
 				autofillMarkerSection.calculatePositionViaCellCursor([this._cellCursorPixels.getX2(), this._cellCursorPixels.getY2()]);
 
-			this._cellCursorXY = new L.Point(parseInt(strTwips[4]), parseInt(strTwips[5]));
+			this._cellCursorXY = new Point(parseInt(strTwips[4]), parseInt(strTwips[5]));
 		}
 
 		var horizontalDirection = 0;
@@ -2785,19 +2786,19 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._cellViewCursors[viewId] = this._cellViewCursors[viewId] || {};
 		if (!this._cellViewCursors[viewId].bounds) {
 			this._cellViewCursors[viewId].bounds = L.LatLngBounds.createDefault();
-			this._cellViewCursors[viewId].corePixelBounds = new L.Bounds();
+			this._cellViewCursors[viewId].corePixelBounds = new Bounds();
 		}
 		if (obj.rectangle.match('EMPTY')) {
 			this._cellViewCursors[viewId].bounds = L.LatLngBounds.createDefault();
-			this._cellViewCursors[viewId].corePixelBounds = new L.Bounds();
+			this._cellViewCursors[viewId].corePixelBounds = new Bounds();
 		}
 		else {
 			var strTwips = obj.rectangle.match(/\d+/g);
-			var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
-			var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
+			var topLeftTwips = new Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
+			var offset = new Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
 			var bottomRightTwips = topLeftTwips.add(offset);
 			var boundsTwips = this._convertToTileTwipsSheetArea(
-				new L.Bounds(topLeftTwips, bottomRightTwips));
+				new Bounds(topLeftTwips, bottomRightTwips));
 			this._cellViewCursors[viewId].bounds = new L.LatLngBounds(
 				this._twipsToLatLng(boundsTwips.getTopLeft(), this._map.getZoom()),
 				this._twipsToLatLng(boundsTwips.getBottomRight(), this._map.getZoom()));
@@ -2833,7 +2834,7 @@ L.CanvasTileLayer = L.Layer.extend({
 					color: backgroundColor,
 					weight: 2 * app.dpiScale,
 					toCompatUnits: function (corePx) {
-						return this._map.unproject(L.point(corePx)
+						return this._map.unproject(Point.toPoint(corePx)
 							.divideBy(app.dpiScale));
 					}.bind(this)
 				});
@@ -3073,10 +3074,10 @@ L.CanvasTileLayer = L.Layer.extend({
 				var strTwips = result.twipsRectangles.match(/\d+/g);
 				var rectangles = [];
 				for (var i = 0; i < strTwips.length; i += 4) {
-					var topLeftTwips = new L.Point(parseInt(strTwips[i]), parseInt(strTwips[i + 1]));
-					var offset = new L.Point(parseInt(strTwips[i + 2]), parseInt(strTwips[i + 3]));
-					var topRightTwips = topLeftTwips.add(new L.Point(offset.x, 0));
-					var bottomLeftTwips = topLeftTwips.add(new L.Point(0, offset.y));
+					var topLeftTwips = new Point(parseInt(strTwips[i]), parseInt(strTwips[i + 1]));
+					var offset = new Point(parseInt(strTwips[i + 2]), parseInt(strTwips[i + 3]));
+					var topRightTwips = topLeftTwips.add(new Point(offset.x, 0));
+					var bottomLeftTwips = topLeftTwips.add(new Point(0, offset.y));
 					var bottomRightTwips = topLeftTwips.add(offset);
 					rectangles.push([bottomLeftTwips, bottomRightTwips, topLeftTwips, topRightTwips]);
 				}
@@ -3259,7 +3260,7 @@ L.CanvasTileLayer = L.Layer.extend({
 					this._map.addLayer(this._referenceMarkerStart);
 					var sizeStart = this._referenceMarkerStart._icon.getBoundingClientRect();
 					var posStart = this._referencesAll[i].mark.getBounds().getTopLeft().divideBy(app.dpiScale);
-					posStart = posStart.subtract(new L.Point(sizeStart.width / 2, sizeStart.height / 2));
+					posStart = posStart.subtract(new Point(sizeStart.width / 2, sizeStart.height / 2));
 					posStart = this._map.unproject(posStart);
 					this._referenceMarkerStart.setLatLng(posStart);
 				}
@@ -3268,7 +3269,7 @@ L.CanvasTileLayer = L.Layer.extend({
 					this._map.addLayer(this._referenceMarkerEnd);
 					var sizeEnd = this._referenceMarkerEnd._icon.getBoundingClientRect();
 					var posEnd = this._referencesAll[i].mark.getBounds().getBottomRight().divideBy(app.dpiScale);
-					posEnd = posEnd.subtract(new L.Point(sizeEnd.width / 2, sizeEnd.height / 2));
+					posEnd = posEnd.subtract(new Point(sizeEnd.width / 2, sizeEnd.height / 2));
 					posEnd = this._map.unproject(posEnd);
 					this._referenceMarkerEnd.setLatLng(posEnd);
 				}
@@ -3291,10 +3292,10 @@ L.CanvasTileLayer = L.Layer.extend({
 			if (strTwips != null) {
 				var rectangles = [];
 				for (var i = 0; i < strTwips.length; i += 4) {
-					var topLeftTwips = new L.Point(parseInt(strTwips[i]), parseInt(strTwips[i + 1]));
-					var offset = new L.Point(parseInt(strTwips[i + 2]), parseInt(strTwips[i + 3]));
+					var topLeftTwips = new Point(parseInt(strTwips[i]), parseInt(strTwips[i + 1]));
+					var offset = new Point(parseInt(strTwips[i + 2]), parseInt(strTwips[i + 3]));
 					var boundsTwips = this._convertToTileTwipsSheetArea(
-						new L.Bounds(topLeftTwips, topLeftTwips.add(offset)));
+						new Bounds(topLeftTwips, topLeftTwips.add(offset)));
 					rectangles.push([boundsTwips.getBottomLeft(), boundsTwips.getBottomRight(),
 						boundsTwips.getTopLeft(), boundsTwips.getTopRight()]);
 				}
@@ -3466,11 +3467,11 @@ L.CanvasTileLayer = L.Layer.extend({
 		var autofillMarkerSection = app.sectionContainer.getSectionWithName(L.CSections.AutoFillMarker.name);
 		var strTwips = textMsg.match(/\d+/g);
 		if (strTwips != null && this._map.isEditMode()) {
-			var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
-			var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
+			var topLeftTwips = new Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
+			var offset = new Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
 			var bottomRightTwips = topLeftTwips.add(offset);
 			var boundsTwips = this._convertToTileTwipsSheetArea(
-				new L.Bounds(topLeftTwips, bottomRightTwips));
+				new Bounds(topLeftTwips, bottomRightTwips));
 			var oldSelection = this._cellSelectionArea;
 			this._cellSelectionArea = new L.LatLngBounds(
 				this._twipsToLatLng(boundsTwips.getTopLeft(), this._map.getZoom()),
@@ -3478,7 +3479,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 			var offsetPixels = this._twipsToCorePixels(boundsTwips.getSize());
 			var start = this._twipsToCorePixels(boundsTwips.min);
-			var cellSelectionAreaPixels = L.LOUtil.createRectangle(start.x, start.y, offsetPixels.x, offsetPixels.y);
+			var cellSelectionAreaPixels = createRectangle(start.x, start.y, offsetPixels.x, offsetPixels.y);
 			if (autofillMarkerSection)
 				autofillMarkerSection.calculatePositionViaCellSelection([cellSelectionAreaPixels.getX2(), cellSelectionAreaPixels.getY2()]);
 
@@ -3501,12 +3502,12 @@ L.CanvasTileLayer = L.Layer.extend({
 	_onCellAutoFillAreaMsg: function (textMsg) {
 		var strTwips = textMsg.match(/\d+/g);
 		if (strTwips != null && this._map.isEditMode()) {
-			var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
-			var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
+			var topLeftTwips = new Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
+			var offset = new Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
 
 			var topLeftPixels = this._twipsToCorePixels(topLeftTwips);
 			var offsetPixels = this._twipsToCorePixels(offset);
-			this._cellAutoFillAreaPixels = L.LOUtil.createRectangle(topLeftPixels.x, topLeftPixels.y, offsetPixels.x, offsetPixels.y);
+			this._cellAutoFillAreaPixels = createRectangle(topLeftPixels.x, topLeftPixels.y, offsetPixels.x, offsetPixels.y);
 		}
 		else {
 			this._cellAutoFillAreaPixels = null;
@@ -3849,8 +3850,8 @@ L.CanvasTileLayer = L.Layer.extend({
 				// For Writer documents, disallow scrolling to cursor outside of the page (horizontally)
 				// Use document dimensions to approximate page width
 				var documentLatLngBounds = new L.LatLngBounds(
-					this._twipsToLatLng(new L.Point(0, 0), this._map.getZoom()),
-					this._twipsToLatLng(new L.Point(this._docWidthTwips - 1, 0), this._map.getZoom()));
+					this._twipsToLatLng(new Point(0, 0), this._map.getZoom()),
+					this._twipsToLatLng(new Point(this._docWidthTwips - 1, 0), this._map.getZoom()));
 				var correctedWest = clamp(correctedCursor.getWest(), documentLatLngBounds.getWest(), documentLatLngBounds.getEast());
 				var correctedEast = clamp(correctedCursor.getEast(), documentLatLngBounds.getWest(), documentLatLngBounds.getEast());
 				correctedCursor = new L.LatLngBounds(
@@ -4159,7 +4160,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				}
 			}
 			else {
-				var newPos = new L.Point(
+				var newPos = new Point(
 					// Choose the logical left of the shape.
 					this._graphicSelectionTwips.min.x + deltaPos.x,
 					this._graphicSelectionTwips.min.y + deltaPos.y);
@@ -4319,9 +4320,9 @@ L.CanvasTileLayer = L.Layer.extend({
 
 			// Onscreen position of the cursor, i.e. relative to the browser window
 			var boundingrect = e.target._icon.getBoundingClientRect();
-			var cursorPos = L.point(boundingrect.left, boundingrect.top);
+			var cursorPos = Point.toPoint(boundingrect.left, boundingrect.top);
 
-			var expectedPos = L.point(e.originalEvent.pageX, e.originalEvent.pageY).subtract(e.target.dragging._draggable.startOffset);
+			var expectedPos = Point.toPoint(e.originalEvent.pageX, e.originalEvent.pageY).subtract(e.target.dragging._draggable.startOffset);
 
 			// Dragging the selection handles vertically more than one line on a touch
 			// device is more or less impossible without this hack.
@@ -4338,7 +4339,7 @@ L.CanvasTileLayer = L.Layer.extend({
 					e.target.dragging._draggable._updatePosition();
 				}
 			}
-			var containerPos = new L.Point(expectedPos.x - this._map._container.getBoundingClientRect().left,
+			var containerPos = new Point(expectedPos.x - this._map._container.getBoundingClientRect().left,
 				expectedPos.y - this._map._container.getBoundingClientRect().top);
 
 			containerPos = containerPos.add(e.target.dragging._draggable.startOffset);
@@ -4383,8 +4384,8 @@ L.CanvasTileLayer = L.Layer.extend({
 
 			// Onscreen position of the cursor, i.e. relative to the browser window
 			var boundingrect = e.target._icon.getBoundingClientRect();
-			var cursorPos = L.point(boundingrect.left, boundingrect.top);
-			var expectedPos = L.point(event.pageX, event.pageY).subtract(e.target.dragging._draggable.startOffset);
+			var cursorPos = Point.toPoint(boundingrect.left, boundingrect.top);
+			var expectedPos = Point.toPoint(event.pageX, event.pageY).subtract(e.target.dragging._draggable.startOffset);
 
 			// Dragging the selection handles vertically more than one line on a touch
 			// device is more or less impossible without this hack.
@@ -4401,7 +4402,7 @@ L.CanvasTileLayer = L.Layer.extend({
 					e.target.dragging._draggable._updatePosition();
 				}
 			}
-			var containerPos = new L.Point(expectedPos.x - this._map._container.getBoundingClientRect().left,
+			var containerPos = new Point(expectedPos.x - this._map._container.getBoundingClientRect().left,
 				expectedPos.y - this._map._container.getBoundingClientRect().top);
 
 			containerPos = containerPos.add(e.target.dragging._draggable.startOffset);
@@ -4426,7 +4427,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			size = this._cellResizeMarkerEnd._icon.getBoundingClientRect();
 		}
 
-		aMousePosition = aMousePosition.add(new L.Point(size.width / 2, size.height / 2));
+		aMousePosition = aMousePosition.add(new Point(size.width / 2, size.height / 2));
 		aMousePosition = this._map.unproject(aMousePosition);
 		aMousePosition = this._latLngToTwips(aMousePosition);
 
@@ -4454,12 +4455,12 @@ L.CanvasTileLayer = L.Layer.extend({
 		else if (e.type === 'drag') {
 			var startPos = this._map.project(this._referenceMarkerStart.getLatLng());
 			var startSize = this._referenceMarkerStart._icon.getBoundingClientRect();
-			startPos = startPos.add(new L.Point(startSize.width, startSize.height));
+			startPos = startPos.add(new Point(startSize.width, startSize.height));
 			var start = this.sheetGeometry.getCellFromPos(this._latLngToTwips(this._map.unproject(startPos)), 'tiletwips');
 
 			var endPos = this._map.project(this._referenceMarkerEnd.getLatLng());
 			var endSize = this._referenceMarkerEnd._icon.getBoundingClientRect();
-			endPos = endPos.subtract(new L.Point(endSize.width / 2, endSize.height / 2));
+			endPos = endPos.subtract(new Point(endSize.width / 2, endSize.height / 2));
 			var end = this.sheetGeometry.getCellFromPos(this._latLngToTwips(this._map.unproject(endPos)), 'tiletwips');
 
 			this._sendReferenceRangeCommand(start.x, start.y, end.x, end.y);
@@ -4630,7 +4631,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	_onValidityListButtonMsg: function(textMsg) {
 		var strXY = textMsg.match(/\d+/g);
-		var validatedCell = new L.Point(parseInt(strXY[0]), parseInt(strXY[1]));
+		var validatedCell = new Point(parseInt(strXY[0]), parseInt(strXY[1]));
 		var show = parseInt(strXY[2]) === 1;
 		if (show) {
 			if (this._validatedCellXY && !this._validatedCellXY.equals(validatedCell)) {
@@ -4707,7 +4708,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				this._map.addLayer(this._cellResizeMarkerStart);
 				var posStart = this._map.project(cellRectangle.getNorthWest());
 				var sizeStart = this._cellResizeMarkerStart._icon.getBoundingClientRect();
-				posStart = posStart.subtract(new L.Point(sizeStart.width / 2, sizeStart.height / 2));
+				posStart = posStart.subtract(new Point(sizeStart.width / 2, sizeStart.height / 2));
 				posStart = this._map.unproject(posStart);
 				this._cellResizeMarkerStart.setLatLng(posStart);
 			}
@@ -4715,7 +4716,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				this._map.addLayer(this._cellResizeMarkerEnd);
 				var posEnd = this._map.project(cellRectangle.getSouthEast());
 				var sizeEnd = this._cellResizeMarkerEnd._icon.getBoundingClientRect();
-				posEnd = posEnd.subtract(new L.Point(sizeEnd.width / 2, sizeEnd.height / 2));
+				posEnd = posEnd.subtract(new Point(sizeEnd.width / 2, sizeEnd.height / 2));
 				posEnd = this._map.unproject(posEnd);
 				this._cellResizeMarkerEnd.setLatLng(posEnd);
 			}
@@ -4925,7 +4926,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		for (var key in this._map._docPreviews) {
 			var preview = this._map._docPreviews[key];
 			preview.invalid = true;
-			this._previewInvalidations.push(new L.Bounds(new L.Point(0, 0), new L.Point(preview.maxWidth, preview.maxHeight)));
+			this._previewInvalidations.push(new Bounds(new Point(0, 0), new Point(preview.maxWidth, preview.maxHeight)));
 		}
 		this._invalidatePreviews();
 	},
@@ -4959,9 +4960,9 @@ L.CanvasTileLayer = L.Layer.extend({
 					}
 					else {
 						// we have a custom preview
-						var bounds = new L.Bounds(
-							new L.Point(preview.tilePosX, preview.tilePosY),
-							new L.Point(preview.tilePosX + preview.tileWidth, preview.tilePosY + preview.tileHeight));
+						var bounds = new Bounds(
+							new Point(preview.tilePosX, preview.tilePosY),
+							new Point(preview.tilePosX + preview.tileWidth, preview.tilePosY + preview.tileHeight));
 						if (preview.invalid || (preview.part === this._selectedPart ||
 								(preview.part === this._prevSelectedPart && this._prevSelectedPartNeedsUpdate)) &&
 								invalidBounds.intersects(bounds)) {
@@ -5008,7 +5009,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	// converts rectangle in print-twips to tile-twips rectangle of the smallest cell-range that encloses it.
 	_convertToTileTwipsSheetArea: function (rectangle) {
-		if (!(rectangle instanceof L.Bounds) || !this.options.printTwipsMsgsEnabled || !this.sheetGeometry) {
+		if (!(rectangle instanceof Bounds) || !this.options.printTwipsMsgsEnabled || !this.sheetGeometry) {
 			return rectangle;
 		}
 
@@ -5016,7 +5017,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_getGraphicSelectionRectangle: function (rectangle) {
-		if (!(rectangle instanceof L.Bounds) || !this.options.printTwipsMsgsEnabled || !this.sheetGeometry) {
+		if (!(rectangle instanceof Bounds) || !this.options.printTwipsMsgsEnabled || !this.sheetGeometry) {
 			return rectangle;
 		}
 
@@ -5028,14 +5029,14 @@ L.CanvasTileLayer = L.Layer.extend({
 			rectSize.x = -rectSize.x;
 		}
 
-		return new L.Bounds(newTopLeft, newTopLeft.add(rectSize));
+		return new Bounds(newTopLeft, newTopLeft.add(rectSize));
 	},
 
 	_convertCalcTileTwips: function (point, offset) {
 		if (!this.options.printTwipsMsgsEnabled || !this.sheetGeometry)
 			return point;
-		var newPoint = new L.Point(parseInt(point.x), parseInt(point.y));
-		var _offset = offset ? new L.Point(parseInt(offset.x), parseInt(offset.y)) : this._shapeGridOffset;
+		var newPoint = new Point(parseInt(point.x), parseInt(point.y));
+		var _offset = offset ? new Point(parseInt(offset.x), parseInt(offset.y)) : this._shapeGridOffset;
 		return newPoint.add(_offset);
 	},
 
@@ -5046,7 +5047,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			return undefined;
 		}
 
-		return L.Bounds.parse(msgObj.rectangle);
+		return Bounds.parse(msgObj.rectangle);
 	},
 
 	_getTextSelectionRectangles: function (textMsg) {
@@ -5056,14 +5057,14 @@ L.CanvasTileLayer = L.Layer.extend({
 			return [];
 		}
 
-		return L.Bounds.parseArray(textMsg);
+		return Bounds.parseArray(textMsg);
 	},
 
 	// Needed for the split-panes feature to determine the active split-pane.
 	// Needs to be implemented by the app specific TileLayer.
 	getCursorPos: function () {
 		window.app.console.error('No implementations available for getCursorPos!');
-		return new L.Point(0, 0);
+		return new Point(0, 0);
 	},
 
 	getPaneLatLngRectangles: function () {
@@ -5223,7 +5224,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		var tilePane = this._container.parentElement;
 		if (tilePane) {
 			var mapPanePos = this._map._getMapPanePos();
-			L.DomUtil.setPosition(tilePane, new L.Point(-mapPanePos.x , -mapPanePos.y));
+			L.DomUtil.setPosition(tilePane, new Point(-mapPanePos.x , -mapPanePos.y));
 			var documentBounds = this._map.getPixelBoundsCore();
 			var documentPos = documentBounds.min;
 			var documentEndPos = documentBounds.max;
@@ -5289,10 +5290,10 @@ L.CanvasTileLayer = L.Layer.extend({
 	_getTilesSectionRectangle: function () {
 		var section = app.sectionContainer.getSectionWithName(L.CSections.Tiles.name);
 		if (section) {
-			return L.LOUtil.createRectangle(section.myTopLeft[0] / app.dpiScale, section.myTopLeft[1] / app.dpiScale, section.size[0] / app.dpiScale, section.size[1] / app.dpiScale);
+			return createRectangle(section.myTopLeft[0] / app.dpiScale, section.myTopLeft[1] / app.dpiScale, section.size[0] / app.dpiScale, section.size[1] / app.dpiScale);
 		}
 		else {
-			return L.LOUtil.createRectangle(0, 0, 0, 0);
+			return createRectangle(0, 0, 0, 0);
 		}
 	},
 
@@ -5672,7 +5673,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_pxBoundsToTileRange: function (bounds) {
-		return new L.Bounds(
+		return new Bounds(
 			bounds.min.divideBy(this._tileSize).floor(),
 			bounds.max.divideBy(this._tileSize).floor());
 	},
@@ -5686,39 +5687,39 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_cssBoundsToCore: function (bounds) {
-		return new L.Bounds(
+		return new Bounds(
 			this._cssPixelsToCore(bounds.min),
 			this._cssPixelsToCore(bounds.max)
 		);
 	},
 
 	_twipsToCorePixels: function (twips) {
-		return new L.Point(
+		return new Point(
 			twips.x / this._tileWidthTwips * this._tileSize,
 			twips.y / this._tileHeightTwips * this._tileSize);
 	},
 
 	_twipsToCorePixelsBounds: function (twips) {
-		return new L.Bounds(
+		return new Bounds(
 			this._twipsToCorePixels(twips.min),
 			this._twipsToCorePixels(twips.max)
 		);
 	},
 
 	_corePixelsToTwips: function (corePixels) {
-		return new L.Point(
+		return new Point(
 			corePixels.x / this._tileSize * this._tileWidthTwips,
 			corePixels.y / this._tileSize * this._tileHeightTwips);
 	},
 
 	_twipsToCssPixels: function (twips) {
-		return new L.Point(
+		return new Point(
 			(twips.x / this._tileWidthTwips) * (this._tileSize / app.dpiScale),
 			(twips.y / this._tileHeightTwips) * (this._tileSize / app.dpiScale));
 	},
 
 	_cssPixelsToTwips: function (pixels) {
-		return new L.Point(
+		return new Point(
 			((pixels.x * app.dpiScale) / this._tileSize) * this._tileWidthTwips,
 			((pixels.y * app.dpiScale) / this._tileSize) * this._tileHeightTwips);
 	},
@@ -5735,7 +5736,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	_latLngToCorePixels: function(latLng, zoom) {
 		var pixels = this._map.project(latLng, zoom);
-		return new L.Point (
+		return new Point (
 			pixels.x * app.dpiScale,
 			pixels.y * app.dpiScale);
 	},
@@ -5755,7 +5756,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_coordsToTwips: function (coords) {
-		return new L.Point(
+		return new Point(
 			Math.floor(coords.x / this._tileSize) * this._tileWidthTwips,
 			Math.floor(coords.y / this._tileSize) * this._tileHeightTwips);
 	},
@@ -5777,9 +5778,9 @@ L.CanvasTileLayer = L.Layer.extend({
 			return;
 		}
 
-		var docPixelLimits = new L.Point(app.file.size.pixels[0] / app.dpiScale, app.file.size.pixels[1] / app.dpiScale);
-		var scrollPixelLimits = new L.Point(app.view.size.pixels[0] / app.dpiScale, app.view.size.pixels[1] / app.dpiScale);
-		var topLeft = this._map.unproject(new L.Point(0, 0));
+		var docPixelLimits = new Point(app.file.size.pixels[0] / app.dpiScale, app.file.size.pixels[1] / app.dpiScale);
+		var scrollPixelLimits = new Point(app.view.size.pixels[0] / app.dpiScale, app.view.size.pixels[1] / app.dpiScale);
+		var topLeft = this._map.unproject(new Point(0, 0));
 
 		if (this._documentInfo === '' || sizeChanged) {
 			// we just got the first status so we need to center the document
@@ -6070,12 +6071,12 @@ L.CanvasTileLayer = L.Layer.extend({
 
 			pixelTopLeft.y += pixelHeight;
 			pixelBottomRight.y += pixelPrevNextHeight;
-			pixelBounds = new L.Bounds(pixelTopLeft, pixelBottomRight);
+			pixelBounds = new Bounds(pixelTopLeft, pixelBottomRight);
 			var queue = this._getMissingTiles(pixelBounds, zoom);
 
 			pixelTopLeft.y -= pixelHeight + pixelPrevNextHeight;
 			pixelBottomRight.y -= pixelHeight + pixelPrevNextHeight;
-			pixelBounds = new L.Bounds(pixelTopLeft, pixelBottomRight);
+			pixelBounds = new Bounds(pixelTopLeft, pixelBottomRight);
 			queue = queue.concat(this._getMissingTiles(pixelBounds, zoom));
 
 			if (queue.length !== 0)
@@ -6088,10 +6089,10 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (!this._map._docLoaded)
 			return;
 
-		var splitPos = this._splitPanesContext ? this._splitPanesContext.getSplitPos() : new L.Point(0, 0);
+		var splitPos = this._splitPanesContext ? this._splitPanesContext.getSplitPos() : new Point(0, 0);
 
 		var visibleArea = this._map.getPixelBounds();
-		visibleArea = new L.Bounds(
+		visibleArea = new Bounds(
 			this._pixelsToTwips(visibleArea.min),
 			this._pixelsToTwips(visibleArea.max)
 		);
@@ -6257,7 +6258,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			}
 
 			var rectQueue = [coords];
-			var bound = coords.getPos(); // L.Point
+			var bound = coords.getPos(); // Point
 
 			// remove it
 			coordsQueue.splice(0, 1);
@@ -6349,7 +6350,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		var map = this._map;
 		var tileSize = this._getTileSize();
 
-		var nwPoint = new L.Point(coords.x, coords.y);
+		var nwPoint = new Point(coords.x, coords.y);
 		var sePoint = nwPoint.add([tileSize, tileSize]);
 		nwPoint = this._corePixelsToCss(nwPoint);
 		sePoint = this._corePixelsToCss(sePoint);
@@ -7042,11 +7043,11 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	_coordsToTileBounds: function (coords) {
 		var zoomFactor = this._map.zoomToFactor(coords.z);
-		var tileTopLeft = new L.Point(
+		var tileTopLeft = new Point(
 			coords.x * this.options.tileWidthTwips / this._tileSize / zoomFactor,
 			coords.y * this.options.tileHeightTwips / this._tileSize / zoomFactor);
-		var tileSize = new L.Point(this.options.tileWidthTwips / zoomFactor, this.options.tileHeightTwips / zoomFactor);
-		return new L.Bounds(tileTopLeft, tileTopLeft.add(tileSize));
+		var tileSize = new Point(this.options.tileWidthTwips / zoomFactor, this.options.tileHeightTwips / zoomFactor);
+		return new Bounds(tileTopLeft, tileTopLeft.add(tileSize));
 	},
 
 	isLayoutRTL: function () {
@@ -7113,7 +7114,7 @@ L.TilesPreFetcher = L.Class.extend({
 		}
 
 		var splitPanesContext = this._docLayer.getSplitPanesContext();
-		var splitPos = splitPanesContext ? splitPanesContext.getSplitPos() : new L.Point(0, 0);
+		var splitPos = splitPanesContext ? splitPanesContext.getSplitPos() : new Point(0, 0);
 
 		if (this._splitPos === undefined) {
 			this._splitPos = splitPos;
@@ -7155,9 +7156,9 @@ L.TilesPreFetcher = L.Class.extend({
 				}
 
 				var tileRange = tileRanges[paneIdx];
-				var paneBorder = new L.Bounds(
-					tileRange.min.add(new L.Point(-1, -1)),
-					tileRange.max.add(new L.Point(1, 1))
+				var paneBorder = new Bounds(
+					tileRange.min.add(new Point(-1, -1)),
+					tileRange.max.add(new Point(1, 1))
 				);
 
 				this._borders.push(new L.TilesPreFetcher.PaneBorder(paneBorder, paneXFixed, paneYFixed));
@@ -7168,9 +7169,9 @@ L.TilesPreFetcher = L.Class.extend({
 		var finalQueue = [];
 		var visitedTiles = {};
 
-		var validTileRange = new L.Bounds(
-			new L.Point(0, 0),
-			new L.Point(
+		var validTileRange = new Bounds(
+			new Point(0, 0),
+			new Point(
 				Math.floor((this._docLayer._docWidthTwips - 1) / this._docLayer._tileWidthTwips),
 				Math.floor((this._docLayer._docHeightTwips - 1) / this._docLayer._tileHeightTwips)
 			)

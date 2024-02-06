@@ -5,6 +5,8 @@
 
 /* global _ */
 
+import { Bounds } from '../../geometry/Bounds';
+
 L.SVGGroup = L.Layer.extend({
 
 	options: {
@@ -46,7 +48,7 @@ L.SVGGroup = L.Layer.extend({
 			return;
 		}
 
-		var size = L.bounds(this._map.latLngToLayerPoint(this._bounds.getNorthWest()),
+		var size = Bounds.toBounds(this._map.latLngToLayerPoint(this._bounds.getNorthWest()),
 			this._map.latLngToLayerPoint(this._bounds.getSouthEast())).getSize();
 
 		this._forEachSVGNode(function (svgNode) {

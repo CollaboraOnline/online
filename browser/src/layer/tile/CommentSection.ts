@@ -13,12 +13,12 @@ import { CanvasSectionObject } from './CanvasSectionContainer';
 import { CanvasSectionContainer } from './CanvasSectionContainer';
 import { CommentSection } from './CommentListSection';
 import { ScrollSection } from './ScrollSection';
+import { Point } from '../../geometry/Point';
 
 declare var L: any;
 declare var app: any;
 declare var _: any;
 declare var Autolinker: any;
-declare var Hammer: any;
 declare var $: any;
 
 export class Comment extends CanvasSectionObject {
@@ -635,7 +635,7 @@ export class Comment extends CanvasSectionObject {
 				this.map.addLayer(this.sectionProperties.annotationMarker);
 		}
 		if (this.sectionProperties.data.rectangle != null) {
-			this.sectionProperties.annotationMarker.setLatLng(this.sectionProperties.docLayer._twipsToLatLng(new L.Point(this.sectionProperties.data.rectangle[0], this.sectionProperties.data.rectangle[1])));
+			this.sectionProperties.annotationMarker.setLatLng(this.sectionProperties.docLayer._twipsToLatLng(new Point(this.sectionProperties.data.rectangle[0], this.sectionProperties.data.rectangle[1])));
 			this.sectionProperties.annotationMarker.on('dragstart drag dragend', this.onMarkerDrag, this);
 			//this.sectionProperties.annotationMarker.on('click', this.onMarkerClick, this);
 		}

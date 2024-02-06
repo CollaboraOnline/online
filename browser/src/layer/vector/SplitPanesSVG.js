@@ -3,6 +3,9 @@
  * L.SplitPanesSVG renders vector layers with SVG for split-panes.
  */
 
+import { Bounds } from '../../geometry/Bounds';
+import { Point } from '../../geometry/Point';
+
 L.SplitPanesSVG = L.SplitPanesRenderer.extend({
 	_initContainer: function () {
 
@@ -79,7 +82,7 @@ L.SplitPanesSVG = L.SplitPanesRenderer.extend({
 	// In RTL Calc mode this h-mirrors the top-left position of a rectangle else it does nothing.
 	_transformContainerPoint: function (pos, size) {
 		if (this._isCalcRTL()) {
-			return new L.Point(this._map._size.x - pos.x - size.x, pos.y);
+			return new Point(this._map._size.x - pos.x - size.x, pos.y);
 		}
 
 		return pos;
@@ -95,7 +98,7 @@ L.SplitPanesSVG = L.SplitPanesRenderer.extend({
 		var size = this._map.getSize();
 		var pixelOrigin = this._map.getPixelOrigin();
 		// Container coordinates.
-		var topLeft = new L.Point(0, 0);
+		var topLeft = new Point(0, 0);
 		// pos and boundPos should be in layer coordinates.
 		var pos = undefined;
 		var boundPos = undefined;
@@ -135,7 +138,7 @@ L.SplitPanesSVG = L.SplitPanesRenderer.extend({
 				this._transformContainerPoint(topLeft, size)).round();
 			// Don't apply container point transformation for viewBox bounds.
 			var boundPosX = this._map.containerPointToLayerPointIgnoreSplits(topLeft).round().x;
-			boundPos = new L.Point(boundPosX, topLeft.y - pixelOrigin.y);
+			boundPos = new Point(boundPosX, topLeft.y - pixelOrigin.y);
 		}
 		else if (rendererId === 'bottomleft') {
 			// is always glued to left (x = 0) of the document.
@@ -144,7 +147,7 @@ L.SplitPanesSVG = L.SplitPanesRenderer.extend({
 			size.x = splitPos.x - 1;
 			pos = this._map.containerPointToLayerPointIgnoreSplits(
 				this._transformContainerPoint(topLeft, size)).round();
-			boundPos = new L.Point(topLeft.x - pixelOrigin.x, pos.y);
+			boundPos = new Point(topLeft.x - pixelOrigin.x, pos.y);
 		}
 		else {
 			window.app.console.error('unhandled rendererId : ' + rendererId);
@@ -162,10 +165,10 @@ L.SplitPanesSVG = L.SplitPanesRenderer.extend({
 			// (negation has to be done in document coordinates)
 
 			var docPosRightX = boundPos.x + size.x + pixelOrigin.x;
-			var negatedTopRightLayerPoint = new L.Point(-docPosRightX - pixelOrigin.x, boundPos.y);
-			bounds = new L.Bounds(negatedTopRightLayerPoint, negatedTopRightLayerPoint.add(size));
+			var negatedTopRightLayerPoint = new Point(-docPosRightX - pixelOrigin.x, boundPos.y);
+			bounds = new Bounds(negatedTopRightLayerPoint, negatedTopRightLayerPoint.add(size));
 		} else {
-			bounds = new L.Bounds(boundPos, boundPos.add(size));
+			bounds = new Bounds(boundPos, boundPos.add(size));
 		}
 
 		return {

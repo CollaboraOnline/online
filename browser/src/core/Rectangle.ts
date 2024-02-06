@@ -256,6 +256,3 @@ export class Rectangle {
 export function createRectangle(x: number, y: number, width: number, height: number): Rectangle {
 	return new Rectangle(x, y, width, height);
 }
-
-L.LOUtil.Rectangle = Rectangle;
-L.LOUtil.createRectangle = createRectangle;

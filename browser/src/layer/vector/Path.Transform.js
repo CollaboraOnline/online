@@ -1,5 +1,7 @@
 /* -*- js-indent-level: 8 -*- */
 
+import { Bounds } from '../../geometry/Bounds';
+import { Point } from '../../geometry/Point';
 
 /**
  * Marker handler
@@ -194,7 +196,7 @@ L.Handler.PathTransform = L.Handler.extend({
 		this._rotationOrigin   = null;
 		this._scaleOrigin      = null;
 		this._angle            = 0;
-		this._scale            = L.point(1, 1);
+		this._scale            = Point.toPoint(1, 1);
 		this._initialDist      = 0;
 		this._initialDistX     = 0;
 		this._initialDistY     = 0;
@@ -329,13 +331,13 @@ L.Handler.PathTransform = L.Handler.extend({
 
 
 	/**
-	* @param  {L.Point|Number} scale
+	* @param  {Point|Number} scale
 	* @param  {L.LatLng}       origin
 	* @return {L.Handler.PathTransform}
 	*/
 	scale: function(scale, origin) {
 		if (typeof scale === 'number') {
-			scale = L.point(scale, scale);
+			scale = Point.toPoint(scale, scale);
 		}
 		return this.transform(0, scale, null, origin);
 	},
@@ -343,7 +345,7 @@ L.Handler.PathTransform = L.Handler.extend({
 
 	/**
 	* @param  {Number}    angle
-	* @param  {L.Point}   scale
+	* @param  {Point}   scale
 	* @param  {L.LatLng=} rotationOrigin
 	* @param  {L.LatLng=} scaleOrigin
 	* @return {L.Handler.PathTransform}
@@ -358,7 +360,7 @@ L.Handler.PathTransform = L.Handler.extend({
 	},
 
 	/**
-	* @param  {L.Point}   point
+	* @param  {Point}   point
 	*/
 	getMarker: function(point) {
 		for (var i = 0, len = this._handlers.length; i < len; i++) {
@@ -427,7 +429,7 @@ L.Handler.PathTransform = L.Handler.extend({
 		}
 
 		this._matrix = L.matrix(1, 0, 0, 1, 0, 0);
-		this._scale  = L.point(1, 1);
+		this._scale  = Point.toPoint(1, 1);
 		this._angle  = 0;
 
 		this._updateHandlers();
@@ -528,7 +530,7 @@ L.Handler.PathTransform = L.Handler.extend({
 		var origin;
 
 		angle = angle || this._angle || 0;
-		scale = scale || this._scale || L.point(1, 1);
+		scale = scale || this._scale || Point.toPoint(1, 1);
 
 		if (!(scale.x === 1 && scale.y === 1)) {
 			scaleOrigin = scaleOrigin || this._scaleOrigin;
@@ -568,7 +570,7 @@ L.Handler.PathTransform = L.Handler.extend({
 	*
 	* @param {L.Path}    path
 	* @param {Number=}   angle
-	* @param {L.Point=}  scale
+	* @param {Point=}  scale
 	* @param {L.LatLng=} rotationOrigin
 	* @param {L.LatLng=} scaleOrigin
 	*/
@@ -765,7 +767,7 @@ L.Handler.PathTransform = L.Handler.extend({
 		this._handlers = [];
 		this._polyEdges = [];
 		for (var i = 0; i < handleList.length; ++i) {
-			var point = new L.Point(handleList[i].point.x,handleList[i].point.y);
+			var point = new Point(handleList[i].point.x,handleList[i].point.y);
 			point = map._docLayer._convertCalcTileTwips(point);
 			handleList[i].convertedPoint = point;
 			this._handlers.push(
@@ -841,7 +843,7 @@ L.Handler.PathTransform = L.Handler.extend({
 			.fire('transformstart', { layer: this._path })
 			.fire('scalestart', {
 				layer: this._path,
-				scale: L.point(1, 1),
+				scale: Point.toPoint(1, 1),
 				pos: this._activeMarker._latlng,
 				handleId: this._activeMarker.options.id
 			});
@@ -930,7 +932,7 @@ L.Handler.PathTransform = L.Handler.extend({
 			return;
 
 		var handle = anchor[anchorKind][0];
-		var point = new L.Point(handle.point.x, handle.point.y);
+		var point = new Point(handle.point.x, handle.point.y);
 		point = map._docLayer._convertCalcTileTwips(point);
 		var anchorPos = map._docLayer._twipsToLatLng(point, this._map.getZoom());
 		var options = {
@@ -953,7 +955,7 @@ L.Handler.PathTransform = L.Handler.extend({
 		var handles = this.options.handles['custom']['22'];
 		this._customMarkers = [];
 		for (var i = 0; i < handles.length; ++i) {
-			var point = new L.Point(handles[i].point.x, handles[i].point.y);
+			var point = new Point(handles[i].point.x, handles[i].point.y);
 			point = map._docLayer._convertCalcTileTwips(point);
 			var customHandlePosition = map._docLayer._twipsToLatLng(point, this._map.getZoom());
 			var options = {
@@ -1053,7 +1055,7 @@ L.Handler.PathTransform = L.Handler.extend({
 
 	/**
 	 * Returns the layer coordinates of the event position.
-	 * @return {L.Point}
+	 * @return {Point}
 	 */
 	_getEventLayerPoint: function (evt) {
 		if (!this.isCalcRTL()) {
@@ -1199,7 +1201,7 @@ L.Handler.PathTransform = L.Handler.extend({
 			.fire('transformstart', { layer: this._path })
 			.fire('scalestart', {
 				layer: this._path,
-				scale: L.point(1, 1),
+				scale: Point.toPoint(1, 1),
 				pos: this._activeMarker._latlng,
 				handleId: this._getPoints()[index].id
 			});
@@ -1235,7 +1237,7 @@ L.Handler.PathTransform = L.Handler.extend({
 			var glueList = this._glueHandlers;
 			for (var i = 0; i < glueList.length; i++) {
 				var gluePoint = glueList[i];
-				if (gluePoint._pxBounds.intersects(new L.Bounds(evtLayerPoint, evtLayerPoint))) {
+				if (gluePoint._pxBounds.intersects(new Bounds(evtLayerPoint, evtLayerPoint))) {
 					gluePoint.options.enter = true;
 					this._gluePointMouseEnter(gluePoint);
 				} else if (gluePoint.options.enter) {
@@ -1267,7 +1269,7 @@ L.Handler.PathTransform = L.Handler.extend({
 				(originPoint.y - evtLayerPoint.y) / this._initialDistY : 1;
 		}
 
-		this._scale = new L.Point(ratioX, ratioY);
+		this._scale = new Point(ratioX, ratioY);
 
 		// update matrix
 		this._matrix = this._initialMatrix
@@ -1457,10 +1459,10 @@ L.Handler.PathTransform = L.Handler.extend({
 		this._showHandlers();
 
 		this._path.fire('transformed', {
-			scale: L.point(1, 1),
+			scale: Point.toPoint(1, 1),
 			rotation: 0,
 			matrix: L.matrix.apply(undefined, matrix),
-			translate: L.point(matrix[4], matrix[5]),
+			translate: Point.toPoint(matrix[4], matrix[5]),
 			layer: this._path
 		});
 	}

@@ -20,6 +20,8 @@
 
 /* global app L */
 
+import { Point } from '../geometry/Point';
+
 L.DebugManager = L.Class.extend({
 	initialize: function(map) {
 		this._map = map;
@@ -782,8 +784,8 @@ L.DebugManager = L.Class.extend({
 
 		var signX =  this._docLayer.isCalcRTL() ? -1 : 1;
 
-		var absTopLeftTwips = L.point(topLeftTwips.x * signX, topLeftTwips.y);
-		var absBottomRightTwips = L.point(bottomRightTwips.x * signX, bottomRightTwips.y);
+		var absTopLeftTwips = Point.toPoint(topLeftTwips.x * signX, topLeftTwips.y);
+		var absBottomRightTwips = Point.toPoint(bottomRightTwips.x * signX, bottomRightTwips.y);
 
 		var invalidBoundCoords = new L.LatLngBounds(
 			this._docLayer._twipsToLatLng(absTopLeftTwips, this._docLayer._tileZoom),

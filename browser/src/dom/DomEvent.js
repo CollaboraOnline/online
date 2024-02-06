@@ -4,6 +4,8 @@
  * Inspired by John Resig, Dean Edwards and YUI addEvent implementations.
  */
 
+import { Point } from '../geometry/Point';
+
 var eventsKey = '_leaflet_events';
 
 L.DomEvent = {
@@ -190,9 +192,9 @@ L.DomEvent = {
 	getMousePosition: function (e, container) {
 		if (!container) {
 			if (e.clientX === undefined && e.touches !== undefined)
-				return new L.Point(e.touches[0].clientX, e.touches[0].clientY);
+				return new Point(e.touches[0].clientX, e.touches[0].clientY);
 
-			return new L.Point(e.clientX, e.clientY);
+			return new Point(e.clientX, e.clientY);
 		}
 
 		var rect = container.getBoundingClientRect(), // constant object
@@ -212,15 +214,15 @@ L.DomEvent = {
 		// touching the screen any longer then and thus there is no "mouse position". But
 		// let's just least guard against an unhandled exception for now.
 		if (e.clientX === undefined && e.touches !== undefined && e.touches.length > 0)
-			return new L.Point(
+			return new Point(
 				e.touches[0].clientX - left - container.clientLeft,
 				e.touches[0].clientY - top - container.clientTop);
 		else if (e.clientX === undefined && e.changedTouches !== undefined && e.changedTouches.length > 0)
-			return new L.Point(
+			return new Point(
 				e.changedTouches[0].clientX - left - container.clientLeft,
 				e.changedTouches[0].clientY - top - container.clientTop);
 
-		return new L.Point(
+		return new Point(
 			e.clientX - left - container.clientLeft,
 			e.clientY - top - container.clientTop);
 	},

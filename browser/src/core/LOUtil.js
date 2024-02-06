@@ -3,6 +3,9 @@
  * L.LOUtil contains various LO related utility functions used throughout the code
  */
 
+import { Bounds } from '../geometry/Bounds';
+import { Point } from '../geometry/Point';
+
 L.LOUtil = {
 	// Based on core.git's colordata.hxx: COL_AUTHOR1_DARK...COL_AUTHOR9_DARK
 	// consisting of arrays of RGB values
@@ -74,9 +77,9 @@ L.LOUtil = {
 
 	stringToBounds: function(bounds) {
 		var numbers = bounds.match(/\d+/g);
-		var topLeft = L.point(parseInt(numbers[0]), parseInt(numbers[1]));
-		var bottomRight = topLeft.add(L.point(parseInt(numbers[2]), parseInt(numbers[3])));
-		return L.bounds(topLeft, bottomRight);
+		var topLeft = Point.toPoint(parseInt(numbers[0]), parseInt(numbers[1]));
+		var bottomRight = topLeft.add(Point.toPoint(parseInt(numbers[2]), parseInt(numbers[3])));
+		return Bounds.toBounds(topLeft, bottomRight);
 	},
 
 	stringToRectangles: function(strRect) {
@@ -84,10 +87,10 @@ L.LOUtil = {
 		var rectangles = [];
 		if (matches !== null) {
 			for (var itMatch = 0; itMatch < matches.length; itMatch += 4) {
-				var topLeft = L.point(parseInt(matches[itMatch]), parseInt(matches[itMatch + 1]));
-				var size = L.point(parseInt(matches[itMatch + 2]), parseInt(matches[itMatch + 3]));
-				var topRight = topLeft.add(L.point(size.x, 0));
-				var bottomLeft = topLeft.add(L.point(0, size.y));
+				var topLeft = Point.toPoint(parseInt(matches[itMatch]), parseInt(matches[itMatch + 1]));
+				var size = Point.toPoint(parseInt(matches[itMatch + 2]), parseInt(matches[itMatch + 3]));
+				var topRight = topLeft.add(Point.toPoint(size.x, 0));
+				var bottomLeft = topLeft.add(Point.toPoint(0, size.y));
 				var bottomRight = topLeft.add(size);
 				rectangles.push([bottomLeft, bottomRight, topLeft, topRight]);
 			}

@@ -14,6 +14,11 @@
 
 /* global app */
 
+import { Bounds } from '../../geometry/Bounds';
+import { Point } from '../../geometry/Point';
+import { SheetGeometry } from './SheetGeometry';
+import { createRectangle } from '../../core/Rectangle';
+
 L.CalcTileLayer = L.CanvasTileLayer.extend({
 	options: {
 		// TODO: sync these automatically from SAL_LOK_OPTIONS
@@ -42,15 +47,15 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		}
 
 		if (!comment) {
-			var pixelStart = new L.Point(Math.ceil(this._cellCursorPixels.getX1()),
+			var pixelStart = new Point(Math.ceil(this._cellCursorPixels.getX1()),
 						     Math.ceil(this._cellCursorPixels.getY1()));
 			var rangeStart = this.sheetGeometry.getCellFromPos(pixelStart, 'corepixels');
-			var pixelEnd = new L.Point(Math.floor(this._cellCursorPixels.getX2() - 1),
+			var pixelEnd = new Point(Math.floor(this._cellCursorPixels.getX2() - 1),
 						   Math.floor(this._cellCursorPixels.getY2() - 1));
 			var rangeEnd = this.sheetGeometry.getCellFromPos(pixelEnd, 'corepixels');
 
 			var newComment = {
-				cellRange: new L.Bounds(rangeStart, rangeEnd),
+				cellRange: new Bounds(rangeStart, rangeEnd),
 				anchorPos: app.file.calc.cellCursor.rectangle.twips.slice(), // Copy the array.
 				id: 'new',
 				tab: this._selectedPart,
@@ -98,7 +103,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 
 	_resetInternalState: function() {
 		this._cellSelections = Array(0);
-		this._cellCursorXY = new L.Point(-1, -1);
+		this._cellCursorXY = new Point(-1, -1);
 		this._gotFirstCellCursor = false;
 		this._lastColumn = 0; // with data
 		this._lastRow = 0; // with data
@@ -191,14 +196,14 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		if (isNaN(command.mode))
 			command.mode = this._selectedMode;
 
-		var topLeftTwips = new L.Point(command.x, command.y);
-		var offset = new L.Point(command.width, command.height);
+		var topLeftTwips = new Point(command.x, command.y);
+		var offset = new Point(command.width, command.height);
 		var bottomRightTwips = topLeftTwips.add(offset);
 		if (this._debug.tileInvalidationsOn && command.part === this._selectedPart) {
 			this._debug.addInvalidationRectangle(topLeftTwips, bottomRightTwips, textMsg);
 		}
 
-		var invalidBounds = new L.Bounds(topLeftTwips, bottomRightTwips);
+		var invalidBounds = new Bounds(topLeftTwips, bottomRightTwips);
 		var visibleArea, visiblePaneAreas;
 		if (this._splitPanesContext) {
 			visiblePaneAreas = this._splitPanesContext.getTwipsBoundList();
@@ -206,7 +211,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		else {
 			var visibleTopLeft = this._latLngToTwips(this._map.getBounds().getNorthWest());
 			var visibleBottomRight = this._latLngToTwips(this._map.getBounds().getSouthEast());
-			visibleArea = new L.Bounds(visibleTopLeft, visibleBottomRight);
+			visibleArea = new Bounds(visibleTopLeft, visibleBottomRight);
 		}
 
 		var needsNewTiles = false;
@@ -316,9 +321,9 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		}
 
 		// When there will be a latlng conversion, we should use CSS pixels.
-		var newSizePx = this._twipsToPixels(new L.Point(newDocWidth, newDocHeight));
+		var newSizePx = this._twipsToPixels(new Point(newDocWidth, newDocHeight));
 
-		var topLeft = this._map.unproject(new L.Point(0, 0));
+		var topLeft = this._map.unproject(new Point(0, 0));
 		var bottomRight = this._map.unproject(newSizePx);
 
 		this._docPixelSize = newSizePx.clone();
@@ -342,7 +347,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			x = this._cellCursorXY.x + 1;
 			y = this._cellCursorXY.y + 1;
 		}
-		var size = new L.Point(0, 0);
+		var size = new Point(0, 0);
 		if (this._cellCursor && !this._isEmptyRectangle(this._cellCursor)) {
 			size = this._cellCursorTwips.getSize();
 		}
@@ -414,14 +419,14 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			this._viewId = parseInt(command.viewid);
 			console.assert(this._viewId >= 0, 'Incorrect viewId received: ' + this._viewId);
 			var mapSize = this._map.getSize();
-			var sizePx = this._twipsToPixels(new L.Point(this._docWidthTwips, this._docHeightTwips));
+			var sizePx = this._twipsToPixels(new Point(this._docWidthTwips, this._docHeightTwips));
 			var width = sizePx.x;
 			var height = sizePx.y;
 			if (width < mapSize.x || height < mapSize.y) {
 				width = Math.max(width, mapSize.x);
 				height = Math.max(height, mapSize.y);
-				var topLeft = this._map.unproject(new L.Point(0, 0));
-				var bottomRight = this._map.unproject(new L.Point(width, height));
+				var topLeft = this._map.unproject(new Point(0, 0));
+				var bottomRight = this._map.unproject(new Point(width, height));
 				this._map.setMaxBounds(new L.LatLngBounds(topLeft, bottomRight));
 				this._docPixelSize = {x: width, y: height};
 				this._map.fire('scrolllimits', {x: width, y: height});
@@ -475,7 +480,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 
 		var offset = coordinatesData.offset || {};
 
-		var topLeftPoint = new L.Point(coordinatesData.x, coordinatesData.y);
+		var topLeftPoint = new Point(coordinatesData.x, coordinatesData.y);
 		var sizePx = this._map.getSize();
 
 		if (topLeftPoint.x === undefined) {
@@ -708,7 +713,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 	_handleSheetGeometryDataMsg: function (jsonMsgObj, differentSheet) {
 		if (!this.sheetGeometry) {
 			this._sheetGeomFirstWait = false;
-			this.sheetGeometry = new L.SheetGeometry(jsonMsgObj,
+			this.sheetGeometry = new SheetGeometry(jsonMsgObj,
 				this._tileWidthTwips, this._tileHeightTwips,
 				this._tileSize, this._selectedPart);
 
@@ -835,7 +840,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		}
 
 		if (!this._splitCellState) {
-			this._splitCellState = new L.Point(-1, -1);
+			this._splitCellState = new Point(-1, -1);
 		}
 
 		if (!e.state || e.state.length === 0) {
@@ -971,12 +976,12 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 				var that = this;
 				this._cellSelections = this._cellSelections.map(function(element) {
 					element = element.split(',');
-					var topLeftTwips = new L.Point(parseInt(element[0]), parseInt(element[1]));
-					var offset = new L.Point(parseInt(element[2]), parseInt(element[3]));
+					var topLeftTwips = new Point(parseInt(element[0]), parseInt(element[1]));
+					var offset = new Point(parseInt(element[2]), parseInt(element[3]));
 					var bottomRightTwips = topLeftTwips.add(offset);
-					var boundsTwips = that._convertToTileTwipsSheetArea(new L.Bounds(topLeftTwips, bottomRightTwips));
+					var boundsTwips = that._convertToTileTwipsSheetArea(new Bounds(topLeftTwips, bottomRightTwips));
 
-					element = L.LOUtil.createRectangle(boundsTwips.min.x * ratio, boundsTwips.min.y * ratio, boundsTwips.getSize().x * ratio, boundsTwips.getSize().y * ratio);
+					element = createRectangle(boundsTwips.min.x * ratio, boundsTwips.min.y * ratio, boundsTwips.getSize().x * ratio, boundsTwips.getSize().y * ratio);
 					return element;
 				});
 			}
@@ -1012,8 +1017,8 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			return undefined;
 		}
 
-		var relrect = L.Bounds.parse(msgObj.relrect);
-		var refpoint = L.Point.parse(msgObj.refpoint);
+		var relrect = Bounds.parse(msgObj.relrect);
+		var refpoint = Point.parse(msgObj.refpoint);
 		refpoint = this.sheetGeometry.getTileTwipsPointFromPrint(refpoint);
 		return relrect.add(refpoint);
 	},
@@ -1033,17 +1038,17 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		var delimIndex = textMsg.indexOf(refpointDelim);
 		if (delimIndex === -1) {
 			// No refpoint information available, treat it as cell-range selection rectangle.
-			var rangeRectArray = L.Bounds.parseArray(textMsg);
+			var rangeRectArray = Bounds.parseArray(textMsg);
 			rangeRectArray = rangeRectArray.map(function (rect) {
 				return this._convertToTileTwipsSheetArea(rect);
 			}, this);
 			return rangeRectArray;
 		}
 
-		var refpoint = L.Point.parse(textMsg.substring(delimIndex + refpointDelim.length));
+		var refpoint = Point.parse(textMsg.substring(delimIndex + refpointDelim.length));
 		refpoint = this.sheetGeometry.getTileTwipsPointFromPrint(refpoint);
 
-		var rectArray = L.Bounds.parseArray(textMsg.substring(0, delimIndex));
+		var rectArray = Bounds.parseArray(textMsg.substring(0, delimIndex));
 		rectArray.forEach(function (rect) {
 			rect._add(refpoint); // compute absolute coordinates and update in-place.
 		});
@@ -1085,7 +1090,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			return this.sheetGeometry.getSize('corepixels');
 		}
 
-		return this._twipsToPixels(new L.Point(this._docWidthTwips, this._docHeightTwips));
+		return this._twipsToPixels(new Point(this._docWidthTwips, this._docHeightTwips));
 	},
 
 	getCursorPos: function () {
@@ -1108,7 +1113,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		}
 
 		var noSplit = !this._splitPanesContext
-			|| this._splitPanesContext.getSplitPos().equals(new L.Point(0, 0));
+			|| this._splitPanesContext.getSplitPos().equals(new Point(0, 0));
 
 		var cellWidth = this._cellCursor.getWidth();
 		var cellHeight = this._cellCursor.getHeight();
@@ -1123,7 +1128,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		}
 
 		var freePaneBounds = paneRectsInLatLng[paneRectsInLatLng.length - 1];
-		var splitPoint = map.unproject(this._splitPanesContext ? this._splitPanesContext.getSplitPos() : new L.Point(0, 0));
+		var splitPoint = map.unproject(this._splitPanesContext ? this._splitPanesContext.getSplitPos() : new Point(0, 0));
 
 		// Horizontal split
 		if (this._cellCursor.getEast() > splitPoint.lng) {
