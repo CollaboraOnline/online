@@ -80,11 +80,6 @@ Cypress.Commands.add('cSetActiveFrame', function(frameID) {
 	cy.cActiveFrame = frameID;
 });
 
-Cypress.Commands.add('cSetLevel', function(level) {
-	Cypress.log();
-	cy.cLevel = level;
-});
-
 /**
  * Get the current iFrame body to be chained with other queries.
  * Example: cy.cframe().find('#my-item');
@@ -150,24 +145,12 @@ Cypress.Commands.add('cGet', function(selector, options) {
 		optionsWithLogFalse = {log: false};
 	}
 
-	if (cy.cLevel === '1') {
-		if (selector)
-			return cy.get(cy.cActiveFrame, {log: false})
-				.its('0.contentDocument', {log: false})
-				.find(selector, optionsWithLogFalse);
-		else
-			return cy.get(cy.cActiveFrame, optionsWithLogFalse)
-				.its('0.contentDocument', {log: false});
-	}
-	else if (selector) // This is not cool frame and there is a selector.
+	if (selector) {
 		return cy.get(cy.cActiveFrame, {log: false})
 			.its('0.contentDocument', {log: false})
-			.find('#coolframe', {log: false})
-			.its('0.contentDocument', {log: false})
 			.find(selector, optionsWithLogFalse);
-	else // Not cool frame without a selector.
+	} else {
 		return cy.get(cy.cActiveFrame, optionsWithLogFalse)
-			.its('0.contentDocument', {log: false})
-			.find('#coolframe', {log: false})
 			.its('0.contentDocument', {log: false});
+	}
 });
