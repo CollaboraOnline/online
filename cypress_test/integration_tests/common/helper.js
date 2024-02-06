@@ -513,7 +513,6 @@ function beforeAll(fileName, subFolder, noFileCopy, isMultiUser, subsequentLoad,
 	cy.log('Starting test: ' + Cypress.spec.relative + ' / ' + Cypress.currentTest.titlePath.join(' / '));
 	// Set defaults here in order to remove checks from cy.cGet function.
 	cy.cSetActiveFrame('#coolframe');
-	cy.cSetLevel('1');
 
 	return loadTestDoc(fileName, subFolder, noFileCopy, isMultiUser, subsequentLoad, hasInteractionBeforeLoad, noRename);
 }
