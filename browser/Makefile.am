@@ -502,7 +502,7 @@ endif
 
 $(TYPESCRIPT_JS_DIR)/%.js: $(srcdir)/%.ts
 	@mkdir -p $(dir $@)
-	$(builddir)/node_modules/typescript/bin/tsc --outFile $@ $<
+	$(builddir)/node_modules/typescript/bin/tsc --project admin/ --outFile $@
 
 build-cool: \
 	$(COOL_L10N_DST) \
