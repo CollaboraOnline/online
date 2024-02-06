@@ -85,6 +85,8 @@ public:
     virtual std::string getDocPassword() const = 0;
 
     virtual DocumentPasswordType getDocPasswordType() const = 0;
+
+    virtual void updateActivityHeader() const = 0;
 };
 
 struct RecordedEvent
@@ -379,6 +381,20 @@ private:
     }
 
 public:
+    // simple one line for priming
+    std::string getActivityState()
+    {
+        std::stringstream ss;
+        ss << "view: " << _viewId
+           << ", session " << getId()
+           << (isReadOnly() ? ", ro": ", rw")
+           << ", user: '" << getUserNameAnonym() << "'"
+           << ", load" << (_isDocLoaded ? "ed" : "ing")
+           << ", type: " << _docType
+           << ", lang: " << getLang();
+        return ss.str();
+    }
+
     void dumpState(std::ostream& oss) override
     {
         Session::dumpState(oss);

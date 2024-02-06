@@ -795,6 +795,8 @@ public:
             LOG_DBG("Have " << _sessions.size() << " active sessions after creating "
                             << session->getId());
             LOG_INF("New session [" << sessionId << "]");
+
+            updateActivityHeader();
             return true;
         }
         catch (const std::exception& ex)
@@ -1344,6 +1346,17 @@ private:
     DocumentPasswordType getDocPasswordType() const override
     {
         return _docPasswordType;
+    }
+
+    void updateActivityHeader() const override
+    {
+        // pre-prepare and set details in case of a signal later
+        std::stringstream ss;
+        ss << "Session count: " << _sessions.size() << "\n";
+        for (const auto& it : _sessions)
+            ss << "\t" << it.second->getActivityState() << "\n";
+        ss << "Commands:\n";
+        SigUtil::setActivityHeader(ss.str());
     }
 
     /// Notify all views of viewId and their associated usernames
