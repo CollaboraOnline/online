@@ -64,6 +64,7 @@ static std::atomic<bool> ForwardSigUsr2Flag(false); //< Flags to forward SIG_USR
 #endif
 
 static size_t ActivityStringIndex = 0;
+static std::string ActivityHeader = "";
 static std::array<std::string, 16> ActivityStrings;
 static bool UnattendedRun = false;
 #if !MOBILEAPP
@@ -132,9 +133,19 @@ void requestShutdown()
 #endif
     }
 
+    void setActivityHeader(const std::string &message)
+    {
+        ActivityHeader = message;
+    }
+
     void addActivity(const std::string &message)
     {
         ActivityStrings[ActivityStringIndex++ % ActivityStrings.size()] = message;
+    }
+
+    void addActivity(const std::string &viewId, const std::string &message)
+    {
+        addActivity("session: " + viewId + ": " + message);
     }
 
     void setUnattended()
@@ -388,6 +399,7 @@ void requestShutdown()
         signalLog("\n");
 
         signalLog("Recent activity:\n");
+        signalLog(ActivityHeader.c_str());
         for (size_t i = 0; i < ActivityStrings.size(); ++i)
         {
             size_t idx = (ActivityStringIndex + i) % ActivityStrings.size();
