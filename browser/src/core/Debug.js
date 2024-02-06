@@ -313,7 +313,7 @@ L.DebugManager = L.Class.extend({
 
 		this._addDebugTool({
 			name: 'Typer',
-			category: 'Automated User',
+			category: 'Functionality',
 			startsOn: false,
 			onAdd: function () {
 				self._typerLorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\n';
@@ -327,7 +327,7 @@ L.DebugManager = L.Class.extend({
 
 		this._addDebugTool({
 			name: 'Randomize user settings',
-			category: 'Automated User',
+			category: 'Functionality',
 			startsOn: !!window.coolParams.get('randomUser'),
 			onAdd: function () {
 				self._randomizeSettings();
@@ -338,7 +338,7 @@ L.DebugManager = L.Class.extend({
 		});
 
 		this._addDebugTool({
-			name: 'Automated user input',
+			name: 'Enable automated user',
 			category: 'Automated User',
 			startsOn: false,
 			onAdd: function () {
