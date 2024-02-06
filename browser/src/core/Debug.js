@@ -417,7 +417,7 @@ L.DebugManager = L.Class.extend({
 		}
 
 		// Set zoom
-		var targetZoom = Math.floor(Math.random() * 18) + 1;
+		var targetZoom = Math.floor(Math.random() * 9) + 6; // 6 to 14, 50% to 200%
 		window.app.console.log('Randomize Settings: Set zoom to '+targetZoom);
 		this._map.setZoom(targetZoom, null, false);
 
