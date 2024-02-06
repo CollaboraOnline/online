@@ -841,7 +841,10 @@ public:
 #endif
         }
 
-        LOG_TRC("Purging dead sessions, have " << num_sessions << " active sessions.");
+        if (deadSessions.size() > 0 )
+            LOG_TRC("Purging " << deadSessions.size() <<
+                    " dead sessions, with " << num_sessions <<
+                    " active sessions.");
 
         // Don't destroy sessions while holding our lock.
         // We may deadlock if a session is waiting on us
@@ -960,7 +963,6 @@ public:
 
     void trimIfInactive() override
     {
-        LOG_TRC("Should we trim our caches ?");
         // FIXME: multi-document mobile optimization ?
         for (const auto& it : _sessions)
         {
@@ -980,14 +982,13 @@ public:
 
     void trimAfterInactivity()
     {
-        LOG_TRC("Should we trim our caches ?");
         if (std::chrono::duration_cast<std::chrono::seconds>(std::chrono::steady_clock::now() -
                                                              _lastMemTrimTime) < std::chrono::seconds(30))
         {
-            LOG_TRC("Too soon to trim again");
             return;
         }
 
+        LOG_TRC("Should we trim our caches ?");
         double minInactivityMs = std::numeric_limits<double>::max();
         for (const auto& it : _sessions)
         {
