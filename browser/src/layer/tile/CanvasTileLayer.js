@@ -1916,7 +1916,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		else if (textMsg.startsWith('readonlyhyperlinkclicked: ')) {
 			var jsonString = textMsg.replace('readonlyhyperlinkclicked: ', '');
 			var json = JSON.parse(jsonString);
-
 			var position = this._twipsToLatLng(json.position);
 			this._showURLPopUp(position, json.link);
 		}
@@ -3723,7 +3722,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			' x=' + x + ' y=' + y + ' count=' + count +
 			' buttons=' + buttons + ' modifier=' + modifier);
 
-		if (app.file.permission === 'readonly' && type === 'buttonup' && (this._docType === 'text' || this._docType === 'spreadsheet')) {
+		if (app.file.permission === 'readonly' && type === 'buttonup' && this._docType === 'text') {
 			if (this._map.hyperlinkPopup !== null)
 				this._closeURLPopUp();
 			app.socket.sendMessage('readonlyclick x=' + x + ' y=' + y);
