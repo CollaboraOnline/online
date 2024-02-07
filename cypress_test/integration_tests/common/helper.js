@@ -510,7 +510,6 @@ function reload(fileName, subFolder, noFileCopy, isMultiUser, subsequentLoad, ha
 
 // noRename - whether or not to give the file a unique name, if noFileCopy is false.
 function beforeAll(fileName, subFolder, noFileCopy, isMultiUser, subsequentLoad, hasInteractionBeforeLoad, noRename) {
-	cy.log('Starting test: ' + Cypress.spec.relative + ' / ' + Cypress.currentTest.titlePath.join(' / '));
 	// Set defaults here in order to remove checks from cy.cGet function.
 	cy.cSetActiveFrame('#coolframe');
 
@@ -519,7 +518,6 @@ function beforeAll(fileName, subFolder, noFileCopy, isMultiUser, subsequentLoad,
 
 function afterAll(fileName, testState) {
 	closeDocument(fileName, testState);
-	cy.log('Finished test: ' + Cypress.spec.relative + ' / ' + Cypress.currentTest.titlePath.join(' / '));
 }
 
 // This method is intended to call after each test case.
