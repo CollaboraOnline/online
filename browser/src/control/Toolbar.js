@@ -451,6 +451,7 @@ L.Map.include({
 			else if (map.getDocType() === 'drawing') {
 				document.getElementById('drawing-shortcuts').style.display='block';
 			}
+			document.getElementById('online-help-search-input').style.display='none';
 		} else /* id === 'online-help' */ {
 			document.getElementById('keyboard-shortcuts-content').style.display='none';
 			if (window.socketProxy) {
@@ -548,6 +549,106 @@ L.Map.include({
 		if (id === 'keyboard-shortcuts-content') {
 			document.getElementById('keyboard-shortcuts-content').innerHTML = L.Util.replaceCtrlAltInMac(document.getElementById('keyboard-shortcuts-content').innerHTML);
 		}
+		var searchInput = document.getElementById('online-help-search-input');
+		searchInput.focus();
+		var startFilter = false;
+		searchInput.addEventListener('input', function () {
+			// Hide all elements within the #online-help-content on first key stroke/at start of filter content
+			if (!startFilter) {
+				// Hide all <p> tags within .text, .spreadsheet, or .presentation sections
+				document.querySelectorAll('#online-help-content > *:not(a), .link-section p, .product-header').forEach(function (element) {
+					// Check if the element has class text, spreadsheet, or presentation
+					if (!element.classList.contains('text') && !element.classList.contains('spreadsheet') && !element.classList.contains('presentation')) {
+						element.style.display = 'none';
+					}
+				});
+
+				startFilter = true;
+			}
+			var searchTerm = searchInput.value.trim();
+			// Reset highlighting and visibility if search term is empty
+			if (searchTerm === '') {
+				this.resetFilterResults();
+				startFilter = false;
+			}
+			else {
+				this.filterResults(searchTerm);
+			}
+		}.bind(this));
+	},
+
+
+	filterResults: function (searchTerm) {
+
+		// Select main sections
+		var mainSections = document.querySelectorAll('.section');
+
+		// Loop through each main section
+		mainSections.forEach(function (mainSection) {
+			// check header text matches or not
+			var headerText = mainSection.querySelector('.section-header').textContent.toLowerCase();
+			var containsTermInHeader = headerText.includes(searchTerm.toLowerCase());
+			// check main section text matches or not
+			var sectionText = mainSection.textContent.toLowerCase();
+			var containsTerm = sectionText.includes(searchTerm.toLowerCase());
+			
+			//sub-section text matches or not
+			var subSections = mainSection.querySelectorAll('.sub-section');
+			var subSectionContainsTerm = false;
+
+			// if text matching with the main header then display full main section
+			if (containsTermInHeader) {
+				// first need to reset display of subsection
+				subSections.forEach(function(subSection) {
+					subSection.style.backgroundColor = '';
+					subSection.style.display = 'block';
+				});
+				mainSection.style.backgroundColor = 'yellow';
+				mainSection.style.display = 'block';
+			}
+			else {
+				// else Loop through each sub-section and display subsections with matching text has search term
+				subSections.forEach(function (subSection) {
+					// Highlight matching sub-sections
+					if (subSection.textContent.toLowerCase().includes(searchTerm.toLowerCase())) {
+						subSection.style.backgroundColor = 'yellow';
+						subSection.style.display = 'block';
+						// make sure main section of matched subsection is visible
+						mainSection.style.display = 'block';
+						subSectionContainsTerm = true;
+					} else {
+						subSection.style.backgroundColor = ''; // Remove previous highlighting
+						subSection.style.display = 'none';
+					}
+				});
+			}
+
+			if (!subSectionContainsTerm && !containsTerm) {
+				mainSection.style.display = 'none';
+			}
+
+		}.bind(this));
+
+	},
+
+	resetFilterResults: function () {
+		// Select main sections and make it visible
+		var mainSections = document.querySelectorAll('.section');
+		mainSections.forEach(function(mainSection) {
+			mainSection.style.backgroundColor = '';
+			mainSection.style.display = 'block';
+
+			var subSections = mainSection.querySelectorAll('.sub-section');
+			subSections.forEach(function(subSection) {
+				subSection.style.backgroundColor = '';
+				subSection.style.display = 'block';
+			});
+		});
+
+		// select all event scroll elements, main-header elements, product header elements and make visible to user if search term is empty
+		document.querySelectorAll('.m-v-0, .product-header, .help-dialog-header').forEach(function(element) {
+			element.style.display = 'block';
+		});
 	},
 
 	_doOpenHelpFile: function(data, id, map) {
