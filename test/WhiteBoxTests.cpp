@@ -657,7 +657,7 @@ public:
         return DocumentPasswordType::ToView;
     }
 
-    void updateActivityHeader() const
+    void updateActivityHeader() const override
     {
     }
 };
