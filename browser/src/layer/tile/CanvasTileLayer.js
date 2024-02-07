@@ -1914,8 +1914,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			}
 		}
 		else if (textMsg.startsWith('readonlyhyperlinkclicked: ')) {
-			var jsonString = textMsg.replace('readonlyhyperlinkclicked: ', '');
-			var json = JSON.parse(jsonString);
+			var json = JSON.parse(textMsg.replace('readonlyhyperlinkclicked: ', ''));
 			var position = this._twipsToLatLng(json.position);
 			this._showURLPopUp(position, json.link);
 		}
