@@ -4,8 +4,14 @@
 /// <reference path="./helper/canvasContainerSetup.ts" />
 /// <reference path="./helper/rectUtil.ts" />
 
-var jsdom = require('jsdom');
-var assert = require('assert').strict;
+declare var app: any;
+
+import assert from 'assert';
+import jsdom from 'jsdom';
+import { canvasDomString, setupCanvasContainer } from './helper/canvasContainerSetup';
+
+//var jsdom = require('jsdom');
+//var assert = require('assert').strict;
 
 var dom = new jsdom.JSDOM(canvasDomString());
 

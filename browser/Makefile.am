@@ -34,7 +34,7 @@ MOCHA_TS_JS_FILES := $(MOCHA_TS_FILES:.ts=.js)
 # tsc can report a failure, but still create a .js and a second make attempt will succeed,
 # so if this returns an error then delete the target
 $(MOCHA_TS_JS_FILES): %.js: %.ts
-	$(builddir)/node_modules/typescript/bin/tsc $< --outfile $@ --module none --lib dom,es2016 --target ES5 || (rm -f $@ && false)
+	$(builddir)/node_modules/.bin/esbuild $< --bundle --outfile=$@ --target=ES2015 --platform=node --packages=external || (rm -f $@ && false)
 
 JQUERY_LIGHTNESS_IMAGE_PATH = $(srcdir)/images/jquery-ui-lightness
 JQUERY_LIGHTNESS_IMAGES = $(wildcard $(JQUERY_LIGHTNESS_IMAGE_PATH)/*.png)
