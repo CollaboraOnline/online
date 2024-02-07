@@ -319,7 +319,6 @@ private:
     bool extTextInputEvent(const StringVector& tokens);
     bool dialogKeyEvent(const char* buffer, int length, const std::vector<std::string>& tokens);
     bool mouseEvent(const StringVector& tokens, const LokEventTargetEnum target);
-    bool readOnlyClickEvent(const StringVector& tokens);
     bool gestureEvent(const StringVector& tokens);
     bool dialogEvent(const StringVector& tokens);
     bool completeFunction(const StringVector& tokens);
