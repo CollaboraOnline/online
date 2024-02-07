@@ -4,6 +4,8 @@
  * It's an approximation and starts to diverge from a real circle closer to poles (due to projection distortion)
  */
 
+// Looks like this file is not used.
+
 L.Circle = L.CircleMarker.extend({
 
 	initialize: function (latlng, radius, options) {
