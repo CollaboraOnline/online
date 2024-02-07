@@ -681,7 +681,9 @@ check-for-system-nss:
 		fi \
 	fi
 
-check: check-for-system-nss check-recursive eslint
+check-recursive: eslint
+
+check: check-for-system-nss eslint check-recursive
 	$(GEN_COVERAGE_COMMAND)
 
 coverage-report:
