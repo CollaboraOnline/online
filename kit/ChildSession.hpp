@@ -87,6 +87,8 @@ public:
     virtual DocumentPasswordType getDocPasswordType() const = 0;
 
     virtual void updateActivityHeader() const = 0;
+
+    virtual bool joinThreads() = 0;
 };
 
 struct RecordedEvent
@@ -301,6 +303,7 @@ public:
 
 private:
     bool loadDocument(const StringVector& tokens);
+    bool saveDocumentAsync(const StringVector &tokens);
 
     bool sendFontRendering(const StringVector& tokens);
     bool getCommandValues(const StringVector& tokens);

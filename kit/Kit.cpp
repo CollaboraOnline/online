@@ -118,6 +118,16 @@ extern "C" { void dump_kit_state(void); /* easy for gdb */ }
 // A Kit process hosts only a single document in its lifetime.
 class Document;
 static Document *singletonDocument = nullptr;
+static std::unique_ptr<Util::ThreadCounter> threadCounter;
+
+int getCurrentThreadCount()
+{
+    if (threadCounter)
+        return threadCounter->count();
+    else
+        return -1;
+}
+
 #endif
 
 _LibreOfficeKit* loKitPtr = nullptr;
@@ -1356,6 +1366,14 @@ private:
             ss << "\t" << it.second->getActivityState() << "\n";
         ss << "Commands:\n";
         SigUtil::setActivityHeader(ss.str());
+    }
+
+    bool joinThreads() override
+    {
+        if (!getLOKit()->joinThreads())
+            return false;
+        _pngPool.stop();
+        return true;
     }
 
     /// Notify all views of viewId and their associated usernames
@@ -2935,6 +2953,8 @@ void lokit_main(
         const Path jailPath = Path::forDirectory(childRoot + '/' + jailId);
         const std::string jailPathStr = jailPath.toString();
         JailUtil::createJailPath(jailPathStr);
+
+        threadCounter.reset(new Util::ThreadCounter());
 
         if (!ChildSession::NoCapsForKit)
         {

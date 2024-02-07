@@ -660,6 +660,11 @@ public:
     void updateActivityHeader() const override
     {
     }
+
+    bool joinThreads() override
+    {
+        return false;
+    }
 };
 
 void WhiteBoxTests::testEmptyCellCursor()

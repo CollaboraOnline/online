@@ -549,9 +549,15 @@ bool ChildSession::_handleInput(const char *buffer, int length)
             }
             else if (tokens[1].find(".uno:Save") != std::string::npos)
             {
-                // Disable processing of other messages while saving document
-                InputProcessingManager processInput(getProtocol(), false);
-                return unoCommand(tokens);
+
+                // Attempt to save in the background.
+                if (!saveDocumentAsync(tokens))
+                { // fallback to synchronous save
+
+                    // Disable processing of other messages while saving document
+                    InputProcessingManager processInput(getProtocol(), false);
+                    return unoCommand(tokens);
+                }
             }
 
             return unoCommand(tokens);
@@ -832,6 +838,47 @@ bool ChildSession::loadDocument(const StringVector& tokens)
     _docManager->updateActivityHeader();
 
     LOG_INF("Loaded session " << getId());
+    return true;
+}
+
+// attempt to shutdown threads, fork and execute in the background
+bool ChildSession::saveDocumentAsync(const StringVector &tokens)
+{
+    if (!_docManager->getLOKit()->joinThreads())
+    {
+        LOG_WRN("Failed to join threads before async save");
+        return false;
+    }
+
+    size_t threads = getCurrentThreadCount();
+    if (threads != 1)
+    {
+        LOG_WRN("Failed to ensure we have just one, we have: " << threads);
+        return false;
+    }
+    LOG_TRC("Starting async save");
+
+    // FIXME: only doing one of these at a time ...
+
+    // FIXME: time this ...
+    const pid_t pid = fork();
+
+    if (!pid) // Child
+    {
+        // FIXME: and say how long it took here ...
+        // saving prolly should be done on the Kit process ...
+
+        LOG_TRC("Async save process " << getpid());
+        // FIXME: re-directing our sockets perhaps over
+        // a pipe to our parent process ?
+        unoCommand(tokens);
+        // FIXME: cleaning up nicely.
+    }
+    else // Still us
+    {
+        LOG_TRC("Spawned process " << pid << " to do async save");
+    }
+
     return true;
 }
 
