@@ -99,9 +99,6 @@ static void doc_setTextSelection (LibreOfficeKitDocument* pThis,
                                   int nType,
                                   int nX,
                                   int nY);
-static char* doc_hyperlinkInfoAtPosition () (LibreOfficeKitDocument* pThis,
-                                  int nX,
-                                  int nY);
 static char* doc_getTextSelection(LibreOfficeKitDocument* pThis,
                                   const char* pMimeType,
                                   char** pUsedMimeType);
@@ -172,7 +169,6 @@ LibLODocument_Impl::LibLODocument_Impl()
         m_pDocumentClass->postMouseEvent = doc_postMouseEvent;
         m_pDocumentClass->postUnoCommand = doc_postUnoCommand;
         m_pDocumentClass->setTextSelection = doc_setTextSelection;
-        m_pDocumentClass->hyperlinkInfoAtPosition = doc_hyperlinkInfoAtPosition;
         m_pDocumentClass->getTextSelection = doc_getTextSelection;
         m_pDocumentClass->paste = doc_paste;
         m_pDocumentClass->setGraphicSelection = doc_setGraphicSelection;
@@ -437,13 +433,6 @@ static void doc_setTextSelection(LibreOfficeKitDocument* pThis, int nType, int n
 {
     (void) pThis;
     (void) nType;
-    (void) nX;
-    (void) nY;
-}
-
-static char* doc_hyperlinkInfoAtPosition(LibreOfficeKitDocument* pThis, int nX, int nY)
-{
-    (void) pThis;
     (void) nX;
     (void) nY;
 }

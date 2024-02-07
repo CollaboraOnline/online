@@ -463,8 +463,7 @@ bool ChildSession::_handleInput(const char *buffer, int length)
                tokens.equals(0, "a11ystate") ||
                tokens.equals(0, "geta11yfocusedparagraph") ||
                tokens.equals(0, "geta11ycaretposition") ||
-               tokens.equals(0, "toggletiledumping") ||
-               tokens.equals(0, "readonlyclick"));
+               tokens.equals(0, "toggletiledumping"));
 
         std::string pzName("ChildSession::_handleInput:" + tokens[0]);
         ProfileZone pz(pzName.c_str());
@@ -527,10 +526,6 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         else if (tokens.equals(0, "windowmouse"))
         {
             return mouseEvent(tokens, LokEventTargetEnum::Window);
-        }
-        else if (tokens.equals(0, "readonlyclick"))
-        {
-            return readOnlyClickEvent(tokens);
         }
         else if (tokens.equals(0, "windowgesture"))
         {
@@ -1646,35 +1641,6 @@ bool ChildSession::mouseEvent(const StringVector& tokens,
         break;
     default:
         assert(false && "Unsupported mouse target type");
-    }
-
-    return true;
-}
-
-bool ChildSession::readOnlyClickEvent(const StringVector& tokens)
-{
-    getLOKitDocument()->setView(_viewId);
-
-    if (tokens.size() != 3)
-        return false;
-
-    const int x = Util::safe_atoi(tokens[1].data(), tokens[1].size());
-    const int y = Util::safe_atoi(tokens[2].data(), tokens[2].size());
-    char* test = getLOKitDocument()->hyperlinkInfoAtPosition(x, y);
-
-    if (test != nullptr)
-    {
-        std::string result(test);
-        std::free(test);
-
-        if (!result.empty() && x != 0 && y != 0)
-        {
-            std::ostringstream message;
-            message << "readonlyhyperlinkclicked: { \"link\": \"" << result << "\""
-                    << " \"position\": { \"x\": " << x << ", \"y\": " << y << " }";
-
-            sendTextFrame(message.str());
-        }
     }
 
     return true;
