@@ -523,7 +523,7 @@ L.TileSectionManager = L.Class.extend({
 		}
 	},
 
-	// This section is added when debug is enabled. Splits are enabled for only Calc for now.
+	// Debug tool. Splits are enabled for only Calc for now.
 	_addSplitsSection: function () {
 		var that = this;
 		this._sectionContainer.createSection({
@@ -543,9 +543,20 @@ L.TileSectionManager = L.Class.extend({
 			},
 			onDraw: that._onDrawSplitsSection
 		}, 'tiles'); // Its size and position will be copied from 'tiles' section.
+		this._sectionContainer.reNewAllSections(true);
 	},
 
-	// This section is added when debug is enabled.
+	_removeSplitsSection: function () {
+		var section = this._sectionContainer.getSectionWithName('calc grid');
+		if (section) {
+			section.setDrawingOrder(L.CSections.CalcGrid.drawingOrder);
+			section.sectionProperties.strokeStyle = '#c0c0c0';
+		}
+		this._sectionContainer.removeSection(L.CSections.Debug.Splits.name);
+		this._sectionContainer.reNewAllSections(true);
+	},
+
+	// Debug tool
 	_addTilePixelGridSection: function () {
 		var that = this;
 		this._sectionContainer.createSection({
@@ -561,6 +572,12 @@ L.TileSectionManager = L.Class.extend({
 			sectionProperties: {},
 			onDraw: that._onDrawTilePixelGrid
 		}, 'tiles'); // Its size and position will be copied from 'tiles' section.
+		this._sectionContainer.reNewAllSections(true);
+	},
+
+	_removeTilePixelGridSection: function () {
+		this._sectionContainer.removeSection(L.CSections.Debug.TilePixelGrid.name);
+		this._sectionContainer.reNewAllSections(true);
 	},
 
 	_onDrawTilePixelGrid: function() {
