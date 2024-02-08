@@ -1282,14 +1282,16 @@ void AdminModel::sendMigrateMsgAfterSave(bool lastSaveSuccessful, const std::str
     oss << "migrate: {";
     oss << "\"afterSave\""
         << ":true,";
-    oss << "\"saved\":" << saveSuccessful << ',';
+    oss << "\"saved\":" << saveSuccessful;
     if (lastSaveSuccessful)
     {
+        oss << ',';
         oss << "\"routeToken\"" << ':' << '"' << getCurrentMigToken() << '"' << ',';
         oss << "\"serverId\"" << ':' << '"' << getTargetMigServerId() << '"' << '}';
     }
     else
     {
+        oss << '}';
         resetMigratingInfo();
     }
     COOLWSD::alertUserInternal(docKey, oss.str());
