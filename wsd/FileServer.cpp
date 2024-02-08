@@ -1272,6 +1272,11 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     {
         if (param.first == "WOPISrc")
         {
+            if (!HttpHelper::verifyWOPISrc(request.getURI(), param.second, socket))
+            {
+                return;
+            }
+
             const Poco::URI uriWopiFrameAncestor(Util::decodeURIComponent(param.second));
             // Remove parameters from URL
             const std::string& wopiFrameAncestor = uriWopiFrameAncestor.getHost();
