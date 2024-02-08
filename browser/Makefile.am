@@ -468,7 +468,7 @@ define global_file
 		@$(NODE) node_modules/uglify-js/bin/uglifyjs $< --output $@)
 endef
 
-.PHONY: build-cool
+.PHONY: build-cool mostlyclean-local
 
 all-local: build-cool
 
@@ -504,6 +504,7 @@ $(TYPESCRIPT_JS_DIR)/%.js: $(srcdir)/%.ts
 	$(builddir)/node_modules/typescript/bin/tsc --outFile $@ $<
 
 build-cool: \
+	mostlyclean-local \
 	$(COOL_L10N_DST) \
 	$(L10N_JSON) \
 	$(SRC_TS_JS_DST) \
@@ -798,9 +799,12 @@ l10n: pot
 	for i in po/ui-*.po; do pot2po --input=po/templates/cool-ui.pot --template=$$i --output=$$i.new; mv $$i.new $$i;done
 	for i in po/help-*.po; do pot2po --input=po/templates/cool-help.pot --template=$$i --output=$$i.new; mv $$i.new $$i;done
 
-clean-local:
+mostlyclean-local:
+	@rm -f tscompile.done
 	@rm -rf $(DIST_FOLDER)
 	@rm -rf $(INTERMEDIATE_DIR)
+
+clean-local: mostlyclean-local
 	@rm -rf node_modules
 	@rm -f $(abs_srcdir)/jsconfig.json
 	@rm -f $(abs_srcdir)/admin/jsconfig.json
