@@ -5,16 +5,16 @@ msgstr ""
 "Project-Id-Version: Collabora Online UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-01-18 11:56+0100\n"
-"PO-Revision-Date: 2024-01-14 12:29+0000\n"
+"PO-Revision-Date: 2024-02-08 20:46+0000\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/sl/>\n"
-"Language: \n"
+"Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
-"%100==4 ? 2 : 3;\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3;\n"
 "X-Accelerator-Marker: ~\n"
 "X-Generator: Weblate 5.4-dev\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -249,7 +249,7 @@ msgstr "Podatki o različici"
 
 #: admin/admin.strings.js:67
 msgid "License"
-msgstr ""
+msgstr "Dovoljenje"
 
 #: admin/admin.strings.js:68 src/control/Control.Menubar.js:377
 #: src/control/Control.Menubar.js:531 src/control/Control.Menubar.js:658
@@ -2755,11 +2755,11 @@ msgstr "Nalaganje datoteke na strežnik je spodletelo s stanjem: %0"
 
 #: src/map/handler/Map.SlideShow.js:50
 msgid "Empty Slide Show"
-msgstr ""
+msgstr "Prazna projekcija"
 
 #: src/map/handler/Map.SlideShow.js:147
 msgid "Windowed Presentation Blocked"
-msgstr ""
+msgstr "Predstavitev v oknu je blokirana"
 
 #: src/map/handler/Map.SlideShow.js:148
 msgid ""
@@ -2767,32 +2767,33 @@ msgid ""
 "slide shows to be displayed in separated windows, allowing for easy screen "
 "sharing."
 msgstr ""
+"Predstavitev je bila blokirana. Dovolite pojavna okna v svojem brskalniku. "
+"Tako bo predstavitev lahko prikazana v ločenih oknih, kar poenostavi "
+"deljenje zaslona."
 
 #: src/map/handler/Map.SlideShow.js:156
-#, fuzzy
 msgid "Presenting in window"
-msgstr "Predstavi v oknu"
+msgstr "Predstavitev v oknu"
 
 #: src/map/handler/Map.SlideShow.js:157
 msgid "Close Presentation"
-msgstr ""
+msgstr "Zapri predstavitev"
 
 #: src/map/handler/Map.SlideShow.js:169
 msgid "Presenting in fullscreen"
-msgstr ""
+msgstr "Predstavitev čez cel zaslon"
 
 #: src/map/handler/Map.SlideShow.js:170
-#, fuzzy
 msgid "End Presentation"
-msgstr "Predstavitev"
+msgstr "Končaj predstavitev"
 
 #: src/map/handler/Map.SlideShow.js:226
 msgid "Already presenting"
-msgstr ""
+msgstr "Predstavitev že poteka"
 
 #: src/map/handler/Map.SlideShow.js:227
 msgid "You are already presenting this document"
-msgstr ""
+msgstr "Dokument že predstavljate"
 
 #: src/map/handler/Map.WOPI.js:149
 msgid "Creating new file from template..."
