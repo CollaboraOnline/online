@@ -370,7 +370,7 @@ L.Map.Keyboard = L.Handler.extend({
 	// any 'beforeinput', 'keypress' and 'input' events that would add
 	// printable characters. Those are handled by TextInput.js.
 	_onKeyDown: function (ev) {
-		if (this._map.uiManager.isUIBlocked() || (this._map.isReadOnlyMode() && !this.readOnlyAllowedShortcuts(ev))
+		if (this._map.uiManager.isUIBlocked()
 			|| ((this._map._docLayer._docType === 'presentation' || this._map._docLayer._docType === 'drawing') && this._map._docLayer._preview.partsFocused === true)
 		)
 			return;
@@ -1016,28 +1016,4 @@ L.Map.Keyboard = L.Handler.extend({
 		}
 		return false;
 	},
-
-	readOnlyAllowedShortcuts: function(e) {
-		// Open keyboard shortcuts help page
-		if (this._isCtrlKey(e) && e.shiftKey && e.key === '?')
-			return true;
-		// Open help with F1 if any special key is not pressed
-		else if (e.type === 'keydown' && !e.shiftKey && !e.ctrlKey && !e.altKey && !e.metaKey && e.keyCode === this.keyCodes.F1)
-			return true;
-		// comment insert
-		else if (this.keyCodes.C.includes(e.keyCode) && e.altKey && e.altKey && e.ctrlKey && this._map.isPermissionEditForComments())
-			return true;
-		// full-screen presentation
-		else if (e.type === 'keydown' && e.keyCode === this.keyCodes.F5 && this._map._docLayer._docType === 'presentation')
-			return true;
-		// moving around
-		else if (!this.modifier && (e.keyCode === this.keyCodes.pageUp || e.keyCode === this.keyCodes.pageDown) && e.type === 'keydown')
-			return true;
-		else if (!this.modifier && (e.keyCode === this.keyCodes.END || e.keyCode === this.keyCodes.HOME) && e.type === 'keydown')
-			return true;
-		else if (e.type === 'keydown' && e.keyCode in this._panKeys)
-			return true;
-
-		return false;
-	}
 });
