@@ -48,9 +48,6 @@ L.DebugManager = L.Class.extend({
 
 		// Initialize state that we build in debug mode whether visible or not
 		// TODO: Associate to specific tools
-		this._debugInvalidBounds = {};
-		this._debugInvalidBoundsMessage = {};
-		this._debugId = 0;
 		this._debugLoadTile = 0;
 		this._debugLoadDelta = 0;
 		this._debugLoadUpdate = 0;
@@ -153,9 +150,12 @@ L.DebugManager = L.Class.extend({
 			startsOn: false,
 			onAdd: function () {
 				self.tileInvalidationsOn = true;
-				self._tileInvalidationTimeout();
+				self._tileInvalidationRectangles = {};
+				self._tileInvalidationMessages = {};
+				self._tileInvalidationId = 0;
 				self._tileInvalidationLayer = new L.LayerGroup();
 				self._map.addLayer(self._tileInvalidationLayer);
+				self._tileInvalidationTimeout();
 			},
 			onRemove: function () {
 				self.tileInvalidationsOn = false;
@@ -787,13 +787,13 @@ L.DebugManager = L.Class.extend({
 		return 'best: ' + times.best + ' ms, avg: ' + Math.round(times.ms/times.count) + ' ms, worst: ' + times.worst + ' ms, last: ' + value + ' ms';
 	},
 
-
 	_overlayShowTileData: function() {
 		this.setOverlayMessage('loadCount',
 			'Total of requested tiles: ' + this._debugInvalidateCount + ', ' +
 			'recv-tiles: ' + this._debugLoadTile + ', ' +
 			'recv-delta: ' + this._debugLoadDelta + ', ' +
 			'recv-update: ' + this._debugLoadUpdate);
+
 		var allDeltas = this._debugLoadDelta + this._debugLoadUpdate;
 		this.setOverlayMessage('nullUpdateMetric',
 			'<b>Tile update waste: ' + Math.round(100.0 * this._debugLoadUpdate / allDeltas) + '%</b>'
@@ -804,16 +804,16 @@ L.DebugManager = L.Class.extend({
 	},
 
 	_tileInvalidationTimeout: function() {
-		for (var key in this._debugInvalidBounds) {
-			var rect = this._debugInvalidBounds[key];
+		for (var key in this._tileInvalidationRectangles) {
+			var rect = this._tileInvalidationRectangles[key];
 			var opac = rect.options.fillOpacity;
 			if (opac <= 0.04) {
-				if (key < this._debugId - 5) {
+				if (key < this._tileInvalidationId - 5) {
 					this._tileInvalidationLayer.removeLayer(rect);
-					delete this._debugInvalidBounds[key];
-					delete this._debugInvalidBoundsMessage[key];
+					delete this._tileInvalidationRectangles[key];
+					delete this._tileInvalidationMessages[key];
 				} else {
-					rect.setStyle({fillOpacity: 0, opacity: 1 - (this._debugId - key) / 7});
+					rect.setStyle({fillOpacity: 0, opacity: 1 - (this._tileInvalidationId - key) / 7});
 				}
 			} else {
 				rect.setStyle({fillOpacity: opac - 0.04});
@@ -822,22 +822,30 @@ L.DebugManager = L.Class.extend({
 		this._tileInvalidationTimeoutId = setTimeout(L.bind(this._tileInvalidationTimeout, this), 50);
 	},
 
-	addInvalidationMessage: function(message) {
-		this._debugInvalidBoundsMessage[this._debugId - 1] = message;
-		var messages = '';
-		for (var i = this._debugId - 1; i > this._debugId - 6; i--) {
-			if (i >= 0 && this._debugInvalidBoundsMessage[i]) {
-				messages += '' + i + ': ' + this._debugInvalidBoundsMessage[i] + ' <br>';
-			}
+	addTileInvalidationMessage: function(message) {
+		if (!this.tileInvalidationsOn) {
+			return;
 		}
+
+		this._tileInvalidationMessages[this._tileInvalidationId - 1] = message;
+
 		if (this.overlayOn) {
+			var messages = '';
+			for (var i = this._tileInvalidationId - 1; i > this._tileInvalidationId - 6; i--) {
+				if (i >= 0 && this._tileInvalidationMessages[i]) {
+					messages += '' + i + ': ' + this._tileInvalidationMessages[i] + ' <br>';
+				}
+			}
 			this.setOverlayMessage('tileCombine',messages);
-			this._overlayShowTileData();
+
 		}
 	},
 
+	addTileInvalidationRectangle: function(topLeftTwips, bottomRightTwips, command) {
+		if (!this.tileInvalidationsOn) {
+			return;
+		}
 
-	addInvalidationRectangle: function(topLeftTwips, bottomRightTwips, command) {
 		var now = +new Date();
 
 		var signX =  this._docLayer.isCalcRTL() ? -1 : 1;
@@ -850,9 +858,9 @@ L.DebugManager = L.Class.extend({
 			this._docLayer._twipsToLatLng(absBottomRightTwips, this._docLayer._tileZoom)
 		);
 		var rect = L.rectangle(invalidBoundCoords, {color: 'red', weight: 1, opacity: 1, fillOpacity: 0.4, pointerEvents: 'none'});
-		this._debugInvalidBounds[this._debugId] = rect;
-		this._debugInvalidBoundsMessage[this._debugId] = command;
-		this._debugId++;
+		this._tileInvalidationRectangles[this._tileInvalidationId] = rect;
+		this._tileInvalidationMessages[this._tileInvalidationId] = command;
+		this._tileInvalidationId++;
 		this._tileInvalidationLayer.addLayer(rect);
 
 		var oldestKeypress = this._debugKeypressQueue.shift();
@@ -868,6 +876,5 @@ L.DebugManager = L.Class.extend({
 		this._debugPINGQueue.push(+new Date());
 		app.socket.sendMessage('ping');
 	},
-
 
 });
