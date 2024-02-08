@@ -14,6 +14,7 @@
 
 #include "COOLWSD.hpp"
 #include "ProofKey.hpp"
+#include "RequestDetails.hpp"
 #if ENABLE_FEATURE_LOCK
 #include "CommandControl.hpp"
 #endif
@@ -4632,6 +4633,12 @@ private:
             return;
         }
 
+        // Verify that the WOPISrc is properly encoded.
+        if (!HttpHelper::verifyWOPISrc(request.getURI(), WOPISrc, socket))
+        {
+            return;
+        }
+
         const auto docKey = RequestDetails::getDocKey(WOPISrc);
         LOG_TRC_S("Clipboard request for us: [" << serverId << "] with tag [" << tag
                                                 << "] on docKey [" << docKey << ']');
@@ -4764,6 +4771,12 @@ private:
             httpResponse.set("Content-Length", "0");
             socket->sendAndShutdown(httpResponse);
             socket->ignoreInput();
+            return;
+        }
+
+        // Verify that the WOPISrc is properly encoded.
+        if (!HttpHelper::verifyWOPISrc(request.getURI(), WOPISrc, socket))
+        {
             return;
         }
 

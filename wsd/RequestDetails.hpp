@@ -143,6 +143,9 @@ public:
     /// Sanitize the URI and return the document-specific key.
     static std::string getDocKey(const std::string& uri) { return getDocKey(sanitizeURI(uri)); }
 
+    /// Returns false if the WOPISrc is not encoded correctly.
+    static bool validateWOPISrc(const std::string& uri) { return !Util::needsURIEncoding(uri); }
+
     // matches the WOPISrc if used. For load balancing
     // must be 2nd element in the path after /cool/<here>
     std::string getLegacyDocumentURI() const { return getField(Field::LegacyDocumentURI); }
