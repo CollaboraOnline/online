@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-01-18 11:56+0100\n"
-"PO-Revision-Date: 2022-04-12 07:41+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"PO-Revision-Date: 2024-02-03 13:02+0000\n"
+"Last-Translator: Rhoslyn Prys <rprys@posteo.net>\n"
 "Language-Team: Welsh <https://hosted.weblate.org/projects/collabora-online/"
 "ui/cy/>\n"
-"Language: \n"
+"Language: cy\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=(n==0) ? 0 : (n==1) ? 1 : (n==2) ? 2 : "
 "(n==3) ? 3 :(n==6) ? 4 : 5;\n"
-"X-Generator: Weblate 4.12-dev\n"
+"X-Generator: Weblate 5.4-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -71,7 +71,7 @@ msgstr " defnyddiwr(wyr)"
 
 #: admin/admin.strings.js:27 admin/src/AdminSocketOverview.js:214
 msgid " document(s) open."
-msgstr " Dogfennau ar agor"
+msgstr " dogfen ar agor."
 
 #: admin/admin.strings.js:28
 msgid "Number of Documents"
@@ -115,11 +115,11 @@ msgstr "Newidiwyd"
 
 #: admin/admin.strings.js:38
 msgid "Uploaded"
-msgstr ""
+msgstr "Wedi ei llwytho"
 
 #: admin/admin.strings.js:39
 msgid "WOPI host"
-msgstr ""
+msgstr "Gwesteiwr WOPI"
 
 #: admin/admin.strings.js:40
 msgid "Kill"
@@ -171,7 +171,7 @@ msgstr "Cyfnod amser ystadegau CPU (mewn ms)"
 
 #: admin/admin.strings.js:50 admin/src/AdminSocketOverview.js:100
 msgid "Kill session."
-msgstr "Gorffen sesiwn"
+msgstr "Gorffen sesiwn."
 
 #: admin/admin.strings.js:51
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
@@ -212,7 +212,7 @@ msgstr "Adnewyddu'r Cofnod"
 
 #: admin/admin.strings.js:60
 msgid "Channel Filter:"
-msgstr ""
+msgstr "Hidlydd Sianel:"
 
 #: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:577
 #: src/control/Control.StatusBar.js:345
@@ -242,11 +242,11 @@ msgstr "Diweddaru Lefelau'r Cofnod"
 
 #: admin/admin.strings.js:66
 msgid "Version Information"
-msgstr ""
+msgstr "Manylion Fersiwn"
 
 #: admin/admin.strings.js:67
 msgid "License"
-msgstr ""
+msgstr "Trwydded"
 
 #: admin/admin.strings.js:68 src/control/Control.Menubar.js:377
 #: src/control/Control.Menubar.js:531 src/control/Control.Menubar.js:658
@@ -267,7 +267,7 @@ msgstr "Anfonwyd"
 
 #: admin/src/AdminSocketBase.js:62
 msgid "Server has been shut down; please reload the page."
-msgstr ""
+msgstr "Gweinydd wedi ei gau i lawr; ail-lwythwch y dudalen, os gwelwch yn dda."
 
 #: admin/src/AdminSocketBase.js:63 admin/src/AdminSocketBase.js:74
 #: admin/src/AdminSocketOverview.js:108 admin/src/AdminSocketOverview.js:431
@@ -324,7 +324,7 @@ msgstr "Methwyd dilysu'r sesiwn hon dros brotocol %0"
 
 #: admin/src/AdminSocketOverview.js:429
 msgid "Warning"
-msgstr ""
+msgstr "Rhybudd"
 
 #: admin/src/AdminSocketSettings.js:46
 msgid "Are you sure you want to shut down the server?"
@@ -380,27 +380,27 @@ msgstr " s"
 
 #: js/global.js:865
 msgid "Cluster is scaling, retrying..."
-msgstr ""
+msgstr "Mae'r clwstwr yn cynyddu, yn rhoi cynnig arall arni..."
 
 #: js/global.js:867
 msgid "Document is migrating to new server, retrying..."
-msgstr ""
+msgstr "Mae'r ddogfen yn mudo i weinydd newydd, yn ceisio eto..."
 
 #: js/global.js:869
 msgid "Failed to get RouteToken from controller"
-msgstr ""
+msgstr "Wedi methu â chael RouteToken gan y rheolwr"
 
 #: js/w2ui-1.5.rc1.js:2967
 msgid "No fill"
-msgstr ""
+msgstr "Dim llanw"
 
 #: js/w2ui-1.5.rc1.js:2967
 msgid "Automatic"
-msgstr ""
+msgstr "Awtomatig"
 
 #: js/w2ui-1.5.rc1.js:3007
 msgid "Recent"
-msgstr ""
+msgstr "Diweddar"
 
 #: src/control/ColorPicker.js:131
 msgid "No color"
@@ -412,7 +412,7 @@ msgstr "Lliw awtomatig"
 
 #: src/control/Control.AlertDialog.js:51
 msgid "External link"
-msgstr ""
+msgstr "Dolen allanol"
 
 #: src/control/Control.AlertDialog.js:52
 msgid "Open link"
@@ -420,11 +420,12 @@ msgstr "Agor dolen"
 
 #: src/control/Control.AlertDialog.js:64
 msgid "Copied external sources are not allowed"
-msgstr ""
+msgstr "Ni chaniateir copïo ffynonellau allanol"
 
 #: src/control/Control.AlertDialog.js:65
 msgid "It seems you have copied a selection that includes external images."
 msgstr ""
+"Mae'n ymddangos eich bod wedi copïo detholiad sy'n cynnwys delweddau allanol."
 
 #: src/control/Control.AlertDialog.js:66
 msgid ""
@@ -432,24 +433,29 @@ msgid ""
 "possible. Please right click in the image, choose \"Copy Image\" and paste "
 "it into the document instead."
 msgstr ""
+"Mae llwytho i lawr adnoddau allanol wedi ei wahardd ond mae gludo delweddau "
+"yn dal yn bosibl. Cliciwch ar y dde yn y ddelwedd, dewiswch \"Copïo Delwedd\""
+" a'i gludo i'r ddogfen yn lle hynny."
 
 #: src/control/Control.AlertDialog.js:70
 msgid "External data source not allowed"
-msgstr ""
+msgstr "Ni chaniateir ffynhonnell data allanol"
 
 #: src/control/Control.AlertDialog.js:71
 msgid "It seems you have tried to insert external data."
-msgstr ""
+msgstr "Mae'n ymddangos eich bod wedi ceisio mewnosod data allanol."
 
 #: src/control/Control.AlertDialog.js:72
 msgid ""
 "Selected external data source is forbidden. Please contact the system "
 "administrator."
 msgstr ""
+"Mae'r ffynhonnell ddata allanol hwn wedi ei wahardd. Cysylltwch â gweinyddwr "
+"y system."
 
 #: src/control/Control.AlertDialog.js:84
 msgid "Don't show this again"
-msgstr ""
+msgstr "Peidio dangos eto"
 
 #: src/control/Control.AlertDialog.js:100
 msgid "The server encountered a %0 error while parsing the %1 command."
@@ -457,11 +463,11 @@ msgstr "Profodd y gweinydd wall %0 wrth ddidoli'r gorchymyn %1."
 
 #: src/control/Control.Command.js:89
 msgid "Unlock"
-msgstr ""
+msgstr "Datgloi"
 
 #: src/control/Control.ContextMenu.js:196 src/control/Toolbar.js:1088
 msgid "Delete"
-msgstr "Dileu:"
+msgstr "Dileu"
 
 #: src/control/Control.ContextMenu.js:216
 msgid "Paste Special"
@@ -469,7 +475,7 @@ msgstr "Gludo Arbennig"
 
 #: src/control/Control.DocumentNameInput.js:95
 msgid "Path"
-msgstr ""
+msgstr "Llwybr"
 
 #: src/control/Control.DocumentRepair.js:27
 #: src/control/Control.DocumentRepair.js:28
@@ -487,19 +493,19 @@ msgstr "Math"
 
 #: src/control/Control.DocumentRepair.js:140
 msgid "What?"
-msgstr ""
+msgstr "Beth?"
 
 #: src/control/Control.DocumentRepair.js:140
 msgid "Who?"
-msgstr ""
+msgstr "Pwy?"
 
 #: src/control/Control.DocumentRepair.js:140
 msgid "When?"
-msgstr ""
+msgstr "Pryd?"
 
 #: src/control/Control.DocumentRepair.js:159
 msgid "You have not done anything to rollback yet..."
-msgstr ""
+msgstr "Nid ydych wedi gwneud dim i'w ddychwelyd eto..."
 
 #: src/control/Control.DocumentRepair.js:169
 msgid "Redo"
@@ -511,51 +517,55 @@ msgstr "Dadwneud"
 
 #: src/control/Control.DownloadProgress.js:52
 msgid "Download Selection"
-msgstr ""
+msgstr "Detholiad Llwytho i Lawr"
 
 #: src/control/Control.DownloadProgress.js:57
 msgid ""
 "If you want to share large elements outside of %productName it's necessary "
 "to first download them."
 msgstr ""
+"Os ydych am rannu elfennau mawr y tu allan i %productName mae angen eu "
+"llwytho i lawr yn gyntaf."
 
 #: src/control/Control.DownloadProgress.js:70
 #: src/control/Control.NotebookbarCalc.js:208
 #: src/control/Control.NotebookbarImpress.js:274
 #: src/control/Control.NotebookbarWriter.js:252
 msgid "Download"
-msgstr ""
+msgstr "Llwytho i lawr"
 
 #: src/control/Control.DownloadProgress.js:89
 msgid "Downloading clipboard content"
-msgstr ""
+msgstr "Wrthi'n llwytho i lawr cynnwys y clipfwrdd"
 
 #: src/control/Control.DownloadProgress.js:96
 #: src/control/Control.DownloadProgress.js:121
 #: src/control/Control.PartsPreview.js:279
 msgid "Copy"
-msgstr ""
+msgstr "Copïo"
 
 #: src/control/Control.DownloadProgress.js:119
 msgid "Download completed and ready to be copied to clipboard."
 msgstr ""
+"Mae'r llwytho i lawr wedi'i gwblhau ac yn barod i'w gopïo i'r clipfwrdd."
 
 #: src/control/Control.DownloadProgress.js:120
 msgid ""
 "From now on clipboard notifications will discreetly appear at the bottom."
 msgstr ""
+"O hyn ymlaen bydd hysbysiadau clipfwrdd yn ymddangos yn gynnil ar y gwaelod."
 
 #: src/control/Control.DownloadProgress.js:273
 msgid "Content copied to clipboard"
-msgstr ""
+msgstr "Cynnwys wedi'i gopïo i'r clipfwrdd"
 
 #: src/control/Control.DownloadProgress.js:317
 msgid "Download failed"
-msgstr ""
+msgstr "Methwyd llwytho i lawr"
 
 #: src/control/Control.FormulaBar.js:54
 msgid "cell address"
-msgstr ""
+msgstr "cyfeiriad cell"
 
 #: src/control/Control.FormulaBarJSDialog.js:53
 #: src/control/Control.FormulaBarJSDialog.js:100
@@ -564,7 +574,7 @@ msgstr "Dewin Swyddogaeth"
 
 #: src/control/Control.FormulaBarJSDialog.js:65
 msgid "Formula"
-msgstr ""
+msgstr "Fformiwla"
 
 #: src/control/Control.FormulaBarJSDialog.js:71
 #: src/control/Control.MobileTopBar.js:51
@@ -591,11 +601,11 @@ msgstr "Cyfartaledd"
 
 #: src/control/Control.JSDialogBuilder.js:171
 msgid "Min"
-msgstr ""
+msgstr "Lleiaf"
 
 #: src/control/Control.JSDialogBuilder.js:172
 msgid "Max"
-msgstr ""
+msgstr "Mwyaf"
 
 #: src/control/Control.JSDialogBuilder.js:173
 #: src/control/Control.StatusBar.js:340
@@ -605,12 +615,12 @@ msgstr "Cyfrif"
 #: src/control/Control.JSDialogBuilder.js:206
 #: src/control/Control.Menubar.js:686
 msgid "Active sheet"
-msgstr ""
+msgstr "Dalen weithredol"
 
 #: src/control/Control.JSDialogBuilder.js:207
 #: src/control/Control.Menubar.js:687 src/control/Control.TopToolbar.js:108
 msgid "All Sheets"
-msgstr ""
+msgstr "Pob dalen"
 
 #: src/control/Control.JSDialogBuilder.js:580
 msgid "Solid"
@@ -675,13 +685,12 @@ msgid "Style"
 msgstr "Arddull"
 
 #: src/control/Control.JSDialogBuilder.js:2061
-#, fuzzy
 msgid "reply"
-msgstr "Ateb"
+msgstr "ateb"
 
 #: src/control/Control.JSDialogBuilder.js:2064
 msgid "replies"
-msgstr ""
+msgstr "ymatebion"
 
 #: src/control/Control.JSDialogBuilder.js:2075
 #: src/layer/tile/CanvasTileLayer.js:5555
@@ -692,7 +701,7 @@ msgstr "Sylw"
 
 #: src/control/Control.JSDialogBuilder.js:2139
 msgid "Insert Comment"
-msgstr ""
+msgstr "Mewnosod Sylw"
 
 #: src/control/Control.JSDialogBuilder.js:3023
 #: src/control/Control.Menubar.js:829
@@ -705,9 +714,8 @@ msgid "Columns"
 msgstr "Colofnau"
 
 #: src/control/Control.JSDialogBuilder.js:3044
-#, fuzzy
 msgid "Insert Table"
-msgstr "Mewnosod tudalen"
+msgstr "Mewnosod Tabl"
 
 #: src/control/Control.LanguageDialog.js:64 src/control/Control.Menubar.js:350
 #: src/control/Control.Menubar.js:352 src/control/Control.Menubar.js:354
@@ -718,11 +726,11 @@ msgstr "Dim (Peidio gwirio sillafu)"
 
 #: src/control/Control.LanguageDialog.js:82
 msgid "Select language"
-msgstr ""
+msgstr "Dewis iaith"
 
 #: src/control/Control.LanguageDialog.js:103
 msgid "Language"
-msgstr ""
+msgstr "Iaith"
 
 #: src/control/Control.Menubar.js:76 src/control/Control.Menubar.js:91
 #: src/control/Control.Menubar.js:943
@@ -764,7 +772,7 @@ msgstr "Testun Cyfoethog (.rtf)"
 #: src/control/Control.Menubar.js:1060 src/control/Control.Menubar.js:1067
 #: src/control/Control.Menubar.js:1114 src/control/Control.Menubar.js:1124
 msgid "Export as"
-msgstr "Allforio fel:"
+msgstr "Allforio fel"
 
 #: src/control/Control.Menubar.js:82 src/control/Control.Menubar.js:89
 #: src/control/Control.Menubar.js:391 src/control/Control.Menubar.js:397
@@ -796,9 +804,8 @@ msgid "EPUB (.epub)"
 msgstr "EPUB (.epub)"
 
 #: src/control/Control.Menubar.js:85 src/control/Control.UIManager.js:159
-#, fuzzy
 msgid "Rename Document"
-msgstr "Trwsio Dogfen"
+msgstr "Ailenwi Dogfen"
 
 #: src/control/Control.Menubar.js:86 src/control/Control.Menubar.js:394
 #: src/control/Control.Menubar.js:544 src/control/Control.Menubar.js:674
@@ -828,9 +835,8 @@ msgstr "Llwytho i lawr fel"
 #: src/control/Control.NotebookbarBuilder.js:556
 #: src/control/Control.NotebookbarBuilder.js:585
 #: src/control/Control.NotebookbarBuilder.js:614
-#, fuzzy
 msgid "PDF Document (.pdf) as..."
-msgstr "Dogfen PDF (.pdf)"
+msgstr "Dogfen PDF (.pdf) fel..."
 
 #: src/control/Control.Menubar.js:99 src/control/Control.Menubar.js:406
 #: src/control/Control.Menubar.js:554 src/control/Control.Menubar.js:689
@@ -882,7 +888,7 @@ msgstr "Ailosod chwyddo"
 #: src/control/Control.NotebookbarImpress.js:506
 #: src/control/Control.NotebookbarWriter.js:1455
 msgid "Toggle UI Mode"
-msgstr ""
+msgstr "Toglo Modd UI"
 
 #: src/control/Control.Menubar.js:138 src/control/Control.Menubar.js:433
 #: src/control/Control.NotebookbarWriter.js:1469
@@ -900,12 +906,12 @@ msgstr "Dangos Mesurydd"
 #: src/control/Control.NotebookbarWriter.js:908
 #: src/control/Control.NotebookbarWriter.js:1482
 msgid "Show Status Bar"
-msgstr ""
+msgstr "Dangos y Bar Statws"
 
 #: src/control/Control.Menubar.js:140 src/control/Control.Menubar.js:435
 #: src/control/Control.Menubar.js:585 src/control/Control.Menubar.js:717
 msgid "Hide Menu Bar"
-msgstr ""
+msgstr "Cuddio Bar Dewislen"
 
 #: src/control/Control.Menubar.js:141 src/control/Control.Menubar.js:436
 #: src/control/Control.Menubar.js:581 src/control/Control.Menubar.js:718
@@ -916,7 +922,7 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:551
 #: src/control/Control.NotebookbarWriter.js:1500
 msgid "Dark Mode"
-msgstr ""
+msgstr "Modd Tywyll"
 
 #: src/control/Control.Menubar.js:149 src/control/Control.Menubar.js:447
 #: src/control/Control.Menubar.js:588 src/control/Control.Menubar.js:728
@@ -937,7 +943,7 @@ msgstr "Y Cyfan"
 #: src/control/Control.NotebookbarImpress.js:1253
 #: src/control/Control.NotebookbarWriter.js:1106
 msgid "Smart Picker"
-msgstr ""
+msgstr "Dewisydd Clyfar"
 
 #: src/control/Control.Menubar.js:225
 msgid "Text orientation"
@@ -945,66 +951,64 @@ msgstr "Cyfeiriad testun"
 
 #: src/control/Control.Menubar.js:287
 #: src/control/Control.NotebookbarWriter.js:61
-#, fuzzy
 msgid "References"
-msgstr "C~yfeirnodau"
+msgstr "Cyfeirnodau"
 
 #: src/control/Control.Menubar.js:290
 #: src/control/Control.NotebookbarWriter.js:1860
 msgid "Update Index"
-msgstr ""
+msgstr "Diweddaru Mynegai"
 
 #: src/control/Control.Menubar.js:299
 #: src/control/Control.NotebookbarWriter.js:1956
 msgid "Add Citation"
-msgstr ""
+msgstr "Ychwanegu Dyfyniad"
 
 #: src/control/Control.Menubar.js:300
 #: src/control/Control.NotebookbarWriter.js:1968
 msgid "Add Citation Note"
-msgstr ""
+msgstr "Ychwanegu Nodyn Dyfynnu"
 
 #: src/control/Control.Menubar.js:301
 #: src/control/Control.NotebookbarWriter.js:1943
 msgid "Add Bibliography"
-msgstr ""
+msgstr "Ychwanegu Llyfryddiaeth"
 
 #: src/control/Control.Menubar.js:303
 #: src/control/Control.NotebookbarWriter.js:1986
 msgid "Refresh Citations"
-msgstr ""
+msgstr "Adnewyddu Dyfyniadau"
 
 #: src/control/Control.Menubar.js:304
 #: src/control/Control.NotebookbarWriter.js:1998
 #: src/control/Control.Zotero.js:1446
 msgid "Unlink Citations"
-msgstr ""
+msgstr "Datgysylltu Dyfyniadau"
 
 #: src/control/Control.Menubar.js:305
 #: src/control/Control.NotebookbarWriter.js:2010
 msgid "Citation Preferences"
-msgstr ""
+msgstr "Dewisiadau Dyfyniadau"
 
 #: src/control/Control.Menubar.js:333 src/control/Control.Menubar.js:1225
 msgid "Insert Rich Text"
-msgstr ""
+msgstr "Mewnosod Testun Cyfoethog"
 
 #: src/control/Control.Menubar.js:334 src/control/Control.Menubar.js:1226
 msgid "Insert Checkbox"
-msgstr ""
+msgstr "Mewnosod Blwch Ticio"
 
 #: src/control/Control.Menubar.js:335 src/control/Control.Menubar.js:1227
 msgid "Insert Dropdown"
-msgstr ""
+msgstr "Mewnosod Cwymplen"
 
 #: src/control/Control.Menubar.js:336 src/control/Control.Menubar.js:1228
 msgid "Insert Picture"
-msgstr ""
+msgstr "Mewnosod Darlun"
 
 #: src/control/Control.Menubar.js:337 src/control/Control.Menubar.js:1229
-#, fuzzy
 msgid "Insert Date"
-msgstr "Mewnosod tudalen"
+msgstr "Mewnosod Dyddiad"
 
 #: src/control/Control.Menubar.js:338 src/control/Control.Menubar.js:1230
 #: src/control/Control.NotebookbarCalc.js:305
@@ -1013,17 +1017,17 @@ msgstr "Mewnosod tudalen"
 #: src/control/Control.NotebookbarWriter.js:359
 #: src/control/Control.NotebookbarWriter.js:1377
 msgid "Properties"
-msgstr ""
+msgstr "Priodweddau"
 
 #: src/control/Control.Menubar.js:358 src/control/Control.Menubar.js:977
 #: src/control/Control.NotebookbarWriter.js:449
 msgid "Screen Reading"
-msgstr ""
+msgstr "Darllen Sgrin"
 
 #: src/control/Control.Menubar.js:371
 #: src/control/Control.NotebookbarWriter.js:415
 msgid "Forum"
-msgstr ""
+msgstr "Fforwm"
 
 #: src/control/Control.Menubar.js:372 src/control/Control.Menubar.js:526
 #: src/control/Control.Menubar.js:653 src/control/Control.Menubar.js:916
@@ -1057,7 +1061,7 @@ msgstr "Diweddariadau Diweddar"
 #: src/control/Control.Menubar.js:1105 src/control/Control.Menubar.js:1179
 #: src/control/Control.NotebookbarWriter.js:490
 msgid "Send Feedback"
-msgstr ""
+msgstr "Anfon Adborth"
 
 #: src/control/Control.Menubar.js:379 src/control/Control.Menubar.js:533
 #: src/control/Control.Menubar.js:660 src/control/Control.Menubar.js:923
@@ -1094,7 +1098,7 @@ msgstr "Cadw Sylwadau"
 #: src/control/Control.Menubar.js:437
 #: src/control/Control.NotebookbarImpress.js:543
 msgid "Master View"
-msgstr ""
+msgstr "Prif Olwg"
 
 #: src/control/Control.Menubar.js:512 src/control/Control.Menubar.js:1049
 #: src/control/Control.PresentationBar.js:73
@@ -1107,7 +1111,7 @@ msgstr "Cyflwyno'r sleid gyfredol"
 
 #: src/control/Control.Menubar.js:514
 msgid "Present in new window"
-msgstr ""
+msgstr "Cyflwyno mewn ffenestr newydd"
 
 #: src/control/Control.Menubar.js:550 src/control/Control.Menubar.js:1010
 #: src/control/Control.Menubar.js:1070
@@ -1142,37 +1146,37 @@ msgstr "Taenlen Excel (.xlsx)"
 
 #: src/control/Control.Menubar.js:682
 msgid "CSV file (.csv)"
-msgstr ""
+msgstr "Ffeil CSV (.csv)"
 
 #: src/control/Control.Menubar.js:813
 #: src/control/Control.NotebookbarBuilder.js:812
 msgid "Condition..."
-msgstr ""
+msgstr "Amod..."
 
 #: src/control/Control.Menubar.js:814
 #: src/control/Control.NotebookbarBuilder.js:813
 msgid "Greater than..."
-msgstr ""
+msgstr "Mwy na..."
 
 #: src/control/Control.Menubar.js:815
 #: src/control/Control.NotebookbarBuilder.js:814
 msgid "Less than..."
-msgstr ""
+msgstr "Llai na..."
 
 #: src/control/Control.Menubar.js:816
 #: src/control/Control.NotebookbarBuilder.js:815
 msgid "Equal to..."
-msgstr ""
+msgstr "Yn hafal i..."
 
 #: src/control/Control.Menubar.js:817
 #: src/control/Control.NotebookbarBuilder.js:816
 msgid "Between..."
-msgstr ""
+msgstr "Rhwng..."
 
 #: src/control/Control.Menubar.js:819
 #: src/control/Control.NotebookbarBuilder.js:818
 msgid "More conditions..."
-msgstr ""
+msgstr "Mwy o amodau..."
 
 #: src/control/Control.Menubar.js:927 src/control/Control.Menubar.js:992
 #: src/control/Control.Menubar.js:1056 src/control/Control.Menubar.js:1110
@@ -1190,11 +1194,11 @@ msgstr "Gosodiad Yudalen"
 
 #: src/control/Control.Menubar.js:1121
 msgid "Define print area"
-msgstr ""
+msgstr "Diffinio ardal argraffu"
 
 #: src/control/Control.Menubar.js:1122
 msgid "Remove print area"
-msgstr ""
+msgstr "Dileu ardal argraffu"
 
 #: src/control/Control.Menubar.js:1400 src/control/Control.StatusBar.js:553
 msgid "Reset to Default Language"
@@ -1208,15 +1212,15 @@ msgstr "Rhagor..."
 
 #: src/control/Control.Menubar.js:1731
 msgid "Use Compact view"
-msgstr ""
+msgstr "Defnyddio'r golwg Cynnil"
 
 #: src/control/Control.Menubar.js:1733
 msgid "Use Tabbed view"
-msgstr ""
+msgstr "Defnyddio'r golwg Tab"
 
 #: src/control/Control.Menubar.js:1791 src/control/Control.Menubar.js:1804
 msgid "Read-only mode"
-msgstr ""
+msgstr "Modd Darllen-yn-unig"
 
 #: src/control/Control.Menubar.js:1825
 msgid "Insert Shape"
@@ -1224,7 +1228,7 @@ msgstr "Mewnosod siapiau"
 
 #: src/control/Control.Menubar.js:2046
 msgid "file type icon"
-msgstr ""
+msgstr "eicon math ffeil"
 
 #: src/control/Control.MobileBottomBar.js:37
 #: src/control/Control.MobileBottomBar.js:139
@@ -1238,7 +1242,6 @@ msgid "Borders"
 msgstr "Borderi"
 
 #: src/control/Control.MobileTopBar.js:40 src/control/Control.StatusBar.js:452
-#, fuzzy
 msgid "Read-only"
 msgstr "Darllen y unig"
 
@@ -1256,17 +1259,17 @@ msgstr "Diwedd Graddiant"
 
 #: src/control/Control.NotebookbarBuilder.js:311
 msgid "Tap to expand"
-msgstr ""
+msgstr "Tapiwch i ehangu"
 
 #: src/control/Control.NotebookbarBuilder.js:312
 #: src/control/Control.NotebookbarBuilder.js:356
 msgid "Tap to collapse"
-msgstr ""
+msgstr "Tapiwch i gau"
 
 #: src/control/Control.NotebookbarBuilder.js:576
 #: src/control/Control.NotebookbarCalc.js:227
 msgid "CSV File (.csv)"
-msgstr ""
+msgstr "Ffeil CSV (.csv)"
 
 #: src/control/Control.NotebookbarBuilder.js:902
 #: src/control/Control.TopToolbar.js:242
@@ -1275,131 +1278,119 @@ msgstr "Mewnosod Delwedd Leol"
 
 #: src/control/Control.NotebookbarBuilder.js:1006
 msgid "Very Tight"
-msgstr ""
+msgstr "Tynn Iawn"
 
 #: src/control/Control.NotebookbarBuilder.js:1007
 msgid "Tight"
-msgstr ""
+msgstr "Tynn"
 
 #: src/control/Control.NotebookbarBuilder.js:1008
 msgid "Normal"
-msgstr ""
+msgstr "Normal"
 
 #: src/control/Control.NotebookbarBuilder.js:1009
 msgid "Loose"
-msgstr ""
+msgstr "Rhydd"
 
 #: src/control/Control.NotebookbarBuilder.js:1010
 msgid "Very Loose"
-msgstr ""
+msgstr "Rhydd Iawn"
 
 #: src/control/Control.NotebookbarCalc.js:23
 #: src/control/Control.NotebookbarDraw.js:62
 #: src/control/Control.NotebookbarImpress.js:77
 #: src/control/Control.NotebookbarWriter.js:36
-#, fuzzy
 msgid "File"
-msgstr "~Ffeil"
+msgstr "Ffeil"
 
 #: src/control/Control.NotebookbarCalc.js:29
 #: src/control/Control.NotebookbarDraw.js:68
 #: src/control/Control.NotebookbarImpress.js:83
 #: src/control/Control.NotebookbarWriter.js:42
-#, fuzzy
 msgid "Home"
-msgstr "~Cartref"
+msgstr "Cartref"
 
 #: src/control/Control.NotebookbarCalc.js:36
 #: src/control/Control.NotebookbarDraw.js:75
 #: src/control/Control.NotebookbarImpress.js:90
 #: src/control/Control.NotebookbarWriter.js:49
-#, fuzzy
 msgid "Insert"
-msgstr "~Mewnosod"
+msgstr "Mewnosod"
 
 #: src/control/Control.NotebookbarCalc.js:42
 #: src/control/Control.NotebookbarDraw.js:81
 #: src/control/Control.NotebookbarImpress.js:96
 #: src/control/Control.NotebookbarWriter.js:55
-#, fuzzy
 msgid "Layout"
-msgstr "~Cynllun"
+msgstr "Cynllun"
 
 #: src/control/Control.NotebookbarCalc.js:48
-#, fuzzy
 msgid "Data"
-msgstr "~Data"
+msgstr "Data"
 
 #: src/control/Control.NotebookbarCalc.js:54
 #: src/control/Control.NotebookbarDraw.js:87
 #: src/control/Control.NotebookbarImpress.js:102
 #: src/control/Control.NotebookbarWriter.js:67
-#, fuzzy
 msgid "Review"
-msgstr "~Trosolwg"
+msgstr "Adolygu"
 
 #: src/control/Control.NotebookbarCalc.js:60
 #: src/control/Control.NotebookbarDraw.js:93
 #: src/control/Control.NotebookbarImpress.js:108
 #: src/control/Control.NotebookbarWriter.js:73
-#, fuzzy
 msgid "Format"
 msgstr "Fformat"
 
 #: src/control/Control.NotebookbarCalc.js:66
 #: src/control/Control.NotebookbarDraw.js:106
 #: src/control/Control.NotebookbarWriter.js:92
-#, fuzzy
 msgid "Draw"
-msgstr "~Lluniadu"
+msgstr "Lluniadu"
 
 #: src/control/Control.NotebookbarCalc.js:73
 #: src/control/Control.NotebookbarDraw.js:113
 #: src/control/Control.NotebookbarImpress.js:135
 #: src/control/Control.NotebookbarWriter.js:99
-#, fuzzy
 msgid "View"
-msgstr "Golygon"
+msgstr "Golwg"
 
 #: src/control/Control.NotebookbarCalc.js:79
 #: src/control/Control.NotebookbarDraw.js:119
 #: src/control/Control.NotebookbarImpress.js:141
 #: src/control/Control.NotebookbarWriter.js:105
-#, fuzzy
 msgid "Help"
-msgstr "~Cymorth"
+msgstr "Cymorth"
 
 #: src/control/Control.NotebookbarCalc.js:125
 #: src/control/Control.NotebookbarImpress.js:190
 #: src/control/Control.NotebookbarWriter.js:171
 #: src/control/Control.NotebookbarWriter.js:252
 msgid "Save As"
-msgstr ""
+msgstr "Cadw Fel"
 
 #: src/control/Control.NotebookbarCalc.js:143
 #: src/control/Control.NotebookbarDraw.js:179
 #: src/control/Control.NotebookbarImpress.js:209
 #: src/control/Control.NotebookbarWriter.js:190
-#, fuzzy
 msgid "Export As"
-msgstr "Allforio fel:"
+msgstr "Allforio fel"
 
 #: src/control/Control.NotebookbarCalc.js:158
 #: src/control/Control.NotebookbarDraw.js:195
 #: src/control/Control.NotebookbarImpress.js:223
 #: src/control/Control.NotebookbarWriter.js:203
 msgid "Share"
-msgstr ""
+msgstr "Rhannu"
 
 #: src/control/Control.NotebookbarCalc.js:168
 #: src/control/Control.NotebookbarDraw.js:205
 #: src/control/Control.NotebookbarImpress.js:232
 #: src/control/Control.NotebookbarWriter.js:212
 msgid "See history"
-msgstr ""
+msgstr "Gweld hanes"
 
 #: src/control/Control.NotebookbarCalc.js:220
-#, fuzzy
 msgid "ODF Spreadsheet (.ods)"
 msgstr "Taenlen ODF (.ods)"
 
@@ -1408,7 +1399,7 @@ msgstr "Taenlen ODF (.ods)"
 #: src/control/Control.NotebookbarImpress.js:359
 #: src/control/Control.NotebookbarWriter.js:306
 msgid "PDF Document (.pdf) - Expert"
-msgstr ""
+msgstr "PDF Document (.pdf) - Arbenigwr"
 
 #: src/control/Control.NotebookbarCalc.js:318
 #: src/control/Control.NotebookbarDraw.js:319
@@ -1416,47 +1407,45 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:373
 #: src/control/Control.UIManager.js:159
 msgid "Rename"
-msgstr ""
+msgstr "Ailenwi"
 
 #: src/control/Control.NotebookbarCalc.js:654
 msgid "General"
-msgstr ""
+msgstr "Cyffredinol"
 
 #: src/control/Control.NotebookbarCalc.js:655
 msgid "Number"
-msgstr ""
+msgstr "Rhif"
 
 #: src/control/Control.NotebookbarCalc.js:656
 msgid "Percent"
-msgstr ""
+msgstr "Canran"
 
 #: src/control/Control.NotebookbarCalc.js:657
-#, fuzzy
 msgid "Currency"
-msgstr "Cyfredol"
+msgstr "Arian"
 
 #: src/control/Control.NotebookbarCalc.js:658
 #: src/control/Control.NotebookbarWriter.js:1370
 #: src/control/Control.Zotero.js:1083 src/control/Control.Zotero.js:1519
-#, fuzzy
 msgid "Date"
-msgstr "~Data"
+msgstr "Dyddiad"
 
 #: src/control/Control.NotebookbarCalc.js:659
 msgid "Time"
-msgstr ""
+msgstr "Amser"
 
 #: src/control/Control.NotebookbarCalc.js:660
 msgid "Scientific"
-msgstr ""
+msgstr "Gwyddonol"
 
 #: src/control/Control.NotebookbarCalc.js:661
 msgid "Fraction"
-msgstr ""
+msgstr "Ffracsiwn"
 
 #: src/control/Control.NotebookbarCalc.js:662
 msgid "Boolean Value"
-msgstr ""
+msgstr "Gwerth Boole"
 
 #: src/control/Control.NotebookbarCalc.js:663 src/control/Toolbar.js:765
 msgid "Text"
@@ -1464,35 +1453,35 @@ msgstr "Testun"
 
 #: src/control/Control.NotebookbarCalc.js:826
 msgid "Default"
-msgstr ""
+msgstr "Rhagosodedig"
 
 #: src/control/Control.NotebookbarCalc.js:833
 msgid "Heading 1"
-msgstr ""
+msgstr "Pennawd 1"
 
 #: src/control/Control.NotebookbarCalc.js:840
 msgid "Heading 2"
-msgstr ""
+msgstr "Pennawd 2"
 
 #: src/control/Control.NotebookbarCalc.js:853
 msgid "Good"
-msgstr ""
+msgstr "Da"
 
 #: src/control/Control.NotebookbarCalc.js:860
 msgid "Neutral"
-msgstr ""
+msgstr "Niwtral"
 
 #: src/control/Control.NotebookbarCalc.js:867
 msgid "Bad"
-msgstr ""
+msgstr "Drwg"
 
 #: src/control/Control.NotebookbarCalc.js:973
 msgid "Row Height"
-msgstr ""
+msgstr "Uchder Rhes"
 
 #: src/control/Control.NotebookbarCalc.js:981
 msgid "Column Width"
-msgstr ""
+msgstr "Lled Colofn"
 
 #: src/control/Control.NotebookbarCalc.js:994
 msgid "Insert Rows Above"
@@ -1523,32 +1512,32 @@ msgstr "Dileu Colofnau"
 #: src/control/Control.NotebookbarImpress.js:435
 #: src/control/Control.NotebookbarWriter.js:1393
 msgid "Read mode"
-msgstr ""
+msgstr "Modd darllen"
 
 #: src/control/Control.NotebookbarCalc.js:1260
 #: src/control/Control.NotebookbarDraw.js:388
 #: src/control/Control.NotebookbarImpress.js:505
 #: src/control/Control.NotebookbarWriter.js:1454
 msgid "Compact view"
-msgstr ""
+msgstr "Golwg cynnil"
 
 #: src/control/Control.NotebookbarCalc.js:1274
 #: src/control/Control.NotebookbarDraw.js:401
 #: src/control/Control.NotebookbarImpress.js:519
 #: src/control/Control.NotebookbarWriter.js:1494
 msgid "Collapse Tabs"
-msgstr ""
+msgstr "Cau Tabiau"
 
 #: src/control/Control.NotebookbarCalc.js:1286
 #: src/control/Control.NotebookbarDraw.js:413
 #: src/control/Control.NotebookbarImpress.js:531
 #: src/control/Control.NotebookbarWriter.js:1481
 msgid "Status Bar"
-msgstr ""
+msgstr "Bar Statws"
 
 #: src/control/Control.NotebookbarCalc.js:1373
 msgid "Sparkline"
-msgstr ""
+msgstr "Sparkline"
 
 #: src/control/Control.NotebookbarCalc.js:1505
 #: src/control/Control.NotebookbarCalc.js:2293
@@ -1560,94 +1549,90 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:1062
 #: src/control/Control.NotebookbarWriter.js:2818
 msgid "Shapes"
-msgstr ""
+msgstr "Siapiau"
 
 #: src/control/Control.NotebookbarDraw.js:99
 #: src/control/Control.NotebookbarImpress.js:114
 #: src/control/Control.NotebookbarWriter.js:85
-#, fuzzy
 msgid "Table"
-msgstr "~Tabl"
+msgstr "Tabl"
 
 #: src/control/Control.NotebookbarDraw.js:245
 msgid "Image (.png)"
-msgstr ""
+msgstr "Delwedd (.png)"
 
 #: src/control/Control.NotebookbarDraw.js:1032
 msgid "Page Layout"
-msgstr ""
+msgstr "Gosodiad Tudalen"
 
 #: src/control/Control.NotebookbarImpress.js:128
 msgid "Master"
-msgstr ""
+msgstr "Prif"
 
 #: src/control/Control.NotebookbarImpress.js:304
-#, fuzzy
 msgid "ODF Presentation (.odp)"
 msgstr "Cyflwyno ODF (.odp)"
 
 #: src/control/Control.NotebookbarImpress.js:442
 #: src/control/Control.NotebookbarImpress.js:1062
 msgid "Presentation"
-msgstr ""
+msgstr "Cyflwyniad"
 
 #: src/control/Control.NotebookbarImpress.js:450
 msgid "Present in Window"
-msgstr ""
+msgstr "Presennol mewn Ffenest"
 
 #: src/control/Control.NotebookbarWriter.js:79
 msgid "Form"
-msgstr ""
+msgstr "Ffurflen"
 
 #: src/control/Control.NotebookbarWriter.js:263
-#, fuzzy
 msgid "ODF Text Document (.odt)"
 msgstr "Dogfen testun ODF (.odt)"
 
 #: src/control/Control.NotebookbarWriter.js:319
 msgid "EPUB Document (.epub)"
-msgstr ""
+msgstr "Dogfen EPUB (.epub)"
 
 #: src/control/Control.NotebookbarWriter.js:387
 msgid "Go Online"
-msgstr ""
+msgstr "Mynd Ar-lein"
 
 #: src/control/Control.NotebookbarWriter.js:387
 msgid "Go Offline"
-msgstr ""
+msgstr "Mynd All-lein"
 
 #: src/control/Control.NotebookbarWriter.js:1342
 msgid "Rich Text"
-msgstr ""
+msgstr "Testun Cyfoethog"
 
 #: src/control/Control.NotebookbarWriter.js:1349
 msgid "Checkbox"
-msgstr ""
+msgstr "Blwch ticio"
 
 #: src/control/Control.NotebookbarWriter.js:1356
 msgid "Dropdown"
-msgstr ""
+msgstr "Cwymplen"
 
 #: src/control/Control.NotebookbarWriter.js:1363
 msgid "Picture"
-msgstr ""
+msgstr "Llun"
 
 #: src/control/Control.NotebookbarWriter.js:1468
 msgid "Ruler"
-msgstr ""
+msgstr "Mesurydd"
 
 #: src/control/Control.PartsPreview.js:186
 msgid "preview of page "
-msgstr ""
+msgstr "rhagolwg o'r dudalen "
 
 #: src/control/Control.PartsPreview.js:245
-#, fuzzy
 msgid "Paste Slide"
-msgstr "Prif Sleidiau"
+msgstr "Gludo Sleid"
 
 #: src/control/Control.PartsPreview.js:288
 msgid "Paste"
-msgstr ""
+msgstr "Gludo"
 
 #: src/control/Control.Scroll.Annotation.js:19
 msgid "Scroll up annotations"
@@ -1739,7 +1724,7 @@ msgstr "Nifer y Sleidiau"
 
 #: src/control/Control.StatusBar.js:452 src/control/Control.StatusBar.js:456
 msgid "Permission Mode"
-msgstr ""
+msgstr "Modd Caniatâd"
 
 #: src/control/Control.StatusBar.js:456
 msgid "Edit"
@@ -1747,27 +1732,27 @@ msgstr "Golygu"
 
 #: src/control/Control.StatusBar.js:496
 msgid "Select multiple cells"
-msgstr ""
+msgstr "Dewiswch gelloedd lluosog"
 
 #: src/control/Control.StatusBar.js:499
 msgid "Insert mode: inactive"
-msgstr ""
+msgstr "Modd mewnosod: anweithredol"
 
 #: src/control/Control.StatusBar.js:512
 msgid "Selection mode: inactive"
-msgstr ""
+msgstr "Modd dewis: anweithredol"
 
 #: src/control/Control.StatusBar.js:575
 msgid "Set Language for All text"
-msgstr ""
+msgstr "Gosod yr Iaith ar gyfer Pob testun"
 
 #: src/control/Control.StatusBar.js:578
 msgid "Set Language for Paragraph"
-msgstr ""
+msgstr "Gosod Iaith ar gyfer y Paragraff"
 
 #: src/control/Control.StatusBar.js:579
 msgid "Set Language for Selection"
-msgstr ""
+msgstr "Gosod Iaith ar gyfer y Dewis"
 
 #: src/control/Control.Tabs.js:63
 msgid "Insert sheet before this"
@@ -1779,24 +1764,23 @@ msgstr "Mewnosod dalen ar ôl hon"
 
 #: src/control/Control.Tabs.js:90
 msgid "Move Sheet Left"
-msgstr ""
+msgstr "Symud Dalen i'r Chwith"
 
 #: src/control/Control.Tabs.js:95
 msgid "Move Sheet Right"
-msgstr ""
+msgstr "Symud Dalen i'r Dde"
 
 #: src/control/Control.Tabs.js:111
 msgid "Copy Sheet..."
-msgstr ""
+msgstr "Copïo'r Ddalen..."
 
 #: src/control/Control.Tabs.js:335
-#, fuzzy
 msgid "Are you sure you want to delete sheet, %sheet%?"
 msgstr "Ydych chi'n siŵr eich bod am ddileu'r ddalen, %sheet% ?"
 
 #: src/control/Control.Tabs.js:346
 msgid "Rename sheet"
-msgstr ""
+msgstr "Ailenwi dalen"
 
 #: src/control/Control.Tabs.js:346
 msgid "Enter new sheet name"
@@ -1820,7 +1804,7 @@ msgstr ""
 
 #: src/control/Control.TopToolbar.js:107
 msgid "Active Sheet"
-msgstr ""
+msgstr "Dalen Weithredol"
 
 #: src/control/Control.TopToolbar.js:120
 msgid "Default Style"
@@ -1836,23 +1820,23 @@ msgstr "Mewnosod siapiau"
 
 #: src/control/Control.TopToolbar.js:248
 msgid "Insert connectors"
-msgstr ""
+msgstr "Mewnosod cysylltwyr"
 
 #: src/control/Control.TopToolbar.js:263 src/control/Control.UIManager.js:764
 msgid "Hide Menu"
-msgstr ""
+msgstr "Cuddio Dewislen"
 
 #: src/control/Control.UIManager.js:159
 msgid "Enter new name"
-msgstr ""
+msgstr "Rhoi enw newydd"
 
 #: src/control/Control.UIManager.js:787
 msgid "Show Menu"
-msgstr ""
+msgstr "Dangos Dewislen"
 
 #: src/control/Control.UIManager.js:1048
 msgid "Dismiss"
-msgstr ""
+msgstr "Cau"
 
 #: src/control/Control.UserList.js:20
 msgid "%user has joined"
@@ -1876,7 +1860,7 @@ msgstr "0 defnyddwyr"
 
 #: src/control/Control.UserList.js:204
 msgid "Following"
-msgstr ""
+msgstr "Yn dilyn"
 
 #: src/control/Control.UserList.js:232 src/control/Control.UserList.js:398
 msgid "Always follow the editor"
@@ -1892,21 +1876,23 @@ msgstr "Cyfredol"
 
 #: src/control/Control.Zotero.js:139
 msgid "Zotero API key is not configured"
-msgstr ""
+msgstr "Nid yw allwedd Zotero API wedi'i ffurfweddu"
 
 #: src/control/Control.Zotero.js:163
 msgid "Zotero API key is incorrect"
-msgstr ""
+msgstr "Mae allwedd Zotero API yn anghywir"
 
 #: src/control/Control.Zotero.js:190
 msgid "Zotero Warning"
-msgstr ""
+msgstr "Rhybudd Zotero"
 
 #: src/control/Control.Zotero.js:191
 msgid ""
 "The document contains some citations which may be unreachable through web "
 "API. It may cause some problems while editing citations or bibliography."
 msgstr ""
+"Mae'r ddogfen yn cynnwys rhai dyfyniadau a all fod yn anghyraeddadwy trwy "
+"API gwe. Gall achosi rhai problemau wrth olygu dyfyniadau neu lyfryddiaeth."
 
 #: src/control/Control.Zotero.js:247 src/core/Socket.js:1103
 msgid "Loading..."
@@ -1914,128 +1900,131 @@ msgstr "Yn llwytho..."
 
 #: src/control/Control.Zotero.js:265
 msgid "Language:"
-msgstr ""
+msgstr "Iaith:"
 
 #: src/control/Control.Zotero.js:280
 msgid "Store as:"
-msgstr ""
+msgstr "Cadw fel:"
 
 #: src/control/Control.Zotero.js:286 src/control/Control.Zotero.js:410
 msgid "Fields"
-msgstr ""
+msgstr "Meysydd"
 
 #: src/control/Control.Zotero.js:287 src/control/Control.Zotero.js:410
 msgid "Bookmarks"
-msgstr ""
+msgstr "Nodau tudalen"
 
 #: src/control/Control.Zotero.js:408
 msgid "Footnotes"
-msgstr ""
+msgstr "Troednodau"
 
 #: src/control/Control.Zotero.js:408
 msgid "Endnotes"
-msgstr ""
+msgstr "Diweddnodau"
 
 #: src/control/Control.Zotero.js:472
 msgid "My Publications"
-msgstr ""
+msgstr "Fy Nghyhoeddiadau"
 
 #: src/control/Control.Zotero.js:478 src/control/Control.Zotero.js:703
 msgid "My Library"
-msgstr ""
+msgstr "Fy Llyfrgell"
 
 #: src/control/Control.Zotero.js:479
 msgid "Group Libraries"
-msgstr ""
+msgstr "Llyfrgelloedd Grŵp"
 
 #: src/control/Control.Zotero.js:719
 msgid "Failed to load groups"
-msgstr ""
+msgstr "Wedi methu llwytho grwpiau"
 
 #: src/control/Control.Zotero.js:737 src/control/Control.Zotero.js:1055
 msgid "Failed to load collections"
-msgstr ""
+msgstr "Wedi methu llwytho casgliadau"
 
 #: src/control/Control.Zotero.js:751
 msgid "Citation Style"
-msgstr ""
+msgstr "Arddull Dyfynnu"
 
 #: src/control/Control.Zotero.js:756
-#, fuzzy
 msgid "Styles"
-msgstr "Arddull"
+msgstr "Arddulliau"
 
 #: src/control/Control.Zotero.js:756
 msgid "An error occurred while fetching style list"
-msgstr ""
+msgstr "Digwyddodd gwall wrth estyn rhestr arddull"
 
 #: src/control/Control.Zotero.js:764
 msgid "Failed to load styles"
-msgstr ""
+msgstr "Wedi methu llwytho arddulliau"
 
 #: src/control/Control.Zotero.js:1083 src/control/Control.Zotero.js:1519
 msgid "Title"
-msgstr ""
+msgstr "Teitl"
 
 #: src/control/Control.Zotero.js:1083 src/control/Control.Zotero.js:1519
 msgid "Creator(s)"
-msgstr ""
+msgstr "Crëwr(wyr)"
 
 #: src/control/Control.Zotero.js:1083 src/control/Control.Zotero.js:1519
 msgid "Your library is empty"
-msgstr ""
+msgstr "Mae eich llyfrgell yn wag"
 
 #: src/control/Control.Zotero.js:1094
 msgid "Failed to load items"
-msgstr ""
+msgstr "Wedi methu llwytho eitemau"
 
 #: src/control/Control.Zotero.js:1144
 msgid "Citation warning"
-msgstr ""
+msgstr "Rhybudd dyfynnu"
 
 #: src/control/Control.Zotero.js:1145
 msgid ""
 "Once citations are entered their storage and display type can not be "
 "changed."
 msgstr ""
+"Unwaith y bydd dyfyniadau wedi'u mewnbynnu nid oes modd newid eu math o "
+"storio a dangos."
 
 #: src/control/Control.Zotero.js:1146 src/control/Control.Zotero.js:1448
 msgid "Confirm"
-msgstr ""
+msgstr "Cadarnhau"
 
 #: src/control/Control.Zotero.js:1252
 msgid "Add Note"
-msgstr ""
+msgstr "Ychwanegu Nodyn"
 
 #: src/control/Control.Zotero.js:1255
 msgid "Notes"
-msgstr ""
+msgstr "Nodiadau"
 
 #: src/control/Control.Zotero.js:1255
 msgid "An error occurred while fetching notes"
-msgstr ""
+msgstr "Digwyddodd gwall wrth estyn nodiadau"
 
 #: src/control/Control.Zotero.js:1386
 msgid "Updated citations"
-msgstr ""
+msgstr "Dyfyniadau wedi'u diweddaru"
 
 #: src/control/Control.Zotero.js:1388
 msgid "Citations update failed"
-msgstr ""
+msgstr "Methodd diweddariad dyfyniadau"
 
 #: src/control/Control.Zotero.js:1392
 msgid "Updating citations"
-msgstr ""
+msgstr "Diweddaru dyfyniadau"
 
 #: src/control/Control.Zotero.js:1447
 msgid ""
 "Unlinking citations will prevent Collabora Online from updating citations "
 "and bibliography in this document."
 msgstr ""
+"Bydd datgysylltu dyfyniadau yn atal Collabora Online rhag diweddaru "
+"dyfyniadau a llyfryddiaeth yn y ddogfen hon."
 
 #: src/control/Permission.js:27 src/control/Permission.js:28
 msgid "Edit document"
-msgstr ""
+msgstr "Golygu dogfen"
 
 #: src/control/Permission.js:85
 msgid "The document could not be locked, and is opened in read-only mode."
@@ -2048,29 +2037,31 @@ msgstr "Dychwelodd y gweinydd y rheswm hwn:"
 
 #: src/control/Permission.js:95
 msgid "The document could not be locked."
-msgstr "Methu cloi'r ddogfen"
+msgstr "Methu cloi'r ddogfen."
 
 #: src/control/Permission.js:149
 msgid "Enter a file name"
-msgstr ""
+msgstr "Rhowch enw ffeil"
 
 #: src/control/Permission.js:168
 msgid "Save as ODF format"
-msgstr ""
+msgstr "Cadw fel fformat ODF"
 
 #: src/control/Permission.js:169
 msgid "Continue editing"
-msgstr ""
+msgstr "_Parhau i Olygu"
 
 #: src/control/Permission.js:169
 msgid "Continue read only"
-msgstr ""
+msgstr "Parhau fel ddarllen-yn-unig"
 
 #: src/control/Permission.js:182
 msgid ""
 "This document may contain formatting or content that cannot be saved in the "
 "current file format."
 msgstr ""
+"Gall y ddogfen hon gynnwys fformatio neu gynnwys nad oes modd ei gadw yn y "
+"fformat ffeil cyfredol."
 
 #: src/control/Ruler.js:368
 msgid "Left Margin"
@@ -2097,7 +2088,6 @@ msgid "This document has an invalid signature."
 msgstr "Mae gan y ddogfen hon lofnod annilys."
 
 #: src/control/Signing.js:35
-#, fuzzy
 msgid "The signature was valid, but the document has been modified."
 msgstr "Roedd y llofnod y ddilys, ond mae'r ddogfen wedi ei newid"
 
@@ -2106,16 +2096,17 @@ msgid "The signature is OK, but the certificate could not be validated."
 msgstr "Mae'r llofnod yn iawn ond nid oedd modd dilysu'r dystysgrif."
 
 #: src/control/Signing.js:43
-#, fuzzy
 msgid "The signature is OK, but the document is only partially signed."
 msgstr ""
-"Mae'r llofnod yn iawn ond dim ond yn rhannol mae'r ddogfen wedi ei llofnodi"
+"Mae'r llofnod yn iawn, ond dim ond yn rhannol mae'r ddogfen wedi ei llofnodi."
 
 #: src/control/Signing.js:47
 msgid ""
 "The signature is OK, but the certificate could not be validated and the "
 "document is only partially signed."
 msgstr ""
+"Mae'r llofnod yn iawn, ond nid oedd modd dilysu'r dystysgrif a dim ond yn "
+"rhannol y mae'r ddogfen wedi'i llofnodi."
 
 #: src/control/Toolbar.js:54
 msgid "Font"
@@ -2143,7 +2134,7 @@ msgstr "\"Dirprwy Araf\""
 
 #: src/control/Toolbar.js:675
 msgid "Copy all version information in English"
-msgstr ""
+msgstr "Copïo'r holl wybodaeth fersiwn yn Saesneg"
 
 #: src/control/Toolbar.js:758
 msgid "Insert hyperlink"
@@ -2168,35 +2159,38 @@ msgstr "Borderi celloedd"
 #: src/control/jsdialog/Widget.TreeView.js:658
 msgid "Headings and objects that you add to the document will appear here"
 msgstr ""
+"Bydd penawdau a gwrthrychau y byddwch yn eu hychwanegu at y ddogfen yn "
+"ymddangos yma"
 
 #: src/core/Socket.js:65
-#, fuzzy
 msgid "Oops, there is a problem connecting to %productName: "
-msgstr "Wps, mae yna anhawster cysylltu a'r ddogfen"
+msgstr "Wps, mae problem cysylltu â %productName: "
 
 #: src/core/Socket.js:589
 msgid "Server is now reachable. We have to refresh the page now."
 msgstr ""
+"Mae'r gweinydd bellach yn gyraeddadwy. Mae'n rhaid i ni adnewyddu'r dudalen "
+"nawr."
 
 #: src/core/Socket.js:591
 msgid "Server is now reachable..."
-msgstr ""
+msgstr "Mae'r gweinydd bellach yn gyraeddadwy..."
 
 #: src/core/Socket.js:595
 msgid "RELOAD"
-msgstr ""
+msgstr "AIL-LWYTHO"
 
 #: src/core/Socket.js:608
 msgid "Cluster configuration warning"
-msgstr ""
+msgstr "Rhybudd ffurfweddiad clwstwr"
 
 #: src/core/Socket.js:611
 msgid "Wrong server, reconnecting..."
-msgstr ""
+msgstr "Gweinydd anghywir, yn ailgysylltu..."
 
 #: src/core/Socket.js:620
 msgid "COOLWSD version:"
-msgstr ""
+msgstr "Fersiwn COOLWSD:"
 
 #: src/core/Socket.js:632
 msgid "Served by:"
@@ -2208,11 +2202,11 @@ msgstr "Fersiwn gweinydd heb gymorth."
 
 #: src/core/Socket.js:642
 msgid "LOKit version:"
-msgstr ""
+msgstr "Fersiwn LOKit:"
 
 #: src/core/Socket.js:751
 msgid "Document is getting migrated"
-msgstr ""
+msgstr "Dogfen yn cael ei mudo"
 
 #: src/core/Socket.js:778
 msgid "Session terminated by document owner"
@@ -2228,7 +2222,7 @@ msgstr "Wps, mae yna anhawster cysylltu a'r ddogfen"
 
 #: src/core/Socket.js:797
 msgid "Server is down, restarting automatically. Please wait."
-msgstr ""
+msgstr "Gweinydd i lawr, ailgychwyn yn awtomatig. Arhoswch, os gwelwch yn dda."
 
 #: src/core/Socket.js:824
 msgid ""
@@ -2248,7 +2242,7 @@ msgstr ""
 
 #: src/core/Socket.js:836
 msgid "Reloading the document after rename"
-msgstr ""
+msgstr "Yn ail-lwytho'r ddogfen ar ôl ei hailenwi"
 
 #: src/core/Socket.js:971
 msgid "Document requires password to view."
@@ -2268,19 +2262,19 @@ msgstr "Wedi darparu cyfrinair anghywir. Ceisiwch eto."
 
 #: src/core/Socket.js:1018
 msgid "Only the document owner can change the password."
-msgstr ""
+msgstr "Dim ond perchennog y ddogfen all newid y cyfrinair."
 
 #: src/core/Socket.js:1049 src/core/Socket.js:1054
 msgid "Missing Fonts"
-msgstr ""
+msgstr "Ffontiau Coll"
 
 #: src/core/Socket.js:1093
 msgid "Someone"
-msgstr ""
+msgstr "Rhywun"
 
 #: src/core/Socket.js:1094
 msgid "%userName saved this document as %fileName. Do you want to join?"
-msgstr ""
+msgstr "Cadwodd %userName y ddogfen hon fel %fileName. Ydych chi eisiau ymuno?"
 
 #: src/core/Socket.js:1103
 msgid "Connecting..."
@@ -2288,19 +2282,19 @@ msgstr "Cysylltu..."
 
 #: src/core/Socket.js:1120
 msgid "The document is being renamed and will reload shortly"
-msgstr ""
+msgstr "Mae'r ddogfen yn cael ei hailenwi a bydd yn cael ei hail-lwytho'n fuan"
 
 #: src/core/Socket.js:1123
 msgid "The document is switching to Offline mode and will reload shortly"
-msgstr ""
+msgstr "Mae'r ddogfen yn newid i'r modd All-lein a bydd yn ail-lwytho'n fuan"
 
 #: src/core/Socket.js:1232
 msgid "Exported to storage"
-msgstr ""
+msgstr "Wedi'i allforio i storfa"
 
 #: src/core/Socket.js:1232
 msgid "Successfully exported: "
-msgstr ""
+msgstr "Wedi'i allforio'n llwyddiannus: "
 
 #: src/core/Socket.js:1260
 msgid "Discard"
@@ -2316,7 +2310,7 @@ msgstr "Cadw i ffeil newydd"
 
 #: src/core/Socket.js:1282
 msgid "Document has been changed"
-msgstr ""
+msgstr "Dogfen wedi'i newid"
 
 #: src/core/Socket.js:1283
 msgid ""
@@ -2334,29 +2328,28 @@ msgstr ""
 "Mae'n ddrwg gennym, nid ydym yn gallu cysylltu â'ch dogfen. Ceisiwch eto."
 
 #: src/core/Socket.js:1616
-#, fuzzy
 msgid "Reconnecting..."
-msgstr "Cysylltu..."
+msgstr "Yn ailgysylltu..."
 
 #: src/core/Socket.js:1626
 msgid "The server has been disconnected."
-msgstr ""
+msgstr "Mae'r gweinydd wedi'i ddatgysylltu."
 
 #: src/docstate.js:82
 msgid "Standard"
-msgstr ""
+msgstr "Safonol"
 
 #: src/docstate.js:93
 msgid "Theme colors"
-msgstr ""
+msgstr "Lliwiau themâu"
 
 #: src/docstate.js:94
 msgid "Document colors"
-msgstr ""
+msgstr "Lliwiau dogfen"
 
 #: src/errormessages.js:22
 msgid "No disk space left on server."
-msgstr ""
+msgstr "Dim lle ar y ddisg ar ôl ar y gweinydd."
 
 #: src/errormessages.js:23
 msgid ""
@@ -2367,7 +2360,6 @@ msgstr ""
 "ffurfweddu, cysyltwch â'r gweinyddwr."
 
 #: src/errormessages.js:24
-#, fuzzy
 msgid ""
 "This is an unsupported version of {productname}. To avoid the impression "
 "that it is suitable for deployment in enterprises, this message appears "
@@ -2412,23 +2404,23 @@ msgid "Wrong or missing WOPISrc parameter, please contact support."
 msgstr "Paramedrau WOPISrc anghywir neu coll, cysylltwch â'ch cefnogaeth."
 
 #: src/errormessages.js:30
-#, fuzzy
 msgid ""
 "Your session will expire in %time. Please save your work and refresh the "
 "session (or webpage) to continue. You might need to login again."
 msgstr ""
-"Bydd eich sesiwn yn dod i ben ymhen %time. Cadwch eich gwaith ac adnewyddu'r "
-"sesiwn (neu dudalen gwe) i barhau."
+"Bydd eich sesiwn yn dod i ben yn %time. Cadwch eich gwaith ac adnewyddwch y "
+"sesiwn (neu'r dudalen we) i barhau. Efallai y bydd angen i chi fewngofnodi "
+"eto."
 
 #: src/errormessages.js:31
-#, fuzzy
 msgid ""
 "Your session has expired. Further changes to the document might not be "
 "saved. Please refresh the session (or webpage) to continue. You might need "
 "to login again."
 msgstr ""
-"Mae eich sesiwn wedi dod i ben. Efallai na fydd newidiadau pellach i'r "
-"ddogfen yn cael eu adw. Adnewyddwch eich sesiwn (neu dudalen gwe) i barhau."
+"Mae eich sesiwn wedi dod i ben. Mae'n bosibl na fydd newidiadau pellach i'r "
+"ddogfen yn cael eu cadw. Adnewyddwch y sesiwn (neu'r dudalen we) i barhau. "
+"Efallai y bydd angen i chi fewngofnodi eto."
 
 #: src/errormessages.js:32
 msgid ""
@@ -2447,6 +2439,8 @@ msgid ""
 "You are leaving the document. The following web page will open in a new "
 "tab: "
 msgstr ""
+"Rydych chi'n gadael y ddogfen. Bydd y dudalen we ganlynol yn agor mewn tab "
+"newydd: "
 
 #: src/errormessages.js:35
 msgid ""
@@ -2454,17 +2448,19 @@ msgid ""
 "more resources than allowed. Please contact the administrator."
 msgstr ""
 "Methwyd â llwytho dogfen. Mae'r ddogfen un ai wedi ei hanffurfio neu'n "
-"cymryd mwy o adnoddau nag sy'n cael ei ganiatáu. Cysylltwch â'ch gweinyddwr"
+"cymryd mwy o adnoddau nag sy'n cael ei ganiatáu. Cysylltwch â'ch gweinyddwr."
 
 #: src/errormessages.js:36
 msgid "Cleaning up the document from the last session."
-msgstr ""
+msgstr "Glanhau'r ddogfen o'r sesiwn ddiwethaf."
 
 #: src/errormessages.js:37
 msgid ""
 "We are in the process of cleaning up this document from the last session, "
 "please try again later."
 msgstr ""
+"Rydym yn y broses o lanhau'r ddogfen hon o'r sesiwn ddiwethaf, ceisiwch eto "
+"yn nes ymlaen."
 
 #: src/errormessages.js:38
 msgid ""
@@ -2474,6 +2470,11 @@ msgid ""
 "storage and/or copy/paste problems. Expected serverId %0 for routeToken %1 "
 "but connected to serverId %2"
 msgstr ""
+"Mae'n ymddangos bod eich clwstwr %productName wedi'i gam-ffurfweddu neu'n "
+"graddio'n gyflym - cysylltwch â gweinyddwr eich system. Gall parhau â'r "
+"golygu olygu na fydd defnyddwyr lluosog yn gweld ei gilydd, y bydd gwrthdaro "
+"o ran storio dogfennau a/neu broblemau copïo/gludo. Yn disgwyl serverId %0 "
+"ar gyfer routeToken %1 but wedi'i gysylltu â serverId %2"
 
 #: src/errormessages.js:39
 msgid ""
@@ -2482,12 +2483,17 @@ msgid ""
 "administrator. For more info on proxy configuration please checkout https://"
 "sdk.collaboraonline.com/docs/installation/Proxy_settings.html"
 msgstr ""
+"Wedi methu sefydlu cysylltiad soced neu gysylltiad soced ar gau yn "
+"annisgwyl. Mae'n bosibl bod y dirprwy gwrthdro wedi'i gam ffurfweddu â'r "
+"gweinyddwr. I gael rhagor o wybodaeth am ffurfweddiad dirprwy, gwiriwch "
+"https://sdk.collaboraonline.com/docs/installation/Proxy_settings.html"
 
 #: src/errormessages.js:40
 msgid ""
 "Failed to establish socket connection or socket connection closed "
 "unexpectedly."
 msgstr ""
+"Wedi methu sefydlu cysylltiad soced neu gysylltiad soced ar gau yn annisgwyl."
 
 #: src/errormessages.js:43
 msgid "Failed to load document."
@@ -2504,6 +2510,8 @@ msgid ""
 "The document is too large or no disk space left to save. Document will now "
 "be read-only."
 msgstr ""
+"Mae'r ddogfen yn rhy fawr neu dim lle ar y ddisg ar ôl i'w chadw. Bydd y "
+"ddogfen nawr yn ddarllen-yn-unig."
 
 #: src/errormessages.js:46 src/errormessages.js:55
 msgid "Document cannot be saved due to expired or invalid access token."
@@ -2511,7 +2519,7 @@ msgstr "Nid oes modd cadw'r ddogfen oherwydd tocyn mynediad hen neu annilys."
 
 #: src/errormessages.js:47
 msgid "Document cannot be saved."
-msgstr "Methu cadw'r ddogfen"
+msgstr "Methu cadw'r ddogfen."
 
 #: src/errormessages.js:48
 msgid "Document cannot be renamed."
@@ -2520,13 +2528,16 @@ msgstr "Methu ailenwi'r ddogfen.."
 #: src/errormessages.js:52
 msgid ""
 "Failed to read document from storage, please try to load the document again."
-msgstr ""
+msgstr "Wedi methu darllen dogfen o'r storfa, ceisiwch lwytho'r ddogfen eto."
 
 #: src/errormessages.js:53
 msgid ""
 "Save failed due to no storage space left. Document will now be read-only. "
 "Please make sure enough disk space is available and try to save again."
 msgstr ""
+"Methodd y cadw oherwydd nad oedd dim lle storio ar ôl. Bydd y ddogfen nawr "
+"yn ddarllen-yn-unig. Sicrhewch fod digon o le ar y ddisg a cheisiwch ei "
+"chadw eto."
 
 #: src/errormessages.js:54
 msgid ""
@@ -2534,18 +2545,21 @@ msgid ""
 "storage space. The document will now be read-only but you may still "
 "download it now to preserve a copy locally."
 msgstr ""
+"Methodd y cadw oherwydd bod y ddogfen yn rhy fawr neu'n fwy na'r gofod "
+"storio sy'n weddill. Bydd y ddogfen yn awr yn ddarllen-yn-unig ond gallwch "
+"ei llwytho i lawr nawr i gadw copi yn lleol."
 
 #: src/errormessages.js:56
 msgid "Document cannot be saved, please check your permissions."
-msgstr ""
+msgstr "Nid oedd modd cadw'r ddogfen, gwiriwch eich caniatâd."
 
 #: src/errormessages.js:57
 msgid "Document cannot be renamed, please check your permissions."
-msgstr ""
+msgstr "Nid oedd modd ailenwi'r ddogfen, gwiriwch eich caniatâd."
 
 #: src/errormessages.js:58
 msgid "Document cannot be exported. Please try again."
-msgstr ""
+msgstr "Nid oedd modd allforio'r ddogfen. Ceisiwch eto, os gwelwch yn dda."
 
 #: src/errormessages.js:63
 msgid "Uploading file to server failed, file not found."
@@ -2553,7 +2567,7 @@ msgstr "Methuwd llwytho dogfen i weinydd, heb ganfod y ffeil."
 
 #: src/errormessages.js:64
 msgid "Uploading file to server failed, the file is too large."
-msgstr "Methwyd llwytho ffeil i weinydd, mae'r ffeil yn rhy fawr"
+msgstr "Methwyd llwytho ffeil i weinydd, mae'r ffeil yn rhy fawr."
 
 #: src/layer/tile/CanvasTileLayer.js:1957
 msgid "Functions"
@@ -2561,27 +2575,27 @@ msgstr "Swyddogaeth"
 
 #: src/layer/tile/CanvasTileLayer.js:2533
 msgid "Copy link location"
-msgstr ""
+msgstr "Copïo lleoliad dolen"
 
 #: src/layer/tile/CanvasTileLayer.js:2544
 msgid "Edit link"
-msgstr ""
+msgstr "Golygu dolen"
 
 #: src/layer/tile/CanvasTileLayer.js:2553
 msgid "Remove link"
-msgstr ""
+msgstr "Tynnu dolen"
 
 #: src/layer/tile/CanvasTileLayer.js:5583
 msgid "No Comments"
-msgstr ""
+msgstr "Dim Sylwadau"
 
 #: src/layer/tile/CommentListSection.ts:138
 msgid "A comment is being edited"
-msgstr ""
+msgstr "Mae sylw yn cael ei olygu"
 
 #: src/layer/tile/CommentListSection.ts:139
 msgid "Please save or discard the comment currently being edited."
-msgstr ""
+msgstr "Cadwch neu ddileu'r sylw sy'n cael ei olygu ar hyn o bryd."
 
 #: src/layer/tile/CommentListSection.ts:922
 msgid "Modify"
@@ -2598,7 +2612,7 @@ msgstr "Tynnu"
 
 #: src/layer/tile/CommentListSection.ts:940
 msgid "Remove Thread"
-msgstr ""
+msgstr "Dileu Trywydd"
 
 #: src/layer/tile/CommentListSection.ts:946
 msgid "Resolve"
@@ -2606,20 +2620,20 @@ msgstr "Datrys"
 
 #: src/layer/tile/CommentListSection.ts:946
 msgid "Unresolve"
-msgstr ""
+msgstr "Anatrysiadwy"
 
 #: src/layer/tile/CommentListSection.ts:952
 msgid "Unresolve Thread"
-msgstr ""
+msgstr "Trywydd heb ei ddatrys"
 
 #: src/layer/tile/CommentListSection.ts:952
 msgid "Resolve Thread"
-msgstr ""
+msgstr "Datrys Trywydd"
 
 #: src/layer/tile/CommentListSection.ts:1224
 #: src/layer/tile/CommentListSection.ts:1273
 msgid "Autosaved"
-msgstr ""
+msgstr "Wedi'i gadw'n awtomatig"
 
 #: src/layer/tile/CommentSection.ts:285
 msgid "Open menu"
@@ -2639,7 +2653,7 @@ msgstr "Datryswyd"
 
 #: src/main.js:134
 msgid "Warning! The browser you are using is not supported."
-msgstr ""
+msgstr "Rhybudd! Nid yw'r porwr rydych chi'n ei ddefnyddio yn cael ei gefnogi."
 
 #: src/map/Clipboard.js:135
 msgid ""
@@ -2649,11 +2663,11 @@ msgstr ""
 
 #: src/map/Clipboard.js:145
 msgid "Copying from the document disabled"
-msgstr ""
+msgstr "Analluogwyd copïo o'r ddogfen"
 
 #: src/map/Clipboard.js:248
 msgid "warning: copy/paste request timed out"
-msgstr ""
+msgstr "rhybudd: copi/gludo cais wedi dod i ben"
 
 #: src/map/Clipboard.js:311
 msgid "Failed to download clipboard, please re-copy"
@@ -2673,6 +2687,13 @@ msgid ""
 "kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd></td></tr><tr><td>Copy</"
 "td><td>Cut</td><td>Paste</td></tr></table>"
 msgstr ""
+"<p>Mynediad cyfyngedig sydd gan eich porwr i'r clipfwrdd, felly defnyddiwch "
+"y llwybrau byr bysellfwrdd hyn:</p><table class=\"warn-copy-paste\""
+"><tr><td><kbd>Ctrl</kbd><span class=\"kbd--plus\""
+">+</span><kbd>C</kbd></td><td><kbd>Ctrl</kbd><span class=\"kbd--plus\""
+">+</span><kbd>X</kbd></td><td><kbd>Ctrl</kbd><span class=\"kbd--plus\">+</spa"
+"n><kbd>V</kbd></td></tr><tr><td>Copïo</td><td>Torri</td><td>Gludo</td></tr></"
+"table>"
 
 #: src/map/Clipboard.js:884
 msgid ""
@@ -2690,6 +2711,9 @@ msgid ""
 "now: <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to see "
 "more options</p><p>Close popup to ignore paste special</p>"
 msgstr ""
+"<p>Mynediad cyfyngedig iawn sydd gan eich porwr i'r clipfwrdd</p><p>Pwyswch: "
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> i weld rhagor "
+"o ddewisiadau</p><p>Caewch y llamlen i anwybyddu gludo arbennig</p>"
 
 #: src/map/Map.js:218
 msgid "Initializing..."
@@ -2697,18 +2721,18 @@ msgstr "Cychwyn..."
 
 #: src/map/Map.js:461 src/map/Map.js:464 src/map/Map.js:467 src/map/Map.js:470
 msgid "Last saved:"
-msgstr ""
+msgstr "Cadwyd diwethaf:"
 
 #: src/map/handler/Map.Feedback.js:82
 msgid "Please send us your feedback"
-msgstr ""
+msgstr "Anfonwch eich adborth atom"
 
 #: src/map/handler/Map.FileInserter.js:105
 #, javascript-format
 msgid ""
 "The file of type: %0 cannot be uploaded to server since the file has no name"
 msgstr ""
-"Nid oes modd llwytho ffeil o fath: %0 i weinydd gan nad oes gan y ffeil enw."
+"Nid oes modd llwytho ffeil o fath: %0 i weinydd gan nad oes gan y ffeil enw"
 
 #: src/map/handler/Map.FileInserter.js:107
 #, javascript-format
@@ -2728,11 +2752,11 @@ msgstr "Methodd llwytho ffeil i weinydd gyda statws: %0"
 
 #: src/map/handler/Map.SlideShow.js:50
 msgid "Empty Slide Show"
-msgstr ""
+msgstr "Sioe Sleidiau Gwag"
 
 #: src/map/handler/Map.SlideShow.js:147
 msgid "Windowed Presentation Blocked"
-msgstr ""
+msgstr "Cyflwyniad Ffenestredig wedi'i Rhwystro"
 
 #: src/map/handler/Map.SlideShow.js:148
 msgid ""
@@ -2740,30 +2764,33 @@ msgid ""
 "slide shows to be displayed in separated windows, allowing for easy screen "
 "sharing."
 msgstr ""
+"Cafodd y cyflwyniad ei rwystro. Caniatewch llamlenni yn eich porwr. Mae hyn "
+"yn caniatáu i sioeau sleidiau gael eu dangos mewn ffenestri ar wahân, gan "
+"ganiatáu ar gyfer rhannu sgrin yn hawdd."
 
 #: src/map/handler/Map.SlideShow.js:156
 msgid "Presenting in window"
-msgstr ""
+msgstr "Cyflwyno mewn ffenestr"
 
 #: src/map/handler/Map.SlideShow.js:157
 msgid "Close Presentation"
-msgstr ""
+msgstr "Cau Cyflwyniad"
 
 #: src/map/handler/Map.SlideShow.js:169
 msgid "Presenting in fullscreen"
-msgstr ""
+msgstr "Cyflwyno mewn sgrin lawn"
 
 #: src/map/handler/Map.SlideShow.js:170
 msgid "End Presentation"
-msgstr ""
+msgstr "Diwedd Cyflwyniad"
 
 #: src/map/handler/Map.SlideShow.js:226
 msgid "Already presenting"
-msgstr ""
+msgstr "Wrthi'n cyflwyno"
 
 #: src/map/handler/Map.SlideShow.js:227
 msgid "You are already presenting this document"
-msgstr ""
+msgstr "Rydych chi eisoes yn cyflwyno'r ddogfen hon"
 
 #: src/map/handler/Map.WOPI.js:149
 msgid "Creating new file from template..."
@@ -2771,11 +2798,11 @@ msgstr "Creu ffeil newydd o dempled..."
 
 #: src/map/handler/Map.WOPI.js:582
 msgid "Error"
-msgstr ""
+msgstr "Gwall"
 
 #: src/map/handler/Map.WOPI.js:582
 msgid "File name should contain an extension."
-msgstr ""
+msgstr "Dylai enw ffeil gynnwys estyniad."
 
 #: src/map/handler/Map.WOPI.js:590
 msgid "Creating copy..."
@@ -2783,16 +2810,16 @@ msgstr "Creu copi..."
 
 #: welcome/welcome.html%2Bhtml.head.title:9-3
 msgid "Collabora Online Welcome"
-msgstr ""
+msgstr "Croeso i Collabora Ar-lein"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:26-7
 msgid "Explore The New %coolVersion"
-msgstr ""
+msgstr "Archwiliwch y %coolVersion Newydd"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:27-7
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:38-7
 msgid "Collabora Online Development Edition"
-msgstr ""
+msgstr "Fersiwn Datblygiadol Ar-lein Collabora"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:28-7
 msgid ""
@@ -2801,10 +2828,15 @@ msgid ""
 "target=\"_blank\" href=\"https://www.collaboraoffice.com/solutions/"
 "collabora-office-android-ios/\">apps</a> are also available for mobile."
 msgstr ""
+"Mwynhewch y datblygiadau diweddaraf mewn cynhyrchiant ar-lein. Mae nhw am "
+"ddim i chi eu defnyddio, eu harchwilio a'u defnyddio gydag eraill, i gyd o "
+"fewn eich porwr. Mae <a target=\"_blank\" href=\"https://www.collaboraoffice."
+"com/solutions/collabora-office-android-ios/\">apiau</a> amrywiol hefyd ar "
+"gael ar gyfer ffonau symudol a thabledi."
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:37-7
 msgid "Discover All The Changes"
-msgstr ""
+msgstr "Darganfod yr Holl Newidiadau"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:39-7
 msgid ""
@@ -2813,14 +2845,18 @@ msgid ""
 "latest Collabora Online Development Edition, aimed at home users and small "
 "teams."
 msgstr ""
+"Darllenwch y <a target=\"_blank\" href=\"https://www.collaboraoffice.com/"
+"code-23-05-release-notes/\">nodiadau rhyddhau</a> a dysgwch bopeth am: Y "
+"Fersiwn Datblygiadol Ar-lein Collabora diweddaraf, wedi'i anelu at "
+"ddefnyddwyr cartref a thimau bach."
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:48-7
 msgid "Get Involved"
-msgstr ""
+msgstr "Ymunwch â ni"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:49-7
 msgid "https://collaboraonline.github.io/"
-msgstr ""
+msgstr "https://collaboraonline.github.io/"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:50-7
 msgid ""
@@ -2833,6 +2869,14 @@ msgid ""
 "\">filing a bug report</a> with all the essential steps on how to reproduce "
 "it."
 msgstr ""
+"Oes gennych chi ddiddordeb mewn cyfrannu ond ddim yn gwybod ble i ddechrau? "
+"Ewch draw i'r <a target=\"_blank\" href=\"https://collaboraonline.github.io/"
+"post/build-code/\">cyfarwyddiadau cam wrth gam</a> ac adeiladu CODE o'r "
+"dechrau. Gallwch hefyd helpu gyda <a target=\"_blank\" href=\"https"
+"://collaboraonline.github.io/post/translate/\">chyfieithiadau</a> neu drwy "
+"<a target=\"_blank\" href=\"https://collaboraonline.github.io/post/filebugs/"
+"\">ffeilio adroddiad gwall</a> gyda'r holl gamau hanfodol ar sut i'w "
+"atgynhyrchu."
 
 #: welcome/welcome.html%2Bhtml.body.div.div:55-5
 msgid ""
@@ -2840,6 +2884,9 @@ msgid ""
 "id=\"slide-2-indicator\" href=\"#slide-2\">2</a> <a id=\"slide-3-"
 "indicator\" href=\"#slide-3\">3</a>"
 msgstr ""
+"<a id=\"slide-1-indicator\" class=\"active\" href=\"#slide-1\">1</a> <a id="
+"\"slide-2-indicator\" href=\"#slide-2\">2</a> <a id=\"slide-3-indicator\" "
+"href=\"#slide-3\">3</a>"
 
 #~ msgid "Start download"
 #~ msgstr "Cychwyn y llwytho i lawr"

@@ -4,7 +4,7 @@
     <string name="cannot_open_file_chooser">Methu agor dewisydd ffeiliau</string>
     <string name="failed_to_insert_image">Methwyd mewnosod delwedd</string>
     <string name="failed_to_load_file">Methwyd penderfynu pa ffeil i\'w chadw</string>
-    <string name="storage_permission_required">Mae angen caniatâd cadw.</string>
+    <string name="storage_permission_required">Mae angen caniatâd cadw</string>
     <string name="temp_file_saving_disabled">Darllen yn unig yw\'r ffeil hon, mae cadw wedi ei analluogi.</string>
     <string name="saving">Yn cadw...</string>
     <string name="preparing_for_the_first_start_after_an_update">Paratoi am y cychwyn cyntaf ar ôl diweddariad.</string>
@@ -14,4 +14,13 @@
     <string name="exiting">Gorffen...</string>
     <string name="rate_our_app_text">Os ydych yn ei hoffi, rhowch 5 seren i ni ar Google Play. Mae eich adolygiadau da yn ein hysbrydoli.</string>
     <string name="file_chromeos_read_only">Nid oes modd cadw\'r ffeil yn y lleoliad yma. Bydd angen ei symud i\'r fan Chwarae ffeiliau ar gyfer mynediad darllen/ysgrifennu llawn.</string>
+    <string name="restarting">Yn ailgychwyn...</string>
+    <string name="cant_open_the_document">Methu agor y ddogfen</string>
+    <string name="view_only">Gweld yn unig</string>
+    <string name="edit_copy">Golygu copi</string>
+    <string name="ask_for_copy">Mae\'r ddogfen hon yn ddarllen-yn-unig. Ydych chi eisiau gwneud copi i\'w olygu?</string>
+    <string name="use_text">Defnyddio Fformat Testun</string>
+    <string name="use_odf">Defnyddio Fformat ODF</string>
+    <string name="ask_for_convert_odf">Cadarnhau Fformat Ffeil</string>
+    <string name="convert_odf_message">Gall y ddogfen hon gynnwys fformatio neu gynnwys nad oes modd ei chadw yn y fformat ffeil \"Testun\" a ddewiswyd ar hyn o bryd .</string>
 </resources>
