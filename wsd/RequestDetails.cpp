@@ -18,6 +18,7 @@
 #include "HostUtil.hpp"
 
 #include <Poco/URI.h>
+#include <stdexcept>
 #include "Exceptions.hpp"
 
 namespace
@@ -28,6 +29,16 @@ std::map<std::string, std::string> getParams(const std::string& uri)
     std::map<std::string, std::string> result;
     for (const auto& param : Poco::URI(uri).getQueryParameters())
     {
+        // getQueryParameters() decodes the values. Compare with the URI.
+        if (param.first == "WOPISrc" && uri.find(param.second) != std::string::npos)
+        {
+            LOG_WRN("WOPISrc validation error: unencoded WOPISrc [" << param.second
+                                                                    << "] in URL: " << uri);
+#if ENABLE_DEBUG
+            throw std::runtime_error("WOPISrc must be URI-encoded");
+#endif // ENABLE_DEBUG
+        }
+
         std::string key = Util::decodeURIComponent(param.first);
         std::string value = Util::decodeURIComponent(param.second);
         LOG_TRC("Decoding param [" << param.first << "] = [" << param.second << "] -> [" << key
