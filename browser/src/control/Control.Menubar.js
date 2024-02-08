@@ -116,8 +116,8 @@ L.Control.Menubar = L.Control.extend({
 					{uno: '.uno:ShowTrackedChanges'},
 					{type: 'separator'},
 					{uno: '.uno:AcceptTrackedChanges'},
-					{uno: '.uno:AcceptAllTrackedChanges'},
-					{uno: '.uno:RejectAllTrackedChanges'},
+					{name: _UNO('.uno:AcceptAllTrackedChanges', 'text'), id: 'acceptalltrackedchanges', type: 'action'},
+					{name: _UNO('.uno:RejectAllTrackedChanges', 'text'), id: 'rejectalltrackedchanges', type: 'action'},
 					{uno: '.uno:PreviousTrackedChange'},
 					{uno: '.uno:NextTrackedChange'}
 				]},
@@ -960,8 +960,8 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:TrackChanges'},
 				{uno: '.uno:ShowTrackedChanges'},
 				{type: 'separator'},
-				{uno: '.uno:AcceptAllTrackedChanges'},
-				{uno: '.uno:RejectAllTrackedChanges'},
+				{name: _UNO('.uno:AcceptAllTrackedChanges', 'text'), id: 'acceptalltrackedchanges', type: 'action'},
+				{name: _UNO('.uno:RejectAllTrackedChanges', 'text'), id: 'rejectalltrackedchanges', type: 'action'},
 				{uno: '.uno:PreviousTrackedChange'},
 				{uno: '.uno:NextTrackedChange'}
 			]},
@@ -1969,6 +1969,11 @@ L.Control.Menubar = L.Control.extend({
 			this._map.hideSlide();
 		} else if (id.indexOf('morelanguages-') != -1) {
 			this._map.fire('morelanguages', { applyto: id.substr('morelanguages-'.length) });
+		} else if (id === 'acceptalltrackedchanges') {
+			this._map.dispatch('acceptalltrackedchanges');
+
+		} else if (id === 'rejectalltrackedchanges') {
+			this._map.dispatch('rejectalltrackedchanges');
 		}
 		// Inform the host if asked
 		if (postmessage)
