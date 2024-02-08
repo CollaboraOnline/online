@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="owncloud_wrong_connection">Methu cysylltu a\'r gweinydd cwmwl. Gwiriwch eich ffurfweddiad.</string>
-    <string name="usb_connected_configure">USB wedi\'i gysylltu, ffurfweddwch eich dyfais</string>
+    <string name="usb_connected_configure">USB wedi\'i gysylltu, ffurfweddwch eich dyfais.</string>
     <string name="remote_server">Gweinydd pell</string>
     <string name="otg_file_system">Dyfais OTG (arbrofol)</string>
     <string name="external_sd_file_system">SD allanol</string>
@@ -38,19 +38,19 @@
     <string name="about_license">Dangos y Drwydded</string>
     <string name="pref_show_debug_info_summary">Galluogi i ddangos manylion dadfygio mewn darllenydd dogfennau</string>
     <string name="pref_show_debug_info">Dangos Manylion Dadfygio</string>
-    <string name="pref_filter_summary">Gosod pa hidl ffeiliau ddylai gael eu defnyddio drwy ragosodiad</string>
+    <string name="pref_filter_summary">Gosod pa hidl ffeiliau ddylai gael eu defnyddio drwy ragosodiad.</string>
     <string name="pref_filter_title">Hidl Ffeiliau Rhagosodedig</string>
     <string name="pref_sort_title">Trefn Ffeiliau</string>
     <string name="pref_file_explorer_title">Cynllun rheolwr ffeiliau</string>
-    <string name="pref_viewmode_summary">Gweld ffeiliau fel grid neu mewn rhestr</string>
-    <string name="pref_sort_summary">Dewiswch sut i drefnu ffeiliau: A-Z, yn ôl maint neu ddyddiad</string>
+    <string name="pref_viewmode_summary">Gweld ffeiliau fel grid neu mewn rhestr.</string>
+    <string name="pref_sort_summary">Dewiswch sut i drefnu ffeiliau: A-Z, yn ôl maint neu ddyddiad.</string>
     <string name="pref_show_hidden_files_summary">Galluogwch i ddangos ffeiliau/ffolderi cudd</string>
     <string name="pref_show_hidden_files">Ffeiliau/Ffolderi Cudd</string>
     <string name="pref_category_explorer">Gosodiadau Rheolwr Ffeiliau</string>
     <string name="grid_view">Grid</string>
     <string name="list_view">Rhestr</string>
     <string name="failed_to_load_file">Methwyd penderfynu pa ffeil i\'w chadw</string>
-    <string name="storage_permission_required">Mae angen caniatâd cadw.</string>
+    <string name="storage_permission_required">Mae angen caniatâd cadw</string>
     <string name="file_creation_failed">Methodd creu\'r ffeil</string>
     <string name="file_exists_warning">Mae ffeil o\'r enw yna\'n bodoli eisoes, a bydd yn cael ei thros ysgrifennu.</string>
     <string name="temp_file_saving_disabled">Darllen yn unig yw\'r ffeil hon, mae cadw wedi ei analluogi.</string>
@@ -62,8 +62,8 @@
     <string name="app_name_settings">Gosodiadau</string>
     <string name="owncloud_unauthorized">Methu mewngofnodi i\'r gweinydd cwmwl. Gwiriwch eich ffurfweddiad.</string>
     <string name="title_activity_show_html">Ynghylch</string>
-    <string name="directory_not_saved">Heb gadw\'r cyfeiriadur</string>
-    <string name="bmp_null">Mae bmp yn nwll</string>
+    <string name="directory_not_saved">Heb gadw\'r cyfeiriadur.</string>
+    <string name="bmp_null">Mae bmp yn nwl!</string>
     <string name="unable_to_go_further">Methu mynd ymhellach.</string>
     <string name="share_document">Rhannu Dogfen</string>
     <string name="loading">Llwytho...</string>
@@ -77,7 +77,7 @@
     <string name="positive_ok">Iawn</string>
     <string name="reason_required_to_read_documents">Mae angen caniatâd ar gyfer darllen eich dogfennau.</string>
     <string name="title_permission_required">Mae Angen Caniatâd</string>
-    <string name="current_dir">"Cyfeiriadur Cyfredol:  %1$s"</string>
+    <string name="current_dir">Cyfeiriadur Cyfredol: %1$s</string>
     <string name="bad_directory">Llwybr cyfeiriadur annilys</string>
     <string name="directory_browser_label">Dewis Gyfeiriadur</string>
     <string name="search_label">Mynd</string>
@@ -86,9 +86,9 @@
     <string name="up_description">Llinynnau porwr cyfeiriadur</string>
     <string name="password">Cyfrinair</string>
     <string name="user_name">Enw defnyddiwr</string>
-    <string name="server_url_and_port">URL a phorth y gweinydd cwmwl</string>
+    <string name="server_url_and_port">URL a phorth y gweinydd cwmwl.</string>
     <string name="server_url">URL y gweinydd</string>
-    <string name="otg_warning">Nodwedd arbrofol: Defnyddiwch yn unig os yw\'r ddyfais OTG yn ysgrifenadwy</string>
+    <string name="otg_warning">Nodwedd Arbrofol: Defnyddiwch yn unig os yw\'r ddyfais OTG yn ysgrifenadwy.</string>
     <string name="otg_device_path">Llwybr dyfais OTG</string>
     <string name="external_sd_path">Llwybr SD allanol</string>
     <string name="physical_storage_settings">Gosodiadau offer storio</string>
@@ -110,4 +110,7 @@
     <string name="theme_system_default">Rhagosodiad y system</string>
     <string name="choose_theme">Dewis thema</string>
     <string name="theme">Thema</string>
+    <string name="pref_user_name">Enw Defnyddiwr</string>
+    <string name="pref_user_name_info">Yn cael ei ddefnyddio wrth ychwanegu sylw</string>
+    <string name="pref_user_name_guest">Defnyddiwr Gwadd</string>
 </resources>
