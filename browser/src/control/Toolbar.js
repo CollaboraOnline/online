@@ -1152,6 +1152,15 @@ L.Map.include({
 			this.sendUnoCommand('.uno:DeletePrintArea');
 			this.print();
 			break;
+		case 'acceptalltrackedchanges':
+			this.sendUnoCommand('.uno:AcceptAllTrackedChanges');
+			app.socket.sendMessage('commandvalues command=.uno:ViewAnnotations');
+			break;
+		case 'rejectalltrackedchanges':
+			this.sendUnoCommand('.uno:RejectAllTrackedChanges');
+			var commentSection = app.sectionContainer.getSectionWithName(L.CSections.CommentList.name);
+			commentSection.rejectAllTrackedCommentChanges();
+			break;
 		default:
 			console.error('unknown dispatch: "' + action + '"');
 		}

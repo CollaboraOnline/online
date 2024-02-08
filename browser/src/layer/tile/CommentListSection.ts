@@ -1992,6 +1992,16 @@ export class CommentSection extends CanvasSectionObject {
 			comment.onCommentDataUpdate();
 		}
 	}
+
+	public rejectAllTrackedCommentChanges(): void {
+		for (var i = 0; i < this.sectionProperties.commentList.length; i++) {
+			var comment = this.sectionProperties.commentList[i];
+			if (comment.sectionProperties.data.layoutStatus === 3) {
+				comment.sectionProperties.data.layoutStatus = 2;
+				comment.sectionProperties.container.classList.remove('greyed');
+			}
+		}
+	}
 }
 
 }
