@@ -24,6 +24,7 @@ L.DebugManager = L.Class.extend({
 	initialize: function(map) {
 		this._map = map;
 		this.debugOn = false;
+		this.debugNeverStarted = true;
 	},
 
 	toggle: function() {
@@ -42,6 +43,7 @@ L.DebugManager = L.Class.extend({
 		this._painter = this._map._docLayer._painter;
 
 		this.debugOn = true;
+		this.debugNeverStarted = false;
 
 		this._controls = {};
 		// Add header
