@@ -747,6 +747,22 @@ namespace Util
         return decoded;
     }
 
+    bool needsURIEncoding(const std::string& uri, const std::string& reserved)
+    {
+        const std::string decoded = decodeURIComponent(uri);
+        if (decoded != uri)
+        {
+            // We could decode it; must have been encoded already.
+            return false;
+        }
+
+        // Identical when decoded, might need encoding.
+        const std::string encoded = encodeURIComponent(uri, reserved);
+
+        // If identical, then doesn't need encoding.
+        return encoded != uri;
+    }
+
     /// Split a string in two at the delimiter and give the delimiter to the first.
     static
     std::pair<std::string, std::string> splitLast2(const std::string& str, const char delimiter = ' ')
