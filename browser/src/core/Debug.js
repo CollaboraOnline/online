@@ -65,12 +65,6 @@ L.DebugManager = L.Class.extend({
 		// if the user is not active
 		this._automatedUserQueue = [];
 		this._automatedUserTasks = {};
-
-		// TODO: Extract to named tool
-		if (this._docLayer.isCalc()) {
-			this._painter._addSplitsSection();
-			this._painter._sectionContainer.reNewAllSections(true /* redraw */);
-		}
 	},
 
 	_stop: function() {
@@ -86,17 +80,6 @@ L.DebugManager = L.Class.extend({
 			this._controls[category].remove();
 		}
 		this._controls = {};
-
-		// TODO: Extract to named tool
-		if (this._docLayer.isCalc()) {
-			var section = this._painter._sectionContainer.getSectionWithName('calc grid');
-			if (section) {
-				section.setDrawingOrder(L.CSections.CalcGrid.drawingOrder);
-				section.sectionProperties.strokeStyle = '#c0c0c0';
-			}
-			this._painter._sectionContainer.removeSection('splits');
-			this._painter._sectionContainer.reNewAllSections(true /* redraw */);
-		}
 	},
 
 	_addDebugTool: function (tool) {
@@ -211,18 +194,30 @@ L.DebugManager = L.Class.extend({
 		});
 
 		this._addDebugTool({
-			name: 'Tiles device pixel grid',
+			name: 'Tile pixel grid section',
 			category: 'Display',
 			startsOn: false,
 			onAdd: function () {
 				self._painter._addTilePixelGridSection();
-				self._painter._sectionContainer.reNewAllSections(true);
 			},
 			onRemove: function () {
-				self._painter._sectionContainer.removeSection('tile pixel grid');
-				self._painter._sectionContainer.reNewAllSections(true);
+				self._painter._removeTilePixelGridSection();
 			},
 		});
+
+		if (this._docLayer.isCalc()) {
+			this._addDebugTool({
+				name: 'Splits section',
+				category: 'Display',
+				startsOn: false,
+				onAdd: function () {
+					self._painter._addSplitsSection();
+				},
+				onRemove: function () {
+					self._painter._removeSplitsSection();
+				},
+			});
+		}
 
 		this._addDebugTool({
 			name: 'Performance Tracing',
