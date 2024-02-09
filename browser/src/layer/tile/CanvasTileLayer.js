@@ -6419,8 +6419,9 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		tile.invalidateCount++;
 
-		if (this._debug.tileInvalidationsOn)
-			this._debug._debugInvalidateCount++;
+		if (this._debug.tileDataOn) {
+			this._debug.tileDataAddInvalidate();
+		}
 
 		if (!tile.hasContent())
 			this._removeTile(key);
@@ -6677,25 +6678,30 @@ L.CanvasTileLayer = L.Layer.extend({
 			return;
 
 		// if re-creating a canvas from rawDeltas don't update counts
-		if (wireMessage)
-		{
-			if (isKeyframe)
-			{
+		if (wireMessage) {
+			if (isKeyframe) {
 				tile.loadCount++;
 				tile.deltaCount = 0;
 				tile.updateCount = 0;
-			}
-			else if (rawDelta.length === 0)
-			{
+				if (this._debug.tileDataOn) {
+					this._debug.tileDataAddLoad();
+				}
+			} else if (rawDelta.length === 0) {
 				tile.updateCount++;
 				this._nullDeltaUpdate++;
 				if (this._emptyDeltaDiv) {
 					this._emptyDeltaDiv.innerText = this._nullDeltaUpdate;
 				}
+				if (this._debug.tileDataOn) {
+					this._debug.tileDataAddUpdate();
+				}
 				return; // that was easy
-			}
-			else
+			} else {
 				tile.deltaCount++;
+				if (this._debug.tileDataOn) {
+					this._debug.tileDataAddDelta();
+				}
+			}
 		}
 		// else - re-constituting from tile.rawData
 
@@ -6893,10 +6899,6 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		var tile = this._tiles[key];
 		tile._debugTime = this._debug.getTimeArray();
-
-		if (this._debug.overlayOn) {
-			this._debug._overlayShowTileData();
-		}
 	},
 
 	_queueAcknowledgement: function (tileMsgObj) {
@@ -6907,6 +6909,10 @@ L.CanvasTileLayer = L.Layer.extend({
 	_onTileMsg: function (textMsg, img) {
 		var tileMsgObj = app.socket.parseServerCmd(textMsg);
 		this._checkTileMsgObject(tileMsgObj);
+
+		if (this._debug.tileDataOn) {
+			this._debug.tileDataAddMessage();
+		}
 
 		// a rather different code-path with a png; should have its own msg perhaps.
 		if (tileMsgObj.id !== undefined) {
@@ -6956,22 +6962,6 @@ L.CanvasTileLayer = L.Layer.extend({
 
 			hasContent = false;
 		}
-
-		if (this._debug.debugOn) {
-			if (!img) {
-				tile.updateCount++;
-				this._debug._debugLoadUpdate++;
-			} else if (img.rawData && !img.isKeyframe) {
-				if (img.rawData.length === 0) {
-					this._debug._debugLoadUpdate++;
-				} else {
-					this._debug._debugLoadDelta++;
-				}
-			} else if (img.rawData) {
-				this._debug._debugLoadTile++;
-			}
-		}
-		this._showDebugForTile(key);
 
 		// updates don't need more chattiness with a tileprocessed
 		if (hasContent)
