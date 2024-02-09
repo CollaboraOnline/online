@@ -927,12 +927,12 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (builder.wizard) {
 			var that = this;
 			var functionName = data.functionName;
-			$(rightDiv).click(function() {
+			$(rightDiv).click(() => {
 				builder.wizard.goLevelDown(mainContainer);
 				if (contentNode.onshow)
 					contentNode.onshow();
 			});
-			$(leftDiv).click(function() {
+			$(leftDiv).click(() => {
 				if (functionName !== '') {
 					app.socket.sendMessage('completefunction name=' + functionName);
 					that.map.fire('closemobilewizard');
@@ -1076,7 +1076,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		$(contentDiv).hide();
 		if (builder.wizard) {
-			$(sectionTitle).click(function() { builder.wizard.goLevelDown(mainContainer); });
+			$(sectionTitle).click(() => { builder.wizard.goLevelDown(mainContainer); });
 		} else {
 			window.app.console.debug('Builder used outside of mobile wizard: please implement the click handler');
 		}
@@ -1462,7 +1462,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			builder.callback('radiobutton', 'change', container, this.checked, builder);
 		};
 
-		$(radiobuttonLabel).click(function () {
+		$(radiobuttonLabel).click(() => {
 			$(radiobutton).prop('checked', true);
 			toggleFunction.bind({checked: true})();
 		});
@@ -1824,9 +1824,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (data.enabled === false || data.enabled === 'false')
 			$(listbox).attr('disabled', 'disabled');
 
-		$(listbox).change(function() {
-			if ($(this).val())
-				builder.callback('combobox', 'selected', data, $(this).val()+ ';' + $(this).children('option:selected').text(), builder);
+		$(listbox).change(() => {
+			if ($(listbox).val())
+				builder.callback('combobox', 'selected', data, $(listbox).val()+ ';' + $(listbox).children('option:selected').text(), builder);
 		});
 		var hasSelectedEntry = false;
 		if (typeof(data.entries) === 'object') {
@@ -2981,7 +2981,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		L.DomUtil.addClass(titleSpan, paddingClass);
 
 		if (builder.wizard) {
-			$(menuEntry).click(function() {
+			$(menuEntry).click(() => {
 				if (window.insertionMobileWizard)
 					w2ui['actionbar'].click('insertion_mobile_wizard');
 				else if (window.mobileMenuWizard)
