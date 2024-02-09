@@ -1,6 +1,10 @@
 /// <reference path="./types.ts" />
 
-function assertPosSize(actual: mtest.Rectangle, expected: mtest.Rectangle) {
+import assert from 'assert';
+import { mtest } from './types';
+import { CanvasSectionObject } from '../../src/layer/tile/CanvasSectionContainer';
+
+export function assertPosSize(actual: mtest.Rectangle, expected: mtest.Rectangle) {
     // Only assert components of expected that are provided.
     if (typeof expected.x === 'number')
         assert.equal(actual.x, expected.x, 'Left mismatch');
@@ -12,7 +16,7 @@ function assertPosSize(actual: mtest.Rectangle, expected: mtest.Rectangle) {
         assert.equal(actual.height, expected.height, 'Height mismatch');
 }
 
-function getSectionRectangle(section: CanvasSectionObject): mtest.Rectangle {
+export function getSectionRectangle(section: CanvasSectionObject): mtest.Rectangle {
     return {
         x: section.myTopLeft[0],
         y: section.myTopLeft[1],

@@ -12,7 +12,11 @@
  * L.Control.GroupBase
  */
 
-namespace cool {
+import { CanvasSectionObject, SectionInitProperties } from '../layer/tile/CanvasSectionContainer';
+
+declare var app: any;
+declare var $: any;
+declare var L: any;
 
 export interface GroupEntry {
 	level: number,
@@ -377,6 +381,5 @@ export abstract class GroupBase extends CanvasSectionObject {
 		this.containerObject.getSectionWithName(L.CSections.CornerHeader.name).position[0] = 0;
 	}
 }
-}
 
-L.Control.GroupBase = cool.GroupBase;
+L.Control.GroupBase = GroupBase;

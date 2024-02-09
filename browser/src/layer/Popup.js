@@ -3,6 +3,8 @@
  * L.Popup is used for displaying popups on the map.
  */
 
+import { Point } from '../geometry/Point';
+
 L.Map.mergeOptions({
 	closePopupOnClick: true
 });
@@ -233,12 +235,12 @@ L.Popup = L.Layer.extend({
 	_updatePosition: function () {
 		if (!this._map) { return; }
 
-		var offset = L.point(this.options.offset);
+		var offset = Point.toPoint(this.options.offset);
 		var posVis = L.Layer.getLayerPositionVisibility(this._latlng, {
 			width: this._containerWidth,
 			height: this._container.offsetHeight
 		}, this._map,
-		new L.Point(
+		new Point(
 			offset.x - Math.round(this._containerWidth / 2),
 			-this._container.offsetHeight - offset.y));
 		var pos = posVis.position;
@@ -261,12 +263,12 @@ L.Popup = L.Layer.extend({
 		var map = this._map,
 		    containerHeight = this._container.offsetHeight,
 		    containerWidth = this._containerWidth,
-		    layerPos = new L.Point(this._containerLeft, -containerHeight - this._containerBottom);
+		    layerPos = new Point(this._containerLeft, -containerHeight - this._containerBottom);
 
 		var containerPos = map.layerPointToContainerPoint(layerPos),
-		    padding = L.point(this.options.autoPanPadding),
-		    paddingTL = L.point(this.options.autoPanPaddingTopLeft || padding),
-		    paddingBR = L.point(this.options.autoPanPaddingBottomRight || padding),
+		    padding = Point.toPoint(this.options.autoPanPadding),
+		    paddingTL = Point.toPoint(this.options.autoPanPaddingTopLeft || padding),
+		    paddingBR = Point.toPoint(this.options.autoPanPaddingBottomRight || padding),
 		    size = map.getSize(),
 		    dx = 0,
 		    dy = 0;

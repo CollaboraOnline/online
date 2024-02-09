@@ -11,6 +11,9 @@
 /*
  * Control.Mention
  */
+
+import { Point } from '../geometry/Point';
+
 L.Control.Mention = L.Control.extend({
 	onAdd: function(map) {
 		this.map = map;
@@ -55,7 +58,7 @@ L.Control.Mention = L.Control.extend({
 		var currPos = this.map._docLayer._corePixelsToCss(this.map._docLayer._cursorCorePixels.getBottomLeft());
 		var origin = this.map.getPixelOrigin();
 		var panePos = this.map._getMapPanePos();
-		return new L.Point(Math.round(currPos.x + panePos.x - origin.x), Math.round(currPos.y + panePos.y - origin.y));
+		return new Point(Math.round(currPos.x + panePos.x - origin.x), Math.round(currPos.y + panePos.y - origin.y));
 	},
 
 	openMentionPopup: function(ev) {

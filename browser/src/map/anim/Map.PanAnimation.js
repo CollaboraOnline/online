@@ -3,6 +3,8 @@
  * Extends L.Map to handle panning animations.
  */
 
+import { Point } from '../../geometry/Point';
+
 L.Map.include({
 
 	setView: function (center, zoom, options) {
@@ -39,7 +41,7 @@ L.Map.include({
 	},
 
 	panBy: function (offset, options) {
-		offset = L.point(offset).round();
+		offset = Point.toPoint(offset).round();
 		options = options || {};
 
 		if (!offset.x && !offset.y) {

@@ -13,6 +13,10 @@
  */
 
 /* global app */
+
+import { Bounds } from '../../geometry/Bounds';
+import { Point } from '../../geometry/Point';
+
 L.WriterTileLayer = L.CanvasTileLayer.extend({
 
 	newAnnotation: function (comment) {
@@ -91,16 +95,16 @@ L.WriterTileLayer = L.CanvasTileLayer.extend({
 			command.mode = this._selectedMode;
 
 		command.part = 0;
-		var topLeftTwips = new L.Point(command.x, command.y);
-		var offset = new L.Point(command.width, command.height);
+		var topLeftTwips = new Point(command.x, command.y);
+		var offset = new Point(command.width, command.height);
 		var bottomRightTwips = topLeftTwips.add(offset);
 		if (this._debug.tileInvalidationsOn) {
 			this._debug.addInvalidationRectangle(topLeftTwips, bottomRightTwips, textMsg);
 		}
-		var invalidBounds = new L.Bounds(topLeftTwips, bottomRightTwips);
+		var invalidBounds = new Bounds(topLeftTwips, bottomRightTwips);
 		var visibleTopLeft = this._latLngToTwips(this._map.getBounds().getNorthWest());
 		var visibleBottomRight = this._latLngToTwips(this._map.getBounds().getSouthEast());
-		var visibleArea = new L.Bounds(visibleTopLeft, visibleBottomRight);
+		var visibleArea = new Bounds(visibleTopLeft, visibleBottomRight);
 		var needsNewTiles = false;
 		for (var key in this._tiles) {
 			var coords = this._tiles[key].coords;

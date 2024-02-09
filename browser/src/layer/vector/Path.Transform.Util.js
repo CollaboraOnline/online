@@ -1,3 +1,5 @@
+import { Point } from '../../geometry/Point';
+
 /**
  * @namespace
  * @type {Object}
@@ -7,14 +9,14 @@ L.PathTransform = {};
 /**
  * Point on the line segment or its extension
  *
- * @param  {L.Point} start
- * @param  {L.Point} final
+ * @param  {Point} start
+ * @param  {Point} final
  * @param  {Number}  distPx
- * @return {L.Point}
+ * @return {Point}
  */
 L.PathTransform.pointOnLine = function(start, final, distPx) {
 	var ratio = 1 + distPx / start.distanceTo(final);
-	return new L.Point(
+	return new Point(
 		start.x + (final.x - start.x) * ratio,
 		start.y + (final.y - start.y) * ratio
 	);

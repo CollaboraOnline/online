@@ -11,13 +11,11 @@
  * Class for idle handling of the view.
  */
 
-/* global app L */
+/* global L */
 
-declare var mode: any;
-declare var ThisIsTheAndroidApp: any;
-declare var postMobileMessage: any;
-declare var idleTimeoutSecs: number;
-declare var outOfFocusTimeoutSecs: number;
+declare var _: any;
+declare var app: any;
+declare var L: any;
 
 /**/
 
@@ -34,7 +32,7 @@ class IdleHandler {
 	getIdleMessage(): string {
 		if (this.map['wopi'] && this.map['wopi'].DisableInactiveMessages) {
 			return '';
-		} else if (window.mode.isDesktop()) {
+		} else if ((<any>window).mode.isDesktop()) {
 			return _('Idle document - please click to reload and resume editing');
 		} else {
 			return _('Idle document - please tap to reload and resume editing');
@@ -51,7 +49,7 @@ class IdleHandler {
 	}
 
 	_activate() {
-		window.app.console.debug('IdleHandler: _activate()');
+		app.console.debug('IdleHandler: _activate()');
 
 		if (this._serverRecycling || this._documentIdle) {
 			return false;
@@ -80,7 +78,7 @@ class IdleHandler {
 			}
 		}
 
-		if (window.mode.isDesktop() && !this.map.uiManager.isAnyDialogOpen()) {
+		if ((<any>window).mode.isDesktop() && !this.map.uiManager.isAnyDialogOpen()) {
 			this.map.focus();
 		}
 
@@ -108,7 +106,7 @@ class IdleHandler {
 
 		this._outOfFocusTimer = setTimeout(() => {
 			this._dim();
-		}, window.outOfFocusTimeoutSecs * 1000);
+		}, (<any>window).outOfFocusTimeoutSecs * 1000);
 	}
 
 	_stopOutOfFocusTimer() {
@@ -116,7 +114,7 @@ class IdleHandler {
 	}
 
 	_dimIfInactive() {
-		if (this.map._docLoaded && (this.getElapsedFromActivity() >= window.idleTimeoutSecs)) {
+		if (this.map._docLoaded && (this.getElapsedFromActivity() >= (<any>window).idleTimeoutSecs)) {
 			this._dim();
 		} else {
 			this._startInactiveTimer();
@@ -126,7 +124,7 @@ class IdleHandler {
 	_dim() {
 		const message = this.getIdleMessage();
 
-		window.app.console.debug('IdleHandler: _dim()');
+		app.console.debug('IdleHandler: _dim()');
 
 		if (document.getElementById(this.dimId))
 			return;
@@ -137,7 +135,7 @@ class IdleHandler {
 		var restartConnectionFn = function() {
 			if (app.idleHandler._documentIdle)
 			{
-				window.app.console.debug('idleness: reactivating');
+				app.console.debug('idleness: reactivating');
 				map.fire('postMessage', {msgId: 'User_Active'});
 				app.idleHandler._documentIdle = false;
 				app.idleHandler.map._docLayer._setCursorVisible();
@@ -171,8 +169,8 @@ class IdleHandler {
 	notifyActive() {
 		this._lastActivity = Date.now();
 
-		if (window.ThisIsTheAndroidApp) {
-			window.postMobileMessage('LIGHT_SCREEN');
+		if ((<any>window).ThisIsTheAndroidApp) {
+			(<any>window).postMobileMessage('LIGHT_SCREEN');
 		}
 	}
 
@@ -185,13 +183,13 @@ class IdleHandler {
 	}
 
 	_deactivate() {
-		window.app.console.debug('IdleHandler: _deactivate()');
+		(<any>window).app.console.debug('IdleHandler: _deactivate()');
 
 		if (this._serverRecycling || this._documentIdle || !this.map._docLoaded) {
 			return;
 		}
 
-		if (window.mode.isDesktop() && (!this._active || this.isDimActive())) {
+		if ((<any>window).mode.isDesktop() && (!this._active || this.isDimActive())) {
 			// A dialog is already dimming the screen and probably
 			// shows an error message. Leave it alone.
 			this._active = false;

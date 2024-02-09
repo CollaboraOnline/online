@@ -14,6 +14,9 @@
  */
 
 /* global JSDialog Hammer app _ */
+
+import { Point } from '../geometry/Point';
+
 L.Control.JSDialog = L.Control.extend({
 	options: {
 		snackbarTimeout: 10000
@@ -524,7 +527,7 @@ L.Control.JSDialog = L.Control.extend({
 		var top = parseInt(instance.posy) * scale;
 
 		var splitPanesContext = this.map.getSplitPanesContext();
-		var splitPos = new L.Point(0, 0);
+		var splitPos = new Point(0, 0);
 
 		if (splitPanesContext)
 			splitPos = splitPanesContext.getSplitPos();
@@ -739,7 +742,7 @@ L.Control.JSDialog = L.Control.extend({
 		if (dialogInfo.isDocumentAreaPopup) {
 			// FIXME: suspicious false to remove, leftover from: 629b25b, updatePos rework: a2d666d
 			// FIXME: data here doesn't seem to have posx, posy in any case (only with full updates)
-			dialogInfo.updatePos(false, new L.Point(data.posx, data.posy));
+			dialogInfo.updatePos(false, new Point(data.posx, data.posy));
 		}
 
 		// FIXME: remove 100 ms magic timing, drawing areas should request dialog position update

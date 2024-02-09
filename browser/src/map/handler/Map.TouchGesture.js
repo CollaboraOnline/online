@@ -3,6 +3,8 @@
  * L.Map.CalcTap is used to enable mobile taps.
  */
 
+import { Point } from '../../geometry/Point';
+
 L.Map.mergeOptions({
 	touchGesture: true,
 });
@@ -666,10 +668,10 @@ L.Map.TouchGesture = L.Handler.extend({
 			return;
 
 		if (this._inSwipeAction) {
-			this._velocity = this._velocity.add(new L.Point(e.velocityX, e.velocityY));
+			this._velocity = this._velocity.add(new Point(e.velocityX, e.velocityY));
 		}
 		else {
-			this._velocity = new L.Point(e.velocityX, e.velocityY);
+			this._velocity = new Point(e.velocityX, e.velocityY);
 		}
 		this._amplitude = this._velocity.multiplyBy(32);
 		this._newPos = L.DomUtil.getPosition(this._map._mapPane);
@@ -678,7 +680,7 @@ L.Map.TouchGesture = L.Handler.extend({
 			clientY: e.center.y,
 			target: this._map._mapPane
 		},'mousedown');
-		this._startSwipePoint = new L.Point(evt.clientX, evt.clientY);
+		this._startSwipePoint = new Point(evt.clientX, evt.clientY);
 		this._map.dragging._draggable._onDown(evt);
 		this._timeStamp = Date.now();
 		this._inSwipeAction = true;

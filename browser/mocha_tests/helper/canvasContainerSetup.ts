@@ -1,7 +1,9 @@
 /// <reference path="../../src/layer/tile/CanvasSectionContainer.ts" />
 /// <reference path="../../src/layer/tile/TilesSection.ts" />
 
-function canvasDomString() {
+import { CanvasSectionContainer } from "../../src/layer/tile/CanvasSectionContainer";
+
+export function canvasDomString() {
     return `
     <!DOCTYPE html>
     <html>
@@ -14,7 +16,7 @@ function canvasDomString() {
     </html>`;
 }
 
-function setupCanvasContainer(width: number, height: number): CanvasSectionContainer {
+export function setupCanvasContainer(width: number, height: number): CanvasSectionContainer {
     const canvas = <HTMLCanvasElement>document.getElementById('document-canvas');
 
     const sectionContainer = new CanvasSectionContainer(canvas, true /* disableDrawing? */);

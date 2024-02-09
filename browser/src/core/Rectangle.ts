@@ -10,8 +10,6 @@
  */
 declare var L: any;
 
-namespace cool {
-
 /**
  * Represents a rectangle object which works with core pixels.
  * x1 and y1 should always <= x2 and y2. In other words width >= 0 && height >= 0 is a precondition.
@@ -258,8 +256,3 @@ export class Rectangle {
 export function createRectangle(x: number, y: number, width: number, height: number): Rectangle {
 	return new Rectangle(x, y, width, height);
 }
-
-}
-
-L.LOUtil.Rectangle = cool.Rectangle;
-L.LOUtil.createRectangle = cool.createRectangle;

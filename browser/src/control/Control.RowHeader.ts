@@ -14,12 +14,15 @@
 
 /* global _UNO app UNOModifier */
 
+import { Point } from '../geometry/Point';
+import { Header, HeaderInfo, HeaderExtraProperties, HeaderEntryData, SelectionRange } from './Control.Header';
+
+declare var app: any;
 declare var _UNO: any;
 declare var UNOModifier: any;
+declare var L: any;
 
-namespace cool {
-
-export class RowHeader extends cool.Header {
+export class RowHeader extends Header {
 
 	_current: number;
 	_resizeHandleSize: number;
@@ -93,7 +96,7 @@ export class RowHeader extends cool.Header {
 		};
 
 		this._menuData = L.Control.JSDialogBuilder.getMenuStructureForMobileWizard(this._menuItem, true, '');
-		this._headerInfo = new cool.HeaderInfo(this._map, false /* isCol */);
+		this._headerInfo = new HeaderInfo(this._map, false /* isCol */);
 	}
 
 	drawHeaderEntry (entry: HeaderEntryData): void {
@@ -280,11 +283,11 @@ export class RowHeader extends cool.Header {
 		}
 	}
 
-	_getParallelPos (point: cool.Point): number {
+	_getParallelPos (point: Point): number {
 		return point.y;
 	}
 
-	_getOrthogonalPos (point: cool.Point): number {
+	_getOrthogonalPos (point: Point): number {
 		return point.x;
 	}
 
@@ -293,10 +296,8 @@ export class RowHeader extends cool.Header {
 	}
 }
 
-}
+L.Control.RowHeader = RowHeader;
 
-L.Control.RowHeader = cool.RowHeader;
-
-L.control.rowHeader = function (options?: cool.HeaderExtraProperties) {
+L.control.rowHeader = function (options?: HeaderExtraProperties) {
 	return new L.Control.RowHeader(options);
 };

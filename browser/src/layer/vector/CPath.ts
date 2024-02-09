@@ -1,3 +1,8 @@
+import { Bounds } from '../../geometry/Bounds';
+import { Point, PointConvertable } from '../../geometry/Point';
+import { CEventsHandler, EventData } from './CEventsHandler';
+import { CanvasOverlay } from './CanvasOverlay';
+
 declare var L: any;
 
 /*
@@ -5,7 +10,7 @@ declare var L: any;
  * objects like cell-cursors, cell-selections etc.
  */
 
-abstract class CPath extends CEventsHandler {
+export abstract class CPath extends CEventsHandler {
 	name: string = '';
 	stroke: boolean = true;
 	color: string = '#3388ff';
@@ -23,11 +28,11 @@ abstract class CPath extends CEventsHandler {
 	thickness: number = 2;
 	viewId: number = -1;
 	groupType: PathGroupType = PathGroupType.Other;
-	toCompatUnits: (from: cool.PointConvertable) => any;
+	toCompatUnits: (from: PointConvertable) => any;
 
 	radius: number = 0;
 	radiusY: number = 0;
-	point: cool.Point;
+	point: Point;
 	zIndex: number = 0;
 
 	isTopOrLeftOfSplitPane: boolean = true;
@@ -145,15 +150,15 @@ abstract class CPath extends CEventsHandler {
 		this.underMouse = isUnder;
 	}
 
-	onMouseEnter(position: cool.Point) {
+	onMouseEnter(position: Point) {
 		this.fire('mouseenter', {position: position});
 	}
 
-	onMouseLeave(position: cool.Point) {
+	onMouseLeave(position: Point) {
 		this.fire('mouseleave', {position: position});
 	}
 
-	redraw(oldBounds: cool.Bounds) {
+	redraw(oldBounds: Bounds) {
 		if (this.renderer)
 			this.renderer.updatePath(this, oldBounds);
 	}
@@ -166,13 +171,13 @@ abstract class CPath extends CEventsHandler {
 		}
 	}
 
-	updatePathAllPanes(paintArea?: cool.Bounds) {
+	updatePathAllPanes(paintArea?: Bounds) {
 		var viewBounds = this.renderer.getBounds().clone();
 
 		if (this.fixed) {
 			// Ignore freeze-panes.
-			var fixedMapArea = new cool.Bounds(
-				new cool.Point(0, 0),
+			var fixedMapArea = new Bounds(
+				new Point(0, 0),
 				viewBounds.getSize()
 			);
 			this.updatePath(fixedMapArea, fixedMapArea);
@@ -181,7 +186,7 @@ abstract class CPath extends CEventsHandler {
 		}
 
 		var splitPanesContext = this.renderer.getSplitPanesContext();
-		var paneBoundsList: Array<cool.Bounds> = splitPanesContext ?
+		var paneBoundsList: Array<Bounds> = splitPanesContext ?
 			splitPanesContext.getPxBoundList() :
 			[viewBounds];
 
@@ -206,7 +211,7 @@ abstract class CPath extends CEventsHandler {
 		this.updateTestData();
 	}
 
-	updatePath(paintArea?: cool.Bounds, paneBounds?: cool.Bounds) {
+	updatePath(paintArea?: Bounds, paneBounds?: Bounds) {
 		// Overridden in implementations.
 	}
 
@@ -222,7 +227,7 @@ abstract class CPath extends CEventsHandler {
 		}
 	}
 
-	getBounds(): cool.Bounds {
+	getBounds(): Bounds {
 		// Overridden in implementations.
 		return undefined;
 	}
@@ -232,9 +237,9 @@ abstract class CPath extends CEventsHandler {
 		return true;
 	}
 
-	getParts(): Array<Array<cool.Point>> {
+	getParts(): Array<Array<Point>> {
 		// Overridden in implementations.
-		return Array<Array<cool.Point>>();
+		return Array<Array<Point>>();
 	}
 
 	clickTolerance(): number {
@@ -328,14 +333,14 @@ abstract class CPath extends CEventsHandler {
 }
 
 // This also defines partial rendering order.
-enum PathGroupType {
+export enum PathGroupType {
 	CellSelection, // bottom.
 	TextSelection,
 	CellCursor,
 	Other  // top.
 }
 
-class CPathGroup {
+export class CPathGroup {
 	private paths: CPath[];
 
 	constructor(paths: CPath[]) {

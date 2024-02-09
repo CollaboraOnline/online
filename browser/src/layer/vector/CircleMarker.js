@@ -3,6 +3,8 @@
  * L.CircleMarker is a circle overlay with a permanent pixel radius.
  */
 
+import { Bounds } from '../../geometry/Bounds';
+
 L.CircleMarker = L.Path.extend({
 
 	options: {
@@ -52,7 +54,7 @@ L.CircleMarker = L.Path.extend({
 		    r2 = this._radiusY || r,
 		    w = this._clickTolerance(),
 		    p = [r + w, r2 + w];
-		this._pxBounds = new L.Bounds(this._point.subtract(p), this._point.add(p));
+		this._pxBounds = new Bounds(this._point.subtract(p), this._point.add(p));
 	},
 
 	_update: function () {

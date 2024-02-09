@@ -3,6 +3,8 @@
  * L.DomUtil contains various utility functions for working with DOM.
  */
 
+import { Point } from '../geometry/Point';
+
 L.DomUtil = {
 	get: function (id) {
 		return typeof id === 'string' ? document.getElementById(id) : id;
@@ -176,7 +178,7 @@ L.DomUtil = {
 	},
 
 	setTransform: function (el, offset, scale) {
-		var pos = offset || new L.Point(0, 0);
+		var pos = offset || new Point(0, 0);
 
 		el.style[L.DomUtil.TRANSFORM] =
 			'translate3d(' + pos.x + 'px,' + pos.y + 'px' + ',0)' + (scale ? ' scale(' + scale + ')' : '');

@@ -3,7 +3,7 @@
 	This class is used as the notebookbar accessibility configuration provider for the current document type.
 */
 
-/* global app */
+/* global L app */
 
 /* eslint-disable-next-line */
 var NotebookbarAccessibilityDefinitions = function() {
@@ -121,3 +121,5 @@ var NotebookbarAccessibilityDefinitions = function() {
 		return selectedDefinitions;
 	};
 };
+
+L.NotebookbarAccessibilityDefinitions = NotebookbarAccessibilityDefinitions;

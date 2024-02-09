@@ -34,6 +34,10 @@
   "env": {
     "browser": true
   },
+  "parserOptions": {
+    ecmaVersion: 2015,
+    "sourceType": "module"
+  },
   "overrides": [
     {
       "files": ["**/*.ts"],

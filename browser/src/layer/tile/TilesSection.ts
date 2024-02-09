@@ -10,12 +10,12 @@
  */
 /* See CanvasSectionContainer.ts for explanations. */
 
-declare var L: any;
-declare var $: any;
-declare var Hammer: any;
-declare var app: any;
+import { Bounds } from '../../geometry/Bounds';
+import { Point } from '../../geometry/Point';
+import { CanvasSectionObject } from './CanvasSectionContainer';
 
-namespace cool {
+declare var L: any;
+declare var app: any;
 
 export class TilesSection extends CanvasSectionObject {
 	map: any;
@@ -82,7 +82,7 @@ export class TilesSection extends CanvasSectionObject {
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	paintWithPanes (tile: any, ctx: any, async: boolean, now: Date): void {
 		var tileTopLeft = tile.coords.getPos();
-		var tileBounds = new L.Bounds(tileTopLeft, tileTopLeft.add(ctx.tileSize));
+		var tileBounds = new Bounds(tileTopLeft, tileTopLeft.add(ctx.tileSize));
 
 		for (var i = 0; i < ctx.paneBoundsList.length; ++i) {
 			// co-ordinates of this pane in core document pixels
@@ -122,7 +122,7 @@ export class TilesSection extends CanvasSectionObject {
 	}
 
 	// the bounding box of this set of tiles
-	public getSubsetBounds(canvasCtx: CanvasRenderingContext2D, tileSubset: Set<any>): cool.Bounds {
+	public getSubsetBounds(canvasCtx: CanvasRenderingContext2D, tileSubset: Set<any>): Bounds {
 
 		// don't do anything for this atypical varient
 		if (app.file.fileBasedView)
@@ -130,13 +130,13 @@ export class TilesSection extends CanvasSectionObject {
 
 		var ctx = this.sectionProperties.tsManager._paintContext();
 
-		var bounds: cool.Bounds;
+		var bounds: Bounds;
 		for (const coords of Array.from(tileSubset)) {
-			var topLeft = new L.Point(coords.getPos().x, coords.getPos().y);
-			var rightBottom = new L.Point(topLeft.x + ctx.tileSize.x, topLeft.y + ctx.tileSize.y);
+			var topLeft = new Point(coords.getPos().x, coords.getPos().y);
+			var rightBottom = new Point(topLeft.x + ctx.tileSize.x, topLeft.y + ctx.tileSize.y);
 
 			if (bounds === undefined)
-				bounds = new cool.Bounds(topLeft, rightBottom);
+				bounds = new Bounds(topLeft, rightBottom);
 			else {
 				bounds.extend(topLeft).extend(rightBottom);
 			}
@@ -145,7 +145,7 @@ export class TilesSection extends CanvasSectionObject {
 		return bounds;
 	}
 
-	public clipSubsetBounds(canvasCtx: CanvasRenderingContext2D, subsetBounds: cool.Bounds): void {
+	public clipSubsetBounds(canvasCtx: CanvasRenderingContext2D, subsetBounds: Bounds): void {
 
 		var ctx = this.sectionProperties.tsManager._paintContext();
 		ctx.viewBounds.round();
@@ -163,7 +163,7 @@ export class TilesSection extends CanvasSectionObject {
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	drawTileInPane (tile: any, tileBounds: any, paneBounds: any, paneOffset: any, canvasCtx: CanvasRenderingContext2D, clearBackground: boolean, now: Date): void {
 		// intersect - to avoid state thrash through clipping
-		var crop = new L.Bounds(tileBounds.min, tileBounds.max);
+		var crop = new Bounds(tileBounds.min, tileBounds.max);
 		crop.min.x = Math.max(paneBounds.min.x, tileBounds.min.x);
 		crop.min.y = Math.max(paneBounds.min.y, tileBounds.min.y);
 		crop.max.x = Math.min(paneBounds.max.x, tileBounds.max.x);
@@ -210,7 +210,7 @@ export class TilesSection extends CanvasSectionObject {
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	paintSimple (tile: any, ctx: any, async: boolean, now: Date): void {
 		ctx.viewBounds.round();
-		var offset = new L.Point(tile.coords.getPos().x - ctx.viewBounds.min.x, tile.coords.getPos().y - ctx.viewBounds.min.y);
+		var offset = new Point(tile.coords.getPos().x - ctx.viewBounds.min.x, tile.coords.getPos().y - ctx.viewBounds.min.y);
 
 		if ((async || this.containerObject.isZoomChanged()) && !app.file.fileBasedView) {
 			// Non Calc tiles(handled by paintSimple) can have transparent pixels,
@@ -399,7 +399,7 @@ export class TilesSection extends CanvasSectionObject {
 		}
 	}
 
-	public onDraw (frameCount: number = null, elapsedTime: number = null, subsetBounds: cool.Bounds = null): void {
+	public onDraw (frameCount: number = null, elapsedTime: number = null, subsetBounds: Bounds = null): void {
 		if (this.containerObject.isInZoomAnimation())
 			return;
 
@@ -470,11 +470,11 @@ export class TilesSection extends CanvasSectionObject {
 		if (size.x <= 0 || size.y <= 0)
 			return 0;
 
-		var intersection = new L.Bounds(
-			new L.Point(
+		var intersection = new Bounds(
+			new Point(
 				Math.max(tileBounds.min.x, viewBounds.min.x),
 				Math.max(tileBounds.min.y, viewBounds.min.y)),
-			new L.Point(
+			new Point(
 				Math.min(tileBounds.max.x, viewBounds.max.x),
 				Math.min(tileBounds.max.y, viewBounds.max.y))
 		);
@@ -568,7 +568,7 @@ export class TilesSection extends CanvasSectionObject {
 						tilePos.y = coords.part * partHeightPixels + tilePos.y;
 					}
 
-					var tileBounds = new L.Bounds(tilePos, tilePos.add(ctx.tileSize));
+					var tileBounds = new Bounds(tilePos, tilePos.add(ctx.tileSize));
 					var interFrac = TilesSection.getTileIntersectionAreaFraction(tileBounds, areaAtZoom);
 
 					// Add to score how much of tile area is available.
@@ -769,7 +769,7 @@ export class TilesSection extends CanvasSectionObject {
 			// Calculate top-left in doc core-pixels for the frame.
 			var docPos = tsManager._getZoomDocPos(tsManager._newCenter, paneBounds, splitPos, scale, false /* findFreePaneCenter? */);
 
-			var destPos = new L.Point(0, 0);
+			var destPos = new Point(0, 0);
 			var docAreaSize = paneSize.divideBy(scale);
 			if (paneBoundsList.length > 1) {
 				if (paneBounds.min.x) {
@@ -791,7 +791,7 @@ export class TilesSection extends CanvasSectionObject {
 				}
 			}
 
-			var docRange = new L.Bounds(docPos.topLeft, docPos.topLeft.add(docAreaSize));
+			var docRange = new Bounds(docPos.topLeft, docPos.topLeft.add(docAreaSize));
 			if (tsManager._calcGridSection) {
 				tsManager._calcGridSection.onDrawArea(docRange, docRange.min.subtract(destPos), this.context);
 			}
@@ -821,9 +821,9 @@ export class TilesSection extends CanvasSectionObject {
 					var partHeightPixels = Math.round((docLayer._partHeightTwips + docLayer._spaceBetweenParts) * ratio);
 					tileCoords.y = tile.coords.part * partHeightPixels + tileCoords.y;
 				}
-				var tileBounds = new L.Bounds(tileCoords, tileCoords.add(ctx.tileSize));
+				var tileBounds = new Bounds(tileCoords, tileCoords.add(ctx.tileSize));
 
-				var crop = new L.Bounds(tileBounds.min, tileBounds.max);
+				var crop = new Bounds(tileBounds.min, tileBounds.max);
 				crop.min.x = Math.max(docRangeScaled.min.x, tileBounds.min.x);
 				crop.min.y = Math.max(docRangeScaled.min.y, tileBounds.min.y);
 				crop.max.x = Math.min(docRangeScaled.max.x, tileBounds.max.x);
@@ -876,21 +876,19 @@ export class TilesSection extends CanvasSectionObject {
 
 			var topLeft = this.scalePosForZoom(corePxBounds.min, toZoom, fromZoom);
 			var size = corePxBounds.getSize().multiplyBy(convScale);
-			return new L.Bounds(
+			return new Bounds(
 				topLeft,
 				topLeft.add(size)
 			);
 		}
 
-		return new L.Bounds(
+		return new Bounds(
 			corePxBounds.min.multiplyBy(convScale),
 			corePxBounds.max.multiplyBy(convScale)
 		);
 	}
 }
 
-}
-
 L.getNewTilesSection = function () {
-	return new cool.TilesSection();
+	return new TilesSection();
 };

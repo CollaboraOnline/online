@@ -12,12 +12,16 @@
  * Document parts switching and selecting handler
  */
 
-/* global app _ cool */
+/* global app _ */
+
+import { Point } from '../geometry/Point';
+import { Comment } from '../layer/tile/CommentSection';
+import { CommentSection } from '../layer/tile/CommentListSection';
 
 L.Map.include({
 	setPart: function (part, external, calledFromSetPartHandler) {
-		if (cool.Comment.isAnyEdit()) {
-			cool.CommentSection.showCommentEditingWarning();
+		if (Comment.isAnyEdit()) {
+			CommentSection.showCommentEditingWarning();
 			return;
 		}
 
@@ -273,7 +277,7 @@ L.Map.include({
 			docLayer._currentPage = page;
 		}
 		if (!this.isEditMode() && app.file.writer.pageRectangleList.length > docLayer._currentPage) {
-			var pos = new L.Point(app.file.writer.pageRectangleList[docLayer._currentPage][0], app.file.writer.pageRectangleList[docLayer._currentPage][1]);
+			var pos = new Point(app.file.writer.pageRectangleList[docLayer._currentPage][0], app.file.writer.pageRectangleList[docLayer._currentPage][1]);
 			pos = docLayer._twipsToCorePixels(pos);
 			this.scrollTop(pos.y);
 			var state = 'Page ' + (docLayer._currentPage + 1) + ' of ' + app.file.writer.pageRectangleList.length;
@@ -292,8 +296,8 @@ L.Map.include({
 	},
 
 	insertPage: function(nPos) {
-		if (cool.Comment.isAnyEdit()) {
-			cool.CommentSection.showCommentEditingWarning();
+		if (Comment.isAnyEdit()) {
+			CommentSection.showCommentEditingWarning();
 			return;
 		}
 

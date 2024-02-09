@@ -13,6 +13,7 @@
     "browserify-css": "0.15.0",
     "canvas": "^2.6.1",
     "d3": "6.7.0",
+    "esbuild": "0.20.0",
     "eslint": "7.0.0",
     "fzstd": "0.1.0",
     "hammerjs": "2.0.8",

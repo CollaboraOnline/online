@@ -9,8 +9,6 @@
  */
 declare var L: any;
 
-namespace cool {
-
 // SheetSwitchViewRestore is used to store the last view position of a sheet
 // before a sheet switch so that when the user switches back to previously used
 // sheets we can restore the last scroll position of that sheet.
@@ -100,8 +98,6 @@ export class SheetSwitchViewRestore {
 	}
 }
 
-}
-
-L.SheetSwitchViewRestore = cool.SheetSwitchViewRestore;
+L.SheetSwitchViewRestore = SheetSwitchViewRestore;
 
 

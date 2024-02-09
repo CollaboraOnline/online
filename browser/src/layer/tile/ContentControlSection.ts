@@ -7,10 +7,17 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
+import { Bounds } from '../../geometry/Bounds';
+import { Point } from '../../geometry/Point';
+import { CanvasSectionObject } from '../tile/CanvasSectionContainer';
+import { CPointSet } from '../vector/CPointSet';
+import { CPolyUtil } from '../vector/CPolyUtil';
+import { CPolygon } from '../vector/CPolygon';
+
 declare var L: any;
 declare var app: any;
-
-namespace cool {
+declare var $: any;
 
 export class ContentControlSection extends CanvasSectionObject {
 
@@ -147,8 +154,8 @@ export class ContentControlSection extends CanvasSectionObject {
 	}
 
 	public drawPolygon(): void {
-		var rectArray = cool.Bounds.parseArray(this.sectionProperties.json.rectangles);
-		var rectangles = rectArray.map(function (rect: cool.Bounds) {
+		var rectArray = Bounds.parseArray(this.sectionProperties.json.rectangles);
+		var rectangles = rectArray.map(function (rect: Bounds) {
 			return rect.getPointArray();
 		});
 
@@ -243,19 +250,19 @@ export class ContentControlSection extends CanvasSectionObject {
 		//consider first rectangle to position dropdownbutton
 		var rectangle = [parseInt(matches[0]), parseInt(matches[1]), parseInt(matches[2]), parseInt(matches[3])];
 
-		var topLeftTwips = new cool.Point(rectangle[0], rectangle[1]);
-		var offset = new cool.Point(rectangle[2], rectangle[3]);
+		var topLeftTwips = new Point(rectangle[0], rectangle[1]);
+		var offset = new Point(rectangle[2], rectangle[3]);
 		var bottomRightTwips = topLeftTwips.add(offset);
 		var buttonAreaTwips = [topLeftTwips, bottomRightTwips];
 
-		var frameArea = new cool.Bounds(
+		var frameArea = new Bounds(
 			this.map._docLayer._twipsToPixels(topLeftTwips),
 			this.map._docLayer._twipsToPixels(bottomRightTwips));
 
 		var size = frameArea.getSize();
 		var origin = this.map.getPixelOrigin();
 		var panePos = this.map._getMapPanePos();
-		this.sectionProperties.framePos = new cool.Point(Math.round(frameArea.min.x + panePos.x - origin.x), Math.round(frameArea.min.y + panePos.y - origin.y));
+		this.sectionProperties.framePos = new Point(Math.round(frameArea.min.x + panePos.x - origin.x), Math.round(frameArea.min.y + panePos.y - origin.y));
 		this.sectionProperties.frameWidth = Math.round(size.x);
 		this.sectionProperties.frameHeight = Math.round(size.y);
 
@@ -377,7 +384,5 @@ export class ContentControlSection extends CanvasSectionObject {
 	}
 }
 
-}
-
-app.definitions.ContentControlSection = cool.ContentControlSection;
+app.definitions.ContentControlSection = ContentControlSection;
 

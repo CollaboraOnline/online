@@ -1,16 +1,23 @@
+import { Bounds } from '../../geometry/Bounds';
+import { Point } from '../../geometry/Point';
+import { CPath, CPathGroup } from './CPath';
+import { CanvasSectionObject } from '../tile/CanvasSectionContainer';
+
+declare var L: any;
+
 // OverlayTransform is used by CanvasOverlay to apply transformations
 // to points/bounds before drawing is done.
 // The reason why we cannot use canvasRenderingContext2D.transform() is it
 // does not support coordinate values bigger than 2^24 - 1 and if we use it in this
 // regime the renders will be incorrect. At least in Calc it is possible to have pixel
 // coordinates greater than this limit at higher zooms near the bottom of the sheet.
-class OverlayTransform {
-	private translationAmount: cool.Point;
-	private scaleAmount: cool.Point;
+export class OverlayTransform {
+	private translationAmount: Point;
+	private scaleAmount: Point;
 
 	constructor() {
-		this.translationAmount = new cool.Point(0, 0);
-		this.scaleAmount = new cool.Point(1, 1);
+		this.translationAmount = new Point(0, 0);
+		this.scaleAmount = new Point(1, 1);
 	}
 
 	translate(x: number, y: number) {
@@ -30,15 +37,15 @@ class OverlayTransform {
 		this.scaleAmount.y = 1;
 	}
 
-	applyToPoint(point: cool.Point): cool.Point {
+	applyToPoint(point: Point): Point {
 		// 'scale first then translation' model.
-		return new cool.Point(
+		return new Point(
 			point.x * this.scaleAmount.x - this.translationAmount.x,
 			point.y * this.scaleAmount.y - this.translationAmount.y);
 	}
 
-	applyToBounds(bounds: cool.Bounds): cool.Bounds {
-		return new cool.Bounds(
+	applyToBounds(bounds: Bounds): Bounds {
+		return new Bounds(
 			this.applyToPoint(bounds.min),
 			this.applyToPoint(bounds.max)
 		);
@@ -58,7 +65,7 @@ class TransformationsList {
 		this.list.push(tx);
 	}
 
-	public addNew(translate: cool.Point, scale: cool.Point) {
+	public addNew(translate: Point, scale: Point) {
 		const tx = new OverlayTransform();
 		tx.translate(translate.x, translate.y);
 		tx.scale(scale.x, scale.y);
@@ -69,7 +76,7 @@ class TransformationsList {
 		this.list = [];
 	}
 
-	applyToPoint(point: cool.Point): cool.Point {
+	applyToPoint(point: Point): Point {
 		let tPoint = point.clone();
 		this.list.forEach((tx) => {
 			tPoint = tx.applyToPoint(tPoint);
@@ -78,7 +85,7 @@ class TransformationsList {
 		return tPoint;
 	}
 
-	applyToBounds(bounds: cool.Bounds): cool.Bounds {
+	applyToBounds(bounds: Bounds): Bounds {
 		let tBounds = bounds.clone();
 		this.list.forEach((tx) => {
 			tBounds = tx.applyToBounds(tBounds);
@@ -90,11 +97,11 @@ class TransformationsList {
 
 // CanvasOverlay handles CPath rendering and mouse events handling via overlay-section of the main canvas.
 // where overlays like cell-cursors, cell-selections, edit-cursors are instances of CPath or its subclasses.
-class CanvasOverlay extends CanvasSectionObject {
+export class CanvasOverlay extends CanvasSectionObject {
 	private map: any;
 	private ctx: CanvasRenderingContext2D;
 	private paths: Map<number, any>;
-	private bounds: cool.Bounds;
+	private bounds: Bounds;
 	private tsManager: any;
 	private transformList: TransformationsList;
 
@@ -138,7 +145,7 @@ class CanvasOverlay extends CanvasSectionObject {
 	}
 
 	onMouseMove(position: Array<number>): void {
-		var mousePos = new cool.Point(position[0], position[1]);
+		var mousePos = new Point(position[0], position[1]);
 		var overlaySectionBounds = this.bounds.clone();
 		var splitPos = this.tsManager.getSplitPos();
 		if (this.isCalcRTL()) {
@@ -200,15 +207,15 @@ class CanvasOverlay extends CanvasSectionObject {
 		}.bind(this));
 	}
 
-	updatePath(path: CPath, oldBounds: cool.Bounds) {
+	updatePath(path: CPath, oldBounds: Bounds) {
 		this.redraw(path, oldBounds);
 	}
 
-	updateStyle(path: CPath, oldBounds: cool.Bounds) {
+	updateStyle(path: CPath, oldBounds: Bounds) {
 		this.redraw(path, oldBounds);
 	}
 
-	paintRegion(paintArea: cool.Bounds) {
+	paintRegion(paintArea: Bounds) {
 		this.draw(paintArea);
 	}
 
@@ -223,7 +230,7 @@ class CanvasOverlay extends CanvasSectionObject {
 		return this.intersectsVisible(pathBounds);
 	}
 
-	private intersectsVisible(queryBounds: cool.Bounds): boolean {
+	private intersectsVisible(queryBounds: Bounds): boolean {
 		this.updateCanvasBounds();
 		var spc = this.getSplitPanesContext();
 		return spc ? spc.intersectsVisible(queryBounds) : this.bounds.intersects(queryBounds);
@@ -266,7 +273,7 @@ class CanvasOverlay extends CanvasSectionObject {
 		return a.viewId - b.viewId;
 	}
 
-	private draw(paintArea?: cool.Bounds) {
+	private draw(paintArea?: Bounds) {
 		if (this.tsManager && this.tsManager.waitForTiles()) {
 			// don't paint anything till tiles arrive for new zoom.
 			return;
@@ -286,7 +293,7 @@ class CanvasOverlay extends CanvasSectionObject {
 		}, this);
 	}
 
-	private redraw(path: CPath, oldBounds: cool.Bounds) {
+	private redraw(path: CPath, oldBounds: Bounds) {
 		if (this.tsManager && this.tsManager.waitForTiles()) {
 			// don't paint anything till tiles arrive for new zoom.
 			return;
@@ -304,16 +311,16 @@ class CanvasOverlay extends CanvasSectionObject {
 
 	private updateCanvasBounds() {
 		var viewBounds: any = this.map.getPixelBoundsCore();
-		this.bounds = new cool.Bounds(new cool.Point(viewBounds.min.x, viewBounds.min.y), new cool.Point(viewBounds.max.x, viewBounds.max.y));
+		this.bounds = new Bounds(new Point(viewBounds.min.x, viewBounds.min.y), new Point(viewBounds.max.x, viewBounds.max.y));
 	}
 
-	getBounds(): cool.Bounds {
+	getBounds(): Bounds {
 		this.updateCanvasBounds();
 		return this.bounds;
 	}
 
 	// Applies canvas translation so that polygons/circles can be drawn using core-pixel coordinates.
-	private ctStart(clipArea?: cool.Bounds, paneBounds?: cool.Bounds, fixed?: boolean) {
+	private ctStart(clipArea?: Bounds, paneBounds?: Bounds, fixed?: boolean) {
 		this.updateCanvasBounds();
 		this.transformList.reset();
 		this.ctx.save();
@@ -340,14 +347,14 @@ class CanvasOverlay extends CanvasSectionObject {
 			var leftMin = paneBounds.min.x < 0 ? -Infinity : 0;
 			var topMin = paneBounds.min.y < 0 ? -Infinity : 0;
 			// Compute the new top left in core pixels that ties with the origin of overlay canvas section.
-			var newTopLeft = new cool.Point(
+			var newTopLeft = new Point(
 				Math.max(leftMin,
 					-splitPos.x - 1 + (center.x - (center.x - paneBounds.min.x) / scale)),
 				Math.max(topMin,
 					-splitPos.y - 1 + (center.y - (center.y - paneBounds.min.y) / scale)));
 
 			// Compute clip area which needs to be applied after setting the transformation.
-			var clipTopLeft = new cool.Point(0, 0);
+			var clipTopLeft = new Point(0, 0);
 			// Original pane size.
 			var paneSize = paneBounds.getSize();
 			var clipSize = paneSize.clone();
@@ -363,7 +370,7 @@ class CanvasOverlay extends CanvasSectionObject {
 				clipSize.y = (paneSize.y - splitPos.y * (scale - 1)) / scale;
 			}
 			// Force clip area to the zoom frame area of the pane specified.
-			clipArea = new cool.Bounds(
+			clipArea = new Bounds(
 				clipTopLeft,
 				clipTopLeft.add(clipSize));
 
@@ -376,7 +383,7 @@ class CanvasOverlay extends CanvasSectionObject {
 			transform.scale(scale, scale);
 
 			if (clipArea) {
-				clipArea = new cool.Bounds(
+				clipArea = new Bounds(
 					clipArea.min.divideBy(scale),
 					clipArea.max.divideBy(scale)
 				);
@@ -392,7 +399,7 @@ class CanvasOverlay extends CanvasSectionObject {
 		if (this.isCalcRTL()) {
 			const sectionWidth = this.size[0];
 			// Apply horizontal flip transformation.
-			this.transformList.addNew(new cool.Point(-sectionWidth, 0), new cool.Point(-1, 1));
+			this.transformList.addNew(new Point(-sectionWidth, 0), new Point(-1, 1));
 		}
 
 		if (clipArea) {
@@ -409,11 +416,11 @@ class CanvasOverlay extends CanvasSectionObject {
 		this.ctx.restore();
 	}
 
-	updatePoly(path: CPath, closed: boolean = false, clipArea?: cool.Bounds, paneBounds?: cool.Bounds) {
+	updatePoly(path: CPath, closed: boolean = false, clipArea?: Bounds, paneBounds?: Bounds) {
 		var i: number;
 		var j: number;
 		var len2: number;
-		var part: cool.Point;
+		var part: Point;
 		var parts = path.getParts();
 		var len: number = parts.length;
 
@@ -438,7 +445,7 @@ class CanvasOverlay extends CanvasSectionObject {
 		this.ctEnd();
 	}
 
-	updateCircle(path: CPath, clipArea?: cool.Bounds, paneBounds?: cool.Bounds) {
+	updateCircle(path: CPath, clipArea?: Bounds, paneBounds?: Bounds) {
 		if (path.empty())
 			return;
 

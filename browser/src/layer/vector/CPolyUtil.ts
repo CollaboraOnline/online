@@ -2,9 +2,12 @@
  * CPolyUtil contains utility functions for polygons.
  */
 
-namespace CPolyUtil {
+import { Point } from '../../geometry/Point';
+import { CPointSet } from './CPointSet';
 
-	export function rectanglesToPointSet(rectangles: Array<Array<cool.Point>>, unitConverter: (point: cool.Point) => cool.Point): CPointSet {
+export namespace CPolyUtil {
+
+	export function rectanglesToPointSet(rectangles: Array<Array<Point>>, unitConverter: (point: Point) => Point): CPointSet {
 		/* An Implementation based on O'ROURKE, Joseph. "Uniqueness of orthogonal connect-the-dots."
 		   Machine Intelligence and Pattern Recognition. Vol. 6. North-Holland, 1988. 97-104.
 		   http://www.science.smith.edu/~jorourke/Papers/OrthoConnect.pdf
@@ -26,7 +29,7 @@ namespace CPolyUtil {
 			}
 		}
 
-		var points = new Map<cool.Point, cool.Point>();
+		var points = new Map<Point, Point>();
 		for (i = 0; i < rectangles.length; i++) {
 			for (j = 0; j < rectangles[i].length; j++) {
 				if (points.has(rectangles[i][j])) {
@@ -38,17 +41,17 @@ namespace CPolyUtil {
 			}
 		}
 
-		function getKeys(points: Map<cool.Point, cool.Point>): Array<cool.Point> {
-			var keys: Array<cool.Point> = [];
-			points.forEach((_: cool.Point, key: cool.Point) => {
+		function getKeys(points: Map<Point, Point>): Array<Point> {
+			var keys: Array<Point> = [];
+			points.forEach((_: Point, key: Point) => {
 				keys.push(key);
 			});
 			return keys;
 		}
 
-		// cool.Point comparison function for sorting a list of CPoints w.r.t x-coordinate.
+		// Point comparison function for sorting a list of CPoints w.r.t x-coordinate.
 		// When the points have same x-coordinate break tie based on y-coordinates.
-		function xThenY(ap: cool.Point, bp: cool.Point): number {
+		function xThenY(ap: Point, bp: Point): number {
 			if (ap.x < bp.x || (ap.x === bp.x && ap.y < bp.y)) {
 				return -1;
 			}
@@ -60,9 +63,9 @@ namespace CPolyUtil {
 			}
 		}
 
-		// cool.Point comparison function for sorting a list of CPoints w.r.t y-coordinate.
+		// Point comparison function for sorting a list of CPoints w.r.t y-coordinate.
 		// When the points have same y-coordinate break tie based on x-coordinates.
-		function yThenX(ap: cool.Point, bp: cool.Point): number {
+		function yThenX(ap: Point, bp: Point): number {
 
 			if (ap.y < bp.y || (ap.y === bp.y && ap.x < bp.x)) {
 				return -1;
@@ -78,8 +81,8 @@ namespace CPolyUtil {
 		var sortX = getKeys(points).sort(xThenY);
 		var sortY = getKeys(points).sort(yThenX);
 
-		var edgesH = new Map<cool.Point, cool.Point>();
-		var edgesV = new Map<cool.Point, cool.Point>();
+		var edgesH = new Map<Point, Point>();
+		var edgesV = new Map<Point, Point>();
 
 		var len = getKeys(points).length;
 		i = 0;
@@ -106,7 +109,7 @@ namespace CPolyUtil {
 		var edgesHKeys = getKeys(edgesH);
 
 		while (edgesHKeys.length > 0) {
-			var p: Array<[cool.Point, number]> = [[edgesHKeys[0], 0]];
+			var p: Array<[Point, number]> = [[edgesHKeys[0], 0]];
 			while (true) {
 				var curr = p[p.length - 1][0];
 				var e = p[p.length - 1][1];
@@ -125,7 +128,7 @@ namespace CPolyUtil {
 					break;
 				}
 			}
-			var polygon = new Array<cool.Point>();
+			var polygon = new Array<Point>();
 			for (i = 0; i < p.length; i++) {
 				polygon.push(unitConverter(points.get(p[i][0])));
 				edgesH.delete(p[i][0]);

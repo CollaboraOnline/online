@@ -3,6 +3,8 @@
  * L.PosAnimation is used by Leaflet internally for pan animations.
  */
 
+import { Point } from '../geometry/Point';
+
 L.PosAnimation = L.Class.extend({
 	includes: L.Mixin.Events,
 
@@ -74,7 +76,7 @@ L.PosAnimation = L.Class.extend({
 			top  = parseFloat(style.top);
 		}
 
-		return new L.Point(left, top, true);
+		return new Point(left, top, true);
 	},
 
 	_onTransitionEnd: function () {

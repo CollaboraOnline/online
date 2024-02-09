@@ -1,8 +1,14 @@
+import { Bounds } from '../../geometry/Bounds';
+import { Point } from '../../geometry/Point';
+import { CRectangle } from './CRectangle';
+
+declare var app: any;
+
 /*
  * CSplitterLine is a CRectangle to be used to show the splits when there are freeze-panes.
  */
 
-class CSplitterLine extends CRectangle {
+export class CSplitterLine extends CRectangle {
 
 	private isHoriz: boolean = true; // splitter divides X axis (vertical line) ?
 	private map: any;
@@ -10,7 +16,7 @@ class CSplitterLine extends CRectangle {
 	private inactive: boolean;
 
 	constructor(map: any, options: any) {
-		super(new cool.Bounds(undefined), options);
+		super(new Bounds(undefined), options);
 
 		this.fixed = true;
 		this.stroke = false;
@@ -45,7 +51,7 @@ class CSplitterLine extends CRectangle {
 		this.setBounds(newBounds);
 	}
 
-	private computeBounds(): cool.Bounds {
+	private computeBounds(): Bounds {
 		var docLayer = this.map._docLayer;
 		var mapSize = this.map.getPixelBoundsCore().getSize();
 		mapSize.round();
@@ -60,15 +66,15 @@ class CSplitterLine extends CRectangle {
 		// highest possible zoom level. This makes splitter's
 		// zoom animation easier.
 		var maxZoom : number = this.map.zoomToFactor(this.map.options.maxZoom);
-		var start = new cool.Point(
+		var start = new Point(
 			this.isHoriz ? splitPos.x - thickup: 0,
 			this.isHoriz ? 0 : splitPos.y - thickup);
-		var end = new cool.Point(
+		var end = new Point(
 			this.isHoriz ? splitPos.x + thickdown : mapSize.x * maxZoom,
 			this.isHoriz ? mapSize.y * maxZoom : splitPos.y + thickdown)
 			._round();
 
 		this.inactive = this.isHoriz ? !splitPos.x : !splitPos.y;
-		return new cool.Bounds(start, end);
+		return new Bounds(start, end);
 	}
 }

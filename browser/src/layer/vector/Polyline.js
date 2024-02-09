@@ -3,6 +3,9 @@
  * L.Polyline implements polyline vector layer (a set of points connected with lines)
  */
 
+import { Bounds } from '../../geometry/Bounds';
+import { Point } from '../../geometry/Point';
+
 L.Polyline = L.Path.extend({
 
 	options: {
@@ -91,10 +94,10 @@ L.Polyline = L.Path.extend({
 
 		// project bounds as well to use later for Canvas hit detection/etc.
 		var w = this._clickTolerance(),
-		    p = new L.Point(w, -w);
+		    p = new Point(w, -w);
 
 		if (this._latlngs.length) {
-			this._pxBounds = new L.Bounds(
+			this._pxBounds = new Bounds(
 				this._latLngToPoint(this._bounds.getSouthWest())._subtract(p),
 				this._latLngToPoint(this._bounds.getNorthEast())._add(p));
 		}

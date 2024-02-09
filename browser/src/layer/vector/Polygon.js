@@ -3,6 +3,9 @@
  * L.Polygon implements polygon vector layer (closed polyline with a fill inside).
  */
 
+import { Bounds } from '../../geometry/Bounds';
+import { Point } from '../../geometry/Point';
+
 L.Polygon = L.Polyline.extend({
 
 	options: {
@@ -53,10 +56,10 @@ L.Polygon = L.Polyline.extend({
 
 		var bounds = this._renderer._bounds,
 		    w = this.options.weight,
-		    p = new L.Point(w, w);
+		    p = new Point(w, w);
 
 		// increase clip padding by stroke width to avoid stroke on clip edges
-		bounds = new L.Bounds(bounds.min.subtract(p), bounds.max.add(p));
+		bounds = new Bounds(bounds.min.subtract(p), bounds.max.add(p));
 
 		this._parts = [];
 

@@ -1,14 +1,18 @@
 /* eslint-disable */
 
+import { Bounds } from '../../geometry/Bounds';
+import { Point } from '../../geometry/Point';
+
 declare var $: any;
 declare var L: any;
+declare var app: any;
 
 /*
  * Cursor implements a blinking cursor.
  * This is used as the text-cursor(in and out of document) and view-cursor.
  */
 
-class Cursor {
+export class Cursor {
 	opacity: number = 1;
 	zIndex: number = 1000;
 	blink: boolean = false;
@@ -17,8 +21,8 @@ class Cursor {
 	headerName: string;
 	headerTimeout: number = 3000;
 
-	private position: cool.Point;
-	private size: cool.Point;
+	private position: Point;
+	private size: Point;
 	private width: number;
 	private container: HTMLDivElement;
 	private cursorHeader: HTMLDivElement;
@@ -29,7 +33,7 @@ class Cursor {
 	private domAttached: boolean = false;
 
 	// position and size should be in core pixels.
-	constructor(position: cool.Point, size: cool.Point, map: any, options: any) {
+	constructor(position: Point, size: Point, map: any, options: any) {
 		this.opacity = options.opacity !== undefined ? options.opacity : this.opacity;
 		this.zIndex = options.zIndex !== undefined ? options.zIndex : this.zIndex;
 		this.blink = options.blink !== undefined ? options.blink : this.blink;
@@ -132,13 +136,13 @@ class Cursor {
 	}
 
 	// position and size should be in core pixels.
-	setPositionSize(position: cool.Point, size: cool.Point) {
+	setPositionSize(position: Point, size: Point) {
 		this.position = position;
 		this.size = size;
 		this.update();
 	}
 
-	getPosition(): cool.Point {
+	getPosition(): Point {
 		return this.position;
 	}
 
@@ -146,14 +150,14 @@ class Cursor {
 		if (!this.container || !this.map || !this.map.hasDocBounds())
 			return;
 
-		var docBounds = <cool.Bounds>this.map.getCorePxDocBounds();
+		var docBounds = <Bounds>this.map.getCorePxDocBounds();
 		var inDocCursor = docBounds.contains(this.position);
 		// Calculate position and size in CSS pixels.
-		var viewBounds = <cool.Bounds>(this.map.getPixelBoundsCore());
+		var viewBounds = <Bounds>(this.map.getPixelBoundsCore());
 		var spCxt = this.map.getSplitPanesContext();
 		var origin = viewBounds.min.clone();
 		var paneSize = viewBounds.getSize();
-		var splitPos = new cool.Point(0, 0);
+		var splitPos = new Point(0, 0);
 		if (inDocCursor && spCxt) {
 			splitPos = spCxt.getSplitPos().multiplyBy(app.dpiScale);
 			if (this.position.x <= splitPos.x && this.position.x >= 0) {
@@ -175,11 +179,11 @@ class Cursor {
 		var canvasOffset = this.position.subtract(origin);
 
 		if (inDocCursor) {
-			var cursorOffset = new cool.Point(
+			var cursorOffset = new Point(
 				origin.x ? canvasOffset.x - splitPos.x : canvasOffset.x,
 				origin.y ? canvasOffset.y - splitPos.y : canvasOffset.y);
-			var paneBounds = new cool.Bounds(new cool.Point(0, 0), paneSize);
-			var cursorBounds = new cool.Bounds(cursorOffset, cursorOffset.add(this.size));
+			var paneBounds = new Bounds(new Point(0, 0), paneSize);
+			var cursorBounds = new Bounds(cursorOffset, cursorOffset.add(this.size));
 
 			if (!paneBounds.contains(cursorBounds)) {
 				this.container.style.visibility = 'hidden';
@@ -267,7 +271,7 @@ class Cursor {
 		return this.map._size.x - xpos;
 	}
 
-	private setPos(pos: cool.Point) {
+	private setPos(pos: Point) {
 		this.container.style.top = pos.y + 'px';
 		this.container.style.left = this.transformX(pos.x) + 'px';
 		this.container.style.zIndex = this.zIndex + '';
@@ -279,12 +283,12 @@ class Cursor {
 		}
 	}
 
-	private setSize(size: cool.Point) {
+	private setSize(size: Point) {
 		this.cursor.style.height = size.y + 'px';
 		this.container.style.top = '-' + (this.container.clientHeight - size.y - 2) / 2 + 'px';
 	}
 
-	static hotSpot = new Map<string, cool.Point>([['fill', new cool.Point(7, 16)]]);
+	static hotSpot = new Map<string, Point>([['fill', new Point(7, 16)]]);
 
 	static customCursors = [
 		'fill'
@@ -300,7 +304,7 @@ class Cursor {
 		var customCursor;
 
 		if (Cursor.isCustomCursor(cursorName)) {
-			var cursorHotSpot = Cursor.hotSpot.get(cursorName) || new cool.Point(0, 0);
+			var cursorHotSpot = Cursor.hotSpot.get(cursorName) || new Point(0, 0);
 			customCursor = L.Browser.ie ? // IE10 does not like item with left/top position in the url list
 				'url(' + Cursor.imagePath + '/' + cursorName + '.cur), default' :
 				'url(' + Cursor.imagePath + '/' + cursorName + '.png) ' + cursorHotSpot.x + ' ' + cursorHotSpot.y + ', default';
@@ -308,3 +312,5 @@ class Cursor {
 		return customCursor;
 	};
 }
+
+L.Cursor = Cursor;
