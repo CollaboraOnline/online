@@ -46,13 +46,6 @@ L.DebugManager = L.Class.extend({
 		this._toolLayers = [];
 		this._addDebugTools();
 
-		// Initialize state that we build in debug mode whether visible or not
-		// TODO: Associate to specific tools
-		this._debugLoadTile = 0;
-		this._debugLoadDelta = 0;
-		this._debugLoadUpdate = 0;
-		this._debugInvalidateCount = 0;
-
 		// Initialize here because tasks can add themselves to the queue even
 		// if the user is not active
 		this._automatedUserQueue = [];
@@ -159,6 +152,25 @@ L.DebugManager = L.Class.extend({
 				clearTimeout(self._tileInvalidationTimeoutId);
 				self._map.removeLayer(self._tileInvalidationLayer);
 				self._painter.update();
+			},
+		});
+
+		this._addDebugTool({
+			name: 'Tile data',
+			category: 'Display',
+			startsOn: true,
+			onAdd: function () {
+				self.tileDataOn = true;
+				self._tileDataTotalMessages = 0;
+				self._tileDataTotalLoads = 0;
+				self._tileDataTotalUpdates = 0;
+				self._tileDataTotalDeltas = 0;
+				self._tileDataTotalInvalidates = 0;
+				self._tileDataShowOverlay();
+			},
+			onRemove: function () {
+				self.tileDataOn = false;
+				self.setOverlayMessage('tileData','');
 			},
 		});
 
@@ -775,12 +787,20 @@ L.DebugManager = L.Class.extend({
 	setOverlayMessage: function(id, message) {
 		if (this.overlayOn) {
 			if (!this.overlayData[id]) {
-				var topLeftNames = ['nullUpdateMetric', 'newTileMetric'];
+				var topLeftNames = ['tileData'];
 				var position = topLeftNames.includes(id) ? 'topleft' : 'bottomleft';
 				this.overlayData[id] = L.control.attribution({prefix: '', position: position});
 				this.overlayData[id].addTo(this._map);
 			}
 			this.overlayData[id].setPrefix(message);
+		}
+	},
+
+	clearOverlayMessage: function(id) {
+		if (this.overlayOn) {
+			if (this.overlayData[id]) {
+				this.overlayData[id].remove();
+			}
 		}
 	},
 
@@ -800,20 +820,61 @@ L.DebugManager = L.Class.extend({
 		return 'best: ' + times.best + ' ms, worst: ' + times.worst + ' ms, avg: ' + Math.round(times.ms/times.count) + ' ms, last: ' + value + ' ms';
 	},
 
-	_overlayShowTileData: function() {
-		this.setOverlayMessage('loadCount',
-			'Total of requested tiles: ' + this._debugInvalidateCount + ', ' +
-			'recv-tiles: ' + this._debugLoadTile + ', ' +
-			'recv-delta: ' + this._debugLoadDelta + ', ' +
-			'recv-update: ' + this._debugLoadUpdate);
+	_tileDataShowOverlay: function() {
+		var messages = this._tileDataTotalMessages;
+		var loads = this._tileDataTotalLoads;
+		var deltas = this._tileDataTotalDeltas;
+		var updates = this._tileDataTotalUpdates;
+		var invalidates = this._tileDataTotalInvalidates;
+		this.setOverlayMessage('tileData',
+			'Total tile messages: ' + messages + '<br>' +
+			'loads: ' + loads + ' ' +
+			'deltas: ' + deltas + ' ' +
+			'updates: ' + updates + '<br>' +
+			'invalidates: ' + invalidates + '<br>' +
+			'<b>Tile update waste: ' + Math.round(100.0 * updates / (updates + deltas)) + '%</b>' + '<br>' +
+			'<b>New Tile ratio: ' + Math.round(100.0 * loads / (loads + updates + deltas)) + '%</b>'
+			);
+	},
 
-		var allDeltas = this._debugLoadDelta + this._debugLoadUpdate;
-		this.setOverlayMessage('nullUpdateMetric',
-			'<b>Tile update waste: ' + Math.round(100.0 * this._debugLoadUpdate / allDeltas) + '%</b>'
-		);
-		this.setOverlayMessage('newTileMetric',
-			'<b>New Tile ratio: ' + Math.round(100.0 * this._debugLoadTile / (allDeltas + this._debugLoadTile)) + '%</b>'
-		);
+	tileDataAddMessage() {
+		if (!this.tileDataOn) {
+			return;
+		}
+		this._tileDataTotalMessages++;
+		this._tileDataShowOverlay();
+	},
+
+	tileDataAddLoad() {
+		if (!this.tileDataOn) {
+			return;
+		}
+		this._tileDataTotalLoads++;
+		this._tileDataShowOverlay();
+	},
+
+	tileDataAddUpdate() {
+		if (!this.tileDataOn) {
+			return;
+		}
+		this._tileDataTotalUpdates++;
+		this._tileDataShowOverlay();
+	},
+
+	tileDataAddDelta() {
+		if (!this.tileDataOn) {
+			return;
+		}
+		this._tileDataTotalDeltas++;
+		this._tileDataShowOverlay();
+	},
+
+	tileDataAddInvalidate() {
+		if (!this.tileDataOn) {
+			return;
+		}
+		this._tileDataTotalInvalidates++;
+		this._tileDataShowOverlay();
 	},
 
 	_tileInvalidationTimeout: function() {
@@ -905,8 +966,8 @@ L.DebugManager = L.Class.extend({
 			return;
 		}
 
-		// TODO: move rendercount from pong to _overlayShowTileData
-		this.setOverlayMessage('rendercount', 'Rendered tiles: ' + rendercount);
+		// TODO: move rendercount from pong to tile data tool
+		this.setOverlayMessage('rendercount', 'Server rendered tiles: ' + rendercount);
 
 		var oldestPing = this._pingQueue.shift();
 		if (oldestPing) {
