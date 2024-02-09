@@ -658,6 +658,9 @@ L.Map.Keyboard = L.Handler.extend({
 						}
 					}
 				}
+				if (this._map._debug.tileInvalidationsOn) {
+					this._map._debug.addTileInvalidationKeypress();
+				}
 			}
 			else if ((ev.type === 'keypress') && (!this.handleOnKeyDownKeys[keyCode] || charCode !== 0)) {
 				if (keyCode === this.keyCodes.BACKSPACE || keyCode === this.keyCodes.DELETE || keyCode === this.keyCodes.enter)
@@ -673,8 +676,7 @@ L.Map.Keyboard = L.Handler.extend({
 					unoKeyCode = this._toUNOKeyCode(keyCode);
 				}
 				if (this._map._debug.tileInvalidationsOn) {
-					// key press times will be paired with the invalidation messages
-					this._debug._debugKeypressQueue.push(+new Date());
+					this._map._debug.addTileInvalidationKeypress();
 				}
 
 				if (keyEventFn) {

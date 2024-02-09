@@ -1077,17 +1077,8 @@ app.definitions.Socket = L.Class.extend({
 					});
 			}
 		}
-		else if (textMsg.startsWith('pong ') && this._map._debug.debugOn) {
-			var times = this._map._debug._debugTimePING;
-			var timeText = this._map._debug.updateTimeArray(times, +new Date() - this._map._debug._debugPINGQueue.shift());
-			if (this._map._debug.overlayOn) {
-				this._map._debug.setOverlayMessage('ping',
-					'Server ping time: ' + timeText + '. ' +
-					'Rendered tiles: ' + command.rendercount + ', ' + 
-					'last: ' + (command.rendercount - this._map._debug._debugRenderCount)
-				);
-			}
-			this._map._debug._debugRenderCount = command.rendercount;
+		else if (textMsg.startsWith('pong ') && this._map._debug.pingOn) {
+			this._map._debug.reportPong(command.rendercount);
 		}
 		else if (textMsg.startsWith('saveas:') || textMsg.startsWith('renamefile:')) {
 			this._renameOrSaveAsCallback(textMsg, command);

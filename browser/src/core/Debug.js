@@ -52,11 +52,6 @@ L.DebugManager = L.Class.extend({
 		this._debugLoadDelta = 0;
 		this._debugLoadUpdate = 0;
 		this._debugInvalidateCount = 0;
-		this._debugTimeKeypress = this.getTimeArray();
-		this._debugKeypressQueue = [];
-		this._debugRenderCount = 0;
-		this._debugTimePING = this.getTimeArray();
-		this._debugPINGQueue = [];
 
 		// Initialize here because tasks can add themselves to the queue even
 		// if the user is not active
@@ -153,6 +148,8 @@ L.DebugManager = L.Class.extend({
 				self._tileInvalidationRectangles = {};
 				self._tileInvalidationMessages = {};
 				self._tileInvalidationId = 0;
+				self._tileInvalidationKeypressQueue = [];
+				self._tileInvalidationKeypressTimes = self.getTimeArray();
 				self._tileInvalidationLayer = new L.LayerGroup();
 				self._map.addLayer(self._tileInvalidationLayer);
 				self._tileInvalidationTimeout();
@@ -218,6 +215,22 @@ L.DebugManager = L.Class.extend({
 				},
 			});
 		}
+
+		this._addDebugTool({
+			name: 'Ping',
+			category: 'Display',
+			startsOn: false,
+			onAdd: function () {
+				self.pingOn = true;
+				self._pingQueue = [];
+				self._pingTimes = self.getTimeArray();
+				self._pingTimeout();
+			},
+			onRemove: function () {
+				self.pingOn = false;
+				clearTimeout(self._pingTimeoutId);
+			},
+		});
 
 		this._addDebugTool({
 			name: 'Performance Tracing',
@@ -750,7 +763,7 @@ L.DebugManager = L.Class.extend({
 
 	_typeChar: function(charCode) {
 		if (this.tileInvalidationsOn) {
-			this._debugKeypressQueue.push(+new Date());
+			this.addTileInvalidationKeypress();
 		}
 		if (charCode === '\n'.charCodeAt(0)) {
 			this._docLayer.postKeyboardEvent('input', 0, 1280);
@@ -784,7 +797,7 @@ L.DebugManager = L.Class.extend({
 		}
 		times.ms += value;
 		times.count++;
-		return 'best: ' + times.best + ' ms, avg: ' + Math.round(times.ms/times.count) + ' ms, worst: ' + times.worst + ' ms, last: ' + value + ' ms';
+		return 'best: ' + times.best + ' ms, worst: ' + times.worst + ' ms, avg: ' + Math.round(times.ms/times.count) + ' ms, last: ' + value + ' ms';
 	},
 
 	_overlayShowTileData: function() {
@@ -822,6 +835,14 @@ L.DebugManager = L.Class.extend({
 		this._tileInvalidationTimeoutId = setTimeout(L.bind(this._tileInvalidationTimeout, this), 50);
 	},
 
+	// key press times will be paired with the invalidation messages
+	addTileInvalidationKeypress: function() {
+		if (!this.tileInvalidationsOn) {
+			return;
+		}
+		this._tileInvalidationKeypressQueue.push(+new Date());
+	},
+
 	addTileInvalidationMessage: function(message) {
 		if (!this.tileInvalidationsOn) {
 			return;
@@ -829,24 +850,19 @@ L.DebugManager = L.Class.extend({
 
 		this._tileInvalidationMessages[this._tileInvalidationId - 1] = message;
 
-		if (this.overlayOn) {
-			var messages = '';
-			for (var i = this._tileInvalidationId - 1; i > this._tileInvalidationId - 6; i--) {
-				if (i >= 0 && this._tileInvalidationMessages[i]) {
-					messages += '' + i + ': ' + this._tileInvalidationMessages[i] + ' <br>';
-				}
+		var messages = '';
+		for (var i = this._tileInvalidationId - 1; i > this._tileInvalidationId - 6; i--) {
+			if (i >= 0 && this._tileInvalidationMessages[i]) {
+				messages += '' + i + ': ' + this._tileInvalidationMessages[i] + ' <br>';
 			}
-			this.setOverlayMessage('tileCombine',messages);
-
 		}
+		this.setOverlayMessage('tileInvalidationMessages',messages);
 	},
 
 	addTileInvalidationRectangle: function(topLeftTwips, bottomRightTwips, command) {
 		if (!this.tileInvalidationsOn) {
 			return;
 		}
-
-		var now = +new Date();
 
 		var signX =  this._docLayer.isCalcRTL() ? -1 : 1;
 
@@ -863,18 +879,41 @@ L.DebugManager = L.Class.extend({
 		this._tileInvalidationId++;
 		this._tileInvalidationLayer.addLayer(rect);
 
-		var oldestKeypress = this._debugKeypressQueue.shift();
+
+		// There is not always an invalidation for every keypress. 
+		// Keypresses at the front of the queue that are older than 1s
+		// are probably stale and should be ignored.
+		var now = +new Date();
+		do {
+			var oldestKeypress = this._tileInvalidationKeypressQueue.shift();
+		} while (oldestKeypress && now - oldestKeypress > 1000);
 		if (oldestKeypress) {
-			var timeText = this.updateTimeArray(this._debugTimeKeypress, now - oldestKeypress);
-			this.setOverlayMessage('fromKeyInputToInvalidate',
-				'Elapsed time between key input and next invalidate: ' + timeText
-			);
+			var timeText = this.updateTimeArray(this._tileInvalidationKeypressTimes, now - oldestKeypress);
+			this.setOverlayMessage('tileInvalidationTime', 'Tile invalidation time: ' + timeText);
+		}
+	},
+
+	_pingTimeout: function() {
+		// pings will be paired with the pong messages
+		this._pingQueue.push(+new Date());
+		app.socket.sendMessage('ping');
+		this._pingTimeoutId = setTimeout(L.bind(this._pingTimeout, this), 2000);
+	},
+
+	reportPong: function(rendercount) {
+		if (!this.pingOn) {
+			return;
 		}
 
-		// query server ping time after invalidation messages
-		// pings will be paired with the pong messages
-		this._debugPINGQueue.push(+new Date());
-		app.socket.sendMessage('ping');
+		// TODO: move rendercount from pong to _overlayShowTileData
+		this.setOverlayMessage('rendercount', 'Rendered tiles: ' + rendercount);
+
+		var oldestPing = this._pingQueue.shift();
+		if (oldestPing) {
+			var now = +new Date();
+			var timeText = this._map._debug.updateTimeArray(this._pingTimes, now - oldestPing);
+			this.setOverlayMessage('ping', 'Server ping time: ' + timeText);
+		}
 	},
 
 });
