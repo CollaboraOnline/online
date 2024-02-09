@@ -107,14 +107,14 @@ L.DebugManager = L.Class.extend({
 			startsOn: true,
 			onAdd: function () {
 				self.overlayOn = true;
-				self.overlayData = {};
+				self._overlayData = {};
 			},
 			onRemove: function () {
 				self.overlayOn = false;
-				for (var i in self.overlayData) {
-					self.overlayData[i].remove();
+				for (var i in self._overlayData) {
+					self._overlayData[i].remove();
 				}
-				delete self.overlayData;
+				delete self._overlayData;
 			},
 		});
 
@@ -149,6 +149,8 @@ L.DebugManager = L.Class.extend({
 			},
 			onRemove: function () {
 				self.tileInvalidationsOn = false;
+				self.clearOverlayMessage('tileInvalidationMessages');
+				self.clearOverlayMessage('tileInvalidationTime');
 				clearTimeout(self._tileInvalidationTimeoutId);
 				self._map.removeLayer(self._tileInvalidationLayer);
 				self._painter.update();
@@ -170,7 +172,7 @@ L.DebugManager = L.Class.extend({
 			},
 			onRemove: function () {
 				self.tileDataOn = false;
-				self.setOverlayMessage('tileData','');
+				self.clearOverlayMessage('tileData');
 			},
 		});
 
@@ -240,6 +242,8 @@ L.DebugManager = L.Class.extend({
 			},
 			onRemove: function () {
 				self.pingOn = false;
+				self.clearOverlayMessage('rendercount');
+				self.clearOverlayMessage('ping');
 				clearTimeout(self._pingTimeoutId);
 			},
 		});
@@ -786,20 +790,21 @@ L.DebugManager = L.Class.extend({
 
 	setOverlayMessage: function(id, message) {
 		if (this.overlayOn) {
-			if (!this.overlayData[id]) {
+			if (!this._overlayData[id]) {
 				var topLeftNames = ['tileData'];
 				var position = topLeftNames.includes(id) ? 'topleft' : 'bottomleft';
-				this.overlayData[id] = L.control.attribution({prefix: '', position: position});
-				this.overlayData[id].addTo(this._map);
+				this._overlayData[id] = L.control.attribution({prefix: '', position: position});
+				this._overlayData[id].addTo(this._map);
 			}
-			this.overlayData[id].setPrefix(message);
+			this._overlayData[id].setPrefix(message);
 		}
 	},
 
 	clearOverlayMessage: function(id) {
 		if (this.overlayOn) {
-			if (this.overlayData[id]) {
-				this.overlayData[id].remove();
+			if (this._overlayData[id]) {
+				this._overlayData[id].remove();
+				delete this._overlayData[id];
 			}
 		}
 	},
