@@ -342,10 +342,9 @@ export class Header extends CanvasSectionObject {
 		const offset = 'A'.charCodeAt(0);
 		let dividend = columnNumber;
 		let columnName = '';
-		let modulo: number;
 
 		while (dividend > 0) {
-			modulo = (dividend - 1) % 26;
+			const modulo: number = (dividend - 1) % 26;
 			columnName = String.fromCharCode(offset + modulo) + columnName;
 			dividend = Math.floor((dividend - modulo) / 26);
 		}
