@@ -7,7 +7,7 @@
 [![Master: Pull request policy](https://img.shields.io/badge/Master-protected%2C%20PRs%20need%20approval-red?logoColor=lightred&logo=git "Collabora Team is preparing for the next release, therefore 'master' branch is protected now, PRs need 1 review before merging. Thanks for your support and contributions! :)")](https://github.com/CollaboraOnline/online/blob/master/CONTRIBUTING.md#contributing-to-source-code)
 
 
-[![irc](https://img.shields.io/badge/IRC-%23cool--dev%20on%20libera-orange.svg)](https://web.libera.chat/?channels=cool-dev)
+[![Matrix](https://img.shields.io/badge/Matrix-%23cool--dev-turquoise.svg)](https://matrix.to/#/#cool-dev:clicks.codes)
 [![Telegram](https://img.shields.io/badge/Telegram-Collabora%20Online-green.svg)](https://t.me/CollaboraOnline)
 [![Forum](https://img.shields.io/badge/Forum-Discourse-blue.svg)](https://forum.collaboraonline.com/)
 [![Website](https://img.shields.io/badge/Website-collaboraonline.github.io-blueviolet.svg)](https://collaboraonline.github.io/)
@@ -39,7 +39,7 @@ For many more details, build instructions, downloads and more please visit https
 
 ## Developer assistance
 Please ask your questions on any of the bridged Matrix/Telegram rooms
-* Matrix: [#cool-dev:libera.chat](https://app.element.io/#/room/#cool-dev:libera.chat)
+* Matrix: [#cool-dev:clicks.codes](https://matrix.to/#/#cool-dev:clicks.codes)
 * Telegram: [CollaboraOnline](https://t.me/CollaboraOnline)
 
 Join the conversation on our Discourse server at https://forum.collaboraonline.com/
