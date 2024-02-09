@@ -83,7 +83,8 @@ UnitBase::TestResult UnitBadDocLoad::testBadDocLoadFail()
         if (Util::startsWith(response, "error: cmd=notasync"))
         {
             // Continue searching for the interesting failure.
-            response = helpers::getResponseString(socket, "error:", testname);
+            response =
+                helpers::getResponseString(socket, "error:", testname, std::chrono::seconds(30));
         }
         StringVector tokens(StringVector::tokenize(response, ' '));
         LOK_ASSERT_EQUAL(static_cast<size_t>(3), tokens.size());
