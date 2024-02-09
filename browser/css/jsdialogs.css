@@ -1946,3 +1946,6 @@ kbd,
 #DocumentPropertiesDialog #customprops #properties > .ui-grid > div:nth-child(4) {
 	width: 45px;
 }
+#DocumentPropertiesDialog #customprops .jsdialog.ui-scrollwindow {
+	max-height: min-content;
+}
