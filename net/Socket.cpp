@@ -713,10 +713,7 @@ void SocketDisposition::execute()
             assert (isTransfer());
             // Ensure the thread is running before adding callback.
             _toPoll->startThread();
-            auto pollCopy = _toPoll;
-            auto socket = _socket;
-            auto socketMoveFn = std::move(_socketMove);
-            _toPoll->addCallback([pollCopy, socket, socketMoveFn]()
+            _toPoll->addCallback([pollCopy = _toPoll, socket = _socket, socketMoveFn = std::move(_socketMove)]()
                 {
                     pollCopy->insertNewSocket(socket);
                     socketMoveFn(socket);

@@ -5295,8 +5295,7 @@ private:
         if (docBroker)
         {
             // need to move into the DocumentBroker context before doing session lookup / creation etc.
-            std::string id = _id;
-            docBroker->setupTransfer(disposition, [docBroker, id, uriPublic,
+            docBroker->setupTransfer(disposition, [docBroker, id = _id, uriPublic,
                                      isReadOnly, requestDetails]
                                     (const std::shared_ptr<Socket> &moveSocket)
                 {
