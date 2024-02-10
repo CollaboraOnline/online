@@ -260,7 +260,7 @@ void RequestVettingStation::checkFileInfo(SocketPoll& poll, const std::string& u
         createDocBroker(docKey, url, uriPublic, isReadOnly, std::move(wopiInfo));
     };
 
-    _httpSession->setFinishedHandler(finishedCallback);
+    _httpSession->setFinishedHandler(std::move(finishedCallback));
 
     // Run the CheckFileInfo request on the WebServer Poll.
     _httpSession->asyncRequest(httpRequest, poll);
@@ -301,7 +301,7 @@ void RequestVettingStation::createDocBroker(const std::string& docKey, const std
     const auto ws = _ws;
     docBroker->setupTransfer(
         _socket,
-        [clientSession, uriPublic, wopiInfo, ws,
+        [clientSession, uriPublic, wopiInfo=std::move(wopiInfo), ws,
          docBroker](const std::shared_ptr<Socket>& moveSocket) mutable
          {
             try
