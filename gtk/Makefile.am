@@ -42,6 +42,7 @@ net_sources = ../net/FakeSocket.cpp \
 wsd_sources = ../wsd/ClientSession.cpp \
               ../wsd/DocumentBroker.cpp \
               ../wsd/COOLWSD.cpp \
+              ../wsd/ClientRequestDispatcher.cpp \
               ../wsd/RequestDetails.cpp \
               ../wsd/Storage.cpp \
               ../wsd/TileCache.cpp \
