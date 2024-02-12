@@ -909,6 +909,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _UNO('.uno:LanguageMenu'), type: 'menu', menu: [
 					{name: _('None (Do not check spelling)'), id: 'nonelanguage', uno: '.uno:LanguageStatus?Language:string=Default_LANGUAGE_NONE'}]},
 				{uno: '.uno:GoalSeekDialog'},
+				{uno: '.uno:Protect'},
 				{type: 'separator'},
 				{name: _UNO('.uno:RunMacro'), id: 'runmacro', uno: '.uno:RunMacro'}
 			]},
