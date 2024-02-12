@@ -1264,7 +1264,7 @@ export class CommentSection extends CanvasSectionObject {
 			id = obj[dataroot].id;
 			var _redlined = this.getComment(id);
 			if (_redlined) {
-				_redlined.sectionProperties.data.layoutStatus = 3;
+				_redlined.sectionProperties.data.layoutStatus = CommentLayoutStatus.DELETED;
 				_redlined.setLayoutClass();
 			}
 		} else if (action === 'Modify') {
@@ -1996,8 +1996,8 @@ export class CommentSection extends CanvasSectionObject {
 	public rejectAllTrackedCommentChanges(): void {
 		for (var i = 0; i < this.sectionProperties.commentList.length; i++) {
 			var comment = this.sectionProperties.commentList[i];
-			if (comment.sectionProperties.data.layoutStatus === 3) {
-				comment.sectionProperties.data.layoutStatus = 2;
+			if (comment.sectionProperties.data.layoutStatus === CommentLayoutStatus.DELETED) {
+				comment.sectionProperties.data.layoutStatus = CommentLayoutStatus.VISIBLE;
 				comment.sectionProperties.container.classList.remove('greyed');
 			}
 		}
