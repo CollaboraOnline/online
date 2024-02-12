@@ -154,6 +154,11 @@ L.Map = L.Evented.extend({
 		this._progressBar = L.progressOverlay(new L.point(150, 25));
 
 		this._debug = new L.DebugManager(this);
+		this.on('docloaded', function() {
+			if (this.options.debug && !this._debug.debugOn) {
+				this._debug.toggle();
+			}
+		});
 
 		// When all these conditions are met, fire statusindicator:initializationcomplete
 		this.initConditions = {

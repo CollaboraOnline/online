@@ -5496,9 +5496,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 
 		this._debug = map._debug;
-		if (map.options.debug && !this._debug.debugOn) {
-			this._debug.toggle();
-		}
 
 		this._searchResultsLayer = new L.LayerGroup();
 		map.addLayer(this._searchResultsLayer);
