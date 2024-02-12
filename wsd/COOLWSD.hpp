@@ -496,6 +496,9 @@ public:
     /// Autosave a given document (currently only called from Admin).
     static void autoSave(const std::string& docKey);
 
+    /// Autosave a given document and stop (currently only called from Admin)
+    static void autoSaveAndStop(const std::string& docKey, const std::string& reason);
+
     /// Sets the log level of current kits.
     static void setLogLevelsOfKits(const std::string& level);
 

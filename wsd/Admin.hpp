@@ -182,6 +182,9 @@ public:
 
     void routeTokenSanityCheck();
 
+    // send shutdown_received message
+    void sendShutdownReceivedMsg();
+
 private:
     /// Notify Forkit of changed settings.
     void notifyForkit();
@@ -247,6 +250,8 @@ private:
 
     // map to make sure only connection with unique monitor uri exists
     std::map<std::string, std::shared_ptr<MonitorSocketHandler>> _monitorSockets;
+
+    bool _shutdownReceivedMsgSent = false;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

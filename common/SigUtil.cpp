@@ -50,6 +50,7 @@ namespace
 enum class RunState : char
 {
     Run = 0, //< Normal up-and-running state.
+    DelayedShutDown, //< Delayed shutdown used with indirection_endpoint
     ShutDown, //< Request to shut down gracefully.
     Terminate //< Immediate termination.
 };
@@ -70,6 +71,7 @@ static bool UnattendedRun = false;
 #if !MOBILEAPP
 static int SignalLogFD = STDERR_FILENO; //< The FD where signalLogs are dumped.
 static char* VersionInfo = nullptr;
+static std::atomic<bool> IndirectionServerEnabled(false);
 static char FatalGdbString[256] = { '\0' };
 #endif
 
@@ -81,6 +83,8 @@ namespace SigUtil
 bool getShutdownRequestFlag() { return RunStateFlag >= RunState::ShutDown; }
 
 bool getTerminationFlag() { return RunStateFlag >= RunState::Terminate; }
+
+bool getDelayedShutdownRequestFlag() { return RunStateFlag >= RunState::DelayedShutDown; }
 
 void setTerminationFlag()
 {
@@ -96,6 +100,12 @@ void setTerminationFlag()
 void requestShutdown()
 {
     RunState oldState = RunState::Run;
+
+    if (getDelayedShutdownRequestFlag())
+    {
+        oldState = RunState::DelayedShutDown;
+    }
+
     if (RunStateFlag.compare_exchange_strong(oldState, RunState::ShutDown))
         SocketPoll::wakeupWorld();
 }
@@ -326,12 +336,20 @@ void requestShutdown()
         const auto onrre = errno; // Save.
 
         bool hardExit = false;
-        const char* domain;
-        RunState oldState = RunState::Run;
-        if ((signal == SIGINT || signal == SIGTERM) &&
-            RunStateFlag.compare_exchange_strong(oldState, RunState::ShutDown))
+        const char* domain = "";
+        RunState oldState = RunStateFlag;
+        if (signal == SIGINT || signal == SIGTERM)
         {
-            domain = " Shutdown signal received: ";
+            if (IndirectionServerEnabled && RunStateFlag == RunState::Run)
+            {
+                domain = " Delayed shutdown signal received: ";
+                RunStateFlag.compare_exchange_strong(oldState, RunState::DelayedShutDown);
+            }
+            else if (RunStateFlag == RunState::Run || RunStateFlag == RunState::DelayedShutDown)
+            {
+                domain = " Shutdown signal received: ";
+                RunStateFlag.compare_exchange_strong(oldState, RunState::ShutDown);
+            }
         }
         else
         {
@@ -479,6 +497,11 @@ void requestShutdown()
         if (VersionInfo)
             free (VersionInfo);
         VersionInfo = strdup(versionInfo.c_str());
+    }
+
+    void setIndirectionServerEnabled(const bool enabled)
+    {
+        IndirectionServerEnabled = enabled;
     }
 
     void setFatalSignals(const std::string &versionInfo)

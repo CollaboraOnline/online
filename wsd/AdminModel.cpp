@@ -1353,4 +1353,13 @@ void AdminModel::routeTokenSanityCheck()
     notify(oss.str());
 }
 
+void AdminModel::sendShutdownReceivedMsg()
+{
+    ASSERT_CORRECT_THREAD_OWNER(_owner);
+
+    std::ostringstream oss;
+    oss << "shutdown_received";
+    notify(oss.str());
+}
+
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

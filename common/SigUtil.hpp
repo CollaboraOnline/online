@@ -28,6 +28,8 @@ namespace SigUtil
     bool getTerminationFlag();
     /// Set the flag to stop pump loops forcefully and request shutting down.
     void setTerminationFlag();
+    /// Set the flag to send message to indirection server to migrate all the document in Admin.cpp
+    bool getDelayedShutdownRequestFlag();
 #if MOBILEAPP
     /// Reset the flags to stop pump loops forcefully.
     /// Only necessary in Mobile.
@@ -100,6 +102,9 @@ namespace SigUtil
 
     /// Update version info
     void setVersionInfo(const std::string &versionInfo);
+
+    // set IndirectionServerEnabled value
+    void setIndirectionServerEnabled(const bool enabled);
 
     /// Trap generally useful signals
     void setUserSignals();

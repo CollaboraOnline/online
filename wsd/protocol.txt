@@ -959,6 +959,10 @@ section). Others are just response messages to some client command.
     }
     <JSON string> contains the map wopiSrc<->routeToken
 
+[*] shutdown_received
+
+    sent when indirection server is enabled and COOLWSD receives SIGTERM signal
+
 InvalidAuthToken
 
     This is sent when invalid auth token is provided in 'auth' and 'verifyauth' command. See

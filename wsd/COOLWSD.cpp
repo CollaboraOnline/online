@@ -2365,6 +2365,9 @@ void COOLWSD::innerInitialize(Application& self)
 
     setenv("COOL_LOGLEVEL", LogLevel.c_str(), true);
 
+    bool isIndirectionServerEnabled = !getConfigValue<std::string>(conf, "indirection_endpoint.url", "").empty();
+    SigUtil::setIndirectionServerEnabled(isIndirectionServerEnabled);
+
 #if !ENABLE_DEBUG
     const std::string salLog = getConfigValue<std::string>(conf, "logging.lokit_sal_log", "-INFO-WARN");
     setenv("SAL_LOG", salLog.c_str(), 0);
@@ -3495,6 +3498,18 @@ void COOLWSD::autoSave(const std::string& docKey)
         std::shared_ptr<DocumentBroker> docBroker = docBrokerIt->second;
         docBroker->addCallback(
             [docBroker]() { docBroker->autoSave(/*force=*/true, /*dontSaveIfUnmodified=*/true); });
+    }
+}
+
+void COOLWSD::autoSaveAndStop(const std::string& docKey, const std::string& reason)
+{
+    std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
+    auto docBrokerIt = DocBrokers.find(docKey);
+    if (docBrokerIt != DocBrokers.end())
+    {
+        std::shared_ptr<DocumentBroker> docBroker = docBrokerIt->second;
+        docBroker->addCallback(
+            [docBroker, reason]() { docBroker->autoSaveAndStop(reason); });
     }
 }
 

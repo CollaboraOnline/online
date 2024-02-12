@@ -348,6 +348,7 @@ void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
         const std::string& dockey = tokens[2];
         const std::string& routeToken = tokens[3];
         const std::string& serverId = tokens[4];
+        const std::string& autoSaveAndStop = tokens[5];
         if (!dockey.empty() && !routeToken.empty() && !serverId.empty())
         {
             model.setMigratingInfo(dockey, routeToken, serverId);
@@ -356,7 +357,14 @@ void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
             oss << "\"afterSave\"" << ":false,";
             if (docStatus == "unsaved" && !model.isDocSaved(dockey))
             {
-                COOLWSD::autoSave(dockey);
+                if (autoSaveAndStop == "true")
+                {
+                    COOLWSD::autoSaveAndStop(dockey, "migrating");
+                }
+                else
+                {
+                    COOLWSD::autoSave(dockey);
+                }
                 oss << "\"saved\"" << ":false,";
             }
             else if ((docStatus == "readonly" && model.isDocReadOnly(dockey)) ||
@@ -682,6 +690,12 @@ void Admin::pollingThread()
             }
         }
 
+        if (SigUtil::getDelayedShutdownRequestFlag() && !_shutdownReceivedMsgSent)
+        {
+            _model.sendShutdownReceivedMsg();
+            _shutdownReceivedMsgSent = true;
+        }
+
         // Handle websockets & other work.
         const auto timeout = std::chrono::milliseconds(capAndRoundInterval(
             std::min(std::min(std::min(cpuWait, memWait), netWait), cleanupWait)));
@@ -903,6 +917,11 @@ void Admin::addLostKitsTerminated(unsigned lostKitsTerminated)
 void Admin::routeTokenSanityCheck()
 {
     addCallback([this] { _model.routeTokenSanityCheck(); });
+}
+
+void Admin::sendShutdownReceivedMsg()
+{
+    addCallback([this] { _model.sendShutdownReceivedMsg(); });
 }
 
 void Admin::notifyForkit()
