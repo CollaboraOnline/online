@@ -16,6 +16,8 @@
  * - Ctrl+Shift+Alt+D (Map.Keyboard.js _handleCtrlCommand)
  * - Help > About > D (Toolbar.js aboutDialogKeyHandler)
  * - Help > About > Triple Click (Toolbar.js aboutDialogClickHandler)
+ * - &debug=true URL parameter (Map.js initialize)
+ * - &randomUser=true URL parameter (global.js)
  */
 
 /* global app L _ */
@@ -515,6 +517,20 @@ L.DebugManager = L.Class.extend({
 		}
 
 		// Toggle sidebar
+		if (!this._map._docLoadedOnce) {
+			// When first opening the document, initializeSidebar is called
+			// 200ms after setup, which would overwrite our randomization.
+			// So in this case, wait for sidebar initialization and the
+			// response to complete so that we know the current state
+			setTimeout(this._randomizeSidebar.bind(this), 1000);
+		} else {
+			this._randomizeSidebar();
+		}
+
+		this._painter.update();
+	},
+
+	_randomizeSidebar: function() {
 		var sidebars = ['none','.uno:SidebarDeck.PropertyDeck','.uno:Navigator'];
 		if (this._docLayer.isImpress()) {
 			sidebars = sidebars.concat(['.uno:SlideChangeWindow','.uno:CustomAnimation','.uno:MasterSlidesPanel','.uno:ModifyPage']);
@@ -522,6 +538,7 @@ L.DebugManager = L.Class.extend({
 		var sidebar = sidebars[Math.floor(Math.random()*sidebars.length)];
 		window.app.console.log('Randomize Settings: Target sidebar: ' + sidebar);
 		if (this._map.sidebar && this._map.sidebar.isVisible()) {
+			// There is currently a sidebar
 			var currentSidebar = this._map.sidebar.getTargetDeck();
 			if (sidebar == 'none') {
 				window.app.console.log('Randomize Settings: Remove sidebar');
@@ -533,7 +550,9 @@ L.DebugManager = L.Class.extend({
 				window.app.console.log('Randomize Settings: Switch sidebar to ' + sidebar);
 				this._map.sendUnoCommand(sidebar);
 			}
-		} else { // eslint-disable-next-line no-lonely-if
+		} else {
+			// Sidebar currently hidden
+			// eslint-disable-next-line no-lonely-if
 			if (sidebar == 'none') {
 				window.app.console.log('Randomize Settings: Leave sidebar off');
 			} else {
@@ -541,8 +560,6 @@ L.DebugManager = L.Class.extend({
 				this._map.sendUnoCommand(sidebar);
 			}
 		}
-
-		this._painter.update();
 	},
 
 	_automatedUserAddTask: function(name, taskFn) {
