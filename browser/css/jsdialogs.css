@@ -1787,6 +1787,11 @@ input[type='number']:hover::-webkit-outer-spin-button {
 }
 #FormulaDialog #box3 {
 	display: grid;
+	min-width: 400px;
+}
+#FormulaDialog .ui-tabs-content.jsdialog {
+	grid-auto-columns: 250px;
+	margin-right: 0.2em;
 }
 
 div [id^='TemplateDialog'] {
