@@ -430,6 +430,14 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 				this._updateMaxBounds(true);
 			}
 			this._hiddenParts = command.hiddenparts || [];
+
+			let pparts = [];
+			pparts.length = command.parts;
+			this._protectedParts = pparts.fill(false, 0, command.parts);
+			if (command.protectedParts) {
+				command.protectedParts.forEach(i => this._protectedParts[i] = true);
+			}
+
 			this._handleRTLFlags(command);
 			this._documentInfo = textMsg;
 			var partNames = textMsg.match(/[^\r\n]+/g);
@@ -441,6 +449,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 				docType: this._docType,
 				partNames: this._partNames,
 				hiddenParts: this._hiddenParts,
+				protectedParts: this._protectedParts,
 				source: 'status'
 			});
 			this._resetPreFetching(true);

@@ -203,6 +203,8 @@ L.Control.Tabs = L.Control.extend({
 					dropZoneIndicator.id = 'drop-zone-' + i;
 					var id = 'spreadsheet-tab' + i;
 					var tab = L.DomUtil.create('button', 'spreadsheet-tab', ssTabScroll);
+					L.DomUtil.create('div', 'lock', tab);
+					let label = L.DomUtil.create('div', '', tab);
 					if (window.mode.isMobile() || window.mode.isTablet()) {
 						(new Hammer(tab, {recognizers: [[Hammer.Press]]}))
 							.on('press', function (j) {
@@ -235,7 +237,13 @@ L.Control.Tabs = L.Control.extend({
 						}(i).bind(this));
 					}
 
-					tab.textContent = e.partNames[i];
+					if (e.protectedParts[i]) {
+						L.DomUtil.addClass(tab, 'spreadsheet-tab-protected');
+					}
+					else {
+						L.DomUtil.removeClass(tab, 'spreadsheet-tab-protected');
+					}
+					label.textContent = e.partNames[i];
 					tab.id = id;
 
 					L.DomEvent
@@ -307,7 +315,7 @@ L.Control.Tabs = L.Control.extend({
 	},
 
 	_setPart: function (e) {
-		var part =  e.target.id.match(/\d+/g)[0];
+		var part =  e.currentTarget.id.match(/\d+/g)[0];
 		if (part !== null) {
 			this._setPartIndex(parseInt(part));
 		}
