@@ -462,9 +462,19 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			$(spinfield).attr('step', step);
 		}
 
-		if (data.enabled === 'false' || data.enabled === false) {
-			$(spinfield).attr('disabled', 'disabled');
+		if (data.enabled === false) {
+			div.setAttribute('disabled', '');
+			spinfield.setAttribute('disabled', '');
 		}
+
+		var enabledCallback = function (enable) {
+			if (enable) {
+				spinfield.removeAttribute('disabled');
+			} else {
+				spinfield.setAttribute('disabled', '');
+			}
+		};
+		JSDialog.OnStateChange(div, enabledCallback);
 
 		if (data.readOnly === true)
 			$(spinfield).attr('readOnly', 'true');
@@ -473,9 +483,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			$(spinfield).hide();
 
 		spinfield.addEventListener('change', function() {
-			var attrdisabled = $(spinfield).attr('disabled');
+			var isDisabled = div.hasAttribute('disabled');
 			var isValid = this.checkValidity();
-			if (attrdisabled !== 'disabled' && isValid) {
+			if (!isDisabled && isValid) {
 				if (customCallback)
 					customCallback('spinfield', 'change', div, this.value, builder);
 				else
@@ -619,31 +629,22 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			}
 		}
 
-		var enabledCallback = function (mutations) {
-			for (var i in mutations) {
-				if (mutations[i].attributeName === 'disabled') {
-					var enable = mutations[i].oldValue !== null;
-					// schedule children update, don't do it in mutation observer callback
-					setTimeout(function () {
-						for (var j in data.children) {
-							var childId = data.children[j].id;
-							var toolboxChild = toolbox.querySelector('#' + childId);
-							if (!toolboxChild)
-								continue;
-							if (enable) {
-								toolboxChild.removeAttribute('disabled');
-								toolboxChild.classList.remove('disabled');
-							} else {
-								toolboxChild.setAttribute('disabled', '');
-								toolboxChild.classList.add('disabled');
-							}
-						}
-					}, 0);
+		var enabledCallback = function (enable) {
+			for (var j in data.children) {
+				var childId = data.children[j].id;
+				var toolboxChild = toolbox.querySelector('#' + childId);
+				if (!toolboxChild)
+					continue;
+				if (enable) {
+					toolboxChild.removeAttribute('disabled');
+					toolboxChild.classList.remove('disabled');
+				} else {
+					toolboxChild.setAttribute('disabled', '');
+					toolboxChild.classList.add('disabled');
 				}
 			}
 		};
-		var enableObserver = new MutationObserver(enabledCallback);
-		enableObserver.observe(toolbox, { attributeFilter: ['disabled'], attributeOldValue: true });
+		JSDialog.OnStateChange(toolbox, enabledCallback);
 
 		var noLabels = builder.options.noLabelsForUnoButtons;
 		builder.options.noLabelsForUnoButtons = true;
@@ -1854,8 +1855,19 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (data.labelledBy)
 			listbox.setAttribute('aria-labelledby', data.labelledBy);
 
-		if (data.enabled === false || data.enabled === 'false')
-			$(listbox).attr('disabled', 'disabled');
+		if (data.enabled === false) {
+			container.setAttribute('disabled', '');
+			listbox.setAttribute('disabled', '');
+		}
+
+		var enabledCallback = function (enable) {
+			if (enable) {
+				listbox.removeAttribute('disabled');
+			} else {
+				listbox.setAttribute('disabled', '');
+			}
+		};
+		JSDialog.OnStateChange(container, enabledCallback);
 
 		$(listbox).change(() => {
 			if ($(listbox).val())
