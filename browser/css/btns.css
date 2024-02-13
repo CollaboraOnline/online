@@ -1,9 +1,12 @@
 /* For btns hover status see device-desktop.css */
 
 .jsdialog *[disabled] {
-	color: var(--color-text-lighter);
-	border: 1px solid var(--color-border-lighter);
+	color: var(--color-text-lighter) !important;
 	background: var(--color-background-lighter);
+}
+
+.jsdialog *[disabled]:not(label):not(.ui-frame-container):not(.checkbutton):not(.spinfieldcontainer):not(.ui-grid):not(.ui-content):not(.ui-listbox-container) {
+	border: 1px solid var(--color-border-lighter);
 }
 
 /*limit icon to button height*/
