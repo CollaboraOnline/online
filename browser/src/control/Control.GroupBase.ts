@@ -270,6 +270,37 @@ export abstract class GroupBase extends app.definitions.canvasSectionObject {
 		return this.isCalcRTL() ? this.size[0] - xcoord : xcoord;
 	}
 
+	drawGroupBoxes(startX: number, startY: number, hidden: boolean): void {
+		// draw head
+		this.context.beginPath();
+		this.context.fillStyle = this.backgroundColor;
+		this.context.fillRect(this.transformRectX(startX, this._groupHeadSize), startY, this._groupHeadSize, this._groupHeadSize);
+		this.context.strokeStyle = 'black';
+		this.context.lineWidth = 1.0;
+		this.context.strokeRect(this.transformRectX(startX + 0.5, this._groupHeadSize), startY + 0.5, this._groupHeadSize, this._groupHeadSize);
+
+		if (!hidden) {
+			// draw '-'
+			this.context.beginPath();
+			this.context.moveTo(startX + 0.5 + this._groupHeadSize * 0.25, startY + 0.5 + this._groupHeadSize / 2);
+			this.context.lineTo(startX + 0.5 + this._groupHeadSize * 0.75, startY + 0.5 + this._groupHeadSize / 2);
+			this.context.stroke();
+		}
+		else {
+			// draw '+'
+			this.context.beginPath();
+			this.context.moveTo(startX + 0.5 + this._groupHeadSize * 0.25, startY + 0.5 + this._groupHeadSize / 2);
+			this.context.lineTo(startX + 0.5 + this._groupHeadSize * 0.75, startY + 0.5 + this._groupHeadSize / 2);
+
+			this.context.stroke();
+
+			this.context.moveTo(startX + 0.5 + this._groupHeadSize / 2, startY + this._groupHeadSize * 0.25);
+			this.context.lineTo(startX + 0.5 + this._groupHeadSize / 2, startY + this._groupHeadSize * 0.75 + 1.0);
+
+			this.context.stroke();
+		}
+	}
+
 	/**
 	 * Checks if the given point is within the bounds of the rectangle defined by
 	 * startX, startY, endX, endY. If mirrorX is true then point is horizontally
