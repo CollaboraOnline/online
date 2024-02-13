@@ -1537,17 +1537,26 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		};
 
 		$(checkboxLabel).click(function () {
-			if (data.enabled) {
+			if (!div.hasAttribute('disabled')) {
 				var status = $(checkbox).is(':checked');
 				$(checkbox).prop('checked', !status);
 				toggleFunction.bind({checked: !status})();
 			}
 		});
 
-		if (data.enabled === 'false' || data.enabled === false) {
-			$(checkboxLabel).addClass('disabled');
-			$(checkbox).prop('disabled', true);
+		if (data.enabled === false) {
+			div.setAttribute('disabled', '');
+			checkbox.setAttribute('disabled', '');
 		}
+
+		var enabledCallback = function (enable) {
+			if (enable) {
+				checkbox.removeAttribute('disabled');
+			} else {
+				checkbox.setAttribute('disabled', '');
+			}
+		};
+		JSDialog.OnStateChange(div, enabledCallback);
 
 		checkbox.addEventListener('change', toggleFunction);
 
