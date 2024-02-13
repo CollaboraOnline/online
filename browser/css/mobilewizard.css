@@ -345,7 +345,7 @@ p.mobile-wizard.ui-combobox-text.selected {
 	justify-content: space-between;
 }
 
-.ui-header.mobile-wizard.disabled .ui-header-left * {
+.ui-explorable-entry.mobile-wizard.disabled .ui-header .ui-header-left * {
 	color: var(--color-text-lighter) !important;
 }
 
