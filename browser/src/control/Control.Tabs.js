@@ -220,6 +220,10 @@ L.Control.Tabs = L.Control.extend({
 							}(i).bind(this));
 					}
 
+					if (i === selectedPart) {
+						horizScrollPos = tab.offsetLeft;
+					}
+
 					if (!window.mode.isMobile()) {
 						L.DomEvent.on(tab, 'dblclick', function(j) {
 							return function() {
