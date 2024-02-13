@@ -5428,6 +5428,20 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		if (this.isCalc()) {
 			this._addDebugTool({
+				name: 'Insert rows and columns',
+				category: 'Automated User',
+				startsOn: false,
+				onAdd: function () {
+					self._debugAutomatedUserAddTask(this.name, L.bind(self._debugAutomatedUserInsertRowsColumns, self));
+				},
+				onRemove: function () {
+					self._debugAutomatedUserRemoveTask(this.name);
+				},
+			});
+		}
+
+		if (this.isCalc()) {
+			this._addDebugTool({
 				name: 'Delete rows and columns',
 				category: 'Automated User',
 				startsOn: false,
@@ -5627,6 +5641,27 @@ L.CanvasTileLayer = L.Layer.extend({
 				// Selecting column is necessary here
 				this._painter._sectionContainer.getSectionWithName('column header')._selectColumn(1,0);
 				this._map.sendUnoCommand('.uno:SetOptimalColumnWidthDirect {"aExtraHeight":{"type":"unsigned short","value":0}}');
+				waitTime = 2000;
+				break;
+		}
+		return waitTime;
+	},
+
+	_debugAutomatedUserInsertRowsColumns: function (phase) {
+		var waitTime = 0;
+		switch (phase) {
+			case 0:
+				window.app.console.log('Automated User: Insert row');
+				// Select just this row first, doesn't work if multiple rows are selected
+				this._painter._sectionContainer.getSectionWithName('row header')._selectRow(1,0);
+				this._painter._sectionContainer.getSectionWithName('row header').insertRowAbove(1);
+				waitTime = 2000;
+				break;
+			case 1:
+				window.app.console.log('Automated User: Delete column');
+				// Select just this column first, doesn't work if multiple columns are selected
+				this._painter._sectionContainer.getSectionWithName('column header')._selectColumn(1,0);
+				this._painter._sectionContainer.getSectionWithName('column header').insertColumnBefore(1);
 				waitTime = 2000;
 				break;
 		}
