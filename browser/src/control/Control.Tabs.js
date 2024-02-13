@@ -69,10 +69,15 @@ L.Control.Tabs = L.Control.extend({
 			'.uno:Remove': {
 				name: _UNO('.uno:Remove', 'spreadsheet', true),
 				callback: (this._deleteSheet).bind(this),
-				visible: areTabsMultiple
+				visible: function() {
+					return areTabsMultiple() && !this._isProtectedSheet(this._tabForContextMenu);
+				}.bind(this)
 			},
 			'.uno:Name': {name: _UNO('.uno:RenameTable', 'spreadsheet', true),
-				callback: (this._renameSheet).bind(this)
+				      callback: (this._renameSheet).bind(this),
+				      visible: function() {
+					      return !this._isProtectedSheet(this._tabForContextMenu);
+				      }.bind(this)
 			},
 			'.uno:Protect': {
 				name: _UNO('.uno:Protect', 'spreadsheet', true),
@@ -397,6 +402,11 @@ L.Control.Tabs = L.Control.extend({
 		if (!this._setPartIndex(this._tabForContextMenu)) {
 			this._map.sendUnoCommand('.uno:Protect');
 		}
+	},
+
+	_isProtectedSheet: function(idx) {
+		let tab = L.DomUtil.get('spreadsheet-tab' + idx);
+		return tab && L.DomUtil.hasClass(tab, 'spreadsheet-tab-protected');
 	},
 
 	_showSheet: function() {
