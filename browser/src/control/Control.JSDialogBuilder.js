@@ -607,14 +607,43 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_toolboxHandler: function(parentContainer, data, builder) {
-		var toolbox = L.DomUtil.create('div', builder.options.cssClass + ' toolbox', parentContainer);
+		var levelClass = (builder._currentDepth !== undefined) ? ' level-' + builder._currentDepth : '';
+		var toolbox = L.DomUtil.create('div',
+			builder.options.cssClass + ' toolbox' + levelClass, parentContainer);
 		toolbox.id = data.id;
 
-		if (data.enabled === false || data.enabled === 'false') {
+		if (data.enabled === false) {
+			toolbox.setAttribute('disabled', '');
 			for (var index in data.children) {
 				data.children[index].enabled = false;
 			}
 		}
+
+		var enabledCallback = function (mutations) {
+			for (var i in mutations) {
+				if (mutations[i].attributeName === 'disabled') {
+					var enable = mutations[i].oldValue !== null;
+					// schedule children update, don't do it in mutation observer callback
+					setTimeout(function () {
+						for (var j in data.children) {
+							var childId = data.children[j].id;
+							var toolboxChild = toolbox.querySelector('#' + childId);
+							if (!toolboxChild)
+								continue;
+							if (enable) {
+								toolboxChild.removeAttribute('disabled');
+								toolboxChild.classList.remove('disabled');
+							} else {
+								toolboxChild.setAttribute('disabled', '');
+								toolboxChild.classList.add('disabled');
+							}
+						}
+					}, 0);
+				}
+			}
+		};
+		var enableObserver = new MutationObserver(enabledCallback);
+		enableObserver.observe(toolbox, { attributeFilter: ['disabled'], attributeOldValue: true });
 
 		var noLabels = builder.options.noLabelsForUnoButtons;
 		builder.options.noLabelsForUnoButtons = true;
@@ -821,8 +850,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var sectionTitle = L.DomUtil.create('div', 'ui-header level-' + builder._currentDepth + ' ' + builder.options.cssClass + ' ui-widget', mainContainer);
 		$(sectionTitle).css('justify-content', 'space-between');
 
-		if (data.enabled === 'false' || data.enabled === false)
-			$(sectionTitle).addClass('disabled');
+		if (data.enabled === 'false' || data.enabled === false) {
+			mainContainer.setAttribute('disabled', '');
+			$(mainContainer).addClass('disabled');
+		}
 
 		var leftDiv = L.DomUtil.create('div', 'ui-header-left', sectionTitle);
 		var titleClass = '';
@@ -883,13 +914,15 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		{
 			$(contentDiv).hide();
 			if (builder.wizard) {
-				if (data.enabled !== 'false' && data.enabled !== false) {
-					$(sectionTitle).click(function(event, data) {
+				$(sectionTitle).click(function(event, data) {
+					if (!mainContainer.hasAttribute('disabled')) {
 						builder.wizard.goLevelDown(mainContainer, data);
 						if (contentNode && contentNode.onshow && !builder.wizard._inBuilding)
 							contentNode.onshow();
-					});
-				} else {
+					}
+				});
+
+				if (mainContainer.hasAttribute('disabled')) {
 					$(arrowSpan).hide();
 				}
 			} else {
@@ -3097,10 +3130,12 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		case 'enable':
 			control.disabled = false;
+			control.removeAttribute('disabled');
 			break;
 
 		case 'disable':
 			control.disabled = true;
+			control.setAttribute('disabled', '');
 			break;
 
 		case 'setText':
