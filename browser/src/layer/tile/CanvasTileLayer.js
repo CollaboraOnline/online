@@ -5083,7 +5083,15 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_debugInit: function() {
+
 		this._debugControls = {};
+		// Add header
+		this._debugControls['header'] = L.control.layers({}, {}, {collapsed: false}).addTo(this._map);
+		var b = document.createElement('b');
+		b.append(_('Debug Tools'));
+		this._debugControls['header']._container.prepend(b);
+		this._debugControls['header']._container.append(_('Ctrl+Shift+Alt+D to exit'));
+
 		this._debugLayers = [];
 		this._addDebugTools();
 		// initialize state that we build in debug mode whether visible or not
@@ -5152,7 +5160,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	_addDebugTool: function (tool) {
 		// Create control if it doesn't exist
 		if (!(tool.category in this._debugControls)) {
-			this._debugControls[tool.category] = L.control.layers({}, {}, {collapsed: false, sortLayers: true}).addTo(this._map);
+			this._debugControls[tool.category] = L.control.layers({}, {}, {collapsed: false}).addTo(this._map);
 			// Add a title
 			var b = document.createElement('b');
 			b.append(tool.category);
