@@ -88,6 +88,10 @@ JSDialog.mobileBorderSelector = function (parentContainer, data, builder) {
 	var mainContainer = L.DomUtil.create('div', builder.options.cssClass + ' ui-mobileborderselector', parentContainer);
 	mainContainer.id = data.id;
 
+	if (data.enabled === false) {
+		mainContainer.disabled = true;
+	}
+
 	var bordercontrollabel = L.DomUtil.create('label', builder.options.cssClass + ' ui-text', mainContainer);
 	bordercontrollabel.textContent = _('Cell borders');
 	bordercontrollabel.id = data.id + 'label';
