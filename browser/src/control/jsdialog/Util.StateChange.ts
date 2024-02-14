@@ -31,4 +31,18 @@ function onStateChange(element: Element, callback: StateChangeCallback) {
 	enableObserver.observe(element, { attributeFilter: ['disabled'], attributeOldValue: true });
 }
 
+function synchronizeDisabledState(source: Element, targets: Array<Element>) {
+	var enabledCallback = function (enable: boolean) {
+		for (const i in targets) {
+			if (enable) {
+				targets[i].removeAttribute('disabled');
+			} else {
+				targets[i].setAttribute('disabled', '');
+			}
+		}
+	};
+	onStateChange(source, enabledCallback);
+}
+
 JSDialog.OnStateChange = onStateChange;
+JSDialog.SynchronizeDisabledState = synchronizeDisabledState;

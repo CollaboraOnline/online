@@ -467,14 +467,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			spinfield.setAttribute('disabled', '');
 		}
 
-		var enabledCallback = function (enable) {
-			if (enable) {
-				spinfield.removeAttribute('disabled');
-			} else {
-				spinfield.setAttribute('disabled', '');
-			}
-		};
-		JSDialog.OnStateChange(div, enabledCallback);
+		JSDialog.SynchronizeDisabledState(div, [spinfield]);
 
 		if (data.readOnly === true)
 			$(spinfield).attr('readOnly', 'true');
@@ -1549,14 +1542,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			checkbox.setAttribute('disabled', '');
 		}
 
-		var enabledCallback = function (enable) {
-			if (enable) {
-				checkbox.removeAttribute('disabled');
-			} else {
-				checkbox.setAttribute('disabled', '');
-			}
-		};
-		JSDialog.OnStateChange(div, enabledCallback);
+		JSDialog.SynchronizeDisabledState(div, [checkbox]);
 
 		checkbox.addEventListener('change', toggleFunction);
 
@@ -1869,14 +1855,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			listbox.setAttribute('disabled', '');
 		}
 
-		var enabledCallback = function (enable) {
-			if (enable) {
-				listbox.removeAttribute('disabled');
-			} else {
-				listbox.setAttribute('disabled', '');
-			}
-		};
-		JSDialog.OnStateChange(container, enabledCallback);
+		JSDialog.SynchronizeDisabledState(container, [listbox]);
 
 		$(listbox).change(() => {
 			if ($(listbox).val())
