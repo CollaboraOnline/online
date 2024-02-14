@@ -13,7 +13,6 @@
 
 /* global L */
 
-declare var _: any;
 declare var app: any;
 declare var L: any;
 
@@ -33,9 +32,9 @@ class IdleHandler {
 		if (this.map['wopi'] && this.map['wopi'].DisableInactiveMessages) {
 			return '';
 		} else if ((<any>window).mode.isDesktop()) {
-			return _('Idle document - please click to reload and resume editing');
+			return window._('Idle document - please click to reload and resume editing');
 		} else {
-			return _('Idle document - please tap to reload and resume editing');
+			return window._('Idle document - please tap to reload and resume editing');
 		}
 	}
 

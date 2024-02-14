@@ -242,7 +242,7 @@ export abstract class CPath extends CEventsHandler {
 
 	clickTolerance(): number {
 		// used when doing hit detection for Canvas layers
-		return (this.stroke ? this.weight / 2 : 0) + ((window as typeof window & { touch: any; }).touch.hasAnyTouchscreen() ? 10 : 0);
+		return (this.stroke ? this.weight / 2 : 0) + (window.touch.hasAnyTouchscreen() ? 10 : 0);
 	}
 
 	setCursorType(cursorType: string) {

@@ -540,6 +540,13 @@ $(DIST_FOLDER)/admin-bundle.js: $(COOL_ADMIN_DST) \
 
 $(INTERMEDIATE_DIR)/admin-src.js: $(COOL_ADMIN_TS_JS) $(COOL_ADMIN_JS)
 	@mkdir -p $(dir $@)
+	@echo "Formatting admin JS with prettier..."
+	@$(NODE) node_modules/prettier/bin/prettier.cjs \
+            --config $(srcdir)/.prettierrc \
+            --ignore-path $(srcdir)/.prettierignore \
+            --ignore-path $(srcdir)/.beforeprettier \
+            --write \
+            $(srcdir)/admin/src
 	@echo "Checking for admin JS errors..."
 	@$(NODE) node_modules/eslint/bin/eslint.js --resolve-plugins-relative-to $(abs_builddir) --ignore-path $(srcdir)/.eslintignore --config $(srcdir)/.eslintrc --no-eslintrc $(srcdir)/admin/src
 	@awk 'FNR == 1 {print ""} 1' $(COOL_ADMIN_TS_JS) $(patsubst %.js,$(srcdir)/%.js,$(COOL_ADMIN_JS)) > $@
@@ -549,6 +556,13 @@ $(INTERMEDIATE_DIR)/cool-src.js: tscompile.done $(call prereq_cool) $(COOL_JS_DS
 	$(abs_top_srcdir)/scripts/unocommands.py --check $(abs_top_srcdir)
 	@printf "Checking for obsolete JS build intermediates in this makefile... "
 	@if ! test "z$(COOL_ASSERT_INTERSECT)" == "z"; then echo; echo "Error: please remove obsolete files:"; echo "$(COOL_ASSERT_INTERSECT)"; exit 1; else echo "clean"; fi
+	@echo "Formatting cool JS with prettier..."
+	@$(NODE) node_modules/prettier/bin/prettier.cjs \
+            --config $(srcdir)/.prettierrc \
+            --ignore-path $(srcdir)/.prettierignore \
+            --ignore-path $(srcdir)/.beforeprettier \
+            --write \
+            $(srcdir)/src $(srcdir)/js
 	@echo "Checking for cool JS errors..."
 	@$(NODE) node_modules/eslint/bin/eslint.js $(srcdir)/src --resolve-plugins-relative-to $(abs_builddir) \
 		$(srcdir)/js --ignore-path $(srcdir)/.eslintignore --no-eslintrc --config $(srcdir)/.eslintrc
@@ -565,7 +579,11 @@ $(DIST_FOLDER)/bundle.js: $(INTERMEDIATE_DIR)/cool-src.js $(call prereq_all)
 	@mkdir -p $(dir $@)
 	$(call bundle_all)
 
-$(DIST_FOLDER)/global.js: $(srcdir)/js/global.js
+$(INTERMEDIATE_DIR)/global.js: $(srcdir)/src/global.ts
+	@mkdir -p $(dir $@)
+	$(builddir)/node_modules/.bin/tsc $(srcdir)/src/global.ts --outfile $(INTERMEDIATE_DIR)/global.js
+
+$(DIST_FOLDER)/global.js: $(INTERMEDIATE_DIR)/global.js
 	@mkdir -p $(dir $@)
 	$(call global_file)
 
