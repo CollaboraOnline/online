@@ -431,11 +431,13 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			}
 			this._hiddenParts = command.hiddenparts || [];
 
-			let pparts = [];
+			var pparts = [];
 			pparts.length = command.parts;
 			this._protectedParts = pparts.fill(false, 0, command.parts);
 			if (command.protectedParts) {
-				command.protectedParts.forEach(i => this._protectedParts[i] = true);
+				command.protectedParts.forEach(function(i) {
+					return this._protectedParts[i] = true;
+				}.bind(this));
 			}
 
 			this._handleRTLFlags(command);
