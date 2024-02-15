@@ -80,7 +80,19 @@ window.app = {
 
 	global.setLogging(global.coolLogging != '');
 
-	global.coolParams = new URLSearchParams(global.location.search);
+	var coolParams = {
+		p: new URLSearchParams(global.location.search),
+	};
+	/* We need to return an empty string instead of `null` */
+	coolParams.get = function(name) {
+		var value = this.p.get(name);
+		return value === null ? '' : value;
+	}.bind(coolParams);
+	coolParams.set = function(name) {
+		this.p.set(name);
+	}.bind(coolParams);
+	global.coolParams = coolParams;
+
 	var ua = navigator.userAgent.toLowerCase(),
 	    uv = navigator.vendor.toLowerCase(),
 	    doc = document.documentElement,
