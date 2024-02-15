@@ -709,7 +709,9 @@ install-data-hook:
 		--exclude='multidocs.html' \
 		--exclude='tsconfig.tsbuildinfo' \
 		dist $(DESTDIR)$(pkgdatadir)/browser/;
-	find . -type f ! -iname "*.png" -exec brotli --force {} \;
+if ENABLE_WASM
+	find $(DESTDIR)$(pkgdatadir)/browser/dist -type f ! -iname "*.png" -exec brotli --force {} \;
+endif
 endif
 
 libs:
