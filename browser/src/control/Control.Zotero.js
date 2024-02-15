@@ -644,11 +644,13 @@ L.Control.Zotero = L.Control.extend({
 
 			var creatorArray = [];
 			for (var creator = 0; items[iterator].data.creators && creator < items[iterator].data.creators.length; ++creator) {
-				creatorArray.push(items[iterator].data.creators[creator].firstName + ' ' + items[iterator].data.creators[creator].lastName);
+				creatorArray.push(items[iterator].data.creators[creator].name ?
+					items[iterator].data.creators[creator].name:
+					items[iterator].data.creators[creator].firstName + ' ' + items[iterator].data.creators[creator].lastName);
 			}
 			var creatorString = creatorArray.join(', ');
 			this.createEntry(index++,
-				[items[iterator].data.title, creatorString, items[iterator].data.date],
+				[items[iterator].csljson.title, creatorString, items[iterator].data.date ? items[iterator].data.date : items[iterator].data.dateDecided],
 				{type: 'item', itemType: items[iterator].data.itemType, item: items[iterator]},
 				true
 			);
