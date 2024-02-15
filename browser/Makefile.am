@@ -169,7 +169,6 @@ NODE_MODULES_JS =\
 	node_modules/fzstd/umd/index.js
 
 COOL_LIBS_JS =\
-	ResizeObserverPolyfill.js \
 	Autolinker.js \
 	select2.js \
 	sanitize-url.js
