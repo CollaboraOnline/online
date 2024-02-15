@@ -209,7 +209,7 @@ L.Control.Tabs = L.Control.extend({
 					var id = 'spreadsheet-tab' + i;
 					var tab = L.DomUtil.create('button', 'spreadsheet-tab', ssTabScroll);
 					L.DomUtil.create('div', 'lock', tab);
-					let label = L.DomUtil.create('div', '', tab);
+					var label = L.DomUtil.create('div', '', tab);
 					if (window.mode.isMobile() || window.mode.isTablet()) {
 						(new Hammer(tab, {recognizers: [[Hammer.Press]]}))
 							.on('press', function (j) {
@@ -405,7 +405,7 @@ L.Control.Tabs = L.Control.extend({
 	},
 
 	_isProtectedSheet: function(idx) {
-		let tab = L.DomUtil.get('spreadsheet-tab' + idx);
+		var tab = L.DomUtil.get('spreadsheet-tab' + idx);
 		return tab && L.DomUtil.hasClass(tab, 'spreadsheet-tab-protected');
 	},
 

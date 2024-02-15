@@ -1763,7 +1763,7 @@ app.definitions.Socket = L.Class.extend({
 				});
 			}
 			else if (tokens[i].startsWith('protectedparts=')) {
-				let protectedParts = tokens[i].substring(15).split(',');
+				var protectedParts = tokens[i].substring(15).split(',');
 				command.protectedParts = [];
 				protectedParts.forEach(function (item) {
 					command.protectedParts.push(parseInt(item));
