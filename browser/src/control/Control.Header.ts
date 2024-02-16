@@ -56,6 +56,11 @@ export class Header extends CanvasSectionObject {
 	constructor (options?: HeaderInitProperties) {
 		super(options);
 		this.options =  { cursor: options.cursor };
+
+		this.callbacks.onContextMenu = (evt: MouseEvent) => {
+			this._bindContextMenu();
+			$('#document-canvas').contextMenu({x: evt.clientX, y: evt.clientY});
+		};
 	}
 
 	_initHeaderEntryStyles (className: string): void {

@@ -576,6 +576,18 @@ class CanvasSectionContainer {
 		this.canvas.ontouchend = this.onTouchEnd.bind(this);
 		this.canvas.ontouchcancel = this.onTouchCancel.bind(this);
 
+		if (typeof Hammer !== 'undefined') {
+			// Mocha does not provide window but hammerjs requires it. As a workaround let's check if hammer exists before trying to create an instance
+			(new Hammer(this.canvas, {recognizers: [[Hammer.Press]]}))
+				.on('press', (window as any /* TODO: remove cast after gh#8221 */).touch.touchOnly((e: any) => {
+					const syntheticEvent = new MouseEvent('contextmenu', {
+						clientX: e.srcEvent.clientX,
+						clientY: e.srcEvent.clientY
+					});
+					this.canvas.dispatchEvent(syntheticEvent);
+				}));
+		}
+
 		// Some explanation first.
 		// When the user uses the mouse wheel for scrolling, different browsers use different technics for calculating the deltaY and deltaX values.
 		// For example FireFox uses "deltaMode=1" which corresponds to "lines". So it creates the event with the number of lines to scroll.
@@ -1239,14 +1251,14 @@ class CanvasSectionContainer {
 		}
 	}
 
-	private propagateOnContextMenu(section: CanvasSectionObject) {
+	private propagateOnContextMenu(section: CanvasSectionObject, e: MouseEvent) {
 		this.targetSection = section.name;
 
 		var propagate: boolean = true;
 		for (var j: number = 0; j < this.windowSectionList.length; j++) {
 			var windowSection = this.windowSectionList[j];
 			if (windowSection.interactable)
-				windowSection.onContextMenu();
+				windowSection.onContextMenu(e);
 
 			if (this.lowestPropagatedBoundSection === windowSection.name)
 				propagate = false; // Window sections can not stop the propagation of the event for other window sections.
@@ -1255,7 +1267,7 @@ class CanvasSectionContainer {
 		if (propagate) {
 			for (var i: number = section.boundsList.length - 1; i > -1; i--) {
 				if (section.boundsList[i].interactable)
-					section.boundsList[i].onContextMenu();
+					section.boundsList[i].onContextMenu(e);
 
 				if (section.boundsList[i].name === this.lowestPropagatedBoundSection)
 					break; // Stop propagation.
@@ -1518,7 +1530,7 @@ class CanvasSectionContainer {
 		var mousePosition = this.convertPositionToCanvasLocale(e);
 		var section: CanvasSectionObject = this.findSectionContainingPoint(mousePosition);
 		if (section) {
-			this.propagateOnContextMenu(section);
+			this.propagateOnContextMenu(section, e);
 		}
 		if (this.potentialLongPress) {
 			// LongPress triggers context menu.
