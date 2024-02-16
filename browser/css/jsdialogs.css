@@ -1057,6 +1057,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 
 #ZoteroDialog .ui-treeview-body {
 	max-height: 500px;
+	max-width: 100%;
 }
 
 .autofilter-container-submenu > .autofilter-container {
