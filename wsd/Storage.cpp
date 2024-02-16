@@ -1275,7 +1275,7 @@ void WopiStorage::uploadLocalFileToStorageAsync(const Authorization& auth, LockC
                 httpHeader.set("X-LOOL-WOPI-ExtendedData", attribs.getExtendedData());
             }
 
-            if (!attribs.isForced())
+            if (!attribs.isForced() && isLastModifiedTimeSafe())
             {
                 // Request WOPI host to not overwrite if timestamps mismatch
                 httpHeader.set("X-COOL-WOPI-Timestamp", getLastModifiedTime());
@@ -1520,6 +1520,10 @@ WopiStorage::handleUploadToStorageResponse(const WopiUploadDetails& details,
                     << "]: " << details.httpResponseCode << ' ' << details.httpResponseReason
                     << ": " << responseString);
             result.setResult(StorageBase::UploadResult::Result::FAILED);
+
+            // If we cannot be sure whether we up-loaded successfully eg. we got
+            // a timeout then be tolerant of subsequent timestamp mismatch problems
+            setLastModifiedTimeUnSafe();
         }
     }
     catch (const Poco::Exception& pexc)
