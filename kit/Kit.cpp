@@ -1211,7 +1211,6 @@ public:
     }
 
 private:
-
     /// Helper method to broadcast callback and its payload to all clients
     void broadcastCallbackToClients(const int type, const std::string& payload)
     {
@@ -2416,7 +2415,8 @@ public:
         {
             LOG_ERR("non-async dialog triggered");
 #if !MOBILEAPP
-            if (singletonDocument && lastWarned < reentries)
+            if (singletonDocument && lastWarned < reentries &&
+                singletonDocument->processInputEnabled()) // ie. not loading/saving
                 singletonDocument->notifyAll("error: cmd=notasync kind=failure");
 #endif
             lastWarned = reentries;
