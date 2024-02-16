@@ -128,8 +128,14 @@ public:
         /// Set the last modified time as reported to the WOPI host.
         void setLastModifiedTime(const std::string& modifiedTime) { _modifiedTime = modifiedTime; }
 
-        /// Get the last modified time as reported by the WOPI host.
+        /// Get the last modified time as reported by the WOPI host, empty if unsafe to rely on
         const std::string& getLastModifiedTime() const { return _modifiedTime; }
+
+        /// Sometimes an up-load fails, leaving our timestamp in an unknown state
+        bool isLastModifiedTimeSafe() const { return !_modifiedTime.empty(); }
+
+        /// Set last modified time as unsafe
+        void setLastModifiedTimeUnSafe() { _modifiedTime.clear(); }
 
     private:
         std::string _filename;
@@ -367,10 +373,9 @@ public:
     const FileInfo& getFileInfo() const { return _fileInfo; }
 
     const std::string& getLastModifiedTime() const { return _fileInfo.getLastModifiedTime(); }
-    void setLastModifiedTime(const std::string& modifiedTime)
-    {
-        _fileInfo.setLastModifiedTime(modifiedTime);
-    }
+    void setLastModifiedTime(const std::string& modifiedTime) { _fileInfo.setLastModifiedTime(modifiedTime); }
+    bool isLastModifiedTimeSafe() const { return _fileInfo.isLastModifiedTimeSafe(); }
+    void setLastModifiedTimeUnSafe() { _fileInfo.setLastModifiedTimeUnSafe(); }
 
     std::string getFileExtension() const { return Poco::Path(_fileInfo.getFilename()).getExtension(); }
 
