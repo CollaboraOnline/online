@@ -15,7 +15,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', fu
 		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
-	function setDummyClipboard(type, content, image = false) {
+	function setDummyClipboard(type, content, image = false, fail = false) {
 		cy.window().then(win => {
 			var app = win['0'].app;
 			var metaURL = encodeURIComponent(app.map._clip.getMetaURL());
@@ -42,8 +42,14 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', fu
 			clipboard._dummyClipboard = {
 				read: function() {
 					return {
-						then: function(resolve/*, reject*/) {
-							resolve(clipboardItems);
+						then: function(resolve, reject) {
+							if (fail) {
+								reject({
+									message: 'rejected',
+								});
+							} else {
+								resolve(clipboardItems);
+							}
 						},
 					};
 				},
@@ -120,7 +126,28 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', fu
 		cy.cGet('#home-paste-button').click();
 		cy.cGet('#w2ui-overlay-pastemenu tr[title="Ctrl + V"]').click();
 
-		// Then make the paste happened:
+		// Then make sure the paste happened:
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g').should('exist');
+	});
+
+	it('HTML paste, internal case failing', function() {
+		// Given a document with an A1 cell copied to the clipboard:
+		cy.cGet('#map').focus();
+		calcHelper.clickOnFirstCell();
+		helper.typeIntoInputField('input#addressInput', 'A1');
+		cy.window().then(win => {
+			var app = win['0'].app;
+			app.socket.sendMessage('uno .uno:Copy');
+		});
+		var html = '<div id="meta-origin" data-coolorigin="%META_URL%">ignored</div>';
+		setDummyClipboard('text/html', html, /*image=*/false, /*fail=*/true);
+
+		// When pasting the clipboard to B1, which fails:
+		helper.typeIntoInputField('input#addressInput', 'B1');
+		cy.cGet('#home-paste-button').click();
+		cy.cGet('#w2ui-overlay-pastemenu tr[title="Ctrl + V"]').click();
+
+		// Then make sure a warning popup is shown:
+		cy.cGet('#copy_paste_warning-box').should('exist');
 	});
 });

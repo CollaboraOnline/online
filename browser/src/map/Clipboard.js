@@ -637,6 +637,11 @@ L.Clipboard = L.Class.extend({
 			return;
 		}
 
+		this._afterCopyCutPaste(operation);
+	},
+
+	_afterCopyCutPaste: function(operation) {
+		var serial = this._clipboardSerial;
 		this._unoCommandForCopyCutPaste = null;
 
 		// try a hidden div
@@ -762,18 +767,25 @@ L.Clipboard = L.Class.extend({
 			return false;
 		}
 
-		if (isSpecial) {
-			this._navigatorClipboardPasteSpecial = true;
-		}
 		var that = this;
 		var clipboard = navigator.clipboard;
 		if (L.Browser.cypressTest) {
 			clipboard = this._dummyClipboard;
 		}
 		clipboard.read().then(function(clipboardContents) {
+			if (isSpecial) {
+				that._navigatorClipboardPasteSpecial = true;
+			}
 			that._navigatorClipboardReadCallback(clipboardContents);
 		}, function(error) {
 			window.app.console.log('navigator.clipboard.read() failed: ' + error.message);
+			if (isSpecial) {
+				// Fallback to the old code, as in filterExecCopyPaste().
+				that._openPasteSpecialPopup();
+			} else {
+				// Fallback to the old code, as in _execCopyCutPaste().
+				that._afterCopyCutPaste('paste');
+			}
 		});
 		return true;
 	},
