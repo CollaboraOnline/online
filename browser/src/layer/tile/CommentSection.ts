@@ -708,14 +708,18 @@ export class Comment extends CanvasSectionObject {
 		}
 	}
 
+	private getCommentWidth() {
+		// note: getComputedStyle can be an exceptional bottle-neck with many comments
+		return parseFloat(getComputedStyle(this.sectionProperties.container).width) * app.dpiScale;
+	}
+
 	public positionCalcComment(): void {
 		if (!(<any>window).mode.isMobile()) {
 			var ratio: number = (app.tile.size.pixels[0] / app.tile.size.twips[0]);
 			var cellPos = this.map._docLayer._cellRangeToTwipRect(this.sectionProperties.data.cellRange).toRectangle();
 			var originalSize = [Math.round((cellPos[2]) * ratio), Math.round((cellPos[3]) * ratio)];
 
-			const commentWidth = parseFloat(getComputedStyle(this.sectionProperties.container).width) * app.dpiScale;
-			const startX = this.isCalcRTL() ? this.myTopLeft[0] - commentWidth : this.myTopLeft[0] + originalSize[0] - 3;
+			const startX = this.isCalcRTL() ? this.myTopLeft[0] - this.getCommentWidth() : this.myTopLeft[0] + originalSize[0] - 3;
 
 			var pos: Array<number> = [Math.round(startX / app.dpiScale), Math.round(this.myTopLeft[1] / app.dpiScale)];
 			this.sectionProperties.container.style.transform = 'translate3d(' + pos[0] + 'px, ' + pos[1] + 'px, 0px)';
