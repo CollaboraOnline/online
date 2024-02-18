@@ -59,6 +59,20 @@ L.Control.DocumentNameInput = L.Control.extend({
 		this.map._onGotFocus();
 	},
 
+	disableDocumentNameInput : function() {
+		$('#document-name-input').prop('disabled', true);
+		$('#document-name-input').removeClass('editable');
+		$('#document-name-input').off('keypress', this.onDocumentNameKeyPress);
+	},
+
+	enableDocumentNameInput : function() {
+		$('#document-name-input').prop('disabled', false);
+		$('#document-name-input').addClass('editable');
+		$('#document-name-input').off('keypress', this.onDocumentNameKeyPress).on('keypress', this.onDocumentNameKeyPress.bind(this));
+		$('#document-name-input').off('focus', this.onDocumentNameFocus).on('focus', this.onDocumentNameFocus.bind(this));
+		$('#document-name-input').off('blur', this.documentNameCancel).on('blur', this.documentNameCancel.bind(this));
+	},
+
 	onDocumentNameKeyPress: function(e) {
 		if (e.keyCode === 13) { // Enter key
 			var value = $('#document-name-input').val();
@@ -119,32 +133,31 @@ L.Control.DocumentNameInput = L.Control.extend({
 							  // TODO: Yes, it would be better to see it change as you rotate the device or invoke Split View.
 							 );
 		}
+
+		if (this.map.isReadOnlyMode()) {
+			this.disableDocumentNameInput();
+		}
 	},
 
 	onWopiProps: function(e) {
 		if (e.BaseFileName !== null)
 			// set the document name into the name field
 			$('#document-name-input').val(e.BreadcrumbDocName !== undefined ? e.BreadcrumbDocName : e.BaseFileName);
-		if (e.UserCanNotWriteRelative === false) {
+		if (!e.UserCanNotWriteRelative && !this.map.isReadOnlyMode()) {
 			// Save As allowed
-			$('#document-name-input').prop('disabled', false);
-			$('#document-name-input').addClass('editable');
-			$('#document-name-input').off('keypress', this.onDocumentNameKeyPress).on('keypress', this.onDocumentNameKeyPress.bind(this));
-			$('#document-name-input').off('focus', this.onDocumentNameFocus).on('focus', this.onDocumentNameFocus.bind(this));
-			$('#document-name-input').off('blur', this.documentNameCancel).on('blur', this.documentNameCancel.bind(this));
+			this.enableDocumentNameInput();
 		} else {
-			$('#document-name-input').prop('disabled', true);
-			$('#document-name-input').removeClass('editable');
-			$('#document-name-input').off('keypress', this.onDocumentNameKeyPress);
+			this.disableDocumentNameInput();
 		}
 	},
 
 	showLoadingAnimation : function() {
-		$('#document-name-input').prop('disabled', true);
+		this.disableDocumentNameInput();
 		$('#document-name-input-loading-bar').css('display', 'block');	
 	},
 
 	hideLoadingAnimation : function() {
+		this.enableDocumentNameInput();
 		$('#document-name-input-loading-bar').css('display', 'none');
 	},
 
