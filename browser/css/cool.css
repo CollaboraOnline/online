@@ -1025,6 +1025,11 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	box-sizing: border-box;
 }
 
+.functiontooltip {
+	white-space: nowrap;
+	max-width: fit-content !important;
+}
+
 .leaflet-canvas-container .cell-cursor-data {
 	border-style: solid; /* required for ie11 */
 	display: none; /* prevent cypress failure */

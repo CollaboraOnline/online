@@ -1755,6 +1755,9 @@ L.CanvasTileLayer = L.Layer.extend({
 		else if (textMsg.startsWith('calcfunctionlist:')) {
 			this._onCalcFunctionListMsg(textMsg.substring('calcfunctionlist:'.length + 1));
 		}
+		else if (textMsg.startsWith('tooltip:')) {
+			this._onCalcFunctionUsageMsg(textMsg.substring('tooltip:'.length + 1));
+		}
 		else if (textMsg.startsWith('tabstoplistupdate:')) {
 			this._onTabStopListUpdate(textMsg);
 		}
@@ -1945,27 +1948,45 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._map.fire('cellformula', {formula: formula});
 	},
 
+	_onCalcFunctionUsageMsg: function (textMsg) {
+		var pos = this._lastVisibleCursorRef._northEast;
+		this._map.uiManager.showDocumentTooltip(textMsg, $('.leaflet-layer'), pos);
+	},
+
 	_onCalcFunctionListMsg: function (textMsg) {
-		var funcData = JSON.parse(textMsg);
-		this._closeMobileWizard();
+		if (textMsg.startsWith('hidetip')) {
+			this._map.uiManager.hideDocumentTooltip($('.leaflet-layer'));
+		}
+		else {
+			var funcData = JSON.parse(textMsg);
 
-		var data = {
-			id: 'funclist',
-			type: '',
-			text: _('Functions'),
-			enabled: true,
-			children: []
-		};
+			if (window.mode.isMobile()) {
+				this._closeMobileWizard();
 
-		if (funcData.categories)
-			this._onCalcFunctionListWithCategories(funcData, data);
-		else
-			this._onCalcFunctionList(funcData, data);
+				var data = {
+					id: 'funclist',
+					type: '',
+					text: _('Functions'),
+					enabled: true,
+					children: []
+				};
 
-		if (funcData.wholeList)
-			this._map._functionWizardData = data;
+				if (funcData.categories)
+					this._onCalcFunctionListWithCategories(funcData, data);
+				else
+					this._onCalcFunctionList(funcData, data);
 
-		this._openMobileWizard(data);
+				if (funcData.wholeList)
+					this._map._functionWizardData = data;
+
+				this._openMobileWizard(data);
+			}
+			else {
+				var pos = this._lastVisibleCursorRef._northEast;
+				var tooltipinfo = this._getFunctionList(textMsg);
+				this._map.uiManager.showDocumentTooltip(tooltipinfo, $('.leaflet-layer'), pos);
+			}
+		}
 	},
 
 	_getCalcFunctionListEntry: function(name, category, index, signature, description) {
@@ -2518,6 +2539,39 @@ L.CanvasTileLayer = L.Layer.extend({
 		var target = document.getElementById(targetId);
 		target.style.cursor = 'pointer';
 		target.onclick = target.ontouchend = func;
+	},
+
+	_getFunctionList: function(textMsg) {
+		var maxSuggestion = 3;
+		var functionNameList = [];
+		var resultText = '';
+		var currentFuncDescription = '';
+
+		var suggestionArray = JSON.parse(textMsg);
+		if (suggestionArray.length < maxSuggestion) { maxSuggestion = suggestionArray.length; }
+
+		for (var i = 0; i < maxSuggestion; i++) {
+			if (i == 0)
+				currentFuncDescription = suggestionArray[i].description;
+
+			var signature = suggestionArray[i].signature;
+			functionNameList.push(signature.substring(0,signature.indexOf('(')));
+		}
+
+		for (var i = 0; i < maxSuggestion; i++) {
+			if (i == 0)
+				resultText = resultText + '[' + functionNameList[i] + ']';
+			else
+				resultText = resultText + ', ' + functionNameList[i];
+		}
+
+		var remainingFuncCount = suggestionArray.length - maxSuggestion;
+		if (remainingFuncCount > 0)
+			resultText = resultText + ' ' + _('and %COUNT more').replace('%COUNT', remainingFuncCount);
+
+		resultText = resultText + ' : ' + currentFuncDescription;
+
+		return resultText;
 	},
 
 	_showURLPopUp: function(position, url) {
