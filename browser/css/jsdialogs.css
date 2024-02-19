@@ -419,7 +419,7 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	min-height: 100px;
 	min-width: 100px;
 	max-height: 150px;
-	width: max-content;
+	width: inherit;
 }
 
 .ui-treeview.empty .ui-treeview-body {
