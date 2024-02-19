@@ -1160,10 +1160,6 @@ app.definitions.Socket = L.Class.extend({
 			// Switching modes.
 			window.location.reload(false);
 		}
-		else if (textMsg.startsWith('tooltip: ')) {
-			var tooltipInfo = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
-			this._map.uiManager.showDocumentTooltip(tooltipInfo, $('.leaflet-layer'));
-		}
 		else if (!textMsg.startsWith('tile:') && !textMsg.startsWith('delta:') &&
 			 !textMsg.startsWith('renderfont:') && !textMsg.startsWith('windowpaint:')) {
 
