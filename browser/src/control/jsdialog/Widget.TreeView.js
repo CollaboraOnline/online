@@ -174,6 +174,9 @@ function _treelistboxEntry(parentContainer, treeViewData, entry, builder, isTree
 	var disabled = treeViewData.enabled === 'false' || treeViewData.enabled === false;
 
 	var li = L.DomUtil.create('li', builder.options.cssClass, parentContainer);
+	if (_isSeparator(entry)) {
+		L.DomUtil.addClass(li,'context-menu-separator');
+	}
 
 	if (!disabled && entry.state == null) {
 		li.draggable = treeType === 'navigator' ? false: true;
@@ -217,7 +220,7 @@ function _treelistboxEntry(parentContainer, treeViewData, entry, builder, isTree
 			var iconName = builder._createIconURL(iconId, true);
 			L.LOUtil.setImage(icon, iconName, builder.map);
 			L.DomUtil.addClass(span, 'ui-listview-expandable-with-icon');
-		} else if (entry.columns[i].text) {
+		} else if (entry.columns[i].text && !_isSeparator(entry.columns[i])) {
 			var innerText = L.DomUtil.create('span', builder.options.cssClass + ' ui-treeview-cell-text', text);
 			innerText.innerText = entry.columns[i].text || entry.text;
 		}
@@ -322,6 +325,9 @@ function _getLevel(element) {
 	return element.getAttribute('aria-level');
 }
 
+function _isSeparator(element) {
+	return element.text.toLowerCase() === 'separator';
+}
 function _expandTreeGrid(element) {
 	var wasExpanded = element.getAttribute('aria-expanded') === 'true';
 	var level = _getLevel(element);
