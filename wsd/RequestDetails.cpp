@@ -11,11 +11,12 @@
 
 #include <config.h>
 
-#include "COOLWSD.hpp"
 #include "RequestDetails.hpp"
 #include "Util.hpp"
 #include "common/Log.hpp"
-#include "HostUtil.hpp"
+#if !MOBILEAPP
+#include <HostUtil.hpp>
+#endif // !MOBILEAPP
 
 #include <Poco/URI.h>
 #include <stdexcept>
