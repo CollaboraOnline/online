@@ -103,7 +103,7 @@ L.Control.DocumentRepair = L.Control.extend({
 		return this;
 	},
 
-	createAction: function (type, index, comment, viewId, dateTime) {
+	createAction: function (type, index, comment, viewId, dateTime, action) {
 		this.actions.push({ 'text': comment, 'columns': [
 			type,
 			comment,
@@ -113,17 +113,17 @@ L.Control.DocumentRepair = L.Control.extend({
 			function (item) {
 				return { text: item };
 			}
-		), 'row': index});
+		), 'row': index, 'action': action});
 	},
 
-	fillAction: function (actions, type) {
+	fillAction: function (actions, type, action) {
 		for (var iterator = 0; iterator < actions.length; ++iterator) {
 			// No user name if the user in question is already disconnected.
 			var userName = actions[iterator].userName ? actions[iterator].userName : '';
 			if (parseInt(actions[iterator].viewId) === this._map._docLayer._viewId) {
 				userName = _('You');
 			}
-			this.createAction(type, actions[iterator].index, actions[iterator].comment, userName, this.transformTimestamp(actions[iterator].dateTime));
+			this.createAction(type, actions[iterator].index, actions[iterator].comment, userName, this.transformTimestamp(actions[iterator].dateTime), action);
 		}
 	},
 
@@ -166,8 +166,8 @@ L.Control.DocumentRepair = L.Control.extend({
 	},
 
 	fillActions: function (data) {
-		this.fillAction(data.Redo.actions, _('Redo'));
-		this.fillAction(data.Undo.actions, _('Undo'));
+		this.fillAction(data.Redo.actions, _('Redo'), 'Redo');
+		this.fillAction(data.Undo.actions, _('Undo'), 'Undo');
 	},
 
 	_onAction: function(element, action, data, index) {
@@ -175,7 +175,7 @@ L.Control.DocumentRepair = L.Control.extend({
 		if (element === 'treeview') {
 			var entry = data.entries[parseInt(index)];
 			this.selected = {
-				action: entry.columns[0].text,
+				action: entry.action,
 				index: parseInt(entry.row),
 			};
 			return;
