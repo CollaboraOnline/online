@@ -506,8 +506,12 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	width: 250px;
 }
 
-.cool-annotation.greyed {
+.cool-annotation.tracked-deteled-comment-show {
 	opacity: 0.5;
+}
+
+.cool-annotation.tracked-deteled-comment-hide {
+	display: none;
 }
 
 .cool-annotation > .modalpopup {
