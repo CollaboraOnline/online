@@ -11,6 +11,9 @@
 
 #pragma once
 
+// HostUtil is only used in non-mobile apps.
+#if !MOBILEAPP
+
 #include <Util.hpp>
 #include <Poco/URI.h>
 #include <Poco/Util/Application.h>
@@ -56,5 +59,6 @@ private:
     /// add host to WopiHosts
     static void addWopiHost(const std::string& host, bool allow);
 };
+#endif // !MOBILEAPP
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

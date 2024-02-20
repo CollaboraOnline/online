@@ -9,7 +9,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include "config.h"
+#include <config.h>
+
+// HostUtil is only used in non-mobile apps.
+#if !MOBILEAPP
 
 #include "HostUtil.hpp"
 #include <common/ConfigUtil.hpp>
@@ -229,5 +232,7 @@ void HostUtil::setFirstHost(const Poco::URI& uri)
                 << ", To use multiple host/aliases check alias_groups tag in configuration");
     }
 }
+
+#endif // !MOBILEAPP
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
