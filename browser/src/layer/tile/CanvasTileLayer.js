@@ -7600,31 +7600,37 @@ L.CanvasTileLayer = L.Layer.extend({
 		{
 			if (this._debugDeltas)
 				window.app.console.log('Next delta at ' + offset + ' length ' + (allDeltas.length - offset));
-			var delta = !offset ? allDeltas : allDeltas.subarray(offset);
-
-			// Debugging paranoia: if we get this wrong bad things happen.
-			if ((isKeyframe && delta.length < canvas.width * canvas.height * 4) ||
-			    (!isKeyframe && delta.length >= canvas.width * canvas.height * 4))
-			{
-				window.app.console.log('Unusual ' + (isKeyframe ? 'keyframe' : 'delta') +
-						       ' possibly mis-tagged, suspicious size vs. type ' +
-						       delta.length + ' vs. ' + (canvas.width * canvas.height * 4));
-			}
 
 			var len;
 			if (isKeyframe)
 			{
+				// Debugging paranoia: if we get this wrong bad things happen.
+				if (allDeltas.length < canvas.width * canvas.height * 4)
+				{
+					window.app.console.log('Unusual keyframe possibly mis-tagged, suspicious size vs. type ' +
+							       allDeltas.length + ' vs. ' + (canvas.width * canvas.height * 4));
+				}
+
 				// FIXME: use zstd to de-compress directly into a Uint8ClampedArray
 				len = canvas.width * canvas.height * 4;
-				var pixelArray = this._unpremultiply(delta, len);
+				var pixelArray = this._unpremultiply(allDeltas, len);
 				imgData = new ImageData(pixelArray, canvas.width, canvas.height);
 
 				if (this._debugDeltas)
-					window.app.console.log('Applied keyframe ' + i++ + ' of total size ' + delta.length +
+					window.app.console.log('Applied keyframe ' + i++ + ' of total size ' + allDeltas.length +
 							       ' at stream offset ' + offset + ' size ' + len);
 			}
 			else
 			{
+				var delta = !offset ? allDeltas : allDeltas.subarray(offset);
+
+				// Debugging paranoia: if we get this wrong bad things happen.
+				if (delta.length >= canvas.width * canvas.height * 4)
+				{
+					window.app.console.log('Unusual delta possibly mis-tagged, suspicious size vs. type ' +
+							       delta.length + ' vs. ' + (canvas.width * canvas.height * 4));
+				}
+
 				if (!imgData) // no keyframe
 					imgData = tile.imgDataCache;
 				if (!imgData)
