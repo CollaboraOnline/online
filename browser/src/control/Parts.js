@@ -302,6 +302,7 @@ L.Map.include({
 			app.socket.sendMessage('uno .uno:InsertPage');
 		}
 		else if (this.getDocType() === 'spreadsheet') {
+			this._docLayer._sheetSwitch.updateOnSheetInsertion(nPos);
 			var command = {
 				'Name': {
 					'type': 'string',
@@ -362,6 +363,7 @@ L.Map.include({
 			app.socket.sendMessage('uno .uno:DeletePage');
 		}
 		else if (this.getDocType() === 'spreadsheet') {
+			this._docLayer._sheetSwitch.updateOnSheetDeleted(nPos);
 			var command = {
 				'Index': {
 					'type': 'long',
