@@ -550,11 +550,12 @@ L.Map.include({
 			document.getElementById('keyboard-shortcuts-content').innerHTML = L.Util.replaceCtrlAltInMac(document.getElementById('keyboard-shortcuts-content').innerHTML);
 		}
 		var searchInput = document.getElementById('online-help-search-input');
-		searchInput.focus();
+		searchInput.focus(); // auto focus on user input field
 		var startFilter = false;
+		var isAnyMatchingContent = false;
 		searchInput.addEventListener('input', function () {
 			// Hide all elements within the #online-help-content on first key stroke/at start of filter content
-			if (!startFilter) {
+			if (!startFilter || !isAnyMatchingContent) {
 				// Hide all <p> tags within .text, .spreadsheet, or .presentation sections
 				document.querySelectorAll('#online-help-content > *:not(a), .link-section p, .product-header').forEach(function (element) {
 					// Check if the element has class text, spreadsheet, or presentation
@@ -572,16 +573,17 @@ L.Map.include({
 				startFilter = false;
 			}
 			else {
-				this.filterResults(searchTerm);
+				this.filterResults(searchTerm, isAnyMatchingContent);
 			}
 		}.bind(this));
 	},
 
 
-	filterResults: function (searchTerm) {
+	filterResults: function (searchTerm, isAnyMatchingContent) {
 
 		// Select main sections
 		var mainSections = document.querySelectorAll('.section');
+		isAnyMatchingContent = false;
 
 		// Loop through each main section
 		mainSections.forEach(function (mainSection) {
@@ -615,6 +617,7 @@ L.Map.include({
 						subSection.style.display = 'block';
 						// make sure main section of matched subsection is visible
 						mainSection.style.display = 'block';
+						mainSection.style.backgroundColor = '';
 						subSectionContainsTerm = true;
 					} else {
 						subSection.style.backgroundColor = ''; // Remove previous highlighting
@@ -626,9 +629,19 @@ L.Map.include({
 			if (!subSectionContainsTerm && !containsTerm) {
 				mainSection.style.display = 'none';
 			}
+			else {
+				isAnyMatchingContent = true;
+			}
 
 		}.bind(this));
 
+		if (!isAnyMatchingContent) {
+			this.resetFilterResults();
+			$('#online-help-search-input').addClass('search-not-found');
+			setTimeout(function () {
+				$('#online-help-search-input').removeClass('search-not-found');
+			}, 800);
+		}
 	},
 
 	resetFilterResults: function () {
@@ -648,6 +661,7 @@ L.Map.include({
 		// select all event scroll elements, main-header elements, product header elements and make visible to user if search term is empty
 		document.querySelectorAll('.m-v-0, .product-header, .help-dialog-header').forEach(function(element) {
 			element.style.display = 'block';
+			element.style.backgroundColor = '';
 		});
 	},
 
