@@ -54,6 +54,14 @@ L.Map.StateChangeHandler = L.Handler.extend({
 				$('.leaflet-pane.leaflet-map-pane').removeClass('bucket-cursor');
 		}
 
+		if (e.commandName === '.uno:StartWithPresentation' && (state === true || state === 'true')) {
+			let startPresentationParam = window.coolParams.get('startPresentation');
+			if (startPresentationParam === '' || startPresentationParam === 'true' || startPresentationParam === '1') {
+
+				this._map.dispatch('presentation');
+			}
+		}
+
 		$('#document-container').removeClass('slide-master-mode');
 		$('#document-container').addClass('slide-normal-mode');
 		if (slideMasterPageItem) {

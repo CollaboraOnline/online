@@ -358,8 +358,14 @@ L.Control.UIManager = L.Control.extend({
 
 		this.map.on('changeuimode', this.onChangeUIMode, this);
 
-		if (typeof window.initializedUI === 'function')
+		if (typeof window.initializedUI === 'function') {
 			window.initializedUI();
+		}
+
+		var startPresentationGet = this.map.isPresentationOrDrawing() && window.coolParams.get('startPresentation');
+		if (startPresentationGet === 'true' || startPresentationGet === '1') {
+			this._map.dispatch('presentation');
+		}
 	},
 
 	initializeSidebar: function() {
