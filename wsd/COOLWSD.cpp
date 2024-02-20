@@ -16,7 +16,9 @@
 #if ENABLE_FEATURE_LOCK
 #include "CommandControl.hpp"
 #endif
-#include "HostUtil.hpp"
+#if !MOBILEAPP
+#include <HostUtil.hpp>
+#endif // !MOBILEAPP
 
 /* Default host used in the start test URI */
 #define COOLWSD_TEST_HOST "localhost"

@@ -31,11 +31,6 @@ public:
         StaticFileContentCache["discovery.xml"] = getDiscoveryXML();
     }
 
-    /// Does this address feature in the allowed hosts list.
-    static bool allowPostFrom(const std::string& address);
-
-    static bool allowConvertTo(const std::string& address, const Poco::Net::HTTPRequest& request);
-
 private:
     /// Set the socket associated with this ResponseClient.
     void onConnect(const std::shared_ptr<StreamSocket>& socket) override;
@@ -52,6 +47,11 @@ private:
     void performWrites(std::size_t /*capacity*/) override {}
 
 #if !MOBILEAPP
+    /// Does this address feature in the allowed hosts list.
+    static bool allowPostFrom(const std::string& address);
+
+    static bool allowConvertTo(const std::string& address, const Poco::Net::HTTPRequest& request);
+
     void handleRootRequest(const RequestDetails& requestDetails,
                            const std::shared_ptr<StreamSocket>& socket);
 
