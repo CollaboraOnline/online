@@ -6642,8 +6642,8 @@ L.CanvasTileLayer = L.Layer.extend({
 		return ctx;
 	},
 
-	_unpremultiply: function(rawDelta) {
-		var len = rawDelta.byteLength / 4;
+	_unpremultiply: function(rawDelta, byteLength) {
+		var len = byteLength / 4;
 		var delta32 = new Uint32Array(rawDelta.buffer, rawDelta.byteOffset, len);
 		var resultu32 = new Uint32Array(len);
 		var resultu8 = new Uint8ClampedArray(resultu32.buffer, resultu32.byteOffset, resultu32.byteLength);
@@ -6771,7 +6771,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			{
 				// FIXME: use zstd to de-compress directly into a Uint8ClampedArray
 				len = canvas.width * canvas.height * 4;
-				var pixelArray = this._unpremultiply(delta.subarray(0, len));
+				var pixelArray = this._unpremultiply(delta, len);
 				imgData = new ImageData(pixelArray, canvas.width, canvas.height);
 
 				if (this._debugDeltas)
@@ -6871,7 +6871,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				span *= 4;
 				// copy so this is suitably aligned for a Uint32Array view
 				var tmpu8 = new Uint8Array(delta.subarray(i, i + span));
-				var pixelData = this._unpremultiply(tmpu8);
+				var pixelData = this._unpremultiply(tmpu8, tmpu8.length);
 				// imgData.data[offset + 1] = 256; // debug - greener start
 				for (var j = 0; j < span; ++j)
 					imgData.data[offset++] = pixelData[j];
