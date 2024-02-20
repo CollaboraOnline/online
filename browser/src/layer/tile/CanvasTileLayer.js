@@ -7600,7 +7600,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		{
 			if (this._debugDeltas)
 				window.app.console.log('Next delta at ' + offset + ' length ' + (allDeltas.length - offset));
-			var delta = allDeltas.subarray(offset);
+			var delta = !offset ? allDeltas : allDeltas.subarray(offset);
 
 			// Debugging paranoia: if we get this wrong bad things happen.
 			if ((isKeyframe && delta.length < canvas.width * canvas.height * 4) ||
