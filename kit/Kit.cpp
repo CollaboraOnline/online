@@ -717,7 +717,8 @@ public:
         _editorChangeWarning(false),
         _lastMemTrimTime(std::chrono::steady_clock::now()),
         _mobileAppDocId(mobileAppDocId),
-        _inputProcessingEnabled(true)
+        _inputProcessingEnabled(true),
+        _duringLoad(0)
     {
         LOG_INF("Document ctor for [" << _docKey <<
                 "] url [" << anonymizeUrl(_url) << "] on child [" << _jailId <<
@@ -951,6 +952,13 @@ public:
         }
 
         return false;
+    }
+
+    void alertNotAsync()
+    {
+        // load unfortunately enables inputprocessing in some cases.
+        if (processInputEnabled() && !_duringLoad)
+            notifyAll("error: cmd=notasync kind=failure");
     }
 
     void alertAllUsers(const std::string& cmd, const std::string& kind) override
@@ -1224,6 +1232,10 @@ private:
     {
         LOG_INF("Loading url [" << uriAnonym << "] for session [" << sessionId <<
                 "] which has " << (_sessions.size() - 1) << " sessions.");
+
+        _duringLoad++;
+        // wouldn't it be nice to have a custom destructor to do this.
+        std::unique_ptr<void, std::function<void(void *)>> guard(nullptr, [&](void*) { _duringLoad--; });
 
         // This shouldn't happen, but for sanity.
         const auto it = _sessions.find(sessionId);
@@ -2148,6 +2160,7 @@ public:
             << "\n\teditorChangeWarning: " << _editorChangeWarning
             << "\n\tmobileAppDocId: " << _mobileAppDocId
             << "\n\tinputProcessingEnabled: " << _inputProcessingEnabled
+            << "\n\tduringLoad: " << _duringLoad
             << "\n";
 
         // dumpState:
@@ -2257,6 +2270,7 @@ private:
 
     const unsigned _mobileAppDocId;
     bool _inputProcessingEnabled;
+    int _duringLoad;
 };
 
 #if !defined BUILDING_TESTS && !MOBILEAPP && !LIBFUZZER
@@ -2445,9 +2459,8 @@ public:
         {
             LOG_ERR("non-async dialog triggered");
 #if !MOBILEAPP
-            if (singletonDocument && lastWarned < reentries &&
-                singletonDocument->processInputEnabled()) // ie. not loading/saving
-                singletonDocument->notifyAll("error: cmd=notasync kind=failure");
+            if (singletonDocument && lastWarned < reentries)
+                singletonDocument->alertNotAsync();
 #endif
             lastWarned = reentries;
         }

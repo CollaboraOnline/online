@@ -82,6 +82,7 @@ UnitBase::TestResult UnitBadDocLoad::testBadDocLoadFail()
         auto response = helpers::getResponseString(socket, "error:", testname);
         if (Util::startsWith(response, "error: cmd=notasync"))
         {
+            TST_LOG("Ignoring initial notasync error - waiting again");
             // Continue searching for the interesting failure.
             response =
                 helpers::getResponseString(socket, "error:", testname, std::chrono::seconds(30));
