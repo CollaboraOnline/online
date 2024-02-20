@@ -265,7 +265,26 @@ window.app = {
 
 		// @property lang: String
 		// browser language locale
-		lang: navigatorLang
+		lang: navigatorLang,
+
+		docs: ['presentation', 'spreadsheet', 'text', 'drawing'],
+
+		getTheme: function () {
+			var docTheme;
+			var themes = [];
+			if (global.isLocalStorageAllowed) {
+				for (var theme in global.L.Browser.docs) {
+					docTheme = global.localStorage.getItem('UIDefaults_' +
+									       global.L.Browser.docs[theme] +
+									       '_darkTheme');
+					if (docTheme) {
+						themes.push(global.L.Browser.docs[theme] + ':' +
+							    (docTheme === 'true' ? 'Dark' : 'Light'));
+					}
+				}
+			}
+			return themes.join(';');
+		}
 	};
 
 	global.keyboard = {
@@ -1208,6 +1227,10 @@ window.app = {
 					}
 
 				}
+
+				var docTheme = global.L.Browser.getTheme();
+				if (docTheme)
+					msg += ' theme=' + docTheme;
 
 				msg += ' timezone=' + Intl.DateTimeFormat().resolvedOptions().timeZone;
 
