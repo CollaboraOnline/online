@@ -332,6 +332,7 @@ L.Control.Tabs = L.Control.extend({
 
 	//selected sheet is moved to new index
 	_moveSheet: function (newIndex) {
+		this._map._docLayer._sheetSwitch.updateOnSheetMoved(this._map.getPartNumber(), newIndex - 1);
 		this._map.sendUnoCommand('.uno:Move?Copy:bool=false&UseCurrentDocument:bool=true&Index=' + newIndex);
 	},
 
@@ -351,6 +352,8 @@ L.Control.Tabs = L.Control.extend({
 		var contextMenuTab = this._tabForContextMenu;
 		if (contextMenuTab <= 0) return;
 
+		this._map._docLayer._sheetSwitch.updateOnSheetMoved(contextMenuTab, contextMenuTab - 1);
+
 		// core handles the decreasing of contextMenuTab by 1
 		// so, no need to do it here (for the second parameter)
 		this._moveSheetLR(contextMenuTab, contextMenuTab);
@@ -358,6 +361,8 @@ L.Control.Tabs = L.Control.extend({
 
 	_moveSheetRight: function () {
 		var contextMenuTab = this._tabForContextMenu;
+
+		this._map._docLayer._sheetSwitch.updateOnSheetMoved(contextMenuTab, contextMenuTab + 1);
 
 		/*
 		Why there is '+3' ?
