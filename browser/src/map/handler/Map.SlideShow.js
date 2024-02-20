@@ -52,37 +52,45 @@ L.Map.SlideShow = L.Handler.extend({
 			return;
 		}
 
-		if (!this._cypressSVGPresentationTest && !this._map['wopi'].DownloadAsPostMessage) {
+		let doPresentation = function(that, e) {
+			that._presentInWindow = false;
+
+			that._startSlideNumber = 0; // Default: start from page 0
+			if (typeof e.startSlideNumber !== 'undefined') {
+				that._startSlideNumber = e.startSlideNumber;
+			}
+			that.fullscreen = !that._cypressSVGPresentationTest;
+			that._map.downloadAs('slideshow.svg', 'svg', null, 'slideshow');
+
+			L.DomEvent.on(document, 'fullscreenchange', that._onFullScreenChange, that);
+		};
+
+		let fallback = function(that, e) {
+			// fallback to "open in new tab"
+			if (that._slideShow) {
+				L.DomUtil.remove(that._slideShow);
+				that._slideShow = null;
+			}
+
+			doPresentation(that, e);
+		};
+
+		if (!(this._cypressSVGPresentationTest || this._map['wopi'].DownloadAsPostMessage)) {
 			this._slideShow = L.DomUtil.create('iframe', 'leaflet-slideshow', this._map._container);
 			if (this._slideShow.requestFullscreen) {
-				this._slideShow.requestFullscreen();
-			}
-			else if (this._slideShow.msRequestFullscreen) {
-				this._slideShow.msRequestFullscreen();
-			}
-			else if (this._slideShow.mozRequestFullScreen) {
-				this._slideShow.mozRequestFullScreen();
-			}
-			else if (this._slideShow.webkitRequestFullscreen) {
-				this._slideShow.webkitRequestFullscreen();
-			} else {
-				// fallback to "open in new tab"
-				L.DomUtil.remove(this._slideShow);
-				this._slideShow = null;
-			}
 
-			L.DomEvent.on(document, 'fullscreenchange webkitfullscreenchange mozfullscreenchange msfullscreenchange',
-				this._onFullScreenChange, this);
+				let that = this;
+				this._slideShow.requestFullscreen()
+					.then(function () { doPresentation(that, e); })
+					.catch(function () {
+						fallback(that, e);
+					});
+
+				return;
+			}
 		}
 
-		this._presentInWindow = false;
-
-		this._startSlideNumber = 0; // Default: start from page 0
-		if (e.startSlideNumber !== undefined) {
-			this._startSlideNumber = e.startSlideNumber;
-		}
-		this.fullscreen = !this._cypressSVGPresentationTest;
-		this._map.downloadAs('slideshow.svg', 'svg', null, 'slideshow');
+		fallback(this, e);
 	},
 
 	_onPresentWindow: function (e) {
@@ -105,10 +113,7 @@ L.Map.SlideShow = L.Handler.extend({
 			return;
 		}
 
-		this.fullscreen = document.fullscreenElement ||
-			document.webkitIsFullScreen ||
-			document.mozFullScreen ||
-			document.msFullscreenElement;
+		this.fullscreen = document.fullscreenElement;
 		if (!this.fullscreen) {
 			this._stopFullScreen();
 		}
