@@ -9,9 +9,9 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include <chrono>
 #include <config.h>
 
+#include <chrono>
 #include <memory>
 #include <iconv.h>
 #include <string>

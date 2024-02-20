@@ -1,5 +1,9 @@
 /* -*- Mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4; fill-column: 100 -*- */
 /*
+ * Copyright the Collabora Online contributors.
+ *
+ * SPDX-License-Identifier: MPL-2.0
+ *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -7,15 +11,6 @@
 
 #include <config.h>
 
-#include "HttpRequest.hpp"
-#include "Storage.hpp"
-
-#include <chrono>
-#include <algorithm>
-#include <memory>
-#include <cassert>
-#include <errno.h>
-#include <fstream>
 #include <iconv.h>
 #include <string>
 
@@ -36,24 +31,30 @@
 #include <Poco/Net/NameValueCollection.h>
 #include <Poco/Net/SSLManager.h>
 
+#include <cassert>
+
+#include <Auth.hpp>
+#include <HostUtil.hpp>
+#include <ProofKey.hpp>
+#include <HttpRequest.hpp>
+
 #endif
 
 #include <Poco/StreamCopier.h>
 #include <Poco/URI.h>
 
-#include "Auth.hpp"
 #include <Common.hpp>
-#include "Exceptions.hpp"
+#include <Exceptions.hpp>
+#include <Storage.hpp>
 #include <Log.hpp>
 #include <Unit.hpp>
 #include <Util.hpp>
-#include "ProofKey.hpp"
 #include <common/FileUtil.hpp>
 #include <common/JsonUtil.hpp>
 #include <common/TraceEvent.hpp>
 #include <NetUtil.hpp>
 #include <CommandControl.hpp>
-#include "HostUtil.hpp"
+
 #include <StorageConnectionManager.hpp>
 
 bool StorageConnectionManager::FilesystemEnabled;
