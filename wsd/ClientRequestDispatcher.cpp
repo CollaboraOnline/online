@@ -424,10 +424,8 @@ bool ClientRequestDispatcher::allowConvertTo(const std::string& address,
         LOG_WRN_S("convert-to: Requesting address is denied: " << addressToCheck);
         return false;
     }
-    else
-    {
-        LOG_TRC_S("convert-to: Requesting address is allowed: " << addressToCheck);
-    }
+
+    LOG_TRC_S("convert-to: Requesting address is allowed: " << addressToCheck);
 
     // Handle forwarded header and make sure all participating IPs are allowed
     if (request.has("X-Forwarded-For"))
@@ -459,10 +457,8 @@ bool ClientRequestDispatcher::allowConvertTo(const std::string& address,
                 LOG_WRN_S("convert-to: Requesting address is denied: " << addressToCheck);
                 return false;
             }
-            else
-            {
-                LOG_INF_S("convert-to: Requesting address is allowed: " << addressToCheck);
-            }
+
+            LOG_INF_S("convert-to: Requesting address is allowed: " << addressToCheck);
         }
     }
 
