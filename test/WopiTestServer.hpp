@@ -11,8 +11,6 @@
 
 #pragma once
 
-#include "config.h"
-
 #include "Protocol.hpp"
 #include "HttpRequest.hpp"
 #include "helpers.hpp"

@@ -9,11 +9,12 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#include "config.h"
+
 #include "HostUtil.hpp"
 #include <common/ConfigUtil.hpp>
 #include <common/Log.hpp>
 #include <common/CommandControl.hpp>
-#include <config.h>
 
 Util::RegexListMatcher HostUtil::WopiHosts;
 std::map<std::string, std::string> HostUtil::AliasHosts;

@@ -608,7 +608,7 @@ void LockContext::dumpState(std::ostream& os) const
 void WopiStorage::initHttpRequest(Poco::Net::HTTPRequest& request, const Poco::URI& uri,
                                   const Authorization& auth) const
 {
-    request.set("User-Agent", WOPI_AGENT_STRING);
+    request.set("User-Agent", http::getAgentString());
 
     auth.authorizeRequest(request);
 

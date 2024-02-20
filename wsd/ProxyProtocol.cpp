@@ -59,7 +59,7 @@ void DocumentBroker::handleProxyRequest(
         std::ostringstream oss;
         oss << "HTTP/1.1 200 OK\r\n"
             "Last-Modified: " << Util::getHttpTimeNow() << "\r\n"
-            "User-Agent: " WOPI_AGENT_STRING "\r\n"
+            "User-Agent: " << http::getAgentString() << "\r\n"
             "Content-Length: " << sessionId.size() << "\r\n"
             "Content-Type: application/json; charset=utf-8\r\n"
             "X-Content-Type-Options: nosniff\r\n"
@@ -217,7 +217,7 @@ void ProxyProtocolHandler::handleRequest(bool isWaiting, const std::shared_ptr<S
             std::ostringstream oss;
             oss << "HTTP/1.1 200 OK\r\n"
                 "Last-Modified: " << Util::getHttpTimeNow() << "\r\n"
-                "User-Agent: " WOPI_AGENT_STRING "\r\n"
+                "User-Agent: " << http::getAgentString() << "\r\n"
                 "Content-Length: " << 0 << "\r\n"
                 "\r\n";
             streamSocket->send(oss.str());
@@ -345,7 +345,7 @@ bool ProxyProtocolHandler::flushQueueTo(const std::shared_ptr<StreamSocket> &soc
     std::ostringstream oss;
     oss << "HTTP/1.1 200 OK\r\n"
         "Last-Modified: " << Util::getHttpTimeNow() << "\r\n"
-        "User-Agent: " WOPI_AGENT_STRING "\r\n"
+        "User-Agent: " << http::getAgentString() << "\r\n"
         "Content-Length: " << totalSize << "\r\n"
         "Content-Type: application/json; charset=utf-8\r\n"
         "X-Content-Type-Options: nosniff\r\n"

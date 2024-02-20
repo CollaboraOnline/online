@@ -666,7 +666,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
                 }
             }
 
-            response.set("Server", HTTP_SERVER_STRING);
+            response.set("Server", http::getServerString());
             response.set("Date", Util::getHttpTimeNow());
 
 #if !MOBILEAPP
@@ -1399,7 +1399,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     oss << "HTTP/1.1 200 OK\r\n"
         "Date: " << Util::getHttpTimeNow() << "\r\n"
         "Last-Modified: " << Util::getHttpTimeNow() << "\r\n"
-        "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
+        "User-Agent: " << http::getAgentString() << "\r\n"
         "Cache-Control:max-age=11059200\r\n"
         "ETag: \"" COOLWSD_VERSION_HASH "\"\r\n"
         "Content-Length: " << preprocess.size() << "\r\n"
@@ -1523,7 +1523,7 @@ void FileServerRequestHandler::preprocessWelcomeFile(const HTTPRequest& request,
     // No referrer-policy
     httpResponse.add("Referrer-Policy", "no-referrer");
     httpResponse.add("X-Content-Type-Options", "nosniff");
-    httpResponse.set("Server", HTTP_SERVER_STRING);
+    httpResponse.set("Server", http::getServerString());
     httpResponse.set("Date", Util::getHttpTimeNow());
 
     httpResponse.setBody(std::move(templateWelcome));
@@ -1634,7 +1634,7 @@ void FileServerRequestHandler::preprocessAdminFile(const HTTPRequest& request,
     // No referrer-policy
     response.add("Referrer-Policy", "no-referrer");
     response.add("X-Content-Type-Options", "nosniff");
-    response.set("Server", HTTP_SERVER_STRING);
+    response.set("Server", http::getServerString());
     response.set("Date", Util::getHttpTimeNow());
 
     response.setContentType("text/html");

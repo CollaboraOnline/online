@@ -77,15 +77,6 @@ constexpr const char UPLOADING_SUFFIX[] = "ing";
 /// the code: they are logical execution unit names.
 #define SHARED_DOC_THREADNAME_SUFFIX "broker_"
 
-/// The HTTP request User-Agent. Used only in Requests.
-#define HTTP_AGENT_STRING "COOLWSD HTTP Agent " COOLWSD_VERSION
-
-/// The WOPI User-Agent. Depricated: use HTTP_AGENT_STRING.
-#define WOPI_AGENT_STRING HTTP_AGENT_STRING
-
-/// The HTTP response Server. Used only in Responses.
-#define HTTP_SERVER_STRING "COOLWSD HTTP Server " COOLWSD_VERSION
-
 /// The client port number, both coolwsd and the kits have this.
 extern int ClientPortNumber;
 extern std::string MasterLocation;

@@ -10,6 +10,7 @@
  */
 
 #include <config.h>
+#include <config_version.h>
 
 #include <helpers.hpp>
 #include <lokassert.hpp>

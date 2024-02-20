@@ -10,7 +10,8 @@
 // versions of inlined code that get injected outside of this
 // module by the linker.
 
-#include <config.h>
+#include "config.h"
+
 #include <assert.h>
 #include <string.h>
 #include <stdio.h>

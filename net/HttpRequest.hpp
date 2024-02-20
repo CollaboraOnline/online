@@ -11,8 +11,6 @@
 
 #pragma once
 
-#include <config_version.h>
-
 #include <fcntl.h>
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -325,6 +323,9 @@ static inline const char* getReasonPhraseForCode(StatusCode statusCode)
 {
     return getReasonPhraseForCode(static_cast<unsigned>(statusCode));
 }
+
+std::string getAgentString();
+std::string getServerString();
 
 /// The callback signature for handling IO writes.
 /// Returns the number of bytes read from the buffer,
@@ -822,7 +823,7 @@ public:
         , _fd(fd)
     {
         _header.add("Date", Util::getHttpTimeNow());
-        _header.add("Server", HTTP_SERVER_STRING);
+        _header.add("Server", http::getServerString());
     }
 
     /// A response sent from a server.
@@ -1358,7 +1359,7 @@ private:
         }
         _request.set("Host", host); // Make sure the host is set.
         _request.set("Date", Util::getHttpTimeNow());
-        _request.set("User-Agent", HTTP_AGENT_STRING);
+        _request.set("User-Agent", http::getAgentString());
     }
 
     void onConnect(const std::shared_ptr<StreamSocket>& socket) override

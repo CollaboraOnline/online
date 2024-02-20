@@ -8,6 +8,8 @@
 // To build a freestanding test executable for just Tracevent:
 // clang++ -Wall -Wextra -DTEST_TRACEEVENT_EXE TraceEvent.cpp -o TraceEvent -pthread
 
+#include "config.h"
+
 #include <cassert>
 #include <mutex>
 #include <sstream>
