@@ -42,7 +42,7 @@ void HostUtil::parseWopiHost(Poco::Util::LayeredConfiguration& conf)
     }
 }
 
-void HostUtil::addWopiHost(std::string host, bool allow)
+void HostUtil::addWopiHost(const std::string& host, bool allow)
 {
     if (!host.empty())
     {
