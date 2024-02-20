@@ -262,6 +262,8 @@ public:
 
     bool getAccessibilityState() const { return _accessibilityState; }
 
+    const std::string& getTheme() const { return _theme; }
+
 protected:
     Session(const std::shared_ptr<ProtocolHandlerInterface> &handler,
             const std::string& name, const std::string& id, bool readonly);
@@ -381,6 +383,9 @@ private:
 
     /// Specifies whether accessibility support is enabled for this session.
     bool _accessibilityState;
+
+    /// Specifies the theme
+    std::string _theme;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

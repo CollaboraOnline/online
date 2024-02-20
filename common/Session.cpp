@@ -215,6 +215,11 @@ void Session::parseDocOptions(const StringVector& tokens, int& part, std::string
             _accessibilityState = value == "true";
             ++offset;
         }
+        else if (name == "theme")
+        {
+            _theme = value;
+            ++offset;
+        }
     }
 
     Util::mapAnonymized(_userId, _userIdAnonym);

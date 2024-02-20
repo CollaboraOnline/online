@@ -1279,6 +1279,12 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/,
         {
             oss << " batch=" << getBatchMode();
         }
+
+        if (!getTheme().empty())
+        {
+            oss << " theme=" << getTheme();
+        }
+
 #if ENABLE_FEATURE_LOCK
         sendLockedInfo();
 #endif
