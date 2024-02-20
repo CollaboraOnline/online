@@ -26,6 +26,7 @@ L.Map.include({
 		if (docLayer.isCalc())
 			docLayer._sheetSwitch.save(part /* toPart */);
 
+		docLayer._clearMsgReplayStore();
 		docLayer._prevSelectedPart = docLayer._selectedPart;
 		docLayer._selectedParts = [];
 		if (part === 'prev') {
