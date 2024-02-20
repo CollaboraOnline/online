@@ -986,6 +986,9 @@ L.Map.include({
 		case 'closetablet':
 			this.uiManager.enterReadonlyOrClose();
 			break;
+		case 'renamedocument':
+			this.uiManager.renameDocument();
+			break;
 		default:
 			console.error('unknown dispatch: "' + action + '"');
 		}
