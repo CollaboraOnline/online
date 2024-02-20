@@ -23,11 +23,12 @@
 /// Load torture testcase.
 class UnitLoadTorture : public UnitWSD
 {
-    int loadTorture(const std::string& name, const std::string& docName,
-                    const size_t thread_count, const size_t max_jitter_ms);
+    void loadTorture(const std::string& name, const std::string& docName,
+                    const size_t thread_count, const size_t max_jitter_ms = 100);
     TestResult testLoadTortureODT();
     TestResult testLoadTortureODS();
     TestResult testLoadTortureODP();
+    TestResult testLoadTortureODG();
     TestResult testLoadTorture();
 
 public:
@@ -35,7 +36,7 @@ public:
     void invokeWSDTest() override;
 };
 
-int UnitLoadTorture::loadTorture(const std::string& name, const std::string& docName,
+void UnitLoadTorture::loadTorture(const std::string& name, const std::string& docName,
                                  const size_t thread_count, const size_t max_jitter_ms)
 {
     // Load same document from many threads together.
@@ -44,10 +45,14 @@ int UnitLoadTorture::loadTorture(const std::string& name, const std::string& doc
 
     TST_LOG("Starting test on " << documentURL << ' ' << documentPath);
 
+    std::mutex stateLock;
+    std::vector<int> view_ids;
+
     std::atomic<int> sum_view_ids;
     sum_view_ids = 0;
     std::atomic<int> num_of_views(0);
     std::atomic<int> num_to_load(thread_count);
+
     std::shared_ptr<SocketPoll> poll = std::make_shared<SocketPoll>("WebSocketPoll");
     poll->startThread();
 
@@ -76,41 +81,36 @@ int UnitLoadTorture::loadTorture(const std::string& name, const std::string& doc
 
                 int viewid = -1;
                 LOK_ASSERT(COOLProtocol::getTokenIntegerFromMessage(status, "viewid", viewid));
-                sum_view_ids += viewid;
+
+                LOK_ASSERT("Failed to create view in time " && viewid >= 0);
+
+                {
+                    std::lock_guard<std::mutex> guard(stateLock);
+                    LOK_ASSERT("Duplicate view-id generated " && std::find(view_ids.begin(), view_ids.end(), viewid) == view_ids.end());
+                    view_ids.push_back(viewid);
+                }
+
                 ++num_of_views;
                 --num_to_load;
 
-                TST_LOG(": #" << id << ", loaded views: " << num_of_views
-                              << ", to load: " << num_to_load);
+                TST_LOG(": #" << id << ", new viewId: " << viewid <<
+                        ", loaded views: " << num_of_views <<
+                        ", to load: " << num_to_load);
 
-                while (true)
-                {
-                    if (num_to_load == 0)
-                    {
-                        // Unload at once, nothing more left to do.
-                        TST_LOG(": #" << id << ", no more to load, unloading.");
-                        break;
-                    }
+                // Get all the views loaded - lean on test timeout to interrupt.
+                while (num_to_load > 0)
+                    std::this_thread::sleep_for(std::chrono::milliseconds(20));
 
-                    const auto ms
-                        = (max_jitter_ms > 0
-                               ? std::chrono::milliseconds(Util::rng::getNext() % max_jitter_ms)
-                               : std::chrono::milliseconds(0));
-                    std::this_thread::sleep_for(ms);
+                // delay randomly to close in random order:
+                const auto ms
+                    = (max_jitter_ms > 0
+                       ? std::chrono::milliseconds(Util::rng::getNext() % max_jitter_ms)
+                       : std::chrono::milliseconds(0));
+                std::this_thread::sleep_for(ms);
 
-                    // Unload only when we aren't the last/only.
-                    if (--num_of_views > 0)
-                    {
-                        TST_LOG(": #" << id << ", views: " << num_of_views
-                                      << " not the last/only, unloading.");
-                        break;
-                    }
-                    else
-                    {
-                        // Correct back, since we aren't unloading just yet.
-                        ++num_of_views;
-                    }
-                }
+                --num_of_views;
+
+                TST_LOG(": #" << id << ", view: " << num_of_views << " unloading");
             }
             catch (const std::exception& exc)
             {
@@ -131,49 +131,41 @@ int UnitLoadTorture::loadTorture(const std::string& name, const std::string& doc
             TST_LOG(": Exception: " << exc.what());
         }
     }
-
-    return sum_view_ids;
 }
 
 UnitBase::TestResult UnitLoadTorture::testLoadTortureODT()
 {
     const int thread_count = 6;
-    const int max_jitter_ms = 100;
 
-    const int sum_view_ids = loadTorture(testname, "empty.odt", thread_count, max_jitter_ms);
+    loadTorture(testname, "empty.odt", thread_count);
 
-    // This only works when the first view-ID is 0 and increments monotonously.
-    const int number_of_loads = thread_count;
-    const int exp_sum_view_ids = number_of_loads * (number_of_loads - 1) / 2; // 0-based view-ids.
-    LOK_ASSERT_EQUAL(exp_sum_view_ids, sum_view_ids);
     return TestResult::Ok;
 }
 
 UnitBase::TestResult UnitLoadTorture::testLoadTortureODS()
 {
     const int thread_count = 6;
-    const int max_jitter_ms = 100;
 
-    const int sum_view_ids = loadTorture(testname, "empty.ods", thread_count, max_jitter_ms);
+    loadTorture(testname, "empty.ods", thread_count);
 
-    // This only works when the first view-ID is 0 and increments monotonously.
-    const int number_of_loads = thread_count;
-    const int exp_sum_view_ids = number_of_loads * (number_of_loads - 1) / 2; // 0-based view-ids.
-    LOK_ASSERT_EQUAL(exp_sum_view_ids, sum_view_ids);
     return TestResult::Ok;
 }
 
 UnitBase::TestResult UnitLoadTorture::testLoadTortureODP()
 {
     const int thread_count = 6;
-    const int max_jitter_ms = 100;
 
-    const int sum_view_ids = loadTorture(testname, "empty.odp", thread_count, max_jitter_ms);
+    loadTorture(testname, "empty.odp", thread_count);
 
-    // For ODP the view-id is always odd, and we expect not to skip any ids.
-    const int number_of_loads = thread_count;
-    const int exp_sum_view_ids = number_of_loads * (number_of_loads - 1) / 2; // 0-based view-ids.
-    LOK_ASSERT_EQUAL(exp_sum_view_ids, sum_view_ids);
+    return TestResult::Ok;
+}
+
+UnitBase::TestResult UnitLoadTorture::testLoadTortureODG()
+{
+    const int thread_count = 6;
+
+    loadTorture(testname, "empty.odg", thread_count);
+
     return TestResult::Ok;
 }
 
@@ -220,6 +212,10 @@ void UnitLoadTorture::invokeWSDTest()
         exitTest(result);
 
     result = testLoadTortureODP();
+    if (result != TestResult::Ok)
+        exitTest(result);
+
+    result = testLoadTortureODG();
     if (result != TestResult::Ok)
         exitTest(result);
 
