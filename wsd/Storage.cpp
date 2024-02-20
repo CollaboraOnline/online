@@ -12,14 +12,7 @@
 #include <chrono>
 #include <config.h>
 
-#include "HttpRequest.hpp"
-#include "Storage.hpp"
-
-#include <algorithm>
 #include <memory>
-#include <cassert>
-#include <errno.h>
-#include <fstream>
 #include <iconv.h>
 #include <string>
 
@@ -40,24 +33,30 @@
 #include <Poco/Net/NameValueCollection.h>
 #include <Poco/Net/SSLManager.h>
 
+#include <cassert>
+#include <errno.h>
+
+#include <Auth.hpp>
+#include <HostUtil.hpp>
+#include <ProofKey.hpp>
+#include <HttpRequest.hpp>
+
 #endif
 
 #include <Poco/StreamCopier.h>
 #include <Poco/URI.h>
 
-#include "Auth.hpp"
 #include <Common.hpp>
-#include "Exceptions.hpp"
+#include <Exceptions.hpp>
+#include <Storage.hpp>
 #include <Log.hpp>
 #include <Unit.hpp>
 #include <Util.hpp>
-#include "ProofKey.hpp"
 #include <common/FileUtil.hpp>
 #include <common/JsonUtil.hpp>
 #include <common/TraceEvent.hpp>
 #include <NetUtil.hpp>
 #include <CommandControl.hpp>
-#include "HostUtil.hpp"
 
 #ifdef IOS
 #include <ios.h>
@@ -67,7 +66,7 @@
 #include "gtk.hpp"
 #elif WASMAPP
 #include "wasmapp.hpp"
-#endif
+#endif // IOS
 
 bool StorageBase::FilesystemEnabled;
 bool StorageBase::SSLAsScheme = true;
