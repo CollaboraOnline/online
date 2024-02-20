@@ -551,11 +551,13 @@ L.Map.include({
 		}
 		var searchInput = document.getElementById('online-help-search-input');
 		searchInput.focus(); // auto focus on user input field
+		var helpContentParent = document.getElementsByClassName('ui-dialog-content')[0];
 		var startFilter = false;
 		var isAnyMatchingContent = false;
 		searchInput.addEventListener('input', function () {
 			// Hide all elements within the #online-help-content on first key stroke/at start of filter content
 			if (!startFilter || !isAnyMatchingContent) {
+				helpContentParent.setAttribute('style', 'background-color: var(--color-background-dark) !important');
 				// Hide all <p> tags within .text, .spreadsheet, or .presentation sections
 				document.querySelectorAll('#online-help-content > *:not(a), .link-section p, .product-header').forEach(function (element) {
 					// Check if the element has class text, spreadsheet, or presentation
@@ -602,10 +604,14 @@ L.Map.include({
 			if (containsTermInHeader) {
 				// first need to reset display of subsection
 				subSections.forEach(function(subSection) {
-					subSection.style.backgroundColor = '';
+					mainSection.style.backgroundColor = '';
+					mainSection.style.paddingInline = '';
+					mainSection.style.borderRadius = '';
 					subSection.style.display = 'block';
 				});
-				mainSection.style.backgroundColor = 'yellow';
+				mainSection.style.backgroundColor = 'var(--color-background-lighter)';
+				mainSection.style.paddingInline = '12px';
+				mainSection.style.borderRadius = 'var(--border-radius-large)';
 				mainSection.style.display = 'block';
 			}
 			else {
@@ -613,14 +619,16 @@ L.Map.include({
 				subSections.forEach(function (subSection) {
 					// Highlight matching sub-sections
 					if (subSection.textContent.toLowerCase().includes(searchTerm.toLowerCase())) {
-						subSection.style.backgroundColor = 'yellow';
+						subSection.style.color = 'var(--color-text-darker)';
 						subSection.style.display = 'block';
+						mainSection.style.backgroundColor = 'var(--color-background-lighter)';
+						mainSection.style.paddingInline = '12px';
+						mainSection.style.borderRadius = 'var(--border-radius-large)';
 						// make sure main section of matched subsection is visible
 						mainSection.style.display = 'block';
-						mainSection.style.backgroundColor = '';
 						subSectionContainsTerm = true;
 					} else {
-						subSection.style.backgroundColor = ''; // Remove previous highlighting
+						subSection.style.color = ''; // Remove previous highlighting
 						subSection.style.display = 'none';
 					}
 				});
@@ -645,6 +653,8 @@ L.Map.include({
 	},
 
 	resetFilterResults: function () {
+		var helpContentParent = document.getElementsByClassName('ui-dialog-content')[0];
+		helpContentParent.style.backgroundColor='';
 		// Select main sections and make it visible
 		var mainSections = document.querySelectorAll('.section');
 		mainSections.forEach(function(mainSection) {
@@ -653,7 +663,6 @@ L.Map.include({
 
 			var subSections = mainSection.querySelectorAll('.sub-section');
 			subSections.forEach(function(subSection) {
-				subSection.style.backgroundColor = '';
 				subSection.style.display = 'block';
 			});
 		});
