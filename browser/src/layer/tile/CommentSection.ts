@@ -742,10 +742,13 @@ export class Comment extends CanvasSectionObject {
 	}
 
 	public setLayoutClass(): void {
-		this.sectionProperties.container.classList.remove('greyed');
+		this.sectionProperties.container.classList.remove('tracked-deteled-comment-show');
+		this.sectionProperties.container.classList.remove('tracked-deteled-comment-hide');
 
+		var showTrackedChanges: boolean = this.map['stateChangeHandler'].getItemValue('.uno:ShowTrackedChanges') === 'true';
+		var layoutClass: string = showTrackedChanges ? 'tracked-deteled-comment-show' : 'tracked-deteled-comment-hide';
 		if (this.sectionProperties.data.layoutStatus === CommentLayoutStatus.DELETED) {
-			this.sectionProperties.container.classList.add('greyed');
+			this.sectionProperties.container.classList.add(layoutClass);
 		}
 	}
 
