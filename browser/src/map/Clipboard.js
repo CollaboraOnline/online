@@ -708,28 +708,35 @@ L.Clipboard = L.Class.extend({
 	},
 
 	// ClipboardContent.getType() callback
-	_navigatorClipboardGetTypeCallback: function(clipboardContent, blob, type) {
-		var that = this;
+	_navigatorClipboardGetTypeCallback: async function(clipboardContent, blob, type) {
 		if (type == 'image/png') {
 			this._pasteTypedBlob(type, blob);
 			return;
 		}
 
-		blob.text().then(function(text) {
-			if (type === 'text/html' && text.substring(0, 4) === '<img') {
-				// Got an image, work with that directly.
-				clipboardContent.getType('image/png').then(function(blob) {
-					that._navigatorClipboardGetTypeCallback(clipboardContent, blob, 'image/png');
-				}, function(error) {
-					window.app.console.log('clipboardContent.getType(image/png) failed: ' + error.message);
-				});
-				return;
-			}
-
-			that._navigatorClipboardTextCallback(text, type);
-		}, function(error) {
+		let text;
+		try {
+			text = await blob.text();
+		} catch (error) {
 			window.app.console.log('blob.text() failed: ' + error.message);
-		});
+			return;
+		}
+
+		if (type !== 'text/html' || text.substring(0, 4) !== '<img') {
+			this._navigatorClipboardTextCallback(text, type);
+			return;
+		}
+
+		// Got an image, work with that directly.
+		let image;
+		try {
+			image = await clipboardContent.getType('image/png');
+		} catch (error) {
+			window.app.console.log('clipboardContent.getType(image/png) failed: ' + error.message);
+			return;
+		}
+
+		this._navigatorClipboardGetTypeCallback(clipboardContent, image, 'image/png');
 	},
 
 	// Clipboard blob text() callback for the text/html and text/plain cases
