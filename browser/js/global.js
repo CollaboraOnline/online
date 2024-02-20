@@ -1214,7 +1214,14 @@ window.app = {
 					if (spellOnline) {
 						msg += ' spellOnline=' + spellOnline;
 					}
-
+					var docTypes = ['text', 'spreadsheet', 'presentation', 'drawing'];
+					for (var i = 0; i < docTypes.length; ++i) {
+						var docType = docTypes[i];
+						var darkTheme = global.localStorage.getItem('UIDefaults_' + docType + '_darkTheme');
+						if (darkTheme) {
+							msg += ' ' + docType + 'DarkTheme=' + darkTheme;
+						}
+					}
 				}
 
 				msg += ' timezone=' + Intl.DateTimeFormat().resolvedOptions().timeZone;
