@@ -7596,60 +7596,58 @@ L.CanvasTileLayer = L.Layer.extend({
 		// May have been changed by _ensureContext garbage collection
 		var canvas = tile.canvas;
 
+		if (isKeyframe)
+		{
+			// Debugging paranoia: if we get this wrong bad things happen.
+			if (allDeltas.length < canvas.width * canvas.height * 4)
+			{
+				window.app.console.log('Unusual keyframe possibly mis-tagged, suspicious size vs. type ' +
+						       allDeltas.length + ' vs. ' + (canvas.width * canvas.height * 4));
+			}
+
+			// FIXME: use zstd to de-compress directly into a Uint8ClampedArray
+			var len = canvas.width * canvas.height * 4;
+			var pixelArray = this._unpremultiply(allDeltas, len);
+			imgData = new ImageData(pixelArray, canvas.width, canvas.height);
+
+			if (this._debugDeltas)
+				window.app.console.log('Applied keyframe ' + i++ + ' of total size ' + allDeltas.length +
+						       ' at stream offset ' + offset + ' size ' + len);
+
+			offset = len;
+		}
+
 		while (offset < allDeltas.length)
 		{
 			if (this._debugDeltas)
 				window.app.console.log('Next delta at ' + offset + ' length ' + (allDeltas.length - offset));
 
-			var len;
-			if (isKeyframe)
+			var delta = !offset ? allDeltas : allDeltas.subarray(offset);
+
+			// Debugging paranoia: if we get this wrong bad things happen.
+			if (delta.length >= canvas.width * canvas.height * 4)
 			{
-				// Debugging paranoia: if we get this wrong bad things happen.
-				if (allDeltas.length < canvas.width * canvas.height * 4)
-				{
-					window.app.console.log('Unusual keyframe possibly mis-tagged, suspicious size vs. type ' +
-							       allDeltas.length + ' vs. ' + (canvas.width * canvas.height * 4));
-				}
-
-				// FIXME: use zstd to de-compress directly into a Uint8ClampedArray
-				len = canvas.width * canvas.height * 4;
-				var pixelArray = this._unpremultiply(allDeltas, len);
-				imgData = new ImageData(pixelArray, canvas.width, canvas.height);
-
-				if (this._debugDeltas)
-					window.app.console.log('Applied keyframe ' + i++ + ' of total size ' + allDeltas.length +
-							       ' at stream offset ' + offset + ' size ' + len);
-			}
-			else
-			{
-				var delta = !offset ? allDeltas : allDeltas.subarray(offset);
-
-				// Debugging paranoia: if we get this wrong bad things happen.
-				if (delta.length >= canvas.width * canvas.height * 4)
-				{
-					window.app.console.log('Unusual delta possibly mis-tagged, suspicious size vs. type ' +
-							       delta.length + ' vs. ' + (canvas.width * canvas.height * 4));
-				}
-
-				if (!imgData) // no keyframe
-					imgData = tile.imgDataCache;
-				if (!imgData)
-				{
-					if (this._debugDeltas)
-						window.app.console.log('Fetch canvas contents');
-					imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-				}
-
-				// copy old data to work from:
-				var oldData = new Uint8ClampedArray(imgData.data);
-
-				len = this._applyDeltaChunk(imgData, delta, oldData, canvas.width, canvas.height);
-				if (this._debugDeltas)
-					window.app.console.log('Applied chunk ' + i++ + ' of total size ' + delta.length +
-							       ' at stream offset ' + offset + ' size ' + len);
+				window.app.console.log('Unusual delta possibly mis-tagged, suspicious size vs. type ' +
+						       delta.length + ' vs. ' + (canvas.width * canvas.height * 4));
 			}
 
-			isKeyframe = false;
+			if (!imgData) // no keyframe
+				imgData = tile.imgDataCache;
+			if (!imgData)
+			{
+				if (this._debugDeltas)
+					window.app.console.log('Fetch canvas contents');
+				imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+			}
+
+			// copy old data to work from:
+			var oldData = new Uint8ClampedArray(imgData.data);
+
+			var len = this._applyDeltaChunk(imgData, delta, oldData, canvas.width, canvas.height);
+			if (this._debugDeltas)
+				window.app.console.log('Applied chunk ' + i++ + ' of total size ' + delta.length +
+						       ' at stream offset ' + offset + ' size ' + len);
+
 			offset += len;
 		}
 
