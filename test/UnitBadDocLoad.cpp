@@ -65,28 +65,34 @@ UnitBase::TestResult UnitBadDocLoad::testBadDocLoadFail()
         // Send a load request with incorrect password
         helpers::sendTextFrame(socket, "load url=" + documentURL, testname);
 
+        std::map<std::string, std::string> items;
+
         // We receive jsdialog with question about repair
         const auto dialog = helpers::getResponseString(socket, "jsdialog:", testname);
         LOK_ASSERT_EQUAL(true, dialog.size() > 0);
 
-        // Click "Yes" in a dialog
-        helpers::sendTextFrame(socket, "dialogevent 1 {\"id\":\"yes\", \"cmd\": \"click\", \"data\": \"2\", \"type\": \"responsebutton\"}", testname);
+        // Extract all json entries into a map.
+        items = Util::JsonToMap(dialog.substr(sizeof("jsdialog:")));
+        auto firstId = items["id"];
 
-        // We receive jsdialog with warning that repair failed
-        const auto dialog2 = helpers::getResponseString(socket, "jsdialog:", testname);
-        LOK_ASSERT_EQUAL(true, dialog2.size() > 0);
+        // Click "Yes" in a dialog
+        helpers::sendTextFrame(socket, "dialogevent " + firstId + " {\"id\":\"yes\", \"cmd\": \"click\", \"data\": \"2\", \"type\": \"responsebutton\"}", testname);
+
+        // we can potentially receive multiple jsdialog update messages
+        std::string dialog2;
+        do {
+            dialog2 = helpers::getResponseString(socket, "jsdialog:", testname);
+            LOK_ASSERT_EQUAL(true, dialog2.size() > 0);
+            items = Util::JsonToMap(dialog2.substr(sizeof("jsdialog:")));
+        } while(items["id"] == firstId); // a duplicate update of existing dialog
+
+        // Now we received jsdialog with warning that repair failed
 
         // Click "Ok"
-        helpers::sendTextFrame(socket, "dialogevent 2 {\"id\":\"ok\", \"cmd\": \"click\", \"data\": \"1\", \"type\": \"responsebutton\"}", testname);
+        helpers::sendTextFrame(socket, "dialogevent " + items["id"] + " {\"id\":\"ok\", \"cmd\": \"click\", \"data\": \"1\", \"type\": \"responsebutton\"}", testname);
 
         auto response = helpers::getResponseString(socket, "error:", testname);
-        if (Util::startsWith(response, "error: cmd=notasync"))
-        {
-            TST_LOG("Ignoring initial notasync error - waiting again");
-            // Continue searching for the interesting failure.
-            response =
-                helpers::getResponseString(socket, "error:", testname, std::chrono::seconds(30));
-        }
+
         StringVector tokens(StringVector::tokenize(response, ' '));
         LOK_ASSERT_EQUAL(static_cast<size_t>(3), tokens.size());
 
