@@ -276,7 +276,7 @@ std::string RequestDetails::getDocKey(const Poco::URI& uri)
 #if !MOBILEAPP
     const std::string newUri = HostUtil::getNewUri(uri);
 #else
-    const std::string newUri = uri.getPath();
+    const std::string& newUri = uri.getPath();
 #endif
 
     std::string docKey = Util::encodeURIComponent(newUri);
