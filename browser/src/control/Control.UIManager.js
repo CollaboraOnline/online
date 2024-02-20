@@ -960,7 +960,17 @@ L.Control.UIManager = L.Control.extend({
 	},
 
 	onUpdateViews: function () {
-		var userPrivateInfo = this.map._docLayer ? this.map._viewInfo[this.map._docLayer._viewId].userprivateinfo : null;
+		if (!this.map._docLayer)
+			return;
+
+		var myViewId = this.map._docLayer._viewId;
+		var myViewData = this.map._viewInfo[myViewId];
+		if (!myViewData) {
+			console.error('Not found view data for viewId: "' + myViewId + '"');
+			return;
+		}
+
+		var userPrivateInfo = myViewData.userprivateinfo;
 		if (userPrivateInfo) {
 			var apiKey = userPrivateInfo.ZoteroAPIKey;
 			if (apiKey !== undefined && !this.map.zotero) {
