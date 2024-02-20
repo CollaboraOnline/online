@@ -105,7 +105,7 @@ L.Control.DocumentRepair = L.Control.extend({
 
 	createAction: function (type, index, comment, viewId, dateTime) {
 		this.actions.push({ 'text': comment, 'columns': [
-			type,
+			_(type),
 			comment,
 			viewId,
 			dateTime
@@ -113,7 +113,7 @@ L.Control.DocumentRepair = L.Control.extend({
 			function (item) {
 				return { text: item };
 			}
-		), 'row': index});
+		), 'row': index, 'action': type});
 	},
 
 	fillAction: function (actions, type) {
@@ -166,8 +166,8 @@ L.Control.DocumentRepair = L.Control.extend({
 	},
 
 	fillActions: function (data) {
-		this.fillAction(data.Redo.actions, _('Redo'));
-		this.fillAction(data.Undo.actions, _('Undo'));
+		this.fillAction(data.Redo.actions, 'Redo');
+		this.fillAction(data.Undo.actions, 'Undo');
 	},
 
 	_onAction: function(element, action, data, index) {
@@ -175,7 +175,7 @@ L.Control.DocumentRepair = L.Control.extend({
 		if (element === 'treeview') {
 			var entry = data.entries[parseInt(index)];
 			this.selected = {
-				action: entry.columns[0].text,
+				action: entry.action,
 				index: parseInt(entry.row),
 			};
 			return;
