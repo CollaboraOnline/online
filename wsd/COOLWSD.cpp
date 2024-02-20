@@ -1983,7 +1983,7 @@ private:
         std::shared_ptr<http::Session> httpSession(StorageBase::getHttpSession(fontUri));
         http::Request request(fontUri.getPathAndQuery());
 
-        request.set("User-Agent", WOPI_AGENT_STRING);
+        request.set("User-Agent", http::getAgentString());
 
         const std::shared_ptr<const http::Response> httpResponse
             = httpSession->syncRequest(request);
@@ -2002,7 +2002,7 @@ private:
             request.set("If-None-Match", oldETag);
         }
 
-        request.set("User-Agent", WOPI_AGENT_STRING);
+        request.set("User-Agent", http::getAgentString());
 
         const std::shared_ptr<const http::Response> httpResponse
             = httpSession->syncRequest(request);
@@ -2027,7 +2027,7 @@ private:
             request.set("If-None-Match", oldETag);
         }
 
-        request.set("User-Agent", WOPI_AGENT_STRING);
+        request.set("User-Agent", http::getAgentString());
 
         const std::shared_ptr<const http::Response> httpResponse
             = httpSession->syncRequest(request);
@@ -4362,7 +4362,7 @@ private:
                 response->add("X-XSS-Protection", "1; mode=block");
                 // No referrer-policy
                 response->add("Referrer-Policy", "no-referrer");
-                response->set("Server", HTTP_SERVER_STRING);
+                response->set("Server", http::getServerString());
                 response->add("Content-Type", "text/plain");
                 response->add("X-Content-Type-Options", "nosniff");
 

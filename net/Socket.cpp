@@ -9,7 +9,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include <config.h>
+#include "config.h"
+#include "config_version.h"
 
 #include "Socket.hpp"
 #include "TraceEvent.hpp"
@@ -753,7 +754,7 @@ void StreamSocket::dumpState(std::ostream& os)
 
 void StreamSocket::send(Poco::Net::HTTPResponse& response)
 {
-    response.set("Server", HTTP_SERVER_STRING);
+    response.set("Server", http::getServerString());
     response.set("Date", Util::getHttpTimeNow());
 
     std::ostringstream oss;
@@ -1316,5 +1317,19 @@ bool StreamSocket::sniffSSL() const
 }
 
 #endif // !MOBILEAPP
+
+// Required by Android and iOS apps.
+namespace http
+{
+    std::string getAgentString()
+    {
+        return "COOLWSD HTTP Agent " COOLWSD_VERSION;
+    }
+
+    std::string getServerString()
+    {
+        return "COOLWSD HTTP Server " COOLWSD_VERSION;
+    }
+}
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
