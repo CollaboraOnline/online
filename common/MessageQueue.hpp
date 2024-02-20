@@ -241,6 +241,8 @@ protected:
         return std::string();
     }
 
+    void dumpState(std::ostream& oss);
+
 private:
     std::vector<Payload> _queue;
 };
