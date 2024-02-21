@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-14 12:43+0200\n"
-"PO-Revision-Date: 2020-10-21 10:26+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"PO-Revision-Date: 2024-02-19 20:58+0000\n"
+"Last-Translator: Jesper Holck <jesper.holck@ibsgaarden.dk>\n"
 "Language-Team: Danish <https://hosted.weblate.org/projects/collabora-online/"
 "help/da/>\n"
 "Language: da\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.5-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:20-5
 msgid "Keyboard Shortcuts"
@@ -1136,35 +1136,37 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:136-18
 msgid "Moves the cursor to the first cell in the sheet (A1)."
-msgstr ""
+msgstr "Flytter markøren til første celle i regnearket (A1)."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:137-18
 msgid "Moves the cursor to the last cell on the sheet that contains data."
-msgstr ""
+msgstr "Flytter markøren til sidste celle med data i regnearket."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:138-18
 msgid "Moves the cursor to the first cell of the current row."
-msgstr ""
+msgstr "Flytter markøren til første celle i den aktuelle række."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:139-18
 msgid "Moves the cursor to the last cell of the current row."
-msgstr ""
+msgstr "Flytter markøren til sidste celle i den aktuelle række."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:140-18
 msgid ""
 "Selects cells from the current cell to the first cell of the current row."
-msgstr ""
+msgstr "Markerer celler fra begyndelsen af rækken til nuværende celle."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:141-18
 msgid ""
 "Selects cells from the current cell to the last cell of the current row."
-msgstr ""
+msgstr "Markerer celler fra denne celle til sidste celle i denne række."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:142-18
 msgid ""
 "Selects cells from the current cell up to one page in the current column or "
 "extends the existing selection one page up."
 msgstr ""
+"Markerer celler i denne kolonne fra denne celle og en side op eller udvider "
+"markeringen endnu en side op."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:142-164
 #, fuzzy
@@ -1176,6 +1178,8 @@ msgid ""
 "Selects cells from the current cell down to one page in the current column "
 "or extends the existing selection one page down."
 msgstr ""
+"Markerer celler i denne kolonne fra denne celle og en side ned eller udvider "
+"markeringen endnu en side ned."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:143-168
 #, fuzzy
