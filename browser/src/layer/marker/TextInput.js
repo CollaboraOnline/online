@@ -972,12 +972,12 @@ L.TextInput = L.Layer.extend({
 		this._newlineHint = ev.keyCode === 13;
 		this._linebreakHint = this._newlineHint && ev.shiftKey;
 
-		// In Firefox 117 and greater no copy/cut input event is emitted when CTRL+C/X is pressed
+		// In Firefox 117 up to 120 no copy/cut input event is emitted when CTRL+C/X is pressed
 		// with no selection in a text element with contenteditable='true'. Since no copy/cut event
 		// is emitted, Clipboard.copy/cut is never invoked. So we need to emit it manually.
 		// To be honest it seems a Firefox bug. We need to check if they fix it in later version.
 		if (!this.hasAccessibilitySupport() && !L.Browser.win &&
-			L.Browser.gecko && L.Browser.geckoVersion >= '117.0' &&
+			L.Browser.gecko && L.Browser.geckoVersion >= '117.0' && L.Browser.geckoVersion <= '120.0' &&
 			ev.ctrlKey && window.getSelection().isCollapsed) {
 			if (ev.key === 'c') {
 				document.execCommand('copy');
