@@ -1037,7 +1037,7 @@ L.Clipboard = L.Class.extend({
 		this.pasteSpecialDialogId = this._map.uiManager.generateModalId('paste_special_dialog') + '-box';
 
 		var id = 'paste_special_dialog';
-		this._map.uiManager.showYesNoButton(id + '-box', '', '', _('OK'), null, null, null, true);
+		this._map.uiManager.showYesNoButton(id + '-box', '', '', _('Cancel'), null, null, null, true);
 		var box = document.getElementById(id + '-box');
 		var innerDiv = L.DomUtil.create('div', '', null);
 		box.insertBefore(innerDiv, box.firstChild);
