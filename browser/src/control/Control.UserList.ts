@@ -221,6 +221,20 @@ class UserList extends L.Control {
 		);
 	}
 
+	getSortedUsers() {
+		if (this.users.get(this.map._docLayer._viewId) === undefined) {
+			return [];
+		}
+
+		return [
+			[this.map._docLayer._viewId, this.users.get(this.map._docLayer._viewId)],
+		].concat(
+			Array.from(this.users.entries()).filter(
+				([id, _user]) => id != this.map._docLayer._viewId,
+			),
+		);
+	}
+
 	renderHeaderAvatars() {
 		const userListElement = document.getElementById('userListSummary');
 
@@ -234,12 +248,7 @@ class UserList extends L.Control {
 			return;
 		}
 
-		const users = this.users.entries();
-		const avatarUsers = [
-			users.next().value,
-			users.next().value,
-			users.next().value,
-		].filter((user) => user !== undefined);
+		const avatarUsers = this.getSortedUsers().slice(0, 3);
 
 		userListElement.setAttribute('accesskey', 'UP');
 
@@ -385,7 +394,7 @@ class UserList extends L.Control {
 	}
 
 	renderUserList() {
-		const headerUserList = Array.from(this.users.entries());
+		const headerUserList = this.getSortedUsers();
 
 		const userItems = headerUserList.map(([viewId, user]) => {
 			let username = user.username;
@@ -406,7 +415,7 @@ class UserList extends L.Control {
 
 	renderHeaderAvatarPopover() {
 		// Popover rendering
-		const users = Array.from(this.users.entries());
+		const users = this.getSortedUsers();
 		const popoverElement = document.getElementById('userListPopover');
 
 		const userElements = users.map(([viewId, user]) => {
