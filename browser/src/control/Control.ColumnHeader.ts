@@ -50,7 +50,8 @@ export class ColumnHeader extends Header {
 
 		this._selectionBackgroundGradient = [ '#3465A4', '#729FCF', '#004586' ];
 
-		this._map.on('move zoomchanged sheetgeometrychanged splitposchanged darkmodechanged', this._updateCanvas, this);
+		this._map.on('move zoomchanged sheetgeometrychanged splitposchanged', this._updateCanvas, this);
+		this._map.on('darkmodechanged', this._reInitRowColumnHeaderStylesAfterModeChange, this);
 
 		this._initHeaderEntryStyles('spreadsheet-header-column');
 		this._initHeaderEntryHoverStyles('spreadsheet-header-column-hover');
