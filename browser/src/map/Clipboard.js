@@ -1030,7 +1030,7 @@ L.Clipboard = L.Class.extend({
 	},
 
 	_openPasteSpecialPopup: function () {
-		var msg = _('<p>Your browser has very limited access to the clipboard</p><p>Please press now: <kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>V</kbd> to see more options</p><p>Close popup to ignore paste special</p>');
+		var msg = _('<p>Your browser has very limited access to the clipboard</p><p><b>Please press</b> <kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>V</kbd> to see more options</p><p>Close popup to ignore paste special</p>');
 		msg = L.Util.replaceCtrlAltInMac(msg);
 
 		// We will use this for closing the dialog.
