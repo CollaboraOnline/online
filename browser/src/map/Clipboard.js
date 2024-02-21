@@ -1049,6 +1049,11 @@ L.Clipboard = L.Class.extend({
 		var innerDiv = L.DomUtil.create('div', '', null);
 		box.insertBefore(innerDiv, box.firstChild);
 		innerDiv.innerHTML = msg;
+
+		// Drop the not wanted whitespace between the dialog body and the button row at the
+		// bottom.
+		var label = document.getElementById('modal-dialog-' + id + '-box-label');
+		label.style.display = 'none';
 	},
 
 	// Check if the paste special mode is enabled, and if so disable it.
