@@ -1044,7 +1044,9 @@ L.Clipboard = L.Class.extend({
 		this.pasteSpecialDialogId = this._map.uiManager.generateModalId('paste_special_dialog') + '-box';
 
 		var id = 'paste_special_dialog';
-		this._map.uiManager.showYesNoButton(id + '-box', /*title=*/'', /*message=*/'', /*yesButtonText=*/_('Cancel paste special'), /*noButtonText=*/null, /*yesFunction=*/null, /*noFunction=*/null, /*cancellable=*/true);
+		this._map.uiManager.showYesNoButton(id + '-box', /*title=*/'', /*message=*/'', /*yesButtonText=*/_('Paste from this document'), /*noButtonText=*/_('Cancel paste special'), /*yesFunction=*/function() {
+			app.socket.sendMessage('uno .uno:PasteSpecial');
+		}, /*noFunction=*/null, /*cancellable=*/true);
 		var box = document.getElementById(id + '-box');
 		var innerDiv = L.DomUtil.create('div', '', null);
 		box.insertBefore(innerDiv, box.firstChild);
