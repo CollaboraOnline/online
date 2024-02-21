@@ -178,11 +178,19 @@ class UserList extends L.Control {
 
 	hideUserList() {
 		return (window as any /* TODO: remove cast after gh#8221 */).ThisIsAMobileApp ||
-		(this.map['wopi'].HideUserList !== null && this.map['wopi'].HideUserList !== undefined &&
-			($.inArray('true', this.map['wopi'].HideUserList) >= 0) ||
-			(window.mode.isMobile() && $.inArray('mobile', this.map['wopi'].HideUserList) >= 0) ||
-			(window.mode.isTablet() && $.inArray('tablet', this.map['wopi'].HideUserList) >= 0) ||
-			(window.mode.isDesktop() && $.inArray('desktop', this.map['wopi'].HideUserList) >= 0));
+			(this.map['wopi'].HideUserList !== null && this.map['wopi'].HideUserList !== undefined &&
+				($.inArray('true', this.map['wopi'].HideUserList) >= 0) ||
+				(window.mode.isMobile() && $.inArray('mobile', this.map['wopi'].HideUserList) >= 0) ||
+				(window.mode.isTablet() && $.inArray('tablet', this.map['wopi'].HideUserList) >= 0) ||
+				(window.mode.isDesktop() && $.inArray('desktop', this.map['wopi'].HideUserList) >= 0));
+	}
+
+	getSortedUsers() {
+		if (this.users.get(this.map._docLayer._viewId) === undefined) {
+			return [];
+		}
+
+		return [[this.map._docLayer._viewId, this.users.get(this.map._docLayer._viewId)]].concat(Array.from(this.users.entries()).filter(([id, _user]) => id != this.map._docLayer._viewId));
 	}
 
 	renderHeaderAvatars() {
@@ -194,8 +202,7 @@ class UserList extends L.Control {
 			return;
 		}
 
-		const users = this.users.entries();
-		const avatarUsers = [users.next().value, users.next().value, users.next().value].filter(user => user !== undefined);
+		const avatarUsers = this.getSortedUsers().slice(0, 3);
 
 		userListElement.setAttribute('accesskey','UP');
 
@@ -325,7 +332,7 @@ class UserList extends L.Control {
 	}
 
 	renderUserList() {
-		const headerUserList = Array.from(this.users.entries());
+		const headerUserList = this.getSortedUsers();
 
 		const userItems = headerUserList.map(([viewId, user]) => {
 			let username = user.username;
@@ -346,7 +353,7 @@ class UserList extends L.Control {
 
 	renderHeaderAvatarPopover() {
 		// Popover rendering
-		const users = Array.from(this.users.entries());
+		const users = this.getSortedUsers();
 		const popoverElement = document.getElementById('userListPopover');
 
 		const userElements = users.map(([viewId, user]) => {
