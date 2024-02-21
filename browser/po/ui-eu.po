@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-14 12:43+0100\n"
-"PO-Revision-Date: 2024-01-21 16:42+0000\n"
+"PO-Revision-Date: 2024-02-18 21:02+0000\n"
 "Last-Translator: Alexander Gabilondo <alexgabi@openmailbox.org>\n"
 "Language-Team: Basque <https://hosted.weblate.org/projects/collabora-online/"
 "ui/eu/>\n"
-"Language: \n"
+"Language: eu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.4-dev\n"
+"X-Generator: Weblate 5.4\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -458,7 +458,7 @@ msgstr ""
 
 #: src/control/Control.AlertDialog.js:84
 msgid "Don't show this again"
-msgstr ""
+msgstr "Ez erakutsi hau berriro"
 
 #: src/control/Control.AlertDialog.js:103
 msgid "The server encountered a %0 error while parsing the %1 command."
@@ -1025,7 +1025,7 @@ msgstr "Propietateak"
 #: src/control/Control.Menubar.js:358 src/control/Control.Menubar.js:978
 #: src/control/Control.NotebookbarWriter.js:449
 msgid "Screen Reading"
-msgstr ""
+msgstr "Pantaila irakurtzea"
 
 #: src/control/Control.Menubar.js:371
 #: src/control/Control.NotebookbarWriter.js:415
@@ -1114,7 +1114,7 @@ msgstr "Aurkeztu uneko diapositiba"
 
 #: src/control/Control.Menubar.js:514
 msgid "Present in new window"
-msgstr ""
+msgstr "Aurkeztu leiho berrian"
 
 #: src/control/Control.Menubar.js:550 src/control/Control.Menubar.js:1011
 #: src/control/Control.Menubar.js:1071
@@ -1583,7 +1583,7 @@ msgstr "Aurkezpena"
 
 #: src/control/Control.NotebookbarImpress.js:450
 msgid "Present in Window"
-msgstr ""
+msgstr "Aurkeztu leihoan"
 
 #: src/control/Control.NotebookbarWriter.js:79
 msgid "Form"
@@ -1599,11 +1599,11 @@ msgstr "EPUB dokumentua (.epub)"
 
 #: src/control/Control.NotebookbarWriter.js:387
 msgid "Go Online"
-msgstr ""
+msgstr "Konekta zaitez"
 
 #: src/control/Control.NotebookbarWriter.js:387
 msgid "Go Offline"
-msgstr ""
+msgstr "Deskonekta zaitez"
 
 #: src/control/Control.NotebookbarWriter.js:1342
 msgid "Rich Text"
@@ -1831,15 +1831,15 @@ msgstr "Ezkutatu menua"
 
 #: src/control/Control.UIManager.js:159
 msgid "Enter new name"
-msgstr ""
+msgstr "Idatzi izen berria"
 
 #: src/control/Control.UIManager.js:787
 msgid "Show Menu"
-msgstr ""
+msgstr "Erakutsi menua"
 
 #: src/control/Control.UIManager.js:1070
 msgid "Dismiss"
-msgstr ""
+msgstr "Baztertu"
 
 #: src/control/Control.UserList.js:20
 msgid "%user has joined"
@@ -2287,7 +2287,7 @@ msgstr "Dokumentua izena aldatzen ari da eta laster berriro kargatuko da"
 
 #: src/core/Socket.js:1123
 msgid "The document is switching to Offline mode and will reload shortly"
-msgstr ""
+msgstr "Dokumentua lineaz kanpo modura aldatzen ari da eta laster kargatuko da"
 
 #: src/core/Socket.js:1232
 msgid "Exported to storage"
@@ -2339,11 +2339,11 @@ msgstr "Zerbitzaria deskonektatu da."
 
 #: src/core/Debug.js:52
 msgid "Debug Tools"
-msgstr ""
+msgstr "Arazketa tresnak"
 
 #: src/core/Debug.js:54
 msgid "Ctrl+Shift+Alt+D to exit"
-msgstr ""
+msgstr "Ktrl+Maius+Alt+D irteteko"
 
 #: src/docstate.js:82
 msgid "Standard"
@@ -2355,7 +2355,7 @@ msgstr "Gaiaren koloreak"
 
 #: src/docstate.js:94
 msgid "Document colors"
-msgstr ""
+msgstr "Dokumentuen koloreak"
 
 #: src/errormessages.js:22
 msgid "No disk space left on server."
@@ -2503,6 +2503,7 @@ msgid ""
 "Failed to establish socket connection or socket connection closed "
 "unexpectedly."
 msgstr ""
+"Ezin izan da socket konexioa ezarri edo socket konexioa itxi da ustekabean."
 
 #: src/errormessages.js:43
 msgid "Failed to load document."
@@ -2605,11 +2606,11 @@ msgstr "Iruzkinik gabe"
 
 #: src/layer/tile/CommentListSection.ts:140
 msgid "A comment is being edited"
-msgstr ""
+msgstr "Iruzkin bat editatzen ari da"
 
 #: src/layer/tile/CommentListSection.ts:141
 msgid "Please save or discard the comment currently being edited."
-msgstr ""
+msgstr "Gorde edo baztertu editatzen ari den iruzkina."
 
 #: src/layer/tile/CommentListSection.ts:924
 msgid "Modify"
@@ -2762,11 +2763,11 @@ msgstr "Fitxategia zerbitzarira igotzeak huts egin du honako egoerarekin: %0"
 
 #: src/map/handler/Map.SlideShow.js:50
 msgid "Empty Slide Show"
-msgstr ""
+msgstr "Diapositiba aurkezpen hutsa"
 
 #: src/map/handler/Map.SlideShow.js:148
 msgid "Windowed Presentation Blocked"
-msgstr ""
+msgstr "Leihoko aurkezpena blokeatuta dago"
 
 #: src/map/handler/Map.SlideShow.js:149
 msgid ""
@@ -2774,31 +2775,34 @@ msgid ""
 "slide shows to be displayed in separated windows, allowing for easy screen "
 "sharing."
 msgstr ""
+"Aurkezpena blokeatu egin da. Mesedez, baimendu pop-up leihoak zure "
+"nabigatzailean. Honek diapositiba-aurkezpenak bereizitako leihoetan "
+"bistaratzeko aukera ematen du eta pantaila erraz partekatzeko aukera ematen "
+"du."
 
 #: src/map/handler/Map.SlideShow.js:157
 msgid "Presenting in window"
-msgstr ""
+msgstr "Leihoan aurkeztea"
 
 #: src/map/handler/Map.SlideShow.js:158
 msgid "Close Presentation"
-msgstr ""
+msgstr "Itxi aurkezpena"
 
 #: src/map/handler/Map.SlideShow.js:178
 msgid "Presenting in fullscreen"
-msgstr ""
+msgstr "Pantaila osoan aurkezten"
 
 #: src/map/handler/Map.SlideShow.js:179
-#, fuzzy
 msgid "End Presentation"
-msgstr "Aurkezpena"
+msgstr "Amaitu aurkezpena"
 
 #: src/map/handler/Map.SlideShow.js:234
 msgid "Already presenting"
-msgstr ""
+msgstr "Dagoeneko aurkezten"
 
 #: src/map/handler/Map.SlideShow.js:235
 msgid "You are already presenting this document"
-msgstr ""
+msgstr "Dagoeneko dokumentu hau aurkezten ari zara"
 
 #: src/map/handler/Map.WOPI.js:149
 msgid "Creating new file from template..."
@@ -2891,6 +2895,9 @@ msgid ""
 "id=\"slide-2-indicator\" href=\"#slide-2\">2</a> <a id=\"slide-3-"
 "indicator\" href=\"#slide-3\">3</a>"
 msgstr ""
+"<a id=\"slide-1-indicator\" class=\"active\" href=\"#slide-1\">1</a> <a id="
+"\"slide-2-indicator\" href=\"#slide-2\">2</a> <a id=\"slide-3-indicator\" "
+"href=\"#slide-3\">3</a>"
 
 #~ msgid "Accessibility Support"
 #~ msgstr "Irisgarritasunerako laguntza"
