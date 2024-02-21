@@ -140,7 +140,6 @@ export class Header extends CanvasSectionObject {
 
 	_updateCanvas(): void {
 		if (this._headerInfo) {
-			this._reInitRowColumnHeaderStylesAfterModeChange();
 			this._headerInfo.update(this);
 			this.containerObject.requestReDraw();
 		}
