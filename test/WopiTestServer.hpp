@@ -450,28 +450,38 @@ protected:
             LOG_TST("FakeWOPIHost: Handling PutFile (#" << _countPutFile
                                                         << "): " << uriReq.getPath());
 
-            const std::string wopiTimestamp = request.get("X-COOL-WOPI-Timestamp", std::string());
-            if (!wopiTimestamp.empty())
+            return handleWopiUpload(request, message, socket);
+        }
+
+        return false;
+    }
+
+    /// Handles the uploading of a document to wopi.
+    virtual bool handleWopiUpload(const Poco::Net::HTTPRequest& request,
+                                  Poco::MemoryInputStream& message,
+                                  std::shared_ptr<StreamSocket>& socket)
+    {
+        const std::string wopiTimestamp = request.get("X-COOL-WOPI-Timestamp", std::string());
+        if (!wopiTimestamp.empty())
+        {
+            const std::string fileModifiedTime =
+                Util::getIso8601FracformatTime(getFileLastModifiedTime());
+            if (wopiTimestamp != fileModifiedTime)
             {
-                const std::string fileModifiedTime =
-                    Util::getIso8601FracformatTime(getFileLastModifiedTime());
-                if (wopiTimestamp != fileModifiedTime)
-                {
-                    LOG_TST("FakeWOPIHost: Document conflict detected, Stored ModifiedTime: ["
-                            << fileModifiedTime << "], Upload ModifiedTime: [" << wopiTimestamp
-                            << ']');
-                    http::Response httpResponse(http::StatusCode::Conflict);
-                    httpResponse.setBody(
-                        "{\"COOLStatusCode\":" +
-                        std::to_string(static_cast<int>(COOLStatusCode::DocChanged)) + '}');
-                    socket->sendAndShutdown(httpResponse);
-                    return true;
-                }
+                LOG_TST("FakeWOPIHost: Document conflict detected, Stored ModifiedTime: ["
+                        << fileModifiedTime << "], Upload ModifiedTime: [" << wopiTimestamp << ']');
+                http::Response httpResponse(http::StatusCode::Conflict);
+                httpResponse.setBody("{\"COOLStatusCode\":" +
+                                     std::to_string(static_cast<int>(COOLStatusCode::DocChanged)) +
+                                     '}');
+                socket->sendAndShutdown(httpResponse);
+                return true;
             }
-            else
-            {
-                LOG_TST("FakeWOPIHost: Forced document upload");
-            }
+        }
+        else
+        {
+            LOG_TST("FakeWOPIHost: Forced document upload");
+        }
 
             std::unique_ptr<http::Response> response = assertPutFileRequest(request);
             if (!response || response->statusLine().statusCategory() ==
@@ -481,9 +491,10 @@ protected:
                 LOG_TST("FakeWOPIHost: Writing document contents in storage (" << size << "bytes)");
                 std::vector<char> buffer(size);
                 message.read(buffer.data(), size);
-                setFileContent(std::string(buffer.begin(), buffer.end()));
+                setFileContent(Util::toString(buffer));
             }
 
+            const Poco::URI uriReq(request.getURI());
             if (response)
             {
                 LOG_TST("FakeWOPIHost: Response to POST "
@@ -506,9 +517,6 @@ protected:
 
             return true;
         }
-
-        return false;
-    }
 
     /// In some very rare cases we may get requests from other tests.
     /// This asserts that the URI in question is for our test.
