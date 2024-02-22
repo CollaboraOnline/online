@@ -396,7 +396,6 @@ dist-hook:
 EXTRA_DIST = discovery.xml \
              favicon.ico \
              coolkitconfig.xcu \
-             coolwsd.init.rhel6 \
              coolwsd.spec \
              coolwsd.xml.in \
              coolwsd.service \
