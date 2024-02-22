@@ -451,7 +451,6 @@ L.Map.include({
 			else if (map.getDocType() === 'drawing') {
 				document.getElementById('drawing-shortcuts').style.display='block';
 			}
-			document.getElementById('online-help-search-input').style.display='none';
 		} else /* id === 'online-help' */ {
 			document.getElementById('keyboard-shortcuts-content').style.display='none';
 			document.getElementById('online-help-search-input').setAttribute('placeholder',_('Search'));
