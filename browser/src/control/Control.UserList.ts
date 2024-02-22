@@ -17,18 +17,15 @@ interface UserExtraInfo {
 }
 
 interface User {
-	userName: string;
-	viewId: number;
-	extraInfo: UserExtraInfo;
-	color: string;
-}
-
-interface UserEvent {
 	username: string;
 	extraInfo: UserExtraInfo;
 	color: string;
-	viewId: number;
 	readonly: boolean;
+	you: boolean;
+}
+
+interface UserEvent extends User {
+	viewId: number;
 }
 
 class UserList extends L.Control {
@@ -40,7 +37,6 @@ class UserList extends L.Control {
 		nUsers?: string,
 		oneUser?: string,
 		noUser?: string,
-		listUser?: User[]
 	} = {
 		userLimitHeader: 6,
 		userPopupTimeout: null,
@@ -49,8 +45,9 @@ class UserList extends L.Control {
 		nUsers: undefined,
 		oneUser: undefined,
 		noUser: undefined,
-		listUser: []
 	};
+
+	users: Map<number, User> = new Map();
 
 	onAdd(map: ReturnType<typeof L.map>) {
 		this.map = map;
@@ -124,7 +121,7 @@ class UserList extends L.Control {
 		w2ui['actionbar'].uncheck('userlist');
 	}
 
-	createAvatar(viewId: number, _userName: string, extraInfo: UserExtraInfo, color: string) {
+	createAvatar(viewId: number, extraInfo: UserExtraInfo, color: string) {
 		var img;
 		if (extraInfo !== undefined && extraInfo.avatar !== undefined) {
 			img = L.DomUtil.create('img', 'avatar-img');
@@ -141,7 +138,7 @@ class UserList extends L.Control {
 		return img;
 	}
 
-	getUserItem(viewId: number, userName: string, extraInfo: UserExtraInfo, color: string) {
+	getUserItem(viewId: number, username: string, extraInfo: UserExtraInfo, color: string) {
 		var content = L.DomUtil.create('tr', 'useritem');
 		content.id = 'user-' + viewId;
 		$(document).on('click', '#' + content.id, this.onUseritemClicked.bind(this));
@@ -149,8 +146,8 @@ class UserList extends L.Control {
 		var iconTd = L.DomUtil.create('td', 'usercolor', content);
 		var nameTd = L.DomUtil.create('td', 'username cool-font', content);
 
-		iconTd.appendChild(this.createAvatar(viewId, userName, extraInfo, color));
-		nameTd.textContent = userName;
+		iconTd.appendChild(this.createAvatar(viewId, extraInfo, color));
+		nameTd.textContent = username;
 
 		return content;
 	}
@@ -189,91 +186,22 @@ class UserList extends L.Control {
 	}
 
 	renderHeaderAvatars() {
-		if (window.mode.isMobile() || this.hideUserList() || this.options.listUser.length === 1) {
-			document.getElementById('userListSummary').removeAttribute('accesskey');
+		const userListElement = document.getElementById('userListSummary');
+
+		if (window.mode.isMobile() || this.hideUserList() || this.users.size === 1) {
+			userListElement.removeAttribute('accesskey');
+			userListElement.replaceChildren();
 			return;
 		}
 
-		var headerUserList = this.options.listUser.slice(-this.options.userLimitHeader);
-		document.getElementById('userListSummary').setAttribute('accesskey','UP');
+		const users = this.users.entries();
+		const avatarUsers = [users.next().value, users.next().value, users.next().value].filter(user => user !== undefined);
 
-		// Remove users that should no longer be in the header
-		Array.from(document.querySelectorAll('#userListSummary [data-view-id]')).map(function(element) {
-			return element.getAttribute('data-view-id');
-		}).filter(function(viewId) {
-			return headerUserList.map(function(user: User) {
-				return user.viewId;
-			}).indexOf(parseInt(viewId)) === -1;
-		}).forEach(function(viewId) {
-			L.DomUtil.remove(document.querySelector('#userListSummary [data-view-id="' + viewId + '"]'));
-		});
+		userListElement.setAttribute('accesskey','UP');
 
-		// Summary rendering
-		headerUserList.forEach(function (user: User) {
-			if (!document.querySelector('#userListSummary [data-view-id="' + user.viewId + '"]')) {
-				document.getElementById('userListSummary').appendChild(this.createAvatar(user.viewId, user.userName, user.extraInfo, user.color));
-			}
-		}.bind(this));
-
-		// Popover rendering
-		this.options.listUser.forEach(function (user: User) {
-			if (document.querySelector('#userListPopover .user-list-item[data-view-id="' + user.viewId + '"]')) {
-				return;
-			}
-
-			var userLabel = L.DomUtil.create('div', 'user-list-item--name');
-			userLabel.innerText = user.userName;
-
-			var userFollowingLabel = L.DomUtil.create('div', 'user-list-item--following-label');
-			userFollowingLabel.innerText = _('Following');
-			var userLabelContainer = L.DomUtil.create('div', 'user-list-item--name-container');
-			userLabelContainer.appendChild(userLabel);
-			userLabelContainer.appendChild(userFollowingLabel);
-
-			var listItem = L.DomUtil.create('div', 'user-list-item');
-			listItem.setAttribute('data-view-id', user.viewId);
-			listItem.setAttribute('role', 'button');
-			listItem.appendChild(this.createAvatar(user.viewId, user.userName, user.extraInfo, user.color));
-			listItem.appendChild(userLabelContainer);
-			listItem.addEventListener('click', function () {
-				this.followUser(user.viewId);
-			}.bind(this), false);
-
-			var popoverList = document.getElementById('userListPopover');
-			popoverList.insertBefore(listItem, popoverList.lastChild);
-		}.bind(this));
-
-		if (!document.getElementById('follow-editor')) {
-			var followEditorWrapper = L.DomUtil.create('div', '');
-			followEditorWrapper.id = 'follow-editor';
-			var followEditorCheckbox = L.DomUtil.create('input', 'follow-editor-checkbox', followEditorWrapper);
-			followEditorCheckbox.id = 'follow-editor-checkbox';
-			followEditorCheckbox.setAttribute('type', 'checkbox');
-			followEditorCheckbox.onchange = function(event: Event) {
-				(window as any /* TODO: remove cast after gh#8221 */).editorUpdate(event);
-			};
-			var followEditorCheckboxLabel = L.DomUtil.create('label', 'follow-editor-label', followEditorWrapper);
-			followEditorCheckboxLabel.innerText = _('Always follow the editor');
-			followEditorCheckboxLabel.setAttribute('for', 'follow-editor-checkbox');
-
-			document.getElementById('userListPopover').appendChild(followEditorWrapper);
-		}
-
-		(document.getElementById('follow-editor-checkbox') as HTMLInputElement).checked = this.map._docLayer._followEditor;
-	}
-
-	removeUserFromHeaderAvatars(viewId: number) {
-		var index = null;
-		this.options.listUser.forEach(function(item, idx) {
-			if (item.viewId == viewId) {
-				index = idx;
-			}
-		});
-
-		L.DomUtil.remove(document.querySelector('#userListSummary [data-view-id="' + viewId + '"]'));
-		L.DomUtil.remove(document.querySelector('#userListPopover .user-list-item[data-view-id="' + viewId + '"]'));
-		this.options.listUser.splice(index, 1);
-		this.renderHeaderAvatars();
+		userListElement.replaceChildren(...avatarUsers.map(([viewId, user]) => {
+			return this.createAvatar(viewId, user.extraInfo, user.color);
+		}));
 	}
 
 	updateUserListCount() {
@@ -285,7 +213,7 @@ class UserList extends L.Control {
 
 		var count = $(userlistItem.html).find('#userlist_table tbody tr').length;
 		if (count > 1) {
-			userlistItem.text = this.options.nUsers.replace('%n', count);
+			userlistItem.text = this.options.nUsers.replace('%n', count.toString());
 		} else if (count === 1) {
 			userlistItem.text = this.options.oneUser;
 		} else {
@@ -322,7 +250,7 @@ class UserList extends L.Control {
 			var followUser = docLayer._followUser;
 
 			if (cBox)
-				cBox.checked = docLayer._followEditor;
+				(cBox as HTMLInputElement).checked = docLayer._followEditor;
 
 			if (docLayer.editorId !== -1 && this.map._viewInfo[editorId])
 				$('#current-editor').text(this.map._viewInfo[editorId].username);
@@ -335,75 +263,130 @@ class UserList extends L.Control {
 	}
 
 	onAddView(e: UserEvent) {
-		var userlistItem = w2ui['actionbar'].get('userlist');
-		var username = this.escapeHtml(e.username);
-		var showPopup = false;
+		let color;
+		let username;
+		let you;
 
-		if (userlistItem !== null)
-			showPopup = $(userlistItem.html).find('#userlist_table tbody tr').length > 0;
-
-		if (showPopup) {
-			$('#tb_actionbar_item_userlist')
-				.w2overlay({
-					class: 'cool-font',
-					html: this.options.userJoinedPopupMessage.replace('%user', username),
-					style: 'padding: 5px'
-				});
-			clearTimeout(this.options.userPopupTimeout);
-			this.options.userPopupTimeout = setTimeout(() => {
-				$('#tb_actionbar_item_userlist').w2overlay('');
-				clearTimeout(this.options.userPopupTimeout);
-				this.options.userPopupTimeout = null;
-			}, 3000);
-		}
-
-		var color = L.LOUtil.rgbToHex(this.map.getViewColor(e.viewId));
 		if (e.viewId === this.map._docLayer._viewId) {
 			username = _('You');
 			color = '#000';
+			you = true;
+		} else {
+			username = this.escapeHtml(e.username);
+			color = L.LOUtil.rgbToHex(this.map.getViewColor(e.viewId));
+			you = false;
 		}
 
-		// Mention readonly sessions in userlist
-		if (e.readonly) {
-			username += ' (' +  _('Readonly') + ')';
+		this.users.set(e.viewId, {you: you, username: username, extraInfo: e.extraInfo, color: color, readonly: e.readonly});
+
+		if (!you) {
+			this.showJoinLeaveMessage('join', username, color);
 		}
 
-		if (userlistItem !== null) {
-			var newhtml = $(userlistItem.html).find('#userlist_table tbody').append(this.getUserItem(e.viewId, username, e.extraInfo, color)).parent().parent()[0].outerHTML;
-			userlistItem.html = newhtml;
-			this.updateUserListCount();
-		}
-
-		this.options.listUser.push({viewId: e.viewId, userName: username, extraInfo: e.extraInfo, color: color});
-		this.renderHeaderAvatars();
+		this.renderAll();
 	}
 
 	onRemoveView(e: UserEvent) {
-		var username = this.escapeHtml(e.username);
+		const user = this.users.get(e.viewId);
+		this.users.delete(e.viewId);
+
+		if (user !== undefined) {
+			this.showJoinLeaveMessage('leave', user.username, user.color);
+		}
+
+		this.renderAll();
+	}
+
+	renderAll() {
+		this.updateUserListCount();
+		this.renderHeaderAvatars();
+		this.renderHeaderAvatarPopover();
+		this.renderUserList();
+	}
+
+	showJoinLeaveMessage(type: 'join' | 'leave', username: string, _color: string /* TODO: make this display in user colors */) {
+		let message;
+
+		if (type === 'join') {
+			message = this.options.userJoinedPopupMessage.replace('%user', username);
+		} else {
+			message = this.options.userLeftPopupMessage.replace('%user', username);
+		}
+
 		$('#tb_actionbar_item_userlist')
 			.w2overlay({
 				class: 'cool-font',
-				html: this.options.userLeftPopupMessage.replace('%user', username),
+				html: message,
 				style: 'padding: 5px'
 			});
+
 		clearTimeout(this.options.userPopupTimeout);
-		this.options.userPopupTimeout = setTimeout(() => {
-			$('#tb_actionbar_item_userlist').w2overlay('');
-			clearTimeout(this.options.userPopupTimeout);
-			this.options.userPopupTimeout = null;
-		}, 3000);
+		this.options.userPopupTimeout = setTimeout(() => $('#tb_actionbar_item_userlist').w2overlay(''), 3000);
+	}
 
-		if (e.viewId === this.map._docLayer._followThis) {
-			this.map._docLayer._followThis = -1;
-			this.map._docLayer._followUser = false;
-		}
+	renderUserList() {
+		const headerUserList = Array.from(this.users.entries());
 
-		var userlistItem = w2ui['actionbar'].get('userlist');
-		if (userlistItem !== null) {
-			userlistItem.html = $(userlistItem.html).find('#user-' + e.viewId).remove().end()[0].outerHTML;
-			this.updateUserListCount();
-			this.removeUserFromHeaderAvatars(e.viewId);
-		}
+		const userItems = headerUserList.map(([viewId, user]) => {
+			let username = user.username;
+
+			if (user.readonly) {
+				username += ' (' +  _('Readonly') + ')';
+			}
+
+			return this.getUserItem(viewId, username, user.extraInfo, user.color);
+		});
+
+		const userlistItem = w2ui['actionbar'].get('userlist');
+		const userlistElement = $(userlistItem.html).find('#userlist_table tbody');
+		userlistElement.children().replaceWith(userItems);
+		const newHtml = userlistElement.parent().parent()[0].outerHTML;
+		userlistItem.html = newHtml;
+	}
+
+	renderHeaderAvatarPopover() {
+		// Popover rendering
+		const users = Array.from(this.users.entries());
+		const popoverElement = document.getElementById('userListPopover');
+
+		const userElements = users.map(([viewId, user]) => {
+			const userLabel = L.DomUtil.create('div', 'user-list-item--name');
+			userLabel.innerText = user.username;
+
+			const userFollowingLabel = L.DomUtil.create('div', 'user-list-item--following-label');
+			userFollowingLabel.innerText = _('Following');
+
+			const userLabelContainer = L.DomUtil.create('div', 'user-list-item--name-container');
+			userLabelContainer.appendChild(userLabel);
+			userLabelContainer.appendChild(userFollowingLabel);
+
+			const listItem = L.DomUtil.create('div', 'user-list-item');
+			listItem.setAttribute('data-view-id', viewId);
+			listItem.setAttribute('role', 'button');
+			listItem.appendChild(this.createAvatar(viewId, user.extraInfo, user.color));
+			listItem.appendChild(userLabelContainer);
+			listItem.addEventListener('click', () => {
+				this.followUser(viewId);
+			});
+
+			return listItem;
+		});
+
+		const followEditorWrapper = L.DomUtil.create('div', '');
+		followEditorWrapper.id = 'follow-editor';
+		const followEditorCheckbox = L.DomUtil.create('input', 'follow-editor-checkbox', followEditorWrapper);
+		followEditorCheckbox.id = 'follow-editor-checkbox';
+		followEditorCheckbox.setAttribute('type', 'checkbox');
+		followEditorCheckbox.onchange = function(event: Event) {
+			(window as any).editorUpdate(event);
+		};
+		const followEditorCheckboxLabel = L.DomUtil.create('label', 'follow-editor-label', followEditorWrapper);
+		followEditorCheckboxLabel.innerText = _('Always follow the editor');
+		followEditorCheckboxLabel.setAttribute('for', 'follow-editor-checkbox');
+
+		popoverElement.replaceChildren(...userElements, followEditorWrapper);
+
+		(document.getElementById('follow-editor-checkbox') as HTMLInputElement).checked = this.map._docLayer._followEditor;
 	}
 }
 
