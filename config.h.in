@@ -55,12 +55,6 @@
 /* Define to 1 if you have the `ppoll' function. */
 #define HAVE_PPOLL 0
 
-/* Whether the used C++ has support for std::filesystem. */
-#undef HAVE_STD_FILESYSTEM
-
-/* Whether the std::filesystem is in the experimental header. */
-#undef HAVE_STD_FILESYSTEM_EXPERIMENTAL
-
 /* Default value of help root URL */
 #undef HELP_URL
 

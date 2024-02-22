@@ -32,21 +32,10 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
+#include <filesystem>
 #include <fstream>
 #include <mutex>
 #include <string>
-
-#if HAVE_STD_FILESYSTEM
-# if HAVE_STD_FILESYSTEM_EXPERIMENTAL
-#  include <experimental/filesystem>
-namespace filesystem = ::std::experimental::filesystem;
-# else
-#  include <filesystem>
-namespace filesystem = ::std::filesystem;
-# endif
-#else
-# include <Poco/TemporaryFile.h>
-#endif
 
 #include <Poco/File.h>
 #include <Poco/Path.h>
@@ -60,11 +49,7 @@ namespace FileUtil
     std::string createRandomDir(const std::string& path)
     {
         std::string name = Util::rng::getFilename(64);
-#if HAVE_STD_FILESYSTEM
-        filesystem::create_directory(path + '/' + name);
-#else
-        Poco::File(Poco::Path(path, name)).createDirectories();
-#endif
+        std::filesystem::create_directory(path + '/' + name);
         return name;
     }
 
@@ -151,11 +136,7 @@ namespace FileUtil
     std::string getSysTempDirectoryPath()
     {
         // Don't const to allow for automatic move on return.
-#if HAVE_STD_FILESYSTEM
-        std::string path = filesystem::temp_directory_path();
-#else
-        std::string path = Poco::Path::temp();
-#endif
+        std::string path = std::filesystem::temp_directory_path();
 
         if (!path.empty())
             return path;
@@ -231,9 +212,9 @@ namespace FileUtil
 #if 0 // HAVE_STD_FILESYSTEM
         std::error_code ec;
         if (recursive)
-            filesystem::remove_all(path, ec);
+            std::filesystem::remove_all(path, ec);
         else
-            filesystem::remove(path, ec);
+            std::filesystem::remove(path, ec);
 
         // Already removed or we don't care about failures.
         (void) ec;
