@@ -132,7 +132,16 @@ class UserList extends L.Control {
 		w2ui['actionbar'].uncheck('userlist');
 	}
 
-	createAvatar(viewId: number, extraInfo: UserExtraInfo, color: string) {
+	createAvatar(
+		viewId: number,
+		extraInfo: UserExtraInfo,
+		color: string,
+		zIndex?: number | 'auto',
+	) {
+		if (zIndex === undefined) {
+			zIndex = 'auto';
+		}
+
 		var img;
 		if (extraInfo !== undefined && extraInfo.avatar !== undefined) {
 			img = L.DomUtil.create('img', 'avatar-img');
@@ -145,7 +154,7 @@ class UserList extends L.Control {
 				'onerror',
 				"this.onerror=null;this.src='" + altImg + "';",
 			);
-			$(img).css({ 'border-color': color });
+			$(img).css({ 'border-color': color, 'z-index': zIndex });
 		} else {
 			img = L.DomUtil.create('div', 'user-info');
 			$(img).css({
@@ -155,6 +164,7 @@ class UserList extends L.Control {
 					'url("' +
 					L.LOUtil.getImageURL('user.svg', this.map._docLayer._docType) +
 					'")',
+				'z-index': zIndex,
 			});
 		}
 		img.setAttribute('data-view-id', viewId);
@@ -279,16 +289,22 @@ class UserList extends L.Control {
 			return;
 		}
 
+		const displayCount = this.options.userLimitHeader;
 		const avatarUsers = Array.from(this.getSortedUsers()).slice(
 			0,
-			this.options.userLimitHeader,
+			displayCount,
 		);
 
 		userListElement.setAttribute('accesskey', 'UP');
 
 		userListElement.replaceChildren(
-			...avatarUsers.map(([viewId, user]) => {
-				return this.createAvatar(viewId, user.extraInfo, user.color);
+			...avatarUsers.map(([viewId, user], index) => {
+				return this.createAvatar(
+					viewId,
+					user.extraInfo,
+					user.color,
+					displayCount - index,
+				);
 			}),
 		);
 	}
