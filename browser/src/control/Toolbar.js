@@ -454,6 +454,7 @@ L.Map.include({
 			document.getElementById('online-help-search-input').style.display='none';
 		} else /* id === 'online-help' */ {
 			document.getElementById('keyboard-shortcuts-content').style.display='none';
+			document.getElementById('online-help-search-input').setAttribute('placeholder',_('Search'));
 			if (window.socketProxy) {
 				var helpdiv = document.getElementById('online-help-content');
 				var imgList = helpdiv.querySelectorAll('img');
@@ -596,7 +597,7 @@ L.Map.include({
 			// check main section text matches or not
 			var sectionText = mainSection.textContent.toLowerCase();
 			var containsTerm = sectionText.includes(searchTerm.toLowerCase());
-			
+
 			//sub-section text matches or not
 			var subSections = mainSection.querySelectorAll('.sub-section');
 			var subSectionContainsTerm = false;
