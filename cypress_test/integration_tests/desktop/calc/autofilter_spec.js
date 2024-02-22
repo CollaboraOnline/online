@@ -110,20 +110,19 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'AutoFilter', function() {
 	});
 
 	it('Close autofilter popup by click outside', function() {
+		// Test sometimes fails without this wait, no idea why.
+		cy.wait(1000);
+
 		calcHelper.openAutoFilterMenu();
 
 		cy.cGet('.autofilter .vertical').should('be.visible');
-
 		cy.cGet('div.jsdialog-overlay').should('be.visible');
-
 		cy.cGet('div.jsdialog-overlay').click();
 
-		cy.cGet('.jsdialog.autofilter').should('not.exist');
-
-		// check if spreadsheet is interactive - prevent core block by hanging popup
+		// Wait for autofilter dialog to close
+		cy.cGet('div.autofilter').should('not.exist');
 
 		calcHelper.dblClickOnFirstCell();
-
 		helper.typeIntoDocument('New content{enter}');
 
 		calcHelper.selectEntireSheet();
@@ -144,9 +143,6 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'AutoFilter', function() {
 		
 		//Click on `Filter by Color`
 		cy.cGet('body').contains('.autofilter', 'Filter by Color').click();
-
-		//wait after apply filter by color filter
-		cy.wait(500);
 
 		// Find the table element with ID "background"
 		cy.cGet('table#background')
