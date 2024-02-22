@@ -194,20 +194,26 @@ function ensureViewContainsCellCursor() {
 	});
 }
 
+function assertSheetContents(expectedData) {
+	selectEntireSheet();
+	assertDataClipboardTable(expectedData);
+}
+
 function assertDataClipboardTable(expectedData) {
 	cy.cGet('#copy-paste-container table td')
 		.should(function(cells) {
 			expect(cells).to.have.lengthOf(expectedData.length);
 		});
 
-	// Wait for clipboard to update anyways, in case previous contents were same length
+	// Wait for clipboard to update anyways, in case we get here before the
+	// update because the new contents are the same length as the previous
 	cy.wait(200);
 
 	var data = [];
 
 	cy.cGet('#copy-paste-container tbody').find('td').each(($el) => {
-		cy.wrap($el)
-			.invoke('text')
+		cy.wrap($el,{log: false})
+			.invoke({log: false}, 'text')
 			.then(text => {
 				data.push(text);
 			});
@@ -240,6 +246,6 @@ module.exports.removeTextSelection = removeTextSelection;
 module.exports.selectEntireSheet = selectEntireSheet;
 module.exports.selectFirstColumn = selectFirstColumn;
 module.exports.ensureViewContainsCellCursor = ensureViewContainsCellCursor;
-module.exports.assertDataClipboardTable = assertDataClipboardTable;
+module.exports.assertSheetContents = assertSheetContents;
 module.exports.selectCellsInRange = selectCellsInRange;
 module.exports.openAutoFilterMenu = openAutoFilterMenu;

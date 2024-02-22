@@ -22,11 +22,7 @@ describe(['tagdesktop'], 'Idle', function() {
 		const content = 'New content';
 		helper.typeIntoDocument(content + '{enter}');
 
-		calcHelper.selectEntireSheet();
-
-		helper.waitUntilIdle('#copy-paste-container tbody');
-
-		calcHelper.assertDataClipboardTable(['C' + content + 'ypress Test', 'Status', 'Test 1', 'Pass', 'Test 2', 'Fail', 'Test 3', 'Pass', 'Test 4', '', 'Test 5', 'Fail']);
+		calcHelper.assertSheetContents(['C' + content + 'ypress Test', 'Status', 'Test 1', 'Pass', 'Test 2', 'Fail', 'Test 3', 'Pass', 'Test 4', '', 'Test 5', 'Fail']);
 	}
 
 	it('Check idle out of focus', function() {

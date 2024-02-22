@@ -29,11 +29,6 @@ describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Open different file t
 	});
 
 	function assertData() {
-		//select all the content of doc
-		calcHelper.selectEntireSheet();
-
-		helper.waitUntilIdle('#copy-paste-container');
-
 		var expectedData = [
 			'0', 'First Name', 'Last Name', 'Gender', 'Country', 'Age', 'Date', 'Id',
 			'1', 'Dulce', 'Abril', 'Female', 'United States', '32', '15/10/2017', '1562',
@@ -41,8 +36,7 @@ describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Open different file t
 			'3', 'Philip', 'Gent', 'Male', 'France', '36', '21/05/2015', '2587',
 			'4', 'Kathleen', 'Hanner', 'Female', 'United States', '25', '15/10/2017', '3549',
 		];
-
-		calcHelper.assertDataClipboardTable(expectedData);
+		calcHelper.assertSheetContents(expectedData);
 	}
 
 	it('Open xls file', { defaultCommandTimeout: 60000 }, function () {
