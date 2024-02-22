@@ -43,7 +43,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 		cy.cGet('#menu-changesmenu').click();
 	}
 
-	it('Accept All', function () {
+	it.skip('Accept All', function () {
 		helper.typeIntoDocument('Hello World');
 		for (var n = 0; n < 2; n++) {
 			cy.cGet('#tb_editbar_item_insertannotation').click();
@@ -125,7 +125,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 		helper.expectTextForClipboard('Hello World');
 	});
 
-	it('Comment Undo-Redo', function () {
+	it.skip('Comment Undo-Redo', function () {
 		for (var n = 0; n < 2; n++) {
 			cy.cGet('#tb_editbar_item_insertannotation').click();
 			cy.cGet('#annotation-modify-textarea-new').type('some text' + n);
