@@ -12,12 +12,11 @@
 #include <config.h>
 #include <config_version.h>
 
-#include <ConfigUtil.hpp>
-#include <JailUtil.hpp>
-#include <ProofKey.hpp>
-#include <Poco/Net/NetException.h>
-
 #include <ClientRequestDispatcher.hpp>
+
+#if ENABLE_FEATURE_LOCK
+#include "CommandControl.hpp"
+#endif
 
 #include <Admin.hpp>
 #include <ClientSession.hpp>
@@ -32,6 +31,9 @@
 #include <ProxyRequestHandler.hpp>
 #include <WopiProxy.hpp>
 #include <net/HttpHelper.hpp>
+#include <ConfigUtil.hpp>
+#include <JailUtil.hpp>
+#include <ProofKey.hpp>
 
 #include <Poco/File.h>
 #include <Poco/StreamCopier.h>
@@ -42,6 +44,7 @@
 #include <Poco/DOM/Element.h>
 #include <Poco/DOM/NodeList.h>
 #include <Poco/Net/DNS.h>
+#include <Poco/Net/NetException.h>
 #include <Poco/Net/HTMLForm.h>
 #include <Poco/Net/PartHandler.h>
 #include <Poco/SAX/InputSource.h>
