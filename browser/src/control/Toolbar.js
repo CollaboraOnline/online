@@ -577,16 +577,22 @@ L.Map.include({
 				startFilter = false;
 			}
 			else {
-				this.filterResults(searchTerm, isAnyMatchingContent);
+				this.filterResults(searchTerm, isAnyMatchingContent, id);
 			}
 		}.bind(this));
 	},
 
 
-	filterResults: function (searchTerm, isAnyMatchingContent) {
+	filterResults: function (searchTerm, isAnyMatchingContent, id) {
 
-		// Select main sections
-		var mainSections = document.querySelectorAll('.section');
+		var mainDiv = document.getElementById(id);
+		// Combine query parameters to select main sections
+		var mainSectionsQuery = '.section:not(div.text .section, div.spreadsheet .section, div.presentation .section)';
+		var docType = this.getDocType() === 'drawing' ? 'presentation' : this.getDocType();
+		mainSectionsQuery += ', div.' + docType + ' .section';
+
+		// Select nain sections elements within the mainDiv
+		var mainSections = mainDiv.querySelectorAll(mainSectionsQuery);
 		isAnyMatchingContent = false;
 
 		// Loop through each main section
