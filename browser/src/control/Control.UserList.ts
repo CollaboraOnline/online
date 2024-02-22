@@ -91,15 +91,20 @@ class UserList extends L.Control {
 	}
 
 	followUser(viewId: number) {
+		const myViewId = this.map._docLayer._viewId;
+		const followingViewId = this.map._docLayer._followThis;
+
+		const follow = viewId !== myViewId && viewId !== followingViewId;
+
 		$('#userListPopover').hide();
 		var docLayer = this.map._docLayer;
-		this.map._goToViewId(viewId);
 
-		if (viewId === docLayer._viewId) {
+		if (!follow) {
+			this.map._goToViewId(myViewId);
 			this.map._setFollowing(false, null);
 			w2ui['actionbar'].uncheck('userlist');
 			return;
-		} else if (docLayer._followThis !== -1) {
+		} else if (followingViewId !== -1) {
 			this.map._setFollowing(false, null);
 		}
 
