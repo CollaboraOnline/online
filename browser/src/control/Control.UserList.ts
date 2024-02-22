@@ -126,17 +126,21 @@ class UserList extends L.Control {
 		w2ui['actionbar'].uncheck('userlist');
 	}
 
-	createAvatar(viewId: number, extraInfo: UserExtraInfo, color: string) {
+	createAvatar(viewId: number, extraInfo: UserExtraInfo, color: string, zIndex?: number | 'auto') {
+		if (zIndex === undefined) {
+			zIndex = 'auto';
+		}
+
 		var img;
 		if (extraInfo !== undefined && extraInfo.avatar !== undefined) {
 			img = L.DomUtil.create('img', 'avatar-img');
 			img.src = extraInfo.avatar;
 			var altImg = L.LOUtil.getImageURL('user.svg', this.map._docLayer._docType);
 			img.setAttribute('onerror', 'this.onerror=null;this.src=\'' + altImg + '\';');
-			$(img).css({'border-color': color});
+			$(img).css({'border-color': color, 'z-index': zIndex});
 		} else {
 			img = L.DomUtil.create('div', 'user-info');
-			$(img).css({'border-color': color, 'background-color': '#eee', 'background-image': 'url("' + L.LOUtil.getImageURL('user.svg', this.map._docLayer._docType) + '")'});
+			$(img).css({'border-color': color, 'background-color': '#eee', 'background-image': 'url("' + L.LOUtil.getImageURL('user.svg', this.map._docLayer._docType) + '")', 'z-index': zIndex});
 		}
 		img.setAttribute('data-view-id', viewId);
 		L.LOUtil.checkIfImageExists(img);
@@ -236,12 +240,13 @@ class UserList extends L.Control {
 			return;
 		}
 
-		const avatarUsers = Array.from(this.getSortedUsers()).slice(0, this.options.userLimitHeader);
+		const displayCount = this.options.userLimitHeader;
+		const avatarUsers = Array.from(this.getSortedUsers()).slice(0, displayCount);
 
 		userListElement.setAttribute('accesskey','UP');
 
-		userListElement.replaceChildren(...avatarUsers.map(([viewId, user]) => {
-			return this.createAvatar(viewId, user.extraInfo, user.color);
+		userListElement.replaceChildren(...avatarUsers.map(([viewId, user], index) => {
+			return this.createAvatar(viewId, user.extraInfo, user.color, displayCount - index);
 		}));
 	}
 
