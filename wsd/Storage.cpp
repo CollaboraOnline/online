@@ -198,7 +198,7 @@ bool isTemplate(const std::string& filename)
 {
     std::vector<std::string> templateExtensions {".stw", ".ott", ".dot", ".dotx", ".dotm", ".otm", ".stc", ".ots", ".xltx", ".xltm", ".sti", ".otp", ".potx", ".potm", ".std", ".otg"};
     for (auto & extension : templateExtensions)
-        if (Util::endsWith(filename, extension))
+        if (filename.ends_with(extension))
             return true;
     return false;
 }
@@ -861,7 +861,7 @@ WopiStorage::WOPIFileInfo::WOPIFileInfo(const FileInfo& fileInfo,
     JsonUtil::findJSONValue(object, "FileUrl", _fileUrl);
 
     // Update the scheme to https if ssl or ssl termination is on
-    if (Util::startsWith(_postMessageOrigin, "http://") &&
+    if (_postMessageOrigin.starts_with("http://") &&
         (COOLWSD::isSSLEnabled() || COOLWSD::isSSLTermination()))
     {
         _postMessageOrigin.replace(0, 4, "https");

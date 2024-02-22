@@ -55,7 +55,7 @@ std::map<std::string, std::string> getParams(const std::string& uri)
 RequestDetails::RequestDetails(Poco::Net::HTTPRequest &request, const std::string& serviceRoot)
 {
     // Check and remove the ServiceRoot from the request.getURI()
-    if (!Util::startsWith(request.getURI(), serviceRoot))
+    if (!request.getURI().starts_with(serviceRoot))
         throw BadRequestException("The request does not start with prefix: " + serviceRoot);
 
     // re-writes ServiceRoot out of request

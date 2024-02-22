@@ -221,7 +221,7 @@ FieldParseState StatusLine::parse(const char* p, int64_t& len)
     const int versionMaj = version[VersionMajPos] - '0';
     const int versionMin = version[VersionMinPos] - '0';
     // Version may not be null-terminated.
-    if (!Util::startsWith(std::string(version, VersionLen), "HTTP/") ||
+    if (!std::string(version, VersionLen).starts_with("HTTP/") ||
         (versionMaj < 0 || versionMaj > 9) || version[VersionDotPos] != '.' ||
         (versionMin < 0 || versionMin > 9) || !isWhitespace(version[VersionBreakPos]))
     {
@@ -359,7 +359,7 @@ int64_t Request::readData(const char* p, const int64_t len)
         const int versionMaj = version[VersionMajPos] - '0';
         const int versionMin = version[VersionMinPos] - '0';
         // Version may not be null-terminated.
-        if (!Util::startsWith(std::string(version, VersionLen), "HTTP/") ||
+        if (!std::string(version, VersionLen).starts_with("HTTP/") ||
             (versionMaj < 0 || versionMaj > 9) || version[VersionDotPos] != '.' ||
             (versionMin < 0 || versionMin > 9) || !isWhitespace(version[VersionBreakPos]))
         {

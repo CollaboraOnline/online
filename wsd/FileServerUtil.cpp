@@ -286,7 +286,7 @@ std::string FileServerRequestHandler::uiDefaultsToJSON(const std::string& uiDefa
             currentDef = &presentationDefs;
             key = keyValue[0].substr(12);
         }
-        else if (Util::startsWith(keyValue[0], "Drawing"))
+        else if (keyValue[0].starts_with("Drawing"))
         {
             currentDef = &drawingDefs;
             key = keyValue[0].substr(7);

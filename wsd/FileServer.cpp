@@ -381,7 +381,7 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
         const std::string prefix = "/wopi/files";
         const std::string suffix = "/contents";
         std::string localPath;
-        if (Util::endsWith(path.toString(), suffix))
+        if (path.toString().ends_with(suffix))
         {
             localPath = path.toString().substr(prefix.length(), path.toString().length() - prefix.length() - suffix.length());
         }
@@ -396,7 +396,7 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
             throw BadRequestException("Invalid URI: " + localPath);
         }
 
-        if (request.getMethod() == "GET" && !Util::endsWith(path.toString(), suffix))
+        if (request.getMethod() == "GET" && !path.toString().ends_with(suffix))
         {
             std::shared_ptr<LocalFileInfo> localFile =
                 LocalFileInfo::getOrCreateFile(localPath, path.getFileName());
@@ -430,7 +430,7 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
 
             return;
         }
-        else if(request.getMethod() == "GET" && Util::endsWith(path.toString(), suffix))
+        else if(request.getMethod() == "GET" && path.toString().ends_with(suffix))
         {
             std::shared_ptr<LocalFileInfo> localFile =
                 LocalFileInfo::getOrCreateFile(localPath,path.getFileName());
@@ -444,7 +444,7 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
             socket->send(httpResponse);
             return;
         }
-        else if (request.getMethod() == "POST" && Util::endsWith(path.toString(), suffix))
+        else if (request.getMethod() == "POST" && path.toString().ends_with(suffix))
         {
             std::shared_ptr<LocalFileInfo> localFile =
                 LocalFileInfo::getOrCreateFile(localPath,path.getFileName());
@@ -542,7 +542,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
             config.getString("ver_suffix", "") + "\"";
 
 #if ENABLE_DEBUG
-        if (Util::startsWith(relPath, std::string("/wopi/files"))) {
+        if (relPath.starts_with("/wopi/files")) {
             handleWopiRequest(request, requestDetails, message, socket);
             return;
         }
@@ -823,7 +823,7 @@ void FileServerRequestHandler::readDirToHash(const std::string &basePath, const 
         if (S_ISDIR(fileStat.st_mode))
             readDirToHash(basePath, relPath);
 
-        else if (S_ISREG(fileStat.st_mode) && Util::endsWith(relPath, ".br"))
+        else if (S_ISREG(fileStat.st_mode) && relPath.ends_with(".br"))
         {
             // Only cache without compressing.
             fileCount++;

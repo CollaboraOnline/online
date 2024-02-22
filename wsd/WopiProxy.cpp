@@ -22,7 +22,7 @@
 void WopiProxy::handleRequest([[maybe_unused]] SocketPoll& poll, SocketDisposition& disposition)
 {
     std::string url = _requestDetails.getDocumentURI();
-    if (Util::startsWith(url, "/wasm/"))
+    if (url.starts_with("/wasm/"))
     {
         url = url.substr(6);
     }

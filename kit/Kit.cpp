@@ -557,7 +557,7 @@ namespace
             return FTW_CONTINUE;
         }
 
-        if (Util::startsWith(fpath, childRootForGCDAFiles))
+        if (fpath.starts_with(childRootForGCDAFiles))
         {
             LOG_TRC("nftw: Skipping childRoot subtree: " << fpath);
             return FTW_SKIP_SUBTREE;

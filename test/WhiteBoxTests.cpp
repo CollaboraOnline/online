@@ -1146,14 +1146,6 @@ void WhiteBoxTests::testStringCompare()
     LOK_ASSERT(!Util::iequal("abc", "abcd"));
 
     LOK_ASSERT(!Util::iequal("abc", 3, "abcd", 4));
-
-    LOK_ASSERT(!Util::startsWith("abc", "abcd"));
-    LOK_ASSERT(Util::startsWith("abcd", "abc"));
-    LOK_ASSERT(Util::startsWith("abcd", "abcd"));
-
-    LOK_ASSERT(!Util::endsWith("abc", "abcd"));
-    LOK_ASSERT(Util::endsWith("abcd", "bcd"));
-    LOK_ASSERT(Util::endsWith("abcd", "abcd"));
 }
 
 void WhiteBoxTests::testParseUri()

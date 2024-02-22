@@ -783,7 +783,7 @@ bool ChildSession::loadDocument(const StringVector& tokens)
         if (!_jailRoot.empty())
         {
             url = Protocol + _jailRoot;
-            if (Util::startsWith(getJailedFilePath(), Protocol))
+            if (getJailedFilePath().starts_with(Protocol))
                 url += getJailedFilePath().substr(sizeof(Protocol) - 1);
             else
                 url += getJailedFilePath();
@@ -1413,7 +1413,7 @@ bool ChildSession::insertFile(const StringVector& tokens)
         else if (type == "graphicurl")
         {
             URI::decode(name, url);
-            if (!Util::startsWith(Util::toLower(url), "http"))
+            if (!Util::toLower(url).starts_with("http"))
             {
                 // Do not allow arbitrary schemes, especially "file://".
                 sendTextFrameAndLogError("error: cmd=insertfile kind=syntax");
@@ -2891,7 +2891,7 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
         break;
     case LOK_CALLBACK_STATE_CHANGED:
         sendTextFrame("statechanged: " + payload);
-        if (Util::startsWith(payload, ".uno:SlideMasterPage"))
+        if (payload.starts_with(".uno:SlideMasterPage"))
         {
             std::string status = LOKitHelper::documentStatus(getLOKitDocument()->get());
             sendTextFrame("status: " + status);

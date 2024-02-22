@@ -1453,7 +1453,7 @@ bool ClientSession::sendCombinedTiles(const char* /*buffer*/, int /*length*/, co
 bool ClientSession::forwardToChild(const std::string& message,
                                    const std::shared_ptr<DocumentBroker>& docBroker)
 {
-    const bool binary = Util::startsWith(message, "paste") || Util::startsWith(message, "urp");
+    const bool binary = message.starts_with("paste") || message.starts_with("urp");
     return docBroker->forwardToChild(client_from_this(), message, binary);
 }
 
