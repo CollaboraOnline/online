@@ -132,7 +132,7 @@ function shouldHaveZoomLevel(zoomLevel) {
 }
 
 // Make the zoom related status bar items visible if they are hidden.
-// The status bar van be long to not fit on the screen. We have a scroll
+// The status bar can be long to not fit on the screen. We have a scroll
 // item for navigation in this case.
 function makeZoomItemsVisible() {
 	cy.cGet('.w2ui-tb-image.w2ui-icon.zoomin')
@@ -149,8 +149,6 @@ function makeZoomItemsVisible() {
 // Parameters:
 // zoomIn - do a zoom in (e.g. increase zoom level) or zoom out.
 function doZoom(zoomIn) {
-	makeZoomItemsVisible();
-
 	var prevZoom = '';
 	cy.cGet('#tb_actionbar_item_zoom .w2ui-tb-caption')
 		.should(function(zoomLevel) {
@@ -158,12 +156,15 @@ function doZoom(zoomIn) {
 			expect(prevZoom).to.not.equal('');
 		});
 
+	// Force because sometimes the icons are scrolled off the screen to the right
 	if (zoomIn) {
-		cy.cGet('.w2ui-tb-image.w2ui-icon.zoomin').click({force: true});
+		cy.cGet('#tb_actionbar_item_zoomin .w2ui-button').click({force: true});
 	} else {
-		cy.cGet('.w2ui-tb-image.w2ui-icon.zoomout').click({force: true});
+		cy.cGet('#tb_actionbar_item_zoomout .w2ui-button').click({force: true});
 	}
-	cy.wait(500); // Wait for animation to complete
+
+	// Wait for animation to complete
+	cy.wait(500);
 
 	cy.cGet('#tb_actionbar_item_zoom .w2ui-tb-caption')
 		.should(function(zoomLevel) {
@@ -187,21 +188,18 @@ function zoomOut() {
 // zoomLevel - a number specifing the zoom level  (e.g. '100' means 100%).
 //             See also the status bar's zoom level list for possible values.
 function selectZoomLevel(zoomLevel) {
+	// We cannot interact with this menu if it's not visible
 	makeZoomItemsVisible();
 
-	helper.clickOnIdle('#tb_actionbar_item_zoom');
-
+	cy.cGet('#tb_actionbar_item_zoom .w2ui-button').click();
 	cy.cGet('#w2ui-overlay-actionbar').contains('.menu-text', zoomLevel).click();
-
 	shouldHaveZoomLevel(zoomLevel);
 }
 
-// Reser zoom level to 100%.
+// Reset zoom level to 100%.
 function resetZoomLevel() {
-	makeZoomItemsVisible();
-
-	cy.cGet('#tb_actionbar_item_zoomreset').click();
-
+	// Force because sometimes the icons are scrolled off the screen to the right
+	cy.cGet('#tb_actionbar_item_zoomreset .w2ui-button').click({force: true});
 	shouldHaveZoomLevel('100');
 }
 
