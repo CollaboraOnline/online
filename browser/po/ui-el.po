@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-14 12:43+0100\n"
+"POT-Creation-Date: 2024-02-22 15:24+0100\n"
 "PO-Revision-Date: 2023-09-19 19:52+0000\n"
 "Last-Translator: Theo <tbousiou@gmail.com>\n"
 "Language-Team: Greek <https://hosted.weblate.org/projects/collabora-online/"
@@ -215,7 +215,7 @@ msgstr "Ανανέωση σύνδεσης"
 msgid "Channel Filter:"
 msgstr "Φίλτρο καναλιού:"
 
-#: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:578
+#: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:581
 #: src/control/Control.StatusBar.js:345
 msgid "None"
 msgstr "Καμία"
@@ -231,7 +231,7 @@ msgstr "Επίπεδα σύνδεσης"
 #: admin/admin.strings.js:64 src/control/Control.AlertDialog.js:30
 #: src/control/Control.AlertDialog.js:36 src/control/Control.AlertDialog.js:99
 #: src/control/Control.AlertDialog.js:106 src/control/Control.Zotero.js:192
-#: src/control/Parts.js:460 src/core/Socket.js:1056 src/core/Socket.js:1061
+#: src/control/Parts.js:463 src/core/Socket.js:1056 src/core/Socket.js:1061
 #: src/layer/tile/CommentListSection.ts:141
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.div:51-7
 msgid "Close"
@@ -276,16 +276,16 @@ msgstr ""
 #: admin/src/AdminSocketOverview.js:108 admin/src/AdminSocketOverview.js:431
 #: admin/src/AdminSocketSettings.js:47 src/control/Control.AlertDialog.js:52
 #: src/control/Control.DocumentRepair.js:77
-#: src/control/Control.LanguageDialog.js:119 src/control/Control.Tabs.js:371
-#: src/control/Control.Tabs.js:380 src/control/Control.Zotero.js:338
+#: src/control/Control.LanguageDialog.js:119 src/control/Control.Tabs.js:389
+#: src/control/Control.Tabs.js:398 src/control/Control.Zotero.js:338
 #: src/control/Control.Zotero.js:376 src/control/Permission.js:89
 #: src/control/Permission.js:99 src/control/Permission.js:149
-#: src/control/Toolbar.js:561 src/control/Toolbar.js:663
-#: src/control/Toolbar.js:799 src/control/Toolbar.js:1090
+#: src/control/Toolbar.js:686 src/control/Toolbar.js:788
+#: src/control/Toolbar.js:924 src/control/Toolbar.js:1215
 #: src/core/Socket.js:613 src/core/Socket.js:1026 src/core/Socket.js:1096
 #: src/core/Socket.js:1232 src/core/Socket.js:1236 src/main.js:79
-#: src/main.js:82 src/main.js:134 src/map/Clipboard.js:989
-#: src/map/Clipboard.js:1028 src/map/handler/Map.Feedback.js:83
+#: src/main.js:82 src/main.js:134 src/map/Clipboard.js:1001
+#: src/map/Clipboard.js:1040 src/map/handler/Map.Feedback.js:83
 #: src/map/handler/Map.SlideShow.js:51 src/map/handler/Map.SlideShow.js:150
 #: src/map/handler/Map.SlideShow.js:236 src/map/handler/Map.WOPI.js:582
 msgid "OK"
@@ -309,9 +309,9 @@ msgstr "Είστε βέβαιοι ότι θέλετε να τερματίσετ�
 #: src/control/Control.DownloadProgress.js:90
 #: src/control/Control.LanguageDialog.js:113
 #: src/control/Control.MobileTopBar.js:52
-#: src/control/Control.UIManager.js:1245 src/control/Control.UIManager.js:1312
-#: src/control/Control.UIManager.js:1447 src/control/Control.UIManager.js:1589
-#: src/control/Control.Zotero.js:333 src/control/Toolbar.js:794
+#: src/control/Control.UIManager.js:1255 src/control/Control.UIManager.js:1322
+#: src/control/Control.UIManager.js:1457 src/control/Control.UIManager.js:1599
+#: src/control/Control.Zotero.js:333 src/control/Toolbar.js:919
 #: src/core/Socket.js:1257 src/layer/tile/CommentListSection.ts:425
 #: src/layer/tile/CommentSection.ts:157 src/layer/tile/CommentSection.ts:160
 msgid "Cancel"
@@ -382,15 +382,15 @@ msgstr " λεπτά"
 msgid " s"
 msgstr " δευτερόλεπτα"
 
-#: js/global.js:909
+#: js/global.js:921
 msgid "Cluster is scaling, retrying..."
 msgstr ""
 
-#: js/global.js:911
+#: js/global.js:923
 msgid "Document is migrating to new server, retrying..."
 msgstr ""
 
-#: js/global.js:913
+#: js/global.js:925
 msgid "Failed to get RouteToken from controller"
 msgstr ""
 
@@ -463,7 +463,7 @@ msgstr "Ο διακομιστής αντιμετώπισε σφάλμα %0 κα�
 msgid "Unlock"
 msgstr "Ξεκλείδωμα"
 
-#: src/control/Control.ContextMenu.js:196 src/control/Toolbar.js:1089
+#: src/control/Control.ContextMenu.js:196 src/control/Toolbar.js:1214
 msgid "Delete"
 msgstr "Διαγραφή"
 
@@ -471,7 +471,7 @@ msgstr "Διαγραφή"
 msgid "Paste Special"
 msgstr "Ειδική επικόλληση"
 
-#: src/control/Control.DocumentNameInput.js:95
+#: src/control/Control.DocumentNameInput.js:109
 msgid "Path"
 msgstr "Διαδρομή"
 
@@ -536,7 +536,7 @@ msgstr ""
 
 #: src/control/Control.DownloadProgress.js:96
 #: src/control/Control.DownloadProgress.js:121
-#: src/control/Control.PartsPreview.js:279
+#: src/control/Control.PartsPreview.js:280
 msgid "Copy"
 msgstr "Αντιγραφή"
 
@@ -620,64 +620,64 @@ msgstr ""
 msgid "All Sheets"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:581
+#: src/control/Control.JSDialogBuilder.js:584
 msgid "Solid"
 msgstr "Συμπαγές"
 
-#: src/control/Control.JSDialogBuilder.js:584
+#: src/control/Control.JSDialogBuilder.js:587
 msgid "Linear"
 msgstr "Γραμμικό"
 
-#: src/control/Control.JSDialogBuilder.js:587
+#: src/control/Control.JSDialogBuilder.js:590
 msgid "Axial"
 msgstr "Αξονικό"
 
-#: src/control/Control.JSDialogBuilder.js:590
+#: src/control/Control.JSDialogBuilder.js:593
 msgid "Radial"
 msgstr "Ακτινικό"
 
-#: src/control/Control.JSDialogBuilder.js:593
+#: src/control/Control.JSDialogBuilder.js:596
 msgid "Ellipsoid"
 msgstr "Ελλειψοειδές"
 
-#: src/control/Control.JSDialogBuilder.js:597
+#: src/control/Control.JSDialogBuilder.js:600
 msgid "Quadratic"
 msgstr "Δευτεροβάθμιο"
 
-#: src/control/Control.JSDialogBuilder.js:600
+#: src/control/Control.JSDialogBuilder.js:603
 msgid "Square"
 msgstr "Τετράγωνο"
 
-#: src/control/Control.JSDialogBuilder.js:603
+#: src/control/Control.JSDialogBuilder.js:606
 msgid "Fixed size"
 msgstr "Σταθερό μέγεθος"
 
-#: src/control/Control.JSDialogBuilder.js:1650
+#: src/control/Control.JSDialogBuilder.js:1646
 msgid "From"
 msgstr "Από"
 
-#: src/control/Control.JSDialogBuilder.js:1653
+#: src/control/Control.JSDialogBuilder.js:1649
 msgid "To"
 msgstr "Σε"
 
-#: src/control/Control.JSDialogBuilder.js:1656
+#: src/control/Control.JSDialogBuilder.js:1652
 msgid "Color"
 msgstr "Χρώμα"
 
-#: src/control/Control.JSDialogBuilder.js:1770
+#: src/control/Control.JSDialogBuilder.js:1766
 msgid "Select range"
 msgstr "Επιλογή περιοχής"
 
-#: src/control/Control.JSDialogBuilder.js:1824
+#: src/control/Control.JSDialogBuilder.js:1820
 #: src/control/Control.NotebookbarBuilder.js:241
 msgid "Font Name"
 msgstr "Όνομα γραμματοσειράς"
 
-#: src/control/Control.JSDialogBuilder.js:1826 src/control/Toolbar.js:132
+#: src/control/Control.JSDialogBuilder.js:1822 src/control/Toolbar.js:132
 msgid "Font Size"
 msgstr "Μέγεθος γραμματοσειράς"
 
-#: src/control/Control.JSDialogBuilder.js:1828
+#: src/control/Control.JSDialogBuilder.js:1824
 #: src/control/Control.TopToolbar.js:533
 msgid "Style"
 msgstr "Τεχνοτροπία"
@@ -693,7 +693,7 @@ msgstr "απαντήσεις"
 #: src/control/Control.JSDialogBuilder.js:2109
 #: src/layer/tile/CanvasTileLayer.js:5097
 #: src/layer/tile/CanvasTileLayer.js:5108
-#: src/layer/tile/CommentListSection.ts:981
+#: src/layer/tile/CommentListSection.ts:1018
 msgid "Comment"
 msgstr "Σχόλιο"
 
@@ -982,7 +982,7 @@ msgstr ""
 
 #: src/control/Control.Menubar.js:304
 #: src/control/Control.NotebookbarWriter.js:1998
-#: src/control/Control.Zotero.js:1446
+#: src/control/Control.Zotero.js:1448
 msgid "Unlink Citations"
 msgstr ""
 
@@ -1439,7 +1439,7 @@ msgstr "Νόμισμα"
 
 #: src/control/Control.NotebookbarCalc.js:658
 #: src/control/Control.NotebookbarWriter.js:1370
-#: src/control/Control.Zotero.js:1083 src/control/Control.Zotero.js:1519
+#: src/control/Control.Zotero.js:1085 src/control/Control.Zotero.js:1521
 msgid "Date"
 msgstr "Ημερομηνία"
 
@@ -1459,7 +1459,7 @@ msgstr "Κλάσμα"
 msgid "Boolean Value"
 msgstr "Δυαδική τιμή"
 
-#: src/control/Control.NotebookbarCalc.js:663 src/control/Toolbar.js:766
+#: src/control/Control.NotebookbarCalc.js:663 src/control/Toolbar.js:891
 msgid "Text"
 msgstr "Κείμενο"
 
@@ -1553,7 +1553,7 @@ msgid "Sparkline"
 msgstr "Γράφημα sparkline"
 
 #: src/control/Control.NotebookbarCalc.js:1506
-#: src/control/Control.NotebookbarCalc.js:2294
+#: src/control/Control.NotebookbarCalc.js:2305
 #: src/control/Control.NotebookbarDraw.js:834
 #: src/control/Control.NotebookbarDraw.js:1323
 #: src/control/Control.NotebookbarImpress.js:953
@@ -1637,16 +1637,16 @@ msgstr "Εικόνα"
 msgid "Ruler"
 msgstr "Χάρακας"
 
-#: src/control/Control.PartsPreview.js:186
+#: src/control/Control.PartsPreview.js:187
 msgid "preview of page "
 msgstr "προεπισκόπηση της σελίδας "
 
-#: src/control/Control.PartsPreview.js:245
+#: src/control/Control.PartsPreview.js:246
 #, fuzzy
 msgid "Paste Slide"
 msgstr "Κύριες διαφάνειες"
 
-#: src/control/Control.PartsPreview.js:288
+#: src/control/Control.PartsPreview.js:289
 msgid "Paste"
 msgstr "Επικόλληση"
 
@@ -1778,27 +1778,27 @@ msgstr "Εισαγωγή φύλλου πριν από αυτό"
 msgid "Insert sheet after this"
 msgstr "Εισαγωγή φύλλου μετά από αυτό"
 
-#: src/control/Control.Tabs.js:94
+#: src/control/Control.Tabs.js:99
 msgid "Move Sheet Left"
 msgstr "Μετακίνηση φύλλου αριστερά"
 
-#: src/control/Control.Tabs.js:99
+#: src/control/Control.Tabs.js:104
 msgid "Move Sheet Right"
 msgstr "Μετακίνηση φύλλου δεξιά"
 
-#: src/control/Control.Tabs.js:115
+#: src/control/Control.Tabs.js:120
 msgid "Copy Sheet..."
 msgstr "Αντιγραφή Φύλλου..."
 
-#: src/control/Control.Tabs.js:369
+#: src/control/Control.Tabs.js:387
 msgid "Are you sure you want to delete sheet, %sheet%?"
 msgstr "Είστε βέβαιοι ότι θέλετε να διαγράψετε το φύλλο, %sheet%;"
 
-#: src/control/Control.Tabs.js:380
+#: src/control/Control.Tabs.js:398
 msgid "Rename sheet"
 msgstr ""
 
-#: src/control/Control.Tabs.js:380
+#: src/control/Control.Tabs.js:398
 msgid "Enter new sheet name"
 msgstr "Εισάγετε νέο όνομα φύλλου"
 
@@ -1850,7 +1850,7 @@ msgstr ""
 msgid "Show Menu"
 msgstr ""
 
-#: src/control/Control.UIManager.js:1070
+#: src/control/Control.UIManager.js:1080
 msgid "Dismiss"
 msgstr ""
 
@@ -1940,7 +1940,7 @@ msgstr ""
 msgid "My Publications"
 msgstr ""
 
-#: src/control/Control.Zotero.js:478 src/control/Control.Zotero.js:703
+#: src/control/Control.Zotero.js:478 src/control/Control.Zotero.js:705
 msgid "My Library"
 msgstr ""
 
@@ -1948,86 +1948,86 @@ msgstr ""
 msgid "Group Libraries"
 msgstr ""
 
-#: src/control/Control.Zotero.js:719
+#: src/control/Control.Zotero.js:721
 msgid "Failed to load groups"
 msgstr ""
 
-#: src/control/Control.Zotero.js:737 src/control/Control.Zotero.js:1055
+#: src/control/Control.Zotero.js:739 src/control/Control.Zotero.js:1057
 msgid "Failed to load collections"
 msgstr ""
 
-#: src/control/Control.Zotero.js:751
+#: src/control/Control.Zotero.js:753
 msgid "Citation Style"
 msgstr ""
 
-#: src/control/Control.Zotero.js:756
+#: src/control/Control.Zotero.js:758
 #, fuzzy
 msgid "Styles"
 msgstr "Τεχνοτροπία"
 
-#: src/control/Control.Zotero.js:756
+#: src/control/Control.Zotero.js:758
 msgid "An error occurred while fetching style list"
 msgstr ""
 
-#: src/control/Control.Zotero.js:764
+#: src/control/Control.Zotero.js:766
 msgid "Failed to load styles"
 msgstr ""
 
-#: src/control/Control.Zotero.js:1083 src/control/Control.Zotero.js:1519
+#: src/control/Control.Zotero.js:1085 src/control/Control.Zotero.js:1521
 msgid "Title"
 msgstr "Τίτλος"
 
-#: src/control/Control.Zotero.js:1083 src/control/Control.Zotero.js:1519
+#: src/control/Control.Zotero.js:1085 src/control/Control.Zotero.js:1521
 msgid "Creator(s)"
 msgstr ""
 
-#: src/control/Control.Zotero.js:1083 src/control/Control.Zotero.js:1519
+#: src/control/Control.Zotero.js:1085 src/control/Control.Zotero.js:1521
 msgid "Your library is empty"
 msgstr ""
 
-#: src/control/Control.Zotero.js:1094
+#: src/control/Control.Zotero.js:1096
 msgid "Failed to load items"
 msgstr ""
 
-#: src/control/Control.Zotero.js:1144
+#: src/control/Control.Zotero.js:1146
 msgid "Citation warning"
 msgstr ""
 
-#: src/control/Control.Zotero.js:1145
+#: src/control/Control.Zotero.js:1147
 msgid ""
 "Once citations are entered their storage and display type can not be "
 "changed."
 msgstr ""
 
-#: src/control/Control.Zotero.js:1146 src/control/Control.Zotero.js:1448
+#: src/control/Control.Zotero.js:1148 src/control/Control.Zotero.js:1450
 msgid "Confirm"
 msgstr ""
 
-#: src/control/Control.Zotero.js:1252
+#: src/control/Control.Zotero.js:1254
 msgid "Add Note"
 msgstr ""
 
-#: src/control/Control.Zotero.js:1255
+#: src/control/Control.Zotero.js:1257
 msgid "Notes"
 msgstr ""
 
-#: src/control/Control.Zotero.js:1255
+#: src/control/Control.Zotero.js:1257
 msgid "An error occurred while fetching notes"
 msgstr ""
 
-#: src/control/Control.Zotero.js:1386
+#: src/control/Control.Zotero.js:1388
 msgid "Updated citations"
 msgstr ""
 
-#: src/control/Control.Zotero.js:1388
+#: src/control/Control.Zotero.js:1390
 msgid "Citations update failed"
 msgstr ""
 
-#: src/control/Control.Zotero.js:1392
+#: src/control/Control.Zotero.js:1394
 msgid "Updating citations"
 msgstr ""
 
-#: src/control/Control.Zotero.js:1447
+#: src/control/Control.Zotero.js:1449
 msgid ""
 "Unlinking citations will prevent Collabora Online from updating citations "
 "and bibliography in this document."
@@ -2138,31 +2138,31 @@ msgstr "Αποθήκευση..."
 msgid "Renaming..."
 msgstr "Μετονομάζεται..."
 
-#: src/control/Toolbar.js:645
+#: src/control/Toolbar.js:770
 msgid "This version of %productName is powered by"
 msgstr "Αυτή η έκδοση του %productName παρέχεται από"
 
-#: src/control/Toolbar.js:657
+#: src/control/Toolbar.js:782
 msgid "\"Slow Proxy\""
 msgstr "\"Αργός μεσολαβητής\""
 
-#: src/control/Toolbar.js:676
+#: src/control/Toolbar.js:801
 msgid "Copy all version information in English"
 msgstr ""
 
-#: src/control/Toolbar.js:759
+#: src/control/Toolbar.js:884
 msgid "Insert hyperlink"
 msgstr "Εισαγωγή υπερσυνδέσμου"
 
-#: src/control/Toolbar.js:778
+#: src/control/Toolbar.js:903
 msgid "Link"
 msgstr "Σύνδεσμος"
 
-#: src/control/Toolbar.js:1084
+#: src/control/Toolbar.js:1209
 msgid "Are you sure you want to delete this slide?"
 msgstr "Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτήν τη διαφάνεια;"
 
-#: src/control/Toolbar.js:1087
+#: src/control/Toolbar.js:1212
 msgid "Are you sure you want to delete this page?"
 msgstr "Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτήν τη σελίδα;"
 
@@ -2170,7 +2170,7 @@ msgstr "Είστε βέβαιοι ότι θέλετε να διαγράψετε 
 msgid "Cell borders"
 msgstr "Περιγράμματα κελιού"
 
-#: src/control/jsdialog/Widget.TreeView.js:658
+#: src/control/jsdialog/Widget.TreeView.js:664
 msgid "Headings and objects that you add to the document will appear here"
 msgstr ""
 
@@ -2608,41 +2608,41 @@ msgstr ""
 msgid "Please save or discard the comment currently being edited."
 msgstr ""
 
-#: src/layer/tile/CommentListSection.ts:924
+#: src/layer/tile/CommentListSection.ts:961
 msgid "Modify"
 msgstr "Τροποποίηση"
 
-#: src/layer/tile/CommentListSection.ts:930
+#: src/layer/tile/CommentListSection.ts:967
 #: src/layer/tile/CommentSection.ts:161
 msgid "Reply"
 msgstr "Απάντηση"
 
-#: src/layer/tile/CommentListSection.ts:936
+#: src/layer/tile/CommentListSection.ts:973
 msgid "Remove"
 msgstr "Αφαίρεση"
 
-#: src/layer/tile/CommentListSection.ts:942
+#: src/layer/tile/CommentListSection.ts:979
 msgid "Remove Thread"
 msgstr "Αφαίρεση νήματος"
 
-#: src/layer/tile/CommentListSection.ts:948
+#: src/layer/tile/CommentListSection.ts:985
 msgid "Resolve"
 msgstr "Επίλυση"
 
-#: src/layer/tile/CommentListSection.ts:948
+#: src/layer/tile/CommentListSection.ts:985
 msgid "Unresolve"
 msgstr "Άλυτο"
 
-#: src/layer/tile/CommentListSection.ts:954
+#: src/layer/tile/CommentListSection.ts:991
 msgid "Unresolve Thread"
 msgstr "Ανεπίλυτο νήμα"
 
-#: src/layer/tile/CommentListSection.ts:954
+#: src/layer/tile/CommentListSection.ts:991
 msgid "Resolve Thread"
 msgstr "Επίλυση νήματος"
 
-#: src/layer/tile/CommentListSection.ts:1235
-#: src/layer/tile/CommentListSection.ts:1290
+#: src/layer/tile/CommentListSection.ts:1272
+#: src/layer/tile/CommentListSection.ts:1327
 msgid "Autosaved"
 msgstr ""
 
@@ -2684,13 +2684,13 @@ msgstr ""
 msgid "Failed to download clipboard, please re-copy"
 msgstr "Αποτυχία λήψης του προχείρου, ξαναντιγράψτε"
 
-#: src/map/Clipboard.js:982
+#: src/map/Clipboard.js:994
 msgid "<p>Please use the copy/paste buttons on your on-screen keyboard.</p>"
 msgstr ""
 "<p>Χρησιμοποιήστε τα πλήκτρα αντιγραφής/επικόλλησης στο πληκτρολόγιο της "
 "οθόνης σας.</p>"
 
-#: src/map/Clipboard.js:984
+#: src/map/Clipboard.js:996
 msgid ""
 "<p>Your browser has very limited access to the clipboard, so use these "
 "keyboard shortcuts:</p><table class=\"warn-copy-paste\"><tr><td><kbd>Ctrl</"
@@ -2707,7 +2707,7 @@ msgstr ""
 ">+</span><kbd>V</kbd></td></tr><tr><td>Για αντιγραφή</td><td></td>Για "
 "αποκοπή<td>Για επικόλληση</td></tr></table>"
 
-#: src/map/Clipboard.js:1003
+#: src/map/Clipboard.js:1015
 msgid ""
 "<p>A download due to a large copy/paste operation has already started. "
 "Please, wait for the current download or cancel it before starting a new "
@@ -2717,7 +2717,7 @@ msgstr ""
 "επικόλλησης. Παρακαλούμε, περιμένετε την ολοκλήρωση της τρέχουσας λήψης ή "
 "ακυρώστε την πριν ξεκινήσετε μια νέα</p>"
 
-#: src/map/Clipboard.js:1021
+#: src/map/Clipboard.js:1033
 #, fuzzy
 msgid ""
 "<p>Your browser has very limited access to the clipboard</p><p>Please press "

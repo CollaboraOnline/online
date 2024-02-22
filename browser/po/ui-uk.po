@@ -7,17 +7,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-14 12:43+0100\n"
+"POT-Creation-Date: 2024-02-22 15:24+0100\n"
 "PO-Revision-Date: 2024-02-14 17:10+0000\n"
 "Last-Translator: Сергій <sergiy.goncharuk.1@gmail.com>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/uk/>\n"
-"Language: uk\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Weblate 5.4-dev\n"
 
 #: admin/admin.strings.js:15
@@ -216,7 +216,7 @@ msgstr "Оновити журнал"
 msgid "Channel Filter:"
 msgstr "Фільтр каналу:"
 
-#: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:578
+#: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:581
 #: src/control/Control.StatusBar.js:345
 msgid "None"
 msgstr "Нічого"
@@ -232,7 +232,7 @@ msgstr "Рівні журналювання"
 #: admin/admin.strings.js:64 src/control/Control.AlertDialog.js:30
 #: src/control/Control.AlertDialog.js:36 src/control/Control.AlertDialog.js:99
 #: src/control/Control.AlertDialog.js:106 src/control/Control.Zotero.js:192
-#: src/control/Parts.js:460 src/core/Socket.js:1056 src/core/Socket.js:1061
+#: src/control/Parts.js:463 src/core/Socket.js:1056 src/core/Socket.js:1061
 #: src/layer/tile/CommentListSection.ts:141
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.div:51-7
 msgid "Close"
@@ -275,16 +275,16 @@ msgstr "Сервер вимкнено, перезавантажте сторін
 #: admin/src/AdminSocketOverview.js:108 admin/src/AdminSocketOverview.js:431
 #: admin/src/AdminSocketSettings.js:47 src/control/Control.AlertDialog.js:52
 #: src/control/Control.DocumentRepair.js:77
-#: src/control/Control.LanguageDialog.js:119 src/control/Control.Tabs.js:371
-#: src/control/Control.Tabs.js:380 src/control/Control.Zotero.js:338
+#: src/control/Control.LanguageDialog.js:119 src/control/Control.Tabs.js:389
+#: src/control/Control.Tabs.js:398 src/control/Control.Zotero.js:338
 #: src/control/Control.Zotero.js:376 src/control/Permission.js:89
 #: src/control/Permission.js:99 src/control/Permission.js:149
-#: src/control/Toolbar.js:561 src/control/Toolbar.js:663
-#: src/control/Toolbar.js:799 src/control/Toolbar.js:1090
+#: src/control/Toolbar.js:686 src/control/Toolbar.js:788
+#: src/control/Toolbar.js:924 src/control/Toolbar.js:1215
 #: src/core/Socket.js:613 src/core/Socket.js:1026 src/core/Socket.js:1096
 #: src/core/Socket.js:1232 src/core/Socket.js:1236 src/main.js:79
-#: src/main.js:82 src/main.js:134 src/map/Clipboard.js:989
-#: src/map/Clipboard.js:1028 src/map/handler/Map.Feedback.js:83
+#: src/main.js:82 src/main.js:134 src/map/Clipboard.js:1001
+#: src/map/Clipboard.js:1040 src/map/handler/Map.Feedback.js:83
 #: src/map/handler/Map.SlideShow.js:51 src/map/handler/Map.SlideShow.js:150
 #: src/map/handler/Map.SlideShow.js:236 src/map/handler/Map.WOPI.js:582
 msgid "OK"
@@ -308,9 +308,9 @@ msgstr "Ви справді бажаєте закінчити цей сеанс?
 #: src/control/Control.DownloadProgress.js:90
 #: src/control/Control.LanguageDialog.js:113
 #: src/control/Control.MobileTopBar.js:52
-#: src/control/Control.UIManager.js:1245 src/control/Control.UIManager.js:1312
-#: src/control/Control.UIManager.js:1447 src/control/Control.UIManager.js:1589
-#: src/control/Control.Zotero.js:333 src/control/Toolbar.js:794
+#: src/control/Control.UIManager.js:1255 src/control/Control.UIManager.js:1322
+#: src/control/Control.UIManager.js:1457 src/control/Control.UIManager.js:1599
+#: src/control/Control.Zotero.js:333 src/control/Toolbar.js:919
 #: src/core/Socket.js:1257 src/layer/tile/CommentListSection.ts:425
 #: src/layer/tile/CommentSection.ts:157 src/layer/tile/CommentSection.ts:160
 msgid "Cancel"
@@ -381,15 +381,15 @@ msgstr " хв"
 msgid " s"
 msgstr " с"
 
-#: js/global.js:909
+#: js/global.js:921
 msgid "Cluster is scaling, retrying..."
 msgstr "Кластер масштабується, повторна спроба..."
 
-#: js/global.js:911
+#: js/global.js:923
 msgid "Document is migrating to new server, retrying..."
 msgstr "Документ мігрує на новий сервер, повторна спроба..."
 
-#: js/global.js:913
+#: js/global.js:925
 msgid "Failed to get RouteToken from controller"
 msgstr "Не вдалося отримати RouteToken від контролера"
 
@@ -467,7 +467,7 @@ msgstr "Сервер зіткнувся з %0 помилок під час оп�
 msgid "Unlock"
 msgstr "Розблокувати"
 
-#: src/control/Control.ContextMenu.js:196 src/control/Toolbar.js:1089
+#: src/control/Control.ContextMenu.js:196 src/control/Toolbar.js:1214
 msgid "Delete"
 msgstr "Видалити"
 
@@ -475,7 +475,7 @@ msgstr "Видалити"
 msgid "Paste Special"
 msgstr "Вставити як"
 
-#: src/control/Control.DocumentNameInput.js:95
+#: src/control/Control.DocumentNameInput.js:109
 msgid "Path"
 msgstr "Шлях"
 
@@ -542,7 +542,7 @@ msgstr "Завантаження вмісту буфера обміну"
 
 #: src/control/Control.DownloadProgress.js:96
 #: src/control/Control.DownloadProgress.js:121
-#: src/control/Control.PartsPreview.js:279
+#: src/control/Control.PartsPreview.js:280
 msgid "Copy"
 msgstr "Скопіювати"
 
@@ -624,64 +624,64 @@ msgstr "Активний аркуш"
 msgid "All Sheets"
 msgstr "Усі аркуші"
 
-#: src/control/Control.JSDialogBuilder.js:581
+#: src/control/Control.JSDialogBuilder.js:584
 msgid "Solid"
 msgstr "Суцільний"
 
-#: src/control/Control.JSDialogBuilder.js:584
+#: src/control/Control.JSDialogBuilder.js:587
 msgid "Linear"
 msgstr "Лінійний"
 
-#: src/control/Control.JSDialogBuilder.js:587
+#: src/control/Control.JSDialogBuilder.js:590
 msgid "Axial"
 msgstr "Осьовий"
 
-#: src/control/Control.JSDialogBuilder.js:590
+#: src/control/Control.JSDialogBuilder.js:593
 msgid "Radial"
 msgstr "Радіальний"
 
-#: src/control/Control.JSDialogBuilder.js:593
+#: src/control/Control.JSDialogBuilder.js:596
 msgid "Ellipsoid"
 msgstr "Еліпсоїд"
 
-#: src/control/Control.JSDialogBuilder.js:597
+#: src/control/Control.JSDialogBuilder.js:600
 msgid "Quadratic"
 msgstr "Квадратичний"
 
-#: src/control/Control.JSDialogBuilder.js:600
+#: src/control/Control.JSDialogBuilder.js:603
 msgid "Square"
 msgstr "Прямокутний"
 
-#: src/control/Control.JSDialogBuilder.js:603
+#: src/control/Control.JSDialogBuilder.js:606
 msgid "Fixed size"
 msgstr "Фіксований розмір"
 
-#: src/control/Control.JSDialogBuilder.js:1650
+#: src/control/Control.JSDialogBuilder.js:1646
 msgid "From"
 msgstr "Від"
 
-#: src/control/Control.JSDialogBuilder.js:1653
+#: src/control/Control.JSDialogBuilder.js:1649
 msgid "To"
 msgstr "До"
 
-#: src/control/Control.JSDialogBuilder.js:1656
+#: src/control/Control.JSDialogBuilder.js:1652
 msgid "Color"
 msgstr "Колір"
 
-#: src/control/Control.JSDialogBuilder.js:1770
+#: src/control/Control.JSDialogBuilder.js:1766
 msgid "Select range"
 msgstr "Обрати діапазон"
 
-#: src/control/Control.JSDialogBuilder.js:1824
+#: src/control/Control.JSDialogBuilder.js:1820
 #: src/control/Control.NotebookbarBuilder.js:241
 msgid "Font Name"
 msgstr "Шрифт"
 
-#: src/control/Control.JSDialogBuilder.js:1826 src/control/Toolbar.js:132
+#: src/control/Control.JSDialogBuilder.js:1822 src/control/Toolbar.js:132
 msgid "Font Size"
 msgstr "Кегль"
 
-#: src/control/Control.JSDialogBuilder.js:1828
+#: src/control/Control.JSDialogBuilder.js:1824
 #: src/control/Control.TopToolbar.js:533
 msgid "Style"
 msgstr "Стиль"
@@ -697,7 +697,7 @@ msgstr "відповіді"
 #: src/control/Control.JSDialogBuilder.js:2109
 #: src/layer/tile/CanvasTileLayer.js:5097
 #: src/layer/tile/CanvasTileLayer.js:5108
-#: src/layer/tile/CommentListSection.ts:981
+#: src/layer/tile/CommentListSection.ts:1018
 msgid "Comment"
 msgstr "Коментар"
 
@@ -983,7 +983,7 @@ msgstr "Оновити цитати"
 
 #: src/control/Control.Menubar.js:304
 #: src/control/Control.NotebookbarWriter.js:1998
-#: src/control/Control.Zotero.js:1446
+#: src/control/Control.Zotero.js:1448
 msgid "Unlink Citations"
 msgstr "Від'єднати посилання на цитати"
 
@@ -1429,7 +1429,7 @@ msgstr "Валюта"
 
 #: src/control/Control.NotebookbarCalc.js:658
 #: src/control/Control.NotebookbarWriter.js:1370
-#: src/control/Control.Zotero.js:1083 src/control/Control.Zotero.js:1519
+#: src/control/Control.Zotero.js:1085 src/control/Control.Zotero.js:1521
 msgid "Date"
 msgstr "Дата"
 
@@ -1449,7 +1449,7 @@ msgstr "Частка"
 msgid "Boolean Value"
 msgstr "Логічне значення"
 
-#: src/control/Control.NotebookbarCalc.js:663 src/control/Toolbar.js:766
+#: src/control/Control.NotebookbarCalc.js:663 src/control/Toolbar.js:891
 msgid "Text"
 msgstr "Текст"
 
@@ -1542,7 +1542,7 @@ msgid "Sparkline"
 msgstr "Мінідіаграма"
 
 #: src/control/Control.NotebookbarCalc.js:1506
-#: src/control/Control.NotebookbarCalc.js:2294
+#: src/control/Control.NotebookbarCalc.js:2305
 #: src/control/Control.NotebookbarDraw.js:834
 #: src/control/Control.NotebookbarDraw.js:1323
 #: src/control/Control.NotebookbarImpress.js:953
@@ -1624,15 +1624,15 @@ msgstr "Картинка"
 msgid "Ruler"
 msgstr "Лінійка"
 
-#: src/control/Control.PartsPreview.js:186
+#: src/control/Control.PartsPreview.js:187
 msgid "preview of page "
 msgstr "попередній перегляд сторінки "
 
-#: src/control/Control.PartsPreview.js:245
+#: src/control/Control.PartsPreview.js:246
 msgid "Paste Slide"
 msgstr "Вставити слайд"
 
-#: src/control/Control.PartsPreview.js:288
+#: src/control/Control.PartsPreview.js:289
 msgid "Paste"
 msgstr "Вставити"
 
@@ -1764,27 +1764,27 @@ msgstr "Вставити аркуш перед"
 msgid "Insert sheet after this"
 msgstr "Вставити аркуш після"
 
-#: src/control/Control.Tabs.js:94
+#: src/control/Control.Tabs.js:99
 msgid "Move Sheet Left"
 msgstr "Пересунути аркуш ліворуч"
 
-#: src/control/Control.Tabs.js:99
+#: src/control/Control.Tabs.js:104
 msgid "Move Sheet Right"
 msgstr "Пересунути аркуш праворуч"
 
-#: src/control/Control.Tabs.js:115
+#: src/control/Control.Tabs.js:120
 msgid "Copy Sheet..."
 msgstr "Копіювати аркуш..."
 
-#: src/control/Control.Tabs.js:369
+#: src/control/Control.Tabs.js:387
 msgid "Are you sure you want to delete sheet, %sheet%?"
 msgstr "Ви дійсно бажаєте видалити аркуш %sheet%?"
 
-#: src/control/Control.Tabs.js:380
+#: src/control/Control.Tabs.js:398
 msgid "Rename sheet"
 msgstr "Перейменувати аркуш"
 
-#: src/control/Control.Tabs.js:380
+#: src/control/Control.Tabs.js:398
 msgid "Enter new sheet name"
 msgstr "Введіть нову назву аркуша"
 
@@ -1836,7 +1836,7 @@ msgstr "Введіть нове ім'я"
 msgid "Show Menu"
 msgstr "Показати меню"
 
-#: src/control/Control.UIManager.js:1070
+#: src/control/Control.UIManager.js:1080
 msgid "Dismiss"
 msgstr "Знехтувати"
 
@@ -1929,7 +1929,7 @@ msgstr "Кінцеві примітки"
 msgid "My Publications"
 msgstr "Мої публікації"
 
-#: src/control/Control.Zotero.js:478 src/control/Control.Zotero.js:703
+#: src/control/Control.Zotero.js:478 src/control/Control.Zotero.js:705
 msgid "My Library"
 msgstr "Моя бібліотека"
 
@@ -1937,86 +1937,86 @@ msgstr "Моя бібліотека"
 msgid "Group Libraries"
 msgstr "Групові бібліотеки"
 
-#: src/control/Control.Zotero.js:719
+#: src/control/Control.Zotero.js:721
 msgid "Failed to load groups"
 msgstr "Не вдалося завантажити групи"
 
-#: src/control/Control.Zotero.js:737 src/control/Control.Zotero.js:1055
+#: src/control/Control.Zotero.js:739 src/control/Control.Zotero.js:1057
 msgid "Failed to load collections"
 msgstr "Не вдалося завантажити збірки"
 
-#: src/control/Control.Zotero.js:751
+#: src/control/Control.Zotero.js:753
 msgid "Citation Style"
 msgstr "Стиль цитування"
 
-#: src/control/Control.Zotero.js:756
+#: src/control/Control.Zotero.js:758
 msgid "Styles"
 msgstr "Стилі"
 
-#: src/control/Control.Zotero.js:756
+#: src/control/Control.Zotero.js:758
 msgid "An error occurred while fetching style list"
 msgstr "Сталася помилка під час отримання списку стилів"
 
-#: src/control/Control.Zotero.js:764
+#: src/control/Control.Zotero.js:766
 msgid "Failed to load styles"
 msgstr "Не вдалося завантажити стилі"
 
-#: src/control/Control.Zotero.js:1083 src/control/Control.Zotero.js:1519
+#: src/control/Control.Zotero.js:1085 src/control/Control.Zotero.js:1521
 msgid "Title"
 msgstr "Заголовок"
 
-#: src/control/Control.Zotero.js:1083 src/control/Control.Zotero.js:1519
+#: src/control/Control.Zotero.js:1085 src/control/Control.Zotero.js:1521
 msgid "Creator(s)"
 msgstr "Автор(и)"
 
-#: src/control/Control.Zotero.js:1083 src/control/Control.Zotero.js:1519
+#: src/control/Control.Zotero.js:1085 src/control/Control.Zotero.js:1521
 msgid "Your library is empty"
 msgstr "Ваша бібліотека порожня"
 
-#: src/control/Control.Zotero.js:1094
+#: src/control/Control.Zotero.js:1096
 msgid "Failed to load items"
 msgstr "Не вдалося завантажити елементи"
 
-#: src/control/Control.Zotero.js:1144
+#: src/control/Control.Zotero.js:1146
 msgid "Citation warning"
 msgstr "Попередження про цитування"
 
-#: src/control/Control.Zotero.js:1145
+#: src/control/Control.Zotero.js:1147
 msgid ""
 "Once citations are entered their storage and display type can not be "
 "changed."
 msgstr ""
 "Після введення цитат, їх зберігання і тип показу не можуть бути змінені."
 
-#: src/control/Control.Zotero.js:1146 src/control/Control.Zotero.js:1448
+#: src/control/Control.Zotero.js:1148 src/control/Control.Zotero.js:1450
 msgid "Confirm"
 msgstr "Підтвердити"
 
-#: src/control/Control.Zotero.js:1252
+#: src/control/Control.Zotero.js:1254
 msgid "Add Note"
 msgstr "Додати примітку"
 
-#: src/control/Control.Zotero.js:1255
+#: src/control/Control.Zotero.js:1257
 msgid "Notes"
 msgstr "Примітки"
 
-#: src/control/Control.Zotero.js:1255
+#: src/control/Control.Zotero.js:1257
 msgid "An error occurred while fetching notes"
 msgstr "Сталася помилка під час отримання приміток"
 
-#: src/control/Control.Zotero.js:1386
+#: src/control/Control.Zotero.js:1388
 msgid "Updated citations"
 msgstr "Оновлені цитати"
 
-#: src/control/Control.Zotero.js:1388
+#: src/control/Control.Zotero.js:1390
 msgid "Citations update failed"
 msgstr "Не вдалося оновити цитати"
 
-#: src/control/Control.Zotero.js:1392
+#: src/control/Control.Zotero.js:1394
 msgid "Updating citations"
 msgstr "Оновлення цитат"
 
-#: src/control/Control.Zotero.js:1447
+#: src/control/Control.Zotero.js:1449
 msgid ""
 "Unlinking citations will prevent Collabora Online from updating citations "
 "and bibliography in this document."
@@ -2124,31 +2124,31 @@ msgstr "Збереження..."
 msgid "Renaming..."
 msgstr "Перейменування..."
 
-#: src/control/Toolbar.js:645
+#: src/control/Toolbar.js:770
 msgid "This version of %productName is powered by"
 msgstr "Ця версія %productName працює на"
 
-#: src/control/Toolbar.js:657
+#: src/control/Toolbar.js:782
 msgid "\"Slow Proxy\""
 msgstr "\"Повільний проксі\""
 
-#: src/control/Toolbar.js:676
+#: src/control/Toolbar.js:801
 msgid "Copy all version information in English"
 msgstr "Скопіювати всю інформацію про версію англійською мовою"
 
-#: src/control/Toolbar.js:759
+#: src/control/Toolbar.js:884
 msgid "Insert hyperlink"
 msgstr "Вставити гіперпосилання"
 
-#: src/control/Toolbar.js:778
+#: src/control/Toolbar.js:903
 msgid "Link"
 msgstr "Посилання"
 
-#: src/control/Toolbar.js:1084
+#: src/control/Toolbar.js:1209
 msgid "Are you sure you want to delete this slide?"
 msgstr "Ви дійсно бажаєте видалити цей слайд?"
 
-#: src/control/Toolbar.js:1087
+#: src/control/Toolbar.js:1212
 msgid "Are you sure you want to delete this page?"
 msgstr "Ви дійсно бажаєте видалити цю сторінку?"
 
@@ -2156,7 +2156,7 @@ msgstr "Ви дійсно бажаєте видалити цю сторінку?
 msgid "Cell borders"
 msgstr "Краї комірки"
 
-#: src/control/jsdialog/Widget.TreeView.js:658
+#: src/control/jsdialog/Widget.TreeView.js:664
 msgid "Headings and objects that you add to the document will appear here"
 msgstr "Тут з'являться заголовки та об'єкти, які ви додасте до документа"
 
@@ -2605,41 +2605,41 @@ msgstr "Коментар редагується"
 msgid "Please save or discard the comment currently being edited."
 msgstr "Збережіть або відкиньте коментар, який зараз редагується."
 
-#: src/layer/tile/CommentListSection.ts:924
+#: src/layer/tile/CommentListSection.ts:961
 msgid "Modify"
 msgstr "Змінити"
 
-#: src/layer/tile/CommentListSection.ts:930
+#: src/layer/tile/CommentListSection.ts:967
 #: src/layer/tile/CommentSection.ts:161
 msgid "Reply"
 msgstr "Відповідь"
 
-#: src/layer/tile/CommentListSection.ts:936
+#: src/layer/tile/CommentListSection.ts:973
 msgid "Remove"
 msgstr "Видалити"
 
-#: src/layer/tile/CommentListSection.ts:942
+#: src/layer/tile/CommentListSection.ts:979
 msgid "Remove Thread"
 msgstr "Вилучити ланцюжок"
 
-#: src/layer/tile/CommentListSection.ts:948
+#: src/layer/tile/CommentListSection.ts:985
 msgid "Resolve"
 msgstr "Вирішити"
 
-#: src/layer/tile/CommentListSection.ts:948
+#: src/layer/tile/CommentListSection.ts:985
 msgid "Unresolve"
 msgstr "Позначити не розв'язаним"
 
-#: src/layer/tile/CommentListSection.ts:954
+#: src/layer/tile/CommentListSection.ts:991
 msgid "Unresolve Thread"
 msgstr "Позначити ланцюжок не розв'язаним"
 
-#: src/layer/tile/CommentListSection.ts:954
+#: src/layer/tile/CommentListSection.ts:991
 msgid "Resolve Thread"
 msgstr "Позначити ланцюжок розв'язаним"
 
-#: src/layer/tile/CommentListSection.ts:1235
-#: src/layer/tile/CommentListSection.ts:1290
+#: src/layer/tile/CommentListSection.ts:1272
+#: src/layer/tile/CommentListSection.ts:1327
 msgid "Autosaved"
 msgstr "Збережено автоматично"
 
@@ -2681,11 +2681,11 @@ msgstr "попередження: закінчився термін дії за�
 msgid "Failed to download clipboard, please re-copy"
 msgstr "Не вдалося завантажити буфер обміну, повторіть копіювання"
 
-#: src/map/Clipboard.js:982
+#: src/map/Clipboard.js:994
 msgid "<p>Please use the copy/paste buttons on your on-screen keyboard.</p>"
 msgstr "<p>Використовуйте кнопки копіювання/вставки на екранній клавіатурі.</p>"
 
-#: src/map/Clipboard.js:984
+#: src/map/Clipboard.js:996
 msgid ""
 "<p>Your browser has very limited access to the clipboard, so use these "
 "keyboard shortcuts:</p><table class=\"warn-copy-paste\"><tr><td><kbd>Ctrl</"
@@ -2702,7 +2702,7 @@ msgstr ""
 "n><kbd>V</kbd></td></tr><tr><td>Копіювати</td><td>Вирізати</td><td>Вставити</"
 "td></tr></table>"
 
-#: src/map/Clipboard.js:1003
+#: src/map/Clipboard.js:1015
 msgid ""
 "<p>A download due to a large copy/paste operation has already started. "
 "Please, wait for the current download or cancel it before starting a new "
@@ -2711,7 +2711,7 @@ msgstr ""
 "<p>Іде завантаження для копіювання/вставки великого фрагменту. Будь ласка, "
 "дочекайтесь завершення завантаження або відмініть його, щоб почати нове</p>"
 
-#: src/map/Clipboard.js:1021
+#: src/map/Clipboard.js:1033
 msgid ""
 "<p>Your browser has very limited access to the clipboard</p><p>Please press "
 "now: <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to see "

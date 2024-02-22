@@ -6,12 +6,12 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-14 12:43+0100\n"
+"POT-Creation-Date: 2024-02-22 15:24+0100\n"
 "PO-Revision-Date: 2024-02-17 00:02+0000\n"
 "Last-Translator: Rob Pearson <rob.dunedin@gmail.com>\n"
 "Language-Team: English (Australia) <https://hosted.weblate.org/projects/"
 "collabora-online/ui/en_AU/>\n"
-"Language: en_AU\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -213,7 +213,7 @@ msgstr "Refresh Log"
 msgid "Channel Filter:"
 msgstr "Channel Filter:"
 
-#: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:578
+#: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:581
 #: src/control/Control.StatusBar.js:345
 msgid "None"
 msgstr "None"
@@ -229,7 +229,7 @@ msgstr "Log Levels"
 #: admin/admin.strings.js:64 src/control/Control.AlertDialog.js:30
 #: src/control/Control.AlertDialog.js:36 src/control/Control.AlertDialog.js:99
 #: src/control/Control.AlertDialog.js:106 src/control/Control.Zotero.js:192
-#: src/control/Parts.js:460 src/core/Socket.js:1056 src/core/Socket.js:1061
+#: src/control/Parts.js:463 src/core/Socket.js:1056 src/core/Socket.js:1061
 #: src/layer/tile/CommentListSection.ts:141
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.div:51-7
 msgid "Close"
@@ -272,16 +272,16 @@ msgstr "Server has been shut down; please reload the page."
 #: admin/src/AdminSocketOverview.js:108 admin/src/AdminSocketOverview.js:431
 #: admin/src/AdminSocketSettings.js:47 src/control/Control.AlertDialog.js:52
 #: src/control/Control.DocumentRepair.js:77
-#: src/control/Control.LanguageDialog.js:119 src/control/Control.Tabs.js:371
-#: src/control/Control.Tabs.js:380 src/control/Control.Zotero.js:338
+#: src/control/Control.LanguageDialog.js:119 src/control/Control.Tabs.js:389
+#: src/control/Control.Tabs.js:398 src/control/Control.Zotero.js:338
 #: src/control/Control.Zotero.js:376 src/control/Permission.js:89
 #: src/control/Permission.js:99 src/control/Permission.js:149
-#: src/control/Toolbar.js:561 src/control/Toolbar.js:663
-#: src/control/Toolbar.js:799 src/control/Toolbar.js:1090
+#: src/control/Toolbar.js:686 src/control/Toolbar.js:788
+#: src/control/Toolbar.js:924 src/control/Toolbar.js:1215
 #: src/core/Socket.js:613 src/core/Socket.js:1026 src/core/Socket.js:1096
 #: src/core/Socket.js:1232 src/core/Socket.js:1236 src/main.js:79
-#: src/main.js:82 src/main.js:134 src/map/Clipboard.js:989
-#: src/map/Clipboard.js:1028 src/map/handler/Map.Feedback.js:83
+#: src/main.js:82 src/main.js:134 src/map/Clipboard.js:1001
+#: src/map/Clipboard.js:1040 src/map/handler/Map.Feedback.js:83
 #: src/map/handler/Map.SlideShow.js:51 src/map/handler/Map.SlideShow.js:150
 #: src/map/handler/Map.SlideShow.js:236 src/map/handler/Map.WOPI.js:582
 msgid "OK"
@@ -305,9 +305,9 @@ msgstr "Are you sure you want to terminate this session?"
 #: src/control/Control.DownloadProgress.js:90
 #: src/control/Control.LanguageDialog.js:113
 #: src/control/Control.MobileTopBar.js:52
-#: src/control/Control.UIManager.js:1245 src/control/Control.UIManager.js:1312
-#: src/control/Control.UIManager.js:1447 src/control/Control.UIManager.js:1589
-#: src/control/Control.Zotero.js:333 src/control/Toolbar.js:794
+#: src/control/Control.UIManager.js:1255 src/control/Control.UIManager.js:1322
+#: src/control/Control.UIManager.js:1457 src/control/Control.UIManager.js:1599
+#: src/control/Control.Zotero.js:333 src/control/Toolbar.js:919
 #: src/core/Socket.js:1257 src/layer/tile/CommentListSection.ts:425
 #: src/layer/tile/CommentSection.ts:157 src/layer/tile/CommentSection.ts:160
 msgid "Cancel"
@@ -377,15 +377,15 @@ msgstr " mins"
 msgid " s"
 msgstr " s"
 
-#: js/global.js:909
+#: js/global.js:921
 msgid "Cluster is scaling, retrying..."
 msgstr "Cluster is scaling, retrying..."
 
-#: js/global.js:911
+#: js/global.js:923
 msgid "Document is migrating to new server, retrying..."
 msgstr "Document is migrating to new server, retrying..."
 
-#: js/global.js:913
+#: js/global.js:925
 msgid "Failed to get RouteToken from controller"
 msgstr "Failed to get RouteToken from controller"
 
@@ -463,7 +463,7 @@ msgstr "The server encountered a %0 error while parsing the %1 command."
 msgid "Unlock"
 msgstr "Unlock"
 
-#: src/control/Control.ContextMenu.js:196 src/control/Toolbar.js:1089
+#: src/control/Control.ContextMenu.js:196 src/control/Toolbar.js:1214
 msgid "Delete"
 msgstr "Delete"
 
@@ -471,7 +471,7 @@ msgstr "Delete"
 msgid "Paste Special"
 msgstr "Paste Special"
 
-#: src/control/Control.DocumentNameInput.js:95
+#: src/control/Control.DocumentNameInput.js:109
 msgid "Path"
 msgstr "Path"
 
@@ -538,7 +538,7 @@ msgstr "Downloading clipboard content"
 
 #: src/control/Control.DownloadProgress.js:96
 #: src/control/Control.DownloadProgress.js:121
-#: src/control/Control.PartsPreview.js:279
+#: src/control/Control.PartsPreview.js:280
 msgid "Copy"
 msgstr "Copy"
 
@@ -619,64 +619,64 @@ msgstr "Active sheet"
 msgid "All Sheets"
 msgstr "All Sheets"
 
-#: src/control/Control.JSDialogBuilder.js:581
+#: src/control/Control.JSDialogBuilder.js:584
 msgid "Solid"
 msgstr "Solid"
 
-#: src/control/Control.JSDialogBuilder.js:584
+#: src/control/Control.JSDialogBuilder.js:587
 msgid "Linear"
 msgstr "Linear"
 
-#: src/control/Control.JSDialogBuilder.js:587
+#: src/control/Control.JSDialogBuilder.js:590
 msgid "Axial"
 msgstr "Axial"
 
-#: src/control/Control.JSDialogBuilder.js:590
+#: src/control/Control.JSDialogBuilder.js:593
 msgid "Radial"
 msgstr "Radial"
 
-#: src/control/Control.JSDialogBuilder.js:593
+#: src/control/Control.JSDialogBuilder.js:596
 msgid "Ellipsoid"
 msgstr "Ellipsoid"
 
-#: src/control/Control.JSDialogBuilder.js:597
+#: src/control/Control.JSDialogBuilder.js:600
 msgid "Quadratic"
 msgstr "Quadratic"
 
-#: src/control/Control.JSDialogBuilder.js:600
+#: src/control/Control.JSDialogBuilder.js:603
 msgid "Square"
 msgstr "Square"
 
-#: src/control/Control.JSDialogBuilder.js:603
+#: src/control/Control.JSDialogBuilder.js:606
 msgid "Fixed size"
 msgstr "Fixed size"
 
-#: src/control/Control.JSDialogBuilder.js:1650
+#: src/control/Control.JSDialogBuilder.js:1646
 msgid "From"
 msgstr "From"
 
-#: src/control/Control.JSDialogBuilder.js:1653
+#: src/control/Control.JSDialogBuilder.js:1649
 msgid "To"
 msgstr "To"
 
-#: src/control/Control.JSDialogBuilder.js:1656
+#: src/control/Control.JSDialogBuilder.js:1652
 msgid "Color"
 msgstr "Colour"
 
-#: src/control/Control.JSDialogBuilder.js:1770
+#: src/control/Control.JSDialogBuilder.js:1766
 msgid "Select range"
 msgstr "Select range"
 
-#: src/control/Control.JSDialogBuilder.js:1824
+#: src/control/Control.JSDialogBuilder.js:1820
 #: src/control/Control.NotebookbarBuilder.js:241
 msgid "Font Name"
 msgstr "Font Name"
 
-#: src/control/Control.JSDialogBuilder.js:1826 src/control/Toolbar.js:132
+#: src/control/Control.JSDialogBuilder.js:1822 src/control/Toolbar.js:132
 msgid "Font Size"
 msgstr "Font Size"
 
-#: src/control/Control.JSDialogBuilder.js:1828
+#: src/control/Control.JSDialogBuilder.js:1824
 #: src/control/Control.TopToolbar.js:533
 msgid "Style"
 msgstr "Style"
@@ -692,7 +692,7 @@ msgstr "replies"
 #: src/control/Control.JSDialogBuilder.js:2109
 #: src/layer/tile/CanvasTileLayer.js:5097
 #: src/layer/tile/CanvasTileLayer.js:5108
-#: src/layer/tile/CommentListSection.ts:981
+#: src/layer/tile/CommentListSection.ts:1018
 msgid "Comment"
 msgstr "Comment"
 
@@ -978,7 +978,7 @@ msgstr "Refresh Citations"
 
 #: src/control/Control.Menubar.js:304
 #: src/control/Control.NotebookbarWriter.js:1998
-#: src/control/Control.Zotero.js:1446
+#: src/control/Control.Zotero.js:1448
 msgid "Unlink Citations"
 msgstr "Unlink Citations"
 
@@ -1424,7 +1424,7 @@ msgstr "Currency"
 
 #: src/control/Control.NotebookbarCalc.js:658
 #: src/control/Control.NotebookbarWriter.js:1370
-#: src/control/Control.Zotero.js:1083 src/control/Control.Zotero.js:1519
+#: src/control/Control.Zotero.js:1085 src/control/Control.Zotero.js:1521
 msgid "Date"
 msgstr "Date"
 
@@ -1444,7 +1444,7 @@ msgstr "Fraction"
 msgid "Boolean Value"
 msgstr "Boolean Value"
 
-#: src/control/Control.NotebookbarCalc.js:663 src/control/Toolbar.js:766
+#: src/control/Control.NotebookbarCalc.js:663 src/control/Toolbar.js:891
 msgid "Text"
 msgstr "Text"
 
@@ -1537,7 +1537,7 @@ msgid "Sparkline"
 msgstr "Sparkline"
 
 #: src/control/Control.NotebookbarCalc.js:1506
-#: src/control/Control.NotebookbarCalc.js:2294
+#: src/control/Control.NotebookbarCalc.js:2305
 #: src/control/Control.NotebookbarDraw.js:834
 #: src/control/Control.NotebookbarDraw.js:1323
 #: src/control/Control.NotebookbarImpress.js:953
@@ -1619,15 +1619,15 @@ msgstr "Picture"
 msgid "Ruler"
 msgstr "Ruler"
 
-#: src/control/Control.PartsPreview.js:186
+#: src/control/Control.PartsPreview.js:187
 msgid "preview of page "
 msgstr "preview of page "
 
-#: src/control/Control.PartsPreview.js:245
+#: src/control/Control.PartsPreview.js:246
 msgid "Paste Slide"
 msgstr "Paste Slide"
 
-#: src/control/Control.PartsPreview.js:288
+#: src/control/Control.PartsPreview.js:289
 msgid "Paste"
 msgstr "Paste"
 
@@ -1759,27 +1759,27 @@ msgstr "Insert sheet before this"
 msgid "Insert sheet after this"
 msgstr "Insert sheet after this"
 
-#: src/control/Control.Tabs.js:94
+#: src/control/Control.Tabs.js:99
 msgid "Move Sheet Left"
 msgstr "Move Sheet Left"
 
-#: src/control/Control.Tabs.js:99
+#: src/control/Control.Tabs.js:104
 msgid "Move Sheet Right"
 msgstr "Move Sheet Right"
 
-#: src/control/Control.Tabs.js:115
+#: src/control/Control.Tabs.js:120
 msgid "Copy Sheet..."
 msgstr "Copy Sheet..."
 
-#: src/control/Control.Tabs.js:369
+#: src/control/Control.Tabs.js:387
 msgid "Are you sure you want to delete sheet, %sheet%?"
 msgstr "Are you sure you want to delete sheet, %sheet%?"
 
-#: src/control/Control.Tabs.js:380
+#: src/control/Control.Tabs.js:398
 msgid "Rename sheet"
 msgstr "Rename sheet"
 
-#: src/control/Control.Tabs.js:380
+#: src/control/Control.Tabs.js:398
 msgid "Enter new sheet name"
 msgstr "Enter new sheet name"
 
@@ -1830,7 +1830,7 @@ msgstr "Enter new name"
 msgid "Show Menu"
 msgstr "Show Menu"
 
-#: src/control/Control.UIManager.js:1070
+#: src/control/Control.UIManager.js:1080
 msgid "Dismiss"
 msgstr "Dismiss"
 
@@ -1922,7 +1922,7 @@ msgstr "Endnotes"
 msgid "My Publications"
 msgstr "My Publications"
 
-#: src/control/Control.Zotero.js:478 src/control/Control.Zotero.js:703
+#: src/control/Control.Zotero.js:478 src/control/Control.Zotero.js:705
 msgid "My Library"
 msgstr "My Library"
 
@@ -1930,86 +1930,86 @@ msgstr "My Library"
 msgid "Group Libraries"
 msgstr "Group Libraries"
 
-#: src/control/Control.Zotero.js:719
+#: src/control/Control.Zotero.js:721
 msgid "Failed to load groups"
 msgstr "Failed to load groups"
 
-#: src/control/Control.Zotero.js:737 src/control/Control.Zotero.js:1055
+#: src/control/Control.Zotero.js:739 src/control/Control.Zotero.js:1057
 msgid "Failed to load collections"
 msgstr "Failed to load collections"
 
-#: src/control/Control.Zotero.js:751
+#: src/control/Control.Zotero.js:753
 msgid "Citation Style"
 msgstr "Citation Style"
 
-#: src/control/Control.Zotero.js:756
+#: src/control/Control.Zotero.js:758
 msgid "Styles"
 msgstr "Styles"
 
-#: src/control/Control.Zotero.js:756
+#: src/control/Control.Zotero.js:758
 msgid "An error occurred while fetching style list"
 msgstr "An error occurred while fetching style list"
 
-#: src/control/Control.Zotero.js:764
+#: src/control/Control.Zotero.js:766
 msgid "Failed to load styles"
 msgstr "Failed to load styles"
 
-#: src/control/Control.Zotero.js:1083 src/control/Control.Zotero.js:1519
+#: src/control/Control.Zotero.js:1085 src/control/Control.Zotero.js:1521
 msgid "Title"
 msgstr "Title"
 
-#: src/control/Control.Zotero.js:1083 src/control/Control.Zotero.js:1519
+#: src/control/Control.Zotero.js:1085 src/control/Control.Zotero.js:1521
 msgid "Creator(s)"
 msgstr "Creator(s)"
 
-#: src/control/Control.Zotero.js:1083 src/control/Control.Zotero.js:1519
+#: src/control/Control.Zotero.js:1085 src/control/Control.Zotero.js:1521
 msgid "Your library is empty"
 msgstr "Your library is empty"
 
-#: src/control/Control.Zotero.js:1094
+#: src/control/Control.Zotero.js:1096
 msgid "Failed to load items"
 msgstr "Failed to load items"
 
-#: src/control/Control.Zotero.js:1144
+#: src/control/Control.Zotero.js:1146
 msgid "Citation warning"
 msgstr "Citation warning"
 
-#: src/control/Control.Zotero.js:1145
+#: src/control/Control.Zotero.js:1147
 msgid ""
 "Once citations are entered their storage and display type can not be "
 "changed."
 msgstr ""
 "Once citations are entered their storage and display type can not be changed."
 
-#: src/control/Control.Zotero.js:1146 src/control/Control.Zotero.js:1448
+#: src/control/Control.Zotero.js:1148 src/control/Control.Zotero.js:1450
 msgid "Confirm"
 msgstr "Confirm"
 
-#: src/control/Control.Zotero.js:1252
+#: src/control/Control.Zotero.js:1254
 msgid "Add Note"
 msgstr "Add Note"
 
-#: src/control/Control.Zotero.js:1255
+#: src/control/Control.Zotero.js:1257
 msgid "Notes"
 msgstr "Notes"
 
-#: src/control/Control.Zotero.js:1255
+#: src/control/Control.Zotero.js:1257
 msgid "An error occurred while fetching notes"
 msgstr "An error occurred while fetching notes"
 
-#: src/control/Control.Zotero.js:1386
+#: src/control/Control.Zotero.js:1388
 msgid "Updated citations"
 msgstr "Updated citations"
 
-#: src/control/Control.Zotero.js:1388
+#: src/control/Control.Zotero.js:1390
 msgid "Citations update failed"
 msgstr "Citations update failed"
 
-#: src/control/Control.Zotero.js:1392
+#: src/control/Control.Zotero.js:1394
 msgid "Updating citations"
 msgstr "Updating citations"
 
-#: src/control/Control.Zotero.js:1447
+#: src/control/Control.Zotero.js:1449
 msgid ""
 "Unlinking citations will prevent Collabora Online from updating citations "
 "and bibliography in this document."
@@ -2117,31 +2117,31 @@ msgstr "Saving..."
 msgid "Renaming..."
 msgstr "Renaming..."
 
-#: src/control/Toolbar.js:645
+#: src/control/Toolbar.js:770
 msgid "This version of %productName is powered by"
 msgstr "This version of %productName is powered by"
 
-#: src/control/Toolbar.js:657
+#: src/control/Toolbar.js:782
 msgid "\"Slow Proxy\""
 msgstr "\"Slow Proxy\""
 
-#: src/control/Toolbar.js:676
+#: src/control/Toolbar.js:801
 msgid "Copy all version information in English"
 msgstr "Copy all version information in English"
 
-#: src/control/Toolbar.js:759
+#: src/control/Toolbar.js:884
 msgid "Insert hyperlink"
 msgstr "Insert hyperlink"
 
-#: src/control/Toolbar.js:778
+#: src/control/Toolbar.js:903
 msgid "Link"
 msgstr "Link"
 
-#: src/control/Toolbar.js:1084
+#: src/control/Toolbar.js:1209
 msgid "Are you sure you want to delete this slide?"
 msgstr "Are you sure you want to delete this slide?"
 
-#: src/control/Toolbar.js:1087
+#: src/control/Toolbar.js:1212
 msgid "Are you sure you want to delete this page?"
 msgstr "Are you sure you want to delete this page?"
 
@@ -2149,7 +2149,7 @@ msgstr "Are you sure you want to delete this page?"
 msgid "Cell borders"
 msgstr "Cell borders"
 
-#: src/control/jsdialog/Widget.TreeView.js:658
+#: src/control/jsdialog/Widget.TreeView.js:664
 msgid "Headings and objects that you add to the document will appear here"
 msgstr "Headings and objects that you add to the document will appear here"
 
@@ -2592,41 +2592,41 @@ msgstr "A comment is being edited"
 msgid "Please save or discard the comment currently being edited."
 msgstr "Please save or discard the comment currently being edited."
 
-#: src/layer/tile/CommentListSection.ts:924
+#: src/layer/tile/CommentListSection.ts:961
 msgid "Modify"
 msgstr "Modify"
 
-#: src/layer/tile/CommentListSection.ts:930
+#: src/layer/tile/CommentListSection.ts:967
 #: src/layer/tile/CommentSection.ts:161
 msgid "Reply"
 msgstr "Reply"
 
-#: src/layer/tile/CommentListSection.ts:936
+#: src/layer/tile/CommentListSection.ts:973
 msgid "Remove"
 msgstr "Remove"
 
-#: src/layer/tile/CommentListSection.ts:942
+#: src/layer/tile/CommentListSection.ts:979
 msgid "Remove Thread"
 msgstr "Remove Thread"
 
-#: src/layer/tile/CommentListSection.ts:948
+#: src/layer/tile/CommentListSection.ts:985
 msgid "Resolve"
 msgstr "Resolve"
 
-#: src/layer/tile/CommentListSection.ts:948
+#: src/layer/tile/CommentListSection.ts:985
 msgid "Unresolve"
 msgstr "Unresolve"
 
-#: src/layer/tile/CommentListSection.ts:954
+#: src/layer/tile/CommentListSection.ts:991
 msgid "Unresolve Thread"
 msgstr "Unresolve Thread"
 
-#: src/layer/tile/CommentListSection.ts:954
+#: src/layer/tile/CommentListSection.ts:991
 msgid "Resolve Thread"
 msgstr "Resolve Thread"
 
-#: src/layer/tile/CommentListSection.ts:1235
-#: src/layer/tile/CommentListSection.ts:1290
+#: src/layer/tile/CommentListSection.ts:1272
+#: src/layer/tile/CommentListSection.ts:1327
 msgid "Autosaved"
 msgstr "Autosaved"
 
@@ -2667,11 +2667,11 @@ msgstr "warning: copy/paste request timed out"
 msgid "Failed to download clipboard, please re-copy"
 msgstr "Failed to download clipboard, please re-copy"
 
-#: src/map/Clipboard.js:982
+#: src/map/Clipboard.js:994
 msgid "<p>Please use the copy/paste buttons on your on-screen keyboard.</p>"
 msgstr "<p>Please use the copy/paste buttons on your on-screen keyboard.</p>"
 
-#: src/map/Clipboard.js:984
+#: src/map/Clipboard.js:996
 msgid ""
 "<p>Your browser has very limited access to the clipboard, so use these "
 "keyboard shortcuts:</p><table class=\"warn-copy-paste\"><tr><td><kbd>Ctrl</"
@@ -2687,7 +2687,7 @@ msgstr ""
 "kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd></td></tr><tr><td>Copy</td>"
 "<td>Cut</td><td>Paste</td></tr></table>"
 
-#: src/map/Clipboard.js:1003
+#: src/map/Clipboard.js:1015
 msgid ""
 "<p>A download due to a large copy/paste operation has already started. "
 "Please, wait for the current download or cancel it before starting a new "
@@ -2697,7 +2697,7 @@ msgstr ""
 "Please, wait for the current download or cancel it before starting a new "
 "one</p>"
 
-#: src/map/Clipboard.js:1021
+#: src/map/Clipboard.js:1033
 msgid ""
 "<p>Your browser has very limited access to the clipboard</p><p>Please press "
 "now: <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to see "
