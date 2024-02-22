@@ -954,7 +954,9 @@ export class Comment extends CanvasSectionObject {
 	public onLostFocus (e: any): void {
 		if (!this.sectionProperties.isRemoved) {
 			$(this.sectionProperties.container).removeClass('annotation-active reply-annotation-container modify-annotation-container');
-			if (this.sectionProperties.contentText.origText !== this.sectionProperties.nodeModifyText.value) {
+			if (this.sectionProperties.nodeModifyText.value === '') {
+				this.onCancelClick(e);
+			} else if (this.sectionProperties.contentText.origText !== this.sectionProperties.nodeModifyText.value) {
 				if (!this.sectionProperties.contentText.unedited)
 					this.sectionProperties.contentText.unedited = this.sectionProperties.contentText.origText;
 				cool.CommentSection.autoSavedComment = this;
