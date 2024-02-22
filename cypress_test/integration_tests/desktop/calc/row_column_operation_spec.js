@@ -9,8 +9,7 @@ describe(['tagdesktop'], 'Row Column Operation', function() {
 	beforeEach(function() {
 		helper.beforeAll(testFileName, 'calc');
 		desktopHelper.switchUIToNotebookbar();
-		calcHelper.selectEntireSheet();
-		calcHelper.assertDataClipboardTable(['Hello','Hi','World','Bye']);
+		calcHelper.assertSheetContents(['Hello','Hi','World','Bye']);
 		calcHelper.clickOnFirstCell(true,false);
 		cy.cGet('#toolbar-up .w2ui-scroll-right').click();
 	});
@@ -23,39 +22,33 @@ describe(['tagdesktop'], 'Row Column Operation', function() {
 		//Insert row above
 		cy.cGet('#home-insert-columns-before-button').click();
 
-		calcHelper.selectEntireSheet();
-		//calcHelper.assertDataClipboardTable(['','','Hello','Hi','World','Bye']);
+		//calcHelper.assertSheetContents(['','','Hello','Hi','World','Bye']);
 		//delete row
 		calcHelper.clickOnFirstCell(true, false);
 
 		cy.cGet('#home-delete-rows-button').click();
-		calcHelper.selectEntireSheet();
-		//calcHelper.assertDataClipboardTable(['Hello','Hi','World','Bye']);
+		//calcHelper.assertSheetContents(['Hello','Hi','World','Bye']);
 
 		//insert row below
 		calcHelper.clickOnFirstCell(true, false);
 		cy.cGet('#home-insert-rows-after-button').click();
-		calcHelper.selectEntireSheet();
-		//calcHelper.assertDataClipboardTable(['Hello','Hi','','','World','Bye']);
+		//calcHelper.assertSheetContents(['Hello','Hi','','','World','Bye']);
 	});
 
 	it('Insert/Delete Column', function() {
 		//insert column before
 		cy.cGet('#home-insert-columns-before-button').click();
-		calcHelper.selectEntireSheet();
-		//calcHelper.assertDataClipboardTable(['','Hello','Hi','','World','Bye']);
+		//calcHelper.assertSheetContents(['','Hello','Hi','','World','Bye']);
 		calcHelper.clickOnFirstCell(true, false);
 
 		//delete column
 		cy.cGet('#home-delete-columns-button').click();
-		calcHelper.selectEntireSheet();
 		cy.wait(500);
-		//calcHelper.assertDataClipboardTable(['Hello','Hi','World','Bye']);
+		//calcHelper.assertSheetContents(['Hello','Hi','World','Bye']);
 		calcHelper.clickOnFirstCell(true,false);
 
 		//insert column after
 		cy.cGet('#home-insert-columns-after-button').click();
-		calcHelper.selectEntireSheet();
-		//calcHelper.assertDataClipboardTable(['Hello','','Hi','World','','Bye']);
+		//calcHelper.assertSheetContents(['Hello','','Hi','World','','Bye']);
 	});
 });

@@ -19,11 +19,9 @@ describe.skip('Repair Document', function() {
 		cy.cSetActiveFrame(frameId1);
 		helper.typeIntoDocument('Hello World{enter}');
 		cy.cSetActiveFrame(frameId2);
-		calcHelper.selectEntireSheet();
-		calcHelper.assertDataClipboardTable(['Hello World\n']);
+		calcHelper.assertSheetContents(['Hello World\n']);
 		cy.cSetActiveFrame(frameId1);
-		calcHelper.selectEntireSheet();
-		calcHelper.assertDataClipboardTable(['Hello World\n']);
+		calcHelper.assertSheetContents(['Hello World\n']);
 		cy.cSetActiveFrame(frameId2);
 		cy.cGet('#menu-editmenu').click().cGet('#menu-repair').click();
 		cy.cGet('#DocumentRepairDialog').should('exist');

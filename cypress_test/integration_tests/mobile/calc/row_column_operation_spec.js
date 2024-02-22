@@ -11,9 +11,7 @@ describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Row Column Operation',
 
 		mobileHelper.enableEditingMobile();
 
-		calcHelper.selectEntireSheet();
-
-		calcHelper.assertDataClipboardTable(['Hello','Hi','World','Bye']);
+		calcHelper.assertSheetContents(['Hello','Hi','World','Bye']);
 
 		calcHelper.clickOnFirstCell(true,false);
 	});
@@ -36,44 +34,38 @@ describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Row Column Operation',
 		//Insert row above
 		selectOption('Insert Rows', 'Rows Above');
 
-		calcHelper.selectEntireSheet();
-		calcHelper.assertDataClipboardTable(['','','Hello','Hi','World','Bye']);
+		calcHelper.assertSheetContents(['','','Hello','Hi','World','Bye']);
 		//delete row
 		calcHelper.clickOnFirstCell(true, false);
 
 		selectOption('Delete Rows');
 
-		calcHelper.selectEntireSheet();
-		calcHelper.assertDataClipboardTable(['Hello','Hi','World','Bye']);
+		calcHelper.assertSheetContents(['Hello','Hi','World','Bye']);
 
 		//insert row below
 		calcHelper.clickOnFirstCell(true, false);
 
 		selectOption('Insert Rows', 'Rows Below');
 
-		calcHelper.selectEntireSheet();
-		calcHelper.assertDataClipboardTable(['Hello','Hi','','','World','Bye']);
+		calcHelper.assertSheetContents(['Hello','Hi','','','World','Bye']);
 	});
 
 	it('Insert/Delete Column', function() {
 		//insert column before
 		selectOption('Insert Columns', 'Columns Before');
 
-		calcHelper.selectEntireSheet();
-		calcHelper.assertDataClipboardTable(['','Hello','Hi','','World','Bye']);
+		calcHelper.assertSheetContents(['','Hello','Hi','','World','Bye']);
 		calcHelper.clickOnFirstCell(true, false);
 
 		//delete column
 		selectOption('Delete Columns');
 
-		calcHelper.selectEntireSheet();
-		calcHelper.assertDataClipboardTable(['Hello','Hi','World','Bye']);
+		calcHelper.assertSheetContents(['Hello','Hi','World','Bye']);
 		calcHelper.clickOnFirstCell(true,false);
 
 		//insert column after
 		selectOption('Insert Columns', 'Columns After');
 
-		calcHelper.selectEntireSheet();
-		calcHelper.assertDataClipboardTable(['Hello','','Hi','World','','Bye']);
+		calcHelper.assertSheetContents(['Hello','','Hi','World','','Bye']);
 	});
 });

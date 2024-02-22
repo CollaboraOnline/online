@@ -12,8 +12,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'AutoFilter', function() {
 		testFileName = helper.beforeAll(origTestFileName, 'calc');
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
-		calcHelper.selectEntireSheet();
-		calcHelper.assertDataClipboardTable(['Cypress Test', 'Status', 'Test 1', 'Pass', 'Test 2', 'Fail', 'Test 3', 'Pass', 'Test 4', '', 'Test 5', 'Fail']);
+		calcHelper.assertSheetContents(['Cypress Test', 'Status', 'Test 1', 'Pass', 'Test 2', 'Fail', 'Test 3', 'Pass', 'Test 4', '', 'Test 5', 'Fail']);
 	});
 
 	afterEach(function() {
@@ -28,8 +27,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'AutoFilter', function() {
 		// Wait for autofilter dialog to close
 		cy.cGet('.mobile-wizard').should('not.exist');
 
-		calcHelper.selectEntireSheet();
-		calcHelper.assertDataClipboardTable(['Cypress Test', 'Status', 'Test 5', 'Fail', 'Test 4', '', 'Test 3', 'Pass', 'Test 2', 'Fail', 'Test 1', 'Pass']);
+		calcHelper.assertSheetContents(['Cypress Test', 'Status', 'Test 5', 'Fail', 'Test 4', '', 'Test 3', 'Pass', 'Test 2', 'Fail', 'Test 1', 'Pass']);
 
 		//sort by ascending order
 		calcHelper.openAutoFilterMenu();
@@ -38,7 +36,6 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'AutoFilter', function() {
 		// Wait for autofilter dialog to close
 		cy.cGet('.mobile-wizard').should('not.exist');
 
-		calcHelper.selectEntireSheet();
-		calcHelper.assertDataClipboardTable(['Cypress Test', 'Status', 'Test 1', 'Pass', 'Test 2', 'Fail', 'Test 3', 'Pass', 'Test 4', '', 'Test 5', 'Fail']);
+		calcHelper.assertSheetContents(['Cypress Test', 'Status', 'Test 1', 'Pass', 'Test 2', 'Fail', 'Test 3', 'Pass', 'Test 4', '', 'Test 5', 'Fail']);
 	});
 });
