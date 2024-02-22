@@ -553,7 +553,6 @@ L.Map.include({
 		var searchInput = document.getElementById('online-help-search-input');
 		searchInput.focus(); // auto focus on user input field
 		var helpContentParent = document.getElementsByClassName('ui-dialog-content')[0];
-		searchInput.focus();
 		var startFilter = false;
 		var isAnyMatchingContent = false;
 		searchInput.addEventListener('input', function () {
@@ -564,9 +563,9 @@ L.Map.include({
 				document.querySelectorAll('#online-help-content > *:not(a), .link-section p, .product-header').forEach(function (element) {
 					// Check if the element has class text, spreadsheet, or presentation
 					if (!element.classList.contains('text') && !element.classList.contains('spreadsheet') && !element.classList.contains('presentation')) {
-						element.style.display = 'none';
+						this.hide(element);
 					}
-				});
+				}.bind(this));
 
 				startFilter = true;
 			}
@@ -615,12 +614,12 @@ L.Map.include({
 					mainSection.style.backgroundColor = '';
 					mainSection.style.paddingInline = '';
 					mainSection.style.borderRadius = '';
-					subSection.style.display = 'block';
-				});
+					this.show(subSection);
+				}.bind(this));
 				mainSection.style.backgroundColor = 'var(--color-background-lighter)';
 				mainSection.style.paddingInline = '12px';
 				mainSection.style.borderRadius = 'var(--border-radius-large)';
-				mainSection.style.display = 'block';
+				this.show(mainSection);
 			}
 			else {
 				// else Loop through each sub-section and display subsections with matching text has search term
@@ -628,22 +627,22 @@ L.Map.include({
 					// Highlight matching sub-sections
 					if (subSection.textContent.toLowerCase().includes(searchTerm.toLowerCase())) {
 						subSection.style.color = 'var(--color-text-darker)';
-						subSection.style.display = 'block';
+						this.show(subSection);
 						mainSection.style.backgroundColor = 'var(--color-background-lighter)';
 						mainSection.style.paddingInline = '12px';
 						mainSection.style.borderRadius = 'var(--border-radius-large)';
 						// make sure main section of matched subsection is visible
-						mainSection.style.display = 'block';
+						this.show(mainSection);
 						subSectionContainsTerm = true;
 					} else {
 						subSection.style.color = ''; // Remove previous highlighting
-						subSection.style.display = 'none';
+						this.hide(subSection);
 					}
-				});
+				}.bind(this));
 			}
 
 			if (!subSectionContainsTerm && !containsTerm) {
-				mainSection.style.display = 'none';
+				this.hide(mainSection);
 			}
 			else {
 				isAnyMatchingContent = true;
@@ -667,19 +666,29 @@ L.Map.include({
 		var mainSections = document.querySelectorAll('.section');
 		mainSections.forEach(function(mainSection) {
 			mainSection.style.backgroundColor = '';
-			mainSection.style.display = 'block';
+			this.show(mainSection);
 
 			var subSections = mainSection.querySelectorAll('.sub-section');
 			subSections.forEach(function(subSection) {
-				subSection.style.display = 'block';
-			});
-		});
+				this.show(subSection);
+			}.bind(this));
+		}.bind(this));
 
 		// select all event scroll elements, main-header elements, product header elements and make visible to user if search term is empty
 		document.querySelectorAll('.m-v-0, .product-header, .help-dialog-header').forEach(function(element) {
-			element.style.display = 'block';
+			this.show(element);
 			element.style.backgroundColor = '';
-		});
+		}.bind(this));
+	},
+
+	show: function(element) {
+		element.classList.remove('hide');
+		element.classList.add('show');
+	},
+
+	hide: function(element) {
+		element.classList.remove('show');
+		element.classList.add('hide');
 	},
 
 	_doOpenHelpFile: function(data, id, map) {
