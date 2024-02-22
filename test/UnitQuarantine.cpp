@@ -172,7 +172,7 @@ public:
         // We expect this to happen only with the disonnection test,
         // because only in that case there is no user input.
         LOK_ASSERT_MESSAGE("Expected reason to be 'Data-loss detected'",
-                           Util::startsWith(reason, "Data-loss detected"));
+                           reason.starts_with("Data-loss detected"));
         LOK_ASSERT_MESSAGE("Expected to be in Phase::WaitDocClose but was " + toString(_phase),
                            _phase == Phase::WaitDocClose);
         _unloadingModifiedDocDetected = true;

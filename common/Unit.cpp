@@ -421,7 +421,7 @@ bool UnitBase::filterSendWebSocketMessage(const char* data, const std::size_t le
                                           const WSOpCode code, const bool flush, int& unitReturn)
 {
     const std::string message(data, len);
-    if (Util::startsWith(message, "unocommandresult:"))
+    if (message.starts_with("unocommandresult:"))
     {
         const std::size_t index = message.find_first_of('{');
         if (index != std::string::npos)
@@ -458,7 +458,7 @@ bool UnitBase::filterSendWebSocketMessage(const char* data, const std::size_t le
             LOG_TST("Expected json unocommandresult. Ignoring: " << message);
         }
     }
-    else if (Util::startsWith(message, "status:"))
+    else if (message.starts_with("status:"))
     {
         if (onDocumentLoaded(message))
             return false;
@@ -473,12 +473,12 @@ bool UnitBase::filterSendWebSocketMessage(const char* data, const std::size_t le
         if (onDocumentUnmodified(message))
             return false;
     }
-    else if (Util::startsWith(message, "statechanged:"))
+    else if (message.starts_with("statechanged:"))
     {
         if (onDocumentStateChanged(message))
             return false;
     }
-    else if (Util::startsWith(message, "error:"))
+    else if (message.starts_with("error:"))
     {
         if (onDocumentError(message))
             return false;

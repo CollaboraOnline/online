@@ -99,14 +99,14 @@ public:
         }
 
         const std::string lowerScheme = Util::toLower(scheme);
-        if (!Util::startsWith(lowerScheme, "http") && !Util::startsWith(lowerScheme, "ws"))
+        if (!lowerScheme.starts_with("http") && !lowerScheme.starts_with("ws"))
         {
             LOG_ERR_S("Unsupported scheme in URI while creating WebSocketSession: " << uri);
             return nullptr;
         }
 
         const bool secure
-            = Util::startsWith(lowerScheme, "https") || Util::startsWith(lowerScheme, "wss");
+            = lowerScheme.starts_with("https") || lowerScheme.starts_with("wss");
 
         const int portInt = port.empty() ? 0 : std::stoi(port);
         return create(host, secure ? Protocol::HttpSsl : Protocol::HttpUnencrypted, portInt);

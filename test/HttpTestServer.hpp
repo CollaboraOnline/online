@@ -86,7 +86,7 @@ private:
         if (request.getVerb() == http::Request::VERB_GET)
         {
             // Return test data.
-            if (Util::startsWith(request.getUrl(), "/status/"))
+            if (request.getUrl().starts_with("/status/"))
             {
                 const auto statusCode
                     = Util::i32FromString(request.getUrl().substr(sizeof("/status")));
@@ -120,7 +120,7 @@ private:
             {
                 // Don't send anything back.
             }
-            else if (Util::startsWith(request.getUrl(), "/inject"))
+            else if (request.getUrl().starts_with("/inject"))
             {
                 // /inject/<hex data> sends back the data (in binary form)
                 // verbatim. It doesn't add headers or anything at all.
@@ -133,9 +133,9 @@ private:
             else
             {
                 http::Response response(http::StatusCode::OK, fd);
-                if (Util::startsWith(request.getUrl(), "/echo/"))
+                if (request.getUrl().starts_with("/echo/"))
                 {
-                    if (Util::startsWith(request.getUrl(), "/echo/chunked/"))
+                    if (request.getUrl().starts_with("/echo/chunked/"))
                     {
                         response.set("transfer-encoding", "chunked");
                         std::string body = request.getUrl().substr(sizeof("/echo/chunked"));

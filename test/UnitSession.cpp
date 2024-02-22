@@ -123,8 +123,8 @@ UnitBase::TestResult UnitSession::testHandshake()
         wsSession->poll(
             [&](const std::vector<char>& message)
             {
-                const std::string msg = Util::toString(message);
-                if (!Util::startsWith(msg, "error:"))
+                const std::string msg(std::string(message.begin(), message.end()));
+                if (!msg.starts_with("error:"))
                 {
                     LOK_ASSERT_EQUAL(expectedStr, msg);
                 }

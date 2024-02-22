@@ -553,7 +553,7 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
             const auto pos = uri.find(ProxyRemoteStatic);
             if (pos != std::string::npos)
             {
-                if (Util::endsWith(uri, "lokit-extra-img.svg"))
+                if (uri.ends_with("lokit-extra-img.svg"))
                 {
                     ProxyRequestHandler::handleRequest(uri.substr(pos + ProxyRemoteLen), socket,
                                                        ProxyRequestHandler::getProxyRatingServer());
