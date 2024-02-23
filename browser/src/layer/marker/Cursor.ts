@@ -1,6 +1,5 @@
 /* eslint-disable */
 
-declare var $: any;
 declare var L: any;
 
 /*
