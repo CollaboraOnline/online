@@ -12,9 +12,36 @@
  * L.Control.UserList
  */
 
-/* global $ w2ui _ */
-L.Control.UserList = L.Control.extend({
+interface UserExtraInfo {
+	avatar: string;
+}
+
+interface User {
+	userName: string;
+	viewId: number;
+	extraInfo: UserExtraInfo;
+	color: string;
+}
+
+interface UserEvent {
+	username: string;
+	extraInfo: UserExtraInfo;
+	color: string;
+	viewId: number;
+	readonly: boolean;
+}
+
+class UserList extends L.Control {
 	options: {
+		userLimitHeader: number,
+		userPopupTimeout: null | ReturnType<typeof setTimeout>,
+		userJoinedPopupMessage: string,
+		userLeftPopupMessage: string,
+		nUsers?: string,
+		oneUser?: string,
+		noUser?: string,
+		listUser?: User[]
+	} = {
 		userLimitHeader: 6,
 		userPopupTimeout: null,
 		userJoinedPopupMessage: '<div>' + _('%user has joined') + '</div>',
@@ -23,12 +50,9 @@ L.Control.UserList = L.Control.extend({
 		oneUser: undefined,
 		noUser: undefined,
 		listUser: []
-	},
+	};
 
-	initialize: function () {
-	},
-
-	onAdd: function (map) {
+	onAdd(map: ReturnType<typeof L.map>) {
 		this.map = map;
 
 		map.on('addview', this.onAddView, this);
@@ -46,20 +70,20 @@ L.Control.UserList = L.Control.extend({
 			this.options.noUser = _('0 users');
 		}
 
-		map.on('updateEditorName', function(e) {
+		map.on('updateEditorName', function(e: UserEvent) {
 			$('#currently-msg').show();
 			$('#current-editor').text(e.username);
 		});
 
 
 		this.registerHeaderAvatarEvents();
-	},
+	}
 
-	escapeHtml: function(input) {
+	escapeHtml(input: string) {
 		return $('<div>').text(input).html();
-	},
+	}
 
-	selectUser: function(viewId) {
+	selectUser(viewId: number) {
 		var userlistItem = w2ui['actionbar'].get('userlist');
 		if (userlistItem === null) {
 			return;
@@ -67,9 +91,9 @@ L.Control.UserList = L.Control.extend({
 
 		$('#user-' + viewId).addClass('selected-user');
 		L.DomUtil.addClass(document.querySelector('#userListPopover .user-list-item[data-view-id="' + viewId + '"]'), 'selected-user');
-	},
+	}
 
-	followUser: function(viewId) {
+	followUser(viewId: number) {
 		$('#userListPopover').hide();
 		var docLayer = this.map._docLayer;
 		this.map._goToViewId(viewId);
@@ -87,10 +111,10 @@ L.Control.UserList = L.Control.extend({
 		docLayer._followEditor = false;
 
 		this.selectUser(viewId);
-	},
+	}
 
-	onUseritemClicked: function(e) { // eslint-disable-line no-unused-vars
-		var viewId = parseInt(e.currentTarget.id.replace('user-', ''));
+	onUseritemClicked(e: MouseEvent | TouchEvent) {
+		var viewId = parseInt((e.currentTarget as HTMLElement).id.replace('user-', ''));
 
 		if (viewId === this.map._docLayer._viewId) {
 			w2ui['actionbar'].uncheck('userlist');
@@ -98,9 +122,9 @@ L.Control.UserList = L.Control.extend({
 		}
 
 		w2ui['actionbar'].uncheck('userlist');
-	},
+	}
 
-	createAvatar: function (viewId, userName, extraInfo, color) {
+	createAvatar(viewId: number, _userName: string, extraInfo: UserExtraInfo, color: string) {
 		var img;
 		if (extraInfo !== undefined && extraInfo.avatar !== undefined) {
 			img = L.DomUtil.create('img', 'avatar-img');
@@ -115,9 +139,9 @@ L.Control.UserList = L.Control.extend({
 		img.setAttribute('data-view-id', viewId);
 		L.LOUtil.checkIfImageExists(img);
 		return img;
-	},
+	}
 
-	getUserItem: function(viewId, userName, extraInfo, color) {
+	getUserItem(viewId: number, userName: string, extraInfo: UserExtraInfo, color: string) {
 		var content = L.DomUtil.create('tr', 'useritem');
 		content.id = 'user-' + viewId;
 		$(document).on('click', '#' + content.id, this.onUseritemClicked.bind(this));
@@ -129,10 +153,10 @@ L.Control.UserList = L.Control.extend({
 		nameTd.textContent = userName;
 
 		return content;
-	},
+	}
 
-	registerHeaderAvatarEvents: function() {
-		var outsideClickListener = function(e) {
+	registerHeaderAvatarEvents() {
+		var outsideClickListener = function(e: MouseEvent) {
 			$('.main-nav.hasnotebookbar').css('overflow', 'scroll hidden');
 			var selector = '#userListPopover';
 			var $target = $(e.target);
@@ -153,18 +177,18 @@ L.Control.UserList = L.Control.extend({
 			}
 			document.addEventListener('click', outsideClickListener);
 		});
-	},
+	}
 
-	hideUserList: function() {
-		return window.ThisIsAMobileApp ||
+	hideUserList() {
+		return (window as any /* TODO: remove cast after gh#8221 */).ThisIsAMobileApp ||
 		(this.map['wopi'].HideUserList !== null && this.map['wopi'].HideUserList !== undefined &&
 			($.inArray('true', this.map['wopi'].HideUserList) >= 0) ||
 			(window.mode.isMobile() && $.inArray('mobile', this.map['wopi'].HideUserList) >= 0) ||
 			(window.mode.isTablet() && $.inArray('tablet', this.map['wopi'].HideUserList) >= 0) ||
 			(window.mode.isDesktop() && $.inArray('desktop', this.map['wopi'].HideUserList) >= 0));
-	},
+	}
 
-	renderHeaderAvatars: function() {
+	renderHeaderAvatars() {
 		if (window.mode.isMobile() || this.hideUserList() || this.options.listUser.length === 1) {
 			document.getElementById('userListSummary').removeAttribute('accesskey');
 			return;
@@ -177,22 +201,22 @@ L.Control.UserList = L.Control.extend({
 		Array.from(document.querySelectorAll('#userListSummary [data-view-id]')).map(function(element) {
 			return element.getAttribute('data-view-id');
 		}).filter(function(viewId) {
-			return headerUserList.map(function(user) {
+			return headerUserList.map(function(user: User) {
 				return user.viewId;
-			}).indexOf(viewId) === -1;
+			}).indexOf(parseInt(viewId)) === -1;
 		}).forEach(function(viewId) {
 			L.DomUtil.remove(document.querySelector('#userListSummary [data-view-id="' + viewId + '"]'));
 		});
 
 		// Summary rendering
-		headerUserList.forEach(function (user) {
+		headerUserList.forEach(function (user: User) {
 			if (!document.querySelector('#userListSummary [data-view-id="' + user.viewId + '"]')) {
 				document.getElementById('userListSummary').appendChild(this.createAvatar(user.viewId, user.userName, user.extraInfo, user.color));
 			}
 		}.bind(this));
 
 		// Popover rendering
-		this.options.listUser.forEach(function (user) {
+		this.options.listUser.forEach(function (user: User) {
 			if (document.querySelector('#userListPopover .user-list-item[data-view-id="' + user.viewId + '"]')) {
 				return;
 			}
@@ -225,8 +249,8 @@ L.Control.UserList = L.Control.extend({
 			var followEditorCheckbox = L.DomUtil.create('input', 'follow-editor-checkbox', followEditorWrapper);
 			followEditorCheckbox.id = 'follow-editor-checkbox';
 			followEditorCheckbox.setAttribute('type', 'checkbox');
-			followEditorCheckbox.onchange = function(event) {
-				window.editorUpdate(event);
+			followEditorCheckbox.onchange = function(event: Event) {
+				(window as any /* TODO: remove cast after gh#8221 */).editorUpdate(event);
 			};
 			var followEditorCheckboxLabel = L.DomUtil.create('label', 'follow-editor-label', followEditorWrapper);
 			followEditorCheckboxLabel.innerText = _('Always follow the editor');
@@ -235,10 +259,10 @@ L.Control.UserList = L.Control.extend({
 			document.getElementById('userListPopover').appendChild(followEditorWrapper);
 		}
 
-		document.getElementById('follow-editor-checkbox').checked = this.map._docLayer._followEditor;
-	},
+		(document.getElementById('follow-editor-checkbox') as HTMLInputElement).checked = this.map._docLayer._followEditor;
+	}
 
-	removeUserFromHeaderAvatars: function(viewId) {
+	removeUserFromHeaderAvatars(viewId: number) {
 		var index = null;
 		this.options.listUser.forEach(function(item, idx) {
 			if (item.viewId == viewId) {
@@ -250,9 +274,9 @@ L.Control.UserList = L.Control.extend({
 		L.DomUtil.remove(document.querySelector('#userListPopover .user-list-item[data-view-id="' + viewId + '"]'));
 		this.options.listUser.splice(index, 1);
 		this.renderHeaderAvatars();
-	},
+	}
 
-	updateUserListCount: function() {
+	updateUserListCount() {
 		var actionbar = w2ui.actionbar;
 		var userlistItem = actionbar && actionbar.get('userlist');
 		if (userlistItem == null) {
@@ -261,7 +285,7 @@ L.Control.UserList = L.Control.extend({
 
 		var count = $(userlistItem.html).find('#userlist_table tbody tr').length;
 		if (count > 1) {
-			userlistItem.text = this.options.nUsers.replace('%n', count);
+			userlistItem.text = this.options.nUsers.replace('%n', count.toString());
 		} else if (count === 1) {
 			userlistItem.text = this.options.oneUser;
 		} else {
@@ -277,9 +301,9 @@ L.Control.UserList = L.Control.extend({
 			actionbar.hide('userlist');
 			actionbar.hide('userlistbreak');
 		}
-	},
+	}
 
-	deselectUser: function(e) {
+	deselectUser(e: UserEvent) {
 		var userlistItem = w2ui['actionbar'].get('userlist');
 		if (userlistItem === null) {
 			return;
@@ -287,31 +311,30 @@ L.Control.UserList = L.Control.extend({
 
 		$('#user-' + e.viewId).removeClass('selected-user');
 		L.DomUtil.removeClass(document.querySelector('#userListPopover .user-list-item[data-view-id="' + e.viewId + '"]'), 'selected-user');
-	},
+	}
 
-	onOpenUserList: function() {
-		var that = this;
-		setTimeout(function () {
+	onOpenUserList() {
+		setTimeout(() => {
 			var cBox = $('#follow-checkbox')[0];
-			var docLayer = that.map._docLayer;
+			var docLayer = this.map._docLayer;
 			var editorId = docLayer._editorId;
 			var viewId = docLayer._followThis;
 			var followUser = docLayer._followUser;
 
 			if (cBox)
-				cBox.checked = docLayer._followEditor;
+				(cBox as HTMLInputElement).checked = docLayer._followEditor;
 
-			if (docLayer.editorId !== -1 && that.map._viewInfo[editorId])
-				$('#current-editor').text(that.map._viewInfo[editorId].username);
+			if (docLayer.editorId !== -1 && this.map._viewInfo[editorId])
+				$('#current-editor').text(this.map._viewInfo[editorId].username);
 			else
 				$('#currently-msg').hide();
 
 			if (followUser)
-				that.selectUser(viewId);
+				this.selectUser(viewId);
 		}, 100);
-	},
+	}
 
-	onAddView: function(e) {
+	onAddView(e: UserEvent) {
 		var userlistItem = w2ui['actionbar'].get('userlist');
 		var username = this.escapeHtml(e.username);
 		var showPopup = false;
@@ -327,11 +350,10 @@ L.Control.UserList = L.Control.extend({
 					style: 'padding: 5px'
 				});
 			clearTimeout(this.options.userPopupTimeout);
-			var that = this;
-			this.options.userPopupTimeout = setTimeout(function() {
+			this.options.userPopupTimeout = setTimeout(() => {
 				$('#tb_actionbar_item_userlist').w2overlay('');
-				clearTimeout(that.options.userPopupTimeout);
-				that.options.userPopupTimeout = null;
+				clearTimeout(this.options.userPopupTimeout);
+				this.options.userPopupTimeout = null;
 			}, 3000);
 		}
 
@@ -354,10 +376,9 @@ L.Control.UserList = L.Control.extend({
 
 		this.options.listUser.push({viewId: e.viewId, userName: username, extraInfo: e.extraInfo, color: color});
 		this.renderHeaderAvatars();
-	},
+	}
 
-	onRemoveView: function(e) {
-		var that = this;
+	onRemoveView(e: UserEvent) {
 		var username = this.escapeHtml(e.username);
 		$('#tb_actionbar_item_userlist')
 			.w2overlay({
@@ -366,10 +387,10 @@ L.Control.UserList = L.Control.extend({
 				style: 'padding: 5px'
 			});
 		clearTimeout(this.options.userPopupTimeout);
-		this.options.userPopupTimeout = setTimeout(function() {
+		this.options.userPopupTimeout = setTimeout(() => {
 			$('#tb_actionbar_item_userlist').w2overlay('');
-			clearTimeout(that.options.userPopupTimeout);
-			that.options.userPopupTimeout = null;
+			clearTimeout(this.options.userPopupTimeout);
+			this.options.userPopupTimeout = null;
 		}, 3000);
 
 		if (e.viewId === this.map._docLayer._followThis) {
@@ -383,11 +404,11 @@ L.Control.UserList = L.Control.extend({
 			this.updateUserListCount();
 			this.removeUserFromHeaderAvatars(e.viewId);
 		}
-	},
-});
+	}
+}
 
 L.control.userList = function () {
-	return new L.Control.UserList();
+	return new UserList();
 };
 
 L.control.createUserListWidget = function () {
