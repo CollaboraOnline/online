@@ -188,11 +188,9 @@ function zoomOut() {
 // zoomLevel - a number specifing the zoom level  (e.g. '100' means 100%).
 //             See also the status bar's zoom level list for possible values.
 function selectZoomLevel(zoomLevel) {
-	// We cannot interact with this menu if it's not visible
-	makeZoomItemsVisible();
-
-	cy.cGet('#tb_actionbar_item_zoom .w2ui-button').click();
-	cy.cGet('#w2ui-overlay-actionbar').contains('.menu-text', zoomLevel).click();
+	// Force because sometimes the icons are scrolled off the screen to the right
+	cy.cGet('#tb_actionbar_item_zoom .w2ui-button').click({force: true});
+	cy.cGet('#w2ui-overlay-actionbar').contains('.menu-text', zoomLevel).click({force: true});
 	shouldHaveZoomLevel(zoomLevel);
 }
 
