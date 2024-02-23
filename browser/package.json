@@ -9,6 +9,7 @@
     "@types/jqueryui": "^1.12.21",
     "@types/mocha": "8.2.0",
     "@types/node": "14.14.25",
+    "@types/w2ui": "^1.4.37",
     "@typescript-eslint/eslint-plugin": "^4.21.0",
     "@typescript-eslint/parser": "^4.21.0",
     "autolinker": "3.14.1",
