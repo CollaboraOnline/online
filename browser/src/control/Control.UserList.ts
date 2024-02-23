@@ -22,6 +22,7 @@ interface User {
 	color: string;
 	readonly: boolean;
 	you: boolean;
+	following: boolean;
 }
 
 interface UserEvent extends User {
@@ -92,15 +93,15 @@ class UserList extends L.Control {
 			return;
 		}
 
-		this.renderAll();
+		const user = this.users.get(viewId);
 
-		$('#user-' + viewId).addClass('selected-user');
-		L.DomUtil.addClass(
-			document.querySelector(
-				'#userListPopover .user-list-item[data-view-id="' + viewId + '"]',
-			),
-			'selected-user',
-		);
+		if (user === undefined) {
+			return;
+		}
+
+		user.following = true;
+
+		this.renderAll();
 	}
 
 	getFollowedUser(): undefined | [number, any] {
@@ -370,15 +371,15 @@ class UserList extends L.Control {
 			return;
 		}
 
-		this.renderAll();
+		const user = this.users.get(e.viewId);
 
-		$('#user-' + e.viewId).removeClass('selected-user');
-		L.DomUtil.removeClass(
-			document.querySelector(
-				'#userListPopover .user-list-item[data-view-id="' + e.viewId + '"]',
-			),
-			'selected-user',
-		);
+		if (user === undefined) {
+			return;
+		}
+
+		user.following = false;
+
+		this.renderAll();
 	}
 
 	onOpenUserList() {
@@ -420,6 +421,7 @@ class UserList extends L.Control {
 			extraInfo: e.extraInfo,
 			color: color,
 			readonly: e.readonly,
+			following: false,
 		});
 
 		if (!you) {
@@ -523,6 +525,11 @@ class UserList extends L.Control {
 			const listItem = L.DomUtil.create('div', 'user-list-item');
 			listItem.setAttribute('data-view-id', viewId);
 			listItem.setAttribute('role', 'button');
+
+			if (user.following) {
+				$(listItem).addClass('selected-user');
+			}
+
 			listItem.appendChild(
 				this.createAvatar(viewId, user.extraInfo, user.color),
 			);
