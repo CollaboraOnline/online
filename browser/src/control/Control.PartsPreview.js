@@ -863,7 +863,13 @@ L.Control.PartsPreview = L.Control.extend({
 			e.stopPropagation();
 		}
 
-		var part = this.partsPreview._findClickedPart(e.target.parentNode);
+		// When dropping on a thumbnail we get an `img` tag as a target, so we need to get the
+		// parent.
+		// Otherwise dropping between slides doesn't work.
+		// See https://github.com/CollaboraOnline/online/issues/6941
+		var target = e.target.classList.contains('preview-img') ? e.target.parentNode : e.target;
+
+		var part = this.partsPreview._findClickedPart(target);
 		if (part !== null) {
 			var partId = parseInt(part) - 1; // First frame is a drop-site for reordering.
 			if (partId < 0)
