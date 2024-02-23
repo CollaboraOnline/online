@@ -775,6 +775,16 @@ bool ClientSession::_handleInput(const char *buffer, int length)
                 _splitY = splitY;
             }
 
+            // Untrusted user input, make sure these are not negative.
+            if (width < 0)
+            {
+                width = 0;
+            }
+            if (height < 0)
+            {
+                height = 0;
+            }
+
             _clientVisibleArea = Util::Rectangle(x, y, width, height);
             return forwardToChild(std::string(buffer, length), docBroker);
         }
