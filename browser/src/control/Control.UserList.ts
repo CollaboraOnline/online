@@ -43,7 +43,7 @@ class UserList extends L.Control {
 		userPopupTimeout: null,
 		userJoinedPopupMessage: '<div>' + _('%user has joined') + '</div>',
 		userLeftPopupMessage: '<div>' + _('%user has left') + '</div>',
-		followingChipText: '<div>' + _('Following %user') + '</div><div>' + _('Click to stop following') + '</div>',
+		followingChipText: '<div><b>' + _('Following %user') + '</b></div><div>' + _('Click to stop following') + '</div>',
 		nUsers: undefined,
 		oneUser: undefined,
 		noUser: undefined,
@@ -106,6 +106,10 @@ class UserList extends L.Control {
 		}
 
 		return [this.map._docLayer._followThis, followedUser];
+	}
+
+	unfollowAll() {
+		this.followUser(this.map._docLayer._viewId);
 	}
 
 	followUser(viewId: number) {
@@ -476,6 +480,12 @@ class UserList extends L.Control {
 		followingChip.style.backgroundColor = following[1].color;
 		followingChip.style.color = 'white';
 		followingChip.style.display = 'block';
+
+		followingChip.onclick = () => {
+			this.unfollowAll();
+		};
+
+		followingChip.style.display = 'flex';
 	}
 }
 
