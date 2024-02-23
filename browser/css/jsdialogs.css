@@ -1898,6 +1898,12 @@ kbd,
 	min-width: 75%;
 }
 
+/* Keyboard shortcuts */
+#modal-dialog-keyboard-shortcuts-content-box {
+	width: 468px;
+	max-width: 95%; /* Safe guard for when window is too small */
+}
+
 /* Calc -> Insert -> Pivot Table */
 #PivotTableLayout #box2 {
 	grid-gap: 12px; /* make space for vertical separator */
