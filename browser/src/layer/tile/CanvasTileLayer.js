@@ -2586,7 +2586,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		var remainingFuncCount = suggestionArray.length - maxSuggestion;
 		if (remainingFuncCount > 0)
-			resultText = resultText + ' and ' + remainingFuncCount + ' more';
+			resultText = resultText + ' ' + _('and %COUNT more').replace('%COUNT', remainingFuncCount);
 
 		resultText = resultText + ' : ' + currentFuncDescription;
 
