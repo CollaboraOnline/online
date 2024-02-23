@@ -453,7 +453,6 @@ L.Map.include({
 			}
 		} else /* id === 'online-help' */ {
 			document.getElementById('keyboard-shortcuts-content').style.display='none';
-			document.getElementById('online-help-search-input').setAttribute('placeholder',_('Search'));
 			if (window.socketProxy) {
 				var helpdiv = document.getElementById('online-help-content');
 				var imgList = helpdiv.querySelectorAll('img');
@@ -550,6 +549,7 @@ L.Map.include({
 			document.getElementById('keyboard-shortcuts-content').innerHTML = L.Util.replaceCtrlAltInMac(document.getElementById('keyboard-shortcuts-content').innerHTML);
 		}
 		var searchInput = document.getElementById('online-help-search-input');
+		searchInput.setAttribute('placeholder',_('Search'));
 		searchInput.focus(); // auto focus on user input field
 		var helpContentParent = document.getElementsByClassName('ui-dialog-content')[0];
 		var startFilter = false;
