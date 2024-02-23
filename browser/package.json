@@ -4,6 +4,9 @@
   "description": "Collabora Online front-end",
   "devDependencies": {
     "@braintree/sanitize-url": "6.0.2",
+    "@types/jquery": "^3.5.29",
+    "@types/jquery.contextmenu": "^1.7.38",
+    "@types/jqueryui": "^1.12.21",
     "@types/mocha": "8.2.0",
     "@types/node": "14.14.25",
     "@typescript-eslint/eslint-plugin": "^4.21.0",
@@ -27,7 +30,7 @@
     "shrinkpack": "1.0.0-alpha",
     "smartmenus": "1.0.0",
     "stylelint": "13.7.0",
-    "typescript": "4.2.3",
+    "typescript": "4.4.2",
     "uglify-js": "3.17.4",
     "uglifycss": "0.0.29",
     "uglifyify": "5.0.2"
