@@ -185,12 +185,41 @@ class UserList extends L.Control {
 				(window.mode.isDesktop() && $.inArray('desktop', this.map['wopi'].HideUserList) >= 0));
 	}
 
-	getSortedUsers() {
-		if (this.users.get(this.map._docLayer._viewId) === undefined) {
-			return [];
-		}
+	getSortedUsers(): Generator<[number, User], undefined, undefined> {
+		return (function* (this: UserList): Generator<[number, User], undefined, undefined> {
+			const self = this.users.get(this.map._docLayer._viewId);
 
-		return [[this.map._docLayer._viewId, this.users.get(this.map._docLayer._viewId)]].concat(Array.from(this.users.entries()).filter(([id, _user]) => id != this.map._docLayer._viewId));
+			if (this.users.get(this.map._docLayer._viewId) === undefined) {
+				return;
+			}
+
+			const followedUser = this.getFollowedUser();
+
+			if (followedUser !== undefined) {
+				yield followedUser;
+			}
+
+			yield [this.map._docLayer._viewId, self];
+
+			const readonlyUsers: [number, User][] = [];
+
+			for (const [viewId, user] of Array.from(this.users.entries()).reverse()) {
+				const isSelf = viewId === this.map._docLayer._viewId;
+				const isFollowed = followedUser !== undefined && viewId === followedUser[0];
+				if (isSelf || isFollowed) {
+					continue;
+				}
+
+				if (user.readonly) {
+					readonlyUsers.push([viewId, user]);
+					continue;
+				}
+
+				yield [viewId, user];
+			}
+
+			yield* readonlyUsers;
+		}).bind(this)();
 	}
 
 	renderHeaderAvatars() {
@@ -202,7 +231,7 @@ class UserList extends L.Control {
 			return;
 		}
 
-		const avatarUsers = this.getSortedUsers().slice(0, 3);
+		const avatarUsers = Array.from(this.getSortedUsers()).slice(0, this.options.userLimitHeader);
 
 		userListElement.setAttribute('accesskey','UP');
 
@@ -332,7 +361,7 @@ class UserList extends L.Control {
 	}
 
 	renderUserList() {
-		const headerUserList = this.getSortedUsers();
+		const headerUserList = Array.from(this.getSortedUsers());
 
 		const userItems = headerUserList.map(([viewId, user]) => {
 			let username = user.username;
@@ -353,7 +382,7 @@ class UserList extends L.Control {
 
 	renderHeaderAvatarPopover() {
 		// Popover rendering
-		const users = this.getSortedUsers();
+		const users = Array.from(this.getSortedUsers());
 		const popoverElement = document.getElementById('userListPopover');
 
 		const userElements = users.map(([viewId, user]) => {
