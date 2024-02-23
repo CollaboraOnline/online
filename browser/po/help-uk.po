@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-22 15:24+0200\n"
-"PO-Revision-Date: 2023-12-23 15:06+0000\n"
+"PO-Revision-Date: 2024-02-23 15:02+0000\n"
 "Last-Translator: Ihor Hordiichuk <igor_ck@outlook.com>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/"
 "collabora-online/help/uk/>\n"
@@ -11,9 +11,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Weblate 5.5-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:72-5
 msgid "Keyboard Shortcuts"
@@ -1915,9 +1915,8 @@ msgstr ""
 "class=\"ui\">Перейти до стану</span>."
 
 #: html/cool-help.html%2Bdiv.div.div.div.img[alt]:489-29
-#, fuzzy
 msgid "document repair"
-msgstr "Відновлення документа"
+msgstr "відновлення документа"
 
 #: html/cool-help.html%2Bdiv.div.div.p:490-5
 msgid ""
@@ -1949,9 +1948,8 @@ msgstr ""
 "продовження редагування\"."
 
 #: html/cool-help.html%2Bdiv.div.div.div.img[alt]:495-29
-#, fuzzy
 msgid "inactive document"
-msgstr "Неактивний документ"
+msgstr "неактивний документ"
 
 #: html/cool-help.html%2Bdiv.div.div.p:496-5
 msgid ""
@@ -2045,7 +2043,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.ol.div.img[alt]:518-31
 msgid "chart"
-msgstr ""
+msgstr "діаграма"
 
 #: html/cool-help.html%2Bdiv.div.div.ol.li.p:519-11
 msgid "If no table or range was selected, a prototype chart is displayed."
@@ -2141,7 +2139,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.img[alt]:536-29
 msgid "comment"
-msgstr ""
+msgstr "коментар"
 
 #: html/cool-help.html%2Bdiv.div.div.p:537-5
 msgid ""
@@ -2169,9 +2167,8 @@ msgstr ""
 "миші, щоб відкрити контекстне меню із запропонованими виправленнями помилок."
 
 #: html/cool-help.html%2Bdiv.div.div.div.img[alt]:542-29
-#, fuzzy
 msgid "spellchecking"
-msgstr "Перевірка правопису"
+msgstr "перевірка правопису"
 
 #: html/cool-help.html%2Bdiv.div.div.p:543-5
 msgid ""
@@ -2277,7 +2274,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.div.img[alt]:580-34
 msgid "filter"
-msgstr ""
+msgstr "фільтр"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:582-11
 msgid ""
@@ -2332,7 +2329,7 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.div.ol.div.img[alt]:596-31
 #: html/cool-help.html%2Bdiv.div.div.div.ol.div.img[alt]:601-31
 msgid "data validate"
-msgstr ""
+msgstr "перевірка даних"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:597-11
 msgid ""
@@ -2524,9 +2521,8 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:655-29
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:789-29
-#, fuzzy
 msgid "track changes"
-msgstr "Відстеження змін"
+msgstr "відстеження змін"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:656-5
 msgid ""
@@ -2874,7 +2870,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:763-29
 msgid "word count"
-msgstr ""
+msgstr "лічильник слів"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:764-5
 msgid ""
@@ -2917,7 +2913,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.div.img[alt]:774-31
 msgid "Special Characters"
-msgstr ""
+msgstr "спеціальні символи"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:775-11
 msgid ""
@@ -3201,7 +3197,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.div.img[alt]:854-31
 msgid "import"
-msgstr ""
+msgstr "імпорт"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:855-11
 msgid ""
@@ -3305,7 +3301,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.div.img[alt]:896-31
 msgid "Position and Size"
-msgstr ""
+msgstr "положення та розмір"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:897-11
 msgid "Set the properties of the element of the object."
