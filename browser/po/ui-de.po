@@ -12,16 +12,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-22 15:24+0100\n"
-"PO-Revision-Date: 2024-01-19 09:47+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"PO-Revision-Date: 2024-02-23 15:02+0000\n"
+"Last-Translator: Ettore Atalan <atalanttore@googlemail.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "ui/de/>\n"
-"Language: \n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.4-dev\n"
+"X-Generator: Weblate 5.5-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -2360,11 +2360,11 @@ msgstr "Die Verbindung zum Server wurde unterbrochen."
 
 #: src/core/Debug.js:52
 msgid "Debug Tools"
-msgstr ""
+msgstr "Debugging-Werkzeuge"
 
 #: src/core/Debug.js:54
 msgid "Ctrl+Shift+Alt+D to exit"
-msgstr ""
+msgstr "Strg+Umschalt+Alt+D zum Beenden"
 
 #: src/docstate.js:82
 msgid "Standard"
