@@ -64,7 +64,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 		cy.cGet('#comment-container-2').should('contain','some text1');
 		cy.cGet('#comment-container-2 .cool-annotation-menubar').click();
 		cy.cGet('body').contains('.context-menu-item', 'Remove').click();
-		cy.cGet('#comment-container-2').should('have.class','greyed');
+		cy.cGet('#comment-container-2').should('have.class','tracked-deleted-comment-show');
 		cy.cGet('#comment-container-2').should('contain','some text1');
 		cy.cGet('div.cool-annotation').should('have.length', 3);
 
@@ -104,14 +104,14 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 		cy.cGet('#comment-container-2').should('contain','some text1');
 		cy.cGet('#comment-container-2 .cool-annotation-menubar').click();
 		cy.cGet('body').contains('.context-menu-item', 'Remove').click();
-		cy.cGet('#comment-container-2').should('have.class','greyed');
+		cy.cGet('#comment-container-2').should('have.class','tracked-deleted-comment-show');
 		cy.cGet('#comment-container-2').should('contain','some text1');
 		cy.cGet('div.cool-annotation').should('have.length', 3);
 
 		confirmChange('Reject All');
 		cy.cGet('#comment-container-1').should('contain','some text0');
 		cy.cGet('#comment-container-2').should('contain','some text1');
-		cy.cGet('#comment-container-2').should('not.have.class','greyed');
+		cy.cGet('#comment-container-2').should('not.have.class','tracked-deleted-comment-show');
 		cy.cGet('#comment-container-3').should('not.exist');
 		cy.cGet('div.cool-annotation').should('have.length', 2);
 
@@ -160,12 +160,12 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 		cy.cGet('#comment-container-2').should('contain','some text1');
 		cy.cGet('#comment-container-2 .cool-annotation-menubar').click();
 		cy.cGet('body').contains('.context-menu-item', 'Remove').click();
-		cy.cGet('#comment-container-2').should('have.class','greyed');
+		cy.cGet('#comment-container-2').should('have.class','tracked-deleted-comment-show');
 		cy.cGet('div.cool-annotation').should('have.length', 3);
 		cy.cGet('#tb_editbar_item_undo').click();
 
 		cy.cGet('#comment-container-2').should('contain','some text1');
-		cy.cGet('#comment-container-2').should('not.have.class','greyed');
+		cy.cGet('#comment-container-2').should('not.have.class','tracked-deleted-comment-show');
 		cy.cGet('div.cool-annotation').should('have.length', 3);
 
 		// redo
@@ -173,7 +173,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 		cy.wait(500);
 
 		cy.cGet('#comment-container-2').should('contain','some text1');
-		cy.cGet('#comment-container-2').should('have.class','greyed');
+		cy.cGet('#comment-container-2').should('have.class','tracked-deleted-comment-show');
 		cy.cGet('div.cool-annotation').should('have.length', 3);
 
 	});
