@@ -506,11 +506,11 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	max-width: 250px;
 }
 
-.cool-annotation.tracked-deteled-comment-show {
+.cool-annotation.tracked-deleted-comment-show {
 	opacity: 0.5;
 }
 
-.cool-annotation.tracked-deteled-comment-hide {
+.cool-annotation.tracked-deleted-comment-hide {
 	display: none;
 }
 
