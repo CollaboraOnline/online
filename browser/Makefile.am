@@ -361,7 +361,7 @@ COOL_JS_LST =\
 	src/control/Control.SearchBar.js \
 	src/control/Control.MobileTopBar.js \
 	src/control/Control.MobileBottomBar.js \
-	src/control/Control.UserList.js \
+	src/control/Control.UserList.ts \
 	src/control/Control.FormulaBar.js \
 	src/control/Control.FormulaBarJSDialog.js \
 	src/control/Control.SheetsBar.js \
@@ -766,7 +766,7 @@ pot:
 		src/control/Control.Toolbar.js \
 		src/control/Control.TopToolbar.js \
 		src/control/Control.UIManager.js \
-		src/control/Control.UserList.js \
+		src/control/Control.UserList.ts \
 		src/control/Control.Zotero.js \
 		src/control/Parts.js \
 		src/control/Permission.js \
