@@ -43,7 +43,6 @@ L.Map.include({
 
 declare var L: any;
 declare var app: any;
-declare var $: any;
 declare var _: any;
 
 namespace cool {

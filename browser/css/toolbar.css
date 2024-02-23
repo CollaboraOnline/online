@@ -1656,15 +1656,44 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 	margin-right: 5px;
 }
 
+#followingChip {
+	float: right;
+	display: none;
+
+	border-radius: var(--btn-size) 0 0 var(--btn-size);
+
+	height: var(--btn-size);
+	padding: 0 calc(3px + (var(--btn-size) / 2));
+
+	margin-right: calc(4px - (var(--btn-size) / 2));
+
+	border-style: solid;
+	border-width: 2px;
+	border-color: transparent;
+
+	font-size: 0.8em;
+
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+#followingChip:hover {
+	text-decoration: underline;
+	border-color: white;
+	cursor: pointer;
+}
+
 #userListSummary {
 	display: flex;
 	border: 0px;
-	background: transparent;
+	background: transparent !important /* we want to override .button-secondary:hover, button:not(.ui-corner-all):not(.button-primary):not(.unobutton):not(.form-field-button):hover */;
 }
 
-#userListSummary:hover {
-	background: transparent;
+#userListSummary:hover .user-info,
+#userListSummary:hover .avatar-img {
 	cursor: pointer;
+	border-color: white !important;
 }
 
 #userListSummary .user-info,
