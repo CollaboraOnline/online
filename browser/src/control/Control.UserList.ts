@@ -34,6 +34,7 @@ class UserList extends L.Control {
 		userPopupTimeout: null | ReturnType<typeof setTimeout>,
 		userJoinedPopupMessage: string,
 		userLeftPopupMessage: string,
+		followingChipText: string,
 		nUsers?: string,
 		oneUser?: string,
 		noUser?: string,
@@ -42,6 +43,7 @@ class UserList extends L.Control {
 		userPopupTimeout: null,
 		userJoinedPopupMessage: '<div>' + _('%user has joined') + '</div>',
 		userLeftPopupMessage: '<div>' + _('%user has left') + '</div>',
+		followingChipText: '<div>' + _('Following %user') + '</div><div>' + _('Click to stop following') + '</div>',
 		nUsers: undefined,
 		oneUser: undefined,
 		noUser: undefined,
@@ -86,8 +88,24 @@ class UserList extends L.Control {
 			return;
 		}
 
+		this.renderAll();
+
 		$('#user-' + viewId).addClass('selected-user');
 		L.DomUtil.addClass(document.querySelector('#userListPopover .user-list-item[data-view-id="' + viewId + '"]'), 'selected-user');
+	}
+
+	getFollowedUser(): undefined | [number, any] {
+		if (this.map._docLayer._followThis === -1) {
+			return undefined;
+		}
+
+		const followedUser = this.users.get(this.map._docLayer._followThis);
+
+		if (followedUser === undefined) {
+			return undefined;
+		}
+
+		return [this.map._docLayer._followThis, followedUser];
 	}
 
 	followUser(viewId: number) {
@@ -103,6 +121,7 @@ class UserList extends L.Control {
 			this.map._goToViewId(myViewId);
 			this.map._setFollowing(false, null);
 			w2ui['actionbar'].uncheck('userlist');
+			this.renderAll();
 			return;
 		} else if (followingViewId !== -1) {
 			this.map._setFollowing(false, null);
@@ -283,6 +302,8 @@ class UserList extends L.Control {
 			return;
 		}
 
+		this.renderAll();
+
 		$('#user-' + e.viewId).removeClass('selected-user');
 		L.DomUtil.removeClass(document.querySelector('#userListPopover .user-list-item[data-view-id="' + e.viewId + '"]'), 'selected-user');
 	}
@@ -336,6 +357,10 @@ class UserList extends L.Control {
 		const user = this.users.get(e.viewId);
 		this.users.delete(e.viewId);
 
+		if (e.viewId === this.map._docLayer._followThis) {
+			this.unfollowAll();
+		}
+
 		if (user !== undefined) {
 			this.showJoinLeaveMessage('leave', user.username, user.color);
 		}
@@ -348,6 +373,7 @@ class UserList extends L.Control {
 		this.renderHeaderAvatars();
 		this.renderHeaderAvatarPopover();
 		this.renderUserList();
+		this.renderFollowingChip();
 	}
 
 	showJoinLeaveMessage(type: 'join' | 'leave', username: string, _color: string /* TODO: make this display in user colors */) {
@@ -425,6 +451,7 @@ class UserList extends L.Control {
 		followEditorCheckbox.setAttribute('type', 'checkbox');
 		followEditorCheckbox.onchange = function(event: Event) {
 			(window as any).editorUpdate(event);
+			this.renderFollowingChip();
 		};
 		const followEditorCheckboxLabel = L.DomUtil.create('label', 'follow-editor-label', followEditorWrapper);
 		followEditorCheckboxLabel.innerText = _('Always follow the editor');
@@ -433,6 +460,22 @@ class UserList extends L.Control {
 		popoverElement.replaceChildren(...userElements, followEditorWrapper);
 
 		(document.getElementById('follow-editor-checkbox') as HTMLInputElement).checked = this.map._docLayer._followEditor;
+	}
+
+	renderFollowingChip() {
+		const followingChip = document.getElementById('followingChip');
+
+		const following = this.getFollowedUser();
+
+		if (following === undefined || !this.map._docLayer._followUser) {
+			followingChip.style.display = 'none';
+			return;
+		}
+
+		followingChip.innerHTML = this.options.followingChipText.replace('%user', following[1].username);
+		followingChip.style.backgroundColor = following[1].color;
+		followingChip.style.color = 'white';
+		followingChip.style.display = 'block';
 	}
 }
 
