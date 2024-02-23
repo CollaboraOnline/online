@@ -938,6 +938,9 @@ body .ui-tooltip,
 	color: var(--color-main-text);
 	background: var(--color-background-lighter);
 }
+.ui-tooltip.ui-widget-shadow {
+	box-shadow: 0px 0px 4px 0 var(--color-box-shadow);
+}
 
 /* Interaction states
 ----------------------------------*/
