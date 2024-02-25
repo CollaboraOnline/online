@@ -1748,7 +1748,9 @@ export class CommentSection extends CanvasSectionObject {
 				var j = i;
 				while (this.sectionProperties.commentList[j] && j <= lastIndex) {
 					if (this.sectionProperties.commentList[j].sectionProperties.data.parent !== '0') {
-						if (this.sectionProperties.commentList[j].sectionProperties.data.resolved !== 'true') {
+						if ((this.sectionProperties.commentList[j].sectionProperties.data.layoutStatus !== CommentLayoutStatus.DELETED ||
+							this.map['stateChangeHandler'].getItemValue('.uno:ShowTrackedChanges') === 'true') &&
+							this.sectionProperties.commentList[j].sectionProperties.data.resolved !== 'true') {
 							replyCount++;
 						}
 					}
