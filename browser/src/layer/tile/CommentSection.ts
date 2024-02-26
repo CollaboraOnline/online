@@ -760,7 +760,7 @@ export class Comment extends CanvasSectionObject {
 		if ((<any>window).mode.isMobile() && this.sectionProperties.container.parentElement === document.getElementById('document-container'))
 			this.sectionProperties.container.style.visibility = 'hidden';
 
-		if (cool.CommentSection.commentWasAutoAdded)
+		if (cool.CommentSection.commentWasAutoAdded || this.isEdit())
 			return;
 		if (this.sectionProperties.docLayer._docType === 'text')
 			this.showWriter();
