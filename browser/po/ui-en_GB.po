@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-22 15:24+0100\n"
+"POT-Creation-Date: 2024-02-26 08:45+0100\n"
 "PO-Revision-Date: 2024-02-17 00:02+0000\n"
 "Last-Translator: Rob Pearson <rob.dunedin@gmail.com>\n"
 "Language-Team: English (United Kingdom) <https://hosted.weblate.org/projects/"
@@ -276,14 +276,14 @@ msgstr "Server has been shut down; please reload the page."
 #: src/control/Control.Tabs.js:398 src/control/Control.Zotero.js:338
 #: src/control/Control.Zotero.js:376 src/control/Permission.js:89
 #: src/control/Permission.js:99 src/control/Permission.js:149
-#: src/control/Toolbar.js:686 src/control/Toolbar.js:788
-#: src/control/Toolbar.js:924 src/control/Toolbar.js:1215
+#: src/control/Toolbar.js:701 src/control/Toolbar.js:803
+#: src/control/Toolbar.js:939 src/control/Toolbar.js:1230
 #: src/core/Socket.js:613 src/core/Socket.js:1026 src/core/Socket.js:1096
-#: src/core/Socket.js:1232 src/core/Socket.js:1236 src/main.js:79
-#: src/main.js:82 src/main.js:134 src/map/Clipboard.js:1001
-#: src/map/Clipboard.js:1040 src/map/handler/Map.Feedback.js:83
-#: src/map/handler/Map.SlideShow.js:51 src/map/handler/Map.SlideShow.js:150
-#: src/map/handler/Map.SlideShow.js:236 src/map/handler/Map.WOPI.js:582
+#: src/core/Socket.js:1228 src/core/Socket.js:1232 src/main.js:79
+#: src/main.js:82 src/main.js:134 src/map/Clipboard.js:1008
+#: src/map/handler/Map.Feedback.js:83 src/map/handler/Map.SlideShow.js:51
+#: src/map/handler/Map.SlideShow.js:150 src/map/handler/Map.SlideShow.js:236
+#: src/map/handler/Map.WOPI.js:582
 msgid "OK"
 msgstr "OK"
 
@@ -305,11 +305,12 @@ msgstr "Are you sure you want to terminate this session?"
 #: src/control/Control.DownloadProgress.js:90
 #: src/control/Control.LanguageDialog.js:113
 #: src/control/Control.MobileTopBar.js:52
-#: src/control/Control.UIManager.js:1255 src/control/Control.UIManager.js:1322
-#: src/control/Control.UIManager.js:1457 src/control/Control.UIManager.js:1599
-#: src/control/Control.Zotero.js:333 src/control/Toolbar.js:919
-#: src/core/Socket.js:1257 src/layer/tile/CommentListSection.ts:425
+#: src/control/Control.UIManager.js:1263 src/control/Control.UIManager.js:1330
+#: src/control/Control.UIManager.js:1465 src/control/Control.UIManager.js:1607
+#: src/control/Control.Zotero.js:333 src/control/Toolbar.js:934
+#: src/core/Socket.js:1253 src/layer/tile/CommentListSection.ts:425
 #: src/layer/tile/CommentSection.ts:157 src/layer/tile/CommentSection.ts:160
+#: src/map/Clipboard.js:1047
 msgid "Cancel"
 msgstr "Cancel"
 
@@ -463,7 +464,7 @@ msgstr "The server encountered a %0 error while parsing the %1 command."
 msgid "Unlock"
 msgstr "Unlock"
 
-#: src/control/Control.ContextMenu.js:196 src/control/Toolbar.js:1214
+#: src/control/Control.ContextMenu.js:196 src/control/Toolbar.js:1229
 msgid "Delete"
 msgstr "Delete"
 
@@ -690,8 +691,8 @@ msgid "replies"
 msgstr "replies"
 
 #: src/control/Control.JSDialogBuilder.js:2109
-#: src/layer/tile/CanvasTileLayer.js:5097
-#: src/layer/tile/CanvasTileLayer.js:5108
+#: src/layer/tile/CanvasTileLayer.js:5151
+#: src/layer/tile/CanvasTileLayer.js:5162
 #: src/layer/tile/CommentListSection.ts:1018
 msgid "Comment"
 msgstr "Comment"
@@ -1182,6 +1183,7 @@ msgstr "More conditions..."
 #: src/control/Control.NotebookbarImpress.js:1076
 #: src/control/Control.NotebookbarWriter.js:907
 #: src/control/Control.StatusBar.js:203 src/control/Control.Zotero.js:221
+#: src/control/Toolbar.js:456
 msgid "Search"
 msgstr "Search"
 
@@ -1444,7 +1446,7 @@ msgstr "Fraction"
 msgid "Boolean Value"
 msgstr "Boolean Value"
 
-#: src/control/Control.NotebookbarCalc.js:663 src/control/Toolbar.js:891
+#: src/control/Control.NotebookbarCalc.js:663 src/control/Toolbar.js:906
 msgid "Text"
 msgstr "Text"
 
@@ -1830,7 +1832,7 @@ msgstr "Enter new name"
 msgid "Show Menu"
 msgstr "Show Menu"
 
-#: src/control/Control.UIManager.js:1080
+#: src/control/Control.UIManager.js:1088
 msgid "Dismiss"
 msgstr "Dismiss"
 
@@ -2117,31 +2119,31 @@ msgstr "Saving..."
 msgid "Renaming..."
 msgstr "Renaming..."
 
-#: src/control/Toolbar.js:770
+#: src/control/Toolbar.js:785
 msgid "This version of %productName is powered by"
 msgstr "This version of %productName is powered by"
 
-#: src/control/Toolbar.js:782
+#: src/control/Toolbar.js:797
 msgid "\"Slow Proxy\""
 msgstr "\"Slow Proxy\""
 
-#: src/control/Toolbar.js:801
+#: src/control/Toolbar.js:816
 msgid "Copy all version information in English"
 msgstr "Copy all version information in English"
 
-#: src/control/Toolbar.js:884
+#: src/control/Toolbar.js:899
 msgid "Insert hyperlink"
 msgstr "Insert hyperlink"
 
-#: src/control/Toolbar.js:903
+#: src/control/Toolbar.js:918
 msgid "Link"
 msgstr "Link"
 
-#: src/control/Toolbar.js:1209
+#: src/control/Toolbar.js:1224
 msgid "Are you sure you want to delete this slide?"
 msgstr "Are you sure you want to delete this slide?"
 
-#: src/control/Toolbar.js:1212
+#: src/control/Toolbar.js:1227
 msgid "Are you sure you want to delete this page?"
 msgstr "Are you sure you want to delete this page?"
 
@@ -2277,31 +2279,31 @@ msgstr "The document is being renamed and will reload shortly"
 msgid "The document is switching to Offline mode and will reload shortly"
 msgstr "The document is switching to Offline mode and will reload shortly"
 
-#: src/core/Socket.js:1232
+#: src/core/Socket.js:1228
 msgid "Exported to storage"
 msgstr "Exported to storage"
 
-#: src/core/Socket.js:1232
+#: src/core/Socket.js:1228
 msgid "Successfully exported: "
 msgstr "Successfully exported: "
 
-#: src/core/Socket.js:1260
+#: src/core/Socket.js:1256
 msgid "Discard"
 msgstr "Discard"
 
-#: src/core/Socket.js:1261
+#: src/core/Socket.js:1257
 msgid "Overwrite"
 msgstr "Overwrite"
 
-#: src/core/Socket.js:1272
+#: src/core/Socket.js:1268
 msgid "Save to new file"
 msgstr "Save to new file"
 
-#: src/core/Socket.js:1282
+#: src/core/Socket.js:1278
 msgid "Document has been changed"
 msgstr "Document has been changed"
 
-#: src/core/Socket.js:1283
+#: src/core/Socket.js:1279
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
@@ -2309,7 +2311,7 @@ msgstr ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
 
-#: src/core/Socket.js:1601
+#: src/core/Socket.js:1597
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -2317,11 +2319,11 @@ msgstr ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 
-#: src/core/Socket.js:1618
+#: src/core/Socket.js:1614
 msgid "Reconnecting..."
 msgstr "Reconnecting..."
 
-#: src/core/Socket.js:1628
+#: src/core/Socket.js:1624
 msgid "The server has been disconnected."
 msgstr "The server has been disconnected."
 
@@ -2564,23 +2566,27 @@ msgstr "Uploading file to server failed, file not found."
 msgid "Uploading file to server failed, the file is too large."
 msgstr "Uploading file to server failed, the file is too large."
 
-#: src/layer/tile/CanvasTileLayer.js:1974
+#: src/layer/tile/CanvasTileLayer.js:1988
 msgid "Functions"
 msgstr "Functions"
 
-#: src/layer/tile/CanvasTileLayer.js:2550
+#: src/layer/tile/CanvasTileLayer.js:2589
+msgid "and %COUNT more"
+msgstr ""
+
+#: src/layer/tile/CanvasTileLayer.js:2604
 msgid "Copy link location"
 msgstr "Copy link location"
 
-#: src/layer/tile/CanvasTileLayer.js:2561
+#: src/layer/tile/CanvasTileLayer.js:2615
 msgid "Edit link"
 msgstr "Edit link"
 
-#: src/layer/tile/CanvasTileLayer.js:2570
+#: src/layer/tile/CanvasTileLayer.js:2624
 msgid "Remove link"
 msgstr "Remove link"
 
-#: src/layer/tile/CanvasTileLayer.js:5125
+#: src/layer/tile/CanvasTileLayer.js:5179
 msgid "No Comments"
 msgstr "No Comments"
 
@@ -2667,11 +2673,11 @@ msgstr "warning: copy/paste request timed out"
 msgid "Failed to download clipboard, please re-copy"
 msgstr "Failed to download clipboard, please re-copy"
 
-#: src/map/Clipboard.js:994
+#: src/map/Clipboard.js:1001
 msgid "<p>Please use the copy/paste buttons on your on-screen keyboard.</p>"
 msgstr "<p>Please use the copy/paste buttons on your on-screen keyboard.</p>"
 
-#: src/map/Clipboard.js:996
+#: src/map/Clipboard.js:1003
 msgid ""
 "<p>Your browser has very limited access to the clipboard, so use these "
 "keyboard shortcuts:</p><table class=\"warn-copy-paste\"><tr><td><kbd>Ctrl</"
@@ -2687,7 +2693,7 @@ msgstr ""
 "kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd></td></tr><tr><td>Copy</td>"
 "<td>Cut</td><td>Paste</td></tr></table>"
 
-#: src/map/Clipboard.js:1015
+#: src/map/Clipboard.js:1022
 msgid ""
 "<p>A download due to a large copy/paste operation has already started. "
 "Please, wait for the current download or cancel it before starting a new "
@@ -2697,7 +2703,7 @@ msgstr ""
 "Please, wait for the current download or cancel it before starting a new "
 "one</p>"
 
-#: src/map/Clipboard.js:1033
+#: src/map/Clipboard.js:1040
 msgid ""
 "<p>Your browser has very limited access to the clipboard</p><p>Please press "
 "now: <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to see "
