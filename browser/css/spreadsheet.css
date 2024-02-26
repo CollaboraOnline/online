@@ -27,6 +27,8 @@
 	font: var(--default-font-size)/1.5 var(--cool-font);
 	display: inline-grid;
 	grid-auto-flow: column;
+	justify-content: center;
+	align-items: center;
 	border: 1px solid transparent;
 	border-radius: var(--border-radius);
 	background: var(--color-main-background);
