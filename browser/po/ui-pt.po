@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-26 08:45+0100\n"
-"PO-Revision-Date: 2023-11-15 11:07+0000\n"
-"Last-Translator: SC <lalocas@protonmail.com>\n"
+"PO-Revision-Date: 2024-02-26 11:06+0000\n"
+"Last-Translator: Pedro Silva <pedro.silva@collabora.com>\n"
 "Language-Team: Portuguese <https://hosted.weblate.org/projects/"
 "collabora-online/ui/pt/>\n"
-"Language: \n"
+"Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.2-dev\n"
+"X-Generator: Weblate 5.5-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -249,7 +249,7 @@ msgstr "Informação da versão"
 
 #: admin/admin.strings.js:67
 msgid "License"
-msgstr ""
+msgstr "Licença"
 
 #: admin/admin.strings.js:68 src/control/Control.Menubar.js:377
 #: src/control/Control.Menubar.js:531 src/control/Control.Menubar.js:658
@@ -385,19 +385,19 @@ msgstr " segundos"
 
 #: js/global.js:921
 msgid "Cluster is scaling, retrying..."
-msgstr ""
+msgstr "Cluster está escalando, tentando novamente..."
 
 #: js/global.js:923
 msgid "Document is migrating to new server, retrying..."
-msgstr ""
+msgstr "A migrar documento para um novo servidor, tentando novamente..."
 
 #: js/global.js:925
 msgid "Failed to get RouteToken from controller"
-msgstr ""
+msgstr "Falhado para obter RouteToken do controlador"
 
 #: js/w2ui-1.5.rc1.js:2967
 msgid "No fill"
-msgstr ""
+msgstr "Sem preenchimento"
 
 #: js/w2ui-1.5.rc1.js:2967
 msgid "Automatic"
@@ -425,11 +425,11 @@ msgstr "Abrir hiperligação"
 
 #: src/control/Control.AlertDialog.js:64
 msgid "Copied external sources are not allowed"
-msgstr ""
+msgstr "Fontes externas copiadas não são permitidas"
 
 #: src/control/Control.AlertDialog.js:65
 msgid "It seems you have copied a selection that includes external images."
-msgstr ""
+msgstr "Parece que copiou uma seleção que inclui imagens externas."
 
 #: src/control/Control.AlertDialog.js:66
 msgid ""
@@ -437,24 +437,29 @@ msgid ""
 "possible. Please right click in the image, choose \"Copy Image\" and paste "
 "it into the document instead."
 msgstr ""
+"O download de recursos externos é proibido, mas a colagem de imagens ainda é "
+"possível. Clique com o botão direito na imagem, escolha \"Copiar Imagem\" e "
+"cole-a no documento."
 
 #: src/control/Control.AlertDialog.js:70
 msgid "External data source not allowed"
-msgstr ""
+msgstr "Fonte externa de dados não permitida"
 
 #: src/control/Control.AlertDialog.js:71
 msgid "It seems you have tried to insert external data."
-msgstr ""
+msgstr "Parece que tentou inserir dados externos."
 
 #: src/control/Control.AlertDialog.js:72
 msgid ""
 "Selected external data source is forbidden. Please contact the system "
 "administrator."
 msgstr ""
+"A fonte de dados externa selecionada está proibida. Entre em contato com o "
+"administrador do sistema."
 
 #: src/control/Control.AlertDialog.js:84
 msgid "Don't show this again"
-msgstr ""
+msgstr "Não mostrar novamente"
 
 #: src/control/Control.AlertDialog.js:103
 msgid "The server encountered a %0 error while parsing the %1 command."
@@ -1023,7 +1028,7 @@ msgstr "Propriedades"
 #: src/control/Control.Menubar.js:358 src/control/Control.Menubar.js:978
 #: src/control/Control.NotebookbarWriter.js:449
 msgid "Screen Reading"
-msgstr ""
+msgstr "Leitura de ecrã"
 
 #: src/control/Control.Menubar.js:371
 #: src/control/Control.NotebookbarWriter.js:415
@@ -1112,7 +1117,7 @@ msgstr "Mostrar diapositivo atual"
 
 #: src/control/Control.Menubar.js:514
 msgid "Present in new window"
-msgstr ""
+msgstr "Apresentar em nova janela"
 
 #: src/control/Control.Menubar.js:550 src/control/Control.Menubar.js:1011
 #: src/control/Control.Menubar.js:1071
@@ -1582,7 +1587,7 @@ msgstr "Apresentação"
 
 #: src/control/Control.NotebookbarImpress.js:450
 msgid "Present in Window"
-msgstr ""
+msgstr "Apresentar em janela"
 
 #: src/control/Control.NotebookbarWriter.js:79
 msgid "Form"
@@ -1598,11 +1603,11 @@ msgstr "Documento EPUB (.epub)"
 
 #: src/control/Control.NotebookbarWriter.js:387
 msgid "Go Online"
-msgstr ""
+msgstr "Fique on-line"
 
 #: src/control/Control.NotebookbarWriter.js:387
 msgid "Go Offline"
-msgstr ""
+msgstr "Fique off-line"
 
 #: src/control/Control.NotebookbarWriter.js:1342
 msgid "Rich Text"
@@ -1830,11 +1835,11 @@ msgstr "Ocultar menu"
 
 #: src/control/Control.UIManager.js:159
 msgid "Enter new name"
-msgstr ""
+msgstr "Inserir novo nome"
 
 #: src/control/Control.UIManager.js:787
 msgid "Show Menu"
-msgstr ""
+msgstr "Mostrar menu"
 
 #: src/control/Control.UIManager.js:1088
 msgid "Dismiss"
@@ -2284,7 +2289,7 @@ msgstr "O nome do documento está a ser alterado e será recarregado em breve"
 
 #: src/core/Socket.js:1123
 msgid "The document is switching to Offline mode and will reload shortly"
-msgstr ""
+msgstr "O documento está mudando para o modo offline e irá recarregar em breve"
 
 #: src/core/Socket.js:1228
 msgid "Exported to storage"
@@ -2336,11 +2341,11 @@ msgstr "O servidor foi desconectado."
 
 #: src/core/Debug.js:52
 msgid "Debug Tools"
-msgstr ""
+msgstr "Ferramentas de Depuração"
 
 #: src/core/Debug.js:54
 msgid "Ctrl+Shift+Alt+D to exit"
-msgstr ""
+msgstr "Ctrl+Shift+Alt+D para sair"
 
 #: src/docstate.js:82
 msgid "Standard"
@@ -2352,7 +2357,7 @@ msgstr "Cores do tema"
 
 #: src/docstate.js:94
 msgid "Document colors"
-msgstr ""
+msgstr "Cores do documento"
 
 #: src/errormessages.js:22
 msgid "No disk space left on server."
@@ -2490,7 +2495,7 @@ msgid ""
 "administrator. For more info on proxy configuration please checkout https://"
 "sdk.collaboraonline.com/docs/installation/Proxy_settings.html"
 msgstr ""
-"Ocorreu uma falha ao estabelecer a conexão de soquet ou a conexão de soquet "
+"Ocorreu uma falha ao estabelecer a conexão de socket ou a conexão de socket "
 "foi fechada inesperadamente. O proxy reverso pode estar mal configurado, "
 "entre em contacto com o administrador. Para mais informações sobre a "
 "configuração do proxy veja https://sdk.collaboraonline.com/docs/installation/"
@@ -2501,6 +2506,8 @@ msgid ""
 "Failed to establish socket connection or socket connection closed "
 "unexpectedly."
 msgstr ""
+"Falha ao estabelecer conexão de socket ou conexão foi fechada "
+"inesperadamente."
 
 #: src/errormessages.js:43
 msgid "Failed to load document."
@@ -2590,7 +2597,7 @@ msgstr "Funções"
 
 #: src/layer/tile/CanvasTileLayer.js:2589
 msgid "and %COUNT more"
-msgstr ""
+msgstr "e %COUNT mais"
 
 #: src/layer/tile/CanvasTileLayer.js:2604
 msgid "Copy link location"
@@ -2610,11 +2617,11 @@ msgstr "Sem comentários"
 
 #: src/layer/tile/CommentListSection.ts:140
 msgid "A comment is being edited"
-msgstr ""
+msgstr "Um comentário está sendo editado"
 
 #: src/layer/tile/CommentListSection.ts:141
 msgid "Please save or discard the comment currently being edited."
-msgstr ""
+msgstr "Por favor, guarde ou descarte o comentário que está a ser editado."
 
 #: src/layer/tile/CommentListSection.ts:961
 msgid "Modify"
@@ -2774,11 +2781,11 @@ msgstr "Não foi possível enviar para o servidor. código de estado: %0"
 
 #: src/map/handler/Map.SlideShow.js:50
 msgid "Empty Slide Show"
-msgstr ""
+msgstr "Esvaziar apresentação de diapositivos"
 
 #: src/map/handler/Map.SlideShow.js:148
 msgid "Windowed Presentation Blocked"
-msgstr ""
+msgstr "Apresentação em janela bloqueada"
 
 #: src/map/handler/Map.SlideShow.js:149
 msgid ""
@@ -2786,31 +2793,33 @@ msgid ""
 "slide shows to be displayed in separated windows, allowing for easy screen "
 "sharing."
 msgstr ""
+"A apresentação foi bloqueada. Por favor, permita pop-ups no seu navegador "
+"para que os diapositivos sejam exibidos em janelas separadas e, para que a "
+"partilha de ecrã seja mais fácil."
 
 #: src/map/handler/Map.SlideShow.js:157
 msgid "Presenting in window"
-msgstr ""
+msgstr "Apresentando na janela"
 
 #: src/map/handler/Map.SlideShow.js:158
 msgid "Close Presentation"
-msgstr ""
+msgstr "Fechar Apresentação"
 
 #: src/map/handler/Map.SlideShow.js:178
 msgid "Presenting in fullscreen"
-msgstr ""
+msgstr "Apresentando em ecrã completo"
 
 #: src/map/handler/Map.SlideShow.js:179
-#, fuzzy
 msgid "End Presentation"
-msgstr "Apresentação"
+msgstr "Terminar apresentação"
 
 #: src/map/handler/Map.SlideShow.js:234
 msgid "Already presenting"
-msgstr ""
+msgstr "Apresentação já em curso"
 
 #: src/map/handler/Map.SlideShow.js:235
 msgid "You are already presenting this document"
-msgstr ""
+msgstr "Já está apresentando este documento"
 
 #: src/map/handler/Map.WOPI.js:149
 msgid "Creating new file from template..."
@@ -2903,6 +2912,9 @@ msgid ""
 "id=\"slide-2-indicator\" href=\"#slide-2\">2</a> <a id=\"slide-3-"
 "indicator\" href=\"#slide-3\">3</a>"
 msgstr ""
+"<a id=\"slide-1-indicator\" class=\"active\" href=\"#slide-1\">1</a> <a id="
+"\"slide-2-indicator\" href=\"#slide-2\">2</a> <a id=\"slide-3-indicator\" "
+"href=\"#slide-3\">3</a>"
 
 #~ msgid "Accessibility Support"
 #~ msgstr "Suporte de acessibilidade"
