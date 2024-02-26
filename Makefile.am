@@ -40,7 +40,8 @@ dist_doc_DATA = wsd/README \
                 wsd/README.vars \
                 wsd/protocol.txt \
                 wsd/reference.md \
-                wsd/metrics.txt
+                wsd/metrics.txt \
+                THIRDPARTYLICENSES
 
 coolwsddatadir = @COOLWSD_DATADIR@
 
@@ -363,6 +364,7 @@ EXTRA_DIST = discovery.xml \
              scripts/unocommands.py \
              scripts/refresh-git-hooks \
              README.md \
+             THIRDPARTYLICENSES \
              $(man_MANS)
 
 if ENABLE_LIBFUZZER
