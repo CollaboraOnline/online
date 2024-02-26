@@ -40,6 +40,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Statubar tests.', function
 	it('Text entering mode.', function() {
 		cy.cGet('#InsertMode').should('have.text', 'Insert');
 		helper.typeIntoDocument('{insert}');
+		cy.cGet('.ui-dialog-titlebar-close').click();
 		cy.cGet('#InsertMode').should('have.text', 'Overwrite');
 		helper.typeIntoDocument('{insert}');
 		cy.cGet('#InsertMode').should('have.text', 'Insert');
