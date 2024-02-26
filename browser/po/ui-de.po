@@ -12,11 +12,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-26 08:45+0100\n"
-"PO-Revision-Date: 2024-02-23 15:02+0000\n"
-"Last-Translator: Ettore Atalan <atalanttore@googlemail.com>\n"
+"PO-Revision-Date: 2024-02-26 08:55+0000\n"
+"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "ui/de/>\n"
-"Language: \n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2630,7 +2630,7 @@ msgstr "Funktionen"
 
 #: src/layer/tile/CanvasTileLayer.js:2589
 msgid "and %COUNT more"
-msgstr ""
+msgstr "und %COUNT mehr"
 
 #: src/layer/tile/CanvasTileLayer.js:2604
 msgid "Copy link location"
