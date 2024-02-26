@@ -44,7 +44,7 @@
 .spreadsheet-tab.spreadsheet-tab-protected > .lock, .spreadsheet-tab.spreadsheet-tab-protected:hover > .lock {
 	width: 16px;
 	height: 16px;
-	background-image: url('images/lc_protect.svg') !important;
+	background-image: url('images/lc_spreadsheet_protected.svg') !important;
 	background-repeat: no-repeat !important;
 }
 
