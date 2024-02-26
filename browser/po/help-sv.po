@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-22 15:24+0200\n"
-"PO-Revision-Date: 2023-12-27 06:06+0000\n"
+"PO-Revision-Date: 2024-02-25 03:34+0000\n"
 "Last-Translator: bittin1ddc447d824349b2 <bittin@reimu.nl>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/collabora-online/"
 "help/sv/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.5-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:72-5
 msgid "Keyboard Shortcuts"
@@ -1906,9 +1906,8 @@ msgstr ""
 "och trycker på <span class=\"ui\">Växla till tillstånd</span>."
 
 #: html/cool-help.html%2Bdiv.div.div.div.img[alt]:489-29
-#, fuzzy
 msgid "document repair"
-msgstr "Dokumentreparation"
+msgstr "dokumentreparation"
 
 #: html/cool-help.html%2Bdiv.div.div.p:490-5
 msgid ""
@@ -1940,9 +1939,8 @@ msgstr ""
 "."
 
 #: html/cool-help.html%2Bdiv.div.div.div.img[alt]:495-29
-#, fuzzy
 msgid "inactive document"
-msgstr "Inaktivt dokument"
+msgstr "inaktivt dokument"
 
 #: html/cool-help.html%2Bdiv.div.div.p:496-5
 msgid ""
@@ -2037,7 +2035,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.ol.div.img[alt]:518-31
 msgid "chart"
-msgstr ""
+msgstr "diagram"
 
 #: html/cool-help.html%2Bdiv.div.div.ol.li.p:519-11
 msgid "If no table or range was selected, a prototype chart is displayed."
@@ -2131,7 +2129,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.img[alt]:536-29
 msgid "comment"
-msgstr ""
+msgstr "kommentar"
 
 #: html/cool-help.html%2Bdiv.div.div.p:537-5
 msgid ""
@@ -2158,9 +2156,8 @@ msgstr ""
 "med förslag till rättelser av felstavning."
 
 #: html/cool-help.html%2Bdiv.div.div.div.img[alt]:542-29
-#, fuzzy
 msgid "spellchecking"
-msgstr "Stavningskontroll"
+msgstr "stavningskontroll"
 
 #: html/cool-help.html%2Bdiv.div.div.p:543-5
 msgid ""
@@ -2267,7 +2264,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.div.img[alt]:580-34
 msgid "filter"
-msgstr ""
+msgstr "filter"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:582-11
 msgid ""
@@ -2321,7 +2318,7 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.div.ol.div.img[alt]:596-31
 #: html/cool-help.html%2Bdiv.div.div.div.ol.div.img[alt]:601-31
 msgid "data validate"
-msgstr ""
+msgstr "data validera"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:597-11
 msgid ""
@@ -2510,9 +2507,8 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:655-29
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:789-29
-#, fuzzy
 msgid "track changes"
-msgstr "Spåra ändringar"
+msgstr "spåra ändringar"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:656-5
 msgid ""
@@ -2858,7 +2854,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:763-29
 msgid "word count"
-msgstr ""
+msgstr "ordräkning"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:764-5
 msgid ""
@@ -2899,7 +2895,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.div.img[alt]:774-31
 msgid "Special Characters"
-msgstr ""
+msgstr "Specialtecken"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:775-11
 msgid ""
@@ -3186,7 +3182,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.div.img[alt]:854-31
 msgid "import"
-msgstr ""
+msgstr "importera"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:855-11
 msgid ""
@@ -3291,7 +3287,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.div.img[alt]:896-31
 msgid "Position and Size"
-msgstr ""
+msgstr "Position och storlek"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:897-11
 msgid "Set the properties of the element of the object."
