@@ -16,7 +16,7 @@ var AdminClusterOverviewAbout = AdminSocketBase.extend({
             textMsg = '';
         }
         if (textMsg.startsWith('license')) {
-            $('#license-content').html(textMsg.substring('license: '.length + 1));
+            $('#license-content').html(textMsg.substring('license: '.length));
         }
     },
 
