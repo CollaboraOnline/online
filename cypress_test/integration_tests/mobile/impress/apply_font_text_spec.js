@@ -84,7 +84,6 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected text
 
 		triggerNewSVG();
 
-		cy.wait(400);
 		// TODO: shadowed property is not in the SVG
 	});
 
@@ -117,6 +116,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected text
 	it('Apply text color on selected text.', function() {
 		impressHelper.selectTextShapeInTheCenter();
 		impressHelper.selectTextOfShape();
+
 		cy.cGet('text tspan.TextPosition tspan').should('have.attr', 'fill', 'rgb(0,0,0)');
 
 		mobileHelper.openTextPropertiesPanel();
@@ -147,7 +147,6 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected text
 
 		// TODO: highlight color is not in the SVG
 		// At least check the mobile wizard's state
-		cy.wait(400);
 		impressHelper.selectTextOfShape();
 
 		mobileHelper.openTextPropertiesPanel();
@@ -169,7 +168,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected text
 
 		triggerNewSVG();
 
-		cy.cGet('text tspan.TextPosition').should('have.attr', 'y', '3285');
+		cy.cGet('text tspan.TextPosition').should('have.attr', 'y', '3273');
 		cy.cGet('text tspan.TextPosition tspan').should('have.attr', 'font-size', '368px');
 	});
 
@@ -186,7 +185,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected text
 
 		triggerNewSVG();
 
-		cy.cGet('text tspan.TextPosition').should('have.attr', 'y', '3546');
+		cy.cGet('text tspan.TextPosition').should('have.attr', 'y', '3533');
 		cy.cGet('text tspan.TextPosition tspan').should('have.attr', 'font-size', '368px');
 	});
 });

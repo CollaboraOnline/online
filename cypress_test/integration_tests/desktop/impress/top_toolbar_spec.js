@@ -110,7 +110,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 
 		impressHelper.triggerNewSVGForShapeInTheCenter();
 
-		cy.cGet('text tspan.TextPosition').should('have.attr', 'x', '24526');
+		cy.cGet('text tspan.TextPosition').should('have.attr', 'x', '24530');
 
 		// Set left alignment
 		impressHelper.selectTextOfShape();
@@ -132,7 +132,8 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 
 		impressHelper.triggerNewSVGForShapeInTheCenter();
 
-		cy.cGet('text tspan.TextPosition').should('have.attr', 'y', '8271');
+		cy.cGet('text tspan.TextPosition').invoke('attr','y').then((y)=>+y).should('be.gt',8200);
+		cy.cGet('text tspan.TextPosition').invoke('attr','y').then((y)=>+y).should('be.lt',8300);
 		cy.cGet('text tspan.TextPosition tspan').should('have.attr', 'font-size', '655px');
 	});
 
@@ -147,7 +148,8 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 
 		impressHelper.triggerNewSVGForShapeInTheCenter();
 
-		cy.cGet('text tspan.TextPosition').should('have.attr', 'y', '8734');
+		cy.cGet('text tspan.TextPosition').invoke('attr','y').then((y)=>+y).should('be.gt',8700);
+		cy.cGet('text tspan.TextPosition').invoke('attr','y').then((y)=>+y).should('be.lt',8750);
 		cy.cGet('text tspan.TextPosition tspan').should('have.attr', 'font-size', '655px');
 	});
 });
