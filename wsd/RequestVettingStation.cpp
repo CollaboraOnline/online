@@ -205,7 +205,7 @@ void RequestVettingStation::handleRequest(const std::string& id,
                     LOG_TRC_S('#' << moveSocket->getFD()
                                   << ": Dissociating client socket from "
                                      "ClientRequestDispatcher and invoking CheckFileInfo for ["
-                                  << docKey << ']');
+                                  << docKey << "], " << name(_cfiState));
 
                     // CheckFileInfo and only when it's good create DocBroker.
                     if (_cfiState == CFIState::Active)
@@ -367,6 +367,10 @@ void RequestVettingStation::checkFileInfo(const std::string& url, const Poco::UR
     if (_httpSession->asyncRequest(httpRequest, *_poll))
     {
         _cfiState = CFIState::Active;
+    }
+    else
+    {
+        LOG_ERR("Failed to start an async CheckFileInfo request");
     }
 }
 #endif //!MOBILEAPP
