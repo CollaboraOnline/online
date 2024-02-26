@@ -54,7 +54,6 @@ export class SheetSwitchViewRestore {
 	}
 
 	public updateOnSheetMoved(oldIndex: number, newIndex: number): void {
-		window.app.console.log('SheetSwitchViewRestore.updateOnSheetMoved: oldIndex: ' + oldIndex + ', newIndex: ' + newIndex);
 		if (oldIndex < 0 || newIndex < 0 || oldIndex === newIndex)
 			return;
 
