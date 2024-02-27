@@ -10,10 +10,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected text
 
 	beforeEach(function() {
 		testFileName = helper.beforeAll(origTestFileName, 'impress');
-
 		mobileHelper.enableEditingMobile();
-
-		impressHelper.selectTextShapeInTheCenter();
 	});
 
 	afterEach(function() {
@@ -26,11 +23,12 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected text
 	}
 
 	it('Apply bold on selected text.', function() {
+		impressHelper.selectTextShapeInTheCenter();
 		impressHelper.selectTextOfShape();
 
 		mobileHelper.openTextPropertiesPanel();
 
-		helper.clickOnIdle('.unoBold');
+		cy.cGet('.unoBold').click();
 
 		triggerNewSVG();
 
@@ -38,11 +36,12 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected text
 	});
 
 	it('Apply italic on selected text.', function() {
+		impressHelper.selectTextShapeInTheCenter();
 		impressHelper.selectTextOfShape();
 
 		mobileHelper.openTextPropertiesPanel();
 
-		helper.clickOnIdle('.unoItalic');
+		cy.cGet('.unoItalic').click();
 
 		triggerNewSVG();
 
@@ -50,11 +49,12 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected text
 	});
 
 	it('Apply underline on selected text.', function() {
+		impressHelper.selectTextShapeInTheCenter();
 		impressHelper.selectTextOfShape();
 
 		mobileHelper.openTextPropertiesPanel();
 
-		helper.clickOnIdle('.unoUnderline');
+		cy.cGet('.unoUnderline').click();
 
 		triggerNewSVG();
 
@@ -62,11 +62,12 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected text
 	});
 
 	it('Apply strikeout on selected text.', function() {
+		impressHelper.selectTextShapeInTheCenter();
 		impressHelper.selectTextOfShape();
 
 		mobileHelper.openTextPropertiesPanel();
 
-		helper.clickOnIdle('.unoStrikeout');
+		cy.cGet('.unoStrikeout').click();
 
 		triggerNewSVG();
 
@@ -74,11 +75,12 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected text
 	});
 
 	it('Apply shadowed on selected text.', function() {
+		impressHelper.selectTextShapeInTheCenter();
 		impressHelper.selectTextOfShape();
 
 		mobileHelper.openTextPropertiesPanel();
 
-		helper.clickOnIdle('.unoShadowed');
+		cy.cGet('.unoShadowed').click();
 
 		triggerNewSVG();
 
@@ -87,7 +89,9 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected text
 	});
 
 	it('Change font name of selected text.', function() {
+		impressHelper.selectTextShapeInTheCenter();
 		impressHelper.selectTextOfShape();
+
 		mobileHelper.openTextPropertiesPanel();
 		cy.cGet('#font').click();
 		cy.cGet('#fontnamecombobox').contains('.mobile-wizard.ui-combobox-text', 'Linux Libertine G').click();
@@ -98,7 +102,9 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected text
 	});
 
 	it('Change font size of selected text.', function() {
+		impressHelper.selectTextShapeInTheCenter();
 		impressHelper.selectTextOfShape();
+
 		mobileHelper.openTextPropertiesPanel();
 		cy.cGet('#fontsizecombobox').click();
 		cy.cGet('#fontsizecombobox').contains('.mobile-wizard.ui-combobox-text', '24 pt').click();
@@ -109,13 +115,13 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected text
 	});
 
 	it('Apply text color on selected text.', function() {
-		cy.cGet('text tspan.TextPosition tspan').should('have.attr', 'fill', 'rgb(0,0,0)');
-
+		impressHelper.selectTextShapeInTheCenter();
 		impressHelper.selectTextOfShape();
+		cy.cGet('text tspan.TextPosition tspan').should('have.attr', 'fill', 'rgb(0,0,0)');
 
 		mobileHelper.openTextPropertiesPanel();
 
-		helper.clickOnIdle('#Color .ui-header');
+		cy.cGet('#Color .ui-header').click();
 
 		mobileHelper.selectFromColorPicker('#Color', 5, 2);
 
@@ -125,11 +131,12 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected text
 	});
 
 	it('Apply highlight on selected text.', function() {
+		impressHelper.selectTextShapeInTheCenter();
 		impressHelper.selectTextOfShape();
 
 		mobileHelper.openTextPropertiesPanel();
 
-		helper.clickOnIdle('#CharBackColor .ui-header');
+		cy.cGet('#CharBackColor .ui-header').click();
 
 		mobileHelper.selectFromColorPicker('#CharBackColor', 2, 2);
 
@@ -150,6 +157,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected text
 	});
 
 	it('Apply superscript on selected text.', function() {
+		impressHelper.selectTextShapeInTheCenter();
 		impressHelper.selectTextOfShape();
 
 		mobileHelper.openTextPropertiesPanel();
@@ -157,7 +165,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected text
 		cy.cGet('text tspan.TextPosition').should('have.attr', 'y', '3495');
 		cy.cGet('text tspan.TextPosition tspan').should('have.attr', 'font-size', '635px');
 
-		helper.clickOnIdle('.unoSuperScript');
+		cy.cGet('.unoSuperScript').click();
 
 		triggerNewSVG();
 
@@ -166,6 +174,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected text
 	});
 
 	it('Apply subscript on selected text.', function() {
+		impressHelper.selectTextShapeInTheCenter();
 		impressHelper.selectTextOfShape();
 
 		mobileHelper.openTextPropertiesPanel();
@@ -173,7 +182,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected text
 		cy.cGet('text tspan.TextPosition').should('have.attr', 'y', '3495');
 		cy.cGet('text tspan.TextPosition tspan').should('have.attr', 'font-size', '635px');
 
-		helper.clickOnIdle('.unoSubScript');
+		cy.cGet('.unoSubScript').click();
 
 		triggerNewSVG();
 
