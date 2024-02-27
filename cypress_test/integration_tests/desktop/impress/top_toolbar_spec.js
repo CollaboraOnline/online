@@ -30,8 +30,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 
 		impressHelper.triggerNewSVGForShapeInTheCenter();
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition tspan')
-			.should('have.attr', 'font-weight', '700');
+		cy.cGet('text tspan.TextPosition tspan').should('have.attr', 'font-weight', '700');
 	});
 
 	it('Apply italic on text shape.', function() {
@@ -39,18 +38,15 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 
 		impressHelper.triggerNewSVGForShapeInTheCenter();
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition tspan')
-			.should('have.attr', 'font-style', 'italic');
+		cy.cGet('text tspan.TextPosition tspan').should('have.attr', 'font-style', 'italic');
 	});
 
 	it('Apply underline on text shape.', function() {
-		cy.cGet('#tb_editbar_item_underline')
-			.click();
+		cy.cGet('#tb_editbar_item_underline').click();
 
 		impressHelper.triggerNewSVGForShapeInTheCenter();
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition tspan')
-			.should('have.attr', 'text-decoration', 'underline');
+		cy.cGet('text tspan.TextPosition tspan').should('have.attr', 'text-decoration', 'underline');
 	});
 
 	it('Apply strikethrough on text shape.', function() {
@@ -58,119 +54,91 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 
 		impressHelper.triggerNewSVGForShapeInTheCenter();
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition tspan')
-			.should('have.attr', 'text-decoration', 'line-through');
+		cy.cGet('text tspan.TextPosition tspan').should('have.attr', 'text-decoration', 'line-through');
 	});
 
 	it('Apply font color on text shape.', function() {
-		cy.cGet('#tb_editbar_item_fontcolor')
-			.click();
-
+		cy.cGet('#tb_editbar_item_fontcolor').click();
 		desktopHelper.selectColorFromPalette('FF011B');
 
 		impressHelper.triggerNewSVGForShapeInTheCenter();
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .SVGTextShape .TextParagraph .TextPosition tspan')
-			.should('have.attr', 'fill', 'rgb(255,1,27)');
+		cy.cGet('text tspan.TextPosition tspan').should('have.attr', 'fill', 'rgb(255,1,27)');
 	});
 
 	it('Apply highlight color on text shape.', function() {
 		cy.cGet('#tb_editbar_item_backcolor').click();
-
 		desktopHelper.selectColorFromPalette('FF9838');
 
 		impressHelper.triggerNewSVGForShapeInTheCenter();
 
-		cy.wait(500);
-
 		//highlight color is not in the SVG
 		// that's why we didn't test there
-
 	});
 
 	it('Apply a selected font name on the text shape', function() {
 		cy.cGet('#tb_editbar_item_fonts').click();
-
 		desktopHelper.selectFromListbox('Liberation Mono');
 
 		impressHelper.triggerNewSVGForShapeInTheCenter();
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .SVGTextShape .TextParagraph .TextPosition tspan')
-			.should('have.attr', 'font-family', 'Liberation Mono');
+		cy.cGet('text tspan.TextPosition tspan').should('have.attr', 'font-family', 'Liberation Mono');
 	});
 
 	it('Apply a selected font size on the text shape', function() {
-
 		cy.cGet('#tb_editbar_item_fontsizes').click();
-
 		desktopHelper.selectFromListbox('22');
 
 		impressHelper.triggerNewSVGForShapeInTheCenter();
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .SVGTextShape .TextParagraph .TextPosition tspan')
-			.should('have.attr', 'font-size', '776px');
+		cy.cGet('text tspan.TextPosition tspan').should('have.attr', 'font-size', '776px');
 	});
 
 	it('Apply left/right alignment on text selected text.', function() {
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
-			.should('have.attr', 'x', '1400');
+		cy.cGet('text tspan.TextPosition').should('have.attr', 'x', '1400');
 
 		// Set right alignment first
 		impressHelper.selectTextOfShape();
-
 		cy.cGet('#tb_editbar_item_rightpara').click();
 
 		impressHelper.triggerNewSVGForShapeInTheCenter();
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition').should('have.attr', 'x', '24526');
+		cy.cGet('text tspan.TextPosition').should('have.attr', 'x', '24526');
 
 		// Set left alignment
 		impressHelper.selectTextOfShape();
-
 		cy.cGet('#tb_editbar_item_leftpara').click();
 
 		impressHelper.triggerNewSVGForShapeInTheCenter();
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition').should('have.attr', 'x', '1400');
+		cy.cGet('text tspan.TextPosition').should('have.attr', 'x', '1400');
 	});
 
 	it('Apply superscript on selected text.', function() {
 		impressHelper.selectTextOfShape();
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition')
-			.should('have.attr', 'y', '8643');
-
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition tspan')
-			.should('have.attr', 'font-size', '1129px');
+		cy.cGet('text tspan.TextPosition').should('have.attr', 'y', '8643');
+		cy.cGet('text tspan.TextPosition tspan').should('have.attr', 'font-size', '1129px');
 
 		helper.typeIntoDocument('{ctrl}{shift}p');
 
 		impressHelper.triggerNewSVGForShapeInTheCenter();
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition')
-			.should('have.attr', 'y', '8271');
-
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition tspan')
-			.should('have.attr', 'font-size', '655px');
+		cy.cGet('text tspan.TextPosition').should('have.attr', 'y', '8271');
+		cy.cGet('text tspan.TextPosition tspan').should('have.attr', 'font-size', '655px');
 	});
 
 	it('Apply subscript on selected text.', function() {
 		impressHelper.selectTextOfShape();
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition')
-			.should('have.attr', 'y', '8643');
-
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition tspan')
-			.should('have.attr', 'font-size', '1129px');
+		cy.cGet('text tspan.TextPosition').should('have.attr', 'y', '8643');
+		cy.cGet('text tspan.TextPosition tspan').should('have.attr', 'font-size', '1129px');
 
 		helper.typeIntoDocument('{ctrl}{shift}b');
 
 		impressHelper.triggerNewSVGForShapeInTheCenter();
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition')
-			.should('have.attr', 'y', '8734');
-
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition tspan')
-			.should('have.attr', 'font-size', '655px');
+		cy.cGet('text tspan.TextPosition').should('have.attr', 'y', '8734');
+		cy.cGet('text tspan.TextPosition tspan').should('have.attr', 'font-size', '655px');
 	});
 });
