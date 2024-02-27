@@ -1656,49 +1656,83 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 	margin-right: 5px;
 }
 
-#followingChip {
-	float: right;
+#followingChipBackground,
+#userListSummaryBackground {
+	border-radius: var(--btn-size); /* We expect the height to be --btn-size, give a bit for a border. To fully round the corners, this needs to be at least 50% of the height so --btn-size should do */
+	padding: 2px; /* This will become the grey border around the inner elements */
+
+	font-size: 0.8em; /* The "Following foo" text overflows the box at the default size, 0.8em seems about right */
+
 	display: none;
+}
 
-	border-radius: var(--btn-size) 0 0 var(--btn-size);
+#followingChipBackground {
+	transform: translateX(calc(4px /* border widths */ + 4px /* background paddings */ + var(--btn-size) - 0.6px /* browser rendering fudge */));
+	/* We'd like this to flow over the first item of the userListSummary. I've added a fudge because browser rendering seems to have subpixel errors here and it's far better to
+	 * render the border marginally too far left than leave a gap. */
+}
 
-	height: var(--btn-size);
-	padding: 0 calc(3px + (var(--btn-size) / 2));
+#userListSummaryBackground {
+	margin-right: 5px;
+}
 
-	margin-right: calc(4px - (var(--btn-size) / 2));
+#followingChipBackground:hover:has(#followingChip:hover),
+#userListSummaryBackground:hover:has(#userListSummary:hover) {
+	background-color: var(--color-background-darker);
+}
 
+#followingChipBackground > #followingChip,
+#userListSummaryBackground > #userListSummary {
+	cursor: pointer;
+
+	margin: 0; /* everything is in the respective #fooBackground selectors */
+	padding: 0;
+}
+
+#followingChipBackground > #followingChip {
 	border-style: solid;
 	border-width: 2px;
-	border-color: transparent;
+	border-radius: calc(var(--btn-size));
 
-	font-size: 0.8em;
+	height: var(--btn-size);
+	padding-left: calc(var(--btn-size) * 0.4);
+	padding-right: calc(var(--btn-size) * 1.2);
+}
 
-	flex-direction: column;
+#userListSummaryBackground > #userListSummary {
+	background: transparent !important; /* we want to override some classes that are added to buttons by default */
+
+	height: fit-content !important;
+	width: fit-content !important;
+
+	min-width: 0 !important; /* we want to override some classes that are added to buttons by default */
+
+	display: flex;
 	justify-content: center;
 	align-items: center;
+
+	border: none !important; /* we want to override some classes that are added to buttons by default */
 }
 
-#followingChip:hover {
-	text-decoration: underline;
-	border-color: white;
-	cursor: pointer;
+#userListSummary .user-info:first-child,
+#userListSummary .avatar-img:first-child {
+	margin-left: 0;
 }
 
-#userListSummary {
-	display: flex;
-	border: 0px;
-	background: transparent !important /* we want to override .button-secondary:hover, button:not(.ui-corner-all):not(.button-primary):not(.unobutton):not(.form-field-button):hover */;
-}
-
-#userListSummary:hover .user-info,
-#userListSummary:hover .avatar-img {
-	cursor: pointer;
-	border-color: white !important;
+#userListSummary .user-info:last-child,
+#userListSummary .avatar-img:last-child {
+	margin-right: 0 !important;
 }
 
 #userListSummary .user-info,
 #userListSummary .avatar-img {
+	background-clip: padding-box;
 	margin-left: -10px;
+}
+
+#userListSummary:not(:hover) .user-info.following,
+#userListSummary:not(:hover) .avatar-img.following {
+	border-color: transparent !important;
 }
 
 .user-list-item .user-info {
