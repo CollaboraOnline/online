@@ -34,8 +34,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected text
 
 		triggerNewSVG();
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition tspan')
-			.should('have.attr', 'font-weight', '700');
+		cy.cGet('text tspan.TextPosition tspan').should('have.attr', 'font-weight', '700');
 	});
 
 	it('Apply italic on selected text.', function() {
@@ -47,8 +46,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected text
 
 		triggerNewSVG();
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition tspan')
-			.should('have.attr', 'font-style', 'italic');
+		cy.cGet('text tspan.TextPosition tspan').should('have.attr', 'font-style', 'italic');
 	});
 
 	it('Apply underline on selected text.', function() {
@@ -60,8 +58,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected text
 
 		triggerNewSVG();
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition tspan')
-			.should('have.attr', 'text-decoration', 'underline');
+		cy.cGet('text tspan.TextPosition tspan').should('have.attr', 'text-decoration', 'underline');
 	});
 
 	it('Apply strikeout on selected text.', function() {
@@ -73,8 +70,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected text
 
 		triggerNewSVG();
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition tspan')
-			.should('have.attr', 'text-decoration', 'line-through');
+		cy.cGet('text tspan.TextPosition tspan').should('have.attr', 'text-decoration', 'line-through');
 	});
 
 	it('Apply shadowed on selected text.', function() {
@@ -98,8 +94,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected text
 
 		triggerNewSVG();
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition tspan')
-			.should('have.attr', 'font-family', 'Linux Libertine G');
+		cy.cGet('text tspan.TextPosition tspan').should('have.attr', 'font-family', 'Linux Libertine G');
 	});
 
 	it('Change font size of selected text.', function() {
@@ -110,13 +105,11 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected text
 
 		triggerNewSVG();
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition tspan')
-			.should('have.attr', 'font-size', '847px');
+		cy.cGet('text tspan.TextPosition tspan').should('have.attr', 'font-size', '847px');
 	});
 
 	it('Apply text color on selected text.', function() {
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition tspan')
-			.should('have.attr', 'fill', 'rgb(0,0,0)');
+		cy.cGet('text tspan.TextPosition tspan').should('have.attr', 'fill', 'rgb(0,0,0)');
 
 		impressHelper.selectTextOfShape();
 
@@ -128,8 +121,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected text
 
 		triggerNewSVG();
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition tspan')
-			.should('have.attr', 'fill', 'rgb(106,168,79)');
+		cy.cGet('text tspan.TextPosition tspan').should('have.attr', 'fill', 'rgb(106,168,79)');
 	});
 
 	it('Apply highlight on selected text.', function() {
@@ -162,19 +154,15 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected text
 
 		mobileHelper.openTextPropertiesPanel();
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition')
-			.should('have.attr', 'y', '3495');
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition tspan')
-			.should('have.attr', 'font-size', '635px');
+		cy.cGet('text tspan.TextPosition').should('have.attr', 'y', '3495');
+		cy.cGet('text tspan.TextPosition tspan').should('have.attr', 'font-size', '635px');
 
 		helper.clickOnIdle('.unoSuperScript');
 
 		triggerNewSVG();
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition')
-			.should('have.attr', 'y', '3285');
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition tspan')
-			.should('have.attr', 'font-size', '368px');
+		cy.cGet('text tspan.TextPosition').should('have.attr', 'y', '3285');
+		cy.cGet('text tspan.TextPosition tspan').should('have.attr', 'font-size', '368px');
 	});
 
 	it('Apply subscript on selected text.', function() {
@@ -182,18 +170,14 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected text
 
 		mobileHelper.openTextPropertiesPanel();
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition')
-			.should('have.attr', 'y', '3495');
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition tspan')
-			.should('have.attr', 'font-size', '635px');
+		cy.cGet('text tspan.TextPosition').should('have.attr', 'y', '3495');
+		cy.cGet('text tspan.TextPosition tspan').should('have.attr', 'font-size', '635px');
 
 		helper.clickOnIdle('.unoSubScript');
 
 		triggerNewSVG();
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition')
-			.should('have.attr', 'y', '3546');
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition tspan')
-			.should('have.attr', 'font-size', '368px');
+		cy.cGet('text tspan.TextPosition').should('have.attr', 'y', '3546');
+		cy.cGet('text tspan.TextPosition tspan').should('have.attr', 'font-size', '368px');
 	});
 });
