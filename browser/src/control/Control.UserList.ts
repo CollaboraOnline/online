@@ -32,6 +32,7 @@ interface UserEvent extends User {
 class UserList extends L.Control {
 	options: {
 		userLimitHeader: number;
+		userLimitHeaderWhenFollowing: number;
 		userPopupTimeout: null | ReturnType<typeof setTimeout>;
 		userJoinedPopupMessage: string;
 		userLeftPopupMessage: string;
@@ -41,6 +42,7 @@ class UserList extends L.Control {
 		noUser?: string;
 	} = {
 		userLimitHeader: 6,
+		userLimitHeaderWhenFollowing: 3,
 		userPopupTimeout: null,
 		userJoinedPopupMessage: '<div>' + _('%user has joined') + '</div>',
 		userLeftPopupMessage: '<div>' + _('%user has left') + '</div>',
@@ -105,7 +107,10 @@ class UserList extends L.Control {
 	}
 
 	getFollowedUser(): undefined | [number, any] {
-		if (this.map._docLayer._followThis === -1) {
+		if (
+			this.map._docLayer._followThis === -1 ||
+			!this.map._docLayer._followUser
+		) {
 			return undefined;
 		}
 
@@ -183,19 +188,19 @@ class UserList extends L.Control {
 				'onerror',
 				"this.onerror=null;this.src='" + altImg + "';",
 			);
-			$(img).css({ 'border-color': color, 'z-index': zIndex });
 		} else {
 			img = L.DomUtil.create('div', 'user-info');
-			$(img).css({
-				'border-color': color,
-				'background-color': '#eee',
-				'background-image':
-					'url("' +
-					L.LOUtil.getImageURL('user.svg', this.map._docLayer._docType) +
-					'")',
-				'z-index': zIndex,
-			});
+			img.style.backgroundColor = '#eee';
+			img.style.backgroundImage =
+				'url("' +
+				L.LOUtil.getImageURL('user.svg', this.map._docLayer._docType) +
+				'")';
 		}
+
+		img.style.zIndex = zIndex;
+		img.style.borderColor = color;
+		img.style.backgroundColor = 'var(--color-background-lighter)';
+
 		img.setAttribute('data-view-id', viewId);
 		L.LOUtil.checkIfImageExists(img);
 		return img;
@@ -306,6 +311,9 @@ class UserList extends L.Control {
 	}
 
 	renderHeaderAvatars() {
+		const userListElementBackground = document.getElementById(
+			'userListSummaryBackground',
+		);
 		const userListElement = document.getElementById('userListSummary');
 
 		if (
@@ -314,28 +322,44 @@ class UserList extends L.Control {
 			this.users.size === 1
 		) {
 			userListElement.removeAttribute('accesskey');
-			userListElement.replaceChildren();
+			userListElementBackground.style.display = 'none';
 			return;
 		}
 
-		const displayCount = this.options.userLimitHeader;
+		let displayCount: number;
+
+		if (this.getFollowedUser() === undefined) {
+			displayCount = this.options.userLimitHeader;
+		} else {
+			displayCount = this.options.userLimitHeaderWhenFollowing;
+		}
+
 		const avatarUsers = Array.from(this.getSortedUsers()).slice(
 			0,
 			displayCount,
 		);
+		const followed = this.getFollowedUser();
 
 		userListElement.setAttribute('accesskey', 'UP');
 
 		userListElement.replaceChildren(
 			...avatarUsers.map(([viewId, user], index) => {
-				return this.createAvatar(
+				const img = this.createAvatar(
 					viewId,
 					user.extraInfo,
 					user.color,
 					displayCount - index,
 				);
+
+				if (followed !== undefined && followed[0] === viewId) {
+					img.classList.add('following');
+				}
+
+				return img;
 			}),
 		);
+
+		userListElementBackground.style.display = 'block';
 	}
 
 	updateUserListCount() {
@@ -505,7 +529,7 @@ class UserList extends L.Control {
 		const users = Array.from(this.getSortedUsers());
 		const popoverElement = document.getElementById('userListPopover');
 
-		const userElements = users.map(([viewId, user]) => {
+		const userElements = users.map(([viewId, user], index) => {
 			const userLabel = L.DomUtil.create('div', 'user-list-item--name');
 			userLabel.innerText = user.username;
 
@@ -570,28 +594,39 @@ class UserList extends L.Control {
 	}
 
 	renderFollowingChip() {
+		const followingChipBackground = document.getElementById(
+			'followingChipBackground',
+		);
 		const followingChip = document.getElementById('followingChip');
 
 		const following = this.getFollowedUser();
 
 		if (following === undefined || !this.map._docLayer._followUser) {
-			followingChip.style.display = 'none';
+			followingChipBackground.style.display = 'none';
 			return;
 		}
 
-		followingChip.innerHTML = this.options.followingChipText.replace(
-			'%user',
-			following[1].username,
-		);
-		followingChip.style.backgroundColor = following[1].color;
-		followingChip.style.color = 'white';
-		followingChip.style.display = 'block';
+		let displayedAvatarCount: number;
+
+		if (this.getFollowedUser() === undefined) {
+			displayedAvatarCount = this.options.userLimitHeader;
+		} else {
+			displayedAvatarCount = this.options.userLimitHeaderWhenFollowing;
+		}
+
+		const topAvatarZIndex = displayedAvatarCount;
+
+		followingChip.innerHTML =
+			'<div id="text">' +
+			this.options.followingChipText.replace('%user', following[1].username);
+		followingChip.style.borderColor = following[1].color;
 
 		followingChip.onclick = () => {
 			this.unfollowAll();
 		};
 
-		followingChip.style.display = 'flex';
+		followingChipBackground.style.display = 'block';
+		followingChipBackground.style.zIndex = topAvatarZIndex.toString();
 	}
 }
 
