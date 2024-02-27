@@ -17,8 +17,6 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 		} else {
 			desktopHelper.hideSidebar();
 		}
-
-		impressHelper.selectTextShapeInTheCenter();
 	});
 
 	afterEach(function() {
@@ -26,6 +24,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 	});
 
 	it('Apply bold on text shape.', function() {
+		impressHelper.selectTextShapeInTheCenter();
 		cy.cGet('#tb_editbar_item_bold').click();
 
 		impressHelper.triggerNewSVGForShapeInTheCenter();
@@ -34,6 +33,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 	});
 
 	it('Apply italic on text shape.', function() {
+		impressHelper.selectTextShapeInTheCenter();
 		cy.cGet('#tb_editbar_item_italic').click();
 
 		impressHelper.triggerNewSVGForShapeInTheCenter();
@@ -42,6 +42,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 	});
 
 	it('Apply underline on text shape.', function() {
+		impressHelper.selectTextShapeInTheCenter();
 		cy.cGet('#tb_editbar_item_underline').click();
 
 		impressHelper.triggerNewSVGForShapeInTheCenter();
@@ -50,6 +51,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 	});
 
 	it('Apply strikethrough on text shape.', function() {
+		impressHelper.selectTextShapeInTheCenter();
 		cy.cGet('#tb_editbar_item_strikeout').click();
 
 		impressHelper.triggerNewSVGForShapeInTheCenter();
@@ -58,6 +60,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 	});
 
 	it('Apply font color on text shape.', function() {
+		impressHelper.selectTextShapeInTheCenter();
 		cy.cGet('#tb_editbar_item_fontcolor').click();
 		desktopHelper.selectColorFromPalette('FF011B');
 
@@ -67,6 +70,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 	});
 
 	it('Apply highlight color on text shape.', function() {
+		impressHelper.selectTextShapeInTheCenter();
 		cy.cGet('#tb_editbar_item_backcolor').click();
 		desktopHelper.selectColorFromPalette('FF9838');
 
@@ -77,6 +81,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 	});
 
 	it('Apply a selected font name on the text shape', function() {
+		impressHelper.selectTextShapeInTheCenter();
 		cy.cGet('#tb_editbar_item_fonts').click();
 		desktopHelper.selectFromListbox('Liberation Mono');
 
@@ -86,6 +91,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 	});
 
 	it('Apply a selected font size on the text shape', function() {
+		impressHelper.selectTextShapeInTheCenter();
 		cy.cGet('#tb_editbar_item_fontsizes').click();
 		desktopHelper.selectFromListbox('22');
 
@@ -95,10 +101,11 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 	});
 
 	it('Apply left/right alignment on text selected text.', function() {
+		impressHelper.selectTextShapeInTheCenter();
+		impressHelper.selectTextOfShape();
 		cy.cGet('text tspan.TextPosition').should('have.attr', 'x', '1400');
 
 		// Set right alignment first
-		impressHelper.selectTextOfShape();
 		cy.cGet('#tb_editbar_item_rightpara').click();
 
 		impressHelper.triggerNewSVGForShapeInTheCenter();
@@ -115,6 +122,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 	});
 
 	it('Apply superscript on selected text.', function() {
+		impressHelper.selectTextShapeInTheCenter();
 		impressHelper.selectTextOfShape();
 
 		cy.cGet('text tspan.TextPosition').should('have.attr', 'y', '8643');
@@ -129,6 +137,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 	});
 
 	it('Apply subscript on selected text.', function() {
+		impressHelper.selectTextShapeInTheCenter();
 		impressHelper.selectTextOfShape();
 
 		cy.cGet('text tspan.TextPosition').should('have.attr', 'y', '8643');
