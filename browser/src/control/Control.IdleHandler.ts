@@ -80,7 +80,7 @@ class IdleHandler {
 			}
 		}
 
-		if (window.mode.isDesktop() && !this.map.uiManager.isAnyDialogOpen()) {
+		if (window.mode.isDesktop() && !this.map.uiManager.isAnyDialogOpen() && $('input:focus').length === 0) {
 			this.map.focus();
 		}
 
