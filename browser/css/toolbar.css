@@ -1642,7 +1642,6 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 	justify-content: end;
 }
 
-#userListHeader .user-info,
 #userListHeader .avatar-img {
 	width: var(--btn-size);
 	height: var(--btn-size);
@@ -1714,29 +1713,21 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 	border: none !important; /* we want to override some classes that are added to buttons by default */
 }
 
-#userListSummary .user-info:first-child,
 #userListSummary .avatar-img:first-child {
 	margin-left: 0;
 }
 
-#userListSummary .user-info:last-child,
 #userListSummary .avatar-img:last-child {
 	margin-right: 0 !important;
 }
 
-#userListSummary .user-info,
 #userListSummary .avatar-img {
 	background-clip: padding-box;
 	margin-left: -10px;
 }
 
-#userListSummary:not(:hover) .user-info.following,
 #userListSummary:not(:hover) .avatar-img.following {
 	border-color: transparent !important;
-}
-
-.user-list-item .user-info {
-	margin: 0;
 }
 
 #userListPopover {

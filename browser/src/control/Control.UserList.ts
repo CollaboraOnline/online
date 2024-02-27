@@ -23,10 +23,15 @@ interface User {
 	readonly: boolean;
 	you: boolean;
 	following: boolean;
+	cachedHeaderAvatar?: HTMLImageElement;
+	cachedUserListAvatar?: HTMLImageElement;
 }
 
-interface UserEvent extends User {
+interface UserEvent {
 	viewId: number;
+	username: string;
+	extraInfo: UserExtraInfo;
+	readonly: boolean;
 }
 
 class UserList extends L.Control {
@@ -167,6 +172,7 @@ class UserList extends L.Control {
 	}
 
 	createAvatar(
+		cachedElement: HTMLImageElement | undefined,
 		viewId: number,
 		extraInfo: UserExtraInfo,
 		color: string,
@@ -176,33 +182,32 @@ class UserList extends L.Control {
 			zIndex = 'auto';
 		}
 
-		var img;
-		if (extraInfo !== undefined && extraInfo.avatar !== undefined) {
-			img = L.DomUtil.create('img', 'avatar-img');
-			img.src = extraInfo.avatar;
-			var altImg = L.LOUtil.getImageURL(
-				'user.svg',
-				this.map._docLayer._docType,
-			);
-			img.setAttribute(
-				'onerror',
-				"this.onerror=null;this.src='" + altImg + "';",
-			);
-		} else {
-			img = L.DomUtil.create('div', 'user-info');
-			img.style.backgroundColor = '#eee';
-			img.style.backgroundImage =
-				'url("' +
-				L.LOUtil.getImageURL('user.svg', this.map._docLayer._docType) +
-				'")';
+		let img = cachedElement;
+
+		if (img === undefined) {
+			img = L.DomUtil.create('img', 'avatar-img') as HTMLImageElement;
 		}
 
-		img.style.zIndex = zIndex;
+		const defaultImage = L.LOUtil.getImageURL(
+			'user.svg',
+			this.map._docLayer._docType,
+		);
+
+		if (extraInfo !== undefined && extraInfo.avatar !== undefined) {
+			img.src = extraInfo.avatar;
+			img.addEventListener('error', () => (img.src = defaultImage));
+		} else {
+			img.src = defaultImage;
+		}
+
+		img.style.zIndex = zIndex.toString();
 		img.style.borderColor = color;
 		img.style.backgroundColor = 'var(--color-background-lighter)';
 
-		img.setAttribute('data-view-id', viewId);
+		img.setAttribute('data-view-id', viewId.toString());
+
 		L.LOUtil.checkIfImageExists(img);
+
 		return img;
 	}
 
@@ -223,7 +228,13 @@ class UserList extends L.Control {
 		var iconTd = L.DomUtil.create('td', 'usercolor', content);
 		var nameTd = L.DomUtil.create('td', 'username cool-font', content);
 
-		iconTd.appendChild(this.createAvatar(viewId, extraInfo, color));
+		const avatarElement = this.createAvatar(
+			undefined,
+			viewId,
+			extraInfo,
+			color,
+		);
+		iconTd.appendChild(avatarElement);
 		nameTd.textContent = username;
 
 		return content;
@@ -345,14 +356,18 @@ class UserList extends L.Control {
 		userListElement.replaceChildren(
 			...avatarUsers.map(([viewId, user], index) => {
 				const img = this.createAvatar(
+					user.cachedHeaderAvatar,
 					viewId,
 					user.extraInfo,
 					user.color,
 					displayCount - index,
 				);
+				user.cachedHeaderAvatar = img;
 
 				if (followed !== undefined && followed[0] === viewId) {
 					img.classList.add('following');
+				} else {
+					img.classList.remove('following');
 				}
 
 				return img;
@@ -529,7 +544,7 @@ class UserList extends L.Control {
 		const users = Array.from(this.getSortedUsers());
 		const popoverElement = document.getElementById('userListPopover');
 
-		const userElements = users.map(([viewId, user], index) => {
+		const userElements = users.map(([viewId, user]) => {
 			const userLabel = L.DomUtil.create('div', 'user-list-item--name');
 			userLabel.innerText = user.username;
 
@@ -554,9 +569,15 @@ class UserList extends L.Control {
 				$(listItem).addClass('selected-user');
 			}
 
-			listItem.appendChild(
-				this.createAvatar(viewId, user.extraInfo, user.color),
+			const avatar = this.createAvatar(
+				user.cachedUserListAvatar,
+				viewId,
+				user.extraInfo,
+				user.color,
 			);
+			user.cachedUserListAvatar = avatar;
+
+			listItem.appendChild(avatar);
 			listItem.appendChild(userLabelContainer);
 			listItem.addEventListener('click', () => {
 				this.followUser(viewId);
