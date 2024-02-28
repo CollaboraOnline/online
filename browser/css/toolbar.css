@@ -1696,6 +1696,15 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 	height: var(--btn-size);
 	padding-left: calc(var(--btn-size) * 0.4);
 	padding-right: calc(var(--btn-size) * 1.2);
+
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+#followingChipBackground > #followingChip > #followingChipLine1 {
+	font-weight: bold;
 }
 
 #userListSummaryBackground > #userListSummary {

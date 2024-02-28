@@ -190,7 +190,12 @@ m4_ifelse(MOBILEAPP,[true],
       </div>
 
       <div id="userListHeader">
-        <div id="followingChipBackground"><div id="followingChip"></div></div>
+        <div id="followingChipBackground">
+          <div id="followingChip">
+            <div id="followingChipLine1"></div>
+            <div id="followingChipLine2"></div>
+          </div>
+        </div>
         <div id="userListSummaryBackground"><button id="userListSummary"></button></div>
         <div id="userListPopover"></div>
       </div>
