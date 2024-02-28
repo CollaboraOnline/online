@@ -41,7 +41,8 @@ class UserList extends L.Control {
 		userPopupTimeout: null | ReturnType<typeof setTimeout>;
 		userJoinedPopupMessage: string;
 		userLeftPopupMessage: string;
-		followingChipText: string;
+		followingChipLine1Text: string;
+		followingChipLine2Text: string;
 		nUsers?: string;
 		oneUser?: string;
 		noUser?: string;
@@ -49,14 +50,10 @@ class UserList extends L.Control {
 		userLimitHeader: 6,
 		userLimitHeaderWhenFollowing: 3,
 		userPopupTimeout: null,
-		userJoinedPopupMessage: '<div>' + _('%user has joined') + '</div>',
-		userLeftPopupMessage: '<div>' + _('%user has left') + '</div>',
-		followingChipText:
-			'<div><b>' +
-			_('Following %user') +
-			'</b></div><div>' +
-			_('Click to stop following') +
-			'</div>',
+		userJoinedPopupMessage: _('%user has joined'),
+		userLeftPopupMessage: _('%user has left'),
+		followingChipLine1Text: _('Following %user'),
+		followingChipLine2Text: _('Click to stop following'),
 		nUsers: undefined,
 		oneUser: undefined,
 		noUser: undefined,
@@ -88,10 +85,6 @@ class UserList extends L.Control {
 		});
 
 		this.registerHeaderAvatarEvents();
-	}
-
-	escapeHtml(input: string) {
-		return $('<div>').text(input).html();
 	}
 
 	selectUser(viewId: number) {
@@ -449,7 +442,7 @@ class UserList extends L.Control {
 			color = '#000';
 			you = true;
 		} else {
-			username = this.escapeHtml(e.username);
+			username = e.username;
 			color = L.LOUtil.rgbToHex(this.map.getViewColor(e.viewId));
 			you = false;
 		}
@@ -506,9 +499,12 @@ class UserList extends L.Control {
 			message = this.options.userLeftPopupMessage.replace('%user', username);
 		}
 
+		const sanitizer = document.createElement('div');
+		sanitizer.innerText = message;
+
 		$('#tb_actionbar_item_userlist').w2overlay({
 			class: 'cool-font',
-			html: message,
+			html: sanitizer.innerHTML,
 			style: 'padding: 5px',
 		});
 
@@ -619,6 +615,8 @@ class UserList extends L.Control {
 			'followingChipBackground',
 		);
 		const followingChip = document.getElementById('followingChip');
+		const followingChipLine1 = document.getElementById('followingChipLine1');
+		const followingChipLine2 = document.getElementById('followingChipLine2');
 
 		const following = this.getFollowedUser();
 
@@ -637,9 +635,15 @@ class UserList extends L.Control {
 
 		const topAvatarZIndex = displayedAvatarCount;
 
-		followingChip.innerHTML =
-			'<div id="text">' +
-			this.options.followingChipText.replace('%user', following[1].username);
+		followingChipLine1.innerText = this.options.followingChipLine1Text.replace(
+			'%user',
+			following[1].username,
+		);
+		followingChipLine2.innerText = this.options.followingChipLine2Text.replace(
+			'%user',
+			following[1].username,
+		);
+
 		followingChip.style.borderColor = following[1].color;
 
 		followingChip.onclick = () => {
