@@ -1773,7 +1773,17 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._onCalcFunctionListMsg(textMsg.substring('calcfunctionlist:'.length + 1));
 		}
 		else if (textMsg.startsWith('tooltip:')) {
-			this._onCalcFunctionUsageMsg(textMsg.substring('tooltip:'.length + 1));
+			var tooltipInfo = JSON.parse(textMsg.substring('tooltip:'.length + 1));
+			if (tooltipInfo.type === 'formulausage') {
+				this._onCalcFunctionUsageMsg(tooltipInfo.text);
+			}
+			else if (tooltipInfo.type === 'generaltooltip') {
+				var tooltipInfo = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
+				this._map.uiManager.showDocumentTooltip(tooltipInfo);
+			}
+			else {
+				console.error('unknown tooltip type');
+			}
 		}
 		else if (textMsg.startsWith('tabstoplistupdate:')) {
 			this._onTabStopListUpdate(textMsg);
@@ -1969,12 +1979,12 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	_onCalcFunctionUsageMsg: function (textMsg) {
 		var pos = this._lastVisibleCursorRef._northEast;
-		this._map.uiManager.showDocumentTooltip(textMsg, $('.leaflet-layer'), pos);
+		this._map.uiManager.showFormulaTooltip(textMsg, pos);
 	},
 
 	_onCalcFunctionListMsg: function (textMsg) {
 		if (textMsg.startsWith('hidetip')) {
-			this._map.uiManager.hideDocumentTooltip($('.leaflet-layer'));
+			this._map.uiManager.hideFormulaTooltip();
 		}
 		else {
 			var funcData = JSON.parse(textMsg);
@@ -2003,7 +2013,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			else {
 				var pos = this._lastVisibleCursorRef._northEast;
 				var tooltipinfo = this._getFunctionList(textMsg);
-				this._map.uiManager.showDocumentTooltip(tooltipinfo, $('.leaflet-layer'), pos);
+				this._map.uiManager.showFormulaTooltip(tooltipinfo, pos);
 			}
 		}
 	},
