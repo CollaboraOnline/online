@@ -23,6 +23,10 @@ L.Map.include({
 
 		var docLayer = this._docLayer;
 
+		if (docLayer._selectedPart === part) {
+			return;
+		}
+
 		if (docLayer.isCalc())
 			docLayer._sheetSwitch.save(part /* toPart */);
 
