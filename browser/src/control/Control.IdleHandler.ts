@@ -124,6 +124,7 @@ class IdleHandler {
 	}
 
 	_dim() {
+		this.map.fire('closealldialogs');
 		const message = this.getIdleMessage();
 
 		window.app.console.debug('IdleHandler: _dim()');
