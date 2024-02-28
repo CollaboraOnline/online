@@ -51,20 +51,46 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Sheet switching tests', fu
 		desktopHelper.assertScrollbarPosition('vertical', 15, 25);
 	});
 
+	// TODO: remove if multiple sheet selection feature will be implemented
+	it('Check if multiple sheet selection is disabled', function() {
+		// go to sheet 1
+		cy.cGet('#spreadsheet-tab0').click();
+
+		desktopHelper.assertScrollbarPosition('vertical', 35, 45);
+		cy.cGet('input#addressInput').should('have.prop', 'value', 'G45');
+		cy.cGet('#spreadsheet-tab0').should('have.class', 'spreadsheet-tab-selected');
+		cy.cGet('#spreadsheet-tab1').should('not.have.class', 'spreadsheet-tab-selected');
+
+		// try to add sheet 2 to sheets selection
+		helper.typeIntoDocument('{ctrl}{shift}{pageDown}');
+
+		// we expect no effect
+		desktopHelper.assertScrollbarPosition('vertical', 35, 45);
+		cy.cGet('input#addressInput').should('have.prop', 'value', 'G45');
+		cy.cGet('#spreadsheet-tab0').should('have.class', 'spreadsheet-tab-selected');
+		cy.cGet('#spreadsheet-tab1').should('not.have.class', 'spreadsheet-tab-selected');
+	});
+
+	// TODO: enable if multiple sheet selection feature will be implemented
+	//       this tests serious regression we had, so be sure it works properly
 	it.skip('Check view position when having multiple sheet selection', function() {
 		// go to sheet 1
 		cy.cGet('#spreadsheet-tab0').click();
 
 		desktopHelper.assertScrollbarPosition('vertical', 35, 45);
 		cy.cGet('input#addressInput').should('have.prop', 'value', 'G45');
+		cy.cGet('#spreadsheet-tab0').should('have.class', 'spreadsheet-tab-selected');
+		cy.cGet('#spreadsheet-tab1').should('not.have.class', 'spreadsheet-tab-selected');
 
 		// add sheet 2 to sheets selection
 		helper.typeIntoDocument('{ctrl}{shift}{pageDown}');
 
 		desktopHelper.assertScrollbarPosition('vertical', 320, 330);
 		cy.cGet('input#addressInput').should('have.prop', 'value', 'F720');
+		cy.cGet('#spreadsheet-tab0').should('have.class', 'spreadsheet-tab-selected');
+		cy.cGet('#spreadsheet-tab1').should('have.class', 'spreadsheet-tab-selected');
 
-		// go to sheet 1 using keyboard shortcut
+		// try to go to sheet 1 using keyboard shortcut - it is not allowed in the core
 		helper.typeIntoDocument('{ctrl}{alt}{pageUp}');
 
 		// we still have selected two sheets so we see cell data from sheet 2

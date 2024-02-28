@@ -296,6 +296,7 @@ L.Map.Keyboard = L.Handler.extend({
 		this._setPanOffset(map.options.keyboardPanOffset);
 		this._setZoomOffset(map.options.keyboardZoomOffset);
 		this.modifier = 0;
+		window.KeyboardShortcuts.initialize(map);
 	},
 
 
@@ -463,6 +464,9 @@ L.Map.Keyboard = L.Handler.extend({
 		var cmd = ev.metaKey ? UNOModifier.CTRL : 0;
 		var location = ev.location;
 		this.modifier = shift | ctrl | alt | cmd;
+
+		if (window.KeyboardShortcuts.processEvent(app.UI.language.fromURL, ev))
+			return;
 
 		// On Windows, pressing AltGr = Alt + Ctrl
 		// Presence of AltGr is detected if previous Ctrl + Alt 'location' === 2 (i.e right)
