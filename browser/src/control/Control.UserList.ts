@@ -22,7 +22,6 @@ interface User {
 	color: string;
 	readonly: boolean;
 	you: boolean;
-	following: boolean;
 	cachedHeaderAvatar?: HTMLImageElement;
 	cachedUserListAvatar?: HTMLImageElement;
 }
@@ -41,7 +40,8 @@ class UserList extends L.Control {
 		userPopupTimeout: null | ReturnType<typeof setTimeout>;
 		userJoinedPopupMessage: string;
 		userLeftPopupMessage: string;
-		followingChipLine1Text: string;
+		followingChipLine1TextUser: string;
+		followingChipLine1TextEditor: string;
 		followingChipLine2Text: string;
 		userAvatarAlt: string;
 		nUsers?: string;
@@ -53,7 +53,8 @@ class UserList extends L.Control {
 		userPopupTimeout: null,
 		userJoinedPopupMessage: _('%user has joined'),
 		userLeftPopupMessage: _('%user has left'),
-		followingChipLine1Text: _('Following %user'),
+		followingChipLine1TextUser: _('Following %user'),
+		followingChipLine1TextEditor: _('Following the editor'),
 		followingChipLine2Text: _('Click to stop following'),
 		userAvatarAlt: _('Avatar for %user'),
 		nUsers: undefined,
@@ -101,8 +102,6 @@ class UserList extends L.Control {
 			return;
 		}
 
-		user.following = true;
-
 		this.renderAll();
 	}
 
@@ -124,6 +123,7 @@ class UserList extends L.Control {
 	}
 
 	unfollowAll() {
+		this.map._docLayer._followEditor = false;
 		this.followUser(this.map._docLayer._viewId);
 	}
 
@@ -338,7 +338,10 @@ class UserList extends L.Control {
 
 		let displayCount: number;
 
-		if (this.getFollowedUser() === undefined) {
+		if (
+			this.getFollowedUser() === undefined &&
+			!this.map._docLayer._followEditor
+		) {
 			displayCount = this.options.userLimitHeader;
 		} else {
 			displayCount = this.options.userLimitHeaderWhenFollowing;
@@ -416,8 +419,6 @@ class UserList extends L.Control {
 			return;
 		}
 
-		user.following = false;
-
 		this.renderAll();
 	}
 
@@ -460,7 +461,6 @@ class UserList extends L.Control {
 			extraInfo: e.extraInfo,
 			color: color,
 			readonly: e.readonly,
-			following: false,
 		});
 
 		if (!you) {
@@ -547,6 +547,8 @@ class UserList extends L.Control {
 		const users = Array.from(this.getSortedUsers());
 		const popoverElement = document.getElementById('userListPopover');
 
+		const following = this.getFollowedUser();
+
 		const userElements = users.map(([viewId, user]) => {
 			const userLabel = L.DomUtil.create('div', 'user-list-item--name');
 			userLabel.innerText = user.username;
@@ -568,7 +570,7 @@ class UserList extends L.Control {
 			listItem.setAttribute('data-view-id', viewId);
 			listItem.setAttribute('role', 'button');
 
-			if (user.following) {
+			if (following !== undefined && viewId == following[0]) {
 				$(listItem).addClass('selected-user');
 			}
 
@@ -599,9 +601,9 @@ class UserList extends L.Control {
 		);
 		followEditorCheckbox.id = 'follow-editor-checkbox';
 		followEditorCheckbox.setAttribute('type', 'checkbox');
-		followEditorCheckbox.onchange = function (event: Event) {
+		followEditorCheckbox.onchange = (event: Event) => {
 			(window as any).editorUpdate(event);
-			this.renderFollowingChip();
+			this.renderAll();
 		};
 		const followEditorCheckboxLabel = L.DomUtil.create(
 			'label',
@@ -628,31 +630,26 @@ class UserList extends L.Control {
 
 		const following = this.getFollowedUser();
 
-		if (following === undefined || !this.map._docLayer._followUser) {
+		if (following === undefined && !this.map._docLayer._followEditor) {
 			followingChipBackground.style.display = 'none';
 			return;
 		}
 
-		let displayedAvatarCount: number;
+		const topAvatarZIndex = this.options.userLimitHeaderWhenFollowing;
 
-		if (this.getFollowedUser() === undefined) {
-			displayedAvatarCount = this.options.userLimitHeader;
+		if (this.map._docLayer._followEditor) {
+			followingChipLine1.innerText = this.options.followingChipLine1TextEditor;
+			followingChip.style.borderColor = '#000';
 		} else {
-			displayedAvatarCount = this.options.userLimitHeaderWhenFollowing;
+			followingChipLine1.innerText =
+				this.options.followingChipLine1TextUser.replace(
+					'%user',
+					following[1].username,
+				);
+			followingChip.style.borderColor = following[1].color;
 		}
 
-		const topAvatarZIndex = displayedAvatarCount;
-
-		followingChipLine1.innerText = this.options.followingChipLine1Text.replace(
-			'%user',
-			following[1].username,
-		);
-		followingChipLine2.innerText = this.options.followingChipLine2Text.replace(
-			'%user',
-			following[1].username,
-		);
-
-		followingChip.style.borderColor = following[1].color;
+		followingChipLine2.innerText = this.options.followingChipLine2Text;
 
 		followingChip.onclick = () => {
 			this.unfollowAll();
