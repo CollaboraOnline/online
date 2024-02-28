@@ -324,9 +324,15 @@ L.Control.Tabs = L.Control.extend({
 	},
 
 	_setPart: function (e) {
-		var part =  e.currentTarget.id.match(/\d+/g)[0];
-		if (part !== null) {
-			this._setPartIndex(parseInt(part));
+		var part = e.currentTarget.id.match(/\d+/g)[0];
+		if (part == null) {
+			return;
+		}
+
+		part = parseInt(part);
+
+		if (part !== this._map._docLayer._selectedPart) {
+			this._setPartIndex(part);
 		}
 	},
 
