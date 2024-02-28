@@ -96,7 +96,7 @@ L.Control.JSDialog = L.Control.extend({
 			if (leaveSnackbar && dialogs[i] && dialogs[i] === 'snackbar')
 				continue;
 
-			this.close(dialogs[i], true);
+			this.close(dialogs[i], app.idleHandler._active);
 		}
 	},
 
@@ -154,6 +154,8 @@ L.Control.JSDialog = L.Control.extend({
 
 	onCloseAll: function() {
 		this.closeAll(/*leaveSnackbar*/ true);
+		// should also close all dropdowns on close all dialogs
+		this.closeAllDropdowns();
 	},
 
 	focusToLastElement: function(id) {
