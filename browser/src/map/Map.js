@@ -314,6 +314,8 @@ L.Map = L.Evented.extend({
 				Status: 'Initialized',
 			}
 		});
+
+		this._firstStartCheckAndCache();
 	},
 
 	initTextInput: function(docType) {
@@ -379,7 +381,6 @@ L.Map = L.Evented.extend({
 		// Fire last, otherwise not all events are handled correctly.
 		this.fire('removeview', {viewId: viewid, username: username});
 	},
-
 
 	// replaced by animation-powered implementation in Map.PanAnimation.js
 	setView: function (center, zoom) {
@@ -1717,6 +1718,45 @@ L.Map = L.Evented.extend({
 		if (this._docLayer)
 			return this._docLayer._cursorOverlayDiv;
 		return undefined;
+	},
+
+	_firstStartCheckAndCache: function() {
+		// May seem unusual to use this, but some people loathe cookies
+		// and ultimately we are trying to ensure things are cached.
+		if ('caches' in window)
+		{
+			try {
+				console.debug('we have a cache!');
+				window.caches.open('cool-cache').then(function(cache) {
+					var preloadPath = 'cool-version-' + window.versionPath;
+					cache.match(preloadPath).then(function(response) {
+						if (response) {
+							console.debug('2nd start nothing to do');
+						} else {
+							console.debug('FIXME: first use, caching dialog');
+							window.iterateCSSImages(
+								function(style, img, fullUrl)
+								{
+									// remove url=(" and ")
+									var url = fullUrl.substring(5, fullUrl.length - 2);
+									console.debug('Pre-load ' + fullUrl + ' at ' + url);
+									fetch(url);
+								});
+							var versionURL = new URL(preloadPath, location.origin);
+							var versionResponse = new Response(
+								'This is a version stamp cached for ' + preloadPath,
+								{ status: 200 });
+							// This doesn't work ... ;-)
+							cache.put(versionURL, versionResponse);
+						}
+					});
+				});
+			} catch (e) {
+				console.debug('Caching exception ' + e);
+			}
+		}
+		else
+			console.debug('No cache API');
 	}
 });
 
