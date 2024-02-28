@@ -1027,13 +1027,35 @@ L.Control.UIManager = L.Control.extend({
 		this.map.fire('hidebusy');
 	},
 
+	// Document area tooltip
+
+	/// Shows general tooltips in the document area
+	/// tooltipInfo contains rectangle (position in twips) and text properties
+	showDocumentTooltip: function(tooltipInfo) {
+		var split = tooltipInfo.rectangle.split(',');
+		var latlng = this.map._docLayer._twipsToLatLng(new L.Point(+split[0], +split[1]));
+		var pt = this.map.latLngToContainerPoint(latlng);
+		var elem = $('.leaflet-layer');
+
+		elem.tooltip();
+		elem.tooltip('enable');
+		elem.tooltip('option', 'content', tooltipInfo.text);
+		elem.tooltip('option', 'items', elem[0]);
+		elem.tooltip('option', 'position', { my: 'left bottom',  at: 'left+' + pt.x + ' top+' + pt.y, collision: 'fit fit' });
+		elem.tooltip('open');
+		document.addEventListener('mousemove', function() {
+			elem.tooltip('close');
+			elem.tooltip('disable');
+		}, {once: true});
+	},
+
 	// Calc function tooltip
 
 	/// Shows tooltip over the cell while typing a function in a cell.
 	/// tooltipInfo contains possible function list. If you type a valid
-	/// function it'll show the usage of the function. elem has to be
-	/// jQuery selector output eg. $('.leaflet-layer')
-	showDocumentTooltip: function(tooltipInfo, elem, pos) {
+	/// function it'll show the usage of the function.
+	showFormulaTooltip: function(tooltipInfo, pos) {
+		var elem = $('.leaflet-layer');
 		var pt = this.map.latLngToContainerPoint(pos);
 		pt.y -=35; //Show tooltip above the cursor.
 
@@ -1053,7 +1075,8 @@ L.Control.UIManager = L.Control.extend({
 		}
 	},
 
-	hideDocumentTooltip: function(elem) {
+	hideFormulaTooltip: function() {
+		var elem = $('.leaflet-layer');
 		if ($('.ui-tooltip').length > 0)
 			elem.tooltip('option', 'disabled', true);
 	},
