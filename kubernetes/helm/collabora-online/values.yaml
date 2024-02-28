@@ -24,9 +24,9 @@ serviceAccount:
   name: ""
 
 collabora:
-  # example to add aliasgroups
-  # - host: "<protocol>://<host-name>:<port>"
-  #   aliases: ["<protocol>://<its-first-alias>:<port>, <protocol>://<its-second-alias>:<port>"]
+  # -- example to add aliasgroups
+  # - host: "<protocol>://<host-name>"
+  #   aliases: ["<its-first-alias>", "<its-second-alias>"]
   aliasgroups: []
 
   extra_params: --o:ssl.enable=false

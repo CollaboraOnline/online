@@ -46,8 +46,8 @@ In order for Collaborative Editing and copy/paste to function correctly on kuber
       hosts:
          - host: chart-example.local
             paths:
-            - path: /
-            pathType: ImplementationSpecific
+              - path: /
+                pathType: ImplementationSpecific
 
    image:
       tag: "latest"
@@ -57,7 +57,7 @@ In order for Collaborative Editing and copy/paste to function correctly on kuber
 
    collabora:
       aliasgroups:
-         - host: "https://example.integrator.com:443"
+        - host: "https://example.integrator.com"
       extra_params: --o:ssl.enable=false --o:ssl.termination=true
 
    resources:
@@ -96,7 +96,9 @@ In order for Collaborative Editing and copy/paste to function correctly on kuber
 
    collabora:
       aliasgroups:
-         - host: "https://example.integrator.com:443"
+        - host: "https://example.integrator.com"
+          aliases:
+            - exmaple.integrator.de
       extra_params: --o:ssl.enable=false --o:ssl.termination=true
 
    resources:
