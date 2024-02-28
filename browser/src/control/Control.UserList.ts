@@ -43,6 +43,7 @@ class UserList extends L.Control {
 		userLeftPopupMessage: string;
 		followingChipLine1Text: string;
 		followingChipLine2Text: string;
+		userAvatarAlt: string;
 		nUsers?: string;
 		oneUser?: string;
 		noUser?: string;
@@ -54,6 +55,7 @@ class UserList extends L.Control {
 		userLeftPopupMessage: _('%user has left'),
 		followingChipLine1Text: _('Following %user'),
 		followingChipLine2Text: _('Click to stop following'),
+		userAvatarAlt: _('Avatar for %user'),
 		nUsers: undefined,
 		oneUser: undefined,
 		noUser: undefined,
@@ -167,6 +169,7 @@ class UserList extends L.Control {
 	createAvatar(
 		cachedElement: HTMLImageElement | undefined,
 		viewId: number,
+		username: string,
 		extraInfo: UserExtraInfo,
 		color: string,
 		zIndex?: number | 'auto',
@@ -192,6 +195,8 @@ class UserList extends L.Control {
 		} else {
 			img.src = defaultImage;
 		}
+
+		img.alt = this.options.userAvatarAlt.replace('%user', username);
 
 		img.style.zIndex = zIndex.toString();
 		img.style.borderColor = color;
@@ -224,6 +229,7 @@ class UserList extends L.Control {
 		const avatarElement = this.createAvatar(
 			undefined,
 			viewId,
+			username,
 			extraInfo,
 			color,
 		);
@@ -351,6 +357,7 @@ class UserList extends L.Control {
 				const img = this.createAvatar(
 					user.cachedHeaderAvatar,
 					viewId,
+					user.username,
 					user.extraInfo,
 					user.color,
 					displayCount - index,
@@ -568,6 +575,7 @@ class UserList extends L.Control {
 			const avatar = this.createAvatar(
 				user.cachedUserListAvatar,
 				viewId,
+				user.username,
 				user.extraInfo,
 				user.color,
 			);
