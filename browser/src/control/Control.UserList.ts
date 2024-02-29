@@ -123,8 +123,12 @@ class UserList extends L.Control {
 	}
 
 	unfollowAll() {
-		this.map._docLayer._followEditor = false;
-		this.followUser(this.map._docLayer._viewId);
+		if (this.getFollowedUser() !== undefined) {
+			this.followUser(this.map._docLayer._viewId);
+		} else if (this.map._docLayer._followEditor) {
+			this.map._docLayer._followEditor = false;
+			this.map._docLayer._followThis = -1;
+		}
 	}
 
 	followUser(viewId: number) {
