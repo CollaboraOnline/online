@@ -30,7 +30,7 @@ if (window.ThisIsTheEmscriptenApp)
 else
 	var filePath = global.coolParams.get('file_path');
 
-app.file.permission = global.coolParams.get('permission') || 'edit';
+app.setPermission(global.coolParams.get('permission') || 'edit');
 
 var timestamp = global.coolParams.get('timestamp');
 var target = global.coolParams.get('target') || '';

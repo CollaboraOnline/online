@@ -192,7 +192,7 @@ L.Map.include({
 	},
 
 	_requestFileCopy: function() {
-		if (!this.canUserWrite()) {
+		if (app.isReadOnly()) {
 			window.postMobileMessage('REQUESTFILECOPY');
 		} else {
 			this._switchToEditMode();
@@ -252,17 +252,6 @@ L.Map.include({
 			return;
 		}
 		this.dragging.enable();
-	},
-
-	// Can user make changes to the document or not
-	// i.e: user can not make changes(even can not add comments) is document is shared as read only
-	canUserWrite: function() {
-		return app.file.permission === 'edit';
-	},
-
-	// If user has write access he can always add comments
-	isPermissionEditForComments: function() {
-		return this.canUserWrite() || app.file.editComment;
 	},
 
 	// Is user currently in read only mode (i.e: initial mobile read only view mode, user may have write access)

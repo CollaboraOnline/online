@@ -49,7 +49,7 @@ app.definitions.Socket = L.Class.extend({
 
 	connect: function(socket) {
 		var map = this._map;
-		map.options.docParams['permission'] = app.file.permission;
+		map.options.docParams['permission'] = app.getPermission();
 		if (this.socket) {
 			this.close();
 		}
@@ -673,31 +673,29 @@ app.definitions.Socket = L.Class.extend({
 			var perm = textMsg.substring('perm:'.length).trim();
 
 			// Never make the permission more permissive than it originally was.
-			if (app.file.permission == 'edit')
-				app.file.permission = perm;
+			if (!app.isReadOnly())
+				app.setPermission(perm);
 
 			if (this._map._docLayer)
 				this._map.setPermission(app.file.permission);
 
-			app.file.disableSidebar = perm !== 'edit';
-			app.file.readOnly = app.file.permission === 'readonly';
+			app.file.disableSidebar = app.isReadOnly();
 			return;
 		}
 		else if (textMsg.startsWith('filemode:')) {
 			var json = JSON.parse(textMsg.substring('filemode:'.length).trim());
 
 			// Never make the permission more permissive than it originally was.
-			if (app.file.permission == 'edit' && json.readOnly)
+			if (!app.isReadOnly() && json.readOnly)
 			{
-				app.file.permission = 'readonly';
+				app.setPermission('readonly');
 			}
 
 			if (this._map._docLayer) {
 				this._map.setPermission(app.file.permission);
 			}
 
-			app.file.readOnly = app.file.permission === 'readonly';
-			app.file.editComment = json.editComment; // Allowed even in readonly mode.
+			app.setCommentEditingPermission(json.editComment); // May be allowed even in readonly mode.
 		}
 		else if (textMsg.startsWith('lockfailed:')) {
 			this._map.onLockFailed(textMsg.substring('lockfailed:'.length).trim());
@@ -1318,7 +1316,7 @@ app.definitions.Socket = L.Class.extend({
 				// if this is save-as, we need to load the document with edit permission
 				// otherwise the user has to close the doc then re-open it again
 				// in order to be able to edit.
-				app.file.permission = 'edit';
+				app.setPermission('edit');
 				this.close();
 				this._map.loadDocument();
 				this._map.sendInitUNOCommands();

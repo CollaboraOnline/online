@@ -126,10 +126,10 @@ L.Map.WOPI = L.Handler.extend({
 		this.UserCanRename = !!wopiInfo['UserCanRename'];
 		this.EnableShare = !!wopiInfo['EnableShare'];
 		this.UserCanWrite = !!wopiInfo['UserCanWrite'];
-		if (this.UserCanWrite) // There are 2 places that set the file permissions, WOPI and URI. Don't change permission if URI doesn't allow.
-			app.file.permission = (app.file.permission === 'edit' ? 'edit': app.file.permission);
-		else
-			app.file.permission = 'readonly';
+
+		if (this.UserCanWrite && !app.isReadOnly()) // There are 2 places that set the file permissions, WOPI and URI. Don't change permission if URI doesn't allow.
+			app.setPermission('edit');
+
 		this.IsOwner = !!wopiInfo['IsOwner'];
 
 		if (wopiInfo['HideUserList'])

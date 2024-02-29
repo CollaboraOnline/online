@@ -194,6 +194,7 @@ COOL_LIBS_JS_DST = $(patsubst %.js,$(DIST_FOLDER)/%.js,$(COOL_LIBS_JS))
 # in a rather precise order.
 COOL_JS_LST =\
 	src/docstate.js \
+	src/docstatefunctions.js \
 	src/Leaflet.js \
 	src/errormessages.js \
 	src/unocommands.js \
@@ -777,6 +778,7 @@ pot:
 		src/core/Socket.js \
 		src/core/Debug.js \
 		src/docstate.js \
+		src/docstatefunctions.js \
 		src/errormessages.js \
 		src/layer/tile/CanvasTileLayer.js \
 		src/layer/tile/CommentListSection.ts \
