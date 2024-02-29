@@ -46,4 +46,24 @@ describe(['tagdesktop'], 'Idle', function() {
 
 		checkIfIsInteractiveAgain();
 	});
+
+	it('Check interactivity of document after dialog close', function() {
+		// Check if sidebar-dock-wrapper is visible
+		cy.cGet('#sidebar-dock-wrapper').should('be.visible').then(($sidebar) => {
+			// If it's not visible, click on SidebarDeck.PropertyDeck to make it visible
+			if (!$sidebar.is(':visible')) {
+				cy.cGet('#SidebarDeck.PropertyDeck').click();
+			}
+		});
+		cy.cGet('div.sidebar#fontnamecombobox > div').click();
+		cy.cGet(dimDialogSelector).should('not.exist');
+		cy.wait(7100); // inactivity timeout is 7s
+		cy.cGet(dimDialogSelector).should('exist');
+
+		// check if cell is editable or not after document again become active
+		checkIfIsInteractiveAgain();
+
+		// Make sure the sidebar dropdown is closed after document again become interactive
+		cy.get('#fontnamecombobox-entries').should('not.exist');
+	});
 });
