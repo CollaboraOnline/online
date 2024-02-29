@@ -3452,6 +3452,7 @@ void consistencyCheckJail()
                     "potentially indicative of an operator damaging the system, and will "
                     "inevitably cause document data-loss and/or malfunction.");
             warned = true;
+            SigUtil::addActivity("Fatal, inconsistent jail detected.");
             assert(!"Fatal system error with jail setup.");
         }
         else
