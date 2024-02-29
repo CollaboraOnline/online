@@ -5173,7 +5173,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				children : []
 			};
 
-			if (this._map.isPermissionEditForComments())
+			if (app.isCommentEditingAllowed())
 				menuStructure['customTitle'] = customTitleBar;
 		}
 
@@ -5481,7 +5481,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		// This layergroup contains all the layers corresponding to other's view
 		this._viewLayerGroup = new L.LayerGroup();
-		if (app.file.permission !== 'readonly') {
+		if (!app.isReadOnly()) {
 			map.addLayer(this._viewLayerGroup);
 		}
 

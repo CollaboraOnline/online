@@ -284,7 +284,7 @@ L.Control.UIManager = L.Control.extend({
 	initializeSpecializedUI: function(docType) {
 		var isDesktop = window.mode.isDesktop();
 		var currentMode = this.getCurrentMode();
-		var enableNotebookbar = currentMode === 'notebookbar' && app.file.permission !== 'readonly';
+		var enableNotebookbar = currentMode === 'notebookbar' && !app.isReadOnly();
 		var hasShare = this.map.wopi.EnableShare;
 
 		document.body.setAttribute('data-userInterfaceMode', currentMode);
@@ -333,7 +333,7 @@ L.Control.UIManager = L.Control.extend({
 			L.DomUtil.remove(L.DomUtil.get('presentation-controls-wrapper'));
 			document.getElementById('selectbackground').parentNode.removeChild(document.getElementById('selectbackground'));
 
-			if ((window.mode.isTablet() || window.mode.isDesktop()) && this.map.canUserWrite()) {
+			if ((window.mode.isTablet() || window.mode.isDesktop()) && !app.isReadOnly()) {
 				var showRuler = this.getSavedStateOrDefault('ShowRuler');
 				var interactiveRuler = this.map.isEditMode();
 				var isRTL = document.documentElement.dir === 'rtl';

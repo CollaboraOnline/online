@@ -9,7 +9,13 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-window.app = { // Shouldn't have any functions defined.
+/*
+	Shouldn't have any functions defined. See "docstatefunctions.js" for state functions.
+	Class definitions can be added into "definitions" property and used like in below examples:
+		* app.sectionContainer.addSection(new app.definitions.AutoFillMarkerSection());
+		* var autoFillSection = new app.definitions.AutoFillMarkerSection();
+*/
+window.app = {
 	definitions: {}, // Class instances are created using definitions under this variable.
 	dpiScale: window.devicePixelRatio,
 	roundedDpiScale: Math.round(window.devicePixelRatio),
@@ -57,7 +63,7 @@ window.app = { // Shouldn't have any functions defined.
 			}
 		},
 		writer: {
-			pageRectangleList: [], // Array of arrays: [x, y, w, h] (as usual) // twips only. Pixels will be calculated on the fly. Corresponding pixels may change too ofte
+			pageRectangleList: [], // Array of arrays: [x, y, w, h] (as usual) // twips only. Pixels will be calculated on the fly. Corresponding pixels may change too often.
 		},
 	},
 	view: {
@@ -128,7 +134,6 @@ if (activateValidation) {
 
 	window.app = new Proxy(window.app, validator);
 	window.app.file = new Proxy(window.app.file, validator);
-
 }
 
 window.JSDialog = {}; // initialize jsdialog module

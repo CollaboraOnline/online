@@ -12,7 +12,7 @@
  * L.Control.SearchBar
  */
 
-/* global $ w2ui _ _UNO */
+/* global $ w2ui _ _UNO app */
 L.Control.SearchBar = L.Control.extend({
 
 	onAdd: function (map) {
@@ -89,7 +89,7 @@ L.Control.SearchBar = L.Control.extend({
 			if (this.map.isEditMode())
 				$('#toolbar-down').show();
 			/** show edit button if only we are able to edit but in readonly mode */
-			if (this.map.canUserWrite() && this.map.isReadOnlyMode())
+			if (!app.isReadOnly() && this.map.isReadOnlyMode())
 				$('#mobile-edit-button').show();
 		}
 	}

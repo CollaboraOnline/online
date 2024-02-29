@@ -374,7 +374,7 @@ L.Map.include({
 			'.uno:Signature', '.uno:ShowResolvedAnnotations',
 			'.uno:ToolbarMode?Mode:string=notebookbar_online.ui', '.uno:ToolbarMode?Mode:string=Default',
 			'.uno:ExportToEPUB', '.uno:ExportToPDF', '.uno:ExportDirectToPDF', '.uno:MoveKeepInsertMode'];
-		if (this.isPermissionEditForComments()) {
+		if (app.isCommentEditingAllowed()) {
 			allowedCommands.push('.uno:InsertAnnotation','.uno:DeleteCommentThread', '.uno:DeleteAnnotation', '.uno:DeleteNote',
 				'.uno:DeleteComment', '.uno:ReplyComment', '.uno:ReplyToAnnotation', '.uno:ResolveComment',
 				'.uno:ResolveCommentThread', '.uno:ResolveComment', '.uno:EditAnnotation', '.uno:ExportToEPUB', '.uno:ExportToPDF',
@@ -1292,7 +1292,7 @@ L.Map.include({
 			this.print();
 			break;
 		case 'savecomments':
-			if (this.isPermissionEditForComments()) {
+			if (app.isCommentEditingAllowed()) {
 				this.fire('postMessage', {msgId: 'UI_Save'});
 				if (!this._disableDefaultAction['UI_Save']) {
 					this.save(false, false);
