@@ -403,12 +403,18 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 				this._resetInternalState();
 				window.keyboard.hintOnscreenKeyboard(window.keyboard.onscreenKeyboardHint);
 			} else {
+				if (command.selectedPart && this._selectedPart !== command.selectedPart) {
+					// Enable restoring also when sheet switch is initiated by core.
+					this._sheetSwitch.save(command.selectedPart);
+				}
 				this._selectedPart = command.selectedPart;
 			}
 			this._lastColumn = command.lastcolumn;
 			this._lastRow = command.lastrow;
 			this._selectedMode = (command.mode !== undefined) ? command.mode : 0;
 			if (this.sheetGeometry && this._selectedPart != this.sheetGeometry.getPart()) {
+				window.app.console.log('_onStatusMsg: this._selectedPart: ' + this._selectedPart +
+					', this.sheetGeometry.getPart(): ' + this.sheetGeometry.getPart());
 				// Core initiated sheet switch, need to get full sheetGeometry data for the selected sheet.
 				this.requestSheetGeometryData();
 			}

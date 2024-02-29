@@ -40,6 +40,7 @@ export class SheetSwitchViewRestore {
 		this.setPartRecvd = false;
 		this.currentSheetIndexReassigned = false;
 
+		this.map.on('commandresult', this.onCommandResult, this);
 	}
 
 	public save (toPart: number): void {
@@ -58,9 +59,11 @@ export class SheetSwitchViewRestore {
 		if (oldIndex < 0 || newIndex < 0 || oldIndex === newIndex)
 			return;
 
+		const currentSheetNumber: number = this.map.getCurrentPartNumber();
 		const movedSheetCenter = this.centerOfSheet.get(oldIndex);
 
 		if (oldIndex < newIndex) {
+			this.currentSheetIndexReassigned = oldIndex <= currentSheetNumber && currentSheetNumber <= newIndex;
 			for (let i = oldIndex; i < newIndex; ++i) {
 				const center = this.centerOfSheet.get(i + 1);
 				if (center)
@@ -69,6 +72,7 @@ export class SheetSwitchViewRestore {
 					this.centerOfSheet.delete(i);
 			}
 		} else {
+			this.currentSheetIndexReassigned = newIndex <= currentSheetNumber && currentSheetNumber <= oldIndex;
 			for (let i = oldIndex; i > newIndex; --i) {
 				const center = this.centerOfSheet.get(i - 1);
 				if (center)
@@ -161,7 +165,6 @@ export class SheetSwitchViewRestore {
 	// This should be called to restore sheet's last scroll position if necessary and
 	// returns whether the map should scroll to current cursor.
 	public tryRestore(duplicateCursor: boolean, currentPart: number): boolean {
-
 		let shouldScrollToCursor = false;
 		const attemptRestore = (this.mayRestore && currentPart === this.restorePart);
 
@@ -174,8 +177,51 @@ export class SheetSwitchViewRestore {
 
 		if ((!attemptRestore || this.setPartRecvd) && !duplicateCursor)
 			shouldScrollToCursor = true;
-
 		return shouldScrollToCursor;
+	}
+
+	private onCommandResult(e: any): void {
+		if (!((e.commandName === '.uno:Undo' || e.commandName === '.uno:Redo') && e.success && e.result))
+			return;
+
+		const newTabs = e.result.newTabs;
+		if (!newTabs || newTabs.length === 0)
+			return;
+
+		let centerOfSheetUpdated = false;
+		if (e.result.type === 'ScUndoMoveTab') {
+			const oldTabs = e.result.oldTabs;
+			if (oldTabs) {
+				const numTabs= Math.min(newTabs.length, oldTabs.length);
+				for (let i = 0; i < numTabs; ++i) {
+					this.updateOnSheetMoved(oldTabs[i], newTabs[i]);
+				}
+				centerOfSheetUpdated = true;
+			}
+		}
+		else if (e.result.type === 'ScUndoDeleteTab') {
+			for (let i = 0; i < newTabs.length; ++i) {
+				this.updateOnSheetInsertion(newTabs[i]);
+			}
+			centerOfSheetUpdated = true;
+		}
+		else if (e.result.type === 'ScUndoInsertTab') {
+			for (let i = 0; i < newTabs.length; ++i) {
+				this.updateOnSheetDeleted(newTabs[i]);
+			}
+			centerOfSheetUpdated = true;
+		}
+		if (centerOfSheetUpdated) {
+			const currentSheetNumber: number = this.map.getCurrentPartNumber();
+			for (let i = 0; i < newTabs.length; ++i) {
+				if (newTabs[i] === currentSheetNumber) {
+					this.mayRestore = true;
+					this.restorePart = currentSheetNumber;
+					this.setPartRecvd = false;
+					break;
+				}
+			}
+		}
 	}
 }
 
