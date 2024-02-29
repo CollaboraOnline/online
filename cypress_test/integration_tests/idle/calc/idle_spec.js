@@ -55,7 +55,8 @@ describe(['tagdesktop'], 'Idle', function() {
 				cy.cGet('#SidebarDeck.PropertyDeck').click();
 			}
 		});
-		cy.cGet('div.sidebar#fontnamecombobox > div').click();
+		cy.cGet('div.sidebar#Underline > .arrowbackground').click();
+		cy.cGet('.jsdialog-window.modalpopup').should('exist');
 		cy.cGet(dimDialogSelector).should('not.exist');
 		cy.wait(7100); // inactivity timeout is 7s
 		cy.cGet(dimDialogSelector).should('exist');
@@ -64,6 +65,6 @@ describe(['tagdesktop'], 'Idle', function() {
 		checkIfIsInteractiveAgain();
 
 		// Make sure the sidebar dropdown is closed after document again become interactive
-		cy.get('#fontnamecombobox-entries').should('not.exist');
+		cy.cGet('.jsdialog-window.modalpopup').should('not.exist');
 	});
 });
