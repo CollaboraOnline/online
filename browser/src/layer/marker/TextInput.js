@@ -1171,6 +1171,8 @@ L.TextInput = L.Layer.extend({
 			window.app.console.log('Remove ' + before + ' before, and ' + after + ' after');
 		}
 
+		this._map.userList.unfollowAll();
+
 		/// TODO: rename the event to 'removetextcontent' as soon as coolwsd supports it
 		/// TODO: Ask Marco about it
 		app.socket.sendMessage(
@@ -1200,6 +1202,7 @@ L.TextInput = L.Layer.extend({
 		{
 			var encodedText = encodeURIComponent(text);
 			var winId = this._map.getWinId();
+			this._map.userList.unfollowAll();
 			app.socket.sendMessage(
 				'textinput id=' + winId + ' text=' + encodedText);
 		}
@@ -1208,6 +1211,7 @@ L.TextInput = L.Layer.extend({
 	// Tiny helper - encapsulates sending a 'key' or 'windowkey' websocket message
 	// "type" can be "input" (default) or "up"
 	_sendKeyEvent: function(charCode, unoKeyCode, type) {
+		this._map.userList.unfollowAll();
 		if (!type) {
 			type = 'input';
 		}
