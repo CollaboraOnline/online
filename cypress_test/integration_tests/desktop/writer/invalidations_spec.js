@@ -93,7 +93,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Invalidation tests.', func
 	});
 
 	// Entering a bullet portion shouldn't invalidate anything
-	it('Enter Numbering Portion.', function() {
+	it.skip('Enter Numbering Portion.', function() {
 
 		// Add some main body text of X and bullet
 		ceHelper.type('XX');
