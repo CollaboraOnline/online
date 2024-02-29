@@ -1525,7 +1525,8 @@ export class CommentSection extends CanvasSectionObject {
 			height = subList[i].sectionProperties.container.getBoundingClientRect().height;
 			lastY = subList[i].sectionProperties.data.anchorPix[1] + height < lastY ? subList[i].sectionProperties.data.anchorPix[1]: lastY - height;
 			(new L.PosAnimation()).run(subList[i].sectionProperties.container, {x: Math.round(actualPosition[0] / app.dpiScale), y: Math.round(lastY / app.dpiScale)});
-			subList[i].show();
+			if (!subList[i].isEdit())
+				subList[i].show();
 		}
 		return lastY;
 	}
