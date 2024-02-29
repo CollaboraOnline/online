@@ -455,6 +455,11 @@ L.Map.Keyboard = L.Handler.extend({
 		var location = ev.location;
 		this.modifier = shift | ctrl | alt | cmd;
 
+		// diable multi-sheet selection, on master there is KeyboardShortcuts.ts used instead
+		if (docType === 'spreadsheet' && ctrl && shift && (ev.key == 'PageUp' || ev.key == 'PageDown')) {
+			return;
+		}
+
 		// On Windows, pressing AltGr = Alt + Ctrl
 		// Presence of AltGr is detected if previous Ctrl + Alt 'location' === 2 (i.e right)
 		// because Ctrl + Alt + <some char> won't give any 'location' information.
