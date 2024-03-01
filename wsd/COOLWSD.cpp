@@ -2052,6 +2052,7 @@ void COOLWSD::innerInitialize(Application& self)
         { "storage.wopi.max_file_size", "0" },
         { "storage.wopi[@allow]", "true" },
         { "storage.wopi.locking.refresh", "900" },
+        { "storage.wopi.is_legacy_server", "false" },
         { "sys_template_path", "systemplate" },
         { "trace_event[@enable]", "false" },
         { "trace.path[@compress]", "true" },

@@ -246,6 +246,9 @@ protected:
         UnitWSD::configure(config);
         // we're still internally confused as to https vs. http in places.
         config.setBool("storage.ssl.as_scheme", false);
+
+        // Reset to default.
+        config.setBool("storage.wopi.is_legacy_server", false);
     }
 
     /// Returns the default CheckFileInfo json.
