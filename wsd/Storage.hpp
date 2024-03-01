@@ -24,7 +24,6 @@
 #include "HttpRequest.hpp"
 #include "COOLWSD.hpp"
 #include "Log.hpp"
-#include "Util.hpp"
 #include <common/Authorization.hpp>
 #include <net/HttpRequest.hpp>
 
@@ -698,11 +697,16 @@ public:
                 const std::string& jailPath)
         : StorageBase(uri, localStorePath, jailPath)
         , _wopiSaveDuration(std::chrono::milliseconds::zero())
+        , _legacyServer(COOLWSD::getConfigValue<bool>("storage.wopi.is_legacy_server", false))
     {
         LOG_INF("WopiStorage ctor with localStorePath: ["
                 << localStorePath << "], jailPath: [" << jailPath << "], uri: ["
-                << COOLWSD::anonymizeUrl(uri.toString()) << ']');
+                << COOLWSD::anonymizeUrl(uri.toString()) << "], legacy server: " << _legacyServer);
     }
+
+    /// Signifies if the server is legacy or not, based on the headers
+    /// it sent us on first contact.
+    bool isLegacyServer() const { return _legacyServer; }
 
     /// Handles the response from CheckFileInfo, as converted into WOPIFileInfo.
     /// Also extracts the basic file information from the response
@@ -774,6 +778,9 @@ private:
 
     /// The http::Session used for uploading asynchronously.
     std::shared_ptr<http::Session> _uploadHttpSession;
+
+    /// Whether or not this is a legacy server.
+    const bool _legacyServer;
 #endif // !MOBILEAPP
 };
 

@@ -483,6 +483,7 @@ public:
         // We intentionally fail uploading twice, so need at least 3 tries.
         config.setUInt("per_document.limit_store_failures", 3);
         config.setBool("per_document.always_save_on_exit", false);
+        config.setBool("storage.wopi.is_legacy_server", true);
     }
 
     std::unique_ptr<http::Response>
@@ -653,10 +654,10 @@ public:
     assertPutFileRequest(const Poco::Net::HTTPRequest& request) override
     {
         LOK_ASSERT_EQUAL(std::string("true"), request.get("X-COOL-WOPI-IsModifiedByUser"));
-        LOK_ASSERT_EQUAL(std::string("true"), request.get("X-LOOL-WOPI-IsModifiedByUser"));
+        LOK_ASSERT_EQUAL(false, request.has("X-LOOL-WOPI-IsModifiedByUser"));
 
         LOK_ASSERT_EQUAL(std::string("false"), request.get("X-COOL-WOPI-IsAutosave"));
-        LOK_ASSERT_EQUAL(std::string("false"), request.get("X-LOOL-WOPI-IsAutosave"));
+        LOK_ASSERT_EQUAL(false, request.has("X-LOOL-WOPI-IsAutosave"));
 
         // We save twice. First right after loading, unmodified.
         if (_phase == Phase::WaitFirstPutFile)
@@ -665,7 +666,7 @@ public:
 
             // Certainly not exiting yet.
             LOK_ASSERT_EQUAL(std::string("false"), request.get("X-COOL-WOPI-IsExitSave"));
-            LOK_ASSERT_EQUAL(std::string("false"), request.get("X-LOOL-WOPI-IsExitSave"));
+            LOK_ASSERT_EQUAL(false, request.has("X-LOOL-WOPI-IsExitSave"));
 
             // Fail with error.
             LOG_TST("Returning 500 to simulate PutFile failure");
@@ -678,7 +679,7 @@ public:
 
         // Triggered while closing.
         LOK_ASSERT_EQUAL(std::string("true"), request.get("X-COOL-WOPI-IsExitSave"));
-        LOK_ASSERT_EQUAL(std::string("true"), request.get("X-LOOL-WOPI-IsExitSave"));
+        LOK_ASSERT_EQUAL(false, request.has("X-LOOL-WOPI-IsExitSave"));
 
         return nullptr;
     }

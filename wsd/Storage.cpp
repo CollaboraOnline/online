@@ -835,7 +835,8 @@ StorageBase::LockUpdateResult WopiStorage::updateLockState(const Authorization& 
         if (!attribs.getExtendedData().empty())
         {
             request.set("X-COOL-WOPI-ExtendedData", attribs.getExtendedData());
-            request.set("X-LOOL-WOPI-ExtendedData", attribs.getExtendedData());
+            if (isLegacyServer())
+                request.set("X-LOOL-WOPI-ExtendedData", attribs.getExtendedData());
         }
 
         // IIS requires content-length for POST requests: see https://forums.iis.net/t/1119456.aspx
@@ -1137,25 +1138,33 @@ void WopiStorage::uploadLocalFileToStorageAsync(const Authorization& auth, LockC
         {
             // normal save
             httpHeader.set("X-WOPI-Override", "PUT");
-            httpHeader.set("X-COOL-WOPI-IsModifiedByUser", attribs.isUserModified() ? "true" : "false");
-            httpHeader.set("X-LOOL-WOPI-IsModifiedByUser", attribs.isUserModified() ? "true" : "false");
+            httpHeader.set("X-COOL-WOPI-IsModifiedByUser",
+                           attribs.isUserModified() ? "true" : "false");
             httpHeader.set("X-COOL-WOPI-IsAutosave", attribs.isAutosave() ? "true" : "false");
-            httpHeader.set("X-LOOL-WOPI-IsAutosave", attribs.isAutosave() ? "true" : "false");
             httpHeader.set("X-COOL-WOPI-IsExitSave", attribs.isExitSave() ? "true" : "false");
-            httpHeader.set("X-LOOL-WOPI-IsExitSave", attribs.isExitSave() ? "true" : "false");
+            if (isLegacyServer())
+            {
+                httpHeader.set("X-LOOL-WOPI-IsModifiedByUser",
+                               attribs.isUserModified() ? "true" : "false");
+                httpHeader.set("X-LOOL-WOPI-IsAutosave", attribs.isAutosave() ? "true" : "false");
+                httpHeader.set("X-LOOL-WOPI-IsExitSave", attribs.isExitSave() ? "true" : "false");
+            }
+
             if (attribs.isExitSave())
                 httpHeader.set("Connection", "close"); // Don't maintain the socket if we are exiting.
             if (!attribs.getExtendedData().empty())
             {
                 httpHeader.set("X-COOL-WOPI-ExtendedData", attribs.getExtendedData());
-                httpHeader.set("X-LOOL-WOPI-ExtendedData", attribs.getExtendedData());
+                if (isLegacyServer())
+                    httpHeader.set("X-LOOL-WOPI-ExtendedData", attribs.getExtendedData());
             }
 
             if (!attribs.isForced() && isLastModifiedTimeSafe())
             {
                 // Request WOPI host to not overwrite if timestamps mismatch
                 httpHeader.set("X-COOL-WOPI-Timestamp", getLastModifiedTime());
-                httpHeader.set("X-LOOL-WOPI-Timestamp", getLastModifiedTime());
+                if (isLegacyServer())
+                    httpHeader.set("X-LOOL-WOPI-Timestamp", getLastModifiedTime());
             }
         }
         else
