@@ -865,8 +865,20 @@ export class Comment extends CanvasSectionObject {
 		if ((<any>window).mode.isDesktop()) {
 			if (e.keyCode === 27) {
 				this.onCancelClick(e);
+			} else if (e.keyCode === 33 /*PageUp*/ || e.keyCode === 34 /*PageDown*/) {
+				// work around for a chrome issue https://issues.chromium.org/issues/41417806
+				L.DomEvent.preventDefault(e);
+				var pos = e.keyCode === 33 ? 0 : e.target.textLength;
+				var currentPos = e.target.selectionStart;
+				if (e.shiftKey) {
+					var [start, end] = currentPos <= pos ? [currentPos, pos] : [pos, currentPos];
+					e.target.setSelectionRange(start, end, currentPos > pos ? 'backward' : 'forward');
+				} else {
+					e.target.setSelectionRange(pos, pos);
+				}
 			}
 		}
+
 	}
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
