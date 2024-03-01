@@ -330,7 +330,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		cy.cGet('#toolbar-up .w2ui-scroll-right').click();
 		cy.cGet('#toolbar-up .w2ui-scroll-right').click();
 		cy.wait(500);
-		cy.cGet('#Home-container .unospan-CharmapControl').click();
+		cy.cGet('#Home-container .unospan-CharmapControl').click({force: true});
 		cy.cGet('.jsdialog-container.ui-dialog.ui-widget-content.lokdialog_container').should('be.visible');
 		cy.cGet('.ui-dialog-title').should('have.text', 'Special Characters');
 		helper.clickOnIdle('#favchar1');
