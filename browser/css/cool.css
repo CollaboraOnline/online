@@ -572,6 +572,10 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	z-index: 0;
 }
 
+.cool-annotation-collapsed-show .cool-annotation-img {
+	visibility: visible;
+}
+
 .cool-dont-break {
 	/* These are technically the same, but use both */
 	overflow-wrap: break-word;
