@@ -605,6 +605,10 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	background: var(--color-background-lighter) !important;
 }
 
+.cool-annotation-collapsed-show .cool-annotation-img {
+	visibility: visible;
+}
+
 #mobile-wizard-popup {
 	background-color: var(--color-background-lighter) !important;
 }
