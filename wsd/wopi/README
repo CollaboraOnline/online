@@ -1,0 +1,11 @@
+This directory holds WOPI-specific code.
+
+First and foremost, it is to isolate it from Mobile Apps
+that do not have any dependencies on WOPI. This will also
+enable stubbing out the same classes/functions for Mobile
+Apps, so we wouldn't need so many compile-time directives
+to exclude such code.
+
+This also helps reduce the size of the translation-units
+where previously this code resided, making them more
+manageable in size and complexity.
