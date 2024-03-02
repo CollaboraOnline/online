@@ -16,9 +16,6 @@
 #include <COOLWSD.hpp>
 #include <RequestDetails.hpp>
 #include <TraceEvent.hpp>
-#if !MOBILEAPP
-#include <StorageConnectionManager.hpp>
-#endif // !MOBILEAPP
 #include <Exceptions.hpp>
 #include <Log.hpp>
 #include <DocumentBroker.hpp>
@@ -109,7 +106,7 @@ void RequestVettingStation::handleRequest(const std::string& id)
                             << docKey << "] is for a WOPI document");
 
             // CheckFileInfo asynchronously.
-            checkFileInfo(url, uriPublic, docKey, isReadOnly, RedirectionLimit);
+            checkFileInfo(uriPublic, isReadOnly, RedirectionLimit);
             break;
 #endif //!MOBILEAPP
     }
@@ -205,15 +202,19 @@ void RequestVettingStation::handleRequest(const std::string& id,
                     LOG_TRC_S('#' << moveSocket->getFD()
                                   << ": Dissociating client socket from "
                                      "ClientRequestDispatcher and invoking CheckFileInfo for ["
-                                  << docKey << "], " << name(_cfiState));
+                                  << docKey << "], "
+                                  << (_checkFileInfo ? CheckFileInfo::name(_checkFileInfo->state())
+                                                     : "no CheckFileInfo"));
 
                     // CheckFileInfo and only when it's good create DocBroker.
-                    if (_cfiState == CFIState::Active)
+                    if (_checkFileInfo && _checkFileInfo->state() == CheckFileInfo::State::Active)
                     {
                         // Wait for CheckFileInfo result.
                         LOG_DBG("CheckFileInfo request is in progress. Will resume when done");
                     }
-                    else if (_cfiState == CFIState::Pass && _wopiInfo)
+                    else if (_checkFileInfo &&
+                             _checkFileInfo->state() == CheckFileInfo::State::Pass &&
+                             _checkFileInfo->wopiInfo())
                     {
                         // We have a valid CheckFileInfo result; Create the DocBroker.
                         if (createDocBroker(docKey, url, uriPublic))
@@ -222,13 +223,15 @@ void RequestVettingStation::handleRequest(const std::string& id,
                             createClientSession(docKey, url, uriPublic, isReadOnly);
                         }
                     }
-                    else if (_cfiState == CFIState::None)
+                    else if (_checkFileInfo == nullptr ||
+                             _checkFileInfo->state() == CheckFileInfo::State::None)
                     {
                         // We don't have CheckFileInfo
-                        checkFileInfo(url, uriPublic, docKey, isReadOnly, RedirectionLimit);
+                        checkFileInfo(uriPublic, isReadOnly, RedirectionLimit);
                     }
                     else
                     {
+                        // E.g. Timeout.
                         sendErrorAndShutdown(_ws, "error: cmd=internal kind=unauthorized",
                                              WebSocketHandler::StatusCodes::POLICY_VIOLATION);
                     }
@@ -239,139 +242,52 @@ void RequestVettingStation::handleRequest(const std::string& id,
 }
 
 #if !MOBILEAPP
-void RequestVettingStation::checkFileInfo(const std::string& url, const Poco::URI& uriPublic,
-                                          const std::string& docKey, bool isReadOnly,
-                                          int redirectLimit)
+void RequestVettingStation::checkFileInfo(const Poco::URI& uri, bool isReadOnly, int redirectLimit)
 {
-    ProfileZone profileZone("WopiStorage::getWOPIFileInfo", { { "url", url } }); // Move to ctor.
-
-    const std::string uriAnonym = COOLWSD::anonymizeUrl(uriPublic.toString());
-
-    LOG_DBG("Getting info for wopi uri [" << uriAnonym << ']');
-    _httpSession = StorageConnectionManager::getHttpSession(uriPublic);
-    Authorization auth = Authorization::create(uriPublic);
-    http::Request httpRequest = StorageConnectionManager::createHttpRequest(uriPublic, auth);
-
-    const auto startTime = std::chrono::steady_clock::now();
-
-    LOG_TRC("WOPI::CheckFileInfo request header for URI [" << uriAnonym << "]:\n"
-                                                           << httpRequest.header());
-
-    http::Session::FinishedCallback finishedCallback =
-        [this, docKey, startTime, url, uriPublic, isReadOnly, uriAnonym,
-         redirectLimit](const std::shared_ptr<http::Session>& session)
+    auto cfiContinuation = [this, isReadOnly]([[maybe_unused]] CheckFileInfo& checkFileInfo)
     {
-        if (SigUtil::getShutdownRequestFlag())
+        assert(&checkFileInfo == _checkFileInfo.get() && "Unknown CheckFileInfo instance");
+        if (_checkFileInfo && _checkFileInfo->state() == CheckFileInfo::State::Pass &&
+            _checkFileInfo->wopiInfo())
         {
-            LOG_DBG("Shutdown flagged, giving up on in-flight requests");
-            return;
-        }
-
-        const std::shared_ptr<const http::Response> httpResponse = session->response();
-        LOG_TRC("WOPI::CheckFileInfo returned " << httpResponse->statusLine().statusCode());
-
-        const http::StatusCode statusCode = httpResponse->statusLine().statusCode();
-        if (statusCode == http::StatusCode::MovedPermanently ||
-            statusCode == http::StatusCode::Found ||
-            statusCode == http::StatusCode::TemporaryRedirect ||
-            statusCode == http::StatusCode::PermanentRedirect)
-        {
-            if (redirectLimit)
-            {
-                const std::string& location = httpResponse->get("Location");
-                LOG_TRC("WOPI::CheckFileInfo redirect to URI [" << COOLWSD::anonymizeUrl(location)
-                                                                << "]");
-
-                checkFileInfo(location, Poco::URI(location), docKey, isReadOnly, redirectLimit - 1);
-                return;
-            }
-            else
-            {
-                LOG_WRN("WOPI::CheckFileInfo redirected too many times. Giving up on URI ["
-                        << uriAnonym << ']');
-            }
-        }
-
-        std::chrono::milliseconds callDurationMs =
-            std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() -
-                                                                  startTime);
-
-        // Note: we don't log the response if obfuscation is enabled, except for failures.
-        std::string wopiResponse = httpResponse->getBody();
-        const bool failed = (httpResponse->statusLine().statusCode() != http::StatusCode::OK);
-
-        Log::StreamLogger logRes = failed ? Log::error() : Log::trace();
-        if (logRes.enabled())
-        {
-            logRes << "WOPI::CheckFileInfo " << (failed ? "failed" : "returned") << " for URI ["
-                   << uriAnonym << "]: " << httpResponse->statusLine().statusCode() << ' '
-                   << httpResponse->statusLine().reasonPhrase()
-                   << ". Headers: " << httpResponse->header()
-                   << (failed ? "\tBody: [" + wopiResponse + ']' : std::string());
-
-            LOG_END_FLUSH(logRes);
-        }
-
-        if (failed)
-        {
-            _cfiState = CFIState::Fail;
-
-            if (httpResponse->statusLine().statusCode() == http::StatusCode::Forbidden)
-            {
-                LOG_ERR("Access denied to [" << uriAnonym << ']');
-                return;
-            }
-
-            LOG_ERR("Invalid URI or access denied to [" << uriAnonym << ']');
-            return;
-        }
-
-        if (JsonUtil::parseJSON(wopiResponse, _wopiInfo))
-        {
-            if (COOLWSD::AnonymizeUserData)
-                LOG_DBG("WOPI::CheckFileInfo (" << callDurationMs << "): anonymizing...");
-            else
-                LOG_DBG("WOPI::CheckFileInfo (" << callDurationMs << "): " << wopiResponse);
-
-            _cfiState = CFIState::Pass;
             if (_ws)
             {
+                // The final URL might be different due to redirection.
+                const std::string url = checkFileInfo.url().toString();
+                const auto uriPublic = RequestDetails::sanitizeURI(url);
+                const auto docKey = RequestDetails::getDocKey(uriPublic);
+                LOG_DBG("WOPI::CheckFileInfo succeeded and will create DocBroker ["
+                        << docKey << "] now with URL: [" << url << ']');
                 if (createDocBroker(docKey, url, uriPublic))
                 {
                     assert(_docBroker && "Must have docBroker");
                     createClientSession(docKey, url, uriPublic, isReadOnly);
                 }
             }
+            else
+            {
+                LOG_DBG("WOPI::CheckFileInfo succeeded but we don't have the client's "
+                        "WebSocket yet. Deferring DocBroker creation");
+            }
         }
         else
         {
-            _cfiState = CFIState::Fail;
-
-            if (COOLWSD::AnonymizeUserData)
-                wopiResponse = "obfuscated";
-
-            LOG_ERR("WOPI::CheckFileInfo ("
-                    << callDurationMs
-                    << ") failed or no valid JSON payload returned. Access denied. "
-                       "Original response: ["
-                    << wopiResponse << ']');
-
-            sendErrorAndShutdown(_ws, "error: cmd=storage kind=unauthorized",
-                                 WebSocketHandler::StatusCodes::POLICY_VIOLATION);
+            if (_ws)
+            {
+                LOG_DBG("WOPI::CheckFileInfo failed, sending error and closing connection now");
+                sendErrorAndShutdown(_ws, "error: cmd=storage kind=unauthorized",
+                                     WebSocketHandler::StatusCodes::POLICY_VIOLATION);
+            }
+            else
+            {
+                LOG_DBG("WOPI::CheckFileInfo failed but no client WebSocket to send error to");
+            }
         }
     };
 
-    _httpSession->setFinishedHandler(std::move(finishedCallback));
-
-    // Run the CheckFileInfo request on the WebServer Poll.
-    if (_httpSession->asyncRequest(httpRequest, *_poll))
-    {
-        _cfiState = CFIState::Active;
-    }
-    else
-    {
-        LOG_ERR("Failed to start an async CheckFileInfo request");
-    }
+    // CheckFileInfo asynchronously.
+    _checkFileInfo =
+        std::make_unique<CheckFileInfo>(_poll, uri, std::move(cfiContinuation), redirectLimit);
 }
 #endif //!MOBILEAPP
 
@@ -412,10 +328,16 @@ void RequestVettingStation::createClientSession(const std::string& docKey, const
     LOG_DBG("ClientSession [" << clientSession->getName() << "] for [" << docKey
                               << "] acquired for [" << url << ']');
 
+    Poco::JSON::Object::Ptr wopiInfo;
+#if !MOBILEAPP
+    assert((!_checkFileInfo || _checkFileInfo->wopiInfo()) &&
+           "Must have WopiInfo when CheckFileInfo exists");
+    wopiInfo = _checkFileInfo ? _checkFileInfo->wopiInfo() : nullptr;
+#endif // !MOBILEAPP
+
     // Transfer the client socket to the DocumentBroker when we get back to the poll:
     const auto ws = _ws;
     const auto docBroker = _docBroker;
-    auto wopiInfo = _wopiInfo;
     _docBroker->setupTransfer(
         _socket,
         [clientSession, uriPublic, wopiInfo=std::move(wopiInfo), ws,

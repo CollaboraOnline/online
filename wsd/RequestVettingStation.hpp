@@ -13,8 +13,12 @@
 
 #include "RequestDetails.hpp"
 #include <Storage.hpp>
-#include "StateEnum.hpp"
 #include "WebSocketHandler.hpp"
+#if !MOBILEAPP
+#include <wopi/CheckFileInfo.hpp>
+#endif // !MOBILEAPP
+
+#include <Poco/URI.h>
 
 #include <string>
 
@@ -36,16 +40,12 @@
 /// We take these possibilities into account and support them here.
 class RequestVettingStation
 {
-    /// The CheckFileInfo State.
-    STATE_ENUM(CFIState, None, Active, Timedout, Fail, Pass);
-
 public:
     /// Create an instance with a SocketPoll and a RequestDetails instance.
     RequestVettingStation(const std::shared_ptr<TerminatingPoll>& poll,
                           const RequestDetails& requestDetails)
         : _poll(poll)
         , _requestDetails(requestDetails)
-        , _cfiState(CFIState::None)
     {
     }
 
@@ -72,25 +72,21 @@ private:
     void createClientSession(const std::string& docKey, const std::string& url,
                              const Poco::URI& uriPublic, const bool isReadOnly);
 
-#if !MOBILEAPP
-    void checkFileInfo(const std::string& url, const Poco::URI& uriPublic,
-                       const std::string& docKey, bool isReadOnly, int redirectionLimit);
-#endif //!MOBILEAPP
-
     /// Send an error to the client and disconnect the socket.
     static void sendErrorAndShutdown(const std::shared_ptr<WebSocketHandler>& ws,
                                      const std::string& msg,
                                      WebSocketHandler::StatusCodes statusCode);
 
-private:
+#if !MOBILEAPP
+    void checkFileInfo(const Poco::URI& uri, bool isReadOnly, int redirectionLimit);
+    std::unique_ptr<CheckFileInfo> _checkFileInfo;
+#endif // !MOBILEAPP
+
     std::shared_ptr<TerminatingPoll> _poll;
     std::string _id;
     std::shared_ptr<WebSocketHandler> _ws;
     RequestDetails _requestDetails;
     std::shared_ptr<StreamSocket> _socket;
-    std::shared_ptr<http::Session> _httpSession;
     unsigned _mobileAppDocId;
-    CFIState _cfiState;
-    Poco::JSON::Object::Ptr _wopiInfo;
     std::shared_ptr<DocumentBroker> _docBroker;
 };
