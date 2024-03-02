@@ -16,7 +16,7 @@
 #include <COOLWSD.hpp>
 #include <RequestDetails.hpp>
 #include <TraceEvent.hpp>
-#include <StorageConnectionManager.hpp>
+#include <wopi/StorageConnectionManager.hpp>
 #include <Exceptions.hpp>
 #include <Log.hpp>
 #include <DocumentBroker.hpp>
