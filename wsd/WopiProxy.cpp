@@ -13,7 +13,7 @@
 #include "HttpHelper.hpp"
 #include "HttpRequest.hpp"
 #include <COOLWSD.hpp>
-#include <StorageConnectionManager.hpp>
+#include <wopi/StorageConnectionManager.hpp>
 #include <Exceptions.hpp>
 #include <Log.hpp>
 #include <common/JsonUtil.hpp>

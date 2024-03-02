@@ -11,14 +11,26 @@
 
 #include <config.h>
 
-#include <iconv.h>
-#include <string>
+#include "StorageConnectionManager.hpp"
 
-#include <Poco/Exception.h>
-#include <Poco/JSON/Object.h>
-#include <Poco/JSON/Parser.h>
+#include <Common.hpp>
+#include <Exceptions.hpp>
+#include <Storage.hpp>
+#include <Log.hpp>
+#include <Unit.hpp>
+#include <Util.hpp>
+#include <common/FileUtil.hpp>
+#include <common/JsonUtil.hpp>
+#include <common/TraceEvent.hpp>
+#include <NetUtil.hpp>
+#include <CommandControl.hpp>
 
 #if !MOBILEAPP
+
+#include <Auth.hpp>
+#include <HostUtil.hpp>
+#include <ProofKey.hpp>
+#include <HttpRequest.hpp>
 
 #include <Poco/Net/AcceptCertificateHandler.h>
 #include <Poco/Net/Context.h>
@@ -33,29 +45,16 @@
 
 #include <cassert>
 
-#include <Auth.hpp>
-#include <HostUtil.hpp>
-#include <ProofKey.hpp>
-#include <HttpRequest.hpp>
-
 #endif
 
+#include <Poco/Exception.h>
+#include <Poco/JSON/Object.h>
+#include <Poco/JSON/Parser.h>
 #include <Poco/StreamCopier.h>
 #include <Poco/URI.h>
 
-#include <Common.hpp>
-#include <Exceptions.hpp>
-#include <Storage.hpp>
-#include <Log.hpp>
-#include <Unit.hpp>
-#include <Util.hpp>
-#include <common/FileUtil.hpp>
-#include <common/JsonUtil.hpp>
-#include <common/TraceEvent.hpp>
-#include <NetUtil.hpp>
-#include <CommandControl.hpp>
-
-#include <StorageConnectionManager.hpp>
+#include <iconv.h>
+#include <string>
 
 bool StorageConnectionManager::FilesystemEnabled;
 bool StorageConnectionManager::SSLAsScheme = true;
@@ -154,5 +153,3 @@ StorageConnectionManager::getHttpSession(const Poco::URI& uri, std::chrono::seco
 
     return httpSession;
 }
-
-/* vim:set shiftwidth=4 softtabstop=4 expandtab: */
