@@ -518,24 +518,6 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	max-height: initial !important;
 }
 
-.cool-annotation:not(annotation-active) .cool-annotation-collapsed{
-	position: absolute;
-	left: 24px;
-}
-.cool-annotation.annotation-active:not(.rtl) .cool-annotation-collapsed{
-	position: absolute;
-	left: 0 !important;
-}
-.cool-annotation.annotation-active.rtl .cool-annotation-collapsed{
-	position: absolute;
-	left: 48px !important;
-}
-
-#document-container > .cool-annotation:hover .cool-annotation-collapsed{
-	box-shadow: 0 0 3px 0 rgb(0 0 0 / 50%), 0 0 10px 4px rgb(0 0 0 / 10%);
-	cursor: pointer;
-}
-
 .cool-annotation-content-wrapper, .cool-annotation-redline-content-wrapper {
 	padding: 8px;
 	font-family: var(--cool-font) !important;
@@ -556,8 +538,7 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 }
 
 .annotation-active.modify-annotation-container .cool-annotation-content-wrapper,
-.annotation-active.reply-annotation-container .cool-annotation-content-wrapper,
-.cool-annotation-collapsed.modalpopup {
+.annotation-active.reply-annotation-container .cool-annotation-content-wrapper {
 	width: auto;
 }
 
@@ -591,54 +572,8 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	z-index: 0;
 }
 
-.cool-annotation-collapsed {
-	background: var(--color-background-lighter);
-	border-radius: 50%;
-	width: 36px;
-	height: 36px;
-	box-shadow: 0 0 3px 5px var(--color-background-lighter), 0 0 1px 5px var(--color-box-shadow);
-}
-
-.annotation-active .cool-annotation-collapsed {
-	box-shadow: 0 0 3px 5px var(--color-background-lighter), 0 0 1px 5px var(--color-box-shadow);
-}
-
-.jsdialog-container.cool-annotation-collapsed.modalpopup {
-	border-radius: 8px !important;
-	border: 1px solid var(--color-border) !important;
-	background: var(--color-background-lighter) !important;
-}
-
 #mobile-wizard-popup {
 	background-color: var(--color-background-lighter) !important;
-}
-
-.jsdialog-container.cool-annotation-collapsed.modalpopup .lokdialog.ui-dialog-content {
-	background-color: transparent !important;
-}
-
-.jsdialog-container.cool-annotation-collapsed.modalpopup .cool-annotation {
-	margin-bottom: 16px;
-}
-
-.jsdialog-container.cool-annotation-collapsed.modalpopup .cool-annotation:last-of-type {
-	margin-bottom: 8px;
-}
-
-.jsdialog-container.cool-annotation-collapsed.modalpopup .cool-annotation:first-of-type {
-	margin-top: 8px;
-}
-
-.jsdialog-container.cool-annotation-collapsed.modalpopup .cool-annotation-content-wrapper {
-	box-shadow: none;
-	border-width: 0px 0px 1px !important;
-	border-bottom: 1px solid var(--color-border) !important;
-	border-radius: 0 !important;
-	background: var(--color-background-lighter);
-}
-
-.jsdialog-container.cool-annotation-collapsed.modalpopup [id^='comment-container-']:last-child > .cool-annotation-content-wrapper{
-	border-width: 0 !important;
 }
 
 
@@ -800,12 +735,6 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	opacity: 1;
 	transition: all 0.1s ease 0.5s;
 	visibility: visible;
-}
-.cool-annotation-collapsed [data-title]:hover:after {
-	position: static;
-	float: right;
-	margin-top: 22px;
-	margin-right: 8px;
 }
 [data-title]:after {
 	content: attr(data-title);

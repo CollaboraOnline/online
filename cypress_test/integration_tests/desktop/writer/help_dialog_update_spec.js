@@ -68,15 +68,13 @@ describe(['tagscreenshot'], 'Help dialog screenshot updation', function() {
 		copyScreenshot('repair-document.png');
 	});
 
-	it.skip('Comment', function() {
+	it('Comment', function() {
 		hideSidebar();
 
 		cy.cGet('#toolbar-up > .w2ui-scroll-right').click();
 		cy.cGet('#tb_editbar_item_insertannotation').click();
-		cy.cGet('#input-modal-input').type('comment added');
-		cy.cGet('.vex-dialog-buttons .button-primary').click(); // save button
-		cy.wait(1000);
-		cy.cGet('.jsdialog-container.cool-annotation-collapsed').click();
+		cy.cGet('#annotation-modify-textarea-new').type('comment added');
+		cy.cGet('#annotation-save-new').click(); // save button
 		cy.wait(1000);
 		cy.cGet('.cool-annotation-content-wrapper').should('exist');
 		cy.cGet('#comment .cool-annotation').screenshot('comment');
