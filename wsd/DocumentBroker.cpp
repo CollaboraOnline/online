@@ -1874,7 +1874,9 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResu
     // Storage upload is considered successful only when storage returns OK.
     const bool lastUploadSuccessful =
         uploadResult.getResult() == StorageBase::UploadResult::Result::OK;
-    LOG_TRC("lastUploadSuccessful: " << lastUploadSuccessful);
+    const bool previousUploadSuccessful = _storageManager.lastUploadSuccessful();
+    LOG_TRC("lastUploadSuccessful: " << lastUploadSuccessful
+                                     << ", previousUploadSuccessful: " << previousUploadSuccessful);
     _storageManager.setLastUploadResult(lastUploadSuccessful);
 
     if (_unitWsd)
