@@ -47,12 +47,12 @@ public:
         std::string redirectUri2 = "/wopi/files/2/contents";
         Poco::RegularExpression regContentsRedirected(redirectUri2);
 
-        LOG_INF("FakeWOPIHost: Request URI [" << uriReq.toString() << "]:\n");
+        LOG_TST("FakeWOPIHost: Request URI [" << uriReq.toString() << "]:\n");
 
         // CheckFileInfo - returns redirect response
         if (request.getMethod() == "GET" && regInfo.match(uriReq.getPath()))
         {
-            LOG_INF("FakeWOPIHost: Handling CheckFileInfo (1/2)");
+            LOG_TST("FakeWOPIHost: Handling CheckFileInfo (1/2)");
 
             assertCheckFileInfoRequest(request);
 
@@ -68,7 +68,7 @@ public:
         // CheckFileInfo - for redirected URI
         else if (request.getMethod() == "GET" && regRedirected.match(uriReq.getPath()) && !regContents.match(uriReq.getPath()))
         {
-            LOG_INF("FakeWOPIHost: Handling CheckFileInfo: (2/2)");
+            LOG_TST("FakeWOPIHost: Handling CheckFileInfo: (2/2)");
 
             assertCheckFileInfoRequest(request);
 
@@ -175,12 +175,12 @@ public:
         Poco::RegularExpression regInfo("/wopi/files/[0-9]+");
         static unsigned redirectionCount = 0;
 
-        LOG_INF("FakeWOPIHost: Request URI [" << uriReq.toString() << "]:\n");
+        LOG_TST("FakeWOPIHost: Request URI [" << uriReq.toString() << "]:\n");
 
         // CheckFileInfo - always returns redirect response
         if (request.getMethod() == "GET" && regInfo.match(uriReq.getPath()))
         {
-            LOG_INF("FakeWOPIHost: Handling CheckFileInfo");
+            LOG_TST("FakeWOPIHost: Handling CheckFileInfo");
 
             assertCheckFileInfoRequest(request);
 
