@@ -63,7 +63,7 @@ public:
     assertPutFileRequest(const Poco::Net::HTTPRequest& request) override
     {
         LOG_TST("PutFile");
-        LOK_ASSERT_MESSAGE("Expected to be in Phase::WaitPutFile", _phase == Phase::WaitPutFile);
+        LOK_ASSERT_STATE(_phase, Phase::WaitPutFile);
 
         // Triggered while closing.
         LOK_ASSERT_EQUAL(std::string("false"), request.get("X-COOL-WOPI-IsAutosave"));
@@ -83,8 +83,7 @@ public:
     bool onDocumentLoaded(const std::string& message) override
     {
         LOG_TST("Doc (" << toString(_phase) << "): [" << message << ']');
-        LOK_ASSERT_MESSAGE("Expected to be in Phase::WaitLoadStatus",
-                           _phase == Phase::WaitLoadStatus);
+        LOK_ASSERT_STATE(_phase, Phase::WaitLoadStatus);
 
         // Modify and wait for the notification.
         TRANSITION_STATE(_phase, Phase::WaitModifiedStatus);
@@ -104,8 +103,7 @@ public:
         if (_phase == Phase::WaitModifiedStatus)
         {
             LOG_TST("Doc (" << toString(_phase) << "): [" << message << ']');
-            LOK_ASSERT_MESSAGE("Expected to be in Phase::WaitModifiedStatus",
-                               _phase == Phase::WaitModifiedStatus);
+            LOK_ASSERT_STATE(_phase, Phase::WaitModifiedStatus);
 
             // Save and immediately modify, then close the connection.
             WSD_CMD("save dontTerminateEdit=0 dontSaveIfUnmodified=0 "
@@ -189,7 +187,7 @@ public:
         else
         {
             LOK_ASSERT_EQUAL(std::string("false"), request.get("X-COOL-WOPI-IsModifiedByUser"));
-            LOK_ASSERT_MESSAGE("Expected to be in Phase::WaitPutFile", _phase == Phase::Done);
+            LOK_ASSERT_STATE(_phase, Phase::Done);
             // LOK_ASSERT_EQUAL_MESSAGE("Expected to be in Phase::WaitPutFile", 2, _uploadCount);
         }
 
@@ -200,8 +198,7 @@ public:
     bool onDocumentLoaded(const std::string& message) override
     {
         LOG_TST("Doc (" << toString(_phase) << "): [" << message << ']');
-        LOK_ASSERT_MESSAGE("Expected to be in Phase::WaitLoadStatus",
-                           _phase == Phase::WaitLoadStatus);
+        LOK_ASSERT_STATE(_phase, Phase::WaitLoadStatus);
 
         // Modify and wait for the notification.
         TRANSITION_STATE(_phase, Phase::WaitModifiedStatus);
@@ -216,8 +213,7 @@ public:
     bool onDocumentModified(const std::string& message) override
     {
         LOG_TST("Doc (" << toString(_phase) << "): [" << message << ']');
-        LOK_ASSERT_MESSAGE("Expected to be in Phase::WaitModifiedStatus",
-                           _phase == Phase::WaitModifiedStatus);
+        LOK_ASSERT_STATE(_phase, Phase::WaitModifiedStatus);
 
         _stopwatch.restart();
 

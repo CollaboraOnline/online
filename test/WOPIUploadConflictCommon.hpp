@@ -272,8 +272,8 @@ public:
         // because only in that case there is no user input.
         LOK_ASSERT_MESSAGE("Expected reason to be 'Data-loss detected'",
                            reason.starts_with("Data-loss detected"));
-        LOK_ASSERT_MESSAGE("Expected to be in Phase::WaitDocClose but was " + toString(_phase),
-                           _phase == Phase::WaitDocClose);
+        LOK_ASSERT_STATE(_phase, Phase::WaitDocClose);
+
         // In SaveOverwrite, we should not be in modified state, because we do save
         // and upload. But because we don't wait for the modified=false, we can end-up
         // here. Since we will verify after reloading that we have no data-loss, it's OK.

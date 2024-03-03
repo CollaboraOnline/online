@@ -168,8 +168,7 @@ public:
         // because only in that case there is no user input.
         LOK_ASSERT_MESSAGE("Expected reason to be 'Data-loss detected'",
                            reason.starts_with("Data-loss detected"));
-        LOK_ASSERT_MESSAGE("Expected to be in Phase::WaitDocClose but was " + toString(_phase),
-                           _phase == Phase::WaitDocClose);
+        LOK_ASSERT_STATE(_phase, Phase::WaitDocClose);
         _unloadingModifiedDocDetected = true;
 
         return failed();
@@ -253,8 +252,7 @@ public:
         // only have one session.
         LOK_ASSERT_MESSAGE("Expected reason to be 'Data-loss detected'",
                            reason.starts_with("Data-loss detected"));
-        LOK_ASSERT_MESSAGE("Expected to be in Phase::WaitDocClose but was " + toString(_phase),
-                           _phase == Phase::Done);
+        LOK_ASSERT_STATE(_phase, Phase::Done);
 
         passTest("Data-loss detected as expected");
         return failed();
