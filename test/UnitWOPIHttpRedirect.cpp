@@ -57,7 +57,7 @@ public:
             assertCheckFileInfoRequest(request);
 
             LOK_ASSERT_MESSAGE("Expected to be in Phase::Load", _phase == Phase::Load);
-            _phase = Phase::Redirected;
+            TRANSITION_STATE(_phase, Phase::Redirected);
 
             http::Response httpResponse(http::StatusCode::Found);
             httpResponse.set("Location", helpers::getTestServerURI() + redirectUri + '?' + params);
