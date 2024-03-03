@@ -22,13 +22,7 @@
 
 class UnitWOPITemplate : public WopiTestServer
 {
-    enum class Phase
-    {
-        LoadTemplate,
-        SaveDoc,
-        CloseDoc,
-        Polling
-    } _phase;
+    STATE_ENUM(Phase, LoadTemplate, SaveDoc, CloseDoc, Polling) _phase;
 
     bool _savedTemplate;
 
@@ -99,7 +93,7 @@ public:
                 LOK_ASSERT_EQUAL(static_cast<int>(Phase::SaveDoc), static_cast<int>(_phase));
                 _savedTemplate = true;
                 LOG_TST("SaveDoc => CloseDoc");
-                _phase = Phase::CloseDoc;
+                TRANSITION_STATE(_phase, Phase::CloseDoc);
             }
             else
             {
@@ -133,7 +127,7 @@ public:
             case Phase::LoadTemplate:
             {
                 LOG_TST("LoadTemplate => SaveDoc");
-                _phase = Phase::SaveDoc;
+                TRANSITION_STATE(_phase, Phase::SaveDoc);
 
                 initWebsocket("/wopi/files/10?access_token=anything");
                 WSD_CMD("load url=" + getWopiSrc());
@@ -143,7 +137,7 @@ public:
             case Phase::CloseDoc:
             {
                 LOG_TST("CloseDoc => Polling");
-                _phase = Phase::Polling;
+                TRANSITION_STATE(_phase, Phase::Polling);
                 WSD_CMD("closedocument");
                 break;
             }
