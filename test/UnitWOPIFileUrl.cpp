@@ -150,8 +150,7 @@ public:
         {
             LOG_TST("FakeWOPIHost: Handling PutFile: " << uriReq.getPath());
 
-            LOK_ASSERT_MESSAGE("Expected to be in Phase::WaitPutFile",
-                               _phase == Phase::WaitPutFile);
+            LOK_ASSERT_STATE(_phase, Phase::WaitPutFile);
 
             LOK_ASSERT_MESSAGE("Always the default URI must be used for PutFile",
                                regContent.match(uriReq.getPath()));
@@ -197,8 +196,7 @@ public:
     bool onDocumentLoaded(const std::string& message) override
     {
         LOG_TST("onDocumentLoaded: [" << message << ']');
-        LOK_ASSERT_MESSAGE("Expected to be in Phase::WaitLoadStatus",
-                           _phase == Phase::WaitLoadStatus);
+        LOK_ASSERT_STATE(_phase, Phase::WaitLoadStatus);
 
         LOG_TST(
             "onDocumentLoaded: Modifying the document and switching to Phase::WaitModifiedStatus");
@@ -213,8 +211,7 @@ public:
     bool onDocumentModified(const std::string& message) override
     {
         LOG_TST("onDocumentModified: [" << message << ']');
-        LOK_ASSERT_MESSAGE("Expected to be in Phase::WaitModified",
-                           _phase == Phase::WaitModifiedStatus);
+        LOK_ASSERT_STATE(_phase, Phase::WaitModifiedStatus);
 
         LOG_TST("onDocumentModified: Saving document and switching to Phase::WaitPutFile");
         TRANSITION_STATE(_phase, Phase::WaitPutFile);

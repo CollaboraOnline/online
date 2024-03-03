@@ -56,7 +56,7 @@ public:
 
             assertCheckFileInfoRequest(request);
 
-            LOK_ASSERT_MESSAGE("Expected to be in Phase::Load", _phase == Phase::Load);
+            LOK_ASSERT_STATE(_phase, Phase::Load);
             TRANSITION_STATE(_phase, Phase::Redirected);
 
             http::Response httpResponse(http::StatusCode::Found);
@@ -99,7 +99,7 @@ public:
 
             assertGetFileRequest(request);
 
-            LOK_ASSERT_MESSAGE("Expected to be in Phase::GetFile", _phase == Phase::GetFile);
+            LOK_ASSERT_STATE(_phase, Phase::GetFile);
             TRANSITION_STATE(_phase, Phase::Redirected2);
 
             http::Response httpResponse(http::StatusCode::Found);
@@ -115,7 +115,7 @@ public:
 
             assertGetFileRequest(request);
 
-            LOK_ASSERT_MESSAGE("Expected to be in Phase::Redirected2", _phase == Phase::Redirected2);
+            LOK_ASSERT_STATE(_phase, Phase::Redirected2);
             TRANSITION_STATE(_phase, Phase::Done);
 
             http::Response httpResponse(http::StatusCode::OK);
