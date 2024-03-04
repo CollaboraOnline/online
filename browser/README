@@ -387,10 +387,10 @@ x				menu-nb-hamburger > ul (calculated from jquery.smartmenus.js)
 -------------------------------------------
 		on the top
 -------------------------------------------
-1105			dialogs
+1105			dialogs, tooltips
 1001			mobile-edit-button
 1500			mobile-wizard (with class=menuwizard)
 1501			toolbar-hamburger (with class=menuwizard-opened)
-2000			vex-overlay // JSDialog overlay?
-2001			vex dialog (vex-content) // JSDialog content?
+2000			JSDialog overlay
+2001			JSDialog modal
 -------------------------------------------
