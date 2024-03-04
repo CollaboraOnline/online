@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-26 08:45+0200\n"
-"PO-Revision-Date: 2024-01-24 11:49+0000\n"
+"PO-Revision-Date: 2024-02-29 10:53+0000\n"
 "Last-Translator: \"PhD. Ayhan YALÇINSOY\" <ayhanyalcinsoy@pisilinux.org>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/collabora-online/"
 "help/tr/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.5-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:84-5
 msgid "Keyboard Shortcuts"
@@ -1892,9 +1892,8 @@ msgstr ""
 ">Duruma dön</span> ü tıklayın."
 
 #: html/cool-help.html%2Bdiv.div.div.div.img[alt]:501-29
-#, fuzzy
 msgid "document repair"
-msgstr "Belge Kurtarma"
+msgstr "belge kurtarma"
 
 #: html/cool-help.html%2Bdiv.div.div.p:502-5
 msgid ""
@@ -1925,9 +1924,8 @@ msgstr ""
 "için lütfen tıklayın\" mesajı ile şeffaf gri bir kaplama ile gösterilir."
 
 #: html/cool-help.html%2Bdiv.div.div.div.img[alt]:507-29
-#, fuzzy
 msgid "inactive document"
-msgstr "Kullanımda olmayan belge"
+msgstr "kullanımda olmayan belge"
 
 #: html/cool-help.html%2Bdiv.div.div.p:508-5
 msgid ""
@@ -2021,7 +2019,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.ol.div.img[alt]:530-31
 msgid "chart"
-msgstr ""
+msgstr "grafik"
 
 #: html/cool-help.html%2Bdiv.div.div.ol.li.p:531-11
 msgid "If no table or range was selected, a prototype chart is displayed."
@@ -2114,7 +2112,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.img[alt]:548-29
 msgid "comment"
-msgstr ""
+msgstr "açıklama"
 
 #: html/cool-help.html%2Bdiv.div.div.p:549-5
 msgid ""
@@ -2143,9 +2141,8 @@ msgstr ""
 "tıklayın."
 
 #: html/cool-help.html%2Bdiv.div.div.div.img[alt]:554-29
-#, fuzzy
 msgid "spellchecking"
-msgstr "İmla denetimi"
+msgstr "imla denetimi"
 
 #: html/cool-help.html%2Bdiv.div.div.p:555-5
 msgid ""
@@ -2254,7 +2251,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.div.img[alt]:592-34
 msgid "filter"
-msgstr ""
+msgstr "süzgeç"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:594-11
 msgid ""
@@ -2309,7 +2306,7 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.div.ol.div.img[alt]:608-31
 #: html/cool-help.html%2Bdiv.div.div.div.ol.div.img[alt]:613-31
 msgid "data validate"
-msgstr ""
+msgstr "veri doğrulama"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:609-11
 msgid ""
@@ -2500,9 +2497,8 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:667-29
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:801-29
-#, fuzzy
 msgid "track changes"
-msgstr "Değişiklikleri İzle"
+msgstr "değişiklikleri İzle"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:668-5
 msgid ""
@@ -2846,7 +2842,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:775-29
 msgid "word count"
-msgstr ""
+msgstr "kelime sayısı"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:776-5
 msgid ""
@@ -2889,7 +2885,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.div.img[alt]:786-31
 msgid "Special Characters"
-msgstr ""
+msgstr "Özel Karakterler"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:787-11
 msgid ""
@@ -3176,7 +3172,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.div.img[alt]:866-31
 msgid "import"
-msgstr ""
+msgstr "içe aktar"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:867-11
 msgid ""
@@ -3280,7 +3276,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.div.img[alt]:908-31
 msgid "Position and Size"
-msgstr ""
+msgstr "Konum ve Boyut"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:909-11
 msgid "Set the properties of the element of the object."
