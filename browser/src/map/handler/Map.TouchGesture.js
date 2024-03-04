@@ -578,7 +578,6 @@ L.Map.TouchGesture = L.Handler.extend({
 
 		if (this._inSwipeAction) {
 			this._cancelAutoscrollRAF();
-			return;
 		}
 
 		if (isNaN(e.center.x) || isNaN(e.center.y))
