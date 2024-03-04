@@ -427,6 +427,10 @@ export class Header extends CanvasSectionObject {
 		}
 	}
 
+	_freezePanes (): void {
+		this._map.sendUnoCommand('.uno:FreezePanes');
+	}
+
 	_entryAtPoint(point: number[]): PointEntryQueryResult {
 		if (!this._headerInfo)
 			return undefined;
