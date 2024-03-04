@@ -27,13 +27,15 @@ enum Mod {
 }
 
 class ShortcutDescriptor {
+    docType: string; // if undefined then all apps match
     eventType: string;
     modifier: Mod;
     key: string;
     unoAction: string;
     dispatchAction: string;
 
-    constructor(eventType: string, modifier: Mod, key: string, unoAction: string, dispatchAction: string) {
+    constructor(docType: string, eventType: string, modifier: Mod, key: string, unoAction: string, dispatchAction: string) {
+        this.docType = docType;
         this.eventType = eventType;
         this.modifier = modifier;
         this.key = key;
@@ -57,8 +59,11 @@ class KeyboardShortcuts {
             return undefined;
         }
 
+        const docType = this.map._docLayer._docType;
+
         const shortcuts = descriptors.filter((descriptor: ShortcutDescriptor) => {
-            return descriptor.eventType === eventType &&
+            return (!descriptor.docType || descriptor.docType === docType) &&
+                descriptor.eventType === eventType &&
                 descriptor.modifier === modifier &&
                 descriptor.key === key;
         });
@@ -142,8 +147,8 @@ const keyboardShortcuts = new KeyboardShortcuts();
 
 keyboardShortcuts.definitions.set('default', new Array<ShortcutDescriptor>(
     // disable multi-sheet selection shortcuts in Calc
-    new ShortcutDescriptor('keydown', Mod.CTRL | Mod.SHIFT, 'PageUp', undefined, undefined),
-    new ShortcutDescriptor('keydown', Mod.CTRL | Mod.SHIFT, 'PageDown', undefined, undefined),
+    new ShortcutDescriptor('spreadsheet', 'keydown', Mod.CTRL | Mod.SHIFT, 'PageUp', undefined, undefined),
+    new ShortcutDescriptor('spreadsheet', 'keydown', Mod.CTRL | Mod.SHIFT, 'PageDown', undefined, undefined),
 ));
 
 (window as any).KeyboardShortcuts = keyboardShortcuts;
