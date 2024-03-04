@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-26 08:45+0100\n"
-"PO-Revision-Date: 2024-02-21 12:41+0000\n"
+"PO-Revision-Date: 2024-02-28 15:42+0000\n"
 "Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
 "Language-Team: Albanian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/sq/>\n"
-"Language: \n"
+"Language: sq\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1705,7 +1705,6 @@ msgid "Choice of functions"
 msgstr "Zgjedhje funksionesh"
 
 #: src/control/Control.StatusBar.js:339
-#, fuzzy
 msgid "CountA"
 msgstr "Numër"
 
@@ -2594,7 +2593,7 @@ msgstr "Funksione"
 
 #: src/layer/tile/CanvasTileLayer.js:2589
 msgid "and %COUNT more"
-msgstr ""
+msgstr "dhe %COUNT më tepër"
 
 #: src/layer/tile/CanvasTileLayer.js:2604
 msgid "Copy link location"
