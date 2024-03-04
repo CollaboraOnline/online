@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-26 08:45+0100\n"
-"PO-Revision-Date: 2023-11-15 11:07+0000\n"
-"Last-Translator: TUCAOEVER5023416dba724da7 <814697582@qq.com>\n"
+"PO-Revision-Date: 2024-03-04 13:10+0000\n"
+"Last-Translator: ccz <mmlsc@qq.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
 "collabora-online/ui/zh_Hans/>\n"
-"Language: \n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.2-dev\n"
+"X-Generator: Weblate 5.5-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -245,7 +245,7 @@ msgstr "版本信息"
 
 #: admin/admin.strings.js:67
 msgid "License"
-msgstr ""
+msgstr "授权"
 
 #: admin/admin.strings.js:68 src/control/Control.Menubar.js:377
 #: src/control/Control.Menubar.js:531 src/control/Control.Menubar.js:658
@@ -384,11 +384,11 @@ msgstr ""
 
 #: js/global.js:923
 msgid "Document is migrating to new server, retrying..."
-msgstr ""
+msgstr "文档正在迁移到新服务器，正在重试..."
 
 #: js/global.js:925
 msgid "Failed to get RouteToken from controller"
-msgstr ""
+msgstr "无法从控制器获取RouteToken"
 
 #: js/w2ui-1.5.rc1.js:2967
 msgid "No fill"
