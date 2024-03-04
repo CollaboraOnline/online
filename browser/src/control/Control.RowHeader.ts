@@ -90,6 +90,10 @@ export class RowHeader extends cool.Header {
 			'.uno:ShowRow': {
 				name: _UNO('.uno:ShowRow', 'spreadsheet', true),
 				callback: (this._showRow).bind(this)
+			},
+			'.uno:FreezePanes': {
+				name: _UNO('.uno:FreezePanes', 'spreadsheet', true),
+				callback: (this._freezePanes).bind(this)
 			}
 		};
 
