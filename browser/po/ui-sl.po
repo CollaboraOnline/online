@@ -5,18 +5,18 @@ msgstr ""
 "Project-Id-Version: Collabora Online UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-26 08:45+0100\n"
-"PO-Revision-Date: 2024-02-08 20:46+0000\n"
+"PO-Revision-Date: 2024-02-27 05:11+0000\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/sl/>\n"
-"Language: \n"
+"Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
-"%100==4 ? 2 : 3;\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3;\n"
 "X-Accelerator-Marker: ~\n"
-"X-Generator: Weblate 5.4-dev\n"
+"X-Generator: Weblate 5.5-dev\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #: admin/admin.strings.js:15
@@ -2340,11 +2340,11 @@ msgstr "Strežnik ni več povezan."
 
 #: src/core/Debug.js:52
 msgid "Debug Tools"
-msgstr ""
+msgstr "Orodja za razhroščevanje"
 
 #: src/core/Debug.js:54
 msgid "Ctrl+Shift+Alt+D to exit"
-msgstr ""
+msgstr "Krmilka+dvigalka+izmenjalka+D za izhod"
 
 #: src/docstate.js:82
 msgid "Standard"
@@ -2589,7 +2589,7 @@ msgstr "Funkcije"
 
 #: src/layer/tile/CanvasTileLayer.js:2589
 msgid "and %COUNT more"
-msgstr ""
+msgstr "in še %COUNT drugih"
 
 #: src/layer/tile/CanvasTileLayer.js:2604
 msgid "Copy link location"
