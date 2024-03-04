@@ -86,6 +86,10 @@ export class ColumnHeader extends Header {
 			'.uno:ShowColumn': {
 				name: _UNO('.uno:ShowColumn', 'spreadsheet', true),
 				callback: (this._showColumn).bind(this)
+			},
+			'.uno:FreezePanes': {
+				name: _UNO('.uno:FreezePanes', 'spreadsheet', true),
+				callback: (this._freezePanes).bind(this)
 			}
 		};
 
