@@ -109,12 +109,13 @@ class KeyboardShortcuts {
         return false;
     }
 
-    // has to be called before use, in cypress fail to not allow for duplicated shortcuts
+    // has to be called before use
     public initialize(map: any) {
         this.map = map;
 
+        // in cypress it can fail on load to not allow for duplicated shortcuts
         if (L.Browser.cypressTest) {
-            keyboardShortcuts.verifyShortcuts();
+            this.map.on('docloaded', () => { keyboardShortcuts.verifyShortcuts(); });
         }
     }
 
