@@ -1042,43 +1042,6 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				'vertical': 'true'
 			},
 			{
-				'id': 'layout-freeze-panes',
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:FreezePanes', 'spreadsheet', true),
-				'command': '.uno:FreezePanes',
-				'accessibility': { focusBack: true,	combination: 'FP', de: null }
-			},
-			{
-				'type': 'container',
-				'children': [
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'id': 'layout-freeze-panes-column',
-								'type': 'toolitem',
-								'text':_UNO('.uno:FreezePanesColumn', 'spreadsheet', true),
-								'command': '.uno:FreezePanesColumn',
-								'accessibility': { focusBack: true,	combination: 'FC', de: null }
-							}
-						]
-					},
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'id': 'layout-freeze-panes-row',
-								'type': 'toolitem',
-								'text': _UNO('.uno:FreezePanesRow', 'spreadsheet', true),
-								'command': '.uno:FreezePanesRow',
-								'accessibility': { focusBack: true,	combination: 'FR', de: null }
-							}
-						]
-					}
-				],
-				'vertical': 'true'
-			},
-			{
 				'id': 'layout-select-all',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:SelectAll'),
@@ -1200,6 +1163,43 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 
 	getViewTab: function() {
 		var content = [
+			{
+				'id': 'layout-freeze-panes',
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:FreezePanes', 'spreadsheet', true),
+				'command': '.uno:FreezePanes',
+				'accessibility': { focusBack: true,	combination: 'FP', de: null }
+			},
+			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'layout-freeze-panes-column',
+								'type': 'toolitem',
+								'text':_UNO('.uno:FreezePanesColumn', 'spreadsheet', true),
+								'command': '.uno:FreezePanesColumn',
+								'accessibility': { focusBack: true,	combination: 'FC', de: null }
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'layout-freeze-panes-row',
+								'type': 'toolitem',
+								'text': _UNO('.uno:FreezePanesRow', 'spreadsheet', true),
+								'command': '.uno:FreezePanesRow',
+								'accessibility': { focusBack: true,	combination: 'FR', de: null }
+							}
+						]
+					}
+				],
+				'vertical': 'true'
+			},
 			(window.mode.isTablet()) ?
 				{
 					'id': 'closemobile',
