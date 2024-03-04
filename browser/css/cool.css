@@ -572,11 +572,6 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	z-index: 0;
 }
 
-#mobile-wizard-popup {
-	background-color: var(--color-background-lighter) !important;
-}
-
-
 .cool-dont-break {
 	/* These are technically the same, but use both */
 	overflow-wrap: break-word;
