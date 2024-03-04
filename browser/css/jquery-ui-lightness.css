@@ -923,7 +923,7 @@ button.ui-button::-moz-focus-inner {
 [data-title]:after {
 	padding: 7px 9px;
 	position: absolute;
-	z-index: 9999;
+	z-index: 1105;
 	max-width: 300px;
 	background: var(--color-background-lighter);
 }
