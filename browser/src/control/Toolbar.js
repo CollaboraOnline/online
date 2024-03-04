@@ -1269,7 +1269,6 @@ L.Map.include({
 			this.uiManager.toggleWasm();
 			break;
 		case 'print-active-sheet':
-			this.sendUnoCommand('.uno:DeletePrintArea');
 			var currentSheet = this._docLayer._selectedPart + 1;
 			var options  = {
 				ExportFormFields: {
@@ -1289,7 +1288,6 @@ L.Map.include({
 			this.print(options);
 			break;
 		case 'print-all-sheets':
-			this.sendUnoCommand('.uno:DeletePrintArea');
 			this.print();
 			break;
 		case 'acceptalltrackedchanges':
