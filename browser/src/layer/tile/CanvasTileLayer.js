@@ -2460,7 +2460,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		var oldCursorXY = this._cellCursorXY.clone();
 
-		if (textMsg.match('EMPTY') || !this._map.isEditMode()) {
+		if (textMsg.match('EMPTY')) {
 			app.file.calc.cellCursor.visible = false;
 			this._cellCursorTwips = new L.Bounds(new L.Point(0, 0), new L.Point(0, 0));
 			this._cellCursor = L.LatLngBounds.createDefault();
@@ -2731,7 +2731,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._showURLPopUp(cursorPos, obj.hyperlink.link);
 		}
 
-		if (!this._map.editorHasFocus() && this._map._isCursorVisible && weAreModifier && (this._map.isEditMode())) {
+		if (!this._map.editorHasFocus() && this._map._isCursorVisible && weAreModifier) {
 			// Regain cursor if we had been out of focus and now have input.
 			// Unless the focus is in the Calc Formula-Bar, don't steal the focus.
 			if (!this._map.calcInputBarHasFocus())
@@ -3461,7 +3461,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	_onTextSelectionEndMsg: function (textMsg) {
 		var rectangles = this._getTextSelectionRectangles(textMsg);
 
-		if (rectangles.length && this._map.isEditMode()) {
+		if (rectangles.length) {
 			var topLeftTwips = rectangles[0].getTopLeft();
 			var bottomRightTwips = rectangles[0].getBottomRight();
 			var oldSelection = this._textSelectionEnd;
@@ -3480,7 +3480,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	_onTextSelectionStartMsg: function (textMsg) {
 		var rectangles = this._getTextSelectionRectangles(textMsg);
 
-		if (rectangles.length && this._map.isEditMode()) {
+		if (rectangles.length) {
 			var topLeftTwips = rectangles[0].getTopLeft();
 			var bottomRightTwips = rectangles[0].getBottomRight();
 			var oldSelection = this._textSelectionStart;
@@ -3508,7 +3508,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	_onCellSelectionAreaMsg: function (textMsg) {
 		var autofillMarkerSection = app.sectionContainer.getSectionWithName(L.CSections.AutoFillMarker.name);
 		var strTwips = textMsg.match(/\d+/g);
-		if (strTwips != null && this._map.isEditMode()) {
+		if (strTwips != null) {
 			var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
 			var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
 			var bottomRightTwips = topLeftTwips.add(offset);

@@ -1120,7 +1120,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         if (tokens.equals(0, "key"))
             _keyEvents++;
 
-        if (isEditable() && COOLProtocol::tokenIndicatesDocumentModification(tokens)) // check this function: tokenIndicatesDocumentModification
+        if (isEditable() && COOLProtocol::tokenIndicatesDocumentModification(tokens))
         {
             docBroker->updateLastModifyingActivityTime();
         }

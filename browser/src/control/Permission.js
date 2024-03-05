@@ -202,9 +202,6 @@ L.Map.include({
 	_enterEditMode: function (perm) {
 		this._permission = perm;
 
-		this.dragging.disable(); // FIXME: before unification, this was only called when not on a touch device.
-		// It would be better to split dragging.disable into a touch version and a mouse version but this looks like it will require a major rework of its own...
-
 		if ((window.mode.isMobile() || window.mode.isTablet()) && this._textInput && this.getDocType() === 'text') {
 			this._textInput.setSwitchedToEditMode();
 		}
@@ -225,7 +222,6 @@ L.Map.include({
 	_enterReadOnlyMode: function (perm) {
 		this._permission = perm;
 
-		this.dragging.enable();
 		// disable all user interaction, will need to add keyboard too
 		if (this._docLayer) {
 			this._docLayer._onUpdateCursor();
@@ -238,20 +234,6 @@ L.Map.include({
 
 		if (window.ThisIsTheAndroidApp)
 			window.postMobileMessage('EDITMODE off');
-	},
-
-	enableSelection: function () {
-		if (this.isEditMode()) {
-			return;
-		}
-		this.dragging.disable();
-	},
-
-	disableSelection: function () {
-		if (this.isEditMode()) {
-			return;
-		}
-		this.dragging.enable();
 	},
 
 	// Is user currently in read only mode (i.e: initial mobile read only view mode, user may have write access)

@@ -30,12 +30,6 @@ L.Control.Selection = L.Control.extend({
 	},
 
 	_onChange: function () {
-		if (this._checkBox.checked) {
-			this._map.enableSelection();
-		}
-		else {
-			this._map.disableSelection();
-		}
 		this._map.focus();
 	},
 
