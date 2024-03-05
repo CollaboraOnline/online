@@ -568,6 +568,10 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	top: -15px;
 }
 
+.tracked-deleted-comment-show .cool-annotation-menubar {
+	display: none;
+}
+
 #main-document-content {
 	z-index: 0;
 }
