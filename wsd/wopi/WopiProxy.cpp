@@ -7,7 +7,7 @@
 
 #include <config.h>
 
-#include <WopiProxy.hpp>
+#include "WopiProxy.hpp"
 
 #include "FileUtil.hpp"
 #include "HttpHelper.hpp"
