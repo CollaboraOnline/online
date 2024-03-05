@@ -14,7 +14,7 @@
 #include <RequestVettingStation.hpp>
 #include <RequestDetails.hpp>
 #include <Socket.hpp>
-#include <WopiProxy.hpp>
+#include <wopi/WopiProxy.hpp>
 
 #include <string>
 #include <memory>
