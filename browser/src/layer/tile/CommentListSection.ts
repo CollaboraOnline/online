@@ -2037,7 +2037,7 @@ export class CommentSection extends CanvasSectionObject {
 			var comment = this.sectionProperties.commentList[i];
 			if (comment.sectionProperties.data.layoutStatus === CommentLayoutStatus.DELETED) {
 				comment.sectionProperties.data.layoutStatus = CommentLayoutStatus.VISIBLE;
-				comment.sectionProperties.container.classList.remove('greyed');
+				comment.sectionProperties.container.classList.remove('tracked-deleted-comment-show');
 			}
 		}
 	}
