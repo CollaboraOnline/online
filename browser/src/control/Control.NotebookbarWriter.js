@@ -2149,7 +2149,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'class': 'unoshowresolvedannotations',
 				'type': 'bigcustomtoolitem',
 				'text': _UNO('.uno:ShowResolvedAnnotations', 'text'),
-				'command': 'showresolvedannotations',
+				'command': '.uno:ShowResolvedAnnotations',
 				'accessibility': { focusBack: true, combination: 'SR', de: null }
 			},
 			{
@@ -2286,7 +2286,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 								'id': 'acceptalltrackedchanges',
 								'type': 'customtoolitem',
 								'text': _UNO('.uno:AcceptAllTrackedChanges', 'text'),
-								'command': 'acceptalltrackedchanges',
+								'command': '.uno:AcceptAllTrackedChanges',
 								'accessibility': { focusBack: true, combination: 'A2', de: 'A2' }
 							}
 						]
@@ -2298,7 +2298,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 								'id': 'rejectalltrackedchanges',
 								'type': 'customtoolitem',
 								'text': _UNO('.uno:RejectAllTrackedChanges', 'text'),
-								'command': 'rejectalltrackedchanges',
+								'command': '.uno:RejectAllTrackedChanges',
 								'accessibility': { focusBack: true, combination: 'J', de: 'J' }
 							}
 						]
