@@ -1776,6 +1776,14 @@ L.Control.Menubar = L.Control.extend({
 								$(aItem).removeClass(constChecked);
 							}
 						}
+					} else if (id === 'acceptalltrackedchanges' || id === 'rejectalltrackedchanges') {
+						var command = id === 'acceptalltrackedchanges' ? '.uno:AcceptAllTrackedChanges' : '.uno:RejectAllTrackedChanges';
+						itemState = self._map['stateChangeHandler'].getItemValue(command);
+						if (itemState === 'disabled') {
+							$(aItem).addClass('disabled');
+						} else {
+							$(aItem).removeClass('disabled');
+						}
 					} else {
 						$(aItem).removeClass('disabled');
 					}
@@ -1898,7 +1906,7 @@ L.Control.Menubar = L.Control.extend({
 		} else if (id === 'zoomin' && this._map.getZoom() < this._map.getMaxZoom()) {
 			this._map.zoomIn(1, null, true /* animate? */);
 		} else if (id === 'showresolved') {
-			this._map.dispatch('showresolvedannotations');
+			this._map.dispatch('.uno:ShowResolvedAnnotations');
 		} else if (id === 'zoomout' && this._map.getZoom() > this._map.getMinZoom()) {
 			this._map.zoomOut(1, null, true /* animate? */);
 		} else if (id === 'zoomreset') {
@@ -1976,10 +1984,9 @@ L.Control.Menubar = L.Control.extend({
 		} else if (id.indexOf('morelanguages-') != -1) {
 			this._map.fire('morelanguages', { applyto: id.substr('morelanguages-'.length) });
 		} else if (id === 'acceptalltrackedchanges') {
-			this._map.dispatch('acceptalltrackedchanges');
-
+			this._map.dispatch('.uno:AcceptAllTrackedChanges');
 		} else if (id === 'rejectalltrackedchanges') {
-			this._map.dispatch('rejectalltrackedchanges');
+			this._map.dispatch('.uno:RejectAllTrackedChanges');
 		}
 		// Inform the host if asked
 		if (postmessage)
