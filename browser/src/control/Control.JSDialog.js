@@ -1,4 +1,3 @@
-/* -*- js-indent-level: 8 -*- */
 /*
  * Copyright the Collabora Online contributors.
  *
@@ -781,10 +780,18 @@ L.Control.JSDialog = L.Control.extend({
 		builder.executeAction(dialogContainer, innerData);
 	},
 
+    _clamp: function(value, min, max) {
+        return Math.min(Math.max(value, min), max);
+    },
+
 	onPan: function (ev) {
 		var target = this.draggingObject;
 		if (target) {
 			var isRTL = document.documentElement.dir === 'rtl';
+
+			var dialogBounds = target.form.getBoundingClientRect();
+			var width = dialogBounds.width;
+			var height = dialogBounds.height;
 
 			var startX = target.startX ? target.startX : 0;
 			var startY = target.startY ? target.startY : 0;
@@ -792,15 +799,13 @@ L.Control.JSDialog = L.Control.extend({
 			var newX = startX + ev.deltaX * (isRTL ? -1 : 1);
 			var newY = startY + ev.deltaY;
 
-			// Don't allow to put dialog outside the view
-			if (!(newX < 0 || newY < 0
-				|| newX > window.innerWidth - target.offsetWidth/2
-				|| newY > window.innerHeight - target.offsetHeight/2)) {
-				target.translateX = newX;
-				target.translateY = newY;
+            newX = this._clamp(newX, 0, window.innerWidth - width);
+			newY = this._clamp(newY, 0, window.innerHeight - height);
 
-				this.updatePosition(target.container, newX, newY);
-			}
+			target.translateX = newX;
+			target.translateY = newY;
+
+			this.updatePosition(target.container, newX, newY);
 		}
 	},
 
