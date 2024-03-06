@@ -497,7 +497,7 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	-webkit-user-select: text;
 	-ms-user-select: text;
 	z-index: 10;
-	max-width: 250px;
+	width: 250px;
 }
 
 .cool-annotation.tracked-deleted-comment-show {
