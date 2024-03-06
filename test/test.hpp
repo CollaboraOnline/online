@@ -24,7 +24,6 @@ bool runClientTests(const char* cmd, bool standalone, bool verbose);
 
 /// Get the list of all kit PIDs
 std::set<pid_t> getKitPids();
-
 /// Get the list of spare (unused) kit PIDs
 std::set<pid_t> getSpareKitPids();
 /// Get the list of doc (loaded) kit PIDs
