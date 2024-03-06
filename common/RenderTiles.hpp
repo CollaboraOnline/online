@@ -72,18 +72,14 @@ namespace RenderTiles
         return nextId;
     }
 
-    bool doRender(std::shared_ptr<lok::Document> document,
-                  DeltaGenerator &deltaGen,
-                  TileCombined &tileCombined,
-                  ThreadPool &pngPool,
-                  const std::function<void (unsigned char *data,
-                                            int offsetX, int offsetY,
-                                            size_t pixmapWidth, size_t pixmapHeight,
-                                            int pixelWidth, int pixelHeight,
-                                            LibreOfficeKitTileMode mode)>& blendWatermark,
-                  const std::function<void (const char *buffer, size_t length)>& outputMessage,
-                  unsigned mobileAppDocId,
-                  int canonicalViewId, bool dumpTiles)
+    bool doRender(
+        std::shared_ptr<lok::Document> document, DeltaGenerator& deltaGen,
+        TileCombined& tileCombined, ThreadPool& pngPool,
+        const std::function<void(unsigned char* data, int offsetX, int offsetY, size_t pixmapWidth,
+                                 size_t pixmapHeight, int pixelWidth, int pixelHeight,
+                                 LibreOfficeKitTileMode mode)>& blendWatermark,
+        const std::function<void(const char* buffer, size_t length)>& outputMessage,
+        [[maybe_unused]] unsigned mobileAppDocId, int canonicalViewId, bool dumpTiles)
     {
         const auto& tiles = tileCombined.getTiles();
 
@@ -144,8 +140,6 @@ namespace RenderTiles
                 << renderArea.getLeft() << ", " << renderArea.getTop() << "), ("
                 << renderArea.getWidth() << ", " << renderArea.getHeight() << ") "
                 << " took " << elapsedUs << " (" << area / elapsedUs.count() << " MP/s).");
-
-        (void) mobileAppDocId;
 
         const auto mode = static_cast<LibreOfficeKitTileMode>(document->getTileMode());
 

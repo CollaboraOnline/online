@@ -227,21 +227,16 @@ namespace Util
 #endif
 
     /// Assert that a lock is already taken.
-    template <typename T>
-    void assertIsLocked(const T& lock)
+    template <typename T> void assertIsLocked([[maybe_unused]] const T& lock)
     {
-#ifdef NDEBUG
-        (void) lock;
-#else
+#ifndef NDEBUG
         assert(lock.owns_lock());
 #endif
     }
 
-    inline void assertIsLocked(std::mutex& mtx)
+    inline void assertIsLocked([[maybe_unused]] std::mutex& mtx)
     {
-#ifdef NDEBUG
-        (void) mtx;
-#else
+#ifndef NDEBUG
         assert(!mtx.try_lock());
 #endif
     }

@@ -325,23 +325,20 @@ class DeltaGenerator {
         DeltaData(const DeltaData&) = delete;
         DeltaData& operator=(const DeltaData&) = delete;
 
-        DeltaData (TileWireId wid,
-                   unsigned char* pixmap, size_t startX, size_t startY,
-                   int width, int height,
-                   const TileLocation &loc, int bufferWidth, int bufferHeight
-            ) :
-            _loc(loc),
-            _inUse(false),
-            _wid(wid),
+        DeltaData(TileWireId wid, unsigned char* pixmap, size_t startX, size_t startY, int width,
+                  int height, const TileLocation& loc, int bufferWidth,
+                  [[maybe_unused]] int bufferHeight)
+            : _loc(loc)
+            , _inUse(false)
+            , _wid(wid)
+            ,
             // in Pixels
-            _width(width),
-            _height(height),
-            _rows(new DeltaBitmapRow[height])
+            _width(width)
+            , _height(height)
+            , _rows(new DeltaBitmapRow[height])
         {
             assert (startX + width <= (size_t)bufferWidth);
             assert (startY + height <= (size_t)bufferHeight);
-
-            (void)bufferHeight;
 
             LOG_TRC("Converting pixel data to delta data of size "
                     << (width * height * 4) << " width " << width

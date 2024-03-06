@@ -222,7 +222,7 @@ namespace
     unsigned linkOrCopyFileCount = 0; // Track to help quantify the link-or-copy performance.
     constexpr unsigned SlowLinkOrCopyLimitInSecs = 2; // After this many seconds, start spamming the logs.
 
-    bool detectSlowStackingFileSystem(const std::string &directory)
+    bool detectSlowStackingFileSystem([[maybe_unused]] const std::string& directory)
     {
 #ifdef __linux__
 #ifndef OVERLAYFS_SUPER_MAGIC
@@ -243,7 +243,6 @@ namespace
             return false;
         }
 #else
-        (void)directory;
         return false;
 #endif
     }

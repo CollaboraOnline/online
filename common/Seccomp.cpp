@@ -102,10 +102,8 @@ static void handleSysSignal(int /* signal */,
 
 namespace Seccomp {
 
-bool lockdown(Type type)
+bool lockdown([[maybe_unused]] Type type)
 {
-    (void)type; // so far just the kit.
-
 #if DISABLE_SECCOMP == 0
     #define ACCEPT_SYSCALL(name) \
         BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, __NR_##name, 0, 1), \
