@@ -59,7 +59,6 @@
 #include <Poco/Exception.h>
 #include <Poco/JSON/Object.h>
 #include <Poco/JSON/Parser.h>
-#include <Poco/Net/Socket.h>
 #include <Poco/URI.h>
 
 #include "ChildSession.hpp"

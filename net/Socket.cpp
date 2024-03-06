@@ -34,6 +34,7 @@
 #include <Poco/MemoryStream.h>
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPResponse.h>
+#include <Poco/Net/WebSocket.h> // computeAccept
 #include <Poco/URI.h>
 #if ENABLE_SSL
 #include <Poco/Net/X509Certificate.h>
@@ -1314,6 +1315,30 @@ bool StreamSocket::sniffSSL() const
 }
 
 #endif // !MOBILEAPP
+
+namespace {
+    /// To make the protected 'computeAccept' accessible.
+    class PublicComputeAccept final : public Poco::Net::WebSocket
+    {
+    public:
+        static std::string doComputeAccept(const std::string &key)
+        {
+            return computeAccept(key);
+        }
+
+        static std::string generateKey() { return createKey(); }
+    };
+}
+
+std::string WebSocketHandler::computeAccept(const std::string &key)
+{
+    return PublicComputeAccept::doComputeAccept(key);
+}
+
+std::string WebSocketHandler::generateKey()
+{
+    return PublicComputeAccept::generateKey();
+}
 
 // Required by Android and iOS apps.
 namespace http
