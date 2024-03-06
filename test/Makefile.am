@@ -113,9 +113,10 @@ endif
 AM_CPPFLAGS = -pthread -I$(top_srcdir) -DBUILDING_TESTS -DLOK_ABORT_ON_ASSERTION
 
 wsd_sources = \
-            ../common/SpookyV2.cpp \
             ../common/Authorization.cpp \
+            ../common/SpookyV2.cpp \
             ../kit/Kit.cpp \
+            ../kit/KitWebSocket.cpp \
             ../kit/TestStubs.cpp \
             ../wsd/FileServerUtil.cpp \
             ../wsd/RequestDetails.cpp \

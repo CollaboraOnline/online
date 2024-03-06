@@ -32,6 +32,7 @@
 #include <chrono>
 
 #include <Poco/Path.h>
+#include <Poco/URI.h>
 
 #include <Common.hpp>
 #include "Kit.hpp"
@@ -41,9 +42,6 @@
 #include <Unit.hpp>
 #include <Util.hpp>
 #include <WebSocketHandler.hpp>
-#if !MOBILEAPP
-#include <Admin.hpp>
-#endif
 
 #include <common/FileUtil.hpp>
 #include <common/JailUtil.hpp>

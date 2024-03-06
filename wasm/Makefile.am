@@ -38,6 +38,7 @@ online_SOURCES = \
 	../common/Util.cpp \
 	../kit/ChildSession.cpp \
 	../kit/Kit.cpp \
+	../kit/KitWebSocket.cpp \
 	../kit/DeltaSimd.c \
 	../net/FakeSocket.cpp \
 	../net/Socket.cpp \
