@@ -1259,7 +1259,7 @@ FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::prepro
 
     // the config value of 'notebookbar/tabbed' or 'classic/compact' overrides the UIMode
     // from the WOPI
-    std::string userInterfaceModeConfig = config.getString("user_interface.mode", "default");
+    std::string userInterfaceModeConfig = config.getString("user_interface.mode", "tabbed");
     if (userInterfaceModeConfig == "compact")
         userInterfaceModeConfig = "classic";
 
