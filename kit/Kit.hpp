@@ -446,6 +446,9 @@ std::string anonymizeUsername(const std::string& username);
 /// Ensure there is no fatal system setup problem
 void consistencyCheckJail();
 
+/// check how many theads we have currently
+int getCurrentThreadCount();
+
 /// Fetch the latest montonically incrementing wire-id
 TileWireId getCurrentWireId(bool increment = false);
 
