@@ -95,7 +95,7 @@ describe(['tagdesktop'], 'Collapsed Annotation Tests', function() {
 		insertMultipleComment('impress', 1, false, '#insert-insert-annotation-button');
 		cy.cGet('.leaflet-marker-icon').should('exist');
 		cy.cGet('#annotation-content-area-1').should('contain','some text0');
-		cy.cGet('.avatar-img').click();
+		cy.cGet('.cool-annotation-table .avatar-img').click();
 		cy.cGet('.cool-annotation-menu').click();
 		cy.cGet('body').contains('.context-menu-item','Modify').click();
 		cy.cGet('#annotation-modify-textarea-1').type('{home}');
@@ -109,7 +109,7 @@ describe(['tagdesktop'], 'Collapsed Annotation Tests', function() {
 		insertMultipleComment('impress', 1, false, '#insert-insert-annotation-button');
 		cy.cGet('.leaflet-marker-icon').should('exist');
 		cy.cGet('.cool-annotation-content > div').should('contain','some text');
-		cy.cGet('.avatar-img').click();
+		cy.cGet('.cool-annotation-table .avatar-img').click();
 		cy.cGet('.cool-annotation-menu').click();
 		cy.cGet('body').contains('.context-menu-item','Remove').click();
 		cy.cGet('.leaflet-marker-icon').should('not.exist');
@@ -119,7 +119,7 @@ describe(['tagdesktop'], 'Collapsed Annotation Tests', function() {
 		insertMultipleComment('impress', 1, false, '#insert-insert-annotation-button');
 		cy.cGet('.leaflet-marker-icon').should('exist');
 		cy.cGet('.cool-annotation-content > div').should('contain','some text');
-		cy.cGet('.avatar-img').click();
+		cy.cGet('.cool-annotation-table .avatar-img').click();
 		cy.cGet('.cool-annotation-menu').click();
 		cy.cGet('body').contains('.context-menu-item','Reply').click();
 		cy.cGet('#annotation-reply-textarea-1').type('some reply text');
