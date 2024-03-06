@@ -11,17 +11,26 @@
 
 #include <config.h>
 
-#include <chrono>
-#include <memory>
-#include <iconv.h>
-#include <string>
+#include "WopiStorage.hpp"
+
+#include <Auth.hpp>
+#include <CommandControl.hpp>
+#include <Common.hpp>
+#include <Exceptions.hpp>
+#include <HostUtil.hpp>
+#include <HttpRequest.hpp>
+#include <Log.hpp>
+#include <NetUtil.hpp>
+#include <ProofKey.hpp>
+#include <Unit.hpp>
+#include <Util.hpp>
+#include <common/FileUtil.hpp>
+#include <common/JsonUtil.hpp>
+#include <common/TraceEvent.hpp>
 
 #include <Poco/Exception.h>
 #include <Poco/JSON/Object.h>
 #include <Poco/JSON/Parser.h>
-
-#if !MOBILEAPP
-
 #include <Poco/Net/AcceptCertificateHandler.h>
 #include <Poco/Net/Context.h>
 #include <Poco/Net/DNS.h>
@@ -32,41 +41,14 @@
 #include <Poco/Net/KeyConsoleHandler.h>
 #include <Poco/Net/NameValueCollection.h>
 #include <Poco/Net/SSLManager.h>
-
-#include <cassert>
-#include <errno.h>
-
-#include <Auth.hpp>
-#include <HostUtil.hpp>
-#include <ProofKey.hpp>
-#include <HttpRequest.hpp>
-
-#endif
-
 #include <Poco/StreamCopier.h>
 #include <Poco/URI.h>
 
-#include <Common.hpp>
-#include <Exceptions.hpp>
-#include <Storage.hpp>
-#include <Log.hpp>
-#include <Unit.hpp>
-#include <Util.hpp>
-#include <common/FileUtil.hpp>
-#include <common/JsonUtil.hpp>
-#include <common/TraceEvent.hpp>
-#include <NetUtil.hpp>
-#include <CommandControl.hpp>
-
-#ifdef IOS
-#include <ios.h>
-#elif defined(__ANDROID__)
-#include "androidapp.hpp"
-#elif defined(GTKAPP)
-#include "gtk.hpp"
-#elif WASMAPP
-#include "wasmapp.hpp"
-#endif // IOS
+#include <cassert>
+#include <chrono>
+#include <iconv.h>
+#include <memory>
+#include <string>
 
 bool isTemplate(const std::string& filename)
 {
@@ -79,8 +61,6 @@ bool isTemplate(const std::string& filename)
             return true;
     return false;
 }
-
-#if !MOBILEAPP
 
 namespace
 {
@@ -123,10 +103,6 @@ std::map<std::string, std::string> GetQueryParams(const Poco::URI& uri)
 }
 
 } // anonymous namespace
-
-#endif // !MOBILEAPP
-
-#if !MOBILEAPP
 
 void WopiStorage::initHttpRequest(Poco::Net::HTTPRequest& request, const Poco::URI& uri,
                                   const Authorization& auth) const
@@ -957,7 +933,5 @@ WopiStorage::handleUploadToStorageResponse(const WopiUploadDetails& details,
 
     return result;
 }
-
-#endif // !MOBILEAPP
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

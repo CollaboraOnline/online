@@ -11,19 +11,20 @@
 
 #pragma once
 
-#include <memory>
-#include <string>
-#include <chrono>
-
-#include <Poco/URI.h>
-#include <Poco/Util/Application.h>
-#include <Poco/JSON/Object.h>
-
-#include "HttpRequest.hpp"
-#include "COOLWSD.hpp"
-#include "Log.hpp"
+#include <COOLWSD.hpp>
+#include <HttpRequest.hpp>
+#include <Log.hpp>
+#include <Storage.hpp>
 #include <common/Authorization.hpp>
 #include <net/HttpRequest.hpp>
+
+#include <Poco/JSON/Object.h>
+#include <Poco/URI.h>
+#include <Poco/Util/Application.h>
+
+#include <chrono>
+#include <memory>
+#include <string>
 
 /// WOPI protocol backed storage.
 class WopiStorage : public StorageBase
@@ -159,8 +160,6 @@ public:
         bool _userCanRename = false;
     };
 
-#if !MOBILEAPP
-
     WopiStorage(const Poco::URI& uri, const std::string& localStorePath,
                 const std::string& jailPath)
         : StorageBase(uri, localStorePath, jailPath)
@@ -249,7 +248,6 @@ private:
 
     /// Whether or not this is a legacy server.
     const bool _legacyServer;
-#endif // !MOBILEAPP
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

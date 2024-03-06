@@ -14,7 +14,9 @@
 #include <RequestVettingStation.hpp>
 #include <RequestDetails.hpp>
 #include <Socket.hpp>
+#if !MOBILEAPP
 #include <wopi/WopiProxy.hpp>
+#endif // !MOBILEAPP
 
 #include <string>
 #include <memory>
@@ -110,8 +112,10 @@ private:
     std::weak_ptr<StreamSocket> _socket;
     std::string _id;
 
+#if !MOBILEAPP
     /// WASM document request handler. Used only when WASM is enabled.
     std::unique_ptr<WopiProxy> _wopiProxy;
+#endif // !MOBILEAPP
 
     /// The private RequestVettingStation. Held privately after the
     /// WS is created and as long as it is connected.

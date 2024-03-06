@@ -769,9 +769,9 @@ void DocumentBroker::stop(const std::string& reason)
     _poll->wakeup();
 }
 
-bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session,
-                              const std::string& jailId,
-                              std::unique_ptr<WopiStorage::WOPIFileInfo> wopiFileInfo)
+bool DocumentBroker::download(
+    const std::shared_ptr<ClientSession>& session, const std::string& jailId,
+    [[maybe_unused]] std::unique_ptr<WopiStorage::WOPIFileInfo> wopiFileInfo)
 {
     ASSERT_CORRECT_THREAD();
 
