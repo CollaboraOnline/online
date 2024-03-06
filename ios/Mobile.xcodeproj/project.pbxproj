@@ -67,6 +67,7 @@
 		BE8D85D6214055F3009F1860 /* rc in Resources */ = {isa = PBXBuildFile; fileRef = BE8D85C8214055F3009F1860 /* rc */; };
 		BE9ADE3F265D046600BC034A /* TraceEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE9ADE3D265D046600BC034A /* TraceEvent.cpp */; };
 		BEA2835621467FDD00848631 /* Kit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA2835521467FDD00848631 /* Kit.cpp */; };
+		BEA2835621467F0D00848631 /* KitWebSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA2835521467F0D00848631 /* KitWebSocket.cpp */; };
 		BEA283582146945500848631 /* ChildSession.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA283572146945500848631 /* ChildSession.cpp */; };
 		BEA2835A21470A1C00848631 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEA2835921470A1C00848631 /* WebKit.framework */; };
 		BEA2835D21498AD400848631 /* Socket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA2835C21498AD400848631 /* Socket.cpp */; };
@@ -1074,6 +1075,7 @@
 		BEA1203724C587D600332049 /* BitmapConvolutionMatrixFilter.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BitmapConvolutionMatrixFilter.cxx; path = "../lobuilddir-symlink/vcl/source/bitmap/BitmapConvolutionMatrixFilter.cxx"; sourceTree = "<group>"; };
 		BEA1203824C587D600332049 /* BitmapSolarizeFilter.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BitmapSolarizeFilter.cxx; path = "../lobuilddir-symlink/vcl/source/bitmap/BitmapSolarizeFilter.cxx"; sourceTree = "<group>"; };
 		BEA2835521467FDD00848631 /* Kit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Kit.cpp; sourceTree = "<group>"; };
+		BEA2835521467F0D00848631 /* KitWebSocket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KitWebSocket.cpp; sourceTree = "<group>"; };
 		BEA283572146945500848631 /* ChildSession.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ChildSession.cpp; sourceTree = "<group>"; };
 		BEA2835921470A1C00848631 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		BEA2835C21498AD400848631 /* Socket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Socket.cpp; path = ../net/Socket.cpp; sourceTree = "<group>"; };
@@ -2907,6 +2909,7 @@
 				A5C2FA5C2AC1BEC500265946 /* DeltaSimd.h */,
 				BEA283572146945500848631 /* ChildSession.cpp */,
 				BEA2835521467FDD00848631 /* Kit.cpp */,
+				BEA2835521467F0D00848631 /* KitWebSocket.cpp */,
 			);
 			name = kit;
 			path = ../kit;
@@ -3675,6 +3678,7 @@
 				BE5EB5F821401E0F00E0826C /* Storage.cpp in Sources */,
 				BE5EB5D621401E0F00E0826C /* Storage.cpp in Sources */,
 				BEA2835621467FDD00848631 /* Kit.cpp in Sources */,
+				BEA2835621467F0D00848631 /* KitWebSocket.cpp in Sources */,
 				BE8D77322136762500AC58EA /* DocumentViewController.mm in Sources */,
 				BE8D772C2136762500AC58EA /* AppDelegate.mm in Sources */,
 			);
