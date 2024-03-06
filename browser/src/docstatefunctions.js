@@ -1,4 +1,4 @@
-/* global Proxy _ */
+/* -*- js-indent-level: 8 -*- */
 /*
  * Copyright the Collabora Online contributors.
  *
@@ -8,11 +8,10 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-
 /*
-    Doc state functions.
-    This file is meant to be used for setting and getting the document states.
-*/
+ * Doc state functions.
+ * This file is meant to be used for setting and getting the document states.
+ */
 
 /* global app */
 
