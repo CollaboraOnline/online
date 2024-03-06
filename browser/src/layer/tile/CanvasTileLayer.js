@@ -4578,6 +4578,10 @@ L.CanvasTileLayer = L.Layer.extend({
 					this._twipsToLatLng(this._innerTextRectTwips.getTopLeft(), this._map.getZoom()),
 					this._twipsToLatLng(this._innerTextRectTwips.getBottomRight(), this._map.getZoom()));
 
+
+				if (this._innerTextRectMarker)
+					this._map.removeLayer(this._innerTextRectMarker);
+
 				this._innerTextRectMarker = L.svgGroup(this._innerTextRect, {
 					draggable: extraInfo.isDraggable,
 					dragConstraint: extraInfo.dragInfo,
