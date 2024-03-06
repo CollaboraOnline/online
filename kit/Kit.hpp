@@ -20,7 +20,6 @@
 #include <common/ThreadPool.hpp>
 #include <wsd/TileDesc.hpp>
 
-#include "Delta.hpp"
 #include "Socket.hpp"
 
 #define LOK_USE_UNSTABLE_API
@@ -51,6 +50,7 @@ bool globalPreinit(const std::string& loTemplate);
 /// Wrapper around private Document::ViewCallback().
 void documentViewCallback(const int type, const char* p, void* data);
 
+class DeltaGenerator;
 class DocumentManagerInterface;
 
 /// Descriptor class used to link a LOK
@@ -409,8 +409,8 @@ private:
 
     std::atomic<bool> _stop;
 
-    ThreadPool _pngPool;
-    DeltaGenerator _deltaGen;
+    ThreadPool _deltaPool;
+    std::unique_ptr<DeltaGenerator> _deltaGen;
 
     std::condition_variable _cvLoading;
     int _editorId;
