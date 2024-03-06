@@ -939,7 +939,19 @@ app.definitions.Socket = L.Class.extend({
 				tmpLink.href = this._map.options.doc;
 				// Insert the storage server address to be more friendly
 				storageError = storageError.replace('%storageserver', tmpLink.host);
+
+				// show message to the user in Control.AlertDialog
 				this._map.fire('warn', {msg: storageError});
+
+				// send to wopi handler so we can respond
+				var postMessageObj = {
+					success: false,
+					cmd: command.errorCmd,
+					result: command.errorKind,
+					errorMsg: storageError
+				};
+
+				this._map.fire('postMessage', {msgId: 'Action_Save_Resp', args: postMessageObj});
 
 				return;
 			}
@@ -1219,6 +1231,17 @@ app.definitions.Socket = L.Class.extend({
 		}
 		else if (textMsg.startsWith('hyperlinkclicked:')) {
 			this._onHyperlinkClickedMsg(textMsg);
+		}
+
+		if (textMsg.startsWith('downloadas:')) {
+			var postMessageObj = {
+				success: true,
+				result: 'exportas',
+				errorMsg: ''
+			};
+
+			this._map.fire('postMessage', {msgId: 'Action_Save_Resp', args: postMessageObj});
+			// intentional falltrough
 		}
 
 		if (!this._map._docLayer || this._handlingDelayedMessages) {

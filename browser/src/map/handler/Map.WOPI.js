@@ -489,6 +489,7 @@ L.Map.WOPI = L.Handler.extend({
 		}
 		else if (msg.MessageId === 'Action_Export') {
 			if (msg.Values) {
+				this._notifySave = msg.Values['Notify'];
 				var format = msg.Values.Format;
 				var fileName = this._map['wopi'].BaseFileName;
 				fileName = fileName.substr(0, fileName.lastIndexOf('.'));
