@@ -1299,6 +1299,13 @@ export class CommentSection extends CanvasSectionObject {
 		} else if (action === 'RedlinedDeletion') {
 			id = obj[dataroot].id;
 			var _redlined = this.getComment(id);
+			if (_redlined && _redlined.sectionProperties.data.layoutStatus === CommentLayoutStatus.INSERTED) {
+				// Do normal removal if comment was added while recording was on
+				// No need to keep the deleted comment
+				obj[dataroot].action = 'Remove';
+				this.onACKComment(obj);
+				return;
+			}
 			if (_redlined) {
 				_redlined.sectionProperties.data.layoutStatus = CommentLayoutStatus.DELETED;
 				_redlined.setLayoutClass();
