@@ -40,6 +40,7 @@
 #include <HostUtil.hpp>
 #include <ProofKey.hpp>
 #include <HttpRequest.hpp>
+#include <wopi/WopiStorage.hpp>
 
 #endif
 

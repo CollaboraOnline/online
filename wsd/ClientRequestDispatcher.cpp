@@ -26,7 +26,6 @@
 #include <FileServer.hpp>
 #if !MOBILEAPP
 #include <HostUtil.hpp>
-#include <wopi/WopiProxy.hpp>
 #endif // !MOBILEAPP
 #include <RequestDetails.hpp>
 #include <ProxyRequestHandler.hpp>
