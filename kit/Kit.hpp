@@ -281,10 +281,8 @@ public:
 
     void alertAllUsers(const std::string& cmd, const std::string& kind) override
     {
-        alertAllUsers("errortoall: cmd=" + cmd + " kind=" + kind);
+        sendTextFrame("errortoall: cmd=" + cmd + " kind=" + kind);
     }
-
-    void alertAllUsers(const std::string& msg) { sendTextFrame(msg); }
 
     /// Notify all views with the given message
     bool notifyAll(const std::string& msg) override
