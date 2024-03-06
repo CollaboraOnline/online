@@ -24,9 +24,6 @@
 #include <Poco/Net/HTTPResponse.h>
 #include <Poco/Net/HTTPSClientSession.h>
 #include <Poco/Net/NetException.h>
-#include <Poco/Net/StreamSocket.h>
-#include <Poco/Net/SecureStreamSocket.h>
-#include <Poco/Net/Socket.h>
 #include <Poco/Path.h>
 #include <Poco/URI.h>
 
@@ -300,17 +297,6 @@ pocoGet(bool secure, const std::string& host, const int port, const std::string&
     const char* scheme = (secure ? "https://" : "http://");
     Poco::URI uri(scheme + host + ':' + std::to_string(port) + url);
     return pocoGet(uri);
-}
-
-inline std::shared_ptr<Poco::Net::StreamSocket> createRawSocket()
-{
-    return
-#if ENABLE_SSL
-        std::make_shared<Poco::Net::SecureStreamSocket>
-#else
-        std::make_shared<Poco::Net::StreamSocket>
-#endif
-        (Poco::Net::SocketAddress("127.0.0.1", ClientPortNumber));
 }
 
 // Sets read / write timeout for the given file descriptor.

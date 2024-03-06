@@ -19,10 +19,7 @@
 #include "Socket.hpp"
 #include <net/HttpRequest.hpp>
 
-#include <Poco/MemoryStream.h>
-#include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPResponse.h>
-#include <Poco/Net/WebSocket.h>
 
 #include <chrono>
 #include <memory>
@@ -79,7 +76,7 @@ public:
         , _pingTimeUs(0)
         , _isMasking(isClient && isMasking)
         , _inFragmentBlock(false)
-        , _key(isClient ? PublicComputeAccept::generateKey() : std::string())
+        , _key(isClient ? generateKey() : std::string())
         , _lastFlags(0)
         ,
 #endif
@@ -931,17 +928,8 @@ protected:
     /// Implementation of the ProtocolHandlerInterface.
     void dumpState(std::ostream& os) const override;
 
-    /// To make the protected 'computeAccept' accessible.
-    class PublicComputeAccept final : public Poco::Net::WebSocket
-    {
-    public:
-        static std::string doComputeAccept(const std::string &key)
-        {
-            return computeAccept(key);
-        }
-
-        static std::string generateKey() { return createKey(); }
-    };
+    static std::string generateKey();
+    static std::string computeAccept(const std::string &key);
 
     /// Upgrade the http(s) connection to a websocket.
     template <typename T>
@@ -969,7 +957,7 @@ protected:
         http::Response httpResponse(http::StatusCode::SwitchingProtocols, socket->getFD());
         httpResponse.set("Upgrade", "websocket");
         httpResponse.set("Connection", "Upgrade");
-        httpResponse.set("Sec-WebSocket-Accept", PublicComputeAccept::doComputeAccept(wsKey));
+        httpResponse.set("Sec-WebSocket-Accept", computeAccept(wsKey));
         LOG_TRC("Sending WS Upgrade response: " << httpResponse.header().toString());
         socket->send(httpResponse);
 #else
@@ -997,8 +985,7 @@ protected:
                 if (response.statusLine().statusCode() == http::StatusCode::SwitchingProtocols &&
                     Util::iequal(response.get("Upgrade"), "websocket") &&
                     Util::iequal(response.get("Connection", ""), "Upgrade") &&
-                    response.get("Sec-WebSocket-Accept", "") ==
-                        PublicComputeAccept::doComputeAccept(_key))
+                    response.get("Sec-WebSocket-Accept", "") == computeAccept(_key))
                 {
                     LOG_TRC("Accepted incoming websocket response");
                     setWebSocket(socket);

@@ -14,6 +14,7 @@
 #include <helpers.hpp>
 #include <Poco/Util/Application.h>
 #include <Poco/Net/StreamSocket.h>
+#include <Poco/Net/SecureStreamSocket.h>
 #include <Poco/Net/StringPartSource.h>
 #include <Poco/Net/HTMLForm.h>
 #include <Poco/Net/HTTPRequest.h>
@@ -115,11 +116,22 @@ public:
             return true;
     }
 
+    inline std::shared_ptr<Poco::Net::StreamSocket> createRawSocket()
+    {
+        return
+#if ENABLE_SSL
+            std::make_shared<Poco::Net::SecureStreamSocket>
+#else
+            std::make_shared<Poco::Net::StreamSocket>
+#endif
+            (Poco::Net::SocketAddress("127.0.0.1", ClientPortNumber));
+    }
+
     void testChunks()
     {
         LOG_TST("testChunks");
 
-        std::shared_ptr<Poco::Net::StreamSocket> socket = helpers::createRawSocket();
+        std::shared_ptr<Poco::Net::StreamSocket> socket = createRawSocket();
 
         writeString(
             socket,
