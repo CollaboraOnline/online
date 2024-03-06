@@ -19,7 +19,10 @@
 #include <common/JsonUtil.hpp>
 #include <Util.hpp>
 
-void WopiProxy::handleRequest([[maybe_unused]] SocketPoll& poll, SocketDisposition& disposition)
+#include <Poco/JSON/Object.h>
+
+void WopiProxy::handleRequest([[maybe_unused]] const std::shared_ptr<TerminatingPoll>& poll,
+                              SocketDisposition& disposition)
 {
     std::string url = _requestDetails.getDocumentURI();
     if (url.starts_with("/wasm/"))
@@ -86,8 +89,7 @@ void WopiProxy::handleRequest([[maybe_unused]] SocketPoll& poll, SocketDispositi
                     }
                     else
                     {
-                        http::Response response(http::StatusCode::NotFound);
-                        _socket->sendAndShutdown(response);
+                        HttpHelper::sendErrorAndShutdown(http::StatusCode::NotFound, _socket);
                     }
                 });
             break;
@@ -104,10 +106,10 @@ void WopiProxy::handleRequest([[maybe_unused]] SocketPoll& poll, SocketDispositi
                                      "ClientRequestDispatcher and invoking CheckFileInfo for ["
                                   << docKey << ']');
 
-                    poll.insertNewSocket(moveSocket);
+                    poll->insertNewSocket(moveSocket);
 
                     // CheckFileInfo and only when it's good create DocBroker.
-                    checkFileInfo(poll, url, uriPublic, docKey, RedirectionLimit);
+                    checkFileInfo(poll, uriPublic, RedirectionLimit);
                 });
             break;
 #endif //!MOBILEAPP
@@ -115,183 +117,93 @@ void WopiProxy::handleRequest([[maybe_unused]] SocketPoll& poll, SocketDispositi
 }
 
 #if !MOBILEAPP
-void WopiProxy::checkFileInfo(SocketPoll& poll, const std::string& url, const Poco::URI& uriPublic,
-                              const std::string& docKey, int redirectLimit)
+void WopiProxy::checkFileInfo(const std::shared_ptr<TerminatingPoll>& poll, const Poco::URI& uri,
+                              int redirectLimit)
 {
-    const std::string uriAnonym = COOLWSD::anonymizeUrl(uriPublic.toString());
-
-    LOG_DBG("Getting info for wopi uri [" << uriAnonym << ']');
-    _httpSession = StorageConnectionManager::getHttpSession(uriPublic);
-    Authorization auth = Authorization::create(uriPublic);
-    http::Request httpRequest = StorageConnectionManager::createHttpRequest(uriPublic, auth);
-
-    const auto startTime = std::chrono::steady_clock::now();
-
-    LOG_TRC("WOPI::CheckFileInfo request header for URI [" << uriAnonym << "]:\n"
-                                                           << httpRequest.header());
-
-    http::Session::FinishedCallback finishedCallback =
-        [this, &poll, docKey, startTime, url, uriPublic, uriAnonym,
-         redirectLimit](const std::shared_ptr<http::Session>& session)
+    auto cfiContinuation = [this, poll, uri]([[maybe_unused]] CheckFileInfo& checkFileInfo)
     {
-        if (SigUtil::getShutdownRequestFlag())
-        {
-            LOG_DBG("Shutdown flagged, giving up on in-flight requests");
-            return;
-        }
+        const std::string uriAnonym = COOLWSD::anonymizeUrl(uri.toString());
 
-        const std::shared_ptr<const http::Response> httpResponse = session->response();
-        LOG_TRC("WOPI::CheckFileInfo returned " << httpResponse->statusLine().statusCode());
-
-        const http::StatusCode statusCode = httpResponse->statusLine().statusCode();
-        if (statusCode == http::StatusCode::MovedPermanently ||
-            statusCode == http::StatusCode::Found ||
-            statusCode == http::StatusCode::TemporaryRedirect ||
-            statusCode == http::StatusCode::PermanentRedirect)
+        assert(&checkFileInfo == _checkFileInfo.get() && "Unknown CheckFileInfo instance");
+        if (_checkFileInfo && _checkFileInfo->state() == CheckFileInfo::State::Pass &&
+            _checkFileInfo->wopiInfo())
         {
-            if (redirectLimit)
+            Poco::JSON::Object::Ptr object = _checkFileInfo->wopiInfo();
+
+            std::size_t size = 0;
+            std::string filename, ownerId, lastModifiedTime;
+            JsonUtil::findJSONValue(object, "Size", size);
+            JsonUtil::findJSONValue(object, "OwnerId", ownerId);
+            JsonUtil::findJSONValue(object, "BaseFileName", filename);
+            JsonUtil::findJSONValue(object, "LastModifiedTime", lastModifiedTime);
+
+            LocalStorage::FileInfo fileInfo =
+                LocalStorage::FileInfo({ filename, ownerId, lastModifiedTime });
+
+            // if (COOLWSD::AnonymizeUserData)
+            //     Util::mapAnonymized(Util::getFilenameFromURL(filename),
+            //                         Util::getFilenameFromURL(getUri().toString()));
+
+            auto wopiInfo = std::make_unique<WopiStorage::WOPIFileInfo>(fileInfo, object, uri);
+            // if (wopiInfo->getSupportsLocks())
+            //     lockCtx.initSupportsLocks();
+
+            std::string url = checkFileInfo.url().toString();
+
+            // If FileUrl is set, we use it for GetFile.
+            const std::string fileUrl = wopiInfo->getFileUrl();
+
+            // First try the FileUrl, if provided.
+            if (!fileUrl.empty())
             {
-                const std::string& location = httpResponse->get("Location");
-                LOG_TRC("WOPI::CheckFileInfo redirect to URI [" << COOLWSD::anonymizeUrl(location)
-                                                                << "]");
-
-                checkFileInfo(poll, location, Poco::URI(location), docKey, redirectLimit - 1);
-                return;
-            }
-            else
-            {
-                LOG_WRN("WOPI::CheckFileInfo redirected too many times. Giving up on URI ["
-                        << uriAnonym << ']');
-            }
-        }
-
-        std::chrono::milliseconds callDurationMs =
-            std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() -
-                                                                  startTime);
-
-        // Note: we don't log the response if obfuscation is enabled, except for failures.
-        std::string wopiResponse = httpResponse->getBody();
-        const bool failed = (httpResponse->statusLine().statusCode() != http::StatusCode::OK);
-
-        Log::StreamLogger logRes = failed ? Log::error() : Log::trace();
-        if (logRes.enabled())
-        {
-            logRes << "WOPI::CheckFileInfo " << (failed ? "failed" : "returned") << " for URI ["
-                   << uriAnonym << "]: " << httpResponse->statusLine().statusCode() << ' '
-                   << httpResponse->statusLine().reasonPhrase()
-                   << ". Headers: " << httpResponse->header()
-                   << (failed ? "\tBody: [" + wopiResponse + ']' : std::string());
-
-            LOG_END_FLUSH(logRes);
-        }
-
-        if (failed)
-        {
-            if (httpResponse->statusLine().statusCode() == http::StatusCode::Forbidden)
-            {
-                LOG_ERR("Access denied to [" << uriAnonym << ']');
-                HttpHelper::sendErrorAndShutdown(http::StatusCode::Forbidden, _socket);
-                return;
+                const std::string fileUrlAnonym = COOLWSD::anonymizeUrl(fileUrl);
+                const auto uriPublic = RequestDetails::sanitizeURI(url);
+                try
+                {
+                    LOG_INF("WOPI::GetFile using FileUrl: " << fileUrlAnonym);
+                    return download(poll, url, Poco::URI(fileUrl), RedirectionLimit);
+                }
+                catch (const std::exception& ex)
+                {
+                    LOG_ERR("Could not download document from WOPI FileUrl [" + fileUrlAnonym +
+                                "]. Will use default URL. Error: "
+                            << ex.what());
+                    // Fall-through.
+                }
             }
 
-            LOG_ERR("Invalid URI or access denied to [" << uriAnonym << ']');
-            HttpHelper::sendErrorAndShutdown(http::StatusCode::Unauthorized, _socket);
-            return;
-        }
+            // Try the default URL, we either don't have FileUrl, or it failed.
+            // WOPI URI to download files ends in '/contents'.
+            // Add it here to get the payload instead of file info.
+            Poco::URI uriObject(uri);
+            uriObject.setPath(uriObject.getPath() + "/contents");
+            url = uriObject.toString();
 
-        Poco::JSON::Object::Ptr object;
-        if (!JsonUtil::parseJSON(wopiResponse, object))
-        {
-            if (COOLWSD::AnonymizeUserData)
-                wopiResponse = "obfuscated";
-
-            LOG_ERR("WOPI::CheckFileInfo ("
-                    << callDurationMs
-                    << ") failed or no valid JSON payload returned. Access denied. "
-                       "Original response: ["
-                    << wopiResponse << "].");
-
-            throw UnauthorizedRequestException("Access denied. WOPI::CheckFileInfo failed on: " +
-                                               uriAnonym);
-        }
-
-        // Stream the file contents.
-
-        if (COOLWSD::AnonymizeUserData)
-            LOG_DBG("WOPI::CheckFileInfo (" << callDurationMs << "): anonymizing...");
-        else
-            LOG_DBG("WOPI::CheckFileInfo (" << callDurationMs << "): " << wopiResponse);
-
-        std::size_t size = 0;
-        std::string filename, ownerId, lastModifiedTime;
-
-        JsonUtil::findJSONValue(object, "Size", size);
-        JsonUtil::findJSONValue(object, "OwnerId", ownerId);
-        JsonUtil::findJSONValue(object, "BaseFileName", filename);
-        JsonUtil::findJSONValue(object, "LastModifiedTime", lastModifiedTime);
-
-        LocalStorage::FileInfo fileInfo =
-            LocalStorage::FileInfo({ filename, ownerId, lastModifiedTime });
-
-        // if (COOLWSD::AnonymizeUserData)
-        //     Util::mapAnonymized(Util::getFilenameFromURL(filename),
-        //                         Util::getFilenameFromURL(getUri().toString()));
-
-        auto wopiInfo = std::make_unique<WopiStorage::WOPIFileInfo>(fileInfo, object, uriPublic);
-        // if (wopiInfo->getSupportsLocks())
-        //     lockCtx.initSupportsLocks();
-
-        // If FileUrl is set, we use it for GetFile.
-        const std::string fileUrl = wopiInfo->getFileUrl();
-
-        // First try the FileUrl, if provided.
-        if (!fileUrl.empty())
-        {
-            const std::string fileUrlAnonym = COOLWSD::anonymizeUrl(fileUrl);
             try
             {
-                LOG_INF("WOPI::GetFile using FileUrl: " << fileUrlAnonym);
-                return download(poll, url, Poco::URI(fileUrl), docKey, RedirectionLimit);
-            }
-            catch (const StorageSpaceLowException&)
-            {
-                throw; // Bubble-up the exception.
+                LOG_INF("WOPI::GetFile using default URI: " << uriAnonym);
+                return download(poll, url, uriObject, RedirectionLimit);
             }
             catch (const std::exception& ex)
             {
-                LOG_ERR("Could not download document from WOPI FileUrl [" + fileUrlAnonym +
-                            "]. Will use default URL. Error: "
-                        << ex.what());
+                LOG_ERR(
+                    "Cannot download document from WOPI storage uri [" + uriAnonym + "]. Error: "
+                    << ex.what());
+                // Fall-through.
             }
         }
 
-        // Try the default URL, we either don't have FileUrl, or it failed.
-        // WOPI URI to download files ends in '/contents'.
-        // Add it here to get the payload instead of file info.
-        Poco::URI uriObject(uriPublic);
-        uriObject.setPath(uriObject.getPath() + "/contents");
-
-        try
-        {
-            LOG_INF("WOPI::GetFile using default URI: " << uriAnonym);
-            download(poll, url, uriObject, docKey, redirectLimit);
-        }
-        catch (const std::exception& ex)
-        {
-            LOG_ERR("Cannot download document from WOPI storage uri [" + uriAnonym + "]. Error: "
-                    << ex.what());
-            throw; // Bubble-up the exception.
-        }
+        LOG_ERR("Invalid URI or access denied to [" << uriAnonym << ']');
+        HttpHelper::sendErrorAndShutdown(http::StatusCode::Unauthorized, _socket);
     };
 
-    _httpSession->setFinishedHandler(std::move(finishedCallback));
-
-    // Run the CheckFileInfo request on the WebServer Poll.
-    _httpSession->asyncRequest(httpRequest, poll);
+    // CheckFileInfo asynchronously.
+    _checkFileInfo =
+        std::make_unique<CheckFileInfo>(poll, uri, std::move(cfiContinuation), redirectLimit);
 }
 
-void WopiProxy::download(SocketPoll& poll, const std::string& url, const Poco::URI& uriPublic,
-                         const std::string& docKey, int redirectLimit)
+void WopiProxy::download(const std::shared_ptr<TerminatingPoll>& poll, const std::string& url,
+                         const Poco::URI& uriPublic, int redirectLimit)
 {
     const std::string uriAnonym = COOLWSD::anonymizeUrl(uriPublic.toString());
 
@@ -306,7 +218,7 @@ void WopiProxy::download(SocketPoll& poll, const std::string& url, const Poco::U
                                                      << httpRequest.header());
 
     http::Session::FinishedCallback finishedCallback =
-        [this, &poll, docKey, startTime, url, uriPublic, uriAnonym,
+        [this, &poll, startTime, url, uriPublic, uriAnonym,
          redirectLimit](const std::shared_ptr<http::Session>& session)
     {
         if (SigUtil::getShutdownRequestFlag())
@@ -330,7 +242,7 @@ void WopiProxy::download(SocketPoll& poll, const std::string& url, const Poco::U
                 LOG_TRC("WOPI::GetFile redirect to URI [" << COOLWSD::anonymizeUrl(location)
                                                           << "]");
 
-                download(poll, location, Poco::URI(location), docKey, redirectLimit - 1);
+                download(poll, location, Poco::URI(location), redirectLimit - 1);
                 return;
             }
             else
@@ -382,8 +294,8 @@ void WopiProxy::download(SocketPoll& poll, const std::string& url, const Poco::U
 
     _httpSession->setFinishedHandler(std::move(finishedCallback));
 
-    // Run the CheckFileInfo request on the WebServer Poll.
-    _httpSession->asyncRequest(httpRequest, poll);
+    // Run the GET request on the WebServer Poll.
+    _httpSession->asyncRequest(httpRequest, *poll);
 }
 #endif //!MOBILEAPP
 

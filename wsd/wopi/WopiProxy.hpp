@@ -7,7 +7,12 @@
 
 #pragma once
 
+#if MOBILEAPP
+#error This file should be excluded from Mobile App builds
+#endif // MOBILEAPP
+
 #include "RequestDetails.hpp"
+#include "wopi/CheckFileInfo.hpp"
 #include <Storage.hpp>
 
 #include <string>
@@ -25,22 +30,20 @@ public:
     {
     }
 
-    void handleRequest(SocketPoll& poll, SocketDisposition& disposition);
+    void handleRequest(const std::shared_ptr<TerminatingPoll>& poll,
+                       SocketDisposition& disposition);
 
 private:
     inline void logPrefix(std::ostream& os) const { os << '#' << _socket->getFD() << ": "; }
 
-#if !MOBILEAPP
-    void checkFileInfo(SocketPoll& poll, const std::string& url, const Poco::URI& uriPublic,
-                       const std::string& docKey, int redirectionLimit);
-    void download(SocketPoll& poll, const std::string& url, const Poco::URI& uriPublic,
-                  const std::string& docKey, int redirectionLimit);
-#endif //!MOBILEAPP
+    void checkFileInfo(const std::shared_ptr<TerminatingPoll>& poll, const Poco::URI& uri,
+                       int redirectionLimit);
+    void download(const std::shared_ptr<TerminatingPoll>& poll, const std::string& url,
+                  const Poco::URI& uriPublic, int redirectionLimit);
 
-private:
     const std::string _id;
     const RequestDetails _requestDetails;
     const std::shared_ptr<StreamSocket> _socket;
     std::shared_ptr<http::Session> _httpSession;
-    std::unique_ptr<WopiStorage::WOPIFileInfo> _wopiInfo;
+    std::unique_ptr<CheckFileInfo> _checkFileInfo;
 };
