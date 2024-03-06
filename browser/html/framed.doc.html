@@ -138,6 +138,12 @@
             });
       }
 
+      function exportAsPdfWithNotify() {
+        post({'MessageId': 'Action_Export',
+              'Values': { 'Format': 'pdf', Notify: true }
+            });
+      }
+
       function getExportFormats() {
         post({'MessageId': 'Get_Export_Formats',
               'Values': null
@@ -476,7 +482,9 @@
             <button onclick="startPresentation(); return false;">Start presentation</button>
 
             <button onclick="exportAsHtml(); return false;">Export as HTML</button>
+            <button onclick="exportAsPdfWithNotify(); return false;">Export as PDF with Notify set</button>
             <button onclick="getExportFormats(); return false;">Get export formats</button>
+            <div></div>
 
             <button onclick="ShowSave(false); return false;">Hide Save Commands</button>
             <button onclick="ShowSave(true); return false;">Show Save Commands</button>
