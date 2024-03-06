@@ -880,7 +880,10 @@ app.definitions.Socket = L.Class.extend({
 			return;
 		}
 		else if (textMsg.startsWith('error:')
-			&& (command.errorCmd === 'storage' || command.errorCmd === 'saveas') || command.errorCmd === 'downloadas')  {
+			&& (command.errorCmd === 'storage'
+			|| command.errorCmd === 'saveas')
+			|| command.errorCmd === 'downloadas'
+			|| command.errorCmd === 'exportas')  {
 
 			if (command.errorCmd === 'saveas') {
 				this._map.fire('postMessage', {
