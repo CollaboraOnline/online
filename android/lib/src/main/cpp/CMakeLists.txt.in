@@ -21,6 +21,7 @@ add_library(androidapp SHARED
             ../../../../../kit/ChildSession.cpp
             ../../../../../kit/DeltaSimd.c
             ../../../../../kit/Kit.cpp
+            ../../../../../kit/KitWebSocket.cpp
             ../../../../../net/FakeSocket.cpp
             ../../../../../net/Socket.cpp
             ../../../../../wsd/ClientSession.cpp

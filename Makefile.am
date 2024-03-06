@@ -194,7 +194,8 @@ libsimd_a_CFLAGS = @SIMD_CFLAGS@
 
 coolforkit_sources = kit/ChildSession.cpp \
                      kit/ForKit.cpp \
-                     kit/Kit.cpp
+                     kit/Kit.cpp \
+                     kit/KitWebSocket.cpp
 
 coolforkit_SOURCES = $(coolforkit_sources) \
                      $(shared_sources) \
@@ -344,6 +345,7 @@ shared_headers = common/Common.hpp \
                  common/SpookyV2.h \
                  common/CommandControl.hpp \
                  common/Simd.hpp \
+                 common/ThreadPool.hpp \
                  net/Buffer.hpp \
                  net/DelaySocket.hpp \
                  net/FakeSocket.hpp \
@@ -366,7 +368,9 @@ kit_headers = kit/ChildSession.hpp \
               kit/DummyLibreOfficeKit.hpp \
               kit/Kit.hpp \
               kit/KitHelper.hpp \
+              kit/KitWebSocket.hpp \
               kit/SetupKitEnvironment.hpp \
+              kit/StateRecorder.hpp \
               kit/Watermark.hpp
 
 noinst_HEADERS = $(wsd_headers) $(shared_headers) $(kit_headers) \

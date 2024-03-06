@@ -34,7 +34,8 @@ common_sources = \
                  ../common/Util.cpp
 
 kit_sources = ../kit/ChildSession.cpp \
-              ../kit/Kit.cpp
+              ../kit/Kit.cpp \
+              ../kit/KitWebSocket.cpp
 
 net_sources = ../net/FakeSocket.cpp \
               ../net/Socket.cpp
