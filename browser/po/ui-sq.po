@@ -7,12 +7,12 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-26 08:45+0100\n"
+"POT-Creation-Date: 2024-03-06 16:29+0100\n"
 "PO-Revision-Date: 2024-02-28 15:42+0000\n"
 "Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
 "Language-Team: Albanian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/sq/>\n"
-"Language: sq\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -147,8 +147,8 @@ msgstr "Grafik Rrjeti"
 #: src/control/Control.NotebookbarImpress.js:29
 #: src/control/Control.NotebookbarImpress.js:176
 #: src/control/Control.NotebookbarWriter.js:158
-#: src/layer/tile/CommentListSection.ts:430
-#: src/layer/tile/CommentSection.ts:158
+#: src/layer/tile/CommentListSection.ts:429
+#: src/layer/tile/CommentSection.ts:157
 msgid "Save"
 msgstr "Ruaje"
 
@@ -233,8 +233,8 @@ msgstr "Shkallë Regjistrimi"
 #: admin/admin.strings.js:64 src/control/Control.AlertDialog.js:30
 #: src/control/Control.AlertDialog.js:36 src/control/Control.AlertDialog.js:99
 #: src/control/Control.AlertDialog.js:106 src/control/Control.Zotero.js:192
-#: src/control/Parts.js:463 src/core/Socket.js:1056 src/core/Socket.js:1061
-#: src/layer/tile/CommentListSection.ts:141
+#: src/control/Parts.js:467 src/core/Socket.js:1054 src/core/Socket.js:1059
+#: src/layer/tile/CommentListSection.ts:140
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.div:51-7
 msgid "Close"
 msgstr "Mbylle"
@@ -276,15 +276,15 @@ msgstr "Shërbyesi është fikur; ju lutemi, ringarkoni faqen."
 #: admin/src/AdminSocketOverview.js:108 admin/src/AdminSocketOverview.js:431
 #: admin/src/AdminSocketSettings.js:47 src/control/Control.AlertDialog.js:52
 #: src/control/Control.DocumentRepair.js:77
-#: src/control/Control.LanguageDialog.js:119 src/control/Control.Tabs.js:389
-#: src/control/Control.Tabs.js:398 src/control/Control.Zotero.js:338
+#: src/control/Control.LanguageDialog.js:119 src/control/Control.Tabs.js:399
+#: src/control/Control.Tabs.js:408 src/control/Control.Zotero.js:338
 #: src/control/Control.Zotero.js:376 src/control/Permission.js:89
 #: src/control/Permission.js:99 src/control/Permission.js:149
 #: src/control/Toolbar.js:701 src/control/Toolbar.js:803
 #: src/control/Toolbar.js:939 src/control/Toolbar.js:1230
-#: src/core/Socket.js:613 src/core/Socket.js:1026 src/core/Socket.js:1096
-#: src/core/Socket.js:1228 src/core/Socket.js:1232 src/main.js:79
-#: src/main.js:82 src/main.js:134 src/map/Clipboard.js:1008
+#: src/core/Socket.js:613 src/core/Socket.js:1024 src/core/Socket.js:1094
+#: src/core/Socket.js:1226 src/core/Socket.js:1230 src/main.js:79
+#: src/main.js:82 src/main.js:134 src/map/Clipboard.js:1003
 #: src/map/handler/Map.Feedback.js:83 src/map/handler/Map.SlideShow.js:51
 #: src/map/handler/Map.SlideShow.js:150 src/map/handler/Map.SlideShow.js:236
 #: src/map/handler/Map.WOPI.js:582
@@ -309,12 +309,11 @@ msgstr "Jeni të sigurt se doni të përfundohet ky sesion?"
 #: src/control/Control.DownloadProgress.js:90
 #: src/control/Control.LanguageDialog.js:113
 #: src/control/Control.MobileTopBar.js:52
-#: src/control/Control.UIManager.js:1263 src/control/Control.UIManager.js:1330
-#: src/control/Control.UIManager.js:1465 src/control/Control.UIManager.js:1607
+#: src/control/Control.UIManager.js:1285 src/control/Control.UIManager.js:1352
+#: src/control/Control.UIManager.js:1487 src/control/Control.UIManager.js:1629
 #: src/control/Control.Zotero.js:333 src/control/Toolbar.js:934
-#: src/core/Socket.js:1253 src/layer/tile/CommentListSection.ts:425
-#: src/layer/tile/CommentSection.ts:157 src/layer/tile/CommentSection.ts:160
-#: src/map/Clipboard.js:1047
+#: src/core/Socket.js:1251 src/layer/tile/CommentListSection.ts:424
+#: src/layer/tile/CommentSection.ts:156 src/layer/tile/CommentSection.ts:159
 msgid "Cancel"
 msgstr "Anuloje"
 
@@ -384,15 +383,15 @@ msgstr " min."
 msgid " s"
 msgstr " s"
 
-#: js/global.js:921
+#: js/global.js:922
 msgid "Cluster is scaling, retrying..."
 msgstr ""
 
-#: js/global.js:923
+#: js/global.js:924
 msgid "Document is migrating to new server, retrying..."
 msgstr "Dokumenti po migrohet te një shërbyes i ri, po riprovohet…"
 
-#: js/global.js:925
+#: js/global.js:926
 msgid "Failed to get RouteToken from controller"
 msgstr "S’u arrit të merret RouteToken nga kontrollori"
 
@@ -488,7 +487,7 @@ msgid "Repair Document"
 msgstr "Riparoje Dokumentin"
 
 #: src/control/Control.DocumentRepair.js:124
-#: src/control/Control.UserList.js:340
+#: src/control/Control.UserList.ts:449
 msgid "You"
 msgstr "Ju"
 
@@ -702,9 +701,9 @@ msgid "replies"
 msgstr "përgjigje"
 
 #: src/control/Control.JSDialogBuilder.js:2109
-#: src/layer/tile/CanvasTileLayer.js:5151
-#: src/layer/tile/CanvasTileLayer.js:5162
-#: src/layer/tile/CommentListSection.ts:1018
+#: src/layer/tile/CanvasTileLayer.js:5159
+#: src/layer/tile/CanvasTileLayer.js:5170
+#: src/layer/tile/CommentListSection.ts:1017
 msgid "Comment"
 msgstr "Koment"
 
@@ -1194,7 +1193,7 @@ msgstr "Më tepër kushte…"
 #: src/control/Control.NotebookbarImpress.js:1076
 #: src/control/Control.NotebookbarWriter.js:907
 #: src/control/Control.StatusBar.js:203 src/control/Control.Zotero.js:221
-#: src/control/Toolbar.js:456
+#: src/control/Toolbar.js:552
 msgid "Search"
 msgstr "Kërko"
 
@@ -1228,15 +1227,15 @@ msgstr "Përdor pamje Kompakte"
 msgid "Use Tabbed view"
 msgstr "Përdor pamje me Skeda"
 
-#: src/control/Control.Menubar.js:1792 src/control/Control.Menubar.js:1805
+#: src/control/Control.Menubar.js:1800 src/control/Control.Menubar.js:1813
 msgid "Read-only mode"
 msgstr "Mënyrë “Vetëm për lexim”"
 
-#: src/control/Control.Menubar.js:1826
+#: src/control/Control.Menubar.js:1834
 msgid "Insert Shape"
 msgstr "Futni Formë"
 
-#: src/control/Control.Menubar.js:2047
+#: src/control/Control.Menubar.js:2054
 msgid "file type icon"
 msgstr "ikonë lloji kartelash"
 
@@ -1286,23 +1285,23 @@ msgstr "Kartelë CSV (.csv)"
 msgid "Insert Local Image"
 msgstr "Futni Figurë Vendore"
 
-#: src/control/Control.NotebookbarBuilder.js:1009
+#: src/control/Control.NotebookbarBuilder.js:1010
 msgid "Very Tight"
 msgstr ""
 
-#: src/control/Control.NotebookbarBuilder.js:1010
+#: src/control/Control.NotebookbarBuilder.js:1011
 msgid "Tight"
 msgstr ""
 
-#: src/control/Control.NotebookbarBuilder.js:1011
+#: src/control/Control.NotebookbarBuilder.js:1012
 msgid "Normal"
 msgstr ""
 
-#: src/control/Control.NotebookbarBuilder.js:1012
+#: src/control/Control.NotebookbarBuilder.js:1013
 msgid "Loose"
 msgstr ""
 
-#: src/control/Control.NotebookbarBuilder.js:1013
+#: src/control/Control.NotebookbarBuilder.js:1014
 msgid "Very Loose"
 msgstr ""
 
@@ -1784,15 +1783,15 @@ msgstr "Kaloje Fletën Djathtas"
 msgid "Copy Sheet..."
 msgstr "Kopjoni Fletë…"
 
-#: src/control/Control.Tabs.js:387
+#: src/control/Control.Tabs.js:397
 msgid "Are you sure you want to delete sheet, %sheet%?"
 msgstr "Jeni i sigurt se doni të fshihet fleta %sheet%?"
 
-#: src/control/Control.Tabs.js:398
+#: src/control/Control.Tabs.js:408
 msgid "Rename sheet"
 msgstr "Riemërtojeni fletën"
 
-#: src/control/Control.Tabs.js:398
+#: src/control/Control.Tabs.js:408
 msgid "Enter new sheet name"
 msgstr "Jepni emrin e ri të fletës"
 
@@ -1832,7 +1831,7 @@ msgstr "Futni forma"
 msgid "Insert connectors"
 msgstr "Futni lidhës"
 
-#: src/control/Control.TopToolbar.js:263 src/control/Control.UIManager.js:764
+#: src/control/Control.TopToolbar.js:263 src/control/Control.UIManager.js:762
 msgid "Hide Menu"
 msgstr "Fshihe Menunë"
 
@@ -1840,47 +1839,63 @@ msgstr "Fshihe Menunë"
 msgid "Enter new name"
 msgstr "Jepni emër të ri"
 
-#: src/control/Control.UIManager.js:787
+#: src/control/Control.UIManager.js:785
 msgid "Show Menu"
 msgstr "Shfaq Menu"
 
-#: src/control/Control.UIManager.js:1088
+#: src/control/Control.UIManager.js:1110
 msgid "Dismiss"
 msgstr "Hidhe tej"
 
-#: src/control/Control.UserList.js:20
+#: src/control/Control.UserList.ts:54
 msgid "%user has joined"
 msgstr "%user erdhi"
 
-#: src/control/Control.UserList.js:21
+#: src/control/Control.UserList.ts:55
 msgid "%user has left"
 msgstr "%user iku"
 
-#: src/control/Control.UserList.js:44
+#: src/control/Control.UserList.ts:56
+msgid "Following %user"
+msgstr ""
+
+#: src/control/Control.UserList.ts:57
+msgid "Following the editor"
+msgstr ""
+
+#: src/control/Control.UserList.ts:58
+msgid "Click to stop following"
+msgstr ""
+
+#: src/control/Control.UserList.ts:59
+msgid "Avatar for %user"
+msgstr ""
+
+#: src/control/Control.UserList.ts:80
 msgid "%n users"
 msgstr "%n përdorues"
 
-#: src/control/Control.UserList.js:45
+#: src/control/Control.UserList.ts:81
 msgid "1 user"
 msgstr "1 përdorues"
 
-#: src/control/Control.UserList.js:46
+#: src/control/Control.UserList.ts:82
 msgid "0 users"
 msgstr "0 përdorues"
 
-#: src/control/Control.UserList.js:204
-msgid "Following"
-msgstr "Ndjekje"
-
-#: src/control/Control.UserList.js:232 src/control/Control.UserList.js:398
-msgid "Always follow the editor"
-msgstr "Ndiq përherë përpunuesin"
-
-#: src/control/Control.UserList.js:346
+#: src/control/Control.UserList.ts:532
 msgid "Readonly"
 msgstr "Vetëm-lexim"
 
-#: src/control/Control.UserList.js:401
+#: src/control/Control.UserList.ts:560
+msgid "Following"
+msgstr "Ndjekje"
+
+#: src/control/Control.UserList.ts:613 src/control/Control.UserList.ts:674
+msgid "Always follow the editor"
+msgstr "Ndiq përherë përpunuesin"
+
+#: src/control/Control.UserList.ts:679
 msgid "Current"
 msgstr "I tanishmi"
 
@@ -1905,7 +1920,7 @@ msgstr ""
 "t web. Kjo mund të shkaktojë ca probleme teksa përpunohen citime, ose "
 "bibliografi."
 
-#: src/control/Control.Zotero.js:247 src/core/Socket.js:1103
+#: src/control/Control.Zotero.js:247 src/core/Socket.js:1101
 msgid "Loading..."
 msgstr "Po ngarkohet…"
 
@@ -2209,27 +2224,27 @@ msgstr "Version i pambuluar shërbyesi."
 msgid "LOKit version:"
 msgstr "Version LOKit:"
 
-#: src/core/Socket.js:756
+#: src/core/Socket.js:754
 msgid "Document is getting migrated"
 msgstr "Dokumenti po migrohet"
 
-#: src/core/Socket.js:783
+#: src/core/Socket.js:781
 msgid "Session terminated by document owner"
 msgstr "Sesioni i përfunduar nga i zoti i dokumentit"
 
-#: src/core/Socket.js:794
+#: src/core/Socket.js:792
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "Shërbyesi po fiket për mirëmbajtje (po ruhet automatikish)"
 
-#: src/core/Socket.js:798
+#: src/core/Socket.js:796
 msgid "Oops, there is a problem connecting the document"
 msgstr "Hëm, ka një problem në lidhjen e dokumentit"
 
-#: src/core/Socket.js:802
+#: src/core/Socket.js:800
 msgid "Server is down, restarting automatically. Please wait."
 msgstr "Shërbyesi është i fikur, po riniset automakisht. Ju lutemi, prisni."
 
-#: src/core/Socket.js:829
+#: src/core/Socket.js:827
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
@@ -2237,7 +2252,7 @@ msgstr ""
 "Dokumenti ka ndryshuar te depoja. Po ngarkohet dokumenti i ri. Versioni juaj "
 "mund të kihet si rishikim."
 
-#: src/core/Socket.js:835
+#: src/core/Socket.js:833
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
@@ -2245,80 +2260,80 @@ msgstr ""
 "Po rikthehet versioni i vjetër. Çfarëdo ndryshimesh të paruajtura do të "
 "shihen te historiku i versioneve"
 
-#: src/core/Socket.js:841
+#: src/core/Socket.js:839
 msgid "Reloading the document after rename"
 msgstr "Po ringarkohet dokumenti pas riemërtimit"
 
-#: src/core/Socket.js:978
+#: src/core/Socket.js:976
 msgid "Document requires password to view."
 msgstr "Që të shihet, dokumenti lyp fjalëkalim."
 
-#: src/core/Socket.js:981
+#: src/core/Socket.js:979
 msgid "Document requires password to modify."
 msgstr "Që të ndryshohet, dokumenti lyp fjalëkalim."
 
-#: src/core/Socket.js:983
+#: src/core/Socket.js:981
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Shtypni “Anuloje” që të hapet nën mënyrën vetëm-parje."
 
-#: src/core/Socket.js:987
+#: src/core/Socket.js:985
 msgid "Wrong password provided. Please try again."
 msgstr "U dha fjalëkalim i gabuar. Ju lutemi, riprovoni."
 
-#: src/core/Socket.js:1025
+#: src/core/Socket.js:1023
 msgid "Only the document owner can change the password."
 msgstr "Fjalëkalimin mund ta ndryshojë vetëm i zoti i dokumentit."
 
-#: src/core/Socket.js:1056 src/core/Socket.js:1061
+#: src/core/Socket.js:1054 src/core/Socket.js:1059
 msgid "Missing Fonts"
 msgstr "Mungojnë Shkronja"
 
-#: src/core/Socket.js:1093
+#: src/core/Socket.js:1091
 msgid "Someone"
 msgstr "Dikush"
 
-#: src/core/Socket.js:1094
+#: src/core/Socket.js:1092
 msgid "%userName saved this document as %fileName. Do you want to join?"
 msgstr "%userName e ruajti këtë dokument si %fileName. Doni të merrni pjesë?"
 
-#: src/core/Socket.js:1103
+#: src/core/Socket.js:1101
 msgid "Connecting..."
 msgstr "Po lidhet…"
 
-#: src/core/Socket.js:1120
+#: src/core/Socket.js:1118
 msgid "The document is being renamed and will reload shortly"
 msgstr "Dokumenti po riemërtohet dhe do të ringarkohet pas pak"
 
-#: src/core/Socket.js:1123
+#: src/core/Socket.js:1121
 msgid "The document is switching to Offline mode and will reload shortly"
 msgstr ""
 "Dokumenti po kalohet nën mënyrën “Jashtë Linje” dhe do të ringarkohet pas pak"
 
-#: src/core/Socket.js:1228
+#: src/core/Socket.js:1226
 msgid "Exported to storage"
 msgstr "U eksportua në depozitim"
 
-#: src/core/Socket.js:1228
+#: src/core/Socket.js:1226
 msgid "Successfully exported: "
 msgstr "Eksportuar me sukses: "
 
-#: src/core/Socket.js:1256
+#: src/core/Socket.js:1254
 msgid "Discard"
 msgstr "Hidhe tej"
 
-#: src/core/Socket.js:1257
+#: src/core/Socket.js:1255
 msgid "Overwrite"
 msgstr "Mbishkruaje"
 
-#: src/core/Socket.js:1268
+#: src/core/Socket.js:1266
 msgid "Save to new file"
 msgstr "Ruaje në kartelë të re"
 
-#: src/core/Socket.js:1278
+#: src/core/Socket.js:1276
 msgid "Document has been changed"
 msgstr "Dokumenti u ndryshua"
 
-#: src/core/Socket.js:1279
+#: src/core/Socket.js:1277
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
@@ -2326,7 +2341,7 @@ msgstr ""
 "Dokumenti ka ndryshuar te depoja. Ç’do të donit të bëhet me ndryshimet tuaja "
 "të paruajtura?"
 
-#: src/core/Socket.js:1597
+#: src/core/Socket.js:1595
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -2334,11 +2349,11 @@ msgstr ""
 "Hëm, kjo është turpëruese, s’lidhemi dot me dokumentin tuaj. Ju lutemi, "
 "riprovoni."
 
-#: src/core/Socket.js:1614
+#: src/core/Socket.js:1612
 msgid "Reconnecting..."
 msgstr "Po rilidhet…"
 
-#: src/core/Socket.js:1624
+#: src/core/Socket.js:1622
 msgid "The server has been disconnected."
 msgstr "Shërbyesi është shkëputur."
 
@@ -2350,15 +2365,15 @@ msgstr "Mjete Diagnostikimi"
 msgid "Ctrl+Shift+Alt+D to exit"
 msgstr "Ctrl+Shift+Alt+D që të dilet"
 
-#: src/docstate.js:82
+#: src/docstate.js:88
 msgid "Standard"
 msgstr "Standarde"
 
-#: src/docstate.js:93
+#: src/docstate.js:99
 msgid "Theme colors"
 msgstr "Ngjyra teme"
 
-#: src/docstate.js:94
+#: src/docstate.js:100
 msgid "Document colors"
 msgstr "Ngjyra dokumenti"
 
@@ -2587,89 +2602,89 @@ msgstr "Ngarkimi i kartelës në shërbyes dështoi, s’u gjet kartelë."
 msgid "Uploading file to server failed, the file is too large."
 msgstr "Ngarkimi i kartelës në shërbyes dështoi, kartela është shumë e madhe."
 
-#: src/layer/tile/CanvasTileLayer.js:1988
+#: src/layer/tile/CanvasTileLayer.js:1991
 msgid "Functions"
 msgstr "Funksione"
 
-#: src/layer/tile/CanvasTileLayer.js:2589
+#: src/layer/tile/CanvasTileLayer.js:2592
 msgid "and %COUNT more"
 msgstr "dhe %COUNT më tepër"
 
-#: src/layer/tile/CanvasTileLayer.js:2604
+#: src/layer/tile/CanvasTileLayer.js:2606
 msgid "Copy link location"
 msgstr "Kopjo vendndodhje lidhjeje"
 
-#: src/layer/tile/CanvasTileLayer.js:2615
+#: src/layer/tile/CanvasTileLayer.js:2614
 msgid "Edit link"
 msgstr "Përpunoni lidhje"
 
-#: src/layer/tile/CanvasTileLayer.js:2624
+#: src/layer/tile/CanvasTileLayer.js:2622
 msgid "Remove link"
 msgstr "Hiqe lidhjen"
 
-#: src/layer/tile/CanvasTileLayer.js:5179
+#: src/layer/tile/CanvasTileLayer.js:5187
 msgid "No Comments"
 msgstr "S’ka Komente"
 
-#: src/layer/tile/CommentListSection.ts:140
+#: src/layer/tile/CommentListSection.ts:139
 msgid "A comment is being edited"
 msgstr "Po përpunohet një koment"
 
-#: src/layer/tile/CommentListSection.ts:141
+#: src/layer/tile/CommentListSection.ts:140
 msgid "Please save or discard the comment currently being edited."
 msgstr "Ju lutemi, ruajeni, ose hidhet tej komentin që po përpunoni aktualish."
 
-#: src/layer/tile/CommentListSection.ts:961
+#: src/layer/tile/CommentListSection.ts:960
 msgid "Modify"
 msgstr "Ndryshojeni"
 
-#: src/layer/tile/CommentListSection.ts:967
-#: src/layer/tile/CommentSection.ts:161
+#: src/layer/tile/CommentListSection.ts:966
+#: src/layer/tile/CommentSection.ts:160
 msgid "Reply"
 msgstr "Përgjigjuni"
 
-#: src/layer/tile/CommentListSection.ts:973
+#: src/layer/tile/CommentListSection.ts:972
 msgid "Remove"
 msgstr "Hiqe"
 
-#: src/layer/tile/CommentListSection.ts:979
+#: src/layer/tile/CommentListSection.ts:978
 msgid "Remove Thread"
 msgstr "Hiqe Rrjedhën"
 
-#: src/layer/tile/CommentListSection.ts:985
+#: src/layer/tile/CommentListSection.ts:984
 msgid "Resolve"
 msgstr "Zgjidhe"
 
-#: src/layer/tile/CommentListSection.ts:985
+#: src/layer/tile/CommentListSection.ts:984
 msgid "Unresolve"
 msgstr "Ktheje si të pazgjidhur"
 
-#: src/layer/tile/CommentListSection.ts:991
+#: src/layer/tile/CommentListSection.ts:990
 msgid "Unresolve Thread"
 msgstr "Ktheje Rrjedhën Si të Pazgjidhur"
 
-#: src/layer/tile/CommentListSection.ts:991
+#: src/layer/tile/CommentListSection.ts:990
 msgid "Resolve Thread"
 msgstr "Zgjidhe Rrjedhën"
 
-#: src/layer/tile/CommentListSection.ts:1272
-#: src/layer/tile/CommentListSection.ts:1327
+#: src/layer/tile/CommentListSection.ts:1271
+#: src/layer/tile/CommentListSection.ts:1326
 msgid "Autosaved"
 msgstr "U vetëruajt"
 
-#: src/layer/tile/CommentSection.ts:299
+#: src/layer/tile/CommentSection.ts:296
 msgid "Open menu"
 msgstr "Hape menunë"
 
-#: src/layer/tile/CommentSection.ts:317 src/layer/tile/CommentSection.ts:318
+#: src/layer/tile/CommentSection.ts:314 src/layer/tile/CommentSection.ts:315
 msgid "Accept change"
 msgstr "Pranoje ndryshimin"
 
-#: src/layer/tile/CommentSection.ts:324 src/layer/tile/CommentSection.ts:325
+#: src/layer/tile/CommentSection.ts:321 src/layer/tile/CommentSection.ts:322
 msgid "Reject change"
 msgstr "Hidhe poshtë ndryshimin"
 
-#: src/layer/tile/CommentSection.ts:348
+#: src/layer/tile/CommentSection.ts:345
 msgid "Resolved"
 msgstr "E zgjidhur"
 
@@ -2696,12 +2711,12 @@ msgstr "kujdes: kërkesës për kopjim/ngjitje i mbaroi koha"
 msgid "Failed to download clipboard, please re-copy"
 msgstr "S’u arrit të shkarkohej ç’ka e papastra, ju lutemi, rikopjojeni"
 
-#: src/map/Clipboard.js:1001
+#: src/map/Clipboard.js:996
 msgid "<p>Please use the copy/paste buttons on your on-screen keyboard.</p>"
 msgstr ""
 "<p>Ju lutemi, përdorni butonat kopjoje/ngjite të tastierës tuaj në ekran.</p>"
 
-#: src/map/Clipboard.js:1003
+#: src/map/Clipboard.js:998
 msgid ""
 "<p>Your browser has very limited access to the clipboard, so use these "
 "keyboard shortcuts:</p><table class=\"warn-copy-paste\"><tr><td><kbd>Ctrl</"
@@ -2718,7 +2733,7 @@ msgstr ""
 "n><kbd>V</kbd></td></tr><tr><td>Kopjoje</td><td>Prije</td><td>Ngjite</td></tr"
 "></table>"
 
-#: src/map/Clipboard.js:1022
+#: src/map/Clipboard.js:1017
 msgid ""
 "<p>A download due to a large copy/paste operation has already started. "
 "Please, wait for the current download or cancel it before starting a new "
@@ -2728,16 +2743,25 @@ msgstr ""
 "të madhe. Ju lutemi, përpara se të filloni një të ri, pritni të mbarojë "
 "shkarkimi i tanishëm, ose anulojeni</p>"
 
-#: src/map/Clipboard.js:1040
+#: src/map/Clipboard.js:1035
+#, fuzzy
 msgid ""
-"<p>Your browser has very limited access to the clipboard</p><p>Please press "
-"now: <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to see "
-"more options</p><p>Close popup to ignore paste special</p>"
+"<p>Your browser has very limited access to the clipboard</p><p><b>Please "
+"press</b> <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to "
+"see more options</p><p>Close popup to ignore paste special</p>"
 msgstr ""
 "<p>Shfletuesi juaj ka hyrje shumë të kufizuar te e papastra</p><p>Ju lutemi, "
 "shtypni tani: <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd>, "
 "që të shihni më tepër mundësi</p><p>Që të shpërfillet ngjitja speciale, "
 "mbylleni flluskën</p>"
+
+#: src/map/Clipboard.js:1042
+msgid "Paste from this document"
+msgstr ""
+
+#: src/map/Clipboard.js:1042
+msgid "Cancel paste special"
+msgstr ""
 
 #: src/map/Map.js:220
 msgid "Initializing..."
