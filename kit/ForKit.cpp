@@ -728,7 +728,7 @@ int forkit_main(int argc, char** argv)
         Util::forcedExit(EX_SOFTWARE);
     }
 
-    if (Util::getProcessThreadCount() != 1)
+    if (Util::ThreadCounter().count() != 1)
         LOG_ERR("forkit has more than a single thread after pre-init");
 
     // Link the network and system files in sysTemplate, if possible.

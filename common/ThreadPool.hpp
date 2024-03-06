@@ -66,6 +66,7 @@ public:
         _cond.notify_all();
         for (auto& it : _threads)
             it.join();
+        _threads.clear();
     }
 
     size_t count() const { return _work.size(); }
