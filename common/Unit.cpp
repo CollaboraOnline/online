@@ -54,7 +54,8 @@ std::condition_variable TimeoutConditionVariable;
 /// Controls whether experimental features/behavior is enabled or not.
 bool EnableExperimental = false;
 
-UnitBase** UnitBase::linkAndCreateUnit(UnitType type, const std::string& unitLibPath)
+UnitBase** UnitBase::linkAndCreateUnit([[maybe_unused]] UnitType type,
+                                       [[maybe_unused]] const std::string& unitLibPath)
 {
 #if !MOBILEAPP
     DlHandle = dlopen(unitLibPath.c_str(), RTLD_GLOBAL|RTLD_NOW);
@@ -124,9 +125,6 @@ UnitBase** UnitBase::linkAndCreateUnit(UnitType type, const std::string& unitLib
         return new UnitBase* [2] { hooks, nullptr };
 
     LOG_ERR("No wsd unit-tests found in " << unitLibPath);
-#else
-    (void) type;
-    (void) unitLibPath;
 #endif
 
     return nullptr;

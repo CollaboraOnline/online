@@ -105,7 +105,7 @@ void requestShutdown()
 #endif
 #endif // !IOS
 
-    void checkDumpGlobalState(GlobalDumpStateFn dumpState)
+    void checkDumpGlobalState([[maybe_unused]] GlobalDumpStateFn dumpState)
     {
 #if !MOBILEAPP
         assert(dumpState && "Invalid callback for checkDumpGlobalState");
@@ -114,12 +114,10 @@ void requestShutdown()
             DumpGlobalState = false;
             dumpState();
         }
-#else
-        (void) dumpState;
 #endif
     }
 
-    void checkForwardSigUsr2(ForwardSigUsr2Fn forwardSigUsr2)
+    void checkForwardSigUsr2([[maybe_unused]] ForwardSigUsr2Fn forwardSigUsr2)
     {
 #if !MOBILEAPP
         assert(forwardSigUsr2 && "Invalid callback for checkForwardSigUsr2");
@@ -128,8 +126,6 @@ void requestShutdown()
             ForwardSigUsr2Flag = false;
             forwardSigUsr2();
         }
-#else
-        (void) forwardSigUsr2;
 #endif
     }
 

@@ -495,18 +495,16 @@ class LocalStorage : public StorageBase
 {
 public:
     LocalStorage(const Poco::URI& uri, const std::string& localStorePath,
-                 const std::string& jailPath, bool isTemporaryFile)
+                 const std::string& jailPath, [[maybe_unused]] bool isTemporaryFile)
         : StorageBase(uri, localStorePath, jailPath)
 #if !MOBILEAPP
         , _isTemporaryFile(isTemporaryFile)
 #endif
         , _isCopy(false)
     {
-        LOG_INF("LocalStorage ctor with localStorePath: [" << localStorePath <<
-                "], jailPath: [" << jailPath << "], uri: [" << COOLWSD::anonymizeUrl(uri.toString()) << "].");
-#if MOBILEAPP
-        (void) isTemporaryFile;
-#endif
+        LOG_INF("LocalStorage ctor with localStorePath: ["
+                << localStorePath << "], jailPath: [" << jailPath << "], uri: ["
+                << COOLWSD::anonymizeUrl(uri.toString()) << "].");
     }
 
     class LocalFileInfo
