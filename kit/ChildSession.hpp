@@ -128,6 +128,7 @@ public:
 
 private:
     bool loadDocument(const StringVector& tokens);
+    bool saveDocumentAsync(const StringVector &tokens);
 
     bool sendFontRendering(const StringVector& tokens);
     bool getCommandValues(const StringVector& tokens);

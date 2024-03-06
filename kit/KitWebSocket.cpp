@@ -163,8 +163,26 @@ void KitWebSocketHandler::enableProcessInput(bool enable)
         _ksPoll->wakeup();
 }
 
+void KitWebSocketHandler::shutdownForBackgroundSave()
+{
+    auto kitToWSDSocket = getSocket().lock();
+    if (kitToWSDSocket)
+    {
+        // stays open in the parent process
+        LOG_TRC("Hard close kit to parent socket");
+        kitToWSDSocket->closeConnection();
+    }
+    _backgroundSaver = true;
+}
+
 void KitWebSocketHandler::onDisconnect()
 {
+    if (_backgroundSaver)
+    {
+        LOG_TRC("Ignoring hard disconnect of duplicate kit -> wsd socket in wsd");
+        return;
+    }
+
     if (!Util::isMobileApp())
     {
         //FIXME: We could try to recover.
