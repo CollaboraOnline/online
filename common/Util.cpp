@@ -175,22 +175,35 @@ namespace Util
     }
 
 #if !MOBILEAPP
-    int getProcessThreadCount()
+    ThreadCounter::ThreadCounter() :
+        _tasks(opendir("/proc/self/task"))
     {
-        DIR *fdDir = opendir("/proc/self/task");
-        if (!fdDir)
-        {
-            LOG_ERR("No proc mounted");
+        if (!_tasks)
+            LOG_ERR("No proc mounted, can't count threads");
+    }
+
+    ThreadCounter::~ThreadCounter()
+    {
+        closedir(reinterpret_cast<DIR *>(_tasks));
+    }
+
+    int ThreadCounter::count()
+    {
+        auto dir = reinterpret_cast<DIR *>(_tasks);
+
+        if (!dir)
             return -1;
-        }
+
+        rewinddir(dir);
+
         int tasks = 0;
         struct dirent *i;
-        while ((i = readdir(fdDir)))
+        while ((i = readdir(dir)))
         {
             if (i->d_name[0] != '.')
                 tasks++;
         }
-        closedir(fdDir);
+
         return tasks;
     }
 
@@ -448,6 +461,27 @@ namespace Util
             return rss;
         }
         return 0;
+    }
+
+    size_t getCurrentThreadCount()
+    {
+        DIR *dir = opendir("/proc/self/task");
+        if (!dir)
+        {
+            LOG_TRC("Failed to open /proc/self/task");
+            return 0;
+        }
+
+        size_t threads = 0;
+        struct dirent *it;
+        while ((it = readdir(dir)) != nullptr) {
+            if (it->d_name[0] == '.')
+                continue;
+            threads++;
+        }
+        closedir(dir);
+        LOG_TRC("We have " << threads << " threads");
+        return threads;
     }
 
     std::size_t getCpuUsage(const pid_t pid)

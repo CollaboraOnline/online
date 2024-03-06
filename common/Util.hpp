@@ -132,8 +132,17 @@ namespace Util
     };
 
 #if !MOBILEAPP
-    /// Get number of threads in this process or -1 on error
-    int getProcessThreadCount();
+    /// Needs to open dirent before forking in Kit process
+    class ThreadCounter
+    {
+        void *_tasks;
+    public:
+        ThreadCounter();
+        ~ThreadCounter();
+
+        /// Get number of threads in this process or -1 on error
+        int count();
+    };
 
     /// Spawn a process.
     int spawnProcess(const std::string &cmd, const StringVector &args);
@@ -258,6 +267,9 @@ namespace Util
 
     /// Returns the process RSS in KB.
     size_t getMemoryUsageRSS(const pid_t pid);
+
+    /// Returns the number of current threads, or zero on error
+    size_t getCurrentThreadCount();
 
     /// Returns the RSS and PSS of the current process in KB.
     /// Example: "procmemstats: pid=123 rss=12400 pss=566"
