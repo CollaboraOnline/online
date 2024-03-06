@@ -3149,7 +3149,7 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
         if (isError) // local save failed
         {
             _exportAsWopiUrl.clear();
-            sendTextFrameAndLogError("error: cmd=exportas kind=failure");
+            sendTextFrameAndLogError("error: cmd=exportas kind=saveasfailed");
             return;
         }
 
