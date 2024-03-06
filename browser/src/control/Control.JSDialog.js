@@ -780,9 +780,9 @@ L.Control.JSDialog = L.Control.extend({
 		builder.executeAction(dialogContainer, innerData);
 	},
 
-    _clamp: function(value, min, max) {
-        return Math.min(Math.max(value, min), max);
-    },
+	_clamp: function(value, min, max) {
+		return Math.min(Math.max(value, min), max);
+	},
 
 	onPan: function (ev) {
 		const target = this.draggingObject;
@@ -799,7 +799,16 @@ L.Control.JSDialog = L.Control.extend({
 			let newX = startX + ev.deltaX * (isRTL ? -1 : 1);
 			let newY = startY + ev.deltaY;
 
-            newX = this._clamp(newX, 0, window.innerWidth - width);
+			// We want to allow dragging the dialog offscreen iff it also drags another part of the dialog onscreen
+			if (newX < 0 && newX + width < window.innerWidth) {
+				newX = Math.min(0, window.innerWidth - width);
+			}
+
+			if (newX + width > window.innerWidth && newX > 0) {
+				newX = Math.max(window.innerWidth - width, 0);
+			}
+
+			// Happily for us, jsdialogs scroll in the y direction if the screen is too small anyway which lets us not worry about the title bar going fully offscreen
 			newY = this._clamp(newY, 0, window.innerHeight - height);
 
 			target.translateX = newX;
