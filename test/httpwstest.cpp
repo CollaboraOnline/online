@@ -103,7 +103,7 @@ public:
 
 void HTTPWSTest::testExoticLang()
 {
-    const std::string testname = "saveOnDisconnect- ";
+    const std::string testname = "testExoticLang- ";
 
     std::string documentPath, documentURL;
     getDocumentPathAndURL("hello.odt", documentPath, documentURL, testname);
@@ -134,7 +134,7 @@ void HTTPWSTest::testSaveOnDisconnect()
     std::string documentPath, documentURL;
     getDocumentPathAndURL("hello.odt", documentPath, documentURL, testname);
 
-    int kitcount = -1;
+    pid_t origPid;
     try
     {
         std::shared_ptr<http::WebSocketSession> socket1
@@ -148,7 +148,10 @@ void HTTPWSTest::testSaveOnDisconnect()
         sendTextFrame(socket1, "paste mimetype=text/plain;charset=utf-8\n" + text, testname);
         getResponseMessage(socket1, "pasteresult: success", testname);
 
-        kitcount = getCoolKitProcessCount();
+        std::set<pid_t> origPids = getDocKitPids();
+        LOK_ASSERT_EQUAL(static_cast<size_t>(1), origPids.size());
+        origPid = *(origPids.begin());
+        TST_LOG("Original pid: " << origPid);
 
         // Shutdown abruptly.
         TST_LOG("Closing connection after pasting.");
@@ -167,7 +170,8 @@ void HTTPWSTest::testSaveOnDisconnect()
     }
 
     // Allow time to save and destroy before we connect again.
-    testNoExtraCoolKitsLeft();
+    waitForKitProcessToStop(origPid,testname);
+
     TST_LOG("Loading again.");
     try
     {
@@ -176,7 +180,11 @@ void HTTPWSTest::testSaveOnDisconnect()
             = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname + "3 ");
 
         // Should have no new instances.
-        LOK_ASSERT_EQUAL(kitcount, countCoolKitProcesses(kitcount));
+        std::set<pid_t> newPids = getDocKitPids();
+        LOK_ASSERT_EQUAL(static_cast<size_t>(1), newPids.size());
+        pid_t newPid = *(newPids.begin());
+        TST_LOG("New pid: " << newPid);
+        LOK_ASSERT_MESSAGE("New pid ("<<newPid<<") should not match old pid ("<<origPid<<")", newPid != origPid);
 
         // Check if the document contains the pasted text.
         const std::string selection = getAllText(socket, testname, text);

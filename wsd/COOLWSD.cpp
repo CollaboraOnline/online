@@ -4637,6 +4637,13 @@ std::vector<std::shared_ptr<DocumentBroker>> COOLWSD::getBrokersTestOnly()
 
 std::set<pid_t> COOLWSD::getKitPids()
 {
+    std::set<pid_t> pids = getSpareKitPids();
+    pids.merge(getDocKitPids());
+    return pids;
+}
+
+std::set<pid_t> COOLWSD::getSpareKitPids()
+{
     std::set<pid_t> pids;
     pid_t pid;
     {
@@ -4648,6 +4655,13 @@ std::set<pid_t> COOLWSD::getKitPids()
                 pids.emplace(pid);
         }
     }
+    return pids;
+}
+
+std::set<pid_t> COOLWSD::getDocKitPids()
+{
+    std::set<pid_t> pids;
+    pid_t pid;
     {
         std::unique_lock<std::mutex> lock(DocBrokersMutex);
         for (const auto &it : DocBrokers)

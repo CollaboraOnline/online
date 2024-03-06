@@ -339,6 +339,8 @@ public:
 
     // Return a map for fast searches. Used in testing and in admin for cleanup
     static std::set<pid_t> getKitPids();
+    static std::set<pid_t> getSpareKitPids();
+    static std::set<pid_t> getDocKitPids();
 
     static std::string GetConnectionId()
     {
