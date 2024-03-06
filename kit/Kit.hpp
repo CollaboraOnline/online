@@ -231,6 +231,10 @@ public:
     virtual DocumentPasswordType getDocPasswordType() const = 0;
 
     virtual void updateActivityHeader() const = 0;
+
+    virtual bool joinThreads() = 0;
+
+    virtual bool forkToSave(const std::function<void()> &childSave) = 0;
 };
 
 /// A document container.
@@ -328,6 +332,10 @@ private:
 
     void updateActivityHeader() const override;
 
+    bool joinThreads() override;
+
+    bool forkToSave(const std::function<void()> &childSave) override;
+
     /// Notify all views of viewId and their associated usernames
     void notifyViewInfo() override;
 
@@ -396,7 +404,11 @@ private:
     static std::shared_ptr<lok::Document> _loKitDocumentForAndroidOnly;
 #endif
     std::shared_ptr<TileQueue> _tileQueue;
+
+    // Connection to the coolwsd process
     std::shared_ptr<WebSocketHandler> _websocketHandler;
+    // Connection a child background save process has to its parent: a precious thing.
+    std::shared_ptr<WebSocketHandler> _saveProcessParent;
 
     // Document password provided
     std::string _docPassword;

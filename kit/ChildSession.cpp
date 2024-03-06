@@ -544,9 +544,15 @@ bool ChildSession::_handleInput(const char *buffer, int length)
             }
             else if (tokens[1].find(".uno:Save") != std::string::npos)
             {
-                // Disable processing of other messages while saving document
-                InputProcessingManager processInput(getProtocol(), false);
-                return unoCommand(tokens);
+
+                // Attempt to save in the background.
+                if (!saveDocumentAsync(tokens))
+                { // fallback to synchronous save
+
+                    // Disable processing of other messages while saving document
+                    InputProcessingManager processInput(getProtocol(), false);
+                    return unoCommand(tokens);
+                }
             }
 
             return unoCommand(tokens);
@@ -828,6 +834,48 @@ bool ChildSession::loadDocument(const StringVector& tokens)
 
     LOG_INF("Loaded session " << getId());
     return true;
+}
+
+// attempt to shutdown threads, fork and execute in the background
+bool ChildSession::saveDocumentAsync(const StringVector &tokens)
+{
+    if (!_docManager->joinThreads())
+    {
+        LOG_WRN("Failed to join threads before async save");
+        return false;
+    }
+
+    size_t threads = getCurrentThreadCount();
+    if (threads != 1)
+    {
+        LOG_WRN("Failed to ensure we have just one, we have: " << threads);
+        return false;
+    }
+#if MOBILEAPP
+    return false;
+#else
+    LOG_TRC("Starting async save");
+
+    if (!_docManager->forkToSave([this, tokens]{
+
+        sendTextFrame("asyncsave start");
+
+        // FIXME: re-directing our sockets perhaps over
+        // a pipe to our parent process ?
+        unoCommand(tokens);
+
+        // FIXME: did we send our responses properly ? ...
+        SigUtil::addActivity("async save process exiting");
+
+        sendTextFrame("asyncsave end");
+        disconnect();
+
+        // FIXME: does this clean us up properly ?
+    }))
+        return false; // fork failed
+
+    return true;
+#endif // !MOBILEAPP
 }
 
 bool ChildSession::sendFontRendering(const StringVector& tokens)

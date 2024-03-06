@@ -751,6 +751,13 @@ Document::~Document()
 /// Post the message - in the unipoll world we're in the right thread anyway
 bool Document::postMessage(const char* data, int size, const WSOpCode code) const
 {
+    if (_saveProcessParent)
+    {
+        LOG_TRC("postMessage forwarding to save process: " << getAbbreviatedMessage(data, size));
+        if (_saveProcessParent->sendMessage(data, size, code, /*flush=*/true) > 0)
+            return true;
+    }
+
     LOG_TRC("postMessage called with: " << getAbbreviatedMessage(data, size));
     if (!_websocketHandler)
     {
@@ -1291,6 +1298,70 @@ void Document::updateActivityHeader() const
         ss << "\t" << it.second->getActivityState() << "\n";
     ss << "Commands:\n";
     SigUtil::setActivityHeader(ss.str());
+}
+
+bool Document::joinThreads()
+{
+    if (!getLOKit()->joinThreads())
+        return false;
+    _deltaPool.stop();
+    return true;
+}
+
+bool Document::forkToSave(const std::function<void()> &childSave)
+{
+    LOG_TRC("Starting background save");
+
+    const auto start = std::chrono::steady_clock::now();
+
+    // TODO: close URPtoLoFDs and URPfromLoFDs and test
+    if (isURPEnabled())
+    {
+        LOG_WRN("Can't background save with URP enabled");
+        return false;
+    }
+
+    // FIXME: only do one of these at a time ...
+    // FIXME: defer and queue a 2nd save if queued during save ...
+
+    std::shared_ptr<StreamSocket> parentSocket, childSocket;
+    if (!StreamSocket::socketpair(parentSocket, childSocket))
+        return false;
+
+    const pid_t pid = fork();
+
+    if (!pid) // Child
+    {
+        SigUtil::addActivity("forked background save process: " +
+                             std::to_string(pid));
+
+        childSocket.reset();
+        // now we have a socket to the parent: parentSocket
+
+        // close duplicate kit->wsd socket
+        auto kitWs = std::static_pointer_cast<KitWebSocketHandler>(_websocketHandler);
+        kitWs->shutdownForBackgroundSave();
+
+        // FIXME: refresh our wakeup-pipes [!] hmmm - interesting.
+        // FIXME: do we inherit these from forkit properly ?
+//        --- what are those pipes!? ---
+
+        const auto now = std::chrono::steady_clock::now();
+        LOG_TRC("Background save process " << getpid() << " fork took " <<
+                std::chrono::duration_cast<std::chrono::milliseconds>(now - start).count() << "ms");
+
+        childSave();
+
+        SigUtil::addActivity("background save process shutdown");
+    }
+    else // Still us
+    {
+        LOG_TRC("Spawned process " << pid << " to do background save");
+
+        parentSocket.reset();
+        // now we have a socket to the child: childSocket
+    }
+    return true;
 }
 
 void Document::notifyViewInfo()
@@ -2947,8 +3018,8 @@ void lokit_main(
             }
         }
 
-        if (!mainKit->insertNewUnixSocket(MasterLocation, pathAndQuery, websocketHandler,
-                                          &shareFDs))
+        if (!mainKit->insertNewUnixSocket(MasterLocation, pathAndQuery,
+                                          websocketHandler, &shareFDs))
         {
             LOG_SFL("Failed to connect to WSD. Will exit.");
             Util::forcedExit(EX_SOFTWARE);

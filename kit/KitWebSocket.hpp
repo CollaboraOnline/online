@@ -29,6 +29,7 @@ class KitWebSocketHandler final : public WebSocketHandler
     std::shared_ptr<Document> _document;
     std::shared_ptr<KitSocketPoll> _ksPoll;
     const unsigned _mobileAppDocId;
+    bool _backgroundSaver;
 
 public:
     KitWebSocketHandler(const std::string& socketName, const std::shared_ptr<lok::Office>& loKit,
@@ -41,6 +42,7 @@ public:
         , _jailId(jailId)
         , _ksPoll(std::move(ksPoll))
         , _mobileAppDocId(mobileAppDocId)
+        , _backgroundSaver(false)
     {
     }
 
@@ -48,6 +50,8 @@ public:
     {
         // Just to make it easier to set a breakpoint
     }
+
+    void shutdownForBackgroundSave();
 
 protected:
     virtual void handleMessage(const std::vector<char>& data) override;
