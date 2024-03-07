@@ -912,11 +912,12 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 										'accessibility': { focusBack: true, combination: 'SR', de: null }
 									},
 									{
-										'id': 'home-line-spacing',
-										'type': 'toolitem',
+										'id': 'home-line-spacing:LineSpacingMenu',
+										'type': 'menubutton',
+										'noLabel': true,
 										'text': _UNO('.uno:LineSpacing'),
 										'command': '.uno:LineSpacing',
-										'accessibility': { focusBack: true, combination: 'SL', de: null }
+										'accessibility': { focusBack: false, combination: 'SL', de: null }
 									},
 									{
 										'id': 'home-para-right-to-left',
