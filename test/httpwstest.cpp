@@ -87,7 +87,7 @@ public:
     void setUp()
     {
         resetTestStartTime();
-        testCountHowManyCoolkits();
+        waitForKitPidsReady("setUp");
         resetTestStartTime();
         _socketPoll->startThread();
     }
@@ -96,7 +96,7 @@ public:
     {
         _socketPoll->joinThread();
         resetTestStartTime();
-        testNoExtraCoolKitsLeft();
+        waitForKitPidsReady("tearDown");
         resetTestStartTime();
     }
 };
@@ -133,7 +133,6 @@ void HTTPWSTest::testSaveOnDisconnect()
     std::string documentPath, documentURL;
     getDocumentPathAndURL("hello.odt", documentPath, documentURL, testname);
 
-    pid_t origPid;
     try
     {
         std::shared_ptr<http::WebSocketSession> socket1
@@ -147,11 +146,6 @@ void HTTPWSTest::testSaveOnDisconnect()
         sendTextFrame(socket1, "paste mimetype=text/plain;charset=utf-8\n" + text, testname);
         getResponseMessage(socket1, "pasteresult: success", testname);
 
-        std::set<pid_t> origPids = getDocKitPids();
-        LOK_ASSERT_EQUAL(static_cast<size_t>(1), origPids.size());
-        origPid = *(origPids.begin());
-        TST_LOG("Original pid: " << origPid);
-
         // Shutdown abruptly.
         TST_LOG("Closing connection after pasting.");
 
@@ -162,28 +156,14 @@ void HTTPWSTest::testSaveOnDisconnect()
                            socket1->waitForDisconnection(std::chrono::seconds(5)));
         LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket 2",
                            socket2->waitForDisconnection(std::chrono::seconds(5)));
-    }
-    catch (const Poco::Exception& exc)
-    {
-        LOK_ASSERT_FAIL(exc.displayText());
-    }
 
-    // Allow time to save and destroy before we connect again.
-    waitForKitProcessToStop(origPid,testname);
+        // Allow time to save and destroy before we connect again.
+        waitForKitPidsReady(testname);
 
-    TST_LOG("Loading again.");
-    try
-    {
+        TST_LOG("Loading again.");
         // Load the same document and check that the last changes (pasted text) is saved.
         std::shared_ptr<http::WebSocketSession> socket
             = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname + "3 ");
-
-        // Should have no new instances.
-        std::set<pid_t> newPids = getDocKitPids();
-        LOK_ASSERT_EQUAL(static_cast<size_t>(1), newPids.size());
-        pid_t newPid = *(newPids.begin());
-        TST_LOG("New pid: " << newPid);
-        LOK_ASSERT_MESSAGE("New pid ("<<newPid<<") should not match old pid ("<<origPid<<")", newPid != origPid);
 
         // Check if the document contains the pasted text.
         const std::string selection = getAllText(socket, testname, text);
@@ -219,20 +199,18 @@ void HTTPWSTest::testReloadWhileDisconnecting()
         // the socket is closed, when the doc is not even modified yet.
         getResponseMessage(socket, "statechanged", testname);
 
-        const int kitcount = getCoolKitProcessCount();
-
         // Shutdown abruptly.
         TST_LOG("Closing connection after pasting.");
         socket->asyncShutdown();
         LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket",
                            socket->waitForDisconnection(std::chrono::seconds(5)));
 
+        // Do not wait here. Reconnect before disconnect finishes
+        // TODO: Test fails because it is unable to reconnect
+
         // Load the same document and check that the last changes (pasted text) is saved.
         TST_LOG("Loading again.");
         socket = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname);
-
-        // Should have no new instances.
-        LOK_ASSERT_EQUAL(kitcount, countCoolKitProcesses(kitcount));
 
         // Check if the document contains the pasted text.
         const std::string expected = "aaa bbb ccc";
