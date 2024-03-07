@@ -45,16 +45,17 @@ function _menubuttonControl (parentContainer, data, builder) {
 	// import menu
 	if (data.menu) {
 		menuId = data.id + '-menu';
-		builder._menus[menuId] = [];
+		var builtMenu = [];
 		for (var i in data.menu) {
-			builder._menus[menuId].push({
+			builtMenu.push({
 				id: data.menu[i].id,
 				text: data.menu[i].text
 			});
 		}
+		builder._menus.set(menuId, builtMenu);
 	}
 
-	if (menuId && builder._menus[menuId]) {
+	if (menuId && builder._menus.get(menuId)) {
 		var noLabels = builder.options.noLabelsForUnoButtons;
 		builder.options.noLabelsForUnoButtons = false;
 
@@ -94,7 +95,7 @@ function _menubuttonControl (parentContainer, data, builder) {
 				return false;
 			};
 
-			JSDialog.OpenDropdown(dropdownId, control.container, builder._menus[menuId], callback);
+			JSDialog.OpenDropdown(dropdownId, control.container, builder._menus.get(menuId), callback);
 		};
 
 		control.container.addEventListener('click', clickFunction);
