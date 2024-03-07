@@ -893,8 +893,9 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 						'type': 'toolbox',
 						'children': [
 							{
-								'id': 'home-insert-graphic',
-								'type': 'toolitem',
+								'id': 'home-insert-graphic:InsertImageMenu',
+								'type': 'menubutton',
+								'noLabel': true,
 								'text': _UNO('.uno:InsertGraphic'),
 								'command': '.uno:InsertGraphic',
 								'accessibility': { focusBack: true, combination: 'IG', de: null }
@@ -1188,8 +1189,8 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				'vertical': 'true'
 			},
 			{
-				'id': 'insert-insert-graphic',
-				'type': 'bigtoolitem',
+				'id': 'insert-insert-graphic:InsertImageMenu',
+				'type': 'menubutton',
 				'text': _UNO('.uno:InsertGraphic'),
 				'command': '.uno:InsertGraphic',
 				'accessibility': { focusBack: true, combination: 'IG', de: null }

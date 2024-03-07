@@ -158,4 +158,9 @@ menuDefinitions.set('LanguageMenu', [
 	{action: 'morelanguages-all', text: _UNO('.uno:SetLanguageAllTextMenu', 'text')},
 ] as Array<MenuDefinition>);
 
+menuDefinitions.set('InsertImageMenu', [
+	{action: 'localgraphic', text: _('Insert Local Image')}
+	// remote entry added in Map.WOPI
+] as Array<MenuDefinition>);
+
 JSDialog.MenuDefinitions = menuDefinitions;
