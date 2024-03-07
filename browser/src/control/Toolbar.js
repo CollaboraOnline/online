@@ -1320,6 +1320,12 @@ L.Map.include({
 		case 'morelanguages-all':
 			this.fire('morelanguages', {applyto: 'all'});
 			break;
+		case 'localgraphic':
+			L.DomUtil.get('insertgraphic').click();
+			break;
+		case 'remotegraphic':
+			this.fire('postMessage', {msgId: 'UI_InsertGraphic'});
+			break;
 		default:
 			console.error('unknown dispatch: "' + action + '"');
 		}

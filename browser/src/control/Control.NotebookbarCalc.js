@@ -1384,8 +1384,9 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 						'type': 'toolbox',
 						'children': [
 							{
-								'id': 'insert-insert-graphic',
-								'type': 'toolitem',
+								'id': 'insert-insert-graphic:InsertImageMenu',
+								'type': 'menubutton',
+								'noLabel': true,
 								'text': _UNO('.uno:InsertGraphic'),
 								'command': '.uno:InsertGraphic',
 								'accessibility': { focusBack: true,	combination: 'IG', de: null }

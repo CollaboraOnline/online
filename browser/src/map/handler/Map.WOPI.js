@@ -3,7 +3,7 @@
  * L.WOPI contains WOPI related logic
  */
 
-/* global w2ui _ app errorMessages */
+/* global w2ui _ app _UNO JSDialog errorMessages */
 L.Map.WOPI = L.Handler.extend({
 	// If the CheckFileInfo call fails on server side, we won't have any PostMessageOrigin.
 	// So use '*' because we still needs to send 'close' message to the parent frame which
@@ -40,6 +40,7 @@ L.Map.WOPI = L.Handler.extend({
 	},
 
 	_appLoaded: false,
+	_insertImageMenuSetupDone: false,
 
 	initialize: function(map) {
 		this._map = map;
@@ -149,6 +150,26 @@ L.Map.WOPI = L.Handler.extend({
 			this._map.showBusy(_('Creating new file from template...'), false);
 			this._map.saveAs(wopiInfo['TemplateSaveAs']);
 		}
+
+		this.setupImageInsertionMenu();
+	},
+
+	setupImageInsertionMenu: function() {
+		if (this._insertImageMenuSetupDone) {
+			return;
+		}
+
+		var menuEntries = JSDialog.MenuDefinitions.get('InsertImageMenu');
+
+		if (this.DisableInsertLocalImage) {
+			menuEntries = [];
+		}
+
+		if (this.EnableInsertRemoteImage) {
+			menuEntries.push({action: 'remotegraphic', text: _UNO('.uno:InsertGraphic', '', true)});
+		}
+
+		this._insertImageMenuSetupDone = true;
 	},
 
 	resetAppLoaded: function() {
