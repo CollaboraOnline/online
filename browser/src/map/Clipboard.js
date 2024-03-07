@@ -23,6 +23,7 @@ L.Clipboard = L.Class.extend({
 	initialize: function(map) {
 		this._map = map;
 		this._selectionContent = '';
+		this._selectionPlainTextContent = '';
 		this._selectionType = null;
 		this._accessKey = [ '', '' ];
 		this._clipboardSerial = 0; // incremented on each operation
@@ -34,6 +35,7 @@ L.Clipboard = L.Class.extend({
 
 		var div = document.createElement('div');
 		this._dummyDiv = div;
+		this._dummyPlainDiv = null;
 		this._dummyClipboard = {};
 
 		div.setAttribute('id', this._dummyDivName);
@@ -48,6 +50,12 @@ L.Clipboard = L.Class.extend({
 		// so we get events to where we want them.
 		var parent = document.getElementById('map');
 		parent.appendChild(div);
+
+		if (L.Browser.cypressTest) {
+			this._dummyPlainDiv = document.createElement('div');
+			this._dummyPlainDiv.id = 'copy-plain-container';
+			parent.appendChild(this._dummyPlainDiv);
+		}
 
 		// sensible default content.
 		this._resetDiv();
@@ -503,6 +511,9 @@ L.Clipboard = L.Class.extend({
 		var text = this._getHtmlForClipboard();
 
 		var plainText = this.stripHTML(text);
+		if (text == this._selectionContent && this._selectionPlainTextContent != '') {
+			plainText = this._selectionPlainTextContent;
+		}
 		if (ev.clipboardData) { // Standard
 			if (this._unoCommandForCopyCutPaste === '.uno:CopyHyperlinkLocation') {
 				var ess = 's';
@@ -915,16 +926,19 @@ L.Clipboard = L.Class.extend({
 
 	clearSelection: function() {
 		this._selectionContent = '';
+		this._selectionPlainTextContent = '';
 		this._selectionType = null;
 		this._scheduleHideDownload();
 	},
 
 	// textselectioncontent: message
-	setTextSelectionHTML: function(html) {
+	setTextSelectionHTML: function(html, plainText = '') {
 		this._selectionType = 'text';
 		this._selectionContent = html;
+		this._selectionPlainTextContent = plainText;
 		if (L.Browser.cypressTest) {
 			this._dummyDiv.innerHTML = html;
+			this._dummyPlainDiv.innerText = plainText;
 		}
 		this._scheduleHideDownload();
 	},
@@ -941,6 +955,7 @@ L.Clipboard = L.Class.extend({
 		}
 		this._selectionType = 'text';
 		this._selectionContent = this._originWrapBody(text);
+		this._selectionPlainTextContent = text;
 		this._scheduleHideDownload();
 	},
 

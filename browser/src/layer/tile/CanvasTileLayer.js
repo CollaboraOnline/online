@@ -1679,11 +1679,23 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._onTextSelectionMsg(textMsg);
 		}
 		else if (textMsg.startsWith('textselectioncontent:')) {
-			if (this._map._clip)
-				this._map._clip.setTextSelectionHTML(textMsg.substr(22));
-			else
+			let textMsgContent = textMsg.substr(22);
+			let textMsgHtml = '';
+			let textMsgPlainText = '';
+			if (textMsgContent.startsWith('{')) {
+				// Multiple formats: JSON.
+				let textMsgJson = JSON.parse(textMsgContent);
+				textMsgHtml = textMsgJson['text/html'];
+				textMsgPlainText = textMsgJson['text/plain;charset=utf-8'];
+			} else {
+				// Single format: as-is.
+				textMsgHtml = textMsgContent;
+			}
+			if (this._map._clip) {
+				this._map._clip.setTextSelectionHTML(textMsgHtml, textMsgPlainText);
+			} else
 				// hack for ios and android to get selected text into hyperlink insertion dialog
-				this._selectedTextContent = textMsg.substr(22);
+				this._selectedTextContent = textMsgHtml;
 		}
 		else if (textMsg.startsWith('clipboardchanged')) {
 			var jMessage = textMsg.substr(17);
@@ -3235,7 +3247,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				clearTimeout(this._selectionContentRequest);
 			}
 			this._selectionContentRequest = setTimeout(L.bind(function () {
-				app.socket.sendMessage('gettextselection mimetype=text/html');}, this), 100);
+				app.socket.sendMessage('gettextselection mimetype=text/html,text/plain;charset=utf-8');}, this), 100);
 		}
 		else {
 			this._textCSelections.clear();

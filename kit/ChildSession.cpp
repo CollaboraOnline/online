@@ -1170,15 +1170,23 @@ std::string ChildSession::getTextSelectionInternal(const std::string& mimeType)
 
 bool ChildSession::getTextSelection(const StringVector& tokens)
 {
-    std::string mimeType;
+    std::string mimeTypeList;
 
     if (tokens.size() != 2 ||
-        !getTokenString(tokens[1], "mimetype", mimeType))
+        !getTokenString(tokens[1], "mimetype", mimeTypeList))
     {
         sendTextFrameAndLogError("error: cmd=gettextselection kind=syntax");
         return false;
     }
 
+    std::vector<std::string> mimeTypes = Util::splitStringToVector(mimeTypeList, ',');
+    if (mimeTypes.empty())
+    {
+        sendTextFrameAndLogError("error: cmd=gettextselection kind=syntax");
+        return false;
+    }
+
+    std::string mimeType = mimeTypes[0];
     SigUtil::addActivity(getId(), "getTextSelection");
 
     if (getLOKitDocument()->getDocumentType() != LOK_DOCTYPE_TEXT &&
@@ -1197,18 +1205,34 @@ bool ChildSession::getTextSelection(const StringVector& tokens)
     }
 
     getLOKitDocument()->setView(_viewId);
-    char* textSelection = nullptr;
-    const int selectionType = getLOKitDocument()->getSelectionTypeAndText(mimeType.c_str(), &textSelection);
-    std::string selection(textSelection ? textSelection : "");
-    free(textSelection);
-    if (selectionType == LOK_SELTYPE_LARGE_TEXT || selectionType == LOK_SELTYPE_COMPLEX)
+    Poco::JSON::Object selectionObject;
+    for (const auto& type : mimeTypes)
     {
-        // Flag complex data so the client will download async.
-        sendTextFrame("complexselection:");
-        return true;
+        char* textSelection = nullptr;
+        const int selectionType = getLOKitDocument()->getSelectionTypeAndText(type.c_str(), &textSelection);
+        std::string selection(textSelection ? textSelection : "");
+        free(textSelection);
+        if (selectionType == LOK_SELTYPE_LARGE_TEXT || selectionType == LOK_SELTYPE_COMPLEX)
+        {
+            // Flag complex data so the client will download async.
+            sendTextFrame("complexselection:");
+            return true;
+        }
+        if (mimeTypes.size() == 1)
+        {
+            // Single format: send that as-is.
+            sendTextFrame("textselectioncontent: " + selection);
+            return true;
+        }
+
+        selectionObject.set(type, selection);
     }
 
-    sendTextFrame("textselectioncontent: " + selection);
+    // Multiple formats: send in JSON.
+    std::stringstream selectionStream;
+    selectionObject.stringify(selectionStream);
+    std::string selection = selectionStream.str();
+    sendTextFrame("textselectioncontent:\n" + selection);
     return true;
 }
 

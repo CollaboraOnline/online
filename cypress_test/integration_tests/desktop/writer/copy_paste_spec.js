@@ -1,20 +1,20 @@
-/* global describe it cy beforeEach require expect afterEach*/
+/* global describe it cy require expect afterEach*/
 
 var helper = require('../../common/helper');
 
 describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Clipboard operations.', function() {
-	var origTestFileName = 'copy_paste.odt';
 	var testFileName;
 
-	beforeEach(function() {
-		testFileName = helper.beforeAll(origTestFileName, 'writer');
-	});
+	function before(filename) {
+		testFileName = helper.beforeAll(filename, 'writer');
+	}
 
 	afterEach(function() {
 		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	it('Copy and Paste text.', function() {
+		before('copy_paste.odt');
 		// Select some text
 		helper.selectAllText();
 
@@ -31,5 +31,14 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Clipboard operations.', fu
 			.click();
 
 		cy.cGet('#copy_paste_warning-box').should('exist');
+	});
+
+	it('Copy plain text.', function() {
+		before('copy_paste_simple.odt');
+
+		helper.selectAllText();
+
+		let expected = '    • first\n    • second\n    • third\n';
+		cy.cGet('#copy-plain-container').should('have.text', expected.replaceAll('\n', ''));
 	});
 });
