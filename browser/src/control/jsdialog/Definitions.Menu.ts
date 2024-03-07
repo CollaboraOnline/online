@@ -13,12 +13,14 @@
  * Definitions.Menu - JSON description of menus for JSDialog
  */
 
+declare var L: any;
 declare var JSDialog: any;
 
 type MenuDefinition = {
 	id: string,			// unique identifier
 	type: (undefined | 'action' | 'menu'| 'separator'),		// type of entry
 	text: string,		// displayed text
+	hint: string,		// hint text
 	uno: string,		// uno command
 	action: string,		// dispatch command
 	img: string,		// icon name
@@ -169,6 +171,11 @@ menuDefinitions.set('CharSpacingMenu', [
 	{id: 'space15', text: _('Normal'), uno: 'Spacing?Spacing:short=0'},
 	{id: 'space2', text: _('Loose'), uno: 'Spacing?Spacing:short=60'},
 	{id: 'space2', text: _('Very Loose'), uno: 'Spacing?Spacing:short=120'},
+] as Array<MenuDefinition>);
+
+menuDefinitions.set('PasteMenu', [
+	{text: _UNO('.uno:Paste', 'text'), action: '.uno:Paste', hint: L.Control.MenubarShortcuts.shortcuts.PASTE},
+	{text: _UNO('.uno:PasteSpecial', 'text'), action: '.uno:PasteSpecial', hint: L.Control.MenubarShortcuts.shortcuts.PASTE_SPECIAL},
 ] as Array<MenuDefinition>);
 
 JSDialog.MenuDefinitions = menuDefinitions;

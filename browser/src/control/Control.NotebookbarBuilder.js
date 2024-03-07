@@ -48,9 +48,6 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['.uno:InsertTable'] = this._insertTableControl;
 		this._toolitemHandlers['.uno:SelectBackground'] = this._selectBackgroundControl;
 		this._toolitemHandlers['.uno:InsertAnnotation'] = this._insertAnnotationControl;
-		this._toolitemHandlers['.uno:Cut'] = this._clipboardButtonControl;
-		this._toolitemHandlers['.uno:Copy'] = this._clipboardButtonControl;
-		this._toolitemHandlers['.uno:Paste'] = this._clipboardButtonControl;
 		this._toolitemHandlers['.uno:BasicShapes'] = this._shapesControl;
 		this._toolitemHandlers['.uno:ConditionalFormatMenu'] = this._conditionalFormatControl;
 		this._toolitemHandlers['.uno:SetBorderStyle'] = this._borderStyleControl;
@@ -907,43 +904,6 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 				builder.map.insertComment();
 			}
 		});
-		builder._preventDocumentLosingFocusOnClick(control.container);
-	},
-
-	_clipboardButtonControl: function(parentContainer, data, builder) {
-		var isPaste = data.command === '.uno:Paste';
-		var options = {hasDropdownArrow: isPaste};
-		var control = builder._unoToolButton(parentContainer, data, builder, options);
-
-		if (builder.map._clip) {
-			if (isPaste) {
-				var menu = [
-					{text: _UNO('.uno:Paste', 'text'), uno: 'Paste', hint: L.Control.MenubarShortcuts.shortcuts.PASTE},
-					{text: _UNO('.uno:PasteSpecial', 'text'), uno: 'PasteSpecial', hint: L.Control.MenubarShortcuts.shortcuts.PASTE_SPECIAL},
-				];
-
-				var itemCallback = function(event) {
-					if (event.item)
-						builder.map._clip.filterExecCopyPaste('.uno:' + event.item.uno);
-				};
-
-				$(control.container).unbind('click.toolbutton');
-				$(control.container).click(function () {
-					$(control.container).w2menu({
-						name: 'pastemenu',
-						items: menu,
-						onSelect: itemCallback
-					});
-					builder._makeW2MenuFocusable(builder, 'w2ui-overlay-pastemenu', menu, data.id, itemCallback);
-				});
-			} else {
-				$(control.container).unbind('click.toolbutton');
-				$(control.container).click(function () {
-					builder.map._clip.filterExecCopyPaste(data.command);
-				});
-			}
-		}
-
 		builder._preventDocumentLosingFocusOnClick(control.container);
 	},
 

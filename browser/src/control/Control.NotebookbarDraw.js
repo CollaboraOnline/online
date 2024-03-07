@@ -468,8 +468,8 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				'vertical': 'true'
 			},
 			{
-				'id': 'home-paste',
-				'type': 'bigtoolitem',
+				'id': 'home-paste:PasteMenu',
+				'type': 'menubutton',
 				'text': _UNO('.uno:Paste'),
 				'command': '.uno:Paste',
 				'accessibility': { focusBack: true, combination: 'V', de: null }
@@ -482,7 +482,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 						'children': [
 							{
 								'id': 'home-cut',
-								'type': 'toolitem',
+								'type': 'customtoolitem',
 								'text': _UNO('.uno:Cut'),
 								'command': '.uno:Cut',
 								'accessibility': { focusBack: true, combination: 'X', de: null }
@@ -501,7 +501,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 						'children': [
 							{
 								'id': 'home-copy',
-								'type': 'toolitem',
+								'type': 'customtoolitem',
 								'text': _UNO('.uno:Copy'),
 								'command': '.uno:Copy',
 								'accessibility': { focusBack: true, combination: 'C', de: null }
