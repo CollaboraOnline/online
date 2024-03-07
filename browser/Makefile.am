@@ -331,6 +331,7 @@ COOL_JS_LST =\
 	src/control/Control.LokDialog.js \
 	src/control/Control.AlertDialog.js \
 	src/control/ColorPicker.js \
+	src/control/jsdialog/Definitions.Menu.ts \
 	src/control/jsdialog/Util.Dropdown.js \
 	src/control/jsdialog/Util.FocusCycle.js \
 	src/control/jsdialog/Util.ModalHelper.js \
@@ -773,7 +774,25 @@ pot:
 		src/control/Ruler.js \
 		src/control/Signing.js \
 		src/control/Toolbar.js \
+		src/control/jsdialog/Definitions.Menu.ts \
+		src/control/jsdialog/Util.Dropdown.js \
+		src/control/jsdialog/Util.FocusCycle.js \
+		src/control/jsdialog/Util.ModalHelper.js \
+		src/control/jsdialog/Util.StateChange.ts \
+		src/control/jsdialog/Widget.Calendar.js \
+		src/control/jsdialog/Widget.Combobox.js \
+		src/control/jsdialog/Widget.DrawingArea.js \
+		src/control/jsdialog/Widget.FormulabarEdit.js \
+		src/control/jsdialog/Widget.Frame.js \
+		src/control/jsdialog/Widget.IconView.js \
+		src/control/jsdialog/Widget.LanguageSelector.js \
+		src/control/jsdialog/Widget.MenuButton.js \
 		src/control/jsdialog/Widget.MobileBorderSelector.js \
+		src/control/jsdialog/Widget.MobileTabControl.js \
+		src/control/jsdialog/Widget.MultilineEdit.js \
+		src/control/jsdialog/Widget.Progressbar.js \
+		src/control/jsdialog/Widget.ScrolledWindow.js \
+		src/control/jsdialog/Widget.Timefield.js \
 		src/control/jsdialog/Widget.TreeView.js \
 		src/core/Socket.js \
 		src/core/Debug.js \
