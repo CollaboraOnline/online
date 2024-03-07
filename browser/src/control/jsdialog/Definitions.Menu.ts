@@ -163,4 +163,12 @@ menuDefinitions.set('InsertImageMenu', [
 	// remote entry added in Map.WOPI
 ] as Array<MenuDefinition>);
 
+menuDefinitions.set('CharSpacingMenu', [
+	{id: 'space1', text: _('Very Tight'), uno: 'Spacing?Spacing:short=-60'},
+	{id: 'space1', text: _('Tight'), uno: 'Spacing?Spacing:short=-30'},
+	{id: 'space15', text: _('Normal'), uno: 'Spacing?Spacing:short=0'},
+	{id: 'space2', text: _('Loose'), uno: 'Spacing?Spacing:short=60'},
+	{id: 'space2', text: _('Very Loose'), uno: 'Spacing?Spacing:short=120'},
+] as Array<MenuDefinition>);
+
 JSDialog.MenuDefinitions = menuDefinitions;
