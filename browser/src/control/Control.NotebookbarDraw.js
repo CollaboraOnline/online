@@ -793,11 +793,12 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 										'accessibility': { focusBack: true, combination: 'SD', de: null }
 									},
 									{
-										'id': 'home-line-spacing',
-										'type': 'toolitem',
+										'id': 'home-line-spacing:LineSpacingMenu',
+										'type': 'menubutton',
+										'noLabel': true,
 										'text': _UNO('.uno:LineSpacing'),
 										'command': '.uno:LineSpacing',
-										'accessibility': { focusBack: true, combination: 'LS', de: null }
+										'accessibility': { focusBack: false, combination: 'LS', de: null }
 									},
 									{
 										'id': 'home-para-right-to-left',

@@ -21,6 +21,7 @@ type MenuDefinition = {
 	text: string,		// displayed text
 	uno: string,		// uno command
 	action: string,		// dispatch command
+	img: string,		// icon name
 	checked: boolean	// state of check mark
 };
 
@@ -140,6 +141,15 @@ menuDefinitions.set('FormatBulletsMenu', [
 	{text: _UNO('.uno:JumpDownThisLevel', 'text'), uno: 'JumpDownThisLevel'},
 	{text: _UNO('.uno:JumpUpThisLevel', 'text'), uno: 'JumpUpThisLevel'},
 	{text: _UNO('.uno:ContinueNumbering', 'text'), uno: 'ContinueNumbering'}
+] as Array<MenuDefinition>);
+
+menuDefinitions.set('LineSpacingMenu', [
+	{id: 'spacepara1', img: 'spacepara1', text: _UNO('.uno:SpacePara1'), uno: 'SpacePara1'},
+	{id: 'spacepara15', img: 'spacepara15', text: _UNO('.uno:SpacePara15'), uno: 'SpacePara15'},
+	{id: 'spacepara2', img: 'spacepara2', text: _UNO('.uno:SpacePara2'), uno: 'SpacePara2'},
+	{type: 'separator'},
+	{id: 'paraspaceincrease', img: 'paraspaceincrease', text: _UNO('.uno:ParaspaceIncrease'), uno: 'ParaspaceIncrease'},
+	{id: 'paraspacedecrease', img: 'paraspacedecrease', text: _UNO('.uno:ParaspaceDecrease'), uno: 'ParaspaceDecrease'}
 ] as Array<MenuDefinition>);
 
 JSDialog.MenuDefinitions = menuDefinitions;

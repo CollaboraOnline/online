@@ -57,7 +57,7 @@ function _menubuttonControl (parentContainer, data, builder) {
 
 	if (menuId && builder._menus.get(menuId)) {
 		var noLabels = builder.options.noLabelsForUnoButtons;
-		builder.options.noLabelsForUnoButtons = false;
+		builder.options.noLabelsForUnoButtons = data.noLabel ? data.noLabel : false;
 
 		// command is needed to generate image
 		if (!data.command)
