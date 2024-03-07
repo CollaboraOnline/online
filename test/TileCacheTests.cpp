@@ -22,6 +22,9 @@
 
 #include <cppunit/extensions/HelperMacros.h>
 
+#include <sstream>
+#include <random>
+
 #include <Common.hpp>
 #include <Protocol.hpp>
 #include <MessageQueue.hpp>
@@ -171,7 +174,7 @@ public:
     void setUp()
     {
         resetTestStartTime();
-        testCountHowManyCoolkits();
+        waitForKitPidsReady("setUp");
         resetTestStartTime();
         _socketPoll->startThread();
     }
@@ -180,7 +183,7 @@ public:
     {
         _socketPoll->joinThread();
         resetTestStartTime();
-        testNoExtraCoolKitsLeft();
+        waitForKitPidsReady("tearDown");
         resetTestStartTime();
     }
 };
@@ -451,13 +454,14 @@ void TileCacheTests::testDisconnectMultiView()
     constexpr size_t repeat = 2;
     for (size_t j = 1; j <= repeat; ++j)
     {
-        std::string documentPath, documentURL;
-        getDocumentPathAndURL("setclientpart.ods", documentPath, documentURL, "disconnectMultiView ");
+        // Make sure previous sessions have closed
+        waitForKitPidsReady(testname);
 
         TST_LOG("disconnectMultiView try #" << j);
 
-        // Wait to clear previous sessions.
-        countCoolKitProcesses(InitialCoolKitCount);
+        std::string documentPath, documentURL;
+        getDocumentPathAndURL("setclientpart.ods", documentPath, documentURL, "disconnectMultiView ");
+
 
         // Request a huge tile, and cancel immediately.
         std::shared_ptr<http::WebSocketSession> socket1
