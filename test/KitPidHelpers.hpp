@@ -21,32 +21,59 @@
 namespace helpers
 {
 
-const int InitialCoolKitCount = 1;
-void testCountHowManyCoolkits();
-void testNoExtraCoolKitsLeft();
+constexpr int KIT_PID_TIMEOUT_MS = 4000 * TRACE_MULTIPLIER;
+constexpr int KIT_PID_RETRY_MS = 20;
 
-int countCoolKitProcesses(const int expected);/*,
-                                 std::chrono::milliseconds timeoutMs
-                                 = std::chrono::milliseconds(COMMAND_TIMEOUT_MS * 8));
-                                 */
-
-/// Get the list of all kit PIDs
+/*
+ * Get the list of all kit pids
+ */
 std::set<pid_t> getKitPids();
-/// Get the list of spare (unused) kit PIDs
+
+/*
+ * Get the list of spare (unused) kit pids
+ */
 std::set<pid_t> getSpareKitPids();
-/// Get the list of doc (loaded) kit PIDs
+
+/*
+ * Get the list of doc (loaded) kit pids
+ */
 std::set<pid_t> getDocKitPids();
 
-/// Get the PID of the forkit
-std::set<pid_t> getForKitPids();
+/*
+ * Get the pid of the coolforkit process
+ */
+pid_t getForKitPid();
 
-/// How many live coolkit processes do we have ?
-int getCoolKitProcessCount();
+/*
+ * Log the current doc and spare kit pids
+ * Useful for debugging
+ */
+void logKitProcesses(const std::string& testname);
 
-void waitForKitProcessToStop(
-        const pid_t pid,
+/*
+ * Wait until the number of kit processes matches the desired count.
+ * Set numDocKits and numSpareKits to -1 to skip counting those processes
+ */
+void waitForKitProcessCount(const std::string& testname, int numDocKits, int numSpareKits,
+        const std::chrono::milliseconds timeoutMs,
+        const std::chrono::milliseconds retryMs);
+
+/*
+ * Wait until ready with 0 doc kits and 1 spare kit
+ * Used to wait for spare kit to start up before use
+ * or to wait for doc kits to shut down after
+ */
+void waitForKitPidsReady(
         const std::string& testname,
-        const std::chrono::milliseconds timeoutMs = std::chrono::milliseconds(COMMAND_TIMEOUT_MS * 8),
-        const std::chrono::milliseconds retryMs = std::chrono::milliseconds(10));
+        const std::chrono::milliseconds timeoutMs = std::chrono::milliseconds(KIT_PID_TIMEOUT_MS),
+        const std::chrono::milliseconds retryMs = std::chrono::milliseconds(KIT_PID_RETRY_MS));
 
-}
+/*
+ * Wait until all doc and spare kits are closed
+ */
+void waitForKitPidsKilled(
+        const std::string& testname,
+        const std::chrono::milliseconds timeoutMs = std::chrono::milliseconds(KIT_PID_TIMEOUT_MS),
+        const std::chrono::milliseconds retryMs = std::chrono::milliseconds(KIT_PID_RETRY_MS));
+
+} // namespace helpers

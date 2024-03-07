@@ -100,14 +100,14 @@ public:
     void setUp()
     {
         helpers::resetTestStartTime();
-        helpers::testCountHowManyCoolkits();
+        helpers::waitForKitPidsReady("setUp");
         helpers::resetTestStartTime();
     }
 
     void tearDown()
     {
         helpers::resetTestStartTime();
-        helpers::testNoExtraCoolKitsLeft();
+        helpers::waitForKitPidsReady("tearDown");
         helpers::resetTestStartTime();
     }
 
