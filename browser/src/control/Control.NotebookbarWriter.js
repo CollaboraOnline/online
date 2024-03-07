@@ -686,8 +686,9 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 										'accessibility': { focusBack: true, 	combination: '6',	de: '6' }
 									},
 									{
-										'id': 'home-spacing',
-										'type': 'toolitem',
+										'id': 'home-spacing:CharSpacingMenu',
+										'type': 'menubutton',
+										'noLabel': true,
 										'text': _UNO('.uno:Spacing'),
 										'command': '.uno:CharSpacing',
 										'accessibility': { focusBack: false,	combination: 'FT',	de: null }
