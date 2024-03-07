@@ -536,8 +536,8 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'vertical': 'true'
 			},
 			{
-				'id': 'home-paste',
-				'type': 'bigtoolitem',
+				'id': 'home-paste:PasteMenu',
+				'type': 'menubutton',
 				'text': _UNO('.uno:Paste'),
 				'command': '.uno:Paste',
 				'accessibility': { focusBack: false,	combination: 'V',	de: null }
@@ -550,7 +550,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'children': [
 							{
 								'id': 'home-cut',
-								'type': 'toolitem',
+								'type': 'customtoolitem',
 								'text': _UNO('.uno:Cut'),
 								'command': '.uno:Cut',
 								'accessibility': { focusBack: true, 	combination: 'X',	de: 'X' }
@@ -569,7 +569,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'children': [
 							{
 								'id': 'home-copy',
-								'type': 'toolitem',
+								'type': 'customtoolitem',
 								'text': _UNO('.uno:Copy'),
 								'command': '.uno:Copy',
 								'accessibility': { focusBack: true, 	combination: 'C',	de: 'C' }

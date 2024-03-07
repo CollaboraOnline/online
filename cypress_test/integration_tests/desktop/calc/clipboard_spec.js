@@ -73,7 +73,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', fu
 		// When pasting C1 to D1:
 		helper.typeIntoInputField('input#addressInput', 'D1');
 		cy.cGet('#home-paste-button').click();
-		cy.cGet('#w2ui-overlay-pastemenu tr[title="Ctrl + V"]').click();
+		cy.cGet('#home-paste-entries .ui-combobox-entry').contains('Paste').click();
 
 		// Then make sure the formula gets rewritten as expected:
 		// Internal paste: B1 is 2, C1 is 3, so D1 is 5.
@@ -92,7 +92,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', fu
 
 		// When pasting the clipboard to A1:
 		cy.cGet('#home-paste-button').click();
-		cy.cGet('#w2ui-overlay-pastemenu tr[title="Ctrl + V"]').click();
+		cy.cGet('#home-paste-entries .ui-combobox-entry').contains('Paste').click();
 
 		// Then make sure we actually consider the content of the HTML:
 		cy.cGet('#sc_input_window.formulabar .ui-custom-textarea-text-layer').should('have.text', 'clipboard');
@@ -107,7 +107,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', fu
 
 		// When pasting the clipboard to A1:
 		cy.cGet('#home-paste-button').click();
-		cy.cGet('#w2ui-overlay-pastemenu tr[title="Ctrl + V"]').click();
+		cy.cGet('#home-paste-entries .ui-combobox-entry').contains('Paste').click();
 
 		// Then make the paste happened:
 		cy.cGet('#sc_input_window.formulabar .ui-custom-textarea-text-layer').should('have.text', 'plain text');
@@ -124,7 +124,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', fu
 
 		// When pasting the clipboard:
 		cy.cGet('#home-paste-button').click();
-		cy.cGet('#w2ui-overlay-pastemenu tr[title="Ctrl + V"]').click();
+		cy.cGet('#home-paste-entries .ui-combobox-entry').contains('Paste').click();
 
 		// Then make sure the paste happened:
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g').should('exist');
@@ -145,7 +145,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', fu
 		// When pasting the clipboard to B1, which fails:
 		helper.typeIntoInputField('input#addressInput', 'B1');
 		cy.cGet('#home-paste-button').click();
-		cy.cGet('#w2ui-overlay-pastemenu tr[title="Ctrl + V"]').click();
+		cy.cGet('#home-paste-entries .ui-combobox-entry').contains('Paste').click();
 
 		// Then make sure a warning popup is shown:
 		cy.cGet('#copy_paste_warning-box').should('exist');

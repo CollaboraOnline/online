@@ -1326,6 +1326,12 @@ L.Map.include({
 		case 'remotegraphic':
 			this.fire('postMessage', {msgId: 'UI_InsertGraphic'});
 			break;
+		case '.uno:Copy':
+		case '.uno:Cut':
+		case '.uno:Paste':
+		case '.uno:PasteSpecial':
+			this._clip.filterExecCopyPaste(action);
+			break;
 		default:
 			console.error('unknown dispatch: "' + action + '"');
 		}
