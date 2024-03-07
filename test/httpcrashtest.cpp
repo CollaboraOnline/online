@@ -55,7 +55,6 @@ class HTTPCrashTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testBarren);
     CPPUNIT_TEST(testCrashKit);
     CPPUNIT_TEST(testRecoverAfterKitCrash);
-
     CPPUNIT_TEST(testCrashForkit);
 
     CPPUNIT_TEST_SUITE_END();
@@ -65,9 +64,9 @@ class HTTPCrashTest : public CPPUNIT_NS::TestFixture
     void testRecoverAfterKitCrash();
     void testCrashForkit();
 
-    static
-    void killLoKitProcesses();
-    void killForkitProcess();
+    void killPid(const pid_t pid, const std::string& testname);
+    void killDocKitProcesses(const std::string& testname);
+    void killAllKitProcesses(const std::string& testname);
 
 public:
     HTTPCrashTest()
@@ -94,7 +93,7 @@ public:
     void setUp()
     {
         resetTestStartTime();
-        testCountHowManyCoolkits();
+        waitForKitPidsReady("setUp");
         resetTestStartTime();
         _socketPoll->startThread();
     }
@@ -103,23 +102,24 @@ public:
     {
         _socketPoll->joinThread();
         resetTestStartTime();
-        testNoExtraCoolKitsLeft();
+        waitForKitPidsReady("tearDown");
         resetTestStartTime();
     }
 };
 
 void HTTPCrashTest::testBarren()
 {
-#if 0 // FIXME why does this fail?
     // Kill all kit processes and try loading a document.
     const char* testname = "barren ";
     try
     {
-        killLoKitProcesses();
-        countCoolKitProcesses(0);
+        TST_LOG("Killing all kits");
+        killAllKitProcesses(testname);
+        waitForKitPidsKilled(testname);
+
+        // Do not wait for spare kit to start up here
 
         TST_LOG("Loading after kill.");
-
         // Load a document and get its status.
         std::shared_ptr<http::WebSocketSession> socket
             = loadDocAndGetSession(_socketPoll, "hello.odt", _uri, testname);
@@ -128,7 +128,6 @@ void HTTPCrashTest::testBarren()
         assertResponseString(socket, "status:", testname);
 
         socket->asyncShutdown();
-
         LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket",
                            socket->waitForDisconnection(std::chrono::seconds(5)));
     }
@@ -136,7 +135,6 @@ void HTTPCrashTest::testBarren()
     {
         LOK_ASSERT_FAIL(exc.displayText());
     }
-#endif
 }
 
 void HTTPCrashTest::testCrashKit()
@@ -144,18 +142,18 @@ void HTTPCrashTest::testCrashKit()
     const char* testname = "crashKit ";
     try
     {
+        TST_LOG("Loading document");
         std::shared_ptr<http::WebSocketSession> socket
             = loadDocAndGetSession(_socketPoll, "empty.odt", _uri, testname);
 
-        TST_LOG("Allowing time for kits to spawn and connect to wsd to get cleanly killed");
+        TST_LOG("Allowing time for kit to connect to wsd to get cleanly killed");
         std::this_thread::sleep_for(std::chrono::seconds(1));
 
         TST_LOG("Killing coolkit instances.");
+        killAllKitProcesses(testname);
+        waitForKitPidsKilled(testname);
 
-        killLoKitProcesses();
-        countCoolKitProcesses(0);//, std::chrono::seconds(1));
-
-        TST_LOG("Reading the error code from the socket.");
+        // TST_LOG("Reading the error code from the socket.");
         //FIXME: implement in WebSocketSession.
         // std::string message;
         // const int statusCode = getErrorCode(socket, message, testname);
@@ -179,28 +177,20 @@ void HTTPCrashTest::testRecoverAfterKitCrash()
     const char* testname = "recoverAfterKitCrash ";
     try
     {
+        TST_LOG("Loading document");
         std::shared_ptr<http::WebSocketSession> socket1
             = loadDocAndGetSession(_socketPoll, "empty.odt", _uri, testname);
 
-        TST_LOG("Allowing time for kits to spawn and connect to wsd to get cleanly killed");
+        TST_LOG("Allowing time for kit to connect to wsd to get cleanly killed");
         std::this_thread::sleep_for(std::chrono::seconds(1));
 
         TST_LOG("Killing coolkit instances.");
+        killDocKitProcesses(testname);
+        waitForKitPidsReady(testname);
 
-        killLoKitProcesses();
-        countCoolKitProcesses(0);//, std::chrono::seconds(1));
-
-        // We expect the client connection to close.
         TST_LOG("Reconnect after kill.");
-
         std::shared_ptr<http::WebSocketSession> socket2 = loadDocAndGetSession(
             _socketPoll, "empty.odt", _uri, testname, /*isView=*/true, /*isAssert=*/false);
-        if (!socket2)
-        {
-            // In case still starting up.
-            sleep(2);
-            socket2 = loadDocAndGetSession(_socketPoll, "empty.odt", _uri, testname);
-        }
 
         sendTextFrame(socket2, "status", testname);
         assertResponseString(socket2, "status:", testname);
@@ -224,13 +214,17 @@ void HTTPCrashTest::testCrashForkit()
     const char* testname = "crashForkit ";
     try
     {
+        TST_LOG("Loading document");
         std::shared_ptr<http::WebSocketSession> socket
             = loadDocAndGetSession(_socketPoll, "empty.odt", _uri, testname);
 
-        TST_LOG("Killing forkit.");
-        killForkitProcess();
-        TST_LOG("Communicating after kill.");
+        TST_LOG("Allowing time for kit to connect to wsd to get cleanly killed");
+        std::this_thread::sleep_for(std::chrono::seconds(1));
 
+        TST_LOG("Killing forkit.");
+        killPid(getForKitPid(), testname);
+
+        TST_LOG("Communicating after kill.");
         sendTextFrame(socket, "status", testname);
         assertResponseString(socket, "status:", testname);
 
@@ -240,13 +234,20 @@ void HTTPCrashTest::testCrashForkit()
                            socket->waitForDisconnection(std::chrono::seconds(5)));
 
         TST_LOG("Killing coolkit.");
-        killLoKitProcesses();
-        countCoolKitProcesses(0);
+        killAllKitProcesses(testname);
+        waitForKitPidsKilled(testname);
+
+        // Forkit should restart
+        waitForKitPidsReady(testname);
+
         TST_LOG("Communicating after kill.");
         socket = loadDocAndGetSession(_socketPoll, "empty.odt", _uri, testname);
+        sendTextFrame(socket, "status", testname);
+        assertResponseString(socket, "status:", testname);
+
         socket->asyncShutdown();
         LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket",
-                           socket->waitForDisconnection(std::chrono::seconds(5)));
+                socket->waitForDisconnection(std::chrono::seconds(5)));
     }
     catch (const Poco::Exception& exc)
     {
@@ -254,27 +255,29 @@ void HTTPCrashTest::testCrashForkit()
     }
 }
 
-static void killPids(const std::set<pid_t> &pids, const std::string& testname)
+void HTTPCrashTest::killPid(const pid_t pid, const std::string& testname)
 {
-    TST_LOG("kill pids " << pids.size());
-    // Now kill them
-    for (pid_t pid : pids)
+    TST_LOG("Killing " << pid);
+    if (kill(pid, SIGKILL) == -1)
     {
-        TST_LOG_BEGIN("Killing " << pid);
-        if (kill(pid, SIGKILL) == -1)
-            TST_LOG_APPEND("kill(" << pid << ", SIGKILL) failed: " << Util::symbolicErrno(errno) << ": " << std::strerror(errno));
-        TST_LOG_END;
+        TST_LOG("kill(" << pid << ", SIGKILL) failed: " << Util::symbolicErrno(errno) << ": " << std::strerror(errno));
     }
 }
 
-void HTTPCrashTest::killLoKitProcesses()
+void HTTPCrashTest::killDocKitProcesses(const std::string& testname)
 {
-    killPids(getKitPids(), "killLoKitProcesses ");
+    for (pid_t pid : getDocKitPids())
+    {
+        killPid(pid, testname);
+    }
 }
 
-void HTTPCrashTest::killForkitProcess()
+void HTTPCrashTest::killAllKitProcesses(const std::string& testname)
 {
-    killPids(getForKitPids(), "killForkitProcess ");
+    for (pid_t pid : getKitPids())
+    {
+        killPid(pid, testname);
+    }
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(HTTPCrashTest);
