@@ -829,10 +829,11 @@ L.Control.JSDialog = L.Control.extend({
 		switch (keyCode) {
 		case 27:
 			// ESC
-			var dialogs = Object.keys(this.dialogs);
-			if (dialogs.length) {
-				var lastKey = dialogs[dialogs.length - 1];
-				this.close(lastKey, true);
+			var dialogKeys = Object.keys(this.dialogs);
+			if (dialogKeys.length) {
+				var lastKey = dialogKeys[dialogKeys.length - 1];
+				var sendCloseToServer = this.dialogs[lastKey].isDropdown !== true;
+				this.close(lastKey, sendCloseToServer);
 				return true;
 			}
 		}
