@@ -152,4 +152,10 @@ menuDefinitions.set('LineSpacingMenu', [
 	{id: 'paraspacedecrease', img: 'paraspacedecrease', text: _UNO('.uno:ParaspaceDecrease'), uno: 'ParaspaceDecrease'}
 ] as Array<MenuDefinition>);
 
+menuDefinitions.set('LanguageMenu', [
+	{action: 'morelanguages-selection', text: _UNO('.uno:SetLanguageSelectionMenu', 'text')},
+	{action: 'morelanguages-paragraph', text: _UNO('.uno:SetLanguageParagraphMenu', 'text')},
+	{action: 'morelanguages-all', text: _UNO('.uno:SetLanguageAllTextMenu', 'text')},
+] as Array<MenuDefinition>);
+
 JSDialog.MenuDefinitions = menuDefinitions;

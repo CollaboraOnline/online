@@ -1840,9 +1840,9 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 			},
 			{
 				'id': 'LanguageMenu',
-				'type': 'bigtoolitem',
+				'type': 'bigcustomtoolitem',
 				'text': _UNO('.uno:LanguageMenu'),
-				'command': '.uno:LanguageMenu',
+				'command': 'languagemenu',
 				'accessibility': { focusBack: true,	combination: 'L', de: null }
 			},
 			{

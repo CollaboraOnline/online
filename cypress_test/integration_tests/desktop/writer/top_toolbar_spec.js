@@ -119,25 +119,25 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Apply Line spacing: 1 and 1.5', function() {
 		cy.cGet('#Home .notebookbar .unoLineSpacing button').click();
-		cy.cGet('[id$=line-spacing-menu]').contains('.menu-text', 'Line Spacing: 1.5').click();
+		cy.cGet('[id$=home-line-spacing-entries]').contains('.ui-combobox-entry', 'Line Spacing: 1.5').click();
 		writerHelper.selectAllTextOfDoc();
 		cy.cGet('#copy-paste-container p').should('have.attr', 'style').should('contain', 'line-height: 150%');
 		cy.cGet('#Home .notebookbar .unoLineSpacing button').click();
-		cy.cGet('[id$=line-spacing-menu]').contains('.menu-text', 'Line Spacing: 1').click();
+		cy.cGet('[id$=home-line-spacing-entries]').contains('.ui-combobox-entry', 'Line Spacing: 1').click();
 		writerHelper.selectAllTextOfDoc();
 		cy.cGet('#copy-paste-container p').should('have.attr', 'style').should('contain', 'line-height: 100%');
 	});
 
 	it('Apply Line spacing: 2', function() {
 		cy.cGet('#Home .notebookbar .unoLineSpacing button').click();
-		cy.cGet('[id$=line-spacing-menu]').contains('.menu-text', 'Line Spacing: 2').click();
+		cy.cGet('[id$=home-line-spacing-entries]').contains('.ui-combobox-entry', 'Line Spacing: 2').click();
 		writerHelper.selectAllTextOfDoc();
 		cy.cGet('#copy-paste-container p').should('have.attr', 'style').should('contain', 'line-height: 200%');
 	});
 
 	it('Increase/Decrease Paragraph spacing', function() {
 		cy.cGet('.notebookbar .unoLineSpacing button').click();
-		cy.cGet('[id$=line-spacing-menu]').contains('.menu-text', 'Increase Paragraph Spacing').click();
+		cy.cGet('[id$=home-line-spacing-entries]').contains('.ui-combobox-entry', 'Increase Paragraph Spacing').click();
 
 		writerHelper.selectAllTextOfDoc();
 
@@ -147,7 +147,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		writerHelper.selectAllTextOfDoc();
 
 		cy.cGet('.notebookbar .unoLineSpacing button').click();
-		cy.cGet('[id$=line-spacing-menu]').contains('.menu-text', 'Decrease Paragraph Spacing').click();
+		cy.cGet('[id$=home-line-spacing-entries]').contains('.ui-combobox-entry', 'Decrease Paragraph Spacing').click();
 
 		writerHelper.selectAllTextOfDoc();
 
