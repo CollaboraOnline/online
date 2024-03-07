@@ -27,6 +27,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._controlHandlers['bigtoolitem'] = this._bigtoolitemHandler;
 		this._controlHandlers['combobox'] = this._comboboxControl;
 		this._controlHandlers['menubartoolitem'] = this._inlineMenubarToolItemHandler;
+		this._controlHandlers['exportmenubutton'] = this._exportMenuButton;
 		this._controlHandlers['tabcontrol'] = this._overriddenTabsControlHandler;
 		this._controlHandlers['tabpage'] = this._overriddenTabPageHandler;
 		this._controlHandlers['toolbox'] = this._toolboxHandler;
@@ -420,7 +421,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		}
 	},
 
-	_menubarToolItemHandler: function(parentContainer, data, builder) {
+	_exportMenuButton: function(parentContainer, data, builder) {
 		if (data.id && data.id.startsWith('downloadas-')) {
 			var format = data.id.substring('downloadas-'.length);
 			app.registerExportFormat(data.text, format);
@@ -429,54 +430,43 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 				return false;
 		}
 
-		data.command = data.id;
+		var separatorPos = data.id.indexOf(':');
+		var menuId = data.id.substr(separatorPos + 1);
+		var submenu = builder._getSubmenuOpts(builder.options.map._docLayer._docType, menuId, builder);
 
-		var isDownloadAsGroup = data.id === 'downloadas';
-		var isSaveAsGroup = data.id === 'saveas';
-		var isExportAsGroup = data.id === 'exportas';
-		var options = {};
-		var hasCustomMenu = isDownloadAsGroup || isSaveAsGroup || isExportAsGroup;
-		if (hasCustomMenu) {
-			options.hasDropdownArrow = true;
+		JSDialog.MenuDefinitions.set(menuId, submenu);
+		JSDialog.menubuttonControl(parentContainer, data, builder);
+
+		for (var i in submenu) {
+			var action = submenu[i].action;
+			var text = submenu[i].action;
+
+			if (action.startsWith('export')) {
+				var format = action.substring('export'.length);
+				app.registerExportFormat(text, format);
+			}
+			else if (action.startsWith('downloadas-')) {
+				var format = action.substring('downloadas-'.length);
+				app.registerExportFormat(text, format);
+			}
 		}
 
-		var control = builder._unoToolButton(parentContainer, data, builder, options);
-		var submenuOpts = builder._getSubmenuOpts(builder.options.map._docLayer._docType, data.id, builder);
+		return false;
+	},
+
+	_menubarToolItemHandler: function(parentContainer, data, builder) {
+		data.command = data.id;
+
+		var control = builder._unoToolButton(parentContainer, data, builder);
 
 		$(control.container).unbind('click.toolbutton');
 		if (!builder.map.isLockedItem(data)) {
 			$(control.container).click(function () {
-				if (!hasCustomMenu) {
-					L.control.menubar()._executeAction.bind({_map: builder.options.map})(undefined, {id: data.id});
-					return;
-				}
-
-				var itemCallback = function(event) {
-					builder.map.dispatch(event.item.id);
-				};
-
-				$(control.container).w2menu({
-					name: 'download-as-menu',
-					items: submenuOpts,
-					onSelect: itemCallback
-				});
-
-				builder._makeW2MenuFocusable(builder, 'w2ui-overlay-download-as-menu', submenuOpts, data.id, itemCallback);
+				L.control.menubar()._executeAction.bind({_map: builder.options.map})(undefined, {id: data.id});
 			});
 		}
 
-		for (var i in submenuOpts) {
-			var item = submenuOpts[i];
-
-			if (item.id.startsWith('export')) {
-				var format = item.id.substring('export'.length);
-				app.registerExportFormat(item.text, format);
-			}
-			else if (item.id.startsWith('downloadas-')) {
-				var format = item.id.substring('downloadas-'.length);
-				app.registerExportFormat(item.text, format);
-			}
-		}
+		return false;
 	},
 
 	_inlineMenubarToolItemHandler: function(parentContainer, data, builder) {
@@ -503,11 +493,11 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 
 	_getSubmenuOpts: function(docType, id, builder) {
 		switch (id) {
-		case 'downloadas':
+		case 'DownloadAsMenu':
 			return builder._getDownloadAsSubmenuOpts(docType);
-		case 'saveas':
+		case 'SaveAsMenu':
 			return builder._getSaveAsSubmenuOpts(docType);
-		case 'exportas':
+		case 'ExportAsMenu':
 			return builder._getExportAsSubmenuOpts(docType);
 		}
 		return [];
@@ -519,34 +509,34 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		if (docType === 'text') {
 			submenuOpts = [
 				{
-					'id': 'downloadas-odt',
+					'action': 'downloadas-odt',
 					'text': _('ODF text document (.odt)')
 				},
 				{
-					'id': 'downloadas-rtf',
+					'action': 'downloadas-rtf',
 					'text': _('Rich Text (.rtf)')
 				},
 				{
-					'id': 'downloadas-docx',
+					'action': 'downloadas-docx',
 					'text': _('Word Document (.docx)')
 				},
 				{
-					'id': 'downloadas-doc',
+					'action': 'downloadas-doc',
 					'text': _('Word 2003 Document (.doc)')
 				},
 				{
-					'id': !window.ThisIsAMobileApp ? 'exportepub' : 'downloadas-epub',
+					'action': !window.ThisIsAMobileApp ? 'exportepub' : 'downloadas-epub',
 					'text': _('EPUB (.epub)'),
 					'command': !window.ThisIsAMobileApp ? 'exportepub' : 'downloadas-epub'
 				},
 				{
-					'id': !window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-pdf',
+					'action': !window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-pdf',
 					'text': _('PDF Document (.pdf)'),
 					'command': !window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-pdf'
 				},
 			].concat(!window.ThisIsTheAndroidApp ? [
 				{
-					'id': 'exportpdf' ,
+					'action': 'exportpdf' ,
 					'text': _('PDF Document (.pdf) as...'),
 					'command': 'exportpdf'
 				}
@@ -554,29 +544,29 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		} else if (docType === 'spreadsheet') {
 			submenuOpts = [
 				{
-					'id': 'downloadas-ods',
+					'action': 'downloadas-ods',
 					'text': _('ODF spreadsheet (.ods)')
 				},
 				{
-					'id': 'downloadas-xlsx',
+					'action': 'downloadas-xlsx',
 					'text': _('Excel Spreadsheet (.xlsx)')
 				},
 				{
-					'id': 'downloadas-xls',
+					'action': 'downloadas-xls',
 					'text': _('Excel 2003 Spreadsheet (.xls)')
 				},
 				{
-					'id': 'downloadas-csv',
+					'action': 'downloadas-csv',
 					'text': _('CSV File (.csv)')
 				},
 				{
-					'id': !window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-pdf',
+					'action': !window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-pdf',
 					'text': _('PDF Document (.pdf)'),
 					'command': !window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-pdf'
 				},
 			].concat(!window.ThisIsTheAndroidApp ? [
 				{
-					'id': 'exportpdf' ,
+					'action': 'exportpdf' ,
 					'text': _('PDF Document (.pdf) as...'),
 					'command': 'exportpdf'
 				}
@@ -584,29 +574,29 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		} else if (docType === 'presentation') {
 			submenuOpts = [
 				{
-					'id': 'downloadas-odp',
+					'action': 'downloadas-odp',
 					'text': _('ODF presentation (.odp)')
 				},
 				{
-					'id': 'downloadas-odg',
+					'action': 'downloadas-odg',
 					'text': _('ODF Drawing (.odg)')
 				},
 				{
-					'id': 'downloadas-pptx',
+					'action': 'downloadas-pptx',
 					'text': _('PowerPoint Presentation (.pptx)')
 				},
 				{
-					'id': 'downloadas-ppt',
+					'action': 'downloadas-ppt',
 					'text': _('PowerPoint 2003 Presentation (.ppt)')
 				},
 				{
-					'id': !window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-pdf',
+					'action': !window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-pdf',
 					'text': _('PDF Document (.pdf)'),
 					'command': !window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-pdf'
 				},
 			].concat(!window.ThisIsTheAndroidApp ? [
 				{
-					'id': 'exportpdf' ,
+					'action': 'exportpdf' ,
 					'text': _('PDF Document (.pdf) as...'),
 					'command': 'exportpdf'
 				}
@@ -614,7 +604,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		}
 
 		submenuOpts.forEach(function mapIconToItem(menuItem) {
-			menuItem.icon = menuItem.id + '-submenu-icon';
+			menuItem.icon = menuItem.action + '-submenu-icon';
 		});
 
 		return submenuOpts;
@@ -626,56 +616,56 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		if (docType === 'text') {
 			submenuOpts = [
 				{
-					'id': 'saveas-odt',
+					'action': 'saveas-odt',
 					'text': _('ODF text document (.odt)')
 				},
 				{
-					'id': 'saveas-rtf',
+					'action': 'saveas-rtf',
 					'text': _('Rich Text (.rtf)')
 				},
 				{
-					'id': 'saveas-docx',
+					'action': 'saveas-docx',
 					'text': _('Word Document (.docx)')
 				},
 				{
-					'id': 'saveas-doc',
+					'action': 'saveas-doc',
 					'text': _('Word 2003 Document (.doc)')
 				}
 			];
 		} else if (docType === 'spreadsheet') {
 			submenuOpts = [
 				{
-					'id': 'saveas-ods',
+					'action': 'saveas-ods',
 					'text': _('ODF spreadsheet (.ods)')
 				},
 				{
-					'id': 'saveas-xlsx',
+					'action': 'saveas-xlsx',
 					'text': _('Excel Spreadsheet (.xlsx)')
 				},
 				{
-					'id': 'saveas-xls',
+					'action': 'saveas-xls',
 					'text': _('Excel 2003 Spreadsheet (.xls)')
 				}
 			];
 		} else if (docType === 'presentation') {
 			submenuOpts = [
 				{
-					'id': 'saveas-odp',
+					'action': 'saveas-odp',
 					'text': _('ODF presentation (.odp)')
 				},
 				{
-					'id': 'saveas-pptx',
+					'action': 'saveas-pptx',
 					'text': _('PowerPoint Presentation (.pptx)')
 				},
 				{
-					'id': 'saveas-ppt',
+					'action': 'saveas-ppt',
 					'text': _('PowerPoint 2003 Presentation (.ppt)')
 				}
 			];
 		}
 
 		submenuOpts.forEach(function mapIconToItem(menuItem) {
-			menuItem.icon = menuItem.id + '-submenu-icon';
+			menuItem.icon = menuItem.action + '-submenu-icon';
 		});
 
 		return submenuOpts;
@@ -687,39 +677,39 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		if (docType === 'text') {
 			submenuOpts = [
 				{
-					'id': 'exportas-pdf',
+					'action': 'exportas-pdf',
 					'text': _('PDF Document (.pdf)')
 				},
 				{
-					'id': 'exportas-epub',
+					'action': 'exportas-epub',
 					'text': _('EPUB (.epub)')
 				}
 			];
 		} else if (docType === 'spreadsheet') {
 			submenuOpts = [
 				{
-					'id': 'exportas-pdf',
+					'action': 'exportas-pdf',
 					'text': _('PDF Document (.pdf)')
 				}
 			];
 		} else if (docType === 'presentation') {
 			submenuOpts = [
 				{
-					'id': 'exportas-pdf',
+					'action': 'exportas-pdf',
 					'text': _('PDF Document (.pdf)')
 				}
 			];
 		} else if (docType === 'drawing') {
 			submenuOpts = [
 				{
-					'id': 'exportas-pdf',
+					'action': 'exportas-pdf',
 					'text': _('PDF Document (.pdf)')
 				}
 			];
 		}
 
 		submenuOpts.forEach(function mapIconToItem(menuItem) {
-			menuItem.icon = menuItem.id + '-submenu-icon';
+			menuItem.icon = menuItem.action + '-submenu-icon';
 		});
 
 		return submenuOpts;

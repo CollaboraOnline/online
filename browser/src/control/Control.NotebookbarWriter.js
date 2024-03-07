@@ -166,8 +166,9 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 		if (hasSaveAs) {
 			if (hasGroupedSaveAs) {
 				content.push({
-					'id': 'saveas',
-					'type': 'bigmenubartoolitem',
+					'id': 'saveas:SaveAsMenu',
+					'command': 'saveas',
+					'type': 'exportmenubutton',
 					'text': _('Save As'),
 					'accessibility': { focusBack: true,	combination: 'SA' }
 				});
@@ -184,9 +185,10 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 
 		if (hasSaveAs) {
 			content.push({
-				'id': 'exportas',
+				'id': 'exportas:ExportAsMenu',
+				'command': 'exportas',
 				'class': 'unoexportas',
-				'type': 'bigmenubartoolitem',
+				'type': 'exportmenubutton',
 				'text': _('Export As'),
 				'accessibility': { focusBack: true,	combination: 'EA' }
 			});
@@ -246,9 +248,10 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 
 		if (hasGroupedDownloadAs && !hideDownload) {
 			content.push({
-				'id': 'downloadas',
+				'id': 'downloadas:DownloadAsMenu',
+				'command': 'downloadas',
 				'class': 'unodownloadas',
-				'type': 'bigmenubartoolitem',
+				'type': 'exportmenubutton',
 				'text': !window.ThisIsAMobileApp ? _('Download') : _('Save As'),
 				'accessibility': { focusBack: true,	combination: 'A', de: 'M' }
 			});

@@ -173,9 +173,10 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 		if (!this._map['wopi'].UserCanNotWriteRelative) {
 			content.push(
 				{
-					'id': 'exportas',
+					'id': 'exportas:ExportAsMenu',
+					'command': 'exportas',
 					'class': 'unoexportas',
-					'type': 'bigmenubartoolitem',
+					'type': 'exportmenubutton',
 					'text': _('Export As'),
 					'accessibility': { focusBack: true, combination: 'EA', de: null }
 				}

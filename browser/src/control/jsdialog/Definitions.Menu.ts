@@ -24,6 +24,7 @@ type MenuDefinition = {
 	uno: string,		// uno command
 	action: string,		// dispatch command
 	img: string,		// icon name
+	icon: string,		// icon name FIXME: duplicated property, used in exportMenuButton
 	checked: boolean	// state of check mark
 };
 

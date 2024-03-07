@@ -185,8 +185,10 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 			content.push(
 				(window.uiDefaults && window.uiDefaults.saveAsMode === 'group') ?
 				{
-					'id': 'saveas',
-					'type': 'bigmenubartoolitem',
+					'id': 'saveas:SaveAsMenu',
+					'command': 'saveas',
+					'class': 'unosaveas',
+					'type': 'exportmenubutton',
 					'text': _('Save As'),
 					'accessibility': { focusBack: true, combination: 'SA', de: null }
 				}:
@@ -203,9 +205,10 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 		if (!this._map['wopi'].UserCanNotWriteRelative) {
 			content.push(
 			{
-				'id': 'exportas',
+				'id': 'exportas:ExportAsMenu',
+				'command': 'exportas',
 				'class': 'unoexportas',
-				'type': 'bigmenubartoolitem',
+				'type': 'exportmenubutton',
 				'text': _('Export As'),
 				'accessibility': { focusBack: true, combination: 'EA', de: null }
 			});
@@ -268,9 +271,10 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 
 		if ((!!window.groupDownloadAsForNb) && !this._map['wopi'].HideExportOption) {
 			content.push({
-				'id': 'downloadas',
+				'id': 'downloadas:DownloadAsMenu',
+				'command': 'downloadas',
 				'class': 'unodownloadas',
-				'type': 'bigmenubartoolitem',
+				'type': 'exportmenubutton',
 				'text': _('Download'),
 				'accessibility': { focusBack: true, combination: 'DA', de: null }
 			});
