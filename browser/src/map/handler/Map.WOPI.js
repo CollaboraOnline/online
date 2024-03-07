@@ -583,10 +583,10 @@ L.Map.WOPI = L.Handler.extend({
 		}
 		else if (msg.MessageId === 'Get_Export_Formats') {
 			var exportFormatsResp = [];
-			for (var index in this._map._docLayer._exportFormats) {
+			for (var index in app.file.exportFormats) {
 				exportFormatsResp.push({
-					Label: this._map._docLayer._exportFormats[index].label,
-					Format: this._map._docLayer._exportFormats[index].format
+					Label: app.file.exportFormats[index].label,
+					Format: app.file.exportFormats[index].format
 				});
 			}
 
