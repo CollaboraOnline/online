@@ -2160,7 +2160,7 @@ L.Control.Menubar = L.Control.extend({
 		// to get access to.
 		if (menuItem.id && menuItem.id.startsWith('downloadas-')) {
 			var format = menuItem.id.substring('downloadas-'.length);
-			this._map._docLayer.registerExportFormat(menuItem.name, format);
+			app.registerExportFormat(menuItem.name, format);
 
 			if (this._map['wopi'].HideExportOption)
 				return false;
@@ -2169,7 +2169,7 @@ L.Control.Menubar = L.Control.extend({
 		if (menuItem.id && menuItem.id.startsWith('export')) {
 			if (!menuItem.id.startsWith('exportas-')) {
 				var format = menuItem.id.substring('export'.length);
-				this._map._docLayer.registerExportFormat(menuItem.name, format);
+				app.registerExportFormat(menuItem.name, format);
 			}
 
 			if (this._map['wopi'].HideExportOption)

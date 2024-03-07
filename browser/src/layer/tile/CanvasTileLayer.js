@@ -1465,24 +1465,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		return newEvent;
 	},
 
-	registerExportFormat: function(label, format) {
-		if (!this._exportFormats) {
-			this._exportFormats = [];
-		}
-
-		var duplicate = false;
-		for (var i = 0; i < this._exportFormats.length; i++) {
-			if (this._exportFormats[i].label == label && this._exportFormats[i].format == format) {
-				duplicate = true;
-				break;
-			}
-		}
-
-		if (duplicate == false) {
-			this._exportFormats.push({label: label, format: format});
-		}
-	},
-
 	createTile: function (coords, key) {
 		if (this._tiles[key])
 		{

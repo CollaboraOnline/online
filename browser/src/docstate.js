@@ -65,6 +65,7 @@ window.app = {
 		writer: {
 			pageRectangleList: [], // Array of arrays: [x, y, w, h] (as usual) // twips only. Pixels will be calculated on the fly. Corresponding pixels may change too often.
 		},
+		exportFormats: [] // possible output formats
 	},
 	view: {
 		commentHasFocus: false,
