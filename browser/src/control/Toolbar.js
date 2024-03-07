@@ -1308,6 +1308,18 @@ L.Map.include({
 			var commentSection = app.sectionContainer.getSectionWithName(L.CSections.CommentList.name);
 			commentSection.rejectAllTrackedCommentChanges();
 			break;
+		case 'languagemenu':
+			this.fire('morelanguages');
+			break;
+		case 'morelanguages-selection':
+			this.fire('morelanguages', {applyto: 'selection'});
+			break;
+		case 'morelanguages-paragraph':
+			this.fire('morelanguages', {applyto: 'paragraph'});
+			break;
+		case 'morelanguages-all':
+			this.fire('morelanguages', {applyto: 'all'});
+			break;
 		default:
 			console.error('unknown dispatch: "' + action + '"');
 		}

@@ -2095,8 +2095,8 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'accessibility': { focusBack: false, combination: 'E', de: null }
 			},
 			{
-				'id': 'LanguageMenu',
-				'type': 'bigtoolitem',
+				'id': 'LanguageMenu:LanguageMenu',
+				'type': 'menubutton',
 				'text': _UNO('.uno:LanguageMenu'),
 				'command': '.uno:LanguageMenu',
 				'accessibility': { focusBack: false, combination: 'ZL', de: null }
