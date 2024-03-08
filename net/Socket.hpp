@@ -926,11 +926,9 @@ public:
 
     /// Create a StreamSocket from native FD.
     StreamSocket(std::string host, const int fd, Type type, bool /* isClient */,
-                 std::shared_ptr<ProtocolHandlerInterface> socketHandler,
                  ReadType readType = NormalRead) :
         Socket(fd, type),
         _hostname(std::move(host)),
-        _socketHandler(std::move(socketHandler)),
         _bytesSent(0),
         _bytesRecvd(0),
         _wsState(WSState::HTTP),
@@ -941,11 +939,6 @@ public:
         _inputProcessingEnabled(true)
     {
         LOG_TRC("StreamSocket ctor");
-
-        // Without a handler we make no sense object.
-        if (!_socketHandler)
-            throw std::runtime_error("StreamSocket " + std::to_string(fd) +
-                                     " expects a valid SocketHandler instance.");
     }
 
     ~StreamSocket()
@@ -956,7 +949,8 @@ public:
         if (!_closed)
         {
             ASSERT_CORRECT_SOCKET_THREAD(this);
-            _socketHandler->onDisconnect();
+            if (_socketHandler)
+                _socketHandler->onDisconnect();
             _socketHandler.reset();
         }
 
@@ -1008,6 +1002,10 @@ public:
     {
         return !_outBuffer.empty() || !_inBuffer.empty();
     }
+
+    /// Create a pair of connected stream sockets
+    static bool socketpair(std::shared_ptr<StreamSocket> &parent,
+                           std::shared_ptr<StreamSocket> &child);
 
     /// Send data to the socket peer.
     void send(const char* data, const int len, const bool doFlush = true)
@@ -1202,10 +1200,14 @@ public:
                                            std::shared_ptr<ProtocolHandlerInterface> handler,
                                            ReadType readType = NormalRead)
     {
-        ProtocolHandlerInterface* pHandler = handler.get();
-        auto socket = std::make_shared<TSocket>(std::move(hostname), fd, type, isClient,
-                                                std::move(handler), readType);
-        pHandler->onConnect(socket);
+        // Without a handler we make no sense object.
+        if (!handler)
+            throw std::runtime_error("StreamSocket " + std::to_string(fd) +
+                                     " expects a valid SocketHandler instance.");
+
+        auto socket = std::make_shared<TSocket>(std::move(hostname), fd, type, isClient, readType);
+        socket->setHandler(handler);
+
         return socket;
     }
 
