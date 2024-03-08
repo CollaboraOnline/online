@@ -80,6 +80,26 @@ int Socket::createSocket([[maybe_unused]] Socket::Type type)
 #endif
 }
 
+
+bool StreamSocket::socketpair(std::shared_ptr<StreamSocket> &parent,
+                              std::shared_ptr<StreamSocket> &child)
+{
+#if MOBILEAPP
+    return false;
+#else
+    int pair[2];
+    int rc = ::socketpair(AF_UNIX, SOCK_STREAM | SOCK_NONBLOCK | SOCK_CLOEXEC, 0, pair);
+    if (rc != 0)
+        return false;
+
+    child = std::shared_ptr<StreamSocket>(new StreamSocket("save-child", pair[0], Socket::Type::Unix, true));
+    parent = std::shared_ptr<StreamSocket>(new StreamSocket("save-kit-parent", pair[1], Socket::Type::Unix, true));
+
+    return true;
+#endif
+}
+
+
 #if ENABLE_DEBUG
 static std::atomic<long> socketErrorCount;
 

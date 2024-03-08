@@ -24,9 +24,8 @@ class SslStreamSocket final : public StreamSocket
 {
 public:
     SslStreamSocket(const std::string& host, const int fd, Type type, bool isClient,
-                    std::shared_ptr<ProtocolHandlerInterface> responseClient,
                     ReadType readType = NormalRead)
-        : StreamSocket(host, fd, type, isClient, std::move(responseClient), readType)
+        : StreamSocket(host, fd, type, isClient, readType)
         , _bio(nullptr)
         , _ssl(nullptr)
         , _sslWantsTo(SslWantsTo::Neither)
