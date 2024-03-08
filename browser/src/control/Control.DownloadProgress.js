@@ -303,6 +303,9 @@ L.Control.DownloadProgress = L.Control.extend({
 					var text = reader.result;
 					window.app.console.log('async clipboard parse done: ' + text.substring(0, 256));
 					var idx = text.indexOf('<!DOCTYPE HTML');
+					if (idx === -1) {
+						idx = text.indexOf('<!DOCTYPE html');
+					}
 					if (idx > 0)
 						text = text.substring(idx, text.length);
 					that._map._clip.setTextSelectionHTML(text);
