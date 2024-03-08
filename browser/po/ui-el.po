@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-06 16:29+0100\n"
+"POT-Creation-Date: 2024-03-08 16:42+0100\n"
 "PO-Revision-Date: 2023-09-19 19:52+0000\n"
 "Last-Translator: Theo <tbousiou@gmail.com>\n"
 "Language-Team: Greek <https://hosted.weblate.org/projects/collabora-online/"
@@ -147,8 +147,8 @@ msgstr "Γράφημα δικτύου"
 #: src/control/Control.NotebookbarImpress.js:29
 #: src/control/Control.NotebookbarImpress.js:176
 #: src/control/Control.NotebookbarWriter.js:158
-#: src/layer/tile/CommentListSection.ts:429
-#: src/layer/tile/CommentSection.ts:157
+#: src/layer/tile/CommentListSection.ts:430
+#: src/layer/tile/CommentSection.ts:158
 msgid "Save"
 msgstr "Αποθήκευση"
 
@@ -215,7 +215,7 @@ msgstr "Ανανέωση σύνδεσης"
 msgid "Channel Filter:"
 msgstr "Φίλτρο καναλιού:"
 
-#: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:581
+#: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:577
 #: src/control/Control.StatusBar.js:345
 msgid "None"
 msgstr "Καμία"
@@ -229,10 +229,10 @@ msgid "Log Levels"
 msgstr "Επίπεδα σύνδεσης"
 
 #: admin/admin.strings.js:64 src/control/Control.AlertDialog.js:30
-#: src/control/Control.AlertDialog.js:36 src/control/Control.AlertDialog.js:99
-#: src/control/Control.AlertDialog.js:106 src/control/Control.Zotero.js:192
-#: src/control/Parts.js:467 src/core/Socket.js:1054 src/core/Socket.js:1059
-#: src/layer/tile/CommentListSection.ts:140
+#: src/control/Control.AlertDialog.js:36
+#: src/control/Control.AlertDialog.js:103 src/control/Control.Zotero.js:192
+#: src/control/Parts.js:467 src/core/Socket.js:1066 src/core/Socket.js:1071
+#: src/layer/tile/CommentListSection.ts:141
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.div:51-7
 msgid "Close"
 msgstr "Κλείσιμο"
@@ -280,14 +280,14 @@ msgstr ""
 #: src/control/Control.Tabs.js:408 src/control/Control.Zotero.js:338
 #: src/control/Control.Zotero.js:376 src/control/Permission.js:89
 #: src/control/Permission.js:99 src/control/Permission.js:149
-#: src/control/Toolbar.js:701 src/control/Toolbar.js:803
-#: src/control/Toolbar.js:939 src/control/Toolbar.js:1230
-#: src/core/Socket.js:613 src/core/Socket.js:1024 src/core/Socket.js:1094
-#: src/core/Socket.js:1226 src/core/Socket.js:1230 src/main.js:79
-#: src/main.js:82 src/main.js:134 src/map/Clipboard.js:1003
+#: src/control/Toolbar.js:701 src/control/Toolbar.js:802
+#: src/control/Toolbar.js:938 src/control/Toolbar.js:1229
+#: src/core/Socket.js:608 src/core/Socket.js:1036 src/core/Socket.js:1113
+#: src/core/Socket.js:1256 src/core/Socket.js:1260 src/main.js:79
+#: src/main.js:82 src/main.js:134 src/map/Clipboard.js:1008
 #: src/map/handler/Map.Feedback.js:83 src/map/handler/Map.SlideShow.js:51
 #: src/map/handler/Map.SlideShow.js:150 src/map/handler/Map.SlideShow.js:236
-#: src/map/handler/Map.WOPI.js:582
+#: src/map/handler/Map.WOPI.js:583
 msgid "OK"
 msgstr "Εντάξει"
 
@@ -309,11 +309,12 @@ msgstr "Είστε βέβαιοι ότι θέλετε να τερματίσετ�
 #: src/control/Control.DownloadProgress.js:90
 #: src/control/Control.LanguageDialog.js:113
 #: src/control/Control.MobileTopBar.js:52
-#: src/control/Control.UIManager.js:1285 src/control/Control.UIManager.js:1352
-#: src/control/Control.UIManager.js:1487 src/control/Control.UIManager.js:1629
-#: src/control/Control.Zotero.js:333 src/control/Toolbar.js:934
-#: src/core/Socket.js:1251 src/layer/tile/CommentListSection.ts:424
-#: src/layer/tile/CommentSection.ts:156 src/layer/tile/CommentSection.ts:159
+#: src/control/Control.UIManager.js:1287 src/control/Control.UIManager.js:1354
+#: src/control/Control.UIManager.js:1489 src/control/Control.UIManager.js:1631
+#: src/control/Control.Zotero.js:333 src/control/Toolbar.js:933
+#: src/core/Socket.js:1281 src/layer/tile/CommentListSection.ts:425
+#: src/layer/tile/CommentSection.ts:157 src/layer/tile/CommentSection.ts:160
+#: src/map/Clipboard.js:1047
 msgid "Cancel"
 msgstr "Άκυρο"
 
@@ -382,15 +383,15 @@ msgstr " λεπτά"
 msgid " s"
 msgstr " δευτερόλεπτα"
 
-#: js/global.js:922
+#: js/global.js:913
 msgid "Cluster is scaling, retrying..."
 msgstr ""
 
-#: js/global.js:924
+#: js/global.js:915
 msgid "Document is migrating to new server, retrying..."
 msgstr ""
 
-#: js/global.js:926
+#: js/global.js:917
 msgid "Failed to get RouteToken from controller"
 msgstr ""
 
@@ -455,7 +456,7 @@ msgstr ""
 msgid "Don't show this again"
 msgstr ""
 
-#: src/control/Control.AlertDialog.js:103
+#: src/control/Control.AlertDialog.js:100
 msgid "The server encountered a %0 error while parsing the %1 command."
 msgstr "Ο διακομιστής αντιμετώπισε σφάλμα %0 κατά την ανάλυση της εντολής %1."
 
@@ -463,7 +464,7 @@ msgstr "Ο διακομιστής αντιμετώπισε σφάλμα %0 κα�
 msgid "Unlock"
 msgstr "Ξεκλείδωμα"
 
-#: src/control/Control.ContextMenu.js:196 src/control/Toolbar.js:1229
+#: src/control/Control.ContextMenu.js:196 src/control/Toolbar.js:1228
 msgid "Delete"
 msgstr "Διαγραφή"
 
@@ -481,7 +482,7 @@ msgid "Repair Document"
 msgstr "Επισκευή εγγράφου"
 
 #: src/control/Control.DocumentRepair.js:124
-#: src/control/Control.UserList.ts:449
+#: src/control/Control.UserList.js:340
 msgid "You"
 msgstr "Εσείς"
 
@@ -587,131 +588,131 @@ msgid "Idle document - please tap to reload and resume editing"
 msgstr ""
 "Αδρανές έγγραφο - πατήστε για επαναφόρτωση και συνέχιση της επεξεργασίας"
 
-#: src/control/Control.JSDialogBuilder.js:170
+#: src/control/Control.JSDialogBuilder.js:169
 #: src/control/Control.StatusBar.js:343
 msgid "Sum"
 msgstr "Άθροισμα"
 
-#: src/control/Control.JSDialogBuilder.js:171
+#: src/control/Control.JSDialogBuilder.js:170
 #: src/control/Control.StatusBar.js:338
 msgid "Average"
 msgstr "Μέσος όρος"
 
-#: src/control/Control.JSDialogBuilder.js:172
+#: src/control/Control.JSDialogBuilder.js:171
 msgid "Min"
 msgstr "Ελάχιστο"
 
-#: src/control/Control.JSDialogBuilder.js:173
+#: src/control/Control.JSDialogBuilder.js:172
 msgid "Max"
 msgstr "Μέγιστο"
 
-#: src/control/Control.JSDialogBuilder.js:174
+#: src/control/Control.JSDialogBuilder.js:173
 #: src/control/Control.StatusBar.js:340
 msgid "Count"
 msgstr "Πλήθος"
 
-#: src/control/Control.JSDialogBuilder.js:207
+#: src/control/Control.JSDialogBuilder.js:206
 #: src/control/Control.Menubar.js:686
 msgid "Active sheet"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:208
+#: src/control/Control.JSDialogBuilder.js:207
 #: src/control/Control.Menubar.js:687 src/control/Control.TopToolbar.js:108
 msgid "All Sheets"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:584
+#: src/control/Control.JSDialogBuilder.js:580
 msgid "Solid"
 msgstr "Συμπαγές"
 
-#: src/control/Control.JSDialogBuilder.js:587
+#: src/control/Control.JSDialogBuilder.js:583
 msgid "Linear"
 msgstr "Γραμμικό"
 
-#: src/control/Control.JSDialogBuilder.js:590
+#: src/control/Control.JSDialogBuilder.js:586
 msgid "Axial"
 msgstr "Αξονικό"
 
-#: src/control/Control.JSDialogBuilder.js:593
+#: src/control/Control.JSDialogBuilder.js:589
 msgid "Radial"
 msgstr "Ακτινικό"
 
-#: src/control/Control.JSDialogBuilder.js:596
+#: src/control/Control.JSDialogBuilder.js:592
 msgid "Ellipsoid"
 msgstr "Ελλειψοειδές"
 
-#: src/control/Control.JSDialogBuilder.js:600
+#: src/control/Control.JSDialogBuilder.js:596
 msgid "Quadratic"
 msgstr "Δευτεροβάθμιο"
 
-#: src/control/Control.JSDialogBuilder.js:603
+#: src/control/Control.JSDialogBuilder.js:599
 msgid "Square"
 msgstr "Τετράγωνο"
 
-#: src/control/Control.JSDialogBuilder.js:606
+#: src/control/Control.JSDialogBuilder.js:602
 msgid "Fixed size"
 msgstr "Σταθερό μέγεθος"
 
-#: src/control/Control.JSDialogBuilder.js:1646
+#: src/control/Control.JSDialogBuilder.js:1616
 msgid "From"
 msgstr "Από"
 
-#: src/control/Control.JSDialogBuilder.js:1649
+#: src/control/Control.JSDialogBuilder.js:1619
 msgid "To"
 msgstr "Σε"
 
-#: src/control/Control.JSDialogBuilder.js:1652
+#: src/control/Control.JSDialogBuilder.js:1622
 msgid "Color"
 msgstr "Χρώμα"
 
-#: src/control/Control.JSDialogBuilder.js:1766
+#: src/control/Control.JSDialogBuilder.js:1736
 msgid "Select range"
 msgstr "Επιλογή περιοχής"
 
-#: src/control/Control.JSDialogBuilder.js:1820
+#: src/control/Control.JSDialogBuilder.js:1790
 #: src/control/Control.NotebookbarBuilder.js:241
 msgid "Font Name"
 msgstr "Όνομα γραμματοσειράς"
 
-#: src/control/Control.JSDialogBuilder.js:1822 src/control/Toolbar.js:132
+#: src/control/Control.JSDialogBuilder.js:1792 src/control/Toolbar.js:132
 msgid "Font Size"
 msgstr "Μέγεθος γραμματοσειράς"
 
-#: src/control/Control.JSDialogBuilder.js:1824
+#: src/control/Control.JSDialogBuilder.js:1794
 #: src/control/Control.TopToolbar.js:533
 msgid "Style"
 msgstr "Τεχνοτροπία"
 
-#: src/control/Control.JSDialogBuilder.js:2095
+#: src/control/Control.JSDialogBuilder.js:2061
 msgid "reply"
 msgstr "απάντηση"
 
-#: src/control/Control.JSDialogBuilder.js:2098
+#: src/control/Control.JSDialogBuilder.js:2064
 msgid "replies"
 msgstr "απαντήσεις"
 
-#: src/control/Control.JSDialogBuilder.js:2109
-#: src/layer/tile/CanvasTileLayer.js:5159
-#: src/layer/tile/CanvasTileLayer.js:5170
-#: src/layer/tile/CommentListSection.ts:1017
+#: src/control/Control.JSDialogBuilder.js:2075
+#: src/layer/tile/CanvasTileLayer.js:5958
+#: src/layer/tile/CanvasTileLayer.js:5969
+#: src/layer/tile/CommentListSection.ts:1018
 msgid "Comment"
 msgstr "Σχόλιο"
 
-#: src/control/Control.JSDialogBuilder.js:2173
+#: src/control/Control.JSDialogBuilder.js:2139
 msgid "Insert Comment"
 msgstr "Εισαγωγή σχολίου"
 
-#: src/control/Control.JSDialogBuilder.js:3057
+#: src/control/Control.JSDialogBuilder.js:3031
 #: src/control/Control.Menubar.js:829
 msgid "Rows"
 msgstr "Γραμμές"
 
-#: src/control/Control.JSDialogBuilder.js:3058
+#: src/control/Control.JSDialogBuilder.js:3032
 #: src/control/Control.Menubar.js:832
 msgid "Columns"
 msgstr "Στήλες"
 
-#: src/control/Control.JSDialogBuilder.js:3078
+#: src/control/Control.JSDialogBuilder.js:3052
 msgid "Insert Table"
 msgstr "Εισαγωγή πίνακα"
 
@@ -1220,15 +1221,15 @@ msgstr "Χρήση συμπτυγμένης προβολής"
 msgid "Use Tabbed view"
 msgstr ""
 
-#: src/control/Control.Menubar.js:1800 src/control/Control.Menubar.js:1813
+#: src/control/Control.Menubar.js:1792 src/control/Control.Menubar.js:1805
 msgid "Read-only mode"
 msgstr ""
 
-#: src/control/Control.Menubar.js:1834
+#: src/control/Control.Menubar.js:1826
 msgid "Insert Shape"
 msgstr "Εισαγωγή σχήματος"
 
-#: src/control/Control.Menubar.js:2054
+#: src/control/Control.Menubar.js:2052
 msgid "file type icon"
 msgstr "εικονίδιο τύπου αρχείου"
 
@@ -1247,15 +1248,15 @@ msgstr "Περιγράμματα"
 msgid "Read-only"
 msgstr "Μόνο για ανάγνωση"
 
-#: src/control/Control.MobileWizardBuilder.js:523
+#: src/control/Control.MobileWizardBuilder.js:524
 msgid "Background Color"
 msgstr "Χρώμα παρασκηνίου"
 
-#: src/control/Control.MobileWizardBuilder.js:525
+#: src/control/Control.MobileWizardBuilder.js:526
 msgid "Gradient Start"
 msgstr "Έναρξη διαβάθμισης"
 
-#: src/control/Control.MobileWizardBuilder.js:527
+#: src/control/Control.MobileWizardBuilder.js:528
 msgid "Gradient End"
 msgstr "Τέλος διαβάθμισης"
 
@@ -1460,7 +1461,7 @@ msgstr "Κλάσμα"
 msgid "Boolean Value"
 msgstr "Δυαδική τιμή"
 
-#: src/control/Control.NotebookbarCalc.js:663 src/control/Toolbar.js:906
+#: src/control/Control.NotebookbarCalc.js:663 src/control/Toolbar.js:905
 msgid "Text"
 msgstr "Κείμενο"
 
@@ -1839,7 +1840,7 @@ msgstr "Εισαγωγή σχημάτων"
 msgid "Insert connectors"
 msgstr "Εισαγωγή συνδέσμων"
 
-#: src/control/Control.TopToolbar.js:263 src/control/Control.UIManager.js:762
+#: src/control/Control.TopToolbar.js:263 src/control/Control.UIManager.js:764
 msgid "Hide Menu"
 msgstr ""
 
@@ -1847,63 +1848,47 @@ msgstr ""
 msgid "Enter new name"
 msgstr ""
 
-#: src/control/Control.UIManager.js:785
+#: src/control/Control.UIManager.js:787
 msgid "Show Menu"
 msgstr ""
 
-#: src/control/Control.UIManager.js:1110
+#: src/control/Control.UIManager.js:1112
 msgid "Dismiss"
 msgstr ""
 
-#: src/control/Control.UserList.ts:54
+#: src/control/Control.UserList.js:20
 msgid "%user has joined"
 msgstr "Ο %user συμμετέχει"
 
-#: src/control/Control.UserList.ts:55
+#: src/control/Control.UserList.js:21
 msgid "%user has left"
 msgstr "Ο %user έφυγε"
 
-#: src/control/Control.UserList.ts:56
-msgid "Following %user"
-msgstr ""
-
-#: src/control/Control.UserList.ts:57
-msgid "Following the editor"
-msgstr ""
-
-#: src/control/Control.UserList.ts:58
-msgid "Click to stop following"
-msgstr ""
-
-#: src/control/Control.UserList.ts:59
-msgid "Avatar for %user"
-msgstr ""
-
-#: src/control/Control.UserList.ts:80
+#: src/control/Control.UserList.js:44
 msgid "%n users"
 msgstr "%n χρήστες"
 
-#: src/control/Control.UserList.ts:81
+#: src/control/Control.UserList.js:45
 msgid "1 user"
 msgstr "1 χρήστης"
 
-#: src/control/Control.UserList.ts:82
+#: src/control/Control.UserList.js:46
 msgid "0 users"
 msgstr "0 χρήστες"
 
-#: src/control/Control.UserList.ts:532
-msgid "Readonly"
-msgstr "Μόνο για ανάγνωση"
-
-#: src/control/Control.UserList.ts:560
+#: src/control/Control.UserList.js:204
 msgid "Following"
 msgstr ""
 
-#: src/control/Control.UserList.ts:613 src/control/Control.UserList.ts:674
+#: src/control/Control.UserList.js:232 src/control/Control.UserList.js:398
 msgid "Always follow the editor"
 msgstr "Να ακολουθείται πάντα ο επεξεργαστής"
 
-#: src/control/Control.UserList.ts:679
+#: src/control/Control.UserList.js:346
+msgid "Readonly"
+msgstr "Μόνο για ανάγνωση"
+
+#: src/control/Control.UserList.js:401
 msgid "Current"
 msgstr "Τρέχουσα"
 
@@ -1925,7 +1910,7 @@ msgid ""
 "API. It may cause some problems while editing citations or bibliography."
 msgstr ""
 
-#: src/control/Control.Zotero.js:247 src/core/Socket.js:1101
+#: src/control/Control.Zotero.js:247 src/core/Socket.js:1120
 msgid "Loading..."
 msgstr "Φόρτωση..."
 
@@ -2155,35 +2140,35 @@ msgstr "Αποθήκευση..."
 msgid "Renaming..."
 msgstr "Μετονομάζεται..."
 
-#: src/control/Toolbar.js:785
+#: src/control/Toolbar.js:784
 msgid "This version of %productName is powered by"
 msgstr "Αυτή η έκδοση του %productName παρέχεται από"
 
-#: src/control/Toolbar.js:797
+#: src/control/Toolbar.js:796
 msgid "\"Slow Proxy\""
 msgstr "\"Αργός μεσολαβητής\""
 
-#: src/control/Toolbar.js:816
+#: src/control/Toolbar.js:815
 msgid "Copy all version information in English"
 msgstr ""
 
-#: src/control/Toolbar.js:899
+#: src/control/Toolbar.js:898
 msgid "Insert hyperlink"
 msgstr "Εισαγωγή υπερσυνδέσμου"
 
-#: src/control/Toolbar.js:918
+#: src/control/Toolbar.js:917
 msgid "Link"
 msgstr "Σύνδεσμος"
 
-#: src/control/Toolbar.js:1224
+#: src/control/Toolbar.js:1223
 msgid "Are you sure you want to delete this slide?"
 msgstr "Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτήν τη διαφάνεια;"
 
-#: src/control/Toolbar.js:1227
+#: src/control/Toolbar.js:1226
 msgid "Are you sure you want to delete this page?"
 msgstr "Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτήν τη σελίδα;"
 
-#: src/control/jsdialog/Widget.MobileBorderSelector.js:96
+#: src/control/jsdialog/Widget.MobileBorderSelector.js:92
 msgid "Cell borders"
 msgstr "Περιγράμματα κελιού"
 
@@ -2195,65 +2180,65 @@ msgstr ""
 msgid "Oops, there is a problem connecting to %productName: "
 msgstr "Όπα, υπάρχει πρόβλημα σύνδεσης με το %productName: "
 
-#: src/core/Socket.js:594
+#: src/core/Socket.js:589
 msgid "Server is now reachable. We have to refresh the page now."
 msgstr "Η σύνδεση με το διακομιστή αποκαταστάθηκε. Ανανεώστε τη σελίδα."
 
-#: src/core/Socket.js:596
+#: src/core/Socket.js:591
 msgid "Server is now reachable..."
 msgstr "Η σύνδεση με το διακομιστή αποκαταστάθηκε..."
 
-#: src/core/Socket.js:600
+#: src/core/Socket.js:595
 msgid "RELOAD"
 msgstr "ΑΝΑΝΕΩΣΗ"
 
-#: src/core/Socket.js:613
+#: src/core/Socket.js:608
 msgid "Cluster configuration warning"
 msgstr ""
 
-#: src/core/Socket.js:616
+#: src/core/Socket.js:611
 msgid "Wrong server, reconnecting..."
 msgstr ""
 
-#: src/core/Socket.js:625
+#: src/core/Socket.js:620
 msgid "COOLWSD version:"
 msgstr "Έκδοση COOLWSD:"
 
-#: src/core/Socket.js:637
+#: src/core/Socket.js:632
 msgid "Served by:"
 msgstr "Εξυπηρετούμενο από:"
 
-#: src/core/Socket.js:643
+#: src/core/Socket.js:638
 msgid "Unsupported server version."
 msgstr "Μη υποστηριζόμενη έκδοση διακομιστή."
 
-#: src/core/Socket.js:647
+#: src/core/Socket.js:642
 msgid "LOKit version:"
 msgstr "Έκδοση LOKit:"
 
-#: src/core/Socket.js:754
+#: src/core/Socket.js:751
 msgid "Document is getting migrated"
 msgstr ""
 
-#: src/core/Socket.js:781
+#: src/core/Socket.js:778
 msgid "Session terminated by document owner"
 msgstr "Η συνεδρία τελείωσε από τον κάτοχο του εγγράφου"
 
-#: src/core/Socket.js:792
+#: src/core/Socket.js:789
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "Ο διακομιστής κλείνει για συντήρηση (αυτόματη αποθήκευση)"
 
-#: src/core/Socket.js:796
+#: src/core/Socket.js:793
 msgid "Oops, there is a problem connecting the document"
 msgstr "Ωχ, υπάρχει πρόβλημα σύνδεσης του εγγράφου"
 
-#: src/core/Socket.js:800
+#: src/core/Socket.js:797
 msgid "Server is down, restarting automatically. Please wait."
 msgstr ""
 "Ο διακομιστής είναι εκτός λειτουργίας, επανεκκινείται αυτόματα. Παρακαλούμε "
 "περιμένετε."
 
-#: src/core/Socket.js:827
+#: src/core/Socket.js:824
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
@@ -2261,7 +2246,7 @@ msgstr ""
 "Το έγγραφο έχει αλλάξει στην αποθήκευση. Φόρτωση του νέου εγγράφου. Η έκδοση "
 "σας είναι διαθέσιμη ως αναθεώρηση."
 
-#: src/core/Socket.js:833
+#: src/core/Socket.js:830
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
@@ -2269,79 +2254,79 @@ msgstr ""
 "Επαναφορά παλαιότερης έκδοσης. Τυχόν μη αποθηκευμένες αλλαγές θα είναι "
 "διαθέσιμες στο ιστορικό εκδόσεων"
 
-#: src/core/Socket.js:839
+#: src/core/Socket.js:836
 msgid "Reloading the document after rename"
 msgstr "Επαναφόρτωση του εγγράφου μετά τη μετονομασία"
 
-#: src/core/Socket.js:976
+#: src/core/Socket.js:988
 msgid "Document requires password to view."
 msgstr "Για την προβολή του εγγράφου απαιτείται κωδικός πρόσβασης."
 
-#: src/core/Socket.js:979
+#: src/core/Socket.js:991
 msgid "Document requires password to modify."
 msgstr "Για την τροποποίηση του εγγράφου απαιτείται κωδικός πρόσβασης."
 
-#: src/core/Socket.js:981
+#: src/core/Socket.js:993
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Πατήστε Άκυρο για να ανοιχθεί σε κατάσταση μόνο για προβολή."
 
-#: src/core/Socket.js:985
+#: src/core/Socket.js:997
 msgid "Wrong password provided. Please try again."
 msgstr "Εσφαλμένος κωδικός πρόσβασης. Παρακαλούμε, ξαναπροσπαθήστε."
 
-#: src/core/Socket.js:1023
+#: src/core/Socket.js:1035
 msgid "Only the document owner can change the password."
 msgstr ""
 
-#: src/core/Socket.js:1054 src/core/Socket.js:1059
+#: src/core/Socket.js:1066 src/core/Socket.js:1071
 msgid "Missing Fonts"
 msgstr ""
 
-#: src/core/Socket.js:1091
+#: src/core/Socket.js:1110
 msgid "Someone"
 msgstr "Κάποιος"
 
-#: src/core/Socket.js:1092
+#: src/core/Socket.js:1111
 msgid "%userName saved this document as %fileName. Do you want to join?"
 msgstr ""
 
-#: src/core/Socket.js:1101
+#: src/core/Socket.js:1120
 msgid "Connecting..."
 msgstr "Συνδέεται..."
 
-#: src/core/Socket.js:1118
+#: src/core/Socket.js:1137
 msgid "The document is being renamed and will reload shortly"
 msgstr "Το έγγραφο μετονομάστηκε και θα γίνει ανανέωση σύντομα"
 
-#: src/core/Socket.js:1121
+#: src/core/Socket.js:1140
 msgid "The document is switching to Offline mode and will reload shortly"
 msgstr ""
 
-#: src/core/Socket.js:1226
+#: src/core/Socket.js:1256
 msgid "Exported to storage"
 msgstr ""
 
-#: src/core/Socket.js:1226
+#: src/core/Socket.js:1256
 msgid "Successfully exported: "
 msgstr ""
 
-#: src/core/Socket.js:1254
+#: src/core/Socket.js:1284
 msgid "Discard"
 msgstr "Απόρριψη"
 
-#: src/core/Socket.js:1255
+#: src/core/Socket.js:1285
 msgid "Overwrite"
 msgstr "Αντικατάσταση"
 
-#: src/core/Socket.js:1266
+#: src/core/Socket.js:1296
 msgid "Save to new file"
 msgstr "Αποθήκευση σε νέο αρχείο"
 
-#: src/core/Socket.js:1276
+#: src/core/Socket.js:1306
 msgid "Document has been changed"
 msgstr "Το έγγραφο έχει αλλάξει"
 
-#: src/core/Socket.js:1277
+#: src/core/Socket.js:1307
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
@@ -2349,7 +2334,7 @@ msgstr ""
 "Το έγγραφο έχει αλλαχθεί στην αποθήκευση. Τι θα θέλατε να κάνετε με τις μη "
 "αποθηκευμένες αλλαγές σας;"
 
-#: src/core/Socket.js:1595
+#: src/core/Socket.js:1625
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -2357,31 +2342,23 @@ msgstr ""
 "Δυστυχώς, δεν μπορούμε να συνδεθούμε με το έγγραφό σας. Παρακαλούμε, "
 "ξαναπροσπαθήστε."
 
-#: src/core/Socket.js:1612
+#: src/core/Socket.js:1642
 msgid "Reconnecting..."
 msgstr "Επανασύνδεση..."
 
-#: src/core/Socket.js:1622
+#: src/core/Socket.js:1652
 msgid "The server has been disconnected."
 msgstr "Ο διακομιστής έχει αποσυνδεθεί."
 
-#: src/core/Debug.js:52
-msgid "Debug Tools"
-msgstr ""
-
-#: src/core/Debug.js:54
-msgid "Ctrl+Shift+Alt+D to exit"
-msgstr ""
-
-#: src/docstate.js:88
+#: src/docstate.js:82
 msgid "Standard"
 msgstr ""
 
-#: src/docstate.js:99
+#: src/docstate.js:93
 msgid "Theme colors"
 msgstr ""
 
-#: src/docstate.js:100
+#: src/docstate.js:94
 msgid "Document colors"
 msgstr ""
 
@@ -2597,89 +2574,97 @@ msgstr ""
 "Αποτυχία αποστολής του αρχείου στον διακομιστή, το αρχείο είναι υπερβολικά "
 "μεγάλο."
 
-#: src/layer/tile/CanvasTileLayer.js:1991
+#: src/layer/tile/CanvasTileLayer.js:1979
 msgid "Functions"
 msgstr "Λειτουργίες"
 
-#: src/layer/tile/CanvasTileLayer.js:2592
+#: src/layer/tile/CanvasTileLayer.js:2580
 msgid "and %COUNT more"
 msgstr ""
 
-#: src/layer/tile/CanvasTileLayer.js:2606
+#: src/layer/tile/CanvasTileLayer.js:2595
 msgid "Copy link location"
 msgstr ""
 
-#: src/layer/tile/CanvasTileLayer.js:2614
+#: src/layer/tile/CanvasTileLayer.js:2606
 msgid "Edit link"
 msgstr ""
 
-#: src/layer/tile/CanvasTileLayer.js:2622
+#: src/layer/tile/CanvasTileLayer.js:2615
 msgid "Remove link"
 msgstr ""
 
-#: src/layer/tile/CanvasTileLayer.js:5187
+#: src/layer/tile/CanvasTileLayer.js:5155
+msgid "Debug Tools"
+msgstr ""
+
+#: src/layer/tile/CanvasTileLayer.js:5157
+msgid "Ctrl+Shift+Alt+D to exit"
+msgstr ""
+
+#: src/layer/tile/CanvasTileLayer.js:5986
 msgid "No Comments"
 msgstr "Χωρίς σχόλια"
 
-#: src/layer/tile/CommentListSection.ts:139
+#: src/layer/tile/CommentListSection.ts:140
 msgid "A comment is being edited"
 msgstr ""
 
-#: src/layer/tile/CommentListSection.ts:140
+#: src/layer/tile/CommentListSection.ts:141
 msgid "Please save or discard the comment currently being edited."
 msgstr ""
 
-#: src/layer/tile/CommentListSection.ts:960
+#: src/layer/tile/CommentListSection.ts:961
 msgid "Modify"
 msgstr "Τροποποίηση"
 
-#: src/layer/tile/CommentListSection.ts:966
-#: src/layer/tile/CommentSection.ts:160
+#: src/layer/tile/CommentListSection.ts:967
+#: src/layer/tile/CommentSection.ts:161
 msgid "Reply"
 msgstr "Απάντηση"
 
-#: src/layer/tile/CommentListSection.ts:972
+#: src/layer/tile/CommentListSection.ts:973
 msgid "Remove"
 msgstr "Αφαίρεση"
 
-#: src/layer/tile/CommentListSection.ts:978
+#: src/layer/tile/CommentListSection.ts:979
 msgid "Remove Thread"
 msgstr "Αφαίρεση νήματος"
 
-#: src/layer/tile/CommentListSection.ts:984
+#: src/layer/tile/CommentListSection.ts:985
 msgid "Resolve"
 msgstr "Επίλυση"
 
-#: src/layer/tile/CommentListSection.ts:984
+#: src/layer/tile/CommentListSection.ts:985
 msgid "Unresolve"
 msgstr "Άλυτο"
 
-#: src/layer/tile/CommentListSection.ts:990
+#: src/layer/tile/CommentListSection.ts:991
 msgid "Unresolve Thread"
 msgstr "Ανεπίλυτο νήμα"
 
-#: src/layer/tile/CommentListSection.ts:990
+#: src/layer/tile/CommentListSection.ts:991
 msgid "Resolve Thread"
 msgstr "Επίλυση νήματος"
 
-#: src/layer/tile/CommentListSection.ts:1271
-#: src/layer/tile/CommentListSection.ts:1326
+#: src/layer/tile/CommentListSection.ts:1272
+#: src/layer/tile/CommentListSection.ts:1334
 msgid "Autosaved"
 msgstr ""
 
-#: src/layer/tile/CommentSection.ts:296
+#: src/layer/tile/CommentSection.ts:297
 msgid "Open menu"
 msgstr "Άνοιγμα μενού"
 
-#: src/layer/tile/CommentSection.ts:314 src/layer/tile/CommentSection.ts:315
+#: src/layer/tile/CommentSection.ts:315 src/layer/tile/CommentSection.ts:316
 msgid "Accept change"
 msgstr "Αποδοχή αλλαγής"
 
-#: src/layer/tile/CommentSection.ts:321 src/layer/tile/CommentSection.ts:322
+#: src/layer/tile/CommentSection.ts:322 src/layer/tile/CommentSection.ts:323
 msgid "Reject change"
 msgstr "Απόρριψη αλλαγής"
 
-#: src/layer/tile/CommentSection.ts:345
+#: src/layer/tile/CommentSection.ts:346
 msgid "Resolved"
 msgstr "Επιλύθηκε"
 
@@ -2688,30 +2673,30 @@ msgid "Warning! The browser you are using is not supported."
 msgstr ""
 "Προειδοποίηση! Το πρόγραμμα περιήγησης που χρησιμοποιείτε δεν υποστηρίζεται."
 
-#: src/map/Clipboard.js:142
+#: src/map/Clipboard.js:143
 msgid ""
 "To paste outside %productName, please first click the 'download' button"
 msgstr "Για επικόλληση εκτός του %productName, πατήστε πρώτα το πλήκτρο 'λήψη'"
 
-#: src/map/Clipboard.js:150
+#: src/map/Clipboard.js:151
 msgid "Copying from the document disabled"
 msgstr "Έχει απενεργοποιηθεί η αντιγραφή από το έγγραφο"
 
-#: src/map/Clipboard.js:252
+#: src/map/Clipboard.js:253
 msgid "warning: copy/paste request timed out"
 msgstr ""
 
-#: src/map/Clipboard.js:314
+#: src/map/Clipboard.js:315
 msgid "Failed to download clipboard, please re-copy"
 msgstr "Αποτυχία λήψης του προχείρου, ξαναντιγράψτε"
 
-#: src/map/Clipboard.js:996
+#: src/map/Clipboard.js:1001
 msgid "<p>Please use the copy/paste buttons on your on-screen keyboard.</p>"
 msgstr ""
 "<p>Χρησιμοποιήστε τα πλήκτρα αντιγραφής/επικόλλησης στο πληκτρολόγιο της "
 "οθόνης σας.</p>"
 
-#: src/map/Clipboard.js:998
+#: src/map/Clipboard.js:1003
 msgid ""
 "<p>Your browser has very limited access to the clipboard, so use these "
 "keyboard shortcuts:</p><table class=\"warn-copy-paste\"><tr><td><kbd>Ctrl</"
@@ -2728,7 +2713,7 @@ msgstr ""
 ">+</span><kbd>V</kbd></td></tr><tr><td>Για αντιγραφή</td><td></td>Για "
 "αποκοπή<td>Για επικόλληση</td></tr></table>"
 
-#: src/map/Clipboard.js:1017
+#: src/map/Clipboard.js:1022
 msgid ""
 "<p>A download due to a large copy/paste operation has already started. "
 "Please, wait for the current download or cancel it before starting a new "
@@ -2738,31 +2723,23 @@ msgstr ""
 "επικόλλησης. Παρακαλούμε, περιμένετε την ολοκλήρωση της τρέχουσας λήψης ή "
 "ακυρώστε την πριν ξεκινήσετε μια νέα</p>"
 
-#: src/map/Clipboard.js:1035
+#: src/map/Clipboard.js:1040
 #, fuzzy
 msgid ""
-"<p>Your browser has very limited access to the clipboard</p><p><b>Please "
-"press</b> <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to "
-"see more options</p><p>Close popup to ignore paste special</p>"
+"<p>Your browser has very limited access to the clipboard</p><p>Please press "
+"now: <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to see "
+"more options</p><p>Close popup to ignore paste special</p>"
 msgstr ""
 "<p>Το πρόγραμμα περιήγησής σας έχει πολύ περιορισμένη πρόσβαση στο πρόχειρο</"
 "p><p>Πατήστε τώρα: <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</"
 "kbd> για να δείτε περισσότερες επιλογές</p><p class=\"vex-footnote\">Κλείστε "
 "το αναδυόμενο παράθυρο για να αγνοήσετε την ειδική επικόλληση</p>"
 
-#: src/map/Clipboard.js:1042
-msgid "Paste from this document"
-msgstr ""
-
-#: src/map/Clipboard.js:1042
-msgid "Cancel paste special"
-msgstr ""
-
-#: src/map/Map.js:220
+#: src/map/Map.js:218
 msgid "Initializing..."
 msgstr "Αρχικοποίηση..."
 
-#: src/map/Map.js:445 src/map/Map.js:448 src/map/Map.js:451 src/map/Map.js:454
+#: src/map/Map.js:443 src/map/Map.js:446 src/map/Map.js:449 src/map/Map.js:452
 msgid "Last saved:"
 msgstr "Τελευταία αποθήκευση:"
 
@@ -2838,15 +2815,15 @@ msgstr ""
 msgid "Creating new file from template..."
 msgstr "Δημιουργία νέου αρχείου από πρότυπο..."
 
-#: src/map/handler/Map.WOPI.js:582
+#: src/map/handler/Map.WOPI.js:583
 msgid "Error"
 msgstr ""
 
-#: src/map/handler/Map.WOPI.js:582
+#: src/map/handler/Map.WOPI.js:583
 msgid "File name should contain an extension."
 msgstr ""
 
-#: src/map/handler/Map.WOPI.js:590
+#: src/map/handler/Map.WOPI.js:591
 msgid "Creating copy..."
 msgstr "Δημιουργείται αντίγραφο..."
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-06 16:29+0100\n"
+"POT-Creation-Date: 2024-03-08 16:42+0100\n"
 "PO-Revision-Date: 2024-02-11 21:42+0000\n"
 "Last-Translator: Владимир <plazotronik@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/collabora-online/"
@@ -148,8 +148,8 @@ msgstr "График сети"
 #: src/control/Control.NotebookbarImpress.js:29
 #: src/control/Control.NotebookbarImpress.js:176
 #: src/control/Control.NotebookbarWriter.js:158
-#: src/layer/tile/CommentListSection.ts:429
-#: src/layer/tile/CommentSection.ts:157
+#: src/layer/tile/CommentListSection.ts:430
+#: src/layer/tile/CommentSection.ts:158
 msgid "Save"
 msgstr "Сохранить"
 
@@ -220,7 +220,7 @@ msgstr "Обновить журнал"
 msgid "Channel Filter:"
 msgstr "Фильтр каналов:"
 
-#: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:581
+#: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:577
 #: src/control/Control.StatusBar.js:345
 msgid "None"
 msgstr "Нет"
@@ -234,10 +234,10 @@ msgid "Log Levels"
 msgstr "Уровни логирования"
 
 #: admin/admin.strings.js:64 src/control/Control.AlertDialog.js:30
-#: src/control/Control.AlertDialog.js:36 src/control/Control.AlertDialog.js:99
-#: src/control/Control.AlertDialog.js:106 src/control/Control.Zotero.js:192
-#: src/control/Parts.js:467 src/core/Socket.js:1054 src/core/Socket.js:1059
-#: src/layer/tile/CommentListSection.ts:140
+#: src/control/Control.AlertDialog.js:36
+#: src/control/Control.AlertDialog.js:103 src/control/Control.Zotero.js:192
+#: src/control/Parts.js:467 src/core/Socket.js:1066 src/core/Socket.js:1071
+#: src/layer/tile/CommentListSection.ts:141
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.div:51-7
 msgid "Close"
 msgstr "Закрыть"
@@ -283,14 +283,14 @@ msgstr "Сервер был выключен; пожалуйста, переза
 #: src/control/Control.Tabs.js:408 src/control/Control.Zotero.js:338
 #: src/control/Control.Zotero.js:376 src/control/Permission.js:89
 #: src/control/Permission.js:99 src/control/Permission.js:149
-#: src/control/Toolbar.js:701 src/control/Toolbar.js:803
-#: src/control/Toolbar.js:939 src/control/Toolbar.js:1230
-#: src/core/Socket.js:613 src/core/Socket.js:1024 src/core/Socket.js:1094
-#: src/core/Socket.js:1226 src/core/Socket.js:1230 src/main.js:79
-#: src/main.js:82 src/main.js:134 src/map/Clipboard.js:1003
+#: src/control/Toolbar.js:701 src/control/Toolbar.js:802
+#: src/control/Toolbar.js:938 src/control/Toolbar.js:1229
+#: src/core/Socket.js:608 src/core/Socket.js:1036 src/core/Socket.js:1113
+#: src/core/Socket.js:1256 src/core/Socket.js:1260 src/main.js:79
+#: src/main.js:82 src/main.js:134 src/map/Clipboard.js:1008
 #: src/map/handler/Map.Feedback.js:83 src/map/handler/Map.SlideShow.js:51
 #: src/map/handler/Map.SlideShow.js:150 src/map/handler/Map.SlideShow.js:236
-#: src/map/handler/Map.WOPI.js:582
+#: src/map/handler/Map.WOPI.js:583
 msgid "OK"
 msgstr "ОК"
 
@@ -312,11 +312,12 @@ msgstr "Действительно завершить сеанс?"
 #: src/control/Control.DownloadProgress.js:90
 #: src/control/Control.LanguageDialog.js:113
 #: src/control/Control.MobileTopBar.js:52
-#: src/control/Control.UIManager.js:1285 src/control/Control.UIManager.js:1352
-#: src/control/Control.UIManager.js:1487 src/control/Control.UIManager.js:1629
-#: src/control/Control.Zotero.js:333 src/control/Toolbar.js:934
-#: src/core/Socket.js:1251 src/layer/tile/CommentListSection.ts:424
-#: src/layer/tile/CommentSection.ts:156 src/layer/tile/CommentSection.ts:159
+#: src/control/Control.UIManager.js:1287 src/control/Control.UIManager.js:1354
+#: src/control/Control.UIManager.js:1489 src/control/Control.UIManager.js:1631
+#: src/control/Control.Zotero.js:333 src/control/Toolbar.js:933
+#: src/core/Socket.js:1281 src/layer/tile/CommentListSection.ts:425
+#: src/layer/tile/CommentSection.ts:157 src/layer/tile/CommentSection.ts:160
+#: src/map/Clipboard.js:1047
 #, fuzzy
 msgid "Cancel"
 msgstr "Отменить"
@@ -386,15 +387,15 @@ msgstr " мин"
 msgid " s"
 msgstr " с"
 
-#: js/global.js:922
+#: js/global.js:913
 msgid "Cluster is scaling, retrying..."
 msgstr "Кластер масштабируется, повторная попытка..."
 
-#: js/global.js:924
+#: js/global.js:915
 msgid "Document is migrating to new server, retrying..."
 msgstr "Документ переносится на новый сервер, повторная попытка..."
 
-#: js/global.js:926
+#: js/global.js:917
 msgid "Failed to get RouteToken from controller"
 msgstr "Не удалось получить RouteToken от контроллера"
 
@@ -464,7 +465,7 @@ msgstr ""
 msgid "Don't show this again"
 msgstr "Не показывать снова"
 
-#: src/control/Control.AlertDialog.js:103
+#: src/control/Control.AlertDialog.js:100
 msgid "The server encountered a %0 error while parsing the %1 command."
 msgstr "Сервер столкнулся с ошибкой %0 при анализе команды %1."
 
@@ -472,7 +473,7 @@ msgstr "Сервер столкнулся с ошибкой %0 при анали
 msgid "Unlock"
 msgstr "Разблокировать"
 
-#: src/control/Control.ContextMenu.js:196 src/control/Toolbar.js:1229
+#: src/control/Control.ContextMenu.js:196 src/control/Toolbar.js:1228
 msgid "Delete"
 msgstr "Удалить"
 
@@ -490,7 +491,7 @@ msgid "Repair Document"
 msgstr "Восстановить документ"
 
 #: src/control/Control.DocumentRepair.js:124
-#: src/control/Control.UserList.ts:449
+#: src/control/Control.UserList.js:340
 msgid "You"
 msgstr "Вы"
 
@@ -598,131 +599,131 @@ msgstr ""
 "Неактивный документ - пожалуйста щёлкните, чтобы перезагрузить его и "
 "продолжить редактирование"
 
-#: src/control/Control.JSDialogBuilder.js:170
+#: src/control/Control.JSDialogBuilder.js:169
 #: src/control/Control.StatusBar.js:343
 msgid "Sum"
 msgstr "Сумма"
 
-#: src/control/Control.JSDialogBuilder.js:171
+#: src/control/Control.JSDialogBuilder.js:170
 #: src/control/Control.StatusBar.js:338
 msgid "Average"
 msgstr "Среднее"
 
-#: src/control/Control.JSDialogBuilder.js:172
+#: src/control/Control.JSDialogBuilder.js:171
 msgid "Min"
 msgstr "Минимальное"
 
-#: src/control/Control.JSDialogBuilder.js:173
+#: src/control/Control.JSDialogBuilder.js:172
 msgid "Max"
 msgstr "Максимальное"
 
-#: src/control/Control.JSDialogBuilder.js:174
+#: src/control/Control.JSDialogBuilder.js:173
 #: src/control/Control.StatusBar.js:340
 msgid "Count"
 msgstr "Количество"
 
-#: src/control/Control.JSDialogBuilder.js:207
+#: src/control/Control.JSDialogBuilder.js:206
 #: src/control/Control.Menubar.js:686
 msgid "Active sheet"
 msgstr "Активный лист"
 
-#: src/control/Control.JSDialogBuilder.js:208
+#: src/control/Control.JSDialogBuilder.js:207
 #: src/control/Control.Menubar.js:687 src/control/Control.TopToolbar.js:108
 msgid "All Sheets"
 msgstr "Все листы"
 
-#: src/control/Control.JSDialogBuilder.js:584
+#: src/control/Control.JSDialogBuilder.js:580
 msgid "Solid"
 msgstr "Сплошной"
 
-#: src/control/Control.JSDialogBuilder.js:587
+#: src/control/Control.JSDialogBuilder.js:583
 msgid "Linear"
 msgstr "Линейный"
 
-#: src/control/Control.JSDialogBuilder.js:590
+#: src/control/Control.JSDialogBuilder.js:586
 msgid "Axial"
 msgstr "Осевой"
 
-#: src/control/Control.JSDialogBuilder.js:593
+#: src/control/Control.JSDialogBuilder.js:589
 msgid "Radial"
 msgstr "Радиальный"
 
-#: src/control/Control.JSDialogBuilder.js:596
+#: src/control/Control.JSDialogBuilder.js:592
 msgid "Ellipsoid"
 msgstr "Эллипсоидный"
 
-#: src/control/Control.JSDialogBuilder.js:600
+#: src/control/Control.JSDialogBuilder.js:596
 msgid "Quadratic"
 msgstr "Квадратный"
 
-#: src/control/Control.JSDialogBuilder.js:603
+#: src/control/Control.JSDialogBuilder.js:599
 msgid "Square"
 msgstr "Прямоугольный"
 
-#: src/control/Control.JSDialogBuilder.js:606
+#: src/control/Control.JSDialogBuilder.js:602
 msgid "Fixed size"
 msgstr "Фиксированный размер"
 
-#: src/control/Control.JSDialogBuilder.js:1646
+#: src/control/Control.JSDialogBuilder.js:1616
 msgid "From"
 msgstr "От"
 
-#: src/control/Control.JSDialogBuilder.js:1649
+#: src/control/Control.JSDialogBuilder.js:1619
 msgid "To"
 msgstr "До"
 
-#: src/control/Control.JSDialogBuilder.js:1652
+#: src/control/Control.JSDialogBuilder.js:1622
 msgid "Color"
 msgstr "Цвет"
 
-#: src/control/Control.JSDialogBuilder.js:1766
+#: src/control/Control.JSDialogBuilder.js:1736
 msgid "Select range"
 msgstr "Выбрать диапазон"
 
-#: src/control/Control.JSDialogBuilder.js:1820
+#: src/control/Control.JSDialogBuilder.js:1790
 #: src/control/Control.NotebookbarBuilder.js:241
 msgid "Font Name"
 msgstr "Шрифт"
 
-#: src/control/Control.JSDialogBuilder.js:1822 src/control/Toolbar.js:132
+#: src/control/Control.JSDialogBuilder.js:1792 src/control/Toolbar.js:132
 msgid "Font Size"
 msgstr "Кегль"
 
-#: src/control/Control.JSDialogBuilder.js:1824
+#: src/control/Control.JSDialogBuilder.js:1794
 #: src/control/Control.TopToolbar.js:533
 msgid "Style"
 msgstr "Стиль"
 
-#: src/control/Control.JSDialogBuilder.js:2095
+#: src/control/Control.JSDialogBuilder.js:2061
 msgid "reply"
 msgstr "ответить"
 
-#: src/control/Control.JSDialogBuilder.js:2098
+#: src/control/Control.JSDialogBuilder.js:2064
 msgid "replies"
 msgstr "ответы"
 
-#: src/control/Control.JSDialogBuilder.js:2109
-#: src/layer/tile/CanvasTileLayer.js:5159
-#: src/layer/tile/CanvasTileLayer.js:5170
-#: src/layer/tile/CommentListSection.ts:1017
+#: src/control/Control.JSDialogBuilder.js:2075
+#: src/layer/tile/CanvasTileLayer.js:5958
+#: src/layer/tile/CanvasTileLayer.js:5969
+#: src/layer/tile/CommentListSection.ts:1018
 msgid "Comment"
 msgstr "Примечание"
 
-#: src/control/Control.JSDialogBuilder.js:2173
+#: src/control/Control.JSDialogBuilder.js:2139
 msgid "Insert Comment"
 msgstr "Вставить комментарий"
 
-#: src/control/Control.JSDialogBuilder.js:3057
+#: src/control/Control.JSDialogBuilder.js:3031
 #: src/control/Control.Menubar.js:829
 msgid "Rows"
 msgstr "Строки"
 
-#: src/control/Control.JSDialogBuilder.js:3058
+#: src/control/Control.JSDialogBuilder.js:3032
 #: src/control/Control.Menubar.js:832
 msgid "Columns"
 msgstr "Столбцы"
 
-#: src/control/Control.JSDialogBuilder.js:3078
+#: src/control/Control.JSDialogBuilder.js:3052
 msgid "Insert Table"
 msgstr "Вставить таблицу"
 
@@ -1228,15 +1229,15 @@ msgstr "Использовать компактный вид"
 msgid "Use Tabbed view"
 msgstr "Использовать представление вкладками"
 
-#: src/control/Control.Menubar.js:1800 src/control/Control.Menubar.js:1813
+#: src/control/Control.Menubar.js:1792 src/control/Control.Menubar.js:1805
 msgid "Read-only mode"
 msgstr "Режим только для чтения"
 
-#: src/control/Control.Menubar.js:1834
+#: src/control/Control.Menubar.js:1826
 msgid "Insert Shape"
 msgstr "Вставить фигуру"
 
-#: src/control/Control.Menubar.js:2054
+#: src/control/Control.Menubar.js:2052
 msgid "file type icon"
 msgstr "значок типа файла"
 
@@ -1255,15 +1256,15 @@ msgstr "Обрамления"
 msgid "Read-only"
 msgstr "Только чтение"
 
-#: src/control/Control.MobileWizardBuilder.js:523
+#: src/control/Control.MobileWizardBuilder.js:524
 msgid "Background Color"
 msgstr "Фоновый цвет"
 
-#: src/control/Control.MobileWizardBuilder.js:525
+#: src/control/Control.MobileWizardBuilder.js:526
 msgid "Gradient Start"
 msgstr "Начало градиента"
 
-#: src/control/Control.MobileWizardBuilder.js:527
+#: src/control/Control.MobileWizardBuilder.js:528
 msgid "Gradient End"
 msgstr "Конец градиента"
 
@@ -1457,7 +1458,7 @@ msgstr "Дробь"
 msgid "Boolean Value"
 msgstr "Логический"
 
-#: src/control/Control.NotebookbarCalc.js:663 src/control/Toolbar.js:906
+#: src/control/Control.NotebookbarCalc.js:663 src/control/Toolbar.js:905
 msgid "Text"
 msgstr "Текст"
 
@@ -1833,7 +1834,7 @@ msgstr "Вставить фигуры"
 msgid "Insert connectors"
 msgstr "Вставить соединители"
 
-#: src/control/Control.TopToolbar.js:263 src/control/Control.UIManager.js:762
+#: src/control/Control.TopToolbar.js:263 src/control/Control.UIManager.js:764
 msgid "Hide Menu"
 msgstr "Скрыть меню"
 
@@ -1841,63 +1842,47 @@ msgstr "Скрыть меню"
 msgid "Enter new name"
 msgstr "Введите новое имя"
 
-#: src/control/Control.UIManager.js:785
+#: src/control/Control.UIManager.js:787
 msgid "Show Menu"
 msgstr "Показать меню"
 
-#: src/control/Control.UIManager.js:1110
+#: src/control/Control.UIManager.js:1112
 msgid "Dismiss"
 msgstr ""
 
-#: src/control/Control.UserList.ts:54
+#: src/control/Control.UserList.js:20
 msgid "%user has joined"
 msgstr "%user присоединился"
 
-#: src/control/Control.UserList.ts:55
+#: src/control/Control.UserList.js:21
 msgid "%user has left"
 msgstr "%user отсоединился"
 
-#: src/control/Control.UserList.ts:56
-msgid "Following %user"
-msgstr ""
-
-#: src/control/Control.UserList.ts:57
-msgid "Following the editor"
-msgstr ""
-
-#: src/control/Control.UserList.ts:58
-msgid "Click to stop following"
-msgstr ""
-
-#: src/control/Control.UserList.ts:59
-msgid "Avatar for %user"
-msgstr ""
-
-#: src/control/Control.UserList.ts:80
+#: src/control/Control.UserList.js:44
 msgid "%n users"
 msgstr "Пользователей: %n"
 
-#: src/control/Control.UserList.ts:81
+#: src/control/Control.UserList.js:45
 msgid "1 user"
 msgstr "Пользователей: 1"
 
-#: src/control/Control.UserList.ts:82
+#: src/control/Control.UserList.js:46
 msgid "0 users"
 msgstr "Пользователей: 0"
 
-#: src/control/Control.UserList.ts:532
-msgid "Readonly"
-msgstr "Только чтение"
-
-#: src/control/Control.UserList.ts:560
+#: src/control/Control.UserList.js:204
 msgid "Following"
 msgstr "Следую"
 
-#: src/control/Control.UserList.ts:613 src/control/Control.UserList.ts:674
+#: src/control/Control.UserList.js:232 src/control/Control.UserList.js:398
 msgid "Always follow the editor"
 msgstr "Всегда следовать за редактором"
 
-#: src/control/Control.UserList.ts:679
+#: src/control/Control.UserList.js:346
+msgid "Readonly"
+msgstr "Только чтение"
+
+#: src/control/Control.UserList.js:401
 msgid "Current"
 msgstr "Текущий"
 
@@ -1922,7 +1907,7 @@ msgstr ""
 "API. Это может вызвать некоторые проблемы при редактировании цитат или "
 "библиографии."
 
-#: src/control/Control.Zotero.js:247 src/core/Socket.js:1101
+#: src/control/Control.Zotero.js:247 src/core/Socket.js:1120
 msgid "Loading..."
 msgstr "Загрузка…"
 
@@ -2149,35 +2134,35 @@ msgstr "Сохранение…"
 msgid "Renaming..."
 msgstr "Переименование..."
 
-#: src/control/Toolbar.js:785
+#: src/control/Toolbar.js:784
 msgid "This version of %productName is powered by"
 msgstr "Эта версия %productName работает на"
 
-#: src/control/Toolbar.js:797
+#: src/control/Toolbar.js:796
 msgid "\"Slow Proxy\""
 msgstr "\"Медленный прокси\""
 
-#: src/control/Toolbar.js:816
+#: src/control/Toolbar.js:815
 msgid "Copy all version information in English"
 msgstr "Скопировать всю информацию о версии на английском языке"
 
-#: src/control/Toolbar.js:899
+#: src/control/Toolbar.js:898
 msgid "Insert hyperlink"
 msgstr "Вставить гиперссылку"
 
-#: src/control/Toolbar.js:918
+#: src/control/Toolbar.js:917
 msgid "Link"
 msgstr "Связь"
 
-#: src/control/Toolbar.js:1224
+#: src/control/Toolbar.js:1223
 msgid "Are you sure you want to delete this slide?"
 msgstr "Действительно удалить этот слайд?"
 
-#: src/control/Toolbar.js:1227
+#: src/control/Toolbar.js:1226
 msgid "Are you sure you want to delete this page?"
 msgstr "Действительно удалить эту страницу?"
 
-#: src/control/jsdialog/Widget.MobileBorderSelector.js:96
+#: src/control/jsdialog/Widget.MobileBorderSelector.js:92
 msgid "Cell borders"
 msgstr "Обрамление ячеек"
 
@@ -2189,63 +2174,63 @@ msgstr "Заголовки и объекты, которые вы добавит
 msgid "Oops, there is a problem connecting to %productName: "
 msgstr "Упс, неполадки при подключении к %productName: "
 
-#: src/core/Socket.js:594
+#: src/core/Socket.js:589
 msgid "Server is now reachable. We have to refresh the page now."
 msgstr "Сервер теперь доступен. Теперь нужно обновить страницу."
 
-#: src/core/Socket.js:596
+#: src/core/Socket.js:591
 msgid "Server is now reachable..."
 msgstr "Сервер теперь доступен..."
 
-#: src/core/Socket.js:600
+#: src/core/Socket.js:595
 msgid "RELOAD"
 msgstr "ПЕРЕЗАГРУЗИТЬ"
 
-#: src/core/Socket.js:613
+#: src/core/Socket.js:608
 msgid "Cluster configuration warning"
 msgstr "Предупреждение конфигурации кластера"
 
-#: src/core/Socket.js:616
+#: src/core/Socket.js:611
 msgid "Wrong server, reconnecting..."
 msgstr "Неверный сервер, переподключение..."
 
-#: src/core/Socket.js:625
+#: src/core/Socket.js:620
 msgid "COOLWSD version:"
 msgstr "Версия COOLWSD:"
 
-#: src/core/Socket.js:637
+#: src/core/Socket.js:632
 msgid "Served by:"
 msgstr "Работает на:"
 
-#: src/core/Socket.js:643
+#: src/core/Socket.js:638
 msgid "Unsupported server version."
 msgstr "Версия сервера не поддерживается."
 
-#: src/core/Socket.js:647
+#: src/core/Socket.js:642
 msgid "LOKit version:"
 msgstr "Версия LOKit:"
 
-#: src/core/Socket.js:754
+#: src/core/Socket.js:751
 msgid "Document is getting migrated"
 msgstr "Документ переносится"
 
-#: src/core/Socket.js:781
+#: src/core/Socket.js:778
 msgid "Session terminated by document owner"
 msgstr "Сеанс завершён владельцем документа"
 
-#: src/core/Socket.js:792
+#: src/core/Socket.js:789
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "Сервер выключается для техобслуживания (Автоматическое сохранение)"
 
-#: src/core/Socket.js:796
+#: src/core/Socket.js:793
 msgid "Oops, there is a problem connecting the document"
 msgstr "Упс, неполадки при подключении к документу"
 
-#: src/core/Socket.js:800
+#: src/core/Socket.js:797
 msgid "Server is down, restarting automatically. Please wait."
 msgstr "Сервер отключён, автоматический перезапуск. Подождите."
 
-#: src/core/Socket.js:827
+#: src/core/Socket.js:824
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
@@ -2253,7 +2238,7 @@ msgstr ""
 "Документ в хранилище изменился. Загружается новый документ. Ваш вариант "
 "сохранён в виде версии."
 
-#: src/core/Socket.js:833
+#: src/core/Socket.js:830
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
@@ -2261,80 +2246,80 @@ msgstr ""
 "Восстановление старой версии. Все несохранённые изменения будут доступны в "
 "истории версий"
 
-#: src/core/Socket.js:839
+#: src/core/Socket.js:836
 msgid "Reloading the document after rename"
 msgstr "Перезагрузка документа после переименования"
 
-#: src/core/Socket.js:976
+#: src/core/Socket.js:988
 msgid "Document requires password to view."
 msgstr "Документ требует пароль для просмотра."
 
-#: src/core/Socket.js:979
+#: src/core/Socket.js:991
 msgid "Document requires password to modify."
 msgstr "Документ требует пароль для редактирования."
 
-#: src/core/Socket.js:981
+#: src/core/Socket.js:993
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Отмена для открытия в режиме просмотра."
 
-#: src/core/Socket.js:985
+#: src/core/Socket.js:997
 msgid "Wrong password provided. Please try again."
 msgstr "Неправильный пароль. Попробуйте снова."
 
-#: src/core/Socket.js:1023
+#: src/core/Socket.js:1035
 msgid "Only the document owner can change the password."
 msgstr "Только владелец документа может изменить пароль."
 
-#: src/core/Socket.js:1054 src/core/Socket.js:1059
+#: src/core/Socket.js:1066 src/core/Socket.js:1071
 msgid "Missing Fonts"
 msgstr "Отсутствуют шрифты"
 
-#: src/core/Socket.js:1091
+#: src/core/Socket.js:1110
 msgid "Someone"
 msgstr "Кто-то"
 
-#: src/core/Socket.js:1092
+#: src/core/Socket.js:1111
 msgid "%userName saved this document as %fileName. Do you want to join?"
 msgstr ""
 "%userName сохранил(а) этот документ как %fileName. Вы хотите присоединиться?"
 
-#: src/core/Socket.js:1101
+#: src/core/Socket.js:1120
 msgid "Connecting..."
 msgstr "Соединение..."
 
-#: src/core/Socket.js:1118
+#: src/core/Socket.js:1137
 msgid "The document is being renamed and will reload shortly"
 msgstr "Документ переименовывается и вскоре перезагрузится"
 
-#: src/core/Socket.js:1121
+#: src/core/Socket.js:1140
 msgid "The document is switching to Offline mode and will reload shortly"
 msgstr "Документ переключается в режим офлайн и скоро будет перезагружен"
 
-#: src/core/Socket.js:1226
+#: src/core/Socket.js:1256
 msgid "Exported to storage"
 msgstr "Экспортировано в хранилище"
 
-#: src/core/Socket.js:1226
+#: src/core/Socket.js:1256
 msgid "Successfully exported: "
 msgstr "Успешно экспортировано: "
 
-#: src/core/Socket.js:1254
+#: src/core/Socket.js:1284
 msgid "Discard"
 msgstr "Отклонить"
 
-#: src/core/Socket.js:1255
+#: src/core/Socket.js:1285
 msgid "Overwrite"
 msgstr "Перезаписать"
 
-#: src/core/Socket.js:1266
+#: src/core/Socket.js:1296
 msgid "Save to new file"
 msgstr "Сохранить в новый файл"
 
-#: src/core/Socket.js:1276
+#: src/core/Socket.js:1306
 msgid "Document has been changed"
 msgstr "Документ был изменен"
 
-#: src/core/Socket.js:1277
+#: src/core/Socket.js:1307
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
@@ -2342,37 +2327,29 @@ msgstr ""
 "Документ был изменён в хранилище. Что сделать со своими несохранёнными "
 "изменениями?"
 
-#: src/core/Socket.js:1595
+#: src/core/Socket.js:1625
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 msgstr "Не удалось подключиться к документу. Попробуйте снова."
 
-#: src/core/Socket.js:1612
+#: src/core/Socket.js:1642
 msgid "Reconnecting..."
 msgstr "Переподключение..."
 
-#: src/core/Socket.js:1622
+#: src/core/Socket.js:1652
 msgid "The server has been disconnected."
 msgstr "Сервер был отключен."
 
-#: src/core/Debug.js:52
-msgid "Debug Tools"
-msgstr ""
-
-#: src/core/Debug.js:54
-msgid "Ctrl+Shift+Alt+D to exit"
-msgstr ""
-
-#: src/docstate.js:88
+#: src/docstate.js:82
 msgid "Standard"
 msgstr "Стандартная"
 
-#: src/docstate.js:99
+#: src/docstate.js:93
 msgid "Theme colors"
 msgstr "Цвета темы"
 
-#: src/docstate.js:100
+#: src/docstate.js:94
 msgid "Document colors"
 msgstr ""
 
@@ -2601,90 +2578,98 @@ msgstr "Не удалось загрузить файл на сервер, фа�
 msgid "Uploading file to server failed, the file is too large."
 msgstr "Не удалось загрузить файл на сервер, слишком большой размер файла."
 
-#: src/layer/tile/CanvasTileLayer.js:1991
+#: src/layer/tile/CanvasTileLayer.js:1979
 msgid "Functions"
 msgstr "Функции"
 
-#: src/layer/tile/CanvasTileLayer.js:2592
+#: src/layer/tile/CanvasTileLayer.js:2580
 msgid "and %COUNT more"
 msgstr ""
 
-#: src/layer/tile/CanvasTileLayer.js:2606
+#: src/layer/tile/CanvasTileLayer.js:2595
 msgid "Copy link location"
 msgstr "Копировать ссылку"
 
-#: src/layer/tile/CanvasTileLayer.js:2614
+#: src/layer/tile/CanvasTileLayer.js:2606
 msgid "Edit link"
 msgstr "Изменить ссылку"
 
-#: src/layer/tile/CanvasTileLayer.js:2622
+#: src/layer/tile/CanvasTileLayer.js:2615
 msgid "Remove link"
 msgstr "Удалить ссылку"
 
-#: src/layer/tile/CanvasTileLayer.js:5187
+#: src/layer/tile/CanvasTileLayer.js:5155
+msgid "Debug Tools"
+msgstr ""
+
+#: src/layer/tile/CanvasTileLayer.js:5157
+msgid "Ctrl+Shift+Alt+D to exit"
+msgstr ""
+
+#: src/layer/tile/CanvasTileLayer.js:5986
 msgid "No Comments"
 msgstr "Нет комментариев"
 
-#: src/layer/tile/CommentListSection.ts:139
+#: src/layer/tile/CommentListSection.ts:140
 msgid "A comment is being edited"
 msgstr "Комментарий редактируется"
 
-#: src/layer/tile/CommentListSection.ts:140
+#: src/layer/tile/CommentListSection.ts:141
 msgid "Please save or discard the comment currently being edited."
 msgstr ""
 "Пожалуйста, сохраните или отмените изменения редактируемых комментариев."
 
-#: src/layer/tile/CommentListSection.ts:960
+#: src/layer/tile/CommentListSection.ts:961
 msgid "Modify"
 msgstr "Изменить"
 
-#: src/layer/tile/CommentListSection.ts:966
-#: src/layer/tile/CommentSection.ts:160
+#: src/layer/tile/CommentListSection.ts:967
+#: src/layer/tile/CommentSection.ts:161
 msgid "Reply"
 msgstr "Ответ"
 
-#: src/layer/tile/CommentListSection.ts:972
+#: src/layer/tile/CommentListSection.ts:973
 msgid "Remove"
 msgstr "Удалить"
 
-#: src/layer/tile/CommentListSection.ts:978
+#: src/layer/tile/CommentListSection.ts:979
 msgid "Remove Thread"
 msgstr "Удалить обсуждение"
 
-#: src/layer/tile/CommentListSection.ts:984
+#: src/layer/tile/CommentListSection.ts:985
 msgid "Resolve"
 msgstr "Решено"
 
-#: src/layer/tile/CommentListSection.ts:984
+#: src/layer/tile/CommentListSection.ts:985
 msgid "Unresolve"
 msgstr "Удалить пометку \"Решено\""
 
-#: src/layer/tile/CommentListSection.ts:990
+#: src/layer/tile/CommentListSection.ts:991
 msgid "Unresolve Thread"
 msgstr "Удалить пометку \"Решено\" с обсуждения"
 
-#: src/layer/tile/CommentListSection.ts:990
+#: src/layer/tile/CommentListSection.ts:991
 msgid "Resolve Thread"
 msgstr "Обсуждение решено"
 
-#: src/layer/tile/CommentListSection.ts:1271
-#: src/layer/tile/CommentListSection.ts:1326
+#: src/layer/tile/CommentListSection.ts:1272
+#: src/layer/tile/CommentListSection.ts:1334
 msgid "Autosaved"
 msgstr "Автоматически сохранён"
 
-#: src/layer/tile/CommentSection.ts:296
+#: src/layer/tile/CommentSection.ts:297
 msgid "Open menu"
 msgstr "Открыть меню"
 
-#: src/layer/tile/CommentSection.ts:314 src/layer/tile/CommentSection.ts:315
+#: src/layer/tile/CommentSection.ts:315 src/layer/tile/CommentSection.ts:316
 msgid "Accept change"
 msgstr "Принять изменение"
 
-#: src/layer/tile/CommentSection.ts:321 src/layer/tile/CommentSection.ts:322
+#: src/layer/tile/CommentSection.ts:322 src/layer/tile/CommentSection.ts:323
 msgid "Reject change"
 msgstr "Отклонить изменение"
 
-#: src/layer/tile/CommentSection.ts:345
+#: src/layer/tile/CommentSection.ts:346
 msgid "Resolved"
 msgstr "Решено"
 
@@ -2692,29 +2677,29 @@ msgstr "Решено"
 msgid "Warning! The browser you are using is not supported."
 msgstr "Внимание! Используемый вами браузер не поддерживается."
 
-#: src/map/Clipboard.js:142
+#: src/map/Clipboard.js:143
 msgid ""
 "To paste outside %productName, please first click the 'download' button"
 msgstr "Чтобы вставить вне %productName, сначала нажмите кнопку \"загрузить\""
 
-#: src/map/Clipboard.js:150
+#: src/map/Clipboard.js:151
 msgid "Copying from the document disabled"
 msgstr "Копирование из документа отключено"
 
-#: src/map/Clipboard.js:252
+#: src/map/Clipboard.js:253
 msgid "warning: copy/paste request timed out"
 msgstr ""
 "предупреждение: превышен интервал ожидания запроса на копирование/вставку"
 
-#: src/map/Clipboard.js:314
+#: src/map/Clipboard.js:315
 msgid "Failed to download clipboard, please re-copy"
 msgstr "Не удалось загрузить буфер обмена, повторите копирование"
 
-#: src/map/Clipboard.js:996
+#: src/map/Clipboard.js:1001
 msgid "<p>Please use the copy/paste buttons on your on-screen keyboard.</p>"
 msgstr "<p>Используйте кнопки копирования/вставки на экранной клавиатуре.</p>"
 
-#: src/map/Clipboard.js:998
+#: src/map/Clipboard.js:1003
 msgid ""
 "<p>Your browser has very limited access to the clipboard, so use these "
 "keyboard shortcuts:</p><table class=\"warn-copy-paste\"><tr><td><kbd>Ctrl</"
@@ -2730,7 +2715,7 @@ msgstr ""
 "kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd></td></tr><tr><td>Копироват"
 "ь</td><td>Вырезать</td><td>Вставить</td></tr></table>"
 
-#: src/map/Clipboard.js:1017
+#: src/map/Clipboard.js:1022
 msgid ""
 "<p>A download due to a large copy/paste operation has already started. "
 "Please, wait for the current download or cancel it before starting a new "
@@ -2739,31 +2724,22 @@ msgstr ""
 "<p>Идёт загрузка для копирования/вставки крупного фрагмента. Пожалуйста, "
 "дождитесь завершения загрузки или отмените её, чтобы начать новую</p>"
 
-#: src/map/Clipboard.js:1035
-#, fuzzy
+#: src/map/Clipboard.js:1040
 msgid ""
-"<p>Your browser has very limited access to the clipboard</p><p><b>Please "
-"press</b> <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to "
-"see more options</p><p>Close popup to ignore paste special</p>"
+"<p>Your browser has very limited access to the clipboard</p><p>Please press "
+"now: <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to see "
+"more options</p><p>Close popup to ignore paste special</p>"
 msgstr ""
 "<p>Ваш браузер имеет очень ограниченный доступ к буферу обмена</p><p>Нажмите:"
 " <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd>для просмотра "
 "дополнительных опций</p><p>Закройте всплывающее окно для игнорирования "
 "специальной вставки</p>"
 
-#: src/map/Clipboard.js:1042
-msgid "Paste from this document"
-msgstr ""
-
-#: src/map/Clipboard.js:1042
-msgid "Cancel paste special"
-msgstr ""
-
-#: src/map/Map.js:220
+#: src/map/Map.js:218
 msgid "Initializing..."
 msgstr "Инициализация…"
 
-#: src/map/Map.js:445 src/map/Map.js:448 src/map/Map.js:451 src/map/Map.js:454
+#: src/map/Map.js:443 src/map/Map.js:446 src/map/Map.js:449 src/map/Map.js:452
 msgid "Last saved:"
 msgstr "Последнее сохранение:"
 
@@ -2836,15 +2812,15 @@ msgstr ""
 msgid "Creating new file from template..."
 msgstr "Создать новый файл из шаблона..."
 
-#: src/map/handler/Map.WOPI.js:582
+#: src/map/handler/Map.WOPI.js:583
 msgid "Error"
 msgstr "Ошибка"
 
-#: src/map/handler/Map.WOPI.js:582
+#: src/map/handler/Map.WOPI.js:583
 msgid "File name should contain an extension."
 msgstr "Имя файла должно включать расширение."
 
-#: src/map/handler/Map.WOPI.js:590
+#: src/map/handler/Map.WOPI.js:591
 msgid "Creating copy..."
 msgstr "Создать копию..."
 
