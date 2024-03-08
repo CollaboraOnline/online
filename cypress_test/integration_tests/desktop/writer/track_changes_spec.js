@@ -11,7 +11,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 		cy.viewport(1400, 600);
 		testFileName = helper.beforeAll(origTestFileName, 'writer');
 		desktopHelper.switchUIToCompact();
-		cy.cGet('#tb_editbar_item_sidebar').click(); // Hide sidebar.
+		cy.cGet('#tb_editbar_item_sidebar').click({force: true}); // Hide sidebar.
 		desktopHelper.selectZoomLevel('50');
 	});
 
