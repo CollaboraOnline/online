@@ -955,9 +955,9 @@ void Document::trimIfInactive()
             return;
         }
     }
-    // FIXME: be more clever - detect if we rendered recently,
-    // measure memory pressure etc.
-    LOG_WRN("Sessions are all inactive - trim memory");
+    // TODO: be more clever - detect if we mutated the documen
+    // recently, measure memory pressure etc.
+    LOG_DBG("Sessions are all inactive - trim memory");
     SigUtil::addActivity("trimIfInactive");
     _loKit->trimMemory(4096);
     _deltaGen->dropCache();
