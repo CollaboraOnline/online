@@ -39,7 +39,7 @@
 #include <Protocol.hpp>
 #include <test.hpp>
 #include <helpers.hpp>
-#include <countcoolkits.hpp>
+#include <KitPidHelpers.hpp>
 
 using namespace helpers;
 
@@ -153,7 +153,7 @@ void HTTPCrashTest::testCrashKit()
         TST_LOG("Killing coolkit instances.");
 
         killLoKitProcesses();
-        countCoolKitProcesses(0, std::chrono::seconds(1));
+        countCoolKitProcesses(0);//, std::chrono::seconds(1));
 
         TST_LOG("Reading the error code from the socket.");
         //FIXME: implement in WebSocketSession.
@@ -188,7 +188,7 @@ void HTTPCrashTest::testRecoverAfterKitCrash()
         TST_LOG("Killing coolkit instances.");
 
         killLoKitProcesses();
-        countCoolKitProcesses(0, std::chrono::seconds(1));
+        countCoolKitProcesses(0);//, std::chrono::seconds(1));
 
         // We expect the client connection to close.
         TST_LOG("Reconnect after kill.");
@@ -270,7 +270,6 @@ static void killPids(const std::set<pid_t> &pids, const std::string& testname)
 void HTTPCrashTest::killLoKitProcesses()
 {
     killPids(getKitPids(), "killLoKitProcesses ");
-    InitialCoolKitCount = 1; // non-intuitive but it will arrive soon.
 }
 
 void HTTPCrashTest::killForkitProcess()

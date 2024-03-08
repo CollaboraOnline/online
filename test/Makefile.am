@@ -180,13 +180,13 @@ fakesockettest_LDADD = $(CPPUNIT_LIBS)
 
 # old-style unit tests - bootstrapped via UnitClient
 unit_base_la_SOURCES = UnitClient.cpp ${test_base_sources}
-unit_tiletest_la_SOURCES = UnitClient.cpp TileCacheTests.cpp
+unit_tiletest_la_SOURCES = UnitClient.cpp TileCacheTests.cpp KitPidHelpers.cpp
 unit_tiletest_la_LIBADD = $(CPPUNIT_LIBS)
-unit_integration_la_SOURCES = UnitClient.cpp integration-http-server.cpp
+unit_integration_la_SOURCES = UnitClient.cpp integration-http-server.cpp KitPidHelpers.cpp
 unit_integration_la_LIBADD = $(CPPUNIT_LIBS)
-unit_httpws_la_SOURCES = UnitClient.cpp httpwstest.cpp
+unit_httpws_la_SOURCES = UnitClient.cpp httpwstest.cpp KitPidHelpers.cpp
 unit_httpws_la_LIBADD = $(CPPUNIT_LIBS)
-unit_crash_la_SOURCES = UnitClient.cpp httpcrashtest.cpp
+unit_crash_la_SOURCES = UnitClient.cpp httpcrashtest.cpp KitPidHelpers.cpp
 unit_crash_la_LIBADD = $(CPPUNIT_LIBS)
 
 # unit test modules:

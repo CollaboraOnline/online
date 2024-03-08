@@ -11,31 +11,10 @@
 
 #pragma once
 
-#include <ctime>
-#include <set>
-
 /// Are we running inside WSD or by ourselves.
 bool isStandalone();
 
 /// Run the set of client tests we have
 bool runClientTests(const char* cmd, bool standalone, bool verbose);
-
-// ---- Abstraction for standalone vs. WSD ----
-
-/// Get the list of all kit PIDs
-std::set<pid_t> getKitPids();
-/// Get the list of spare (unused) kit PIDs
-std::set<pid_t> getSpareKitPids();
-/// Get the list of doc (loaded) kit PIDs
-std::set<pid_t> getDocKitPids();
-
-/// Get the PID of the forkit
-std::set<pid_t> getForKitPids();
-
-/// Which port should we connect to get to WSD.
-int getClientPort();
-
-/// How many live coolkit processes do we have ?
-int getCoolKitProcessCount();
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

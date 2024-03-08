@@ -30,9 +30,9 @@
 #include <Common.hpp>
 #include <Protocol.hpp>
 
-#include "lokassert.hpp"
-#include <countcoolkits.hpp>
+#include <lokassert.hpp>
 #include <helpers.hpp>
+#include <KitPidHelpers.hpp>
 
 using namespace helpers;
 
@@ -124,6 +124,7 @@ void HTTPWSTest::testExoticLang()
 
 void HTTPWSTest::testSaveOnDisconnect()
 {
+
     const std::string testname = "saveOnDisconnect- ";
 
     const std::string text = helpers::genRandomString(40);
