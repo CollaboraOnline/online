@@ -59,7 +59,7 @@ class KeyboardShortcuts {
             return undefined;
         }
 
-        const docType = this.map._docLayer._docType;
+        const docType = this.map._docLayer ? this.map._docLayer._docType : '';
 
         const shortcuts = descriptors.filter((descriptor: ShortcutDescriptor) => {
             return (!descriptor.docType || descriptor.docType === docType) &&
