@@ -13,7 +13,6 @@
 
 #include <test/testlog.hpp>
 #include <test/lokassert.hpp>
-#include <test/test.hpp>
 
 #include <Poco/BinaryReader.h>
 #include <Poco/Dynamic/Var.h>
@@ -899,53 +898,6 @@ inline std::string getAllText(const std::shared_ptr<http::WebSocketSession>& soc
     }
 
     return std::string();
-}
-
-
-inline std::string getPidList(std::set<pid_t> pids)
-{
-    std::ostringstream oss;
-    oss << "[";
-    for (pid_t i : pids)
-    {
-        oss << i << ", ";
-    }
-    oss << "]";
-    return oss.str();
-}
-
-
-inline void waitForKitProcessToStop(
-        const pid_t pid,
-        const std::string& testname,
-        const std::chrono::milliseconds timeoutMs = std::chrono::milliseconds(COMMAND_TIMEOUT_MS * 8),
-        const std::chrono::milliseconds retryMs = std::chrono::milliseconds(10))
-{
-
-    TST_LOG("Waiting for kit process " << pid << " to stop.");
-
-    std::set<pid_t> pids = getDocKitPids();
-    TST_LOG("Active kit pids are: " << getPidList(pids));
-
-    int tries = (timeoutMs / retryMs);
-    while(pids.contains(pid) && tries >= 0)
-    {
-        std::this_thread::sleep_for(retryMs);
-        pids = getDocKitPids();
-        tries--;
-    }
-
-    if (pids.contains(pid))
-    {
-        std::ostringstream oss;
-        oss << "Timed out waiting for kit process " << pid << " to stop. Active kit pids are: " << getPidList(pids);
-        LOK_ASSERT_FAIL(oss.str());
-    }
-    else
-    {
-        TST_LOG("Finished waiting for kit process " << pid << " to stop.");
-        TST_LOG("Active kit pids are: " << getPidList(pids));
-    }
 }
 
 }
