@@ -1217,6 +1217,11 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/,
 
         oss << " readonly=" << isReadOnly();
 
+        if (isAllowChangeComments())
+        {
+            oss << " isAllowChangeComments=true";
+        }
+
         if (loadPart >= 0)
         {
             oss << " part=" << loadPart;
