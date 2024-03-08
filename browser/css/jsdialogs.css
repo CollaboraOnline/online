@@ -827,13 +827,15 @@ input[type='number']:hover::-webkit-outer-spin-button {
 
 .ui-combobox-entry {
 	width: calc(100% + 15px); /* + padding for scrollbar */
+	display: flex;
+	align-items: center;
 }
 
-.ui-combobox-entry span:hover {
+.ui-combobox-entry:hover {
 	background-color: var(--color-background-dark);
 }
 
-.ui-combobox-entry.selected span:not(:hover) {
+.ui-combobox-entry.selected:not(:hover) span {
 	border: 1px solid var(--color-primary);
 	background-color: var(--color-primary);
 	color: var(--color-primary-text);
@@ -849,6 +851,27 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	color: var(--color-text-dark);
 }
 
+.ui-combobox-entry.checked::before {
+	content: '\2713';
+	display: inline-block;
+	color: var(--color-primary);
+	padding: 0 6px;
+}
+
+.ui-combobox-entry.notchecked::before {
+	content: '\2713';
+	display: inline-block;
+	visibility: hidden;
+	padding: 0 6px;
+}
+
+.ui-combobox-icon {
+	background-repeat: no-repeat !important;
+	width: var(--btn-size);
+	height: var(--btn-size);
+}
+
+/* these rules are for custom rendering like font previews */
 .ui-combobox-entry img {
 	border: 1px solid transparent;
 	max-height: 24px; /* required for hidpi*/
