@@ -235,6 +235,10 @@ void Session::parseDocOptions(const StringVector& tokens, int& part, std::string
             _accessibilityState = value == "true";
             ++offset;
         }
+        else if (name == "isAllowChangeComments")
+        {
+            _isAllowChangeComments = value == "true";
+        }
     }
 
     Util::mapAnonymized(_userId, _userIdAnonym);
