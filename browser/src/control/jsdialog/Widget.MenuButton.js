@@ -55,7 +55,9 @@ function _menubuttonControl (parentContainer, data, builder) {
 		builder._menus.set(menuId, builtMenu);
 	}
 
-	if (menuId && builder._menus.get(menuId)) {
+	var menuEntries = menuId ? builder._menus.get(menuId) : null;
+
+	if (menuEntries) {
 		var noLabels = builder.options.noLabelsForUnoButtons;
 		builder.options.noLabelsForUnoButtons = data.noLabel ? data.noLabel : false;
 
@@ -63,7 +65,7 @@ function _menubuttonControl (parentContainer, data, builder) {
 		if (!data.command)
 			data.command = menuId;
 
-		var options = {hasDropdownArrow: true};
+		var options = {hasDropdownArrow: menuEntries.length > 1};
 		var control = builder._unoToolButton(parentContainer, data, builder, options);
 
 		$(control.container).tooltip({disabled: true});
@@ -95,7 +97,11 @@ function _menubuttonControl (parentContainer, data, builder) {
 				return false;
 			};
 
-			JSDialog.OpenDropdown(dropdownId, control.container, builder._menus.get(menuId), callback);
+			if (menuEntries.length === 1) {
+				callback(null, 'selected', null, null, menuEntries[0]);
+			} else {
+				JSDialog.OpenDropdown(dropdownId, control.container, menuEntries, callback);
+			}
 		};
 
 		control.container.addEventListener('click', clickFunction);
