@@ -228,12 +228,12 @@ L.Control.MobileWizardWindow = L.Control.extend({
 
 		$('#mobile-wizard .ui-effects-placeholder').hide();
 
-		var nodesToHide = $(contentToShow).siblings().not('.mobile-wizard-scroll-indicator');
+		// do not select already hidden nodes at first place
+		var nodesToHide = $(contentToShow).siblings(':visible').not('.mobile-wizard-scroll-indicator');
 
 		var parent = $(contentToShow).parent();
 		if (parent.hasClass('toolbox'))
-			nodesToHide = nodesToHide.add(parent.siblings().not('.mobile-wizard-scroll-indicator'));
-
+			nodesToHide = nodesToHide.add(parent.siblings(':visible:not(.mobile-wizard-scroll-indicator)'));
 		var duration = 10;
 		if (animate) {
 			nodesToHide.hide('slide', { direction: 'left' }, duration);
@@ -299,13 +299,23 @@ L.Control.MobileWizardWindow = L.Control.extend({
 				this._customTitle ? this._setCustomTitle(this._customTitle) : this._setTitle(this._mainTitle);
 
 			var currentNode = $('.ui-explorable-entry.level-' + this._currentDepth + '.mobile-wizard:visible');
-			var headers = currentNode.siblings();
+			// select only those nodes which are updated on Level down
+			var headers = currentNode.siblings().filter(function() {
+				var styleAttributeValue = $(this).attr('style');
+				return styleAttributeValue && styleAttributeValue.includes('display: none;');
+			});
 			var currentHeader = currentNode.children('.ui-header');
 			headers = headers.add(currentHeader);
 
 			var parent = currentNode.parent();
 			if (parent.hasClass('toolbox'))
-				headers = headers.add(parent.siblings());
+				parent.siblings().each(function() {
+					var styleAttributeValue = $(this).attr('style');
+					// select only those nodes which are updated on Level down
+					if (styleAttributeValue && styleAttributeValue.includes('display: none;')) {
+						headers = headers.add($(this));
+					}
+				});
 
 			headers = headers.not('.hidden');
 
