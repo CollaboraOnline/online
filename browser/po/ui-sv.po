@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-03-06 16:29+0100\n"
-"PO-Revision-Date: 2024-02-26 15:52+0000\n"
-"Last-Translator: bittin1ddc447d824349b2 <bittin@reimu.nl>\n"
+"PO-Revision-Date: 2024-03-08 14:19+0000\n"
+"Last-Translator: Leif-Jöran Olsson <info@friprogramvarusyndikatet.se>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/sv/>\n"
-"Language: \n"
+"Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1849,19 +1849,19 @@ msgstr "%user har lämnat"
 
 #: src/control/Control.UserList.ts:56
 msgid "Following %user"
-msgstr ""
+msgstr "Följer %user"
 
 #: src/control/Control.UserList.ts:57
 msgid "Following the editor"
-msgstr ""
+msgstr "Följer redaktören"
 
 #: src/control/Control.UserList.ts:58
 msgid "Click to stop following"
-msgstr ""
+msgstr "Klicka för att sluta följa"
 
 #: src/control/Control.UserList.ts:59
 msgid "Avatar for %user"
-msgstr ""
+msgstr "Avatar för %user"
 
 #: src/control/Control.UserList.ts:80
 msgid "%n users"
@@ -2728,24 +2728,23 @@ msgstr ""
 "ny</p>"
 
 #: src/map/Clipboard.js:1035
-#, fuzzy
 msgid ""
 "<p>Your browser has very limited access to the clipboard</p><p><b>Please "
 "press</b> <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to "
 "see more options</p><p>Close popup to ignore paste special</p>"
 msgstr ""
-"<p> Din webbläsare har mycket begränsad tillgång till urklipp</p><p>Vänligen "
-"tryck nu: <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> för "
-"att se fler alternativ</p><p>Stäng popup för att ignorera klistra in "
-"special</p>"
+"<p> Din webbläsare har mycket begränsad tillgång till "
+"urklipp</p><p><b>Tryck:</b> <kbd>Ctrl</kbd><span class=\"kbd--plus\""
+">+</span><kbd>V</kbd> för att se fler alternativ</p><p>Stäng popup-rutan för "
+"att ignorera klistra in special</p>"
 
 #: src/map/Clipboard.js:1042
 msgid "Paste from this document"
-msgstr ""
+msgstr "Klistra in från detta dokument"
 
 #: src/map/Clipboard.js:1042
 msgid "Cancel paste special"
-msgstr ""
+msgstr "Avbryt klistra in-special"
 
 #: src/map/Map.js:220
 msgid "Initializing..."
