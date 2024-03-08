@@ -13,17 +13,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-03-06 16:29+0100\n"
-"PO-Revision-Date: 2024-02-26 07:57+0000\n"
+"PO-Revision-Date: 2024-03-07 02:46+0000\n"
 "Last-Translator: Matthaiks <kitynska@gmail.com>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/pl/>\n"
-"Language: \n"
+"Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n"
-"%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n"
-"%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && ("
+"n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && "
+"n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
 "X-Generator: Weblate 5.5-dev\n"
 
 #: admin/admin.strings.js:15
@@ -1854,19 +1854,19 @@ msgstr "%user wyszedł"
 
 #: src/control/Control.UserList.ts:56
 msgid "Following %user"
-msgstr ""
+msgstr "Obserwowanie %user"
 
 #: src/control/Control.UserList.ts:57
 msgid "Following the editor"
-msgstr ""
+msgstr "Obserwowanie edytora"
 
 #: src/control/Control.UserList.ts:58
 msgid "Click to stop following"
-msgstr ""
+msgstr "Kliknij, aby przestać obserwować"
 
 #: src/control/Control.UserList.ts:59
 msgid "Avatar for %user"
-msgstr ""
+msgstr "Awatar dla %user"
 
 #: src/control/Control.UserList.ts:80
 msgid "%n users"
@@ -2745,24 +2745,23 @@ msgstr ""
 "nowego</p>"
 
 #: src/map/Clipboard.js:1035
-#, fuzzy
 msgid ""
 "<p>Your browser has very limited access to the clipboard</p><p><b>Please "
 "press</b> <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to "
 "see more options</p><p>Close popup to ignore paste special</p>"
 msgstr ""
-"<p>Twoja przeglądarka ma bardzo ograniczony dostęp do schowka</p><p>Naciśnij "
-"teraz: <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd>, aby "
-"zobaczyć więcej opcji</p> <p>Zamknij wyskakujące okienko, aby zignorować "
-"wklejanie specjalnie</p>"
+"<p>Twoja przeglądarka ma bardzo ograniczony dostęp do "
+"schowka</p><p><b>Naciśnij</b> <kbd>Ctrl</kbd><span class=\"kbd--plus\""
+">+</span><kbd>V</kbd>, aby zobaczyć więcej opcji</p><p>Zamknij wyskakujące "
+"okienko, aby zignorować wklejanie specjalne</p>"
 
 #: src/map/Clipboard.js:1042
 msgid "Paste from this document"
-msgstr ""
+msgstr "Wklej z tego dokumentu"
 
 #: src/map/Clipboard.js:1042
 msgid "Cancel paste special"
-msgstr ""
+msgstr "Anuluj wklejanie specjalne"
 
 #: src/map/Map.js:220
 msgid "Initializing..."
