@@ -387,7 +387,7 @@ private:
             case WSOpCode::Ping:
                 {
                     if (!_isClient)
-                        LOG_ERR("Clients should not send pings, only servers");
+                        LOG_DBG("Clients should not send pings, only servers");
 
                     const auto now = std::chrono::steady_clock::now();
                     _pingTimeUs = std::chrono::duration_cast<std::chrono::microseconds>
