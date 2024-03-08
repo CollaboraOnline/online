@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-03-06 16:29+0100\n"
-"PO-Revision-Date: 2024-02-26 08:55+0000\n"
+"PO-Revision-Date: 2024-03-07 02:46+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/hu/>\n"
-"Language: \n"
+"Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1855,19 +1855,19 @@ msgstr "%user kilépett"
 
 #: src/control/Control.UserList.ts:56
 msgid "Following %user"
-msgstr ""
+msgstr "%user követése"
 
 #: src/control/Control.UserList.ts:57
 msgid "Following the editor"
-msgstr ""
+msgstr "A szerkesztő követése"
 
 #: src/control/Control.UserList.ts:58
 msgid "Click to stop following"
-msgstr ""
+msgstr "Kattintson a követés befejezéséhez"
 
 #: src/control/Control.UserList.ts:59
 msgid "Avatar for %user"
-msgstr ""
+msgstr "%user avatárja"
 
 #: src/control/Control.UserList.ts:80
 msgid "%n users"
@@ -2747,24 +2747,23 @@ msgstr ""
 "mielőtt egy új letöltést kezdeményez.</p>"
 
 #: src/map/Clipboard.js:1035
-#, fuzzy
 msgid ""
 "<p>Your browser has very limited access to the clipboard</p><p><b>Please "
 "press</b> <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to "
 "see more options</p><p>Close popup to ignore paste special</p>"
 msgstr ""
 "<p>A böngészője csak korlátozottan fér hozzá a vágólaphoz.</p><p>A további "
-"lehetőséget megtekintéséhez használja az alábbi gyorsbillentyűt: <kbd>Ctrl</"
+"lehetőségek megtekintéséhez használja az alábbi gyorsbillentyűt: <kbd>Ctrl</"
 "kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd>.</p><p>A speciális "
 "beillesztés elvetéséhez zárja be ezt a felugró ablakot.</p>"
 
 #: src/map/Clipboard.js:1042
 msgid "Paste from this document"
-msgstr ""
+msgstr "Beillesztés ebből a dokumentumból"
 
 #: src/map/Clipboard.js:1042
 msgid "Cancel paste special"
-msgstr ""
+msgstr "Speciális beillesztés elvetése"
 
 #: src/map/Map.js:220
 msgid "Initializing..."
