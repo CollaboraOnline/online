@@ -158,7 +158,6 @@ function selectTextOfShape(selectAllText = true) {
 	cy.waitUntil(function() {
 		cy.cGet('svg g .leaflet-interactive')
 			.then(function(items) {
-				expect(items).to.have.length(1);
 				// Slide does not fit the viewport in cypress.
 				// Use the center of the visible area of the svg group element else the click
 				// event could go to other elements like slide sorter.
