@@ -768,7 +768,7 @@ inline std::string getLaunchBase(bool asAdmin = false)
     return oss.str();
 }
 
-inline std::string getLaunchURI(const std::string &document)
+inline std::string getLaunchURI(const std::string &document, bool readonly = false)
 {
     std::ostringstream oss;
 
@@ -778,6 +778,8 @@ inline std::string getLaunchURI(const std::string &document)
     oss << "?file_path=";
     oss << DEBUG_ABSSRCDIR "/";
     oss << document;
+    if (readonly)
+        oss << "&permission=readonly";
 
     return oss.str();
 }
@@ -4319,11 +4321,17 @@ int COOLWSD::innerMain()
                       "/" COOLWSD_TEST_DOCUMENT_RELATIVE_PATH_WRITER);
     std::ostringstream oss;
     oss << "\nLaunch one of these in your browser:\n\n"
+        << "Edit mode:" << '\n'
         << "    Writer:      " << getLaunchURI(COOLWSD_TEST_DOCUMENT_RELATIVE_PATH_WRITER) << '\n'
         << "    Calc:        " << getLaunchURI(COOLWSD_TEST_DOCUMENT_RELATIVE_PATH_CALC) << '\n'
         << "    Impress:     " << getLaunchURI(COOLWSD_TEST_DOCUMENT_RELATIVE_PATH_IMPRESS) << '\n'
         << "    Draw:        " << getLaunchURI(COOLWSD_TEST_DOCUMENT_RELATIVE_PATH_DRAW) << '\n'
-        << "    postMessage: " << postMessageURI << std::endl;
+        << "\nReadonly mode:" << '\n'
+        << "    Writer readonly:  " << getLaunchURI(COOLWSD_TEST_DOCUMENT_RELATIVE_PATH_WRITER, true) << '\n'
+        << "    Calc readonly:    " << getLaunchURI(COOLWSD_TEST_DOCUMENT_RELATIVE_PATH_CALC, true) << '\n'
+        << "    Impress readonly: " << getLaunchURI(COOLWSD_TEST_DOCUMENT_RELATIVE_PATH_IMPRESS, true) << '\n'
+        << "    Draw readonly:    " << getLaunchURI(COOLWSD_TEST_DOCUMENT_RELATIVE_PATH_DRAW, true) << '\n'
+        << "\npostMessage: " << postMessageURI << std::endl;
 
     const std::string adminURI = getServiceURI(COOLWSD_TEST_ADMIN_CONSOLE, true);
     if (!adminURI.empty())
