@@ -33,11 +33,30 @@ JSDialog.comboboxEntry = function (parentContainer, data, builder) {
 	if (data.hasSubMenu)
 		L.DomUtil.addClass(entry, 'ui-has-menu');
 
+	if (data.w2icon) {
+		// FIXME: DEPRECATED, this is legacy way to setup icon based on CSS class
+		L.DomUtil.create('div', 'ui-combobox-icon ' + data.w2icon, entry);
+	}
+
+	if (data.icon) {
+		var icon = L.DomUtil.create('img', 'ui-combobox-icon', entry);
+		builder._isStringCloseToURL(data.icon) ? icon.src = data.icon : L.LOUtil.setImage(icon, data.icon, builder.map);
+	}
+
+	if (data.hint) {
+		entry.title = data.hint;
+	}
+
 	var content = L.DomUtil.create('span', '', entry);
 	content.innerText = data.text;
 
 	if (data.selected)
 		L.DomUtil.addClass(entry, 'selected');
+
+	if (data.checked)
+		L.DomUtil.addClass(entry, 'checked');
+	else if (data.checked !== undefined)
+		L.DomUtil.addClass(entry, 'notchecked');
 
 	if (data.customRenderer) {
 		var cachedComboboxEntries = builder.rendersCache[data.comboboxId];

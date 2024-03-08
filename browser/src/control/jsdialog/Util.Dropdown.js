@@ -40,7 +40,20 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 		]
 	};
 
+	var isChecked = function (unoCommand) {
+		var items = L.Map.THIS['stateChangeHandler'];
+		var val = items.getItemValue(unoCommand);
+
+		if (val && (val === true || val === 'true'))
+			return true;
+		else
+			return false;
+	};
+
 	for (var i in entries) {
+		var checkedValue = (entries[i].checked === undefined)
+			? undefined : (entries[i].uno && isChecked('.uno' + entries[i].uno));
+
 		var entry = {
 			id: id + '-entry-' + i,
 			type: 'comboboxentry',
@@ -48,6 +61,10 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 			comboboxId: id,
 			pos: i,
 			text: entries[i].text,
+			hint: entries[i].hint,
+			w2icon: entries[i].icon, // FIXME: DEPRECATED
+			icon: entries[i].img,
+			checked: entries[i].checked || checkedValue,
 			selected: entries[i].selected,
 			hasSubMenu: !!entries[i].items
 		};
