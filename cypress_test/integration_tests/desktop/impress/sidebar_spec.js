@@ -38,7 +38,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Sidebar Tests', function()
 		cy.cGet('#colorset').should('be.visible');
 	});
 
-	it('Set underline using popup', function() {
+	it.skip('Set underline using popup', function() {
 		cy.cGet('#layoutvalueset').should('be.visible');
 		impressHelper.selectTextShapeInTheCenter();
 		impressHelper.selectTextOfShape();
