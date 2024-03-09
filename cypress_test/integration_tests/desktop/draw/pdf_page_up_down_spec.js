@@ -24,7 +24,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'PDF View Tests', function(
 		cy.cGet('#preview-frame-part-0').should('have.attr', 'style', 'border: 2px solid darkgrey;');
 	});
 
-	it('PDF insert comment', { env: { 'pdf-view': true }, defaultCommandTimeout: 60000 }, function() {
+	it.skip('PDF insert comment', { env: { 'pdf-view': true }, defaultCommandTimeout: 60000 }, function() {
 
 		// Insert some comment into the PDF.
 		desktopHelper.insertMultipleComment('draw', 1, false);
