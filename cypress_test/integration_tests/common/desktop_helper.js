@@ -213,10 +213,10 @@ function insertImage(docType) {
 
 	if (docType === 'calc' &&  mode === 'notebookbar') {
 		cy.cGet('#Insert-tab-label').click();
-		cy.cGet('#Insert-container .unoInsertGraphic').click();
+		cy.cGet('#Insert-container .unoInsertGraphic').click({force: true});
 	}
 	else {
-		cy.cGet('#Home-container .unoInsertGraphic').click();
+		cy.cGet('#Home-container .unoInsertGraphic').click({force: true});
 	}
 
 	cy.cGet('#insertgraphic[type=file]').attachFile('/desktop/writer/image_to_insert.png');

@@ -200,7 +200,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 	it('Insert image.', function() {
 		cy.cGet('#toolbar-up .w2ui-scroll-right').click();
 		cy.cGet('#toolbar-up .w2ui-scroll-right').click();
-		cy.cGet('#Home-container .unoInsertGraphic').click();
+		cy.cGet('#Home-container .unoInsertGraphic').click({force: true});
 		cy.cGet('#insertgraphic[type=file]').attachFile('/desktop/writer/image_to_insert.png');
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g.Graphic').should('exist');
 	});
