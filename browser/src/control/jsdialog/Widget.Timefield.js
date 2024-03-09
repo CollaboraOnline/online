@@ -38,8 +38,7 @@ JSDialog.timeField = function (parentContainer, data, builder) {
 		}
 	});
 
-	var disabled = data.enabled === 'false' || data.enabled === false;
-	if (disabled) {
+	if (data.enabled === false) {
 		inputTimeField.disabled = true;
 	}
 

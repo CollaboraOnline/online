@@ -129,7 +129,7 @@ function _menubuttonControl (parentContainer, data, builder) {
 		});
 
 		if (data.enabled === false)
-			button.setAttribute('disabled', '');
+			button.disabled = true;
 	} else {
 		window.app.console.warn('Not found menu "' + menuId + '"');
 	}

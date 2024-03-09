@@ -37,7 +37,7 @@ function synchronizeDisabledState(source: Element, targets: Array<Element>) {
 			if (enable) {
 				targets[i].removeAttribute('disabled');
 			} else {
-				targets[i].setAttribute('disabled', '');
+				targets[i].setAttribute('disabled', 'true');
 			}
 		}
 	};

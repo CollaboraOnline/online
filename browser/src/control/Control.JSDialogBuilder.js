@@ -357,7 +357,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 
 		if (data.enabled === false) {
-			div.setAttribute('disabled', '');
+			div.disabled = true;
 			spinfield.setAttribute('disabled', '');
 		}
 
@@ -510,7 +510,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		toolbox.id = data.id;
 
 		if (data.enabled === false) {
-			toolbox.setAttribute('disabled', '');
+			toolbox.disabled = true;
 			for (var index in data.children) {
 				data.children[index].enabled = false;
 			}
@@ -526,7 +526,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 					toolboxChild.removeAttribute('disabled');
 					toolboxChild.classList.remove('disabled');
 				} else {
-					toolboxChild.setAttribute('disabled', '');
+					toolboxChild.disabled = true;
 					toolboxChild.classList.add('disabled');
 				}
 			}
@@ -739,7 +739,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		$(sectionTitle).css('justify-content', 'space-between');
 
 		if (data.enabled === 'false' || data.enabled === false) {
-			mainContainer.setAttribute('disabled', '');
+			mainContainer.disabled = true;
 			$(mainContainer).addClass('disabled');
 		}
 
@@ -1432,8 +1432,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		});
 
 		if (data.enabled === false) {
-			div.setAttribute('disabled', '');
-			checkbox.setAttribute('disabled', '');
+			div.disabled = true;
+			checkbox.disabled = true;
 		}
 
 		JSDialog.SynchronizeDisabledState(div, [checkbox]);
@@ -1744,12 +1744,12 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (data.labelledBy)
 			listbox.setAttribute('aria-labelledby', data.labelledBy);
 
-		if (data.enabled === false) {
-			container.setAttribute('disabled', '');
-			listbox.setAttribute('disabled', '');
-		}
-
 		JSDialog.SynchronizeDisabledState(container, [listbox]);
+
+		if (data.enabled === false) {
+			container.disabled = true;
+			listbox.disabled = true;
+		}
 
 		$(listbox).change(() => {
 			if ($(listbox).val())
@@ -3028,8 +3028,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			break;
 
 		case 'disable':
-			control.disabled = true;
 			control.setAttribute('disabled', '');
+			control.disabled = true;
 			break;
 
 		case 'setText':

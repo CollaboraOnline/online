@@ -27,6 +27,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'JSDialog Tests', function(
 
 		// select animation entry
 		cy.cGet('#custom_animation_list').contains('.jsdialog.sidebar.ui-treeview-cell-text', 'Shape 1').click();
+		cy.wait(500);
 
 		// some options are enabled
 		cy.cGet('#start_effect_list-input').should('not.be.disabled');

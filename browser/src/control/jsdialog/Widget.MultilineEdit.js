@@ -52,8 +52,9 @@ function _multiLineEditControl(parentContainer, data, builder, callback) {
 
 	edit.id = data.id;
 
-	if (data.enabled === 'false' || data.enabled === false)
+	if (data.enabled === false) {
 		edit.disabled = true;
+	}
 
 	edit.addEventListener('keyup', function() {
 		if (callback)
