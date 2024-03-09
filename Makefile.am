@@ -163,6 +163,7 @@ noinst_PROGRAMS = clientnb \
                   connect \
                   lokitclient \
                   coolmap \
+                  coolbench \
                   coolsocketdump
 
 if ENABLE_LIBFUZZER
@@ -268,6 +269,14 @@ clientnb_SOURCES = net/clientnb.cpp \
 coolmount_SOURCES = tools/mount.cpp
 
 coolmap_SOURCES = tools/map.cpp
+
+coolbench_SOURCES = tools/Benchmark.cpp \
+                    common/DummyTraceEventEmitter.cpp \
+		    common/Log.cpp \
+                    common/StringVector.cpp \
+                    common/Util.cpp \
+                    common/Simd.cpp
+coolbench_LDADD = libsimd.a
 
 coolconvert_SOURCES = tools/Tool.cpp
 
