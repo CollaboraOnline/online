@@ -1192,7 +1192,7 @@ AC_SUBST(ENABLE_EMSCRIPTENAPP)
 has_simd=no
 if test "$mobile_app" != "true"; then
     # Check for SIMD / AVX2 acceleration compile-time goodness
-    SIMD_CFLAGS=-mavx2
+    SIMD_CFLAGS="-mavx2 -O3"
     AC_MSG_CHECKING([whether $CC has AVX2 SIMD support])
 
     save_CFLAGS=$CFLAGS
