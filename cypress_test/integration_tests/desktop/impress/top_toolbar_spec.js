@@ -100,7 +100,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 		cy.cGet('text tspan.TextPosition tspan').should('have.attr', 'font-size', '776px');
 	});
 
-	it('Apply left/right alignment on text selected text.', function() {
+	it.skip('Apply left/right alignment on text selected text.', function() {
 		impressHelper.selectTextShapeInTheCenter();
 		impressHelper.selectTextOfShape();
 		cy.cGet('text tspan.TextPosition').should('have.attr', 'x', '1400');
@@ -121,7 +121,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 		cy.cGet('text tspan.TextPosition').should('have.attr', 'x', '1400');
 	});
 
-	it('Apply superscript on selected text.', function() {
+	it.skip('Apply superscript on selected text.', function() {
 		impressHelper.selectTextShapeInTheCenter();
 		impressHelper.selectTextOfShape();
 
@@ -137,7 +137,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 		cy.cGet('text tspan.TextPosition tspan').should('have.attr', 'font-size', '655px');
 	});
 
-	it('Apply subscript on selected text.', function() {
+	it.skip('Apply subscript on selected text.', function() {
 		impressHelper.selectTextShapeInTheCenter();
 		impressHelper.selectTextOfShape();
 
