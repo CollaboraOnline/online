@@ -15,6 +15,8 @@
 #include <assert.h>
 #include <string.h>
 #include <stdio.h>
+#include <endian.h>
+
 #include "DeltaSimd.h"
 
 #if ENABLE_SIMD
@@ -93,7 +95,7 @@ void simd_deltaInit(void)
 }
 
 // accelerated compression of a 256 pixel run
-int simd_initPixRowSimd(const uint32_t *from, uint32_t *scratch, size_t *scratchLen, uint64_t *rleMaskBlock)
+int simd_initPixRowSimd(const uint32_t *from, uint32_t *scratch, size_t *scratchLen, uint64_t *rleMaskBlockWide)
 {
 #if !ENABLE_SIMD
     // no fun.
@@ -103,7 +105,8 @@ int simd_initPixRowSimd(const uint32_t *from, uint32_t *scratch, size_t *scratch
 #else // ENABLE_SIMD
 
     *scratchLen = 0;
-    for (unsigned int x = 0; x < 4; ++x)
+    uint8_t *rleMaskBlock = (uint8_t *)rleMaskBlockWide;
+    for (unsigned int x = 0; x < 256/8; ++x)
         rleMaskBlock[x] = 0;
 
     const uint32_t* block = from;
@@ -134,12 +137,10 @@ int simd_initPixRowSimd(const uint32_t *from, uint32_t *scratch, size_t *scratch
         assert (newMask < 256);
 
         // invert bitmask for counting non-same foo ... [!]
-        uint8_t newMaskInverse = ~newMask;
-        {
-            unsigned int nMask = x >> 6; // 64 bits per mask
-            unsigned int i = (x >> 3) & 0x7; // chunk of bits we work on
-            rleMaskBlock[nMask] |= newMask << (i * 8);
-        }
+        uint32_t newMaskInverse = ~newMask & 0xff;
+
+        // stash our mask for these 8 pixels
+        rleMaskBlock[x>>3] = newMask;
 
         // Shuffle the pixels and pack them
         __m256i control_vector = _mm256_loadu_si256(&vpermd_lut[newMask]);
@@ -171,8 +172,12 @@ int simd_initPixRowSimd(const uint32_t *from, uint32_t *scratch, size_t *scratch
     }
     *scratchLen += dest - scratch;
 
+    // a no-op for LE architectures - ~everyone.
+    for (unsigned int x = 0; x < 4; ++x)
+        rleMaskBlockWide[x] = htole64(rleMaskBlockWide[x]);
+
     return 1;
-#endif
+#endif // ENABLE_SIMD
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
