@@ -112,7 +112,7 @@ int simd_initPixRowSimd(const uint32_t *from, uint32_t *scratch, size_t *scratch
 
     for (unsigned int x = 0; x < 256; x += 8) // 8 pixels per cycle
     {
-        __m256i curr = _mm256_loadu_si256((const __m256i_u*)(block));
+        __m256i curr = _mm256_loadu_si256((const __m256i_u*)(block + x));
 
         // Generate mask
 
@@ -155,8 +155,10 @@ int simd_initPixRowSimd(const uint32_t *from, uint32_t *scratch, size_t *scratch
                     "%4x%4x%4x%4x%4x%4x%4x%4x\n"
                     "%4x%4x%4x%4x%4x%4x%4x%4x\n",
                     (unsigned int)newMask, countBitsUnset,
-                    block[0], block[1], block[2], block[3], block[4], block[5], block[6], block[7],
-                    dest[0], dest[1], dest[2], dest[3], dest[4], dest[5], dest[6], dest[7]);
+                    block[x + 0], block[x + 1], block[x + 2], block[x + 3],
+                    block[x + 4], block[x + 5], block[x + 6], block[x + 7],
+                    dest[0], dest[1], dest[2], dest[3],
+                    dest[4], dest[5], dest[6], dest[7]);
 #endif
 
         // move on for the next run.
@@ -164,8 +166,6 @@ int simd_initPixRowSimd(const uint32_t *from, uint32_t *scratch, size_t *scratch
 
         // stash current for use next time around
         prev = curr;
-
-        block += 8;
     }
     *scratchLen += dest - scratch;
 
