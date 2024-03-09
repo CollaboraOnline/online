@@ -133,6 +133,8 @@ int simd_initPixRowSimd(const uint32_t *from, uint32_t *scratch, size_t *scratch
         uint64_t newMask = diffMask(prev, curr);
         assert (newMask < 256);
 
+        // invert bitmask for counting non-same foo ... [!]
+        uint8_t newMaskInverse = ~newMask;
         {
             unsigned int nMask = x >> 6; // 64 bits per mask
             unsigned int i = (x >> 3) & 0x7; // chunk of bits we work on
@@ -143,7 +145,7 @@ int simd_initPixRowSimd(const uint32_t *from, uint32_t *scratch, size_t *scratch
         __m256i control_vector = _mm256_loadu_si256(&vpermd_lut[newMask]);
         __m256i packed = _mm256_permutevar8x32_epi32(curr, control_vector);
 
-        unsigned int countBitsUnset = _mm_popcnt_u32(newMask ^ 0xff);
+        unsigned int countBitsUnset = _mm_popcnt_u32(newMaskInverse);
         assert(countBitsUnset <= 8);
 
         // over-store in dest: we are guaranteed enough space worst-case
