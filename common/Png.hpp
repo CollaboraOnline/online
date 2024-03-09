@@ -56,6 +56,7 @@
 #include <cassert>
 #include <chrono>
 #include <iomanip>
+#include <fstream>
 
 #include "Log.hpp"
 #include "TraceEvent.hpp"
@@ -339,6 +340,25 @@ std::vector<png_bytep> decodePNG(std::stringstream& stream, png_uint_32& height,
     png_destroy_read_struct(&ptrPNG, &ptrInfo, &ptrEnd);
 
     return rows;
+}
+
+inline std::vector<char> loadPng(const char *relpath,
+                                 uint32_t& height,
+                                 uint32_t& width,
+                                 uint32_t& rowBytes)
+{
+    std::ifstream file(relpath);
+    std::stringstream buffer;
+    buffer << file.rdbuf();
+    file.close();
+    png_uint_32 h, w, rb;
+    std::vector<png_bytep> rows = decodePNG(buffer, h, w, rb);
+    height = h; width = w; rowBytes = rb;
+    std::vector<char> output;
+    for (png_uint_32 y = 0; y < height; ++y)
+        for (png_uint_32 i = 0; i < width * 4; ++i)
+            output.push_back(rows[y][i]);
+    return output;
 }
 
 }
