@@ -13,7 +13,7 @@
  * L.Control.NotebookbarBuilder - builder of native HTML widgets for tabbed menu
  */
 
-/* global $ _ _UNO JSDialog app */
+/* global $ _ JSDialog app */
 L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 
 	_customizeOptions: function() {
@@ -50,7 +50,6 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['.uno:SelectBackground'] = this._selectBackgroundControl;
 		this._toolitemHandlers['.uno:InsertAnnotation'] = this._insertAnnotationControl;
 		this._toolitemHandlers['.uno:BasicShapes'] = this._shapesControl;
-		this._toolitemHandlers['.uno:ConditionalFormatMenu'] = this._conditionalFormatControl;
 		this._toolitemHandlers['.uno:SetBorderStyle'] = this._borderStyleControl;
 		this._toolitemHandlers['.uno:SetDefault'] = this._formattingControl;
 		this._toolitemHandlers['.uno:Save'] = this._saveControl;
@@ -735,46 +734,6 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 				});
 			}
 		});
-		builder._preventDocumentLosingFocusOnClick(control.container);
-	},
-
-	_conditionalFormatControl: function(parentContainer, data, builder) {
-		var options = {hasDropdownArrow: true};
-		var control = builder._unoToolButton(parentContainer, data, builder, options);
-
-		var menu = [
-			{text: _('Condition...'), items: [
-				{text: _('Greater than...'), uno: '.uno:ConditionalFormatEasy?FormatRule:short=2'},
-				{text: _('Less than...'), uno: '.uno:ConditionalFormatEasy?FormatRule:short=1'},
-				{text: _('Equal to...'), uno: '.uno:ConditionalFormatEasy?FormatRule:short=0'},
-				{text: _('Between...'), uno: '.uno:ConditionalFormatEasy?FormatRule:short=6'},
-				{type: 'separator'},
-				{text: _('More conditions...'), uno: '.uno:ConditionalFormatDialog'}
-			]},
-			{type: 'separator'},
-			{id: 'scaleset', text: _UNO('.uno:ColorScaleFormatDialog', 'spreadsheet'), items: [
-				{type: 'html', htmlId: 'scaleset'}
-			]},
-			{id: 'databarset', text: _UNO('.uno:DataBarFormatDialog', 'spreadsheet'), items: [
-				{type: 'html', htmlId: 'databarset'}
-			]},
-			{id: 'iconset', text: _UNO('.uno:IconSetFormatDialog', 'spreadsheet'), items: [
-				{type: 'html', htmlId: 'iconset'}
-			]},
-			{text: _UNO('.uno:CondDateFormatDialog', 'spreadsheet'), uno: '.uno:CondDateFormatDialog'},
-			{type: 'separator'},
-			{text: _UNO('.uno:ConditionalFormatManagerDialog', 'spreadsheet'), uno: '.uno:ConditionalFormatManagerDialog'}
-		];
-
-		$(control.container).unbind('click.toolbutton');
-
-		var dropdownId = data.id;
-		var clickFunction = function () {
-			JSDialog.OpenDropdown(dropdownId, control.container, menu);
-		};
-
-		control.container.addEventListener('click', clickFunction);
-
 		builder._preventDocumentLosingFocusOnClick(control.container);
 	},
 

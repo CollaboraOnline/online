@@ -79,7 +79,9 @@ function _menubuttonControl (parentContainer, data, builder) {
 				return;
 
 			var callback = function(objectType, eventType, object, data, entry) {
-				if (eventType === 'selected' && entry.uno) {
+				if ((eventType === 'selected' && entry.items) || eventType === 'showsubmenu') {
+					return true;
+				} else if (eventType === 'selected' && entry.uno) {
 					var uno = (entry.uno.indexOf('.uno:') === 0) ? entry.uno : '.uno:' + entry.uno;
 					builder.map.sendUnoCommand(uno);
 					JSDialog.CloseDropdown(dropdownId);

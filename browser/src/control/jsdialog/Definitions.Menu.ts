@@ -293,4 +293,55 @@ menuDefinitions.set('PasteMenu', [
 	},
 ] as Array<MenuDefinition>);
 
+menuDefinitions.set('ConditionalFormatMenu', [
+	{
+		text: _('Condition...'),
+		items: [
+			{
+				text: _('Greater than...'),
+				uno: '.uno:ConditionalFormatEasy?FormatRule:short=2',
+			},
+			{
+				text: _('Less than...'),
+				uno: '.uno:ConditionalFormatEasy?FormatRule:short=1',
+			},
+			{
+				text: _('Equal to...'),
+				uno: '.uno:ConditionalFormatEasy?FormatRule:short=0',
+			},
+			{
+				text: _('Between...'),
+				uno: '.uno:ConditionalFormatEasy?FormatRule:short=6',
+			},
+			{ type: 'separator' },
+			{ text: _('More conditions...'), uno: '.uno:ConditionalFormatDialog' },
+		],
+	},
+	{ type: 'separator' },
+	{
+		id: 'scaleset',
+		text: _UNO('.uno:ColorScaleFormatDialog', 'spreadsheet'),
+		items: [{ type: 'html', htmlId: 'scaleset' }],
+	},
+	{
+		id: 'databarset',
+		text: _UNO('.uno:DataBarFormatDialog', 'spreadsheet'),
+		items: [{ type: 'html', htmlId: 'databarset' }],
+	},
+	{
+		id: 'iconset',
+		text: _UNO('.uno:IconSetFormatDialog', 'spreadsheet'),
+		items: [{ type: 'html', htmlId: 'iconset' }],
+	},
+	{
+		text: _UNO('.uno:CondDateFormatDialog', 'spreadsheet'),
+		uno: '.uno:CondDateFormatDialog',
+	},
+	{ type: 'separator' },
+	{
+		text: _UNO('.uno:ConditionalFormatManagerDialog', 'spreadsheet'),
+		uno: '.uno:ConditionalFormatManagerDialog',
+	},
+] as Array<MenuDefinition>);
+
 JSDialog.MenuDefinitions = menuDefinitions;
