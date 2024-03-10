@@ -54,7 +54,15 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 		var checkedValue = (entries[i].checked === undefined)
 			? undefined : (entries[i].uno && isChecked('.uno' + entries[i].uno));
 
-		var entry = {
+		var entry = entries[i].type === 'html' ?
+			// custom html content
+			{
+				id: id + '-entry-' + i,
+				type: 'htmlcontent',
+				htmlId: entries[i].htmlId
+			}
+			: // regular entry
+			{
 			id: id + '-entry-' + i,
 			type: 'comboboxentry',
 			customRenderer: entries[i].customRenderer,
@@ -83,9 +91,11 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 	var lastSubMenuOpened = null;
 	var generateCallback = function (targetEntries) {
 		return function(objectType, eventType, object, data) {
+			var pos = data ? parseInt(data.substr(0, data.indexOf(';'))) : null;
+			var entry = targetEntries && pos !== null ? targetEntries[pos] : null;
+
 			if (eventType === 'selected' || eventType === 'showsubmenu') {
-				var pos = parseInt(data.substr(0, data.indexOf(';')));
-				if (targetEntries[pos].items) {
+				if (entry.items) {
 					if (lastSubMenuOpened) {
 						var submenu = JSDialog.GetDropdown(lastSubMenuOpened);
 						if (submenu) {
@@ -98,16 +108,26 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 					var dropdown = JSDialog.GetDropdown(object.id);
 					var subMenuId = object.id + '-' + pos;
 					var targetEntry = dropdown.querySelectorAll('.ui-grid-cell')[pos + 1];
-					JSDialog.OpenDropdown(subMenuId, targetEntry, targetEntries[pos].items,
-						generateCallback(targetEntries[pos].items), 'top-end', true);
+					JSDialog.OpenDropdown(subMenuId, targetEntry, entry.items,
+						generateCallback(entry.items), 'top-end', true);
 					lastSubMenuOpened = subMenuId;
+
+					var dropdown = JSDialog.GetDropdown(subMenuId);
+					var container = dropdown.querySelector('.ui-grid');
+					JSDialog.MakeFocusCycle(container);
+					var focusables = JSDialog.GetFocusableElements(container);
+					if (focusables && focusables.length)
+						focusables[0].focus();
+				} else if (eventType === 'selected' && entry.uno) {
+					L.Map.THIS.sendUnoCommand(entry.uno);
+					JSDialog.CloseDropdown(id);
 				}
 			} else if (!lastSubMenuOpened && eventType === 'hidedropdown') {
 				JSDialog.CloseDropdown(id);
 			}
 
 			// for multi-level menus last parameter should be used to handle event (it contains selected entry)
-			if (innerCallback && innerCallback(objectType, eventType, object, data, targetEntries[pos]))
+			if (innerCallback && innerCallback(objectType, eventType, object, data, entry))
 				return;
 
 			if (eventType === 'selected')

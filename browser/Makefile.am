@@ -341,6 +341,7 @@ COOL_JS_LST =\
 	src/control/jsdialog/Widget.DrawingArea.js \
 	src/control/jsdialog/Widget.FormulabarEdit.js \
 	src/control/jsdialog/Widget.Frame.js \
+	src/control/jsdialog/Widget.HTMLContent.ts \
 	src/control/jsdialog/Widget.IconView.js \
 	src/control/jsdialog/Widget.MenuButton.js \
 	src/control/jsdialog/Widget.MobileBorderSelector.js \
@@ -783,6 +784,7 @@ pot:
 		src/control/jsdialog/Widget.DrawingArea.js \
 		src/control/jsdialog/Widget.FormulabarEdit.js \
 		src/control/jsdialog/Widget.Frame.js \
+		src/control/jsdialog/Widget.HTMLContent.ts \
 		src/control/jsdialog/Widget.IconView.js \
 		src/control/jsdialog/Widget.MenuButton.js \
 		src/control/jsdialog/Widget.MobileBorderSelector.js \
