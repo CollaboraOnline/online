@@ -164,7 +164,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._toolitemHandlers['.uno:FillColor'] = this._colorControl;
 
 		this._toolitemHandlers['.uno:InsertFormula'] = function () {};
-		this._toolitemHandlers['.uno:SetBorderStyle'] = function () {};
 
 		this._menus = JSDialog.MenuDefinitions;
 

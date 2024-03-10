@@ -19,9 +19,13 @@ interface HtmlContentJson {
 	id: string;
 	type: 'htmlcontent';
 	htmlId: string;
+	closeCallback: EventListenerOrEventListenerObject;
 }
 
-var getHtmlFromId = function (id: string) {
+var getHtmlFromId = function (
+	id: string,
+	closeCallback: EventListenerOrEventListenerObject,
+) {
 	if (id === 'iconset')
 		return (window as any).getConditionalFormatMenuHtml('iconsetoverlay', true);
 	else if (id === 'scaleset')
@@ -34,13 +38,17 @@ var getHtmlFromId = function (id: string) {
 			'iconsetoverlay',
 			true,
 		);
+	else if (id === 'inserttablepopup')
+		return (window as any).getInsertTablePopupHtml();
+	else if (id === 'borderstylepopup')
+		return (window as any).getBorderStyleMenuHtml(closeCallback);
 };
 
 function htmlContent(
 	parentContainer: Element,
 	data: HtmlContentJson /*builder*/,
 ) {
-	parentContainer.innerHTML = getHtmlFromId(data.htmlId);
+	parentContainer.innerHTML = getHtmlFromId(data.htmlId, data.closeCallback);
 }
 
 JSDialog.htmlContent = htmlContent;
