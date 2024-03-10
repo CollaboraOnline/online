@@ -502,8 +502,9 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 								'accessibility': { focusBack: true,	combination: '6', de: null }
 							},
 							{
-								'id': 'home-set-border-style',
-								'type': 'toolitem',
+								'id': 'home-set-border-style:BorderStyleMenu',
+								'type': 'menubutton',
+								'noLabel': true,
 								'text': _UNO('.uno:SetBorderStyle'),
 								'command': '.uno:SetBorderStyle',
 								'accessibility': { focusBack: true,	combination: 'B', de: null }

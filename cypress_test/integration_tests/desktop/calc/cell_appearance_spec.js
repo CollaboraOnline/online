@@ -179,6 +179,7 @@ describe(['tagdesktop'], 'Change cell appearance.', function() {
 		calcHelper.clickOnFirstCell();
 		// Apply left border first
 		cy.cGet('.notebookbar .unoSetBorderStyle').click();
+		cy.wait(500);
 		cy.cGet('.w2ui-tb-image.w2ui-icon.frame02').should($el => { expect(Cypress.dom.isDetached($el)).to.eq(false); }).click();
 
 		cy.wait(500); // Wait for first popup to close.

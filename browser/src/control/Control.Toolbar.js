@@ -200,9 +200,16 @@ function _setBorders(left, right, bottom, top, horiz, vert, color) {
 }
 
 // close the popup
+
+var lastClosePopupCallback = undefined;
+
 function closePopup() {
 	if ($('#w2ui-overlay-editbar').length > 0) {
 		$('#w2ui-overlay-editbar').removeData('keepOpen')[0].hide();
+	}
+	if (lastClosePopupCallback) {
+		lastClosePopupCallback();
+		lastClosePopupCallback = undefined;
 	}
 	map.focus();
 }
@@ -241,7 +248,8 @@ function setBorderStyle(num, color) {
 
 global.setBorderStyle = setBorderStyle;
 
-function getBorderStyleMenuHtml() {
+function getBorderStyleMenuHtml(closeCallback) {
+	lastClosePopupCallback = closeCallback;
 	return '<table id="setborderstyle-grid"><tr><td class="w2ui-tb-image w2ui-icon frame01" onclick="setBorderStyle(1)"></td>' +
 	'<td class="w2ui-tb-image w2ui-icon frame02" onclick="setBorderStyle(2)"></td><td class="w2ui-tb-image w2ui-icon frame03" onclick="setBorderStyle(3)"></td>' +
 	'<td class="w2ui-tb-image w2ui-icon frame04" onclick="setBorderStyle(4)"></td></tr><tr><td class="w2ui-tb-image w2ui-icon frame05" onclick="setBorderStyle(5)"></td>' +

@@ -50,7 +50,6 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['.uno:SelectBackground'] = this._selectBackgroundControl;
 		this._toolitemHandlers['.uno:InsertAnnotation'] = this._insertAnnotationControl;
 		this._toolitemHandlers['.uno:BasicShapes'] = this._shapesControl;
-		this._toolitemHandlers['.uno:SetBorderStyle'] = this._borderStyleControl;
 		this._toolitemHandlers['.uno:SetDefault'] = this._formattingControl;
 		this._toolitemHandlers['.uno:Save'] = this._saveControl;
 		this._toolitemHandlers['.uno:SaveAs'] = this._saveAsControl;
@@ -730,23 +729,6 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 				}
 
 				$('.insertshape-grid .row .col').click(function () {
-					$(control.container).w2overlay();
-				});
-			}
-		});
-		builder._preventDocumentLosingFocusOnClick(control.container);
-	},
-
-	_borderStyleControl: function(parentContainer, data, builder) {
-		var options = {hasDropdownArrow: true};
-		var control = builder._unoToolButton(parentContainer, data, builder, options);
-
-		$(control.container).unbind('click.toolbutton');
-		$(control.container).click(function () {
-			if (!$('#setborderstyle-grid').length) {
-				$(control.container).w2overlay(window.getBorderStyleMenuHtml());
-
-				$('#setborderstyle-grid tr td').click(function () {
 					$(control.container).w2overlay();
 				});
 			}

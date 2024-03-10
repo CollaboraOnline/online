@@ -87,6 +87,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'AutoFilter', function() {
 
 		// Wait for autofilter dialog to close
 		cy.cGet('div.autofilter').should('not.exist');
+		cy.wait(500);
 
 		calcHelper.dblClickOnFirstCell();
 		helper.typeIntoDocument('New content{enter}');
