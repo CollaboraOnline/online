@@ -753,13 +753,13 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 			]},
 			{type: 'separator'},
 			{id: 'scaleset', text: _UNO('.uno:ColorScaleFormatDialog', 'spreadsheet'), items: [
-				// open popup in the callback
+				{type: 'html', htmlId: 'scaleset'}
 			]},
 			{id: 'databarset', text: _UNO('.uno:DataBarFormatDialog', 'spreadsheet'), items: [
-				// open popup in the callback
+				{type: 'html', htmlId: 'databarset'}
 			]},
 			{id: 'iconset', text: _UNO('.uno:IconSetFormatDialog', 'spreadsheet'), items: [
-				// open popup in the callback
+				{type: 'html', htmlId: 'iconset'}
 			]},
 			{text: _UNO('.uno:CondDateFormatDialog', 'spreadsheet'), uno: '.uno:CondDateFormatDialog'},
 			{type: 'separator'},
@@ -768,35 +768,9 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 
 		$(control.container).unbind('click.toolbutton');
 
-		var getMenuHtml = function (id) {
-			if (id === 'iconset')
-				return window.getConditionalFormatMenuHtml('iconsetoverlay', true);
-			else if (id === 'scaleset')
-				return window.getConditionalColorScaleMenuHtml('iconsetoverlay', true);
-			else if (id === 'databarset')
-				return window.getConditionalDataBarMenuHtml('iconsetoverlay', true);
-		};
-
 		var dropdownId = data.id;
 		var clickFunction = function () {
-			var callback = function(objectType, eventType, object, data, entry) {
-				if ((eventType === 'selected' || eventType === 'showsubmenu') && entry.id) {
-					var pos = data.substr(0, parseInt(data.indexOf(';')));
-					var subDropdownId = dropdownId + '-' + pos;
-					var dropdown = JSDialog.GetDropdown(subDropdownId);
-					var container = dropdown.querySelector('.ui-grid');
-					container.innerHTML = getMenuHtml(entry.id);
-					JSDialog.MakeFocusCycle(container);
-					JSDialog.GetFocusableElements(container)[0].focus();
-				} else if (eventType === 'selected' && entry.uno) {
-					builder.map.sendUnoCommand(entry.uno);
-					JSDialog.CloseDropdown(dropdownId);
-				}
-
-				return true;
-			};
-
-			JSDialog.OpenDropdown(dropdownId, control.container, menu, callback);
+			JSDialog.OpenDropdown(dropdownId, control.container, menu);
 		};
 
 		control.container.addEventListener('click', clickFunction);

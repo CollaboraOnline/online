@@ -144,6 +144,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['customtoolitem'] = this._mapDispatchToolItem;
 		this._controlHandlers['bigcustomtoolitem'] = this._mapBigDispatchToolItem;
 		this._controlHandlers['calendar'] = JSDialog.calendar;
+		this._controlHandlers['htmlcontent'] = JSDialog.htmlContent;
 
 		this._controlHandlers['mainmenu'] = this._containerHandler;
 		this._controlHandlers['submenu'] = this._subMenuHandler;
