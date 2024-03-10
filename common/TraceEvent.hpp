@@ -33,12 +33,15 @@ class TraceEvent
 private:
     static void emitInstantEvent(const std::string& name, const std::string& args);
 
+    const std::string _args;
+    const int _pid;
+
 protected:
     static std::atomic<bool> recordingOn; // True during recoding/emission
     thread_local static int threadLocalNesting; // For use only by the ProfileZone derived class
 
-    const std::string _args;
-    const int _pid;
+    int pid() const { return _pid; }
+    const std::string& args() const { return _args; }
 
     static long getThreadId()
     {
@@ -120,9 +123,9 @@ public:
 
 class NamedEvent : public TraceEvent
 {
-protected:
     const std::string _name;
 
+protected:
     explicit NamedEvent(std::string name)
         : NamedEvent(std::move(name), std::string())
     {
@@ -138,6 +141,9 @@ protected:
         : NamedEvent(std::move(name), createArgsString(args))
     {
     }
+
+public:
+    const std::string& name() const { return _name; }
 };
 
 class ProfileZone : public NamedEvent
@@ -174,16 +180,16 @@ public:
 
     ~ProfileZone()
     {
-        if (_pid > 0)
+        if (pid() > 0)
         {
             threadLocalNesting--;
 
             if (_nesting != threadLocalNesting)
             {
 #ifdef TEST_TRACEEVENT_EXE
-                std::cerr << "Incorrect ProfileZone nesting for " << _name << "\n";
+                std::cerr << "Incorrect ProfileZone nesting for " << name() << "\n";
 #else
-                LOG_WRN("Incorrect ProfileZone nesting for " << _name);
+                LOG_WRN("Incorrect ProfileZone nesting for " << name());
 #endif
             }
             else
