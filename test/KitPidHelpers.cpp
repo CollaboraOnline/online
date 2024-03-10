@@ -21,7 +21,7 @@
 #include <lokassert.hpp>
 #include <testlog.hpp>
 
-std::string getPidList(std::set<pid_t> pids);
+std::string getPidList(const std::set<pid_t>& pids);
 
 std::set<pid_t> helpers::getKitPids() { return COOLWSD::getKitPids(); }
 
@@ -37,7 +37,7 @@ pid_t helpers::getForKitPid()
     return pid;
 }
 
-std::string getPidList(std::set<pid_t> pids)
+std::string getPidList(const std::set<pid_t>& pids)
 {
     std::ostringstream oss;
     oss << "[";
