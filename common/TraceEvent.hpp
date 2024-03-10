@@ -11,7 +11,6 @@
 #include <chrono>
 #include <map>
 #include <string>
-#include <vector>
 
 #include <sys/types.h>
 #include <unistd.h>
@@ -36,9 +35,10 @@ private:
 
 protected:
     static std::atomic<bool> recordingOn; // True during recoding/emission
-    int _pid;
-    std::string _args;
     thread_local static int threadLocalNesting; // For use only by the ProfileZone derived class
+
+    const std::string _args;
+    const int _pid;
 
     static long getThreadId()
     {
@@ -77,15 +77,13 @@ protected:
         return result;
     }
 
-    TraceEvent(const std::string &args)
-        : _pid(-1)
-        , _args(args)
+    explicit TraceEvent(std::string args)
+        : _args(std::move(args))
+        , _pid(recordingOn ? getpid() : -1)
     {
-        if (recordingOn)
-        {
-            _pid = getpid();
-        }
     }
+
+    virtual ~TraceEvent() = default;
 
 public:
     static void startRecording();
@@ -125,21 +123,19 @@ class NamedEvent : public TraceEvent
 protected:
     const std::string _name;
 
-    NamedEvent(const std::string& name)
-        : TraceEvent(std::string())
-        , _name(name)
+    explicit NamedEvent(std::string name)
+        : NamedEvent(std::move(name), std::string())
     {
     }
 
-    NamedEvent(const std::string& name, const std::string& args)
-        : TraceEvent(args)
-        , _name(name)
+    NamedEvent(std::string name, std::string args)
+        : TraceEvent(std::move(args))
+        , _name(std::move(name))
     {
     }
 
-    NamedEvent(const std::string& name, const std::map<std::string, std::string>& args)
-        : TraceEvent(createArgsString(args))
-        , _name(name)
+    NamedEvent(std::string name, const std::map<std::string, std::string>& args)
+        : NamedEvent(std::move(name), createArgsString(args))
     {
     }
 };
@@ -152,8 +148,8 @@ private:
 
     void emitRecording();
 
-    ProfileZone(const std::string& name, const std::string &args)
-        : NamedEvent(name, args)
+    ProfileZone(std::string name, std::string args)
+        : NamedEvent(std::move(name), std::move(args))
         , _nesting(-1)
     {
         if (recordingOn)
@@ -166,12 +162,12 @@ private:
     }
 
 public:
-    ProfileZone(const std::string& name, const std::map<std::string, std::string> &arguments)
-        : ProfileZone(name, createArgsString(arguments))
+    ProfileZone(std::string name, const std::map<std::string, std::string>& arguments)
+        : ProfileZone(std::move(name), createArgsString(arguments))
     {
     }
 
-    ProfileZone(const char* id)
+    explicit ProfileZone(const char* id)
         : ProfileZone(id, std::string())
     {
     }
