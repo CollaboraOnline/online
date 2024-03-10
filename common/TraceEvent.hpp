@@ -34,13 +34,17 @@ private:
     static void emitInstantEvent(const std::string& name, const std::string& args);
 
     const std::string _args;
-    const int _pid;
+    int _pid; //< -1 when not recording, or done recording.
 
 protected:
     static std::atomic<bool> recordingOn; // True during recoding/emission
     thread_local static int threadLocalNesting; // For use only by the ProfileZone derived class
 
+    /// Reset the pid when done recording.
+    void reset() { _pid = -1; }
+
     int pid() const { return _pid; }
+
     const std::string& args() const { return _args; }
 
     static long getThreadId()
@@ -167,18 +171,7 @@ private:
         }
     }
 
-public:
-    ProfileZone(std::string name, const std::map<std::string, std::string>& arguments)
-        : ProfileZone(std::move(name), createArgsString(arguments))
-    {
-    }
-
-    explicit ProfileZone(const char* id)
-        : ProfileZone(id, std::string())
-    {
-    }
-
-    ~ProfileZone()
+    void emitIfRecording()
     {
         if (pid() > 0)
         {
@@ -199,8 +192,27 @@ public:
         }
     }
 
+public:
+    ProfileZone(std::string name, const std::map<std::string, std::string>& arguments)
+        : ProfileZone(std::move(name), createArgsString(arguments))
+    {
+    }
+
+    explicit ProfileZone(const char* id)
+        : ProfileZone(id, std::string())
+    {
+    }
+
+    ~ProfileZone() { emitIfRecording(); }
+
     ProfileZone(const ProfileZone&) = delete;
     void operator=(const ProfileZone&) = delete;
+
+    void end()
+    {
+        emitIfRecording();
+        reset(); // So we don't re-emit on destruction.
+    }
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
