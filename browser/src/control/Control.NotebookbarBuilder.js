@@ -369,58 +369,6 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		return true;
 	},
 
-	_makeW2MenuFocusable: function(builder, id, menu, parentId, itemCallback) {
-		var element = document.getElementById(id);
-		var rows = element.getElementsByTagName('tr');
-		rows = Array.from(rows);
-
-		if (rows.length > 0) {
-			var tabStartIndex = 1000; // Shouldn't be 0 (zero).
-			// Loop focus inside menu - start.
-			var parentNode = rows[0].parentNode;
-			var trBegin = document.createElement('tr');
-			trBegin.tabIndex = tabStartIndex - 1;
-			trBegin.id = id + '-beginning';
-			parentNode.insertBefore(trBegin, parentNode.children[0]);
-
-			var trEnd = document.createElement('tr');
-			trEnd.id = id + '-ending';
-			trEnd.tabIndex = tabStartIndex + rows.length;
-			parentNode.appendChild(trEnd);
-
-			trBegin.addEventListener('focusin', function() {
-				rows[rows.length - 1].focus();
-			});
-
-			trEnd.addEventListener('focusin', function() {
-				rows[0].focus();
-			});
-			// Loop focus inside menu - end.
-
-			rows.forEach(function(row, index) {
-				if (!menu[index].type || (menu[index].type !== 'break' && menu[index].type !== 'separator'))
-					row.tabIndex = index + tabStartIndex;
-
-				row.onkeydown = function(e) {
-					var elementToHide = document.getElementById(id);
-					if (e.code === 'Enter' || e.code === 'Space') {
-						itemCallback({ item: menu[index] });
-						if (elementToHide)
-							elementToHide.style.display = 'none';
-					}
-					else if (e.code === 'Escape') {
-						if (elementToHide)
-							elementToHide.style.display = 'none';
-						var parentUNOButton = document.getElementById(parentId).querySelector('button');
-						parentUNOButton ? document.getElementById(parentId).querySelector('button').focus() : document.getElementById(parentId).focus();
-					}
-				};
-			});
-
-			trEnd.focus();
-		}
-	},
-
 	_exportMenuButton: function(parentContainer, data, builder) {
 		if (data.id && data.id.startsWith('downloadas-')) {
 			var format = data.id.substring('downloadas-'.length);
