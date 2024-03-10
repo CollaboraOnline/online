@@ -70,25 +70,23 @@ void ProfileZone::emitRecording()
 
     std::string recordingData(
         "{"
-        "\"name\":\""
-        + std::string(_name)
-        + "\","
-          "\"ph\":\"X\","
-          "\"ts\":"
-        + std::to_string(std::chrono::duration_cast<std::chrono::microseconds>(
-                             _createTime.time_since_epoch())
-                             .count())
-        + ","
-          "\"dur\":"
-        + std::to_string(std::chrono::duration_cast<std::chrono::microseconds>(duration).count())
-        + ","
-          "\"pid\":"
-        + std::to_string(_pid)
-        + ","
-          "\"tid\":"
-        + std::to_string(getThreadId())
-        + (_args.length() == 0 ? "" : ",\"args\":" + _args)
-        + "},");
+        "\"name\":\"" +
+        std::string(name()) +
+        "\","
+        "\"ph\":\"X\","
+        "\"ts\":" +
+        std::to_string(
+            std::chrono::duration_cast<std::chrono::microseconds>(_createTime.time_since_epoch())
+                .count()) +
+        ","
+        "\"dur\":" +
+        std::to_string(std::chrono::duration_cast<std::chrono::microseconds>(duration).count()) +
+        ","
+        "\"pid\":" +
+        std::to_string(pid()) +
+        ","
+        "\"tid\":" +
+        std::to_string(getThreadId()) + (args().length() == 0 ? "" : ",\"args\":" + args()) + "},");
     std::lock_guard<std::mutex> guard(mutex);
     emitOneRecording(recordingData);
 }
