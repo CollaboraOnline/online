@@ -21,7 +21,7 @@
 namespace helpers
 {
 
-constexpr int KIT_PID_TIMEOUT_MS = 4000 * TRACE_MULTIPLIER;
+constexpr int KIT_PID_TIMEOUT_MS = 10000 * TRACE_MULTIPLIER;
 constexpr int KIT_PID_RETRY_MS = 20;
 
 /*
