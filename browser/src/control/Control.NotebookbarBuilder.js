@@ -49,7 +49,6 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['.uno:InsertTable'] = this._insertTableControl;
 		this._toolitemHandlers['.uno:SelectBackground'] = this._selectBackgroundControl;
 		this._toolitemHandlers['.uno:InsertAnnotation'] = this._insertAnnotationControl;
-		this._toolitemHandlers['.uno:BasicShapes'] = this._shapesControl;
 		this._toolitemHandlers['.uno:SetDefault'] = this._formattingControl;
 		this._toolitemHandlers['.uno:Save'] = this._saveControl;
 		this._toolitemHandlers['.uno:SaveAs'] = this._saveAsControl;
@@ -112,7 +111,6 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['.uno:ShareDocument'] = function() {};
 		this._toolitemHandlers['.uno:EditDoc'] = function() {};
 		this._toolitemHandlers['.uno:AssignLayout'] = function() {};
-		this._toolitemHandlers['.uno:ConnectorToolbox'] = this._shapesControl;
 		this._toolitemHandlers['.uno:PresentationCurrentSlide'] = function() {};
 		this._toolitemHandlers['.uno:PresentationLayout'] = function() {};
 		this._toolitemHandlers['.uno:CapturePoint'] = function() {};
@@ -707,28 +705,6 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 				window.insertTable();
 
 				$('.inserttable-grid .row .col').click(function () {
-					$(control.container).w2overlay();
-				});
-			}
-		});
-		builder._preventDocumentLosingFocusOnClick(control.container);
-	},
-
-	_shapesControl: function(parentContainer, data, builder) {
-		var options = {hasDropdownArrow: true};
-		var control = builder._unoToolButton(parentContainer, data, builder, options);
-
-		$(control.container).unbind('click.toolbutton');
-		$(control.container).click(function () {
-			if (!$('.insertshape-grid').length) {
-				$(control.container).w2overlay(window.getShapesPopupHtml());
-				if (data.command === '.uno:ConnectorToolbox') {
-					window.insertShapes('insertconnectors');
-				} else {
-					window.insertShapes('insertshapes');
-				}
-
-				$('.insertshape-grid .row .col').click(function () {
 					$(control.container).w2overlay();
 				});
 			}

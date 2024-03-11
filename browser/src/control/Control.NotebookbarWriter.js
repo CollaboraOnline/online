@@ -1063,8 +1063,9 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
-								'id': 'insert-insert-shapes',
-								'type': 'toolitem',
+								'id': 'insert-insert-shapes:InsertShapesMenu',
+								'type': 'menubutton',
+								'noLabel': true,
 								'text': _('Shapes'),
 								'command': '.uno:BasicShapes',
 								'accessibility': { focusBack: false,	combination: 'IH',	de: null }
@@ -2820,7 +2821,9 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
-								'type': 'toolitem',
+								'id': 'draw-tab-shapes:InsertShapesMenu',
+								'type': 'menubutton',
+								'noLabel': true,
 								'text': _('Shapes'),
 								'command': '.uno:BasicShapes'
 							}

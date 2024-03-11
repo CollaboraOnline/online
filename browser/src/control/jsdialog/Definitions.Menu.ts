@@ -351,4 +351,14 @@ menuDefinitions.set('BorderStyleMenu', [
 	{ type: 'separator' }, // required to show dropdown arrow
 ] as Array<MenuDefinition>);
 
+menuDefinitions.set('InsertShapesMenu', [
+	{ type: 'html', htmlId: 'insertshapespopup' },
+	{ type: 'separator' }, // required to show dropdown arrow
+] as Array<MenuDefinition>);
+
+menuDefinitions.set('InsertConnectorsMenu', [
+	{ type: 'html', htmlId: 'insertconnectorspopup' },
+	{ type: 'separator' }, // required to show dropdown arrow
+] as Array<MenuDefinition>);
+
 JSDialog.MenuDefinitions = menuDefinitions;
