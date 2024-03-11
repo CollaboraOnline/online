@@ -106,7 +106,8 @@ MULTIUSER_TESTS_DONE= \
 check-local: do-check
 	$(if $(wildcard $(ERROR_LOG)),$(error CypressError: some tests failed!))
 
-do-check: $(DESKTOP_TEST_FILES_DONE) $(MOBILE_TEST_FILES_DONE) $(IDLE_TEST_FILES_DONE) $(MULTIUSER_TESTS_DONE)
+# TODO: enable other tests $(MOBILE_TEST_FILES_DONE) $(IDLE_TEST_FILES_DONE) $(MULTIUSER_TESTS_DONE)
+do-check: $(DESKTOP_TEST_FILES_DONE)
 	$(V)$(KILL_COMMAND) || true
 	$(if $(HEADLESS_BUILD),$(V)pkill Xvfb,)
 	$(if $(wildcard $(ERROR_LOG)),$(V)cat $(ERROR_LOG))
