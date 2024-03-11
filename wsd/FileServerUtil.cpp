@@ -202,7 +202,7 @@ std::string FileServerRequestHandler::uiDefaultsToJSON(const std::string& uiDefa
     Poco::JSON::Object presentationDefs;
     Poco::JSON::Object drawingDefs;
 
-    uiMode = "";
+    uiMode.clear();
     uiTheme = "light";
     savedUIState = "true";
     StringVector tokens(StringVector::tokenize(uiDefaults, ';'));

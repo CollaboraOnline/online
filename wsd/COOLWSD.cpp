@@ -1923,7 +1923,7 @@ private:
         fonts.clear();
         // Clear the saved ETag of the remote font configuration file so that it will be
         // re-downloaded, and all fonts mentioned in it re-downloaded and fed to ForKit.
-        _eTagValue = "";
+        _eTagValue.clear();
         COOLWSD::sendMessageToForKit("exit");
     }
 
@@ -2743,7 +2743,7 @@ void COOLWSD::innerInitialize(Application& self)
                 LOG_INF("Your support key is valid for " << validDays << " days");
                 COOLWSD::MaxConnections = 1000;
                 COOLWSD::MaxDocuments = 200;
-                COOLWSD::OverrideWatermark = "";
+                COOLWSD::OverrideWatermark.clear();
             }
         }
     }
