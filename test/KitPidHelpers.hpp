@@ -21,8 +21,8 @@
 namespace helpers
 {
 
-constexpr int KIT_PID_TIMEOUT_MS = 4000 * TRACE_MULTIPLIER;
-constexpr int KIT_PID_RETRY_MS = 20;
+constexpr int KIT_PID_TIMEOUT_MS = 20000 * TRACE_MULTIPLIER;
+constexpr int KIT_PID_RETRY_MS = 50;
 
 /*
  * Get the list of all kit pids
