@@ -66,7 +66,10 @@ protected:
         if (!recordingOn)
             return "0";
 
-        std::string result = "{";
+        std::string result;
+        result.reserve(args.size() * 64);
+
+        result += '{';
         bool first = true;
         for (const auto& i : args)
         {

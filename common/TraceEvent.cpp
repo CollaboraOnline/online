@@ -63,30 +63,36 @@ void ProfileZone::emitRecording()
     if (!recordingOn)
         return;
 
-    auto now = std::chrono::system_clock::now();
-
     // Generate a single "Complete Event" (type X)
-    auto duration = now - _createTime;
+    const auto duration = std::chrono::system_clock::now() - _createTime;
 
-    std::string recordingData(
-        "{"
-        "\"name\":\"" +
-        std::string(name()) +
-        "\","
-        "\"ph\":\"X\","
-        "\"ts\":" +
-        std::to_string(
-            std::chrono::duration_cast<std::chrono::microseconds>(_createTime.time_since_epoch())
-                .count()) +
-        ","
-        "\"dur\":" +
-        std::to_string(std::chrono::duration_cast<std::chrono::microseconds>(duration).count()) +
-        ","
-        "\"pid\":" +
-        std::to_string(pid()) +
-        ","
-        "\"tid\":" +
-        std::to_string(getThreadId()) + (args().length() == 0 ? "" : ",\"args\":" + args()) + "},");
+    std::ostringstream oss;
+    oss << "{"
+           "\"name\":\""
+        << name()
+        << "\","
+           "\"ph\":\"X\","
+           "\"ts\":"
+        << std::chrono::duration_cast<std::chrono::microseconds>(_createTime.time_since_epoch())
+               .count()
+        << ","
+           "\"dur\":"
+        << std::chrono::duration_cast<std::chrono::microseconds>(duration).count()
+        << ","
+           "\"pid\":"
+        << pid()
+        << ","
+           "\"tid\":"
+        << getThreadId();
+
+    if (!args().empty())
+    {
+        oss << ",\"args\":" << args();
+    }
+
+    oss << "},";
+    std::string recordingData = oss.str();
+
     std::lock_guard<std::mutex> guard(mutex);
     emitOneRecording(recordingData);
 }
