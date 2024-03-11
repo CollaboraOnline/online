@@ -328,7 +328,7 @@ public:
         std::string out = msg;
 
         if (tokens.equals(0, "tileprocessed"))
-            out = ""; // we do this accurately below
+            out.clear(); // we do this accurately below
 
         else if (tokens.equals(0, "load")) {
             std::string url = tokens[1];
