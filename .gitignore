@@ -100,6 +100,7 @@ unittest
 clientnb
 libsimd.a
 coolwsd-inproc
+coolbench
 
 # Fuzzer
 *_fuzzer
