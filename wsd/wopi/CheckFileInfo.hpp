@@ -15,17 +15,18 @@
 #error This file should be excluded from Mobile App builds
 #endif // MOBILEAPP
 
-#include "HttpRequest.hpp"
+#include <HttpRequest.hpp>
 #include <RequestDetails.hpp>
 #include <Socket.hpp>
 #include <StateEnum.hpp>
+#include <TraceEvent.hpp>
 
-#include <Poco/URI.h>
 #include <Poco/JSON/Object.h>
+#include <Poco/URI.h>
 
 #include <functional>
-#include <string>
 #include <memory>
+#include <string>
 
 class CheckFileInfo
 {
@@ -45,6 +46,7 @@ public:
         , _docKey(RequestDetails::getDocKey(url))
         , _onFinishCallback(std::move(onFinishCallback))
         , _state(State::None)
+        , _profileZone("WopiStorage::getWOPIFileInfo", { { "url", url.toString() } })
     {
         assert(_url == RequestDetails::sanitizeURI(url.toString()) && "Expected sanitized URL");
 
@@ -83,4 +85,5 @@ private:
     std::shared_ptr<http::Session> _httpSession;
     std::atomic<State> _state;
     Poco::JSON::Object::Ptr _wopiInfo;
+    ProfileZone _profileZone;
 };

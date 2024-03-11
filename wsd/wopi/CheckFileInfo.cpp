@@ -26,8 +26,6 @@
 
 void CheckFileInfo::checkFileInfo(int redirectLimit)
 {
-    // ProfileZone profileZone("WopiStorage::getWOPIFileInfo", { { "url", url } }); // Move to ctor.
-
     const std::string uriAnonym = COOLWSD::anonymizeUrl(_url.toString());
 
     LOG_DBG("Getting info for wopi uri [" << uriAnonym << ']');
@@ -43,6 +41,8 @@ void CheckFileInfo::checkFileInfo(int redirectLimit)
     http::Session::FinishedCallback finishedCallback =
         [this, startTime, uriAnonym, redirectLimit](const std::shared_ptr<http::Session>& session)
     {
+        _profileZone.end(); // Finish profiling.
+
         if (SigUtil::getShutdownRequestFlag())
         {
             LOG_DBG("Shutdown flagged, giving up on in-flight requests");
