@@ -2147,7 +2147,7 @@ void flushTraceEventRecordings()
         std::vector<std::string> &r = traceEventRecords[n];
 
         if (r.empty())
-            return;
+            continue;
 
         std::size_t totalLength = 32; // Provision for the command name.
         for (const auto& i: r)
@@ -2156,7 +2156,7 @@ void flushTraceEventRecordings()
         std::string recordings;
         recordings.reserve(totalLength);
 
-        recordings.append(n == 0 ? "forcetraceevent: \n" : "traceevent: \n");
+        recordings.append(n == 0 ? "forcedtraceevent: \n" : "traceevent: \n");
         for (const auto& i: r)
             recordings += i;
 
