@@ -1118,8 +1118,12 @@ function onCommandResult(e) {
 	}
 	else if ((commandName === '.uno:Undo' || commandName === '.uno:Redo') &&
 		e.success === true && e.result.value && !isNaN(e.result.value)) { /*UNDO_CONFLICT*/
-		$('#tb_editbar_item_repair').w2overlay({ html: '<div style="padding: 10px; line-height: 150%">' +
-		_('Conflict Undo/Redo with multiple users. Please use document repair to resolve') + '</div>'});
+		var alertOptions = {
+			messages: [
+				_('Conflict Undo/Redo with multiple users. Please use document repair to resolve')
+			],
+		};
+		JSDialog.showInfoModalWithOptions('undo-conflict-error', alertOptions);
 	} else if (map.zotero &&
 		((commandName === '.uno:DeleteTextFormField' && e.result.DeleteTextFormField.startsWith('ADDIN ZOTERO_')) ||
 		(commandName === '.uno:DeleteField' && e.result.DeleteField.startsWith('ZOTERO_')) ||
