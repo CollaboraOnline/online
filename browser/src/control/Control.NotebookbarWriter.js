@@ -854,8 +854,9 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
-								'id': 'home-insert-table',
-								'type': 'toolitem',
+								'id': 'home-insert-table:InsertTableMenu',
+								'type': 'menubutton',
+								'noLabel': true,
 								'text': _UNO('.uno:InsertTable', 'text'),
 								'command': '.uno:InsertTable',
 								'accessibility': { focusBack: false,	combination: 'IT',	de:	null }
@@ -1043,8 +1044,8 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'accessibility': { focusBack: true,	combination: 'B',	de:	'SU' }
 			},
 			{
-				'id': 'insert-insert-table',
-				'type': 'bigtoolitem',
+				'id': 'insert-insert-table:InsertTableMenu',
+				'type': 'menubutton',
 				'text': _UNO('.uno:InsertTable', 'text'),
 				'command': '.uno:InsertTable',
 				'accessibility': { focusBack: false,	combination: 'IT',	de: null }

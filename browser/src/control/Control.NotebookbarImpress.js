@@ -1052,8 +1052,9 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 								'accessibility': { focusBack: true, combination: 'IC', de: null }
 							},
 							{
-								'id': 'home-insert-table',
-								'type': 'toolitem',
+								'id': 'home-insert-table:InsertTableMenu',
+								'type': 'menubutton',
+								'noLabel': true,
 								'text': _UNO('.uno:InsertTable', 'presentation'),
 								'command': '.uno:InsertTable',
 								'accessibility': { focusBack: true, combination: 'IT', de: null }
@@ -1223,8 +1224,9 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 						'type': 'toolbox',
 						'children': [
 							{
-								'id': 'insert-insert-table',
-								'type': 'toolitem',
+								'id': 'insert-insert-table:InsertTableMenu',
+								'type': 'menubutton',
+								'noLabel': true,
 								'text': _UNO('.uno:InsertTable', 'presentation'),
 								'command': '.uno:InsertTable',
 								'accessibility': { focusBack: true, combination: 'IT', de: null }

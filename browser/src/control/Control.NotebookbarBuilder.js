@@ -46,7 +46,6 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['.uno:Color'] = this._colorControl;
 		this._toolitemHandlers['.uno:FillColor'] = this._colorControl;
 
-		this._toolitemHandlers['.uno:InsertTable'] = this._insertTableControl;
 		this._toolitemHandlers['.uno:SelectBackground'] = this._selectBackgroundControl;
 		this._toolitemHandlers['.uno:InsertAnnotation'] = this._insertAnnotationControl;
 		this._toolitemHandlers['.uno:SetDefault'] = this._formattingControl;
@@ -690,24 +689,6 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		$(control.container).unbind('click.toolbutton');
 		$(control.container).click(function () {
 			L.control.menubar()._executeAction.bind({_map: builder.options.map})(undefined, {id: originalDataId});
-		});
-		builder._preventDocumentLosingFocusOnClick(control.container);
-	},
-
-	_insertTableControl: function(parentContainer, data, builder) {
-		var options = {hasDropdownArrow: true};
-		var control = builder._unoToolButton(parentContainer, data, builder, options);
-
-		$(control.container).unbind('click.toolbutton');
-		$(control.container).click(function () {
-			if (!$('.inserttable-grid').length) {
-				$(control.container).w2overlay(window.getInsertTablePopupHtml());
-				window.insertTable();
-
-				$('.inserttable-grid .row .col').click(function () {
-					$(control.container).w2overlay();
-				});
-			}
 		});
 		builder._preventDocumentLosingFocusOnClick(control.container);
 	},
