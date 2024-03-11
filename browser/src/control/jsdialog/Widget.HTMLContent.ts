@@ -42,6 +42,10 @@ var getHtmlFromId = function (
 		return (window as any).getInsertTablePopupHtml();
 	else if (id === 'borderstylepopup')
 		return (window as any).getBorderStyleMenuHtml(closeCallback);
+	else if (id === 'insertshapespopup')
+		return (window as any).getShapesPopupHtml(closeCallback);
+	else if (id === 'insertconnectorspopup')
+		return (window as any).getConnectorsPopupHtml(closeCallback);
 };
 
 function htmlContent(

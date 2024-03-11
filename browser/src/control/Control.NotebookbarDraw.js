@@ -831,8 +831,9 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 						'type': 'toolbox',
 						'children': [
 							{
-								'id': 'home-basic-shapes',
-								'type': 'toolitem',
+								'id': 'home-basic-shapes:InsertShapesMenu',
+								'type': 'menubutton',
+								'noLabel': true,
 								'text': _('Shapes'),
 								'command': '.uno:BasicShapes',
 								'accessibility': { focusBack: true, combination: 'IS', de: null }
@@ -844,8 +845,9 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 						'type': 'toolbox',
 						'children': [
 							{
-								'id': 'home-connector-toolbox',
-								'type': 'toolitem',
+								'id': 'home-connector-toolbox:InsertConnectorsMenu',
+								'type': 'menubutton',
+								'noLabel': true,
 								'text': _UNO('.uno:ConnectorToolbox', 'presentation'),
 								'command': '.uno:ConnectorToolbox',
 								'accessibility': { focusBack: true, combination: 'TC', de: null }
@@ -1321,8 +1323,9 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 						'type': 'toolbox',
 						'children': [
 							{
-								'id': 'insert-basic-shapes',
-								'type': 'toolitem',
+								'id': 'insert-basic-shapes:InsertShapesMenu',
+								'type': 'menubutton',
+								'noLabel': true,
 								'text': _('Shapes'),
 								'command': '.uno:BasicShapes',
 								'accessibility': { focusBack: true, combination: 'BS', de: null }
