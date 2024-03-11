@@ -26,7 +26,6 @@ interface SectionCallbacks {
 	onDoubleClick?: (point: Array<number>, e: MouseEvent) => void;
 	onContextMenu?: (e?: MouseEvent) => void;
 	onMouseWheel?: (point: Array<number>, delta: Array<number>, e: MouseEvent) => void;
-	onLongPress?: (point: Array<number>, e: MouseEvent) => void;
 	onMultiTouchStart?: (e: TouchEvent) => void;
 	onMultiTouchMove?: (point: Array<number>, dragDistance: number, e: TouchEvent) => void;
 	onMultiTouchEnd?: (e: TouchEvent) => void;
@@ -302,12 +301,6 @@ class CanvasSectionObject {
 			return this.callbacks.onMouseWheel(point, delta, e);
 	}
 
-	/// Parameters: Point [x, y], e (native event object)
-	onLongPress(point: Array<number>, e: MouseEvent): void {
-		if (this.callbacks.onLongPress)
-			return this.callbacks.onLongPress(point, e);
-	}
-
 	/// Parameters: e (native event object)
 	onMultiTouchStart(e: TouchEvent): void {
 		if (this.callbacks.onMultiTouchStart)
@@ -477,7 +470,6 @@ class CanvasSectionObject {
 			onDoubleClick: options.onDoubleClick?.bind(this),
 			onContextMenu: options.onContextMenu?.bind(this),
 			onMouseWheel: options.onMouseWheel?.bind(this),
-			onLongPress: options.onLongPress?.bind(this),
 			onMultiTouchStart: options.onMultiTouchStart?.bind(this),
 			onMultiTouchMove: options.onMultiTouchMove?.bind(this),
 			onMultiTouchEnd: options.onMultiTouchEnd?.bind(this),
@@ -1164,31 +1156,6 @@ class CanvasSectionContainer {
 		}
 	}
 
-	private propagateOnLongPress(section: CanvasSectionObject, position: Array<number>, e: MouseEvent) {
-		this.targetSection = section.name;
-
-		var propagate: boolean = true;
-		var windowPosition: Array<number> = position ? [position[0] + section.myTopLeft[0], position[1] + section.myTopLeft[1]]: null;
-		for (var j: number = 0; j < this.windowSectionList.length; j++) {
-			var windowSection = this.windowSectionList[j];
-			if (windowSection.interactable)
-				windowSection.onLongPress(windowPosition, e);
-
-			if (this.lowestPropagatedBoundSection === windowSection.name)
-				propagate = false; // Window sections can not stop the propagation of the event for other window sections.
-		}
-
-		if (propagate) {
-			for (var i: number = section.boundsList.length - 1; i > -1; i--) {
-				if (section.boundsList[i].interactable)
-					section.boundsList[i].onLongPress((position ? [position[0], position[1]]: null), e);
-
-				if (section.boundsList[i].name === this.lowestPropagatedBoundSection)
-					break; // Stop propagation.
-			}
-		}
-	}
-
 	private propagateOnMouseDown(section: CanvasSectionObject, position: Array<number>, e: MouseEvent) {
 		this.targetSection = section.name;
 
@@ -1467,7 +1434,7 @@ class CanvasSectionContainer {
 			this.mousePosition = this.convertPositionToCanvasLocale(e);
 			var section: CanvasSectionObject = this.findSectionContainingPoint(this.mousePosition);
 			if (section) {
-				this.propagateOnLongPress(section, this.convertPositionToSectionLocale(section, this.mousePosition), e);
+				this.propagateOnContextMenu(section);
 			}
 		}
 	}

@@ -131,7 +131,7 @@ export class Header extends CanvasSectionObject {
 		return (!!this._headerInfo.getElementData(index).isCurrent) || (!!this._headerInfo.getElementData(index).isHighlighted);
 	}
 
-	onLongPress(): void {
+	onContextMenu(): void {
 		if (this._map.isEditMode()) {
 			(window as any).contextMenuWizard = true;
 			this._map.fire('mobilewizard', {data: this._menuData});
