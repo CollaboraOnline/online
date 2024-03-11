@@ -219,7 +219,7 @@ std::string AdminModel::getAllHistory() const
         separator1 = ",";
     }
     oss << "], \"expiredDocuments\" : [";
-    separator1 = "";
+    separator1.clear();
     for (const auto& ed : _expiredDocuments)
     {
         oss << separator1;

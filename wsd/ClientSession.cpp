@@ -592,7 +592,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     }
     else if (tokens.equals(0, "load"))
     {
-        if (getDocURL() != "")
+        if (!getDocURL().empty())
         {
             sendTextFrameAndLogError("error: cmd=load kind=docalreadyloaded");
             return false;
@@ -1189,14 +1189,14 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/,
             std::string encodedUserId;
             Poco::URI::encode(getUserId(), "", encodedUserId);
             oss << " authorid=" << encodedUserId;
-            encodedUserId = "";
+            encodedUserId.clear();
             Poco::URI::encode(COOLWSD::anonymizeUsername(getUserId()), "", encodedUserId);
             oss << " xauthorid=" << encodedUserId;
 
             std::string encodedUserName;
             Poco::URI::encode(getUserName(), "", encodedUserName);
             oss << " author=" << encodedUserName;
-            encodedUserName = "";
+            encodedUserName.clear();
             Poco::URI::encode(COOLWSD::anonymizeUsername(getUserName()), "", encodedUserName);
             oss << " xauthor=" << encodedUserName;
         }

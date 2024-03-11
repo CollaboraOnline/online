@@ -2725,7 +2725,7 @@ bool ChildSession::updateBlockingCommandStatus(const StringVector& tokens)
         sendTextFrameAndLogError("error: cmd=lockstatus kind=failure");
         return false;
     }
-    std::string blockedCommands = "";
+    std::string blockedCommands;
     if (restrictedStatus == "true")
         blockedCommands += CommandControl::RestrictionManager::getRestrictedCommandListString();
     if (lockStatus == "true")

@@ -64,7 +64,7 @@ static std::atomic<bool> ForwardSigUsr2Flag(false); //< Flags to forward SIG_USR
 #endif
 
 static size_t ActivityStringIndex = 0;
-static std::string ActivityHeader = "";
+static std::string ActivityHeader;
 static std::array<std::string, 16> ActivityStrings;
 static bool UnattendedRun = false;
 #if !MOBILEAPP

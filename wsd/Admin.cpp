@@ -844,7 +844,7 @@ std::string Admin::getLogLines()
             lineCount = (int)lines.size();
         }
 
-        line = ""; // Use the same variable to include result.
+        line.clear(); // Use the same variable to include result.
         // Newest will be on top.
         for (int i = lineCount - 1; i >= 0; i--)
         {
