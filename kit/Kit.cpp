@@ -2143,20 +2143,18 @@ void flushTraceEventRecordings()
         if (r.empty())
             return;
 
-        std::size_t totalLength = 0;
+        std::size_t totalLength = 32; // Provision for the command name.
         for (const auto& i: r)
             totalLength += i.length();
 
         std::string recordings;
         recordings.reserve(totalLength);
 
+        recordings.append(n == 0 ? "forcetraceevent: \n" : "traceevent: \n");
         for (const auto& i: r)
             recordings += i;
 
-        std::string name = "forcetraceevent: \n";
-        if (n == 1 )
-            name = "traceevent: \n";
-        singletonDocument->sendTextFrame(name + recordings);
+        singletonDocument->sendTextFrame(recordings);
         r.clear();
     }
 }
