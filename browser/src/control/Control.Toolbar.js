@@ -1203,8 +1203,7 @@ function editorUpdate(e) { // eslint-disable-line no-unused-vars
 		docLayer._followEditor = false;
 		docLayer._followThis = -1;
 	}
-	$('#tb_actionbar_item_userlist').w2overlay('');
-	$('#userListPopover').hide();
+	map.userList.hideTooltip();
 }
 
 global.editorUpdate = editorUpdate;
