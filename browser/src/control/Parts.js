@@ -302,11 +302,15 @@ L.Map.include({
 			return;
 		}
 
+		var docLayer = this._docLayer;
+
 		if (this.isPresentationOrDrawing()) {
 			app.socket.sendMessage('uno .uno:InsertPage');
 		}
 		else if (this.getDocType() === 'spreadsheet') {
-			this._docLayer._sheetSwitch.updateOnSheetInsertion(nPos);
+			// update partHashes
+			docLayer._partHashes.splice(nPos, 0, '');
+
 			var command = {
 				'Name': {
 					'type': 'string',
@@ -323,8 +327,6 @@ L.Map.include({
 		else {
 			return;
 		}
-
-		var docLayer = this._docLayer;
 
 		// At least for Impress, we should not fire this. It causes a circular reference.
 		if (!this.isPresentationOrDrawing()) {
@@ -363,11 +365,18 @@ L.Map.include({
 	},
 
 	deletePage: function (nPos) {
+		var docLayer = this._docLayer;
+
 		if (this.isPresentationOrDrawing()) {
 			app.socket.sendMessage('uno .uno:DeletePage');
 		}
 		else if (this.getDocType() === 'spreadsheet') {
-			this._docLayer._sheetSwitch.updateOnSheetDeleted(nPos);
+			// update partHashes
+			docLayer._partHashes.splice(nPos, 1);
+			// avoid to save current part position
+			if (docLayer._selectedPart === nPos)
+				docLayer._sheetSwitch.currentSheetIndexReassigned = true;
+
 			var command = {
 				'Index': {
 					'type': 'long',
@@ -381,7 +390,6 @@ L.Map.include({
 			return;
 		}
 
-		var docLayer = this._docLayer;
 		// TO DO: Deleting all the pages causes problem.
 		if (docLayer._parts === 1) {
 			return;
@@ -432,33 +440,36 @@ L.Map.include({
 
 	showPage: function () {
 		if (this.getDocType() === 'spreadsheet' && this.hasAnyHiddenPart()) {
-			var partNames_ = this._docLayer._partNames;
-			var hiddenParts_ = this._docLayer._hiddenParts;
+			var partsInfo = this._docLayer._partsInfo;
+			var partHashes = this._docLayer._partHashes;
+			var numberOfParts = this._docLayer._parts;
 
-			if (hiddenParts_.length > 0) {
-				var container = document.createElement('div');
-				container.style.maxHeight = '300px';
-				container.style.overflowY = 'auto';
-				for (var i = 0; i < hiddenParts_.length; i++) {
-					var checkbox = document.createElement('input');
-					checkbox.type = 'checkbox';
-					checkbox.id = 'hidden-part-checkbox-' + String(hiddenParts_[i]);
-					var label = document.createElement('label');
-					label.htmlFor = 'hidden-part-checkbox-' + String(hiddenParts_[i]);
-					label.innerText = partNames_[hiddenParts_[i]];
-					var newLine = document.createElement('br');
-					container.appendChild(checkbox);
-					container.appendChild(label);
-					container.appendChild(newLine);
-				}
+			var container = document.createElement('div');
+			container.style.maxHeight = '300px';
+			container.style.overflowY = 'auto';
+			for (var i = 0; i < numberOfParts; i++) {
+				var partInfo = partsInfo[partHashes[i]];
+				if (!partInfo.hidden)
+					continue;
+				var checkbox = document.createElement('input');
+				checkbox.type = 'checkbox';
+				checkbox.id = 'hidden-part-checkbox-' + String(i);
+				var label = document.createElement('label');
+				label.htmlFor = 'hidden-part-checkbox-' + String(i);
+				label.innerText = partInfo.name;
+				var newLine = document.createElement('br');
+				container.appendChild(checkbox);
+				container.appendChild(label);
+				container.appendChild(newLine);
 			}
 
 			var callback = function() {
 				var checkboxList = document.querySelectorAll('input[id^="hidden-part-checkbox"]');
 				for (var i = 0; i < checkboxList.length; i++) {
 					if (checkboxList[i].checked === true) {
-						var partName_ = partNames_[parseInt(checkboxList[i].id.replace('hidden-part-checkbox-', ''))];
-						var argument = {aTableName: {type: 'string', value: partName_}};
+						var sheetIndex = parseInt(checkboxList[i].id.replace('hidden-part-checkbox-', ''));
+						var partInfo = partsInfo[partHashes[sheetIndex]];
+						var argument = {aTableName: {type: 'string', value: partInfo.name}};
 						app.socket.sendMessage('uno .uno:Show ' + JSON.stringify(argument));
 					}
 				}
