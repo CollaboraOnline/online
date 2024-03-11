@@ -44,6 +44,21 @@ L.Control.SheetsBar = L.Control.extend({
 				window.hideTooltip(this, e.target);
 			}
 		});
+
+		toolbar.find('.w2ui-button').on('mousedown', function (e) {
+			if (e.button != 0) {
+				return; //if the right mouse button is pressed do nothing.
+			}
+
+			const pressAndHoldTimer = setTimeout(function () {
+				that.handlePressAndHold(e);
+			}, 500);
+
+			$(document).one('mouseup', function () {
+				clearTimeout(pressAndHoldTimer);
+			});
+		});
+
 		this.map.uiManager.enableTooltip(toolbar);
 
 		toolbar.bind('touchstart', function(e) {
@@ -88,6 +103,26 @@ L.Control.SheetsBar = L.Control.extend({
 			// https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollLeft
 			L.DomUtil.get('spreadsheet-tab-scroll').scrollLeft = 100000;
 		}
+	},
+
+	handlePressAndHold: function(e) {
+		var that = this;
+		var id;
+		if (e.target.classList.contains('nextrecord')) {
+			id = 'nextrecord';
+		} else if (e.target.classList.contains('prevrecord')) {
+			id = 'prevrecord';
+		} else  {
+			return;
+		}
+
+		const scrollingInterval = setInterval(function () {
+			that.onClick(e, id);
+		}, 100);
+
+		$(document).one('mouseup', function () {
+			clearInterval(scrollingInterval);
+		});
 	},
 
 	onDocLayerInit: function() {

@@ -16,7 +16,13 @@
 	height: 100%;
 	overflow-y: hidden;
 	overflow-x: auto;
+	scrollbar-width: none; /* Firefox */
+	-ms-overflow-style: none; /* IE and Edge */
 	margin-left: 6px;
+}
+
+.spreadsheet-tab-scroll::-webkit-scrollbar {
+	display: none;
 }
 
 .spreadsheet-tab {
