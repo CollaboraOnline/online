@@ -234,7 +234,7 @@ L.Control.TopToolbar = L.Control.extend({
 			{type: 'button',  id: 'numberformatdecdecimals',  img: 'numberformatdecdecimals', hint: _UNO('.uno:NumberFormatDecDecimals', 'spreadsheet', true), hidden: true, uno: 'NumberFormatDecDecimals', disabled: true},
 			{type: 'button',  id: 'numberformatincdecimals',  img: 'numberformatincdecimals', hint: _UNO('.uno:NumberFormatIncDecimals', 'spreadsheet', true), hidden: true, uno: 'NumberFormatIncDecimals', disabled: true},
 			{type: 'break',   id: 'break-number', hidden: true},
-			{type: 'drop',  id: 'inserttable',  img: 'inserttable', hint: _('Insert table'), hidden: true, overlay: {onShow: window.insertTable}, html: window.getInsertTablePopupHtml(), lockUno: '.uno:InsertTable'},
+			{type: 'drop',  id: 'inserttable',  img: 'inserttable', hint: _('Insert table'), hidden: true, html: window.getInsertTablePopupHtml(), lockUno: '.uno:InsertTable'},
 			{type: 'button',  id: 'insertgraphic',  img: 'insertgraphic', hint: _UNO('.uno:InsertGraphic', '', true), lockUno: '.uno:InsertGraphic'},
 			{type: 'button',  id: 'insertremotegraphic',  img: 'insertgraphic', hint: _UNO('.uno:InsertGraphic', '', true),  hidden: true, lockUno: '.uno:InsertGraphic'},
 			{type: 'menu', id: 'menugraphic', img: 'insertgraphic', hint: _UNO('.uno:InsertGraphic', '', true), hidden: true, lockUno: '.uno:InsertGraphic',
@@ -308,9 +308,6 @@ L.Control.TopToolbar = L.Control.extend({
 						toolItem.css('display', '');
 					}
 				}
-
-				if (event.target === 'inserttable')
-					window.insertTable();
 
 				if (that.map.isRestrictedUser()) {
 					for (var i = 0; i < this.items.length; i++) {

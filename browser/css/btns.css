@@ -22,7 +22,7 @@ button.jsdialog img {
 }
 
 :not(.main-nav) .button-secondary,
-:not(.main-nav) > div > button:not(.ui-tab):not(.ui-corner-all):not(.button-primary):not(.unobutton):not(.form-field-button) {
+:not(.main-nav) > div > button:not(.ui-tab):not(.ui-corner-all):not(.button-primary):not(.unobutton):not(.form-field-button):not(.col) {
 	box-sizing: border-box;
 	height: 32px;
 	line-height: 0em;

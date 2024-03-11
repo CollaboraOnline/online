@@ -39,7 +39,7 @@ var getHtmlFromId = function (
 			true,
 		);
 	else if (id === 'inserttablepopup')
-		return (window as any).getInsertTablePopupHtml();
+		return (window as any).getInsertTablePopupHtml(closeCallback);
 	else if (id === 'borderstylepopup')
 		return (window as any).getBorderStyleMenuHtml(closeCallback);
 	else if (id === 'insertshapespopup')

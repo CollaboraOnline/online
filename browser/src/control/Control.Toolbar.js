@@ -331,114 +331,59 @@ function getConditionalDataBarMenuHtml(more, jsdialogDropdown) {
 
 global.getConditionalDataBarMenuHtml = getConditionalDataBarMenuHtml;
 
-function getInsertTablePopupHtml() {
-	return '<div id="inserttable-wrapper">\
-					<div id="inserttable-popup" class="inserttable-pop ui-widget ui-corner-all" tabIndex=0>\
-						<div class="inserttable-grid"></div>\
-						<div id="inserttable-status" class="cool-font" style="padding: 5px;"><br/></div>\
-					</div>\
-				</div>';
+var sendInsertTableFunction = function(event) {
+	var col = $(event.target).index() + 1;
+	var row = $(event.target).parent().index() + 1;
+	$('.col').removeClass('bright');
+	var status = $('#inserttable-status')
+	status.html('<br/>');
+	var msg = 'uno .uno:InsertTable {' +
+		' "Columns": { "type": "long","value": '
+		+ col +
+		' }, "Rows": { "type": "long","value": '
+		+ row + ' }}';
+
+	app.socket.sendMessage(msg);
+	closePopup();
+};
+
+var highlightTableFunction = function(event) {
+	var col = $(event.target).index() + 1;
+	var row = $(event.target).parent().index() + 1;
+	$('.col').removeClass('bright');
+	$('.row:nth-child(-n+' + row + ') .col:nth-child(-n+' + col + ')')
+		.addClass('bright');
+	var status = $('#inserttable-status')
+	status.html(col + 'x' + row);
+};
+
+function getInsertTablePopupHtml(closeCallback) {
+	lastClosePopupCallback = closeCallback;
+	var grid = $('<div><div class="inserttable-grid" onmouseover="highlightTableFunction(event)" \
+		onclick="sendInsertTableFunction(event)"></div>\
+		<div id="inserttable-status" class="cool-font" style="padding: 5px;"><br/></div></div>');
+
+	insertTable(grid.children('.inserttable-grid'));
+
+	var wrapper = $('<div><div id="inserttable-wrapper">\
+		<div id="inserttable-popup" class="inserttable-pop ui-widget ui-corner-all" tabIndex=0>\
+		' + grid.html() + '</div></div></div>');
+
+	return wrapper.html();
 }
 
-function insertTable() {
+function insertTable($grid = $('.inserttable-grid')) {
 	var rows = 10;
 	var cols = 10;
-	var $grid = $('.inserttable-grid');
-	var $status = $('#inserttable-status');
 
-	var selectedRow = 1;
-	var selectedColumn = 1;
-
-	// init
 	for (var r = 0; r < rows; r++) {
 		var $row = $('<div/>').addClass('row');
 		$grid.append($row);
 		for (var c = 0; c < cols; c++) {
-			var $col = $('<div/>').addClass('col');
+			var $col = $('<button aria-label="' + (1+r) + 'x' + (1+c) + '"\
+				onfocusin="highlightTableFunction(event)"/>').addClass('col');
 			$row.append($col);
 		}
-	}
-
-	var sendInsertMessageFunction = function(col, row) {
-		$('.col').removeClass('bright');
-		$status.html('<br/>');
-		var msg = 'uno .uno:InsertTable {' +
-			' "Columns": { "type": "long","value": '
-			+ col +
-			' }, "Rows": { "type": "long","value": '
-			+ row + ' }}';
-
-		app.socket.sendMessage(msg);
-		closePopup();
-	};
-
-	var highlightFunction = function(col, row) {
-		$('.col').removeClass('bright');
-		$('.row:nth-child(-n+' + row + ') .col:nth-child(-n+' + col + ')')
-			.addClass('bright');
-		$status.html(col + 'x' + row);
-	};
-
-	if (document.getElementById('inserttable-popup')) {
-		document.getElementById('inserttable-popup').addEventListener('keydown', function(event) {
-			if (event.code === 'ArrowLeft') {
-				if (selectedColumn > 1)
-					selectedColumn--;
-
-				highlightFunction(selectedColumn, selectedRow);
-			}
-			else if (event.code === 'ArrowRight') {
-				if (selectedColumn < 10)
-					selectedColumn++;
-
-				highlightFunction(selectedColumn, selectedRow);
-			}
-			else if (event.code === 'ArrowUp') {
-				if (selectedRow > 1)
-					selectedRow--;
-
-				highlightFunction(selectedColumn, selectedRow);
-			}
-			else if (event.code === 'ArrowDown') {
-				if (selectedRow < 10)
-					selectedRow++;
-
-				highlightFunction(selectedColumn, selectedRow);
-			}
-			else if (event.code === 'Escape' || event.code === 'Tab') {
-				event.preventDefault();
-				event.stopPropagation();
-				var popUp = document.getElementById('w2ui-overlay');
-				popUp.remove();
-				app.map.focus();
-			}
-			else if (event.code === 'Enter') {
-				sendInsertMessageFunction(selectedColumn, selectedRow);
-			}
-			else if (event.code === 'Space') {
-				sendInsertMessageFunction(selectedColumn, selectedRow);
-			}
-		});
-	}
-
-	// events
-	$grid.on({
-		mouseover: function () {
-			var col = $(this).index() + 1;
-			var row = $(this).parent().index() + 1;
-			highlightFunction(col, row);
-		},
-		click: function() {
-			var col = $(this).index() + 1;
-			var row = $(this).parent().index() + 1;
-			sendInsertMessageFunction(col, row);
-		}
-	}, '.col');
-
-	if (document.getElementById('inserttable-popup')) {
-		setTimeout(function() {
-			document.getElementById('inserttable-popup').focus();
-		}, 100);
 	}
 }
 
@@ -1373,6 +1318,8 @@ global.onClick = onClick;
 global.hideTooltip = hideTooltip;
 global.insertTable = insertTable;
 global.getInsertTablePopupHtml = getInsertTablePopupHtml;
+global.sendInsertTableFunction = sendInsertTableFunction;
+global.highlightTableFunction = highlightTableFunction;
 global.getShapesPopupHtml = getShapesPopupHtml;
 global.getConnectorsPopupHtml = getConnectorsPopupHtml;
 global.onShapeClickFunction = onShapeClickFunction;
