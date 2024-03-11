@@ -106,21 +106,29 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 	},
 
 	isHiddenPart: function (part) {
-		if (!this._hiddenParts)
-			return false;
-		return this._hiddenParts.indexOf(part) !== -1;
+		var partHash = this._partHashes[part];
+		if (partHash) {
+			var partInfo = this._partsInfo[partHash];
+			return partInfo.hidden;
+		}
+		return false;
 	},
 
 	hiddenParts: function () {
-		if (!this._hiddenParts)
-			return 0;
-		return this._hiddenParts.length;
+		var numberOfHiddenParts = 0;
+		for (var hash in this._partsInfo) {
+			if (this._partsInfo[hash].hidden)
+				++numberOfHiddenParts;
+		}
+		return numberOfHiddenParts;
 	},
 
 	hasAnyHiddenPart: function () {
-		if (!this._hiddenParts)
-			return false;
-		return this.hiddenParts() !== 0;
+		for (var hash in this._partsInfo) {
+			if (this._partsInfo[hash].hidden)
+				return true;
+		}
+		return false;
 	},
 
 	_onUpdateParts: function (e) {
@@ -397,11 +405,36 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			app.view.size.pixels = app.file.size.pixels.slice();
 			this._docType = command.type;
 			this._parts = command.parts;
+
+			// Extract part hashes and names
+			var partMatch = textMsg.match(/[^\r\n]+/g);
+			var hashesStart = partMatch.length - this._parts;
+			var newPartHashes = partMatch.slice(hashesStart);
+			var partNames = partMatch.slice(hashesStart - this._parts, hashesStart);
+
+			var prevSelectedPartHash;
+			if (this._partHashes && typeof this._selectedPart === 'number') {
+				prevSelectedPartHash = this._partHashes[this._selectedPart];
+			}
+
+			var saveSheetPosition = false;
+			var partHasBeenInserted = false;
+			if (prevSelectedPartHash && typeof command.selectedPart === 'number') {
+				saveSheetPosition = prevSelectedPartHash !== newPartHashes[command.selectedPart];
+				var selectedPartHash = newPartHashes[command.selectedPart] || '';
+				partHasBeenInserted = this._partHashes.indexOf(selectedPartHash) < 0;
+			}
+
 			if (app.socket._reconnecting) {
 				app.socket.sendMessage('setclientpart part=' + this._selectedPart);
 				this._resetInternalState();
 				window.keyboard.hintOnscreenKeyboard(window.keyboard.onscreenKeyboardHint);
 			} else {
+				if (saveSheetPosition) {
+					// save current position also when sheet switch is initiated by core.
+					this._sheetSwitch.saveCurrent();
+				}
+
 				this._selectedPart = command.selectedPart;
 			}
 			this._lastColumn = command.lastcolumn;
@@ -442,18 +475,42 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 
 			this._handleRTLFlags(command);
 			this._documentInfo = textMsg;
-			var partNames = textMsg.match(/[^\r\n]+/g);
-			// only get the last matches
-			this._partNames = partNames.slice(partNames.length - this._parts);
+
+			this._partHashes = newPartHashes;
+			if (!app.socket._reconnecting && saveSheetPosition) {
+				// Enable restoring also when sheet switch is initiated by core.
+				this._sheetSwitch.setRestorePart(command.selectedPart);
+				if (partHasBeenInserted)
+					this._cellCursorXY = null;
+			}
+
+			this._partsInfo = {};
+			for (var i = 0; i < this._parts; ++i) {
+				var partProps = { name: partNames[i], hidden: false, protected: false };
+				this._partsInfo[this._partHashes[i]] = partProps;
+			}
+
+			var hiddenParts = command.hiddenparts || [];
+			hiddenParts.forEach(function(i) {
+				var partInfo = this._partsInfo[this._partHashes[i]];
+				partInfo.hidden = true;
+			}.bind(this));
+
+			var protectedParts = command.protectedParts || [];
+			protectedParts.forEach(function(i) {
+				var partInfo = this._partsInfo[this._partHashes[i]];
+				partInfo.protected = true;
+			}.bind(this));
+
 			this._map.fire('updateparts', {
 				selectedPart: this._selectedPart,
 				parts: this._parts,
 				docType: this._docType,
-				partNames: this._partNames,
-				hiddenParts: this._hiddenParts,
-				protectedParts: this._protectedParts,
+				partHashes: this._partHashes,
+				partsInfo: this._partsInfo,
 				source: 'status'
 			});
+
 			this._resetPreFetching(true);
 			this._update();
 			if (firstSelectedPart) {

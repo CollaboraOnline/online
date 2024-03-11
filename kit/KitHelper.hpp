@@ -169,7 +169,7 @@ namespace LOKitHelper
                 std::free(ptrValue);
             }
 
-            if (type == LOK_DOCTYPE_PRESENTATION || type == LOK_DOCTYPE_DRAWING)
+            if (type == LOK_DOCTYPE_PRESENTATION || type == LOK_DOCTYPE_DRAWING || type == LOK_DOCTYPE_SPREADSHEET)
             {
                 for (int i = 0; i < parts; ++i)
                 {
