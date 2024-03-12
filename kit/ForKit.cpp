@@ -70,6 +70,9 @@ static std::map<pid_t, std::string> childJails;
 /// The jails that need cleaning up. This should be small.
 static std::vector<std::string> cleanupJailPaths;
 
+/// The Main polling main-loop of this (single threaded) process
+static std::unique_ptr<SocketPoll> ForKitPoll;
+
 extern "C" { void dump_forkit_state(void); /* easy for gdb */ }
 
 void dump_forkit_state()
@@ -424,6 +427,9 @@ static int createLibreOfficeKit(const std::string& childRoot,
             // Close the pipe from coolwsd
             close(0);
 
+            // Close the ForKit main-loop & it's pipes
+            ForKitPoll.reset();
+
             UnitKit::get().postFork();
 
             sleepForDebugger();
@@ -769,13 +775,13 @@ int forkit_main(int argc, char** argv)
         Log::logger().setLevel(LogLevel);
     }
 
-    SocketPoll mainPoll(Util::getThreadName());
-    mainPoll.runOnClientThread(); // We will do the polling on this thread.
+    ForKitPoll.reset(new SocketPoll (Util::getThreadName()));
+    ForKitPoll->runOnClientThread(); // We will do the polling on this thread.
 
     WSHandler = std::make_shared<ServerWSHandler>("forkit_ws");
 
 #if !MOBILEAPP
-    if (!mainPoll.insertNewUnixSocket(MasterLocation, FORKIT_URI, WSHandler))
+    if (!ForKitPoll->insertNewUnixSocket(MasterLocation, FORKIT_URI, WSHandler))
     {
         LOG_SFL("Failed to connect to WSD. Will exit.");
         Util::forcedExit(EX_SOFTWARE);
@@ -791,7 +797,7 @@ int forkit_main(int argc, char** argv)
     {
         UnitKit::get().invokeForKitTest();
 
-        mainPoll.poll(std::chrono::microseconds(POLL_TIMEOUT_MICRO_S));
+        ForKitPoll->poll(std::chrono::microseconds(POLL_TIMEOUT_MICRO_S));
 
         SigUtil::checkDumpGlobalState(dump_forkit_state);
 
