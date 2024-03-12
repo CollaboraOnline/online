@@ -384,11 +384,25 @@ int UnitBase::uninit()
     return GlobalResult == TestResult::Ok ? EX_OK : EX_SOFTWARE;
 }
 
+std::shared_ptr<SocketPoll> UnitBase::socketPoll()
+{
+    if (!_socketPoll)
+        _socketPoll = std::make_shared<SocketPoll>(getTestname());
+    return _socketPoll;
+}
+
+void UnitKit::postFork()
+{
+    // Don't drag wakeup pipes into the new process.
+    if (_socketPoll)
+        _socketPoll->closeAllSockets();
+}
+
 void UnitBase::initialize()
 {
     assert(DlHandle != nullptr && "Invalid handle to set");
     LOG_TST("==================== Starting [" << getTestname() << "] ====================");
-    _socketPoll->startThread();
+    socketPoll()->startThread();
 }
 
 bool UnitBase::isUnitTesting()
@@ -407,7 +421,8 @@ UnitBase::~UnitBase()
 {
     LOG_TST(getTestname() << ": ~UnitBase: " << (failed() ? "FAILED" : "SUCCESS"));
 
-    _socketPoll->joinThread();
+    if (_socketPoll)
+        _socketPoll->joinThread();
 }
 
 bool UnitBase::filterLOKitMessage(const std::shared_ptr<Message>& message)
@@ -542,8 +557,9 @@ void UnitBase::returnValue(int& retValue)
 
 void UnitBase::endTest(const std::string& reason)
 {
-    LOG_TST("Ending test by stopping SocketPoll [" << _socketPoll->name() << "]: " << reason);
-    _socketPoll->joinThread();
+    LOG_TST("Ending test by stopping SocketPoll [" << getTestname() << "]: " << reason);
+    if (_socketPoll)
+        _socketPoll->joinThread();
 
     // tell the timeout thread that the work has finished
     TimeoutConditionVariable.notify_all();
