@@ -656,13 +656,7 @@ eslint: browser/node_modules
 	@make -C browser eslint
 
 prettier: browser/node_modules
-	browser/node_modules/.bin/prettier \
-		--config browser/.prettierrc \
-		--ignore-path browser/.prettierignore \
-		--ignore-path browser/.beforeprettier \
-		--check \
-		browser/src browser/js browser/admin/src \
-		|| echo "To run prettier, you can use 'make prettier-write' or run COOLWSD with 'make run'"
+	@make -C browser prettier
 
 prettier-write: browser/node_modules
 	browser/node_modules/.bin/prettier \
