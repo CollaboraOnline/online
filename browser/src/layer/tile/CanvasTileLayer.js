@@ -1387,8 +1387,8 @@ L.CanvasTileLayer = L.Layer.extend({
 			partMode[pmKey].push(coords);
 		}
 
-		for (var pmKey in partMode) // no keys method
-		{
+		for (var pmKey in partMode) {
+			// no keys method
 			var partTileQueue = partMode[pmKey];
 			var part = partTileQueue[0].part;
 			var mode = partTileQueue[0].mode;
