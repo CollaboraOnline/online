@@ -132,16 +132,28 @@ namespace Util
     };
 
 #if !MOBILEAPP
-    /// Needs to open dirent before forking in Kit process
-    class ThreadCounter
+    class DirectoryCounter
     {
         void *_tasks;
     public:
-        ThreadCounter();
-        ~ThreadCounter();
-
-        /// Get number of threads in this process or -1 on error
+        DirectoryCounter(const char *procPath);
+        ~DirectoryCounter();
+        /// Get number of items in this directory or -1 on error
         int count();
+    };
+
+    /// Needs to open dirent before forking in Kit process
+    class ThreadCounter : public DirectoryCounter
+    {
+    public:
+        ThreadCounter() : DirectoryCounter("/proc/self/task") {}
+    };
+
+    /// Needs to open dirent before forking in Kit process
+    class FDCounter : public DirectoryCounter
+    {
+    public:
+        FDCounter() : DirectoryCounter("/proc/self/fd") {}
     };
 
     /// Spawn a process.
