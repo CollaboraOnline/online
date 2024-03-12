@@ -201,6 +201,11 @@ public:
     {
     }
 
+    explicit ProfileZone(std::string name)
+        : ProfileZone(std::move(name), std::string())
+    {
+    }
+
     explicit ProfileZone(const char* id)
         : ProfileZone(id, std::string())
     {
