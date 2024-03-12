@@ -6,7 +6,7 @@ apply from: 'libSettings.gradle'
 android {
     compileSdkVersion 33
     buildDir = "${rootProject.getBuildDir()}/lib"
-    ndkVersion "20.1.5948944"
+    ndkVersion "22.1.7171670"
 
     defaultConfig {
         minSdkVersion 21
