@@ -465,8 +465,7 @@ bool ChildSession::_handleInput(const char *buffer, int length)
                tokens.equals(0, "geta11ycaretposition") ||
                tokens.equals(0, "toggletiledumping"));
 
-        std::string pzName("ChildSession::_handleInput:" + tokens[0]);
-        ProfileZone pz(pzName.c_str());
+        ProfileZone pz("ChildSession::_handleInput:" + tokens[0]);
         if (tokens.equals(0, "clientzoom"))
         {
             return clientZoom(tokens);
