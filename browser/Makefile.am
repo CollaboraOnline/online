@@ -481,8 +481,8 @@ endef
 
 define run_prettier_check
 	@$(NODE) node_modules/.bin/prettier \
-		--ignore-path $(srcdir)/browser/.prettierignore \
-		--ignore-path $(srcdir)/browser/.beforeprettier \
+		--ignore-path $(srcdir)/.prettierignore \
+		--ignore-path $(srcdir)/.beforeprettier \
 		$(1)
 endef
 
