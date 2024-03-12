@@ -175,19 +175,19 @@ namespace Util
     }
 
 #if !MOBILEAPP
-    ThreadCounter::ThreadCounter() :
-        _tasks(opendir("/proc/self/task"))
+    DirectoryCounter::DirectoryCounter(const char *procPath) :
+        _tasks(opendir(procPath))
     {
         if (!_tasks)
             LOG_ERR("No proc mounted, can't count threads");
     }
 
-    ThreadCounter::~ThreadCounter()
+    DirectoryCounter::~DirectoryCounter()
     {
         closedir(reinterpret_cast<DIR *>(_tasks));
     }
 
-    int ThreadCounter::count()
+    int DirectoryCounter::count()
     {
         auto dir = reinterpret_cast<DIR *>(_tasks);
 
