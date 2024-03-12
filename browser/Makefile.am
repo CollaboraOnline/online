@@ -879,6 +879,12 @@ prettier:
 		$(srcdir)/js \
 		$(srcdir)/admin/src)
 
+prettier-write:
+	$(call run_prettier_check,--write \
+		$(srcdir)/src \
+		$(srcdir)/js \
+		$(srcdir)/admin/src)
+
 MOCHA_TEST_LOG = "`pwd`/mocha.log"
 DUPLICATION_TEST_LOG = "`pwd`/duplication.log"
 check-local: $(MOCHA_TS_JS_FILES)
