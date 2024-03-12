@@ -479,6 +479,13 @@ define run_eslint_check
 		--no-eslintrc $(1)
 endef
 
+define run_prettier_check
+	@$(NODE) node_modules/.bin/prettier \
+		--ignore-path $(srcdir)/browser/.prettierignore \
+		--ignore-path $(srcdir)/browser/.beforeprettier \
+		$(1)
+endef
+
 .PHONY: build-cool
 
 all-local: build-cool
@@ -552,11 +559,7 @@ $(INTERMEDIATE_DIR)/admin-src.js: $(COOL_ADMIN_TS_JS) $(COOL_ADMIN_JS)
 	@mkdir -p $(dir $@)
 	@echo "Checking for admin JS errors..."
 	$(call run_eslint_check,--ignore-pattern $(COOL_ADMIN_TS_JS) $(srcdir)/admin/src)
-	@$(NODE) node_modules/.bin/prettier \
-		--ignore-path $(srcdir)/browser/.prettierignore \
-		--ignore-path $(srcdir)/browser/.beforeprettier \
-		--debug-check \
-		$(srcdir)/admin/src
+	$(call run_prettier_check,--debug-check $(srcdir)/admin/src)
 	@awk 'FNR == 1 {print ""} 1' $(COOL_ADMIN_TS_JS) $(patsubst %.js,$(srcdir)/%.js,$(COOL_ADMIN_JS)) > $@
 
 $(INTERMEDIATE_DIR)/cool-src.js: tscompile.done $(call prereq_cool) $(COOL_JS_DST) $(abs_top_srcdir)/scripts/unocommands.py
@@ -566,11 +569,7 @@ $(INTERMEDIATE_DIR)/cool-src.js: tscompile.done $(call prereq_cool) $(COOL_JS_DS
 	@if ! test "z$(COOL_ASSERT_INTERSECT)" == "z"; then echo; echo "Error: please remove obsolete files:"; echo "$(COOL_ASSERT_INTERSECT)"; exit 1; else echo "clean"; fi
 	@echo "Checking for cool JS errors..."
 	$(call run_eslint_check,$(srcdir)/src $(srcdir)/js)
-	@$(NODE) node_modules/.bin/prettier \
-		--ignore-path $(srcdir)/browser/.prettierignore \
-		--ignore-path $(srcdir)/browser/.beforeprettier \
-		--debug-check \
-		$(srcdir)/src
+	$(call run_prettier_check,--debug-check $(srcdir)/src $(srcdir)/js/global.js)
 	@echo "Bundling cool..."
 	$(call bundle_cool)
 
