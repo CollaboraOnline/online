@@ -126,7 +126,7 @@ protected:
         , _timeoutMilliSeconds(std::chrono::seconds(30))
         , _startTimeMilliSeconds(std::chrono::milliseconds::zero())
         , _type(type)
-        , _socketPoll(std::make_shared<SocketPoll>(name))
+        , _socketPoll(nullptr)
         , testname(name)
     {
     }
@@ -272,7 +272,7 @@ public:
     const std::string& getTestname() const { return testname; }
     void setTestname(const std::string& name) { testname = name; }
 
-    std::shared_ptr<SocketPoll> socketPoll() { return _socketPoll; }
+    std::shared_ptr<SocketPoll> socketPoll();
 
 private:
     /// Initialize the test.
@@ -522,7 +522,7 @@ public:
     // ---------------- Kit hooks ----------------
 
     /// Post fork hook - just before we init the child kit
-    virtual void postFork() {}
+    virtual void postFork();
 
     /// Kit got a message
     virtual bool filterKitMessage(WebSocketHandler *, std::string &/* message */ )
