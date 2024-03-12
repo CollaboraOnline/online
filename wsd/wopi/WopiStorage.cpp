@@ -581,7 +581,9 @@ void WopiStorage::uploadLocalFileToStorageAsync(const Authorization& auth, LockC
                                                 SocketPoll& socketPoll,
                                                 const AsyncUploadCallback& asyncUploadCallback)
 {
-    ProfileZone profileZone("WopiStorage::uploadLocalFileToStorage", { { "url", _fileUrl } });
+    auto profileZone =
+        std::make_shared<ProfileZone>(std::string("WopiStorage::uploadLocalFileToStorage"),
+                                      std::map<std::string, std::string>({ { "url", _fileUrl } }));
 
     // TODO: Check if this URI has write permission (canWrite = true)
 
@@ -730,8 +732,11 @@ void WopiStorage::uploadLocalFileToStorageAsync(const Authorization& auth, LockC
 
         http::Session::FinishedCallback finishedCallback =
             [this, startTime, wopiLog, filePathAnonym, uriAnonym, size, isSaveAs, isRename,
-             asyncUploadCallback](const std::shared_ptr<http::Session>& httpSession)
+             asyncUploadCallback, profileZone = std::move(profileZone)](
+                const std::shared_ptr<http::Session>& httpSession)
         {
+            profileZone->end();
+
             // Retire.
             _uploadHttpSession.reset();
 
