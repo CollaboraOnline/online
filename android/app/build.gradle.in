@@ -6,7 +6,7 @@ apply from: 'appSettings.gradle'
 android {
     compileSdkVersion 33
     buildDir = "${rootProject.getBuildDir()}/app"
-    ndkVersion "20.1.5948944"
+    ndkVersion "22.1.7171670"
 
     defaultConfig {
         // applicationId, versionCode and versionName are defined in appSettings.gradle
