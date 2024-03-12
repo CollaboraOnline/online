@@ -653,12 +653,7 @@ browser/node_modules: browser/package.json browser/archived-packages
 	@cd browser && npm install
 
 eslint: browser/node_modules
-	browser/node_modules/.bin/eslint browser/src browser/js browser/admin/src \
-		--max-warnings 0 \
-		--resolve-plugins-relative-to browser \
-		--ignore-path browser/.eslintignore \
-		--no-eslintrc \
-		--config browser/.eslintrc
+	@make -C browser eslint
 
 prettier: browser/node_modules
 	browser/node_modules/.bin/prettier \

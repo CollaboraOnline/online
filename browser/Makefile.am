@@ -867,6 +867,13 @@ jsconfig: $(abs_srcdir)/jsconfig.json $(abs_srcdir)/admin/jsconfig.json
 build-tests: $(MOCHA_TS_JS_FILES)
 	@echo "Build of mocha test finished."
 
+eslint: $(COOL_ADMIN_TS_JS)
+	$(call run_eslint_check,--max-warnings 0 \
+		--ignore-pattern $(COOL_ADMIN_TS_JS) \
+		$(srcdir)/src \
+		$(srcdir)/js \
+		$(srcdir)/admin/src)
+
 MOCHA_TEST_LOG = "`pwd`/mocha.log"
 DUPLICATION_TEST_LOG = "`pwd`/duplication.log"
 check-local: $(MOCHA_TS_JS_FILES)
