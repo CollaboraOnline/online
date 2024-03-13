@@ -93,7 +93,9 @@ bool StreamSocket::socketpair(std::shared_ptr<StreamSocket> &parent,
         return false;
 
     child = std::shared_ptr<StreamSocket>(new StreamSocket("save-child", pair[0], Socket::Type::Unix, true));
+    child->setNoShutdown();
     parent = std::shared_ptr<StreamSocket>(new StreamSocket("save-kit-parent", pair[1], Socket::Type::Unix, true));
+    parent->setNoShutdown();
 
     return true;
 #endif

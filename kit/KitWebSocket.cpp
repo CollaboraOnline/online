@@ -168,7 +168,7 @@ void KitWebSocketHandler::shutdownForBackgroundSave()
     {
         // stays open in the parent process
         LOG_TRC("Hard close kit to parent socket");
-        kitToWSDSocket->closeConnection();
+        close(kitToWSDSocket->getFD());
     }
     _backgroundSaver = true;
 }

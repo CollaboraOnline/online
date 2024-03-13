@@ -120,6 +120,7 @@ extern "C" { void dump_kit_state(void); /* easy for gdb */ }
 class Document;
 static Document *singletonDocument = nullptr;
 static std::unique_ptr<Util::ThreadCounter> threadCounter;
+static std::unique_ptr<Util::FDCounter> fdCounter;
 
 int getCurrentThreadCount()
 {
@@ -1312,6 +1313,19 @@ bool Document::forkToSave(const std::function<void()> &childSave)
 {
     LOG_TRC("Starting background save");
 
+    // ARGH - FIXME - we can't count FDs in fact ...
+#if 0
+    // Check we don't have unexpected file-descriptors open
+    int expectFds = 2 // SocketPoll wakeups
+        + 1; // socket to coolwsd
+    int actualFds = fdCounter->count();
+    if (actualFds != expectFds)
+    {
+        LOG_WRN("Can't background save: " << actualFds << " fds open; expect " << expectFds);
+        return false;
+    }
+#endif
+
     const auto start = std::chrono::steady_clock::now();
 
     // TODO: close URPtoLoFDs and URPfromLoFDs and test
@@ -1332,6 +1346,10 @@ bool Document::forkToSave(const std::function<void()> &childSave)
 
     if (!pid) // Child
     {
+        // sort out thread local variables to get logging right from
+        // as early as possible.
+        Util::setThreadName("kit_bgsave_" + Util::encodeId(mobileAppDocId, 3));
+
         SigUtil::addActivity("forked background save process: " +
                              std::to_string(pid));
 
@@ -2678,6 +2696,8 @@ void lokit_main(
 
         // initialize while we have access to /proc/self/task
         threadCounter.reset(new Util::ThreadCounter());
+        // initialize while we have access to /proc/self/fd
+        fdCounter.reset(new Util::FDCounter());
 
         if (!ChildSession::NoCapsForKit)
         {
