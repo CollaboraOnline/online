@@ -1659,8 +1659,6 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 	border-radius: var(--btn-size); /* We expect the height to be --btn-size, give a bit for a border. To fully round the corners, this needs to be at least 50% of the height so --btn-size should do */
 	padding: 2px; /* This will become the grey border around the inner elements */
 
-	font-size: 0.8em; /* The "Following foo" text overflows the box at the default size, 0.8em seems about right */
-
 	display: none;
 }
 
@@ -1700,10 +1698,6 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-}
-
-#followingChipBackground > #followingChip > #followingChipLine1 {
-	font-weight: bold;
 }
 
 #userListSummaryBackground > #userListSummary {

@@ -40,9 +40,9 @@ class UserList extends L.Control {
 		userPopupTimeout: null | ReturnType<typeof setTimeout>;
 		userJoinedPopupMessage: string;
 		userLeftPopupMessage: string;
-		followingChipLine1TextUser: string;
-		followingChipLine1TextEditor: string;
-		followingChipLine2Text: string;
+		followingChipTextUser: string;
+		followingChipTextEditor: string;
+		followingChipTooltipText: string;
 		userAvatarAlt: string;
 		nUsers?: string;
 		oneUser?: string;
@@ -53,9 +53,9 @@ class UserList extends L.Control {
 		userPopupTimeout: null,
 		userJoinedPopupMessage: _('%user has joined'),
 		userLeftPopupMessage: _('%user has left'),
-		followingChipLine1TextUser: _('Following %user'),
-		followingChipLine1TextEditor: _('Following the editor'),
-		followingChipLine2Text: _('Click to stop following'),
+		followingChipTextUser: _('Following %user'),
+		followingChipTextEditor: _('Following the editor'),
+		followingChipTooltipText: _('Stop following'),
 		userAvatarAlt: _('Avatar for %user'),
 		nUsers: undefined,
 		oneUser: undefined,
@@ -640,8 +640,6 @@ class UserList extends L.Control {
 			'followingChipBackground',
 		);
 		const followingChip = document.getElementById('followingChip');
-		const followingChipLine1 = document.getElementById('followingChipLine1');
-		const followingChipLine2 = document.getElementById('followingChipLine2');
 
 		const following = this.getFollowedUser();
 
@@ -653,22 +651,22 @@ class UserList extends L.Control {
 		const topAvatarZIndex = this.options.userLimitHeaderWhenFollowing;
 
 		if (this.map._docLayer._followEditor) {
-			followingChipLine1.innerText = this.options.followingChipLine1TextEditor;
+			followingChip.innerText = this.options.followingChipTextEditor;
 			followingChip.style.borderColor = '#000';
 		} else {
-			followingChipLine1.innerText =
-				this.options.followingChipLine1TextUser.replace(
-					'%user',
-					following[1].username,
-				);
+			followingChip.innerText = this.options.followingChipTextUser.replace(
+				'%user',
+				following[1].username,
+			);
 			followingChip.style.borderColor = following[1].color;
 		}
-
-		followingChipLine2.innerText = this.options.followingChipLine2Text;
 
 		followingChip.onclick = () => {
 			this.unfollowAll();
 		};
+
+		followingChip.title = this.options.followingChipTooltipText;
+		$(followingChip).tooltip();
 
 		followingChipBackground.style.display = 'block';
 		followingChipBackground.style.zIndex = topAvatarZIndex.toString();
