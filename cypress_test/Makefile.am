@@ -106,8 +106,8 @@ MULTIUSER_TESTS_DONE= \
 check-local: do-check
 	$(if $(wildcard $(ERROR_LOG)),$(error CypressError: some tests failed!))
 
-# TODO: enable other tests $(MOBILE_TEST_FILES_DONE) $(IDLE_TEST_FILES_DONE) $(MULTIUSER_TESTS_DONE)
-do-check: $(DESKTOP_TEST_FILES_DONE)
+# TODO: enable multiuser tests $(MULTIUSER_TESTS_DONE)
+do-check: $(DESKTOP_TEST_FILES_DONE) $(MOBILE_TEST_FILES_DONE) $(IDLE_TEST_FILES_DONE)
 	$(V)$(KILL_COMMAND) || true
 	$(if $(HEADLESS_BUILD),$(V)pkill Xvfb,)
 	$(if $(wildcard $(ERROR_LOG)),$(V)cat $(ERROR_LOG))
@@ -152,11 +152,11 @@ $(DESKTOP_TEST_FILES_DONE): $(PID_FILE)
 		$(V)$(foreach done_file,$(DESKTOP_TEST_FILES_DONE),mkdir -p $(dir $(done_file)) && touch $(done_file) &&) true\
 	)
 
-$(MULTIUSER_TESTS_DONE): $(PID_FILE) $(MOBILE_TEST_FILES_DONE)
+$(MULTIUSER_TESTS_DONE): $(PID_FILE) $(MOBILE_TEST_FILES_DONE) $(IDLE_TEST_FILES_DONE)
 	$(call run_all_multiuser_tests)
 	$(V)mkdir -p $(dir $@) && touch $@
 
-$(IDLE_TEST_FILES_DONE): $(MULTIUSER_TESTS_DONE) start_short_idle_coolwsd $(PID_FILE)
+$(IDLE_TEST_FILES_DONE): start_short_idle_coolwsd $(PID_FILE)
 	$(if $(PARALLEL_BUILD),\
 		$(call run_idle_tests,$(subst $(IDLE_TRACK_FOLDER)/,,$(basename $@)),$(basename $@).log),\
 		$(call run_idle_tests))
