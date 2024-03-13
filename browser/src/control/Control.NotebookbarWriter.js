@@ -2135,7 +2135,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 								'type': 'toolitem',
 								'text': _UNO('.uno:NextTrackedChange', 'text'),
 								'command': '.uno:NextTrackedChange',
-								'accessibility': { focusBack: true, combination: 'H1', de: 'H' }
+								'accessibility': { focusBack: true, combination: 'H', de: 'H' }
 							}
 						]
 					},
@@ -2155,6 +2155,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'vertical': 'true'
 			},
 			{
+				'type': 'container',
 				'children': [
 					{
 						'type': 'toolbox',
@@ -2163,7 +2164,8 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 								'id': 'review-accept-tracked-change',
 								'type': 'toolitem',
 								'text': _UNO('.uno:AcceptTrackedChange', 'text'),
-								'command': '.uno:AcceptTrackedChange'
+								'command': '.uno:AcceptTrackedChange',
+								'accessibility': { focusBack: true, combination: 'AC', de: 'AC' }
 							}
 						]
 					},
@@ -2174,7 +2176,8 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 								'id': 'review-reject-tracked-change',
 								'type': 'toolitem',
 								'text': _UNO('.uno:RejectTrackedChange', 'text'),
-								'command': '.uno:RejectTrackedChange'
+								'command': '.uno:RejectTrackedChange',
+								'accessibility': { focusBack: true, combination: 'JR', de: 'JR' }
 							}
 						]
 					}
@@ -2182,14 +2185,17 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'vertical': 'true'
 			},
 			{
+				'type': 'container',
 				'children': [
 					{
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'review-accept-tracked-change-to-next',
 								'type': 'toolitem',
 								'text': _UNO('.uno:AcceptTrackedChangeToNext', 'text'),
-								'command': '.uno:AcceptTrackedChangeToNext'
+								'command': '.uno:AcceptTrackedChangeToNext',
+								'accessibility': { focusBack: true, combination: 'AM', de: 'AM' }
 							}
 						]
 					},
@@ -2197,9 +2203,11 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'review-reject-tracked-change-to-next',
 								'type': 'toolitem',
 								'text': _UNO('.uno:RejectTrackedChangeToNext', 'text'),
-								'command': '.uno:RejectTrackedChangeToNext'
+								'command': '.uno:RejectTrackedChangeToNext',
+								'accessibility': { focusBack: true, combination: 'JM', de: 'JM' }
 							}
 						]
 					}
@@ -2217,7 +2225,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 								'type': 'customtoolitem',
 								'text': _UNO('.uno:AcceptAllTrackedChanges', 'text'),
 								'command': '.uno:AcceptAllTrackedChanges',
-								'accessibility': { focusBack: true, combination: 'A2', de: 'A2' }
+								'accessibility': { focusBack: true, combination: 'AL', de: 'AL' }
 							}
 						]
 					},
@@ -2229,7 +2237,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 								'type': 'customtoolitem',
 								'text': _UNO('.uno:RejectAllTrackedChanges', 'text'),
 								'command': '.uno:RejectAllTrackedChanges',
-								'accessibility': { focusBack: true, combination: 'J', de: 'J' }
+								'accessibility': { focusBack: true, combination: 'JL', de: 'JL' }
 							}
 						]
 					}
