@@ -744,6 +744,12 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	color: var(--color-text-dark);
 }
 
+.jsdialog-window .ui-listbox,
+.jsdialog-window .ui-combobox,
+.jsdialog-window .ui-timefield {
+	height: 32px;/* Use the same height as in .jsdialog.ui-edit */
+}
+
 .ui-listbox option {
 	font-weight: normal;
 	display: block;
