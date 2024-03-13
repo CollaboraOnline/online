@@ -634,6 +634,9 @@ public:
     /// Remove all the sockets we own.
     void removeSockets();
 
+    /// After a fork - close all associated sockets without shutdown.
+    void closeAllSockets();
+
     bool isAlive() const { return (_threadStarted && !_threadFinished) || _runOnClientThread; }
 
     /// Check if we should continue polling
@@ -810,6 +813,9 @@ protected:
     {
         return _stop;
     }
+
+    void removeFromWakeupArray();
+
     bool hasCallbacks()
     {
         std::lock_guard<std::mutex> lock(_mutex);

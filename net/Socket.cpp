@@ -229,6 +229,11 @@ SocketPoll::~SocketPoll()
 
     joinThread();
 
+    removeFromWakeupArray();
+}
+
+void SocketPoll::removeFromWakeupArray()
+{
     {
         std::lock_guard<std::mutex> lock(getPollWakeupsMutex());
         auto it = std::find(getWakeupsArray().begin(),
@@ -538,6 +543,17 @@ void SocketPoll::wakeupWorld()
 {
     for (const auto& fd : getWakeupsArray())
         wakeup(fd);
+}
+
+// NB. if we just ~Socket we do a shutdown which closes
+// the parent copy of the same socket, which is exactly
+// what we don't want.
+void SocketPoll::closeAllSockets()
+{
+    removeFromWakeupArray();
+    for (auto &it : _pollSockets)
+        close(it->getFD());
+    assert(_newSockets.size() == 0);
 }
 
 void SocketPoll::removeSockets()
