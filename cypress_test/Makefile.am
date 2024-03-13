@@ -14,6 +14,8 @@ CYPRESS_CONFIG = $(abs_srcdir)/cypress.config.ts
 SERVER_ARG = $(subst :, ,$(shell basename $(if $(coolwsd),$(coolwsd),http://localhost:9980)))
 COOLWSD_SERVER = $(firstword $(SERVER_ARG))
 FREE_PORT = $(lastword $(SERVER_ARG))
+SCREENSHOT_FOLDER = $(abs_srcdir)/cypress/screenshots
+IMAGES_FOLDER = $(abs_top_srcdir)/browser/images/help/en/
 
 export COOLWSD_SERVER
 export FREE_PORT
@@ -27,6 +29,7 @@ COOLWSD_OUTPUT=$(abs_builddir)/cypress/wsd_logs/coolwsd_output.log
 
 SUPPORT_FILE_ABS = $(abs_srcdir)/support/index.js
 SUPPORT_FILE = $(if $(findstring $(abs_srcdir),$(abs_builddir)),support/index.js,$(SUPPORT_FILE_ABS))
+
 
 DESKTOP_USER_AGENT = "cypress"
 DESKTOP_TEST_FOLDER = $(abs_srcdir)/integration_tests/desktop
@@ -46,10 +49,12 @@ MOBILE_DATA_FOLDER = $(abs_srcdir)/data/mobile/
 MOBILE_DATA_WORKDIR = $(if $(coolwsd),$(MOBILE_DATA_FOLDER),$(abs_builddir)/workdir/data/mobile/)
 MOBILE_TRACK_FOLDER = $(abs_builddir)/workdir/track/mobile
 
+MULTIUSER_USER_AGENT = "cypress"
 MULTIUSER_TEST_FOLDER = $(abs_srcdir)/integration_tests/multiuser
 MULTIUSER_DATA_FOLDER = $(abs_srcdir)/data/multiuser/
 MULTIUSER_DATA_WORKDIR = $(if $(coolwsd),$(MULTIUSER_DATA_FOLDER),$(abs_builddir)/workdir/data/multiuser/)
 MULTIUSER_TRACK_FOLDER=$(abs_builddir)/workdir/track/multiuser
+
 
 USER_INTERFACE = classic
 UPDATE_SCREENSHOT = false
@@ -83,30 +88,68 @@ endif
 
 if HAVE_LO_PATH
 
-MOBILE_TEST_FILES=$(subst $(MOBILE_TEST_FOLDER)/,,$(wildcard $(MOBILE_TEST_FOLDER)/*_spec.js) $(wildcard $(MOBILE_TEST_FOLDER)/*/*_spec.js))
+# The *_INCLUDE_TAGS variable must be exported separately because the
+# cypress --env option does not support variables with commas
 
 DESKTOP_TEST_FILES=$(subst $(DESKTOP_TEST_FOLDER)/,,$(wildcard $(DESKTOP_TEST_FOLDER)/*_spec.js) $(wildcard $(DESKTOP_TEST_FOLDER)/*/*_spec.js))
+DESKTOP_TEST_FILES_DONE= $(foreach test_file,$(DESKTOP_TEST_FILES),$(DESKTOP_TRACK_FOLDER)/$(test_file).done)
+DESKTOP_INCLUDE_TAGS = tagdesktop,$(A11Y_TAG)
 
 IDLE_TEST_FILES=$(subst $(IDLE_TEST_FOLDER)/,,$(wildcard $(IDLE_TEST_FOLDER)/*_spec.js) $(wildcard $(IDLE_TEST_FOLDER)/*/*_spec.js))
+IDLE_TEST_FILES_DONE= $(foreach test_file,$(IDLE_TEST_FILES),$(IDLE_TRACK_FOLDER)/$(test_file).done)
+IDLE_INCLUDE_TAGS = tagdesktop,$(A11Y_TAG)
+
+MOBILE_TEST_FILES=$(subst $(MOBILE_TEST_FOLDER)/,,$(wildcard $(MOBILE_TEST_FOLDER)/*_spec.js) $(wildcard $(MOBILE_TEST_FOLDER)/*/*_spec.js))
+MOBILE_TEST_FILES_DONE= $(foreach test_file,$(MOBILE_TEST_FILES),$(MOBILE_TRACK_FOLDER)/$(test_file).done)
+MOBILE_INCLUDE_TAGS = tagmobile
 
 MULTIUSER_TEST_FILES=$(subst $(MULTIUSER_TEST_FOLDER)/,,$(wildcard $(MULTIUSER_TEST_FOLDER)/*_spec.js) $(wildcard $(MULTIUSER_TEST_FOLDER)/*/*_spec.js))
+MULTIUSER_TEST_FILES_DONE= $(foreach test_file,$(MULTIUSER_TEST_FILES),$(MULTIUSER_TRACK_FOLDER)/$(test_file).done)
+MULTIUSER_INCLUDE_TAGS = tagmultiuser
 
-MOBILE_TEST_FILES_DONE= \
-	$(foreach test_file,$(MOBILE_TEST_FILES),$(MOBILE_TRACK_FOLDER)/$(test_file).done)
+# $\ expands to replace newline character without whitespace
+COMMON_ENV = WSD_VERSION_HASH=$(COOLWSD_VERSION_HASH),$\
+			 SERVER=$(COOLWSD_SERVER),$\
+			 SERVER_PORT=$(FREE_PORT),$\
+			 LO_CORE_VERSION="$(CORE_VERSION)",$\
+			 INTEGRATION=$(CYPRESS_INTEGRATION),$\
+			 SCREENSHOT_FOLDER=$(SCREENSHOT_FOLDER),$\
+			 IMAGES_FOLDER=$(IMAGES_FOLDER)
+COMMON_CONFIG = supportFile=$(SUPPORT_FILE)
 
-DESKTOP_TEST_FILES_DONE= \
-	$(foreach test_file,$(DESKTOP_TEST_FILES),$(DESKTOP_TRACK_FOLDER)/$(test_file).done)
+DESKTOP_CONFIG = specPattern=$(DESKTOP_TEST_FOLDER)/**/*_spec.js,$\
+				 userAgent=$(DESKTOP_USER_AGENT),$\
+				 $(COMMON_CONFIG)
+DESKTOP_ENV = DATA_FOLDER=$(DESKTOP_DATA_FOLDER),$\
+			  DATA_WORKDIR=$(DESKTOP_DATA_WORKDIR),$\
+			  $(COMMON_ENV)
 
-IDLE_TEST_FILES_DONE= \
-	$(foreach test_file,$(IDLE_TEST_FILES),$(IDLE_TRACK_FOLDER)/$(test_file).done)
+MOBILE_CONFIG = specPattern=$(MOBILE_TEST_FOLDER)/**/*_spec.js,$\
+				userAgent=$(MOBILE_USER_AGENT),$\
+				$(COMMON_CONFIG)
+MOBILE_ENV = DATA_FOLDER=$(MOBILE_DATA_FOLDER),$\
+			 DATA_WORKDIR=$(MOBILE_DATA_WORKDIR),$\
+			 $(COMMON_ENV)
 
-MULTIUSER_TESTS_DONE= \
-	$(MULTIUSER_TRACK_FOLDER)/multiuser_tests.done
+IDLE_CONFIG = specPattern=$(IDLE_TEST_FOLDER)/**/*_spec.js,$\
+			  userAgent=$(IDLE_USER_AGENT),$\
+			  $(COMMON_CONFIG)
+IDLE_ENV = DATA_FOLDER=$(IDLE_DATA_FOLDER),$\
+		   DATA_WORKDIR=$(IDLE_DATA_WORKDIR),$\
+		   $(COMMON_ENV)
+
+MULTIUSER_CONFIG = specPattern=$(MULTIUSER_TEST_FOLDER)/**/*_spec.js,$\
+				   userAgent=$(DESKTOP_USER_AGENT),$\
+				   $(COMMON_CONFIG)
+MULTIUSER_ENV = DATA_FOLDER=$(MULTIUSER_DATA_FOLDER),$\
+				DATA_WORKDIR=$(MULTIUSER_DATA_WORKDIR),$\
+				$(COMMON_ENV)
+
 
 check-local: do-check
 	$(if $(wildcard $(ERROR_LOG)),$(error CypressError: some tests failed!))
 
-do-check: $(DESKTOP_TEST_FILES_DONE) $(MOBILE_TEST_FILES_DONE) $(IDLE_TEST_FILES_DONE) $(MULTIUSER_TESTS_DONE)
+do-check: $(DESKTOP_TEST_FILES_DONE) $(IDLE_TEST_FILES_DONE) $(MOBILE_TEST_FILES_DONE) $(MULTIUSER_TEST_FILES_DONE)
 	$(V)$(KILL_COMMAND) || true
 	$(if $(HEADLESS_BUILD),$(V)pkill Xvfb,)
 	$(if $(wildcard $(ERROR_LOG)),$(V)cat $(ERROR_LOG))
@@ -131,16 +174,6 @@ start_short_idle_coolwsd: @JAILS_PATH@ $(NODE_BINS) setup_short_idle
 	$(if $(HEADLESS_BUILD),$(call start_Xvfb),)
 	$(call start_coolwsd)
 
-$(MOBILE_TEST_FILES_DONE): $(PID_FILE) $(DESKTOP_TEST_FILES_DONE)
-	$(if $(PARALLEL_BUILD),\
-		$(call run_mobile_tests,$(subst $(MOBILE_TRACK_FOLDER)/,,$(basename $@)),$(basename $@).log),\
-		$(call run_mobile_tests))
-	$(if $(PARALLEL_BUILD),\
-		$(V)mkdir -p $(dir $@) && touch $@\
-		,\
-		$(V)$(foreach done_file,$(MOBILE_TEST_FILES_DONE),mkdir -p $(dir $(done_file)) && touch $(done_file) &&) true\
-	)
-
 $(DESKTOP_TEST_FILES_DONE): $(PID_FILE)
 	$(if $(PARALLEL_BUILD),\
 		$(call run_desktop_tests,$(subst $(DESKTOP_TRACK_FOLDER)/,,$(basename $@)),$(basename $@).log),\
@@ -151,11 +184,8 @@ $(DESKTOP_TEST_FILES_DONE): $(PID_FILE)
 		$(V)$(foreach done_file,$(DESKTOP_TEST_FILES_DONE),mkdir -p $(dir $(done_file)) && touch $(done_file) &&) true\
 	)
 
-$(MULTIUSER_TESTS_DONE): $(PID_FILE) $(MOBILE_TEST_FILES_DONE)
-	$(call run_all_multiuser_tests)
-	$(V)mkdir -p $(dir $@) && touch $@
-
-$(IDLE_TEST_FILES_DONE): $(MULTIUSER_TESTS_DONE) start_short_idle_coolwsd $(PID_FILE)
+# Depends on other test files so that it runs last. It must run last because it starts a new coolwsd with a different config
+$(IDLE_TEST_FILES_DONE): start_short_idle_coolwsd $(PID_FILE) $(DESKTOP_TEST_FILES_DONE) $(MOBILE_TEST_FILES_DONE) $(MULTIUSER_TEST_FILES_DONE)
 	$(if $(PARALLEL_BUILD),\
 		$(call run_idle_tests,$(subst $(IDLE_TRACK_FOLDER)/,,$(basename $@)),$(basename $@).log),\
 		$(call run_idle_tests))
@@ -163,6 +193,26 @@ $(IDLE_TEST_FILES_DONE): $(MULTIUSER_TESTS_DONE) start_short_idle_coolwsd $(PID_
 		$(V)mkdir -p $(dir $@) && touch $@\
 		,\
 		$(V)$(foreach done_file,$(IDLE_TEST_FILES_DONE),mkdir -p $(dir $(done_file)) && touch $(done_file) &&) true\
+	)
+
+$(MOBILE_TEST_FILES_DONE): $(PID_FILE) $(DESKTOP_TEST_FILES_DONE)
+	$(if $(PARALLEL_BUILD),\
+		$(call run_mobile_tests,$(subst $(MOBILE_TRACK_FOLDER)/,,$(basename $@)),$(basename $@).log),\
+		$(call run_mobile_tests))
+	$(if $(PARALLEL_BUILD),\
+		$(V)mkdir -p $(dir $@) && touch $@\
+		,\
+		$(V)$(foreach done_file,$(MOBILE_TEST_FILES_DONE),mkdir -p $(dir $(done_file)) && touch $(done_file) &&) true\
+	)
+
+$(MULTIUSER_TEST_FILES_DONE): $(PID_FILE) $(MOBILE_TEST_FILES_DONE)
+	$(if $(PARALLEL_BUILD),\
+		$(call run_multiuser_tests,$(subst $(MULTIUSER_TRACK_FOLDER)/,,$(basename $@)),$(basename $@).log),\
+		$(call run_multiuser_tests))
+	$(if $(PARALLEL_BUILD),\
+		$(V)mkdir -p $(dir $@) && touch $@\
+		,\
+		$(V)$(foreach done_file,$(MULTIUSER_TEST_FILES_DONE),mkdir -p $(dir $(done_file)) && touch $(done_file) &&) true\
 	)
 
 @JAILS_PATH@:
@@ -255,6 +305,7 @@ clean-local:
 	rm -rf .nyc_output
 	rm -rf coverage
 
+
 ###############
 # Mobile tests.
 ###############
@@ -275,18 +326,13 @@ run-mobile: @JAILS_PATH@ $(NODE_BINS)
 	$(call run_interactive_mobile,$(spec)) || true
 	$(V)$(KILL_COMMAND) || true
 
-MOBILE_CONFIG = \
-	specPattern=$(MOBILE_TEST_FOLDER)/**/*_spec.js,supportFile=$(SUPPORT_FILE),userAgent=$(MOBILE_USER_AGENT)
-
-MOBILE_ENV = \
-	CYPRESS_INCLUDE_TAGS=tagmobile,DATA_FOLDER=$(MOBILE_DATA_FOLDER),DATA_WORKDIR=$(MOBILE_DATA_WORKDIR),WSD_VERSION_HASH=$(COOLWSD_VERSION_HASH),SERVER=$(COOLWSD_SERVER),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION)
-
 # Run one mobile test / all mobile tests in interactive test runner.
 # Parameters:
 # 1 - spec (optional):	test file to run, if not specified all mobile tests are run.
 define run_interactive_mobile
 	$(V)echo "Open cypress with mobile tests..."
 	$(V)echo
+	$(eval export CYPRESS_INCLUDE_TAGS=$(MOBILE_INCLUDE_TAGS))
 	$(if $(1),\
 		$(eval SPEC_FILE=$(MOBILE_TEST_FOLDER)/$(1))\
 		$(call check_spec_existence,$(1),mobile)\
@@ -304,6 +350,7 @@ endef
 define run_mobile_tests
 	$(V)echo $(if $(1),"Running cypress mobile test: $(1)","Running cypress mobile tests...")
 	$(V)echo
+	$(eval export CYPRESS_INCLUDE_TAGS=$(MOBILE_INCLUDE_TAGS))
 	$(eval ENV_EXTENDED=$(MOBILE_ENV)$(if $(3),$(COMMA)$(3)))
 	$(if $(and $(PARALLEL_BUILD), $(1)),\
 		$(V)$(call run_test_parallel,\
@@ -315,6 +362,7 @@ define run_mobile_tests
 			$(MOBILE_CONFIG),$(ENV_EXTENDED),$(SPEC_FILE))\
 	)
 endef
+
 
 ################
 # Desktop tests.
@@ -336,25 +384,13 @@ run-desktop: @JAILS_PATH@ $(NODE_BINS)
 	$(call run_interactive_desktop,$(spec)) || true
 	$(V)$(KILL_COMMAND) || true
 
-DESKTOP_CONFIG = \
-	specPattern=$(DESKTOP_TEST_FOLDER)/**/*_spec.js,supportFile=$(SUPPORT_FILE),userAgent=$(DESKTOP_USER_AGENT)
-
-DESKTOP_ENV = \
-	DATA_FOLDER=$(DESKTOP_DATA_FOLDER),DATA_WORKDIR=$(DESKTOP_DATA_WORKDIR),WSD_VERSION_HASH=$(COOLWSD_VERSION_HASH),SERVER=$(COOLWSD_SERVER),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION),SCREENSHOT_FOLDER=$(abs_srcdir)/cypress/screenshots,IMAGES_FOLDER=$(abs_top_srcdir)/browser/images/help/en/
-
-DESKTOP_INCLUDE_TAGS = \
-	tagdesktop,$(A11Y_TAG)
-
 # Run one desktop test / all desktop tests in interactive test runner.
 # Parameters:
 # 1 - spec (optional):	test file to run, if not specified all desktop tests are run.
 define run_interactive_desktop
 	$(V)echo "Open cypress with desktop tests..."
 	$(V)echo
-	$(eval CYPRESS_INCLUDE_TAGS=$(DESKTOP_INCLUDE_TAGS))
-	$(V)echo Cypress tags: $(CYPRESS_INCLUDE_TAGS)
-	$(V)echo
-	$(eval export CYPRESS_INCLUDE_TAGS)
+	$(eval export CYPRESS_INCLUDE_TAGS=$(DESKTOP_INCLUDE_TAGS))
 	$(if $(1),\
 		$(eval SPEC_FILE=$(DESKTOP_TEST_FOLDER)/$(1))\
 		$(call check_spec_existence,$(1),desktop)\
@@ -372,10 +408,7 @@ endef
 define run_desktop_tests
 	$(V)echo $(if $(1),"Running cypress desktop mode test: $(1)","Running cypress desktop mode tests...")
 	$(V)echo
-	$(eval CYPRESS_INCLUDE_TAGS=$(DESKTOP_INCLUDE_TAGS))
-	$(V)echo Cypress tags: $(CYPRESS_INCLUDE_TAGS)
-	$(V)echo
-	$(eval export CYPRESS_INCLUDE_TAGS)
+	$(eval export CYPRESS_INCLUDE_TAGS=$(DESKTOP_INCLUDE_TAGS))
 	$(eval ENV_EXTENDED=$(DESKTOP_ENV)$(if $(3),$(COMMA)$(3)))
 	$(if $(and $(PARALLEL_BUILD), $(1)),\
 		$(V)$(call run_test_parallel,\
@@ -387,6 +420,7 @@ define run_desktop_tests
 			$(DESKTOP_CONFIG),$(ENV_EXTENDED),$(SPEC_FILE))\
 	)
 endef
+
 
 ################
 # Idle tests.
@@ -401,25 +435,13 @@ run-idle: @JAILS_PATH@ $(NODE_BINS) start_short_idle_coolwsd $(PID_FILE)
 	$(call run_interactive_idle,$(spec)) || true
 	$(V)$(KILL_COMMAND) || true
 
-IDLE_CONFIG = \
-	specPattern=$(IDLE_TEST_FOLDER)/**/*_spec.js,supportFile=$(SUPPORT_FILE),userAgent=$(IDLE_USER_AGENT)
-
-IDLE_ENV = \
-	DATA_FOLDER=$(IDLE_DATA_FOLDER),DATA_WORKDIR=$(IDLE_DATA_WORKDIR),WSD_VERSION_HASH=$(COOLWSD_VERSION_HASH),SERVER=$(COOLWSD_SERVER),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION),SCREENSHOT_FOLDER=$(abs_srcdir)/cypress/screenshots,IMAGES_FOLDER=$(abs_top_srcdir)/browser/images/help/en/
-
-IDLE_INCLUDE_TAGS = \
-	tagdesktop,$(A11Y_TAG)
-
 # Run one idle test / all idle tests in interactive test runner.
 # Parameters:
 # 1 - spec (optional):	test file to run, if not specified all idle tests are run.
 define run_interactive_idle
 	$(V)echo "Open cypress with idle tests..."
 	$(V)echo
-	$(eval CYPRESS_INCLUDE_TAGS=$(IDLE_INCLUDE_TAGS))
-	$(V)echo Cypress tags: $(CYPRESS_INCLUDE_TAGS)
-	$(V)echo
-	$(eval export CYPRESS_INCLUDE_TAGS)
+	$(eval export CYPRESS_INCLUDE_TAGS=$(IDLE_INCLUDE_TAGS))
 	$(if $(1),\
 		$(eval SPEC_FILE=$(IDLE_TEST_FOLDER)/$(1))\
 		$(call check_spec_existence,$(1),idle)\
@@ -437,10 +459,7 @@ endef
 define run_idle_tests
 	$(V)echo $(if $(1),"Running cypress idle test: $(1)","Running cypress idle tests...")
 	$(V)echo
-	$(eval CYPRESS_INCLUDE_TAGS=$(IDLE_INCLUDE_TAGS))
-	$(V)echo Cypress tags: $(CYPRESS_INCLUDE_TAGS)
-	$(V)echo
-	$(eval export CYPRESS_INCLUDE_TAGS)
+	$(eval export CYPRESS_INCLUDE_TAGS=$(IDLE_INCLUDE_TAGS))
 	$(eval ENV_EXTENDED=$(IDLE_ENV)$(if $(3),$(COMMA)$(3)))
 	$(if $(and $(PARALLEL_BUILD), $(1)),\
 		$(V)$(call run_test_parallel,\
@@ -453,6 +472,7 @@ define run_idle_tests
 	)
 endef
 
+
 ###################
 # Multi-user tests.
 ###################
@@ -461,9 +481,7 @@ check-multi: @JAILS_PATH@ $(NODE_BINS)
 	$(call run_JS_error_check)
 	$(if $(HEADLESS_BUILD),$(call start_Xvfb),)
 	$(call start_coolwsd)
-	$(if $(spec), \
-		$(call run_multiuser_test,$(spec)), \
-		$(call run_all_multiuser_tests))
+	$(call run_multiuser_tests,$(spec))
 	$(if $(HEADLESS_BUILD),$(V)pkill Xvfb,)
 	$(V)$(KILL_COMMAND) || true
 
@@ -474,25 +492,13 @@ run-multi: @JAILS_PATH@ $(NODE_BINS)
 	$(call run_interactive_multiuser,$(spec)) || true
 	$(V)$(KILL_COMMAND) || true
 
-MULTIUSER_CONFIG = \
-	specPattern=$(MULTIUSER_TEST_FOLDER)/**/*_spec.js,supportFile=$(SUPPORT_FILE),userAgent=$(DESKTOP_USER_AGENT)
-
-MULTIUSER_ENV = \
-	CYPRESS_INCLUDE_TAGS=tagmultiuser,DATA_FOLDER=$(MULTIUSER_DATA_FOLDER),DATA_WORKDIR=$(MULTIUSER_DATA_WORKDIR),WSD_VERSION_HASH=$(COOLWSD_VERSION_HASH),SERVER=$(COOLWSD_SERVER),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION)
-
-# Run all multi-user tests in headless mode.
-# Parameters:
-# 1 - +env (optional):	additional env variables (will be appended to $(MULTIUSER_ENV).
-define run_all_multiuser_tests
-	$(foreach test,$(MULTIUSER_TEST_FILES),$(call run_multiuser_test,$(test),$(1)))
-endef
-
 # Run one multiuser test / all multiuser tests in interactive test runner.
 # Parameters:
 # 1 - spec (optional):	test file to run, if not specified all desktop tests are run.
 define run_interactive_multiuser
 	$(V)echo "Open cypress with multiuser tests..."
 	$(V)echo
+	$(eval export CYPRESS_INCLUDE_TAGS=$(MULTIUSER_INCLUDE_TAGS))
 	$(if $(1),\
 		$(eval SPEC_FILE=$(MULTIUSER_TEST_FOLDER)/$(1))\
 		$(call check_spec_existence,$(1),multi)\
@@ -502,19 +508,27 @@ define run_interactive_multiuser
 	)
 endef
 
-# Run one multi-user test in headless mode.
+# Run one multiuser test / all multiuser tests in headless mode.
 # Parameters:
-# 1 - test name:	test name to run. This test name means to test files (user1, user2).
-# 2 - +env (optional):	additional env variables (will be appended to $(MULTIUSER_ENV).
-define run_multiuser_test
-	$(call check_spec_existence,$(1),multi)
-	$(V)echo "Running cypress multi-user test: $(1)"
+# 1 - spec (optional):	test file to run, if not specified all multiuser tests are run.
+# 2 - log (optional):	log file for cypress run, needed for parallel build only.
+# 3 - +env (optional):	additional env variables (will be appended to $(MULTIUSER_ENV).
+define run_multiuser_tests
+	$(V)echo $(if $(1),"Running cypress multiuser mode test: $(1)","Running cypress multiuser mode tests...")
 	$(V)echo
-	$(eval ENV_EXTENDED=$(MULTIUSER_ENV)$(if $(2),$(COMMA)$(2)))
-	$(eval SPEC_FILE=$(if $(1),$(MULTIUSER_TEST_FOLDER)/$(1)))
-	$(call run_test_headless,\
-		$(MULTIUSER_CONFIG),$(ENV_EXTENDED),$(SPEC_FILE))
+	$(eval export CYPRESS_INCLUDE_TAGS=$(MULTIUSER_INCLUDE_TAGS))
+	$(eval ENV_EXTENDED=$(MULTIUSER_ENV)$(if $(3),$(COMMA)$(3)))
+	$(if $(and $(PARALLEL_BUILD), $(1)),\
+		$(V)$(call run_test_parallel,\
+			$(MULTIUSER_CONFIG),$(ENV_EXTENDED),$(1),multi,$(2))\
+	,\
+		$(eval SPEC_FILE=$(if $(1),$(MULTIUSER_TEST_FOLDER)/$(1)))\
+		$(if $(1),$(call check_spec_existence,$(1),multi))\
+		$(call run_test_headless,\
+			$(MULTIUSER_CONFIG),$(ENV_EXTENDED),$(SPEC_FILE))\
+	)
 endef
+
 
 ############################
 # Mobile interference tests.
@@ -686,7 +700,7 @@ do-run-cov: @JAILS_PATH@ $(NODE_BINS)
 	$(call start_coolwsd)
 	$(call run_desktop_tests,,,COVERAGE_RUN="1")
 	$(call run_mobile_tests,,,COVERAGE_RUN="1")
-	$(call run_all_multiuser_tests,COVERAGE_RUN="1")
+	$(call run_multiuser_tests,COVERAGE_RUN="1")
 	$(V)$(KILL_COMMAND) || true
 	$(call run_idle_tests,,,COVERAGE_RUN="1")
 	$(V)$(KILL_COMMAND) || true
