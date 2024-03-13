@@ -131,10 +131,14 @@ export class Header extends CanvasSectionObject {
 		return (!!this._headerInfo.getElementData(index).isCurrent) || (!!this._headerInfo.getElementData(index).isHighlighted);
 	}
 
-	onContextMenu(): void {
-		if (this._map.isEditMode()) {
+	onContextMenu(evt: MouseEvent): void {
+		if ((window as any).mode.isMobile() && this._map.isEditMode()) {
 			(window as any).contextMenuWizard = true;
 			this._map.fire('mobilewizard', {data: this._menuData});
+		}
+		else if (this._map.isEditMode()) {
+			this._bindContextMenu();
+			$('#canvas-container').contextMenu({x: evt.clientX, y: evt.clientY});
 		}
 	}
 
@@ -489,18 +493,18 @@ export class Header extends CanvasSectionObject {
 	_bindContextMenu(): void {
 		this._unBindContextMenu();
 		$.contextMenu({
-			selector: '#document-canvas',
+			selector: '#canvas-container',
 			className: 'cool-font',
 			zIndex: 10,
 			items: this._menuItem,
 			callback: function() { return; }
 		});
-		$('#document-canvas').contextMenu('update');
+		$('#canvas-container').contextMenu('update');
 		this._map._contextMenu.stopRightMouseUpEvent();
 	}
 
 	_unBindContextMenu(): void {
-		$.contextMenu('destroy', '#document-canvas');
+		$.contextMenu('destroy', '#canvas-container');
 	}
 
 	inResize(): boolean {

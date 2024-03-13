@@ -514,7 +514,7 @@ class CanvasSectionContainer {
 	private draggingTolerance: number = 5; // This is for only desktop, mobile browsers seem to distinguish dragging and clicking nicely.
 	private multiTouch: boolean = false;
 	private touchCenter: Array<number> = null;
-	private potentialLongPress: boolean = false;
+	private longPressTimer: any = null;
 	private clearColor: string = '#f8f9fa';
 	private documentBackgroundColor = '#ffffff'; // This is the background color of the document
 	private useCSSForBackgroundColor = true;
@@ -1206,14 +1206,14 @@ class CanvasSectionContainer {
 		}
 	}
 
-	private propagateOnContextMenu(section: CanvasSectionObject) {
+	private propagateOnContextMenu(section: CanvasSectionObject, e: MouseEvent) {
 		this.targetSection = section.name;
 
 		var propagate: boolean = true;
 		for (var j: number = 0; j < this.windowSectionList.length; j++) {
 			var windowSection = this.windowSectionList[j];
 			if (windowSection.interactable)
-				windowSection.onContextMenu();
+				windowSection.onContextMenu(e);
 
 			if (this.lowestPropagatedBoundSection === windowSection.name)
 				propagate = false; // Window sections can not stop the propagation of the event for other window sections.
@@ -1222,7 +1222,7 @@ class CanvasSectionContainer {
 		if (propagate) {
 			for (var i: number = section.boundsList.length - 1; i > -1; i--) {
 				if (section.boundsList[i].interactable)
-					section.boundsList[i].onContextMenu();
+					section.boundsList[i].onContextMenu(e);
 
 				if (section.boundsList[i].name === this.lowestPropagatedBoundSection)
 					break; // Stop propagation.
@@ -1385,12 +1385,32 @@ class CanvasSectionContainer {
 		this.drawSections();
 	}
 
+	private isLongPressActive() {
+		return !!this.longPressTimer;
+	}
+
+	private startLongPress(e: TouchEvent) {
+		this.stopLongPress();
+		this.longPressTimer = setTimeout(function() {
+			(e as any).clientX = e.touches[0].clientX;
+			(e as any).clientY = e.touches[0].clientY;
+			this.onMouseMove(e);
+		}.bind(this), 550);
+	}
+
+	private stopLongPress() {
+		if (this.longPressTimer) {
+			clearTimeout(this.longPressTimer);
+			this.longPressTimer = null;
+		}
+	}
+
 	private onMouseMove (e: MouseEvent) {
 		// Early exit. If mouse is outside and "draggingSomething = false", then there is no reason to check further.
 		if (!this.mouseIsInside && !this.draggingSomething)
 			return;
 
-		if (!this.potentialLongPress) {
+		if (!this.isLongPressActive()) {
 			if (!this.touchEventInProgress) {
 				this.mousePosition = this.convertPositionToCanvasLocale(e);
 				if (this.positionOnMouseDown !== null && !this.draggingSomething) {
@@ -1434,7 +1454,8 @@ class CanvasSectionContainer {
 			this.mousePosition = this.convertPositionToCanvasLocale(e);
 			var section: CanvasSectionObject = this.findSectionContainingPoint(this.mousePosition);
 			if (section) {
-				this.propagateOnContextMenu(section);
+				this.stopLongPress();
+				this.propagateOnContextMenu(section, e);
 			}
 		}
 	}
@@ -1485,9 +1506,9 @@ class CanvasSectionContainer {
 		var mousePosition = this.convertPositionToCanvasLocale(e);
 		var section: CanvasSectionObject = this.findSectionContainingPoint(mousePosition);
 		if (section) {
-			this.propagateOnContextMenu(section);
+			this.propagateOnContextMenu(section, e);
 		}
-		if (this.potentialLongPress) {
+		if (this.isLongPressActive()) {
 			// LongPress triggers context menu.
 			// We should stop propagating here because we are using different context menu handlers for touch and mouse events.
 			// By stopping this event here, we can have real context menus (for mice) and other handlers (for longpress) at the same time (see Control.RowHeader.js).
@@ -1541,7 +1562,7 @@ class CanvasSectionContainer {
 	onTouchStart (e: TouchEvent) { // Should be ignored unless this.draggingSomething = true.
 		if (e.touches.length === 1) {
 			this.clearMousePositions();
-			this.potentialLongPress = true;
+			this.startLongPress(e);
 			this.positionOnMouseDown = this.convertPositionToCanvasLocale(e);
 
 			var section: CanvasSectionObject = this.findSectionContainingPoint(this.positionOnMouseDown);
@@ -1551,7 +1572,7 @@ class CanvasSectionContainer {
 			}
 		}
 		else if (!this.multiTouch) {
-			this.potentialLongPress = false;
+			this.stopLongPress();
 			this.multiTouch = true;
 			var section: CanvasSectionObject = this.getSectionWithName(this.sectionOnMouseDown);
 			if (section)
@@ -1564,7 +1585,7 @@ class CanvasSectionContainer {
 		if (this.positionOnMouseDown === null)
 			return;
 
-		this.potentialLongPress = false;
+		this.stopLongPress();
 		if (!this.multiTouch) {
 			this.mousePosition = this.convertPositionToCanvasLocale(e);
 			this.draggingSomething = true;
@@ -1593,7 +1614,7 @@ class CanvasSectionContainer {
 	}
 
 	private onTouchEnd (e: TouchEvent) { // Should be ignored unless this.draggingSomething = true.
-		this.potentialLongPress = false;
+		this.stopLongPress();
 		if (!this.multiTouch) {
 			this.positionOnMouseUp = this.convertPositionToCanvasLocale(e);
 			if (!this.draggingSomething) {
@@ -1619,7 +1640,7 @@ class CanvasSectionContainer {
 
 	private onTouchCancel (e: TouchEvent) {
 		this.clearMousePositions();
-		this.potentialLongPress = false;
+		this.stopLongPress();
 	}
 
 	onResize (newWidth: number, newHeight: number) {
