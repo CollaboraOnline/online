@@ -8,6 +8,8 @@ var mobileHelper = require('./mobile_helper');
 // We check whether the NC sidebar is opened and then we
 // close it.
 function checkAndCloseSharing() {
+	cy.log('>> checkAndCloseSharing - start');
+
 	mobileHelper.selectHamburgerMenuItem(['File']);
 
 	cy.contains('.menu-entry-with-icon', 'Share...')
@@ -30,6 +32,8 @@ function checkAndCloseSharing() {
 			cy.wrap(item)
 				.click();
 		});
+
+	cy.log('<< checkAndCloseSharing - end');
 }
 
 // Insert an image from NC storage. We use the "Insert"
@@ -39,6 +43,8 @@ function checkAndCloseSharing() {
 // Parameters:
 // fileName - name of the image file.
 function insertImageFromStorage(fileName) {
+	cy.log('>> insertImageFromStorage - start');
+
 	mobileHelper.openInsertionWizard();
 
 	cy.get('.insertgraphicremote')
@@ -60,6 +66,8 @@ function insertImageFromStorage(fileName) {
 			cy.wrap(item)
 				.click();
 		});
+
+	cy.log('<< insertImageFromStorage - end');
 }
 
 // Save an existing and opened document with a different
@@ -69,6 +77,8 @@ function insertImageFromStorage(fileName) {
 // Parameters:
 // fileName - the new filename we would like to save as.
 function saveFileAs(fileName) {
+	cy.log('>> saveFileAs - start');
+
 	mobileHelper.enableEditingMobile();
 
 	mobileHelper.selectHamburgerMenuItem(['File']);
@@ -93,6 +103,8 @@ function saveFileAs(fileName) {
 			cy.wrap(item)
 				.click();
 		});
+
+	cy.log('<< saveFileAs - end');
 }
 
 module.exports.checkAndCloseSharing = checkAndCloseSharing;
