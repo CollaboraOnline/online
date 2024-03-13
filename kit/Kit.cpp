@@ -1311,8 +1311,6 @@ bool Document::joinThreads()
 
 bool Document::forkToSave(const std::function<void()> &childSave)
 {
-    LOG_TRC("Starting background save");
-
     // ARGH - FIXME - we can't count FDs in fact ...
 #if 0
     // Check we don't have unexpected file-descriptors open
@@ -1348,7 +1346,7 @@ bool Document::forkToSave(const std::function<void()> &childSave)
     {
         // sort out thread local variables to get logging right from
         // as early as possible.
-        Util::setThreadName("kit_bgsave_" + Util::encodeId(mobileAppDocId, 3));
+        Util::setThreadName("kit_bgsave_" + Util::encodeId(_mobileAppDocId, 3));
 
         SigUtil::addActivity("forked background save process: " +
                              std::to_string(pid));

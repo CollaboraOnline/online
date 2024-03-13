@@ -553,6 +553,7 @@ bool ChildSession::_handleInput(const char *buffer, int length)
                     InputProcessingManager processInput(getProtocol(), false);
                     return unoCommand(tokens);
                 }
+                return true;
             }
 
             return unoCommand(tokens);
@@ -854,7 +855,7 @@ bool ChildSession::saveDocumentAsync(const StringVector &tokens)
 #if MOBILEAPP
     return false;
 #else
-    LOG_TRC("Starting async save");
+    LOG_TRC("Starting background save");
 
     if (!_docManager->forkToSave([this, tokens]{
 
@@ -868,12 +869,13 @@ bool ChildSession::saveDocumentAsync(const StringVector &tokens)
         SigUtil::addActivity("async save process exiting");
 
         sendTextFrame("asyncsave end");
-        disconnect();
 
-        // FIXME: does this clean us up properly ?
+        LOG_TRC("Finished background saving ...");
+        disconnect();
     }))
         return false; // fork failed
 
+    LOG_TRC("saveDocumentAsync returns succesful start.");
     return true;
 #endif // !MOBILEAPP
 }
