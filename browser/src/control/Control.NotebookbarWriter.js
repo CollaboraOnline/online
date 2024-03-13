@@ -697,17 +697,19 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 										'accessibility': { focusBack: false,	combination: 'FT',	de: null }
 									},
 									{
-										'id': 'home-back-color',
+										'id': 'home-back-color:ColorPickerMenu',
 										'class': 'unospan-BackColor',
 										'type': 'toolitem',
+										'noLabel': true,
 										'text': _UNO('.uno:BackColor', 'text'),
 										'command': '.uno:BackColor',
 										'accessibility': { focusBack: true,	combination: 'HC',	de:	null }
 									},
 									{
-										'id': 'home-color',
+										'id': 'home-color:ColorPickerMenu',
 										'class': 'unospan-FontColor',
 										'type': 'toolitem',
+										'noLabel': true,
 										'text': _UNO('.uno:Color'),
 										'command': '.uno:Color',
 										'accessibility': { focusBack: true,	combination: 'FC',	de: null }
@@ -826,8 +828,9 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 										'accessibility': { focusBack: false,	combination: 'K',	de: null }
 									},
 									{
-										'id': 'home-background-color',
+										'id': 'home-background-color:ColorPickerMenu',
 										'class': 'unospan-BackgroundColor',
+										'noLabel': true,
 										'type': 'toolitem',
 										'text': _UNO('.uno:BackgroundColor'),
 										'command': '.uno:BackgroundColor',
@@ -2632,6 +2635,8 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'draw-tab-xlinecolor:ColorPickerMenu',
+								'noLabel': true,
 								'type': 'toolitem',
 								'text': _UNO('.uno:XLineColor'),
 								'command': '.uno:XLineColor'
@@ -2642,6 +2647,8 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'draw-tab-fillcolor:ColorPickerMenu',
+								'noLabel': true,
 								'type': 'toolitem',
 								'text': _UNO('.uno:FillColor'),
 								'command': '.uno:FillColor'

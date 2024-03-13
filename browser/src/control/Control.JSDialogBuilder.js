@@ -52,7 +52,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	_menuItemHandlers: null,
 	_menus: null,
 	_colorPickers: null,
-	_colorLastSelection: {},
 	_decimal: '.',
 	_minusSign: '-',
 
@@ -145,6 +144,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['bigcustomtoolitem'] = this._mapBigDispatchToolItem;
 		this._controlHandlers['calendar'] = JSDialog.calendar;
 		this._controlHandlers['htmlcontent'] = JSDialog.htmlContent;
+		this._controlHandlers['colorpicker'] = JSDialog.colorPicker;
 
 		this._controlHandlers['mainmenu'] = this._containerHandler;
 		this._controlHandlers['submenu'] = this._subMenuHandler;
@@ -2448,20 +2448,22 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				$(div).addClass('selected');
 			}
 		} else {
-			button = L.DomUtil.create('label', 'ui-content unolabel', div);
-			button.textContent = builder._cleanText(data.text);
-			controls['label'] = button;
+			var label = L.DomUtil.create('label', 'ui-content unolabel', div);
+			label.textContent = builder._cleanText(data.text);
+			controls['button'] = button;
+			controls['label'] = label;
 		}
 
 		if (options && options.hasDropdownArrow) {
 			$(div).addClass('has-dropdown');
-			var arrow = L.DomUtil.create('i', 'unoarrow', div);
-			controls['arrow'] = arrow;
+			var arrowbackground = L.DomUtil.create('div', 'arrowbackground', div);
+			L.DomUtil.create('i', 'unoarrow', arrowbackground);
+			controls['arrow'] = arrowbackground;
 		} else if (data.dropdown === true) {
 			$(div).addClass('has-dropdown');
 			var arrowbackground = L.DomUtil.create('div', 'arrowbackground', div);
-			var arrow = L.DomUtil.create('i', 'unoarrow', arrowbackground);
-			controls['arrow'] = arrow;
+			L.DomUtil.create('i', 'unoarrow', arrowbackground);
+			controls['arrow'] = arrowbackground;
 			$(arrowbackground).click(function (event) {
 				if (!$(div).hasClass('disabled')) {
 					builder.callback('toolbox', 'openmenu', parentContainer, data.command, builder);
@@ -2474,7 +2476,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			};
 		}
 
-		$(div).on('click.toolbutton',function (e) {
+		var clickFunction = function (e) {
 			if (!$(div).hasClass('disabled')) {
 				builder.refreshSidebar = true;
 				if (data.postmessage)
@@ -2486,7 +2488,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			}
 			e.preventDefault();
 			e.stopPropagation();
-		});
+		};
+
+		$(controls.button).on('click', clickFunction);
+		$(controls.label).on('click', clickFunction);
 
 		div.addEventListener('keydown', function(e) {
 			switch (e.key) {
@@ -2529,7 +2534,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (data.inlineLabel !== undefined)
 			builder.options.useInLineLabelsForUnoButtons = backupInlineText;
 
-		$(control.container).unbind('click.toolbutton');
+		$(control.button).unbind('click');
+		$(control.label).unbind('click');
+
 		if (!builder.map.isLockedItem(data)) {
 			$(control.container).click(function () {
 				builder.map.dispatch(data.command);
@@ -2550,7 +2557,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		builder.options.noLabelsForUnoButtons = noLabels;
 
-		$(control.container).unbind('click.toolbutton');
+		$(control.button).unbind('click');
+		$(control.label).unbind('click');
+
 		if (!builder.map.isLockedItem(data)) {
 			$(control.container).click(function (e) {
 				e.preventDefault();
@@ -2577,18 +2586,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 		builder._setupHandlers(divElem, data.handlers);
 		return false;
-	},
-
-	setPickerOutline: function(bgColor) {
-		// Make sure the border around the color indicator is not too bright
-		// when the color is black so to avoid weird contast artifacts
-		if (bgColor) {
-			if (bgColor.style.backgroundColor == '#000000' || bgColor.style.backgroundColor == 'rgb(0, 0, 0)') {
-				bgColor.style.borderColor = '#6a6a6a';
-			} else {
-				bgColor.style.borderColor = 'var(--color-border)';
-			}
-		}
 	},
 
 	_colorSampleControl: function (parentContainer, data, builder) {
@@ -2680,6 +2677,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		builder.map['stateChangeHandler'].setItemValue(data.command, params[colorParameterID].value);
 		builder.map.sendUnoCommand(data.command, params);
+		app.colorLastSelection[data.command] = color;
 	},
 
 	_getDefaultColorForCommand: function(command) {
@@ -2692,6 +2690,18 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		return 0;
 	},
 
+	_toHexColor: function(colorInt) {
+		var colorHex = parseInt(colorInt).toString(16);
+
+		while (colorHex != '#' && colorHex.length < 6)
+			colorHex = '0' + colorHex;
+
+		if (colorHex[0] != '#')
+			colorHex = '#' + colorHex;
+
+		return colorHex;
+	},
+
 	_getCurrentColor: function(data, builder) {
 		var selectedColor = parseInt(builder.map['stateChangeHandler'].getItemValue(data.command));
 
@@ -2701,16 +2711,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (!selectedColor || selectedColor < 0)
 			selectedColor = builder._getDefaultColorForCommand(data.command);
 
-		selectedColor = selectedColor.toString(16);
-
-		while (selectedColor != '#' && selectedColor.length < 6) {
-			selectedColor = '0' + selectedColor;
-		}
-
-		if (selectedColor[0] != '#')
-			selectedColor = '#' + selectedColor;
-
-		return selectedColor;
+		return builder._toHexColor(selectedColor);
 	},
 
 	_colorControl: function(parentContainer, data, builder) {
@@ -2723,63 +2724,14 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			data.text = titleOverride;
 
 		data.id = data.id ? data.id : (data.command ? data.command.replace('.uno:', '') : undefined);
-
 		data.text = builder._cleanText(data.text);
 
 		if (data.command) {
-			var div = builder._createIdentifiable('div', 'unotoolbutton ' + builder.options.cssClass + ' ui-content unospan', parentContainer, data);
+			var applyFunction = function(event) {
+				event.preventDefault();
+				event.stopPropagation();
 
-			if (data.class)
-				div.classList.add(data.class);
-
-			var id = data.command.substr('.uno:'.length);
-			div.id = id;
-			div.tabIndex = -1;
-
-			div.title = data.text;
-			builder.map.uiManager.enableTooltip(div);
-
-			var icon = builder._createIconURL(data.command);
-			var buttonId = data.id ? data.id: id + '-button';
-			var button = L.DomUtil.create('button', 'ui-content unobutton', div);
-			// Create an img element
-			var buttonImage = L.DomUtil.create('img', '', button);
-			// Set the src attribute of the img element to the image URL
-			L.LOUtil.setImage(buttonImage, icon, builder.map);
-
-			button.id = buttonId;
-			button.setAttribute('alt', id);
-
-			var arrowbackground = L.DomUtil.create('div', 'arrowbackground', div);
-			L.DomUtil.create('i', 'unoarrow', arrowbackground);
-			$(div).addClass('has-dropdown--color');
-
-			var valueNode =  L.DomUtil.create('div', 'selected-color', div);
-
-			var selectedColor;
-
-			var updateFunction = function (color) {
-				if (builder._colorLastSelection[data.command] !== undefined)
-					selectedColor = builder._colorLastSelection[data.command];
-				else
-					selectedColor = builder._getCurrentColor(data, builder);
-
-				valueNode.style.backgroundColor = color ? color : selectedColor;
-				builder._colorLastSelection[data.command] = color ? color : selectedColor;
-				builder.setPickerOutline(valueNode);
-			};
-
-			updateFunction();
-
-			builder.map.on('commandstatechanged', function(e) {
-				if (e.commandName === data.command)
-					updateFunction();
-			}, this);
-
-			var noColorControl = (data.command !== '.uno:FontColor' && data.command !== '.uno:Color');
-
-			var applyFunction = function() {
-				var colorToApply = builder._colorLastSelection[data.command];
+				var colorToApply = app.colorLastSelection[data.command];
 				if (!colorToApply || colorToApply === '#')
 					return;
 
@@ -2790,67 +2742,49 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				builder._sendColorCommand(builder, data, color);
 			};
 
-			button.addEventListener('click', applyFunction);
-			valueNode.addEventListener('click', applyFunction);
+			// add menu id for dropdown
+			if (data.id.indexOf(':ColorPickerMenu') === -1)
+				data.id = data.id + ':ColorPickerMenu';
+			data.noLabel = true;
 
-			arrowbackground.tabIndex = 0;
+			// make it a split button
+			data.applyCallback = applyFunction;
 
-			var arrowEventHandler = function() {
-				if (!$(div).hasClass('disabled')) {
-					$(div).w2color({ color: builder._colorLastSelection[data.command], transparent: noColorControl }, function (color, themeData) {
-						if (color != null) {
-							if (color) {
-								updateFunction('#' + color);
-								builder._sendColorCommand(builder, data, color, themeData);
-							} else {
-								updateFunction('#FFFFFF');
-								builder._sendColorCommand(builder, data, 'transparent');
-							}
-						}
-					});
+			var menubutton = builder._controlHandlers['menubutton'](parentContainer, data, builder);
 
-					if (data.command === '.uno:FontColor' || data.command === '.uno:Color') {
-						var colorDiv = document.getElementById('w2ui-overlay');
-						var autoColorButton = colorDiv.querySelector('.auto-color-button');
+			if (typeof menubutton === 'object') {
+				if (data.class)
+					L.DomUtil.addClass(menubutton.container, data.class);
 
-						autoColorButton.onclick = function() {
-							updateFunction(-1);
-							builder.map['stateChangeHandler'].setItemValue(data.command, -1);
+				var valueNode = L.DomUtil.create('div', 'selected-color', menubutton.container);
+				valueNode.addEventListener('click', applyFunction);
 
-							var parameters;
-							if (data.command === '.uno:FontColor')
-								parameters = { FontColor: { type: 'long', value: -1 } };
-							else
-								parameters = { Color: { type: 'long', value: -1 } };
-							builder.map.sendUnoCommand(data.command, parameters);
-							document.getElementById('document-container').click();
-						}.bind(this);
+				var updateFunction = function () {
+					if (app.colorLastSelection[data.command] !== undefined)
+						var selectedColor = app.colorLastSelection[data.command];
+					else
+						selectedColor = builder._getCurrentColor(data, builder);
+
+					valueNode.style.backgroundColor =
+						selectedColor[0] !== '#' ? '#' + selectedColor : selectedColor;
+
+					// Make sure the border around the color indicator is not too bright
+					// when the color is black so to avoid weird contast artifacts
+					if (valueNode.style.backgroundColor == '#000000'
+						|| valueNode.style.backgroundColor == 'rgb(0, 0, 0)') {
+						valueNode.style.borderColor = '#6a6a6a';
+					} else {
+						valueNode.style.borderColor = 'var(--color-border)';
 					}
-				}
-			};
+				};
 
-			arrowbackground.addEventListener('keydown', function(event) {
-				if (event.code === 'Enter' || event.ccode === 'Space') {
-					arrowEventHandler();
-					var w2uiElement = document.getElementById('w2ui-overlay');
-					w2uiElement.querySelector('.color-palette-selector').focus();
-					var tabCatcher = document.createElement('div');
-					tabCatcher.tabIndex = 0;
-					tabCatcher.onfocus = function() {
-						w2uiElement.querySelector('.color-palette-selector').focus();
-					};
-					w2uiElement.insertBefore(tabCatcher, w2uiElement.children[0]);
+				builder.map.on('commandstatechanged', function(e) {
+					if (e.commandName === data.command)
+						updateFunction();
+				}, this);
 
-					tabCatcher = document.createElement('div');
-					tabCatcher.tabIndex = 0;
-					tabCatcher.onfocus = function() {
-						w2uiElement.querySelector('.color-palette-selector').focus();
-					};
-					w2uiElement.appendChild(tabCatcher);
-				}
-			});
-			arrowbackground.addEventListener('click', arrowEventHandler);
-			builder._preventDocumentLosingFocusOnClick(div);
+				updateFunction();
+			}
 		}
 
 		return false;

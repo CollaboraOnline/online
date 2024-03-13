@@ -62,7 +62,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 	it('Apply font color on text shape.', function() {
 		impressHelper.selectTextShapeInTheCenter();
 		cy.cGet('#tb_editbar_item_fontcolor').click();
-		desktopHelper.selectColorFromPalette('FF011B');
+		desktopHelper.selectColorFromPaletteClassic('FF011B');
 
 		impressHelper.triggerNewSVGForShapeInTheCenter();
 
@@ -72,7 +72,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 	it('Apply highlight color on text shape.', function() {
 		impressHelper.selectTextShapeInTheCenter();
 		cy.cGet('#tb_editbar_item_backcolor').click();
-		desktopHelper.selectColorFromPalette('FF9838');
+		desktopHelper.selectColorFromPaletteClassic('FF9838');
 
 		impressHelper.triggerNewSVGForShapeInTheCenter();
 

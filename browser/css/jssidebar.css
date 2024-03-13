@@ -152,7 +152,7 @@ div.sidebar.ui-grid .checkbutton.sidebar,
 .sidebar.ui-pushbutton,
 .sidebar.spinfield,
 .sidebar.ui-listbox,
-.sidebar.menubutton {
+.sidebar.menubutton:not(.has-dropdown) {
 	width: 121px;
 }
 
@@ -222,9 +222,6 @@ div.sidebar.ui-grid .checkbutton.sidebar,
 .sidebar.unotoolbutton {
 	border: 1px solid transparent;
 	margin-right: 5px;
-}
-.sidebar.unotoolbutton.has-dropdown {
-	display: flex;
 }
 .sidebar.jsdialog.checkbutton {
 	font-size: var(--default-font-size);

@@ -335,7 +335,8 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 
 		var control = builder._unoToolButton(parentContainer, data, builder);
 
-		$(control.container).unbind('click.toolbutton');
+		$(control.button).unbind('click');
+		$(control.label).unbind('click');
 		if (!builder.map.isLockedItem(data)) {
 			$(control.container).click(function () {
 				L.control.menubar()._executeAction.bind({_map: builder.options.map})(undefined, {id: data.id});
@@ -594,7 +595,8 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 	_headerFooterControl: function(parentContainer, data, builder) {
 		var control = builder._unoToolButton(parentContainer, data, builder);
 
-		$(control.container).unbind('click.toolbutton');
+		$(control.button).unbind('click');
+		$(control.label).unbind('click');
 		$(control.container).click(function () {
 			if (!$(control.container).hasClass('disabled')) {
 				builder.refreshSidebar = true;
@@ -608,7 +610,8 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 	_insertTextBoxControl: function(parentContainer, data, builder) {
 		var control = builder._unoToolButton(parentContainer, data, builder);
 
-		$(control.container).unbind('click.toolbutton');
+		$(control.button).unbind('click');
+		$(control.label).unbind('click');
 		$(control.container).click(function () {
 			builder.map.sendUnoCommand(data.command + '?CreateDirectly:bool=true');
 		});
@@ -619,7 +622,8 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		var originalDataId = data.id; // builder can change this
 		var control = builder._unoToolButton(parentContainer, data, builder);
 
-		$(control.container).unbind('click.toolbutton');
+		$(control.button).unbind('click');
+		$(control.label).unbind('click');
 		$(control.container).click(function () {
 			L.control.menubar()._executeAction.bind({_map: builder.options.map})(undefined, {id: originalDataId});
 		});
@@ -630,7 +634,8 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		var options = {hasDropdownArrow: false};
 		var control = builder._unoToolButton(parentContainer, data, builder, options);
 
-		$(control.container).unbind('click.toolbutton');
+		$(control.button).unbind('click');
+		$(control.label).unbind('click');
 		$(control.container).click(function () {
 			L.DomUtil.get('selectbackground').click();
 		});
@@ -639,7 +644,8 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 
 	_insertAnnotationControl: function(parentContainer, data, builder) {
 		var control = builder._unoToolButton(parentContainer, data, builder);
-		$(control.container).unbind('click.toolbutton');
+		$(control.button).unbind('click');
+$(control.label).unbind('click');
 		$(control.container).click(function (e) {
 			e.preventDefault();
 			var docLayer = builder.map._docLayer;
@@ -653,7 +659,8 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 	_saveControl: function(parentContainer, data, builder) {
 		var control = builder._unoToolButton(parentContainer, data, builder);
 
-		$(control.container).unbind('click.toolbutton');
+		$(control.button).unbind('click');
+		$(control.label).unbind('click');
 		$(control.container).click(function () {
 			// Save only when not read-only.
 			if (!builder.map.isReadOnlyMode()) {
@@ -670,7 +677,8 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		data.text = data.text.replace('...', '');
 		var control = builder._unoToolButton(parentContainer, data, builder);
 
-		$(control.container).unbind('click.toolbutton');
+		$(control.button).unbind('click');
+		$(control.label).unbind('click');
 		$(control.container).click(function () {
 			builder.map.openSaveAs();
 		});
@@ -681,7 +689,8 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		data.text = data.text.replace('...', '');
 		var control = builder._unoToolButton(parentContainer, data, builder);
 
-		$(control.container).unbind('click.toolbutton');
+		$(control.button).unbind('click');
+		$(control.label).unbind('click');
 		$(control.container).click(function () {
 			builder.map.print();
 		});

@@ -1,6 +1,6 @@
 /* -*- js-indent-level: 8 -*- */
 module.exports.list = {
-	fontColor: ['#Home #FontColor .arrowbackground', '#tb_editbar_item_fontcolor'],
+	fontColor: ['#Home #home-color .unoarrow', '#tb_editbar_item_fontcolor'],
 	fontName: ['#fontnamecombobox.notebookbar > .ui-combobox-button', '#tb_editbar_item_fonts'],
 	bold: ['#Bold', '#tb_editbar_item_bold'],
 	italic: ['#Italic', '#tb_editbar_item_italic'],
@@ -30,9 +30,9 @@ module.exports.list = {
 	insertSymbol: ['#CharmapControl', '#tb_editbar_item_insertsymbol'],
 	formatBrush: ['#FormatPaintbrush', '#tb_editbar_item_formatpaintbrush'],
 	sidebar: ['.unospan-optionstoolboxdown.unoSidebar', '#tb_editbar_item_sidebar'],
-	backColor: ['#Home #BackColor .arrowbackground', '#tb_editbar_item_backcolor'],
+	backColor: ['#Home #home-back-color .unoarrow', '#tb_editbar_item_backcolor'],
 	borderStyle: ['#SetBorderStyle', '#tb_editbar_item_setborderstyle'],
-	backgroundColor: ['#Home #BackgroundColor .arrowbackground','#tb_editbar_item_backgroundcolor'],
+	backgroundColor: ['#Home #home-background-color .unoarrow','#tb_editbar_item_backgroundcolor'],
 	fileTab: ['#File-tab-label', '#menu-file'],
 	documentProperties: ['#SetDocumentProperties', '#menu-properties'],
 };

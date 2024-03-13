@@ -25,7 +25,7 @@ describe(['tagdesktop'], 'Notebookbar tests.', function() {
 
 	it('Apply bold font from dropdown in Format tab', function() {
 		cy.cGet('.notebookbar #Format-tab-label').click();
-		cy.cGet('.notebookbar .unoFormatMenu > .unoarrow').click();
+		cy.cGet('.notebookbar .unoFormatMenu .unoarrow').click();
 		cy.cGet('#format-dropdown').should('exist');
 		cy.cGet('#format-dropdown #format-entry-0').click(); // Bold
 		cy.cGet('#format-dropdown').should('not.exist');

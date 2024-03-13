@@ -164,14 +164,14 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Apply highlight color.', function() {
 		cy.cGet('#tb_editbar_item_backgroundcolor').click();
-		desktopHelper.selectColorFromPalette('8E7CC3');
+		desktopHelper.selectColorFromPaletteClassic('8E7CC3');
 		calcHelper.selectEntireSheet();
 		cy.cGet('#copy-paste-container table td').should('have.attr', 'bgcolor', '#8E7CC3');
 	});
 
 	it('Apply font color.', function() {
 		cy.cGet('#tb_editbar_item_fontcolor').click();
-		desktopHelper.selectColorFromPalette('FFF2CC');
+		desktopHelper.selectColorFromPaletteClassic('FFF2CC');
 		calcHelper.selectEntireSheet();
 		cy.cGet('#copy-paste-container table td font').should('have.attr', 'color', '#FFF2CC');
 	});

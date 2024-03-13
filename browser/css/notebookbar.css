@@ -264,6 +264,7 @@ button.ui-tab.notebookbar {
 	color: var(--color-main-text);
 	padding: 0px 5px !important;
 	line-height: normal;
+	grid-column: 2;
 }
 
 #table-HomeTab .unospan-uptoolbar:not(.disabled) {
@@ -317,12 +318,7 @@ button.ui-tab.notebookbar {
 	text-align: center;
 }
 
-.unotoolbutton.notebookbar.has-dropdown {
-	display: flex;
-	align-items: center;
-}
-
-.unotoolbutton.notebookbar.has-label > *{ /*so they stay side by side*/
+.unotoolbutton.notebookbar.has-label > *:not(.arrowbackground) { /*so they stay side by side*/
 	display: table-cell;
 	width: 100%;
 	height: 100%;
@@ -340,7 +336,6 @@ button.ui-tab.notebookbar {
 .has-label.has-dropdown:not(.inline) .unolabel{
 	display: inline-block;
 	clear: both;
-	float: inline-start;
 }
 
 /* adding focus to tab in notebookbar */
