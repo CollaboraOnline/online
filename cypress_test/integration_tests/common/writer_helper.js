@@ -10,7 +10,7 @@ var helper = require('./helper');
 // on this content, so we don't need to worry about testing an
 // out-dated content.
 function selectAllTextOfDoc() {
-	cy.log('Select all text of Writer document - start.');
+	cy.log('>> selectAllTextOfDoc - start');
 
 	// Remove selection if exist
 	cy.cGet('.leaflet-marker-pane')
@@ -24,16 +24,20 @@ function selectAllTextOfDoc() {
 
 	helper.selectAllText();
 
-	cy.log('Select all text of Writer document - end.');
+	cy.log('<< selectAllTextOfDoc - end');
 }
 
 function openFileProperties() {
+	cy.log('>> openFileProperties - start');
+
 	cy.cGet('#File-tab-label').then(function(element) {
 		if (!element.hasClass('selected'))
 			element.click();
 
 		cy.cGet('#File-container .unoSetDocumentProperties').click();
 	});
+
+	cy.log('<< openFileProperties - end');
 }
 
 module.exports.selectAllTextOfDoc = selectAllTextOfDoc;
