@@ -1060,6 +1060,9 @@ input.clipboard {
 	bottom: 0;
 	right: 0;
 	z-index: 9;
+	user-select: none;
+	-webkit-touch-callout: none !important;
+	-webkit-user-select: none !important;
 }
 
 .leaflet-pane-splitter {
