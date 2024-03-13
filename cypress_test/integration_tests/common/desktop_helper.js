@@ -6,7 +6,7 @@ var helper = require('./helper');
 // We assume that the sidebar is hidden, when this method is called.
 
 function showSidebar() {
-	cy.log('Showing sidebar - start.');
+	cy.log('>> showSidebar - start');
 
 	cy.cGet('#tb_editbar_item_sidebar .w2ui-button').should('not.have.class', 'checked');
 	cy.cGet('#sidebar-dock-wrapper').should('not.be.visible');
@@ -14,13 +14,13 @@ function showSidebar() {
 	cy.cGet('#tb_editbar_item_sidebar .w2ui-button').should('have.class', 'checked');
 	cy.cGet('#sidebar-dock-wrapper').should('be.visible');
 
-	cy.log('Showing sidebar - end.');
+	cy.log('<< showSidebar - end');
 }
 
 // Hide the sidebar by clicking on the corresponding toolbar item.
 // We assume that the sidebar is visible, when this method is called.
 function hideSidebar() {
-	cy.log('Hiding sidebar - start.');
+	cy.log('>> hideSidebar - start');
 
 	cy.cGet('#tb_editbar_item_sidebar .w2ui-button').should('have.class', 'checked');
 	cy.cGet('#sidebar-dock-wrapper').should('be.visible');
@@ -28,12 +28,14 @@ function hideSidebar() {
 	cy.cGet('#tb_editbar_item_sidebar .w2ui-button').should('not.have.class', 'checked');
 	cy.cGet('#sidebar-dock-wrapper').should('not.be.visible');
 
-	cy.log('Hiding sidebar - end.');
+	cy.log('<< hideSidebar - end');
 }
 
 // Make the status bar visible if it's hidden at the moment.
 // We use the menu option under 'View' menu to make it visible.
 function showStatusBarIfHidden() {
+	cy.log('>> showStatusBarIfHidden - start');
+
 	cy.cGet('#toolbar-down')
 		.then(function(statusbar) {
 			if (!Cypress.dom.isVisible(statusbar[0])) {
@@ -46,10 +48,14 @@ function showStatusBarIfHidden() {
 		});
 
 	cy.cGet('#toolbar-down').should('be.visible');
+
+	cy.log('<< showStatusBarIfHidden - end');
 }
 
 // Make the sidebar visible if it's hidden at the moment.
 function showSidebarIfHidden() {
+	cy.log('>> showSidebarIfHidden - start');
+
 	cy.get('#tb_editbar_item_sidebar .w2ui-button')
 		.then(function(sidebarItem) {
 			if (!sidebarItem.hasClass('checked')) {
@@ -59,10 +65,14 @@ function showSidebarIfHidden() {
 
 	cy.get('#sidebar-dock-wrapper')
 		.should('be.visible');
+
+	cy.log('<< showSidebarIfHidden - end');
 }
 
 // Hide the sidebar if it's visible at the moment.
 function hideSidebarIfVisible() {
+	cy.log('>> hideSidebarIfVisible - start');
+
 	cy.get('#tb_editbar_item_sidebar .w2ui-button')
 		.then(function(sidebarItem) {
 			if (sidebarItem.hasClass('checked')) {
@@ -72,31 +82,43 @@ function hideSidebarIfVisible() {
 
 	cy.get('#sidebar-dock-wrapper')
 		.should('not.be.visible');
+
+	cy.log('<< hideSidebarIfVisible - end');
 }
 
 // Select a color from colour palette widget used on top toolbar.
 // Parameters:
 // color - a hexadecimal color code without the '#' mark (e.g. 'FF011B')
 function selectColorFromPalette(color) {
+	cy.log('>> selectColorFromPalette - start');
+
 	cy.cGet('.w2ui-overlay').should('be.visible');
 	cy.cGet('.w2ui-color [name="' + color + '"]').click();
 	cy.cGet('.w2ui-overlay').should('not.exist');
+
+	cy.log('<< selectColorFromPalette - end');
 }
 
 // Select an item from a listbox widget used on top toolbar.
 // Parameters:
 // item - item string, that we use a selector to find the right list item.
 function selectFromListbox(item) {
+	cy.log('>> selectFromListbox - start');
+
 	cy.cGet('.select2-dropdown').should('be.visible');
 	// We use force because the tooltip sometimes hides the items.
 	cy.cGet('body').contains('.select2-results__option', item).click({force: true});
 	cy.cGet('.select2-dropdown').should('not.exist');
+
+	cy.log('<< selectFromListbox - end');
 }
 
 // Select an item from a JSDialog dropdown widget used on top toolbar.
 // Parameters:
 // item - item string, that we use a selector to find the right list item.
 function selectFromJSDialogListbox(item, isImage) {
+	cy.log('>> selectFromJSDialogListbox - start');
+
 	cy.cGet('[id$="-dropdown"].modalpopup').should('be.visible');
 	// We use force because the tooltip sometimes hides the items.
 	if (isImage) {
@@ -106,6 +128,8 @@ function selectFromJSDialogListbox(item, isImage) {
 		cy.cGet('[id$="-dropdown"].modalpopup').contains('span', item).click({force: true});
 
 	cy.cGet('[id$="-dropdown"].modalpopup').should('not.exist');
+
+	cy.log('<< selectFromJSDialogListbox - end');
 }
 
 // Make sure the right dialog is opened and then we close it.
@@ -115,6 +139,8 @@ function selectFromJSDialogListbox(item, isImage) {
 // Parameters:
 // dialogTitle - a title string to make sure the right dialog was opened.
 function checkDialogAndClose(dialogTitle) {
+	cy.log('>> checkDialogAndClose - start');
+
 	// Dialog is opened
 	cy.cGet('.lokdialog_canvas').should('be.visible');
 	cy.cGet('.ui-dialog-title').should('have.text', dialogTitle);
@@ -122,19 +148,27 @@ function checkDialogAndClose(dialogTitle) {
 	// Close the dialog
 	cy.cGet('body').type('{esc}');
 	cy.cGet('.lokdialog_canvas').should('not.exist');
+
+	cy.log('<< checkDialogAndClose - end');
 }
 
 // Checks wether the document has the given zoom level according to the status bar.
 // Parameters:
 // zoomLevel        the expected zoom level (e.g. '100' means 100%).
 function shouldHaveZoomLevel(zoomLevel) {
+	cy.log('>> shouldHaveZoomLevel - start');
+
 	cy.cGet('#tb_actionbar_item_zoom .w2ui-tb-caption').should('have.text', zoomLevel);
+
+	cy.log('<< shouldHaveZoomLevel - end');
 }
 
 // Make the zoom related status bar items visible if they are hidden.
 // The status bar can be long to not fit on the screen. We have a scroll
 // item for navigation in this case.
 function makeZoomItemsVisible() {
+	cy.log('>> makeZoomItemsVisible - start');
+
 	cy.cGet('.w2ui-tb-image.w2ui-icon.zoomin')
 		.then(function(zoomInItem) {
 			if (!Cypress.dom.isVisible(zoomInItem)) {
@@ -143,12 +177,16 @@ function makeZoomItemsVisible() {
 		});
 
 	cy.cGet('.w2ui-tb-image.w2ui-icon.zoomin').should('be.visible');
+
+	cy.log('<< makeZoomItemsVisible - end');
 }
 
 // Increase / decrease the zoom level using the status bar related items.
 // Parameters:
 // zoomIn - do a zoom in (e.g. increase zoom level) or zoom out.
 function doZoom(zoomIn) {
+	cy.log('>> doZoom - start');
+
 	var prevZoom = '';
 	cy.cGet('#tb_actionbar_item_zoom .w2ui-tb-caption')
 		.should(function(zoomLevel) {
@@ -170,6 +208,8 @@ function doZoom(zoomIn) {
 		.should(function(zoomLevel) {
 			expect(zoomLevel.text()).to.not.equal(prevZoom);
 		});
+
+	cy.log('<< doZoom - end');
 }
 
 // Zoom in the document.
@@ -188,20 +228,30 @@ function zoomOut() {
 // zoomLevel - a number specifing the zoom level  (e.g. '100' means 100%).
 //             See also the status bar's zoom level list for possible values.
 function selectZoomLevel(zoomLevel) {
+	cy.log('>> selectZoomLevel - start');
+
 	// Force because sometimes the icons are scrolled off the screen to the right
 	cy.cGet('#tb_actionbar_item_zoom .w2ui-button').click({force: true});
 	cy.cGet('#w2ui-overlay-actionbar').contains('.menu-text', zoomLevel).click({force: true});
 	shouldHaveZoomLevel(zoomLevel);
+
+	cy.log('<< selectZoomLevel - end');
 }
 
 // Reset zoom level to 100%.
 function resetZoomLevel() {
+	cy.log('>> resetZoomLevel - start');
+
 	// Force because sometimes the icons are scrolled off the screen to the right
 	cy.cGet('#tb_actionbar_item_zoomreset .w2ui-button').click({force: true});
 	shouldHaveZoomLevel('100');
+
+	cy.log('<< resetZoomLevel - end');
 }
 
 function insertImage(docType) {
+	cy.log('>> insertImage - start');
+
 	selectZoomLevel('50');
 
 	cy.cGet('#toolbar-up .w2ui-scroll-right').click();
@@ -221,14 +271,22 @@ function insertImage(docType) {
 
 	cy.cGet('#insertgraphic[type=file]').attachFile('/desktop/writer/image_to_insert.png');
 	cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g').should('exist');
+
+	cy.log('<< insertImage - end');
 }
 
 function deleteImage() {
+	cy.log('>> deleteImage - start');
+
 	helper.typeIntoDocument('{del}');
 	cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g').should('not.exist');
+
+	cy.log('<< deleteImage - end');
 }
 
 function assertImageSize(expectedWidth, expectedHeight) {
+	cy.log('>> assertImageSize - start');
+
 	cy.cGet('.leaflet-pane.leaflet-overlay-pane svg svg')
 		.should('exist')
 		.then($ele => {
@@ -238,9 +296,13 @@ function assertImageSize(expectedWidth, expectedHeight) {
 			expect(actualWidth).to.be.closeTo(expectedWidth, 10);
 			expect(actualHeight).to.be.closeTo(expectedHeight, 10);
 		});
+
+	cy.log('<< assertImageSize - end');
 }
 
 function createComment(docType, text, isMobile, selector) {
+	cy.log('>> createComment - start');
+
 	if (docType === 'draw') {
 		cy.cGet('#menu-insert').click();
 		cy.cGet('#menu-insertcomment').click();
@@ -260,9 +322,13 @@ function createComment(docType, text, isMobile, selector) {
 
 	cy.cGet('#annotation-modify-textarea-new').type(text);
 	// Cannot have any action between type and subsequent save button click
+
+	cy.log('<< createComment - end');
 }
 
 function saveComment(isMobile) {
+	cy.log('>> saveComment - start');
+
 	if (isMobile) {
 		cy.cGet('#response-ok').click();
 	} else {
@@ -272,9 +338,13 @@ function saveComment(isMobile) {
 		// Wait for animation
 		cy.wait(100);
 	}
+
+	cy.log('<< saveComment - end');
 }
 
 function setupUIforCommentInsert(docType) {
+	cy.log('>> setupUIforCommentInsert - start');
+
 	var mode = Cypress.env('USER_INTERFACE');
 
 	if (docType !== 'draw') {
@@ -300,44 +370,50 @@ function setupUIforCommentInsert(docType) {
 			}
 		});
 	}
+
+	cy.log('<< setupUIforCommentInsert - end');
 }
 
 function insertMultipleComment(docType, numberOfComments = 1, isMobile = false, selector) {
+	cy.log('>> insertMultipleComment - start');
+
 	setupUIforCommentInsert(docType);
 
 	for (var n = 0; n < numberOfComments; n++) {
 		createComment(docType, 'some text' + n, isMobile, selector);
 		saveComment(isMobile);
 	}
+
+	cy.log('<< insertMultipleComment - end');
 }
 
 function switchUIToNotebookbar() {
+	cy.log('>> switchUIToNotebookbar - start');
+
 	cy.window().then(win => {
 		var userInterfaceMode = win['0'].userInterfaceMode;
 		if (userInterfaceMode !== 'notebookbar') {
-			cy.log('switchUIToNotebookbar start');
 			cy.cGet('#menu-view').click();
 			cy.cGet('#menu-toggleuimode').should($el => { expect(Cypress.dom.isDetached($el)).to.eq(false); }).click();
-			cy.log('switchUIToNotebookbar end');
-		} else {
-			cy.log('switchUIToNotebookbar: already notebookbar UI');
 		}
 		Cypress.env('USER_INTERFACE', 'notebookbar');
 	});
+
+	cy.log('<< switchUIToNotebookbar - end');
 }
 
 function switchUIToCompact() {
+	cy.log('>> switchUIToCompact - start');
+
 	cy.window().then(win => {
 		var userInterfaceMode = win['0'].userInterfaceMode;
 		if (userInterfaceMode === 'notebookbar') {
-			cy.log('switchUIToCompact start');
 			cy.cGet('#View-tab-label').click();
 			cy.cGet('#toggleuimode').click();
-			cy.log('switchUIToCompact end');
-		} else {
-			cy.log('switchUIToCompact: already compact UI');
 		}
 	});
+
+	cy.log('<< switchUIToCompact - end');
 }
 
 function actionOnSelector(name, func) {
@@ -353,20 +429,30 @@ function actionOnSelector(name, func) {
 //arr : In both cypress GUI and CLI the scrollposition are slightly different
 //so we are passing both in array and assert using oneOf
 function assertScrollbarPosition(type, lowerBound, upperBound) {
+	cy.log('>> assertScrollbarPosition - start');
+
 	cy.cGet('#test-div-' + type + '-scrollbar')
 		.should(function($item) {
 			const x = parseInt($item.text());
 			expect(x).to.be.within(lowerBound, upperBound);
 		});
+
+	cy.log('<< assertScrollbarPosition - end');
 }
 
 function pressKey(n, key) {
+	cy.log('>> pressKey - start');
+
 	for (let i=0; i<n; i++) {
 		helper.typeIntoDocument('{' + key + '}');
 	}
+
+	cy.log('<< pressKey - end');
 }
 
 function openReadOnlyFile(type, filename) {
+	cy.log('>> openReadOnlyFile - start');
+
 	var testFileName = helper.loadTestDocNoIntegration(filename, type, false, false, false);
 
 	//check doc is loaded
@@ -376,10 +462,13 @@ function openReadOnlyFile(type, filename) {
 
 	cy.cGet('#PermissionMode').should('be.visible').should('have.text', ' Read-only ');
 
+	cy.log('<< openReadOnlyFile - end');
 	return testFileName;
 }
 
 function checkAccessibilityEnabledToBe(state) {
+	cy.log('>> checkAccessibilityEnabledToBe - start');
+
 	cy.window().then(win => {
 		cy.log('check accessibility enabled to be: ' + state);
 		var isAccessibilityEnabledAtServerLevel = win['0'].enableAccessibility;
@@ -408,9 +497,13 @@ function checkAccessibilityEnabledToBe(state) {
 			cy.log('accessibility disabled at server level');
 		}
 	});
+
+	cy.log('<< checkAccessibilityEnabledToBe - end');
 }
 
 function setAccessibilityState(enable) {
+	cy.log('>> setAccessibilityState - start');
+
 	cy.window().then(win => {
 		cy.log('set accessibility state to: ' + enable);
 		var a11yEnabled = win['0'].enableAccessibility;
@@ -447,6 +540,8 @@ function setAccessibilityState(enable) {
 			cy.log('accessibility disabled at server level');
 		}
 	});
+
+	cy.log('<< setAccessibilityState - end');
 }
 
 module.exports.showSidebar = showSidebar;

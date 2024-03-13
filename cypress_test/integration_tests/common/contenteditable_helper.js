@@ -13,19 +13,22 @@ function _checkSelectionEnd(value) {
 }
 
 function type(text, times = 1) {
+	cy.log('>> type - start');
+
 	var input = '';
 	for (var i = 0; i < times; ++i) {
 		input += text;
 	}
 
-	cy.log('Clipboard - typing start.');
 	cy.get('@clipboard').type(input, {delay: 10, force: true});
-	cy.log('Clipboard - typing end.');
+
+	cy.log('<< type - end');
 }
 
 function moveCaret(direction, modifier = '', times = 1) {
-	cy.log('Clipboard - moving caret start');
+	cy.log('>> moveCaret - start');
 	cy.log('  Param - direction: ' + direction);
+
 	if (modifier)
 		cy.log('  Param - modifier: ' + modifier);
 	if (times > 1)
@@ -61,10 +64,13 @@ function moveCaret(direction, modifier = '', times = 1) {
 	}
 
 	cy.get('@clipboard').type(key, {delay: 10, force: true});
-	cy.log('Clipboard - moving caret end');
+
+	cy.log('<< moveCaret - end');
 }
 
 function select(start, end) {
+	cy.log('>> select - start');
+
 	moveCaret('home');
 	moveCaret('right', '', start);
 	if (start < end) {
@@ -73,19 +79,31 @@ function select(start, end) {
 	else if (start > end) {
 		moveCaret('left', 'shift', start - end);
 	}
+
+	cy.log('<< select - end');
 }
 
 function checkHTMLContent(content) {
+	cy.log('>> checkHTMLContent - start');
+
 	cy.get('@clipboard').should(($c) => {
 		expect($c).have.html($c.get(0)._wrapContent(content));
 	});
+
+	cy.log('<< checkHTMLContent - end');
 }
 
 function checkPlainContent(content) {
+	cy.log('>> checkPlainContent - start');
+
 	cy.get('@clipboard').should('have.text', content);
+
+	cy.log('<< checkPlainContent - end');
 }
 
 function checkSelectionRange(start, end) {
+	cy.log('>> checkSelectionRange - start');
+
 	if (start > end) {
 		var t = start;
 		start = end;
@@ -94,21 +112,35 @@ function checkSelectionRange(start, end) {
 	cy.get('@clipboard').should('have.prop', 'isSelectionNull', false);
 	_checkSelectionStart(start);
 	_checkSelectionEnd(end);
+
+	cy.log('<< checkSelectionRange - end');
 }
 
 function checkCaretPosition(pos) {
+	cy.log('>> checkCaretPosition - start');
+
 	_checkSelectionStart(pos);
 	_checkSelectionEnd(pos);
+
+	cy.log('<< checkCaretPosition - end');
 }
 
 function checkSelectionIsNull() {
+	cy.log('>> checkSelectionIsNull - start');
+
 	cy.get('@clipboard').should('have.prop', 'isSelectionNull', true);
+
+	cy.log('<< checkSelectionIsNull - end');
 }
 
 function checkSelectionIsEmpty(pos) {
+	cy.log('>> checkSelectionIsEmpty - start');
+
 	cy.get('@clipboard').should('have.prop', 'isSelectionNull', false);
 	_checkSelectionStart(pos);
 	_checkSelectionEnd(pos);
+
+	cy.log('<< checkSelectionIsEmpty - end');
 }
 
 module.exports.type = type;
