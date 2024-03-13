@@ -53,6 +53,8 @@ public:
 
     void shutdownForBackgroundSave();
 
+    int getKitId() const { return _mobileAppDocId; }
+
 protected:
     virtual void handleMessage(const std::vector<char>& data) override;
     virtual void enableProcessInput(bool enable = true) override;
