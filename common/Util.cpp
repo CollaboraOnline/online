@@ -598,6 +598,33 @@ namespace Util
         return replace(r, "\n", " / ");
     }
 
+#if defined __linux__
+    static thread_local pid_t ThreadTid = 0;
+
+    pid_t getThreadId()
+#else
+    static thread_local long ThreadTid = 0;
+
+    long getThreadId()
+#endif
+    {
+        // Avoid so many redundant system calls
+#if defined __linux__
+        if (!ThreadTid)
+            ThreadTid = ::syscall(SYS_gettid);
+        return ThreadTid;
+#elif defined __FreeBSD__
+        if (!ThreadTid)
+            thr_self(&ThreadTid);
+        return ThreadTid;
+#else
+        static long threadCounter = 1;
+        if (!ThreadTid)
+            ThreadTid = threadCounter++;
+        return ThreadTid;
+#endif
+    }
+
     // prctl(2) supports names of up to 16 characters, including null-termination.
     // Although in practice on linux more than 16 chars is supported.
     static thread_local char ThreadName[32] = {0};
@@ -605,6 +632,9 @@ namespace Util
 
     void setThreadName(const std::string& s)
     {
+        // Clear the cache - perhaps we forked
+        ThreadTid = 0;
+
         // Copy the current name.
         const std::string knownAs
             = ThreadName[0] ? "known as [" + std::string(ThreadName) + ']' : "unnamed";
@@ -656,33 +686,6 @@ namespace Util
 
         // Avoid so many redundant system calls
         return ThreadName;
-    }
-
-#if defined __linux__
-    static thread_local pid_t ThreadTid = 0;
-
-    pid_t getThreadId()
-#else
-    static thread_local long ThreadTid = 0;
-
-    long getThreadId()
-#endif
-    {
-        // Avoid so many redundant system calls
-#if defined __linux__
-        if (!ThreadTid)
-            ThreadTid = ::syscall(SYS_gettid);
-        return ThreadTid;
-#elif defined __FreeBSD__
-        if (!ThreadTid)
-            thr_self(&ThreadTid);
-        return ThreadTid;
-#else
-        static long threadCounter = 1;
-        if (!ThreadTid)
-            ThreadTid = threadCounter++;
-        return ThreadTid;
-#endif
     }
 
     void getVersionInfo(std::string& version, std::string& hash)

@@ -2542,8 +2542,6 @@ void lokit_main(
         SigUtil::setUserSignals();
     }
 
-    Util::setThreadName("kit_spare_" + Util::encodeId(numericIdentifier, 3));
-
     // Reinitialize logging when forked.
     const bool logToFile = std::getenv("COOL_LOGFILE");
     const char* logFilename = std::getenv("COOL_LOGFILENAME");
