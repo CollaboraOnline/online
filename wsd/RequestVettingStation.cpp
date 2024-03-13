@@ -232,6 +232,11 @@ void RequestVettingStation::handleRequest(const std::string& id,
                     else
                     {
                         // E.g. Timeout.
+                        LOG_ERR_S('#'
+                                  << moveSocket->getFD() << ": CheckFileInfo failed for [" << docKey
+                                  << "], "
+                                  << (_checkFileInfo ? CheckFileInfo::name(_checkFileInfo->state())
+                                                     : "no CheckFileInfo"));
                         sendErrorAndShutdown(_ws, "error: cmd=internal kind=unauthorized",
                                              WebSocketHandler::StatusCodes::POLICY_VIOLATION);
                     }
@@ -426,6 +431,9 @@ void RequestVettingStation::sendErrorAndShutdown(const std::shared_ptr<WebSocket
                                                  const std::string& msg,
                                                  WebSocketHandler::StatusCodes statusCode)
 {
-    ws->sendMessage(msg);
-    ws->shutdown(statusCode, msg); // And ignore input (done in shutdown()).
+    if (ws)
+    {
+        ws->sendMessage(msg);
+        ws->shutdown(statusCode, msg); // And ignore input (done in shutdown()).
+    }
 }
