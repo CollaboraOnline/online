@@ -744,7 +744,8 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 										'accessibility': { focusBack: true, combination: 'FL', de: null }
 									},
 									{
-										'id': 'home-charbackcolor',
+										'id': 'home-charbackcolor:ColorPickerMenu',
+										'noLabel': true,
 										'class': 'unospan-CharBackColor',
 										'type': 'toolitem',
 										'text': _UNO('.uno:CharBackColor'),
@@ -752,7 +753,8 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 										'accessibility': { focusBack: true, combination: 'HC', de: null }
 									},
 									{
-										'id': 'home-color',
+										'id': 'home-color:ColorPickerMenu',
+										'noLabel': true,
 										'class': 'unospan-FontColor',
 										'type': 'toolitem',
 										'text': _UNO('.uno:Color'),
@@ -986,7 +988,8 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 						'type': 'toolbox',
 						'children': [
 							{
-								'id': 'home-xline-color',
+								'id': 'home-xline-color:ColorPickerMenu',
+								'noLabel': true,
 								'class': 'unospan-XLineColor',
 								'type': 'toolitem',
 								'text': _UNO('.uno:XLineColor'),
@@ -999,7 +1002,8 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 						'type': 'toolbox',
 						'children': [
 							{
-								'id': 'home-fill-color',
+								'id': 'home-fill-color:ColorPickerMenu',
+								'noLabel': true,
 								'class': 'unospan-FillColor',
 								'type': 'toolitem',
 								'text': _UNO('.uno:FillColor'),
@@ -2021,7 +2025,8 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 						'type': 'toolbox',
 						'children': [
 							{
-								'id': 'table-xline-color',
+								'id': 'table-xline-color:ColorPickerMenu',
+								'noLabel': true,
 								'type': 'toolitem',
 								'text': _UNO('.uno:XLineColor'),
 								'command': '.uno:XLineColor',
@@ -2033,7 +2038,8 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 						'type': 'toolbox',
 						'children': [
 							{
-								'id': 'table-fill-color',
+								'id': 'table-fill-color:ColorPickerMenu',
+								'noLabel': true,
 								'type': 'toolitem',
 								'text': _UNO('.uno:FillColor'),
 								'command': '.uno:FillColor',
@@ -2198,7 +2204,8 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 						'type': 'toolbox',
 						'children': [
 							{
-								'id': 'draw-xline-color',
+								'id': 'draw-xline-color:ColorPickerMenu',
+								'noLabel': true,
 								'type': 'toolitem',
 								'text': _UNO('.uno:XLineColor'),
 								'command': '.uno:XLineColor',
@@ -2210,7 +2217,8 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 						'type': 'toolbox',
 						'children': [
 							{
-								'id': 'draw-fill-color',
+								'id': 'draw-fill-color:ColorPickerMenu',
+								'noLabel': true,
 								'type': 'toolitem',
 								'text': _UNO('.uno:FillColor'),
 								'command': '.uno:FillColor',

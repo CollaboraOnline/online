@@ -89,12 +89,22 @@ function hideSidebarIfVisible() {
 // Select a color from colour palette widget used on top toolbar.
 // Parameters:
 // color - a hexadecimal color code without the '#' mark (e.g. 'FF011B')
-function selectColorFromPalette(color) {
+function selectColorFromPaletteClassic(color) {
 	cy.log('>> selectColorFromPalette - start');
 
 	cy.cGet('.w2ui-overlay').should('be.visible');
 	cy.cGet('.w2ui-color [name="' + color + '"]').click();
 	cy.cGet('.w2ui-overlay').should('not.exist');
+
+	cy.log('<< selectColorFromPalette - end');
+}
+
+function selectColorFromPalette(color) {
+	cy.log('>> selectColorFromPalette - start');
+
+	cy.cGet('.ui-color-picker').should('be.visible');
+	cy.cGet('.ui-color-picker-entry[name="' + color + '"]').click();
+	cy.cGet('.ui-color-picker').should('not.exist');
 
 	cy.log('<< selectColorFromPalette - end');
 }
@@ -550,6 +560,7 @@ module.exports.showStatusBarIfHidden = showStatusBarIfHidden;
 module.exports.showSidebarIfHidden = showSidebarIfHidden;
 module.exports.hideSidebarIfVisible = hideSidebarIfVisible;
 module.exports.selectColorFromPalette = selectColorFromPalette;
+module.exports.selectColorFromPaletteClassic = selectColorFromPaletteClassic;
 module.exports.selectFromListbox = selectFromListbox;
 module.exports.selectFromJSDialogListbox = selectFromJSDialogListbox;
 module.exports.checkDialogAndClose = checkDialogAndClose;

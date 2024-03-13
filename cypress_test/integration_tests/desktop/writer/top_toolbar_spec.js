@@ -187,8 +187,8 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 	it('Insert/delete table.', function() {
 		cy.cGet('#toolbar-up .w2ui-scroll-right').click();
 		cy.cGet('#toolbar-up .w2ui-scroll-right').click();
-		cy.wait(500);
-		cy.cGet('#Home-container .unoInsertTable').click();
+		cy.cGet('#toolbar-up .w2ui-scroll-right').click();
+		cy.cGet('#Home-container .unoInsertTable button').click();
 		cy.cGet('.inserttable-grid > .row > .col').eq(3).click();
 		helper.typeIntoDocument('{ctrl}a');
 		cy.cGet('#copy-paste-container table').should('exist');
@@ -207,24 +207,20 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Insert hyperlink.', function() {
 		helper.expectTextForClipboard('text text1');
+		cy.wait(500);
 		cy.cGet('#Insert-tab-label').click();
-		cy.cGet('#toolbar-up .w2ui-scroll-right').click();
-		cy.cGet('#Insert-container .hyperlinkdialog').click();
+		cy.cGet('#Insert-container .hyperlinkdialog button').click();
 		cy.cGet('#hyperlink-link-box').should('exist');
 		cy.cGet('#hyperlink-text-box').type('link');
 		cy.cGet('#hyperlink-link-box').type('www.something.com');
 		cy.cGet('#response-ok').click();
-		writerHelper.selectAllTextOfDoc();
 		helper.expectTextForClipboard('text text1link');
 		cy.cGet('#copy-paste-container p a').should('have.attr', 'href', 'http://www.something.com/');
 	});
 
 	it('Insert/delete shape.', function() {
 		cy.cGet('#Insert-tab-label').click();
-		cy.cGet('#toolbar-up .w2ui-scroll-right').click();
-
-		cy.cGet('#Insert-container .unoBasicShapes').click();
-
+		cy.cGet('#Insert-container .unoBasicShapes button').click();
 		cy.cGet('.col.w2ui-icon.basicshapes_octagon').click();
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g').should('exist');
 
@@ -237,8 +233,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Insert/delete chart.', function() {
 		cy.cGet('#Insert-tab-label').click();
-		cy.cGet('#toolbar-up .w2ui-scroll-right').click();
-		cy.cGet('#Insert-container .unoInsertObjectChart').click();
+		cy.cGet('#Insert-container .unoInsertObjectChart button').click();
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g').should('exist');
 
 		//delete
@@ -265,25 +260,30 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 			});
 
 		cy.cGet('#File-tab-label').click();
-		cy.cGet('#File-container .unoPrint').click();
+		cy.cGet('#File-container .unoPrint button').click();
 
 		cy.get('@windowOpen').should('be.called');
 	});
 
 	it('Apply Undo/Redo.', function() {
 		//Do
-		cy.cGet('.notebookbar > .unoItalic > button').click();
-		writerHelper.selectAllTextOfDoc();
+		cy.cGet('.notebookbar .unoItalic button').click();
+		cy.wait(500); // wait for new clipboard
 		cy.cGet('#copy-paste-container p i').should('exist');
 
 		//Undo
-		cy.cGet('#Home-container .unoUndo').should('not.have.class','disabled').click();
-		writerHelper.selectAllTextOfDoc();
+		cy.cGet('#Home-container .unoUndo').should('not.be.disabled').click();
+		cy.wait(500); // wait for new clipboard
 		cy.cGet('#copy-paste-container p i').should('not.exist');
 
+		// Dismiss tooltip
+		cy.cGet('#Home-tab-label').click();
+		cy.cGet('#Home-tab-label').click();
+		cy.cGet('[role="tooltip"]').should('not.exist');
+
 		//Redo
-		cy.cGet('#Home-container .unoRedo').click();
-		writerHelper.selectAllTextOfDoc();
+		cy.cGet('#Home-container .unoRedo').should('not.be.disabled').click();
+		cy.wait(500); // wait for new clipboard
 		cy.cGet('#copy-paste-container p i').should('exist');
 	});
 

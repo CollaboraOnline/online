@@ -100,6 +100,7 @@ window.app = {
 		'ThemeColors': { name: _('Theme colors'), colors: [] },
 		'DocumentColors': { name: _('Document colors'), colors: [] },
 	},
+	colorLastSelection: {}, // last used colors for uno commands
 };
 
 var activateValidation = false;

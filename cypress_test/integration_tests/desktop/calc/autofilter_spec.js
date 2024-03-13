@@ -100,7 +100,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'AutoFilter', function() {
 		// apply background color to some cells
 		calcHelper.selectCellsInRange('A2:A2');
 		cy.cGet('#tb_editbar_item_backgroundcolor').click();
-		desktopHelper.selectColorFromPalette('8E7CC3');
+		desktopHelper.selectColorFromPaletteClassic('8E7CC3');
 
 		calcHelper.openAutoFilterMenu();
 		

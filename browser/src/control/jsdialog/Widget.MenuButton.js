@@ -65,13 +65,22 @@ function _menubuttonControl (parentContainer, data, builder) {
 		if (!data.command)
 			data.command = menuId;
 
+		if (menuEntries.length && menuEntries[0].type === 'colorpicker') {
+			// make copy and fill with information to identify color command
+			menuEntries = JSON.parse(JSON.stringify(menuEntries));
+			menuEntries[0].command = data.command;
+			menuEntries[0].id = data.id;
+		}
+
 		var options = {hasDropdownArrow: menuEntries.length > 1};
 		var control = builder._unoToolButton(parentContainer, data, builder, options);
 
 		$(control.container).tooltip({disabled: true});
 		$(control.container).addClass('menubutton');
+		control.container.setAttribute('aria-haspopup', true);
 
-		$(control.container).unbind('click');
+		$(control.button).unbind('click');
+		$(control.label).unbind('click');
 
 		var dropdownId = data.id;
 		var clickFunction = function () {
@@ -106,10 +115,25 @@ function _menubuttonControl (parentContainer, data, builder) {
 			}
 		};
 
-		control.container.addEventListener('click', clickFunction);
+		// make it possible to setup separate callbacks for split button
+		if (data.applyCallback) {
+			control.button.addEventListener('click', data.applyCallback);
+			if (control.label)
+				control.label.addEventListener('click', data.applyCallback);
+		} else {
+			control.button.addEventListener('click', clickFunction);
+			if (control.label)
+				control.label.addEventListener('click', clickFunction);
+		}
+
+		if (control.arrow)
+			control.arrow.addEventListener('click', clickFunction);
+
 		builder._preventDocumentLosingFocusOnClick(control.container);
 
 		builder.options.noLabelsForUnoButtons = noLabels;
+
+		return control;
 	} else if (data.text !== undefined || data.image) {
 		var button = L.DomUtil.create('button', 'menubutton ' + builder.options.cssClass, parentContainer);
 		button.id = data.id;

@@ -1202,7 +1202,9 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	height: 5px;
 	width: 24px;
 	position: relative;
-	top: -6px;
+	top: -5px;
+	grid-column: 1;
+	grid-row: 2;
 	border: 1px solid var(--color-border-dark);
 	border-radius: 7px;
 	outline: 1px solid var(--color-background-lighter);
@@ -1230,6 +1232,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	display: inline-block;
 	border-left: 1px solid transparent;
 	background-color: transparent;
+	grid-column: 3;
 }
 
 .arrowbackground:hover {
@@ -1301,6 +1304,50 @@ input[type='number']:hover::-webkit-outer-spin-button {
 @keyframes spin {
 	0% { transform: rotate(0deg); }
 	100% { transform: rotate(360deg); }
+}
+
+/* color picker */
+.ui-color-picker {
+	padding: 4px;
+}
+
+.ui-color-picker,
+#ui-color-picker-custom,
+#ui-color-picker-recent {
+	display: grid;
+	grid-gap: 4px;
+	align-items: center;
+}
+
+.ui-color-picker-palette {
+	display: grid;
+	grid-gap: 4px;
+}
+
+.ui-color-picker-entry {
+	border: 1px solid transparent;
+	cursor: pointer;
+	width: 16px;
+	height: 16px;
+}
+
+.ui-color-picker-entry:hover {
+	border: 1px solid var(--color-primary);
+}
+
+#ui-color-picker-custom,
+#ui-color-picker-recent {
+	grid-auto-flow: column;
+}
+
+.ui-color-picker .ui-listbox-container,
+.ui-color-picker button {
+	margin: 0px !important;
+	width: 100% !important;
+}
+
+#ui-color-picker-custom input {
+	max-width: 75px;
 }
 
 /* busy popup */
@@ -1608,6 +1655,13 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	vertical-align: middle;
 	background-color: transparent;
 	border: none;
+}
+
+.unotoolbutton.has-dropdown {
+	display: grid;
+	align-items: center;
+	grid-auto-flow: column;
+	grid-template-rows: auto 0px;
 }
 
 .unotoolbutton.jsdialog.sidebar.ui-content > .arrowbackground {

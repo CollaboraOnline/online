@@ -20,7 +20,7 @@ describe(['tagdesktop'], 'Change cell appearance.', function() {
 		desktopHelper.switchUIToNotebookbar();
 		calcHelper.clickOnFirstCell();
 		cy.cGet('#Home').click();
-		cy.cGet('#Home-container #BackgroundColor .arrowbackground').click();
+		cy.cGet('#Home-container .unoBackgroundColor .arrowbackground').click();
 		desktopHelper.selectColorFromPalette('006CE7');
 		calcHelper.selectEntireSheet();
 		cy.cGet('#copy-paste-container table td').should('have.attr', 'bgcolor', '#006CE7');
