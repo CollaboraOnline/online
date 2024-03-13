@@ -6,6 +6,7 @@ var helper = require('./helper');
 // mouseover is triggered to avoid leaving the mouse on the Formula-Bar,
 // which shows the tooltip and messes up tests.
 function clickFormulaBar() {
+	cy.log('>> clickFormulaBar - start');
 
 	// The inputbar_container is 100% width, which
 	// can extend behind the sidebar. So we can't
@@ -19,6 +20,8 @@ function clickFormulaBar() {
 
 	cy.cGet('#sc_input_window.formulabar').focus();
 	cy.cGet('body').trigger('mouseover');
+
+	cy.log('<< clickFormulaBar - end');
 }
 
 // Click on the first cell of the sheet (A1), we use the document
@@ -31,7 +34,7 @@ function clickFormulaBar() {
 // dblClick - to do a double click or not. The result of double click is that the cell
 //            editing it triggered both on desktop and mobile.
 function clickOnFirstCell(firstClick = true, dblClick = false, isA1 = true) {
-	cy.log('Clicking on first cell - start.');
+	cy.log('>> clickOnFirstCell - start');
 	cy.log('Param - firstClick: ' + firstClick);
 	cy.log('Param - dblClick: ' + dblClick);
 
@@ -65,19 +68,23 @@ function clickOnFirstCell(firstClick = true, dblClick = false, isA1 = true) {
 	if (isA1)
 		cy.cGet('input#addressInput').should('have.prop', 'value', 'A1');
 
-	cy.log('Clicking on first cell - end.');
+	cy.log('<< clickOnFirstCell - end');
 }
 
 // Double click on the A1 cell.
 function dblClickOnFirstCell() {
+	cy.log('>> dblClickOnFirstCell - start');
+
 	clickOnFirstCell(false, true);
+
+	cy.log('<< dblClickOnFirstCell - end');
 }
 
 // Type some text into the formula bar.
 // Parameters:
 // text - the text the method type into the formula bar's intput field.
 function typeIntoFormulabar(text) {
-	cy.log('Typing into formulabar - start.');
+	cy.log('>> typeIntoFormulabar - start');
 
 	cy.cGet('#sc_input_window.formulabar')
 		.then(function(cursor) {
@@ -100,14 +107,14 @@ function typeIntoFormulabar(text) {
 		cy.cGet('#cancelformula').should('be.visible');
 	});
 
-	cy.log('Typing into formulabar - end.');
+	cy.log('<< typeIntoFormulabar - end');
 }
 
 // Remove exisiting text selection by clicking on
 // row headers at the center position, until a
 // a row is selected (and text seletion is removed).
 function removeTextSelection() {
-	cy.log('Removing text selection - start.');
+	cy.log('>> removeTextSelection - start');
 
 	cy.cGet('[id="test-div-row header"]')
 		.then(function(header) {
@@ -130,8 +137,7 @@ function removeTextSelection() {
 			});
 		});
 
-
-	cy.log('Removing text selection - end.');
+	cy.log('<< removeTextSelection - end');
 }
 
 // Select the enitre sheet, using the select all button
@@ -141,7 +147,7 @@ function removeTextSelection() {
 // text selection, select all would select only the content
 // of the currently edited cell instead of the whole table.
 function selectEntireSheet() {
-	cy.log('Selecting entire sheet - start.');
+	cy.log('>> selectEntireSheet - start');
 
 	removeTextSelection();
 
@@ -165,7 +171,7 @@ function selectEntireSheet() {
 			return regex.test(value);
 		});
 
-	cy.log('Selecting entire sheet - end.');
+	cy.log('<< selectEntireSheet - end');
 }
 
 // Select first column of a calc document.
@@ -173,6 +179,8 @@ function selectEntireSheet() {
 // of the column headers. Of course if the first column
 // has a very small width, then this might fail.
 function selectFirstColumn() {
+	cy.log('>> selectFirstColumn - start');
+
 	cy.cGet('[id="test-div-column header"]')
 		.then(function(items) {
 			expect(items).to.have.lengthOf(1);
@@ -184,9 +192,13 @@ function selectFirstColumn() {
 		});
 
 		cy.cGet('input#addressInput').should('have.prop', 'value', 'A1:A1048576');
+
+	cy.log('<< selectFirstColumn - end');
 }
 
 function ensureViewContainsCellCursor() {
+	cy.log('>> ensureViewContainsCellCursor - start');
+
 	var sheetViewBounds = new helper.Bounds();
 	var sheetCursorBounds = new helper.Bounds();
 
@@ -197,9 +209,13 @@ function ensureViewContainsCellCursor() {
 		cy.log('ensureViewContainsCellCursor: cursor-area is ' + sheetCursorBounds.toString() + ' view-area is ' + sheetViewBounds.toString());
 		expect(sheetViewBounds.contains(sheetCursorBounds)).to.equal(true, 'view-area must contain cursor-area');
 	});
+
+	cy.log('<< ensureViewContainsCellCursor - end');
 }
 
 function assertDataClipboardTable(expectedData) {
+	cy.log('>> assertDataClipboardTable - start');
+
 	cy.cGet('#copy-paste-container table td')
 		.should(function(cells) {
 			expect(cells).to.have.lengthOf(expectedData.length);
@@ -214,15 +230,23 @@ function assertDataClipboardTable(expectedData) {
 				data.push(text);
 			});
 	}).then(() => expect(data).to.deep.eq(expectedData));
+
+	cy.log('<< assertDataClipboardTable - end');
 }
 
 function selectCellsInRange(range) {
+	cy.log('>> selectCellsInRange - start');
+
 	cy.cGet('#tb_formulabar_item_address #addressInput')
 		.clear()
 		.type(range + '{enter}');
+
+	cy.log('<< selectCellsInRange - end');
 }
 
 function openAutoFilterMenu(secondColumn) {
+	cy.log('>> openAutoFilterMenu - start');
+
 	let XPos = 95;
 	let YPos = 10;
 
@@ -232,6 +256,8 @@ function openAutoFilterMenu(secondColumn) {
 
 	cy.cGet('#map').then(function(items) { expect(items).to.have.lengthOf(1); });
 	cy.cGet('#map').click(XPos, YPos);
+
+	cy.log('<< openAutoFilterMenu - end');
 }
 
 module.exports.clickOnFirstCell = clickOnFirstCell;
