@@ -2236,6 +2236,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'vertical': 'true'
 			},
 			{
+				'type': 'container',
 				'children': [
 					{
 						'type': 'toolbox',
@@ -2263,11 +2264,13 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'vertical': 'true'
 			},
 			{
+				'type': 'container',
 				'children': [
 					{
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'review-accept-tracked-change-to-next',
 								'type': 'toolitem',
 								'text': _UNO('.uno:AcceptTrackedChangeToNext', 'text'),
 								'command': '.uno:AcceptTrackedChangeToNext'
@@ -2278,6 +2281,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'review-reject-tracked-change-to-next',
 								'type': 'toolitem',
 								'text': _UNO('.uno:RejectTrackedChangeToNext', 'text'),
 								'command': '.uno:RejectTrackedChangeToNext'
