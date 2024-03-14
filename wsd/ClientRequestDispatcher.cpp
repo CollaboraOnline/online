@@ -576,6 +576,9 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
                         "access_token=" + accessDetails.accessToken(), "access_token_ttl=0"
                     };
 
+                    if (!accessDetails.permission().empty())
+                        options.push_back("permission=" + accessDetails.permission());
+
                     const RequestDetails fullRequestDetails =
                         RequestDetails(accessDetails.wopiSrc(), options, /*compat=*/std::string());
                     LOG_TRC("Creating RVS with key: " << requestKey << ", for DocumentLoadURI: "
