@@ -2395,7 +2395,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 				controls['label'] = label;
 			}
-
+			var disabled = data.enabled === 'false' || data.enabled === false;
 			if (data.command) {
 				var updateFunction = function() {
 					var items = builder.map['stateChangeHandler'];
@@ -2410,7 +2410,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 						$(div).removeClass('selected');
 					}
 
-					if (state && state === 'disabled') {
+					if (disabled) {
 						if (data.command === '.uno:Paste') {
 							// Fix GitHub issue #5839 and never disable Paste toolbar button
 							// Behave the same as Contol.Menubar and never
@@ -2435,12 +2435,18 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				updateFunction();
 
 				builder.map.on('commandstatechanged', function(e) {
+					disabled = false;
 					if (e.commandName === data.command)
+					{
+						// in some cases we will get both property like state and disabled
+						// to handle it we will set disable var based on INCOMING info (ex: .uno:ParaRightToLft) 
+						disabled = e.disabled || e.state == 'disabled';
 						updateFunction();
+					}
 				}, this);
 			}
 
-			if (data.enabled === 'false' || data.enabled === false)
+			if (disabled)
 				L.DomUtil.addClass(div, 'disabled');
 
 			if (data.selected === true) {
