@@ -54,36 +54,48 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 		var checkedValue = (entries[i].checked === undefined)
 			? undefined : (entries[i].uno && isChecked('.uno' + entries[i].uno));
 
-		var entry = entries[i].type === 'html' ?
-			// custom html content
-			{
-				id: id + '-entry-' + i,
-				type: 'htmlcontent',
-				htmlId: entries[i].htmlId,
-				closeCallback: function () { JSDialog.CloseDropdown(id); }
-			}
-			: // regular entry
-			{
-			id: id + '-entry-' + i,
-			type: 'comboboxentry',
-			customRenderer: entries[i].customRenderer,
-			comboboxId: id,
-			pos: i,
-			text: entries[i].text,
-			hint: entries[i].hint,
-			w2icon: entries[i].icon, // FIXME: DEPRECATED
-			icon: entries[i].img,
-			checked: entries[i].checked || checkedValue,
-			selected: entries[i].selected,
-			hasSubMenu: !!entries[i].items
-		};
+		var entry;
 
-		if (entries[i].type === 'separator') {
-			entry = {
-				id: id + '-entry-' + i,
-				type: 'separator',
-				orientation: 'horizontal'
-			};
+		switch (entries[i].type) {
+			case 'html':
+				entry = {
+					id: id + '-entry-' + i,
+					type: 'htmlcontent',
+					htmlId: entries[i].htmlId,
+					closeCallback: function () { JSDialog.CloseDropdown(id); }
+				};
+			break;
+
+			case 'colorpicker':
+				entry = entries[i];
+			break;
+
+			case 'action':
+			case 'menu':
+			default:
+				entry = {
+					id: id + '-entry-' + i,
+					type: 'comboboxentry',
+					customRenderer: entries[i].customRenderer,
+					comboboxId: id,
+					pos: i,
+					text: entries[i].text,
+					hint: entries[i].hint,
+					w2icon: entries[i].icon, // FIXME: DEPRECATED
+					icon: entries[i].img,
+					checked: entries[i].checked || checkedValue,
+					selected: entries[i].selected,
+					hasSubMenu: !!entries[i].items
+				};
+			break;
+
+			case 'separator':
+				entry = {
+					id: id + '-entry-' + i,
+					type: 'separator',
+					orientation: 'horizontal'
+				};
+			break;
 		}
 
 		json.children[0].children.push(entry);
