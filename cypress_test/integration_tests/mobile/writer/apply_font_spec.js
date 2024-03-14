@@ -64,31 +64,30 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font changes.', funct
 	});
 
 	it('Apply font color.', function() {
-		helper.clickOnIdle('#FontColor .ui-header');
-		cy.cGet('[id$=-basic-color-5]').then(items => { items[0].click(); });
-		//mobileHelper.selectFromColorPalette(0, 5, 5, 2);
+		cy.cGet('#Color').contains('.ui-header','Font Color').click();
+		cy.cGet('#Color [id$=-basic-color-5]').click();
 		writerHelper.selectAllTextOfDoc();
-		//cy.cGet('#copy-paste-container p font').should('have.attr', 'color', '#6aa84f');
+		cy.cGet('#copy-paste-container p font').should('have.attr', 'color', '#00ff00');
 	});
 
 	it('Apply automatic font color.', function() {
-		helper.clickOnIdle('#FontColor .ui-header');
-		cy.cGet('[id$=-basic-color-2]').then(items => { items[0].click(); });
+		cy.cGet('#Color').contains('.ui-header','Font Color').click();
+		cy.cGet('#Color [id$=-basic-color-2]').click();
 		mobileHelper.closeMobileWizard();
 		writerHelper.selectAllTextOfDoc();
-		//cy.cGet('#copy-paste-container p font').should('have.attr', 'color', '#ff0000');
+		cy.cGet('#copy-paste-container p font').should('have.attr', 'color', '#ff0000');
 		mobileHelper.openMobileWizard();
-		helper.clickOnIdle('#FontColor .ui-header');
-		helper.clickOnIdle('.colors-container-auto-color-row:visible');
+		cy.cGet('#Color').contains('.ui-header','Font Color').click();
+		cy.cGet('.colors-container-auto-color-row:visible').click();
 		writerHelper.selectAllTextOfDoc();
-		//cy.cGet('#copy-paste-container p font').should('have.attr', 'color', '#000000');
+		cy.cGet('#copy-paste-container p font').should('have.attr', 'color', '#000000');
 	});
 
 	it('Apply highlight color.', function() {
-		helper.clickOnIdle('#BackColor .ui-header');
-		cy.cGet('[id$=-basic-color-2]').then(items => { items[0].click(); });
+		cy.cGet('#CharBackColor .ui-header').click();
+		cy.cGet('#CharBackColor [id$=-basic-color-2]').click();
 		writerHelper.selectAllTextOfDoc();
-		//cy.cGet('#copy-paste-container p font span').should('have.attr', 'style', 'background: #93c47d');
+		cy.cGet('#copy-paste-container p font span').should('have.attr', 'style', 'background: #ff0000');
 	});
 
 	it('Apply superscript.', function() {

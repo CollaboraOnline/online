@@ -23,8 +23,8 @@ describe.skip(['tagmobile'], 'Trigger hamburger menu options.', function() {
 		// Change text color to white to hide text.
 		writerHelper.selectAllTextOfDoc();
 		mobileHelper.openMobileWizard();
-		helper.clickOnIdle('#FontColor .ui-header');
-		mobileHelper.selectFromColorPicker('#FontColor', 0, 7);
+		cy.cGet('#Color').contains('.ui-header','Font Color').click();
+		mobileHelper.selectFromColorPicker('#Color', 0, 7);
 		// End remove spell checking red lines
 		mobileHelper.selectHamburgerMenuItem(['View', 'Automatic Spell Checking']);
 		// Remove any selections.
