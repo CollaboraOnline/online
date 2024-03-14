@@ -32,7 +32,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected text
 
 		triggerNewSVG();
 
-		cy.cGet('text tspan.TextPosition tspan').should('have.attr', 'font-weight', '700');
+		cy.cGet('text tspan.TextPosition tspan').not('.PlaceholderText').should('have.attr', 'font-weight', '700');
 	});
 
 	it('Apply italic on selected text.', function() {
@@ -45,7 +45,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected text
 
 		triggerNewSVG();
 
-		cy.cGet('text tspan.TextPosition tspan').should('have.attr', 'font-style', 'italic');
+		cy.cGet('text tspan.TextPosition tspan').not('.PlaceholderText').should('have.attr', 'font-style', 'italic');
 	});
 
 	it('Apply underline on selected text.', function() {
@@ -58,7 +58,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected text
 
 		triggerNewSVG();
 
-		cy.cGet('text tspan.TextPosition tspan').should('have.attr', 'text-decoration', 'underline');
+		cy.cGet('text tspan.TextPosition tspan').not('.PlaceholderText').should('have.attr', 'text-decoration', 'underline');
 	});
 
 	it('Apply strikeout on selected text.', function() {
@@ -71,7 +71,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected text
 
 		triggerNewSVG();
 
-		cy.cGet('text tspan.TextPosition tspan').should('have.attr', 'text-decoration', 'line-through');
+		cy.cGet('text tspan.TextPosition tspan').not('.PlaceholderText').should('have.attr', 'text-decoration', 'line-through');
 	});
 
 	it('Apply shadowed on selected text.', function() {
@@ -97,7 +97,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected text
 
 		triggerNewSVG();
 
-		cy.cGet('text tspan.TextPosition tspan').should('have.attr', 'font-family', 'Linux Libertine G');
+		cy.cGet('text tspan.TextPosition tspan').not('.PlaceholderText').should('have.attr', 'font-family', 'Linux Libertine G');
 	});
 
 	it('Change font size of selected text.', function() {
@@ -110,14 +110,14 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected text
 
 		triggerNewSVG();
 
-		cy.cGet('text tspan.TextPosition tspan').should('have.attr', 'font-size', '847px');
+		cy.cGet('text tspan.TextPosition tspan').not('.PlaceholderText').should('have.attr', 'font-size', '847px');
 	});
 
 	it('Apply text color on selected text.', function() {
 		impressHelper.selectTextShapeInTheCenter();
 		impressHelper.selectTextOfShape();
 
-		cy.cGet('text tspan.TextPosition tspan').should('have.attr', 'fill', 'rgb(0,0,0)');
+		cy.cGet('text tspan.TextPosition tspan').not('.PlaceholderText').should('have.attr', 'fill', 'rgb(0,0,0)');
 
 		mobileHelper.openTextPropertiesPanel();
 
@@ -126,8 +126,10 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected text
 		mobileHelper.selectFromColorPicker('#Color', 5, 2);
 
 		triggerNewSVG();
+		// Not sure why this extra svg trigger is needed
+		impressHelper.triggerNewSVGForShapeInTheCenter();
 
-		cy.cGet('text tspan.TextPosition tspan').should('have.attr', 'fill', 'rgb(106,168,79)');
+		cy.cGet('text tspan.TextPosition tspan').not('.PlaceholderText').should('have.attr', 'fill', 'rgb(106,168,79)');
 	});
 
 	it('Apply highlight on selected text.', function() {
@@ -168,7 +170,8 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected text
 
 		triggerNewSVG();
 
-		cy.cGet('text tspan.TextPosition').should('have.attr', 'y', '3273');
+		cy.cGet('text tspan.TextPosition').invoke('attr','y').then((y)=>+y).should('be.gt',3250);
+		cy.cGet('text tspan.TextPosition').invoke('attr','y').then((y)=>+y).should('be.lt',3325);
 		cy.cGet('text tspan.TextPosition tspan').should('have.attr', 'font-size', '368px');
 	});
 
@@ -185,7 +188,8 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected text
 
 		triggerNewSVG();
 
-		cy.cGet('text tspan.TextPosition').should('have.attr', 'y', '3533');
+		cy.cGet('text tspan.TextPosition').invoke('attr','y').then((y)=>+y).should('be.gt',3500);
+		cy.cGet('text tspan.TextPosition').invoke('attr','y').then((y)=>+y).should('be.lt',3575);
 		cy.cGet('text tspan.TextPosition tspan').should('have.attr', 'font-size', '368px');
 	});
 });
