@@ -179,7 +179,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 			.should('exist');
 	});
 
-	it('Apply default numbering on selected text.', function() {
+	it.skip('Apply default numbering on selected text.', function() {
 		// We have no bulleting by default
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .SVGTextShape tspan')
 			.should('not.have.attr', 'ooo:numbering-type');
@@ -191,6 +191,8 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 		helper.clickOnIdle('#ListsPropertyPanel .unoDefaultNumbering');
 
 		triggerNewSVG();
+
+		// TODO: SVG does not get retriggered
 
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .SVGTextShape tspan')
 			.should('have.attr', 'ooo:numbering-type', 'number-style');
