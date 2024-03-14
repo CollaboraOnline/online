@@ -415,7 +415,7 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
             fileInfo->set("OwnerId", "test");
             fileInfo->set("UserId", userId);
             fileInfo->set("UserFriendlyName", userNameString);
-            fileInfo->set("UserCanWrite", "true");
+            fileInfo->set("UserCanWrite", (requestDetails.getParam("permission") != "readonly") ? "true": "false");
             fileInfo->set("PostMessageOrigin", postMessageOrigin);
             fileInfo->set("LastModifiedTime", localFile->getLastModifiedTime());
             fileInfo->set("EnableOwnerTermination", "true");
@@ -1013,6 +1013,7 @@ static const std::string POSTMESSAGE_ORIGIN = "%POSTMESSAGE_ORIGIN%";
 static const std::string BRANDING_THEME = "%BRANDING_THEME%";
 static const std::string CHECK_FILE_INFO_OVERRIDE = "%CHECK_FILE_INFO_OVERRIDE%";
 static const std::string BUYPRODUCT_URL = "%BUYPRODUCT_URL%";
+static const std::string PERMISSION = "%PERMISSION%";
 
 /// Per user request variables.
 /// Holds access_token, css_variables, postmessage_origin, etc.
@@ -1101,6 +1102,8 @@ public:
         extractVariable(form, "checkfileinfo_override", CHECK_FILE_INFO_OVERRIDE);
 
         extractVariable(form, "buy_product", BUYPRODUCT_URL);
+
+        extractVariable(form, "permission", PERMISSION);
 
         std::string buyProduct;
         {
@@ -1504,7 +1507,7 @@ FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::prepro
     socket->send(oss.str());
     LOG_TRC("Sent file: " << relPath << ": " << preprocess);
 
-    return ResourceAccessDetails(wopiSrc, urv[ACCESS_TOKEN]);
+    return ResourceAccessDetails(wopiSrc, urv[ACCESS_TOKEN], urv[PERMISSION]);
 }
 
 

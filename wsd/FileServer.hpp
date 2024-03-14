@@ -80,9 +80,10 @@ public:
     public:
         ResourceAccessDetails() = default;
 
-        ResourceAccessDetails(std::string wopiSrc, std::string accessToken)
+        ResourceAccessDetails(std::string wopiSrc, std::string accessToken, std::string permission)
             : _wopiSrc(std::move(wopiSrc))
             , _accessToken(std::move(accessToken))
+            , _permission(std::move(permission))
         {
         }
 
@@ -90,10 +91,12 @@ public:
 
         const std::string wopiSrc() const { return _wopiSrc; }
         const std::string accessToken() const { return _accessToken; }
+        const std::string permission() const { return _permission; }
 
     private:
         std::string _wopiSrc;
         std::string _accessToken;
+        std::string _permission;
     };
 
 private:

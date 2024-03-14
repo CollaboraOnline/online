@@ -238,6 +238,7 @@ void Session::parseDocOptions(const StringVector& tokens, int& part, std::string
         else if (name == "isAllowChangeComments")
         {
             _isAllowChangeComments = value == "true";
+            ++offset;
         }
     }
 
