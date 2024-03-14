@@ -124,7 +124,7 @@ function removeShapeSelection() {
 
 		return cy.cGet('.leaflet-overlay-pane svg')
 		.then(function(overlay) {
-				return overlay.children('g').length === 0;
+				return overlay.find('[style*="cursor"]').length === 0;
 			});
 	});
 
