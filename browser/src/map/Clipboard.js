@@ -44,8 +44,8 @@ L.Clipboard = L.Class.extend({
 		div.setAttribute('contenteditable', 'true');
 		div.setAttribute('type', 'text');
 		div.setAttribute('style', 'position: fixed; left: 0px; top: -200px; width: 15000px; height: 200px; ' +
-				 'overflow: hidden; z-index: -1000, -webkit-user-select: text !important; display: block; ' +
-				 'font-size: 6pt">');
+				 'overflow: hidden; z-index: -1000; -webkit-user-select: text !important; display: block; ' +
+				 'font-size: 6pt');
 
 		// so we get events to where we want them.
 		var parent = document.getElementById('map');
@@ -54,6 +54,9 @@ L.Clipboard = L.Class.extend({
 		if (L.Browser.cypressTest) {
 			this._dummyPlainDiv = document.createElement('div');
 			this._dummyPlainDiv.id = 'copy-plain-container';
+			this._dummyPlainDiv.style = 'position: fixed; left: 0px; top: -400px; width: 15000px; height: 200px; ' +
+				'overflow: hidden; z-index: -1000; -webkit-user-select: text !important; display: block; ' +
+				'font-size: 6pt';
 			parent.appendChild(this._dummyPlainDiv);
 		}
 
