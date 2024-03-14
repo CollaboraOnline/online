@@ -105,7 +105,7 @@ class UserList extends L.Control {
 		this.renderAll();
 	}
 
-	getFollowedUser(): undefined | [number, any] {
+	getFollowedUser(): undefined | [number, User] {
 		if (
 			this.map._docLayer._followThis === -1 ||
 			!this.map._docLayer._followUser
