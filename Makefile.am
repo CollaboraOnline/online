@@ -357,6 +357,7 @@ shared_headers = common/Common.hpp \
                  common/CommandControl.hpp \
                  common/Simd.hpp \
                  common/ThreadPool.hpp \
+                 common/Watchdog.hpp \
                  net/Buffer.hpp \
                  net/DelaySocket.hpp \
                  net/FakeSocket.hpp \
