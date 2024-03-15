@@ -54,6 +54,14 @@ L.Map.StateChangeHandler = L.Handler.extend({
 				$('.leaflet-pane.leaflet-map-pane').removeClass('bucket-cursor');
 		}
 
+		if (e.commandName === '.uno:GridUse') {
+			this._map._docLayer._snapToGrid = !!e.state;
+		}
+
+		if (e.commandName === '.uno:Position') {
+			console.log('Received uno position.', e.state);
+		}
+
 		$('#document-container').removeClass('slide-master-mode');
 		$('#document-container').addClass('slide-normal-mode');
 		if (slideMasterPageItem) {

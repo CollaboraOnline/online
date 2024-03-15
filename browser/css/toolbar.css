@@ -1118,6 +1118,8 @@ button.leaflet-control-search-next
 .w2ui-icon.freezepanescolumn{ background: url('images/lc_freezepanescolumn.svg') no-repeat center; }
 .w2ui-icon.freezepanesrow{ background: url('images/lc_freezepanesrow.svg') no-repeat center; }
 .w2ui-icon.navigator{ background: url('images/lc_navigator.svg') no-repeat center; }
+.w2ui-icon.gridvisible{ background: url('images/lc_gridvisible.svg') no-repeat center; }
+.w2ui-icon.griduse{ background: url('images/lc_griduse.svg') no-repeat center; }
 
 .w2ui-icon.flipvertical { background: url('images/lc_flipvertical.svg') no-repeat center; }
 .w2ui-icon.fliphorizontal { background: url('images/lc_fliphorizontal.svg') no-repeat center; }

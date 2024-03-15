@@ -4202,10 +4202,17 @@ L.CanvasTileLayer = L.Layer.extend({
 				}
 			}
 			else {
+				if (e.target.dragging.shiftConstraint) {
+					deltaPos = L.Constraint.shiftConstraint(deltaPos);
+				}
 				var newPos = new L.Point(
 					// Choose the logical left of the shape.
 					this._graphicSelectionTwips.min.x + deltaPos.x,
 					this._graphicSelectionTwips.min.y + deltaPos.y);
+
+				if (this._snapToGrid) {
+					console.log('SnapToGrid');
+				}
 
 				var size = this._graphicSelectionTwips.getSize();
 
