@@ -72,7 +72,8 @@ using Poco::Util::Application;
 
 std::map<std::string, std::pair<std::string, std::string>> FileServerRequestHandler::FileHash;
 
-namespace {
+namespace
+{
 
 int functionConversation(int /*num_msg*/, const struct pam_message** /*msg*/,
                          struct pam_response **reply, void *appdata_ptr)
@@ -204,7 +205,13 @@ bool isConfigAuthOk(const std::string& userProvidedUsr, const std::string& userP
     return pass == userProvidedPwd;
 }
 
+std::string stringifyBoolFromConfig(const Poco::Util::LayeredConfiguration& config,
+                                    const std::string& propertyName, bool defaultValue)
+{
+    return config.getBool(propertyName, defaultValue) ? "true" : "false";
 }
+
+} // namespace
 
 FileServerRequestHandler::FileServerRequestHandler(const std::string& root)
 {

@@ -128,10 +128,6 @@ private:
 
     static std::string cssVarsToStyle(const std::string& cssVars);
 
-    static std::string stringifyBoolFromConfig(const Poco::Util::LayeredConfiguration& config,
-                                               std::string propertyName,
-                                               bool defaultValue);
-
 public:
     FileServerRequestHandler(const std::string& root);
     ~FileServerRequestHandler();
