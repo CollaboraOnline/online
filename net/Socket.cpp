@@ -50,6 +50,7 @@
 #include <net/HttpRequest.hpp>
 #include <NetUtil.hpp>
 #include <Log.hpp>
+#include <Watchdog.hpp>
 
 // Bug in pre C++17 where static constexpr must be defined. Fixed in C++17.
 constexpr std::chrono::microseconds SocketPoll::DefaultPollTimeoutMicroS;
@@ -58,6 +59,8 @@ constexpr std::chrono::microseconds WebSocketHandler::PingFrequencyMicroS;
 
 std::atomic<bool> SocketPoll::InhibitThreadChecks(false);
 std::atomic<bool> Socket::InhibitThreadChecks(false);
+
+std::unique_ptr<Watchdog> PollWatchdog;
 
 #define SOCKET_ABSTRACT_UNIX_NAME "0coolwsd-"
 
@@ -205,9 +208,15 @@ SocketPoll::SocketPoll(std::string threadName)
       _threadStarted(0),
       _threadFinished(false),
       _runOnClientThread(false),
-      _owner(std::this_thread::get_id())
+      _owner(std::this_thread::get_id()),
+      _watchdogTime(Watchdog::getDisableStamp())
+
 {
     ProfileZone profileZone("SocketPoll::SocketPoll");
+
+    static bool watchDogProfile = !!getenv("COOL_WATCHDOG");
+    if (watchDogProfile && !PollWatchdog)
+        PollWatchdog.reset(new Watchdog());
 
     // Create the wakeup fd.
     if (
@@ -225,11 +234,17 @@ SocketPoll::SocketPoll(std::string threadName)
 
     std::lock_guard<std::mutex> lock(getPollWakeupsMutex());
     getWakeupsArray().push_back(_wakeup[1]);
+
+    if (PollWatchdog)
+        PollWatchdog->addTime(&_watchdogTime);
 }
 
 SocketPoll::~SocketPoll()
 {
     LOG_TRC("~SocketPoll [" << _name << "] destroying. Joining thread now.");
+
+    if (PollWatchdog)
+        PollWatchdog->removeTime(&_watchdogTime);
 
     joinThread();
 
@@ -369,6 +384,9 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
     setupPollFds(now, timeoutMaxMicroS);
     const size_t size = _pollSockets.size();
 
+    // disable watchdog - it's good to sleep
+    _watchdogTime = Watchdog::getDisableStamp();
+
     int rc;
     do
     {
@@ -394,6 +412,9 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
     while (rc < 0 && errno == EINTR);
     LOG_TRC("Poll completed with " << rc << " live polls max (" <<
             timeoutMaxMicroS << "us)" << ((rc==0) ? "(timedout)" : ""));
+
+    // from now we want to race back to sleep.
+    _watchdogTime = Watchdog::getTimestamp();
 
     // First process the wakeup pipe (always the last entry).
     if (_pollFds[size].revents)
@@ -1388,6 +1409,20 @@ namespace http
     {
         return "COOLWSD HTTP Server " COOLWSD_VERSION;
     }
+}
+
+extern "C" {
+    void watchdog_probe()
+    {
+        // connect perf probes here
+        LOG_TRC("Watchdog triggered");
+        volatile int i = 42; (void)i;
+    }
+}
+
+void SocketPoll::shutdownWatchdog()
+{
+    PollWatchdog.reset();
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

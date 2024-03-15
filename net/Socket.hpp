@@ -613,6 +613,7 @@ public:
     /// Create a socket poll, called rather infrequently.
     explicit SocketPoll(std::string threadName);
     virtual ~SocketPoll();
+    static void shutdownWatchdog();
 
     /// Default poll time - useful to increase for debugging.
     static constexpr std::chrono::microseconds DefaultPollTimeoutMicroS = std::chrono::seconds(5);
@@ -908,6 +909,8 @@ private:
     std::atomic<bool> _threadFinished;
     std::atomic<bool> _runOnClientThread;
     std::thread::id _owner;
+    /// Time-stamp for profiling
+    std::atomic<uint64_t> _watchdogTime;
 };
 
 /// A SocketPoll that will stop polling and
