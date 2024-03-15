@@ -12,6 +12,48 @@
 #include <config.h>
 #include <config_version.h>
 
+#include "FileServer.hpp"
+
+#include "Auth.hpp"
+#include "COOLWSD.hpp"
+#include "Exceptions.hpp"
+#include "FileServer.hpp"
+#include "FileUtil.hpp"
+#include "ServerURL.hpp"
+#include <Common.hpp>
+#include <Crypto.hpp>
+#include <Log.hpp>
+#include <Protocol.hpp>
+#include <Util.hpp>
+#include <common/ConfigUtil.hpp>
+#include <common/LangUtil.hpp>
+#if !MOBILEAPP
+#include <net/HttpHelper.hpp>
+#endif
+#include <ContentSecurityPolicy.hpp>
+
+#include <Poco/DateTime.h>
+#include <Poco/DateTimeFormat.h>
+#include <Poco/DateTimeFormatter.h>
+#include <Poco/Exception.h>
+#include <Poco/FileStream.h>
+#include <Poco/JSON/Object.h>
+#include <Poco/MemoryStream.h>
+#include <Poco/Net/HTMLForm.h>
+#include <Poco/Net/HTTPBasicCredentials.h>
+#include <Poco/Net/HTTPCookie.h>
+#include <Poco/Net/HTTPRequest.h>
+#include <Poco/Net/HTTPResponse.h>
+#include <Poco/Net/NameValueCollection.h>
+#include <Poco/Net/NetException.h>
+#include <Poco/RegularExpression.h>
+#include <Poco/Runnable.h>
+#include <Poco/SHA1Engine.h>
+#include <Poco/StreamCopier.h>
+#include <Poco/URI.h>
+#include <Poco/Util/LayeredConfiguration.h>
+
+#include <chrono>
 #include <iomanip>
 #include <string>
 #include <vector>
@@ -24,42 +66,6 @@
 
 #include <openssl/evp.h>
 
-#include <Poco/DateTime.h>
-#include <Poco/DateTimeFormat.h>
-#include <Poco/DateTimeFormatter.h>
-#include <Poco/Exception.h>
-#include <Poco/FileStream.h>
-#include <Poco/Net/HTMLForm.h>
-#include <Poco/Net/HTTPBasicCredentials.h>
-#include <Poco/Net/HTTPCookie.h>
-#include <Poco/Net/HTTPRequest.h>
-#include <Poco/Net/HTTPResponse.h>
-#include <Poco/Net/NameValueCollection.h>
-#include <Poco/Net/NetException.h>
-#include <Poco/RegularExpression.h>
-#include <Poco/Runnable.h>
-#include <Poco/StreamCopier.h>
-#include <Poco/URI.h>
-#include <Poco/JSON/Object.h>
-#include "Exceptions.hpp"
-
-#include "Auth.hpp"
-#include <Common.hpp>
-#include <Crypto.hpp>
-#include "FileServer.hpp"
-#include "COOLWSD.hpp"
-#include "FileUtil.hpp"
-#include "ServerURL.hpp"
-#include <Log.hpp>
-#include <Protocol.hpp>
-#include <Util.hpp>
-#include <common/ConfigUtil.hpp>
-#include <common/LangUtil.hpp>
-#if !MOBILEAPP
-#include <net/HttpHelper.hpp>
-#endif
-#include <ContentSecurityPolicy.hpp>
-
 using Poco::Net::HTMLForm;
 using Poco::Net::HTTPBasicCredentials;
 using Poco::Net::HTTPRequest;
@@ -69,7 +75,8 @@ using Poco::Util::Application;
 
 std::map<std::string, std::pair<std::string, std::string>> FileServerRequestHandler::FileHash;
 
-namespace {
+namespace
+{
 
 int functionConversation(int /*num_msg*/, const struct pam_message** /*msg*/,
                          struct pam_response **reply, void *appdata_ptr)

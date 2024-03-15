@@ -12,12 +12,24 @@
 #pragma once
 
 #include <string>
-#include "Socket.hpp"
+#include <unordered_map>
 
-#include <Poco/MemoryStream.h>
-#include <Poco/Util/LayeredConfiguration.h>
+#include <HttpRequest.hpp>
+#include <Socket.hpp>
 
 class RequestDetails;
+
+namespace Poco
+{
+namespace Net
+{
+class HTTPRequest;
+class HTTPResponse;
+class HTTPBasicCredentials;
+} // namespace Net
+
+} // namespace Poco
+
 /// Handles file requests over HTTP(S).
 class FileServerRequestHandler
 {
