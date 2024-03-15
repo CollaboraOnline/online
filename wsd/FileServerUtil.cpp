@@ -217,15 +217,4 @@ std::string FileServerRequestHandler::cssVarsToStyle(const std::string& cssVars)
     return previousStyle;
 }
 
-std::string FileServerRequestHandler::stringifyBoolFromConfig(
-                                                const Poco::Util::LayeredConfiguration& config,
-                                                std::string propertyName,
-                                                bool defaultValue)
-{
-    std::string value = "false";
-    if (config.getBool(propertyName, defaultValue))
-        value = "true";
-    return value;
-}
-
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

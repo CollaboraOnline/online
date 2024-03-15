@@ -47,10 +47,6 @@ class FileServerRequestHandler
 
     static std::string cssVarsToStyle(const std::string& cssVars);
 
-    static std::string stringifyBoolFromConfig(const Poco::Util::LayeredConfiguration& config,
-                                               std::string propertyName,
-                                               bool defaultValue);
-
 public:
     /// Evaluate if the cookie exists and returns it when it does.
     static bool isAdminLoggedIn(const Poco::Net::HTTPRequest& request, std::string& jwtToken);

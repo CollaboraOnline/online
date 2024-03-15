@@ -201,7 +201,13 @@ bool isConfigAuthOk(const std::string& userProvidedUsr, const std::string& userP
     return pass == userProvidedPwd;
 }
 
+std::string stringifyBoolFromConfig(const Poco::Util::LayeredConfiguration& config,
+                                    const std::string& propertyName, bool defaultValue)
+{
+    return config.getBool(propertyName, defaultValue) ? "true" : "false";
 }
+
+} // namespace
 
 bool FileServerRequestHandler::isAdminLoggedIn(const Poco::Net::HTTPRequest& request,
                                                std::string& jwtToken)
