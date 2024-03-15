@@ -19,35 +19,38 @@
 #endif
 
 #include <Admin.hpp>
-#include <ClientSession.hpp>
 #include <COOLWSD.hpp>
+#include <ClientSession.hpp>
+#include <ConfigUtil.hpp>
 #include <DocumentBroker.hpp>
 #include <Exceptions.hpp>
 #include <FileServer.hpp>
+#include <HttpRequest.hpp>
+#include <JailUtil.hpp>
+#include <ProofKey.hpp>
+#include <ProxyRequestHandler.hpp>
+#include <RequestDetails.hpp>
+#include <Socket.hpp>
+#include <Util.hpp>
+#include <net/HttpHelper.hpp>
 #if !MOBILEAPP
 #include <HostUtil.hpp>
 #endif // !MOBILEAPP
-#include <RequestDetails.hpp>
-#include <ProxyRequestHandler.hpp>
-#include <net/HttpHelper.hpp>
-#include <ConfigUtil.hpp>
-#include <JailUtil.hpp>
-#include <ProofKey.hpp>
-#include <Util.hpp>
 
-#include <Poco/File.h>
-#include <Poco/StreamCopier.h>
 #include <Poco/DOM/AutoPtr.h>
+#include <Poco/DOM/DOMParser.h>
 #include <Poco/DOM/DOMWriter.h>
 #include <Poco/DOM/Document.h>
-#include <Poco/DOM/DOMParser.h>
 #include <Poco/DOM/Element.h>
 #include <Poco/DOM/NodeList.h>
+#include <Poco/File.h>
+#include <Poco/MemoryStream.h>
 #include <Poco/Net/DNS.h>
-#include <Poco/Net/NetException.h>
 #include <Poco/Net/HTMLForm.h>
+#include <Poco/Net/NetException.h>
 #include <Poco/Net/PartHandler.h>
 #include <Poco/SAX/InputSource.h>
+#include <Poco/StreamCopier.h>
 
 #include <map>
 #include <memory>

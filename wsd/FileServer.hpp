@@ -17,10 +17,18 @@
 #include <HttpRequest.hpp>
 #include <Socket.hpp>
 
-#include <Poco/MemoryStream.h>
-#include <Poco/Util/LayeredConfiguration.h>
-
 class RequestDetails;
+
+namespace Poco
+{
+namespace Net
+{
+class HTTPRequest;
+class HTTPResponse;
+class HTTPBasicCredentials;
+} // namespace Net
+
+} // namespace Poco
 
 /// Represents a file that is preprocessed for variable
 /// expansion/replacement before serving.
