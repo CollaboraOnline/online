@@ -1,5 +1,9 @@
 /* -*- Mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4; fill-column: 100 -*- */
 /*
+ * Copyright the Collabora Online contributors.
+ *
+ * SPDX-License-Identifier: MPL-2.0
+ *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -199,6 +203,34 @@ bool isConfigAuthOk(const std::string& userProvidedUsr, const std::string& userP
 
 }
 
+bool FileServerRequestHandler::isAdminLoggedIn(const Poco::Net::HTTPRequest& request,
+                                               std::string& jwtToken)
+{
+    assert(COOLWSD::AdminEnabled);
+
+    try
+    {
+        NameValueCollection cookies;
+        request.getCookies(cookies);
+        jwtToken = cookies.get("jwt");
+        LOG_INF("Verifying JWT token: " << jwtToken);
+        JWTAuth authAgent("admin", "admin", "admin");
+        if (authAgent.verify(jwtToken))
+        {
+            LOG_TRC("JWT token is valid");
+            return true;
+        }
+
+        LOG_INF("Invalid JWT token, let the administrator re-login");
+    }
+    catch (const Poco::Exception& exc)
+    {
+        LOG_INF("No existing JWT cookie found");
+    }
+
+    return false;
+}
+
 bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request,
                                                HTTPResponse &response)
 {
@@ -288,7 +320,6 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request,
             // Last modified time of the file
             std::chrono::system_clock::time_point fileLastModifiedTime;
 
-
             enum class COOLStatusCode
             {
                 DocChanged = 1010  // Document changed externally in storage
@@ -330,9 +361,9 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request,
 
     //handles request starts with /wopi/files
     void handleWopiRequest(const HTTPRequest& request,
-                        const RequestDetails &requestDetails,
-                        Poco::MemoryInputStream& message,
-                        const std::shared_ptr<StreamSocket>& socket)
+                           const RequestDetails &requestDetails,
+                           Poco::MemoryInputStream& message,
+                           const std::shared_ptr<StreamSocket>& socket)
     {
         Poco::URI requestUri(request.getURI());
         const Poco::Path path = requestUri.getPath();
@@ -500,9 +531,10 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
         {
             if (config.getBool("ssl.sts.enabled", false))
             {
-                const auto maxAge = config.getInt("ssl.sts.max_age", 31536000); // Default 1 year.
+                const auto maxAge =
+                    config.getInt("ssl.sts.max_age", 31536000); // Default 1 year.
                 response.add("Strict-Transport-Security",
-                             "max-age=" + std::to_string(maxAge) + "; includeSubDomains");
+                                "max-age=" + std::to_string(maxAge) + "; includeSubDomains");
             }
         }
 #endif
@@ -708,7 +740,8 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
 
 void FileServerRequestHandler::sendError(int errorCode, const Poco::Net::HTTPRequest& request,
                                          const std::shared_ptr<StreamSocket>& socket,
-                                         const std::string& shortMessage, const std::string& longMessage,
+                                         const std::string& shortMessage,
+                                         const std::string& longMessage,
                                          const std::string& extraHeader)
 {
     std::string body;
@@ -837,6 +870,7 @@ std::string FileServerRequestHandler::getRequestPathname(const HTTPRequest& requ
     requestUri.normalize();
 
     std::string path(requestUri.getPath());
+
     Poco::RegularExpression gitHashRe("/([0-9a-f]+)/");
     std::string gitHash;
     if (gitHashRe.extract(path, gitHash))
@@ -1041,6 +1075,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
 
     std::string enableMacrosExecution = stringifyBoolFromConfig(config, "security.enable_macros_execution", false);
     Poco::replaceInPlace(preprocess, std::string("%ENABLE_MACROS_EXECUTION%"), enableMacrosExecution);
+
 
     if (!config.getBool("feedback.show", true) && config.getBool("home_mode.enable", false))
     {
