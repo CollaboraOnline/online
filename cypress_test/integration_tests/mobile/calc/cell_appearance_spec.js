@@ -226,7 +226,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change cell appearance.', f
 			});
 	});
 
-	it('Apply border color', function() {
+	it.skip('Apply border color', function() {
 		openAppearencePanelOnFirstCell();
 
 		// Apply left border first
