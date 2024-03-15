@@ -147,6 +147,10 @@ public:
     static bool isAdminLoggedIn(const Poco::Net::HTTPRequest& request, Poco::Net::HTTPResponse& response);
     static bool isAdminLoggedIn(const Poco::Net::HTTPRequest& request, http::Response& response);
 
+    /// Authenticate the admin.
+    static bool authenticateAdmin(const Poco::Net::HTTPBasicCredentials& credentials,
+                                  Poco::Net::HTTPResponse& response, std::string& jwtToken);
+
     static void handleRequest(const Poco::Net::HTTPRequest& request,
                               const RequestDetails& requestDetails,
                               Poco::MemoryInputStream& message,
