@@ -338,6 +338,7 @@ shared_headers = common/Common.hpp \
                  common/SpookyV2.h \
                  common/CommandControl.hpp \
                  common/Simd.hpp \
+                 common/Watchdog.hpp \
                  net/Buffer.hpp \
                  net/DelaySocket.hpp \
                  net/FakeSocket.hpp \
