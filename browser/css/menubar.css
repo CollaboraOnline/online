@@ -68,12 +68,6 @@
 	align-self: center;
 }
 
-@media screen and (max-width: 1238px) {
-	.main-nav.hasnotebookbar:not(.readonly) #document-titlebar {
-		display: none;
-	}
-}
-
 .main-nav.readonly #optionstoolboxdown {
 	display: none;
 }
