@@ -226,6 +226,34 @@ FileServerRequestHandler::~FileServerRequestHandler()
     FileHash.clear();
 }
 
+bool FileServerRequestHandler::isAdminLoggedIn(const Poco::Net::HTTPRequest& request,
+                                               std::string& jwtToken)
+{
+    assert(COOLWSD::AdminEnabled);
+
+    try
+    {
+        NameValueCollection cookies;
+        request.getCookies(cookies);
+        jwtToken = cookies.get("jwt");
+        LOG_INF("Verifying JWT token: " << jwtToken);
+        JWTAuth authAgent("admin", "admin", "admin");
+        if (authAgent.verify(jwtToken))
+        {
+            LOG_TRC("JWT token is valid");
+            return true;
+        }
+
+        LOG_INF("Invalid JWT token, let the administrator re-login");
+    }
+    catch (const Poco::Exception& exc)
+    {
+        LOG_INF("No existing JWT cookie found");
+    }
+
+    return false;
+}
+
 bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request,
                                                HTTPResponse &response)
 {
