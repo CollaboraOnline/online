@@ -244,6 +244,51 @@ bool FileServerRequestHandler::isAdminLoggedIn(const Poco::Net::HTTPRequest& req
     return false;
 }
 
+bool FileServerRequestHandler::authenticateAdmin(const Poco::Net::HTTPBasicCredentials& credentials,
+                                                 Poco::Net::HTTPResponse& response,
+                                                 std::string& jwtToken)
+{
+    assert(COOLWSD::AdminEnabled);
+
+    const std::string& userProvidedUsr = credentials.getUsername();
+    const std::string& userProvidedPwd = credentials.getPassword();
+
+    // Deny attempts to login without providing a username / pwd and fail right away
+    // We don't even want to allow a password-less PAM module to be used here,
+    // or anything.
+    if (userProvidedUsr.empty() || userProvidedPwd.empty())
+    {
+        LOG_ERR("An attempt to log into Admin Console without username or password.");
+        return false;
+    }
+
+    // Check if the user is allowed to use the admin console
+    if (COOLWSD::getConfigValue<bool>("admin_console.enable_pam", false))
+    {
+        // use PAM - it needs the username too
+        if (!isPamAuthOk(userProvidedUsr, userProvidedPwd))
+            return false;
+    }
+    else
+    {
+        // use the hash or password in the config file
+        if (!isConfigAuthOk(userProvidedUsr, userProvidedPwd))
+            return false;
+    }
+
+    // authentication passed, generate and set the cookie
+    JWTAuth authAgent("admin", "admin", "admin");
+    jwtToken = authAgent.getAccessToken();
+
+    Poco::Net::HTTPCookie cookie("jwt", jwtToken);
+    // bundlify appears to add an extra /dist -> dist/dist/admin
+    cookie.setPath(COOLWSD::ServiceRoot + "/browser/dist/");
+    cookie.setSecure(COOLWSD::isSSLEnabled());
+    response.addCookie(cookie);
+
+    return true;
+}
+
 bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request,
                                                HTTPResponse &response)
 {
