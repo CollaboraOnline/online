@@ -1294,13 +1294,27 @@ void FileServerRequestHandler::preprocessAdminFile(const HTTPRequest& request,
                                                    const RequestDetails &requestDetails,
                                                    const std::shared_ptr<StreamSocket>& socket)
 {
-    Poco::Net::HTTPResponse response;
-
     if (!COOLWSD::AdminEnabled)
         throw Poco::FileAccessDeniedException("Admin console disabled");
 
-    if (!FileServerRequestHandler::isAdminLoggedIn(request, response))
-        throw Poco::Net::NotAuthenticatedException("Invalid admin login");
+    Poco::Net::HTTPResponse response;
+    std::string jwtToken;
+    if (!isAdminLoggedIn(request, jwtToken))
+    {
+        // Not logged in, so let's log in now.
+        if (!authenticateAdmin(Poco::Net::HTTPBasicCredentials(request), response, jwtToken))
+        {
+            throw Poco::Net::NotAuthenticatedException("Invalid admin login");
+        }
+
+        // New login, log.
+        static bool showLog =
+            COOLWSD::getConfigValue<bool>("admin_console.logging.admin_login", true);
+        if (showLog)
+        {
+            LOG_ANY("Admin logged in with source IPAddress [" << socket->clientAddress() << ']');
+        }
+    }
 
     ServerURL cnxDetails(requestDetails);
     std::string responseRoot = cnxDetails.getResponseRoot();
@@ -1314,29 +1328,6 @@ void FileServerRequestHandler::preprocessAdminFile(const HTTPRequest& request,
     const std::string templatePath =
         Poco::Path(relPath).setFileName("admintemplate.html").toString();
     std::string templateFile = *getUncompressedFile(templatePath);
-
-    std::string jwtToken;
-    Poco::Net::NameValueCollection reqCookies;
-    std::vector<Poco::Net::HTTPCookie> resCookies;
-
-    response.getCookies(resCookies);
-    for (size_t it = 0; it < resCookies.size(); ++it)
-    {
-        if (resCookies[it].getName() == "jwt")
-        {
-            jwtToken = resCookies[it].getValue();
-            break;
-        }
-    }
-
-    if (jwtToken.empty())
-    {
-        request.getCookies(reqCookies);
-        if (reqCookies.has("jwt"))
-        {
-            jwtToken = reqCookies.get("jwt");
-        }
-    }
 
     const std::string escapedJwtToken = Util::encodeURIComponent(jwtToken, "'");
     Poco::replaceInPlace(templateFile, std::string("%JWT_TOKEN%"), escapedJwtToken);
