@@ -95,17 +95,17 @@ function typeIntoFormulabar(text) {
 
 	cy.cGet('#sc_input_window.formulabar').click(); // This probably shouldn't be here, but acceptformula doesn't get visible without a click.
 	cy.cGet('#sc_input_window.formulabar').should('have.class', 'focused');
-	cy.cGet('body').type(text);
 
 	helper.doIfOnMobile(function() {
 		cy.cGet('#tb_actionbar_item_acceptformula').should('be.visible');
 		cy.cGet('#tb_actionbar_item_cancelformula').should('be.visible');
 	});
-
 	helper.doIfOnDesktop(function() {
 		cy.cGet('#acceptformula').should('be.visible');
 		cy.cGet('#cancelformula').should('be.visible');
 	});
+
+	cy.cGet('body').type(text);
 
 	cy.log('<< typeIntoFormulabar - end');
 }
