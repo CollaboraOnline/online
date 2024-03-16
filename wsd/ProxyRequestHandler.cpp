@@ -65,8 +65,6 @@ void ProxyRequestHandler::handleRequest(const std::string& relPath,
 
                         CacheFileHash[httpSession->getUrl()] = httpResponse;
 
-                        httpResponse->add("Server", http::getServerString());
-                        httpResponse->add("Date", Util::getHttpTimeNow());
                         socket->sendAndShutdown(*httpResponse);
                     }
                     else

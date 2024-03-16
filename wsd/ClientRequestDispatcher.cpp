@@ -654,7 +654,6 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
             response->add("X-XSS-Protection", "1; mode=block");
             // No referrer-policy
             response->add("Referrer-Policy", "no-referrer");
-            response->set("Server", http::getServerString());
             response->add("Content-Type", "text/plain");
             response->add("X-Content-Type-Options", "nosniff");
 

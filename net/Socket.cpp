@@ -790,8 +790,9 @@ void StreamSocket::dumpState(std::ostream& os)
 
 void StreamSocket::sendWithDateAndAgent(http::Response& response)
 {
-    response.set("Server", http::getServerString());
-    response.set("Date", Util::getHttpTimeNow());
+    assert(response.get("Server") == http::getServerString() &&
+           "Server Agent is always set in http::Response ctor");
+    assert(!response.get("Date").empty() && "Date is always set in http::Response ctor");
 
     send(response);
 }
