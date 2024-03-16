@@ -623,8 +623,8 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
                  requestDetails.equals(1, "getMetrics"))
         {
             // See metrics.txt
-            std::shared_ptr<Poco::Net::HTTPResponse> response =
-                std::make_shared<Poco::Net::HTTPResponse>();
+            std::shared_ptr<http::Response> response =
+                std::make_shared<http::Response>(http::StatusCode::OK);
 
             if (!COOLWSD::AdminEnabled)
                 throw Poco::FileAccessDeniedException("Admin console disabled");
@@ -654,7 +654,6 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
             response->add("X-XSS-Protection", "1; mode=block");
             // No referrer-policy
             response->add("Referrer-Policy", "no-referrer");
-            response->add("Content-Type", "text/plain");
             response->add("X-Content-Type-Options", "nosniff");
 
             disposition.setTransfer(Admin::instance(),
