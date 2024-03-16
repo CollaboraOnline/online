@@ -581,14 +581,21 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
 
                     const RequestDetails fullRequestDetails =
                         RequestDetails(accessDetails.wopiSrc(), options, /*compat=*/std::string());
-                    LOG_TRC("Creating RVS with key: " << requestKey << ", for DocumentLoadURI: "
-                                                      << fullRequestDetails.getDocumentURI());
 
-                    auto it = RequestVettingStations.emplace(
-                        requestKey, std::make_shared<RequestVettingStation>(
-                                        COOLWSD::getWebServerPoll(), fullRequestDetails));
+                    if (RequestVettingStations.find(requestKey) != RequestVettingStations.end())
+                    {
+                        LOG_TRC("Found RVS under key: " << requestKey << ", nothing to do");
+                    }
+                    else
+                    {
+                        LOG_TRC("Creating RVS with key: " << requestKey << ", for DocumentLoadURI: "
+                                                          << fullRequestDetails.getDocumentURI());
+                        auto it = RequestVettingStations.emplace(
+                            requestKey, std::make_shared<RequestVettingStation>(
+                                            COOLWSD::getWebServerPoll(), fullRequestDetails));
 
-                    it.first->second->handleRequest(_id);
+                        it.first->second->handleRequest(_id);
+                    }
                 }
 
                 socket->shutdown();
@@ -1683,7 +1690,7 @@ void ClientRequestDispatcher::handleClientWsUpgrade(const Poco::Net::HTTPRequest
 
         if (!_rvs)
         {
-            LOG_TRC("Creating RVS");
+            LOG_TRC("Creating RVS for key: " << requestKey);
             _rvs = std::make_shared<RequestVettingStation>(COOLWSD::getWebServerPoll(),
                                                            requestDetails);
         }
