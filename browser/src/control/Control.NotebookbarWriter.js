@@ -137,14 +137,11 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 		var hasSaveAs = !this._map['wopi'].UserCanNotWriteRelative;
 		var hasShare = this._map['wopi'].EnableShare;
 		var hideDownload = this._map['wopi'].HideExportOption;
-		var hasGroupedDownloadAs = !!window.groupDownloadAsForNb;
 		var hasGroupedSaveAs = window.uiDefaults && window.uiDefaults.saveAsMode === 'group';
 		var hasRunMacro = !(window.enableMacrosExecution  === 'false');
 		var hasSave = !this._map['wopi'].HideSaveOption;
 		var content = [];
 
-		var addRepairToDownloads = hasRepair && !hideDownload;
-		var addRepairToColumn = hasRepair && (hideDownload || hasGroupedDownloadAs);
 
 		content = [];
 
@@ -246,7 +243,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			});
 		}
 
-		if (hasGroupedDownloadAs && !hideDownload) {
+		if (!hideDownload) {
 			content.push({
 				'id': 'downloadas:DownloadAsMenu',
 				'command': 'downloadas',
@@ -255,87 +252,9 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'text': !window.ThisIsAMobileApp ? _('Download') : _('Save As'),
 				'accessibility': { focusBack: true,	combination: 'A', de: 'M' }
 			});
-		} else if (!hideDownload) {
-			content.push(
-				{
-					'type': 'container',
-					'children': [
-						{
-							'id': 'downloadas-odt',
-							'type': 'menubartoolitem',
-							'text': _('ODF Text Document (.odt)'),
-							'command': ''
-						},
-						{
-							'id': 'downloadas-rtf',
-							'type': 'menubartoolitem',
-							'text': _('Rich Text (.rtf)'),
-							'command': ''
-						},
-					],
-					'vertical': 'true'
-				},
-				{
-					'type': 'container',
-					'children': [
-						{
-							'id': 'downloadas-doc',
-							'type': 'menubartoolitem',
-							'text': _('Word 2003 Document (.doc)'),
-							'command': ''
-						},
-						{
-							'id': 'downloadas-docx',
-							'type': 'menubartoolitem',
-							'text': _('Word Document (.docx)'),
-							'command': ''
-						},
-					],
-					'vertical': 'true'
-				},
-				{
-					'type': 'container',
-					'children': [
-						{
-							'id': !window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-pdf',
-							'type': 'customtoolitem',
-							'text': _('PDF Document (.pdf)'),
-							'command': !window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-pdf',
-							'inlineLabel': true
-						},
-						{
-							'id': 'exportpdf' ,
-							'type': 'customtoolitem',
-							'text': _('PDF Document (.pdf) - Expert'),
-							'command': 'exportpdf' ,
-							'inlineLabel': true
-						},
-					],
-					'vertical': 'true'
-				},
-				{
-					'type': 'container',
-					'children': [
-						{
-							'id': !window.ThisIsAMobileApp ? 'exportepub' : 'downloadas-epub',
-							'type': 'customtoolitem',
-							'text': _('EPUB Document (.epub)'),
-							'command': !window.ThisIsAMobileApp ? 'exportepub' : 'downloadas-epub',
-							'inlineLabel': true
-						},
-						addRepairToDownloads? {
-							'id': 'repair',
-							'type': 'menubartoolitem',
-							'text': _('Repair'),
-							'command': _('Repair')
-						} : {}
-					],
-					'vertical': 'true'
-				}
-			);
 		}
 
-		if (addRepairToColumn) {
+		if (hasRepair) {
 			content.push({
 				'type': 'container',
 				'children': [

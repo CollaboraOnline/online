@@ -269,7 +269,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 			});
 		}
 
-		if ((!!window.groupDownloadAsForNb) && !this._map['wopi'].HideExportOption) {
+		if (!this._map['wopi'].HideExportOption) {
 			content.push({
 				'id': 'downloadas:DownloadAsMenu',
 				'command': 'downloadas',
@@ -295,80 +295,6 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 					'vertical': 'true'
 				});
 			}
-		} else if (!this._map['wopi'].HideExportOption) {
-			content = content.concat([
-				{
-					'id': 'file-downloadas-odp-downloadas-odg',
-					'type': 'container',
-					'children': [
-						{
-							'id': 'downloadas-odp',
-							'class': 'unodownloadas-odp',
-							'type': 'menubartoolitem',
-							'text': _('ODF Presentation (.odp)'),
-							'command': '',
-							'accessibility': { focusBack: true, combination: 'DA', de: null }
-						},
-						{
-							'id': 'downloadas-odg',
-							'class': 'unodownloadas-odg',
-							'type': 'menubartoolitem',
-							'text': _('ODF Drawing (.odg)'),
-							'command': '',
-							'accessibility': { focusBack: true, combination: 'DO', de: null }
-						},
-					],
-					'vertical': 'true'
-				},
-				{
-					'id': 'file-downloadas-ppt-downloadas-pptx',
-					'type': 'container',
-					'children': [
-						{
-							'id': 'downloadas-ppt',
-							'class': 'unodownloadas-ppt',
-							'type': 'menubartoolitem',
-							'text': _('PowerPoint 2003 Presentation (.ppt)'),
-							'command': '',
-							'accessibility': { focusBack: true, combination: 'DP', de: null }
-						},
-						{
-							'id': 'downloadas-pptx',
-							'class': 'unodownloadas-pptx',
-							'type': 'menubartoolitem',
-							'text': _('PowerPoint Presentation (.pptx)'),
-							'command': '',
-							'accessibility': { focusBack: true, combination: 'DX', de: null }
-						},
-					],
-					'vertical': 'true'
-				},
-				{
-					'id': 'file-exportdirectpdf',
-					'type': 'container',
-					'children': [
-						{
-							'id': !window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-pdf',
-							'class': 'unoexportpdf',
-							'type': 'customtoolitem',
-							'text': _('PDF Document (.pdf)'),
-							'command': !window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-pdf',
-							'inlineLabel': true,
-							'accessibility': { focusBack: true, combination: 'ED', de: null }
-						},
-						{
-							'id': 'exportpdf' ,
-							'class': 'unoexportpdf',
-							'type': 'customtoolitem',
-							'text': _('PDF Document (.pdf) - Expert'),
-							'command': 'exportpdf' ,
-							'inlineLabel': true,
-							'accessibility': { focusBack: true, combination: 'DF', de: null }
-						},
-					],
-					'vertical': 'true'
-				}
-			]);
 			if (!this._map['wopi'].HideRepairOption) {
 				content.push({
 					'type': 'container',
