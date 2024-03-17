@@ -500,11 +500,12 @@ namespace FileUtil
     {
         assert(!path.empty());
 
-#if !MOBILEAPP
-        bool hookResult = true;
-        if (UnitBase::get().filterCheckDiskSpace(path, hookResult))
-            return hookResult;
-#endif
+        if (!Util::isMobileApp())
+        {
+            bool hookResult = true;
+            if (UnitBase::get().filterCheckDiskSpace(path, hookResult))
+                return hookResult;
+        }
 
         // we should be able to run just OK with 5GB for production or 1GB for development
 #if defined(__linux__) || defined(__FreeBSD__) || defined(IOS)

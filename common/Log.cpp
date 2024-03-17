@@ -529,10 +529,8 @@ namespace Log
         Static.setName(name);
         std::ostringstream oss;
         oss << Static.getName();
-#if !MOBILEAPP // Just one process in a mobile app, the pid is uninteresting.
-        oss << '-'
-            << std::setw(5) << std::setfill('0') << getpid();
-#endif
+        if (!Util::isMobileApp())
+            oss << '-' << std::setw(5) << std::setfill('0') << getpid();
         Static.setId(oss.str());
 
         // Configure the logger.
@@ -599,7 +597,8 @@ namespace Log
 
     void shutdown()
     {
-#if !MOBILEAPP
+        if (Util::isMobileApp())
+            return;
         if (!Util::isKitInProcess())
             assert(ThreadLocalBufferCount <= 1 &&
                    "Unstopped threads may have unflushed buffered log entries");
@@ -611,7 +610,6 @@ namespace Log
         // Flush
         fflush(stdout);
         fflush(stderr);
-#endif
     }
 
     void setThreadLocalLogLevel(const std::string& logLevel)

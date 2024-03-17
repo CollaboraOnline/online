@@ -190,9 +190,8 @@ DocumentBroker::DocumentBroker(ChildType type, const std::string& uri, const Poc
     assert(!_docKey.empty());
     assert(!COOLWSD::ChildRoot.empty());
 
-#if !MOBILEAPP
-    assert(_mobileAppDocId == 0 && "Unexpected to have mobileAppDocId in the non-mobile build");
-#endif
+    if (!Util::isMobileApp())
+        assert(_mobileAppDocId == 0 && "Unexpected to have mobileAppDocId in the non-mobile build");
 #ifdef IOS
     assert(_mobileAppDocId > 0 && "Unexpected to have no mobileAppDocId in the iOS build");
 #endif
@@ -209,13 +208,13 @@ DocumentBroker::DocumentBroker(ChildType type, const std::string& uri, const Poc
 
 void DocumentBroker::setupPriorities()
 {
-#if !MOBILEAPP
+    if (Util::isMobileApp())
+        return;
     if (_type == ChildType::Batch)
     {
         int prio = COOLWSD::getConfigValue<int>("per_document.batch_priority", 5);
         Util::setProcessAndThreadPriorities(_childProcess->getPid(), prio);
     }
-#endif
 }
 
 void DocumentBroker::setupTransfer(SocketDisposition &disposition,
@@ -1008,8 +1007,7 @@ bool DocumentBroker::download(
                 // message for "view file extension" document types
                 session->sendFileMode(session->isReadOnly(), session->isAllowChangeComments());
             }
-#ifdef MOBILEAPP
-            else
+            else if (Util::isMobileApp())
             {
                 // Fix issue #5887 by assuming that documents are writable on iOS and Android
                 // The iOS and Android app saves directly to local disk so, other than for
@@ -1021,7 +1019,6 @@ bool DocumentBroker::download(
                 session->setReadOnly(false);
                 session->setAllowChangeComments(true);
             }
-#endif
         }
     }
 
@@ -1216,12 +1213,7 @@ bool DocumentBroker::download(
             _storageManager.setLastUploadedFileModifiedTime(timepoint); // Used to detect modifications.
         }
 
-        bool dontUseCache = false;
-#if MOBILEAPP
-        // avoid memory consumption for single-user local bits.
-        // FIXME: arguably should/could do this for single user documents too.
-        dontUseCache = true;
-#endif
+        bool dontUseCache = Util::isMobileApp();
 
         _tileCache = std::make_unique<TileCache>(_storage->getUri().toString(),
                                                  _saveManager.getLastModifiedTime(), dontUseCache);
@@ -2893,8 +2885,7 @@ void DocumentBroker::disconnectSessionInternal(const std::shared_ptr<ClientSessi
             LOG_DBG("Disconnecting session [" << id << "] from Kit");
             hardDisconnect = session->disconnectFromKit();
 
-#if !MOBILEAPP
-            if (!isLoaded() && _sessions.empty())
+            if (!Util::isMobileApp() && !isLoaded() && _sessions.empty())
             {
                 // We aren't even loaded and no other views--kill.
                 // If we send disconnect, we risk hanging because we flag Core for
@@ -2908,7 +2899,6 @@ void DocumentBroker::disconnectSessionInternal(const std::shared_ptr<ClientSessi
                 if (_childProcess)
                     _childProcess->terminate();
             }
-#endif
         }
 
         if (hardDisconnect)

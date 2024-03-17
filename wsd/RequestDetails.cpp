@@ -72,11 +72,9 @@ RequestDetails::RequestDetails(Poco::Net::HTTPRequest &request, const std::strin
         _proxyPrefix = it->second;
     it = request.find("Upgrade");
     _isWebSocket = it != request.end() && Util::iequal(it->second, "websocket");
-#if MOBILEAPP
     // request.getHost fires an exception on mobile.
-#else
-	_hostUntrusted = request.getHost();
-#endif
+    if (!Util::isMobileApp())
+        _hostUntrusted = request.getHost();
 
     processURI();
 }
@@ -256,11 +254,7 @@ void RequestDetails::processURI()
 Poco::URI RequestDetails::sanitizeURI(const std::string& uri)
 {
     // The URI of the document should be url-encoded.
-#if !MOBILEAPP
-    Poco::URI uriPublic(Util::decodeURIComponent(uri));
-#else
-    Poco::URI uriPublic(uri);
-#endif
+    Poco::URI uriPublic((Util::isMobileApp() ? uri : Util::decodeURIComponent(uri)));
 
     if (uriPublic.isRelative() || uriPublic.getScheme() == "file")
     {

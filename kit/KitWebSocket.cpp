@@ -35,10 +35,9 @@ void KitWebSocketHandler::handleMessage(const std::vector<char>& data)
 
     std::string message(data.data(), data.size());
 
-#if !MOBILEAPP
-    if (UnitKit::get().filterKitMessage(this, message))
+    if (!Util::isMobileApp() && UnitKit::get().filterKitMessage(this, message))
         return;
-#endif
+
     StringVector tokens = StringVector::tokenize(message);
 
     LOG_DBG(_socketName << ": recv [" << [&](auto& log) {
@@ -96,26 +95,29 @@ void KitWebSocketHandler::handleMessage(const std::vector<char>& data)
 
     else if (tokens.equals(0, "exit"))
     {
-#if !MOBILEAPP
-        LOG_INF("Terminating immediately due to parent 'exit' command.");
-        flushTraceEventRecordings();
-        _document.reset();
-        if (!Util::isKitInProcess())
-            Util::forcedExit(EX_OK);
+        if (!Util::isMobileApp())
+        {
+            LOG_INF("Terminating immediately due to parent 'exit' command.");
+            flushTraceEventRecordings();
+            _document.reset();
+            if (!Util::isKitInProcess())
+                Util::forcedExit(EX_OK);
+            else
+                SigUtil::setTerminationFlag();
+        }
         else
-            SigUtil::setTerminationFlag();
-#else
+        {
 #ifdef IOS
-        LOG_INF("Setting our KitSocketPoll's termination flag due to 'exit' command.");
-        std::unique_lock<std::mutex> lock(_ksPoll->terminationMutex);
-        _ksPoll->terminationFlag = true;
-        _ksPoll->terminationCV.notify_all();
+            LOG_INF("Setting our KitSocketPoll's termination flag due to 'exit' command.");
+            std::unique_lock<std::mutex> lock(_ksPoll->terminationMutex);
+            _ksPoll->terminationFlag = true;
+            _ksPoll->terminationCV.notify_all();
 #else
-        LOG_INF("Setting TerminationFlag due to 'exit' command.");
-        SigUtil::setTerminationFlag();
+            LOG_INF("Setting TerminationFlag due to 'exit' command.");
+            SigUtil::setTerminationFlag();
 #endif
-        _document.reset();
-#endif
+            _document.reset();
+        }
     }
     else if (tokens.equals(0, "tile") || tokens.equals(0, "tilecombine") ||
              tokens.equals(0, "paintwindow") || tokens.equals(0, "resizewindow") ||
@@ -163,13 +165,14 @@ void KitWebSocketHandler::enableProcessInput(bool enable)
 
 void KitWebSocketHandler::onDisconnect()
 {
-#if !MOBILEAPP
-    //FIXME: We could try to recover.
-    LOG_ERR("Kit for DocBroker ["
-            << _docKey
-            << "] connection lost without exit arriving from wsd. Setting TerminationFlag");
-    SigUtil::setTerminationFlag();
-#endif
+    if (!Util::isMobileApp())
+    {
+        //FIXME: We could try to recover.
+        LOG_ERR("Kit for DocBroker ["
+                << _docKey
+                << "] connection lost without exit arriving from wsd. Setting TerminationFlag");
+        SigUtil::setTerminationFlag();
+    }
 #ifdef IOS
     {
         std::unique_lock<std::mutex> lock(_ksPoll->terminationMutex);

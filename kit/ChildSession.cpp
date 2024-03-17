@@ -678,8 +678,6 @@ bool ChildSession::_handleInput(const char *buffer, int length)
     return true;
 }
 
-#if !MOBILEAPP
-
 std::string getMimeFromFileType(const std::string & fileType)
 {
     if (fileType == "pdf")
@@ -717,8 +715,6 @@ namespace {
         }
     }
 }
-
-#endif
 
 bool ChildSession::loadDocument(const StringVector& tokens)
 {
@@ -795,11 +791,8 @@ bool ChildSession::loadDocument(const StringVector& tokens)
             return false;
         }
 
-#if !MOBILEAPP
-
-        renameForUpload(url);
-
-#endif //!MOBILEAPP
+        if (!Util::isMobileApp())
+            renameForUpload(url);
     }
 
     getLOKitDocument()->setView(_viewId);
@@ -1111,9 +1104,8 @@ bool ChildSession::downloadAs(const StringVector& tokens)
         jailDoc = jailDoc.substr(0, jailDoc.find(JAILED_DOCUMENT_ROOT)) + JAILED_DOCUMENT_ROOT;
     }
 
-#if !MOBILEAPP
-    consistencyCheckJail();
-#endif
+    if (!Util::isMobileApp())
+        consistencyCheckJail();
 
     // The file is removed upon downloading.
     const std::string tmpDir = FileUtil::createRandomDir(jailDoc);
@@ -1390,27 +1382,26 @@ bool ChildSession::paste(const char* buffer, int length, const StringVector& tok
 
 bool ChildSession::insertFile(const StringVector& tokens)
 {
-    std::string name, type;
+    std::string name, type, data;
 
-#if !MOBILEAPP
-    if (tokens.size() != 3 ||
-        !getTokenString(tokens[1], "name", name) ||
-        !getTokenString(tokens[2], "type", type))
+    if (!Util::isMobileApp())
     {
-        sendTextFrameAndLogError("error: cmd=insertfile kind=syntax");
-        return false;
+        if (tokens.size() != 3 || !getTokenString(tokens[1], "name", name) ||
+            !getTokenString(tokens[2], "type", type))
+        {
+            sendTextFrameAndLogError("error: cmd=insertfile kind=syntax");
+            return false;
+        }
     }
-#else
-    std::string data;
-    if (tokens.size() != 4 ||
-        !getTokenString(tokens[1], "name", name) ||
-        !getTokenString(tokens[2], "type", type) ||
-        !getTokenString(tokens[3], "data", data))
+    else
     {
-        sendTextFrameAndLogError("error: cmd=insertfile kind=syntax");
-        return false;
+        if (tokens.size() != 4 || !getTokenString(tokens[1], "name", name) ||
+            !getTokenString(tokens[2], "type", type) || !getTokenString(tokens[3], "data", data))
+        {
+            sendTextFrameAndLogError("error: cmd=insertfile kind=syntax");
+            return false;
+        }
     }
-#endif
 
     SigUtil::addActivity(getId(), "insertFile " + type);
 
@@ -1418,37 +1409,41 @@ bool ChildSession::insertFile(const StringVector& tokens)
     {
         std::string url;
 
-#if !MOBILEAPP
-        if (type == "graphic" || type == "selectbackground")
+        if (!Util::isMobileApp())
         {
-            std::string jailDoc = JAILED_DOCUMENT_ROOT;
-            if (NoCapsForKit)
+            if (type == "graphic" || type == "selectbackground")
             {
-                jailDoc = Poco::URI(getJailedFilePath()).getPath();
-                jailDoc = jailDoc.substr(0, jailDoc.find(JAILED_DOCUMENT_ROOT)) + JAILED_DOCUMENT_ROOT;
+                std::string jailDoc = JAILED_DOCUMENT_ROOT;
+                if (NoCapsForKit)
+                {
+                    jailDoc = Poco::URI(getJailedFilePath()).getPath();
+                    jailDoc = jailDoc.substr(0, jailDoc.find(JAILED_DOCUMENT_ROOT)) +
+                              JAILED_DOCUMENT_ROOT;
+                }
+                url = "file://" + jailDoc + "insertfile/" + name;
             }
-            url = "file://" + jailDoc + "insertfile/" + name;
+            else if (type == "graphicurl")
+            {
+                URI::decode(name, url);
+                if (!Util::toLower(url).starts_with("http"))
+                {
+                    // Do not allow arbitrary schemes, especially "file://".
+                    sendTextFrameAndLogError("error: cmd=insertfile kind=syntax");
+                    return false;
+                }
+            }
         }
-        else if (type == "graphicurl")
+        else
         {
-            URI::decode(name, url);
-            if (!Util::toLower(url).starts_with("http"))
-            {
-                // Do not allow arbitrary schemes, especially "file://".
-                sendTextFrameAndLogError("error: cmd=insertfile kind=syntax");
-                return false;
-            }
+            assert(type == "graphic");
+            auto binaryData = decodeBase64(data);
+            const std::string tempFile = FileUtil::createRandomTmpDir() + '/' + name;
+            std::ofstream fileStream;
+            fileStream.open(tempFile);
+            fileStream.write(reinterpret_cast<char*>(binaryData.data()), binaryData.size());
+            fileStream.close();
+            url = "file://" + tempFile;
         }
-#else
-        assert(type == "graphic");
-        auto binaryData = decodeBase64(data);
-        const std::string tempFile = FileUtil::createRandomTmpDir() + '/' + name;
-        std::ofstream fileStream;
-        fileStream.open(tempFile);
-        fileStream.write(reinterpret_cast<char*>(binaryData.data()), binaryData.size());
-        fileStream.close();
-        url = "file://" + tempFile;
-#endif
 
         const std::string command = (type == "selectbackground" ? ".uno:SelectBackground" : ".uno:InsertGraphic");
         const std::string arguments = "{"
@@ -2332,9 +2327,8 @@ bool ChildSession::saveAs(const StringVector& tokens)
         // url is already encoded
         encodedURL = url;
 
-#if !MOBILEAPP
-    consistencyCheckJail();
-#endif
+    if (!Util::isMobileApp())
+        consistencyCheckJail();
 
     std::string encodedWopiFilename;
     Poco::URI::encode(wopiFilename, "", encodedWopiFilename);
@@ -2757,10 +2751,9 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
     LOG_TRC("ChildSession::loKitCallback [" << getName() << "]: " << typeName << " [" << payload
                                             << ']');
 
-#if !MOBILEAPP
-    if (UnitKit::get().filterLoKitCallback(type, payload))
+    if (!Util::isMobileApp() && UnitKit::get().filterLoKitCallback(type, payload))
         return;
-#endif
+
     if (isCloseFrame())
     {
         LOG_TRC("Skipping callback [" << typeName << "] on closing session " << getName());
@@ -2911,32 +2904,39 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
 
         if (!commandName.isEmpty() && commandName.toString() == ".uno:Save")
         {
-#if !MOBILEAPP
-            consistencyCheckJail();
-
-            renameForUpload(getJailedFilePath());
-
-#else // MOBILEAPP
-            // After the document has been saved (into the temporary copy that we set up in
-            // -[CODocument loadFromContents:ofType:error:]), save it also using the system API so
-            // that file provider extensions notice.
-            if (!success.isEmpty() && success.toString() == "true")
+            if (!Util::isMobileApp())
             {
-#if defined(IOS)
-                CODocument *document = DocumentData::get(_docManager->getMobileAppDocId()).coDocument;
-                [document saveToURL:[document fileURL]
-                   forSaveOperation:UIDocumentSaveForOverwriting
-                  completionHandler:^(BOOL success) {
-                        LOG_TRC("ChildSession::loKitCallback() save completion handler gets " << (success?"YES":"NO"));
-                        if (![[NSFileManager defaultManager] removeItemAtURL:document->copyFileURL error:nil]) {
-                            LOG_SYS("Could not remove copy of document at " << [[document->copyFileURL path] UTF8String]);
-                        }
-                    }];
-#elif defined(__ANDROID__)
-                postDirectMessage("SAVE " + payload);
-#endif
+                consistencyCheckJail();
+
+                renameForUpload(getJailedFilePath());
             }
+            else
+            {
+                // After the document has been saved (into the temporary copy that we set up in
+                // -[CODocument loadFromContents:ofType:error:]), save it also using the system API so
+                // that file provider extensions notice.
+                if (!success.isEmpty() && success.toString() == "true")
+                {
+#if defined(IOS)
+                    CODocument* document =
+                        DocumentData::get(_docManager->getMobileAppDocId()).coDocument;
+                    [document saveToURL:[document fileURL]
+                         forSaveOperation:UIDocumentSaveForOverwriting
+                        completionHandler:^(BOOL success) {
+                          LOG_TRC("ChildSession::loKitCallback() save completion handler gets "
+                                  << (success ? "YES" : "NO"));
+                          if (![[NSFileManager defaultManager] removeItemAtURL:document->copyFileURL
+                                                                         error:nil])
+                          {
+                              LOG_SYS("Could not remove copy of document at "
+                                      << [[document->copyFileURL path] UTF8String]);
+                          }
+                        }];
+#elif defined(__ANDROID__)
+                    postDirectMessage("SAVE " + payload);
 #endif
+                }
+            }
         }
 
         sendTextFrame("unocommandresult: " + payload);
@@ -3096,7 +3096,7 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
         sendTextFrame("printranges: " + payload);
         break;
     case LOK_CALLBACK_FONTS_MISSING:
-#if !MOBILEAPP
+        if (!Util::isMobileApp())
         {
             // This environment variable is always set in COOLWSD::innerInitialize().
             static std::string fontsMissingHandling = std::string(std::getenv("FONTS_MISSING_HANDLING"));
@@ -3117,7 +3117,6 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
 #endif
             }
         }
-#endif
         break;
     case LOK_CALLBACK_EXPORT_FILE:
     {

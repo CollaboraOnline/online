@@ -525,16 +525,17 @@ std::shared_ptr<http::Session> StorageBase::getHttpSession(const Poco::URI& uri)
 
 void LockContext::initSupportsLocks()
 {
-#if MOBILEAPP
-    _supportsLocks = false;
-#else
-    if (_supportsLocks)
-        return;
+    if (Util::isMobileApp())
+        _supportsLocks = false;
+    else
+    {
+        if (_supportsLocks)
+            return;
 
-    // first time token setup
-    _supportsLocks = true;
-    _lockToken = "cool-lock" + Util::rng::getHexString(8);
-#endif
+        // first time token setup
+        _supportsLocks = true;
+        _lockToken = "cool-lock" + Util::rng::getHexString(8);
+    }
 }
 
 bool LockContext::needsRefresh(const std::chrono::steady_clock::time_point &now) const

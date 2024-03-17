@@ -372,13 +372,13 @@ public:
     {
         std::string lowerCaseExtension = extension;
         std::transform(lowerCaseExtension.begin(), lowerCaseExtension.end(), lowerCaseExtension.begin(), ::tolower);
-#if MOBILEAPP
-        if (lowerCaseExtension == "pdf")
-            return true; // true for only pdf - it is not editable
-        return false; // mark everything else editable on mobile
-#else
-            return EditFileExtensions.find(lowerCaseExtension) == EditFileExtensions.end();
-#endif
+        if (Util::isMobileApp())
+        {
+            if (lowerCaseExtension == "pdf")
+                return true; // true for only pdf - it is not editable
+            return false; // mark everything else editable on mobile
+        }
+        return EditFileExtensions.find(lowerCaseExtension) == EditFileExtensions.end();
     }
 
     /// Return true if extension is marked as view_comment action in discovery.xml.
@@ -387,13 +387,14 @@ public:
 
         std::string lowerCaseExtension = extension;
         std::transform(lowerCaseExtension.begin(), lowerCaseExtension.end(), lowerCaseExtension.begin(), ::tolower);
-#if MOBILEAPP
-        if (lowerCaseExtension == "pdf")
-            return true; // true for only pdf - it is not editable
-        return false; // mark everything else editable on mobile
-#else
-        return ViewWithCommentsFileExtensions.find(lowerCaseExtension) != ViewWithCommentsFileExtensions.end();
-#endif
+        if (Util::isMobileApp())
+        {
+            if (lowerCaseExtension == "pdf")
+                return true; // true for only pdf - it is not editable
+            return false; // mark everything else editable on mobile
+        }
+        return ViewWithCommentsFileExtensions.find(lowerCaseExtension) !=
+               ViewWithCommentsFileExtensions.end();
     }
 
     /// Returns the value of the specified application configuration,
@@ -660,8 +661,6 @@ public:
 
 void setKitInProcess();
 
-#if !MOBILEAPP
 int createForkit(const std::string& forKitPath, const StringVector& args);
-#endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

@@ -119,10 +119,9 @@ protected:
     {
         std::string message(data.data(), data.size());
 
-#if !MOBILEAPP
-        if (UnitKit::get().filterKitMessage(this, message))
+        if (!Util::isMobileApp() && UnitKit::get().filterKitMessage(this, message))
             return;
-#endif
+
         StringVector tokens = StringVector::tokenize(message);
 
         LOG_DBG(_socketName << ": recv [" <<
@@ -187,10 +186,10 @@ protected:
 
     void onDisconnect() override
     {
-#if !MOBILEAPP
+        if (Util::isMobileApp())
+            return;
         LOG_ERR("ForKit connection lost without exit arriving from wsd. Setting TerminationFlag");
         SigUtil::setTerminationFlag();
-#endif
     }
 };
 
@@ -749,7 +748,6 @@ int forkit_main(int argc, char** argv)
     // Make dev/[u]random point to the writable devices in tmp/dev/.
     JailUtil::SysTemplate::setupRandomDeviceLinks(sysTemplate);
 
-#if !MOBILEAPP
     if (!Util::isKitInProcess())
     {
         // Parse the configuration.
@@ -757,7 +755,6 @@ int forkit_main(int argc, char** argv)
         config::initialize(std::string(conf ? conf : std::string()));
         EnableExperimental = config::getBool("experimental_features", false);
     }
-#endif
 
     Util::setThreadName("forkit");
 
@@ -786,13 +783,12 @@ int forkit_main(int argc, char** argv)
 
     WSHandler = std::make_shared<ServerWSHandler>("forkit_ws");
 
-#if !MOBILEAPP
-    if (!ForKitPoll->insertNewUnixSocket(MasterLocation, FORKIT_URI, WSHandler))
+    if (!Util::isMobileApp() &&
+        !ForKitPoll->insertNewUnixSocket(MasterLocation, FORKIT_URI, WSHandler))
     {
         LOG_SFL("Failed to connect to WSD. Will exit.");
         Util::forcedExit(EX_SOFTWARE);
     }
-#endif
 
     SigUtil::setUserSignals();
 
