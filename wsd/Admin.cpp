@@ -16,7 +16,6 @@
 #include <sys/poll.h>
 #include <unistd.h>
 
-#include <Poco/Net/HTTPCookie.h>
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPResponse.h>
 

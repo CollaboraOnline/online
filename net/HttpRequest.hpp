@@ -440,8 +440,11 @@ public:
     /// Return true iff Transfer-Encoding is set to chunked (the last entry).
     bool getChunkedTransferEncoding() const { return _chunked; }
 
-    /// Adds a new "Cookie" header entry with the given cookies.
-    void addCookies(const Container& pairs)
+    /// Adds a new "Cookie" header entry with the given content.
+    void addCookie(const std::string& cookie) { add(COOKIE, cookie); }
+
+    /// Adds a new "Cookie" header entry with the given pairs.
+    void addCookie(const Container& pairs)
     {
         std::string s;
         s.reserve(256);
@@ -853,6 +856,7 @@ public:
 
     const StatusLine& statusLine() const { return _statusLine; }
 
+    Header& header() { return _header; }
     const Header& header() const { return _header; }
 
     /// Add an HTTP header field.
