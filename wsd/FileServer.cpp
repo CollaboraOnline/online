@@ -1236,8 +1236,6 @@ FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::prepro
     else
         Poco::replaceInPlace(preprocess, std::string("%BROWSER_LOGGING%"), std::string());
 
-    const auto groupDownloadAs = stringifyBoolFromConfig(config, "per_view.group_download_as", true);
-    Poco::replaceInPlace(preprocess, std::string("%GROUP_DOWNLOAD_AS%"), groupDownloadAs);
     const unsigned int outOfFocusTimeoutSecs = config.getUInt("per_view.out_of_focus_timeout_secs", 60);
     Poco::replaceInPlace(preprocess, std::string("%OUT_OF_FOCUS_TIMEOUT_SECS%"), std::to_string(outOfFocusTimeoutSecs));
     const unsigned int idleTimeoutSecs = config.getUInt("per_view.idle_timeout_secs", 900);

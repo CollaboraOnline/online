@@ -203,7 +203,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 			});
 		}
 
-		if (!!window.groupDownloadAsForNb && !this._map['wopi'].HideExportOption) {
+		if (!this._map['wopi'].HideExportOption) {
 			content.push({
 				'id': 'downloadas:DownloadAsMenu',
 				'command': 'downloadas',
@@ -212,74 +212,6 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				'text': _('Download'),
 				'accessibility': { focusBack: true,	combination: 'DA', de: null }
 			});
-		} else if (!this._map['wopi'].HideExportOption) {
-			content.push(
-				{
-					'id': 'file-downloadas-ods-downloadas-csv',
-					'type': 'container',
-					'children': [
-						{
-							'id': 'downloadas-ods',
-							'type': 'menubartoolitem',
-							'text': _('ODF Spreadsheet (.ods)'),
-							'command': '',
-							'accessibility': { focusBack: true,	combination: 'DS', de: null }
-						},
-						{
-							'id': 'downloadas-csv',
-							'type': 'menubartoolitem',
-							'text': _('CSV File (.csv)'),
-							'command': '',
-							'accessibility': { focusBack: true,	combination: 'DV', de: null }
-						},
-					],
-					'vertical': 'true'
-				},
-				{
-					'id': 'file-downloadas-xls-downloadas-xlsx',
-					'type': 'container',
-					'children': [
-						{
-							'id': 'downloadas-xls',
-							'type': 'menubartoolitem',
-							'text': _('Excel 2003 Spreadsheet (.xls)'),
-							'command': '',
-							'accessibility': { focusBack: true,	combination: 'DX', de: null }
-						},
-						{
-							'id': 'downloadas-xlsx',
-							'type': 'menubartoolitem',
-							'text': _('Excel Spreadsheet (.xlsx)'),
-							'command': '',
-							'accessibility': { focusBack: true,	combination: 'DL', de: null }
-						},
-					],
-					'vertical': 'true'
-				},
-				{
-					'id': 'file-exportpdf',
-					'type': 'container',
-					'children': [
-						{
-							'id': !window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-pdf',
-							'type': 'customtoolitem',
-							'text': _('PDF Document (.pdf)'),
-							'command': !window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-pdf',
-							'inlineLabel': true,
-							'accessibility': { focusBack: true,	combination: 'EP', de: null }
-						},
-						{
-							'id': 'exportpdf' ,
-							'type': 'customtoolitem',
-							'text': _('PDF Document (.pdf) - Expert'),
-							'command': 'exportpdf' ,
-							'inlineLabel': true,
-							'accessibility': { focusBack: true,	combination: 'ED', de: null }
-						},
-					],
-					'vertical': 'true'
-				}
-			);
 		}
 
 		if (!this._map['wopi'].HideRepairOption) {

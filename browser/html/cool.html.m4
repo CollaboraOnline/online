@@ -310,7 +310,6 @@ m4_ifelse(MOBILEAPP,[true],
       window.frameAncestors = '';
       window.socketProxy = false;
       window.tileSize = 256;
-      window.groupDownloadAsForNb = 'true'
       window.uiDefaults = {};
       window.useIntegrationTheme = 'false';
       window.checkFileInfoOverride = {};
@@ -342,7 +341,6 @@ m4_ifelse(MOBILEAPP,[true],
       window.frameAncestors = decodeURIComponent('%FRAME_ANCESTORS%');
       window.socketProxy = %SOCKET_PROXY%;
       window.tileSize = 256;
-      window.groupDownloadAsForNb = %GROUP_DOWNLOAD_AS%;
       window.uiDefaults = %UI_DEFAULTS%;
       window.checkFileInfoOverride = %CHECK_FILE_INFO_OVERRIDE%;
       window.deeplEnabled = %DEEPL_ENABLED%;

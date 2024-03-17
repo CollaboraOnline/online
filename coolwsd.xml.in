@@ -75,7 +75,6 @@
     </per_document>
 
     <per_view desc="View-specific settings.">
-        <group_download_as desc="If set to true, groups download as icons into a dropdown for the notebookbar view." type="bool" default="true">true</group_download_as>
         <out_of_focus_timeout_secs desc="The maximum number of seconds before dimming and stopping updates when the browser tab is no longer in focus. Defaults to 300 seconds." type="uint" default="300">300</out_of_focus_timeout_secs>
         <idle_timeout_secs desc="The maximum number of seconds before dimming and stopping updates when the user is no longer active (even if the browser is in focus). Defaults to 15 minutes." type="uint" default="900">900</idle_timeout_secs>
         <custom_os_info desc="Custom string shown as OS version in About dialog, get from system if empty." type="string" default=""></custom_os_info>

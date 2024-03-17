@@ -91,7 +91,6 @@ data = data.replace(/%IDLE_TIMEOUT_SECS%/g, '1000000');
 data = data.replace(/%PROTOCOL_DEBUG%/g, 'true');
 data = data.replace(/%FRAME_ANCESTORS%/g, '');
 data = data.replace(/%SOCKET_PROXY%/g, 'false');
-data = data.replace(/%GROUP_DOWNLOAD_AS%/g, 'false');
 data = data.replace(/%UI_DEFAULTS%/g, '{}');
 data = data.replace(/%HEXIFY_URL%/g, '""');
 data = data.replace(/%CHECK_FILE_INFO_OVERRIDE%/g, 'false');
