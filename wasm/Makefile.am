@@ -36,6 +36,7 @@ online_SOURCES = \
 	../common/SpookyV2.cpp \
 	../common/Unit.cpp \
 	../common/Util.cpp \
+	../common/Util-mobile.cpp \
 	../kit/ChildSession.cpp \
 	../kit/Kit.cpp \
 	../kit/KitWebSocket.cpp \
