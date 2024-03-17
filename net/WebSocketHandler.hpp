@@ -204,16 +204,17 @@ protected:
                                                  << ", message: " << statusMessage);
             _shuttingDown = true;
 
-#if !MOBILEAPP
-            const size_t len = statusMessage.size();
-            std::vector<char> buf(2 + len);
-            buf[0] = ((((int)statusCode) >> 8) & 0xff);
-            buf[1] = ((((int)statusCode) >> 0) & 0xff);
-            std::copy(statusMessage.begin(), statusMessage.end(), buf.begin() + 2);
-            const unsigned char flags = WSFrameMask::Fin | static_cast<char>(WSOpCode::Close);
+            if (!Util::isMobileApp())
+            {
+                const size_t len = statusMessage.size();
+                std::vector<char> buf(2 + len);
+                buf[0] = ((((int)statusCode) >> 8) & 0xff);
+                buf[1] = ((((int)statusCode) >> 0) & 0xff);
+                std::copy(statusMessage.begin(), statusMessage.end(), buf.begin() + 2);
+                const unsigned char flags = WSFrameMask::Fin | static_cast<char>(WSOpCode::Close);
 
-            sendFrame(socket, buf.data(), buf.size(), flags);
-#endif
+                sendFrame(socket, buf.data(), buf.size(), flags);
+            }
         }
     }
 
@@ -517,11 +518,12 @@ protected:
     {
         std::shared_ptr<StreamSocket> socket = _socket.lock();
 
-#if MOBILEAPP
-        // No separate "upgrade" is going on
-        if (socket && !socket->isWebSocket())
-            socket->setWebSocket();
-#endif
+        if (Util::isMobileApp())
+        {
+            // No separate "upgrade" is going on
+            if (socket && !socket->isWebSocket())
+                socket->setWebSocket();
+        }
 
         if (!socket)
         {

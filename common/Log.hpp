@@ -48,14 +48,10 @@ namespace Log
 
     void setThreadLocalLogLevel(const std::string& logLevel);
 
-#if !MOBILEAPP
     extern bool IsShutdown;
 
     /// Was static shutdown() called? If so, producing more logs should be avoided.
-    inline bool isShutdownCalled() { return IsShutdown; }
-#else
-    constexpr bool isShutdownCalled() { return false; }
-#endif
+    inline bool isShutdownCalled() { return IsShutdown && !Util::isMobileApp(); }
 
     /// Generates log entry prefix. Example follows (without the pipes).
     /// |wsd-07272-07298 2020-04-25 17:29:28.928697 -0400 [ websrv_poll ] TRC  |

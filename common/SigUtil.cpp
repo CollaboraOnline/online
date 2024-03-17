@@ -87,10 +87,11 @@ void setTerminationFlag()
     // Set the forced-termination flag.
     RunStateFlag = RunState::Terminate;
 
-#if !MOBILEAPP
+    if (!Util::isMobileApp())
+    {
         // And wake-up the thread.
         SocketPoll::wakeupWorld();
-#endif
+    }
 }
 
 void requestShutdown()

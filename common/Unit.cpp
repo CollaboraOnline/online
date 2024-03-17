@@ -57,7 +57,8 @@ bool EnableExperimental = false;
 UnitBase** UnitBase::linkAndCreateUnit([[maybe_unused]] UnitType type,
                                        [[maybe_unused]] const std::string& unitLibPath)
 {
-#if !MOBILEAPP
+    if (Util::isMobileApp())
+        return nullptr;
     DlHandle = dlopen(unitLibPath.c_str(), RTLD_GLOBAL|RTLD_NOW);
     if (!DlHandle)
     {
@@ -125,7 +126,6 @@ UnitBase** UnitBase::linkAndCreateUnit([[maybe_unused]] UnitType type,
         return new UnitBase* [2] { hooks, nullptr };
 
     LOG_ERR("No wsd unit-tests found in " << unitLibPath);
-#endif
 
     return nullptr;
 }
@@ -205,13 +205,14 @@ void UnitBase::selfTest()
 
 bool UnitBase::init(UnitType type, const std::string &unitLibPath)
 {
-#if !MOBILEAPP
-    LOG_ASSERT(!get(type));
-#else
-    // The COOLWSD initialization is called in a loop on mobile, allow reuse
-    if (get(type))
-        return true;
-#endif
+    if (!Util::isMobileApp())
+        LOG_ASSERT(!get(type));
+    else
+    {
+        // The COOLWSD initialization is called in a loop on mobile, allow reuse
+        if (get(type))
+            return true;
+    }
 
     LOG_ASSERT(GlobalArray == nullptr);
     LOG_ASSERT(GlobalIndex == -1);
@@ -660,12 +661,13 @@ void UnitWSD::onExitTest(TestResult result, const std::string&)
         if (result != TestResult::Ok && !GlobalTestOptions.getKeepgoing())
         {
             LOG_TST("Failing fast per options, even though there are more tests");
-#if !MOBILEAPP
-            LOG_TST("Setting TerminationFlag as the Test Suite failed");
-            SigUtil::setTerminationFlag(); // and wake-up world.
-#else
-            SocketPoll::wakeupWorld();
-#endif
+            if (!Util::isMobileApp())
+            {
+                LOG_TST("Setting TerminationFlag as the Test Suite failed");
+                SigUtil::setTerminationFlag(); // and wake-up world.
+            }
+            else
+                SocketPoll::wakeupWorld();
             return;
         }
 
@@ -678,12 +680,13 @@ void UnitWSD::onExitTest(TestResult result, const std::string&)
                                  << " was the last test. Finishing "
                                  << (GlobalResult == TestResult::Ok ? "SUCCESS" : "FAILED"));
 
-#if !MOBILEAPP
-    LOG_TST("Setting TerminationFlag as there are no more tests");
-    SigUtil::setTerminationFlag(); // and wake-up world.
-#else
-    SocketPoll::wakeupWorld();
-#endif
+    if (!Util::isMobileApp())
+    {
+        LOG_TST("Setting TerminationFlag as there are no more tests");
+        SigUtil::setTerminationFlag(); // and wake-up world.
+    }
+    else
+        SocketPoll::wakeupWorld();
 }
 
 UnitKit::UnitKit(const std::string& name)
@@ -695,10 +698,6 @@ UnitKit::~UnitKit() {}
 
 UnitKit& UnitKit::get()
 {
-#if MOBILEAPP
-    if (!GlobalKit)
-        GlobalKit = new UnitKit("UnitKit");
-#endif
     if (Util::isKitInProcess() && !GlobalKit)
         GlobalKit = new UnitKit("UnitKit");
 
@@ -716,12 +715,13 @@ void UnitKit::onExitTest(TestResult, const std::string&)
     //                              << " was the last test. Finishing "
     //                              << (GlobalResult == TestResult::Ok ? "SUCCESS" : "FAILED"));
 
-#if !MOBILEAPP
-    // LOG_TST("Setting TerminationFlag as there are no more tests");
-    SigUtil::setTerminationFlag(); // and wake-up world.
-#else
-    SocketPoll::wakeupWorld();
-#endif
+    if (!Util::isMobileApp())
+    {
+        // LOG_TST("Setting TerminationFlag as there are no more tests");
+        SigUtil::setTerminationFlag(); // and wake-up world.
+    }
+    else
+        SocketPoll::wakeupWorld();
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

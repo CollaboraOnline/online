@@ -16,13 +16,11 @@
 
 void setKitInProcess() { Util::setKitInProcess(false); }
 
-#if !MOBILEAPP
 int createForkit(const std::string& forKitPath, const StringVector& args)
 {
     // create forkit in a process
     return Util::spawnProcess(forKitPath, args);
 };
-#endif
 
 // FIXME: Somewhat idiotically, the parameter to emitOneRecordingIfEnabled() should end with a
 // newline, while the paramter to emitOneRecording() should not.

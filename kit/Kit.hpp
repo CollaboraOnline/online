@@ -374,10 +374,8 @@ private:
 
     std::string getObfuscatedFileId() override { return _obfuscatedFileId; }
 
-#if !MOBILEAPP
     /// Stops theads, flushes buffers, and exits the process.
     void flushAndExit(int code);
-#endif
 
 private:
     std::shared_ptr<lok::Office> _loKit;

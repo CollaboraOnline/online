@@ -307,13 +307,9 @@ int64_t Request::readData(const char* p, const int64_t len)
     if (_stage == Stage::Header)
     {
         // First line is the status line.
-#if !MOBILEAPP
-        if (p == nullptr || len < MinRequestHeaderLen)
-#else
         // Fix infinite loop on mobile by skipping the minimum request header
         // length check
-        if (p == nullptr)
-#endif
+        if (p == nullptr || (len < MinRequestHeaderLen && !Util::isMobileApp()))
         {
             LOG_TRC("Request::readData: len < MinRequestHeaderLen");
             return 0;
