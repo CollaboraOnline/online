@@ -116,6 +116,7 @@ shared_sources = common/FileUtil.cpp \
                  common/SpookyV2.cpp \
                  common/Unit.cpp \
                  common/Util.cpp \
+                 common/Util-desktop.cpp \
                  common/ConfigUtil.cpp \
                  common/Authorization.cpp \
                  common/CommandControl.cpp \
@@ -180,7 +181,8 @@ connect_SOURCES = tools/Connect.cpp \
                   common/Log.cpp \
                   common/Protocol.cpp \
                   common/StringVector.cpp \
-                  common/Util.cpp
+                  common/Util.cpp \
+                  common/Util-desktop.cpp
 
 lokitclient_SOURCES = common/Log.cpp \
                       common/DummyTraceEventEmitter.cpp \
@@ -188,7 +190,8 @@ lokitclient_SOURCES = common/Log.cpp \
                       common/Protocol.cpp \
                       common/StringVector.cpp \
                       common/TraceEvent.cpp \
-                      common/Util.cpp
+                      common/Util.cpp \
+                      common/Util-desktop.cpp
 
 noinst_LIBRARIES = libsimd.a
 libsimd_a_SOURCES = kit/DeltaSimd.c
@@ -265,7 +268,8 @@ clientnb_SOURCES = net/clientnb.cpp \
                    common/DummyTraceEventEmitter.cpp \
                    common/Log.cpp \
                    common/StringVector.cpp \
-                   common/Util.cpp
+                   common/Util.cpp \
+                   common/Util-desktop.cpp
 
 coolmount_SOURCES = tools/mount.cpp
 
@@ -276,6 +280,7 @@ coolbench_SOURCES = tools/Benchmark.cpp \
 		    common/Log.cpp \
                     common/StringVector.cpp \
                     common/Util.cpp \
+                    common/Util-desktop.cpp \
                     common/Simd.cpp
 coolbench_LDADD = libsimd.a
 
@@ -292,7 +297,8 @@ coolconfig_SOURCES = tools/Config.cpp \
 		     common/Crypto.cpp \
 		     common/Log.cpp \
 		     common/StringVector.cpp \
-		     common/Util.cpp
+		     common/Util.cpp \
+		     common/Util-desktop.cpp
 
 coolsocketdump_SOURCES = tools/WebSocketDump.cpp \
 			 common/DummyTraceEventEmitter.cpp \

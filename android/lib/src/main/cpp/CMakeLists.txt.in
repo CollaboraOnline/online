@@ -20,6 +20,7 @@ add_library(androidapp SHARED
             ../../../../../common/SpookyV2.cpp
             ../../../../../common/Unit.cpp
             ../../../../../common/Util.cpp
+            ../../../../../common/Util-mobile.cpp
             ../../../../../kit/ChildSession.cpp
             ../../../../../kit/DeltaSimd.c
             ../../../../../kit/Kit.cpp

@@ -31,7 +31,8 @@ common_sources = \
                  ../common/StringVector.cpp \
                  ../common/TraceEvent.cpp \
                  ../common/Unit.cpp \
-                 ../common/Util.cpp
+                 ../common/Util.cpp \
+                 ../common/Util-mobile.cpp
 
 kit_sources = ../kit/ChildSession.cpp \
               ../kit/Kit.cpp \

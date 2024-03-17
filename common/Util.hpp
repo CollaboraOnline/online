@@ -131,7 +131,6 @@ namespace Util
         std::chrono::steady_clock::time_point _startTime;
     };
 
-#if !MOBILEAPP
     class DirectoryCounter
     {
         void *_tasks;
@@ -158,8 +157,6 @@ namespace Util
 
     /// Spawn a process.
     int spawnProcess(const std::string &cmd, const StringVector &args);
-
-#endif
 
     /// Convert unsigned char data to hex.
     /// @buffer can be either std::vector<char> or std::string.
@@ -214,8 +211,6 @@ namespace Util
 
     bool windowingAvailable();
 
-#if !defined(BUILDING_TESTS) && !MOBILEAPP
-
     /// Send a message to all clients.
     void alertAllUsers(const std::string& msg);
 
@@ -225,18 +220,6 @@ namespace Util
     /// coolwsd for redistribution. (This function must be implemented separately in each program
     /// that uses it, it is not in Util.cpp.)
     void alertAllUsers(const std::string& cmd, const std::string& kind);
-#else
-
-    /// No-op implementation in the test programs
-    inline void alertAllUsers(const std::string&)
-    {
-    }
-
-    /// No-op implementation in the test programs
-    inline void alertAllUsers(const std::string&, const std::string&)
-    {
-    }
-#endif
 
     /// Assert that a lock is already taken.
     template <typename T> void assertIsLocked([[maybe_unused]] const T& lock)
@@ -253,7 +236,6 @@ namespace Util
 #endif
     }
 
-#if !MOBILEAPP
     /// Print given number of bytes in human-understandable form (KB,MB, etc.)
     std::string getHumanizedBytes(unsigned long nBytes);
 
@@ -292,7 +274,6 @@ namespace Util
 
     /// Sets priorities for a given pid & the current thread
     void setProcessAndThreadPriorities(const pid_t pid, int prio);
-#endif
 
     /// Replace substring @a in string @s with string @b.
     std::string replace(std::string s, const std::string& a, const std::string& b);
@@ -1322,6 +1303,8 @@ int main(int argc, char**argv)
      */
     bool isFuzzing();
 
+    bool isMobileApp();
+
     void setKitInProcess(bool value);
     bool isKitInProcess();
 
@@ -1354,10 +1337,8 @@ int main(int argc, char**argv)
      */
     std::map<std::string, std::string> stringVectorToMap(const std::vector<std::string>& strvector, const char delimiter);
 
-#if !MOBILEAPP
     // If OS is not mobile, it must be Linux.
     std::string getLinuxVersion();
-#endif
 
     /// Convert a string to 32-bit signed int.
     /// Returns the parsed value and a boolean indicating success or failure.
