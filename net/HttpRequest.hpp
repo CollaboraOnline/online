@@ -934,6 +934,10 @@ public:
     /// Serializes the Server Response into the given buffer.
     bool writeData(Buffer& out) const
     {
+        assert(!get("Date").empty() && "Date is always set in http::Response ctor");
+        assert(get("Server") == http::getServerString() &&
+               "Server Agent is always set in http::Response ctor");
+
         _statusLine.writeData(out);
         _header.writeData(out);
         out.append("\r\n"); // End of header.
