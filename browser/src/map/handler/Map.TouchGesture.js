@@ -665,11 +665,13 @@ L.Map.TouchGesture = L.Handler.extend({
 		if (this._map.uiManager.isUIBlocked())
 			return;
 
+		let velocityX = this._map._docLayer.isCalcRTL() ? -e.velocityX : e.velocityX;
+		let pointVelocity = new L.Point(velocityX, e.velocityY);
 		if (this._inSwipeAction) {
-			this._velocity = this._velocity.add(new L.Point(e.velocityX, e.velocityY));
+			this._velocity = this._velocity.add(pointVelocity);
 		}
 		else {
-			this._velocity = new L.Point(e.velocityX, e.velocityY);
+			this._velocity = pointVelocity;
 		}
 		this._amplitude = this._velocity.multiplyBy(32);
 		this._newPos = L.DomUtil.getPosition(this._map._mapPane);
