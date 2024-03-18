@@ -38,15 +38,18 @@ class FileServerRequestHandler
     static std::string getRequestPathname(const Poco::Net::HTTPRequest& request);
 
     static void preprocessFile(const Poco::Net::HTTPRequest& request,
+                               http::Response& httpResponse,
                                const RequestDetails &requestDetails,
                                Poco::MemoryInputStream& message,
                                const std::shared_ptr<StreamSocket>& socket);
     static void preprocessWelcomeFile(const Poco::Net::HTTPRequest& request,
-                                      const RequestDetails &requestDetails,
-                                      Poco::MemoryInputStream& message,
+                                      http::Response& httpResponse,
+                                      const RequestDetails& /*requestDetails*/,
+                                      Poco::MemoryInputStream& /*message*/,
                                       const std::shared_ptr<StreamSocket>& socket);
     static void preprocessAdminFile(const Poco::Net::HTTPRequest& request,
-                                    const RequestDetails &requestDetails,
+                                    http::Response& httpResponse,
+                                    const RequestDetails& requestDetails,
                                     const std::shared_ptr<StreamSocket>& socket);
 
     /// Construct a JSON to be accepted by the cool.html from a list like
