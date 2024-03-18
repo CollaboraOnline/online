@@ -582,7 +582,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
 
         if (endPoint == "welcome.html")
         {
-            preprocessWelcomeFile(request, requestDetails, message, socket);
+            preprocessWelcomeFile(request, response, requestDetails, message, socket);
             return;
         }
 
@@ -593,7 +593,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
             endPoint == "uno-localizations.json" ||
             endPoint == "uno-localizations-override.json")
         {
-            accessDetails = preprocessFile(request, requestDetails, message, socket);
+            accessDetails = preprocessFile(request, response, requestDetails, message, socket);
             return;
         }
 
@@ -604,7 +604,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
                 endPoint == "adminLog.html" || endPoint == "adminClusterOverview.html" ||
                 endPoint == "adminClusterOverviewAbout.html")
             {
-                preprocessAdminFile(request, requestDetails, socket);
+                preprocessAdminFile(request, response, requestDetails, socket);
                 return;
             }
 
@@ -1136,8 +1136,9 @@ private:
 };
 
 FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::preprocessFile(
-    const HTTPRequest& request, const RequestDetails& requestDetails,
-    Poco::MemoryInputStream& message, const std::shared_ptr<StreamSocket>& socket)
+    const HTTPRequest& request, http::Response& /*httpResponse*/,
+    const RequestDetails& requestDetails, Poco::MemoryInputStream& message,
+    const std::shared_ptr<StreamSocket>& socket)
 {
     const ServerURL cnxDetails(requestDetails);
 
@@ -1511,8 +1512,8 @@ FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::prepro
     return ResourceAccessDetails(wopiSrc, urv[ACCESS_TOKEN], urv[PERMISSION]);
 }
 
-
 void FileServerRequestHandler::preprocessWelcomeFile(const HTTPRequest& request,
+                                                     http::Response& httpResponse,
                                                      const RequestDetails& requestDetails,
                                                      Poco::MemoryInputStream& message,
                                                      const std::shared_ptr<StreamSocket>& socket)
@@ -1525,8 +1526,6 @@ void FileServerRequestHandler::preprocessWelcomeFile(const HTTPRequest& request,
     std::string uiTheme = form.get("ui_theme", "");
     uiTheme = (uiTheme == "dark") ? "dark" : "light";
     Poco::replaceInPlace(templateWelcome, std::string("%UI_THEME%"), uiTheme);
-
-    http::Response httpResponse(http::StatusCode::OK);
 
     // Ask UAs to block if they detect any XSS attempt
     httpResponse.add("X-XSS-Protection", "1; mode=block");
@@ -1541,13 +1540,13 @@ void FileServerRequestHandler::preprocessWelcomeFile(const HTTPRequest& request,
 }
 
 void FileServerRequestHandler::preprocessAdminFile(const HTTPRequest& request,
-                                                   const RequestDetails &requestDetails,
+                                                   http::Response& response,
+                                                   const RequestDetails& requestDetails,
                                                    const std::shared_ptr<StreamSocket>& socket)
 {
     if (!COOLWSD::AdminEnabled)
         throw Poco::FileAccessDeniedException("Admin console disabled");
 
-    http::Response response(http::StatusCode::OK);
     std::string jwtToken;
     if (!isAdminLoggedIn(request, jwtToken))
     {
