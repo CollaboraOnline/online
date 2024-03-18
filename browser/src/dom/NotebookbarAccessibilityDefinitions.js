@@ -36,7 +36,7 @@ var NotebookbarAccessibilityDefinitions = function() {
 					var element = document.getElementById(id + '-button');
 					if (element) {
 						list.push({ id: id + '-button', focusBack: rawList[i].accessibility.focusBack, combination: combination });
-						continue
+						continue;
 					}
 
 					// other
