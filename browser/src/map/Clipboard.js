@@ -75,6 +75,8 @@ L.Clipboard = L.Class.extend({
 	getMetaPath: function(idx) {
 		if (!idx)
 			idx = 0;
+		if (this._accessKey[idx] === '')
+			return '';
 
 		var metaPath = '/cool/clipboard?WOPISrc=' + encodeURIComponent(this._map.options.doc) +
 			'&ServerId=' + app.socket.WSDServer.Id +
@@ -356,7 +358,7 @@ L.Clipboard = L.Class.extend({
 
 		// for the paste, we always prefer the internal LOK's copy/paste
 		if (preferInternal === true &&
-		    (meta.indexOf(id) >= 0 || meta.indexOf(idOld) >= 0))
+			((id !== '' && meta.indexOf(id) >= 0) || (idOld !== '' && meta.indexOf(idOld) >= 0)))
 		{
 			// Home from home: short-circuit internally.
 			window.app.console.log('short-circuit, internal paste');
