@@ -5634,6 +5634,20 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 
 		// Toggle sidebar
+		if (!this._map._docLoadedOnce) {
+			// When first opening the document, initializeSidebar is called
+			// 200ms after setup, which would overwrite our randomization.
+			// So in this case, wait for sidebar initialization and the
+			// response to complete so that we know the current state
+			setTimeout(this._debugRandomizeSidebar.bind(this), 1000);
+		} else {
+			this._debugRandomizeSidebar();
+		}
+
+		this._painter.update();
+	},
+
+	_debugRandomizeSidebar: function() {
 		var sidebars = ['none','.uno:SidebarDeck.PropertyDeck','.uno:Navigator'];
 		if (this.isImpress()) {
 			sidebars = sidebars.concat(['.uno:SlideChangeWindow','.uno:CustomAnimation','.uno:MasterSlidesPanel','.uno:ModifyPage']);
@@ -5641,6 +5655,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		var sidebar = sidebars[Math.floor(Math.random()*sidebars.length)];
 		console.log('Randomize Settings: Target sidebar: ' + sidebar);
 		if (this._map.sidebar && this._map.sidebar.isVisible()) {
+			// There is currently a sidebar
 			var currentSidebar = this._map.sidebar.getTargetDeck();
 			if (sidebar == 'none') {
 				console.log('Randomize Settings: Remove sidebar');
@@ -5652,7 +5667,9 @@ L.CanvasTileLayer = L.Layer.extend({
 				console.log('Randomize Settings: Switch sidebar to ' + sidebar);
 				this._map.sendUnoCommand(sidebar);
 			}
-		} else { // eslint-disable-next-line no-lonely-if
+		} else {
+			// Sidebar currently hidden
+			// eslint-disable-next-line no-lonely-if
 			if (sidebar == 'none') {
 				console.log('Randomize Settings: Leave sidebar off');
 			} else {
@@ -5660,8 +5677,6 @@ L.CanvasTileLayer = L.Layer.extend({
 				this._map.sendUnoCommand(sidebar);
 			}
 		}
-
-		this._painter.update();
 	},
 
 	_debugAutomatedUserTypeCellFormula: function (phase) {

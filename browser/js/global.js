@@ -89,8 +89,8 @@ window.app = {
 		var value = this.p.get(name);
 		return value === null ? '' : value;
 	}.bind(coolParams);
-	coolParams.set = function(name) {
-		this.p.set(name);
+	coolParams.set = function(name, value) {
+		this.p.set(name, value);
 	}.bind(coolParams);
 	global.coolParams = coolParams;
 
