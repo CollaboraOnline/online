@@ -26,13 +26,6 @@ L.Map.Scroll = L.Handler.extend({
 		this._vertical = 1;
 		this.lastY = 0;
 		this.lastX = 0;
-
-		if (!this._map.touchGesture) {
-			L.DomEvent.on(this._map._container, {
-				touchstart: this._onTouchScrollStart,
-				touchmove: this._onTouchScroll,
-			}, this);
-		}
 	},
 
 	removeHooks: function () {
@@ -40,41 +33,7 @@ L.Map.Scroll = L.Handler.extend({
 			mousewheel: this._onWheelScroll,
 			MozMousePixelScroll: this._mouseOnlyPreventDefault
 		}, this);
-		if (!this._map.touchGesture) {
-			L.DomEvent.off(this._map._container, {
-				touchstart: this._onTouchScrollStart,
-				touchmove: this._onTouchScroll,
-			}, this);
-		}
 	},
-
-	_onTouchScrollStart: window.touch.mouseOnly(function (e) {
-		this.lastX = e.touches[0].clientX;
-		this.lastY = e.touches[0].clientY;
-	}),
-
-	_onTouchScroll: window.touch.mouseOnly(function (e) {
-		var top = e.touches[0].clientY;
-		var start = e.touches[0].clientX;
-		var deltaX = (start - this.lastX);
-		var deltaY = (top - this.lastY);
-		var debounce = this._map.options.wheelDebounceTime;
-		if (!this._startTime) {
-			this._startTime = +new Date();
-		}
-		var left = Math.max(debounce - (+new Date() - this._startTime), 0);
-		clearTimeout(this._timer);
-
-		this.lastY = top;
-		if (Math.abs(deltaX) > Math.abs(deltaY)) {
-			this._vertical = 0;
-			this._delta += deltaX / 120;
-		} else {
-			this._delta += deltaY / 120;
-			this._vertical = 1;
-		}
-		this._timer = setTimeout(L.bind(this._performScroll, this), left);
-	}),
 
 	_onWheelScroll: window.touch.mouseOnly(function (e) {
 		var delta =  -1 * e.deltaY; // L.DomEvent.getWheelDelta(e);
@@ -118,18 +77,6 @@ L.Map.Scroll = L.Handler.extend({
 
 		L.DomEvent.stop(e);
 	}),
-
-	_performScroll: function () {
-		var map = this._map,
-		    delta = -this._delta,
-		    scrollAmount = Math.round(map.getSize().y / 20);
-
-		this._delta = 0;
-		this._startTime = null;
-
-		if (!delta) { return; }
-		map.fire('scrollby', {x: (1 - this._vertical) * delta * scrollAmount, y: this._vertical * delta * scrollAmount});
-	},
 
 	_performZoom: function () {
 		var lastScrollTime = this._zoomScrollTime;
