@@ -3674,6 +3674,13 @@ bool DocumentBroker::forwardToChild(const std::shared_ptr<ClientSession>& sessio
         return true;
     }
 
+    // Ignore textinput, mouse and key message when document is unloading
+    if (isUnloading() && (message.starts_with("textinput ") || message.starts_with("mouse ") ||
+                          message.starts_with("key ")))
+    {
+        return true;
+    }
+
     const std::string viewId = session->getId();
 
     LOG_TRC("Forwarding payload to child [" << viewId << "]: " << getAbbreviatedMessage(message));
@@ -3799,7 +3806,6 @@ void DocumentBroker::terminateChild(const std::string& closeReason)
 
         _childProcess->close();
     }
-
     stop(closeReason);
 }
 

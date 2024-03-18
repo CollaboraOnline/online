@@ -791,6 +791,8 @@ app.definitions.Socket = L.Class.extend({
 			else if (textMsg === 'shuttingdown') {
 				msg = _('Server is shutting down for maintenance (auto-saving)');
 				postMsgData['Reason'] = 'ShuttingDown';
+				app.idleHandler._active = false;
+				app.idleHandler._serverRecycling = true;
 			}
 			else if (textMsg === 'docdisconnected') {
 				msg = _('Oops, there is a problem connecting the document');
@@ -1219,6 +1221,11 @@ app.definitions.Socket = L.Class.extend({
 			else if (textMsg.startsWith('statusindicatorfinish:')) {
 				this._map.fire('statusindicator', {statusType : 'finish'});
 				this._map._fireInitComplete('statusindicatorfinish');
+				// show shutting down popup after saving is finished
+				// if we show the popup just after the shuttingdown messsage, it will be overwitten by save popup
+				if (app.idleHandler._serverRecycling) {
+					this._map.showBusy(_('Server is shutting down'), false);
+				}
 				return;
 			}
 		}
