@@ -1053,13 +1053,64 @@ L.Map.include({
 		map.fire('postMessage', {msgId: 'UI_SaveAs', args: {format: format}});
 	},
 
+	onFormulaBarFocus: function() {
+		var mobileTopBar = w2ui['actionbar'];
+		var jsdialogFormulabar = this.formulabar;
+		var target = jsdialogFormulabar;
+
+		if (window.mode.isMobile() === true) {
+			mobileTopBar.hide('undo');
+			mobileTopBar.hide('redo');
+			target = mobileTopBar;
+		} else {
+			jsdialogFormulabar.hide('startformula');
+			jsdialogFormulabar.hide('AutoSumMenu');
+		}
+		target.show('cancelformula');
+		target.show('acceptformula');
+	},
+
+	onFormulaBarBlur: function() {
+		// The timeout is needed because we want 'click' event on 'cancel',
+		// 'accept' button to act before we hide these buttons because
+		// once hidden, click event won't be processed.
+		// TODO: Some better way to do it ?
+		var map = this;
+
+		setTimeout(function() {
+			if ($('.leaflet-cursor').is(':visible'))
+				return;
+			var mobileTopBar = w2ui['actionbar'];
+			var jsdialogFormulabar = map.formulabar;
+
+			var target = window.mode.isMobile() ? mobileTopBar : jsdialogFormulabar;
+			target.hide('cancelformula');
+			target.hide('acceptformula');
+
+			mobileTopBar.show('undo');
+			mobileTopBar.show('redo');
+
+			$('#AutoSumMenu-button').css('margin-inline', '0');
+			$('#AutoSumMenu .unoarrow').css('margin', '0');
+
+			jsdialogFormulabar.show('startformula');
+			jsdialogFormulabar.show('AutoSumMenu');
+
+			// clear reference marks
+			map._docLayer._clearReferences();
+		}, 250);
+
+		map.formulabar.blurField();
+		$('#addressInput').blur();
+	},
+
 	formulabarBlur: function() {
 		if (!this.uiManager.isAnyDialogOpen())
 			this.focus();
 	},
 
 	formulabarFocus: function() {
-		this.formulabar.focus();
+		this.formulabar.focusField();
 	},
 
 	formulabarSetDirty: function() {

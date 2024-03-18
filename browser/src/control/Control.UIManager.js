@@ -310,10 +310,7 @@ L.Control.UIManager = L.Control.extend({
 
 		if (docType === 'spreadsheet') {
 			this.map.addControl(L.control.sheetsBar({shownavigation: isDesktop || window.mode.isTablet()}));
-			this.map.addControl(L.control.formulaBar());
-			var formulabar = L.control.formulaBarJSDialog();
-			this.map.formulabar = formulabar;
-			this.map.addControl(formulabar);
+			this.map.formulabar = JSDialog.FormulaBar(this.map);
 			$('#toolbar-wrapper').addClass('spreadsheet');
 
 			// remove unused elements

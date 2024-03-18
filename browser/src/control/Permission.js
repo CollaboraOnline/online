@@ -213,7 +213,7 @@ L.Map.include({
 		}
 
 		if (window.ThisIsTheiOSApp && window.mode.isTablet() && this._docLayer._docType === 'spreadsheet')
-			this.showCalcInputBar(0);
+			this.showCalcInputBar();
 
 		if (window.ThisIsTheAndroidApp)
 			window.postMobileMessage('EDITMODE on');

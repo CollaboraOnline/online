@@ -1356,9 +1356,8 @@ L.Map = L.Evented.extend({
 	},
 
 	showCalcInputBar: function() {
-		var wrapper = document.getElementById('calc-inputbar-wrapper');
-		if (wrapper)
-			wrapper.style.display = 'block';
+		if (this.formulabar)
+			this.formulabar.showFormulabar();
 	},
 
 	// Change the focus to a dialog or editor.

@@ -69,7 +69,7 @@ describe(['tagmobile', 'tagnextcloud'], 'Formula bar tests.', function() {
 
 		calcHelper.typeIntoFormulabar('{end}');
 
-		cy.cGet('#calc-inputbar .lokdialog-cursor')
+		cy.cGet('#formulabar .lokdialog-cursor')
 			.should(function(cursor) {
 				expect(cursor.offset().left).to.be.equal(93);
 			});
@@ -110,7 +110,7 @@ describe(['tagmobile', 'tagnextcloud'], 'Formula bar tests.', function() {
 		calcHelper.clickFormulaBar();
 		helper.assertCursorAndFocus();
 
-		helper.moveCursor('end', undefined, true, '#calc-inputbar .lokdialog-cursor');
+		helper.moveCursor('end', undefined, true, '#formulabar .lokdialog-cursor');
 
 		calcHelper.typeIntoFormulabar('{backspace}{backspace}{backspace}');
 
@@ -151,7 +151,7 @@ describe(['tagmobile', 'tagnextcloud'], 'Formula bar tests.', function() {
 	it.skip('Switch oneline-multiline mode of input bar', function() {
 		// Get the initial height of the input field.
 		var inputOriginalHeight = 0;
-		cy.cGet('#calc-inputbar')
+		cy.cGet('#formulabar')
 			.should(function(inputbar) {
 				inputOriginalHeight = inputbar.height();
 				expect(inputOriginalHeight).to.not.equal(0);
@@ -159,24 +159,24 @@ describe(['tagmobile', 'tagnextcloud'], 'Formula bar tests.', function() {
 
 		// Switch to multiline mode.
 		var arrowPos = [255, 10];
-		cy.cGet('#calc-inputbar')
+		cy.cGet('#formulabar')
 			.click(arrowPos[0], arrowPos[1]);
 
-		cy.cGet('#calc-inputbar')
+		cy.cGet('#formulabar')
 			.should(function(inputbar) {
 				expect(inputbar.height()).to.be.greaterThan(inputOriginalHeight);
 			});
 
-		cy.cGet('#calc-inputbar')
+		cy.cGet('#formulabar')
 			.should(function(inputbar) {
 				expect(inputbar.height()).to.be.equal(111);
 			});
 
 		// Switch back to one-line mode.
-		cy.cGet('#calc-inputbar')
+		cy.cGet('#formulabar')
 			.click(arrowPos[0], arrowPos[1]);
 
-		cy.cGet('#calc-inputbar')
+		cy.cGet('#formulabar')
 			.should(function(inputbar) {
 				expect(inputbar.height()).to.be.equal(inputOriginalHeight);
 			});
@@ -212,11 +212,11 @@ describe(['tagmobile', 'tagnextcloud'], 'Formula bar tests.', function() {
 			.click();
 
 		cy.cGet('#mobile-wizard-content').should('not.be.visible');
-		cy.cGet('#calc-inputbar .lokdialog-cursor').should('be.visible');
+		cy.cGet('#formulabar .lokdialog-cursor').should('be.visible');
 
 		// Add a range
 		calcHelper.typeIntoFormulabar('B2:B4');
-		cy.cGet('#tb_actionbar_item_acceptformula').click();
+		cy.cGet('#acceptformula').click();
 
 		// Close mobile wizard with formulas.
 		cy.waitUntil(function() {

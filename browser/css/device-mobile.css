@@ -182,17 +182,6 @@ div#w2ui-overlay-actionbar.w2ui-overlay{
 #document-name-input {
 	display: none;
 }
-/* Related to selectionMarkers.css */
-.inputbar_multiline #tb_formulabar_item_formula > div,
-.inputbar_multiline #tb_formulabar_item_address > div {
-	margin-top: 0px;
-}
-.inputbar_multiline #tb_formulabar_item_address{
-	border-right: solid 1px #0000004d !important;
-}
-.inputbar_multiline #addressInput{
-	border: none;
-}
 
 .spreadsheet-tab-selected{
 	color: #0b87e7 !important;
@@ -287,15 +276,16 @@ nav:not(.spreadsheet-color-indicator) ~ #toolbar-wrapper #toolbar-up.w2ui-toolba
 	margin: 0 !important;
 }
 #expand.formulabar {
-	margin-inline-start: -8px !important
+	margin-inline-start: -8px !important;
+	height: 30px !important;
 }
 .formulabar.toolbox {
 	grid-column-gap: 8px;
 	/* fx = inputfield expander */
-	grid-template-columns: 24px auto 16px 0;
+	grid-template-columns: 32px auto 16px 0;
 	display: grid;
 	grid-auto-flow: column;
-	align-items: center;
+	align-items: start;
 }
 .expanded .formulabar.toolbox {
 	align-items: flex-start;
@@ -303,6 +293,9 @@ nav:not(.spreadsheet-color-indicator) ~ #toolbar-wrapper #toolbar-up.w2ui-toolba
 #formulabar {
 	padding: 0px !important;
 	border-top: 1px solid #bbbbbb !important;
+}
+#formulabar > div > div {
+	grid-template-columns: 70px auto;
 }
 #toolbar-search {
 	height: 39px !important;
@@ -339,24 +332,10 @@ nav:not(.spreadsheet-color-indicator) ~ #toolbar-wrapper #toolbar-up.w2ui-toolba
 #addressInput{
 	margin-inline-start: 8px;
 	width: 50px;
-	height: 23px;
-	text-align: center;
-	border-color: 1px solid #808080 !important;
+	height: 26px;
+	align-self: start;
 }
 .w2ui-icon.equal, .w2ui-icon.autosum{width: 38px !important;}
-
-#calc-inputbar-wrapper {
-	display: block;
-	border: none;
-}
-
-#calc-inputbar {
-	display: block;
-	width: 100%;
-	position: relative;
-	padding: 0px;
-	margin: 0px;
-}
 
 #toolbar-wrapper.mobile td[id^='tb_actionbar_item'] .w2ui-tb-image {
 	width: 36px !important;

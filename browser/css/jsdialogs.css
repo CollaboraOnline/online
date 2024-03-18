@@ -1805,7 +1805,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 }
 
 #expand.formulabar {
-	height: 28px !important;
+	height: 30px !important;
 	margin: 0 !important;
 	border-radius: 0 var(--border-radius) var(--border-radius) 0 !important;
 	border-inline-start: none !important;
