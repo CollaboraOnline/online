@@ -115,19 +115,23 @@ function _menubuttonControl (parentContainer, data, builder) {
 			}
 		};
 
+		var isSplitButton = data.applyCallback;
+
 		// make it possible to setup separate callbacks for split button
-		if (data.applyCallback) {
-			control.button.addEventListener('click', data.applyCallback);
+		if (isSplitButton) {
+			JSDialog.AddOnClick(control.button, data.applyCallback);
 			if (control.label)
-				control.label.addEventListener('click', data.applyCallback);
+				JSDialog.AddOnClick(control.label, data.applyCallback);
+			if (control.arrow)
+				control.arrow.tabIndex = 0;
 		} else {
-			control.button.addEventListener('click', clickFunction);
+			JSDialog.AddOnClick(control.button, clickFunction);
 			if (control.label)
-				control.label.addEventListener('click', clickFunction);
+				JSDialog.AddOnClick(control.label, clickFunction);
 		}
 
 		if (control.arrow)
-			control.arrow.addEventListener('click', clickFunction);
+			JSDialog.AddOnClick(control.arrow, clickFunction);
 
 		builder._preventDocumentLosingFocusOnClick(control.container);
 
