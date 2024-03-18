@@ -6320,6 +6320,8 @@ int COOLWSD::innerMain()
     // atexit handlers tend to free Admin before Documents
     LOG_INF("Exiting. Cleaning up lingering documents.");
 #if !MOBILEAPP
+    COOLWSD::alertAllUsersInternal("close: shuttingdown");
+
     if (!SigUtil::getShutdownRequestFlag())
     {
         // This shouldn't happen, but it's fail safe to always cleanup properly.
