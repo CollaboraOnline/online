@@ -24,13 +24,23 @@ var NotebookbarAccessibilityDefinitions = function() {
 				if (rawList[i].accessibility) {
 					var combination = language && rawList[i].accessibility[language] ? rawList[i].accessibility[language]: rawList[i].accessibility.combination;
 					var id = this.cleanMenuName(rawList[i].id);
+
+					// menu button
+					var arrow = document.querySelector('#' + id + ' .arrowbackground');
+					if (arrow) {
+						list.push({ id: id, focusBack: rawList[i].accessibility.focusBack, combination: combination });
+						continue;
+					}
+
+					// regular uno button
 					var element = document.getElementById(id + '-button');
 					if (element) {
 						list.push({ id: id + '-button', focusBack: rawList[i].accessibility.focusBack, combination: combination });
+						continue
 					}
-					else {
-						list.push({ id: id, focusBack: rawList[i].accessibility.focusBack, combination: combination });
-					}
+
+					// other
+					list.push({ id: id, focusBack: rawList[i].accessibility.focusBack, combination: combination });
 				}
 				else if (rawList[i].children && Array.isArray(rawList[i].children) && rawList[i].children.length > 0) {
 					this.getContentListRecursive(rawList[i].children, list, language);
