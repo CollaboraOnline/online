@@ -169,26 +169,6 @@ w2ui-toolbar {
 	border-top: 1px solid var(--color-border);
 }
 
-#formulabar {
-	background-color: var(--color-main-background);
-	border-top: 1px solid var(--color-border);
-	height: 30px;
-	padding: 0 4px;
-}
-
-#formulabar.expanded {
-	padding-block: 5px;
-}
-
-#tb_formulabar_item_address {
-	padding-inline-end: 5px;
-	vertical-align: top;
-}
-
-#formulabar.expanded #tb_formulabar_item_address * {
-	vertical-align: top;
-}
-
 #presentation-toolbar {
 	bottom: 0;
 	background-color: var(--color-main-background);
@@ -243,23 +223,6 @@ w2ui-toolbar {
 /* center the toolbar */
 #tb_presentation-toolbar_item_left {
 	width: 50%;
-}
-
-#addressInput {
-	height: 28px;
-	width: 100px;
-	color: var(--color-main-text);
-	background-color: var(--color-background-lighter);
-	border: 1px solid var(--color-border);
-	border-radius: var(--border-radius);
-}
-
-#tb_formulabar_item_formula {
-	width: 100%;
-}
-
-#tb_formulabar_item_formula div table {
-	width: 100%;
 }
 
 @keyframes textPulse {

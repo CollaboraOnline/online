@@ -245,7 +245,7 @@ function assertDataClipboardTable(expectedData) {
 function selectCellsInRange(range) {
 	cy.log('>> selectCellsInRange - start');
 
-	cy.cGet('#tb_formulabar_item_address #addressInput')
+	cy.cGet('#formulabar #addressInput')
 		.clear()
 		.type(range + '{enter}');
 
