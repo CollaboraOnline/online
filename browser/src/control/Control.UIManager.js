@@ -1028,6 +1028,12 @@ L.Control.UIManager = L.Control.extend({
 
 	// Document area tooltip
 
+	_setTooltipText: function(element, text) {
+		var dummyNode = L.DomUtil.create('div');
+		dummyNode.innerText = text;
+		element.tooltip('option', 'content', dummyNode.innerHTML);
+	},
+
 	/// Shows general tooltips in the document area
 	/// tooltipInfo contains rectangle (position in twips) and text properties
 	showDocumentTooltip: function(tooltipInfo) {
@@ -1038,7 +1044,7 @@ L.Control.UIManager = L.Control.extend({
 
 		elem.tooltip();
 		elem.tooltip('enable');
-		elem.tooltip('option', 'content', tooltipInfo.text);
+		this._setTooltipText(elem, tooltipInfo.text);
 		elem.tooltip('option', 'items', elem[0]);
 		elem.tooltip('option', 'position', { my: 'left bottom',  at: 'left+' + pt.x + ' top+' + pt.y, collision: 'fit fit' });
 		elem.tooltip('open');
@@ -1059,7 +1065,7 @@ L.Control.UIManager = L.Control.extend({
 		pt.y -=35; //Show tooltip above the cursor.
 
 		if ($('.ui-tooltip').length > 0) {
-			elem.tooltip('option', 'content', tooltipInfo);
+			this._setTooltipText(elem, tooltipInfo);
 		}
 		else {
 			elem.tooltip({
