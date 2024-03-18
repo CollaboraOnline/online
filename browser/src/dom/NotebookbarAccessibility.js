@@ -178,6 +178,12 @@ var NotebookbarAccessibility = function() {
 		if (this.filteredItem !== null) {
 			var element = document.getElementById(this.filteredItem.id);
 			if (element) {
+				// menu button - prioritize dropdown arrow
+				var dropdownArrow = element.querySelector('.arrowbackground');
+				if (dropdownArrow) {
+					element = dropdownArrow;
+				}
+
 				if (this.state === 0) {
 					this.removeFocusFromTab();
 					element.click();
