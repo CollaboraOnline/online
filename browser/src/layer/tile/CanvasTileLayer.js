@@ -1018,7 +1018,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._painter._addTilesSection();
 		this._painter._sectionContainer.getSectionWithName('tiles').onResize();
 		this._painter._addOverlaySection();
-		this._painter._sectionContainer.addSection(L.getNewScrollSection());
+		this._painter._sectionContainer.addSection(L.getNewScrollSection(() => this._map._docLayer.isCalcRTL()));
 
 		// For mobile/tablet the hammerjs swipe handler already uses a requestAnimationFrame to fire move/drag events
 		// Using L.TileSectionManager's own requestAnimationFrame loop to do the updates in that case does not perform well.
