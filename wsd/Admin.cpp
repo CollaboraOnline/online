@@ -494,7 +494,7 @@ bool AdminSocketHandler::handleInitialRequest(
     http::Response response(http::StatusCode::BadRequest);
     response.setContentLength(0);
     LOG_INF_S("Admin::handleInitialRequest bad request");
-    socket->sendWithDateAndAgent(response);
+    socket->send(response);
 
     return false;
 }

@@ -809,15 +809,6 @@ void StreamSocket::dumpState(std::ostream& os)
     _outBuffer.dumpHex(os, "\t\toutBuffer:\n", "\t\t");
 }
 
-void StreamSocket::sendWithDateAndAgent(http::Response& response)
-{
-    assert(response.get("Server") == http::getServerString() &&
-           "Server Agent is always set in http::Response ctor");
-    assert(!response.get("Date").empty() && "Date is always set in http::Response ctor");
-
-    send(response);
-}
-
 bool StreamSocket::send(const http::Response& response)
 {
     if (response.writeData(_outBuffer))

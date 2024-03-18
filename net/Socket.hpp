@@ -1034,10 +1034,6 @@ public:
         send(str.data(), str.size(), doFlush);
     }
 
-    /// Sends HTTP response.
-    /// Adds Date and User-Agent.
-    void sendWithDateAndAgent(http::Response& response);
-
     /// Send an http::Request and flush.
     /// Does not add any fields to the header.
     /// Will shutdown the socket upon error and return false.

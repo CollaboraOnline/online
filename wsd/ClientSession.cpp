@@ -1710,7 +1710,7 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
                     {
                         http::Response response(http::StatusCode::Unauthorized);
                         response.set("X-ERROR-KIND", errorKind);
-                        _saveAsSocket->sendWithDateAndAgent(response);
+                        _saveAsSocket->send(response);
 
                         // Conversion failed, cleanup fake session.
                         LOG_TRC("Removing save-as ClientSession after conversion error.");
