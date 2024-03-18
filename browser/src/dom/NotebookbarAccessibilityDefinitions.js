@@ -7,18 +7,29 @@
 
 /* eslint-disable-next-line */
 var NotebookbarAccessibilityDefinitions = function() {
+	this.cleanMenuName = function(id) {
+		if (!id) {
+			console.debug('No id found for Notebookbar Accesibility item');
+			return id;
+		}
+		var separatorPos = id.indexOf(':');
+		if (separatorPos === -1)
+			return id;
+		return id.substr(0, separatorPos);
+	};
 
 	this.getContentListRecursive = function(rawList, list, language) {
 		if (Array.isArray(rawList)) {
 			for (var i = 0; i < rawList.length; i++) {
 				if (rawList[i].accessibility) {
 					var combination = language && rawList[i].accessibility[language] ? rawList[i].accessibility[language]: rawList[i].accessibility.combination;
-					var element = document.getElementById(rawList[i].id + '-button');
+					var id = this.cleanMenuName(rawList[i].id);
+					var element = document.getElementById(id + '-button');
 					if (element) {
-						list.push({ id: rawList[i].id + '-button', focusBack: rawList[i].accessibility.focusBack, combination: combination });
+						list.push({ id: id + '-button', focusBack: rawList[i].accessibility.focusBack, combination: combination });
 					}
 					else {
-						list.push({ id: rawList[i].id, focusBack: rawList[i].accessibility.focusBack, combination: combination });
+						list.push({ id: id, focusBack: rawList[i].accessibility.focusBack, combination: combination });
 					}
 				}
 				else if (rawList[i].children && Array.isArray(rawList[i].children) && rawList[i].children.length > 0) {
