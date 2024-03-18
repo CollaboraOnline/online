@@ -1136,9 +1136,8 @@ private:
 };
 
 FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::preprocessFile(
-    const HTTPRequest& request, http::Response& /*httpResponse*/,
-    const RequestDetails& requestDetails, Poco::MemoryInputStream& message,
-    const std::shared_ptr<StreamSocket>& socket)
+    const HTTPRequest& request, http::Response& httpResponse, const RequestDetails& requestDetails,
+    Poco::MemoryInputStream& message, const std::shared_ptr<StreamSocket>& socket)
 {
     const ServerURL cnxDetails(requestDetails);
 
@@ -1404,18 +1403,13 @@ FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::prepro
         LOG_TRC("Denied all frame ancestors");
     }
 
-    std::ostringstream oss;
-    oss << "HTTP/1.1 200 OK\r\n"
-        "Date: " << Util::getHttpTimeNow() << "\r\n"
-        "Last-Modified: " << Util::getHttpTimeNow() << "\r\n"
-        "User-Agent: " << http::getAgentString() << "\r\n"
-        "Cache-Control:max-age=11059200\r\n"
-        "ETag: \"" COOLWSD_VERSION_HASH "\"\r\n"
-        "Content-Length: " << preprocess.size() << "\r\n"
-        "Content-Type: " << mimeType << "\r\n"
-        "X-Content-Type-Options: nosniff\r\n"
-        "X-XSS-Protection: 1; mode=block\r\n"
-        "Referrer-Policy: no-referrer\r\n";
+    httpResponse.set("Last-Modified", Util::getHttpTimeNow());
+    httpResponse.set("Cache-Control", "max-age=11059200");
+    httpResponse.set("ETag", COOLWSD_VERSION_HASH);
+
+    httpResponse.add("X-Content-Type-Options", "nosniff");
+    httpResponse.add("X-XSS-Protection", "1; mode=block");
+    httpResponse.add("Referrer-Policy", "no-referrer");
 
 #if !MOBILEAPP
     // if we have richdocuments with:
@@ -1428,9 +1422,9 @@ FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::prepro
     // capabilities shows hasWASMSupport
     if (COOLWSD::WASMState != COOLWSD::WASMActivationState::Disabled)
     {
-        oss << "Cross-Origin-Opener-Policy: same-origin\r\n";
-        oss << "Cross-Origin-Embedder-Policy: require-corp\r\n";
-        oss << "Cross-Origin-Resource-Policy: cross-origin\r\n";
+        httpResponse.add("Cross-Origin-Opener-Policy", "same-origin");
+        httpResponse.add("Cross-Origin-Embedder-Policy", "require-corp");
+        httpResponse.add("Cross-Origin-Resource-Policy", "cross-origin");
     }
 
     const bool wasm = (relPath.find("wasm") != std::string::npos);
@@ -1444,7 +1438,7 @@ FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::prepro
     csp.merge(config.getString("net.content_security_policy", ""));
 
     // Append CSP to response headers too
-    oss << "Content-Security-Policy: " << csp.generate() << "\r\n";
+    httpResponse.add("Content-Security-Policy", csp.generate());
 
     // Setup HTTP Public key pinning
     if ((COOLWSD::isSSLEnabled() || COOLWSD::isSSLTermination()) && config.getBool("ssl.hpkp[@enable]", false))
@@ -1494,19 +1488,18 @@ FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::prepro
             {
                 // Only send validation failure reports to reportUri while still allowing UAs to
                 // connect to the server
-                oss << "Public-Key-Pins-Report-Only: " << hpkpOss.str() << "\r\n";
+                httpResponse.add("Public-Key-Pins-Report-Only", hpkpOss.str());
             }
             else
             {
-                oss << "Public-Key-Pins: " << hpkpOss.str() << "\r\n";
+                httpResponse.add("Public-Key-Pins", hpkpOss.str());
             }
         }
     }
 
-    oss << "\r\n"
-        << preprocess;
+    httpResponse.setBody(preprocess, mimeType);
 
-    socket->send(oss.str());
+    socket->send(httpResponse);
     LOG_TRC("Sent file: " << relPath << ": " << preprocess);
 
     return ResourceAccessDetails(wopiSrc, urv[ACCESS_TOKEN], urv[PERMISSION]);
