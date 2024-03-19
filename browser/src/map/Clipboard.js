@@ -492,7 +492,7 @@ L.Clipboard = L.Class.extend({
 				text = this._getStubHtml();
 				this._onDownloadOnLargeCopyPaste();
 				this._downloadProgress.setURI( // richer, bigger HTML ...
-					this.getMetaURL() + '&MimeType=text/html');
+					this.getMetaURL() + '&MimeType=text/html,text/plain;charset=utf-8');
 			}
 		} else if (this._selectionType === null) {
 			window.app.console.log('Copy/Cut with no selection!');

@@ -282,6 +282,10 @@ void ClientSession::handleClipboardRequest(DocumentBroker::ClipboardRequest     
     std::string specific;
     if (type == DocumentBroker::CLIP_REQUEST_GET_RICH_HTML_ONLY)
         specific = " text/html";
+    else if (type == DocumentBroker::CLIP_REQUEST_GET_HTML_PLAIN_ONLY)
+    {
+        specific = " text/html,text/plain;charset=utf-8";
+    }
 
     if (type != DocumentBroker::CLIP_REQUEST_SET)
     {
@@ -1605,6 +1609,10 @@ void ClientSession::postProcessCopyPayload(const std::shared_ptr<Message>& paylo
     // Insert our meta origin if we can
     payload->rewriteDataBody([this](std::vector<char>& data) {
             bool json = Util::findInVector(data, "textselectioncontent:\n{") == 0;
+            if (!json)
+            {
+                json = Util::findInVector(data, "clipboardcontent: content\n{") == 0;
+            }
             std::size_t pos = Util::findInVector(data, "<body");
             if (pos != std::string::npos)
             {

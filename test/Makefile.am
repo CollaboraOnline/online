@@ -43,6 +43,7 @@ all_la_unit_tests = \
 	unit-quarantine.la \
 	unit-load-torture.la \
 	unit-copy-paste.la \
+	unit-copy-paste-writer.la \
 	unit-crash.la \
 	unit-wopi-fileurl.la \
 	unit-wopi-save-on-exit.la \
@@ -204,6 +205,8 @@ unit_typing_la_SOURCES = UnitTyping.cpp
 unit_typing_la_LIBADD = $(CPPUNIT_LIBS)
 unit_copy_paste_la_SOURCES = UnitCopyPaste.cpp
 unit_copy_paste_la_LIBADD = $(CPPUNIT_LIBS)
+unit_copy_paste_writer_la_SOURCES = UnitCopyPasteWriter.cpp
+unit_copy_paste_writer_la_LIBADD = $(CPPUNIT_LIBS)
 unit_convert_la_SOURCES = UnitConvert.cpp
 unit_timeout_la_SOURCES = UnitTimeout.cpp
 unit_timeout_la_LIBADD = $(CPPUNIT_LIBS)
