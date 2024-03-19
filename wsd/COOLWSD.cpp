@@ -246,35 +246,6 @@ static std::size_t SimulatedLatencyMs = 0;
 
 #endif
 
-namespace
-{
-
-#if ENABLE_SUPPORT_KEY
-inline void shutdownLimitReached(const std::shared_ptr<ProtocolHandlerInterface>& proto)
-{
-    if (!proto)
-        return;
-
-    const std::string error = Poco::format(PAYLOAD_UNAVAILABLE_LIMIT_REACHED, COOLWSD::MaxDocuments, COOLWSD::MaxConnections);
-    LOG_INF("Sending client 'hardlimitreached' message: " << error);
-
-    try
-    {
-        // Let the client know we are shutting down.
-        proto->sendTextMessage(error.data(), error.size());
-
-        // Shutdown.
-        proto->shutdown(true, error);
-    }
-    catch (const std::exception& ex)
-    {
-        LOG_ERR("Error while shutting down socket on reaching limit: " << ex.what());
-    }
-}
-#endif
-
-} // end anonymous namespace
-
 void COOLWSD::appendAllowedHostsFrom(LayeredConfiguration& conf, const std::string& root, std::vector<std::string>& allowed)
 {
     for (size_t i = 0; ; ++i)
