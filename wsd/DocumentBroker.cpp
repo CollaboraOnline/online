@@ -619,8 +619,7 @@ void DocumentBroker::pollThread()
     // Flush socket data first, if any.
     if (_poll->getSocketCount())
     {
-        constexpr auto flushTimeoutMicroS =
-            std::chrono::microseconds(POLL_TIMEOUT_MICRO_S * 2); // ~2000ms
+        constexpr std::chrono::microseconds flushTimeoutMicroS(std::chrono::seconds(2));
         LOG_INF("Flushing " << _poll->getSocketCount() << " sockets for doc [" << _docKey
                             << "] for " << flushTimeoutMicroS);
 
@@ -634,8 +633,7 @@ void DocumentBroker::pollThread()
                 break;
 
             const std::chrono::microseconds timeoutMicroS =
-                std::min(flushTimeoutMicroS - elapsedMicroS,
-                         std::chrono::microseconds(POLL_TIMEOUT_MICRO_S / 5));
+                std::min(flushTimeoutMicroS - elapsedMicroS, flushTimeoutMicroS/10);
             if (_poll->poll(timeoutMicroS) == 0 && UnitWSD::isUnitTesting())
             {
                 // Polling timed out, no more data to flush.

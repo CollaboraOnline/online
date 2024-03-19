@@ -602,7 +602,7 @@ public:
     static void shutdownWatchdog();
 
     /// Default poll time - useful to increase for debugging.
-    static constexpr std::chrono::microseconds DefaultPollTimeoutMicroS = std::chrono::seconds(5);
+    static constexpr std::chrono::microseconds DefaultPollTimeoutMicroS = std::chrono::seconds(64);
     static std::atomic<bool> InhibitThreadChecks;
 
     /// Stop the polling thread.
