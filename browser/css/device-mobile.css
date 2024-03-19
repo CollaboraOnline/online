@@ -188,10 +188,6 @@ div#w2ui-overlay-actionbar.w2ui-overlay{
 	border-color: #0b87e7;
 }
 
-#tb_spreadsheet-toolbar_item_insertsheet {
-	padding: 0 7px 0 12px;
-}
-
 .spreadsheet-tab-scroll {
 	overflow-x: scroll;
 	scrollbar-width: none; /*css draft (firefox only)*/
@@ -206,23 +202,9 @@ div#w2ui-overlay-actionbar.w2ui-overlay{
 #spreadsheet-toolbar{
 	background-color: var(--color-main-background);
 	border-top: 1px solid var(--color-border);
+	grid-template-columns: 40px auto;
 	height: 40px;
 	padding: 0;
-}
-#spreadsheet-toolbar .w2ui-tb-image{
-	padding-top: 0px !important;
-	margin-top: 0px !important;
-	margin-bottom: 0px !important;
-}
-#toolbar-down table.w2ui-button.over {
-	border: 1px solid transparent;
-	background-color: var(--color-background-darker);
-	border-radius: 0;
-}
-#toolbar-down table.w2ui-button.checked {
-	border: 1px solid transparent;
-	background-color: var(--color-background-dark);
-	border-radius: 0;
 }
 
 #mobile-wizard .cool-annotation-content {
@@ -390,22 +372,6 @@ nav:not(.spreadsheet-color-indicator) ~ #toolbar-wrapper #toolbar-up.w2ui-toolba
 }
 #setgamma input.spinfield, #linewidth input.spinfield, #nolines input.spinfield{
 	width: 140px !important;
-}
-td[id^='tb_spreadsheet-toolbar_item'] table.w2ui-button.over {
-	background: none;
-	border-color: #fff;
-}
-td[id^='tb_spreadsheet-toolbar_item'] table.w2ui-button{
-	border: none !important;
-}
-td[id^='tb_spreadsheet-toolbar_item']:focus table.w2ui-button, td[id^='tb_spreadsheet-toolbar_item']:active table.w2ui-button{
-	background-color: #eaf5ff;
-	outline: none;
-	border: none;
-}
-td[id^='tb_spreadsheet-toolbar_item']:focus table.w2ui-button div.w2ui-icon, td[id^='tb_spreadsheet-toolbar_item']:active table.w2ui-button div.w2ui-icon{
-	-webkit-filter: grayscale(100%) brightness(80%) sepia(100%) hue-rotate(-190deg) saturate(900%) contrast(0.8);
-	filter: grayscale(100%) brightness(80%) sepia(100%) hue-rotate(-190deg) saturate(900%) contrast(0.8);
 }
 #toolbar-down table.w2ui-button:not(.checked) td.w2ui-tb-down > div {
 	border-top: none !important;

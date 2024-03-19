@@ -1657,7 +1657,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 .jsdialog .ui-content.unobutton {
 	width: var(--btn-size);
 	height: var(--btn-size);
-	margin-inline-end: 5px;
+	padding: 0px;
 	vertical-align: middle;
 	background-color: transparent;
 	border: none;

@@ -59,26 +59,6 @@
 	color: var(--color-text-darker) !important;
 }
 
-.tab-drop-area {
-	height: 32px;
-	width: 4px;
-	opacity: 0;
-	margin-top: 4px;
-	padding-top: 8px;
-	vertical-align: bottom;
-	display: inline-block;
-	background-color: var(--color-main-background);
-	padding-bottom: 5px;
-}
-
-.tab-drop-area-active {
-	background-color: rgb(109, 109, 211);
-}
-
-.tab-drop-area.tab-drop-area-active {
-	opacity: 100% !important;
-}
-
 #drop-zone-end-container {
 	height: 32px;
 	width: 128px;
@@ -251,9 +231,14 @@
 	align-self: start;
 }
 
-#formulabar-toolbox > div,
+#formulabar-toolbox > div {
+	align-items: start;
+}
+
 #formulabar-buttons-toolbox > div {
 	align-items: start;
+	margin-left: auto;
+	text-align: center;
 }
 
 #formulabar {
@@ -269,4 +254,47 @@
 #formulabar > div > div {
 	display: grid;
 	grid-template-columns: 110px 120px auto;
+}
+
+/* sheet tabs */
+
+.empty-deltas {
+	pointer-events: none; /* fix cypress, it covers some buttons*/
+}
+
+#spreadsheet-toolbar {
+	width: 100%;
+	z-index: 1000;
+	display: grid;
+	grid-template-columns: 170px auto;
+	text-align: center;
+	vertical-align: middle;
+	padding: 0;
+	background-color: var(--color-main-background);
+	border-top: 1px solid var(--color-border);
+}
+
+#sheets-buttons-toolbox > div.toolbox {
+	display: grid;
+	grid-auto-flow: column;
+	align-content: center;
+	height: 39px;
+}
+
+.tab-drop-area {
+	height: 32px;
+	width: 4px;
+	opacity: 0;
+	vertical-align: bottom;
+	display: inline-block;
+	background-color: var(--color-main-background);
+	padding-bottom: 5px;
+}
+
+.tab-drop-area-active {
+	background-color: rgb(109, 109, 211);
+}
+
+.tab-drop-area.tab-drop-area-active {
+	opacity: 100% !important;
 }

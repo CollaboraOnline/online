@@ -39,7 +39,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Sheet Operation', function 
 	it('Insert sheet', function () {
 		assertNumberofSheets(1);
 
-		cy.cGet('#tb_spreadsheet-toolbar_item_insertsheet').click();
+		cy.cGet('#insertsheet').click();
 
 		assertNumberofSheets(2);
 	});
@@ -75,7 +75,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Sheet Operation', function 
 	it('Delete sheet', function () {
 		assertNumberofSheets(1);
 
-		cy.cGet('#tb_spreadsheet-toolbar_item_insertsheet').click();
+		cy.cGet('#insertsheet').click();
 
 		assertNumberofSheets(2);
 
@@ -102,7 +102,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Sheet Operation', function 
 	it('Hide/Show sheet', function () {
 		assertNumberofSheets(1);
 
-		cy.cGet('#tb_spreadsheet-toolbar_item_insertsheet').click();
+		cy.cGet('#insertsheet').click();
 
 		assertNumberofSheets(2);
 
@@ -124,7 +124,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Sheet Operation', function 
 	it('Move sheet left/right', function () {
 		assertNumberofSheets(1);
 
-		cy.cGet('#tb_spreadsheet-toolbar_item_insertsheet').click();
+		cy.cGet('#insertsheet').click();
 
 		assertNumberofSheets(2);
 

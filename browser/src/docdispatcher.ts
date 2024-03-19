@@ -214,6 +214,32 @@ class Dispatcher {
 		this.actionsMap['focusonaddressinput'] = function () {
 			document.getElementById('addressInput').focus();
 		};
+
+		// sheets toolbar
+		this.actionsMap['insertsheet'] = function () {
+			var nPos = $('#spreadsheet-tab-scroll')[0].childElementCount;
+			app.map.insertPage(nPos);
+			app.map.insertPage.scrollToEnd = true;
+		};
+		this.actionsMap['firstrecord'] = function () {
+			$('#spreadsheet-tab-scroll').scrollLeft(0);
+		};
+		this.actionsMap['nextrecord'] = function () {
+			// TODO: We should get visible tab's width instead of 60px
+			$('#spreadsheet-tab-scroll').scrollLeft(
+				$('#spreadsheet-tab-scroll').scrollLeft() + 60,
+			);
+		};
+		this.actionsMap['prevrecord'] = function () {
+			$('#spreadsheet-tab-scroll').scrollLeft(
+				$('#spreadsheet-tab-scroll').scrollLeft() - 30,
+			);
+		};
+		this.actionsMap['lastrecord'] = function () {
+			// Set a very high value, so that scroll is set to the maximum possible value internally.
+			// https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollLeft
+			L.DomUtil.get('spreadsheet-tab-scroll').scrollLeft = 100000;
+		};
 	}
 
 	private addImpressAndDrawCommands() {

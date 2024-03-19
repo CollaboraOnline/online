@@ -1635,15 +1635,15 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (data.enabled === 'false' || data.enabled === false)
 			$(edit).prop('disabled', true);
 
-		edit.addEventListener('keyup', function() {
+		edit.addEventListener('keyup', function(e) {
+			var callbackToUse =
+				(e.key === 'Enter' && data.changedCallback) ? data.changedCallback : null;
 			if (callback)
-				callback(this.value);
+				callbackToUse = callback;
+			if (typeof callbackToUse === 'function')
+				callbackToUse(this.value);
 			else
 				builder.callback('edit', 'change', edit, this.value, builder);
-		});
-
-		edit.addEventListener('change', function() {
-			builder.callback('edit', 'changed', edit, this.value, builder);
 		});
 
 		edit.addEventListener('click', function(e) {
@@ -2549,7 +2549,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		if (!builder.map.isLockedItem(data)) {
 			$(control.container).click(function () {
-				app.dispatcher.dispatch(data.command);
+				if (control.container.getAttribute('disabled') === null)
+					app.dispatcher.dispatch(data.command);
 			});
 		}
 

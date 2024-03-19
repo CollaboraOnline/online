@@ -309,7 +309,7 @@ L.Control.UIManager = L.Control.extend({
 		this.initDarkModeFromSettings();
 
 		if (docType === 'spreadsheet') {
-			this.map.addControl(L.control.sheetsBar({shownavigation: isDesktop || window.mode.isTablet()}));
+			this.sheetsBar = JSDialog.SheetsBar(this.map, isDesktop || window.mode.isTablet());
 			this.map.formulabar = JSDialog.FormulaBar(this.map);
 			$('#toolbar-wrapper').addClass('spreadsheet');
 
