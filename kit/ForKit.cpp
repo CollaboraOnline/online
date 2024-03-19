@@ -799,7 +799,7 @@ int forkit_main(int argc, char** argv)
     {
         UnitKit::get().invokeForKitTest();
 
-        ForKitPoll->poll(std::chrono::microseconds(POLL_TIMEOUT_MICRO_S));
+        ForKitPoll->poll(std::chrono::seconds(POLL_FORKIT_TIMEOUT_SECS));
 
         SigUtil::checkDumpGlobalState(dump_forkit_state);
 
@@ -813,6 +813,7 @@ int forkit_main(int argc, char** argv)
 #if ENABLE_DEBUG
         if (!SingleKit)
 #endif
+            // new kits are launched primarily after a 'spawn' message
             if (!Util::isKitInProcess() && !SigUtil::getTerminationFlag())
                 forkLibreOfficeKit(childRoot, sysTemplate, loTemplate);
     }
