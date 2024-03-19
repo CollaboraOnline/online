@@ -251,11 +251,13 @@
 	align-self: start;
 }
 
-#formulabar-toolbox > div {
+#formulabar-toolbox > div,
+#formulabar-buttons-toolbox > div {
 	align-items: start;
 }
 
 #formulabar {
+	padding: 4px;
 	background-color: var(--color-main-background);
 	border-top: 1px solid var(--color-border);
 }
@@ -266,5 +268,5 @@
 
 #formulabar > div > div {
 	display: grid;
-	grid-template-columns: 110px auto;
+	grid-template-columns: 110px 120px auto;
 }
