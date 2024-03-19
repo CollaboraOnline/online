@@ -3167,7 +3167,6 @@ void DocumentBroker::handleTileRequest(const StringVector &tokens, bool forceKey
                                        const std::shared_ptr<ClientSession>& session)
 {
     ASSERT_CORRECT_THREAD();
-    std::unique_lock<std::mutex> lock(_mutex);
 
     TileDesc tile = TileDesc::parse(tokens);
     tile.setNormalizedViewId(session->getCanonicalViewId());
@@ -3222,7 +3221,7 @@ void DocumentBroker::sendTileCombine(const TileCombined& newTileCombined)
 void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined, bool forceKeyframe,
                                                const std::shared_ptr<ClientSession>& session)
 {
-    std::unique_lock<std::mutex> lock(_mutex);
+    ASSERT_CORRECT_THREAD();
 
     assert(!tileCombined.hasDuplicates());
 
@@ -3306,8 +3305,6 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined, bool 
         }
     }
 
-    lock.unlock();
-    lock.release();
     sendRequestedTiles(session);
 }
 
@@ -3422,7 +3419,7 @@ void DocumentBroker::handleMediaRequest(std::string range,
 
 void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& session)
 {
-    std::unique_lock<std::mutex> lock(_mutex);
+    ASSERT_CORRECT_THREAD();
 
     size_t tilesOnFlyUpperLimit = session->getTilesOnFlyUpperLimit();
 
@@ -3527,6 +3524,8 @@ void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& se
 
 void DocumentBroker::handleTileResponse(const std::shared_ptr<Message>& message)
 {
+    ASSERT_CORRECT_THREAD();
+
     const std::string firstLine = message->firstLine();
     LOG_DBG("Handling tile: " << firstLine);
 
@@ -3538,8 +3537,6 @@ void DocumentBroker::handleTileResponse(const std::shared_ptr<Message>& message)
             const TileDesc tile = TileDesc::parse(firstLine);
             const char* buffer = message->data().data();
             const std::size_t offset = firstLine.size() + 1;
-
-            std::unique_lock<std::mutex> lock(_mutex);
 
             tileCache().saveTileAndNotify(tile, buffer + offset, length - offset);
         }
@@ -3560,6 +3557,8 @@ void DocumentBroker::handleTileCombinedResponse(const std::shared_ptr<Message>& 
     const std::string firstLine = message->firstLine();
     LOG_DBG("Handling tile combined: " << firstLine);
 
+    ASSERT_CORRECT_THREAD();
+
     try
     {
         const std::size_t length = message->size();
@@ -3568,8 +3567,6 @@ void DocumentBroker::handleTileCombinedResponse(const std::shared_ptr<Message>& 
             const TileCombined tileCombined = TileCombined::parse(firstLine);
             const char* buffer = message->data().data();
             std::size_t offset = firstLine.size() + 1;
-
-            std::unique_lock<std::mutex> lock(_mutex);
 
             for (const auto& tile : tileCombined.getTiles())
             {
@@ -3830,6 +3827,8 @@ void DocumentBroker::closeDocument(const std::string& reason)
 
 void DocumentBroker::disconnectedFromKit(bool unexpected)
 {
+    ASSERT_CORRECT_THREAD();
+
     // Always set the disconnected flag.
     _docState.setDisconnected(unexpected ? DocumentState::Disconnected::Unexpected
                                          : DocumentState::Disconnected::Normal);
@@ -4164,8 +4163,6 @@ std::vector<std::shared_ptr<ClientSession>> DocumentBroker::getSessionsTestOnlyU
 
 void DocumentBroker::dumpState(std::ostream& os)
 {
-    std::unique_lock<std::mutex> lock(_mutex);
-
     uint64_t sent = 0, recv = 0;
     getIOStats(sent, recv);
 

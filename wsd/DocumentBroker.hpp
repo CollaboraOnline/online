@@ -519,8 +519,6 @@ public:
     /// Get the PID of the associated child process
     pid_t getPid() const { return _childProcess ? _childProcess->getPid() : 0; }
 
-    std::unique_lock<std::mutex> getLock() { return std::unique_lock<std::mutex>(_mutex); }
-
     /// Update the last activity time to now.
     /// Best to be inlined as it's called frequently.
     void updateLastActivityTime()
@@ -1567,7 +1565,6 @@ private:
     int _cursorPosY;
     int _cursorWidth;
     int _cursorHeight;
-    mutable std::mutex _mutex;
     std::unique_ptr<DocumentBrokerPoll> _poll;
     std::atomic<bool> _stop;
     std::string _closeReason;
