@@ -208,8 +208,6 @@ class UserList extends L.Control {
 
 		img.setAttribute('data-view-id', viewId.toString());
 
-		L.LOUtil.checkIfImageExists(img);
-
 		return img;
 	}
 
