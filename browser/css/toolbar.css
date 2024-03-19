@@ -1698,6 +1698,8 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+
+	color: var(--color-main-text);
 }
 
 #userListSummaryBackground > #userListSummary {
