@@ -30,15 +30,6 @@ L.Control.Tabs = L.Control.extend({
 		setTimeout(function() {
 			$('.spreadsheet-tab').contextMenu(e.perm === 'edit');
 		}, 100);
-
-		if (window.mode.isMobile()) {
-			if (e.perm === 'edit') {
-				document.getElementById('spreadsheet-toolbar').style.display = 'block';
-			}
-			else {
-				document.getElementById('spreadsheet-toolbar').style.display = 'none';
-			}
-		}
 	},
 
 	_initialize: function () {
@@ -47,8 +38,7 @@ L.Control.Tabs = L.Control.extend({
 		this._spreadsheetTabs = {};
 		this._tabForContextMenu = 0;
 		var map = this._map;
-		var tableCell = document.getElementById('tb_spreadsheet-toolbar_right');
-		tableCell.style.verticalAlign = 'middle';
+		var tableCell = document.getElementById('spreadsheet-toolbar');
 		this._tabsCont = L.DomUtil.create('div', 'spreadsheet-tabs-container', tableCell);
 		var that = this;
 		function areTabsMultiple() {

@@ -161,13 +161,6 @@ w2ui-toolbar {
 	border-bottom: 5px solid var(--color-text-dark);
 	margin-top: -5px;
 }
-#spreadsheet-toolbar {
-	width: 100%;
-	text-align: center;
-	padding: 0;
-	background-color: var(--color-main-background);
-	border-top: 1px solid var(--color-border);
-}
 
 #presentation-toolbar {
 	bottom: 0;
@@ -1040,7 +1033,6 @@ button.leaflet-control-search-next
 .w2ui-icon.equal{ background: url('images/lc26049.svg') no-repeat center; }
 .w2ui-icon.help{ background: url('images/lc_helpindex.svg') no-repeat center; }
 .w2ui-icon.insertpage{ background: url('images/lc_insertpage.svg') no-repeat center; }
-.w2ui-icon.insertsheet{ background: url('images/plus.svg') no-repeat center; }
 .w2ui-icon.conditionalformatdialog{ background: url('images/lc_conditionalformatmenu.svg') no-repeat center; }
 .w2ui-icon.search{ background: url('images/sc_recsearch.svg') no-repeat center; }
 .w2ui-icon.next{ background: url('images/lc_downsearch.svg') no-repeat center; }

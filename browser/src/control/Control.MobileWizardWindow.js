@@ -172,9 +172,8 @@ L.Control.MobileWizardWindow = L.Control.extend({
 		if (window.mobileMenuWizard)
 			this.map.showSidebar = false;
 
-		var stb = document.getElementById('spreadsheet-toolbar');
-		if (stb)
-			stb.style.display = 'none';
+		if (this.map.uiManager.sheetsBar)
+			this.map.uiManager.sheetsBar.hide();
 
 		if (!document.getElementById('document-container').classList.contains('landscape')) {
 			var pcw = document.getElementById('presentation-controls-wrapper');

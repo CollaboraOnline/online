@@ -123,9 +123,8 @@ L.Control.MobileWizard = L.Control.extend({
 			this.map.focus();
 		}
 
-		var stb = document.getElementById('spreadsheet-toolbar');
-		if (stb)
-			stb.style.display = 'block';
+		if (this.map.uiManager.sheetsBar)
+			this.map.uiManager.sheetsBar.show();
 	},
 
 	isOpen: function() {

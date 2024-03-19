@@ -89,11 +89,6 @@ button.ui-tab.notebookbar {
 	margin: 0 !important;
 }
 
-.unotoolbutton.notebookbar .unobutton img {
-	width: var(--btn-size);
-	height: var(--btn-size);
-}
-
 .notebookbar-shortcuts-bar .notebookbar.unotoolbutton {
 	margin: 0px !important;
 }

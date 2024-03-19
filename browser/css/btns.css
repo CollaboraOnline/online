@@ -9,6 +9,13 @@
 	border: 1px solid var(--color-border-lighter);
 }
 
+/* toolbuttons */
+
+.unotoolbutton .unobutton img {
+	width: var(--btn-size);
+	height: var(--btn-size);
+}
+
 /*limit icon to button height*/
 button.jsdialog img {
 	max-height: 100%;

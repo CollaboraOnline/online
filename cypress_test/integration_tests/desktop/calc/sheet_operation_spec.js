@@ -27,7 +27,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Sheet Operations.', functi
 
 	it('Insert sheet', function () {
 		assertNumberofSheets(1);
-		cy.cGet('#tb_spreadsheet-toolbar_item_insertsheet').click();
+		cy.cGet('#spreadsheet-toolbar #insertsheet').click();
 		assertNumberofSheets(2);
 	});
 
@@ -35,7 +35,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Sheet Operations.', functi
 		assertNumberofSheets(1);
 		helper.typeIntoInputField('input#addressInput', 'A1');
 		calcHelper.ensureViewContainsCellCursor();
-		cy.cGet('#tb_spreadsheet-toolbar_item_insertsheet').click();
+		cy.cGet('#spreadsheet-toolbar #insertsheet').click();
 		assertNumberofSheets(2);
 		helper.clickOnIdle('#spreadsheet-tab1');
 		calcHelper.ensureViewContainsCellCursor();
@@ -65,7 +65,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Sheet Operations.', functi
 
 	it('Delete sheet', function () {
 		assertNumberofSheets(1);
-		cy.cGet('#tb_spreadsheet-toolbar_item_insertsheet').click();
+		cy.cGet('#spreadsheet-toolbar #insertsheet').click();
 		assertNumberofSheets(2);
 		selectOptionFromContextMenu('Delete Sheet...');
 		cy.cGet('#delete-sheet-modal-response').click();
@@ -84,7 +84,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Sheet Operations.', functi
 
 	it('Hide/Show sheet', function () {
 		assertNumberofSheets(1);
-		cy.cGet('#tb_spreadsheet-toolbar_item_insertsheet').click();
+		cy.cGet('#spreadsheet-toolbar #insertsheet').click();
 		assertNumberofSheets(2);
 		//hide sheet
 		selectOptionFromContextMenu('Hide Sheet');
@@ -99,7 +99,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Sheet Operations.', functi
 
 	it('Move sheet left/right', function () {
 		assertNumberofSheets(1);
-		cy.cGet('#tb_spreadsheet-toolbar_item_insertsheet').click();
+		cy.cGet('#spreadsheet-toolbar #insertsheet').click();
 		assertNumberofSheets(2);
 		cy.cGet('#spreadsheet-tab0').should('have.text', 'Sheet1');
 		//left
