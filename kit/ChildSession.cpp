@@ -1229,9 +1229,9 @@ bool ChildSession::getTextSelection(const StringVector& tokens)
 
 bool ChildSession::getClipboard(const StringVector& tokens)
 {
-    std::string token;
+    std::vector<std::string> specifics;
     const char **pMimeTypes = nullptr; // fetch all for now.
-    const char  *pOneType[2];
+    std::vector<const char*> inMimeTypes;
     size_t       nOutCount = 0;
     char       **pOutMimeTypes = nullptr;
     size_t      *pOutSizes = nullptr;
@@ -1240,10 +1240,13 @@ bool ChildSession::getClipboard(const StringVector& tokens)
     bool hasMimeRequest = tokens.size() > 1;
     if (hasMimeRequest)
     {
-        pMimeTypes = pOneType;
-        token = tokens[1];
-        pMimeTypes[0] = token.c_str();
-        pMimeTypes[1] = nullptr;
+        specifics = Util::splitStringToVector(tokens[1], ',');
+        for (const auto& specific : specifics)
+        {
+            inMimeTypes.push_back(specific.c_str());
+        }
+        inMimeTypes.push_back(nullptr);
+        pMimeTypes = inMimeTypes.data();
     }
 
     SigUtil::addActivity(getId(), "getClipboard");
@@ -1270,22 +1273,39 @@ bool ChildSession::getClipboard(const StringVector& tokens)
 
     // FIXME: extra 'content' is necessary for Message parsing.
     Util::vectorAppend(output, "clipboardcontent: content\n");
+    bool json = specifics.size() > 1;
+    Poco::JSON::Object selectionObject;
     LOG_TRC("Building clipboardcontent: " << nOutCount << " items");
     for (size_t i = 0; i < nOutCount; ++i)
     {
         LOG_TRC("\t[" << i << " - type " << pOutMimeTypes[i] << " size " << pOutSizes[i]);
-        Util::vectorAppend(output, pOutMimeTypes[i]);
+        if (json)
+        {
+            std::string selection(pOutStreams[i], pOutSizes[i]);
+            selectionObject.set(pOutMimeTypes[i], selection);
+        }
+        else
+        {
+            Util::vectorAppend(output, pOutMimeTypes[i]);
+            Util::vectorAppend(output, "\n", 1);
+            Util::vectorAppendHex(output, pOutSizes[i]);
+            Util::vectorAppend(output, "\n", 1);
+            Util::vectorAppend(output, pOutStreams[i], pOutSizes[i]);
+            Util::vectorAppend(output, "\n", 1);
+        }
         free(pOutMimeTypes[i]);
-        Util::vectorAppend(output, "\n", 1);
-        Util::vectorAppendHex(output, pOutSizes[i]);
-        Util::vectorAppend(output, "\n", 1);
-        Util::vectorAppend(output, pOutStreams[i], pOutSizes[i]);
         free(pOutStreams[i]);
-        Util::vectorAppend(output, "\n", 1);
     }
     free(pOutSizes);
     free(pOutMimeTypes);
     free(pOutStreams);
+    if (json)
+    {
+        std::stringstream selectionStream;
+        selectionObject.stringify(selectionStream);
+        std::string selection = selectionStream.str();
+        Util::vectorAppend(output, selection.c_str(), selection.size());
+    }
 
     LOG_TRC("Sending clipboardcontent of size " << output.size() << " bytes");
     sendBinaryFrame(output.data(), output.size());

@@ -302,13 +302,20 @@ L.Control.DownloadProgress = L.Control.extend({
 				reader.onload = function() {
 					var text = reader.result;
 					window.app.console.log('async clipboard parse done: ' + text.substring(0, 256));
-					var idx = text.indexOf('<!DOCTYPE HTML');
-					if (idx === -1) {
-						idx = text.indexOf('<!DOCTYPE html');
+					if (text.startsWith('{')) {
+						let textJson = JSON.parse(text);
+						let textHtml = textJson['text/html'];
+						let textPlain = textJson['text/plain;charset=utf-8'];
+						that._map._clip.setTextSelectionHTML(textHtml, textPlain);
+					} else {
+						var idx = text.indexOf('<!DOCTYPE HTML');
+						if (idx === -1) {
+							idx = text.indexOf('<!DOCTYPE html');
+						}
+						if (idx > 0)
+							text = text.substring(idx, text.length);
+						that._map._clip.setTextSelectionHTML(text);
 					}
-					if (idx > 0)
-						text = text.substring(idx, text.length);
-					that._map._clip.setTextSelectionHTML(text);
 				};
 				// TODO: failure to parse ? ...
 				reader.readAsText(response);
