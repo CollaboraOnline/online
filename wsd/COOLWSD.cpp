@@ -4408,7 +4408,9 @@ int COOLWSD::innerMain()
 #endif
     }
 
+#if !MOBILEAPP
     COOLWSD::alertAllUsersInternal("close: shuttingdown");
+#endif
 
     // Lots of polls will stop; stop watching them first.
     SocketPoll::shutdownWatchdog();
