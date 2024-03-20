@@ -1,7 +1,6 @@
 /* global describe it require cy afterEach beforeEach */
 
 var helper = require('../../common/helper');
-var { insertMultipleComment, setupUIforCommentInsert, createComment } = require('../../common/desktop_helper');
 var desktopHelper = require('../../common/desktop_helper');
 
 describe(['tagmultiuser'], 'Multiuser Annotation Tests', function() {
@@ -19,7 +18,7 @@ describe(['tagmultiuser'], 'Multiuser Annotation Tests', function() {
 
 	it('Insert',function() {
 		cy.cSetActiveFrame('#iframe1');
-		insertMultipleComment('calc', 1, false, '[id=insert-insert-annotation]');
+		desktopHelper.insertComment();
 
 		cy.cGet('.cool-annotation').should('exist');
 		cy.cGet('#comment-container-1').then(function (element) {
@@ -41,7 +40,7 @@ describe(['tagmultiuser'], 'Multiuser Annotation Tests', function() {
 
 	it('Modify',function() {
 		cy.cSetActiveFrame('#iframe1');
-		insertMultipleComment('calc', 1, false, '[id=insert-insert-annotation]');
+		desktopHelper.insertComment();
 
 		cy.cGet('#comment-container-1').should('exist');
 
@@ -75,7 +74,7 @@ describe(['tagmultiuser'], 'Multiuser Annotation Tests', function() {
 
 	it('Remove',function() {
 		cy.cSetActiveFrame('#iframe1');
-		insertMultipleComment('calc', 1, false, '[id=insert-insert-annotation]');
+		desktopHelper.insertComment();
 
 		cy.cGet('#comment-container-1').should('exist');
 
@@ -109,8 +108,7 @@ describe(['tagmultiuser'], 'Multiuser Annotation Autosave Tests', function() {
 
 	it('Insert autosave',function() {
 		cy.cSetActiveFrame('#iframe1');
-		setupUIforCommentInsert('calc');
-		createComment('writer', 'Test Comment', false, '[id=insert-insert-annotation]');
+		desktopHelper.insertComment(undefined, false);
 		cy.cGet('#map').focus();
 		cy.cGet('.cool-annotation-autosavelabel').should('be.visible');
 		cy.cGet('.cool-annotation-edit.modify-annotation').should('be.visible');
@@ -122,13 +120,12 @@ describe(['tagmultiuser'], 'Multiuser Annotation Autosave Tests', function() {
 			element[0].style.display = '';
 		});
 		cy.cGet('#comment-container-1').trigger('mouseover');
-		cy.cGet('#annotation-content-area-1').should('have.text','Test Comment');
+		cy.cGet('#annotation-content-area-1').should('have.text','some text0');
 	});
 
 	it('Insert autosave save',function() {
 		cy.cSetActiveFrame('#iframe1');
-		setupUIforCommentInsert('calc');
-		createComment('writer', 'Test Comment', false, '[id=insert-insert-annotation]');
+		desktopHelper.insertComment(undefined, false);
 		cy.cGet('#map').focus();
 		cy.cGet('.cool-annotation-autosavelabel').should('be.visible');
 		cy.cGet('.cool-annotation-edit.modify-annotation').should('be.visible');
@@ -140,7 +137,7 @@ describe(['tagmultiuser'], 'Multiuser Annotation Autosave Tests', function() {
 		});
 		cy.cGet('.cool-annotation-autosavelabel').should('be.not.visible');
 		cy.cGet('#comment-container-1').trigger('mouseover');
-		cy.cGet('#annotation-content-area-1').should('have.text','Test Comment');
+		cy.cGet('#annotation-content-area-1').should('have.text','some text0');
 
 		cy.cSetActiveFrame('#iframe2');
 		cy.cGet('.cool-annotation').should('exist');
@@ -149,13 +146,12 @@ describe(['tagmultiuser'], 'Multiuser Annotation Autosave Tests', function() {
 			element[0].style.display = '';
 		});
 		cy.cGet('#comment-container-1').trigger('mouseover');
-		cy.cGet('#annotation-content-area-1').should('have.text','Test Comment');
+		cy.cGet('#annotation-content-area-1').should('have.text','some text0');
 	});
 
 	it('Insert autosave cancel',function() {
 		cy.cSetActiveFrame('#iframe1');
-		setupUIforCommentInsert('calc');
-		createComment('writer', 'Test Comment', false, '[id=insert-insert-annotation]');
+		desktopHelper.insertComment(undefined, false);
 		cy.cGet('#map').focus();
 		cy.cGet('.cool-annotation-autosavelabel').should('be.visible');
 		cy.cGet('.cool-annotation-edit.modify-annotation').should('be.visible');
@@ -169,7 +165,7 @@ describe(['tagmultiuser'], 'Multiuser Annotation Autosave Tests', function() {
 
 	it('Modify autosave',function() {
 		cy.cSetActiveFrame('#iframe1');
-		insertMultipleComment('calc', 1, false, '[id=insert-insert-annotation]');
+		desktopHelper.insertComment();
 
 		cy.cGet('#comment-container-1').should('exist');
 
@@ -198,7 +194,7 @@ describe(['tagmultiuser'], 'Multiuser Annotation Autosave Tests', function() {
 
 	it('Modify autosave save',function() {
 		cy.cSetActiveFrame('#iframe1');
-		insertMultipleComment('calc', 1, false, '[id=insert-insert-annotation]');
+		desktopHelper.insertComment();
 
 		cy.cGet('#comment-container-1').should('exist');
 
@@ -235,7 +231,7 @@ describe(['tagmultiuser'], 'Multiuser Annotation Autosave Tests', function() {
 
 	it('Modify autosave cancel',function() {
 		cy.cSetActiveFrame('#iframe1');
-		insertMultipleComment('calc', 1, false, '[id=insert-insert-annotation]');
+		desktopHelper.insertComment();
 
 		cy.cGet('#comment-container-1').should('exist');
 

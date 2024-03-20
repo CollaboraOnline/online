@@ -27,7 +27,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'PDF View Tests', function(
 	it.skip('PDF insert comment', { env: { 'pdf-view': true }, defaultCommandTimeout: 60000 }, function() {
 
 		// Insert some comment into the PDF.
-		desktopHelper.insertMultipleComment('draw', 1, false);
+		desktopHelper.insertComment();
 		cy.cGet('.cool-annotation-content-wrapper').should('exist');
 		cy.cGet('#annotation-content-area-1').should('contain','some text0');
 
