@@ -273,6 +273,7 @@ w2ui-toolbar {
 	background-color: transparent;
 	border-radius: var(--border-radius);
 	padding: 0px 2px;
+	width: calc(100% - 10px);
 }
 
 #document-name-input.editable {
