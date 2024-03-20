@@ -450,6 +450,10 @@ L.Map.Keyboard = L.Handler.extend({
 		if (this._map.slideShow && this._map.slideShow.fullscreen) {
 			return;
 		}
+
+		if (window.KeyboardShortcuts.processEvent(app.UI.language.fromURL, ev))
+			return;
+
 		var docLayer = this._map._docLayer;
 		if (!keyEventFn && docLayer.postKeyboardEvent) {
 			// default is to post keyboard events on the document
@@ -463,9 +467,6 @@ L.Map.Keyboard = L.Handler.extend({
 		var alt = ev.altKey ? UNOModifier.ALT : 0;
 		var location = ev.location;
 		this.modifier = shift | ctrl | alt;
-
-		if (window.KeyboardShortcuts.processEvent(app.UI.language.fromURL, ev))
-			return;
 
 		// On Windows, pressing AltGr = Alt + Ctrl
 		// Presence of AltGr is detected if previous Ctrl + Alt 'location' === 2 (i.e right)
