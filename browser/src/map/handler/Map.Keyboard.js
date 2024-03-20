@@ -459,11 +459,10 @@ L.Map.Keyboard = L.Handler.extend({
 		var docType = this._map._docLayer._docType;
 		this.modifier = 0;
 		var shift = ev.shiftKey ? UNOModifier.SHIFT : 0;
-		var ctrl = ev.ctrlKey ? UNOModifier.CTRL : 0;
+		var ctrl = (ev.ctrlKey || ev.metaKey) ? UNOModifier.CTRL : 0;
 		var alt = ev.altKey ? UNOModifier.ALT : 0;
-		var cmd = ev.metaKey ? UNOModifier.CTRL : 0;
 		var location = ev.location;
-		this.modifier = shift | ctrl | alt | cmd;
+		this.modifier = shift | ctrl | alt;
 
 		if (window.KeyboardShortcuts.processEvent(app.UI.language.fromURL, ev))
 			return;
@@ -492,7 +491,7 @@ L.Map.Keyboard = L.Handler.extend({
 			}
 		}
 
-		if (ctrl || cmd) {
+		if (ctrl) {
 			if (this._handleCtrlCommand(ev)) {
 				return;
 			}
