@@ -502,7 +502,12 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
         size_t i = _pollStartIndex;
         for (std::size_t j = 0; j < size; ++j)
         {
-            if (_pollFds[i].fd == _pollSockets[i]->getFD())
+            if (!_pollSockets[i])
+            {
+                // removed in a callback
+                toErase.push_back(i);
+            }
+            else if (_pollFds[i].fd == _pollSockets[i]->getFD())
             {
                 SocketDisposition disposition(_pollSockets[i]);
                 try
@@ -575,6 +580,55 @@ void SocketPoll::closeAllSockets()
     for (auto &it : _pollSockets)
         close(it->getFD());
     assert(_newSockets.size() == 0);
+}
+
+void SocketPoll::takeSocket(const std::shared_ptr<SocketPoll> &fromPoll,
+                            const std::shared_ptr<Socket> &inSocket)
+{
+    std::mutex mut;
+    std::condition_variable cond;
+    bool transferred = false;
+
+    // Important we're not blocking the fromPoll thread.
+    ASSERT_CORRECT_THREAD();
+
+    // hold a reference during transfer
+    std::shared_ptr<Socket> socket = inSocket;
+
+    SocketPoll *toPoll = this;
+    fromPoll->addCallback([fromPoll,socket,&mut,&cond,&transferred,toPoll](){
+        auto it = std::find(fromPoll->_pollSockets.begin(),
+                            fromPoll->_pollSockets.end(), socket);
+        if (it != fromPoll->_pollSockets.end())
+        {
+            // Erasing messes up the tracking of poll results in 'poll'
+            // leave to be added to toErase and cleaned later.
+            *it = nullptr;
+        }
+        else
+            LOG_WRN("Trying to move socket out of the wrong poll");
+
+        // sockets in transit are un-owned
+        socket->resetThreadOwner();
+
+        toPoll->insertNewSocket(socket);
+
+        LOG_TRC("Socket #" << socket->getFD() << " moved across polls");
+
+        // Let the caller know we've done our job.
+        std::unique_lock<std::mutex> lock(mut);
+        transferred = true;
+        cond.notify_all();
+    });
+
+    LOG_TRC("Waiting to transfer Socket #" << socket->getFD() <<
+            " from: " << fromPoll->name() << " to new poll: " << name());
+    std::unique_lock<std::mutex> lock(mut);
+    while (!transferred && continuePolling()) // in case of exit during transfer.
+        cond.wait_for(lock, std::chrono::milliseconds(50));
+
+    LOG_TRC("Transfer of Socket #" << socket->getFD() <<
+            " from: " << fromPoll->name() << " to new poll: " << name() << " complete");
 }
 
 void SocketPoll::removeSockets()

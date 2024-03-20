@@ -92,8 +92,8 @@ void ChildProcess::setDocumentBroker(const std::shared_ptr<DocumentBroker>& docB
     assert(docBroker && "Invalid DocumentBroker instance.");
     _docBroker = docBroker;
 
-    // Add the prisoner socket to the docBroker poll.
-    docBroker->addSocketToPoll(getSocket());
+    // The prisoner socket is added in 'takeSocket'
+
     // if URP is enabled, also add its socket to the poll
     if (_urpFromKit)
         docBroker->addSocketToPoll(_urpFromKit);
@@ -254,7 +254,7 @@ void DocumentBroker::pollThread()
     do
     {
         static constexpr std::chrono::milliseconds timeoutMs(COMMAND_TIMEOUT_MS * 5);
-        _childProcess = getNewChild_Blocks(_mobileAppDocId);
+        _childProcess = getNewChild_Blocks(*_poll, _mobileAppDocId);
         if (_childProcess
             || std::chrono::duration_cast<std::chrono::milliseconds>(
                    std::chrono::steady_clock::now() - _threadStart)

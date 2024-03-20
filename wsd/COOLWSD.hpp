@@ -40,7 +40,7 @@ class DocumentBroker;
 class ClipboardCache;
 class FileServerRequestHandler;
 
-std::shared_ptr<ChildProcess> getNewChild_Blocks(unsigned mobileAppDocId);
+std::shared_ptr<ChildProcess> getNewChild_Blocks(SocketPoll &destPoll, unsigned mobileAppDocId);
 
 // A WSProcess object in the WSD process represents a descendant process, either the direct child
 // process ForKit or a grandchild Kit process, with which the WSD process communicates through a
@@ -198,13 +198,13 @@ public:
 
 protected:
     std::shared_ptr<WebSocketHandler> getWSHandler() const { return _ws; }
-    std::shared_ptr<StreamSocket> getSocket() const { return _socket; };
+    std::shared_ptr<StreamSocket> getSocket() const { return _socket.lock(); };
 
 private:
     std::string _name;
     std::atomic<pid_t> _pid; //< The process-id, which can be access from different threads.
-    std::shared_ptr<WebSocketHandler> _ws;
-    std::shared_ptr<StreamSocket> _socket;
+    std::shared_ptr<WebSocketHandler> _ws;  // FIXME: should be weak ? ...
+    std::weak_ptr<StreamSocket> _socket;
 };
 
 #if !MOBILEAPP

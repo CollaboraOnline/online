@@ -650,97 +650,6 @@ static size_t addNewChild(std::shared_ptr<ChildProcess> child)
     return count;
 }
 
-#if MOBILEAPP
-#ifndef IOS
-std::mutex COOLWSD::lokit_main_mutex;
-#endif
-#endif
-
-std::shared_ptr<ChildProcess> getNewChild_Blocks(unsigned mobileAppDocId)
-{
-    (void)mobileAppDocId;
-    const auto startTime = std::chrono::steady_clock::now();
-
-    std::unique_lock<std::mutex> lock(NewChildrenMutex);
-
-#if !MOBILEAPP
-    assert(mobileAppDocId == 0 && "Unexpected to have mobileAppDocId in the non-mobile build");
-
-    int numPreSpawn = COOLWSD::NumPreSpawnedChildren;
-    ++numPreSpawn; // Replace the one we'll dispatch just now.
-    LOG_DBG("getNewChild: Rebalancing children to " << numPreSpawn);
-    if (rebalanceChildren(numPreSpawn) < 0)
-    {
-        LOG_DBG("getNewChild: rebalancing of children failed. Scheduling housekeeping to recover.");
-
-        COOLWSD::doHousekeeping();
-
-        // Let the caller retry after a while.
-        return nullptr;
-    }
-
-    const auto timeout = std::chrono::milliseconds(ChildSpawnTimeoutMs / 2);
-    LOG_TRC("Waiting for a new child for a max of " << timeout);
-#else
-    const auto timeout = std::chrono::hours(100);
-
-#ifdef IOS
-    assert(mobileAppDocId > 0 && "Unexpected to have no mobileAppDocId in the iOS build");
-#endif
-
-    std::thread([&]
-                {
-#ifndef IOS
-                    std::lock_guard<std::mutex> lock(COOLWSD::lokit_main_mutex);
-                    Util::setThreadName("lokit_main");
-#else
-                    Util::setThreadName("lokit_main_" + Util::encodeId(mobileAppDocId, 3));
-#endif
-                    // Ugly to have that static global COOLWSD::prisonerServerSocketFD, Otoh we know
-                    // there is just one COOLWSD object. (Even in real Online.)
-                    lokit_main(COOLWSD::prisonerServerSocketFD, COOLWSD::UserInterface, mobileAppDocId);
-                }).detach();
-#endif
-
-    // FIXME: blocks ...
-    // Unfortunately we need to wait after spawning children to avoid bombing the system.
-    // If we fail fast and return, the next document will spawn more children without knowing
-    // there are some on the way already. And if the system is slow already, that wouldn't help.
-    LOG_TRC("Waiting for NewChildrenCV");
-    if (NewChildrenCV.wait_for(lock, timeout, []()
-                               {
-                                   LOG_TRC("Predicate for NewChildrenCV wait: NewChildren.size()=" << NewChildren.size());
-                                   return !NewChildren.empty();
-                               }))
-    {
-        LOG_TRC("NewChildrenCV wait successful");
-        std::shared_ptr<ChildProcess> child = NewChildren.back();
-        NewChildren.pop_back();
-        const size_t available = NewChildren.size();
-
-        // Validate before returning.
-        if (child && child->isAlive())
-        {
-            LOG_DBG("getNewChild: Have "
-                    << available << " spare " << (available == 1 ? "child" : "children")
-                    << " after popping [" << child->getPid() << "] to return in "
-                    << std::chrono::duration_cast<std::chrono::milliseconds>(
-                           std::chrono::steady_clock::now() - startTime));
-            return child;
-        }
-
-        LOG_WRN("getNewChild: popped dead child, need to find another.");
-    }
-    else
-    {
-        LOG_TRC("NewChildrenCV wait failed");
-        LOG_WRN("getNewChild: No child available. Sending spawn request to forkit and failing.");
-    }
-
-    LOG_DBG("getNewChild: Timed out while waiting for new child.");
-    return nullptr;
-}
-
 #if !MOBILEAPP
 
 namespace
@@ -924,7 +833,105 @@ private:
 
 /// This thread listens for and accepts prisoner kit processes.
 /// And also cleans up and balances the correct number of children.
-static std::unique_ptr<PrisonPoll> PrisonerPoll;
+static std::shared_ptr<PrisonPoll> PrisonerPoll;
+
+#if MOBILEAPP
+#ifndef IOS
+std::mutex COOLWSD::lokit_main_mutex;
+#endif
+#endif
+
+std::shared_ptr<ChildProcess> getNewChild_Blocks(SocketPoll &destPoll, unsigned mobileAppDocId)
+{
+    (void)mobileAppDocId;
+    const auto startTime = std::chrono::steady_clock::now();
+
+    std::unique_lock<std::mutex> lock(NewChildrenMutex);
+
+#if !MOBILEAPP
+    assert(mobileAppDocId == 0 && "Unexpected to have mobileAppDocId in the non-mobile build");
+
+    int numPreSpawn = COOLWSD::NumPreSpawnedChildren;
+    ++numPreSpawn; // Replace the one we'll dispatch just now.
+    LOG_DBG("getNewChild: Rebalancing children to " << numPreSpawn);
+    if (rebalanceChildren(numPreSpawn) < 0)
+    {
+        LOG_DBG("getNewChild: rebalancing of children failed. Scheduling housekeeping to recover.");
+
+        COOLWSD::doHousekeeping();
+
+        // Let the caller retry after a while.
+        return nullptr;
+    }
+
+    const auto timeout = std::chrono::milliseconds(ChildSpawnTimeoutMs / 2);
+    LOG_TRC("Waiting for a new child for a max of " << timeout);
+#else // MOBILEAPP
+    const auto timeout = std::chrono::hours(100);
+
+#ifdef IOS
+    assert(mobileAppDocId > 0 && "Unexpected to have no mobileAppDocId in the iOS build");
+#endif
+
+    std::thread([&]
+                {
+#ifndef IOS
+                    std::lock_guard<std::mutex> lock(COOLWSD::lokit_main_mutex);
+                    Util::setThreadName("lokit_main");
+#else
+                    Util::setThreadName("lokit_main_" + Util::encodeId(mobileAppDocId, 3));
+#endif
+                    // Ugly to have that static global COOLWSD::prisonerServerSocketFD, Otoh we know
+                    // there is just one COOLWSD object. (Even in real Online.)
+                    lokit_main(COOLWSD::prisonerServerSocketFD, COOLWSD::UserInterface, mobileAppDocId);
+                }).detach();
+#endif // MOBILEAPP
+
+    // FIXME: blocks ...
+    // Unfortunately we need to wait after spawning children to avoid bombing the system.
+    // If we fail fast and return, the next document will spawn more children without knowing
+    // there are some on the way already. And if the system is slow already, that wouldn't help.
+    LOG_TRC("Waiting for NewChildrenCV");
+    if (NewChildrenCV.wait_for(lock, timeout, []()
+                               {
+                                   LOG_TRC("Predicate for NewChildrenCV wait: NewChildren.size()=" << NewChildren.size());
+                                   return !NewChildren.empty();
+                               }))
+    {
+        LOG_TRC("NewChildrenCV wait successful");
+        std::shared_ptr<ChildProcess> child = NewChildren.back();
+        NewChildren.pop_back();
+        const size_t available = NewChildren.size();
+
+        // Release early before moving sockets.
+        lock.unlock();
+
+        // Validate before returning.
+        if (child && child->isAlive())
+        {
+            LOG_DBG("getNewChild: Have "
+                    << available << " spare " << (available == 1 ? "child" : "children")
+                    << " after popping [" << child->getPid() << "] to return in "
+                    << std::chrono::duration_cast<std::chrono::milliseconds>(
+                           std::chrono::steady_clock::now() - startTime));
+
+            // Change ownership now.
+            child->moveSocketFromTo(PrisonerPoll, destPoll);
+
+            return child;
+        }
+
+        LOG_WRN("getNewChild: popped dead child, need to find another.");
+    }
+    else
+    {
+        LOG_TRC("NewChildrenCV wait failed");
+        LOG_WRN("getNewChild: No child available. Sending spawn request to forkit and failing.");
+    }
+
+    LOG_DBG("getNewChild: Timed out while waiting for new child.");
+    return nullptr;
+}
 
 #ifdef __linux__
 #if !MOBILEAPP
@@ -3570,6 +3577,16 @@ private:
         else if (!_associatedWithDoc && !SigUtil::getShutdownRequestFlag())
         {
             LOG_WRN("Unassociated Kit (" << _pid << ") disconnected unexpectedly");
+
+            std::unique_lock<std::mutex> lock(NewChildrenMutex);
+            auto it = std::find(NewChildren.begin(), NewChildren.end(), child);
+            if (it != NewChildren.end())
+                NewChildren.erase(it);
+            else
+                LOG_WRN("Unknown Kit process closed with pid " << child->getPid());
+#if !MOBILEAPP
+            rebalanceChildren(COOLWSD::NumPreSpawnedChildren);
+#endif
         }
     }
 
@@ -3702,15 +3719,7 @@ private:
             child->setSMapsFD(socket->getIncomingFD(SMAPS));
             _childProcess = child; // weak
 
-            // Remove from prisoner poll since there is no activity
-            // until we attach the childProcess (with this socket)
-            // to a docBroker, which will do the polling.
-            disposition.setMove(
-                [this, child](const std::shared_ptr<Socket>&)
-                {
-                    LOG_TRC("Calling addNewChild in disposition's move thing to add to NewChildren");
-                    addNewChild(child);
-                });
+            addNewChild(child);
         }
         catch (const std::bad_weak_ptr&)
         {
