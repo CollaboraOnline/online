@@ -204,6 +204,7 @@ m4_ifelse(MOBILEAPP,[true],
      <div id="toolbar-wrapper">
        <div id="toolbar-logo"></div>
        <div id="toolbar-mobile-back" class="editmode-off"></div>
+       <div class="jsdialog ui-spacer"></div>
        <div id="toolbar-up"></div>
        <div id="toolbar-hamburger">
          <label class="main-menu-btn" for="main-menu-state">
