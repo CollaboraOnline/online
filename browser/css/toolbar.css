@@ -71,7 +71,8 @@
 	background-color: var(--color-main-background);
 }
 #InsertMode.insert-mode-false,
-#PermissionMode.status-readonly-mode {
+#PermissionMode.status-readonly-mode,
+#MobilePermissionMode.status-readonly-mode {
 	background-color: var(--color-warning);
 	color: var(--color-primary-text);
 	border-radius: var(--border-radius);
