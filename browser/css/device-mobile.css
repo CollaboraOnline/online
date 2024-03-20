@@ -83,6 +83,8 @@ div#w2ui-overlay-actionbar.w2ui-overlay{
 	height: 36px;
 	position: relative;
 	z-index: 1002;
+	display: flex;
+	align-items: center; /* Align items vertically */
 }
 #toolbar-hamburger.menuwizard-opened {
 	width: 36px;
@@ -108,6 +110,12 @@ div#w2ui-overlay-actionbar.w2ui-overlay{
 	height: 36px;
 	position: relative;
 	z-index: 1003;
+}
+#toolbar-mobile-center-space {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex: 1;
 }
 .editmode-off {
 	background: url('images/lc_closedocmobile.svg') no-repeat center !important;
@@ -235,6 +243,7 @@ textarea.cool-annotation-textarea {
 #toolbar-wrapper.mobile{
 	border-top: none;
 	z-index: auto !important;
+	flex-direction: row;
 }
 
 .insertshape-grid {

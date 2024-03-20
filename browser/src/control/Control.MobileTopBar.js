@@ -205,9 +205,7 @@ L.Control.MobileTopBar = L.Control.extend({
 				toolbarDownButtons.forEach(function(id) {
 					toolbar.enable(id);
 				});
-				toolbar.hide('PermissionMode');
-				toolbar.hide('after-PermissionMode');
-				$('#tb_actionbar_item_before-PermissionMode').width('');
+				document.getElementById('MobilePermissionMode').style.display = 'none';
 			}
 		} else {
 			toolbar = w2ui['actionbar'];
@@ -217,10 +215,7 @@ L.Control.MobileTopBar = L.Control.extend({
 				});
 				toolbar.enable('comment_wizard');
 				if ($('#mobile-edit-button').is(':hidden')) {
-					toolbar.show('PermissionMode');
-					toolbar.show('after-PermissionMode');
-					$('#tb_actionbar_item_before-PermissionMode').width('50%');
-					$('#tb_actionbar_item_after-PermissionMode').width('50%');
+					document.getElementById('MobilePermissionMode').style.display = 'block';
 				}
 			}
 		}
