@@ -40,8 +40,8 @@ findOrCreateDocBroker(const std::shared_ptr<ProtocolHandlerInterface>& proto,
                       const std::string& docKey, const std::string& id, const Poco::URI& uriPublic,
                       unsigned mobileAppDocId = 0)
 {
-    const auto pair = findOrCreateDocBroker(type, uri, docKey, id, uriPublic, mobileAppDocId);
-    const std::shared_ptr<DocumentBroker>& docBroker = pair.first;
+    const auto [docBroker, error] =
+        findOrCreateDocBroker(type, uri, docKey, id, uriPublic, mobileAppDocId);
 
     if (docBroker)
     {
@@ -59,7 +59,6 @@ findOrCreateDocBroker(const std::shared_ptr<ProtocolHandlerInterface>& proto,
     // Failed.
     if (proto)
     {
-        const std::string& error = pair.second;
         proto->sendTextMessage(error.data(), error.size(), /*flush=*/true);
         proto->shutdown(true, error);
     }
