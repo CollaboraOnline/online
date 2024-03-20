@@ -11,14 +11,13 @@
 
 #include <config.h>
 
-#include <string>
-
-#include <test/lokassert.hpp>
-
 #include <Unit.hpp>
 #include <Util.hpp>
 #include <helpers.hpp>
-#include <net/WebSocketSession.hpp>
+#include <WebSocketSession.hpp>
+#include <test/lokassert.hpp>
+
+#include <string>
 
 /// Load torture testcase.
 class UnitLoadTorture : public UnitWSD

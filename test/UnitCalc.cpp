@@ -11,19 +11,19 @@
 
 #include <config.h>
 
-#include <memory>
-#include <ostream>
-#include <string>
+#include <Png.hpp>
+#include <Unit.hpp>
+#include <WebSocketSession.hpp>
+#include <helpers.hpp>
+#include <kit/Delta.hpp>
 
 #include <Poco/Exception.h>
 #include <Poco/URI.h>
 #include <test/lokassert.hpp>
 
-#include <Png.hpp>
-#include <Unit.hpp>
-#include <helpers.hpp>
-#include <kit/Delta.hpp>
-#include <net/WebSocketSession.hpp>
+#include <memory>
+#include <ostream>
+#include <string>
 
 namespace
 {

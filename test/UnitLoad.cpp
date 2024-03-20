@@ -11,20 +11,20 @@
 
 #include <config.h>
 
-#include <test/lokassert.hpp>
-#include <Unit.hpp>
-#include <helpers.hpp>
-#include <net/WebSocketSession.hpp>
 #include "Util.hpp"
+#include <Unit.hpp>
+#include <WebSocketSession.hpp>
+#include <helpers.hpp>
+#include <test/lokassert.hpp>
+
+#include <Poco/Exception.h>
+#include <Poco/URI.h>
+#include <Poco/Util/LayeredConfiguration.h>
 
 #include <chrono>
 #include <memory>
 #include <ostream>
 #include <string>
-
-#include <Poco/Exception.h>
-#include <Poco/URI.h>
-#include <Poco/Util/LayeredConfiguration.h>
 
 namespace
 {

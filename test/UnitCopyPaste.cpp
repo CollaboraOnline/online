@@ -13,25 +13,24 @@
 
 #include <config.h>
 
-#include "HttpRequest.hpp"
-#include "lokassert.hpp"
-
+#include <HttpRequest.hpp>
 #include <Unit.hpp>
 #include <UnitHTTP.hpp>
-#include <helpers.hpp>
-#include <sstream>
-#include <wsd/COOLWSD.hpp>
+#include <WebSocketSession.hpp>
 #include <common/Clipboard.hpp>
+#include <helpers.hpp>
+#include <lokassert.hpp>
+#include <test.hpp>
+#include <wsd/COOLWSD.hpp>
 #include <wsd/ClientSession.hpp>
-#include <net/WebSocketSession.hpp>
 
+#include <Poco/Net/HTMLForm.h>
 #include <Poco/Net/HTTPResponse.h>
 #include <Poco/Net/HTTPServerRequest.h>
-#include <Poco/Net/HTMLForm.h>
 #include <Poco/Net/StringPartSource.h>
 #include <Poco/Util/LayeredConfiguration.h>
 
-#include <test.hpp>
+#include <sstream>
 
 using namespace Poco::Net;
 
