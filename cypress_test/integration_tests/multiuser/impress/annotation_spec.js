@@ -2,7 +2,6 @@
 
 var desktopHelper = require('../../common/desktop_helper');
 var helper = require('../../common/helper');
-var { insertMultipleComment, setupUIforCommentInsert, createComment } = require('../../common/desktop_helper');
 
 describe(['tagmultiuser'], 'Multiuser Annotation Tests', function() {
 	var origTestFileName = 'comment_switching.odp';
@@ -35,7 +34,7 @@ describe(['tagmultiuser'], 'Multiuser Annotation Tests', function() {
 
 	it('Insert', function() {
 		cy.cSetActiveFrame('#iframe1');
-		insertMultipleComment('impress', 1, false, '#insert-insert-annotation-button');
+		desktopHelper.insertComment();
 		cy.cGet('.leaflet-marker-icon').should('exist');
 		cy.cGet('.cool-annotation-content > div').should('contain','some text');
 
@@ -46,7 +45,7 @@ describe(['tagmultiuser'], 'Multiuser Annotation Tests', function() {
 
 	it('Modify', function() {
 		cy.cSetActiveFrame('#iframe1');
-		insertMultipleComment('impress', 1, false, '#insert-insert-annotation-button');
+		desktopHelper.insertComment();
 		cy.cGet('.leaflet-marker-icon').should('exist');
 		cy.cGet('#annotation-content-area-1').should('contain','some text0');
 		cy.cGet('.cool-annotation-content-wrapper:visible .cool-annotation-menu').click();
@@ -64,7 +63,7 @@ describe(['tagmultiuser'], 'Multiuser Annotation Tests', function() {
 
 	it('Remove',function() {
 		cy.cSetActiveFrame('#iframe1');
-		insertMultipleComment('impress', 1, false, '#insert-insert-annotation-button');
+		desktopHelper.insertComment();
 		cy.cGet('.leaflet-marker-icon').should('exist');
 		cy.cGet('.cool-annotation-content > div').should('contain','some text');
 		cy.cGet('.cool-annotation-content-wrapper:visible .cool-annotation-menu').click();
@@ -77,7 +76,7 @@ describe(['tagmultiuser'], 'Multiuser Annotation Tests', function() {
 
 	it('Reply',function() {
 		cy.cSetActiveFrame('#iframe1');
-		insertMultipleComment('impress', 1, false, '#insert-insert-annotation-button');
+		desktopHelper.insertComment();
 		cy.cGet('.leaflet-marker-icon').should('exist');
 		cy.cGet('.cool-annotation-content > div').should('contain','some text');
 		cy.cGet('.cool-annotation-content-wrapper:visible .cool-annotation-menu').click();
@@ -120,7 +119,7 @@ describe(['tagmultiuser'], 'Multiuser Collapsed Annotation Tests', function() {
 
 	it('Insert', function() {
 		cy.cSetActiveFrame('#iframe1');
-		insertMultipleComment('impress', 1, false, '#insert-insert-annotation-button');
+		desktopHelper.insertComment();
 		cy.cGet('.leaflet-marker-icon').should('exist');
 		cy.cGet('.cool-annotation-content > div').should('contain','some text');
 
@@ -131,7 +130,7 @@ describe(['tagmultiuser'], 'Multiuser Collapsed Annotation Tests', function() {
 
 	it('Modify', function() {
 		cy.cSetActiveFrame('#iframe1');
-		insertMultipleComment('impress', 1, false, '#insert-insert-annotation-button');
+		desktopHelper.insertComment();
 		cy.cGet('.leaflet-marker-icon').should('exist');
 		cy.cGet('#annotation-content-area-1').should('contain','some text0');
 		cy.cGet('.cool-annotation-table .avatar-img').click();
@@ -150,7 +149,7 @@ describe(['tagmultiuser'], 'Multiuser Collapsed Annotation Tests', function() {
 
 	it('Remove',function() {
 		cy.cSetActiveFrame('#iframe1');
-		insertMultipleComment('impress', 1, false, '#insert-insert-annotation-button');
+		desktopHelper.insertComment();
 		cy.cGet('.leaflet-marker-icon').should('exist');
 		cy.cGet('.cool-annotation-content > div').should('contain','some text');
 		cy.cGet('.cool-annotation-table .avatar-img').click();
@@ -164,7 +163,7 @@ describe(['tagmultiuser'], 'Multiuser Collapsed Annotation Tests', function() {
 
 	it('Reply',function() {
 		cy.cSetActiveFrame('#iframe1');
-		insertMultipleComment('impress', 1, false, '#insert-insert-annotation-button');
+		desktopHelper.insertComment();
 		cy.cGet('.leaflet-marker-icon').should('exist');
 		cy.cGet('.cool-annotation-content > div').should('contain','some text');
 		cy.cGet('.cool-annotation-table .avatar-img').click();
@@ -209,21 +208,19 @@ describe(['tagmultiuser'], 'Multiuser Annotation Autosave Tests', function() {
 
 	it('Insert autosave', function() {
 		cy.cSetActiveFrame('#iframe1');
-		setupUIforCommentInsert('impress');
-		createComment('impress', 'Test Comment', false, '#insert-insert-annotation-button');
+		desktopHelper.insertComment(undefined, false);
 		cy.cGet('#map').focus();
 		cy.cGet('.cool-annotation-autosavelabel').should('be.visible');
 		cy.cGet('.cool-annotation-edit.modify-annotation').should('be.visible');
 
 		cy.cSetActiveFrame('#iframe2');
 		cy.cGet('.leaflet-marker-icon').should('exist');
-		cy.cGet('.cool-annotation-content > div').should('have.text','Test Comment');
+		cy.cGet('.cool-annotation-content > div').should('have.text','some text0');
 	});
 
 	it('Insert autosave save', function() {
 		cy.cSetActiveFrame('#iframe1');
-		setupUIforCommentInsert('impress');
-		createComment('impress', 'Test Comment', false, '#insert-insert-annotation-button');
+		desktopHelper.insertComment(undefined, false);
 		cy.cGet('#map').focus();
 		cy.cGet('.cool-annotation-autosavelabel').should('be.visible');
 		cy.cGet('.cool-annotation-edit.modify-annotation').should('be.visible');
@@ -231,17 +228,16 @@ describe(['tagmultiuser'], 'Multiuser Annotation Autosave Tests', function() {
 		cy.cGet('.cool-annotation-autosavelabel').should('be.not.visible');
 		cy.cGet('.cool-annotation-edit.modify-annotation').should('be.not.visible');
 		cy.cGet('.leaflet-marker-icon').should('exist');
-		cy.cGet('.cool-annotation-content > div').should('have.text','Test Comment');
+		cy.cGet('.cool-annotation-content > div').should('have.text','some text0');
 
 		cy.cSetActiveFrame('#iframe2');
 		cy.cGet('.leaflet-marker-icon').should('exist');
-		cy.cGet('.cool-annotation-content > div').should('have.text','Test Comment');
+		cy.cGet('.cool-annotation-content > div').should('have.text','some text0');
 	});
 
 	it('Insert autosave cancel', function() {
 		cy.cSetActiveFrame('#iframe1');
-		setupUIforCommentInsert('impress');
-		createComment('impress', 'Test Comment', false, '#insert-insert-annotation-button');
+		desktopHelper.insertComment(undefined, false);
 		cy.cGet('#map').focus();
 		cy.cGet('.cool-annotation-autosavelabel').should('be.visible');
 		cy.cGet('.cool-annotation-edit.modify-annotation').should('be.visible');
@@ -258,7 +254,7 @@ describe(['tagmultiuser'], 'Multiuser Annotation Autosave Tests', function() {
 
 	it('Modify autosave', function() {
 		cy.cSetActiveFrame('#iframe1');
-		insertMultipleComment('impress', 1, false, '#insert-insert-annotation-button');
+		desktopHelper.insertComment();
 		cy.cGet('.leaflet-marker-icon').should('exist');
 		cy.cGet('#annotation-content-area-1').should('have.text','some text0');
 		cy.cGet('.cool-annotation-content-wrapper:visible .cool-annotation-menu').click();
@@ -276,7 +272,7 @@ describe(['tagmultiuser'], 'Multiuser Annotation Autosave Tests', function() {
 
 	it('Modify autosave save', function() {
 		cy.cSetActiveFrame('#iframe1');
-		insertMultipleComment('impress', 1, false, '#insert-insert-annotation-button');
+		desktopHelper.insertComment();
 		cy.cGet('.leaflet-marker-icon').should('exist');
 		cy.cGet('#annotation-content-area-1').should('have.text','some text0');
 		cy.cGet('.cool-annotation-content-wrapper:visible .cool-annotation-menu').click();
@@ -297,7 +293,7 @@ describe(['tagmultiuser'], 'Multiuser Annotation Autosave Tests', function() {
 
 	it('Modify autosave cancel', function() {
 		cy.cSetActiveFrame('#iframe1');
-		insertMultipleComment('impress', 1, false, '#insert-insert-annotation-button');
+		desktopHelper.insertComment();
 		cy.cGet('.leaflet-marker-icon').should('exist');
 		cy.cGet('#annotation-content-area-1').should('have.text','some text0');
 		cy.cGet('.cool-annotation-content-wrapper:visible .cool-annotation-menu').click();
@@ -318,7 +314,7 @@ describe(['tagmultiuser'], 'Multiuser Annotation Autosave Tests', function() {
 
 	it('Reply autosave',function() {
 		cy.cSetActiveFrame('#iframe1');
-		insertMultipleComment('impress', 1, false, '#insert-insert-annotation-button');
+		desktopHelper.insertComment();
 		cy.cGet('.leaflet-marker-icon').should('exist');
 		cy.cGet('.cool-annotation-content > div').should('have.text','some text0');
 		cy.cGet('.cool-annotation-content-wrapper:visible .cool-annotation-menu').click();
@@ -337,7 +333,7 @@ describe(['tagmultiuser'], 'Multiuser Annotation Autosave Tests', function() {
 
 	it('Reply autosave save',function() {
 		cy.cSetActiveFrame('#iframe1');
-		insertMultipleComment('impress', 1, false, '#insert-insert-annotation-button');
+		desktopHelper.insertComment();
 		cy.cGet('.leaflet-marker-icon').should('exist');
 		cy.cGet('.cool-annotation-content > div').should('have.text','some text0');
 		cy.cGet('.cool-annotation-content-wrapper:visible .cool-annotation-menu').click();
@@ -361,7 +357,7 @@ describe(['tagmultiuser'], 'Multiuser Annotation Autosave Tests', function() {
 
 	it('Reply autosave cancel',function() {
 		cy.cSetActiveFrame('#iframe1');
-		insertMultipleComment('impress', 1, false, '#insert-insert-annotation-button');
+		desktopHelper.insertComment();
 		cy.cGet('.leaflet-marker-icon').should('exist');
 		cy.cGet('.cool-annotation-content > div').should('have.text','some text0');
 		cy.cGet('.cool-annotation-content-wrapper:visible .cool-annotation-menu').click();

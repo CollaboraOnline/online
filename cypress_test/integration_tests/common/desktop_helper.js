@@ -310,91 +310,45 @@ function assertImageSize(expectedWidth, expectedHeight) {
 	cy.log('<< assertImageSize - end');
 }
 
-function createComment(docType, text, isMobile, selector) {
-	cy.log('>> createComment - start');
+function insertComment(text = 'some text0', save = true) {
+	cy.log('>> insertComment - start');
 
-	if (docType === 'draw') {
+	var mode = Cypress.env('USER_INTERFACE');
+	if (mode === 'notebookbar') {
+		cy.cGet('#Insert-tab-label').click();
+		cy.cGet('#insert-insert-annotation').click({force: true});
+	} else {
 		cy.cGet('#menu-insert').click();
 		cy.cGet('#menu-insertcomment').click();
 	}
-	else if (!selector) {
-		actionOnSelector('insertAnnotation', (selector) => {
-			cy.cGet(selector).click();
-		});
-	}
-	else
-		cy.cGet(selector).click();
 
-	// Without this wait, the save button click sometimes fails.
-	cy.wait(500);
+	// Use .last() because there might be multiple comments
+	cy.cGet('.cool-annotation').last({log: false}).find('#annotation-modify-textarea-new').type(text);
+	// Click outside modify area to trigger update
+	cy.cGet('.cool-annotation').last({log: false}).find('.cool-annotation-table').click();
+	// Check that comment exists
+	cy.cGet('.cool-annotation').last({log: false}).find('.cool-annotation-textarea').should('contain',text);
 
-	cy.cGet('.cool-annotation-table').should('exist');
+	if (save) {
+		cy.cGet('.cool-annotation').last({log: false}).find('[value="Save"]').click();
+		cy.cGet('.cool-annotation').last({log: false}).find('.modify-annotation').should('not.be.visible');
+		cy.cGet('.cool-annotation').last({log: false}).find('.cool-annotation-content').should('contain',text);
+		// Comments can be automatically hidden after save in some cases,
+		// so we can't check that the final content is visible
+		// cy.cGet('.cool-annotation').last({log: false}).find('.cool-annotation-content').should('be.visible');
 
-	cy.cGet('#annotation-modify-textarea-new').type(text);
-	// Cannot have any action between type and subsequent save button click
-
-	cy.log('<< createComment - end');
-}
-
-function saveComment(isMobile) {
-	cy.log('>> saveComment - start');
-
-	if (isMobile) {
-		cy.cGet('#response-ok').click();
+		// Wait for the animation to stop
+		cy.cGet('.cool-annotation').last({log: false}).invoke('attr','style').should('not.contain','transition');
+		// Need to wait even longer so that modify and reply work
+		// TODO: Find out why newly typed text gets overwritten, find
+		// a way to query for it, and wait only in relevant tests
+		cy.wait(500);
 	} else {
-		// The button id is usually called #annotation-save-new,
-		// but sometimes it is #annotation-save-1
-		cy.cGet('[id^=annotation-save-]').last().click();
-		// Wait for animation
-		cy.wait(100);
+		cy.cGet('.cool-annotation').last({log: false}).find('.cool-annotation-content').should('not.be.visible');
+		cy.cGet('.cool-annotation').last({log: false}).find('.modify-annotation').should('be.visible');
 	}
 
-	cy.log('<< saveComment - end');
-}
-
-function setupUIforCommentInsert(docType) {
-	cy.log('>> setupUIforCommentInsert - start');
-
-	var mode = Cypress.env('USER_INTERFACE');
-
-	if (docType !== 'draw') {
-		cy.cGet('#toolbar-up .w2ui-scroll-right').then($button => {
-			if ($button.is(':visible'))	{
-				$button.click();
-			}
-		});
-	}
-
-	if (mode === 'notebookbar') {
-		cy.cGet('#Insert-tab-label').then($button => {
-			if (!$button.hasClass('selected')) {
-				$button.click();
-			}
-		});
-	}
-
-	if (docType === 'writer' && mode !== 'notebookbar') {
-		cy.cGet('#toolbar-up .w2ui-scroll-right').then($button => {
-			if ($button.is(':visible'))	{
-				$button.click();
-			}
-		});
-	}
-
-	cy.log('<< setupUIforCommentInsert - end');
-}
-
-function insertMultipleComment(docType, numberOfComments = 1, isMobile = false, selector) {
-	cy.log('>> insertMultipleComment - start');
-
-	setupUIforCommentInsert(docType);
-
-	for (var n = 0; n < numberOfComments; n++) {
-		createComment(docType, 'some text' + n, isMobile, selector);
-		saveComment(isMobile);
-	}
-
-	cy.log('<< insertMultipleComment - end');
+	cy.log('<< insertComment - end');
 }
 
 function switchUIToNotebookbar() {
@@ -572,7 +526,7 @@ module.exports.selectZoomLevel = selectZoomLevel;
 module.exports.resetZoomLevel = resetZoomLevel;
 module.exports.insertImage = insertImage;
 module.exports.deleteImage = deleteImage;
-module.exports.insertMultipleComment = insertMultipleComment;
+module.exports.insertComment = insertComment;
 module.exports.actionOnSelector = actionOnSelector;
 module.exports.assertScrollbarPosition = assertScrollbarPosition;
 module.exports.pressKey = pressKey;
@@ -582,6 +536,3 @@ module.exports.switchUIToNotebookbar = switchUIToNotebookbar;
 module.exports.switchUIToCompact = switchUIToCompact;
 module.exports.checkAccessibilityEnabledToBe = checkAccessibilityEnabledToBe;
 module.exports.setAccessibilityState = setAccessibilityState;
-module.exports.setupUIforCommentInsert = setupUIforCommentInsert;
-module.exports.createComment = createComment;
-module.exports.saveComment = saveComment;
