@@ -11,19 +11,19 @@
 
 #include <config.h>
 
-#include <memory>
-#include <ostream>
-#include <string>
+#include <Png.hpp>
+#include <Unit.hpp>
+#include <WebSocketSession.hpp>
+#include <helpers.hpp>
 
 #include <Poco/Exception.h>
 #include <Poco/RegularExpression.h>
 #include <Poco/URI.h>
 #include <test/lokassert.hpp>
 
-#include <Png.hpp>
-#include <Unit.hpp>
-#include <helpers.hpp>
-#include <net/WebSocketSession.hpp>
+#include <memory>
+#include <ostream>
+#include <string>
 
 // Include config.h last, so the test server URI is still HTTP, even in SSL builds.
 #include <config.h>

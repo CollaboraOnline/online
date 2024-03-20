@@ -13,18 +13,14 @@
 
 #include <config.h>
 
-#include <Unit.hpp>
-
-#include <sstream>
-
-#include <common/JsonUtil.hpp>
-#include <net/WebSocketSession.hpp>
-#include <wsd/COOLWSD.hpp>
-#include <wsd/ClientSession.hpp>
-
 #include <HttpRequest.hpp>
+#include <Unit.hpp>
+#include <WebSocketSession.hpp>
+#include <common/JsonUtil.hpp>
 #include <helpers.hpp>
 #include <lokassert.hpp>
+#include <wsd/COOLWSD.hpp>
+#include <wsd/ClientSession.hpp>
 
 using namespace Poco::Net;
 
