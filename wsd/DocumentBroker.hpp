@@ -159,6 +159,11 @@ public:
     void setSMapsFD(int smapsFD) { _smapsFD = smapsFD;}
     int getSMapsFD(){ return _smapsFD; }
 
+    void moveSocketFromTo(const std::shared_ptr<SocketPoll> &from, SocketPoll &to)
+    {
+        to.takeSocket(from, getSocket());
+    }
+
 private:
     const std::string _jailId;
     std::weak_ptr<DocumentBroker> _docBroker;

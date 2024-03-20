@@ -738,6 +738,11 @@ public:
         }
     }
 
+    /// Takes socket from @fromPoll and moves it to this current
+    /// poll. Blocks until the transfer is complete.
+    void takeSocket(const std::shared_ptr<SocketPoll> &fromPoll,
+                    const std::shared_ptr<Socket> &socket);
+
 #if !MOBILEAPP
     /// Inserts a new remote websocket to be polled.
     /// NOTE: The DNS lookup is synchronous.
