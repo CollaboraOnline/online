@@ -31,6 +31,7 @@
 #include <ProxyRequestHandler.hpp>
 #include <RequestDetails.hpp>
 #include <Socket.hpp>
+#include <UserMessages.hpp>
 #include <Util.hpp>
 #include <net/HttpHelper.hpp>
 #if !MOBILEAPP
@@ -64,6 +65,36 @@ extern std::map<std::string, std::shared_ptr<DocumentBroker>> DocBrokers;
 extern std::mutex DocBrokersMutex;
 
 extern void cleanupDocBrokers();
+
+namespace
+{
+
+#if ENABLE_SUPPORT_KEY
+inline void shutdownLimitReached(const std::shared_ptr<ProtocolHandlerInterface>& proto)
+{
+    if (!proto)
+        return;
+
+    const std::string error = Poco::format(PAYLOAD_UNAVAILABLE_LIMIT_REACHED, COOLWSD::MaxDocuments,
+                                           COOLWSD::MaxConnections);
+    LOG_INF("Sending client 'hardlimitreached' message: " << error);
+
+    try
+    {
+        // Let the client know we are shutting down.
+        proto->sendTextMessage(error.data(), error.size());
+
+        // Shutdown.
+        proto->shutdown(true, error);
+    }
+    catch (const std::exception& ex)
+    {
+        LOG_ERR("Error while shutting down socket on reaching limit: " << ex.what());
+    }
+}
+#endif
+
+} // end anonymous namespace
 
 /// Find the DocumentBroker for the given docKey, if one exists.
 /// Otherwise, creates and adds a new one to DocBrokers.
@@ -135,8 +166,9 @@ findOrCreateDocBroker(DocumentBroker::ChildType type, const std::string& uri,
                     << COOLWSD::MaxDocuments << " reached while loading new session [" << id
                     << "] for docKey [" << docKey << ']');
 #if ENABLE_SUPPORT_KEY
-            shutdownLimitReached(proto);
-            return nullptr;
+            const std::string error = Poco::format(PAYLOAD_UNAVAILABLE_LIMIT_REACHED,
+                                                   COOLWSD::MaxDocuments, COOLWSD::MaxConnections);
+            return std::make_pair(nullptr, error);
 #endif
         }
 
