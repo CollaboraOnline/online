@@ -18,6 +18,8 @@ html[dir='rtl'] .sub-menu-arrow {
 	height: 36px;
 	position: relative;
 	z-index: 1002;
+	display: flex;
+	align-items: center; /* Align items vertically */
 }
 #toolbar-hamburger.menuwizard-opened {
 	width: 36px;
@@ -170,6 +172,7 @@ textarea.cool-annotation-textarea {
 #toolbar-wrapper.mobile{
 	border-top: none;
 	z-index: auto !important;
+	flex-direction: row;
 }
 
 .insertshape-grid {
