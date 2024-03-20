@@ -325,6 +325,8 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	z-index: 11 !important;
 	border-bottom: 1px solid var(--color-border);
 	background-color: var(--color-background-lighter);
+	display: flex;
+	flex-direction: column;
 }
 #toolbar-wrapper:not(.mobile) {
 	padding: 3px 0;
