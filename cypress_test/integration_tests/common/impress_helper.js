@@ -120,11 +120,13 @@ function removeShapeSelection() {
 				var XPos = items[0].getBoundingClientRect().left + 10;
 				var YPos = items[0].getBoundingClientRect().top + 10;
 				cy.cGet('body').click(XPos, YPos);
+				cy.cGet('body').type('{esc}');
+				cy.cGet('body').type('{esc}');
 			});
 
 		return cy.cGet('.leaflet-overlay-pane svg')
-		.then(function(overlay) {
-				return overlay.find('[style*="cursor"]').length === 0;
+			.then(function(overlay) {
+				return overlay.children('g').length === 0;
 			});
 	});
 
