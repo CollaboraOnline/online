@@ -451,8 +451,10 @@ L.Map.Keyboard = L.Handler.extend({
 			return;
 		}
 
-		if (window.KeyboardShortcuts.processEvent(app.UI.language.fromURL, ev))
+		if (window.KeyboardShortcuts.processEvent(app.UI.language.fromURL, ev)) {
+			ev.preventDefault();
 			return;
+		}
 
 		var docLayer = this._map._docLayer;
 		if (!keyEventFn && docLayer.postKeyboardEvent) {
@@ -460,7 +462,6 @@ L.Map.Keyboard = L.Handler.extend({
 			keyEventFn = L.bind(docLayer.postKeyboardEvent, docLayer);
 		}
 
-		var docType = this._map._docLayer._docType;
 		this.modifier = 0;
 		var shift = ev.shiftKey ? UNOModifier.SHIFT : 0;
 		var ctrl = (ev.ctrlKey || ev.metaKey) ? UNOModifier.CTRL : 0;
@@ -510,119 +511,6 @@ L.Map.Keyboard = L.Handler.extend({
 			// But don't ignore it for Alt + non-printing keys.
 			this.modifier -= alt;
 			alt = 0;
-		}
-
-		// handle help - F1
-		if (ev.type === 'keydown' && !ev.altKey && !this.modifier && keyCode === this.keyCodes.F1) {
-			this._map.showHelp('online-help-content');
-			ev.preventDefault();
-			return;
-		}
-
-		// save-as for German shortcuts - F12.
-		if (ev.type === 'keydown' && !ev.altKey && !this.modifier && keyCode === this.keyCodes.F12 && app.UI.language.fromURL === 'de' && ['text', 'spreadsheet', 'presentation'].includes(docType)) {
-			if (this._map.uiManager.getCurrentMode() === 'notebookbar') {
-				this._map.openSaveAs(); // Opens save as dialog if integrator supports it.
-				ev.preventDefault();
-				return;
-			}
-		}
-
-		if (ev.type === 'keydown' && !ev.altKey && ev.shiftKey && keyCode === this.keyCodes.F9 && app.UI.language.fromURL === 'de' && docType === 'presentation') {
-			this._map.sendUnoCommand('.uno:GridVisible');
-			ev.preventDefault();
-			return;
-		}
-
-		if (ev.type === 'keydown' && !ev.altKey && ev.shiftKey && keyCode === this.keyCodes.F3 && app.UI.language.fromURL === 'de' && docType === 'presentation') {
-			this._map.sendUnoCommand('.uno:ChangeCaseRotateCase');
-			ev.preventDefault();
-			return;
-		}
-
-		if (ev.type === 'keydown' && !ev.altKey && ev.shiftKey && keyCode === this.keyCodes.F5 && app.UI.language.fromURL === 'de' && docType === 'presentation') {
-			this._map.fire('fullscreen', { startSlideNumber: this._map.getCurrentPartNumber() });
-			ev.preventDefault();
-			return;
-		}
-
-		if (ev.type === 'keydown' && !ev.altKey && ev.shiftKey && keyCode === this.keyCodes.F3 && app.UI.language.fromURL === 'de' && ['text', 'spreadsheet'].includes(docType)) {
-			if (docType === 'text')
-				this._map.sendUnoCommand('.uno:ChangeCaseRotateCase');
-			else if (docType === 'spreadsheet')
-				this._map.sendUnoCommand('.uno:FunctionDialog'); // Insert function wizard in Calc.
-
-			ev.preventDefault();
-			return;
-		}
-
-		if (ev.type === 'keydown' && ev.altKey && ev.keyCode === this.keyCodes.F1) {
-			var tabsContainer = document.getElementsByClassName('notebookbar-tabs-container')[0].children[0];
-			var elementToFocus;
-			if (tabsContainer) {
-				for (var i = 0; i < tabsContainer.children.length; i++) {
-					if (tabsContainer.children[i].classList.contains('selected')) {
-						elementToFocus = tabsContainer.children[i];
-						break;
-					}
-				}
-			}
-			if (!elementToFocus)
-				elementToFocus = document.getElementById('Home-tab-label');
-
-			elementToFocus.focus();
-			ev.preventDefault();
-			return;
-		}
-
-		// disable F2 in Writer, formula bar is unsupported, and messes with further input
-		if (ev.type === 'keydown' && !this.modifier && keyCode === this.keyCodes.F2 && docType === 'text') {
-			ev.preventDefault();
-			return;
-		}
-
-		// Comment in Calc.
-		if (ev.type === 'keydown' && ev.shiftKey && !ev.altKey && keyCode === this.keyCodes.F2 && docType === 'spreadsheet' && app.UI.language.fromURL === 'de') {
-			this._map.insertComment();
-			ev.preventDefault();
-			return;
-		}
-
-		if (ev.type === 'keydown' && !this.modifier && keyCode === this.keyCodes.F4 && docType === 'spreadsheet' && app.UI.language.fromURL === 'de') {
-			if (this._map._docLayer.insertMode === true) {
-				this._map.sendUnoCommand('.uno:ToggleRelative');
-				ev.preventDefault();
-				return;
-			}
-		}
-
-		// Recalculate Calc.
-		if (ev.type === 'keydown' && !this.modifier && keyCode === this.keyCodes.F9 && docType === 'spreadsheet' && app.UI.language.fromURL === 'de') {
-			this._map.sendUnoCommand('.uno:Calculate');
-			ev.preventDefault();
-			return;
-		}
-
-		// don't trigger browser reload on F5, launch slideshow in Impress
-		if (ev.type === 'keydown' && keyCode === this.keyCodes.F5) {
-			ev.preventDefault();
-			if (docType === 'presentation') {
-				this._map.fire('fullscreen');
-			}
-			else if (docType === 'text' && !this.modifier && app.UI.language.fromURL === 'de') {
-				this._map.sendUnoCommand('.uno:GoToPage');
-			}
-			else if (docType === 'spreadsheet' && !this.modifier && app.UI.language.fromURL === 'de') {
-				document.getElementById('addressInput').focus();
-			}
-
-			return;
-		}
-
-		if (ev.type === 'keydown' && ev.altKey && this.keyCodes.NUM0.includes(ev.keyCode)) {
-			app.socket.sendMessage('uno .uno:FormatCellDialog');
-			ev.preventDefault();
-			return;
 		}
 
 		var unoKeyCode = this._toUNOKeyCode(keyCode);
@@ -702,23 +590,6 @@ L.Map.Keyboard = L.Handler.extend({
 				// tab would change focus to other DOM elements
 				ev.preventDefault();
 			}
-		}
-		else if (!this.modifier && (keyCode === this.keyCodes.pageUp || keyCode === this.keyCodes.pageDown) && ev.type === 'keydown') {
-			if (docType === 'presentation' || docType === 'drawing') {
-				var partToSelect = keyCode === this.keyCodes.pageUp ? 'prev' : 'next';
-				this._map._docLayer._preview._scrollViewByDirection(partToSelect);
-				if (app.file.fileBasedView)
-					this._map._docLayer._checkSelectedPart();
-			}
-			return;
-		}
-		else if (!this.modifier && (keyCode === this.keyCodes.END || keyCode === this.keyCodes.HOME) && ev.type === 'keydown') {
-			if (docType === 'drawing' && app.file.fileBasedView === true) {
-				partToSelect = keyCode === this.keyCodes.HOME ? 0 : this._map._docLayer._parts -1;
-				this._map._docLayer._preview._scrollViewToPartPosition(partToSelect);
-				this._map._docLayer._checkSelectedPart();
-			}
-			return;
 		}
 		else if (ev.type === 'keydown') {
 			var key = ev.keyCode;
