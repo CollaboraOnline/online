@@ -201,21 +201,17 @@ m4_ifelse(MOBILEAPP,[true],
       </div>
      </nav>
 
-     <table id="toolbar-wrapper">
-     <tr>
-       <td id="toolbar-logo"></td>
-       <td id="toolbar-mobile-back" class="editmode-off"></td>
-       <td id="toolbar-up"></td>
-       <td id="toolbar-hamburger">
+     <div id="toolbar-wrapper">
+       <div id="toolbar-logo"></div>
+       <div id="toolbar-mobile-back" class="editmode-off"></div>
+       <div id="toolbar-up"></div>
+       <div id="toolbar-hamburger">
          <label class="main-menu-btn" for="main-menu-state">
            <span class="main-menu-btn-icon" id="main-menu-btn-icon"></span>
          </label>
-       </td>
-     </tr>
-     <tr>
-       <td colspan="4" id="formulabar" style="display: none"></td>
-     </tr>
-    </table>
+       </div>
+       <div colspan="4" id="formulabar" style="display: none"></div>
+    </div>
 
     <input id="insertgraphic" aria-labelledby="menu-insertgraphic" type="file" accept="image/*" style="position: fixed; top: -100em">
     <input id="selectbackground" aria-labelledby="menu-selectbackground" type="file" accept="image/*" style="position: fixed; top: -100em">
