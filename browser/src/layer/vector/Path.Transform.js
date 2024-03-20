@@ -1433,6 +1433,8 @@ L.Handler.PathTransform = L.Handler.extend({
 
 		this._rect._transform(matrix);
 		rect._updatePath();
+		if (!this._rect._map)
+			this._rect._map = rect._map = this._map;
 		rect._project();
 	},
 
