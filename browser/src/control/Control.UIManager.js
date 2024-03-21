@@ -1714,7 +1714,7 @@ L.Control.UIManager = L.Control.extend({
 		var elem = $(element);
 		if (window.mode.isDesktop()) {
 			elem.tooltip();
-			elem.click(function() {
+			elem.on("mousedown", function() {
 				$('.ui-tooltip').fadeOut(function() {
 					$(this).remove();
 				});
