@@ -832,7 +832,7 @@ L.TextInput = L.Layer.extend({
 		if (this._hasFormulaBarFocus() && content.length) {
 			var contentString = this.codePointsToString(content);
 			if (contentString[matchTo] === '\n' || contentString.charCodeAt(matchTo) === 13) {
-				this._map.dispatch('acceptformula');
+				app.dispatcher.dispatch('acceptformula');
 			}
 		}
 	},

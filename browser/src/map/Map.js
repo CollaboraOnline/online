@@ -283,6 +283,7 @@ L.Map = L.Evented.extend({
 			this._docLoaded = e.status;
 			if (this._docLoaded) {
 				app.idleHandler.notifyActive();
+				app.dispatcher = new app.definitions['dispatcher']();
 				if (!document.hasFocus()) {
 					this.fire('editorgotfocus');
 					this.focus();

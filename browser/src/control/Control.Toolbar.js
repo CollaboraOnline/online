@@ -103,7 +103,7 @@ function onClick(e, id, item) {
 		map.executeUnoAction(item);
 	}
 	else if (item.id === 'print-active-sheet' || item.id === 'print-all-sheets') {
-		map.dispatch(item.id);
+		app.dispatcher.dispatch(item.id);
 	}
 	else if (id === 'print') {
 		map.print();

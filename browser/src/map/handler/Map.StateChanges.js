@@ -3,7 +3,7 @@
  * L.Map.StateChanges stores the state changes commands coming from core
  * LOK_CALLBACK_STATE_CHANGED callback
  */
-/* global $ */
+/* global $ app */
 /*eslint no-extend-native:0*/
 L.Map.mergeOptions({
 	stateChangeHandler: true
@@ -57,8 +57,7 @@ L.Map.StateChangeHandler = L.Handler.extend({
 		if (e.commandName === '.uno:StartWithPresentation' && (state === true || state === 'true')) {
 			let startPresentationParam = window.coolParams.get('startPresentation');
 			if (startPresentationParam === '' || startPresentationParam === 'true' || startPresentationParam === '1') {
-
-				this._map.dispatch('presentation');
+				app.dispatcher.dispatch('presentation');
 			}
 		}
 

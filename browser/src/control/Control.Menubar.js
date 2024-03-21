@@ -1873,9 +1873,9 @@ L.Control.Menubar = L.Control.extend({
 		} else if (id === 'saveas' && type !== 'menu') { // jsdialog has no type='action'
 			this._map.openSaveAs();
 		} else if (id === 'savecomments') {
-			this._map.dispatch('savecomments');
+			app.dispatcher.dispatch('savecomments');
 		} else if (id === 'shareas' || id === 'ShareAs') {
-			this._map.dispatch('shareas');
+			app.dispatcher.dispatch('shareas');
 		} else if (id === 'print') {
 			this._map.print();
 		} else if (id.startsWith('downloadas-')
@@ -1889,7 +1889,7 @@ L.Control.Menubar = L.Control.extend({
 			|| id === 'home-search'
 			|| id === 'print-active-sheet'
 			|| id == 'print-all-sheets') {
-			this._map.dispatch(id);
+			app.dispatcher.dispatch(id);
 		} else if (id === 'insertcomment') {
 			this._map.insertComment();
 		} else if (id === 'insertgraphic') {
@@ -1901,7 +1901,7 @@ L.Control.Menubar = L.Control.extend({
 		} else if (id === 'zoomin' && this._map.getZoom() < this._map.getMaxZoom()) {
 			this._map.zoomIn(1, null, true /* animate? */);
 		} else if (id === 'showresolved') {
-			this._map.dispatch('.uno:ShowResolvedAnnotations');
+			app.dispatcher.dispatch('.uno:ShowResolvedAnnotations');
 		} else if (id === 'zoomout' && this._map.getZoom() > this._map.getMinZoom()) {
 			this._map.zoomOut(1, null, true /* animate? */);
 		} else if (id === 'zoomreset') {
@@ -1947,11 +1947,11 @@ L.Control.Menubar = L.Control.extend({
 		} else if (id === 'forum') {
 			window.open('https://forum.collaboraonline.com', '_blank');
 		} else if (id === 'inserthyperlink') {
-			this._map.dispatch('hyperlinkdialog');
+			app.dispatcher.dispatch('hyperlinkdialog');
 		} else if (id === 'keyboard-shortcuts' || id === 'online-help') {
 			this._map.showHelp(id + '-content');
 		} else if (L.Params.revHistoryEnabled && (id === 'rev-history' || id === 'Rev-History' || id === 'last-mod')) {
-			this._map.dispatch('rev-history');
+			app.dispatcher.dispatch('rev-history');
 		} else if (id === 'closedocument') {
 			window.onClose();
 		} else if (id === 'repair') {
@@ -1979,9 +1979,9 @@ L.Control.Menubar = L.Control.extend({
 		} else if (id.indexOf('morelanguages-') != -1) {
 			this._map.fire('morelanguages', { applyto: id.substr('morelanguages-'.length) });
 		} else if (id === 'acceptalltrackedchanges') {
-			this._map.dispatch('.uno:AcceptAllTrackedChanges');
+			app.dispatcher.dispatch('.uno:AcceptAllTrackedChanges');
 		} else if (id === 'rejectalltrackedchanges') {
-			this._map.dispatch('.uno:RejectAllTrackedChanges');
+			app.dispatcher.dispatch('.uno:RejectAllTrackedChanges');
 		}
 		// Inform the host if asked
 		if (postmessage)

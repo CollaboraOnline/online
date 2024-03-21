@@ -23,7 +23,7 @@
  * }
  */
 
-/* global JSDialog $ */
+/* global JSDialog $ app */
 
 function _menubuttonControl (parentContainer, data, builder) {
 	var ids;
@@ -96,7 +96,7 @@ function _menubuttonControl (parentContainer, data, builder) {
 					JSDialog.CloseDropdown(dropdownId);
 					return true;
 				} else if (eventType === 'selected' && entry.action) {
-					builder.map.dispatch(entry.action);
+					app.dispatcher.dispatch(entry.action);
 					JSDialog.CloseDropdown(dropdownId);
 					return true;
 				} else if (eventType === 'selected') {
