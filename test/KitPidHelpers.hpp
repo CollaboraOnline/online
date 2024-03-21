@@ -51,12 +51,9 @@ pid_t getForKitPid();
 void logKitProcesses(const std::string& testname);
 
 /*
- * Wait until the number of kit processes matches the desired count.
- * Set numDocKits and numSpareKits to -1 to skip counting those processes
+ * SIGKILL relevant pid
  */
-void waitForKitProcessCount(const std::string& testname, int numDocKits, int numSpareKits,
-        const std::chrono::milliseconds timeoutMs,
-        const std::chrono::milliseconds retryMs);
+void killPid(const std::string& testname, const pid_t pid);
 
 /*
  * Wait until ready with 0 doc kits and 1 spare kit
@@ -69,11 +66,10 @@ void waitForKitPidsReady(
         const std::chrono::milliseconds retryMs = std::chrono::milliseconds(KIT_PID_RETRY_MS));
 
 /*
- * Wait until all doc and spare kits are closed
+ * Kill all and wait for previous processes to die
  */
-void waitForKitPidsKilled(
-        const std::string& testname,
-        const std::chrono::milliseconds timeoutMs = std::chrono::milliseconds(KIT_PID_TIMEOUT_MS),
-        const std::chrono::milliseconds retryMs = std::chrono::milliseconds(KIT_PID_RETRY_MS));
+void killAllKitProcesses(const std::string& testname,
+                         const std::chrono::milliseconds timeoutMs = std::chrono::milliseconds(KIT_PID_TIMEOUT_MS),
+                         const std::chrono::milliseconds retryMs = std::chrono::milliseconds(KIT_PID_RETRY_MS));
 
 } // namespace helpers

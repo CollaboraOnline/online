@@ -64,9 +64,7 @@ class HTTPCrashTest : public CPPUNIT_NS::TestFixture
     void testRecoverAfterKitCrash();
     void testCrashForkit();
 
-    void killPid(const pid_t pid, const std::string& testname);
     void killDocKitProcesses(const std::string& testname);
-    void killAllKitProcesses(const std::string& testname);
 
 public:
     HTTPCrashTest()
@@ -114,8 +112,7 @@ void HTTPCrashTest::testBarren()
     try
     {
         TST_LOG("Killing all kits");
-        killAllKitProcesses(testname);
-        waitForKitPidsKilled(testname);
+        helpers::killAllKitProcesses(testname);
 
         // Do not wait for spare kit to start up here
 
@@ -150,8 +147,7 @@ void HTTPCrashTest::testCrashKit()
         std::this_thread::sleep_for(std::chrono::seconds(1));
 
         TST_LOG("Killing coolkit instances.");
-        killAllKitProcesses(testname);
-        waitForKitPidsKilled(testname);
+        helpers::killAllKitProcesses(testname);
 
         // TST_LOG("Reading the error code from the socket.");
         //FIXME: implement in WebSocketSession.
@@ -186,7 +182,6 @@ void HTTPCrashTest::testRecoverAfterKitCrash()
 
         TST_LOG("Killing coolkit instances.");
         killDocKitProcesses(testname);
-        waitForKitPidsReady(testname);
 
         TST_LOG("Reconnect after kill.");
         std::shared_ptr<http::WebSocketSession> socket2 = loadDocAndGetSession(
@@ -222,7 +217,7 @@ void HTTPCrashTest::testCrashForkit()
         std::this_thread::sleep_for(std::chrono::seconds(1));
 
         TST_LOG("Killing forkit.");
-        killPid(getForKitPid(), testname);
+        helpers::killPid(testname, getForKitPid());
 
         TST_LOG("Communicating after kill.");
         sendTextFrame(socket, "status", testname);
@@ -234,8 +229,7 @@ void HTTPCrashTest::testCrashForkit()
                            socket->waitForDisconnection(std::chrono::seconds(5)));
 
         TST_LOG("Killing coolkit.");
-        killAllKitProcesses(testname);
-        waitForKitPidsKilled(testname);
+        helpers::killAllKitProcesses(testname);
 
         // Forkit should restart
         waitForKitPidsReady(testname);
@@ -255,29 +249,13 @@ void HTTPCrashTest::testCrashForkit()
     }
 }
 
-void HTTPCrashTest::killPid(const pid_t pid, const std::string& testname)
-{
-    TST_LOG("Killing " << pid);
-    if (kill(pid, SIGKILL) == -1)
-    {
-        TST_LOG("kill(" << pid << ", SIGKILL) failed: " << Util::symbolicErrno(errno) << ": " << std::strerror(errno));
-    }
-}
-
 void HTTPCrashTest::killDocKitProcesses(const std::string& testname)
 {
     for (pid_t pid : getDocKitPids())
     {
-        killPid(pid, testname);
+        helpers::killPid(testname, pid);
     }
-}
-
-void HTTPCrashTest::killAllKitProcesses(const std::string& testname)
-{
-    for (pid_t pid : getKitPids())
-    {
-        killPid(pid, testname);
-    }
+    waitForKitPidsReady(testname);
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(HTTPCrashTest);
