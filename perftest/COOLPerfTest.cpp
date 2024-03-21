@@ -1,0 +1,99 @@
+/* -*- Mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4; fill-column: 100 -*- */
+/*
+ * Copyright the Collabora Online contributors.
+ *
+ * SPDX-License-Identifier: MPL-2.0
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+#include <config.h>
+
+#include <sysexits.h>
+#include <filesystem>
+#include <memory>
+
+#include <Poco/Util/Application.h>
+#include <Poco/URI.h>
+
+#include <net/Ssl.hpp>
+#if ENABLE_SSL
+#  include <SslSocket.hpp>
+#endif
+#include <Log.hpp>
+
+#include <perftest/PerfTest.hpp>
+#include <perftest/SamplePerfTest.hpp>
+#include <perftest/PerfTestSocketHandler.hpp>
+
+class COOLPerfTest : public Poco::Util::Application
+{
+public:
+    COOLPerfTest() {}
+protected:
+    int  main(const std::vector<std::string>& args) override;
+};
+
+// coverity[root_function] : don't warn about uncaught exceptions
+int COOLPerfTest::main(const std::vector<std::string>& args)
+{
+
+    // Temporarily silence unused parameter warning
+    for (std::string arg : args) {
+        std::cout << "Args: " << arg << std::endl;
+    }
+    /*
+    if (args.size() != 1) {
+        std::cerr << "Usage: ./coolperftest <server>" << std::endl;
+        std::cerr << "       server : Started separately. URI must start with ws:// or wss://. eg: wss://localhost:9980" << std::endl;
+        std::cerr << "       See README for more info." << std::endl;
+        return EX_USAGE;
+    }
+    std::string server = args[0];
+    if (!server.starts_with("ws")) {
+        std::cerr << "Server must start with ws:// or wss://. Server was: " << server << std::endl;
+        return EX_USAGE;
+    }
+    */
+    std::string server = "wss://localhost:9980";
+
+#if ENABLE_SSL
+    ssl::Manager::initializeClientContext("", "", "",
+            "ALL:!ADH:!LOW:!EXP:!MD5:@STRENGTH",
+            ssl::CertificateVerification::Disabled);
+    if (!ssl::Manager::isClientContextInitialized()) {
+        std::cerr << "Failed to initialize Client SSL.\n";
+        return EX_SOFTWARE;
+    }
+#endif
+
+    std::cerr << "Starting" << std::endl;
+    Log::setLevel("warning");
+
+    SamplePerfTest perfTest(server);
+    std::cerr << "runTest..." << std::endl;
+    perfTest.runTest();
+    std::cerr << "runTest DONE" << std::endl;
+
+    if (perfTest.isFinished()) {
+        std::cerr << "Finished" << std::endl;
+    } else {
+        std::cerr << "Did not finish measurement";
+        if (!perfTest.isStarted()) {
+            std::cerr << " (Never started)";
+        }
+        std::cerr << std::endl;
+        return EX_SOFTWARE;
+    }
+
+    perfTest.printResults();
+
+    return EX_OK;
+}
+
+// coverity[root_function] : don't warn about uncaught exceptions
+POCO_APP_MAIN(COOLPerfTest)
+
+/* vim:set shiftwidth=4 softtabstop=4 expandtab: */

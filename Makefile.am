@@ -306,6 +306,18 @@ coolsocketdump_SOURCES = tools/WebSocketDump.cpp \
 			 common/DummyTraceEventEmitter.cpp \
 			 $(shared_sources)
 
+noinst_PROGRAMS += coolperftest
+
+coolperftest_CPPFLAGS = ${include_paths} #-DTDOC=\"$(abs_top_srcdir)/test/data\"
+coolperftest_SOURCES = $(shared_sources) \
+                       perftest/COOLPerfTest.cpp \
+                       perftest/PerfTest.hpp \
+                       perftest/PerfTest.cpp \
+                       perftest/PerfTestSocketHandler.hpp \
+                       perftest/PerfTestSocketHandler.cpp \
+                       perftest/SamplePerfTest.hpp \
+                       common/DummyTraceEventEmitter.cpp
+
 wsd_headers = wsd/Admin.hpp \
               wsd/AdminModel.hpp \
               wsd/Auth.hpp \
