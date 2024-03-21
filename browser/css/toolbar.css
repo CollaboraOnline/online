@@ -175,6 +175,11 @@ w2ui-toolbar {
 	box-sizing: border-box;
 }
 
+#presentation-buttons-toolbar {
+	display: grid;
+	grid-auto-flow: column;
+}
+
 .w2ui-toolbar .w2ui-break {
 	height: 18px;
 	background-image: none;

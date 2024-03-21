@@ -85,7 +85,7 @@ describe.skip(['tagdesktop'], 'Scroll through document, insert/delete items', fu
 
 	it('Insert/delete updated on Navigator', function() {
 		//create a new page
-		helper.clickOnIdle('#tb_presentation-toolbar_item_insertpage');
+		helper.clickOnIdle('#presentation-toolbar #insertpage');
 		cy.cGet('#tree').contains('.jsdialog.sidebar.ui-treeview-cell-text', 'Page 5').should('exist');
 		cy.cGet('#toolbar-up > .w2ui-scroll-right').click();
 

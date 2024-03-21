@@ -297,6 +297,19 @@ class Dispatcher {
 				app.map._docLayer._checkSelectedPart();
 			}
 		};
+
+		this.actionsMap['hideslide'] = function () {
+			app.map.hideSlide();
+		};
+		this.actionsMap['showslide'] = function () {
+			app.map.showSlide();
+		};
+		this.actionsMap['duplicatepage'] = function () {
+			app.map.duplicatePage();
+		};
+		this.actionsMap['insertpage'] = function () {
+			app.map.insertPage();
+		};
 	}
 
 	private addZoteroCommands() {

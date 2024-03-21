@@ -206,7 +206,7 @@ function addSlide(numberOfSlides) {
 	cy.cGet('.preview-frame').then(function (result) {
 		var origSlides = result.length;
 		for (let i = 0; i < numberOfSlides; i++) {
-			cy.cGet('#tb_presentation-toolbar_item_insertpage')
+			cy.cGet('#presentation-toolbar #insertpage')
 				.should('not.have.class', 'disabled')
 				.click();
 		}

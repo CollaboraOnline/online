@@ -289,6 +289,7 @@ button.ui-tab.notebookbar {
 }
 
 .unotoolbutton.notebookbar.disabled:not(.unospan-shortcutstoolbox),
+.unotoolbutton[disabled]:not(.unospan-shortcutstoolbox),
 .mobile-wizard-widebutton.disabled,
 .locking-disabled {
 	opacity: 0.65;
@@ -303,7 +304,9 @@ button.ui-tab.notebookbar {
 	display: none !important;
 }
 
-.unotoolbutton.notebookbar.disabled img, .mobile-wizard-widebutton.disabled img {
+.unotoolbutton.notebookbar.disabled img,
+.mobile-wizard-widebutton.disabled img,
+.unotoolbutton[disabled] img {
 	-webkit-filter: grayscale(100%) brightness(100%);
 	filter: grayscale(100%) brightness(100%);
 }

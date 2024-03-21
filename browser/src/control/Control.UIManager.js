@@ -344,7 +344,7 @@ L.Control.UIManager = L.Control.extend({
 		}
 
 		if (this.map.isPresentationOrDrawing() && (isDesktop || window.mode.isTablet())) {
-			this.map.addControl(L.control.presentationBar());
+			JSDialog.PresentationBar(this.map);
 		}
 
 		if (window.mode.isMobile() || (window.mode.isTablet() && !enableNotebookbar)) {

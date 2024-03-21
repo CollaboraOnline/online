@@ -9,17 +9,23 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 /*
- * L.Control.PresentationBar
+ * JSDialog.PresentationBar - buttons for adding/removing slides
  */
 
-/* global $ w2ui _ _UNO app */
-L.Control.PresentationBar = L.Control.extend({
-	options: {
-		shownavigation: true
-	},
+/* global JSDialog _ _UNO */
 
-	onAdd: function (map) {
+class PresentationBar {
+
+	constructor(map) {
 		this.map = map;
+		this.parentContainer = L.DomUtil.get('presentation-toolbar');
+		this.builder = new L.control.jsDialogBuilder(
+			{
+				mobileWizard: this,
+				map: this.map,
+				cssClass: 'jsdialog'
+			});
+
 		this.create();
 
 		map.on('wopiprops', this.onWopiProps, this);
@@ -31,42 +37,96 @@ L.Control.PresentationBar = L.Control.extend({
 			this.map.on('updateparts', this.onSlideHideToggle, this);
 			this.map.on('toggleslidehide', this.onSlideHideToggle, this);
 		}
-	},
+	}
 
-	create: function() {
-		var that = this;
-		var toolbar = $('#presentation-toolbar');
-		toolbar.w2toolbar({
-			name: 'presentation-toolbar',
-			hidden: true,
-			items: [
-				{type: 'html',  id: 'left'},
-				{type: 'button',  id: 'presentation', img: 'presentation', hidden:true, hint: this._getItemUnoName('presentation')},
-				{type: 'break', id: 'presentationbreak', hidden:true},
-				{type: 'button',  id: 'insertpage', img: 'insertpage', hint: this._getItemUnoName('insertpage')},
-				{type: 'button',  id: 'duplicatepage', img: 'duplicatepage', hint: this._getItemUnoName('duplicatepage')},
-				{type: 'button',  id: 'deletepage', img: 'deletepage', hint: this._getItemUnoName('deletepage')},
-				{type: 'button', id: 'showslide', img: 'showslide', hidden: that.map.getDocType() !== 'presentation', hint: _UNO('.uno:ShowSlide', 'presentation')},
-				{type: 'button', id: 'hideslide', img: 'hideslide', hidden: that.map.getDocType() !== 'presentation', hint: _UNO('.uno:HideSlide', 'presentation')},
-				{type: 'html',  id: 'right'}
-			],
-			onClick: function (e) {
-				that.onClick(e, e.target);
-				window.hideTooltip(this, e.target);
+	create() {
+		if (this.parentContainer.firstChild)
+			return;
+
+		var data = [
+			{
+				id: 'presentation-buttons-toolbar',
+				type: 'toolbox',
+				children: [
+					{
+						id: 'presentation',
+						type: 'customtoolitem',
+						text: this._getItemUnoName('presentation'),
+						command: 'presentation',
+						visible: false
+					},
+					{
+						id: 'presentationbreak',
+						type: 'separator',
+						orientation: 'vertical',
+						visible: false
+					},
+					{
+						id: 'insertpage',
+						type: 'customtoolitem',
+						text: this._getItemUnoName('insertpage'),
+						command: 'insertpage',
+					},
+					{
+						id: 'duplicatepage',
+						type: 'customtoolitem',
+						text: this._getItemUnoName('duplicatepage'),
+						command: 'duplicatepage',
+					},
+					{
+						id: 'deletepage',
+						type: 'customtoolitem',
+						text: this._getItemUnoName('deletepage'),
+						command: 'deletepage'
+					},
+					{
+						id: 'showslide',
+						type: 'customtoolitem',
+						text: _UNO('.uno:ShowSlide', 'presentation'),
+						command: 'showslide',
+						visible: this.map.getDocType() === 'presentation'
+					},
+					{
+						id: 'hideslide',
+						type: 'customtoolitem',
+						text: _UNO('.uno:HideSlide', 'presentation'),
+						command: 'hideslide',
+						visible: this.map.getDocType() === 'presentation'
+					}
+				]
 			}
-		});
+		];
 
-		this.map.uiManager.enableTooltip(toolbar);
+		this.parentContainer.innerHTML = '';
+		this.builder.build(this.parentContainer, data);
 
 		if (this.map.getDocType() === 'drawing')
-			w2ui['presentation-toolbar'].disable('presentation');
+			this.enableItem('presentation', false);
+	}
 
-		toolbar.bind('touchstart', function() {
-			w2ui['presentation-toolbar'].touchStarted = true;
+	enableItem(command, enable) {
+		this.builder.executeAction(this.parentContainer, {
+			'control_id': command,
+			'action_type': enable ? 'enable' : 'disable'
 		});
-	},
+	}
 
-	_getItemUnoName: function(id) {
+	showItem(command, show) {
+		this.builder.executeAction(this.parentContainer, {
+			'control_id': command,
+			'action_type': show ? 'show' : 'hide'
+		});
+	}
+
+	uncheck() {
+		// TODO
+	}
+
+	show() {
+		this.parentContainer.style.display = 'grid';
+	}
+
+	_getItemUnoName(id) {
 		var docType = this.map.getDocType();
 		switch (id) {
 		case 'presentation':
@@ -79,106 +139,52 @@ L.Control.PresentationBar = L.Control.extend({
 			return docType === 'presentation' ? _UNO('.uno:DeleteSlide', 'presentation') : _UNO('.uno:DeletePage', 'presentation');
 		}
 		return '';
-	},
+	}
 
-	onDelete: function(e) {
-		if (e !== false) {
-			this.map.deletePage();
-		}
-	},
-
-	onClick: function(e, id, item) {
-		if ('presentation-toolbar' in w2ui && w2ui['presentation-toolbar'].get(id) !== null) {
-			var toolbar = w2ui['presentation-toolbar'];
-			item = toolbar.get(id);
-		}
-
-		this.map.preventKeyboardPopup(id);
-
-		if (item.disabled) {
-			return;
-		}
-
-		if ((id === 'presentation') && this.map.getDocType() === 'presentation') {
-			this.map.fire('fullscreen');
-		}
-		else if (id === 'insertpage') {
-			this.map.insertPage();
-		}
-		else if (id === 'duplicatepage') {
-			this.map.duplicatePage();
-		}
-		else if (id === 'deletepage') {
-			app.dispatcher.dispatch('deletepage');
-		}
-		else if (id === 'showslide') {
-			this.map.showSlide();
-		}
-		else if (id === 'hideslide') {
-			this.map.hideSlide();
-		}
-	},
-
-	onWopiProps: function(e) {
+	onWopiProps(e) {
 		if (e.HideExportOption) {
-			w2ui['presentation-toolbar'].hide('presentation', 'presentationbreak');
+			this.hideItem('presentation');
+			this.hideItem('presentationbreak');
 		}
-	},
+	}
 
-	onDocLayerInit: function() {
-		var presentationToolbar = w2ui['presentation-toolbar'];
-		if (!this.map['wopi'].HideExportOption && presentationToolbar && this._map.getDocType() !== 'drawing') {
-			presentationToolbar.show('presentation', 'presentationbreak');
-		}
+	onDocLayerInit() {
+		if (!this.map['wopi'].HideExportOption && this.map.getDocType() !== 'drawing')
+			this.showItem('presentation');
 
-		if (!window.mode.isMobile()) {
-			var toolbar = $('#presentation-toolbar');
-			toolbar.show();
-		}
-	},
+		if (!window.mode.isMobile())
+			this.show();
+	}
 
-	onUpdatePermission: function(e) {
+	onUpdatePermission(e) {
 		var presentationButtons = ['insertpage', 'duplicatepage', 'deletepage'];
-		var that = this;
 
 		if (e.perm === 'edit') {
-			var toolbar = w2ui['presentation-toolbar'];
-			if (toolbar) {
-				presentationButtons.forEach(function(id) {
-					toolbar.enable(id);
-				});
-			}
+			presentationButtons.forEach((id) => { this.enableItem(id, true); });
 
-			if (toolbar) {
-				presentationButtons.forEach(function(id) {
-					if (id === 'deletepage') {
-						var itemState = that.map['stateChangeHandler'].getItemValue('.uno:DeletePage');
-					} else if (id === 'insertpage') {
-						itemState = that.map['stateChangeHandler'].getItemValue('.uno:InsertPage');
-					} else if (id === 'duplicatepage') {
-						itemState = that.map['stateChangeHandler'].getItemValue('.uno:DuplicatePage');
-					} else {
-						itemState = 'enabled';
-					}
+			presentationButtons.forEach((id) => {
+				if (id === 'deletepage') {
+					var itemState = this.map['stateChangeHandler'].getItemValue('.uno:DeletePage');
+				} else if (id === 'insertpage') {
+					itemState = this.map['stateChangeHandler'].getItemValue('.uno:InsertPage');
+				} else if (id === 'duplicatepage') {
+					itemState = this.map['stateChangeHandler'].getItemValue('.uno:DuplicatePage');
+				} else {
+					itemState = 'enabled';
+				}
 
-					if (itemState === 'enabled') {
-						toolbar.enable(id);
-					} else {
-						toolbar.disable(id);
-					}
-				});
-			}
+				if (itemState === 'enabled') {
+					this.enableItem(id, true);
+				} else {
+					this.enableItem(id, false);
+				}
+			});
 		} else {
-			toolbar = w2ui['presentation-toolbar'];
-			if (toolbar) {
-				presentationButtons.forEach(function(id) {
-					toolbar.disable(id);
-				});
-			}
+			presentationButtons.forEach((id) => { this.enableItem(id, false); });
 		}
-	},
+	}
 
-	onCommandStateChanged: function(e) {
+	onCommandStateChanged(e) {
 		var commandName = e.commandName;
 		var state = e.state;
 
@@ -186,36 +192,32 @@ L.Control.PresentationBar = L.Control.extend({
 			var id = window.unoCmdToToolbarId(commandName);
 
 			if (id === 'deletepage' || id === 'insertpage' || id === 'duplicatepage') {
-				var toolbar = w2ui['presentation-toolbar'];
-
 				if (state === 'enabled') {
-					toolbar.enable(id);
+					this.enableItem(id, true);
 				} else {
-					toolbar.uncheck(id);
-					toolbar.disable(id);
+					this.uncheck(id);
+					this.enableItem(id, false);
 				}
 			}
 		}
-	},
+	}
 
-	onSlideHideToggle: function() {
+	onSlideHideToggle() {
 		if (this.map.getDocType() !== 'presentation')
 			return;
 
-
 		if (!this.map._docLayer.isHiddenSlide(this.map.getCurrentPartNumber()))
-			w2ui['presentation-toolbar'].hide('showslide');
-
+			this.showItem('showslide', false);
 		else
-		w2ui['presentation-toolbar'].show('showslide');
+			this.showItem('showslide', true);
 
 		if (this.map._docLayer.isHiddenSlide(this.map.getCurrentPartNumber()))
-			w2ui['presentation-toolbar'].hide('hideslide');
+			this.showItem('hideslide', false);
 		else
-		w2ui['presentation-toolbar'].show('hideslide');
-	},
-});
+			this.showItem('hideslide', true);
+	}
+}
 
-L.control.presentationBar = function (options) {
-	return new L.Control.PresentationBar(options);
+JSDialog.PresentationBar = function (map) {
+	return new PresentationBar(map);
 };
