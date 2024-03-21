@@ -1106,8 +1106,6 @@ button.leaflet-control-search-next
 .w2ui-icon.objectbackone { background: url('images/lc_objectbackone.svg') no-repeat center; }
 .w2ui-icon.sendtoback { background: url('images/lc_sendtoback.svg') no-repeat center; }
 
-.w2ui-icon.vereign{ background: url('images/vereign.png') no-repeat center; }
-
 /* dark theme icon css */
 [data-theme='dark'] .w2ui-icon.basicshapes_round-rectangle { background: url('images/dark/lc_rect_rounded.svg') no-repeat center; }
 [data-theme='dark'] .w2ui-icon.basicshapes_rectangle { background: url('images/dark/lc_rect.svg') no-repeat center; }
@@ -1401,8 +1399,6 @@ button.leaflet-control-search-next
 [data-theme='dark'] .w2ui-icon.objectforwardone { background: url('images/dark/lc_objectforwardone.svg') no-repeat center; }
 [data-theme='dark'] .w2ui-icon.objectbackone { background: url('images/dark/lc_objectbackone.svg') no-repeat center; }
 [data-theme='dark'] .w2ui-icon.sendtoback { background: url('images/dark/lc_sendtoback.svg') no-repeat center; }
-
-[data-theme='dark'] .w2ui-icon.vereign{ background: url('images/dark/vereign.png') no-repeat center; }
 
 [data-theme='dark'] .w2ui-icon.frame01 { background: url('images/dark/fr01.svg') no-repeat center; }
 [data-theme='dark'] .w2ui-icon.frame02 { background: url('images/dark/fr02.svg') no-repeat center; }
