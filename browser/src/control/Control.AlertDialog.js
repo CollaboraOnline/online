@@ -21,7 +21,9 @@ L.Control.AlertDialog = L.Control.extend({
 	},
 
 	_onError: function(e) {
-		if (!this._map._fatal && e.cmd != 'notasync') {
+		if (!this._map._fatal &&
+		    e.cmd !== 'notasync' &&
+		    e.type !== 'warn') {
 			this._map.uiManager.closeAll();
 		}
 
