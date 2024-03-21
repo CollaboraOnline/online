@@ -31,7 +31,13 @@ pkill -SIGUSR1 kitbroker
 echo Waiting 1 second for results
 sleep 1
 echo ---systemd journal---
-journalctl --since @$date -u coolwsd --output=cat | grep -P "\Wpid:|\WjailedUrl:|\WviewId:.*userExtraInfo:"
+# We might have multiple coolwsds and we want the output from all of them.
+# But we want lines from each pid to be grouped together, and each group
+# of lines to be in chronological order.
+# So use short-unix to retain the name[pid], stable sort on that key
+# then use cut to remove the columns we only included to get the desired
+# order
+journalctl --since @$date -t "coolwsd" -o short-unix | sort -s -k3,3 | cut -d " " -f 4- | grep -P "\Wpid:|\WjailedUrl:|\WviewId:.*userExtraInfo:"
 if [ -e /tmp/coolwsd.log ]; then
   echo ---local dev log---
   tail -c +$locallogsize /tmp/coolwsd.log | grep -P "\Wpid:|\WjailedUrl:|\WviewId:.*userExtraInfo:"
