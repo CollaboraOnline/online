@@ -2443,7 +2443,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 					if (e.commandName === data.command)
 					{
 						// in some cases we will get both property like state and disabled
-						// to handle it we will set disable var based on INCOMING info (ex: .uno:ParaRightToLft) 
+						// to handle it we will set disable var based on INCOMING info (ex: .uno:ParaRightToLft)
 						disabled = e.disabled || e.state == 'disabled';
 						updateFunction();
 					}
@@ -2549,7 +2549,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		if (!builder.map.isLockedItem(data)) {
 			$(control.container).click(function () {
-				builder.map.dispatch(data.command);
+				app.dispatcher.dispatch(data.command);
 			});
 		}
 
@@ -2573,7 +2573,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (!builder.map.isLockedItem(data)) {
 			$(control.container).click(function (e) {
 				e.preventDefault();
-				builder.map.dispatch(data.command);
+				app.dispatcher.dispatch(data.command);
 			});
 		}
 

@@ -12,7 +12,7 @@
  * L.Control.PresentationBar
  */
 
-/* global $ w2ui _ _UNO */
+/* global $ w2ui _ _UNO app */
 L.Control.PresentationBar = L.Control.extend({
 	options: {
 		shownavigation: true
@@ -109,7 +109,7 @@ L.Control.PresentationBar = L.Control.extend({
 			this.map.duplicatePage();
 		}
 		else if (id === 'deletepage') {
-			this.map.dispatch('deletepage');
+			app.dispatcher.dispatch('deletepage');
 		}
 		else if (id === 'showslide') {
 			this.map.showSlide();

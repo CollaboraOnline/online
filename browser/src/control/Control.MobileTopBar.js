@@ -120,10 +120,10 @@ L.Control.MobileTopBar = L.Control.extend({
 			this.map.executeUnoAction(item);
 		}
 		else if (id === 'cancelformula') {
-			this.map.dispatch('cancelformula');
+			app.dispatcher.dispatch('cancelformula');
 		}
 		else if (id === 'acceptformula') {
-			this.map.dispatch('acceptformula');
+			app.dispatcher.dispatch('acceptformula');
 		}
 		else if (id === 'comment_wizard') {
 			if (window.commentWizard) {

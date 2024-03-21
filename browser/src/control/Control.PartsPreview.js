@@ -308,7 +308,7 @@ L.Control.PartsPreview = L.Control.extend({
 					},
 					delete: {
 						name: _UNO(that._map._docLayer._docType == 'presentation' ? '.uno:DeleteSlide' : '.uno:DeletePage', 'presentation'),
-						callback: function() { that._map.dispatch('deletepage'); },
+						callback: function() { app.dispatcher.dispatch('deletepage'); },
 						visible: function() {
 							return that._map._docLayer._parts > 1;
 						}
