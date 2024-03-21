@@ -21,7 +21,7 @@ L.Control.AlertDialog = L.Control.extend({
 	},
 
 	_onError: function(e) {
-		if (!this._map._fatal) {
+		if (!this._map._fatal && e.type !== 'warn') {
 			this._map.uiManager.closeAll();
 		}
 
