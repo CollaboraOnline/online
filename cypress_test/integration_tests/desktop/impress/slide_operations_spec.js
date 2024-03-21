@@ -19,26 +19,28 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Slide operations', functio
 	});
 
 	it('Add slides', function() {
-		helper.clickOnIdle('#tb_presentation-toolbar_item_insertpage');
+		helper.clickOnIdle('#presentation-toolbar #insertpage');
 
 		impressHelper.assertNumberOfSlidePreviews(2);
 	});
 
 	it('Remove slides', function() {
 		// Add slides
-		helper.clickOnIdle('#tb_presentation-toolbar_item_insertpage');
+		helper.clickOnIdle('#presentation-toolbar #insertpage');
 
 		impressHelper.assertNumberOfSlidePreviews(2);
 
 		// Remove Slides
-		cy.cGet('#tb_presentation-toolbar_item_deletepage')
-			.should('not.have.class', 'disabled')
+		cy.cGet('#presentation-toolbar #deletepage')
+			.should('not.have.attr', 'disabled');
+
+		cy.cGet('#presentation-toolbar #deletepage')
 			.click();
 
 		cy.cGet('#modal-dialog-deleteslide-modal .button-primary').click();
 
-		cy.cGet('#tb_presentation-toolbar_item_deletepage')
-			.should('have.class', 'disabled');
+		cy.cGet('#presentation-toolbar #deletepage')
+			.should('have.attr', 'disabled')
 
 		impressHelper.assertNumberOfSlidePreviews(1);
 
@@ -49,7 +51,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Slide operations', functio
 		cy.cGet('#options-modify-page').click();
 		desktopHelper.insertMultipleComment('impress', 1, false, '#insert-insert-annotation-button');
 		cy.cGet('#annotation-content-area-1').should('include.text', 'some text0');
-		helper.clickOnIdle('#tb_presentation-toolbar_item_duplicatepage');
+		helper.clickOnIdle('#presentation-toolbar #duplicatepage');
 
 		impressHelper.assertNumberOfSlidePreviews(2);
 		cy.cGet('#PageStatus').should('have.text', 'Slide 2 of 2');
