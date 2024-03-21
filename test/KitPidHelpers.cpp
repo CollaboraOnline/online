@@ -13,6 +13,7 @@
 #include <set>
 #include <chrono>
 #include <iostream>
+#include <algorithm>
 #include <thread>
 #include <string>
 
@@ -58,7 +59,8 @@ void helpers::logKitProcesses(const std::string& testname)
             << " Spare Kits: " << getPidList(spareKitPids));
 }
 
-void helpers::waitForKitProcessCount(
+namespace {
+void waitForKitProcessCount(
         const std::string& testname,
         int numDocKits,
         int numSpareKits /* = -1 */,
@@ -69,8 +71,8 @@ void helpers::waitForKitProcessCount(
             << (numDocKits >= 0 ? "Doc Kits: " + std::to_string(numDocKits) + " " : "")
             << (numSpareKits >= 0 ? " Spare Kits: " + std::to_string(numSpareKits) + " " : ""));
 
-    std::set<pid_t> docKitPids = getDocKitPids();
-    std::set<pid_t> spareKitPids = getSpareKitPids();
+    std::set<pid_t> docKitPids = helpers::getDocKitPids();
+    std::set<pid_t> spareKitPids = helpers::getSpareKitPids();
     bool pass = (numDocKits < 0 || docKitPids.size() == static_cast<size_t>(numDocKits)) &&
         (numSpareKits < 0 || spareKitPids.size() == static_cast<size_t>(numSpareKits));
     int tries = (timeoutMs / retryMs);
@@ -83,8 +85,8 @@ void helpers::waitForKitProcessCount(
     {
         std::this_thread::sleep_for(retryMs);
 
-        docKitPids = getDocKitPids();
-        spareKitPids = getSpareKitPids();
+        docKitPids = helpers::getDocKitPids();
+        spareKitPids = helpers::getSpareKitPids();
         pass = (numDocKits < 0 || docKitPids.size() == static_cast<size_t>(numDocKits)) &&
             (numSpareKits < 0 || spareKitPids.size() == static_cast<size_t>(numSpareKits));
         tries--;
@@ -111,6 +113,7 @@ void helpers::waitForKitProcessCount(
         LOK_ASSERT_FAIL("Timed out waiting for kit process count: " + oss.str());
     }
 }
+}
 
 void helpers::waitForKitPidsReady(
         const std::string& testname,
@@ -120,10 +123,50 @@ void helpers::waitForKitPidsReady(
     waitForKitProcessCount(testname, 0, 1, timeoutMs, retryMs);
 }
 
-void helpers::waitForKitPidsKilled(
-        const std::string& testname,
-        const std::chrono::milliseconds timeoutMs /* = KIT_PID_TIMEOUT_MS */,
-        const std::chrono::milliseconds retryMs /* = KIT_PID_RETRY_MS */)
+void helpers::killPid(const std::string& testname, const pid_t pid)
 {
-    waitForKitProcessCount(testname, 0, 0, timeoutMs, retryMs);
+    TST_LOG("Killing " << pid);
+    if (kill(pid, SIGKILL) == -1)
+        TST_LOG("kill(" << pid << ", SIGKILL) failed: " <<
+                Util::symbolicErrno(errno) << ": " << std::strerror(errno));
+}
+
+void helpers::killAllKitProcesses(
+    const std::string& testname,
+    const std::chrono::milliseconds timeoutMs /* = COMMAND_TIMEOUT_MS * 8 */,
+    const std::chrono::milliseconds retryMs /* = 10ms */)
+{
+    auto before = getKitPids();
+    for (pid_t pid : before)
+        killPid(testname, pid);
+
+    TST_LOG("Waiting for these kit processes to close: " << getPidList(before));
+
+    bool pass = false;
+    int tries = (timeoutMs / retryMs);
+
+    std::set<pid_t> inters;
+    while (tries >= 0 && !pass)
+    {
+        std::this_thread::sleep_for(retryMs);
+
+        auto current = getKitPids();
+
+        inters.clear();
+        std::set_intersection(
+            current.begin(), current.end(), before.begin(), before.end(),
+            std::inserter(inters, inters.begin()));
+
+        pass = inters.empty();
+        tries--;
+
+        TST_LOG("Current kit processes: " << getPidList(current));
+    }
+
+    TST_LOG("Finished waiting for all previous kit processes to close"
+            << " before: " << getPidList(before)
+            << " current: " << getPidList(getKitPids())
+            << " intersection: " << getPidList(inters));
+
+    LOK_ASSERT_MESSAGE_SILENT("Timed out waiting for these kit processes to close", pass);
 }
