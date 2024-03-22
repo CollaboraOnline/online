@@ -223,6 +223,17 @@ void BgSaveParentWebSocketHandler::handleMessage(const std::vector<char>& data)
 {
     LOG_DBG(_socketName << ": recv from parent [" <<
             COOLProtocol::getAbbreviatedMessage(data));
+
+    const StringVector tokens = StringVector::tokenize(data.data(), data.size());
+
+    // FIXME: check for badness - jsdialogs and so on and bail ... ?
+
+    // Should pass only:
+    // "error:", "asyncsave", "forcedtracevent", "unocommandresult"
+    // "statusindicator[start|finish|setvalue]"
+
+    // Messages already include client-foo prefixes inherited from ourselves
+    _document->sendFrame(data.data(), data.size(), WSOpCode::Text);
 }
 
 void BgSaveParentWebSocketHandler::onDisconnect()

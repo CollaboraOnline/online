@@ -238,7 +238,7 @@ public:
 
     virtual bool joinThreads() = 0;
 
-    virtual bool forkToSave(const std::function<void()> &childSave) = 0;
+    virtual bool forkToSave(const std::function<void()> &childSave, int viewId) = 0;
 
     virtual void handleSaveMessage(const std::string &msg) = 0;
 };
@@ -250,7 +250,8 @@ public:
 /// per process. But for security reasons don't.
 /// However, we could have a coolkit instance
 /// per user or group of users (a trusted circle).
-class Document final : public DocumentManagerInterface
+class Document final : public DocumentManagerInterface,
+                       public std::enable_shared_from_this<Document>
 {
 public:
     Document(const std::shared_ptr<lok::Office>& loKit, const std::string& jailId,
@@ -342,7 +343,7 @@ private:
 
     void startThreads();
 
-    bool forkToSave(const std::function<void()> &childSave) override;
+    bool forkToSave(const std::function<void()> &childSave, int viewId) override;
 
     void handleSaveMessage(const std::string &msg) override;
 

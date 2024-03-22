@@ -837,6 +837,7 @@ bool ChildSession::saveDocumentAsync(const StringVector &tokens)
 #else
     LOG_TRC("Attempting background save");
 
+    // Keep the session alive over the lifetime of an async save
     if (!_docManager->forkToSave([this, tokens]{
 
         sendTextFrame("asyncsave start");
@@ -852,7 +853,7 @@ bool ChildSession::saveDocumentAsync(const StringVector &tokens)
 
         LOG_TRC("Finished synchronous background saving ...");
         // Now we wait for an async UNO_COMMAND_RESULT on .uno:Save
-    }))
+    }, getViewId())) // FIXME: shared_from_this surely ?
         return false; // fork failed
 
     LOG_TRC("saveDocumentAsync returns succesful start.");

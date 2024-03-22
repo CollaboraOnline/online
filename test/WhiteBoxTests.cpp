@@ -666,7 +666,7 @@ public:
         return false;
     }
 
-    bool forkToSave(const std::function<void()> &) override
+    bool forkToSave(const std::function<void()> &, int) override
     {
         return false;
     }

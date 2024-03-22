@@ -1344,7 +1344,8 @@ void Document::handleSaveMessage(const std::string &)
     }
 }
 
-bool Document::forkToSave(const std::function<void()> &childSave)
+// need to hold a reference on session in case it exits during async save
+bool Document::forkToSave(const std::function<void()> &childSave, int viewId)
 {
     if (!joinThreads())
     {
@@ -1443,7 +1444,9 @@ bool Document::forkToSave(const std::function<void()> &childSave)
         parentSocket.reset();
         // now we have a socket to the child: childSocket
 
-        auto bgSaveChild = std::make_shared<BgSaveParentWebSocketHandler>("bgsv_kit_ws", pid);
+        auto bgSaveChild = std::make_shared<BgSaveParentWebSocketHandler>(
+            "bgsv_kit_ws", pid, shared_from_this(),
+            findSessionByViewId(viewId));
         childSocket->setHandler(bgSaveChild);
         childSocket->setWebSocket(); // avoid http upgrade.
         KitSocketPoll::getMainPoll()->insertNewSocket(childSocket);

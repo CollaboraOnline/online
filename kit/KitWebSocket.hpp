@@ -85,12 +85,19 @@ class BgSaveParentWebSocketHandler final : public WebSocketHandler
 {
     pid_t _childPid;
     std::string _socketName;
+    std::shared_ptr<Document> _document;
+    std::shared_ptr<ChildSession> _session;
 
 public:
-    BgSaveParentWebSocketHandler(const std::string& socketName, const pid_t childPid)
+    BgSaveParentWebSocketHandler(const std::string& socketName,
+                                 const pid_t childPid,
+                                 std::shared_ptr<Document> document,
+                                 const std::shared_ptr<ChildSession> &session)
         : WebSocketHandler(/* isClient = */ false, /* isMasking */ false)
         , _childPid(childPid)
         , _socketName(socketName)
+        , _document(document)
+        , _session(session)
     {
     }
 
