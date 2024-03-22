@@ -701,6 +701,7 @@ Document::Document(const std::shared_ptr<lok::Office>& loKit,
       _obfuscatedFileId(Util::getFilenameFromURL(docKey)),
       _tileQueue(std::move(tileQueue)),
       _websocketHandler(websocketHandler),
+      _isBgSaveProcess(false),
       _haveDocPassword(false),
       _isDocPasswordProtected(false),
       _docPasswordType(DocumentPasswordType::ToView),
@@ -749,10 +750,17 @@ Document::~Document()
 /// Post the message - in the unipoll world we're in the right thread anyway
 bool Document::postMessage(const char* data, int size, const WSOpCode code) const
 {
-    if (_saveProcessParent)
+    if (_isBgSaveProcess)
     {
-        LOG_TRC("postMessage forwarding to save process: " << getAbbreviatedMessage(data, size));
-        return _saveProcessParent->sendMessage(data, size, code, /*flush=*/true) > 0;
+        auto socket = _saveProcessParent.lock();
+        if (socket)
+        {
+            LOG_TRC("postMessage forwarding to parent of save process: " << getAbbreviatedMessage(data, size));
+            return socket->sendMessage(data, size, code, /*flush=*/true) > 0;
+        }
+        else
+            LOG_TRC("Failed to forward to parent of save process: connection closed.");
+        return false;
     }
 
     LOG_TRC("postMessage called with: " << getAbbreviatedMessage(data, size));
@@ -1314,11 +1322,25 @@ void Document::startThreads()
 
 void Document::handleSaveMessage(const std::string &)
 {
+    LOG_TRC("Check save message");
+
     // if a bgsave process - now we can clean up.
-    if (_saveProcessParent)
+    if (_isBgSaveProcess)
     {
-        LOG_WRN("Shutting down bgsave child's socket to parent kit post save");
-        _saveProcessParent->shutdown();
+        auto socket = _saveProcessParent.lock();
+        if (socket)
+        {
+            LOG_TRC("Shutting down bgsv child's socket to parent kit post save");
+
+            // We don't want to wait around for the parent's websocket
+            socket->shutdownAfterWriting();
+        }
+        else
+            LOG_TRC("Shutting down already shutdown bgsv child's socket to parent kit post save");
+
+        // any further messages are not interesting.
+        if (_tileQueue)
+            _tileQueue->clear();
     }
 }
 
@@ -1378,6 +1400,7 @@ bool Document::forkToSave(const std::function<void()> &childSave)
         // as early as possible.
         Util::setThreadName("kitbgsv_" + Util::encodeId(_mobileAppDocId, 3) +
                             "_" + Util::encodeId(numSaves, 3));
+        _isBgSaveProcess = true;
 
         SigUtil::addActivity("forked background save process: " +
                              std::to_string(pid));
@@ -1393,15 +1416,14 @@ bool Document::forkToSave(const std::function<void()> &childSave)
         kitWs->shutdownForBackgroundSave();
 
         // now send messages to the parent instead of the kit.
-        _saveProcessParent = std::make_shared<BgSaveChildWebSocketHandler>("bgsv_child_ws");
-        parentSocket->setHandler(_saveProcessParent);
+        auto parentWs = std::make_shared<BgSaveChildWebSocketHandler>("bgsv_child_ws");
+        parentSocket->setHandler(parentWs);
         parentSocket->setWebSocket(); // avoid http upgrade.
+        _saveProcessParent = parentWs;
 
         // hand parentSocket to the main poll
         KitSocketPoll::getMainPoll()->insertNewSocket(parentSocket);
-        parentSocket.reset();
-
-        // FIXME: strace this - and re-check shutdownForBackgroundSave ...
+        parentWs.reset();
 
         const auto now = std::chrono::steady_clock::now();
         LOG_TRC("Background save process " << getpid() << " fork took " <<
@@ -1411,8 +1433,8 @@ bool Document::forkToSave(const std::function<void()> &childSave)
 
         SigUtil::addActivity("background save process shutdown");
 
-        _saveProcessParent->shutdown();
-        _saveProcessParent.reset();
+        // Wait now for an async save result from the core,
+        // and head to handleSaveMessage
     }
     else // Still us
     {
@@ -1421,7 +1443,7 @@ bool Document::forkToSave(const std::function<void()> &childSave)
         parentSocket.reset();
         // now we have a socket to the child: childSocket
 
-        auto bgSaveChild = std::make_shared<BgSaveParentWebSocketHandler>("bgsave_kit_ws");
+        auto bgSaveChild = std::make_shared<BgSaveParentWebSocketHandler>("bgsv_kit_ws");
         childSocket->setHandler(bgSaveChild);
         childSocket->setWebSocket(); // avoid http upgrade.
         KitSocketPoll::getMainPoll()->insertNewSocket(childSocket);

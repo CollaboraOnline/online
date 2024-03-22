@@ -238,7 +238,8 @@ protected:
 
 public:
     void shutdown(const StatusCodes statusCode = StatusCodes::NORMAL_CLOSE,
-                  const std::string& statusMessage = std::string())
+                  const std::string& statusMessage = std::string(),
+                  bool hardShutdown = false)
     {
         std::shared_ptr<StreamSocket> socket = _socket.lock();
         if (socket)
@@ -250,6 +251,10 @@ public:
             socket->ignoreInput();
             assert(socket->getInBuffer().empty() &&
                    "Socket buffer must be empty after ignoreInput");
+
+            // force close after writing this message
+            if (hardShutdown)
+                socket->shutdown();
         }
 
         _wsPayload.clear();
@@ -257,6 +262,13 @@ public:
         _inFragmentBlock = false;
 #endif
         _shuttingDown = false;
+    }
+
+    /// Don't wait for the remote Websocket to handshake with us; go down fast.
+    void shutdownAfterWriting()
+    {
+        shutdown(WebSocketHandler::StatusCodes::NORMAL_CLOSE, std::string(),
+                 true /* hard async shutdown & close */);
     }
 
 private:

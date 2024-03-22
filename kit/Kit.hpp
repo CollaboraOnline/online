@@ -415,8 +415,10 @@ private:
 
     // Connection to the coolwsd process
     std::shared_ptr<WebSocketHandler> _websocketHandler;
+
     // Connection a child background save process has to its parent: a precious thing.
-    std::shared_ptr<WebSocketHandler> _saveProcessParent;
+    std::weak_ptr<WebSocketHandler> _saveProcessParent;
+    bool _isBgSaveProcess;
 
     // Document password provided
     std::string _docPassword;
