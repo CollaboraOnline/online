@@ -2873,6 +2873,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			if (!cellViewCursorMarker) {
 				var backgroundColor = L.LOUtil.rgbToHex(this._map.getViewColor(viewId));
 				cellViewCursorMarker = new CCellCursor(this._cellViewCursors[viewId].corePixelBounds, {
+					name: 'cell-view-cursor-' + viewId,
 					viewId: viewId,
 					fill: false,
 					color: backgroundColor,
@@ -5261,12 +5262,12 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._printTwipsMessagesForReplay.save(msgType, textMsg, viewId);
 	},
 
-	_clearMsgReplayStore: function () {
+	_clearMsgReplayStore: function (notOtherMsg) {
 		if (!this._printTwipsMessagesForReplay) {
 			return;
 		}
 
-		this._printTwipsMessagesForReplay.clear();
+		this._printTwipsMessagesForReplay.clear(notOtherMsg);
 	},
 
 	_replayPrintTwipsMsgs: function (differentSheet) {
@@ -7494,16 +7495,18 @@ L.MessageStore = L.Class.extend({
 		this._othersMessages = othersMessages;
 	},
 
-	clear: function () {
+	clear: function (notOtherMsg) {
 		var msgs = this._ownMessages;
 		Object.keys(msgs).forEach(function (msgType) {
 			msgs[msgType] = '';
 		});
 
-		msgs = this._othersMessages;
-		Object.keys(msgs).forEach(function (msgType) {
-			msgs[msgType] = [];
-		});
+		if (!notOtherMsg) {
+			msgs = this._othersMessages;
+			Object.keys(msgs).forEach(function (msgType) {
+				msgs[msgType] = [];
+			});
+		}
 	},
 
 	save: function (msgType, textMsg, viewId) {

@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach require afterEach */
+/* global describe it cy beforeEach require afterEach expect */
 
 var helper = require('../../common/helper');
 
@@ -63,3 +63,74 @@ describe.skip(['tagmultiuser'], 'Multiuser sheet operations', function() {
 	});
 
 });
+
+describe(['tagmultiuser'], 'Check overlays after tab switching/operations', function() {
+	const origTestFileName = 'cell_cursor_overlay.ods';
+	let testFileName;
+
+	beforeEach(function() {
+		testFileName = helper.beforeAll(origTestFileName, 'calc', undefined, true);
+	});
+
+	afterEach(function() {
+		helper.afterAll(testFileName, this.currentTest.state);
+	});
+
+	it('Check cell cursor overlay bounds after switching tab', function () {
+		cy.cSetActiveFrame('#iframe1');
+		cy.cGet('#spreadsheet-tab1').click();
+		cy.cGet('input#addressInput').should('have.prop', 'value', 'A14');
+
+		let cellA14Bounds = new helper.Bounds();
+		helper.getOverlayItemBounds('#test-div-overlay-cell-cursor-border-0', cellA14Bounds);
+
+		cy.cSetActiveFrame('#iframe2');
+		// Check that cell cursor have the same bounds in both views
+		cy.cGet('#spreadsheet-tab1').click();
+		cy.cGet('input#addressInput').should('have.prop', 'value', 'A14');
+		helper.overlayItemHasBounds('#test-div-overlay-cell-cursor-border-0', cellA14Bounds);
+	});
+
+	it('Check cell view cursor overlay bounds after switching tab', function () {
+		cy.cSetActiveFrame('#iframe1');
+		cy.cGet('#spreadsheet-tab1').click();
+
+		let cellA14Bounds = new helper.Bounds();
+		helper.getOverlayItemBounds('#test-div-overlay-cell-cursor-border-0', cellA14Bounds);
+
+		cy.cSetActiveFrame('#iframe2');
+		cy.cGet('#spreadsheet-tab1').click();
+
+		// check that cell cursor and cell view cursor from first view have the same bounds
+		// since we don't know if view 0 has been loaded in frame1 or in frame2 we look for an element
+		// starting with 'test-div-overlay-cell-view-cursor' and ending with 'border-0'.
+		cy.cframe()
+			.find('[id^="test-div-overlay-cell-view-cursor"][id$="border-0"]')
+			.then(elements => {
+				expect(elements.length).to.be.equals(1);
+				const id = elements[0].id;
+				// cy.log('id: ' + id);
+				helper.overlayItemHasBounds('#' + id, cellA14Bounds);
+			});
+	});
+
+	it('Check cell view cursor overlay bounds after inserting a new tab', function () {
+		cy.cSetActiveFrame('#iframe1');
+		cy.cGet('input#addressInput').should('have.prop', 'value', 'D8');
+
+		cy.cSetActiveFrame('#iframe2');
+		helper.typeIntoInputField('input#addressInput', 'F6');
+		cy.cGet('input#addressInput').should('have.prop', 'value', 'F6');
+
+		cy.cSetActiveFrame('#iframe1');
+		cy.cGet('#tb_spreadsheet-toolbar_item_insertsheet').click();
+
+		// check that there is no cell view cursor;
+		// in fact in the other view the new sheet has never been selected
+		// since we don't know if view 0 has been loaded in frame1 or in frame2 we test for both.
+		cy.cGet('#test-div-overlay-cell-view-cursor-0-border-0').should('not.exist');
+		cy.cGet('#test-div-overlay-cell-view-cursor-1-border-0').should('not.exist');
+	});
+
+});
+
