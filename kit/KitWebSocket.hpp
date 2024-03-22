@@ -83,11 +83,13 @@ protected:
 /// WebSocket for a Kit process to talk to its background save child
 class BgSaveParentWebSocketHandler final : public WebSocketHandler
 {
+    pid_t _childPid;
     std::string _socketName;
 
 public:
-    BgSaveParentWebSocketHandler(const std::string& socketName)
+    BgSaveParentWebSocketHandler(const std::string& socketName, const pid_t childPid)
         : WebSocketHandler(/* isClient = */ false, /* isMasking */ false)
+        , _childPid(childPid)
         , _socketName(socketName)
     {
     }

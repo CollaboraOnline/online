@@ -18,6 +18,9 @@
 #include <Poco/URI.h>
 #include <sysexits.h> // EX_OK
 
+#include <sys/wait.h>
+#include <sys/types.h>
+
 #include <common/Seccomp.hpp>
 #include <common/TraceEvent.hpp>
 #include <common/MessageQueue.hpp>
@@ -224,7 +227,13 @@ void BgSaveParentWebSocketHandler::handleMessage(const std::vector<char>& data)
 
 void BgSaveParentWebSocketHandler::onDisconnect()
 {
-    LOG_TRC("Disconnected background web socket to child");
+    LOG_TRC("Disconnected background web socket to child " << _childPid);
+    // reap and de-zombify children.
+    int status = -1;
+    if (waitpid(_childPid, &status, WUNTRACED | WNOHANG) > 0)
+        LOG_TRC("Child " << _childPid << " terminated with status " << status);
+    else
+        LOG_TRC("Child disconnected but not terminated");
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

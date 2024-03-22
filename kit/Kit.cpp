@@ -1443,7 +1443,7 @@ bool Document::forkToSave(const std::function<void()> &childSave)
         parentSocket.reset();
         // now we have a socket to the child: childSocket
 
-        auto bgSaveChild = std::make_shared<BgSaveParentWebSocketHandler>("bgsv_kit_ws");
+        auto bgSaveChild = std::make_shared<BgSaveParentWebSocketHandler>("bgsv_kit_ws", pid);
         childSocket->setHandler(bgSaveChild);
         childSocket->setWebSocket(); // avoid http upgrade.
         KitSocketPoll::getMainPoll()->insertNewSocket(childSocket);
