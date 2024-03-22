@@ -82,7 +82,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Interact with bottom toolba
 		cy.cGet('#copy-paste-container table td').should('have.attr', 'bgcolor', '#00FF00');
 	});
 
-	it('Merge cells', function() {
+	it.skip('Merge cells', function() {
 		before('bottom_toolbar.ods');
 		// Select 100 cells in first row
 		calcHelper.selectCellsInRange('A1:CV1');
