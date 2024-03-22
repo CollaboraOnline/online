@@ -60,3 +60,25 @@ protected:
     virtual void enableProcessInput(bool enable = true) override;
     virtual void onDisconnect() override;
 };
+
+
+class BgSaveChildWebSocketHandler final : public WebSocketHandler
+{
+    std::string _socketName;
+
+public:
+    BgSaveChildWebSocketHandler(const std::string& socketName)
+        : WebSocketHandler(/* isClient = */ true, /* isMasking */ false)
+        , _socketName(socketName)
+    {
+    }
+
+    ~BgSaveChildWebSocketHandler()
+    {
+        // Just to make it easier to set a breakpoint
+    }
+
+protected:
+    virtual void handleMessage(const std::vector<char>& data) override;
+    virtual void onDisconnect() override;
+};

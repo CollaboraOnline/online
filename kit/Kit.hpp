@@ -146,6 +146,8 @@ public:
 
     virtual void wakeupHook() override;
 
+    static KitSocketPoll* getMainPoll() { return mainPoll; }
+
 #if ENABLE_DEBUG
     struct ReEntrancyGuard
     {

@@ -752,8 +752,7 @@ bool Document::postMessage(const char* data, int size, const WSOpCode code) cons
     if (_saveProcessParent)
     {
         LOG_TRC("postMessage forwarding to save process: " << getAbbreviatedMessage(data, size));
-        if (_saveProcessParent->sendMessage(data, size, code, /*flush=*/true) > 0)
-            return true;
+        return _saveProcessParent->sendMessage(data, size, code, /*flush=*/true) > 0;
     }
 
     LOG_TRC("postMessage called with: " << getAbbreviatedMessage(data, size));
@@ -1379,9 +1378,12 @@ bool Document::forkToSave(const std::function<void()> &childSave)
         kitWs->shutdownForBackgroundSave();
 
         // now send messages to the parent instead of the kit.
-//        _saveProcessParent = parentSocket;
-//            + FIXME: needs to be a websockethandler etc. [!]
-//                + kill http foo on it.
+        _saveProcessParent = std::make_shared<BgSaveChildWebSocketHandler>("bgsave_child_ws");
+        parentSocket->setHandler(_saveProcessParent);
+        // avoid http upgrade etc.
+        parentSocket->setWebSocket();
+        KitSocketPoll::getMainPoll()->insertNewSocket(parentSocket);
+//        parentSocket.reset(); // now owned by the poll.
 
         // FIXME: strace this - and re-check shutdownForBackgroundSave ...
 

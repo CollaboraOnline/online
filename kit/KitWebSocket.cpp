@@ -195,4 +195,15 @@ void KitWebSocketHandler::onDisconnect()
     _ksPoll.reset();
 }
 
+void BgSaveChildWebSocketHandler::handleMessage(const std::vector<char>& data)
+{
+    LOG_DBG(_socketName << ": recv from parent [" <<
+            COOLProtocol::getAbbreviatedMessage(data));
+}
+
+void BgSaveChildWebSocketHandler::onDisconnect()
+{
+    LOG_TRC("Disconnected background web socket handler");
+}
+
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
