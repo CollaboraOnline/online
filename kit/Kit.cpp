@@ -1369,15 +1369,21 @@ bool Document::forkToSave(const std::function<void()> &childSave)
                              std::to_string(pid));
 
         childSocket.reset();
-        // now we have a socket to the parent: parentSocket
+        // now we just have a single socket to our parent
+
+        // Hard drop our previous connections to coolwsd and shared wakeups.x
+        KitSocketPoll::cleanupChildProcess();
 
         // close duplicate kit->wsd socket
         auto kitWs = std::static_pointer_cast<KitWebSocketHandler>(_websocketHandler);
         kitWs->shutdownForBackgroundSave();
 
-        // FIXME: refresh our wakeup-pipes [!] hmmm - interesting.
-        // FIXME: do we inherit these from forkit properly ?
-//        --- what are those pipes!? ---
+        // now send messages to the parent instead of the kit.
+//        _saveProcessParent = parentSocket;
+//            + FIXME: needs to be a websockethandler etc. [!]
+//                + kill http foo on it.
+
+        // FIXME: strace this - and re-check shutdownForBackgroundSave ...
 
         const auto now = std::chrono::steady_clock::now();
         LOG_TRC("Background save process " << getpid() << " fork took " <<
@@ -2362,6 +2368,12 @@ std::shared_ptr<KitSocketPoll> KitSocketPoll::create() // static
     KSPolls.push_back(result);
 #endif
     return result;
+}
+
+/* static */ void KitSocketPoll::cleanupChildProcess()
+{
+    mainPoll->closeAllSockets();
+    mainPoll->createWakeups();
 }
 
 // process pending message-queue events.

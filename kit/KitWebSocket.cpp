@@ -165,13 +165,7 @@ void KitWebSocketHandler::enableProcessInput(bool enable)
 
 void KitWebSocketHandler::shutdownForBackgroundSave()
 {
-    auto kitToWSDSocket = getSocket().lock();
-    if (kitToWSDSocket)
-    {
-        // stays open in the parent process
-        LOG_TRC("Hard close kit to parent socket");
-        close(kitToWSDSocket->getFD());
-    }
+    // Don't shutdown the app when this socket closes
     _backgroundSaver = true;
 }
 

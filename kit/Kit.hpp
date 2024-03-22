@@ -142,6 +142,8 @@ public:
     static void dumpGlobalState(std::ostream& oss);
     static std::shared_ptr<KitSocketPoll> create();
 
+    static void cleanupChildProcess();
+
     virtual void wakeupHook() override;
 
 #if ENABLE_DEBUG

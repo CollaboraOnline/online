@@ -639,6 +639,9 @@ public:
     /// After a fork - close all associated sockets without shutdown.
     void closeAllSockets();
 
+    /// Setup pipes needed for cross-thread wakeups
+    void createWakeups();
+
     bool isAlive() const { return (_threadStarted && !_threadFinished) || _runOnClientThread; }
 
     /// Check if we should continue polling
