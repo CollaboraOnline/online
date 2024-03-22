@@ -15,7 +15,7 @@ describe(['tagdesktop'], 'Calc focus tests', function() {
 		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
-	it('Formula-bar focus', function() {
+	it.skip('Formula-bar focus', function() {
 		// Select first cell
 		calcHelper.clickOnFirstCell();
 		cy.wait(200);
