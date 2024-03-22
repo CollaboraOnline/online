@@ -202,7 +202,7 @@ class Dispatcher {
 				},
 			};
 			const optionsString = JSON.stringify(options);
-			this.print(optionsString);
+			app.map.print(optionsString);
 		};
 
 		this.actionsMap['print-all-sheets'] = function () {
