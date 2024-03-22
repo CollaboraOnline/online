@@ -59,68 +59,51 @@ void helpers::logKitProcesses(const std::string& testname)
             << " Spare Kits: " << getPidList(spareKitPids));
 }
 
-namespace {
-void waitForKitProcessCount(
-        const std::string& testname,
-        int numDocKits,
-        int numSpareKits /* = -1 */,
-        const std::chrono::milliseconds timeoutMs /* = COMMAND_TIMEOUT_MS * 8 */,
-        const std::chrono::milliseconds retryMs /* = 10ms */)
-{
-    TST_LOG("Waiting for kit process count: "
-            << (numDocKits >= 0 ? "Doc Kits: " + std::to_string(numDocKits) + " " : "")
-            << (numSpareKits >= 0 ? " Spare Kits: " + std::to_string(numSpareKits) + " " : ""));
-
-    std::set<pid_t> docKitPids = helpers::getDocKitPids();
-    std::set<pid_t> spareKitPids = helpers::getSpareKitPids();
-    bool pass = (numDocKits < 0 || docKitPids.size() == static_cast<size_t>(numDocKits)) &&
-        (numSpareKits < 0 || spareKitPids.size() == static_cast<size_t>(numSpareKits));
-    int tries = (timeoutMs / retryMs);
-
-    TST_LOG("Current kit processes: "
-            << "Doc Kits: " << getPidList(docKitPids)
-            << " Spare Kits: " << getPidList(spareKitPids));
-
-    while (tries >= 0 && !pass)
-    {
-        std::this_thread::sleep_for(retryMs);
-
-        docKitPids = helpers::getDocKitPids();
-        spareKitPids = helpers::getSpareKitPids();
-        pass = (numDocKits < 0 || docKitPids.size() == static_cast<size_t>(numDocKits)) &&
-            (numSpareKits < 0 || spareKitPids.size() == static_cast<size_t>(numSpareKits));
-        tries--;
-
-        TST_LOG("Current kit processes: "
-                << "Doc Kits: " << getPidList(docKitPids)
-                << " Spare Kits: " << getPidList(spareKitPids));
-    }
-
-    if (pass)
-    {
-        TST_LOG("Finished waiting for kit process count: "
-                << (numDocKits >= 0 ? "Doc Kits: " + std::to_string(numDocKits) + " " : "")
-                << (numSpareKits >= 0 ? " Spare Kits: " + std::to_string(numSpareKits) + " " : ""));
-    }
-    else
-    {
-        std::ostringstream oss;
-        oss << (numDocKits >= 0 ? "Doc Kits: " + std::to_string(numDocKits) + " " : "")
-            << (numSpareKits >= 0 ? " Spare Kits: " + std::to_string(numSpareKits) + " " : "")
-            << "Current kit processes: "
-            << "Doc Kits: " << getPidList(docKitPids)
-            << " Spare Kits: " << getPidList(spareKitPids);
-        LOK_ASSERT_FAIL("Timed out waiting for kit process count: " + oss.str());
-    }
-}
-}
-
 void helpers::waitForKitPidsReady(
         const std::string& testname,
         const std::chrono::milliseconds timeoutMs /* = KIT_PID_TIMEOUT_MS */,
         const std::chrono::milliseconds retryMs /* = KIT_PID_RETRY_MS */)
 {
-    waitForKitProcessCount(testname, 0, 1, timeoutMs, retryMs);
+    // It is generally not a great idea to look for exactly <N> processes
+    const int targetDocKits = 0;
+    const int targetSpareKits = 1;
+
+    TST_LOG("Waiting for kit processes to close, with one spare kit");
+
+    std::set<pid_t> docKitPids;
+    std::set<pid_t> spareKitPids;
+
+    bool pass = false;
+    int tries = timeoutMs / retryMs;
+
+    while (tries >= 0 && !pass)
+    {
+        docKitPids = helpers::getDocKitPids();
+        spareKitPids = helpers::getSpareKitPids();
+        pass = (docKitPids.size() == static_cast<size_t>(targetDocKits) &&
+                spareKitPids.size() == static_cast<size_t>(targetSpareKits));
+        tries--;
+
+        TST_LOG("Current kit processes: "
+                << "Doc Kits: " << getPidList(docKitPids)
+                << " Spare Kits: " << getPidList(spareKitPids));
+
+        if (!pass)
+            std::this_thread::sleep_for(retryMs);
+    }
+
+    if (pass)
+    {
+        TST_LOG("Finished waiting for kit processes to close");
+    }
+    else
+    {
+        std::ostringstream oss;
+        oss << "Current kit processes:"
+            << " Doc Kits: " << getPidList(docKitPids)
+            << " Spare Kits: " << getPidList(spareKitPids);
+        LOK_ASSERT_FAIL("Timed out waiting for kit processes to close: " + oss.str());
+    }
 }
 
 void helpers::killPid(const std::string& testname, const pid_t pid)
