@@ -102,6 +102,15 @@ function _createRadioButton(parentContainer, treeViewData, builder, entry) {
 	return radioButton;
 }
 
+function _createColorPreviewButton(parentContainer, treeViewData, builder, entry) {
+	var colorPreviewButton = L.DomUtil.create('input', builder.options.cssClass + ' ui-treeview-checkbox', parentContainer);
+	colorPreviewButton.type = 'color-preview';
+	colorPreviewButton.style.setProperty("background-color", entry.text, "important");
+	colorPreviewButton.style.setProperty("outline", "1px solid var(--color-border)");
+
+	return colorPreviewButton;
+}
+
 function _changeCheckboxStateOnClick(checkbox, treeViewData, builder, entry) {
 	if (checkbox.checked) {
 		var foundEntry = _findEntryWithRow(treeViewData.entries, entry.row);
@@ -418,6 +427,11 @@ function _hasIcon(columns) {
 function _createSelectionElement (parentContainer, treeViewData, entry, builder) {
 	var selectionElement;
 	var checkboxtype = treeViewData.checkboxtype;
+
+	if(treeViewData.colorpreview) {
+		selectionElement = _createColorPreviewButton(parentContainer, treeViewData, builder, entry);
+		return selectionElement;
+	}
 	if (checkboxtype == 'radio') {
 		selectionElement = _createRadioButton(parentContainer, treeViewData, builder, entry);
 	}
