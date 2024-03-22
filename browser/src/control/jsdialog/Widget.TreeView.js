@@ -29,7 +29,7 @@
  *     type: 'treelistbox',
  *     headers: [ { text: 'first column' }, { text: 'second' }],
  *     entries: [
- *         { row: 0, columns [ { text: 'a' }, { collapsed: 'collapsedIcon.svg' } ] },
+ *         { row: 0, columns [ { text: 'a' }, { collapsed: 'collapsedIcon.svg' }, { collapsedimage: '<BASE64 encoded PNG>' } ] },
  *         { row: 1, columns [ { text: 'a2' }, { expanded: 'expandedIcon.svg' }, selected: true ]}
  *     ]
  * }
@@ -41,7 +41,7 @@
  *     headers: [ { text: 'first column' }, { text: 'second' }],
  *     entries: [
  *         { row: 0, columns [ { text: 'a' }, { collapsed: 'collapsedIcon.svg' } ] },
- *         { row: 1, columns [ { text: 'a' }, { collapsed: 'collapsedIcon.svg' } ],
+ *         { row: 1, columns [ { text: 'a' }, { collapsed: 'collapsedIcon.svg' }, { expandedimage: '<BASE64 encoded PNG>' } ],
  * 			   children: [
  *                 { row: 2, columns [ { text: 'a2' }, { expanded: 'expandedIcon.svg' }, selected: true ]}
  *             ]
@@ -100,6 +100,15 @@ function _createRadioButton(parentContainer, treeViewData, builder, entry) {
 		radioButton.checked = true;
 
 	return radioButton;
+}
+
+function _createImageColumn(parentContainer, builder, imageUrl) {
+	var colorPreviewButton = L.DomUtil.create('img', builder.options.cssClass + ' ui-treeview-checkbox', parentContainer);
+	colorPreviewButton.src = imageUrl
+	colorPreviewButton.style.setProperty('outline', '1px solid var(--color-btn-border)');
+	colorPreviewButton.style.setProperty('vertical-align', 'middle');
+
+	return colorPreviewButton;
 }
 
 function _changeCheckboxStateOnClick(checkbox, treeViewData, builder, entry) {
@@ -209,7 +218,10 @@ function _treelistboxEntry(parentContainer, treeViewData, entry, builder, isTree
 
 	var text = L.DomUtil.create('span', builder.options.cssClass + ' ui-treeview-cell', span);
 	for (var i in entry.columns) {
-		if (entry.columns[i].collapsed || entry.columns[i].expanded) {
+		var pngImage = entry.columns[i].collapsedimage ? entry.columns[i].collapsedimage : entry.columns[i].expandedimage;
+		if (pngImage) {
+			_createImageColumn(text, builder, pngImage);
+		} else if (entry.columns[i].collapsed || entry.columns[i].expanded) {
 			var icon = L.DomUtil.create('img', 'ui-listview-icon', text);
 
 			if (treeType === 'navigator')
@@ -374,8 +386,10 @@ function _headerlistboxEntry(parentContainer, treeViewData, entry, builder) {
 			var expander = L.DomUtil.create('div', builder.options.cssClass + ' ui-treeview-expander', td);
 			expander.addEventListener('click', function () { _expandTreeGrid(parentContainer); });
 		}
-
-		if (entry.columns[i].collapsed || entry.columns[i].expanded) {
+		var pngImage = entry.columns[i].collapsedimage ? entry.columns[i].collapsedimage : entry.columns[i].expandedimage;
+		if (pngImage) {
+			_createImageColumn(td, builder, pngImage);
+		} else if (entry.columns[i].collapsed || entry.columns[i].expanded) {
 			var icon = L.DomUtil.create('img', 'ui-listview-icon', td);
 			var iconId = _getCellIconId(entry.columns[i]);
 			L.DomUtil.addClass(icon, iconId + 'img');
@@ -385,7 +399,7 @@ function _headerlistboxEntry(parentContainer, treeViewData, entry, builder) {
 			td.innerText = entry.columns[i].text;
 
 		if (!disabled)
-			$(parentContainer).click(clickFunction);
+			$(td).click(clickFunction);
 	}
 
 	if (!disabled) {
@@ -412,7 +426,8 @@ function _headerlistboxEntry(parentContainer, treeViewData, entry, builder) {
 
 function _hasIcon(columns) {
 	for (var i in columns)
-		if (columns[i].collapsed !== undefined)
+		if (columns[i].collapsed !== undefined || columns[i].expanded !== undefined
+			|| columns[i].collapsedimage !== undefined || columns[i].expandedimage !== undefined)
 			return true;
 	return false;
 }

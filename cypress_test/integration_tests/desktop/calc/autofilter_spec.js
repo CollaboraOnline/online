@@ -118,7 +118,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'AutoFilter', function() {
 
 		// Find the table element with ID "background"
 		cy.cGet('table#background')
-		.find('input') // Find all input elements inside the table
+		.find('img') // Find all input elements inside the table
 		.first() // Select the first input element
 		.click(); // Click on the first input element
 

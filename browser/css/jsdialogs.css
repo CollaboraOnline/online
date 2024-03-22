@@ -642,6 +642,7 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 	border: none;
 	height: 18px;
 	width: 20px;
+	display: block;
 }
 
 .jsdialog .radiobutton > label {
@@ -1102,6 +1103,17 @@ input[type='number']:hover::-webkit-outer-spin-button {
 
 .autofilter-container-submenu .autofilter.root-container .ui-treeview {
 	border-color: transparent;
+}
+
+/* hide radio in filter by color */
+.jsdialog.autofilter #background tr td:nth-of-type(1),
+.jsdialog.autofilter #textcolor tr td:nth-of-type(1) {
+	display: none;
+}
+
+/* hide arrow icons in the autofilter menu*/
+#menu img.jsdialog.autofilter.ui-treeview-checkbox {
+	display: none;
 }
 
 /* Word count dialog */
