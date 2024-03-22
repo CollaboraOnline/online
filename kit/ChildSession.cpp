@@ -832,22 +832,10 @@ bool ChildSession::loadDocument(const StringVector& tokens)
 // attempt to shutdown threads, fork and execute in the background
 bool ChildSession::saveDocumentAsync(const StringVector &tokens)
 {
-    if (!_docManager->joinThreads())
-    {
-        LOG_WRN("Failed to join threads before async save");
-        return false;
-    }
-
-    size_t threads = getCurrentThreadCount();
-    if (threads != 1)
-    {
-        LOG_WRN("Failed to ensure we have just one, we have: " << threads);
-        return false;
-    }
 #if MOBILEAPP
     return false;
 #else
-    LOG_TRC("Starting background save");
+    LOG_TRC("Attempting background save");
 
     if (!_docManager->forkToSave([this, tokens]{
 

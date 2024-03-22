@@ -82,6 +82,7 @@
 #include "SetupKitEnvironment.hpp"
 #include <common/ConfigUtil.hpp>
 #include <common/TraceEvent.hpp>
+#include <common/Watchdog.hpp>
 
 #if !MOBILEAPP
 #include <common/SigUtil.hpp>
@@ -1297,12 +1298,36 @@ bool Document::joinThreads()
 {
     if (!getLOKit()->joinThreads())
         return false;
+
+    if (SocketPoll::PollWatchdog)
+        SocketPoll::PollWatchdog->joinThread();
+
     _deltaPool.stop();
     return true;
 }
 
+// Most threads are opportunisticaly created but some need to be started
+void Document::startThreads()
+{
+    if (SocketPoll::PollWatchdog)
+        SocketPoll::PollWatchdog->startThread();
+}
+
 bool Document::forkToSave(const std::function<void()> &childSave)
 {
+    if (!joinThreads())
+    {
+        LOG_WRN("Failed to join threads before async save");
+        return false;
+    }
+
+    size_t threads = getCurrentThreadCount();
+    if (threads != 1)
+    {
+        LOG_WRN("Failed to ensure we have just one, we have: " << threads);
+        return false;
+    }
+
     // ARGH - FIXME - we can't count FDs in fact ...
 #if 0
     // Check we don't have unexpected file-descriptors open
@@ -1368,6 +1393,8 @@ bool Document::forkToSave(const std::function<void()> &childSave)
 
         parentSocket.reset();
         // now we have a socket to the child: childSocket
+
+        startThreads();
     }
     return true;
 }

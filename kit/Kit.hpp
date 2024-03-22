@@ -334,6 +334,8 @@ private:
 
     bool joinThreads() override;
 
+    void startThreads();
+
     bool forkToSave(const std::function<void()> &childSave) override;
 
     /// Notify all views of viewId and their associated usernames
