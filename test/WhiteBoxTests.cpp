@@ -670,6 +670,10 @@ public:
     {
         return false;
     }
+
+    void handleSaveMessage(const std::string &) override
+    {
+    }
 };
 
 void WhiteBoxTests::testEmptyCellCursor()

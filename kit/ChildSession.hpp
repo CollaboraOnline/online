@@ -90,6 +90,13 @@ public:
         return _docManager->sendFrame(msg.data(), msg.size(), WSOpCode::Text);
     }
 
+    bool sendSaveFrame(const std::string& msg)
+    {
+        bool ret = sendTextFrame(msg);
+        _docManager->handleSaveMessage(msg);
+        return ret;
+    }
+
     bool sendBinaryFrame(const char* buffer, int length) override
     {
         if (!_docManager)

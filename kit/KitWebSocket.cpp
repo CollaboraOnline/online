@@ -195,6 +195,8 @@ void KitWebSocketHandler::onDisconnect()
     _ksPoll.reset();
 }
 
+// transient background save child message handler
+
 void BgSaveChildWebSocketHandler::handleMessage(const std::vector<char>& data)
 {
     LOG_DBG(_socketName << ": recv from parent [" <<
@@ -203,7 +205,26 @@ void BgSaveChildWebSocketHandler::handleMessage(const std::vector<char>& data)
 
 void BgSaveChildWebSocketHandler::onDisconnect()
 {
-    LOG_TRC("Disconnected background web socket handler");
+    LOG_TRC("Disconnected background web socket to parent kit");
+    Util::forcedExit(EX_OK);
+}
+
+BgSaveChildWebSocketHandler::~BgSaveChildWebSocketHandler()
+{
+    LOG_TRC("Close web socket to parent kit");
+}
+
+// Kit handler for messages from transient background save Kit
+
+void BgSaveParentWebSocketHandler::handleMessage(const std::vector<char>& data)
+{
+    LOG_DBG(_socketName << ": recv from parent [" <<
+            COOLProtocol::getAbbreviatedMessage(data));
+}
+
+void BgSaveParentWebSocketHandler::onDisconnect()
+{
+    LOG_TRC("Disconnected background web socket to child");
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

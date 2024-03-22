@@ -850,8 +850,8 @@ bool ChildSession::saveDocumentAsync(const StringVector &tokens)
 
         sendTextFrame("asyncsave end");
 
-        LOG_TRC("Finished background saving ...");
-        disconnect();
+        LOG_TRC("Finished synchronous background saving ...");
+        // Now we wait for an async UNO_COMMAND_RESULT on .uno:Save
     }))
         return false; // fork failed
 
@@ -2959,6 +2959,7 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
         auto commandName = object->get("commandName");
         auto success = object->get("success");
 
+        bool saveCommand = false;
         if (!commandName.isEmpty() && commandName.toString() == ".uno:Save")
         {
             if (!Util::isMobileApp())
@@ -2966,6 +2967,8 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
                 consistencyCheckJail();
 
                 renameForUpload(getJailedFilePath());
+
+                saveCommand = true;
             }
             else
             {
@@ -2996,7 +2999,10 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
             }
         }
 
-        sendTextFrame("unocommandresult: " + payload);
+        if (saveCommand)
+            sendSaveFrame("unocommandresult: " + payload);
+        else
+            sendTextFrame("unocommandresult: " + payload);
     }
     break;
     case LOK_CALLBACK_ERROR:

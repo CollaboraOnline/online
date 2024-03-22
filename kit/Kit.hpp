@@ -239,6 +239,8 @@ public:
     virtual bool joinThreads() = 0;
 
     virtual bool forkToSave(const std::function<void()> &childSave) = 0;
+
+    virtual void handleSaveMessage(const std::string &msg) = 0;
 };
 
 /// A document container.
@@ -341,6 +343,8 @@ private:
     void startThreads();
 
     bool forkToSave(const std::function<void()> &childSave) override;
+
+    void handleSaveMessage(const std::string &msg) override;
 
     /// Notify all views of viewId and their associated usernames
     void notifyViewInfo() override;

@@ -61,7 +61,7 @@ protected:
     virtual void onDisconnect() override;
 };
 
-
+/// WebSocket for a background save child process to talk to its parent Kit
 class BgSaveChildWebSocketHandler final : public WebSocketHandler
 {
     std::string _socketName;
@@ -73,7 +73,26 @@ public:
     {
     }
 
-    ~BgSaveChildWebSocketHandler()
+    ~BgSaveChildWebSocketHandler();
+
+protected:
+    virtual void handleMessage(const std::vector<char>& data) override;
+    virtual void onDisconnect() override;
+};
+
+/// WebSocket for a Kit process to talk to its background save child
+class BgSaveParentWebSocketHandler final : public WebSocketHandler
+{
+    std::string _socketName;
+
+public:
+    BgSaveParentWebSocketHandler(const std::string& socketName)
+        : WebSocketHandler(/* isClient = */ false, /* isMasking */ false)
+        , _socketName(socketName)
+    {
+    }
+
+    ~BgSaveParentWebSocketHandler()
     {
         // Just to make it easier to set a breakpoint
     }

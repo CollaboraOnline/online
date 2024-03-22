@@ -1312,6 +1312,16 @@ void Document::startThreads()
         SocketPoll::PollWatchdog->startThread();
 }
 
+void Document::handleSaveMessage(const std::string &)
+{
+    // if a bgsave process - now we can clean up.
+    if (_saveProcessParent)
+    {
+        LOG_WRN("Shutting down bgsave child's socket to parent kit post save");
+        _saveProcessParent->shutdown();
+    }
+}
+
 bool Document::forkToSave(const std::function<void()> &childSave)
 {
     if (!joinThreads())
@@ -1356,13 +1366,18 @@ bool Document::forkToSave(const std::function<void()> &childSave)
     if (!StreamSocket::socketpair(parentSocket, childSocket))
         return false;
 
+    // encode this in child process id
+    static size_t numSaves = 0;
+    numSaves++;
+
     const pid_t pid = fork();
 
     if (!pid) // Child
     {
         // sort out thread local variables to get logging right from
         // as early as possible.
-        Util::setThreadName("kit_bgsave_" + Util::encodeId(_mobileAppDocId, 3));
+        Util::setThreadName("kitbgsv_" + Util::encodeId(_mobileAppDocId, 3) +
+                            "_" + Util::encodeId(numSaves, 3));
 
         SigUtil::addActivity("forked background save process: " +
                              std::to_string(pid));
@@ -1378,12 +1393,13 @@ bool Document::forkToSave(const std::function<void()> &childSave)
         kitWs->shutdownForBackgroundSave();
 
         // now send messages to the parent instead of the kit.
-        _saveProcessParent = std::make_shared<BgSaveChildWebSocketHandler>("bgsave_child_ws");
+        _saveProcessParent = std::make_shared<BgSaveChildWebSocketHandler>("bgsv_child_ws");
         parentSocket->setHandler(_saveProcessParent);
-        // avoid http upgrade etc.
-        parentSocket->setWebSocket();
+        parentSocket->setWebSocket(); // avoid http upgrade.
+
+        // hand parentSocket to the main poll
         KitSocketPoll::getMainPoll()->insertNewSocket(parentSocket);
-//        parentSocket.reset(); // now owned by the poll.
+        parentSocket.reset();
 
         // FIXME: strace this - and re-check shutdownForBackgroundSave ...
 
@@ -1394,6 +1410,9 @@ bool Document::forkToSave(const std::function<void()> &childSave)
         childSave();
 
         SigUtil::addActivity("background save process shutdown");
+
+        _saveProcessParent->shutdown();
+        _saveProcessParent.reset();
     }
     else // Still us
     {
@@ -1401,6 +1420,11 @@ bool Document::forkToSave(const std::function<void()> &childSave)
 
         parentSocket.reset();
         // now we have a socket to the child: childSocket
+
+        auto bgSaveChild = std::make_shared<BgSaveParentWebSocketHandler>("bgsave_kit_ws");
+        childSocket->setHandler(bgSaveChild);
+        childSocket->setWebSocket(); // avoid http upgrade.
+        KitSocketPoll::getMainPoll()->insertNewSocket(childSocket);
 
         startThreads();
     }
