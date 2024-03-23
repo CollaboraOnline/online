@@ -1000,10 +1000,8 @@ std::string FileServerRequestHandler::getRequestPathname(const HTTPRequest& requ
     return path;
 }
 
-constexpr char BRANDING[] = "branding";
-#if ENABLE_SUPPORT_KEY
-constexpr char BRANDING_UNSUPPORTED[] = "branding-unsupported";
-#endif
+constexpr std::string_view BRANDING = "branding";
+constexpr std::string_view SUPPORT_KEY_BRANDING_UNSUPPORTED = "branding-unsupported";
 
 static const std::string ACCESS_TOKEN = "%ACCESS_TOKEN%";
 static const std::string ACCESS_TOKEN_TTL = "%ACCESS_TOKEN_TTL%";
@@ -1212,15 +1210,16 @@ FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::prepro
     std::string brandCSS(Poco::format(linkCSS, responseRoot, std::string(BRANDING)));
     std::string brandJS(Poco::format(scriptJS, responseRoot, std::string(BRANDING)));
 
-#if ENABLE_SUPPORT_KEY
-    const std::string keyString = config.getString("support_key", "");
-    SupportKey key(keyString);
-    if (!key.verify() || key.validDaysRemaining() <= 0)
+    if (config::isSupportKeyEnabled())
     {
-        brandCSS = Poco::format(linkCSS, responseRoot, std::string(BRANDING_UNSUPPORTED));
-        brandJS = Poco::format(scriptJS, responseRoot, std::string(BRANDING_UNSUPPORTED));
+        const std::string keyString = config.getString("support_key", "");
+        SupportKey key(keyString);
+        if (!key.verify() || key.validDaysRemaining() <= 0)
+        {
+            brandCSS = Poco::format(linkCSS, responseRoot, SUPPORT_KEY_BRANDING_UNSUPPORTED);
+            brandJS = Poco::format(scriptJS, responseRoot, SUPPORT_KEY_BRANDING_UNSUPPORTED);
+        }
     }
-#endif
 
     Poco::replaceInPlace(preprocess, std::string("<!--%BRANDING_CSS%-->"), brandCSS);
     Poco::replaceInPlace(preprocess, std::string("<!--%BRANDING_JS%-->"), brandJS);
@@ -1592,17 +1591,18 @@ void FileServerRequestHandler::preprocessAdminFile(const HTTPRequest& request,
     std::string brandJS(Poco::format(scriptJS, responseRoot, std::string(BRANDING)));
     std::string brandFooter;
 
-#if ENABLE_SUPPORT_KEY
-    const auto& config = Application::instance().config();
-    const std::string keyString = config.getString("support_key", "");
-    SupportKey key(keyString);
-
-    if (!key.verify() || key.validDaysRemaining() <= 0)
+    if (config::isSupportKeyEnabled())
     {
-        brandJS = Poco::format(scriptJS, std::string(BRANDING_UNSUPPORTED));
-        brandFooter = Poco::format(footerPage, key.data(), Poco::DateTimeFormatter::format(key.expiry(), Poco::DateTimeFormat::RFC822_FORMAT));
+        const auto& config = Application::instance().config();
+        const std::string keyString = config.getString("support_key", "");
+        SupportKey key(keyString);
+
+        if (!key.verify() || key.validDaysRemaining() <= 0)
+        {
+            brandJS = Poco::format(scriptJS, SUPPORT_KEY_BRANDING_UNSUPPORTED);
+            brandFooter = Poco::format(footerPage, key.data(), Poco::DateTimeFormatter::format(key.expiry(), Poco::DateTimeFormat::RFC822_FORMAT));
+        }
     }
-#endif
 
     Poco::replaceInPlace(templateFile, std::string("<!--%BRANDING_JS%-->"), brandJS);
     Poco::replaceInPlace(templateFile, std::string("<!--%FOOTER%-->"), brandFooter);

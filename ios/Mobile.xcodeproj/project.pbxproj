@@ -23,6 +23,7 @@
 		BE18C7DE226DE09A001AD27E /* Branding in Resources */ = {isa = PBXBuildFile; fileRef = BE18C7DD226DE09A001AD27E /* Branding */; };
 		BE512CBA2518DE6E00921C15 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = BE512CB92518DE6400921C15 /* libsqlite3.tbd */; };
 		BE55E0EB2653FCCB007DDF29 /* ConfigUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE55E0E92653FCCB007DDF29 /* ConfigUtil.cpp */; };
+		BE55E0EB3653FCCB007DDF29 /* Crypto-stub.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE55E0EC2653FCCB007DDF29 /* Crypto-stub.cpp */; };
 		BE5EB5C1213FE29900E0826C /* Log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5EB5B9213FE29900E0826C /* Log.cpp */; };
 		BE5EB5C2213FE29900E0826C /* SpookyV2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5EB5BA213FE29900E0826C /* SpookyV2.cpp */; };
 		BE5EB5C3213FE29900E0826C /* Session.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5EB5BB213FE29900E0826C /* Session.cpp */; };
@@ -552,6 +553,7 @@
 		BE512CB92518DE6400921C15 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		BE55E0E92653FCCB007DDF29 /* ConfigUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConfigUtil.cpp; sourceTree = "<group>"; };
 		BE55E0EA2653FCCB007DDF29 /* ConfigUtil.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ConfigUtil.hpp; sourceTree = "<group>"; };
+		BE55E0EC2653FCCB007DDF29 /* Crypto-stub.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Crypto-stub.cpp; sourceTree = "<group>"; };
 		BE58E129217F295B00249358 /* Log.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Log.hpp; sourceTree = "<group>"; };
 		BE58E12A217F295B00249358 /* Png.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Png.hpp; sourceTree = "<group>"; };
 		BE58E12B217F295B00249358 /* SigUtil.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SigUtil.hpp; sourceTree = "<group>"; };
@@ -2183,6 +2185,7 @@
 				BEABFC6724AC94C3004DE339 /* Authorization.hpp */,
 				BE55E0E92653FCCB007DDF29 /* ConfigUtil.cpp */,
 				BE55E0EA2653FCCB007DDF29 /* ConfigUtil.hpp */,
+				BE55E0EC2653FCCB007DDF29 /* Crypto-stub.cpp */,
 				BE5EB5C0213FE29900E0826C /* FileUtil.cpp */,
 				BE5EB5B9213FE29900E0826C /* Log.cpp */,
 				BE58E129217F295B00249358 /* Log.hpp */,
@@ -3678,6 +3681,7 @@
 				BE5EB5C5213FE29900E0826C /* MessageQueue.cpp in Sources */,
 				BE7228E22417BC9F000ADABD /* StringVector.cpp in Sources */,
 				BE55E0EB2653FCCB007DDF29 /* ConfigUtil.cpp in Sources */,
+				BE55E0EB3653FCCB007DDF29 /* Crypto-stub.cpp in Sources */,
 				BE5EB5E721401E0F00E0826C /* RequestVettingStation.cpp in Sources */,
 				BE5EB5F821401E0F00E0826C /* Storage.cpp in Sources */,
 				BE5EB5D621401E0F00E0826C /* Storage.cpp in Sources */,

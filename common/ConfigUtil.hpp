@@ -49,4 +49,7 @@ bool getBool(const std::string& key, const bool def);
 /// Return true if SSL is enabled in the config and no fuzzing is enabled.
 bool isSslEnabled();
 
+/// Return true if build is support key enabled (ENABLE_SUPPORT_KEY is defined)
+bool isSupportKeyEnabled();
+
 } // namespace config
