@@ -46,6 +46,7 @@ public:
                           const RequestDetails& requestDetails)
         : _poll(poll)
         , _requestDetails(requestDetails)
+        , _mobileAppDocId(0)
     {
     }
 
