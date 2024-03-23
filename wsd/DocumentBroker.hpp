@@ -321,9 +321,6 @@ public:
         Interactive, Batch
     };
 
-    /// Dummy document broker that is marked to destroy.
-    DocumentBroker();
-
     DocumentBroker(ChildType type,
                    const std::string& uri,
                    const Poco::URI& uriPublic,
