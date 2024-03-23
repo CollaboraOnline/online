@@ -206,6 +206,17 @@ DocumentBroker::DocumentBroker(ChildType type, const std::string& uri, const Poc
     }
 }
 
+DocumentBroker::DocumentBroker(ChildType type, const std::string& uri, const Poco::URI& uriPublic,
+                               const std::string& docKey,
+                               std::unique_ptr<WopiStorage::WOPIFileInfo> wopiFileInfo)
+    : DocumentBroker(type, uri, uriPublic, docKey, /*mobileAppDocId=*/0)
+{
+    _initialWopiFileInfo = std::move(wopiFileInfo);
+
+    LOG_DBG("Starting DocBrokerPoll thread");
+    _poll->startThread();
+}
+
 void DocumentBroker::setupPriorities()
 {
     if (Util::isMobileApp())
@@ -295,6 +306,13 @@ void DocumentBroker::pollThread()
     LOG_INF("Doc [" << _docKey << "] attached to child [" << _childProcess->getPid() << "].");
 
     setupPriorities();
+
+    // Download and load the document.
+    if (_initialWopiFileInfo)
+    {
+        downloadAdvance(_childProcess->getJailId(), *_initialWopiFileInfo);
+        _initialWopiFileInfo.reset();
+    }
 
 #if !MOBILEAPP
     static const std::size_t IdleDocTimeoutSecs
@@ -764,6 +782,253 @@ void DocumentBroker::stop(const std::string& reason)
 
     _stop = true;
     _poll->wakeup();
+}
+
+bool DocumentBroker::downloadAdvance(const std::string& jailId,
+                                     const WopiStorage::WOPIFileInfo& wopiFileInfo)
+{
+    ASSERT_CORRECT_THREAD();
+
+    LOG_INF("Loading [" << _docKey << "] ahead-of-time in jail [" << jailId << ']');
+
+    assert(!_docState.isMarkedToDestroy() && "MarkedToDestroy while downloading ahead-of-time");
+
+    _jailId = jailId;
+
+    // The URL is the publicly visible one, not visible in the chroot jail.
+    // We need to map it to a jailed path and copy the file there.
+
+    // /tmp/user/docs/<dirName>, root under getJailRoot()
+    const Poco::Path jailPath(JAILED_DOCUMENT_ROOT, Util::rng::getFilename(16));
+    const std::string jailRoot = getJailRoot();
+
+    LOG_INF("JailPath for docKey [" << _docKey << "]: [" << jailPath.toString() << "], jailRoot: ["
+                                    << jailRoot << ']');
+
+    assert(_storage == nullptr &&
+           "Unexpected to find storage created while downloading ahead-of-time");
+
+    _docState.setStatus(DocumentState::Status::Downloading);
+
+    // Pass the public URI to storage as it needs to load using the token
+    // and other storage-specific data provided in the URI.
+    LOG_DBG("Creating new storage instance for URI ["
+            << COOLWSD::anonymizeUrl(_uriPublic.toString()) << ']');
+
+    try
+    {
+        _storage = StorageBase::create(_uriPublic, jailRoot, jailPath.toString(),
+                                       /*takeOwnership=*/isConvertTo());
+    }
+    catch (...)
+    {
+        // fallthrough
+    }
+
+    if (_storage == nullptr)
+    {
+        // We should get an exception, not null.
+        LOG_WRN("Failed to create storage ahead-of-time for ["
+                << _docKey << "] in [" << jailPath.toString()
+                << "], will try again on user connection");
+        return false;
+    }
+
+    LOG_ASSERT(_storage);
+
+    // Call the storage specific fileinfo functions
+    std::string userId, username;
+    std::string userExtraInfo;
+    std::string userPrivateInfo;
+    std::string watermarkText;
+    std::string templateSource;
+
+#if !MOBILEAPP
+    std::chrono::milliseconds checkFileInfoCallDurationMs = std::chrono::milliseconds::zero();
+    WopiStorage* wopiStorage = dynamic_cast<WopiStorage*>(_storage.get());
+    if (wopiStorage != nullptr)
+    {
+        LOG_DBG("CheckFileInfo for docKey [" << _docKey << ']');
+        std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
+        wopiStorage->handleWOPIFileInfo(wopiFileInfo, *_lockCtx);
+
+        checkFileInfoCallDurationMs = std::chrono::duration_cast<std::chrono::milliseconds>(
+            std::chrono::steady_clock::now() - start);
+    }
+    else
+#endif
+    {
+        LocalStorage* localStorage = dynamic_cast<LocalStorage*>(_storage.get());
+        if (localStorage != nullptr)
+        {
+            std::unique_ptr<LocalStorage::LocalFileInfo> localfileinfo =
+                localStorage->getLocalFileInfo();
+            userId = localfileinfo->getUserId();
+            username = localfileinfo->getUsername();
+
+            _isViewFileExtension = COOLWSD::IsViewFileExtension(localStorage->getFileExtension());
+        }
+    }
+
+#if ENABLE_SUPPORT_KEY
+    if (!COOLWSD::OverrideWatermark.empty())
+        watermarkText = COOLWSD::OverrideWatermark;
+#endif
+
+    // Basic file information was stored by the above getWOPIFileInfo() or getLocalFileInfo() calls
+    const StorageBase::FileInfo fileInfo = _storage->getFileInfo();
+    if (!fileInfo.isValid())
+    {
+        LOG_ERR("Invalid fileinfo for URI [" << _uriPublic.toString() << ']');
+        return false;
+    }
+
+    _storageManager.setLastModifiedTime(fileInfo.getLastModifiedTime());
+    LOG_DBG("Document timestamp: " << _storageManager.getLastModifiedTime());
+
+    // Let's download the document now, if not downloaded.
+    std::chrono::milliseconds getFileCallDurationMs = std::chrono::milliseconds::zero();
+    if (!_storage->isDownloaded())
+    {
+        LOG_DBG("Download file for docKey [" << _docKey << ']');
+        std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
+        std::string localPath = _storage->downloadStorageFileToLocal(
+            Authorization::create(_uriPublic), *_lockCtx, templateSource);
+        if (localPath.empty())
+        {
+            throw std::runtime_error("Failed to retrieve document from storage");
+        }
+
+        getFileCallDurationMs = std::chrono::duration_cast<std::chrono::milliseconds>(
+            std::chrono::steady_clock::now() - start);
+
+        _docState.setStatus(DocumentState::Status::Loading); // Done downloading.
+
+#if !MOBILEAPP
+        // Check if we have a prefilter "plugin" for this document format
+        for (const auto& plugin : COOLWSD::PluginConfigurations)
+        {
+            try
+            {
+                const std::string extension(plugin->getString("prefilter.extension"));
+                const std::string newExtension(plugin->getString("prefilter.newextension"));
+                std::string commandLine(plugin->getString("prefilter.commandline"));
+
+                if (localPath.length() > extension.length() + 1 &&
+                    strcasecmp(localPath.substr(localPath.length() - extension.length() - 1).data(),
+                               (std::string(".") + extension).data()) == 0)
+                {
+                    // Extension matches, try the conversion. We convert the file to another one in
+                    // the same (jail) directory, with just the new extension tacked on.
+
+                    const std::string newRootPath =
+                        _storage->getRootFilePath() + '.' + newExtension;
+
+                    // The commandline must contain the space-separated substring @INPUT@ that is
+                    // replaced with the input file name, and @OUTPUT@ for the output file name.
+                    int inputs(0), outputs(0);
+
+                    std::string input("@INPUT");
+                    std::size_t pos = commandLine.find(input);
+                    if (pos != std::string::npos)
+                    {
+                        commandLine.replace(pos, input.length(), _storage->getRootFilePath());
+                        ++inputs;
+                    }
+
+                    std::string output("@OUTPUT@");
+                    pos = commandLine.find(output);
+                    if (pos != std::string::npos)
+                    {
+                        commandLine.replace(pos, output.length(), newRootPath);
+                        ++outputs;
+                    }
+
+                    StringVector args(StringVector::tokenize(commandLine, ' '));
+                    std::string command(args[0]);
+                    args.erase(args.begin()); // strip the command
+
+                    if (inputs != 1 || outputs != 1)
+                        throw std::exception();
+
+                    int process = Util::spawnProcess(command, args);
+                    int status = -1;
+                    const int rc = ::waitpid(process, &status, 0);
+                    if (rc != 0)
+                    {
+                        LOG_ERR("Conversion from " << extension << " to " << newExtension
+                                                   << " failed (" << rc << ").");
+                        return false;
+                    }
+
+                    _storage->setRootFilePath(newRootPath);
+                    localPath += '.' + newExtension;
+                }
+
+                // We successfully converted the file to something LO can use; break out of the for
+                // loop.
+                break;
+            }
+            catch (const std::exception&)
+            {
+                // This plugin is not a proper prefilter one
+            }
+        }
+#endif
+
+        const std::string localFilePath = Poco::Path(getJailRoot(), localPath).toString();
+        std::ifstream istr(localFilePath, std::ios::binary);
+        Poco::SHA1Engine sha1;
+        Poco::DigestOutputStream dos(sha1);
+        Poco::StreamCopier::copyStream(istr, dos);
+        dos.close();
+        LOG_INF("SHA1 for DocKey [" << _docKey << "] of [" << COOLWSD::anonymizeUrl(localPath)
+                                    << "]: " << Poco::DigestEngine::digestToHex(sha1.digest()));
+
+        std::string localPathEncoded;
+        Poco::URI::encode(localPath, "#?", localPathEncoded);
+        _uriJailed = Poco::URI(Poco::URI("file://"), localPathEncoded).toString();
+        _uriJailedAnonym =
+            Poco::URI(Poco::URI("file://"), COOLWSD::anonymizeUrl(localPathEncoded)).toString();
+
+        _filename = fileInfo.getFilename();
+#if !MOBILEAPP
+        _quarantine = std::make_unique<Quarantine>(*this, _filename);
+#endif
+
+        if (!templateSource.empty())
+        {
+            // Invalid timestamp for templates, to force uploading once we save-after-loading.
+            _saveManager.setLastModifiedTime(std::chrono::system_clock::time_point());
+            _storageManager.setLastUploadedFileModifiedTime(
+                std::chrono::system_clock::time_point());
+        }
+        else
+        {
+            // Use the local temp file's timestamp.
+            const auto timepoint = FileUtil::Stat(localFilePath).modifiedTimepoint();
+            _saveManager.setLastModifiedTime(timepoint);
+            _storageManager.setLastUploadedFileModifiedTime(
+                timepoint); // Used to detect modifications.
+        }
+
+        bool dontUseCache = Util::isMobileApp();
+
+        _tileCache = std::make_unique<TileCache>(_storage->getUri().toString(),
+                                                 _saveManager.getLastModifiedTime(), dontUseCache);
+        _tileCache->setThreadOwner(std::this_thread::get_id());
+    }
+
+#if !MOBILEAPP
+    // Since document has been loaded, send the stats if its WOPI
+    assert(wopiStorage != nullptr);
+    {
+        // Add the time taken to load the file from storage and to check file info.
+        _wopiDownloadDuration += getFileCallDurationMs + checkFileInfoCallDurationMs;
+    }
+#endif
+
+    return true;
 }
 
 bool DocumentBroker::download(
