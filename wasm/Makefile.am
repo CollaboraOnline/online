@@ -23,6 +23,7 @@ online_SOURCES = \
 	wasmapp.cpp \
 	../common/Authorization.cpp \
 	../common/ConfigUtil.cpp \
+	../common/Crypto-stub.cpp \
 	../common/FileUtil.cpp \
 	../common/CommandControl.cpp \
 	../common/Log.cpp \

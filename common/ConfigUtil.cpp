@@ -70,4 +70,14 @@ bool isSslEnabled()
     return false;
 #endif
 }
+
+bool isSupportKeyEnabled()
+{
+#if ENABLE_SUPPORT_KEY
+    return true;
+#else
+    return false;
+#endif
+}
+
 } // namespace config

@@ -11,8 +11,6 @@
 
 #pragma once
 
-#if ENABLE_SUPPORT_KEY
-
 #include <memory>
 
 struct SupportKeyImpl;
@@ -37,7 +35,5 @@ public:
 
     std::string data() const;
 };
-
-#endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

@@ -294,7 +294,8 @@ coolstress_SOURCES = tools/Stress.cpp \
 coolconfig_SOURCES = tools/Config.cpp \
 		     tools/ConfigMigrationAssistant.cpp \
 		     common/DummyTraceEventEmitter.cpp \
-		     common/Crypto.cpp \
+		     common/ConfigUtil.cpp \
+                     common/Crypto.cpp \
 		     common/Log.cpp \
 		     common/StringVector.cpp \
 		     common/Util.cpp \
