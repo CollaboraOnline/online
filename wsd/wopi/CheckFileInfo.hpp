@@ -64,7 +64,7 @@ public:
     const std::string& docKey() const { return _docKey; }
 
     /// Returns the parsed response JSON, if any.
-    Poco::JSON::Object::Ptr wopiInfo() const { return _wopiInfo; };
+    Poco::JSON::Object::Ptr wopiInfo() const { return _wopiInfo; }
 
 private:
     inline void logPrefix(std::ostream& os) const
