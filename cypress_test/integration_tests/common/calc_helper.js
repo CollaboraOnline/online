@@ -220,24 +220,13 @@ function assertSheetContents(expectedData) {
 function assertDataClipboardTable(expectedData) {
 	cy.log('>> assertDataClipboardTable - start');
 
-	cy.cGet('#copy-paste-container table td')
-		.should(function(cells) {
-			expect(cells).to.have.lengthOf(expectedData.length);
-		});
-
-	// Wait for clipboard to update anyways, in case we get here before the
-	// update because the new contents are the same length as the previous
-	cy.wait(200);
-
-	var data = [];
-
-	cy.cGet('#copy-paste-container tbody').find('td').each(($el) => {
-		cy.wrap($el,{log: false})
-			.invoke({log: false}, 'text')
-			.then(text => {
-				data.push(text);
-			});
-	}).then(() => expect(data).to.deep.eq(expectedData));
+	cy.cGet('#copy-paste-container table td').should(function($td) {
+		expect($td).to.have.length(expectedData.length);
+		var actualData = $td.map(function(i,el) {
+			return Cypress.$(el).text();
+		}).get();
+		expect(actualData).to.deep.eq(expectedData);
+	});
 
 	cy.log('<< assertDataClipboardTable - end');
 }
