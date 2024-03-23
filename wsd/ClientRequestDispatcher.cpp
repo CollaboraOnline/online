@@ -1626,10 +1626,9 @@ void ClientRequestDispatcher::handleClientProxyRequest(const Poco::Net::HTTPRequ
     (void)message;
     (void)disposition;
 
-    std::shared_ptr<ProtocolHandlerInterface> none;
     // Request a kit process for this doc.
-    std::shared_ptr<DocumentBroker> docBroker = findOrCreateDocBroker(
-        none, DocumentBroker::ChildType::Interactive, url, docKey, _id, uriPublic);
+    auto [docBroker, errorMsg] =
+        findOrCreateDocBroker(DocumentBroker::ChildType::Interactive, url, docKey, _id, uriPublic);
     if (docBroker)
     {
         // need to move into the DocumentBroker context before doing session lookup / creation etc.
@@ -1673,9 +1672,9 @@ void ClientRequestDispatcher::handleClientProxyRequest(const Poco::Net::HTTPRequ
     }
     else
     {
-        auto streamSocket = std::static_pointer_cast<StreamSocket>(disposition.getSocket());
-        LOG_ERR("Failed to find document");
+        LOG_ERR("Failed to find document [" << docKey << "]: " << errorMsg);
         // badness occurred:
+        auto streamSocket = std::static_pointer_cast<StreamSocket>(disposition.getSocket());
         HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, streamSocket);
         // FIXME: send docunloading & re-try on client ?
     }
