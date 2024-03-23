@@ -30,42 +30,6 @@ findOrCreateDocBroker(DocumentBroker::ChildType type, const std::string& uri,
 
 namespace
 {
-/// Find the DocumentBroker for the given docKey, if one exists.
-/// Otherwise, creates and adds a new one to DocBrokers.
-/// May return null if terminating or MaxDocuments limit is reached.
-/// After returning a valid instance DocBrokers must be cleaned up after exceptions.
-std::shared_ptr<DocumentBroker>
-findOrCreateDocBroker(const std::shared_ptr<ProtocolHandlerInterface>& proto,
-                      DocumentBroker::ChildType type, const std::string& uri,
-                      const std::string& docKey, const std::string& id, const Poco::URI& uriPublic,
-                      unsigned mobileAppDocId = 0)
-{
-    const auto [docBroker, error] =
-        findOrCreateDocBroker(type, uri, docKey, id, uriPublic, mobileAppDocId);
-
-    if (docBroker)
-    {
-        // Indicate to the client that we're connecting to the docbroker.
-        if (proto)
-        {
-            const std::string statusConnect = "statusindicator: connect";
-            LOG_TRC("Sending to Client [" << statusConnect << ']');
-            proto->sendTextMessage(statusConnect.data(), statusConnect.size());
-        }
-
-        return docBroker;
-    }
-
-    // Failed.
-    if (proto)
-    {
-        proto->sendTextMessage(error.data(), error.size(), /*flush=*/true);
-        proto->shutdown(true, error);
-    }
-
-    return nullptr;
-}
-
 void sendLoadResult(const std::shared_ptr<ClientSession>& clientSession, bool success,
                     const std::string& errorMsg)
 {
@@ -344,19 +308,33 @@ bool RequestVettingStation::createDocBroker(const std::string& docKey, const std
                                             const Poco::URI& uriPublic)
 {
     // Request a kit process for this doc.
-    _docBroker = findOrCreateDocBroker(std::static_pointer_cast<ProtocolHandlerInterface>(_ws),
-                                       DocumentBroker::ChildType::Interactive, url, docKey, _id,
-                                       uriPublic, _mobileAppDocId);
-    if (!_docBroker)
+    const auto [docBroker, error] = findOrCreateDocBroker(
+        DocumentBroker::ChildType::Interactive, url, docKey, _id, uriPublic, _mobileAppDocId);
+
+    _docBroker = docBroker;
+    if (_docBroker)
     {
-        LOG_ERR("Failed to create DocBroker [" << docKey << ']');
-        sendErrorAndShutdown(_ws, "error: cmd=internal kind=load",
-                             WebSocketHandler::StatusCodes::UNEXPECTED_CONDITION);
-        return false;
+        // Indicate to the client that we're connecting to the docbroker.
+        if (_ws)
+        {
+            const std::string statusConnect = "statusindicator: connect";
+            LOG_TRC("Sending to Client [" << statusConnect << ']');
+            _ws->sendTextMessage(statusConnect.data(), statusConnect.size());
+        }
+
+        LOG_DBG("DocBroker [" << docKey << "] acquired for [" << url << ']');
+        return true;
     }
 
-    LOG_DBG("DocBroker [" << docKey << "] acquired for [" << url << ']');
-    return true;
+    // Failed.
+    LOG_ERR("Failed to create DocBroker [" << docKey << ']');
+    if (_ws)
+    {
+        sendErrorAndShutdown(_ws, "error: cmd=internal kind=load",
+                             WebSocketHandler::StatusCodes::UNEXPECTED_CONDITION);
+    }
+
+    return false;
 }
 
 void RequestVettingStation::createClientSession(const std::string& docKey, const std::string& url,
