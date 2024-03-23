@@ -291,14 +291,14 @@ void RequestVettingStation::checkFileInfo(const Poco::URI& uri, bool isReadOnly,
         if (_checkFileInfo && _checkFileInfo->state() == CheckFileInfo::State::Pass &&
             _checkFileInfo->wopiInfo())
         {
+            // The final URL might be different due to redirection.
+            const std::string url = checkFileInfo.url().toString();
+            const auto uriPublic = RequestDetails::sanitizeURI(url);
+            const auto docKey = RequestDetails::getDocKey(uriPublic);
+            LOG_DBG("WOPI::CheckFileInfo succeeded and will create DocBroker ["
+                    << docKey << "] now with URL: [" << url << ']');
             if (_ws)
             {
-                // The final URL might be different due to redirection.
-                const std::string url = checkFileInfo.url().toString();
-                const auto uriPublic = RequestDetails::sanitizeURI(url);
-                const auto docKey = RequestDetails::getDocKey(uriPublic);
-                LOG_DBG("WOPI::CheckFileInfo succeeded and will create DocBroker ["
-                        << docKey << "] now with URL: [" << url << ']');
                 if (createDocBroker(docKey, url, uriPublic))
                 {
                     assert(_docBroker && "Must have docBroker");
@@ -308,7 +308,15 @@ void RequestVettingStation::checkFileInfo(const Poco::URI& uri, bool isReadOnly,
             else
             {
                 LOG_DBG("WOPI::CheckFileInfo succeeded but we don't have the client's "
-                        "WebSocket yet. Deferring DocBroker creation");
+                        "WebSocket yet. Creating DocBroker without connection");
+                auto [docBroker, errorMsg] =
+                    findOrCreateDocBroker(DocumentBroker::ChildType::Interactive, url, docKey, _id,
+                                          uriPublic, _mobileAppDocId);
+                _docBroker = docBroker;
+                if (!_docBroker)
+                {
+                    LOG_DBG("Failed to find document [" << docKey << "]: " << errorMsg);
+                }
             }
         }
         else
