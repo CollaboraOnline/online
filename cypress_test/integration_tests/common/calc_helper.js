@@ -215,21 +215,14 @@ function ensureViewContainsCellCursor() {
 
 function assertDataClipboardTable(expectedData) {
 	cy.log('>> assertDataClipboardTable - start');
-
-	cy.cGet('#copy-paste-container table td')
-		.should(function(cells) {
-			expect(cells).to.have.lengthOf(expectedData.length);
-		});
-
-	var data = [];
-
-	cy.cGet('#copy-paste-container tbody').find('td').each(($el) => {
-		cy.wrap($el)
-			.invoke('text')
-			.then(text => {
-				data.push(text);
-			});
-	}).then(() => expect(data).to.deep.eq(expectedData));
+	
+	cy.cGet('#copy-paste-container table td').should(function($td) {
+		expect($td).to.have.length(expectedData.length);
+		var actualData = $td.map(function(i,el) {
+			return Cypress.$(el).text();
+		}).get();
+		expect(actualData).to.deep.eq(expectedData);
+	});
 
 	cy.log('<< assertDataClipboardTable - end');
 }
