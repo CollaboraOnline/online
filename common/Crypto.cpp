@@ -11,8 +11,6 @@
 
 #include <config.h>
 
-#if ENABLE_SUPPORT_KEY
-
 #include <Poco/DigestStream.h>
 #include <Poco/Base64Decoder.h>
 #include <Poco/DateTimeParser.h>
@@ -24,10 +22,21 @@
 
 #include "Log.hpp"
 #include "Crypto.hpp"
+#if ENABLE_SUPPORT_KEY
 #include "support-public-key.hpp"
+#endif
 
 using namespace Poco;
 using namespace Poco::Crypto;
+
+std::string getSupportPublicKey()
+{
+#if ENABLE_SUPPORT_KEY
+    return SUPPORT_PUBLIC_KEY;
+#else
+    return std::string();
+#endif
+}
 
 struct SupportKeyImpl
 {
@@ -86,7 +95,7 @@ bool SupportKey::verify()
         return false;
     }
 
-    std::istringstream pubStream(SUPPORT_PUBLIC_KEY);
+    std::istringstream pubStream(getSupportPublicKey());
 
     try {
         RSAKey keyPub(&pubStream);
@@ -139,7 +148,5 @@ std::string SupportKey::data() const
 {
     return _impl->_data;
 }
-
-#endif // ENABLE_SUPPORT_KEY
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

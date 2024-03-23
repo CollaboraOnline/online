@@ -69,7 +69,7 @@ extern void cleanupDocBrokers();
 namespace
 {
 
-#if ENABLE_SUPPORT_KEY
+/// Used in support key enabled builds
 inline void shutdownLimitReached(const std::shared_ptr<ProtocolHandlerInterface>& proto)
 {
     if (!proto)
@@ -92,7 +92,6 @@ inline void shutdownLimitReached(const std::shared_ptr<ProtocolHandlerInterface>
         LOG_ERR("Error while shutting down socket on reaching limit: " << ex.what());
     }
 }
-#endif
 
 } // end anonymous namespace
 
@@ -166,11 +165,12 @@ findOrCreateDocBroker(DocumentBroker::ChildType type, const std::string& uri,
             LOG_WRN("Maximum number of open documents of "
                     << COOLWSD::MaxDocuments << " reached while loading new session [" << id
                     << "] for docKey [" << docKey << ']');
-#if ENABLE_SUPPORT_KEY
-            const std::string error = Poco::format(PAYLOAD_UNAVAILABLE_LIMIT_REACHED,
-                                                   COOLWSD::MaxDocuments, COOLWSD::MaxConnections);
-            return std::make_pair(nullptr, error);
-#endif
+            if (config::isSupportKeyEnabled())
+            {
+                const std::string error = Poco::format(PAYLOAD_UNAVAILABLE_LIMIT_REACHED,
+                                                       COOLWSD::MaxDocuments, COOLWSD::MaxConnections);
+                return std::make_pair(nullptr, error);
+            }
         }
 
         // Set the one we just created.
@@ -1673,10 +1673,11 @@ void ClientRequestDispatcher::handleClientWsUpgrade(const Poco::Net::HTTPRequest
         {
             LOG_INF("Limit on maximum number of connections of " << COOLWSD::MaxConnections
                                                                  << " reached.");
-#if ENABLE_SUPPORT_KEY
-            shutdownLimitReached(ws);
-            return;
-#endif
+            if (config::isSupportKeyEnabled())
+            {
+                shutdownLimitReached(ws);
+                return;
+            }
         }
 
         const std::string requestKey = requestDetails.getRequestKey();

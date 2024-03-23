@@ -33,6 +33,7 @@
 #include <Poco/Util/OptionSet.h>
 #include <Poco/Util/XMLConfiguration.h>
 
+#include <common/ConfigUtil.hpp>
 #include <Util.hpp>
 #include <Crypto.hpp>
 
@@ -131,11 +132,12 @@ void Config::displayHelp()
               << "Commands: " << std::endl
               << "    migrateconfig [--old-config-file=<path>] [--config-file=<path>] [--write]" << std::endl
               << "    anonymize [string-1]...[string-n]" << std::endl
-              << "    set-admin-password" << std::endl
-#if ENABLE_SUPPORT_KEY
-              << "    set-support-key" << std::endl
-#endif
-              << "    set <key> <value>" << std::endl
+              << "    set-admin-password" << std::endl;
+    if (config::isSupportKeyEnabled())
+    {
+        std::cout << "    set-support-key" << std::endl;
+    }
+    std::cout << "    set <key> <value>" << std::endl
               << "    generate-proof-key" << std::endl
               << "    update-system-template" << std::endl << std::endl;
 }
@@ -169,12 +171,13 @@ void Config::defineOptions(OptionSet& optionSet)
                         .repeatable(false)
                         .argument("number"));
 
-#if ENABLE_SUPPORT_KEY
-    optionSet.addOption(Option("support-key", "", "Specify the support key [set-support-key].")
-                        .required(false)
-                        .repeatable(false)
-                        .argument("key"));
-#endif
+    if (config::isSupportKeyEnabled())
+    {
+        optionSet.addOption(Option("support-key", "", "Specify the support key [set-support-key].")
+                            .required(false)
+                            .repeatable(false)
+                            .argument("key"));
+    }
 
     optionSet.addOption(Option("anonymization-salt", "", "Anonymize strings with the given 64-bit salt instead of the one in the config file.")
                         .required(false)
@@ -337,8 +340,7 @@ int Config::main(const std::vector<std::string>& args)
         return EX_UNAVAILABLE;
 #endif
     }
-#if ENABLE_SUPPORT_KEY
-    else if (args[0] == "set-support-key")
+    else if (config::isSupportKeyEnabled() && args[0] == "set-support-key")
     {
         std::string supportKeyString;
         if (SupportKeyStringProvided)
@@ -373,7 +375,6 @@ int Config::main(const std::vector<std::string>& args)
             changed = true;
         }
     }
-#endif
     else if (args[0] == "set")
     {
         if (args.size() == 3)

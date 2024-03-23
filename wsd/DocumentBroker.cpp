@@ -935,11 +935,6 @@ bool DocumentBroker::download(
         }
     }
 
-#if ENABLE_SUPPORT_KEY
-    if (!COOLWSD::OverrideWatermark.empty())
-        watermarkText = COOLWSD::OverrideWatermark;
-#endif
-
     if (session)
     {
         LOG_DBG("Setting username ["
@@ -1126,7 +1121,10 @@ DocumentBroker::updateSessionWithWopiInfo(const std::shared_ptr<ClientSession>& 
     const std::string username = wopiFileInfo->getUsername();
     const std::string userExtraInfo = wopiFileInfo->getUserExtraInfo();
     const std::string userPrivateInfo = wopiFileInfo->getUserPrivateInfo();
-    const std::string watermarkText = wopiFileInfo->getWatermarkText();
+    const std::string watermarkText =
+        (config::isSupportKeyEnabled() && !COOLWSD::OverrideWatermark.empty())
+        ? COOLWSD::OverrideWatermark
+        : wopiFileInfo->getWatermarkText();
     const std::string templateSource = wopiFileInfo->getTemplateSource();
 
     _isViewFileExtension = COOLWSD::IsViewFileExtension(wopiStorage->getFileExtension());
