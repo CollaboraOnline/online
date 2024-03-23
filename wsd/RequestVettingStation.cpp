@@ -390,7 +390,7 @@ void RequestVettingStation::createClientSession(const std::string& docKey, const
                 // when reaching max documents or connections
                 COOLWSD::checkSessionLimitsAndWarnClients();
 
-                sendLoadResult(clientSession, true, "");
+                sendLoadResult(clientSession, /*success=*/true, /*errorMsg=*/std::string());
             }
             catch (const UnauthorizedRequestException& exc)
             {
