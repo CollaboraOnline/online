@@ -182,43 +182,6 @@ findOrCreateDocBroker(DocumentBroker::ChildType type, const std::string& uri,
     return std::make_pair(docBroker, std::string());
 }
 
-/// Find the DocumentBroker for the given docKey, if one exists.
-/// Otherwise, creates and adds a new one to DocBrokers.
-/// May return null if terminating or MaxDocuments limit is reached.
-/// After returning a valid instance DocBrokers must be cleaned up after exceptions.
-std::shared_ptr<DocumentBroker>
-findOrCreateDocBroker(const std::shared_ptr<ProtocolHandlerInterface>& proto,
-                      DocumentBroker::ChildType type, const std::string& uri,
-                      const std::string& docKey, const std::string& id, const Poco::URI& uriPublic,
-                      unsigned mobileAppDocId = 0)
-{
-    const auto pair = findOrCreateDocBroker(type, uri, docKey, id, uriPublic, mobileAppDocId);
-    const std::shared_ptr<DocumentBroker>& docBroker = pair.first;
-
-    if (docBroker)
-    {
-        // Indicate to the client that we're connecting to the docbroker.
-        if (proto)
-        {
-            const std::string statusConnect = "statusindicator: connect";
-            LOG_TRC("Sending to Client [" << statusConnect << ']');
-            proto->sendTextMessage(statusConnect.data(), statusConnect.size());
-        }
-
-        return docBroker;
-    }
-
-    // Failed.
-    if (proto)
-    {
-        const std::string& error = pair.second;
-        proto->sendTextMessage(error.data(), error.size(), /*flush=*/true);
-        proto->shutdown(true, error);
-    }
-
-    return nullptr;
-}
-
 #if !MOBILEAPP
 
 /// For clipboard setting
