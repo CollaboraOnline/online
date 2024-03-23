@@ -327,6 +327,11 @@ public:
                    const std::string& docKey,
                    unsigned mobileAppDocId = 0);
 
+    /// Overloaded for early loading.
+    DocumentBroker(ChildType type, const std::string& uri, const Poco::URI& uriPublic,
+                   const std::string& docKey,
+                   std::unique_ptr<WopiStorage::WOPIFileInfo> wopiFileInfo);
+
     virtual ~DocumentBroker();
 
     /// Called when removed from the DocBrokers list
@@ -602,6 +607,9 @@ private:
     std::shared_ptr<ClientSession> getWriteableSession() const;
 
     void refreshLock();
+
+    /// Downloads the document ahead-of-time.
+    bool downloadAdvance(const std::string& jailId, const WopiStorage::WOPIFileInfo& wopiFileInfo);
 
     /// Loads a document from the public URI into the jail.
     bool download(const std::shared_ptr<ClientSession>& session, const std::string& jailId,
@@ -1360,6 +1368,10 @@ private:
     std::string _uriJailedAnonym;
     std::string _jailId;
     std::string _filename;
+
+    /// The WopiFileInfo of the initial request loading the document for the first time.
+    /// This has a single-use, and then it's reset.
+    std::unique_ptr<WopiStorage::WOPIFileInfo> _initialWopiFileInfo;
 
     /// The state of the document.
     /// This regulates all other primary operations.
