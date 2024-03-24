@@ -296,17 +296,20 @@ public:
         Interactive, Batch
     };
 
-    DocumentBroker(ChildType type,
-                   const std::string& uri,
-                   const Poco::URI& uriPublic,
-                   const std::string& docKey,
-                   unsigned mobileAppDocId = 0);
-
-    /// Overloaded for early loading.
     DocumentBroker(ChildType type, const std::string& uri, const Poco::URI& uriPublic,
-                   const std::string& docKey,
+                   const std::string& docKey, unsigned mobileAppDocId,
                    std::unique_ptr<WopiStorage::WOPIFileInfo> wopiFileInfo);
 
+protected:
+    /// Used by derived classes.
+    DocumentBroker(ChildType type, const std::string& uri, const Poco::URI& uriPublic,
+                   const std::string& docKey)
+        : DocumentBroker(type, uri, uriPublic, docKey, /*mobileAppDocId=*/0,
+                         /*wopiFileInfo=*/nullptr)
+    {
+    }
+
+public:
     virtual ~DocumentBroker();
 
     /// Called when removed from the DocBrokers list
