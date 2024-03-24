@@ -274,7 +274,7 @@ export class Comment extends CanvasSectionObject {
 		imgAuthor.setAttribute('width', this.sectionProperties.imgSize[0]);
 		imgAuthor.setAttribute('height', this.sectionProperties.imgSize[1]);
 
-		if (this.sectionProperties.docLayer._docType === 'text') {
+		if (this.sectionProperties.docLayer._docType !== 'spreadsheet') {
 			this.sectionProperties.replyCountNode = L.DomUtil.create('div', 'cool-annotation-reply-count-collapsed', tdImg);
 			this.sectionProperties.replyCountNode.style.display = 'none';
 		}
@@ -1359,30 +1359,38 @@ export class Comment extends CanvasSectionObject {
 	}
 
 	public setCollapsed(): void {
-		if (this.isEdit())
-			return;
 		this.isCollapsed = true;
 
-		this.show();
+		if (!this.isEdit())
+			this.show();
 
 		if (this.isRootComment() || this.sectionProperties.docLayer._docType === 'presentation' || this.sectionProperties.docLayer._docType === 'drawing') {
 			this.sectionProperties.container.style.display = '';
 			this.sectionProperties.container.style.visibility = 'hidden';
-
-			if (this.sectionProperties.docLayer._docType === 'text') {
-				if (this.sectionProperties.replyCountNode.innerText !== '')
-					this.sectionProperties.replyCountNode.style.display = '';
-				else
-					this.sectionProperties.replyCountNode.style.display = 'none';
-			}
 		}
-		else {
-			this.sectionProperties.container.style.display = 'none';
-			if (this.sectionProperties.docLayer._docType === 'text')
-				this.sectionProperties.replyCountNode.style.display = 'none';
-		}
-		if (this.sectionProperties.data.resolved === 'false' || this.sectionProperties.commentListSection.sectionProperties.showResolved)
+		this.updateThreadCountIndicator();
+		if (this.sectionProperties.data.resolved === 'false'
+		|| this.sectionProperties.commentListSection.sectionProperties.showResolved
+		|| this.sectionProperties.docLayer._docType === 'presentation'
+		|| this.sectionProperties.docLayer._docType === 'drawing')
 			L.DomUtil.addClass(this.sectionProperties.container, 'cool-annotation-collapsed-show');
+	}
+
+	public updateThreadCountIndicator(replycount:number | string = -1): void {
+		if (this.sectionProperties.docLayer._docType === 'spreadsheet')
+			return;
+
+		if (this.isEdit())
+			this.sectionProperties.replyCountNode.innerText = '!';
+		else if (replycount === '!' || typeof replycount === "number" && replycount > 0)
+			this.sectionProperties.replyCountNode.innerText = replycount;
+		else
+			this.sectionProperties.replyCountNode.innerText = '';
+
+		if (this.sectionProperties.replyCountNode.innerText === '' || this.isContainerVisible())
+			this.sectionProperties.replyCountNode.style.display = 'none';
+		else if ((!this.isContainerVisible() && this.sectionProperties.replyCountNode.innerText !== ''))
+			this.sectionProperties.replyCountNode.style.display = '';
 	}
 
 	public setExpanded(): void {
