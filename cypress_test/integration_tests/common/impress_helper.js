@@ -228,9 +228,9 @@ function changeSlide(changeNum,direction) {
 
 	var slideButton;
 	if (direction === 'next') {
-		slideButton = cy.cGet('#toolbar-up #next');
+		slideButton = cy.cGet('#next-button');
 	} else if (direction === 'previous') {
-		slideButton = cy.cGet('#toolbar-up #prev');
+		slideButton = cy.cGet('#prev-button');
 	}
 	if (slideButton) {
 		for (var n = 0; n < changeNum; n++) {
