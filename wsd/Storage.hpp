@@ -88,8 +88,10 @@ public:
     class FileInfo
     {
     public:
-        FileInfo(std::string filename, std::string ownerId, std::string modifiedTime)
-            : _filename(std::move(filename))
+        FileInfo(std::size_t size, std::string filename, std::string ownerId,
+                 std::string modifiedTime)
+            : _size(size)
+            , _filename(std::move(filename))
             , _ownerId(std::move(ownerId))
             , _modifiedTime(std::move(modifiedTime))
         {
@@ -120,6 +122,8 @@ public:
             return !_filename.empty();
         }
 
+        std::size_t getSize() const { return _size; }
+
         const std::string& getFilename() const { return _filename; }
 
         const std::string& getOwnerId() const { return _ownerId; }
@@ -137,6 +141,7 @@ public:
         void setLastModifiedTimeUnSafe() { _modifiedTime.clear(); }
 
     private:
+        std::size_t _size;
         std::string _filename;
         std::string _ownerId;
         std::string _modifiedTime; //< Opaque modified timestamp as received from the server.
@@ -317,13 +322,13 @@ public:
 
     /// localStorePath the absolute root path of the chroot.
     /// jailPath the path within the jail that the child uses.
-    StorageBase(const Poco::URI& uri,
-                const std::string& localStorePath,
-                const std::string& jailPath) :
-        _localStorePath(localStorePath),
-        _jailPath(jailPath),
-        _fileInfo(std::string(), "cool", std::string()),
-        _isDownloaded(false)
+    StorageBase(const Poco::URI& uri, const std::string& localStorePath,
+                const std::string& jailPath)
+        : _localStorePath(localStorePath)
+        , _jailPath(jailPath)
+        , _fileInfo(/*size=*/0, /*filename=*/std::string(), /*ownerId=*/"cool",
+                    /*modifiledTime=*/std::string())
+        , _isDownloaded(false)
     {
         setUri(uri);
         LOG_DBG("Storage ctor: " << COOLWSD::anonymizeUrl(_uri.toString()));
