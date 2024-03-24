@@ -2144,6 +2144,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			'downloadas-pdf': 'exportpdf',
 			'downloadas-direct-pdf': 'exportdirectpdf',
 			'downloadas-epub': 'exportepub',
+			'languagestatusmenu': 'languagemenu',
+			'cancelsearch': 'cancel'
 		};
 		if (iconURLAliases[cleanName]) {
 			cleanName = iconURLAliases[cleanName];
@@ -2246,14 +2248,20 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			if (hasPopUp)
 				button.setAttribute('aria-haspopup', true);
 
-			var buttonImage = L.DomUtil.create('img', '', button);
-			if (data.icon) {
+			if (data.w2icon) {
+				// FIXME: DEPRECATED, this is legacy way to setup icon based on CSS class
+				var buttonImage = L.DomUtil.create('div', 'w2ui-icon ' + data.w2icon, button);
+			}
+			else if (data.icon) {
+				buttonImage = L.DomUtil.create('img', '', button);
 				this._isStringCloseToURL(data.icon) ? buttonImage.src = data.icon : L.LOUtil.setImage(buttonImage, data.icon, builder.map);
 			}
 			else if (data.image) {
+				buttonImage = L.DomUtil.create('img', '', button);
 				buttonImage.src =  data.image;
 			}
 			else {
+				buttonImage = L.DomUtil.create('img', '', button);
 				L.LOUtil.setImage(buttonImage, builder._createIconURL(data.command), builder.map);
 			}
 
@@ -2948,9 +2956,13 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_updateWidgetImpl: function (container, data, buildFunc) {
-		var control = container.querySelector('[id=\'' + data.id + '\']');
+		var elementId = data.id;
+		var separatorPos = elementId.indexOf(':'); // delete menuId
+		if (separatorPos > 0)
+			elementId = elementId.substr(0, separatorPos);
+		var control = container.querySelector('[id=\'' + elementId + '\']');
 		if (!control) {
-			window.app.console.warn('jsdialogupdate: not found control with id: "' + data.id + '"');
+			window.app.console.warn('jsdialogupdate: not found control with id: "' + elementId + '"');
 			return;
 		}
 
@@ -2971,7 +2983,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var backupGridSpan = control.style.gridColumn;
 		L.DomUtil.remove(control);
 
-		var newControl = container.querySelector('[id=\'' + data.id + '\']');
+		var newControl = container.querySelector('[id=\'' + elementId + '\']');
 		if (newControl) {
 			newControl.scrollTop = scrollTop;
 			newControl.style.gridColumn = backupGridSpan;

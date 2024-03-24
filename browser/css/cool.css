@@ -390,6 +390,7 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 }
 
 #search-input {
+	min-width: 100px;
 	width: 200px;
 	height: 22px;
 	background: var(--color-background-lighter);

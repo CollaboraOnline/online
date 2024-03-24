@@ -885,7 +885,7 @@ L.Control.UIManager = L.Control.extend({
 
 	showStatusBar: function() {
 		$('#document-container').css('bottom', this.documentBottom);
-		$('#toolbar-down').show();
+		this.map.statusBar.show();
 		this.setSavedState('ShowStatusbar', true);
 		this.map.fire('statusbarchanged');
 	},
@@ -896,7 +896,7 @@ L.Control.UIManager = L.Control.extend({
 
 		this.documentBottom = $('#document-container').css('bottom');
 		$('#document-container').css('bottom', '0px');
-		$('#toolbar-down').hide();
+		this.map.statusBar.hide();
 		if (!firstStart)
 			this.setSavedState('ShowStatusbar', false);
 		this.map.fire('statusbarchanged');
@@ -915,7 +915,7 @@ L.Control.UIManager = L.Control.extend({
 	},
 
 	isStatusBarVisible: function() {
-		return $('#toolbar-down').is(':visible');
+		return document.getElementById('toolbar-down').style.display !== 'none';
 	},
 
 	// Event handlers

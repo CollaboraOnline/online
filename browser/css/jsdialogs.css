@@ -1654,8 +1654,11 @@ input[type='number']:hover::-webkit-outer-spin-button {
 
 /* toolbuttons */
 
-.jsdialog .ui-content.unobutton {
+.jsdialog:not(.menubutton) > .ui-content.unobutton {
 	width: var(--btn-size);
+}
+
+.jsdialog .ui-content.unobutton {
 	height: var(--btn-size);
 	padding: 0px;
 	vertical-align: middle;
@@ -1731,7 +1734,6 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	overflow: -moz-scrollbars-none; /* Firefox < 64 */
 	-ms-overflow-style: none;  /* Internet Explorer 10+ */
 	display: flex;
-	height: 72px;
 	align-items: center;
 }
 

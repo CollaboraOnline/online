@@ -362,15 +362,6 @@ class UserList extends L.Control {
 	}
 
 	updateUserListCount() {
-		const userlistItem =
-			this.map.statusBar &&
-			this.map.statusBar.hasItem &&
-			this.map.statusBar.hasItem('userlist');
-
-		if (userlistItem == null) {
-			return;
-		}
-
 		const count = this.users.size;
 		let text = '';
 		if (count > 1) {
@@ -381,15 +372,23 @@ class UserList extends L.Control {
 			text = this.options.noUser;
 		}
 
-		if (this.map.statusBar.setUsersCountText)
+		if (this.map.statusBar && this.map.statusBar.setUsersCountText)
 			this.map.statusBar.setUsersCountText(text);
 
-		if (!this.hideUserList() && count > 1 && !window.mode.isDesktop()) {
-			this.map.statusBar.showItem('userlist');
-			this.map.statusBar.showItem('userlistbreak');
+		if (!this.hideUserList() && count > 1) {
+			if (window.mode.isDesktop()) {
+				this.map.statusBar.showItem('userlist', true);
+				this.map.statusBar.showItem('userlistbreak', true);
+			} else {
+				var toolbar = w2ui['actionbar'];
+				toolbar.show('userlist');
+			}
+		} else if (window.mode.isDesktop()) {
+			this.map.statusBar.showItem('userlist', false);
+			this.map.statusBar.showItem('userlistbreak', false);
 		} else {
-			this.map.statusBar.hideItem('userlist');
-			this.map.statusBar.hideItem('userlistbreak');
+			var toolbar = w2ui['actionbar'];
+			toolbar.hide('userlist');
 		}
 	}
 
@@ -405,11 +404,9 @@ class UserList extends L.Control {
 	}
 
 	onOpenUserList() {
+		// TODO: used on mobile, remove w2ui and it will be not needed
 		setTimeout(() => {
-			var docLayer = this.map._docLayer;
-			var viewId = docLayer._followThis;
-			var followUser = docLayer._followUser;
-			if (followUser) this.selectUser(viewId);
+			this.renderAll();
 		}, 100);
 	}
 
@@ -466,22 +463,32 @@ class UserList extends L.Control {
 		const statusbarPopoverElement = document.getElementById('userlist-entries');
 		if (statusbarPopoverElement)
 			this.renderHeaderAvatarPopover(statusbarPopoverElement);
+		const mobilePopoverElement = document.getElementById(
+			'w2ui-overlay-actionbar',
+		);
+		if (mobilePopoverElement)
+			this.renderHeaderAvatarPopover(mobilePopoverElement);
 		this.renderFollowingChip();
 	}
 
 	showTooltip(text: string) {
-		// TODO: better placement, where it should appear?
-		const userList = $('#tb_actionbar_item_userlist');
+		const userList = $('#userListHeader');
 		if (userList) {
+			userList.get(0).title = text;
 			userList.tooltip({
 				content: text,
 			});
+			userList.tooltip('enable');
 			userList.tooltip('open');
 		}
 	}
 
 	hideTooltip() {
-		$('#tb_actionbar_item_userlist').tooltip('option', 'disabled', true);
+		const userList = $('#userListHeader');
+		if (userList) {
+			userList.get(0).title = undefined;
+			userList.tooltip('option', 'disabled', true);
+		}
 		$('#userListPopover').hide();
 	}
 

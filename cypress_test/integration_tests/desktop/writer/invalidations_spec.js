@@ -24,7 +24,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Invalidation tests.', func
 
 		// Add some main body text of X
 		ceHelper.type('X');
-		cy.cGet('#tb_actionbar_item_StateWordCount').should('have.text', '    1 word, 1 character');
+		cy.cGet('#toolbar-down #StateWordCount').should('have.text', '1 word, 1 character');
 
 		cy.cGet('.empty-deltas').then(($before) => {
 			const beforeCount = $before.text();
@@ -35,7 +35,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Invalidation tests.', func
 
 			// Wait until we have round trip of selection of 'X' and tile updates will have arrived.
 			writerHelper.selectAllTextOfDoc();
-			cy.cGet('#tb_actionbar_item_StateWordCount').should('have.text', '    Selected: 1 word, 1 character');
+			cy.cGet('#toolbar-down #StateWordCount').should('have.text', 'Selected: 1 word, 1 character');
 
 			cy.cGet('.empty-deltas').should(($after) => {
 				expect($after.text()).to.eq(beforeCount);
@@ -57,7 +57,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Invalidation tests.', func
 		// Click back in main document
 		cy.cGet('.leaflet-layer').click(200, 200);
 		writerHelper.selectAllTextOfDoc();
-		cy.cGet('#tb_actionbar_item_StateWordCount').should('have.text', '    Selected: 1 word, 1 character');
+		cy.cGet('#toolbar-down #StateWordCount').should('have.text', 'Selected: 1 word, 1 character');
 
 		cy.cGet('.empty-deltas').then(($before) => {
 			const beforeCount = $before.text();
@@ -70,7 +70,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Invalidation tests.', func
 
 			// verify the content is 'YY'
 			writerHelper.selectAllTextOfDoc();
-			cy.cGet('#tb_actionbar_item_StateWordCount').should('have.text', '    Selected: 1 word, 2 characters');
+			cy.cGet('#toolbar-down #StateWordCount').should('have.text', 'Selected: 1 word, 2 characters');
 
 			// verify empty deltas is unchanged
 			cy.cGet('.empty-deltas').should(($after) => {
@@ -86,7 +86,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Invalidation tests.', func
 
 			// verify the content is 'X'
 			writerHelper.selectAllTextOfDoc();
-			cy.cGet('#tb_actionbar_item_StateWordCount').should('have.text', '    Selected: 1 word, 1 character');
+			cy.cGet('#toolbar-down #StateWordCount').should('have.text', 'Selected: 1 word, 1 character');
 
 			// verify empty deltas is unchanged
 			cy.cGet('.empty-deltas').should(($after) => {
@@ -101,7 +101,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Invalidation tests.', func
 		// Add some main body text of X and bullet
 		ceHelper.type('XX');
 		cy.cGet('.notebookbar > .unoDefaultBullet > button').click();
-		cy.cGet('#tb_actionbar_item_StateWordCount').should('have.text', '    2 words, 3 characters');
+		cy.cGet('#toolbar-down #StateWordCount').should('have.text', '2 words, 3 characters');
 
 		cy.cGet('.empty-deltas').then(($before) => {
 			const beforeCount = $before.text();
@@ -116,7 +116,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Invalidation tests.', func
 			ceHelper.moveCaret('end');
 
 			ceHelper.moveCaret('left', 'shift');
-			cy.cGet('#tb_actionbar_item_StateWordCount').should('have.text', '    Selected: 1 word, 1 character');
+			cy.cGet('#toolbar-down #StateWordCount').should('have.text', 'Selected: 1 word, 1 character');
 
 			cy.cGet('.empty-deltas').should(($after) => {
 				expect($after.text()).to.eq(beforeCount);

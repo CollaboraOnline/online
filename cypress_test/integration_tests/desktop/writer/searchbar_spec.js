@@ -29,9 +29,9 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Searching via search bar' 
 		writerHelper.selectAllTextOfDoc();
 		cy.cGet('input#search-input').clear().type('q');
 		cy.cGet('input#search-input').should('have.prop', 'value', 'q');
-		cy.cGet('#tb_actionbar_item_searchprev').should('have.class', 'disabled');
-		cy.cGet('#tb_actionbar_item_searchnext').should('have.class', 'disabled');
-		cy.cGet('#tb_actionbar_item_cancelsearch').should('not.be.visible');
+		cy.cGet('#toolbar-down #searchprev').should('have.attr', 'disabled');
+		cy.cGet('#toolbar-down #searchnext').should('have.attr', 'disabled');
+		cy.cGet('#toolbar-down #cancelsearch').should('not.be.visible');
 		helper.textSelectionShouldNotExist();
 	});
 
