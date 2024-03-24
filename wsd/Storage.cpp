@@ -312,7 +312,7 @@ std::unique_ptr<LocalStorage::LocalFileInfo> LocalStorage::getLocalFileInfo()
     const FileUtil::Stat stat(path.toString());
     const std::chrono::system_clock::time_point lastModified = stat.modifiedTimepoint();
 
-    setFileInfo(FileInfo(path.getFileName(), "LocalOwner",
+    setFileInfo(FileInfo(stat.size(), path.getFileName(), "LocalOwner",
                          Util::getIso8601FracformatTime(lastModified)));
 
     // Set automatic userid and username.
