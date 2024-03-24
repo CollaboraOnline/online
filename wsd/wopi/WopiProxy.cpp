@@ -143,7 +143,7 @@ void WopiProxy::checkFileInfo(const std::shared_ptr<TerminatingPoll>& poll, cons
             JsonUtil::findJSONValue(object, "LastModifiedTime", lastModifiedTime);
 
             LocalStorage::FileInfo fileInfo =
-                LocalStorage::FileInfo({ filename, ownerId, lastModifiedTime });
+                LocalStorage::FileInfo({ size, filename, ownerId, lastModifiedTime });
 
             // if (COOLWSD::AnonymizeUserData)
             //     Util::mapAnonymized(Util::getFilenameFromURL(filename),

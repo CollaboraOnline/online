@@ -385,15 +385,15 @@ void RequestVettingStation::createClientSession(const std::string& docKey, const
                 if (wopiInfo)
                 {
                     std::size_t size = 0;
-                    std::string filename, ownerId, lastModifiedTime;
+                    std::string filename, ownerId, modifiedTime;
 
                     JsonUtil::findJSONValue(wopiInfo, "Size", size);
                     JsonUtil::findJSONValue(wopiInfo, "OwnerId", ownerId);
                     JsonUtil::findJSONValue(wopiInfo, "BaseFileName", filename);
-                    JsonUtil::findJSONValue(wopiInfo, "LastModifiedTime", lastModifiedTime);
+                    JsonUtil::findJSONValue(wopiInfo, "LastModifiedTime", modifiedTime);
 
                     StorageBase::FileInfo fileInfo =
-                        StorageBase::FileInfo({ filename, ownerId, lastModifiedTime });
+                        StorageBase::FileInfo({ size, filename, ownerId, modifiedTime });
 
                     wopiFileInfo =
                         std::make_unique<WopiStorage::WOPIFileInfo>(fileInfo, wopiInfo, uriPublic);
