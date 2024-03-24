@@ -211,6 +211,8 @@ export class CommentSection extends CanvasSectionObject {
 		for (var i: number = 0; i < this.sectionProperties.commentList.length; i++) {
 			if (this.sectionProperties.commentList[i].sectionProperties.data.id !== 'new')
 				this.sectionProperties.commentList[i].setCollapsed();
+			if (this.sectionProperties.commentList[i].isRootComment())
+				this.collapseReplies(i, this.sectionProperties.commentList[i].sectionProperties.data.id);
 		}
 	}
 
@@ -670,19 +672,26 @@ export class CommentSection extends CanvasSectionObject {
 	}
 
 	private showCollapsedReplies(rootIndex: number) {
-		rootIndex++;
-		while (rootIndex < this.sectionProperties.commentList.length && this.sectionProperties.commentList[rootIndex].sectionProperties.data.parent !== '0') {
+		if (!this.sectionProperties.commentList.length)
+			return;
+		var lastIndex = this.getLastChildIndexOf(this.sectionProperties.commentList[rootIndex].sectionProperties.data.id);
+		var rootComment = this.sectionProperties.commentList[rootIndex];
+
+		while (rootIndex <= lastIndex) {
 			this.sectionProperties.commentList[rootIndex].sectionProperties.container.style.display = '';
 			this.sectionProperties.commentList[rootIndex].sectionProperties.container.style.visibility = '';
 			rootIndex++;
 		}
+		rootComment.updateThreadCountIndicator();
 	}
 
 	private collapseReplies(rootIndex: number, rootId: number) {
 		var lastChild = this.getLastChildIndexOf(rootId);
 
-		for (var i = lastChild; i > rootIndex; i--)
+		for (var i = lastChild; i > rootIndex; i--) {
 			this.sectionProperties.commentList[i].sectionProperties.container.style.display = 'none';
+			this.sectionProperties.commentList[i].updateThreadCountIndicator();
+		}
 	}
 
 	private cssToCorePixels(cssPixels: number) {
@@ -1334,6 +1343,8 @@ export class CommentSection extends CanvasSectionObject {
 					if (this.sectionProperties.docLayer._docType === 'spreadsheet')
 						modified.show();
 					modified.edit();
+					if(this.shouldCollapse())
+						modified.setCollapsed();
 				}
 			}
 		} else if (action === 'Resolve') {
@@ -1754,11 +1765,13 @@ export class CommentSection extends CanvasSectionObject {
 		for (var i = 0; i < this.sectionProperties.commentList.length; i++) {
 			var comment = this.sectionProperties.commentList[i];
 			var replyCount = 0;
+			var anyEdit = false;
 
 			if (comment && comment.isRootComment()) {
 				var lastIndex = this.getLastChildIndexOf(comment.sectionProperties.data.id);
 				var j = i;
 				while (this.sectionProperties.commentList[j] && j <= lastIndex) {
+					anyEdit = this.sectionProperties.commentList[j].isEdit() || anyEdit;
 					if (this.sectionProperties.commentList[j].sectionProperties.data.parent !== '0') {
 						if ((this.sectionProperties.commentList[j].sectionProperties.data.layoutStatus !== CommentLayoutStatus.DELETED ||
 							this.map['stateChangeHandler'].getItemValue('.uno:ShowTrackedChanges') === 'true') &&
@@ -1769,11 +1782,10 @@ export class CommentSection extends CanvasSectionObject {
 					j++;
 				}
 			}
-
-			if (replyCount >= 1)
-				comment.sectionProperties.replyCountNode.innerText = replyCount;
+			if (anyEdit)
+				comment.updateThreadCountIndicator('!');
 			else
-				comment.sectionProperties.replyCountNode.innerText = '';
+				comment.updateThreadCountIndicator(replyCount);
 		}
 	}
 
