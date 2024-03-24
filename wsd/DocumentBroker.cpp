@@ -146,7 +146,8 @@ public:
 std::atomic<unsigned> DocumentBroker::DocBrokerId(1);
 
 DocumentBroker::DocumentBroker(ChildType type, const std::string& uri, const Poco::URI& uriPublic,
-                               const std::string& docKey, unsigned mobileAppDocId)
+                               const std::string& docKey, unsigned mobileAppDocId,
+                               std::unique_ptr<WopiStorage::WOPIFileInfo> wopiFileInfo)
     : _limitLifeSeconds(std::chrono::seconds::zero())
     , _uriOrig(uri)
     , _type(type)
@@ -204,17 +205,13 @@ DocumentBroker::DocumentBroker(ChildType type, const std::string& uri, const Poc
     {
         _unitWsd->onDocBrokerCreate(_docKey);
     }
-}
 
-DocumentBroker::DocumentBroker(ChildType type, const std::string& uri, const Poco::URI& uriPublic,
-                               const std::string& docKey,
-                               std::unique_ptr<WopiStorage::WOPIFileInfo> wopiFileInfo)
-    : DocumentBroker(type, uri, uriPublic, docKey, /*mobileAppDocId=*/0)
-{
     _initialWopiFileInfo = std::move(wopiFileInfo);
-
-    LOG_DBG("Starting DocBrokerPoll thread");
-    _poll->startThread();
+    if (_initialWopiFileInfo)
+    {
+        LOG_DBG("Starting DocBrokerPoll thread");
+        _poll->startThread();
+    }
 }
 
 void DocumentBroker::setupPriorities()
