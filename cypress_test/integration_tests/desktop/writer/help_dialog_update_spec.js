@@ -31,7 +31,7 @@ describe(['tagscreenshot'], 'Help dialog screenshot updation', function() {
 		var w1, w2;
 		cy.cGet('#toolbar-down').should('exist').then(el => {
 			w1 = el[0].getBoundingClientRect().left;
-			cy.cGet('#tb_actionbar_item_break8').should('exist').then(el => {
+			cy.cGet('#toolbar-down #permissionspacer').should('exist').then(el => {
 				w2 = el[0].getBoundingClientRect().left;
 				var width = w2 - w1;
 				cy.log('w1 w2 ' + w1 + ' ' + w2);
@@ -46,7 +46,7 @@ describe(['tagscreenshot'], 'Help dialog screenshot updation', function() {
 		var w1, w2;
 		cy.cGet('#toolbar-down').should('exist').then(el => {
 			w1 = el[0].getBoundingClientRect().right;
-			cy.cGet('#tb_actionbar_item_break8').should('exist').then(el => {
+			cy.cGet('#toolbar-down #permissionspacer').should('exist').then(el => {
 				w2 = el[0].getBoundingClientRect().right;
 				var width = w1 - w2 + 10;
 				cy.cGet('#toolbar-down').screenshot('information-bar', { clip: { x: w2, y: 0, height: 300, width: width} });

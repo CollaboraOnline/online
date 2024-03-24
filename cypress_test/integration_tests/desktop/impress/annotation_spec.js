@@ -159,12 +159,12 @@ describe(['tagdesktop'], 'Comment Scrolling',function() {
 		helper.waitUntilIdle('.leaflet-control-scroll-up');
 		cy.cGet('.leaflet-control-scroll-up').should('be.visible');
 		cy.cGet('.leaflet-control-scroll-up').click().wait(300);
-		cy.cGet('#PageStatus').should('contain','Slide 1 of 3');
+		cy.cGet('#SlideStatus').should('contain','Slide 1 of 3');
 
 		//scroll down
 		cy.cGet('.leaflet-control-scroll-down').should('exist');
 		cy.cGet('.leaflet-control-scroll-down').click().wait(1000);
-		cy.cGet('#PageStatus').should('contain','Slide 3 of 3');
+		cy.cGet('#SlideStatus').should('contain','Slide 3 of 3');
 	});
 
 	it('switch to previous or next slide',function() {
@@ -176,13 +176,13 @@ describe(['tagdesktop'], 'Comment Scrolling',function() {
 		addSlide(1);
 		cy.cGet('.leaflet-control-scroll-up').should('exist');
 		cy.cGet('.leaflet-control-scroll-up').click().wait(300);
-		cy.cGet('#PageStatus').should('contain','Slide 2 of 3');
+		cy.cGet('#SlideStatus').should('contain','Slide 2 of 3');
 
 		//scroll down
 		changeSlide(1,'previous');
 		cy.cGet('.leaflet-control-scroll-down').should('exist');
 		cy.cGet('.leaflet-control-scroll-down').click().wait(300);
-		cy.cGet('#PageStatus').should('contain','Slide 2 of 3');
+		cy.cGet('#SlideStatus').should('contain','Slide 2 of 3');
 	});
 });
 

@@ -35,7 +35,7 @@ JSDialog.comboboxEntry = function (parentContainer, data, builder) {
 
 	if (data.w2icon) {
 		// FIXME: DEPRECATED, this is legacy way to setup icon based on CSS class
-		L.DomUtil.create('div', 'ui-combobox-icon ' + data.w2icon, entry);
+		L.DomUtil.create('div', 'w2ui-icon ui-combobox-icon ' + data.w2icon, entry);
 	}
 
 	if (data.icon) {

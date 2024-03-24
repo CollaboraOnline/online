@@ -33,44 +33,41 @@
 	to { left: 100%; }
 }
 
+/* status bar / mobile bottom bar */
+
 #toolbar-down {
-	left: 0;
-	right: 0;
-	text-align: center;
+	position: sticky;
 	padding: 0;
-	bottom: 0;
 	z-index: 11;
 	border-top: 1px solid var(--color-border);
-	display: block;
 }
-#toolbar-down *{
-	font-family: var(--cool-font);
-	color: var(--color-main-text);
+#toolbar-down > div > div {
+	display: flex;
+	padding: 0px 5px;
 }
 #toolbar-down .menubutton {
 	line-height: normal;
 }
 #toolbar-down .unotoolbutton,
-#toolbar-down .menubutton {
-	margin: auto;
+#toolbar-down .menubutton,
+#toolbar-down .ui-pushbutton,
+#toolbar-down .cool-font {
+	margin: auto 2px;
+	padding: 3px;
+	text-wrap: nowrap;
+	height: inherit;
+}
+#toolbar-down .unotoolbutton button {
+	width: inherit;
+	display: flex;
+}
+#toolbar-down .unotoolbutton .w2ui-icon {
+	width: var(--btn-size);
+	height: var(--btn-size);
+	margin: 0px;
 }
 #toolbar-down:not(.mobile) {
 	background-color: var(--color-main-background);
-}
-#tb_actionbar_item_LanguageStatus table table td:first-of-type{
-	min-width: max-content !important;
-}
-#tb_actionbar_item_LanguageStatus .w2ui-tb-caption{
-	float: none;
-}
-#toolbar-down.readonly #tb_actionbar_item_LanguageStatus .w2ui-button .w2ui-tb-down {
-	display: none;
-}
-#toolbar-down.readonly #tb_actionbar_item_LanguageStatus .w2ui-button {
-	border-color: transparent !important;
-}
-#tb_actionbar_item_StateTableCellMenu .w2ui-tb-down {
-	padding: 4px;
 }
 #InsertMode.insert-mode-false,
 #PermissionMode.status-readonly-mode {
@@ -82,10 +79,10 @@
 	/* to do: replace hard coded px */
 	margin-top: 3px;
 }
-#tb_actionbar_item_zoom .w2ui-tb-caption{
+#toolbar-down #zoom {
 	min-width: 43px;
 }
-#tb_actionbar_item_zoom .w2ui-tb-caption::after {
+#toolbar-down #zoom .unolabel::after {
 	content: '%';
 }
 
@@ -98,14 +95,6 @@
 	bottom: 0;
 	z-index: 1000;
 	border-top: 1px solid var(--color-border);
-}
-
-#tb_actionbar_item_prev .w2ui-icon.prev {
-	background: url('images/lc_prevrecord.svg') no-repeat center/24px;
-}
-
-#tb_actionbar_item_next .w2ui-icon.next {
-	background: url('images/lc_nextrecord.svg') no-repeat center/24px;
 }
 
 .w2ui-icon-check:before {
@@ -158,13 +147,6 @@ w2ui-toolbar {
 .w2ui-overlay.bottom-arrow:after {
 	border-top-color: var(--color-background-lighter);
 }
-#tb_actionbar_item_LanguageStatus .w2ui-button.checked .w2ui-tb-down > div,
-#tb_actionbar_item_StateTableCellMenu .w2ui-button.checked .w2ui-tb-down > div,
-#tb_actionbar_item_zoom .w2ui-button.checked .w2ui-tb-down > div {
-	border-color: transparent;
-	border-bottom: 5px solid var(--color-text-dark);
-	margin-top: -5px;
-}
 
 #presentation-toolbar {
 	bottom: 0;
@@ -209,6 +191,9 @@ w2ui-toolbar {
 	z-index: 1001;
 	background-color: var(--color-background-dark);
 	box-shadow: 0px 0px 7px var(--color-box-shadow);
+}
+.notebookbar-scroll-wrapper {
+	height: 72px;
 }
 #toolbar-wrapper.hasnotebookbar .w2ui-scroll-left,
 #toolbar-wrapper.hasnotebookbar .w2ui-scroll-right {
@@ -360,13 +345,6 @@ td[id^='tb_editbar_item_sidebar']{
 #closebutton:hover {
 	border-color: var(--color-border-darker);
 	background-color: var(--color-background-darker);
-}
-
-#tb_actionbar_item_left {
-	width: 45%;
-}
-#tb_actionbar_item_right {
-	width: 100%;
 }
 
 #tb_searchbar_item_left {
@@ -1044,11 +1022,9 @@ button.leaflet-control-search-next
 .w2ui-icon.insertpage{ background: url('images/lc_insertpage.svg') no-repeat center; }
 .w2ui-icon.conditionalformatdialog{ background: url('images/lc_conditionalformatmenu.svg') no-repeat center; }
 .w2ui-icon.search{ background: url('images/sc_recsearch.svg') no-repeat center; }
-.w2ui-icon.next{ background: url('images/lc_downsearch.svg') no-repeat center; }
 .w2ui-icon.presentation{ background: url('images/lc_dia.svg') no-repeat center; }
 .w2ui-icon.sign_ok{ background: url('images/sign_ok.svg') no-repeat center; }
 .w2ui-icon.sign_not_ok{ background: url('images/sign_not_ok.svg') no-repeat center; }
-.w2ui-icon.prev{ background: url('images/lc_upsearch.svg') no-repeat center; }
 .w2ui-icon.save{ background: url('images/lc_save.svg') no-repeat center; }
 .w2ui-icon.saveas{ background: url('images/lc_saveas.svg') no-repeat center; }
 .w2ui-icon.savemodified{ background: url('images/savemodified_large.svg') no-repeat center; }
@@ -1339,11 +1315,9 @@ button.leaflet-control-search-next
 [data-theme='dark'] .w2ui-icon.insertsheet{ background: url('images/dark/plus.svg') no-repeat center; }
 [data-theme='dark'] .w2ui-icon.conditionalformatdialog{ background: url('images/dark/lc_conditionalformatmenu.svg') no-repeat center; }
 [data-theme='dark'] .w2ui-icon.search{ background: url('images/dark/sc_recsearch.svg') no-repeat center; }
-[data-theme='dark'] .w2ui-icon.next{ background: url('images/dark/lc_downsearch.svg') no-repeat center; }
 [data-theme='dark'] .w2ui-icon.presentation{ background: url('images/dark/lc_dia.svg') no-repeat center; }
 [data-theme='dark'] .w2ui-icon.sign_ok{ background: url('images/dark/sign_ok.svg') no-repeat center; }
 [data-theme='dark'] .w2ui-icon.sign_not_ok{ background: url('images/dark/sign_not_ok.svg') no-repeat center; }
-[data-theme='dark'] .w2ui-icon.prev{ background: url('images/dark/lc_upsearch.svg') no-repeat center; }
 [data-theme='dark'] .w2ui-icon.save{ background: url('images/dark/lc_save.svg') no-repeat center; }
 [data-theme='dark'] .w2ui-icon.saveas{ background: url('images/dark/lc_saveas.svg') no-repeat center; }
 [data-theme='dark'] .w2ui-icon.savemodified{ background: url('images/dark/savemodified_large.svg') no-repeat center; }
@@ -1416,14 +1390,6 @@ button.leaflet-control-search-next
 [data-theme='dark'] .w2ui-icon.frame10 { background: url('images/dark/fr010.svg') no-repeat center; }
 [data-theme='dark'] .w2ui-icon.frame11 { background: url('images/dark/fr011.svg') no-repeat center; }
 [data-theme='dark'] .w2ui-icon.frame12 { background: url('images/dark/fr012.svg') no-repeat center; }
-
-[data-theme='dark'] #tb_actionbar_item_prev .w2ui-icon.prev {
-	background: url('images/dark/lc_prevrecord.svg') no-repeat center/24px;
-}
-
-[data-theme='dark'] #tb_actionbar_item_next .w2ui-icon.next {
-	background: url('images/dark/lc_nextrecord.svg') no-repeat center/24px;
-}
 
 [data-theme='dark'] .Open_Local_Editor {
 	filter: invert(1);

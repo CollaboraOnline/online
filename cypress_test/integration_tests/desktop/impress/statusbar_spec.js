@@ -20,11 +20,11 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Statubar tests.', function
 	});
 
 	it('Selected slide.', function() {
-		cy.cGet('#PageStatus').should('have.text', 'Slide 1 of 2');
-		cy.cGet('#tb_actionbar_item_next').click();
-		cy.cGet('#PageStatus').should('have.text', 'Slide 2 of 2');
-		cy.cGet('#tb_actionbar_item_prev').click();
-		cy.cGet('#PageStatus').should('have.text', 'Slide 1 of 2');
+		cy.cGet('#SlideStatus').should('have.text', 'Slide 1 of 2');
+		cy.cGet('#toolbar-down #next').click();
+		cy.cGet('#SlideStatus').should('have.text', 'Slide 2 of 2');
+		cy.cGet('#toolbar-down #prev').click();
+		cy.cGet('#SlideStatus').should('have.text', 'Slide 1 of 2');
 	});
 
 	it('Change zoom level.', function() {

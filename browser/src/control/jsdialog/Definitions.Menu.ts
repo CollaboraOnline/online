@@ -376,4 +376,10 @@ menuDefinitions.set('ColorPickerMenu', [
 	{ type: 'separator' }, // required to show dropdown arrow
 ] as Array<MenuDefinition>);
 
+menuDefinitions.set('LanguageStatusMenu', [
+	{ type: 'separator' },
+	{ type: 'separator' },
+	// dynamically updated in Constol.StatusBar
+] as Array<MenuDefinition>);
+
 JSDialog.MenuDefinitions = menuDefinitions;
