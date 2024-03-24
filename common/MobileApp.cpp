@@ -11,14 +11,15 @@
 
 #include "config.h"
 
+#if MOBILEAPP
+
+#include "MobileApp.hpp"
+
 #include <cassert>
 #include <map>
 #include <mutex>
 
 #include "Log.hpp"
-#include "MobileApp.hpp"
-
-#if MOBILEAPP
 
 static std::map<unsigned, DocumentData*> idToDocDataMap;
 static std::mutex idToDocDataMapMutex;
