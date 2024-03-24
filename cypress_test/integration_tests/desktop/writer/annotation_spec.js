@@ -65,10 +65,11 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 });
 
 describe(['tagdesktop'], 'Collapsed Annotation Tests', function() {
-	var testFileName = 'annotation.odt';
+	var origTestFileName = 'annotation.odt';
+	var testFileName;
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'writer');
+		testFileName = helper.beforeAll(origTestFileName, 'writer');
 		desktopHelper.switchUIToNotebookbar();
 		cy.cGet('#optionscontainer div[id$="SidebarDeck.PropertyDeck"]').click(); // Hide sidebar.
 	});
@@ -121,6 +122,33 @@ describe(['tagdesktop'], 'Collapsed Annotation Tests', function() {
 		cy.cGet('body').contains('.context-menu-item','Remove').click();
 		cy.cGet('.cool-annotation-content-wrapper').should('not.exist');
 	});
+
+	it('Autosave Collapse', function() {
+		desktopHelper.insertComment(undefined, false);
+		cy.cGet('#map').focus();
+		helper.typeIntoDocument('{home}');
+		cy.cGet('.cool-annotation-reply-count-collapsed').should('have.text','!');
+		cy.cGet('.cool-annotation-reply-count-collapsed').should('be.visible');
+		cy.cGet('.cool-annotation-img').click();
+		cy.cGet('.cool-annotation-autosavelabel').should('be.visible');
+		cy.cGet('#annotation-save-1').click();
+		helper.typeIntoDocument('{home}');
+		cy.cGet('.cool-annotation-img').click();
+		cy.cGet('#annotation-content-area-1').should('have.text','some text0');
+		cy.cGet('.cool-annotation-autosavelabel').should('be.not.visible');
+		cy.cGet('.cool-annotation-reply-count-collapsed').should('not.have.text','!');
+		cy.cGet('#map').focus();
+		helper.typeIntoDocument('{home}');
+		cy.cGet('.cool-annotation-reply-count-collapsed').should('be.not.visible');
+
+		helper.closeDocument(testFileName, '');
+		helper.beforeAll(testFileName, 'writer', true, false, false, true);
+		cy.cGet('#optionscontainer div[id$="SidebarDeck.PropertyDeck"]').click(); // show sidebar.
+		cy.cGet('.cool-annotation-img').click();
+		cy.cGet('.cool-annotation-content-wrapper').should('exist');
+		cy.cGet('#annotation-content-area-1').should('have.text','some text0');
+		cy.cGet('.cool-annotation-info-collapsed').should('be.not.visible');
+	})
 
 });
 

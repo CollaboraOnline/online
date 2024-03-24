@@ -67,11 +67,11 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 });
 
 describe(['tagdesktop'], 'Collapsed Annotation Tests', function() {
-	var testFileName = 'comment_switching.odp';
+	var origTestFileName = 'comment_switching.odp';
+	var testFileName;
 
 	beforeEach(function() {
-		cy.viewport(1500, 600);
-		helper.beforeAll(testFileName, 'impress');
+		testFileName = helper.beforeAll(origTestFileName, 'impress');
 		desktopHelper.switchUIToNotebookbar();
 
 		if (Cypress.env('INTEGRATION') === 'nextcloud') {
@@ -126,6 +126,30 @@ describe(['tagdesktop'], 'Collapsed Annotation Tests', function() {
 		cy.cGet('#annotation-reply-1').click();
 		cy.cGet('.cool-annotation-content > div').should('include.text','some reply text');
 	});
+
+	it('Autosave Collapse', function() {
+		desktopHelper.insertComment(undefined, false);
+		cy.cGet('#map').focus();
+		helper.typeIntoDocument('{home}');
+		cy.cGet('.cool-annotation-info-collapsed').should('have.text','!');
+		cy.cGet('.cool-annotation-info-collapsed').should('be.visible');
+		cy.cGet('.cool-annotation-img').click();
+		cy.cGet('.cool-annotation-autosavelabel').should('be.visible');
+		cy.cGet('#annotation-save-1').click();
+		cy.cGet('.cool-annotation-img').click();
+		cy.cGet('#annotation-content-area-1').should('have.text','some text0');
+		cy.cGet('.cool-annotation-autosavelabel').should('be.not.visible');
+		cy.cGet('.cool-annotation-reply-count-collapsed').should('not.have.text','!');
+		cy.cGet('#map').focus();
+		cy.cGet('.cool-annotation-reply-count-collapsed').should('be.not.visible');
+
+		helper.closeDocument(testFileName, '');
+		helper.beforeAll(testFileName, 'impress', true, false, false, true);
+		cy.cGet('.cool-annotation-img').click();
+		cy.cGet('.cool-annotation-content-wrapper').should('exist');
+		cy.cGet('#annotation-content-area-1').should('have.text','some text0');
+		cy.cGet('.cool-annotation-info-collapsed').should('be.not.visible');
+	})
 });
 
 describe(['tagdesktop'], 'Comment Scrolling',function() {
@@ -151,7 +175,7 @@ describe(['tagdesktop'], 'Comment Scrolling',function() {
 		cy.cGet('.leaflet-marker-icon').should('exist');
 	});
 
-	it.only('omit slides without comments', function() {
+	it('omit slides without comments', function() {
 		//scroll up
 		desktopHelper.insertComment();
 		addSlide(2);
