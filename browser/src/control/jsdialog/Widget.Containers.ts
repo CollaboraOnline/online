@@ -165,3 +165,18 @@ JSDialog.toolbox = function (
 
 	return false;
 };
+
+JSDialog.spacer = function (
+	parentContainer: Element,
+	data: WidgetData,
+	builder: any,
+) {
+	const spacer = L.DomUtil.create(
+		'div',
+		builder.options.cssClass + ' ui-spacer',
+		parentContainer,
+	);
+	spacer.id = data.id;
+
+	return false;
+};

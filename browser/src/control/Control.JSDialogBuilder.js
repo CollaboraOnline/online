@@ -124,6 +124,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['control'] = JSDialog.container;
 		this._controlHandlers['scrollbar'] = this._ignoreHandler;
 		this._controlHandlers['toolbox'] = JSDialog.toolbox;
+		this._controlHandlers['spacer'] = JSDialog.spacer;
 		this._controlHandlers['toolitem'] = this._toolitemHandler;
 		this._controlHandlers['colorsample'] = this._colorSampleControl;
 		this._controlHandlers['divcontainer'] = this._divContainerHandler;
