@@ -1759,16 +1759,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 	_separatorControl: function(parentContainer, data, builder) {
 		if (data.orientation && data.orientation === 'vertical') {
-			// don't create new control, style current parent
-			// TODO: create something...
-			var target = parentContainer.lastChild;
-			if (!target)
-				target = parentContainer;
-			L.DomUtil.addClass(target, 'ui-separator');
-			L.DomUtil.addClass(target, 'vertical');
+			var separator = L.DomUtil.create('div', builder.options.cssClass + ' ui-separator vertical', parentContainer);
 		} else {
-			L.DomUtil.create('hr', builder.options.cssClass + ' ui-separator horizontal', parentContainer);
+			separator = L.DomUtil.create('hr', builder.options.cssClass + ' ui-separator horizontal', parentContainer);
 		}
+		separator.id = data.id;
 
 		return false;
 	},
