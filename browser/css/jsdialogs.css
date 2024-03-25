@@ -1297,6 +1297,11 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	display: flex;
 }
 
+.jsdialog.ui-spacer {
+	display: flex;
+	flex-grow: 1;
+}
+
 /* spinner */
 .spinner {
 	border: 6px solid #f3f3f3; /* Light grey */
