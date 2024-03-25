@@ -106,7 +106,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['fixedtext'] = this._fixedtextControl;
 		this._controlHandlers['htmlcontrol'] = this._htmlControl;
 		this._controlHandlers['expander'] = this._expanderHandler;
-		this._controlHandlers['grid'] = this._gridHandler;
+		this._controlHandlers['grid'] = JSDialog.grid;
 		this._controlHandlers['alignment'] = this._alignmentHandler;
 		this._controlHandlers['buttonbox'] = this._buttonBox;
 		this._controlHandlers['frame'] = JSDialog.frame;
@@ -116,14 +116,14 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['tabcontrol'] = this._tabsControlHandler;
 		this._controlHandlers['tabpage'] = this._tabPageHandler;
 		this._controlHandlers['singlepanel'] = this._singlePanelHandler;
-		this._controlHandlers['container'] = this._containerHandler;
-		this._controlHandlers['dialog'] = this._containerHandler;
-		this._controlHandlers['messagebox'] = this._containerHandler;
-		this._controlHandlers['window'] = this._containerHandler;
+		this._controlHandlers['container'] = JSDialog.container;
+		this._controlHandlers['dialog'] = JSDialog.container;
+		this._controlHandlers['messagebox'] = JSDialog.container;
+		this._controlHandlers['window'] = JSDialog.container;
 		this._controlHandlers['borderwindow'] = this._borderwindowHandler;
-		this._controlHandlers['control'] = this._containerHandler;
+		this._controlHandlers['control'] = JSDialog.container;
 		this._controlHandlers['scrollbar'] = this._ignoreHandler;
-		this._controlHandlers['toolbox'] = this._toolboxHandler;
+		this._controlHandlers['toolbox'] = JSDialog.toolbox;
 		this._controlHandlers['toolitem'] = this._toolitemHandler;
 		this._controlHandlers['colorsample'] = this._colorSampleControl;
 		this._controlHandlers['divcontainer'] = this._divContainerHandler;
@@ -146,7 +146,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['htmlcontent'] = JSDialog.htmlContent;
 		this._controlHandlers['colorpicker'] = JSDialog.colorPicker;
 
-		this._controlHandlers['mainmenu'] = this._containerHandler;
+		this._controlHandlers['mainmenu'] = JSDialog.container;
 		this._controlHandlers['submenu'] = this._subMenuHandler;
 		this._controlHandlers['menuitem'] = this._menuItemHandler;
 
@@ -503,53 +503,13 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		return '';
 	},
 
-	_toolboxHandler: function(parentContainer, data, builder) {
-		var levelClass = (builder._currentDepth !== undefined) ? ' level-' + builder._currentDepth : '';
-		var toolbox = L.DomUtil.create('div',
-			builder.options.cssClass + ' toolbox' + levelClass, parentContainer);
-		toolbox.id = data.id;
-
-		if (data.enabled === false) {
-			toolbox.disabled = true;
-			for (var index in data.children) {
-				data.children[index].enabled = false;
-			}
-		}
-
-		var enabledCallback = function (enable) {
-			for (var j in data.children) {
-				var childId = data.children[j].id;
-				var toolboxChild = toolbox.querySelector('#' + childId);
-				if (!toolboxChild)
-					continue;
-				if (enable) {
-					toolboxChild.removeAttribute('disabled');
-					toolboxChild.classList.remove('disabled');
-				} else {
-					toolboxChild.disabled = true;
-					toolboxChild.classList.add('disabled');
-				}
-			}
-		};
-		JSDialog.OnStateChange(toolbox, enabledCallback);
-
-		var noLabels = builder.options.noLabelsForUnoButtons;
-		builder.options.noLabelsForUnoButtons = true;
-
-		builder.build(toolbox, data.children, false, false);
-
-		builder.options.noLabelsForUnoButtons = noLabels;
-
-		return false;
-	},
-
 	_borderwindowHandler: function(parentContainer, data, builder) {
 		if (data.visible === false) {
 			for (var i in data.children)
 				data.children[i].visible = false;
 		}
 
-		return builder._containerHandler(parentContainer, data, builder);
+		return JSDialog.container(parentContainer, data, builder);
 	},
 
 	_handleResponses: function(data, builder) {
@@ -560,17 +520,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				builder._responses[data.responses[i].id] = data.responses[i].response;
 			}
 		}
-	},
-
-	_containerHandler: function(parentContainer, data, builder) {
-		if (data.cols && data.rows) {
-			return builder._gridHandler(parentContainer, data, builder);
-		}
-
-		if (parentContainer && !parentContainer.id)
-			parentContainer.id = data.id;
-
-		return true;
 	},
 
 	// used inside tab control and assistant (chart wizard, where it should create own container)
@@ -585,7 +534,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 	_alignmentHandler: function(parentContainer, data, builder) {
 		L.DomUtil.addClass(parentContainer, 'ui-alignment');
-		return builder._containerHandler(parentContainer, data, builder);
+		return JSDialog.container(parentContainer, data, builder);
 	},
 
 	_ignoreHandler: function() {
@@ -617,68 +566,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				return children[index];
 		}
 		return null;
-	},
-
-	_gridHandler: function(parentContainer, data, builder) {
-		var rows = builder._getGridRows(data.children);
-		var cols = builder._getGridColumns(data.children);
-
-		var processedChildren = [];
-
-		var table = L.DomUtil.create('div', builder.options.cssClass + ' ui-grid', parentContainer);
-		table.id = data.id;
-
-		var gridRowColStyle = 'grid-template-rows: repeat(' + rows  + ', auto); \
-			grid-template-columns: repeat(' + cols  + ', auto);';
-
-		table.style = gridRowColStyle;
-
-		for (var row = 0; row < rows; row++) {
-			var prevChild = null;
-
-			for (var col = 0; col < cols; col++) {
-				var child = builder._getGridChild(data.children, row, col);
-				var isMergedCell = prevChild && prevChild.width
-					&& parseInt(prevChild.left) + parseInt(prevChild.width) > col;
-
-				if (child) {
-					if (!child.id || child.id === '') // required for postprocess...
-						child.id = table.id + '-cell-' + row + '-' + col;
-
-					var sandbox = L.DomUtil.create('div');
-					builder.build(sandbox, [child], false);
-
-					var control = sandbox.firstChild;
-					if (control) {
-						L.DomUtil.addClass(control, 'ui-grid-cell');
-						table.appendChild(control);
-					}
-
-					processedChildren.push(child);
-					prevChild = child;
-				} else if (!isMergedCell) {
-					// empty placeholder to keep correct order
-					L.DomUtil.create('div', 'ui-grid-cell', table);
-				}
-
-			}
-		}
-
-		for (var i = 0; i < (data.children || []).length; i++) {
-			child = data.children[i];
-			if (processedChildren.indexOf(child) === -1) {
-				sandbox = L.DomUtil.create('div');
-				builder.build(sandbox, [child], false);
-				control = sandbox.firstChild;
-				if (control) {
-					L.DomUtil.addClass(control, 'ui-grid-cell');
-					table.appendChild(control);
-				}
-				processedChildren.push(child);
-			}
-		}
-
-		return false;
 	},
 
 	_buttonBox: function(parentContainer, data, builder) {

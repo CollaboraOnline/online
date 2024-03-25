@@ -340,6 +340,7 @@ COOL_JS_LST =\
 	src/control/jsdialog/Widget.Calendar.js \
 	src/control/jsdialog/Widget.ColorPicker.ts \
 	src/control/jsdialog/Widget.Combobox.js \
+	src/control/jsdialog/Widget.Containers.ts \
 	src/control/jsdialog/Widget.DrawingArea.js \
 	src/control/jsdialog/Widget.FormulabarEdit.js \
 	src/control/jsdialog/Widget.Frame.js \
@@ -799,6 +800,7 @@ pot:
 		src/control/jsdialog/Widget.Calendar.js \
 		src/control/jsdialog/Widget.ColorPicker.ts \
 		src/control/jsdialog/Widget.Combobox.js \
+		src/control/jsdialog/Widget.Containers.ts \
 		src/control/jsdialog/Widget.DrawingArea.js \
 		src/control/jsdialog/Widget.FormulabarEdit.js \
 		src/control/jsdialog/Widget.Frame.js \
