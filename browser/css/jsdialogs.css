@@ -142,7 +142,7 @@
 	vertical-align: middle;
 }
 
-.jsdialog.vertical:not(.sidebar) {
+.jsdialog.vertical:not(.sidebar):not(.ui-separator) {
 	width: 100%;
 }
 
@@ -223,14 +223,9 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	background-color: transparent;
 }
 .jsdialog.ui-separator.vertical {
-	height: 100%;
-	padding-right: 6px;
-	/* border-right: 1px dashed #888; */
-	background-image: linear-gradient(#888 22%, rgba(255,255,255,0) 0%);
-	background-position: right center;
-	background-size: 1px 14px;
-	background-repeat: repeat-y;
-	box-shadow: inset 0 34px 0 0 white;
+	margin: 5px 0px;
+	padding-right: 1px;
+	background-color: #888;
 }
 
 .jsdialog.ui-separator.horizontal {
