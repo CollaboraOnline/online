@@ -2874,9 +2874,6 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
     case LOK_CALLBACK_GRAPHIC_SELECTION:
         sendTextFrame("graphicselection: " + payload);
         break;
-    case LOK_CALLBACK_SHAPE_INNER_TEXT:
-        sendTextFrame("graphicinnertextarea: " + payload);
-        break;
     case LOK_CALLBACK_CELL_CURSOR:
         sendTextFrame("cellcursor: " + payload);
         break;

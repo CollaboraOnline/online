@@ -36,7 +36,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Spell checking menu.', func
 		// Open context menu
 		cy.cGet('g path.leaflet-interactive')
 			.then(function(shape) {
-				expect(shape.length).to.be.equal(2);
+				expect(shape.length).to.be.equal(1);
 				var XPos = (shape[0].getBoundingClientRect().left + shape[0].getBoundingClientRect().right) / 2;
 				var YPos = (shape[0].getBoundingClientRect().top + shape[0].getBoundingClientRect().bottom) / 2;
 
