@@ -2523,9 +2523,11 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._prevCellCursor = new L.LatLngBounds(this._cellCursor.getSouthWest(), this._cellCursor.getNorthEast());
 		}
 
-		var scrollToCursor = this._sheetSwitch.tryRestore(oldCursorXY.equals(this._cellCursorXY), this._selectedPart);
+		var sameAddress = oldCursorXY.equals(this._cellCursorXY);
 
-		this._onUpdateCellCursor(horizontalDirection, verticalDirection, onPgUpDn, scrollToCursor);
+		var scrollToCursor = this._sheetSwitch.tryRestore(sameAddress, this._selectedPart);
+
+		this._onUpdateCellCursor(horizontalDirection, verticalDirection, onPgUpDn, scrollToCursor, sameAddress);
 
 		// Remove input help if there is any:
 		this._removeInputHelpMarker();
@@ -4639,7 +4641,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	// TODO: unused variables: horizontalDirection, verticalDirection
 	// TODO: used only in calc: move to CalcTileLayer
-	_onUpdateCellCursor: function (horizontalDirection, verticalDirection, onPgUpDn, scrollToCursor) {
+	_onUpdateCellCursor: function (horizontalDirection, verticalDirection, onPgUpDn, scrollToCursor, sameAddress) {
 		this._onUpdateCellResizeMarkers();
 		if (this._cellCursor && !this._isEmptyRectangle(this._cellCursor)) {
 			var mapBounds = this._map.getBounds();
@@ -4690,6 +4692,8 @@ L.CanvasTileLayer = L.Layer.extend({
 
 			var focusOutOfDocument = document.activeElement === document.body;
 			var dontFocusDocument = this._isAnyInputFocused() || focusOutOfDocument;
+			var dontStealFocus = sameAddress && this._map.calcInputBarHasFocus();
+			dontFocusDocument = dontFocusDocument || dontStealFocus;
 
 			// when the cell cursor is moving, the user is in the document,
 			// and the focus should leave the cell input bar
