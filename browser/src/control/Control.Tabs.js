@@ -145,6 +145,9 @@ L.Control.Tabs = L.Control.extend({
 			return;
 		}
 		if (docType === 'spreadsheet') {
+			if (!e.partsInfo || !e.partHashes)
+				return;
+
 			if (!this._tabsInitialized) {
 				// make room for the preview
 				var docContainer = this._map.options.documentContainer;
@@ -159,123 +162,126 @@ L.Control.Tabs = L.Control.extend({
 				horizScrollPos = scrollDiv.scrollLeft;
 			}
 
-			if ('partNames' in e) {
-				while (this._tabsCont.firstChild) {
-					this._tabsCont.removeChild(this._tabsCont.firstChild);
+			// clear tabs container
+			while (this._tabsCont.firstChild) {
+				this._tabsCont.removeChild(this._tabsCont.firstChild);
+			}
+
+			var ssTabScroll = L.DomUtil.create('div', 'spreadsheet-tab-scroll', this._tabsCont);
+			ssTabScroll.id = 'spreadsheet-tab-scroll';
+			if (!window.mode.isMobile())
+				ssTabScroll.style.overflow = 'hidden';
+
+			this._tabsCont.style.display = 'grid';
+
+			var menuItemMobile = {};
+			Object.assign(menuItemMobile,
+				{
+					'insertsheetbefore' : this._menuItem['insertsheetbefore'],
+					'insertsheetafter'  :   this._menuItem['insertsheetafter'],
+					'Name' : this._menuItem['.uno:Name'],
 				}
-				var ssTabScroll = L.DomUtil.create('div', 'spreadsheet-tab-scroll', this._tabsCont);
-				ssTabScroll.id = 'spreadsheet-tab-scroll';
-				if (!window.mode.isMobile())
-					ssTabScroll.style.overflow = 'hidden';
-
-				this._tabsCont.style.display = 'grid';
-
-				var menuItemMobile = {};
+			);
+			if (this._map.hasAnyHiddenPart()) {
+				Object.assign(menuItemMobile, {
+					'Show' : this._menuItem['.uno:Show'],
+				});
+			}
+			if (this._map.getNumberOfVisibleParts() !== 1) {
 				Object.assign(menuItemMobile,
 					{
-						'insertsheetbefore' : this._menuItem['insertsheetbefore'],
-						'insertsheetafter'  :   this._menuItem['insertsheetafter'],
-						'Name' : this._menuItem['.uno:Name'],
+						'Remove': this._menuItem['.uno:Remove'],
+						'Hide': this._menuItem['.uno:Hide'],
+						'movesheetleft': this._menuItem['movesheetleft'],
+						'movesheetright': this._menuItem['movesheetright'],
 					}
 				);
-				if (this._map.hasAnyHiddenPart()) {
-					Object.assign(menuItemMobile, {
-						'Show' : this._menuItem['.uno:Show'],
-					});
-				}
-				if (this._map.getNumberOfVisibleParts() !== 1) {
-					Object.assign(menuItemMobile,
-						{
-							'Remove': this._menuItem['.uno:Remove'],
-							'Hide': this._menuItem['.uno:Hide'],
-							'movesheetleft': this._menuItem['movesheetleft'],
-							'movesheetright': this._menuItem['movesheetright'],
-						}
-					);
-				}
-
-				if (window.mode.isMobile()) {
-					var menuData = L.Control.JSDialogBuilder.getMenuStructureForMobileWizard(menuItemMobile, true, '');
-				}
-
-				for (var i = 0; i < parts; i++) {
-					if (e.hiddenParts.indexOf(i) !== -1)
-						continue;
-
-					// create a drop zone indicator for the sheet tab
-					// put the indicator on the left of the tab
-					var dropZoneIndicator = L.DomUtil.create('div', 'tab-drop-area', ssTabScroll);
-					dropZoneIndicator.id = 'drop-zone-' + i;
-					var id = 'spreadsheet-tab' + i;
-					var tab = L.DomUtil.create('button', 'spreadsheet-tab', ssTabScroll);
-					L.DomUtil.create('div', 'lock', tab);
-					var label = L.DomUtil.create('div', '', tab);
-					if (window.mode.isMobile() || window.mode.isTablet()) {
-						(new Hammer(tab, {recognizers: [[Hammer.Press]]}))
-							.on('press', function (j) {
-								return function(e) {
-									this._tabForContextMenu = j;
-									if (!this._map.isReadOnlyMode()) {
-										if (window.mode.isMobile()) {
-											window.contextMenuWizard = true;
-											this._map.fire('mobilewizard', {data: menuData});
-										} else {
-											$(e.target).trigger('contextmenu');
-                                        }
-									}
-								};
-							}(i).bind(this));
-					}
-
-					if (i === selectedPart) {
-						horizScrollPos = tab.offsetLeft;
-					}
-
-					if (!window.mode.isMobile()) {
-						L.DomEvent.on(tab, 'dblclick', function(j) {
-							return function() {
-								// window.app.console.err('Double clicked ' + j);
-								this._tabForContextMenu = j;
-								this._renameSheet();
-							};
-						}(i).bind(this));
-						L.DomEvent.on(tab, 'contextmenu', function(j) {
-							return function() {
-								this._tabForContextMenu = j;
-							};
-						}(i).bind(this));
-					}
-
-					if (e.protectedParts[i]) {
-						L.DomUtil.addClass(tab, 'spreadsheet-tab-protected');
-					}
-					else {
-						L.DomUtil.removeClass(tab, 'spreadsheet-tab-protected');
-					}
-					label.textContent = e.partNames[i];
-					tab.id = id;
-
-					L.DomEvent
-						.on(tab, 'click', L.DomEvent.stopPropagation)
-						.on(tab, 'click', L.DomEvent.stop)
-						.on(tab, 'click', this._setPart, this)
-						.on(tab, 'click', this._map.focus, this._map);
-					this._addDnDHandlers(tab);
-					this._spreadsheetTabs[id] = tab;
-				}
-
-				// add an additional dropZoneIndicator for the last sheet tab
-				// put the indicator on the right of the last tab
-				var dropZoneIndicatorForTheLastTab = L.DomUtil.create('div', 'tab-drop-area', ssTabScroll);
-				dropZoneIndicatorForTheLastTab.id = 'drop-zone-end';
-
-				// create drop zone container for the last drop zone indicator
-				// when a tab is over this container, dropZoneIndicatorForTheLastTab will be shown
-				var dropZoneEndContainer = L.DomUtil.create('div', '', ssTabScroll);
-				dropZoneEndContainer.id = 'drop-zone-end-container';
-				this._addDnDHandlers(dropZoneEndContainer);
-				dropZoneEndContainer.setAttribute('draggable', false);
 			}
+
+			if (window.mode.isMobile()) {
+				var menuData = L.Control.JSDialogBuilder.getMenuStructureForMobileWizard(menuItemMobile, true, '');
+			}
+
+			for (var i = 0; i < parts; i++) {
+				var partHash = e.partHashes[i];
+				var partInfo = e.partsInfo[partHash];
+				if (partInfo.hidden)
+					continue;
+
+				// create a drop zone indicator for the sheet tab
+				// put the indicator on the left of the tab
+				var dropZoneIndicator = L.DomUtil.create('div', 'tab-drop-area', ssTabScroll);
+				dropZoneIndicator.id = 'drop-zone-' + i;
+				var id = 'spreadsheet-tab' + i;
+				var tab = L.DomUtil.create('button', 'spreadsheet-tab', ssTabScroll);
+				L.DomUtil.create('div', 'lock', tab);
+				var label = L.DomUtil.create('div', '', tab);
+				if (window.mode.isMobile() || window.mode.isTablet()) {
+					(new Hammer(tab, {recognizers: [[Hammer.Press]]}))
+						.on('press', function (j) {
+							return function(e) {
+								this._tabForContextMenu = j;
+								if (!this._map.isReadOnlyMode()) {
+									if (window.mode.isMobile()) {
+										window.contextMenuWizard = true;
+										this._map.fire('mobilewizard', {data: menuData});
+									} else {
+										$(e.target).trigger('contextmenu');
+									}
+								}
+							};
+						}(i).bind(this));
+				}
+
+				if (i === selectedPart) {
+					horizScrollPos = tab.offsetLeft;
+				}
+
+				if (!window.mode.isMobile()) {
+					L.DomEvent.on(tab, 'dblclick', function(j) {
+						return function() {
+							// window.app.console.err('Double clicked ' + j);
+							this._tabForContextMenu = j;
+							this._renameSheet();
+						};
+					}(i).bind(this));
+					L.DomEvent.on(tab, 'contextmenu', function(j) {
+						return function() {
+							this._tabForContextMenu = j;
+						};
+					}(i).bind(this));
+				}
+
+				if (partInfo.protected) {
+					L.DomUtil.addClass(tab, 'spreadsheet-tab-protected');
+				}
+				else {
+					L.DomUtil.removeClass(tab, 'spreadsheet-tab-protected');
+				}
+				label.textContent = partInfo.name;
+				tab.id = id;
+
+				L.DomEvent
+					.on(tab, 'click', L.DomEvent.stopPropagation)
+					.on(tab, 'click', L.DomEvent.stop)
+					.on(tab, 'click', this._setPart, this)
+					.on(tab, 'click', this._map.focus, this._map);
+				this._addDnDHandlers(tab);
+				this._spreadsheetTabs[id] = tab;
+			}
+
+			// add an additional dropZoneIndicator for the last sheet tab
+			// put the indicator on the right of the last tab
+			var dropZoneIndicatorForTheLastTab = L.DomUtil.create('div', 'tab-drop-area', ssTabScroll);
+			dropZoneIndicatorForTheLastTab.id = 'drop-zone-end';
+
+			// create drop zone container for the last drop zone indicator
+			// when a tab is over this container, dropZoneIndicatorForTheLastTab will be shown
+			var dropZoneEndContainer = L.DomUtil.create('div', '', ssTabScroll);
+			dropZoneEndContainer.id = 'drop-zone-end-container';
+			this._addDnDHandlers(dropZoneEndContainer);
+			dropZoneEndContainer.setAttribute('draggable', false);
+
 			for (var key in this._spreadsheetTabs) {
 				var part =  parseInt(key.match(/\d+/g)[0]);
 				L.DomUtil.removeClass(this._spreadsheetTabs[key], 'spreadsheet-tab-selected');
@@ -338,11 +344,6 @@ L.Control.Tabs = L.Control.extend({
 
 	//selected sheet is moved to new index
 	_moveSheet: function (newIndex) {
-		var currentTab = this._map.getCurrentPartNumber();
-		// odd but true: the base index changes according to the tab is dragged
-		// on the left or on the right wrt the current tab position
-		var newIndexZeroBased = newIndex > currentTab ? newIndex - 2 : newIndex - 1;
-		this._map._docLayer._sheetSwitch.updateOnSheetMoved(currentTab, newIndexZeroBased);
 		this._map.sendUnoCommand('.uno:Move?Copy:bool=false&UseCurrentDocument:bool=true&Index=' + newIndex);
 	},
 
@@ -362,8 +363,6 @@ L.Control.Tabs = L.Control.extend({
 		var contextMenuTab = this._tabForContextMenu;
 		if (contextMenuTab <= 0) return;
 
-		this._map._docLayer._sheetSwitch.updateOnSheetMoved(contextMenuTab, contextMenuTab - 1);
-
 		// core handles the decreasing of contextMenuTab by 1
 		// so, no need to do it here (for the second parameter)
 		this._moveSheetLR(contextMenuTab, contextMenuTab);
@@ -371,8 +370,6 @@ L.Control.Tabs = L.Control.extend({
 
 	_moveSheetRight: function () {
 		var contextMenuTab = this._tabForContextMenu;
-
-		this._map._docLayer._sheetSwitch.updateOnSheetMoved(contextMenuTab, contextMenuTab + 1);
 
 		/*
 		Why there is '+3' ?
@@ -465,8 +462,18 @@ L.Control.Tabs = L.Control.extend({
 		}
 
 		e.target.previousElementSibling.classList.remove('tab-drop-area-active');
-		var targetIndex = this._map._docLayer._partNames.indexOf(e.target.innerText);
-		this._moveSheet(targetIndex + 1); // drop to left side of the tab
+
+		var sheetName = e.target.innerText;
+		var partsInfo = this._map._docLayer._partsInfo;
+		var partHashes = this._map._docLayer._partHashes;
+		for (var hash in partsInfo) {
+			var partInfo = partsInfo[hash];
+			if (partInfo.name === sheetName) {
+				var targetIndex = partHashes.indexOf(hash);
+				this._moveSheet(targetIndex + 1); // drop to left side of the tab
+				return;
+			}
+		}
 	},
 
 	_handleDragEnd: function (e) {
