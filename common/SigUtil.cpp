@@ -71,6 +71,7 @@ static bool UnattendedRun = false;
 static int SignalLogFD = STDERR_FILENO; //< The FD where signalLogs are dumped.
 static char* VersionInfo = nullptr;
 static char FatalGdbString[256] = { '\0' };
+static SigUtil::SigChildHandler SigChildHandle;
 #endif
 
 } // namespace
@@ -515,6 +516,34 @@ void requestShutdown()
         assert (sizeof (FatalGdbString) > strlen(streamStr.c_str()) + 1);
         strncpy(FatalGdbString, streamStr.c_str(), sizeof(FatalGdbString)-1);
         FatalGdbString[sizeof(FatalGdbString)-1] = '\0';
+    }
+
+    static
+    void handleSigChild(const int /* signal */, siginfo_t *info, void * /* uctxt */)
+    {
+        SigChildHandle(info ? info->si_pid : -1);
+    }
+
+    void setSigChildHandler(SigChildHandler fn)
+    {
+        struct sigaction action;
+
+        SigChildHandle = fn;
+        sigemptyset(&action.sa_mask);
+
+        if (fn)
+        {
+            action.sa_flags = SA_SIGINFO;
+            action.sa_sigaction = handleSigChild;
+        }
+        else
+        {
+            action.sa_flags = 0;
+            action.sa_handler = SIG_DFL;
+        }
+
+        sigaction(SIGCHLD, &action, nullptr);
+
     }
 
     static

@@ -435,6 +435,8 @@ static int createLibreOfficeKit(const std::string& childRoot,
                 ForKitPoll->closeAllSockets();
             // else very first kit process spawned
 
+            SigUtil::setSigChildHandler(nullptr);
+
             UnitKit::get().postFork();
 
             sleepForDebugger();
@@ -497,6 +499,14 @@ static void printArgumentHelp()
     std::cout << "  Note: Running this standalone is not possible. It is spawned by coolwsd" << std::endl;
     std::cout << "        and is controlled via a pipe." << std::endl;
     std::cout << "" << std::endl;
+}
+
+extern "C" {
+    static void wakeupPoll(uint32_t /*pid*/)
+    {
+        if (ForKitPoll)
+            ForKitPoll->wakeup();
+    }
 }
 
 int forkit_main(int argc, char** argv)
@@ -780,6 +790,9 @@ int forkit_main(int argc, char** argv)
 
     ForKitPoll.reset(new SocketPoll (Util::getThreadName()));
     ForKitPoll->runOnClientThread(); // We will do the polling on this thread.
+
+    // Reap zombies when we get the signal
+    SigUtil::setSigChildHandler(wakeupPoll);
 
     WSHandler = std::make_shared<ServerWSHandler>("forkit_ws");
 
