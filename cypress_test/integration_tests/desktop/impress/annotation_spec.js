@@ -139,9 +139,9 @@ describe(['tagdesktop'], 'Collapsed Annotation Tests', function() {
 		cy.cGet('.cool-annotation-img').click();
 		cy.cGet('#annotation-content-area-1').should('have.text','some text0');
 		cy.cGet('.cool-annotation-autosavelabel').should('be.not.visible');
-		cy.cGet('.cool-annotation-reply-count-collapsed').should('not.have.text','!');
+		cy.cGet('.cool-annotation-info-collapsed').should('not.have.text','!');
 		cy.cGet('#map').focus();
-		cy.cGet('.cool-annotation-reply-count-collapsed').should('be.not.visible');
+		cy.cGet('.cool-annotation-info-collapsed').should('be.not.visible');
 
 		helper.closeDocument(testFileName, '');
 		helper.beforeAll(testFileName, 'impress', true, false, false, true);

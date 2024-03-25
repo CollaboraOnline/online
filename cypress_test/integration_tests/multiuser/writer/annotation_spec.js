@@ -140,11 +140,11 @@ describe(['tagmultiuser'], 'Multiuser Annotation Tests', function () {
 		cy.cGet('#annotation-reply-textarea-1').type('some reply text');
 		cy.cGet('#annotation-reply-1').click();
 		cy.cGet('#annotation-content-area-2').should('contain','some reply text');
-		cy.cGet('#comment-container-1 .cool-annotation-reply-count-collapsed').should('have.text', '1');
+		cy.cGet('#comment-container-1 .cool-annotation-info-collapsed').should('have.text', '1');
 
 		cy.cSetActiveFrame('#iframe2');
 		cy.cGet('#annotation-content-area-2').should('contain','some reply text');
-		cy.cGet('#comment-container-1 .cool-annotation-reply-count-collapsed').should('have.text', '1');
+		cy.cGet('#comment-container-1 .cool-annotation-info-collapsed').should('have.text', '1');
 	});
 
 	it('Remove', function() {
