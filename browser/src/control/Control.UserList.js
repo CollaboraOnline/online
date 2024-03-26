@@ -113,7 +113,7 @@ L.Control.UserList = L.Control.extend({
 			$(img).css({'border-color': color, 'background-color': '#eee', 'background-image': 'url("' + L.LOUtil.getImageURL('user.svg', this.map._docLayer._docType) + '")'});
 		}
 		img.setAttribute('data-view-id', viewId);
-		L.LOUtil.checkIfImageExists(img);
+		L.LOUtil.checkIfImageExists(img, true);
 		return img;
 	},
 
