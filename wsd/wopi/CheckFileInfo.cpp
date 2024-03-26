@@ -157,3 +157,29 @@ void CheckFileInfo::checkFileInfo(int redirectLimit)
     // We're in business.
     _state = State::Active;
 }
+
+std::unique_ptr<WopiStorage::WOPIFileInfo>
+CheckFileInfo::wopiFileInfo(const Poco::URI& uriPublic) const
+{
+    std::unique_ptr<WopiStorage::WOPIFileInfo> wopiFileInfo;
+    if (_wopiInfo)
+    {
+        std::size_t size = 0;
+        std::string filename;
+        std::string ownerId;
+        std::string modifiedTime;
+        if (_wopiInfo)
+        {
+            JsonUtil::findJSONValue(_wopiInfo, "Size", size);
+            JsonUtil::findJSONValue(_wopiInfo, "OwnerId", ownerId);
+            JsonUtil::findJSONValue(_wopiInfo, "BaseFileName", filename);
+            JsonUtil::findJSONValue(_wopiInfo, "LastModifiedTime", modifiedTime);
+        }
+
+        Poco::JSON::Object::Ptr wopiInfo = _wopiInfo;
+        wopiFileInfo = std::make_unique<WopiStorage::WOPIFileInfo>(
+            StorageBase::FileInfo(size, filename, ownerId, modifiedTime), wopiInfo, uriPublic);
+    }
+
+    return wopiFileInfo;
+}
