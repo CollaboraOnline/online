@@ -25,6 +25,10 @@
 
 class MessageCountSocketHandler : public ReplaySocketHandler
 {
+public:
+    MessageCountSocketHandler(SocketPoll &poll, /* bad style */
+                        const std::string &uri, const std::string &trace) :
+        ReplaySocketHandler(poll, uri, trace){}
 };
 
 class MessageCountPerfTest : public Poco::Util::Application
@@ -70,8 +74,14 @@ int MessageCountPerfTest::main(const std::vector<std::string>& args)
     }
 #endif
 
+    std::string filePath = "../test/data/hello-world.odt";
+    std::string fileUri = ReplaySocketHandler::getFileUri(filePath);
+    std::string serverUri = ReplaySocketHandler::getServerUri(server, fileUri);
+
     TerminatingPoll poll("MessageCountPerfTest poll");
-    MessageCountSocketHandler::addPollFor(poll, server, trace);
+    auto handler = std::make_shared<MessageCountSocketHandler>(poll, fileUri, trace);
+
+    ReplaySocketHandler::start(handler, poll, serverUri);
 
     do {
         poll.poll(TerminatingPoll::DefaultPollTimeoutMicroS);
