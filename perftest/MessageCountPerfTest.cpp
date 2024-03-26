@@ -16,6 +16,11 @@
 
 #include <Poco/Util/Application.h>
 
+#include <net/Ssl.hpp>
+#if ENABLE_SSL
+#  include <SslSocket.hpp>
+#endif
+
 #include <ReplaySocketHandler.hpp>
 
 class MessageCountSocketHandler : public ReplaySocketHandler
@@ -35,7 +40,7 @@ int MessageCountPerfTest::main(const std::vector<std::string>& args)
 {
     if (args.size() != 2) {
         std::cerr << "Usage: ./messagecountperftest <server> <trace-path>" << std::endl;
-        std::cerr << "       server : Started separately. URI must start with ws:// or wss://." << std::endl;
+        std::cerr << "       server : Started separately. URI must start with ws:// or wss://. eg: wss://localhost:9980" << std::endl;
         std::cerr << "       trace  : Created from make run-trace and manually edited." << std::endl;
         std::cerr << "       See README for more info." << std::endl;
         return EX_USAGE;
@@ -54,6 +59,16 @@ int MessageCountPerfTest::main(const std::vector<std::string>& args)
     }
 
     std::cerr << "Starting" << std::endl;
+
+#if ENABLE_SSL
+    ssl::Manager::initializeClientContext("", "", "",
+            "ALL:!ADH:!LOW:!EXP:!MD5:@STRENGTH",
+            ssl::CertificateVerification::Disabled);
+    if (!ssl::Manager::isClientContextInitialized()) {
+        std::cerr << "Failed to initialize Client SSL.\n";
+        return -1;
+    }
+#endif
 
     TerminatingPoll poll("MessageCountPerfTest poll");
     MessageCountSocketHandler::addPollFor(poll, server, trace);
