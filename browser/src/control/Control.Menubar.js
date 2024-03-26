@@ -1617,12 +1617,12 @@ L.Control.Menubar = L.Control.extend({
 	// needed for smartmenus to work inside notebookbar
 	_setupOverflow: function() {
 		$('.main-nav.hasnotebookbar').css('overflow', 'visible');
-		$('.notebookbar-scroll-wrapper').css('overflow', 'visible');
+		$('.ui-scrollable-content').css('overflow', 'visible');
 	},
 
 	_resetOverflow: function() {
 		$('.main-nav').css('overflow', '');
-		$('.notebookbar-scroll-wrapper').css('overflow', '');
+		$('.ui-scrollable-content').css('overflow', '');
 	},
 
 	_onMouseOut: function(e) {

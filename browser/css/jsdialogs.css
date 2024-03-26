@@ -1723,6 +1723,22 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	filter: invert(.9)
 }
 
+/* scrollable content */
+.ui-scrollable-content {
+	overflow-x: scroll;
+	overflow-y: hidden;
+	scrollbar-width: none; /* Firefox >= 64 */
+	overflow: -moz-scrollbars-none; /* Firefox < 64 */
+	-ms-overflow-style: none;  /* Internet Explorer 10+ */
+	display: flex;
+	height: 72px;
+	align-items: center;
+}
+
+.ui-scrollable-content::-webkit-scrollbar { /* WebKit */
+	width: 0;
+	height: 0;
+}
 
 /* formulabar */
 #sc_input_window.formulabar {

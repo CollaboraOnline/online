@@ -168,25 +168,9 @@ button.ui-tab.notebookbar {
 
 /* root container */
 
-.notebookbar-scroll-wrapper {
-	overflow-x: scroll;
-	overflow-y: hidden;
-	scrollbar-width: none; /* Firefox >= 64 */
-	overflow: -moz-scrollbars-none; /* Firefox < 64 */
-	-ms-overflow-style: none;  /* Internet Explorer 10+ */
-	display: flex;
-	height: 72px;
-	align-items: center;
-}
-
 .root-container.notebookbar {
 	display: table-cell;
 	vertical-align: middle;
-}
-
-.notebookbar-scroll-wrapper::-webkit-scrollbar { /* WebKit */
-	width: 0;
-	height: 0;
 }
 
 #toolbar-wrapper.hasnotebookbar {
@@ -354,11 +338,6 @@ button.ui-tab.notebookbar {
 #FormatPaintbrush span
 {
 	display: none;
-}
-
-/* comboboxes in readonly mode on mobile devices */
-.notebookbar-scroll-wrapper .select2-container {
-	z-index: auto !important;
 }
 
 /* Writer */
