@@ -50,10 +50,17 @@ public:
 
     std::string toString() const
     {
-        std::ostringstream oss;
-        oss << static_cast<char>(_dir) << _pid << static_cast<char>(_dir)
-            << _sessionId << static_cast<char>(_dir) << _payload;
-        return oss.str();
+        if (_dir == Direction::Invalid)
+        {
+            return "Invalid TraceFileRecord";
+        }
+        else
+        {
+            std::ostringstream oss;
+            oss << static_cast<char>(_dir) << _pid << static_cast<char>(_dir)
+                << _sessionId << static_cast<char>(_dir) << _payload;
+            return oss.str();
+        }
     }
 
     void setDir(Direction dir) { _dir = dir; }

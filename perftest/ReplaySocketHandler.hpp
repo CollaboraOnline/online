@@ -13,8 +13,10 @@
 
 #include <iomanip>
 #include <chrono>
+#include <time.h>
 #include <cstring>
 #include <unordered_map>
+#include <sysexits.h>
 
 #include <net/Socket.hpp>
 #include <WebSocketHandler.hpp>
@@ -29,7 +31,6 @@ class ReplaySocketHandler : public WebSocketHandler
     TraceFileRecord _next;
     std::chrono::steady_clock::time_point _start;
     bool _connecting;
-    std::string _logPre;
     std::string _uri;
     std::string _trace;
 public:
@@ -43,94 +44,94 @@ public:
         _trace(trace)
     {
 
-        static std::atomic<int> number;
-        _logPre = "[" + std::to_string(++number) + "] ";
         std::cerr << "Attempt connect to " << uri << " for trace " << _trace << "\n";
         getNextRecord();
         _start = std::chrono::steady_clock::now();
     }
 
-    int getPollEvents(std::chrono::steady_clock::time_point now,
-                      int64_t &timeoutMaxMicroS) override
+    int getPollEvents(std::chrono::steady_clock::time_point now, int64_t &timeoutMaxMicroS) override
     {
-        if (_connecting)
-        {
-            std::cerr << _logPre << "Waiting for outbound connection to " << _uri <<
-                " to complete for trace " << _trace << "\n";
+        if (_connecting) {
+            std::cerr << "getPollEvents (Waiting for outbound connection to " << _uri <<
+                " to complete for trace " << _trace << ")" << std::endl;
             return POLLOUT;
         }
 
         int events = WebSocketHandler::getPollEvents(now, timeoutMaxMicroS);
 
-        int64_t nextTime = -1;
-        while (nextTime <= 0) {
-            nextTime = std::chrono::microseconds((_next.getTimestampUs() - _reader.getEpochStart()) * TRACE_MULTIPLIER).count();
-            if ((now - _start).count() > nextTime)
-            {
-                sendTraceMessage();
-                events = WebSocketHandler::getPollEvents(now, timeoutMaxMicroS);
-                break;
-            }
-        }
+        int64_t nextMessageTime = (_next.getTimestampUs() - _reader.getEpochStart()) * TRACE_MULTIPLIER;
+        int64_t currentTime = std::chrono::duration_cast<std::chrono::microseconds>(now - _start).count();
+        int64_t timeToNextMessage = nextMessageTime - currentTime;
 
-//        std::cerr << "next event in " << nextTime << " us\n";
-        if (nextTime < timeoutMaxMicroS)
-            timeoutMaxMicroS = nextTime;
+        std::cerr << "getPollEvents nextMessageTime: " << nextMessageTime <<
+                                  " currentTime: " << currentTime <<
+                                  " timeToNextMessage: " << timeToNextMessage << std::endl;
+
+        if (timeToNextMessage < 0) {
+            processTraceMessage();
+            getNextRecord();
+            timeoutMaxMicroS = 0;
+        } else {
+            timeoutMaxMicroS = timeToNextMessage;
+        }
 
         return events;
     }
 
-    bool getNextRecord()
+    void getNextRecord()
     {
-        bool found = false;
-        while (!found) {
-            _next = _reader.getNextRecord();
-            switch (_next.getDir()) {
-            case TraceFileRecord::Direction::Invalid:
-            case TraceFileRecord::Direction::Incoming:
-                // FIXME: need to subset output quite a bit.
-                found = true;
-                break;
-            default:
-                found = false;
-                break;
-            }
+        _next = _reader.getNextRecord();
+        std::cerr << "Got next record: " << _next.toString() << std::endl;
+        if (_next.getDir() == TraceFileRecord::Direction::Invalid){
+            std::cerr << "Shutdown\n";
+            shutdown();
         }
-        return _next.getDir () != TraceFileRecord::Direction::Invalid;
     }
 
     void performWrites(std::size_t capacity) override
     {
-        if (_connecting)
-            std::cerr << _logPre << "Outbound websocket - connected\n";
-        _connecting = false;
+        if (_connecting) {
+            std::cerr << "Outbound websocket - connected" << std::endl;
+            _connecting = false;
+        }
         return WebSocketHandler::performWrites(capacity);
     }
 
     void onDisconnect() override
     {
-        std::cerr << _logPre << "Websocket " << _uri <<
-            " dis-connected, re-trying in 20 seconds\n";
+        std::cerr << "Websocket " << _uri << " dis-connected" << std::endl;
         WebSocketHandler::onDisconnect();
+    }
+
+    void processTraceMessage()
+    {
+        std::cerr << "processTraceMessage: " << _next.toString() << std::endl;
+        switch(_next.getDir()) {
+            case TraceFileRecord::Direction::Invalid:
+                std::cerr << "Shutdown" << std::endl;
+                shutdown();
+                break;
+            case TraceFileRecord::Direction::Incoming:
+                // Incoming from server's perspective, outgoing for us
+                sendTraceMessage();
+                break;
+            case TraceFileRecord::Direction::Outgoing:
+                // Do nothing
+                break;
+            case TraceFileRecord::Direction::Event:
+                // Do nothing
+                break;
+        }
     }
 
     // send outgoing messages
     void sendTraceMessage()
     {
-        if (_next.getDir() == TraceFileRecord::Direction::Invalid)
-            return; // shutting down
-
+        std::cerr << "sendTraceMessage: " << _next.toString() << std::endl;
         std::string msg = rewriteMessage(_next.getPayload());
-        if (!msg.empty())
-        {
-            std::cerr << _logPre << "Send: '" << msg << "'\n";
+        if (!msg.empty()) {
+            std::cerr << "Send: '" << msg << "'\n";
             sendMessage(msg);
-        }
-
-        if (!getNextRecord())
-        {
-            std::cerr << _logPre << "Shutdown\n";
-            shutdown();
         }
     }
 
@@ -141,10 +142,7 @@ public:
 
         std::string out = msg;
 
-        if (tokens.equals(0, "tileprocessed"))
-            out.clear(); // we do this accurately below
-
-        else if (tokens.equals(0, "load")) {
+        if (tokens.equals(0, "load")) {
             std::string url = tokens[1];
             assert(!strncmp(url.c_str(), "url=", 4));
 
@@ -152,7 +150,7 @@ public:
             out = "load url=" + _uri; // already encoded
             for (size_t i = 2; i < tokens.size(); ++i)
                 out += " " + tokens[i];
-            std::cerr << _logPre << "msg " << out << "\n";
+            std::cerr << "msg " << out << "\n";
         }
 
         // FIXME: translate mouse events relative to view-port etc.
@@ -162,69 +160,46 @@ public:
     // handle incoming messages
     void handleMessage(const std::vector<char> &data) override
     {
-        //const auto now = std::chrono::steady_clock::now();
-
         const std::string firstLine = COOLProtocol::getFirstLine(data.data(), data.size());
+        std::cerr << "handleMessage: " << firstLine << std::endl;
+
         StringVector tokens = StringVector::tokenize(firstLine);
-        std::cerr << _logPre << "Got msg: " << firstLine << "\n";
-
-
         if (tokens.equals(0, "tile:")) {
-            // accumulate latencies
-
             // eg. tileprocessed tile=0:9216:0:3072:3072:0
             TileDesc desc = TileDesc::parse(tokens);
-
-            sendMessage("tileprocessed tile=" + desc.generateID());
-            std::cerr << _logPre << "Sent tileprocessed tile= " + desc.generateID() << "\n";
+            std::string msg = "tileprocessed tile=" + desc.generateID();
+            std::cerr << "Send: '" << msg << "'\n";
+            sendMessage(msg);
         } if (tokens.equals(0, "error:")) {
 
-            bool reconnect = false;
-            if (firstLine == "error: cmd=load kind=docunloading")
-            {
+            if (firstLine == "error: cmd=load kind=docunloading") {
                 std::cerr << ": wait and try again later ...!\n";
-                reconnect = true;
-            }
-            else if (firstLine == "error: cmd=storage kind=documentconflict")
-            {
+                reconnect();
+            } else if (firstLine == "error: cmd=storage kind=documentconflict") {
                 std::cerr << "Document conflict - need to resolve it first ...\n";
                 sendMessage("closedocument");
-                reconnect = true;
-            }
-            else
-            {
-                std::cerr << _logPre << "Error while processing " << _uri
+                reconnect();
+            } else {
+                std::cerr << "Error while processing " << _uri
                           << " and trace " << _trace << ":\n"
                           << "'" << firstLine << "'\n";
-            }
-
-            if (reconnect)
-            {
-                shutdown(true, "bye");
-                auto handler = std::make_shared<ReplaySocketHandler>(
-                    _poll, _uri, _trace);
-                _poll.insertNewWebSocketSync(Poco::URI(_uri), handler);
-                return;
-            }
-            else
                 Util::forcedExit(EX_SOFTWARE);
+            }
         }
-
-        // FIXME: implement code to send new view-ports based
-        // on cursor position etc.
     }
 
-    /// override ProtocolHandlerInterface piece
-    int sendTextMessage(const char* msg, const size_t len, bool flush = false) const override
+    void reconnect()
     {
-        return WebSocketHandler::sendTextMessage(msg, len, flush);
+        shutdown(true, "reconnecting...");
+        auto handler = std::make_shared<ReplaySocketHandler>(_poll, _uri, _trace);
+        _poll.insertNewWebSocketSync(Poco::URI(_uri), handler);
     }
 
     static void addPollFor(SocketPoll &poll,
             const std::string &server,
             const std::string &tracePath)
     {
-        std::string filePath = "test/data/hello.odt";
+        std::string filePath = "../test/data/hello-world.odt";
         std::cerr << "Connect to " << server << "\n";
 
         std::string file, wrap;
@@ -235,7 +210,6 @@ public:
 
         auto handler = std::make_shared<ReplaySocketHandler>(poll, file, tracePath);
         poll.insertNewWebSocketSync(Poco::URI(uri), handler);
-
     }
 };
 
