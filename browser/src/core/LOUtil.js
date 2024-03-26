@@ -128,19 +128,34 @@ L.LOUtil = {
 		}
 		return defaultImageURL;
 	},
-	checkIfImageExists : function(imageElement) {
-		imageElement.addEventListener('error', function() {
-			if (imageElement.src && imageElement.src.includes('images/branding/dark')) {
-				imageElement.src = imageElement.src.replace('images/branding/dark', 'images/dark');
+	checkIfImageExists: function (imageElement, imageIsLayoutCritical) {
+		imageElement.addEventListener('error', function (e) {
+			if (e.loUtilProcessed) {
 				return;
 			}
-			if (imageElement.src && (imageElement.src.includes('images/dark')|| imageElement.src.includes('images/branding'))) {
-				imageElement.src = imageElement.src.replace('images/dark', 'images');
-				imageElement.src = imageElement.src.replace('images/branding', 'images');
+
+			if (imageElement.src && imageElement.src.includes('/images/branding/dark/')) {
+				imageElement.src = imageElement.src.replace('/images/branding/dark/', '/images/dark/');
+				e.loUtilProcessed = true;
 				return;
 			}
+			if (imageElement.src && (imageElement.src.includes('/images/dark/') || imageElement.src.includes('/images/branding/'))) {
+				imageElement.src = imageElement.src.replace('/images/dark/', '/images/');
+				imageElement.src = imageElement.src.replace('/images/branding/', '/images/');
+				e.loUtilProcessed = true;
+				return;
+			}
+
+			if (imageIsLayoutCritical) {
+                imageElement.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=';
+                // We cannot set visibility: hidden because that would hide other attributes of the image, e.g. its border
+				e.loUtilProcessed = true;
+                return;
+			}
+
 			imageElement.style.display = 'none';
-			});
+			e.loUtilProcessed = true;
+		});
 	},
 	/// oldFileName = Example.odt, suffix = new
 	/// returns: Example_new.odt
