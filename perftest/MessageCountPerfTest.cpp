@@ -23,12 +23,40 @@
 
 #include <ReplaySocketHandler.hpp>
 
+struct Stats
+{
+    size_t _messageCount;
+    size_t _messageBytes;
+    Stats() :
+        _messageCount(0),
+        _messageBytes(0)
+    {
+    }
+    void addMessage(const std::vector<char> &data)
+    {
+        _messageCount++;
+        _messageBytes += data.size();
+    }
+};
+
 class MessageCountSocketHandler : public ReplaySocketHandler
 {
+    std::shared_ptr<Stats> _stats;
 public:
     MessageCountSocketHandler(SocketPoll &poll, /* bad style */
-                        const std::string &uri, const std::string &trace) :
-        ReplaySocketHandler(poll, uri, trace){}
+                        const std::string &uri,
+                        const std::string &trace,
+                        const std::shared_ptr<Stats> stats) :
+        ReplaySocketHandler(poll, uri, trace),
+    _stats(stats)
+    {
+    }
+
+    void handleMessage(const std::vector<char> &data) override
+    {
+        _stats->addMessage(data);
+        ReplaySocketHandler::handleMessage(data);
+    }
 };
 
 class MessageCountPerfTest : public Poco::Util::Application
@@ -78,8 +106,9 @@ int MessageCountPerfTest::main(const std::vector<std::string>& args)
     std::string fileUri = ReplaySocketHandler::getFileUri(filePath);
     std::string serverUri = ReplaySocketHandler::getServerUri(server, fileUri);
 
+    auto stats = std::make_shared<Stats>();
     TerminatingPoll poll("MessageCountPerfTest poll");
-    auto handler = std::make_shared<MessageCountSocketHandler>(poll, fileUri, trace);
+    auto handler = std::make_shared<MessageCountSocketHandler>(poll, fileUri, trace, stats);
 
     ReplaySocketHandler::start(handler, poll, serverUri);
 
@@ -88,6 +117,13 @@ int MessageCountPerfTest::main(const std::vector<std::string>& args)
     } while (poll.continuePolling() && poll.getSocketCount() > 0);
 
     std::cerr << "Finished" << std::endl;
+
+    // This is supposed to be json
+    std::cout << "{\n"
+              << "    name: " << trace << ",\n"
+              << "    messageCount: " << stats->_messageCount << ",\n"
+              << "    messageBytes: " << stats->_messageBytes << "\n"
+              << "}" << std::endl;
 
     return EX_OK;
 }
