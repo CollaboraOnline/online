@@ -47,8 +47,12 @@
 	font-family: var(--cool-font);
 	color: var(--color-main-text);
 }
-#toolbar-down *:hover {
-	color: var(--color-text-darker);
+#toolbar-down .menubutton {
+	line-height: normal;
+}
+#toolbar-down .unotoolbutton,
+#toolbar-down .menubutton {
+	margin: auto;
 }
 #toolbar-down:not(.mobile) {
 	background-color: var(--color-main-background);
@@ -1695,6 +1699,10 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 	position: absolute;
 	z-index: 1;
 	top: 38px;
+}
+
+#userListPopover,
+#userlist-dropdown {
 	color: var(--color-main-text);
 	background-color: var(--color-main-background);
 	border-radius: var(--border-radius);
@@ -1724,48 +1732,47 @@ html[dir='rtl'] #userListPopover::after {
 	left: 16px;
 }
 
-#userListPopover .user-list-item {
+.user-list-item {
 	display: flex;
 	max-width: 100%;
 	padding: 4px 8px;
 }
 
-#userListPopover .user-list-item:hover {
+.user-list-item:hover {
 	cursor: pointer;
 	background-color: var(--color-background-dark);
 }
 
-#userListPopover .user-list-item--name {
+.user-list-item--name {
 	display: flex;
 	flex-grow: 1;
 	padding: 8px;
 }
 
-#userListPopover .user-list-item.selected-user {
+.user-list-item.selected-user {
 	background-color: var(--color-background-dark);
 	display: grid;
 	grid-template-columns: 0fr 1fr;
 }
 
-#userListPopover #follow-editor {
+#follow-editor {
 	padding: 8px;
 }
 
-#userListPopover #follow-editor .follow-editor-checkbox {
+#follow-editor .follow-editor-checkbox {
 	margin-right: 12px;
 	margin-left: 7px;
 	border-radius: 1px;
 	height: 16px;
 	width: 16px;
 	box-shadow: none !important;
-	background-position: center;
 }
 
-#userListPopover .user-list-item:not(.selected-user) .user-list-item--following-label {
+.user-list-item:not(.selected-user) .user-list-item--following-label {
 	display: none;
 }
 
-#userListPopover .user-list-item.selected-user .user-list-item--following-label {
+.user-list-item.selected-user .user-list-item--following-label {
 	display: flex;
 	padding-inline-start: 8px;
 	font-size: var(--default-font-size);
@@ -1773,26 +1780,30 @@ html[dir='rtl'] #userListPopover::after {
 	color: var(--color-text-lighter);
 }
 
-#userListPopover .user-list-item.selected-user .user-list-item--name {
+.user-list-item.selected-user .user-list-item--name {
 	padding: 4px 0 0 8px;
 }
 /* Style for the scrollbar track */
-#userListPopover::-webkit-scrollbar {
+#userListPopover::-webkit-scrollbar,
+#userlist-dropdown::-webkit-scrollbar {
 	width: 6px;
 }
 
 /* Style for the scrollbar handle (thumb) */
-#userListPopover::-webkit-scrollbar-thumb {
+#userListPopover::-webkit-scrollbar-thumb,
+#userlist-dropdown::-webkit-scrollbar-thumb {
 	background-color: var(--color-border);
 }
 
 /* Style for the scrollbar track when handle is being dragged */
-#userListPopover::-webkit-scrollbar-thumb:hover {
+#userListPopover::-webkit-scrollbar-thumb:hover,
+#userlist-dropdown::-webkit-scrollbar-thumb:hover {
 	width: 8px;
 }
 
 /* Style for the scrollbar track (not the handle) */
-#userListPopover::-webkit-scrollbar-track {
+#userListPopover::-webkit-scrollbar-track,
+#userlist-dropdown::-webkit-scrollbar-track {
 	background: transparent;
 }
 
