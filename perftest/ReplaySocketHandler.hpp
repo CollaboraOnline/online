@@ -130,7 +130,6 @@ public:
         std::cerr << "sendTraceMessage: " << _next.toString() << std::endl;
         std::string msg = rewriteMessage(_next.getPayload());
         if (!msg.empty()) {
-            std::cerr << "Send: '" << msg << "'\n";
             sendMessage(msg);
         }
     }
@@ -150,7 +149,7 @@ public:
             out = "load url=" + _uri; // already encoded
             for (size_t i = 2; i < tokens.size(); ++i)
                 out += " " + tokens[i];
-            std::cerr << "msg " << out << "\n";
+            std::cerr << "rewriteMessage: " << out << std::endl;
         }
 
         // FIXME: translate mouse events relative to view-port etc.
@@ -171,45 +170,34 @@ public:
             std::cerr << "Send: '" << msg << "'\n";
             sendMessage(msg);
         } if (tokens.equals(0, "error:")) {
-
-            if (firstLine == "error: cmd=load kind=docunloading") {
-                std::cerr << ": wait and try again later ...!\n";
-                reconnect();
-            } else if (firstLine == "error: cmd=storage kind=documentconflict") {
-                std::cerr << "Document conflict - need to resolve it first ...\n";
-                sendMessage("closedocument");
-                reconnect();
-            } else {
-                std::cerr << "Error while processing " << _uri
-                          << " and trace " << _trace << ":\n"
-                          << "'" << firstLine << "'\n";
-                Util::forcedExit(EX_SOFTWARE);
-            }
+            std::cerr << "Error while processing " << _uri << " and trace " << _trace << ":\n"
+                << "'" << firstLine << "'\n";
+            Util::forcedExit(EX_SOFTWARE);
         }
     }
 
-    void reconnect()
+    static std::string getFileUri(const std::string &filePath)
     {
-        shutdown(true, "reconnecting...");
-        auto handler = std::make_shared<ReplaySocketHandler>(_poll, _uri, _trace);
-        _poll.insertNewWebSocketSync(Poco::URI(_uri), handler);
+        std::string fileUri;
+        std::string fileabs = Poco::Path(filePath).makeAbsolute().toString();
+        Poco::URI::encode("file://" + fileabs, ":/?", fileUri);
+        return fileUri;
     }
 
-    static void addPollFor(SocketPoll &poll,
-            const std::string &server,
-            const std::string &tracePath)
+    static std::string getServerUri(const std::string &server, const std::string &fileUri)
     {
-        std::string filePath = "../test/data/hello-world.odt";
-        std::cerr << "Connect to " << server << "\n";
+        std::string wrap;
+        Poco::URI::encode(fileUri, ":/?", wrap); // double encode.
+        std::string serverUri = server + "/cool/" + wrap + "/ws";
+        return serverUri;
+    }
 
-        std::string file, wrap;
-        std::string fileabs = Poco::Path(filePath).makeAbsolute().toString();
-        Poco::URI::encode("file://" + fileabs, ":/?", file);
-        Poco::URI::encode(file, ":/?", wrap); // double encode.
-        std::string uri = server + "/cool/" + wrap + "/ws";
-
-        auto handler = std::make_shared<ReplaySocketHandler>(poll, file, tracePath);
-        poll.insertNewWebSocketSync(Poco::URI(uri), handler);
+    static void start(const std::shared_ptr<ReplaySocketHandler> &handler,
+            SocketPoll &poll,
+            std::string &serverUri)
+    {
+        std::cerr << "Connecting to " << serverUri << std::endl;
+        poll.insertNewWebSocketSync(Poco::URI(serverUri), handler);
     }
 };
 
