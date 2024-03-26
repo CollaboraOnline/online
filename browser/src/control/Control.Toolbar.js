@@ -1193,11 +1193,6 @@ function editorUpdate(e) { // eslint-disable-line no-unused-vars
 			map._goToViewId(editorId);
 			docLayer._followThis = editorId;
 		}
-
-		var userlistItem = w2ui['actionbar'].get('userlist');
-		if (userlistItem !== null) {
-			$('.selected-user').removeClass('selected-user');
-		}
 	}
 	else {
 		docLayer._followEditor = false;

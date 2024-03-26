@@ -14,6 +14,7 @@
  */
 
 declare var JSDialog: any;
+declare var L: any;
 
 interface HtmlContentJson {
 	id: string;
@@ -46,13 +47,19 @@ var getHtmlFromId = function (
 		return (window as any).getShapesPopupHtml(closeCallback);
 	else if (id === 'insertconnectorspopup')
 		return (window as any).getConnectorsPopupHtml(closeCallback);
+	else if (id === 'userslistpopup') return L.control.createUserListWidget();
 };
 
 function htmlContent(
 	parentContainer: Element,
-	data: HtmlContentJson /*builder*/,
+	data: HtmlContentJson,
+	builder: any,
 ) {
 	parentContainer.innerHTML = getHtmlFromId(data.htmlId, data.closeCallback);
+
+	// TODO: remove this and create real widget for userslistpopup
+	if (data.htmlId === 'userslistpopup')
+		setTimeout(() => builder.map.userList.renderAll(), 0);
 }
 
 JSDialog.htmlContent = htmlContent;
