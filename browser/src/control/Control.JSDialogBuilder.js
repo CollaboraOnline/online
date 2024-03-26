@@ -193,6 +193,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		var inputs = this._container.querySelectorAll('input[type="number"]');
 		for (var item = 0; item < inputs.length; item++) {
+			if (!inputs[item].checkVisibility())
+				continue;
+
 			isValid = inputs[item].reportValidity();
 			if (!isValid)
 				break;
