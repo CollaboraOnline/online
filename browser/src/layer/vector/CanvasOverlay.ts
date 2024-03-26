@@ -329,46 +329,35 @@ class CanvasOverlay extends CanvasSectionObject {
 
 			var splitPos = this.tsManager.getSplitPos();
 			var scale = this.tsManager._zoomFrameScale;
-			var pinchCenter = this.tsManager._newCenter;
 
-			var center = paneBounds.min.clone();
-			if (pinchCenter.x >= paneBounds.min.x && pinchCenter.x <= paneBounds.max.x)
-				center.x = pinchCenter.x;
-			if (pinchCenter.y >= paneBounds.min.y && pinchCenter.y <= paneBounds.max.y)
-				center.y = pinchCenter.y;
+			const docPos = this.tsManager._getZoomDocPos(
+				this.tsManager._newCenter,
+				this.tsManager._layer._pinchStartCenter,
+				paneBounds,
+				splitPos,
+				scale,
+				false /* findFreePaneCenter? */
+			);
 
-			var leftMin = paneBounds.min.x < 0 ? -Infinity : 0;
-			var topMin = paneBounds.min.y < 0 ? -Infinity : 0;
-			// Compute the new top left in core pixels that ties with the origin of overlay canvas section.
-			var newTopLeft = new cool.Point(
-				Math.max(leftMin,
-					-splitPos.x - 1 + (center.x - (center.x - paneBounds.min.x) / scale)),
-				Math.max(topMin,
-					-splitPos.y - 1 + (center.y - (center.y - paneBounds.min.y) / scale)));
-
-			// Compute clip area which needs to be applied after setting the transformation.
-			var clipTopLeft = new cool.Point(0, 0);
 			// Original pane size.
 			var paneSize = paneBounds.getSize();
 			var clipSize = paneSize.clone();
 			if (paneBounds.min.x || (!paneBounds.min.x && !splitPos.x)) {
-				clipTopLeft.x = newTopLeft.x + splitPos.x;
 				// Pane's "free" size will shrink(expand) as we zoom in(out)
 				// respectively because fixed pane size expand(shrink).
 				clipSize.x = (paneSize.x - splitPos.x * (scale - 1)) / scale;
 			}
 			if (paneBounds.min.y || (!paneBounds.min.y && !splitPos.y)) {
-				clipTopLeft.y = newTopLeft.y + splitPos.y;
 				// See comment regarding pane width above.
 				clipSize.y = (paneSize.y - splitPos.y * (scale - 1)) / scale;
 			}
 			// Force clip area to the zoom frame area of the pane specified.
 			clipArea = new cool.Bounds(
-				clipTopLeft,
-				clipTopLeft.add(clipSize));
+				docPos.topLeft,
+				docPos.topLeft.add(clipSize));
 
 			transform.scale(scale, scale);
-			transform.translate(scale * newTopLeft.x, scale * newTopLeft.y);
+			transform.translate(scale * (docPos.topLeft.x - splitPos.x), scale * (docPos.topLeft.y - splitPos.y));
 
 		} else if (this.tsManager._inZoomAnim && fixed) {
 
