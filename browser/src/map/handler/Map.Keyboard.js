@@ -328,7 +328,7 @@ L.Map.Keyboard = L.Handler.extend({
 	},
 
 	_setPanOffset: function (pan) {
-		var keys = this._panKeys = {},
+		var keys = {},
 		    codes = this.navigationKeyCodes,
 		    i, len;
 
@@ -594,18 +594,8 @@ L.Map.Keyboard = L.Handler.extend({
 		else if (ev.type === 'keydown') {
 			var key = ev.keyCode;
 			var map = this._map;
-			if (key in this._panKeys && !ev.shiftKey) {
-				if (map._panAnim && map._panAnim._inProgress) {
-					return;
-				}
-				map.fire('scrollby', {x: this._panKeys[key][0], y: this._panKeys[key][1]});
-			}
-			else if (key in this._panKeys && ev.shiftKey &&
-					!docLayer._textCSelections.empty()) {
-				// if there is a selection and the user wants to modify it
-				if (keyEventFn) {
-					keyEventFn('input', charCode, unoKeyCode);
-				}
+			if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End'].includes(ev.code)) {
+				keyEventFn('input', charCode, unoKeyCode);
 			}
 			else if (key in this._zoomKeys) {
 				map.setZoom(map.getZoom() + (ev.shiftKey ? 3 : 1) * this._zoomKeys[key], null, true /* animate? */);
