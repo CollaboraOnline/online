@@ -120,11 +120,11 @@ L.Draggable = L.Evented.extend({
 		    newPoint = new L.Point(first.clientX, first.clientY),
 		    offset = newPoint.subtract(this._startPoint);
 
-		if (this._map._docLayer.isCalcRTL()) {
-			offset.x = -offset.x;
-		}
-
 		if (this._map) {
+			if (this._map._docLayer.isCalcRTL()) {
+				offset.x = -offset.x;
+			}
+
 			// needed in order to avoid a jump when the document is dragged and the mouse pointer move
 			// from over the map into the html document element area which is not covered by tiles
 			// (resize-detector iframe)
