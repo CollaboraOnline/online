@@ -26,7 +26,8 @@
 extern std::pair<std::shared_ptr<DocumentBroker>, std::string>
 findOrCreateDocBroker(DocumentBroker::ChildType type, const std::string& uri,
                       const std::string& docKey, const std::string& id, const Poco::URI& uriPublic,
-                      unsigned mobileAppDocId = 0);
+                      unsigned mobileAppDocId,
+                      std::unique_ptr<WopiStorage::WOPIFileInfo> wopiFileInfo);
 
 namespace
 {
@@ -273,9 +274,9 @@ void RequestVettingStation::checkFileInfo(const Poco::URI& uri, bool isReadOnly,
             {
                 LOG_DBG("WOPI::CheckFileInfo succeeded but we don't have the client's "
                         "WebSocket yet. Creating DocBroker without connection");
-                auto [docBroker, errorMsg] =
-                    findOrCreateDocBroker(DocumentBroker::ChildType::Interactive, url, docKey, _id,
-                                          uriPublic, _mobileAppDocId);
+                auto [docBroker, errorMsg] = findOrCreateDocBroker(
+                    DocumentBroker::ChildType::Interactive, url, docKey, _id, uriPublic,
+                    _mobileAppDocId, _checkFileInfo->wopiFileInfo(uriPublic));
                 _docBroker = docBroker;
                 if (!_docBroker)
                 {
@@ -308,8 +309,9 @@ bool RequestVettingStation::createDocBroker(const std::string& docKey, const std
                                             const Poco::URI& uriPublic)
 {
     // Request a kit process for this doc.
-    const auto [docBroker, error] = findOrCreateDocBroker(
-        DocumentBroker::ChildType::Interactive, url, docKey, _id, uriPublic, _mobileAppDocId);
+    const auto [docBroker, error] =
+        findOrCreateDocBroker(DocumentBroker::ChildType::Interactive, url, docKey, _id, uriPublic,
+                              _mobileAppDocId, /*wopiFileInfo=*/nullptr);
 
     _docBroker = docBroker;
     if (_docBroker)
