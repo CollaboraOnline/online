@@ -129,8 +129,10 @@ export class ScrollSection extends CanvasSectionObject {
 			return;
 		}
 		// Triggered by the document (e.g. search result out of the viewing area).
-		this.map.scrollTop(e.y, {});
-		this.map.scrollLeft(e.x, {});
+		if (this.map.scrollTop && this.map.scrollLeft) {
+			this.map.scrollTop(e.y, {});
+			this.map.scrollLeft(e.x, {});
+		}
 	}
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
