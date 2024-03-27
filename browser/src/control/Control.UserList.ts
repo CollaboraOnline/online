@@ -163,17 +163,7 @@ class UserList extends L.Control {
 			img = L.DomUtil.create('img', 'avatar-img') as HTMLImageElement;
 		}
 
-		const defaultImage = L.LOUtil.getImageURL(
-			'user.svg',
-			this.map._docLayer._docType,
-		);
-
-		if (extraInfo !== undefined && extraInfo.avatar !== undefined) {
-			img.src = extraInfo.avatar;
-			img.addEventListener('error', () => (img.src = defaultImage));
-		} else {
-			img.src = defaultImage;
-		}
+		L.LOUtil.setUserImage(img, this.map);
 
 		img.alt = this.options.userAvatarAlt.replace('%user', username);
 
@@ -182,8 +172,6 @@ class UserList extends L.Control {
 		img.style.backgroundColor = 'var(--color-background-lighter)';
 
 		img.setAttribute('data-view-id', viewId.toString());
-
-		L.LOUtil.checkIfImageExists(img, true);
 
 		return img;
 	}
