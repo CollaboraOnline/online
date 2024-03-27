@@ -1913,8 +1913,8 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				'accessibility': { focusBack: true,	combination: 'FC', de: null }
 			},
 			{
-				'id': 'format-conditional-format-menu',
-				'type': 'bigtoolitem',
+				'id': 'format-conditional-format-menu:ConditionalFormatMenu',
+				'type': 'menubutton',
 				'text': _UNO('.uno:ConditionalFormatMenu', 'spreadsheet'),
 				'command': '.uno:ConditionalFormatMenu',
 				'accessibility': { focusBack: true,	combination: 'CF', de: null }
