@@ -10,7 +10,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Scroll through document', 
 		helper.beforeAll(testFileName, 'calc');
 		desktopHelper.switchUIToCompact();
 		cy.cGet('#toolbar-up .w2ui-scroll-right').click();
-		cy.cGet('#tb_editbar_item_sidebar').click();
+		cy.cGet('#sidebar').click();
 	});
 
 	afterEach(function() {
