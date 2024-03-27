@@ -1345,7 +1345,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		var radiobuttonLabel = L.DomUtil.createWithId('label', data.id + '-label', container);
 		radiobuttonLabel.textContent = builder._cleanText(data.text);
-		radiobuttonLabel.htmlFor = data.id;
+		radiobuttonLabel.htmlFor = data.id + '-input';
 
 		radiobutton.setAttribute('aria-labelledby', radiobuttonLabel.id);
 
@@ -1385,7 +1385,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var checkboxLabel = L.DomUtil.create('label', builder.options.cssClass, div);
 		checkboxLabel.id = data.id + '-label';
 		checkboxLabel.textContent = builder._cleanText(data.text);
-		checkboxLabel.htmlFor = data.id;
+		checkboxLabel.htmlFor = data.id + '-input';
 
 		checkbox.setAttribute('aria-labelledby', checkboxLabel.id);
 
@@ -1801,7 +1801,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var fixedtext = L.DomUtil.create('label', builder.options.cssClass, parentContainer);
 
 		if (data.labelFor)
-			fixedtext.htmlFor = data.labelFor;
+			fixedtext.htmlFor = data.labelFor + '-input';
 
 		if (data.text)
 			fixedtext.textContent = builder._cleanText(data.text);
