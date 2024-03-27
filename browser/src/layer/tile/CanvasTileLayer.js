@@ -647,7 +647,7 @@ L.TileSectionManager = L.Class.extend({
 	 *
 	 * @param findFreePaneCenter {boolean} Wether to return a center point
 	 *
-	 * @returns {{topLeft: {x: number, y: number}, center?: {x: number, y: number}}} An object with a top left point in core-pixels and optionally a center point in core-pixels
+	 * @returns {{topLeft: {x: number, y: number}, center?: {x: number, y: number}}} An object with a top left point in core-pixels and optionally a center point
 	 * Center is included iff findFreePaneCenter is true
 	 * (probably this should be encoded into the type, e.g. with an overload when this is converted to TypeScript)
 	 **/
@@ -699,12 +699,12 @@ L.TileSectionManager = L.Class.extend({
 		}
 
 		const newPaneCenter = new L.Point(
-			(docTopLeft.x - splitPos.x + (paneSize.x + splitPos.x) / (2 * scale)) * scale / app.dpiScale,
-			(docTopLeft.y - splitPos.y + (paneSize.y + splitPos.y) / (2 * scale)) * scale / app.dpiScale);
+			(docTopLeft.x - splitPos.x + (paneSize.x + splitPos.x) * 0.5 / scale) / app.dpiScale,
+			(docTopLeft.y - splitPos.y + (paneSize.y + splitPos.y) * 0.5 / scale) / app.dpiScale);
 
 		return {
 			topLeft: docTopLeft,
-			center: newPaneCenter
+			center: this._map.project(this._map.unproject(newPaneCenter, this._map.getZoom()), this._map.getScaleZoom(scale))
 		};
 	},
 
