@@ -2833,9 +2833,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 	// executes actions like changing the selection without rebuilding the widget
 	executeAction: function(container, data) {
-		var control = container.querySelector('[id=\'' + data.control_id + '\']');
+		var control = container.querySelector('[id=\'' + this._removeMenuId(data.control_id) + '\']');
 		if (!control && data.control)
-			control = container.querySelector('[id=\'' + data.control.id + '\']');
+			control = container.querySelector('[id=\'' + this._removeMenuId(data.control.id) + '\']');
 		if (!control) {
 			window.app.console.warn('executeAction: not found control with id: "' + data.control_id + '"');
 			return;
@@ -2955,11 +2955,16 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 	},
 
-	_updateWidgetImpl: function (container, data, buildFunc) {
-		var elementId = data.id;
+	_removeMenuId: function (rawId) {
+		var elementId = rawId;
 		var separatorPos = elementId.indexOf(':'); // delete menuId
 		if (separatorPos > 0)
 			elementId = elementId.substr(0, separatorPos);
+		return elementId;
+	},
+
+	_updateWidgetImpl: function (container, data, buildFunc) {
+		var elementId = this._removeMenuId(data.id);
 		var control = container.querySelector('[id=\'' + elementId + '\']');
 		if (!control) {
 			window.app.console.warn('jsdialogupdate: not found control with id: "' + elementId + '"');
