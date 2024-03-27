@@ -33,38 +33,43 @@
 	to { left: 100%; }
 }
 
-/* status bar / mobile bottom bar */
+/* general toolbar rules */
 
-#toolbar-down {
+.ui-toolbar {
 	position: sticky;
 	padding: 0;
-	z-index: 11;
-	border-top: 1px solid var(--color-border);
 }
-#toolbar-down > div > div {
+.ui-toolbar > div > div {
 	display: flex;
 	padding: 0px 5px;
 }
-#toolbar-down .menubutton {
+.ui-toolbar > div > div > .menubutton {
 	line-height: normal;
 }
-#toolbar-down .unotoolbutton,
-#toolbar-down .menubutton,
-#toolbar-down .ui-pushbutton,
-#toolbar-down .cool-font {
+.ui-toolbar > div > div > .unotoolbutton,
+.ui-toolbar > div > div > .menubutton,
+.ui-toolbar > div > div > .ui-pushbutton,
+.ui-toolbar > div > div .cool-font {
 	margin: auto 2px;
 	padding: 3px;
 	text-wrap: nowrap;
 	height: inherit;
 }
-#toolbar-down .unotoolbutton button {
+.ui-toolbar > div > div > .unotoolbutton button {
 	width: inherit;
 	display: flex;
 }
-#toolbar-down .unotoolbutton .w2ui-icon {
+.ui-toolbar > div > div > .unotoolbutton .w2ui-icon {
 	width: var(--btn-size);
 	height: var(--btn-size);
 	margin: 0px;
+}
+
+/* status bar / mobile bottom bar */
+
+#toolbar-down {
+	z-index: 11;
+	border-top: 1px solid var(--color-border);
 }
 #toolbar-down:not(.mobile) {
 	background-color: var(--color-main-background);
