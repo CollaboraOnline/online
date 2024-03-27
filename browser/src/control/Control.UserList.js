@@ -104,16 +104,13 @@ L.Control.UserList = L.Control.extend({
 		var img;
 		if (extraInfo !== undefined && extraInfo.avatar !== undefined) {
 			img = L.DomUtil.create('img', 'avatar-img');
-			img.src = extraInfo.avatar;
-			var altImg = L.LOUtil.getImageURL('user.svg', this.map._docLayer._docType);
-			img.setAttribute('onerror', 'this.onerror=null;this.src=\'' + altImg + '\';');
+			L.LOUtil.setUserImage(img, this.map);
 			$(img).css({'border-color': color});
 		} else {
 			img = L.DomUtil.create('div', 'user-info');
 			$(img).css({'border-color': color, 'background-color': '#eee', 'background-image': 'url("' + L.LOUtil.getImageURL('user.svg', this.map._docLayer._docType) + '")'});
 		}
 		img.setAttribute('data-view-id', viewId);
-		L.LOUtil.checkIfImageExists(img, true);
 		return img;
 	},
 
