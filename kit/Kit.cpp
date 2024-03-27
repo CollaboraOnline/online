@@ -1434,6 +1434,8 @@ bool Document::forkToSave(const std::function<void()> &childSave, int viewId)
         KitSocketPoll::getMainPoll()->insertNewSocket(parentSocket);
         parentWs.reset();
 
+        getLOKit()->setForkedChild(true);
+
         const auto now = std::chrono::steady_clock::now();
         LOG_TRC("Background save process " << getpid() << " fork took " <<
                 std::chrono::duration_cast<std::chrono::milliseconds>(now - start).count() << "ms");
@@ -1458,6 +1460,8 @@ bool Document::forkToSave(const std::function<void()> &childSave, int viewId)
         childSocket->setHandler(bgSaveChild);
         childSocket->setWebSocket(); // avoid http upgrade.
         KitSocketPoll::getMainPoll()->insertNewSocket(childSocket);
+
+        getLOKit()->setForkedChild(false);
 
         startThreads();
     }
