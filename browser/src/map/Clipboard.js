@@ -779,6 +779,29 @@ L.Clipboard = L.Class.extend({
 		this.paste(ev);
 	},
 
+	// Parses the result from the clipboard endpoint into HTML and plain text.
+	parseClipboard: function(text) {
+		let textHtml;
+		let textPlain = '';
+		if (text.startsWith('{')) {
+			let textJson = JSON.parse(text);
+			textHtml = textJson['text/html'];
+			textPlain = textJson['text/plain;charset=utf-8'];
+		} else {
+			var idx = text.indexOf('<!DOCTYPE HTML');
+			if (idx === -1) {
+				idx = text.indexOf('<!DOCTYPE html');
+			}
+			if (idx > 0)
+				text = text.substring(idx, text.length);
+			textHtml = text;
+		}
+		return {
+			'html': textHtml,
+			'plain': textPlain
+		};
+	},
+
 	// Executes the navigator.clipboard.read() call, if it's available.
 	_navigatorClipboardRead: function(isSpecial) {
 		if (navigator.clipboard.read === undefined) {
