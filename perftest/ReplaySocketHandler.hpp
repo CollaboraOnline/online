@@ -17,9 +17,11 @@
 #include <cstring>
 #include <unordered_map>
 #include <sysexits.h>
+#include <string>
 
 #include <net/Socket.hpp>
 #include <WebSocketHandler.hpp>
+#include <common/StringVector.hpp>
 
 #include <TraceFile.hpp>
 #include <wsd/TileDesc.hpp>
@@ -33,6 +35,10 @@ class ReplaySocketHandler : public WebSocketHandler
     bool _connecting;
     std::string _uri;
     std::string _trace;
+    bool _waiting;
+    std::chrono::steady_clock::time_point _waitingStart;
+    int64_t _waitingTimeout;
+    std::string _waitingMessage;
 public:
     ReplaySocketHandler(SocketPoll &poll, /* bad style */
                         const std::string &uri, const std::string &trace) :
@@ -41,7 +47,8 @@ public:
         _reader(trace),
         _connecting(true),
         _uri(uri),
-        _trace(trace)
+        _trace(trace),
+        _waiting(false)
     {
 
         std::cerr << "Attempt connect to " << uri << " for trace " << _trace << "\n";
@@ -68,9 +75,20 @@ public:
                                   " timeToNextMessage: " << timeToNextMessage << std::endl;
 
         if (timeToNextMessage < 0) {
-            processTraceMessage();
-            getNextRecord();
-            timeoutMaxMicroS = 0;
+            if (_waiting) {
+                int64_t currentWaitTime = std::chrono::duration_cast<std::chrono::microseconds>(now - _waitingStart).count();
+                if (currentWaitTime > _waitingTimeout) {
+                    std::cerr << "Timed out waiting for message " << _waitingMessage << " after " << _waitingTimeout << "us" << std::endl;
+                    shutdown();
+                } else {
+                    std::cerr << "    getPollEvents waiting for message " << _waitingMessage << std::endl;
+                    timeoutMaxMicroS = 100000;
+                }
+            } else {
+                processTraceMessage();
+                getNextRecord();
+                timeoutMaxMicroS = 0;
+            }
         } else {
             timeoutMaxMicroS = timeToNextMessage;
         }
@@ -81,9 +99,8 @@ public:
     void getNextRecord()
     {
         _next = _reader.getNextRecord();
-        std::cerr << "Got next record: " << _next.toString() << std::endl;
+        // std::cerr << "Got next record: " << _next.toString() << std::endl; // Confusing to have next record show in logs well before it is actually used
         if (_next.getDir() == TraceFileRecord::Direction::Invalid){
-            std::cerr << "Shutdown\n";
             shutdown();
         }
     }
@@ -108,7 +125,6 @@ public:
         std::cerr << "processTraceMessage: " << _next.toString() << std::endl;
         switch(_next.getDir()) {
             case TraceFileRecord::Direction::Invalid:
-                std::cerr << "Shutdown" << std::endl;
                 shutdown();
                 break;
             case TraceFileRecord::Direction::Incoming:
@@ -116,10 +132,24 @@ public:
                 sendTraceMessage();
                 break;
             case TraceFileRecord::Direction::Outgoing:
-                // Do nothing
+                // These don't appear in our trace files
                 break;
             case TraceFileRecord::Direction::Event:
-                // Do nothing
+                std::string payload = _next.getPayload();
+                StringVector tokens = StringVector::tokenize(payload);
+                if (tokens.equals(0, "wait")) {
+                    _waitingStart = std::chrono::steady_clock::now();
+                    _waitingTimeout = std::stoi(tokens[1]);
+                    _waitingMessage = tokens.cat(" ",2);
+                    _waiting = true;
+                    std::cerr << "processTraceMessage waiting for message: " << _waitingMessage << " (Timeout " << _waitingTimeout << "us)" << std::endl;
+                } else if (tokens.equals(0, "start")) {
+                    std::cerr << "start measurement" << std::endl;
+                    startMeasurement();
+                } else if (tokens.equals(0, "stop")) {
+                    std::cerr << "stop measurement" << std::endl;
+                    stopMeasurement();
+                }
                 break;
         }
     }
@@ -152,7 +182,6 @@ public:
             std::cerr << "rewriteMessage: " << out << std::endl;
         }
 
-        // FIXME: translate mouse events relative to view-port etc.
         return out;
     }
 
@@ -174,6 +203,28 @@ public:
                 << "'" << firstLine << "'\n";
             Util::forcedExit(EX_SOFTWARE);
         }
+
+        if (_waiting) {
+            if (tokens.cat(" ",0).starts_with(_waitingMessage)) {
+                std::cerr << "Done waiting for message" << std::endl;
+                _waiting = false;
+            }
+        }
+
+    }
+
+    virtual void startMeasurement()
+    {
+    }
+
+    virtual void stopMeasurement()
+    {
+    }
+
+    void shutdown()
+    {
+        std::cerr << "Shutdown" << std::endl;
+        WebSocketHandler::shutdown();
     }
 
     static std::string getFileUri(const std::string &filePath)

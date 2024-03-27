@@ -27,11 +27,13 @@ struct Stats
 {
     size_t _messageCount;
     size_t _messageBytes;
+
     Stats() :
         _messageCount(0),
         _messageBytes(0)
     {
     }
+
     void addMessage(const std::vector<char> &data)
     {
         _messageCount++;
@@ -41,6 +43,7 @@ struct Stats
 
 class MessageCountSocketHandler : public ReplaySocketHandler
 {
+    bool _measuring;
     std::shared_ptr<Stats> _stats;
 public:
     MessageCountSocketHandler(SocketPoll &poll, /* bad style */
@@ -48,14 +51,27 @@ public:
                         const std::string &trace,
                         const std::shared_ptr<Stats> stats) :
         ReplaySocketHandler(poll, uri, trace),
-    _stats(stats)
+        _measuring(false),
+        _stats(stats)
     {
     }
 
     void handleMessage(const std::vector<char> &data) override
     {
-        _stats->addMessage(data);
+        if (_measuring) {
+            _stats->addMessage(data);
+        }
         ReplaySocketHandler::handleMessage(data);
+    }
+
+    void startMeasurement() override
+    {
+        _measuring = true;
+    }
+
+    void stopMeasurement() override
+    {
+        _measuring = false;
     }
 };
 
