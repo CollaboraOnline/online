@@ -49,9 +49,6 @@ In order for Collaborative Editing and copy/paste to function correctly on kuber
             - path: /
             pathType: ImplementationSpecific
 
-   image:
-      tag: "latest"
-
    autoscaling:
       enabled: false
 
@@ -59,6 +56,7 @@ In order for Collaborative Editing and copy/paste to function correctly on kuber
       aliasgroups:
          - host: "https://example.integrator.com:443"
       extra_params: --o:ssl.enable=false --o:ssl.termination=true
+      # for production enviroment we recommend appending `extra_params` with `--o:num_prespawn_children=4`. It defines number of child processes to keep started in advance and waiting for new clients
 
    resources:
       limits:
@@ -67,6 +65,15 @@ In order for Collaborative Editing and copy/paste to function correctly on kuber
       requests:
          cpu: "1800m"
          memory: "2000Mi"
+
+   # for production enviroment we recommended following values
+   # resources:
+      # limits:
+         # cpu: "8000m"
+         # memory: "8000Mi"
+      # requests:
+         # cpu: "4000m"
+         # memory: "6000Mi"
    ```
 
    B. Nginx:
@@ -88,9 +95,6 @@ In order for Collaborative Editing and copy/paste to function correctly on kuber
             - path: /
             pathType: ImplementationSpecific
 
-   image:
-      tag: "latest"
-
    autoscaling:
       enabled: false
 
@@ -98,6 +102,7 @@ In order for Collaborative Editing and copy/paste to function correctly on kuber
       aliasgroups:
          - host: "https://example.integrator.com:443"
       extra_params: --o:ssl.enable=false --o:ssl.termination=true
+      # for production enviroment we recommend appending `extra_params` with `--o:num_prespawn_children=4`. It defines number of child processes to keep started in advance and waiting for new clients
 
    resources:
       limits:
@@ -106,6 +111,15 @@ In order for Collaborative Editing and copy/paste to function correctly on kuber
       requests:
          cpu: "1800m"
          memory: "2000Mi"
+
+   # for production enviroment we recommended following values
+   # resources:
+      # limits:
+         # cpu: "8000m"
+         # memory: "8000Mi"
+      # requests:
+         # cpu: "4000m"
+         # memory: "6000Mi"
    ```
 
    ---
@@ -129,6 +143,18 @@ In order for Collaborative Editing and copy/paste to function correctly on kuber
       ``` yaml
       collabora:
          server_name: <hostname>:<port>
+      ```
+
+   - For production enviroment we recommended following resource values. We recommend appending `extra_params` with `--o:num_prespawn_children=4`. It defines number of child processes to keep started in advance and waiting for new clients
+
+      ``` yaml
+      resources:
+         limits:
+            cpu: "8000m"
+            memory: "8000Mi"
+         requests:
+            cpu: "4000m"
+            memory: "6000Mi"
       ```
 
    - In **Openshift** , it is recommended to use HAproxy deployment instead of default router. And add `className` in ingress block
@@ -164,11 +190,11 @@ In order for Collaborative Editing and copy/paste to function correctly on kuber
    Example output:
 
    ```
-   |----------------|---------|--------------|------------|------------------------------------------|
-   |NAME            |TYPE     |CLUSTER-IP    |EXTERNAL-IP |PORT(S)                                   |
-   |----------------|---------|--------------|------------|------------------------------------------|
-   |haproxy-ingress |NodePort |10.108.214.98 |<none>      |80:30536/TCP,443:31821/TCP,1024:30480/TCP |
-   |----------------|---------|--------------|------------|------------------------------------------|
+   |------------------|-----------|----------------|--------------|--------------------------------------------|
+   | NAME             | TYPE      | CLUSTER-IP     | EXTERNAL-IP  | PORT(S)                                    |
+   | ---------------- | --------- | -------------- | ------------ | ------------------------------------------ |
+   | haproxy-ingress  | NodePort  | 10.108.214.98  | <none>       | 80:30536/TCP,443:31821/TCP,1024:30480/TCP  |
+   | ---------------- | --------- | -------------- | ------------ | ------------------------------------------ |
    ```
    In this instance, the following ports were mapped:
       - Container port 80 to NodePort 30536
@@ -277,8 +303,8 @@ In order for Collaborative Editing and copy/paste to function correctly on kuber
          globalOutputRefs:
            - "default"
    ```
-   
-   * `dedot`: usefull if the Logging has an [global filter](https://kube-logging.dev/4.0/docs/configuration/crds/v1beta1/logging_types/#loggingspec-globalfilters) for dedot an correction for selector is possible. 
+
+   * `dedot`: usefull if the Logging has an [global filter](https://kube-logging.dev/4.0/docs/configuration/crds/v1beta1/logging_types/#loggingspec-globalfilters) for dedot an correction for selector is possible.
    * `ecs`: Therefore the fields are remapped to filter to the [ElasticCommonSchema](https://www.elastic.co/guide/en/ecs/current/index.html).
    * `additionalFilters`: Add more filter of the logging-operator
 
