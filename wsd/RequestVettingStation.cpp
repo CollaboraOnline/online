@@ -356,11 +356,13 @@ void RequestVettingStation::createClientSession(const std::string& docKey, const
     LOG_DBG("ClientSession [" << clientSession->getName() << "] for [" << docKey
                               << "] acquired for [" << url << ']');
 
-    Poco::JSON::Object::Ptr wopiInfo;
+    std::shared_ptr<std::unique_ptr<WopiStorage::WOPIFileInfo>> wopiFileInfo;
 #if !MOBILEAPP
     assert((!_checkFileInfo || _checkFileInfo->wopiInfo()) &&
            "Must have WopiInfo when CheckFileInfo exists");
-    wopiInfo = _checkFileInfo ? _checkFileInfo->wopiInfo() : nullptr;
+    // unique_ptr is not copyable, so cannot be captured in a std::function-wrapped lambda.
+    wopiFileInfo = std::make_shared<std::unique_ptr<WopiStorage::WOPIFileInfo>>(
+        _checkFileInfo ? _checkFileInfo->wopiFileInfo(uriPublic) : nullptr);
 #endif // !MOBILEAPP
 
     // Transfer the client socket to the DocumentBroker when we get back to the poll:
@@ -368,7 +370,7 @@ void RequestVettingStation::createClientSession(const std::string& docKey, const
     const auto docBroker = _docBroker;
     _docBroker->setupTransfer(
         _socket,
-        [clientSession, uriPublic, wopiInfo=std::move(wopiInfo), ws,
+        [clientSession, uriPublic, wopiFileInfo = std::move(wopiFileInfo), ws,
          docBroker](const std::shared_ptr<Socket>& moveSocket) mutable
         {
             try
@@ -382,31 +384,9 @@ void RequestVettingStation::createClientSession(const std::string& docKey, const
 
                 LOG_DBG_S('#' << moveSocket->getFD() << " handler is " << clientSession->getName());
 
-                std::unique_ptr<WopiStorage::WOPIFileInfo> wopiFileInfo;
-#if !MOBILEAPP
-                if (wopiInfo)
-                {
-                    std::size_t size = 0;
-                    std::string filename, ownerId, modifiedTime;
-
-                    JsonUtil::findJSONValue(wopiInfo, "Size", size);
-                    JsonUtil::findJSONValue(wopiInfo, "OwnerId", ownerId);
-                    JsonUtil::findJSONValue(wopiInfo, "BaseFileName", filename);
-                    JsonUtil::findJSONValue(wopiInfo, "LastModifiedTime", modifiedTime);
-
-                    StorageBase::FileInfo fileInfo =
-                        StorageBase::FileInfo({ size, filename, ownerId, modifiedTime });
-
-                    wopiFileInfo =
-                        std::make_unique<WopiStorage::WOPIFileInfo>(fileInfo, wopiInfo, uriPublic);
-                }
-#else // MOBILEAPP
-                assert(!wopiInfo && "Wopi is not used on mobile");
-#endif // MOBILEAPP
-
                 // Add and load the session.
                 // Will download synchronously, but in own docBroker thread.
-                docBroker->addSession(clientSession, std::move(wopiFileInfo));
+                docBroker->addSession(clientSession, std::move(*wopiFileInfo));
 
                 COOLWSD::checkDiskSpaceAndWarnClients(true);
                 // Users of development versions get just an info
