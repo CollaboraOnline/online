@@ -817,6 +817,18 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 				{text: _('Less than...'), uno: '.uno:ConditionalFormatEasy?FormatRule:short=1'},
 				{text: _('Equal to...'), uno: '.uno:ConditionalFormatEasy?FormatRule:short=0'},
 				{text: _('Between...'), uno: '.uno:ConditionalFormatEasy?FormatRule:short=6'},
+				{text: _('Duplicate...'), uno: '.uno:ConditionalFormatEasy?FormatRule:short=8'},
+				{text: _('Contains text...'), uno: '.uno:ConditionalFormatEasy?FormatRule:short=23'},
+				{type: 'separator'},
+				{text: _('More conditions...'), uno: '.uno:ConditionalFormatDialog'}
+			]},
+			{text: _('Top/Bottom Rules...'), items: [
+				{text: _('Top N elements...'), uno: '.uno:ConditionalFormatEasy?FormatRule:short=11'},
+				{text: _('Top N percent...'), uno: '.uno:ConditionalFormatEasy?FormatRule:short=13'},
+				{text: _('Bottom N elements...'), uno: '.uno:ConditionalFormatEasy?FormatRule:short=12'},
+				{text: _('Bottom N percent...'), uno: '.uno:ConditionalFormatEasy?FormatRule:short=14'},
+				{text: _('Above Average...'), uno: '.uno:ConditionalFormatEasy?FormatRule:short=15'},
+				{text: _('Bellow Average...'), uno: '.uno:ConditionalFormatEasy?FormatRule:short=16'},
 				{type: 'separator'},
 				{text: _('More conditions...'), uno: '.uno:ConditionalFormatDialog'}
 			]},
