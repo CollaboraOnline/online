@@ -46,12 +46,8 @@ function _menubuttonControl (parentContainer, data, builder) {
 	if (data.menu) {
 		menuId = data.id + '-menu';
 		var builtMenu = [];
-		for (var i in data.menu) {
-			builtMenu.push({
-				id: data.menu[i].id,
-				text: data.menu[i].text
-			});
-		}
+		for (var i in data.menu)
+			builtMenu.push(data.menu[i]);
 		builder._menus.set(menuId, builtMenu);
 	}
 
