@@ -147,16 +147,27 @@ L.Map.SlideShow = L.Handler.extend({
 	_startPlaying: function() {
 		// Windowed Presentation
 		if (this._presentInWindow) {
-			this._slideShowWindowProxy = window.open(this._slideURL, '_blank', 'popup'); // do we need to set this to null when closed or is that already done?
+
+			var popupTitle = "Windowed Presentation: " + this._map['wopi'].BaseFileName;
+			const htmlContent = this._generateSlideWindowHtml(popupTitle, this._slideURL);
+
+			this._slideShowWindowProxy = window.open('', '_blank', 'popup');
+			
 			if (!this._slideShowWindowProxy) {
 				this._map.uiManager.showInfoModal('popup-blocked-modal',
-			_('Windowed Presentation Blocked'),
-			_('Presentation was blocked. Please allow pop-ups in your browser. This lets slide shows to be displayed in separated windows, allowing for easy screen sharing.'), '',
-			_('OK'), null, false);
+					_('Windowed Presentation Blocked'),
+					_('Presentation was blocked. Please allow pop-ups in your browser. This lets slide shows to be displayed in separated windows, allowing for easy screen sharing.'), '',
+					_('OK'), null, false);
 			}
 
+			this._slideShowWindowProxy.document.write(htmlContent)
+			this._slideShowWindowProxy.document.close()
 			this._slideShowWindowProxy.focus();
-			this._slideShowWindowProxy.addEventListener('keydown', this._onCloseSlideWindow.bind(this));
+
+			this._slideShowWindowProxy.onload = this._handleSlideWindowLoaded.bind(this);
+
+			// this event listener catches keypresses if the user somehow manages to unfocus the iframe
+			this._slideShowWindowProxy.addEventListener('keydown', this._onSlideWindowKeyPress.bind(this));
 
 			var slideShowWindow = this._slideShowWindowProxy;
 			this._map.uiManager.showSnackbar(_('Presenting in window'),
@@ -188,6 +199,44 @@ L.Map.SlideShow = L.Handler.extend({
 		var separator = (this._slideURL.indexOf('?') === -1) ? '?' : '&';
 		this._slideShow.src = this._slideURL + separator + 'StartSlideNumber=' + this._startSlideNumber;
 		this._slideShow.contentWindow.focus();
+	},
+
+	_handleSlideWindowLoaded: function() {
+		const iframe = this._slideShowWindowProxy.document.querySelector('iframe');
+
+		if (iframe) {
+			iframe.contentWindow.focus();
+			iframe.contentWindow.addEventListener('keydown', this._onSlideWindowKeyPress.bind(this));
+		}
+	},
+
+	_generateSlideWindowHtml: function(title, slideURL) {
+		return `
+		<!DOCTYPE html>
+		<html lang="en">
+		<head>
+			<meta charset="UTF-8">
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+			<title>${title}</title>
+			<style>
+				body, html {
+					margin: 0;
+					padding: 0;
+					height: 100%;
+					overflow: hidden; /* Prevent scrollbars */
+				}
+				iframe {
+					width: 100%;
+					height: 100%;
+					border: none;
+				}
+			</style>
+		</head>
+		<body>
+			<iframe src="${slideURL}"></iframe>
+		</body>
+		</html>
+		`;
 	},
 
 	_processSlideshowLinks: function() {
@@ -242,7 +291,7 @@ L.Map.SlideShow = L.Handler.extend({
 	},
 
 
-	_onCloseSlideWindow: function(e) {
+	_onSlideWindowKeyPress: function(e) {
 		if (e.code === 'Escape') {
 			this._slideShowWindowProxy.opener.focus();
 			this._slideShowWindowProxy.close();
