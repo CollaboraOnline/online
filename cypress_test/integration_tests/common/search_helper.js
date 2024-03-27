@@ -6,9 +6,9 @@
 function showSearchBar() {
 	cy.log('>> showSearchBar - start');
 
-	cy.cGet('#tb_editbar_item_showsearchbar').click();
+	cy.cGet('#tb_editbar_item_showsearchbar .w2ui-button').click();
 	cy.cGet('input#search-input').should('be.visible');
-	cy.cGet('#tb_editbar_item_bold').should('not.be.visible');
+	cy.cGet('#tb_editbar_item_bold .w2ui-button').should('not.be.visible');
 	cy.cGet('#tb_searchbar_item_searchprev').should('have.class', 'disabled');
 	cy.cGet('#tb_searchbar_item_searchnext').should('have.class', 'disabled');
 	cy.cGet('#tb_searchbar_item_cancelsearch').should('not.be.visible');
@@ -110,7 +110,7 @@ function closeSearchBar() {
 
 	cy.cGet('#tb_searchbar_item_hidesearchbar').click();
 	cy.cGet('input#search-input').should('not.be.visible');
-	cy.cGet('#tb_editbar_item_bold').should('be.visible');
+	cy.cGet('#tb_editbar_item_bold .w2ui-button').should('be.visible');
 
 	cy.log('<< closeSearchBar - end');
 }

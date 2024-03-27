@@ -35,7 +35,7 @@ describe(['taga11yenabled'], 'Editable area - Basic typing and caret moving', fu
         helper.beforeAll(testFileName, 'impress');
         desktopHelper.switchUIToCompact();
         cy.cGet('#toolbar-up > .w2ui-scroll-right').click();
-        cy.cGet('#tb_editbar_item_modifypage').click();
+        cy.cGet('#modifypage').click();
         cy.cGet('div.clipboard').as('clipboard');
     });
 

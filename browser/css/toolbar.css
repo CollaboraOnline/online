@@ -1,12 +1,6 @@
-#toolbar-up.w2ui-toolbar {
-	left: 0;
-	right: 0;
-	padding-left: 9px;
-	padding-right: 0px;
-	text-align: center;
-	z-index: 999;
-	overflow: visible !important;
-	background-color: transparent;
+#toolbar-up {
+	z-index: 11;
+	height: 38px;
 }
 
 #document-name-input-loading-bar {
@@ -48,6 +42,7 @@
 }
 .ui-toolbar > div > div > .unotoolbutton,
 .ui-toolbar > div > div > .menubutton,
+.ui-toolbar > div > div > .ui-listbox-container,
 .ui-toolbar > div > div > .ui-pushbutton,
 .ui-toolbar > div > div .cool-font {
 	margin: auto 2px;
@@ -70,6 +65,7 @@
 #toolbar-down {
 	z-index: 11;
 	border-top: 1px solid var(--color-border);
+	padding: 4px 0px;
 }
 #toolbar-down:not(.mobile) {
 	background-color: var(--color-main-background);
@@ -439,6 +435,9 @@ button.leaflet-control-search-next
 }
 
 /* select box */
+.select2 span {
+	font-family: var(--cool-font);
+}
 .select2-results__option {
 	padding: 5px;
 	font-family: var(--cool-font);
@@ -492,10 +491,10 @@ button.leaflet-control-search-next
 .select2-container--default .select2-results__option[aria-disabled='true'] {
 	color: var(--color-border-lighter);
 }
-.styles-select {
+#styles-input {
 	width: 150px !important;
 }
-#tb_editbar_item_fonts .select2-container{
+#toolbar-up #fontnamecombobox .select2-container{
 	margin-left: 5px;
 	margin-right: 5px;
 	width: 150px !important;
@@ -506,10 +505,10 @@ button.leaflet-control-search-next
 	line-height: 24px;
 	padding-right: 8px;
 }
-#tb_editbar_item_fontsizes .select2-container{
+#toolbar-up #fontsizecombobox .select2-container{
 	min-width: 55px !important;
 }
-.fontsizes-select {
+#fontsizecombobox-input {
 	width: 55px !important;
 }
 .evo-cp-wrap {

@@ -12,15 +12,36 @@
  * L.Control.TopToolbar
  */
 
-/* global $ w2ui _ _UNO w2utils */
+/* global $ JSDialog _ _UNO */
 L.Control.TopToolbar = L.Control.extend({
 	options: {
 		stylesSelectValue: null,
-		fontsSelectValue: null
 	},
 
 	onAdd: function (map) {
 		this.map = map;
+		this.parentContainer = L.DomUtil.get('toolbar-up');
+
+		// In case it contains garbage
+		if (this.parentContainer) {
+			this.parentContainer.outerHTML = '';
+			this.parentContainer = null;
+		}
+
+		// Use original template as provided by server
+		$('#toolbar-logo').after(this.map.toolbarUpTemplate.cloneNode(true));
+		this.parentContainer = L.DomUtil.get('toolbar-up');
+		L.DomUtil.addClass(this.parentContainer, 'ui-toolbar');
+
+		this.builder = new L.control.jsDialogBuilder(
+			{
+				mobileWizard: this,
+				map: this.map,
+				cssClass: 'jsdialog',
+				noLabelsForUnoButtons: true,
+				callback: this.callback.bind(this)
+			});
+
 		this.create();
 
 		map.on('doclayerinit', this.onDocLayerInit, this);
@@ -33,18 +54,16 @@ L.Control.TopToolbar = L.Control.extend({
 			map.on('updatetoolbarcommandvalues', this.updateCommandValues, this);
 		}
 
-		$(window).resize(function() {
-			if ($(window).width() !== map.getSize().x) {
-				var toolbar = w2ui['editbar'];
-				if (toolbar)
-					toolbar.resize();
-			}
-		});
+		// on mode switch NB -> Compact
+		if (map._docLoadedOnce)
+			this.onDocLayerInit();
 	},
 
 	onRemove: function() {
-		$().w2destroy('editbar');
-		L.DomUtil.get('toolbar-up').remove();
+		if (this.parentContainer) {
+			this.parentContainer.outerHTML = '';
+			this.parentContainer = null;
+		}
 
 		this.map.off('doclayerinit', this.onDocLayerInit, this);
 		this.map.off('updatepermission', this.onUpdatePermission, this);
@@ -56,15 +75,13 @@ L.Control.TopToolbar = L.Control.extend({
 		}
 	},
 
-	onFontSizeSelect: function(e) {
-		this.map.applyFontSize(e.target.value);
-		this.map.focus();
-	},
+	callback: function(objectType, eventType, object, data, builder) {
+		if (object.id === 'fontnamecombobox' || object.id === 'fontsizecombobox' || object.id === 'styles') {
+			// managed by non-JSDialog code
+			return;
+		}
 
-	onFontSelect: function(e) {
-		var font = e.target.value;
-		this.map.applyFont(font);
-		this.map.focus();
+		this.builder._defaultCallbackHandler(objectType, eventType, object, data, builder);
 	},
 
 	onStyleSelect: function(e) {
@@ -85,7 +102,7 @@ L.Control.TopToolbar = L.Control.extend({
 	},
 
 	onContextChange: function(event) {
-		window.updateVisibilityForToolbar(w2ui['editbar'], event.context);
+		window.updateVisibilityForToolbar(this, event.context);
 	},
 
 	// mobile:false means hide it both for normal Online used from a mobile phone browser, and in a mobile app on a mobile phone
@@ -97,171 +114,105 @@ L.Control.TopToolbar = L.Control.extend({
 	// invisible means visibility:hidden
 
 	getToolItems: function() {
-		var that = this;
 		return [
-			{type: 'button',  id: 'closemobile',  img: 'closemobile', desktop: false, mobile: false, tablet: true, hidden: true},
-			{type: 'button',  id: 'save', img: 'save', hint: _UNO('.uno:Save'), lockUno: '.uno:Save'},
-			{type: 'button',  id: 'print', img: 'print', hint: _UNO('.uno:Print', 'text'), mobile: false, tablet: false, lockUno: '.uno:Print'},
-			{type: 'menu',  id: 'print-options',  img: 'print', hint: _UNO('.uno:Print', 'text'), mobile: false, tablet: false, lockUno: '.uno:Print',
-				items: [
-					{id: 'print-active-sheet', text: _('Active Sheet')},
-					{id: 'print-all-sheets', text: _('All Sheets')},
+			{type: 'customtoolitem',  id: 'closemobile', desktop: false, mobile: false, tablet: true, visible: false},
+			{type: 'customtoolitem',  id: 'save', command: 'save', text: _UNO('.uno:Save'), lockUno: '.uno:Save'},
+			{type: 'customtoolitem',  id: 'print', command: 'print', text: _UNO('.uno:Print', 'text'), mobile: false, tablet: false, lockUno: '.uno:Print'},
+			{type: 'menubutton',  id: 'printoptions',  command: 'printoptions', noLabel: true, text: _UNO('.uno:Print', 'text'), mobile: false, tablet: false, lockUno: '.uno:Print',
+				menu: [
+					{id: 'print-active-sheet', action: 'print-active-sheet', text: _('Active Sheet')},
+					{id: 'print-all-sheets', action: 'print-all-sheets', text: _('All Sheets')},
 				]
 			},
-			{type: 'break', id: 'savebreak', mobile: false},
-			{type: 'button',  id: 'undo',  img: 'undo', hint: _UNO('.uno:Undo'), uno: 'Undo', disabled: true, mobile: false},
-			{type: 'button',  id: 'redo',  img: 'redo', hint: _UNO('.uno:Redo'), uno: 'Redo', disabled: true, mobile: false},
-			{type: 'break', id: 'redobreak', mobile: false, tablet: false,},
-			{type: 'button',  id: 'formatpaintbrush',  img: 'copyformat', hint: _UNO('.uno:FormatPaintbrush'), uno: 'FormatPaintbrush', mobile: false},
-			{type: 'button',  id: 'reset',  img: 'deleteformat', hint: _UNO('.uno:ResetAttributes', 'text'), hidden: true, uno: 'ResetAttributes', mobile: false},
-			{type: 'button',  id: 'resetimpress',  img: 'deleteformat', hint: _UNO('.uno:SetDefault', 'presentation', 'true'), hidden: true, uno: 'SetDefault', mobile: false},
-			{type: 'break', id: 'breakreset', invisible: true, mobile: false, tablet: false,},
-			{type: 'html', id: 'styles',
-				html: '<select id="styles-select" class="styles-select"><option>' + _('Default Style') + '</option></select>',
-				onRefresh: function (edata) {
-					if (!edata.item.html) {
-						edata.isCancelled = true;
-					} else {
-						$.extend(edata, { onComplete: function (e) {
-							$('#styles-select').select2();
-							e.item.html = undefined;
-						}});
-					}
-				}, hidden: true, desktop: true, mobile: false, tablet: false},
-			{type: 'html', id: 'fonts',
-				html: '<select id="fonts-select" class="fonts-select"><option>Carlito</option></select>',
-				onRefresh: function (edata) {
-					if (!edata.item.html) {
-						edata.isCancelled = true;
-					} else {
-						$.extend(edata, { onComplete: function (e) {
-							e.item.html = undefined;
-						}});
-					}
-				}, mobile: false},
-			{type: 'html',   id: 'fontsizes',
-				html: '<select id="fontsizes-select" class="fontsizes-select">',
-				onRefresh: function (edata) {
-					if (!edata.item.html) {
-						edata.isCancelled = true;
-					} else {
-						$.extend(edata, { onComplete: function (e) {
-							e.item.html = undefined;
-						}});
-					}
-				}, mobile: false},
-			{type: 'break', id: 'breakfontsizes', invisible: true, mobile: false, tablet: false,},
-			{type: 'button',  id: 'bold',  img: 'bold', hint: _UNO('.uno:Bold'), uno: 'Bold'},
-			{type: 'button',  id: 'italic', img: 'italic', hint: _UNO('.uno:Italic'), uno: 'Italic'},
-			{type: 'button',  id: 'underline',  img: 'underline', hint: _UNO('.uno:Underline'), uno: 'Underline'},
-			{type: 'button',  id: 'strikeout', img: 'strikeout', hint: _UNO('.uno:Strikeout'), uno: 'Strikeout'},
-			{type: 'break', id: 'breakformatting'},
-			{type: 'drop',  id: 'fontcolor', img: 'textcolor', hint: _UNO('.uno:FontColor'), overlay: { onShow : function() { window.showColorPicker('fontcolor'); }} , html: window.getColorPickerHTML('fontcolor'), lockUno: '.uno:FontColor'},
-			{type: 'drop',  id: 'backcolor', img: 'backcolor', hint: _UNO('.uno:BackColor', 'text'), hidden: true,  overlay: { onShow : function() { window.showColorPicker('backcolor'); }} , html: window.getColorPickerHTML('backcolor'), lockUno: '.uno:BackColor'},
-			{type: 'drop',  id: 'backgroundcolor', img: 'backgroundcolor', hint: _UNO('.uno:BackgroundColor'), hidden: true,  overlay: { onShow : function() { window.showColorPicker('backgroundcolor'); }} , html: window.getColorPickerHTML('backcolor'), lockUno: '.uno:BackgroundColor'},
-			{type: 'break' , id: 'breakcolor', mobile:false},
-			{type: 'button',  id: 'leftpara',  img: 'alignleft', hint: _UNO('.uno:LeftPara', '', true),
-				uno: {textCommand: 'LeftPara', objectCommand: 'ObjectAlignLeft'},
-				hidden: true, unosheet: 'AlignLeft', disabled: true},
-			{type: 'button',  id: 'centerpara',  img: 'alignhorizontal', hint: _UNO('.uno:CenterPara', '', true),
-				uno: {textCommand: 'CenterPara', objectCommand: 'AlignCenter'},
-				hidden: true, unosheet: 'AlignHorizontalCenter', disabled: true},
-			{type: 'button',  id: 'rightpara',  img: 'alignright', hint: _UNO('.uno:RightPara', '', true),
-				uno: {textCommand: 'RightPara', objectCommand: 'ObjectAlignRight'},
-				hidden: true, unosheet: 'AlignRight', disabled: true},
-			{type: 'button',  id: 'justifypara',  img: 'alignblock', hint: _UNO('.uno:JustifyPara', '', true), uno: 'JustifyPara', hidden: true, unosheet: '', disabled: true},
-			{type: 'break', id: 'breakpara', hidden: true},
-			{type: 'drop',  id: 'setborderstyle',  img: 'setborderstyle', hint: _('Borders'), hidden: true, html: window.getBorderStyleMenuHtml()},
-			{type: 'button',  id: 'togglemergecells',  img: 'togglemergecells', hint: _UNO('.uno:ToggleMergeCells', 'spreadsheet', true), hidden: true, uno: 'ToggleMergeCells', disabled: true},
-			{type: 'break', id: 'breakmergecells', hidden: true},
-			{type: 'menu', id: 'textalign', img: 'alignblock', hint: _UNO('.uno:TextAlign'), hidden: true, lockUno: '.uno:TextAlign',
-				items: [
-					{id: 'alignleft', text: _UNO('.uno:AlignLeft', 'spreadsheet', true), icon: 'alignleft', uno: 'AlignLeft'},
-					{id: 'alignhorizontalcenter', text: _UNO('.uno:AlignHorizontalCenter', 'spreadsheet', true), icon: 'alignhorizontal', uno: 'AlignHorizontalCenter'},
-					{id: 'alignright', text: _UNO('.uno:AlignRight', 'spreadsheet', true), icon: 'alignright', uno: 'AlignRight'},
-					{id: 'alignblock', text: _UNO('.uno:AlignBlock', 'spreadsheet', true), icon: 'alignblock', uno: 'AlignBlock'},
-					{type: 'break'},
-					{id: 'aligntop', text: _UNO('.uno:AlignTop', 'spreadsheet', true), icon: 'aligntop', uno: 'AlignTop'},
-					{id: 'alignvcenter', text: _UNO('.uno:AlignVCenter', 'spreadsheet', true), icon: 'alignvcenter', uno: 'AlignVCenter'},
-					{id: 'alignbottom', text: _UNO('.uno:AlignBottom', 'spreadsheet', true), icon: 'alignbottom', uno: 'AlignBottom'},
+			{type: 'separator', orientation: 'vertical', id: 'savebreak', mobile: false},
+			{type: 'toolitem',  id: 'undo', text: _UNO('.uno:Undo'), command: '.uno:Undo', mobile: false},
+			{type: 'toolitem',  id: 'redo', text: _UNO('.uno:Redo'), command: '.uno:Redo', mobile: false},
+			{type: 'separator', orientation: 'vertical', id: 'redobreak', mobile: false, tablet: false,},
+			{type: 'toolitem',  id: 'formatpaintbrush', text: _UNO('.uno:FormatPaintbrush'), command: '.uno:FormatPaintbrush', mobile: false},
+			{type: 'toolitem',  id: 'reset', text: _UNO('.uno:ResetAttributes', 'text'), visible: false, command: '.uno:ResetAttributes', mobile: false},
+			{type: 'toolitem',  id: 'resetimpress', text: _UNO('.uno:SetDefault', 'presentation', 'true'), visible: false, command: '.uno:SetDefault', mobile: false},
+			{type: 'separator', orientation: 'vertical', id: 'breakreset', invisible: true, mobile: false, tablet: false,},
+			{type: 'listbox', id: 'styles', text: _('Default Style'), desktop: true, mobile: false, tablet: false},
+			{type: 'listbox', id: 'fontnamecombobox', text: 'Carlito', command: '.uno:CharFontName', mobile: false},
+			{type: 'listbox', id: 'fontsizecombobox', text: '12 pt', command: '.uno:FontHeight', mobile: false,},
+			{type: 'separator', orientation: 'vertical', id: 'breakfontsizes', invisible: true, mobile: false, tablet: false},
+			{type: 'toolitem',  id: 'bold', text: _UNO('.uno:Bold'), command: '.uno:Bold'},
+			{type: 'toolitem',  id: 'italic', text: _UNO('.uno:Italic'), command: '.uno:Italic'},
+			{type: 'toolitem',  id: 'underline', text: _UNO('.uno:Underline'), command: '.uno:Underline'},
+			{type: 'toolitem',  id: 'strikeout', text: _UNO('.uno:Strikeout'), command: '.uno:Strikeout'},
+			{type: 'separator', orientation: 'vertical', id: 'breakformatting'},
+			{type: 'colorlistbox',  id: 'fontcolorwriter:ColorPickerMenu', command: '.uno:FontColor', text: _UNO('.uno:FontColor'), visible: false, lockUno: '.uno:FontColor'},
+			{type: 'colorlistbox',  id: 'fontcolor:ColorPickerMenu', command: '.uno:Color', text: _UNO('.uno:FontColor'), lockUno: '.uno:FontColor'},
+			{type: 'colorlistbox',  id: 'backcolor:ColorPickerMenu', command: '.uno:BackColor', text: _UNO('.uno:BackColor', 'text'), visible: false, lockUno: '.uno:BackColor'},
+			{type: 'colorlistbox',  id: 'backgroundcolor:ColorPickerMenu', command: '.uno:BackgroundColor', text: _UNO('.uno:BackgroundColor'), visible: false, lockUno: '.uno:BackgroundColor'},
+			{type: 'separator', orientation: 'vertical' , id: 'breakcolor', mobile:false},
+			{type: 'toolitem',  id: 'leftpara',  command: '.uno:LeftPara', text: _UNO('.uno:LeftPara', '', true), visible: false},
+			{type: 'toolitem',  id: 'centerpara',  command: '.uno:CenterPara', text: _UNO('.uno:CenterPara', '', true), visible: false},
+			{type: 'toolitem',  id: 'rightpara',  command: '.uno:RightPara', text: _UNO('.uno:RightPara', '', true), visible: false},
+			{type: 'toolitem',  id: 'justifypara', command: '.uno:JustifyPara', text: _UNO('.uno:JustifyPara', '', true), visible: false, unosheet: ''},
+			{type: 'separator', orientation: 'vertical', id: 'breakpara', visible: false},
+			{type: 'menubutton',  id: 'setborderstyle:BorderStyleMenu', noLabel: true, command: '.uno:SetBorderStyle', text: _('Borders'), visible: false},
+			{type: 'toolitem',  id: 'togglemergecells', text: _UNO('.uno:ToggleMergeCells', 'spreadsheet', true), visible: false, command: '.uno:ToggleMergeCells'},
+			{type: 'separator', orientation: 'vertical', id: 'breakmergecells', visible: false},
+			{type: 'menubutton', id: 'textalign', command: 'justifypara', noLabel: true, text: _UNO('.uno:TextAlign'), visible: false, lockUno: '.uno:TextAlign',
+				menu: [
+					{id: 'alignleft', text: _UNO('.uno:AlignLeft', 'spreadsheet', true), icon: 'alignleft', uno: '.uno:AlignLeft'},
+					{id: 'alignhorizontalcenter', text: _UNO('.uno:AlignHorizontalCenter', 'spreadsheet', true), icon: 'alignhorizontal', uno: '.uno:AlignHorizontalCenter'},
+					{id: 'alignright', text: _UNO('.uno:AlignRight', 'spreadsheet', true), icon: 'alignright', uno: '.uno:AlignRight'},
+					{id: 'alignblock', text: _UNO('.uno:AlignBlock', 'spreadsheet', true), icon: 'alignblock', uno: '.uno:AlignBlock'},
+					{type: 'separator'},
+					{id: 'aligntop', text: _UNO('.uno:AlignTop', 'spreadsheet', true), icon: 'aligntop', uno: '.uno:AlignTop'},
+					{id: 'alignvcenter', text: _UNO('.uno:AlignVCenter', 'spreadsheet', true), icon: 'alignvcenter', uno: '.uno:AlignVCenter'},
+					{id: 'alignbottom', text: _UNO('.uno:AlignBottom', 'spreadsheet', true), icon: 'alignbottom', uno: '.uno:AlignBottom'},
 				]},
-			{type: 'menu',  id: 'linespacing',  img: 'linespacing', hint: _UNO('.uno:FormatSpacingMenu'), hidden: true, lockUno: '.uno:FormatSpacingMenu',
-				items: [
-					{id: 'spacepara1', img: 'spacepara1', text: _UNO('.uno:SpacePara1'), uno: 'SpacePara1'},
-					{id: 'spacepara15', img: 'spacepara15', text: _UNO('.uno:SpacePara15'), uno: 'SpacePara15'},
-					{id: 'spacepara2', img: 'spacepara2', text: _UNO('.uno:SpacePara2'), uno: 'SpacePara2'},
-					{type: 'break'},
-					{id: 'paraspaceincrease', img: 'paraspaceincrease', text: _UNO('.uno:ParaspaceIncrease'), uno: 'ParaspaceIncrease'},
-					{id: 'paraspacedecrease', img: 'paraspacedecrease', text: _UNO('.uno:ParaspaceDecrease'), uno: 'ParaspaceDecrease'}
+			{type: 'menubutton',  id: 'linespacing',  command: 'linespacing', noLabel: true, text: _UNO('.uno:FormatSpacingMenu'), visible: false, lockUno: '.uno:FormatSpacingMenu',
+				menu: [
+					{id: 'spacepara1', text: _UNO('.uno:SpacePara1'), uno: '.uno:SpacePara1'},
+					{id: 'spacepara15', text: _UNO('.uno:SpacePara15'), uno: '.uno:SpacePara15'},
+					{id: 'spacepara2', text: _UNO('.uno:SpacePara2'), uno: '.uno:SpacePara2'},
+					{type: 'separator'},
+					{id: 'paraspaceincrease', text: _UNO('.uno:ParaspaceIncrease'), uno: '.uno:ParaspaceIncrease'},
+					{id: 'paraspacedecrease', text: _UNO('.uno:ParaspaceDecrease'), uno: '.uno:ParaspaceDecrease'}
 				],
-				onRefresh: function (event) {
-					var isChecked = function(command) {
-						var items = that.map['stateChangeHandler'];
-						var val = items.getItemValue(command);
-						if (val && (val === 'true' || val === true))
-							return true;
-						else
-							return false;
-					};
-
-					event.item.selected = null;
-
-					for (var i in event.item.items) {
-						var item = event.item.items[i];
-						item.checked = false;
-
-						if (item.id && item.id.indexOf('spacepara') !== -1) {
-							item.checked = isChecked('.uno:' + item.uno);
-							if (item.checked)
-								event.item.selected = item.id;
-						}
-					}
-				}},
-			{type: 'button',  id: 'wraptext',  img: 'wraptext', hint: _UNO('.uno:WrapText', 'spreadsheet', true), hidden: true, uno: 'WrapText', disabled: true},
-			{type: 'break', id: 'breakspacing', hidden: true},
-			{type: 'button',  id: 'defaultnumbering',  img: 'numbering', hint: _UNO('.uno:DefaultNumbering', '', true), hidden: true, uno: 'DefaultNumbering', disabled: true},
-			{type: 'button',  id: 'defaultbullet',  img: 'bullet', hint: _UNO('.uno:DefaultBullet', '', true), hidden: true, uno: 'DefaultBullet', disabled: true},
-			{type: 'break', id: 'breakbullet', hidden: true},
-			{type: 'button',  id: 'incrementindent',  img: 'incrementindent', hint: _UNO('.uno:IncrementIndent', '', true), uno: 'IncrementIndent', hidden: true, disabled: true},
-			{type: 'button',  id: 'decrementindent',  img: 'decrementindent', hint: _UNO('.uno:DecrementIndent', '', true), uno: 'DecrementIndent', hidden: true, disabled: true},
-			{type: 'break', id: 'breakindent', hidden: true},
-			{type: 'drop', id: 'conditionalformaticonset',  img: 'conditionalformatdialog', hint: _UNO('.uno:ConditionalFormatMenu', 'spreadsheet', true), hidden: true, html: window.getConditionalFormatMenuHtml(), lockUno: '.uno:ConditionalFormatMenu'},
-			{type: 'button',  id: 'sortascending',  img: 'sortascending', hint: _UNO('.uno:SortAscending', 'spreadsheet', true), uno: 'SortAscending', disabled: true, hidden: true},
-			{type: 'button',  id: 'sortdescending',  img: 'sortdescending', hint: _UNO('.uno:SortDescending', 'spreadsheet', true), uno: 'SortDescending', disabled: true, hidden: true},
-			{type: 'break', id: 'breaksorting', hidden: true},
-			{type: 'button',  id: 'numberformatcurrency',  img: 'numberformatcurrency', hint: _UNO('.uno:NumberFormatCurrency', 'spreadsheet', true), hidden: true, uno: 'NumberFormatCurrency', disabled: true},
-			{type: 'button',  id: 'numberformatpercent',  img: 'numberformatpercent', hint: _UNO('.uno:NumberFormatPercent', 'spreadsheet', true), hidden: true, uno: 'NumberFormatPercent', disabled: true},
-			{type: 'button',  id: 'numberformatdecdecimals',  img: 'numberformatdecdecimals', hint: _UNO('.uno:NumberFormatDecDecimals', 'spreadsheet', true), hidden: true, uno: 'NumberFormatDecDecimals', disabled: true},
-			{type: 'button',  id: 'numberformatincdecimals',  img: 'numberformatincdecimals', hint: _UNO('.uno:NumberFormatIncDecimals', 'spreadsheet', true), hidden: true, uno: 'NumberFormatIncDecimals', disabled: true},
-			{type: 'break',   id: 'break-number', hidden: true},
-			{type: 'drop',  id: 'inserttable',  img: 'inserttable', hint: _('Insert table'), hidden: true, html: window.getInsertTablePopupHtml(), lockUno: '.uno:InsertTable'},
-			{type: 'button',  id: 'insertgraphic',  img: 'insertgraphic', hint: _UNO('.uno:InsertGraphic', '', true), lockUno: '.uno:InsertGraphic'},
-			{type: 'button',  id: 'insertremotegraphic',  img: 'insertgraphic', hint: _UNO('.uno:InsertGraphic', '', true),  hidden: true, lockUno: '.uno:InsertGraphic'},
-			{type: 'menu', id: 'menugraphic', img: 'insertgraphic', hint: _UNO('.uno:InsertGraphic', '', true), hidden: true, lockUno: '.uno:InsertGraphic',
-				items: [
-					{id: 'localgraphic', text: _('Insert Local Image')},
-					{id: 'remotegraphic', text: _UNO('.uno:InsertGraphic', '', true)},
-				]},
-			{type: 'button',  id: 'insertobjectchart',  img: 'insertobjectchart', hint: _UNO('.uno:InsertObjectChart', '', true), uno: 'InsertObjectChart'},
-			{type: 'drop',  id: 'insertshapes',  img: 'basicshapes_ellipse', hint: _('Insert shapes'), html: window.getShapesPopupHtml()},
-			{type: 'button',  id: 'insertline', img: 'line', hint: _UNO('.uno:Line', '', true), uno: 'Line'},
-			{type: 'drop',  id: 'insertconnectors',  img: 'connectors_connector', hint: _('Insert connectors'), html: window.getShapesPopupHtml(), hidden: true},
-			{type: 'break',   id: 'breakinsert', desktop: true},
-			{type: 'button',  id: 'inserttextbox', img: 'text', hint: _UNO('.uno:Text', '', true), uno: 'Text?CreateDirectly:bool=true', hidden: true},
-			{type: 'button',  id: 'insertannotation', img: 'annotation', hint: _UNO('.uno:InsertAnnotation', '', true), hidden: true, lockUno: '.uno:InsertAnnotation'},
-			{type: 'button',  id: 'link',  img: 'link', hint: _UNO('.uno:HyperlinkDialog', '', true), disabled: true, lockUno: '.uno:HyperlinkDialog'},
-			{type: 'button',  id: 'insertsymbol', img: 'insertsymbol', hint: _UNO('.uno:InsertSymbol', '', true), uno: 'InsertSymbol'},
-			{type: 'spacer'},
-			{type: 'break', id: 'breaksidebar', hidden: true},
-			{type: 'button',  id: 'edit',  img: 'edit'},
-			{type: 'button',  id: 'sidebar', img: 'sidebar_modify_page', hint: _UNO('.uno:Sidebar', '', true), uno: '.uno:SidebarDeck.PropertyDeck', hidden: true},
-			{type: 'button',  id: 'modifypage', img: 'sidebar_modify_page', hint: _UNO('.uno:ModifyPage', 'presentation', true), uno: '.uno:ModifyPage', hidden: true},
-			{type: 'button',  id: 'slidechangewindow', img: 'sidebar_slide_change', hint: _UNO('.uno:SlideChangeWindow', 'presentation', true), uno: '.uno:SlideChangeWindow', hidden: true},
-			{type: 'button',  id: 'customanimation', img: 'sidebar_custom_animation', hint: _UNO('.uno:CustomAnimation', 'presentation', true), uno: '.uno:CustomAnimation', hidden: true},
-			{type: 'button',  id: 'masterslidespanel', img: 'sidebar_master_slides', hint: _UNO('.uno:MasterSlidesPanel', 'presentation', true), uno: '.uno:MasterSlidesPanel', hidden: true},
-			{type: 'button',  id: 'navigator', img: 'navigator', hint: _UNO('.uno:Navigator'), uno: '.uno:Navigator', hidden: true},
-			{type: 'button',  id: 'fold',  img: 'fold', hint: _('Hide Menu'), desktop: true, mobile: false, hidden: true},
-			{type: 'button',  id: 'hamburger-tablet',  img: 'fold', desktop: false, mobile: false, tablet: true, iosapptablet: false, hidden: true},
+			},
+			{type: 'toolitem',  id: 'wraptextbutton', text: _UNO('.uno:WrapText', 'spreadsheet', true), visible: false, command: '.uno:WrapText'},
+			{type: 'separator', orientation: 'vertical', id: 'breakspacing', visible: false},
+			{type: 'toolitem',  id: 'defaultnumbering', text: _UNO('.uno:DefaultNumbering', '', true), visible: false, command: '.uno:DefaultNumbering'},
+			{type: 'toolitem',  id: 'defaultbullet', text: _UNO('.uno:DefaultBullet', '', true), visible: false, command: '.uno:DefaultBullet'},
+			{type: 'separator', orientation: 'vertical', id: 'breakbullet', visible: false},
+			{type: 'toolitem',  id: 'incrementindent', text: _UNO('.uno:IncrementIndent', '', true), command: '.uno:IncrementIndent', visible: false},
+			{type: 'toolitem',  id: 'decrementindent', text: _UNO('.uno:DecrementIndent', '', true), command: '.uno:DecrementIndent', visible: false},
+			{type: 'separator', orientation: 'vertical', id: 'breakindent', visible: false},
+			{type: 'menubutton', id: 'conditionalformatdialog:ConditionalFormatMenu', noLabel: true, text: _UNO('.uno:ConditionalFormatMenu', 'spreadsheet', true), visible: false, lockUno: '.uno:ConditionalFormatMenu'},
+			{type: 'toolitem',  id: 'sortascending', text: _UNO('.uno:SortAscending', 'spreadsheet', true), command: '.uno:SortAscending', visible: false},
+			{type: 'toolitem',  id: 'sortdescending', text: _UNO('.uno:SortDescending', 'spreadsheet', true), command: '.uno:SortDescending', visible: false},
+			{type: 'separator', orientation: 'vertical', id: 'breaksorting', visible: false},
+			{type: 'toolitem',  id: 'numberformatcurrency', text: _UNO('.uno:NumberFormatCurrency', 'spreadsheet', true), visible: false, command: '.uno:NumberFormatCurrency'},
+			{type: 'toolitem',  id: 'numberformatpercent', text: _UNO('.uno:NumberFormatPercent', 'spreadsheet', true), visible: false, command: '.uno:NumberFormatPercent'},
+			{type: 'toolitem',  id: 'numberformatdecdecimals', text: _UNO('.uno:NumberFormatDecDecimals', 'spreadsheet', true), visible: false, command: '.uno:NumberFormatDecDecimals'},
+			{type: 'toolitem',  id: 'numberformatincdecimals', text: _UNO('.uno:NumberFormatIncDecimals', 'spreadsheet', true), visible: false, command: '.uno:NumberFormatIncDecimals'},
+			{type: 'separator', orientation: 'vertical',   id: 'break-number', visible: false},
+			{type: 'menubutton',  id: 'inserttable:InsertTableMenu', command: 'inserttable', noLabel: true, text: _('Insert table'), visible: false, lockUno: '.uno:InsertTable'},
+			{type: 'menubutton', id: 'menugraphic:InsertImageMenu', noLabel: true, command: '.uno:InsertGraphic', text: _UNO('.uno:InsertGraphic', '', true), visible: false, lockUno: '.uno:InsertGraphic'},
+			{type: 'toolitem',  id: 'insertobjectchart', text: _UNO('.uno:InsertObjectChart', '', true), command: '.uno:InsertObjectChart'},
+			{type: 'menubutton',  id: 'insertshapes:InsertShapesMenu', command: '.uno:BasicShapes', noLabel: true, text: _('Insert shapes')},
+			{type: 'toolitem',  id: 'insertline', text: _UNO('.uno:Line', '', true), command: '.uno:Line'},
+			{type: 'menubutton',  id: 'insertconnectors:InsertConnectorsMenu', command: 'connector', noLabel: true, text: _('Insert connectors'), visible: false},
+			{type: 'separator', orientation: 'vertical',   id: 'breakinsert', desktop: true},
+			{type: 'customtoolitem',  id: 'inserttextbox', text: _UNO('.uno:Text', '', true), command: 'inserttextbox', visible: false},
+			{type: 'customtoolitem',  id: 'insertannotation', text: _UNO('.uno:InsertAnnotation', '', true), visible: false, lockUno: '.uno:InsertAnnotation'},
+			{type: 'customtoolitem',  id: 'inserthyperlink',  command: 'inserthyperlink', text: _UNO('.uno:HyperlinkDialog', '', true), lockUno: '.uno:HyperlinkDialog'},
+			{type: 'toolitem',  id: 'insertsymbol', text: _UNO('.uno:InsertSymbol', '', true), command: '.uno:InsertSymbol'},
+			{type: 'spacer', id: 'topspacer'},
+			{type: 'separator', orientation: 'vertical', id: 'breaksidebar', visible: false},
+			{type: 'toolitem',  id: 'sidebar', text: _UNO('.uno:Sidebar', '', true), command: '.uno:SidebarDeck.PropertyDeck', visible: false},
+			{type: 'toolitem',  id: 'modifypage', text: _UNO('.uno:ModifyPage', 'presentation', true), command: '.uno:ModifyPage', visible: false},
+			{type: 'toolitem',  id: 'slidechangewindow', text: _UNO('.uno:SlideChangeWindow', 'presentation', true), command: '.uno:SlideChangeWindow', visible: false},
+			{type: 'toolitem',  id: 'customanimation', text: _UNO('.uno:CustomAnimation', 'presentation', true), command: '.uno:CustomAnimation', visible: false},
+			{type: 'toolitem',  id: 'masterslidespanel', text: _UNO('.uno:MasterSlidesPanel', 'presentation', true), command: '.uno:MasterSlidesPanel', visible: false},
+			{type: 'toolitem',  id: 'navigator', text: _UNO('.uno:Navigator'), command: '.uno:Navigator', visible: false},
+			{type: 'customtoolitem',  id: 'fold', text: _('Hide Menu'), desktop: true, mobile: false, visible: false},
+			{type: 'customtoolitem',  id: 'hamburger-tablet', desktop: false, mobile: false, tablet: true, iosapptablet: false, visible: false},
 		];
 	},
 
@@ -276,78 +227,67 @@ L.Control.TopToolbar = L.Control.extend({
 		}
 	},
 
+	enableItem(command, enable) {
+		this.builder.executeAction(this.parentContainer, {
+			'control_id': command,
+			'action_type': enable ? 'enable' : 'disable'
+		});
+	},
+
+	showItem(command, show) {
+		this.builder.executeAction(this.parentContainer, {
+			'control_id': command,
+			'action_type': show ? 'show' : 'hide'
+		});
+
+		JSDialog.RefreshScrollables();
+	},
+
 	create: function() {
-		$().w2destroy('editbar');
-		var toolbar = L.DomUtil.get('toolbar-up');
-		// In case it contains garbage
-		if (toolbar)
-			toolbar.remove();
-		// Use original template as provided by server
-		$('#toolbar-logo').after(this.map.toolbarUpTemplate.cloneNode(true));
-		toolbar = $('#toolbar-up');
-		var that = this;
-		toolbar.w2toolbar({
-			name: 'editbar',
-			items: this.getToolItems(),
-			onClick: function (e) {
-				window.onClick(e, e.target);
-				window.hideTooltip(this, e.target);
-			},
-			onRefresh: function(event) {
-				if (event.item && (event.target === 'styles' || event.target === 'fonts' || event.target === 'fontsizes'
-					|| event.item.invisible)) {
-					var toolItem = $(this.box).find('#tb_'+ this.name +'_item_'+ w2utils.escapeId(event.item.id));
+		if (this.parentContainer.firstChild)
+			return;
 
-					if (event.item.invisible === true) {
-						toolItem.css('visibility', 'hidden');
-					}
-					else if ((window.mode.isDesktop() && event.item.desktop == false)
-							|| (window.mode.isTablet() && event.item.tablet == false)) {
-						toolItem.css('display', 'none');
-					} else {
-						toolItem.css('display', '');
-					}
-				}
+		var items = this.getToolItems();
+		this.builder.build(this.parentContainer, items);
 
-				if (that.map.isRestrictedUser()) {
-					for (var i = 0; i < this.items.length; i++) {
-						var it = this.items[i];
-						that.map.hideRestrictedItems(it, $('#tb_editbar_item_'+ it.id)[0], $('#tb_editbar_item_'+ it.id)[0]);
-					}
-				}
+		JSDialog.MakeScrollable(this.parentContainer, this.parentContainer.querySelector('div'));
+		JSDialog.RefreshScrollables();
 
-				if (that.map.isLockedUser()) {
-					for (var i = 0; i < this.items.length; i++) {
-						var it = this.items[i];
-						that.map.disableLockedItem(it, $('#tb_editbar_item_'+ it.id)[0], $('#tb_editbar_item_'+ it.id)[0]);
-					}
-				}
+		if (this.map.isRestrictedUser()) {
+			for (var i = 0; i < items.length; i++) {
+				var it = items[i];
+				var item = $('#' + it.id)[0];
+				this.map.hideRestrictedItems(it, item, item);
 			}
-		});
-		this.map.uiManager.enableTooltip(toolbar);
+		}
 
-		toolbar.bind('touchstart', function() {
-			w2ui['editbar'].touchStarted = true;
-		});
+		if (this.map.isLockedUser()) {
+			for (var i = 0; i < items.length; i++) {
+				var it = items[i];
+				var item = $('#' + it.id)[0];
+				this.map.disableLockedItem(it, item, item);
+			}
+		}
 
-		this.map.createFontSelector('#fonts-select');
-		w2ui['editbar'].resize();
+		this.map.createFontSelector('#fontnamecombobox-input');
 	},
 
 	onDocLayerInit: function() {
-		var toolbarUp = w2ui['editbar'];
 		var docType = this.map.getDocType();
-		var data;
 
 		switch (docType) {
 		case 'spreadsheet':
-			if (toolbarUp) {
-				toolbarUp.show('reset', 'textalign', 'wraptext', 'breakspacing', 'insertannotation', 'conditionalformaticonset',
+			if (this.parentContainer) {
+				['reset', 'textalign', 'wraptextbutton', 'breakspacing', 'insertannotation', 'conditionalformatdialog',
 					'numberformatcurrency', 'numberformatpercent',
 					'numberformatincdecimals', 'numberformatdecdecimals', 'break-number', 'togglemergecells', 'breakmergecells',
-					'setborderstyle', 'sortascending', 'sortdescending', 'breaksorting', 'backgroundcolor', 'breaksidebar', 'sidebar', 'print-options');
-				toolbarUp.hide('print');
-				toolbarUp.remove('styles');
+					'setborderstyle', 'sortascending', 'sortdescending', 'breaksorting', 'backgroundcolor', 'breaksidebar', 'sidebar', 'printoptions'
+				].forEach((id) => {
+					this.showItem(id, true);
+				});
+
+				this.showItem('print', false);
+				this.showItem('styles', false);
 			}
 
 			$('#toolbar-wrapper').addClass('spreadsheet');
@@ -358,107 +298,108 @@ L.Control.TopToolbar = L.Control.extend({
 
 			break;
 		case 'text':
-			if (toolbarUp) {
-				toolbarUp.show('reset', 'leftpara', 'centerpara', 'rightpara', 'justifypara', 'breakpara', 'linespacing',
+			if (this.parentContainer) {
+				['fontcolorwriter', 'reset', 'leftpara', 'centerpara', 'rightpara', 'justifypara', 'breakpara', 'linespacing',
 					'breakspacing', 'defaultbullet', 'defaultnumbering', 'breakbullet', 'incrementindent', 'decrementindent',
-					'breakindent', 'inserttable', 'insertannotation', 'backcolor', 'breaksidebar', 'sidebar');
-				toolbarUp.hide('print-options');
+					'breakindent', 'inserttable', 'insertannotation', 'backcolor', 'breaksidebar', 'sidebar'
+				].forEach((id) => {
+					this.showItem(id, true);
+				});
+
+				this.showItem('printoptions', false);
+				this.showItem('fontcolor', false);
 			}
 			break;
 		case 'presentation':
 			// Fill the style select box if not yet filled
-			if ($('#styles-select')[0] && $('#styles-select')[0].length === 1) {
-				data = [''];
+			if ($('#styles-input')[0] && $('#styles-input')[0].length === 1) {
+				var data = [''];
 				// Inserts a separator element
-				data = data.concat({text: '\u2500\u2500\u2500\u2500\u2500\u2500', disabled: true});
+				data = data.concat({text: '\u2500\u2500\u2500\u2500\u2500\u2500', enabled: false});
 
 				L.Styles.impressLayout.forEach(function(layout) {
 					data = data.concat({id: layout.id, text: _(layout.text)});
 				}, this);
 
-				$('#styles-select').select2({
+				$('#styles-input').select2({
 					data: data,
 					placeholder: _UNO('.uno:LayoutStatus', 'presentation')
 				});
-				$('#styles-select').on('select2:select', this.onStyleSelect.bind(this));
+				$('#styles-input').on('select2:select', this.onStyleSelect.bind(this));
 			}
 
-			if (toolbarUp) {
-				toolbarUp.show('resetimpress', 'breaksidebar', 'modifypage',
+			if (this.parentContainer) {
+				['resetimpress', 'breaksidebar', 'modifypage',
 					'leftpara', 'centerpara', 'rightpara', 'justifypara', 'breakpara', 'linespacing',
 					'breakspacing', 'defaultbullet', 'defaultnumbering', 'breakbullet', 'inserttextbox', 'inserttable',  'insertannotation', 'backcolor',
-					'breaksidebar', 'modifypage', 'slidechangewindow', 'customanimation', 'masterslidespanel', 'navigator');
-				toolbarUp.hide('print-options');
+					'breaksidebar', 'modifypage', 'slidechangewindow', 'customanimation', 'masterslidespanel', 'navigator'
+				].forEach((id) => {
+					this.showItem(id, true);
+				});
+
+				this.showItem('printoptions', false);
 			}
 			break;
 		case 'drawing':
-			if (toolbarUp) {
-				toolbarUp.show('leftpara', 'centerpara', 'rightpara', 'justifypara', 'breakpara', 'linespacing',
+			if (this.parentContainer) {
+				['leftpara', 'centerpara', 'rightpara', 'justifypara', 'breakpara', 'linespacing',
 					'breakspacing', 'defaultbullet', 'defaultnumbering', 'breakbullet', 'inserttextbox', 'inserttable', 'backcolor',
-					'breaksidebar', 'sidebar', 'insertconnectors');
-				toolbarUp.hide('print-options');
+					'breaksidebar', 'sidebar', 'insertconnectors'
+				].forEach((id) => {
+					this.showItem(id, true);
+				});
+
+				this.showItem('printoptions', false);
 			}
 			break;
 		}
 
-		window.updateVisibilityForToolbar(w2ui['editbar']);
+		window.updateVisibilityForToolbar(this);
 
-		if (toolbarUp)
-			toolbarUp.refresh();
+		this.map.createFontSizeSelector('#fontsizecombobox-input');
 
-		this.map.createFontSizeSelector('#fontsizes-select');
+		JSDialog.RefreshScrollables();
 	},
 
 	onUpdatePermission: function(e) {
 		if (e.perm === 'edit') {
 			// Enable list boxes
-			$('#styles-select').prop('disabled', false);
-			$('#fonts-select').prop('disabled', false);
-			$('#fontsizes-select').prop('disabled', false);
+			$('#styles-input').prop('disabled', false);
+			$('#fontnamecombobox-input').prop('disabled', false);
+			$('#fontsizecombobox-input').prop('disabled', false);
 		} else {
 			// Disable list boxes
-			$('#styles-select').prop('disabled', true);
-			$('#fonts-select').prop('disabled', true);
-			$('#fontsizes-select').prop('disabled', true);
+			$('#styles-input').prop('disabled', true);
+			$('#fontnamecombobox-input').prop('disabled', true);
+			$('#fontsizecombobox-input').prop('disabled', true);
 		}
 	},
 
 	onWopiProps: function(e) {
 		if (e.HideSaveOption) {
-			w2ui['editbar'].hide('save');
+			this.showItem('save', false);
 		}
 		if (e.HidePrintOption) {
-			w2ui['editbar'].hide('print');
+			this.showItem('print', false);
 		}
 
 		// On desktop we only have Save and Print buttons before the first
 		// splitter/break. Hide the splitter if we hid both save and print.
 		// TODO: Apply the same logic to mobile/tablet to avoid beginning with a splitter.
 		if (window.mode.isDesktop() && e.HideSaveOption && e.HidePrintOption) {
-			w2ui['editbar'].hide('savebreak');
+			this.showItem('savebreak', false);
 		}
 
-		if (w2ui['editbar']) {
-			if (e.EnableInsertRemoteImage && !e.DisableInsertLocalImage) {
-				w2ui['editbar'].hide('insertgraphic');
-				w2ui['editbar'].hide('insertremotegraphic');
-				w2ui['editbar'].show('menugraphic');
+		if (this.parentContainer) {
+			if (e.EnableInsertRemoteImage || !e.DisableInsertLocalImage) {
+				this.showItem('menugraphic', true);
 			} else {
-				w2ui['editbar'].hide('menugraphic');
-				if (e.EnableInsertRemoteImage) {
-					w2ui['editbar'].show('insertremotegraphic');
-				} else {
-					w2ui['editbar'].hide('insertremotegraphic');
-				}
-				if (e.DisableInsertLocalImage) {
-					w2ui['editbar'].hide('insertgraphic');
-				} else {
-					w2ui['editbar'].show('insertgraphic');
-				}
+				this.showItem('menugraphic', false);
 			}
 		}
 	},
 
+	// TODO: create dedicated widget for styles listbox
 	updateCommandValues: function(e) {
 		var data = [];
 		var commandValues;
@@ -497,7 +438,7 @@ L.Control.TopToolbar = L.Control.extend({
 
 			if (topStyles.length > 0) {
 				// Inserts a separator element
-				data = data.concat({text: '\u2500\u2500\u2500\u2500\u2500\u2500', disabled: true});
+				data = data.concat({text: '\u2500\u2500\u2500\u2500\u2500\u2500', enabled: false});
 
 				topStyles.forEach(function (style) {
 					data = data.concat({id: style, text: L.Styles.styleMappings[style].toLocaleString()});
@@ -506,7 +447,7 @@ L.Control.TopToolbar = L.Control.extend({
 
 			if (styles !== undefined && styles.length > 0) {
 				// Inserts a separator element
-				data = data.concat({text: '\u2500\u2500\u2500\u2500\u2500\u2500', disabled: true});
+				data = data.concat({text: '\u2500\u2500\u2500\u2500\u2500\u2500', enabled: false});
 
 				styles.forEach(function (style) {
 					var localeStyle;
@@ -522,16 +463,13 @@ L.Control.TopToolbar = L.Control.extend({
 				}, this);
 			}
 
-			$('#styles-select').select2({
+			$('#styles-input').select2({
 				data: data,
 				placeholder: _('Style')
 			});
-			$('#styles-select').val(this.options.stylesSelectValue).trigger('change');
-			$('#styles-select').on('select2:select', this.onStyleSelect.bind(this));
+			$('#styles-input').val(this.options.stylesSelectValue).trigger('change');
+			$('#styles-input').on('select2:select', this.onStyleSelect.bind(this));
 		}
-
-		if (w2ui['editbar'])
-			w2ui['editbar'].resize();
 	},
 
 	processStateChangedCommand: function(commandName, state) {
@@ -547,7 +485,7 @@ L.Control.TopToolbar = L.Control.extend({
 				return;
 			}
 
-			$('#styles-select option').each(function () {
+			$('#styles-input option').each(function () {
 				var value = this.value;
 				// For writer we get UI names; ideally we should be getting only programmatic ones
 				// For eg: 'Text body' vs 'Text Body'
@@ -560,16 +498,13 @@ L.Control.TopToolbar = L.Control.extend({
 			});
 			if (!found) {
 				// we need to add the size
-				$('#styles-select')
+				$('#styles-input')
 					.append($('<option></option>')
 						.text(state));
 			}
 
 			this.options.stylesSelectValue = state;
-			$('#styles-select').val(state).trigger('change');
-		}
-		else if (commandName === '.uno:CharFontName') {
-			this.options.fontsSelectValue = state;
+			$('#styles-input').val(state).trigger('change');
 		}
 
 		window.processStateChangedCommand(commandName, state);

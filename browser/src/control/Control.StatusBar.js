@@ -74,7 +74,7 @@ L.Control.StatusBar = L.Control.extend({
 		return text;
 	},
 
-	_updateToolbarsVisibility: function(/*context*/) {
+	_updateToolbarsVisibility: function(context) {
 		var isReadOnly = this.map.isReadOnlyMode();
 		if (isReadOnly) {
 			this.enableItem('languagestatus', false);
@@ -85,7 +85,7 @@ L.Control.StatusBar = L.Control.extend({
 			this.showItem('insertmode-container', true);
 			this.showItem('statusselectionmode-container', true);
 		}
-		// TODO window.updateVisibilityForToolbar(statusbar, context);
+		window.updateVisibilityForToolbar(this, context);
 	},
 
 	onContextChange: function(event) {
@@ -93,7 +93,10 @@ L.Control.StatusBar = L.Control.extend({
 	},
 
 	callback: function (objectType, eventType, object, data, builder) {
-		if (object.id === 'zoom') {
+		if (object.id === 'search-input') {
+			// its handled by window.setupSearchInput
+			return;
+		} else if (object.id === 'zoom') {
 			var selected = this._generateZoomItems().filter((item) => { return item.id === data; });
 			if (selected.length)
 				this.map.setZoom(selected[0].scale, null, true /* animate? */);
@@ -242,11 +245,8 @@ L.Control.StatusBar = L.Control.extend({
 		];
 	},
 
-	create: function() {
-		if (this.parentContainer.firstChild)
-			return;
-
-		var data = [
+	getToolItems() {
+		return [
 			{type: 'edit',  id: 'search-input', placeholder: _('Search'), text: ''},
 			{type: 'customtoolitem',  id: 'searchprev', command: 'searchprev', text: _UNO('.uno:UpSearch'), enabled: false},
 			{type: 'customtoolitem',  id: 'searchnext', command: 'searchnext', text: _UNO('.uno:DownSearch'), enabled: false},
@@ -279,9 +279,14 @@ L.Control.StatusBar = L.Control.extend({
 			{type: 'menubutton', id: 'zoom', text: '100', selected: 'zoom100', menu: this._generateZoomItems()},
 			{type: 'customtoolitem',  id: 'zoomin', command: 'zoomin', text: _UNO('.uno:ZoomPlus')}
 		]);
+	},
+
+	create: function() {
+		if (this.parentContainer.firstChild)
+			return;
 
 		this.parentContainer.innerHTML = '';
-		this.builder.build(this.parentContainer, data);
+		this.builder.build(this.parentContainer, this.getToolItems());
 
 		this.onLanguagesUpdated();
 		window.setupSearchInput();
@@ -367,6 +372,8 @@ L.Control.StatusBar = L.Control.extend({
 		this.parentContainer.style.display = 'none';
 	},
 
+	// TODO: make base class for toolbar components
+	// jscpd:ignore-start
 	enableItem(command, enable) {
 		this.builder.executeAction(this.parentContainer, {
 			'control_id': command,
@@ -382,6 +389,7 @@ L.Control.StatusBar = L.Control.extend({
 
 		JSDialog.RefreshScrollables();
 	},
+	// jscpd:ignore-end
 
 	updateHtmlItem: function (id, text) {
 		this.builder.updateWidget(this.parentContainer, {

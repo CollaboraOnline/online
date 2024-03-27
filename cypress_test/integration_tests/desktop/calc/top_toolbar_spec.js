@@ -25,8 +25,8 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 	}
 
 	it('Save.', { defaultCommandTimeout: 60000 }, function() {
-		cy.cGet('#tb_editbar_item_bold').click();
-		cy.cGet('#tb_editbar_item_save').click();
+		cy.cGet('#bold').click();
+		cy.cGet('#save').click();
 
 		helper.reload(testFileName, 'calc', true);
 		cy.log('reload happened');
@@ -38,8 +38,8 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		helper.typeIntoDocument('{downarrow}');
 
 		// Apply bold and try to clone it to the whole word.
-		cy.cGet('#tb_editbar_item_bold').click();
-		cy.cGet('#tb_editbar_item_formatpaintbrush').click();
+		cy.cGet('#bold').click();
+		cy.cGet('#toolbar-up #formatpaintbrush').click();
 
 		calcHelper.clickOnFirstCell(true,false);
 
@@ -60,8 +60,8 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 				cy.stub(win, 'open').as('windowOpen');
 			});
 
-		cy.cGet('#tb_editbar_item_print-options .w2ui-tb-down').click();
-		cy.cGet('body').contains('.menu-text', 'Active Sheet').click();
+		cy.cGet('#toolbar-up #printoptions .arrowbackground').click();
+		cy.cGet('body').contains('.ui-combobox-entry', 'Active Sheet').click();
 
 		cy.get('@windowOpen').should('be.called');
 	});
@@ -80,7 +80,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 		calcHelper.clickOnFirstCell();
 
-		cy.cGet('.w2ui-tb-image.w2ui-icon.wraptext').click();
+		cy.cGet('#toolbar-up .unoWrapText').click();
 
 		helper.typeIntoDocument('{enter}');
 		// We use the text position as indicator
@@ -105,18 +105,18 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		// Despite the selection is there, merge cells needs more time here.
 		cy.wait(1000);
 
-		cy.cGet('.w2ui-tb-image.w2ui-icon.togglemergecells').click();
+		cy.cGet('#toolbar-up #togglemergecells').click();
 
 		desktopHelper.checkDialogAndClose('Merge Cells');
 	});
 
 	it('Clear Direct formatting.', function() {
-		cy.cGet('#tb_editbar_item_bold').click();
+		cy.cGet('#bold').click();
 
 		calcHelper.selectEntireSheet();
 
 		cy.cGet('#copy-paste-container table td b').should('exist');
-		cy.cGet('#tb_editbar_item_reset').click();
+		cy.cGet('#reset').click();
 
 		calcHelper.selectEntireSheet();
 
@@ -124,7 +124,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 	});
 
 	it('Apply font style.', function() {
-		cy.cGet('#tb_editbar_item_fonts').click();
+		cy.cGet('#toolbar-up #fontnamecombobox').click();
 		desktopHelper.selectFromListbox('Alef');
 		calcHelper.selectEntireSheet();
 		helper.waitUntilIdle('#copy-paste-container');
@@ -132,46 +132,46 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 	});
 
 	it('Apply font size.', function() {
-		cy.cGet('#tb_editbar_item_fontsizes').click();
+		cy.cGet('#toolbar-up #fontsizecombobox').click();
 		desktopHelper.selectFromListbox('12');
 		calcHelper.selectEntireSheet();
 		cy.cGet('#copy-paste-container table td font').should('have.attr', 'size', '3');
 	});
 
 	it('Apply bold font.', function() {
-		cy.cGet('#tb_editbar_item_bold').click();
+		cy.cGet('#bold').click();
 		calcHelper.selectEntireSheet();
 		cy.cGet('#copy-paste-container table td b').should('exist');
 	});
 
 	it('Apply underline.', function() {
-		cy.cGet('#tb_editbar_item_underline').click();
+		cy.cGet('#underline').click();
 		calcHelper.selectEntireSheet();
 		cy.cGet('#copy-paste-container table td u').should('exist');
 	});
 
 	it('Apply italic.', function() {
-		cy.cGet('#tb_editbar_item_italic').click();
+		cy.cGet('#italic').click();
 		calcHelper.selectEntireSheet();
 		cy.cGet('#copy-paste-container table td i').should('exist');
 	});
 
 	it('Apply strikethrough.', function() {
-		cy.cGet('#tb_editbar_item_strikeout').click();
+		cy.cGet('#strikeout').click();
 		calcHelper.selectEntireSheet();
 		cy.cGet('#copy-paste-container table td s').should('exist');
 	});
 
 	it('Apply highlight color.', function() {
-		cy.cGet('#tb_editbar_item_backgroundcolor').click();
-		desktopHelper.selectColorFromPaletteClassic('8E7CC3');
+		cy.cGet('#backgroundcolor .arrowbackground').click();
+		desktopHelper.selectColorFromPalette('8E7CC3');
 		calcHelper.selectEntireSheet();
 		cy.cGet('#copy-paste-container table td').should('have.attr', 'bgcolor', '#8E7CC3');
 	});
 
 	it('Apply font color.', function() {
-		cy.cGet('#tb_editbar_item_fontcolor').click();
-		desktopHelper.selectColorFromPaletteClassic('FFF2CC');
+		cy.cGet('#fontcolor .arrowbackground').click();
+		desktopHelper.selectColorFromPalette('FFF2CC');
 		calcHelper.selectEntireSheet();
 		cy.cGet('#copy-paste-container table td font').should('have.attr', 'color', '#FFF2CC');
 	});
@@ -179,7 +179,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 	it('Add/Delete decimal places', function() {
 		// Add decimal place
 		cy.cGet('#toolbar-up .w2ui-scroll-right').click();
-		cy.cGet('#tb_editbar_item_numberformatincdecimals').click();
+		cy.cGet('#numberformatincdecimals').click();
 		calcHelper.selectEntireSheet();
 
 		var regex = new RegExp(';0;0.0$');
@@ -190,7 +190,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		// Delete Decimal place
 		calcHelper.clickOnFirstCell();
 
-		cy.cGet('#tb_editbar_item_numberformatdecdecimals').click();
+		cy.cGet('#numberformatdecdecimals').click();
 
 		calcHelper.selectEntireSheet();
 		regex = new RegExp(';0;0$');
@@ -200,7 +200,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 	});
 
 	it('Format as currency.', function() {
-		cy.cGet('#tb_editbar_item_numberformatcurrency').click();
+		cy.cGet('#numberformatcurrency').click();
 
 		calcHelper.selectEntireSheet();
 
@@ -211,7 +211,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 	});
 
 	it('Format as Percent.', function() {
-		cy.cGet('#tb_editbar_item_numberformatpercent').click();
+		cy.cGet('#numberformatpercent').click();
 
 		calcHelper.selectEntireSheet();
 
@@ -223,16 +223,16 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Apply left/right alignment', function() {
 		// Set right aligment first
-		cy.cGet('#tb_editbar_item_textalign .w2ui-tb-down').click();
-		cy.cGet('body').contains('.menu-text', 'Align Right').click();
+		cy.cGet('#textalign .arrowbackground').click();
+		cy.cGet('body').contains('.ui-combobox-entry', 'Align Right').click();
 		calcHelper.selectEntireSheet();
 		cy.cGet('#copy-paste-container table td').should('have.attr', 'align', 'right');
 
 		// Change alignment back
 		calcHelper.clickOnFirstCell();
 
-		cy.cGet('#tb_editbar_item_textalign .w2ui-tb-down').click();
-		cy.cGet('body').contains('.menu-text', 'Align Left').click({force: true}); // tooltip
+		cy.cGet('#textalign .arrowbackground').click();
+		cy.cGet('body').contains('.ui-combobox-entry', 'Align Left').click({force: true}); // tooltip
 		calcHelper.selectEntireSheet();
 		cy.cGet('#copy-paste-container table td').should('have.attr', 'align', 'left');
 	});
