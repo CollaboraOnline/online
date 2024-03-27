@@ -2145,7 +2145,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			'downloadas-direct-pdf': 'exportdirectpdf',
 			'downloadas-epub': 'exportepub',
 			'languagestatusmenu': 'languagemenu',
-			'cancelsearch': 'cancel'
+			'cancelsearch': 'cancel',
+			'printoptions': 'print'
 		};
 		if (iconURLAliases[cleanName]) {
 			cleanName = iconURLAliases[cleanName];
