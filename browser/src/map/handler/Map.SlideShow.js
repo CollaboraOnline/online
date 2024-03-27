@@ -148,7 +148,7 @@ L.Map.SlideShow = L.Handler.extend({
 		// Windowed Presentation
 		if (this._presentInWindow) {
 
-			var popupTitle = "Windowed Presentation: " + this._map['wopi'].BaseFileName;
+			var popupTitle = _('Windowed Presentation: ') + this._map['wopi'].BaseFileName;
 			const htmlContent = this._generateSlideWindowHtml(popupTitle, this._slideURL);
 
 			this._slideShowWindowProxy = window.open('', '_blank', 'popup');
