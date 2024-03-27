@@ -599,7 +599,6 @@ L.Map.TouchGesture = L.Handler.extend({
 		var offset = {x: e.center.x - this._pinchStartCenter.x, y: e.center.y - this._pinchStartCenter.y};
 		var center = {x: this._pinchStartCenter.x - offset.x, y: this._pinchStartCenter.y - offset.y};
 		this._zoom = this._map._limitZoom(this._map.getScaleZoom(e.scale));
-		this._center = this._map.mouseEventToLatLng({clientX: center.x, clientY: center.y});
 		this._origCenter = this._map.mouseEventToLatLng({clientX: center.x, clientY: center.y});
 
 
@@ -625,7 +624,7 @@ L.Map.TouchGesture = L.Handler.extend({
 			var thisObj = this;
 			this._map._docLayer.zoomStepEnd(finalZoom, this._origCenter,
 				function (newMapCenter) { // mapUpdater
-					thisObj._map.setView(newMapCenter || thisObj._center, finalZoom);
+					thisObj._map.setView(newMapCenter, finalZoom);
 				},
 				// showMarkers
 				function () {
