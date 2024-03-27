@@ -462,6 +462,7 @@ class Dispatcher {
 	}
 
 	private addWriterCommands() {
+
 		this.actionsMap['.uno:ShowResolvedAnnotations'] = function () {
 			const items = app.map['stateChangeHandler'];
 			let val = items.getItemValue('.uno:ShowResolvedAnnotations');
