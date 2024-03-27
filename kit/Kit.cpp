@@ -956,6 +956,10 @@ bool Document::sendFrame(const char* buffer, int length, WSOpCode opCode)
 
 void Document::trimIfInactive()
 {
+    // Don't perturb memory un-necessarily
+    if (_isBgSaveProcess)
+        return;
+
     // FIXME: multi-document mobile optimization ?
     for (const auto& it : _sessions)
     {
@@ -975,6 +979,10 @@ void Document::trimIfInactive()
 
 void Document::trimAfterInactivity()
 {
+    // Don't perturb memory un-necessarily
+    if (_isBgSaveProcess)
+        return;
+
     if (std::chrono::duration_cast<std::chrono::seconds>(std::chrono::steady_clock::now() -
                                                          _lastMemTrimTime) < std::chrono::seconds(30))
     {
