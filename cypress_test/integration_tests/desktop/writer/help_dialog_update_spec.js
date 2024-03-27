@@ -58,7 +58,7 @@ describe(['tagscreenshot'], 'Help dialog screenshot updation', function() {
 	it('Document repair', function() {
 		cy.cGet('#toolbar-up > .w2ui-scroll-right').click();
 		//insert
-		cy.cGet('#tb_editbar_item_insertshapes').click();
+		cy.cGet('#insertshapes').click();
 		cy.cGet('.col.w2ui-icon.symbolshapes').click();
 		cy.cGet('.leaflet-control-buttons-disabled path.leaflet-interactive').should('exist');
 		cy.cGet('#menu-editmenu').click();
@@ -72,7 +72,7 @@ describe(['tagscreenshot'], 'Help dialog screenshot updation', function() {
 		hideSidebar();
 
 		cy.cGet('#toolbar-up > .w2ui-scroll-right').click();
-		cy.cGet('#tb_editbar_item_insertannotation').click();
+		cy.cGet('#insertannotation').click();
 		cy.cGet('#annotation-modify-textarea-new').type('comment added');
 		cy.cGet('#annotation-save-new').click(); // save button
 		cy.wait(1000);
@@ -94,7 +94,7 @@ describe(['tagscreenshot'], 'Help dialog screenshot updation', function() {
 		hideSidebar();
 
 		cy.cGet('#toolbar-up > .w2ui-scroll-right').click();
-		cy.cGet('#tb_editbar_item_inserttable').click();
+		cy.cGet('#inserttable').click();
 		cy.cGet('.inserttable-grid > :nth-child(4) > :nth-child(4)').trigger('mouseover');
 
 		helper.waitUntilIdle('#inserttable-popup');
@@ -113,7 +113,7 @@ describe(['tagscreenshot'], 'Help dialog screenshot updation', function() {
 
 	it('Insert special', function() {
 		cy.cGet('#toolbar-up > .w2ui-scroll-right').click();
-		cy.cGet('#tb_editbar_item_insertsymbol').click();
+		cy.cGet('#insertsymbol').click();
 		cy.cGet('#SpecialCharactersDialog').should('exist');
 		cy.cGet('#SpecialCharactersDialog').screenshot('special-character');
 		copyScreenshot('special-character.png');
@@ -128,7 +128,7 @@ describe(['tagscreenshot'], 'Help dialog screenshot updation', function() {
 
 		cy.cGet('#toolbar-up > .w2ui-scroll-right').click();
 		//insert
-		cy.cGet('#tb_editbar_item_insertshapes').click();
+		cy.cGet('#insertshapes').click();
 		cy.cGet('.col.w2ui-icon.symbolshapes').click();
 
 		cy.cGet('.leaflet-control-buttons-disabled path.leaflet-interactive').should('exist');

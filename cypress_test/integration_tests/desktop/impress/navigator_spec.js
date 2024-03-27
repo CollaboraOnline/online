@@ -90,7 +90,7 @@ describe.skip(['tagdesktop'], 'Scroll through document, insert/delete items', fu
 		cy.cGet('#toolbar-up > .w2ui-scroll-right').click();
 
 		//Insert Shape
-		cy.cGet('#tb_editbar_item_insertshapes').click();
+		cy.cGet('#insertshapes').click();
 		cy.cGet('.col.w2ui-icon.symbolshapes').click();
 		checkIfItemSelectedAndVisible('Shape 3 (Shape)');
 		//delete
@@ -98,7 +98,7 @@ describe.skip(['tagdesktop'], 'Scroll through document, insert/delete items', fu
 		checkIfItemNotExist('Shape 3 (Shape)');
 
 		//Insert Chart
-		cy.cGet('#tb_editbar_item_insertobjectchart').click();
+		cy.cGet('#insertobjectchart').click();
 		checkIfItemSelectedAndVisible('Object 4');
 		//delete
 		helper.typeIntoDocument('{del}');

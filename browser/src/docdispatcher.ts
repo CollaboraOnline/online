@@ -20,8 +20,14 @@ class Dispatcher {
 		this.actionsMap['remotelink'] = function () {
 			app.map.fire('postMessage', { msgId: 'UI UI_PickLink' });
 		};
+		// TODO: deduplicate
 		this.actionsMap['hyperlinkdialog'] = function () {
 			app.map.showHyperlinkDialog();
+		};
+		this.actionsMap['inserthyperlink'] = () => {
+			if (app.map.getDocType() == 'spreadsheet')
+				app.map.sendUnoCommand('.uno:HyperlinkDialog');
+			else app.map.showHyperlinkDialog();
 		};
 		this.actionsMap['rev-history'] = function () {
 			app.map.openRevisionHistory();
@@ -140,6 +146,13 @@ class Dispatcher {
 		this.actionsMap['next'] = () => {
 			if (app.map._docLayer._docType === 'text') app.map.goToPage('next');
 			else app.map.setPart('next');
+		};
+
+		this.actionsMap['inserttextbox'] = () => {
+			app.map.sendUnoCommand('.uno:Text?CreateDirectly:bool=true');
+		};
+		this.actionsMap['insertannotation'] = () => {
+			app.map.insertComment();
 		};
 	}
 
@@ -338,6 +351,34 @@ class Dispatcher {
 		};
 		this.actionsMap['insertpage'] = function () {
 			app.map.insertPage();
+		};
+
+		this.actionsMap['leftpara'] = function () {
+			app.map.sendUnoCommand(
+				(window as any).getUNOCommand({
+					textCommand: '.uno:LeftPara',
+					objectCommand: '.uno:ObjectAlignLeft',
+					unosheet: '.uno:AlignLeft',
+				}),
+			);
+		};
+		this.actionsMap['centerpara'] = function () {
+			app.map.sendUnoCommand(
+				(window as any).getUNOCommand({
+					textCommand: '.uno:CenterPara',
+					objectCommand: '.uno:AlignCenter',
+					unosheet: '.uno:AlignHorizontalCenter',
+				}),
+			);
+		};
+		this.actionsMap['rightpara'] = function () {
+			app.map.sendUnoCommand(
+				(window as any).getUNOCommand({
+					textCommand: '.uno:RightPara',
+					objectCommand: '.uno:ObjectAlignRight',
+					unosheet: '.uno:AlignRight',
+				}),
+			);
 		};
 	}
 

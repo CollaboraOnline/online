@@ -115,9 +115,6 @@ function onClick(e, id, item) {
 	else if (id === 'present-in-window') {
 		map.fire('presentinwindow');
 	}
-	else if (id === 'insertannotation') {
-		map.insertComment();
-	}
 	else if (id === 'insertgraphic' || item.id === 'localgraphic') {
 		L.DomUtil.get('insertgraphic').click();
 	}
@@ -144,12 +141,6 @@ function onClick(e, id, item) {
 	}
 	else if (id === 'close' || id === 'closemobile') {
 		map.uiManager.enterReadonlyOrClose();
-	}
-	else if (id === 'link') {
-		if (map.getDocType() == 'spreadsheet')
-			map.sendUnoCommand('.uno:HyperlinkDialog');
-		else
-			map.showHyperlinkDialog();
 	}
 }
 
@@ -929,6 +920,9 @@ function onWopiProps(e) {
 
 function processStateChangedCommand(commandName, state) {
 	var toolbar = w2ui['editbar'];
+	if (!toolbar)
+		return;
+
 	var color, div;
 
 	if (!commandName)
@@ -1273,7 +1267,8 @@ function updateVisibilityForToolbar(toolbar, context) {
 	var toShow = [];
 	var toHide = [];
 
-	toolbar.items.forEach(function(item) {
+	var items = toolbar.getToolItems ? toolbar.getToolItems() : toolbar.items;
+	items.forEach(function(item) {
 		if (window.ThisIsTheiOSApp && window.mode.isTablet() && item.iosapptablet === false) {
 			toHide.push(item.id);
 		}
@@ -1300,8 +1295,8 @@ function updateVisibilityForToolbar(toolbar, context) {
 	window.app.console.log('explicitly hiding: ' + toHide);
 	window.app.console.log('explicitly showing: ' + toShow);
 
-	toHide.forEach(function(item) { toolbar.hide(item); });
-	toShow.forEach(function(item) { toolbar.show(item); });
+	toHide.forEach(function(item) { toolbar.showItem ? toolbar.showItem(item, false) : toolbar.hide(item); });
+	toShow.forEach(function(item) { toolbar.showItem ? toolbar.showItem(item, true) : toolbar.show(item); });
 }
 
 global.onClose = onClose;

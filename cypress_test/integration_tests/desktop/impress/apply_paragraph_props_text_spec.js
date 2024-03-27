@@ -12,7 +12,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties
 		testFileName = helper.beforeAll(origTestFileName, 'impress');
 		desktopHelper.switchUIToCompact();
 		cy.cGet('#toolbar-up > .w2ui-scroll-right').click();
-		cy.cGet('#tb_editbar_item_modifypage').click();
+		cy.cGet('#modifypage').click();
 		impressHelper.selectTextShapeInTheCenter();
 	});
 
@@ -25,12 +25,12 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties
 			.should('have.attr', 'x', '1400');
 
 		impressHelper.selectTextOfShape();
-		cy.cGet('#tb_editbar_item_rightpara').click();
+		cy.cGet('#rightpara').click();
 		impressHelper.triggerNewSVGForShapeInTheCenter();
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '23586');
 
-		cy.cGet('#tb_editbar_item_leftpara').click();
+		cy.cGet('#leftpara').click();
 		impressHelper.triggerNewSVGForShapeInTheCenter();
 
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
@@ -42,7 +42,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties
 			.should('have.attr', 'x', '1400');
 
 		impressHelper.selectTextOfShape();
-		cy.cGet('#tb_editbar_item_centerpara').click();
+		cy.cGet('#centerpara').click();
 		impressHelper.triggerNewSVGForShapeInTheCenter();
 
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
@@ -54,14 +54,14 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties
 			.should('have.attr', 'x', '1400');
 
 		impressHelper.selectTextOfShape();
-		cy.cGet('#tb_editbar_item_rightpara').click();
+		cy.cGet('#rightpara').click();
 		impressHelper.triggerNewSVGForShapeInTheCenter();
 
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '23586');
 
 		impressHelper.selectTextOfShape();
-		cy.cGet('#tb_editbar_item_justifypara').click();
+		cy.cGet('#justifypara').click();
 		impressHelper.triggerNewSVGForShapeInTheCenter();
 
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
@@ -74,7 +74,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties
 			.should('not.exist');
 
 		impressHelper.selectTextOfShape();
-		cy.cGet('#tb_editbar_item_defaultbullet').click();
+		cy.cGet('#defaultbullet').click();
 		impressHelper.triggerNewSVGForShapeInTheCenter();
 
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .BulletChars')
@@ -87,7 +87,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties
 			.should('not.have.attr', 'ooo:numbering-type');
 
 		impressHelper.selectTextOfShape();
-		cy.cGet('#tb_editbar_item_defaultnumbering').click();
+		cy.cGet('#defaultnumbering').click();
 		impressHelper.triggerNewSVGForShapeInTheCenter();
 
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .SVGTextShape tspan')
@@ -101,8 +101,8 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties
 		impressHelper.selectTextOfShape();
 		// Need to wait for click to work, not sure why
 		cy.wait(500);
-		cy.cGet('#tb_editbar_item_linespacing').click();
-		cy.cGet('body').contains('td','Increase Paragraph Spacing').click();
+		cy.cGet('#linespacing').click();
+		cy.cGet('#linespacing-dropdown .ui-combobox-entry').contains('Increase Paragraph Spacing').click();
 
 		impressHelper.triggerNewSVGForShapeInTheCenter();
 
@@ -110,8 +110,8 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties
 			.should('have.attr', 'y', '6700');
 
 		impressHelper.selectTextOfShape();
-		cy.cGet('#tb_editbar_item_linespacing').click();
-		cy.cGet('body').contains('td','Decrease Paragraph Spacing').click();
+		cy.cGet('#linespacing').click();
+		cy.cGet('#linespacing-dropdown .ui-combobox-entry').contains('Decrease Paragraph Spacing').click();
 
 		impressHelper.triggerNewSVGForShapeInTheCenter();
 

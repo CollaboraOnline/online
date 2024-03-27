@@ -17,10 +17,10 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Sidebar Tests', function()
 	});
 
 	it.skip('Switch to slide transition Deck', function() {
-		cy.cGet('#tb_editbar_item_slidechangewindow .w2ui-button').should('not.have.class', 'checked');
+		cy.cGet('#slidechangewindow .w2ui-button').should('not.have.class', 'checked');
 		cy.cGet('#layoutvalueset').should('be.visible');
-		cy.cGet('#tb_editbar_item_slidechangewindow .w2ui-button').click({force: true});
-		cy.cGet('#tb_editbar_item_slidechangewindow .w2ui-button').should('have.class', 'checked');
+		cy.cGet('#slidechangewindow .w2ui-button').click({force: true});
+		cy.cGet('#slidechangewindow .w2ui-button').should('have.class', 'checked');
 		cy.cGet('#layoutvalueset').should('not.exist');
 		cy.cGet('#transitions_iconswin').should('be.visible');
 	});

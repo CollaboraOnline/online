@@ -8,10 +8,10 @@ var helper = require('./helper');
 function showSidebar() {
 	cy.log('>> showSidebar - start');
 
-	cy.cGet('#tb_editbar_item_sidebar .w2ui-button').should('not.have.class', 'checked');
+	cy.cGet('#sidebar').should('not.have.class', 'selected');
 	cy.cGet('#sidebar-dock-wrapper').should('not.be.visible');
-	cy.cGet('#tb_editbar_item_sidebar .w2ui-button').click({force: true});
-	cy.cGet('#tb_editbar_item_sidebar .w2ui-button').should('have.class', 'checked');
+	cy.cGet('#sidebar').click({force: true});
+	cy.cGet('#sidebar').should('have.class', 'selected');
 	cy.cGet('#sidebar-dock-wrapper').should('be.visible');
 
 	cy.log('<< showSidebar - end');
@@ -22,13 +22,25 @@ function showSidebar() {
 function hideSidebar() {
 	cy.log('>> hideSidebar - start');
 
-	cy.cGet('#tb_editbar_item_sidebar .w2ui-button').should('have.class', 'checked');
+	cy.cGet('#sidebar').should('have.class', 'selected');
 	cy.cGet('#sidebar-dock-wrapper').should('be.visible');
-	cy.cGet('#tb_editbar_item_sidebar .w2ui-button').click({force: true});
-	cy.cGet('#tb_editbar_item_sidebar .w2ui-button').should('not.have.class', 'checked');
+	cy.cGet('#sidebar').click({force: true});
+	cy.cGet('#sidebar').should('not.have.class', 'selected');
 	cy.cGet('#sidebar-dock-wrapper').should('not.be.visible');
 
 	cy.log('<< hideSidebar - end');
+}
+
+function hideSidebarImpress() {
+	cy.log('>> hideSidebarImpress - start');
+
+	cy.cGet('#modifypage').should('have.class', 'selected');
+	cy.cGet('#sidebar-dock-wrapper').should('be.visible');
+	cy.cGet('#modifypage button').click({force: true});
+	cy.cGet('#modifypage').should('not.have.class', 'selected');
+	cy.cGet('#sidebar-dock-wrapper').should('not.be.visible');
+
+	cy.log('<< hideSidebarImpress - end');
 }
 
 // Make the status bar visible if it's hidden at the moment.
@@ -56,7 +68,7 @@ function showStatusBarIfHidden() {
 function showSidebarIfHidden() {
 	cy.log('>> showSidebarIfHidden - start');
 
-	cy.get('#tb_editbar_item_sidebar .w2ui-button')
+	cy.get('#sidebar')
 		.then(function(sidebarItem) {
 			if (!sidebarItem.hasClass('checked')) {
 				showSidebar();
@@ -73,7 +85,7 @@ function showSidebarIfHidden() {
 function hideSidebarIfVisible() {
 	cy.log('>> hideSidebarIfVisible - start');
 
-	cy.get('#tb_editbar_item_sidebar .w2ui-button')
+	cy.get('#sidebar')
 		.then(function(sidebarItem) {
 			if (sidebarItem.hasClass('checked')) {
 				hideSidebar();
@@ -89,16 +101,6 @@ function hideSidebarIfVisible() {
 // Select a color from colour palette widget used on top toolbar.
 // Parameters:
 // color - a hexadecimal color code without the '#' mark (e.g. 'FF011B')
-function selectColorFromPaletteClassic(color) {
-	cy.log('>> selectColorFromPalette - start');
-
-	cy.cGet('.w2ui-overlay').should('be.visible');
-	cy.cGet('.w2ui-color [name="' + color + '"]').click();
-	cy.cGet('.w2ui-overlay').should('not.exist');
-
-	cy.log('<< selectColorFromPalette - end');
-}
-
 function selectColorFromPalette(color) {
 	cy.log('>> selectColorFromPalette - start');
 
@@ -511,11 +513,11 @@ function setAccessibilityState(enable) {
 
 module.exports.showSidebar = showSidebar;
 module.exports.hideSidebar = hideSidebar;
+module.exports.hideSidebarImpress = hideSidebarImpress;
 module.exports.showStatusBarIfHidden = showStatusBarIfHidden;
 module.exports.showSidebarIfHidden = showSidebarIfHidden;
 module.exports.hideSidebarIfVisible = hideSidebarIfVisible;
 module.exports.selectColorFromPalette = selectColorFromPalette;
-module.exports.selectColorFromPaletteClassic = selectColorFromPaletteClassic;
 module.exports.selectFromListbox = selectFromListbox;
 module.exports.selectFromJSDialogListbox = selectFromJSDialogListbox;
 module.exports.checkDialogAndClose = checkDialogAndClose;
