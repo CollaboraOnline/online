@@ -1020,10 +1020,8 @@ bool DocumentBroker::download(
         }
     }
 
-#if ENABLE_SUPPORT_KEY
-    if (!COOLWSD::OverrideWatermark.empty())
+    if (config::isSupportKeyEnabled() && !COOLWSD::OverrideWatermark.empty())
         watermarkText = COOLWSD::OverrideWatermark;
-#endif
 
     session->setUserId(userId);
     session->setUserName(username);
