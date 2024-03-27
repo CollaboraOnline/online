@@ -1083,8 +1083,10 @@ L.Control.UIManager = L.Control.extend({
 
 	hideFormulaTooltip: function() {
 		var elem = $('.leaflet-layer');
-		if ($('.ui-tooltip').length > 0)
+		if ($('.ui-tooltip').length > 0) {
+			elem.tooltip();
 			elem.tooltip('option', 'disabled', true);
+		}
 	},
 
 	// Snack bar
@@ -1720,6 +1722,7 @@ L.Control.UIManager = L.Control.extend({
 			});
 		}
 		else {
+			elem.tooltip();
 			elem.tooltip({disabled: true});
 			(new Hammer(elem.get(0), {recognizers: [[Hammer.Press]]}))
 				.on('press', function () {
