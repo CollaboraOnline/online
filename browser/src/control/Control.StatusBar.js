@@ -26,6 +26,7 @@ L.Control.StatusBar = L.Control.extend({
 				mobileWizard: this,
 				map: this.map,
 				cssClass: 'jsdialog',
+				noLabelsForUnoButtons: true,
 				callback: this.callback.bind(this)
 			});
 
@@ -246,9 +247,9 @@ L.Control.StatusBar = L.Control.extend({
 
 		var data = [
 			{type: 'edit',  id: 'search-input', placeholder: _('Search'), text: ''},
-			{type: 'customtoolitem',  id: 'searchprev', command: 'searchprev', hint: _UNO('.uno:UpSearch'), disabled: true},
-			{type: 'customtoolitem',  id: 'searchnext', command: 'searchnext', hint: _UNO('.uno:DownSearch'), disabled: true},
-			{type: 'customtoolitem',  id: 'cancelsearch', command: 'cancelsearch', hint: _('Cancel the search'), visible: false},
+			{type: 'customtoolitem',  id: 'searchprev', command: 'searchprev', text: _UNO('.uno:UpSearch'), disabled: true},
+			{type: 'customtoolitem',  id: 'searchnext', command: 'searchnext', text: _UNO('.uno:DownSearch'), disabled: true},
+			{type: 'customtoolitem',  id: 'cancelsearch', command: 'cancelsearch', text: _('Cancel the search'), visible: false},
 			{type: 'separator', id: 'searchbreak', orientation: 'vertical' },
 			this._generateHtmlItem('statusdocpos'), 					// spreadsheet
 			this._generateHtmlItem('rowcolselcount'), 					// spreadsheet
@@ -268,14 +269,14 @@ L.Control.StatusBar = L.Control.extend({
 			{type: 'spacer',  id: 'permissionspacer'},
 			{type: 'menubutton', id: 'userlist:UsersListMenu', visible: false},
 			{type: 'separator', id: 'userlistbreak', visible: false, orientation: 'vertical' },
-			{type: 'customtoolitem',  id: 'prev', command: 'prev', hint: _UNO('.uno:PageUp', 'text')},
-			{type: 'customtoolitem',  id: 'next', command: 'next', hint: _UNO('.uno:PageDown', 'text')},
+			{type: 'customtoolitem',  id: 'prev', command: 'prev', text: _UNO('.uno:PageUp', 'text')},
+			{type: 'customtoolitem',  id: 'next', command: 'next', text: _UNO('.uno:PageDown', 'text')},
 			{type: 'separator', id: 'prevnextbreak', orientation: 'vertical'},
 		].concat(window.mode.isTablet() ? [] : [
-			{type: 'customtoolitem',  id: 'zoomreset', command: 'zoomreset', hint: _('Reset zoom')},
-			{type: 'customtoolitem',  id: 'zoomout', command: 'zoomout', hint: _UNO('.uno:ZoomMinus')},
+			{type: 'customtoolitem',  id: 'zoomreset', command: 'zoomreset', text: _('Reset zoom')},
+			{type: 'customtoolitem',  id: 'zoomout', command: 'zoomout', text: _UNO('.uno:ZoomMinus')},
 			{type: 'menubutton', id: 'zoom', text: '100', selected: 'zoom100', menu: this._generateZoomItems()},
-			{type: 'customtoolitem',  id: 'zoomin', command: 'zoomin', hint: _UNO('.uno:ZoomPlus')}
+			{type: 'customtoolitem',  id: 'zoomin', command: 'zoomin', text: _UNO('.uno:ZoomPlus')}
 		]);
 
 		this.parentContainer.innerHTML = '';
