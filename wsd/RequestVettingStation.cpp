@@ -23,11 +23,12 @@
 #include <common/JsonUtil.hpp>
 #include <Util.hpp>
 
-extern std::shared_ptr<DocumentBroker>
-findOrCreateDocBroker(const std::shared_ptr<ProtocolHandlerInterface>& proto,
-                      DocumentBroker::ChildType type, const std::string& uri,
+extern std::pair<std::shared_ptr<DocumentBroker>, std::string>
+findOrCreateDocBroker(DocumentBroker::ChildType type, const std::string& uri,
                       const std::string& docKey, const std::string& id, const Poco::URI& uriPublic,
-                      unsigned mobileAppDocId = 0);
+                      unsigned mobileAppDocId,
+                      std::unique_ptr<WopiStorage::WOPIFileInfo> wopiFileInfo);
+
 namespace
 {
 void sendLoadResult(const std::shared_ptr<ClientSession>& clientSession, bool success,
@@ -255,14 +256,14 @@ void RequestVettingStation::checkFileInfo(const Poco::URI& uri, bool isReadOnly,
         if (_checkFileInfo && _checkFileInfo->state() == CheckFileInfo::State::Pass &&
             _checkFileInfo->wopiInfo())
         {
+            // The final URL might be different due to redirection.
+            const std::string url = checkFileInfo.url().toString();
+            const auto uriPublic = RequestDetails::sanitizeURI(url);
+            const auto docKey = RequestDetails::getDocKey(uriPublic);
+            LOG_DBG("WOPI::CheckFileInfo succeeded and will create DocBroker ["
+                    << docKey << "] now with URL: [" << url << ']');
             if (_ws)
             {
-                // The final URL might be different due to redirection.
-                const std::string url = checkFileInfo.url().toString();
-                const auto uriPublic = RequestDetails::sanitizeURI(url);
-                const auto docKey = RequestDetails::getDocKey(uriPublic);
-                LOG_DBG("WOPI::CheckFileInfo succeeded and will create DocBroker ["
-                        << docKey << "] now with URL: [" << url << ']');
                 if (createDocBroker(docKey, url, uriPublic))
                 {
                     assert(_docBroker && "Must have docBroker");
@@ -272,7 +273,15 @@ void RequestVettingStation::checkFileInfo(const Poco::URI& uri, bool isReadOnly,
             else
             {
                 LOG_DBG("WOPI::CheckFileInfo succeeded but we don't have the client's "
-                        "WebSocket yet. Deferring DocBroker creation");
+                        "WebSocket yet. Creating DocBroker without connection");
+                auto [docBroker, errorMsg] = findOrCreateDocBroker(
+                    DocumentBroker::ChildType::Interactive, url, docKey, _id, uriPublic,
+                    _mobileAppDocId, _checkFileInfo->wopiFileInfo(uriPublic));
+                _docBroker = docBroker;
+                if (!_docBroker)
+                {
+                    LOG_DBG("Failed to find document [" << docKey << "]: " << errorMsg);
+                }
             }
         }
         else
@@ -300,19 +309,33 @@ bool RequestVettingStation::createDocBroker(const std::string& docKey, const std
                                             const Poco::URI& uriPublic)
 {
     // Request a kit process for this doc.
-    _docBroker = findOrCreateDocBroker(std::static_pointer_cast<ProtocolHandlerInterface>(_ws),
-                                       DocumentBroker::ChildType::Interactive, url, docKey, _id,
-                                       uriPublic, _mobileAppDocId);
-    if (!_docBroker)
+    const auto [docBroker, error] =
+        findOrCreateDocBroker(DocumentBroker::ChildType::Interactive, url, docKey, _id, uriPublic,
+                              _mobileAppDocId, /*wopiFileInfo=*/nullptr);
+
+    _docBroker = docBroker;
+    if (_docBroker)
     {
-        LOG_ERR("Failed to create DocBroker [" << docKey << ']');
-        sendErrorAndShutdown(_ws, "error: cmd=internal kind=load",
-                             WebSocketHandler::StatusCodes::UNEXPECTED_CONDITION);
-        return false;
+        // Indicate to the client that we're connecting to the docbroker.
+        if (_ws)
+        {
+            const std::string statusConnect = "statusindicator: connect";
+            LOG_TRC("Sending to Client [" << statusConnect << ']');
+            _ws->sendTextMessage(statusConnect.data(), statusConnect.size());
+        }
+
+        LOG_DBG("DocBroker [" << docKey << "] acquired for [" << url << ']');
+        return true;
     }
 
-    LOG_DBG("DocBroker [" << docKey << "] acquired for [" << url << ']');
-    return true;
+    // Failed.
+    LOG_ERR("Failed to create DocBroker [" << docKey << "]: " << error);
+    if (_ws)
+    {
+        sendErrorAndShutdown(_ws, error, WebSocketHandler::StatusCodes::UNEXPECTED_CONDITION);
+    }
+
+    return false;
 }
 
 void RequestVettingStation::createClientSession(const std::string& docKey, const std::string& url,
@@ -333,11 +356,13 @@ void RequestVettingStation::createClientSession(const std::string& docKey, const
     LOG_DBG("ClientSession [" << clientSession->getName() << "] for [" << docKey
                               << "] acquired for [" << url << ']');
 
-    Poco::JSON::Object::Ptr wopiInfo;
+    std::shared_ptr<std::unique_ptr<WopiStorage::WOPIFileInfo>> wopiFileInfo;
 #if !MOBILEAPP
     assert((!_checkFileInfo || _checkFileInfo->wopiInfo()) &&
            "Must have WopiInfo when CheckFileInfo exists");
-    wopiInfo = _checkFileInfo ? _checkFileInfo->wopiInfo() : nullptr;
+    // unique_ptr is not copyable, so cannot be captured in a std::function-wrapped lambda.
+    wopiFileInfo = std::make_shared<std::unique_ptr<WopiStorage::WOPIFileInfo>>(
+        _checkFileInfo ? _checkFileInfo->wopiFileInfo(uriPublic) : nullptr);
 #endif // !MOBILEAPP
 
     // Transfer the client socket to the DocumentBroker when we get back to the poll:
@@ -345,7 +370,7 @@ void RequestVettingStation::createClientSession(const std::string& docKey, const
     const auto docBroker = _docBroker;
     _docBroker->setupTransfer(
         _socket,
-        [clientSession, uriPublic, wopiInfo=std::move(wopiInfo), ws,
+        [clientSession, uriPublic, wopiFileInfo = std::move(wopiFileInfo), ws,
          docBroker](const std::shared_ptr<Socket>& moveSocket) mutable
         {
             try
@@ -359,38 +384,16 @@ void RequestVettingStation::createClientSession(const std::string& docKey, const
 
                 LOG_DBG_S('#' << moveSocket->getFD() << " handler is " << clientSession->getName());
 
-                std::unique_ptr<WopiStorage::WOPIFileInfo> wopiFileInfo;
-#if !MOBILEAPP
-                if (wopiInfo)
-                {
-                    std::size_t size = 0;
-                    std::string filename, ownerId, lastModifiedTime;
-
-                    JsonUtil::findJSONValue(wopiInfo, "Size", size);
-                    JsonUtil::findJSONValue(wopiInfo, "OwnerId", ownerId);
-                    JsonUtil::findJSONValue(wopiInfo, "BaseFileName", filename);
-                    JsonUtil::findJSONValue(wopiInfo, "LastModifiedTime", lastModifiedTime);
-
-                    StorageBase::FileInfo fileInfo =
-                        StorageBase::FileInfo({ filename, ownerId, lastModifiedTime });
-
-                    wopiFileInfo =
-                        std::make_unique<WopiStorage::WOPIFileInfo>(fileInfo, wopiInfo, uriPublic);
-                }
-#else // MOBILEAPP
-                assert(!wopiInfo && "Wopi is not used on mobile");
-#endif // MOBILEAPP
-
                 // Add and load the session.
                 // Will download synchronously, but in own docBroker thread.
-                docBroker->addSession(clientSession, std::move(wopiFileInfo));
+                docBroker->addSession(clientSession, std::move(*wopiFileInfo));
 
                 COOLWSD::checkDiskSpaceAndWarnClients(true);
                 // Users of development versions get just an info
                 // when reaching max documents or connections
                 COOLWSD::checkSessionLimitsAndWarnClients();
 
-                sendLoadResult(clientSession, true, "");
+                sendLoadResult(clientSession, /*success=*/true, /*errorMsg=*/std::string());
             }
             catch (const UnauthorizedRequestException& exc)
             {

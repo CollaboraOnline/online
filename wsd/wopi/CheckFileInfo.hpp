@@ -19,6 +19,7 @@
 #include <RequestDetails.hpp>
 #include <Socket.hpp>
 #include <StateEnum.hpp>
+#include <wopi/WopiStorage.hpp>
 #include <TraceEvent.hpp>
 
 #include <Poco/JSON/Object.h>
@@ -64,7 +65,10 @@ public:
     const std::string& docKey() const { return _docKey; }
 
     /// Returns the parsed response JSON, if any.
-    Poco::JSON::Object::Ptr wopiInfo() const { return _wopiInfo; };
+    Poco::JSON::Object::Ptr wopiInfo() const { return _wopiInfo; }
+
+    /// Returns the parsed wopiInfo JSON into FileInfo.
+    std::unique_ptr<WopiStorage::WOPIFileInfo> wopiFileInfo(const Poco::URI& uriPublic) const;
 
 private:
     inline void logPrefix(std::ostream& os) const

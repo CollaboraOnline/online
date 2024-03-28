@@ -37,34 +37,9 @@
 #if !MOBILEAPP
 #include "Admin.hpp"
 #include <wopi/WopiStorage.hpp>
-#else
-//FIXME: Move to a stub file.
-class WopiStorage : public StorageBase
-{
-public:
-    class WOPIFileInfo : public FileInfo
-    {
-    public:
-        enum class TriState
-        {
-            False,
-            True,
-            Unset
-        };
-
-        std::string getTemplateSource() const { return std::string(); }
-
-        bool getDisablePrint() const { return false; }
-        bool getDisableExport() const { return false; }
-        bool getDisableCopy() const { return false; }
-        bool getEnableOwnerTermination() const { return false; }
-
-        TriState getDisableChangeTrackingShow() const { return TriState::Unset; }
-        TriState getDisableChangeTrackingRecord() const { return TriState::Unset; }
-        TriState getHideChangeTrackingControls() const { return TriState::Unset; }
-    };
-};
-#endif
+#else // MOBILEAPP
+#include <MobileApp.hpp>
+#endif // MOBILEAPP
 
 // Forwards.
 class PrisonerRequestDispatcher;
@@ -321,15 +296,20 @@ public:
         Interactive, Batch
     };
 
-    /// Dummy document broker that is marked to destroy.
-    DocumentBroker();
+    DocumentBroker(ChildType type, const std::string& uri, const Poco::URI& uriPublic,
+                   const std::string& docKey, unsigned mobileAppDocId,
+                   std::unique_ptr<WopiStorage::WOPIFileInfo> wopiFileInfo);
 
-    DocumentBroker(ChildType type,
-                   const std::string& uri,
-                   const Poco::URI& uriPublic,
-                   const std::string& docKey,
-                   unsigned mobileAppDocId = 0);
+protected:
+    /// Used by derived classes.
+    DocumentBroker(ChildType type, const std::string& uri, const Poco::URI& uriPublic,
+                   const std::string& docKey)
+        : DocumentBroker(type, uri, uriPublic, docKey, /*mobileAppDocId=*/0,
+                         /*wopiFileInfo=*/nullptr)
+    {
+    }
 
+public:
     virtual ~DocumentBroker();
 
     /// Called when removed from the DocBrokers list
@@ -606,9 +586,16 @@ private:
 
     void refreshLock();
 
+    /// Downloads the document ahead-of-time.
+    bool downloadAdvance(const std::string& jailId, const WopiStorage::WOPIFileInfo& wopiFileInfo);
+
     /// Loads a document from the public URI into the jail.
     bool download(const std::shared_ptr<ClientSession>& session, const std::string& jailId,
                   std::unique_ptr<WopiStorage::WOPIFileInfo> wopiFileInfo);
+
+    /// Process the configured plugins, if any, after downloading the document file.
+    bool processPlugins(std::string& localPath);
+
     bool isLoaded() const { return _docState.hadLoaded(); }
     bool isInteractive() const { return _docState.isInteractive(); }
 
@@ -1363,6 +1350,10 @@ private:
     std::string _uriJailedAnonym;
     std::string _jailId;
     std::string _filename;
+
+    /// The WopiFileInfo of the initial request loading the document for the first time.
+    /// This has a single-use, and then it's reset.
+    std::unique_ptr<WopiStorage::WOPIFileInfo> _initialWopiFileInfo;
 
     /// The state of the document.
     /// This regulates all other primary operations.

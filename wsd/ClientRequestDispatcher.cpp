@@ -103,7 +103,8 @@ inline void shutdownLimitReached(const std::shared_ptr<ProtocolHandlerInterface>
 std::pair<std::shared_ptr<DocumentBroker>, std::string>
 findOrCreateDocBroker(DocumentBroker::ChildType type, const std::string& uri,
                       const std::string& docKey, const std::string& id, const Poco::URI& uriPublic,
-                      unsigned mobileAppDocId = 0)
+                      unsigned mobileAppDocId,
+                      std::unique_ptr<WopiStorage::WOPIFileInfo> wopiFileInfo)
 {
     LOG_INF("Find or create DocBroker for docKey ["
             << docKey << "] for session [" << id << "] on url ["
@@ -174,49 +175,13 @@ findOrCreateDocBroker(DocumentBroker::ChildType type, const std::string& uri,
 
         // Set the one we just created.
         LOG_DBG("New DocumentBroker for docKey [" << docKey << ']');
-        docBroker = std::make_shared<DocumentBroker>(type, uri, uriPublic, docKey, mobileAppDocId);
+        docBroker = std::make_shared<DocumentBroker>(type, uri, uriPublic, docKey, mobileAppDocId,
+                                                     std::move(wopiFileInfo));
         DocBrokers.emplace(docKey, docBroker);
         LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after inserting [" << docKey << ']');
     }
 
     return std::make_pair(docBroker, std::string());
-}
-
-/// Find the DocumentBroker for the given docKey, if one exists.
-/// Otherwise, creates and adds a new one to DocBrokers.
-/// May return null if terminating or MaxDocuments limit is reached.
-/// After returning a valid instance DocBrokers must be cleaned up after exceptions.
-std::shared_ptr<DocumentBroker>
-findOrCreateDocBroker(const std::shared_ptr<ProtocolHandlerInterface>& proto,
-                      DocumentBroker::ChildType type, const std::string& uri,
-                      const std::string& docKey, const std::string& id, const Poco::URI& uriPublic,
-                      unsigned mobileAppDocId = 0)
-{
-    const auto pair = findOrCreateDocBroker(type, uri, docKey, id, uriPublic, mobileAppDocId);
-    const std::shared_ptr<DocumentBroker>& docBroker = pair.first;
-
-    if (docBroker)
-    {
-        // Indicate to the client that we're connecting to the docbroker.
-        if (proto)
-        {
-            const std::string statusConnect = "statusindicator: connect";
-            LOG_TRC("Sending to Client [" << statusConnect << ']');
-            proto->sendTextMessage(statusConnect.data(), statusConnect.size());
-        }
-
-        return docBroker;
-    }
-
-    // Failed.
-    if (proto)
-    {
-        const std::string& error = pair.second;
-        proto->sendTextMessage(error.data(), error.size(), /*flush=*/true);
-        proto->shutdown(true, error);
-    }
-
-    return nullptr;
 }
 
 #if !MOBILEAPP
@@ -1626,10 +1591,10 @@ void ClientRequestDispatcher::handleClientProxyRequest(const Poco::Net::HTTPRequ
     (void)message;
     (void)disposition;
 
-    std::shared_ptr<ProtocolHandlerInterface> none;
     // Request a kit process for this doc.
-    std::shared_ptr<DocumentBroker> docBroker = findOrCreateDocBroker(
-        none, DocumentBroker::ChildType::Interactive, url, docKey, _id, uriPublic);
+    auto [docBroker, errorMsg] =
+        findOrCreateDocBroker(DocumentBroker::ChildType::Interactive, url, docKey, _id, uriPublic,
+                              /*mobileAppDocId=*/0, /*wopiFileInfo=*/nullptr);
     if (docBroker)
     {
         // need to move into the DocumentBroker context before doing session lookup / creation etc.
@@ -1673,9 +1638,9 @@ void ClientRequestDispatcher::handleClientProxyRequest(const Poco::Net::HTTPRequ
     }
     else
     {
-        auto streamSocket = std::static_pointer_cast<StreamSocket>(disposition.getSocket());
-        LOG_ERR("Failed to find document");
+        LOG_ERR("Failed to find document [" << docKey << "]: " << errorMsg);
         // badness occurred:
+        auto streamSocket = std::static_pointer_cast<StreamSocket>(disposition.getSocket());
         HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, streamSocket);
         // FIXME: send docunloading & re-try on client ?
     }
