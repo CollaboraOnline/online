@@ -1445,13 +1445,14 @@ bool DocumentBroker::download(
         Poco::DigestOutputStream dos(sha1);
         Poco::StreamCopier::copyStream(istr, dos);
         dos.close();
-        LOG_INF("SHA1 for DocKey [" << _docKey << "] of [" << COOLWSD::anonymizeUrl(localPath) << "]: " <<
-                Poco::DigestEngine::digestToHex(sha1.digest()));
+        LOG_INF("SHA1 for DocKey [" << _docKey << "] of [" << COOLWSD::anonymizeUrl(localPath)
+                                    << "]: " << Poco::DigestEngine::digestToHex(sha1.digest()));
 
         std::string localPathEncoded;
         Poco::URI::encode(localPath, "#?", localPathEncoded);
         _uriJailed = Poco::URI(Poco::URI("file://"), localPathEncoded).toString();
-        _uriJailedAnonym = Poco::URI(Poco::URI("file://"), COOLWSD::anonymizeUrl(localPathEncoded)).toString();
+        _uriJailedAnonym =
+            Poco::URI(Poco::URI("file://"), COOLWSD::anonymizeUrl(localPathEncoded)).toString();
 
         _filename = fileInfo.getFilename();
 #if !MOBILEAPP
@@ -1470,7 +1471,8 @@ bool DocumentBroker::download(
             // Use the local temp file's timestamp.
             const auto timepoint = FileUtil::Stat(localFilePath).modifiedTimepoint();
             _saveManager.setLastModifiedTime(timepoint);
-            _storageManager.setLastUploadedFileModifiedTime(timepoint); // Used to detect modifications.
+            _storageManager.setLastUploadedFileModifiedTime(
+                timepoint); // Used to detect modifications.
         }
 
         bool dontUseCache = Util::isMobileApp();
@@ -1489,8 +1491,8 @@ bool DocumentBroker::download(
         // Add the time taken to load the file from storage and to check file info.
         _wopiDownloadDuration += getFileCallDurationMs + checkFileInfoCallDurationMs;
         const auto downloadSecs = _wopiDownloadDuration.count() / 1000.;
-        const std::string msg
-            = "stats: wopiloadduration " + std::to_string(downloadSecs); // In seconds.
+        const std::string msg =
+            "stats: wopiloadduration " + std::to_string(downloadSecs); // In seconds.
         LOG_TRC("Sending to Client [" << msg << "].");
         session->sendTextFrame(msg);
     }
