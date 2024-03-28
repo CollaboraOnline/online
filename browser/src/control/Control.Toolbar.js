@@ -18,23 +18,6 @@
 
 var map;
 
-function _cancelSearch() {
-	var toolbar = window.mode.isMobile() ? w2ui['searchbar'] : w2ui['actionbar'];
-	var searchInput = L.DomUtil.get('search-input');
-	map.resetSelection();
-	toolbar.hide('cancelsearch');
-	toolbar.disable('searchprev');
-	toolbar.disable('searchnext');
-	searchInput.value = '';
-	if (window.mode.isMobile()) {
-		searchInput.focus();
-		// odd, but on mobile we need to invoke it twice
-		toolbar.hide('cancelsearch');
-	}
-
-	map._onGotFocus();
-}
-
 function getUNOCommand(unoData) {
 	if (typeof unoData !== 'object')
 		return unoData;
@@ -132,9 +115,6 @@ function onClick(e, id, item) {
 	else if (id === 'present-in-window') {
 		map.fire('presentinwindow');
 	}
-	else if (id === 'insertannotation') {
-		map.insertComment();
-	}
 	else if (id === 'insertgraphic' || item.id === 'localgraphic') {
 		L.DomUtil.get('insertgraphic').click();
 	}
@@ -161,12 +141,6 @@ function onClick(e, id, item) {
 	}
 	else if (id === 'close' || id === 'closemobile') {
 		map.uiManager.enterReadonlyOrClose();
-	}
-	else if (id === 'link') {
-		if (map.getDocType() == 'spreadsheet')
-			map.sendUnoCommand('.uno:HyperlinkDialog');
-		else
-			map.showHyperlinkDialog();
 	}
 }
 
@@ -844,14 +818,25 @@ function unoCmdToToolbarId(commandname)
 }
 
 function updateSearchButtons() {
-	var toolbar = window.mode.isMobile() ? w2ui['searchbar'] : w2ui['actionbar'];
+	var toolbar = window.mode.isMobile() ? w2ui['searchbar'] : null;
+	var statusBar = app.map.statusBar;
 	// conditionally disabling until, we find a solution for tdf#108577
 	if (L.DomUtil.get('search-input').value === '') {
-		toolbar.disable('searchprev');
-		toolbar.disable('searchnext');
-		toolbar.hide('cancelsearch');
+		if (statusBar) {
+			statusBar.enableItem('searchprev', false);
+			statusBar.enableItem('searchnext', false);
+			statusBar.showItem('cancelsearch', false);
+		} else {
+			toolbar.disable('searchprev');
+			toolbar.disable('searchnext');
+			toolbar.hide('cancelsearch');
+		}
 	}
-	else {
+	else if (statusBar) {
+		statusBar.enableItem('searchprev', true);
+		statusBar.enableItem('searchnext', true);
+		statusBar.showItem('cancelsearch', true);
+	} else {
 		toolbar.enable('searchprev');
 		toolbar.enable('searchnext');
 		toolbar.show('cancelsearch');
@@ -880,7 +865,7 @@ function onSearchKeyDown(e) {
 		entry.select();
 		e.originalEvent.preventDefault();
 	} else if (e.keyCode === 27) {
-		_cancelSearch();
+		map.cancelSearch();
 	}
 }
 
@@ -935,6 +920,9 @@ function onWopiProps(e) {
 
 function processStateChangedCommand(commandName, state) {
 	var toolbar = w2ui['editbar'];
+	if (!toolbar)
+		return;
+
 	var color, div;
 
 	if (!commandName)
@@ -1193,11 +1181,6 @@ function editorUpdate(e) { // eslint-disable-line no-unused-vars
 			map._goToViewId(editorId);
 			docLayer._followThis = editorId;
 		}
-
-		var userlistItem = w2ui['actionbar'].get('userlist');
-		if (userlistItem !== null) {
-			$('.selected-user').removeClass('selected-user');
-		}
 	}
 	else {
 		docLayer._followEditor = false;
@@ -1225,11 +1208,11 @@ function setupToolbar(e) {
 
 	map.on('search', function (e) {
 		var searchInput = L.DomUtil.get('search-input');
-		var toolbar = w2ui['actionbar'];
+		var toolbar = app.map.statusBar;
 		if (e.count === 0) {
-			toolbar.disable('searchprev');
-			toolbar.disable('searchnext');
-			toolbar.hide('cancelsearch');
+			toolbar.enableItem('searchprev', false);
+			toolbar.enableItem('searchnext', false);
+			toolbar.showItem('cancelsearch', false);
 			L.DomUtil.addClass(searchInput, 'search-not-found');
 			$('#findthis').addClass('search-not-found');
 			map.resetSelection();
@@ -1284,7 +1267,8 @@ function updateVisibilityForToolbar(toolbar, context) {
 	var toShow = [];
 	var toHide = [];
 
-	toolbar.items.forEach(function(item) {
+	var items = toolbar.getToolItems ? toolbar.getToolItems() : toolbar.items;
+	items.forEach(function(item) {
 		if (window.ThisIsTheiOSApp && window.mode.isTablet() && item.iosapptablet === false) {
 			toHide.push(item.id);
 		}
@@ -1311,8 +1295,8 @@ function updateVisibilityForToolbar(toolbar, context) {
 	window.app.console.log('explicitly hiding: ' + toHide);
 	window.app.console.log('explicitly showing: ' + toShow);
 
-	toHide.forEach(function(item) { toolbar.hide(item); });
-	toShow.forEach(function(item) { toolbar.show(item); });
+	toHide.forEach(function(item) { toolbar.showItem ? toolbar.showItem(item, false) : toolbar.hide(item); });
+	toShow.forEach(function(item) { toolbar.showItem ? toolbar.showItem(item, true) : toolbar.show(item); });
 }
 
 global.onClose = onClose;

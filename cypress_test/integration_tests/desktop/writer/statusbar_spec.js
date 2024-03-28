@@ -21,9 +21,9 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Statubar tests.', function
 	});
 
 	it('Text selection.', function() {
-		cy.cGet('body').contains('#tb_actionbar_item_StateWordCount', '2 words, 9 characters');
+		cy.cGet('body').contains('#toolbar-down #StateWordCount', '2 words, 9 characters');
 		helper.moveCursor('right', 'shift');
-		cy.cGet('body').contains('#tb_actionbar_item_StateWordCount', 'Selected: 1 word, 1 character');
+		cy.cGet('body').contains('#toolbar-down #StateWordCount', 'Selected: 1 word, 1 character');
 	});
 
 	it('Switching page.', function() {
@@ -31,9 +31,9 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Statubar tests.', function
 		cy.cGet('#menu-insert').click();
 		cy.cGet('body').contains('#menu-insert li a', 'Page Break').click();
 		cy.cGet('#StatePageNumber').invoke('text').should('be.oneOf', ['Page 2 of 2', 'Pages 1 and 2 of 2']);
-		cy.cGet('#tb_actionbar_item_prev').click();
+		cy.cGet('#toolbar-down #prev').click();
 		cy.cGet('#StatePageNumber').should('have.text', 'Page 1 of 2');
-		cy.cGet('#tb_actionbar_item_next').click();
+		cy.cGet('#toolbar-down #next').click();
 		cy.cGet('#StatePageNumber').invoke('text').should('be.oneOf', ['Page 2 of 2', 'Pages 1 and 2 of 2']);
 	});
 

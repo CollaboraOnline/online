@@ -20,8 +20,8 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc bottom bar tests.', f
 		cy.cGet('#map').focus();
 		calcHelper.clickOnFirstCell();
 		desktophelper.makeZoomItemsVisible();
-		cy.cGet('#tb_actionbar_item_StateTableCellMenu .w2ui-button').click();
+		cy.cGet('#StateTableCellMenu').click();
 		// If it clicks, it passes.
-		cy.cGet('body').contains('.w2ui-drop-menu .menu-text', 'CountA').click();
+		cy.cGet('body').contains('.ui-combobox-entry', 'CountA').click();
 	});
 });

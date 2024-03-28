@@ -8,10 +8,10 @@ var helper = require('./helper');
 function showSidebar() {
 	cy.log('>> showSidebar - start');
 
-	cy.cGet('#tb_editbar_item_sidebar .w2ui-button').should('not.have.class', 'checked');
+	cy.cGet('#sidebar').should('not.have.class', 'selected');
 	cy.cGet('#sidebar-dock-wrapper').should('not.be.visible');
-	cy.cGet('#tb_editbar_item_sidebar .w2ui-button').click({force: true});
-	cy.cGet('#tb_editbar_item_sidebar .w2ui-button').should('have.class', 'checked');
+	cy.cGet('#sidebar').click({force: true});
+	cy.cGet('#sidebar').should('have.class', 'selected');
 	cy.cGet('#sidebar-dock-wrapper').should('be.visible');
 
 	cy.log('<< showSidebar - end');
@@ -22,13 +22,25 @@ function showSidebar() {
 function hideSidebar() {
 	cy.log('>> hideSidebar - start');
 
-	cy.cGet('#tb_editbar_item_sidebar .w2ui-button').should('have.class', 'checked');
+	cy.cGet('#sidebar').should('have.class', 'selected');
 	cy.cGet('#sidebar-dock-wrapper').should('be.visible');
-	cy.cGet('#tb_editbar_item_sidebar .w2ui-button').click({force: true});
-	cy.cGet('#tb_editbar_item_sidebar .w2ui-button').should('not.have.class', 'checked');
+	cy.cGet('#sidebar').click({force: true});
+	cy.cGet('#sidebar').should('not.have.class', 'selected');
 	cy.cGet('#sidebar-dock-wrapper').should('not.be.visible');
 
 	cy.log('<< hideSidebar - end');
+}
+
+function hideSidebarImpress() {
+	cy.log('>> hideSidebarImpress - start');
+
+	cy.cGet('#modifypage').should('have.class', 'selected');
+	cy.cGet('#sidebar-dock-wrapper').should('be.visible');
+	cy.cGet('#modifypage button').click({force: true});
+	cy.cGet('#modifypage').should('not.have.class', 'selected');
+	cy.cGet('#sidebar-dock-wrapper').should('not.be.visible');
+
+	cy.log('<< hideSidebarImpress - end');
 }
 
 // Make the status bar visible if it's hidden at the moment.
@@ -56,7 +68,7 @@ function showStatusBarIfHidden() {
 function showSidebarIfHidden() {
 	cy.log('>> showSidebarIfHidden - start');
 
-	cy.get('#tb_editbar_item_sidebar .w2ui-button')
+	cy.get('#sidebar')
 		.then(function(sidebarItem) {
 			if (!sidebarItem.hasClass('checked')) {
 				showSidebar();
@@ -73,7 +85,7 @@ function showSidebarIfHidden() {
 function hideSidebarIfVisible() {
 	cy.log('>> hideSidebarIfVisible - start');
 
-	cy.get('#tb_editbar_item_sidebar .w2ui-button')
+	cy.get('#sidebar')
 		.then(function(sidebarItem) {
 			if (sidebarItem.hasClass('checked')) {
 				hideSidebar();
@@ -89,16 +101,6 @@ function hideSidebarIfVisible() {
 // Select a color from colour palette widget used on top toolbar.
 // Parameters:
 // color - a hexadecimal color code without the '#' mark (e.g. 'FF011B')
-function selectColorFromPaletteClassic(color) {
-	cy.log('>> selectColorFromPalette - start');
-
-	cy.cGet('.w2ui-overlay').should('be.visible');
-	cy.cGet('.w2ui-color [name="' + color + '"]').click();
-	cy.cGet('.w2ui-overlay').should('not.exist');
-
-	cy.log('<< selectColorFromPalette - end');
-}
-
 function selectColorFromPalette(color) {
 	cy.log('>> selectColorFromPalette - start');
 
@@ -168,7 +170,7 @@ function checkDialogAndClose(dialogTitle) {
 function shouldHaveZoomLevel(zoomLevel) {
 	cy.log('>> shouldHaveZoomLevel - start');
 
-	cy.cGet('#tb_actionbar_item_zoom .w2ui-tb-caption').should('have.text', zoomLevel);
+	cy.cGet('#toolbar-down #zoom .unolabel').should('have.text', zoomLevel);
 
 	cy.log('<< shouldHaveZoomLevel - end');
 }
@@ -179,14 +181,14 @@ function shouldHaveZoomLevel(zoomLevel) {
 function makeZoomItemsVisible() {
 	cy.log('>> makeZoomItemsVisible - start');
 
-	cy.cGet('.w2ui-tb-image.w2ui-icon.zoomin')
+	cy.cGet('#toolbar-down #zoomin')
 		.then(function(zoomInItem) {
 			if (!Cypress.dom.isVisible(zoomInItem)) {
 				cy.cGet('#toolbar-down .w2ui-scroll-right').click();
 			}
 		});
 
-	cy.cGet('.w2ui-tb-image.w2ui-icon.zoomin').should('be.visible');
+	cy.cGet('#toolbar-down #zoomin').should('be.visible');
 
 	cy.log('<< makeZoomItemsVisible - end');
 }
@@ -198,7 +200,7 @@ function doZoom(zoomIn) {
 	cy.log('>> doZoom - start');
 
 	var prevZoom = '';
-	cy.cGet('#tb_actionbar_item_zoom .w2ui-tb-caption')
+	cy.cGet('#toolbar-down #zoom .unolabel')
 		.should(function(zoomLevel) {
 			prevZoom = zoomLevel.text();
 			expect(prevZoom).to.not.equal('');
@@ -206,15 +208,15 @@ function doZoom(zoomIn) {
 
 	// Force because sometimes the icons are scrolled off the screen to the right
 	if (zoomIn) {
-		cy.cGet('#tb_actionbar_item_zoomin .w2ui-button').click({force: true});
+		cy.cGet('#toolbar-down #zoomin').click({force: true});
 	} else {
-		cy.cGet('#tb_actionbar_item_zoomout .w2ui-button').click({force: true});
+		cy.cGet('#toolbar-down #zoomout').click({force: true});
 	}
 
 	// Wait for animation to complete
 	cy.wait(500);
 
-	cy.cGet('#tb_actionbar_item_zoom .w2ui-tb-caption')
+	cy.cGet('#toolbar-down #zoom .unolabel')
 		.should(function(zoomLevel) {
 			expect(zoomLevel.text()).to.not.equal(prevZoom);
 		});
@@ -241,8 +243,9 @@ function selectZoomLevel(zoomLevel) {
 	cy.log('>> selectZoomLevel - start');
 
 	// Force because sometimes the icons are scrolled off the screen to the right
-	cy.cGet('#tb_actionbar_item_zoom .w2ui-button').click({force: true});
-	cy.cGet('#w2ui-overlay-actionbar').contains('.menu-text', zoomLevel).click({force: true});
+	makeZoomItemsVisible();
+	cy.cGet('#toolbar-down #zoom .arrowbackground').click({force: true});
+	cy.cGet('#zoom-dropdown').contains('.ui-combobox-entry', zoomLevel).click({force: true});
 	shouldHaveZoomLevel(zoomLevel);
 
 	cy.log('<< selectZoomLevel - end');
@@ -253,7 +256,7 @@ function resetZoomLevel() {
 	cy.log('>> resetZoomLevel - start');
 
 	// Force because sometimes the icons are scrolled off the screen to the right
-	cy.cGet('#tb_actionbar_item_zoomreset .w2ui-button').click({force: true});
+	cy.cGet('#toolbar-down #zoomreset').click({force: true});
 	shouldHaveZoomLevel('100');
 
 	cy.log('<< resetZoomLevel - end');
@@ -510,11 +513,11 @@ function setAccessibilityState(enable) {
 
 module.exports.showSidebar = showSidebar;
 module.exports.hideSidebar = hideSidebar;
+module.exports.hideSidebarImpress = hideSidebarImpress;
 module.exports.showStatusBarIfHidden = showStatusBarIfHidden;
 module.exports.showSidebarIfHidden = showSidebarIfHidden;
 module.exports.hideSidebarIfVisible = hideSidebarIfVisible;
 module.exports.selectColorFromPalette = selectColorFromPalette;
-module.exports.selectColorFromPaletteClassic = selectColorFromPaletteClassic;
 module.exports.selectFromListbox = selectFromListbox;
 module.exports.selectFromJSDialogListbox = selectFromJSDialogListbox;
 module.exports.checkDialogAndClose = checkDialogAndClose;

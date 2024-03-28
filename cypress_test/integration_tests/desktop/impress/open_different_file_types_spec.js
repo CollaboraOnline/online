@@ -16,7 +16,7 @@ describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Open different file t
 
 		cy.cGet('#toolbar-up .w2ui-scroll-right').click();
 
-		cy.cGet('#tb_editbar_item_modifypage').click();
+		cy.cGet('#modifypage').click();
 	}
 
 	afterEach(function() {

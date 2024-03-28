@@ -11,7 +11,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 		cy.viewport(1400, 600);
 		testFileName = helper.beforeAll(origTestFileName, 'writer');
 		desktopHelper.switchUIToCompact();
-		cy.cGet('#tb_editbar_item_sidebar').click({force: true}); // Hide sidebar.
+		cy.cGet('#sidebar').click({force: true}); // Hide sidebar.
 		desktopHelper.selectZoomLevel('50');
 	});
 
@@ -46,7 +46,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 	it('Accept All', function () {
 		helper.typeIntoDocument('Hello World');
 		for (var n = 0; n < 2; n++) {
-			cy.cGet('#tb_editbar_item_insertannotation').click();
+			cy.cGet('#insertannotation').click();
 			cy.cGet('#annotation-modify-textarea-new').type('some text' + n);
 			cy.cGet('#annotation-save-new').click();
 			// Wait for animation
@@ -54,7 +54,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 		}
 		enableRecord();
 
-		cy.cGet('#tb_editbar_item_insertannotation').click();
+		cy.cGet('#insertannotation').click();
 		cy.cGet('#annotation-modify-textarea-new').type('some text2');
 		cy.cGet('#annotation-save-new').click();
 		cy.wait(500);
@@ -86,7 +86,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 	it('Reject All', function () {
 		helper.typeIntoDocument('Hello World');
 		for (var n = 0; n < 2; n++) {
-			cy.cGet('#tb_editbar_item_insertannotation').click();
+			cy.cGet('#insertannotation').click();
 			cy.cGet('#annotation-modify-textarea-new').type('some text' + n);
 			cy.cGet('#annotation-save-new').click();
 			// Wait for animation
@@ -94,7 +94,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 		}
 		enableRecord();
 
-		cy.cGet('#tb_editbar_item_insertannotation').click();
+		cy.cGet('#insertannotation').click();
 		cy.cGet('#annotation-modify-textarea-new').type('some text2');
 		cy.cGet('#annotation-save-new').click();
 		cy.wait(500);
@@ -127,7 +127,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 
 	it.skip('Comment Undo-Redo', function () {
 		for (var n = 0; n < 2; n++) {
-			cy.cGet('#tb_editbar_item_insertannotation').click();
+			cy.cGet('#insertannotation').click();
 			cy.cGet('#annotation-modify-textarea-new').type('some text' + n);
 			cy.cGet('#annotation-save-new').click();
 			// Wait for animation
@@ -135,7 +135,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 		}
 		enableRecord();
 
-		cy.cGet('#tb_editbar_item_insertannotation').click();
+		cy.cGet('#insertannotation').click();
 		cy.cGet('#annotation-modify-textarea-new').type('some text2');
 		cy.cGet('#annotation-save-new').click();
 		cy.wait(500);
@@ -143,13 +143,13 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 		cy.cGet('div.cool-annotation').should('have.length', 3);
 
 		// simple undo
-		cy.cGet('#tb_editbar_item_undo').click();
+		cy.cGet('#undo').click();
 		cy.cGet('#comment-container-3').should('not.exist');
 		cy.cGet('div.cool-annotation').should('have.length', 2);
 
 		// simple redo
 		cy.wait(500);
-		cy.cGet('#tb_editbar_item_redo').click();
+		cy.cGet('#redo').click();
 		// cy.wait(500);
 		cy.cGet('#map').focus();
 		helper.typeIntoDocument('{home}');
@@ -162,14 +162,14 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 		cy.cGet('body').contains('.context-menu-item', 'Remove').click();
 		cy.cGet('#comment-container-2').should('have.class','tracked-deleted-comment-show');
 		cy.cGet('div.cool-annotation').should('have.length', 3);
-		cy.cGet('#tb_editbar_item_undo').click();
+		cy.cGet('#undo').click();
 
 		cy.cGet('#comment-container-2').should('contain','some text1');
 		cy.cGet('#comment-container-2').should('not.have.class','tracked-deleted-comment-show');
 		cy.cGet('div.cool-annotation').should('have.length', 3);
 
 		// redo
-		cy.cGet('#tb_editbar_item_redo').click();
+		cy.cGet('#redo').click();
 		cy.wait(500);
 
 		cy.cGet('#comment-container-2').should('contain','some text1');

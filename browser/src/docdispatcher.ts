@@ -20,8 +20,14 @@ class Dispatcher {
 		this.actionsMap['remotelink'] = function () {
 			app.map.fire('postMessage', { msgId: 'UI UI_PickLink' });
 		};
+		// TODO: deduplicate
 		this.actionsMap['hyperlinkdialog'] = function () {
 			app.map.showHyperlinkDialog();
+		};
+		this.actionsMap['inserthyperlink'] = () => {
+			if (app.map.getDocType() == 'spreadsheet')
+				app.map.sendUnoCommand('.uno:HyperlinkDialog');
+			else app.map.showHyperlinkDialog();
 		};
 		this.actionsMap['rev-history'] = function () {
 			app.map.openRevisionHistory();
@@ -110,6 +116,42 @@ class Dispatcher {
 		};
 
 		this.actionsMap['insertcomment'] = function () {
+			app.map.insertComment();
+		};
+
+		this.actionsMap['zoomin'] = () => {
+			app.map.zoomIn(1, null, true /* animate? */);
+		};
+		this.actionsMap['zoomout'] = () => {
+			app.map.zoomOut(1, null, true /* animate? */);
+		};
+		this.actionsMap['zoomreset'] = () => {
+			app.map.setZoom(app.map.options.zoom);
+		};
+
+		this.actionsMap['searchprev'] = () => {
+			app.map.search(L.DomUtil.get('search-input').value, true);
+		};
+		this.actionsMap['searchnext'] = () => {
+			app.map.search(L.DomUtil.get('search-input').value);
+		};
+		this.actionsMap['cancelsearch'] = () => {
+			app.map.cancelSearch();
+		};
+
+		this.actionsMap['prev'] = () => {
+			if (app.map._docLayer._docType === 'text') app.map.goToPage('prev');
+			else app.map.setPart('prev');
+		};
+		this.actionsMap['next'] = () => {
+			if (app.map._docLayer._docType === 'text') app.map.goToPage('next');
+			else app.map.setPart('next');
+		};
+
+		this.actionsMap['inserttextbox'] = () => {
+			app.map.sendUnoCommand('.uno:Text?CreateDirectly:bool=true');
+		};
+		this.actionsMap['insertannotation'] = () => {
 			app.map.insertComment();
 		};
 	}
@@ -309,6 +351,34 @@ class Dispatcher {
 		};
 		this.actionsMap['insertpage'] = function () {
 			app.map.insertPage();
+		};
+
+		this.actionsMap['leftpara'] = function () {
+			app.map.sendUnoCommand(
+				(window as any).getUNOCommand({
+					textCommand: '.uno:LeftPara',
+					objectCommand: '.uno:ObjectAlignLeft',
+					unosheet: '.uno:AlignLeft',
+				}),
+			);
+		};
+		this.actionsMap['centerpara'] = function () {
+			app.map.sendUnoCommand(
+				(window as any).getUNOCommand({
+					textCommand: '.uno:CenterPara',
+					objectCommand: '.uno:AlignCenter',
+					unosheet: '.uno:AlignHorizontalCenter',
+				}),
+			);
+		};
+		this.actionsMap['rightpara'] = function () {
+			app.map.sendUnoCommand(
+				(window as any).getUNOCommand({
+					textCommand: '.uno:RightPara',
+					objectCommand: '.uno:ObjectAlignRight',
+					unosheet: '.uno:AlignRight',
+				}),
+			);
 		};
 	}
 

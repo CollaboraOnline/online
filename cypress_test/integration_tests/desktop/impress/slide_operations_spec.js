@@ -54,7 +54,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Slide operations', functio
 		helper.clickOnIdle('#presentation-toolbar #duplicatepage');
 
 		impressHelper.assertNumberOfSlidePreviews(2);
-		cy.cGet('#PageStatus').should('have.text', 'Slide 2 of 2');
+		cy.cGet('#SlideStatus').should('have.text', 'Slide 2 of 2');
 		cy.cGet('#annotation-content-area-2').should('include.text', 'some text0');
 
 	});

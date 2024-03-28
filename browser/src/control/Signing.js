@@ -12,7 +12,7 @@
  * Document Signing
  */
 
-/* global _ w2ui*/
+/* global _ app w2ui*/
 
 L.Map.include({
 	onChangeSignStatus: function(signstatus) {
@@ -51,7 +51,7 @@ L.Map.include({
 
 		if (statusText) {
 			if (!window.mode.isMobile())
-				w2ui['actionbar'].insert('prev', {type: 'button',  id: 'signstatus', img: statusIcon, hint: statusText});
+				app.map.statusBar.showSigningItem(statusIcon, statusText);
 			else
 				w2ui['actionbar'].insert('undo', {type: 'button',  id: 'signstatus', img: statusIcon, hint: statusText});
 		}

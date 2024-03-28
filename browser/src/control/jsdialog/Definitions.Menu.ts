@@ -366,9 +366,20 @@ menuDefinitions.set('InsertTableMenu', [
 	{ type: 'separator' }, // required to show dropdown arrow
 ] as Array<MenuDefinition>);
 
+menuDefinitions.set('UsersListMenu', [
+	{ type: 'html', htmlId: 'userslistpopup' },
+	{ type: 'separator' }, // required to show dropdown arrow
+] as Array<MenuDefinition>);
+
 menuDefinitions.set('ColorPickerMenu', [
 	{ id: 'colorpickerwidget', type: 'colorpicker' },
 	{ type: 'separator' }, // required to show dropdown arrow
+] as Array<MenuDefinition>);
+
+menuDefinitions.set('LanguageStatusMenu', [
+	{ type: 'separator' },
+	{ type: 'separator' },
+	// dynamically updated in Constol.StatusBar
 ] as Array<MenuDefinition>);
 
 JSDialog.MenuDefinitions = menuDefinitions;

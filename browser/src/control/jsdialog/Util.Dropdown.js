@@ -132,8 +132,10 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 					if (focusables && focusables.length)
 						focusables[0].focus();
 				} else if (eventType === 'selected' && entry.uno) {
-					L.Map.THIS.sendUnoCommand(entry.uno);
+					var uno = (entry.uno.indexOf('.uno:') === 0) ? entry.uno : '.uno:' + entry.uno;
+					L.Map.THIS.sendUnoCommand(uno);
 					JSDialog.CloseDropdown(id);
+					return;
 				}
 			} else if (!lastSubMenuOpened && eventType === 'hidedropdown') {
 				JSDialog.CloseDropdown(id);
