@@ -440,13 +440,14 @@ L.Control.Tabs = L.Control.extend({
 		// support duplication with ctrl in the future.
 		e.dataTransfer.dropEffect = 'move';
 
-		e.target.previousElementSibling.classList.add('tab-drop-area-active');
+		e.currentTarget.previousElementSibling.classList.add('tab-drop-area-active');
 
 		return false;
 	},
 
 	_handleDragLeave: function (e) {
-		e.target.previousElementSibling.classList.remove('tab-drop-area-active');
+		if ($(e.target).hasClass('spreadsheet-tab') || (e.target.getAttribute('id') == 'drop-zone-end-container'))
+			e.currentTarget.previousElementSibling.classList.remove('tab-drop-area-active');
 	},
 
 	_handleDrop: function(e) {
@@ -454,13 +455,13 @@ L.Control.Tabs = L.Control.extend({
 			e.stopPropagation();
 		}
 
-		e.target.previousElementSibling.classList.remove('tab-drop-area-active');
+		e.currentTarget.previousElementSibling.classList.remove('tab-drop-area-active');
 		var targetIndex = this._map._docLayer._partNames.indexOf(e.target.innerText);
 		this._moveSheet(targetIndex + 1); // drop to left side of the tab
 	},
 
 	_handleDragEnd: function (e) {
-		e.target.previousElementSibling.classList.remove('tab-drop-area-active');
+		e.currentTarget.previousElementSibling.classList.remove('tab-drop-area-active');
 	}
 });
 
