@@ -1220,10 +1220,114 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 
 		function addKeydownEvents(element) {
+			var handleKeyDown = function(sourceElement, direction, currentTarget) {
+				var findFocusableParent = function(currentElement) {
+					if (currentElement.tagName === 'NAV') {
+						return currentElement;
+					}
+					else if (currentElement.tabIndex === -1 || currentElement.tagName == 'A') {
+						return findFocusableParent(currentElement.parentNode);
+					}
+					else {
+						return currentElement;
+					}
+				};
+
+				var currentElementBoundingRectangle = sourceElement.getBoundingClientRect();
+
+				var currentElementX = currentElementBoundingRectangle.left + (currentElementBoundingRectangle.right - currentElementBoundingRectangle.left) / 2; 
+				var currentElementY = currentElementBoundingRectangle.top + (currentElementBoundingRectangle.bottom - currentElementBoundingRectangle.top) / 2;
+
+				var horizontalDirection = 0;
+				var verticalDirection = 0;
+				var secondaryRayOffset = 0;
+				var tertiaryRayOffset = 0;
+
+				switch (direction) {
+					case 'left':
+						horizontalDirection = -1;
+						break;
+					case 'right':
+						horizontalDirection = 1;
+						break;
+					case 'up':
+						verticalDirection = -1;
+						break;
+					case 'down':
+						verticalDirection = 1;
+					}
+
+				if (horizontalDirection !== 0) {
+					secondaryRayOffset = (currentElementBoundingRectangle.top - currentElementBoundingRectangle.bottom) / 2;
+					tertiaryRayOffset = (currentElementBoundingRectangle.bottom - currentElementBoundingRectangle.top) / 2;
+				}
+				else {
+					secondaryRayOffset = (currentElementBoundingRectangle.left - currentElementBoundingRectangle.right) / 2;
+					tertiaryRayOffset = (currentElementBoundingRectangle.right - currentElementBoundingRectangle.left) / 2;
+				}
+
+				var raycasting = true;
+				var focusableElementAtNewPosition;
+				var difference = 0;
+
+				var checkElementAtNewPosition = function (rayOffset) {
+					var elementAtNewPosition = document.elementFromPoint(currentElementX + horizontalDirection * difference + rayOffset * !horizontalDirection, currentElementY + verticalDirection * difference + rayOffset * !verticalDirection);
+					
+					if (elementAtNewPosition === sourceElement) {
+						return;
+					}
+
+					focusableElementAtNewPosition = findFocusableParent(elementAtNewPosition);
+
+					if (focusableElementAtNewPosition !== sourceElement && focusableElementAtNewPosition != document) {
+						raycasting = false;
+					}
+
+					if (focusableElementAtNewPosition.tagName === 'NAV') {
+						var tabIdx = tabIds.indexOf(currentTarget.id);
+						focusableElementAtNewPosition = tabs[tabIdx];
+					}
+				};
+
+				// 3 rays are cast to make sure that non-aligned elements can still have arrow keys traverse between them.
+				while (raycasting) {
+					difference++;
+					
+					checkElementAtNewPosition(0);
+
+					if (raycasting) {
+						checkElementAtNewPosition(secondaryRayOffset);
+					}
+
+					if (raycasting) {
+						checkElementAtNewPosition(tertiaryRayOffset);
+					}
+				}
+
+				focusableElementAtNewPosition.focus();
+			};
+
 			element.addEventListener('keydown', function(e) {
-				if (e.key === 'ArrowUp') {
-					var tabIdx = tabIds.indexOf(e.currentTarget.id);
-					tabs[tabIdx].focus();
+				var currentElement = e.srcElement;
+
+				if (!(currentElement.tagName === 'INPUT' || currentElement.tagName === 'TEXTAREA')) {
+					switch (e.key) {
+						case 'ArrowLeft':
+							handleKeyDown(currentElement, 'left');
+							break;
+	
+						case 'ArrowRight':
+							handleKeyDown(currentElement, 'right');
+							break;
+	
+						case 'ArrowUp':
+							handleKeyDown(currentElement, 'up', e.currentTarget);
+							break;
+	
+						case 'ArrowDown':
+							handleKeyDown(currentElement, 'down');
+							break;
+					}
 				}
 			});
 		}
