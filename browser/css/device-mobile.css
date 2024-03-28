@@ -15,7 +15,7 @@ html[dir='rtl'] .sub-menu-arrow {
 /* Related to cool.css */
 #toolbar-hamburger {
 	width: 36px;
-	height: 36px;
+	height: 42px;
 	position: relative;
 	z-index: 1002;
 	display: flex;
@@ -37,8 +37,7 @@ html[dir='rtl'] .sub-menu-arrow {
 
 /* Related to back button */
 #toolbar-mobile-back {
-	width: 36px;
-	height: 36px;
+	width: 42px;
 	position: relative;
 	z-index: 1003;
 }
