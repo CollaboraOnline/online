@@ -650,12 +650,6 @@ L.TileSectionManager = L.Class.extend({
 			yMin = splitPos.y;
 		}
 
-
-		pinchCenter = {
-			x: clamp(pinchCenter.x, paneBounds.min.x, paneBounds.max.x),
-			y: clamp(pinchCenter.y, paneBounds.min.y, paneBounds.max.y)
-		};
-
 		var documentTopLeft = new L.Point(xMin, yMin);
 
 		var paneSize = paneBounds.getSize();
