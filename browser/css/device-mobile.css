@@ -167,6 +167,10 @@ textarea.cool-annotation-textarea {
 #toolbar-wrapper.mobile{
 	border-top: none;
 	z-index: auto !important;
+	flex-direction: column;
+}
+.toolbar-row {
+	display: flex;
 	flex-direction: row;
 }
 
@@ -183,6 +187,7 @@ textarea.cool-annotation-textarea {
 	padding-top: 0px;
 	padding-bottom: 0px;
 	background: transparent;
+	align-self: end;
 }
 nav:not(.spreadsheet-color-indicator) ~ #toolbar-wrapper #toolbar-up.w2ui-toolbar {
 	border-color: transparent;
@@ -208,6 +213,7 @@ nav:not(.spreadsheet-color-indicator) ~ #toolbar-wrapper #toolbar-up.w2ui-toolba
 #formulabar {
 	padding: 0px !important;
 	border-top: 1px solid #bbbbbb !important;
+	margin-bottom: 5px;
 }
 #formulabar > div > div {
 	grid-template-columns: 70px auto;
