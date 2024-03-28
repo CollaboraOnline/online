@@ -655,19 +655,7 @@ public:
     }
 
     /// Kit poll can be called from LOK's Yield in any thread, adapt to that.
-    void checkAndReThread()
-    {
-        if (InhibitThreadChecks)
-            return; // in late shutdown
-        const std::thread::id us = std::this_thread::get_id();
-        if (_owner == us)
-            return; // all well
-        LOG_DBG("Unusual - SocketPoll used from a new thread");
-        _owner = us;
-        for (const auto& it : _pollSockets)
-            it->setThreadOwner(us);
-        // _newSockets are adapted as they are inserted.
-    }
+    void checkAndReThread();
 
     /// Poll the sockets for available data to read or buffer to write.
     /// Returns the return-value of poll(2): 0 on timeout,
@@ -900,6 +888,7 @@ private:
     std::atomic<bool> _runOnClientThread;
     std::thread::id _owner;
     /// Time-stamp for profiling
+    int _ownerThreadId;
     std::atomic<uint64_t> _watchdogTime;
 };
 
