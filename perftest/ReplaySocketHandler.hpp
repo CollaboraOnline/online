@@ -39,6 +39,7 @@ class ReplaySocketHandler : public WebSocketHandler
     std::chrono::steady_clock::time_point _waitingStart;
     int64_t _waitingTimeout;
     std::string _waitingMessage;
+    int64_t _lastMessageTime;
 public:
     ReplaySocketHandler(SocketPoll &poll, /* bad style */
                         const std::string &uri, const std::string &trace) :
@@ -48,7 +49,8 @@ public:
         _connecting(true),
         _uri(uri),
         _trace(trace),
-        _waiting(false)
+        _waiting(false),
+        _lastMessageTime(0)
     {
 
         std::cerr << "Attempt connect to " << uri << " for trace " << _trace << "\n";
@@ -66,8 +68,8 @@ public:
 
         int events = WebSocketHandler::getPollEvents(now, timeoutMaxMicroS);
 
-        int64_t nextMessageTime = (_next.getTimestampUs() - _reader.getEpochStart()) * TRACE_MULTIPLIER;
-        int64_t currentTime = std::chrono::duration_cast<std::chrono::microseconds>(now - _start).count();
+        int64_t currentTime = getCurrentTime();
+        int64_t nextMessageTime = _lastMessageTime + (_next.getRelativeTimestampUs() * TRACE_MULTIPLIER);
         int64_t timeToNextMessage = nextMessageTime - currentTime;
 
         //std::cerr << getCurrentTime() << " getPollEvents"
@@ -121,12 +123,14 @@ public:
 
     void processTraceMessage()
     {
-        std::cerr << getCurrentTime() << " processTraceMessage: " << _next.toString() << std::endl;
+        _lastMessageTime = getCurrentTime();
         switch(_next.getDir()) {
             case TraceFileRecord::Direction::Invalid:
+                std::cerr << getCurrentTime() << " processTraceMessage: " << _next.toString() << std::endl;
                 shutdown();
                 break;
             case TraceFileRecord::Direction::Incoming:
+                // Logged in sendTraceMessage
                 // Incoming from server's perspective, outgoing for us
                 sendTraceMessage();
                 break;
@@ -134,6 +138,7 @@ public:
                 // These don't appear in our trace files
                 break;
             case TraceFileRecord::Direction::Event:
+                std::cerr << getCurrentTime() << " processTraceMessage: " << _next.toString() << std::endl;
                 std::string payload = _next.getPayload();
                 StringVector tokens = StringVector::tokenize(payload);
                 if (tokens.equals(0, "wait")) {
@@ -141,12 +146,12 @@ public:
                     _waitingTimeout = std::stoi(tokens[1]);
                     _waitingMessage = tokens.cat(" ",2);
                     _waiting = true;
-                    std::cerr << getCurrentTime() << " processTraceMessage waiting for message: " << _waitingMessage << " (Timeout " << _waitingTimeout << "us)" << std::endl;
+                    std::cerr << getCurrentTime() << " waiting for message: " << _waitingMessage << " (Timeout " << _waitingTimeout << "us)" << std::endl;
                 } else if (tokens.equals(0, "start")) {
-                    std::cerr << "start measurement" << std::endl;
+                    std::cerr << getCurrentTime() << " start measurement" << std::endl;
                     startMeasurement();
                 } else if (tokens.equals(0, "stop")) {
-                    std::cerr << "stop measurement" << std::endl;
+                    std::cerr << getCurrentTime() << " stop measurement" << std::endl;
                     stopMeasurement();
                 }
                 break;
