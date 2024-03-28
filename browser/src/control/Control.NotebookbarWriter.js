@@ -1025,6 +1025,33 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'accessibility': { focusBack: false, combination: 'I', de: null }
 			},
 			{
+				'id': 'format-name-description',
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:NameGroup', 'text'),
+								'command': '.uno:NameGroup'
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:ObjectTitleDescription', 'text'),
+								'command': '.uno:ObjectTitleDescription'
+							}
+						]
+					}
+				],
+				'vertical': 'true'
+			},
+			{
 				'id': 'format-theme-dialog',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:ThemeDialog'),
