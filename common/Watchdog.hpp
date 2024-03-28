@@ -14,11 +14,12 @@
 #include <thread>
 #include <chrono>
 #include <mutex>
+#include <csignal>
 #include <condition_variable>
 
 extern "C"
 {
-    void watchdog_probe();
+    void handleUserProfileSignal(const int /* signal */);
 }
 
 /*
@@ -30,7 +31,8 @@ class Watchdog : private std::thread
     std::unique_ptr<std::thread> _thread;
     std::mutex _lock;
     std::condition_variable _condition;
-    std::vector<std::atomic<uint64_t>*> _times;
+    typedef std::pair<std::atomic<uint64_t>*,int *> WatchDetail;
+    std::vector<WatchDetail> _times;
 
     static const uint64_t MsToTrigger = 100;
 
@@ -38,6 +40,14 @@ public:
     Watchdog()
     {
         startThread();
+
+        // Steal SIGUSR2 from the backtrace handler for profiling
+        struct sigaction action;
+
+        sigemptyset(&action.sa_mask);
+        action.sa_flags = 0;
+        action.sa_handler = handleUserProfileSignal;
+        sigaction(SIGUSR2, &action, nullptr);
     }
 
     ~Watchdog()
@@ -76,15 +86,16 @@ public:
         {
             {
                 uint64_t msSinceEpoc = getTimestamp();
-                for (auto i : _times)
+                for (auto d : _times)
                 {
-                    uint64_t snapshot = *i; // one atomic read
+                    uint64_t snapshot = *d.first; // one atomic read
                     if (snapshot == 0) // sleeping / polling
                         continue;
                     // out of the poll for longer than threshold:
                     if (msSinceEpoc - snapshot > MsToTrigger)
                     {
-                        watchdog_probe();
+                        // Signal the poorly behaved thread to profile it
+                        Util::killThreadById(*d.second, SIGUSR2);
                         break;
                     }
                 }
@@ -93,20 +104,24 @@ public:
         }
     }
 
-    void addTime(std::atomic<uint64_t> *timeRef)
+    void addTime(std::atomic<uint64_t> *timeRef, int *threadIdRef)
     {
         std::lock_guard<std::mutex> guard(_lock);
-        _times.push_back(timeRef);
+        _times.push_back(WatchDetail(timeRef, threadIdRef));
     }
 
     void removeTime(std::atomic<uint64_t> *timeRef)
     {
         std::lock_guard<std::mutex> guard(_lock);
-        auto it = std::find(_times.begin(), _times.end(), timeRef);
-        if (it != _times.end())
-            _times.erase(it);
-        else
-            assert("missing time to remove" && false);
+        for (auto it = _times.begin(); it != _times.end(); it++)
+        {
+            if (it->first == timeRef)
+            {
+                it = _times.erase(it);
+                return;
+            }
+        }
+        assert("missing time to remove" && false);
     }
 };
 
