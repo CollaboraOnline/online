@@ -803,6 +803,5 @@ L.control.notebookbarBuilder = function (options) {
 	builder._setup(options);
 	builder._overrideHandlers();
 	builder._customizeOptions();
-	options.map.on('commandstatechanged', builder.onCommandStateChanged, builder);
 	return builder;
 };
