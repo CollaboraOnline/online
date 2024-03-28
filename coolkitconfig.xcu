@@ -62,11 +62,6 @@
 <!-- Light Theme -->
 <item oor:path="/org.openoffice.Office.UI/ColorScheme/ColorSchemes">
     <node oor:name="Light" oor:op="replace">
-        <node oor:name="DocColor">
-            <prop oor:name="Color" oor:op="fuse">
-                <value>16777215</value>
-            </prop>
-        </node>
         <node oor:name="DocBoundaries">
             <prop oor:name="Color" oor:op="fuse">
                 <value>12632256</value>
@@ -381,11 +376,6 @@
 <!-- Dark Theme -->
 <item oor:path="/org.openoffice.Office.UI/ColorScheme/ColorSchemes">
     <node oor:name="Dark" oor:op="replace">
-        <node oor:name="DocColor">
-            <prop oor:name="Color" oor:op="fuse">
-                <value>1842204</value>
-            </prop>
-        </node>
         <node oor:name="DocBoundaries">
             <prop oor:name="Color" oor:op="fuse">
                 <value>8421504</value>
