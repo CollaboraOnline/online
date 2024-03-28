@@ -38,6 +38,7 @@ L.Control.Notebookbar = L.Control.extend({
 			this._RTL = true;
 
 		this.builder = new L.control.notebookbarBuilder({windowId: -2, mobileWizard: this, map: map, cssClass: 'notebookbar', useSetTabs: true});
+		this.map.on('commandstatechanged', this.builder.onCommandStateChanged, this.builder);
 
 		// remove old toolbar
 		var toolbar = L.DomUtil.get('toolbar-up');
@@ -106,6 +107,7 @@ L.Control.Notebookbar = L.Control.extend({
 	onRemove: function() {
 		clearTimeout(this.retry);
 		this.resetInCore();
+		this.map.off('commandstatechanged', this.builder.onCommandStateChanged, this.builder);
 		this.map.off('contextchange', this.onContextChange, this);
 		this.map.off('updatepermission', this.onUpdatePermission, this);
 		this.map.off('notebookbar');
