@@ -247,8 +247,8 @@ L.Control.StatusBar = L.Control.extend({
 
 		var data = [
 			{type: 'edit',  id: 'search-input', placeholder: _('Search'), text: ''},
-			{type: 'customtoolitem',  id: 'searchprev', command: 'searchprev', text: _UNO('.uno:UpSearch'), disabled: true},
-			{type: 'customtoolitem',  id: 'searchnext', command: 'searchnext', text: _UNO('.uno:DownSearch'), disabled: true},
+			{type: 'customtoolitem',  id: 'searchprev', command: 'searchprev', text: _UNO('.uno:UpSearch'), enabled: false},
+			{type: 'customtoolitem',  id: 'searchnext', command: 'searchnext', text: _UNO('.uno:DownSearch'), enabled: false},
 			{type: 'customtoolitem',  id: 'cancelsearch', command: 'cancelsearch', text: _('Cancel the search'), visible: false},
 			{type: 'separator', id: 'searchbreak', orientation: 'vertical' },
 			this._generateHtmlItem('statusdocpos'), 					// spreadsheet
