@@ -22,11 +22,11 @@ export class SheetSwitchViewRestore {
 	// centerOfSheet maps from sheet id to center of sheet view.
 	// Currently LatLng is used for center, but this will be
 	// replaced by pixel coordinates.
-	private centerOfSheet: Map<number, any>;
+	private centerOfSheet: Map<string, any>;
 	private mayRestore: boolean;
-	private restorePart: number;
+	private restorePart: string;
 	private setPartRecvd: boolean;
-	private currentSheetIndexReassigned: boolean;
+	public currentSheetIndexReassigned: boolean;
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	constructor (map: any) {
@@ -34,113 +34,56 @@ export class SheetSwitchViewRestore {
 		this.map = map;
 		this.docLayer = this.map._docLayer;
 
-		this.centerOfSheet = new Map<number, any>();
+		this.centerOfSheet = new Map<string, any>();
 		this.mayRestore = false;
-		this.restorePart = -1;
+		this.restorePart = '';
 		this.setPartRecvd = false;
 		this.currentSheetIndexReassigned = false;
 
 	}
 
-	public save (toPart: number): void {
-		if (!this.currentSheetIndexReassigned) {
-			this.centerOfSheet.set(this.docLayer._selectedPart as number, this.map.getCenter());
-		} else {
-			this.currentSheetIndexReassigned = false;
+	public saveCurrent(): void {
+		const selectedPartHash = this.getHash(this.docLayer._selectedPart as number);
+		if (selectedPartHash.length > 0) {
+			this.centerOfSheet.set(selectedPartHash, this.map.getCenter());
 		}
-		this.mayRestore = this.centerOfSheet.has(toPart);
-		this.restorePart = this.mayRestore ? toPart : -1;
+	}
+
+	public setRestorePart(toPart: number): void {
+		const toPartHash = this.getHash(toPart);
+		this.mayRestore = this.centerOfSheet.has(toPartHash);
+		this.restorePart = this.mayRestore ? toPartHash : '';
 		this.setPartRecvd = false;
 	}
 
-	public updateOnSheetMoved(oldIndex: number, newIndex: number): void {
-		if (oldIndex < 0 || newIndex < 0 || oldIndex === newIndex)
-			return;
-
-		const movedSheetCenter = this.centerOfSheet.get(oldIndex);
-
-		if (oldIndex < newIndex) {
-			for (let i = oldIndex; i < newIndex; ++i) {
-				const center = this.centerOfSheet.get(i + 1);
-				if (center)
-					this.centerOfSheet.set(i, center);
-				else
-					this.centerOfSheet.delete(i);
-			}
+	public save (toPart: number): void {
+		if (!this.currentSheetIndexReassigned) {
+			this.saveCurrent();
 		} else {
-			for (let i = oldIndex; i > newIndex; --i) {
-				const center = this.centerOfSheet.get(i - 1);
-				if (center)
-					this.centerOfSheet.set(i, center);
-				else
-					this.centerOfSheet.delete(i);
-			}
+			this.currentSheetIndexReassigned = false;
 		}
 
-		if (movedSheetCenter)
-			this.centerOfSheet.set(newIndex, movedSheetCenter);
-		else
-			this.centerOfSheet.delete(newIndex);
-	}
-
-	public updateOnSheetInsertion(index: number): void {
-		if (index < 0)
-			return;
-
-		// when insert a sheet
-		this.centerOfSheet.set(this.docLayer._selectedPart as number, this.map.getCenter());
-
-		const numberOfSheets: number = this.map.getNumberOfParts();
-		for (let i = numberOfSheets; i > index; --i) {
-			const center = this.centerOfSheet.get(i - 1);
-			if (center)
-				this.centerOfSheet.set(i, center);
-			else
-				this.centerOfSheet.delete(i);
-		}
-		this.centerOfSheet.delete(index);
-
-		const currentSheetNumber: number = this.map.getCurrentPartNumber();
-		this.currentSheetIndexReassigned = index <= currentSheetNumber;
-		if (this.currentSheetIndexReassigned) {
-			this.centerOfSheet.set(currentSheetNumber + 1, this.map.getCenter());
-		}
-	}
-
-	public updateOnSheetDeleted(index: number): void {
-		if (index < 0)
-			return;
-
-		const numberOfSheets: number = this.map.getNumberOfParts();
-		for (let i = index; i < numberOfSheets; ++i) {
-			const center = this.centerOfSheet.get(i + 1);
-			if (center)
-				this.centerOfSheet.set(i, center);
-			else
-				this.centerOfSheet.delete(i);
-		}
-
-		const currentSheetNumber: number = this.map.getCurrentPartNumber();
-		this.currentSheetIndexReassigned = index <= currentSheetNumber;
-		if (index < currentSheetNumber) {
-			this.centerOfSheet.set(currentSheetNumber - 1, this.map.getCenter());
-		}
+		this.setRestorePart(toPart);
 	}
 
 	public gotSetPart(part: number): void {
-
-		this.setPartRecvd = (part === this.restorePart);
+		this.setPartRecvd = (this.getHash(part) === this.restorePart);
 	}
 
+	private getHash(part: number): string {
+		const hash  = this.docLayer._partHashes[part];
+		if (typeof hash === 'string')
+			return hash;
+		else
+			return '';
+	}
 	// This resets the flags but not the center map.
 	private reset (): void {
-
-		this.restorePart = -1;
+		this.restorePart = '';
 		this.mayRestore = false;
 	}
 
 	private restoreView (): void {
-
 		const center = this.centerOfSheet.get(this.restorePart);
 		if (center === undefined) {
 			this.reset();
@@ -160,9 +103,9 @@ export class SheetSwitchViewRestore {
 	// This should be called to restore sheet's last scroll position if necessary and
 	// returns whether the map should scroll to current cursor.
 	public tryRestore(duplicateCursor: boolean, currentPart: number): boolean {
-
+		const currentPartHash = this.getHash(currentPart);
 		let shouldScrollToCursor = false;
-		const attemptRestore = (this.mayRestore && currentPart === this.restorePart);
+		const attemptRestore = (this.mayRestore && currentPartHash === this.restorePart);
 
 		if (attemptRestore) {
 			if (this.setPartRecvd && duplicateCursor)
@@ -173,7 +116,6 @@ export class SheetSwitchViewRestore {
 
 		if ((!attemptRestore || this.setPartRecvd) && !duplicateCursor)
 			shouldScrollToCursor = true;
-
 		return shouldScrollToCursor;
 	}
 }
