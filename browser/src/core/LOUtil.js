@@ -118,6 +118,31 @@ L.LOUtil = {
 
 		map.on('themechanged', setupIcon, this);
 	},
+	setUserImage: function(img, map) {
+		var docType = map.getDocType();
+		// set avatar image if it exist in user extract info
+		var defaultImage = L.LOUtil.getImageURL('user.svg', docType);
+		var myViewId = map._docLayer._viewId;
+		var extraInfo = map._viewInfo[myViewId].userextrainfo;
+		if (extraInfo !== undefined && extraInfo.avatar !== undefined) {
+			// set user avatar
+			img.src = extraInfo.avatar;
+			// Track if error event is already bound to this image
+			img.addEventListener('error', function errorHandler (e) {
+				if (e.loUtilProcessed) {
+					return;
+				}
+				img.src = defaultImage;
+				e.loUtilProcessed = true;
+				// remove this error event listener here to avoid future conflicts with the checkIfImageExists listener
+				img.removeEventListener('error', errorHandler);
+				this.checkIfImageExists(img, true);
+			}.bind(this));
+			return;
+		}
+		img.src = defaultImage;
+		this.checkIfImageExists(img, true);
+	},
 	getImageURL: function(imgName, docType) {
 		var defaultImageURL = this.getURL('images/' + imgName);
 		if (window.isLocalStorageAllowed) {
