@@ -326,8 +326,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		spinfield.tabIndex = '0';
 		controls['spinfield'] = spinfield;
 
-		if (data.labelledBy)
-			spinfield.setAttribute('aria-labelledby', data.labelledBy);
 
 		if (data.unit && data.unit !== ':') {
 			var unit = L.DomUtil.create('span', builder.options.cssClass + ' spinfieldunit', div);
@@ -1347,8 +1345,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		radiobuttonLabel.textContent = builder._cleanText(data.text);
 		radiobuttonLabel.htmlFor = data.id + '-input';
 
-		radiobutton.setAttribute('aria-labelledby', radiobuttonLabel.id);
-
 		var toggleFunction = function() {
 			builder.callback('radiobutton', 'change', container, this.checked, builder);
 		};
@@ -1386,8 +1382,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		checkboxLabel.id = data.id + '-label';
 		checkboxLabel.textContent = builder._cleanText(data.text);
 		checkboxLabel.htmlFor = data.id + '-input';
-
-		checkbox.setAttribute('aria-labelledby', checkboxLabel.id);
 
 		var toggleFunction = function() {
 			builder.callback('checkbox', 'change', div, this.checked, builder);
@@ -1715,8 +1709,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var listboxArrow = L.DomUtil.create('span', builder.options.cssClass + ' ui-listbox-arrow', container);
 		listboxArrow.id = 'listbox-arrow-' + data.id;
 
-		if (data.labelledBy)
-			listbox.setAttribute('aria-labelledby', data.labelledBy);
 
 		JSDialog.SynchronizeDisabledState(container, [listbox]);
 
@@ -3111,8 +3103,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			control.style.gridColumn = 'span ' + parseInt(data.width);
 		}
 
-		if (control && data.labelledBy)
-			control.setAttribute('aria-labelledby', data.labelledBy);
 
 		// natural tab-order when using keyboard navigation
 		if (control && !control.hasAttribute('tabIndex')
