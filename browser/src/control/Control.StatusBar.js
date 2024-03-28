@@ -307,11 +307,11 @@ L.Control.StatusBar = L.Control.extend({
 				this.showItem('rowcolselcount-container', true);
 				this.showItem('insertmode-container', true);
 				this.showItem('statusselectionmode-container', true);
-				this.showItem('languagestatus', true);
-				this.showItem('languagestatusbreak', true);
+				this.showItem('languagestatus', !app.map.isReadOnlyMode());
+				this.showItem('languagestatusbreak', !app.map.isReadOnlyMode());
 				this.showItem('statetablecell-container', true);
-				this.showItem('StateTableCellMenu', true);
-				this.showItem('statetablebreak', true);
+				this.showItem('StateTableCellMenu', !app.map.isReadOnlyMode());
+				this.showItem('statetablebreak', !app.map.isReadOnlyMode());
 				this.showItem('permissionmode-container', true);
 			}
 			break;
@@ -322,8 +322,8 @@ L.Control.StatusBar = L.Control.extend({
 				this.showItem('statewordcount-container', true);
 				this.showItem('insertmode-container', true);
 				this.showItem('statusselectionmode-container', true);
-				this.showItem('languagestatus', true);
-				this.showItem('languagestatusbreak', true);
+				this.showItem('languagestatus', !app.map.isReadOnlyMode());
+				this.showItem('languagestatusbreak', !app.map.isReadOnlyMode());
 				this.showItem('permissionmode-container', true);
 			}
 			break;
@@ -331,16 +331,16 @@ L.Control.StatusBar = L.Control.extend({
 		case 'presentation':
 			if (!window.mode.isMobile()) {
 				this.showItem('slidestatus-container', true);
-				this.showItem('languagestatus', true);
-				this.showItem('languagestatusbreak', true);
+				this.showItem('languagestatus', !app.map.isReadOnlyMode());
+				this.showItem('languagestatusbreak', !app.map.isReadOnlyMode());
 				this.showItem('permissionmode-container', true);
 			}
 			break;
 		case 'drawing':
 			if (!window.mode.isMobile()) {
 				this.showItem('pagestatus-container', true);
-				this.showItem('languagestatus', true);
-				this.showItem('languagestatusbreak', true);
+				this.showItem('languagestatus', !app.map.isReadOnlyMode());
+				this.showItem('languagestatusbreak', !app.map.isReadOnlyMode());
 				this.showItem('permissionmode-container', true);
 			}
 			break;
@@ -393,6 +393,9 @@ L.Control.StatusBar = L.Control.extend({
 	},
 
 	updateLanguageItem: function (language) {
+		if (app.map.isReadOnlyMode())
+			return;
+
 		this.builder.updateWidget(this.parentContainer,
 			{type: 'menubutton', id: 'languagestatus:LanguageStatusMenu', noLabel: false, text: language});
 		JSDialog.RefreshScrollables();
@@ -471,6 +474,9 @@ L.Control.StatusBar = L.Control.extend({
 			this.updateHtmlItem('StateTableCell', state ? this.localizeStateTableCell(state) : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
 		}
 		else if (commandName === '.uno:StatusBarFunc') {
+			if (app.map.isReadOnlyMode())
+				return;
+
 			// Check 'None' even when state is 0
 			if (state === '0')
 				state = '1';
