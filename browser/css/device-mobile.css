@@ -80,13 +80,11 @@ div#w2ui-overlay-actionbar.w2ui-overlay{
 /* Related to cool.css */
 #toolbar-hamburger {
 	width: 36px;
-	height: 36px;
+	height: 42px;
 	position: relative;
 	z-index: 1002;
-}
-#toolbar-hamburger.menuwizard-opened {
-	width: 36px;
-	height: 36px;
+	display: flex;
+	align-items: center; /* Align items vertically */
 }
 
 .logo {
@@ -104,10 +102,17 @@ div#w2ui-overlay-actionbar.w2ui-overlay{
 
 /* Related to back button */
 #toolbar-mobile-back {
-	width: 36px;
-	height: 36px;
+	width: 42px;
 	position: relative;
 	z-index: 1003;
+	/* span 2 columns */
+	grid-column: 1/2;
+}
+#toolbar-mobile-center-space {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex: 1;
 }
 .editmode-off {
 	background: url('images/lc_closedocmobile.svg') no-repeat center !important;
@@ -235,6 +240,18 @@ textarea.cool-annotation-textarea {
 #toolbar-wrapper.mobile{
 	border-top: none;
 	z-index: auto !important;
+	flex-direction: row;
+}
+#toolbar-wrapper.mobile.spreadsheet {
+	height: calc(46px*2);
+	display: grid;
+	grid-template-rows: repeat(2, auto);
+	grid-template-columns: repeat(5, auto);
+}
+
+#toolbar-wrapper.mobile.spreadsheet #formulabar {
+	/* Column span span via grid, also these div in html is been attributed some weird colspan talbe alike attribute   */
+	grid-column: 1 / 6;
 }
 
 .insertshape-grid {
