@@ -28,7 +28,7 @@ interface HtmlContentJson {
 
 function getPermissionModeHtml(isReadOnlyMode: boolean, canUserWrite: boolean) {
 	var permissionModeDiv =
-		'<div id="PermissionMode" class="cool-font jsdialog unotoolbutton ';
+		'<div id="PermissionMode" class="cool-font jsdialog ';
 	if (isReadOnlyMode && !canUserWrite) {
 		permissionModeDiv +=
 			' status-readonly-mode" title="' +
