@@ -16,6 +16,10 @@ else
 
 SUBDIRS = . browser test cypress_test
 
+if ENABLE_PERFTEST
+SUBDIRS += perftest
+endif
+
 export ENABLE_DEBUG
 
 bin_PROGRAMS = \
