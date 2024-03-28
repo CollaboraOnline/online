@@ -70,9 +70,9 @@ public:
         int64_t currentTime = std::chrono::duration_cast<std::chrono::microseconds>(now - _start).count();
         int64_t timeToNextMessage = nextMessageTime - currentTime;
 
-        std::cerr << "getPollEvents nextMessageTime: " << nextMessageTime <<
-                                  " currentTime: " << currentTime <<
-                                  " timeToNextMessage: " << timeToNextMessage << std::endl;
+        //std::cerr << getCurrentTime() << " getPollEvents"
+            //<< " (nextMessageTime: " << nextMessageTime << "(" << timeToNextMessage << "))"
+            //<< (_waiting ? " (waiting for: " + _waitingMessage + ")" : "") << std::endl;
 
         if (timeToNextMessage < 0) {
             if (_waiting) {
@@ -81,7 +81,6 @@ public:
                     std::cerr << "Timed out waiting for message " << _waitingMessage << " after " << _waitingTimeout << "us" << std::endl;
                     shutdown();
                 } else {
-                    std::cerr << "    getPollEvents waiting for message " << _waitingMessage << std::endl;
                     timeoutMaxMicroS = 100000;
                 }
             } else {
@@ -122,7 +121,7 @@ public:
 
     void processTraceMessage()
     {
-        std::cerr << "processTraceMessage: " << _next.toString() << std::endl;
+        std::cerr << getCurrentTime() << " processTraceMessage: " << _next.toString() << std::endl;
         switch(_next.getDir()) {
             case TraceFileRecord::Direction::Invalid:
                 shutdown();
@@ -142,7 +141,7 @@ public:
                     _waitingTimeout = std::stoi(tokens[1]);
                     _waitingMessage = tokens.cat(" ",2);
                     _waiting = true;
-                    std::cerr << "processTraceMessage waiting for message: " << _waitingMessage << " (Timeout " << _waitingTimeout << "us)" << std::endl;
+                    std::cerr << getCurrentTime() << " processTraceMessage waiting for message: " << _waitingMessage << " (Timeout " << _waitingTimeout << "us)" << std::endl;
                 } else if (tokens.equals(0, "start")) {
                     std::cerr << "start measurement" << std::endl;
                     startMeasurement();
@@ -157,7 +156,7 @@ public:
     // send outgoing messages
     void sendTraceMessage()
     {
-        std::cerr << "sendTraceMessage: " << _next.toString() << std::endl;
+        std::cerr << getCurrentTime() << " sendTraceMessage: " << _next.toString() << std::endl;
         std::string msg = rewriteMessage(_next.getPayload());
         if (!msg.empty()) {
             sendMessage(msg);
@@ -189,7 +188,8 @@ public:
     void handleMessage(const std::vector<char> &data) override
     {
         const std::string firstLine = COOLProtocol::getFirstLine(data.data(), data.size());
-        std::cerr << "handleMessage: " << firstLine << std::endl;
+        std::cerr << getCurrentTime() << " handleMessage: " << firstLine << std::endl;
+        //std::cerr << getCurrentTime() << " handleMessage: " << std::string(data.begin(),data.end()) << std::endl;
 
         StringVector tokens = StringVector::tokenize(firstLine);
         if (tokens.equals(0, "tile:")) {
@@ -205,8 +205,10 @@ public:
         }
 
         if (_waiting) {
-            if (tokens.cat(" ",0).starts_with(_waitingMessage)) {
-                std::cerr << "Done waiting for message" << std::endl;
+            std::string message = tokens.cat(" ",0);
+            if (message.find(_waitingMessage) != std::string::npos) {
+                int64_t elapsedTime = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - _waitingStart).count();
+                std::cerr << getCurrentTime() << " Done waiting for message " << _waitingMessage << " after " << elapsedTime << "us" << std::endl;
                 _waiting = false;
             }
         }
@@ -249,6 +251,12 @@ public:
     {
         std::cerr << "Connecting to " << serverUri << std::endl;
         poll.insertNewWebSocketSync(Poco::URI(serverUri), handler);
+    }
+
+private:
+    int64_t getCurrentTime()
+    {
+        return std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - _start).count();
     }
 };
 
