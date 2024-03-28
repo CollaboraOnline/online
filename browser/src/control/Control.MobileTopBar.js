@@ -122,18 +122,20 @@ L.Control.MobileTopBar = L.Control.extend({
 
 	onUpdatePermission: function(e) {
 		var toolbarButtons = ['next', 'prev', 'mobile_wizard', 'insertion_mobile_wizard', 'comment_wizard'];
+		// Handle permission mode as diffrent case because it's not part of `toolbar-up` element
+		var PermissionMode = document.getElementById('PermissionMode');
 		if (e.perm === 'edit') {
 			toolbarButtons.forEach((id) => {
 				this.enableItem(id, true);
 			});
-			this.showItem('PermissionMode', false);
+			PermissionMode.style.display = 'none';
 		} else {
 			toolbarButtons.forEach((id) => {
 				this.enableItem(id, false);
 			});
 			this.enableItem('comment_wizard', true);
 			if ($('#mobile-edit-button').is(':hidden')) {
-				this.showItem('PermissionMode', true);
+				PermissionMode.style.display = 'block';
 			}
 		}
 	},

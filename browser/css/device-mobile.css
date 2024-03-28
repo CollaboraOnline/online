@@ -40,8 +40,6 @@ html[dir='rtl'] .sub-menu-arrow {
 	width: 42px;
 	position: relative;
 	z-index: 1003;
-	/* span 2 columns */
-	grid-column: 1/2;
 }
 #toolbar-mobile-center-space {
 	display: flex;
@@ -175,18 +173,11 @@ textarea.cool-annotation-textarea {
 #toolbar-wrapper.mobile{
 	border-top: none;
 	z-index: auto !important;
+	flex-direction: column;
+}
+.toolbar-row {
+	display: flex;
 	flex-direction: row;
-}
-#toolbar-wrapper.mobile.spreadsheet {
-	height: calc(46px*2);
-	display: grid;
-	grid-template-rows: repeat(2, auto);
-	grid-template-columns: repeat(5, auto);
-}
-
-#toolbar-wrapper.mobile.spreadsheet #formulabar {
-	/* Column span span via grid, also these div in html is been attributed some weird colspan talbe alike attribute   */
-	grid-column: 1 / 6;
 }
 
 .insertshape-grid {
@@ -202,6 +193,7 @@ textarea.cool-annotation-textarea {
 	padding-top: 0px;
 	padding-bottom: 0px;
 	background: transparent;
+	align-self: end;
 }
 nav:not(.spreadsheet-color-indicator) ~ #toolbar-wrapper #toolbar-up.w2ui-toolbar {
 	border-color: transparent;
@@ -227,6 +219,7 @@ nav:not(.spreadsheet-color-indicator) ~ #toolbar-wrapper #toolbar-up.w2ui-toolba
 #formulabar {
 	padding: 0px !important;
 	border-top: 1px solid #bbbbbb !important;
+	margin-bottom: 5px;
 }
 #formulabar > div > div {
 	grid-template-columns: 70px auto;

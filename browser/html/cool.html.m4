@@ -202,17 +202,19 @@ m4_ifelse(MOBILEAPP,[true],
      </nav>
 
      <div id="toolbar-wrapper">
-       <div id="toolbar-logo"></div>
-       <div id="toolbar-mobile-back" class="editmode-off"></div>
-       <div id="toolbar-mobile-center-space">
-        <div id="MobilePermissionMode" class="cool-font status-readonly-mode" style="padding: 3px 10px; display: none"> Read-only</div>
-       </div>
-       <div id="toolbar-up"></div>
-       <div id="toolbar-hamburger">
-         <label class="main-menu-btn" for="main-menu-state">
-           <span class="main-menu-btn-icon" id="main-menu-btn-icon"></span>
-         </label>
-       </div>
+        <div id="toolbar-row" class="toolbar-row">
+          <div id="toolbar-logo"></div>
+          <div id="toolbar-mobile-back" class="editmode-off"></div>
+          <div id="toolbar-mobile-center-space">
+            <div id="PermissionMode" class="cool-font status-readonly-mode" style="padding: 3px 10px; display: none"> Read-only</div>
+          </div>
+          <div id="toolbar-up"></div>
+          <div id="toolbar-hamburger">
+            <label class="main-menu-btn" for="main-menu-state">
+              <span class="main-menu-btn-icon" id="main-menu-btn-icon"></span>
+            </label>
+          </div>
+        </div>
        <div colspan="4" id="formulabar" style="display: none"></div>
     </div>
 
