@@ -41,6 +41,11 @@
 #include <net/HttpHelper.hpp>
 #endif
 
+#if ENABLE_PERFTEST
+#include <perftest/callgrind.h>
+#include <perftest/valgrind.h>
+#endif
+
 using namespace COOLProtocol;
 
 static constexpr float TILES_ON_FLY_MIN_UPPER_LIMIT = 10.0;
@@ -484,6 +489,42 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         }
         return false;
     }
+#if ENABLE_PERFTEST
+    else if (tokens.equals(0, "PERFTEST"))
+    {
+        if (RUNNING_ON_VALGRIND)
+        {
+            // Valid commands: PERFTEST start and PERFTEST stop <filename>
+            if (tokens.size() == 2 && tokens[1] == "start")
+            {
+                LOG_DBG("Starting callgrind instrumentation");
+                CALLGRIND_START_INSTRUMENTATION;
+                CALLGRIND_TOGGLE_COLLECT;
+                return true;
+            }
+            else if (tokens.size() == 3 && tokens[1] == "stop")
+            {
+                LOG_DBG("Stopping callgrind instrumentation");
+                CALLGRIND_STOP_INSTRUMENTATION;
+                auto traceName = tokens[2].c_str(); // Doesn't work if used directly in the macro
+                CALLGRIND_DUMP_STATS_AT(traceName);
+                return true;
+            }
+            else
+            {
+                LOG_WRN("Unrecognized PERFTEST message: " << std::string(buffer,length));
+                sendTextFrameAndLogError("error: cmd=PERFTEST kind=syntax");
+                return false;
+            }
+        }
+        else
+        {
+            LOG_ERR("Must be running under callgrind");
+            sendTextFrameAndLogError("error: cmd=PERFTEST kind=callgrind");
+            return false;
+        }
+    }
+#endif
 
     COOLWSD::dumpIncomingTrace(docBroker->getJailId(), getId(), firstLine);
 

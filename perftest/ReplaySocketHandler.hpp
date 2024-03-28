@@ -34,12 +34,13 @@ class ReplaySocketHandler : public WebSocketHandler
     std::chrono::steady_clock::time_point _start;
     bool _connecting;
     std::string _uri;
-    std::string _trace;
     bool _waiting;
     std::chrono::steady_clock::time_point _waitingStart;
     int64_t _waitingTimeout;
     std::string _waitingMessage;
     int64_t _lastMessageTime;
+protected:
+    std::string _trace;
 public:
     ReplaySocketHandler(SocketPoll &poll, /* bad style */
                         const std::string &uri, const std::string &trace) :
@@ -48,9 +49,9 @@ public:
         _reader(trace),
         _connecting(true),
         _uri(uri),
-        _trace(trace),
         _waiting(false),
-        _lastMessageTime(0)
+        _lastMessageTime(0),
+        _trace(trace)
     {
 
         std::cerr << "Attempt connect to " << uri << " for trace " << _trace << "\n";
@@ -143,7 +144,7 @@ public:
                 StringVector tokens = StringVector::tokenize(payload);
                 if (tokens.equals(0, "wait")) {
                     _waitingStart = std::chrono::steady_clock::now();
-                    _waitingTimeout = std::stoi(tokens[1]);
+                    _waitingTimeout = std::stoi(tokens[1]) * TRACE_MULTIPLIER;
                     _waitingMessage = tokens.cat(" ",2);
                     _waiting = true;
                     std::cerr << getCurrentTime() << " waiting for message: " << _waitingMessage << " (Timeout " << _waitingTimeout << "us)" << std::endl;

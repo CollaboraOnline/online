@@ -57,6 +57,7 @@ test/fakesockettest
 test/unithttplib
 jsstress
 perftest/messagecountperftest
+perftest/cyclecountperftest
 
 *.o
 *.exe

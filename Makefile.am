@@ -75,7 +75,11 @@ nginxconfig_DATA = etc/nginx/coolwsd.conf
 ACLOCAL_AMFLAGS = -I m4
 
 # quick and easy for now.
-include_paths = -I${top_srcdir}/common -I${top_srcdir}/net -I${top_srcdir}/wsd -I${top_srcdir}/kit ${ZLIB_CFLAGS} ${ZSTD_CFLAGS} ${PNG_CFLAGS}
+include_paths = -I${top_srcdir}/common -I${top_srcdir}/net -I${top_srcdir}/wsd -I${top_srcdir}/kit
+if ENABLE_PERFTEST
+include_paths += -I${top_srcdir}/perftest
+endif
+include_paths += ${ZLIB_CFLAGS} ${ZSTD_CFLAGS} ${PNG_CFLAGS}
 if ENABLE_SSL
 include_paths += ${OPENSSL_CFLAGS}
 endif

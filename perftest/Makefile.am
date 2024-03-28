@@ -1,8 +1,12 @@
 if ENABLE_PERFTEST
 
-noinst_PROGRAMS = messagecountperftest
+noinst_PROGRAMS = cyclecountperftest messagecountperftest
 
-include_paths = -I${top_srcdir}/common -I${top_srcdir}/net -I${top_srcdir}/wsd -I${top_srcdir}/kit -Ipoiu ${ZLIB_CFLAGS} -Izxcv ${ZSTD_CFLAGS} -Iqwer ${PNG_CFLAGS} -Iasdf
+include_paths = -I${top_srcdir}/common -I${top_srcdir}/net -I${top_srcdir}/wsd -I${top_srcdir}/kit -I${top_srcdir}/perftest
+include_paths += ${ZLIB_CFLAGS} ${ZSTD_CFLAGS} ${PNG_CFLAGS}
+if ENABLE_SSL
+include_paths += ${OPENSSL_CFLAGS}
+endif
 
 AM_CPPFLAGS = $(include_paths)
 AM_LDFLAGS = -Wl,-E -lpam $(ZLIB_LIBS) $(ZSTD_LIBS) ${PNG_LIBS} ${OPENSSL_LIBS}
@@ -38,9 +42,13 @@ shared_sources = \
 				 ../net/Ssl.cpp \
 				 ../wsd/Exceptions.cpp
 
+cyclecountperftest_SOURCES = $(shared_sources) \
+							   CycleCountPerfTest.cpp
+cyclecountperftest_CPPFLAGS = ${include_paths} #-DTDOC=\"$(abs_top_srcdir)/test/data\"
+
 messagecountperftest_SOURCES = $(shared_sources) \
 							   MessageCountPerfTest.cpp
-messagecountperftest_CPPFLAGS = ${include_paths} #-DTDOC=\"$(abs_top_srcdir)/test/data\" 
+messagecountperftest_CPPFLAGS = ${include_paths} #-DTDOC=\"$(abs_top_srcdir)/test/data\"
 
 
 V = $(if $(verbose),,@)
