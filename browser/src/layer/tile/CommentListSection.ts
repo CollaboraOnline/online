@@ -691,7 +691,7 @@ export class CommentSection extends CanvasSectionObject {
 	}
 
 	public select (annotation: Comment, force: boolean = false): void {
-		if (force || (annotation && !annotation.pendingInit && annotation !== this.sectionProperties.selectedComment)) {
+		if (annotation && ((!annotation.pendingInit && annotation !== this.sectionProperties.selectedComment) || force)) {
 			// Unselect first if there anything selected.
 			if (this.sectionProperties.selectedComment)
 				this.unselect();
@@ -1723,8 +1723,13 @@ export class CommentSection extends CanvasSectionObject {
 		}
 
 		lastY += this.containerObject.getDocumentTopLeft()[1];
-		if (lastY > app.file.size.pixels[1])
-			app.view.size.pixels[1] = lastY;
+		if (lastY > app.file.size.pixels[1]) {
+			if (app.view.size.pixels[1] !== lastY) {
+				app.view.size.pixels[1] = lastY;
+				this.onResize(); // Annotation goes beyond document and can't be scrolled further unless resized
+				this.select(this.sectionProperties.selectedComment, true); // Reselecting will bring entire comment in view
+			  }
+		}
 		else
 			app.view.size.pixels[1] = app.file.size.pixels[1];
 	}
