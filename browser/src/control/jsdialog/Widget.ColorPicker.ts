@@ -183,6 +183,8 @@ function createPaletteSwitch(
 		paletteListbox,
 	);
 
+	listbox.setAttribute('aria-labelledby', 'color-palette');
+
 	for (const i in window.app.colorPalettes) {
 		const paletteOption = L.DomUtil.create('option', '', listbox);
 		if (i === getCurrentPaletteName())
