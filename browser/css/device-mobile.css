@@ -86,10 +86,6 @@ div#w2ui-overlay-actionbar.w2ui-overlay{
 	display: flex;
 	align-items: center; /* Align items vertically */
 }
-#toolbar-hamburger.menuwizard-opened {
-	width: 36px;
-	height: 36px;
-}
 
 .logo {
 	background-size: 100px;
