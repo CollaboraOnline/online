@@ -592,6 +592,10 @@ private:
     /// Loads a document from the public URI into the jail.
     bool download(const std::shared_ptr<ClientSession>& session, const std::string& jailId,
                   std::unique_ptr<WopiStorage::WOPIFileInfo> wopiFileInfo);
+
+    /// Process the configured plugins, if any, after downloading the document file.
+    bool processPlugins(std::string& localPath);
+
     bool isLoaded() const { return _docState.hadLoaded(); }
     bool isInteractive() const { return _docState.isInteractive(); }
 
