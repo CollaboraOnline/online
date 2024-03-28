@@ -40,6 +40,8 @@ html[dir='rtl'] .sub-menu-arrow {
 	width: 42px;
 	position: relative;
 	z-index: 1003;
+	/* span 2 columns */
+	grid-column: 1/2;
 }
 #toolbar-mobile-center-space {
 	display: flex;
@@ -174,6 +176,17 @@ textarea.cool-annotation-textarea {
 	border-top: none;
 	z-index: auto !important;
 	flex-direction: row;
+}
+#toolbar-wrapper.mobile.spreadsheet {
+	height: calc(46px*2);
+	display: grid;
+	grid-template-rows: repeat(2, auto);
+	grid-template-columns: repeat(5, auto);
+}
+
+#toolbar-wrapper.mobile.spreadsheet #formulabar {
+	/* Column span span via grid, also these div in html is been attributed some weird colspan talbe alike attribute   */
+	grid-column: 1 / 6;
 }
 
 .insertshape-grid {
