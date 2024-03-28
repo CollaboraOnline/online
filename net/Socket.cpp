@@ -1459,6 +1459,13 @@ extern "C" {
         // connect perf probes here
         LOG_TRC("Watchdog triggered");
         volatile int i = 42; (void)i;
+#if defined(__linux__) && !defined(__ANDROID__)
+        const struct timeval times[2] = {};
+        // call something fairly obscure that perf can trigger on.  futimesat
+        // look a good candidate (calling "futimesat" typically results in
+        // using syscall SYS_utimensat so use SYS_futimesat directly).
+        syscall(SYS_futimesat, -1, "/tmp/kit-watchdog", times);
+#endif
     }
 }
 
