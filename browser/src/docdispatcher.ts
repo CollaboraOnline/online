@@ -112,6 +112,35 @@ class Dispatcher {
 		this.actionsMap['insertcomment'] = function () {
 			app.map.insertComment();
 		};
+
+		this.actionsMap['zoomin'] = () => {
+			app.map.zoomIn(1, null, true /* animate? */);
+		};
+		this.actionsMap['zoomout'] = () => {
+			app.map.zoomOut(1, null, true /* animate? */);
+		};
+		this.actionsMap['zoomreset'] = () => {
+			app.map.setZoom(app.map.options.zoom);
+		};
+
+		this.actionsMap['searchprev'] = () => {
+			app.map.search(L.DomUtil.get('search-input').value, true);
+		};
+		this.actionsMap['searchnext'] = () => {
+			app.map.search(L.DomUtil.get('search-input').value);
+		};
+		this.actionsMap['cancelsearch'] = () => {
+			app.map.cancelSearch();
+		};
+
+		this.actionsMap['prev'] = () => {
+			if (app.map._docLayer._docType === 'text') app.map.goToPage('prev');
+			else app.map.setPart('prev');
+		};
+		this.actionsMap['next'] = () => {
+			if (app.map._docLayer._docType === 'text') app.map.goToPage('next');
+			else app.map.setPart('next');
+		};
 	}
 
 	private addExportCommands() {

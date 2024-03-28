@@ -135,7 +135,6 @@ COOL_CSS_LST =\
 	$(srcdir)/css/spreadsheet.css \
 	$(srcdir)/css/writer-mobile.css \
 	$(srcdir)/css/writer.css \
-	$(srcdir)/css/editor.css \
 	$(srcdir)/css/iframedialog.css \
 	$(builddir)/node_modules/jquery-contextmenu/dist/jquery.contextMenu.css \
 	$(builddir)/node_modules/smartmenus/dist/css/sm-core-css.css \

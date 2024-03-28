@@ -65,13 +65,6 @@ function _menubuttonControl (parentContainer, data, builder) {
 		if (!data.command)
 			data.command = menuId;
 
-		if (menuEntries.length && menuEntries[0].type === 'colorpicker') {
-			// make copy and fill with information to identify color command
-			menuEntries = JSON.parse(JSON.stringify(menuEntries));
-			menuEntries[0].command = data.command;
-			menuEntries[0].id = data.id;
-		}
-
 		var options = {hasDropdownArrow: menuEntries.length > 1};
 		var control = builder._unoToolButton(parentContainer, data, builder, options);
 
@@ -108,10 +101,18 @@ function _menubuttonControl (parentContainer, data, builder) {
 				return false;
 			};
 
-			if (menuEntries.length === 1) {
-				callback(null, 'selected', null, null, menuEntries[0]);
+			var freshMenu = builder._menus.get(menuId); // refetch to apply dynamic changes
+			if (freshMenu.length && freshMenu[0].type === 'colorpicker') {
+				// make copy and fill with information to identify color command
+				freshMenu = JSON.parse(JSON.stringify(freshMenu));
+				freshMenu[0].command = data.command;
+				freshMenu[0].id = data.id;
+			}
+
+			if (freshMenu.length === 1) {
+				callback(null, 'selected', null, null, freshMenu[0]);
 			} else {
-				JSDialog.OpenDropdown(dropdownId, control.container, menuEntries, callback);
+				JSDialog.OpenDropdown(dropdownId, control.container, freshMenu, callback);
 			}
 		};
 

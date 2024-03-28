@@ -37,9 +37,9 @@ function typeIntoSearchFieldDesktop(text) {
 
 	cy.cGet('input#search-input').clear().type(text);
 	cy.cGet('input#search-input').should('have.prop', 'value', text);
-	cy.cGet('#tb_actionbar_item_searchprev').should('not.have.class', 'disabled');
-	cy.cGet('#tb_actionbar_item_searchnext').should('not.have.class', 'disabled');
-	cy.cGet('#tb_actionbar_item_cancelsearch').should('be.visible');
+	cy.cGet('#searchprev').should('not.have.attr', 'disabled');
+	cy.cGet('#searchnext').should('not.have.attr', 'disabled');
+	cy.cGet('#cancelsearch').should('be.visible');
 
 	cy.log('<< typeIntoSearchFieldDesktop - end');
 }
@@ -56,7 +56,7 @@ function searchNext() {
 function searchNextDesktop() {
 	cy.log('>> searchNextDesktop - start');
 
-	cy.cGet('#tb_actionbar_item_searchnext').click();
+	cy.cGet('#searchnext').click();
 
 	cy.log('<< searchNextDesktop - end');
 }
@@ -65,7 +65,7 @@ function searchNextDesktop() {
 function searchPrev() {
 	cy.log('>> searchPrev - start');
 
-	cy.cGet('#tb_searchbar_item_searchnext').click();
+	cy.cGet('#tb_searchbar_item_searchprev').click();
 
 	cy.log('<< searchPrev - end');
 }
@@ -73,7 +73,7 @@ function searchPrev() {
 function searchPrevDesktop() {
 	cy.log('>> searchPrevDesktop - start');
 
-	cy.cGet('#tb_actionbar_item_searchprev').click();
+	cy.cGet('#searchprev').click();
 
 	cy.log('<< searchPrevDesktop - end');
 }
@@ -95,11 +95,11 @@ function cancelSearch() {
 function cancelSearchDesktop() {
 	cy.log('>> cancelSearchDesktop - start');
 
-	cy.cGet('#tb_actionbar_item_cancelsearch').click();
+	cy.cGet('#toolbar-down #cancelsearch').click();
 	cy.cGet('input#search-input').should('have.prop', 'value', '');
-	cy.cGet('#tb_actionbar_item_searchprev').should('have.class', 'disabled');
-	cy.cGet('#tb_actionbar_item_searchnext').should('have.class', 'disabled');
-	cy.cGet('#tb_actionbar_item_cancelsearch').should('not.be.visible');
+	cy.cGet('#toolbar-down #searchprev').should('have.attr', 'disabled');
+	cy.cGet('#toolbar-down #searchnext').should('have.attr', 'disabled');
+	cy.cGet('#toolbar-down #cancelsearch').should('not.be.visible');
 
 	cy.log('<< cancelSearchDesktop - end');
 }

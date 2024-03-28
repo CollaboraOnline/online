@@ -1004,12 +1004,19 @@ L.Map.include({
 	},
 
 	cancelSearch: function() {
-		var toolbar = window.mode.isMobile() ? w2ui['searchbar'] : w2ui['actionbar'];
+		var toolbar = window.mode.isMobile() ? w2ui['searchbar'] : null;
+		var statusBar = this.statusBar;
 		var searchInput = L.DomUtil.get('search-input');
 		this.resetSelection();
-		toolbar.hide('cancelsearch');
-		toolbar.disable('searchprev');
-		toolbar.disable('searchnext');
+		if (toolbar) {
+			toolbar.hide('cancelsearch');
+			toolbar.disable('searchprev');
+			toolbar.disable('searchnext');
+		} else if (statusBar) {
+			statusBar.showItem('cancelsearch', false);
+			statusBar.enableItem('searchprev', false);
+			statusBar.enableItem('searchnext', false);
+		}
 		searchInput.value = '';
 		if (window.mode.isMobile()) {
 			searchInput.focus();
@@ -1080,15 +1087,17 @@ L.Map.include({
 		setTimeout(function() {
 			if ($('.leaflet-cursor').is(':visible'))
 				return;
-			var mobileTopBar = w2ui['actionbar'];
+			var mobileTopBar = window.mode.isMobile() ? w2ui['actionbar'] : null;
 			var jsdialogFormulabar = map.formulabar;
 
 			var target = window.mode.isMobile() ? mobileTopBar : jsdialogFormulabar;
 			target.hide('cancelformula');
 			target.hide('acceptformula');
 
-			mobileTopBar.show('undo');
-			mobileTopBar.show('redo');
+			if (mobileTopBar) {
+				mobileTopBar.show('undo');
+				mobileTopBar.show('redo');
+			}
 
 			$('#AutoSumMenu-button').css('margin-inline', '0');
 			$('#AutoSumMenu .unoarrow').css('margin', '0');
