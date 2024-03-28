@@ -82,21 +82,11 @@ public:
     bool onDocumentError(const std::string& message) override
     {
         LOK_ASSERT_STATE(_phase, Phase::WaitLoadStatus);
-        if (message != "error: cmd=internal kind=load")
-        {
-            LOK_ASSERT_EQUAL_MESSAGE("Expect only documentunloading errors",
-                                     std::string("error: cmd=load kind=docunloading"), message);
-        }
-        else
-        {
-            // We send out two errors when we fail to load.
-            // This is the second one, which is 'cmd=internal kind=load'.
 
-            LOK_ASSERT_EQUAL_MESSAGE("Expect only documentunloading errors",
-                                     std::string("error: cmd=internal kind=load"), message);
+        LOK_ASSERT_EQUAL_MESSAGE("Expect only documentunloading errors",
+                                 std::string("error: cmd=load kind=docunloading"), message);
 
-            TRANSITION_STATE(_phase, Phase::Done);
-        }
+        TRANSITION_STATE(_phase, Phase::Done);
 
         return true;
     }

@@ -327,11 +327,10 @@ bool RequestVettingStation::createDocBroker(const std::string& docKey, const std
     }
 
     // Failed.
-    LOG_ERR("Failed to create DocBroker [" << docKey << ']');
+    LOG_ERR("Failed to create DocBroker [" << docKey << "]: " << error);
     if (_ws)
     {
-        sendErrorAndShutdown(_ws, "error: cmd=internal kind=load",
-                             WebSocketHandler::StatusCodes::UNEXPECTED_CONDITION);
+        sendErrorAndShutdown(_ws, error, WebSocketHandler::StatusCodes::UNEXPECTED_CONDITION);
     }
 
     return false;
