@@ -160,8 +160,8 @@ L.Map.SlideShow = L.Handler.extend({
 					_('OK'), null, false);
 			}
 
-			this._slideShowWindowProxy.document.write(htmlContent)
-			this._slideShowWindowProxy.document.close()
+			this._slideShowWindowProxy.document.documentElement.innerHTML = htmlContent;
+			this._slideShowWindowProxy.document.close();
 			this._slideShowWindowProxy.focus();
 
 			this._slideShowWindowProxy.onload = this._handleSlideWindowLoaded.bind(this);
