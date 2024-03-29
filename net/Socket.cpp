@@ -60,7 +60,7 @@ constexpr std::chrono::microseconds WebSocketHandler::PingFrequencyMicroS;
 std::atomic<bool> SocketPoll::InhibitThreadChecks(false);
 std::atomic<bool> Socket::InhibitThreadChecks(false);
 
-std::unique_ptr<Watchdog> PollWatchdog;
+std::unique_ptr<Watchdog> SocketPoll::PollWatchdog;
 
 #define SOCKET_ABSTRACT_UNIX_NAME "0coolwsd-"
 
@@ -1460,11 +1460,6 @@ extern "C" {
         LOG_TRC("Watchdog triggered");
         volatile int i = 42; (void)i;
     }
-}
-
-void SocketPoll::shutdownWatchdog()
-{
-    PollWatchdog.reset();
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
