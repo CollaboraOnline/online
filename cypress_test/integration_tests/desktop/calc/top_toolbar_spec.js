@@ -200,6 +200,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 	});
 
 	it('Format as currency.', function() {
+		cy.cGet('#toolbar-up .w2ui-scroll-right').click();
 		cy.cGet('#numberformatcurrency').click();
 
 		calcHelper.selectEntireSheet();
@@ -211,6 +212,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 	});
 
 	it('Format as Percent.', function() {
+		cy.cGet('#toolbar-up .w2ui-scroll-right').click();
 		cy.cGet('#numberformatpercent').click();
 
 		calcHelper.selectEntireSheet();
@@ -222,6 +224,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 	});
 
 	it('Apply left/right alignment', function() {
+		cy.cGet('#toolbar-up .w2ui-scroll-right').click();
 		// Set right aligment first
 		cy.cGet('#textalign .arrowbackground').click();
 		cy.cGet('body').contains('.ui-combobox-entry', 'Align Right').click();

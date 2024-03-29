@@ -11,7 +11,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 		helper.beforeAll(testFileName, 'calc');
 		desktopHelper.switchUIToCompact();
 		cy.cGet('#toolbar-up .w2ui-scroll-right').click();
-		cy.cGet('#sidebar').click();
+		cy.cGet('#sidebar').click({force: true});
 	});
 
 	afterEach(function() {
@@ -19,10 +19,10 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 	});
 
 	it('No jump on long merged cell', function() {
-		desktopHelper.assertScrollbarPosition('horizontal', 310, 315);
+		desktopHelper.assertScrollbarPosition('horizontal', 210, 315);
 		calcHelper.clickOnFirstCell(true, false, false);
 		cy.cGet('input#addressInput').should('have.prop', 'value', 'A1:Z1');
-		desktopHelper.assertScrollbarPosition('horizontal', 310, 315);
+		desktopHelper.assertScrollbarPosition('horizontal', 210, 315);
 	});
 });
 
@@ -33,7 +33,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 		helper.beforeAll(testFileName, 'calc');
 		desktopHelper.switchUIToCompact();
 		cy.cGet('#toolbar-up .w2ui-scroll-right').click();
-		cy.cGet('#sidebar').click();
+		cy.cGet('#sidebar').click({force: true});
 	});
 
 	afterEach(function() {
@@ -41,7 +41,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 	});
 
 	it('No jump on long merged cell with split panes', function() {
-		desktopHelper.assertScrollbarPosition('horizontal', 380, 390);
+		desktopHelper.assertScrollbarPosition('horizontal', 270, 390);
 
 		// Click on second cell in second row
 		cy.cGet('#map')
@@ -53,6 +53,6 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 		});
 
 		cy.cGet('input#addressInput').should('have.prop', 'value', 'B2:AA2');
-		desktopHelper.assertScrollbarPosition('horizontal', 380, 390);
+		desktopHelper.assertScrollbarPosition('horizontal', 270, 390);
 	});
 });

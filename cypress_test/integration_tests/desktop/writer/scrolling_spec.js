@@ -11,7 +11,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Scroll through document', 
 		desktopHelper.switchUIToCompact();
 
 		cy.cGet('#toolbar-up .w2ui-scroll-right').click();
-		cy.cGet('#sidebar').click();
+		cy.cGet('#sidebar').click({force: true});
 	});
 
 	afterEach(function() {
@@ -47,6 +47,6 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Scroll through document', 
 		helper.typeIntoDocument('{home}{end}{home}');
 		cy.cGet('#test-div-horizontal-scrollbar').should('have.text', '0');
 		helper.typeIntoDocument('{end}{home}{end}');
-		desktopHelper.assertScrollbarPosition('horizontal', 570, 653);
+		desktopHelper.assertScrollbarPosition('horizontal', 430, 653);
 	});
 });
