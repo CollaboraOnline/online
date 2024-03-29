@@ -1,6 +1,6 @@
 if ENABLE_PERFTEST
 
-noinst_PROGRAMS = cyclecountperftest messagecountperftest timeperftest
+noinst_PROGRAMS = cycleperftest messageperftest timeperftest
 
 include_paths = -I${top_srcdir}/common -I${top_srcdir}/net -I${top_srcdir}/wsd -I${top_srcdir}/kit -I${top_srcdir}/perftest
 include_paths += ${ZLIB_CFLAGS} ${ZSTD_CFLAGS} ${PNG_CFLAGS}
@@ -42,13 +42,13 @@ shared_sources = \
 				 ../net/Ssl.cpp \
 				 ../wsd/Exceptions.cpp
 
-cyclecountperftest_SOURCES = $(shared_sources) \
-							   CycleCountPerfTest.cpp
-cyclecountperftest_CPPFLAGS = ${include_paths} #-DTDOC=\"$(abs_top_srcdir)/test/data\"
+cycleperftest_SOURCES = $(shared_sources) \
+							   CyclePerfTest.cpp
+cycleperftest_CPPFLAGS = ${include_paths} #-DTDOC=\"$(abs_top_srcdir)/test/data\"
 
-messagecountperftest_SOURCES = $(shared_sources) \
-							   MessageCountPerfTest.cpp
-messagecountperftest_CPPFLAGS = ${include_paths} #-DTDOC=\"$(abs_top_srcdir)/test/data\"
+messageperftest_SOURCES = $(shared_sources) \
+							   MessagePerfTest.cpp
+messageperftest_CPPFLAGS = ${include_paths} #-DTDOC=\"$(abs_top_srcdir)/test/data\"
 
 timeperftest_SOURCES = $(shared_sources) \
 							   TimePerfTest.cpp
@@ -58,11 +58,11 @@ timeperftest_CPPFLAGS = ${include_paths} #-DTDOC=\"$(abs_top_srcdir)/test/data\"
 V = $(if $(verbose),,@)
 
 perftest:
-	$(call run-messagecountperftest)
+	$(call run-messageperftest)
 
-define run-messagecountperftest
-$(V)echo "Running MessageCountPerfTest"
-./messagecountperftest
+define run-messageperftest
+$(V)echo "Running MessagePerfTest"
+./messageperftest
 endef
 
 

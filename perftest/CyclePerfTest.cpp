@@ -23,65 +23,40 @@
 
 #include <ReplaySocketHandler.hpp>
 
-class MessageCountSocketHandler : public ReplaySocketHandler
+class CyclePerfTestSocketHandler : public ReplaySocketHandler
 {
-    bool _measuring;
-    unsigned int _messageCount;
-    unsigned int _messageBytes;
 public:
-    MessageCountSocketHandler(SocketPoll &poll, /* bad style */
+    CyclePerfTestSocketHandler(SocketPoll &poll, /* bad style */
                         const std::string &uri,
                         const std::string &trace) :
-        ReplaySocketHandler(poll, uri, trace),
-        _measuring(false),
-        _messageCount(0),
-        _messageBytes(0)
+        ReplaySocketHandler(poll, uri, trace)
     {
-    }
-
-    void handleMessage(const std::vector<char> &data) override
-    {
-        if (_measuring) {
-            _messageCount++;
-            _messageBytes += data.size();
-        }
-        ReplaySocketHandler::handleMessage(data);
     }
 
     void startMeasurement() override
     {
-        _measuring = true;
+        sendMessage("PERFTEST start");
     }
 
     void stopMeasurement() override
     {
-        _measuring = false;
-    }
-
-    unsigned int getMessageCount()
-    {
-        return _messageCount;
-    }
-
-    unsigned int getMessageBytes()
-    {
-        return _messageBytes;
+        sendMessage("PERFTEST stop " + _trace);
     }
 };
 
-class MessageCountPerfTest : public Poco::Util::Application
+class CyclePerfTest : public Poco::Util::Application
 {
 public:
-    MessageCountPerfTest() {}
+    CyclePerfTest() {}
 protected:
     int  main(const std::vector<std::string>& args) override;
 };
 
 // coverity[root_function] : don't warn about uncaught exceptions
-int MessageCountPerfTest::main(const std::vector<std::string>& args)
+int CyclePerfTest::main(const std::vector<std::string>& args)
 {
     if (args.size() != 2) {
-        std::cerr << "Usage: ./messagecountperftest <server> <trace-path>" << std::endl;
+        std::cerr << "Usage: ./cycleperftest <server> <trace-path>" << std::endl;
         std::cerr << "       server : Started separately. URI must start with ws:// or wss://. eg: wss://localhost:9980" << std::endl;
         std::cerr << "       trace  : Created from make run-trace and manually edited." << std::endl;
         std::cerr << "       See README for more info." << std::endl;
@@ -116,8 +91,8 @@ int MessageCountPerfTest::main(const std::vector<std::string>& args)
     std::string fileUri = ReplaySocketHandler::getFileUri(filePath);
     std::string serverUri = ReplaySocketHandler::getServerUri(server, fileUri);
 
-    TerminatingPoll poll("MessageCountPerfTest poll");
-    auto handler = std::make_shared<MessageCountSocketHandler>(poll, fileUri, trace);
+    TerminatingPoll poll("CyclePerfTest poll");
+    auto handler = std::make_shared<CyclePerfTestSocketHandler>(poll, fileUri, trace);
 
     ReplaySocketHandler::start(handler, poll, serverUri);
 
@@ -132,17 +107,16 @@ int MessageCountPerfTest::main(const std::vector<std::string>& args)
         return EX_SOFTWARE;
     }
 
+
     // This is supposed to be json
     std::cout << "{\n"
-              << "    name: " << trace << ",\n"
-              << "    messageCount: " << handler->getMessageCount() << ",\n"
-              << "    messageBytes: " << handler->getMessageBytes() << "\n"
+              << "    name: " << trace << "\n"
               << "}" << std::endl;
 
     return EX_OK;
 }
 
 // coverity[root_function] : don't warn about uncaught exceptions
-POCO_APP_MAIN(MessageCountPerfTest)
+POCO_APP_MAIN(CyclePerfTest)
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

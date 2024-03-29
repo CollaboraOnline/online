@@ -56,8 +56,8 @@ test/data/hello-world.odg
 test/fakesockettest
 test/unithttplib
 jsstress
-perftest/messagecountperftest
-perftest/cyclecountperftest
+perftest/messageperftest
+perftest/cycleperftest
 perftest/timeperftest
 
 *.o

@@ -23,13 +23,13 @@
 
 #include <ReplaySocketHandler.hpp>
 
-class TimeSocketHandler : public ReplaySocketHandler
+class TimePerfTestSocketHandler : public ReplaySocketHandler
 {
     std::chrono::steady_clock::time_point _startTime = std::chrono::steady_clock::now();
     std::chrono::steady_clock::time_point _stopTime = std::chrono::steady_clock::now();
 
 public:
-    TimeSocketHandler(SocketPoll &poll, /* bad style */
+    TimePerfTestSocketHandler(SocketPoll &poll, /* bad style */
                         const std::string &uri,
                         const std::string &trace) :
         ReplaySocketHandler(poll, uri, trace)
@@ -100,7 +100,7 @@ int TimePerfTest::main(const std::vector<std::string>& args)
     std::string serverUri = ReplaySocketHandler::getServerUri(server, fileUri);
 
     TerminatingPoll poll("TimePerfTest poll");
-    auto handler = std::make_shared<TimeSocketHandler>(poll, fileUri, trace);
+    auto handler = std::make_shared<TimePerfTestSocketHandler>(poll, fileUri, trace);
 
     ReplaySocketHandler::start(handler, poll, serverUri);
 
