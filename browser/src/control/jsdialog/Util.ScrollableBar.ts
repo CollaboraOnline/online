@@ -21,52 +21,60 @@ function createScrollButtons(parent: Element, scrollable: Element) {
 	const left = L.DomUtil.create('div', 'w2ui-scroll-left', parent);
 	const right = L.DomUtil.create('div', 'w2ui-scroll-right', parent);
 
-	$(left).click(function () {
+	JSDialog.AddOnClick(left, () => {
 		const scroll = $(scrollable).scrollLeft() - 300;
 		$(scrollable).animate({ scrollLeft: scroll }, 300);
 		setTimeout(function () {
-			$(window).resize();
+			JSDialog.RefreshScrollables();
 		}, 350);
 	});
 
-	$(right).click(function () {
+	JSDialog.AddOnClick(right, () => {
 		const scroll = $(scrollable).scrollLeft() + 300;
 		$(scrollable).animate({ scrollLeft: scroll }, 300);
 		setTimeout(function () {
-			$(window).resize();
+			JSDialog.RefreshScrollables();
 		}, 350);
 	});
 }
 
-function setupResizeHandler(container: Element, scrollable: Element) {
-	const handler = function () {
-		const rootContainer = $(scrollable).children('div').get(0);
+function showArrow(arrow: HTMLElement, show: boolean) {
+	if (show) arrow.style.setProperty('display', 'block');
+	else arrow.style.setProperty('display', 'none');
+}
 
-		if ($(rootContainer).outerWidth() > $(window).width()) {
+function setupResizeHandler(container: Element, scrollable: Element) {
+	const left = container.querySelector('.w2ui-scroll-left') as HTMLElement;
+	const right = container.querySelector('.w2ui-scroll-right') as HTMLElement;
+	const handler = function () {
+		const rootContainer = scrollable.querySelector('div');
+		if (!rootContainer) return;
+
+		if (rootContainer.scrollWidth > window.innerWidth) {
 			// we have overflowed content
 			const direction = this._RTL ? -1 : 1;
-			if (direction * $(scrollable).scrollLeft() > 0) {
-				if (this._RTL) $(container).find('.w2ui-scroll-right').show();
-				else $(container).find('.w2ui-scroll-left').show();
-			} else if (this._RTL) $(container).find('.w2ui-scroll-right').hide();
-			else $(container).find('.w2ui-scroll-left').hide();
+			if (direction * scrollable.scrollLeft > 0) {
+				if (this._RTL) showArrow(right, true);
+				else showArrow(left, true);
+			} else if (this._RTL) showArrow(right, false);
+			else showArrow(left, false);
 
 			if (
-				direction * $(scrollable).scrollLeft() <
-				$(rootContainer).outerWidth() - $(window).width() - 1
+				direction * scrollable.scrollLeft <
+				rootContainer.scrollWidth - window.innerWidth - 1
 			) {
-				if (this._RTL) $(container).find('.w2ui-scroll-left').show();
-				else $(container).find('.w2ui-scroll-right').show();
-			} else if (this._RTL) $(container).find('.w2ui-scroll-left').hide();
-			else $(container).find('.w2ui-scroll-right').hide();
+				if (this._RTL) showArrow(left, true);
+				else showArrow(right, true);
+			} else if (this._RTL) showArrow(left, false);
+			else showArrow(right, false);
 		} else {
-			$(container).find('.w2ui-scroll-left').hide();
-			$(container).find('.w2ui-scroll-right').hide();
+			showArrow(left, false);
+			showArrow(right, false);
 		}
 	}.bind(this);
 
-	$(window).resize(handler);
-	$(scrollable).scroll(handler);
+	window.addEventListener('resize', handler);
+	window.addEventListener('scroll', handler);
 }
 
 JSDialog.MakeScrollable = function (parent: Element, scrollable: Element) {
@@ -76,5 +84,5 @@ JSDialog.MakeScrollable = function (parent: Element, scrollable: Element) {
 };
 
 JSDialog.RefreshScrollables = function () {
-	$(window).resize();
+	window.dispatchEvent(new Event('resize'));
 };
