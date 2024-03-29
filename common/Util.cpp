@@ -671,6 +671,15 @@ namespace Util
         return replace(r, "\n", " / ");
     }
 
+    void killThreadById(int tid, int signal)
+    {
+#if defined __linux__
+        ::syscall(SYS_tgkill, getpid(), tid, signal);
+#else
+        LOG_WRN("No tgkill for thread " << tid);
+#endif
+    }
+
     // prctl(2) supports names of up to 16 characters, including null-termination.
     // Although in practice on linux more than 16 chars is supported.
     static thread_local char ThreadName[32] = {0};

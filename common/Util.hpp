@@ -298,6 +298,8 @@ namespace Util
     long getThreadId();
 #endif
 
+    void killThreadById(int tid, int signal);
+
     /// Get version information
     void getVersionInfo(std::string& version, std::string& hash);
 
