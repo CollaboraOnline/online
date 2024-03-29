@@ -73,10 +73,13 @@ public:
 
     void joinThread()
     {
-        _exit = true;
-        _condition.notify_all();
-        _thread->join();
-        _thread.reset();
+        if (_thread)
+        {
+            _exit = true;
+            _condition.notify_all();
+            _thread->join();
+            _thread.reset();
+        }
     }
 
     void checkTime()
