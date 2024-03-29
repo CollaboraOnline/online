@@ -18,6 +18,9 @@
 #include <Poco/URI.h>
 #include <sysexits.h> // EX_OK
 
+#include <sys/wait.h>
+#include <sys/types.h>
+
 #include <common/Seccomp.hpp>
 #include <common/TraceEvent.hpp>
 #include <common/MessageQueue.hpp>
@@ -163,8 +166,20 @@ void KitWebSocketHandler::enableProcessInput(bool enable)
         _ksPoll->wakeup();
 }
 
+void KitWebSocketHandler::shutdownForBackgroundSave()
+{
+    // Don't shutdown the app when this socket closes
+    _backgroundSaver = true;
+}
+
 void KitWebSocketHandler::onDisconnect()
 {
+    if (_backgroundSaver)
+    {
+        LOG_TRC("Ignoring hard disconnect of duplicate kit -> wsd socket in wsd");
+        return;
+    }
+
     if (!Util::isMobileApp())
     {
         //FIXME: We could try to recover.
@@ -181,6 +196,55 @@ void KitWebSocketHandler::onDisconnect()
     }
 #endif
     _ksPoll.reset();
+}
+
+// transient background save child message handler
+
+void BgSaveChildWebSocketHandler::handleMessage(const std::vector<char>& data)
+{
+    LOG_DBG(_socketName << ": recv from parent [" <<
+            COOLProtocol::getAbbreviatedMessage(data));
+}
+
+void BgSaveChildWebSocketHandler::onDisconnect()
+{
+    LOG_TRC("Disconnected background web socket to parent kit");
+    Util::forcedExit(EX_OK);
+}
+
+BgSaveChildWebSocketHandler::~BgSaveChildWebSocketHandler()
+{
+    LOG_TRC("Close web socket to parent kit");
+}
+
+// Kit handler for messages from transient background save Kit
+
+void BgSaveParentWebSocketHandler::handleMessage(const std::vector<char>& data)
+{
+    LOG_DBG(_socketName << ": recv from parent [" <<
+            COOLProtocol::getAbbreviatedMessage(data));
+
+    const StringVector tokens = StringVector::tokenize(data.data(), data.size());
+
+    // FIXME: check for badness - jsdialogs and so on and bail ... ?
+
+    // Should pass only:
+    // "error:", "asyncsave", "forcedtracevent", "unocommandresult"
+    // "statusindicator[start|finish|setvalue]"
+
+    // Messages already include client-foo prefixes inherited from ourselves
+    _document->sendFrame(data.data(), data.size(), WSOpCode::Text);
+}
+
+void BgSaveParentWebSocketHandler::onDisconnect()
+{
+    LOG_TRC("Disconnected background web socket to child " << _childPid);
+    // reap and de-zombify children.
+    int status = -1;
+    if (waitpid(_childPid, &status, WUNTRACED | WNOHANG) > 0)
+        LOG_TRC("Child " << _childPid << " terminated with status " << status);
+    else
+        LOG_TRC("Child disconnected but not terminated");
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
