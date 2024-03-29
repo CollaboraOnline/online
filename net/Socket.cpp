@@ -201,6 +201,7 @@ namespace {
     }
 }
 
+
 SocketPoll::SocketPoll(std::string threadName)
     : _name(std::move(threadName)),
       _pollStartIndex(0),
@@ -218,22 +219,12 @@ SocketPoll::SocketPoll(std::string threadName)
     if (watchDogProfile && !PollWatchdog)
         PollWatchdog.reset(new Watchdog());
 
-    // Create the wakeup fd.
-    if (
-#if !MOBILEAPP
-        ::pipe2(_wakeup, O_CLOEXEC | O_NONBLOCK) == -1
-#else
-        fakeSocketPipe2(_wakeup) == -1
-#endif
-        )
-    {
-        throw std::runtime_error("Failed to allocate pipe for SocketPoll [" + _name + "] waking.");
-    }
+    _wakeup[0] = -1;
+    _wakeup[1] = -1;
+
+    createWakeups();
 
     LOG_DBG("New SocketPoll [" << _name << "] owned by " << Log::to_string(_owner));
-
-    std::lock_guard<std::mutex> lock(getPollWakeupsMutex());
-    getWakeupsArray().push_back(_wakeup[1]);
 
     if (PollWatchdog)
         PollWatchdog->addTime(&_watchdogTime, &_ownerThreadId);
@@ -650,6 +641,26 @@ void SocketPoll::takeSocket(const std::shared_ptr<SocketPoll> &fromPoll,
 
     LOG_TRC("Transfer of Socket #" << socket->getFD() <<
             " from: " << fromPoll->name() << " to new poll: " << name() << " complete");
+}
+
+void SocketPoll::createWakeups()
+{
+    assert(_wakeup[0] == -1 && _wakeup[1] == -1);
+
+    // Create the wakeup fd.
+    if (
+#if !MOBILEAPP
+        ::pipe2(_wakeup, O_CLOEXEC | O_NONBLOCK) == -1
+#else
+        fakeSocketPipe2(_wakeup) == -1
+#endif
+        )
+    {
+        throw std::runtime_error("Failed to allocate pipe for SocketPoll [" + _name + "] waking.");
+    }
+
+    std::lock_guard<std::mutex> lock(getPollWakeupsMutex());
+    getWakeupsArray().push_back(_wakeup[1]);
 }
 
 void SocketPoll::removeSockets()
