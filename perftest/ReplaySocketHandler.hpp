@@ -85,7 +85,7 @@ public:
             if (_waiting) {
                 int64_t currentWaitTime = std::chrono::duration_cast<std::chrono::microseconds>(now - _waitingStart).count();
                 if (currentWaitTime > _waitingTimeout) {
-                    std::cerr << "Timed out waiting for message " << _waitingMessage << " after " << _waitingTimeout << "us" << std::endl;
+                    std::cerr << getCurrentTime() << " Timed out waiting for message " << _waitingMessage << " after " << _waitingTimeout << "us" << std::endl;
                     shutdown();
                 } else {
                     timeoutMaxMicroS = 100000;
@@ -105,7 +105,8 @@ public:
     void getNextRecord()
     {
         _next = _reader.getNextRecord();
-        // std::cerr << "Got next record: " << _next.toString() << std::endl; // Confusing to have next record show in logs well before it is actually used
+        // Confusing to have next record show in logs well before it is actually used
+        // std::cerr << getCurrentTime() << " getNextRecord: " << _next.toString() << std::endl;
         if (_next.getDir() == TraceFileRecord::Direction::Invalid){
             shutdown();
         }
@@ -147,10 +148,21 @@ public:
                 std::string payload = _next.getPayload();
                 StringVector tokens = StringVector::tokenize(payload);
                 if (tokens.equals(0, "wait")) {
-                    _waitingStart = std::chrono::steady_clock::now();
-                    _waitingTimeout = std::stoi(tokens[1]) * TRACE_MULTIPLIER;
-                    _waitingMessage = tokens.cat(" ",2);
+                    // Valid commands: `wait` `wait <timeout>` `wait <timeout> <message substring>`
+                    if (tokens.size() == 1) {
+                        _waitingTimeout = 10000000 * TRACE_MULTIPLIER;
+                        _waitingMessage = "WaitForIdle";
+                        sendMessage("uno .uno:WaitForIdle");
+                    } else if (tokens.size() == 2) {
+                        _waitingTimeout = std::stoi(tokens[1]) * TRACE_MULTIPLIER;
+                        _waitingMessage = "WaitForIdle";
+                        sendMessage("uno .uno:WaitForIdle");
+                    } else {
+                        _waitingTimeout = std::stoi(tokens[1]) * TRACE_MULTIPLIER;
+                        _waitingMessage = tokens.cat(" ",2);
+                    }
                     _waiting = true;
+                    _waitingStart = std::chrono::steady_clock::now();
                     std::cerr << getCurrentTime() << " waiting for message: " << _waitingMessage << " (Timeout " << _waitingTimeout << "us)" << std::endl;
                 } else if (tokens.equals(0, "start")) {
                     if (!_measurementStarted) {
@@ -186,8 +198,14 @@ public:
         std::cerr << getCurrentTime() << " sendTraceMessage: " << _next.toString() << std::endl;
         std::string msg = rewriteMessage(_next.getPayload());
         if (!msg.empty()) {
-            sendMessage(msg);
+            WebSocketHandler::sendMessage(msg);
         }
+    }
+
+    void sendMessage(const std::string &msg)
+    {
+        std::cerr << getCurrentTime() << " sendMessage: " << msg << std::endl;
+        WebSocketHandler::sendMessage(msg);
     }
 
     std::string rewriteMessage(const std::string &msg)
@@ -222,9 +240,7 @@ public:
         if (tokens.equals(0, "tile:")) {
             // eg. tileprocessed tile=0:9216:0:3072:3072:0
             TileDesc desc = TileDesc::parse(tokens);
-            std::string msg = "tileprocessed tile=" + desc.generateID();
-            std::cerr << "Send: '" << msg << "'\n";
-            sendMessage(msg);
+            sendMessage("tileprocessed tile=" + desc.generateID());
         } if (tokens.equals(0, "error:")) {
             std::cerr << "Error while processing " << _uri << " and trace " << _trace << ":\n"
                 << "'" << firstLine << "'\n";
