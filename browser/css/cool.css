@@ -36,6 +36,8 @@
 
 	/* Annotations */
 	--annotation-input-size: 100px;
+	--annotation-max-size: 1000;
+	--annotation-min-size: 100;
 }
 .focus-hidden:focus {
 	outline: none;

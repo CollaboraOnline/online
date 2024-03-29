@@ -1676,6 +1676,7 @@ export class CommentSection extends CanvasSectionObject {
 
 		if (this.sectionProperties.commentList.length > 0) {
 			this.orderCommentList();
+			this.resetCommentsSize();
 
 			var isRTL = document.documentElement.dir === 'rtl';
 
@@ -1721,6 +1722,7 @@ export class CommentSection extends CanvasSectionObject {
 				lastY = this.loopDown(0, x, topRight[1]);
 			}
 		}
+		this.resizeComments();
 
 		lastY += this.containerObject.getDocumentTopLeft()[1];
 		if (lastY > app.file.size.pixels[1]) {
@@ -1851,6 +1853,85 @@ export class CommentSection extends CanvasSectionObject {
 
 		// idIndexMap is now invalid, update it.
 		this.updateIdIndexMap();
+	}
+
+	// reset theis size to default (100px text)
+	private resetCommentsSize (): void {
+		if (this.sectionProperties.docLayer._docType === 'text') {
+			const minMaxHeight = Number(getComputedStyle(document.documentElement).getPropertyValue('--annotation-min-size'));
+			for (var i = 0; i < this.sectionProperties.commentList.length;i++) {
+				this.sectionProperties.commentList[i].sectionProperties.contentNode.setAttribute('style', 'max-height: '+minMaxHeight+'px');
+			}
+			if (this.sectionProperties.selectedComment) {
+				const maxMaxHeight = Number(getComputedStyle(document.documentElement).getPropertyValue('--annotation-max-size'));
+				this.sectionProperties.selectedComment.sectionProperties.contentNode.setAttribute('style', 'max-height: '+maxMaxHeight+'px');
+			}
+		}
+	}
+
+	// grow comments size if they have more text, and there is enought space between other comments
+	private resizeComments (): void {
+		// Change it true, if comments are allowed to grow up direction.
+		// Now it is disabled, because without constant indicator of the comments anchor, it can be confusing.
+		var growUp = false;
+		if (this.sectionProperties.docLayer._docType === 'text') {
+			const minMaxHeight = Number(getComputedStyle(document.documentElement).getPropertyValue('--annotation-min-size'));
+			const maxMaxHeight = Number(getComputedStyle(document.documentElement).getPropertyValue('--annotation-max-size'));
+			for (var i = 0; i < this.sectionProperties.commentList.length;i++) {
+				// act commentText height
+				var actHeight = this.sectionProperties.commentList[i].sectionProperties.contentText.getBoundingClientRect().height;
+				// if the comment is taller then minimal, we may want to make it taller
+				if (actHeight > minMaxHeight) {
+					// but we don't want to make it taller then the maximum
+					if (actHeight > maxMaxHeight) {
+						actHeight = maxMaxHeight;
+					}
+					// check if there is more space after this commit
+					var maxSize = maxMaxHeight;
+					if (i+1 < this.sectionProperties.commentList.length)
+						// max size of text should be the space between comments - size of non text parts 
+						maxSize = this.sectionProperties.commentList[i+1].sectionProperties.container._leaflet_pos.y
+							- this.sectionProperties.commentList[i].sectionProperties.container._leaflet_pos.y
+							- this.sectionProperties.commentList[i].sectionProperties.author.getBoundingClientRect().height
+							- 3 * this.sectionProperties.marginY //top/bottom of comment window + space between comments
+							- 2; // not sure why
+
+					if (maxSize > maxMaxHeight) {
+						maxSize = maxMaxHeight;
+					} else if (growUp && actHeight > maxSize) {
+						// if more space needed as we have after the comment
+						// check it there is any space before the comment
+						var spaceBefore = this.sectionProperties.commentList[i].sectionProperties.container._leaflet_pos.y;
+						if (i > 0) {
+							spaceBefore -= this.sectionProperties.commentList[i-1].sectionProperties.container._leaflet_pos.y
+								+ this.sectionProperties.commentList[i-1].sectionProperties.container.getBoundingClientRect().height
+								+ this.sectionProperties.marginY;
+						} else {
+							spaceBefore += this.documentTopLeft[1];
+						}
+						// if there is more space
+						if (spaceBefore > 0) {
+							var moveUp = 0;
+							if (actHeight - maxSize < spaceBefore) {
+								// there is enought space, move up as much as we can;
+								moveUp = actHeight - maxSize;
+							} else {
+								// there is not enought space
+								moveUp = spaceBefore;
+							}
+							// move up
+							var posX = this.sectionProperties.commentList[i].sectionProperties.container._leaflet_pos.x;
+							var posY = this.sectionProperties.commentList[i].sectionProperties.container._leaflet_pos.y-moveUp;
+							(new L.PosAnimation()).run(this.sectionProperties.commentList[i].sectionProperties.container, {x: Math.round(posX), y: Math.round(posY)});
+							// increase comment height
+							maxSize += moveUp;
+						}
+					}
+					if (maxSize > minMaxHeight)
+						this.sectionProperties.commentList[i].sectionProperties.contentNode.setAttribute('style', 'max-height: '+Math.round(maxSize)+'px');
+				}
+			}
+		}
 	}
 
 	private updateIdIndexMap(): void {
