@@ -39,6 +39,8 @@ class ReplaySocketHandler : public WebSocketHandler
     int64_t _waitingTimeout;
     std::string _waitingMessage;
     int64_t _lastMessageTime;
+    bool _measurementStarted;
+    bool _measurementFinished;
 protected:
     std::string _trace;
 public:
@@ -51,6 +53,8 @@ public:
         _uri(uri),
         _waiting(false),
         _lastMessageTime(0),
+        _measurementStarted(false),
+        _measurementFinished(false),
         _trace(trace)
     {
 
@@ -149,11 +153,28 @@ public:
                     _waiting = true;
                     std::cerr << getCurrentTime() << " waiting for message: " << _waitingMessage << " (Timeout " << _waitingTimeout << "us)" << std::endl;
                 } else if (tokens.equals(0, "start")) {
-                    std::cerr << getCurrentTime() << " start measurement" << std::endl;
-                    startMeasurement();
+                    if (!_measurementStarted) {
+                        std::cerr << getCurrentTime() << " start measurement" << std::endl;
+                        _measurementStarted = true;
+                        startMeasurement();
+                    } else {
+                        std::cerr << "Cannot start. Already started." << std::endl;
+                        shutdown();
+                    }
                 } else if (tokens.equals(0, "stop")) {
-                    std::cerr << getCurrentTime() << " stop measurement" << std::endl;
-                    stopMeasurement();
+                    if (_measurementStarted) {
+                        if (!_measurementFinished) {
+                            std::cerr << getCurrentTime() << " stop measurement" << std::endl;
+                            _measurementFinished = true;
+                            stopMeasurement();
+                        } else {
+                            std::cerr << "Cannot stop. Already finished." << std::endl;
+                            shutdown();
+                        }
+                    } else {
+                        std::cerr << "Cannot stop. Not started yet." << std::endl;
+                        shutdown();
+                    }
                 }
                 break;
         }
@@ -233,6 +254,11 @@ public:
     {
         std::cerr << "Shutdown" << std::endl;
         WebSocketHandler::shutdown();
+    }
+
+    bool isFinished()
+    {
+        return _measurementFinished;
     }
 
     static std::string getFileUri(const std::string &filePath)

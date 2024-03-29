@@ -83,7 +83,7 @@ int CycleCountPerfTest::main(const std::vector<std::string>& args)
             ssl::CertificateVerification::Disabled);
     if (!ssl::Manager::isClientContextInitialized()) {
         std::cerr << "Failed to initialize Client SSL.\n";
-        return -1;
+        return EX_SOFTWARE;
     }
 #endif
 
@@ -100,12 +100,17 @@ int CycleCountPerfTest::main(const std::vector<std::string>& args)
         poll.poll(TerminatingPoll::DefaultPollTimeoutMicroS);
     } while (poll.continuePolling() && poll.getSocketCount() > 0);
 
-    std::cerr << "Finished" << std::endl;
+    if (handler->isFinished()) {
+        std::cerr << "Finished" << std::endl;
+    } else {
+        std::cerr << "Did not finish measurement" << std::endl;
+        return EX_SOFTWARE;
+    }
 
 
     // This is supposed to be json
     std::cout << "{\n"
-              << "    name: " << trace << ",\n"
+              << "    name: " << trace << "\n"
               << "}" << std::endl;
 
     return EX_OK;
