@@ -23,43 +23,27 @@
 
 #include <ReplaySocketHandler.hpp>
 
-struct Stats
-{
-    size_t _messageCount;
-    size_t _messageBytes;
-
-    Stats() :
-        _messageCount(0),
-        _messageBytes(0)
-    {
-    }
-
-    void addMessage(const std::vector<char> &data)
-    {
-        _messageCount++;
-        _messageBytes += data.size();
-    }
-};
-
 class MessageCountSocketHandler : public ReplaySocketHandler
 {
     bool _measuring;
-    std::shared_ptr<Stats> _stats;
+    unsigned int _messageCount;
+    unsigned int _messageBytes;
 public:
     MessageCountSocketHandler(SocketPoll &poll, /* bad style */
                         const std::string &uri,
-                        const std::string &trace,
-                        const std::shared_ptr<Stats> stats) :
+                        const std::string &trace) :
         ReplaySocketHandler(poll, uri, trace),
         _measuring(false),
-        _stats(stats)
+        _messageCount(0),
+        _messageBytes(0)
     {
     }
 
     void handleMessage(const std::vector<char> &data) override
     {
         if (_measuring) {
-            _stats->addMessage(data);
+            _messageCount++;
+            _messageBytes += data.size();
         }
         ReplaySocketHandler::handleMessage(data);
     }
@@ -72,6 +56,16 @@ public:
     void stopMeasurement() override
     {
         _measuring = false;
+    }
+
+    unsigned int getMessageCount()
+    {
+        return _messageCount;
+    }
+
+    unsigned int getMessageBytes()
+    {
+        return _messageBytes;
     }
 };
 
@@ -122,9 +116,8 @@ int MessageCountPerfTest::main(const std::vector<std::string>& args)
     std::string fileUri = ReplaySocketHandler::getFileUri(filePath);
     std::string serverUri = ReplaySocketHandler::getServerUri(server, fileUri);
 
-    auto stats = std::make_shared<Stats>();
     TerminatingPoll poll("MessageCountPerfTest poll");
-    auto handler = std::make_shared<MessageCountSocketHandler>(poll, fileUri, trace, stats);
+    auto handler = std::make_shared<MessageCountSocketHandler>(poll, fileUri, trace);
 
     ReplaySocketHandler::start(handler, poll, serverUri);
 
@@ -142,8 +135,8 @@ int MessageCountPerfTest::main(const std::vector<std::string>& args)
     // This is supposed to be json
     std::cout << "{\n"
               << "    name: " << trace << ",\n"
-              << "    messageCount: " << stats->_messageCount << ",\n"
-              << "    messageBytes: " << stats->_messageBytes << "\n"
+              << "    messageCount: " << handler->getMessageCount() << ",\n"
+              << "    messageBytes: " << handler->getMessageBytes() << "\n"
               << "}" << std::endl;
 
     return EX_OK;
