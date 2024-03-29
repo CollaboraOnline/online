@@ -543,9 +543,20 @@ bool ChildSession::_handleInput(const char *buffer, int length)
             }
             else if (tokens[1].find(".uno:Save") != std::string::npos)
             {
-                // Disable processing of other messages while saving document
-                InputProcessingManager processInput(getProtocol(), false);
-                return unoCommand(tokens);
+                static bool doBgSave = !!getenv("COOL_BGSAVE");
+
+                bool saving = false;
+                if (doBgSave)
+                    saving = !saveDocumentBackground(tokens);
+
+                if (!saving)
+                { // fallback to foreground save
+
+                    // Disable processing of other messages while saving document
+                    InputProcessingManager processInput(getProtocol(), false);
+                    return unoCommand(tokens);
+                }
+                return true;
             }
 
             return unoCommand(tokens);
@@ -820,6 +831,38 @@ bool ChildSession::loadDocument(const StringVector& tokens)
 
     LOG_INF("Loaded session " << getId());
     return true;
+}
+
+// attempt to shutdown threads, fork and execute in the background
+bool ChildSession::saveDocumentBackground(const StringVector &tokens)
+{
+#if MOBILEAPP
+    return false;
+#else
+    LOG_TRC("Attempting background save");
+
+    // Keep the session alive over the lifetime of an async save
+    if (!_docManager->forkToSave([this, tokens]{
+
+        sendTextFrame("asyncsave start");
+
+        // FIXME: re-directing our sockets perhaps over
+        // a pipe to our parent process ?
+        unoCommand(tokens);
+
+        // FIXME: did we send our responses properly ? ...
+        SigUtil::addActivity("async save process exiting");
+
+        sendTextFrame("asyncsave end");
+
+        LOG_TRC("Finished synchronous background saving ...");
+        // Now we wait for an async UNO_COMMAND_RESULT on .uno:Save
+    }, getViewId())) // FIXME: shared_from_this surely ?
+        return false; // fork failed
+
+    LOG_TRC("saveDocumentBackground returns succesful start.");
+    return true;
+#endif // !MOBILEAPP
 }
 
 bool ChildSession::sendFontRendering(const StringVector& tokens)
@@ -2921,6 +2964,7 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
         auto commandName = object->get("commandName");
         auto success = object->get("success");
 
+        bool saveCommand = false;
         if (!commandName.isEmpty() && commandName.toString() == ".uno:Save")
         {
             if (!Util::isMobileApp())
@@ -2928,6 +2972,8 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
                 consistencyCheckJail();
 
                 renameForUpload(getJailedFilePath());
+
+                saveCommand = true;
             }
             else
             {
@@ -2958,7 +3004,10 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
             }
         }
 
-        sendTextFrame("unocommandresult: " + payload);
+        const std::string saveMessage = "unocommandresult: " + payload;
+        sendTextFrame(saveMessage);
+        if (saveCommand)
+            _docManager->handleSaveMessage(saveMessage);
     }
     break;
     case LOK_CALLBACK_ERROR:
