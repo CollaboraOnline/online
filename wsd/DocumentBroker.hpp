@@ -587,7 +587,8 @@ private:
     void refreshLock();
 
     /// Downloads the document ahead-of-time.
-    bool downloadAdvance(const std::string& jailId, const WopiStorage::WOPIFileInfo& wopiFileInfo);
+    bool downloadAdvance(const std::string& jailId, const Poco::URI& uriPublic,
+                         const WopiStorage::WOPIFileInfo& wopiFileInfo);
 
     /// Loads a document from the public URI into the jail.
     bool download(const std::shared_ptr<ClientSession>& session, const std::string& jailId,
