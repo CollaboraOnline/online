@@ -957,6 +957,80 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		};
 	},
 
+	_rayCastingSensitivity: 10, // Pixels
+
+	_findFocusableParent: function(container, currentElement, element, arrowUp) {
+		if (!element)
+			return null;
+		else if (element.tagName === 'NAV' && arrowUp) {
+			return element;
+		}
+		else if (element.tabIndex === -1 || element.tagName == 'A') {
+			return this._findFocusableParent(container, currentElement, element.parentNode, arrowUp);
+		}
+		else if (container.contains(element) && currentElement !== element && !currentElement.contains(element)) {
+			return element;
+		}
+		else
+			return null;
+	},
+
+	_rayCastToNextElement: function(container, currentElement, boundingRectangle, startX, startY, diffX, diffY, arrowUp) {
+		let count = 0;
+		let foundElement;
+		while (count <= 60) {
+			count++;
+			startX += diffX;
+			startY += diffY;
+
+			foundElement = document.elementFromPoint(startX, startY);
+			foundElement = this._findFocusableParent(container, currentElement, foundElement, arrowUp);
+			if (foundElement) break;
+
+			// If we are here, we'll try secondary and tertiary rays.
+			if (diffX === 0) {
+				foundElement = document.elementFromPoint(boundingRectangle.left, startY);
+				foundElement = this._findFocusableParent(container, currentElement, foundElement, arrowUp);
+				if (foundElement) break;
+
+				foundElement = document.elementFromPoint(boundingRectangle.right, startY);
+				foundElement = this._findFocusableParent(container, currentElement, foundElement, arrowUp);
+				if (foundElement) break;
+			}
+			else if (diffY === 0) {
+				foundElement = document.elementFromPoint(startX, boundingRectangle.top);
+				foundElement = this._findFocusableParent(container, currentElement, foundElement, arrowUp);
+				if (foundElement) break;
+
+				foundElement = document.elementFromPoint(startX, boundingRectangle.bottom);
+				foundElement = this._findFocusableParent(container, currentElement, foundElement, arrowUp);
+				if (foundElement) break;
+			}
+		}
+
+		if (count === 60)
+			return null;
+		else
+			return foundElement;
+	},
+
+	_findNextElementInContainer: function(container, currentElement, direction) {
+		let boundingRectangle = currentElement.getBoundingClientRect();
+		let startX = boundingRectangle.left + (boundingRectangle.right - boundingRectangle.left) / 2;
+		let startY = boundingRectangle.top + (boundingRectangle.bottom - boundingRectangle.top) / 2;
+
+		let diffX = 0;
+		let diffY = 0;
+
+		if (direction === 'ArrowLeft' || direction === 'ArrowRight')
+			diffX = direction === 'ArrowRight' ? (this._rayCastingSensitivity) : (this._rayCastingSensitivity * -1);
+
+		if (direction === 'ArrowUp' || direction === 'ArrowDown')
+			diffY = direction === 'ArrowDown' ? (this._rayCastingSensitivity) : (this._rayCastingSensitivity * -1);
+
+		return this._rayCastToNextElement(container, currentElement, boundingRectangle, startX, startY, diffX, diffY, direction === 'ArrowUp');
+	},
+
 	_tabsControlHandler: function(parentContainer, data, builder, tabTooltip) {
 		if (tabTooltip === undefined) {
 			tabTooltip = '';
@@ -1219,123 +1293,24 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			}
 		}
 
-		function addKeydownEvents(element) {
-			var handleKeyDown = function(sourceElement, direction, currentTarget) {
-				var findFocusableParent = function(currentElement) {
-					if (currentElement.tagName === 'NAV') {
-						return currentElement;
+		if (data.tabs && data.parent.id === 'NotebookBar') {
+			let that = this;
+			contentDivs.forEach(function(tabPage)
+			{
+				tabPage.addEventListener('keydown', function(e) {
+					if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
+						var currentElement = e.srcElement;
+						if (!(currentElement.tagName === 'INPUT' || currentElement.tagName === 'TEXTAREA')) {
+							let elementToFocus = this._findNextElementInContainer(document.getElementsByClassName('ui-tabs-content notebookbar')[0], currentElement, e.key);
+							if (elementToFocus && elementToFocus.tagName !== 'NAV')
+								elementToFocus.focus();
+							else if (elementToFocus)
+								document.querySelector('.ui-tab.notebookbar.selected').focus();
+						}
 					}
-					else if (currentElement.tabIndex === -1 || currentElement.tagName == 'A') {
-						return findFocusableParent(currentElement.parentNode);
-					}
-					else {
-						return currentElement;
-					}
-				};
-
-				var currentElementBoundingRectangle = sourceElement.getBoundingClientRect();
-
-				var currentElementX = currentElementBoundingRectangle.left + (currentElementBoundingRectangle.right - currentElementBoundingRectangle.left) / 2; 
-				var currentElementY = currentElementBoundingRectangle.top + (currentElementBoundingRectangle.bottom - currentElementBoundingRectangle.top) / 2;
-
-				var horizontalDirection = 0;
-				var verticalDirection = 0;
-				var secondaryRayOffset = 0;
-				var tertiaryRayOffset = 0;
-
-				switch (direction) {
-					case 'left':
-						horizontalDirection = -1;
-						break;
-					case 'right':
-						horizontalDirection = 1;
-						break;
-					case 'up':
-						verticalDirection = -1;
-						break;
-					case 'down':
-						verticalDirection = 1;
-					}
-
-				if (horizontalDirection !== 0) {
-					secondaryRayOffset = (currentElementBoundingRectangle.top - currentElementBoundingRectangle.bottom) / 2;
-					tertiaryRayOffset = (currentElementBoundingRectangle.bottom - currentElementBoundingRectangle.top) / 2;
-				}
-				else {
-					secondaryRayOffset = (currentElementBoundingRectangle.left - currentElementBoundingRectangle.right) / 2;
-					tertiaryRayOffset = (currentElementBoundingRectangle.right - currentElementBoundingRectangle.left) / 2;
-				}
-
-				var raycasting = true;
-				var focusableElementAtNewPosition;
-				var difference = 0;
-
-				var checkElementAtNewPosition = function (rayOffset) {
-					var elementAtNewPosition = document.elementFromPoint(currentElementX + horizontalDirection * difference + rayOffset * !horizontalDirection, currentElementY + verticalDirection * difference + rayOffset * !verticalDirection);
-					
-					if (elementAtNewPosition === sourceElement) {
-						return;
-					}
-
-					focusableElementAtNewPosition = findFocusableParent(elementAtNewPosition);
-
-					if (focusableElementAtNewPosition !== sourceElement && focusableElementAtNewPosition != document) {
-						raycasting = false;
-					}
-
-					if (focusableElementAtNewPosition.tagName === 'NAV') {
-						var tabIdx = tabIds.indexOf(currentTarget.id);
-						focusableElementAtNewPosition = tabs[tabIdx];
-					}
-				};
-
-				// 3 rays are cast to make sure that non-aligned elements can still have arrow keys traverse between them.
-				while (raycasting) {
-					difference++;
-					
-					checkElementAtNewPosition(0);
-
-					if (raycasting) {
-						checkElementAtNewPosition(secondaryRayOffset);
-					}
-
-					if (raycasting) {
-						checkElementAtNewPosition(tertiaryRayOffset);
-					}
-				}
-
-				focusableElementAtNewPosition.focus();
-			};
-
-			element.addEventListener('keydown', function(e) {
-				var currentElement = e.srcElement;
-
-				if (!(currentElement.tagName === 'INPUT' || currentElement.tagName === 'TEXTAREA')) {
-					switch (e.key) {
-						case 'ArrowLeft':
-							handleKeyDown(currentElement, 'left');
-							break;
-	
-						case 'ArrowRight':
-							handleKeyDown(currentElement, 'right');
-							break;
-	
-						case 'ArrowUp':
-							handleKeyDown(currentElement, 'up', e.currentTarget);
-							break;
-	
-						case 'ArrowDown':
-							handleKeyDown(currentElement, 'down');
-							break;
-					}
-				}
+				}.bind(that));
 			});
 		}
-
-		contentDivs.forEach(function(tabPage)
-		{
-			addKeydownEvents(tabPage);
-		});
 
 		return false;
 	},
