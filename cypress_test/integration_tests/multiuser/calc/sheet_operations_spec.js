@@ -28,7 +28,7 @@ describe.skip(['tagmultiuser'], 'Multiuser sheet operations', function() {
 
 		// Add one more sheet
 		cy.cSetActiveFrame(frameId1);
-		cy.cGet('#tb_spreadsheet-toolbar_item_insertsheet').click();
+		cy.cGet('#insertsheet').click();
 
 		//assert for user-1/2
 		cy.cGet('.spreadsheet-tab').should('have.length', 2);
@@ -123,7 +123,7 @@ describe(['tagmultiuser'], 'Check overlays after tab switching/operations', func
 		cy.cGet('input#addressInput').should('have.prop', 'value', 'F6');
 
 		cy.cSetActiveFrame('#iframe1');
-		cy.cGet('#tb_spreadsheet-toolbar_item_insertsheet').click();
+		cy.cGet('#insertsheet').click();
 
 		// check that there is no cell view cursor;
 		// in fact in the other view the new sheet has never been selected
