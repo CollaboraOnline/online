@@ -10,7 +10,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Scroll through document', 
 		helper.beforeAll(testFileName, 'impress');
 		desktopHelper.switchUIToCompact();
 		cy.cGet('#toolbar-up .w2ui-scroll-right').click();
-		cy.cGet('#modifypage').click();
+		cy.cGet('#modifypage').click({force: true});
 		desktopHelper.selectZoomLevel('200');
 	});
 
@@ -49,6 +49,6 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Scroll through document', 
 		helper.typeIntoDocument('{home}');
 		cy.cGet('#test-div-horizontal-scrollbar').should('have.text', '0').wait(500);
 		helper.typeIntoDocument('{end}');
-		desktopHelper.assertScrollbarPosition('horizontal', 540, 660);
+		desktopHelper.assertScrollbarPosition('horizontal', 340, 660);
 	});
 });

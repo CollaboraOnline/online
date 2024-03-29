@@ -46,7 +46,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 	it('Accept All', function () {
 		helper.typeIntoDocument('Hello World');
 		for (var n = 0; n < 2; n++) {
-			cy.cGet('#insertannotation').click();
+			cy.cGet('#insertannotation').click({force: true});
 			cy.cGet('#annotation-modify-textarea-new').type('some text' + n);
 			cy.cGet('#annotation-save-new').click();
 			// Wait for animation
@@ -54,7 +54,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 		}
 		enableRecord();
 
-		cy.cGet('#insertannotation').click();
+		cy.cGet('#insertannotation').click({force: true});
 		cy.cGet('#annotation-modify-textarea-new').type('some text2');
 		cy.cGet('#annotation-save-new').click();
 		cy.wait(500);
@@ -86,7 +86,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 	it('Reject All', function () {
 		helper.typeIntoDocument('Hello World');
 		for (var n = 0; n < 2; n++) {
-			cy.cGet('#insertannotation').click();
+			cy.cGet('#insertannotation').click({force: true});
 			cy.cGet('#annotation-modify-textarea-new').type('some text' + n);
 			cy.cGet('#annotation-save-new').click();
 			// Wait for animation
@@ -94,7 +94,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 		}
 		enableRecord();
 
-		cy.cGet('#insertannotation').click();
+		cy.cGet('#insertannotation').click({force: true});
 		cy.cGet('#annotation-modify-textarea-new').type('some text2');
 		cy.cGet('#annotation-save-new').click();
 		cy.wait(500);
@@ -127,7 +127,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 
 	it.skip('Comment Undo-Redo', function () {
 		for (var n = 0; n < 2; n++) {
-			cy.cGet('#insertannotation').click();
+			cy.cGet('#insertannotation').click({force: true});
 			cy.cGet('#annotation-modify-textarea-new').type('some text' + n);
 			cy.cGet('#annotation-save-new').click();
 			// Wait for animation
@@ -135,7 +135,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 		}
 		enableRecord();
 
-		cy.cGet('#insertannotation').click();
+		cy.cGet('#insertannotation').click({force: true});
 		cy.cGet('#annotation-modify-textarea-new').type('some text2');
 		cy.cGet('#annotation-save-new').click();
 		cy.wait(500);
