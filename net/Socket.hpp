@@ -67,6 +67,7 @@ namespace Poco
 }
 
 class Socket;
+class Watchdog;
 class SocketPoll;
 
 /// Helper to allow us to easily defer the movement of a socket
@@ -599,7 +600,8 @@ public:
     /// Create a socket poll, called rather infrequently.
     explicit SocketPoll(std::string threadName);
     virtual ~SocketPoll();
-    static void shutdownWatchdog();
+
+    static std::unique_ptr<Watchdog> PollWatchdog;
 
     /// Default poll time - useful to increase for debugging.
     static constexpr std::chrono::microseconds DefaultPollTimeoutMicroS = std::chrono::seconds(64);
