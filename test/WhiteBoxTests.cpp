@@ -660,6 +660,20 @@ public:
     void updateActivityHeader() const override
     {
     }
+
+    bool joinThreads() override
+    {
+        return false;
+    }
+
+    bool forkToSave(const std::function<void()> &, int) override
+    {
+        return false;
+    }
+
+    void handleSaveMessage(const std::string &) override
+    {
+    }
 };
 
 void WhiteBoxTests::testEmptyCellCursor()

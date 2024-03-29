@@ -82,6 +82,7 @@
 #include "SetupKitEnvironment.hpp"
 #include <common/ConfigUtil.hpp>
 #include <common/TraceEvent.hpp>
+#include <common/Watchdog.hpp>
 
 #if !MOBILEAPP
 #include <common/SigUtil.hpp>
@@ -120,6 +121,7 @@ extern "C" { void dump_kit_state(void); /* easy for gdb */ }
 class Document;
 static Document *singletonDocument = nullptr;
 static std::unique_ptr<Util::ThreadCounter> threadCounter;
+static std::unique_ptr<Util::FDCounter> fdCounter;
 
 int getCurrentThreadCount()
 {
@@ -699,6 +701,7 @@ Document::Document(const std::shared_ptr<lok::Office>& loKit,
       _obfuscatedFileId(Util::getFilenameFromURL(docKey)),
       _tileQueue(std::move(tileQueue)),
       _websocketHandler(websocketHandler),
+      _isBgSaveProcess(false),
       _haveDocPassword(false),
       _isDocPasswordProtected(false),
       _docPasswordType(DocumentPasswordType::ToView),
@@ -747,6 +750,19 @@ Document::~Document()
 /// Post the message - in the unipoll world we're in the right thread anyway
 bool Document::postMessage(const char* data, int size, const WSOpCode code) const
 {
+    if (_isBgSaveProcess)
+    {
+        auto socket = _saveProcessParent.lock();
+        if (socket)
+        {
+            LOG_TRC("postMessage forwarding to parent of save process: " << getAbbreviatedMessage(data, size));
+            return socket->sendMessage(data, size, code, /*flush=*/true) > 0;
+        }
+        else
+            LOG_TRC("Failed to forward to parent of save process: connection closed.");
+        return false;
+    }
+
     LOG_TRC("postMessage called with: " << getAbbreviatedMessage(data, size));
     if (!_websocketHandler)
     {
@@ -940,6 +956,10 @@ bool Document::sendFrame(const char* buffer, int length, WSOpCode opCode)
 
 void Document::trimIfInactive()
 {
+    // Don't perturb memory un-necessarily
+    if (_isBgSaveProcess)
+        return;
+
     // FIXME: multi-document mobile optimization ?
     for (const auto& it : _sessions)
     {
@@ -959,6 +979,10 @@ void Document::trimIfInactive()
 
 void Document::trimAfterInactivity()
 {
+    // Don't perturb memory un-necessarily
+    if (_isBgSaveProcess)
+        return;
+
     if (std::chrono::duration_cast<std::chrono::seconds>(std::chrono::steady_clock::now() -
                                                          _lastMemTrimTime) < std::chrono::seconds(30))
     {
@@ -1283,6 +1307,174 @@ void Document::updateActivityHeader() const
         ss << "\t" << it.second->getActivityState() << "\n";
     ss << "Commands:\n";
     SigUtil::setActivityHeader(ss.str());
+}
+
+bool Document::joinThreads()
+{
+    if (!getLOKit()->joinThreads())
+        return false;
+
+    if (SocketPoll::PollWatchdog)
+        SocketPoll::PollWatchdog->joinThread();
+
+    _deltaPool.stop();
+    return true;
+}
+
+// Most threads are opportunisticaly created but some need to be started
+void Document::startThreads()
+{
+    if (SocketPoll::PollWatchdog)
+        SocketPoll::PollWatchdog->startThread();
+}
+
+void Document::handleSaveMessage(const std::string &)
+{
+    LOG_TRC("Check save message");
+
+    // if a bgsave process - now we can clean up.
+    if (_isBgSaveProcess)
+    {
+        auto socket = _saveProcessParent.lock();
+        if (socket)
+        {
+            LOG_TRC("Shutting down bgsv child's socket to parent kit post save");
+
+            // We don't want to wait around for the parent's websocket
+            socket->shutdownAfterWriting();
+        }
+        else
+            LOG_TRC("Shutting down already shutdown bgsv child's socket to parent kit post save");
+
+        // any further messages are not interesting.
+        if (_tileQueue)
+            _tileQueue->clear();
+
+        // cleanup any lingering file-system pieces
+        _loKitDocument.reset();
+
+        // Next step in the chain is BgSaveChildWebSocketHandler::onDisconnect
+    }
+}
+
+// need to hold a reference on session in case it exits during async save
+bool Document::forkToSave(const std::function<void()> &childSave, int viewId)
+{
+#if MOBILEAPP
+    return false;
+#else // !MOBILEAPP
+    if (!joinThreads())
+    {
+        LOG_WRN("Failed to join threads before async save");
+        return false;
+    }
+
+    size_t threads = getCurrentThreadCount();
+    if (threads != 1)
+    {
+        LOG_WRN("Failed to ensure we have just one, we have: " << threads);
+        return false;
+    }
+
+#if 0
+    // TODO: compare FD count in a normal process with how
+    // many we see open now.
+    int expectFds = 2 // SocketPoll wakeups
+        + 1; // socket to coolwsd
+    int actualFds = fdCounter->count();
+    if (actualFds != expectFds)
+    {
+        LOG_WRN("Can't background save: " << actualFds << " fds open; expect " << expectFds);
+        return false;
+    }
+#endif
+
+    const auto start = std::chrono::steady_clock::now();
+
+    // TODO: close URPtoLoFDs and URPfromLoFDs and test
+    if (isURPEnabled())
+    {
+        LOG_WRN("Can't background save with URP enabled");
+        return false;
+    }
+
+    // FIXME: only do one of these at a time ...
+    // FIXME: defer and queue a 2nd save if queued during save ...
+
+    std::shared_ptr<StreamSocket> parentSocket, childSocket;
+    if (!StreamSocket::socketpair(parentSocket, childSocket))
+        return false;
+
+    // To encode into the child process id for debugging
+    static size_t numSaves = 0;
+    numSaves++;
+
+    const pid_t pid = fork();
+
+    if (!pid) // Child
+    {
+        // sort out thread local variables to get logging right from
+        // as early as possible.
+        Util::setThreadName("kitbgsv_" + Util::encodeId(_mobileAppDocId, 3) +
+                            "_" + Util::encodeId(numSaves, 3));
+        _isBgSaveProcess = true;
+
+        SigUtil::addActivity("forked background save process: " +
+                             std::to_string(pid));
+
+        childSocket.reset();
+        // now we just have a single socket to our parent
+
+        // Hard drop our previous connections to coolwsd and shared wakeups.x
+        KitSocketPoll::cleanupChildProcess();
+
+        // close duplicate kit->wsd socket
+        auto kitWs = std::static_pointer_cast<KitWebSocketHandler>(_websocketHandler);
+        kitWs->shutdownForBackgroundSave();
+
+        // now send messages to the parent instead of the kit.
+        auto parentWs = std::make_shared<BgSaveChildWebSocketHandler>("bgsv_child_ws");
+        parentSocket->setHandler(parentWs);
+        parentSocket->setWebSocket(); // avoid http upgrade.
+        _saveProcessParent = parentWs;
+
+        // hand parentSocket to the main poll
+        KitSocketPoll::getMainPoll()->insertNewSocket(parentSocket);
+        parentWs.reset();
+
+        getLOKit()->setForkedChild(true);
+
+        const auto now = std::chrono::steady_clock::now();
+        LOG_TRC("Background save process " << getpid() << " fork took " <<
+                std::chrono::duration_cast<std::chrono::milliseconds>(now - start).count() << "ms");
+
+        childSave();
+
+        SigUtil::addActivity("background save process shutdown");
+
+        // Wait now for an async save result from the core,
+        // and head to handleSaveMessage
+    }
+    else // Still us
+    {
+        LOG_TRC("Spawned process " << pid << " to do background save");
+
+        parentSocket.reset();
+        // now we have a socket to the child: childSocket
+
+        auto bgSaveChild = std::make_shared<BgSaveParentWebSocketHandler>(
+            "bgsv_kit_ws", pid, shared_from_this(),
+            findSessionByViewId(viewId));
+        childSocket->setHandler(bgSaveChild);
+        childSocket->setWebSocket(); // avoid http upgrade.
+        KitSocketPoll::getMainPoll()->insertNewSocket(childSocket);
+
+        getLOKit()->setForkedChild(false);
+
+        startThreads();
+    }
+    return true;
+#endif // !MOBILEAPP
 }
 
 void Document::notifyViewInfo()
@@ -2253,6 +2445,12 @@ std::shared_ptr<KitSocketPoll> KitSocketPoll::create() // static
     return result;
 }
 
+/* static */ void KitSocketPoll::cleanupChildProcess()
+{
+    mainPoll->closeAllSockets();
+    mainPoll->createWakeups();
+}
+
 // process pending message-queue events.
 void KitSocketPoll::drainQueue()
 {
@@ -2605,6 +2803,8 @@ void lokit_main(
 
         // initialize while we have access to /proc/self/task
         threadCounter.reset(new Util::ThreadCounter());
+        // initialize while we have access to /proc/self/fd
+        fdCounter.reset(new Util::FDCounter());
 
         if (!ChildSession::NoCapsForKit)
         {
