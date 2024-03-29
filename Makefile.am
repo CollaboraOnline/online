@@ -16,10 +16,6 @@ else
 
 SUBDIRS = . browser test cypress_test
 
-if ENABLE_PERFTEST
-SUBDIRS += perftest
-endif
-
 export ENABLE_DEBUG
 
 bin_PROGRAMS = \
@@ -313,6 +309,18 @@ coolsocketdump_SOURCES = tools/WebSocketDump.cpp \
 			 common/DummyTraceEventEmitter.cpp \
 			 $(shared_sources)
 
+if ENABLE_PERFTEST
+noinst_PROGRAMS += coolperftest
+
+coolperftest_CPPFLAGS = ${include_paths} #-DTDOC=\"$(abs_top_srcdir)/test/data\"
+coolperftest_SOURCES = $(shared_sources) \
+                       perftest/PerfTest.cpp \
+                       perftest/PerfTestSocketHandler.hpp \
+                       perftest/ReplaySocketHandler.hpp \
+                       common/DummyTraceEventEmitter.cpp
+endif
+
+
 wsd_headers = wsd/Admin.hpp \
               wsd/AdminModel.hpp \
               wsd/Auth.hpp \
@@ -413,6 +421,11 @@ noinst_HEADERS = $(wsd_headers) $(shared_headers) $(kit_headers) \
                  test/WOPIUploadConflictCommon.hpp \
                  test/UnitWSDClient.hpp \
                  test/helpers.hpp
+if ENABLE_PERFTEST
+noinst_HEADERS += perftest/valgrind.h \
+                  perftest/callgrind.h
+endif
+
 
 GIT_BRANCH := $(shell git symbolic-ref --short HEAD)
 GIT_HASH := $(shell git log -1 --format=%h)

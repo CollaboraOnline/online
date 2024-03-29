@@ -37,7 +37,7 @@ protected:
 int PerfTest::main(const std::vector<std::string>& args)
 {
     if (args.size() != 3) {
-        std::cerr << "Usage: ./perftest <type> <server> <trace-path>" << std::endl;
+        std::cerr << "Usage: ./coolperftest <type> <server> <trace-path>" << std::endl;
         std::cerr << "       type : 'cycle' 'message' or 'time'" << std::endl;
         std::cerr << "       server : Started separately. URI must start with ws:// or wss://. eg: wss://localhost:9980" << std::endl;
         std::cerr << "       trace  : Created from make run-trace and manually edited." << std::endl;
@@ -75,7 +75,7 @@ int PerfTest::main(const std::vector<std::string>& args)
     }
 #endif
 
-    std::string filePath = "../test/data/hello-world.odt";
+    std::string filePath = "test/data/hello-world.odt";
     std::string fileUri = ReplaySocketHandler::getFileUri(filePath);
     std::string serverUri = ReplaySocketHandler::getServerUri(server, fileUri);
 

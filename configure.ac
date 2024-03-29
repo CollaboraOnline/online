@@ -1725,7 +1725,6 @@ AC_SUBST(ALLOWED_LANGUAGES)
 
 AC_CONFIG_FILES([Makefile
                  cypress_test/Makefile
-                 perftest/Makefile
                  gtk/Makefile
                  wasm/Makefile
                  test/Makefile

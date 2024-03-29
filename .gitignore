@@ -56,7 +56,6 @@ test/data/hello-world.odg
 test/fakesockettest
 test/unithttplib
 jsstress
-perftest/perftest
 
 *.o
 *.exe
@@ -102,6 +101,7 @@ clientnb
 libsimd.a
 coolwsd-inproc
 coolbench
+coolperftest
 
 # Fuzzer
 *_fuzzer
