@@ -178,6 +178,8 @@ public:
     /// TODO: Support separate read/write shutdown.
     virtual void shutdown()
     {
+        if (_noShutdown)
+            return;
         LOG_TRC("Socket shutdown RDWR.");
 #if !MOBILEAPP
         ::shutdown(_fd, SHUT_RDWR);
@@ -367,12 +369,16 @@ protected:
 
     inline void logPrefix(std::ostream& os) const { os << '#' << _fd << ": "; }
 
+    /// avoid doing a shutdown before close
+    void setNoShutdown() { _noShutdown = true; }
+
 private:
     void init(Type type)
     {
         if (type != Type::Unix)
             setNoDelay();
         _ignoreInput = false;
+        _noShutdown = false;
         _sendBufferSize = DefaultSendBufferSize;
         _owner = std::this_thread::get_id();
         LOG_TRC("Created socket. Thread affinity set to " << Log::to_string(_owner));
@@ -395,6 +401,7 @@ private:
 
     // If _ignoreInput is true no more input from this socket will be processed.
     bool _ignoreInput;
+    bool _noShutdown;
 
     int _sendBufferSize;
 
