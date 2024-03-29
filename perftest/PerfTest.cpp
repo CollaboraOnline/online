@@ -13,6 +13,7 @@
 
 #include <sysexits.h>
 #include <filesystem>
+#include <memory>
 
 #include <Poco/Util/Application.h>
 
@@ -22,54 +23,41 @@
 #endif
 
 #include <ReplaySocketHandler.hpp>
+#include <PerfTestSocketHandler.hpp>
 
-class CyclePerfTestSocketHandler : public ReplaySocketHandler
+class PerfTest : public Poco::Util::Application
 {
 public:
-    CyclePerfTestSocketHandler(SocketPoll &poll, /* bad style */
-                        const std::string &uri,
-                        const std::string &trace) :
-        ReplaySocketHandler(poll, uri, trace)
-    {
-    }
-
-    void startMeasurement() override
-    {
-        sendMessage("PERFTEST start");
-    }
-
-    void stopMeasurement() override
-    {
-        sendMessage("PERFTEST stop " + _trace);
-    }
-};
-
-class CyclePerfTest : public Poco::Util::Application
-{
-public:
-    CyclePerfTest() {}
+    PerfTest() {}
 protected:
     int  main(const std::vector<std::string>& args) override;
 };
 
 // coverity[root_function] : don't warn about uncaught exceptions
-int CyclePerfTest::main(const std::vector<std::string>& args)
+int PerfTest::main(const std::vector<std::string>& args)
 {
-    if (args.size() != 2) {
-        std::cerr << "Usage: ./cycleperftest <server> <trace-path>" << std::endl;
+    if (args.size() != 3) {
+        std::cerr << "Usage: ./perftest <type> <server> <trace-path>" << std::endl;
+        std::cerr << "       type : 'cycle' 'message' or 'time'" << std::endl;
         std::cerr << "       server : Started separately. URI must start with ws:// or wss://. eg: wss://localhost:9980" << std::endl;
         std::cerr << "       trace  : Created from make run-trace and manually edited." << std::endl;
         std::cerr << "       See README for more info." << std::endl;
         return EX_USAGE;
     }
 
-    std::string server = args[0];
+    std::string type = args[0];
+    if (!(type == "cycle" || type == "message" || type == "time")) {
+        std::cerr << " Type must be one of 'cycle' 'message' or 'time'. Type was: " << type << std::endl;
+        return EX_USAGE;
+    }
+
+    std::string server = args[1];
     if (!server.starts_with("ws")) {
         std::cerr << "Server must start with ws:// or wss://. Server was: " << server << std::endl;
         return EX_USAGE;
     }
 
-    std::string trace = args[1];
+    std::string trace = args[2];
     if (!std::filesystem::exists(trace)) {
         std::cerr << "Trace file does not exist. Trace was: " << trace << std::endl;
         return EX_USAGE;
@@ -91,8 +79,15 @@ int CyclePerfTest::main(const std::vector<std::string>& args)
     std::string fileUri = ReplaySocketHandler::getFileUri(filePath);
     std::string serverUri = ReplaySocketHandler::getServerUri(server, fileUri);
 
-    TerminatingPoll poll("CyclePerfTest poll");
-    auto handler = std::make_shared<CyclePerfTestSocketHandler>(poll, fileUri, trace);
+    TerminatingPoll poll("PerfTest poll");
+    std::shared_ptr<PerfTestSocketHandler> handler;
+    if (type == "cycle") {
+        handler = std::make_shared<CyclePerfTestSocketHandler>(poll, fileUri, trace);
+    } else if (type == "message") {
+        handler = std::make_shared<MessagePerfTestSocketHandler>(poll, fileUri, trace);
+    } else if (type == "time") {
+        handler = std::make_shared<TimePerfTestSocketHandler>(poll, fileUri, trace);
+    }
 
     ReplaySocketHandler::start(handler, poll, serverUri);
 
@@ -107,16 +102,12 @@ int CyclePerfTest::main(const std::vector<std::string>& args)
         return EX_SOFTWARE;
     }
 
-
-    // This is supposed to be json
-    std::cout << "{\n"
-              << "    name: " << trace << "\n"
-              << "}" << std::endl;
+    handler->printResults();
 
     return EX_OK;
 }
 
 // coverity[root_function] : don't warn about uncaught exceptions
-POCO_APP_MAIN(CyclePerfTest)
+POCO_APP_MAIN(PerfTest)
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
