@@ -585,29 +585,32 @@ L.Control.UIManager = L.Control.extend({
 	// UI modification
 
 	insertButtonToClassicToolbar: function(button) {
-		if (w2ui['editbar'] && !w2ui['editbar'].get(button.id)) {
-			if (this.map.isEditMode()) {
-				// add the css rule for the image
-				var style = $('html > head > style');
-				if (style.length == 0)
-					$('html > head').append('<style/>');
-				$('html > head > style').append('.w2ui-icon.' + encodeURIComponent(button.id) +
-					'{background: url("' + encodeURI(button.imgurl) + '") no-repeat center !important; }');
+		if (this.map.isEditMode()) {
+			// Position: Either specified by the caller, or defaulting to first position (before save)
+			var insertBefore = button.insertBefore || 'save';
 
-				// Position: Either specified by the caller, or defaulting to first position (before save)
-				var insertBefore = button.insertBefore || 'save';
-				// add the item to the toolbar
-				w2ui['editbar'].insert(insertBefore, [
-					{
-						type: 'button',
-						uno: button.unoCommand,
-						id: button.id,
-						img: button.id,
-						hint: _(button.hint.replaceAll('\"', '&quot;')), /* "Try" to localize ! */
-						/* Notify the host back when button is clicked (only when unoCommand is not set) */
-						postmessage: !Object.prototype.hasOwnProperty.call(button, 'unoCommand')
-					}
-				]);
+			var newButton = [
+				{
+					type: 'button',
+					uno: button.unoCommand,
+					id: button.id,
+					img: button.id,
+					hint: _(button.hint.replaceAll('\"', '&quot;')), /* "Try" to localize ! */
+					/* Notify the host back when button is clicked (only when unoCommand is not set) */
+					postmessage: !Object.prototype.hasOwnProperty.call(button, 'unoCommand')
+				}
+			];
+
+			// add the css rule for the image
+			var style = $('html > head > style');
+			if (style.length == 0)
+				$('html > head').append('<style/>');
+			$('html > head > style').append('.w2ui-icon.' + encodeURIComponent(button.id) +
+				'{background: url("' + encodeURI(button.imgurl) + '") no-repeat center !important; }');
+
+			if (w2ui['editbar'] && !w2ui['editbar'].get(button.id)) {
+				w2ui['editbar'].insert(insertBefore, newButton);
+
 				if (button.mobile)
 				{
 					// Add to our list of items to preserve when in mobile mode
@@ -617,10 +620,21 @@ L.Control.UIManager = L.Control.extend({
 					toolbarUpMobileItems.splice(idx, 0, button.id);
 				}
 			}
-			else if (this.map.isReadOnlyMode()) {
-				// Just add a menu entry for it
-				this.map.fire('addmenu', {id: button.id, label: button.hint});
+
+			var topToolbar = window.app.map.topToolbar;
+			if (topToolbar && !topToolbar.hasItem(button.id)) {
+				// translate to JSDialog JSON
+				newButton[0].command = newButton[0].uno;
+				newButton[0].type = 'toolitem';
+				newButton[0].w2icon = newButton[0].img;
+				newButton[0].text = newButton[0].hint;
+				topToolbar.insertItem(insertBefore, newButton);
 			}
+		}
+
+		if (this.map.isReadOnlyMode()) {
+			// Just add a menu entry for it
+			this.map.fire('addmenu', {id: button.id, label: button.hint});
 		}
 	},
 
@@ -667,6 +681,11 @@ L.Control.UIManager = L.Control.extend({
 				}
 			}
 		});
+
+		var topToolbarHas = window.app.map.topToolbar.hasItem(buttonId);
+		found = found | topToolbarHas;
+		if (topToolbarHas)
+			window.app.map.topToolbar.showItem(buttonId, show);
 
 		if (!found) {
 			window.app.console.error('Toolbar button with id "' + buttonId + '" not found.');

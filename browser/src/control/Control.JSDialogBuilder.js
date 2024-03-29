@@ -229,7 +229,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			var handler = builder._toolitemHandlers[data.command];
 			if (handler)
 				handler(parentContainer, data, builder);
-			else if (data.text || data.command) {
+			else if (data.text || data.command || data.postmessage) {
 				builder._unoToolButton(parentContainer, data, builder);
 			} else
 				window.app.console.warn('Unsupported toolitem type: "' + data.command + '"');
