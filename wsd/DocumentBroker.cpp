@@ -307,7 +307,7 @@ void DocumentBroker::pollThread()
     // Download and load the document.
     if (_initialWopiFileInfo)
     {
-        downloadAdvance(_childProcess->getJailId(), *_initialWopiFileInfo);
+        downloadAdvance(_childProcess->getJailId(), _uriPublic, *_initialWopiFileInfo);
         _initialWopiFileInfo.reset();
     }
 
@@ -781,7 +781,7 @@ void DocumentBroker::stop(const std::string& reason)
     _poll->wakeup();
 }
 
-bool DocumentBroker::downloadAdvance(const std::string& jailId,
+bool DocumentBroker::downloadAdvance(const std::string& jailId, const Poco::URI& uriPublic,
                                      const WopiStorage::WOPIFileInfo& wopiFileInfo)
 {
     ASSERT_CORRECT_THREAD();
@@ -809,12 +809,12 @@ bool DocumentBroker::downloadAdvance(const std::string& jailId,
 
     // Pass the public URI to storage as it needs to load using the token
     // and other storage-specific data provided in the URI.
-    LOG_DBG("Creating new storage instance for URI ["
-            << COOLWSD::anonymizeUrl(_uriPublic.toString()) << ']');
+    LOG_DBG("Creating new storage instance for URI [" << COOLWSD::anonymizeUrl(uriPublic.toString())
+                                                      << ']');
 
     try
     {
-        _storage = StorageBase::create(_uriPublic, jailRoot, jailPath.toString(),
+        _storage = StorageBase::create(uriPublic, jailRoot, jailPath.toString(),
                                        /*takeOwnership=*/isConvertTo());
     }
     catch (...)
@@ -876,7 +876,7 @@ bool DocumentBroker::downloadAdvance(const std::string& jailId,
     const StorageBase::FileInfo fileInfo = _storage->getFileInfo();
     if (!fileInfo.isValid())
     {
-        LOG_ERR("Invalid fileinfo for URI [" << _uriPublic.toString() << ']');
+        LOG_ERR("Invalid fileinfo for URI [" << uriPublic.toString() << ']');
         return false;
     }
 
@@ -890,7 +890,7 @@ bool DocumentBroker::downloadAdvance(const std::string& jailId,
         LOG_DBG("Download file for docKey [" << _docKey << ']');
         std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
         std::string localPath = _storage->downloadStorageFileToLocal(
-            Authorization::create(_uriPublic), *_lockCtx, templateSource);
+            Authorization::create(uriPublic), *_lockCtx, templateSource);
         if (localPath.empty())
         {
             throw std::runtime_error("Failed to retrieve document from storage");
