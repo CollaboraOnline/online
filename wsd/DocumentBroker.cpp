@@ -1025,7 +1025,8 @@ bool DocumentBroker::download(
         if (_storage == nullptr)
         {
             // We should get an exception, not null.
-            LOG_ERR("Failed to create Storage instance for [" << _docKey << "] in " << jailPath.toString());
+            LOG_ERR("Failed to create Storage instance for [" << _docKey << "] in "
+                                                              << jailPath.toString());
             return false;
         }
         firstInstance = true;
@@ -1060,7 +1061,8 @@ bool DocumentBroker::download(
         templateSource = wopiFileInfo->getTemplateSource();
 
         _isViewFileExtension = COOLWSD::IsViewFileExtension(wopiStorage->getFileExtension());
-        if (!wopiFileInfo->getUserCanWrite() || session->isReadOnly()) // Readonly. Second boolean checks for URL "permission=readonly"
+        if (!wopiFileInfo->getUserCanWrite() ||
+            session->isReadOnly()) // Readonly. Second boolean checks for URL "permission=readonly"
         {
             LOG_DBG("Setting session [" << sessionId << "] to readonly for UserCanWrite=false");
             session->setWritable(false);
@@ -1119,7 +1121,7 @@ bool DocumentBroker::download(
             wopiInfo->set("TemplateSaveAs", wopiFileInfo->getTemplateSaveAs());
 
         if (!templateSource.empty())
-                wopiInfo->set("TemplateSource", templateSource);
+            wopiInfo->set("TemplateSource", templateSource);
 
         wopiInfo->set("HidePrintOption", wopiFileInfo->getHidePrintOption());
         wopiInfo->set("HideSaveOption", wopiFileInfo->getHideSaveOption());
@@ -1142,9 +1144,9 @@ bool DocumentBroker::download(
         wopiInfo->set("UserCanWrite", wopiFileInfo->getUserCanWrite() && !session->isReadOnly());
         if (wopiFileInfo->getHideChangeTrackingControls() !=
             WopiStorage::WOPIFileInfo::TriState::Unset)
-                wopiInfo->set("HideChangeTrackingControls",
-                              wopiFileInfo->getHideChangeTrackingControls() ==
-                                  WopiStorage::WOPIFileInfo::TriState::True);
+            wopiInfo->set("HideChangeTrackingControls",
+                          wopiFileInfo->getHideChangeTrackingControls() ==
+                              WopiStorage::WOPIFileInfo::TriState::True);
         wopiInfo->set("IsOwner", session->isDocumentOwner());
 
         std::ostringstream ossWopiInfo;
@@ -1182,7 +1184,8 @@ bool DocumentBroker::download(
         LocalStorage* localStorage = dynamic_cast<LocalStorage*>(_storage.get());
         if (localStorage != nullptr)
         {
-            std::unique_ptr<LocalStorage::LocalFileInfo> localfileinfo = localStorage->getLocalFileInfo();
+            std::unique_ptr<LocalStorage::LocalFileInfo> localfileinfo =
+                localStorage->getLocalFileInfo();
             userId = localfileinfo->getUserId();
             username = localfileinfo->getUsername();
 
@@ -1228,9 +1231,10 @@ bool DocumentBroker::download(
     session->setUserPrivateInfo(userPrivateInfo);
     session->setWatermarkText(watermarkText);
 
-    LOG_DBG("Setting username [" << COOLWSD::anonymizeUsername(username) << "] and userId [" <<
-            COOLWSD::anonymizeUsername(userId) << "] for session [" << sessionId <<
-            "] is canonical id " << session->getCanonicalViewId());
+    LOG_DBG("Setting username [" << COOLWSD::anonymizeUsername(username) << "] and userId ["
+                                 << COOLWSD::anonymizeUsername(userId) << "] for session ["
+                                 << sessionId << "] is canonical id "
+                                 << session->getCanonicalViewId());
 
     // Basic file information was stored by the above getWOPIFileInfo() or getLocalFileInfo() calls
     const StorageBase::FileInfo fileInfo = _storage->getFileInfo();
