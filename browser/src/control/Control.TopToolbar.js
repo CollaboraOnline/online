@@ -18,20 +18,10 @@ L.Control.TopToolbar = L.Control.extend({
 		stylesSelectValue: null,
 	},
 
+	customItems: [],
+
 	onAdd: function (map) {
 		this.map = map;
-		this.parentContainer = L.DomUtil.get('toolbar-up');
-
-		// In case it contains garbage
-		if (this.parentContainer) {
-			this.parentContainer.outerHTML = '';
-			this.parentContainer = null;
-		}
-
-		// Use original template as provided by server
-		$('#toolbar-logo').after(this.map.toolbarUpTemplate.cloneNode(true));
-		this.parentContainer = L.DomUtil.get('toolbar-up');
-		L.DomUtil.addClass(this.parentContainer, 'ui-toolbar');
 
 		this.builder = new L.control.jsDialogBuilder(
 			{
@@ -53,10 +43,6 @@ L.Control.TopToolbar = L.Control.extend({
 		if (!window.mode.isMobile()) {
 			map.on('updatetoolbarcommandvalues', this.updateCommandValues, this);
 		}
-
-		// on mode switch NB -> Compact
-		if (map._docLoadedOnce)
-			this.onDocLayerInit();
 	},
 
 	onRemove: function() {
@@ -73,6 +59,21 @@ L.Control.TopToolbar = L.Control.extend({
 		if (!window.mode.isMobile()) {
 			this.map.off('updatetoolbarcommandvalues', this.updateCommandValues, this);
 		}
+	},
+
+	reset: function() {
+		this.parentContainer = L.DomUtil.get('toolbar-up');
+
+		// In case it contains garbage
+		if (this.parentContainer) {
+			this.parentContainer.outerHTML = '';
+			this.parentContainer = null;
+		}
+
+		// Use original template as provided by server
+		$('#toolbar-logo').after(this.map.toolbarUpTemplate.cloneNode(true));
+		this.parentContainer = L.DomUtil.get('toolbar-up');
+		L.DomUtil.addClass(this.parentContainer, 'ui-toolbar');
 	},
 
 	callback: function(objectType, eventType, object, data, builder) {
@@ -114,7 +115,7 @@ L.Control.TopToolbar = L.Control.extend({
 	// invisible means visibility:hidden
 
 	getToolItems: function() {
-		return [
+		var items = [
 			{type: 'customtoolitem',  id: 'closemobile', desktop: false, mobile: false, tablet: true, visible: false},
 			{type: 'customtoolitem',  id: 'save', command: 'save', text: _UNO('.uno:Save'), lockUno: '.uno:Save'},
 			{type: 'customtoolitem',  id: 'print', command: 'print', text: _UNO('.uno:Print', 'text'), mobile: false, tablet: false, lockUno: '.uno:Print'},
@@ -214,6 +215,20 @@ L.Control.TopToolbar = L.Control.extend({
 			{type: 'customtoolitem',  id: 'fold', text: _('Hide Menu'), desktop: true, mobile: false, visible: false},
 			{type: 'customtoolitem',  id: 'hamburger-tablet', desktop: false, mobile: false, tablet: true, iosapptablet: false, visible: false},
 		];
+
+		this.customItems.forEach((customButton) => {
+			var found = items.find((item) => {
+				return item.id.toLowerCase() === customButton.beforeId.toLowerCase();
+			});
+
+			var position = items.indexOf(found);
+
+			customButton.items.forEach((item) => {
+				items.splice(position, 0, item);
+			});
+		});
+
+		return items;
 	},
 
 	updateControlsState: function() {
@@ -227,11 +242,20 @@ L.Control.TopToolbar = L.Control.extend({
 		}
 	},
 
+	insertItem(beforeId, items) {
+		this.customItems.push({beforeId: beforeId, items: items});
+		this.create();
+	},
+
 	enableItem(command, enable) {
 		this.builder.executeAction(this.parentContainer, {
 			'control_id': command,
 			'action_type': enable ? 'enable' : 'disable'
 		});
+	},
+
+	hasItem(id) {
+		return this.getToolItems().filter((item) => { return item.id === id; }).length > 0;
 	},
 
 	showItem(command, show) {
@@ -244,8 +268,7 @@ L.Control.TopToolbar = L.Control.extend({
 	},
 
 	create: function() {
-		if (this.parentContainer.firstChild)
-			return;
+		this.reset();
 
 		var items = this.getToolItems();
 		this.builder.build(this.parentContainer, items);
@@ -270,6 +293,10 @@ L.Control.TopToolbar = L.Control.extend({
 		}
 
 		this.map.createFontSelector('#fontnamecombobox-input');
+
+		// on mode switch NB -> Compact
+		if (this.map._docLoadedOnce)
+			this.onDocLayerInit();
 	},
 
 	onDocLayerInit: function() {
