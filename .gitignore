@@ -58,6 +58,7 @@ test/unithttplib
 jsstress
 perftest/messagecountperftest
 perftest/cyclecountperftest
+perftest/timeperftest
 
 *.o
 *.exe

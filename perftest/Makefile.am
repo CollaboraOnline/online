@@ -1,6 +1,6 @@
 if ENABLE_PERFTEST
 
-noinst_PROGRAMS = cyclecountperftest messagecountperftest
+noinst_PROGRAMS = cyclecountperftest messagecountperftest timeperftest
 
 include_paths = -I${top_srcdir}/common -I${top_srcdir}/net -I${top_srcdir}/wsd -I${top_srcdir}/kit -I${top_srcdir}/perftest
 include_paths += ${ZLIB_CFLAGS} ${ZSTD_CFLAGS} ${PNG_CFLAGS}
@@ -49,6 +49,10 @@ cyclecountperftest_CPPFLAGS = ${include_paths} #-DTDOC=\"$(abs_top_srcdir)/test/
 messagecountperftest_SOURCES = $(shared_sources) \
 							   MessageCountPerfTest.cpp
 messagecountperftest_CPPFLAGS = ${include_paths} #-DTDOC=\"$(abs_top_srcdir)/test/data\"
+
+timeperftest_SOURCES = $(shared_sources) \
+							   TimePerfTest.cpp
+timeperftest_CPPFLAGS = ${include_paths} #-DTDOC=\"$(abs_top_srcdir)/test/data\"
 
 
 V = $(if $(verbose),,@)
