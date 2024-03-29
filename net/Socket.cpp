@@ -184,8 +184,8 @@ SocketPoll::SocketPoll(std::string threadName)
       _threadFinished(false),
       _runOnClientThread(false),
       _owner(std::this_thread::get_id()),
+      _ownerThreadId(Util::getThreadId()),
       _watchdogTime(Watchdog::getDisableStamp())
-
 {
     ProfileZone profileZone("SocketPoll::SocketPoll");
 
@@ -211,7 +211,7 @@ SocketPoll::SocketPoll(std::string threadName)
     getWakeupsArray().push_back(_wakeup[1]);
 
     if (PollWatchdog)
-        PollWatchdog->addTime(&_watchdogTime);
+        PollWatchdog->addTime(&_watchdogTime, &_ownerThreadId);
 }
 
 SocketPoll::~SocketPoll()
@@ -242,6 +242,22 @@ SocketPoll::~SocketPoll()
 #endif
     _wakeup[0] = -1;
     _wakeup[1] = -1;
+}
+
+void SocketPoll::checkAndReThread()
+{
+    if (InhibitThreadChecks)
+        return; // in late shutdown
+    const std::thread::id us = std::this_thread::get_id();
+    if (_owner == us)
+        return; // all well
+    LOG_DBG("Unusual - SocketPoll used from a new thread");
+
+    _owner = us;
+    _ownerThreadId = Util::getThreadId();
+    for (const auto& it : _pollSockets)
+        it->setThreadOwner(us);
+    // _newSockets are adapted as they are inserted.
 }
 
 bool SocketPoll::startThread()
@@ -317,6 +333,7 @@ void SocketPoll::pollingThreadEntry()
     {
         Util::setThreadName(_name);
         _owner = std::this_thread::get_id();
+        _ownerThreadId = Util::getThreadId();
         LOG_INF("Starting polling thread [" << _name << "] with thread affinity set to "
                                             << Log::to_string(_owner) << '.');
 
@@ -1338,11 +1355,8 @@ bool StreamSocket::sniffSSL() const
 #endif // !MOBILEAPP
 
 extern "C" {
-    void watchdog_probe()
+    void handleUserProfileSignal(const int /* signal */)
     {
-        // connect perf probes here
-        LOG_TRC("Watchdog triggered");
-        volatile int i = 42; (void)i;
 #if defined(__linux__) && !defined(__ANDROID__)
         const struct timeval times[2] = {};
         // call something fairly obscure that perf can trigger on.  futimesat
