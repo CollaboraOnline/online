@@ -30,7 +30,6 @@ class ReplaySocketHandler : public WebSocketHandler
 {
     SocketPoll &_poll;
     TraceFileReader _reader;
-    TraceFileRecord _next;
     std::chrono::steady_clock::time_point _start;
     bool _connecting;
     std::string _uri;
@@ -39,10 +38,9 @@ class ReplaySocketHandler : public WebSocketHandler
     int64_t _waitingTimeout;
     std::string _waitingMessage;
     int64_t _lastMessageTime;
-    bool _measurementStarted;
-    bool _measurementFinished;
 protected:
     std::string _trace;
+    TraceFileRecord _next;
 public:
     ReplaySocketHandler(SocketPoll &poll, /* bad style */
                         const std::string &uri, const std::string &trace) :
@@ -53,8 +51,6 @@ public:
         _uri(uri),
         _waiting(false),
         _lastMessageTime(0),
-        _measurementStarted(false),
-        _measurementFinished(false),
         _trace(trace)
     {
 
@@ -127,7 +123,7 @@ public:
         WebSocketHandler::onDisconnect();
     }
 
-    void processTraceMessage()
+    virtual void processTraceMessage()
     {
         _lastMessageTime = getCurrentTime();
         switch(_next.getDir()) {
@@ -164,29 +160,10 @@ public:
                     _waiting = true;
                     _waitingStart = std::chrono::steady_clock::now();
                     std::cerr << getCurrentTime() << " waiting for message: " << _waitingMessage << " (Timeout " << _waitingTimeout << "us)" << std::endl;
-                } else if (tokens.equals(0, "start")) {
-                    if (!_measurementStarted) {
-                        std::cerr << getCurrentTime() << " start measurement" << std::endl;
-                        _measurementStarted = true;
-                        startMeasurement();
-                    } else {
-                        std::cerr << "Cannot start. Already started." << std::endl;
-                        shutdown();
-                    }
-                } else if (tokens.equals(0, "stop")) {
-                    if (_measurementStarted) {
-                        if (!_measurementFinished) {
-                            std::cerr << getCurrentTime() << " stop measurement" << std::endl;
-                            _measurementFinished = true;
-                            stopMeasurement();
-                        } else {
-                            std::cerr << "Cannot stop. Already finished." << std::endl;
-                            shutdown();
-                        }
-                    } else {
-                        std::cerr << "Cannot stop. Not started yet." << std::endl;
-                        shutdown();
-                    }
+                } else if (tokens.equals(0, "NewSession:")) {
+                    // Do nothing
+                } else if (tokens.equals(0, "EndSession:")) {
+                    // Do nothing
                 }
                 break;
         }
@@ -258,23 +235,10 @@ public:
 
     }
 
-    virtual void startMeasurement()
-    {
-    }
-
-    virtual void stopMeasurement()
-    {
-    }
-
     void shutdown()
     {
         std::cerr << "Shutdown" << std::endl;
         WebSocketHandler::shutdown();
-    }
-
-    bool isFinished()
-    {
-        return _measurementFinished;
     }
 
     static std::string getFileUri(const std::string &filePath)
@@ -301,7 +265,7 @@ public:
         poll.insertNewWebSocketSync(Poco::URI(serverUri), handler);
     }
 
-private:
+protected:
     int64_t getCurrentTime()
     {
         return std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - _start).count();

@@ -11,17 +11,63 @@
 
 #include <iostream>
 
+#include <TraceFile.hpp>
 #include <ReplaySocketHandler.hpp>
 
 class PerfTestSocketHandler : public ReplaySocketHandler
 {
+    bool _measurementStarted;
+    bool _measurementFinished;
 public:
     PerfTestSocketHandler(SocketPoll &poll,
                         const std::string &uri,
                         const std::string &trace) :
-        ReplaySocketHandler(poll, uri, trace)
+        ReplaySocketHandler(poll, uri, trace),
+        _measurementStarted(false),
+        _measurementFinished(false)
     {
     }
+
+    void processTraceMessage() override
+    {
+        if (_next.getDir() == TraceFileRecord::Direction::Event && _next.getPayload().starts_with("start")) {
+            std::cerr << getCurrentTime() << " processTraceMessage: " << _next.toString() << std::endl;
+            if (!_measurementStarted) {
+                std::cerr << getCurrentTime() << " start measurement" << std::endl;
+                _measurementStarted = true;
+                startMeasurement();
+            } else {
+                std::cerr << "Cannot start. Already started." << std::endl;
+                shutdown();
+            }
+        } else if (_next.getDir() == TraceFileRecord::Direction::Event && _next.getPayload().starts_with("stop")) {
+            std::cerr << getCurrentTime() << " processTraceMessage: " << _next.toString() << std::endl;
+            if (_measurementStarted) {
+                if (!_measurementFinished) {
+                    std::cerr << getCurrentTime() << " stop measurement" << std::endl;
+                    _measurementFinished = true;
+                    stopMeasurement();
+                } else {
+                    std::cerr << "Cannot stop. Already finished." << std::endl;
+                    shutdown();
+                }
+            } else {
+                std::cerr << "Cannot stop. Not started yet." << std::endl;
+                shutdown();
+            }
+        } else {
+            ReplaySocketHandler::processTraceMessage();
+        }
+    }
+
+    bool isFinished()
+    {
+        return _measurementFinished;
+    }
+
+    virtual void startMeasurement() = 0;
+
+    virtual void stopMeasurement() = 0;
 
     // Output results as json
     virtual void printResults() = 0;
