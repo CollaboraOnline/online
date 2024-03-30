@@ -7,11 +7,11 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-03-06 16:29+0100\n"
-"PO-Revision-Date: 2024-02-26 15:52+0000\n"
+"PO-Revision-Date: 2024-03-09 18:01+0000\n"
 "Last-Translator: gallegonovato <fran-carro@hotmail.es>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/es/>\n"
-"Language: \n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1853,19 +1853,19 @@ msgstr "%user ha salido"
 
 #: src/control/Control.UserList.ts:56
 msgid "Following %user"
-msgstr ""
+msgstr "Siguiendo a %user"
 
 #: src/control/Control.UserList.ts:57
 msgid "Following the editor"
-msgstr ""
+msgstr "Siguiendo al editor"
 
 #: src/control/Control.UserList.ts:58
 msgid "Click to stop following"
-msgstr ""
+msgstr "Pulsa para dejar de seguir"
 
 #: src/control/Control.UserList.ts:59
 msgid "Avatar for %user"
-msgstr ""
+msgstr "Avatar para %user"
 
 #: src/control/Control.UserList.ts:80
 msgid "%n users"
@@ -2745,24 +2745,23 @@ msgstr ""
 "nueva</p>"
 
 #: src/map/Clipboard.js:1035
-#, fuzzy
 msgid ""
 "<p>Your browser has very limited access to the clipboard</p><p><b>Please "
 "press</b> <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to "
 "see more options</p><p>Close popup to ignore paste special</p>"
 msgstr ""
-"<p>El navegador posee un acceso muy limitado al portapapeles</p><p>Presione "
-"ahora: <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> para "
-"ver más opciones</p><p>Cierre el cuadro emergente para ignorar el pegado "
-"especial</p>"
+"<p>Su navegador tiene un acceso muy limitado al "
+"portapapeles</p><p><b>Presione</b> <kbd>Ctrl</kbd><span class=\"kbd--plus\""
+">+</span><kbd>V</kbd> para ver más opciones</p><p>Cerrar la ventana "
+"emergente para ignorar el pegado especial</p>"
 
 #: src/map/Clipboard.js:1042
 msgid "Paste from this document"
-msgstr ""
+msgstr "Pegue desde este documento"
 
 #: src/map/Clipboard.js:1042
 msgid "Cancel paste special"
-msgstr ""
+msgstr "Cancelar el pegado especial"
 
 #: src/map/Map.js:220
 msgid "Initializing..."
