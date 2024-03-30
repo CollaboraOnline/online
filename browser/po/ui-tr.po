@@ -14,11 +14,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-03-06 16:29+0100\n"
-"PO-Revision-Date: 2024-02-29 10:53+0000\n"
-"Last-Translator: \"PhD. Ayhan YALÇINSOY\" <ayhanyalcinsoy@pisilinux.org>\n"
+"PO-Revision-Date: 2024-03-09 18:01+0000\n"
+"Last-Translator: Oğuz Ersen <oguz@ersen.moe>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/tr/>\n"
-"Language: \n"
+"Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1854,19 +1854,19 @@ msgstr "%user ayrıldı"
 
 #: src/control/Control.UserList.ts:56
 msgid "Following %user"
-msgstr ""
+msgstr "%user takip ediliyor"
 
 #: src/control/Control.UserList.ts:57
 msgid "Following the editor"
-msgstr ""
+msgstr "Düzenleyici takip ediliyor"
 
 #: src/control/Control.UserList.ts:58
 msgid "Click to stop following"
-msgstr ""
+msgstr "Takip etmeyi bırakmak için tıklayın"
 
 #: src/control/Control.UserList.ts:59
 msgid "Avatar for %user"
-msgstr ""
+msgstr "%user için simge"
 
 #: src/control/Control.UserList.ts:80
 msgid "%n users"
@@ -2736,24 +2736,23 @@ msgstr ""
 "veya iptal edin</p>"
 
 #: src/map/Clipboard.js:1035
-#, fuzzy
 msgid ""
 "<p>Your browser has very limited access to the clipboard</p><p><b>Please "
 "press</b> <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to "
 "see more options</p><p>Close popup to ignore paste special</p>"
 msgstr ""
-"<p>Tarayıcınızın panoya erişimi çok sınırlı</p><p>Daha fazla seçenek görmek "
-"için lütfen şimdi: <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</"
-"kbd> tuşlarına basın</p><p>Özel yapıştırmayı yok saymak için açılır "
-"pencereyi kapatın</p>"
+"<p>Tarayıcınızın panoya erişimi çok sınırlı</p><p><b>Daha fazla seçenek "
+"görmek için lütfen şimdi: </b><kbd>Ctrl</kbd><span class=\"kbd--plus\""
+">+</span><kbd>V</kbd> tuşlarına basın</p><p>Özel yapıştırmayı yok saymak "
+"için açılır pencereyi kapatın</p>"
 
 #: src/map/Clipboard.js:1042
 msgid "Paste from this document"
-msgstr ""
+msgstr "Bu belgeden yapıştır"
 
 #: src/map/Clipboard.js:1042
 msgid "Cancel paste special"
-msgstr ""
+msgstr "Özel yapıştırmayı iptal et"
 
 #: src/map/Map.js:220
 msgid "Initializing..."
