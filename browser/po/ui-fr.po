@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-03-06 16:29+0100\n"
-"PO-Revision-Date: 2023-11-10 16:39+0000\n"
-"Last-Translator: Louis Chance <contact@louischance.com>\n"
+"PO-Revision-Date: 2024-03-22 23:12+0000\n"
+"Last-Translator: Méven Car <meven.car@collabora.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/collabora-online/"
 "ui/fr/>\n"
-"Language: \n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.2-dev\n"
+"X-Generator: Weblate 5.5-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -251,7 +251,7 @@ msgstr "Informations de version"
 
 #: admin/admin.strings.js:67
 msgid "License"
-msgstr ""
+msgstr "Licence"
 
 #: admin/admin.strings.js:68 src/control/Control.Menubar.js:377
 #: src/control/Control.Menubar.js:531 src/control/Control.Menubar.js:658
@@ -432,6 +432,7 @@ msgstr ""
 #: src/control/Control.AlertDialog.js:65
 msgid "It seems you have copied a selection that includes external images."
 msgstr ""
+"Il semble que vous ayez copié une sélection incluant des images externes."
 
 #: src/control/Control.AlertDialog.js:66
 msgid ""
@@ -442,7 +443,7 @@ msgstr ""
 
 #: src/control/Control.AlertDialog.js:70
 msgid "External data source not allowed"
-msgstr ""
+msgstr "Source de donnée externe non permise"
 
 #: src/control/Control.AlertDialog.js:71
 msgid "It seems you have tried to insert external data."
@@ -456,7 +457,7 @@ msgstr ""
 
 #: src/control/Control.AlertDialog.js:84
 msgid "Don't show this again"
-msgstr ""
+msgstr "Ne plus montrer à nouveau"
 
 #: src/control/Control.AlertDialog.js:103
 msgid "The server encountered a %0 error while parsing the %1 command."
@@ -1115,7 +1116,7 @@ msgstr "Présenter la diapo active"
 
 #: src/control/Control.Menubar.js:514
 msgid "Present in new window"
-msgstr ""
+msgstr "Présenter dans une nouvelle fenêtre"
 
 #: src/control/Control.Menubar.js:550 src/control/Control.Menubar.js:1011
 #: src/control/Control.Menubar.js:1071
@@ -1585,7 +1586,7 @@ msgstr "Présentation"
 
 #: src/control/Control.NotebookbarImpress.js:450
 msgid "Present in Window"
-msgstr ""
+msgstr "Présenter dans une fenêtre"
 
 #: src/control/Control.NotebookbarWriter.js:79
 msgid "Form"
@@ -1601,11 +1602,11 @@ msgstr "Document EPUB (.epub)"
 
 #: src/control/Control.NotebookbarWriter.js:387
 msgid "Go Online"
-msgstr ""
+msgstr "Aller en mode en ligne"
 
 #: src/control/Control.NotebookbarWriter.js:387
 msgid "Go Offline"
-msgstr ""
+msgstr "Aller en mode hors-ligne"
 
 #: src/control/Control.NotebookbarWriter.js:1342
 msgid "Rich Text"
@@ -1837,7 +1838,7 @@ msgstr ""
 
 #: src/control/Control.UIManager.js:785
 msgid "Show Menu"
-msgstr ""
+msgstr "Montrer le menu"
 
 #: src/control/Control.UIManager.js:1110
 msgid "Dismiss"
@@ -1853,19 +1854,19 @@ msgstr "%user a quitté"
 
 #: src/control/Control.UserList.ts:56
 msgid "Following %user"
-msgstr ""
+msgstr "Suivre %user"
 
 #: src/control/Control.UserList.ts:57
 msgid "Following the editor"
-msgstr ""
+msgstr "Suivre l'éditeur"
 
 #: src/control/Control.UserList.ts:58
 msgid "Click to stop following"
-msgstr ""
+msgstr "Cliquer pour arrêter de suivre"
 
 #: src/control/Control.UserList.ts:59
 msgid "Avatar for %user"
-msgstr ""
+msgstr "Avatar pour %user"
 
 #: src/control/Control.UserList.ts:80
 msgid "%n users"
@@ -2308,6 +2309,8 @@ msgstr "Le document est en train d'être renommé et sera rechargé sous peu"
 #: src/core/Socket.js:1121
 msgid "The document is switching to Offline mode and will reload shortly"
 msgstr ""
+"Le document bascule en mode hors-ligne et va se recharger dans quelques "
+"instants"
 
 #: src/core/Socket.js:1226
 msgid "Exported to storage"
@@ -2375,7 +2378,7 @@ msgstr "Couleurs du thème"
 
 #: src/docstate.js:100
 msgid "Document colors"
-msgstr ""
+msgstr "Couleurs du document"
 
 #: src/errormessages.js:22
 msgid "No disk space left on server."
@@ -2761,11 +2764,11 @@ msgstr ""
 
 #: src/map/Clipboard.js:1042
 msgid "Paste from this document"
-msgstr ""
+msgstr "Coller depuis ce document"
 
 #: src/map/Clipboard.js:1042
 msgid "Cancel paste special"
-msgstr ""
+msgstr "Annuler collage spécial"
 
 #: src/map/Map.js:220
 msgid "Initializing..."
@@ -2805,11 +2808,11 @@ msgstr "Le téléversement sur le serveur a échoué avec le statut : %0"
 
 #: src/map/handler/Map.SlideShow.js:50
 msgid "Empty Slide Show"
-msgstr ""
+msgstr "Présentation vide"
 
 #: src/map/handler/Map.SlideShow.js:148
 msgid "Windowed Presentation Blocked"
-msgstr ""
+msgstr "Présentation dans une fenêtre bloquée"
 
 #: src/map/handler/Map.SlideShow.js:149
 msgid ""
@@ -2820,28 +2823,27 @@ msgstr ""
 
 #: src/map/handler/Map.SlideShow.js:157
 msgid "Presenting in window"
-msgstr ""
+msgstr "Présentation en cours dans une fenêtre"
 
 #: src/map/handler/Map.SlideShow.js:158
 msgid "Close Presentation"
-msgstr ""
+msgstr "Fermer Présentation"
 
 #: src/map/handler/Map.SlideShow.js:178
 msgid "Presenting in fullscreen"
-msgstr ""
+msgstr "Présentation en cours en plein écran"
 
 #: src/map/handler/Map.SlideShow.js:179
-#, fuzzy
 msgid "End Presentation"
-msgstr "Présentation"
+msgstr "Fin de la présentation"
 
 #: src/map/handler/Map.SlideShow.js:234
 msgid "Already presenting"
-msgstr ""
+msgstr "Présentation déjà en cours"
 
 #: src/map/handler/Map.SlideShow.js:235
 msgid "You are already presenting this document"
-msgstr ""
+msgstr "Vous présentez déjà ce document"
 
 #: src/map/handler/Map.WOPI.js:149
 msgid "Creating new file from template..."
