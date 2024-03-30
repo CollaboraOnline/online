@@ -1687,10 +1687,15 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 	background-color: var(--color-background-dark);
 }
 
+.user-list-item--name-container {
+	display: grid;
+	align-content: center;
+}
+
 .user-list-item--name {
 	display: flex;
 	flex-grow: 1;
-	padding: 8px;
+	padding: 0px 8px;
 }
 
 .user-list-item.selected-user {
@@ -1725,7 +1730,7 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 }
 
 .user-list-item.selected-user .user-list-item--name {
-	padding: 4px 0 0 8px;
+	padding: 0px 8px;
 }
 /* Style for the scrollbar track */
 #userlist-dropdown::-webkit-scrollbar {
