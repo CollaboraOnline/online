@@ -594,8 +594,16 @@ private:
     bool download(const std::shared_ptr<ClientSession>& session, const std::string& jailId,
                   std::unique_ptr<WopiStorage::WOPIFileInfo> wopiFileInfo);
 
+#if !MOBILEAPP
+    /// Updates the Session with the wopiFileInfo given.
+    /// Returns the templateSource, if any.
+    std::string updateSessionWithWopiInfo(const std::shared_ptr<ClientSession>& session,
+                                          WopiStorage* wopiStorage,
+                                          std::unique_ptr<WopiStorage::WOPIFileInfo> wopiFileInfo);
+
     /// Process the configured plugins, if any, after downloading the document file.
     bool processPlugins(std::string& localPath);
+#endif //!MOBILEAPP
 
     bool isLoaded() const { return _docState.hadLoaded(); }
     bool isInteractive() const { return _docState.isInteractive(); }

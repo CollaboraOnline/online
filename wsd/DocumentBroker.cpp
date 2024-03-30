@@ -834,10 +834,6 @@ bool DocumentBroker::downloadAdvance(const std::string& jailId, const Poco::URI&
     LOG_ASSERT(_storage);
 
     // Call the storage specific fileinfo functions
-    std::string userId, username;
-    std::string userExtraInfo;
-    std::string userPrivateInfo;
-    std::string watermarkText;
     std::string templateSource;
 
 #if !MOBILEAPP
@@ -860,8 +856,6 @@ bool DocumentBroker::downloadAdvance(const std::string& jailId, const Poco::URI&
         {
             std::unique_ptr<LocalStorage::LocalFileInfo> localfileinfo =
                 localStorage->getLocalFileInfo();
-            userId = localfileinfo->getUserId();
-            username = localfileinfo->getUsername();
 
             _isViewFileExtension = COOLWSD::IsViewFileExtension(localStorage->getFileExtension());
         }
@@ -901,12 +895,14 @@ bool DocumentBroker::downloadAdvance(const std::string& jailId, const Poco::URI&
 
         _docState.setStatus(DocumentState::Status::Loading); // Done downloading.
 
+#if !MOBILEAPP
         if (!processPlugins(localPath))
         {
             // FIXME: Why don't we resume anyway?
             LOG_WRN("Failed to process plugins on file [" << localPath << ']');
             return false;
         }
+#endif //!MOBILEAPP
 
         const std::string localFilePath = Poco::Path(getJailRoot(), localPath).toString();
         std::ifstream istr(localFilePath, std::ios::binary);
@@ -1035,10 +1031,6 @@ bool DocumentBroker::download(
     LOG_ASSERT(_storage);
 
     // Call the storage specific fileinfo functions
-    std::string userId, username;
-    std::string userExtraInfo;
-    std::string userPrivateInfo;
-    std::string watermarkText;
     std::string templateSource;
 
 #if !MOBILEAPP
@@ -1053,130 +1045,7 @@ bool DocumentBroker::download(
         checkFileInfoCallDurationMs = std::chrono::duration_cast<std::chrono::milliseconds>(
             std::chrono::steady_clock::now() - start);
 
-        userId = wopiFileInfo->getUserId();
-        username = wopiFileInfo->getUsername();
-        userExtraInfo = wopiFileInfo->getUserExtraInfo();
-        userPrivateInfo = wopiFileInfo->getUserPrivateInfo();
-        watermarkText = wopiFileInfo->getWatermarkText();
-        templateSource = wopiFileInfo->getTemplateSource();
-
-        _isViewFileExtension = COOLWSD::IsViewFileExtension(wopiStorage->getFileExtension());
-        if (!wopiFileInfo->getUserCanWrite() ||
-            session->isReadOnly()) // Readonly. Second boolean checks for URL "permission=readonly"
-        {
-            LOG_DBG("Setting session [" << sessionId << "] to readonly for UserCanWrite=false");
-            session->setWritable(false);
-        }
-        else if (CommandControl::LockManager::isLockedReadOnlyUser()) // Readonly.
-        {
-            LOG_DBG("Setting session [" << sessionId << "] to readonly for LockedReadOnlyUser");
-            session->setWritable(false);
-        }
-        else if (_isViewFileExtension) // PDF and the like: only commenting, no editing.
-        {
-            LOG_DBG("Setting session [" << sessionId << "] to readonly for ViewFileExtension ["
-                                        << wopiStorage->getFileExtension()
-                                        << "] and allowing comments");
-            session->setWritable(true);
-            session->setReadOnly(true);
-            session->setAllowChangeComments(true);
-        }
-        else // Fully writable document, with comments.
-        {
-            LOG_DBG("Setting session [" << sessionId << "] to writable and allowing comments");
-            session->setWritable(true);
-            session->setReadOnly(false);
-            session->setAllowChangeComments(true);
-        }
-
-        // Mark the session as 'Document owner' if WOPI hosts supports it
-        if (userId == _storage->getFileInfo().getOwnerId())
-        {
-            LOG_DBG("Session [" << sessionId << "] is the document owner");
-            session->setDocumentOwner(true);
-        }
-
-        // We will send the client about information of the usage type of the file.
-        // Some file types may be treated differently than others.
-        session->sendFileMode(session->isReadOnly(), session->isAllowChangeComments());
-
-        // Construct a JSON containing relevant WOPI host properties
-        Object::Ptr wopiInfo = new Object();
-        if (!wopiFileInfo->getPostMessageOrigin().empty())
-        {
-            wopiInfo->set("PostMessageOrigin", wopiFileInfo->getPostMessageOrigin());
-        }
-
-        // If print, export are disabled, order client to hide these options in the UI
-        if (wopiFileInfo->getDisablePrint())
-            wopiFileInfo->setHidePrintOption(true);
-        if (wopiFileInfo->getDisableExport())
-            wopiFileInfo->setHideExportOption(true);
-
-        wopiInfo->set("BaseFileName", wopiStorage->getFileInfo().getFilename());
-        if (wopiFileInfo->getBreadcrumbDocName().size())
-            wopiInfo->set("BreadcrumbDocName", wopiFileInfo->getBreadcrumbDocName());
-
-        if (!wopiFileInfo->getTemplateSaveAs().empty())
-            wopiInfo->set("TemplateSaveAs", wopiFileInfo->getTemplateSaveAs());
-
-        if (!templateSource.empty())
-            wopiInfo->set("TemplateSource", templateSource);
-
-        wopiInfo->set("HidePrintOption", wopiFileInfo->getHidePrintOption());
-        wopiInfo->set("HideSaveOption", wopiFileInfo->getHideSaveOption());
-        wopiInfo->set("HideExportOption", wopiFileInfo->getHideExportOption());
-        wopiInfo->set("HideRepairOption", wopiFileInfo->getHideRepairOption());
-        wopiInfo->set("DisablePrint", wopiFileInfo->getDisablePrint());
-        wopiInfo->set("DisableExport", wopiFileInfo->getDisableExport());
-        wopiInfo->set("DisableCopy", wopiFileInfo->getDisableCopy());
-        wopiInfo->set("DisableInactiveMessages", wopiFileInfo->getDisableInactiveMessages());
-        wopiInfo->set("DownloadAsPostMessage", wopiFileInfo->getDownloadAsPostMessage());
-        wopiInfo->set("UserCanNotWriteRelative", wopiFileInfo->getUserCanNotWriteRelative());
-        wopiInfo->set("EnableInsertRemoteImage", wopiFileInfo->getEnableInsertRemoteImage());
-        wopiInfo->set("DisableInsertLocalImage", wopiFileInfo->getDisableInsertLocalImage());
-        wopiInfo->set("EnableRemoteLinkPicker", wopiFileInfo->getEnableRemoteLinkPicker());
-        wopiInfo->set("EnableShare", wopiFileInfo->getEnableShare());
-        wopiInfo->set("HideUserList", wopiFileInfo->getHideUserList());
-        wopiInfo->set("SupportsRename", wopiFileInfo->getSupportsRename());
-        wopiInfo->set("UserCanRename", wopiFileInfo->getUserCanRename());
-        wopiInfo->set("FileUrl", wopiFileInfo->getFileUrl());
-        wopiInfo->set("UserCanWrite", wopiFileInfo->getUserCanWrite() && !session->isReadOnly());
-        if (wopiFileInfo->getHideChangeTrackingControls() !=
-            WopiStorage::WOPIFileInfo::TriState::Unset)
-            wopiInfo->set("HideChangeTrackingControls",
-                          wopiFileInfo->getHideChangeTrackingControls() ==
-                              WopiStorage::WOPIFileInfo::TriState::True);
-        wopiInfo->set("IsOwner", session->isDocumentOwner());
-
-        std::ostringstream ossWopiInfo;
-        wopiInfo->stringify(ossWopiInfo);
-        const std::string wopiInfoString = ossWopiInfo.str();
-        LOG_TRC("Sending wopi info to client: " << wopiInfoString);
-
-        // Contains PostMessageOrigin property which is necessary to post messages to parent
-        // frame. Important to send this message immediately and not enqueue it so that in case
-        // document load fails, cool is able to tell its parent frame via PostMessage API.
-        session->sendMessage("wopi: " + wopiInfoString);
-
-        if (config::getBool("logging.userstats", false))
-        {
-            // using json because fetching details from json string is easier and will be consistent
-            Object::Ptr userStats = new Object();
-            userStats->set("PostMessageOrigin", wopiFileInfo->getPostMessageOrigin());
-            userStats->set("UserID", COOLWSD::anonymizeUsername(userId));
-            userStats->set("BaseFileName", wopiStorage->getFileInfo().getFilename());
-            userStats->set("UserCanWrite", wopiFileInfo->getUserCanWrite());
-
-            std::ostringstream ossUserStats;
-            userStats->stringify(ossUserStats);
-            const std::string userStatsString = ossUserStats.str();
-
-            LOG_ANY("User stats: " << userStatsString);
-        }
-
-        // Pass the ownership to client session
-        session->setWopiFileInfo(wopiFileInfo);
+        templateSource = updateSessionWithWopiInfo(session, wopiStorage, std::move(wopiFileInfo));
     }
     else
 #endif
@@ -1186,8 +1055,6 @@ bool DocumentBroker::download(
         {
             std::unique_ptr<LocalStorage::LocalFileInfo> localfileinfo =
                 localStorage->getLocalFileInfo();
-            userId = localfileinfo->getUserId();
-            username = localfileinfo->getUsername();
 
             _isViewFileExtension = COOLWSD::IsViewFileExtension(localStorage->getFileExtension());
             if (_isViewFileExtension)
@@ -1217,6 +1084,9 @@ bool DocumentBroker::download(
                 session->setReadOnly(false);
                 session->setAllowChangeComments(true);
             }
+
+            session->setUserId(localfileinfo->getUserId());
+            session->setUserName(localfileinfo->getUsername());
         }
     }
 
@@ -1225,15 +1095,10 @@ bool DocumentBroker::download(
         watermarkText = COOLWSD::OverrideWatermark;
 #endif
 
-    session->setUserId(userId);
-    session->setUserName(username);
-    session->setUserExtraInfo(userExtraInfo);
-    session->setUserPrivateInfo(userPrivateInfo);
-    session->setWatermarkText(watermarkText);
-
-    LOG_DBG("Setting username [" << COOLWSD::anonymizeUsername(username) << "] and userId ["
-                                 << COOLWSD::anonymizeUsername(userId) << "] for session ["
-                                 << sessionId << "] is canonical id "
+    LOG_DBG("Setting username [" << COOLWSD::anonymizeUsername(session->getUserName())
+                                 << "] and userId ["
+                                 << COOLWSD::anonymizeUsername(session->getUserId())
+                                 << "] for session [" << sessionId << "] with canonical id "
                                  << session->getCanonicalViewId());
 
     // Basic file information was stored by the above getWOPIFileInfo() or getLocalFileInfo() calls
@@ -1309,12 +1174,14 @@ bool DocumentBroker::download(
             }
         }
 
+#if !MOBILEAPP
         if (!processPlugins(localPath))
         {
             // FIXME: Why don't we resume anyway?
             LOG_WRN("Failed to process plugins on file [" << localPath << ']');
             return false;
         }
+#endif //!MOBILEAPP
 
         const std::string localFilePath = Poco::Path(getJailRoot(), localPath).toString();
         std::ifstream istr(localFilePath, std::ios::binary);
@@ -1377,9 +1244,147 @@ bool DocumentBroker::download(
     return true;
 }
 
+#if !MOBILEAPP
+std::string
+DocumentBroker::updateSessionWithWopiInfo(const std::shared_ptr<ClientSession>& session,
+                                          WopiStorage* wopiStorage,
+                                          std::unique_ptr<WopiStorage::WOPIFileInfo> wopiFileInfo)
+{
+    const std::string sessionId = session->getId();
+
+    const std::string userId = wopiFileInfo->getUserId();
+    const std::string username = wopiFileInfo->getUsername();
+    const std::string userExtraInfo = wopiFileInfo->getUserExtraInfo();
+    const std::string userPrivateInfo = wopiFileInfo->getUserPrivateInfo();
+    const std::string watermarkText = wopiFileInfo->getWatermarkText();
+    const std::string templateSource = wopiFileInfo->getTemplateSource();
+
+    _isViewFileExtension = COOLWSD::IsViewFileExtension(wopiStorage->getFileExtension());
+    if (!wopiFileInfo->getUserCanWrite() ||
+        session->isReadOnly()) // Readonly. Second boolean checks for URL "permission=readonly"
+    {
+        LOG_DBG("Setting session [" << sessionId << "] to readonly for UserCanWrite=false");
+        session->setWritable(false);
+    }
+    else if (CommandControl::LockManager::isLockedReadOnlyUser()) // Readonly.
+    {
+        LOG_DBG("Setting session [" << sessionId << "] to readonly for LockedReadOnlyUser");
+        session->setWritable(false);
+    }
+    else if (_isViewFileExtension) // PDF and the like: only commenting, no editing.
+    {
+        LOG_DBG("Setting session [" << sessionId << "] to readonly for ViewFileExtension ["
+                                    << wopiStorage->getFileExtension()
+                                    << "] and allowing comments");
+        session->setWritable(true);
+        session->setReadOnly(true);
+        session->setAllowChangeComments(true);
+    }
+    else // Fully writable document, with comments.
+    {
+        LOG_DBG("Setting session [" << sessionId << "] to writable and allowing comments");
+        session->setWritable(true);
+        session->setReadOnly(false);
+        session->setAllowChangeComments(true);
+    }
+
+    // Mark the session as 'Document owner' if WOPI hosts supports it
+    if (userId == _storage->getFileInfo().getOwnerId())
+    {
+        LOG_DBG("Session [" << sessionId << "] is the document owner");
+        session->setDocumentOwner(true);
+    }
+
+    // We will send the client about information of the usage type of the file.
+    // Some file types may be treated differently than others.
+    session->sendFileMode(session->isReadOnly(), session->isAllowChangeComments());
+
+    // Construct a JSON containing relevant WOPI host properties
+    Object::Ptr wopiInfo = new Object();
+    if (!wopiFileInfo->getPostMessageOrigin().empty())
+    {
+        wopiInfo->set("PostMessageOrigin", wopiFileInfo->getPostMessageOrigin());
+    }
+
+    // If print, export are disabled, order client to hide these options in the UI
+    if (wopiFileInfo->getDisablePrint())
+        wopiFileInfo->setHidePrintOption(true);
+    if (wopiFileInfo->getDisableExport())
+        wopiFileInfo->setHideExportOption(true);
+
+    wopiInfo->set("BaseFileName", wopiStorage->getFileInfo().getFilename());
+    if (wopiFileInfo->getBreadcrumbDocName().size())
+        wopiInfo->set("BreadcrumbDocName", wopiFileInfo->getBreadcrumbDocName());
+
+    if (!wopiFileInfo->getTemplateSaveAs().empty())
+        wopiInfo->set("TemplateSaveAs", wopiFileInfo->getTemplateSaveAs());
+
+    if (!templateSource.empty())
+        wopiInfo->set("TemplateSource", templateSource);
+
+    wopiInfo->set("HidePrintOption", wopiFileInfo->getHidePrintOption());
+    wopiInfo->set("HideSaveOption", wopiFileInfo->getHideSaveOption());
+    wopiInfo->set("HideExportOption", wopiFileInfo->getHideExportOption());
+    wopiInfo->set("HideRepairOption", wopiFileInfo->getHideRepairOption());
+    wopiInfo->set("DisablePrint", wopiFileInfo->getDisablePrint());
+    wopiInfo->set("DisableExport", wopiFileInfo->getDisableExport());
+    wopiInfo->set("DisableCopy", wopiFileInfo->getDisableCopy());
+    wopiInfo->set("DisableInactiveMessages", wopiFileInfo->getDisableInactiveMessages());
+    wopiInfo->set("DownloadAsPostMessage", wopiFileInfo->getDownloadAsPostMessage());
+    wopiInfo->set("UserCanNotWriteRelative", wopiFileInfo->getUserCanNotWriteRelative());
+    wopiInfo->set("EnableInsertRemoteImage", wopiFileInfo->getEnableInsertRemoteImage());
+    wopiInfo->set("DisableInsertLocalImage", wopiFileInfo->getDisableInsertLocalImage());
+    wopiInfo->set("EnableRemoteLinkPicker", wopiFileInfo->getEnableRemoteLinkPicker());
+    wopiInfo->set("EnableShare", wopiFileInfo->getEnableShare());
+    wopiInfo->set("HideUserList", wopiFileInfo->getHideUserList());
+    wopiInfo->set("SupportsRename", wopiFileInfo->getSupportsRename());
+    wopiInfo->set("UserCanRename", wopiFileInfo->getUserCanRename());
+    wopiInfo->set("FileUrl", wopiFileInfo->getFileUrl());
+    wopiInfo->set("UserCanWrite", wopiFileInfo->getUserCanWrite() && !session->isReadOnly());
+    if (wopiFileInfo->getHideChangeTrackingControls() != WopiStorage::WOPIFileInfo::TriState::Unset)
+        wopiInfo->set("HideChangeTrackingControls", wopiFileInfo->getHideChangeTrackingControls() ==
+                                                        WopiStorage::WOPIFileInfo::TriState::True);
+    wopiInfo->set("IsOwner", session->isDocumentOwner());
+
+    std::ostringstream ossWopiInfo;
+    wopiInfo->stringify(ossWopiInfo);
+    const std::string wopiInfoString = ossWopiInfo.str();
+    LOG_TRC("Sending wopi info to client: " << wopiInfoString);
+
+    // Contains PostMessageOrigin property which is necessary to post messages to parent
+    // frame. Important to send this message immediately and not enqueue it so that in case
+    // document load fails, cool is able to tell its parent frame via PostMessage API.
+    session->sendMessage("wopi: " + wopiInfoString);
+
+    if (config::getBool("logging.userstats", false))
+    {
+        // using json because fetching details from json string is easier and will be consistent
+        Object::Ptr userStats = new Object();
+        userStats->set("PostMessageOrigin", wopiFileInfo->getPostMessageOrigin());
+        userStats->set("UserID", COOLWSD::anonymizeUsername(userId));
+        userStats->set("BaseFileName", wopiStorage->getFileInfo().getFilename());
+        userStats->set("UserCanWrite", wopiFileInfo->getUserCanWrite());
+
+        std::ostringstream ossUserStats;
+        userStats->stringify(ossUserStats);
+        const std::string userStatsString = ossUserStats.str();
+
+        LOG_ANY("User stats: " << userStatsString);
+    }
+
+    // Pass the ownership to the client session.
+    session->setWopiFileInfo(wopiFileInfo);
+    session->setUserId(userId);
+    session->setUserName(username);
+    session->setUserExtraInfo(userExtraInfo);
+    session->setUserPrivateInfo(userPrivateInfo);
+    session->setWatermarkText(watermarkText);
+
+    return templateSource;
+}
+
 bool DocumentBroker::processPlugins(std::string& localPath)
 {
-#if !MOBILEAPP
     // Check if we have a prefilter "plugin" for this document format
     for (const auto& plugin : COOLWSD::PluginConfigurations)
     {
@@ -1449,10 +1454,10 @@ bool DocumentBroker::processPlugins(std::string& localPath)
             // This plugin is not a proper prefilter one
         }
     }
-#endif
 
     return true;
 }
+#endif //!MOBILEAPP
 
 std::string DocumentBroker::handleRenameFileCommand(std::string sessionId,
                                                     std::string newFilename)
