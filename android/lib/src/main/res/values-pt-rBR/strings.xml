@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="temp_file_saving_disabled">Este documento é apenas de leitura, salvaguardar está desabilitado.</string>
+    <string name="temp_file_saving_disabled">Este arquivo é apenas de leitura, salvamento está desabilitado.</string>
     <string name="storage_permission_required">Permissão de armazenamento é requirida</string>
-    <string name="failed_to_load_file">Falha no carregamento do documento</string>
+    <string name="failed_to_load_file">Falha no carregamento do arquivo</string>
     <string name="failed_to_insert_image">Falha ao inserir imagem</string>
     <string name="cannot_open_file_chooser">Não foi possível abrir o gestor de arquivos</string>
     <!-- Loading SlideShow Dialog Strings -->
