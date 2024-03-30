@@ -5,16 +5,16 @@ msgstr ""
 "Project-Id-Version: Collabora Online UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-03-06 16:29+0100\n"
-"PO-Revision-Date: 2024-02-27 05:11+0000\n"
+"PO-Revision-Date: 2024-03-09 18:01+0000\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/sl/>\n"
-"Language: \n"
+"Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
-"%100==4 ? 2 : 3;\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3;\n"
 "X-Accelerator-Marker: ~\n"
 "X-Generator: Weblate 5.5-dev\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -1853,19 +1853,19 @@ msgstr "Odšel je uporabnik %user"
 
 #: src/control/Control.UserList.ts:56
 msgid "Following %user"
-msgstr ""
+msgstr "Sledite: %user"
 
 #: src/control/Control.UserList.ts:57
 msgid "Following the editor"
-msgstr ""
+msgstr "Sledenje urednika"
 
 #: src/control/Control.UserList.ts:58
 msgid "Click to stop following"
-msgstr ""
+msgstr "Kliknite za konec sledenja"
 
 #: src/control/Control.UserList.ts:59
 msgid "Avatar for %user"
-msgstr ""
+msgstr "Avatar - %user"
 
 #: src/control/Control.UserList.ts:80
 msgid "%n users"
@@ -2739,23 +2739,23 @@ msgstr ""
 "počakajte na trenutni prenos ali ga prekličite, preden začnete z novim.</p>"
 
 #: src/map/Clipboard.js:1035
-#, fuzzy
 msgid ""
 "<p>Your browser has very limited access to the clipboard</p><p><b>Please "
 "press</b> <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to "
 "see more options</p><p>Close popup to ignore paste special</p>"
 msgstr ""
-"<p>Vaš brskalnik ima zelo omejen dostop do odložišča.</p><p>Zdaj pritisnite: "
-"<kbd>krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd>, da vidite "
-"več možnosti.</p><p>Zaprite pojavno okno, da prezrete posebno lepljenje.</p>"
+"<p>Vaš brskalnik ima zelo omejen dostop do odložišča.</p><p><b>Pritisnite</"
+"b> <kbd>krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd>, da "
+"vidite več možnosti.</p><p>Zaprite pojavno okno, da prezrete posebno "
+"lepljenje.</p>"
 
 #: src/map/Clipboard.js:1042
 msgid "Paste from this document"
-msgstr ""
+msgstr "Prilepi iz tega dokumenta"
 
 #: src/map/Clipboard.js:1042
 msgid "Cancel paste special"
-msgstr ""
+msgstr "Prekliči posebno lepljenje"
 
 #: src/map/Map.js:220
 msgid "Initializing..."
