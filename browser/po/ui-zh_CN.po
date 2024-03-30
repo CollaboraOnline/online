@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-03-06 16:29+0100\n"
-"PO-Revision-Date: 2024-03-04 13:10+0000\n"
-"Last-Translator: ccz <mmlsc@qq.com>\n"
+"PO-Revision-Date: 2024-03-18 14:01+0000\n"
+"Last-Translator: CloneWith <clonewith@users.noreply.hosted.weblate.org>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
 "collabora-online/ui/zh_Hans/>\n"
-"Language: \n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -379,7 +379,7 @@ msgstr " 秒"
 
 #: js/global.js:922
 msgid "Cluster is scaling, retrying..."
-msgstr ""
+msgstr "集群缩放中，正在重试…"
 
 #: js/global.js:924
 msgid "Document is migrating to new server, retrying..."
@@ -391,7 +391,7 @@ msgstr "无法从控制器获取RouteToken"
 
 #: js/w2ui-1.5.rc1.js:2967
 msgid "No fill"
-msgstr ""
+msgstr "无填充"
 
 #: js/w2ui-1.5.rc1.js:2967
 msgid "Automatic"
@@ -419,36 +419,37 @@ msgstr "打开链接"
 
 #: src/control/Control.AlertDialog.js:64
 msgid "Copied external sources are not allowed"
-msgstr ""
+msgstr "不允许复制外部源"
 
 #: src/control/Control.AlertDialog.js:65
 msgid "It seems you have copied a selection that includes external images."
-msgstr ""
+msgstr "您复制的内容似乎含有外部图像。"
 
 #: src/control/Control.AlertDialog.js:66
 msgid ""
 "Downloading external resources is forbidden but pasting images is still "
 "possible. Please right click in the image, choose \"Copy Image\" and paste "
 "it into the document instead."
-msgstr ""
+msgstr "禁止下载外部源文件，但您仍可粘贴图像。请右键点击图像，选择“复制图像”，然后将"
+"其粘贴到文档中。"
 
 #: src/control/Control.AlertDialog.js:70
 msgid "External data source not allowed"
-msgstr ""
+msgstr "不允许外部数据源"
 
 #: src/control/Control.AlertDialog.js:71
 msgid "It seems you have tried to insert external data."
-msgstr ""
+msgstr "您似乎在尝试插入外部数据。"
 
 #: src/control/Control.AlertDialog.js:72
 msgid ""
 "Selected external data source is forbidden. Please contact the system "
 "administrator."
-msgstr ""
+msgstr "所选外部数据源被禁止。请联系系统管理员。"
 
 #: src/control/Control.AlertDialog.js:84
 msgid "Don't show this again"
-msgstr ""
+msgstr "不再显示"
 
 #: src/control/Control.AlertDialog.js:103
 msgid "The server encountered a %0 error while parsing the %1 command."
@@ -1011,7 +1012,7 @@ msgstr "属性"
 #: src/control/Control.Menubar.js:358 src/control/Control.Menubar.js:978
 #: src/control/Control.NotebookbarWriter.js:449
 msgid "Screen Reading"
-msgstr ""
+msgstr "屏幕阅读"
 
 #: src/control/Control.Menubar.js:371
 #: src/control/Control.NotebookbarWriter.js:415
@@ -1100,7 +1101,7 @@ msgstr "从当前幻灯片开始演示"
 
 #: src/control/Control.Menubar.js:514
 msgid "Present in new window"
-msgstr ""
+msgstr "在新窗口中显示"
 
 #: src/control/Control.Menubar.js:550 src/control/Control.Menubar.js:1011
 #: src/control/Control.Menubar.js:1071
@@ -1570,7 +1571,7 @@ msgstr "演示文稿"
 
 #: src/control/Control.NotebookbarImpress.js:450
 msgid "Present in Window"
-msgstr ""
+msgstr "显示在窗口中"
 
 #: src/control/Control.NotebookbarWriter.js:79
 msgid "Form"
@@ -1586,11 +1587,11 @@ msgstr "EPUB 文档（.epub）"
 
 #: src/control/Control.NotebookbarWriter.js:387
 msgid "Go Online"
-msgstr ""
+msgstr "联机"
 
 #: src/control/Control.NotebookbarWriter.js:387
 msgid "Go Offline"
-msgstr ""
+msgstr "脱机"
 
 #: src/control/Control.NotebookbarWriter.js:1342
 msgid "Rich Text"
@@ -1816,15 +1817,15 @@ msgstr "隐藏菜单"
 
 #: src/control/Control.UIManager.js:159
 msgid "Enter new name"
-msgstr ""
+msgstr "输入新名称"
 
 #: src/control/Control.UIManager.js:785
 msgid "Show Menu"
-msgstr ""
+msgstr "显示菜单"
 
 #: src/control/Control.UIManager.js:1110
 msgid "Dismiss"
-msgstr ""
+msgstr "忽略"
 
 #: src/control/Control.UserList.ts:54
 msgid "%user has joined"
@@ -1836,19 +1837,19 @@ msgstr "用户 %user 已离开"
 
 #: src/control/Control.UserList.ts:56
 msgid "Following %user"
-msgstr ""
+msgstr "正在跟随 %user"
 
 #: src/control/Control.UserList.ts:57
 msgid "Following the editor"
-msgstr ""
+msgstr "正在跟随编辑器"
 
 #: src/control/Control.UserList.ts:58
 msgid "Click to stop following"
-msgstr ""
+msgstr "点击停止跟随"
 
 #: src/control/Control.UserList.ts:59
 msgid "Avatar for %user"
-msgstr ""
+msgstr "%user 的头像"
 
 #: src/control/Control.UserList.ts:80
 msgid "%n users"
@@ -1868,7 +1869,7 @@ msgstr "只读"
 
 #: src/control/Control.UserList.ts:560
 msgid "Following"
-msgstr "正在关注"
+msgstr "跟随中"
 
 #: src/control/Control.UserList.ts:613 src/control/Control.UserList.ts:674
 msgid "Always follow the editor"
@@ -2271,7 +2272,7 @@ msgstr "文档正被重命名，即可将被重载"
 
 #: src/core/Socket.js:1121
 msgid "The document is switching to Offline mode and will reload shortly"
-msgstr ""
+msgstr "文档正切换到脱机模式，稍后将重新加载"
 
 #: src/core/Socket.js:1226
 msgid "Exported to storage"
@@ -2319,11 +2320,11 @@ msgstr "服务器连接中断。"
 
 #: src/core/Debug.js:52
 msgid "Debug Tools"
-msgstr ""
+msgstr "调试工具"
 
 #: src/core/Debug.js:54
 msgid "Ctrl+Shift+Alt+D to exit"
-msgstr ""
+msgstr "按下 Ctrl+Shift+Alt+D 退出"
 
 #: src/docstate.js:88
 msgid "Standard"
@@ -2335,7 +2336,7 @@ msgstr "主题颜色"
 
 #: src/docstate.js:100
 msgid "Document colors"
-msgstr ""
+msgstr "文档颜色"
 
 #: src/errormessages.js:22
 msgid "No disk space left on server."
@@ -2458,7 +2459,7 @@ msgstr ""
 msgid ""
 "Failed to establish socket connection or socket connection closed "
 "unexpectedly."
-msgstr ""
+msgstr "无法建立套接字连接，或连接意外关闭。"
 
 #: src/errormessages.js:43
 msgid "Failed to load document."
@@ -2532,7 +2533,7 @@ msgstr "函数"
 
 #: src/layer/tile/CanvasTileLayer.js:2592
 msgid "and %COUNT more"
-msgstr ""
+msgstr "还有 %COUNT 个"
 
 #: src/layer/tile/CanvasTileLayer.js:2606
 msgid "Copy link location"
@@ -2552,11 +2553,11 @@ msgstr "暂无评论"
 
 #: src/layer/tile/CommentListSection.ts:139
 msgid "A comment is being edited"
-msgstr ""
+msgstr "正在编辑评论"
 
 #: src/layer/tile/CommentListSection.ts:140
 msgid "Please save or discard the comment currently being edited."
-msgstr ""
+msgstr "请保存或舍弃当前正在编辑的评论。"
 
 #: src/layer/tile/CommentListSection.ts:960
 msgid "Modify"
@@ -2662,22 +2663,22 @@ msgstr "<p>大型复制／粘贴操作所需的下载已经开始。请等待下
 "始新的下载</p>"
 
 #: src/map/Clipboard.js:1035
-#, fuzzy
 msgid ""
 "<p>Your browser has very limited access to the clipboard</p><p><b>Please "
 "press</b> <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to "
 "see more options</p><p>Close popup to ignore paste special</p>"
 msgstr ""
-"<p>剪切板访问受限</p><p>请按住：<kbd>Ctrl</kbd><span class=\"kbd--plus\""
-">+</span><kbd>V</kbd>以插件更多选项</p><p>关闭弹出窗口以忽略特殊粘贴</p>"
+"<p>浏览器剪贴板访问受限</p><p><b>请按下：</b><kbd>Ctrl</kbd><span class=\"kbd"
+"--plus\""
+">+</span><kbd>V</kbd>查看更多选项</p><p>关闭弹出窗口以忽略特殊粘贴</p>"
 
 #: src/map/Clipboard.js:1042
 msgid "Paste from this document"
-msgstr ""
+msgstr "从本文档粘贴"
 
 #: src/map/Clipboard.js:1042
 msgid "Cancel paste special"
-msgstr ""
+msgstr "取消特殊粘贴"
 
 #: src/map/Map.js:220
 msgid "Initializing..."
@@ -2713,43 +2714,43 @@ msgstr "向服务器上传文件失败，失败状态为 %0"
 
 #: src/map/handler/Map.SlideShow.js:50
 msgid "Empty Slide Show"
-msgstr ""
+msgstr "空白演示文稿"
 
 #: src/map/handler/Map.SlideShow.js:148
 msgid "Windowed Presentation Blocked"
-msgstr ""
+msgstr "演示窗口被阻止"
 
 #: src/map/handler/Map.SlideShow.js:149
 msgid ""
 "Presentation was blocked. Please allow pop-ups in your browser. This lets "
 "slide shows to be displayed in separated windows, allowing for easy screen "
 "sharing."
-msgstr ""
+msgstr "演示被阻止。请在浏览器中允许弹出窗口。这让幻灯片演示显示在单独窗口中，便于屏"
+"幕分享。"
 
 #: src/map/handler/Map.SlideShow.js:157
 msgid "Presenting in window"
-msgstr ""
+msgstr "窗口演示中"
 
 #: src/map/handler/Map.SlideShow.js:158
 msgid "Close Presentation"
-msgstr ""
+msgstr "关闭演示"
 
 #: src/map/handler/Map.SlideShow.js:178
 msgid "Presenting in fullscreen"
-msgstr ""
+msgstr "全屏演示中"
 
 #: src/map/handler/Map.SlideShow.js:179
-#, fuzzy
 msgid "End Presentation"
-msgstr "演示文稿"
+msgstr "结束演示"
 
 #: src/map/handler/Map.SlideShow.js:234
 msgid "Already presenting"
-msgstr ""
+msgstr "已在演示中"
 
 #: src/map/handler/Map.SlideShow.js:235
 msgid "You are already presenting this document"
-msgstr ""
+msgstr "您已经在演示此文档"
 
 #: src/map/handler/Map.WOPI.js:149
 msgid "Creating new file from template..."
@@ -2838,6 +2839,9 @@ msgid ""
 "id=\"slide-2-indicator\" href=\"#slide-2\">2</a> <a id=\"slide-3-"
 "indicator\" href=\"#slide-3\">3</a>"
 msgstr ""
+"<a id=\"slide-1-indicator\" class=\"active\" href=\"#slide-1\">1</a> <a id="
+"\"slide-2-indicator\" href=\"#slide-2\">2</a> <a id=\"slide-3-indicator\" "
+"href=\"#slide-3\">3</a>"
 
 #~ msgid "Accessibility Support"
 #~ msgstr "辅助功能支持"
