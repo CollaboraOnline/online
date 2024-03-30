@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-03-06 16:29+0100\n"
-"PO-Revision-Date: 2024-02-28 15:42+0000\n"
+"PO-Revision-Date: 2024-03-28 20:01+0000\n"
 "Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
 "Language-Team: Albanian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/sq/>\n"
-"Language: \n"
+"Language: sq\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -769,7 +769,7 @@ msgstr "Dokument Word (.docx)"
 #: src/control/Control.NotebookbarBuilder.js:641
 #: src/control/Control.NotebookbarWriter.js:269
 msgid "Rich Text (.rtf)"
-msgstr "Rich Text (.rtf)"
+msgstr "Tekst i Pasur (.rtf)"
 
 #: src/control/Control.Menubar.js:81 src/control/Control.Menubar.js:88
 #: src/control/Control.Menubar.js:390 src/control/Control.Menubar.js:396
@@ -1857,19 +1857,19 @@ msgstr "%user iku"
 
 #: src/control/Control.UserList.ts:56
 msgid "Following %user"
-msgstr ""
+msgstr "Po ndiqet %user"
 
 #: src/control/Control.UserList.ts:57
 msgid "Following the editor"
-msgstr ""
+msgstr "Po ndiqet redaktori"
 
 #: src/control/Control.UserList.ts:58
 msgid "Click to stop following"
-msgstr ""
+msgstr "Klikoni që të ndalet ndjekja"
 
 #: src/control/Control.UserList.ts:59
 msgid "Avatar for %user"
-msgstr ""
+msgstr "Avatar për %user"
 
 #: src/control/Control.UserList.ts:80
 msgid "%n users"
@@ -2097,11 +2097,11 @@ msgstr "Mënjanë Djathtas"
 
 #: src/control/Ruler.js:630
 msgid "Insert tabstop"
-msgstr ""
+msgstr "Futni ndalesë Tab"
 
 #: src/control/Ruler.js:637
 msgid "Delete tabstop"
-msgstr ""
+msgstr "Fshije ndalesën Tab"
 
 #: src/control/Signing.js:27
 msgid "This document is digitally signed and the signature is valid."
@@ -2514,6 +2514,10 @@ msgid ""
 "administrator. For more info on proxy configuration please checkout https://"
 "sdk.collaboraonline.com/docs/installation/Proxy_settings.html"
 msgstr ""
+"S’u arrit të vendoset lidhje socket-i, ose ajo u mbyll papritur. Ndërmjetësi "
+"“reverse” mund të jetë formësuar gabim, ju lutemi, lidhuni me përgjegjësin. "
+"Për më tepër hollësi mbi formësim ndërmjetësi, shihni https://sdk."
+"collaboraonline.com/docs/installation/Proxy_settings.html"
 
 #: src/errormessages.js:40
 msgid ""
@@ -2744,24 +2748,23 @@ msgstr ""
 "shkarkimi i tanishëm, ose anulojeni</p>"
 
 #: src/map/Clipboard.js:1035
-#, fuzzy
 msgid ""
 "<p>Your browser has very limited access to the clipboard</p><p><b>Please "
 "press</b> <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to "
 "see more options</p><p>Close popup to ignore paste special</p>"
 msgstr ""
-"<p>Shfletuesi juaj ka hyrje shumë të kufizuar te e papastra</p><p>Ju lutemi, "
-"shtypni tani: <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd>, "
-"që të shihni më tepër mundësi</p><p>Që të shpërfillet ngjitja speciale, "
-"mbylleni flluskën</p>"
+"<p>Shfletuesi juaj ka hyrje shumë të kufizuar te e papastra</p><p><b>Ju "
+"lutemi, shtypni <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</"
+"kbd>, që të shihni më tepër mundësi</p><p>Që të shpërfillet ngjitja "
+"speciale, mbylleni flluskën</p>"
 
 #: src/map/Clipboard.js:1042
 msgid "Paste from this document"
-msgstr ""
+msgstr "Ngjit nga ky dokument"
 
 #: src/map/Clipboard.js:1042
 msgid "Cancel paste special"
-msgstr ""
+msgstr "Anuloje ngjitjen speciale"
 
 #: src/map/Map.js:220
 msgid "Initializing..."
