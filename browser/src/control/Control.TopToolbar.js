@@ -12,7 +12,7 @@
  * L.Control.TopToolbar
  */
 
-/* global $ JSDialog _ _UNO */
+/* global $ app JSDialog _ _UNO */
 L.Control.TopToolbar = L.Control.extend({
 	options: {
 		stylesSelectValue: null,
@@ -103,7 +103,7 @@ L.Control.TopToolbar = L.Control.extend({
 	},
 
 	onContextChange: function(event) {
-		window.updateVisibilityForToolbar(this, event.context);
+		window.updateVisibilityForToolbar(app.map.topToolbar, event.context);
 	},
 
 	// mobile:false means hide it both for normal Online used from a mobile phone browser, and in a mobile app on a mobile phone
