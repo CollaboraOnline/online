@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-03-06 16:29+0100\n"
-"PO-Revision-Date: 2024-02-29 10:21+0000\n"
+"PO-Revision-Date: 2024-03-21 05:11+0000\n"
 "Last-Translator: Ihor Hordiichuk <igor_ck@outlook.com>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/uk/>\n"
-"Language: \n"
+"Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Weblate 5.5-dev\n"
 
 #: admin/admin.strings.js:15
@@ -1851,19 +1851,19 @@ msgstr "%user вийшов"
 
 #: src/control/Control.UserList.ts:56
 msgid "Following %user"
-msgstr ""
+msgstr "Відстеження %user"
 
 #: src/control/Control.UserList.ts:57
 msgid "Following the editor"
-msgstr ""
+msgstr "Відстеження редактора"
 
 #: src/control/Control.UserList.ts:58
 msgid "Click to stop following"
-msgstr ""
+msgstr "Клацніть, щоб припинити стежити"
 
 #: src/control/Control.UserList.ts:59
 msgid "Avatar for %user"
-msgstr ""
+msgstr "Аватар для %user"
 
 #: src/control/Control.UserList.ts:80
 msgid "%n users"
@@ -2733,24 +2733,23 @@ msgstr ""
 "дочекайтесь завершення завантаження або відмініть його, щоб почати нове</p>"
 
 #: src/map/Clipboard.js:1035
-#, fuzzy
 msgid ""
 "<p>Your browser has very limited access to the clipboard</p><p><b>Please "
 "press</b> <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to "
 "see more options</p><p>Close popup to ignore paste special</p>"
 msgstr ""
-"<p>Ваш браузер має дуже обмежений доступ до буфера обміну</p><p>Будь ласка, "
-"натисніть зараз: <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</"
-"kbd>, щоб побачити додаткові параметри</p><p>Закрийте спливне вікно, щоб "
-"ігнорувати спеціальну вставку</p>"
+"<p>Ваш браузер має дуже обмежений доступ до буфера обміну</p><p><b>Будь "
+"ласка, натисніть</b> <kbd>Ctrl</kbd><span class=\"kbd--plus\""
+">+</span><kbd>V</kbd>, щоб переглянути додаткові параметри</p><p>Закрийте "
+"спливне вікно, щоб ігнорувати спеціальну вставку</p>"
 
 #: src/map/Clipboard.js:1042
 msgid "Paste from this document"
-msgstr ""
+msgstr "Вставити з цього документа"
 
 #: src/map/Clipboard.js:1042
 msgid "Cancel paste special"
-msgstr ""
+msgstr "Скасувати спеціальне вставлення"
 
 #: src/map/Map.js:220
 msgid "Initializing..."
