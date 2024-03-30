@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-03-06 16:29+0100\n"
-"PO-Revision-Date: 2024-02-17 00:02+0000\n"
+"PO-Revision-Date: 2024-03-09 18:01+0000\n"
 "Last-Translator: Rob Pearson <rob.dunedin@gmail.com>\n"
 "Language-Team: English (United Kingdom) <https://hosted.weblate.org/projects/"
 "collabora-online/ui/en_GB/>\n"
-"Language: \n"
+"Language: en_GB\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.4\n"
+"X-Generator: Weblate 5.5-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -1845,19 +1845,19 @@ msgstr "%user has left"
 
 #: src/control/Control.UserList.ts:56
 msgid "Following %user"
-msgstr ""
+msgstr "Following %user"
 
 #: src/control/Control.UserList.ts:57
 msgid "Following the editor"
-msgstr ""
+msgstr "Following the editor"
 
 #: src/control/Control.UserList.ts:58
 msgid "Click to stop following"
-msgstr ""
+msgstr "Click to stop following"
 
 #: src/control/Control.UserList.ts:59
 msgid "Avatar for %user"
-msgstr ""
+msgstr "Avatar for %user"
 
 #: src/control/Control.UserList.ts:80
 msgid "%n users"
@@ -2587,7 +2587,7 @@ msgstr "Functions"
 
 #: src/layer/tile/CanvasTileLayer.js:2592
 msgid "and %COUNT more"
-msgstr ""
+msgstr "and %COUNT more"
 
 #: src/layer/tile/CanvasTileLayer.js:2606
 msgid "Copy link location"
@@ -2719,23 +2719,22 @@ msgstr ""
 "one</p>"
 
 #: src/map/Clipboard.js:1035
-#, fuzzy
 msgid ""
 "<p>Your browser has very limited access to the clipboard</p><p><b>Please "
 "press</b> <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to "
 "see more options</p><p>Close popup to ignore paste special</p>"
 msgstr ""
-"<p>Your browser has very limited access to the clipboard</p><p>Please press "
-"now: <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to see "
-"more options</p><p>Close popup to ignore paste special</p>"
+"<p>Your browser has very limited access to the clipboard</p><p><b>Please "
+"press</b> <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to "
+"see more options</p><p>Close popup to ignore paste special</p>"
 
 #: src/map/Clipboard.js:1042
 msgid "Paste from this document"
-msgstr ""
+msgstr "Paste from this document"
 
 #: src/map/Clipboard.js:1042
 msgid "Cancel paste special"
-msgstr ""
+msgstr "Cancel paste special"
 
 #: src/map/Map.js:220
 msgid "Initializing..."
