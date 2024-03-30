@@ -1664,14 +1664,6 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 	border-color: transparent !important;
 }
 
-#userListPopover {
-	display: none;
-	position: absolute;
-	z-index: 1;
-	top: 38px;
-}
-
-#userListPopover,
 #userlist-dropdown {
 	color: var(--color-main-text);
 	background-color: var(--color-main-background);
@@ -1682,24 +1674,6 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 	max-height: 85vh;
 	overflow-y: auto;
 	overflow-x: hidden;
-}
-
-#userListPopover::after {
-	border: 10px solid transparent;
-	border-bottom-color: var(--color-main-background);
-	bottom: 100%;
-	content: ' ';
-	height: 0;
-	width: 0;
-	position: absolute;
-	pointer-events: none;
-	color: var(--color-main-text);
-	right: 16px;
-}
-
-html[dir='rtl'] #userListPopover::after {
-	right: unset !important;
-	left: 16px;
 }
 
 .user-list-item {
@@ -1754,25 +1728,21 @@ html[dir='rtl'] #userListPopover::after {
 	padding: 4px 0 0 8px;
 }
 /* Style for the scrollbar track */
-#userListPopover::-webkit-scrollbar,
 #userlist-dropdown::-webkit-scrollbar {
 	width: 6px;
 }
 
 /* Style for the scrollbar handle (thumb) */
-#userListPopover::-webkit-scrollbar-thumb,
 #userlist-dropdown::-webkit-scrollbar-thumb {
 	background-color: var(--color-border);
 }
 
 /* Style for the scrollbar track when handle is being dragged */
-#userListPopover::-webkit-scrollbar-thumb:hover,
 #userlist-dropdown::-webkit-scrollbar-thumb:hover {
 	width: 8px;
 }
 
 /* Style for the scrollbar track (not the handle) */
-#userListPopover::-webkit-scrollbar-track,
 #userlist-dropdown::-webkit-scrollbar-track {
 	background: transparent;
 }

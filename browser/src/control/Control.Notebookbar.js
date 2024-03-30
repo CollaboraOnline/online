@@ -68,7 +68,6 @@ L.Control.Notebookbar = L.Control.extend({
 		this.initializeInCore();
 
 		$('#toolbar-wrapper').addClass('hasnotebookbar');
-		$('.main-nav').removeProp('overflow');
 		$('.main-nav').addClass('hasnotebookbar');
 		$('.main-nav').addClass(docType + '-color-indicator');
 		document.getElementById('document-container').classList.add('notebookbar-active');
@@ -114,11 +113,6 @@ L.Control.Notebookbar = L.Control.extend({
 		this.map.off('jsdialogupdate', this.onJSUpdate, this);
 		this.map.off('jsdialogaction', this.onJSAction, this);
 		$('.main-nav #document-header').remove();
-		if (this._map.isReadOnlyMode()) {
-			$('.main-nav.hasnotebookbar').css('overflow', 'visible');
-		} else {
-			$('.main-nav.hasnotebookbar').css('overflow', 'scroll hidden');
-		}
 		$('.main-nav').removeClass('hasnotebookbar');
 		$('#toolbar-wrapper').removeClass('hasnotebookbar');
 		$('.main-nav').removeClass(this._map.getDocType() + '-color-indicator');

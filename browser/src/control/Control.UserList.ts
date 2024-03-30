@@ -128,7 +128,6 @@ class UserList extends L.Control {
 
 		const follow = viewId !== myViewId && viewId !== followingViewId;
 
-		$('#userListPopover').hide();
 		var docLayer = this.map._docLayer;
 
 		if (!follow) {
@@ -221,28 +220,15 @@ class UserList extends L.Control {
 	}
 
 	registerHeaderAvatarEvents() {
-		var outsideClickListener = function (e: MouseEvent) {
-			$('.main-nav.hasnotebookbar').css('overflow', 'scroll hidden');
-			var selector = '#userListPopover';
-			var $target = $(e.target);
-			if (!$target.closest(selector).length && $(selector).is(':visible')) {
-				$(selector).hide();
-			}
-			document.removeEventListener('click', outsideClickListener);
-		};
-
 		document
 			.getElementById('userListSummary')
 			.addEventListener('click', function (e) {
 				e.stopPropagation();
-				$('.main-nav.hasnotebookbar').css('overflow', 'visible');
-				var selector = '#userListPopover';
-				if ($(selector).is(':hidden')) {
-					$(selector).show();
-				} else {
-					outsideClickListener(e);
-				}
-				document.addEventListener('click', outsideClickListener);
+				JSDialog.OpenDropdown(
+					'userlist',
+					document.getElementById('userListSummary'),
+					JSDialog.MenuDefinitions.get('UsersListMenu'),
+				);
 			});
 	}
 
@@ -458,11 +444,9 @@ class UserList extends L.Control {
 	renderAll() {
 		this.updateUserListCount();
 		this.renderHeaderAvatars();
-		const topPopoverElement = document.getElementById('userListPopover');
-		if (topPopoverElement) this.renderHeaderAvatarPopover(topPopoverElement);
-		const statusbarPopoverElement = document.getElementById('userlist-entries');
-		if (statusbarPopoverElement)
-			this.renderHeaderAvatarPopover(statusbarPopoverElement);
+		const jsdialogPopoverElement = document.getElementById('userlist-entries');
+		if (jsdialogPopoverElement)
+			this.renderHeaderAvatarPopover(jsdialogPopoverElement);
 		const mobilePopoverElement = document.getElementById(
 			'w2ui-overlay-actionbar',
 		);
@@ -489,7 +473,6 @@ class UserList extends L.Control {
 			userList.get(0).title = undefined;
 			userList.tooltip('option', 'disabled', true);
 		}
-		$('#userListPopover').hide();
 	}
 
 	showJoinLeaveMessage(
