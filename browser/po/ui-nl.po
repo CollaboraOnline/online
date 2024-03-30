@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-03-06 16:29+0100\n"
-"PO-Revision-Date: 2024-02-26 08:55+0000\n"
+"PO-Revision-Date: 2024-03-11 20:03+0000\n"
 "Last-Translator: Sebastiaan Veld <sebastiaan.veld@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/collabora-online/"
 "ui/nl/>\n"
-"Language: \n"
+"Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1856,19 +1856,19 @@ msgstr "%user is vertrokken"
 
 #: src/control/Control.UserList.ts:56
 msgid "Following %user"
-msgstr ""
+msgstr "Volgen van %gebruiker"
 
 #: src/control/Control.UserList.ts:57
 msgid "Following the editor"
-msgstr ""
+msgstr "Editor volgen"
 
 #: src/control/Control.UserList.ts:58
 msgid "Click to stop following"
-msgstr ""
+msgstr "Klik om te stoppen met volgen"
 
 #: src/control/Control.UserList.ts:59
 msgid "Avatar for %user"
-msgstr ""
+msgstr "Avatar voor %gebruiker"
 
 #: src/control/Control.UserList.ts:80
 msgid "%n users"
@@ -2748,24 +2748,22 @@ msgstr ""
 "tot die gereed is of annuleer die voor u een nieuwe start</p>"
 
 #: src/map/Clipboard.js:1035
-#, fuzzy
 msgid ""
 "<p>Your browser has very limited access to the clipboard</p><p><b>Please "
 "press</b> <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to "
 "see more options</p><p>Close popup to ignore paste special</p>"
 msgstr ""
-"<p>Uw browser heeft beperkt toegang tot het klembord</p><p>Druk alstublieft "
-"op: <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> om meer "
-"mogelijkheden te zien</p><p>Sluit de pop-up om plakken speciaal te "
-"negeren</p>"
+"<p>Uw browser heeft zeer beperkte toegang tot het klembord</p><p><b>Druk op</"
+"b> <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> om meer "
+"opties te zien</p><p>Sluit popup om plakken speciaal te negeren</p>"
 
 #: src/map/Clipboard.js:1042
 msgid "Paste from this document"
-msgstr ""
+msgstr "Plakken uit dit document"
 
 #: src/map/Clipboard.js:1042
 msgid "Cancel paste special"
-msgstr ""
+msgstr "Annuleren plakken speciaal"
 
 #: src/map/Map.js:220
 msgid "Initializing..."
