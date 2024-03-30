@@ -509,15 +509,19 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
         if (_pollStartIndex > size - 1)
             _pollStartIndex = 0;
 
-        std::vector<int> toErase;
-
+        size_t itemsErased = 0;
         size_t i = _pollStartIndex;
         for (std::size_t j = 0; j < size; ++j)
         {
-            if (!_pollSockets[i])
+            if (i >= _pollSockets.size())
+            {
+                // re-entrancy hazard
+                LOG_DBG("Unexpected socket poll resize");
+            }
+            else if (!_pollSockets[i])
             {
                 // removed in a callback
-                toErase.push_back(i);
+                itemsErased++;
             }
             else if (_pollFds[i].fd == _pollSockets[i]->getFD())
             {
@@ -539,7 +543,12 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
                 }
 
                 if (!disposition.isContinue())
-                    toErase.push_back(i);
+                {
+                    itemsErased++;
+                    LOG_TRC('#' << _pollFds[i].fd << ": Removing socket (at " << i
+                            << " of " << _pollSockets.size() << ") from " << _name);
+                    _pollSockets[i] = nullptr;
+                }
 
                 disposition.execute();
             }
@@ -551,25 +560,24 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
                 assert(!"Unexpected socket at the wrong position");
             }
 
+            // wrap for _pollStartIndex rotation
             if (i == 0)
                 i = size - 1;
             else
                 i--;
         }
 
-        if (!toErase.empty())
+        if (itemsErased)
         {
-            LOG_TRC("Removing " << toErase.size() << " socket" << (toErase.size() > 1 ? "s" : "")
-                                << " of " << _pollSockets.size() << " total");
-            LOG_ASSERT(_pollSockets.size() > 0);
-            LOG_ASSERT(toErase.size() <= _pollSockets.size());
-            std::sort(toErase.begin(), toErase.end(), [](int a, int b) { return a > b; });
-            for (const int eraseIndex : toErase)
+            LOG_TRC("Scanning to removing " << itemsErased << " defunct sockets from "
+                    << _pollSockets.size() << " sockets");
+
+            for (auto it = _pollSockets.begin(); it != _pollSockets.end();)
             {
-                LOG_TRC('#' << _pollFds[eraseIndex].fd << ": Removing socket (at " << eraseIndex
-                            << " of " << _pollSockets.size() << ") from " << _name << " to have "
-                            << _pollSockets.size() - 1 << " sockets");
-                _pollSockets.erase(_pollSockets.begin() + eraseIndex);
+                if (!*it)
+                    it = _pollSockets.erase(it);
+                else
+                    ++it;
             }
         }
     }
