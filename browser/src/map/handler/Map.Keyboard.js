@@ -756,16 +756,6 @@ L.Map.Keyboard = L.Handler.extend({
 				case this.keyCodes.D: // d
 					app.socket.sendMessage('uno .uno:InsertEndnote');
 					return true;
-				case this.keyCodes.P:
-					var userListSummary = document.getElementById('userListSummary');
-					var userListPopover = document.getElementById('userlist-dropdown');
-					// checking case ''(empty string) is because when element loads first time it does not have any inline display style
-					var isUserListPopoverVisible = !userListPopover || userListPopover.style.display === 'none' || userListPopover.style.display === '';
-					// we should only show user list when there are multiple users present and user list is hidden
-					var showUserList = isUserListPopoverVisible && userListSummary.hasChildNodes();
-					if (showUserList) userListSummary.click();
-					e.preventDefault();
-					return true;
 				case this.keyCodes.pageUp:
 				case this.keyCodes.pageDown :
 					if (this._map.getDocType() === 'spreadsheet') {

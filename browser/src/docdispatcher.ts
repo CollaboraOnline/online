@@ -33,6 +33,10 @@ class Dispatcher {
 			}
 		};
 
+		this.actionsMap['userlist'] = () => {
+			if (app.map.userList) app.map.userList.openDropdown();
+		};
+
 		this.actionsMap['print'] = function () {
 			app.map.print();
 		};
