@@ -268,10 +268,6 @@ button.ui-tab.notebookbar {
 	padding: 4px;
 }
 
-.unotoolbutton.notebookbar .unobutton.selected + .ui-content.unolabel {
-	color: var(--color-text-dark);
-}
-
 .unotoolbutton.notebookbar.disabled:not(.unospan-shortcutstoolbox),
 .unotoolbutton[disabled]:not(.unospan-shortcutstoolbox),
 .mobile-wizard-widebutton.disabled,
