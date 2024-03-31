@@ -913,8 +913,9 @@ function onWopiProps(e) {
 }
 
 function processStateChangedCommand(commandName, state) {
-	var toolbar = w2ui['editbar'];
-	if (!toolbar)
+	var toolbar = window.mode.isMobile() ? w2ui['editbar'] : null;
+	var topToolbar = app.map.topToolbar;
+	if (!toolbar && !topToolbar)
 		return;
 
 	var color, div;
@@ -926,6 +927,7 @@ function processStateChangedCommand(commandName, state) {
 		$('.styles-select').val(state).trigger('change');
 	}
 	else if (commandName === '.uno:FontColor' || commandName === '.uno:Color') {
+		if (!toolbar) return;
 		// confusingly, the .uno: command is named differently in Writer, Calc and Impress
 		color = parseInt(state);
 		if (color === -1) {
@@ -944,6 +946,7 @@ function processStateChangedCommand(commandName, state) {
 		}
 	}
 	else if (commandName === '.uno:BackColor' || commandName === '.uno:BackgroundColor' || commandName === '.uno:CharBackColor') {
+		if (!toolbar) return;
 		// confusingly, the .uno: command is named differently in Writer, Calc and Impress
 		color = parseInt(state);
 		if (color === -1) {
@@ -967,24 +970,28 @@ function processStateChangedCommand(commandName, state) {
 		}
 	}
 	else if (commandName === '.uno:ModifiedStatus') {
+		if (!toolbar) return;
+		// TODO: topToolbar case
 		if (state === 'true') {
-			w2ui['editbar'].set('save', {img:'savemodified'});
+			toolbar.set('save', {img:'savemodified'});
 		}
 		else {
-			w2ui['editbar'].set('save', {img:'save'});
+			toolbar.set('save', {img:'save'});
 		}
 	}
 	else if (commandName === '.uno:DocumentRepair') {
 		if (state === 'true') {
-			toolbar.enable('repair');
+			if (toolbar) toolbar.enable('repair');
+			if (topToolbar) topToolbar.enableItem('repair', true);
 		} else {
-			toolbar.disable('repair');
+			if (toolbar) toolbar.disable('repair');
+			if (topToolbar) topToolbar.enableItem('repair', false);
 		}
 	}
 
 	if (commandName === '.uno:SpacePara1' || commandName === '.uno:SpacePara15'
 		|| commandName === '.uno:SpacePara2') {
-		toolbar.refresh();
+		if (toolbar) toolbar.refresh();
 	}
 
 	var id = unoCmdToToolbarId(commandName);
@@ -994,25 +1001,32 @@ function processStateChangedCommand(commandName, state) {
 
 	if (state === 'true') {
 		if (map.isEditMode()) {
-			toolbar.enable(id);
+			if (toolbar) toolbar.enable(id);
+			if (topToolbar) topToolbar.enableItem(id, true);
 		}
-		toolbar.check(id);
+		if (toolbar) toolbar.check(id);
+		// TODO: topToolbar case
 	}
 	else if (state === 'false') {
 		if (map.isEditMode()) {
-			toolbar.enable(id);
+			if (toolbar) toolbar.enable(id);
+			if (topToolbar) topToolbar.enableItem(id, true);
 		}
-		toolbar.uncheck(id);
+		if (toolbar) toolbar.uncheck(id);
+		// TODO: topToolbar case
 	}
 	// Change the toolbar button states if we are in editmode
 	// If in non-edit mode, will be taken care of when permission is changed to 'edit'
 	else if (map.isEditMode() && (state === 'enabled' || state === 'disabled')) {
-		var toolbarUp = toolbar;
 		if (state === 'enabled') {
-			toolbarUp.enable(id);
+			if (toolbar) toolbar.enable(id);
+			if (topToolbar) topToolbar.enableItem(id, true);
 		} else {
-			toolbarUp.uncheck(id);
-			toolbarUp.disable(id);
+			if (toolbar) toolbar.uncheck(id);
+			// TODO: topToolbar case
+
+			if (toolbar) toolbar.disable(id);
+			if (topToolbar) topToolbar.enableItem(id, false);
 		}
 	}
 }
