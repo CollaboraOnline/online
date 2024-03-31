@@ -21,7 +21,7 @@ describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Editing Operations', f
 		helper.typeIntoDocument('Hello World');
 		//if we don't wait tests in CI is failing
 		cy.wait(1000);
-		cy.cGet('#tb_actionbar_item_undo').click();
+		cy.cGet('#toolbar-up #undo').click();
 		helper.selectAllText();
 		helper.expectTextForClipboard('Hello \n');
 	}
@@ -32,7 +32,7 @@ describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Editing Operations', f
 
 	it('Redo',function() {
 		undo();
-		cy.cGet('#tb_actionbar_item_redo').click();
+		cy.cGet('#toolbar-up #redo').click();
 		helper.selectAllText();
 		helper.expectTextForClipboard('Hello World');
 	});

@@ -87,7 +87,7 @@ describe.skip(['tagmobile'], 'Calc focus tests', function() {
 		// Type some text.
 		var text1 = 'Hello from Calc';
 		calcHelper.typeIntoFormulabar(text1);
-		cy.cGet('#tb_actionbar_item_acceptformula')
+		cy.cGet('#toolbar-up #acceptformula')
 			.click();
 		helper.assertNoKeyboardInput();
 
@@ -101,7 +101,7 @@ describe.skip(['tagmobile'], 'Calc focus tests', function() {
 		helper.expectTextForClipboard(text1);
 
 		// Accept changes.
-		cy.cGet('#tb_actionbar_item_acceptformula')
+		cy.cGet('#toolbar-up #acceptformula')
 			.click();
 		helper.assertNoKeyboardInput();
 
@@ -116,7 +116,7 @@ describe.skip(['tagmobile'], 'Calc focus tests', function() {
 		calcHelper.typeIntoFormulabar('{ctrl}a');
 		helper.expectTextForClipboard(text1 + text2);
 		// End editing.
-		cy.cGet('#tb_actionbar_item_acceptformula')
+		cy.cGet('#toolbar-up #acceptformula')
 			.click();
 		helper.assertNoKeyboardInput();
 	});

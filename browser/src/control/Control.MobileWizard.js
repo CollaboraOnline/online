@@ -13,7 +13,7 @@
  * L.Control.MobileWizard - main container can contain few MobileWizardWindows
  */
 
-/* global app $ w2ui */
+/* global app $ */
 L.Control.MobileWizard = L.Control.extend({
 
 	initialize: function (options) {
@@ -132,16 +132,16 @@ L.Control.MobileWizard = L.Control.extend({
 	},
 
 	_updateToolbarItemStateByClose: function() {
-		var toolbar = w2ui['actionbar'];
+		var toolbar = app.map.mobileTopBar;
 		if (toolbar)
 		{
-			if (window.mobileWizard === false && toolbar.get('mobile_wizard').checked)
-				toolbar.uncheck('mobile_wizard');
+			//if (window.mobileWizard === false && toolbar.get('mobile_wizard').checked)
+			//	toolbar.uncheck('mobile_wizard');
 
-			if (window.insertionMobileWizard === false && toolbar.get('insertion_mobile_wizard').checked)
-				toolbar.uncheck('insertion_mobile_wizard');
-			if (window.commentWizard === false && toolbar.get('comment_wizard').checked)
-				toolbar.uncheck('comment_wizard');
+			//if (window.insertionMobileWizard === false && toolbar.get('insertion_mobile_wizard').checked)
+			//	toolbar.uncheck('insertion_mobile_wizard');
+			//if (window.commentWizard === false && toolbar.get('comment_wizard').checked)
+			//	toolbar.uncheck('comment_wizard');
 		}
 	},
 

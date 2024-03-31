@@ -225,9 +225,9 @@ function changeSlide(changeNum,direction) {
 
 	var slideButton;
 	if (direction === 'next') {
-		slideButton = cy.cGet('#tb_actionbar_item_next');
+		slideButton = cy.cGet('#toolbar-up #next');
 	} else if (direction === 'previous') {
-		slideButton = cy.cGet('#tb_actionbar_item_prev');
+		slideButton = cy.cGet('#toolbar-up #prev');
 	}
 	if (slideButton) {
 		for (var n = 0; n < changeNum; n++) {

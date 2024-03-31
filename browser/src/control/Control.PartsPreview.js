@@ -12,7 +12,7 @@
  * L.Control.PartsPreview
  */
 
-/* global _ app $ Hammer w2ui _UNO cool */
+/* global _ app $ Hammer _UNO cool */
 L.Control.PartsPreview = L.Control.extend({
 	options: {
 		fetchThumbnail: true,
@@ -209,7 +209,7 @@ L.Control.PartsPreview = L.Control.extend({
 					// Remove selection to get the slide properties in mobile wizard.
 					app.socket.sendMessage('resetselection');
 					setTimeout(function () {
-						w2ui['actionbar'].click('mobile_wizard');
+						app.dispatcher.dispatch('mobile_wizard');
 					}, 0);
 				}
 			} else {

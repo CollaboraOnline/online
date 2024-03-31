@@ -25,7 +25,7 @@ describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change alignment setti
 		helper.getCursorPos('left', 'currentTextEndPos');
 
 		//remove text selection
-		cy.cGet('#tb_actionbar_item_acceptformula').should('be.visible')
+		cy.cGet('#toolbar-up #acceptformula').should('be.visible')
 			.then($ele =>{
 				if (Cypress.dom.isVisible($ele)) {
 					cy.wrap($ele).click();

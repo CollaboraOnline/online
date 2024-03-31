@@ -70,7 +70,6 @@ class UserList extends L.Control {
 		map.on('addview', this.onAddView, this);
 		map.on('removeview', this.onRemoveView, this);
 		map.on('deselectuser', this.deselectUser, this);
-		map.on('openuserlist', this.onOpenUserList, this);
 
 		if (window.mode.isMobile() || window.mode.isTablet()) {
 			this.options.nUsers = '%n';
@@ -378,19 +377,17 @@ class UserList extends L.Control {
 			this.map.statusBar.setUsersCountText(text);
 
 		if (!this.hideUserList() && count > 1) {
-			if (window.mode.isDesktop()) {
+			if (this.map.statusBar) {
 				this.map.statusBar.showItem('userlist', true);
 				this.map.statusBar.showItem('userlistbreak', true);
-			} else {
-				var toolbar = w2ui['actionbar'];
-				toolbar.show('userlist');
 			}
-		} else if (window.mode.isDesktop()) {
+			if (this.map.mobileTopBar)
+				this.map.mobileTopBar.showItem('userlist', true);
+		} else if (this.map.statusBar) {
 			this.map.statusBar.showItem('userlist', false);
 			this.map.statusBar.showItem('userlistbreak', false);
-		} else {
-			var toolbar = w2ui['actionbar'];
-			toolbar.hide('userlist');
+		} else if (this.map.mobileTopBar) {
+			this.map.mobileTopBar.showItem('userlist', false);
 		}
 	}
 
@@ -403,13 +400,6 @@ class UserList extends L.Control {
 		}
 
 		this.renderAll();
-	}
-
-	onOpenUserList() {
-		// TODO: used on mobile, remove w2ui and it will be not needed
-		setTimeout(() => {
-			this.renderAll();
-		}, 100);
 	}
 
 	onAddView(e: UserEvent) {
@@ -460,14 +450,11 @@ class UserList extends L.Control {
 	renderAll() {
 		this.updateUserListCount();
 		this.renderHeaderAvatars();
-		const jsdialogPopoverElement = document.getElementById('userlist-entries');
-		if (jsdialogPopoverElement)
-			this.renderHeaderAvatarPopover(jsdialogPopoverElement);
-		const mobilePopoverElement = document.getElementById(
-			'w2ui-overlay-actionbar',
-		);
-		if (mobilePopoverElement)
-			this.renderHeaderAvatarPopover(mobilePopoverElement);
+		const topPopoverElement = document.getElementById('userListPopover');
+		if (topPopoverElement) this.renderHeaderAvatarPopover(topPopoverElement);
+		const statusbarPopoverElement = document.getElementById('userlist-entries');
+		if (statusbarPopoverElement)
+			this.renderHeaderAvatarPopover(statusbarPopoverElement);
 		this.renderFollowingChip();
 	}
 

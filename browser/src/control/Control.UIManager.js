@@ -295,7 +295,8 @@ L.Control.UIManager = L.Control.extend({
 		if (window.mode.isMobile()) {
 			$('#mobile-edit-button').show();
 			this.map.addControl(L.control.mobileBottomBar(docType));
-			this.map.addControl(L.control.mobileTopBar(docType));
+			this.map.mobileTopBar = L.control.mobileTopBar(docType);
+			this.map.addControl(this.map.mobileTopBar);
 			this.map.addControl(L.control.searchBar());
 		} else if (enableNotebookbar) {
 			this.createNotebookbarControl(docType);

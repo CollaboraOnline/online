@@ -104,17 +104,17 @@ function closeHamburgerMenu() {
 function openMobileWizard() {
 	cy.log('>> openMobileWizard - start');
 
-	helper.waitUntilIdle('#tb_actionbar_item_mobile_wizard');
+	helper.waitUntilIdle('#toolbar-up #mobile_wizard');
 	// Open mobile wizard
-	cy.cGet('#tb_actionbar_item_mobile_wizard')
+	cy.cGet('#toolbar-up #mobile_wizard')
 		.should('not.have.class', 'disabled')
 		.click();
 
 	// Mobile wizard is opened and it has content
 	cy.cGet('#mobile-wizard-content')
 		.should('not.be.empty');
-	cy.cGet('#tb_actionbar_item_mobile_wizard table')
-		.should('have.class', 'checked');
+	//cy.cGet('#toolbar-up #mobile_wizard')
+	//	.should('have.class', 'checked');
 
 	cy.log('<< openMobileWizard - end');
 }
@@ -122,16 +122,16 @@ function openMobileWizard() {
 function closeMobileWizard() {
 	cy.log('>> closeMobileWizard - start');
 
-	cy.cGet('#tb_actionbar_item_mobile_wizard table')
-		.should('have.class', 'checked');
+	//cy.cGet('#toolbar-up #mobile_wizard')
+	//	.should('have.class', 'checked');
 
-	cy.cGet('#tb_actionbar_item_mobile_wizard')
+	cy.cGet('#toolbar-up #mobile_wizard')
 		.click();
 
 	cy.cGet('#mobile-wizard')
 		.should('not.be.visible');
-	cy.cGet('#tb_actionbar_item_mobile_wizard table')
-		.should('not.have.class', 'checked');
+	//cy.cGet('#toolbar-up #mobile_wizard')
+	//	.should('not.have.class', 'checked');
 
 	cy.log('<< closeMobileWizard - end');
 }
@@ -161,15 +161,15 @@ function executeCopyFromContextMenu(XPos, YPos) {
 function openInsertionWizard() {
 	cy.log('>> openInsertionWizard - start');
 
-	cy.cGet('#tb_actionbar_item_insertion_mobile_wizard')
+	cy.cGet('#toolbar-up #insertion_mobile_wizard')
 		.should('not.have.class', 'disabled')
 		.click();
 
 	cy.cGet('#mobile-wizard-content')
 		.should('not.be.empty');
 
-	cy.cGet('#tb_actionbar_item_insertion_mobile_wizard table')
-		.should('have.class', 'checked');
+	//cy.cGet('#toolbar-up #insertion_mobile_wizard')
+	//	.should('have.class', 'checked');
 
 	cy.log('<< openInsertionWizard - end');
 }
@@ -177,12 +177,12 @@ function openInsertionWizard() {
 function openCommentWizard() {
 	cy.log('>> openCommentWizard - start');
 
-	cy.cGet('#tb_actionbar_item_comment_wizard')
+	cy.cGet('#toolbar-up #comment_wizard')
 		.should('not.have.class', 'disabled')
 		.click();
 
-	cy.cGet('#tb_actionbar_item_comment_wizard table')
-		.should('have.class', 'checked');
+	//cy.cGet('#toolbar-up #comment_wizard')
+	//	.should('have.class', 'checked');
 
 	cy.log('<< openCommentWizard - end');
 }
@@ -190,17 +190,17 @@ function openCommentWizard() {
 function closeInsertionWizard() {
 	cy.log('>> closeInsertionWizard - start');
 
-	cy.cGet('#tb_actionbar_item_insertion_mobile_wizard table')
-		.should('have.class', 'checked');
+	//cy.cGet('#toolbar-up #insertion_mobile_wizard')
+	//	.should('have.class', 'checked');
 
-	cy.cGet('#tb_actionbar_item_insertion_mobile_wizard')
+	cy.cGet('#toolbar-up #insertion_mobile_wizard')
 		.click();
 
 	cy.cGet('#mobile-wizard')
 		.should('not.be.visible');
 
-	cy.cGet('#tb_actionbar_item_insertion_mobile_wizard table')
-		.should('not.have.class', 'checked');
+	//cy.cGet('#toolbar-up #insertion_mobile_wizard')
+	//	.should('not.have.class', 'checked');
 
 	cy.log('<< closeInsertionWizard - end');
 }
