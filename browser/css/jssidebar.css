@@ -170,52 +170,6 @@ div.sidebar.ui-grid .checkbutton.sidebar,
 	width: 198px;
 }
 
-/* widget selected */
-
-/* non selected */
-#clearFormatting,
-.hasnotebookbar .ui-content.unotoolbutton.has-label,
-.hasnotebookbar .ui-content.unotoolbutton.inline,
-.hasnotebookbar .ui-content.unotoolbutton:not(.has-label):not(.inline),
-.sidebar.unotoolbutton,
-.jsdialog.unotoolbutton {
-	background-color: transparent;
-	border: 1px solid transparent;
-	color: var(--color-main-text);
-	border-radius: var(--border-radius);
-}
-/* selected */
-.hasnotebookbar .ui-content.unotoolbutton.selected.has-label,
-.hasnotebookbar .ui-content.unotoolbutton.selected.inline,
-.hasnotebookbar .ui-content.unotoolbutton.selected:not(.has-label):not(.inline),
-.sidebar.unotoolbutton.selected {
-	background-color: var(--color-background-dark);
-	border: 1px solid var(--color-border-dark);
-	color: var(--color-text-dark);
-	border-radius: var(--border-radius);
-}
-[data-theme='dark'] .hasnotebookbar .ui-content.unotoolbutton.selected.has-label,
-[data-theme='dark'] #toggledarktheme,
-[data-theme='dark'] .hasnotebookbar .ui-content.unotoolbutton.selected.inline,
-[data-theme='dark'] .hasnotebookbar .ui-content.unotoolbutton.selected:not(.has-label):not(.inline),
-[data-theme='dark'] .sidebar.unotoolbutton.selected {
-	background-color: var(--color-background-darker);
-	border-color: var(--color-border-darker);
-}
-/* selected hover */
-.hasnotebookbar .ui-content.unotoolbutton.selected:hover,
-.unotoolbutton.notebookbar:hover,
-.unotoolbutton.jsdialog:hover,
-.hasnotebookbar .ui-content.unotoolbutton.selected:not(.has-label):not(.inline):hover,
-.sidebar.unotoolbutton:hover,
-.sidebar.unotoolbutton.selected:hover {
-	background-color: var(--color-background-darker) !important;
-	border: 1px solid var(--color-border-darker);
-	color: var(--color-text-darker);
-	border-radius: var(--border-radius);
-}
-
-
 /* fixes */
 
 .sidebar.ui-grid-cell .sidebar.ui-pushbutton {
