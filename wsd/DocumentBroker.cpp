@@ -32,6 +32,7 @@
 #include <Poco/URI.h>
 
 #include "Admin.hpp"
+#include "Authorization.hpp"
 #include "ClientSession.hpp"
 #include "Exceptions.hpp"
 #include "COOLWSD.hpp"
@@ -881,70 +882,13 @@ bool DocumentBroker::downloadAdvance(const std::string& jailId, const Poco::URI&
     std::chrono::milliseconds getFileCallDurationMs = std::chrono::milliseconds::zero();
     if (!_storage->isDownloaded())
     {
-        LOG_DBG("Download file for docKey [" << _docKey << ']');
-        std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
-        std::string localPath = _storage->downloadStorageFileToLocal(
-            Authorization::create(uriPublic), *_lockCtx, templateSource);
-        if (localPath.empty())
+        const Authorization auth = Authorization::create(uriPublic);
+        if (!doDownloadDocument(/*session=*/nullptr, auth, templateSource, fileInfo.getFilename(),
+                                getFileCallDurationMs))
         {
-            throw std::runtime_error("Failed to retrieve document from storage");
-        }
-
-        getFileCallDurationMs = std::chrono::duration_cast<std::chrono::milliseconds>(
-            std::chrono::steady_clock::now() - start);
-
-        _docState.setStatus(DocumentState::Status::Loading); // Done downloading.
-
-#if !MOBILEAPP
-        if (!processPlugins(localPath))
-        {
-            // FIXME: Why don't we resume anyway?
-            LOG_WRN("Failed to process plugins on file [" << localPath << ']');
+            LOG_DBG("Failed to download or process downloaded document");
             return false;
         }
-#endif //!MOBILEAPP
-
-        const std::string localFilePath = Poco::Path(getJailRoot(), localPath).toString();
-        std::ifstream istr(localFilePath, std::ios::binary);
-        Poco::SHA1Engine sha1;
-        Poco::DigestOutputStream dos(sha1);
-        Poco::StreamCopier::copyStream(istr, dos);
-        dos.close();
-        LOG_INF("SHA1 for DocKey [" << _docKey << "] of [" << COOLWSD::anonymizeUrl(localPath)
-                                    << "]: " << Poco::DigestEngine::digestToHex(sha1.digest()));
-
-        std::string localPathEncoded;
-        Poco::URI::encode(localPath, "#?", localPathEncoded);
-        _uriJailed = Poco::URI(Poco::URI("file://"), localPathEncoded).toString();
-        _uriJailedAnonym =
-            Poco::URI(Poco::URI("file://"), COOLWSD::anonymizeUrl(localPathEncoded)).toString();
-
-        _filename = fileInfo.getFilename();
-#if !MOBILEAPP
-        _quarantine = std::make_unique<Quarantine>(*this, _filename);
-#endif
-
-        if (!templateSource.empty())
-        {
-            // Invalid timestamp for templates, to force uploading once we save-after-loading.
-            _saveManager.setLastModifiedTime(std::chrono::system_clock::time_point());
-            _storageManager.setLastUploadedFileModifiedTime(
-                std::chrono::system_clock::time_point());
-        }
-        else
-        {
-            // Use the local temp file's timestamp.
-            const auto timepoint = FileUtil::Stat(localFilePath).modifiedTimepoint();
-            _saveManager.setLastModifiedTime(timepoint);
-            _storageManager.setLastUploadedFileModifiedTime(
-                timepoint); // Used to detect modifications.
-        }
-
-        bool dontUseCache = Util::isMobileApp();
-
-        _tileCache = std::make_unique<TileCache>(_storage->getUri().toString(),
-                                                 _saveManager.getLastModifiedTime(), dontUseCache);
-        _tileCache->setThreadOwner(std::this_thread::get_id());
     }
 
 #if !MOBILEAPP
@@ -1147,83 +1091,14 @@ bool DocumentBroker::download(
     std::chrono::milliseconds getFileCallDurationMs = std::chrono::milliseconds::zero();
     if (!_storage->isDownloaded())
     {
-        LOG_DBG("Download file for docKey [" << _docKey << ']');
-        std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
-        std::string localPath = _storage->downloadStorageFileToLocal(session->getAuthorization(),
-                                                                     *_lockCtx, templateSource);
-        if (localPath.empty())
+        const Authorization auth =
+            session ? session->getAuthorization() : Authorization::create(uriPublic);
+        if (!doDownloadDocument(session, auth, templateSource, fileInfo.getFilename(),
+                                getFileCallDurationMs))
         {
-            throw std::runtime_error("Failed to retrieve document from storage");
-        }
-
-        getFileCallDurationMs = std::chrono::duration_cast<std::chrono::milliseconds>(
-            std::chrono::steady_clock::now() - start);
-
-        _docState.setStatus(DocumentState::Status::Loading); // Done downloading.
-
-        // Only lock the document on storage for editing sessions
-        // FIXME: why not lock before downloadStorageFileToLocal? Would also prevent race conditions
-        if (!session->isReadOnly())
-        {
-            std::string error;
-            if (!updateStorageLockState(*session, /*lock=*/true, error))
-            {
-                LOG_ERR("Failed to lock docKey [" << _docKey << "] with session ["
-                                                  << session->getId()
-                                                  << "] after downloading: " << error);
-            }
-        }
-
-#if !MOBILEAPP
-        if (!processPlugins(localPath))
-        {
-            // FIXME: Why don't we resume anyway?
-            LOG_WRN("Failed to process plugins on file [" << localPath << ']');
+            LOG_DBG("Failed to download or process downloaded document");
             return false;
         }
-#endif //!MOBILEAPP
-
-        const std::string localFilePath = Poco::Path(getJailRoot(), localPath).toString();
-        std::ifstream istr(localFilePath, std::ios::binary);
-        Poco::SHA1Engine sha1;
-        Poco::DigestOutputStream dos(sha1);
-        Poco::StreamCopier::copyStream(istr, dos);
-        dos.close();
-        LOG_INF("SHA1 for DocKey [" << _docKey << "] of [" << COOLWSD::anonymizeUrl(localPath)
-                                    << "]: " << Poco::DigestEngine::digestToHex(sha1.digest()));
-
-        std::string localPathEncoded;
-        Poco::URI::encode(localPath, "#?", localPathEncoded);
-        _uriJailed = Poco::URI(Poco::URI("file://"), localPathEncoded).toString();
-        _uriJailedAnonym =
-            Poco::URI(Poco::URI("file://"), COOLWSD::anonymizeUrl(localPathEncoded)).toString();
-
-        _filename = fileInfo.getFilename();
-#if !MOBILEAPP
-        _quarantine = std::make_unique<Quarantine>(*this, _filename);
-#endif
-
-        if (!templateSource.empty())
-        {
-            // Invalid timestamp for templates, to force uploading once we save-after-loading.
-            _saveManager.setLastModifiedTime(std::chrono::system_clock::time_point());
-            _storageManager.setLastUploadedFileModifiedTime(
-                std::chrono::system_clock::time_point());
-        }
-        else
-        {
-            // Use the local temp file's timestamp.
-            const auto timepoint = FileUtil::Stat(localFilePath).modifiedTimepoint();
-            _saveManager.setLastModifiedTime(timepoint);
-            _storageManager.setLastUploadedFileModifiedTime(
-                timepoint); // Used to detect modifications.
-        }
-
-        bool dontUseCache = Util::isMobileApp();
-
-        _tileCache = std::make_unique<TileCache>(_storage->getUri().toString(),
-                                                 _saveManager.getLastModifiedTime(), dontUseCache);
-        _tileCache->setThreadOwner(std::this_thread::get_id());
     }
 
 #if !MOBILEAPP
@@ -1241,6 +1116,91 @@ bool DocumentBroker::download(
         session->sendTextFrame(msg);
     }
 #endif
+    return true;
+}
+
+bool DocumentBroker::doDownloadDocument(const std::shared_ptr<ClientSession>& session,
+                                        const Authorization& auth,
+                                        const std::string& templateSource,
+                                        const std::string& filename,
+                                        std::chrono::milliseconds& getFileCallDurationMs)
+{
+    assert(_storage && !_storage->isDownloaded());
+
+    LOG_DBG("Download file for docKey [" << _docKey << ']');
+    std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
+    std::string localPath = _storage->downloadStorageFileToLocal(auth, *_lockCtx, templateSource);
+    if (localPath.empty())
+    {
+        throw std::runtime_error("Failed to retrieve document from storage");
+    }
+
+    getFileCallDurationMs = std::chrono::duration_cast<std::chrono::milliseconds>(
+        std::chrono::steady_clock::now() - start);
+
+    _docState.setStatus(DocumentState::Status::Loading); // Done downloading.
+
+    // Only lock the document on storage for editing sessions
+    // FIXME: why not lock before downloadStorageFileToLocal? Would also prevent race conditions
+    if (session && !session->isReadOnly())
+    {
+        std::string error;
+        if (!updateStorageLockState(*session, /*lock=*/true, error))
+        {
+            LOG_ERR("Failed to lock docKey [" << _docKey << "] with session [" << session->getId()
+                                              << "] after downloading: " << error);
+        }
+    }
+
+#if !MOBILEAPP
+    if (!processPlugins(localPath))
+    {
+        // FIXME: Why don't we resume anyway?
+        LOG_WRN("Failed to process plugins on file [" << localPath << ']');
+        return false;
+    }
+#endif //!MOBILEAPP
+
+    const std::string localFilePath = Poco::Path(getJailRoot(), localPath).toString();
+    std::ifstream istr(localFilePath, std::ios::binary);
+    Poco::SHA1Engine sha1;
+    Poco::DigestOutputStream dos(sha1);
+    Poco::StreamCopier::copyStream(istr, dos);
+    dos.close();
+    LOG_INF("SHA1 for DocKey [" << _docKey << "] of [" << COOLWSD::anonymizeUrl(localPath)
+                                << "]: " << Poco::DigestEngine::digestToHex(sha1.digest()));
+
+    std::string localPathEncoded;
+    Poco::URI::encode(localPath, "#?", localPathEncoded);
+    _uriJailed = Poco::URI(Poco::URI("file://"), localPathEncoded).toString();
+    _uriJailedAnonym =
+        Poco::URI(Poco::URI("file://"), COOLWSD::anonymizeUrl(localPathEncoded)).toString();
+
+    _filename = filename;
+#if !MOBILEAPP
+    _quarantine = std::make_unique<Quarantine>(*this, _filename);
+#endif
+
+    if (!templateSource.empty())
+    {
+        // Invalid timestamp for templates, to force uploading once we save-after-loading.
+        _saveManager.setLastModifiedTime(std::chrono::system_clock::time_point());
+        _storageManager.setLastUploadedFileModifiedTime(std::chrono::system_clock::time_point());
+    }
+    else
+    {
+        // Use the local temp file's timestamp.
+        const auto timepoint = FileUtil::Stat(localFilePath).modifiedTimepoint();
+        _saveManager.setLastModifiedTime(timepoint);
+        _storageManager.setLastUploadedFileModifiedTime(timepoint); // Used to detect modifications.
+    }
+
+    const bool dontUseCache = Util::isMobileApp();
+
+    _tileCache = std::make_unique<TileCache>(_storage->getUri().toString(),
+                                             _saveManager.getLastModifiedTime(), dontUseCache);
+    _tileCache->setThreadOwner(std::this_thread::get_id());
+
     return true;
 }
 
