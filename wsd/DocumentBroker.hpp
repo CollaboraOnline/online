@@ -594,6 +594,13 @@ private:
     bool download(const std::shared_ptr<ClientSession>& session, const std::string& jailId,
                   std::unique_ptr<WopiStorage::WOPIFileInfo> wopiFileInfo);
 
+    /// Actual document download and post-download processing.
+    /// Must be called only when creating the storage for the first time.
+    bool doDownloadDocument(const std::shared_ptr<ClientSession>& session,
+                            const Authorization& auth, const std::string& templateSource,
+                            const std::string& filename,
+                            std::chrono::milliseconds& getFileCallDurationMs);
+
 #if !MOBILEAPP
     /// Updates the Session with the wopiFileInfo given.
     /// Returns the templateSource, if any.
