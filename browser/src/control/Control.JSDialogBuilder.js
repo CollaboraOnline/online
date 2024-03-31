@@ -14,7 +14,7 @@
  * from the JSON description provided by the server.
  */
 
-/* global app $ w2ui _ L JSDialog */
+/* global app $ _ L JSDialog */
 
 L.Control.JSDialogBuilder = L.Control.extend({
 
@@ -2320,14 +2320,17 @@ L.Control.JSDialogBuilder = L.Control.extend({
 							// empty, So, we ignore such messages or else the
 							// current document's Paste toolbar button will
 							// never be enabled.
-							$(div).removeClass('disabled');
+							$(div).removeClass('disabled'); // TODO: remove after css rework
+							div.setAttribute('disabled', '');
 							window.app.console.log('do not disable paste based on server side data');
 						} else {
-							$(div).addClass('disabled');
+							$(div).addClass('disabled'); // TODO: remove after css rework
+							div.setAttribute('disabled', '');
 						}
 					}
 					else {
-						$(div).removeClass('disabled');
+						$(div).removeClass('disabled'); // TODO: remove after css rework
+						div.removeAttribute('disabled');
 					}
 				};
 
@@ -2345,8 +2348,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				}, this);
 			}
 
-			if (disabled)
-				L.DomUtil.addClass(div, 'disabled');
+			if (disabled) {
+				L.DomUtil.addClass(div, 'disabled'); // TODO: remove after css rework
+				div.setAttribute('disabled', '');
+			}
 
 			if (data.selected === true) {
 				$(button).addClass('selected');
@@ -2370,7 +2375,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			L.DomUtil.create('i', 'unoarrow', arrowbackground);
 			controls['arrow'] = arrowbackground;
 			$(arrowbackground).click(function (event) {
-				if (!$(div).hasClass('disabled')) {
+				if (!div.hasAttribute('disabled')) {
 					builder.callback('toolbox', 'openmenu', parentContainer, data.command, builder);
 					event.stopPropagation();
 				}
@@ -2382,7 +2387,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 
 		var clickFunction = function (e) {
-			if (!$(div).hasClass('disabled')) {
+			if (!div.hasAttribute('disabled')) {
 				builder.refreshSidebar = true;
 				if (data.postmessage)
 					builder.map.fire('postMessage', {msgId: 'Clicked_Button', args: {Id: data.id} });
@@ -2409,7 +2414,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		builder._preventDocumentLosingFocusOnClick(div);
 
 		if (data.enabled === 'false' || data.enabled === false)
-			$(button).prop('disabled', true);
+			div.setAttribute('disabled', '');
 
 		builder.map.hideRestrictedItems(data, controls['container'], controls['container']);
 		builder.map.disableLockedItem(data, controls['container'], controls['container']);
