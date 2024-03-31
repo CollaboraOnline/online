@@ -25,7 +25,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'AutoFilter', function() {
 		cy.cGet('body').contains('#menu-data li', 'AutoFilter').click();
 	}
 
-	it.skip('Enable/Disable autofilter', function() {
+	it('Enable/Disable autofilter', function() {
 		//filter by pass
 		calcHelper.openAutoFilterMenu(true);
 		cy.cGet('.autofilter .vertical').should('be.visible');
