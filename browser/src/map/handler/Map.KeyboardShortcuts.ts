@@ -182,8 +182,9 @@ keyboardShortcuts.definitions.set('default', new Array<ShortcutDescriptor>(
     new ShortcutDescriptor('drawing', 'keydown', 0, 'PageUp', null, 'previouspart', ViewType.ReadOnly),
     new ShortcutDescriptor('drawing', 'keydown', 0, 'PageDown', null, 'nextpart', ViewType.ReadOnly),
     new ShortcutDescriptor('drawing', 'keydown', 0, 'End', null, 'lastpart', ViewType.ReadOnly),
-    new ShortcutDescriptor('drawing', 'keydown', 0, 'Home', null, 'firstpart', ViewType.ReadOnly)
+    new ShortcutDescriptor('drawing', 'keydown', 0, 'Home', null, 'firstpart', ViewType.ReadOnly),
 
+    new ShortcutDescriptor(null, 'keydown', Mod.ALT | Mod.CTRL, 'p', null, 'userlist', null),
 ));
 
 // German shortcuts.
