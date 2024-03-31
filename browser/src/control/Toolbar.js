@@ -1064,20 +1064,19 @@ L.Map.include({
 	},
 
 	onFormulaBarFocus: function() {
-		var mobileTopBar = w2ui['actionbar'];
-		var jsdialogFormulabar = this.formulabar;
-		var target = jsdialogFormulabar;
-
 		if (window.mode.isMobile() === true) {
-			mobileTopBar.hide('undo');
-			mobileTopBar.hide('redo');
-			target = mobileTopBar;
+			var mobileTopBar = this.mobileTopBar;
+			mobileTopBar.showItem('undo', false);
+			mobileTopBar.showItem('redo', false);
+			mobileTopBar.showItem('cancelformula', true);
+			mobileTopBar.showItem('acceptformula', true);
 		} else {
+			var jsdialogFormulabar = this.formulabar;
 			jsdialogFormulabar.hide('startformula');
 			jsdialogFormulabar.hide('AutoSumMenu');
+			jsdialogFormulabar.show('cancelformula');
+			jsdialogFormulabar.show('acceptformula');
 		}
-		target.show('cancelformula');
-		target.show('acceptformula');
 	},
 
 	onFormulaBarBlur: function() {
@@ -1087,26 +1086,26 @@ L.Map.include({
 		// TODO: Some better way to do it ?
 		var map = this;
 
-		setTimeout(function() {
+		setTimeout(() => {
 			if ($('.leaflet-cursor').is(':visible'))
 				return;
-			var mobileTopBar = window.mode.isMobile() ? w2ui['actionbar'] : null;
-			var jsdialogFormulabar = map.formulabar;
 
-			var target = window.mode.isMobile() ? mobileTopBar : jsdialogFormulabar;
-			target.hide('cancelformula');
-			target.hide('acceptformula');
-
-			if (mobileTopBar) {
-				mobileTopBar.show('undo');
-				mobileTopBar.show('redo');
+			if (window.mode.isMobile()) {
+				var mobileTopBar = map.mobileTopBar;
+				mobileTopBar.showItem('cancelformula', false);
+				mobileTopBar.showItem('acceptformula', false);
+				mobileTopBar.showItem('undo', true);
+				mobileTopBar.showItem('redo', true);
+			} else {
+				var jsdialogFormulabar = map.formulabar;
+				jsdialogFormulabar.hide('cancelformula');
+				jsdialogFormulabar.hide('acceptformula');
+				jsdialogFormulabar.show('startformula');
+				jsdialogFormulabar.show('AutoSumMenu');
 			}
 
 			$('#AutoSumMenu-button').css('margin-inline', '0');
 			$('#AutoSumMenu .unoarrow').css('margin', '0');
-
-			jsdialogFormulabar.show('startformula');
-			jsdialogFormulabar.show('AutoSumMenu');
 
 			// clear reference marks
 			map._docLayer._clearReferences();

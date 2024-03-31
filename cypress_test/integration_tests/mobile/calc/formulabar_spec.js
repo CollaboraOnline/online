@@ -114,7 +114,7 @@ describe(['tagmobile', 'tagnextcloud'], 'Formula bar tests.', function() {
 
 		calcHelper.typeIntoFormulabar('{backspace}{backspace}{backspace}');
 
-		cy.cGet('#tb_actionbar_item_acceptformula')
+		cy.cGet('#toolbar-up #acceptformula')
 			.click();
 
 		calcHelper.selectEntireSheet();
@@ -137,7 +137,7 @@ describe(['tagmobile', 'tagnextcloud'], 'Formula bar tests.', function() {
 
 		calcHelper.typeIntoFormulabar('{end}{backspace}{backspace}{backspace}');
 
-		cy.cGet('#tb_actionbar_item_cancelformula')
+		cy.cGet('#toolbar-up #cancelformula')
 			.click();
 
 		cy.wait(2000);

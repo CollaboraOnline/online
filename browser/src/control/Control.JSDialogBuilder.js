@@ -2755,7 +2755,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (builder.wizard) {
 			$(menuEntry).click(() => {
 				if (window.insertionMobileWizard)
-					w2ui['actionbar'].click('insertion_mobile_wizard');
+					app.dispatcher.dispatch('insertion_mobile_wizard');
 				else if (window.mobileMenuWizard)
 					$('#main-menu-state').click();
 				else if (window.contextMenuWizard) {

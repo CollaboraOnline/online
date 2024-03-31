@@ -47,16 +47,16 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Mobile wizard state tests',
 		cy.cGet('body').contains('.ui-header.level-0.mobile-wizard.ui-widget .menu-entry-with-icon', 'Paste').should('be.visible');
 
 		// TODO: fix this bug
-		//cy.get('#tb_actionbar_item_mobile_wizard table')
+		//cy.get('#toolbar-up #mobile_wizard table')
 		//	.should('not.have.class', 'checked');
 
 		// Open mobile wizard again
-		cy.cGet('#tb_actionbar_item_mobile_wizard').click();
+		cy.cGet('#toolbar-up #mobile_wizard').click();
 
 		// TODO: fix this bug
 		//cy.get('#mobile-wizard-content')
 		//	.should('not.be.empty');
-		//cy.get('#tb_actionbar_item_mobile_wizard table')
+		//cy.get('#toolbar-up #mobile_wizard table')
 		//	.should('have.class', 'checked');
 	});
 });

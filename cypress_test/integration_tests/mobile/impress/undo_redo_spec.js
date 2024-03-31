@@ -34,7 +34,7 @@ describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Editing Operations', f
 		//if we don't wait tests in CLI is failing
 		cy.wait(3000);
 
-		cy.cGet('#tb_actionbar_item_undo').click();
+		cy.cGet('#toolbar-up #undo').click();
 
 		helper.selectAllText();
 
@@ -51,7 +51,7 @@ describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Editing Operations', f
 	it('Redo',function() {
 		undo();
 
-		cy.cGet('#tb_actionbar_item_redo').click();
+		cy.cGet('#toolbar-up #redo').click();
 
 		helper.selectAllText();
 

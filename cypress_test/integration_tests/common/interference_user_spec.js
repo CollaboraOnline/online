@@ -34,7 +34,7 @@ describe('Interfering second user.', function() {
 					helper.beforeAll(text, getComponent(text), true);
 				});
 
-			cy.get('#tb_actionbar_item_userlist', { timeout: Cypress.config('defaultCommandTimeout') * 2.0 })
+			cy.get('#toolbar-up #userlist', { timeout: Cypress.config('defaultCommandTimeout') * 2.0 })
 				.should('be.visible');
 
 			helper.doIfOnMobile(function() {
@@ -61,7 +61,7 @@ describe('Interfering second user.', function() {
 					}
 				});
 
-				return cy.get('#tb_actionbar_item_userlist')
+				return cy.get('#toolbar-up #userlist')
 					.then(function(userlist) {
 						return !Cypress.dom.isVisible(userlist[0]);
 					});

@@ -40,7 +40,7 @@ describe(['tagmobile'], 'Annotation tests.', function() {
 		//cy.get('.blinking-cursor').should('be.visible');
 		cy.cGet('#input-modal-input').type('{home}modified ');
 		cy.cGet('#response-ok').click();
-		cy.cGet('#tb_actionbar_item_comment_wizard').click();
+		cy.cGet('#toolbar-up #comment_wizard').click();
 		cy.cGet('#comment-container-1').should('exist');
 		cy.cGet('#annotation-content-area-1').should('have.text', 'modified some text');
 	});

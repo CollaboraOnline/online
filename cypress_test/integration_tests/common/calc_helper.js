@@ -92,8 +92,8 @@ function typeIntoFormulabar(text) {
 	cy.cGet('#sc_input_window.formulabar').should('have.class', 'focused');
 
 	helper.doIfOnMobile(function() {
-		cy.cGet('#tb_actionbar_item_acceptformula').should('be.visible');
-		cy.cGet('#tb_actionbar_item_cancelformula').should('be.visible');
+		cy.cGet('#toolbar-up #acceptformula').should('be.visible');
+		cy.cGet('#toolbar-up #cancelformula').should('be.visible');
 	});
 	helper.doIfOnDesktop(function() {
 		cy.cGet('#acceptformula').should('be.visible');

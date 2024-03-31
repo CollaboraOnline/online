@@ -278,7 +278,7 @@ function upLoadFileToNextCloud(fileName, subFolder, subsequentLoad) {
 function waitForInterferingUser() {
 	cy.log('>> waitForInterferingUser - start');
 
-	cy.cGet('#tb_actionbar_item_userlist', { timeout: Cypress.config('defaultCommandTimeout') * 2.0 })
+	cy.cGet('#toolbar-up #userlist', { timeout: Cypress.config('defaultCommandTimeout') * 2.0 })
 		.should('be.visible');
 
 	cy.wait(10000);

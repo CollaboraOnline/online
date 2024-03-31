@@ -164,7 +164,7 @@ textarea.cool-annotation-textarea {
 		top: -1px;
 	}
 }
-#tb_actionbar_item_redo.disabled, #tb_actionbar_item_undo.disabled, #tb_actionbar_item_mobile_wizard.disabled, #tb_actionbar_item_insertion_mobile_wizard.disabled {
+#toolbar-up #redo.disabled, #toolbar-up #undo.disabled, #toolbar-up #mobile_wizard.disabled, #toolbar-up #insertion_mobile_wizard.disabled {
 	display: none;
 }
 #toolbar-wrapper.mobile{
@@ -217,7 +217,7 @@ nav:not(.spreadsheet-color-indicator) ~ #toolbar-wrapper #toolbar-up.w2ui-toolba
 #toolbar-search {
 	height: 39px !important;
 }
-#tb_actionbar_item_fullscreen{display: none;}
+#toolbar-up #fullscreen{display: none;}
 #toolbar-down {
 	border-top: 1px solid var(--color-border) !important;
 }
@@ -258,9 +258,6 @@ nav:not(.spreadsheet-color-indicator) ~ #toolbar-wrapper #toolbar-up.w2ui-toolba
 	width: 36px !important;
 }
 
-#tb_actionbar_item_userlist table{
-	margin: -1px 0px auto 3px !important;
-}
 #toolbar-up .checked{
 	border-color: transparent !important;
 	background: none !important;

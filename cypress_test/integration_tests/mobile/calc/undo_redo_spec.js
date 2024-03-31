@@ -26,12 +26,12 @@ describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Editing Operations', f
 
 		helper.typeIntoDocument('Hello World');
 
-		cy.cGet('#tb_actionbar_item_acceptformula').click();
+		cy.cGet('#toolbar-up #acceptformula').click();
 
 		//if we don't wait tests in CLI is failing
 		cy.wait(3000);
 
-		cy.cGet('#tb_actionbar_item_undo').click();
+		cy.cGet('#toolbar-up #undo').click();
 
 		calcHelper.dblClickOnFirstCell();
 
@@ -39,7 +39,7 @@ describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Editing Operations', f
 
 		helper.textSelectionShouldNotExist();
 
-		cy.cGet('#tb_actionbar_item_acceptformula').click();
+		cy.cGet('#toolbar-up #acceptformula').click();
 	}
 
 	it('Undo', function() {
@@ -51,7 +51,7 @@ describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Editing Operations', f
 
 		cy.wait(3000);
 
-		cy.cGet('#tb_actionbar_item_redo').click();
+		cy.cGet('#toolbar-up #redo').click();
 
 		calcHelper.dblClickOnFirstCell();
 
@@ -67,7 +67,7 @@ describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Editing Operations', f
 
 		cy.wait(3000);
 
-		cy.cGet('#tb_actionbar_item_acceptformula').click();
+		cy.cGet('#toolbar-up #acceptformula').click();
 
 		calcHelper.dblClickOnFirstCell();
 
@@ -77,7 +77,7 @@ describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Editing Operations', f
 
 		cy.wait(3000);
 
-		cy.cGet('#tb_actionbar_item_acceptformula').click();
+		cy.cGet('#toolbar-up #acceptformula').click();
 
 		repairHelper.rollbackPastChange('Undo', undefined, true);
 

@@ -27,7 +27,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Interact with bottom toolba
 
 		helper.getCursorPos('left', 'currentTextEndPos');
 
-		cy.cGet('#tb_actionbar_item_acceptformula').should('be.visible')
+		cy.cGet('#toolbar-up #acceptformula').should('be.visible')
 			.then($ele =>{
 				if (Cypress.dom.isVisible($ele)) {
 					cy.wrap($ele).click();

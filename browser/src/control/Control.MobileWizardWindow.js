@@ -13,7 +13,7 @@
  * L.Control.MobileWizardWindow - contains one unique window instance inside mobile-wizard
  */
 
-/* global app $ w2ui */
+/* global app $ */
 L.Control.MobileWizardWindow = L.Control.extend({
 	options: {
 		maxHeight: '45vh',
@@ -277,13 +277,13 @@ L.Control.MobileWizardWindow = L.Control.extend({
 			this.parent.removeWindow(this);
 			this._currentDepth = 0;
 			if (window.mobileWizard === true) {
-				w2ui['actionbar'].click('mobile_wizard');
+				app.dispatcher.dispatch('mobile_wizard');
 			} else if (window.insertionMobileWizard === true) {
-				w2ui['actionbar'].click('insertion_mobile_wizard');
+				app.dispatcher.dispatch('insertion_mobile_wizard');
 			} else if (window.mobileMenuWizard === true) {
 				$('#main-menu-state').click();
 			} else if (window.commentWizard === true) {
-				w2ui['actionbar'].click('comment_wizard');
+				app.dispatcher.dispatch('comment_wizard');
 			} else if (window.contextMenuWizard) {
 				window.contextMenuWizard = false;
 				this.map.fire('closemobilewizard');
