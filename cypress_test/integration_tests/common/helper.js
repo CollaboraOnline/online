@@ -838,8 +838,10 @@ function clickOnIdle(selector, content) {
 	// Then call .click() directly from the test
 	cy.log('clickOnIdle stubbed');
 	if (content) {
+		cy.cGet(selector, content).should('not.have.attr', 'disabled');
 		cy.cGet(selector, content).click();
 	} else {
+		cy.cGet(selector).should('not.have.attr', 'disabled');
 		cy.cGet(selector).click();
 	}
 }

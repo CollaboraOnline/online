@@ -140,7 +140,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Table operations', functio
 		// With merging two rows, the cursor is moved into the first row.
 		cy.get('@origCursorPos')
 			.then(function(origCursorPos) {
-				helper.clickOnIdle('#split_merge .unoMergeCells button');
+				helper.clickOnIdle('#split_merge .unoMergeCells');
 
 				cy.cGet('.blinking-cursor')
 					.should(function(cursor) {
@@ -183,6 +183,8 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Table operations', functio
 		helper.moveCursor('down', 'shift');
 		helper.moveCursor('right', 'shift');
 
+		cy.wait(200);
+		helper.clickOnIdle('#rowsizing .unoSetOptimalRowHeight');
 		helper.clickOnIdle('#rowsizing .unoSetMinimalRowHeight');
 
 		selectFullTable();
@@ -196,7 +198,9 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Table operations', functio
 		helper.moveCursor('down', 'shift');
 		helper.moveCursor('down', 'shift');
 		helper.moveCursor('right', 'shift');
-		helper.clickOnIdle('#rowsizing .unoSetOptimalRowHeight button');
+
+		cy.wait(200);
+		helper.clickOnIdle('#rowsizing .unoSetOptimalRowHeight');
 		selectFullTable();
 
 		// Check new row height
@@ -218,7 +222,8 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Table operations', functio
 		helper.moveCursor('down', 'shift');
 		helper.moveCursor('right', 'shift');
 
-		helper.clickOnIdle('#rowsizing .unoDistributeRows button');
+		cy.wait(200);
+		helper.clickOnIdle('#rowsizing .unoDistributeRows');
 
 		selectFullTable();
 
@@ -241,6 +246,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Table operations', functio
 		helper.moveCursor('down', 'shift');
 		helper.moveCursor('right', 'shift');
 
+		cy.wait(200);
 		helper.clickOnIdle('#columnsizing .unoSetMinimalColumnWidth');
 
 		selectFullTable();
@@ -254,6 +260,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Table operations', functio
 		helper.moveCursor('down', 'shift');
 		helper.moveCursor('right', 'shift');
 
+		cy.wait(200);
 		helper.clickOnIdle('#columnsizing .unoSetOptimalColumnWidth');
 
 		selectFullTable();
@@ -268,6 +275,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Table operations', functio
 		helper.moveCursor('down', 'shift');
 		helper.moveCursor('right', 'shift');
 
+		cy.wait(200);
 		helper.clickOnIdle('#columnsizing .unoDistributeColumns');
 
 		selectFullTable();
