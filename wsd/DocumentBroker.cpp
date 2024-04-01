@@ -790,116 +790,10 @@ bool DocumentBroker::downloadAdvance(const std::string& jailId, const Poco::URI&
 
     assert(!_docState.isMarkedToDestroy() && "MarkedToDestroy while downloading ahead-of-time");
 
-    _jailId = jailId;
-
-    // The URL is the publicly visible one, not visible in the chroot jail.
-    // We need to map it to a jailed path and copy the file there.
-
-    // /tmp/user/docs/<dirName>, root under getJailRoot()
-    const Poco::Path jailPath(JAILED_DOCUMENT_ROOT, Util::rng::getFilename(16));
-    const std::string jailRoot = getJailRoot();
-
-    LOG_INF("JailPath for docKey [" << _docKey << "]: [" << jailPath.toString() << "], jailRoot: ["
-                                    << jailRoot << ']');
-
     assert(_storage == nullptr &&
            "Unexpected to find storage created while downloading ahead-of-time");
 
-    _docState.setStatus(DocumentState::Status::Downloading);
-
-    // Pass the public URI to storage as it needs to load using the token
-    // and other storage-specific data provided in the URI.
-    LOG_DBG("Creating new storage instance for URI [" << COOLWSD::anonymizeUrl(uriPublic.toString())
-                                                      << ']');
-
-    try
-    {
-        _storage = StorageBase::create(uriPublic, jailRoot, jailPath.toString(),
-                                       /*takeOwnership=*/isConvertTo());
-    }
-    catch (...)
-    {
-        // fallthrough
-    }
-
-    if (_storage == nullptr)
-    {
-        // We should get an exception, not null.
-        LOG_WRN("Failed to create storage ahead-of-time for ["
-                << _docKey << "] in [" << jailPath.toString()
-                << "], will try again on user connection");
-        return false;
-    }
-
-    LOG_ASSERT(_storage);
-
-    // Call the storage specific fileinfo functions
-    std::string templateSource;
-
-#if !MOBILEAPP
-    std::chrono::milliseconds checkFileInfoCallDurationMs = std::chrono::milliseconds::zero();
-    WopiStorage* wopiStorage = dynamic_cast<WopiStorage*>(_storage.get());
-    if (wopiStorage != nullptr)
-    {
-        LOG_DBG("CheckFileInfo for docKey [" << _docKey << ']');
-        std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
-        wopiStorage->handleWOPIFileInfo(*wopiFileInfo, *_lockCtx);
-
-        checkFileInfoCallDurationMs = std::chrono::duration_cast<std::chrono::milliseconds>(
-            std::chrono::steady_clock::now() - start);
-    }
-    else
-#endif
-    {
-        LocalStorage* localStorage = dynamic_cast<LocalStorage*>(_storage.get());
-        if (localStorage != nullptr)
-        {
-            std::unique_ptr<LocalStorage::LocalFileInfo> localfileinfo =
-                localStorage->getLocalFileInfo();
-
-            _isViewFileExtension = COOLWSD::IsViewFileExtension(localStorage->getFileExtension());
-        }
-    }
-
-#if ENABLE_SUPPORT_KEY
-    if (!COOLWSD::OverrideWatermark.empty())
-        watermarkText = COOLWSD::OverrideWatermark;
-#endif
-
-    // Basic file information was stored by the above getWOPIFileInfo() or getLocalFileInfo() calls
-    const StorageBase::FileInfo fileInfo = _storage->getFileInfo();
-    if (!fileInfo.isValid())
-    {
-        LOG_ERR("Invalid fileinfo for URI [" << uriPublic.toString() << ']');
-        return false;
-    }
-
-    _storageManager.setLastModifiedTime(fileInfo.getLastModifiedTime());
-    LOG_DBG("Document timestamp: " << _storageManager.getLastModifiedTime());
-
-    // Let's download the document now, if not downloaded.
-    std::chrono::milliseconds getFileCallDurationMs = std::chrono::milliseconds::zero();
-    if (!_storage->isDownloaded())
-    {
-        const Authorization auth = Authorization::create(uriPublic);
-        if (!doDownloadDocument(/*session=*/nullptr, auth, templateSource, fileInfo.getFilename(),
-                                getFileCallDurationMs))
-        {
-            LOG_DBG("Failed to download or process downloaded document");
-            return false;
-        }
-    }
-
-#if !MOBILEAPP
-    // Since document has been loaded, send the stats if its WOPI
-    assert(wopiStorage != nullptr);
-    {
-        // Add the time taken to load the file from storage and to check file info.
-        _wopiDownloadDuration += getFileCallDurationMs + checkFileInfoCallDurationMs;
-    }
-#endif
-
-    return true;
+    return download(/*session=*/nullptr, jailId, uriPublic, std::move(wopiFileInfo));
 }
 
 bool DocumentBroker::download(
@@ -909,8 +803,7 @@ bool DocumentBroker::download(
 {
     ASSERT_CORRECT_THREAD();
 
-    const std::string sessionId = session->getId();
-
+    const std::string sessionId = session ? session->getId() : "000";
     LOG_INF("Loading [" << _docKey << "] for session [" << sessionId << "] in jail [" << jailId
                         << ']');
 
@@ -957,7 +850,8 @@ bool DocumentBroker::download(
         }
         catch (...)
         {
-            session->sendMessage("loadstorage: failed");
+            if (session)
+                session->sendMessage("loadstorage: failed");
             throw;
         }
 
@@ -988,7 +882,11 @@ bool DocumentBroker::download(
         checkFileInfoCallDurationMs = std::chrono::duration_cast<std::chrono::milliseconds>(
             std::chrono::steady_clock::now() - start);
 
-        templateSource = updateSessionWithWopiInfo(session, wopiStorage, std::move(wopiFileInfo));
+        if (session)
+        {
+            templateSource =
+                updateSessionWithWopiInfo(session, wopiStorage, std::move(wopiFileInfo));
+        }
     }
     else
 #endif
@@ -1000,36 +898,40 @@ bool DocumentBroker::download(
                 localStorage->getLocalFileInfo();
 
             _isViewFileExtension = COOLWSD::IsViewFileExtension(localStorage->getFileExtension());
-            if (_isViewFileExtension)
+            if (session)
             {
-                LOG_DBG("Setting session [" << sessionId << "] as readonly");
-                session->setReadOnly(true);
                 if (_isViewFileExtension)
                 {
-                    LOG_DBG("Allow session [" << sessionId
-                                              << "] to change comments on document with extension ["
-                                              << localStorage->getFileExtension() << ']');
+                    LOG_DBG("Setting session [" << sessionId << "] as readonly");
+                    session->setReadOnly(true);
+                    if (_isViewFileExtension)
+                    {
+                        LOG_DBG("Allow session ["
+                                << sessionId << "] to change comments on document with extension ["
+                                << localStorage->getFileExtension() << ']');
+                        session->setAllowChangeComments(true);
+                    }
+                    // Related to fix for issue #5887: only send a read-only
+                    // message for "view file extension" document types
+                    session->sendFileMode(session->isReadOnly(), session->isAllowChangeComments());
+                }
+                else if (Util::isMobileApp())
+                {
+                    // Fix issue #5887 by assuming that documents are writable on iOS and Android
+                    // The iOS and Android app saves directly to local disk so, other than for
+                    // "view file extension" document types or other cases that
+                    // I am missing, we can assume the document is writable until
+                    // a write failure occurs.
+                    LOG_DBG("Setting session [" << sessionId
+                                                << "] to writable and allowing comments");
+                    session->setWritable(true);
+                    session->setReadOnly(false);
                     session->setAllowChangeComments(true);
                 }
-                // Related to fix for issue #5887: only send a read-only
-                // message for "view file extension" document types
-                session->sendFileMode(session->isReadOnly(), session->isAllowChangeComments());
-            }
-            else if (Util::isMobileApp())
-            {
-                // Fix issue #5887 by assuming that documents are writable on iOS and Android
-                // The iOS and Android app saves directly to local disk so, other than for
-                // "view file extension" document types or other cases that
-                // I am missing, we can assume the document is writable until
-                // a write failure occurs.
-                LOG_DBG("Setting session [" << sessionId << "] to writable and allowing comments");
-                session->setWritable(true);
-                session->setReadOnly(false);
-                session->setAllowChangeComments(true);
-            }
 
-            session->setUserId(localfileinfo->getUserId());
-            session->setUserName(localfileinfo->getUsername());
+                session->setUserId(localfileinfo->getUserId());
+                session->setUserName(localfileinfo->getUsername());
+            }
         }
     }
 
@@ -1038,11 +940,13 @@ bool DocumentBroker::download(
         watermarkText = COOLWSD::OverrideWatermark;
 #endif
 
-    LOG_DBG("Setting username [" << COOLWSD::anonymizeUsername(session->getUserName())
-                                 << "] and userId ["
-                                 << COOLWSD::anonymizeUsername(session->getUserId())
-                                 << "] for session [" << sessionId << "] with canonical id "
-                                 << session->getCanonicalViewId());
+    if (session)
+    {
+        LOG_DBG("Setting username ["
+                << COOLWSD::anonymizeUsername(session->getUserName()) << "] and userId ["
+                << COOLWSD::anonymizeUsername(session->getUserId()) << "] for session ["
+                << sessionId << "] with canonical id " << session->getCanonicalViewId());
+    }
 
     // Basic file information was stored by the above getWOPIFileInfo() or getLocalFileInfo() calls
     const StorageBase::FileInfo fileInfo = _storage->getFileInfo();
@@ -1079,12 +983,16 @@ bool DocumentBroker::download(
                     ? "error: cmd=storage kind=documentconflict"
                     : "close: documentconflict";
 
-            session->sendTextFrame(message);
-            broadcastMessage(message);
+            if (session)
+            {
+                session->sendTextFrame(message);
+                broadcastMessage(message);
+            }
         }
     }
 
-    broadcastLastModificationTime(session);
+    if (session)
+        broadcastLastModificationTime(session);
 
     // Let's download the document now, if not downloaded.
     std::chrono::milliseconds getFileCallDurationMs = std::chrono::milliseconds::zero();
@@ -1108,11 +1016,14 @@ bool DocumentBroker::download(
     {
         // Add the time taken to load the file from storage and to check file info.
         _wopiDownloadDuration += getFileCallDurationMs + checkFileInfoCallDurationMs;
-        const auto downloadSecs = _wopiDownloadDuration.count() / 1000.;
-        const std::string msg =
-            "stats: wopiloadduration " + std::to_string(downloadSecs); // In seconds.
-        LOG_TRC("Sending to Client [" << msg << "].");
-        session->sendTextFrame(msg);
+        if (session)
+        {
+            const auto downloadSecs = _wopiDownloadDuration.count() / 1000.;
+            const std::string msg =
+                "stats: wopiloadduration " + std::to_string(downloadSecs); // In seconds.
+            LOG_TRC("Sending to Client [" << msg << "].");
+            session->sendTextFrame(msg);
+        }
     }
 #endif
     return true;
