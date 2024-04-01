@@ -1,6 +1,6 @@
 #toolbar-up {
 	z-index: 11;
-	height: 38px;
+	align-self: center;
 }
 
 #document-name-input-loading-bar {
