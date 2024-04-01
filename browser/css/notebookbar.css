@@ -179,6 +179,10 @@ button.ui-tab.notebookbar {
 	z-index: 11;
 }
 
+#toolbar-row {
+	height: 74px;
+}
+
 .vertical.notebookbar {
 	width: max-content;
 	display: grid;

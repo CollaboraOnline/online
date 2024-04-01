@@ -1,6 +1,6 @@
 #toolbar-up {
 	z-index: 11;
-	height: 38px;
+	align-self: center;
 }
 
 #document-name-input-loading-bar {
@@ -245,6 +245,10 @@ w2ui-toolbar {
 	height: 72px;
 	/* #toolbar-wrapper:not(.mobile)'s top padding */
 	top: 3px;
+}
+
+.main-nav:not(.hasnotebookbar) ~ #toolbar-wrapper .toolbar-row {
+	height: 42px;
 }
 
 /* center the toolbar */
