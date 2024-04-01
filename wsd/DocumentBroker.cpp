@@ -308,8 +308,7 @@ void DocumentBroker::pollThread()
     // Download and load the document.
     if (_initialWopiFileInfo)
     {
-        downloadAdvance(_childProcess->getJailId(), _uriPublic, *_initialWopiFileInfo);
-        _initialWopiFileInfo.reset();
+        downloadAdvance(_childProcess->getJailId(), _uriPublic, std::move(_initialWopiFileInfo));
     }
 
 #if !MOBILEAPP
@@ -783,7 +782,7 @@ void DocumentBroker::stop(const std::string& reason)
 }
 
 bool DocumentBroker::downloadAdvance(const std::string& jailId, const Poco::URI& uriPublic,
-                                     const WopiStorage::WOPIFileInfo& wopiFileInfo)
+                                     std::unique_ptr<WopiStorage::WOPIFileInfo> wopiFileInfo)
 {
     ASSERT_CORRECT_THREAD();
 
@@ -844,7 +843,7 @@ bool DocumentBroker::downloadAdvance(const std::string& jailId, const Poco::URI&
     {
         LOG_DBG("CheckFileInfo for docKey [" << _docKey << ']');
         std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
-        wopiStorage->handleWOPIFileInfo(wopiFileInfo, *_lockCtx);
+        wopiStorage->handleWOPIFileInfo(*wopiFileInfo, *_lockCtx);
 
         checkFileInfoCallDurationMs = std::chrono::duration_cast<std::chrono::milliseconds>(
             std::chrono::steady_clock::now() - start);
