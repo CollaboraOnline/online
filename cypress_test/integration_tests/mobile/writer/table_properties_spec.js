@@ -229,7 +229,8 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change table properties / l
 		openTablePanel();
 		selectFullTable();
 
-		helper.clickOnIdle('.unoDistributeRows button');
+		cy.wait(200);
+		helper.clickOnIdle('.unoDistributeRows');
 
 		selectFullTable();
 
@@ -255,6 +256,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change table properties / l
 		openTablePanel();
 		selectFullTable();
 
+		cy.wait(200);
 		helper.clickOnIdle('.unoSetMinimalColumnWidth');
 
 		selectFullTable();
@@ -269,6 +271,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change table properties / l
 		openTablePanel();
 		selectFullTable();
 
+		cy.wait(200);
 		helper.clickOnIdle('.unoEntireRow');
 
 		cy.cGet('#copy-paste-container table').should('exist');
@@ -285,7 +288,8 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change table properties / l
 		openTablePanel();
 		selectFullTable();
 
-		helper.clickOnIdle('.unoDistributeColumns button');
+		cy.wait(200);
+		helper.clickOnIdle('.unoDistributeColumns');
 
 		selectFullTable();
 
