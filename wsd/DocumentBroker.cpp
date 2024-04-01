@@ -904,6 +904,7 @@ bool DocumentBroker::downloadAdvance(const std::string& jailId, const Poco::URI&
 
 bool DocumentBroker::download(
     const std::shared_ptr<ClientSession>& session, const std::string& jailId,
+    const Poco::URI& uriPublic,
     [[maybe_unused]] std::unique_ptr<WopiStorage::WOPIFileInfo> wopiFileInfo)
 {
     ASSERT_CORRECT_THREAD();
@@ -935,7 +936,6 @@ bool DocumentBroker::download(
     // /tmp/user/docs/<dirName>, root under getJailRoot()
     const Poco::Path jailPath(JAILED_DOCUMENT_ROOT, Util::rng::getFilename(16));
     const std::string jailRoot = getJailRoot();
-    const Poco::URI& uriPublic = session->getPublicUri();
 
     LOG_INF("JailPath for docKey [" << _docKey << "]: [" << jailPath.toString() << "], jailRoot: ["
                                     << jailRoot << ']');
@@ -2849,7 +2849,8 @@ DocumentBroker::addSessionInternal(const std::shared_ptr<ClientSession>& session
     try
     {
         // First, download the document, since this can fail.
-        if (!download(session, _childProcess->getJailId(), std::move(wopiFileInfo)))
+        if (!download(session, _childProcess->getJailId(), session->getPublicUri(),
+                      std::move(wopiFileInfo)))
         {
             const auto msg = "Failed to load document with URI [" + session->getPublicUri().toString() + "].";
             LOG_ERR(msg);
