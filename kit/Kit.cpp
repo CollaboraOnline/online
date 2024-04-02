@@ -1551,6 +1551,30 @@ private:
         return viewColors;
     }
 
+    std::string getDefaultTheme(const std::shared_ptr<ChildSession>& session) const
+    {
+        bool darkTheme;
+        switch (_loKitDocument->getDocumentType())
+        {
+            case LOK_DOCTYPE_TEXT:
+                darkTheme = session->getTextDarkTheme() == "true";
+                break;
+            case LOK_DOCTYPE_SPREADSHEET:
+                darkTheme = session->getSpreadsheetDarkTheme() == "true";
+                break;
+            case LOK_DOCTYPE_PRESENTATION:
+                darkTheme = session->getPresentationDarkTheme() == "true";
+                break;
+            case LOK_DOCTYPE_DRAWING:
+                darkTheme = session->getDrawingDarkTheme() == "true";
+                break;
+            default:
+                darkTheme = false;
+                break;
+        }
+        return darkTheme ? "Dark" : "Light";
+    }
+
     std::shared_ptr<lok::Document> load(const std::shared_ptr<ChildSession>& session,
                                         const std::string& renderOpts)
     {
@@ -1569,7 +1593,6 @@ private:
         const std::string& macroSecurityLevel = session->getMacroSecurityLevel();
         const bool accessibilityState = session->getAccessibilityState();
         const std::string& userTimezone = session->getTimezone();
-        const std::string& theme = session->getTheme();
 
 #if !MOBILEAPP
         consistencyCheckFileExists(uri);
@@ -1593,9 +1616,6 @@ private:
 
         if (!userTimezone.empty())
             options += ",Timezone=" + userTimezone;
-
-        if (!theme.empty())
-            options += ",Theme=" + theme;
 
         std::string spellOnline;
         if (!_loKitDocument)
@@ -1701,12 +1721,14 @@ private:
             LOG_TRC("View to url [" << uriAnonym << "] created.");
         }
 
+        std::string theme = getDefaultTheme(session);
+
         LOG_INF("Initializing for rendering session [" << sessionId << "] on document url [" <<
-                anonymizeUrl(_url) << "] with: [" << makeRenderParams(_renderOpts, userNameAnonym, spellOnline) << "].");
+                anonymizeUrl(_url) << "] with: [" << makeRenderParams(_renderOpts, userNameAnonym, spellOnline, theme) << "].");
 
         // initializeForRendering() should be called before
         // registerCallback(), as the previous creates a new view in Impress.
-        const std::string renderParams = makeRenderParams(_renderOpts, userName, spellOnline);
+        const std::string renderParams = makeRenderParams(_renderOpts, userName, spellOnline, theme);
 
         _loKitDocument->initializeForRendering(renderParams.c_str());
 
@@ -1829,7 +1851,8 @@ private:
         return obj;
     }
 
-    static std::string makeRenderParams(const std::string& renderOpts, const std::string& userName, const std::string& spellOnline)
+    static std::string makeRenderParams(const std::string& renderOpts, const std::string& userName,
+                                        const std::string& spellOnline, const std::string& theme)
     {
         Object::Ptr renderOptsObj;
 
@@ -1858,6 +1881,9 @@ private:
             const bool bSet = (spellOnline != "false");
             renderOptsObj->set(".uno:SpellOnline", makePropertyValue("boolean", bSet));
         }
+
+        if (!theme.empty())
+            renderOptsObj->set(".uno:ChangeTheme", makePropertyValue("string", theme));
 
         if (renderOptsObj)
         {
