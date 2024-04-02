@@ -14,7 +14,7 @@
  *			 and allows to controll them (show/hide)
  */
 
-/* global app $ setupToolbar w2ui toolbarUpMobileItems _ Hammer JSDialog */
+/* global app $ setupToolbar _ Hammer JSDialog */
 L.Control.UIManager = L.Control.extend({
 	mobileWizard: null,
 	documentNameInput: null,
@@ -293,7 +293,8 @@ L.Control.UIManager = L.Control.extend({
 
 		if (window.mode.isMobile()) {
 			$('#mobile-edit-button').show();
-			this.map.addControl(L.control.mobileBottomBar(docType));
+			this.map.mobileBottomBar = L.control.mobileBottomBar(docType);
+			this.map.addControl(this.map.mobileBottomBar);
 			this.map.mobileTopBar = L.control.mobileTopBar(docType);
 			this.map.addControl(this.map.mobileTopBar);
 			this.map.mobileSearchBar = L.control.searchBar(this.map);
@@ -345,12 +346,6 @@ L.Control.UIManager = L.Control.extend({
 
 		if (this.map.isPresentationOrDrawing() && (isDesktop || window.mode.isTablet())) {
 			JSDialog.PresentationBar(this.map);
-		}
-
-		if (window.mode.isMobile()) {
-			this.map.on('updatetoolbarcommandvalues', function() {
-				w2ui['editbar'].refresh();
-			});
 		}
 
 		this.map.on('changeuimode', this.onChangeUIMode, this);
@@ -505,10 +500,7 @@ L.Control.UIManager = L.Control.extend({
 
 	},
 	refreshToolbar: function() {
-		if (w2ui['editbar'])
-			w2ui['editbar'].refresh();
-		if (w2ui['actionbar'])
-			w2ui['actionbar'].refresh();
+		// TODO
 	},
 	addNotebookbarUI: function() {
 		this.refreshNotebookbar();
@@ -608,19 +600,7 @@ L.Control.UIManager = L.Control.extend({
 			$('html > head > style').append('.w2ui-icon.' + encodeURIComponent(button.id) +
 				'{background: url("' + encodeURI(button.imgurl) + '") no-repeat center !important; }');
 
-			if (w2ui['editbar'] && !w2ui['editbar'].get(button.id)) {
-				w2ui['editbar'].insert(insertBefore, newButton);
-
-				if (button.mobile)
-				{
-					// Add to our list of items to preserve when in mobile mode
-					// FIXME: Wrap the toolbar in a class so that we don't make use
-					// global variables and functions like this
-					var idx = toolbarUpMobileItems.indexOf(insertBefore);
-					toolbarUpMobileItems.splice(idx, 0, button.id);
-				}
-			}
-
+			// TODO: other
 			var topToolbar = window.app.map.topToolbar;
 			if (topToolbar && !topToolbar.hasItem(button.id)) {
 				// translate to JSDialog JSON
@@ -668,16 +648,17 @@ L.Control.UIManager = L.Control.extend({
 	},
 
 	showButtonInClassicToolbar: function(buttonId, show) {
-		var toolbars = [w2ui['toolbar-up'], w2ui['actionbar'], w2ui['editbar']];
+		// TODO: other
+		var toolbars = [];
 		var found = false;
 
 		toolbars.forEach(function(toolbar) {
 			if (toolbar && toolbar.get(buttonId)) {
 				found = true;
 				if (show) {
-					toolbar.show(buttonId);
+					toolbar.showItem(buttonId, true);
 				} else {
-					toolbar.hide(buttonId);
+					toolbar.showItem(buttonId, false);
 				}
 			}
 		});
@@ -723,7 +704,8 @@ L.Control.UIManager = L.Control.extend({
 	},
 
 	showCommandInClassicToolbar: function(command, show) {
-		var toolbars = [w2ui['toolbar-up'], w2ui['actionbar'], w2ui['editbar']];
+		// TODO: other
+		var toolbars = [];
 		var found = false;
 
 		toolbars.forEach(function(toolbar) {
@@ -734,9 +716,9 @@ L.Control.UIManager = L.Control.extend({
 				if (commands.indexOf(command) != -1) {
 					found = true;
 					if (show) {
-						toolbar.show(item.id);
+						toolbar.showItem(item.id, true);
 					} else {
-						toolbar.hide(item.id);
+						toolbar.showItem(item.id, false);
 					}
 				}
 			}.bind(this));
@@ -1007,10 +989,10 @@ L.Control.UIManager = L.Control.extend({
 			// in edit mode, passing 'edit' actually enters readonly mode
 			// and bring the blue circle editmode button back
 			this.map.setPermission('edit');
-			var toolbar = w2ui['actionbar'];
+			var toolbar = app.map.topToolbar;
 			if (toolbar) {
-				toolbar.uncheck('closemobile');
-				toolbar.uncheck('close');
+				toolbar.selectItem('closemobile', false);
+				toolbar.selectItem('close', false);
 			}
 		} else {
 			window.onClose();

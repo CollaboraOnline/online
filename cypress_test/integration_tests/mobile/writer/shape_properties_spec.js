@@ -117,14 +117,14 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change shape properties via
 
 	it('Change shape width.', function() {
 		openPosSizePanel();
-		helper.typeIntoInputField('#selectwidth .spinfield', '4.2', true, false);
+		helper.typeIntoInputField('#mobile-wizard #selectwidth .spinfield', '4.2', true, false);
 		const matcher = new TriangleCoordinatesMatcher(defaultStartPoint, Math.floor(4.2 * unitScale) /* new base */, defaultAltitude);
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path').invoke('attr', 'd').should(matcher.match.bind(matcher));
 	});
 
 	it('Change shape height.', function() {
 		openPosSizePanel();
-		helper.typeIntoInputField('#selectheight .spinfield', '5.2', true, false);
+		helper.typeIntoInputField('#mobile-wizard #selectheight .spinfield', '5.2', true, false);
 		const matcher = new TriangleCoordinatesMatcher(defaultStartPoint, defaultBase, Math.ceil(5.2 * unitScale) /* new altitude */);
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path').invoke('attr', 'd').should(matcher.match.bind(matcher));
 	});
@@ -132,8 +132,8 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change shape properties via
 	it('Change size with keep ratio enabled.', function() {
 		openPosSizePanel();
 		// Enable keep ratio
-		helper.clickOnIdle('#ratio #ratio');
-		cy.cGet('#ratio #ratio').should('have.prop', 'checked', true);
+		helper.clickOnIdle('#mobile-wizard #ratio #ratio');
+		cy.cGet('#mobile-wizard #ratio #ratio').should('have.prop', 'checked', true);
 		// Change height
 		helper.inputOnIdle('#selectheight .spinfield', '5.2');
 		const matcher = new TriangleCoordinatesMatcher(defaultStartPoint, Math.floor(5.2 * unitScale), Math.ceil(5.2 * unitScale));
@@ -142,14 +142,14 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change shape properties via
 
 	it('Vertical mirroring', function() {
 		openPosSizePanel();
-		helper.clickOnIdle('.unoFlipVertical');
+		helper.clickOnIdle('#mobile-wizard .unoFlipVertical');
 		const matcher = new TriangleCoordinatesMatcher(defaultStartPoint, defaultBase, defaultAltitude, false /* horiz mirroring */, true /* vert mirroring */);
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path').invoke('attr', 'd').should(matcher.match.bind(matcher));
 	});
 
 	it('Horizontal mirroring', function() {
 		openPosSizePanel();
-		helper.clickOnIdle('.unoFlipHorizontal');
+		helper.clickOnIdle('#mobile-wizard .unoFlipHorizontal');
 		triggerNewSVG();
 		const matcher = new TriangleCoordinatesMatcher(defaultStartPoint, defaultBase, defaultAltitude, true /* horiz mirroring */, false /* vert mirroring */);
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path').invoke('attr', 'd').should(matcher.match.bind(matcher));
@@ -159,19 +159,19 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change shape properties via
 		openPosSizePanel();
 		// We can't test the result, so we just trigger
 		// the events to catch crashes, consoler errors.
-		helper.clickOnIdle('.unoBringToFront');
+		helper.clickOnIdle('#mobile-wizard .unoBringToFront');
 		cy.wait(300);
-		helper.clickOnIdle('.unoObjectForwardOne');
+		helper.clickOnIdle('#mobile-wizard .unoObjectForwardOne');
 		cy.wait(300);
-		helper.clickOnIdle('.unoObjectBackOne');
+		helper.clickOnIdle('#mobile-wizard .unoObjectBackOne');
 		cy.wait(300);
-		helper.clickOnIdle('.unoSendToBack');
+		helper.clickOnIdle('#mobile-wizard .unoSendToBack');
 		cy.wait(300);
 	});
 
 	it.skip('Change line color', function() {
 		openLinePropertyPanel();
-		helper.clickOnIdle('.unoXLineColor');
+		helper.clickOnIdle('#mobile-wizard .unoXLineColor');
 		helper.clickOnIdle('.ui-content[title="Line Color"] .color-sample-small[style="background-color: rgb(152, 0, 0);"]');
 		triggerNewSVG();
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path[fill="none"]').should('have.attr', 'stroke', 'rgb(152,0,0)');
@@ -205,28 +205,28 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change shape properties via
 
 	it.skip('Arrow style items are hidden.', function() {
 		openLinePropertyPanel();
-		cy.cGet('#linestyle').should('be.visible');
-		cy.cGet('#beginarrowstyle').should('not.exist');
-		cy.cGet('#endarrowstyle').should('not.exist');
+		cy.cGet('#mobile-wizard #linestyle').should('be.visible');
+		cy.cGet('#mobile-wizard #beginarrowstyle').should('not.exist');
+		cy.cGet('#mobile-wizard #endarrowstyle').should('not.exist');
 
 	});
 
 	it.skip('Apply gradient fill', function() {
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g svg g.Page g g#id1 defs pattern').should('not.exist');
 		openAreaPanel();
-		cy.cGet('#fillstylearea .ui-header-left').should('have.text', 'Color');
+		cy.cGet('#mobile-wizard #fillstylearea .ui-header-left').should('have.text', 'Color');
 		mobileHelper.selectListBoxItem2('#fillstylearea', 'Gradient');
 		// Select type
-		cy.cGet('#gradientstyle .ui-header-left').should('have.text', 'Linear');
+		cy.cGet('#mobile-wizard #gradientstyle .ui-header-left').should('have.text', 'Linear');
 		mobileHelper.selectListBoxItem2('#gradientstyle', 'Square');
 		// Select From color
-		helper.clickOnIdle('#fillgrad1');
+		helper.clickOnIdle('#mobile-wizard #fillgrad1');
 		mobileHelper.selectFromColorPalette(0, 2);
 		// Set gradient angle
-		helper.inputOnIdle('#gradangle .spinfield', '100');
-		cy.cGet('#gradangle .spinfield').should('have.value', '100');
+		helper.inputOnIdle('#mobile-wizard #gradangle .spinfield', '100');
+		cy.cGet('#mobile-wizard #gradangle .spinfield').should('have.value', '100');
 		// Select To color
-		helper.clickOnIdle('#fillgrad2');
+		helper.clickOnIdle('#mobile-wizard #fillgrad2');
 		mobileHelper.selectFromColorPalette(1, 7);
 		triggerNewSVG();
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g svg g.Page g g#id1 defs pattern').should('exist');
@@ -235,9 +235,9 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change shape properties via
 	it.skip('Apply hatching fill', function() {
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g svg g.Page g g#id1 defs pattern').should('not.exist');
 		openAreaPanel();
-		cy.cGet('#fillstylearea .ui-header-left').should('have.text', 'Color');
+		cy.cGet('#mobile-wizard #fillstylearea .ui-header-left').should('have.text', 'Color');
 		mobileHelper.selectListBoxItem2('#fillstylearea', 'Hatching');
-		cy.cGet('#fillattrhb .ui-header-left').should('have.text', 'Black 0 Degrees');
+		cy.cGet('#mobile-wizard #fillattrhb .ui-header-left').should('have.text', 'Black 0 Degrees');
 		mobileHelper.selectListBoxItem2('#fillattrhb', 'Black 45 Degrees');
 		triggerNewSVG();
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g svg g.Page g g#id1 defs pattern').should('exist');
@@ -246,9 +246,9 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change shape properties via
 	it.skip('Apply bitmap fill', function() {
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g svg g.Page g g#id1 defs clipPath').should('not.exist');
 		openAreaPanel();
-		cy.cGet('#fillstylearea .ui-header-left').should('have.text', 'Color');
+		cy.cGet('#mobile-wizard #fillstylearea .ui-header-left').should('have.text', 'Color');
 		mobileHelper.selectListBoxItem2('#fillstylearea', 'Bitmap');
-		cy.cGet('#fillattrhb .ui-header-left').should('have.text', 'Painted White');
+		cy.cGet('#mobile-wizard #fillattrhb .ui-header-left').should('have.text', 'Painted White');
 		mobileHelper.selectListBoxItem2('#fillattrhb', 'Paper Graph');
 		triggerNewSVG();
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g svg g.Page g g#id1 defs clipPath').should('exist');
@@ -257,9 +257,9 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change shape properties via
 	it.skip('Apply pattern fill', function() {
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g svg g.Page g g#id1 defs clipPath').should('not.exist');
 		openAreaPanel();
-		cy.cGet('#fillstylearea .ui-header-left').should('have.text', 'Color');
+		cy.cGet('#mobile-wizard #fillstylearea .ui-header-left').should('have.text', 'Color');
 		mobileHelper.selectListBoxItem2('#fillstylearea', 'Pattern');
-		cy.cGet('#fillattrhb .ui-header-left').should('have.text', '5 Percent');
+		cy.cGet('#mobile-wizard #fillattrhb .ui-header-left').should('have.text', '5 Percent');
 		mobileHelper.selectListBoxItem2('#fillattrhb', '20 Percent');
 		triggerNewSVG();
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g svg g.Page g g#id1 defs clipPath').should('exist');
@@ -268,10 +268,10 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change shape properties via
 	it.skip('Change fill color', function() {
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g svg g.Page g g#id1 path:nth-of-type(1)').should('have.attr', 'fill', 'rgb(114,159,207)');
 		openAreaPanel();
-		cy.cGet('#FillColor .color-sample-selected').should('have.attr', 'style', 'background-color: rgb(114, 159, 207);');
+		cy.cGet('#mobile-wizard #FillColor .color-sample-selected').should('have.attr', 'style', 'background-color: rgb(114, 159, 207);');
 		helper.clickOnIdle('.unoFillColor');
 		mobileHelper.selectFromColorPalette(0, 2, 0, 2);
-		cy.cGet('#FillColor .color-sample-selected').should('have.attr', 'style', 'background-color: rgb(204, 0, 0);');
+		cy.cGet('#mobile-wizard #FillColor .color-sample-selected').should('have.attr', 'style', 'background-color: rgb(204, 0, 0);');
 		triggerNewSVG();
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g svg g.Page g g#id1 path:nth-of-type(1)').should('have.attr', 'fill', 'rgb(204,0,0)');
 	});
@@ -279,7 +279,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change shape properties via
 	it.skip('Change fill transparency type', function() {
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g svg g.Page g g#id1 linearGradient').should('not.exist');
 		openAreaPanel();
-		cy.cGet('#transtype .ui-header-left').should('have.text', 'None');
+		cy.cGet('#mobile-wizard #transtype .ui-header-left').should('have.text', 'None');
 		mobileHelper.selectListBoxItem2('#transtype', 'Linear');
 		// TODO: implement show/hide
 		//cy.get('#settransparency .spinfield')
@@ -291,10 +291,10 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change shape properties via
 	it.skip('Change fill transparency', function() {
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g svg g.Page g g#id1 path:nth-of-type(1)').should('not.have.attr', 'fill-opacity');
 		openAreaPanel();
-		cy.cGet('#transtype .ui-header-left').should('have.text', 'None');
+		cy.cGet('#mobile-wizard #transtype .ui-header-left').should('have.text', 'None');
 		helper.inputOnIdle('#settransparency .spinfield', '50');
-		cy.cGet('#settransparency .spinfield').should('have.value', '50');
-		cy.cGet('#transtype .ui-header-left').should('have.text', 'Solid');
+		cy.cGet('#mobile-wizard #settransparency .spinfield').should('have.value', '50');
+		cy.cGet('#mobile-wizard #transtype .ui-header-left').should('have.text', 'Solid');
 		triggerNewSVG();
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g svg g.Page g g#id1 path:nth-of-type(1)').should('have.attr', 'fill-opacity', '0.502');
 	});

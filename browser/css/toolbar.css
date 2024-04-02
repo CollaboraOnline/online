@@ -307,19 +307,6 @@ w2ui-toolbar {
 	background-position: right;
 	background-repeat: no-repeat;
 }
-#tb_editbar_item_fold table.w2ui-button {
-	margin: 0px 14px 0px 4px !important;
-}
-#tb_editbar_item_fold table.w2ui-button.over {
-	background-color: var(--color-background-darker) !important;
-	border: 1px solid var(--color-border-darker);
-}
-td[id^='tb_editbar_item_sidebar']{
-	padding: 0px 8px;
-}
-#tb_editbar_item_edit {
-	display: none;
-}
 
 #closebuttonwrapper {
 	order: 99;
@@ -1758,10 +1745,6 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 	{
 		display: none;
 	}
-}
-
-#w2ui-overlay-actionbar {
-	top: 270px;
 }
 
 .w2ui-color {

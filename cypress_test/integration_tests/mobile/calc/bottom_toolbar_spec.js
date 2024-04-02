@@ -39,7 +39,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Interact with bottom toolba
 
 	it('Apply bold.', function() {
 		before('bottom_toolbar.ods');
-		cy.cGet('.w2ui-tb-image.w2ui-icon.bold').click();
+		cy.cGet('#toolbar-down #bold').click();
 		calcHelper.selectEntireSheet();
 		cy.cGet('#copy-paste-container table td b').should('exist');
 	});
@@ -47,28 +47,28 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Interact with bottom toolba
 	it('Apply italic.', function() {
 		before('bottom_toolbar.ods');
 
-		cy.cGet('.w2ui-tb-image.w2ui-icon.italic').click();
+		cy.cGet('#toolbar-down #italic').click();
 		calcHelper.selectEntireSheet();
 		cy.cGet('#copy-paste-container table td i').should('exist');
 	});
 
 	it('Apply underline.', function() {
 		before('bottom_toolbar.ods');
-		cy.cGet('.w2ui-tb-image.w2ui-icon.underline').click();
+		cy.cGet('#toolbar-down #underline').click();
 		calcHelper.selectEntireSheet();
 		cy.cGet('#copy-paste-container table td u').should('exist');
 	});
 
 	it.skip('Apply strikeout.', function() {
 		before('bottom_toolbar.ods');
-		cy.cGet('.w2ui-tb-image.w2ui-icon.strikeout').click();
+		cy.cGet('#toolbar-down #strikeout').click();
 		calcHelper.selectEntireSheet();
 		cy.cGet('#copy-paste-container table td s').should('exist');
 	});
 
 	it('Apply font color.', function() {
 		before('bottom_toolbar.ods');
-		cy.cGet('.w2ui-tb-image.w2ui-icon.textcolor').click();
+		cy.cGet('#toolbar-down #fontcolor').click();
 		mobileHelper.selectFromColorPalette(0, 5);
 		calcHelper.selectEntireSheet();
 		cy.cGet('#copy-paste-container table td font').should('have.attr', 'color', '#00FF00');
@@ -76,7 +76,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Interact with bottom toolba
 
 	it('Apply highlight color.', function() {
 		before('bottom_toolbar.ods');
-		cy.cGet('.w2ui-tb-image.w2ui-icon.backcolor').click();
+		cy.cGet('#toolbar-down #backcolor').click();
 		mobileHelper.selectFromColorPalette(0, 5);
 		calcHelper.selectEntireSheet();
 		cy.cGet('#copy-paste-container table td').should('have.attr', 'bgcolor', '#00FF00');
@@ -88,7 +88,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Interact with bottom toolba
 		calcHelper.selectCellsInRange('A1:CV1');
 		// Despite the selection is there, merge cells needs more time here.
 		cy.wait(1000);
-		cy.cGet('.w2ui-tb-image.w2ui-icon.togglemergecells').click();
+		cy.cGet('#toolbar-down #togglemergecells').click();
 		calcHelper.selectCellsInRange('A1:CV1');
 		cy.cGet('#copy-paste-container table td').should('have.attr', 'colspan', '100');
 	});
@@ -100,7 +100,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Interact with bottom toolba
 		cy.get('@currentTextEndPos').as('originalTextEndPos');
 		cy.get('@currentTextEndPos').should('be.greaterThan', 0);
 		calcHelper.clickOnFirstCell();
-		cy.cGet('.w2ui-tb-image.w2ui-icon.wraptext').click();
+		cy.cGet('#toolbar-down #wraptext').click();
 
 		// We use the text position as indicator
 		cy.waitUntil(function() {
