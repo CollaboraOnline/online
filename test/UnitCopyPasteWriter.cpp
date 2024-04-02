@@ -77,20 +77,37 @@ public:
 
         // Then make sure asking for multiple, specific formats results in a JSON answer, it's what
         // JS expects:
-        std::string clipURI = getSessionClipboardURI(0);
-        clipURI += "&MimeType=text/html,text/plain;charset=utf-8";
-        std::shared_ptr<http::Session> httpSession = http::Session::create(clipURI);
-        std::shared_ptr<const http::Response> httpResponse =
-            httpSession->syncRequest(http::Request(Poco::URI(clipURI).getPathAndQuery()));
-        LOK_ASSERT_EQUAL(http::StatusCode::OK, httpResponse->statusLine().statusCode());
-        std::string body = httpResponse->getBody();
-        Poco::JSON::Object::Ptr object;
-        // This failed, we didn't return JSON.
-        LOK_ASSERT(JsonUtil::parseJSON(body, object));
-        LOK_ASSERT(object->has("text/html"));
-        std::string expectedPlainText("    • first\n    • second\n    • third");
-        std::string actualPlainText = object->get("text/plain;charset=utf-8").toString();
-        LOK_ASSERT_EQUAL(actualPlainText, expectedPlainText);
+        {
+            std::string clipURI = getSessionClipboardURI(0);
+            clipURI += "&MimeType=text/html,text/plain;charset=utf-8";
+            std::shared_ptr<http::Session> httpSession = http::Session::create(clipURI);
+            std::shared_ptr<const http::Response> httpResponse =
+                httpSession->syncRequest(http::Request(Poco::URI(clipURI).getPathAndQuery()));
+            LOK_ASSERT_EQUAL(http::StatusCode::OK, httpResponse->statusLine().statusCode());
+            std::string body = httpResponse->getBody();
+            Poco::JSON::Object::Ptr object;
+            // This failed, we didn't return JSON.
+            LOK_ASSERT(JsonUtil::parseJSON(body, object));
+            LOK_ASSERT(object->has("text/html"));
+            std::string expectedPlainText("    • first\n    • second\n    • third");
+            std::string actualPlainText = object->get("text/plain;charset=utf-8").toString();
+            LOK_ASSERT_EQUAL(actualPlainText, expectedPlainText);
+        }
+
+        // Now also test HTML only:
+        {
+            std::string clipURI = getSessionClipboardURI(0);
+            clipURI += "&MimeType=text/html";
+            std::shared_ptr<http::Session> httpSession = http::Session::create(clipURI);
+            std::shared_ptr<const http::Response> httpResponse =
+                httpSession->syncRequest(http::Request(Poco::URI(clipURI).getPathAndQuery()));
+            LOK_ASSERT_EQUAL(http::StatusCode::OK, httpResponse->statusLine().statusCode());
+            std::string body = httpResponse->getBody();
+            Poco::JSON::Object::Ptr object;
+            LOK_ASSERT(JsonUtil::parseJSON(body, object));
+            LOK_ASSERT(object->has("text/html"));
+        }
+
         TRANSITION_STATE(_phase, Phase::WaitDocClose);
         socket->asyncShutdown();
         LOK_ASSERT(socket->waitForDisconnection(std::chrono::seconds(5)));

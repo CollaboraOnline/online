@@ -1273,7 +1273,7 @@ bool ChildSession::getClipboard(const StringVector& tokens)
 
     // FIXME: extra 'content' is necessary for Message parsing.
     Util::vectorAppend(output, "clipboardcontent: content\n");
-    bool json = specifics.size() > 1;
+    bool json = !specifics.empty();
     Poco::JSON::Object selectionObject;
     LOG_TRC("Building clipboardcontent: " << nOutCount << " items");
     for (size_t i = 0; i < nOutCount; ++i)
