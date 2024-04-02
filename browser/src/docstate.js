@@ -21,8 +21,9 @@ window.app = {
 	roundedDpiScale: Math.round(window.devicePixelRatio),
 	map: null, // Make map object a part of this.
 	dispatcher: null, // A Dispatcher class instance is assigned to this.
-	twipsToPixels: 0, // Twips to pixels multiplier.
-	pixelsToTwips: 0, // Pixels to twips multiplier.
+	twipsToPixels: 0, // Twips to core (canvas) pixels multiplier.
+	pixelsToTwips: 0, // Core (canvas) pixels to twips multiplier.
+	tilesSectionRectangle: null, // // See docstatefunctions.js.
 	UI: {
 		language: {
 			fromURL: window.langParam, // This is set in global.js.
@@ -55,11 +56,8 @@ window.app = {
 		fileBasedView: false, // (draw-impress only) Default is false. For read-only documents, user can view all parts at once. In that case, this variable is set to "true".
 		calc: {
 			cellCursor: {
-				address: [0, 0],
-				rectangle: {
-					pixels: [0, 0, 0, 0],
-					twips: [0, 0, 0, 0]
-				},
+				address: null, // See docstatefunctions.js.
+				rectangle: null, // See docstatefunctions.js.
 				visible: false,
 			}
 		},

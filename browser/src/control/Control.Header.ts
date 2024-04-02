@@ -669,7 +669,7 @@ export class HeaderInfo {
 
 	findXInCellSelections (cellSelections: cool.Rectangle[], ordinate: number): boolean {
 		for (let i = 0; i < cellSelections.length; i++) {
-			if (cellSelections[i].containsPixelOrdinateX(ordinate))
+			if (cellSelections[i].pContainsX(ordinate))
 				return true;
 		}
 		return false;
@@ -677,7 +677,7 @@ export class HeaderInfo {
 
 	findYInCellSelections (cellSelections: cool.Rectangle[], ordinate: number): boolean {
 		for (let i = 0; i < cellSelections.length; i++) {
-			if (cellSelections[i].containsPixelOrdinateY(ordinate))
+			if (cellSelections[i].pContainsY(ordinate))
 				return true;
 		}
 		return false;
@@ -702,9 +702,10 @@ export class HeaderInfo {
 		const cellSelections: cool.Rectangle[] = this._map._docLayer._cellSelections;
 		let currentIndex = -1;
 
-		if (this._map._docLayer._cellCursorXY) {
-			currentIndex = this._isColumn ? this._map._docLayer._cellCursorXY.x: this._map._docLayer._cellCursorXY.y;
-		}
+		if (app.file.calc.cellCursor.visible)
+			currentIndex = this._isColumn ? app.file.calc.cellCursor.address.x: app.file.calc.cellCursor.address.y;
+		else
+			currentIndex = -1;
 
 		if (currentIndex === -1 && this._map._docLayer._prevCellCursorXY) {
 			currentIndex = this._isColumn ? this._map._docLayer._prevCellCursorXY.x : this._map._docLayer._prevCellCursorXY.y;

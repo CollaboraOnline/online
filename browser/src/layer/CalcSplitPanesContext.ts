@@ -19,7 +19,7 @@ export class CalcSplitPanesContext extends SplitPanesContext {
 
 	protected _setDefaults(): void {
 		this._part = this._docLayer.getSelectedPart() as number;
-		this._splitPos = new Point(0, 0);
+		this._splitPos = new SimplePoint(0, 0);
 		this._splitCell = new Point(0, 0);
 	}
 

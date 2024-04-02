@@ -268,22 +268,16 @@ export class SheetGeometry {
 
 	// accepts a rectangle in print twips coordinates and returns the equivalent rectangle
 	// in tile-twips aligned to the cells.
-	public getTileTwipsSheetAreaFromPrint(rectangle: Bounds): Bounds {
-		if (!(rectangle instanceof L.Bounds)) {
-			console.error('Bad argument type, expected L.Bounds');
+	public getTileTwipsSheetAreaFromPrint(rectangle: cool.Rectangle): cool.Rectangle {
+		if (!(rectangle instanceof cool.Rectangle)) {
+			console.error('Bad argument type, expected cool.Rectangle');
 			return rectangle;
 		}
 
-		var topLeft = rectangle.getTopLeft();
-		var bottomRight = rectangle.getBottomRight();
+		var horizBounds = this._columns.getTileTwipsRangeFromPrint(rectangle.x1, rectangle.x2);
+		var vertBounds = this._rows.getTileTwipsRangeFromPrint(rectangle.y1, rectangle.y2);
 
-		var horizBounds = this._columns.getTileTwipsRangeFromPrint(topLeft.x, bottomRight.x);
-		var vertBounds = this._rows.getTileTwipsRangeFromPrint(topLeft.y, bottomRight.y);
-
-		topLeft = new L.Point(horizBounds.startpos, vertBounds.startpos);
-		bottomRight = new L.Point(horizBounds.endpos, vertBounds.endpos);
-
-		return new L.Bounds(topLeft, bottomRight);
+		return new cool.Rectangle(horizBounds.startpos, vertBounds.startpos, (horizBounds.endpos - horizBounds.startpos), (vertBounds.endpos - vertBounds.startpos));
 	}
 
 	// Returns full sheet size as L.Point in the given unit.
@@ -304,8 +298,8 @@ export class SheetGeometry {
 		return new L.Bounds(topLeft, topLeft.add(size));
 	}
 
-	public getCellFromPos(pos: Point, unit: GeometryUnit): Point {
-		console.assert(pos instanceof L.Point);
+	public getCellFromPos(pos: cool.SimplePoint, unit: GeometryUnit): Point {
+		console.assert(pos instanceof cool.SimplePoint);
 		return new L.Point(
 			this._columns.getIndexFromPos(pos.x, unit),
 			this._rows.getIndexFromPos(pos.y, unit)

@@ -15,6 +15,13 @@
 
 /* global app */
 
+// Initiate docstate variables here. Better than checking them inside functions lik if(isnull) etc.
+window.addEventListener('load', function() {
+	app.file.calc.cellCursor.address = new app.definitions.simplePoint(-1, -1);
+	app.file.calc.cellCursor.rectangle = new app.defintions.rectangle(0, 0, 0, 0);
+	app.tilesSectionRectangle = new app.definitions.rectangle(0, 0, 0, 0);
+});
+
 app.isReadOnly = function () {
 	return app.file.readOnly;
 };

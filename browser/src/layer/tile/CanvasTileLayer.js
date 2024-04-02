@@ -896,7 +896,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		// Original rectangle of cell cursor in twips
 		this._cellCursorTwips = new L.Bounds(new L.Point(0, 0), new L.Point(0, 0));
 		// Rectangle for cell cursor
-		this._cellCursor =  L.LatLngBounds.createDefault();
 		this._prevCellCursor = L.LatLngBounds.createDefault();
 		this._cellCursorOnPgUp = null;
 		this._cellCursorOnPgDn = null;
@@ -2476,27 +2475,19 @@ L.CanvasTileLayer = L.Layer.extend({
 	_onCellCursorMsg: function (textMsg) {
 		var autofillMarkerSection = app.sectionContainer.getSectionWithName(L.CSections.AutoFillMarker.name);
 
-		if (!this._cellCursor) {
-			this._cellCursor = L.LatLngBounds.createDefault();
-		}
 		if (!this._prevCellCursor) {
-			this._prevCellCursor = L.LatLngBounds.createDefault();
+			this._prevCellCursor = new app.definitions.rectangle(0, 0, 0, 0);
 		}
-		if (!this._cellCursorXY) {
-			this._cellCursorXY = new L.Point(-1, -1);
-		}
+
 		if (!this._prevCellCursorXY) {
 			this._prevCellCursorXY = new L.Point(-1, -1);
 		}
 
-		var oldCursorXY = this._cellCursorXY.clone();
+		var oldCursorXY = app.file.calc.cellCursor.address.clone();
 
 		if (textMsg.match('EMPTY')) {
 			app.file.calc.cellCursor.visible = false;
-			this._cellCursorTwips = new L.Bounds(new L.Point(0, 0), new L.Point(0, 0));
-			this._cellCursor = L.LatLngBounds.createDefault();
-			this._cellCursorXY = new L.Point(-1, -1);
-			this._cellCursorPixels = null;
+
 			if (autofillMarkerSection)
 				autofillMarkerSection.calculatePositionViaCellCursor(null);
 			if (this._map._clip)
@@ -2505,27 +2496,16 @@ L.CanvasTileLayer = L.Layer.extend({
 		else {
 			var strTwips = textMsg.match(/\d+/g);
 
-			var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
-			var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
-			var bottomRightTwips = topLeftTwips.add(offset);
-			this._cellCursorTwips = this._convertToTileTwipsSheetArea(
-				new L.Bounds(topLeftTwips, bottomRightTwips));
-			this._cellCursor = new L.LatLngBounds(
-				this._twipsToLatLng(this._cellCursorTwips.getTopLeft(), this._map.getZoom()),
-				this._twipsToLatLng(this._cellCursorTwips.getBottomRight(), this._map.getZoom()));
+			app.file.calc.cellCursor.rectangle = new app.definitions.rectangle(parseInt(strTwips[0]), parseInt(strTwips[1]), parseInt(strTwips[2]), parseInt(strTwips[3]));
+			app.file.calc.cellCursor.rectangle = this._convertToTileTwipsSheetArea(app.file.calc.cellCursor.rectangle);
 
-			var start = this._twipsToCorePixels(this._cellCursorTwips.min);
-			var offsetPixels = this._twipsToCorePixels(this._cellCursorTwips.getSize());
-			this._cellCursorPixels = L.LOUtil.createRectangle(start.x, start.y, offsetPixels.x, offsetPixels.y);
-			app.file.calc.cellCursor.address = [parseInt(strTwips[4]), parseInt(strTwips[5])];
-			app.file.calc.cellCursor.rectangle.pixels = [Math.round(start.x), Math.round(start.y), Math.round(offsetPixels.x), Math.round(offsetPixels.y)];
-			app.file.calc.cellCursor.rectangle.twips = this._cellCursorTwips.toRectangle();
 			app.file.calc.cellCursor.visible = true;
-			app.sectionContainer.onCellAddressChanged();
-			if (autofillMarkerSection)
-				autofillMarkerSection.calculatePositionViaCellCursor([this._cellCursorPixels.getX2(), this._cellCursorPixels.getY2()]);
+			app.file.calc.cellCursor.address = new app.definitions.simplePoint(parseInt(strTwips[4], parseInt(strTwips[5])));
 
-			this._cellCursorXY = new L.Point(parseInt(strTwips[4]), parseInt(strTwips[5]));
+			app.sectionContainer.onCellAddressChanged();
+
+			if (autofillMarkerSection)
+				autofillMarkerSection.calculatePositionViaCellCursor([app.file.calc.cellCursor.rectangle.pX2, app.file.calc.cellCursor.rectangle.pY2]);
 		}
 
 		var horizontalDirection = 0;
@@ -2552,7 +2532,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._prevCellCursor = new L.LatLngBounds(this._cellCursor.getSouthWest(), this._cellCursor.getNorthEast());
 		}
 
-		var sameAddress = oldCursorXY.equals(this._cellCursorXY);
+		var sameAddress = oldCursorXY.equals(app.file.calc.cellCursor.address.toArray());
 
 		var scrollToCursor = this._sheetSwitch.tryRestore(sameAddress, this._selectedPart);
 
@@ -3555,13 +3535,10 @@ L.CanvasTileLayer = L.Layer.extend({
 
 			var offsetPixels = this._twipsToCorePixels(boundsTwips.getSize());
 			var start = this._twipsToCorePixels(boundsTwips.min);
-			var cellSelectionAreaPixels = L.LOUtil.createRectangle(start.x, start.y, offsetPixels.x, offsetPixels.y);
+			var cellSelectionAreaPixels = app.definitions.rectangle(start.x, start.y, offsetPixels.x, offsetPixels.y);
 			if (autofillMarkerSection)
 				autofillMarkerSection.calculatePositionViaCellSelection([cellSelectionAreaPixels.getX2(), cellSelectionAreaPixels.getY2()]);
 
-			if (this._cellCursor === null) {
-				this._cellCursor = L.LatLngBounds.createDefault();
-			}
 			this._updateScrollOnCellSelection(oldSelection, this._cellSelectionArea);
 		} else {
 			this._cellSelectionArea = null;
@@ -3583,7 +3560,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 			var topLeftPixels = this._twipsToCorePixels(topLeftTwips);
 			var offsetPixels = this._twipsToCorePixels(offset);
-			this._cellAutoFillAreaPixels = L.LOUtil.createRectangle(topLeftPixels.x, topLeftPixels.y, offsetPixels.x, offsetPixels.y);
+			this._cellAutoFillAreaPixels = app.definitions.rectangle(topLeftPixels.x, topLeftPixels.y, offsetPixels.x, offsetPixels.y);
 		}
 		else {
 			this._cellAutoFillAreaPixels = null;
@@ -3679,8 +3656,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		// hide the graphic selection
 		this._graphicSelection = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(0, 0));
 		this._onUpdateGraphicSelection();
-		this._cellCursor = null;
-		this._cellCursorXY = null;
 		this._prevCellCursor = null;
 		this._prevCellCursorXY = null;
 		this._onUpdateCellCursor();
@@ -5117,7 +5092,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	// converts rectangle in print-twips to tile-twips rectangle of the smallest cell-range that encloses it.
 	_convertToTileTwipsSheetArea: function (rectangle) {
-		if (!(rectangle instanceof L.Bounds) || !this.options.printTwipsMsgsEnabled || !this.sheetGeometry) {
+		if (!(rectangle instanceof app.definitions.rectangle) || !this.options.printTwipsMsgsEnabled || !this.sheetGeometry) {
 			return rectangle;
 		}
 
@@ -5395,16 +5370,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 	},
 
-	_getTilesSectionRectangle: function () {
-		var section = app.sectionContainer.getSectionWithName(L.CSections.Tiles.name);
-		if (section) {
-			return L.LOUtil.createRectangle(section.myTopLeft[0] / app.dpiScale, section.myTopLeft[1] / app.dpiScale, section.size[0] / app.dpiScale, section.size[1] / app.dpiScale);
-		}
-		else {
-			return L.LOUtil.createRectangle(0, 0, 0, 0);
-		}
-	},
-
 	_getRealMapSize: function() {
 		this._map._sizeChanged = true; // force using real size
 		return this._map.getPixelBounds().getSize();
@@ -5425,15 +5390,14 @@ L.CanvasTileLayer = L.Layer.extend({
 
 			var oldSize = this._getRealMapSize();
 
-			var rectangle = this._getTilesSectionRectangle();
 			var mapElement = document.getElementById('map'); // map's size = tiles section's size.
-			mapElement.style.left = rectangle.getPxX1() + 'px';
-			mapElement.style.top = rectangle.getPxY1() + 'px';
-			mapElement.style.width = rectangle.getPxWidth() + 'px';
-			mapElement.style.height = rectangle.getPxHeight() + 'px';
+			mapElement.style.left = app.tilesSectionRectangle.pX1 + 'px';
+			mapElement.style.top = app.tilesSectionRectangle.pY1 + 'px';
+			mapElement.style.width = app.tilesSectionRectangle.pWidth + 'px';
+			mapElement.style.height = app.tilesSectionRectangle.pHeight + 'px';
 
-			tileContainer.style.width = rectangle.getPxWidth() + 'px';
-			tileContainer.style.height = rectangle.getPxHeight() + 'px';
+			tileContainer.style.width = app.tilesSectionRectangle.pWidth + 'px';
+			tileContainer.style.height = app.tilesSectionRectangle.pHeight + 'px';
 
 			var newSize = this._getRealMapSize();
 			var heightIncreased = oldSize.y < newSize.y;

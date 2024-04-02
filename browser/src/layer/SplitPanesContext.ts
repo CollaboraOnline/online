@@ -35,7 +35,7 @@ export class SplitPanesContext {
 
 	protected _docLayer: any;
 	protected _map: any;
-	protected _splitPos: Point;
+	protected _splitPos: SimplePoint;
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	constructor(docLayer: any, createSplitters: boolean = false) {
@@ -52,7 +52,7 @@ export class SplitPanesContext {
 	}
 
 	protected _setDefaults(): void {
-		this._splitPos = new Point(0, 0);
+		this._splitPos = new SimplePoint(0, 0);
 	}
 
 	public get options(): SplitPanesOptions {
@@ -77,7 +77,7 @@ export class SplitPanesContext {
 			this._map.fire('splitposchanged');
 	}
 
-	public getSplitPos(): Point {
+	public getSplitPos(): SimplePoint {
 		return this._splitPos.divideBy(app.dpiScale as number);
 	}
 

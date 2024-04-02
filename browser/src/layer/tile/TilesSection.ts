@@ -75,7 +75,7 @@ export class TilesSection extends CanvasSectionObject {
 	}
 
 	public onResize (): void {
-		// empty: probably safe to remove this method and use parent CanvasSectionObject::onResize
+		app.tilesSectionRectangle = new app.definitions.rectangle(this.myTopLeft[0] / app.dpiScale, this.myTopLeft[1] / app.dpiScale, this.size[0] / app.dpiScale, this.size[1] / app.dpiScale);
 	}
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types

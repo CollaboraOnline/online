@@ -42,8 +42,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		}
 
 		if (!comment) {
-			var pixelStart = new L.Point(Math.ceil(this._cellCursorPixels.getX1()),
-						     Math.ceil(this._cellCursorPixels.getY1()));
+			var pixelStart = new app.definitions.simplePoint(app.file.calc.cellCursor.rectangle.pX1, app.file.calc.cellCursor.pY1);
 			var rangeStart = this.sheetGeometry.getCellFromPos(pixelStart, 'corepixels');
 			var pixelEnd = new L.Point(Math.floor(this._cellCursorPixels.getX2() - 1),
 						   Math.floor(this._cellCursorPixels.getY2() - 1));
@@ -98,7 +97,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 
 	_resetInternalState: function() {
 		this._cellSelections = Array(0);
-		this._cellCursorXY = new L.Point(-1, -1);
+		app.file.calc.cellCursor.visible = false;
 		this._gotFirstCellCursor = false;
 		this._lastColumn = 0; // with data
 		this._lastRow = 0; // with data
@@ -338,9 +337,9 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 
 	_getCursorPosSize: function () {
 		var x = -1, y = -1;
-		if (this._cellCursorXY) {
-			x = this._cellCursorXY.x + 1;
-			y = this._cellCursorXY.y + 1;
+		if (app.file.calc.cellCursor.visible) {
+			x = app.file.calc.cellCursor.address.x + 1;
+			y = app.file.calc.cellCursor.address.y + 1;
 		}
 		var size = new L.Point(0, 0);
 		if (this._cellCursor && !this._isEmptyRectangle(this._cellCursor)) {
@@ -972,8 +971,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 	_onTextSelectionMsg: function (textMsg) {
 		L.CanvasTileLayer.prototype._onTextSelectionMsg.call(this, textMsg);
 		// If this is a cellSelection message, user shouldn't be editing a cell. Below check is for ensuring that.
-		if ((this.insertMode === false || this._map._isCursorVisible == false) &&
-		    this._cellCursorXY && this._cellCursorXY.x !== -1) {
+		if ((this.insertMode === false || this._map._isCursorVisible == false) && app.file.calc.cellCursor.visible) {
 			// When insertMode is false, this is a cell selection message.
 			textMsg = textMsg.replace('textselection:', '');
 			if (textMsg.trim() !== 'EMPTY' && textMsg.trim() !== '') {
@@ -987,7 +985,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 					var bottomRightTwips = topLeftTwips.add(offset);
 					var boundsTwips = that._convertToTileTwipsSheetArea(new L.Bounds(topLeftTwips, bottomRightTwips));
 
-					element = L.LOUtil.createRectangle(boundsTwips.min.x * ratio, boundsTwips.min.y * ratio, boundsTwips.getSize().x * ratio, boundsTwips.getSize().y * ratio);
+					element = new app.definitions.rectangle(boundsTwips.min.x * ratio, boundsTwips.min.y * ratio, boundsTwips.getSize().x * ratio, boundsTwips.getSize().y * ratio);
 					return element;
 				});
 			}
@@ -1107,7 +1105,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 
 		var scroll = new L.LatLng(0, 0);
 
-		if (!this._cellCursor || this._isEmptyRectangle(this._cellCursor)) {
+		if (!app.file.calc.cellCursor.visible) {
 			return scroll;
 		}
 
