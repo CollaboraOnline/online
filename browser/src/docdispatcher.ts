@@ -76,62 +76,6 @@ class Dispatcher {
 			app.map.uiManager.enterReadonlyOrClose();
 		};
 
-		this.actionsMap['comment_wizard'] = function () {
-			const configuration = window as any;
-			if (configuration.commentWizard) {
-				configuration.commentWizard = false;
-				app.sectionContainer
-					.getSectionWithName(L.CSections.CommentList.name)
-					.removeHighlighters();
-				app.map.fire('closemobilewizard');
-				//app.map.mobileTopBar.uncheck(id);
-			} else {
-				if (configuration.insertionMobileWizard)
-					app.dispatcher.dispatch('insertion_mobile_wizard');
-				else if (configuration.mobileWizard)
-					app.dispatcher.dispatch('mobile_wizard');
-				configuration.commentWizard = true;
-				var menuData = app.map._docLayer.getCommentWizardStructure();
-				app.map.fire('mobilewizard', { data: menuData });
-				//app.map.mobileTopBar.check(id);
-			}
-		};
-		this.actionsMap['mobile_wizard'] = () => {
-			const configuration = window as any;
-			if (configuration.mobileWizard) {
-				configuration.mobileWizard = false;
-				app.map.sendUnoCommand('.uno:SidebarHide');
-				app.map.fire('closemobilewizard');
-				//app.map.mobileTopBar.uncheck(id);
-			} else {
-				if (configuration.insertionMobileWizard)
-					app.dispatcher.dispatch('insertion_mobile_wizard');
-				else if (configuration.commentWizard)
-					app.dispatcher.dispatch('comment_wizard');
-				configuration.mobileWizard = true;
-				app.map.sendUnoCommand('.uno:SidebarShow');
-				app.map.fire('showwizardsidebar');
-				//app.map.mobileTopBar.check(id);
-			}
-		};
-		this.actionsMap['insertion_mobile_wizard'] = () => {
-			const configuration = window as any;
-			if (configuration.insertionMobileWizard) {
-				configuration.insertionMobileWizard = false;
-				app.map.fire('closemobilewizard');
-				//app.map.mobileTopBar.uncheck(id);
-			} else {
-				if (configuration.mobileWizard)
-					app.dispatcher.dispatch('mobile_wizard');
-				else if (configuration.commentWizard)
-					app.dispatcher.dispatch('comment_wizard');
-				configuration.insertionMobileWizard = true;
-				const menuData = app.map.menubar.generateInsertMenuStructure();
-				app.map.fire('mobilewizard', { data: menuData });
-				//app.map.mobileTopBar.check(id);
-			}
-		};
-
 		this.actionsMap['toggledarktheme'] = function () {
 			app.map.uiManager.toggleDarkMode();
 		};
@@ -518,6 +462,75 @@ class Dispatcher {
 		};
 	}
 
+	private addMobileCommands() {
+		this.actionsMap['comment_wizard'] = function () {
+			const configuration = window as any;
+			if (configuration.commentWizard) {
+				configuration.commentWizard = false;
+				app.sectionContainer
+					.getSectionWithName(L.CSections.CommentList.name)
+					.removeHighlighters();
+				app.map.fire('closemobilewizard');
+				//app.map.mobileTopBar.uncheck(id);
+			} else {
+				if (configuration.insertionMobileWizard)
+					app.dispatcher.dispatch('insertion_mobile_wizard');
+				else if (configuration.mobileWizard)
+					app.dispatcher.dispatch('mobile_wizard');
+				configuration.commentWizard = true;
+				var menuData = app.map._docLayer.getCommentWizardStructure();
+				app.map.fire('mobilewizard', { data: menuData });
+				//app.map.mobileTopBar.check(id);
+			}
+		};
+		this.actionsMap['mobile_wizard'] = () => {
+			const configuration = window as any;
+			if (configuration.mobileWizard) {
+				configuration.mobileWizard = false;
+				app.map.sendUnoCommand('.uno:SidebarHide');
+				app.map.fire('closemobilewizard');
+				//app.map.mobileTopBar.uncheck(id);
+			} else {
+				if (configuration.insertionMobileWizard)
+					app.dispatcher.dispatch('insertion_mobile_wizard');
+				else if (configuration.commentWizard)
+					app.dispatcher.dispatch('comment_wizard');
+				configuration.mobileWizard = true;
+				app.map.sendUnoCommand('.uno:SidebarShow');
+				app.map.fire('showwizardsidebar');
+				//app.map.mobileTopBar.check(id);
+			}
+		};
+		this.actionsMap['insertion_mobile_wizard'] = () => {
+			const configuration = window as any;
+			if (configuration.insertionMobileWizard) {
+				configuration.insertionMobileWizard = false;
+				app.map.fire('closemobilewizard');
+				//app.map.mobileTopBar.uncheck(id);
+			} else {
+				if (configuration.mobileWizard)
+					app.dispatcher.dispatch('mobile_wizard');
+				else if (configuration.commentWizard)
+					app.dispatcher.dispatch('comment_wizard');
+				configuration.insertionMobileWizard = true;
+				const menuData = app.map.menubar.generateInsertMenuStructure();
+				app.map.fire('mobilewizard', { data: menuData });
+				//app.map.mobileTopBar.check(id);
+			}
+		};
+
+		this.actionsMap['fontcolor'] = () => {
+			app.map.fire('mobilewizard', {
+				data: (window as any).getColorPickerData('Font Color'),
+			});
+		};
+		this.actionsMap['backcolor'] = () => {
+			app.map.fire('mobilewizard', {
+				data: (window as any).getColorPickerData('Highlight Color'),
+			});
+		};
+	}
+
 	constructor() {
 		this.addGeneralCommands();
 		this.addExportCommands();
@@ -532,6 +545,8 @@ class Dispatcher {
 		) {
 			this.addImpressAndDrawCommands();
 		}
+
+		if (window.mode.isMobile()) this.addMobileCommands();
 	}
 
 	public dispatch(action: string) {
