@@ -2976,11 +2976,19 @@ L.CanvasTileLayer = L.Layer.extend({
 			delete this._viewSelections[viewId];
 		}
 
-		// Remove the view and update (to refresh as needed).
+		// update viewcursor in writer
 		if (typeof this._viewCursors[viewId] !== 'undefined') {
 			this._viewCursors[viewId].visible = false;
 			this._onUpdateViewCursor(viewId);
 			delete this._viewCursors[viewId];
+		}
+
+		//  update cellviewcursor in calc
+		if (typeof this._cellViewCursors[viewId] !== 'undefined') {
+			this._cellViewCursors[viewId].bounds = L.LatLngBounds.createDefault();
+			this._cellViewCursors[viewId].corePixelBounds = new L.Bounds();
+			this._onUpdateCellViewCursor(viewId);
+			delete this._cellViewCursors[viewId];
 		}
 
 		this._map.removeView(viewId);
