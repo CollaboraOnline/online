@@ -223,27 +223,33 @@ public:
                             const Poco::URI wopiURL(helpers::getTestServerURI() + wopiPath +
                                                     "&testname=" + getTestname());
 
-                            std::string wopiSrc = Util::encodeURIComponent(wopiURL.toString());
+                            const std::string wopiSrc =
+                                Util::encodeURIComponent(wopiURL.toString());
+                            const std::string documentURL = "/cool/" + wopiSrc + "/ws";
 
                             // This is just a client connection that is used from the tests.
                             LOG_TST("Connecting test client to COOL (#"
-                                    << _count << " connection): /cool/" << wopiSrc << "/ws");
+                                    << _count << " connection): " << documentURL);
 
                             Poco::URI uri(helpers::getTestServerURI());
-                            const std::string documentURL = "/cool/" + wopiSrc + "/ws";
 
                             std::shared_ptr<http::WebSocketSession> ws =
                                 http::WebSocketSession::create(uri.toString());
-                            _webSessions.emplace_back(ws);
-
                             TST_LOG("Connection to " << uri.toString() << " is "
                                                      << (ws->secure() ? "secure" : "plain"));
 
                             http::Request req(documentURL);
-                            ws->asyncRequest(req, socketPoll());
-
-                            LOG_TST("Load #" << _count);
-                            helpers::sendTextFrame(ws, "load url=" + wopiSrc, getTestname());
+                            if (ws->asyncRequest(req, socketPoll()))
+                            {
+                                _webSessions.emplace_back(ws);
+                                LOG_TST("Load #" << _count);
+                                helpers::sendTextFrame(ws, "load url=" + wopiSrc, getTestname());
+                            }
+                            else
+                            {
+                                LOG_TST("Failed async request #" << _count << " to "
+                                                                 << documentURL);
+                            }
                         }
                     });
             }
