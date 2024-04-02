@@ -296,7 +296,7 @@ L.Control.UIManager = L.Control.extend({
 			this.map.addControl(L.control.mobileBottomBar(docType));
 			this.map.mobileTopBar = L.control.mobileTopBar(docType);
 			this.map.addControl(this.map.mobileTopBar);
-			this.map.addControl(L.control.searchBar());
+			this.map.mobileSearchBar = L.control.searchBar(this.map);
 		} else if (enableNotebookbar) {
 			this.createNotebookbarControl(docType);
 			// makeSpaceForNotebookbar call in onUpdatePermission

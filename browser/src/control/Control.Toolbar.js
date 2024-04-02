@@ -55,10 +55,6 @@ function getToolbarItemById(id) {
 		toolbar = w2ui['actionbar'];
 		item = toolbar.get(id);
 	}
-	else if (w2ui['searchbar'].get(id) !== null) {
-		toolbar = w2ui['searchbar'];
-		item = toolbar.get(id);
-	}
 	else {
 		throw new Error('unknown id: ' + id);
 	}
@@ -812,28 +808,21 @@ function unoCmdToToolbarId(commandname)
 }
 
 function updateSearchButtons() {
-	var toolbar = window.mode.isMobile() ? w2ui['searchbar'] : null;
-	var statusBar = app.map.statusBar;
+	var toolbar = window.mode.isMobile() ? app.map.mobileSearchBar: app.map.statusBar;
+	if (!toolbar) {
+		console.debug('Cannot find search bar');
+		return;
+	}
+
 	// conditionally disabling until, we find a solution for tdf#108577
 	if (L.DomUtil.get('search-input').value === '') {
-		if (statusBar) {
-			statusBar.enableItem('searchprev', false);
-			statusBar.enableItem('searchnext', false);
-			statusBar.showItem('cancelsearch', false);
-		} else {
-			toolbar.disable('searchprev');
-			toolbar.disable('searchnext');
-			toolbar.hide('cancelsearch');
-		}
-	}
-	else if (statusBar) {
-		statusBar.enableItem('searchprev', true);
-		statusBar.enableItem('searchnext', true);
-		statusBar.showItem('cancelsearch', true);
+		toolbar.enableItem('searchprev', false);
+		toolbar.enableItem('searchnext', false);
+		toolbar.showItem('cancelsearch', false);
 	} else {
-		toolbar.enable('searchprev');
-		toolbar.enable('searchnext');
-		toolbar.show('cancelsearch');
+		toolbar.enableItem('searchprev', true);
+		toolbar.enableItem('searchnext', true);
+		toolbar.showItem('cancelsearch', true);
 	}
 }
 
@@ -1216,7 +1205,11 @@ function setupToolbar(e) {
 
 	map.on('search', function (e) {
 		var searchInput = L.DomUtil.get('search-input');
-		var toolbar = app.map.statusBar;
+		var toolbar = window.mode.isMobile() ? app.map.mobileSearchBar: app.map.statusBar;
+		if (!toolbar) {
+			console.debug('Cannot find search bar');
+			return;
+		}
 		if (e.count === 0) {
 			toolbar.enableItem('searchprev', false);
 			toolbar.enableItem('searchnext', false);

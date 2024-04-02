@@ -12,7 +12,7 @@
  * Toolbar handler
  */
 
-/* global app $ window sanitizeUrl brandProductName brandProductURL _ w2ui */
+/* global app $ window sanitizeUrl brandProductName brandProductURL _ */
 L.Map.include({
 
 	// a mapping of uno commands to more readable toolbar items
@@ -1007,24 +1007,19 @@ L.Map.include({
 	},
 
 	cancelSearch: function() {
-		var toolbar = window.mode.isMobile() ? w2ui['searchbar'] : null;
-		var statusBar = this.statusBar;
+		var toolbar = window.mode.isMobile() ? app.map.mobileSearchBar: app.map.statusBar;
 		var searchInput = L.DomUtil.get('search-input');
 		this.resetSelection();
 		if (toolbar) {
-			toolbar.hide('cancelsearch');
-			toolbar.disable('searchprev');
-			toolbar.disable('searchnext');
-		} else if (statusBar) {
-			statusBar.showItem('cancelsearch', false);
-			statusBar.enableItem('searchprev', false);
-			statusBar.enableItem('searchnext', false);
+			toolbar.showItem('cancelsearch', false);
+			toolbar.enableItem('searchprev', false);
+			toolbar.enableItem('searchnext', false);
 		}
 		searchInput.value = '';
 		if (window.mode.isMobile()) {
 			searchInput.focus();
 			// odd, but on mobile we need to invoke it twice
-			toolbar.hide('cancelsearch');
+			toolbar.showItem('cancelsearch', false);
 		}
 
 		this._onGotFocus();
