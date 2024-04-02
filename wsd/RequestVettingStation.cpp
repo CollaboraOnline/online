@@ -250,7 +250,7 @@ void RequestVettingStation::handleRequest(const std::string& id,
 #if !MOBILEAPP
 void RequestVettingStation::checkFileInfo(const Poco::URI& uri, bool isReadOnly, int redirectLimit)
 {
-    auto cfiContinuation = [this, isReadOnly]([[maybe_unused]] CheckFileInfo& checkFileInfo)
+    auto cfiContinuation = [this, isReadOnly](CheckFileInfo& checkFileInfo)
     {
         assert(&checkFileInfo == _checkFileInfo.get() && "Unknown CheckFileInfo instance");
         if (_checkFileInfo && _checkFileInfo->state() == CheckFileInfo::State::Pass &&
@@ -300,8 +300,9 @@ void RequestVettingStation::checkFileInfo(const Poco::URI& uri, bool isReadOnly,
     };
 
     // CheckFileInfo asynchronously.
-    _checkFileInfo =
-        std::make_unique<CheckFileInfo>(_poll, uri, std::move(cfiContinuation), redirectLimit);
+    assert(_checkFileInfo == nullptr);
+    _checkFileInfo = std::make_unique<CheckFileInfo>(_poll, uri, std::move(cfiContinuation));
+    _checkFileInfo->checkFileInfo(redirectLimit);
 }
 #endif //!MOBILEAPP
 
