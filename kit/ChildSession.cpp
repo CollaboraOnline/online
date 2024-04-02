@@ -783,7 +783,7 @@ bool ChildSession::loadDocument(const StringVector& tokens)
 
         LOG_INF("Saving the template document after loading to [" << url << ']');
 
-        const bool success = getLOKitDocument()->saveAs(url.c_str(), nullptr, "TakeOwnership");
+        const bool success = getLOKitDocument()->saveAs(url.c_str(), nullptr, "TakeOwnership,FromTemplate");
         if (!success)
         {
             LOG_ERR("Failed to save template [" << url << ']');
