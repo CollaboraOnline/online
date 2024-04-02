@@ -127,8 +127,8 @@ describe(['tagmobile', 'tagproxy'], 'Focus tests', function() {
 		// No focus
 		helper.assertFocus('tagName', 'BODY');
 		// Apply bold
-		helper.clickOnIdle('.unoBold');
-		cy.cGet('.unoBold').should('have.class', 'selected');
+		helper.clickOnIdle('#mobile-wizard .unoBold');
+		cy.cGet('#mobile-wizard .unoBold').should('have.class', 'selected');
 		// No focus
 		helper.assertFocus('tagName', 'BODY');
 		mobileHelper.closeMobileWizard();
@@ -140,10 +140,10 @@ describe(['tagmobile', 'tagproxy'], 'Focus tests', function() {
 		// Grab focus to the document
 		helper.typeIntoDocument('x');
 		helper.selectAllText();
-		cy.cGet('#tb_editbar_item_bold div table').should('not.have.class', 'checked');
+		cy.cGet('#toolbar-down .unoBold').should('not.have.class', 'selected');
 		helper.assertHaveKeyboardInput();
-		cy.cGet('#tb_editbar_item_bold').click();
-		cy.cGet('#tb_editbar_item_bold div table').should('have.class', 'checked');
+		cy.cGet('#toolbar-down .unoBold').click();
+		cy.cGet('#toolbar-down .unoBold').should('have.class', 'selected');
 		helper.assertHaveKeyboardInput();
 	});
 
@@ -153,10 +153,10 @@ describe(['tagmobile', 'tagproxy'], 'Focus tests', function() {
 		// Grab focus to the document
 		helper.typeIntoDocument('x');
 		helper.selectAllText();
-		cy.cGet('#tb_editbar_item_italic div table').should('not.have.class', 'checked');
+		cy.cGet('#toolbar-down .unoItalic').should('not.have.class', 'selected');
 		helper.assertHaveKeyboardInput();
-		cy.cGet('#tb_editbar_item_italic').click();
-		cy.cGet('#tb_editbar_item_italic div table').should('have.class', 'checked');
+		cy.cGet('#toolbar-down .unoItalic').click();
+		cy.cGet('#toolbar-down .unoItalic').should('have.class', 'selected');
 		helper.assertHaveKeyboardInput();
 	});
 
@@ -166,10 +166,10 @@ describe(['tagmobile', 'tagproxy'], 'Focus tests', function() {
 		// Grab focus to the document
 		helper.typeIntoDocument('x');
 		helper.selectAllText();
-		cy.cGet('#tb_editbar_item_underline div table').should('not.have.class', 'checked');
+		cy.cGet('#toolbar-down .unoUnderline').should('not.have.class', 'selected');
 		helper.assertHaveKeyboardInput();
-		cy.cGet('#tb_editbar_item_underline').click();
-		cy.cGet('#tb_editbar_item_underline div table').should('have.class', 'checked');
+		cy.cGet('#toolbar-down .unoUnderline').click();
+		cy.cGet('#toolbar-down .unoUnderline').should('have.class', 'selected');
 		helper.assertHaveKeyboardInput();
 	});
 });

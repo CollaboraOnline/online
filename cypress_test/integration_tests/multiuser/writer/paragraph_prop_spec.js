@@ -18,7 +18,7 @@ describe.skip(['tagmultiuser'], 'Change paragraph properties', function() {
 		cy.cSetActiveFrame('#iframe1');
 		//user 1 change the paragraph alignment
 		cy.cGet('.leaflet-layer').click();
-		cy.cGet('#tb_editbar_item_rightpara').click();
+		cy.cGet('#rightpara').click();
 
 		helper.selectAllText();
 
@@ -35,7 +35,7 @@ describe.skip(['tagmultiuser'], 'Change paragraph properties', function() {
 
 		//user-2 changes alignment to left
 		cy.cGet('.leaflet-layer').click();
-		cy.cGet('#tb_editbar_item_leftpara').click();
+		cy.cGet('#leftpara').click();
 
 		helper.selectAllText();
 

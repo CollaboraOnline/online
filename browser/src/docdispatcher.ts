@@ -40,6 +40,9 @@ class Dispatcher {
 		this.actionsMap['print'] = function () {
 			app.map.print();
 		};
+		this.actionsMap['repair'] = function () {
+			app.socket.sendMessage('commandvalues command=.uno:DocumentRepair');
+		};
 
 		this.actionsMap['remotelink'] = function () {
 			app.map.fire('postMessage', { msgId: 'UI UI_PickLink' });
@@ -104,9 +107,10 @@ class Dispatcher {
 		this.actionsMap['localgraphic'] = function () {
 			L.DomUtil.get('insertgraphic').click();
 		};
-		this.actionsMap['remotegraphic'] = function () {
-			app.map.fire('postMessage', { msgId: 'UI_InsertGraphic' });
-		};
+		this.actionsMap['remotegraphic'] = this.actionsMap['insertremotegraphic'] =
+			function () {
+				app.map.fire('postMessage', { msgId: 'UI_InsertGraphic' });
+			};
 
 		this.actionsMap['showhelp'] = function () {
 			app.map.showHelp('online-help-content');
@@ -162,6 +166,12 @@ class Dispatcher {
 		this.actionsMap['cancelsearch'] = () => {
 			app.map.cancelSearch();
 		};
+		this.actionsMap['showsearchbar'] = () => {
+			$('#toolbar-down').hide();
+			$('#showsearchbar').removeClass('over');
+			$('#toolbar-search').show();
+			L.DomUtil.get('search-input').focus();
+		};
 		this.actionsMap['hidesearchbar'] = () => {
 			$('#toolbar-search').hide();
 			if (app.map.isEditMode()) $('#toolbar-down').show();
@@ -184,6 +194,14 @@ class Dispatcher {
 		};
 		this.actionsMap['insertannotation'] = () => {
 			app.map.insertComment();
+		};
+
+		this.actionsMap['fold'] = this.actionsMap['hamburger-tablet'] = () => {
+			app.map.uiManager.toggleMenubar();
+		};
+
+		this.actionsMap['close'] = this.actionsMap['closemobile'] = () => {
+			app.map.uiManager.enterReadonlyOrClose();
 		};
 	}
 
@@ -318,6 +336,9 @@ class Dispatcher {
 	private addImpressAndDrawCommands() {
 		this.actionsMap['presentation'] = function () {
 			app.map.fire('fullscreen');
+		};
+		this.actionsMap['present-in-window'] = function () {
+			app.map.fire('presentinwindow');
 		};
 		this.actionsMap['fullscreen-drawing'] = () => {
 			L.toggleFullScreen();
@@ -529,6 +550,16 @@ class Dispatcher {
 				data: (window as any).getColorPickerData('Highlight Color'),
 			});
 		};
+		// TODO: leftover from mobile bottom bar
+		// if (id === 'fontcolor' && typeof e.color !== 'undefined') {
+		// 	onColorPick(id, e.color, e.themeData);
+		// }
+		// else if (id === 'backcolor' && typeof e.color !== 'undefined') {
+		// 	onColorPick(id, e.color, e.themeData);
+		// }
+		// else if (id === 'backgroundcolor' && typeof e.color !== 'undefined') {
+		// 	onColorPick(id, e.color, e.themeData);
+		// }
 	}
 
 	constructor() {

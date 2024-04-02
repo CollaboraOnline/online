@@ -3,7 +3,7 @@
  * L.WOPI contains WOPI related logic
  */
 
-/* global w2ui _ app _UNO JSDialog errorMessages */
+/* global _ app _UNO JSDialog errorMessages */
 L.Map.WOPI = L.Handler.extend({
 	// If the CheckFileInfo call fails on server side, we won't have any PostMessageOrigin.
 	// So use '*' because we still needs to send 'close' message to the parent frame which
@@ -320,11 +320,8 @@ L.Map.WOPI = L.Handler.extend({
 				window.app.console.error('Property "Values.id" not set');
 				return;
 			}
-			if (!w2ui['actionbar'].get(msg.Values.id)) {
-				window.app.console.error('Statusbar element with id "' + msg.Values.id + '" not found.');
-				return;
-			}
-			w2ui['actionbar'].remove(msg.Values.id);
+			// TODO: remove
+			window.app.map.statusBar.showItem(msg.Values.id, false);
 			return;
 		}
 		else if (msg.MessageId === 'Show_Menubar') {

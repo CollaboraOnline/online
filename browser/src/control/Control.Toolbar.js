@@ -12,7 +12,7 @@
  * Collabora Online toolbar
  */
 
-/* global app $ w2ui _ JSDialog */
+/* global app $ _ JSDialog */
 /*eslint indent: [error, "tab", { "outerIIFEBody": 0 }]*/
 (function(global) {
 
@@ -42,95 +42,6 @@ function onClose() {
 	}
 	if (!map._disableDefaultAction['UI_Close']) {
 		map.remove();
-	}
-}
-
-function getToolbarItemById(id) {
-	var item;
-	if (w2ui['editbar'].get(id) !== null) {
-		var toolbar = w2ui['editbar'];
-		item = toolbar.get(id);
-	}
-	else if ('actionbar' in w2ui && w2ui['actionbar'].get(id) !== null) {
-		toolbar = w2ui['actionbar'];
-		item = toolbar.get(id);
-	}
-	else {
-		throw new Error('unknown id: ' + id);
-	}
-	return item;
-}
-
-function onClick(e, id, item) {
-	// dont reassign the item if we already have it
-	item = item || getToolbarItemById(id);
-
-	map.preventKeyboardPopup(id);
-
-	if (item.disabled) {
-		return;
-	}
-
-	if (item.postmessage && item.type === 'button') {
-		map.fire('postMessage', {msgId: 'Clicked_Button', args: {Id: item.id} });
-	}
-	else if (item.uno) {
-		if (id === 'save') {
-			map.fire('postMessage', {msgId: 'UI_Save', args: { source: 'toolbar' }});
-		}
-
-		map.executeUnoAction(item);
-	}
-	else if (item.id === 'print-active-sheet' || item.id === 'print-all-sheets') {
-		app.dispatcher.dispatch(item.id);
-	}
-	else if (id === 'print') {
-		app.dispatcher.dispatch('print');
-	}
-	else if (id === 'save') {
-		app.dispatcher.dispatch('save');
-	}
-	else if (id === 'repair') {
-		app.socket.sendMessage('commandvalues command=.uno:DocumentRepair');
-	}
-	else if (id === 'showsearchbar') {
-		$('#toolbar-down').hide();
-		$('#tb_editbar_item_showsearchbar .w2ui-button').removeClass('over');
-		$('#toolbar-search').show();
-		L.DomUtil.get('search-input').focus();
-	}
-	else if ((id === 'presentation' || id === 'fullscreen-presentation') && map.getDocType() === 'presentation') {
-		map.fire('fullscreen');
-	}
-	else if (id === 'present-in-window') {
-		map.fire('presentinwindow');
-	}
-	else if (id === 'insertgraphic' || item.id === 'localgraphic') {
-		L.DomUtil.get('insertgraphic').click();
-	}
-	else if (item.id === 'remotegraphic' || item.id === 'insertremotegraphic') {
-		map.fire('postMessage', {msgId: 'UI_InsertGraphic'});
-	}
-	else if (id === 'fontcolor' && typeof e.color === 'undefined') {
-		map.fire('mobilewizard', {data: getColorPickerData('Font Color')});
-	}
-	else if (id === 'backcolor' && typeof e.color === 'undefined') {
-		map.fire('mobilewizard', {data: getColorPickerData('Highlight Color')});
-	}
-	else if (id === 'fontcolor' && typeof e.color !== 'undefined') {
-		onColorPick(id, e.color, e.themeData);
-	}
-	else if (id === 'backcolor' && typeof e.color !== 'undefined') {
-		onColorPick(id, e.color, e.themeData);
-	}
-	else if (id === 'backgroundcolor' && typeof e.color !== 'undefined') {
-		onColorPick(id, e.color, e.themeData);
-	}
-	else if (id === 'fold' || id === 'hamburger-tablet') {
-		map.uiManager.toggleMenubar();
-	}
-	else if (id === 'close' || id === 'closemobile') {
-		map.uiManager.enterReadonlyOrClose();
 	}
 }
 
@@ -168,9 +79,6 @@ function _setBorders(left, right, bottom, top, horiz, vert, color) {
 var lastClosePopupCallback = undefined;
 
 function closePopup() {
-	if ($('#w2ui-overlay-editbar').length > 0) {
-		$('#w2ui-overlay-editbar').removeData('keepOpen')[0].hide();
-	}
 	if (lastClosePopupCallback) {
 		lastClosePopupCallback();
 		lastClosePopupCallback = undefined;
@@ -634,19 +542,6 @@ function getConnectorsPopupHtml(closeCallback) {
 	return wrapper.html();
 }
 
-function showColorPicker(id) {
-	var it = w2ui['editbar'].get(id);
-	var obj = w2ui['editbar'];
-	var el = '#tb_editbar_item_' + id;
-	if (it.transparent == null && id !== 'fontcolor') it.transparent = true;
-	$(el).w2color({ color: it.color, transparent: it.transparent }, function (color, themeData) {
-		if (color != null) {
-			obj.colorClick({ name: obj.name, item: it, color: color, themeData: themeData });
-		}
-		closePopup();
-	});
-}
-
 function getColorPickerHTML(id) {
 	return '<div id="' + id +'-wrapper' + '">\
 			</div>';
@@ -684,57 +579,6 @@ function getColorPickerData(type) {
 		vertical: 'true'
 	};
 	return data;
-}
-
-function onColorPick(id, color, themeData) {
-	if (!map.isEditMode()) {
-		return;
-	}
-	// no fill or automatic color is -1
-	if (color === '') {
-		color = -1;
-	}
-	// transform from #FFFFFF to an Int
-	else {
-		color = parseInt(color.replace('#', ''), 16);
-	}
-	var command = {};
-
-	if (id === 'fontcolor') {
-		var commandId = {'text': 'FontColor',
-			     'spreadsheet': 'Color',
-			     'presentation': 'Color'}[map.getDocType()];
-	}
-	// "backcolor" can be used in Writer and Impress and translates to "Highlighting" while
-	// "backgroundcolor" can be used in Writer and Calc and translates to "Background color".
-	else if (id === 'backcolor') {
-		commandId = {'text': 'BackColor',
-			     'presentation': 'CharBackColor'}[map.getDocType()];
-	}
-	else if (id === 'backgroundcolor') {
-		commandId = {'text': 'BackgroundColor',
-			     'spreadsheet': 'BackgroundColor'}[map.getDocType()];
-	}
-
-	var uno = '.uno:' + commandId;
-	var colorParameterID = commandId + '.Color';
-	var themeParameterID = commandId + '.ComplexColorJSON';
-
-	command[colorParameterID] = {
-		type : 'long',
-		value : color
-	};
-
-	if (themeData != null)
-	{
-		command[themeParameterID] = {
-			type : 'string',
-			value : themeData
-		};
-	}
-
-	map.sendUnoCommand(uno, command);
-	map.focus();
 }
 
 function hideTooltip(toolbar, id) {
@@ -902,9 +746,8 @@ function onWopiProps(e) {
 }
 
 function processStateChangedCommand(commandName, state) {
-	var toolbar = window.mode.isMobile() ? w2ui['editbar'] : null;
-	var topToolbar = app.map.topToolbar;
-	if (!toolbar && !topToolbar)
+	var toolbar = window.mode.isMobile() ? app.map.mobileBottomBar : app.map.topToolbar;
+	if (!toolbar)
 		return;
 
 	var color, div;
@@ -926,8 +769,8 @@ function processStateChangedCommand(commandName, state) {
 			color = color.toString(16);
 			color = '#' + Array(7 - color.length).join('0') + color;
 		}
-		$('#tb_editbar_item_fontcolor table.w2ui-button .selected-color-classic').css('background-color', color);
-		$('#tb_editbar_item_fontcolor .w2ui-tb-caption').css('display', 'none');
+		// $('#fontcolor table.w2ui-button .selected-color-classic').css('background-color', color);
+		// $('#fontcolor .w2ui-tb-caption').css('display', 'none');
 
 		div = L.DomUtil.get('fontcolorindicator');
 		if (div) {
@@ -946,12 +789,12 @@ function processStateChangedCommand(commandName, state) {
 			color = '#' + Array(7 - color.length).join('0') + color;
 		}
 		//writer
-		$('#tb_editbar_item_backcolor table.w2ui-button .selected-color-classic').css('background-color', color);
-		$('#tb_editbar_item_backcolor .w2ui-tb-caption').css('display', 'none');
+		// $('#tb_editbar_item_backcolor table.w2ui-button .selected-color-classic').css('background-color', color);
+		// $('#tb_editbar_item_backcolor .w2ui-tb-caption').css('display', 'none');
 
-		//calc?
-		$('#tb_editbar_item_backgroundcolor table.w2ui-button .selected-color-classic').css('background-color', color);
-		$('#tb_editbar_item_backgroundcolor .w2ui-tb-caption').css('display', 'none');
+		// //calc?
+		// $('#tb_editbar_item_backgroundcolor table.w2ui-button .selected-color-classic').css('background-color', color);
+		// $('#tb_editbar_item_backgroundcolor .w2ui-tb-caption').css('display', 'none');
 
 		div = L.DomUtil.get('backcolorindicator');
 		if (div) {
@@ -959,28 +802,26 @@ function processStateChangedCommand(commandName, state) {
 		}
 	}
 	else if (commandName === '.uno:ModifiedStatus') {
-		if (!toolbar) return;
-		// TODO: topToolbar case
-		if (state === 'true') {
-			toolbar.set('save', {img:'savemodified'});
-		}
-		else {
-			toolbar.set('save', {img:'save'});
-		}
+		// // TODO: topToolbar case
+		// if (state === 'true') {
+		// 	toolbar.set('save', {img:'savemodified'});
+		// }
+		// else {
+		// 	toolbar.set('save', {img:'save'});
+		// }
 	}
 	else if (commandName === '.uno:DocumentRepair') {
 		if (state === 'true') {
-			if (toolbar) toolbar.enable('repair');
-			if (topToolbar) topToolbar.enableItem('repair', true);
+			toolbar.enableItem('repair', true);
 		} else {
-			if (toolbar) toolbar.disable('repair');
-			if (topToolbar) topToolbar.enableItem('repair', false);
+			toolbar.enableItem('repair', false);
 		}
 	}
 
 	if (commandName === '.uno:SpacePara1' || commandName === '.uno:SpacePara15'
 		|| commandName === '.uno:SpacePara2') {
-		if (toolbar) toolbar.refresh();
+		// TODO
+		//if (toolbar) toolbar.refresh();
 	}
 
 	var id = unoCmdToToolbarId(commandName);
@@ -990,32 +831,24 @@ function processStateChangedCommand(commandName, state) {
 
 	if (state === 'true') {
 		if (map.isEditMode()) {
-			if (toolbar) toolbar.enable(id);
-			if (topToolbar) topToolbar.enableItem(id, true);
+			toolbar.enableItem(id, true);
 		}
-		if (toolbar) toolbar.check(id);
-		// TODO: topToolbar case
+		// TODO: toolbar.check(id);
 	}
 	else if (state === 'false') {
 		if (map.isEditMode()) {
-			if (toolbar) toolbar.enable(id);
-			if (topToolbar) topToolbar.enableItem(id, true);
+			toolbar.enableItem(id, true);
 		}
-		if (toolbar) toolbar.uncheck(id);
-		// TODO: topToolbar case
+		// TODO: toolbar.uncheck(id);
 	}
 	// Change the toolbar button states if we are in editmode
 	// If in non-edit mode, will be taken care of when permission is changed to 'edit'
 	else if (map.isEditMode() && (state === 'enabled' || state === 'disabled')) {
 		if (state === 'enabled') {
-			if (toolbar) toolbar.enable(id);
-			if (topToolbar) topToolbar.enableItem(id, true);
+			toolbar.enableItem(id, true);
 		} else {
-			if (toolbar) toolbar.uncheck(id);
-			// TODO: topToolbar case
-
-			if (toolbar) toolbar.disable(id);
-			if (topToolbar) topToolbar.enableItem(id, false);
+			// TODO: toolbar.uncheck(id);
+			toolbar.enableItem(id, false);
 		}
 	}
 }
@@ -1035,43 +868,45 @@ function onUpdateParts(e) {
 		count = e.parts;
 	}
 
-	var toolbar = w2ui['actionbar'];
+	// TODO
+	var toolbar = null;
 	if (!toolbar) {
 		return;
 	}
 
 	if (!window.mode.isMobile()) {
 		if (e.docType === 'presentation') {
-			toolbar.set('prev', {hint: _('Previous slide')});
-			toolbar.set('next', {hint: _('Next slide')});
+			// TODO
+			//toolbar.set('prev', {hint: _('Previous slide')});
+			//toolbar.set('next', {hint: _('Next slide')});
 		}
 		else {
-			toolbar.hide('presentation');
-			toolbar.hide('insertpage');
-			toolbar.hide('duplicatepage');
-			toolbar.hide('deletepage');
+			toolbar.showItem('presentation', false);
+			toolbar.showItem('insertpage', false);
+			toolbar.showItem('duplicatepage', false);
+			toolbar.showItem('deletepage', false);
 		}
 	}
 
 	if (app.file.fileBasedView) {
-		toolbar.enable('prev');
-		toolbar.enable('next');
+		toolbar.enableItem('prev', true);
+		toolbar.enableItem('next', true);
 		return;
 	}
 
 	if (e.docType !== 'spreadsheet') {
 		if (current === 0) {
-			toolbar.disable('prev');
+			toolbar.enableItem('prev', false);
 		}
 		else {
-			toolbar.enable('prev');
+			toolbar.enableItem('prev', true);
 		}
 
 		if (current === count - 1) {
-			toolbar.disable('next');
+			toolbar.enableItem('next', false);
 		}
 		else {
-			toolbar.enable('next');
+			toolbar.enableItem('next', true);
 		}
 	}
 }
@@ -1128,13 +963,13 @@ function onCommandResult(e) {
 }
 
 function onUpdatePermission(e) {
-	var toolbar = w2ui['editbar'];
+	var toolbar = window.mode.isMobile() ? app.map.mobileBottomBar : app.map.topToolbar;
 	if (toolbar) {
 		// always enabled items
 		var enabledButtons = ['closemobile', 'undo', 'redo', 'hamburger-tablet'];
 
 		// copy the first array
-		var items = toolbar.items.slice();
+		var items = toolbar.getToolItems(app.map.getDocType()).slice();
 		for (var idx in items) {
 			var found = enabledButtons.filter(function(id) { return id === items[idx].id; });
 			var alwaysEnable = found.length !== 0;
@@ -1142,27 +977,26 @@ function onUpdatePermission(e) {
 			if (e.perm === 'edit') {
 				var unoCmd = map.getDocType() === 'spreadsheet' ? items[idx].unosheet : getUNOCommand(items[idx].uno);
 				var keepDisabled = map['stateChangeHandler'].getItemValue(unoCmd) === 'disabled';
-				if (!keepDisabled || alwaysEnable) {
-					toolbar.enable(items[idx].id);
-				}
+				if (!keepDisabled || alwaysEnable)
+					toolbar.enableItem(items[idx].id, true);
 				$('.main-nav').removeClass('readonly');
 				$('#toolbar-down').removeClass('readonly');
 			} else if (!alwaysEnable) {
 				$('.main-nav').addClass('readonly');
 				$('#toolbar-down').addClass('readonly');
-				toolbar.disable(items[idx].id);
+				toolbar.enableItem(items[idx].id, false);
 			}
 		}
+
 		if (e.perm === 'edit') {
 			$('#toolbar-mobile-back').removeClass('editmode-off');
 			$('#toolbar-mobile-back').addClass('editmode-on');
-			toolbar.set('closemobile', {img: 'editmode'});
+			toolbar.updateItem({id: 'closemobile', type: 'customtoolitem', w2icon: 'editmode'});
 		} else {
 			$('#toolbar-mobile-back').removeClass('editmode-on');
 			$('#toolbar-mobile-back').addClass('editmode-off');
-			toolbar.set('closemobile', {img: 'closemobile'});
+			toolbar.updateItem({id: 'closemobile', type: 'customtoolitem', w2icon: 'closemobile'});
 		}
-
 	}
 }
 
@@ -1268,7 +1102,7 @@ function updateVisibilityForToolbar(toolbar, context) {
 	var toShow = [];
 	var toHide = [];
 
-	var items = toolbar.getToolItems ? toolbar.getToolItems() : toolbar.items;
+	var items = toolbar.getToolItems(app.map.getDocType());
 	items.forEach(function(item) {
 		if (window.ThisIsTheiOSApp && window.mode.isTablet() && item.iosapptablet === false) {
 			toHide.push(item.id);
@@ -1296,13 +1130,12 @@ function updateVisibilityForToolbar(toolbar, context) {
 	window.app.console.log('explicitly hiding: ' + toHide);
 	window.app.console.log('explicitly showing: ' + toShow);
 
-	toHide.forEach(function(item) { toolbar.showItem ? toolbar.showItem(item, false) : toolbar.hide(item); });
-	toShow.forEach(function(item) { toolbar.showItem ? toolbar.showItem(item, true) : toolbar.show(item); });
+	toHide.forEach(function(item) { toolbar.showItem(item, false); });
+	toShow.forEach(function(item) { toolbar.showItem(item, true); });
 }
 
 global.onClose = onClose;
 global.setupToolbar = setupToolbar;
-global.onClick = onClick;
 global.hideTooltip = hideTooltip;
 global.insertTable = insertTable;
 global.getInsertTablePopupHtml = getInsertTablePopupHtml;
@@ -1320,8 +1153,8 @@ global.getUNOCommand = getUNOCommand;
 global.unoCmdToToolbarId = unoCmdToToolbarId;
 global.onCommandStateChanged = onCommandStateChanged;
 global.processStateChangedCommand = processStateChangedCommand;
-global.showColorPicker = showColorPicker;
 global.getColorPickerHTML = getColorPickerHTML;
 global.updateVisibilityForToolbar = updateVisibilityForToolbar;
 global.onUpdateParts = onUpdateParts;
+global.getColorPickerData = getColorPickerData;
 }(window));

@@ -152,7 +152,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change table properties / l
 		// We use cursor position as the indicator of layout change.
 		helper.getCursorPos('top', 'origCursorPos');
 		openTablePanel();
-		helper.clickOnIdle('.unoMergeCells');
+		helper.clickOnIdle('#mobile-wizard .unoMergeCells');
 		// Cursor was in the second row originally.
 		// With merging two rows, the cursor is moved into the first row.
 		cy.get('@origCursorPos')
@@ -198,7 +198,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change table properties / l
 		helper.moveCursor('down', 'shift');
 		helper.moveCursor('right', 'shift');
 		openTablePanel();
-		helper.clickOnIdle('.unoSetMinimalRowHeight');
+		helper.clickOnIdle('#mobile-wizard .unoSetMinimalRowHeight');
 		helper.moveCursor('up', 'shift');
 		helper.moveCursor('up', 'shift');
 		helper.moveCursor('left', 'shift');
@@ -214,7 +214,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change table properties / l
 		cy.cGet('#copy-paste-container tr:nth-of-type(2) td:nth-of-type(1)').should('not.have.attr', 'height');
 		cy.cGet('#copy-paste-container tr:nth-of-type(3) td:nth-of-type(1)').should('not.have.attr', 'height');
 
-		helper.clickOnIdle('.unoSetOptimalRowHeight');
+		helper.clickOnIdle('#mobile-wizard .unoSetOptimalRowHeight');
 		selectFullTable();
 
 		cy.cGet('#copy-paste-container table td').should('have.length', 6);
@@ -230,7 +230,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change table properties / l
 		selectFullTable();
 
 		cy.wait(200);
-		helper.clickOnIdle('.unoDistributeRows');
+		helper.clickOnIdle('#mobile-wizard .unoDistributeRows');
 
 		selectFullTable();
 
@@ -257,7 +257,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change table properties / l
 		selectFullTable();
 
 		cy.wait(200);
-		helper.clickOnIdle('.unoSetMinimalColumnWidth');
+		helper.clickOnIdle('#mobile-wizard .unoSetMinimalColumnWidth');
 
 		selectFullTable();
 
@@ -272,7 +272,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change table properties / l
 		selectFullTable();
 
 		cy.wait(200);
-		helper.clickOnIdle('.unoEntireRow');
+		helper.clickOnIdle('#mobile-wizard .unoEntireRow');
 
 		cy.cGet('#copy-paste-container table').should('exist');
 		helper.clickOnIdle('.unoSetOptimalColumnWidth');
@@ -289,7 +289,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change table properties / l
 		selectFullTable();
 
 		cy.wait(200);
-		helper.clickOnIdle('.unoDistributeColumns');
+		helper.clickOnIdle('#mobile-wizard .unoDistributeColumns');
 
 		selectFullTable();
 

@@ -28,7 +28,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected text
 
 		mobileHelper.openTextPropertiesPanel();
 
-		cy.cGet('.unoBold').click();
+		cy.cGet('#mobile-wizard .unoBold').click();
 
 		triggerNewSVG();
 
@@ -41,7 +41,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected text
 
 		mobileHelper.openTextPropertiesPanel();
 
-		cy.cGet('.unoItalic').click();
+		cy.cGet('#mobile-wizard .unoItalic').click();
 
 		triggerNewSVG();
 
@@ -54,7 +54,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected text
 
 		mobileHelper.openTextPropertiesPanel();
 
-		cy.cGet('.unoUnderline').click();
+		cy.cGet('#mobile-wizard .unoUnderline').click();
 
 		triggerNewSVG();
 
@@ -67,7 +67,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected text
 
 		mobileHelper.openTextPropertiesPanel();
 
-		cy.cGet('.unoStrikeout').click();
+		cy.cGet('#mobile-wizard .unoStrikeout').click();
 
 		triggerNewSVG();
 
@@ -80,7 +80,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected text
 
 		mobileHelper.openTextPropertiesPanel();
 
-		cy.cGet('.unoShadowed').click();
+		cy.cGet('#mobile-wizard .unoShadowed').click();
 
 		triggerNewSVG();
 
@@ -166,7 +166,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected text
 		cy.cGet('text tspan.TextPosition').should('have.attr', 'y', '3495');
 		cy.cGet('text tspan.TextPosition tspan').should('have.attr', 'font-size', '635px');
 
-		cy.cGet('.unoSuperScript').click();
+		cy.cGet('#mobile-wizard .unoSuperScript').click();
 
 		triggerNewSVG();
 
@@ -184,7 +184,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected text
 		cy.cGet('text tspan.TextPosition').should('have.attr', 'y', '3495');
 		cy.cGet('text tspan.TextPosition tspan').should('have.attr', 'font-size', '635px');
 
-		cy.cGet('.unoSubScript').click();
+		cy.cGet('#mobile-wizard .unoSubScript').click();
 
 		triggerNewSVG();
 
