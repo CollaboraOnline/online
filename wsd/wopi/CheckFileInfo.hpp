@@ -31,17 +31,13 @@
 
 class CheckFileInfo
 {
-    /// Limits number of HTTP redirections to prevent from redirection loops.
-    static constexpr auto RedirectionLimit = 21;
-
 public:
     /// The CheckFileInfo State.
     STATE_ENUM(State, None, Active, Timedout, Fail, Pass);
 
     /// Create an instance with a SocketPoll and a RequestDetails instance.
     CheckFileInfo(const std::shared_ptr<TerminatingPoll>& poll, const Poco::URI& url,
-                  std::function<void(CheckFileInfo&)> onFinishCallback,
-                  int redirectionLimit = RedirectionLimit)
+                  std::function<void(CheckFileInfo&)> onFinishCallback)
         : _poll(poll)
         , _url(url)
         , _docKey(RequestDetails::getDocKey(url))
@@ -51,8 +47,6 @@ public:
     {
         assert(_url == RequestDetails::sanitizeURI(url.toString()) && "Expected sanitized URL");
 
-        // Start the request.
-        checkFileInfo(redirectionLimit);
     }
 
     /// Returns the state of the request.
@@ -70,6 +64,9 @@ public:
     /// Returns the parsed wopiInfo JSON into FileInfo.
     std::unique_ptr<WopiStorage::WOPIFileInfo> wopiFileInfo(const Poco::URI& uriPublic) const;
 
+    /// Start the actual request.
+    void checkFileInfo(int redirectionLimit);
+
 private:
     inline void logPrefix(std::ostream& os) const
     {
@@ -78,9 +75,6 @@ private:
             os << '#' << _httpSession->getFD() << ": ";
         }
     }
-
-    /// Start the actual request.
-    void checkFileInfo(int redirectionLimit);
 
     std::shared_ptr<TerminatingPoll> _poll;
     Poco::URI _url; //< Sanitized URL to the document. Can change through redirection.

@@ -203,8 +203,8 @@ void WopiProxy::checkFileInfo(const std::shared_ptr<TerminatingPoll>& poll, cons
     };
 
     // CheckFileInfo asynchronously.
-    _checkFileInfo =
-        std::make_unique<CheckFileInfo>(poll, uri, std::move(cfiContinuation), redirectLimit);
+    _checkFileInfo = std::make_unique<CheckFileInfo>(poll, uri, std::move(cfiContinuation));
+    _checkFileInfo->checkFileInfo(redirectLimit);
 }
 
 void WopiProxy::download(const std::shared_ptr<TerminatingPoll>& poll, const std::string& url,
