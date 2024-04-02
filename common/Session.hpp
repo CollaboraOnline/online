@@ -254,6 +254,11 @@ public:
 
     const std::string& getSpellOnline() const { return _spellOnline; }
 
+    const std::string& getTextDarkTheme() const { return _textDarkTheme; }
+    const std::string& getSpreadsheetDarkTheme() const { return _spreadsheetDarkTheme; }
+    const std::string& getPresentationDarkTheme() const { return _presentationDarkTheme; }
+    const std::string& getDrawingDarkTheme() const { return _drawingDarkTheme; }
+
     const std::string& getBatchMode() const { return _batch; }
 
     const std::string& getEnableMacrosExecution() const { return _enableMacrosExecution; }
@@ -261,8 +266,6 @@ public:
     const std::string& getMacroSecurityLevel() const { return _macroSecurityLevel; }
 
     bool getAccessibilityState() const { return _accessibilityState; }
-
-    const std::string& getTheme() const { return _theme; }
 
 protected:
     Session(const std::shared_ptr<ProtocolHandlerInterface> &handler,
@@ -372,6 +375,12 @@ private:
     /// The start value of Auto Spell Checking whether it is enabled or disabled on start.
     std::string _spellOnline;
 
+    /// The start value for Dark Theme whether it is active or not on start.
+    std::string _textDarkTheme;
+    std::string _spreadsheetDarkTheme;
+    std::string _presentationDarkTheme;
+    std::string _drawingDarkTheme;
+
     /// Disable dialogs interactivity.
     std::string _batch;
 
@@ -383,9 +392,6 @@ private:
 
     /// Specifies whether accessibility support is enabled for this session.
     bool _accessibilityState;
-
-    /// Specifies the theme
-    std::string _theme;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

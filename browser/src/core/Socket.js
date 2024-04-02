@@ -247,10 +247,6 @@ app.definitions.Socket = L.Class.extend({
 			msg += ' accessibilityState=' + accessibilityState;
 		}
 
-		var docTheme = L.Browser.getTheme();
-		if (docTheme)
-			msg += ' theme=' + docTheme;
-
 		this._doSend(msg);
 		for (var i = 0; i < this._msgQueue.length; i++) {
 			this._doSend(this._msgQueue[i]);

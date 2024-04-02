@@ -265,26 +265,7 @@ window.app = {
 
 		// @property lang: String
 		// browser language locale
-		lang: navigatorLang,
-
-		docs: ['presentation', 'spreadsheet', 'text', 'drawing'],
-
-		getTheme: function () {
-			var docTheme;
-			var themes = [];
-			if (global.isLocalStorageAllowed) {
-				for (var theme in global.L.Browser.docs) {
-					docTheme = global.localStorage.getItem('UIDefaults_' +
-									       global.L.Browser.docs[theme] +
-									       '_darkTheme');
-					if (docTheme) {
-						themes.push(global.L.Browser.docs[theme] + ':' +
-							    (docTheme === 'true' ? 'Dark' : 'Light'));
-					}
-				}
-			}
-			return themes.join(';');
-		}
+		lang: navigatorLang
 	};
 
 	global.keyboard = {
@@ -1225,12 +1206,15 @@ window.app = {
 					if (spellOnline) {
 						msg += ' spellOnline=' + spellOnline;
 					}
-
+					var docTypes = ['text', 'spreadsheet', 'presentation', 'drawing'];
+					for (var i = 0; i < docTypes.length; ++i) {
+						var docType = docTypes[i];
+						var darkTheme = global.localStorage.getItem('UIDefaults_' + docType + '_darkTheme');
+						if (darkTheme) {
+							msg += ' ' + docType + 'DarkTheme=' + darkTheme;
+						}
+					}
 				}
-
-				var docTheme = global.L.Browser.getTheme();
-				if (docTheme)
-					msg += ' theme=' + docTheme;
 
 				msg += ' timezone=' + Intl.DateTimeFormat().resolvedOptions().timeZone;
 
