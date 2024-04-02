@@ -17,7 +17,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Searching via search bar' 
 	});
 
 	it('Search existing word.', function() {
-		searchHelper.typeIntoSearchFieldDesktop('a');
+		searchHelper.typeIntoSearchField('a');
 
 		// Part of the text should be selected
 		helper.textSelectionShouldExist();
@@ -36,40 +36,40 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Searching via search bar' 
 	});
 
 	it('Search next / prev instance.', function() {
-		searchHelper.typeIntoSearchFieldDesktop('a');
+		searchHelper.typeIntoSearchField('a');
 		helper.textSelectionShouldExist();
 		helper.expectTextForClipboard('a');
 		cy.cGet('#copy-paste-container p b').should('not.exist');
 		//search next instance
-		searchHelper.searchNextDesktop();
+		searchHelper.searchNext();
 		cy.cGet('#copy-paste-container p b').should('exist');
 		helper.textSelectionShouldExist();
 		helper.expectTextForClipboard('a');
 		// Search prev instance
-		searchHelper.searchPrevDesktop();
+		searchHelper.searchPrev();
 		cy.cGet('#copy-paste-container p b').should('not.exist');
 		helper.textSelectionShouldExist();
 		helper.expectTextForClipboard('a');
 	});
 	it('Search wrap at document end.', function() {
-		searchHelper.typeIntoSearchFieldDesktop('a');
+		searchHelper.typeIntoSearchField('a');
 		helper.textSelectionShouldExist();
 		helper.expectTextForClipboard('a');
 		cy.cGet('#copy-paste-container p b').should('not.exist');
 		// Search next instance
-		searchHelper.searchNextDesktop();
+		searchHelper.searchNext();
 		cy.cGet('#copy-paste-container p b').should('exist');
 		helper.textSelectionShouldExist();
 		helper.expectTextForClipboard('a');
 		// Search next instance, which is in the beginning of the document.
-		searchHelper.searchNextDesktop();
+		searchHelper.searchNext();
 		cy.cGet('#copy-paste-container p b').should('not.exist');
 		helper.textSelectionShouldExist();
 		helper.expectTextForClipboard('a');
 	});
 
 	it('Cancel search.', function() {
-		searchHelper.typeIntoSearchFieldDesktop('a');
+		searchHelper.typeIntoSearchField('a');
 
 		// Part of the text should be selected
 		helper.textSelectionShouldExist();
@@ -77,7 +77,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Searching via search bar' 
 		helper.expectTextForClipboard('a');
 
 		// Cancel search -> selection removed
-		searchHelper.cancelSearchDesktop();
+		searchHelper.cancelSearch();
 
 		helper.textSelectionShouldNotExist();
 

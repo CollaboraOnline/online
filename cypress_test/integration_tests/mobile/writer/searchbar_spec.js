@@ -20,7 +20,7 @@ describe.skip('Searching via search bar.', function() {
 	});
 
 	it('Search existing word.', function() {
-		searchHelper.tpyeIntoSearchField('a');
+		searchHelper.typeIntoSearchField('a');
 		// Part of the text should be selected
 		helper.textSelectionShouldExist();
 		helper.expectTextForClipboard('a');
@@ -28,12 +28,12 @@ describe.skip('Searching via search bar.', function() {
 
 	it('Search not existing word.', function() {
 		writerHelper.selectAllTextOfDoc();
-		searchHelper.tpyeIntoSearchField('q');
+		searchHelper.typeIntoSearchField('q');
 		helper.textSelectionShouldNotExist();
 	});
 
 	it('Search next / prev instance.', function() {
-		searchHelper.tpyeIntoSearchField('a');
+		searchHelper.typeIntoSearchField('a');
 		helper.textSelectionShouldExist();
 		helper.expectTextForClipboard('a');
 		cy.cGet('#copy-paste-container p b').should('not.exist');
@@ -50,7 +50,7 @@ describe.skip('Searching via search bar.', function() {
 	});
 
 	it('Search at the document end.', function() {
-		searchHelper.tpyeIntoSearchField('a');
+		searchHelper.typeIntoSearchField('a');
 		helper.textSelectionShouldExist();
 		helper.expectTextForClipboard('a');
 		cy.cGet('#copy-paste-container p b').should('not.exist');
@@ -67,7 +67,7 @@ describe.skip('Searching via search bar.', function() {
 	});
 
 	it('Cancel search.', function() {
-		searchHelper.tpyeIntoSearchField('a');
+		searchHelper.typeIntoSearchField('a');
 		// Part of the text should be selected
 		helper.textSelectionShouldExist();
 		helper.expectTextForClipboard('a');
@@ -78,7 +78,7 @@ describe.skip('Searching via search bar.', function() {
 	});
 
 	it('Close search.', function() {
-		searchHelper.tpyeIntoSearchField('a');
+		searchHelper.typeIntoSearchField('a');
 		// Part of the text should be selected
 		helper.textSelectionShouldExist();
 		helper.expectTextForClipboard('a');

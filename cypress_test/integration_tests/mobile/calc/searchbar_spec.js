@@ -21,7 +21,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Searching via search bar.',
 	});
 
 	it('Search existing word.', function() {
-		searchHelper.tpyeIntoSearchField('a');
+		searchHelper.typeIntoSearchField('a');
 
 		searchHelper.searchNext();
 
@@ -33,14 +33,14 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Searching via search bar.',
 	it('Search not existing word.', function() {
 		cy.cGet('input#addressInput').should('have.prop', 'value', 'A2');
 
-		searchHelper.tpyeIntoSearchField('q');
+		searchHelper.typeIntoSearchField('q');
 
 		// Should be no new selection
 		cy.cGet('input#addressInput').should('have.prop', 'value', 'A2');
 	});
 
 	it('Search next / prev instance.', function() {
-		searchHelper.tpyeIntoSearchField('a');
+		searchHelper.typeIntoSearchField('a');
 
 		searchHelper.searchNext();
 		cy.cGet('input#addressInput').should('have.prop', 'value', 'A1');
@@ -60,7 +60,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Searching via search bar.',
 	});
 
 	it('Search at the document end.', function() {
-		searchHelper.tpyeIntoSearchField('a');
+		searchHelper.typeIntoSearchField('a');
 
 		searchHelper.searchNext();
 
@@ -79,7 +79,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Searching via search bar.',
 	});
 
 	it('Cancel search.', function() {
-		searchHelper.tpyeIntoSearchField('a');
+		searchHelper.typeIntoSearchField('a');
 
 		searchHelper.searchNext();
 
@@ -92,7 +92,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Searching via search bar.',
 	});
 
 	it('Close search.', function() {
-		searchHelper.tpyeIntoSearchField('a');
+		searchHelper.typeIntoSearchField('a');
 		searchHelper.searchNext();
 
 		cy.cGet('input#addressInput').should('have.prop', 'value', 'A1');

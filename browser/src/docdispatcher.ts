@@ -218,6 +218,13 @@ class Dispatcher {
 		this.actionsMap['cancelsearch'] = () => {
 			app.map.cancelSearch();
 		};
+		this.actionsMap['hidesearchbar'] = () => {
+			$('#toolbar-search').hide();
+			if (app.map.isEditMode()) $('#toolbar-down').show();
+			/** show edit button if only we are able to edit but in readonly mode */
+			if (!app.isReadOnly() && app.map.isReadOnlyMode())
+				$('#mobile-edit-button').show();
+		};
 
 		this.actionsMap['prev'] = () => {
 			if (app.map._docLayer._docType === 'text') app.map.goToPage('prev');
