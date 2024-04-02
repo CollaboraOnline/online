@@ -363,7 +363,7 @@ COOL_JS_LST =\
 	src/control/Control.Attribution.js \
 	src/control/Control.MobileSlide.js \
 	src/control/Control.StatusBar.js \
-	src/control/Control.SearchBar.js \
+	src/control/Control.MobileSearchBar.ts \
 	src/control/Control.MobileTopBar.js \
 	src/control/Control.MobileBottomBar.js \
 	src/control/Control.UserList.ts \
@@ -777,7 +777,7 @@ pot:
 		src/control/Control.PartsPreview.js \
 		src/control/Control.PresentationBar.js \
 		src/control/Control.Scroll.Annotation.js \
-		src/control/Control.SearchBar.js \
+		src/control/Control.MobileSearchBar.ts \
 		src/control/Control.SheetsBar.js \
 		src/control/Control.StatusBar.js \
 		src/control/Control.Tabs.js \

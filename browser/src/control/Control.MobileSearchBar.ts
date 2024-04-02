@@ -14,8 +14,11 @@
 
 /* global _ _UNO */
 class MobileSearchBar {
+	map: any;
+	builder: any;
+	parentContainer: Element;
 
-	constructor(map) {
+	constructor(map: any) {
 		this.map = map;
 		this.parentContainer = document.getElementById('toolbar-search');
 		L.DomUtil.addClass(this.parentContainer, 'ui-toolbar');
@@ -78,10 +81,10 @@ class MobileSearchBar {
 	create() {
 		var items = this.getToolItems();
 		this.builder.build(this.parentContainer, items);
-		window.setupSearchInput();
+		(window as any).setupSearchInput();
 	}
-};
+}
 
-L.control.searchBar = function (map) {
+L.control.searchBar = function (map: any) {
 	return new MobileSearchBar(map);
 };
