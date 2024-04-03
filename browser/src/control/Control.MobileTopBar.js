@@ -90,17 +90,17 @@ class MobileTopBar extends JSDialog.Toolbar {
 	}
 
 	onUpdatePermission(e) {
-		var toolbarButtons = ['next', 'prev', 'mobile_wizard', 'insertion_mobile_wizard', 'comment_wizard'];
+		var toolbarButtons = ['undo', 'redo', 'mobile_wizard', 'insertion_mobile_wizard', 'comment_wizard'];
 		if (e.perm === 'edit') {
 			toolbarButtons.forEach((id) => {
-				this.enableItem(id, true);
+				this.showItem(id, true);
 			});
 			this.showItem('PermissionMode', false);
 		} else {
 			toolbarButtons.forEach((id) => {
-				this.enableItem(id, false);
+				this.showItem(id, false);
 			});
-			this.enableItem('comment_wizard', true);
+			this.showItem('comment_wizard', true);
 			if ($('#mobile-edit-button').is(':hidden')) {
 				this.showItem('PermissionMode', true);
 			}
