@@ -1592,9 +1592,12 @@ void ClientRequestDispatcher::handleClientProxyRequest(const Poco::Net::HTTPRequ
     (void)disposition;
 
     // Request a kit process for this doc.
-    auto [docBroker, errorMsg] =
-        findOrCreateDocBroker(DocumentBroker::ChildType::Interactive, url, docKey, _id, uriPublic,
+    std::pair<std::shared_ptr<DocumentBroker>, std::string> pair
+        = findOrCreateDocBroker(DocumentBroker::ChildType::Interactive, url, docKey, _id, uriPublic,
                               /*mobileAppDocId=*/0, /*wopiFileInfo=*/nullptr);
+    auto docBroker = pair.first;
+    auto errorMsg = pair.second;
+
     if (docBroker)
     {
         // need to move into the DocumentBroker context before doing session lookup / creation etc.
