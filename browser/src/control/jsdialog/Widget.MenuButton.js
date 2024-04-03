@@ -44,6 +44,10 @@ function _menubuttonControl (parentContainer, data, builder) {
 
 	// import menu
 	if (data.menu) {
+		// command is needed to generate image
+		if (!data.command)
+			data.command = data.id;
+
 		menuId = data.id + '-menu';
 		var builtMenu = [];
 		for (var i in data.menu)
