@@ -201,6 +201,7 @@ COOL_JS_LST =\
 	src/core/Log.js \
 	src/core/Util.js \
 	src/core/LOUtil.js \
+	src/core/geometry.ts \
 	src/core/Rectangle.ts \
 	src/core/Class.js \
 	src/core/Events.js \
