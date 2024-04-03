@@ -22,24 +22,14 @@ class MobileTopBar extends JSDialog.Toolbar {
 	}
 
 	getToolItems() {
-		var isReadOnlyMode = app.map ? app.map.isReadOnlyMode() : true;
-		var canUserWrite = !app.isReadOnly();
-
 		if (this.docType == 'text') {
 			return [
 				{type: 'toolitem', id: 'signstatus', command: '.uno:Signature', w2icon: '', text: _UNO('.uno:Signature'), visible: false},
 				{type: 'toolitem',  id: 'undo', text: _UNO('.uno:Undo'), command: '.uno:Undo', enabled: false},
 				{type: 'toolitem',  id: 'redo', text: _UNO('.uno:Redo'), command: '.uno:Redo', enabled: false},
-				{type: 'spacer', id: 'before-PermissionMode'},
-				{
-					type: 'container',
-					id: 'permissionmode-container',
-					children: [
-						{type: 'htmlcontent', id: 'PermissionMode', htmlId: 'permissionmode', text: '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp', isReadOnlyMode: isReadOnlyMode, canUserWrite: canUserWrite, visible: false},
-						{type: 'spacer', id: 'after-PermissionMode', visible: false},
-					],
-					vertical: false,
-				},
+				{type: 'spacer', id: 'before-permissionmode'},
+				this._generateHtmlItem('permissionmode'),
+				{type: 'spacer', id: 'after-permissionmode'},
 				{type: 'customtoolitem',  id: 'mobile_wizard', command: 'mobile_wizard'},
 				{type: 'customtoolitem',  id: 'insertion_mobile_wizard', command: 'insertion_mobile_wizard'},
 				{type: 'customtoolitem',  id: 'comment_wizard', command: 'comment_wizard', w2icon: 'viewcomments'},
@@ -52,7 +42,9 @@ class MobileTopBar extends JSDialog.Toolbar {
 				{type: 'toolitem',  id: 'redo', text: _UNO('.uno:Redo'), command: '.uno:Redo', enabled: false},
 				{type: 'customtoolitem', visible: false, id: 'acceptformula', command: 'acceptformula', text: _('Accept')},
 				{type: 'customtoolitem', visible: false, id: 'cancelformula', command: 'cancelformula', text: _('Cancel')},
-				{type: 'spacer'},
+				{type: 'spacer', id: 'before-PermissionMode'},
+				this._generateHtmlItem('permissionmode'),
+				{type: 'spacer', id: 'after-PermissionMode'},
 				{type: 'customtoolitem',  id: 'mobile_wizard', command: 'mobile_wizard'},
 				{type: 'customtoolitem',  id: 'insertion_mobile_wizard', command: 'insertion_mobile_wizard'},
 				{type: 'customtoolitem',  id: 'comment_wizard', command: 'comment_wizard', w2icon: 'viewcomments'},
@@ -63,7 +55,9 @@ class MobileTopBar extends JSDialog.Toolbar {
 				{type: 'toolitem', id: 'signstatus', command: '.uno:Signature', w2icon: '', text: _UNO('.uno:Signature'), visible: false},
 				{type: 'toolitem',  id: 'undo', text: _UNO('.uno:Undo'), command: '.uno:Undo', enabled: false},
 				{type: 'toolitem',  id: 'redo', text: _UNO('.uno:Redo'), command: '.uno:Redo', enabled: false},
-				{type: 'spacer'},
+				{type: 'spacer', id: 'before-permissionmode'},
+				this._generateHtmlItem('permissionmode'),
+				{type: 'spacer', id: 'after-permissionmode'},
 				{type: 'customtoolitem',  id: 'mobile_wizard', command: 'mobile_wizard'},
 				{type: 'customtoolitem',  id: 'insertion_mobile_wizard', command: 'insertion_mobile_wizard'},
 				{type: 'customtoolitem',  id: 'comment_wizard', command: 'comment_wizard', w2icon: 'viewcomments'},
@@ -75,7 +69,9 @@ class MobileTopBar extends JSDialog.Toolbar {
 				{type: 'toolitem', id: 'signstatus', command: '.uno:Signature', w2icon: '', text: _UNO('.uno:Signature'), visible: false},
 				{type: 'toolitem',  id: 'undo', text: _UNO('.uno:Undo'), command: '.uno:Undo', enabled: false},
 				{type: 'toolitem',  id: 'redo', text: _UNO('.uno:Redo'), command: '.uno:Redo', enabled: false},
-				{type: 'spacer'},
+				{type: 'spacer', id: 'before-PermissionMode'},
+				this._generateHtmlItem('permissionmode'),
+				{type: 'spacer', id: 'after-PermissionMode'},
 				{type: 'customtoolitem',  id: 'mobile_wizard', command: 'mobile_wizard'},
 				{type: 'customtoolitem',  id: 'insertion_mobile_wizard', command: 'insertion_mobile_wizard'},
 				{type: 'customtoolitem',  id: 'comment_wizard', command: 'comment_wizard', w2icon: 'viewcomments'},
@@ -121,6 +117,21 @@ class MobileTopBar extends JSDialog.Toolbar {
 				this.enableItem(id, false);
 			}
 		}
+	}
+
+	_generateHtmlItem(id) {
+		var isReadOnlyMode = app.map ? app.isReadOnly() : true;
+		var canUserWrite = !app.isReadOnly();
+
+		return {
+			type: 'container',
+			id: id + '-container',
+			children: [
+				{type: 'htmlcontent', id: id, htmlId: id, text: '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp', isReadOnlyMode: isReadOnlyMode, canUserWrite: canUserWrite, visible: false},
+				{type: 'spacer', id: id + '-break'}
+			],
+			vertical: false,
+		};
 	}
 }
 
