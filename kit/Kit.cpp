@@ -2244,8 +2244,11 @@ std::shared_ptr<KitSocketPoll> KitSocketPoll::create() // static
     std::shared_ptr<KitSocketPoll> result(new KitSocketPoll());
 
 #ifdef IOS
-    std::unique_lock<std::mutex> lock(KSPollsMutex);
-    KSPolls.push_back(result);
+    {
+        std::unique_lock<std::mutex> lock(KSPollsMutex);
+        KSPolls.push_back(result);
+    }
+    KitSocketPoll::KSPollsCV.notify_all();
 #endif
     return result;
 }
@@ -2393,7 +2396,7 @@ bool pushToMainThread(LibreOfficeKitCallback cb, int type, const char *p, void *
 #ifdef IOS
 
 std::mutex KitSocketPoll::KSPollsMutex;
-// std::condition_variable KitSocketPoll::KSPollsCV;
+std::condition_variable KitSocketPoll::KSPollsCV;
 std::vector<std::weak_ptr<KitSocketPoll>> KitSocketPoll::KSPolls;
 
 #endif
@@ -2422,13 +2425,16 @@ int pollCallback(void* pData, int timeoutUs)
         if (p)
             v.push_back(p);
     }
-    lock.unlock();
     if (v.empty())
     {
-        std::this_thread::sleep_for(std::chrono::microseconds(timeoutUs));
+        // Remove any stale elements from KitSocketPoll::KSPolls and
+        // block until an element is added to KitSocketPoll::KSPolls
+        KitSocketPoll::KSPolls.clear();
+        KitSocketPoll::KSPollsCV.wait(lock, []{ return KitSocketPoll::KSPolls.size(); });
     }
     else
     {
+        lock.unlock();
         for (const auto &p : v)
             p->kitPoll(timeoutUs);
     }

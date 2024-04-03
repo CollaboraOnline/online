@@ -165,7 +165,7 @@ public:
 
 #ifdef IOS
     static std::mutex KSPollsMutex;
-    // static std::condition_variable KSPollsCV;
+    static std::condition_variable KSPollsCV;
     static std::vector<std::weak_ptr<KitSocketPoll>> KSPolls;
 
     std::mutex terminationMutex;
