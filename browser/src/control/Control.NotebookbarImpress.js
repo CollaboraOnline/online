@@ -443,7 +443,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'command': 'presentation',
 				'accessibility': { focusBack: true, combination: 'PR', de: null }
 			},
-			window.mode.isDesktop() ?
+			!window.ThisIsAMobileApp ?
 				{
 					'id': 'view-presentation-in-window',
 					'type': 'bigcustomtoolitem',
