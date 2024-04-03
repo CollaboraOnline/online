@@ -129,6 +129,13 @@ L.Control.MobileTopBar = L.Control.extend({
 			{type: 'toolitem', id: 'signstatus', command: '.uno:Signature', noLabel: true, w2icon: icon, text: text ? text : _UNO('.uno:Signature')});
 	},
 
+	selectItem(command, select) {
+		this.builder.executeAction(this.parentContainer, {
+			'control_id': command,
+			'action_type': select ? 'select' : 'unselect'
+		});
+	},
+
 	onUpdatePermission: function(e) {
 		var toolbarButtons = ['next', 'prev', 'mobile_wizard', 'insertion_mobile_wizard', 'comment_wizard'];
 		if (e.perm === 'edit') {

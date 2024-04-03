@@ -328,6 +328,7 @@ L.Control.MobileBottomBar = L.Control.extend({
 		JSDialog.RefreshScrollables();
 	},
 
+	// jscpd:ignore-start
 	enableItem(command, enable) {
 		if (!command)
 			return;
@@ -338,10 +339,18 @@ L.Control.MobileBottomBar = L.Control.extend({
 		});
 	},
 
+	selectItem(command, select) {
+		this.builder.executeAction(this.parentContainer, {
+			'control_id': command,
+			'action_type': select ? 'select' : 'unselect'
+		});
+	},
+
 	updateItem: function (data) {
 		this.builder.updateWidget(this.parentContainer, data);
 		JSDialog.RefreshScrollables();
 	},
+	// jscpd:ignore-end
 
 	onContextChange: function(event) {
 		window.updateVisibilityForToolbar(app.map.mobileBottomBar, event.context);
