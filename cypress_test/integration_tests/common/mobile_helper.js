@@ -113,8 +113,8 @@ function openMobileWizard() {
 	// Mobile wizard is opened and it has content
 	cy.cGet('#mobile-wizard-content')
 		.should('not.be.empty');
-	//cy.cGet('#toolbar-up #mobile_wizard')
-	//	.should('have.class', 'checked');
+	cy.cGet('#toolbar-up #mobile_wizard')
+		.should('have.class', 'selected');
 
 	cy.log('<< openMobileWizard - end');
 }
@@ -122,16 +122,16 @@ function openMobileWizard() {
 function closeMobileWizard() {
 	cy.log('>> closeMobileWizard - start');
 
-	//cy.cGet('#toolbar-up #mobile_wizard')
-	//	.should('have.class', 'checked');
+	cy.cGet('#toolbar-up #mobile_wizard')
+		.should('have.class', 'selected');
 
 	cy.cGet('#toolbar-up #mobile_wizard')
 		.click();
 
 	cy.cGet('#mobile-wizard')
 		.should('not.be.visible');
-	//cy.cGet('#toolbar-up #mobile_wizard')
-	//	.should('not.have.class', 'checked');
+	cy.cGet('#toolbar-up #mobile_wizard')
+		.should('not.have.class', 'selected');
 
 	cy.log('<< closeMobileWizard - end');
 }
@@ -170,8 +170,8 @@ function openInsertionWizard() {
 	cy.cGet('#mobile-wizard-content')
 		.should('not.be.empty');
 
-	//cy.cGet('#toolbar-up #insertion_mobile_wizard')
-	//	.should('have.class', 'checked');
+	cy.cGet('#toolbar-up #insertion_mobile_wizard')
+		.should('have.class', 'selected');
 
 	cy.log('<< openInsertionWizard - end');
 }
@@ -185,8 +185,8 @@ function openCommentWizard() {
 	cy.cGet('#toolbar-up #comment_wizard button')
 		.click();
 
-	//cy.cGet('#toolbar-up #comment_wizard')
-	//	.should('have.class', 'checked');
+	cy.cGet('#toolbar-up #comment_wizard')
+		.should('have.class', 'selected');
 
 	cy.log('<< openCommentWizard - end');
 }
@@ -194,8 +194,8 @@ function openCommentWizard() {
 function closeInsertionWizard() {
 	cy.log('>> closeInsertionWizard - start');
 
-	//cy.cGet('#toolbar-up #insertion_mobile_wizard')
-	//	.should('have.class', 'checked');
+	cy.cGet('#toolbar-up #insertion_mobile_wizard')
+		.should('have.class', 'selected');
 
 	cy.cGet('#toolbar-up #insertion_mobile_wizard')
 		.click();
@@ -203,8 +203,8 @@ function closeInsertionWizard() {
 	cy.cGet('#mobile-wizard')
 		.should('not.be.visible');
 
-	//cy.cGet('#toolbar-up #insertion_mobile_wizard')
-	//	.should('not.have.class', 'checked');
+	cy.cGet('#toolbar-up #insertion_mobile_wizard')
+		.should('not.have.class', 'selected');
 
 	cy.log('<< closeInsertionWizard - end');
 }

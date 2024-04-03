@@ -492,7 +492,7 @@ class Dispatcher {
 					.getSectionWithName(L.CSections.CommentList.name)
 					.removeHighlighters();
 				app.map.fire('closemobilewizard');
-				//app.map.mobileTopBar.uncheck(id);
+				app.map.mobileTopBar.selectItem('comment_wizard', false);
 			} else {
 				if (configuration.insertionMobileWizard)
 					app.dispatcher.dispatch('insertion_mobile_wizard');
@@ -501,7 +501,7 @@ class Dispatcher {
 				configuration.commentWizard = true;
 				var menuData = app.map._docLayer.getCommentWizardStructure();
 				app.map.fire('mobilewizard', { data: menuData });
-				//app.map.mobileTopBar.check(id);
+				app.map.mobileTopBar.selectItem('comment_wizard', true);
 			}
 		};
 		this.actionsMap['mobile_wizard'] = () => {
@@ -510,7 +510,7 @@ class Dispatcher {
 				configuration.mobileWizard = false;
 				app.map.sendUnoCommand('.uno:SidebarHide');
 				app.map.fire('closemobilewizard');
-				//app.map.mobileTopBar.uncheck(id);
+				app.map.mobileTopBar.selectItem('mobile_wizard', false);
 			} else {
 				if (configuration.insertionMobileWizard)
 					app.dispatcher.dispatch('insertion_mobile_wizard');
@@ -519,7 +519,7 @@ class Dispatcher {
 				configuration.mobileWizard = true;
 				app.map.sendUnoCommand('.uno:SidebarShow');
 				app.map.fire('showwizardsidebar');
-				//app.map.mobileTopBar.check(id);
+				app.map.mobileTopBar.selectItem('mobile_wizard', true);
 			}
 		};
 		this.actionsMap['insertion_mobile_wizard'] = () => {
@@ -527,7 +527,7 @@ class Dispatcher {
 			if (configuration.insertionMobileWizard) {
 				configuration.insertionMobileWizard = false;
 				app.map.fire('closemobilewizard');
-				//app.map.mobileTopBar.uncheck(id);
+				app.map.mobileTopBar.selectItem('insertion_mobile_wizard', false);
 			} else {
 				if (configuration.mobileWizard)
 					app.dispatcher.dispatch('mobile_wizard');
@@ -536,7 +536,7 @@ class Dispatcher {
 				configuration.insertionMobileWizard = true;
 				const menuData = app.map.menubar.generateInsertMenuStructure();
 				app.map.fire('mobilewizard', { data: menuData });
-				//app.map.mobileTopBar.check(id);
+				app.map.mobileTopBar.selectItem('insertion_mobile_wizard', true);
 			}
 		};
 

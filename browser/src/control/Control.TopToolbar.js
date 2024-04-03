@@ -247,12 +247,26 @@ L.Control.TopToolbar = L.Control.extend({
 		this.create();
 	},
 
+	// jscpd:ignore-start
 	enableItem(command, enable) {
 		this.builder.executeAction(this.parentContainer, {
 			'control_id': command,
 			'action_type': enable ? 'enable' : 'disable'
 		});
 	},
+
+	selectItem(command, select) {
+		this.builder.executeAction(this.parentContainer, {
+			'control_id': command,
+			'action_type': select ? 'select' : 'unselect'
+		});
+	},
+
+	updateItem: function (data) {
+		this.builder.updateWidget(this.parentContainer, data);
+		JSDialog.RefreshScrollables();
+	},
+	// jscpd:ignore-end
 
 	hasItem(id) {
 		return this.getToolItems().filter((item) => { return item.id === id; }).length > 0;

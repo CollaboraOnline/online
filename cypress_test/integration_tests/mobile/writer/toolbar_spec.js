@@ -82,11 +82,11 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Toolbar tests', function() 
 		// Mobile wizard is opened and it has any content
 		cy.cGet('#mobile-wizard-content').should('not.be.empty');
 		// Toolbar button is checked
-		//cy.cGet('#toolbar-up #mobile_wizard').should('have.class', 'checked');
+		cy.cGet('#toolbar-up #mobile_wizard').should('have.class', 'selected');
 		cy.cGet('#toolbar-up #mobile_wizard button').click();
 		// Mobile wizard is closed
 		cy.cGet('#mobile-wizard').should('not.be.visible');
-		//cy.cGet('#toolbar-up #mobile_wizard').should('not.have.class', 'checked');
+		cy.cGet('#toolbar-up #mobile_wizard').should('not.have.class', 'selected');
 	});
 
 	it('Open and close insertion mobile wizard by toolbar item.', function() {
@@ -106,10 +106,10 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Toolbar tests', function() 
 		// Mobile wizard is opened and it has any content
 		cy.cGet('#mobile-wizard-content').should('not.be.empty');
 		// Toolbar button is checked
-		//cy.cGet('#toolbar-up #comment_wizard').should('have.class', 'checked');
+		cy.cGet('#toolbar-up #comment_wizard').should('have.class', 'selected');
 		cy.cGet('#toolbar-up #comment_wizard button').click();
 		// Mobile wizard is closed
 		cy.cGet('#mobile-wizard').should('not.be.visible');
-		//cy.cGet('#toolbar-up #comment_wizard').should('not.have.class', 'checked');
+		cy.cGet('#toolbar-up #comment_wizard').should('not.have.class', 'selected');
 	});
 });

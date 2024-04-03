@@ -2424,10 +2424,21 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				div.setAttribute('disabled', '');
 			}
 
-			if (data.selected === true) {
-				$(button).addClass('selected');
-				$(div).addClass('selected');
-			}
+			var selectFn = function() {
+				L.DomUtil.addClass(button, 'selected');
+				L.DomUtil.addClass(div, 'selected');
+			};
+
+			var unSelectFn = function() {
+				L.DomUtil.removeClass(button, 'selected');
+				L.DomUtil.removeClass(div, 'selected');
+			};
+
+			div.onSelect = selectFn;
+			div.onUnSelect = unSelectFn;
+
+			if (data.selected === true)
+				selectFn();
 		} else {
 			var label = L.DomUtil.create('label', 'ui-content unolabel', div);
 			label.textContent = builder._cleanText(data.text);
@@ -2927,6 +2938,13 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				control.onSelect(parseInt(data.position));
 			else
 				window.app.console.warn('widget "' + data.control_id + '" doesn\'t support "select" action');
+			break;
+
+		case 'unselect':
+			if (typeof control.onSelect === 'function')
+				control.onUnSelect(parseInt(data.position));
+			else
+				window.app.console.warn('widget "' + data.control_id + '" doesn\'t support "unselect" action');
 			break;
 
 		case 'show':
