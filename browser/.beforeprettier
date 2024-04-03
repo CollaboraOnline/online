@@ -88,6 +88,7 @@
 /src/core/Log.js
 /src/core/LOUtil.js
 /src/core/Matrix.js
+/src/core/geometry.ts
 /src/core/Rectangle.ts
 /src/core/Socket.js
 /src/core/Util.js
