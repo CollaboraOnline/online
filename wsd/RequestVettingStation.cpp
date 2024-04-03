@@ -386,7 +386,8 @@ void RequestVettingStation::createClientSession(const std::string& docKey, const
 
                 // Add and load the session.
                 // Will download synchronously, but in own docBroker thread.
-                docBroker->addSession(clientSession, std::move(*wopiFileInfo));
+                if (wopiFileInfo)
+                    docBroker->addSession(clientSession, std::move(*wopiFileInfo));
 
                 COOLWSD::checkDiskSpaceAndWarnClients(true);
                 // Users of development versions get just an info
