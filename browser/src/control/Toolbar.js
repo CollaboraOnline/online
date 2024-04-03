@@ -1085,7 +1085,7 @@ L.Map.include({
 			if ($('.leaflet-cursor').is(':visible'))
 				return;
 
-			if (window.mode.isMobile()) {
+			if (window.mode.isMobile() && this.isEditMode()) {
 				var mobileTopBar = map.mobileTopBar;
 				mobileTopBar.showItem('cancelformula', false);
 				mobileTopBar.showItem('acceptformula', false);
