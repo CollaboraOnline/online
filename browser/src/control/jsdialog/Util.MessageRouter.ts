@@ -82,7 +82,7 @@ class JSDialogMessageRouter {
 		// re/create component
 		if (window.mode.isMobile()) {
 			// allow to use desktop's JSDialog component to show dropdowns
-			if (msgData.type === 'dropdown') {
+			if (msgData.type === 'dropdown' || msgData.type === 'snackbar') {
 				app.map.fire('jsdialog', { data: msgData, callback: callbackFn });
 				return;
 			}
@@ -96,8 +96,7 @@ class JSDialogMessageRouter {
 			if (
 				msgData.enabled ||
 				msgData.jsontype === 'dialog' ||
-				msgData.type === 'modalpopup' ||
-				msgData.type === 'snackbar'
+				msgData.type === 'modalpopup'
 			) {
 				app.map.fire('mobilewizard', { data: msgData, callback: callbackFn });
 			} else {
