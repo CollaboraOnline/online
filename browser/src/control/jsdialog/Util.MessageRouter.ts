@@ -48,6 +48,7 @@ class JSDialogMessageRouter {
 	}
 
 	public processMessage(msgData: JSDialogJSON, callbackFn: JSDialogCallback) {
+		// update existing component
 		if (msgData.action) {
 			var fireJSDialogEvent = function () {
 				switch (msgData.action) {
@@ -78,8 +79,15 @@ class JSDialogMessageRouter {
 		// appears in autofilter dropdown for hidden popups, we can ignore that
 		if (msgData.jsontype === 'popup') return;
 
-		// re/create
+		// re/create component
 		if (window.mode.isMobile()) {
+			// allow to use desktop's JSDialog component to show dropdowns
+			if (msgData.type === 'dropdown') {
+				app.map.fire('jsdialog', { data: msgData, callback: callbackFn });
+				return;
+			}
+
+			// use mobile wizard
 			if (msgData.type == 'borderwindow') return;
 			if (msgData.jsontype === 'formulabar') {
 				app.map.fire('formulabar', { data: msgData });
