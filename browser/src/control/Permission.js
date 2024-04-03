@@ -68,7 +68,7 @@ L.Map.include({
 				button.on('click', function () {
 					that._requestFileCopy();
 				});
-			} else if (!this.options.canTryLock && (window.mode.isMobile() || window.mode.isTablet())) {
+			} else if ((!window.ThisIsAMobileApp && !this['wopi'].UserCanWrite) || (!this.options.canTryLock && (window.mode.isMobile() || window.mode.isTablet()))) {
 				$('#mobile-edit-button').hide();
 			}
 
