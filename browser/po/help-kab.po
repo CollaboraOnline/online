@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-03-06 16:29+0200\n"
-"PO-Revision-Date: 2020-10-08 12:25+0000\n"
-"Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
+"PO-Revision-Date: 2024-04-02 04:51+0000\n"
+"Last-Translator: ButterflyOfFire <boffire@users.noreply.hosted.weblate.org>\n"
 "Language-Team: Kabyle <https://hosted.weblate.org/projects/collabora-online/"
 "help/kab/>\n"
 "Language: kab\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.5-dev\n"
 "X-POOTLE-MTIME: 1475585999.000000\n"
 
 #: html/cool-help.html%2Bdiv.h1:84-5
@@ -702,9 +702,8 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:216-137
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:311-99
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:376-99
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>End</kbd>"
-msgstr "Tagara"
+msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>End</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:155-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:312-38
