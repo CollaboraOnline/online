@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-03-06 16:29+0100\n"
-"PO-Revision-Date: 2024-02-18 21:02+0000\n"
+"PO-Revision-Date: 2024-04-03 10:12+0000\n"
 "Last-Translator: Alexander Gabilondo <alexgabi@openmailbox.org>\n"
 "Language-Team: Basque <https://hosted.weblate.org/projects/collabora-online/"
 "ui/eu/>\n"
-"Language: \n"
+"Language: eu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.4\n"
+"X-Generator: Weblate 5.5-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -1852,19 +1852,19 @@ msgstr "%user joan da"
 
 #: src/control/Control.UserList.ts:56
 msgid "Following %user"
-msgstr ""
+msgstr "% erabiltzaileari jarraitzen"
 
 #: src/control/Control.UserList.ts:57
 msgid "Following the editor"
-msgstr ""
+msgstr "Editoreari jarraitzen"
 
 #: src/control/Control.UserList.ts:58
 msgid "Click to stop following"
-msgstr ""
+msgstr "Egin klik jarraitzeari uzteko"
 
 #: src/control/Control.UserList.ts:59
 msgid "Avatar for %user"
-msgstr ""
+msgstr "%user erabiltzailearen avatarra"
 
 #: src/control/Control.UserList.ts:80
 msgid "%n users"
@@ -2607,7 +2607,7 @@ msgstr "Funtzioak"
 
 #: src/layer/tile/CanvasTileLayer.js:2592
 msgid "and %COUNT more"
-msgstr ""
+msgstr "eta %COUNT gehiago"
 
 #: src/layer/tile/CanvasTileLayer.js:2606
 msgid "Copy link location"
@@ -2753,11 +2753,11 @@ msgstr ""
 
 #: src/map/Clipboard.js:1042
 msgid "Paste from this document"
-msgstr ""
+msgstr "Itsatsi dokumentu honetatik"
 
 #: src/map/Clipboard.js:1042
 msgid "Cancel paste special"
-msgstr ""
+msgstr "Utzi itsatsi berezia"
 
 #: src/map/Map.js:220
 msgid "Initializing..."
