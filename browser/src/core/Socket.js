@@ -12,7 +12,7 @@
  * L.Socket contains methods for the communication with the server
  */
 
-/* global app _ $ errorMessages Uint8Array brandProductName */
+/* global app JSDialog _ $ errorMessages Uint8Array brandProductName */
 
 app.definitions.Socket = L.Class.extend({
 	ProtocolVersionNumber: '0.1',
@@ -1463,17 +1463,6 @@ app.definitions.Socket = L.Class.extend({
 		}
 	},
 
-	// show labels instead of editable fields in message boxes
-	_preProcessMessageDialog: function(msgData) {
-		for (var i in msgData.children) {
-			var child = msgData.children[i];
-			if (child.type === 'multilineedit')
-				child.type = 'fixedtext';
-			else if (child.children)
-				this._preProcessMessageDialog(child);
-		}
-	},
-
 	_onJSDialog: function(textMsg, callback) {
 		var msgData = JSON.parse(textMsg.substring('jsdialog:'.length + 1));
 
@@ -1482,71 +1471,7 @@ app.definitions.Socket = L.Class.extend({
 			return;
 		}
 
-		if (msgData.action) {
-			var that = this;
-			var fireJSDialogEvent = function () {
-				switch (msgData.action) {
-				case 'update':
-					that._map.fire('jsdialogupdate', {data: msgData});
-					return true;
-
-				case 'action':
-					that._map.fire('jsdialogaction', {data: msgData});
-					return true;
-				}
-
-				return false;
-			};
-
-			var isNotebookbarInitialized = (this._map.uiManager && this._map.uiManager.notebookbar);
-			if (msgData.jsontype === 'notebookbar' && !isNotebookbarInitialized) {
-				setTimeout(fireJSDialogEvent, 1000);
-				return;
-			} else if (fireJSDialogEvent() === true) {
-				return;
-			}
-		}
-
-		if (msgData.type === 'messagebox')
-			this._preProcessMessageDialog(msgData);
-
-		// appears in autofilter dropdown for hidden popups, we can ignore that
-		if (msgData.jsontype === 'popup')
-			return;
-
-		// re/create
-		if (window.mode.isMobile()) {
-			if (msgData.type == 'borderwindow')
-				return;
-			if (msgData.jsontype === 'formulabar') {
-				this._map.fire('formulabar', {data: msgData});
-				return;
-			}
-			if (msgData.enabled || msgData.jsontype === 'dialog' ||
-				msgData.type === 'modalpopup' || msgData.type === 'snackbar') {
-				this._map.fire('mobilewizard', {data: msgData, callback: callback});
-			} else {
-				console.warn('jsdialog: unhandled jsdialog mobile message: {jsontype: "' + msgData.jsontype + '", type: "' + msgData.type + '" ... }');
-			}
-		} else if (msgData.jsontype === 'dialog') {
-			this._map.fire('jsdialog', {data: msgData, callback: callback});
-		} else if (msgData.jsontype === 'sidebar') {
-			this._map.fire('sidebar', {data: msgData});
-		} else if (msgData.jsontype === 'formulabar') {
-			this._map.fire('formulabar', {data: msgData});
-		} else if (msgData.jsontype === 'notebookbar') {
-			if (msgData.children) {
-				for (var i = 0; i < msgData.children.length; i++) {
-					if (msgData.children[i].type === 'control') {
-						msgData.children[i].id = msgData.id;
-						this._map.fire('notebookbar', msgData.children[i]);
-						return;
-					}
-				}
-			}
-		} else {
-			console.warn('Unhandled jsdialog message: {jsontype: "' + msgData.jsontype + '", type: "' + msgData.type + '" ... }');
-		}
+		JSDialog.MessageRouter.processMessage(msgData, callback);
 	},
 
 	_onHyperlinkClickedMsg: function (textMsg) {

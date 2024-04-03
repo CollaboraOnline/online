@@ -332,6 +332,7 @@ COOL_JS_LST =\
 	src/control/jsdialog/Util.Dropdown.js \
 	src/control/jsdialog/Util.Events.ts \
 	src/control/jsdialog/Util.FocusCycle.js \
+	src/control/jsdialog/Util.MessageRouter.ts \
 	src/control/jsdialog/Util.ModalHelper.js \
 	src/control/jsdialog/Util.ScrollableBar.ts \
 	src/control/jsdialog/Util.StateChange.ts \
@@ -792,6 +793,7 @@ pot:
 		src/control/jsdialog/Util.Dropdown.js \
 		src/control/jsdialog/Util.Events.ts \
 		src/control/jsdialog/Util.FocusCycle.js \
+		src/control/jsdialog/Util.MessageRouter.ts \
 		src/control/jsdialog/Util.ModalHelper.js \
 		src/control/jsdialog/Util.ScrollableBar.ts \
 		src/control/jsdialog/Util.StateChange.ts \
