@@ -2,24 +2,26 @@
 <resources>
     <string name="temp_file_saving_disabled">Este arquivo é apenas de leitura, salvamento está desabilitado.</string>
     <string name="storage_permission_required">Permissão de armazenamento é requirida</string>
-    <string name="failed_to_load_file">Falha no carregamento do arquivo</string>
-    <string name="failed_to_insert_image">Falha ao inserir imagem</string>
-    <string name="cannot_open_file_chooser">Não foi possível abrir o gestor de arquivos</string>
+    <string name="failed_to_load_file">Falha para determinar o arquivo a ser carregado</string>
+    <string name="failed_to_insert_image">Falha para inserir imagem</string>
+    <string name="cannot_open_file_chooser">Não foi possível abrir o gerenciador de arquivos</string>
     <!-- Loading SlideShow Dialog Strings -->
     <string name="loading">Carregando...</string>
     <string name="saving">Salvando...</string>
     <string name="preparing_for_the_first_start_after_an_update">Preparando para iniciar após uma atualização.</string>
     <string name="rate_now">Avaliar agora</string>
-    <string name="rate_our_app_text">Se gostou dele, marque 5 estrelas no Google Play. Sua avaliação positiva é nossa melhor motivação.</string>
+    <string name="rate_our_app_text">Se você gostar, por favor, dê-nos 5 estrelas no Google Play. Suas boas críticas são nossa melhor motivação.</string>
     <string name="rate_our_app_title">Obrigado por usar %1$s!</string>
     <string name="later">Mais tarde</string>
     <string name="exiting">Saindo...</string>
-    <string name="file_chromeos_read_only">Este arquivo não pode ser salvo neste local, abrindo-o em só leitura. Mova-o para os arquivos de Play para poder ler e gravar o arquivo.</string>
+    <string name="file_chromeos_read_only">Este arquivo não pode ser salvo nesse local, abrindo-o como somente leitura. Mova-o para os arquivos Play para ter acesso total de leitura/gravação.</string>
     <string name="ask_for_copy">Este documento é somente para leitura. Você quer fazer uma cópia para editá-lo\?</string>
     <string name="edit_copy">Editar uma cópia</string>
     <string name="view_only">Apenas visualização</string>
     <string name="restarting">Reiniciando...</string>
     <string name="cant_open_the_document">Não foi possível abrir o documento</string>
-    <string name="use_odf">Usar formato ODF</string>
+    <string name="use_odf">Usar Formato ODF</string>
     <string name="ask_for_convert_odf">Confirmar formato de arquivo</string>
+    <string name="use_text">Usar Formato de Texto</string>
+    <string name="convert_odf_message">Este documento pode conter formatação ou conteúdo que não pode ser salvo no formato de arquivo \"Texto\" atualmente selecionado.</string>
 </resources>

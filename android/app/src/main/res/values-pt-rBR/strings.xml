@@ -11,7 +11,7 @@
     <string name="file_exists_warning">Um arquivo com esse nome já existe e será sobrescrito.</string>
     <string name="file_creation_failed">Falha na criação do arquivo</string>
     <string name="storage_permission_required">Permissão de armazenamento é requirida</string>
-    <string name="failed_to_load_file">Falha no carregamento do arquivo</string>
+    <string name="failed_to_load_file">Falha para determinar o arquivo a ser carregado</string>
     <string name="list_view">Lista</string>
     <string name="grid_view">Grade</string>
     <string name="pref_category_explorer">Configurações do Gerenciador de Arquivos</string>
@@ -24,22 +24,22 @@
     <string name="pref_filter_title">Filtro de arquivo padrão</string>
     <string name="pref_filter_summary">Defina qual o filtro de arquivo que deve ser usado por padrão.</string>
     <string name="pref_show_debug_info">Mostrar info de depuração </string>
-    <string name="pref_show_debug_info_summary">Habilitar info de depuração no document viewer</string>
+    <string name="pref_show_debug_info_summary">Habilitar para mostrar informação de depuração no visualizador de documento</string>
     <string name="about_license">Mostrar Licença</string>
-    <string name="about_notice">Mostar aviso</string>
-    <string name="about_moreinfo">Mais informação</string>
-    <string name="new_textdocument">Novo documento de texto</string>
-    <string name="new_presentation">Nova apresentação </string>
-    <string name="new_spreadsheet">Nova folha de cálculo</string>
-    <string name="default_document_name">Sem nome</string>
-    <string name="filter">Filtrado por</string>
-    <string name="sort">Ordenado por</string>
-    <string name="sort_smallest">Mais pequeno primeiro</string>
-    <string name="sort_largest">Maior em primeiro lugar</string>
+    <string name="about_notice">Mostrar Aviso</string>
+    <string name="about_moreinfo">Mais Informação</string>
+    <string name="new_textdocument">Novo Documento de Texto</string>
+    <string name="new_presentation">Nova Apresentação</string>
+    <string name="new_spreadsheet">Nova Planilha</string>
+    <string name="default_document_name">Sem título</string>
+    <string name="filter">Filtrar por</string>
+    <string name="sort">Ordenar por</string>
+    <string name="sort_smallest">O menor em primeiro</string>
+    <string name="sort_largest">O maior em primeiro</string>
     <string name="sort_az">A-Z</string>
     <string name="sort_za">Z-A</string>
-    <string name="sort_oldest">Mais antigo em primeiro</string>
-    <string name="sort_newest">Recentes em primeiro</string>
+    <string name="sort_oldest">Mais antigo primeiro</string>
+    <string name="sort_newest">Mais recente primeiro</string>
     <string name="file_icon_desc">Ícone de arquivo</string>
     <string name="title_recents">Arquivos recentes</string>
     <string name="title_browser">Todos os arquivos</string>
@@ -47,31 +47,31 @@
     <string name="action_about">Sobre</string>
     <string name="action_settings">Configurações</string>
     <string name="open">Abrir</string>
-    <string name="share">Partilhar</string>
-    <string name="share_via">Partilhar via</string>
+    <string name="share">Compartilhar</string>
+    <string name="share_via">Compartilhar via</string>
     <!-- Document browser filters -->
     <string name="filter_everything">Tudo</string>
     <string name="filter_documents">Documentos</string>
-    <string name="filter_spreadsheets">Folhas de cálculo</string>
+    <string name="filter_spreadsheets">Planilhas</string>
     <string name="filter_presentations">Apresentações</string>
     <!-- Document provider names -->
-    <string name="document_locations">Locais de arquivos</string>
-    <string name="close_document_locations">Fechar Locais de arquivos</string>
-    <string name="local_documents">Diretórios de documentos</string>
+    <string name="document_locations">Locais de documentos</string>
+    <string name="close_document_locations">Fechar locais de documentos</string>
+    <string name="local_documents">Diretório de documentos</string>
     <string name="local_file_system">Sistema local de arquivos</string>
     <string name="external_sd_file_system">SD externo</string>
     <string name="otg_file_system">Dispositivo OTG (experimental)</string>
     <string name="remote_server">Servidor remoto</string>
-    <string name="usb_connected_configure">USB conetado, configure o seu dispositivo.</string>
+    <string name="usb_connected_configure">USB conectado, configure o seu dispositivo.</string>
     <string name="owncloud_wrong_connection">Não foi possível conectar com o servidor na nuvem. Verifique as suas configurações.</string>
     <string name="owncloud_unauthorized">Não foi possível iniciar a sessão no servidor. Verifique as suas configurações.</string>
-    <string name="owncloud_unspecified_error">Erro não especificado ao conetar com o servidor na nuvem. Verifique as suas configurações ou tente mais tarde.</string>
+    <string name="owncloud_unspecified_error">Erro não especificado ao conectar com o servidor na nuvem. Verifique as suas configurações e/ou tente mais tarde.</string>
     <string name="ext_document_provider_error">Arquivo raiz inválido. Verifique a configuração do seu cartão SD.</string>
     <string name="otg_missing_error">Arquivo raiz inválido. Verifique seu dispositivo OTG e/ou configuração.</string>
     <!-- Edit action names -->
     <!-- Feedback messages -->
     <!-- Document provider settings -->
-    <string name="storage_provider_settings">Configurações de servidor</string>
+    <string name="storage_provider_settings">Configurações do provedor de armazenamento</string>
     <string name="owncloud_settings">Configurações do servidor na nuvem</string>
     <string name="physical_storage_settings">Configurações de armazenamento físico</string>
     <string name="external_sd_path">Caminho SD externo</string>
@@ -79,19 +79,19 @@
     <string name="otg_warning">Recurso experimental: use somente se o dispositivo OTG for gravável.</string>
     <string name="server_url">URL de servidor</string>
     <string name="server_url_and_port">URL e porta do servidor na nuvem.</string>
-    <string name="user_name">Usuário</string>
+    <string name="user_name">Nome de usuário(a)</string>
     <string name="password">Senha</string>
     <!-- Directory browser strings -->
     <string name="up_description">Ir para um diretório acima</string>
     <string name="confirm_label">Confirmar</string>
     <string name="cancel_label">Cancelar</string>
     <string name="search_label">Ir</string>
-    <string name="directory_browser_label">Escolha Diretório</string>
+    <string name="directory_browser_label">Escolher Diretório</string>
     <string name="bad_directory">Caminho de diretório inválido</string>
     <string name="current_dir">Diretório atual: %1$s</string>
     <!-- Permission rationale alert dialog strings -->
-    <string name="title_permission_required">Permissão necessária</string>
-    <string name="reason_required_to_read_documents">É necessária permissão de armazenamento para ler seus documentos.</string>
+    <string name="title_permission_required">Permissão requerida</string>
+    <string name="reason_required_to_read_documents">Permissão de armazenamento é requerida para ler seus documentos.</string>
     <string name="positive_ok">OK</string>
     <string name="negative_im_sure">Tenho a certeza</string>
     <string name="negative_cancel">Cancelar</string>
@@ -99,9 +99,9 @@
     <string name="action_cancel">Cancelar</string>
     <!-- Create New Document Dialog Strings -->
     <string name="create_new_document_title">Criar novo documento</string>
-    <string name="enter_filename">Introduza o nome do arquivo:</string>
+    <string name="enter_filename">Por favor, insira o nome do arquivo:</string>
     <string name="action_create">Criar</string>
-    <string name="action_overwrite">Substituir</string>
+    <string name="action_overwrite">Sobrescrever</string>
     <!-- Loading SlideShow Dialog Strings -->
     <string name="loading">Carregando...</string>
     <!-- Presentation Mode Strings -->
@@ -115,8 +115,8 @@
     <string name="directory_not_saved">Diretório não salvo.</string>
     <string name="title_activity_show_html">Sobre</string>
     <string name="share_document">Compartilhar documento</string>
-    <string name="pref_enable_chrome_debugger_info">Ative para utilizar a ferramenta de debug do Chrome no documento</string>
-    <string name="pref_enable_chrome_debugger">Debug do Chrome</string>
+    <string name="pref_enable_chrome_debugger_info">Habilita para utilizar a ferramenta de depuração do Chrome no documento</string>
+    <string name="pref_enable_chrome_debugger">Depuração do Chrome</string>
     <string name="pref_category_editor">Configurações do editor</string>
     <string name="remove_from_list">Remover da lista</string>
     <string name="file_actions_icon_desc">Ações de arquivo</string>
@@ -129,4 +129,6 @@
     <string name="choose_theme">Escolher tema</string>
     <string name="theme">Tema</string>
     <string name="pref_user_name_info">Utilizado ao adicionar um comentário</string>
+    <string name="pref_user_name">Nome de Usuário(a)</string>
+    <string name="pref_user_name_guest">Usuário(a) Convidado(a)</string>
 </resources>
