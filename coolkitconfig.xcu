@@ -417,7 +417,7 @@
         </node>
         <node oor:name="FontColor">
             <prop oor:name="Color" oor:op="fuse">
-                <value>0</value>
+                <value>0xFFFFFF</value>
             </prop>
         </node>
         <node oor:name="Links">
