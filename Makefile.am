@@ -548,6 +548,12 @@ run-massif-inproc: setup-wsd
 	valgrind --tool=massif --num-callers=64 --trace-children=no -v \
 		./coolwsd-inproc $(COMMON_PARAMS) \
 			--o:logging.file[@enable]=false --o:logging.level=trace
+
+run-heaptrack-inproc: setup-wsd
+	@echo "Launching coolwsd under heaptrack for single process"
+	heaptrack \
+		./coolwsd-inproc $(COMMON_PARAMS) \
+			--o:logging.file[@enable]=false --o:logging.level=trace
 endif
 
 sync-writer:
