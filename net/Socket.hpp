@@ -606,7 +606,12 @@ public:
     /// Create a socket poll, called rather infrequently.
     explicit SocketPoll(std::string threadName);
     virtual ~SocketPoll();
+    /// discard Watchdog
     static void shutdownWatchdog();
+    /// join watchdog thread if it exists, return true if there was a watchdog
+    static bool joinWatchdogThread();
+    /// re-launch watchdog thread if it exists
+    static void relaunchWatchdogThread();
 
     /// Default poll time - useful to increase for debugging.
     static constexpr std::chrono::microseconds DefaultPollTimeoutMicroS = std::chrono::seconds(5);
