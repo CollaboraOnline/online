@@ -52,7 +52,8 @@ public:
 
     ~Watchdog()
     {
-        joinThread();
+        if (_thread)
+            joinThread();
     }
 
     static uint64_t getDisableStamp() { return 0; }
