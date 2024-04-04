@@ -9,7 +9,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 /*
- * MobileSearchBar - mobile search bar
+ * JSDialog.MobileSearchBar - mobile search bar
  */
 
 /* global _ _UNO */
@@ -85,6 +85,6 @@ class MobileSearchBar {
 	}
 }
 
-L.control.searchBar = function (map: any) {
+JSDialog.MobileSearchBar = function (map: any) {
 	return new MobileSearchBar(map);
 };
