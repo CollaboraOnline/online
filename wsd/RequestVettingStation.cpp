@@ -357,14 +357,16 @@ void RequestVettingStation::createClientSession(const std::string& docKey, const
     LOG_DBG("ClientSession [" << clientSession->getName() << "] for [" << docKey
                               << "] acquired for [" << url << ']');
 
-    std::shared_ptr<std::unique_ptr<WopiStorage::WOPIFileInfo>> wopiFileInfo;
+    std::unique_ptr<WopiStorage::WOPIFileInfo> realWopiFileInfo;
 #if !MOBILEAPP
     assert((!_checkFileInfo || _checkFileInfo->wopiInfo()) &&
            "Must have WopiInfo when CheckFileInfo exists");
-    // unique_ptr is not copyable, so cannot be captured in a std::function-wrapped lambda.
-    wopiFileInfo = std::make_shared<std::unique_ptr<WopiStorage::WOPIFileInfo>>(
-        _checkFileInfo ? _checkFileInfo->wopiFileInfo(uriPublic) : nullptr);
+    realWopiFileInfo = _checkFileInfo ? _checkFileInfo->wopiFileInfo(uriPublic) : nullptr;
 #endif // !MOBILEAPP
+
+    // std::unique_ptr is not copyable, so cannot be captured in a std::function-wrapped lambda.
+    std::shared_ptr<std::unique_ptr<WopiStorage::WOPIFileInfo>> wopiFileInfo =
+        std::make_shared<std::unique_ptr<WopiStorage::WOPIFileInfo>>(std::move(realWopiFileInfo));
 
     // Transfer the client socket to the DocumentBroker when we get back to the poll:
     const auto ws = _ws;
