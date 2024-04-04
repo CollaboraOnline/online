@@ -9,22 +9,14 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 /*
- * L.Control.MobileBottomBar
+ * JSDialog.MobileBottomBar - component of bottom bar on mobile
  */
 
 /* global $ JSDialog app _ _UNO */
-L.Control.MobileBottomBar = L.Control.extend({
-
-	options: {
-		doctype: 'text'
-	},
-
-	initialize: function (docType) {
-		L.setOptions(this, {docType: docType});
-	},
-
-	onAdd: function (map) {
+class MobileBottomBar {
+	constructor(map) {
 		this.map = map;
+		this.docType = map.getDocType();
 		this.parentContainer = document.getElementById('toolbar-down');
 		L.DomUtil.addClass(this.parentContainer, 'ui-toolbar');
 
@@ -41,10 +33,10 @@ L.Control.MobileBottomBar = L.Control.extend({
 		map.on('commandstatechanged', window.onCommandStateChanged);
 		map.on('updatetoolbarcommandvalues', window.onCommandStateChanged);
 		map.on('contextchange', this.onContextChange, this);
-	},
+	}
 
-	getToolItems: function(docType) {
-		if (docType == 'text') {
+	getToolItems() {
+		if (this.docType == 'text') {
 			return [
 				{type: 'customtoolitem', id: 'showsearchbar', w2icon: 'search', text: _('Show the search bar')},
 				{type: 'separator'},
@@ -145,7 +137,7 @@ L.Control.MobileBottomBar = L.Control.extend({
 				{type: 'toolitem', id: 'flipvertical', text: _UNO('.uno:FlipVertical', 'text', true), command: '.uno:FlipVertical', context: ['Draw', 'DrawLine', '3DObject', 'MultiObject', 'Graphic', 'DrawFontwork']},
 				{type: 'toolitem', id: 'fliphorizontal', text: _UNO('.uno:FlipHorizontal', 'text', true), command: '.uno:FlipHorizontal', context: ['Draw', 'DrawLine', '3DObject', 'MultiObject', 'Graphic', 'DrawFontwork']},
 			];
-		} else if (docType == 'spreadsheet') {
+		} else if (this.docType == 'spreadsheet') {
 			return [
 				{type: 'customtoolitem', id: 'showsearchbar', w2icon: 'search', text: _('Show the search bar')},
 				{type: 'separator'},
@@ -212,7 +204,7 @@ L.Control.MobileBottomBar = L.Control.extend({
 				{type: 'toolitem', id: 'numberformatincdecimals', text: _UNO('.uno:NumberFormatIncDecimals', 'spreadsheet', true), command: '.uno:NumberFormatIncDecimals', disabled: true},
 				{type: 'toolitem', id: 'numberformatdecdecimals', text: _UNO('.uno:NumberFormatDecDecimals', 'spreadsheet', true), command: '.uno:NumberFormatDecDecimals', disabled: true},
 			];
-		} else if ((docType == 'presentation') || (docType == 'drawing')) {
+		} else if ((this.docType == 'presentation') || (this.docType == 'drawing')) {
 			return [
 				{type: 'customtoolitem', id: 'showsearchbar', w2icon: 'search', text: _('Show the search bar')},
 				{type: 'separator'},
@@ -221,7 +213,7 @@ L.Control.MobileBottomBar = L.Control.extend({
 				{type: 'toolitem', id: 'duplicatepage', text: _UNO('.uno:DuplicatePage', 'presentation', true), command: '.uno:DuplicatePage', context: ['DrawPage']},
 				{type: 'toolitem', id: 'deletepage', text: _UNO('.uno:DeletePage', 'presentation', true), command: '.uno:DeletePage', context: ['DrawPage']},
 				{type: 'separator', context: ['DrawPage']},
-				{type: 'customtoolitem', id: 'fullscreen', command: 'fullscreen-' + docType, text: _UNO('.uno:FullScreen', docType), context: ['DrawPage']},
+				{type: 'customtoolitem', id: 'fullscreen', command: 'fullscreen-' + this.docType, text: _UNO('.uno:FullScreen', this.docType), context: ['DrawPage']},
 				// context: ['default', 'Text', 'DrawText', 'Table']
 				{type: 'toolitem', id: 'bold', text: _UNO('.uno:Bold'), command: '.uno:Bold', context: ['default', 'Text', 'DrawText', 'TextObject', 'Table']},
 				{type: 'toolitem', id: 'italic', text: _UNO('.uno:Italic'), command: 'Italic', context: ['default', 'Text', 'DrawText', 'TextObject', 'Table']},
@@ -292,10 +284,10 @@ L.Control.MobileBottomBar = L.Control.extend({
 				{type: 'toolitem', id: 'fliphorizontal', text: _UNO('.uno:FlipHorizontal', '', true), command: '.uno:FlipHorizontal', context: ['Draw', 'DrawLine', '3DObject', 'MultiObject', 'Graphic', 'DrawFontwork']},
 			];
 		}
-	},
+	}
 
-	create: function() {
-		var toolItems = this.getToolItems(this.options.docType);
+	create() {
+		var toolItems = this.getToolItems();
 		this.builder.build(this.parentContainer, toolItems);
 
 		if (this.map.isRestrictedUser()) {
@@ -314,7 +306,7 @@ L.Control.MobileBottomBar = L.Control.extend({
 
 		JSDialog.MakeScrollable(this.parentContainer, this.parentContainer.querySelector('div'));
 		JSDialog.RefreshScrollables();
-	},
+	}
 
 	showItem(command, show) {
 		if (!command)
@@ -326,7 +318,7 @@ L.Control.MobileBottomBar = L.Control.extend({
 		});
 
 		JSDialog.RefreshScrollables();
-	},
+	}
 
 	// jscpd:ignore-start
 	enableItem(command, enable) {
@@ -337,26 +329,26 @@ L.Control.MobileBottomBar = L.Control.extend({
 			'control_id': command,
 			'action_type': enable ? 'enable' : 'disable'
 		});
-	},
+	}
 
 	selectItem(command, select) {
 		this.builder.executeAction(this.parentContainer, {
 			'control_id': command,
 			'action_type': select ? 'select' : 'unselect'
 		});
-	},
+	}
 
-	updateItem: function (data) {
+	updateItem(data) {
 		this.builder.updateWidget(this.parentContainer, data);
 		JSDialog.RefreshScrollables();
-	},
+	}
 	// jscpd:ignore-end
 
-	onContextChange: function(event) {
+	onContextChange(event) {
 		window.updateVisibilityForToolbar(app.map.mobileBottomBar, event.context);
-	},
-});
+	}
+}
 
-L.control.mobileBottomBar = function (docType) {
-	return new L.Control.MobileBottomBar(docType);
+JSDialog.MobileBottomBar = function (map) {
+	return new MobileBottomBar(map);
 };
