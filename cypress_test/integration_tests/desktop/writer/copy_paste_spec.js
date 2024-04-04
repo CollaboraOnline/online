@@ -13,16 +13,25 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Clipboard operations.', fu
 		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
-	function setDummyClipboard() {
+	// Replaces the system clipboard with a dummy one. The specified type will be injected into
+	// the DOM for assertion purposes.
+	function setDummyClipboard(type) {
+		if (type === undefined) {
+			type = 'text/html';
+		}
 		cy.window().then(win => {
 			const app = win['0'].app;
 			const clipboard = app.map._clip;
 			clipboard._dummyClipboard = {
 				write: function(clipboardItems) {
 					const clipboardItem = clipboardItems[0];
-					clipboardItem.getType('text/html').then(blob => blob.text())
+					clipboardItem.getType(type).then(blob => blob.text())
 					.then(function (text) {
-						clipboard._dummyDiv.innerHTML = text;
+						if (type === 'text/html') {
+							clipboard._dummyDiv.innerHTML = text;
+						} else if (type == 'text/plain') {
+							clipboard._dummyPlainDiv.innerHTML = text;
+						}
 					});
 					return {
 						then: function(resolve/*, reject*/) {
@@ -30,7 +39,17 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Clipboard operations.', fu
 						},
 					};
 				},
+
+				useAsyncWrite: true,
 			};
+		});
+	}
+
+	function copy() {
+		cy.window().then(win => {
+			const app = win['0'].app;
+			const clipboard = app.map._clip;
+			clipboard.filterExecCopyPaste('.uno:Copy');
 		});
 	}
 
@@ -59,9 +78,11 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Clipboard operations.', fu
 	it('Copy plain text.', function() {
 		before('copy_paste_simple.odt');
 
+		setDummyClipboard('text/plain');
 		helper.selectAllText();
+		copy();
 
-		let expected = '    • first\n    • second\n    • third\n';
-		cy.cGet('#copy-plain-container').should('have.text', expected.replaceAll('\n', ''));
+		let expected = '    • first\n    • second\n    • third';
+		cy.cGet('#copy-plain-container').should('have.text', expected);
 	});
 });
