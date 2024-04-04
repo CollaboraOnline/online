@@ -1372,4 +1372,18 @@ void SocketPoll::shutdownWatchdog()
     PollWatchdog.reset();
 }
 
+bool SocketPoll::joinWatchdogThread()
+{
+    if (!PollWatchdog)
+        return false;
+    PollWatchdog->joinThread();
+    return true;
+}
+
+void SocketPoll::relaunchWatchdogThread()
+{
+    if (PollWatchdog)
+        PollWatchdog->startThread();
+}
+
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

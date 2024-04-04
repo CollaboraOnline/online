@@ -418,6 +418,14 @@ static int createLibreOfficeKit(const std::string& childRoot,
     }
     else
     {
+        /* We are about to fork, but not exec. After a fork the child has
+           only one thread, but a copy of the watchdog object.
+
+           Stop the watchdog thread before fork, let the child discard
+           its copy of the watchdog that is now in a discardable state,
+           and allow it to create a new one on next SocketPoll ctor */
+        const bool hasWatchDog = SocketPoll::joinWatchdogThread();
+
         pid = fork();
         if (!pid)
         {
@@ -425,6 +433,10 @@ static int createLibreOfficeKit(const std::string& childRoot,
 
             // Close the pipe from coolwsd
             close(0);
+
+            // Throw away inherited watchdog, which will let a new one for this
+            // child be created on demand
+            SocketPoll::shutdownWatchdog();
 
             UnitKit::get().postFork();
 
@@ -435,6 +447,12 @@ static int createLibreOfficeKit(const std::string& childRoot,
         }
         else
         {
+            if (hasWatchDog)
+            {
+                // restart parent watchdog if there was one
+                SocketPoll::relaunchWatchdogThread();
+            }
+
             // Parent
             if (pid < 0)
             {
