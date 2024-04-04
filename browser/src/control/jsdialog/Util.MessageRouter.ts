@@ -82,7 +82,12 @@ class JSDialogMessageRouter {
 		// re/create component
 		if (window.mode.isMobile()) {
 			// allow to use desktop's JSDialog component to show dropdowns
-			if (msgData.type === 'dropdown' || msgData.type === 'snackbar') {
+			if (
+				msgData.type === 'dropdown' ||
+				msgData.type === 'snackbar' ||
+				(msgData.type === 'modalpopup' &&
+					msgData.id === JSDialog.generateModalId(app.idleHandlerId))
+			) {
 				app.map.fire('jsdialog', { data: msgData, callback: callbackFn });
 				return;
 			}
