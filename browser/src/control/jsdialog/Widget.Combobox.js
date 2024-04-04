@@ -215,10 +215,15 @@ JSDialog.combobox = function (parentContainer, data, builder) {
 
 	var content = L.DomUtil.create('input', 'ui-combobox-content ' + builder.options.cssClass, container);
 	content.value = data.text;
-	content.setAttribute('aria-labelledby', data.id);
+	content.role = 'combobox';
+
+	if (data.aria) {
+		content.setAttribute("aria-label",data.aria.label);
+	}
 
 	var button = L.DomUtil.create('div', 'ui-combobox-button ' + builder.options.cssClass, container);
 	button.tabIndex = '0';
+	button.role = 'button';
 
 	var arrow = L.DomUtil.create('span', builder.options.cssClass + ' ui-listbox-arrow', button);
 	arrow.id = 'listbox-arrow-' + data.id;
@@ -292,7 +297,7 @@ JSDialog.combobox = function (parentContainer, data, builder) {
 
 	button.addEventListener('click', clickFunction);
 	button.addEventListener('keypress', function (event) {
-		if (event.key === 'Enter')
+		if (event.key === 'Enter' || event.key === ' ')
 			clickFunction();
 	});
 
