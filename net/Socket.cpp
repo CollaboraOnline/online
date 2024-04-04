@@ -572,13 +572,11 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
             LOG_TRC("Scanning to removing " << itemsErased << " defunct sockets from "
                     << _pollSockets.size() << " sockets");
 
-            for (auto it = _pollSockets.begin(); it != _pollSockets.end();)
-            {
-                if (!*it)
-                    it = _pollSockets.erase(it);
-                else
-                    ++it;
-            }
+            _pollSockets.erase(
+                std::remove_if(_pollSockets.begin(), _pollSockets.end(),
+                    [](const std::shared_ptr<Socket>& s)->bool
+                    { return !s; }),
+                _pollSockets.end());
         }
     }
 
