@@ -1588,9 +1588,12 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_editControl: function(parentContainer, data, builder, callback) {
-		var edit = L.DomUtil.create('input', 'ui-edit ' + builder.options.cssClass, parentContainer);
+		var container = L.DomUtil.create('div', 'ui-edit-container ' + builder.options.cssClass, parentContainer);
+		container.id = data.id;
+
+		var edit = L.DomUtil.create('input', 'ui-edit ' + builder.options.cssClass, container);
 		edit.value = data.text;
-		edit.id = data.id;
+		edit.id = data.id + '-input';
 		edit.dir = 'auto';
 
 		if (data.password === true)
@@ -1607,7 +1610,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			if (typeof callbackToUse === 'function')
 				callbackToUse(this.value);
 			else
-				builder.callback('edit', 'change', edit, this.value, builder);
+				builder.callback('edit', 'change', container, this.value, builder);
 		});
 
 		edit.addEventListener('click', function(e) {
