@@ -4,7 +4,7 @@ set -e
 
 case "$1" in
     configure)
-	setcap cap_fowner,cap_chown,cap_mknod,cap_sys_chroot=ep /usr/bin/coolforkit || true
+	setcap cap_fowner,cap_chown,cap_sys_chroot=ep /usr/bin/coolforkit || true
 	setcap cap_sys_admin=ep /usr/bin/coolmount || true
 	if [ -f /etc/loolwsd/loolwsd.xml ]; then /usr/bin/coolconfig migrateconfig --write || true; fi
 

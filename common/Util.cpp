@@ -117,25 +117,33 @@ namespace Util
         {
             std::vector<char> v(length);
 
-            int len = 0;
-            /* use "/dev/[u]random" by default in case of
-            getentropy() or getrandom() fails,
-            or they don't available */
-            bool useDevRandom = true;
-#ifdef HAVE_GETENTROPY
-            len = getentropy(v.data(), length);
-
-            // getentropy() works, no need to use "/dev/[u]random"
-            if (len != -1)
-                useDevRandom = false;
-#elif defined HAVE_SYS_RANDOM_H
-            len = getrandom(v.data(), length, GRND_NONBLOCK);
-
-            // getrandom() works, no need to use "/dev/[u]random"
-            if (len != -1)
-                useDevRandom = false;
+            int len = -1;
+#if !HAVE_GETENTROPY && !HAVE_SYS_RANDOM_H
+#  error "getentropy or getrandom are required for succesful function";
 #endif
-            if (useDevRandom)
+
+#if HAVE_GETENTROPY
+            len = getentropy(v.data(), length);
+#endif
+
+#if HAVE_SYS_RANDOM_H
+            if (len < int(length))
+            {
+                char *buffer = v.data();
+                size_t toRead = length;
+                while (toRead > 0)
+                {
+                    int got = getrandom(buffer, toRead, GRND_NONBLOCK);
+                    if (got < 0 && errno != EINTR)
+                        break;
+                    buffer += got;
+                    toRead -= got;
+                    len += got;
+                }
+            }
+#endif
+
+            if (len < int(length))
             {
                 const int fd = open("/dev/urandom", O_RDONLY);
                 if (fd < 0 ||

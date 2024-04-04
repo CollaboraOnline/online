@@ -2709,8 +2709,12 @@ void copyCertificateDatabaseToTmp(Poco::Path const& jailPath)
         }
     }
 }
+
 #endif
 }
+
+
+
 
 void lokit_main(
 #if !MOBILEAPP
@@ -2917,8 +2921,7 @@ void lokit_main(
                 }
             }
 
-            // Setup the devices inside /tmp and set TMPDIR.
-            JailUtil::setupJailDevNodes(Poco::Path(jailPath, "/tmp").toString());
+            // Setup /tmp and set TMPDIR.
             ::setenv("TMPDIR", "/tmp", 1);
             allowedPaths += ":w:/tmp";
 

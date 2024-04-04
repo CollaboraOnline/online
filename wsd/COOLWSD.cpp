@@ -3361,7 +3361,7 @@ bool COOLWSD::createForKit()
     std::string parentPath = Path(Application::instance().commandPath()).parent().toString();
 
 #if STRACE_COOLFORKIT
-    // if you want to use this, you need to sudo setcap cap_fowner,cap_chown,cap_mknod,cap_sys_chroot=ep /usr/bin/strace
+    // if you want to use this, you need to sudo setcap cap_fowner,cap_chown,cap_sys_chroot=ep /usr/bin/strace
     args.push_back("-o");
     args.push_back("strace.log");
     args.push_back("-f");

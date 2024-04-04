@@ -94,7 +94,7 @@ getent group cool >/dev/null || groupadd -r cool
 getent passwd cool >/dev/null || useradd -g cool -r cool -d /opt/cool -s /bin/bash
 
 %post
-setcap cap_fowner,cap_chown,cap_mknod,cap_sys_chroot=ep /usr/bin/coolforkit
+setcap cap_fowner,cap_chown,cap_sys_chroot=ep /usr/bin/coolforkit
 setcap cap_sys_admin=ep /usr/bin/coolmount
 if [ -f /etc/loolwsd/loolwsd.xml ]; then /usr/bin/coolconfig migrateconfig --write; fi
 # compatibility with older systemd versions
