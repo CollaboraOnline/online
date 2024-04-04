@@ -55,11 +55,8 @@ window.app = {
 		fileBasedView: false, // (draw-impress only) Default is false. For read-only documents, user can view all parts at once. In that case, this variable is set to "true".
 		calc: {
 			cellCursor: {
-				address: [0, 0],
-				rectangle: {
-					pixels: [0, 0, 0, 0],
-					twips: [0, 0, 0, 0]
-				},
+				address: null, // To be assigned SimplePoint.
+				rectangle: null, // To be assigned SimpleRectangle.
 				visible: false,
 			}
 		},

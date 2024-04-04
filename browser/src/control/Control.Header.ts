@@ -702,12 +702,8 @@ export class HeaderInfo {
 		const cellSelections: cool.Rectangle[] = this._map._docLayer._cellSelections;
 		let currentIndex = -1;
 
-		if (this._map._docLayer._cellCursorXY) {
-			currentIndex = this._isColumn ? this._map._docLayer._cellCursorXY.x: this._map._docLayer._cellCursorXY.y;
-		}
-
-		if (currentIndex === -1 && this._map._docLayer._prevCellCursorXY) {
-			currentIndex = this._isColumn ? this._map._docLayer._prevCellCursorXY.x : this._map._docLayer._prevCellCursorXY.y;
+		if (app.file.calc.cellCursor.visible) {
+			currentIndex = this._isColumn ? app.file.calc.cellCursor.address.x: app.file.calc.cellCursor.address.y;
 		}
 
 		const startPx = this._isColumn === true ? section.documentTopLeft[0]: section.documentTopLeft[1];

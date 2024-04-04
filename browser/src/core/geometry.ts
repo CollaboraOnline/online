@@ -97,6 +97,8 @@ export class SimplePoint {
 
 	public cEquals(point: Array<number>): boolean { return this.cX === Math.round(point[0]) && this.cY === Math.round(point[1]); }
 	public cToArray(): number[] { return [this.cX, this.cY]; }
+
+	public clone(): SimplePoint { return new SimplePoint(this._x, this._y); }
 }
 
 /**

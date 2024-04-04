@@ -71,8 +71,8 @@ class AutoFillMarkerSection extends CanvasSectionObject {
 
 	private setMarkerPosition () {
 		var center: number = 0;
-		if (!(<any>window).mode.isDesktop() && this.map._docLayer._cellCursorPixels) {
-			center = this.map._docLayer._cellCursorPixels.getWidth() * 0.5;
+		if (!(<any>window).mode.isDesktop()) {
+			center = app.file.calc.cellCursor.rectangle.pWidth * 0.5;
 		}
 
 		var position: Array<number> = [0, 0];

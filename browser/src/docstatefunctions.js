@@ -15,6 +15,16 @@
 
 /* global app */
 
+window.addEventListener('load', function () {
+	app.file.calc.cellCursor.rectangle = new app.definitions.simpleRectangle(
+		0,
+		0,
+		0,
+		0,
+	);
+	app.file.calc.cellCursor.address = new app.definitions.simplePoint(0, 0);
+});
+
 app.isReadOnly = function () {
 	return app.file.readOnly;
 };

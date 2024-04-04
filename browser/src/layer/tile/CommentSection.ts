@@ -1145,9 +1145,9 @@ export class Comment extends CanvasSectionObject {
 	/// This event is Calc-only. Fired by CanvasSectionContainer.
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	public onCellAddressChanged(cursorInfo: any): void {
-		if (cursorInfo.rectangle.pixels && this.sectionProperties.data.rectangles) {
-			var midX = this.containerObject.getDocumentAnchor()[0] + Math.round(cursorInfo.rectangle.pixels[0] + (cursorInfo.rectangle.pixels[2]) * 0.5);
-			var midY = this.containerObject.getDocumentAnchor()[1] + Math.round(cursorInfo.rectangle.pixels[1] + (cursorInfo.rectangle.pixels[3]) * 0.5);
+		if (this.sectionProperties.data.rectangles) {
+			var midX = this.containerObject.getDocumentAnchor()[0] + Math.round(cursorInfo.rectangle.pCenter[0]);
+			var midY = this.containerObject.getDocumentAnchor()[1] + Math.round(cursorInfo.rectangle.pCenter[1]);
 
 			if (midX > this.sectionProperties.data.rectangles[0][0] && midX < this.sectionProperties.data.rectangles[0][0] + this.sectionProperties.data.rectangles[0][2]
 				&& midY > this.sectionProperties.data.rectangles[0][1] && midY < this.sectionProperties.data.rectangles[0][1] + this.sectionProperties.data.rectangles[0][3]) {
