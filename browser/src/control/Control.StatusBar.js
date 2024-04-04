@@ -13,22 +13,9 @@
  */
 
 /* global $ app JSDialog _ _UNO */
-class StatusBar {
-
+class StatusBar extends JSDialog.Toolbar {
 	constructor(map) {
-		this.map = map;
-		this.parentContainer = document.getElementById('toolbar-down');
-		L.DomUtil.addClass(this.parentContainer, 'ui-toolbar');
-		this.builder = new L.control.jsDialogBuilder(
-			{
-				mobileWizard: this,
-				map: this.map,
-				cssClass: 'jsdialog',
-				noLabelsForUnoButtons: true,
-				callback: this.callback.bind(this)
-			});
-
-		this.create();
+		super(map, 'toolbar-down');
 
 		map.on('doclayerinit', this.onDocLayerInit, this);
 		map.on('languagesupdated', this.onLanguagesUpdated, this);
@@ -38,15 +25,6 @@ class StatusBar {
 		map.on('updatestatepagenumber', this.onPageChange, this);
 		map.on('search', this.onSearch, this);
 		map.on('zoomend', this.onZoomEnd, this);
-	}
-
-	hideTooltip(toolbar, id) {
-		if (toolbar.touchStarted) {
-			setTimeout(function() {
-				toolbar.tooltipHide(id, {});
-			}, 5000);
-			toolbar.touchStarted = false;
-		}
 	}
 
 	localizeStateTableCell(text) {
@@ -368,25 +346,6 @@ class StatusBar {
 	hide() {
 		this.parentContainer.style.display = 'none';
 	}
-
-	// TODO: make base class for toolbar components
-	// jscpd:ignore-start
-	enableItem(command, enable) {
-		this.builder.executeAction(this.parentContainer, {
-			'control_id': command,
-			'action_type': enable ? 'enable' : 'disable'
-		});
-	}
-
-	showItem(command, show) {
-		this.builder.executeAction(this.parentContainer, {
-			'control_id': command,
-			'action_type': show ? 'show' : 'hide'
-		});
-
-		JSDialog.RefreshScrollables();
-	}
-	// jscpd:ignore-end
 
 	updateHtmlItem(id, text) {
 		this.builder.updateWidget(this.parentContainer, {

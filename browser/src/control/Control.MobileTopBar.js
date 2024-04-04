@@ -13,22 +13,9 @@
  */
 
 /* global JSDialog $ _UNO _ app */
-class MobileTopBar {
+class MobileTopBar extends JSDialog.Toolbar {
 	constructor(map) {
-		this.map = map;
-		this.docType = map.getDocType();
-		this.parentContainer = document.getElementById('toolbar-up');
-		L.DomUtil.addClass(this.parentContainer, 'ui-toolbar');
-
-		this.builder = new L.control.jsDialogBuilder(
-			{
-				mobileWizard: this,
-				map: this.map,
-				cssClass: 'jsdialog',
-				noLabelsForUnoButtons: true
-			});
-
-		this.create();
+		super(map, 'toolbar-up');
 
 		map.on('updatepermission', this.onUpdatePermission, this);
 		map.on('commandstatechanged', this.onCommandStateChanged, this);
@@ -100,32 +87,6 @@ class MobileTopBar {
 	create() {
 		var items = this.getToolItems();
 		this.builder.build(this.parentContainer, items);
-	}
-
-	showItem(command, show) {
-		this.builder.executeAction(this.parentContainer, {
-			'control_id': command,
-			'action_type': show ? 'show' : 'hide'
-		});
-	}
-
-	enableItem(command, enable) {
-		this.builder.executeAction(this.parentContainer, {
-			'control_id': command,
-			'action_type': enable ? 'enable' : 'disable'
-		});
-	}
-
-	showSigningItem(icon, text) {
-		this.builder.updateWidget(this.parentContainer,
-			{type: 'toolitem', id: 'signstatus', command: '.uno:Signature', noLabel: true, w2icon: icon, text: text ? text : _UNO('.uno:Signature')});
-	}
-
-	selectItem(command, select) {
-		this.builder.executeAction(this.parentContainer, {
-			'control_id': command,
-			'action_type': select ? 'select' : 'unselect'
-		});
 	}
 
 	onUpdatePermission(e) {

@@ -13,41 +13,12 @@
  */
 
 /* global _ _UNO */
-class MobileSearchBar {
-	map: any;
-	builder: any;
-	parentContainer: Element;
-
+class MobileSearchBar extends Toolbar {
 	constructor(map: any) {
-		this.map = map;
-		this.parentContainer = document.getElementById('toolbar-search');
-		L.DomUtil.addClass(this.parentContainer, 'ui-toolbar');
-
-		this.builder = new L.control.jsDialogBuilder({
-			mobileWizard: this,
-			map: this.map,
-			cssClass: 'jsdialog',
-			noLabelsForUnoButtons: true,
-		});
-
-		this.create();
+		super(map, 'toolbar-search');
 	}
 
-	showItem(command: string, show: boolean) {
-		this.builder.executeAction(this.parentContainer, {
-			control_id: command,
-			action_type: show ? 'show' : 'hide',
-		});
-	}
-
-	enableItem(command: string, enable: boolean) {
-		this.builder.executeAction(this.parentContainer, {
-			control_id: command,
-			action_type: enable ? 'enable' : 'disable',
-		});
-	}
-
-	getToolItems() {
+	getToolItems(): Array<ToolbarItem> {
 		return [
 			{
 				type: 'customtoolitem',

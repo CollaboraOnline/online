@@ -12,23 +12,10 @@
  * JSDialog.MobileBottomBar - component of bottom bar on mobile
  */
 
-/* global $ JSDialog app _ _UNO */
-class MobileBottomBar {
+/* global JSDialog app _ _UNO */
+class MobileBottomBar extends JSDialog.Toolbar {
 	constructor(map) {
-		this.map = map;
-		this.docType = map.getDocType();
-		this.parentContainer = document.getElementById('toolbar-down');
-		L.DomUtil.addClass(this.parentContainer, 'ui-toolbar');
-
-		this.builder = new L.control.jsDialogBuilder(
-			{
-				mobileWizard: this,
-				map: this.map,
-				cssClass: 'jsdialog',
-				noLabelsForUnoButtons: true
-			});
-
-		this.create();
+		super(map, 'toolbar-down')
 
 		map.on('commandstatechanged', window.onCommandStateChanged);
 		map.on('updatetoolbarcommandvalues', window.onCommandStateChanged);
@@ -285,64 +272,6 @@ class MobileBottomBar {
 			];
 		}
 	}
-
-	create() {
-		var toolItems = this.getToolItems();
-		this.builder.build(this.parentContainer, toolItems);
-
-		if (this.map.isRestrictedUser()) {
-			for (var i = 0; i < toolItems.length; i++) {
-				var it = toolItems[i];
-				this.map.hideRestrictedItems(it, $('#' + it.id)[0], $('#' + it.id)[0]);
-			}
-		}
-
-		if (this.map.isLockedUser()) {
-			for (var i = 0; i < toolItems.length; i++) {
-				var it = toolItems[i];
-				this.map.disableLockedItem(it, $('#' + it.id)[0], $('#'+ it.id)[0]);
-			}
-		}
-
-		JSDialog.MakeScrollable(this.parentContainer, this.parentContainer.querySelector('div'));
-		JSDialog.RefreshScrollables();
-	}
-
-	showItem(command, show) {
-		if (!command)
-			return;
-
-		this.builder.executeAction(this.parentContainer, {
-			'control_id': command,
-			'action_type': show ? 'show' : 'hide'
-		});
-
-		JSDialog.RefreshScrollables();
-	}
-
-	// jscpd:ignore-start
-	enableItem(command, enable) {
-		if (!command)
-			return;
-
-		this.builder.executeAction(this.parentContainer, {
-			'control_id': command,
-			'action_type': enable ? 'enable' : 'disable'
-		});
-	}
-
-	selectItem(command, select) {
-		this.builder.executeAction(this.parentContainer, {
-			'control_id': command,
-			'action_type': select ? 'select' : 'unselect'
-		});
-	}
-
-	updateItem(data) {
-		this.builder.updateWidget(this.parentContainer, data);
-		JSDialog.RefreshScrollables();
-	}
-	// jscpd:ignore-end
 
 	onContextChange(event) {
 		window.updateVisibilityForToolbar(app.map.mobileBottomBar, event.context);

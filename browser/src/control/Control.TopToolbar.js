@@ -13,22 +13,10 @@
  */
 
 /* global $ app JSDialog _ _UNO */
-class TopToolbar {
+class TopToolbar extends JSDialog.Toolbar {
 	constructor(map) {
-		this.map = map;
+		super(map, 'toolbar-up');
 		this.stylesSelectValue = null;
-		this.customItems = [];
-
-		this.builder = new L.control.jsDialogBuilder(
-			{
-				mobileWizard: this,
-				map: this.map,
-				cssClass: 'jsdialog',
-				noLabelsForUnoButtons: true,
-				callback: this.callback.bind(this)
-			});
-
-		this.create();
 
 		map.on('doclayerinit', this.onDocLayerInit, this);
 		map.on('updatepermission', this.onUpdatePermission, this);
@@ -236,45 +224,6 @@ class TopToolbar {
 				}
 			}
 		}
-	}
-
-	insertItem(beforeId, items) {
-		this.customItems.push({beforeId: beforeId, items: items});
-		this.create();
-	}
-
-	// jscpd:ignore-start
-	enableItem(command, enable) {
-		this.builder.executeAction(this.parentContainer, {
-			'control_id': command,
-			'action_type': enable ? 'enable' : 'disable'
-		});
-	}
-
-	selectItem(command, select) {
-		this.builder.executeAction(this.parentContainer, {
-			'control_id': command,
-			'action_type': select ? 'select' : 'unselect'
-		});
-	}
-
-	updateItem(data) {
-		this.builder.updateWidget(this.parentContainer, data);
-		JSDialog.RefreshScrollables();
-	}
-	// jscpd:ignore-end
-
-	hasItem(id) {
-		return this.getToolItems().filter((item) => { return item.id === id; }).length > 0;
-	}
-
-	showItem(command, show) {
-		this.builder.executeAction(this.parentContainer, {
-			'control_id': command,
-			'action_type': show ? 'show' : 'hide'
-		});
-
-		JSDialog.RefreshScrollables();
 	}
 
 	create() {
