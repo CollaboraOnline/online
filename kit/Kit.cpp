@@ -85,6 +85,7 @@
 #include <common/Watchdog.hpp>
 
 #if !MOBILEAPP
+#include "RandomStream.hpp"
 #include <common/SigUtil.hpp>
 #include <common/Seccomp.hpp>
 #include <utility>
@@ -2703,8 +2704,89 @@ void copyCertificateDatabaseToTmp(Poco::Path const& jailPath)
         }
     }
 }
+
+static std::shared_ptr<TerminatingPoll> RandomPoll;
+
+/// Create FIFOs for random devices
+bool createRandomDeviceInJail(const std::string& root, const std::string& devicePath)
+{
+    const std::string absPath = root + devicePath;
+
+    if (FileUtil::Stat(absPath).exists())
+    {
+        LOG_DBG("Random fifo [" << devicePath << "] already exits");
+        return true;
+    }
+
+    LOG_DBG("Making [" << devicePath << "] node in [" << root << "/dev]");
+
+    if (mkfifo((absPath).c_str(), S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH) == 0)
+    {
+        LOG_DBG("Created random fifo [" << absPath << ']');
+
+        // Cannot open to write unless there is one reader already; would get ENXIO on open
+        int wasteful = open((absPath).c_str(), O_RDONLY | O_NONBLOCK);
+        (void)wasteful;
+
+        // FIXME: the worst thing about this is that wasteful has
+        // a socket that sucks a lot of randomness out of dev/urandom.
+
+        int randomFd = open((absPath).c_str(), O_WRONLY | O_NONBLOCK);
+        if (randomFd < 0)
+            LOG_SYS("Failed to open random fifo for writing: ");
+
+        RandomPoll->insertNewSocket(
+            std::make_shared<RandomStream>(randomFd));
+        return true;
+    }
+
+    static bool warned = false;
+    if (!warned)
+    {
+        warned = true;
+        LOG_SYS("Failed to create random fifo [" << devicePath << "] at [" << absPath << "]. "
+                "Some features, such as password-protection and document-signing, might not work");
+    }
+
+    return false;
+}
+
+// /tmp/dev/ in the jail chroot. See setupRandomDeviceLinks().
+void setupJailDevNodes(const std::string& root)
+{
+    if (!FileUtil::isWritable(root))
+    {
+        LOG_WRN("Path [" << root << "] is read-only. Will not create the random device nodes.");
+        return;
+    }
+
+    const auto pathDev = Poco::Path(root, "/dev");
+
+    try
+    {
+        // Create the path first.
+        Poco::File(pathDev).createDirectory();
+    }
+    catch (const std::exception& ex)
+    {
+        LOG_ERR("Failed to create [" << pathDev.toString() << "]: " << ex.what());
+        return;
+    }
+
+    // Will start the polling thread in the child process
+    std::cerr << "Start random poll thread\n";
+    RandomPoll = std::make_shared<TerminatingPoll>("random_poll");
+    RandomPoll->startThread();
+
+    createRandomDeviceInJail(root, "/dev/random");
+    createRandomDeviceInJail(root, "/dev/urandom");
+}
+
 #endif
 }
+
+
+
 
 void lokit_main(
 #if !MOBILEAPP
@@ -2912,7 +2994,7 @@ void lokit_main(
             }
 
             // Setup the devices inside /tmp and set TMPDIR.
-            JailUtil::setupJailDevNodes(Poco::Path(jailPath, "/tmp").toString());
+            setupJailDevNodes(Poco::Path(jailPath, "tmp").toString());
             ::setenv("TMPDIR", "/tmp", 1);
             allowedPaths += ":w:/tmp";
 
