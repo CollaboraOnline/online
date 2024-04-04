@@ -336,7 +336,8 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		$(control.button).unbind('click');
 		$(control.label).unbind('click');
 		if (!builder.map.isLockedItem(data)) {
-			$(control.container).click(function () {
+			$(control.container).click(function (e) {
+				e.preventDefault();
 				L.control.menubar()._executeAction.bind({_map: builder.options.map})(undefined, {id: data.id});
 			});
 		}
