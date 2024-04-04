@@ -292,7 +292,7 @@ L.Control.UIManager = L.Control.extend({
 			$('#mobile-edit-button').show();
 			this.map.mobileBottomBar = JSDialog.MobileBottomBar(this.map);
 			this.map.mobileTopBar = JSDialog.MobileTopBar(this.map);
-			this.map.mobileSearchBar = L.control.searchBar(this.map);
+			this.map.mobileSearchBar = JSDialog.MobileSearchBar(this.map);
 		} else if (enableNotebookbar) {
 			this.createNotebookbarControl(docType);
 			// makeSpaceForNotebookbar call in onUpdatePermission
