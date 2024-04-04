@@ -13,6 +13,27 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Clipboard operations.', fu
 		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
+	function setDummyClipboard() {
+		cy.window().then(win => {
+			const app = win['0'].app;
+			const clipboard = app.map._clip;
+			clipboard._dummyClipboard = {
+				write: function(clipboardItems) {
+					const clipboardItem = clipboardItems[0];
+					clipboardItem.getType('text/html').then(blob => blob.text())
+					.then(function (text) {
+						clipboard._dummyDiv.innerHTML = text;
+					});
+					return {
+						then: function(resolve/*, reject*/) {
+							resolve();
+						},
+					};
+				},
+			};
+		});
+	}
+
 	it('Copy and Paste text.', function() {
 		before('copy_paste.odt');
 		// Select some text
@@ -27,10 +48,12 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Clipboard operations.', fu
 				cy.cGet('body').rightclick(XPos, YPos);
 			});
 
+		setDummyClipboard();
+
 		cy.cGet('body').contains('.context-menu-link', 'Copy')
 			.click();
 
-		cy.cGet('#copy_paste_warning-box').should('exist');
+		cy.cGet('#copy-paste-container div p').should('have.text', 'text');
 	});
 
 	it('Copy plain text.', function() {
