@@ -9,16 +9,13 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 /*
- * L.Control.StatusBar
+ * JSDialog.StatusBar - statusbar component
  */
 
 /* global $ app JSDialog _ _UNO */
-L.Control.StatusBar = L.Control.extend({
+class StatusBar {
 
-	initialize: function () {
-	},
-
-	onAdd: function (map) {
+	constructor(map) {
 		this.map = map;
 		this.parentContainer = document.getElementById('toolbar-down');
 		L.DomUtil.addClass(this.parentContainer, 'ui-toolbar');
@@ -41,18 +38,18 @@ L.Control.StatusBar = L.Control.extend({
 		map.on('updatestatepagenumber', this.onPageChange, this);
 		map.on('search', this.onSearch, this);
 		map.on('zoomend', this.onZoomEnd, this);
-	},
+	}
 
-	hideTooltip: function(toolbar, id) {
+	hideTooltip(toolbar, id) {
 		if (toolbar.touchStarted) {
 			setTimeout(function() {
 				toolbar.tooltipHide(id, {});
 			}, 5000);
 			toolbar.touchStarted = false;
 		}
-	},
+	}
 
-	localizeStateTableCell: function(text) {
+	localizeStateTableCell(text) {
 		var stateArray = text.split(';');
 		var stateArrayLength = stateArray.length;
 		var localizedText = '';
@@ -64,17 +61,17 @@ L.Control.StatusBar = L.Control.extend({
 			}
 		}
 		return localizedText;
-	},
+	}
 
-	toLocalePattern: function(pattern, regex, text, sub1, sub2) {
+	toLocalePattern(pattern, regex, text, sub1, sub2) {
 		var matches = new RegExp(regex, 'g').exec(text);
 		if (matches) {
 			text = pattern.toLocaleString().replace(sub1, parseInt(matches[1].replace(/,/g,'')).toLocaleString(String.locale)).replace(sub2, parseInt(matches[2].replace(/,/g,'')).toLocaleString(String.locale));
 		}
 		return text;
-	},
+	}
 
-	_updateToolbarsVisibility: function(context) {
+	_updateToolbarsVisibility(context) {
 		var isReadOnly = this.map.isReadOnlyMode();
 		if (isReadOnly) {
 			this.enableItem('languagestatus', false);
@@ -86,13 +83,13 @@ L.Control.StatusBar = L.Control.extend({
 			this.showItem('statusselectionmode-container', true);
 		}
 		window.updateVisibilityForToolbar(this, context);
-	},
+	}
 
-	onContextChange: function(event) {
+	onContextChange(event) {
 		this._updateToolbarsVisibility(event.context);
-	},
+	}
 
-	callback: function (objectType, eventType, object, data, builder) {
+	callback(objectType, eventType, object, data, builder) {
 		if (object.id === 'search-input') {
 			// its handled by window.setupSearchInput
 			return;
@@ -127,9 +124,9 @@ L.Control.StatusBar = L.Control.extend({
 		}
 
 		this.builder._defaultCallbackHandler(objectType, eventType, object, data, builder);
-	},
+	}
 
-	onSearch: function(e) {
+	onSearch(e) {
 		var searchInput = L.DomUtil.get('search-input');
 		if (e.count === 0) {
 			this.enableItem('searchprev', false);
@@ -143,9 +140,9 @@ L.Control.StatusBar = L.Control.extend({
 				L.DomUtil.removeClass(searchInput, 'search-not-found');
 			}, 800);
 		}
-	},
+	}
 
-	onZoomEnd: function() {
+	onZoomEnd() {
 		var zoomPercent = 100;
 		var zoomSelected = null;
 		switch (this.map.getZoom()) {
@@ -182,13 +179,13 @@ L.Control.StatusBar = L.Control.extend({
 				selected: zoomSelected,
 				menu: this._generateZoomItems()
 			});
-	},
+	}
 
-	onPageChange: function(e) {
+	onPageChange(e) {
 		var state = e.state;
 		state = this.toLocalePattern('Page %1 of %2', 'Page (\\d+) of (\\d+)', state, '%1', '%2');
 		this.updateHtmlItem('StatePageNumber', state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
-	},
+	}
 
 	_generateHtmlItem(id) {
 		var isReadOnlyMode = app.map ? app.map.isReadOnlyMode() : true;
@@ -204,7 +201,7 @@ L.Control.StatusBar = L.Control.extend({
 			vertical: false,
 			visible: false
 		};
-	},
+	}
 
 	_generateStateTableCellMenuItem(value, visible) {
 		var submenu = [
@@ -220,7 +217,7 @@ L.Control.StatusBar = L.Control.extend({
 		var selected = submenu.filter((item) => { return item.id === value; });
 		var text = selected.length ? selected[0].text : _('None');
 		return {type: 'menubutton', id: 'StateTableCellMenu', text: text, menu: submenu, visible: visible};
-	},
+	}
 
 	_generateZoomItems() {
 		return [
@@ -243,7 +240,7 @@ L.Control.StatusBar = L.Control.extend({
 			{ id: 'zoom335', text: '335', scale: 17},
 			{ id: 'zoom400', text: '400', scale: 18},
 		];
-	},
+	}
 
 	getToolItems() {
 		return [
@@ -279,9 +276,9 @@ L.Control.StatusBar = L.Control.extend({
 			{type: 'menubutton', id: 'zoom', text: '100', selected: 'zoom100', menu: this._generateZoomItems()},
 			{type: 'customtoolitem',  id: 'zoomin', command: 'zoomin', text: _UNO('.uno:ZoomPlus')}
 		]);
-	},
+	}
 
-	create: function() {
+	create() {
 		if (this.parentContainer.firstChild)
 			return;
 
@@ -292,9 +289,9 @@ L.Control.StatusBar = L.Control.extend({
 		window.setupSearchInput();
 		JSDialog.MakeScrollable(this.parentContainer, this.parentContainer.querySelector('div'));
 		JSDialog.RefreshScrollables();
-	},
+	}
 
-	onDocLayerInit: function () {
+	onDocLayerInit() {
 		var showStatusbar = this.map.uiManager.getSavedStateOrDefault('ShowStatusbar');
 		if (showStatusbar)
 			this.map.uiManager.showStatusBar();
@@ -361,16 +358,16 @@ L.Control.StatusBar = L.Control.extend({
 
 		this._updateToolbarsVisibility();
 		JSDialog.RefreshScrollables();
-	},
+	}
 
-	show: function() {
+	show() {
 		this.parentContainer.style.display = '';
 		JSDialog.RefreshScrollables();
-	},
+	}
 
-	hide: function() {
+	hide() {
 		this.parentContainer.style.display = 'none';
-	},
+	}
 
 	// TODO: make base class for toolbar components
 	// jscpd:ignore-start
@@ -379,7 +376,7 @@ L.Control.StatusBar = L.Control.extend({
 			'control_id': command,
 			'action_type': enable ? 'enable' : 'disable'
 		});
-	},
+	}
 
 	showItem(command, show) {
 		this.builder.executeAction(this.parentContainer, {
@@ -388,10 +385,10 @@ L.Control.StatusBar = L.Control.extend({
 		});
 
 		JSDialog.RefreshScrollables();
-	},
+	}
 	// jscpd:ignore-end
 
-	updateHtmlItem: function (id, text) {
+	updateHtmlItem(id, text) {
 		this.builder.updateWidget(this.parentContainer, {
 			id: id,
 			type: 'htmlcontent',
@@ -400,24 +397,24 @@ L.Control.StatusBar = L.Control.extend({
 		});
 
 		JSDialog.RefreshScrollables();
-	},
+	}
 
-	updateLanguageItem: function (language) {
+	updateLanguageItem(language) {
 		if (app.map.isReadOnlyMode())
 			return;
 
 		this.builder.updateWidget(this.parentContainer,
 			{type: 'menubutton', id: 'languagestatus:LanguageStatusMenu', noLabel: false, text: language});
 		JSDialog.RefreshScrollables();
-	},
+	}
 
-	showSigningItem: function (icon, text) {
+	showSigningItem(icon, text) {
 		this.builder.updateWidget(this.parentContainer,
 			{type: 'toolitem', id: 'signstatus', command: '.uno:Signature', w2icon: icon, text: text ? text : _UNO('.uno:Signature')});
 		JSDialog.RefreshScrollables();
-	},
+	}
 
-	onPermissionChanged: function(event) {
+	onPermissionChanged(event) {
 		var isReadOnlyMode = event.perm === 'readonly';
 		if (isReadOnlyMode) {
 			$('#toolbar-down').addClass('readonly');
@@ -434,7 +431,7 @@ L.Control.StatusBar = L.Control.extend({
 		});
 
 		JSDialog.RefreshScrollables();
-	},
+	}
 
 	extractLanguageFromStatus(state) {
 		var code = state;
@@ -443,9 +440,9 @@ L.Control.StatusBar = L.Control.extend({
 		if (split.length > 1)
 			language = _(split[0]);
 		return language;
-	},
+	}
 
-	onCommandStateChanged: function(e) {
+	onCommandStateChanged(e) {
 		var commandName = e.commandName;
 		var state = e.state;
 
@@ -511,9 +508,9 @@ L.Control.StatusBar = L.Control.extend({
 				this.updateHtmlItem('PageStatus', state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
 			}
 		}
-	},
+	}
 
-	onLanguagesUpdated: function() {
+	onLanguagesUpdated() {
 		var menuEntries = [];
 		var translated, neutral;
 		var constLang = '.uno:LanguageStatus?Language:string=';
@@ -544,9 +541,9 @@ L.Control.StatusBar = L.Control.extend({
 		}
 
 		JSDialog.MenuDefinitions.set('LanguageStatusMenu', menuEntries);
-	},
-});
+	}
+}
 
-L.control.statusBar = function () {
-	return new L.Control.StatusBar();
+JSDialog.StatusBar = function (map) {
+	return new StatusBar(map);
 };
