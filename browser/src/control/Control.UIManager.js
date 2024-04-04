@@ -207,8 +207,7 @@ L.Control.UIManager = L.Control.extend({
 				this.map.addControl(this.map.topToolbar);
 			}
 
-			this.map.statusBar = L.control.statusBar();
-			this.map.addControl(this.map.statusBar);
+			this.map.statusBar = JSDialog.StatusBar(this.map);
 
 			this.map.sidebar = L.control.sidebar({animSpeed: 200});
 			this.map.addControl(this.map.sidebar);
