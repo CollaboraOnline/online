@@ -9,19 +9,15 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 /*
- * L.Control.TopToolbar
+ * JSDialog.TopToolbar - component of top toolbar in compact mode
  */
 
 /* global $ app JSDialog _ _UNO */
-L.Control.TopToolbar = L.Control.extend({
-	options: {
-		stylesSelectValue: null,
-	},
-
-	customItems: [],
-
-	onAdd: function (map) {
+class TopToolbar {
+	constructor(map) {
 		this.map = map;
+		this.stylesSelectValue = null;
+		this.customItems = [];
 
 		this.builder = new L.control.jsDialogBuilder(
 			{
@@ -43,9 +39,9 @@ L.Control.TopToolbar = L.Control.extend({
 		if (!window.mode.isMobile()) {
 			map.on('updatetoolbarcommandvalues', this.updateCommandValues, this);
 		}
-	},
+	}
 
-	onRemove: function() {
+	onRemove() {
 		if (this.parentContainer) {
 			this.parentContainer.outerHTML = '';
 			this.parentContainer = null;
@@ -59,9 +55,9 @@ L.Control.TopToolbar = L.Control.extend({
 		if (!window.mode.isMobile()) {
 			this.map.off('updatetoolbarcommandvalues', this.updateCommandValues, this);
 		}
-	},
+	}
 
-	reset: function() {
+	reset() {
 		this.parentContainer = L.DomUtil.get('toolbar-up');
 
 		// In case it contains garbage
@@ -74,18 +70,18 @@ L.Control.TopToolbar = L.Control.extend({
 		$('#toolbar-logo').after(this.map.toolbarUpTemplate.cloneNode(true));
 		this.parentContainer = L.DomUtil.get('toolbar-up');
 		L.DomUtil.addClass(this.parentContainer, 'ui-toolbar');
-	},
+	}
 
-	callback: function(objectType, eventType, object, data, builder) {
+	callback(objectType, eventType, object, data, builder) {
 		if (object.id === 'fontnamecombobox' || object.id === 'fontsizecombobox' || object.id === 'styles') {
 			// managed by non-JSDialog code
 			return;
 		}
 
 		this.builder._defaultCallbackHandler(objectType, eventType, object, data, builder);
-	},
+	}
 
-	onStyleSelect: function(e) {
+	onStyleSelect(e) {
 		var style = e.target.value;
 		if (style.startsWith('.uno:')) {
 			this.map.sendUnoCommand(style);
@@ -100,11 +96,11 @@ L.Control.TopToolbar = L.Control.extend({
 			this.map.applyLayout(style);
 		}
 		this.map.focus();
-	},
+	}
 
-	onContextChange: function(event) {
+	onContextChange(event) {
 		window.updateVisibilityForToolbar(app.map.topToolbar, event.context);
-	},
+	}
 
 	// mobile:false means hide it both for normal Online used from a mobile phone browser, and in a mobile app on a mobile phone
 	// mobilebrowser:false means hide it for normal Online used from a mobile browser, but don't hide it in a mobile app
@@ -114,7 +110,7 @@ L.Control.TopToolbar = L.Control.extend({
 	// hidden means display:none
 	// invisible means visibility:hidden
 
-	getToolItems: function() {
+	getToolItems() {
 		var items = [
 			{type: 'customtoolitem',  id: 'closemobile', desktop: false, mobile: false, tablet: true, visible: false},
 			{type: 'customtoolitem',  id: 'save', command: 'save', text: _UNO('.uno:Save'), lockUno: '.uno:Save'},
@@ -229,9 +225,9 @@ L.Control.TopToolbar = L.Control.extend({
 		});
 
 		return items;
-	},
+	}
 
-	updateControlsState: function() {
+	updateControlsState() {
 		if (this.map['stateChangeHandler']) {
 			var items = this.map['stateChangeHandler'].getItems();
 			if (items) {
@@ -240,12 +236,12 @@ L.Control.TopToolbar = L.Control.extend({
 				}
 			}
 		}
-	},
+	}
 
 	insertItem(beforeId, items) {
 		this.customItems.push({beforeId: beforeId, items: items});
 		this.create();
-	},
+	}
 
 	// jscpd:ignore-start
 	enableItem(command, enable) {
@@ -253,24 +249,24 @@ L.Control.TopToolbar = L.Control.extend({
 			'control_id': command,
 			'action_type': enable ? 'enable' : 'disable'
 		});
-	},
+	}
 
 	selectItem(command, select) {
 		this.builder.executeAction(this.parentContainer, {
 			'control_id': command,
 			'action_type': select ? 'select' : 'unselect'
 		});
-	},
+	}
 
-	updateItem: function (data) {
+	updateItem(data) {
 		this.builder.updateWidget(this.parentContainer, data);
 		JSDialog.RefreshScrollables();
-	},
+	}
 	// jscpd:ignore-end
 
 	hasItem(id) {
 		return this.getToolItems().filter((item) => { return item.id === id; }).length > 0;
-	},
+	}
 
 	showItem(command, show) {
 		this.builder.executeAction(this.parentContainer, {
@@ -279,9 +275,9 @@ L.Control.TopToolbar = L.Control.extend({
 		});
 
 		JSDialog.RefreshScrollables();
-	},
+	}
 
-	create: function() {
+	create() {
 		this.reset();
 
 		var items = this.getToolItems();
@@ -311,9 +307,9 @@ L.Control.TopToolbar = L.Control.extend({
 		// on mode switch NB -> Compact
 		if (this.map._docLoadedOnce)
 			this.onDocLayerInit();
-	},
+	}
 
-	onDocLayerInit: function() {
+	onDocLayerInit() {
 		var docType = this.map.getDocType();
 
 		switch (docType) {
@@ -400,9 +396,9 @@ L.Control.TopToolbar = L.Control.extend({
 		this.map.createFontSizeSelector('#fontsizecombobox-input');
 
 		JSDialog.RefreshScrollables();
-	},
+	}
 
-	onUpdatePermission: function(e) {
+	onUpdatePermission(e) {
 		if (e.perm === 'edit') {
 			// Enable list boxes
 			$('#styles-input').prop('disabled', false);
@@ -414,9 +410,9 @@ L.Control.TopToolbar = L.Control.extend({
 			$('#fontnamecombobox-input').prop('disabled', true);
 			$('#fontsizecombobox-input').prop('disabled', true);
 		}
-	},
+	}
 
-	onWopiProps: function(e) {
+	onWopiProps(e) {
 		if (e.HideSaveOption) {
 			this.showItem('save', false);
 		}
@@ -438,10 +434,10 @@ L.Control.TopToolbar = L.Control.extend({
 				this.showItem('menugraphic', false);
 			}
 		}
-	},
+	}
 
 	// TODO: create dedicated widget for styles listbox
-	updateCommandValues: function(e) {
+	updateCommandValues(e) {
 		var data = [];
 		var commandValues;
 		// 1) For .uno:StyleApply
@@ -508,12 +504,12 @@ L.Control.TopToolbar = L.Control.extend({
 				data: data,
 				placeholder: _('Style')
 			});
-			$('#styles-input').val(this.options.stylesSelectValue).trigger('change');
+			$('#styles-input').val(this.stylesSelectValue).trigger('change');
 			$('#styles-input').on('select2:select', this.onStyleSelect.bind(this));
 		}
-	},
+	}
 
-	processStateChangedCommand: function(commandName, state) {
+	processStateChangedCommand(commandName, state) {
 		var found = false;
 
 		if (commandName === '.uno:StyleApply') {
@@ -544,18 +540,18 @@ L.Control.TopToolbar = L.Control.extend({
 						.text(state));
 			}
 
-			this.options.stylesSelectValue = state;
+			this.stylesSelectValue = state;
 			$('#styles-input').val(state).trigger('change');
 		}
 
 		window.processStateChangedCommand(commandName, state);
-	},
+	}
 
-	onCommandStateChanged: function(e) {
+	onCommandStateChanged(e) {
 		this.processStateChangedCommand(e.commandName, e.state);
 	}
-});
+};
 
-L.control.topToolbar = function () {
-	return new L.Control.TopToolbar();
+JSDialog.TopToolbar = function (map) {
+	return new TopToolbar(map);
 };
