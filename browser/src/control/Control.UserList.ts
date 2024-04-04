@@ -468,7 +468,7 @@ class UserList extends L.Control {
 		const sanitizer = document.createElement('div');
 		sanitizer.innerText = message;
 
-		this.showTooltip(sanitizer.innerText);
+		this.showTooltip(sanitizer.innerHTML);
 
 		clearTimeout(this.options.userPopupTimeout);
 		this.options.userPopupTimeout = setTimeout(() => {
