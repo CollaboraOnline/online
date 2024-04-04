@@ -17,7 +17,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Toolbar tests', function() 
 
 	it('State of mobile wizard toolbar item.', function() {
 		// Mobile wizard toolbar button is disabled by default
-		cy.cGet('#toolbar-up #mobile_wizard').should('have.attr', 'disabled');
+		cy.cGet('#toolbar-up #mobile_wizard').should('not.be.visible');
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
 		// Button should be enabled now
@@ -26,7 +26,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Toolbar tests', function() 
 
 	it('State of insertion mobile wizard toolbar item.', function() {
 		// Insertion mobile wizard toolbar button is disabled by default
-		cy.cGet('#toolbar-up #insertion_mobile_wizard').should('have.attr', 'disabled');
+		cy.cGet('#toolbar-up #insertion_mobile_wizard').should('not.be.visible');
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
 		// Button should be enabled now
