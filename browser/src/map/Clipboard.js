@@ -13,7 +13,7 @@
  * local & remote clipboard data.
  */
 
-/* global app _ brandProductName $ */
+/* global app _ brandProductName $ ClipboardItem */
 
 // Get all interesting clipboard related events here, and handle
 // download logic in one place ...
@@ -513,6 +513,12 @@ L.Clipboard = L.Class.extend({
 	populateClipboard: function(ev) {
 		this._checkSelection();
 
+		if (this._navigatorClipboardWrite()) {
+			// This is the codepath where the browser initiates the clipboard operation,
+			// e.g. the keyboard is used.
+			return true;
+		}
+
 		var text = this._getHtmlForClipboard();
 
 		var plainText = this.stripHTML(text);
@@ -640,6 +646,13 @@ L.Clipboard = L.Class.extend({
 		var serial = this._clipboardSerial;
 
 		this._unoCommandForCopyCutPaste = cmd;
+
+		if (operation !== 'paste' && this._navigatorClipboardWrite()) {
+			// This is the codepath where an UNO command initiates the clipboard
+			// operation.
+			return;
+		}
+
 		if (document.execCommand(operation) &&
 			serial !== this._clipboardSerial) {
 			window.app.console.log('copied successfully');
@@ -777,6 +790,49 @@ L.Clipboard = L.Class.extend({
 
 		// Invoke paste(), which knows how to recognize our HTML vs external HTML.
 		this.paste(ev);
+	},
+
+	// Executes the navigator.clipboard.write() call, if it's available.
+	_navigatorClipboardWrite: function() {
+		if (navigator.clipboard.write === undefined) {
+			return false;
+		}
+
+		if (this._selectionType !== 'text') {
+			return false;
+		}
+
+		app.socket.sendMessage('uno ' + this._unoCommandForCopyCutPaste);
+		const url = this.getMetaURL() + '&MimeType=text/html,text/plain;charset=utf-8';
+		const that = this;
+		const text = new ClipboardItem({
+			'text/html': fetch(url)
+				.then(response => response.text())
+				.then(function(text) {
+					const type = "text/html";
+					const content = that.parseClipboard(text)['html'];
+					const blob = new Blob([content], { 'type': type });
+					return blob;
+				}),
+			'text/plain': fetch(url)
+				.then(response => response.text())
+				.then(function(text) {
+					const type = 'text/plain';
+					const content = that.parseClipboard(text)['plain'];
+					const blob = new Blob([content], { 'type': type });
+					return blob;
+				}),
+		});
+		let clipboard = navigator.clipboard;
+		if (L.Browser.cypressTest) {
+			clipboard = this._dummyClipboard;
+		}
+		clipboard.write([text]).then(function() {
+		}, function(error) {
+			window.app.console.log('navigator.clipboard.write() failed: ' + error.message);
+		});
+
+		return true;
 	},
 
 	// Parses the result from the clipboard endpoint into HTML and plain text.
@@ -969,6 +1025,11 @@ L.Clipboard = L.Class.extend({
 			this._dummyPlainDiv.innerText = plainText;
 		}
 		this._scheduleHideDownload();
+	},
+
+	// Sets the selection type without having the selection content (async clipboard).
+	setTextSelectionType: function(selectionType) {
+		this._selectionType = selectionType;
 	},
 
 	// sets the selection to some (cell formula) text)
