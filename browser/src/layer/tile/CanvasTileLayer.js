@@ -2484,10 +2484,10 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._prevCellCursor = L.LatLngBounds.createDefault();
 		}
 
-		var oldCursorAddress = app.file.calc.cellCursor.address.clone();
+		var oldCursorAddress = app.calc.cellAddress.clone();
 
 		if (textMsg.match('EMPTY')) {
-			app.file.calc.cellCursor.visible = false;
+			app.calc.cellCursorVisible = false;
 			this._cellCursorTwips = new L.Bounds(new L.Point(0, 0), new L.Point(0, 0));
 			this._cellCursor = L.LatLngBounds.createDefault();
 			if (autofillMarkerSection)
@@ -2507,14 +2507,14 @@ L.CanvasTileLayer = L.Layer.extend({
 				this._twipsToLatLng(this._cellCursorTwips.getTopLeft(), this._map.getZoom()),
 				this._twipsToLatLng(this._cellCursorTwips.getBottomRight(), this._map.getZoom()));
 
-			app.file.calc.cellCursor.address = new app.definitions.simplePoint(parseInt(strTwips[4]), parseInt(strTwips[5]));
+			app.calc.cellAddress = new app.definitions.simplePoint(parseInt(strTwips[4]), parseInt(strTwips[5]));
 			let tempRectangle = this._cellCursorTwips.toRectangle();
-			app.file.calc.cellCursor.rectangle = new app.definitions.simpleRectangle(tempRectangle[0], tempRectangle[1], tempRectangle[2], tempRectangle[3]);
-			app.file.calc.cellCursor.visible = true;
+			app.calc.cellCursorRectangle = new app.definitions.simpleRectangle(tempRectangle[0], tempRectangle[1], tempRectangle[2], tempRectangle[3]);
+			app.calc.cellCursorVisible = true;
 
 			app.sectionContainer.onCellAddressChanged();
 			if (autofillMarkerSection)
-				autofillMarkerSection.calculatePositionViaCellCursor([app.file.calc.cellCursor.rectangle.pX2, app.file.calc.cellCursor.rectangle.pY2]);
+				autofillMarkerSection.calculatePositionViaCellCursor([app.calc.cellCursorRectangle.pX2, app.calc.cellCursorRectangle.pY2]);
 		}
 
 		var horizontalDirection = 0;
@@ -2541,7 +2541,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._prevCellCursor = new L.LatLngBounds(this._cellCursor.getSouthWest(), this._cellCursor.getNorthEast());
 		}
 
-		var sameAddress = oldCursorAddress.equals(app.file.calc.cellCursor.address.toArray());
+		var sameAddress = oldCursorAddress.equals(app.calc.cellAddress.toArray());
 
 		var scrollToCursor = this._sheetSwitch.tryRestore(sameAddress, this._selectedPart);
 
@@ -3675,7 +3675,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._graphicSelection = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(0, 0));
 		this._onUpdateGraphicSelection();
 		this._cellCursor = null;
-		app.file.calc.cellCursor.visible = false;
+		app.calc.cellCursorVisible = false;
 		this._prevCellCursor = null;
 		this._onUpdateCellCursor();
 		if (this._map._clip)
@@ -4550,7 +4550,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_onDropDownButtonClick: function () {
-		if (this._validatedCellAddress && app.file.calc.cellCursor.visible && this._validatedCellAddress.equals(app.file.calc.cellCursor.address.toArray())) {
+		if (this._validatedCellAddress && app.calc.cellCursorVisible && this._validatedCellAddress.equals(app.calc.cellAddress.toArray())) {
 			this._map.sendUnoCommand('.uno:DataSelect');
 		}
 	},
@@ -4667,7 +4667,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._onUpdateCellResizeMarkers();
 		if (this._cellCursor && !this._isEmptyRectangle(this._cellCursor)) {
 			var mapBounds = this._map.getBounds();
-			if (scrollToCursor && (!this._prevCellCursorAddress || !app.file.calc.cellCursor.address.equals(this._prevCellCursorAddress.toArray())) &&
+			if (scrollToCursor && (!this._prevCellCursorAddress || !app.calc.cellAddress.equals(this._prevCellCursorAddress.toArray())) &&
 			    !this._map.calcInputBarHasFocus()) {
 				var scroll = this._calculateScrollForNewCellCursor();
 				window.app.console.assert(scroll instanceof L.LatLng, '_calculateScrollForNewCellCursor returned wrong type');
@@ -4677,7 +4677,7 @@ L.CanvasTileLayer = L.Layer.extend({
 					newCenter.lat += scroll.lat;
 					this.scrollToPos(newCenter);
 				}
-				this._prevCellCursorAddress = app.file.calc.cellCursor.address.clone();
+				this._prevCellCursorAddress = app.calc.cellAddress.clone();
 			}
 
 			if (onPgUpDn) {
@@ -4768,7 +4768,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_addDropDownMarker: function () {
-		if (this._validatedCellAddress && app.file.calc.cellCursor.visible && this._validatedCellAddress.equals(app.file.calc.cellCursor.address.toArray())) {
+		if (this._validatedCellAddress && app.calc.cellCursorVisible && this._validatedCellAddress.equals(app.calc.cellAddress.toArray())) {
 			var pos = this._cellCursor.getNorthEast();
 			var dropDownMarker = this._getDropDownMarker(16);
 			dropDownMarker.setLatLng(pos);

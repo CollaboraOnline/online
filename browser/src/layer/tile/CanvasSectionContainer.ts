@@ -35,7 +35,7 @@ interface SectionCallbacks {
 	onNewDocumentTopLeft?: (size: Array<number>) => void;
 	onRemove?: () => void;
 	onCursorPositionChanged?: (newPosition: Array<number>) => void;
-	onCellAddressChanged?: (cursorInfo: any) => void;
+	onCellAddressChanged?: () => void;
 	onAnimationEnded?: (frameCount: number, elapsedTime: number) => void;
 }
 
@@ -242,9 +242,9 @@ class CanvasSectionObject {
 			return this.callbacks.onCursorPositionChanged(newPosition);
 	}
 
-	onCellAddressChanged(cursorInfo: any) {
+	onCellAddressChanged() {
 		if (this.callbacks.onCellAddressChanged)
-			return this.callbacks.onCellAddressChanged(cursorInfo);
+			return this.callbacks.onCellAddressChanged();
 	}
 
 	/// Parameters: Point [x, y], DragDistance [x, y] (null when not dragging), e (native event object)
@@ -1031,7 +1031,7 @@ class CanvasSectionContainer {
 		for (var j: number = 0; j < this.windowSectionList.length; j++) {
 			var windowSection = this.windowSectionList[j];
 			if (windowSection.interactable)
-				windowSection.onCellAddressChanged(app.file.calc.cellCursor);
+				windowSection.onCellAddressChanged();
 
 			if (this.lowestPropagatedBoundSection === windowSection.name)
 				propagate = false; // Window sections can not stop the propagation of the event for other window sections.
@@ -1040,7 +1040,7 @@ class CanvasSectionContainer {
 		if (propagate) {
 			for (var i: number = this.sections.length - 1; i > -1; i--) {
 				if (this.sections[i].interactable)
-					this.sections[i].onCellAddressChanged(app.file.calc.cellCursor);
+					this.sections[i].onCellAddressChanged();
 			}
 		}
 	}
