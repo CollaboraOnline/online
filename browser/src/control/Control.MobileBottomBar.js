@@ -36,7 +36,7 @@ class MobileBottomBar extends JSDialog.Toolbar {
 				{type: 'customtoolitem', id: 'backcolor', text: _UNO('.uno:BackColor', 'text'), lockUno: '.uno:BackColor', context: ['default', 'Text', 'DrawText', 'Table']},
 				{type: 'menubutton', id: 'setborderstyle:BorderStyleMenu', noLabel: true, command: '.uno:SetBorderStyle', text: _('Borders'), hidden: true, context: ['Table']},
 				{type: 'separator', id: 'breakalign-text', context: ['default', 'Text', 'DrawText']},
-				{type: 'menubutton', id: 'align-text', noLabel: true, command: 'alignblock', text: _UNO('.uno:TextAlign'), lockUno: '.uno:TextAlign', context: ['default', 'Text'],
+				{type: 'menubutton', id: 'aligntext', noLabel: true, command: 'alignblock', text: _UNO('.uno:TextAlign'), lockUno: '.uno:TextAlign', context: ['default', 'Text'],
 					menu: [
 						{type: 'comboboxentry', id: 'alignleft', text: _UNO('.uno:LeftPara', 'text', true), uno: '.uno:LeftPara'},
 						{type: 'comboboxentry', id: 'centerpara', text: _UNO('.uno:CenterPara', 'text', true), uno: '.uno:CenterPara'},
@@ -44,7 +44,7 @@ class MobileBottomBar extends JSDialog.Toolbar {
 						{type: 'comboboxentry', id: 'alignblock', text: _UNO('.uno:JustifyPara', 'text', true), uno: '.uno:JustifyPara'},
 					]},
 				{type: 'separator', id: 'breakalign-table', context: ['Table']},
-				{type: 'menubutton', id: 'align-table', noLabel: true, command: 'alignblock', text: _UNO('.uno:TextAlign'), lockUno: '.uno:TextAlign', context: ['Table', 'DrawText'],
+				{type: 'menubutton', id: 'aligntable', noLabel: true, command: 'alignblock', text: _UNO('.uno:TextAlign'), lockUno: '.uno:TextAlign', context: ['Table', 'DrawText'],
 					menu: [
 						{type: 'comboboxentry', id: 'alignleft', text: _UNO('.uno:LeftPara', 'text', true), uno: '.uno:LeftPara'},
 						{type: 'comboboxentry', id: 'centerpara', text: _UNO('.uno:CenterPara', 'text', true), uno: '.uno:CenterPara'},
