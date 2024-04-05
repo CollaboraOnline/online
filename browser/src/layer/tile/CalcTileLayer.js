@@ -42,14 +42,14 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		}
 
 		if (!comment) {
-			var pixelStart = new L.Point(app.file.calc.cellCursor.rectangle.pX1, app.file.calc.cellCursor.rectangle.pY1);
+			var pixelStart = new L.Point(app.calc.cellCursorRectangle.pX1, app.calc.cellCursorRectangle.pY1);
 			var rangeStart = this.sheetGeometry.getCellFromPos(pixelStart, 'corepixels');
-			var pixelEnd = new L.Point(app.file.calc.cellCursor.rectangle.pX2 - 1, app.file.calc.cellCursor.rectangle.pY2 - 1);
+			var pixelEnd = new L.Point(app.calc.cellCursorRectangle.pX2 - 1, app.calc.cellCursorRectangle.pY2 - 1);
 			var rangeEnd = this.sheetGeometry.getCellFromPos(pixelEnd, 'corepixels');
 
 			var newComment = {
 				cellRange: new L.Bounds(rangeStart, rangeEnd),
-				anchorPos: app.file.calc.cellCursor.rectangle.toArray(),
+				anchorPos: app.calc.cellCursorRectangle.toArray(),
 				id: 'new',
 				tab: this._selectedPart,
 				dateTime: new Date().toDateString(),
@@ -96,7 +96,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 
 	_resetInternalState: function() {
 		this._cellSelections = Array(0);
-		app.file.calc.cellCursor.visible = false;
+		app.calc.cellCursorVisible = false;
 		this._gotFirstCellCursor = false;
 		this._lastColumn = 0; // with data
 		this._lastRow = 0; // with data
@@ -338,9 +338,9 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		var x = -1, y = -1;
 		var size = new L.Point(0, 0);
 
-		if (app.file.calc.cellCursor.visible) {
-			x = app.file.calc.cellCursor.address.x + 1;
-			y = app.file.calc.cellCursor.address.y + 1;
+		if (app.calc.cellCursorVisible) {
+			x = app.calc.cellAddress.x + 1;
+			y = app.calc.cellAddress.y + 1;
 
 			size = this._cellCursorTwips.getSize();
 		}
@@ -970,7 +970,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 	_onTextSelectionMsg: function (textMsg) {
 		L.CanvasTileLayer.prototype._onTextSelectionMsg.call(this, textMsg);
 		// If this is a cellSelection message, user shouldn't be editing a cell. Below check is for ensuring that.
-		if ((this.insertMode === false || this._map._isCursorVisible == false) && app.file.calc.cellCursor.visible) {
+		if ((this.insertMode === false || this._map._isCursorVisible == false) && app.calc.cellCursorVisible) {
 			// When insertMode is false, this is a cell selection message.
 			textMsg = textMsg.replace('textselection:', '');
 			if (textMsg.trim() !== 'EMPTY' && textMsg.trim() !== '') {
@@ -1104,7 +1104,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 
 		var scroll = new L.LatLng(0, 0);
 
-		if (!app.file.calc.cellCursor.visible) {
+		if (!app.calc.cellCursorVisible) {
 			return scroll;
 		}
 

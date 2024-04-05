@@ -702,8 +702,8 @@ export class HeaderInfo {
 		const cellSelections: cool.Rectangle[] = this._map._docLayer._cellSelections;
 		let currentIndex = -1;
 
-		if (app.file.calc.cellCursor.visible) {
-			currentIndex = this._isColumn ? app.file.calc.cellCursor.address.x: app.file.calc.cellCursor.address.y;
+		if (app.calc.cellCursorVisible) {
+			currentIndex = this._isColumn ? app.calc.cellAddress.x: app.calc.cellAddress.y;
 		}
 
 		const startPx = this._isColumn === true ? section.documentTopLeft[0]: section.documentTopLeft[1];

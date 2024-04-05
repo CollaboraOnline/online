@@ -19,6 +19,13 @@ window.app = {
 	definitions: {}, // Class instances are created using definitions under this variable.
 	dpiScale: window.devicePixelRatio,
 	roundedDpiScale: Math.round(window.devicePixelRatio),
+	viewId: null, // Unique view id of the user.
+	calc: {
+		cellAddress: null, // To be assigned SimplePoint.
+		cellCursorVisible: false,
+		cellCursorRectangle: null, // To be assigned SimpleRectangle.
+		otherCellCursors: {}
+	},
 	map: null, // Make map object a part of this.
 	dispatcher: null, // A Dispatcher class instance is assigned to this.
 	twipsToPixels: 0, // Twips to pixels multiplier.
@@ -53,13 +60,6 @@ window.app = {
 		},
 		viewedRectangle: [0, 0, 0, 0], // Visible part of the file (x, y, w, h).
 		fileBasedView: false, // (draw-impress only) Default is false. For read-only documents, user can view all parts at once. In that case, this variable is set to "true".
-		calc: {
-			cellCursor: {
-				address: null, // To be assigned SimplePoint.
-				rectangle: null, // To be assigned SimpleRectangle.
-				visible: false,
-			}
-		},
 		writer: {
 			pageRectangleList: [], // Array of arrays: [x, y, w, h] (as usual) // twips only. Pixels will be calculated on the fly. Corresponding pixels may change too often.
 		},
