@@ -51,6 +51,7 @@
 #include <NetUtil.hpp>
 #include <Log.hpp>
 #include <Watchdog.hpp>
+#include <wasm/base64.hpp>
 
 // Bug in pre C++17 where static constexpr must be defined. Fixed in C++17.
 constexpr std::chrono::microseconds SocketPoll::DefaultPollTimeoutMicroS;
@@ -1465,7 +1466,11 @@ namespace {
             return computeAccept(key);
         }
 
-        static std::string generateKey() { return createKey(); }
+        static std::string generateKey()
+        {
+            auto random = Util::rng::getBytes(16);
+            return macaron::Base64::Encode(std::string(random.begin(), random.end()));
+        }
     };
 }
 
