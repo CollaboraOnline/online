@@ -23,30 +23,36 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Editing Operations', funct
 
 		helper.selectAllText();
 
+		helper.copy();
 		helper.expectTextForClipboard('Hello ');
 	}
 
 	it('Undo', function() {
+		helper.setDummyClipboardForCopy();
 		undo();
 	});
 
 
 	it('Redo', function() {
+		helper.setDummyClipboardForCopy();
 		undo();
 		helper.typeIntoDocument('{ctrl}y');
 
 		helper.selectAllText();
 		cy.wait(500);
+		helper.copy();
 		helper.expectTextForClipboard('Hello World');
 	});
 
 	it('Repair Document', function() {
+		helper.setDummyClipboardForCopy();
 		helper.typeIntoDocument('Hello World');
 
 		repairHelper.rollbackPastChange('Typing: “World”');
 
 		helper.selectAllText();
 
+		helper.copy();
 		helper.expectTextForClipboard('Hello ');
 	});
 });
