@@ -373,7 +373,8 @@ shared_headers = common/Common.hpp \
                  net/ServerSocket.hpp \
                  net/Socket.hpp \
                  net/WebSocketHandler.hpp \
-                 tools/Replay.hpp
+                 tools/Replay.hpp \
+		 wasm/base64.hpp
 if ENABLE_SSL
 shared_headers += net/Ssl.hpp \
                   net/SslSocket.hpp
