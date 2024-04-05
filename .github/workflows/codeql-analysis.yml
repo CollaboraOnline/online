@@ -11,13 +11,6 @@ on:
   pull_request:
     # The branches below must be a subset of the branches above
     branches: [master]
-    # The paths-ignore here only defines that changes in these will not trigger
-    # the action at all; but to actually avoid scanning the content of these,
-    # see the .github/codeql/codeql-config.yml configuration file
-    paths-ignore:
-      - '**/*w2ui-1.5.rc1.js'
-      - 'loleaflet'
-
   schedule:
     - cron: '0 22 * * 3'
 

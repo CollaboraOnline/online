@@ -3,8 +3,6 @@
 **/js/select2.js
 **/js/sanitize-url.js
 **/js/l10n.js
-**/js/w2ui-1.5.rc1.js
 **/src/unocommands.js
-**/js/viamapi-client.js
 node_modules
 dist/src

@@ -2,8 +2,3 @@ name: "CodeQL config"
 
 queries:
   - uses: security-and-quality
-
-# Ignore these from being scanned
-paths-ignore:
-  - '**/*w2ui-1.5.rc1.js'
-  - 'loleaflet'
