@@ -118,7 +118,7 @@ namespace Util
             std::vector<char> v(length);
 
             int len = -1;
-#if !HAVE_GETENTROPY && !HAVE_SYS_RANDOM_H
+#if !HAVE_GETENTROPY && !HAVE_SYS_RANDOM_H && !MOBILEAPP
 #  error "getentropy or getrandom are required for succesful function";
 #endif
 
