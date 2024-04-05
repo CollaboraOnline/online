@@ -1542,6 +1542,11 @@ tr.useritem > td > img {
 	padding-left: 10px;
 }
 
+/* statusbar: language status menu - disable icon */
+.menubutton.LanguageStatusMenu img {
+	display: none;
+}
+
 /* Don't forget to update it when you change one of the two above!
 menu-entry-with-icon.padding-left + menu-entry-icon.width */
 .menu-entry-no-icon {
