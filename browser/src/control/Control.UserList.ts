@@ -373,21 +373,11 @@ class UserList extends L.Control {
 			text = this.options.noUser;
 		}
 
-		if (this.map.statusBar && this.map.statusBar.setUsersCountText)
-			this.map.statusBar.setUsersCountText(text);
-
-		if (!this.hideUserList() && count > 1) {
-			if (this.map.statusBar) {
-				this.map.statusBar.showItem('userlist', true);
-				this.map.statusBar.showItem('userlistbreak', true);
-			}
-			if (this.map.mobileTopBar)
+		if (this.map.mobileTopBar) {
+			if (!this.hideUserList() && count > 1)
 				this.map.mobileTopBar.showItem('userlist', true);
-		} else if (this.map.statusBar) {
-			this.map.statusBar.showItem('userlist', false);
-			this.map.statusBar.showItem('userlistbreak', false);
-		} else if (this.map.mobileTopBar) {
-			this.map.mobileTopBar.showItem('userlist', false);
+			else
+				this.map.mobileTopBar.showItem('userlist', false);
 		}
 	}
 
@@ -450,11 +440,9 @@ class UserList extends L.Control {
 	renderAll() {
 		this.updateUserListCount();
 		this.renderHeaderAvatars();
-		const topPopoverElement = document.getElementById('userListPopover');
-		if (topPopoverElement) this.renderHeaderAvatarPopover(topPopoverElement);
-		const statusbarPopoverElement = document.getElementById('userlist-entries');
-		if (statusbarPopoverElement)
-			this.renderHeaderAvatarPopover(statusbarPopoverElement);
+		const popoverElement = document.getElementById('userlist-entries');
+		if (popoverElement)
+			this.renderHeaderAvatarPopover(popoverElement);
 		this.renderFollowingChip();
 	}
 
