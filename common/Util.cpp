@@ -114,7 +114,7 @@ namespace Util
         {
             std::vector<char> v(length);
 
-            int len = 0;
+            int len = -1;
 
 #if HAVE_GETENTROPY
             len = getentropy(v.data(), length);
