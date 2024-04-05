@@ -822,6 +822,22 @@ AC_SUBST(ENABLE_IOSAPP)
 AM_CONDITIONAL([ENABLE_IOSAPP], [test "$ENABLE_IOSAPP" = "true"])
 AC_SUBST(IOSAPP_BUNDLE_VERSION)
 
+mobile_app=
+ENABLE_MOBILEAPP=
+MOBILEAPP=0
+AC_MSG_CHECKING([Is this a mobile app])
+if test "$enable_gtkapp" = "yes" -o "$enable_iosapp" = "yes" -o "$enable_androidapp" = "yes" -o "$host_os" = "emscripten" ; then
+     AC_MSG_RESULT([Yes])
+     mobile_app=true;
+     MOBILEAPP=1
+     ENABLE_MOBILEAPP=true
+else
+     AC_MSG_RESULT([No])
+fi
+AC_DEFINE_UNQUOTED([MOBILEAPP],[$MOBILEAPP],[Define to 1 if this is a mobileapp (eg. Android) build.])
+AC_SUBST(ENABLE_MOBILEAPP)
+AM_CONDITIONAL([ENABLE_MOBILEAPP], [test "$ENABLE_MOBILEAPP" = "true"])
+
 AC_MSG_CHECKING([for custom icon theme])
 CUSTOM_ICONS_DIRECTORY=
 if test -d "$with_icon_theme"; then
@@ -1052,18 +1068,20 @@ AS_IF([test "$ENABLE_GTKAPP" != true],
 
 SYS_RANDOM=
 AC_MSG_CHECKING([for getrandom()])
-AC_LANG_PUSH([C++])
-AC_LINK_IFELSE(
-    [AC_LANG_SOURCE([[
-    #include <sys/random.h>
-    int main()
-    {
-        char buffer[8];
-        getrandom(buffer, sizeof(buffer), GRND_NONBLOCK);
-    }
-    ]])],
-    [SYS_RANDOM=TRUE])
-AC_LANG_POP([C++])
+if test "$mobile_app" != "true"; then
+    AC_LANG_PUSH([C++])
+    AC_LINK_IFELSE(
+        [AC_LANG_SOURCE([[
+        #include <sys/random.h>
+        int main()
+        {
+            char buffer[8];
+            getrandom(buffer, sizeof(buffer), GRND_NONBLOCK);
+        }
+        ]])],
+        [SYS_RANDOM=TRUE])
+    AC_LANG_POP([C++])
+fi
 
 if test "$SYS_RANDOM" == "TRUE" ; then
     AC_MSG_RESULT([yes])
@@ -1075,16 +1093,18 @@ fi
 
 GETENTROPY=
 AC_MSG_CHECKING([for getentropy()])
-AC_LINK_IFELSE(
-    [AC_LANG_SOURCE([[
-    #include <unistd.h>
-    int main()
-    {
-        char buffer[8];
-        getentropy(buffer, sizeof(buffer));
-    }
-    ]])],
-    [GETENTROPY=TRUE])
+if test "$mobile_app" != "true"; then
+    AC_LINK_IFELSE(
+        [AC_LANG_SOURCE([[
+        #include <unistd.h>
+        int main()
+        {
+            char buffer[8];
+            getentropy(buffer, sizeof(buffer));
+        }
+        ]])],
+        [GETENTROPY=TRUE])
+fi
 
 if test "$GETENTROPY" == "TRUE" ; then
     AC_MSG_RESULT([yes])
@@ -1191,22 +1211,6 @@ AS_IF([test "$ENABLE_GTKAPP" = true],
       [PKG_CHECK_MODULES([WEBKIT],[webkit2gtk-4.0])])
 
 AM_CONDITIONAL([ENABLE_DEBUG], [test "$ENABLE_DEBUG" = "true"])
-
-mobile_app=
-ENABLE_MOBILEAPP=
-MOBILEAPP=0
-AC_MSG_CHECKING([Is this a mobile app])
-if test "$enable_gtkapp" = "yes" -o "$enable_iosapp" = "yes" -o "$enable_androidapp" = "yes" -o "$host_os" = "emscripten" ; then
-     AC_MSG_RESULT([Yes])
-     mobile_app=true;
-     MOBILEAPP=1
-     ENABLE_MOBILEAPP=true
-else
-     AC_MSG_RESULT([No])
-fi
-AC_DEFINE_UNQUOTED([MOBILEAPP],[$MOBILEAPP],[Define to 1 if this is a mobileapp (eg. Android) build.])
-AC_SUBST(ENABLE_MOBILEAPP)
-AM_CONDITIONAL([ENABLE_MOBILEAPP], [test "$ENABLE_MOBILEAPP" = "true"])
 
 if test "$host_os" = "emscripten" ; then
     ENABLE_EMSCRIPTENAPP=true
