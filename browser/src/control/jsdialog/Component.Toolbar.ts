@@ -42,6 +42,7 @@ class Toolbar {
 
 		this.reset();
 		this.create();
+		this.updateVisibilityForToolbar('');
 	}
 
 	getToolItems(): Array<ToolbarItem> {
@@ -104,6 +105,7 @@ class Toolbar {
 
 		this.builder.executeAction(this.parentContainer, {
 			control_id: command,
+			control: { id: command },
 			action_type: show ? 'show' : 'hide',
 		});
 
@@ -131,6 +133,57 @@ class Toolbar {
 	updateItem(data: ToolbarItem) {
 		this.builder.updateWidget(this.parentContainer, data);
 		JSDialog.RefreshScrollables();
+	}
+
+	updateVisibilityForToolbar(context: string) {
+		const toShow: Array<string> = [];
+		const toHide: Array<string> = [];
+
+		const items = this.getToolItems();
+		items.forEach((item) => {
+			if (
+				(window as any).ThisIsTheiOSApp &&
+				window.mode.isTablet() &&
+				item.iosapptablet === false
+			) {
+				toHide.push(item.id);
+			} else if (
+				((window.mode.isMobile() && item.mobile === false) ||
+					(window.mode.isTablet() && item.tablet === false) ||
+					(window.mode.isDesktop() && item.desktop === false) ||
+					(!(window as any).ThisIsAMobileApp &&
+						item.mobilebrowser === false)) &&
+				!item.hidden
+			) {
+				toHide.push(item.id);
+			} else if (
+				((window.mode.isMobile() && item.mobile === true) ||
+					(window.mode.isTablet() && item.tablet === true) ||
+					(window.mode.isDesktop() && item.desktop === true) ||
+					((window as any).ThisIsAMobileApp && item.mobilebrowser === true)) &&
+				item.hidden
+			) {
+				toShow.push(item.id);
+			}
+
+			if (context && item.context) {
+				if (item.context.indexOf(context) >= 0) toShow.push(item.id);
+				else toHide.push(item.id);
+			} else if (!context && item.context) {
+				if (item.context.indexOf('default') >= 0) toShow.push(item.id);
+				else toHide.push(item.id);
+			}
+		});
+
+		window.app.console.log('explicitly hiding: ' + toHide);
+		window.app.console.log('explicitly showing: ' + toShow);
+
+		toHide.forEach((item) => {
+			this.showItem(item, false);
+		});
+		toShow.forEach((item) => {
+			this.showItem(item, true);
+		});
 	}
 }
 

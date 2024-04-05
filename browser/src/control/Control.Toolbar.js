@@ -1095,45 +1095,6 @@ function setupToolbar(e) {
 	$('#closebutton').click(onClose);
 }
 
-function updateVisibilityForToolbar(toolbar, context) {
-	if (!toolbar)
-		return;
-
-	var toShow = [];
-	var toHide = [];
-
-	var items = toolbar.getToolItems(app.map.getDocType());
-	items.forEach(function(item) {
-		if (window.ThisIsTheiOSApp && window.mode.isTablet() && item.iosapptablet === false) {
-			toHide.push(item.id);
-		}
-		else if (((window.mode.isMobile() && item.mobile === false) || (window.mode.isTablet() && item.tablet === false) || (window.mode.isDesktop() && item.desktop === false) || (!window.ThisIsAMobileApp && item.mobilebrowser === false)) && !item.hidden) {
-			toHide.push(item.id);
-		}
-		else if (((window.mode.isMobile() && item.mobile === true) || (window.mode.isTablet() && item.tablet === true) || (window.mode.isDesktop() && item.desktop === true) || (window.ThisIsAMobileApp && item.mobilebrowser === true)) && item.hidden) {
-			toShow.push(item.id);
-		}
-
-		if (context && item.context) {
-			if (item.context.indexOf(context) >= 0)
-				toShow.push(item.id);
-			else
-				toHide.push(item.id);
-		} else if (!context && item.context) {
-			if (item.context.indexOf('default') >= 0)
-				toShow.push(item.id);
-			else
-				toHide.push(item.id);
-		}
-	});
-
-	window.app.console.log('explicitly hiding: ' + toHide);
-	window.app.console.log('explicitly showing: ' + toShow);
-
-	toHide.forEach(function(item) { toolbar.showItem(item, false); });
-	toShow.forEach(function(item) { toolbar.showItem(item, true); });
-}
-
 global.onClose = onClose;
 global.setupToolbar = setupToolbar;
 global.hideTooltip = hideTooltip;
@@ -1154,7 +1115,6 @@ global.unoCmdToToolbarId = unoCmdToToolbarId;
 global.onCommandStateChanged = onCommandStateChanged;
 global.processStateChangedCommand = processStateChangedCommand;
 global.getColorPickerHTML = getColorPickerHTML;
-global.updateVisibilityForToolbar = updateVisibilityForToolbar;
 global.onUpdateParts = onUpdateParts;
 global.getColorPickerData = getColorPickerData;
 }(window));
