@@ -84,6 +84,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 	});
 
 	it('Reject All', function () {
+		helper.setDummyClipboardForCopy();
 		helper.typeIntoDocument('Hello World');
 		for (var n = 0; n < 2; n++) {
 			cy.cGet('#insertannotation').click({force: true});
@@ -122,6 +123,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 		cy.cGet('#document-container').click();
 		helper.selectAllText();
 		cy.wait(500);
+		helper.copy();
 		helper.expectTextForClipboard('Hello World');
 	});
 
