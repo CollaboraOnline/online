@@ -581,15 +581,6 @@ function getColorPickerData(type) {
 	return data;
 }
 
-function hideTooltip(toolbar, id) {
-	if (toolbar.touchStarted) {
-		setTimeout(function() {
-			toolbar.tooltipHide(id, {});
-		}, 5000);
-		toolbar.touchStarted = false;
-	}
-}
-
 function setupSearchInput() {
 	$('#search-input').off('input', onSearchInput).on('input', onSearchInput);
 	$('#search-input').off('keydown', onSearchKeyDown).on('keydown', onSearchKeyDown);
@@ -1097,7 +1088,6 @@ function setupToolbar(e) {
 
 global.onClose = onClose;
 global.setupToolbar = setupToolbar;
-global.hideTooltip = hideTooltip;
 global.insertTable = insertTable;
 global.getInsertTablePopupHtml = getInsertTablePopupHtml;
 global.sendInsertTableFunction = sendInsertTableFunction;
