@@ -20,11 +20,11 @@
 
 #include <poll.h>
 
-#ifdef HAVE_GETENTROPY
+#if HAVE_GETENTROPY
 #  include <unistd.h>
 #endif
 
-#ifdef HAVE_SYS_RANDOM_H
+#if HAVE_SYS_RANDOM_H
 #  include <sys/random.h>
 #endif
 
