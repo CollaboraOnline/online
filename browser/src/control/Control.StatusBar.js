@@ -243,8 +243,6 @@ class StatusBar extends JSDialog.Toolbar {
 			this._generateHtmlItem('permissionmode'),					// spreadsheet, text, presentation
 			{type: 'toolitem', id: 'signstatus', command: '.uno:Signature', w2icon: '', text: _UNO('.uno:Signature'), visible: false},
 			{type: 'spacer',  id: 'permissionspacer'},
-			{type: 'menubutton', id: 'userlist:UsersListMenu', visible: false},
-			{type: 'separator', id: 'userlistbreak', visible: false, orientation: 'vertical' },
 			{type: 'customtoolitem',  id: 'prev', command: 'prev', text: _UNO('.uno:PageUp', 'text')},
 			{type: 'customtoolitem',  id: 'next', command: 'next', text: _UNO('.uno:PageDown', 'text')},
 			{type: 'separator', id: 'prevnextbreak', orientation: 'vertical'},
@@ -327,8 +325,6 @@ class StatusBar extends JSDialog.Toolbar {
 			}
 			break;
 		}
-
-		this.map.fire('updateuserlistcount');
 
 		var language = app.map['stateChangeHandler'].getItemValue('.uno:LanguageStatus');
 		if (language)
