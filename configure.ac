@@ -1094,6 +1094,7 @@ else
 fi
 
 SYS_RANDOM=
+AC_MSG_CHECKING([for getrandom()])
 AC_LANG_PUSH([C++])
 AC_LINK_IFELSE(
     [AC_LANG_SOURCE([[
@@ -1108,11 +1109,15 @@ AC_LINK_IFELSE(
 AC_LANG_POP([C++])
 
 if test "$SYS_RANDOM" == "TRUE" ; then
+    AC_MSG_RESULT([yes])
     AC_DEFINE([HAVE_SYS_RANDOM_H],1,[Define to 1 if you have the <sys/random.h> header file.])
 else
+    AC_MSG_RESULT([no])
     AC_DEFINE([HAVE_SYS_RANDOM_H],0,[Define to 1 if you have the <sys/random.h> header file.])
 fi
 
+GETENTROPY=
+AC_MSG_CHECKING([for getentropy()])
 AC_LINK_IFELSE(
     [AC_LANG_SOURCE([[
     #include <unistd.h>
@@ -1122,8 +1127,15 @@ AC_LINK_IFELSE(
         getentropy(buffer, sizeof(buffer));
     }
     ]])],
-    [AC_DEFINE([HAVE_GETENTROPY],1,[Define to 1 if you have getentropy() function in <unistd.h> header file.])],
-    [AC_DEFINE([HAVE_GETENTROPY],0,[Define to 1 if you have getentropy() function in <unistd.h> header file.])])
+    [GETENTROPY=TRUE])
+
+if test "$GETENTROPY" == "TRUE" ; then
+    AC_MSG_RESULT([yes])
+    AC_DEFINE([HAVE_GETENTROPY],1,[Define to 1 if you have getentropy() function in <unistd.h> header file.])
+else
+    AC_MSG_RESULT([no])
+    AC_DEFINE([HAVE_GETENTROPY],0,[Define to 1 if you have getentropy() function in <unistd.h> header file.])
+fi
 
 AS_IF([test -n "$LOKIT_PATH"],
       [CPPFLAGS="$CPPFLAGS -I${LOKIT_PATH}"])
