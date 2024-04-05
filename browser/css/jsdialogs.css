@@ -1776,7 +1776,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	grid-column: 1;
 	grid-row: 1;
 	white-space: pre-wrap;
-	text-wrap: wrap;
+	white-space: wrap;
 }
 
 .ui-custom-textarea-cursor-layer {
