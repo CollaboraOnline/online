@@ -80,6 +80,8 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', fu
 		// Without the accompanying fix in place, this test would have failed with:
 		// expected **#copy-paste-container table td:nth-of-type(1)** to have text **'5'**, but the text was **''**
 		// i.e. a popup dialog was shown, instead of working, like with Ctrl-V.
+		helper.setDummyClipboardForCopy();
+		helper.copy();
 		cy.cGet('#copy-paste-container table td:nth-of-type(1)').should('have.text', '5');
 	});
 

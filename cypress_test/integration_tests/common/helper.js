@@ -1212,6 +1212,47 @@ function clickAt(aliasName, double = false) {
 	cy.log('<< clickAt - end');
 }
 
+// Replaces the system clipboard with a dummy one for copy purposes. The copy content for the
+// specified type will be injected into the DOM, so the caller can assert it.
+function setDummyClipboardForCopy(type) {
+	if (type === undefined) {
+		type = 'text/html';
+	}
+	cy.window().then(win => {
+		const app = win['0'].app;
+		const clipboard = app.map._clip;
+		clipboard._dummyClipboard = {
+			write: function(clipboardItems) {
+				const clipboardItem = clipboardItems[0];
+				clipboardItem.getType(type).then(blob => blob.text())
+				.then(function (text) {
+					if (type === 'text/html') {
+						clipboard._dummyDiv.innerHTML = text;
+					} else if (type == 'text/plain') {
+						clipboard._dummyPlainDiv.innerHTML = text;
+					}
+				});
+				return {
+					then: function(resolve/*, reject*/) {
+						resolve();
+					},
+				};
+			},
+
+			useAsyncWrite: true,
+		};
+	});
+}
+
+// Clicks the Copy button on the UI.
+function copy() {
+	cy.window().then(win => {
+		const app = win['0'].app;
+		const clipboard = app.map._clip;
+		clipboard.filterExecCopyPaste('.uno:Copy');
+	});
+}
+
 module.exports.loadTestDoc = loadTestDoc;
 module.exports.checkIfDocIsLoaded = checkIfDocIsLoaded;
 module.exports.assertCursorAndFocus = assertCursorAndFocus;
@@ -1258,3 +1299,5 @@ module.exports.assertFocus = assertFocus;
 module.exports.loadTestDocNoIntegration = loadTestDocNoIntegration;
 module.exports.getBlinkingCursorPosition = getBlinkingCursorPosition;
 module.exports.clickAt = clickAt;
+module.exports.setDummyClipboardForCopy = setDummyClipboardForCopy;
+module.exports.copy = copy;
