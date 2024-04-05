@@ -13,46 +13,6 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Clipboard operations.', fu
 		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
-	// Replaces the system clipboard with a dummy one. The specified type will be injected into
-	// the DOM for assertion purposes.
-	function setDummyClipboard(type) {
-		if (type === undefined) {
-			type = 'text/html';
-		}
-		cy.window().then(win => {
-			const app = win['0'].app;
-			const clipboard = app.map._clip;
-			clipboard._dummyClipboard = {
-				write: function(clipboardItems) {
-					const clipboardItem = clipboardItems[0];
-					clipboardItem.getType(type).then(blob => blob.text())
-					.then(function (text) {
-						if (type === 'text/html') {
-							clipboard._dummyDiv.innerHTML = text;
-						} else if (type == 'text/plain') {
-							clipboard._dummyPlainDiv.innerHTML = text;
-						}
-					});
-					return {
-						then: function(resolve/*, reject*/) {
-							resolve();
-						},
-					};
-				},
-
-				useAsyncWrite: true,
-			};
-		});
-	}
-
-	function copy() {
-		cy.window().then(win => {
-			const app = win['0'].app;
-			const clipboard = app.map._clip;
-			clipboard.filterExecCopyPaste('.uno:Copy');
-		});
-	}
-
 	it('Copy and Paste text.', function() {
 		before('copy_paste.odt');
 		// Select some text
@@ -67,7 +27,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Clipboard operations.', fu
 				cy.cGet('body').rightclick(XPos, YPos);
 			});
 
-		setDummyClipboard();
+		helper.setDummyClipboardForCopy();
 
 		cy.cGet('body').contains('.context-menu-link', 'Copy')
 			.click();
@@ -78,9 +38,9 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Clipboard operations.', fu
 	it('Copy plain text.', function() {
 		before('copy_paste_simple.odt');
 
-		setDummyClipboard('text/plain');
+		helper.setDummyClipboardForCopy('text/plain');
 		helper.selectAllText();
-		copy();
+		helper.copy();
 
 		let expected = '    • first\n    • second\n    • third';
 		cy.cGet('#copy-plain-container').should('have.text', expected);
