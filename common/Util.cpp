@@ -113,43 +113,44 @@ namespace Util
             return _rng();
         }
 
+        int getURandom()
+        {
+            static int urandom = open("/dev/urandom", O_RDONLY);
+            if (urandom < 0)
+            {
+                LOG_SYS("Failed to source hard random numbers");
+                fprintf(stderr, "No adequate source of randomness");
+                abort();
+                // Potentially dangerous to continue without randomness
+            }
+            return urandom;
+        }
+
+        // Since we have a fd always open to /dev/urandom
+        // 'read' is hopefully no less efficient than getrandom.
         std::vector<char> getBytes(const std::size_t length)
         {
             std::vector<char> v(length);
 
-            int len = 0;
-            /* use "/dev/[u]random" by default in case of
-            getentropy() or getrandom() fails,
-            or they don't available */
-            bool useDevRandom = true;
-#ifdef HAVE_GETENTROPY
-            len = getentropy(v.data(), length);
-
-            // getentropy() works, no need to use "/dev/[u]random"
-            if (len != -1)
-                useDevRandom = false;
-#elif defined HAVE_SYS_RANDOM_H
-            len = getrandom(v.data(), length, GRND_NONBLOCK);
-
-            // getrandom() works, no need to use "/dev/[u]random"
-            if (len != -1)
-                useDevRandom = false;
-#endif
-            if (useDevRandom)
+            size_t offset;
+            for (offset = 0; offset < length; )
             {
-                const int fd = open("/dev/urandom", O_RDONLY);
-                if (fd < 0 ||
-                    (len = read(fd, v.data(), length)) < 0 ||
-                    std::size_t(len) < length)
+                int b = read(getURandom(), v.data() + offset, length - offset);
+                if (b <= 0)
                 {
-                    fprintf(stderr, "No adequate source of randomness, "
-                            "failed to read %ld bytes: with error %s\n",
-                            (long int)length, strerror(errno));
-                    // Potentially dangerous to continue without randomness
-                    abort();
+                    if (errno == EINTR)
+                        continue;
+                    break;
                 }
-                if (fd >= 0)
-                    close(fd);
+                offset += b;
+            }
+            if (offset < length)
+            {
+                fprintf(stderr, "No adequate source of randomness, "
+                        "failed to read %ld bytes: with error %s\n",
+                        (long int)length, strerror(errno));
+                // Potentially dangerous to continue without randomness
+                abort();
             }
 
             return v;
