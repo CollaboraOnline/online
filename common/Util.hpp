@@ -85,6 +85,9 @@ namespace Util
 {
     namespace rng
     {
+        /// Returns a global handle to /dev/urandom - do not close it.
+        int getURandom();
+
         uint_fast64_t getSeed();
         void reseed();
         unsigned getNext();
