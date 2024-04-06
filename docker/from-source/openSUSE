@@ -20,7 +20,7 @@ COPY /start-collabora-online.sh /
 
 # set up Collabora Online (normally done by postinstall script of package)
 # Fix permissions
-RUN setcap cap_fowner,cap_chown,cap_mknod,cap_sys_chroot=ep /usr/bin/coolforkit && \
+RUN setcap cap_fowner,cap_chown,cap_sys_chroot=ep /usr/bin/coolforkit && \
     setcap cap_sys_admin=ep /usr/bin/coolmount && \
     groupadd -r cool && \
     useradd -g cool -r cool -d /opt/cool -s /bin/bash && \
