@@ -13,17 +13,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-04-05 18:53+0200\n"
-"PO-Revision-Date: 2024-03-07 02:46+0000\n"
+"PO-Revision-Date: 2024-04-06 15:09+0000\n"
 "Last-Translator: Matthaiks <kitynska@gmail.com>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/pl/>\n"
-"Language: \n"
+"Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n"
-"%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n"
-"%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && ("
+"n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && "
+"n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
 "X-Generator: Weblate 5.5-dev\n"
 
 #: admin/admin.strings.js:15
@@ -1134,12 +1134,12 @@ msgstr "Między..."
 #: src/control/Control.Menubar.js:822
 #: src/control/jsdialog/Definitions.Menu.ts:319
 msgid "Duplicate..."
-msgstr ""
+msgstr "Duplikat..."
 
 #: src/control/Control.Menubar.js:823
 #: src/control/jsdialog/Definitions.Menu.ts:323
 msgid "Contains text..."
-msgstr ""
+msgstr "Zawiera tekst..."
 
 #: src/control/Control.Menubar.js:825 src/control/Control.Menubar.js:835
 #: src/control/jsdialog/Definitions.Menu.ts:327
@@ -1150,37 +1150,37 @@ msgstr "Więcej warunków..."
 #: src/control/Control.Menubar.js:827
 #: src/control/jsdialog/Definitions.Menu.ts:331
 msgid "Top/Bottom Rules..."
-msgstr ""
+msgstr "Górne/dolne reguły..."
 
 #: src/control/Control.Menubar.js:828
 #: src/control/jsdialog/Definitions.Menu.ts:334
 msgid "Top N elements..."
-msgstr ""
+msgstr "Górne N elementów..."
 
 #: src/control/Control.Menubar.js:829
 #: src/control/jsdialog/Definitions.Menu.ts:338
 msgid "Top N percent..."
-msgstr ""
+msgstr "Górny N procent..."
 
 #: src/control/Control.Menubar.js:830
 #: src/control/jsdialog/Definitions.Menu.ts:342
 msgid "Bottom N elements..."
-msgstr ""
+msgstr "Dolne N elementów..."
 
 #: src/control/Control.Menubar.js:831
 #: src/control/jsdialog/Definitions.Menu.ts:346
 msgid "Bottom N percent..."
-msgstr ""
+msgstr "Dolny N procent..."
 
 #: src/control/Control.Menubar.js:832
 #: src/control/jsdialog/Definitions.Menu.ts:350
 msgid "Above Average..."
-msgstr ""
+msgstr "Powyżej średniej..."
 
 #: src/control/Control.Menubar.js:833
 #: src/control/jsdialog/Definitions.Menu.ts:354
 msgid "Bellow Average..."
-msgstr ""
+msgstr "Poniżej średniej..."
 
 #: src/control/Control.Menubar.js:944 src/control/Control.Menubar.js:1009
 #: src/control/Control.Menubar.js:1073 src/control/Control.Menubar.js:1127
@@ -1780,7 +1780,7 @@ msgstr "Obserwowanie edytora"
 
 #: src/control/Control.UserList.ts:58
 msgid "Stop following"
-msgstr ""
+msgstr "Zakończ obserwowanie"
 
 #: src/control/Control.UserList.ts:59
 msgid "Avatar for %user"
@@ -2305,7 +2305,7 @@ msgstr ""
 
 #: src/core/Socket.js:1227
 msgid "Server is shutting down"
-msgstr ""
+msgstr "Serwer się zamyka"
 
 #: src/core/Socket.js:1259
 msgid "Exported to storage"
