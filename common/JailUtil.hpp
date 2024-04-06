@@ -52,9 +52,6 @@ void createJailPath(const std::string& path);
 /// Setup the Child-Root directory.
 void setupChildRoot(bool bindMount, const std::string& jailRoot, const std::string& sysTemplate);
 
-/// Setup /dev/random and /dev/urandom in the given jail path.
-void setupJailDevNodes(const std::string& root);
-
 /// Enable bind-mounting in this process.
 void enableBindMounting();
 

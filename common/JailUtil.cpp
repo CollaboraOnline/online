@@ -14,6 +14,7 @@
 #include "FileUtil.hpp"
 #include "JailUtil.hpp"
 
+#include <sys/stat.h>
 #include <sys/types.h>
 #include <fcntl.h>
 #include <unistd.h>
@@ -312,107 +313,6 @@ void setupChildRoot(bool bindMount, const std::string& childRoot, const std::str
     else
         LOG_INF("Disabling Bind-Mounting of jail contents per "
                 "mount_jail_tree config in coolwsd.xml.");
-}
-
-/// Create a random device, either via mknod or by bind-mounting.
-bool createRandomDeviceInJail(const std::string& root, const std::string& devicePath, dev_t dev)
-{
-    const std::string absPath = root + devicePath;
-
-    if (FileUtil::Stat(absPath).exists())
-    {
-        LOG_DBG("Random device [" << devicePath << "] already exits");
-        return true;
-    }
-
-    LOG_DBG("Making [" << devicePath << "] node in [" << root << "/dev]");
-
-    if (mknod((absPath).c_str(),
-              S_IFCHR | S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH, dev) == 0)
-    {
-        LOG_DBG("Created random device [" << absPath << ']');
-        return true;
-    }
-
-    const auto mknodErrno = errno;
-
-    if (isBindMountingEnabled())
-    {
-        static bool warned = false;
-        if (!warned)
-        {
-            warned = true;
-            LOG_WRN("Performance issue: nodev mount permission or mknod fails. Have to bind mount "
-                    "random devices");
-        }
-
-        Poco::File(absPath).createFile();
-        if (coolmount("-b", devicePath, absPath))
-        {
-            LOG_DBG("Bind mounted [" << devicePath << "] -> [" << absPath << ']');
-            return true;
-        }
-
-        LOG_INF("Failed to bind mount [" << devicePath << "] -> [" << absPath << ']');
-    }
-    else
-    {
-        LOG_INF("Failed to create random device via mknod("
-                << absPath << "). Mount must not use nodev flag, or bind-mount must be enabled: "
-                << strerror(mknodErrno));
-    }
-
-    static bool warned = false;
-    if (!warned)
-    {
-        warned = true;
-        LOG_ERR("Failed to create random device ["
-                << devicePath << "] at [" << absPath
-                << "]. Please either allow creating devices or enable bind-mounting. Some "
-                   "features, such us password-protection and document-signing, might not work");
-    }
-
-    return false;
-}
-
-// This is the second stage of setting up /dev/[u]random
-// in the jails. Here we create the random devices in
-// /tmp/dev/ in the jail chroot. See setupRandomDeviceLinks().
-void setupJailDevNodes(const std::string& root)
-{
-    if (!FileUtil::isWritable(root))
-    {
-        LOG_WRN("Path [" << root << "] is read-only. Will not create the random device nodes.");
-        return;
-    }
-
-    const auto pathDev = Poco::Path(root, "/dev");
-
-    try
-    {
-        // Create the path first.
-        Poco::File(pathDev).createDirectory();
-    }
-    catch (const std::exception& ex)
-    {
-        LOG_ERR("Failed to create [" << pathDev.toString() << "]: " << ex.what());
-        return;
-    }
-
-#ifndef __FreeBSD__
-    // Create the random and urandom devices.
-    createRandomDeviceInJail(root, "/dev/random", makedev(1, 8));
-    createRandomDeviceInJail(root, "/dev/urandom", makedev(1, 9));
-#else
-    if (!FileUtil::Stat(root + "/dev/random").exists())
-    {
-         const bool res = coolmount("-d", "", root + "/dev");
-         if (res)
-            LOG_TRC("Mounted devfs hierarchy -> [" << root << "/dev].");
-        else
-            LOG_ERR("Failed to mount devfs -> [" << root << "/dev].");
-    }
-#endif
 }
 
 /// The envar name used to control bind-mounting of systemplate/jails.
