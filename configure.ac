@@ -1050,38 +1050,6 @@ AC_SUBST(HAVE_CLANG)
 AS_IF([test "$ENABLE_GTKAPP" != true],
 [CXXFLAGS="$CXXFLAGS $CXXFLAGS_CXXSTD"])
 
-SYS_RANDOM=
-AC_LANG_PUSH([C++])
-AC_LINK_IFELSE(
-    [AC_LANG_SOURCE([[
-    #include <sys/random.h>
-    int main()
-    {
-        char buffer[8];
-        getrandom(buffer, sizeof(buffer), GRND_NONBLOCK);
-    }
-    ]])],
-    [SYS_RANDOM=TRUE])
-AC_LANG_POP([C++])
-
-if test "$SYS_RANDOM" == "TRUE" ; then
-    AC_DEFINE([HAVE_SYS_RANDOM_H],1,[Define to 1 if you have the <sys/random.h> header file.])
-else
-    AC_DEFINE([HAVE_SYS_RANDOM_H],0,[Define to 1 if you have the <sys/random.h> header file.])
-fi
-
-AC_LINK_IFELSE(
-    [AC_LANG_SOURCE([[
-    #include <unistd.h>
-    int main()
-    {
-        char buffer[8];
-        getentropy(buffer, sizeof(buffer));
-    }
-    ]])],
-    [AC_DEFINE([HAVE_GETENTROPY],1,[Define to 1 if you have getentropy() function in <unistd.h> header file.])],
-    [AC_DEFINE([HAVE_GETENTROPY],0,[Define to 1 if you have getentropy() function in <unistd.h> header file.])])
-
 AS_IF([test -n "$LOKIT_PATH"],
       [CPPFLAGS="$CPPFLAGS -I${LOKIT_PATH}"])
 lokit_msg="$LOKIT_PATH"
