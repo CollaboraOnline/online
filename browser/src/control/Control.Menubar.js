@@ -830,7 +830,7 @@ L.Control.Menubar = L.Control.extend({
 						{name: _('Bottom N elements...'), uno: '.uno:ConditionalFormatEasy?FormatRule:short=12'},
 						{name: _('Bottom N percent...'), uno: '.uno:ConditionalFormatEasy?FormatRule:short=14'},
 						{name: _('Above Average...'), uno: '.uno:ConditionalFormatEasy?FormatRule:short=15'},
-						{name: _('Bellow Average...'), uno: '.uno:ConditionalFormatEasy?FormatRule:short=16'},
+						{name: _('Below Average...'), uno: '.uno:ConditionalFormatEasy?FormatRule:short=16'},
 						{type: 'separator'},
 						{name: _('More conditions...'), uno: '.uno:ConditionalFormatDialog'},
 					]},

@@ -1182,7 +1182,7 @@ msgstr ""
 
 #: src/control/Control.Menubar.js:833
 #: src/control/jsdialog/Definitions.Menu.ts:354
-msgid "Bellow Average..."
+msgid "Below Average..."
 msgstr ""
 
 #: src/control/Control.Menubar.js:944 src/control/Control.Menubar.js:1009

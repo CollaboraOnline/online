@@ -351,7 +351,7 @@ menuDefinitions.set('ConditionalFormatMenu', [
 				uno: '.uno:ConditionalFormatEasy?FormatRule:short=15',
 			},
 			{
-				text: _('Bellow Average...'),
+				text: _('Below Average...'),
 				uno: '.uno:ConditionalFormatEasy?FormatRule:short=16',
 			},
 			{ type: 'separator' },
