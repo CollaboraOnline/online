@@ -70,8 +70,7 @@ L.Map = L.Evented.extend({
 			this.options.documentContainer = L.DomUtil.get(this.options.documentContainer);
 		}
 
-		if (!window.ThisIsAMobileApp)
-			this._clip = L.clipboard(this);
+		this._clip = L.clipboard(this);
 		this._initContainer(id);
 		this._initLayout();
 

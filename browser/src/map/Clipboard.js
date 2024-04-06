@@ -890,11 +890,6 @@ L.Clipboard = L.Class.extend({
 	// Pull UNO clipboard commands out from menus and normal user input.
 	// We try to massage and re-emit these, to get good security event / credentials.
 	filterExecCopyPaste: function(cmd) {
-		if (window.ThisIsAMobileApp) {
-			// We do native copy/paste in the iOS and Android cases
-			return false;
-		}
-
 		if (this._map['wopi'].DisableCopy && (cmd === '.uno:Copy' || cmd === '.uno:Cut')) {
 			// perform internal operations
 			app.socket.sendMessage('uno ' + cmd);
