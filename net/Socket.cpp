@@ -1501,7 +1501,7 @@ namespace http
 extern "C" {
     void handleUserProfileSignal(const int /* signal */)
     {
-#if defined(__linux__) && !defined(__ANDROID__)
+#if defined(__linux__) && !defined(__ANDROID__) && defined(SYS_futimesat)
         const struct timeval times[2] = {};
         // call something fairly obscure that perf can trigger on.  futimesat
         // look a good candidate (calling "futimesat" typically results in
