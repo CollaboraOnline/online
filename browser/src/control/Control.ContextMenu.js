@@ -12,7 +12,7 @@
  * Control.ContextMenu
  */
 
-/* global $ _ _UNO */
+/* global $ _ _UNO app */
 L.Control.ContextMenu = L.Control.extend({
 	options: {
 		SEPARATOR: '---------',
@@ -50,7 +50,7 @@ L.Control.ContextMenu = L.Control.extend({
 					  'InsertAxisTitle', 'InsertMinorGrid', 'InsertMajorGrid' , 'InsertAxis', 'DeleteMajorGrid' , 'DeleteMinorGrid',
 					  'SpellCheckIgnoreAll', 'LanguageStatus', 'SpellCheckApplySuggestion', 'PageDialog',
 					  'CompressGraphic', 'GraphicDialog', 'InsertCaptionDialog',
-					  'NextTrackedChange', 'PreviousTrackedChange', 'RejectTrackedChange', 'AcceptTrackedChange'],
+					  'NextTrackedChange', 'PreviousTrackedChange', 'RejectTrackedChange', 'AcceptTrackedChange', 'InsertAnnotation'],
 
 			text: ['TableInsertMenu',
 				   'InsertRowsBefore', 'InsertRowsAfter', 'InsertColumnsBefore', 'InsertColumnsAfter',
@@ -162,7 +162,9 @@ L.Control.ContextMenu = L.Control.extend({
 				build: function() {
 					return {
 						callback: function(key) {
-							if (map._clip === undefined || !map._clip.filterExecCopyPaste(key)) {
+							if (key === '.uno:InsertAnnotation') {
+								app.map.insertComment();
+							} else if (map._clip === undefined || !map._clip.filterExecCopyPaste(key)) {
 								map.sendUnoCommand(key);
 								// For spelling context menu we need to remove selection
 								if (spellingContextMenu)
