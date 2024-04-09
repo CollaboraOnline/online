@@ -1697,6 +1697,11 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 	grid-template-columns: 0fr 1fr;
 }
 
+.user-list-item img {
+	width: 32px;
+	height: 32px;
+}
+
 #follow-editor {
 	padding: 8px;
 }
