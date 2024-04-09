@@ -170,6 +170,10 @@ export class Point {
 			return x;
 		}
 
+		if (x instanceof SimplePoint) {
+			return new Point(x.x, x.y);
+		}
+
 		if (Array.isArray(x)) {
 			var arr = x as Array<number>;
 			return new Point(arr[0], arr[1]);

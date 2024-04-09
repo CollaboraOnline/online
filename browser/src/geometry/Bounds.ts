@@ -128,7 +128,7 @@ export class Bounds {
 
 		var bounds: Bounds;
 		var point: Point;
-		if (Array.isArray(obj) || obj instanceof L.Point) {
+		if (Array.isArray(obj) || obj instanceof L.Point || obj instanceof SimplePoint) {
 			point = toPoint(<PointConvertable>obj);
 		} else {
 			bounds = Bounds.toBounds(obj);
