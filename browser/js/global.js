@@ -1218,7 +1218,14 @@ window.app = {
 					var docTypes = ['text', 'spreadsheet', 'presentation', 'drawing'];
 					for (var i = 0; i < docTypes.length; ++i) {
 						var docType = docTypes[i];
-						var darkTheme = global.localStorage.getItem('UIDefaults_' + docType + '_darkTheme');
+						var darkTheme = false;
+						if (window.uiDefaults) {
+							darkTheme = window.uiDefaults.darkTheme === true;
+						}
+						var item = global.localStorage.getItem('UIDefaults_' + docType + '_darkTheme');
+						if (item) {
+							darkTheme = item;
+						}
 						if (darkTheme) {
 							msg += ' ' + docType + 'DarkTheme=' + darkTheme;
 						}
