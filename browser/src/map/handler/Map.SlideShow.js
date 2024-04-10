@@ -3,7 +3,7 @@
  * L.Map.SlideShow is handling the slideShow action
  */
 
-/* global _ */
+/* global _ sanitizeUrl */
 L.Map.mergeOptions({
 	slideShow: true
 });
@@ -211,13 +211,18 @@ L.Map.SlideShow = L.Handler.extend({
 	},
 
 	_generateSlideWindowHtml: function(title, slideURL) {
+		var sanitizer = document.createElement('div');
+		sanitizer.innerText = title;
+
+		var sanitizedTitle = sanitizer.innerHTML;
+		var sanitizedUrl = sanitizeUrl(slideURL);
 		return `
 		<!DOCTYPE html>
 		<html lang="en">
 		<head>
 			<meta charset="UTF-8">
 			<meta name="viewport" content="width=device-width, initial-scale=1.0">
-			<title>${title}</title>
+			<title>${sanitizedTitle}</title>
 			<style>
 				body, html {
 					margin: 0;
@@ -233,7 +238,7 @@ L.Map.SlideShow = L.Handler.extend({
 			</style>
 		</head>
 		<body>
-			<iframe src="${slideURL}"></iframe>
+			<iframe src="${sanitizedUrl}"></iframe>
 		</body>
 		</html>
 		`;
