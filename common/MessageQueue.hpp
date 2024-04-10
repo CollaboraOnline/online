@@ -165,9 +165,17 @@ protected:
                 // Remove the queued textinput message and combine it with the current one
                 getQueue().erase(getQueue().begin() + i);
 
-                std::string newMsg = queuedTokens[0] + " textinput id=" + id + " text=" + queuedText + text;
+                std::string newMsg;
+                newMsg.reserve(it.size() * 2);
+                newMsg.append(queuedTokens[0]);
+                newMsg.append(" textinput id=");
+                newMsg.append(id);
+                newMsg.append(" text=");
+                newMsg.append(queuedText);
+                newMsg.append(text);
 
-                LOG_TRC("Combined [" << queuedMessage << "] with current message to [" << newMsg << "]");
+                LOG_TRC("Combined [" << queuedMessage << "] with current message to [" << newMsg
+                                     << ']');
 
                 return newMsg;
             }
