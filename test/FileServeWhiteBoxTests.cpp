@@ -437,7 +437,7 @@ void FileServeTests::testPreProcessedFileSubstitution()
         { "BUYPRODUCT_URL", "https://buy.ourproduct.com/'" }
     };
 
-    preProcessedFileSubstitution(testname, variables);
+    preProcessedFileSubstitution(testname, std::move(variables));
     preProcessedFileSubstitution(std::string(testname) + "_empty",
                                  std::unordered_map<std::string, std::string>());
 }
