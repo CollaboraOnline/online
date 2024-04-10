@@ -178,17 +178,21 @@ int main(int argc, char** argv)
             if (retval != 0)
             {
                 if (errno != EINVAL)
+                {
+                    // Don't complain where MNT_DETACH is unsupported. Fall back to forcing instead.
                     fprintf(stderr, "%s: unmount failed to detach [%s]: %s.\n", program, target,
                             strerror(errno));
-            }
+                }
 
-            // Now try to force the unmounting, which isn't supported on all filesystems.
-            retval = umount2(target, MNT_FORCE);
-            if (retval && errno != EINVAL)
-            {
-                fprintf(stderr, "%s: forced unmount of [%s] failed: %s.\n", program, target,
-                        strerror(errno));
-                return EX_SOFTWARE;
+                // Now try to force the unmounting, which isn't supported on all filesystems.
+                retval = umount2(target, MNT_FORCE);
+                if (retval != 0)
+                {
+                    // Complain to capture the reason of failure.
+                    fprintf(stderr, "%s: forced unmount of [%s] failed: %s.\n", program, target,
+                            strerror(errno));
+                    return EX_SOFTWARE;
+                }
             }
         }
     }
