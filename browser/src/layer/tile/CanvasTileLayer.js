@@ -7012,13 +7012,19 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_setSpliterGradient: function (splitter, visibleTopLeft) {
+
+		var origTopOrLeftOfSplitPane = splitter.isTopOrLeftOfSplitPane;
+
 		if (Math.round(visibleTopLeft) == 0) {
 			splitter.isTopOrLeftOfSplitPane = true;
 		}
 		else {
 			splitter.isTopOrLeftOfSplitPane = false;
 		}
-		splitter.onPositionChange();
+
+		if (origTopOrLeftOfSplitPane != splitter.isTopOrLeftOfSplitPane) {
+			splitter.onPositionChange();
+		}
 	},
 
 	_updateOnChangePart: function () {
