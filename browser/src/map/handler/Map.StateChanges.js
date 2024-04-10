@@ -33,8 +33,14 @@ L.Map.StateChangeHandler = L.Handler.extend({
 		if (typeof (e.state) == 'object') {
 			state = e.state;
 		} else if (typeof (e.state) == 'string') {
-			var index = e.state.indexOf('{');
-			state = index !== -1 ? JSON.parse(e.state.substring(index)) : e.state;
+			var firstIndex = e.state.indexOf('{');
+			var lastIndex = e.state.lastIndexOf('}');
+
+			if (firstIndex !== -1 && lastIndex !== -1) {
+				state = JSON.parse(e.state.substring(firstIndex, lastIndex + 1));
+			} else {
+				state = e.state;
+			}
 		}
 
 		this._items[e.commandName] = state;
