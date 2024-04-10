@@ -88,7 +88,7 @@ class UserList extends L.Control {
 		const user = this.users.get(viewId);
 
 		if (user === undefined) {
-			console.debug("User doesn't exist: " + viewId);
+			console.debug('User doesn\'t exist: ' + viewId);
 			return;
 		}
 
@@ -372,7 +372,7 @@ class UserList extends L.Control {
 		const user = this.users.get(e.viewId);
 
 		if (user === undefined) {
-			console.debug("User doesn't exist: " + e.viewId);
+			console.debug('User doesn\'t exist: ' + e.viewId);
 			return;
 		}
 

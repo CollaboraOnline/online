@@ -207,7 +207,7 @@ var sendInsertTableFunction = function(event) {
 	var col = $(event.target).index() + 1;
 	var row = $(event.target).parent().index() + 1;
 	$('.col').removeClass('bright');
-	var status = $('#inserttable-status')
+	var status = $('#inserttable-status');
 	status.html('<br/>');
 	var msg = 'uno .uno:InsertTable {' +
 		' "Columns": { "type": "long","value": '
@@ -225,7 +225,7 @@ var highlightTableFunction = function(event) {
 	$('.col').removeClass('bright');
 	$('.row:nth-child(-n+' + row + ') .col:nth-child(-n+' + col + ')')
 		.addClass('bright');
-	var status = $('#inserttable-status')
+	var status = $('#inserttable-status');
 	status.html(col + 'x' + row);
 };
 
