@@ -734,8 +734,6 @@ Document::~Document()
     // Wait for the callback worker to finish.
     _stop = true;
 
-    _tileQueue->put("eof");
-
     for (const auto& session : _sessions)
     {
         session.second->resetDocManager();
