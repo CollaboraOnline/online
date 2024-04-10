@@ -163,7 +163,7 @@ class UserList extends L.Control {
 			img = L.DomUtil.create('img', 'avatar-img') as HTMLImageElement;
 		}
 
-		L.LOUtil.setUserImage(img, this.map);
+		L.LOUtil.setUserImage(img, this.map, viewId);
 
 		img.alt = this.options.userAvatarAlt.replace('%user', username);
 
