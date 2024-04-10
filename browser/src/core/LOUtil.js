@@ -118,12 +118,11 @@ L.LOUtil = {
 
 		map.on('themechanged', setupIcon, this);
 	},
-	setUserImage: function(img, map) {
+	setUserImage: function(img, map, viewId) {
 		var docType = map.getDocType();
 		// set avatar image if it exist in user extract info
 		var defaultImage = L.LOUtil.getImageURL('user.svg', docType);
-		var myViewId = map._docLayer._viewId;
-		var extraInfo = map._viewInfo[myViewId].userextrainfo;
+		var extraInfo = map._viewInfo[viewId].userextrainfo;
 		if (extraInfo !== undefined && extraInfo.avatar !== undefined) {
 			// set user avatar
 			img.src = extraInfo.avatar;
