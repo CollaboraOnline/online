@@ -104,7 +104,7 @@ L.Control.UserList = L.Control.extend({
 		var img;
 		if (extraInfo !== undefined && extraInfo.avatar !== undefined) {
 			img = L.DomUtil.create('img', 'avatar-img');
-			L.LOUtil.setUserImage(img, this.map);
+			L.LOUtil.setUserImage(img, this.map, viewId);
 			$(img).css({'border-color': color});
 		} else {
 			img = L.DomUtil.create('div', 'user-info');
