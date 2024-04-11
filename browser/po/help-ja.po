@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-04-05 18:53+0200\n"
-"PO-Revision-Date: 2024-04-11 08:58+0000\n"
+"PO-Revision-Date: 2024-04-12 09:02+0000\n"
 "Last-Translator: Shavazo <pleasure.7010@gmail.com>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/"
 "collabora-online/help/ja/>\n"
@@ -1110,7 +1110,7 @@ msgstr "リストの内側に番号付けしないで段落を挿入する。カ
 
 #: html/cool-help.html%2Bdiv.div.div.h2:209-9
 msgid "Navigating in Spreadsheets"
-msgstr ""
+msgstr "スプレッドシートでのナビゲート"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:211-38
 msgid "Moves the cursor to the first cell in the sheet (A1)."
@@ -1223,7 +1223,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:224-38
 msgid "Go to previous sheet."
-msgstr ""
+msgstr "前のシートへ移動。"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:224-86
 #, fuzzy
