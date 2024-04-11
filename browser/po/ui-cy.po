@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-04-05 18:53+0200\n"
-"PO-Revision-Date: 2024-02-03 13:02+0000\n"
+"PO-Revision-Date: 2024-04-08 22:01+0000\n"
 "Last-Translator: Rhoslyn Prys <rprys@posteo.net>\n"
 "Language-Team: Welsh <https://hosted.weblate.org/projects/collabora-online/"
 "ui/cy/>\n"
-"Language: \n"
+"Language: cy\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=(n==0) ? 0 : (n==1) ? 1 : (n==2) ? 2 : "
 "(n==3) ? 3 :(n==6) ? 4 : 5;\n"
-"X-Generator: Weblate 5.4-dev\n"
+"X-Generator: Weblate 5.5-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -67,7 +67,7 @@ msgstr "Dogfennau ar agor"
 #: admin/admin.strings.js:26 admin/src/AdminSocketOverview.js:82
 #: admin/src/AdminSocketOverview.js:131 admin/src/AdminSocketOverview.js:358
 msgid " user(s)."
-msgstr " defnyddiwr(wyr)"
+msgstr " defnyddiwr(wyr)."
 
 #: admin/admin.strings.js:27 admin/src/AdminSocketOverview.js:214
 msgid " document(s) open."
@@ -1129,12 +1129,12 @@ msgstr "Rhwng..."
 #: src/control/Control.Menubar.js:822
 #: src/control/jsdialog/Definitions.Menu.ts:319
 msgid "Duplicate..."
-msgstr ""
+msgstr "Dyblygu..."
 
 #: src/control/Control.Menubar.js:823
 #: src/control/jsdialog/Definitions.Menu.ts:323
 msgid "Contains text..."
-msgstr ""
+msgstr "Yn cynnwys testun..."
 
 #: src/control/Control.Menubar.js:825 src/control/Control.Menubar.js:835
 #: src/control/jsdialog/Definitions.Menu.ts:327
@@ -1145,37 +1145,37 @@ msgstr "Mwy o amodau..."
 #: src/control/Control.Menubar.js:827
 #: src/control/jsdialog/Definitions.Menu.ts:331
 msgid "Top/Bottom Rules..."
-msgstr ""
+msgstr "Rheolau Brig/Gwaelod..."
 
 #: src/control/Control.Menubar.js:828
 #: src/control/jsdialog/Definitions.Menu.ts:334
 msgid "Top N elements..."
-msgstr ""
+msgstr "Elfennau Brig N..."
 
 #: src/control/Control.Menubar.js:829
 #: src/control/jsdialog/Definitions.Menu.ts:338
 msgid "Top N percent..."
-msgstr ""
+msgstr "Canran Brig N..."
 
 #: src/control/Control.Menubar.js:830
 #: src/control/jsdialog/Definitions.Menu.ts:342
 msgid "Bottom N elements..."
-msgstr ""
+msgstr "Elfennau Gwaelod N..."
 
 #: src/control/Control.Menubar.js:831
 #: src/control/jsdialog/Definitions.Menu.ts:346
 msgid "Bottom N percent..."
-msgstr ""
+msgstr "Canran Gwaelod N..."
 
 #: src/control/Control.Menubar.js:832
 #: src/control/jsdialog/Definitions.Menu.ts:350
 msgid "Above Average..."
-msgstr ""
+msgstr "Uwchlaw'r Cyfartaledd..."
 
 #: src/control/Control.Menubar.js:833
 #: src/control/jsdialog/Definitions.Menu.ts:354
 msgid "Below Average..."
-msgstr ""
+msgstr "Islaw'r Cyfartaledd..."
 
 #: src/control/Control.Menubar.js:944 src/control/Control.Menubar.js:1009
 #: src/control/Control.Menubar.js:1073 src/control/Control.Menubar.js:1127
@@ -1767,19 +1767,19 @@ msgstr "Mae %user wedi gadael"
 
 #: src/control/Control.UserList.ts:56
 msgid "Following %user"
-msgstr ""
+msgstr "Yn dilyn %user"
 
 #: src/control/Control.UserList.ts:57
 msgid "Following the editor"
-msgstr ""
+msgstr "Yn dilyn y golygydd"
 
 #: src/control/Control.UserList.ts:58
 msgid "Stop following"
-msgstr ""
+msgstr "Peidio â dilyn"
 
 #: src/control/Control.UserList.ts:59
 msgid "Avatar for %user"
-msgstr ""
+msgstr "Avatar %user"
 
 #: src/control/Control.UserList.ts:79
 msgid "%n users"
@@ -2016,7 +2016,7 @@ msgstr "Mae gan y ddogfen hon lofnod annilys."
 
 #: src/control/Signing.js:35
 msgid "The signature was valid, but the document has been modified."
-msgstr "Roedd y llofnod y ddilys, ond mae'r ddogfen wedi ei newid"
+msgstr "Roedd y llofnod y ddilys, ond mae'r ddogfen wedi ei newid."
 
 #: src/control/Signing.js:39
 msgid "The signature is OK, but the certificate could not be validated."
@@ -2299,7 +2299,7 @@ msgstr "Mae'r ddogfen yn newid i'r modd All-lein a bydd yn ail-lwytho'n fuan"
 
 #: src/core/Socket.js:1227
 msgid "Server is shutting down"
-msgstr ""
+msgstr "Mae'r gweinydd yn cau"
 
 #: src/core/Socket.js:1259
 msgid "Exported to storage"
@@ -2350,11 +2350,11 @@ msgstr "Mae'r gweinydd wedi'i ddatgysylltu."
 
 #: src/core/Debug.js:54
 msgid "Debug Tools"
-msgstr ""
+msgstr "Offer Dadfygio"
 
 #: src/core/Debug.js:56
 msgid "Ctrl+Shift+Alt+D to exit"
-msgstr ""
+msgstr "Ctrl+Shift+Alt+D i adael"
 
 #: src/docstate.js:90
 msgid "Standard"
@@ -2398,7 +2398,7 @@ msgstr ""
 "Mae hwn yn fersiwn heb ei gynnal o {productname}. I osgoi'r argraff ei fod "
 "yn addas ar gyfer ei ddefnyddio mewn mentrau, bydd y neges yma'n cae ei "
 "ddangos pan fydd mwy na {docs} dogfen neu {connections} cysylltiad yn cael "
-"eu defnyddio ar y tro"
+"eu defnyddio ar y tro."
 
 #: src/errormessages.js:25
 msgid "More information and support"
@@ -2604,7 +2604,7 @@ msgstr "Swyddogaeth"
 
 #: src/layer/tile/CanvasTileLayer.js:2625
 msgid "and %COUNT more"
-msgstr ""
+msgstr "a %COUNT rhagor"
 
 #: src/layer/tile/CanvasTileLayer.js:2639
 msgid "Copy link location"
@@ -2739,23 +2739,23 @@ msgstr ""
 "newydd</p>"
 
 #: src/map/Clipboard.js:1139
-#, fuzzy
 msgid ""
 "<p>Your browser has very limited access to the clipboard</p><p><b>Please "
 "press</b> <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to "
 "see more options</p><p>Close popup to ignore paste special</p>"
 msgstr ""
-"<p>Mynediad cyfyngedig iawn sydd gan eich porwr i'r clipfwrdd</p><p>Pwyswch: "
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> i weld rhagor "
-"o ddewisiadau</p><p>Caewch y llamlen i anwybyddu gludo arbennig</p>"
+"<p>Mynediad cyfyngedig iawn sydd gan eich porwr i'r "
+"clipfwrdd</p><p><b>Pwyswch:</b> <kbd>Ctrl</kbd><span class=\"kbd--plus\""
+">+</span><kbd>V</kbd> i weld rhagor o ddewisiadau</p><p>Caewch y llamlen i "
+"anwybyddu gludo arbennig</p>"
 
 #: src/map/Clipboard.js:1146
 msgid "Paste from this document"
-msgstr ""
+msgstr "Gludo o'r ddogfen hon"
 
 #: src/map/Clipboard.js:1146
 msgid "Cancel paste special"
-msgstr ""
+msgstr "Dileu gludo arbennig"
 
 #: src/map/Map.js:225
 msgid "Initializing..."
