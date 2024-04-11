@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-04-05 18:53+0200\n"
 "PO-Revision-Date: 2024-04-11 08:58+0000\n"
-"Last-Translator: Shavazo <pleasure.7010@gmail.com>\n"
+"Last-Translator: Poe Mon <p.poemon.awitd@gmail.com>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/"
 "collabora-online/ui/ja/>\n"
 "Language: ja\n"
@@ -69,9 +69,8 @@ msgid " user(s)."
 msgstr " ユーザー。"
 
 #: admin/admin.strings.js:27 admin/src/AdminSocketOverview.js:214
-#, fuzzy
 msgid " document(s) open."
-msgstr "開いているドキュメント"
+msgstr " 開いているドキュメント"
 
 #: admin/admin.strings.js:28
 msgid "Number of Documents"
@@ -184,7 +183,7 @@ msgstr "最大ドキュメント プロセス スタック メモリ (KB) - の�
 
 #: admin/admin.strings.js:53
 msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
-msgstr ""
+msgstr "最大ファイルプロセス スタック メモリ (KB) - のみを削減"
 
 #: admin/admin.strings.js:54
 msgid "Documents:"
@@ -409,7 +408,7 @@ msgstr "リンクを開く"
 
 #: src/control/Control.AlertDialog.js:66
 msgid "Copied external sources are not allowed"
-msgstr ""
+msgstr "ソースをコピーできません"
 
 #: src/control/Control.AlertDialog.js:67
 msgid "It seems you have copied a selection that includes external images."
@@ -489,7 +488,7 @@ msgstr "いつ?"
 
 #: src/control/Control.DocumentRepair.js:159
 msgid "You have not done anything to rollback yet..."
-msgstr ""
+msgstr "まだ完了してないです"
 
 #: src/control/Control.DocumentRepair.js:169
 msgid "Redo"
@@ -1356,7 +1355,7 @@ msgstr "共有"
 #: src/control/Control.NotebookbarImpress.js:235
 #: src/control/Control.NotebookbarWriter.js:211
 msgid "See history"
-msgstr ""
+msgstr "履歴"
 
 #: src/control/Control.NotebookbarCalc.js:254
 #: src/control/Control.NotebookbarDraw.js:320
@@ -1696,7 +1695,7 @@ msgstr "シートを右に移動"
 
 #: src/control/Control.Tabs.js:110
 msgid "Copy Sheet..."
-msgstr ""
+msgstr "シートをコピーする..."
 
 #: src/control/Control.Tabs.js:387
 #, fuzzy
