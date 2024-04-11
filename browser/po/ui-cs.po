@@ -12,17 +12,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-04-05 18:53+0200\n"
-"PO-Revision-Date: 2024-01-14 12:29+0000\n"
+"PO-Revision-Date: 2024-04-10 18:01+0000\n"
 "Last-Translator: Stanislav Horáček <stanislav.horacek@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/collabora-online/"
 "ui/cs/>\n"
-"Language: \n"
+"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n "
 "<= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
-"X-Generator: Weblate 5.4-dev\n"
+"X-Generator: Weblate 5.5-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -252,7 +252,7 @@ msgstr "Informace o verzi"
 
 #: admin/admin.strings.js:67
 msgid "License"
-msgstr ""
+msgstr "Licence"
 
 #: admin/admin.strings.js:68 src/control/Control.Menubar.js:381
 #: src/control/Control.Menubar.js:535 src/control/Control.Menubar.js:662
@@ -1137,12 +1137,12 @@ msgstr "Mezi..."
 #: src/control/Control.Menubar.js:822
 #: src/control/jsdialog/Definitions.Menu.ts:319
 msgid "Duplicate..."
-msgstr ""
+msgstr "Duplikovat..."
 
 #: src/control/Control.Menubar.js:823
 #: src/control/jsdialog/Definitions.Menu.ts:323
 msgid "Contains text..."
-msgstr ""
+msgstr "Obsahuje text..."
 
 #: src/control/Control.Menubar.js:825 src/control/Control.Menubar.js:835
 #: src/control/jsdialog/Definitions.Menu.ts:327
@@ -1153,37 +1153,37 @@ msgstr "Další podmínky..."
 #: src/control/Control.Menubar.js:827
 #: src/control/jsdialog/Definitions.Menu.ts:331
 msgid "Top/Bottom Rules..."
-msgstr ""
+msgstr "Pravidla horní/dolní..."
 
 #: src/control/Control.Menubar.js:828
 #: src/control/jsdialog/Definitions.Menu.ts:334
 msgid "Top N elements..."
-msgstr ""
+msgstr "Horních N prvků..."
 
 #: src/control/Control.Menubar.js:829
 #: src/control/jsdialog/Definitions.Menu.ts:338
 msgid "Top N percent..."
-msgstr ""
+msgstr "Horních N procent..."
 
 #: src/control/Control.Menubar.js:830
 #: src/control/jsdialog/Definitions.Menu.ts:342
 msgid "Bottom N elements..."
-msgstr ""
+msgstr "Dolních N prvků..."
 
 #: src/control/Control.Menubar.js:831
 #: src/control/jsdialog/Definitions.Menu.ts:346
 msgid "Bottom N percent..."
-msgstr ""
+msgstr "Dolních N procent..."
 
 #: src/control/Control.Menubar.js:832
 #: src/control/jsdialog/Definitions.Menu.ts:350
 msgid "Above Average..."
-msgstr ""
+msgstr "Nad průměrem..."
 
 #: src/control/Control.Menubar.js:833
 #: src/control/jsdialog/Definitions.Menu.ts:354
 msgid "Below Average..."
-msgstr ""
+msgstr "Pod průměrem..."
 
 #: src/control/Control.Menubar.js:944 src/control/Control.Menubar.js:1009
 #: src/control/Control.Menubar.js:1073 src/control/Control.Menubar.js:1127
@@ -1775,19 +1775,19 @@ msgstr "%user se odpojil"
 
 #: src/control/Control.UserList.ts:56
 msgid "Following %user"
-msgstr ""
+msgstr "Uživatel %user sledován"
 
 #: src/control/Control.UserList.ts:57
 msgid "Following the editor"
-msgstr ""
+msgstr "Editor sledován"
 
 #: src/control/Control.UserList.ts:58
 msgid "Stop following"
-msgstr ""
+msgstr "Ukončit sledování"
 
 #: src/control/Control.UserList.ts:59
 msgid "Avatar for %user"
-msgstr ""
+msgstr "Avatar uživatele %user"
 
 #: src/control/Control.UserList.ts:79
 msgid "%n users"
@@ -1807,7 +1807,7 @@ msgstr "Sledován"
 
 #: src/control/Control.UserList.ts:563
 msgid "Always follow the editor"
-msgstr "Vždy následovat editora"
+msgstr "Vždy sledovat editora"
 
 #: src/control/Control.Zotero.js:139
 msgid "Zotero API key is not configured"
@@ -2302,7 +2302,7 @@ msgstr "Dokument se přepíná do režimu offline a za chvíli bude znovu načte
 
 #: src/core/Socket.js:1227
 msgid "Server is shutting down"
-msgstr ""
+msgstr "Server se vypíná"
 
 #: src/core/Socket.js:1259
 msgid "Exported to storage"
@@ -2353,11 +2353,11 @@ msgstr "Server byl odpojen."
 
 #: src/core/Debug.js:54
 msgid "Debug Tools"
-msgstr ""
+msgstr "Nástroje pro ladění"
 
 #: src/core/Debug.js:56
 msgid "Ctrl+Shift+Alt+D to exit"
-msgstr ""
+msgstr "Ctrl+Shift+Alt+D pro ukončení"
 
 #: src/docstate.js:90
 msgid "Standard"
@@ -2606,7 +2606,7 @@ msgstr "Funkce"
 
 #: src/layer/tile/CanvasTileLayer.js:2625
 msgid "and %COUNT more"
-msgstr ""
+msgstr "a %COUNT dalších"
 
 #: src/layer/tile/CanvasTileLayer.js:2639
 msgid "Copy link location"
@@ -2737,23 +2737,22 @@ msgstr ""
 "na jeho dokončení, nebo ho před zahájením nového nejprve zrušte.</p>"
 
 #: src/map/Clipboard.js:1139
-#, fuzzy
 msgid ""
 "<p>Your browser has very limited access to the clipboard</p><p><b>Please "
 "press</b> <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to "
 "see more options</p><p>Close popup to ignore paste special</p>"
 msgstr ""
-"<p>Prohlížeč má velmi omezený přístup ke schránce</p><p>Stisknutím "
+"<p>Prohlížeč má velmi omezený přístup ke schránce</p><p><b>Stisknutím</b> "
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> zobrazíte "
 "další možnosti</p><p>Zavřením vyskakovacího okna vložení jinak zrušíte</p>"
 
 #: src/map/Clipboard.js:1146
 msgid "Paste from this document"
-msgstr ""
+msgstr "Vložit z tohoto dokumentu"
 
 #: src/map/Clipboard.js:1146
 msgid "Cancel paste special"
-msgstr ""
+msgstr "Zrušit vložení jinak"
 
 #: src/map/Map.js:225
 msgid "Initializing..."
@@ -2791,11 +2790,11 @@ msgstr "Nahrávání souboru na server se nepodařilo se stavem: %0"
 
 #: src/map/handler/Map.SlideShow.js:50
 msgid "Empty Slide Show"
-msgstr ""
+msgstr "Prázdná prezentace"
 
 #: src/map/handler/Map.SlideShow.js:153
 msgid "Windowed Presentation Blocked"
-msgstr ""
+msgstr "Prezentace v okně zablokována"
 
 #: src/map/handler/Map.SlideShow.js:154
 msgid ""
@@ -2803,32 +2802,33 @@ msgid ""
 "slide shows to be displayed in separated windows, allowing for easy screen "
 "sharing."
 msgstr ""
+"Prezentace byla zablokována. Je nutné v prohlížeči povolit vyskakovací okna. "
+"Prezentace tak bude možné zobrazovat v oddělených oknech a díky tomu bude "
+"snadné sdílet obrazovku."
 
 #: src/map/handler/Map.SlideShow.js:162
-#, fuzzy
 msgid "Presenting in window"
-msgstr "Prezentovat v okně"
+msgstr "Prezentuje se v okně"
 
 #: src/map/handler/Map.SlideShow.js:163
 msgid "Close Presentation"
-msgstr ""
+msgstr "Zavřít prezentaci"
 
 #: src/map/handler/Map.SlideShow.js:183
 msgid "Presenting in fullscreen"
-msgstr ""
+msgstr "Prezentuje se na celou obrazovku"
 
 #: src/map/handler/Map.SlideShow.js:184
-#, fuzzy
 msgid "End Presentation"
-msgstr "Prezentace"
+msgstr "Ukončit prezentaci"
 
 #: src/map/handler/Map.SlideShow.js:239
 msgid "Already presenting"
-msgstr ""
+msgstr "Již se prezentuje"
 
 #: src/map/handler/Map.SlideShow.js:240
 msgid "You are already presenting this document"
-msgstr ""
+msgstr "Tento dokument se již prezentuje"
 
 #: src/map/handler/Map.WOPI.js:150
 msgid "Creating new file from template..."

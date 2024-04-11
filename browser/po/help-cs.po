@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-04-05 18:53+0200\n"
-"PO-Revision-Date: 2024-01-02 19:06+0000\n"
+"PO-Revision-Date: 2024-04-10 18:02+0000\n"
 "Last-Translator: Stanislav Horáček <stanislav.horacek@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/collabora-online/"
 "help/cs/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=((n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2);\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.5-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:84-5
 msgid "Keyboard Shortcuts"
@@ -1909,9 +1909,8 @@ msgstr ""
 "\"ui\">Přejít na stav</span>."
 
 #: html/cool-help.html%2Bdiv.div.div.div.img[alt]:501-29
-#, fuzzy
 msgid "document repair"
-msgstr "Oprava dokumentu"
+msgstr "oprava dokumentu"
 
 #: html/cool-help.html%2Bdiv.div.div.p:502-5
 msgid ""
@@ -1942,9 +1941,8 @@ msgstr ""
 "Dokument je neaktivní - pro pokračování v úpravách klikněte“."
 
 #: html/cool-help.html%2Bdiv.div.div.div.img[alt]:507-29
-#, fuzzy
 msgid "inactive document"
-msgstr "Neaktivní dokument"
+msgstr "neaktivní dokument"
 
 #: html/cool-help.html%2Bdiv.div.div.p:508-5
 msgid ""
@@ -2038,7 +2036,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.ol.div.img[alt]:530-31
 msgid "chart"
-msgstr ""
+msgstr "graf"
 
 #: html/cool-help.html%2Bdiv.div.div.ol.li.p:531-11
 msgid "If no table or range was selected, a prototype chart is displayed."
@@ -2130,7 +2128,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.img[alt]:548-29
 msgid "comment"
-msgstr ""
+msgstr "komentář"
 
 #: html/cool-help.html%2Bdiv.div.div.p:549-5
 msgid ""
@@ -2158,9 +2156,8 @@ msgstr ""
 "nabídku s návrhy na opravu."
 
 #: html/cool-help.html%2Bdiv.div.div.div.img[alt]:554-29
-#, fuzzy
 msgid "spellchecking"
-msgstr "Kontrola pravopisu"
+msgstr "kontrola pravopisu"
 
 #: html/cool-help.html%2Bdiv.div.div.p:555-5
 msgid ""
@@ -2265,7 +2262,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.div.img[alt]:592-34
 msgid "filter"
-msgstr ""
+msgstr "filtr"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:594-11
 msgid ""
@@ -2318,7 +2315,7 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.div.ol.div.img[alt]:608-31
 #: html/cool-help.html%2Bdiv.div.div.div.ol.div.img[alt]:613-31
 msgid "data validate"
-msgstr ""
+msgstr "platnost dat"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:609-11
 msgid ""
@@ -2505,9 +2502,8 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:667-29
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:801-29
-#, fuzzy
 msgid "track changes"
-msgstr "Sledování změn"
+msgstr "sledování změn"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:668-5
 msgid ""
@@ -2850,7 +2846,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:775-29
 msgid "word count"
-msgstr ""
+msgstr "počet slov"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:776-5
 msgid ""
@@ -2892,7 +2888,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.div.img[alt]:786-31
 msgid "Special Characters"
-msgstr ""
+msgstr "speciální znaky"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:787-11
 msgid ""
@@ -3171,7 +3167,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.div.img[alt]:866-31
 msgid "import"
-msgstr ""
+msgstr "import"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:867-11
 msgid ""
@@ -3273,7 +3269,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.div.img[alt]:908-31
 msgid "Position and Size"
-msgstr ""
+msgstr "Umístění a velikost"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:909-11
 msgid "Set the properties of the element of the object."
