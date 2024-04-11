@@ -4,7 +4,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-04-05 18:53+0200\n"
 "PO-Revision-Date: 2024-04-11 08:39+0000\n"
-"Last-Translator: Shavazo <pleasure.7010@gmail.com>\n"
+"Last-Translator: Poe Mon <p.poemon.awitd@gmail.com>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/"
 "collabora-online/help/ja/>\n"
 "Language: ja\n"
@@ -27,54 +27,50 @@ msgid "Undo"
 msgstr "取り消す"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:88-69
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:89-38
 msgid "Redo"
 msgstr "やり直す"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:89-69
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Y</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Y"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Y</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:90-38
 msgid "Cut"
 msgstr "切り取り"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:90-68
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>X</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>X"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>X</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:91-38
 msgid "Paste as unformatted text"
 msgstr "書式設定されていないテキストを貼り付け"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:91-90
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>V</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>V"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>V</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:92-38
 msgid "Paste special"
 msgstr "形式を選択して貼り付け"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:92-78
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd--plus\""
 ">+</span><kbd>V</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>V"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd--plus\""
+">+</span><kbd>V</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:93-38
 msgid "Print (Download as PDF)"
@@ -113,7 +109,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:96-38
 msgid "Focus to document from menu"
-msgstr ""
+msgstr "メニューを確認してください"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:96-92
 msgid "ESC"
