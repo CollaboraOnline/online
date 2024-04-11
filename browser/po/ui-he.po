@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-04-05 18:53+0200\n"
-"PO-Revision-Date: 2024-01-19 22:48+0000\n"
+"PO-Revision-Date: 2024-04-08 22:01+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://hosted.weblate.org/projects/collabora-online/"
 "ui/he/>\n"
-"Language: \n"
+"Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Weblate 5.4-dev\n"
+"X-Generator: Weblate 5.5-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -1121,12 +1121,12 @@ msgstr "בין…"
 #: src/control/Control.Menubar.js:822
 #: src/control/jsdialog/Definitions.Menu.ts:319
 msgid "Duplicate..."
-msgstr ""
+msgstr "שכפול…"
 
 #: src/control/Control.Menubar.js:823
 #: src/control/jsdialog/Definitions.Menu.ts:323
 msgid "Contains text..."
-msgstr ""
+msgstr "מכיל טקסט…"
 
 #: src/control/Control.Menubar.js:825 src/control/Control.Menubar.js:835
 #: src/control/jsdialog/Definitions.Menu.ts:327
@@ -1137,37 +1137,37 @@ msgstr "תנאים נוספים…"
 #: src/control/Control.Menubar.js:827
 #: src/control/jsdialog/Definitions.Menu.ts:331
 msgid "Top/Bottom Rules..."
-msgstr ""
+msgstr "כללים עליונים/תחתונים…"
 
 #: src/control/Control.Menubar.js:828
 #: src/control/jsdialog/Definitions.Menu.ts:334
 msgid "Top N elements..."
-msgstr ""
+msgstr "N הרכיבים העליונים…"
 
 #: src/control/Control.Menubar.js:829
 #: src/control/jsdialog/Definitions.Menu.ts:338
 msgid "Top N percent..."
-msgstr ""
+msgstr "N האחוזים העליונים…"
 
 #: src/control/Control.Menubar.js:830
 #: src/control/jsdialog/Definitions.Menu.ts:342
 msgid "Bottom N elements..."
-msgstr ""
+msgstr "N הרכיבים התחתונים…"
 
 #: src/control/Control.Menubar.js:831
 #: src/control/jsdialog/Definitions.Menu.ts:346
 msgid "Bottom N percent..."
-msgstr ""
+msgstr "N האחוזים התחתונים…"
 
 #: src/control/Control.Menubar.js:832
 #: src/control/jsdialog/Definitions.Menu.ts:350
 msgid "Above Average..."
-msgstr ""
+msgstr "מעל לממוצע…"
 
 #: src/control/Control.Menubar.js:833
 #: src/control/jsdialog/Definitions.Menu.ts:354
 msgid "Below Average..."
-msgstr ""
+msgstr "מתחת לממוצע…"
 
 #: src/control/Control.Menubar.js:944 src/control/Control.Menubar.js:1009
 #: src/control/Control.Menubar.js:1073 src/control/Control.Menubar.js:1127
@@ -1758,19 +1758,19 @@ msgstr "%user לא בערוץ עוד"
 
 #: src/control/Control.UserList.ts:56
 msgid "Following %user"
-msgstr ""
+msgstr "במעקב אחר %user"
 
 #: src/control/Control.UserList.ts:57
 msgid "Following the editor"
-msgstr ""
+msgstr "במעקב אחר העורך"
 
 #: src/control/Control.UserList.ts:58
 msgid "Stop following"
-msgstr ""
+msgstr "הפסקת המעקב"
 
 #: src/control/Control.UserList.ts:59
 msgid "Avatar for %user"
-msgstr ""
+msgstr "תמונה ייצוגית של %user"
 
 #: src/control/Control.UserList.ts:79
 msgid "%n users"
@@ -2274,7 +2274,7 @@ msgstr "המסמך עובר למצב בלתי־מקוון והוא ייטען מ
 
 #: src/core/Socket.js:1227
 msgid "Server is shutting down"
-msgstr ""
+msgstr "השרת נכבה"
 
 #: src/core/Socket.js:1259
 msgid "Exported to storage"
@@ -2322,11 +2322,11 @@ msgstr "השרת התנתק."
 
 #: src/core/Debug.js:54
 msgid "Debug Tools"
-msgstr ""
+msgstr "כלי ניפוי תקלות"
 
 #: src/core/Debug.js:56
 msgid "Ctrl+Shift+Alt+D to exit"
-msgstr ""
+msgstr "Ctrl+Shift+Alt+D ליציאה"
 
 #: src/docstate.js:90
 msgid "Standard"
@@ -2473,12 +2473,15 @@ msgid ""
 "administrator. For more info on proxy configuration please checkout https://"
 "sdk.collaboraonline.com/docs/installation/Proxy_settings.html"
 msgstr ""
+"הקמת קישוריות לשקע או החיבור לשקע נסגרו במפתיע. כנראה שהמתווך ההפוך לא מוגדר "
+"נכון, נא ליצור קשר עם ההנהלה. למידע נוסף על הגדרות מתווך נא לעיין "
+"ב־https://sdk.collaboraonline.com/docs/installation/Proxy_settings.html"
 
 #: src/errormessages.js:40
 msgid ""
 "Failed to establish socket connection or socket connection closed "
 "unexpectedly."
-msgstr ""
+msgstr "הקמת החיבור לשקע נכשלה או שהחיבור לשקע נקטע במפתיע."
 
 #: src/errormessages.js:43
 msgid "Failed to load document."
@@ -2556,7 +2559,7 @@ msgstr "פונקציות"
 
 #: src/layer/tile/CanvasTileLayer.js:2625
 msgid "and %COUNT more"
-msgstr ""
+msgstr "ועוד %COUNT"
 
 #: src/layer/tile/CanvasTileLayer.js:2639
 msgid "Copy link location"
@@ -2687,24 +2690,23 @@ msgstr ""
 "הנוכחית או לבטל אותה בטרם התחלת הורדה חדשה</p>"
 
 #: src/map/Clipboard.js:1139
-#, fuzzy
 msgid ""
 "<p>Your browser has very limited access to the clipboard</p><p><b>Please "
 "press</b> <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to "
 "see more options</p><p>Close popup to ignore paste special</p>"
 msgstr ""
-"<p>לדפדפן שלך יש גישה מוגבלת במיוחד ללוח הגזירים</p><p>נא להקיש כעת: "
+"<p>לדפדפן שלך יש גישה מוגבלת במיוחד ללוח הגזירים</p><p><b>נא להקיש כעת:</b> "
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> כדי לראות "
 "אפשרויות נוספות</p><p>אפשר לסגור את החלונית הקופצת כי להתעלם מהדבקה "
 "מיוחדת</p>"
 
 #: src/map/Clipboard.js:1146
 msgid "Paste from this document"
-msgstr ""
+msgstr "הדבקה מהמסמך הזה"
 
 #: src/map/Clipboard.js:1146
 msgid "Cancel paste special"
-msgstr ""
+msgstr "ביטול הדבקה מיוחדת"
 
 #: src/map/Map.js:225
 msgid "Initializing..."
@@ -2740,11 +2742,11 @@ msgstr "העלאת הקובץ לשרת נכשלה עם מצב השגיאה: %0"
 
 #: src/map/handler/Map.SlideShow.js:50
 msgid "Empty Slide Show"
-msgstr ""
+msgstr "מצגת ריקה"
 
 #: src/map/handler/Map.SlideShow.js:153
 msgid "Windowed Presentation Blocked"
-msgstr ""
+msgstr "מצגת בחלון נחסמה"
 
 #: src/map/handler/Map.SlideShow.js:154
 msgid ""
@@ -2752,32 +2754,32 @@ msgid ""
 "slide shows to be displayed in separated windows, allowing for easy screen "
 "sharing."
 msgstr ""
+"המצגת נחסמה. נא לאפשר חלונות קופצים בדפדפן. ההגדרה הזאת מאפשרת למצגות להופיע "
+"בחלונות נפרדים, מה שמקל על שיתוף המסך."
 
 #: src/map/handler/Map.SlideShow.js:162
-#, fuzzy
 msgid "Presenting in window"
-msgstr "הצגה בחלון"
+msgstr "מתבצעת הצגה בחלון"
 
 #: src/map/handler/Map.SlideShow.js:163
 msgid "Close Presentation"
-msgstr ""
+msgstr "סגירת המצגת"
 
 #: src/map/handler/Map.SlideShow.js:183
 msgid "Presenting in fullscreen"
-msgstr ""
+msgstr "מתבצעת הצגה במסך מלא"
 
 #: src/map/handler/Map.SlideShow.js:184
-#, fuzzy
 msgid "End Presentation"
-msgstr "מצגת"
+msgstr "סיום המצגת"
 
 #: src/map/handler/Map.SlideShow.js:239
 msgid "Already presenting"
-msgstr ""
+msgstr "כבר מוצג"
 
 #: src/map/handler/Map.SlideShow.js:240
 msgid "You are already presenting this document"
-msgstr ""
+msgstr "המסמך הזה כבר מוצג על ידיך"
 
 #: src/map/handler/Map.WOPI.js:150
 msgid "Creating new file from template..."

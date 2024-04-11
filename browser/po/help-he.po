@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-04-05 18:53+0200\n"
-"PO-Revision-Date: 2024-01-09 13:17+0000\n"
+"PO-Revision-Date: 2024-04-07 15:37+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://hosted.weblate.org/projects/collabora-online/"
 "help/he/>\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.5-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:84-5
 msgid "Keyboard Shortcuts"
@@ -44,7 +44,6 @@ msgid "Cut"
 msgstr "גזירה"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:90-68
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>X</kbd>"
 msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>X</kbd>"
 
@@ -236,9 +235,8 @@ msgstr "הסרת עיצוב ישיר"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:111-89
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:243-89
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>M</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>M"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>M</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:115-9
 #: html/cool-help.html%2Bdiv.div.div.h2:276-9
@@ -257,9 +255,8 @@ msgstr "יישור למרכז"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:248-77
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:278-77
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:343-77
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>E</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>End"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>E</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:118-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:249-38
@@ -272,9 +269,8 @@ msgstr "יישור לשמאל"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:249-75
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:279-75
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:344-75
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>L</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>L"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>L</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:119-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:250-38
