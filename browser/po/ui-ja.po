@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-04-05 18:53+0200\n"
-"PO-Revision-Date: 2024-04-12 09:01+0000\n"
-"Last-Translator: Shavazo <pleasure.7010@gmail.com>\n"
+"PO-Revision-Date: 2024-04-12 09:02+0000\n"
+"Last-Translator: Poe Mon <p.poemon.awitd@gmail.com>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/"
 "collabora-online/ui/ja/>\n"
 "Language: ja\n"
@@ -239,7 +239,7 @@ msgstr "閉じる"
 
 #: admin/admin.strings.js:65
 msgid "Update Log Levels"
-msgstr "ログレベルの更新"
+msgstr "更新ログのレベル"
 
 #: admin/admin.strings.js:66
 msgid "Version Information"
@@ -316,11 +316,11 @@ msgstr "キャンセル"
 
 #: admin/src/AdminSocketOverview.js:420
 msgid "Failed to set jwt authentication cookie over insecure connection"
-msgstr ""
+msgstr "接続が安全ではないのでJWT 認証 Cookie の設定が失敗しました"
 
 #: admin/src/AdminSocketOverview.js:424
 msgid "Failed to authenticate this session over protocol %0"
-msgstr ""
+msgstr "プロトコル %0 でこのセッションを認証できませんでした"
 
 #: admin/src/AdminSocketOverview.js:429
 msgid "Warning"
@@ -380,15 +380,15 @@ msgstr " 秒"
 
 #: js/global.js:922
 msgid "Cluster is scaling, retrying..."
-msgstr ""
+msgstr "クラスターはスケーリング中再実行中です"
 
 #: js/global.js:924
 msgid "Document is migrating to new server, retrying..."
-msgstr ""
+msgstr "ドキュメントは新しいサーバーに移行中です再実行中です"
 
 #: js/global.js:926
 msgid "Failed to get RouteToken from controller"
-msgstr ""
+msgstr "Token取得が失敗しました"
 
 #: src/control/ColorPicker.ts:269
 msgid "No color"
@@ -412,7 +412,7 @@ msgstr "ソースをコピーできません"
 
 #: src/control/Control.AlertDialog.js:67
 msgid "It seems you have copied a selection that includes external images."
-msgstr ""
+msgstr "外部の画像をコピーしたようです。"
 
 #: src/control/Control.AlertDialog.js:68
 msgid ""
@@ -420,6 +420,8 @@ msgid ""
 "possible. Please right click in the image, choose \"Copy Image\" and paste "
 "it into the document instead."
 msgstr ""
+"外部リソースのダウンロードは禁止されていますが、画像の貼り付けは可能です。 "
+"画像を右クリックし、「画像をコピー」を選択して文書に貼り付けてください。"
 
 #: src/control/Control.AlertDialog.js:72
 msgid "External data source not allowed"
@@ -427,7 +429,7 @@ msgstr "外部データソースが許可されていません"
 
 #: src/control/Control.AlertDialog.js:73
 msgid "It seems you have tried to insert external data."
-msgstr ""
+msgstr "外部のデータを挿入したようです"
 
 #: src/control/Control.AlertDialog.js:74
 msgid ""
@@ -488,7 +490,7 @@ msgstr "いつ?"
 
 #: src/control/Control.DocumentRepair.js:159
 msgid "You have not done anything to rollback yet..."
-msgstr "まだ完了してないです"
+msgstr "ロールバックはまだ完了してないです"
 
 #: src/control/Control.DocumentRepair.js:169
 msgid "Redo"
@@ -506,7 +508,7 @@ msgstr "選択中のものをダウンロード"
 msgid ""
 "If you want to share large elements outside of %productName it's necessary "
 "to first download them."
-msgstr ""
+msgstr "共有する場合はダウロードしてから共有してください"
 
 #: src/control/Control.DownloadProgress.js:70
 #: src/control/Control.NotebookbarCalc.js:212
@@ -1362,7 +1364,7 @@ msgstr "履歴"
 #: src/control/Control.NotebookbarWriter.js:295
 #: src/control/Control.UIManager.js:157
 msgid "Rename"
-msgstr ""
+msgstr "名前を変更"
 
 #: src/control/Control.NotebookbarCalc.js:593
 msgid "General"
@@ -1518,7 +1520,7 @@ msgstr "画像 (.png)"
 
 #: src/control/Control.NotebookbarDraw.js:273
 msgid "PDF Document (.pdf) - Expert"
-msgstr ""
+msgstr "PDFドキュメンド(.pdf) - Expert"
 
 #: src/control/Control.NotebookbarDraw.js:1042
 msgid "Page Layout"
