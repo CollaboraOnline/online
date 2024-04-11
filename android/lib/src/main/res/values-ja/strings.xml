@@ -10,4 +10,13 @@
     <string name="restarting">再起動しています...</string>
     <string name="exiting">終了しています...</string>
     <string name="rate_our_app_title">%1$s をご利用いただきありがとうございます！</string>
+    <string name="rate_now">今すぐ評価</string>
+    <string name="later">あとで</string>
+    <string name="use_text">テキスト形式を使用する</string>
+    <string name="use_odf">ODF フォーマットを使用する</string>
+    <string name="cant_open_the_document">ドキュメントを開くことが出来ませんでした</string>
+    <string name="file_chromeos_read_only">このファイルは読み取り専用のため保存できません。 読み書き可能に設定することで編集が可能になります。</string>
+    <string name="ask_for_convert_odf">ファイルフォーマットの確認</string>
+    <string name="convert_odf_message">このドキュメントには、現在選択されているファイル形式「テキスト」で保存できない形式やコンテンツが含まれる場合があります.</string>
+    <string name="rate_our_app_text">お気に召されましたら、Google Playで5つ星を付与してください。 あなたの素晴らしいレビューは私たちにとって最高のモチベーションとなります。</string>
 </resources>

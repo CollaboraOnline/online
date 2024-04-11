@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-04-05 18:53+0200\n"
-"PO-Revision-Date: 2021-02-11 11:50+0000\n"
-"Last-Translator: 日陰のコスモス <baffclan@yahoo.co.jp>\n"
+"PO-Revision-Date: 2024-04-11 08:39+0000\n"
+"Last-Translator: Shavazo <pleasure.7010@gmail.com>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/"
 "collabora-online/help/ja/>\n"
 "Language: ja\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.5-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:84-5
 msgid "Keyboard Shortcuts"
@@ -24,7 +24,7 @@ msgstr "標準キーボードショートカット"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:88-38
 msgid "Undo"
-msgstr "取り消し"
+msgstr "取り消す"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:88-69
 #, fuzzy
@@ -33,7 +33,7 @@ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:89-38
 msgid "Redo"
-msgstr "やり直し"
+msgstr "やり直す"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:89-69
 #, fuzzy
@@ -117,7 +117,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:96-92
 msgid "ESC"
-msgstr ""
+msgstr "ESC"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:97-38
 msgid "Focus to selected comment's menu"
@@ -1218,7 +1218,7 @@ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Enter"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:223-38
 msgid "Go to next sheet."
-msgstr ""
+msgstr "次のシートに移動。"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:223-82
 #, fuzzy
@@ -1618,7 +1618,7 @@ msgstr "コンテキストメニュー"
 #: html/cool-help.html%2Bdiv.div.p:412-9
 #: html/cool-help.html%2Bdiv.div.div.h3:655-5
 msgid "Advanced text document editor features"
-msgstr ""
+msgstr "高度なテキスト文書エディタ機能"
 
 #: html/cool-help.html%2Bdiv.div.p:413-9
 #: html/cool-help.html%2Bdiv.div.div.h3:771-5
@@ -1808,7 +1808,7 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.p:486-30
 msgid ""
 "When closing a document, it is automatically saved if it has been changed."
-msgstr ""
+msgstr "文書を閉じると、変更が自動的に保存されます。"
 
 #: html/cool-help.html%2Bdiv.div.p:491-5
 msgid ""
@@ -1818,7 +1818,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.h4:493-5
 msgid "Copy and Paste"
-msgstr ""
+msgstr "コピー&ペースト"
 
 #: html/cool-help.html%2Bdiv.div.div.p:494-5
 msgid ""
@@ -1848,7 +1848,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.h4:498-5
 msgid "Document repair"
-msgstr ""
+msgstr "文書の修復"
 
 #: html/cool-help.html%2Bdiv.div.div.p:499-5
 msgid ""
@@ -1866,7 +1866,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.img[alt]:501-29
 msgid "document repair"
-msgstr ""
+msgstr "文書の修復"
 
 #: html/cool-help.html%2Bdiv.div.div.p:502-5
 msgid ""
@@ -1878,7 +1878,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.h4:505-5
 msgid "Inactive document"
-msgstr ""
+msgstr "非アクティブな文書"
 
 #: html/cool-help.html%2Bdiv.div.div.p:506-5
 msgid ""
@@ -1890,7 +1890,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.img[alt]:507-29
 msgid "inactive document"
-msgstr ""
+msgstr "非アクティブな文書"
 
 #: html/cool-help.html%2Bdiv.div.div.p:508-5
 msgid ""
@@ -1901,7 +1901,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.h4:511-5
 msgid "Pasting"
-msgstr ""
+msgstr "ペースト"
 
 #: html/cool-help.html%2Bdiv.div.div.p:512-5
 msgid ""
@@ -1924,6 +1924,8 @@ msgid ""
 "You can also paste objects, such as images, if they are copied from the "
 "document you are working in."
 msgstr ""
+"文書内でテキストを貼り付けると、書式が保持されます。 作業中の文書からコピーさ"
+"れている場合は、画像などのオブジェクトを貼り付けすることもできます."
 
 #: html/cool-help.html%2Bdiv.div.div.p:515-5
 msgid ""
@@ -1939,7 +1941,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.h4:523-5
 msgid "Adding charts"
-msgstr ""
+msgstr "チャートの追加"
 
 #: html/cool-help.html%2Bdiv.div.div.p:524-5
 msgid ""
@@ -1951,7 +1953,8 @@ msgstr ""
 msgid ""
 "Select a table in text document, a range in a spreadsheet or a table in a "
 "presentation."
-msgstr ""
+msgstr "テキスト文書の表、スプレッドシートまたはプレゼンテーションの表の範囲を選択し"
+"ます."
 
 #: html/cool-help.html%2Bdiv.div.div.ol.li.p:528-9
 msgid ""
@@ -1961,7 +1964,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.ol.div.img[alt]:530-31
 msgid "chart"
-msgstr ""
+msgstr "チャート"
 
 #: html/cool-help.html%2Bdiv.div.div.ol.li.p:531-11
 msgid "If no table or range was selected, a prototype chart is displayed."
@@ -1989,7 +1992,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.h4:539-5
 msgid "Handling images"
-msgstr ""
+msgstr "画像処理"
 
 #: html/cool-help.html%2Bdiv.div.div.p:540-5
 msgid ""
@@ -2445,7 +2448,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.h4:731-5
 msgid "How do I save a document with another name?"
-msgstr ""
+msgstr "別の名前で文書を保存するにはどうすればよいですか?"
 
 #: html/cool-help.html%2Bdiv.div.div.ol.li.p:733-11
 msgid "Hover the mouse on the document name in the menu bar."
@@ -2677,7 +2680,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:810-5
 msgid "Using the page style"
-msgstr ""
+msgstr "ページスタイルを使用する"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:812-11
 msgid ""
@@ -2814,7 +2817,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.div.img[alt]:866-31
 msgid "import"
-msgstr ""
+msgstr "インポート"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:867-11
 msgid ""
@@ -2858,7 +2861,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:885-5
 msgid "How do I rename a sheet?"
-msgstr ""
+msgstr "シートの名前を変更するにはどうすればよいですか?"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:886-5
 msgid ""
@@ -2869,7 +2872,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:895-5
 msgid "How can I run my slide show?"
-msgstr ""
+msgstr "スライドショーの実行方法は?"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:897-11
 msgid ""
@@ -2900,7 +2903,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.div.img[alt]:908-31
 msgid "Position and Size"
-msgstr ""
+msgstr "位置とサイズ"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:909-11
 msgid "Set the properties of the element of the object."

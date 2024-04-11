@@ -60,4 +60,21 @@
     <string name="about_notice">お知らせを表示</string>
     <string name="owncloud_unauthorized">クラウドサーバーにログインできません。設定を確認してください。</string>
     <string name="owncloud_wrong_connection">クラウドサーバーに接続できません。設定を確認してください。</string>
+    <string name="pref_category_editor">エディタの設定</string>
+    <string name="file_exists_warning">この名前のファイルが既に存在するので、上書きされます.</string>
+    <string name="pref_show_hidden_files">ファイル/フォルダを隠す</string>
+    <string name="pref_filter_title">標準フィルター</string>
+    <string name="file_icon_desc">ファイルアイコン</string>
+    <string name="file_actions_icon_desc">ファイルアクション</string>
+    <string name="pref_user_name">ユーザー名</string>
+    <string name="default_document_name">名称未設定</string>
+    <string name="pref_user_name_guest">ゲストユーザー</string>
+    <string name="sort">ソート</string>
+    <string name="filter">フィルター</string>
+    <string name="share">共有</string>
+    <string name="document_locations">ドキュメントの場所</string>
+    <string name="close_document_locations">ドキュメントの場所を閉じる</string>
+    <string name="local_file_system">ローカルファイルシステム</string>
+    <string name="remove_from_list">リストから削除する</string>
+    <string name="share_via">共有法</string>
 </resources>
