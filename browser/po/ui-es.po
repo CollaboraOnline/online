@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-04-05 18:53+0200\n"
-"PO-Revision-Date: 2024-04-06 15:09+0000\n"
-"Last-Translator: gallegonovato <fran-carro@hotmail.es>\n"
+"PO-Revision-Date: 2024-04-08 22:01+0000\n"
+"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/es/>\n"
 "Language: es\n"
@@ -1133,12 +1133,12 @@ msgstr "Entre…"
 #: src/control/Control.Menubar.js:822
 #: src/control/jsdialog/Definitions.Menu.ts:319
 msgid "Duplicate..."
-msgstr "Duplicado..."
+msgstr "Duplicado…"
 
 #: src/control/Control.Menubar.js:823
 #: src/control/jsdialog/Definitions.Menu.ts:323
 msgid "Contains text..."
-msgstr "Contiene un texto..."
+msgstr "Contiene el texto…"
 
 #: src/control/Control.Menubar.js:825 src/control/Control.Menubar.js:835
 #: src/control/jsdialog/Definitions.Menu.ts:327
@@ -1195,7 +1195,7 @@ msgstr "Buscar"
 
 #: src/control/Control.Menubar.js:996
 msgid "Page Setup"
-msgstr "Configuración de página"
+msgstr "Configurar página"
 
 #: src/control/Control.Menubar.js:1138
 msgid "Define print area"
@@ -1779,11 +1779,11 @@ msgstr "Siguiendo al editor"
 
 #: src/control/Control.UserList.ts:58
 msgid "Stop following"
-msgstr "dejar de seguir"
+msgstr "Dejar de seguir"
 
 #: src/control/Control.UserList.ts:59
 msgid "Avatar for %user"
-msgstr "Avatar para %user"
+msgstr "Avatar de %user"
 
 #: src/control/Control.UserList.ts:79
 msgid "%n users"
