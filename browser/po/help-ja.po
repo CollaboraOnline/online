@@ -4,7 +4,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-04-05 18:53+0200\n"
 "PO-Revision-Date: 2024-04-11 08:58+0000\n"
-"Last-Translator: Poe Mon <p.poemon.awitd@gmail.com>\n"
+"Last-Translator: Shavazo <pleasure.7010@gmail.com>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/"
 "collabora-online/help/ja/>\n"
 "Language: ja\n"
@@ -624,7 +624,7 @@ msgstr "行頭に移動"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:306-88
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:371-88
 msgid "Home"
-msgstr "Home"
+msgstr "ホーム"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:150-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:307-38
