@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-04-05 18:53+0200\n"
-"PO-Revision-Date: 2024-04-11 08:39+0000\n"
-"Last-Translator: Poe Mon <p.poemon.awitd@gmail.com>\n"
+"PO-Revision-Date: 2024-04-11 08:58+0000\n"
+"Last-Translator: Shavazo <pleasure.7010@gmail.com>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/"
 "collabora-online/ui/ja/>\n"
 "Language: ja\n"
@@ -424,7 +424,7 @@ msgstr ""
 
 #: src/control/Control.AlertDialog.js:72
 msgid "External data source not allowed"
-msgstr ""
+msgstr "外部データソースが許可されていません"
 
 #: src/control/Control.AlertDialog.js:73
 msgid "It seems you have tried to insert external data."
@@ -434,11 +434,12 @@ msgstr ""
 msgid ""
 "Selected external data source is forbidden. Please contact the system "
 "administrator."
-msgstr ""
+msgstr "外部データソースの選択は禁止されています。 "
+"システム管理者にお問い合わせください."
 
 #: src/control/Control.AlertDialog.js:86
 msgid "Don't show this again"
-msgstr ""
+msgstr "今後表示しない"
 
 #: src/control/Control.AlertDialog.js:105
 msgid "The server encountered a %0 error while parsing the %1 command."
@@ -446,7 +447,7 @@ msgstr "サーバーでの %1 コマンドの解析中に %0 エラーが発生�
 
 #: src/control/Control.Command.js:89
 msgid "Unlock"
-msgstr ""
+msgstr "ロックの解除"
 
 #: src/control/Control.ContextMenu.js:196 src/docdispatcher.ts:363
 msgid "Delete"
@@ -458,7 +459,7 @@ msgstr "形式を選択して貼り付け"
 
 #: src/control/Control.DocumentNameInput.js:109
 msgid "Path"
-msgstr ""
+msgstr "パス"
 
 #: src/control/Control.DocumentRepair.js:27
 #: src/control/Control.DocumentRepair.js:28
@@ -476,15 +477,15 @@ msgstr "タイプ"
 
 #: src/control/Control.DocumentRepair.js:140
 msgid "What?"
-msgstr ""
+msgstr "なんだと？"
 
 #: src/control/Control.DocumentRepair.js:140
 msgid "Who?"
-msgstr ""
+msgstr "誰?"
 
 #: src/control/Control.DocumentRepair.js:140
 msgid "When?"
-msgstr ""
+msgstr "いつ?"
 
 #: src/control/Control.DocumentRepair.js:159
 msgid "You have not done anything to rollback yet..."
@@ -500,7 +501,7 @@ msgstr "取り消す"
 
 #: src/control/Control.DownloadProgress.js:52
 msgid "Download Selection"
-msgstr ""
+msgstr "選択中のものをダウンロード"
 
 #: src/control/Control.DownloadProgress.js:57
 msgid ""
@@ -513,21 +514,21 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:278
 #: src/control/Control.NotebookbarWriter.js:252
 msgid "Download"
-msgstr ""
+msgstr "ダウンロード"
 
 #: src/control/Control.DownloadProgress.js:89
 msgid "Downloading clipboard content"
-msgstr ""
+msgstr "クリップボードコンテンツをダウンロード"
 
 #: src/control/Control.DownloadProgress.js:96
 #: src/control/Control.DownloadProgress.js:121
 #: src/control/Control.PartsPreview.js:280
 msgid "Copy"
-msgstr ""
+msgstr "コピー"
 
 #: src/control/Control.DownloadProgress.js:119
 msgid "Download completed and ready to be copied to clipboard."
-msgstr ""
+msgstr "ダウンロードが完了し、クリップボードにコピーする準備が整いました."
 
 #: src/control/Control.DownloadProgress.js:120
 msgid ""
@@ -536,16 +537,16 @@ msgstr ""
 
 #: src/control/Control.DownloadProgress.js:273
 msgid "Content copied to clipboard"
-msgstr ""
+msgstr "クリップボードにコピーされたコンテンツ"
 
 #: src/control/Control.DownloadProgress.js:315
 msgid "Download failed"
-msgstr ""
+msgstr "ダウンロードに失敗しました"
 
 #: src/control/Control.FormulaBarJSDialog.js:102
 #: src/control/Control.FormulaBarJSDialog.js:162
 msgid "cell address"
-msgstr ""
+msgstr "セルの場所"
 
 #: src/control/Control.FormulaBarJSDialog.js:112
 #: src/control/Control.FormulaBarJSDialog.js:171
@@ -603,7 +604,7 @@ msgstr ""
 
 #: src/control/Control.JSDialogBuilder.js:1504
 msgid "From"
-msgstr ""
+msgstr "から"
 
 #: src/control/Control.JSDialogBuilder.js:1507
 msgid "To"
@@ -611,7 +612,7 @@ msgstr ""
 
 #: src/control/Control.JSDialogBuilder.js:1510
 msgid "Color"
-msgstr ""
+msgstr "色"
 
 #: src/control/Control.JSDialogBuilder.js:1628
 msgid "Select range"
@@ -632,7 +633,6 @@ msgid "Style"
 msgstr "スタイル"
 
 #: src/control/Control.JSDialogBuilder.js:1950
-#, fuzzy
 msgid "reply"
 msgstr "返信"
 
@@ -649,7 +649,7 @@ msgstr "コメント"
 
 #: src/control/Control.JSDialogBuilder.js:2028
 msgid "Insert Comment"
-msgstr ""
+msgstr "コメントの挿入"
 
 #: src/control/Control.JSDialogBuilder.js:2878
 #: src/control/Control.Menubar.js:845
@@ -674,11 +674,11 @@ msgstr "なし（スペルチェックを行わない）"
 
 #: src/control/Control.LanguageDialog.js:82
 msgid "Select language"
-msgstr ""
+msgstr "言語を選択"
 
 #: src/control/Control.LanguageDialog.js:103
 msgid "Language"
-msgstr ""
+msgstr "言語"
 
 #: src/control/Control.Menubar.js:76 src/control/Control.Menubar.js:91
 #: src/control/Control.Menubar.js:960
@@ -746,9 +746,8 @@ msgid "EPUB (.epub)"
 msgstr "EPUB (.epub)"
 
 #: src/control/Control.Menubar.js:85 src/control/Control.UIManager.js:157
-#, fuzzy
 msgid "Rename Document"
-msgstr "ドキュメントの修復"
+msgstr "ドキュメントの名前を変更"
 
 #: src/control/Control.Menubar.js:86 src/control/Control.Menubar.js:398
 #: src/control/Control.Menubar.js:548 src/control/Control.Menubar.js:678
@@ -830,7 +829,7 @@ msgstr "表示倍率をリセット"
 #: src/control/Control.NotebookbarImpress.js:436
 #: src/control/Control.NotebookbarWriter.js:1385
 msgid "Toggle UI Mode"
-msgstr ""
+msgstr "UIモードを切り替える"
 
 #: src/control/Control.Menubar.js:142 src/control/Control.Menubar.js:437
 #: src/control/Control.NotebookbarWriter.js:1399
@@ -853,7 +852,7 @@ msgstr "ステータスバーの表示"
 #: src/control/Control.Menubar.js:144 src/control/Control.Menubar.js:439
 #: src/control/Control.Menubar.js:589 src/control/Control.Menubar.js:721
 msgid "Hide Menu Bar"
-msgstr ""
+msgstr "メニューバーを隠す"
 
 #: src/control/Control.Menubar.js:145 src/control/Control.Menubar.js:440
 #: src/control/Control.Menubar.js:585 src/control/Control.Menubar.js:722
@@ -864,14 +863,14 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:481
 #: src/control/Control.NotebookbarWriter.js:1430
 msgid "Dark Mode"
-msgstr ""
+msgstr "ダークモード"
 
 #: src/control/Control.Menubar.js:153 src/control/Control.Menubar.js:451
 #: src/control/Control.Menubar.js:592 src/control/Control.Menubar.js:732
 #: src/control/Control.Menubar.js:1203 src/control/Control.Menubar.js:1253
 #: src/control/Control.Menubar.js:1267 src/control/Control.Menubar.js:1290
 msgid "Local Image..."
-msgstr ""
+msgstr "ローカルイメージ..."
 
 #: src/control/Control.Menubar.js:177 src/control/Control.Menubar.js:179
 #: src/control/Control.Menubar.js:1220 src/control/Control.Menubar.js:1222
@@ -885,7 +884,7 @@ msgstr "すべて"
 #: src/control/Control.NotebookbarImpress.js:1193
 #: src/control/Control.NotebookbarWriter.js:1036
 msgid "Smart Picker"
-msgstr ""
+msgstr "スマートピッカー"
 
 #: src/control/Control.Menubar.js:229
 msgid "Text orientation"
@@ -900,12 +899,12 @@ msgstr "参照(~S)"
 #: src/control/Control.Menubar.js:294
 #: src/control/Control.NotebookbarWriter.js:1790
 msgid "Update Index"
-msgstr ""
+msgstr "インデックスの更新"
 
 #: src/control/Control.Menubar.js:303
 #: src/control/Control.NotebookbarWriter.js:1886
 msgid "Add Citation"
-msgstr ""
+msgstr "引用を追加"
 
 #: src/control/Control.Menubar.js:304
 #: src/control/Control.NotebookbarWriter.js:1898
@@ -1048,7 +1047,7 @@ msgstr "全画面プレゼンテーション"
 
 #: src/control/Control.Menubar.js:517
 msgid "Present current slide"
-msgstr ""
+msgstr "現在のスライドから開始"
 
 #: src/control/Control.Menubar.js:518
 msgid "Present in new window"
@@ -1089,12 +1088,12 @@ msgstr "CSV ファイル (.csv)"
 #: src/control/Control.Menubar.js:690
 #: src/control/jsdialog/Definitions.Menu.ts:125
 msgid "Active sheet"
-msgstr ""
+msgstr "アクティブシート"
 
 #: src/control/Control.Menubar.js:691 src/control/Control.TopToolbar.js:125
 #: src/control/jsdialog/Definitions.Menu.ts:126
 msgid "All Sheets"
-msgstr ""
+msgstr "すべてのシート"
 
 #: src/control/Control.Menubar.js:817
 #: src/control/jsdialog/Definitions.Menu.ts:300
@@ -1129,7 +1128,7 @@ msgstr ""
 #: src/control/Control.Menubar.js:823
 #: src/control/jsdialog/Definitions.Menu.ts:323
 msgid "Contains text..."
-msgstr ""
+msgstr "テキストが含まれています..."
 
 #: src/control/Control.Menubar.js:825 src/control/Control.Menubar.js:835
 #: src/control/jsdialog/Definitions.Menu.ts:327
@@ -1140,7 +1139,7 @@ msgstr ""
 #: src/control/Control.Menubar.js:827
 #: src/control/jsdialog/Definitions.Menu.ts:331
 msgid "Top/Bottom Rules..."
-msgstr ""
+msgstr "トップ/ボトムルール..."
 
 #: src/control/Control.Menubar.js:828
 #: src/control/jsdialog/Definitions.Menu.ts:334
@@ -1186,15 +1185,15 @@ msgstr "検索"
 
 #: src/control/Control.Menubar.js:996
 msgid "Page Setup"
-msgstr ""
+msgstr "ページ設定"
 
 #: src/control/Control.Menubar.js:1138
 msgid "Define print area"
-msgstr ""
+msgstr "印刷範囲の定義"
 
 #: src/control/Control.Menubar.js:1139
 msgid "Remove print area"
-msgstr ""
+msgstr "印刷範囲の削除"
 
 #: src/control/Control.Menubar.js:1413 src/control/Control.StatusBar.js:522
 msgid "Reset to Default Language"
@@ -1204,19 +1203,20 @@ msgstr "既定の言語に戻す"
 #: src/control/Control.Menubar.js:1446 src/control/Control.Toolbar.js:132
 #: src/control/Control.Toolbar.js:179
 msgid "More..."
-msgstr ""
+msgstr "もっと詳しく..."
 
 #: src/control/Control.Menubar.js:1727
 msgid "Use Compact view"
-msgstr ""
+msgstr "コンパクトビューを使用"
 
 #: src/control/Control.Menubar.js:1729
 msgid "Use Tabbed view"
-msgstr ""
+msgstr "タブレットビューを使用"
 
 #: src/control/Control.Menubar.js:1795 src/control/Control.Menubar.js:1808
+#, fuzzy
 msgid "Read-only mode"
-msgstr ""
+msgstr "読み取り専用モード"
 
 #: src/control/Control.Menubar.js:1829
 msgid "Insert Shape"
@@ -1224,7 +1224,7 @@ msgstr "シェイプの挿入"
 
 #: src/control/Control.Menubar.js:2049
 msgid "file type icon"
-msgstr ""
+msgstr "ファイルの種類 アイコン"
 
 #: src/control/Control.MobileBottomBar.js:49
 #: src/control/Control.MobileBottomBar.js:150
@@ -1235,7 +1235,7 @@ msgstr "検索バーの表示"
 #: src/control/Control.MobileBottomBar.js:58
 #: src/control/Control.TopToolbar.js:155
 msgid "Borders"
-msgstr ""
+msgstr "罫線"
 
 #: src/control/Control.MobileWizardBuilder.js:522
 msgid "Background Color"
@@ -1266,46 +1266,40 @@ msgstr "CSV ファイル (.csv)"
 #: src/control/Control.NotebookbarDraw.js:62
 #: src/control/Control.NotebookbarImpress.js:77
 #: src/control/Control.NotebookbarWriter.js:36
-#, fuzzy
 msgid "File"
-msgstr "ファイル(~F)"
+msgstr "ファイル"
 
 #: src/control/Control.NotebookbarCalc.js:29
 #: src/control/Control.NotebookbarDraw.js:68
 #: src/control/Control.NotebookbarImpress.js:83
 #: src/control/Control.NotebookbarWriter.js:42
-#, fuzzy
 msgid "Home"
-msgstr "ホーム(~H)"
+msgstr "ホーム"
 
 #: src/control/Control.NotebookbarCalc.js:36
 #: src/control/Control.NotebookbarDraw.js:75
 #: src/control/Control.NotebookbarImpress.js:90
 #: src/control/Control.NotebookbarWriter.js:49
-#, fuzzy
 msgid "Insert"
-msgstr "挿入(~I)"
+msgstr "挿入"
 
 #: src/control/Control.NotebookbarCalc.js:42
 #: src/control/Control.NotebookbarDraw.js:81
 #: src/control/Control.NotebookbarImpress.js:96
 #: src/control/Control.NotebookbarWriter.js:55
-#, fuzzy
 msgid "Layout"
-msgstr "レイアウト(~L)"
+msgstr "レイアウト"
 
 #: src/control/Control.NotebookbarCalc.js:48
-#, fuzzy
 msgid "Data"
-msgstr "データ(~D)"
+msgstr "データ"
 
 #: src/control/Control.NotebookbarCalc.js:54
 #: src/control/Control.NotebookbarDraw.js:87
 #: src/control/Control.NotebookbarImpress.js:102
 #: src/control/Control.NotebookbarWriter.js:67
-#, fuzzy
 msgid "Review"
-msgstr "検査(~R)"
+msgstr "検査"
 
 #: src/control/Control.NotebookbarCalc.js:60
 #: src/control/Control.NotebookbarDraw.js:93
@@ -1326,22 +1320,21 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:135
 #: src/control/Control.NotebookbarWriter.js:99
 msgid "View"
-msgstr ""
+msgstr "表示"
 
 #: src/control/Control.NotebookbarCalc.js:79
 #: src/control/Control.NotebookbarDraw.js:119
 #: src/control/Control.NotebookbarImpress.js:141
 #: src/control/Control.NotebookbarWriter.js:105
-#, fuzzy
 msgid "Help"
-msgstr "ヘルプ(~H)"
+msgstr "ヘルプ"
 
 #: src/control/Control.NotebookbarCalc.js:127
 #: src/control/Control.NotebookbarImpress.js:192
 #: src/control/Control.NotebookbarWriter.js:169
 #: src/control/Control.NotebookbarWriter.js:252
 msgid "Save As"
-msgstr ""
+msgstr "名前を付けて保存"
 
 #: src/control/Control.NotebookbarCalc.js:146
 #: src/control/Control.NotebookbarDraw.js:180
@@ -1356,7 +1349,7 @@ msgstr "形式を指定してエクスポート"
 #: src/control/Control.NotebookbarImpress.js:226
 #: src/control/Control.NotebookbarWriter.js:202
 msgid "Share"
-msgstr ""
+msgstr "共有"
 
 #: src/control/Control.NotebookbarCalc.js:171
 #: src/control/Control.NotebookbarDraw.js:206
@@ -1383,22 +1376,21 @@ msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:595
 msgid "Percent"
-msgstr ""
+msgstr "パーセント"
 
 #: src/control/Control.NotebookbarCalc.js:596
 msgid "Currency"
-msgstr ""
+msgstr "通貨"
 
 #: src/control/Control.NotebookbarCalc.js:597
 #: src/control/Control.NotebookbarWriter.js:1300
 #: src/control/Control.Zotero.js:1085 src/control/Control.Zotero.js:1521
-#, fuzzy
 msgid "Date"
-msgstr "データ(~D)"
+msgstr "日付"
 
 #: src/control/Control.NotebookbarCalc.js:598
 msgid "Time"
-msgstr ""
+msgstr "時間"
 
 #: src/control/Control.NotebookbarCalc.js:599
 msgid "Scientific"
@@ -1696,11 +1688,11 @@ msgstr "シートを後ろに挿入"
 
 #: src/control/Control.Tabs.js:89
 msgid "Move Sheet Left"
-msgstr ""
+msgstr "シートを左に移動"
 
 #: src/control/Control.Tabs.js:94
 msgid "Move Sheet Right"
-msgstr ""
+msgstr "シートを右に移動"
 
 #: src/control/Control.Tabs.js:110
 msgid "Copy Sheet..."
