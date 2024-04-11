@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-04-05 18:53+0200\n"
-"PO-Revision-Date: 2024-04-11 08:58+0000\n"
-"Last-Translator: Poe Mon <p.poemon.awitd@gmail.com>\n"
+"PO-Revision-Date: 2024-04-12 09:01+0000\n"
+"Last-Translator: Shavazo <pleasure.7010@gmail.com>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/"
 "collabora-online/ui/ja/>\n"
 "Language: ja\n"
@@ -171,7 +171,7 @@ msgstr "CPU統計時間(ms)"
 
 #: admin/admin.strings.js:50 admin/src/AdminSocketOverview.js:100
 msgid "Kill session."
-msgstr "セッションを終了"
+msgstr "セッションを終了。"
 
 #: admin/admin.strings.js:51
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
@@ -891,9 +891,8 @@ msgstr "文字の方向"
 
 #: src/control/Control.Menubar.js:291
 #: src/control/Control.NotebookbarWriter.js:61
-#, fuzzy
 msgid "References"
-msgstr "参照(~S)"
+msgstr "参照"
 
 #: src/control/Control.Menubar.js:294
 #: src/control/Control.NotebookbarWriter.js:1790
@@ -1250,7 +1249,7 @@ msgstr ""
 
 #: src/control/Control.NotebookbarBuilder.js:231
 msgid "Tap to expand"
-msgstr ""
+msgstr "タップで表示"
 
 #: src/control/Control.NotebookbarBuilder.js:232
 #: src/control/Control.NotebookbarBuilder.js:276
@@ -1704,7 +1703,7 @@ msgstr "選択したシート %sheet% を削除しますか？"
 
 #: src/control/Control.Tabs.js:398
 msgid "Rename sheet"
-msgstr ""
+msgstr "シート名の変更"
 
 #: src/control/Control.Tabs.js:398
 msgid "Enter new sheet name"
@@ -1719,11 +1718,11 @@ msgstr "複数のユーザーによる元に戻す・やり直しの処理が衝
 
 #: src/control/Control.TopToolbar.js:124
 msgid "Active Sheet"
-msgstr ""
+msgstr "アクティブなシート"
 
 #: src/control/Control.TopToolbar.js:136
 msgid "Default Style"
-msgstr ""
+msgstr "標準スタイル"
 
 #: src/control/Control.TopToolbar.js:196
 msgid "Insert table"
@@ -1739,7 +1738,7 @@ msgstr "コネクターの挿入"
 
 #: src/control/Control.TopToolbar.js:215 src/control/Control.UIManager.js:766
 msgid "Hide Menu"
-msgstr ""
+msgstr "メニューを隠す"
 
 #: src/control/Control.UIManager.js:157
 msgid "Enter new name"
@@ -1747,7 +1746,7 @@ msgstr ""
 
 #: src/control/Control.UIManager.js:789
 msgid "Show Menu"
-msgstr ""
+msgstr "メニューを表示"
 
 #: src/control/Control.UIManager.js:1122
 msgid "Dismiss"
@@ -1807,7 +1806,7 @@ msgstr ""
 
 #: src/control/Control.Zotero.js:190
 msgid "Zotero Warning"
-msgstr ""
+msgstr "Zotero 警告"
 
 #: src/control/Control.Zotero.js:191
 msgid ""
@@ -1821,7 +1820,7 @@ msgstr "読み込み中..."
 
 #: src/control/Control.Zotero.js:265
 msgid "Language:"
-msgstr ""
+msgstr "言語:"
 
 #: src/control/Control.Zotero.js:280
 msgid "Store as:"
@@ -2033,7 +2032,7 @@ msgstr "保存中..."
 
 #: src/control/Toolbar.js:297
 msgid "Renaming..."
-msgstr ""
+msgstr "リネーム..."
 
 #: src/control/Toolbar.js:788
 msgid "This version of %productName is powered by"
@@ -2053,7 +2052,7 @@ msgstr "ハイパーリンクの挿入"
 
 #: src/control/Toolbar.js:921
 msgid "Link"
-msgstr ""
+msgstr "リンク"
 
 #: src/control/jsdialog/Definitions.Menu.ts:38
 msgid "Min"
@@ -2065,27 +2064,27 @@ msgstr ""
 
 #: src/control/jsdialog/Definitions.Menu.ts:273
 msgid "Insert Local Image"
-msgstr ""
+msgstr "ローカル画像を挿入"
 
 #: src/control/jsdialog/Definitions.Menu.ts:278
 msgid "Very Tight"
-msgstr ""
+msgstr "とても狭い"
 
 #: src/control/jsdialog/Definitions.Menu.ts:279
 msgid "Tight"
-msgstr ""
+msgstr "狭い"
 
 #: src/control/jsdialog/Definitions.Menu.ts:280
 msgid "Normal"
-msgstr ""
+msgstr "普通"
 
 #: src/control/jsdialog/Definitions.Menu.ts:281
 msgid "Loose"
-msgstr ""
+msgstr "広い"
 
 #: src/control/jsdialog/Definitions.Menu.ts:282
 msgid "Very Loose"
-msgstr ""
+msgstr "とても広い"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:149
 msgid "No fill"
@@ -2093,11 +2092,11 @@ msgstr ""
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:149
 msgid "Automatic"
-msgstr ""
+msgstr "自動"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:330
 msgid "Recent"
-msgstr ""
+msgstr "最近"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:34
 #: src/control/jsdialog/Widget.HTMLContent.ts:44
@@ -2192,7 +2191,7 @@ msgstr "サポートされていないサーバーバージョンです。"
 
 #: src/core/Socket.js:647
 msgid "LOKit version:"
-msgstr ""
+msgstr "LOKit バージョン:"
 
 #: src/core/Socket.js:754
 msgid "Document is getting migrated"
@@ -2317,9 +2316,8 @@ msgid ""
 msgstr "ええ、困りましたね、ドキュメントに接続できませんでした。再度試みてください。"
 
 #: src/core/Socket.js:1570
-#, fuzzy
 msgid "Reconnecting..."
-msgstr "接続中..."
+msgstr "再接続中..."
 
 #: src/core/Socket.js:1580
 msgid "The server has been disconnected."
@@ -2577,7 +2575,7 @@ msgstr "コメントはありません"
 
 #: src/layer/tile/CommentListSection.ts:139
 msgid "A comment is being edited"
-msgstr ""
+msgstr "コメントは編集されています"
 
 #: src/layer/tile/CommentListSection.ts:140
 msgid "Please save or discard the comment currently being edited."
@@ -2687,6 +2685,9 @@ msgid ""
 "press</b> <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to "
 "see more options</p><p>Close popup to ignore paste special</p>"
 msgstr ""
+"<p>お使いのブラウザはクリップボードへの</p><p><b>アクセスが制限されています</"
+"b><kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd>V</kbd>よりオ"
+"プションを表示</p><p>を無視するポップアップ[X204X204X]"
 
 #: src/map/Clipboard.js:1146
 msgid "Paste from this document"
@@ -2765,7 +2766,7 @@ msgstr ""
 
 #: src/map/handler/Map.SlideShow.js:240
 msgid "You are already presenting this document"
-msgstr ""
+msgstr "すでに文書は開かれています"
 
 #: src/map/handler/Map.WOPI.js:150
 msgid "Creating new file from template..."
@@ -2818,11 +2819,11 @@ msgstr ""
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:48-7
 msgid "Get Involved"
-msgstr ""
+msgstr "参加する"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:49-7
 msgid "https://collaboraonline.github.io/"
-msgstr ""
+msgstr "https://collaboraonline.github.io/"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:50-7
 msgid ""
