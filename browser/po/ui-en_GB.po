@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-04-05 18:53+0200\n"
-"PO-Revision-Date: 2024-03-09 18:01+0000\n"
+"PO-Revision-Date: 2024-04-10 18:01+0000\n"
 "Last-Translator: Rob Pearson <rob.dunedin@gmail.com>\n"
 "Language-Team: English (United Kingdom) <https://hosted.weblate.org/projects/"
 "collabora-online/ui/en_GB/>\n"
-"Language: \n"
+"Language: en_GB\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1126,12 +1126,12 @@ msgstr "Between..."
 #: src/control/Control.Menubar.js:822
 #: src/control/jsdialog/Definitions.Menu.ts:319
 msgid "Duplicate..."
-msgstr ""
+msgstr "Duplicate..."
 
 #: src/control/Control.Menubar.js:823
 #: src/control/jsdialog/Definitions.Menu.ts:323
 msgid "Contains text..."
-msgstr ""
+msgstr "Contains text..."
 
 #: src/control/Control.Menubar.js:825 src/control/Control.Menubar.js:835
 #: src/control/jsdialog/Definitions.Menu.ts:327
@@ -1142,37 +1142,37 @@ msgstr "More conditions..."
 #: src/control/Control.Menubar.js:827
 #: src/control/jsdialog/Definitions.Menu.ts:331
 msgid "Top/Bottom Rules..."
-msgstr ""
+msgstr "Top/Bottom Rules..."
 
 #: src/control/Control.Menubar.js:828
 #: src/control/jsdialog/Definitions.Menu.ts:334
 msgid "Top N elements..."
-msgstr ""
+msgstr "Top N elements..."
 
 #: src/control/Control.Menubar.js:829
 #: src/control/jsdialog/Definitions.Menu.ts:338
 msgid "Top N percent..."
-msgstr ""
+msgstr "Top N percent..."
 
 #: src/control/Control.Menubar.js:830
 #: src/control/jsdialog/Definitions.Menu.ts:342
 msgid "Bottom N elements..."
-msgstr ""
+msgstr "Bottom N elements..."
 
 #: src/control/Control.Menubar.js:831
 #: src/control/jsdialog/Definitions.Menu.ts:346
 msgid "Bottom N percent..."
-msgstr ""
+msgstr "Bottom N percent..."
 
 #: src/control/Control.Menubar.js:832
 #: src/control/jsdialog/Definitions.Menu.ts:350
 msgid "Above Average..."
-msgstr ""
+msgstr "Above Average..."
 
 #: src/control/Control.Menubar.js:833
 #: src/control/jsdialog/Definitions.Menu.ts:354
 msgid "Below Average..."
-msgstr ""
+msgstr "Below Average..."
 
 #: src/control/Control.Menubar.js:944 src/control/Control.Menubar.js:1009
 #: src/control/Control.Menubar.js:1073 src/control/Control.Menubar.js:1127
@@ -1771,7 +1771,7 @@ msgstr "Following the editor"
 
 #: src/control/Control.UserList.ts:58
 msgid "Stop following"
-msgstr ""
+msgstr "Stop following"
 
 #: src/control/Control.UserList.ts:59
 msgid "Avatar for %user"
@@ -2288,7 +2288,7 @@ msgstr "The document is switching to Offline mode and will reload shortly"
 
 #: src/core/Socket.js:1227
 msgid "Server is shutting down"
-msgstr ""
+msgstr "Server is shutting down"
 
 #: src/core/Socket.js:1259
 msgid "Exported to storage"
