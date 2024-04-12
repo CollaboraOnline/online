@@ -41,6 +41,7 @@ public:
     UnitQuarantineConflict()
         : Base("UnitQuarantineConflict", OriginalDocContent)
         , _unloadingModifiedDocDetected(true)
+        , _putFailed(false)
     {
     }
 
