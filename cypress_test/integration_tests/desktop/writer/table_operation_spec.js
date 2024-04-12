@@ -23,10 +23,12 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Table operations', functio
 
 		helper.typeIntoDocument('{ctrl}{a}');
 
+		helper.copy();
 		cy.cGet('#copy-paste-container table').should('exist');
 	}
 
 	it('Insert row before.', function() {
+		helper.setDummyClipboardForCopy();
 		helper.clickOnIdle('#insert .unoInsertRowsBefore');
 		cy.cGet('.leaflet-marker-icon.table-row-resize-marker').should('have.length', 4);
 
@@ -43,6 +45,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Table operations', functio
 	});
 
 	it('Insert row after.', function() {
+		helper.setDummyClipboardForCopy();
 		helper.clickOnIdle('#insert .unoInsertRowsAfter');
 		cy.cGet('.leaflet-marker-icon.table-row-resize-marker').should('have.length', 4);
 
@@ -59,6 +62,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Table operations', functio
 	});
 
 	it('Insert column before.', function() {
+		helper.setDummyClipboardForCopy();
 
 		helper.clickOnIdle('#insert .unoInsertColumnsBefore');
 
@@ -78,6 +82,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Table operations', functio
 	});
 
 	it('Insert column after.', function() {
+		helper.setDummyClipboardForCopy();
 		helper.clickOnIdle('#insert .unoInsertColumnsAfter');
 
 		cy.cGet('.leaflet-marker-icon.table-column-resize-marker').should('have.length', 4);
@@ -95,6 +100,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Table operations', functio
 	});
 
 	it('Delete row.', function() {
+		helper.setDummyClipboardForCopy();
 		helper.clickOnIdle('#delete .unoDeleteRows');
 
 		cy.cGet('.leaflet-marker-icon.table-row-resize-marker').should('have.length', 2);
@@ -129,6 +135,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Table operations', functio
 	});
 
 	it('Merge cells.', function() {
+		helper.setDummyClipboardForCopy();
 		// Select 2x2 part of the table.
 		helper.moveCursor('down', 'shift');
 		helper.moveCursor('right', 'shift');
@@ -177,6 +184,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Table operations', functio
 	});
 
 	it('Set minimal row height.', function() {
+		helper.setDummyClipboardForCopy();
 
 		// Select full table (3x2)
 		helper.moveCursor('down', 'shift');
@@ -194,6 +202,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Table operations', functio
 	});
 
 	it('Set optimal row height.', function() {
+		helper.setDummyClipboardForCopy();
 		// Select full table (3x2)
 		helper.moveCursor('down', 'shift');
 		helper.moveCursor('down', 'shift');
@@ -217,6 +226,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Table operations', functio
 	});
 
 	it('Distribute rows.', function() {
+		helper.setDummyClipboardForCopy();
 		// Select full table (3x2)
 		helper.moveCursor('down', 'shift');
 		helper.moveCursor('down', 'shift');
@@ -241,6 +251,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Table operations', functio
 	});
 
 	it('Set minimal column width.', function() {
+		helper.setDummyClipboardForCopy();
 		// Select full table (3x2)
 		helper.moveCursor('down', 'shift');
 		helper.moveCursor('down', 'shift');
@@ -255,6 +266,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Table operations', functio
 	});
 
 	it('Set optimal column width.', function() {
+		helper.setDummyClipboardForCopy();
 		// Select full table (3x2)
 		helper.moveCursor('down', 'shift');
 		helper.moveCursor('down', 'shift');
@@ -270,6 +282,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Table operations', functio
 	});
 
 	it('Distribute columns.', function() {
+		helper.setDummyClipboardForCopy();
 		// Select full table (3x2)
 		helper.moveCursor('down', 'shift');
 		helper.moveCursor('down', 'shift');
@@ -284,9 +297,11 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Table operations', functio
 	});
 
 	it('Split Cells', function() {
+		helper.setDummyClipboardForCopy();
 		helper.typeIntoDocument('{downarrow}');
 
 		helper.typeIntoDocument('{ctrl}{a}');
+		helper.copy();
 
 		helper.waitUntilIdle('#copy-paste-container');
 
@@ -300,6 +315,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Table operations', functio
 		cy.cGet('#ok.ui-pushbutton.jsdialog').click();
 
 		helper.typeIntoDocument('{ctrl}{a}');
+		helper.copy();
 
 		helper.waitUntilIdle('#copy-paste-container');
 
