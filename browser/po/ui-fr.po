@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-05 18:53+0200\n"
+"POT-Creation-Date: 2024-04-12 19:29+0200\n"
 "PO-Revision-Date: 2024-03-22 23:12+0000\n"
 "Last-Translator: Méven Car <meven.car@collabora.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/collabora-online/"
@@ -220,7 +220,7 @@ msgid "Channel Filter:"
 msgstr "Filtre de canal :"
 
 #: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:477
-#: src/control/Control.StatusBar.js:218 src/control/Control.StatusBar.js:221
+#: src/control/Control.StatusBar.js:193 src/control/Control.StatusBar.js:196
 msgid "None"
 msgstr "Aucun(e)"
 
@@ -287,9 +287,9 @@ msgstr "Le serveur a été arrêté, veuillez recharger la page."
 #: src/control/Toolbar.js:942 src/core/Socket.js:613 src/core/Socket.js:1041
 #: src/core/Socket.js:1111 src/core/Socket.js:1259 src/core/Socket.js:1263
 #: src/docdispatcher.ts:366 src/main.js:79 src/main.js:82 src/main.js:134
-#: src/map/Clipboard.js:1107 src/map/handler/Map.Feedback.js:83
-#: src/map/handler/Map.SlideShow.js:51 src/map/handler/Map.SlideShow.js:155
-#: src/map/handler/Map.SlideShow.js:241 src/map/handler/Map.WOPI.js:601
+#: src/map/Clipboard.js:1102 src/map/handler/Map.Feedback.js:83
+#: src/map/handler/Map.SlideShow.js:51 src/map/handler/Map.SlideShow.js:160
+#: src/map/handler/Map.SlideShow.js:295 src/map/handler/Map.WOPI.js:601
 msgid "OK"
 msgstr "OK"
 
@@ -310,9 +310,9 @@ msgstr "Voulez-vous vraiment terminer cette session ?"
 #: src/control/Control.DocumentRepair.js:71
 #: src/control/Control.DownloadProgress.js:90
 #: src/control/Control.LanguageDialog.js:113
-#: src/control/Control.MobileTopBar.js:75
-#: src/control/Control.UIManager.js:1294 src/control/Control.UIManager.js:1361
-#: src/control/Control.UIManager.js:1496 src/control/Control.UIManager.js:1638
+#: src/control/Control.MobileTopBar.js:54
+#: src/control/Control.UIManager.js:1288 src/control/Control.UIManager.js:1355
+#: src/control/Control.UIManager.js:1490 src/control/Control.UIManager.js:1632
 #: src/control/Control.Zotero.js:333 src/control/Toolbar.js:937
 #: src/core/Socket.js:1284 src/layer/tile/CommentListSection.ts:424
 #: src/layer/tile/CommentSection.ts:156 src/layer/tile/CommentSection.ts:159
@@ -474,7 +474,7 @@ msgid "Repair Document"
 msgstr "Restaurer le document"
 
 #: src/control/Control.DocumentRepair.js:124
-#: src/control/Control.UserList.ts:399
+#: src/control/Control.UserList.ts:388
 msgid "You"
 msgstr "Vous"
 
@@ -569,7 +569,7 @@ msgid "Formula"
 msgstr "Formule"
 
 #: src/control/Control.FormulaBarJSDialog.js:130
-#: src/control/Control.MobileTopBar.js:74
+#: src/control/Control.MobileTopBar.js:53
 msgid "Accept"
 msgstr "Accepter"
 
@@ -641,7 +641,7 @@ msgid "Font Size"
 msgstr "Taille de la police"
 
 #: src/control/Control.JSDialogBuilder.js:1686
-#: src/control/Control.TopToolbar.js:509
+#: src/control/Control.TopToolbar.js:454
 msgid "Style"
 msgstr "Style"
 
@@ -654,8 +654,8 @@ msgid "replies"
 msgstr "réponses"
 
 #: src/control/Control.JSDialogBuilder.js:1964
-#: src/layer/tile/CanvasTileLayer.js:5208
-#: src/layer/tile/CanvasTileLayer.js:5219
+#: src/layer/tile/CanvasTileLayer.js:5202
+#: src/layer/tile/CanvasTileLayer.js:5213
 #: src/layer/tile/CommentListSection.ts:1017
 msgid "Comment"
 msgstr "Commentaire"
@@ -681,7 +681,7 @@ msgstr "Insérer un tableau"
 #: src/control/Control.LanguageDialog.js:64 src/control/Control.Menubar.js:354
 #: src/control/Control.Menubar.js:356 src/control/Control.Menubar.js:358
 #: src/control/Control.Menubar.js:524 src/control/Control.Menubar.js:654
-#: src/control/Control.Menubar.js:926 src/control/Control.StatusBar.js:523
+#: src/control/Control.Menubar.js:926 src/control/Control.StatusBar.js:475
 msgid "None (Do not check spelling)"
 msgstr "Aucune (pas de vérification orthographique)"
 
@@ -795,7 +795,7 @@ msgstr "Document PDF (.pdf) en..."
 
 #: src/control/Control.Menubar.js:99 src/control/Control.Menubar.js:410
 #: src/control/Control.Menubar.js:558 src/control/Control.Menubar.js:693
-#: src/control/Control.Toolbar.js:1088
+#: src/control/Control.Toolbar.js:1079
 msgid "Close document"
 msgstr "Fermer le document"
 
@@ -830,7 +830,7 @@ msgstr "Restaurer"
 #: src/control/Control.NotebookbarImpress.js:396
 #: src/control/Control.NotebookbarWriter.js:1344
 #: src/control/Control.NotebookbarWriter.js:1345
-#: src/control/Control.StatusBar.js:277
+#: src/control/Control.StatusBar.js:250
 msgid "Reset zoom"
 msgstr "Ré-initialiser le zoom"
 
@@ -1101,7 +1101,7 @@ msgstr "Fichier CSV (.csv)"
 msgid "Active sheet"
 msgstr "Feuille active"
 
-#: src/control/Control.Menubar.js:691 src/control/Control.TopToolbar.js:125
+#: src/control/Control.Menubar.js:691 src/control/Control.TopToolbar.js:109
 #: src/control/jsdialog/Definitions.Menu.ts:126
 msgid "All Sheets"
 msgstr "Toutes les feuilles"
@@ -1188,8 +1188,8 @@ msgstr ""
 #: src/control/Control.NotebookbarDraw.js:959
 #: src/control/Control.NotebookbarImpress.js:1015
 #: src/control/Control.NotebookbarWriter.js:836
-#: src/control/Control.MobileSearchBar.ts:58
-#: src/control/Control.StatusBar.js:250 src/control/Control.Zotero.js:221
+#: src/control/Control.MobileSearchBar.ts:29
+#: src/control/Control.StatusBar.js:225 src/control/Control.Zotero.js:221
 #: src/control/Toolbar.js:555
 msgid "Search"
 msgstr "Rechercher"
@@ -1206,7 +1206,7 @@ msgstr "Définir la zone d’impression"
 msgid "Remove print area"
 msgstr "Supprimer la zone d’impression"
 
-#: src/control/Control.Menubar.js:1413 src/control/Control.StatusBar.js:522
+#: src/control/Control.Menubar.js:1413 src/control/Control.StatusBar.js:474
 msgid "Reset to Default Language"
 msgstr "Rétablir la langue par défaut"
 
@@ -1236,14 +1236,14 @@ msgstr "Insérer une forme"
 msgid "file type icon"
 msgstr "icône de type de fichier"
 
-#: src/control/Control.MobileBottomBar.js:49
-#: src/control/Control.MobileBottomBar.js:150
-#: src/control/Control.MobileBottomBar.js:217
+#: src/control/Control.MobileBottomBar.js:28
+#: src/control/Control.MobileBottomBar.js:129
+#: src/control/Control.MobileBottomBar.js:196
 msgid "Show the search bar"
 msgstr "Afficher la barre de recherche"
 
-#: src/control/Control.MobileBottomBar.js:58
-#: src/control/Control.TopToolbar.js:155
+#: src/control/Control.MobileBottomBar.js:37
+#: src/control/Control.TopToolbar.js:139
 msgid "Borders"
 msgstr "Bordures"
 
@@ -1599,11 +1599,11 @@ msgstr "Faire défiler les annotations vers le haut"
 msgid "Scroll down annotations"
 msgstr "Faire défiler les annotations vers le bas"
 
-#: src/control/Control.MobileSearchBar.ts:56
+#: src/control/Control.MobileSearchBar.ts:27
 msgid "Hide the search bar"
 msgstr "Masquer la barre de recherche"
 
-#: src/control/Control.MobileSearchBar.ts:74
+#: src/control/Control.MobileSearchBar.ts:45
 msgid "Clear the search field"
 msgstr "Vider le champ de recherche"
 
@@ -1627,62 +1627,62 @@ msgstr "Défiler jusqu'à la dernière feuille"
 msgid "Insert sheet"
 msgstr "Insérer une feuille"
 
-#: src/control/Control.StatusBar.js:211
+#: src/control/Control.StatusBar.js:186
 #: src/control/jsdialog/Definitions.Menu.ts:37
 msgid "Average"
 msgstr "Moyenne"
 
-#: src/control/Control.StatusBar.js:212
+#: src/control/Control.StatusBar.js:187
 msgid "CountA"
 msgstr "NBVAL"
 
-#: src/control/Control.StatusBar.js:213
+#: src/control/Control.StatusBar.js:188
 #: src/control/jsdialog/Definitions.Menu.ts:40
 msgid "Count"
 msgstr "NB"
 
-#: src/control/Control.StatusBar.js:214
+#: src/control/Control.StatusBar.js:189
 msgid "Maximum"
 msgstr "Maximum"
 
-#: src/control/Control.StatusBar.js:215
+#: src/control/Control.StatusBar.js:190
 msgid "Minimum"
 msgstr "Minimum"
 
-#: src/control/Control.StatusBar.js:216
+#: src/control/Control.StatusBar.js:191
 #: src/control/jsdialog/Definitions.Menu.ts:36
 msgid "Sum"
 msgstr "Somme"
 
-#: src/control/Control.StatusBar.js:217
+#: src/control/Control.StatusBar.js:192
 msgid "Selection count"
 msgstr "Compte de la sélection"
 
-#: src/control/Control.StatusBar.js:253
+#: src/control/Control.StatusBar.js:228
 msgid "Cancel the search"
 msgstr "Annuler la recherche"
 
-#: src/control/Control.StatusBar.js:466
+#: src/control/Control.StatusBar.js:418
 msgid "Select multiple cells"
 msgstr "Sélectionner plusieurs cellules"
 
-#: src/control/Control.StatusBar.js:469
+#: src/control/Control.StatusBar.js:421
 msgid "Insert mode: inactive"
 msgstr "Mode d'insertion : inactif"
 
-#: src/control/Control.StatusBar.js:481
+#: src/control/Control.StatusBar.js:433
 msgid "Selection mode: inactive"
 msgstr "Mode de sélection : inactif"
 
-#: src/control/Control.StatusBar.js:539
+#: src/control/Control.StatusBar.js:491
 msgid "Set Language for All text"
 msgstr "Définir la langue pour tout le texte"
 
-#: src/control/Control.StatusBar.js:542
+#: src/control/Control.StatusBar.js:494
 msgid "Set Language for Paragraph"
 msgstr "Définir la langue du paragraphe"
 
-#: src/control/Control.StatusBar.js:543
+#: src/control/Control.StatusBar.js:495
 msgid "Set Language for Selection"
 msgstr "Définir la langue pour la sélection"
 
@@ -1718,7 +1718,7 @@ msgstr "Renommer la feuille"
 msgid "Enter new sheet name"
 msgstr "Saisissez un nouveau nom de feuille"
 
-#: src/control/Control.Toolbar.js:943
+#: src/control/Control.Toolbar.js:934
 msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to "
 "resolve"
@@ -1726,27 +1726,27 @@ msgstr ""
 "Il y a un conflit d'annulation/restauration avec plusieurs utilisateurs. "
 "Veuillez utiliser la restauration du document pour le résoudre"
 
-#: src/control/Control.TopToolbar.js:124
+#: src/control/Control.TopToolbar.js:108
 msgid "Active Sheet"
 msgstr "Feuille Active"
 
-#: src/control/Control.TopToolbar.js:136
+#: src/control/Control.TopToolbar.js:120
 msgid "Default Style"
 msgstr "Style par défaut"
 
-#: src/control/Control.TopToolbar.js:196
+#: src/control/Control.TopToolbar.js:180
 msgid "Insert table"
 msgstr "Insérer un tableau"
 
-#: src/control/Control.TopToolbar.js:199
+#: src/control/Control.TopToolbar.js:183
 msgid "Insert shapes"
 msgstr "Insérer des formes"
 
-#: src/control/Control.TopToolbar.js:201
+#: src/control/Control.TopToolbar.js:185
 msgid "Insert connectors"
 msgstr "Insérer des connecteurs"
 
-#: src/control/Control.TopToolbar.js:215 src/control/Control.UIManager.js:766
+#: src/control/Control.TopToolbar.js:199 src/control/Control.UIManager.js:760
 msgid "Hide Menu"
 msgstr "Masquer le menu"
 
@@ -1754,11 +1754,11 @@ msgstr "Masquer le menu"
 msgid "Enter new name"
 msgstr ""
 
-#: src/control/Control.UIManager.js:789
+#: src/control/Control.UIManager.js:783
 msgid "Show Menu"
 msgstr "Montrer le menu"
 
-#: src/control/Control.UIManager.js:1122
+#: src/control/Control.UIManager.js:1116
 msgid "Dismiss"
 msgstr "Rejeter"
 
@@ -1798,11 +1798,11 @@ msgstr "1 utilisateur"
 msgid "0 users"
 msgstr "0 utilisateur"
 
-#: src/control/Control.UserList.ts:507
+#: src/control/Control.UserList.ts:493
 msgid "Following"
 msgstr "Suivi"
 
-#: src/control/Control.UserList.ts:563
+#: src/control/Control.UserList.ts:549
 msgid "Always follow the editor"
 msgstr "Toujours suivre l'éditeur"
 
@@ -2171,7 +2171,7 @@ msgstr "Nombre de diapos"
 msgid "Cell borders"
 msgstr "Bordures de cellule"
 
-#: src/control/jsdialog/Widget.TreeView.js:664
+#: src/control/jsdialog/Widget.TreeView.js:666
 msgid "Headings and objects that you add to the document will appear here"
 msgstr "Les titres et les objets que vous ajoutez au document apparaîtront ici"
 
@@ -2364,15 +2364,15 @@ msgstr ""
 msgid "Ctrl+Shift+Alt+D to exit"
 msgstr ""
 
-#: src/docstate.js:90
+#: src/docstate.js:87
 msgid "Standard"
 msgstr "Standard"
 
-#: src/docstate.js:101
+#: src/docstate.js:98
 msgid "Theme colors"
 msgstr "Couleurs du thème"
 
-#: src/docstate.js:102
+#: src/docstate.js:99
 msgid "Document colors"
 msgstr "Couleurs du document"
 
@@ -2614,27 +2614,27 @@ msgstr ""
 "Le téléversement du fichier sur le serveur a échoué, le fichier est trop "
 "volumineux."
 
-#: src/layer/tile/CanvasTileLayer.js:2017
+#: src/layer/tile/CanvasTileLayer.js:2024
 msgid "Functions"
 msgstr "Fonctions"
 
-#: src/layer/tile/CanvasTileLayer.js:2625
+#: src/layer/tile/CanvasTileLayer.js:2620
 msgid "and %COUNT more"
 msgstr ""
 
-#: src/layer/tile/CanvasTileLayer.js:2639
+#: src/layer/tile/CanvasTileLayer.js:2634
 msgid "Copy link location"
 msgstr "Copier l'emplacement du lien"
 
-#: src/layer/tile/CanvasTileLayer.js:2647
+#: src/layer/tile/CanvasTileLayer.js:2642
 msgid "Edit link"
 msgstr "Editer le lien"
 
-#: src/layer/tile/CanvasTileLayer.js:2655
+#: src/layer/tile/CanvasTileLayer.js:2650
 msgid "Remove link"
 msgstr "Retirer le lien"
 
-#: src/layer/tile/CanvasTileLayer.js:5236
+#: src/layer/tile/CanvasTileLayer.js:5230
 msgid "No Comments"
 msgstr "Aucun commentaire"
 
@@ -2723,12 +2723,12 @@ msgstr "avertissement: copier/coller la demande a expiré"
 msgid "Failed to download clipboard, please re-copy"
 msgstr "Échec au téléchargement du presse-papiers, veuillez copier à nouveau"
 
-#: src/map/Clipboard.js:1100
+#: src/map/Clipboard.js:1095
 msgid "<p>Please use the copy/paste buttons on your on-screen keyboard.</p>"
 msgstr ""
 "<p>Veuillez utiliser les boutons copier/coller du clavier à l'écran.</p>"
 
-#: src/map/Clipboard.js:1102
+#: src/map/Clipboard.js:1097
 msgid ""
 "<p>Your browser has very limited access to the clipboard, so use these "
 "keyboard shortcuts:</p><table class=\"warn-copy-paste\"><tr><td><kbd>Ctrl</"
@@ -2744,7 +2744,7 @@ msgstr ""
 "kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd></td></tr><tr><td>Copier</t"
 "d><td>Couper</td><td>Coller</td></tr></table>"
 
-#: src/map/Clipboard.js:1121
+#: src/map/Clipboard.js:1116
 msgid ""
 "<p>A download due to a large copy/paste operation has already started. "
 "Please, wait for the current download or cancel it before starting a new "
@@ -2754,7 +2754,7 @@ msgstr ""
 "a déjà commencé. Veuillez attendre la fin du téléchargement ou l'annuler "
 "avant d'en démarrer un nouveau</p>"
 
-#: src/map/Clipboard.js:1139
+#: src/map/Clipboard.js:1134
 #, fuzzy
 msgid ""
 "<p>Your browser has very limited access to the clipboard</p><p><b>Please "
@@ -2766,19 +2766,19 @@ msgstr ""
 "span> <kbd>V</kbd> pour voir plus d'options</p><p>Fermez ceci pour ignorer "
 "le collage spécial</p>"
 
-#: src/map/Clipboard.js:1146
+#: src/map/Clipboard.js:1141
 msgid "Paste from this document"
 msgstr "Coller depuis ce document"
 
-#: src/map/Clipboard.js:1146
+#: src/map/Clipboard.js:1141
 msgid "Cancel paste special"
 msgstr "Annuler collage spécial"
 
-#: src/map/Map.js:225
+#: src/map/Map.js:224
 msgid "Initializing..."
 msgstr "Initialisation..."
 
-#: src/map/Map.js:451 src/map/Map.js:454 src/map/Map.js:457 src/map/Map.js:460
+#: src/map/Map.js:450 src/map/Map.js:453 src/map/Map.js:456 src/map/Map.js:459
 msgid "Last saved:"
 msgstr "Dernière sauvegarde :"
 
@@ -2814,38 +2814,42 @@ msgstr "Le téléversement sur le serveur a échoué avec le statut : %0"
 msgid "Empty Slide Show"
 msgstr "Présentation vide"
 
-#: src/map/handler/Map.SlideShow.js:153
+#: src/map/handler/Map.SlideShow.js:151
+msgid "Windowed Presentation: "
+msgstr ""
+
+#: src/map/handler/Map.SlideShow.js:158
 msgid "Windowed Presentation Blocked"
 msgstr "Présentation dans une fenêtre bloquée"
 
-#: src/map/handler/Map.SlideShow.js:154
+#: src/map/handler/Map.SlideShow.js:159
 msgid ""
 "Presentation was blocked. Please allow pop-ups in your browser. This lets "
 "slide shows to be displayed in separated windows, allowing for easy screen "
 "sharing."
 msgstr ""
 
-#: src/map/handler/Map.SlideShow.js:162
+#: src/map/handler/Map.SlideShow.js:173
 msgid "Presenting in window"
 msgstr "Présentation en cours dans une fenêtre"
 
-#: src/map/handler/Map.SlideShow.js:163
+#: src/map/handler/Map.SlideShow.js:174
 msgid "Close Presentation"
 msgstr "Fermer Présentation"
 
-#: src/map/handler/Map.SlideShow.js:183
+#: src/map/handler/Map.SlideShow.js:194
 msgid "Presenting in fullscreen"
 msgstr "Présentation en cours en plein écran"
 
-#: src/map/handler/Map.SlideShow.js:184
+#: src/map/handler/Map.SlideShow.js:195
 msgid "End Presentation"
 msgstr "Fin de la présentation"
 
-#: src/map/handler/Map.SlideShow.js:239
+#: src/map/handler/Map.SlideShow.js:293
 msgid "Already presenting"
 msgstr "Présentation déjà en cours"
 
-#: src/map/handler/Map.SlideShow.js:240
+#: src/map/handler/Map.SlideShow.js:294
 msgid "You are already presenting this document"
 msgstr "Vous présentez déjà ce document"
 
@@ -2898,12 +2902,12 @@ msgstr "Découvrir toutes les nouveautés"
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:39-7
 msgid ""
 "Check the <a target=\"_blank\" href=\"https://www.collaboraoffice.com/"
-"code-23-05-release-notes/\">release notes</a> and learn all about: The "
+"code-24-04-release-notes/\">release notes</a> and learn all about: The "
 "latest Collabora Online Development Edition, aimed at home users and small "
 "teams."
 msgstr ""
 "Consultez les <a target=\"_blank\" href=\"https://www.collaboraoffice.com/"
-"code-23-05-release-notes/\">notes de mise à jour</a> et découvrez les "
+"code-24-04-release-notes/\">notes de mise à jour</a> et découvrez les "
 "nouveautés : La dernière édition de développement de Collabora Online, "
 "destinée aux utilisateurs privés et aux petites équipes."
 
@@ -2937,9 +2941,10 @@ msgstr ""
 
 #: welcome/welcome.html%2Bhtml.body.div.div:55-5
 msgid ""
-"<a id=\"slide-1-indicator\" class=\"active\" href=\"#slide-1\">1</a> <a "
-"id=\"slide-2-indicator\" href=\"#slide-2\">2</a> <a id=\"slide-3-"
-"indicator\" href=\"#slide-3\">3</a>"
+"<a id=\"slide-1-indicator\" class=\"active\" href=\"#slide-1\" data-"
+"translate=\"true\">1</a> <a id=\"slide-2-indicator\" href=\"#slide-2\" data-"
+"translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
+"translate=\"true\">3</a>"
 msgstr ""
 
 #~ msgid "ODF Spreadsheet (.ods)"

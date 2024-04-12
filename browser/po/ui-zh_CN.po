@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-05 18:53+0200\n"
+"POT-Creation-Date: 2024-04-12 19:29+0200\n"
 "PO-Revision-Date: 2024-03-18 14:01+0000\n"
 "Last-Translator: CloneWith <clonewith@users.noreply.hosted.weblate.org>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
@@ -214,7 +214,7 @@ msgid "Channel Filter:"
 msgstr "信道滤波器："
 
 #: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:477
-#: src/control/Control.StatusBar.js:218 src/control/Control.StatusBar.js:221
+#: src/control/Control.StatusBar.js:193 src/control/Control.StatusBar.js:196
 msgid "None"
 msgstr "无"
 
@@ -281,9 +281,9 @@ msgstr "服务器已关闭，请刷新该页面。"
 #: src/control/Toolbar.js:942 src/core/Socket.js:613 src/core/Socket.js:1041
 #: src/core/Socket.js:1111 src/core/Socket.js:1259 src/core/Socket.js:1263
 #: src/docdispatcher.ts:366 src/main.js:79 src/main.js:82 src/main.js:134
-#: src/map/Clipboard.js:1107 src/map/handler/Map.Feedback.js:83
-#: src/map/handler/Map.SlideShow.js:51 src/map/handler/Map.SlideShow.js:155
-#: src/map/handler/Map.SlideShow.js:241 src/map/handler/Map.WOPI.js:601
+#: src/map/Clipboard.js:1102 src/map/handler/Map.Feedback.js:83
+#: src/map/handler/Map.SlideShow.js:51 src/map/handler/Map.SlideShow.js:160
+#: src/map/handler/Map.SlideShow.js:295 src/map/handler/Map.WOPI.js:601
 msgid "OK"
 msgstr "确定"
 
@@ -304,9 +304,9 @@ msgstr "您确定要停止此次会话吗？"
 #: src/control/Control.DocumentRepair.js:71
 #: src/control/Control.DownloadProgress.js:90
 #: src/control/Control.LanguageDialog.js:113
-#: src/control/Control.MobileTopBar.js:75
-#: src/control/Control.UIManager.js:1294 src/control/Control.UIManager.js:1361
-#: src/control/Control.UIManager.js:1496 src/control/Control.UIManager.js:1638
+#: src/control/Control.MobileTopBar.js:54
+#: src/control/Control.UIManager.js:1288 src/control/Control.UIManager.js:1355
+#: src/control/Control.UIManager.js:1490 src/control/Control.UIManager.js:1632
 #: src/control/Control.Zotero.js:333 src/control/Toolbar.js:937
 #: src/core/Socket.js:1284 src/layer/tile/CommentListSection.ts:424
 #: src/layer/tile/CommentSection.ts:156 src/layer/tile/CommentSection.ts:159
@@ -465,7 +465,7 @@ msgid "Repair Document"
 msgstr "修复文档"
 
 #: src/control/Control.DocumentRepair.js:124
-#: src/control/Control.UserList.ts:399
+#: src/control/Control.UserList.ts:388
 msgid "You"
 msgstr "您"
 
@@ -556,7 +556,7 @@ msgid "Formula"
 msgstr "公式"
 
 #: src/control/Control.FormulaBarJSDialog.js:130
-#: src/control/Control.MobileTopBar.js:74
+#: src/control/Control.MobileTopBar.js:53
 msgid "Accept"
 msgstr "接受"
 
@@ -626,7 +626,7 @@ msgid "Font Size"
 msgstr "字体大小"
 
 #: src/control/Control.JSDialogBuilder.js:1686
-#: src/control/Control.TopToolbar.js:509
+#: src/control/Control.TopToolbar.js:454
 msgid "Style"
 msgstr "样式"
 
@@ -639,8 +639,8 @@ msgid "replies"
 msgstr "回复"
 
 #: src/control/Control.JSDialogBuilder.js:1964
-#: src/layer/tile/CanvasTileLayer.js:5208
-#: src/layer/tile/CanvasTileLayer.js:5219
+#: src/layer/tile/CanvasTileLayer.js:5202
+#: src/layer/tile/CanvasTileLayer.js:5213
 #: src/layer/tile/CommentListSection.ts:1017
 msgid "Comment"
 msgstr "批注"
@@ -666,7 +666,7 @@ msgstr "插入表格"
 #: src/control/Control.LanguageDialog.js:64 src/control/Control.Menubar.js:354
 #: src/control/Control.Menubar.js:356 src/control/Control.Menubar.js:358
 #: src/control/Control.Menubar.js:524 src/control/Control.Menubar.js:654
-#: src/control/Control.Menubar.js:926 src/control/Control.StatusBar.js:523
+#: src/control/Control.Menubar.js:926 src/control/Control.StatusBar.js:475
 msgid "None (Do not check spelling)"
 msgstr "无 (不检查拼写)"
 
@@ -780,7 +780,7 @@ msgstr "PDF 文档 (.pdf)..."
 
 #: src/control/Control.Menubar.js:99 src/control/Control.Menubar.js:410
 #: src/control/Control.Menubar.js:558 src/control/Control.Menubar.js:693
-#: src/control/Control.Toolbar.js:1088
+#: src/control/Control.Toolbar.js:1079
 msgid "Close document"
 msgstr "关闭文档"
 
@@ -815,7 +815,7 @@ msgstr "修复"
 #: src/control/Control.NotebookbarImpress.js:396
 #: src/control/Control.NotebookbarWriter.js:1344
 #: src/control/Control.NotebookbarWriter.js:1345
-#: src/control/Control.StatusBar.js:277
+#: src/control/Control.StatusBar.js:250
 msgid "Reset zoom"
 msgstr "重置缩放"
 
@@ -1086,7 +1086,7 @@ msgstr "CSV文件(.csv)"
 msgid "Active sheet"
 msgstr "活动工作表"
 
-#: src/control/Control.Menubar.js:691 src/control/Control.TopToolbar.js:125
+#: src/control/Control.Menubar.js:691 src/control/Control.TopToolbar.js:109
 #: src/control/jsdialog/Definitions.Menu.ts:126
 msgid "All Sheets"
 msgstr "所有工作表"
@@ -1173,8 +1173,8 @@ msgstr ""
 #: src/control/Control.NotebookbarDraw.js:959
 #: src/control/Control.NotebookbarImpress.js:1015
 #: src/control/Control.NotebookbarWriter.js:836
-#: src/control/Control.MobileSearchBar.ts:58
-#: src/control/Control.StatusBar.js:250 src/control/Control.Zotero.js:221
+#: src/control/Control.MobileSearchBar.ts:29
+#: src/control/Control.StatusBar.js:225 src/control/Control.Zotero.js:221
 #: src/control/Toolbar.js:555
 msgid "Search"
 msgstr "搜索"
@@ -1191,7 +1191,7 @@ msgstr "自定义打印区域"
 msgid "Remove print area"
 msgstr "删除打印区域"
 
-#: src/control/Control.Menubar.js:1413 src/control/Control.StatusBar.js:522
+#: src/control/Control.Menubar.js:1413 src/control/Control.StatusBar.js:474
 msgid "Reset to Default Language"
 msgstr "重置为默认语言"
 
@@ -1221,14 +1221,14 @@ msgstr "插入形状"
 msgid "file type icon"
 msgstr "文件类型图标"
 
-#: src/control/Control.MobileBottomBar.js:49
-#: src/control/Control.MobileBottomBar.js:150
-#: src/control/Control.MobileBottomBar.js:217
+#: src/control/Control.MobileBottomBar.js:28
+#: src/control/Control.MobileBottomBar.js:129
+#: src/control/Control.MobileBottomBar.js:196
 msgid "Show the search bar"
 msgstr "显示搜索栏"
 
-#: src/control/Control.MobileBottomBar.js:58
-#: src/control/Control.TopToolbar.js:155
+#: src/control/Control.MobileBottomBar.js:37
+#: src/control/Control.TopToolbar.js:139
 msgid "Borders"
 msgstr "边框"
 
@@ -1584,11 +1584,11 @@ msgstr "向上滚动注释"
 msgid "Scroll down annotations"
 msgstr "向下滚动注释"
 
-#: src/control/Control.MobileSearchBar.ts:56
+#: src/control/Control.MobileSearchBar.ts:27
 msgid "Hide the search bar"
 msgstr "隐藏搜索栏"
 
-#: src/control/Control.MobileSearchBar.ts:74
+#: src/control/Control.MobileSearchBar.ts:45
 msgid "Clear the search field"
 msgstr "清空搜索栏"
 
@@ -1612,62 +1612,62 @@ msgstr "滚动到最后一张工作表"
 msgid "Insert sheet"
 msgstr "插入工作表"
 
-#: src/control/Control.StatusBar.js:211
+#: src/control/Control.StatusBar.js:186
 #: src/control/jsdialog/Definitions.Menu.ts:37
 msgid "Average"
 msgstr "平均值"
 
-#: src/control/Control.StatusBar.js:212
+#: src/control/Control.StatusBar.js:187
 msgid "CountA"
 msgstr "计数 A"
 
-#: src/control/Control.StatusBar.js:213
+#: src/control/Control.StatusBar.js:188
 #: src/control/jsdialog/Definitions.Menu.ts:40
 msgid "Count"
 msgstr "计数"
 
-#: src/control/Control.StatusBar.js:214
+#: src/control/Control.StatusBar.js:189
 msgid "Maximum"
 msgstr "最大值"
 
-#: src/control/Control.StatusBar.js:215
+#: src/control/Control.StatusBar.js:190
 msgid "Minimum"
 msgstr "最小值"
 
-#: src/control/Control.StatusBar.js:216
+#: src/control/Control.StatusBar.js:191
 #: src/control/jsdialog/Definitions.Menu.ts:36
 msgid "Sum"
 msgstr "求和"
 
-#: src/control/Control.StatusBar.js:217
+#: src/control/Control.StatusBar.js:192
 msgid "Selection count"
 msgstr "选中范围计数"
 
-#: src/control/Control.StatusBar.js:253
+#: src/control/Control.StatusBar.js:228
 msgid "Cancel the search"
 msgstr "取消搜索"
 
-#: src/control/Control.StatusBar.js:466
+#: src/control/Control.StatusBar.js:418
 msgid "Select multiple cells"
 msgstr "选择多个单元格"
 
-#: src/control/Control.StatusBar.js:469
+#: src/control/Control.StatusBar.js:421
 msgid "Insert mode: inactive"
 msgstr "插入模式: 未激活"
 
-#: src/control/Control.StatusBar.js:481
+#: src/control/Control.StatusBar.js:433
 msgid "Selection mode: inactive"
 msgstr "插入模式: 未激活"
 
-#: src/control/Control.StatusBar.js:539
+#: src/control/Control.StatusBar.js:491
 msgid "Set Language for All text"
 msgstr "为所有文本设置语言"
 
-#: src/control/Control.StatusBar.js:542
+#: src/control/Control.StatusBar.js:494
 msgid "Set Language for Paragraph"
 msgstr "为段落设置语言"
 
-#: src/control/Control.StatusBar.js:543
+#: src/control/Control.StatusBar.js:495
 msgid "Set Language for Selection"
 msgstr "为选中部分设置语言"
 
@@ -1703,33 +1703,33 @@ msgstr "重命名工作表"
 msgid "Enter new sheet name"
 msgstr "输入新的工作表名"
 
-#: src/control/Control.Toolbar.js:943
+#: src/control/Control.Toolbar.js:934
 msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to "
 "resolve"
 msgstr "多个用户之间的「撤销」「恢复」操作发生冲突。请使用文档修复功能解决问题"
 
-#: src/control/Control.TopToolbar.js:124
+#: src/control/Control.TopToolbar.js:108
 msgid "Active Sheet"
 msgstr "活动工作表"
 
-#: src/control/Control.TopToolbar.js:136
+#: src/control/Control.TopToolbar.js:120
 msgid "Default Style"
 msgstr "默认样式"
 
-#: src/control/Control.TopToolbar.js:196
+#: src/control/Control.TopToolbar.js:180
 msgid "Insert table"
 msgstr "插入表格"
 
-#: src/control/Control.TopToolbar.js:199
+#: src/control/Control.TopToolbar.js:183
 msgid "Insert shapes"
 msgstr "插入形状"
 
-#: src/control/Control.TopToolbar.js:201
+#: src/control/Control.TopToolbar.js:185
 msgid "Insert connectors"
 msgstr "插入连接器"
 
-#: src/control/Control.TopToolbar.js:215 src/control/Control.UIManager.js:766
+#: src/control/Control.TopToolbar.js:199 src/control/Control.UIManager.js:760
 msgid "Hide Menu"
 msgstr "隐藏菜单"
 
@@ -1737,11 +1737,11 @@ msgstr "隐藏菜单"
 msgid "Enter new name"
 msgstr "输入新名称"
 
-#: src/control/Control.UIManager.js:789
+#: src/control/Control.UIManager.js:783
 msgid "Show Menu"
 msgstr "显示菜单"
 
-#: src/control/Control.UIManager.js:1122
+#: src/control/Control.UIManager.js:1116
 msgid "Dismiss"
 msgstr "忽略"
 
@@ -1781,11 +1781,11 @@ msgstr "1 位用户"
 msgid "0 users"
 msgstr "0 位用户"
 
-#: src/control/Control.UserList.ts:507
+#: src/control/Control.UserList.ts:493
 msgid "Following"
 msgstr "跟随中"
 
-#: src/control/Control.UserList.ts:563
+#: src/control/Control.UserList.ts:549
 msgid "Always follow the editor"
 msgstr "总是跟随编辑器"
 
@@ -2142,7 +2142,7 @@ msgstr "幻灯片数"
 msgid "Cell borders"
 msgstr "单元格边框"
 
-#: src/control/jsdialog/Widget.TreeView.js:664
+#: src/control/jsdialog/Widget.TreeView.js:666
 msgid "Headings and objects that you add to the document will appear here"
 msgstr "您添加到文档中的标题和对象将显示在此处"
 
@@ -2322,15 +2322,15 @@ msgstr "调试工具"
 msgid "Ctrl+Shift+Alt+D to exit"
 msgstr "按下 Ctrl+Shift+Alt+D 退出"
 
-#: src/docstate.js:90
+#: src/docstate.js:87
 msgid "Standard"
 msgstr "标准"
 
-#: src/docstate.js:101
+#: src/docstate.js:98
 msgid "Theme colors"
 msgstr "主题颜色"
 
-#: src/docstate.js:102
+#: src/docstate.js:99
 msgid "Document colors"
 msgstr "文档颜色"
 
@@ -2531,27 +2531,27 @@ msgstr "向服务器上传文件失败，找不到文件。"
 msgid "Uploading file to server failed, the file is too large."
 msgstr "向服务器上传文件失败，文件过大。"
 
-#: src/layer/tile/CanvasTileLayer.js:2017
+#: src/layer/tile/CanvasTileLayer.js:2024
 msgid "Functions"
 msgstr "函数"
 
-#: src/layer/tile/CanvasTileLayer.js:2625
+#: src/layer/tile/CanvasTileLayer.js:2620
 msgid "and %COUNT more"
 msgstr "还有 %COUNT 个"
 
-#: src/layer/tile/CanvasTileLayer.js:2639
+#: src/layer/tile/CanvasTileLayer.js:2634
 msgid "Copy link location"
 msgstr "复制链接"
 
-#: src/layer/tile/CanvasTileLayer.js:2647
+#: src/layer/tile/CanvasTileLayer.js:2642
 msgid "Edit link"
 msgstr "修改链接"
 
-#: src/layer/tile/CanvasTileLayer.js:2655
+#: src/layer/tile/CanvasTileLayer.js:2650
 msgid "Remove link"
 msgstr "移除链接"
 
-#: src/layer/tile/CanvasTileLayer.js:5236
+#: src/layer/tile/CanvasTileLayer.js:5230
 msgid "No Comments"
 msgstr "暂无评论"
 
@@ -2638,11 +2638,11 @@ msgstr "警告：复制/粘贴请求超时"
 msgid "Failed to download clipboard, please re-copy"
 msgstr "下载剪切板失败，请重新复制"
 
-#: src/map/Clipboard.js:1100
+#: src/map/Clipboard.js:1095
 msgid "<p>Please use the copy/paste buttons on your on-screen keyboard.</p>"
 msgstr "<p>请使用您屏幕键盘上的「复制／粘贴」按钮。</p>"
 
-#: src/map/Clipboard.js:1102
+#: src/map/Clipboard.js:1097
 msgid ""
 "<p>Your browser has very limited access to the clipboard, so use these "
 "keyboard shortcuts:</p><table class=\"warn-copy-paste\"><tr><td><kbd>Ctrl</"
@@ -2658,7 +2658,7 @@ msgstr ""
 ">+</span><kbd>V</kbd "
 "></td></tr><tr><td>复制</td><td>剪切</td><td>粘贴</td></tr></table>"
 
-#: src/map/Clipboard.js:1121
+#: src/map/Clipboard.js:1116
 msgid ""
 "<p>A download due to a large copy/paste operation has already started. "
 "Please, wait for the current download or cancel it before starting a new "
@@ -2666,7 +2666,7 @@ msgid ""
 msgstr "<p>大型复制／粘贴操作所需的下载已经开始。请等待下载完成之后或将其取消后，再开"
 "始新的下载</p>"
 
-#: src/map/Clipboard.js:1139
+#: src/map/Clipboard.js:1134
 msgid ""
 "<p>Your browser has very limited access to the clipboard</p><p><b>Please "
 "press</b> <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to "
@@ -2676,19 +2676,19 @@ msgstr ""
 "--plus\""
 ">+</span><kbd>V</kbd>查看更多选项</p><p>关闭弹出窗口以忽略特殊粘贴</p>"
 
-#: src/map/Clipboard.js:1146
+#: src/map/Clipboard.js:1141
 msgid "Paste from this document"
 msgstr "从本文档粘贴"
 
-#: src/map/Clipboard.js:1146
+#: src/map/Clipboard.js:1141
 msgid "Cancel paste special"
 msgstr "取消特殊粘贴"
 
-#: src/map/Map.js:225
+#: src/map/Map.js:224
 msgid "Initializing..."
 msgstr "正在初始化..."
 
-#: src/map/Map.js:451 src/map/Map.js:454 src/map/Map.js:457 src/map/Map.js:460
+#: src/map/Map.js:450 src/map/Map.js:453 src/map/Map.js:456 src/map/Map.js:459
 msgid "Last saved:"
 msgstr "上次保存："
 
@@ -2720,11 +2720,15 @@ msgstr "向服务器上传文件失败，失败状态为 %0"
 msgid "Empty Slide Show"
 msgstr "空白演示文稿"
 
-#: src/map/handler/Map.SlideShow.js:153
+#: src/map/handler/Map.SlideShow.js:151
+msgid "Windowed Presentation: "
+msgstr ""
+
+#: src/map/handler/Map.SlideShow.js:158
 msgid "Windowed Presentation Blocked"
 msgstr "演示窗口被阻止"
 
-#: src/map/handler/Map.SlideShow.js:154
+#: src/map/handler/Map.SlideShow.js:159
 msgid ""
 "Presentation was blocked. Please allow pop-ups in your browser. This lets "
 "slide shows to be displayed in separated windows, allowing for easy screen "
@@ -2732,27 +2736,27 @@ msgid ""
 msgstr "演示被阻止。请在浏览器中允许弹出窗口。这让幻灯片演示显示在单独窗口中，便于屏"
 "幕分享。"
 
-#: src/map/handler/Map.SlideShow.js:162
+#: src/map/handler/Map.SlideShow.js:173
 msgid "Presenting in window"
 msgstr "窗口演示中"
 
-#: src/map/handler/Map.SlideShow.js:163
+#: src/map/handler/Map.SlideShow.js:174
 msgid "Close Presentation"
 msgstr "关闭演示"
 
-#: src/map/handler/Map.SlideShow.js:183
+#: src/map/handler/Map.SlideShow.js:194
 msgid "Presenting in fullscreen"
 msgstr "全屏演示中"
 
-#: src/map/handler/Map.SlideShow.js:184
+#: src/map/handler/Map.SlideShow.js:195
 msgid "End Presentation"
 msgstr "结束演示"
 
-#: src/map/handler/Map.SlideShow.js:239
+#: src/map/handler/Map.SlideShow.js:293
 msgid "Already presenting"
 msgstr "已在演示中"
 
-#: src/map/handler/Map.SlideShow.js:240
+#: src/map/handler/Map.SlideShow.js:294
 msgid "You are already presenting this document"
 msgstr "您已经在演示此文档"
 
@@ -2803,12 +2807,12 @@ msgstr "检查所有更新"
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:39-7
 msgid ""
 "Check the <a target=\"_blank\" href=\"https://www.collaboraoffice.com/"
-"code-23-05-release-notes/\">release notes</a> and learn all about: The "
+"code-24-04-release-notes/\">release notes</a> and learn all about: The "
 "latest Collabora Online Development Edition, aimed at home users and small "
 "teams."
 msgstr ""
 "请查阅<a target=\"_blank\" href=\"https://www.collaboraoffice.com/"
-"code-23-05-release-notes/\">发布说明</a>，了解有关最新的Collabora Online "
+"code-24-04-release-notes/\">发布说明</a>，了解有关最新的Collabora Online "
 "开发版本（针对家庭用户和小团队）的所有信息。"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:48-7
@@ -2839,13 +2843,20 @@ msgstr ""
 
 #: welcome/welcome.html%2Bhtml.body.div.div:55-5
 msgid ""
-"<a id=\"slide-1-indicator\" class=\"active\" href=\"#slide-1\">1</a> <a "
-"id=\"slide-2-indicator\" href=\"#slide-2\">2</a> <a id=\"slide-3-"
-"indicator\" href=\"#slide-3\">3</a>"
+"<a id=\"slide-1-indicator\" class=\"active\" href=\"#slide-1\" data-"
+"translate=\"true\">1</a> <a id=\"slide-2-indicator\" href=\"#slide-2\" data-"
+"translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
+"translate=\"true\">3</a>"
 msgstr ""
-"<a id=\"slide-1-indicator\" class=\"active\" href=\"#slide-1\">1</a> <a id="
-"\"slide-2-indicator\" href=\"#slide-2\">2</a> <a id=\"slide-3-indicator\" "
-"href=\"#slide-3\">3</a>"
+
+#~ msgid ""
+#~ "<a id=\"slide-1-indicator\" class=\"active\" href=\"#slide-1\">1</a> <a "
+#~ "id=\"slide-2-indicator\" href=\"#slide-2\">2</a> <a id=\"slide-3-"
+#~ "indicator\" href=\"#slide-3\">3</a>"
+#~ msgstr ""
+#~ "<a id=\"slide-1-indicator\" class=\"active\" href=\"#slide-1\">1</a> <a id="
+#~ "\"slide-2-indicator\" href=\"#slide-2\">2</a> <a id=\"slide-3-indicator\" "
+#~ "href=\"#slide-3\">3</a>"
 
 #~ msgid "ODF Spreadsheet (.ods)"
 #~ msgstr "ODF 电子表格 （.ods）"

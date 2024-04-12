@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-05 18:53+0200\n"
+"POT-Creation-Date: 2024-04-12 19:29+0200\n"
 "PO-Revision-Date: 2023-10-10 08:40+0000\n"
 "Last-Translator: Nguyễn Hoàng Minh <mingu03@yandex.com>\n"
 "Language-Team: Vietnamese <https://hosted.weblate.org/projects/"
@@ -214,7 +214,7 @@ msgid "Channel Filter:"
 msgstr "Bộ lọc kệnh:"
 
 #: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:477
-#: src/control/Control.StatusBar.js:218 src/control/Control.StatusBar.js:221
+#: src/control/Control.StatusBar.js:193 src/control/Control.StatusBar.js:196
 msgid "None"
 msgstr "Không có"
 
@@ -281,9 +281,9 @@ msgstr "Máy chủ đã bị tắt; vui lòng tải lại trang."
 #: src/control/Toolbar.js:942 src/core/Socket.js:613 src/core/Socket.js:1041
 #: src/core/Socket.js:1111 src/core/Socket.js:1259 src/core/Socket.js:1263
 #: src/docdispatcher.ts:366 src/main.js:79 src/main.js:82 src/main.js:134
-#: src/map/Clipboard.js:1107 src/map/handler/Map.Feedback.js:83
-#: src/map/handler/Map.SlideShow.js:51 src/map/handler/Map.SlideShow.js:155
-#: src/map/handler/Map.SlideShow.js:241 src/map/handler/Map.WOPI.js:601
+#: src/map/Clipboard.js:1102 src/map/handler/Map.Feedback.js:83
+#: src/map/handler/Map.SlideShow.js:51 src/map/handler/Map.SlideShow.js:160
+#: src/map/handler/Map.SlideShow.js:295 src/map/handler/Map.WOPI.js:601
 msgid "OK"
 msgstr "Đồng ý"
 
@@ -304,9 +304,9 @@ msgstr "Bạn có chắc chắn muốn kết thúc phiên này không?"
 #: src/control/Control.DocumentRepair.js:71
 #: src/control/Control.DownloadProgress.js:90
 #: src/control/Control.LanguageDialog.js:113
-#: src/control/Control.MobileTopBar.js:75
-#: src/control/Control.UIManager.js:1294 src/control/Control.UIManager.js:1361
-#: src/control/Control.UIManager.js:1496 src/control/Control.UIManager.js:1638
+#: src/control/Control.MobileTopBar.js:54
+#: src/control/Control.UIManager.js:1288 src/control/Control.UIManager.js:1355
+#: src/control/Control.UIManager.js:1490 src/control/Control.UIManager.js:1632
 #: src/control/Control.Zotero.js:333 src/control/Toolbar.js:937
 #: src/core/Socket.js:1284 src/layer/tile/CommentListSection.ts:424
 #: src/layer/tile/CommentSection.ts:156 src/layer/tile/CommentSection.ts:159
@@ -464,7 +464,7 @@ msgid "Repair Document"
 msgstr "Sửa tài liệu"
 
 #: src/control/Control.DocumentRepair.js:124
-#: src/control/Control.UserList.ts:399
+#: src/control/Control.UserList.ts:388
 msgid "You"
 msgstr "Bạn"
 
@@ -555,7 +555,7 @@ msgid "Formula"
 msgstr "Công thức"
 
 #: src/control/Control.FormulaBarJSDialog.js:130
-#: src/control/Control.MobileTopBar.js:74
+#: src/control/Control.MobileTopBar.js:53
 msgid "Accept"
 msgstr "Chấp nhận"
 
@@ -627,7 +627,7 @@ msgid "Font Size"
 msgstr "Cỡ phông chữ"
 
 #: src/control/Control.JSDialogBuilder.js:1686
-#: src/control/Control.TopToolbar.js:509
+#: src/control/Control.TopToolbar.js:454
 msgid "Style"
 msgstr "Kiểu"
 
@@ -640,8 +640,8 @@ msgid "replies"
 msgstr "Phản hồi"
 
 #: src/control/Control.JSDialogBuilder.js:1964
-#: src/layer/tile/CanvasTileLayer.js:5208
-#: src/layer/tile/CanvasTileLayer.js:5219
+#: src/layer/tile/CanvasTileLayer.js:5202
+#: src/layer/tile/CanvasTileLayer.js:5213
 #: src/layer/tile/CommentListSection.ts:1017
 msgid "Comment"
 msgstr "Chú thích"
@@ -667,7 +667,7 @@ msgstr "Chèn bảng"
 #: src/control/Control.LanguageDialog.js:64 src/control/Control.Menubar.js:354
 #: src/control/Control.Menubar.js:356 src/control/Control.Menubar.js:358
 #: src/control/Control.Menubar.js:524 src/control/Control.Menubar.js:654
-#: src/control/Control.Menubar.js:926 src/control/Control.StatusBar.js:523
+#: src/control/Control.Menubar.js:926 src/control/Control.StatusBar.js:475
 msgid "None (Do not check spelling)"
 msgstr "Không có (Không kiểm tra chính tả)"
 
@@ -781,7 +781,7 @@ msgstr "Tài liệu PDF (.pdf) dưới dạng…"
 
 #: src/control/Control.Menubar.js:99 src/control/Control.Menubar.js:410
 #: src/control/Control.Menubar.js:558 src/control/Control.Menubar.js:693
-#: src/control/Control.Toolbar.js:1088
+#: src/control/Control.Toolbar.js:1079
 msgid "Close document"
 msgstr "Đóng tài liệu"
 
@@ -816,7 +816,7 @@ msgstr "Sửa"
 #: src/control/Control.NotebookbarImpress.js:396
 #: src/control/Control.NotebookbarWriter.js:1344
 #: src/control/Control.NotebookbarWriter.js:1345
-#: src/control/Control.StatusBar.js:277
+#: src/control/Control.StatusBar.js:250
 msgid "Reset zoom"
 msgstr "Đặt lại thu phóng"
 
@@ -1087,7 +1087,7 @@ msgstr "Tài liệu CSV (.csv)"
 msgid "Active sheet"
 msgstr "Trang tính đang hoạt động"
 
-#: src/control/Control.Menubar.js:691 src/control/Control.TopToolbar.js:125
+#: src/control/Control.Menubar.js:691 src/control/Control.TopToolbar.js:109
 #: src/control/jsdialog/Definitions.Menu.ts:126
 msgid "All Sheets"
 msgstr "Tất cả trang tính"
@@ -1174,8 +1174,8 @@ msgstr ""
 #: src/control/Control.NotebookbarDraw.js:959
 #: src/control/Control.NotebookbarImpress.js:1015
 #: src/control/Control.NotebookbarWriter.js:836
-#: src/control/Control.MobileSearchBar.ts:58
-#: src/control/Control.StatusBar.js:250 src/control/Control.Zotero.js:221
+#: src/control/Control.MobileSearchBar.ts:29
+#: src/control/Control.StatusBar.js:225 src/control/Control.Zotero.js:221
 #: src/control/Toolbar.js:555
 msgid "Search"
 msgstr "Tìm kiếm"
@@ -1192,7 +1192,7 @@ msgstr "Xác định vùng in"
 msgid "Remove print area"
 msgstr "Xóa vùng in"
 
-#: src/control/Control.Menubar.js:1413 src/control/Control.StatusBar.js:522
+#: src/control/Control.Menubar.js:1413 src/control/Control.StatusBar.js:474
 msgid "Reset to Default Language"
 msgstr "Đặt lại về ngôn ngữ mặc định"
 
@@ -1222,14 +1222,14 @@ msgstr "Chèn hình dạng"
 msgid "file type icon"
 msgstr "biểu tượng loại tệp"
 
-#: src/control/Control.MobileBottomBar.js:49
-#: src/control/Control.MobileBottomBar.js:150
-#: src/control/Control.MobileBottomBar.js:217
+#: src/control/Control.MobileBottomBar.js:28
+#: src/control/Control.MobileBottomBar.js:129
+#: src/control/Control.MobileBottomBar.js:196
 msgid "Show the search bar"
 msgstr "Hiển thị thanh tìm kiếm"
 
-#: src/control/Control.MobileBottomBar.js:58
-#: src/control/Control.TopToolbar.js:155
+#: src/control/Control.MobileBottomBar.js:37
+#: src/control/Control.TopToolbar.js:139
 msgid "Borders"
 msgstr "Viền"
 
@@ -1586,11 +1586,11 @@ msgstr "Cuộn lên các chú thích"
 msgid "Scroll down annotations"
 msgstr "Cuộn xuống các chú thích"
 
-#: src/control/Control.MobileSearchBar.ts:56
+#: src/control/Control.MobileSearchBar.ts:27
 msgid "Hide the search bar"
 msgstr "Ẩn thanh tìm kiếm"
 
-#: src/control/Control.MobileSearchBar.ts:74
+#: src/control/Control.MobileSearchBar.ts:45
 msgid "Clear the search field"
 msgstr "Xóa trường tìm kiếm"
 
@@ -1614,62 +1614,62 @@ msgstr "Cuộn đến trang cuối cùng"
 msgid "Insert sheet"
 msgstr "Chèn trang tính"
 
-#: src/control/Control.StatusBar.js:211
+#: src/control/Control.StatusBar.js:186
 #: src/control/jsdialog/Definitions.Menu.ts:37
 msgid "Average"
 msgstr "Trung bình"
 
-#: src/control/Control.StatusBar.js:212
+#: src/control/Control.StatusBar.js:187
 msgid "CountA"
 msgstr "Đếm A"
 
-#: src/control/Control.StatusBar.js:213
+#: src/control/Control.StatusBar.js:188
 #: src/control/jsdialog/Definitions.Menu.ts:40
 msgid "Count"
 msgstr "Đếm"
 
-#: src/control/Control.StatusBar.js:214
+#: src/control/Control.StatusBar.js:189
 msgid "Maximum"
 msgstr "Tối đa"
 
-#: src/control/Control.StatusBar.js:215
+#: src/control/Control.StatusBar.js:190
 msgid "Minimum"
 msgstr "Tối thiểu"
 
-#: src/control/Control.StatusBar.js:216
+#: src/control/Control.StatusBar.js:191
 #: src/control/jsdialog/Definitions.Menu.ts:36
 msgid "Sum"
 msgstr "Tổng"
 
-#: src/control/Control.StatusBar.js:217
+#: src/control/Control.StatusBar.js:192
 msgid "Selection count"
 msgstr "Số lượng lựa chọn"
 
-#: src/control/Control.StatusBar.js:253
+#: src/control/Control.StatusBar.js:228
 msgid "Cancel the search"
 msgstr "Hủy tìm kiếm"
 
-#: src/control/Control.StatusBar.js:466
+#: src/control/Control.StatusBar.js:418
 msgid "Select multiple cells"
 msgstr "Chọn nhiều ô"
 
-#: src/control/Control.StatusBar.js:469
+#: src/control/Control.StatusBar.js:421
 msgid "Insert mode: inactive"
 msgstr "Chế độ chèn: không hoạt động"
 
-#: src/control/Control.StatusBar.js:481
+#: src/control/Control.StatusBar.js:433
 msgid "Selection mode: inactive"
 msgstr "Chế độ lựa chọn: không hoạt động"
 
-#: src/control/Control.StatusBar.js:539
+#: src/control/Control.StatusBar.js:491
 msgid "Set Language for All text"
 msgstr "Đặt ngôn ngữ cho tất cả văn bản"
 
-#: src/control/Control.StatusBar.js:542
+#: src/control/Control.StatusBar.js:494
 msgid "Set Language for Paragraph"
 msgstr "Đặt ngôn ngữ cho Đoạn văn"
 
-#: src/control/Control.StatusBar.js:543
+#: src/control/Control.StatusBar.js:495
 msgid "Set Language for Selection"
 msgstr "Đặt ngôn ngữ cho lựa chọn"
 
@@ -1705,7 +1705,7 @@ msgstr "Đổi tên trang tính"
 msgid "Enter new sheet name"
 msgstr "Nhập tên trang tính mới"
 
-#: src/control/Control.Toolbar.js:943
+#: src/control/Control.Toolbar.js:934
 msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to "
 "resolve"
@@ -1713,27 +1713,27 @@ msgstr ""
 "Xung đột Hoàn tác /Làm lại với nhiều người dùng. Vui lòng sử dụng sửa chữa "
 "tài liệu để giải quyết"
 
-#: src/control/Control.TopToolbar.js:124
+#: src/control/Control.TopToolbar.js:108
 msgid "Active Sheet"
 msgstr "Trang tính đang hoạt động"
 
-#: src/control/Control.TopToolbar.js:136
+#: src/control/Control.TopToolbar.js:120
 msgid "Default Style"
 msgstr "Kiểu mặc định"
 
-#: src/control/Control.TopToolbar.js:196
+#: src/control/Control.TopToolbar.js:180
 msgid "Insert table"
 msgstr "Chèn bảng"
 
-#: src/control/Control.TopToolbar.js:199
+#: src/control/Control.TopToolbar.js:183
 msgid "Insert shapes"
 msgstr "Chèn hình dạng"
 
-#: src/control/Control.TopToolbar.js:201
+#: src/control/Control.TopToolbar.js:185
 msgid "Insert connectors"
 msgstr "Chèn các đầu nối"
 
-#: src/control/Control.TopToolbar.js:215 src/control/Control.UIManager.js:766
+#: src/control/Control.TopToolbar.js:199 src/control/Control.UIManager.js:760
 msgid "Hide Menu"
 msgstr "Ẩn Menu"
 
@@ -1741,11 +1741,11 @@ msgstr "Ẩn Menu"
 msgid "Enter new name"
 msgstr ""
 
-#: src/control/Control.UIManager.js:789
+#: src/control/Control.UIManager.js:783
 msgid "Show Menu"
 msgstr ""
 
-#: src/control/Control.UIManager.js:1122
+#: src/control/Control.UIManager.js:1116
 msgid "Dismiss"
 msgstr "Bỏ qua"
 
@@ -1785,11 +1785,11 @@ msgstr "1 người dùng"
 msgid "0 users"
 msgstr "0 người dùng"
 
-#: src/control/Control.UserList.ts:507
+#: src/control/Control.UserList.ts:493
 msgid "Following"
 msgstr "Tiếp theo"
 
-#: src/control/Control.UserList.ts:563
+#: src/control/Control.UserList.ts:549
 msgid "Always follow the editor"
 msgstr "Luôn theo dõi người chỉnh sửa"
 
@@ -2155,7 +2155,7 @@ msgstr "Số lượng trang chiếu"
 msgid "Cell borders"
 msgstr "Đường viền ô"
 
-#: src/control/jsdialog/Widget.TreeView.js:664
+#: src/control/jsdialog/Widget.TreeView.js:666
 msgid "Headings and objects that you add to the document will appear here"
 msgstr "Các tiêu đề và đối tượng mà bạn thêm vào tài liệu sẽ xuất hiện ở đây"
 
@@ -2345,15 +2345,15 @@ msgstr ""
 msgid "Ctrl+Shift+Alt+D to exit"
 msgstr ""
 
-#: src/docstate.js:90
+#: src/docstate.js:87
 msgid "Standard"
 msgstr ""
 
-#: src/docstate.js:101
+#: src/docstate.js:98
 msgid "Theme colors"
 msgstr ""
 
-#: src/docstate.js:102
+#: src/docstate.js:99
 msgid "Document colors"
 msgstr ""
 
@@ -2577,27 +2577,27 @@ msgstr "Tải tệp lên máy chủ không thành công, không tìm thấy tệ
 msgid "Uploading file to server failed, the file is too large."
 msgstr "Tải tệp lên máy chủ không thành công, tệp quá lớn."
 
-#: src/layer/tile/CanvasTileLayer.js:2017
+#: src/layer/tile/CanvasTileLayer.js:2024
 msgid "Functions"
 msgstr "Chức năng"
 
-#: src/layer/tile/CanvasTileLayer.js:2625
+#: src/layer/tile/CanvasTileLayer.js:2620
 msgid "and %COUNT more"
 msgstr ""
 
-#: src/layer/tile/CanvasTileLayer.js:2639
+#: src/layer/tile/CanvasTileLayer.js:2634
 msgid "Copy link location"
 msgstr "Sao chép vị trí liên kết"
 
-#: src/layer/tile/CanvasTileLayer.js:2647
+#: src/layer/tile/CanvasTileLayer.js:2642
 msgid "Edit link"
 msgstr "Chỉnh sửa liên kết"
 
-#: src/layer/tile/CanvasTileLayer.js:2655
+#: src/layer/tile/CanvasTileLayer.js:2650
 msgid "Remove link"
 msgstr "Xoá liên kết"
 
-#: src/layer/tile/CanvasTileLayer.js:5236
+#: src/layer/tile/CanvasTileLayer.js:5230
 msgid "No Comments"
 msgstr "Không có bình luận"
 
@@ -2685,12 +2685,12 @@ msgstr "cảnh báo: yêu cầu sao chép/dán quá thời gian"
 msgid "Failed to download clipboard, please re-copy"
 msgstr "Không tải xuống được khay nhớ tạm, vui lòng sao chép lại"
 
-#: src/map/Clipboard.js:1100
+#: src/map/Clipboard.js:1095
 msgid "<p>Please use the copy/paste buttons on your on-screen keyboard.</p>"
 msgstr ""
 "<p> Vui lòng sử dụng các nút sao chép / dán trên bàn phím ảo của bạn. </p>"
 
-#: src/map/Clipboard.js:1102
+#: src/map/Clipboard.js:1097
 msgid ""
 "<p>Your browser has very limited access to the clipboard, so use these "
 "keyboard shortcuts:</p><table class=\"warn-copy-paste\"><tr><td><kbd>Ctrl</"
@@ -2707,7 +2707,7 @@ msgstr ""
 ">+</span><kbd>V</kbd></td></tr><tr><td>Sao "
 "chép</td><td>Cắt</td><td>Dán</td></tr></table>"
 
-#: src/map/Clipboard.js:1121
+#: src/map/Clipboard.js:1116
 msgid ""
 "<p>A download due to a large copy/paste operation has already started. "
 "Please, wait for the current download or cancel it before starting a new "
@@ -2716,7 +2716,7 @@ msgstr ""
 "<p> Quá trình tải xuống do thao tác sao chép / dán lớn đã bắt đầu. Vui lòng "
 "đợi tải xuống hiện tại hoặc hủy trước khi bắt đầu tải xuống mới </p>"
 
-#: src/map/Clipboard.js:1139
+#: src/map/Clipboard.js:1134
 #, fuzzy
 msgid ""
 "<p>Your browser has very limited access to the clipboard</p><p><b>Please "
@@ -2728,19 +2728,19 @@ msgstr ""
 ">+</span><kbd>V</kbd> để xem thêm tuỳ chọn</p><p>Đóng cửa sổ popup để bỏ qua "
 "dán đặc biệt</p>"
 
-#: src/map/Clipboard.js:1146
+#: src/map/Clipboard.js:1141
 msgid "Paste from this document"
 msgstr ""
 
-#: src/map/Clipboard.js:1146
+#: src/map/Clipboard.js:1141
 msgid "Cancel paste special"
 msgstr ""
 
-#: src/map/Map.js:225
+#: src/map/Map.js:224
 msgid "Initializing..."
 msgstr "Đang khởi tạo..."
 
-#: src/map/Map.js:451 src/map/Map.js:454 src/map/Map.js:457 src/map/Map.js:460
+#: src/map/Map.js:450 src/map/Map.js:453 src/map/Map.js:456 src/map/Map.js:459
 msgid "Last saved:"
 msgstr "Lưu lần cuối:"
 
@@ -2772,39 +2772,43 @@ msgstr "Tải tệp lên máy chủ không thành công với trạng thái: %0"
 msgid "Empty Slide Show"
 msgstr ""
 
-#: src/map/handler/Map.SlideShow.js:153
+#: src/map/handler/Map.SlideShow.js:151
+msgid "Windowed Presentation: "
+msgstr ""
+
+#: src/map/handler/Map.SlideShow.js:158
 msgid "Windowed Presentation Blocked"
 msgstr ""
 
-#: src/map/handler/Map.SlideShow.js:154
+#: src/map/handler/Map.SlideShow.js:159
 msgid ""
 "Presentation was blocked. Please allow pop-ups in your browser. This lets "
 "slide shows to be displayed in separated windows, allowing for easy screen "
 "sharing."
 msgstr ""
 
-#: src/map/handler/Map.SlideShow.js:162
+#: src/map/handler/Map.SlideShow.js:173
 msgid "Presenting in window"
 msgstr ""
 
-#: src/map/handler/Map.SlideShow.js:163
+#: src/map/handler/Map.SlideShow.js:174
 msgid "Close Presentation"
 msgstr ""
 
-#: src/map/handler/Map.SlideShow.js:183
+#: src/map/handler/Map.SlideShow.js:194
 msgid "Presenting in fullscreen"
 msgstr ""
 
-#: src/map/handler/Map.SlideShow.js:184
+#: src/map/handler/Map.SlideShow.js:195
 #, fuzzy
 msgid "End Presentation"
 msgstr "Trình chiếu"
 
-#: src/map/handler/Map.SlideShow.js:239
+#: src/map/handler/Map.SlideShow.js:293
 msgid "Already presenting"
 msgstr ""
 
-#: src/map/handler/Map.SlideShow.js:240
+#: src/map/handler/Map.SlideShow.js:294
 msgid "You are already presenting this document"
 msgstr ""
 
@@ -2857,12 +2861,12 @@ msgstr "Khám phá tất cả các thay đổi"
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:39-7
 msgid ""
 "Check the <a target=\"_blank\" href=\"https://www.collaboraoffice.com/"
-"code-23-05-release-notes/\">release notes</a> and learn all about: The "
+"code-24-04-release-notes/\">release notes</a> and learn all about: The "
 "latest Collabora Online Development Edition, aimed at home users and small "
 "teams."
 msgstr ""
 "Kiểm tra <a target=\"_blank\" href=\"https://www.collaboraoffice.com/"
-"code-23-05-release-notes/\">ghi chú phát hành</a> và tìm hiểu tất cả về: "
+"code-24-04-release-notes/\">ghi chú phát hành</a> và tìm hiểu tất cả về: "
 "Phiên bản mới nhất của Collabora Online Development Edition,dành cho người "
 "dùng gia đình và các nhóm nhỏ."
 
@@ -2895,9 +2899,10 @@ msgstr ""
 
 #: welcome/welcome.html%2Bhtml.body.div.div:55-5
 msgid ""
-"<a id=\"slide-1-indicator\" class=\"active\" href=\"#slide-1\">1</a> <a "
-"id=\"slide-2-indicator\" href=\"#slide-2\">2</a> <a id=\"slide-3-"
-"indicator\" href=\"#slide-3\">3</a>"
+"<a id=\"slide-1-indicator\" class=\"active\" href=\"#slide-1\" data-"
+"translate=\"true\">1</a> <a id=\"slide-2-indicator\" href=\"#slide-2\" data-"
+"translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
+"translate=\"true\">3</a>"
 msgstr ""
 
 #~ msgid "ODF Spreadsheet (.ods)"

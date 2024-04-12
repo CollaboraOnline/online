@@ -12,18 +12,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-05 18:53+0200\n"
+"POT-Creation-Date: 2024-04-12 19:29+0200\n"
 "PO-Revision-Date: 2024-04-06 15:09+0000\n"
 "Last-Translator: Matthaiks <kitynska@gmail.com>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/pl/>\n"
-"Language: pl\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && ("
-"n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && "
-"n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n"
+"%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n"
+"%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
 "X-Generator: Weblate 5.5-dev\n"
 
 #: admin/admin.strings.js:15
@@ -221,7 +221,7 @@ msgid "Channel Filter:"
 msgstr "Filtr kanału:"
 
 #: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:477
-#: src/control/Control.StatusBar.js:218 src/control/Control.StatusBar.js:221
+#: src/control/Control.StatusBar.js:193 src/control/Control.StatusBar.js:196
 msgid "None"
 msgstr "Brak"
 
@@ -288,9 +288,9 @@ msgstr "Serwer został wyłączony, załaduj ponownie stronę."
 #: src/control/Toolbar.js:942 src/core/Socket.js:613 src/core/Socket.js:1041
 #: src/core/Socket.js:1111 src/core/Socket.js:1259 src/core/Socket.js:1263
 #: src/docdispatcher.ts:366 src/main.js:79 src/main.js:82 src/main.js:134
-#: src/map/Clipboard.js:1107 src/map/handler/Map.Feedback.js:83
-#: src/map/handler/Map.SlideShow.js:51 src/map/handler/Map.SlideShow.js:155
-#: src/map/handler/Map.SlideShow.js:241 src/map/handler/Map.WOPI.js:601
+#: src/map/Clipboard.js:1102 src/map/handler/Map.Feedback.js:83
+#: src/map/handler/Map.SlideShow.js:51 src/map/handler/Map.SlideShow.js:160
+#: src/map/handler/Map.SlideShow.js:295 src/map/handler/Map.WOPI.js:601
 msgid "OK"
 msgstr "OK"
 
@@ -311,9 +311,9 @@ msgstr "Czy jesteś pewien, że chcesz zamknąć tą sesję?"
 #: src/control/Control.DocumentRepair.js:71
 #: src/control/Control.DownloadProgress.js:90
 #: src/control/Control.LanguageDialog.js:113
-#: src/control/Control.MobileTopBar.js:75
-#: src/control/Control.UIManager.js:1294 src/control/Control.UIManager.js:1361
-#: src/control/Control.UIManager.js:1496 src/control/Control.UIManager.js:1638
+#: src/control/Control.MobileTopBar.js:54
+#: src/control/Control.UIManager.js:1288 src/control/Control.UIManager.js:1355
+#: src/control/Control.UIManager.js:1490 src/control/Control.UIManager.js:1632
 #: src/control/Control.Zotero.js:333 src/control/Toolbar.js:937
 #: src/core/Socket.js:1284 src/layer/tile/CommentListSection.ts:424
 #: src/layer/tile/CommentSection.ts:156 src/layer/tile/CommentSection.ts:159
@@ -478,7 +478,7 @@ msgid "Repair Document"
 msgstr "Napraw dokument"
 
 #: src/control/Control.DocumentRepair.js:124
-#: src/control/Control.UserList.ts:399
+#: src/control/Control.UserList.ts:388
 msgid "You"
 msgstr "Ty"
 
@@ -571,7 +571,7 @@ msgid "Formula"
 msgstr "Formuła"
 
 #: src/control/Control.FormulaBarJSDialog.js:130
-#: src/control/Control.MobileTopBar.js:74
+#: src/control/Control.MobileTopBar.js:53
 msgid "Accept"
 msgstr "Akceptuj"
 
@@ -641,7 +641,7 @@ msgid "Font Size"
 msgstr "Rozmiar czcionki"
 
 #: src/control/Control.JSDialogBuilder.js:1686
-#: src/control/Control.TopToolbar.js:509
+#: src/control/Control.TopToolbar.js:454
 msgid "Style"
 msgstr "Styl"
 
@@ -654,8 +654,8 @@ msgid "replies"
 msgstr "odpowiedzi"
 
 #: src/control/Control.JSDialogBuilder.js:1964
-#: src/layer/tile/CanvasTileLayer.js:5208
-#: src/layer/tile/CanvasTileLayer.js:5219
+#: src/layer/tile/CanvasTileLayer.js:5202
+#: src/layer/tile/CanvasTileLayer.js:5213
 #: src/layer/tile/CommentListSection.ts:1017
 msgid "Comment"
 msgstr "Komentarz"
@@ -681,7 +681,7 @@ msgstr "Wstaw tabelę"
 #: src/control/Control.LanguageDialog.js:64 src/control/Control.Menubar.js:354
 #: src/control/Control.Menubar.js:356 src/control/Control.Menubar.js:358
 #: src/control/Control.Menubar.js:524 src/control/Control.Menubar.js:654
-#: src/control/Control.Menubar.js:926 src/control/Control.StatusBar.js:523
+#: src/control/Control.Menubar.js:926 src/control/Control.StatusBar.js:475
 msgid "None (Do not check spelling)"
 msgstr "Brak (nie sprawdzaj pisowni)"
 
@@ -795,7 +795,7 @@ msgstr "Dokument PDF (.pdf) jako..."
 
 #: src/control/Control.Menubar.js:99 src/control/Control.Menubar.js:410
 #: src/control/Control.Menubar.js:558 src/control/Control.Menubar.js:693
-#: src/control/Control.Toolbar.js:1088
+#: src/control/Control.Toolbar.js:1079
 msgid "Close document"
 msgstr "Zamknij dokument"
 
@@ -830,7 +830,7 @@ msgstr "Napraw"
 #: src/control/Control.NotebookbarImpress.js:396
 #: src/control/Control.NotebookbarWriter.js:1344
 #: src/control/Control.NotebookbarWriter.js:1345
-#: src/control/Control.StatusBar.js:277
+#: src/control/Control.StatusBar.js:250
 msgid "Reset zoom"
 msgstr "Resetuj powiększenie"
 
@@ -1101,7 +1101,7 @@ msgstr "Plik CSV (.csv)"
 msgid "Active sheet"
 msgstr "Aktywny arkusz"
 
-#: src/control/Control.Menubar.js:691 src/control/Control.TopToolbar.js:125
+#: src/control/Control.Menubar.js:691 src/control/Control.TopToolbar.js:109
 #: src/control/jsdialog/Definitions.Menu.ts:126
 msgid "All Sheets"
 msgstr "Wszystkie arkusze"
@@ -1188,8 +1188,8 @@ msgstr "Poniżej średniej..."
 #: src/control/Control.NotebookbarDraw.js:959
 #: src/control/Control.NotebookbarImpress.js:1015
 #: src/control/Control.NotebookbarWriter.js:836
-#: src/control/Control.MobileSearchBar.ts:58
-#: src/control/Control.StatusBar.js:250 src/control/Control.Zotero.js:221
+#: src/control/Control.MobileSearchBar.ts:29
+#: src/control/Control.StatusBar.js:225 src/control/Control.Zotero.js:221
 #: src/control/Toolbar.js:555
 msgid "Search"
 msgstr "Znajdź"
@@ -1206,7 +1206,7 @@ msgstr "Określ obszar wydruku"
 msgid "Remove print area"
 msgstr "Usuń obszar wydruku"
 
-#: src/control/Control.Menubar.js:1413 src/control/Control.StatusBar.js:522
+#: src/control/Control.Menubar.js:1413 src/control/Control.StatusBar.js:474
 msgid "Reset to Default Language"
 msgstr "Przywróć domyślny język"
 
@@ -1236,14 +1236,14 @@ msgstr "Wstaw kształt"
 msgid "file type icon"
 msgstr "Ikona typu pliku"
 
-#: src/control/Control.MobileBottomBar.js:49
-#: src/control/Control.MobileBottomBar.js:150
-#: src/control/Control.MobileBottomBar.js:217
+#: src/control/Control.MobileBottomBar.js:28
+#: src/control/Control.MobileBottomBar.js:129
+#: src/control/Control.MobileBottomBar.js:196
 msgid "Show the search bar"
 msgstr "Pokaż pasek wyszukiwania"
 
-#: src/control/Control.MobileBottomBar.js:58
-#: src/control/Control.TopToolbar.js:155
+#: src/control/Control.MobileBottomBar.js:37
+#: src/control/Control.TopToolbar.js:139
 msgid "Borders"
 msgstr "Krawędzie"
 
@@ -1599,11 +1599,11 @@ msgstr "Przewiń w górę adnotacje"
 msgid "Scroll down annotations"
 msgstr "Przewiń w dół adnotacje"
 
-#: src/control/Control.MobileSearchBar.ts:56
+#: src/control/Control.MobileSearchBar.ts:27
 msgid "Hide the search bar"
 msgstr "Ukryj pasek wyszukiwania"
 
-#: src/control/Control.MobileSearchBar.ts:74
+#: src/control/Control.MobileSearchBar.ts:45
 msgid "Clear the search field"
 msgstr "Wyczyść pole wyszukiwania"
 
@@ -1627,62 +1627,62 @@ msgstr "Przewiń do ostatniego arkusza"
 msgid "Insert sheet"
 msgstr "Wstaw arkusz"
 
-#: src/control/Control.StatusBar.js:211
+#: src/control/Control.StatusBar.js:186
 #: src/control/jsdialog/Definitions.Menu.ts:37
 msgid "Average"
 msgstr "Średnia"
 
-#: src/control/Control.StatusBar.js:212
+#: src/control/Control.StatusBar.js:187
 msgid "CountA"
 msgstr "Niepuste"
 
-#: src/control/Control.StatusBar.js:213
+#: src/control/Control.StatusBar.js:188
 #: src/control/jsdialog/Definitions.Menu.ts:40
 msgid "Count"
 msgstr "Zliczanie"
 
-#: src/control/Control.StatusBar.js:214
+#: src/control/Control.StatusBar.js:189
 msgid "Maximum"
 msgstr "Maksymalny"
 
-#: src/control/Control.StatusBar.js:215
+#: src/control/Control.StatusBar.js:190
 msgid "Minimum"
 msgstr "Minimalny"
 
-#: src/control/Control.StatusBar.js:216
+#: src/control/Control.StatusBar.js:191
 #: src/control/jsdialog/Definitions.Menu.ts:36
 msgid "Sum"
 msgstr "Suma"
 
-#: src/control/Control.StatusBar.js:217
+#: src/control/Control.StatusBar.js:192
 msgid "Selection count"
 msgstr "Zlicz zaznaczone"
 
-#: src/control/Control.StatusBar.js:253
+#: src/control/Control.StatusBar.js:228
 msgid "Cancel the search"
 msgstr "Anuluj wyszukiwanie"
 
-#: src/control/Control.StatusBar.js:466
+#: src/control/Control.StatusBar.js:418
 msgid "Select multiple cells"
 msgstr "Wybierz wiele komórek"
 
-#: src/control/Control.StatusBar.js:469
+#: src/control/Control.StatusBar.js:421
 msgid "Insert mode: inactive"
 msgstr "Tryb wstawiania: nieaktywny"
 
-#: src/control/Control.StatusBar.js:481
+#: src/control/Control.StatusBar.js:433
 msgid "Selection mode: inactive"
 msgstr "Tryb zaznaczania: nieaktywny"
 
-#: src/control/Control.StatusBar.js:539
+#: src/control/Control.StatusBar.js:491
 msgid "Set Language for All text"
 msgstr "Ustaw język dla wszystkich tekstów"
 
-#: src/control/Control.StatusBar.js:542
+#: src/control/Control.StatusBar.js:494
 msgid "Set Language for Paragraph"
 msgstr "Ustaw język dla akapitu"
 
-#: src/control/Control.StatusBar.js:543
+#: src/control/Control.StatusBar.js:495
 msgid "Set Language for Selection"
 msgstr "Ustaw język dla zaznaczenia"
 
@@ -1718,7 +1718,7 @@ msgstr "Zmień nazwę arkusza"
 msgid "Enter new sheet name"
 msgstr "Podaj nazwę nowego arkusza"
 
-#: src/control/Control.Toolbar.js:943
+#: src/control/Control.Toolbar.js:934
 msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to "
 "resolve"
@@ -1726,27 +1726,27 @@ msgstr ""
 "Konflikt cofnij/ponów z wieloma użytkownikami. Proszę użyć naprawy "
 "dokumentu, aby rozwiązać problem"
 
-#: src/control/Control.TopToolbar.js:124
+#: src/control/Control.TopToolbar.js:108
 msgid "Active Sheet"
 msgstr "Aktywny arkusz"
 
-#: src/control/Control.TopToolbar.js:136
+#: src/control/Control.TopToolbar.js:120
 msgid "Default Style"
 msgstr "Styl domyślny"
 
-#: src/control/Control.TopToolbar.js:196
+#: src/control/Control.TopToolbar.js:180
 msgid "Insert table"
 msgstr "Wstaw tabelę"
 
-#: src/control/Control.TopToolbar.js:199
+#: src/control/Control.TopToolbar.js:183
 msgid "Insert shapes"
 msgstr "Wstaw kształty"
 
-#: src/control/Control.TopToolbar.js:201
+#: src/control/Control.TopToolbar.js:185
 msgid "Insert connectors"
 msgstr "Wstaw łączniki"
 
-#: src/control/Control.TopToolbar.js:215 src/control/Control.UIManager.js:766
+#: src/control/Control.TopToolbar.js:199 src/control/Control.UIManager.js:760
 msgid "Hide Menu"
 msgstr "Ukryj menu"
 
@@ -1754,11 +1754,11 @@ msgstr "Ukryj menu"
 msgid "Enter new name"
 msgstr "Wpisz nową nazwę"
 
-#: src/control/Control.UIManager.js:789
+#: src/control/Control.UIManager.js:783
 msgid "Show Menu"
 msgstr "Pokaż menu"
 
-#: src/control/Control.UIManager.js:1122
+#: src/control/Control.UIManager.js:1116
 msgid "Dismiss"
 msgstr "Odrzuć"
 
@@ -1798,11 +1798,11 @@ msgstr "1 użytkownik"
 msgid "0 users"
 msgstr "0 użytkowników"
 
-#: src/control/Control.UserList.ts:507
+#: src/control/Control.UserList.ts:493
 msgid "Following"
 msgstr "Podążanie"
 
-#: src/control/Control.UserList.ts:563
+#: src/control/Control.UserList.ts:549
 msgid "Always follow the editor"
 msgstr "Zawsze podążaj za edytorem"
 
@@ -2171,7 +2171,7 @@ msgstr "Liczba slajdów"
 msgid "Cell borders"
 msgstr "Krawędzie komórek"
 
-#: src/control/jsdialog/Widget.TreeView.js:664
+#: src/control/jsdialog/Widget.TreeView.js:666
 msgid "Headings and objects that you add to the document will appear here"
 msgstr "W tym miejscu pojawią się nagłówki i obiekty dodane do dokumentu"
 
@@ -2363,15 +2363,15 @@ msgstr "Narzędzia debugowania"
 msgid "Ctrl+Shift+Alt+D to exit"
 msgstr "Ctrl+Shift+Alt+D, aby wyjść"
 
-#: src/docstate.js:90
+#: src/docstate.js:87
 msgid "Standard"
 msgstr "Standardowe"
 
-#: src/docstate.js:101
+#: src/docstate.js:98
 msgid "Theme colors"
 msgstr "Kolory motywu"
 
-#: src/docstate.js:102
+#: src/docstate.js:99
 msgid "Document colors"
 msgstr "Kolory dokumentu"
 
@@ -2610,27 +2610,27 @@ msgstr "Przesyłanie pliku na serwer nie powiodło się, nie znaleziono pliku."
 msgid "Uploading file to server failed, the file is too large."
 msgstr "Przesyłanie pliku na serwer nie powiodło się, plik jest za duży."
 
-#: src/layer/tile/CanvasTileLayer.js:2017
+#: src/layer/tile/CanvasTileLayer.js:2024
 msgid "Functions"
 msgstr "Funkcje"
 
-#: src/layer/tile/CanvasTileLayer.js:2625
+#: src/layer/tile/CanvasTileLayer.js:2620
 msgid "and %COUNT more"
 msgstr "i %COUNT więcej"
 
-#: src/layer/tile/CanvasTileLayer.js:2639
+#: src/layer/tile/CanvasTileLayer.js:2634
 msgid "Copy link location"
 msgstr "Skopiuj adres łącza"
 
-#: src/layer/tile/CanvasTileLayer.js:2647
+#: src/layer/tile/CanvasTileLayer.js:2642
 msgid "Edit link"
 msgstr "Edytuj łącze"
 
-#: src/layer/tile/CanvasTileLayer.js:2655
+#: src/layer/tile/CanvasTileLayer.js:2650
 msgid "Remove link"
 msgstr "Usuń łącze"
 
-#: src/layer/tile/CanvasTileLayer.js:5236
+#: src/layer/tile/CanvasTileLayer.js:5230
 msgid "No Comments"
 msgstr "Bez komentarzy"
 
@@ -2717,11 +2717,11 @@ msgstr "ostrzeżenie: upłynął limit czasu żądania kopiowania/wklejania"
 msgid "Failed to download clipboard, please re-copy"
 msgstr "Nie udało się pobrać schowka, proszę ponownie skopiować"
 
-#: src/map/Clipboard.js:1100
+#: src/map/Clipboard.js:1095
 msgid "<p>Please use the copy/paste buttons on your on-screen keyboard.</p>"
 msgstr "<p>Użyj przycisków kopiuj/wklej na klawiaturze ekranowej.</p>"
 
-#: src/map/Clipboard.js:1102
+#: src/map/Clipboard.js:1097
 msgid ""
 "<p>Your browser has very limited access to the clipboard, so use these "
 "keyboard shortcuts:</p><table class=\"warn-copy-paste\"><tr><td><kbd>Ctrl</"
@@ -2738,7 +2738,7 @@ msgstr ""
 "n><kbd>V</kbd></td></tr><tr><td>Kopiuj</td><td>Wytnij</td><td>Wklej</td></tr>"
 "</table>"
 
-#: src/map/Clipboard.js:1121
+#: src/map/Clipboard.js:1116
 msgid ""
 "<p>A download due to a large copy/paste operation has already started. "
 "Please, wait for the current download or cancel it before starting a new "
@@ -2748,7 +2748,7 @@ msgstr ""
 "rozpoczęło. Poczekaj na bieżące pobieranie lub anuluj przed rozpoczęciem "
 "nowego</p>"
 
-#: src/map/Clipboard.js:1139
+#: src/map/Clipboard.js:1134
 msgid ""
 "<p>Your browser has very limited access to the clipboard</p><p><b>Please "
 "press</b> <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to "
@@ -2759,19 +2759,19 @@ msgstr ""
 ">+</span><kbd>V</kbd>, aby zobaczyć więcej opcji</p><p>Zamknij wyskakujące "
 "okienko, aby zignorować wklejanie specjalne</p>"
 
-#: src/map/Clipboard.js:1146
+#: src/map/Clipboard.js:1141
 msgid "Paste from this document"
 msgstr "Wklej z tego dokumentu"
 
-#: src/map/Clipboard.js:1146
+#: src/map/Clipboard.js:1141
 msgid "Cancel paste special"
 msgstr "Anuluj wklejanie specjalne"
 
-#: src/map/Map.js:225
+#: src/map/Map.js:224
 msgid "Initializing..."
 msgstr "Inicjowanie..."
 
-#: src/map/Map.js:451 src/map/Map.js:454 src/map/Map.js:457 src/map/Map.js:460
+#: src/map/Map.js:450 src/map/Map.js:453 src/map/Map.js:456 src/map/Map.js:459
 msgid "Last saved:"
 msgstr "Ostatnio zapisany:"
 
@@ -2803,11 +2803,15 @@ msgstr "Przesyłanie pliku na serwer nie powiodło się ze statusem: %0"
 msgid "Empty Slide Show"
 msgstr "Pusty pokaz slajdów"
 
-#: src/map/handler/Map.SlideShow.js:153
+#: src/map/handler/Map.SlideShow.js:151
+msgid "Windowed Presentation: "
+msgstr ""
+
+#: src/map/handler/Map.SlideShow.js:158
 msgid "Windowed Presentation Blocked"
 msgstr "Prezentacja okienkowa zablokowana"
 
-#: src/map/handler/Map.SlideShow.js:154
+#: src/map/handler/Map.SlideShow.js:159
 msgid ""
 "Presentation was blocked. Please allow pop-ups in your browser. This lets "
 "slide shows to be displayed in separated windows, allowing for easy screen "
@@ -2817,27 +2821,27 @@ msgstr ""
 "okienek w przeglądarce. Dzięki temu pokazy slajdów mogą być wyświetlane w "
 "oddzielnych oknach, co ułatwia udostępnianie ekranu."
 
-#: src/map/handler/Map.SlideShow.js:162
+#: src/map/handler/Map.SlideShow.js:173
 msgid "Presenting in window"
 msgstr "Prezentacja w oknie"
 
-#: src/map/handler/Map.SlideShow.js:163
+#: src/map/handler/Map.SlideShow.js:174
 msgid "Close Presentation"
 msgstr "Zamknij prezentację"
 
-#: src/map/handler/Map.SlideShow.js:183
+#: src/map/handler/Map.SlideShow.js:194
 msgid "Presenting in fullscreen"
 msgstr "Prezentacja na pełnym ekranie"
 
-#: src/map/handler/Map.SlideShow.js:184
+#: src/map/handler/Map.SlideShow.js:195
 msgid "End Presentation"
 msgstr "Zakończ prezentację"
 
-#: src/map/handler/Map.SlideShow.js:239
+#: src/map/handler/Map.SlideShow.js:293
 msgid "Already presenting"
 msgstr "Już prezentuję"
 
-#: src/map/handler/Map.SlideShow.js:240
+#: src/map/handler/Map.SlideShow.js:294
 msgid "You are already presenting this document"
 msgstr "Już prezentujesz ten dokument"
 
@@ -2890,12 +2894,12 @@ msgstr "Odkryj wszystkie zmiany"
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:39-7
 msgid ""
 "Check the <a target=\"_blank\" href=\"https://www.collaboraoffice.com/"
-"code-23-05-release-notes/\">release notes</a> and learn all about: The "
+"code-24-04-release-notes/\">release notes</a> and learn all about: The "
 "latest Collabora Online Development Edition, aimed at home users and small "
 "teams."
 msgstr ""
 "Sprawdź <a target=\"_blank\" href=\"https://www.collaboraoffice.com/"
-"code-23-05-release-notes/\">informacje o wydaniu</a> i dowiedz się "
+"code-24-04-release-notes/\">informacje o wydaniu</a> i dowiedz się "
 "wszystkiego o najnowszej wersji Collabora Online Development Edition, "
 "skierowanej do użytkowników domowych i małych zespołów."
 
@@ -2928,13 +2932,20 @@ msgstr ""
 
 #: welcome/welcome.html%2Bhtml.body.div.div:55-5
 msgid ""
-"<a id=\"slide-1-indicator\" class=\"active\" href=\"#slide-1\">1</a> <a "
-"id=\"slide-2-indicator\" href=\"#slide-2\">2</a> <a id=\"slide-3-"
-"indicator\" href=\"#slide-3\">3</a>"
+"<a id=\"slide-1-indicator\" class=\"active\" href=\"#slide-1\" data-"
+"translate=\"true\">1</a> <a id=\"slide-2-indicator\" href=\"#slide-2\" data-"
+"translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
+"translate=\"true\">3</a>"
 msgstr ""
-"<a id=\"slide-1-indicator\" class=\"active\" href=\"#slide-1\">1</a> <a id="
-"\"slide-2-indicator\" href=\"#slide-2\">2</a> <a id=\"slide-3-indicator\" "
-"href=\"#slide-3\">3</a>"
+
+#~ msgid ""
+#~ "<a id=\"slide-1-indicator\" class=\"active\" href=\"#slide-1\">1</a> <a "
+#~ "id=\"slide-2-indicator\" href=\"#slide-2\">2</a> <a id=\"slide-3-"
+#~ "indicator\" href=\"#slide-3\">3</a>"
+#~ msgstr ""
+#~ "<a id=\"slide-1-indicator\" class=\"active\" href=\"#slide-1\">1</a> <a id="
+#~ "\"slide-2-indicator\" href=\"#slide-2\">2</a> <a id=\"slide-3-indicator\" "
+#~ "href=\"#slide-3\">3</a>"
 
 #~ msgid "ODF Spreadsheet (.ods)"
 #~ msgstr "Arkusz kalkulacyjny ODF (.ods)"
