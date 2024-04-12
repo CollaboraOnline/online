@@ -438,6 +438,7 @@ bool ChildSession::_handleInput(const char *buffer, int length)
                tokens.equals(0, "windowmouse") ||
                tokens.equals(0, "windowgesture") ||
                tokens.equals(0, "uno") ||
+               tokens.equals(0, "save") ||
                tokens.equals(0, "selecttext") ||
                tokens.equals(0, "windowselecttext") ||
                tokens.equals(0, "selectgraphic") ||
@@ -538,25 +539,31 @@ bool ChildSession::_handleInput(const char *buffer, int length)
                 newTokens.push_back(firstLine.substr(4)); // Copy the remaining part.
                 return unoCommand(newTokens);
             }
-            else if (tokens[1].find(".uno:Save") != std::string::npos)
-            {
-                static bool doBgSave = !!getenv("COOL_BGSAVE");
-
-                bool saving = false;
-                if (doBgSave)
-                    saving = !saveDocumentBackground(tokens);
-
-                if (!saving)
-                { // fallback to foreground save
-
-                    // Disable processing of other messages while saving document
-                    InputProcessingManager processInput(getProtocol(), false);
-                    return unoCommand(tokens);
-                }
-                return true;
-            }
 
             return unoCommand(tokens);
+        }
+        else if (tokens.equals(0, "save"))
+        {
+            static bool doBgSave = !!getenv("COOL_BGSAVE");
+
+            SigUtil::addActivity(getId(), (doBgSave ? "bg " : "") + firstLine);
+
+            bool autosave = tokens[1] == "autosave=true";
+            StringVector unoSave = StringVector::tokenize("uno .uno:Save " + tokens.cat(std::string(" "), 2));
+
+            bool saving = false;
+            if (doBgSave && autosave)
+                saving = !saveDocumentBackground(unoSave);
+
+            if (!saving)
+            { // fallback to foreground save
+
+                // Disable processing of other messages while saving document
+                InputProcessingManager processInput(getProtocol(), false);
+                return unoCommand(unoSave);
+            }
+            else
+                return true;
         }
         else if (tokens.equals(0, "selecttext"))
         {
@@ -1913,6 +1920,9 @@ bool ChildSession::unoCommand(const StringVector& tokens)
                           tokens.equals(1, ".uno:Redo") ||
                           tokens.equals(1, ".uno:OpenHyperlink") ||
                           tokens.startsWith(1, "vnd.sun.star.script:"));
+
+    // check that internal UNO commands don't make it to the core
+    assert (!tokens.equals(1, ".uno:AutoSave"));
 
     getLOKitDocument()->setView(_viewId);
 

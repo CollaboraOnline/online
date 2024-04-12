@@ -2671,11 +2671,7 @@ bool DocumentBroker::sendUnoSave(const std::shared_ptr<ClientSession>& session,
         // We do not want save to terminate editing mode if we are in edit mode now.
         //TODO: Perhaps we want to terminate if forced by the user,
         // otherwise autosave doesn't terminate?
-        oss << "\"DontTerminateEdit\":"
-               "{"
-               "\"type\":\"boolean\","
-               "\"value\":true"
-               "}";
+        oss << "\"DontTerminateEdit\" : { \"type\":\"boolean\", \"value\":true\" }";
     }
 
     if (dontSaveIfUnmodified)
@@ -2683,11 +2679,7 @@ bool DocumentBroker::sendUnoSave(const std::shared_ptr<ClientSession>& session,
         if (dontTerminateEdit)
             oss << ',';
 
-        oss << "\"DontSaveIfUnmodified\":"
-               "{"
-               "\"type\":\"boolean\","
-               "\"value\":true"
-               "}";
+        oss << "\"DontSaveIfUnmodified\" : { \"type\":\"boolean\", \"value\":true\" }";
     }
 
     // arguments end
@@ -2698,12 +2690,15 @@ bool DocumentBroker::sendUnoSave(const std::shared_ptr<ClientSession>& session,
     _nextStorageAttrs.setUserModified(isModified() || haveModifyActivityAfterSaveRequest());
 
     // Note: It's odd to capture these here, but this function is used from ClientSession too.
-    _nextStorageAttrs.setIsAutosave(isAutosave || (_unitWsd && _unitWsd->isAutosave()));
+    bool autosave = isAutosave || (_unitWsd && _unitWsd->isAutosave());
+    _nextStorageAttrs.setIsAutosave(autosave);
     _nextStorageAttrs.setExtendedData(extendedData);
 
     const std::string saveArgs = oss.str();
-    LOG_TRC(".uno:Save arguments: " << saveArgs);
-    const auto command = "uno .uno:Save " + saveArgs;
+    LOG_TRC("save arguments: " << saveArgs);
+
+    // re-written to .uno:Save in the Kit.
+    const auto command = std::string("save autosave=") + (autosave ? "true" : "")+ " " + saveArgs;
     if (forwardToChild(session, command))
     {
         _saveManager.markLastSaveRequestTime();
@@ -3759,6 +3754,9 @@ bool DocumentBroker::forwardToChild(const std::shared_ptr<ClientSession>& sessio
     }
 
     const std::string viewId = session->getId();
+
+    // Should not get through; we have our own save command.
+    assert(!message.starts_with("uno .uno:Save"));
 
     LOG_TRC("Forwarding payload to child [" << viewId << "]: " << getAbbreviatedMessage(message));
 
