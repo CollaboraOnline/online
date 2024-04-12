@@ -1265,6 +1265,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Editing - Basic typing', f
 	function selectAndCheckText(upTo, expectedText) {
 		var backTo = upTo === 'home' ? 'end' : 'home';
 		ceHelper.moveCaret(upTo, 'shift');
+		helper.copy();
 		cy.wait(500);
 		helper.expectTextForClipboard(expectedText);
 		ceHelper.moveCaret(backTo);
@@ -1272,6 +1273,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Editing - Basic typing', f
 	}
 
 	it('Typing', function () {
+		helper.setDummyClipboardForCopy();
 		// typing paragraph 1
 		ceHelper.type('Hello World');
 		selectAndCheckText('home', 'Hello World');
@@ -1290,6 +1292,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Editing - Basic typing', f
 	});
 
 	it('Typing <delete> at paragraph beginning', function () {
+		helper.setDummyClipboardForCopy();
 		ceHelper.type('Hello World');
 		ceHelper.moveCaret('home');
 		ceHelper.type('{del}');
@@ -1297,6 +1300,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Editing - Basic typing', f
 	});
 
 	it('Typing <enter>', function () {
+		helper.setDummyClipboardForCopy();
 		// typing 4 paragraphs
 		ceHelper.type('Hello World');
 		ceHelper.type('{enter}');
@@ -1316,6 +1320,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Editing - Basic typing', f
 	});
 
 	it('Typing <backspace>', function () {
+		helper.setDummyClipboardForCopy();
 		ceHelper.type('Hello World');
 		ceHelper.moveCaret('left','',5);
 		ceHelper.type('{backspace}');
@@ -1348,6 +1353,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Editing - Basic typing', f
 	});
 
 	it('Typing <delete>', function () {
+		helper.setDummyClipboardForCopy();
 		ceHelper.type('Hello World');
 		ceHelper.moveCaret('left','',6);
 		ceHelper.type('{del}');
