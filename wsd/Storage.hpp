@@ -98,7 +98,8 @@ public:
         }
 
         FileInfo(const FileInfo& fileInfo)
-            : _filename(fileInfo._filename)
+            : _size(fileInfo._size)
+            , _filename(fileInfo._filename)
             , _ownerId(fileInfo._ownerId)
             , _modifiedTime(fileInfo._modifiedTime)
         {
