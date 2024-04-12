@@ -10,7 +10,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Scroll through document', 
 		helper.beforeAll(testFileName, 'writer');
 		desktopHelper.switchUIToCompact();
 
-		cy.cGet('#toolbar-up .w2ui-scroll-right').click();
+		cy.cGet('#toolbar-up .ui-scroll-right').click();
 		cy.cGet('#sidebar').click({force: true});
 	});
 

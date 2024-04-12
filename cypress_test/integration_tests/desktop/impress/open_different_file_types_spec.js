@@ -14,7 +14,7 @@ describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Open different file t
 
 		selectZoomLevel('50');
 
-		cy.cGet('#toolbar-up .w2ui-scroll-right').click();
+		cy.cGet('#toolbar-up .ui-scroll-right').click();
 
 		cy.cGet('#modifypage').click();
 	}

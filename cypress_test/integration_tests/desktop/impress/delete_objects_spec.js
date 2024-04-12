@@ -30,7 +30,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function(
 	});
 
 	it('Delete Shapes', function() {
-		cy.cGet('#toolbar-up > .w2ui-scroll-right').click();
+		cy.cGet('#toolbar-up > .ui-scroll-right').click();
 		cy.wait(1000);
 		//insert
 		cy.cGet('#insertshapes').click();
@@ -43,7 +43,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function(
 	});
 
 	it('Delete Chart' , function() {
-		cy.cGet('#toolbar-up > .w2ui-scroll-right').click();
+		cy.cGet('#toolbar-up > .ui-scroll-right').click();
 		//insert
 		cy.cGet('#insertobjectchart').click();
 		cy.cGet('.leaflet-control-buttons-disabled path.leaflet-interactive').should('exist');

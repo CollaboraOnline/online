@@ -12,7 +12,7 @@ describe(['tagdesktop'], 'Row Column Operation', function() {
 		helper.setDummyClipboardForCopy();
 		calcHelper.assertSheetContents(['Hello','Hi','World','Bye'], true);
 		calcHelper.clickOnFirstCell(true,false);
-		cy.cGet('#toolbar-up .w2ui-scroll-right').click();
+		cy.cGet('#toolbar-up .ui-scroll-right').click();
 	});
 
 	afterEach(function() {

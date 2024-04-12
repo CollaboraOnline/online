@@ -10,7 +10,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 	beforeEach(function() {
 		helper.beforeAll(testFileName, 'calc');
 		desktopHelper.switchUIToCompact();
-		cy.cGet('#toolbar-up .w2ui-scroll-right').click();
+		cy.cGet('#toolbar-up .ui-scroll-right').click();
 		cy.cGet('#sidebar').click({force: true});
 	});
 
@@ -32,7 +32,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 	beforeEach(function() {
 		helper.beforeAll(testFileName, 'calc');
 		desktopHelper.switchUIToCompact();
-		cy.cGet('#toolbar-up .w2ui-scroll-right').click();
+		cy.cGet('#toolbar-up .ui-scroll-right').click();
 		cy.cGet('#sidebar').click({force: true});
 	});
 

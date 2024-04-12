@@ -56,7 +56,7 @@ describe(['tagscreenshot'], 'Help dialog screenshot updation', function() {
 	});
 
 	it('Document repair', function() {
-		cy.cGet('#toolbar-up > .w2ui-scroll-right').click();
+		cy.cGet('#toolbar-up > .ui-scroll-right').click();
 		//insert
 		cy.cGet('#insertshapes').click();
 		cy.cGet('.col.w2ui-icon.symbolshapes').click();
@@ -71,7 +71,7 @@ describe(['tagscreenshot'], 'Help dialog screenshot updation', function() {
 	it('Comment', function() {
 		hideSidebar();
 
-		cy.cGet('#toolbar-up > .w2ui-scroll-right').click();
+		cy.cGet('#toolbar-up > .ui-scroll-right').click();
 		cy.cGet('#insertannotation').click();
 		cy.cGet('#annotation-modify-textarea-new').type('comment added');
 		cy.cGet('#annotation-save-new').click(); // save button
@@ -93,7 +93,7 @@ describe(['tagscreenshot'], 'Help dialog screenshot updation', function() {
 	it('Table', function() {
 		hideSidebar();
 
-		cy.cGet('#toolbar-up > .w2ui-scroll-right').click();
+		cy.cGet('#toolbar-up > .ui-scroll-right').click();
 		cy.cGet('#inserttable').click();
 		cy.cGet('.inserttable-grid > :nth-child(4) > :nth-child(4)').trigger('mouseover');
 
@@ -112,7 +112,7 @@ describe(['tagscreenshot'], 'Help dialog screenshot updation', function() {
 	});
 
 	it('Insert special', function() {
-		cy.cGet('#toolbar-up > .w2ui-scroll-right').click();
+		cy.cGet('#toolbar-up > .ui-scroll-right').click();
 		cy.cGet('#insertsymbol').click();
 		cy.cGet('#SpecialCharactersDialog').should('exist');
 		cy.cGet('#SpecialCharactersDialog').screenshot('special-character');
@@ -126,7 +126,7 @@ describe(['tagscreenshot'], 'Help dialog screenshot updation', function() {
 
 		helper.typeIntoDocument('Hello World');
 
-		cy.cGet('#toolbar-up > .w2ui-scroll-right').click();
+		cy.cGet('#toolbar-up > .ui-scroll-right').click();
 		//insert
 		cy.cGet('#insertshapes').click();
 		cy.cGet('.col.w2ui-icon.symbolshapes').click();

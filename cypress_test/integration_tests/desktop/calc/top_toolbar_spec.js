@@ -206,7 +206,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 	it('Add/Delete decimal places', function() {
 		helper.setDummyClipboardForCopy();
 		// Add decimal place
-		cy.cGet('#toolbar-up .w2ui-scroll-right').click();
+		cy.cGet('#toolbar-up .ui-scroll-right').click();
 		cy.cGet('#numberformatincdecimals').click();
 		calcHelper.selectEntireSheet();
 		helper.copy();
@@ -231,7 +231,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Format as currency.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#toolbar-up .w2ui-scroll-right').click();
+		cy.cGet('#toolbar-up .ui-scroll-right').click();
 		cy.cGet('#numberformatcurrency').click();
 
 		calcHelper.selectEntireSheet();
@@ -245,7 +245,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Format as Percent.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#toolbar-up .w2ui-scroll-right').click();
+		cy.cGet('#toolbar-up .ui-scroll-right').click();
 		cy.cGet('#numberformatpercent').click();
 
 		calcHelper.selectEntireSheet();
@@ -259,7 +259,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Apply left/right alignment', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#toolbar-up .w2ui-scroll-right').click();
+		cy.cGet('#toolbar-up .ui-scroll-right').click();
 		// Set right aligment first
 		cy.cGet('#textalign .arrowbackground').click();
 		cy.cGet('body').contains('.ui-combobox-entry', 'Align Right').click();

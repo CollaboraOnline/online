@@ -9,7 +9,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Scroll through document', 
 	beforeEach(function() {
 		helper.beforeAll(testFileName, 'impress');
 		desktopHelper.switchUIToCompact();
-		cy.cGet('#toolbar-up .w2ui-scroll-right').click();
+		cy.cGet('#toolbar-up .ui-scroll-right').click();
 		cy.cGet('#modifypage').click({force: true});
 		desktopHelper.selectZoomLevel('200');
 	});

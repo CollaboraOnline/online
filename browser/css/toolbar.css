@@ -194,25 +194,57 @@ w2ui-toolbar {
 	height: 100%;
 }
 
-.w2ui-scroll-left,
-.w2ui-scroll-right {
+/* scroll wrapper */
+.ui-scroll-wrapper {
+	overflow: hidden;
+}
+.ui-scroll-left {
+	left: 0;
+}
+.ui-scroll-right {
+	right: 0;
+}
+.ui-scroll-left,
+.ui-scroll-right {
+	display: none;
+	position: absolute;
+	top: 0px;
+	width: 18px;
+	height: 100%;
 	z-index: 1001;
 	background-color: var(--color-background-dark);
 	box-shadow: 0px 0px 7px var(--color-box-shadow);
 }
+.ui-scroll-left::before,
+.ui-scroll-right::after {
+	position: absolute;
+	display: block;
+	content: '';
+	border: 10px solid transparent;
+	border-top-color: var(--color-primary);
+	top: calc(50% - 10px);
+}
+.ui-scroll-left::before {
+	rotate: 90deg;
+	right: 0px;
+}
+.ui-scroll-right::after {
+	rotate: 270deg;
+}
+.ui-scroll-left:hover,
+.ui-scroll-right:hover {
+	background-color: var(--color-background-darker);
+}
+
 .notebookbar-scroll-wrapper {
 	height: 72px;
 }
-#toolbar-wrapper.hasnotebookbar .w2ui-scroll-left,
-#toolbar-wrapper.hasnotebookbar .w2ui-scroll-right {
+#toolbar-wrapper.hasnotebookbar .ui-scroll-left,
+#toolbar-wrapper.hasnotebookbar .ui-scroll-right {
 	/* .notebookbar-scroll-wrapper's height */
 	height: 72px;
 	/* #toolbar-wrapper:not(.mobile)'s top padding */
 	top: 3px;
-}
-.w2ui-scroll-left:hover,
-.w2ui-scroll-right:hover {
-	background-color: var(--color-background-darker);
 }
 
 /* center the toolbar */

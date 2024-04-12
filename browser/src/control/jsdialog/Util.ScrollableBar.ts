@@ -18,8 +18,10 @@
 declare var JSDialog: any;
 
 function createScrollButtons(parent: Element, scrollable: Element) {
-	const left = L.DomUtil.create('div', 'w2ui-scroll-left', parent);
-	const right = L.DomUtil.create('div', 'w2ui-scroll-right', parent);
+	L.DomUtil.addClass(scrollable, 'ui-scroll-wrapper');
+
+	const left = L.DomUtil.create('div', 'ui-scroll-left', parent);
+	const right = L.DomUtil.create('div', 'ui-scroll-right', parent);
 
 	JSDialog.AddOnClick(left, () => {
 		const scroll = $(scrollable).scrollLeft() - 300;
@@ -44,8 +46,8 @@ function showArrow(arrow: HTMLElement, show: boolean) {
 }
 
 function setupResizeHandler(container: Element, scrollable: Element) {
-	const left = container.querySelector('.w2ui-scroll-left') as HTMLElement;
-	const right = container.querySelector('.w2ui-scroll-right') as HTMLElement;
+	const left = container.querySelector('.ui-scroll-left') as HTMLElement;
+	const right = container.querySelector('.ui-scroll-right') as HTMLElement;
 	const handler = function () {
 		const rootContainer = scrollable.querySelector('div');
 		if (!rootContainer) return;
