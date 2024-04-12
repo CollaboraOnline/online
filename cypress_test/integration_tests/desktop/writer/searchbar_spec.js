@@ -17,11 +17,13 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Searching via search bar' 
 	});
 
 	it('Search existing word.', function() {
+		helper.setDummyClipboardForCopy();
 		searchHelper.typeIntoSearchField('a');
 
 		// Part of the text should be selected
 		helper.textSelectionShouldExist();
 
+		helper.copy();
 		helper.expectTextForClipboard('a');
 	});
 
@@ -36,44 +38,54 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Searching via search bar' 
 	});
 
 	it('Search next / prev instance.', function() {
+		helper.setDummyClipboardForCopy();
 		searchHelper.typeIntoSearchField('a');
 		helper.textSelectionShouldExist();
+		helper.copy();
 		helper.expectTextForClipboard('a');
 		cy.cGet('#copy-paste-container p b').should('not.exist');
 		//search next instance
 		searchHelper.searchNext();
+		helper.copy();
 		cy.cGet('#copy-paste-container p b').should('exist');
 		helper.textSelectionShouldExist();
 		helper.expectTextForClipboard('a');
 		// Search prev instance
 		searchHelper.searchPrev();
+		helper.copy();
 		cy.cGet('#copy-paste-container p b').should('not.exist');
 		helper.textSelectionShouldExist();
 		helper.expectTextForClipboard('a');
 	});
 	it('Search wrap at document end.', function() {
+		helper.setDummyClipboardForCopy();
 		searchHelper.typeIntoSearchField('a');
 		helper.textSelectionShouldExist();
+		helper.copy();
 		helper.expectTextForClipboard('a');
 		cy.cGet('#copy-paste-container p b').should('not.exist');
 		// Search next instance
 		searchHelper.searchNext();
+		helper.copy();
 		cy.cGet('#copy-paste-container p b').should('exist');
 		helper.textSelectionShouldExist();
 		helper.expectTextForClipboard('a');
 		// Search next instance, which is in the beginning of the document.
 		searchHelper.searchNext();
+		helper.copy();
 		cy.cGet('#copy-paste-container p b').should('not.exist');
 		helper.textSelectionShouldExist();
 		helper.expectTextForClipboard('a');
 	});
 
 	it('Cancel search.', function() {
+		helper.setDummyClipboardForCopy();
 		searchHelper.typeIntoSearchField('a');
 
 		// Part of the text should be selected
 		helper.textSelectionShouldExist();
 
+		helper.copy();
 		helper.expectTextForClipboard('a');
 
 		// Cancel search -> selection removed
