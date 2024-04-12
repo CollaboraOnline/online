@@ -44,6 +44,9 @@ describe(['tagdesktop'], 'Table operations', function() {
 		cy.cGet('.leaflet-marker-icon.table-column-resize-marker')
 			.should('have.length', 2);
 
+		// Without this wait, click can happen in the wrong spot
+		// and then 'Delete row' deletes the wrong row
+		cy.wait(100);
 		cy.cGet('text.SVGTextShape').click({force: true});
 	}
 
