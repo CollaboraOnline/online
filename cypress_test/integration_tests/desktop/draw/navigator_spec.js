@@ -87,7 +87,7 @@ describe.skip(['tagdesktop'], 'Scroll through document, insert/delete items', fu
 		//create a new page
 		cy.cGet('#presentation-toolbar #insertpage').click();
 		cy.cGet('#tree').contains('.jsdialog.sidebar.ui-treeview-cell-text', 'Page 5').should('exist');
-		cy.cGet('#toolbar-up > .w2ui-scroll-right').click();
+		cy.cGet('#toolbar-up > .ui-scroll-right').click();
 
 		//Insert Shape
 		cy.cGet('#insertshapes').click();

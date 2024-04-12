@@ -43,8 +43,8 @@ describe(['tagdesktop'], 'JSDialog unit test', function() {
 
 	it('JSDialog dropdown', function() {
 		// Open conditional format menu
-		cy.cGet('#toolbar-up .w2ui-scroll-right').click();
-		cy.cGet('#toolbar-up .w2ui-scroll-right').click();
+		cy.cGet('#toolbar-up .ui-scroll-right').click();
+		cy.cGet('#toolbar-up .ui-scroll-right').click();
 		cy.cGet('#toolbar-up #home-conditional-format-menu-button').click();
 
 		// Click on overlay to close

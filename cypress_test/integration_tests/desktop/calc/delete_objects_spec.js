@@ -28,7 +28,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function(
 	});
 
 	it('Delete Shapes', function() {
-		cy.cGet('#toolbar-up > .w2ui-scroll-right').click();
+		cy.cGet('#toolbar-up > .ui-scroll-right').click();
 
 		cy.cGet('#insertshapes').click();
 		cy.cGet('.col.w2ui-icon.symbolshapes').should($el => { expect(Cypress.dom.isDetached($el)).to.eq(false); }).click();
@@ -44,7 +44,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function(
 	});
 
 	it('Delete Chart' , function() {
-		cy.cGet('#toolbar-up > .w2ui-scroll-right').click();
+		cy.cGet('#toolbar-up > .ui-scroll-right').click();
 		//insert
 		cy.cGet('#insertobjectchart').click();
 		cy.cGet('.ui-pushbutton.jsdialog.button-primary').should($el => { expect(Cypress.dom.isDetached($el)).to.eq(false); }).click();

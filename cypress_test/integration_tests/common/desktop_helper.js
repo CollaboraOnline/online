@@ -184,7 +184,7 @@ function makeZoomItemsVisible() {
 	cy.cGet('#toolbar-down #zoomin')
 		.then(function(zoomInItem) {
 			if (!Cypress.dom.isVisible(zoomInItem)) {
-				cy.cGet('#toolbar-down .w2ui-scroll-right').click();
+				cy.cGet('#toolbar-down .ui-scroll-right').click();
 			}
 		});
 
@@ -267,12 +267,12 @@ function insertImage(docType) {
 
 	selectZoomLevel('50');
 
-	cy.cGet('#toolbar-up .w2ui-scroll-right').click();
+	cy.cGet('#toolbar-up .ui-scroll-right').click();
 
 	const mode = Cypress.env('USER_INTERFACE');
 
 	if (mode === 'notebookbar')
-		cy.cGet('#toolbar-up .w2ui-scroll-right').click();
+		cy.cGet('#toolbar-up .ui-scroll-right').click();
 
 	if (docType === 'calc' &&  mode === 'notebookbar') {
 		cy.cGet('#Insert-tab-label').click();

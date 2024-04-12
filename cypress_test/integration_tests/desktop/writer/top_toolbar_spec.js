@@ -224,10 +224,10 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Insert/delete table.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#toolbar-up .w2ui-scroll-right').click();
-		cy.cGet('#toolbar-up .w2ui-scroll-right').click();
-		cy.cGet('#toolbar-up .w2ui-scroll-right').click();
-		cy.cGet('#toolbar-up .w2ui-scroll-right').click();
+		cy.cGet('#toolbar-up .ui-scroll-right').click();
+		cy.cGet('#toolbar-up .ui-scroll-right').click();
+		cy.cGet('#toolbar-up .ui-scroll-right').click();
+		cy.cGet('#toolbar-up .ui-scroll-right').click();
 		cy.cGet('#Home-container .unoInsertTable button').click();
 		cy.cGet('.inserttable-grid > .row > .col').eq(3).click();
 		helper.typeIntoDocument('{ctrl}a');
@@ -239,8 +239,8 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 	});
 
 	it('Insert image.', function() {
-		cy.cGet('#toolbar-up .w2ui-scroll-right').click();
-		cy.cGet('#toolbar-up .w2ui-scroll-right').click();
+		cy.cGet('#toolbar-up .ui-scroll-right').click();
+		cy.cGet('#toolbar-up .ui-scroll-right').click();
 		cy.cGet('#Home-container .unoInsertGraphic').click({force: true});
 		cy.cGet('#insertgraphic[type=file]').attachFile('/desktop/writer/image_to_insert.png');
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g.Graphic').should('exist');
@@ -321,7 +321,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		cy.cGet('#copy-paste-container p i').should('exist');
 
 		//Undo
-		cy.cGet('#toolbar-up .w2ui-scroll-left').click();
+		cy.cGet('#toolbar-up .ui-scroll-left').click();
 		cy.cGet('#Home-container .unoUndo').should('not.be.disabled').click();
 		helper.copy();
 		cy.wait(500); // wait for new clipboard
@@ -378,8 +378,8 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 	});
 
 	it('Insert Special Character.', function() {
-		cy.cGet('#toolbar-up .w2ui-scroll-right').click();
-		cy.cGet('#toolbar-up .w2ui-scroll-right').click();
+		cy.cGet('#toolbar-up .ui-scroll-right').click();
+		cy.cGet('#toolbar-up .ui-scroll-right').click();
 		cy.wait(500);
 		cy.cGet('#Home-container .unospan-CharmapControl').click({force: true});
 		cy.cGet('.jsdialog-container.ui-dialog.ui-widget-content.lokdialog_container').should('be.visible');
@@ -488,7 +488,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 	it('Insert/delete Fontwork', function() {
 		writerHelper.selectAllTextOfDoc();
 		cy.cGet('#Insert-tab-label').click();
-		cy.cGet('#toolbar-up .w2ui-scroll-right').click();
+		cy.cGet('#toolbar-up .ui-scroll-right').click();
 		cy.cGet('#Insert-container .unoFontworkGalleryFloater').click();
 		cy.cGet('#ok').click();
 		cy.cGet('.leaflet-control-buttons-disabled path.leaflet-interactive').should('exist');
