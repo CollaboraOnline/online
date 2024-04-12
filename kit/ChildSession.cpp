@@ -84,7 +84,7 @@ std::vector<unsigned char> decodeBase64(const std::string & inputBase64)
 namespace {
 
 /// Formats the uno command information for logging
-std::string formatUnoCommandInfo(const std::string& sessionId, const std::string& unoCommand)
+std::string formatUnoCommandInfo(const std::string& unoCommand)
 {
     // E.g. '2023-09-06 12:19:32', matching systemd format.
     std::string recorded_time = Util::getTimeNow("%Y-%m-%d %T");
@@ -93,9 +93,6 @@ std::string formatUnoCommandInfo(const std::string& sessionId, const std::string
 
     // unoCommand(sessionId) : command - time
     unoCommandInfo.append("unoCommand");
-    unoCommandInfo.push_back('(');
-    unoCommandInfo.append(sessionId);
-    unoCommandInfo.push_back(')');
     unoCommandInfo.append(" : ");
     unoCommandInfo.append(Util::eliminatePrefix(unoCommand,".uno:"));
     unoCommandInfo.append(" - ");
@@ -1908,7 +1905,7 @@ bool ChildSession::unoCommand(const StringVector& tokens)
         return false;
     }
 
-    SigUtil::addActivity(getId(), formatUnoCommandInfo(getId(), tokens[1]));
+    SigUtil::addActivity(getId(), formatUnoCommandInfo(tokens[1]));
 
     // we need to get LOK_CALLBACK_UNO_COMMAND_RESULT callback when saving
     const bool bNotify = (tokens.equals(1, ".uno:Save") ||
