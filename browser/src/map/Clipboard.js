@@ -896,6 +896,12 @@ L.Clipboard = L.Class.extend({
 			return true;
 		}
 
+		if (window.ThisIsAMobileApp && (cmd === '.uno:Paste' || cmd === '.uno:PasteSpecial')) {
+			// perform internal operations
+			app.socket.sendMessage('uno ' + cmd);
+			return true;
+		}
+
 		if (cmd === '.uno:Copy' || (L.Browser.mobile && L.Browser.safari && cmd === '.uno:CopyHyperlinkLocation')) {
 			this._execCopyCutPaste('copy', cmd);
 		} else if (cmd === '.uno:Cut') {
