@@ -246,6 +246,9 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 	});
 
 	it('Insert hyperlink.', function() {
+		helper.setDummyClipboardForCopy();
+		writerHelper.selectAllTextOfDoc();
+		helper.copy();
 		helper.expectTextForClipboard('text text1');
 		cy.wait(500);
 		cy.cGet('#Insert-tab-label').click();
@@ -254,6 +257,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		cy.cGet('#hyperlink-text-box').type('link');
 		cy.cGet('#hyperlink-link-box').type('www.something.com');
 		cy.cGet('#response-ok').click();
+		helper.copy();
 		helper.expectTextForClipboard('text text1link');
 		cy.cGet('#copy-paste-container p a').should('have.attr', 'href', 'http://www.something.com/');
 	});

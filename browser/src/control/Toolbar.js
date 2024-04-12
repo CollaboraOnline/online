@@ -982,7 +982,12 @@ L.Map.include({
 			text = this.hyperlinkUnderCursor.text;
 		} else if (this._clip && this._clip._selectionType == 'text') {
 			if (map['stateChangeHandler'].getItemValue('.uno:Copy') === 'enabled') {
-				text = this.extractContent(this._clip._selectionContent);
+				if (navigator.clipboard.write) {
+					// Async copy, trigger fetching the text selection.
+					app.socket.sendMessage('gettextselection mimetype=text/html,text/plain;charset=utf-8');
+				} else {
+					text = this.extractContent(this._clip._selectionContent);
+				}
 			}
 		} else if (this._docLayer._selectedTextContent) {
 			text = this.extractContent(this._docLayer._selectedTextContent);
