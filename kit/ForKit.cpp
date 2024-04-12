@@ -807,6 +807,11 @@ int forkit_main(int argc, char** argv)
         Log::logger().setLevel(LogLevel);
     }
 
+    // The SocketPoll ctor which may, depending on COOL_WATCHDOG env variable,
+    // want to override the SIG2 handler so set user signal handlers before
+    // that otherwise that choice is overwritten
+    SigUtil::setUserSignals();
+
     ForKitPoll.reset(new SocketPoll (Util::getThreadName()));
     ForKitPoll->runOnClientThread(); // We will do the polling on this thread.
 
@@ -821,8 +826,6 @@ int forkit_main(int argc, char** argv)
         LOG_SFL("Failed to connect to WSD. Will exit.");
         Util::forcedExit(EX_SOFTWARE);
     }
-
-    SigUtil::setUserSignals();
 
     const int parentPid = getppid();
     LOG_INF("ForKit process is ready. Parent: " << parentPid);
