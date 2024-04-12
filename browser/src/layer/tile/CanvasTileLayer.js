@@ -1706,7 +1706,13 @@ L.CanvasTileLayer = L.Layer.extend({
 				// Single format: as-is.
 				textMsgHtml = textMsgContent;
 			}
-			if (this._map._clip) {
+			const hyperlinkTextBox = document.getElementById('hyperlink-text-box');
+			if (hyperlinkTextBox) {
+				// Hyperlink dialog is open, the text selection is for the link text
+				// widget.
+				const extracted = this._map.extractContent(textMsgHtml);
+				hyperlinkTextBox.value = extracted.trim();
+			} else if (this._map._clip) {
 				this._map._clip.setTextSelectionHTML(textMsgHtml, textMsgPlainText);
 			} else
 				// hack for ios and android to get selected text into hyperlink insertion dialog
