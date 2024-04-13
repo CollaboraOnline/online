@@ -1178,6 +1178,14 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._canonicalIdInitialized = false;
 	},
 
+	_resetViewId: function () {
+		this._viewId = undefined;
+	},
+
+	_getViewId: function () {
+		return this._viewId;
+	},
+
 	_updateTileTwips: function () {
 		// smaller zoom = zoom in
 		var factor = Math.pow(1.2, (this._map.options.zoom - this._tileZoom));
