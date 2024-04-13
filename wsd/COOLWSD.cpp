@@ -3556,7 +3556,7 @@ private:
             if (it != NewChildren.end())
                 NewChildren.erase(it);
             else
-                LOG_WRN("Unknown Kit process closed with pid " << child->getPid());
+                LOG_WRN("Unknown Kit process closed with pid " << child ? child->getPid() : -1);
 #if !MOBILEAPP
             rebalanceChildren(COOLWSD::NumPreSpawnedChildren);
 #endif
