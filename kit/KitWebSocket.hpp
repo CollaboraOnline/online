@@ -96,7 +96,7 @@ public:
         : WebSocketHandler(/* isClient = */ false, /* isMasking */ false)
         , _childPid(childPid)
         , _socketName(socketName)
-        , _document(document)
+        , _document(std::move(document))
         , _session(session)
     {
     }
