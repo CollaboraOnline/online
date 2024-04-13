@@ -1452,6 +1452,11 @@ app.definitions.Socket = L.Class.extend({
 		this._map.fire('docloaded', {status: true});
 		if (this._map._docLayer) {
 			this._map._docLayer._onMessage(textMsg);
+
+			// call update view list viewId if it is not defined yet
+			if (!this._map._docLayer._getViewId())
+				this._map.fire('updateviewslist');
+
 			this._reconnecting = false;
 
 			// Applying delayed messages
@@ -1546,6 +1551,7 @@ app.definitions.Socket = L.Class.extend({
 				this._map._isCursorVisible = false;
 
 			this._map._docLayer._resetCanonicalIdStatus();
+			this._map._docLayer._resetViewId();
 		}
 
 		if (isActive && this._reconnecting) {
