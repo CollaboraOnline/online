@@ -57,6 +57,8 @@ public:
         std::cout << "took: " <<
             std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << "ms - ";
 
+        assert(deltas && "div by zero otherwise");
+
         std::cout << "time/rle: " <<
             (1.0*std::chrono::duration_cast<std::chrono::microseconds>(end - start).count())/deltas << "us\n";
     }
