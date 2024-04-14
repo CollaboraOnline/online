@@ -364,7 +364,7 @@ COOL_JS_LST =\
 	src/control/Control.MobileSlide.js \
 	src/control/Control.StatusBar.js \
 	src/control/Control.MobileSearchBar.ts \
-	src/control/Control.MobileTopBar.js \
+	src/control/Control.MobileTopBar.ts \
 	src/control/Control.MobileBottomBar.js \
 	src/control/Control.UserList.ts \
 	src/control/Control.FormulaBarJSDialog.js \
@@ -763,7 +763,7 @@ pot:
 		src/control/Control.LanguageDialog.js \
 		src/control/Control.Menubar.js \
 		src/control/Control.MobileBottomBar.js \
-		src/control/Control.MobileTopBar.js \
+		src/control/Control.MobileTopBar.ts \
 		src/control/Control.MobileWizardBuilder.js \
 		src/control/Control.MobileWizardWindow.js \
 		src/control/Control.MobileWizard.js \

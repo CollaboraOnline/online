@@ -12,16 +12,15 @@
  * JSDialog.MobileTopBar - component of top bar on mobile
  */
 
-/* global JSDialog $ _UNO _ app */
 class MobileTopBar extends JSDialog.Toolbar {
-	constructor(map) {
+	constructor(map: any) {
 		super(map, 'toolbar-up');
 
 		map.on('updatepermission', this.onUpdatePermission, this);
 		map.on('commandstatechanged', this.onCommandStateChanged, this);
 	}
 
-	getToolItems() {
+	private getToolItems() {
 		if (this.docType == 'text') {
 			return [
 				{type: 'toolitem', id: 'signstatus', command: '.uno:Signature', w2icon: '', text: _UNO('.uno:Signature'), visible: false},
@@ -81,12 +80,12 @@ class MobileTopBar extends JSDialog.Toolbar {
 	}
 
 	create() {
-		var items = this.getToolItems();
+		const items = this.getToolItems();
 		this.builder.build(this.parentContainer, items);
 	}
 
-	onUpdatePermission(e) {
-		var toolbarButtons = ['undo', 'redo', 'mobile_wizard', 'insertion_mobile_wizard', 'comment_wizard'];
+	onUpdatePermission(e: any) {
+		const toolbarButtons: string[] = ['undo', 'redo', 'mobile_wizard', 'insertion_mobile_wizard', 'comment_wizard'];
 		if (e.perm === 'edit') {
 			toolbarButtons.forEach((id) => {
 				this.showItem(id, true);
@@ -103,12 +102,12 @@ class MobileTopBar extends JSDialog.Toolbar {
 		}
 	}
 
-	onCommandStateChanged(e) {
-		var commandName = e.commandName;
-		var state = e.state;
+	onCommandStateChanged(e: any) {
+		const commandName: string = e.commandName;
+		const state: string = e.state;
 
 		if (this.map.isEditMode() && (state === 'enabled' || state === 'disabled')) {
-			var id = window.unoCmdToToolbarId(commandName);
+			const id: string = (window as any).unoCmdToToolbarId(commandName);
 
 			if (state === 'enabled') {
 				this.enableItem(id, true);
@@ -119,9 +118,9 @@ class MobileTopBar extends JSDialog.Toolbar {
 		}
 	}
 
-	_generateHtmlItem(id) {
-		var isReadOnlyMode = app.map ? app.isReadOnly() : true;
-		var canUserWrite = !app.isReadOnly();
+	_generateHtmlItem(id: string) {
+		const isReadOnlyMode: boolean = app.map ? app.isReadOnly() : true;
+		const canUserWrite: boolean = !app.isReadOnly();
 
 		return {
 			type: 'container',
@@ -135,6 +134,6 @@ class MobileTopBar extends JSDialog.Toolbar {
 	}
 }
 
-JSDialog.MobileTopBar = function (map) {
+JSDialog.MobileTopBar = function (map: any) {
 	return new MobileTopBar(map);
 };
