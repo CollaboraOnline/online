@@ -17,10 +17,12 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function(
 	});
 
 	it('Delete Text', function() {
+		helper.setDummyClipboardForCopy();
 		cy.cGet('.leaflet-layer').dblclick('center');
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g').should('exist');
 		helper.typeIntoDocument('text');
 		helper.selectAllText();
+		helper.copy();
 		helper.expectTextForClipboard('text');
 		helper.typeIntoDocument('{del}');
 		helper.typeIntoDocument('{ctrl}a');
