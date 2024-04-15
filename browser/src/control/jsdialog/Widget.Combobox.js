@@ -218,7 +218,7 @@ JSDialog.combobox = function (parentContainer, data, builder) {
 	content.role = 'combobox';
 
 	if (data.aria) {
-		content.setAttribute("aria-label",data.aria.label);
+		content.setAttribute('aria-label',data.aria.label);
 	}
 
 	var button = L.DomUtil.create('div', 'ui-combobox-button ' + builder.options.cssClass, container);
