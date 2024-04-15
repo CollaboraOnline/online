@@ -553,6 +553,21 @@ bool ChildSession::_handleInput(const char *buffer, int length)
                 InputProcessingManager processInput(getProtocol(), false);
                 return unoCommand(tokens);
             }
+            else if (tokens[1].find(".uno:SetDocumentProperties") != std::string::npos)
+            {
+                std::string PossibleFileExtensions[3] = {"", TO_UPLOAD_SUFFIX + std::string(UPLOADING_SUFFIX), TO_UPLOAD_SUFFIX};
+                for (size_t i = 0; i < 3; i++)
+                {
+                    const auto st = FileUtil::Stat(Poco::URI(getJailedFilePath()).getPath() + PossibleFileExtensions[i]);
+                    if (st.exists())
+                    {
+                        const std::size_t size = (st.good() ? st.size() : 0);
+                        std::string addedProperty = firstLine + "?FileSize:string=" + std::to_string(size);
+                        StringVector newTokens = StringVector::tokenize(addedProperty.data(), addedProperty.size());
+                        return unoCommand(newTokens);
+                    }
+                }
+            }
 
             return unoCommand(tokens);
         }
