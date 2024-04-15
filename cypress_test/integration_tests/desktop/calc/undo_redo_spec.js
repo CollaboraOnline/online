@@ -21,21 +21,26 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Editing Operations', funct
 		helper.typeIntoDocument('Hello World');
 		helper.typeIntoDocument('{ctrl}z');
 		helper.selectAllText();
+		helper.copy();
 		cy.cGet('#copy-paste-container pre').should('not.have.text', 'Hello World');
 	}
 
 	it('Undo', function() {
+		helper.setDummyClipboardForCopy();
 		undo();
 	});
 
 	it('Redo', function() {
+		helper.setDummyClipboardForCopy();
 		undo();
 		helper.typeIntoDocument('{ctrl}y');
 		helper.selectAllText();
+		helper.copy();
 		helper.expectTextForClipboard('Hello World');
 	});
 
 	it('Repair Document', function() {
+		helper.setDummyClipboardForCopy();
 		helper.typeIntoDocument('Hello World');
 		helper.typeIntoDocument('{enter}');
 		calcHelper.dblClickOnFirstCell();
@@ -45,6 +50,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Editing Operations', funct
 		repairHelper.rollbackPastChange('Undo');
 		calcHelper.dblClickOnFirstCell();
 		helper.selectAllText();
+		helper.copy();
 		helper.expectTextForClipboard('Hello World');
 	});
 });
