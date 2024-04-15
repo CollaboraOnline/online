@@ -42,6 +42,7 @@ all_la_unit_tests = \
 	unit-httpws.la \
 	unit-quarantine.la \
 	unit-load-torture.la \
+	unit-save-torture.la \
 	unit-copy-paste.la \
 	unit-copy-paste-writer.la \
 	unit-crash.la \
@@ -269,6 +270,8 @@ unit_paste_la_SOURCES = UnitPaste.cpp
 unit_paste_la_LIBADD = $(CPPUNIT_LIBS)
 unit_load_torture_la_SOURCES = UnitLoadTorture.cpp
 unit_load_torture_la_LIBADD = $(CPPUNIT_LIBS)
+unit_save_torture_la_SOURCES = UnitSaveTorture.cpp
+unit_save_torture_la_LIBADD = $(CPPUNIT_LIBS)
 unit_rendering_options_la_SOURCES = UnitRenderingOptions.cpp
 unit_rendering_options_la_LIBADD = $(CPPUNIT_LIBS)
 unit_password_protected_la_SOURCES = UnitPasswordProtected.cpp
