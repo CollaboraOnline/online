@@ -36,7 +36,7 @@ describe(['tagmultiuser'], 'Joining a document should not trigger an invalidatio
 		cy.cSetActiveFrame('#iframe1');
 		writerHelper.selectAllTextOfDoc();
 		cy.cGet('#toolbar-down #StateWordCount').should('have.text', 'Selected: 1 word, 1 character');
-		cy.cGet('.leaflet-layer').click();
+		cy.cGet('.leaflet-layer').click({force:true});
 		cy.cGet('#toolbar-down #StateWordCount').should('have.text', '1 word, 1 character');
 
 		cy.cGet('.empty-deltas').then(($before) => {
@@ -49,7 +49,7 @@ describe(['tagmultiuser'], 'Joining a document should not trigger an invalidatio
 			cy.cSetActiveFrame('#iframe1');
 			writerHelper.selectAllTextOfDoc();
 			cy.cGet('#toolbar-down #StateWordCount').should('have.text', 'Selected: 1 word, 1 character');
-			cy.cGet('.leaflet-layer').click();
+			cy.cGet('.leaflet-layer').click({force:true});
 			cy.cGet('#toolbar-down #StateWordCount').should('have.text', '1 word, 1 character');
 
 			cy.cGet('.empty-deltas').should(($after) => {
@@ -76,7 +76,7 @@ describe(['tagmultiuser'], 'Joining a document should not trigger an invalidatio
 		cy.cSetActiveFrame('#iframe1');
 		writerHelper.selectAllTextOfDoc();
 		cy.cGet('#toolbar-down #StateWordCount').should('have.text', 'Selected: 1 word, 1 character');
-		cy.cGet('.leaflet-layer').click();
+		cy.cGet('.leaflet-layer').click({force:true});
 		cy.cGet('#toolbar-down #StateWordCount').should('have.text', '1 word, 1 character');
 
 		cy.cGet('.empty-deltas').then(($before) => {
@@ -95,7 +95,7 @@ describe(['tagmultiuser'], 'Joining a document should not trigger an invalidatio
 			cy.cSetActiveFrame('#iframe1');
 			writerHelper.selectAllTextOfDoc();
 			cy.cGet('#toolbar-down #StateWordCount').should('have.text', 'Selected: 1 word, 1 character');
-			cy.cGet('.leaflet-layer').click();
+			cy.cGet('.leaflet-layer').click({force:true});
 			cy.cGet('#toolbar-down #StateWordCount').should('have.text', '1 word, 1 character');
 			ceHelper.type('X');
 			cy.cGet('#toolbar-down #StateWordCount').should('have.text', '1 word, 2 characters');
