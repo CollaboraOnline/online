@@ -25,21 +25,26 @@ describe(['tagdesktop'], 'Editing Operations', function() {
 		impressHelper.selectTextOfShape();
 		helper.typeIntoDocument('{ctrl}z');
 		impressHelper.selectTextOfShape();
+		helper.copy();
 		helper.clipboardTextShouldBeDifferentThan('Hello World');
 	}
 
 	it('Undo', function() {
+		helper.setDummyClipboardForCopy();
 		undo();
 	});
 
 	it('Redo', function() {
+		helper.setDummyClipboardForCopy();
 		undo();
 		helper.typeIntoDocument('{ctrl}y');
 		impressHelper.selectTextOfShape();
+		helper.copy();
 		helper.expectTextForClipboard('Hello World');
 	});
 
 	it('Repair Document', function() {
+		helper.setDummyClipboardForCopy();
 		helper.typeIntoDocument('Hello World');
 		impressHelper.triggerNewSVGForShapeInTheCenter();
 		impressHelper.selectTextOfShape();
@@ -48,6 +53,7 @@ describe(['tagdesktop'], 'Editing Operations', function() {
 		repairHelper.rollbackPastChange('Undo');
 		impressHelper.triggerNewSVGForShapeInTheCenter();
 		impressHelper.selectTextOfShape();
+		helper.copy();
 		helper.expectTextForClipboard('Hello World');
 	});
 });
