@@ -500,7 +500,7 @@ export class CommentSection extends CanvasSectionObject {
 
 		var lastChild: any = this.getLastChildIndexOf(comment.sectionProperties.data.id);
 
-		while (true && lastChild >= 0) {
+		while (lastChild >= 0) {
 			commentList[lastChild].highlight();
 
 			if (commentList[lastChild].isRootComment())

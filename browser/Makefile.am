@@ -475,10 +475,7 @@ endef
 
 define run_eslint_check
 	@$(NODE) node_modules/eslint/bin/eslint.js \
-		--resolve-plugins-relative-to $(abs_builddir) \
-		--ignore-path $(srcdir)/.eslintignore \
-		--config .eslintrc \
-		--no-eslintrc $(1)
+		--config eslint.config.mjs $(1)
 endef
 
 define run_prettier_check

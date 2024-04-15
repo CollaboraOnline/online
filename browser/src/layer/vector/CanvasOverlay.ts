@@ -4,6 +4,7 @@
 // does not support coordinate values bigger than 2^24 - 1 and if we use it in this
 // regime the renders will be incorrect. At least in Calc it is possible to have pixel
 // coordinates greater than this limit at higher zooms near the bottom of the sheet.
+
 class OverlayTransform {
 	private translationAmount: cool.Point;
 	private scaleAmount: cool.Point;

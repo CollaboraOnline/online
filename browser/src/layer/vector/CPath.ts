@@ -40,7 +40,7 @@ abstract class CPath extends CEventsHandler {
 	protected underMouse: boolean = false;
 	private popup: any;
 	private popupHandlersAdded: boolean = false;
-	private popupTimer: NodeJS.Timeout;
+	private popupTimer: ReturnType<typeof setTimeout>;
 
 	constructor(options: any) {
 		super();

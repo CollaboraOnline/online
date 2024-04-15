@@ -1,5 +1,5 @@
 {
-  "extends": "../browser/.eslintrc",
+# "extends": "../browser/eslint.config.mjs",
   "plugins": ["cypress-rules"],
   "rules": {
       "cypress-rules/no-get-contains-chain": 2,

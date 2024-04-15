@@ -12,7 +12,7 @@
  * L.Control.RowHeader
  */
 
-/* global _UNO app UNOModifier */
+/* global app UNOModifier */
 
 declare var _UNO: any;
 declare var UNOModifier: any;

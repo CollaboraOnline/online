@@ -173,7 +173,7 @@ define run_JS_error_check
 	$(V)echo "Checking for JS errors in test code..."
 	$(V)echo
 	$(V)$(NODE) $(ESLINT_BINARY) $(abs_srcdir) \
-		--ignore-path $(abs_srcdir)/.eslintignore --config $(abs_srcdir)/.eslintrc
+		--ignore-path $(abs_srcdir)/.eslintignore --config $(abs_srcdir)/eslint.config.mjs
 	$(V)echo
 endef
 
