@@ -209,6 +209,7 @@ void BgSaveChildWebSocketHandler::handleMessage(const std::vector<char>& data)
 void BgSaveChildWebSocketHandler::onDisconnect()
 {
     LOG_TRC("Disconnected background web socket to parent kit");
+    UnitKit::get().preBackgroundSaveExit();
     Util::forcedExit(EX_OK);
 }
 
