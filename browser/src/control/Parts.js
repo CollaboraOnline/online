@@ -165,6 +165,8 @@ L.Map.include({
 				this._timeToEmptyQueue = now;
 			}
 		}
+
+		var previewParts = [];
 		// take 3 requests from the queue:
 		while (this._previewRequestsOnFly < 3) {
 			var tile = this._previewQueue.shift();
@@ -176,7 +178,11 @@ L.Map.include({
 				continue;
 			this._previewRequestsOnFly++;
 			app.socket.sendMessage(tile[1]);
+			previewParts.push(tile[0]);
 		}
+
+		if (previewParts.length > 0)
+			window.app.console.debug('PREVIEW: request preview parts : ' + previewParts.join());
 	},
 
 	_addPreviewToQueue: function(part, tileMsg) {
