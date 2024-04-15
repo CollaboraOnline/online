@@ -110,6 +110,7 @@ L.Control.PartsPreview = L.Control.extend({
 					L.DomUtil.addClass(this._previewTiles[selectedPart], 'preview-img-currentpart');
 				this._onScroll(); // Load previews.
 				this._previewInitialized = true;
+				window.app.console.assert(this._previewTiles.length === this._map._previewQueue.length, 'PREVIEW: Wrong tiles queued : ' + parts);
 			}
 			else
 			{
