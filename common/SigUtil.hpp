@@ -126,6 +126,9 @@ namespace SigUtil
     /// Sets a child death signal handler
     void setSigChildHandler(SigChildHandler fn);
 
+    /// Ensure that if a parent process is killed we go down too
+    void dieOnParentDeath();
+
     /// Dump a signal-safe back-trace
     void dumpBacktrace();
 

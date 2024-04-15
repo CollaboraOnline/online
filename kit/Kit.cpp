@@ -1420,6 +1420,8 @@ bool Document::forkToSave(const std::function<void()> &childSave, int viewId)
         SigUtil::addActivity("forked background save process: " +
                              std::to_string(pid));
 
+        SigUtil::dieOnParentDeath();
+
         childSocket.reset();
         // now we just have a single socket to our parent
 
