@@ -1471,7 +1471,7 @@ WopiStorage::handleUploadToStorageResponse(const WopiUploadDetails& details,
             }
             else
             {
-                LOG_ERR("Invalid or missing JSON in " << wopiLog << " HTTP_OK response.");
+                LOG_WRN("Invalid or missing JSON in " << wopiLog << " HTTP_OK response. Expected json object with a LastModifiedTime value");
             }
         }
         else if (details.httpResponseCode == http::StatusCode::PayloadTooLarge)
