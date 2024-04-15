@@ -633,6 +633,7 @@ L.Control.PartsPreview = L.Control.extend({
 			if (this._previewTiles[e.id]) {
 				this._previewTiles[e.id].src = e.tile.src;
 				this._previewTiles[e.id].fetched = true;
+				window.app.console.debug('PREVIEW: part fetched : ' + e.id);
 			}
 		}
 	},
