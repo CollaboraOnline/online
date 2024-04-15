@@ -376,9 +376,6 @@ L.Control.PartsPreview = L.Control.extend({
 	},
 
 	_layoutPreview: function (i, img, bottomBound) {
-		var topBound = this._previewContTop;
-		var previewFrameTop = 0;
-		var previewFrameBottom = 0;
 		if (i > 0) {
 			if (!bottomBound) {
 				var previewContBB = this._partsPreviewCont.getBoundingClientRect();
@@ -388,21 +385,17 @@ L.Control.PartsPreview = L.Control.extend({
 					bottomBound = this._previewContTop + previewContBB.height + previewContBB.height / 2;
 				}
 			}
-			previewFrameTop = this._previewContTop + this._previewFrameMargin + i * (this._previewFrameHeight + this._previewFrameMargin);
-			previewFrameTop -= this._scrollY;
-			previewFrameBottom = previewFrameTop + this._previewFrameHeight;
 		}
 
-		var imgSize;
-		if (i === 0 || (previewFrameTop >= topBound && previewFrameTop <= bottomBound)
-			|| (previewFrameBottom >= topBound && previewFrameBottom <= bottomBound)) {
-			imgSize = this._map.getPreview(i, i, this.options.maxWidth, this.options.maxHeight, {autoUpdate: this.options.autoUpdate, fetchThumbnail: this.options.fetchThumbnail});
-
-			if (this._direction === 'x') {
-				L.DomUtil.setStyle(img, 'width', '');
-			} else {
-				L.DomUtil.setStyle(img, 'height', '');
-			}
+		var imgSize = this._map.getPreview(i, i,
+						   this.options.maxWidth,
+						   this.options.maxHeight,
+						   {autoUpdate: this.options.autoUpdate,
+						    fetchThumbnail: this.options.fetchThumbnail});
+		if (this._direction === 'x') {
+			L.DomUtil.setStyle(img, 'width', '');
+		} else {
+			L.DomUtil.setStyle(img, 'height', '');
 		}
 
 		if (i === 0) {
