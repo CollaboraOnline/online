@@ -18,11 +18,6 @@
     "no-debugger": 1,
     "no-unreachable": 1,
     "no-unused-vars": 1,
-    "semi": 2,
-    "comma-style": 2,
-    "quotes": [2, "single"],
-    "space-before-blocks": 2,
-    "keyword-spacing": 2
   },
   "globals": {
     "L": true,
