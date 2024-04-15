@@ -809,7 +809,7 @@ L.Clipboard = L.Class.extend({
 			'text/html': fetch(url)
 				.then(response => response.text())
 				.then(function(text) {
-					const type = 'text/html';
+					const type = "text/html";
 					const content = that.parseClipboard(text)['html'];
 					const blob = new Blob([content], { 'type': type });
 					return blob;
