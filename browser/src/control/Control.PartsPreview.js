@@ -705,6 +705,13 @@ L.Control.PartsPreview = L.Control.extend({
 		var elemLeft = elemRect.left;
 		var elemRight = elemRect.right;
 		var isVisible = false;
+
+		if (!(elemRect.width > 0) || !(elemRect.height > 0))
+			window.app.console.warn('PREVIEW: element empty position rectangle');
+
+		if (!(window.innerWidth > 0) || !(window.innerHeight > 0))
+			window.app.console.warn('PREVIEW: element comparing empty window size');
+
 		// dont skip the ones that are near visible or will be visible soon while scrolling.
 		if (isFetching)
 			isVisible = this._direction === 'x' ?
