@@ -181,7 +181,7 @@ L.Map.include({
 
 	_addPreviewToQueue: function(part, tileMsg) {
 		for (var tile in this._previewQueue)
-			if (tile[0] === part)
+			if (this._previewQueue[tile][0] === part)
 				// we already have this tile in the queue
 				// no need to ask for it twice
 				return;
