@@ -19,6 +19,7 @@ window.app = {
 	definitions: {}, // Class instances are created using definitions under this variable.
 	dpiScale: window.devicePixelRatio,
 	roundedDpiScale: Math.round(window.devicePixelRatio),
+	canvasSize: null, // To be assigned SimplePoint.
 	viewId: null, // Unique view id of the user.
 	calc: {
 		cellAddress: null, // To be assigned SimplePoint.
@@ -47,10 +48,9 @@ window.app = {
 
 			/*
 				Starts as null, so we can see if the first invalidation happened or not.
-				This is a rectangle: [x, y, w, h].
+				This is a simpleRectangle.
 				One should consider this as a document object coordinate as in CanvasSectionContainer.
 				This gives the coordinate relative to the document, not relative to the UI.
-				In core pixels.
 			*/
 			rectangle: null
 		},
@@ -58,7 +58,7 @@ window.app = {
 			pixels: [0, 0], // This can change according to the zoom level and document's size.
 			twips: [0, 0]
 		},
-		viewedRectangle: [0, 0, 0, 0], // Visible part of the file (x, y, w, h).
+		viewedRectangle: null, // Visible part of the file - SimpleRectangle.
 		fileBasedView: false, // (draw-impress only) Default is false. For read-only documents, user can view all parts at once. In that case, this variable is set to "true".
 		writer: {
 			pageRectangleList: [], // Array of arrays: [x, y, w, h] (as usual) // twips only. Pixels will be calculated on the fly. Corresponding pixels may change too often.

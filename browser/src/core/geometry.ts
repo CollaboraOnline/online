@@ -47,7 +47,7 @@
 		* If one needs hairlines in drawing, they can always add 0.5 or something to result.
 		* Our canvas uses special positioning and sizing, it doesn't / shouldn't use these classes for resizing. Sections can use these safely. See CanvasSectionContainer::onResize if curious.
 		* Rounding errors:
-			* Converting between units is never lossless. But once a variable set, variable's unit should be consistent. For this:
+			* Converting between units is never lossless. But once a variable is set, variable's unit should be consistent. For this:
 				* We are using calculated variables inside the unit. For example, when pX2 is queried:
 					* We use "return pX1 + pWidth"
 					* If we used "(_x1 + _width) * app.twipsToPixels", we would have raised the possibility of inconsistency. Then below 2 may or may not be equal:
@@ -77,6 +77,7 @@ export class SimplePoint {
 
 	public equals(point: Array<number>): boolean { return this._x === Math.round(point[0]) && this._y === Math.round(point[1]); }
 	public toArray(): number[] { return [this._x, this._y]; }
+	public distanceTo(point: number[]): number { return Math.sqrt(Math.pow(this._x - point[0], 2) + Math.pow(this._y - point[1], 2)); }
 
 	// Core / canvas pixel.
 	public get pX(): number { return Math.round(this._x * app.twipsToPixels); }
@@ -87,6 +88,7 @@ export class SimplePoint {
 
 	public pEquals(point: Array<number>): boolean { return this.pX === Math.round(point[0]) && this.pY === Math.round(point[1]); }
 	public pToArray(): number[] { return [this.pX, this.pY]; }
+	public pDistanceTo(point: number[]): number { return Math.sqrt(Math.pow(this.pX - point[0], 2) + Math.pow(this.pY - point[1], 2)); }
 
 	// CSS pixel.
 	public get cX(): number { return Math.round(this._x * app.twipsToPixels / app.dpiScale); }
@@ -97,6 +99,7 @@ export class SimplePoint {
 
 	public cEquals(point: Array<number>): boolean { return this.cX === Math.round(point[0]) && this.cY === Math.round(point[1]); }
 	public cToArray(): number[] { return [this.cX, this.cY]; }
+	public cDistanceTo(point: number[]): number { return Math.sqrt(Math.pow(this.cX - point[0], 2) + Math.pow(this.cY - point[1], 2)); }
 
 	public clone(): SimplePoint { return new SimplePoint(this._x, this._y); }
 }
@@ -148,6 +151,8 @@ export class SimpleRectangle {
 	public containsPoint (point: number[]): boolean { return (Math.round(point[0]) >= this.x1 && Math.round(point[0]) <= this.x2 && Math.round(point[1]) >= this.y1 && Math.round(point[1]) <= this.y2); }
 	public containsX (x: number): boolean { return (Math.round(x) >= this.x1 && Math.round(x) <= this.x2); }
 	public containsY (y: number): boolean { return (Math.round(y) >= this.y1 && Math.round(y) <= this.y2); }
+	public containsRectangle(rectangle: number[]): boolean { return this.containsPoint([rectangle[0], rectangle[1]]) && this.containsPoint([rectangle[0] + rectangle[2], rectangle[1] + rectangle[3]]); }
+	public intersectsRectangle(rectangle: number[]): boolean { return this.containsPoint([rectangle[0], rectangle[1]]) || this.containsPoint([rectangle[0] + rectangle[2], rectangle[1] + rectangle[3]]); }
 	public equals(rectangle: Array<number>): boolean { return this.x1 === Math.round(rectangle[0]) && this.y1 === Math.round(rectangle[1]) && this.width === Math.round(rectangle[2]) && this.height === Math.round(rectangle[3]); }
 
 	public moveTo (point: number[]): void { this._x1 = Math.round(point[0]); this._y1 = Math.round(point[1]); }
@@ -181,6 +186,8 @@ export class SimpleRectangle {
 	public pContainsPoint (point: number[]): boolean { return (Math.round(point[0]) >= this.pX1 && Math.round(point[0]) <= this.pX2 && Math.round(point[1]) >= this.pY1 && Math.round(point[1]) <= this.pY2); }
 	public pContainsX (x: number): boolean { return (Math.round(x) >= this.pX1 && Math.round(x) <= this.pX2); }
 	public pContainsY (y: number): boolean { return (Math.round(y) >= this.pY1 && Math.round(y) <= this.pY2); }
+	public pContainsRectangle(rectangle: number[]): boolean { return this.pContainsPoint([rectangle[0], rectangle[1]]) && this.pContainsPoint([rectangle[0] + rectangle[2], rectangle[1] + rectangle[3]]); }
+	public pIntersectsRectangle(rectangle: number[]): boolean { return this.pContainsPoint([rectangle[0], rectangle[1]]) || this.pContainsPoint([rectangle[0] + rectangle[2], rectangle[1] + rectangle[3]]); }
 	public pEquals(rectangle: Array<number>): boolean { return this.pX1 === Math.round(rectangle[0]) && this.pY1 === Math.round(rectangle[1]) && this.pWidth === Math.round(rectangle[2]) && this.pHeight === Math.round(rectangle[3]); }
 
 	public pMoveTo (point: number[]): void { this._x1 = Math.round(point[0] * app.pixelsToTwips); this._y1 = Math.round(point[1] * app.pixelsToTwips); }
@@ -214,12 +221,14 @@ export class SimpleRectangle {
 	public cContainsPoint (point: number[]): boolean { return (Math.round(point[0]) >= this.cX1 && Math.round(point[0]) <= this.cX2 && Math.round(point[1]) >= this.cY1 && Math.round(point[1]) <= this.cY2); }
 	public cContainsX (x: number): boolean { return (Math.round(x) >= this.cX1 && Math.round(x) <= this.cX2); }
 	public cContainsY (y: number): boolean { return (Math.round(y) >= this.cY1 && Math.round(y) <= this.cY2); }
+	public cContainsRectangle(rectangle: number[]): boolean { return this.cContainsPoint([rectangle[0], rectangle[1]]) && this.cContainsPoint([rectangle[0] + rectangle[2], rectangle[1] + rectangle[3]]); }
+	public cIntersectsRectangle(rectangle: number[]): boolean { return this.cContainsPoint([rectangle[0], rectangle[1]]) || this.cContainsPoint([rectangle[0] + rectangle[2], rectangle[1] + rectangle[3]]); }
 	public cEquals(rectangle: Array<number>): boolean { return this.cX1 === Math.round(rectangle[0]) && this.cY1 === Math.round(rectangle[this.y1]) && this.cWidth === Math.round(rectangle[2]) && this.cHeight === Math.round(rectangle[3]); }
 
 	public cMoveTo (point: number[]): void { this._x1 = Math.round(point[0] * app.dpiScale * app.pixelsToTwips); this._y1 = Math.round(point[1] * app.dpiScale * app.pixelsToTwips); }
 	public cMoveBy (point: number[]): void { this._x1 += Math.round(point[0] * app.dpiScale * app.pixelsToTwips); this._y1 += Math.round(point[1] * app.dpiScale * app.pixelsToTwips); }
 
-	public clone(): Rectangle { return new Rectangle(this.x1, this.x2, this.width, this.height); }
+	public clone(): SimpleRectangle { return new SimpleRectangle(this.x1, this.y1, this.width, this.height); }
 }
 
 }

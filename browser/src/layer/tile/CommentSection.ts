@@ -1134,9 +1134,9 @@ export class Comment extends CanvasSectionObject {
 	}
 
 	/// This event is Writer-only. Fired by CanvasSectionContainer.
-	public onCursorPositionChanged(newPosition: Array<number>): void {
-		var x = newPosition[0];
-		var y = Math.round(newPosition[1] + (newPosition[3]) * 0.5);
+	public onCursorPositionChanged(newPosition: cool.SimpleRectangle): void {
+		var x = newPosition.pX1;
+		var y = Math.round(newPosition.pCenter[1]);
 		if (this.sectionProperties.pixelBasedOrgRectangles) {
 			this.checkIfCursorIsOnThisCommentWriter(this.sectionProperties.pixelBasedOrgRectangles, [x, y]);
 		}
