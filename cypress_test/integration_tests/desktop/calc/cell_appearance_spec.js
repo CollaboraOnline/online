@@ -17,90 +17,109 @@ describe(['tagdesktop'], 'Change cell appearance.', function() {
 	});
 
 	it('Apply background color', function() {
+		helper.setDummyClipboardForCopy();
 		desktopHelper.switchUIToNotebookbar();
 		calcHelper.clickOnFirstCell();
 		cy.cGet('#Home').click();
 		cy.cGet('#Home-container .unoBackgroundColor .arrowbackground').click();
 		desktopHelper.selectColorFromPalette('006CE7');
 		calcHelper.selectEntireSheet();
+		helper.copy();
 		cy.cGet('#copy-paste-container table td').should('have.attr', 'bgcolor', '#006CE7');
 	});
 
 	it('Apply left border', function() {
+		helper.setDummyClipboardForCopy();
 		desktopHelper.switchUIToNotebookbar();
 		calcHelper.clickOnFirstCell();
 		cy.cGet('.notebookbar .unoSetBorderStyle').click();
 		cy.cGet('.w2ui-tb-image.w2ui-icon.frame02').should($el => { expect(Cypress.dom.isDetached($el)).to.eq(false); }).click();
 		calcHelper.selectEntireSheet();
+		helper.copy();
 		cy.cGet('#copy-paste-container table td').should('have.attr', 'style', 'border-left: 1px solid #000000');
 	});
 
 	it('Remove cell border', function() {
+		helper.setDummyClipboardForCopy();
 		desktopHelper.switchUIToNotebookbar();
 		calcHelper.clickOnFirstCell();
 		// First add left border
 		cy.cGet('.notebookbar .unoSetBorderStyle').click();
 		cy.cGet('.w2ui-tb-image.w2ui-icon.frame02').should($el => { expect(Cypress.dom.isDetached($el)).to.eq(false); }).click();
+		helper.copy();
 		calcHelper.selectEntireSheet();
 		cy.cGet('#copy-paste-container table td').should('have.attr', 'style', 'border-left: 1px solid #000000');
 		// Then remove it
 		calcHelper.clickOnFirstCell();
 		cy.cGet('.notebookbar .unoSetBorderStyle').click();
 		cy.cGet('.w2ui-tb-image.w2ui-icon.frame01').should($el => { expect(Cypress.dom.isDetached($el)).to.eq(false); }).click();
+		helper.copy();
 		calcHelper.selectEntireSheet();
 		cy.cGet('#copy-paste-container table td').should('not.have.attr', 'style');
 	});
 
 	it('Apply right border', function() {
+		helper.setDummyClipboardForCopy();
 		desktopHelper.switchUIToNotebookbar();
 		calcHelper.clickOnFirstCell();
 		cy.cGet('.notebookbar .unoSetBorderStyle').click();
 		cy.cGet('.w2ui-tb-image.w2ui-icon.frame03').should($el => { expect(Cypress.dom.isDetached($el)).to.eq(false); }).click();
 		calcHelper.selectEntireSheet();
+		helper.copy();
 		cy.cGet('#copy-paste-container table td').should('have.attr', 'style', 'border-right: 1px solid #000000');
 	});
 
 	it('Apply left and right border', function() {
+		helper.setDummyClipboardForCopy();
 		desktopHelper.switchUIToNotebookbar();
 		calcHelper.clickOnFirstCell();
 		cy.cGet('.notebookbar .unoSetBorderStyle').click();
 		cy.cGet('.w2ui-tb-image.w2ui-icon.frame04').should($el => { expect(Cypress.dom.isDetached($el)).to.eq(false); }).click();
+		helper.copy();
 		calcHelper.selectEntireSheet();
 		cy.cGet('#copy-paste-container table td').should('have.attr', 'style', 'border-left: 1px solid #000000; border-right: 1px solid #000000');
 	});
 
 	it('Apply top border', function() {
+		helper.setDummyClipboardForCopy();
 		desktopHelper.switchUIToNotebookbar();
 		calcHelper.clickOnFirstCell();
 		cy.cGet('.notebookbar .unoSetBorderStyle').click();
 		cy.cGet('.w2ui-tb-image.w2ui-icon.frame05').should($el => { expect(Cypress.dom.isDetached($el)).to.eq(false); }).click();
+		helper.copy();
 		calcHelper.selectEntireSheet();
 		cy.cGet('#copy-paste-container table td').should('have.attr', 'style', 'border-top: 1px solid #000000');
 	});
 
 	it('Apply bottom border', function() {
+		helper.setDummyClipboardForCopy();
 		desktopHelper.switchUIToNotebookbar();
 		calcHelper.clickOnFirstCell();
 		cy.cGet('.notebookbar .unoSetBorderStyle').click();
 		cy.cGet('.w2ui-tb-image.w2ui-icon.frame06').should($el => { expect(Cypress.dom.isDetached($el)).to.eq(false); }).click();
+		helper.copy();
 		calcHelper.selectEntireSheet();
 		cy.cGet('#copy-paste-container table td').should('have.attr', 'style', 'border-bottom: 1px solid #000000');
 	});
 
 	it('Apply top and bottom border', function() {
+		helper.setDummyClipboardForCopy();
 		desktopHelper.switchUIToNotebookbar();
 		calcHelper.clickOnFirstCell();
 		cy.cGet('.notebookbar .unoSetBorderStyle').click();
 		cy.cGet('.w2ui-tb-image.w2ui-icon.frame07').should($el => { expect(Cypress.dom.isDetached($el)).to.eq(false); }).click();
+		helper.copy();
 		calcHelper.selectEntireSheet();
 		cy.cGet('#copy-paste-container table td').should('have.attr', 'style', 'border-top: 1px solid #000000; border-bottom: 1px solid #000000');
 	});
 
 	it('Apply border for all sides', function() {
+		helper.setDummyClipboardForCopy();
 		desktopHelper.switchUIToNotebookbar();
 		calcHelper.clickOnFirstCell();
 		cy.cGet('.notebookbar .unoSetBorderStyle').click();
 		cy.cGet('.w2ui-tb-image.w2ui-icon.frame08').should($el => { expect(Cypress.dom.isDetached($el)).to.eq(false); }).click();
+		helper.copy();
 		calcHelper.selectEntireSheet();
 		cy.cGet('#copy-paste-container table td')
 			.should('have.attr', 'style', 'border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000');
@@ -175,6 +194,7 @@ describe(['tagdesktop'], 'Change cell appearance.', function() {
 	});
 
 	it('Apply border color', function() {
+		helper.setDummyClipboardForCopy();
 		desktopHelper.switchUIToNotebookbar();
 		calcHelper.clickOnFirstCell();
 		// Apply left border first
@@ -187,6 +207,7 @@ describe(['tagdesktop'], 'Change cell appearance.', function() {
 		// Then apply border color
 		cy.cGet('#FrameLineColor .arrowbackground').click();
 		desktopHelper.selectColorFromPalette('006CE7');
+		helper.copy();
 		calcHelper.selectEntireSheet();
 
 		cy.cGet('#copy-paste-container table td')
