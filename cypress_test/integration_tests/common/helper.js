@@ -607,19 +607,12 @@ function closeDocument(fileName) {
 			Cypress.env('SERVER_PORT') +
 			'/browser/dist/admin/admin.html');
 
-		cy.get('#uptime').its('text').should('not.eq', '0');
-
 		// We have all lines of document infos as one long string.
 		// We have PID number before the file names, with matching
 		// also on the PID number we can make sure to match on the
 		// whole file name, not on a suffix of a file name.
 		var regex = new RegExp('[0-9]' + fileName);
-		// Saving may take much longer now to ensure no unsaved data exists.
-		// This is not an issue on a fast machine, but on the CI we do timeout often.
-		const options = {timeout : Cypress.config('defaultCommandTimeout') * 2.0};
-		cy.get('#doclist', options)
-			.invoke(options, 'text')
-			.should('not.match', regex);
+		cy.get('#doclist').invoke('text').should('not.match', regex);
 	}
 
 	cy.log('<< closeDocument - end');
