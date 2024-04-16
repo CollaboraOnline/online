@@ -23,6 +23,9 @@ window.addEventListener('load', function () {
 		0,
 	);
 	app.calc.cellAddress = new app.definitions.simplePoint(0, 0);
+	app.canvasSize = new app.definitions.simplePoint(0, 0);
+	app.file.viewedRectangle = new app.definitions.simpleRectangle(0, 0, 0, 0);
+	app.file.cursor.rectangle = new app.definitions.simpleRectangle(0, 0, 0, 0);
 });
 
 app.isReadOnly = function () {

@@ -348,7 +348,7 @@ L.TileSectionManager = L.Class.extend({
 		else {
 			var ratio = this._layer._tileSize / this._layer._tileHeightTwips;
 			var partHeightPixels = Math.round((this._layer._partHeightTwips + this._layer._spaceBetweenParts) * ratio);
-			return L.LOUtil._doRectanglesIntersect(app.file.viewedRectangle, [coords.x, coords.y + partHeightPixels * coords.part, app.tile.size.pixels[0], app.tile.size.pixels[1]]);
+			return L.LOUtil._doRectanglesIntersect(app.file.viewedRectangle.pToArray(), [coords.x, coords.y + partHeightPixels * coords.part, app.tile.size.pixels[0], app.tile.size.pixels[1]]);
 		}
 	},
 
@@ -2743,12 +2743,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._twipsToLatLng(recCursor.getBottomRight(), this._map.getZoom()));
 
 		this._cursorCorePixels = this._twipsToCorePixelsBounds(recCursor);
-		app.file.cursor.rectangle = [
-			Math.round(this._cursorCorePixels.getTopLeft().x), // x
-			Math.round(this._cursorCorePixels.getTopLeft().y), // y
-			Math.round(this._cursorCorePixels.getSize().x), // width
-			Math.round(this._cursorCorePixels.getSize().y) // height
-		];
+		app.file.cursor.rectangle = new app.definitions.simpleRectangle(recCursor.getTopLeft().x, recCursor.getTopLeft().y, recCursor.getSize().x, recCursor.getSize().y);
 
 		if (this._docType === 'text') {
 			app.sectionContainer.onCursorPositionChanged();
@@ -6040,7 +6035,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		var partWidthPixels = Math.round((this._partWidthTwips) * ratio);
 		var mode = 0; // mode is different only in Impress MasterPage mode so far
 
-		var intersectionAreaRectangle = L.LOUtil._getIntersectionRectangle(app.file.viewedRectangle, [0, 0, partWidthPixels, partHeightPixels * this._parts]);
+		var intersectionAreaRectangle = L.LOUtil._getIntersectionRectangle(app.file.viewedRectangle.pToArray(), [0, 0, partWidthPixels, partHeightPixels * this._parts]);
 
 		var queue = [];
 
@@ -6049,11 +6044,11 @@ L.CanvasTileLayer = L.Layer.extend({
 			var maxLocalX = Math.floor((intersectionAreaRectangle[0] + intersectionAreaRectangle[2]) / app.tile.size.pixels[0]) * app.tile.size.pixels[0];
 
 			var startPart = Math.floor(intersectionAreaRectangle[1] / partHeightPixels);
-			var startY = app.file.viewedRectangle[1] - startPart * partHeightPixels;
+			var startY = app.file.viewedRectangle.pY1 - startPart * partHeightPixels;
 			startY = Math.floor(startY / app.tile.size.pixels[1]) * app.tile.size.pixels[1];
 
 			var endPart = Math.ceil((intersectionAreaRectangle[1] + intersectionAreaRectangle[3]) / partHeightPixels);
-			var endY = app.file.viewedRectangle[1] + app.file.viewedRectangle[3] - endPart * partHeightPixels;
+			var endY = app.file.viewedRectangle.pY1 + app.file.viewedRectangle.pY2 - endPart * partHeightPixels;
 			endY = Math.floor(endY / app.tile.size.pixels[1]) * app.tile.size.pixels[1];
 
 			var vTileCountPerPart = Math.ceil(partHeightPixels / app.tile.size.pixels[1]);
