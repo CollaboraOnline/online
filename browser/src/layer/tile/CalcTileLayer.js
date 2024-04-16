@@ -30,11 +30,9 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		var commentList = app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).sectionProperties.commentList;
 		var comment = null;
 
-		var cursorAddress = this._cellCursorXY;
-
 		for (var i = 0; i < commentList.length; i++) {
 			if (commentList[i].sectionProperties.data.tab == this._selectedPart) {
-				if (commentList[i].sectionProperties.data.cellRange.contains(cursorAddress)) {
+				if (commentList[i].sectionProperties.data.cellRange.contains(app.calc.cellAddress.toArray())) {
 					comment = commentList[i];
 					break;
 				}
