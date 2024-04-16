@@ -147,7 +147,7 @@ describe(['tagdesktop'], 'Annotation Autosave Tests', function() {
 		cy.cGet('.cool-annotation-autosavelabel').should('be.visible');
 		cy.cGet('.cool-annotation-edit.modify-annotation').should('be.visible');
 
-		helper.closeDocument(testFileName, '');
+		helper.closeDocument(testFileName);
 		helper.beforeAll(testFileName, 'writer', true, false, false, true);
 		cy.cGet('.cool-annotation-content-wrapper').should('exist');
 		cy.cGet('#annotation-content-area-1').should('have.text','some text0');
@@ -162,7 +162,7 @@ describe(['tagdesktop'], 'Annotation Autosave Tests', function() {
 		cy.cGet('#annotation-content-area-1').should('have.text','some text0');
 		cy.cGet('.cool-annotation-autosavelabel').should('be.not.visible');
 
-		helper.closeDocument(testFileName, '');
+		helper.closeDocument(testFileName);
 		helper.beforeAll(testFileName, 'writer', true, false, false, true);
 		cy.cGet('.cool-annotation-content-wrapper').should('exist');
 		cy.cGet('#annotation-content-area-1').should('have.text','some text0');
@@ -177,7 +177,7 @@ describe(['tagdesktop'], 'Annotation Autosave Tests', function() {
 		cy.cGet('#comment-container-1').should('not.exist');
 		cy.cGet('.cool-annotation-autosavelabel').should('not.exist');
 
-		helper.closeDocument(testFileName, '');
+		helper.closeDocument(testFileName);
 		helper.beforeAll(testFileName, 'writer', true, false, false, true);
 		cy.cGet('.cool-annotation-content-wrapper').should('not.exist');
 		cy.cGet('#comment-container-1').should('not.exist');
@@ -195,7 +195,7 @@ describe(['tagdesktop'], 'Annotation Autosave Tests', function() {
 		cy.cGet('.cool-annotation-autosavelabel').should('be.visible');
 		cy.cGet('.cool-annotation-edit.modify-annotation').should('be.visible');
 
-		helper.closeDocument(testFileName, '');
+		helper.closeDocument(testFileName);
 		helper.beforeAll(testFileName, 'writer', true, false, false, true);
 		cy.cGet('.cool-annotation-content-wrapper').should('exist');
 		cy.cGet('#annotation-content-area-1').should('have.text','some other text, some text0');
@@ -216,7 +216,7 @@ describe(['tagdesktop'], 'Annotation Autosave Tests', function() {
 		cy.cGet('#annotation-content-area-1').should('have.text','some other text, some text0');
 		cy.cGet('.cool-annotation-autosavelabel').should('be.not.visible');
 
-		helper.closeDocument(testFileName, '');
+		helper.closeDocument(testFileName);
 		helper.beforeAll(testFileName, 'writer', true, false, false, true);
 		cy.cGet('.cool-annotation-content-wrapper').should('exist');
 		cy.cGet('#annotation-content-area-1').should('have.text','some other text, some text0');
@@ -238,7 +238,7 @@ describe(['tagdesktop'], 'Annotation Autosave Tests', function() {
 		cy.cGet('.cool-annotation-autosavelabel').should('be.not.visible');
 		cy.cGet('#annotation-content-area-1').should('have.text','some text0');
 
-		helper.closeDocument(testFileName, '');
+		helper.closeDocument(testFileName);
 		helper.beforeAll(testFileName, 'writer', true, false, false, true);
 		cy.cGet('.cool-annotation-content-wrapper').should('exist');
 		cy.cGet('#annotation-content-area-1').should('have.text','some text0');
@@ -256,7 +256,7 @@ describe(['tagdesktop'], 'Annotation Autosave Tests', function() {
 		cy.cGet('.cool-annotation-autosavelabel').should('be.visible');
 		cy.cGet('#annotation-modify-textarea-2').should('be.visible');
 
-		helper.closeDocument(testFileName, '');
+		helper.closeDocument(testFileName);
 		helper.beforeAll(testFileName, 'writer', true, false, false, true);
 		cy.cGet('.cool-annotation-content-wrapper').should('exist');
 		cy.cGet('#annotation-content-area-2').should('have.text','some reply text');
@@ -280,7 +280,7 @@ describe(['tagdesktop'], 'Annotation Autosave Tests', function() {
 		cy.cGet('#annotation-content-area-1').should('have.text','some text0');
 		cy.cGet('#annotation-content-area-2').should('have.text','some reply text');
 
-		helper.closeDocument(testFileName, '');
+		helper.closeDocument(testFileName);
 		helper.beforeAll(testFileName, 'writer', true, false, false, true);
 		cy.cGet('.cool-annotation-content-wrapper').should('exist');
 		cy.cGet('#annotation-content-area-2').should('have.text','some reply text');
@@ -306,7 +306,7 @@ describe(['tagdesktop'], 'Annotation Autosave Tests', function() {
 		cy.cGet('#comment-container-1 .cool-annotation-autosavelabel').should('be.not.visible');
 		cy.cGet('#comment-container-2 .cool-annotation-autosavelabel').should('not.exist');
 
-		helper.closeDocument(testFileName, '');
+		helper.closeDocument(testFileName);
 		helper.beforeAll(testFileName, 'writer', true, false, false, true);
 		cy.cGet('.cool-annotation-content-wrapper').should('exist');
 		cy.cGet('#annotation-content-area-1').should('have.text','some text0');

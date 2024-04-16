@@ -103,7 +103,7 @@ describe(['tagdesktop'], 'Annotation Autosave Tests', function() {
 		cy.cGet('.cool-annotation-autosavelabel').should('be.visible');
 		cy.cGet('.cool-annotation-edit.modify-annotation').should('be.visible');
 
-		helper.closeDocument(testFileName, '');
+		helper.closeDocument(testFileName);
 		helper.beforeAll(testFileName, 'calc', true, false, false, true);
 		cy.cGet('.cool-annotation').should('exist');
 		cy.cGet('#comment-container-1').then(function (element) {
@@ -129,7 +129,7 @@ describe(['tagdesktop'], 'Annotation Autosave Tests', function() {
 		cy.cGet('#comment-container-1').trigger('mouseover');
 		cy.cGet('#annotation-content-area-1').should('have.text','some text0');
 
-		helper.closeDocument(testFileName, '');
+		helper.closeDocument(testFileName);
 		helper.beforeAll(testFileName, 'calc', true, false, false, true);
 		cy.cGet('.cool-annotation').should('exist');
 		cy.cGet('#comment-container-1').then(function (element) {
@@ -149,7 +149,7 @@ describe(['tagdesktop'], 'Annotation Autosave Tests', function() {
 		cy.cGet('.cool-annotation').should('not.exist');
 		cy.cGet('.cool-annotation-autosavelabel').should('not.exist');
 
-		helper.closeDocument(testFileName, '');
+		helper.closeDocument(testFileName);
 		helper.beforeAll(testFileName, 'calc', true, false, false, true);
 		cy.cGet('.cool-annotation').should('not.exist');
 	});
@@ -172,7 +172,7 @@ describe(['tagdesktop'], 'Annotation Autosave Tests', function() {
 		cy.cGet('.cool-annotation-autosavelabel').should('be.visible');
 		cy.cGet('.cool-annotation-edit.modify-annotation').should('be.visible');
 
-		helper.closeDocument(testFileName, '');
+		helper.closeDocument(testFileName);
 		helper.beforeAll(testFileName, 'calc', true, false, false, true);
 		cy.cGet('.cool-annotation').should('exist');
 		cy.cGet('#comment-container-1').then(function (element) {
@@ -209,7 +209,7 @@ describe(['tagdesktop'], 'Annotation Autosave Tests', function() {
 		cy.cGet('#annotation-content-area-1').should('have.text','some other text, some text0');
 		cy.cGet('#comment-container-1').should('exist');
 
-		helper.closeDocument(testFileName, '');
+		helper.closeDocument(testFileName);
 		helper.beforeAll(testFileName, 'calc', true, false, false, true);
 		cy.cGet('.cool-annotation').should('exist');
 		cy.cGet('#comment-container-1').then(function (element) {
@@ -246,7 +246,7 @@ describe(['tagdesktop'], 'Annotation Autosave Tests', function() {
 		cy.cGet('#annotation-content-area-1').should('have.text','some text0');
 		cy.cGet('#comment-container-1').should('exist');
 
-		helper.closeDocument(testFileName, '');
+		helper.closeDocument(testFileName);
 		helper.beforeAll(testFileName, 'calc', true, false, false, true);
 		cy.cGet('.cool-annotation').should('exist');
 		cy.cGet('#comment-container-1').then(function (element) {
