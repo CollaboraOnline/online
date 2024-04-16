@@ -613,13 +613,11 @@ function closeDocument(fileName) {
 		// We have PID number before the file names, with matching
 		// also on the PID number we can make sure to match on the
 		// whole file name, not on a suffix of a file name.
-		var rexname = '[0-9]' + fileName;
-		var regex = new RegExp(rexname);
-		cy.log('closeDocument - waiting not.match: ' + rexname);
+		var regex = new RegExp('[0-9]' + fileName);
 		// Saving may take much longer now to ensure no unsaved data exists.
 		// This is not an issue on a fast machine, but on the CI we do timeout often.
 		const options = {timeout : Cypress.config('defaultCommandTimeout') * 2.0};
-		cy.get('#docview', options)
+		cy.get('#doclist', options)
 			.invoke(options, 'text')
 			.should('not.match', regex);
 	}
