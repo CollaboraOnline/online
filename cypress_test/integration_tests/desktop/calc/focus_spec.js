@@ -16,6 +16,7 @@ describe(['tagdesktop'], 'Calc focus tests', function() {
 	});
 
 	it('Formula-bar focus', function() {
+		helper.setDummyClipboardForCopy();
 		// Select first cell
 		calcHelper.clickOnFirstCell();
 		cy.wait(200);
@@ -31,6 +32,7 @@ describe(['tagdesktop'], 'Calc focus tests', function() {
 
 		// Check text in formulabar
 		calcHelper.typeIntoFormulabar('{ctrl}a');
+		helper.copy();
 		helper.expectTextForClipboard(text1);
 		// Clear selection
 		calcHelper.typeIntoFormulabar('{enter}');
@@ -47,6 +49,7 @@ describe(['tagdesktop'], 'Calc focus tests', function() {
 		calcHelper.clickOnFirstCell();
 		cy.wait(200);
 		calcHelper.typeIntoFormulabar('{ctrl}a');
+		helper.copy();
 		helper.expectTextForClipboard(text1+text2);
 		calcHelper.typeIntoFormulabar('{enter}');
 	});
