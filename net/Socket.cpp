@@ -595,9 +595,22 @@ void SocketPoll::wakeupWorld()
 // what we don't want.
 void SocketPoll::closeAllSockets()
 {
+    // We just forked so we need to shift thread ids to this thread.
+    checkAndReThread();
+
     removeFromWakeupArray();
     for (auto &it : _pollSockets)
+    {
+        // first close the underlying socket
         close(it->getFD());
+
+        // avoid the socketHandler' getting an onDisconnect
+        auto stream = dynamic_cast<StreamSocket *>(it.get());
+        if (stream)
+            stream->resetHandler();
+    }
+    // only then remove
+    removeSockets();
     assert(_newSockets.size() == 0);
 }
 
