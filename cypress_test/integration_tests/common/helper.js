@@ -532,7 +532,7 @@ function reload(fileName, subFolder, noFileCopy, isMultiUser, subsequentLoad, ha
 	cy.log('Reloading document: ' + subFolder + '/' + fileName);
 	cy.log('Reloading document - noFileCopy: ' + noFileCopy);
 	cy.log('Reloading document - subsequentLoad: ' + subsequentLoad);
-	closeDocument(fileName, '');
+	closeDocument(fileName);
 	var noRename = true;
 	return loadTestDoc(fileName, subFolder, noFileCopy, isMultiUser, subsequentLoad, hasInteractionBeforeLoad, noRename);
 }
@@ -545,8 +545,10 @@ function beforeAll(fileName, subFolder, noFileCopy, isMultiUser, subsequentLoad,
 	return loadTestDoc(fileName, subFolder, noFileCopy, isMultiUser, subsequentLoad, hasInteractionBeforeLoad, noRename);
 }
 
+// testState no longer used, but not removed from all calls to afterAll yet
+// eslint-disable-next-line no-unused-vars
 function afterAll(fileName, testState) {
-	closeDocument(fileName, testState);
+	closeDocument(fileName);
 }
 
 // This method is intended to call after each test case.
@@ -555,15 +557,10 @@ function afterAll(fileName, testState) {
 // Parameters:
 // fileName - test document name (we can check it on the admin console).
 // testState - whether the test passed or failed before this method was called.
-function closeDocument(fileName, testState) {
+function closeDocument(fileName) {
 	cy.log('>> closeDocument - start');
 
 	if (Cypress.env('INTEGRATION') === 'nextcloud') {
-		if (testState === 'failed') {
-			Cypress.env('IFRAME_LEVEL', '');
-			return;
-		}
-
 		if (Cypress.env('IFRAME_LEVEL') === '2') {
 			// Close the document, with the close button.
 			doIfOnMobile(function() {
@@ -609,13 +606,6 @@ function closeDocument(fileName, testState) {
 		cy.visit('http://admin:admin@' + Cypress.env('SERVER') + ':' +
 			Cypress.env('SERVER_PORT') +
 			'/browser/dist/admin/admin.html');
-
-		// https://github.com/cypress-io/cypress/issues/9207
-		// TODO reproduce or remove
-		if (testState === 'failed') {
-			cy.wait(5000);
-			return;
-		}
 
 		cy.get('#uptime').its('text').should('not.eq', '0');
 
