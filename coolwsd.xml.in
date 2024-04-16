@@ -64,6 +64,7 @@
         <limit_convert_secs desc="Maximum number of seconds to wait for a document conversion to succeed. 0 for unlimited." type="uint" default="100">100</limit_convert_secs>
         <min_time_between_saves_ms desc="Minimum number of milliseconds between saving the document on disk." type="uint" default="500">500</min_time_between_saves_ms>
         <min_time_between_uploads_ms desc="Minimum number of milliseconds between uploading the document to storage." type="uint" default="5000">5000</min_time_between_uploads_ms>
+        <background_autosave desc="Allow auto-saves to occur in a forked background process where possible." type="bool" default="false">false</background_autosave>
         <cleanup desc="Checks for resource consuming (bad) documents and kills associated kit process. A document is considered resource consuming (bad) if is in idle state for idle_time_secs period and memory usage passed limit_dirty_mem_mb or CPU usage passed limit_cpu_per" enable="true">
             <cleanup_interval_ms desc="Interval between two checks" type="uint" default="10000">10000</cleanup_interval_ms>
             <bad_behavior_period_secs desc="Minimum time period for a document to be in bad state before associated kit process is killed. If in this period the condition for bad document is not met once then this period is reset" type="uint" default="60">60</bad_behavior_period_secs>

@@ -1618,7 +1618,10 @@ private:
     std::map<std::string, std::string> _embeddedMedia;
 
     /// True iff the config per_document.always_save_on_exit is true.
-    const bool _alwaysSaveOnExit;
+    const bool _alwaysSaveOnExit : 1;
+
+    /// True iff the config per_document.background_autosave is true.
+    const bool _backgroundAutoSave : 1;
 
 #if !MOBILEAPP
     Admin& _admin;
