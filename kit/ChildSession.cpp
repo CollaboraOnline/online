@@ -539,6 +539,13 @@ bool ChildSession::_handleInput(const char *buffer, int length)
                 newTokens.push_back(firstLine.substr(4)); // Copy the remaining part.
                 return unoCommand(newTokens);
             }
+            else if (tokens[1].find(".uno:Save") != std::string::npos)
+            {
+                LOG_ERR("Unexpected UNO Save command in client");
+                // save should go through path below
+                assert(false);
+                return false;
+            }
 
             return unoCommand(tokens);
         }
@@ -549,7 +556,7 @@ bool ChildSession::_handleInput(const char *buffer, int length)
             SigUtil::addActivity(getId(), (doBgSave ? "bg " : "") + firstLine);
 
             bool autosave = tokens[1] == "autosave=true";
-            StringVector unoSave = StringVector::tokenize("uno .uno:Save " + tokens.cat(std::string(" "), 2));
+            StringVector unoSave = StringVector::tokenize("uno .uno:Save " + tokens.cat(' ', 2));
 
             bool saving = false;
             if (doBgSave && autosave)
@@ -1920,6 +1927,8 @@ bool ChildSession::unoCommand(const StringVector& tokens)
                           tokens.equals(1, ".uno:Redo") ||
                           tokens.equals(1, ".uno:OpenHyperlink") ||
                           tokens.startsWith(1, "vnd.sun.star.script:"));
+
+    LOG_TRC("uno command " << tokens[1] << " " << tokens.cat(' ', 2) << " notify: " << bNotify);
 
     // check that internal UNO commands don't make it to the core
     assert (!tokens.equals(1, ".uno:AutoSave"));

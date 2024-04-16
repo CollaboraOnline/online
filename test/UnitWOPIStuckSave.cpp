@@ -91,11 +91,11 @@ public:
     {
         LOG_TST("Filtering: [" << message->firstLine() << ']');
 
-        constexpr char unoSave[] = ".uno:Save";
+        constexpr char saveMsg[] = "save autosave=";
         constexpr char unoModifiedStatus[] = ".uno:ModifiedStatus";
-        if (message->contains(unoSave, sizeof(unoSave) - 1))
+        if (message->contains(saveMsg, sizeof(saveMsg) - 1))
         {
-            LOG_TST("Dropping .uno:Save to simulate stuck save");
+            LOG_TST("Dropping save message to simulate stuck save");
             return true; // Do not process the message further.
         }
         else if (message->contains(unoModifiedStatus, sizeof(unoModifiedStatus) - 1))
