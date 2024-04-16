@@ -1509,6 +1509,9 @@ int main(int argc, char**argv)
      */
     int safe_atoi(const char* p, int len);
 
+    /// Sleep based on count of seconds in env. var
+    void sleepFromEnvIfSet(const char *domain, const char *envVar);
+
     /// Close logs and forcefully exit with the given exit code.
     /// This calls std::_Exit, which terminates the program without cleaning up
     /// static instances (i.e. anything registered with `atexit' or `on_exit').

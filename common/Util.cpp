@@ -957,6 +957,24 @@ namespace Util
 
         assert(sameThread);
     }
-}
+
+    void sleepFromEnvIfSet(const char *domain, const char *envVar)
+    {
+        const char *value;
+        if ((value = std::getenv(envVar)))
+        {
+            const size_t delaySecs = std::stoul(value);
+            if (delaySecs > 0)
+            {
+                std::cerr << domain << ": Sleeping " << delaySecs
+                          << " seconds to give you time to attach debugger to process "
+                          << getpid() << std::endl
+                          << "sudo gdb --pid=" << getpid() << std::endl;
+                std::this_thread::sleep_for(std::chrono::seconds(delaySecs));
+            }
+        }
+    }
+
+} // namespace Util
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

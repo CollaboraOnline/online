@@ -374,17 +374,7 @@ static void cleanupChildren()
 
 void sleepForDebugger()
 {
-    if (std::getenv("SLEEPKITFORDEBUGGER"))
-    {
-        const size_t delaySecs = std::stoul(std::getenv("SLEEPKITFORDEBUGGER"));
-        if (delaySecs > 0)
-        {
-            std::cerr << "Kit: Sleeping " << delaySecs
-                      << " seconds to give you time to attach debugger to process " << getpid()
-                      << std::endl;
-            std::this_thread::sleep_for(std::chrono::seconds(delaySecs));
-        }
-    }
+    Util::sleepFromEnvIfSet("Kit", "SLEEPKITFORDEBUGGER");
 }
 
 static int createLibreOfficeKit(const std::string& childRoot,
@@ -584,17 +574,7 @@ int forkit_main(int argc, char** argv)
     // * the user is a non-priviled user, the binary is not privileged
     //   either (no caps set), and --disable-cool-user-checking was provided
 
-    if (std::getenv("SLEEPFORDEBUGGER"))
-    {
-        const size_t delaySecs = std::stoul(std::getenv("SLEEPFORDEBUGGER"));
-        if (delaySecs > 0)
-        {
-            std::cerr << "Forkit: Sleeping " << delaySecs
-                      << " seconds to give you time to attach debugger to process "
-                      << getpid() << std::endl;
-            std::this_thread::sleep_for(std::chrono::seconds(delaySecs));
-        }
-    }
+    Util::sleepFromEnvIfSet("Forkit", "SLEEPFORDEBUGGER");
 
     if (!Util::isKitInProcess())
     {
