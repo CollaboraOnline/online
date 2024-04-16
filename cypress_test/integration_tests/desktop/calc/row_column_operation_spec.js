@@ -9,7 +9,8 @@ describe(['tagdesktop'], 'Row Column Operation', function() {
 	beforeEach(function() {
 		helper.beforeAll(testFileName, 'calc');
 		desktopHelper.switchUIToNotebookbar();
-		calcHelper.assertSheetContents(['Hello','Hi','World','Bye']);
+		helper.setDummyClipboardForCopy();
+		calcHelper.assertSheetContents(['Hello','Hi','World','Bye'], true);
 		calcHelper.clickOnFirstCell(true,false);
 		cy.cGet('#toolbar-up .w2ui-scroll-right').click();
 	});
