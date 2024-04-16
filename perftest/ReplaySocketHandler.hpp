@@ -144,26 +144,34 @@ public:
                 std::string payload = _next.getPayload();
                 StringVector tokens = StringVector::tokenize(payload);
                 if (tokens.equals(0, "wait")) {
-                    // Valid commands: `wait` `wait <timeout>` `wait <timeout> <message substring>`
-                    if (tokens.size() == 1) {
-                        _waitingTimeout = 10000000 * TRACE_MULTIPLIER;
-                        _waitingMessage = "WaitForIdle";
-                        sendMessage("uno .uno:WaitForIdle");
-                    } else if (tokens.size() == 2) {
-                        _waitingTimeout = std::stoi(tokens[1]) * TRACE_MULTIPLIER;
-                        _waitingMessage = "WaitForIdle";
-                        sendMessage("uno .uno:WaitForIdle");
-                    } else {
+                    // wait <timeout> <message substring>
+                    if (tokens.size() >= 3) {
                         _waitingTimeout = std::stoi(tokens[1]) * TRACE_MULTIPLIER;
                         _waitingMessage = tokens.cat(" ",2);
+                        _waiting = true;
+                        _waitingStart = std::chrono::steady_clock::now();
+                        std::cerr << getCurrentTime() << " waiting for message: " << _waitingMessage << " (Timeout " << _waitingTimeout << "us)" << std::endl;
                     }
+                } else if (tokens.equals(0, "idle")) {
+                    // idle
+                    // idle <timeout>
+                    if (tokens.size() == 1) {
+                        _waitingTimeout = 10000000 * TRACE_MULTIPLIER;
+                    } else if (tokens.size() == 2) {
+                        _waitingTimeout = std::stoi(tokens[1]) * TRACE_MULTIPLIER;
+                    }
+                    _waitingMessage = "WaitForIdle";
                     _waiting = true;
                     _waitingStart = std::chrono::steady_clock::now();
                     std::cerr << getCurrentTime() << " waiting for message: " << _waitingMessage << " (Timeout " << _waitingTimeout << "us)" << std::endl;
+                    sendMessage("uno .uno:WaitForIdle");
                 } else if (tokens.equals(0, "NewSession:")) {
                     // Do nothing
                 } else if (tokens.equals(0, "EndSession:")) {
                     // Do nothing
+                } else {
+                    std::cerr << "Invalid trace message syntax: " << payload << "\n";
+                    Util::forcedExit(EX_SOFTWARE);
                 }
                 break;
         }

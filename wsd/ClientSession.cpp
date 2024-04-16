@@ -502,12 +502,11 @@ bool ClientSession::_handleInput(const char *buffer, int length)
                 CALLGRIND_TOGGLE_COLLECT;
                 return true;
             }
-            else if (tokens.size() == 3 && tokens[1] == "stop")
+            else if (tokens.size() == 2 && tokens[1] == "stop")
             {
                 LOG_DBG("Stopping callgrind instrumentation");
                 CALLGRIND_STOP_INSTRUMENTATION;
-                auto traceName = tokens[2].c_str(); // Doesn't work if used directly in the macro
-                CALLGRIND_DUMP_STATS_AT(traceName);
+                CALLGRIND_DUMP_STATS;
                 return true;
             }
             else

@@ -98,7 +98,11 @@ int PerfTest::main(const std::vector<std::string>& args)
     if (handler->isFinished()) {
         std::cerr << "Finished" << std::endl;
     } else {
-        std::cerr << "Did not finish measurement" << std::endl;
+        std::cerr << "Did not finish measurement";
+        if (!handler->isStarted()) {
+            std::cerr << " (Never started)";
+        }
+        std::cerr << std::endl;
         return EX_SOFTWARE;
     }
 

@@ -60,6 +60,11 @@ public:
         }
     }
 
+    bool isStarted()
+    {
+        return _measurementStarted;
+    }
+
     bool isFinished()
     {
         return _measurementFinished;
@@ -85,12 +90,16 @@ public:
 
     void startMeasurement() override
     {
-        sendMessage("PERFTEST start");
+        //system("callgrind_control --instr=on");
+        //sendMessage("PERFTEST start");
     }
 
     void stopMeasurement() override
     {
-        sendMessage("PERFTEST stop " + _trace);
+        //system("callgrind_control --dump");
+        //system("callgrind_control --kill");
+        //system("callgrind_control --instr=off");
+        //sendMessage("PERFTEST stop " + _trace);
     }
 
     void printResults()
