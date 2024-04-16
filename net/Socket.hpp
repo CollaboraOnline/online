@@ -1195,6 +1195,12 @@ public:
         _socketHandler->onConnect(shared_from_this());
     }
 
+    void resetHandler()
+    {
+        LOG_TRC("resetHandler");
+        _socketHandler.reset();
+    }
+
     /// Create a socket of type TSocket given an FD and a handler.
     /// We need this helper since the handler needs a shared_ptr to the socket
     /// but we can't have a shared_ptr in the ctor.

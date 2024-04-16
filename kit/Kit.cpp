@@ -1429,7 +1429,7 @@ bool Document::forkToSave(const std::function<void()> &childSave, int viewId)
 
         UnitKit::get().postBackgroundSaveFork();
 
-        // Hard drop our previous connections to coolwsd and shared wakeups.x
+        // Hard drop our previous connections to coolwsd and shared wakeups.
         KitSocketPoll::cleanupChildProcess();
 
         // close duplicate kit->wsd socket
