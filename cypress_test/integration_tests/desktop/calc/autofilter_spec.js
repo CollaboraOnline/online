@@ -12,7 +12,8 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'AutoFilter', function() {
 		testFileName = helper.beforeAll(origTestFileName, 'calc');
 		desktopHelper.switchUIToCompact();
 		toggleAutofilter();
-		calcHelper.assertSheetContents(['Cypress Test', 'Status', 'Test 1', 'Pass', 'Test 2', 'Fail', 'Test 3', 'Pass', 'Test 4', '', 'Test 5', 'Fail']);
+		helper.setDummyClipboardForCopy();
+		calcHelper.assertSheetContents(['Cypress Test', 'Status', 'Test 1', 'Pass', 'Test 2', 'Fail', 'Test 3', 'Pass', 'Test 4', '', 'Test 5', 'Fail'], true);
 	});
 
 	afterEach(function() {
@@ -53,7 +54,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'AutoFilter', function() {
 		// Wait for autofilter dialog to close
 		cy.cGet('div.autofilter').should('not.exist');
 
-		calcHelper.assertSheetContents(['Cypress Test', 'Status', 'Test 5', 'Fail', 'Test 4', '', 'Test 3', 'Pass', 'Test 2', 'Fail', 'Test 1', 'Pass']);
+		calcHelper.assertSheetContents(['Cypress Test', 'Status', 'Test 5', 'Fail', 'Test 4', '', 'Test 3', 'Pass', 'Test 2', 'Fail', 'Test 1', 'Pass'], true);
 
 		//sort by ascending order
 		calcHelper.openAutoFilterMenu();
@@ -61,7 +62,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'AutoFilter', function() {
 		// Wait for autofilter dialog to close
 		cy.cGet('div.autofilter').should('not.exist');
 
-		calcHelper.assertSheetContents(['Cypress Test', 'Status', 'Test 1', 'Pass', 'Test 2', 'Fail', 'Test 3', 'Pass', 'Test 4', '', 'Test 5', 'Fail']);
+		calcHelper.assertSheetContents(['Cypress Test', 'Status', 'Test 1', 'Pass', 'Test 2', 'Fail', 'Test 3', 'Pass', 'Test 4', '', 'Test 5', 'Fail'], true);
 	});
 
 	it('Filter empty/non-empty cells', function() {
@@ -72,7 +73,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'AutoFilter', function() {
 		// Wait for autofilter dialog to close
 		cy.cGet('div.autofilter').should('not.exist');
 
-		calcHelper.assertSheetContents(['Cypress Test', 'Status', 'Test 1', 'Pass', 'Test 2', 'Fail', 'Test 3', 'Pass', 'Test 5', 'Fail']);
+		calcHelper.assertSheetContents(['Cypress Test', 'Status', 'Test 1', 'Pass', 'Test 2', 'Fail', 'Test 3', 'Pass', 'Test 5', 'Fail'], true);
 	});
 
 	it('Close autofilter popup by click outside', function() {
@@ -92,7 +93,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'AutoFilter', function() {
 		calcHelper.dblClickOnFirstCell();
 		helper.typeIntoDocument('New content{enter}');
 
-		calcHelper.assertSheetContents(['CNew contentypress Test', 'Status', 'Test 1', 'Pass', 'Test 2', 'Fail', 'Test 3', 'Pass', 'Test 4', '', 'Test 5', 'Fail']);
+		calcHelper.assertSheetContents(['CNew contentypress Test', 'Status', 'Test 1', 'Pass', 'Test 2', 'Fail', 'Test 3', 'Pass', 'Test 4', '', 'Test 5', 'Fail'], true);
 	});
 
 	// check if filter by color applied or not
@@ -121,6 +122,6 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'AutoFilter', function() {
 		.first() // Select the first input element
 		.click(); // Click on the first input element
 
-		calcHelper.assertSheetContents(['Cypress Test', 'Status', 'Test 1', 'Pass']);
+		calcHelper.assertSheetContents(['Cypress Test', 'Status', 'Test 1', 'Pass'], true);
 	});
 });
