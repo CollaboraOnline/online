@@ -24,7 +24,7 @@
 #include <common/JsonUtil.hpp>
 #include <Util.hpp>
 
-void CheckFileInfo::checkFileInfo(int redirectLimit)
+bool CheckFileInfo::checkFileInfo(int redirectLimit)
 {
     const std::string uriAnonym = COOLWSD::anonymizeUrl(_url.toString());
 
@@ -136,6 +136,9 @@ void CheckFileInfo::checkFileInfo(int redirectLimit)
         {
             _onFinishCallback(*this);
         }
+
+        std::lock_guard<std::mutex> lock(_mutex);
+        _cv.notify_all();
     };
 
     _httpSession->setFinishedHandler(std::move(finishedCallback));
@@ -151,11 +154,21 @@ void CheckFileInfo::checkFileInfo(int redirectLimit)
             _onFinishCallback(*this);
         }
 
-        return;
+        return false;
     }
 
     // We're in business.
     _state = State::Active;
+    return true;
+}
+
+void CheckFileInfo::checkFileInfoSync(int redirectionLimit)
+{
+    std::unique_lock<std::mutex> lock(_mutex);
+    if (checkFileInfo(redirectionLimit))
+    {
+        _cv.wait_for(lock, std::chrono::seconds(30));
+    }
 }
 
 std::unique_ptr<WopiStorage::WOPIFileInfo>
