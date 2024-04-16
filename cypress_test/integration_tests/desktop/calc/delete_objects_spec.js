@@ -16,9 +16,11 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function(
 	});
 
 	it('Delete Text', function() {
+		helper.setDummyClipboardForCopy();
 
 		helper.typeIntoDocument('text');
 		helper.selectAllText();
+		helper.copy();
 		helper.expectTextForClipboard('text');
 		helper.typeIntoDocument('{del}');
 		helper.typeIntoDocument('{ctrl}a');
