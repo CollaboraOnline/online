@@ -551,15 +551,13 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         }
         else if (tokens.equals(0, "save"))
         {
-            static bool doBgSave = !!getenv("COOL_BGSAVE");
+            bool background = tokens[1] == "background=true";
+            SigUtil::addActivity(getId(), (background ? "bg " : "") + firstLine);
 
-            SigUtil::addActivity(getId(), (doBgSave ? "bg " : "") + firstLine);
-
-            bool autosave = tokens[1] == "autosave=true";
             StringVector unoSave = StringVector::tokenize("uno .uno:Save " + tokens.cat(' ', 2));
 
             bool saving = false;
-            if (doBgSave && autosave)
+            if (background)
                 saving = !saveDocumentBackground(unoSave);
 
             if (!saving)

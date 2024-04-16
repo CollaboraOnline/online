@@ -184,6 +184,7 @@ DocumentBroker::DocumentBroker(ChildType type, const std::string& uri, const Poc
     , _wopiDownloadDuration(0)
     , _mobileAppDocId(mobileAppDocId)
     , _alwaysSaveOnExit(COOLWSD::getConfigValue<bool>("per_document.always_save_on_exit", false))
+    , _backgroundAutoSave(COOLWSD::getConfigValue<bool>("per_document.background_autosave", true))
 #if !MOBILEAPP
     , _admin(Admin::instance())
 #endif
@@ -2649,8 +2650,8 @@ void DocumentBroker::autoSaveAndStop(const std::string& reason)
 }
 
 bool DocumentBroker::sendUnoSave(const std::shared_ptr<ClientSession>& session,
-                                 bool dontTerminateEdit, bool dontSaveIfUnmodified, bool isAutosave,
-                                 const std::string& extendedData)
+                                 bool dontTerminateEdit, bool dontSaveIfUnmodified,
+                                 bool isAutosave, const std::string& extendedData)
 {
     ASSERT_CORRECT_THREAD();
 
@@ -2689,8 +2690,12 @@ bool DocumentBroker::sendUnoSave(const std::shared_ptr<ClientSession>& session,
     // If Core does report something different after saving, we'll update this flag.
     _nextStorageAttrs.setUserModified(isModified() || haveModifyActivityAfterSaveRequest());
 
+    static bool forceBackgroundSave = !!getenv("COOL_FORCE_BGSAVE");
+
     // Note: It's odd to capture these here, but this function is used from ClientSession too.
     bool autosave = isAutosave || (_unitWsd && _unitWsd->isAutosave());
+    bool background = forceBackgroundSave || (autosave && _backgroundAutoSave);
+
     _nextStorageAttrs.setIsAutosave(autosave);
     _nextStorageAttrs.setExtendedData(extendedData);
 
@@ -2698,7 +2703,7 @@ bool DocumentBroker::sendUnoSave(const std::shared_ptr<ClientSession>& session,
     LOG_TRC("save arguments: " << saveArgs);
 
     // re-written to .uno:Save in the Kit.
-    const auto command = std::string("save autosave=") + (autosave ? "true" : "")+ " " + saveArgs;
+    const auto command = std::string("save background=") + (background ? "true" : "")+ " " + saveArgs;
     if (forwardToChild(session, command))
     {
         _saveManager.markLastSaveRequestTime();
