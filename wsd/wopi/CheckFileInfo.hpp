@@ -11,6 +11,8 @@
 
 #pragma once
 
+#include <chrono>
+#include <condition_variable>
 #if MOBILEAPP
 #error This file should be excluded from Mobile App builds
 #endif // MOBILEAPP
@@ -65,7 +67,11 @@ public:
     std::unique_ptr<WopiStorage::WOPIFileInfo> wopiFileInfo(const Poco::URI& uriPublic) const;
 
     /// Start the actual request.
-    void checkFileInfo(int redirectionLimit);
+    bool checkFileInfo(int redirectionLimit);
+
+    /// Start the request and wait for the response.
+    /// In some scenarios we can't proceed without CheckFileInfo results.
+    void checkFileInfoSync(int redirectionLimit);
 
 private:
     inline void logPrefix(std::ostream& os) const
@@ -84,4 +90,6 @@ private:
     std::atomic<State> _state;
     Poco::JSON::Object::Ptr _wopiInfo;
     ProfileZone _profileZone;
+    std::mutex _mutex;
+    std::condition_variable _cv;
 };

@@ -20,6 +20,7 @@
 #include <ios>
 #include <fstream>
 #include <memory>
+#include <stdexcept>
 #include <string>
 #include <sstream>
 
@@ -34,6 +35,7 @@
 #include "Admin.hpp"
 #include "Authorization.hpp"
 #include "ClientSession.hpp"
+#include "Common.hpp"
 #include "Exceptions.hpp"
 #include "COOLWSD.hpp"
 #include "Socket.hpp"
@@ -53,6 +55,7 @@
 #include <CommandControl.hpp>
 
 #if !MOBILEAPP
+#include <wopi/CheckFileInfo.hpp>
 #include <net/HttpHelper.hpp>
 #endif
 #include <sys/types.h>
@@ -878,6 +881,20 @@ bool DocumentBroker::download(
     {
         LOG_DBG("CheckFileInfo for docKey [" << _docKey << ']');
         std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
+        if (!wopiFileInfo)
+        {
+            auto poller = std::make_shared<TerminatingPoll>("CFISynReqPoll");
+            poller->startThread();
+            CheckFileInfo checkFileInfo(poller, session->getPublicUri(), [](CheckFileInfo&) {});
+            checkFileInfo.checkFileInfoSync(RedirectionLimit);
+            wopiFileInfo = checkFileInfo.wopiFileInfo(session->getPublicUri());
+            if (!wopiFileInfo)
+            {
+                throw std::runtime_error(
+                    "CheckFileInfo failed or timed out while adding session #" + session->getId());
+            }
+        }
+
         wopiStorage->handleWOPIFileInfo(*wopiFileInfo, *_lockCtx);
 
         checkFileInfoCallDurationMs = std::chrono::duration_cast<std::chrono::milliseconds>(
