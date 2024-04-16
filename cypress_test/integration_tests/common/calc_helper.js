@@ -208,10 +208,13 @@ function ensureViewContainsCellCursor() {
 	cy.log('<< ensureViewContainsCellCursor - end');
 }
 
-function assertSheetContents(expectedData) {
+function assertSheetContents(expectedData, copy) {
 	cy.log('>> assertSheetContents - start');
 
 	selectEntireSheet();
+	if (copy === true) {
+		helper.copy();
+	}
 	assertDataClipboardTable(expectedData);
 
 	cy.log('<< assertSheetContents - end');
