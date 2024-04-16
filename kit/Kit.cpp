@@ -1425,6 +1425,8 @@ bool Document::forkToSave(const std::function<void()> &childSave, int viewId)
         childSocket.reset();
         // now we just have a single socket to our parent
 
+        Util::sleepFromEnvIfSet("KitBackgroundSave", "SLEEPBACKGROUNDFORDEBUGGER");
+
         UnitKit::get().postBackgroundSaveFork();
 
         // Hard drop our previous connections to coolwsd and shared wakeups.x
