@@ -39,23 +39,29 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Interact with bottom toolba
 
 	it('Apply bold.', function() {
 		before('bottom_toolbar.ods');
+		helper.setDummyClipboardForCopy();
 		cy.cGet('#toolbar-down #bold').click();
 		calcHelper.selectEntireSheet();
+		helper.copy();
 		cy.cGet('#copy-paste-container table td b').should('exist');
 	});
 
 	it('Apply italic.', function() {
 		before('bottom_toolbar.ods');
+		helper.setDummyClipboardForCopy();
 
 		cy.cGet('#toolbar-down #italic').click();
 		calcHelper.selectEntireSheet();
+		helper.copy();
 		cy.cGet('#copy-paste-container table td i').should('exist');
 	});
 
 	it('Apply underline.', function() {
 		before('bottom_toolbar.ods');
+		helper.setDummyClipboardForCopy();
 		cy.cGet('#toolbar-down #underline').click();
 		calcHelper.selectEntireSheet();
+		helper.copy();
 		cy.cGet('#copy-paste-container table td u').should('exist');
 	});
 
@@ -68,17 +74,21 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Interact with bottom toolba
 
 	it('Apply font color.', function() {
 		before('bottom_toolbar.ods');
+		helper.setDummyClipboardForCopy();
 		cy.cGet('#toolbar-down #fontcolor').click();
 		mobileHelper.selectFromColorPalette(0, 5);
 		calcHelper.selectEntireSheet();
+		helper.copy();
 		cy.cGet('#copy-paste-container table td font').should('have.attr', 'color', '#00FF00');
 	});
 
 	it('Apply highlight color.', function() {
 		before('bottom_toolbar.ods');
+		helper.setDummyClipboardForCopy();
 		cy.cGet('#toolbar-down #backcolor').click();
 		mobileHelper.selectFromColorPalette(0, 5);
 		calcHelper.selectEntireSheet();
+		helper.copy();
 		cy.cGet('#copy-paste-container table td').should('have.attr', 'bgcolor', '#00FF00');
 	});
 
