@@ -340,7 +340,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			x = app.calc.cellAddress.x + 1;
 			y = app.calc.cellAddress.y + 1;
 
-			size = this._cellCursorTwips.getSize();
+			size = { x: app.calc.cellCursorRectangle.width, y: app.calc.cellCursorRectangle.height };
 		}
 
 		return { curX: x, curY: y, width: size.x, height: size.y };
@@ -1092,10 +1092,6 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		}
 
 		return this._twipsToPixels(new L.Point(this._docWidthTwips, this._docHeightTwips));
-	},
-
-	getCursorPos: function () {
-		return this._twipsToPixels(this._cellCursorTwips.getTopLeft());
 	},
 
 	_calculateScrollForNewCellCursor: function () {
