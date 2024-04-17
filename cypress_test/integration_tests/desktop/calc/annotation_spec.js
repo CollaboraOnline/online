@@ -3,6 +3,7 @@
 var helper = require('../../common/helper');
 var { insertMultipleComment, setupUIforCommentInsert, createComment } = require('../../common/desktop_helper');
 var desktopHelper = require('../../common/desktop_helper');
+var calcHelper = require('../../common/calc_helper');
 
 describe(['tagdesktop'], 'Annotation Tests', function() {
 	var origTestFileName = 'annotation.ods';
@@ -81,6 +82,24 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 		cy.cGet('#annotation-content-area-1').should('contain','some text');
 		cy.cGet('#comment-annotation-menu-1').click();
 		cy.cGet('body').contains('.context-menu-item','Remove').click();
+		cy.cGet('#comment-container-1').should('not.exist');
+	});
+
+	it('Delete then Create Sheet should not retain comment',function() {
+		calcHelper.assertNumberofSheets(1);
+
+		cy.cGet('#tb_spreadsheet-toolbar_item_insertsheet').click();
+		calcHelper.assertNumberofSheets(2);
+
+                insertMultipleComment('calc', 1, false, '[id=insert-insert-annotation]');
+		cy.cGet('.cool-annotation').should('exist');
+
+		calcHelper.selectOptionFromContextMenu('Delete Sheet...');
+		cy.cGet('#delete-sheet-modal-response').click();
+		calcHelper.assertNumberofSheets(1);
+
+		cy.cGet('#tb_spreadsheet-toolbar_item_insertsheet').click();
+		calcHelper.assertNumberofSheets(2);
 		cy.cGet('#comment-container-1').should('not.exist');
 	});
 });
