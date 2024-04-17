@@ -762,34 +762,56 @@ export class TilesSection extends CanvasSectionObject {
 
 		var paneBoundsList = ctx.paneBoundsList;
 
+		let maxXBound = 0;
+		let maxYBound = 0;
+
+		for (const paneBounds of paneBoundsList) {
+			maxXBound = Math.max(maxXBound, paneBounds.min.x);
+			maxYBound = Math.max(maxYBound, paneBounds.min.y);
+		}
+
 		for (var k = 0; k < paneBoundsList.length ; ++k) {
 			var paneBounds = paneBoundsList[k];
 			var paneSize = paneBounds.getSize();
 
-			// Calculate top-left in doc core-pixels for the frame.
-			var docPos = tsManager._getZoomDocPos(tsManager._newCenter, tsManager._layer._pinchStartCenter, paneBounds, splitPos, scale, false /* findFreePaneCenter? */);
-
 			var destPos = new L.Point(0, 0);
 			var docAreaSize = paneSize.divideBy(scale);
-			if (paneBoundsList.length > 1) {
-				if (paneBounds.min.x) {
-					// Pane is free to move in X direction.
-					destPos.x = splitPos.x;
-					paneSize.x -= splitPos.x;
-				} else {
-					// Pane is fixed in X direction.
-					docAreaSize.x = paneSize.x;
-				}
 
-				if (paneBounds.min.y) {
-					// Pane is free to move in Y direction.
-					destPos.y = splitPos.y;
-					paneSize.y -= splitPos.y;
-				} else {
-					// Pane is fixed in Y direction.
-					docAreaSize.y = paneSize.y;
-				}
+			let freezeX: boolean;
+			let freezeY: boolean;
+
+			if (paneBounds.min.x === 0 && maxXBound !== 0) {
+				// There is another pane in the X direction and we are at 0, so we are fixed in X
+				docAreaSize.x = paneSize.x;
+				freezeX = true;
+			} else {
+				// Pane is free to move in X direction.
+				destPos.x = splitPos.x;
+				paneSize.x -= splitPos.x;
+				freezeX = false;
 			}
+
+			if (paneBounds.min.y === 0 && maxYBound !== 0) {
+				// There is another pane in the Y direction and we are at 0, so we are fixed in Y
+				docAreaSize.y = paneSize.y;
+				freezeY = true;
+			} else {
+				// Pane is free to move in Y direction.
+				destPos.y = splitPos.y;
+				paneSize.y -= splitPos.y;
+				freezeY = false;
+			}
+
+			// Calculate top-left in doc core-pixels for the frame.
+			var docPos = tsManager._getZoomDocPos(
+				tsManager._newCenter,
+				tsManager._layer._pinchStartCenter,
+				paneBounds,
+				{ freezeX, freezeY },
+				splitPos,
+				scale,
+				false /* findFreePaneCenter? */
+			);
 
 			var docRange = new L.Bounds(docPos.topLeft, docPos.topLeft.add(docAreaSize));
 			if (tsManager._calcGridSection) {

@@ -145,11 +145,11 @@ class CPolyline extends CPath {
 		return new cool.Bounds(this.bounds.getTopLeft().subtract(p), this.bounds.getBottomRight().add(p));
 	}
 
-	updatePath(paintArea?: cool.Bounds, paneBounds?: cool.Bounds) {
+	updatePath(paintArea?: cool.Bounds, paneBounds?: cool.Bounds, freezePane?: { freezeX: boolean, freezeY: boolean }) {
 		this.clipPoints(paintArea);
 		this.simplifyPoints();
 
-		this.renderer.updatePoly(this, false /* closed? */, paintArea, paneBounds);
+		this.renderer.updatePoly(this, false /* closed? */, paintArea, paneBounds, freezePane);
 	}
 
 	// clip polyline by renderer bounds so that we have less to render for performance

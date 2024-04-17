@@ -623,6 +623,8 @@ L.TileSectionManager = L.Class.extend({
 	 * @param paneBounds {{min: {x: number, y: number}, max: {x: number, y: number}}} The edges of the current pane
 	 * Traditionally this is the map border at the start of the pinch
 	 *
+	 * @param freezePane {{freezeX: boolean, freezeY: boolean}} Whether the pane is frozen in the x or y directions
+	 *
 	 * @param splitPos {{x: number, y: number}} The inset in core-pixels into the document caused by any splits (e.g. a frozen row at the start of the document)
 	 *
 	 * @param scale {number} The scale, relative to the initial size, of the document currently
@@ -634,7 +636,7 @@ L.TileSectionManager = L.Class.extend({
 	 * Center is included iff findFreePaneCenter is true
 	 * (probably this should be encoded into the type, e.g. with an overload when this is converted to TypeScript)
 	 **/
-	_getZoomDocPos: function (pinchCenter, pinchStartCenter, paneBounds, splitPos, scale, findFreePaneCenter) {
+	_getZoomDocPos: function (pinchCenter, pinchStartCenter, paneBounds, freezePane, splitPos, scale, findFreePaneCenter) {
 		var xMin = 0;
 		var hasXMargin = !this._layer.isCalc();
 		if (hasXMargin) {
@@ -671,6 +673,14 @@ L.TileSectionManager = L.Class.extend({
 			Math.max(documentTopLeft.y, pinchStartCenter.y + (centerOffset.y - paneSize.y * panePortion.y) / scale)
 		);
 
+		if (freezePane.freezeX) {
+			docTopLeft.x = paneBounds.min.x;
+		}
+
+		if (freezePane.freezeY) {
+			docTopLeft.y = paneBounds.min.y;
+		}
+
 		if (!findFreePaneCenter) {
 			return { topLeft: docTopLeft };
 		}
@@ -692,7 +702,15 @@ L.TileSectionManager = L.Class.extend({
 		var viewBounds = ctx.viewBounds;
 		var freePaneBounds = new L.Bounds(viewBounds.min.add(splitPos), viewBounds.max);
 
-		return this._getZoomDocPos(this._newCenter, this._layer._pinchStartCenter, freePaneBounds, splitPos, scale, true /* findFreePaneCenter */).center;
+		return this._getZoomDocPos(
+			this._newCenter,
+			this._layer._pinchStartCenter,
+			freePaneBounds,
+			{ freezeX: false, freezeY: false },
+			splitPos,
+			scale,
+			true /* findFreePaneCenter */
+		).center;
 	},
 
 	_zoomAnimation: function () {

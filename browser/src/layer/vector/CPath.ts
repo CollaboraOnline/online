@@ -185,10 +185,18 @@ abstract class CPath extends CEventsHandler {
 			splitPanesContext.getPxBoundList() :
 			[viewBounds];
 
+		let maxXBound = 0;
+		let maxYBound = 0;
+
+		for (const paneBounds of paneBoundsList) {
+			maxXBound = Math.max(maxXBound, paneBounds.min.x);
+			maxYBound = Math.max(maxYBound, paneBounds.min.y);
+		}
+
 		for (var i = 0; i < paneBoundsList.length; ++i) {
 			var panePaintArea = paintArea ? paintArea.clone() : paneBoundsList[i].clone();
+			var paneArea = paneBoundsList[i];
 			if (paintArea) {
-				var paneArea = paneBoundsList[i];
 
 				if (!paneArea.intersects(panePaintArea))
 					continue;
@@ -200,13 +208,27 @@ abstract class CPath extends CEventsHandler {
 				panePaintArea.max.y = Math.min(panePaintArea.max.y, paneArea.max.y);
 			}
 
-			this.updatePath(panePaintArea, paneBoundsList[i]);
+			let freezeX: boolean;
+			let freezeY: boolean;
+			if (paneArea.min.x === 0 && maxXBound !== 0) {
+				freezeX = true;
+			} else {
+				freezeX = false;
+			}
+
+			if (paneArea.min.y === 0 && maxYBound !== 0) {
+				freezeY = true;
+			} else {
+				freezeY = false;
+			}
+
+			this.updatePath(panePaintArea, paneArea, { freezeX, freezeY });
 		}
 
 		this.updateTestData();
 	}
 
-	updatePath(paintArea?: cool.Bounds, paneBounds?: cool.Bounds) {
+	updatePath(paintArea?: cool.Bounds, paneBounds?: cool.Bounds, freezePane?: { freezeX: boolean, freezeY: boolean }) {
 		// Overridden in implementations.
 	}
 
