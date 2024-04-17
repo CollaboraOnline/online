@@ -19,11 +19,11 @@ describe(['tagmultiuser'], 'Joining a document should not trigger an invalidatio
 	it('Join document', function() {
 		cy.cSetActiveFrame('#iframe1');
 
-		cy.cGet('#InsertMode').should('have.text', '\u00a0Insert mode: inactive\u00a0');
+		cy.cGet('#InsertMode').should('have.text', 'Insert mode: inactive');
 		helper.typeIntoDocument('X');
 		cy.cGet('#InsertMode').should('have.text', 'Insert');
 		helper.typeIntoDocument('{enter}');
-		cy.cGet('#InsertMode').should('have.text', '\u00a0Insert mode: inactive\u00a0');
+		cy.cGet('#InsertMode').should('have.text', 'Insert mode: inactive');
 		cy.cGet('input#addressInput').should('have.prop', 'value', 'A2');
 		helper.typeIntoDocument('{uparrow}');
 		// wait until round trip of cell address

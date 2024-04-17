@@ -26,14 +26,20 @@ interface HtmlContentJson {
 	text: string | undefined;
 }
 
+function sanitizeString(text: string): string {
+	const sanitizer = document.createElement('div');
+	sanitizer.innerText = text;
+	return sanitizer.innerHTML;
+}
+
 function getPermissionModeHtml(isReadOnlyMode: boolean, canUserWrite: boolean) {
 	var permissionModeDiv = '<div id="PermissionMode" class="cool-font jsdialog ';
 	if (isReadOnlyMode && !canUserWrite) {
 		permissionModeDiv +=
 			' status-readonly-mode" title="' +
-			_('Permission Mode') +
+			sanitizeString(_('Permission Mode')) +
 			'" style="padding: 5px 5px;"> ' +
-			_('Read-only') +
+			sanitizeString(_('Read-only')) +
 			' </div>';
 	} else if (isReadOnlyMode && canUserWrite) {
 		permissionModeDiv +=
@@ -41,9 +47,9 @@ function getPermissionModeHtml(isReadOnlyMode: boolean, canUserWrite: boolean) {
 	} else {
 		permissionModeDiv +=
 			' status-edit-mode" title="' +
-			_('Permission Mode') +
+			sanitizeString(_('Permission Mode')) +
 			'" style="padding: 5px 5px;"> ' +
-			_('Edit') +
+			sanitizeString(_('Edit')) +
 			' </div>';
 	}
 	return permissionModeDiv;
@@ -52,11 +58,11 @@ function getPermissionModeHtml(isReadOnlyMode: boolean, canUserWrite: boolean) {
 function getStatusbarItemHtml(id: string, title: string, text: string) {
 	return (
 		'<div id="' +
-		id +
+		sanitizeString(id) +
 		'" class="cool-font" title="' +
-		title +
+		sanitizeString(title) +
 		'" style="padding: 5px 5px;">' +
-		text +
+		sanitizeString(text) +
 		'</div>'
 	);
 }

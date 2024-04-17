@@ -162,7 +162,7 @@ class StatusBar extends JSDialog.Toolbar {
 	onPageChange(e) {
 		var state = e.state;
 		state = this.toLocalePattern('Page %1 of %2', 'Page (\\d+) of (\\d+)', state, '%1', '%2');
-		this.updateHtmlItem('StatePageNumber', state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
+		this.updateHtmlItem('StatePageNumber', state ? state : ' ');
 	}
 
 	_generateHtmlItem(id) {
@@ -173,7 +173,7 @@ class StatusBar extends JSDialog.Toolbar {
 			type: 'container',
 			id: id + '-container',
 			children: [
-				{type: 'htmlcontent', id: id, htmlId: id, text: '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp', isReadOnlyMode: isReadOnlyMode, canUserWrite: canUserWrite},
+				{type: 'htmlcontent', id: id, htmlId: id, text: ' ', isReadOnlyMode: isReadOnlyMode, canUserWrite: canUserWrite},
 				{type: 'separator', id: id + 'break', orientation: 'vertical'}
 			],
 			vertical: false,
@@ -406,7 +406,7 @@ class StatusBar extends JSDialog.Toolbar {
 
 		if (commandName === '.uno:StatusDocPos') {
 			state = this.toLocalePattern('Sheet %1 of %2', 'Sheet (\\d+) of (\\d+)', state, '%1', '%2');
-			this.updateHtmlItem('StatusDocPos', state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
+			this.updateHtmlItem('StatusDocPos', state ? state : ' ');
 		}
 		else if (commandName === '.uno:LanguageStatus') {
 			var language = this.extractLanguageFromStatus(state);
@@ -415,10 +415,10 @@ class StatusBar extends JSDialog.Toolbar {
 		else if (commandName === '.uno:RowColSelCount') {
 			state = this.toLocalePattern('$1 rows, $2 columns selected', '(\\d+) rows, (\\d+) columns selected', state, '$1', '$2');
 			state = this.toLocalePattern('$1 of $2 records found', '(\\d+) of (\\d+) records found', state, '$1', '$2');
-			this.updateHtmlItem('RowColSelCount', state ? state : '&nbsp;' + _('Select multiple cells') + '&nbsp;');
+			this.updateHtmlItem('RowColSelCount', state ? state : _('Select multiple cells'));
 		}
 		else if (commandName === '.uno:InsertMode') {
-			this.updateHtmlItem('InsertMode', state ? L.Styles.insertMode[state].toLocaleString() : '&nbsp;' + _('Insert mode: inactive') + '&nbsp;');
+			this.updateHtmlItem('InsertMode', state ? L.Styles.insertMode[state].toLocaleString() : _('Insert mode: inactive'));
 
 			$('#InsertMode').removeClass();
 			$('#InsertMode').addClass('cool-font insert-mode-' + state);
@@ -430,10 +430,10 @@ class StatusBar extends JSDialog.Toolbar {
 			}
 		}
 		else if (commandName === '.uno:StatusSelectionMode' || commandName === '.uno:SelectionMode') {
-			this.updateHtmlItem('StatusSelectionMode', state ? L.Styles.selectionMode[state].toLocaleString() : '&nbsp;' + _('Selection mode: inactive') + '&nbsp;');
+			this.updateHtmlItem('StatusSelectionMode', state ? L.Styles.selectionMode[state].toLocaleString() : _('Selection mode: inactive'));
 		}
 		else if (commandName == '.uno:StateTableCell') {
-			this.updateHtmlItem('StateTableCell', state ? this.localizeStateTableCell(state) : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
+			this.updateHtmlItem('StateTableCell', state ? this.localizeStateTableCell(state) : ' ');
 		}
 		else if (commandName === '.uno:StatusBarFunc') {
 			if (app.map.isReadOnlyMode())
@@ -452,15 +452,15 @@ class StatusBar extends JSDialog.Toolbar {
 		}
 		else if (commandName === '.uno:StateWordCount') {
 			state = this.toLocalePattern('%1 words, %2 characters', '([\\d,]+) words, ([\\d,]+) characters', state, '%1', '%2');
-			this.updateHtmlItem('StateWordCount', state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
+			this.updateHtmlItem('StateWordCount', state ? state : ' ');
 		}
 		else if (commandName === '.uno:PageStatus') {
 			if (this.map.getDocType() === 'presentation') {
 				state = this.toLocalePattern('Slide %1 of %2', 'Slide (\\d+) of (\\d+)', state, '%1', '%2');
-				this.updateHtmlItem('SlideStatus', state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
+				this.updateHtmlItem('SlideStatus', state ? state : ' ');
 			} else {
 				state = this.toLocalePattern('Page %1 of %2', 'Slide (\\d+) of (\\d+)', state, '%1', '%2');
-				this.updateHtmlItem('PageStatus', state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp');
+				this.updateHtmlItem('PageStatus', state ? state : ' ');
 			}
 		}
 	}

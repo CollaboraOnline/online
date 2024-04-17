@@ -29,19 +29,19 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Statubar tests.', function
 	});
 
 	it('Multiple cell selection.', function() {
-		cy.cGet('#RowColSelCount').should('have.text', '\u00a0Select multiple cells\u00a0');
+		cy.cGet('#RowColSelCount').should('have.text', 'Select multiple cells');
 		helper.typeIntoInputField('input#addressInput', 'A1:A2');
 		cy.cGet('#RowColSelCount').should('have.text', 'Selected: 2 rows, 1 column');
 		helper.typeIntoInputField('input#addressInput', 'A1');
-		cy.cGet('#RowColSelCount').should('have.text', '\u00a0Select multiple cells\u00a0');
+		cy.cGet('#RowColSelCount').should('have.text', 'Select multiple cells');
 	});
 
 	it('Text editing mode.', function() {
-		cy.cGet('#InsertMode').should('have.text', '\u00a0Insert mode: inactive\u00a0');
+		cy.cGet('#InsertMode').should('have.text', 'Insert mode: inactive');
 		calcHelper.dblClickOnFirstCell();
 		cy.cGet('#InsertMode').should('have.text', 'Insert');
 		calcHelper.typeIntoFormulabar('{enter}');
-		cy.cGet('#InsertMode').should('have.text', '\u00a0Insert mode: inactive\u00a0');
+		cy.cGet('#InsertMode').should('have.text', 'Insert mode: inactive');
 	});
 
 	it('Selected data summary.', function() {
