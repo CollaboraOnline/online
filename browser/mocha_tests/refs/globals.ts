@@ -4,5 +4,7 @@ var L: any = {
 };
 
 var app: any = {
-    roundedDpiScale : 1
+    roundedDpiScale : 1,
+    canvasSize: null,
+    definitions: {}
 };

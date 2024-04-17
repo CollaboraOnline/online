@@ -34,7 +34,7 @@ interface SectionCallbacks {
 	onDrawArea?: (area?: cool.Bounds, paneTopLeft?: cool.Point, canvasContext?: CanvasRenderingContext2D) => void;
 	onNewDocumentTopLeft?: (size: Array<number>) => void;
 	onRemove?: () => void;
-	onCursorPositionChanged?: (newPosition: cool.SimpleRectangle) => void;
+	onCursorPositionChanged?: (newPosition: any) => void;
 	onCellAddressChanged?: () => void;
 	onAnimationEnded?: (frameCount: number, elapsedTime: number) => void;
 }
@@ -237,7 +237,7 @@ class CanvasSectionObject {
 			return this.callbacks.onInitialize();
 	}
 
-	onCursorPositionChanged(newPosition: cool.SimpleRectangle) {
+	onCursorPositionChanged(newPosition: any) {
 		if (this.callbacks.onCursorPositionChanged)
 			return this.callbacks.onCursorPositionChanged(newPosition);
 	}
@@ -908,10 +908,10 @@ class CanvasSectionContainer {
 		this.documentBottomRight[0] = Math.round(points[2]);
 		this.documentBottomRight[1] = Math.round(points[3]);
 
-		app.file.viewedRectangle.pX = this.documentTopLeft[0];
-		app.file.viewedRectangle.pY = this.documentTopLeft[1];
-		app.file.viewedRectangle.pWidth = this.documentTopLeft[2];
-		app.file.viewedRectangle.pHeight = this.documentTopLeft[3];
+		app.file.viewedRectangle.pX1 = points[0];
+		app.file.viewedRectangle.pY1 = points[1];
+		app.file.viewedRectangle.pWidth = points[2] - points[0];
+		app.file.viewedRectangle.pHeight = points[3] - points[1];
 
 		for (var i: number = 0; i < this.sections.length; i++) {
 			var section: CanvasSectionObject = this.sections[i];

@@ -29,7 +29,7 @@ class CellCursorSection extends CanvasSectionObject {
 		this.documentObject = true;
 
 		this.sectionProperties.viewId = viewId;
-        this.sectionProperties.cursorWeight = 2;
+		this.sectionProperties.cursorWeight = 2;
 	}
 
 	public getViewId(): number {

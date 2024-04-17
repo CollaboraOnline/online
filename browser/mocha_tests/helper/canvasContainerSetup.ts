@@ -15,10 +15,10 @@ function canvasDomString() {
 }
 
 function setupCanvasContainer(width: number, height: number): CanvasSectionContainer {
-    const canvas = <HTMLCanvasElement>document.getElementById('document-canvas');
+  const canvas = <HTMLCanvasElement>document.getElementById('document-canvas');
 
-    const sectionContainer = new CanvasSectionContainer(canvas, true /* disableDrawing? */);
-    sectionContainer.onResize(width, height); // Set canvas size.
+  const sectionContainer = new CanvasSectionContainer(canvas, true /* disableDrawing? */);
+  sectionContainer.onResize(width, height); // Set canvas size.
 
-    return sectionContainer;
+  return sectionContainer;
 }
