@@ -440,7 +440,12 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			this._documentInfo = textMsg;
 			var partNames = textMsg.match(/[^\r\n]+/g);
 			// only get the last matches
+			var oldPartNames = this._partNames;
 			this._partNames = partNames.slice(partNames.length - this._parts);
+			// if the number of parts, or order has changed then refresh comment positions
+			if (oldPartNames !== this._partNames) {
+				app.socket.sendMessage('commandvalues command=.uno:ViewAnnotationsPosition');
+			}
 			this._map.fire('updateparts', {
 				selectedPart: this._selectedPart,
 				parts: this._parts,
