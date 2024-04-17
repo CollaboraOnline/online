@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach require afterEach */
+/* global describe it cy beforeEach require afterEach expect */
 
 var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
@@ -17,12 +17,6 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 	afterEach(function() {
 		helper.afterAll(testFileName, this.currentTest.state);
 	});
-
-	function getTextEndPosForFirstCell() {
-		calcHelper.dblClickOnFirstCell();
-		helper.moveCursor('end');
-		helper.getCursorPos('left', 'currentTextEndPos');
-	}
 
 	it('Save.', { defaultCommandTimeout: 60000 }, function() {
 		cy.cGet('#bold').click();
@@ -71,33 +65,43 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 	});
 
 	it('Enable text wrapping.', function() {
-		getTextEndPosForFirstCell();
+		// Get cursor position at end of line before wrap
+		calcHelper.dblClickOnFirstCell();
+		helper.moveCursor('end');
+		helper.getCursorPos('left', 'currentTextEndPos');
+
+		cy.get('@currentTextEndPos').should('be.greaterThan', 0);
 
 		helper.initAliasToNegative('originalTextEndPos');
 		cy.get('@currentTextEndPos').then(function(pos) {
 			cy.wrap(pos).as('originalTextEndPos');
 		});
 
-		cy.get('@currentTextEndPos').should('be.greaterThan', 0);
-
+		// Leave cell
 		helper.typeIntoDocument('{enter}');
+		// Wait for enter to work before clicking on first cell again
+		cy.cGet('input#addressInput').should('have.prop', 'value', 'A2');
+		cy.wait(100);
 
+		// Turn text wrap on
 		calcHelper.clickOnFirstCell();
-
 		cy.cGet('#toolbar-up .unoWrapText').click();
 
+		// Leave cell
 		helper.typeIntoDocument('{enter}');
-		// We use the text position as indicator
-		cy.waitUntil(function() {
-			getTextEndPosForFirstCell();
+		// Wait for enter to work before clicking on first cell again
+		cy.cGet('input#addressInput').should('have.prop', 'value', 'A2');
+		cy.wait(100);
 
-			return cy.get('@currentTextEndPos')
-				.then(function(currentTextEndPos) {
-					return cy.get('@originalTextEndPos')
-						.then(function(originalTextEndPos) {
-							return originalTextEndPos > currentTextEndPos;
-						});
-				});
+		// Get cursor position at end of line after wrap
+		calcHelper.dblClickOnFirstCell();
+		helper.moveCursor('end');
+		helper.getCursorPos('left', 'currentTextEndPos');
+
+		cy.get('@currentTextEndPos').then(function(currentTextEndPos) {
+			cy.get('@originalTextEndPos').then(function(originalTextEndPos) {
+				expect(currentTextEndPos).to.be.lessThan(originalTextEndPos);
+			});
 		});
 	});
 
