@@ -24,6 +24,7 @@ interface HtmlContentJson {
 	isReadOnlyMode: boolean | undefined;
 	canUserWrite: boolean | undefined;
 	text: string | undefined;
+	enabled: boolean;
 }
 
 function sanitizeString(text: string): string {
@@ -33,12 +34,12 @@ function sanitizeString(text: string): string {
 }
 
 function getPermissionModeHtml(isReadOnlyMode: boolean, canUserWrite: boolean) {
-	var permissionModeDiv = '<div id="PermissionMode" class="cool-font jsdialog ';
+	var permissionModeDiv = '<div id="PermissionMode" class="jsdialog ui-badge';
 	if (isReadOnlyMode && !canUserWrite) {
 		permissionModeDiv +=
 			' status-readonly-mode" title="' +
 			sanitizeString(_('Permission Mode')) +
-			'" style="padding: 5px 5px;"> ' +
+			'"> ' +
 			sanitizeString(_('Read-only')) +
 			' </div>';
 	} else if (isReadOnlyMode && canUserWrite) {
@@ -48,7 +49,7 @@ function getPermissionModeHtml(isReadOnlyMode: boolean, canUserWrite: boolean) {
 		permissionModeDiv +=
 			' status-edit-mode" title="' +
 			sanitizeString(_('Permission Mode')) +
-			'" style="padding: 5px 5px;"> ' +
+			'"> ' +
 			sanitizeString(_('Edit')) +
 			' </div>';
 	}
@@ -59,9 +60,9 @@ function getStatusbarItemHtml(id: string, title: string, text: string) {
 	return (
 		'<div id="' +
 		sanitizeString(id) +
-		'" class="cool-font" title="' +
+		'" class="jsdialog ui-badge" title="' +
 		sanitizeString(title) +
-		'" style="padding: 5px 5px;">' +
+		'">' +
 		sanitizeString(text) +
 		'</div>'
 	);
@@ -160,6 +161,9 @@ function htmlContent(
 	// TODO: remove this and create real widget for userslistpopup
 	if (data.htmlId === 'userslistpopup')
 		setTimeout(() => builder.map.userList.renderAll(), 0);
+
+	if (data.enabled === false && parentContainer.firstChild)
+		(parentContainer.firstChild as HTMLElement).setAttribute('disabled', '');
 }
 
 JSDialog.htmlContent = htmlContent;

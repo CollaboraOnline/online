@@ -236,6 +236,18 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	height: 1px;
 }
 
+/* Badge */
+.ui-badge {
+	padding: 5px !important;
+	color: var(--color-main-text);
+	background-color: var(--color-background-darker);
+	border-width: 0px;
+	border-radius: var(--border-radius);
+	font-family: var(--cool-font);
+	font-size: var(--default-font-size);
+	font-weight: normal;
+}
+
 /* Tabs */
 
 .ui-tabs-content.jsdialog {
