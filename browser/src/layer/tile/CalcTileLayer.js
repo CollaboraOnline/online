@@ -1095,71 +1095,62 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 	},
 
 	_calculateScrollForNewCellCursor: function () {
-
-		var scroll = new L.LatLng(0, 0);
+		var scroll = new app.definitions.simplePoint(0, 0);
 
 		if (!app.calc.cellCursorVisible) {
-			return scroll;
+			return new L.LatLng(0, 0);
 		}
 
-		var map = this._map;
-		var paneRectsInLatLng = this.getPaneLatLngRectangles();
-
-		if (this._cellCursor.isInAny(paneRectsInLatLng)) {
-			return scroll; // no scroll needed.
+		let paneRectangles = this._splitPanesContext.getViewRectangles(); // SimpleRectangle array.
+		let contained = false;
+		for (let i = 0; i < paneRectangles.length; i++) {
+			if (paneRectangles[i].containsRectangle(app.calc.cellCursorRectangle.toArray()))
+				contained = true;
 		}
 
-		var noSplit = !this._splitPanesContext
-			|| this._splitPanesContext.getSplitPos().equals(new L.Point(0, 0));
+		if (contained)
+			return new L.LatLng(0, 0); // No scroll needed.
 
-		var cellWidth = this._cellCursor.getWidth();
-		var cellHeight = this._cellCursor.getHeight();
+		var noSplit = this._splitPanesContext.getSplitPos().equals(new L.Point(0, 0));
 
 		// No split panes. Check if target cell is bigger than screen but partially visible.
-		if (noSplit && this._cellCursor.intersects(paneRectsInLatLng[0])) {
-			var paneWidth = paneRectsInLatLng[0].getWidth();
-			var paneHeight = paneRectsInLatLng[0].getHeight();
-
-			if (cellWidth > paneWidth || cellHeight > paneHeight)
-				return scroll; // no scroll needed.
+		if (noSplit && app.calc.cellCursorRectangle.intersectsRectangle(paneRectangles[0].toArray())) {
+			if (app.calc.cellCursorRectangle.width > paneRectangles[0].width || app.calc.cellCursorRectangle.height > paneRectangles[0].height)
+				return new L.LatLng(0, 0); // no scroll needed.
 		}
 
-		var freePaneBounds = paneRectsInLatLng[paneRectsInLatLng.length - 1];
-		var splitPoint = map.unproject(this._splitPanesContext ? this._splitPanesContext.getSplitPos() : new L.Point(0, 0));
+		let freePane = paneRectangles[paneRectangles.length - 1]; // Last pane, this should be the scrollable - not frozen one.
 
 		// Horizontal split
-		if (this._cellCursor.getEast() > splitPoint.lng) {
-			var freePaneWidth = freePaneBounds.getWidth();
-			var cellWidth = this._cellCursor.getWidth();
+		if (app.calc.cellCursorRectangle.x2 > app.calc.splitCoordinate.x) {
+			if (app.calc.cellCursorRectangle.width > freePane.width)
+				return new L.LatLng(0, 0); // no scroll needed.
 
-			if (cellWidth > freePaneWidth)
-				return scroll; // no scroll needed.
+			var spacingX = app.calc.cellCursorRectangle.width / 4.0;
 
-			var spacingX = cellWidth / 4.0;
-
-			if (this._cellCursor.getWest() < freePaneBounds.getWest()) {
-				scroll.lng = this._cellCursor.getWest() - freePaneBounds.getWest() - spacingX;
+			if (app.calc.cellCursorRectangle.x1 < freePane.x1) {
+				scroll.x = app.calc.cellCursorRectangle.x1 - freePane.x1 - spacingX;
 			}
-			else if (cellWidth < freePaneWidth && this._cellCursor.getEast() > freePaneBounds.getEast()) {
-				scroll.lng = this._cellCursor.getEast() - freePaneBounds.getEast() + spacingX;
+			else if (app.calc.cellCursorRectangle.x2 > freePane.x2) {
+				scroll.x = app.calc.cellCursorRectangle.x2 - freePane.x2 + spacingX;
 			}
 		}
 
 		// Vertical split
-		if (this._cellCursor.getSouth() < splitPoint.lat) {
-			var freePaneHeight = freePaneBounds.getHeight();
+		if (app.calc.cellCursorRectangle.y2 > app.calc.splitCoordinate.y) {
+			if (app.calc.cellCursorRectangle.height > freePane.height)
+				return new L.LatLng(0, 0); // no scroll needed.
 
-			if (cellHeight > freePaneHeight)
-				return scroll; // no scroll needed.
-
-			var spacingY = cellHeight / 4.0;
-			if (this._cellCursor.getNorth() > freePaneBounds.getNorth()) {
-				scroll.lat = this._cellCursor.getNorth() - freePaneBounds.getNorth() + spacingY;
+			var spacingY = app.calc.cellCursorRectangle.height / 4.0;
+			if (app.calc.cellCursorRectangle.y1 < freePane.y1) {
+				scroll.y = app.calc.cellCursorRectangle.y1 - freePane.y1 - spacingY;
 			}
-			else if (this._cellCursor.getSouth() < freePaneBounds.getSouth()) {
-				scroll.lat = this._cellCursor.getSouth() - freePaneBounds.getSouth() - spacingY;
+			else if (app.calc.cellCursorRectangle.y2 > freePane.y2) {
+				scroll.y = app.calc.cellCursorRectangle.y2 - freePane.y2 + spacingY;
 			}
 		}
+
+		scroll = this._twipsToLatLng(scroll, this._map.getZoom()); // Simple point is also converted to L.Point by the converter.
 
 		return scroll;
 	},

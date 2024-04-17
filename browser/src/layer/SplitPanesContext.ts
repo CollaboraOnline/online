@@ -113,6 +113,7 @@ export class SplitPanesContext {
 			changed = true;
 		}
 
+		app.calc.splitCoordinate.pX = newX;
 		this._updateXSplitter();
 
 		if (!noFire)
@@ -139,6 +140,7 @@ export class SplitPanesContext {
 			changed = true;
 		}
 
+		app.calc.splitCoordinate.pY = newY;
 		this._updateYSplitter();
 
 		if (!noFire)
@@ -213,35 +215,44 @@ export class SplitPanesContext {
 		*/
 
 		if (this._splitPos.x) { // Vertical split.
-			const topRightPane: cool.SimpleRectangle = viewRectangles[0].clone();
-			topRightPane.pX1 = this._splitPos.x;
-			viewRectangles.push(topRightPane);
-
 			// There is vertical split, narrow down the initial view.
 			viewRectangles[0].pX1 = 0;
 			viewRectangles[0].pX2 = this._splitPos.x;
+
+			const topRightPane: cool.SimpleRectangle = app.file.viewedRectangle.clone();
+			const width = app.file.viewedRectangle.pWidth - viewRectangles[0].pWidth;
+			topRightPane.pX1 = app.file.viewedRectangle.pX2 - width;
+			topRightPane.pWidth = width;
+			viewRectangles.push(topRightPane);
 		}
 
 		if (this._splitPos.y) {
-			const bottomLeftPane = viewRectangles[0].clone();
-			bottomLeftPane.pY1 = this._splitPos.y;
-
 			// There is a horizontal split, narrow down the initial view.
 			viewRectangles[0].pY1 = 0;
 			viewRectangles[0].pY2 = this._splitPos.y;
+
+			const bottomLeftPane = app.file.viewedRectangle.clone();
+			const height = app.file.viewedRectangle.pHeight - viewRectangles[0].pHeight;
+			bottomLeftPane.pY1 = app.file.viewedRectangle.pY2 - height;
+			bottomLeftPane.pHeight = height;
+			viewRectangles.push(bottomLeftPane);
 		}
 
 		// If both splitters are active, don't let them overlap and add the bottom right pane.
 		if (this._splitPos.x && this._splitPos.y) {
-			const bottomRightPane = viewRectangles[0].clone();
-			bottomRightPane.pX1 = this._splitPos.x;
-			bottomRightPane.pY1 = this._splitPos.y;
-
 			viewRectangles[1].pY1 = 0;
 			viewRectangles[1].pY2 = this._splitPos.y;
 
 			viewRectangles[2].pX1 = 0;
 			viewRectangles[2].pX2 = this._splitPos.x;
+
+			const bottomRightPane = app.file.viewedRectangle.clone();
+			const width = app.file.viewedRectangle.pWidth - viewRectangles[0].pWidth;
+			const height = app.file.viewedRectangle.pHeight - viewRectangles[0].pHeight;
+			bottomRightPane.pX1 = app.file.viewedRectangle.pX2 - width;
+			bottomRightPane.pWidth = width;
+			bottomRightPane.pY1 = app.file.viewedRectangle.pY2 - height;
+			bottomRightPane.pHeight = height;
 
 			viewRectangles.push(bottomRightPane);
 		}

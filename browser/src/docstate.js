@@ -25,7 +25,8 @@ window.app = {
 		cellAddress: null, // To be assigned SimplePoint.
 		cellCursorVisible: false,
 		cellCursorRectangle: null, // To be assigned SimpleRectangle.
-		otherCellCursors: {}
+		otherCellCursors: {},
+		splitCoordinate: null, // SimplePoint.
 	},
 	map: null, // Make map object a part of this.
 	dispatcher: null, // A Dispatcher class instance is assigned to this.

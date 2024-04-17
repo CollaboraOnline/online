@@ -1,4 +1,5 @@
 /// <reference path="./refs/globals.ts"/>
+/// <reference path="../src/core/geometry.ts" />
 /// <reference path="../src/geometry/Point.ts" />
 /// <reference path="../src/geometry/Bounds.ts" />
 /// <reference path="./helper/canvasContainerSetup.ts" />
@@ -11,6 +12,8 @@ var dom = new jsdom.JSDOM(canvasDomString());
 
 global.window = dom.window;
 global.document = dom.window.document;
+
+app.canvasSize = new cool.SimplePoint(0, 0);
 
 const canvasWidth = 1024;
 const canvasHeight = 768;

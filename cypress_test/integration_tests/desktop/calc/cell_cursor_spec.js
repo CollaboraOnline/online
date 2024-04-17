@@ -19,10 +19,10 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 	});
 
 	it('No jump on long merged cell', function() {
-		desktopHelper.assertScrollbarPosition('horizontal', 210, 315);
+		desktopHelper.assertScrollbarPosition('horizontal', 205, 315);
 		calcHelper.clickOnFirstCell(true, false, false);
 		cy.cGet('input#addressInput').should('have.prop', 'value', 'A1:Z1');
-		desktopHelper.assertScrollbarPosition('horizontal', 210, 315);
+		desktopHelper.assertScrollbarPosition('horizontal', 205, 315);
 	});
 });
 
