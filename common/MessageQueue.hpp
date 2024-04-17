@@ -77,6 +77,11 @@ public:
         return _queue.empty();
     }
 
+    bool size()
+    {
+        return _queue.size();
+    }
+
     /// Thread safe removal of all the pending messages.
     void clear()
     {

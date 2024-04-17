@@ -2090,11 +2090,24 @@ void Document::checkIdle()
     ProcessToIdleDeadline = std::chrono::steady_clock::now() - std::chrono::milliseconds(10);
 }
 
+void Document::enableProcessInput(bool enable)
+{
+    LOG_TRC("Document - input processing now: " <<
+            (enable ? "enabled" : "disabled") <<
+            " was " <<
+            (_inputProcessingEnabled ? "enabled" : "disabled"));
+    _inputProcessingEnabled = enable;
+}
+
 void Document::drainQueue()
 {
     try
     {
         std::vector<TileCombined> tileRequests;
+
+        if (hasQueueItems())
+            LOG_TRC("drainQueue with " << _tileQueue->size() <<
+                    " items: " << (processInputEnabled() ? "processing" : "blocked") );
 
         while (processInputEnabled() && hasQueueItems())
         {
