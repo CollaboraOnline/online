@@ -260,13 +260,13 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
 
 #ifdef __ANDROID__
 
-#define LOG_LOG(LOG, PRIO, LVL, STR)                                                               \
+#define LOG_LOG(LOG, NAME, PRIO, LVL, STR)                               \
     ((void)__android_log_print(ANDROID_LOG_DEBUG, "coolwsd", "%s %s", LVL, STR.c_str()))
 
 #else
 
-#define LOG_LOG(LOG, PRIO, LVL, STR)                                                               \
-    LOG.log(Poco::Message(LOG.name(), STR, Poco::Message::PRIO_##PRIO))
+#define LOG_LOG(LOG, NAME, PRIO, LVL, STR)                           \
+    LOG.log(Poco::Message(NAME, STR, Poco::Message::PRIO_##PRIO))
 
 #endif
 
@@ -282,13 +282,13 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
         LOG.flush();                                                                               \
     } while (false)
 
-#define LOG_BODY_(LOG, PRIO, LVL, X, PREFIX, END)                                                  \
+#define LOG_BODY_(LOG, PRIO, LVL, X, PREFIX, END)                        \
     char b_[1024];                                                                                 \
     std::ostringstream oss_(Log::prefix<sizeof(b_) - 1>(b_, LVL), std::ostringstream::ate);        \
     PREFIX(oss_);                                                                                  \
     oss_ << std::boolalpha << X;                                                                   \
     END(oss_);                                                                                     \
-    LOG_LOG(LOG, PRIO, LVL, oss_.str())
+    LOG_LOG(LOG, LOG.name(), PRIO, LVL, oss_.str())
 
 #define LOG_ANY(X)                                                                                 \
     char b_[1024];                                                                                 \
