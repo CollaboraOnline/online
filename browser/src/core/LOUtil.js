@@ -122,10 +122,14 @@ L.LOUtil = {
 		var docType = map.getDocType();
 		// set avatar image if it exist in user extract info
 		var defaultImage = L.LOUtil.getImageURL('user.svg', docType);
-		var extraInfo = map._viewInfo[viewId].userextrainfo;
-		if (extraInfo !== undefined && extraInfo.avatar !== undefined) {
+		var viewInfo = map._viewInfo[viewId];
+		if (
+			viewInfo !== undefined
+			&& viewInfo.userextrainfo !== undefined
+			&& viewInfo.userextrainfo.avatar !== undefined
+		) {
 			// set user avatar
-			img.src = extraInfo.avatar;
+			img.src = viewInfo.userextrainfo.avatar;
 			// Track if error event is already bound to this image
 			img.addEventListener('error', function () {
 				img.src = defaultImage;
