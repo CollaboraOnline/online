@@ -893,8 +893,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._graphicSelection = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(0, 0));
 		// Rotation angle of selected graphic object
 		this._graphicSelectionAngle = 0;
-		// Original rectangle of cell cursor in twips
-		this._cellCursorTwips = new L.Bounds(new L.Point(0, 0), new L.Point(0, 0));
 		// Rectangle for cell cursor
 		this._cellCursor =  L.LatLngBounds.createDefault();
 		this._prevCellCursor = L.LatLngBounds.createDefault();
@@ -2502,7 +2500,6 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		if (textMsg.match('EMPTY')) {
 			app.calc.cellCursorVisible = false;
-			this._cellCursorTwips = new L.Bounds(new L.Point(0, 0), new L.Point(0, 0));
 			this._cellCursor = L.LatLngBounds.createDefault();
 			if (autofillMarkerSection)
 				autofillMarkerSection.calculatePositionViaCellCursor(null);
@@ -2515,14 +2512,14 @@ L.CanvasTileLayer = L.Layer.extend({
 			var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
 			var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
 			var bottomRightTwips = topLeftTwips.add(offset);
-			this._cellCursorTwips = this._convertToTileTwipsSheetArea(
-				new L.Bounds(topLeftTwips, bottomRightTwips));
+			let _cellCursorTwips = this._convertToTileTwipsSheetArea(new L.Bounds(topLeftTwips, bottomRightTwips));
+
 			this._cellCursor = new L.LatLngBounds(
-				this._twipsToLatLng(this._cellCursorTwips.getTopLeft(), this._map.getZoom()),
-				this._twipsToLatLng(this._cellCursorTwips.getBottomRight(), this._map.getZoom()));
+				this._twipsToLatLng(_cellCursorTwips.getTopLeft(), this._map.getZoom()),
+				this._twipsToLatLng(_cellCursorTwips.getBottomRight(), this._map.getZoom()));
 
 			app.calc.cellAddress = new app.definitions.simplePoint(parseInt(strTwips[4]), parseInt(strTwips[5]));
-			let tempRectangle = this._cellCursorTwips.toRectangle();
+			let tempRectangle = _cellCursorTwips.toRectangle();
 			app.calc.cellCursorRectangle = new app.definitions.simpleRectangle(tempRectangle[0], tempRectangle[1], tempRectangle[2], tempRectangle[3]);
 			app.calc.cellCursorVisible = true;
 
@@ -4702,8 +4699,9 @@ L.CanvasTileLayer = L.Layer.extend({
 				this._cellCursorOnPgDn = null;
 			}
 
-			var corePxBounds = this._twipsToCorePixelsBounds(this._cellCursorTwips);
-			corePxBounds.round();
+			var corePxBounds = new L.Bounds(new L.Point(app.calc.cellCursorRectangle.pX1, app.calc.cellCursorRectangle.pY1),
+											new L.Point(app.calc.cellCursorRectangle.pX2, app.calc.cellCursorRectangle.pY2));
+
 			if (this._cellCursorMarker) {
 				this._cellCursorMarker.setBounds(corePxBounds);
 				this._map.removeLayer(this._dropDownButton);
