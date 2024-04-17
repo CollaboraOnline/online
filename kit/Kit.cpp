@@ -1748,7 +1748,7 @@ std::shared_ptr<lok::Document> Document::load(const std::shared_ptr<ChildSession
     if (!userTimezone.empty())
         options += ",Timezone=" + userTimezone;
 
-    std::string spellOnline;
+    std::string spellOnline = session->getSpellOnline();
     if (!_loKitDocument)
     {
         // This is the first time we are loading the document
@@ -1821,7 +1821,6 @@ std::shared_ptr<lok::Document> Document::load(const std::shared_ptr<ChildSession
         // Only save the options on opening the document.
         // No support for changing them after opening a document.
         _renderOpts = renderOpts;
-        spellOnline = session->getSpellOnline();
     }
     else
     {
@@ -1850,8 +1849,28 @@ std::shared_ptr<lok::Document> Document::load(const std::shared_ptr<ChildSession
         LOG_INF("Creating view to url [" << uriAnonym << "] for session [" << sessionId << "] with " << options << '.');
         _loKitDocument->createView(options.c_str());
         LOG_TRC("View to url [" << uriAnonym << "] created.");
-    }
 
+        switch (_loKitDocument->getDocumentType())
+        {
+        case LOK_DOCTYPE_TEXT:
+        case LOK_DOCTYPE_SPREADSHEET:
+            // writer and calc can have different spell checking settings per view, so use this users
+            // preference
+            break;
+        case LOK_DOCTYPE_PRESENTATION:
+        case LOK_DOCTYPE_DRAWING:
+        default:
+            // impress/draw currently cannot, so use the current document state
+            // so simply joining doesn't toggle that shared spelling state
+            if (char* viewRenderState = _loKitDocument->getCommandValues(".uno:ViewRenderState"))
+            {
+                StringVector tokens(StringVector::tokenize(viewRenderState, strlen(viewRenderState), ';'));
+                spellOnline = tokens[0] == "S" ? "true" : "false";
+                free(viewRenderState);
+            }
+            break;
+        }
+    }
     std::string theme = getDefaultTheme(session);
 
     LOG_INF("Initializing for rendering session [" << sessionId << "] on document url [" <<
