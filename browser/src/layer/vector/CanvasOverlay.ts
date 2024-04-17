@@ -313,7 +313,7 @@ class CanvasOverlay extends CanvasSectionObject {
 	}
 
 	// Applies canvas translation so that polygons/circles can be drawn using core-pixel coordinates.
-	private ctStart(clipArea?: cool.Bounds, paneBounds?: cool.Bounds, fixed?: boolean) {
+	private ctStart(clipArea?: cool.Bounds, paneBounds?: cool.Bounds, fixed?: boolean, freezePane?: { freezeX: boolean, freezeY: boolean }) {
 		this.updateCanvasBounds();
 		this.transformList.reset();
 		this.ctx.save();
@@ -322,6 +322,8 @@ class CanvasOverlay extends CanvasSectionObject {
 			paneBounds = this.bounds.clone();
 
 		const transform = new OverlayTransform();
+
+		const { freezeX, freezeY } = freezePane ?? { freezeX: false, freezeY: false };
 
 		if (this.tsManager._inZoomAnim && !fixed) {
 			// zoom-animation is in progress : so draw overlay on main canvas
@@ -334,30 +336,37 @@ class CanvasOverlay extends CanvasSectionObject {
 				this.tsManager._newCenter,
 				this.tsManager._layer._pinchStartCenter,
 				paneBounds,
+				{ freezeX, freezeY },
 				splitPos,
 				scale,
 				false /* findFreePaneCenter? */
 			);
 
+			const clipTopLeft = new cool.Point(docPos.topLeft.x, docPos.topLeft.y);
+
 			// Original pane size.
 			var paneSize = paneBounds.getSize();
 			var clipSize = paneSize.clone();
-			if (paneBounds.min.x || (!paneBounds.min.x && !splitPos.x)) {
+			if (!freezeX) {
 				// Pane's "free" size will shrink(expand) as we zoom in(out)
 				// respectively because fixed pane size expand(shrink).
 				clipSize.x = (paneSize.x - splitPos.x * (scale - 1)) / scale;
+
+				docPos.topLeft.x -= splitPos.x;
 			}
-			if (paneBounds.min.y || (!paneBounds.min.y && !splitPos.y)) {
+			if (!freezeY) {
 				// See comment regarding pane width above.
 				clipSize.y = (paneSize.y - splitPos.y * (scale - 1)) / scale;
+
+				docPos.topLeft.y -= splitPos.y;
 			}
 			// Force clip area to the zoom frame area of the pane specified.
 			clipArea = new cool.Bounds(
-				docPos.topLeft,
-				docPos.topLeft.add(clipSize));
+				clipTopLeft,
+				clipTopLeft.add(clipSize));
 
 			transform.scale(scale, scale);
-			transform.translate(scale * (docPos.topLeft.x - splitPos.x), scale * (docPos.topLeft.y - splitPos.y));
+			transform.translate(scale * docPos.topLeft.x, scale * docPos.topLeft.y);
 
 		} else if (this.tsManager._inZoomAnim && fixed) {
 
@@ -398,7 +407,7 @@ class CanvasOverlay extends CanvasSectionObject {
 		this.ctx.restore();
 	}
 
-	updatePoly(path: CPath, closed: boolean = false, clipArea?: cool.Bounds, paneBounds?: cool.Bounds) {
+	updatePoly(path: CPath, closed: boolean = false, clipArea?: cool.Bounds, paneBounds?: cool.Bounds, freezePane?: { freezeX: boolean, freezeY: boolean }) {
 		var i: number;
 		var j: number;
 		var len2: number;
@@ -409,7 +418,7 @@ class CanvasOverlay extends CanvasSectionObject {
 		if (!len)
 			return;
 
-		this.ctStart(clipArea, paneBounds, path.fixed);
+		this.ctStart(clipArea, paneBounds, path.fixed, freezePane);
 		this.ctx.beginPath();
 
 		for (i = 0; i < len; i++) {
@@ -427,11 +436,11 @@ class CanvasOverlay extends CanvasSectionObject {
 		this.ctEnd();
 	}
 
-	updateCircle(path: CPath, clipArea?: cool.Bounds, paneBounds?: cool.Bounds) {
+	updateCircle(path: CPath, clipArea?: cool.Bounds, paneBounds?: cool.Bounds, freezePane?: { freezeX: boolean, freezeY: boolean }) {
 		if (path.empty())
 			return;
 
-		this.ctStart(clipArea, paneBounds, path.fixed);
+		this.ctStart(clipArea, paneBounds, path.fixed, freezePane);
 
 		var point = this.transformList.applyToPoint(path.point);
 		var r: number = path.radius;
