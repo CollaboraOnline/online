@@ -31,6 +31,18 @@
 
 #include "Util.hpp"
 
+enum Level
+{
+    FTL = 1, // Fatal
+    CTL,     // Critical
+    ERR,     // Error
+    WRN,     // Warning
+    NTC,     // Notice
+    INF,     // Information
+    DBG,     // Debug
+    TRC      // Trace
+};
+
 namespace Log
 {
     /// Initialize the logging system.
@@ -260,13 +272,13 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
 
 #ifdef __ANDROID__
 
-#define LOG_LOG(LOG, NAME, PRIO, LVL, STR)                               \
+#define LOG_LOG(LOG, NAME, LVL, STR)                                     \
     ((void)__android_log_print(ANDROID_LOG_DEBUG, "coolwsd", "%s %s", LVL, STR.c_str()))
 
 #else
 
-#define LOG_LOG(LOG, NAME, PRIO, LVL, STR)                           \
-    LOG.log(Poco::Message(NAME, STR, Poco::Message::PRIO_##PRIO))
+#define LOG_LOG(LOG, NAME, LVL, STR)                                     \
+    LOG.log(Poco::Message(NAME, STR, static_cast<Poco::Message::Priority>(LVL)))
 
 #endif
 
@@ -282,13 +294,13 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
         LOG.flush();                                                                               \
     } while (false)
 
-#define LOG_BODY_(LOG, PRIO, LVL, X, PREFIX, END)                        \
+#define LOG_BODY_(LOG, LVL, X, PREFIX, END)                        \
     char b_[1024];                                                                                 \
-    std::ostringstream oss_(Log::prefix<sizeof(b_) - 1>(b_, LVL), std::ostringstream::ate);        \
+    std::ostringstream oss_(Log::prefix<sizeof(b_) - 1>(b_, #LVL), std::ostringstream::ate);       \
     PREFIX(oss_);                                                                                  \
     oss_ << std::boolalpha << X;                                                                   \
     END(oss_);                                                                                     \
-    LOG_LOG(LOG, LOG.name(), PRIO, LVL, oss_.str())
+    LOG_LOG(LOG, LOG.name(), LVL, oss_.str())
 
 #define LOG_ANY(X)                                                                                 \
     char b_[1024];                                                                                 \
@@ -313,7 +325,7 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
         auto& log_ = Log::logger();                                                                \
         if (LOG_CONDITIONAL(log_, trace))                                                          \
         {                                                                                          \
-            LOG_BODY_(log_, TRACE, "TRC", X, logPrefix, LOG_END);                                  \
+            LOG_BODY_(log_, TRC, X, logPrefix, LOG_END);                                           \
         }                                                                                          \
     } while (false)
 
@@ -323,7 +335,7 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
         auto& log_ = Log::logger();                                                                \
         if (LOG_CONDITIONAL(log_, trace))                                                          \
         {                                                                                          \
-            LOG_BODY_(log_, TRACE, "TRC", X, logPrefix, LOG_END_NOFILE);                           \
+            LOG_BODY_(log_, TRC, X, logPrefix, LOG_END_NOFILE);                                    \
         }                                                                                          \
     } while (false)
 
@@ -333,7 +345,7 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
         auto& log_ = Log::logger();                                                                \
         if (LOG_CONDITIONAL(log_, debug))                                                          \
         {                                                                                          \
-            LOG_BODY_(log_, DEBUG, "DBG", X, logPrefix, LOG_END);                                  \
+            LOG_BODY_(log_, DBG, X, logPrefix, LOG_END);                                           \
         }                                                                                          \
     } while (false)
 
@@ -343,7 +355,7 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
         auto& log_ = Log::logger();                                                                \
         if (LOG_CONDITIONAL(log_, information))                                                    \
         {                                                                                          \
-            LOG_BODY_(log_, INFORMATION, "INF", X, logPrefix, LOG_END);                            \
+            LOG_BODY_(log_, INF, X, logPrefix, LOG_END);                                           \
         }                                                                                          \
     } while (false)
 
@@ -353,7 +365,7 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
         auto& log_ = Log::logger();                                                                \
         if (LOG_CONDITIONAL(log_, information))                                                    \
         {                                                                                          \
-            LOG_BODY_(log_, INFORMATION, "INF", X, logPrefix, LOG_END_NOFILE);                     \
+            LOG_BODY_(log_, INF, X, logPrefix, LOG_END_NOFILE);                                    \
         }                                                                                          \
     } while (false)
 
@@ -363,7 +375,7 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
         auto& log_ = Log::logger();                                                                \
         if (LOG_CONDITIONAL(log_, warning))                                                        \
         {                                                                                          \
-            LOG_BODY_(log_, WARNING, "WRN", X, logPrefix, LOG_END);                                \
+            LOG_BODY_(log_, WRN, X, logPrefix, LOG_END);                                           \
         }                                                                                          \
     } while (false)
 
@@ -373,7 +385,7 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
         auto& log_ = Log::logger();                                                                \
         if (LOG_CONDITIONAL(log_, error))                                                          \
         {                                                                                          \
-            LOG_BODY_(log_, ERROR, "ERR", X, logPrefix, LOG_END);                                  \
+            LOG_BODY_(log_, ERR, X, logPrefix, LOG_END);                                           \
         }                                                                                          \
     } while (false)
 
@@ -397,7 +409,7 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
         auto& log_ = Log::logger();                                                                \
         if (LOG_CONDITIONAL(log_, fatal))                                                          \
         {                                                                                          \
-            LOG_BODY_(log_, FATAL, "FTL", X, logPrefix, LOG_END);                                  \
+            LOG_BODY_(log_, FTL, X, logPrefix, LOG_END);                                           \
         }                                                                                          \
     } while (false)
 
@@ -417,7 +429,7 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
         auto& log_ = Log::logger();                                                                \
         if (LOG_CONDITIONAL(log_, debug))                                                          \
         {                                                                                          \
-            LOG_BODY_(log_, TRACE, "TRC", X, (void), LOG_END);                                     \
+            LOG_BODY_(log_, TRC, X, (void), LOG_END);                                              \
         }                                                                                          \
     } while (false)
 
@@ -428,7 +440,7 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
         auto& log_ = Log::logger();                                                                \
         if (LOG_CONDITIONAL(log_, debug))                                                          \
         {                                                                                          \
-            LOG_BODY_(log_, DEBUG, "DBG", X, (void), LOG_END);                                     \
+            LOG_BODY_(log_, DBG, X, (void), LOG_END);                                              \
         }                                                                                          \
     } while (false)
 
@@ -439,7 +451,7 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
         auto& log_ = Log::logger();                                                                \
         if (LOG_CONDITIONAL(log_, error))                                                          \
         {                                                                                          \
-            LOG_BODY_(log_, INFORMATION, "INF", X, (void), LOG_END);                               \
+            LOG_BODY_(log_, INF, X, (void), LOG_END);                                              \
         }                                                                                          \
     } while (false)
 
@@ -450,7 +462,7 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
         auto& log_ = Log::logger();                                                                \
         if (LOG_CONDITIONAL(log_, error))                                                          \
         {                                                                                          \
-            LOG_BODY_(log_, WARNING, "WRN", X, (void), LOG_END);                                   \
+            LOG_BODY_(log_, WRN, X, (void), LOG_END);                                              \
         }                                                                                          \
     } while (false)
 
@@ -461,7 +473,7 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
         auto& log_ = Log::logger();                                                                \
         if (LOG_CONDITIONAL(log_, error))                                                          \
         {                                                                                          \
-            LOG_BODY_(log_, ERROR, "ERR", X, (void), LOG_END);                                     \
+            LOG_BODY_(log_, ERR, X, (void), LOG_END);                                              \
         }                                                                                          \
     } while (false)
 
