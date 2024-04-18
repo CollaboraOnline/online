@@ -383,13 +383,13 @@ public:
 
     void dumpState(std::ostream& oss);
 
-private:
     /// Return access to the lok::Office instance.
     std::shared_ptr<lok::Office> getLOKit() override { return _loKit; }
 
     /// Return access to the lok::Document instance.
     std::shared_ptr<lok::Document> getLOKitDocument() override;
 
+private:
     std::string getObfuscatedFileId() override { return _obfuscatedFileId; }
 
     /// Stops theads, flushes buffers, and exits the process.

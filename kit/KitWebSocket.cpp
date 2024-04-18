@@ -22,6 +22,7 @@
 #include <sys/types.h>
 
 #include <common/Seccomp.hpp>
+#include <common/JsonUtil.hpp>
 #include <common/TraceEvent.hpp>
 #include <common/MessageQueue.hpp>
 
@@ -232,11 +233,37 @@ void BgSaveParentWebSocketHandler::handleMessage(const std::vector<char>& data)
     // FIXME: check for badness - jsdialogs and so on and bail ... ?
 
     // Should pass only:
-    // "error:", "asyncsave", "forcedtracevent", "unocommandresult"
+    // "error:", "asyncsave", "forcedtracevent", "unocommandresult:"
     // "statusindicator[start|finish|setvalue]"
 
     // Messages already include client-foo prefixes inherited from ourselves
     _document->sendFrame(data.data(), data.size(), WSOpCode::Text);
+
+    // Status update messages are stuck in the bgsave's Idle CallbackFlushHandler
+    if (tokens[1] == "unocommandresult:")
+    {
+        std::string msg(data.data(), data.size());
+        Poco::JSON::Object::Ptr object;
+        if (JsonUtil::parseJSON(msg, object) &&
+            object->get("commandName").toString() == ".uno:Save")
+        {
+            if (object->get("success").toString() == "true")
+            {
+                // Force Modified state off, expecting a notification in a bit ...
+                LOG_TRC("Force modified state clear");
+                SigUtil::addActivity("Force clear modified");
+                _document->getLOKitDocument()->postUnoCommand(".uno:Modified", "{ \"Modified\": { \"type\": \"boolean\", \"value\": \"false\" } }", true);
+#if 0
+                // Synthesize modified status change
+                std::string modMsg = tokens[0] + " statechanged: .uno:ModifiedStatus=false";
+                LOG_TRC("Synthesize modified status clear");
+                _document->sendFrame(modMsg.c_str(), modMsg.size(), WSOpCode::Text);
+#endif
+            }
+            else
+                LOG_DBG("Failed to save, not synthesizing modified state");
+        }
+    }
 }
 
 void BgSaveParentWebSocketHandler::onDisconnect()
