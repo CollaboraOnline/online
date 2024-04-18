@@ -486,6 +486,13 @@ public:
                _docState.isCloseRequested() || SigUtil::getShutdownRequestFlag();
     }
 
+    /// True if any flag to unload or terminate is set.
+    bool isUnloadingUnrecoverably() const
+    {
+        return _docState.isMarkedToDestroy() || _stop || _docState.isCloseRequested() ||
+               SigUtil::getShutdownRequestFlag();
+    }
+
     bool isMarkedToDestroy() const { return _docState.isMarkedToDestroy() || _stop; }
 
     virtual bool handleInput(const std::shared_ptr<Message>& message);
@@ -1468,6 +1475,7 @@ private:
 
         /// Flag to unload the document. Irreversible.
         void setUnloadRequested() { _unloadRequested = true; }
+        void resetUnloadRequested() { _unloadRequested = false; }
         bool isUnloadRequested() const { return _unloadRequested; }
 
         /// Flag that we are disconnected from the Kit. Irreversible.

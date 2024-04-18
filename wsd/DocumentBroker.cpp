@@ -3063,7 +3063,7 @@ std::shared_ptr<ClientSession> DocumentBroker::createNewClientSession(
 {
     try
     {
-        if (isMarkedToDestroy() || _docState.isUnloadRequested())
+        if (isMarkedToDestroy() || _docState.isCloseRequested())
         {
             LOG_WRN("DocBroker [" << getDocKey()
                                   << "] is unloading. Rejecting client request to load session ["
@@ -3091,6 +3091,14 @@ std::shared_ptr<ClientSession> DocumentBroker::createNewClientSession(
         // (UserCanWrite param).
         auto session = std::make_shared<ClientSession>(ws, id, shared_from_this(), uriPublic, isReadOnly, requestDetails);
         session->construct();
+
+        if (_docState.isUnloadRequested())
+        {
+            // A new client has connected; recover.
+            LOG_DBG(
+                "Unload was requested after uploading, but new clients have joined. Recovering");
+            _docState.resetUnloadRequested();
+        }
 
         return session;
     }
