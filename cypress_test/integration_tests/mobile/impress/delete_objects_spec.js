@@ -25,6 +25,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function()
 
 
 	it('Delete Text', function() {
+		helper.setDummyClipboardForCopy();
 		cy.cGet('.leaflet-layer').dblclick('center');
 
 		cy.wait(100);
@@ -32,6 +33,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function()
 		helper.typeIntoDocument('text');
 
 		helper.selectAllText();
+		helper.copy();
 
 		helper.expectTextForClipboard('text');
 
