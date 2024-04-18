@@ -51,7 +51,8 @@ describe(['tagmobile', 'tagproxy'], 'Impress focus tests', function() {
 		impressHelper.assertNotInTextEditMode();
 	});
 
-	it('Double-click to edit', function() {
+	it.only('Double-click to edit', function() {
+		helper.setDummyClipboardForCopy();
 
 		mobileHelper.enableEditingMobile();
 
@@ -62,7 +63,7 @@ describe(['tagmobile', 'tagproxy'], 'Impress focus tests', function() {
 
 		cy.wait(1000);
 
-		impressHelper.typeTextAndVerify('Hello Impress');
+		impressHelper.typeTextAndVerify('Hello Impress', undefined, true);
 
 		// End editing.
 		helper.typeIntoDocument('{esc}');
@@ -75,7 +76,7 @@ describe(['tagmobile', 'tagproxy'], 'Impress focus tests', function() {
 		// Clear the text.
 		helper.clearAllText();
 
-		impressHelper.typeTextAndVerify('Bazinga Impress');
+		impressHelper.typeTextAndVerify('Bazinga Impress', undefined, true);
 	});
 
 	it.skip('Single-click to edit', function() {
