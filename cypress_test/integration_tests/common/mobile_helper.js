@@ -244,7 +244,7 @@ function openTextPropertiesPanel() {
 
 	openMobileWizard();
 
-	helper.clickOnIdle('#TextPropertyPanel');
+	cy.cGet('#TextPropertyPanel').click();
 
 	cy.cGet('#Bold').should('be.visible');
 
@@ -290,9 +290,9 @@ function selectAnnotationMenuItem(menuItem) {
 function selectListBoxItem(listboxSelector, item) {
 	cy.log('>> selectListBoxItem - start');
 
-	helper.clickOnIdle(listboxSelector);
+	cy.cGet(listboxSelector).click();
 
-	helper.clickOnIdle('.mobile-wizard.ui-combobox-text', item);
+	cy.cGet('.mobile-wizard.ui-combobox-text', item).click();
 
 	// Combobox entry contains the selected item
 	cy.cGet(listboxSelector + ' .ui-header-right .entry-value')
@@ -304,14 +304,14 @@ function selectListBoxItem(listboxSelector, item) {
 function selectListBoxItem2(listboxSelector, item) {
 	cy.log('>> selectListBoxItem2 - start');
 
-	helper.clickOnIdle(listboxSelector);
+	cy.cGet(listboxSelector).click();
 
 	var endPos = listboxSelector.indexOf(' ');
 	if (endPos < 0)
 		endPos = listboxSelector.length;
 	var parentId = listboxSelector.substring(0, endPos);
 
-	helper.clickOnIdle(parentId + ' .ui-combobox-text', item);
+	cy.cGet(parentId + ' .ui-combobox-text', item).click();
 
 	cy.cGet(listboxSelector + ' .ui-header-left')
 		.should('have.text', item);

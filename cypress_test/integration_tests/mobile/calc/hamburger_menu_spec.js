@@ -159,9 +159,9 @@ describe.skip(['tagmobile'], 'Trigger hamburger menu options.', function() {
 		// Search bar become visible
 		cy.cGet('#mobile-wizard-content').should('not.be.empty');
 		// Search for some word
-		helper.inputOnIdle('#searchterm', 'a');
+		helper.typeIntoInputField('#searchterm', 'a');
 		cy.cGet('#search').should('not.have.attr', 'disabled');
-		helper.clickOnIdle('#search');
+		cy.cGet('#search').click();
 		// First cell should be selected
 		cy.cGet('input#addressInput').should('have.prop', 'value', 'A1');
 	});

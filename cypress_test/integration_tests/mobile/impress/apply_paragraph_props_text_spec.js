@@ -28,7 +28,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 	function openParagraphPropertiesPanel() {
 		mobileHelper.openMobileWizard();
 
-		helper.clickOnIdle('#ParaPropertyPanel');
+		cy.cGet('#ParaPropertyPanel').click();
 
 		cy.cGet('.unoParaLeftToRight').should('be.visible');
 	}
@@ -36,7 +36,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 	function openListsPropertiesPanel() {
 		mobileHelper.openMobileWizard();
 
-		helper.clickOnIdle('#ListsPropertyPanel');
+		cy.cGet('#ListsPropertyPanel').click();
 
 		cy.cGet('.unoDefaultBullet').should('be.visible');
 	}
@@ -50,7 +50,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 		// Set right alignment first
 		openParagraphPropertiesPanel();
 
-		helper.clickOnIdle('.unoRightPara');
+		cy.cGet('.unoRightPara').click();
 
 		triggerNewSVG();
 
@@ -62,7 +62,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 
 		openParagraphPropertiesPanel();
 
-		helper.clickOnIdle('.unoLeftPara');
+		cy.cGet('.unoLeftPara').click();
 
 		triggerNewSVG();
 
@@ -78,7 +78,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 
 		openParagraphPropertiesPanel();
 
-		helper.clickOnIdle('.unoCenterPara');
+		cy.cGet('.unoCenterPara').click();
 
 		triggerNewSVG();
 
@@ -95,7 +95,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 		// Set right alignment first
 		openParagraphPropertiesPanel();
 
-		helper.clickOnIdle('.unoRightPara');
+		cy.cGet('.unoRightPara').click();
 
 		triggerNewSVG();
 
@@ -107,7 +107,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 		// Then set justified alignment
 		openParagraphPropertiesPanel();
 
-		helper.clickOnIdle('.unoJustifyPara');
+		cy.cGet('.unoJustifyPara').click();
 
 		triggerNewSVG();
 
@@ -124,7 +124,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 		// Set bottom alignment first
 		openParagraphPropertiesPanel();
 
-		helper.clickOnIdle('.unoCellVertBottom');
+		cy.cGet('.unoCellVertBottom').click();
 
 		triggerNewSVG();
 
@@ -136,7 +136,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 		// Then set top alignment
 		openParagraphPropertiesPanel();
 
-		helper.clickOnIdle('.unoCellVertTop');
+		cy.cGet('.unoCellVertTop').click();
 
 		triggerNewSVG();
 
@@ -152,7 +152,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 
 		openParagraphPropertiesPanel();
 
-		helper.clickOnIdle('.unoCellVertCenter');
+		cy.cGet('.unoCellVertCenter').click();
 
 		triggerNewSVG();
 
@@ -171,7 +171,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 
 		openListsPropertiesPanel();
 
-		helper.clickOnIdle('#ListsPropertyPanel .unoDefaultBullet');
+		cy.cGet('#ListsPropertyPanel .unoDefaultBullet').click();
 
 		triggerNewSVG();
 
@@ -188,7 +188,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 
 		openListsPropertiesPanel();
 
-		helper.clickOnIdle('#ListsPropertyPanel .unoDefaultNumbering');
+		cy.cGet('#ListsPropertyPanel .unoDefaultNumbering').click();
 
 		triggerNewSVG();
 
@@ -238,7 +238,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 
 		openParagraphPropertiesPanel();
 
-		helper.clickOnIdle('.unoParaspaceIncrease');
+		cy.cGet('.unoParaspaceIncrease').click();
 
 		triggerNewSVG();
 
@@ -249,7 +249,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 
 		openParagraphPropertiesPanel();
 
-		helper.clickOnIdle('.unoParaspaceDecrease');
+		cy.cGet('.unoParaspaceDecrease').click();
 
 		triggerNewSVG();
 
@@ -266,7 +266,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 
 		openParagraphPropertiesPanel();
 
-		helper.clickOnIdle('.unoParaRightToLeft');
+		cy.cGet('.unoParaRightToLeft').click();
 
 		triggerNewSVG();
 
@@ -278,7 +278,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 
 		openParagraphPropertiesPanel();
 
-		helper.clickOnIdle('.unoParaLeftToRight');
+		cy.cGet('.unoParaLeftToRight').click();
 
 		triggerNewSVG();
 
@@ -296,7 +296,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 
 		openListsPropertiesPanel();
 
-		helper.clickOnIdle('#ListsPropertyPanel .unoDefaultBullet');
+		cy.cGet('#ListsPropertyPanel .unoDefaultBullet').click();
 
 		triggerNewSVG();
 
@@ -310,7 +310,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 
 		openListsPropertiesPanel();
 
-		helper.clickOnIdle('.unoOutlineRight');
+		cy.cGet('.unoOutlineRight').click();
 
 		triggerNewSVG();
 
@@ -322,7 +322,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 
 		openListsPropertiesPanel();
 
-		helper.clickOnIdle('.unoOutlineLeft');
+		cy.cGet('.unoOutlineLeft').click();
 
 		triggerNewSVG();
 

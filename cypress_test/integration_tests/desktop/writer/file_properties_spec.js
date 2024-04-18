@@ -42,7 +42,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'File Property Tests', func
 		cy.cGet('#title.ui-edit').should('have.value', 'New Title');
 		cy.cGet('#comments.ui-textarea').should('have.value', 'New');
 
-		helper.clickOnIdle('#cancel.ui-pushbutton');
+		cy.cGet('#cancel.ui-pushbutton').click();
 	});
 
 	it.skip('Add Custom Property.', function() {
@@ -51,7 +51,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'File Property Tests', func
 		cy.wait(200);
 
 		// Add property
-		helper.clickOnIdle('.ui-pushbutton', 'Add Property');
+		cy.cGet('.ui-pushbutton', 'Add Property').click();
 		helper.waitUntilIdle('#namebox');
 		cy.cGet('#namebox select').select('Mailstop');
 
@@ -64,21 +64,21 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'File Property Tests', func
 		cy.cGet('#customprops-tab-label').click();
 		cy.cGet('#valueedit.ui-edit').should('have.value', '123 Address');
 
-		helper.clickOnIdle('#cancel.ui-pushbutton');
+		cy.cGet('#cancel.ui-pushbutton').click();
 	});
 
 	it.skip('Add Custom Duration Property.', function() {
 		writerHelper.openFileProperties();
-		helper.clickOnIdle('#customprops-tab-label');
+		cy.cGet('#customprops-tab-label').click();
 		cy.wait(200);
 
 		// Add property
-		helper.clickOnIdle('.ui-pushbutton', 'Add Property');
+		cy.cGet('.ui-pushbutton', 'Add Property').click();
 		helper.waitUntilIdle('#namebox');
 		cy.cGet('#namebox select').select('Received from');
 		helper.waitUntilIdle('#typebox');
 		cy.cGet('#typebox select').select('Duration');
-		helper.clickOnIdle('#durationbutton');
+		cy.cGet('#durationbutton').click();
 		cy.cGet('#negative-input').check();
 		cy.cGet('#years-input').type('1');
 		cy.cGet('#days-input').type('2');
@@ -90,9 +90,9 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'File Property Tests', func
 
 		// Check property saved
 		writerHelper.openFileProperties();
-		helper.clickOnIdle('#customprops-tab-label');
+		cy.cGet('#customprops-tab-label').click();
 		cy.cGet('#duration.ui-edit').should('have.value', '- Y: 1 M: 0 D: 2 H: 0 M: 0 S: 3');
-		helper.clickOnIdle('#cancel.ui-pushbutton');
+		cy.cGet('#cancel.ui-pushbutton').click();
 	});
 
 	it.skip('Add Custom Yes/No Property.', function() {
@@ -101,7 +101,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'File Property Tests', func
 		cy.wait(200);
 
 		// Add property
-		helper.clickOnIdle('.ui-pushbutton', 'Add Property');
+		cy.cGet('.ui-pushbutton', 'Add Property').click();
 		helper.waitUntilIdle('#namebox');
 		cy.cGet('#namebox select').select('Telephone number');
 		helper.waitUntilIdle('#typebox');
@@ -114,6 +114,6 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'File Property Tests', func
 		writerHelper.openFileProperties();
 		cy.cGet('#customprops-tab-label').click();
 		cy.cGet('#yes-input').should('be.checked');
-		helper.clickOnIdle('#cancel.ui-pushbutton');
+		cy.cGet('#cancel.ui-pushbutton').click();
 	});
 });

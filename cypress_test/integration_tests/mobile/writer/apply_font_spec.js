@@ -34,31 +34,31 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font changes.', funct
 	});
 
 	it('Apply bold font.', function() {
-		helper.clickOnIdle('#Bold');
+		cy.cGet('#Bold').click();
 		writerHelper.selectAllTextOfDoc();
 		cy.cGet('#copy-paste-container p b').should('exist');
 	});
 
 	it('Apply italic font.', function() {
-		helper.clickOnIdle('#Italic');
+		cy.cGet('#Italic').click();
 		writerHelper.selectAllTextOfDoc();
 		cy.cGet('#copy-paste-container p i').should('exist');
 	});
 
 	it('Apply underline.', function() {
-		helper.clickOnIdle('#Underline');
+		cy.cGet('#Underline').click();
 		writerHelper.selectAllTextOfDoc();
 		cy.cGet('#copy-paste-container p u').should('exist');
 	});
 
 	it('Apply strikeout.', function() {
-		helper.clickOnIdle('#Strikeout');
+		cy.cGet('#Strikeout').click();
 		writerHelper.selectAllTextOfDoc();
 		cy.cGet('#copy-paste-container p strike').should('exist');
 	});
 
 	it('Apply shadowed.', function() {
-		helper.clickOnIdle('#Shadowed');
+		cy.cGet('#Shadowed').click();
 		writerHelper.selectAllTextOfDoc();
 		// TODO: Shadowed is not in the clipboard content.
 	});
@@ -91,13 +91,13 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font changes.', funct
 	});
 
 	it('Apply superscript.', function() {
-		helper.clickOnIdle('#SuperScript');
+		cy.cGet('#SuperScript').click();
 		writerHelper.selectAllTextOfDoc();
 		cy.cGet('#copy-paste-container p sup').should('exist');
 	});
 
 	it('Apply subscript.', function() {
-		helper.clickOnIdle('#SubScript');
+		cy.cGet('#SubScript').click();
 		writerHelper.selectAllTextOfDoc();
 		cy.cGet('#copy-paste-container p sub').should('exist');
 	});

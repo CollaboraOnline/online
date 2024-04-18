@@ -84,26 +84,26 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change shape properties via
 		// Change width
 		openPosSizePanel();
 		cy.cGet('#selectwidth .plus').should('be.visible');
-		helper.clickOnIdle('#selectwidth .plus');
-		helper.clickOnIdle('#selectwidth .plus');
+		cy.cGet('#selectwidth .plus').click();
+		cy.cGet('#selectwidth .plus').click();
 		mobileHelper.closeMobileWizard();
 	}
 
 	function openPosSizePanel() {
 		mobileHelper.openMobileWizard();
-		helper.clickOnIdle('#PosSizePropertyPanel');
+		cy.cGet('#PosSizePropertyPanel').click();
 		cy.cGet('#selectwidth').should('be.visible');
 	}
 
 	function openLinePropertyPanel() {
 		mobileHelper.openMobileWizard();
-		helper.clickOnIdle('#LinePropertyPanel');
+		cy.cGet('#LinePropertyPanel').click();
 		cy.cGet('#linestyle').should('be.visible');
 	}
 
 	function openAreaPanel() {
 		mobileHelper.openMobileWizard();
-		helper.clickOnIdle('#AreaPropertyPanel');
+		cy.cGet('#AreaPropertyPanel').click();
 		cy.cGet('#fillstylearea').should('be.visible');
 	}
 
@@ -132,24 +132,24 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change shape properties via
 	it('Change size with keep ratio enabled.', function() {
 		openPosSizePanel();
 		// Enable keep ratio
-		helper.clickOnIdle('#mobile-wizard #ratio #ratio');
+		cy.cGet('#mobile-wizard #ratio #ratio').click();
 		cy.cGet('#mobile-wizard #ratio #ratio').should('have.prop', 'checked', true);
 		// Change height
-		helper.inputOnIdle('#selectheight .spinfield', '5.2');
+		helper.typeIntoInputField('#selectheight .spinfield', '5.2');
 		const matcher = new TriangleCoordinatesMatcher(defaultStartPoint, Math.floor(5.2 * unitScale), Math.ceil(5.2 * unitScale));
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path').invoke('attr', 'd').should(matcher.match.bind(matcher));
 	});
 
 	it('Vertical mirroring', function() {
 		openPosSizePanel();
-		helper.clickOnIdle('#mobile-wizard .unoFlipVertical');
+		cy.cGet('#mobile-wizard .unoFlipVertical').click();
 		const matcher = new TriangleCoordinatesMatcher(defaultStartPoint, defaultBase, defaultAltitude, false /* horiz mirroring */, true /* vert mirroring */);
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path').invoke('attr', 'd').should(matcher.match.bind(matcher));
 	});
 
 	it('Horizontal mirroring', function() {
 		openPosSizePanel();
-		helper.clickOnIdle('#mobile-wizard .unoFlipHorizontal');
+		cy.cGet('#mobile-wizard .unoFlipHorizontal').click();
 		triggerNewSVG();
 		const matcher = new TriangleCoordinatesMatcher(defaultStartPoint, defaultBase, defaultAltitude, true /* horiz mirroring */, false /* vert mirroring */);
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path').invoke('attr', 'd').should(matcher.match.bind(matcher));
@@ -159,20 +159,20 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change shape properties via
 		openPosSizePanel();
 		// We can't test the result, so we just trigger
 		// the events to catch crashes, consoler errors.
-		helper.clickOnIdle('#mobile-wizard .unoBringToFront');
+		cy.cGet('#mobile-wizard .unoBringToFront').click();
 		cy.wait(300);
-		helper.clickOnIdle('#mobile-wizard .unoObjectForwardOne');
+		cy.cGet('#mobile-wizard .unoObjectForwardOne').click();
 		cy.wait(300);
-		helper.clickOnIdle('#mobile-wizard .unoObjectBackOne');
+		cy.cGet('#mobile-wizard .unoObjectBackOne').click();
 		cy.wait(300);
-		helper.clickOnIdle('#mobile-wizard .unoSendToBack');
+		cy.cGet('#mobile-wizard .unoSendToBack').click();
 		cy.wait(300);
 	});
 
 	it.skip('Change line color', function() {
 		openLinePropertyPanel();
-		helper.clickOnIdle('#mobile-wizard .unoXLineColor');
-		helper.clickOnIdle('.ui-content[title="Line Color"] .color-sample-small[style="background-color: rgb(152, 0, 0);"]');
+		cy.cGet('#mobile-wizard .unoXLineColor').click();
+		cy.cGet('.ui-content[title="Line Color"] .color-sample-small[style="background-color: rgb(152, 0, 0);"]').click();
 		triggerNewSVG();
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path[fill="none"]').should('have.attr', 'stroke', 'rgb(152,0,0)');
 	});
@@ -187,11 +187,11 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change shape properties via
 	it.skip('Change line width', function() {
 		openLinePropertyPanel();
 		cy.cGet('#linewidth .spinfield').should('have.attr', 'readonly', 'readonly');
-		helper.clickOnIdle('#linewidth .plus');
+		cy.cGet('#linewidth .plus').click();
 		triggerNewSVG();
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path[fill="none"]').should('have.attr', 'stroke-width', '141');
 		openLinePropertyPanel();
-		helper.clickOnIdle('#linewidth .minus');
+		cy.cGet('#linewidth .minus').click();
 		triggerNewSVG();
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path[fill="none"]').should('have.attr', 'stroke-width', '88');
 	});
@@ -220,13 +220,13 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change shape properties via
 		cy.cGet('#mobile-wizard #gradientstyle .ui-header-left').should('have.text', 'Linear');
 		mobileHelper.selectListBoxItem2('#gradientstyle', 'Square');
 		// Select From color
-		helper.clickOnIdle('#mobile-wizard #fillgrad1');
+		cy.cGet('#mobile-wizard #fillgrad1').click();
 		mobileHelper.selectFromColorPalette(0, 2);
 		// Set gradient angle
-		helper.inputOnIdle('#mobile-wizard #gradangle .spinfield', '100');
+		helper.typeIntoInputField('#mobile-wizard #gradangle .spinfield', '100');
 		cy.cGet('#mobile-wizard #gradangle .spinfield').should('have.value', '100');
 		// Select To color
-		helper.clickOnIdle('#mobile-wizard #fillgrad2');
+		cy.cGet('#mobile-wizard #fillgrad2').click();
 		mobileHelper.selectFromColorPalette(1, 7);
 		triggerNewSVG();
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g svg g.Page g g#id1 defs pattern').should('exist');
@@ -269,7 +269,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change shape properties via
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g svg g.Page g g#id1 path:nth-of-type(1)').should('have.attr', 'fill', 'rgb(114,159,207)');
 		openAreaPanel();
 		cy.cGet('#mobile-wizard #FillColor .color-sample-selected').should('have.attr', 'style', 'background-color: rgb(114, 159, 207);');
-		helper.clickOnIdle('.unoFillColor');
+		cy.cGet('.unoFillColor').click();
 		mobileHelper.selectFromColorPalette(0, 2, 0, 2);
 		cy.cGet('#mobile-wizard #FillColor .color-sample-selected').should('have.attr', 'style', 'background-color: rgb(204, 0, 0);');
 		triggerNewSVG();
@@ -292,7 +292,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change shape properties via
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g svg g.Page g g#id1 path:nth-of-type(1)').should('not.have.attr', 'fill-opacity');
 		openAreaPanel();
 		cy.cGet('#mobile-wizard #transtype .ui-header-left').should('have.text', 'None');
-		helper.inputOnIdle('#settransparency .spinfield', '50');
+		helper.typeIntoInputField('#settransparency .spinfield', '50');
 		cy.cGet('#mobile-wizard #settransparency .spinfield').should('have.value', '50');
 		cy.cGet('#mobile-wizard #transtype .ui-header-left').should('have.text', 'Solid');
 		triggerNewSVG();

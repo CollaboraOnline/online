@@ -27,11 +27,11 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Sheet Operations.', functi
 		calcHelper.ensureViewContainsCellCursor();
 		cy.cGet('#spreadsheet-toolbar #insertsheet').click();
 		calcHelper.assertNumberofSheets(2);
-		helper.clickOnIdle('#spreadsheet-tab1');
+		cy.cGet('#spreadsheet-tab1').click();
 		calcHelper.ensureViewContainsCellCursor();
 		helper.typeIntoInputField('input#addressInput', 'A200');
 		calcHelper.ensureViewContainsCellCursor();
-		helper.clickOnIdle('#spreadsheet-tab0');
+		cy.cGet('#spreadsheet-tab0').click();
 		calcHelper.ensureViewContainsCellCursor();
 	});
 

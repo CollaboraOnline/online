@@ -10,7 +10,7 @@ describe(['tagdesktop', 'tagproxy'], 'macro dialog tests', function() {
 		cy.get('#MacroWarnMedium.jsdialog')
 			.should('exist');
 
-		helper.clickOnIdle('#MacroWarnMedium.jsdialog #ok');
+		cy.cGet('#MacroWarnMedium.jsdialog #ok').click();
 	}
 
 	beforeEach(function() {

@@ -227,12 +227,12 @@ describe.skip(['tagmobile'], 'Trigger hamburger menu options.', function() {
 			.should('not.be.empty');
 
 		// Search for some word
-		helper.inputOnIdle('#searchterm', 'X');
+		helper.typeIntoInputField('#searchterm', 'X');
 
 		cy.cGet('#search')
 			.should('not.have.attr', 'disabled');
 
-		helper.clickOnIdle('#search');
+		cy.cGet('#search').click();
 
 		// A shape and some text should be selected
 		//cy.get('.transform-handler--rotate')

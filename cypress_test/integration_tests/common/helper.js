@@ -799,53 +799,6 @@ function waitUntilIdle(selector, content) {
 	}
 }
 
-// Waits for the DOM element to be idle and clicks on it afterward.
-// This is a workaround to avoid 'item detached from DOM'
-// failures caused by GUI flickering.
-// GUI flickering might mean bad design, but
-// until it's fixed we can use this method.
-// Known GUI flickering:
-// * mobile wizard
-// IMPORTANT: don't use this if there is no flickering.
-// Use simple click() instead. This method is much slower.
-// Parameters:
-// selector - a CSS selector to query a DOM element to wait on to be idle.
-// content - a string, a content selector used by cy.contains() to select the correct DOM element.
-// waitingTime - how much time to wait before we say the item is idle.
-function clickOnIdle(selector, content) {
-	// waitUntilIdle has been stubbed and clickOnIdle will be removed soon.
-	// Find a specific condition to wait for using waitUntil, or even better use Cypress's
-	// built-in retrying functionality on find, should, and other functions.
-	// Then call .click() directly from the test
-	cy.log('clickOnIdle stubbed');
-	if (content) {
-		cy.cGet(selector, content).should('not.have.attr', 'disabled');
-		cy.cGet(selector, content).click();
-	} else {
-		cy.cGet(selector).should('not.have.attr', 'disabled');
-		cy.cGet(selector).click();
-	}
-}
-
-// Waits for the DOM element to be idle and types into it afterward.
-// See also the comments at clickOnIdle() method.
-// Parameters:
-// selector - a CSS selector to query a DOM element to wait on to be idle.
-// input - text to be typed into the selected DOM element.
-// waitingTime - how much time to wait before we say the item is idle.
-function inputOnIdle(selector, input) {
-	// waitUntilIdle has been stubbed and inputOnIdle will be removed soon.
-	// Find a specific condition to wait for using waitUntil, or even better use Cypress's
-	// built-in retrying functionality on find, should, and other functions.
-	// Then call .type() directly from the test
-	cy.log('inputOnIdle stubbed');
-
-	cy.cGet(selector)
-		.clear()
-		.type(input)
-		.type('{enter}');
-}
-
 // Run a code snippet if we are in a mobile test.
 function doIfOnMobile(callback) {
 	cy.window({log: false})
@@ -1258,8 +1211,6 @@ module.exports.beforeAll = beforeAll;
 module.exports.typeText = typeText;
 module.exports.isImageWhite = isImageWhite;
 module.exports.isCanvasWhite = isCanvasWhite;
-module.exports.clickOnIdle = clickOnIdle;
-module.exports.inputOnIdle = inputOnIdle;
 module.exports.waitUntilIdle = waitUntilIdle;
 module.exports.doIfOnMobile = doIfOnMobile;
 module.exports.doIfOnDesktop = doIfOnDesktop;

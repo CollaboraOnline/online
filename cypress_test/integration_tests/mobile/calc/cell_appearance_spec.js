@@ -22,7 +22,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change cell appearance.', f
 	function openAppearencePanel() {
 		mobileHelper.openMobileWizard();
 
-		helper.clickOnIdle('#ScCellAppearancePropertyPanel');
+		cy.cGet('#ScCellAppearancePropertyPanel').click();
 
 		cy.cGet('body').contains('.menu-entry-with-icon', 'Background Color')
 			.should('be.visible');
@@ -44,7 +44,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change cell appearance.', f
 		helper.setDummyClipboardForCopy();
 		openAppearencePanelOnFirstCell();
 
-		helper.clickOnIdle('#BackgroundColor');
+		cy.cGet('#BackgroundColor').click();
 
 		mobileHelper.selectFromColorPicker('#BackgroundColor', 2);
 
@@ -63,7 +63,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change cell appearance.', f
 		helper.setDummyClipboardForCopy();
 		openAppearencePanelOnFirstCell();
 
-		helper.clickOnIdle('#border-2');
+		cy.cGet('#border-2').click();
 
 		calcHelper.selectEntireSheet();
 		helper.copy();
@@ -77,7 +77,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change cell appearance.', f
 		openAppearencePanelOnFirstCell();
 
 		// First add left border
-		helper.clickOnIdle('#border-2');
+		cy.cGet('#border-2').click();
 
 		calcHelper.selectEntireSheet();
 		helper.copy();
@@ -88,7 +88,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change cell appearance.', f
 		// Then remove it
 		openAppearencePanelOnFirstCell();
 
-		helper.clickOnIdle('#border-1');
+		cy.cGet('#border-1').click();
 
 		calcHelper.selectEntireSheet();
 		helper.copy();
@@ -101,7 +101,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change cell appearance.', f
 		helper.setDummyClipboardForCopy();
 		openAppearencePanelOnFirstCell();
 
-		helper.clickOnIdle('#border-3');
+		cy.cGet('#border-3').click();
 
 		calcHelper.selectEntireSheet();
 		helper.copy();
@@ -114,7 +114,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change cell appearance.', f
 		helper.setDummyClipboardForCopy();
 		openAppearencePanelOnFirstCell();
 
-		helper.clickOnIdle('#border-4');
+		cy.cGet('#border-4').click();
 
 		calcHelper.selectEntireSheet();
 		helper.copy();
@@ -127,7 +127,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change cell appearance.', f
 		helper.setDummyClipboardForCopy();
 		openAppearencePanelOnFirstCell();
 
-		helper.clickOnIdle('#border-5');
+		cy.cGet('#border-5').click();
 
 		calcHelper.selectEntireSheet();
 		helper.copy();
@@ -140,7 +140,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change cell appearance.', f
 		helper.setDummyClipboardForCopy();
 		openAppearencePanelOnFirstCell();
 
-		helper.clickOnIdle('#border-6');
+		cy.cGet('#border-6').click();
 
 		calcHelper.selectEntireSheet();
 		helper.copy();
@@ -153,7 +153,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change cell appearance.', f
 		helper.setDummyClipboardForCopy();
 		openAppearencePanelOnFirstCell();
 
-		helper.clickOnIdle('#border-7');
+		cy.cGet('#border-7').click();
 
 		calcHelper.selectEntireSheet();
 		helper.copy();
@@ -166,7 +166,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change cell appearance.', f
 		helper.setDummyClipboardForCopy();
 		openAppearencePanelOnFirstCell();
 
-		helper.clickOnIdle('#border-8');
+		cy.cGet('#border-8').click();
 
 		calcHelper.selectEntireSheet();
 		helper.copy();
@@ -178,7 +178,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change cell appearance.', f
 	it.skip('Apply horizontal borders for multiple cells', function() {
 		openAppearencePanelOnAllCells();
 
-		helper.clickOnIdle('#border-9');
+		cy.cGet('#border-9').click();
 
 		calcHelper.selectEntireSheet();
 
@@ -194,7 +194,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change cell appearance.', f
 	it.skip('Apply horizontal inner borders and vertical outer borders', function() {
 		openAppearencePanelOnAllCells();
 
-		helper.clickOnIdle('#border-10');
+		cy.cGet('#border-10').click();
 
 		calcHelper.selectEntireSheet();
 
@@ -213,7 +213,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change cell appearance.', f
 	it.skip('Apply vertical inner borders and horizontal outer borders', function() {
 		openAppearencePanelOnAllCells();
 
-		helper.clickOnIdle('#border-11');
+		cy.cGet('#border-11').click();
 
 		calcHelper.selectEntireSheet();
 
@@ -232,7 +232,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change cell appearance.', f
 	it.skip('Apply all inner and outer borders', function() {
 		openAppearencePanelOnAllCells();
 
-		helper.clickOnIdle('#border-12');
+		cy.cGet('#border-12').click();
 
 		calcHelper.selectEntireSheet();
 
@@ -249,7 +249,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change cell appearance.', f
 		openAppearencePanelOnFirstCell();
 
 		// Apply left border first
-		helper.clickOnIdle('#border-2');
+		cy.cGet('#border-2').click();
 
 		// Then apply border color
 		cy.cGet('#FrameLineColor')
