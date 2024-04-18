@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-04-12 19:29+0200\n"
-"PO-Revision-Date: 2024-04-07 15:37+0000\n"
+"PO-Revision-Date: 2024-04-16 14:06+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://hosted.weblate.org/projects/collabora-online/"
 "help/he/>\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.5-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:84-5
 msgid "Keyboard Shortcuts"
@@ -283,9 +283,8 @@ msgstr "יישור לימין"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:250-76
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:280-76
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:345-76
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>R</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>R</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:120-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:251-38
@@ -298,36 +297,32 @@ msgstr "יישור"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:251-72
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:281-72
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:346-72
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>J</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>J"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>J</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:121-38
 msgid "Apply Default paragraph style"
 msgstr "החלת עיצוב בררת מחדל על פסקה"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:121-94
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>0</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>0"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>0</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:122-38
 msgid "Apply Heading 1 paragraph style"
 msgstr "החלת סגנון פסקה „כותרת 1”"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:122-96
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>1</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>1"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>1</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:123-38
 msgid "Apply Heading 2 paragraph style"
 msgstr "החלת סגנון פסקה „כותרת 2”"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:123-96
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>2</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>2"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>2</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:124-38
 msgid "Apply Heading 3 paragraph style"
@@ -1354,9 +1349,8 @@ msgid "Delete cells (as in menu Edit - Delete Cells)"
 msgstr "מחיקת תאים (כמו בעריכה - מחיקת תאים)"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:233-110
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Minus key</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>מקש מינוס"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>מקש מינוס</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:237-9
 msgid "Cell formatting"
