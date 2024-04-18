@@ -253,6 +253,31 @@ function openAutoFilterMenu(secondColumn) {
 	cy.log('<< openAutoFilterMenu - end');
 }
 
+function assertNumberofSheets(n) {
+	cy.cGet('button.spreadsheet-tab').should('have.length', n);
+}
+
+function selectOptionFromContextMenu(contextMenu) {
+	cy.wait(1000);
+	cy.cGet('.spreadsheet-tab.spreadsheet-tab-selected').rightclick();
+	cy.cGet('body').contains('.context-menu-link', contextMenu).click();
+}
+
+function selectOptionMobileWizard(menu) {
+	var eventOptions = {
+		force: true,
+		button: 0,
+		pointerType: 'mouse'
+	};
+
+	cy.cGet('.spreadsheet-tab.spreadsheet-tab-selected')
+		.trigger('pointerdown', eventOptions)
+		.wait(1000);
+
+	cy.cGet('body').contains('.ui-header.level-0.mobile-wizard.ui-widget', menu)
+		.click();
+}
+
 module.exports.clickOnFirstCell = clickOnFirstCell;
 module.exports.dblClickOnFirstCell = dblClickOnFirstCell;
 module.exports.clickFormulaBar = clickFormulaBar;
@@ -264,3 +289,6 @@ module.exports.ensureViewContainsCellCursor = ensureViewContainsCellCursor;
 module.exports.assertDataClipboardTable = assertDataClipboardTable;
 module.exports.selectCellsInRange = selectCellsInRange;
 module.exports.openAutoFilterMenu = openAutoFilterMenu;
+module.exports.assertNumberofSheets = assertNumberofSheets;
+module.exports.selectOptionFromContextMenu = selectOptionFromContextMenu;
+module.exports.selectOptionMobileWizard = selectOptionMobileWizard;
