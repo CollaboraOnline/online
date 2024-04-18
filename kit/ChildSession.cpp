@@ -879,8 +879,9 @@ bool ChildSession::saveDocumentBackground(const StringVector &tokens)
         sendTextFrame("asyncsave end");
 
         LOG_TRC("Finished synchronous background saving ...");
-        // Now we wait for an async UNO_COMMAND_RESULT on .uno:Save
-    }, getViewId())) // FIXME: shared_from_this surely ?
+        // Next: we wait for an async UNO_COMMAND_RESULT on .uno:Save
+        // cf. Document::handleSaveMessage.
+    }, getViewId()))
         return false; // fork failed
 
     LOG_TRC("saveDocumentBackground returns succesful start.");

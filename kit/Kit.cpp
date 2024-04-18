@@ -1339,6 +1339,9 @@ void Document::handleSaveMessage(const std::string &)
 
             // We don't want to wait around for the parent's websocket
             socket->shutdownAfterWriting();
+
+            // This means we don't get to send statechanged: .uno:ModifiedStatus
+            // which is fine - we want to leave that to the Kit process.
         }
         else
             LOG_TRC("Shutting down already shutdown bgsv child's socket to parent kit post save");
@@ -2087,6 +2090,8 @@ bool Document::isTileRequestInsideVisibleArea(const TileCombined& tileCombined)
 // poll is idle, are we ?
 void Document::checkIdle()
 {
+    // FIXME: can have Idle CallbackFlushHandler work in the core.
+
     if (!processInputEnabled() || hasQueueItems())
     {
         LOG_TRC("Nearly idle - but have more queued items to process");
