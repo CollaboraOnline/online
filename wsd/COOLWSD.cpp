@@ -3733,7 +3733,7 @@ static std::shared_ptr<DocumentBroker>
         docBroker = it->second;
 
         // Destroying the document? Let the client reconnect.
-        if (docBroker->isUnloading())
+        if (docBroker->isUnloadingUnrecoverably())
         {
             LOG_WRN("DocBroker [" << docKey
                                   << "] is unloading. Rejecting client request to load session ["
