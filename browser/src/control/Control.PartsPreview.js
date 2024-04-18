@@ -88,7 +88,7 @@ L.Control.PartsPreview = L.Control.extend({
 					}, this), 500);
 				}
 
-				var bottomBound = this._getBottomBound();
+				this._getBottomBound();
 
 				// Add a special frame just as a drop-site for reordering.
 				var frameClass = 'preview-frame ' + this.options.frameClass;
@@ -104,7 +104,7 @@ L.Control.PartsPreview = L.Control.extend({
 
 				// Create the preview parts
 				for (var i = 0; i < parts; i++) {
-					this._previewTiles.push(this._createPreview(i, e.partNames[i], bottomBound));
+					this._previewTiles.push(this._createPreview(i, e.partNames[i]));
 				}
 				if (!app.file.fileBasedView)
 					L.DomUtil.addClass(this._previewTiles[selectedPart], 'preview-img-currentpart');
@@ -170,13 +170,13 @@ L.Control.PartsPreview = L.Control.extend({
 			return;
 		}
 
-		var bottomBound = this._getBottomBound();
+		this._getBottomBound();
 		for (var prev = 0; prev < this._previewTiles.length; prev++) {
-			this._layoutPreview(prev, this._previewTiles[prev], bottomBound);
+			this._layoutPreview(prev, this._previewTiles[prev]);
 		}
 	},
 
-	_createPreview: function (i, hashCode, bottomBound) {
+	_createPreview: function (i, hashCode) {
 		var frameClass = 'preview-frame ' + this.options.frameClass;
 		var frame = L.DomUtil.create('div', frameClass, this._partsPreviewCont);
 		frame.id = 'preview-frame-part-' + this._idNum;
@@ -350,7 +350,7 @@ L.Control.PartsPreview = L.Control.extend({
 			});
 		}, this);
 
-		this._layoutPreview(i, img, bottomBound);
+		this._layoutPreview(i, img);
 		this._idNum++;
 
 		return img;
@@ -376,47 +376,15 @@ L.Control.PartsPreview = L.Control.extend({
 		return bottomBound;
 	},
 
-	_layoutPreview: function (i, img, bottomBound) {
-		if (i > 0) {
-			if (!bottomBound) {
-				var previewContBB = this._partsPreviewCont.getBoundingClientRect();
-				if (this._direction === 'x') {
-					bottomBound = this._previewContTop + previewContBB.width + previewContBB.width / 2;
-				} else {
-					bottomBound = this._previewContTop + previewContBB.height + previewContBB.height / 2;
-				}
-			}
-		}
-
+	_layoutPreview: function (i, img) {
 		var imgSize = this._map.getPreview(i, i,
 						   this.options.maxWidth,
 						   this.options.maxHeight,
 						   {autoUpdate: this.options.autoUpdate,
 						    fetchThumbnail: this.options.fetchThumbnail});
-		if (this._direction === 'x') {
-			L.DomUtil.setStyle(img, 'width', '');
-		} else {
-			L.DomUtil.setStyle(img, 'height', '');
-		}
 
-		if (i === 0) {
-			var previewImgBorder = Math.round(parseFloat(L.DomUtil.getStyle(img, 'border-top-width')));
-			var previewImgMinWidth = Math.round(parseFloat(L.DomUtil.getStyle(img, 'min-width')));
-			var imgHeight = imgSize.height;
-			var imgWidth = imgSize.width;
-			if (imgSize.width < previewImgMinWidth && window.mode.isDesktop())
-				imgHeight = Math.round(imgHeight * previewImgMinWidth / imgSize.width);
-			var previewFrameBB = img.parentElement.getBoundingClientRect();
-			if (this._direction === 'x') {
-				this._previewFrameMargin = previewFrameBB.left - this._previewContTop;
-				this._previewImgHeight = imgWidth;
-				this._previewFrameHeight = imgWidth + 2 * previewImgBorder;
-			} else {
-				this._previewFrameMargin = previewFrameBB.top - this._previewContTop;
-				this._previewImgHeight = imgHeight;
-				this._previewFrameHeight = imgHeight + 2 * previewImgBorder;
-			}
-		}
+		L.DomUtil.setStyle(img, 'width', imgSize.width + 'px');
+		L.DomUtil.setStyle(img, 'height', imgSize.height + 'px');
 	},
 
 	_scrollToPart: function() {
