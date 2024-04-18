@@ -2551,7 +2551,7 @@ int KitSocketPoll::kitPoll(int timeoutMicroS)
         do
         {
             int realTimeout = timeoutMicroS;
-            if (_document && _document->hasQueueItems())
+            if (_document && _document->hasQueueItems() && _document->processInputEnabled())
                 realTimeout = 0;
 
             if (poll(std::chrono::microseconds(realTimeout)) <= 0)
