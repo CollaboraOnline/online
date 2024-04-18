@@ -67,6 +67,14 @@ JSDialog.panel = function (
 			{
 				type: 'toolitem',
 				command: expanderData.command,
+				aria: {
+					label: expanderData.children[0].text
+						? _('More options for {name}').replace(
+								'{name}',
+								expanderData.children[0].text,
+							)
+						: '',
+				},
 				icon: builder._createIconURL('morebutton'),
 			},
 			builder,
