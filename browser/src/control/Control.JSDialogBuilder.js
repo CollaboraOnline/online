@@ -2322,7 +2322,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				label.textContent = builder._cleanText(data.text);
 				button.setAttribute('alt', label.textContent);
 				if (buttonImage !== false) {
-					buttonImage.alt = label.textContent;
+					if(data.aria) {
+						buttonImage.alt = data.aria.label;
+					} else {
+						buttonImage.alt = label.textContent;
+					}
 				}
 				builder._stressAccessKey(label, button.accessKey);
 				controls['label'] = label;
