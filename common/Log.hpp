@@ -294,6 +294,17 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
         LOG.flush();                                                                               \
     } while (false)
 
+#define LOG_MESSAGE_(LVL, X, TYPE, PREFIX, SUFFIX)                                                 \
+    do                                                                                             \
+    {                                                                                              \
+        auto& log_ = Log::logger();                                                                \
+        if (LOG_CONDITIONAL(log_, TYPE))                                                           \
+        {                                                                                          \
+            LOG_BODY_(log_, LVL, X, PREFIX, SUFFIX);                                               \
+        }                                                                                          \
+    } while (false)
+
+
 #define LOG_BODY_(LOG, LVL, X, PREFIX, END)                        \
     char b_[1024];                                                                                 \
     std::ostringstream oss_(Log::prefix<sizeof(b_) - 1>(b_, #LVL), std::ostringstream::ate);       \
@@ -320,74 +331,25 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
 #endif
 
 #define LOG_TRC(X)                                                                                 \
-    do                                                                                             \
-    {                                                                                              \
-        auto& log_ = Log::logger();                                                                \
-        if (LOG_CONDITIONAL(log_, trace))                                                          \
-        {                                                                                          \
-            LOG_BODY_(log_, TRC, X, logPrefix, LOG_END);                                           \
-        }                                                                                          \
-    } while (false)
+    LOG_MESSAGE_(TRC, X, trace, logPrefix, LOG_END)                                                \
 
 #define LOG_TRC_NOFILE(X)                                                                          \
-    do                                                                                             \
-    {                                                                                              \
-        auto& log_ = Log::logger();                                                                \
-        if (LOG_CONDITIONAL(log_, trace))                                                          \
-        {                                                                                          \
-            LOG_BODY_(log_, TRC, X, logPrefix, LOG_END_NOFILE);                                    \
-        }                                                                                          \
-    } while (false)
+    LOG_MESSAGE_(TRC, X, trace, logPrefix, LOG_END_NOFILE)                                         \
 
 #define LOG_DBG(X)                                                                                 \
-    do                                                                                             \
-    {                                                                                              \
-        auto& log_ = Log::logger();                                                                \
-        if (LOG_CONDITIONAL(log_, debug))                                                          \
-        {                                                                                          \
-            LOG_BODY_(log_, DBG, X, logPrefix, LOG_END);                                           \
-        }                                                                                          \
-    } while (false)
+    LOG_MESSAGE_(DBG, X, debug, logPrefix, LOG_END)                                                \
 
 #define LOG_INF(X)                                                                                 \
-    do                                                                                             \
-    {                                                                                              \
-        auto& log_ = Log::logger();                                                                \
-        if (LOG_CONDITIONAL(log_, information))                                                    \
-        {                                                                                          \
-            LOG_BODY_(log_, INF, X, logPrefix, LOG_END);                                           \
-        }                                                                                          \
-    } while (false)
+    LOG_MESSAGE_(INF, X, information, logPrefix, LOG_END)                                          \
 
 #define LOG_INF_NOFILE(X)                                                                          \
-    do                                                                                             \
-    {                                                                                              \
-        auto& log_ = Log::logger();                                                                \
-        if (LOG_CONDITIONAL(log_, information))                                                    \
-        {                                                                                          \
-            LOG_BODY_(log_, INF, X, logPrefix, LOG_END_NOFILE);                                    \
-        }                                                                                          \
-    } while (false)
+    LOG_MESSAGE_(INF, X, information, logPrefix, LOG_END_NOFILE)                                   \
 
 #define LOG_WRN(X)                                                                                 \
-    do                                                                                             \
-    {                                                                                              \
-        auto& log_ = Log::logger();                                                                \
-        if (LOG_CONDITIONAL(log_, warning))                                                        \
-        {                                                                                          \
-            LOG_BODY_(log_, WRN, X, logPrefix, LOG_END);                                           \
-        }                                                                                          \
-    } while (false)
+    LOG_MESSAGE_(WRN, X, warning, logPrefix, LOG_END)                                              \
 
 #define LOG_ERR(X)                                                                                 \
-    do                                                                                             \
-    {                                                                                              \
-        auto& log_ = Log::logger();                                                                \
-        if (LOG_CONDITIONAL(log_, error))                                                          \
-        {                                                                                          \
-            LOG_BODY_(log_, ERR, X, logPrefix, LOG_END);                                           \
-        }                                                                                          \
-    } while (false)
+    LOG_MESSAGE_(ERR, X, error, logPrefix, LOG_END)                                                \
 
 /// Log an ERR entry with the given errno appended.
 #define LOG_SYS_ERRNO(ERRNO, X)                                                                    \
@@ -424,58 +386,23 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
 
 /// No-prefix version of LOG_TRC.
 #define LOG_TRC_S(X)                                                                               \
-    do                                                                                             \
-    {                                                                                              \
-        auto& log_ = Log::logger();                                                                \
-        if (LOG_CONDITIONAL(log_, debug))                                                          \
-        {                                                                                          \
-            LOG_BODY_(log_, TRC, X, (void), LOG_END);                                              \
-        }                                                                                          \
-    } while (false)
+    LOG_MESSAGE_(TRC, X, debug, (void), LOG_END)                                                   \
 
 /// No-prefix version of LOG_DBG.
 #define LOG_DBG_S(X)                                                                               \
-    do                                                                                             \
-    {                                                                                              \
-        auto& log_ = Log::logger();                                                                \
-        if (LOG_CONDITIONAL(log_, debug))                                                          \
-        {                                                                                          \
-            LOG_BODY_(log_, DBG, X, (void), LOG_END);                                              \
-        }                                                                                          \
-    } while (false)
+    LOG_MESSAGE_(DBG, X, debug, (void), LOG_END)                                                   \
 
 /// No-prefix version of LOG_INF.
 #define LOG_INF_S(X)                                                                               \
-    do                                                                                             \
-    {                                                                                              \
-        auto& log_ = Log::logger();                                                                \
-        if (LOG_CONDITIONAL(log_, error))                                                          \
-        {                                                                                          \
-            LOG_BODY_(log_, INF, X, (void), LOG_END);                                              \
-        }                                                                                          \
-    } while (false)
+    LOG_MESSAGE_(INF, X, error, (void), LOG_END)                                                   \
 
 /// No-prefix version of LOG_WRN.
 #define LOG_WRN_S(X)                                                                               \
-    do                                                                                             \
-    {                                                                                              \
-        auto& log_ = Log::logger();                                                                \
-        if (LOG_CONDITIONAL(log_, error))                                                          \
-        {                                                                                          \
-            LOG_BODY_(log_, WRN, X, (void), LOG_END);                                              \
-        }                                                                                          \
-    } while (false)
+    LOG_MESSAGE_(WRN, X, error, (void), LOG_END)                                                   \
 
 /// No-prefix version of LOG_ERR.
 #define LOG_ERR_S(X)                                                                               \
-    do                                                                                             \
-    {                                                                                              \
-        auto& log_ = Log::logger();                                                                \
-        if (LOG_CONDITIONAL(log_, error))                                                          \
-        {                                                                                          \
-            LOG_BODY_(log_, ERR, X, (void), LOG_END);                                              \
-        }                                                                                          \
-    } while (false)
+    LOG_MESSAGE_(ERR, X, error, (void), LOG_END)                                                   \
 
 #define LOG_CHECK(X)                                                                               \
     do                                                                                             \
