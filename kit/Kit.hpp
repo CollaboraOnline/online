@@ -374,8 +374,7 @@ private:
     bool isTileRequestInsideVisibleArea(const TileCombined& tileCombined);
 
 public:
-    void enableProcessInput(bool enable = true);
-    bool processInputEnabled() const { return _inputProcessingEnabled; }
+    bool processInputEnabled() const;
     bool hasQueueItems() const { return _tileQueue && !_tileQueue->isEmpty(); }
 
     // poll is idle, are we ?
@@ -453,7 +452,6 @@ private:
 #endif
 
     const unsigned _mobileAppDocId;
-    bool _inputProcessingEnabled;
     int _duringLoad;
 };
 

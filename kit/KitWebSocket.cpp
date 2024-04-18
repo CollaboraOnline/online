@@ -157,9 +157,11 @@ void KitWebSocketHandler::handleMessage(const std::vector<char>& data)
 
 void KitWebSocketHandler::enableProcessInput(bool enable)
 {
+    LOG_TRC("Kit socket - input processing now: " <<
+            (enable ? "enabled" : "disabled") <<
+            " was " <<
+            (WebSocketHandler::processInputEnabled() ? "enabled" : "disabled"));
     WebSocketHandler::enableProcessInput(enable);
-    if (_document)
-        _document->enableProcessInput(enable);
 
     // Wake up poll to process data from socket input buffer
     if (enable && _ksPoll)

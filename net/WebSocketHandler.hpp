@@ -691,6 +691,15 @@ public:
         return sendFrame(socket, data, len, WSFrameMask::Fin | static_cast<unsigned char>(code), flush);
     }
 
+    virtual bool processInputEnabled() const override
+    {
+        std::shared_ptr<StreamSocket> socket = _socket.lock();
+        if (socket)
+            return socket->processInputEnabled();
+
+        return true;
+    }
+
 protected:
 
 #if !MOBILEAPP
@@ -1037,15 +1046,6 @@ protected:
         std::shared_ptr<StreamSocket> socket = _socket.lock();
         if (socket)
             socket->enableProcessInput(enable);
-    }
-
-    virtual bool processInputEnabled() const override
-    {
-        std::shared_ptr<StreamSocket> socket = _socket.lock();
-        if (socket)
-            return socket->processInputEnabled();
-
-        return false;
     }
 
     virtual void gotPing(WSOpCode /* code */, int /* pingTimeUs */)
