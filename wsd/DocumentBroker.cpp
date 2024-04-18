@@ -187,7 +187,7 @@ DocumentBroker::DocumentBroker(ChildType type, const std::string& uri, const Poc
     , _wopiDownloadDuration(0)
     , _mobileAppDocId(mobileAppDocId)
     , _alwaysSaveOnExit(COOLWSD::getConfigValue<bool>("per_document.always_save_on_exit", false))
-    , _backgroundAutoSave(COOLWSD::getConfigValue<bool>("per_document.background_autosave", true))
+    , _backgroundAutoSave(COOLWSD::getConfigValue<bool>("per_document.background_autosave", false))
 #if !MOBILEAPP
     , _admin(Admin::instance())
 #endif
