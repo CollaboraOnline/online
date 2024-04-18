@@ -28,7 +28,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected shap
 	it('Apply bold on text shape.', function() {
 		mobileHelper.openTextPropertiesPanel();
 
-		helper.clickOnIdle('#Bold');
+		cy.cGet('#Bold').click();
 
 		triggerNewSVG();
 
@@ -39,7 +39,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected shap
 	it('Apply italic on text shape.', function() {
 		mobileHelper.openTextPropertiesPanel();
 
-		helper.clickOnIdle('#Italic');
+		cy.cGet('#Italic').click();
 
 		triggerNewSVG();
 
@@ -50,7 +50,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected shap
 	it('Apply underline on text shape.', function() {
 		mobileHelper.openTextPropertiesPanel();
 
-		helper.clickOnIdle('#Underline');
+		cy.cGet('#Underline').click();
 
 		triggerNewSVG();
 
@@ -61,7 +61,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected shap
 	it('Apply strikeout on text shape.', function() {
 		mobileHelper.openTextPropertiesPanel();
 
-		helper.clickOnIdle('#Strikeout');
+		cy.cGet('#Strikeout').click();
 
 		triggerNewSVG();
 
@@ -72,7 +72,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected shap
 	it('Apply shadowed on text shape.', function() {
 		mobileHelper.openTextPropertiesPanel();
 
-		helper.clickOnIdle('#Shadowed');
+		cy.cGet('#Shadowed').click();
 
 		triggerNewSVG();
 
@@ -108,7 +108,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected shap
 
 		mobileHelper.openTextPropertiesPanel();
 
-		helper.clickOnIdle('#Color .ui-header');
+		cy.cGet('#Color .ui-header').click();
 
 		mobileHelper.selectFromColorPicker('#Color', 5, 2);
 
@@ -124,7 +124,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected shap
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition tspan')
 			.should('not.have.attr', 'font-color');
 
-		helper.clickOnIdle('#CharBackColor');
+		cy.cGet('#CharBackColor').click();
 
 		mobileHelper.selectFromColorPicker('#CharBackColor', 2, 2);
 
@@ -149,7 +149,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected shap
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition tspan')
 			.should('have.attr', 'font-size', '635px');
 
-		helper.clickOnIdle('#SuperScript');
+		cy.cGet('#SuperScript').click();
 
 		triggerNewSVG();
 
@@ -167,7 +167,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected shap
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition tspan')
 			.should('have.attr', 'font-size', '635px');
 
-		helper.clickOnIdle('#SubScript');
+		cy.cGet('#SubScript').click();
 
 		triggerNewSVG();
 
@@ -184,7 +184,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected shap
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition tspan')
 			.should('have.attr', 'font-size', '635px');
 
-		helper.clickOnIdle('#SuperScript');
+		cy.cGet('#SuperScript').click();
 
 		triggerNewSVG();
 
@@ -194,7 +194,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected shap
 		// Remove direct formatting
 		mobileHelper.openTextPropertiesPanel();
 
-		helper.clickOnIdle('#defaultattr .unoSetDefault');
+		cy.cGet('#defaultattr .unoSetDefault').click();
 
 		triggerNewSVG();
 

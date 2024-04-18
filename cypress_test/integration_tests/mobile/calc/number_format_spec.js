@@ -117,7 +117,7 @@ describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply number formattin
 		cy.cGet('.unoNumberFormatDecimal').should('be.visible');
 
 		// Change to number formatting
-		helper.clickOnIdle('.unoNumberFormatDecimal');
+		cy.cGet('.unoNumberFormatDecimal').click();
 
 		cy.cGet('.unoNumberFormatDecimal').should('have.class', 'selected');
 		cy.cGet('#numberformatcombobox .ui-header-left').should('have.text', 'Number');
@@ -310,7 +310,7 @@ describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply number formattin
 			.should('not.have.prop', 'checked', true);
 
 		// Change the option
-		helper.clickOnIdle('#negativenumbersred input');
+		cy.cGet('#negativenumbersred input').click();
 
 		cy.cGet('#negativenumbersred input')
 			.should('have.prop', 'checked', true);
@@ -332,7 +332,7 @@ describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply number formattin
 			.should('not.have.prop', 'checked', true);
 
 		// Change the option
-		helper.clickOnIdle('#thousandseparator input');
+		cy.cGet('#thousandseparator input').click();
 
 		cy.cGet('#thousandseparator input')
 			.should('have.prop', 'checked', true);

@@ -257,9 +257,9 @@ describe.skip(['tagmobile'], 'Trigger hamburger menu options.', function() {
 		// Search bar become visible
 		cy.cGet('#mobile-wizard-content').should('not.be.empty');
 		// Search for some word
-		helper.inputOnIdle('#searchterm', 'a');
+		helper.typeIntoInputField('#searchterm', 'a');
 		cy.cGet('#search').should('not.have.attr', 'disabled');
-		helper.clickOnIdle('#search');
+		cy.cGet('#search').click();
 		// Part of the text should be selected
 		helper.textSelectionShouldExist();
 		helper.expectTextForClipboard('a');
@@ -297,7 +297,7 @@ describe.skip(['tagmobile'], 'Trigger hamburger menu options.', function() {
 		// For now, we don't/can't actually check if the size of the document is updated or not.
 		// That can be checked with a unit test.
 		openPageWizard();
-		helper.inputOnIdle('#paperwidth .spinfield', '12');
+		helper.typeIntoInputField('#paperwidth .spinfield', '12');
 		closePageWizard();
 		// Check that the page wizard shows the right value after reopen.
 		openPageWizard();
@@ -309,7 +309,7 @@ describe.skip(['tagmobile'], 'Trigger hamburger menu options.', function() {
 		// For now, we don't/can't actually check if the size of the document is updated or not.
 		// That can be checked with a unit test.
 		openPageWizard();
-		helper.inputOnIdle('#paperheight .spinfield', '3.0');
+		helper.typeIntoInputField('#paperheight .spinfield', '3.0');
 		closePageWizard();
 		// Check that the page wizard shows the right value after reopen.
 		openPageWizard();

@@ -22,7 +22,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'AutoFilter', function() {
 
 	function toggleAutofilter() {
 		//enable/disable autofilter
-		helper.clickOnIdle('#menu-data');
+		cy.cGet('#menu-data').click();
 		cy.cGet('body').contains('#menu-data li', 'AutoFilter').click();
 	}
 

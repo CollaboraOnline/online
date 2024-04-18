@@ -14,7 +14,7 @@ describe.skip('Apply paragraph properties.', function() {
 		writerHelper.selectAllTextOfDoc();
 		mobileHelper.openMobileWizard();
 		// Open paragraph properties
-		helper.clickOnIdle('#Paragraph');
+		cy.cGet('#Paragraph').click();
 		cy.cGet('#Paragraph').should('have.class', 'selected');
 		cy.cGet('#LeftPara').should('be.visible');
 	});
@@ -24,7 +24,7 @@ describe.skip('Apply paragraph properties.', function() {
 	});
 
 	/*it('Apply left/right alignment.', function() {
-		helper.clickOnIdle('#RightPara');
+		cy.cGet('#RightPara').click();
 
 		mobileHelper.closeMobileWizard();
 
@@ -36,12 +36,12 @@ describe.skip('Apply paragraph properties.', function() {
 		// Then apply left alignment
 		mobileHelper.openMobileWizard();
 
-		helper.clickOnIdle('#Paragraph');
+		cy.cGet('#Paragraph').click();
 
 		cy.get('#Paragraph')
 			.should('have.class', 'selected');
 
-		helper.clickOnIdle('#LeftPara');
+		cy.cGet('#LeftPara').click();
 
 		cy.get('#LeftParaimg')
 			.should('have.class', 'selected');
@@ -55,7 +55,7 @@ describe.skip('Apply paragraph properties.', function() {
 	});
 
 	it('Apply center alignment.', function() {
-		helper.clickOnIdle('#CenterPara');
+		cy.cGet('#CenterPara').click();
 
 		writerHelper.selectAllTextOfDoc();
 
@@ -64,7 +64,7 @@ describe.skip('Apply paragraph properties.', function() {
 	});
 
 	it('Apply justify alignment.', function() {
-		helper.clickOnIdle('#JustifyPara');
+		cy.cGet('#JustifyPara').click();
 
 		writerHelper.selectAllTextOfDoc();
 
@@ -73,7 +73,7 @@ describe.skip('Apply paragraph properties.', function() {
 	});
 
 	it('Change writing direction.', function() {
-		helper.clickOnIdle('#ParaRightToLeft');
+		cy.cGet('#ParaRightToLeft').click();
 
 		mobileHelper.closeMobileWizard();
 
@@ -87,10 +87,10 @@ describe.skip('Apply paragraph properties.', function() {
 		mobileHelper.openMobileWizard();
 
 		// Open paragraph properties
-		helper.clickOnIdle('#Paragraph');
+		cy.cGet('#Paragraph').click();
 
 		// Change writing mode
-		helper.clickOnIdle('#ParaLeftToRight');
+		cy.cGet('#ParaLeftToRight').click();
 
 		mobileHelper.closeMobileWizard();
 
@@ -101,7 +101,7 @@ describe.skip('Apply paragraph properties.', function() {
 	});
 
 	it('Apply default bulleting.', function() {
-		helper.clickOnIdle('#DefaultBullet');
+		cy.cGet('#DefaultBullet').click();
 
 		writerHelper.selectAllTextOfDoc();
 
@@ -110,7 +110,7 @@ describe.skip('Apply paragraph properties.', function() {
 	});
 
 	it('Apply default numbering.', function() {
-		helper.clickOnIdle('#DefaultNumbering');
+		cy.cGet('#DefaultNumbering').click();
 
 		writerHelper.selectAllTextOfDoc();
 
@@ -119,7 +119,7 @@ describe.skip('Apply paragraph properties.', function() {
 	});*/
 
 	it('Apply background color.', function() {
-		helper.clickOnIdle('#BackgroundColor .ui-header');
+		cy.cGet('#BackgroundColor .ui-header').click();
 		mobileHelper.selectFromColorPalette(4, 5, 5, 2);
 		writerHelper.selectAllTextOfDoc();
 		cy.cGet('#copy-paste-container p').should('have.attr', 'style').should('contain', 'background: #6aa84f');
@@ -127,8 +127,8 @@ describe.skip('Apply paragraph properties.', function() {
 
 	it('Increase / decrease para spacing.', function() {
 		// Increase para spacing
-		helper.clickOnIdle('#ParaspaceIncrease');
-		helper.clickOnIdle('#ParaspaceIncrease');
+		cy.cGet('#ParaspaceIncrease').click();
+		cy.cGet('#ParaspaceIncrease').click();
 		mobileHelper.closeMobileWizard();
 		writerHelper.selectAllTextOfDoc();
 		cy.cGet('#copy-paste-container p').should('have.attr', 'style').should('contain', 'margin-top: 0.08in');
@@ -136,9 +136,9 @@ describe.skip('Apply paragraph properties.', function() {
 		writerHelper.selectAllTextOfDoc();
 		mobileHelper.openMobileWizard();
 		// Open paragraph properties
-		helper.clickOnIdle('#Paragraph');
+		cy.cGet('#Paragraph').click();
 		// Decrease para spacing
-		helper.clickOnIdle('#ParaspaceDecrease');
+		cy.cGet('#ParaspaceDecrease').click();
 		writerHelper.selectAllTextOfDoc();
 		cy.cGet('#copy-paste-container p').should('have.attr', 'style').should('contain', 'margin-top: 0.04in');
 		cy.cGet('#copy-paste-container p').should('have.attr', 'style').should('contain', 'margin-bottom: 0.04in');
@@ -150,21 +150,21 @@ describe.skip('Apply paragraph properties.', function() {
 		cy.cGet('#belowparaspacing .spinfield').should('have.value', '0');
 
 		// Change spacing
-		helper.clickOnIdle('#aboveparaspacing .plus');
+		cy.cGet('#aboveparaspacing .plus').click();
 		cy.cGet('#aboveparaspacing .spinfield').should('have.value', '0.01');
-		helper.clickOnIdle('#aboveparaspacing .plus');
+		cy.cGet('#aboveparaspacing .plus').click();
 		cy.cGet('#aboveparaspacing .spinfield').should('have.value', '0.02');
 
-		helper.clickOnIdle('#aboveparaspacing .plus');
+		cy.cGet('#aboveparaspacing .plus').click();
 		cy.cGet('#aboveparaspacing .spinfield').should('have.value', '0.03');
 
-		helper.clickOnIdle('#aboveparaspacing .plus');
+		cy.cGet('#aboveparaspacing .plus').click();
 		cy.cGet('#aboveparaspacing .spinfield').should('have.value', '0.04');
 
-		helper.clickOnIdle('#aboveparaspacing .minus');
+		cy.cGet('#aboveparaspacing .minus').click();
 		cy.cGet('#aboveparaspacing .spinfield').should('have.value', '0.03');
 
-		helper.clickOnIdle('#belowparaspacing .plus');
+		cy.cGet('#belowparaspacing .plus').click();
 		cy.cGet('#belowparaspacing .spinfield').should('have.value', '0.01');
 
 		writerHelper.selectAllTextOfDoc();
@@ -175,27 +175,27 @@ describe.skip('Apply paragraph properties.', function() {
 
 	it('Increase / decrease indent.', function() {
 		// Increase indent
-		helper.clickOnIdle('#IncrementIndent');
-		helper.clickOnIdle('#IncrementIndent');
+		cy.cGet('#IncrementIndent').click();
+		cy.cGet('#IncrementIndent').click();
 		mobileHelper.closeMobileWizard();
 		writerHelper.selectAllTextOfDoc();
 		cy.cGet('#copy-paste-container p').should('have.attr', 'style').should('contain', 'margin-left: 0.98in');
 		writerHelper.selectAllTextOfDoc();
 		mobileHelper.openMobileWizard();
 		// Open paragraph properties
-		helper.clickOnIdle('#Paragraph');
+		cy.cGet('#Paragraph').click();
 		// Decrease indent
-		helper.clickOnIdle('#DecrementIndent');
+		cy.cGet('#DecrementIndent').click();
 		writerHelper.selectAllTextOfDoc();
 		cy.cGet('#copy-paste-container p').should('have.attr', 'style').should('contain', 'margin-left: 0.49in');
 	});
 
 	it('Apply before text indent.', function() {
 		// Change indent
-		helper.clickOnIdle('#beforetextindent .plus');
+		cy.cGet('#beforetextindent .plus').click();
 		cy.cGet('#beforetextindent .spinfield').should('have.value', '0.01');
 
-		helper.clickOnIdle('#beforetextindent .plus');
+		cy.cGet('#beforetextindent .plus').click();
 		cy.cGet('#beforetextindent .spinfield').should('have.value', '0.02');
 
 		writerHelper.selectAllTextOfDoc();
@@ -205,10 +205,10 @@ describe.skip('Apply paragraph properties.', function() {
 
 	it('Apply after text indent.', function() {
 		// Change indent
-		helper.clickOnIdle('#aftertextindent .plus');
+		cy.cGet('#aftertextindent .plus').click();
 		cy.cGet('#aftertextindent .spinfield').should('have.value', '0.01');
 
-		helper.clickOnIdle('#aftertextindent .plus');
+		cy.cGet('#aftertextindent .plus').click();
 		cy.cGet('#aftertextindent .spinfield').should('have.value', '0.02');
 
 		writerHelper.selectAllTextOfDoc();
@@ -218,10 +218,10 @@ describe.skip('Apply paragraph properties.', function() {
 
 	it('Apply first line indent.', function() {
 		// Increase firstline indent
-		helper.clickOnIdle('#firstlineindent .plus');
+		cy.cGet('#firstlineindent .plus').click();
 		cy.cGet('#firstlineindent .spinfield').should('have.value', '0.01');
 
-		helper.clickOnIdle('#firstlineindent .plus');
+		cy.cGet('#firstlineindent .plus').click();
 		cy.cGet('#firstlineindent .spinfield').should('have.value', '0.02');
 
 		writerHelper.selectAllTextOfDoc();

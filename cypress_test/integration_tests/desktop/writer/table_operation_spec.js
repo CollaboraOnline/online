@@ -29,7 +29,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Table operations', functio
 
 	it('Insert row before.', function() {
 		helper.setDummyClipboardForCopy();
-		helper.clickOnIdle('#insert .unoInsertRowsBefore');
+		cy.cGet('#insert .unoInsertRowsBefore').click();
 		cy.cGet('.leaflet-marker-icon.table-row-resize-marker').should('have.length', 4);
 
 		selectFullTable();
@@ -46,7 +46,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Table operations', functio
 
 	it('Insert row after.', function() {
 		helper.setDummyClipboardForCopy();
-		helper.clickOnIdle('#insert .unoInsertRowsAfter');
+		cy.cGet('#insert .unoInsertRowsAfter').click();
 		cy.cGet('.leaflet-marker-icon.table-row-resize-marker').should('have.length', 4);
 
 		selectFullTable();
@@ -64,7 +64,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Table operations', functio
 	it('Insert column before.', function() {
 		helper.setDummyClipboardForCopy();
 
-		helper.clickOnIdle('#insert .unoInsertColumnsBefore');
+		cy.cGet('#insert .unoInsertColumnsBefore').click();
 
 		cy.cGet('.leaflet-marker-icon.table-column-resize-marker').should('have.length', 4);
 
@@ -83,7 +83,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Table operations', functio
 
 	it('Insert column after.', function() {
 		helper.setDummyClipboardForCopy();
-		helper.clickOnIdle('#insert .unoInsertColumnsAfter');
+		cy.cGet('#insert .unoInsertColumnsAfter').click();
 
 		cy.cGet('.leaflet-marker-icon.table-column-resize-marker').should('have.length', 4);
 
@@ -101,7 +101,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Table operations', functio
 
 	it('Delete row.', function() {
 		helper.setDummyClipboardForCopy();
-		helper.clickOnIdle('#delete .unoDeleteRows');
+		cy.cGet('#delete .unoDeleteRows').click();
 
 		cy.cGet('.leaflet-marker-icon.table-row-resize-marker').should('have.length', 2);
 
@@ -119,17 +119,17 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Table operations', functio
 
 	it('Delete column.', function() {
 		// Insert column first
-		helper.clickOnIdle('#insert .unoInsertColumnsBefore');
+		cy.cGet('#insert .unoInsertColumnsBefore').click();
 
 		cy.cGet('.leaflet-marker-icon.table-column-resize-marker').should('have.length', 4);
 
 		// Then delete it
-		helper.clickOnIdle('#delete .unoDeleteColumns');
+		cy.cGet('#delete .unoDeleteColumns').click();
 		cy.cGet('.leaflet-marker-icon.table-column-resize-marker').should('have.length', 3);
 	});
 
 	it('Delete table.', function() {
-		helper.clickOnIdle('#delete .unoDeleteTable');
+		cy.cGet('#delete .unoDeleteTable').click();
 
 		cy.cGet('.leaflet-marker-icon.table-column-resize-marker').should('not.exist');
 	});
@@ -147,7 +147,9 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Table operations', functio
 		// With merging two rows, the cursor is moved into the first row.
 		cy.get('@origCursorPos')
 			.then(function(origCursorPos) {
-				helper.clickOnIdle('#split_merge .unoMergeCells');
+
+				cy.cGet('#split_merge .unoMergeCells').should('not.have.attr', 'disabled');
+				cy.cGet('#split_merge .unoMergeCells').click();
 
 				cy.cGet('.blinking-cursor')
 					.should(function(cursor) {
@@ -191,9 +193,8 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Table operations', functio
 		helper.moveCursor('down', 'shift');
 		helper.moveCursor('right', 'shift');
 
-		cy.wait(200);
-		helper.clickOnIdle('#rowsizing .unoSetOptimalRowHeight');
-		helper.clickOnIdle('#rowsizing .unoSetMinimalRowHeight');
+		cy.cGet('#rowsizing .unoSetOptimalRowHeight').click();
+		cy.cGet('#rowsizing .unoSetMinimalRowHeight').click();
 
 		selectFullTable();
 
@@ -208,8 +209,8 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Table operations', functio
 		helper.moveCursor('down', 'shift');
 		helper.moveCursor('right', 'shift');
 
-		cy.wait(200);
-		helper.clickOnIdle('#rowsizing .unoSetOptimalRowHeight');
+		cy.cGet('#rowsizing .unoSetOptimalRowHeight').should('not.have.attr','disabled');
+		cy.cGet('#rowsizing .unoSetOptimalRowHeight').click();
 		selectFullTable();
 
 		// Check new row height
@@ -232,8 +233,8 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Table operations', functio
 		helper.moveCursor('down', 'shift');
 		helper.moveCursor('right', 'shift');
 
-		cy.wait(200);
-		helper.clickOnIdle('#rowsizing .unoDistributeRows');
+		cy.cGet('#rowsizing .unoDistributeRows').should('not.have.attr','disabled');
+		cy.cGet('#rowsizing .unoDistributeRows').click();
 
 		selectFullTable();
 
@@ -257,8 +258,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Table operations', functio
 		helper.moveCursor('down', 'shift');
 		helper.moveCursor('right', 'shift');
 
-		cy.wait(200);
-		helper.clickOnIdle('#columnsizing .unoSetMinimalColumnWidth');
+		cy.cGet('#columnsizing .unoSetMinimalColumnWidth').click();
 
 		selectFullTable();
 
@@ -272,8 +272,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Table operations', functio
 		helper.moveCursor('down', 'shift');
 		helper.moveCursor('right', 'shift');
 
-		cy.wait(200);
-		helper.clickOnIdle('#columnsizing .unoSetOptimalColumnWidth');
+		cy.cGet('#columnsizing .unoSetOptimalColumnWidth').click();
 
 		selectFullTable();
 
@@ -288,8 +287,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Table operations', functio
 		helper.moveCursor('down', 'shift');
 		helper.moveCursor('right', 'shift');
 
-		cy.wait(200);
-		helper.clickOnIdle('#columnsizing .unoDistributeColumns');
+		cy.cGet('#columnsizing .unoDistributeColumns').click();
 
 		selectFullTable();
 

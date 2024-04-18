@@ -19,14 +19,14 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Slide operations', functio
 	});
 
 	it('Add slides', function() {
-		helper.clickOnIdle('#presentation-toolbar #insertpage');
+		cy.cGet('#presentation-toolbar #insertpage').click();
 
 		impressHelper.assertNumberOfSlidePreviews(2);
 	});
 
 	it('Remove slides', function() {
 		// Add slides
-		helper.clickOnIdle('#presentation-toolbar #insertpage');
+		cy.cGet('#presentation-toolbar #insertpage').click();
 
 		impressHelper.assertNumberOfSlidePreviews(2);
 
@@ -51,7 +51,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Slide operations', functio
 		cy.cGet('#options-modify-page').click();
 		desktopHelper.insertComment();
 		cy.cGet('#annotation-content-area-1').should('include.text', 'some text0');
-		helper.clickOnIdle('#presentation-toolbar #duplicatepage');
+		cy.cGet('#presentation-toolbar #duplicatepage').click();
 
 		impressHelper.assertNumberOfSlidePreviews(2);
 		cy.cGet('#SlideStatus').should('have.text', 'Slide 2 of 2');

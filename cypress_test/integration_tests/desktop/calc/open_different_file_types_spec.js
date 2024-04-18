@@ -64,7 +64,7 @@ describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Open different file t
 
 		cy.cGet('form.jsdialog-container.lokdialog_container').should('exist');
 
-		helper.clickOnIdle('.ui-pushbutton.jsdialog.button-primary');
+		cy.cGet('.ui-pushbutton.jsdialog.button-primary').click();
 
 		//check doc is loaded
 		cy.cGet('.leaflet-canvas-container canvas', {timeout : Cypress.config('defaultCommandTimeout') * 2.0});

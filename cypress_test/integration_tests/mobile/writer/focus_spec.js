@@ -41,11 +41,11 @@ describe(['tagmobile', 'tagproxy'], 'Focus tests', function() {
 		mobileHelper.enableEditingMobile();
 		mobileHelper.openMobileWizard();
 		// Open paragraph properties
-		helper.clickOnIdle('#Paragraph');
+		cy.cGet('#Paragraph').click();
 		cy.cGet('#aboveparaspacing .spinfield').should('have.value', '0');
 		// Need to wait before clicking on spinfield
 		cy.wait(500);
-		helper.clickOnIdle('#aboveparaspacing .spinfield');
+		cy.cGet('#aboveparaspacing .spinfield').click();
 		// The spinfield should have the focus now.
 		helper.assertFocus('className', 'spinfield');
 		mobileHelper.closeMobileWizard();
@@ -127,7 +127,7 @@ describe(['tagmobile', 'tagproxy'], 'Focus tests', function() {
 		// No focus
 		helper.assertFocus('tagName', 'BODY');
 		// Apply bold
-		helper.clickOnIdle('#mobile-wizard .unoBold');
+		cy.cGet('#mobile-wizard .unoBold').click();
 		cy.cGet('#mobile-wizard .unoBold').should('have.class', 'selected');
 		// No focus
 		helper.assertFocus('tagName', 'BODY');

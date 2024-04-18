@@ -64,9 +64,9 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Chart tests.', function() {
 	it.skip('Change chart type.', function() {
 		stepIntoChartEditing();
 		mobileHelper.openMobileWizard();
-		helper.clickOnIdle('#ChartTypePanel');
-		helper.clickOnIdle('#cmb_chartType');
-		helper.clickOnIdle('.ui-combobox-text', 'Pie');
+		cy.cGet('#ChartTypePanel').click();
+		cy.cGet('#cmb_chartType').click();
+		cy.cGet('.ui-combobox-text', 'Pie').click();
 
 		// TODO: this leads to crash?
 		//mobileHelper.closeMobileWizard();

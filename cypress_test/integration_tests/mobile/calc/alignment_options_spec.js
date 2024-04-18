@@ -41,7 +41,7 @@ describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change alignment setti
 
 		mobileHelper.openMobileWizard();
 
-		helper.clickOnIdle('#ScAlignmentPropertyPanel');
+		cy.cGet('#ScAlignmentPropertyPanel').click();
 
 		cy.cGet('.unoAlignLeft').should('be.visible');
 	}
@@ -50,7 +50,7 @@ describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change alignment setti
 		openAlignmentPaneForFirstCell();
 
 		// Set right aligment first
-		helper.clickOnIdle('.unoAlignRight');
+		cy.cGet('.unoAlignRight').click();
 
 		calcHelper.selectEntireSheet();
 
@@ -62,9 +62,9 @@ describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change alignment setti
 
 		mobileHelper.openMobileWizard();
 
-		helper.clickOnIdle('#ScAlignmentPropertyPanel');
+		cy.cGet('#ScAlignmentPropertyPanel').click();
 
-		helper.clickOnIdle('.unoAlignLeft');
+		cy.cGet('.unoAlignLeft').click();
 
 		calcHelper.selectEntireSheet();
 
@@ -75,7 +75,7 @@ describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change alignment setti
 	it('Align to center horizontally.', function() {
 		openAlignmentPaneForFirstCell();
 
-		helper.clickOnIdle('.unoAlignHorizontalCenter');
+		cy.cGet('.unoAlignHorizontalCenter').click();
 
 		calcHelper.selectEntireSheet();
 
@@ -86,7 +86,7 @@ describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change alignment setti
 	it('Change to block alignment.', function() {
 		openAlignmentPaneForFirstCell();
 
-		helper.clickOnIdle('.unoAlignBlock');
+		cy.cGet('.unoAlignBlock').click();
 
 		calcHelper.selectEntireSheet();
 
@@ -97,21 +97,20 @@ describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change alignment setti
 	it('Right-to-left and left-to-right writing mode.', function() {
 		openAlignmentPaneForFirstCell();
 
-		helper.clickOnIdle('.unoParaRightToLeft');
+		cy.cGet('.unoParaRightToLeft').click();
 
 		// TODO: we don't have a way of testing this
 		// copy container doesn't have info about this
-		cy.wait(500);
+		cy.wait(100);
 
-		helper.clickOnIdle('.unoParaLeftToRight');
+		cy.cGet('.unoParaLeftToRight').click();
 
-		cy.wait(500);
 	});
 
 	it('Align to the top and to bottom.', function() {
 		openAlignmentPaneForFirstCell();
 
-		helper.clickOnIdle('.unoAlignTop');
+		cy.cGet('.unoAlignTop').click();
 
 		calcHelper.selectEntireSheet();
 
@@ -123,9 +122,9 @@ describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change alignment setti
 
 		mobileHelper.openMobileWizard();
 
-		helper.clickOnIdle('#ScAlignmentPropertyPanel');
+		cy.cGet('#ScAlignmentPropertyPanel').click();
 
-		helper.clickOnIdle('.unoAlignBottom');
+		cy.cGet('.unoAlignBottom').click();
 
 		calcHelper.selectEntireSheet();
 
@@ -136,7 +135,7 @@ describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change alignment setti
 	it('Align to center vertically.', function() {
 		openAlignmentPaneForFirstCell();
 
-		helper.clickOnIdle('.unoAlignVCenter');
+		cy.cGet('.unoAlignVCenter').click();
 
 		calcHelper.selectEntireSheet();
 
@@ -152,7 +151,7 @@ describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change alignment setti
 
 			openAlignmentPaneForFirstCell();
 			// Increase indent
-			helper.clickOnIdle('#IncrementIndent');
+			cy.cGet('#IncrementIndent').click();
 			getTextEndPosForFirstCell();
 
 			cy.get('@currentTextEndPos')
@@ -162,7 +161,7 @@ describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change alignment setti
 
 			// Decrease indent
 			openAlignmentPaneForFirstCell();
-			helper.clickOnIdle('#DecrementIndent');
+			cy.cGet('#DecrementIndent').click();
 			getTextEndPosForFirstCell();
 
 			// We use the text position as indicator
@@ -183,7 +182,7 @@ describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change alignment setti
 
 			openAlignmentPaneForFirstCell();
 			cy.cGet('input#wraptext').should('not.have.prop', 'checked', true);
-			helper.clickOnIdle('input#wraptext');
+			cy.cGet('input#wraptext').click();
 			cy.cGet('input#wraptext').should('have.prop', 'checked', true);
 
 			// We use the text position as indicator
@@ -200,7 +199,7 @@ describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change alignment setti
 
 		cy.cGet('input#stacked').should('not.have.prop', 'checked', true);
 
-		helper.clickOnIdle('input#stacked');
+		cy.cGet('input#stacked').click();
 
 		cy.cGet('input#stacked').should('have.prop', 'checked', true);
 
@@ -219,13 +218,13 @@ describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change alignment setti
 
 		mobileHelper.openMobileWizard();
 
-		helper.clickOnIdle('#ScAlignmentPropertyPanel');
+		cy.cGet('#ScAlignmentPropertyPanel').click();
 
 		cy.cGet('.unoAlignLeft').should('be.visible');
 		cy.cGet('input#mergecells').should('not.have.attr', 'disabled');
 		// Click merge cells
 		cy.cGet('input#mergecells').should('not.have.prop', 'checked', true);
-		helper.clickOnIdle('input#mergecells');
+		cy.cGet('input#mergecells').click();
 		cy.cGet('input#mergecells').should('have.prop', 'checked', true);
 		// Check content
 		calcHelper.selectCellsInRange('A1:CV1');
