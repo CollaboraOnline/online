@@ -58,6 +58,7 @@ describe(['tagmobile', 'tagnextcloud'], 'Calc insertion wizard.', function() {
 	});
 
 	it('Insert hyperlink.', function() {
+		helper.setDummyClipboardForCopy();
 		cy.cGet('body').contains('.menu-entry-with-icon', 'Hyperlink...')
 			.click();
 
@@ -80,6 +81,7 @@ describe(['tagmobile', 'tagnextcloud'], 'Calc insertion wizard.', function() {
 			.should('be.visible');
 
 		calcHelper.selectEntireSheet();
+		helper.copy();
 
 		cy.cGet('#copy-paste-container table td a')
 			.should('have.text', 'some text');
@@ -108,11 +110,13 @@ describe(['tagmobile', 'tagnextcloud'], 'Calc insertion wizard.', function() {
 	});
 
 	it('Insert date.', function() {
+		helper.setDummyClipboardForCopy();
 		// Do insertion
 		cy.cGet('body').contains('.menu-entry-with-icon', 'Date')
 			.click();
 
 		calcHelper.selectEntireSheet();
+		helper.copy();
 
 		var regex = new RegExp(';MM/DD/YY$');
 		cy.cGet('#copy-paste-container table td')
@@ -121,11 +125,13 @@ describe(['tagmobile', 'tagnextcloud'], 'Calc insertion wizard.', function() {
 	});
 
 	it('Insert time.', function() {
+		helper.setDummyClipboardForCopy();
 		// Do insertion
 		cy.cGet('body').contains('.menu-entry-with-icon', 'Time')
 			.click();
 
 		calcHelper.selectEntireSheet();
+		helper.copy();
 
 		var regex = new RegExp(';HH:MM:SS AM/PM$');
 		cy.cGet('#copy-paste-container table td')
