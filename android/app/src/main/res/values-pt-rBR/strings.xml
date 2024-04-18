@@ -128,7 +128,7 @@
     <string name="theme_system_default">Padrão do sistema</string>
     <string name="choose_theme">Escolher tema</string>
     <string name="theme">Tema</string>
-    <string name="pref_user_name_info">Utilizado ao adicionar um comentário</string>
-    <string name="pref_user_name">Nome de Usuário(a)</string>
-    <string name="pref_user_name_guest">Usuário(a) Convidado(a)</string>
+    <string name="pref_user_name_info">Usado ao adicionar um comentário</string>
+    <string name="pref_user_name">Nome de usuário</string>
+    <string name="pref_user_name_guest">Usuário Convidado</string>
 </resources>

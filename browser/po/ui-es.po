@@ -7,11 +7,11 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-04-12 19:29+0200\n"
-"PO-Revision-Date: 2024-04-08 22:01+0000\n"
-"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
+"PO-Revision-Date: 2024-04-16 14:06+0000\n"
+"Last-Translator: NamelessGO <66227691+NameLessGO@users.noreply.github.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/es/>\n"
-"Language: \n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -384,15 +384,15 @@ msgstr " s"
 
 #: js/global.js:922
 msgid "Cluster is scaling, retrying..."
-msgstr "El clúster está escalando, reintentando..."
+msgstr "Clúster está escalando, reintentando..."
 
 #: js/global.js:924
 msgid "Document is migrating to new server, retrying..."
-msgstr "Se está migrando el documento a un servidor nuevo; reintentando…"
+msgstr "El documento está migrando a un nuevo servidor, reintentando..."
 
 #: js/global.js:926
 msgid "Failed to get RouteToken from controller"
-msgstr "No se pudo obtener «RouteToken» del controlador"
+msgstr "No se pudo obtener RouteToken del controlador"
 
 #: src/control/ColorPicker.ts:269
 msgid "No color"
@@ -412,11 +412,11 @@ msgstr "Abrir enlace"
 
 #: src/control/Control.AlertDialog.js:66
 msgid "Copied external sources are not allowed"
-msgstr "No se permite copiar orígenes externos"
+msgstr "No se permiten copias de fuentes externas"
 
 #: src/control/Control.AlertDialog.js:67
 msgid "It seems you have copied a selection that includes external images."
-msgstr "Parece que ha copiado una selección que incluye imágenes externas."
+msgstr "Parece que has copiado una selección que incluye imágenes externas."
 
 #: src/control/Control.AlertDialog.js:68
 msgid ""
@@ -424,13 +424,13 @@ msgid ""
 "possible. Please right click in the image, choose \"Copy Image\" and paste "
 "it into the document instead."
 msgstr ""
-"Está prohibido descargar recursos externos, pero sí es posible pegar "
-"imágenes. Pulse con el botón secundario del ratón en la imagen, elija «"
-"Copiar imagen» y péguela en el documento."
+"Está prohibido descargar recursos externos, pero aún es posible pegar "
+"imágenes. Haga clic derecho en la imagen, elija \"Copiar imagen\" y péguela "
+"en el documento."
 
 #: src/control/Control.AlertDialog.js:72
 msgid "External data source not allowed"
-msgstr "No se permite el origen de datos externo"
+msgstr "Fuente de datos externa no permitida"
 
 #: src/control/Control.AlertDialog.js:73
 msgid "It seems you have tried to insert external data."
@@ -441,8 +441,8 @@ msgid ""
 "Selected external data source is forbidden. Please contact the system "
 "administrator."
 msgstr ""
-"El origen de datos externo seleccionado está prohibido. Póngase en contacto "
-"con el personal de sistemas."
+"La fuente de datos externa seleccionada está prohibida. Por favor, póngase "
+"en contacto con el administrador del sistema."
 
 #: src/control/Control.AlertDialog.js:86
 msgid "Don't show this again"
@@ -1552,7 +1552,7 @@ msgstr "Formulario"
 
 #: src/control/Control.NotebookbarWriter.js:309
 msgid "Go Online"
-msgstr "Conectarse"
+msgstr "Ir en línea"
 
 #: src/control/Control.NotebookbarWriter.js:309
 msgid "Go Offline"
@@ -2296,7 +2296,8 @@ msgstr "Se está cambiando el nombre del archivo y se recargará pronto"
 
 #: src/core/Socket.js:1138
 msgid "The document is switching to Offline mode and will reload shortly"
-msgstr "El documento está pasando a modo sin conexión y se recargará en breve"
+msgstr ""
+"El documento está cambiando al modo sin conexión y se recargará en breve"
 
 #: src/core/Socket.js:1227
 msgid "Server is shutting down"
@@ -2639,7 +2640,7 @@ msgstr "Se está editando un comentario"
 
 #: src/layer/tile/CommentListSection.ts:140
 msgid "Please save or discard the comment currently being edited."
-msgstr "Guarde o descarte el comentario que se está editando."
+msgstr "Guarde o descarte el comentario que se está editando actualmente."
 
 #: src/layer/tile/CommentListSection.ts:960
 msgid "Modify"
@@ -2808,7 +2809,7 @@ msgstr "Presentación de diapositivas vacía"
 
 #: src/map/handler/Map.SlideShow.js:151
 msgid "Windowed Presentation: "
-msgstr ""
+msgstr "Presentación en ventana: "
 
 #: src/map/handler/Map.SlideShow.js:158
 msgid "Windowed Presentation Blocked"
@@ -2835,7 +2836,7 @@ msgstr "Cerrar la presentación"
 
 #: src/map/handler/Map.SlideShow.js:194
 msgid "Presenting in fullscreen"
-msgstr "Presentar a pantalla completa"
+msgstr "Presentando en pantalla completa"
 
 #: src/map/handler/Map.SlideShow.js:195
 msgid "End Presentation"
@@ -2941,6 +2942,10 @@ msgid ""
 "translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
 "translate=\"true\">3</a>"
 msgstr ""
+"<a id=\"slide-1-indicator\" class=\"active\" href=\"#slide-1\" data-"
+"translate=\"true\">1</a> <a id=\"slide-2-indicator\" href=\"#slide-2\" data-"
+"translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
+"translate=\"true\">3</a>"
 
 #~ msgid ""
 #~ "<a id=\"slide-1-indicator\" class=\"active\" href=\"#slide-1\">1</a> <a "

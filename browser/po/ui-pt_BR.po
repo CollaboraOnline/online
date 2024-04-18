@@ -12,11 +12,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-04-12 19:29+0200\n"
-"PO-Revision-Date: 2024-02-26 11:06+0000\n"
-"Last-Translator: Pedro Silva <pedro.silva@collabora.com>\n"
+"PO-Revision-Date: 2024-04-18 15:52+0000\n"
+"Last-Translator: NamelessGO <66227691+NameLessGO@users.noreply.github.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
 "collabora-online/ui/pt_BR/>\n"
-"Language: \n"
+"Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -901,7 +901,7 @@ msgstr "Tudo"
 #: src/control/Control.NotebookbarImpress.js:1193
 #: src/control/Control.NotebookbarWriter.js:1036
 msgid "Smart Picker"
-msgstr "Smart Picker"
+msgstr "Selecionador inteligente"
 
 #: src/control/Control.Menubar.js:229
 msgid "Text orientation"
@@ -1139,12 +1139,12 @@ msgstr "Entre..."
 #: src/control/Control.Menubar.js:822
 #: src/control/jsdialog/Definitions.Menu.ts:319
 msgid "Duplicate..."
-msgstr ""
+msgstr "Duplicado..."
 
 #: src/control/Control.Menubar.js:823
 #: src/control/jsdialog/Definitions.Menu.ts:323
 msgid "Contains text..."
-msgstr ""
+msgstr "Contém texto..."
 
 #: src/control/Control.Menubar.js:825 src/control/Control.Menubar.js:835
 #: src/control/jsdialog/Definitions.Menu.ts:327
@@ -1155,37 +1155,37 @@ msgstr "Mais condições..."
 #: src/control/Control.Menubar.js:827
 #: src/control/jsdialog/Definitions.Menu.ts:331
 msgid "Top/Bottom Rules..."
-msgstr ""
+msgstr "Regras superiores/inferiores..."
 
 #: src/control/Control.Menubar.js:828
 #: src/control/jsdialog/Definitions.Menu.ts:334
 msgid "Top N elements..."
-msgstr ""
+msgstr "N elementos principais..."
 
 #: src/control/Control.Menubar.js:829
 #: src/control/jsdialog/Definitions.Menu.ts:338
 msgid "Top N percent..."
-msgstr ""
+msgstr "N por cento principais..."
 
 #: src/control/Control.Menubar.js:830
 #: src/control/jsdialog/Definitions.Menu.ts:342
 msgid "Bottom N elements..."
-msgstr ""
+msgstr "N elementos inferiores..."
 
 #: src/control/Control.Menubar.js:831
 #: src/control/jsdialog/Definitions.Menu.ts:346
 msgid "Bottom N percent..."
-msgstr ""
+msgstr "N por cento inferior..."
 
 #: src/control/Control.Menubar.js:832
 #: src/control/jsdialog/Definitions.Menu.ts:350
 msgid "Above Average..."
-msgstr ""
+msgstr "Acima da média..."
 
 #: src/control/Control.Menubar.js:833
 #: src/control/jsdialog/Definitions.Menu.ts:354
 msgid "Below Average..."
-msgstr ""
+msgstr "Abaixo da média..."
 
 #: src/control/Control.Menubar.js:944 src/control/Control.Menubar.js:1009
 #: src/control/Control.Menubar.js:1073 src/control/Control.Menubar.js:1127
@@ -1733,7 +1733,7 @@ msgstr ""
 
 #: src/control/Control.TopToolbar.js:108
 msgid "Active Sheet"
-msgstr "Folha Ativa"
+msgstr "Folha ativa"
 
 #: src/control/Control.TopToolbar.js:120
 msgid "Default Style"
@@ -1777,19 +1777,19 @@ msgstr "%user desconectou"
 
 #: src/control/Control.UserList.ts:56
 msgid "Following %user"
-msgstr ""
+msgstr "Seguindo %user"
 
 #: src/control/Control.UserList.ts:57
 msgid "Following the editor"
-msgstr ""
+msgstr "Seguindo o editor"
 
 #: src/control/Control.UserList.ts:58
 msgid "Stop following"
-msgstr ""
+msgstr "Pare de seguir"
 
 #: src/control/Control.UserList.ts:59
 msgid "Avatar for %user"
-msgstr ""
+msgstr "Avatar para %user"
 
 #: src/control/Control.UserList.ts:79
 msgid "%n users"
@@ -1874,11 +1874,11 @@ msgstr "Bibliotecas de grupos"
 
 #: src/control/Control.Zotero.js:721
 msgid "Failed to load groups"
-msgstr "Falha no carregamento de grupos"
+msgstr "Falha ao carregar grupos"
 
 #: src/control/Control.Zotero.js:739 src/control/Control.Zotero.js:1057
 msgid "Failed to load collections"
-msgstr "Falha no carregamento das coletas"
+msgstr "Falha ao carregar coleções"
 
 #: src/control/Control.Zotero.js:753
 msgid "Citation Style"
@@ -1894,7 +1894,7 @@ msgstr "Ocorreu um erro ao buscar a lista de estilos"
 
 #: src/control/Control.Zotero.js:766
 msgid "Failed to load styles"
-msgstr "Não foi possível carregar os estilos"
+msgstr "Falha ao carregar estilos"
 
 #: src/control/Control.Zotero.js:1085 src/control/Control.Zotero.js:1521
 msgid "Title"
@@ -1910,7 +1910,7 @@ msgstr "Sua biblioteca está vazia"
 
 #: src/control/Control.Zotero.js:1096
 msgid "Failed to load items"
-msgstr "Não foi possível carregar os itens"
+msgstr "Falha ao carregar itens"
 
 #: src/control/Control.Zotero.js:1146
 msgid "Citation warning"
@@ -1921,8 +1921,8 @@ msgid ""
 "Once citations are entered their storage and display type can not be "
 "changed."
 msgstr ""
-"Não é possível alterar o armazenamento e tipo de visualização das citações "
-"após estas serem inseridas."
+"Depois que as citações são inseridas, seu armazenamento e tipo de exibição "
+"não podem ser alterados."
 
 #: src/control/Control.Zotero.js:1148 src/control/Control.Zotero.js:1450
 msgid "Confirm"
@@ -1930,7 +1930,7 @@ msgstr "Confirmar"
 
 #: src/control/Control.Zotero.js:1254
 msgid "Add Note"
-msgstr "Adicionar nota"
+msgstr "Adicionar Nota"
 
 #: src/control/Control.Zotero.js:1257
 msgid "Notes"
@@ -2306,7 +2306,7 @@ msgstr "O documento está mudando para o modo offline e irá recarregar em breve
 
 #: src/core/Socket.js:1227
 msgid "Server is shutting down"
-msgstr ""
+msgstr "O servidor está desligando"
 
 #: src/core/Socket.js:1259
 msgid "Exported to storage"
@@ -2747,24 +2747,23 @@ msgstr ""
 "término, ou cancele-a antes de iniciar uma nova</p>"
 
 #: src/map/Clipboard.js:1134
-#, fuzzy
 msgid ""
 "<p>Your browser has very limited access to the clipboard</p><p><b>Please "
 "press</b> <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to "
 "see more options</p><p>Close popup to ignore paste special</p>"
 msgstr ""
-"<p>Seu navegador tem acesso muito limitado à área de transferência</p><p>Por "
-"favor, pressione agora: <kbd>Ctrl</kbd><span class=\"kbd--plus\""
-">+</span><kbd>V</kbd> para ver mais opções</p><p>Fechar popup para ignorar "
-"colar especial</p>"
+"<p>Seu navegador tem acesso muito limitado à área de "
+"transferência</p><p><b>Pressione</b> <kbd>Ctrl</kbd><span class=\"kbd--plus\""
+">+</span><kbd>V</kbd> para ver mais opções</p><p>Feche o pop-up para ignorar "
+"a colagem especial</p>"
 
 #: src/map/Clipboard.js:1141
 msgid "Paste from this document"
-msgstr ""
+msgstr "Colar deste documento"
 
 #: src/map/Clipboard.js:1141
 msgid "Cancel paste special"
-msgstr ""
+msgstr "Cancelar colar especial"
 
 #: src/map/Map.js:224
 msgid "Initializing..."
@@ -2808,7 +2807,7 @@ msgstr "Esvazie apresentação de slides"
 
 #: src/map/handler/Map.SlideShow.js:151
 msgid "Windowed Presentation: "
-msgstr ""
+msgstr "Apresentação em janela: "
 
 #: src/map/handler/Map.SlideShow.js:158
 msgid "Windowed Presentation Blocked"
@@ -2941,6 +2940,10 @@ msgid ""
 "translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
 "translate=\"true\">3</a>"
 msgstr ""
+"<a id=\"slide-1-indicator\" class=\"active\" href=\"#slide-1\" data-"
+"translate=\"true\">1</a> <a id=\"slide-2-indicator\" href=\"#slide-2\" data-"
+"translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
+"translate=\"true\">3</a>"
 
 #~ msgid ""
 #~ "<a id=\"slide-1-indicator\" class=\"active\" href=\"#slide-1\">1</a> <a "

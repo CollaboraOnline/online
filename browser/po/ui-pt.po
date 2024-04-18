@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-04-12 19:29+0200\n"
-"PO-Revision-Date: 2024-02-26 11:06+0000\n"
-"Last-Translator: Pedro Silva <pedro.silva@collabora.com>\n"
+"PO-Revision-Date: 2024-04-16 14:06+0000\n"
+"Last-Translator: NamelessGO <66227691+NameLessGO@users.noreply.github.com>\n"
 "Language-Team: Portuguese <https://hosted.weblate.org/projects/"
 "collabora-online/ui/pt/>\n"
-"Language: \n"
+"Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1134,12 +1134,12 @@ msgstr "Entre..."
 #: src/control/Control.Menubar.js:822
 #: src/control/jsdialog/Definitions.Menu.ts:319
 msgid "Duplicate..."
-msgstr ""
+msgstr "Duplicado..."
 
 #: src/control/Control.Menubar.js:823
 #: src/control/jsdialog/Definitions.Menu.ts:323
 msgid "Contains text..."
-msgstr ""
+msgstr "Contém texto..."
 
 #: src/control/Control.Menubar.js:825 src/control/Control.Menubar.js:835
 #: src/control/jsdialog/Definitions.Menu.ts:327
@@ -1150,37 +1150,37 @@ msgstr "Mais condições..."
 #: src/control/Control.Menubar.js:827
 #: src/control/jsdialog/Definitions.Menu.ts:331
 msgid "Top/Bottom Rules..."
-msgstr ""
+msgstr "Regras superiores/inferiores..."
 
 #: src/control/Control.Menubar.js:828
 #: src/control/jsdialog/Definitions.Menu.ts:334
 msgid "Top N elements..."
-msgstr ""
+msgstr "N elementos principais..."
 
 #: src/control/Control.Menubar.js:829
 #: src/control/jsdialog/Definitions.Menu.ts:338
 msgid "Top N percent..."
-msgstr ""
+msgstr "N por cento principais..."
 
 #: src/control/Control.Menubar.js:830
 #: src/control/jsdialog/Definitions.Menu.ts:342
 msgid "Bottom N elements..."
-msgstr ""
+msgstr "N elementos inferiores..."
 
 #: src/control/Control.Menubar.js:831
 #: src/control/jsdialog/Definitions.Menu.ts:346
 msgid "Bottom N percent..."
-msgstr ""
+msgstr "N por cento inferior..."
 
 #: src/control/Control.Menubar.js:832
 #: src/control/jsdialog/Definitions.Menu.ts:350
 msgid "Above Average..."
-msgstr ""
+msgstr "Acima da média..."
 
 #: src/control/Control.Menubar.js:833
 #: src/control/jsdialog/Definitions.Menu.ts:354
 msgid "Below Average..."
-msgstr ""
+msgstr "Abaixo da média..."
 
 #: src/control/Control.Menubar.js:944 src/control/Control.Menubar.js:1009
 #: src/control/Control.Menubar.js:1073 src/control/Control.Menubar.js:1127
@@ -1772,19 +1772,19 @@ msgstr "%user saiu"
 
 #: src/control/Control.UserList.ts:56
 msgid "Following %user"
-msgstr ""
+msgstr "Seguindo %user"
 
 #: src/control/Control.UserList.ts:57
 msgid "Following the editor"
-msgstr ""
+msgstr "Seguindo o editor"
 
 #: src/control/Control.UserList.ts:58
 msgid "Stop following"
-msgstr ""
+msgstr "Pare de seguir"
 
 #: src/control/Control.UserList.ts:59
 msgid "Avatar for %user"
-msgstr ""
+msgstr "Avatar para %user"
 
 #: src/control/Control.UserList.ts:79
 msgid "%n users"
@@ -2300,7 +2300,7 @@ msgstr "O documento está mudando para o modo offline e irá recarregar em breve
 
 #: src/core/Socket.js:1227
 msgid "Server is shutting down"
-msgstr ""
+msgstr "O servidor está desligando"
 
 #: src/core/Socket.js:1259
 msgid "Exported to storage"
@@ -2752,24 +2752,23 @@ msgstr ""
 "iniciar uma nova</p>"
 
 #: src/map/Clipboard.js:1134
-#, fuzzy
 msgid ""
 "<p>Your browser has very limited access to the clipboard</p><p><b>Please "
 "press</b> <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to "
 "see more options</p><p>Close popup to ignore paste special</p>"
 msgstr ""
-"<p>O seu navegador tem acesso muito limitado à área de transferência</"
-"p><p>Por favor, pressione agora as teclas: <kbd>Ctrl</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>V</kbd> para ver mais opções</p><p>Fechar popup para "
-"ignorar colar especial</p>"
+"<p>Seu navegador tem acesso muito limitado à área de "
+"transferência</p><p><b>Pressione</b> <kbd>Ctrl</kbd><span class=\"kbd--plus\""
+">+</span><kbd>V</kbd> para ver mais opções</p><p>Feche o pop-up para ignorar "
+"a colagem especial</p>"
 
 #: src/map/Clipboard.js:1141
 msgid "Paste from this document"
-msgstr ""
+msgstr "Colar deste documento"
 
 #: src/map/Clipboard.js:1141
 msgid "Cancel paste special"
-msgstr ""
+msgstr "Cancelar colar especial"
 
 #: src/map/Map.js:224
 msgid "Initializing..."
@@ -2813,7 +2812,7 @@ msgstr "Esvaziar apresentação de diapositivos"
 
 #: src/map/handler/Map.SlideShow.js:151
 msgid "Windowed Presentation: "
-msgstr ""
+msgstr "Apresentação em janela: "
 
 #: src/map/handler/Map.SlideShow.js:158
 msgid "Windowed Presentation Blocked"
@@ -2839,7 +2838,7 @@ msgstr "Fechar Apresentação"
 
 #: src/map/handler/Map.SlideShow.js:194
 msgid "Presenting in fullscreen"
-msgstr "Apresentando em ecrã completo"
+msgstr "Apresentando em tela cheia"
 
 #: src/map/handler/Map.SlideShow.js:195
 msgid "End Presentation"
@@ -2945,6 +2944,10 @@ msgid ""
 "translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
 "translate=\"true\">3</a>"
 msgstr ""
+"<a id=\"slide-1-indicator\" class=\"active\" href=\"#slide-1\" data-"
+"translate=\"true\">1</a> <a id=\"slide-2-indicator\" href=\"#slide-2\" data-"
+"translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
+"translate=\"true\">3</a>"
 
 #~ msgid ""
 #~ "<a id=\"slide-1-indicator\" class=\"active\" href=\"#slide-1\">1</a> <a "
