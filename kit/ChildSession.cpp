@@ -573,11 +573,10 @@ bool ChildSession::_handleInput(const char *buffer, int length)
 
             bool saving = false;
             if (background)
-                saving = !saveDocumentBackground(unoSave);
+                saving = saveDocumentBackground(unoSave);
 
             if (!saving)
             { // fallback to foreground save
-
                 // Disable processing of other messages while saving document
                 InputProcessingManager processInput(getProtocol(), false);
                 return unoCommand(unoSave);
