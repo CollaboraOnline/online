@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 var { selectZoomLevel } = require('../../common/desktop_helper');
 var desktopHelper = require('../../common/desktop_helper');
 
-describe(['tagmultiuser'], 'Multiuser Annotation Test', function () {
+describe(['tagmultiuser'], 'Multiuser Annotation Tests', function () {
 	var origTestFileName = 'annotation.odt';
 	var testFileName;
 
@@ -13,16 +13,20 @@ describe(['tagmultiuser'], 'Multiuser Annotation Test', function () {
 		cy.viewport(2400,800);
 		desktopHelper.switchUIToNotebookbar();
 		cy.cSetActiveFrame('#iframe1');
-		cy.cGet('#optionscontainer div[id$="SidebarDeck.PropertyDeck"]').click(); // Hide sidebar.
+		cy.cGet('#sidebar-dock-wrapper').should('be.visible');
+		cy.cGet('#optionscontainer div[id$="SidebarDeck.PropertyDeck"] button').click(); // Hide sidebar.
 		selectZoomLevel('50');
 		cy.cSetActiveFrame('#iframe2');
-		cy.cGet('#optionscontainer div[id$="SidebarDeck.PropertyDeck"]').click(); // Hide sidebar.
+		cy.cGet('#sidebar-dock-wrapper').should('be.visible');
+		cy.cGet('#optionscontainer div[id$="SidebarDeck.PropertyDeck"] button').click(); // Hide sidebar.
 		selectZoomLevel('50');
 	});
 
 	afterEach(function() {
 		helper.afterAll(testFileName, this.currentTest.state);
 	});
+
+	describe(['tagmultiuser'], 'Annotation Tests', function () {
 
 	it('Insert', function() {
 		cy.cSetActiveFrame('#iframe1');
@@ -83,26 +87,14 @@ describe(['tagmultiuser'], 'Multiuser Annotation Test', function () {
 		cy.cSetActiveFrame('#iframe2');
 		cy.cGet('.cool-annotation-content-wrapper').should('not.exist');
 	});
-});
-
-describe(['tagmultiuser'], 'Multiuser Collapsed Annotation Tests', function() {
-	var testFileName = 'annotation.odt';
-
-	beforeEach(function() {
-		helper.beforeAll(testFileName, 'writer', undefined, true);
-		desktopHelper.switchUIToNotebookbar();
-		cy.cGet('#optionscontainer div[id$="SidebarDeck.PropertyDeck"]').click(); // Hide sidebar.
-		cy.cSetActiveFrame('#iframe2');
-		cy.cGet('#optionscontainer div[id$="SidebarDeck.PropertyDeck"]').click(); // Hide sidebar.
 	});
 
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
-	});
+	describe(['tagmultiuser'], 'Collapsed Annotation Tests', function() {
 
 	it('Insert', function() {
 		cy.cSetActiveFrame('#iframe1');
 		helper.typeIntoDocument('Hello World');
+		cy.wait(100);
 		desktopHelper.insertComment();
 
 		cy.cGet('.cool-annotation-content-wrapper').should('exist');
@@ -116,6 +108,7 @@ describe(['tagmultiuser'], 'Multiuser Collapsed Annotation Tests', function() {
 	it('Modify', function() {
 		cy.cSetActiveFrame('#iframe1');
 		helper.typeIntoDocument('Hello World');
+		cy.wait(100);
 		desktopHelper.insertComment();
 
 		cy.cGet('.cool-annotation-content-wrapper').should('exist');
@@ -136,6 +129,7 @@ describe(['tagmultiuser'], 'Multiuser Collapsed Annotation Tests', function() {
 	it('Reply', function() {
 		cy.cSetActiveFrame('#iframe1');
 		helper.typeIntoDocument('Hello World');
+		cy.wait(100);
 		desktopHelper.insertComment();
 
 		cy.cGet('.cool-annotation-content-wrapper').should('exist');
@@ -156,6 +150,7 @@ describe(['tagmultiuser'], 'Multiuser Collapsed Annotation Tests', function() {
 	it('Remove', function() {
 		cy.cSetActiveFrame('#iframe1');
 		helper.typeIntoDocument('Hello World');
+		cy.wait(100);
 		desktopHelper.insertComment();
 
 		cy.cGet('.cool-annotation-content-wrapper').should('exist');
@@ -169,28 +164,9 @@ describe(['tagmultiuser'], 'Multiuser Collapsed Annotation Tests', function() {
 		cy.cGet('.cool-annotation-content-wrapper').should('not.exist');
 	});
 
-});
-
-describe(['tagmultiuser'], 'Multiuser Annotation Autosave Tests', function() {
-	var origTestFileName = 'annotation.odt';
-	var testFileName;
-
-	beforeEach(function() {
-		testFileName = helper.beforeAll(origTestFileName, 'writer', undefined, true);
-		cy.viewport(2400,800);
-		desktopHelper.switchUIToNotebookbar();
-		cy.cSetActiveFrame('#iframe1');
-		cy.cGet('#optionscontainer div[id$="SidebarDeck.PropertyDeck"]').click(); // Hide sidebar.
-		selectZoomLevel('50');
-		cy.cSetActiveFrame('#iframe2');
-		cy.cGet('#optionscontainer div[id$="SidebarDeck.PropertyDeck"]').click(); // Hide sidebar.
-		selectZoomLevel('50');
-
 	});
 
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
-	});
+	describe(['tagmultiuser'], 'Annotation Autosave Tests', function() {
 
 	it('Insert autosave', function() {
 		cy.cSetActiveFrame('#iframe1');
@@ -364,4 +340,5 @@ describe(['tagmultiuser'], 'Multiuser Annotation Autosave Tests', function() {
 		cy.cGet('#annotation-content-area-2').should('not.exist');
 	});
 
+	});
 });
