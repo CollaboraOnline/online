@@ -48,6 +48,7 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['.uno:StyleUpdateByExampleimg'] = function () { return false; };
 		this._toolitemHandlers['.uno:StyleNewByExampleimg'] = function () { return false; };
 		this._toolitemHandlers['.uno:LineEndStyle'] = function () { return false; };
+		this._toolitemHandlers['.uno:SetOutline'] = function () { return false; };
 
 		this._toolitemHandlers['.uno:FontworkShapeType'] = this._fontworkShapeControl;
 		this._toolitemHandlers['SelectWidth'] = this._lineWidthControl;
