@@ -18,9 +18,7 @@
 #include <string_view>
 #include <iostream>
 
-#include <Poco/JSON/JSON.h>
-#include <Poco/JSON/Object.h>
-#include <Poco/JSON/Parser.h>
+#include "JsonUtil.hpp"
 
 #include "Protocol.hpp"
 #include "Log.hpp"

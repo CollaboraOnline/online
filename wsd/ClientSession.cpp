@@ -24,7 +24,6 @@
 #include <Poco/Net/HTTPResponse.h>
 #include <Poco/StreamCopier.h>
 #include <Poco/URI.h>
-#include <Poco/JSON/Object.h>
 
 #include "DocumentBroker.hpp"
 #include "COOLWSD.hpp"

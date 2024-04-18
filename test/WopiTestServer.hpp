@@ -21,7 +21,7 @@
 #include "StringVector.hpp"
 #include "lokassert.hpp"
 
-#include <Poco/JSON/Object.h>
+#include <JsonUtil.hpp>
 #include <Poco/URI.h>
 #include <Poco/Util/LayeredConfiguration.h>
 

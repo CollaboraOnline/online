@@ -62,14 +62,13 @@
 #include <Poco/ConsoleChannel.h>
 #include <Poco/Exception.h>
 #include <Poco/Format.h>
-#include <Poco/JSON/JSON.h>
-#include <Poco/JSON/Object.h>
-#include <Poco/JSON/Parser.h>
+
 #include <Poco/TemporaryFile.h>
 #include <Poco/Util/Application.h>
 #include <Poco/URI.h>
 
 #include "Log.hpp"
+#include "JsonUtil.hpp"
 #include "Protocol.hpp"
 #include "TraceEvent.hpp"
 

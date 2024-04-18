@@ -48,9 +48,6 @@
 #endif
 
 #include <Poco/Exception.h>
-#include <Poco/JSON/Object.h>
-#include <Poco/JSON/Parser.h>
-#include <Poco/StreamCopier.h>
 #include <Poco/URI.h>
 
 #include <iconv.h>
