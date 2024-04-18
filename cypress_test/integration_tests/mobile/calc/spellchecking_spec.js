@@ -34,10 +34,11 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Calc spell checking menu.',
 	}
 
 	it('Apply suggestion.', function() {
+		helper.setDummyClipboardForCopy();
 		openContextMenu();
 		cy.cGet('body').contains('.context-menu-link', 'hello').click();
 
-		calcHelper.assertSheetContents(['hello']);
+		calcHelper.assertSheetContents(['hello'], true);
 
 		// We don't get the spell check context menu any more
 		openContextMenu();
@@ -45,10 +46,11 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Calc spell checking menu.',
 	});
 
 	it('Ignore all.', function() {
+		helper.setDummyClipboardForCopy();
 		openContextMenu();
 		cy.cGet('body').contains('.context-menu-link', 'Ignore All').click();
 
-		calcHelper.assertSheetContents(['helljo']);
+		calcHelper.assertSheetContents(['helljo'], true);
 
 		// We don't get the spell check context menu any more
 		openContextMenu();
