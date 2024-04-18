@@ -911,9 +911,8 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._graphicSelection = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(0, 0));
 		// Rotation angle of selected graphic object
 		this._graphicSelectionAngle = 0;
-		// Rectangle for cell cursor
-		this._cellCursor =  L.LatLngBounds.createDefault();
-		this._prevCellCursor = L.LatLngBounds.createDefault();
+		app.calc.cellCursorVisible = false;
+		this._prevCellCursor = null;
 		this._prevCellCursorAddress = null;
 		this._cellCursorOnPgUp = null;
 		this._cellCursorOnPgDn = null;
@@ -2507,18 +2506,10 @@ L.CanvasTileLayer = L.Layer.extend({
 	_onCellCursorMsg: function (textMsg) {
 		var autofillMarkerSection = app.sectionContainer.getSectionWithName(L.CSections.AutoFillMarker.name);
 
-		if (!this._cellCursor) {
-			this._cellCursor = L.LatLngBounds.createDefault();
-		}
-		if (!this._prevCellCursor) {
-			this._prevCellCursor = L.LatLngBounds.createDefault();
-		}
-
 		var oldCursorAddress = app.calc.cellAddress.clone();
 
 		if (textMsg.match('EMPTY')) {
 			app.calc.cellCursorVisible = false;
-			this._cellCursor = L.LatLngBounds.createDefault();
 			if (autofillMarkerSection)
 				autofillMarkerSection.calculatePositionViaCellCursor(null);
 			if (this._map._clip)
@@ -2532,10 +2523,6 @@ L.CanvasTileLayer = L.Layer.extend({
 			var bottomRightTwips = topLeftTwips.add(offset);
 			let _cellCursorTwips = this._convertToTileTwipsSheetArea(new L.Bounds(topLeftTwips, bottomRightTwips));
 
-			this._cellCursor = new L.LatLngBounds(
-				this._twipsToLatLng(_cellCursorTwips.getTopLeft(), this._map.getZoom()),
-				this._twipsToLatLng(_cellCursorTwips.getBottomRight(), this._map.getZoom()));
-
 			app.calc.cellAddress = new app.definitions.simplePoint(parseInt(strTwips[4]), parseInt(strTwips[5]));
 			let tempRectangle = _cellCursorTwips.toRectangle();
 			app.calc.cellCursorRectangle = new app.definitions.simpleRectangle(tempRectangle[0], tempRectangle[1], tempRectangle[2], tempRectangle[3]);
@@ -2546,35 +2533,20 @@ L.CanvasTileLayer = L.Layer.extend({
 				autofillMarkerSection.calculatePositionViaCellCursor([app.calc.cellCursorRectangle.pX2, app.calc.cellCursorRectangle.pY2]);
 		}
 
-		var horizontalDirection = 0;
-		var verticalDirection = 0;
-		var sign = function(x) {
-			return x > 0 ? 1 : x < 0 ? -1 : x;
-		};
-		if (!this._isEmptyRectangle(this._prevCellCursor) && !this._isEmptyRectangle(this._cellCursor)) {
-			horizontalDirection = sign(this._cellCursor.getWest() - this._prevCellCursor.getWest());
-			verticalDirection = sign(this._cellCursor.getNorth() - this._prevCellCursor.getNorth());
-		}
-		else if (!this._isEmptyRectangle(this._cellCursor)) {
-			// This is needed for jumping view to cursor position on tab switch
-			horizontalDirection = sign(this._cellCursor.getWest());
-			verticalDirection = sign(this._cellCursor.getNorth());
-		}
-
 		var onPgUpDn = false;
-		if (!this._isEmptyRectangle(this._cellCursor) && !this._prevCellCursor.equals(this._cellCursor)) {
-			if ((this._cellCursorOnPgUp && this._cellCursorOnPgUp.equals(this._prevCellCursor)) ||
-				(this._cellCursorOnPgDn && this._cellCursorOnPgDn.equals(this._prevCellCursor))) {
+		if (app.calc.cellCursorVisible && this._prevCellCursor && !this._prevCellCursor.equals(app.calc.cellCursorRectangle.toArray())) {
+			if ((this._cellCursorOnPgUp && this._cellCursorOnPgUp.equals(this._prevCellCursor.toArray())) ||
+				(this._cellCursorOnPgDn && this._cellCursorOnPgDn.equals(this._prevCellCursor.toArray()))) {
 				onPgUpDn = true;
 			}
-			this._prevCellCursor = new L.LatLngBounds(this._cellCursor.getSouthWest(), this._cellCursor.getNorthEast());
+			this._prevCellCursor = app.calc.cellCursorRectangle.clone();
 		}
 
 		var sameAddress = oldCursorAddress.equals(app.calc.cellAddress.toArray());
 
 		var scrollToCursor = this._sheetSwitch.tryRestore(sameAddress, this._selectedPart);
 
-		this._onUpdateCellCursor(horizontalDirection, verticalDirection, onPgUpDn, scrollToCursor, sameAddress);
+		this._onUpdateCellCursor(onPgUpDn, scrollToCursor, sameAddress);
 
 		// Remove input help if there is any:
 		this._removeInputHelpMarker();
@@ -3489,26 +3461,44 @@ L.CanvasTileLayer = L.Layer.extend({
 			return false;
 	},
 
+	_latLngBoundsToSimpleRectangle: function(latLngBounds) {
+		let topLeft = this._latLngToTwips(latLngBounds.getNorthWest());
+		let bottomRight = this._latLngToTwips(latLngBounds.getSouthEast());
+
+		return new app.definitions.simpleRectangle(topLeft.x, topLeft.y, bottomRight.x - topLeft.x, bottomRight.y - topLeft.y);
+	},
+
+	_simpleRectangleToLatLngBounds: function(simpleRectangle) {
+		return new L.LatLngBounds(
+			this._twipsToLatLng({ x: simpleRectangle.x1, y: simpleRectangle.y1 }, this._map.getZoom()),
+			this._twipsToLatLng({ x: simpleRectangle.x2, y: simpleRectangle.y2 }, this._map.getZoom()));
+	},
+
 	_updateScrollOnCellSelection: function (oldSelection, newSelection) {
 		if (this.isCalc() && oldSelection) {
-			var mapBounds = this._map.getBounds();
-			if (!mapBounds.contains(newSelection) && !newSelection.equals(oldSelection)) {
-				var spacingX = Math.abs(this._cellCursor.getEast() - this._cellCursor.getWest()) / 4.0;
-				var spacingY = Math.abs((this._cellCursor.getSouth() - this._cellCursor.getNorth())) / 2.0;
+			if (oldSelection._northEast) // Is object's type latLngBounds
+				oldSelection = this._latLngBoundsToSimpleRectangle(oldSelection);
+
+			if (newSelection._northEast) // Is object's type latLngBounds
+				newSelection = this._latLngBoundsToSimpleRectangle(newSelection);
+
+			if (!app.file.viewedRectangle.containsRectangle(newSelection.toArray()) && !newSelection.equals(oldSelection.toArray())) {
+				var spacingX = Math.abs(app.calc.cellCursorRectangle.pWidth) / 4.0;
+				var spacingY = Math.abs(app.calc.cellCursorRectangle.pHeight) / 2.0;
 
 				var scrollX = 0, scrollY = 0;
-				if (newSelection.getEast() > mapBounds.getEast() && newSelection.getEast() > oldSelection.getEast())
-					scrollX = newSelection.getEast() - mapBounds.getEast() + spacingX;
-				else if (newSelection.getWest() < mapBounds.getWest() && newSelection.getWest() < oldSelection.getWest())
-					scrollX = newSelection.getWest() - mapBounds.getWest() - spacingX;
-				if (newSelection.getNorth() > mapBounds.getNorth() && newSelection.getNorth() > oldSelection.getNorth())
-					scrollY = newSelection.getNorth() - mapBounds.getNorth() + spacingY;
-				else if (newSelection.getSouth() < mapBounds.getSouth() && newSelection.getSouth() < oldSelection.getSouth())
-					scrollY = newSelection.getSouth() - mapBounds.getSouth() - spacingY;
+				if (newSelection.pX2 > app.file.viewedRectangle.pX2 && newSelection.pX2 > oldSelection.pX2)
+					scrollX = newSelection.pX2 - app.file.viewedRectangle.pX2 + spacingX;
+				else if (newSelection.pX1 < app.file.viewedRectangle.pX1 && newSelection.pX1 < oldSelection.pX1)
+					scrollX = newSelection.pX1 - app.file.viewedRectangle.pX1 - spacingX;
+				if (newSelection.pY1 > app.file.viewedRectangle.pY1 && newSelection.pY1 > oldSelection.pY1)
+					scrollY = newSelection.pY1 - app.file.viewedRectangle.pY1 + spacingY;
+				else if (newSelection.pY2 < app.file.viewedRectangle.pY2 && newSelection.pY2 < oldSelection.pY2)
+					scrollY = newSelection.pY2 - app.file.viewedRectangle.pY2 - spacingY;
 				if (scrollX !== 0 || scrollY !== 0) {
-					var newCenter = mapBounds.getCenter();
-					newCenter.lng += scrollX;
-					newCenter.lat += scrollY;
+					var newCenter = new app.definitions.simplePoint(app.file.viewedRectangle.center[0], app.file.viewedRectangle.center[1]);
+					newCenter.pX += scrollX;
+					newCenter.pY += scrollY;
 					if (!this._map.wholeColumnSelected && !this._map.wholeRowSelected) {
 						var address = document.getElementById('addressInput').value;
 						if (!this._isWholeColumnSelected(address) && !this._isWholeRowSelected(address))
@@ -3586,9 +3576,6 @@ L.CanvasTileLayer = L.Layer.extend({
 			if (autofillMarkerSection)
 				autofillMarkerSection.calculatePositionViaCellSelection([cellSelectionAreaPixels.getX2(), cellSelectionAreaPixels.getY2()]);
 
-			if (this._cellCursor === null) {
-				this._cellCursor = L.LatLngBounds.createDefault();
-			}
 			this._updateScrollOnCellSelection(oldSelection, this._cellSelectionArea);
 		} else {
 			this._cellSelectionArea = null;
@@ -3706,7 +3693,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		// hide the graphic selection
 		this._graphicSelection = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(0, 0));
 		this._onUpdateGraphicSelection();
-		this._cellCursor = null;
 		app.calc.cellCursorVisible = false;
 		this._prevCellCursor = null;
 		this._onUpdateCellCursor();
@@ -3809,13 +3795,13 @@ L.CanvasTileLayer = L.Layer.extend({
 				if (this._cellCursorOnPgUp) {
 					return;
 				}
-				this._cellCursorOnPgUp = new L.LatLngBounds(this._prevCellCursor.getSouthWest(), this._prevCellCursor.getNorthEast());
+				this._cellCursorOnPgUp = this._prevCellCursor.clone();
 			}
 			else if (unoKeyCode === UNOKey.PAGEDOWN) {
 				if (this._cellCursorOnPgDn) {
 					return;
 				}
-				this._cellCursorOnPgDn = new L.LatLngBounds(this._prevCellCursor.getSouthWest(), this._prevCellCursor.getNorthEast());
+				this._cellCursorOnPgDn = this._prevCellCursor.clone();
 			}
 			else if (unoKeyCode === UNOKey.SPACE + UNOModifier.CTRL) { // Select whole column.
 				this._map.wholeColumnSelected = true;
@@ -3909,6 +3895,9 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	// Scrolls the view to selected position
 	scrollToPos: function(pos) {
+		if (pos.pX) // Turn into lat/lng if required.
+			pos = this._twipsToLatLng({ x: pos.x, y: pos.y });
+
 		var center = this._map.project(pos);
 		center = center.subtract(this._map.getSize().divideBy(2));
 		center.x = Math.round(center.x < 0 ? 0 : center.x);
@@ -4695,9 +4684,9 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	// TODO: unused variables: horizontalDirection, verticalDirection
 	// TODO: used only in calc: move to CalcTileLayer
-	_onUpdateCellCursor: function (horizontalDirection, verticalDirection, onPgUpDn, scrollToCursor, sameAddress) {
+	_onUpdateCellCursor: function (onPgUpDn, scrollToCursor, sameAddress) {
 		this._onUpdateCellResizeMarkers();
-		if (this._cellCursor && !this._isEmptyRectangle(this._cellCursor)) {
+		if (app.calc.cellCursorVisible) {
 			var mapBounds = this._map.getBounds();
 			if (scrollToCursor && (!this._prevCellCursorAddress || !app.calc.cellAddress.equals(this._prevCellCursorAddress.toArray())) &&
 			    !this._map.calcInputBarHasFocus()) {
@@ -4793,7 +4782,8 @@ L.CanvasTileLayer = L.Layer.extend({
 		});
 
 		this._removeInputHelpMarker();
-		var inputHelpMarker = L.marker(this._cellCursor.getNorthEast(), { icon: icon });
+		var pos = this._twipsToLatLng({ x: app.calc.cellCursorRectangle.x2, y: app.calc.cellCursorRectangle.y1 });
+		var inputHelpMarker = L.marker(pos, { icon: icon });
 		inputHelpMarker.addTo(this._map);
 		document.getElementById('input-help-title').innerText = message.title;
 		document.getElementById('input-help-content').innerText = message.content;
@@ -4802,7 +4792,8 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	_addDropDownMarker: function () {
 		if (this._validatedCellAddress && app.calc.cellCursorVisible && this._validatedCellAddress.equals(app.calc.cellAddress.toArray())) {
-			var pos = this._cellCursor.getNorthEast();
+			var pos = this._twipsToLatLng({ x: app.calc.cellCursorRectangle.x2, y: app.calc.cellCursorRectangle.y1 });
+
 			var dropDownMarker = this._getDropDownMarker(16);
 			dropDownMarker.setLatLng(pos);
 			this._map.addLayer(dropDownMarker);
@@ -4827,17 +4818,17 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_onUpdateCellResizeMarkers: function () {
-		var selectionOnDesktop = window.mode.isDesktop()
-									&& (this._cellSelectionArea
-									|| (this._cellCursor && !this._isEmptyRectangle(this._cellCursor)));
+		var selectionOnDesktop = window.mode.isDesktop() && (this._cellSelectionArea || app.calc.cellCursorVisible);
 
 		if (!selectionOnDesktop &&
-			(!this._cellCSelections.empty() || (this._cellCursor && !this._isEmptyRectangle(this._cellCursor)))) {
-			if (this._isEmptyRectangle(this._cellSelectionArea) && this._isEmptyRectangle(this._cellCursor)) {
+			(!this._cellCSelections.empty() || app.calc.cellCursorVisible)) {
+			if (this._isEmptyRectangle(this._cellSelectionArea) && !app.calc.cellCursorVisible) {
 				return;
 			}
 
-			var cellRectangle = this._cellSelectionArea ? this._cellSelectionArea : this._cellCursor;
+			let latLngCursor = this._simpleRectangleToLatLngBounds(app.calc.cellCursorRectangle.clone());
+
+			var cellRectangle = this._cellSelectionArea ? this._cellSelectionArea : latLngCursor;
 
 			if (!this._cellResizeMarkerStart.isDragged) {
 				this._map.addLayer(this._cellResizeMarkerStart);
