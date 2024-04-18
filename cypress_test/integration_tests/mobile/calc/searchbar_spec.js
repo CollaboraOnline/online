@@ -21,12 +21,14 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Searching via search bar.',
 	});
 
 	it('Search existing word.', function() {
+		helper.setDummyClipboardForCopy();
 		searchHelper.typeIntoSearchField('a');
 
 		searchHelper.searchNext();
 
 		// First cell should be selected
 		cy.cGet('input#addressInput').should('have.prop', 'value', 'A1');
+		helper.copy();
 		cy.cGet('#copy-paste-container table td').should('have.text', 'a');
 	});
 
@@ -40,50 +42,60 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Searching via search bar.',
 	});
 
 	it('Search next / prev instance.', function() {
+		helper.setDummyClipboardForCopy();
 		searchHelper.typeIntoSearchField('a');
 
 		searchHelper.searchNext();
 		cy.cGet('input#addressInput').should('have.prop', 'value', 'A1');
+		helper.copy();
 		cy.cGet('#copy-paste-container table td').should('have.text', 'a');
 
 		// Search next instance
 		searchHelper.searchNext();
 
 		cy.cGet('input#addressInput').should('have.prop', 'value', 'B1');
+		helper.copy();
 		cy.cGet('#copy-paste-container table td').should('have.text', 'a');
 
 		// Search prev instance
 		searchHelper.searchPrev();
 
 		cy.cGet('input#addressInput').should('have.prop', 'value', 'A1');
+		helper.copy();
 		cy.cGet('#copy-paste-container table td').should('have.text', 'a');
 	});
 
 	it('Search at the document end.', function() {
+		helper.setDummyClipboardForCopy();
 		searchHelper.typeIntoSearchField('a');
 
 		searchHelper.searchNext();
 
 		cy.cGet('input#addressInput').should('have.prop', 'value', 'A1');
+		helper.copy();
 		cy.cGet('#copy-paste-container table td').should('have.text', 'a');
 
 		// Search next instance
 		searchHelper.searchNext();
 		cy.cGet('input#addressInput').should('have.prop', 'value', 'B1');
+		helper.copy();
 		cy.cGet('#copy-paste-container table td').should('have.text', 'a');
 
 		// Search next instance, which is in the beginning of the document.
 		searchHelper.searchNext();
 		cy.cGet('input#addressInput').should('have.prop', 'value', 'A1');
+		helper.copy();
 		cy.cGet('#copy-paste-container table td').should('have.text', 'a');
 	});
 
 	it('Cancel search.', function() {
+		helper.setDummyClipboardForCopy();
 		searchHelper.typeIntoSearchField('a');
 
 		searchHelper.searchNext();
 
 		cy.cGet('input#addressInput').should('have.prop', 'value', 'A1');
+		helper.copy();
 		cy.cGet('#copy-paste-container table td').should('have.text', 'a');
 
 		// Cancel search -> selection removed
@@ -92,10 +104,12 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Searching via search bar.',
 	});
 
 	it('Close search.', function() {
+		helper.setDummyClipboardForCopy();
 		searchHelper.typeIntoSearchField('a');
 		searchHelper.searchNext();
 
 		cy.cGet('input#addressInput').should('have.prop', 'value', 'A1');
+		helper.copy();
 		cy.cGet('#copy-paste-container table td').should('have.text', 'a');
 
 		// Close search -> search bar is closed
