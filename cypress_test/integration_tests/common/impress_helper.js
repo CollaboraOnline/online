@@ -28,7 +28,7 @@ function assertInTextEditMode() {
 }
 
 // Enter some text and confirm we get it back.
-function typeTextAndVerify(text, expected) {
+function typeTextAndVerify(text, expected, copy) {
 	cy.log('>> typeTextAndVerify - start');
 
 	if (!expected)
@@ -43,6 +43,9 @@ function typeTextAndVerify(text, expected) {
 	assertInTextEditMode();
 
 	helper.selectAllText();
+	if (copy === true) {
+		helper.copy();
+	}
 
 	helper.expectTextForClipboard(expected);
 
