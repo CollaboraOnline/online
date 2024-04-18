@@ -14,11 +14,7 @@
 #include "common/SigUtil.hpp"
 #include "Log.hpp"
 #include "TileDesc.hpp"
-
-#include <Poco/Dynamic/Var.h>
-#include <Poco/JSON/JSON.h>
-#include <Poco/JSON/Object.h>
-#include <Poco/JSON/Parser.h>
+#include "JsonUtil.hpp"
 
 #include <deque>
 #include <mutex>

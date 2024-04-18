@@ -26,6 +26,7 @@
 #include <Log.hpp>
 #include <Protocol.hpp>
 #include <Util.hpp>
+#include <JsonUtil.hpp>
 #include <common/ConfigUtil.hpp>
 #include <common/LangUtil.hpp>
 #if !MOBILEAPP
@@ -38,7 +39,6 @@
 #include <Poco/DateTimeFormatter.h>
 #include <Poco/Exception.h>
 #include <Poco/FileStream.h>
-#include <Poco/JSON/Object.h>
 #include <Poco/MemoryStream.h>
 #include <Poco/Net/HTMLForm.h>
 #include <Poco/Net/HTTPBasicCredentials.h>
