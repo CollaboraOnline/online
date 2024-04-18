@@ -1360,6 +1360,13 @@ bool Document::forkToSave(const std::function<void()> &childSave, int viewId)
 #if MOBILEAPP
     return false;
 #else // !MOBILEAPP
+    if (_isBgSaveProcess)
+    {
+        LOG_ERR("Serious error bgsv process trying to fork again");
+        assert(false);
+        return false;
+    }
+
     if (!joinThreads())
     {
         LOG_WRN("Failed to join threads before async save");
@@ -1372,6 +1379,9 @@ bool Document::forkToSave(const std::function<void()> &childSave, int viewId)
         LOG_WRN("Failed to ensure we have just one, we have: " << threads);
         return false;
     }
+
+    // Oddly we have seen this broken in the past.
+    assert(processInputEnabled());
 
 #if 0
     // TODO: compare FD count in a normal process with how
