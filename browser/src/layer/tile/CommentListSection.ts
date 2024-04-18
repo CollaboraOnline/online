@@ -738,7 +738,7 @@ export class CommentSection extends CanvasSectionObject {
 				const annotationHeight = this.cssToCorePixels(rect.height);
 				const annotationBottom = position[1] + annotationHeight;
 
-				if (!this.isInViewPort([annotationTop, annotationBottom]) && position[1] !== 0) {
+				if (!this.isInViewPort([annotationTop, annotationBottom]) && position[1] !== 0 && !annotation.isEdit()) {
 					console.debug('Annotation outside view - scroll');
 					const scrollSection = app.sectionContainer.getSectionWithName(L.CSections.Scroll.name);
 					const screenTopBottom = this.getScreenTopBottom();
