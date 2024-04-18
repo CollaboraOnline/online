@@ -21,8 +21,6 @@
 #include <Poco/Crypto/RSADigestEngine.h>
 #include <Poco/Crypto/RSAKey.h>
 #include <Poco/Dynamic/Var.h>
-#include <Poco/JSON/Object.h>
-#include <Poco/JSON/Parser.h>
 #include <Poco/LineEndingConverter.h>
 #include <Poco/Net/HTTPClientSession.h>
 #include <Poco/Net/HTTPRequest.h>
@@ -31,6 +29,7 @@
 #include <Poco/URI.h>
 
 #include <Log.hpp>
+#include <JsonUtil.hpp>
 #include <Util.hpp>
 #include <Protocol.hpp>
 #include "COOLWSD.hpp"

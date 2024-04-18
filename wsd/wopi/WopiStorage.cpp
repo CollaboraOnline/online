@@ -29,8 +29,6 @@
 #include <common/TraceEvent.hpp>
 
 #include <Poco/Exception.h>
-#include <Poco/JSON/Object.h>
-#include <Poco/JSON/Parser.h>
 #include <Poco/Net/AcceptCertificateHandler.h>
 #include <Poco/Net/Context.h>
 #include <Poco/Net/DNS.h>

@@ -17,8 +17,6 @@
 #include <string>
 
 #include <Poco/Exception.h>
-#include <Poco/JSON/Object.h>
-#include <Poco/JSON/Parser.h>
 
 #if !MOBILEAPP
 

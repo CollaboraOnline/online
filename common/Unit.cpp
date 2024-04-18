@@ -19,8 +19,7 @@
 #include <sysexits.h>
 #include <thread>
 
-#include <Poco/JSON/Object.h>
-#include <Poco/JSON/Parser.h>
+#include "JsonUtil.hpp"
 #include <Poco/Util/LayeredConfiguration.h>
 #include <Poco/Util/Application.h>
 

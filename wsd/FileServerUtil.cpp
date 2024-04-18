@@ -14,7 +14,7 @@
 #include "FileServer.hpp"
 #include "StringVector.hpp"
 
-#include <Poco/JSON/Object.h>
+#include <JsonUtil.hpp>
 
 #include <cctype>
 

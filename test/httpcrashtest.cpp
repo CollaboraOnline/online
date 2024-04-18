@@ -19,8 +19,6 @@
 #include <cstring>
 
 #include <Poco/Dynamic/Var.h>
-#include <Poco/JSON/JSON.h>
-#include <Poco/JSON/Parser.h>
 #include <Poco/Net/AcceptCertificateHandler.h>
 #include <Poco/Net/HTTPResponse.h>
 #include <Poco/Net/InvalidCertificateHandler.h>
