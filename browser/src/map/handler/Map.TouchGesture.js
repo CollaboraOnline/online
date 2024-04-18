@@ -169,6 +169,9 @@ L.Map.TouchGesture = L.Handler.extend({
 			    latlng = this._map.layerPointToLatLng(layerPoint),
 			funcWizardRangeBounds = getFuncWizRangeBounds(this);
 
+			let twipsPoint = this._map._docLayer._latLngToTwips(latlng);
+			twipsPoint = new app.definitions.simplePoint(twipsPoint.x, twipsPoint.y);
+
 			if (this._map._docLayer._graphicMarker) {
 				this._marker = this._map._docLayer._graphicMarker.transform.getMarker(layerPoint);
 			}
@@ -180,9 +183,9 @@ L.Map.TouchGesture = L.Handler.extend({
 					this._state = L.Map.TouchGesture.TABLE;
 				else
 					this._state = L.Map.TouchGesture.GRAPHIC;
-			} else if (this._map._docLayer._cellCursor && this._map._docLayer._cellCursor.contains(latlng)) {
+			} else if (app.calc.cellCursorVisible && app.calc.cellCursorRectangle.containsPoint(twipsPoint.toArray())) {
 				this._state = L.Map.TouchGesture.CURSOR;
-			} else if (this._map._docLayer._cellCursor && funcWizardRangeBounds && funcWizardRangeBounds.contains(latlng)) {
+			} else if (app.calc.cellCursorVisible && funcWizardRangeBounds && funcWizardRangeBounds.contains(latlng)) {
 				this._state = L.Map.TouchGesture.CURSOR;
 			} else {
 				this._state = L.Map.TouchGesture.MAP;
@@ -220,6 +223,8 @@ L.Map.TouchGesture = L.Handler.extend({
 		    latlng = this._map.layerPointToLatLng(layerPoint),
 		    mousePos = this._map._docLayer._latLngToTwips(latlng);
 
+		let posInTwips = new app.definitions.simplePoint(mousePos.x, mousePos.y);
+
 		if (this._moving) {
 			return;
 		}
@@ -247,10 +252,9 @@ L.Map.TouchGesture = L.Handler.extend({
 		var waitForSelectionMsg = function () {
 			// check new selection if any
 			var graphicSelection = docLayer._graphicSelection;
-			var cellCursor = docLayer._cellCursor;
 			if (!docLayer._cursorAtMispelledWord
 				&& (!graphicSelection || !graphicSelection.contains(latlng))
-				&& (!cellCursor || !cellCursor.contains(latlng))) {
+				&& (!app.calc.cellCursorVisible || !app.calc.cellCursorRectangle.containsPoint(posInTwips.toArray()))) {
 				// try to select text
 				doubleClick();
 			}
@@ -270,9 +274,8 @@ L.Map.TouchGesture = L.Handler.extend({
 		// we simulate a double click for trying to select text and finally, in any case,
 		// we trigger the context menu by sending a right click
 		var graphicSelection = docLayer._graphicSelection;
-		var cellCursor = docLayer._cellCursor;
 		var bContainsSel = false;
-		if (cellCursor)
+		if (app.calc.cellCursorVisible)
 			bContainsSel = docLayer.containsSelection(latlng);
 		var textSelection;
 		if (docLayer._textSelectionStart && docLayer._textSelectionEnd)
@@ -280,7 +283,7 @@ L.Map.TouchGesture = L.Handler.extend({
 
 		if ((textSelection && textSelection.inBand(latlng))
 			|| (graphicSelection && graphicSelection.contains(latlng))
-			|| (cellCursor && cellCursor.contains(latlng)) || bContainsSel) {
+			|| (app.calc.cellCursorVisible && app.calc.cellCursorRectangle.containsPoint(posInTwips.toArray())) || bContainsSel) {
 			// long touched an already selected object
 			// send right click to trigger context menus
 			this._map._contextMenu._onMouseDown({originalEvent: e.srcEvent});
@@ -318,6 +321,8 @@ L.Map.TouchGesture = L.Handler.extend({
 		    layerPoint = this._map.containerPointToLayerPoint(containerPoint),
 		    latlng = this._map.layerPointToLatLng(layerPoint),
 		    mousePos = this._map._docLayer._latLngToTwips(latlng);
+
+		let posInTwips = new app.definitions.simplePoint(mousePos.x, mousePos.y);
 
 		// clicked a hyperlink popup - not really designed for this.
 		if (this._map.hyperlinkPopup && e.target) {
@@ -372,8 +377,7 @@ L.Map.TouchGesture = L.Handler.extend({
 				acceptInput = true; // Always show the keyboard in Writer on tap.
 			} else if (docLayer._docType === 'spreadsheet') {
 				// If the tap is in the current cell, start editing.
-				var cellCursor = docLayer._cellCursor;
-				acceptInput = (cellCursor && cellCursor.contains(latlng));
+				acceptInput = (app.calc.cellCursorVisible && app.calc.cellCursorRectangle.containsPoint(posInTwips.toArray()));
 				if (acceptInput) {
 					// Enter cell-edit mode on second tap of a selected cell.
 					if (this._map.isEditMode()) {
@@ -457,32 +461,32 @@ L.Map.TouchGesture = L.Handler.extend({
 		    latlng = this._map.layerPointToLatLng(layerPoint),
 		    mousePos = this._map._docLayer._latLngToTwips(latlng);
 
-		var originalCellCursor = this._map._docLayer._cellCursor;
-		var increaseRatio = 0.40;
-		var increasedCellCursor = null;
-		if (originalCellCursor) {
-			increasedCellCursor = originalCellCursor.padVertically(increaseRatio);
+		let posInTwips = new app.definitions.simplePoint(mousePos.x, mousePos.y);
+
+		let increaseRatio = 0.40;
+		let increasedCellCursor = null;
+		if (app.calc.cellCursorVisible) {
+			increasedCellCursor = app.calc.cellCursorRectangle.clone();
+			increasedCellCursor.y1 -= increasedCellCursor.height * increaseRatio;
+			increasedCellCursor.y2 += increasedCellCursor.height * increaseRatio;
 		}
 
-		if (increasedCellCursor && increasedCellCursor.contains(latlng)) {
-			if (!originalCellCursor.contains(latlng)) {
-				var lat = latlng.lat;
-				var lng = latlng.lng;
+		if (increasedCellCursor && increasedCellCursor.containsPoint(posInTwips.toArray())) {
+			if (!app.calc.cellCursorRectangle.containsPoint(posInTwips.toArray())) {
+				let y = posInTwips.y;
+				let x = posInTwips.x;
 
-				var sw = originalCellCursor._southWest,
-				ne = originalCellCursor._northEast;
-				var heightBuffer = Math.abs(sw.lat - ne.lat) * increaseRatio;
+				let heightBuffer = Math.abs(app.calc.cellCursorRectangle.pHeight) * increaseRatio;
 
-				if (lat < originalCellCursor.getSouthWest().lat) {
-					lat = lat + heightBuffer;
+				if (y < app.calc.cellCursorRectangle.y2) {
+					y = y + heightBuffer;
 				}
 
-				if (lat > originalCellCursor.getNorthEast().lat) {
-					lat = lat - heightBuffer;
+				if (y > app.calc.cellCursorRectangle.y1) {
+					y = y - heightBuffer;
 				}
 
-				latlng = new L.LatLng(lat, lng);
-				mousePos = this._map._docLayer._latLngToTwips(latlng);
+				mousePos = new L.Point(x, y);
 			}
 		}
 
