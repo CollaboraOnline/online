@@ -1185,7 +1185,38 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				],
 				'vertical': 'true'
 			},
-			{
+			(this._map['wopi'].EnableRemoteLinkPicker) ? {
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'insert-hyperlink-dialog',
+								'class': 'unoHyperlinkDialog',
+								'type': 'customtoolitem',
+								'text': _UNO('.uno:HyperlinkDialog'),
+								'command': 'hyperlinkdialog',
+								'accessibility': { focusBack: true, combination: 'IL', de: null }
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'insert-insert-remote-link',
+								'class': 'unoremotelink',
+								'type': 'customtoolitem',
+								'text': _('Smart Picker'),
+								'command': 'remotelink',
+								'accessibility': { focusBack: true, combination: 'RL', de: null }
+							}
+						]
+					}
+				],
+			'vertical': 'true'
+			} : {
 				'id': 'HyperlinkDialog',
 				'class': 'unoHyperlinkDialog',
 				'type': 'bigcustomtoolitem',
@@ -1193,14 +1224,13 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'command': 'hyperlinkdialog',
 				'accessibility': { focusBack: true, combination: 'IL', de: null }
 			},
-			(this._map['wopi'].EnableRemoteLinkPicker) ? {
-				'id': 'insert-insert-smart-picker',
-				'class': 'unoremotelink',
-				'type': 'bigcustomtoolitem',
-				'text': _('Smart Picker'),
-				'command': 'remotelink',
-				'accessibility': { focusBack: true, combination: 'RL', de: null }
-			} : {},
+			{
+				'id': 'insert-insert-annotation',
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:InsertAnnotation', 'text'),
+				'command': '.uno:InsertAnnotation',
+				'accessibility': { focusBack: false, combination: 'ZC', de: 'ZC' }
+			},
 			{
 				'type': 'container',
 				'children': [
@@ -1337,15 +1367,20 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'vertical': 'true'
 			},
 			{
-				'id': 'insert-header-and-footer',
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:HeaderAndFooter', 'presentation'),
-				'command': '.uno:HeaderAndFooter',
-				'accessibility': { focusBack: true, combination: 'HF', de: null }
-			},
-			{
 				'type': 'container',
 				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'insert-header-and-footer',
+								'type': 'toolitem',
+								'text': _UNO('.uno:HeaderAndFooter', 'presentation'),
+								'command': '.uno:HeaderAndFooter',
+								'accessibility': { focusBack: true, combination: 'HF', de: null }
+							}
+						]
+					},
 					{
 						'type': 'toolbox',
 						'children': [
@@ -1356,18 +1391,6 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 								'text': _UNO('.uno:CharmapControl'),
 								'command': 'charmapcontrol',
 								'accessibility': { focusBack: true, combination: 'IM', de: null }
-							}
-						]
-					},
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'id': 'insert-insert-annotation',
-								'type': 'toolitem',
-								'text': _UNO('.uno:InsertAnnotation', 'text'),
-								'command': '.uno:InsertAnnotation',
-								'accessibility': { focusBack: true, combination: 'L', de: null }
 							}
 						]
 					}
