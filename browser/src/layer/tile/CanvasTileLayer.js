@@ -3270,7 +3270,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._map.removeLayer(this._map._textInput._cursorHandler); // User selected a text, we remove the carret marker.
 			// Keep fetching the text selection during testing, for now: too many tests
 			// depend on this behavior currently.
-			if (navigator.clipboard.write && !(L.Browser.cypressTest && !this._map._clip._dummyClipboard.useAsyncWrite)) {
+			if (L.Browser.hasNavigatorClipboardWrite && !(L.Browser.cypressTest && !this._map._clip._dummyClipboard.useAsyncWrite)) {
 				this._map._clip.setTextSelectionType('text');
 			} else {
 				if (this._selectionContentRequest) {
