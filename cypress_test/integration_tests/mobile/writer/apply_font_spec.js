@@ -20,40 +20,52 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font changes.', funct
 	});
 
 	it('Apply font name.', function() {
+		helper.setDummyClipboardForCopy();
 		cy.cGet('#fontnamecombobox').click();
 		cy.cGet('#font').contains('.mobile-wizard.ui-combobox-text', 'Linux Libertine G').click();
 		writerHelper.selectAllTextOfDoc();
+		helper.copy();
 		cy.cGet('#copy-paste-container p font').should('have.attr', 'face', 'Linux Libertine G');
 	});
 
 	it('Apply font size.', function() {
+		helper.setDummyClipboardForCopy();
 		cy.cGet('#fontsizecombobox').click();
 		cy.cGet('#fontsizecombobox').contains('.mobile-wizard.ui-combobox-text', '36 pt').click();
 		writerHelper.selectAllTextOfDoc();
+		helper.copy();
 		cy.cGet('#copy-paste-container p font').should('have.attr', 'style', 'font-size: 36pt');
 	});
 
 	it('Apply bold font.', function() {
+		helper.setDummyClipboardForCopy();
 		cy.cGet('#Bold').click();
 		writerHelper.selectAllTextOfDoc();
+		helper.copy();
 		cy.cGet('#copy-paste-container p b').should('exist');
 	});
 
 	it('Apply italic font.', function() {
+		helper.setDummyClipboardForCopy();
 		cy.cGet('#Italic').click();
 		writerHelper.selectAllTextOfDoc();
+		helper.copy();
 		cy.cGet('#copy-paste-container p i').should('exist');
 	});
 
 	it('Apply underline.', function() {
+		helper.setDummyClipboardForCopy();
 		cy.cGet('#Underline').click();
 		writerHelper.selectAllTextOfDoc();
+		helper.copy();
 		cy.cGet('#copy-paste-container p u').should('exist');
 	});
 
 	it('Apply strikeout.', function() {
+		helper.setDummyClipboardForCopy();
 		cy.cGet('#Strikeout').click();
 		writerHelper.selectAllTextOfDoc();
+		helper.copy();
 		cy.cGet('#copy-paste-container p strike').should('exist');
 	});
 
@@ -64,41 +76,52 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font changes.', funct
 	});
 
 	it('Apply font color.', function() {
+		helper.setDummyClipboardForCopy();
 		cy.cGet('#Color').contains('.ui-header','Font Color').click();
 		cy.cGet('#Color [id$=-basic-color-5]').click();
 		writerHelper.selectAllTextOfDoc();
+		helper.copy();
 		cy.cGet('#copy-paste-container p font').should('have.attr', 'color', '#00ff00');
 	});
 
 	it('Apply automatic font color.', function() {
+		helper.setDummyClipboardForCopy();
 		cy.cGet('#Color').contains('.ui-header','Font Color').click();
 		cy.cGet('#Color [id$=-basic-color-2]').click();
 		mobileHelper.closeMobileWizard();
 		writerHelper.selectAllTextOfDoc();
+		helper.copy();
 		cy.cGet('#copy-paste-container p font').should('have.attr', 'color', '#ff0000');
 		mobileHelper.openMobileWizard();
 		cy.cGet('#Color').contains('.ui-header','Font Color').click();
 		cy.cGet('.colors-container-auto-color-row:visible').click();
 		writerHelper.selectAllTextOfDoc();
+		helper.copy();
 		cy.cGet('#copy-paste-container p font').should('have.attr', 'color', '#000000');
 	});
 
 	it('Apply highlight color.', function() {
+		helper.setDummyClipboardForCopy();
 		cy.cGet('#CharBackColor .ui-header').click();
 		cy.cGet('#CharBackColor [id$=-basic-color-2]').click();
 		writerHelper.selectAllTextOfDoc();
+		helper.copy();
 		cy.cGet('#copy-paste-container p font span').should('have.attr', 'style', 'background: #ff0000');
 	});
 
 	it('Apply superscript.', function() {
+		helper.setDummyClipboardForCopy();
 		cy.cGet('#SuperScript').click();
 		writerHelper.selectAllTextOfDoc();
+		helper.copy();
 		cy.cGet('#copy-paste-container p sup').should('exist');
 	});
 
 	it('Apply subscript.', function() {
+		helper.setDummyClipboardForCopy();
 		cy.cGet('#SubScript').click();
 		writerHelper.selectAllTextOfDoc();
+		helper.copy();
 		cy.cGet('#copy-paste-container p sub').should('exist');
 	});
 
