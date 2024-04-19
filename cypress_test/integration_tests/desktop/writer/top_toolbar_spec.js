@@ -227,6 +227,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		cy.cGet('#toolbar-up .w2ui-scroll-right').click();
 		cy.cGet('#toolbar-up .w2ui-scroll-right').click();
 		cy.cGet('#toolbar-up .w2ui-scroll-right').click();
+		cy.cGet('#toolbar-up .w2ui-scroll-right').click();
 		cy.cGet('#Home-container .unoInsertTable button').click();
 		cy.cGet('.inserttable-grid > .row > .col').eq(3).click();
 		helper.typeIntoDocument('{ctrl}a');
@@ -320,6 +321,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		cy.cGet('#copy-paste-container p i').should('exist');
 
 		//Undo
+		cy.cGet('#toolbar-up .w2ui-scroll-left').click();
 		cy.cGet('#Home-container .unoUndo').should('not.be.disabled').click();
 		helper.copy();
 		cy.wait(500); // wait for new clipboard
