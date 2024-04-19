@@ -1,4 +1,4 @@
-/* global cy describe it beforeEach require afterEach*/
+/* global cy describe it beforeEach require */
 
 var helper = require('../../common/helper');
 var repairHelper = require('../../common/repair_document_helper');
@@ -10,10 +10,6 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Editing Operations', funct
 	beforeEach(function() {
 		helper.beforeAll(testFileName, 'writer');
 		desktopHelper.switchUIToCompact();
-	});
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	function undo() {

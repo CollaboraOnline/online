@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach require afterEach expect*/
+/* global describe it cy beforeEach require expect*/
 
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
@@ -13,10 +13,6 @@ describe.skip(['tagmobile'], 'Calc focus tests', function() {
 
 		// Wait until the Formula-Bar is loaded.
 		cy.cGet('.inputbar_container', {timeout : 10000});
-	});
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	it('Basic document focus.', function() {

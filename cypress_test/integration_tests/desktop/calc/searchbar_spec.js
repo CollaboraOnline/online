@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach require afterEach*/
+/* global describe it cy beforeEach require*/
 
 var helper = require('../../common/helper');
 var searchHelper = require('../../common/search_helper');
@@ -9,10 +9,6 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Searching via search bar.'
 
 	beforeEach(function() {
 		testFileName = helper.beforeAll(origTestFileName, 'calc');
-	});
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	it('Search existing word.', function() {

@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach require afterEach expect*/
+/* global describe it cy beforeEach require expect*/
 
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
@@ -13,10 +13,6 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Chart tests.', function() {
 		mobileHelper.enableEditingMobile();
 		calcHelper.selectFirstColumn();
 		insertChart();
-	});
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	function insertChart() {

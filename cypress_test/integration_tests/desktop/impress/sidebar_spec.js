@@ -1,4 +1,4 @@
-/* global describe it cy require afterEach beforeEach */
+/* global describe it cy require beforeEach */
 
 var helper = require('../../common/helper');
 var impressHelper = require('../../common/impress_helper');
@@ -10,10 +10,6 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Sidebar Tests', function()
 	beforeEach(function() {
 		helper.beforeAll(testFileName, 'impress');
 		desktopHelper.switchUIToCompact();
-	});
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	it.skip('Switch to slide transition Deck', function() {

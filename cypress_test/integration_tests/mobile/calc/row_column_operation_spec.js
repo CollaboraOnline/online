@@ -1,4 +1,4 @@
-/* global describe it cy require afterEach beforeEach */
+/* global describe it cy require beforeEach */
 var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
 var mobileHelper = require('../../common/mobile_helper');
@@ -14,10 +14,6 @@ describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Row Column Operation',
 		calcHelper.assertSheetContents(['Hello','Hi','World','Bye']);
 
 		calcHelper.clickOnFirstCell(true,false);
-	});
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	function selectOption(submenu, option) {

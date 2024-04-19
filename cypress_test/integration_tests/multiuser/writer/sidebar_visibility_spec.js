@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach require afterEach */
+/* global describe it cy beforeEach require */
 
 var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
@@ -9,10 +9,6 @@ describe.skip(['tagmultiuser'], 'Sidebar visibility', function() {
 
 	beforeEach(function() {
 		testFileName = helper.beforeAll(origTestFileName, 'writer', undefined, true);
-	});
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	function testSidebarVisiblity(frameId1 ,frameId2) {

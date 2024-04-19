@@ -1,4 +1,4 @@
-/* global describe cy it expect beforeEach require afterEach */
+/* global describe cy it expect beforeEach require */
 
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
@@ -18,11 +18,6 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function()
 
 		mobileHelper.enableEditingMobile();
 	});
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
-	});
-
 
 	it('Delete Text', function() {
 		helper.setDummyClipboardForCopy();

@@ -1,4 +1,4 @@
-/* global describe  cy beforeEach it expect require afterEach  */
+/* global describe  cy beforeEach it expect require */
 
 var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
@@ -11,10 +11,6 @@ describe(['tagdesktop'], 'Table operations', function() {
 	beforeEach(function() {
 		testFileName = helper.beforeAll(origTestFileName, 'impress');
 		desktopHelper.selectZoomLevel('50');
-	});
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	function selectOptionNotebookbar(optionId) {

@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach require afterEach */
+/* global describe it cy beforeEach require */
 
 var helper = require('../../common/helper');
 var writerHelper = require('../../common/writer_helper');
@@ -11,10 +11,6 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'File Property Tests', func
 	beforeEach(function() {
 		testFileName = helper.beforeAll(origTestFileName, 'writer');
 		desktopHelper.switchUIToNotebookbar();
-	});
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	it('Add File Description.', function() {

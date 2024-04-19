@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach require afterEach Cypress */
+/* global describe it cy beforeEach require Cypress */
 
 var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
@@ -17,10 +17,6 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		}
 
 		writerHelper.selectAllTextOfDoc();
-	});
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	function refreshCopyPasteContainer() {

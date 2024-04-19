@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach require afterEach */
+/* global describe it cy beforeEach require */
 
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
@@ -13,11 +13,6 @@ describe(['tagmobile'], 'Annotation tests.', function() {
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
 	});
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
-	});
-
 
 	it('Saving comment.', { defaultCommandTimeout: 60000 }, function() {
 		cy.wait(1000);

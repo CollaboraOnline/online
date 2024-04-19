@@ -1,4 +1,4 @@
-/* global describe it cy require Cypress afterEach */
+/* global describe it cy require Cypress */
 var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
 const { insertImage } = require('../../common/desktop_helper');
@@ -23,10 +23,6 @@ describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Open different file t
 
 		cy.cGet('#PermissionMode').should('be.visible').should('have.text', ' Read-only ');
 	}
-
-	afterEach(function () {
-		helper.afterAll(testFileName, this.currentTest.state);
-	});
 
 	function assertData() {
 		var expectedData = [

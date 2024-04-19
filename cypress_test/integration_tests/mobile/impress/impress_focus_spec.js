@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach require afterEach expect */
+/* global describe it cy beforeEach require expect */
 
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
@@ -10,10 +10,6 @@ describe(['tagmobile', 'tagproxy'], 'Impress focus tests', function() {
 
 	beforeEach(function() {
 		testFileName = helper.beforeAll(origTestFileName, 'impress');
-	});
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	it('Select text box, no editing', function() {

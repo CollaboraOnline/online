@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach require afterEach expect */
+/* global describe it cy beforeEach require expect */
 
 var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
@@ -12,10 +12,6 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		testFileName = helper.beforeAll(origTestFileName, 'calc');
 		desktopHelper.switchUIToCompact();
 		calcHelper.clickOnFirstCell();
-	});
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	it('Save.', { defaultCommandTimeout: 60000 }, function() {

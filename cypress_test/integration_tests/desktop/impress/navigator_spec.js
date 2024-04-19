@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach require afterEach*/
+/* global describe it cy beforeEach require */
 
 var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
@@ -13,10 +13,6 @@ describe.skip(['tagdesktop'], 'Scroll through document, insert/delete items', fu
 		desktopHelper.selectZoomLevel('100');
 		cy.cGet('#menu-view').click();
 		cy.cGet('#menu-navigator').click();
-	});
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	function checkIfItemNotExist(itemName) {

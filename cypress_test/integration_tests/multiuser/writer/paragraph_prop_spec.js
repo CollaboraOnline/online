@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach require afterEach */
+/* global describe it cy beforeEach require */
 
 var helper = require('../../common/helper');
 
@@ -8,10 +8,6 @@ describe.skip(['tagmultiuser'], 'Change paragraph properties', function() {
 
 	beforeEach(function() {
 		testFileName = helper.beforeAll(origTestFileName, 'writer', undefined, true);
-	});
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	it('Change paragraph alignment.', function() {

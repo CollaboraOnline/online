@@ -1,4 +1,4 @@
-/* global describe it cy require afterEach beforeEach expect Cypress*/
+/* global describe it cy require beforeEach expect Cypress*/
 var helper = require('../../common/helper');
 const desktopHelper = require('../../common/desktop_helper');
 
@@ -9,10 +9,6 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function(
 	beforeEach(function() {
 		testFileName = helper.beforeAll(origTestFileName, 'calc');
 		desktopHelper.switchUIToCompact();
-	});
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	it('Delete Text', function() {

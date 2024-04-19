@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach Cypress require afterEach expect */
+/* global describe it cy beforeEach Cypress require expect */
 
 var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
@@ -12,10 +12,6 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Table operations', functio
 		testFileName = helper.beforeAll(origTestFileName, 'writer');
 		desktopHelper.switchUIToNotebookbar();
 		desktopHelper.selectZoomLevel('70');
-	});
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	function selectFullTable() {

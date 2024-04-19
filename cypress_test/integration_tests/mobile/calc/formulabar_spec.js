@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach require afterEach expect Cypress*/
+/* global describe it cy beforeEach require expect Cypress*/
 
 var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
@@ -12,10 +12,6 @@ describe(['tagmobile', 'tagnextcloud'], 'Formula bar tests.', function() {
 		testFileName = helper.beforeAll(origTestFileName, 'calc');
 
 		mobileHelper.enableEditingMobile();
-	});
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	it('Select a cell by address', function() {

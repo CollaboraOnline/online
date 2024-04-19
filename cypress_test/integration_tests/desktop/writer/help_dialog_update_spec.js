@@ -4,7 +4,7 @@
 // UPDATE_SCREENSHOT needs to be true otherwise cypress will not run the spec file and
 // update the screenshot
 
-/* global describe it cy require afterEach beforeEach Cypress*/
+/* global describe it cy require beforeEach Cypress*/
 
 const { hideSidebar } = require('../../common/desktop_helper');
 var helper = require('../../common/helper');
@@ -13,10 +13,6 @@ describe(['tagscreenshot'], 'Help dialog screenshot updation', function() {
 
 	beforeEach(function() {
 		helper.beforeAll(testFileName, 'writer');
-	});
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	function copyScreenshot(fileName) {

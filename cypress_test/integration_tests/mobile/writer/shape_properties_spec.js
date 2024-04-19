@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach require afterEach Cypress expect */
+/* global describe it cy beforeEach require Cypress expect */
 
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
@@ -73,10 +73,6 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change shape properties via
 		cy.cGet('.basicshapes_right-triangle').click();
 		// Check that the shape is there
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g svg g', { timeout: Cypress.config('defaultCommandTimeout') * 2.0 }).should('have.class', 'com.sun.star.drawing.CustomShape');
-	});
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	function triggerNewSVG() {

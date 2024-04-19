@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach expect require afterEach */
+/* global describe it cy beforeEach expect require */
 
 var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
@@ -12,10 +12,6 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 		desktopHelper.switchUIToCompact();
 		cy.cGet('#toolbar-up .ui-scroll-right').click();
 		cy.cGet('#sidebar').click({force: true});
-	});
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	it('No jump on long merged cell', function() {
@@ -34,10 +30,6 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 		desktopHelper.switchUIToCompact();
 		cy.cGet('#toolbar-up .ui-scroll-right').click();
 		cy.cGet('#sidebar').click({force: true});
-	});
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	it('No jump on long merged cell with split panes', function() {

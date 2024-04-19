@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach require afterEach */
+/* global describe it cy beforeEach require */
 
 var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
@@ -19,10 +19,6 @@ describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply number formattin
 		mobileHelper.openMobileWizard();
 		cy.cGet('#ScNumberFormatPropertyPanel').click();
 		cy.cGet('#numberformatcombobox > .ui-header').should('be.visible');
-	});
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	function selectFormatting(formattingString) {

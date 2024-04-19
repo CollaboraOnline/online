@@ -1,4 +1,4 @@
-/* global describe it cy require afterEach Cypress expect */
+/* global describe it cy require Cypress expect */
 
 var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
@@ -25,10 +25,6 @@ describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Fullscreen Presentati
 		cy.cGet('#menu-slide > a').click();
 		cy.cGet('#menu-fullscreen-presentation > a').click();
 	}
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
-	});
 
 	it('Text fields.', function() {
 		before('text_fields.odp');

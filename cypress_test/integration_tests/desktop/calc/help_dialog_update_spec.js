@@ -5,7 +5,7 @@
 // UPDATE_SCREENSHOT needs to be true otherwise cypress will not run the spec file and
 // update the screenshot
 
-/* global describe it cy require Cypress afterEach beforeEach */
+/* global describe it cy require Cypress beforeEach */
 var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
 
@@ -14,10 +14,6 @@ describe(['tagscreenshot'], 'Help dialog update', function() {
 
 	beforeEach(function() {
 		helper.beforeAll(testFileName, 'calc');
-	});
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	it('Chart selected sidebar open', function() {

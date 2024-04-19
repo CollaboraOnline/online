@@ -1,5 +1,5 @@
 /* -*- js-indent-level: 8 -*- */
-/* global describe it cy require expect afterEach beforeEach*/
+/* global describe it cy require expect beforeEach*/
 
 var helper = require('../../common/helper');
 var impressHelper = require('../../common/impress_helper');
@@ -12,10 +12,6 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Slide operations', functio
 	beforeEach(function() {
 		testFileName = helper.beforeAll(origTestFileName, 'impress');
 		desktopHelper.switchUIToNotebookbar();
-	});
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	it('Add slides', function() {

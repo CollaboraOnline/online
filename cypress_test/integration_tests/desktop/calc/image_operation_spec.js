@@ -1,4 +1,4 @@
-/* global describe it cy require afterEach beforeEach */
+/* global describe it cy require beforeEach */
 
 var helper = require('../../common/helper');
 var { insertImage, deleteImage, assertImageSize } = require('../../common/desktop_helper');
@@ -11,10 +11,6 @@ describe(['tagdesktop'], 'Image Operation Tests', function() {
 	beforeEach(function() {
 		testFileName = helper.beforeAll(origTestFileName, 'calc');
 		desktopHelper.switchUIToNotebookbar();
-	});
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	it('Insert/Delete Image',function() {

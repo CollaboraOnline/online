@@ -1,4 +1,4 @@
-/* global describe it cy require afterEach beforeEach Cypress */
+/* global describe it cy require beforeEach Cypress */
 
 var desktopHelper = require('../../common/desktop_helper');
 var helper = require('../../common/helper');
@@ -21,10 +21,6 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 
 		cy.cGet('#options-modify-page').click();
 		desktopHelper.selectZoomLevel('50');
-	});
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	it('Insert', function() {
@@ -80,10 +76,6 @@ describe(['tagdesktop'], 'Collapsed Annotation Tests', function() {
 
 		cy.cGet('#options-modify-page').click();
 		desktopHelper.selectZoomLevel('50');
-	});
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	it('Insert', function() {
@@ -165,10 +157,6 @@ describe(['tagdesktop'], 'Comment Scrolling',function() {
 		desktopHelper.selectZoomLevel('50');
 	});
 
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
-	});
-
 	it('no comment or one comment', function() {
 		cy.cGet('.leaflet-control-scroll-down').should('not.exist');
 		desktopHelper.insertComment();
@@ -225,10 +213,6 @@ describe(['tagdesktop'], 'Annotation Autosave Tests', function() {
 
 		cy.cGet('#options-modify-page').click();
 		desktopHelper.selectZoomLevel('50');
-	});
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	it('Insert autosave', function() {

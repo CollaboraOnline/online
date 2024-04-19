@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach require afterEach expect*/
+/* global describe it cy beforeEach require expect*/
 
 var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
@@ -17,10 +17,6 @@ describe(['tagmobile', 'tagnextcloud'], 'Calc insertion wizard.', function() {
 		calcHelper.clickOnFirstCell();
 
 		mobileHelper.openInsertionWizard();
-	});
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	it('Inset local image.', function() {

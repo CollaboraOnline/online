@@ -1,4 +1,4 @@
-/* global describe it cy require afterEach Cypress */
+/* global describe it cy require Cypress */
 
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
@@ -7,10 +7,6 @@ var nextcloudHelper = require('../../common/nextcloud_helper');
 describe(['tagnextcloud'], 'Nextcloud specific tests.', function() {
 	var origTestFileName = 'nextcloud.odp';
 	var testFileName;
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
-	});
 
 	it('Insert image from storage.', function() {
 		helper.upLoadFileToNextCloud('image_to_insert.png', 'impress');

@@ -1,4 +1,4 @@
-/* global describe it cy require afterEach */
+/* global describe it cy require */
 
 var helper = require('../../common/helper');
 var impressHelper = require('../../common/impress_helper');
@@ -14,10 +14,6 @@ describe.skip(['tagmobile'], 'Trigger hamburger menu options.', function() {
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
 	}
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
-	});
 
 	it('Save', { defaultCommandTimeout: 60000 }, function() {
 		before('hamburger_menu.odp');

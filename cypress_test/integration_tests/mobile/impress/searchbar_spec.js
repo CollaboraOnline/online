@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach require afterEach expect */
+/* global describe it cy beforeEach require expect */
 
 var helper = require('../../common/helper');
 var searchHelper = require('../../common/search_helper');
@@ -15,10 +15,6 @@ describe.skip('Searching via search bar.', function() {
 		mobileHelper.enableEditingMobile();
 
 		searchHelper.showSearchBar();
-	});
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	it('Search existing word.', function() {

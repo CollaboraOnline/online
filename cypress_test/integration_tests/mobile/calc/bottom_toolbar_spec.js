@@ -1,4 +1,4 @@
-/* global describe it cy Cypress require afterEach */
+/* global describe it cy Cypress require */
 
 var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
@@ -17,10 +17,6 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Interact with bottom toolba
 
 		calcHelper.clickOnFirstCell();
 	}
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
-	});
 
 	function getTextEndPosForFirstCell() {
 		calcHelper.dblClickOnFirstCell();

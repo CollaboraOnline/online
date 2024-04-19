@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach expect require afterEach */
+/* global describe it cy beforeEach expect require */
 
 var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
@@ -12,10 +12,6 @@ describe(['tagmultiuser'], 'Joining a document should not trigger an invalidatio
 	beforeEach(function() {
 		testFileName = helper.beforeAll(origTestFileName, 'writer', undefined, true);
 		desktopHelper.switchUIToNotebookbar();
-	});
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	it('Join document', function() {

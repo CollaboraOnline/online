@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach require afterEach */
+/* global describe it cy beforeEach require */
 
 var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
@@ -11,10 +11,6 @@ describe.skip(['tagdesktop'], 'Scroll through document, modify heading', functio
 
 		cy.cGet('#menu-view').click();
 		cy.cGet('#menu-navigator').click();
-	});
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	it('Jump to element. Navigator -> Document', function() {
