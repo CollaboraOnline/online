@@ -65,7 +65,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 	},
 
 	beforeAdd: function (map) {
-		map._isCursorVisible = false;
+		app.file.textCursor.visible = false;
 		map._addZoomLimit(this);
 		map.on('zoomend', this._onZoomRowColumns, this);
 		map.on('updateparts', this._onUpdateParts, this);
@@ -973,7 +973,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 	_onTextSelectionMsg: function (textMsg) {
 		L.CanvasTileLayer.prototype._onTextSelectionMsg.call(this, textMsg);
 		// If this is a cellSelection message, user shouldn't be editing a cell. Below check is for ensuring that.
-		if ((this.insertMode === false || this._map._isCursorVisible == false) && app.calc.cellCursorVisible) {
+		if ((this.insertMode === false || app.file.textCursor.visible === false) && app.calc.cellCursorVisible) {
 			// When insertMode is false, this is a cell selection message.
 			textMsg = textMsg.replace('textselection:', '');
 			if (textMsg.trim() !== 'EMPTY' && textMsg.trim() !== '') {

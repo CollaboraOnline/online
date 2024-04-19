@@ -2118,14 +2118,12 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	_onCursorVisibleMsg: function(textMsg) {
 		var command = textMsg.match('cursorvisible: true');
-		this._map._isCursorVisible = command ? true : false;
-		app.file.textCursor.visible = this._map.isCursorVisible;
+		app.file.textCursor.visible = command ? true : false;
 		this._removeSelection();
 		this._onUpdateCursor();
 	},
 
 	_setCursorVisible: function() {
-		this._map._isCursorVisible = true;
 		app.file.textCursor.visible = true;
 	},
 
@@ -2741,7 +2739,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._showURLPopUp(cursorPos, obj.hyperlink.link);
 		}
 
-		if (!this._map.editorHasFocus() && this._map._isCursorVisible && weAreModifier) {
+		if (!this._map.editorHasFocus() && app.file.textCursor.visible && weAreModifier) {
 			// Regain cursor if we had been out of focus and now have input.
 			// Unless the focus is in the Calc Formula-Bar, don't steal the focus.
 			if (!this._map.calcInputBarHasFocus())
@@ -3913,7 +3911,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		if (!zoom
 		&& scroll !== false
-		&& (this._map._isCursorVisible
+		&& (app.file.textCursor.visible
 		  || (this._graphicSelection && !this._isEmptyRectangle(this._graphicSelection)))
 		// Do not center view in Calc if no new cursor coordinates have arrived yet.
 		// ie, 'invalidatecursor' has not arrived after 'cursorvisible' yet.
@@ -3997,7 +3995,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	// enable or disable blinking cursor and  the cursor overlay depending on
 	// the state of the document (if the falgs are set)
 	_updateCursorAndOverlay: function (/*update*/) {
-		if (this._map._isCursorVisible   // only when LOK has told us it is ok
+		if (app.file.textCursor.visible   // only when LOK has told us it is ok
 		&& this._map.editorHasFocus()   // not when document is not focused
 		&& !this._map.isSearching()  	// not when searching within the doc
 		&& !this._isZooming             // not when zooming
@@ -4874,7 +4872,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_updateMarkers: function() {
-		if (!this._map._isCursorVisible)
+		if (!app.file.textCursor.visible)
 			return;
 		var startMarker = this._selectionHandles['start'];
 		var endMarker = this._selectionHandles['end'];
