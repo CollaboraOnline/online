@@ -1569,7 +1569,6 @@ private:
         const std::string& macroSecurityLevel = session->getMacroSecurityLevel();
         const bool accessibilityState = session->getAccessibilityState();
         const std::string& userTimezone = session->getTimezone();
-        const std::string& theme = session->getTheme();
 
 #if !MOBILEAPP
         consistencyCheckFileExists(uri);
@@ -1593,9 +1592,6 @@ private:
 
         if (!userTimezone.empty())
             options += ",Timezone=" + userTimezone;
-
-        if (!theme.empty())
-            options += ",Theme=" + theme;
 
         std::string spellOnline;
         if (!_loKitDocument)
