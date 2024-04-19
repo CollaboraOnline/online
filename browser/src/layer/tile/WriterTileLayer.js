@@ -16,7 +16,7 @@
 L.WriterTileLayer = L.CanvasTileLayer.extend({
 
 	newAnnotation: function (comment) {
-		if (this._map._isCursorVisible) {
+		if (app.file.textCursor.visible) {
 			var temp = this._latLngToTwips(this._visibleCursor.getNorthEast());
 			comment.anchorPos = [temp.x, temp.y];
 		} else if (this._graphicSelection && !this._isEmptyRectangle(this._graphicSelection)) {

@@ -117,7 +117,7 @@ L.Map = L.Evented.extend({
 		// Focusing:
 		//
 		// Cursor is visible or hidden (e.g. for graphic selection).
-		this._isCursorVisible = true;
+		app.file.textCursor.visible = true;
 		// The ID of the window with focus. 0 for the document.
 		this._winId = 0;
 		// The object of the dialog, if any (must have .focus callable).

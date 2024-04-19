@@ -1548,7 +1548,7 @@ app.definitions.Socket = L.Class.extend({
 				this._map._docLayer._onUpdateGraphicSelection();
 			}
 			if (this._map._docLayer._docType === 'presentation')
-				this._map._isCursorVisible = false;
+				app.file.textCursor.visible = false;
 
 			this._map._docLayer._resetCanonicalIdStatus();
 			this._map._docLayer._resetViewId();

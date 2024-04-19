@@ -517,7 +517,7 @@ L.Map.Keyboard = L.Handler.extend({
 
 		if (this.modifier) {
 			unoKeyCode |= this.modifier;
-			if (ev.type !== 'keyup' && (this.modifier !== shift || (keyCode === this.keyCodes.SPACE && !this._map._isCursorVisible))) {
+			if (ev.type !== 'keyup' && (this.modifier !== shift || (keyCode === this.keyCodes.SPACE && !app.file.textCursor.visible))) {
 				if (keyEventFn) {
 					keyEventFn('input', charCode, unoKeyCode);
 					ev.preventDefault();
