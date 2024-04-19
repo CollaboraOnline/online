@@ -101,6 +101,11 @@ window.app = {
 	    ie = 'ActiveXObject' in global,
 
 	    cypressTest = ua.indexOf('cypress') !== -1,
+	    // Firefox has undefined navigator.clipboard.read and navigator.clipboard.write,
+	    // unsecure contexts (such as http + non-localhost) has the entire navigator.clipboard
+	    // undefined.
+	    hasNavigatorClipboardRead = navigator.clipboard && navigator.clipboard.read,
+	    hasNavigatorClipboardWrite = navigator.clipboard && navigator.clipboard.write,
 	    webkit    = ua.indexOf('webkit') !== -1,
 	    phantomjs = ua.indexOf('phantom') !== -1,
 	    android23 = ua.search('android [23]') !== -1,
@@ -250,6 +255,14 @@ window.app = {
 		// @property cypressTest: Boolean
 		// `true` when the browser run by cypress
 		cypressTest: cypressTest,
+
+		// @property hasNavigatorClipboardRead: Boolean
+		// `true` when permission-based clipboard paste is available.
+		hasNavigatorClipboardRead: hasNavigatorClipboardRead,
+
+		// @property hasNavigatorClipboardWrite: Boolean
+		// `true` when permission-based clipboard copy is available.
+		hasNavigatorClipboardWrite: hasNavigatorClipboardWrite,
 
 		// @property msPointer: Boolean
 		// `true` for browsers implementing the Microsoft touch events model (notably IE10).
