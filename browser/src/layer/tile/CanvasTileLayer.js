@@ -2119,14 +2119,14 @@ L.CanvasTileLayer = L.Layer.extend({
 	_onCursorVisibleMsg: function(textMsg) {
 		var command = textMsg.match('cursorvisible: true');
 		this._map._isCursorVisible = command ? true : false;
-		app.file.cursor.visible = this._map.isCursorVisible;
+		app.file.textCursor.visible = this._map.isCursorVisible;
 		this._removeSelection();
 		this._onUpdateCursor();
 	},
 
 	_setCursorVisible: function() {
 		this._map._isCursorVisible = true;
-		app.file.cursor.visible = true;
+		app.file.textCursor.visible = true;
 	},
 
 	_onDownloadAsMsg: function (textMsg) {
@@ -2722,7 +2722,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._twipsToLatLng(recCursor.getBottomRight(), this._map.getZoom()));
 
 		this._cursorCorePixels = this._twipsToCorePixelsBounds(recCursor);
-		app.file.cursor.rectangle = new app.definitions.simpleRectangle(recCursor.getTopLeft().x, recCursor.getTopLeft().y, recCursor.getSize().x, recCursor.getSize().y);
+		app.file.textCursor.rectangle = new app.definitions.simpleRectangle(recCursor.getTopLeft().x, recCursor.getTopLeft().y, recCursor.getSize().x, recCursor.getSize().y);
 
 		if (this._docType === 'text') {
 			app.sectionContainer.onCursorPositionChanged();
