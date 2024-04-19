@@ -958,7 +958,7 @@ if test "$enable_hardening_flags" = no -o "$host_os" = "emscripten" -o "x$with_s
     save_CFLAGS=$CFLAGS
     CFLAGS="$CFLAGS -Werror -Wp,-U_FORTIFY_SOURCE,-D_FORTIFY_SOURCE=2"
     AC_LINK_IFELSE(
-        [AC_LANG_PROGRAM(, [[return 0;]])],
+        [AC_LANG_PROGRAM(, [[#include <string.h> return 0;]])],
         [AC_MSG_RESULT([yes]); HARDENING_CFLAGS="$HARDENING_CFLAGS -Wp,-U_FORTIFY_SOURCE,-D_FORTIFY_SOURCE=2"],
         [AC_MSG_RESULT([no])])
     CFLAGS=$save_CFLAGS
