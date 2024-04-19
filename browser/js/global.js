@@ -280,9 +280,6 @@ window.app = {
 					if (docTheme) {
 						themes.push(global.L.Browser.docs[theme] + ':' +
 							    (docTheme === 'true' ? 'Dark' : 'Light'));
-					} else if (window.uiDefaults) {
-						themes.push(global.L.Browser.docs[theme] + ':' +
-							    (window.uiDefaults.darkTheme ? 'Dark' : 'Light'));
 					}
 				}
 			}
