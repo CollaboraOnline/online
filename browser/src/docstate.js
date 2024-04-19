@@ -44,7 +44,7 @@ window.app = {
 		readOnly: true,
 		permission: 'readonly',
 		disableSidebar: false,
-		cursor: {
+		textCursor: {
 			visible: false,
 
 			/*
@@ -53,7 +53,7 @@ window.app = {
 				One should consider this as a document object coordinate as in CanvasSectionContainer.
 				This gives the coordinate relative to the document, not relative to the UI.
 			*/
-			rectangle: null
+			rectangle: null // SimpleRectangle.
 		},
 		size: {
 			pixels: [0, 0], // This can change according to the zoom level and document's size.
