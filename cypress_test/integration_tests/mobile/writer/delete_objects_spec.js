@@ -56,6 +56,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function()
 	});
 
 	it('Delete Table', function() {
+		helper.setDummyClipboardForCopy();
 		mobileHelper.openInsertionWizard();
 		// Open Table submenu
 		cy.cGet('body').contains('.ui-header.level-0.mobile-wizard.ui-widget', 'Table').click();
@@ -65,6 +66,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function()
 		// Table is inserted with the markers shown
 		cy.cGet('.leaflet-marker-icon.table-column-resize-marker').should('exist');
 		helper.typeIntoDocument('{ctrl}a');
+		helper.copy();
 		// Two rows
 		cy.cGet('#copy-paste-container tr').should('have.length', 2);
 		// Four cells
