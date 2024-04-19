@@ -1313,7 +1313,7 @@ L.Control.Menubar = L.Control.extend({
 		commandStates: {},
 
 		// Only these menu options will be visible in readonly mode
-		allowedReadonlyMenus: ['file', 'downloadas', 'view', 'insert', 'help'],
+		allowedReadonlyMenus: ['file', 'downloadas', 'view', 'insert', 'slide', 'help'],
 
 		allowedViewModeActions: [
 			'savecomments', 'shareas', 'print', // file menu
@@ -1322,6 +1322,7 @@ L.Control.Menubar = L.Control.extend({
 			!window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-pdf', !window.ThisIsAMobileApp ? 'exportepub' : 'downloadas-epub', // file menu
 			'downloadas-ods', 'downloadas-xls', 'downloadas-xlsx', 'downloadas-csv', 'closedocument', // file menu
 			'fullscreen', 'zoomin', 'zoomout', 'zoomreset', 'showstatusbar', 'togglemenubar', 'showresolved', 'toggledarktheme', // view menu
+			'fullscreen-presentation', 'presentation-currentslide', 'present-in-window', // slide menu
 			'about', 'keyboard-shortcuts', 'latestupdates', 'feedback', 'online-help', 'report-an-issue', // help menu
 			'insertcomment'
 		]
