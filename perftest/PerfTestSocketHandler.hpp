@@ -91,15 +91,19 @@ public:
     void startMeasurement() override
     {
         //system("callgrind_control --instr=on");
-        //sendMessage("PERFTEST start");
+        sendMessage("PERFTEST start");
     }
 
     void stopMeasurement() override
     {
+        //std::cout << "s" << std::endl;
+        //system("callgrind_control -s");
+        //std::cout << "be" << std::endl;
+        //system("callgrind_control -b -e");
         //system("callgrind_control --dump");
         //system("callgrind_control --kill");
         //system("callgrind_control --instr=off");
-        //sendMessage("PERFTEST stop " + _trace);
+        sendMessage("PERFTEST stop " + _trace);
     }
 
     void printResults()
