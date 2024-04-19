@@ -545,12 +545,6 @@ function beforeAll(fileName, subFolder, noFileCopy, isMultiUser, subsequentLoad,
 	return loadTestDoc(fileName, subFolder, noFileCopy, isMultiUser, subsequentLoad, hasInteractionBeforeLoad, noRename);
 }
 
-// testState no longer used, but not removed from all calls to afterAll yet
-// eslint-disable-next-line no-unused-vars
-function afterAll(fileName, testState) {
-	closeDocument(fileName);
-}
-
 // This method is intended to call after each test case.
 // We use this method to close the document, before step
 // on to the next test case.
@@ -1197,7 +1191,6 @@ module.exports.matchClipboardText = matchClipboardText;
 module.exports.clipboardTextShouldBeDifferentThan = clipboardTextShouldBeDifferentThan;
 module.exports.closeDocument = closeDocument;
 module.exports.reload = reload;
-module.exports.afterAll = afterAll;
 module.exports.initAliasToNegative = initAliasToNegative;
 module.exports.doIfInCalc = doIfInCalc;
 module.exports.doIfInImpress = doIfInImpress;

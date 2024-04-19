@@ -1,4 +1,4 @@
-/* global describe it cy require afterEach expect Cypress */
+/* global describe it cy require expect Cypress */
 
 var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
@@ -19,10 +19,6 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Form field button tests.',
 		cy.cGet('.blinking-cursor')
 			.should('be.visible');
 	}
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
-	});
-
 	function buttonShouldNotExist() {
 		cy.cGet('.form-field-frame').should('not.exist');
 		cy.cGet('.form-field-button').should('not.exist');

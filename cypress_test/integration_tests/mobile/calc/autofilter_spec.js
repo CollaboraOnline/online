@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach require afterEach */
+/* global describe it cy beforeEach require */
 
 var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
@@ -14,10 +14,6 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'AutoFilter', function() {
 		mobileHelper.enableEditingMobile();
 		helper.setDummyClipboardForCopy();
 		calcHelper.assertSheetContents(['Cypress Test', 'Status', 'Test 1', 'Pass', 'Test 2', 'Fail', 'Test 3', 'Pass', 'Test 4', '', 'Test 5', 'Fail'], true);
-	});
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	it('Sort by ascending/descending', function() {

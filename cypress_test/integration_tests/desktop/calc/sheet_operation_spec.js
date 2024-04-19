@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach require afterEach */
+/* global describe it cy beforeEach require */
 
 var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
@@ -9,10 +9,6 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Sheet Operations.', functi
 
 	beforeEach(function () {
 		testFileName = helper.beforeAll(origTestFileName, 'calc');
-	});
-
-	afterEach(function () {
-		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	it('Insert sheet', function () {

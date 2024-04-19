@@ -1,4 +1,4 @@
-/* global describe it cy require expect afterEach */
+/* global describe it cy require expect */
 
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
@@ -13,10 +13,6 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change table properties / l
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
 	}
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
-	});
 
 	function openTablePanel() {
 		mobileHelper.openMobileWizard();

@@ -1,4 +1,4 @@
-/* global describe it cy require afterEach beforeEach Cypress */
+/* global describe it cy require beforeEach Cypress */
 
 var desktopHelper = require('../../common/desktop_helper');
 var helper = require('../../common/helper');
@@ -26,10 +26,6 @@ describe(['tagmultiuser'], 'Multiuser Annotation Tests', function() {
 		}
 		cy.cGet('#options-modify-page').click();
 		desktopHelper.selectZoomLevel('50');
-	});
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	it('Insert', function() {
@@ -111,10 +107,6 @@ describe(['tagmultiuser'], 'Multiuser Collapsed Annotation Tests', function() {
 		}
 		cy.cGet('#options-modify-page').click();
 		desktopHelper.selectZoomLevel('50');
-	});
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	it('Insert', function() {
@@ -200,10 +192,6 @@ describe(['tagmultiuser'], 'Multiuser Annotation Autosave Tests', function() {
 		}
 		cy.cGet('#options-modify-page').click();
 		desktopHelper.selectZoomLevel('50');
-	});
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	it('Insert autosave', function() {

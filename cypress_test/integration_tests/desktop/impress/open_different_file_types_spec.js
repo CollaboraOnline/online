@@ -1,4 +1,4 @@
-/* global describe it cy require expect afterEach */
+/* global describe it cy require expect */
 var helper = require('../../common/helper');
 const { selectZoomLevel, openReadOnlyFile } = require('../../common/desktop_helper');
 // const { selectTextShapeInTheCenter } = require('../../common/impress_helper');
@@ -18,10 +18,6 @@ describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Open different file t
 
 		cy.cGet('#modifypage').click();
 	}
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
-	});
 
 	function assertData() {
 		//select all the content of doc

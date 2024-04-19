@@ -1,4 +1,4 @@
-/* global describe it cy require afterEach beforeEach*/
+/* global describe it cy require beforeEach*/
 
 var helper = require('../../common/helper');
 var impressHelper = require('../../common/impress_helper');
@@ -12,10 +12,6 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Slide operations', function
 		testFileName = helper.beforeAll(origTestFileName, 'impress');
 
 		mobileHelper.enableEditingMobile();
-	});
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	it('Add slides', function() {

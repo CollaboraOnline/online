@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach require afterEach Cypress expect */
+/* global describe it cy beforeEach require Cypress expect */
 
 var helper = require('../../common/helper');
 const desktopHelper = require('../../common/desktop_helper');
@@ -13,10 +13,6 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 		desktopHelper.switchUIToCompact();
 		cy.cGet('#sidebar').click({force: true}); // Hide sidebar.
 		desktopHelper.selectZoomLevel('50');
-	});
-
-	afterEach(function () {
-		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	function confirmChange(action) {

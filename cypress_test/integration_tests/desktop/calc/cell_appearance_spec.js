@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach require afterEach expect Cypress */
+/* global describe it cy beforeEach require expect Cypress */
 
 var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
@@ -10,10 +10,6 @@ describe(['tagdesktop'], 'Change cell appearance.', function() {
 
 	beforeEach(function() {
 		testFileName = helper.beforeAll(origTestFileName, 'calc');
-	});
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	it('Apply background color', function() {

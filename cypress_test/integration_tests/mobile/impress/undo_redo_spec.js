@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach require afterEach */
+/* global describe it cy beforeEach require */
 
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
@@ -22,11 +22,6 @@ describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Editing Operations', f
 
 		helper.typeIntoDocument('Hello World');
 	});
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
-	});
-
 
 	function undo() {
 		cy.cGet('path.leaflet-interactive').dblclick();

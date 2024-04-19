@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach require afterEach*/
+/* global describe it cy beforeEach require */
 
 var helper = require('../../common/helper');
 var impressHelper = require('../../common/impress_helper');
@@ -14,10 +14,6 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties
 		cy.cGet('#toolbar-up > .w2ui-scroll-right').click();
 		cy.cGet('#modifypage').click({force: true});
 		impressHelper.selectTextShapeInTheCenter();
-	});
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	it('Apply left/right alignment on selected text.', function() {

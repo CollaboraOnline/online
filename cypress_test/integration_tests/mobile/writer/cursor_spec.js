@@ -1,4 +1,4 @@
-/* global describe it require afterEach cy */
+/* global describe it require cy */
 
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
@@ -12,10 +12,6 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Text cursor tests.', functi
 
 		mobileHelper.enableEditingMobile();
 	}
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
-	});
 
 	it('Extensive cursor movements.', function() {
 		before('cursor.odt');

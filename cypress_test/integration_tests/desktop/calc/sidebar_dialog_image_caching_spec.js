@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach require afterEach */
+/* global describe it cy beforeEach require */
 
 var helper = require('../../common/helper');
 
@@ -8,10 +8,6 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc sidebar dialog image 
 
 	beforeEach(function() {
 		testFileName = helper.beforeAll(origTestFileName, 'calc');
-	});
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	it('Sidebar image caching', function() {

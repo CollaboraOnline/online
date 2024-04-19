@@ -1,4 +1,4 @@
-/* global describe cy it beforeEach require afterEach */
+/* global describe cy it beforeEach require */
 
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
@@ -13,11 +13,6 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Image Operation Tests', fun
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
 	});
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
-	});
-
 
 	it('Insert Image', function() {
 		mobileHelper.insertImage();

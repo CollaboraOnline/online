@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach require afterEach*/
+/* global describe it cy beforeEach require */
 
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
@@ -16,10 +16,6 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Insert formatting mark via 
 		// Open formatting marks
 		cy.cGet('body').contains('.menu-entry-with-icon.flex-fullwidth', 'Formatting Mark').click();
 		cy.cGet('.ui-content.level-0.mobile-wizard').should('be.visible');
-	});
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	it('Insert non-breaking space.', function() {

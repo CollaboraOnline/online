@@ -1,4 +1,4 @@
-/* global describe it cy require afterEach beforeEach */
+/* global describe it cy require beforeEach */
 var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
 var desktopHelper = require('../../common/desktop_helper');
@@ -13,10 +13,6 @@ describe(['tagdesktop'], 'Row Column Operation', function() {
 		calcHelper.assertSheetContents(['Hello','Hi','World','Bye'], true);
 		calcHelper.clickOnFirstCell(true,false);
 		cy.cGet('#toolbar-up .w2ui-scroll-right').click();
-	});
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	it('Insert/Delete row' , function() {

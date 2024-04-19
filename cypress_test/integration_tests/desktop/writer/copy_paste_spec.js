@@ -1,4 +1,4 @@
-/* global describe it cy require expect afterEach*/
+/* global describe it cy require expect */
 
 var helper = require('../../common/helper');
 
@@ -8,10 +8,6 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Clipboard operations.', fu
 	function before(filename) {
 		testFileName = helper.beforeAll(filename, 'writer');
 	}
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
-	});
 
 	it('Copy and Paste text.', function() {
 		before('copy_paste.odt');

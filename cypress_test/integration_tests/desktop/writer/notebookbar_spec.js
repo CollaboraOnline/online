@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach require afterEach Cypress */
+/* global describe it cy beforeEach require Cypress */
 
 var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
@@ -17,10 +17,6 @@ describe(['tagdesktop'], 'Notebookbar tests.', function() {
 		}
 
 		writerHelper.selectAllTextOfDoc();
-	});
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	it('Apply bold font from dropdown in Format tab', function() {

@@ -1,4 +1,4 @@
-/* global describe it beforeEach require afterEach*/
+/* global describe it beforeEach require */
 
 var helper = require('../../common/helper');
 var impressHelper = require('../../common/impress_helper');
@@ -14,10 +14,6 @@ describe(['tagdesktop'], 'Editing Operations', function() {
 		desktopHelper.selectZoomLevel('30');
 		impressHelper.selectTextShapeInTheCenter();
 		impressHelper.selectTextOfShape(false);
-	});
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	function undo() {

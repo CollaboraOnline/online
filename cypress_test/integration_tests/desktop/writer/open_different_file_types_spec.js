@@ -1,4 +1,4 @@
-/* global describe it cy require afterEach */
+/* global describe it cy require */
 const { assertImageSize, openReadOnlyFile } = require('../../common/desktop_helper');
 var helper = require('../../common/helper');
 
@@ -11,10 +11,6 @@ describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Open different file t
 
 		testFileName = helper.beforeAll(origTestFileName, 'writer');
 	}
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
-	});
 
 	function assertData() {
 		//select all the content of doc

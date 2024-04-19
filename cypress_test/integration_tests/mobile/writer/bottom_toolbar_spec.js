@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach require afterEach*/
+/* global describe it cy beforeEach require */
 
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
@@ -14,10 +14,6 @@ describe.skip('Pushing bottom toolbar items.', function() {
 		mobileHelper.enableEditingMobile();
 
 		writerHelper.selectAllTextOfDoc();
-	});
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	it('Apply bold.', function() {

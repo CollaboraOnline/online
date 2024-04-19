@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach require expect afterEach */
+/* global describe it cy beforeEach require expect */
 
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
@@ -12,10 +12,6 @@ describe(['tagmobile', 'tagnextcloud'], 'Insert objects via insertion wizard.', 
 		testFileName = helper.beforeAll(origTestFileName, 'writer');
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
-	});
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	it('Insert local image.', function() {

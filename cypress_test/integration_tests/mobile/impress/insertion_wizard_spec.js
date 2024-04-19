@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach require expect afterEach Cypress*/
+/* global describe it cy beforeEach require expect Cypress*/
 
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
@@ -12,10 +12,6 @@ describe(['tagmobile', 'tagnextcloud'], 'Impress insertion wizard.', function() 
 		testFileName = helper.beforeAll(origTestFileName, 'impress');
 
 		mobileHelper.enableEditingMobile();
-	});
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	function selectionShouldBeTextShape(checkShape) {

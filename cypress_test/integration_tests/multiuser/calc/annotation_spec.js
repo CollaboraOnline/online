@@ -1,4 +1,4 @@
-/* global describe it require cy afterEach beforeEach */
+/* global describe it require cy beforeEach */
 
 var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
@@ -10,10 +10,6 @@ describe(['tagmultiuser'], 'Multiuser Annotation Tests', function() {
 	beforeEach(function() {
 		testFileName = helper.beforeAll(origTestFileName, 'calc', undefined, true);
 		desktopHelper.switchUIToNotebookbar();
-	});
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	it('Insert',function() {
@@ -100,10 +96,6 @@ describe(['tagmultiuser'], 'Multiuser Annotation Autosave Tests', function() {
 	beforeEach(function() {
 		testFileName = helper.beforeAll(origTestFileName, 'calc', undefined, true);
 		desktopHelper.switchUIToNotebookbar();
-	});
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	it('Insert autosave',function() {

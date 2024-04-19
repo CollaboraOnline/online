@@ -1,4 +1,4 @@
-/* global describe it cy require afterEach expect beforeEach */
+/* global describe it cy require expect beforeEach */
 
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
@@ -12,10 +12,6 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Changing slide properties.'
 		mobileHelper.enableEditingMobile();
 		previewShouldBeFullWhite();
 		mobileHelper.openMobileWizard();
-	});
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	function previewShouldBeFullWhite(fullWhite = true, slideNumber = 1) {

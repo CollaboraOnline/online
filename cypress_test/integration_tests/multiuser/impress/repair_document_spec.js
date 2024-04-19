@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach require afterEach */
+/* global describe it cy beforeEach require */
 
 var helper = require('../../common/helper');
 describe.skip('Repair Document', function() {
@@ -7,10 +7,6 @@ describe.skip('Repair Document', function() {
 
 	beforeEach(function() {
 		testFileName = helper.beforeAll(origTestFileName, 'impress', undefined, true);
-	});
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	function repairDoc(frameId1, frameId2) {

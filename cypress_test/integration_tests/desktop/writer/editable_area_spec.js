@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach require afterEach */
+/* global describe it cy beforeEach require */
 
 var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
@@ -11,10 +11,6 @@ describe(['taga11ydisabled'], 'Editable area [a11y disabled] - Empty paragraph',
 	beforeEach(function () {
 		helper.beforeAll(testFileName, 'writer');
 		cy.cGet('div.clipboard').as('clipboard');
-	});
-
-	afterEach(function () {
-		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	it('Typing in an empty paragraph', function () {
@@ -53,10 +49,6 @@ describe(['taga11ydisabled'], 'Editable area [a11y disabled] - Basic typing', fu
 	beforeEach(function () {
 		helper.beforeAll(testFileName, 'writer');
 		cy.cGet('div.clipboard').as('clipboard');
-	});
-
-	afterEach(function () {
-		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	it('Typing at paragraph beginning', function () {
@@ -135,10 +127,6 @@ describe(['taga11yenabled'], 'Editable area - Empty paragraph', function() {
 		cy.cGet('div.clipboard').as('clipboard');
 	});
 
-	afterEach(function () {
-		helper.afterAll(testFileName, this.currentTest.state);
-	});
-
 	it('Typing in an empty paragraph', function () {
 		// initial position
 		ceHelper.checkHTMLContent('');
@@ -180,10 +168,6 @@ describe(['taga11yenabled'], 'Editable area - Basic typing and caret moving', fu
 	beforeEach(function () {
 		helper.beforeAll(testFileName, 'writer');
 		cy.cGet('div.clipboard').as('clipboard');
-	});
-
-	afterEach(function () {
-		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	it('Moving inside paragraph', function () {
@@ -498,10 +482,6 @@ describe(['taga11yenabled'], 'Editable area - Inner selection', function() {
 		cy.cGet('div.clipboard').as('clipboard');
 	});
 
-	afterEach(function () {
-		helper.afterAll(testFileName, this.currentTest.state);
-	});
-
 	it('Selecting inside paragraph', function () {
 		ceHelper.type('Hello World');
 		ceHelper.checkPlainContent('Hello World');
@@ -657,10 +637,6 @@ describe(['taga11yenabled'], 'Editable area - Multi-paragraph selection', functi
 		cy.cGet('div.clipboard').as('clipboard');
 	});
 
-	afterEach(function () {
-		helper.afterAll(testFileName, this.currentTest.state);
-	});
-
 	it('Selection starts in previous paragraph', function () {
 		ceHelper.type('Hello World');
 		ceHelper.type('{enter}');
@@ -812,10 +788,6 @@ describe(['taga11yenabled'], 'Editable area - Empty selection', function() {
 		cy.cGet('div.clipboard').as('clipboard');
 	});
 
-	afterEach(function () {
-		helper.afterAll(testFileName, this.currentTest.state);
-	});
-
 	it('Typing <backspace> with empty selection', function () {
 		ceHelper.type('Green red');
 		ceHelper.checkPlainContent('Green red');
@@ -898,10 +870,6 @@ describe(['taga11yenabled'], 'Editable area - Undo/Redo', function() {
 		cy.cGet('div.clipboard').as('clipboard');
 	});
 
-	afterEach(function () {
-		helper.afterAll(testFileName, this.currentTest.state);
-	});
-
 	it('Undo/Redo after typing', function () {
 		ceHelper.type('Hello World');
 		ceHelper.checkPlainContent('Hello World');
@@ -976,10 +944,6 @@ describe(['taga11yenabled'], 'Editable area - More typing', function() {
 	beforeEach(function() {
 		helper.beforeAll(testFileName, 'writer');
 		cy.cGet('div.clipboard').as('clipboard');
-	});
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	it('Typing after undo command', function() {
@@ -1068,10 +1032,6 @@ describe(['taga11yenabled'], 'Editable area - Unordered lists', function() {
 	beforeEach(function () {
 		helper.beforeAll(testFileName, 'writer');
 		cy.cGet('div.clipboard').as('clipboard');
-	});
-
-	afterEach(function () {
-		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	it('Check content', function () {
@@ -1256,10 +1216,6 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Editing - Basic typing', f
 	beforeEach(function () {
 		helper.beforeAll(testFileName, 'writer');
 		cy.cGet('div.clipboard').as('clipboard');
-	});
-
-	afterEach(function () {
-		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	function selectAndCheckText(upTo, expectedText) {

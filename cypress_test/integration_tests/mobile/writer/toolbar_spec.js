@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach require afterEach*/
+/* global describe it cy beforeEach require */
 
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
@@ -9,10 +9,6 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Toolbar tests', function() 
 
 	beforeEach(function() {
 		testFileName = helper.beforeAll(origTestFileName, 'writer');
-	});
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	it('State of mobile wizard toolbar item.', function() {

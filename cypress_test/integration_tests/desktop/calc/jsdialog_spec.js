@@ -1,6 +1,6 @@
 /* -*- js-indent-level: 8 -*- */
 
-/* global describe it cy require expect afterEach beforeEach */
+/* global describe it cy require expect beforeEach */
 var helper = require('../../common/helper');
 
 describe(['tagdesktop'], 'JSDialog unit test', function() {
@@ -8,10 +8,6 @@ describe(['tagdesktop'], 'JSDialog unit test', function() {
 
 	beforeEach(function() {
 		helper.beforeAll(testFileName, 'calc');
-	});
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	it('JSDialog popup dialog', function() {

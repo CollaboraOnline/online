@@ -1,4 +1,4 @@
-/* global describe expect it cy beforeEach require afterEach Cypress */
+/* global describe expect it cy beforeEach require Cypress */
 
 var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
@@ -37,10 +37,6 @@ describe(['taga11yenabled'], 'Editable area - Basic typing and caret moving', fu
         cy.cGet('#toolbar-up > .w2ui-scroll-right').click();
         cy.cGet('#modifypage').click({force: true});
         cy.cGet('div.clipboard').as('clipboard');
-    });
-
-    afterEach(function () {
-        helper.afterAll(testFileName, this.currentTest.state);
     });
 
     it.skip('Editing top text shape', function () {

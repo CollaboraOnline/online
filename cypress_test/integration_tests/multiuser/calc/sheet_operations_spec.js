@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach require afterEach expect */
+/* global describe it cy beforeEach require expect */
 
 var helper = require('../../common/helper');
 
@@ -8,10 +8,6 @@ describe.skip(['tagmultiuser'], 'Multiuser sheet operations', function() {
 
 	beforeEach(function() {
 		testFileName = helper.beforeAll(origTestFileName, 'calc', undefined, true);
-	});
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	function testInsertDelete(frameId1, frameId2) {
@@ -70,10 +66,6 @@ describe(['tagmultiuser'], 'Check overlays after tab switching/operations', func
 
 	beforeEach(function() {
 		testFileName = helper.beforeAll(origTestFileName, 'calc', undefined, true);
-	});
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	it('Check cell cursor overlay bounds after switching tab', function () {

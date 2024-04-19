@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach require afterEach*/
+/* global describe it cy beforeEach require */
 
 var helper = require('../../common/helper');
 var { selectZoomLevel } = require('../../common/desktop_helper');
@@ -20,10 +20,6 @@ describe(['tagmultiuser'], 'Multiuser Annotation Tests', function () {
 		cy.cGet('#sidebar-dock-wrapper').should('be.visible');
 		cy.cGet('#optionscontainer div[id$="SidebarDeck.PropertyDeck"] button').click(); // Hide sidebar.
 		selectZoomLevel('50');
-	});
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	describe(['tagmultiuser'], 'Annotation Tests', function () {

@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach require afterEach */
+/* global describe it cy beforeEach require */
 
 var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
@@ -17,10 +17,6 @@ describe(['tagdesktop', 'tagproxy'], 'macro dialog tests', function() {
 		helper.beforeAll(testFileName, 'calc', undefined, undefined, undefined, true);
 		acceptMacroExecution();
 		helper.checkIfDocIsLoaded();
-	});
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	function expandEntryInTreeView(entryText) {

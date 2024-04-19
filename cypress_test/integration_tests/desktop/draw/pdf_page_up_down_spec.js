@@ -1,4 +1,4 @@
-/* global describe it cy require afterEach beforeEach */
+/* global describe it cy require beforeEach */
 
 var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
@@ -9,10 +9,6 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'PDF View Tests', function(
 
 	beforeEach(function() {
 		testFileName = helper.beforeAll(origTestFileName, 'draw');
-	});
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	it('PDF page down', { env: { 'pdf-view': true } }, function() {

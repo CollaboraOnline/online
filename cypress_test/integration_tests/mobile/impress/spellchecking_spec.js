@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach require afterEach expect*/
+/* global describe it cy beforeEach require expect*/
 
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
@@ -13,10 +13,6 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Spell checking menu.', func
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
-	});
-
-	afterEach(function() {
-		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	function openContextMenu() {
