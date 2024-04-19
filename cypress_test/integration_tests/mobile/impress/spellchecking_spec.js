@@ -47,11 +47,13 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Spell checking menu.', func
 	}
 
 	it('Apply suggestion.', function() {
+		helper.setDummyClipboardForCopy();
 		openContextMenu();
 
 		cy.cGet('body').contains('.context-menu-link', 'hello').click();
 
 		impressHelper.selectTextOfShape();
+		helper.copy();
 
 		helper.expectTextForClipboard('hello');
 	});
