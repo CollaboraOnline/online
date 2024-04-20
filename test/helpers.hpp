@@ -160,6 +160,7 @@ inline std::string getTempFileCopyPath(const std::string& srcDir, const std::str
 
     static FileDeleter fileDeleter;
     fileDeleter.registerForDeletion(dstPath);
+
     return dstPath;
 }
 
@@ -177,8 +178,6 @@ inline void getDocumentPathAndURL(const std::string& docFilename, std::string& d
 {
     const std::string testname = prefix;
 
-    static std::mutex lock;
-    std::unique_lock<std::mutex> guard(lock);
 
     std::replace(prefix.begin(), prefix.end(), ' ', '_');
     documentPath = getTempFileCopyPath(TDOC, docFilename, prefix);
