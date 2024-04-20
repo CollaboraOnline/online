@@ -13,7 +13,9 @@
 
 #include <Unit.hpp>
 #include <Util.hpp>
+#include <JsonUtil.hpp>
 #include <helpers.hpp>
+#include <StringVector.hpp>
 #include <WebSocketSession.hpp>
 #include <test/lokassert.hpp>
 #include <Poco/Util/LayeredConfiguration.h>
@@ -24,23 +26,27 @@
 /// Save torture testcase.
 class UnitSaveTorture : public UnitWSD
 {
-    void saveTortureOne(const std::string& name, const std::string& docName,
-                        const size_t thread_count);
+    bool forceAutosave;
+
+    void saveTortureOne(const std::string& name, const std::string& docName);
+
     TestResult testSaveTorture();
 
     void configure(Poco::Util::LayeredConfiguration& config) override
     {
         UnitWSD::configure(config);
 
+#if 0
         // Force much faster auto-saving
         config.setInt("per_document.idlesave_duration_secs", 1);
         config.setInt("per_document.autosave_duration_secs", 2);
+#endif
     }
 
     // Force background autosave when saving the modified document
     bool isAutosave() override
     {
-        return true;
+        return forceAutosave;
     }
 
 public:
@@ -48,117 +54,97 @@ public:
     void invokeWSDTest() override;
 };
 
+namespace {
+    void modifyDocument(const std::shared_ptr<http::WebSocketSession> &wsSession)
+    {
+        wsSession->sendMessage(std::string("key type=input char=97 key=0"));
+        wsSession->sendMessage(std::string("key type=up char=0 key=512"));
+    }
+
+    bool waitForModifiedStatus(const std::string& name, const std::shared_ptr<http::WebSocketSession> &wsSession)
+    {
+        const auto testname = __func__;
+
+        auto timeout = std::chrono::seconds(10);
+        std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
+        while (true)
+        {
+            if (std::chrono::steady_clock::now() - start > std::chrono::seconds(10))
+            {
+                LOK_ASSERT_FAIL("Timed out waiting for modified status change");
+                break;
+            }
+            std::vector<char> message
+                = wsSession->waitForMessage("statechanged:", timeout, name);
+            LOK_ASSERT(message.size() > 0);
+
+            auto tokens = StringVector::tokenize(message.data(), message.size());
+            if (tokens[1] == ".uno:ModifiedStatus=false")
+                return false;
+            else if (tokens[1] == ".uno:ModifiedStatus=true")
+                return true;
+        }
+    }
+}
+
 void UnitSaveTorture::saveTortureOne(
-    const std::string& name, const std::string& docName, const size_t thread_count)
+    const std::string& name, const std::string& docName)
 {
+    auto timeout = std::chrono::seconds(10);
+
     // Save same document from many threads together.
     std::string documentPath, documentURL;
     helpers::getDocumentPathAndURL(docName, documentPath, documentURL, name);
 
     TST_LOG("Starting test on " << documentURL << ' ' << documentPath);
 
-    std::vector<int> view_ids;
-
-    std::atomic<int> sum_view_ids;
-    sum_view_ids = 0;
-    std::atomic<int> num_of_views(0);
-    std::atomic<int> num_to_load(thread_count);
-
     std::shared_ptr<SocketPoll> poll = std::make_shared<SocketPoll>("WebSocketPoll");
     poll->startThread();
 
-    std::vector<std::thread> threads;
-    for (size_t i = 0; i < thread_count; ++i)
-    {
-        threads.emplace_back([&] {
-            std::ostringstream oss;
-            oss << std::hex << std::this_thread::get_id();
-            const std::string id = oss.str();
+    Poco::URI uri(helpers::getTestServerURI());
+    auto wsSession = helpers::loadDocAndGetSession(poll, docName, uri, testname);
 
-            TST_LOG(": #" << id << ", views: " << num_of_views << ", to load: " << num_to_load);
-            try
-            {
-                // Save a document and wait for the status.
-                auto wsSession = http::WebSocketSession::create(helpers::getTestServerURI());
-                http::Request req(documentURL);
-                wsSession->asyncRequest(req, poll);
+    std::vector<char> message
+        = wsSession->waitForMessage("status:", timeout, name);
+    const std::string status = COOLProtocol::getFirstLine(message);
 
-                wsSession->sendMessage("load url=" + documentURL);
+    modifyDocument(wsSession);
 
-                // 20s is double of the default.
-                std::vector<char> message
-                    = wsSession->waitForMessage("status:", std::chrono::seconds(20), name + id + ' ');
-                const std::string status = COOLProtocol::getFirstLine(message);
+    LOK_ASSERT_EQUAL(waitForModifiedStatus(name, wsSession), true);
 
-                ++num_of_views;
-                --num_to_load;
+    // Force a synchronous save-as-auto-save now
+    forceAutosave = true;
+    wsSession->sendMessage(std::string("save dontTerminateEdit=0 dontSaveIfUnmodified=0"));
 
-                // Get all the views loaded - lean on test timeout to interrupt.
-                while (num_to_load > 0)
-                    std::this_thread::sleep_for(std::chrono::milliseconds(20));
+    // Check the save succeeded
+    message = wsSession->waitForMessage("unocommandresult:", timeout, name);
+    LOK_ASSERT(message.size() > 0);
+    Poco::JSON::Object::Ptr object;
+    LOK_ASSERT(JsonUtil::parseJSON(std::string(message.data(), message.size()), object));
+    LOK_ASSERT_EQUAL(JsonUtil::getJSONValue<bool>(object, "success"), true);
 
-                // Modify to have something to save the modified phase.
-//                helpers::sendTextFrame(wsSession, "foo", getTestname());
-                wsSession->sendMessage(std::string("key type=input char=97 key=0"));
-                wsSession->sendMessage(std::string("key type=up char=0 key=512"));
+    // Autosaves and notifies us of clean modification state
+    LOK_ASSERT_EQUAL(waitForModifiedStatus(name, wsSession), false);
 
-                // Couple of saves:
-                if (num_of_views % 3)
-                    wsSession->sendMessage(std::string("save"));
-
-                // wait for autosave to kick in
-                std::this_thread::sleep_for(std::chrono::seconds(2 * 3));
-
-                --num_of_views;
-
-                TST_LOG(": #" << id << ", view: " << num_of_views << " unloading");
-            }
-            catch (const std::exception& exc)
-            {
-                TST_LOG(": #" << id << ", Exception: " << exc.what());
-                --num_to_load;
-            }
-        });
-    }
-
-    for (auto& thread : threads)
-    {
-        try
-        {
-            thread.join();
-        }
-        catch (const std::exception& exc)
-        {
-            TST_LOG(": Exception: " << exc.what());
-        }
-    }
+    // Next: Modify, force an autosave, and while saving, modify again ...
 }
 
 UnitBase::TestResult UnitSaveTorture::testSaveTorture()
 {
-    const int thread_count = 3;
-
-    std::vector<std::string> docNames = { "empty.ods", "empty.odt", "empty.odp", "empty.odg" };
-
-    std::vector<std::thread> threads;
-    threads.reserve(docNames.size());
+    std::vector<std::string> docNames = { "empty.ods", "empty.odt" };
+    //, "empty.odp", "empty.odg" }; - modify command needs twekaing ...
     for (const auto& docName : docNames)
     {
-        threads.emplace_back([&] {
-            const auto name = "saveTorture_" + docName + ' ';
-            saveTortureOne(name, docName, thread_count);
-        });
+        const auto name = "saveTorture_" + docName + ' ';
+        saveTortureOne(name, docName);
     }
 
-    for (auto& thread : threads)
-    {
-        thread.join();
-    }
     return TestResult::Ok;
 }
 
 UnitSaveTorture::UnitSaveTorture()
-    : UnitWSD("UnitSaveTorture")
+    : UnitWSD("UnitSaveTorture"),
+      forceAutosave(false)
 {
     // Double of the default.
     constexpr std::chrono::minutes timeout_minutes(1);
