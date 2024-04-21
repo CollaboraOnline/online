@@ -1031,8 +1031,9 @@ export class CommentSection extends CanvasSectionObject {
 		});
 	}
 
-	public onResize (): void {
-		this.checkCollapseState();
+	public onResize (verticalOnly: boolean = false): void {
+		if (!verticalOnly)
+			this.checkCollapseState();
 		this.update();
 		// When window is resized, it may mean that comment wizard is closed. So we hide the highlights.
 		this.removeHighlighters();
@@ -1725,7 +1726,7 @@ export class CommentSection extends CanvasSectionObject {
 		if (lastY > app.file.size.pixels[1]) {
 			if (app.view.size.pixels[1] !== lastY) {
 				app.view.size.pixels[1] = lastY;
-				this.onResize(); // Annotation goes beyond document and can't be scrolled further unless resized
+				this.onResize(true); // Annotation goes beyond document and can't be scrolled further unless resized
 				this.select(this.sectionProperties.selectedComment, true); // Reselecting will bring entire comment in view
 			  }
 		}
