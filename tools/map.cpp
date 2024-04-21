@@ -539,7 +539,7 @@ static void dump_unshared(unsigned proc_id, unsigned parent_id,
         if (lseek(fd, (p / 0x1000 * 8), SEEK_SET) < 0)
             error(EXIT_FAILURE, errno, "Failed to seek in pagemap");
         addr_t vaddrData;
-        if (read(fd, &vaddrData, 8) < 0)
+        if (read(fd, &vaddrData, sizeof(addr_t)) != sizeof(addr_t))
             error(EXIT_FAILURE, errno, "Failed to read vaddrdata");
         {
             // https://patchwork.kernel.org/patch/6787921/
