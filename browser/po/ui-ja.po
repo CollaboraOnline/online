@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-04-12 19:29+0200\n"
-"PO-Revision-Date: 2024-04-12 09:02+0000\n"
-"Last-Translator: Poe Mon <p.poemon.awitd@gmail.com>\n"
+"PO-Revision-Date: 2024-04-21 19:07+0000\n"
+"Last-Translator: Shavazo <pleasure.7010@gmail.com>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/"
 "collabora-online/ui/ja/>\n"
-"Language: \n"
+"Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -601,7 +601,7 @@ msgstr "正方形"
 
 #: src/control/Control.JSDialogBuilder.js:502
 msgid "Fixed size"
-msgstr ""
+msgstr "固定サイズ"
 
 #: src/control/Control.JSDialogBuilder.js:1504
 msgid "From"
@@ -609,7 +609,7 @@ msgstr "から"
 
 #: src/control/Control.JSDialogBuilder.js:1507
 msgid "To"
-msgstr ""
+msgstr "お問い合わせ"
 
 #: src/control/Control.JSDialogBuilder.js:1510
 msgid "Color"
@@ -639,7 +639,7 @@ msgstr "返信"
 
 #: src/control/Control.JSDialogBuilder.js:1953
 msgid "replies"
-msgstr ""
+msgstr "返信"
 
 #: src/control/Control.JSDialogBuilder.js:1964
 #: src/layer/tile/CanvasTileLayer.js:5202
@@ -1368,11 +1368,11 @@ msgstr "名前を変更"
 
 #: src/control/Control.NotebookbarCalc.js:593
 msgid "General"
-msgstr ""
+msgstr "一般"
 
 #: src/control/Control.NotebookbarCalc.js:594
 msgid "Number"
-msgstr ""
+msgstr "数"
 
 #: src/control/Control.NotebookbarCalc.js:595
 msgid "Percent"
@@ -1398,7 +1398,7 @@ msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:600
 msgid "Fraction"
-msgstr ""
+msgstr "小数部"
 
 #: src/control/Control.NotebookbarCalc.js:601
 msgid "Boolean Value"
@@ -1664,7 +1664,7 @@ msgstr "インサートモード:非アクティブ"
 
 #: src/control/Control.StatusBar.js:433
 msgid "Selection mode: inactive"
-msgstr ""
+msgstr "選択モード:非アクティブ"
 
 #: src/control/Control.StatusBar.js:491
 msgid "Set Language for All text"
@@ -1977,7 +1977,8 @@ msgstr "読み取り専用で開く"
 msgid ""
 "This document may contain formatting or content that cannot be saved in the "
 "current file format."
-msgstr ""
+msgstr "このドキュメントには、現在のファイル形式で保存できない形式やコンテンツが含ま"
+"れる場合があります."
 
 #: src/control/Ruler.js:368
 msgid "Left Margin"
@@ -1997,11 +1998,11 @@ msgstr "タブストップの削除"
 
 #: src/control/Signing.js:27
 msgid "This document is digitally signed and the signature is valid."
-msgstr ""
+msgstr "この文書はデジタル署名され、署名が有効です."
 
 #: src/control/Signing.js:31
 msgid "This document has an invalid signature."
-msgstr ""
+msgstr "このドキュメントには、署名が無効になっています."
 
 #: src/control/Signing.js:35
 msgid "The signature was valid, but the document has been modified."
