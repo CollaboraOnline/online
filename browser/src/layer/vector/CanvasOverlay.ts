@@ -491,6 +491,11 @@ class CanvasOverlay extends CanvasSectionObject {
 		const splitPos = this.tsManager.getSplitPos();
 		let selectionBackgroundGradient = null;
 
+		if (this.tsManager._inZoomAnim) {
+			splitPos.x *= this.tsManager._zoomFrameScale;
+			splitPos.y *= this.tsManager._zoomFrameScale;
+		}
+
 		// last row geometry data will be a good for setting deafult raw height
 		const spanlist = this.map._docLayer.sheetGeometry.getRowsGeometry()._visibleSizes._spanlist;
 		const rowData = spanlist[spanlist.length - 1];
