@@ -4310,6 +4310,10 @@ void DocumentBroker::dumpState(std::ostream& os)
     os << "\n  haveActivityAfterSaveRequest: " << haveActivityAfterSaveRequest();
     os << "\n  lastModifyActivityTime: " << Util::getTimeForLog(now, _lastModifyActivityTime);
     os << "\n  haveModifyActivityAfterSaveRequest: " << haveModifyActivityAfterSaveRequest();
+    os << "\n  loadDuration (ms): " << _loadDuration.count();
+    os << "\n  wopiDownloadDuration (ms): " << _wopiDownloadDuration.count();
+    os << "\n  alwaysSaveOnExit: " << (_alwaysSaveOnExit?"true":"false");
+    os << "\n  backgroundAutoSave: " << (_backgroundAutoSave?"true":"false");
     os << "\n  isViewFileExtension: " << _isViewFileExtension;
 #if !MOBILEAPP
     os << "\n  last quarantined version: "
