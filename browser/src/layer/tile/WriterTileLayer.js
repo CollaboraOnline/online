@@ -17,11 +17,10 @@ L.WriterTileLayer = L.CanvasTileLayer.extend({
 
 	newAnnotation: function (comment) {
 		if (app.file.textCursor.visible) {
-			var temp = this._latLngToTwips(this._visibleCursor.getNorthEast());
-			comment.anchorPos = [temp.x, temp.y];
+			comment.anchorPos = [app.file.textCursor.rectangle.x2, app.file.textCursor.rectangle.y1];
 		} else if (this._graphicSelection && !this._isEmptyRectangle(this._graphicSelection)) {
 			// An image is selected, then guess the anchor based on the graphic selection.
-			temp = this._latLngToTwips(this._graphicSelection.getSouthWest());
+			const temp = this._latLngToTwips(this._graphicSelection.getSouthWest());
 			comment.anchorPos = [temp.x, temp.y];
 		}
 
@@ -144,8 +143,8 @@ L.WriterTileLayer = L.CanvasTileLayer.extend({
 			// of the first paragraph of the document so we want to ignore that
 			// to eliminate document jumping while reconnecting
 			this.persistCursorPositionInWriter = true;
-			this._postMouseEvent('buttondown', this.lastCursorPos.x, this.lastCursorPos.y, 1, 1, 0);
-			this._postMouseEvent('buttonup', this.lastCursorPos.x, this.lastCursorPos.y, 1, 1, 0);
+			this._postMouseEvent('buttondown', this.lastCursorPos.center[0], this.lastCursorPos.center[1], 1, 1, 0);
+			this._postMouseEvent('buttonup', this.lastCursorPos.center[0], this.lastCursorPos.center[1], 1, 1, 0);
 		}
 		if (!command.width || !command.height || this._documentInfo === textMsg)
 			return;

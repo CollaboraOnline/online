@@ -490,8 +490,8 @@ L.TextInput = L.Layer.extend({
 		}
 
 		// Fetch top and bottom coords of caret
-		var top = this._map._docLayer._visibleCursor.getNorthWest();
-		var bottom = this._map._docLayer._visibleCursor.getSouthWest();
+		var top = this._map._docLayer._twipsToLatLng({ x: app.file.textCursor.rectangle.x1, y: app.file.textCursor.rectangle.y1 });
+		var bottom = this._map._docLayer._twipsToLatLng({ x: app.file.textCursor.rectangle.x1, y: app.file.textCursor.rectangle.y2 });
 
 		if (!this._map._docLayer._cursorMarker.isDomAttached()) {
 			// Display caret
@@ -1290,14 +1290,13 @@ L.TextInput = L.Layer.extend({
 				// We need to make the paragraph at the cursor position focused in core
 				// so its content is sent to the editable area.
 				this._justSwitchedToEditMode = false;
-				if (this._map._docLayer && this._map._docLayer._visibleCursor) {
+				if (this._map._docLayer && app.file.textCursor.visible) {
 					window.app.console.log('A11yTextInput._setAcceptInput: going to emit a synthetic click after switching to edit mode.');
-					var top = this._map._docLayer._visibleCursor.getNorthWest();
-					var bottom = this._map._docLayer._visibleCursor.getSouthWest();
-					var center = L.latLng((top.lat + bottom.lat) / 2, top.lng);
-					var cursorPos = this._map._docLayer._latLngToTwips(center);
-					this._map._docLayer._postMouseEvent('buttondown', cursorPos.x, cursorPos.y, 1, 1, 0);
-					this._map._docLayer._postMouseEvent('buttonup', cursorPos.x, cursorPos.y, 1, 1, 0);
+					let center = app.file.textCursor.rectangle.center;
+					center[0] = Math.round(center[0]);
+					center[1] = Math.round(center[1]);
+					this._map._docLayer._postMouseEvent('buttondown', center[0], center[1], 1, 1, 0);
+					this._map._docLayer._postMouseEvent('buttonup', center[0], center[1], 1, 1, 0);
 				}
 			}
 		}

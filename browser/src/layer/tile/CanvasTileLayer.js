@@ -899,8 +899,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		// text, presentation, spreadsheet, etc
 		this._docType = options.docType;
 		this._documentInfo = '';
-		// Position and size of the visible cursor.
-		this._visibleCursor = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(0, 0));
+		app.file.textCursor.visible = false;
 		// Last cursor position for invalidation
 		this.lastCursorPos = null;
 		// Are we zooming currently ? - if so, no cursor.
@@ -2019,7 +2018,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_onCalcFunctionUsageMsg: function (textMsg) {
-		var pos = this._lastVisibleCursorRef._northEast;
+		var pos = this._map._docLayer._twipsToLatLng({ x: this._lastVisibleCursorRef.x2, y: this._lastVisibleCursorRef.y1 });
 		this._map.uiManager.showFormulaTooltip(textMsg, pos);
 	},
 
@@ -2052,7 +2051,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				this._openMobileWizard(data);
 			}
 			else {
-				var pos = this._lastVisibleCursorRef._northEast;
+				var pos = this._map._docLayer._twipsToLatLng({ x: this._lastVisibleCursorRef.x2, y: this._lastVisibleCursorRef.y1 });
 				var tooltipinfo = this._getFunctionList(textMsg);
 				this._map.uiManager.showFormulaTooltip(tooltipinfo, pos);
 			}
@@ -2704,6 +2703,8 @@ L.CanvasTileLayer = L.Layer.extend({
 			return;
 		}
 
+		app.file.textCursor.visible = true;
+
 		// tells who trigerred cursor invalidation, but recCursors is stil "our"
 		var modifierViewId = parseInt(obj.viewId);
 		var weAreModifier = (modifierViewId === this._viewId);
@@ -2711,22 +2712,14 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._cursorAtMispelledWord = obj.mispelledWord ? Boolean(parseInt(obj.mispelledWord)).valueOf() : false;
 
 		// Remember the last position of the caret (in core pixels).
-		if (this._cursorCorePixels) {
-			this._cursorPreviousPositionCorePixels = this._cursorCorePixels.clone();
-		}
+		this._cursorPreviousPositionCorePixels = app.file.textCursor.rectangle.clone();
 
-		this._visibleCursor = new L.LatLngBounds(
-			this._twipsToLatLng(recCursor.getTopLeft(), this._map.getZoom()),
-			this._twipsToLatLng(recCursor.getBottomRight(), this._map.getZoom()));
-
-		this._cursorCorePixels = this._twipsToCorePixelsBounds(recCursor);
 		app.file.textCursor.rectangle = new app.definitions.simpleRectangle(recCursor.getTopLeft().x, recCursor.getTopLeft().y, recCursor.getSize().x, recCursor.getSize().y);
 
 		if (this._docType === 'text') {
 			app.sectionContainer.onCursorPositionChanged();
 		}
 
-		var cursorPos = this._visibleCursor.getNorthWest();
 		var docLayer = this._map._docLayer;
 		if ((docLayer._followEditor || docLayer._followUser) && this._map.lastActionByUser) {
 			this._map._setFollowing(false, null);
@@ -2736,7 +2729,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._map.hyperlinkUnderCursor = obj.hyperlink;
 		this._closeURLPopUp();
 		if (obj.hyperlink && obj.hyperlink.link) {
-			this._showURLPopUp(cursorPos, obj.hyperlink.link);
+			this._showURLPopUp(this._map._docLayer._twipsToLatLng({ x: app.file.textCursor.rectangle.x1, y: app.file.textCursor.rectangle.y1 }), obj.hyperlink.link);
 		}
 
 		if (!this._map.editorHasFocus() && app.file.textCursor.visible && weAreModifier) {
@@ -2748,12 +2741,12 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		//first time document open, set last cursor position
 		if (!this.lastCursorPos)
-			this.lastCursorPos = recCursor.getTopLeft();
+			this.lastCursorPos = app.file.textCursor.rectangle.clone();
 
 		var updateCursor = false;
-		if (!this.lastCursorPos.equals(recCursor.getTopLeft())) {
+		if (!this.lastCursorPos.equals(app.file.textCursor.rectangle.toArray())) {
 			updateCursor = true;
-			this.lastCursorPos = recCursor.getTopLeft();
+			this.lastCursorPos = app.file.textCursor.rectangle.clone();
 		}
 
 		// If modifier view is different than the current view
@@ -2764,7 +2757,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			/* keepCaretPositionRelativeToScreen */ !weAreModifier);
 
 		// Only for reference equality comparison.
-		this._lastVisibleCursorRef = this._visibleCursor;
+		this._lastVisibleCursorRef = app.file.textCursor.rectangle.clone();
 	},
 
 	_updateEditor: function(textMsg) {
@@ -3854,8 +3847,8 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_updateCursorPos: function () {
-		var cursorPos = this._cursorCorePixels.getTopLeft();
-		var cursorSize = this._cursorCorePixels.getSize();
+		var cursorPos = new L.Point(app.file.textCursor.rectangle.pX1, app.file.textCursor.rectangle.pY1);
+		var cursorSize = new L.Point(app.file.textCursor.rectangle.pWidth, app.file.textCursor.rectangle.pHeight);
 
 		if (!this._cursorMarker) {
 			this._cursorMarker = new Cursor(cursorPos, cursorSize, this._map, { blink: true });
@@ -3899,8 +3892,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	// Update cursor layer (blinking cursor).
 	_onUpdateCursor: function (scroll, zoom, keepCaretPositionRelativeToScreen) {
 
-		if (!this._visibleCursor ||
-			this._isEmptyRectangle(this._visibleCursor) ||
+		if (!app.file.textCursor.visible ||
 			this._referenceMarkerStart.isDragged ||
 			this._referenceMarkerEnd.isDragged ||
 			this._map.ignoreCursorUpdate()) {
@@ -3915,34 +3907,28 @@ L.CanvasTileLayer = L.Layer.extend({
 		  || (this._graphicSelection && !this._isEmptyRectangle(this._graphicSelection)))
 		// Do not center view in Calc if no new cursor coordinates have arrived yet.
 		// ie, 'invalidatecursor' has not arrived after 'cursorvisible' yet.
-		&& (!this.isCalc() || this._lastVisibleCursorRef !== this._visibleCursor)
+		&& (!this.isCalc() || !this._lastVisibleCursorRef.equals(app.file.textCursor.rectangle.toArray()))
 		&& this._allowViewJump()) {
 
 			// Cursor invalidation should take most precedence among all the scrolling to follow the cursor
 			// so here we disregard all the pending scrolling
 			this._map._docLayer._painter._sectionContainer.getSectionWithName(L.CSections.Scroll.name).pendingScrollEvent = null;
-			var correctedCursor = this._visibleCursor;
+			var correctedCursor = app.file.textCursor.rectangle.clone();
 
 			if (this._docType === 'text') {
 				// For Writer documents, disallow scrolling to cursor outside of the page (horizontally)
 				// Use document dimensions to approximate page width
-				var documentLatLngBounds = new L.LatLngBounds(
-					this._twipsToLatLng(new L.Point(0, 0), this._map.getZoom()),
-					this._twipsToLatLng(new L.Point(this._docWidthTwips - 1, 0), this._map.getZoom()));
-				var correctedWest = clamp(correctedCursor.getWest(), documentLatLngBounds.getWest(), documentLatLngBounds.getEast());
-				var correctedEast = clamp(correctedCursor.getEast(), documentLatLngBounds.getWest(), documentLatLngBounds.getEast());
-				correctedCursor = new L.LatLngBounds(
-					new L.LatLng(correctedCursor.getSouth(), correctedWest),
-					new L.LatLng(correctedCursor.getNorth(), correctedEast));
+				correctedCursor.x1 = clamp(correctedCursor.x1, 0, app.file.size.twips[0]);
+				correctedCursor.x2 = clamp(correctedCursor.x2, 0, app.file.size.twips[0]);
 			}
 
-			var paneRectsInLatLng = this.getPaneLatLngRectangles();
-			if (!correctedCursor.isInAny(paneRectsInLatLng)) {
+			if (!app.isPointVisibleInTheDisplayedArea(new app.definitions.simplePoint(correctedCursor.x1, correctedCursor.y1).toArray()) ||
+				!app.isPointVisibleInTheDisplayedArea(new app.definitions.simplePoint(correctedCursor.x2, correctedCursor.y2).toArray())) {
 				if (!(this._selectionHandles.start && this._selectionHandles.start.isDragged) &&
 				    !(this._selectionHandles.end && this._selectionHandles.end.isDragged) &&
 				    !(docLayer._followEditor || docLayer._followUser) &&
 				    !this._map.calcInputBarHasFocus()) {
-					this.scrollToPos(correctedCursor.getNorthWest());
+					this.scrollToPos(new app.definitions.simplePoint(correctedCursor.x1, correctedCursor.y1));
 				}
 			}
 		}
@@ -3955,11 +3941,12 @@ L.CanvasTileLayer = L.Layer.extend({
 			Do that only when we are reaching the end of screen so we don't flicker.
 			*/
 			var that = this;
-			var paneRectsInLatLng = this.getPaneLatLngRectangles();
-			var isCursorVisible = this._visibleCursor.isInAny(paneRectsInLatLng);
+
+			var isCursorVisible = app.isPointVisibleInTheDisplayedArea(app.file.textCursor.rectangle.toArray());
+
 			if (!isCursorVisible) {
 				setTimeout(function () {
-					var y = that._cursorCorePixels.min.y - that._cursorPreviousPositionCorePixels.min.y;
+					var y = app.file.textCursor.rectangle.pY1 - that._cursorPreviousPositionCorePixels.pY1;
 					if (y) {
 						that._painter._sectionContainer.getSectionWithName(L.CSections.Scroll.name).scrollVerticalWithOffset(y);
 					}
@@ -3996,10 +3983,10 @@ L.CanvasTileLayer = L.Layer.extend({
 	// the state of the document (if the falgs are set)
 	_updateCursorAndOverlay: function (/*update*/) {
 		if (app.file.textCursor.visible   // only when LOK has told us it is ok
-		&& this._map.editorHasFocus()   // not when document is not focused
-		&& !this._map.isSearching()  	// not when searching within the doc
-		&& !this._isZooming             // not when zooming
-		&& !this._isEmptyRectangle(this._visibleCursor)) {
+			&& this._map.editorHasFocus()   // not when document is not focused
+			&& !this._map.isSearching()  	// not when searching within the doc
+			&& !this._isZooming             // not when zooming
+		) {
 			if (this._innerTextRectMarker)
 				this._map.addLayer(this._innerTextRectMarker);
 			this._updateCursorPos();
@@ -5475,10 +5462,10 @@ L.CanvasTileLayer = L.Layer.extend({
 
 			// We want to keep cursor visible when we show the keyboard on mobile device or tablet
 			var isTabletOrMobile = window.mode.isMobile() || window.mode.isTablet();
-			var hasVisibleCursor = this._map._docLayer._visibleCursor
+			var hasVisibleCursor = app.file.textCursor.visible
 				&& this._map._docLayer._cursorMarker && this._map._docLayer._cursorMarker.isDomAttached();
 			if (!heightIncreased && isTabletOrMobile && this._map._docLoaded && hasVisibleCursor) {
-				var cursorPos = this._map._docLayer._visibleCursor.getSouthWest();
+				var cursorPos = this._map._docLayer._twipsToLatLng({ x: app.file.textCursor.rectangle.x1, y: app.file.textCursor.rectangle.y2 });
 				var centerOffset = this._map._getCenterOffset(cursorPos);
 				var viewHalf = this._map.getSize()._divideBy(2);
 				var cursorPositionInView =

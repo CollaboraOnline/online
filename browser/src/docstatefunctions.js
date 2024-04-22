@@ -26,8 +26,26 @@ window.addEventListener('load', function () {
 	app.calc.splitCoordinate = new app.definitions.simplePoint(0, 0);
 	app.canvasSize = new app.definitions.simplePoint(0, 0);
 	app.file.viewedRectangle = new app.definitions.simpleRectangle(0, 0, 0, 0);
-	app.file.textCursor.rectangle = new app.definitions.simpleRectangle(0, 0, 0, 0);
+	app.file.textCursor.rectangle = new app.definitions.simpleRectangle(
+		0,
+		0,
+		0,
+		0,
+	);
 });
+
+// ToDo: _splitPanesContext should be an app variable.
+app.isPointVisibleInTheDisplayedArea = function (twipsArray) {
+	if (app.map._splitPanesContext) {
+		let rectangles = app.map._splitPanesContext.getViewRectangles();
+		for (let i = 0; i < rectangles.length; i++) {
+			if (rectangles[i].containsPoint(twipsArray)) return true;
+		}
+		return false;
+	} else {
+		return app.file.viewedRectangle.containsPoint(twipsArray);
+	}
+};
 
 app.isReadOnly = function () {
 	return app.file.readOnly;
