@@ -948,7 +948,7 @@ function onCommandResult(e) {
 	} else if (commandName === '.uno:OpenHyperlink') {
 		// allow to process other incoming messages first
 		setTimeout(function () {
-			map._docLayer.scrollToPos(map._docLayer._visibleCursor.getNorthWest());
+			map._docLayer.scrollToPos(new app.definitions.simplePoint(app.file.textCursor.rectangle.x1, app.file.textCursor.rectangle.y1));
 		}, 0);
 	}
 }

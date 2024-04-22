@@ -514,14 +514,12 @@ L.Map = L.Evented.extend({
 		var newTopLeftPx = sheetGeom.getCellRect(topLeftCell.x, topLeftCell.y, zoomScaleAbs)
 			.getTopLeft().divideBy(app.dpiScale);
 
-		var cursorInBounds = calcLayer._cursorCorePixels ?
-			cssBounds.contains(
-				L.point(calcLayer._cursorCorePixels.getTopLeft().divideBy(app.dpiScale))) : false;
+		var cursorInBounds = app.file.textCursor.visible ?
+			cssBounds.contains({ x: app.file.textCursor.rectangle.cX1, y: app.file.textCursor.rectangle.cY1 }) : false;
 
 		var cursorActive = calcLayer.isCursorVisible();
 		if (cursorActive && cursorInBounds) {
-			var cursorBounds = calcLayer._cursorCorePixels;
-			var cursorCenter = calcLayer._corePixelsToTwips(cursorBounds.getCenter());
+			var cursorCenter = new L.Point(app.file.textCursor.rectangle.center[0], app.file.textCursor.rectangle.center[1]);
 			var newCursorCenter = sheetGeom.getTileTwipsAtZoom(cursorCenter, zoomScaleAbs);
 			// convert to css pixels at zoomScale.
 			newCursorCenter._multiplyBy(zoomScaleAbs / 15 / app.dpiScale)._round();
@@ -640,11 +638,11 @@ L.Map = L.Evented.extend({
 		var cssBounds = this.getPixelBounds();
 		var mapUpdater;
 		var runAtFinish;
-		if (this._docLayer && this._docLayer._visibleCursor && this.getBounds().contains(this._docLayer._visibleCursor.getCenter())) {
+		if (this._docLayer && app.file.textCursor.visible && app.file.viewedRectangle.containsPoint(app.file.textCursor.rectangle.center)) {
 			// Calculate new center after zoom. The intent is that the caret
 			// position stays the same.
 			var zoomScale = 1.0 / this.getZoomScale(zoom, this._zoom);
-			var caretPos = this._docLayer._visibleCursor.getCenter();
+			var caretPos = this._docLayer._twipsToLatLng({ x: app.file.textCursor.rectangle.center[0], y: app.file.textCursor.rectangle.center[1] });
 			var newCenter = new L.LatLng(curCenter.lat + (caretPos.lat - curCenter.lat) * (1.0 - zoomScale),
 						     curCenter.lng + (caretPos.lng - curCenter.lng) * (1.0 - zoomScale));
 
