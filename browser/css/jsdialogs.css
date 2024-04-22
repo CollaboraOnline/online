@@ -1106,6 +1106,8 @@ input[type='number']:hover::-webkit-outer-spin-button {
 }
 
 /* hide radio in filter by color */
+.jsdialog.autofilter #background tr th:nth-of-type(1),
+.jsdialog.autofilter #textcolor tr th:nth-of-type(1),
 .jsdialog.autofilter #background tr td:nth-of-type(1),
 .jsdialog.autofilter #textcolor tr td:nth-of-type(1) {
 	display: none;
