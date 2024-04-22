@@ -313,7 +313,7 @@ m4_ifelse(MOBILEAPP,[true],
       window.checkFileInfoOverride = {};
       window.deeplEnabled = false;
       window.zoteroEnabled = false;
-      window.savedUIState = false;
+      window.savedUIState = true;
       window.wasmEnabled = false;
       window.indirectionUrl='';],
      [window.host = '%HOST%';
