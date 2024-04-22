@@ -1275,7 +1275,7 @@ export class CommentSection extends CanvasSectionObject {
 					var isOurComment = annotation.isAutoSaved();
 					if (isOurComment) {
 						annotation.sectionProperties.container.style.visibility = 'visible';
-						annotation.sectionProperties.autoSave.innerText = _('Autosaved');
+						annotation.focusLost();
 						if (this.sectionProperties.docLayer._docType === 'spreadsheet')
 							annotation.show();
 						annotation.edit();
@@ -1337,7 +1337,6 @@ export class CommentSection extends CanvasSectionObject {
 				this.update();
 
 				if (CommentSection.autoSavedComment) {
-					CommentSection.autoSavedComment.sectionProperties.autoSave.innerText = _('Autosaved');
 					if (this.sectionProperties.docLayer._docType === 'spreadsheet')
 						modified.show();
 					modified.edit();

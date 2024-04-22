@@ -151,8 +151,8 @@ export class Comment extends CanvasSectionObject {
 		var button = L.DomUtil.create('div', 'annotation-btns-container', this.sectionProperties.nodeModify);
 		L.DomEvent.on(this.sectionProperties.nodeModifyText, 'blur', this.onLostFocus, this);
 		L.DomEvent.on(this.sectionProperties.nodeReplyText, 'blur', this.onLostFocusReply, this);
-		L.DomEvent.on(this.sectionProperties.nodeModifyText, 'input', this.textAreaInput, this);
-		L.DomEvent.on(this.sectionProperties.nodeReplyText, 'input', this.textAreaInput, this);
+		L.DomEvent.on(this.sectionProperties.nodeModifyText, 'focus', this.onFocus, this);
+		L.DomEvent.on(this.sectionProperties.nodeReplyText, 'focus', this.onFocusReply, this);
 		this.createButton(button, 'annotation-cancel-' + this.sectionProperties.data.id, 'annotation-button button-secondary', _('Cancel'), this.handleCancelCommentButton);
 		this.createButton(button, 'annotation-save-' + this.sectionProperties.data.id, 'annotation-button button-primary',_('Save'), this.handleSaveCommentButton);
 		button = L.DomUtil.create('div', '', this.sectionProperties.nodeReply);
@@ -283,7 +283,6 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.authorAvatartdImg = tdImg;
 		this.sectionProperties.contentAuthor = L.DomUtil.create('div', 'cool-annotation-content-author', tdAuthor);
 		this.sectionProperties.contentDate = L.DomUtil.create('div', 'cool-annotation-date', tdAuthor);
-		this.sectionProperties.autoSave = L.DomUtil.create('div', 'cool-annotation-autosavelabel', tdAuthor);
 	}
 
 	private createMenu (): void {
@@ -345,8 +344,12 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.resolvedTextElement.innerText = state === 'true' ? _('Resolved') : '';
 	}
 
-	private textAreaInput (): void {
-		this.sectionProperties.autoSave.innerText = '';
+	private onFocus() {
+		this.resetControl(this.getSaveButton(), _('Save'), 'annotation-button-autosaved');
+	}
+
+	private onFocusReply() {
+		this.resetControl(this.getReplyButton(), _('Reply'), 'annotation-button-autosaved');
 	}
 
 	private updateContent (): void {
@@ -885,7 +888,6 @@ export class Comment extends CanvasSectionObject {
 	public handleReplyCommentButton (e: any): void {
 		cool.CommentSection.autoSavedComment = null;
 		cool.CommentSection.commentWasAutoAdded = false;
-		this.textAreaInput();
 		this.onReplyClick(e);
 	}
 
@@ -950,7 +952,6 @@ export class Comment extends CanvasSectionObject {
 		cool.CommentSection.autoSavedComment = null;
 		cool.CommentSection.commentWasAutoAdded = false;
 		this.sectionProperties.contentText.unedited = null;
-		this.textAreaInput();
 		this.onSaveComment(e);
 	}
 
@@ -964,10 +965,49 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.commentListSection.save(this);
 	}
 
+
+	private getSaveButton(): HTMLButtonElement | null {
+		return this.sectionProperties.nodeModify.querySelector('input[type="button"][id^="annotation-save-"]');
+	}
+
+	private getCancelButton(): HTMLButtonElement | null {
+		return this.sectionProperties.nodeModify.querySelector('input[type="button"][id^="annotation-cancel-"]');
+	}
+
+	private getReplyButton(): HTMLButtonElement | null {
+		return this.sectionProperties.nodeReply.querySelector('input[type="button"][id^="annotation-reply-"]');
+	}
+
+	private getCancelReplyButton(): HTMLButtonElement | null {
+		return this.sectionProperties.nodeReply.querySelector('input[type="button"][id^="annotation-cancel-reply-"]');
+	}
+
+	private updateControl(
+		button: HTMLButtonElement | null,
+		label: string,
+		className: string
+	): void {
+		if (button) {
+		  button.value = label;
+		  button.classList.add(className);
+		}
+	}
+
+	private updateSaveControls() {
+		this.updateControl(this.getSaveButton(), _('Saved'), 'annotation-button-autosaved');
+		this.updateControl(this.getCancelButton(), _('Delete'), 'annotation-button-delete');
+	}
+
+	private updateReplyControls() {
+		this.updateControl(this.getReplyButton(), _('Saved'), 'annotation-button-autosaved');
+		this.updateControl(this.getCancelReplyButton(), _('Delete'), 'annotation-button-delete');
+	}
+
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	public onLostFocus (e: any): void {
 		if (!this.sectionProperties.isRemoved) {
 			$(this.sectionProperties.container).removeClass('annotation-active reply-annotation-container modify-annotation-container');
+			this.updateSaveControls();
 			if (this.sectionProperties.contentText.origText !== this.sectionProperties.nodeModifyText.value) {
 				if (!this.sectionProperties.contentText.unedited)
 					this.sectionProperties.contentText.unedited = this.sectionProperties.contentText.origText;
@@ -989,6 +1029,7 @@ export class Comment extends CanvasSectionObject {
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	public onLostFocusReply (e: any): void {
 		if (this.sectionProperties.nodeReplyText.value !== '') {
+			this.updateReplyControls();
 			if (!this.sectionProperties.contentText.unedited)
 				this.sectionProperties.contentText.unedited = this.sectionProperties.contentText.origText;
 			cool.CommentSection.autoSavedComment = this;
@@ -999,10 +1040,38 @@ export class Comment extends CanvasSectionObject {
 		}
 	}
 
+	private resetControl(
+		button: HTMLButtonElement | null,
+		label: string,
+		className: string
+	): void {
+		if (button) {
+		  button.value = label;
+		  button.classList.remove(className);
+		}
+	}
+
+	private resetSaveControls(): void {
+		this.resetControl(this.getSaveButton(), _('Save'), 'annotation-button-autosaved');
+		this.resetControl(this.getCancelButton(), _('Cancel'), 'annotation-button-delete');
+	}
+
+	private resetReplyControls(): void {
+		this.resetControl(this.getReplyButton(), _('Reply'), 'annotation-button-autosaved');
+		this.resetControl(this.getCancelReplyButton(), _('Cancel'), 'annotation-button-delete');
+	}
+
 	public focus (): void {
 		this.sectionProperties.container.classList.add('annotation-active');
 		this.sectionProperties.nodeModifyText.focus();
 		this.sectionProperties.nodeReplyText.focus();
+		this.resetSaveControls();
+		this.resetReplyControls();
+	}
+
+	public focusLost (): void {
+		this.updateSaveControls();
+		this.updateReplyControls();
 	}
 
 	public reply (): Comment {
