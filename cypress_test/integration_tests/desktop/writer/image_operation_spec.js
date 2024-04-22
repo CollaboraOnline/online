@@ -5,11 +5,9 @@ var { insertImage, deleteImage, assertImageSize } = require('../../common/deskto
 var desktopHelper = require('../../common/desktop_helper');
 
 describe(['tagdesktop'], 'Image Operation Tests', function() {
-	var origTestFileName = 'image_operation.odt';
-	var testFileName;
 
 	beforeEach(function() {
-		testFileName = helper.beforeAll(origTestFileName, 'writer');
+		helper.setupAndLoadDocument('writer/image_operation.odt');
 		desktopHelper.switchUIToNotebookbar();
 	});
 

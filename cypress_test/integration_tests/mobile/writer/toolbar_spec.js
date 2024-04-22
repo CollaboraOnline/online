@@ -4,11 +4,9 @@ var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 
 describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Toolbar tests', function() {
-	var origTestFileName = 'toolbar.odt';
-	var testFileName;
 
 	beforeEach(function() {
-		testFileName = helper.beforeAll(origTestFileName, 'writer');
+		helper.setupAndLoadDocument('writer/toolbar.odt');
 	});
 
 	it('State of mobile wizard toolbar item.', function() {

@@ -4,11 +4,9 @@ var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
 
 describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', function() {
-	var origTestFileName = 'clipboard.ods';
-	var testFileName;
 
 	beforeEach(function() {
-		testFileName = helper.beforeAll(origTestFileName, 'calc');
+		helper.setupAndLoadDocument('calc/clipboard.ods');
 	});
 
 	function setDummyClipboard(type, content, image = false, fail = false) {

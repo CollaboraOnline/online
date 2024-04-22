@@ -4,10 +4,9 @@ var calcHelper = require('../../common/calc_helper');
 var desktopHelper = require('../../common/desktop_helper');
 
 describe(['tagdesktop'], 'Row Column Operation', function() {
-	var testFileName = 'row_column_operation.ods';
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'calc');
+		helper.setupAndLoadDocument('calc/row_column_operation.ods');
 		desktopHelper.switchUIToNotebookbar();
 		helper.setDummyClipboardForCopy();
 		calcHelper.assertSheetContents(['Hello','Hi','World','Bye'], true);

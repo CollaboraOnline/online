@@ -29,10 +29,9 @@ function selectTextShape(i) {
 }
 
 describe(['taga11yenabled'], 'Editable area - Basic typing and caret moving', function() {
-    var testFileName = 'two_text_shapes.odp';
 
     beforeEach(function () {
-        helper.beforeAll(testFileName, 'impress');
+        helper.setupAndLoadDocument('impress/two_text_shapes.odp');
         desktopHelper.switchUIToCompact();
         cy.cGet('#toolbar-up > .ui-scroll-right').click();
         cy.cGet('#modifypage').click({force: true});

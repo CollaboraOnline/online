@@ -5,11 +5,9 @@ var mobileHelper = require('../../common/mobile_helper');
 var writerHelper = require('../../common/writer_helper');
 
 describe.skip('Spell checking menu.', function() {
-	var origTestFileName = 'spellchecking.odt';
-	var testFileName;
 
 	beforeEach(function() {
-		testFileName = helper.beforeAll(origTestFileName, 'writer');
+		helper.setupAndLoadDocument('writer/spellchecking.odt');
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();

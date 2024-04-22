@@ -5,10 +5,9 @@ var calcHelper = require('../../common/calc_helper');
 var mobileHelper = require('../../common/mobile_helper');
 
 describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Interact with bottom toolbar.', function() {
-	var testFileName;
 
 	function before(fileName) {
-		testFileName = helper.beforeAll(fileName, 'calc');
+		helper.setupAndLoadDocument('calc/' + fileName);
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();

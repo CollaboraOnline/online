@@ -5,11 +5,9 @@ var impressHelper = require('../../common/impress_helper');
 const desktopHelper = require('../../common/desktop_helper');
 
 describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties on selected shape.', function() {
-	var origTestFileName = 'apply_paragraph_props_text.odp';
-	var testFileName;
 
 	beforeEach(function() {
-		testFileName = helper.beforeAll(origTestFileName, 'impress');
+		helper.setupAndLoadDocument('impress/apply_paragraph_props_text.odp');
 		desktopHelper.switchUIToCompact();
 		cy.cGet('#toolbar-up > .ui-scroll-right').click();
 		cy.cGet('#modifypage').click({force: true});

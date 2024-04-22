@@ -4,10 +4,9 @@
 var helper = require('../../common/helper');
 
 describe(['tagdesktop'], 'JSDialog unit test', function() {
-	var testFileName = 'help_dialog.ods';
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'calc');
+		helper.setupAndLoadDocument('calc/help_dialog.ods');
 	});
 
 	it('JSDialog popup dialog', function() {

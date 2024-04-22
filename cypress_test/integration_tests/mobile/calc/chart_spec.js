@@ -5,11 +5,9 @@ var mobileHelper = require('../../common/mobile_helper');
 var calcHelper = require('../../common/calc_helper');
 
 describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Chart tests.', function() {
-	var origTestFileName = 'chart.ods';
-	var testFileName;
 
 	beforeEach(function() {
-		testFileName = helper.beforeAll(origTestFileName, 'calc');
+		helper.setupAndLoadDocument('calc/chart.ods');
 		mobileHelper.enableEditingMobile();
 		calcHelper.selectFirstColumn();
 		insertChart();

@@ -5,11 +5,9 @@ var calcHelper = require('../../common/calc_helper');
 var desktopHelper = require('../../common/desktop_helper');
 
 describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'AutoFilter', function() {
-	var origTestFileName = 'autofilter.ods';
-	var testFileName;
 
 	beforeEach(function() {
-		testFileName = helper.beforeAll(origTestFileName, 'calc');
+		helper.setupAndLoadDocument('calc/autofilter.ods');
 		desktopHelper.switchUIToCompact();
 		toggleAutofilter();
 		helper.setDummyClipboardForCopy();

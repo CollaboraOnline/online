@@ -9,14 +9,13 @@ describe.skip(['tagmobile'], 'Trigger hamburger menu options.', function() {
 	var testFileName;
 
 	function before(testFile) {
-		testFileName = helper.beforeAll(testFile, 'calc');
+		helper.setupAndLoadDocument('calc' + testFile);
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
 	}
 
 	it('Save', { defaultCommandTimeout: 60000 }, function() {
-		before('hamburger_menu.ods');
 		calcHelper.selectEntireSheet();
 
 		cy.cGet('#copy-paste-container table td').should('contain.text', 'Textx');

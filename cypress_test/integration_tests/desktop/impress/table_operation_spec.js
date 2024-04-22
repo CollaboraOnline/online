@@ -5,11 +5,9 @@ var desktopHelper = require('../../common/desktop_helper');
 var impressHelper = require('../../common/impress_helper');
 
 describe(['tagdesktop'], 'Table operations', function() {
-	var origTestFileName = 'table_operation.odp';
-	var testFileName;
 
 	beforeEach(function() {
-		testFileName = helper.beforeAll(origTestFileName, 'impress');
+		helper.setupAndLoadDocument('impress/table_operation.odp');
 		desktopHelper.selectZoomLevel('50');
 	});
 

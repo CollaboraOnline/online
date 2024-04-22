@@ -5,10 +5,9 @@ var mobileHelper = require('../../common/mobile_helper');
 var repairHelper = require('../../common/repair_document_helper');
 
 describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Editing Operations', function() {
-	var testFileName = 'undo_redo.odt';
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'writer');
+		helper.setupAndLoadDocument('writer/undo_redo.odt');
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
 	});

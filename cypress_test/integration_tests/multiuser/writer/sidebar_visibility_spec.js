@@ -4,11 +4,9 @@ var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
 
 describe.skip(['tagmultiuser'], 'Sidebar visibility', function() {
-	var origTestFileName = 'sidebar_visibility.odt';
-	var testFileName;
 
 	beforeEach(function() {
-		testFileName = helper.beforeAll(origTestFileName, 'writer', undefined, true);
+		helper.setupAndLoadDocument('writer/sidebar_visibility.odt',true);
 	});
 
 	function testSidebarVisiblity(frameId1 ,frameId2) {

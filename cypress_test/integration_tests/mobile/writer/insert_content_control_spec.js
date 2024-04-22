@@ -4,11 +4,9 @@ var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 
 describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Insert objects via insertion wizard.', function() {
-	var origTestFileName = 'insert_object.odt';
-	var testFileName;
 
 	beforeEach(function() {
-		testFileName = helper.beforeAll(origTestFileName, 'writer');
+		helper.setupAndLoadDocument('writer/insert_object.odt');
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();

@@ -4,8 +4,6 @@ var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 
 describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function() {
-	var origTestFileName = 'delete_objects.odp';
-	var testFileName;
 
 	var eventOptions = {
 		force: true,
@@ -14,7 +12,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function()
 	};
 
 	beforeEach(function() {
-		testFileName = helper.beforeAll(origTestFileName, 'impress');
+		helper.setupAndLoadDocument('impress/delete_objects.odp');
 
 		mobileHelper.enableEditingMobile();
 	});

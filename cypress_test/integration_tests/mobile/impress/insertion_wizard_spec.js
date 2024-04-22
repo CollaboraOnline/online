@@ -5,11 +5,9 @@ var mobileHelper = require('../../common/mobile_helper');
 var impressHelper = require('../../common/impress_helper');
 
 describe(['tagmobile', 'tagnextcloud'], 'Impress insertion wizard.', function() {
-	var origTestFileName = 'insertion_wizard.odp';
-	var testFileName;
 
 	beforeEach(function() {
-		testFileName = helper.beforeAll(origTestFileName, 'impress');
+		helper.setupAndLoadDocument('impress/insertion_wizard.odp');
 
 		mobileHelper.enableEditingMobile();
 	});

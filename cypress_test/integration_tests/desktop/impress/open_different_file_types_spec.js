@@ -5,12 +5,8 @@ const { selectZoomLevel, openReadOnlyFile } = require('../../common/desktop_help
 
 describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Open different file types', function() {
 
-	var testFileName = '';
-
 	function before(filename) {
-		var origTestFileName = filename;
-
-		testFileName = helper.beforeAll(origTestFileName, 'impress');
+		helper.setupAndLoadDocument('impress/' + filename);
 
 		selectZoomLevel('50');
 
@@ -76,15 +72,15 @@ describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Open different file t
 	});
 
 	it('Open pot file', { defaultCommandTimeout: 60000 }, function() {
-		testFileName = openReadOnlyFile('impress', 'testfile.pot');
+		openReadOnlyFile('impress', 'testfile.pot');
 	});
 
 	it('Open potx file', { defaultCommandTimeout: 60000 }, function() {
-		testFileName = openReadOnlyFile('impress', 'testfile.potx');
+		openReadOnlyFile('impress', 'testfile.potx');
 	});
 
 	it('Open potm file', { defaultCommandTimeout: 60000 }, function() {
-		testFileName = openReadOnlyFile('impress', 'testfile.potm');
+		openReadOnlyFile('impress', 'testfile.potm');
 	});
 
 	it('Open fodp file', { defaultCommandTimeout: 60000 }, function() {

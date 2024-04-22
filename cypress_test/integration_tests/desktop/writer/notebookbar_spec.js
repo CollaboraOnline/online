@@ -5,11 +5,9 @@ var desktopHelper = require('../../common/desktop_helper');
 var writerHelper = require('../../common/writer_helper');
 
 describe(['tagdesktop'], 'Notebookbar tests.', function() {
-	var origTestFileName = 'notebookbar.odt';
-	var testFileName;
 
 	beforeEach(function() {
-		testFileName = helper.beforeAll(origTestFileName, 'writer');
+		helper.setupAndLoadDocument('writer/notebookbar.odt');
 		desktopHelper.switchUIToNotebookbar();
 
 		if (Cypress.env('INTEGRATION') === 'nextcloud') {

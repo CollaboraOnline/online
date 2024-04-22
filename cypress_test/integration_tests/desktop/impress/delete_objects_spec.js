@@ -4,11 +4,9 @@ var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
 
 describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function() {
-	var origTestFileName = 'delete_objects.odp';
-	var testFileName;
 
 	beforeEach(function() {
-		testFileName = helper.beforeAll(origTestFileName, 'impress');
+		helper.setupAndLoadDocument('impress/delete_objects.odp');
 		desktopHelper.switchUIToCompact();
 	});
 

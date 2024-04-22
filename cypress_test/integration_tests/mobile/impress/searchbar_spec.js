@@ -6,11 +6,9 @@ var mobileHelper = require('../../common/mobile_helper');
 var impressHelper = require('../../common/impress_helper');
 
 describe.skip('Searching via search bar.', function() {
-	var origTestFileName = 'search_bar.odp';
-	var testFileName;
 
 	beforeEach(function() {
-		testFileName = helper.beforeAll(origTestFileName, 'impress');
+		helper.setupAndLoadDocument('impress/search_bar.odp');
 
 		mobileHelper.enableEditingMobile();
 

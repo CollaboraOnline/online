@@ -5,11 +5,9 @@ var calcHelper = require('../../common/calc_helper');
 var mobileHelper = require('../../common/mobile_helper');
 
 describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Calc spell checking menu.', function() {
-	var origTestFileName = 'spellchecking.ods';
-	var testFileName;
 
 	beforeEach(function() {
-		testFileName = helper.beforeAll(origTestFileName, 'calc');
+		helper.setupAndLoadDocument('calc/spellchecking.ods');
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();

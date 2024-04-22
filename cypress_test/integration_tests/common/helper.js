@@ -1,6 +1,35 @@
 /* -*- js-indent-level: 8 -*- */
 /* global cy Cypress expect */
 
+/*
+ * Covers most use cases. For more flexibility,
+ * call setupDocument and loadDocument directly
+ * fileName: Includes subFolder, for example: 'calc/hello-world.ods'
+ */
+function setupAndLoadDocument(fullFileName, isMultiUser = false) {
+	cy.log('>> setupAndLoadDocument - start');
+
+	// split 'calc/hello-world.ods' to 'calc' and 'hello-world.ods'
+	var subFolder;
+	var fileName;
+	if (fullFileName.includes('/')) {
+		subFolder = fullFileName.substr(0, fullFileName.lastIndexOf('/'));
+		fileName = fullFileName.substr(fullFileName.lastIndexOf('/')+1, fullFileName.length);
+	} else {
+		subFolder = undefined;
+		fileName = fullFileName;
+	}
+
+	// TODO: replace with loadDocument and setupDocument
+	if (isMultiUser) {
+		beforeAll(fileName, subFolder, undefined, isMultiUser);
+	} else {
+		beforeAll(fileName, subFolder);
+	}
+
+	cy.log('<< setupAndLoadDocument - end');
+}
+
 function copyFile(fileName, newFileName, subFolder) {
 	if (subFolder === undefined) {
 		cy.task('copyFile', {
@@ -1179,6 +1208,7 @@ function copy() {
 	});
 }
 
+module.exports.setupAndLoadDocument = setupAndLoadDocument;
 module.exports.loadTestDoc = loadTestDoc;
 module.exports.checkIfDocIsLoaded = checkIfDocIsLoaded;
 module.exports.assertCursorAndFocus = assertCursorAndFocus;

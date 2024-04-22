@@ -5,11 +5,9 @@ var desktopHelper = require('../../common/desktop_helper');
 var calcHelper = require('../../common/calc_helper');
 
 describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Statubar tests.', function() {
-	var origTestFileName = 'statusbar.ods';
-	var testFileName;
 
 	beforeEach(function() {
-		testFileName = helper.beforeAll(origTestFileName, 'calc');
+		helper.setupAndLoadDocument('calc/statusbar.ods');
 
 		if (Cypress.env('INTEGRATION') === 'nextcloud') {
 			desktopHelper.showStatusBarIfHidden();

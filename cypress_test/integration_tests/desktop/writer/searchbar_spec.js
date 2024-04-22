@@ -5,11 +5,9 @@ var searchHelper = require('../../common/search_helper');
 var writerHelper = require('../../common/writer_helper');
 
 describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Searching via search bar' ,function() {
-	var origTestFileName = 'search_bar.odt';
-	var testFileName;
 
 	beforeEach(function() {
-		testFileName = helper.beforeAll(origTestFileName, 'writer');
+		helper.setupAndLoadDocument('writer/search_bar.odt');
 	});
 
 	it('Search existing word.', function() {

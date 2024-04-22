@@ -4,11 +4,9 @@ var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
 
 describe.skip('Repair Document', function() {
-	var origTestFileName = 'repair_doc.ods';
-	var testFileName;
 
 	beforeEach(function() {
-		testFileName = helper.beforeAll(origTestFileName, 'calc', undefined, true);
+		helper.setupAndLoadDocument('calc/repair_doc.ods',true);
 	});
 
 	function repairDoc(frameId1, frameId2) {

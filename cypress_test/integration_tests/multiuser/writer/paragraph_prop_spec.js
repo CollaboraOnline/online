@@ -3,11 +3,9 @@
 var helper = require('../../common/helper');
 
 describe.skip(['tagmultiuser'], 'Change paragraph properties', function() {
-	var origTestFileName = 'paragraph_prop.odt';
-	var testFileName;
 
 	beforeEach(function() {
-		testFileName = helper.beforeAll(origTestFileName, 'writer', undefined, true);
+		helper.setupAndLoadDocument('writer/paragraph_prop.odt',true);
 	});
 
 	it('Change paragraph alignment.', function() {

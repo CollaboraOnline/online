@@ -3,14 +3,9 @@
 var helper = require('../../common/helper');
 
 describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Clipboard operations.', function() {
-	var testFileName;
-
-	function before(filename) {
-		testFileName = helper.beforeAll(filename, 'writer');
-	}
 
 	it('Copy and Paste text.', function() {
-		before('copy_paste.odt');
+		helper.setupAndLoadDocument('writer/copy_paste.odt');
 		// Select some text
 		helper.selectAllText();
 
@@ -32,7 +27,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Clipboard operations.', fu
 	});
 
 	it('Copy plain text.', function() {
-		before('copy_paste_simple.odt');
+		helper.setupAndLoadDocument('writer/copy_paste_simple.odt');
 
 		helper.setDummyClipboardForCopy('text/plain');
 		helper.selectAllText();

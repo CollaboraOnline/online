@@ -5,11 +5,9 @@ var mobileHelper = require('../../common/mobile_helper');
 var writerHelper = require('../../common/writer_helper');
 
 describe.skip('Apply paragraph properties.', function() {
-	var origTestFileName = 'apply_paragraph_properties.odt';
-	var testFileName;
 
 	beforeEach(function() {
-		testFileName = helper.beforeAll(origTestFileName, 'writer');
+		helper.setupAndLoadDocument('writer/apply_paragraph_properties.odt');
 		mobileHelper.enableEditingMobile();
 		writerHelper.selectAllTextOfDoc();
 		mobileHelper.openMobileWizard();

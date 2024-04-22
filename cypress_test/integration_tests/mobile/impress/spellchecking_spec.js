@@ -5,11 +5,9 @@ var mobileHelper = require('../../common/mobile_helper');
 var impressHelper = require('../../common/impress_helper');
 
 describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Spell checking menu.', function() {
-	var origTestFileName = 'spellchecking.odp';
-	var testFileName;
 
 	beforeEach(function() {
-		testFileName = helper.beforeAll(origTestFileName, 'impress');
+		helper.setupAndLoadDocument('impress/spellchecking.odp');
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();

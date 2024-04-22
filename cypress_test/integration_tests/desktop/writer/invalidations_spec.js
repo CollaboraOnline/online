@@ -6,11 +6,9 @@ var ceHelper = require('../../common/contenteditable_helper');
 var writerHelper = require('../../common/writer_helper');
 
 describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Invalidation tests.', function() {
-	var origTestFileName = 'invalidations.odt';
-	var testFileName;
 
 	beforeEach(function() {
-		testFileName = helper.beforeAll(origTestFileName, 'writer');
+		helper.setupAndLoadDocument('writer/invalidations.odt');
 		desktopHelper.switchUIToNotebookbar();
 		cy.cGet('div.clipboard').as('clipboard');
 	});

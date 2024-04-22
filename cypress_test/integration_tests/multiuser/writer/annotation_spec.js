@@ -5,11 +5,9 @@ var { selectZoomLevel } = require('../../common/desktop_helper');
 var desktopHelper = require('../../common/desktop_helper');
 
 describe(['tagmultiuser'], 'Multiuser Annotation Tests', function () {
-	var origTestFileName = 'annotation.odt';
-	var testFileName;
 
 	beforeEach(function() {
-		testFileName = helper.beforeAll(origTestFileName, 'writer', undefined, true);
+		helper.setupAndLoadDocument('writer/annotation.odt',true);
 		cy.viewport(2400,800);
 		desktopHelper.switchUIToNotebookbar();
 		cy.cSetActiveFrame('#iframe1');

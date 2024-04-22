@@ -4,11 +4,9 @@ var helper = require('../../common/helper');
 var { insertImage, deleteImage } = require('../../common/desktop_helper');
 
 describe.skip(['tagdesktop'], 'Navigator tests.', function () {
-	var origTestFileName = 'navigator.ods';
-	var testFileName;
 
 	beforeEach(function () {
-		testFileName = helper.beforeAll(origTestFileName, 'calc');
+		helper.setupAndLoadDocument('calc/navigator.ods');
 
 		cy.cGet('#menu-view').click();
 		cy.cGet('#menu-navigator').click();

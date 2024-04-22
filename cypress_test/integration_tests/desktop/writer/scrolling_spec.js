@@ -4,10 +4,9 @@ var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
 
 describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Scroll through document', function() {
-	var testFileName = 'scrolling.odt';
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'writer');
+		helper.setupAndLoadDocument('writer/scrolling.odt');
 		desktopHelper.switchUIToCompact();
 
 		cy.cGet('#toolbar-up .ui-scroll-right').click();

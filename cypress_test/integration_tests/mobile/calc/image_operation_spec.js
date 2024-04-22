@@ -4,11 +4,9 @@ var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 
 describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Image Operation Tests', function() {
-	var origTestFileName = 'image_operation.ods';
-	var testFileName;
 
 	beforeEach(function() {
-		testFileName = helper.beforeAll(origTestFileName, 'calc');
+		helper.setupAndLoadDocument('calc/image_operation.ods');
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();

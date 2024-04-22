@@ -10,10 +10,9 @@ var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
 
 describe(['tagscreenshot'], 'Help dialog update', function() {
-	var testFileName = 'help_dialog.ods';
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'calc');
+		helper.setupAndLoadDocument('calc/help_dialog.ods');
 	});
 
 	it('Chart selected sidebar open', function() {

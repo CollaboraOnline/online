@@ -9,9 +9,6 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change shape properties via
 	const defaultAltitude = 5992;
 	const unitScale = 2540.37;
 
-	var origTestFileName = 'shape_properties.odt';
-	var testFileName;
-
 	class TriangleCoordinatesMatcher {
 		/**
 		 * @param {number} start
@@ -63,7 +60,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change shape properties via
 	}
 
 	beforeEach(function() {
-		testFileName = helper.beforeAll(origTestFileName, 'writer');
+		helper.setupAndLoadDocument('writer/shape_properties.odt');
 		mobileHelper.enableEditingMobile();
 		helper.moveCursor('end');
 		helper.moveCursor('home');

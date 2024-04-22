@@ -5,12 +5,10 @@ var { selectZoomLevel } = require('../../common/desktop_helper');
 var desktopHelper = require('../../common/desktop_helper');
 
 describe(['tagdesktop'], 'Annotation Tests', function() {
-	var origTestFileName = 'annotation.odt';
-	var testFileName;
 
 	beforeEach(function() {
 		cy.viewport(1400, 600);
-		testFileName = helper.beforeAll(origTestFileName, 'writer');
+		helper.setupAndLoadDocument('writer/annotation.odt');
 		desktopHelper.switchUIToNotebookbar();
 		cy.cGet('#optionscontainer div[id$="SidebarDeck.PropertyDeck"]').click(); // Hide sidebar.
 		selectZoomLevel('50');

@@ -4,11 +4,9 @@ var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 
 describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Changing slide properties.', function() {
-	var origTestFileName = 'slide_properties.odp';
-	var testFileName;
 
 	beforeEach(function() {
-		testFileName = helper.beforeAll(origTestFileName, 'impress');
+		helper.setupAndLoadDocument('impress/slide_properties.odp');
 		mobileHelper.enableEditingMobile();
 		previewShouldBeFullWhite();
 		mobileHelper.openMobileWizard();

@@ -5,11 +5,9 @@ var desktopHelper = require('../../common/desktop_helper');
 var calcHelper = require('../../common/calc_helper');
 
 describe(['tagdesktop'], 'Annotation Tests', function() {
-	var origTestFileName = 'annotation.ods';
-	var testFileName;
 
 	beforeEach(function() {
-		testFileName = helper.beforeAll(origTestFileName, 'calc');
+		helper.setupAndLoadDocument('calc/annotation.ods');
 		desktopHelper.switchUIToNotebookbar();
 	});
 

@@ -5,11 +5,9 @@ var calcHelper = require('../../common/calc_helper');
 var desktopHelper = require('../../common/desktop_helper');
 
 describe(['tagdesktop'], 'Change cell appearance.', function() {
-	var origTestFileName = 'cell_appearance.ods';
-	var testFileName;
 
 	beforeEach(function() {
-		testFileName = helper.beforeAll(origTestFileName, 'calc');
+		helper.setupAndLoadDocument('calc/cell_appearance.ods');
 	});
 
 	it('Apply background color', function() {

@@ -4,7 +4,6 @@ var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
 
 describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Fullscreen Presentation.', function() {
-	var testFileName = 'text_fields.odp';
 
 	function getSlideShowContent() {
 		return cy.cGet().find('.leaflet-slideshow').then(($iframe) =>{
@@ -13,8 +12,7 @@ describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Fullscreen Presentati
 	}
 
 	function before(fileName) {
-		testFileName = fileName;
-		helper.beforeAll(testFileName, 'impress');
+		helper.setupAndLoadDocument('impress/' + fileName);
 
 		if (Cypress.env('INTEGRATION') === 'nextcloud') {
 			desktopHelper.hideSidebarIfVisible();
