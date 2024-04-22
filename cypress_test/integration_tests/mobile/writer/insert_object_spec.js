@@ -39,6 +39,7 @@ describe(['tagmobile', 'tagnextcloud'], 'Insert objects via insertion wizard.', 
 	});
 
 	it('Insert default table.', function() {
+		helper.setDummyClipboardForCopy();
 		mobileHelper.openInsertionWizard();
 		// Open Table submenu
 		cy.cGet('body').contains('.ui-header.level-0.mobile-wizard.ui-widget', 'Table').click();
@@ -48,6 +49,7 @@ describe(['tagmobile', 'tagnextcloud'], 'Insert objects via insertion wizard.', 
 		// Table is inserted with the markers shown
 		cy.cGet('.leaflet-marker-icon.table-column-resize-marker').should('exist');
 		helper.typeIntoDocument('{ctrl}a');
+		helper.copy();
 		// Two rows
 		cy.cGet('#copy-paste-container tr').should('have.length', 2);
 		// Four cells
@@ -55,6 +57,7 @@ describe(['tagmobile', 'tagnextcloud'], 'Insert objects via insertion wizard.', 
 	});
 
 	it('Insert custom table.', function() {
+		helper.setDummyClipboardForCopy();
 		mobileHelper.openInsertionWizard();
 		// Open Table submenu
 		cy.cGet('body').contains('.ui-header.level-0.mobile-wizard.ui-widget', 'Table').click();
@@ -67,6 +70,7 @@ describe(['tagmobile', 'tagnextcloud'], 'Insert objects via insertion wizard.', 
 		// Table is inserted with the markers shown
 		cy.cGet('.leaflet-marker-icon.table-column-resize-marker').should('exist');
 		helper.typeIntoDocument('{ctrl}a');
+		helper.copy();
 		// Three rows
 		cy.cGet('#copy-paste-container tr').should('have.length', 3);
 		// Nine cells
@@ -186,6 +190,7 @@ describe(['tagmobile', 'tagnextcloud'], 'Insert objects via insertion wizard.', 
 	});
 
 	it('Insert hyperlink.', function() {
+		helper.setDummyClipboardForCopy();
 		mobileHelper.openInsertionWizard();
 		// Open hyperlink dialog
 		cy.cGet('body').contains('.menu-entry-with-icon', 'Hyperlink...').click();
@@ -197,6 +202,7 @@ describe(['tagmobile', 'tagnextcloud'], 'Insert objects via insertion wizard.', 
 		// Insert
 		cy.cGet('#response-ok').click();
 		writerHelper.selectAllTextOfDoc();
+		helper.copy();
 		helper.expectTextForClipboard('some text');
 		cy.cGet('#copy-paste-container p a').should('have.attr', 'href', 'http://www.something.com/');
 	});
