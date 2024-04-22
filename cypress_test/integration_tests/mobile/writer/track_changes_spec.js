@@ -59,6 +59,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Track Changes', function() 
 	});
 
 	it('Reject All',function() {
+		helper.setDummyClipboardForCopy();
 		helper.typeIntoDocument('Hello World');
 		cy.wait(1000);
 		enableRecord();
@@ -69,6 +70,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Track Changes', function() 
 		confirmChange('Reject All');
 		cy.cGet('.leaflet-layer').click();
 		helper.selectAllText();
+		helper.copy();
 		helper.expectTextForClipboard('Hello World');
 	});
 });
