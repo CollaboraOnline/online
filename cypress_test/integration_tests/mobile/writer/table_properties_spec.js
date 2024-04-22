@@ -30,11 +30,13 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change table properties / l
 
 	function selectFullTable() {
 		cy.cGet('.unoSelectTable').click();
+		helper.copy();
 		cy.cGet('#copy-paste-container table').should('exist');
 	}
 
 	it('Insert row before.', function() {
 		before('table_properties.odt');
+		helper.setDummyClipboardForCopy();
 		openTablePanel();
 		cy.cGet('.unoInsertRowsBefore').click();
 		cy.cGet('.leaflet-marker-icon.table-row-resize-marker').should('have.length', 4);
@@ -52,6 +54,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change table properties / l
 
 	it('Insert row after.', function() {
 		before('table_properties.odt');
+		helper.setDummyClipboardForCopy();
 		openTablePanel();
 		cy.cGet('.unoInsertRowsAfter').click();
 		cy.cGet('.leaflet-marker-icon.table-row-resize-marker').should('have.length', 4);
@@ -69,6 +72,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change table properties / l
 
 	it('Insert column before.', function() {
 		before('table_properties.odt');
+		helper.setDummyClipboardForCopy();
 		openTablePanel();
 		cy.cGet('.unoInsertColumnsBefore').click();
 		cy.cGet('.leaflet-marker-icon.table-column-resize-marker').should('have.length', 4);
@@ -85,6 +89,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change table properties / l
 
 	it('Insert column after.', function() {
 		before('table_properties.odt');
+		helper.setDummyClipboardForCopy();
 		openTablePanel();
 		cy.cGet('.unoInsertColumnsAfter').click();
 		cy.cGet('.leaflet-marker-icon.table-column-resize-marker').should('have.length', 4);
@@ -101,6 +106,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change table properties / l
 
 	it('Delete row.', function() {
 		before('table_properties.odt');
+		helper.setDummyClipboardForCopy();
 		openTablePanel();
 		cy.cGet('.unoDeleteRows').click();
 		cy.cGet('.leaflet-marker-icon.table-row-resize-marker').should('have.length', 2);
@@ -146,6 +152,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change table properties / l
 
 	it('Merge cells.', function() {
 		before('table_properties.odt');
+		helper.setDummyClipboardForCopy();
 		// Select 2x2 part of the table.
 		helper.moveCursor('down', 'shift');
 		helper.moveCursor('right', 'shift');
@@ -172,6 +179,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change table properties / l
 
 	it('Change row height.', function() {
 		before('table_properties.odt');
+		helper.setDummyClipboardForCopy();
 		openTablePanel();
 		cy.wait(500);
 		cy.cGet('#rowheight .spinfield').should('have.value', '0');
@@ -183,6 +191,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change table properties / l
 
 	it('Change column width.', function() {
 		before('table_properties.odt');
+		helper.setDummyClipboardForCopy();
 		openTablePanel();
 		cy.wait(500);
 		helper.typeIntoInputField('#columnwidth .spinfield', '1.6', true, false);
@@ -193,6 +202,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change table properties / l
 
 	it('Set minimal row height.', function() {
 		before('table_with_text.odt');
+		helper.setDummyClipboardForCopy();
 		// Select full table (3x2)
 		helper.moveCursor('down', 'shift');
 		helper.moveCursor('down', 'shift');
@@ -202,12 +212,14 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change table properties / l
 		helper.moveCursor('up', 'shift');
 		helper.moveCursor('up', 'shift');
 		helper.moveCursor('left', 'shift');
+		helper.copy();
 		// Check new row height
 		cy.cGet('#copy-paste-container td').should('not.have.attr', 'height');
 	});
 
 	it('Set optimal row height.', function() {
 		before('table_with_text.odt');
+		helper.setDummyClipboardForCopy();
 		openTablePanel();
 		selectFullTable();
 		cy.cGet('#copy-paste-container tr:nth-of-type(1) td:nth-of-type(1)').should('have.attr', 'height', '33');
@@ -224,6 +236,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change table properties / l
 
 	it('Distribute rows.', function() {
 		before('table_with_text.odt');
+		helper.setDummyClipboardForCopy();
 
 		// Select full table (3x2)
 		openTablePanel();
@@ -251,6 +264,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change table properties / l
 
 	it('Set minimal column width.', function() {
 		before('table_with_text.odt');
+		helper.setDummyClipboardForCopy();
 
 		// Select full table (3x2)
 		openTablePanel();
@@ -266,6 +280,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change table properties / l
 
 	it('Set optimal column width.', function() {
 		before('table_with_text.odt');
+		helper.setDummyClipboardForCopy();
 
 		// Select full table (3x2)
 		openTablePanel();
@@ -283,6 +298,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change table properties / l
 
 	it('Distribute columns.', function() {
 		before('table_with_text.odt');
+		helper.setDummyClipboardForCopy();
 
 		// Select full table (3x2)
 		openTablePanel();
