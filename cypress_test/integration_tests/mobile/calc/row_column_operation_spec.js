@@ -4,10 +4,9 @@ var calcHelper = require('../../common/calc_helper');
 var mobileHelper = require('../../common/mobile_helper');
 
 describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Row Column Operation', function() {
-	var testFileName = 'row_column_operation.ods';
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'calc');
+		helper.setupAndLoadDocument('calc/row_column_operation.ods');
 
 		mobileHelper.enableEditingMobile();
 

@@ -5,11 +5,9 @@ var mobileHelper = require('../../common/mobile_helper');
 var calcHelper = require('../../common/calc_helper');
 
 describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Sheet Operation', function () {
-	var origTestFileName = 'sheet_operation.ods';
-	var testFileName;
 
 	beforeEach(function () {
-		testFileName = helper.beforeAll(origTestFileName, 'calc');
+		helper.setupAndLoadDocument('calc/sheet_operation.ods');
 
 		mobileHelper.enableEditingMobile();
 	});

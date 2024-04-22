@@ -6,10 +6,9 @@ var calcHelper = require('../../common/calc_helper');
 var repairHelper = require('../../common/repair_document_helper');
 
 describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Editing Operations', function() {
-	var testFileName = 'undo_redo.ods';
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'calc');
+		helper.setupAndLoadDocument('calc/undo_redo.ods');
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();

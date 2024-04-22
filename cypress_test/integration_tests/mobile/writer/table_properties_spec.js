@@ -5,10 +5,9 @@ var mobileHelper = require('../../common/mobile_helper');
 var writerHelper = require('../../common/writer_helper');
 
 describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change table properties / layout via mobile wizard.', function() {
-	var testFileName = '';
 
 	function before(testFile) {
-		testFileName = helper.beforeAll(testFile, 'writer');
+		helper.setupAndLoadDocument('writer/' + testFile);
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();

@@ -4,11 +4,9 @@ var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
 
 describe(['tagmultiuser'], 'Joining a document should not trigger an invalidation', function() {
-	var origTestFileName = 'invalidations.ods';
-	var testFileName;
 
 	beforeEach(function() {
-		testFileName = helper.beforeAll(origTestFileName, 'calc', undefined, true);
+		helper.setupAndLoadDocument('calc/invalidations.ods',true);
 		desktopHelper.switchUIToNotebookbar();
 	});
 

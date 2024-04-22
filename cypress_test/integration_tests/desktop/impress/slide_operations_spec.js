@@ -6,11 +6,9 @@ var impressHelper = require('../../common/impress_helper');
 var desktopHelper = require('../../common/desktop_helper');
 
 describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Slide operations', function() {
-	var origTestFileName = 'slide_operations.odp';
-	var testFileName;
 
 	beforeEach(function() {
-		testFileName = helper.beforeAll(origTestFileName, 'impress');
+		helper.setupAndLoadDocument('impress/slide_operations.odp');
 		desktopHelper.switchUIToNotebookbar();
 	});
 

@@ -3,12 +3,10 @@
 var helper = require('../../common/helper');
 
 describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Complex image operation test', function() {
-	var origTestFileName = 'complex_image_operation.odt';
-	var testFileName;
 
 	beforeEach(function() {
 		localStorage.setItem('image_validation_test', true);
-		testFileName = helper.beforeAll(origTestFileName, 'writer');
+		helper.setupAndLoadDocument('writer/complex_image_operation.odt');
 	});
 
 	it('tile image validation test',function() {

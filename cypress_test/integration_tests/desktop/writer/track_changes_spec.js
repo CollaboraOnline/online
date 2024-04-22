@@ -4,12 +4,10 @@ var helper = require('../../common/helper');
 const desktopHelper = require('../../common/desktop_helper');
 
 describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function () {
-	var origTestFileName = 'track_changes.odt';
-	var testFileName;
 
 	beforeEach(function () {
 		cy.viewport(1400, 600);
-		testFileName = helper.beforeAll(origTestFileName, 'writer');
+		helper.setupAndLoadDocument('writer/track_changes.odt');
 		desktopHelper.switchUIToCompact();
 		cy.cGet('#sidebar').click({force: true}); // Hide sidebar.
 		desktopHelper.selectZoomLevel('50');

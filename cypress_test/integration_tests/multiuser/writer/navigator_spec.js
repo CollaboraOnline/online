@@ -3,11 +3,9 @@
 var helper = require('../../common/helper');
 
 describe.skip(['tagmultiuser'], 'Navigator follow the change of document', function() {
-	var origTestFileName = 'paragraph_prop.odt';
-	var testFileName;
 
 	beforeEach(function() {
-		testFileName = helper.beforeAll(origTestFileName, 'writer', undefined, true);
+		helper.setupAndLoadDocument('writer/paragraph_prop.odt',true);
 	});
 
 	it('Create Heading, Table, then modify, and delete', function() {

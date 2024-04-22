@@ -4,11 +4,9 @@ var helper = require('../../common/helper');
 var searchHelper = require('../../common/search_helper');
 
 describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Searching via search bar.', function() {
-	var origTestFileName = 'search_bar.ods';
-	var testFileName;
 
 	beforeEach(function() {
-		testFileName = helper.beforeAll(origTestFileName, 'calc');
+		helper.setupAndLoadDocument('calc/search_bar.ods');
 	});
 
 	it('Search existing word.', function() {

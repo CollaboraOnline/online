@@ -5,10 +5,9 @@ var mobileHelper = require('../../common/mobile_helper');
 var writerHelper = require('../../common/writer_helper');
 
 describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Text cursor tests.', function() {
-	var testFileName;
 
 	function before(fileName) {
-		testFileName = helper.beforeAll(fileName, 'writer');
+		helper.setupAndLoadDocument('writer/' + fileName);
 
 		mobileHelper.enableEditingMobile();
 	}

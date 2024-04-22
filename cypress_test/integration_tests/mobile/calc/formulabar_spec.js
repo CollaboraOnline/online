@@ -5,11 +5,9 @@ var calcHelper = require('../../common/calc_helper');
 var mobileHelper = require('../../common/mobile_helper');
 
 describe(['tagmobile', 'tagnextcloud'], 'Formula bar tests.', function() {
-	var origTestFileName = 'formulabar.ods';
-	var testFileName;
 
 	beforeEach(function() {
-		testFileName = helper.beforeAll(origTestFileName, 'calc');
+		helper.setupAndLoadDocument('calc/formulabar.ods');
 
 		mobileHelper.enableEditingMobile();
 	});

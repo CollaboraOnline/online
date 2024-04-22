@@ -3,11 +3,9 @@
 var helper = require('../../common/helper');
 
 describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc sidebar dialog image caching', function() {
-	var origTestFileName = 'many-sizes.ods';
-	var testFileName;
 
 	beforeEach(function() {
-		testFileName = helper.beforeAll(origTestFileName, 'calc');
+		helper.setupAndLoadDocument('calc/many-sizes.ods');
 	});
 
 	it('Sidebar image caching', function() {

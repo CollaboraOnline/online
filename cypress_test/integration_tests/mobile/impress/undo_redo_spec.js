@@ -6,10 +6,9 @@ var impressHelper = require('../../common/impress_helper');
 var repairHelper = require('../../common/repair_document_helper');
 
 describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Editing Operations', function() {
-	var testFileName = 'undo_redo.odp';
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'impress');
+		helper.setupAndLoadDocument('impress/undo_redo.odp');
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();

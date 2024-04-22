@@ -6,10 +6,9 @@ var ceHelper = require('../../common/contenteditable_helper');
 // var repairHelper = require('../../common/repair_document_helper');
 
 describe(['taga11ydisabled'], 'Editable area [a11y disabled] - Empty paragraph', function() {
-	var testFileName = 'undo_redo.odt';
 
 	beforeEach(function () {
-		helper.beforeAll(testFileName, 'writer');
+		helper.setupAndLoadDocument('writer/undo_redo.odt');
 		cy.cGet('div.clipboard').as('clipboard');
 	});
 
@@ -44,10 +43,9 @@ describe(['taga11ydisabled'], 'Editable area [a11y disabled] - Empty paragraph',
 });
 
 describe(['taga11ydisabled'], 'Editable area [a11y disabled] - Basic typing', function() {
-	var testFileName = 'undo_redo.odt';
 
 	beforeEach(function () {
-		helper.beforeAll(testFileName, 'writer');
+		helper.setupAndLoadDocument('writer/undo_redo.odt');
 		cy.cGet('div.clipboard').as('clipboard');
 	});
 
@@ -120,10 +118,9 @@ describe(['taga11ydisabled'], 'Editable area [a11y disabled] - Basic typing', fu
 });
 
 describe(['taga11yenabled'], 'Editable area - Empty paragraph', function() {
-	var testFileName = 'undo_redo.odt';
 
 	beforeEach(function () {
-		helper.beforeAll(testFileName, 'writer');
+		helper.setupAndLoadDocument('writer/undo_redo.odt');
 		cy.cGet('div.clipboard').as('clipboard');
 	});
 
@@ -163,10 +160,9 @@ describe(['taga11yenabled'], 'Editable area - Empty paragraph', function() {
 });
 
 describe(['taga11yenabled'], 'Editable area - Basic typing and caret moving', function() {
-	var testFileName = 'undo_redo.odt';
 
 	beforeEach(function () {
-		helper.beforeAll(testFileName, 'writer');
+		helper.setupAndLoadDocument('writer/undo_redo.odt');
 		cy.cGet('div.clipboard').as('clipboard');
 	});
 
@@ -475,10 +471,9 @@ describe(['taga11yenabled'], 'Editable area - Basic typing and caret moving', fu
 });
 
 describe(['taga11yenabled'], 'Editable area - Inner selection', function() {
-	var testFileName = 'undo_redo.odt';
 
 	beforeEach(function () {
-		helper.beforeAll(testFileName, 'writer');
+		helper.setupAndLoadDocument('writer/undo_redo.odt');
 		cy.cGet('div.clipboard').as('clipboard');
 	});
 
@@ -630,10 +625,9 @@ describe(['taga11yenabled'], 'Editable area - Inner selection', function() {
 });
 
 describe(['taga11yenabled'], 'Editable area - Multi-paragraph selection', function() {
-	var testFileName = 'undo_redo.odt';
 
 	beforeEach(function () {
-		helper.beforeAll(testFileName, 'writer');
+		helper.setupAndLoadDocument('writer/undo_redo.odt');
 		cy.cGet('div.clipboard').as('clipboard');
 	});
 
@@ -781,10 +775,9 @@ describe(['taga11yenabled'], 'Editable area - Multi-paragraph selection', functi
 });
 
 describe(['taga11yenabled'], 'Editable area - Empty selection', function() {
-	var testFileName = 'undo_redo.odt';
 
 	beforeEach(function () {
-		helper.beforeAll(testFileName, 'writer');
+		helper.setupAndLoadDocument('writer/undo_redo.odt');
 		cy.cGet('div.clipboard').as('clipboard');
 	});
 
@@ -863,10 +856,9 @@ describe(['taga11yenabled'], 'Editable area - Empty selection', function() {
 });
 
 describe(['taga11yenabled'], 'Editable area - Undo/Redo', function() {
-	var testFileName = 'undo_redo.odt';
 
 	beforeEach(function () {
-		helper.beforeAll(testFileName, 'writer');
+		helper.setupAndLoadDocument('writer/undo_redo.odt');
 		cy.cGet('div.clipboard').as('clipboard');
 	});
 
@@ -939,10 +931,9 @@ describe(['taga11yenabled'], 'Editable area - Undo/Redo', function() {
 });
 
 describe(['taga11yenabled'], 'Editable area - More typing', function() {
-	var testFileName = 'undo_redo.odt';
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'writer');
+		helper.setupAndLoadDocument('writer/undo_redo.odt');
 		cy.cGet('div.clipboard').as('clipboard');
 	});
 
@@ -1027,10 +1018,9 @@ describe(['taga11yenabled'], 'Editable area - More typing', function() {
 // • Item 2
 // • Item 3
 describe(['taga11yenabled'], 'Editable area - Unordered lists', function() {
-	var testFileName = 'unordered_list.odt';
 
 	beforeEach(function () {
-		helper.beforeAll(testFileName, 'writer');
+		helper.setupAndLoadDocument('writer/unordered_list.odt');
 		cy.cGet('div.clipboard').as('clipboard');
 	});
 
@@ -1211,10 +1201,9 @@ describe(['taga11yenabled'], 'Editable area - Unordered lists', function() {
 });
 
 describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Editing - Basic typing', function() {
-	var testFileName = 'undo_redo.odt';
 
 	beforeEach(function () {
-		helper.beforeAll(testFileName, 'writer');
+		helper.setupAndLoadDocument('writer/undo_redo.odt');
 		cy.cGet('div.clipboard').as('clipboard');
 	});
 

@@ -2,11 +2,9 @@
 
 var helper = require('../../common/helper');
 describe.skip('Repair Document', function() {
-	var origTestFileName = 'repair_doc.odp';
-	var testFileName;
 
 	beforeEach(function() {
-		testFileName = helper.beforeAll(origTestFileName, 'impress', undefined, true);
+		helper.setupAndLoadDocument('impress/repair_doc.odp',true);
 	});
 
 	function repairDoc(frameId1, frameId2) {

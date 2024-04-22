@@ -5,11 +5,9 @@ var impressHelper = require('../../common/impress_helper');
 var mobileHelper = require('../../common/mobile_helper');
 
 describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Slide operations', function() {
-	var origTestFileName = 'slide_operations.odp';
-	var testFileName;
 
 	beforeEach(function() {
-		testFileName = helper.beforeAll(origTestFileName, 'impress');
+		helper.setupAndLoadDocument('impress/slide_operations.odp');
 
 		mobileHelper.enableEditingMobile();
 	});

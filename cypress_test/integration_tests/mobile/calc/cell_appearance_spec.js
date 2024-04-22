@@ -5,11 +5,9 @@ var calcHelper = require('../../common/calc_helper');
 var mobileHelper = require('../../common/mobile_helper');
 
 describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change cell appearance.', function() {
-	var origTestFileName = 'cell_appearance.ods';
-	var testFileName;
 
 	beforeEach(function() {
-		testFileName = helper.beforeAll(origTestFileName, 'calc');
+		helper.setupAndLoadDocument('calc/cell_appearance.ods');
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();

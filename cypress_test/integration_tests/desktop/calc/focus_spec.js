@@ -4,11 +4,9 @@ var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
 
 describe(['tagdesktop'], 'Calc focus tests', function() {
-	var origTestFileName = 'focus.ods';
-	var testFileName;
 
 	beforeEach(function() {
-		testFileName = helper.beforeAll(origTestFileName, 'calc');
+		helper.setupAndLoadDocument('calc/focus.ods');
 	});
 
 	it('Formula-bar focus', function() {

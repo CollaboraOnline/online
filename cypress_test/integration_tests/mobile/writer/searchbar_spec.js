@@ -6,11 +6,9 @@ var mobileHelper = require('../../common/mobile_helper');
 var writerHelper = require('../../common/writer_helper');
 
 describe.skip('Searching via search bar.', function() {
-	var origTestFileName = 'search_bar.odt';
-	var testFileName;
 
 	beforeEach(function() {
-		testFileName = helper.beforeAll(origTestFileName, 'writer');
+		helper.setupAndLoadDocument('writer/search_bar.odt');
 		mobileHelper.enableEditingMobile();
 		searchHelper.showSearchBar();
 	});

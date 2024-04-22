@@ -5,10 +5,9 @@ var repairHelper = require('../../common/repair_document_helper');
 const desktopHelper = require('../../common/desktop_helper');
 
 describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Editing Operations', function() {
-	var testFileName = 'undo_redo.odt';
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'writer');
+		helper.setupAndLoadDocument('writer/undo_redo.odt');
 		desktopHelper.switchUIToCompact();
 	});
 

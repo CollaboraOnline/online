@@ -4,12 +4,10 @@ var desktopHelper = require('../../common/desktop_helper');
 var helper = require('../../common/helper');
 
 describe(['tagmultiuser'], 'Multiuser Annotation Tests', function() {
-	var origTestFileName = 'comment_switching.odp';
-	var testFileName;
 
 	beforeEach(function() {
 
-		testFileName = helper.beforeAll(origTestFileName, 'impress', undefined, true);
+		helper.setupAndLoadDocument('impress/comment_switching.odp',true);
 		cy.viewport(2600, 800);
 		desktopHelper.switchUIToNotebookbar();
 
@@ -87,10 +85,9 @@ describe(['tagmultiuser'], 'Multiuser Annotation Tests', function() {
 });
 
 describe(['tagmultiuser'], 'Multiuser Collapsed Annotation Tests', function() {
-	var testFileName = 'comment_switching.odp';
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'impress', undefined, true);
+		helper.setupAndLoadDocument('impress/comment_switching.odp',true);
 		cy.viewport(2400, 800);
 		desktopHelper.switchUIToNotebookbar();
 
@@ -171,11 +168,9 @@ describe(['tagmultiuser'], 'Multiuser Collapsed Annotation Tests', function() {
 });
 
 describe(['tagmultiuser'], 'Multiuser Annotation Autosave Tests', function() {
-	var origTestFileName = 'comment_switching.odp';
-	var testFileName;
 
 	beforeEach(function() {
-		testFileName = helper.beforeAll(origTestFileName, 'impress', undefined, true);
+		helper.setupAndLoadDocument('impress/comment_switching.odp',true);
 		cy.viewport(2600, 800);
 		desktopHelper.switchUIToNotebookbar();
 

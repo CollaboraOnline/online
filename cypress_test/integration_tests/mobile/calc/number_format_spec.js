@@ -5,11 +5,9 @@ var calcHelper = require('../../common/calc_helper');
 var mobileHelper = require('../../common/mobile_helper');
 
 describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply number formatting.', function() {
-	var origTestFileName = 'number_format.ods';
-	var testFileName;
 
 	beforeEach(function() {
-		testFileName = helper.beforeAll(origTestFileName, 'calc');
+		helper.setupAndLoadDocument('calc/number_format.ods');
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();

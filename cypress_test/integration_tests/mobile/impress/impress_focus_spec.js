@@ -5,11 +5,9 @@ var mobileHelper = require('../../common/mobile_helper');
 var impressHelper = require('../../common/impress_helper');
 
 describe(['tagmobile', 'tagproxy'], 'Impress focus tests', function() {
-	var origTestFileName = 'focus.odp';
-	var testFileName;
 
 	beforeEach(function() {
-		testFileName = helper.beforeAll(origTestFileName, 'impress');
+		helper.setupAndLoadDocument('impress/focus.odp');
 	});
 
 	it('Select text box, no editing', function() {

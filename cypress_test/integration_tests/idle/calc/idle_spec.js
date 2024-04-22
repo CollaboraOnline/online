@@ -4,12 +4,10 @@ var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
 
 describe(['tagdesktop'], 'Idle', function() {
-	var origTestFileName = 'idle.ods';
-	var testFileName;
 	var dimDialogSelector = '#modal-dialog-inactive_user_message-overlay';
 
 	beforeEach(function() {
-		testFileName = helper.beforeAll(origTestFileName, 'calc');
+		helper.setupAndLoadDocument('calc/idle.ods');
 	});
 
 	function checkIfIsInteractiveAgain() {

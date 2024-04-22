@@ -5,14 +5,12 @@ var helper = require('../../common/helper');
 var { addSlide, changeSlide } = require('../../common/impress_helper');
 
 describe(['tagdesktop'], 'Annotation Tests', function() {
-	var origTestFileName = 'comment_switching.odp';
-	var testFileName;
 
 	beforeEach(function() {
 		// Give more horizontal room so that comments do not fall off the right
 		// side of the screen, causing scrolling or hidden buttons
 		cy.viewport(1500, 600);
-		testFileName = helper.beforeAll(origTestFileName, 'impress');
+		helper.setupAndLoadDocument('impress/comment_switching.odp');
 		desktopHelper.switchUIToNotebookbar();
 
 		if (Cypress.env('INTEGRATION') === 'nextcloud') {
@@ -145,12 +143,10 @@ describe(['tagdesktop'], 'Collapsed Annotation Tests', function() {
 });
 
 describe(['tagdesktop'], 'Comment Scrolling',function() {
-	var origTestFileName = 'comment_switching.odp';
-	var testFileName;
 
 	beforeEach(function() {
 		cy.viewport(1500, 600);
-		testFileName = helper.beforeAll(origTestFileName, 'impress');
+		helper.setupAndLoadDocument('impress/comment_switching.odp');
 		desktopHelper.switchUIToNotebookbar();
 
 		cy.cGet('#options-modify-page').click();

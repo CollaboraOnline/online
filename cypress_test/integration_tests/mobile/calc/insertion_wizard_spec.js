@@ -5,11 +5,9 @@ var calcHelper = require('../../common/calc_helper');
 var mobileHelper = require('../../common/mobile_helper');
 
 describe(['tagmobile', 'tagnextcloud'], 'Calc insertion wizard.', function() {
-	var origTestFileName = 'insertion_wizard.ods';
-	var testFileName;
 
 	beforeEach(function() {
-		testFileName = helper.beforeAll(origTestFileName, 'calc');
+		helper.setupAndLoadDocument('calc/insertion_wizard.ods');
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();

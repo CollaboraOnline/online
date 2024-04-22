@@ -5,11 +5,9 @@ var mobileHelper = require('../../common/mobile_helper');
 var impressHelper = require('../../common/impress_helper');
 
 describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties on selected text.', function() {
-	var origTestFileName = 'apply_paragraph_props_text.odp';
-	var testFileName;
 
 	beforeEach(function() {
-		testFileName = helper.beforeAll(origTestFileName, 'impress');
+		helper.setupAndLoadDocument('impress/apply_paragraph_props_text.odp');
 
 		mobileHelper.enableEditingMobile();
 

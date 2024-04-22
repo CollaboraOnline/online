@@ -5,16 +5,8 @@ const { insertImage } = require('../../common/desktop_helper');
 
 describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Open different file types', function () {
 
-	var testFileName = '';
-
-	function before(filename) {
-		var origTestFileName = filename;
-
-		testFileName = helper.beforeAll(origTestFileName, 'calc');
-	}
-
 	function openReadOnlyFile(filename) {
-		testFileName = helper.loadTestDocNoIntegration(filename, 'calc', false, false, false);
+		helper.loadTestDocNoIntegration(filename, 'calc', false, false, false);
 
 		//check doc is loaded
 		cy.cGet('.leaflet-canvas-container canvas', {timeout : Cypress.config('defaultCommandTimeout') * 2.0});
@@ -36,7 +28,7 @@ describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Open different file t
 	}
 
 	it('Open xls file', { defaultCommandTimeout: 60000 }, function () {
-		before('testfile.xls');
+		helper.setupAndLoadDocument('calc/testfile.xls');
 
 		assertData();
 
@@ -44,7 +36,7 @@ describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Open different file t
 	});
 
 	it('Open xlsx file', { defaultCommandTimeout: 60000 }, function () {
-		before('testfile.xlsx');
+		helper.setupAndLoadDocument('calc/testfile.xlsx');
 
 		assertData();
 	});
@@ -56,7 +48,7 @@ describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Open different file t
 		//to fit csv jsdialog in window
 		cy.viewport(1280, 960);
 
-		testFileName = helper.loadTestDocNoIntegration('testfile.csv', 'calc', false, false, false);
+		helper.loadTestDocNoIntegration('testfile.csv', 'calc', false, false, false);
 
 		cy.cGet('form.jsdialog-container.lokdialog_container').should('exist');
 
@@ -89,7 +81,7 @@ describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Open different file t
 	});
 
 	it('Open xlsm file', { defaultCommandTimeout: 60000 }, function() {
-		before('testfile.xlsm');
+		helper.setupAndLoadDocument('calc/testfile.xlsm');
 
 		assertData();
 
@@ -109,7 +101,7 @@ describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Open different file t
 	});
 
 	it('Open fods file', { defaultCommandTimeout: 60000 }, function() {
-		before('testfile.fods');
+		helper.setupAndLoadDocument('calc/testfile.fods');
 
 		//select all the content of doc
 		assertData();

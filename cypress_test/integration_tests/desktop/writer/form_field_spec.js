@@ -4,10 +4,9 @@ var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
 
 describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Form field button tests.', function() {
-	var testFileName = 'shape_operations.odt';
 
 	function before(fileName) {
-		testFileName = helper.beforeAll(fileName, 'writer');
+		helper.setupAndLoadDocument('writer/' + fileName);
 
 		if (Cypress.env('INTEGRATION') === 'nextcloud') {
 			desktopHelper.showStatusBarIfHidden();

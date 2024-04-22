@@ -6,11 +6,9 @@ var desktopHelper = require('../../common/desktop_helper');
 var { triggerNewSVGForShapeInTheCenter } = require('../../common/impress_helper');
 
 describe(['tagdesktop'], 'Image Operation Tests', function() {
-	var origTestFileName = 'image_operation.odp';
-	var testFileName;
 
 	beforeEach(function() {
-		testFileName = helper.beforeAll(origTestFileName, 'impress');
+		helper.setupAndLoadDocument('impress/image_operation.odp');
 	});
 
 	it('Insert/Delete image',function() {

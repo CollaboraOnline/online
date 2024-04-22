@@ -5,11 +5,9 @@ var calcHelper = require('../../common/calc_helper');
 var mobileHelper = require('../../common/mobile_helper');
 
 describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'AutoFilter', function() {
-	var origTestFileName = 'autofilter.ods';
-	var testFileName;
 
 	beforeEach(function() {
-		testFileName = helper.beforeAll(origTestFileName, 'calc');
+		helper.setupAndLoadDocument('calc/autofilter.ods');
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
 		helper.setDummyClipboardForCopy();

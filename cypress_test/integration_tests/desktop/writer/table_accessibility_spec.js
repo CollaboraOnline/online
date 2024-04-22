@@ -5,10 +5,9 @@ var helper = require('../../common/helper');
 var ceHelper = require('../../common/contenteditable_helper');
 
 describe(['taga11yenabled'], 'Table accessibility', function() {
-	var testFileName = 'table_accessibility.odt';
 
 	beforeEach(function () {
-		helper.beforeAll(testFileName, 'writer');
+		helper.setupAndLoadDocument('writer/table_accessibility.odt');
 		cy.cGet('div.clipboard').as('clipboard');
 	});
 

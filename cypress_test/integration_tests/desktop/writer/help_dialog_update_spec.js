@@ -9,10 +9,9 @@
 const { hideSidebar } = require('../../common/desktop_helper');
 var helper = require('../../common/helper');
 describe(['tagscreenshot'], 'Help dialog screenshot updation', function() {
-	var testFileName = 'help_dialog.odt';
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'writer');
+		helper.setupAndLoadDocument('writer/help_dialog.odt');
 	});
 
 	function copyScreenshot(fileName) {

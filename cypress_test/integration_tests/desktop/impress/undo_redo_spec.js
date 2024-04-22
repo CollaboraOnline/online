@@ -6,10 +6,9 @@ var desktopHelper = require('../../common/desktop_helper');
 var repairHelper = require('../../common/repair_document_helper');
 
 describe(['tagdesktop'], 'Editing Operations', function() {
-	var testFileName = 'undo_redo.odp';
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'impress');
+		helper.setupAndLoadDocument('impress/undo_redo.odp');
 		desktopHelper.switchUIToCompact();
 		desktopHelper.selectZoomLevel('30');
 		impressHelper.selectTextShapeInTheCenter();

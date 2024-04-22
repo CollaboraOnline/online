@@ -4,11 +4,9 @@ var helper = require('../../common/helper');
 var searchHelper = require('../../common/search_helper');
 
 describe.skip(['tagdesktop'], 'Searching via search bar' ,function() {
-	var origTestFileName = 'search_bar.odp';
-	var testFileName;
 
 	beforeEach(function() {
-		testFileName = helper.beforeAll(origTestFileName, 'impress');
+		helper.setupAndLoadDocument('impress/search_bar.odp');
 	});
 
 	it('Search existing word.', function() {

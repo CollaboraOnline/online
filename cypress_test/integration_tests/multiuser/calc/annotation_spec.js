@@ -4,11 +4,9 @@ var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
 
 describe(['tagmultiuser'], 'Multiuser Annotation Tests', function() {
-	var origTestFileName = 'annotation.ods';
-	var testFileName;
 
 	beforeEach(function() {
-		testFileName = helper.beforeAll(origTestFileName, 'calc', undefined, true);
+		helper.setupAndLoadDocument('calc/annotation.ods',true);
 		desktopHelper.switchUIToNotebookbar();
 	});
 
@@ -90,11 +88,10 @@ describe(['tagmultiuser'], 'Multiuser Annotation Tests', function() {
 });
 
 describe(['tagmultiuser'], 'Multiuser Annotation Autosave Tests', function() {
-	var origTestFileName = 'annotation.ods';
-	var testFileName;
 
 	beforeEach(function() {
-		testFileName = helper.beforeAll(origTestFileName, 'calc', undefined, true);
+
+		helper.setupAndLoadDocument('calc/annotation.ods',true);
 		desktopHelper.switchUIToNotebookbar();
 	});
 

@@ -6,11 +6,9 @@ var ceHelper = require('../../common/contenteditable_helper');
 var writerHelper = require('../../common/writer_helper');
 
 describe(['tagmultiuser'], 'Joining a document should not trigger an invalidation', function() {
-	var origTestFileName = 'invalidations.odt';
-	var testFileName;
 
 	beforeEach(function() {
-		testFileName = helper.beforeAll(origTestFileName, 'writer', undefined, true);
+		helper.setupAndLoadDocument('writer/invalidations.odt',true);
 		desktopHelper.switchUIToNotebookbar();
 	});
 

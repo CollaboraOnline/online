@@ -3,10 +3,9 @@
 var helper = require('../../common/helper');
 
 describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'JSDialog Tests', function() {
-	var testFileName = 'jsdialog.odp';
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'impress');
+		helper.setupAndLoadDocument('impress/jsdialog.odp');
 	});
 
 	it('Check disabled state in animation sidebar', function() {

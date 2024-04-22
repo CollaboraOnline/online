@@ -4,11 +4,9 @@ var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
 
 describe.skip(['tagdesktop'], 'Scroll through document, insert/delete items', function() {
-	var origTestFileName = 'navigator.odp';
-	var testFileName;
 
 	beforeEach(function() {
-		testFileName = helper.beforeAll(origTestFileName, 'impress');
+		helper.setupAndLoadDocument('impress/navigator.odp');
 
 		desktopHelper.selectZoomLevel('100');
 		cy.cGet('#menu-view').click();
