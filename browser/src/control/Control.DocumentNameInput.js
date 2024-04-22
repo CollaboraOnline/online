@@ -140,9 +140,11 @@ L.Control.DocumentNameInput = L.Control.extend({
 	},
 
 	onWopiProps: function(e) {
-		if (e.BaseFileName !== null)
+		if (e.BaseFileName !== null) {
 			// set the document name into the name field
 			$('#document-name-input').val(e.BreadcrumbDocName !== undefined ? e.BreadcrumbDocName : e.BaseFileName);
+			this.map.uiManager.enableTooltip($('#document-name-input'));
+		}
 		if (!e.UserCanNotWriteRelative && !this.map.isReadOnlyMode()) {
 			// Save As allowed
 			this.enableDocumentNameInput();
