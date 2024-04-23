@@ -738,6 +738,8 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		this._moveInProgress = false;
 		this._canonicalIdInitialized = false;
+		this._tileUpdate = 0;
+		this._nonnullDeltaUpdate = 0;
 		this._nullDeltaUpdate = 0;
 	},
 
@@ -6214,28 +6216,37 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		// if re-creating a canvas from rawDeltas don't update counts
 		if (wireMessage) {
+			var nullDelta = false;
 			if (isKeyframe) {
 				tile.loadCount++;
 				tile.deltaCount = 0;
 				tile.updateCount = 0;
+				this._tileUpdate++;
 				if (this._debug.tileDataOn) {
 					this._debug.tileDataAddLoad();
 				}
 			} else if (rawDelta.length === 0) {
 				tile.updateCount++;
 				this._nullDeltaUpdate++;
-				if (this._emptyDeltaDiv) {
-					this._emptyDeltaDiv.innerText = this._nullDeltaUpdate;
-				}
 				if (this._debug.tileDataOn) {
 					this._debug.tileDataAddUpdate();
 				}
-				return; // that was easy
+				nullDelta = true;
 			} else {
 				tile.deltaCount++;
+				this._nonnullDeltaUpdate++;
 				if (this._debug.tileDataOn) {
 					this._debug.tileDataAddDelta();
 				}
+			}
+			if (this._emptyDeltaDiv) {
+				this._emptyDeltaDiv.innerText =
+					this._tileUpdate.toString() + ':' +
+					this._nonnullDeltaUpdate.toString() + ':' +
+					this._nullDeltaUpdate.toString();
+			}
+			if (nullDelta) {
+				return; // that was easy
 			}
 		}
 		// else - re-constituting from tile.rawData

@@ -32,7 +32,7 @@ describe(['tagmultiuser'], 'Joining a document should not trigger an invalidatio
 		cy.cGet('#toolbar-down #StateWordCount').should('have.text', '1 word, 1 character');
 
 		cy.cGet('.empty-deltas').then(($before) => {
-			const beforeCount = $before.text();
+			const beforeCount = $before.text().split(':')[2];
 
 			// joining triggered a theme related invalidation
 			cy.cSetActiveFrame('#iframe2');
@@ -45,7 +45,7 @@ describe(['tagmultiuser'], 'Joining a document should not trigger an invalidatio
 			cy.cGet('#toolbar-down #StateWordCount').should('have.text', '1 word, 1 character');
 
 			cy.cGet('.empty-deltas').should(($after) => {
-				expect($after.text()).to.eq(beforeCount);
+				expect($after.text().split(':')[2]).to.eq(beforeCount);
 			});
 		});
 	});
@@ -66,7 +66,7 @@ describe(['tagmultiuser'], 'Joining a document should not trigger an invalidatio
 		cy.cGet('#toolbar-down #StateWordCount').should('have.text', '1 word, 1 character');
 
 		cy.cGet('.empty-deltas').then(($before) => {
-			var beforeCount = parseInt($before.text());
+			var beforeCount = parseInt($before.text().split(':')[2]);
 
 			// joins after a save triggered excessive invalidations on changes
 			cy.cGet('#File-tab-label').click();
@@ -91,7 +91,7 @@ describe(['tagmultiuser'], 'Joining a document should not trigger an invalidatio
 			cy.cGet('.empty-deltas').should(($after) => {
 				// allow one row of empty deltas, the case this protects regression against
 				// is a whole document invalidation
-				expect(parseInt($after.text())).to.be.lessThan(beforeCount + 10);
+				expect(parseInt($after.text().split(':')[2])).to.be.lessThan(beforeCount + 10);
 			});
 		});
 	});

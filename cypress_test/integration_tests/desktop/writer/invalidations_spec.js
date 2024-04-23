@@ -25,7 +25,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Invalidation tests.', func
 		cy.cGet('#toolbar-down #StateWordCount').should('have.text', '1 word, 1 character');
 
 		cy.cGet('.empty-deltas').then(($before) => {
-			const beforeCount = $before.text();
+			const beforeCount = $before.text().split(':')[2];
 
 			// Click in header area (there is no actual header, We are testing that nothing
 			// happens if there is no header in the document)
@@ -36,7 +36,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Invalidation tests.', func
 			cy.cGet('#toolbar-down #StateWordCount').should('have.text', 'Selected: 1 word, 1 character');
 
 			cy.cGet('.empty-deltas').should(($after) => {
-				expect($after.text()).to.eq(beforeCount);
+				expect($after.text().split(':')[2]).to.eq(beforeCount);
 			});
 		});
 	});
@@ -60,7 +60,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Invalidation tests.', func
 		cy.cGet('#toolbar-down #StateWordCount').should('have.text', 'Selected: 1 word, 1 character');
 
 		cy.cGet('.empty-deltas').then(($before) => {
-			const beforeCount = $before.text();
+			const beforeCount = $before.text().split(':')[2];
 
 			// Selects the wrong paragraph without this wait, not sure why
 			cy.wait(200);
@@ -74,12 +74,12 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Invalidation tests.', func
 
 			// verify empty deltas is unchanged
 			cy.cGet('.empty-deltas').should(($after) => {
-				expect($after.text()).to.eq(beforeCount);
+				expect($after.text().split(':')[2]).to.eq(beforeCount);
 			});
 		});
 
 		cy.cGet('.empty-deltas').then(($before) => {
-			const beforeCount = $before.text();
+			const beforeCount = $before.text().split(':')[2];
 
 			// click in main document
 			cy.cGet('.leaflet-layer').click(200, 200);
@@ -90,7 +90,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Invalidation tests.', func
 
 			// verify empty deltas is unchanged
 			cy.cGet('.empty-deltas').should(($after) => {
-				expect($after.text()).to.eq(beforeCount);
+				expect($after.text().split(':')[2]).to.eq(beforeCount);
 			});
 		});
 	});

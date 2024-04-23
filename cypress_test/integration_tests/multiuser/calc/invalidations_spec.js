@@ -28,7 +28,7 @@ describe(['tagmultiuser'], 'Joining a document should not trigger an invalidatio
 		cy.cGet('input#addressInput-input').should('have.prop', 'value', 'A1');
 
 		cy.cGet('.empty-deltas').then(($before) => {
-			const beforeCount = $before.text();
+			const beforeCount = $before.text().split(':')[2];
 
 			// joining triggered some theme related invalidations
 
@@ -47,7 +47,7 @@ describe(['tagmultiuser'], 'Joining a document should not trigger an invalidatio
 			cy.cGet('input#addressInput-input').should('have.prop', 'value', 'B1');
 
 			cy.cGet('.empty-deltas').should(($after) => {
-				expect($after.text()).to.eq(beforeCount);
+				expect($after.text().split(':')[2]).to.eq(beforeCount);
 			});
 		});
 	});
