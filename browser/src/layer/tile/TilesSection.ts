@@ -767,7 +767,7 @@ export class TilesSection extends CanvasSectionObject {
 			var paneSize = paneBounds.getSize();
 
 			// Calculate top-left in doc core-pixels for the frame.
-			var docPos = tsManager._getZoomDocPos(tsManager._newCenter, paneBounds, splitPos, scale, false /* findFreePaneCenter? */);
+			var docPos = tsManager._getZoomDocPos(tsManager._newCenter, tsManager._layer._pinchStartCenter, paneBounds, splitPos, scale, false /* findFreePaneCenter? */);
 
 			var destPos = new L.Point(0, 0);
 			var docAreaSize = paneSize.divideBy(scale);

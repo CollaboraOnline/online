@@ -610,42 +610,77 @@ L.TileSectionManager = L.Class.extend({
 		this._sectionContainer.requestReDraw();
 	},
 
-	_getZoomDocPos: function (pinchCenter, paneBounds, splitPos, scale, findFreePaneCenter) {
-		var inXBounds = (pinchCenter.x >= paneBounds.min.x) && (pinchCenter.x <= paneBounds.max.x);
-		var inYBounds = (pinchCenter.y >= paneBounds.min.y) && (pinchCenter.y <= paneBounds.max.y);
-
-		// Calculate the pinch-center in off-screen canvas coordinates.
-		var center = paneBounds.min.clone();
-		if (inXBounds)
-			center.x = pinchCenter.x;
-		if (inYBounds)
-			center.y = pinchCenter.y;
-
+	/**
+	 * Everything in this doc comment is speculation: I didn't write the code that supplies it and I'm guessing to
+	 * have something to work on for this function. That said, given my observations, they seem incredibly likely to be correct
+	 *
+	 * @param pinchCenter {{x: number, y: number}} The current pinch center in doc core-pixels
+	 * Normally expressed as an L.Point instance
+	 *
+	 * @param pinchStartCenter {{x: number, y: number}} The pinch center at the start of the pinch in doc core-pixels
+	 * Normally expressed as an L.Point instance
+	 *
+	 * @param paneBounds {{min: {x: number, y: number}, max: {x: number, y: number}}} The edges of the current pane
+	 * Traditionally this is the map border at the start of the pinch
+	 *
+	 * @param splitPos {{x: number, y: number}} The inset in core-pixels into the document caused by any splits (e.g. a frozen row at the start of the document)
+	 *
+	 * @param scale {number} The scale, relative to the initial size, of the document currently
+	 * Or rather this is equivalent to: old_width / new_width
+	 *
+	 * @param findFreePaneCenter {boolean} Wether to return a center point
+	 *
+	 * @returns {{topLeft: {x: number, y: number}, center?: {x: number, y: number}}} An object with a top left point in core-pixels and optionally a center point in core-pixels
+	 * Center is included iff findFreePaneCenter is true
+	 * (probably this should be encoded into the type, e.g. with an overload when this is converted to TypeScript)
+	 **/
+	_getZoomDocPos: function (pinchCenter, pinchStartCenter, paneBounds, splitPos, scale, findFreePaneCenter) {
 		var xMin = 0;
 		var hasXMargin = !this._layer.isCalc();
-		if (hasXMargin)
+		if (hasXMargin) {
 			xMin = -Infinity;
-		else if (paneBounds.min.x > 0)
+		} else if (paneBounds.min.x > 0) {
 			xMin = splitPos.x;
+		}
 
 		var yMin = 0;
-		if (paneBounds.min.y < 0)
+		if (paneBounds.min.y < 0) {
 			yMin = -Infinity;
-		else if (paneBounds.min.y > 0)
+		} else if (paneBounds.min.y > 0) {
 			yMin = splitPos.y;
+		}
+
+
+		pinchCenter = {
+			x: clamp(pinchCenter.x, paneBounds.min.x, paneBounds.max.x),
+			y: clamp(pinchCenter.y, paneBounds.min.y, paneBounds.max.y)
+		};
+
+		var documentTopLeft = new L.Point(xMin, yMin);
+
+		var paneSize = paneBounds.getSize();
+
+		var centerOffset = {
+			x: pinchCenter.x - pinchStartCenter.x,
+			y: pinchCenter.y - pinchStartCenter.y,
+		};
+
+		// Portion of the pane away that our pinchStart (which should be where we zoom round) is
+		var panePortion = {
+			x: (pinchStartCenter.x - paneBounds.min.x) / paneSize.x,
+			y: (pinchStartCenter.y - paneBounds.min.y) / paneSize.y,
+		};
 
 		// Top left in document coordinates.
 		var docTopLeft = new L.Point(
-			Math.max(xMin,
-				center.x - (center.x - paneBounds.min.x) / scale),
-			Math.max(yMin,
-				center.y - (center.y - paneBounds.min.y) / scale));
+			Math.max(documentTopLeft.x, pinchStartCenter.x + (centerOffset.x - paneSize.x * panePortion.x) / scale),
+			Math.max(documentTopLeft.y, pinchStartCenter.y + (centerOffset.y - paneSize.y * panePortion.y) / scale)
+		);
 
-		if (!findFreePaneCenter)
+		if (!findFreePaneCenter) {
 			return { topLeft: docTopLeft };
+		}
 
-		// Assumes paneBounds is the bounds of the free pane.
-		var paneSize = paneBounds.getSize();
 		var newPaneCenter = new L.Point(
 			(docTopLeft.x - splitPos.x + (paneSize.x + splitPos.x) / (2 * scale)) * scale / app.dpiScale,
 			(docTopLeft.y - splitPos.y + (paneSize.y + splitPos.y) / (2 * scale)) * scale / app.dpiScale);
@@ -663,7 +698,7 @@ L.TileSectionManager = L.Class.extend({
 		var viewBounds = ctx.viewBounds;
 		var freePaneBounds = new L.Bounds(viewBounds.min.add(splitPos), viewBounds.max);
 
-		return this._getZoomDocPos(this._newCenter, freePaneBounds, splitPos, scale, true /* findFreePaneCenter */).center;
+		return this._getZoomDocPos(this._newCenter, this._layer._pinchStartCenter, freePaneBounds, splitPos, scale, true /* findFreePaneCenter */).center;
 	},
 
 	_zoomAnimation: function () {
@@ -6457,7 +6492,9 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._painter.zoomStepEnd(zoom, newCenter, mapUpdater, runAtFinish, noGap);
 	},
 
-	preZoomAnimation: function () {
+	preZoomAnimation: function (pinchStartCenter) {
+		this._pinchStartCenter = this._map.project(pinchStartCenter).multiplyBy(app.dpiScale); // in core pixels
+
 		if (this.isCursorVisible()) {
 			this._cursorMarker.setOpacity(0);
 		}
@@ -6480,6 +6517,9 @@ L.CanvasTileLayer = L.Layer.extend({
 				viewCursorMarker.setOpacity(0);
 			}
 		}, this, true);
+
+
+
 	},
 
 	postZoomAnimation: function () {
@@ -6512,7 +6552,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	// Meant for desktop case, where the ending zoom and centers are all known in advance.
 	runZoomAnimation: function (zoomEnd, pinchCenter, mapUpdater, runAtFinish) {
 
-		this.preZoomAnimation();
+		this.preZoomAnimation(pinchCenter);
 		this.zoomStep(this._map.getZoom(), pinchCenter);
 		var thisObj = this;
 		this.zoomStepEnd(zoomEnd, pinchCenter,
