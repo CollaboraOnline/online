@@ -958,14 +958,6 @@ L.CanvasTileLayer = L.Layer.extend({
 			});
 		}, this));
 
-		this._dropDownButton = L.marker(new L.LatLng(0, 0), {
-			icon: L.divIcon({
-				className: 'spreadsheet-drop-down-marker',
-				iconSize: null
-			}),
-			interactive: true
-		});
-
 		this._cellResizeMarkerStart = L.marker(new L.LatLng(0, 0), {
 			icon: L.divIcon({
 				className: 'spreadsheet-cell-resize-marker',
@@ -4571,12 +4563,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		);
 	},
 
-	_onDropDownButtonClick: function () {
-		if (this._validatedCellAddress && app.calc.cellCursorVisible && this._validatedCellAddress.equals(app.calc.cellAddress.toArray())) {
-			this._map.sendUnoCommand('.uno:DataSelect');
-		}
-	},
-
 	_onUpdateGraphicInnerTextArea: function (rect, force) {
 		var topLeftTwips = new L.Point(rect[0], rect[1]);
 		var offset = new L.Point(rect[2], rect[3]);
@@ -4711,7 +4697,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 			if (this._cellCursorMarker) {
 				this._cellCursorMarker.setBounds(corePxBounds);
-				this._map.removeLayer(this._dropDownButton);
+				this._removeCellDropDownArrow();
 			}
 			else {
 				var cursorStyle = new CStyleData(this._cursorDataDiv);
@@ -4732,7 +4718,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				this._canvasOverlay.initPathGroup(this._cellCursorMarker);
 			}
 
-			this._addDropDownMarker();
+			this._addCellDropDownArrow();
 
 			var focusOutOfDocument = document.activeElement === document.body;
 			var dontFocusDocument = this._isAnyInputFocused() || focusOutOfDocument;
@@ -4749,7 +4735,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._canvasOverlay.removePathGroup(this._cellCursorMarker);
 			this._cellCursorMarker = undefined;
 		}
-		this._removeDropDownMarker();
+		this._removeCellDropDownArrow();
 		this._closeURLPopUp();
 	},
 
@@ -4760,14 +4746,14 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (show) {
 			if (this._validatedCellAddress && !validatedCellAddress.equals(this._validatedCellAddress.toArray())) {
 				this._validatedCellAddress = null;
-				this._removeDropDownMarker();
+				this._removeCellDropDownArrow();
 			}
 			this._validatedCellAddress = validatedCellAddress;
-			this._addDropDownMarker();
+			this._addCellDropDownArrow();
 		}
 		else if (this._validatedCellAddress && validatedCellAddress.equals(this._validatedCellAddress.toArray())) {
 			this._validatedCellAddress = null;
-			this._removeDropDownMarker();
+			this._removeCellDropDownArrow();
 		}
 	},
 
@@ -4790,31 +4776,35 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._inputHelpPopUp = inputHelpMarker;
 	},
 
-	_addDropDownMarker: function () {
+	_addCellDropDownArrow: function () {
 		if (this._validatedCellAddress && app.calc.cellCursorVisible && this._validatedCellAddress.equals(app.calc.cellAddress.toArray())) {
-			var pos = this._twipsToLatLng({ x: app.calc.cellCursorRectangle.x2, y: app.calc.cellCursorRectangle.y1 });
+			if (!app.sectionContainer.getSectionWithName('DropDownArrow')) {
+				let position = new app.definitions.simplePoint(app.calc.cellCursorRectangle.x2, app.calc.cellCursorRectangle.y1);
 
-			var dropDownMarker = this._getDropDownMarker(16);
-			dropDownMarker.setLatLng(pos);
-			this._map.addLayer(dropDownMarker);
+				let dropDownSection = new app.definitions.htmlObjectSection('DropDownArrow', 16, 16, position, 'spreadsheet-drop-down-marker'); // spreadsheet-drop-down-marker
+				app.sectionContainer.addSection(dropDownSection);
+
+				dropDownSection.onClick = function() {
+					dropDownSection.stopPropagating(); // This will be enough after we remove leaflet.
+					if (this._validatedCellAddress && app.calc.cellCursorVisible && this._validatedCellAddress.equals(app.calc.cellAddress.toArray())) {
+						this._map.sendUnoCommand('.uno:DataSelect');
+					}
+				}.bind(this);
+
+				dropDownSection.getHTMLObject().onclick = function(e) {
+					e.stopPropagation(); // We need this because leaflet can catch the event.
+					dropDownSection.onClick();
+				};
+			}
+			else {
+				app.sectionContainer.getSectionWithName('DropDownArrow').setPosition(app.calc.cellCursorRectangle.pX2, app.calc.cellCursorRectangle.pY1);
+			}
 		}
 	},
 
-	_removeDropDownMarker: function () {
-		if (!this._validatedCellAddress && this._dropDownButton)
-			this._map.removeLayer(this._dropDownButton);
-	},
-
-	_getDropDownMarker: function (dropDownSize) {
-		if (dropDownSize) {
-			var icon =  L.divIcon({
-				className: 'spreadsheet-drop-down-marker',
-				iconSize: [dropDownSize, dropDownSize],
-				iconAnchor: [0, 0]
-			});
-			this._dropDownButton.setIcon(icon);
-		}
-		return this._dropDownButton;
+	_removeCellDropDownArrow: function () {
+		if (!this._validatedCellAddress)
+			app.sectionContainer.removeSection('DropDownArrow');
 	},
 
 	_onUpdateCellResizeMarkers: function () {
@@ -5601,10 +5591,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._cellResizeMarkerEnd.on('dragstart drag dragend', this._onCellResizeMarkerDrag, this);
 		this._referenceMarkerStart.on('dragstart drag dragend', this._onReferenceMarkerDrag, this);
 		this._referenceMarkerEnd.on('dragstart drag dragend', this._onReferenceMarkerDrag, this);
-		this._dropDownButton.on('click', this._onDropDownButtonClick, this);
-		// The 'tap' events are not broadcasted by L.Map.TouchGesture, A specialized 'dropdownmarkertapped' event is
-		// generated just for the validity-dropdown-icon.
-		map.on('dropdownmarkertapped', this._onDropDownButtonClick, this);
 
 		map.setPermission(app.file.permission);
 

@@ -28,3 +28,13 @@
 #tb_formulabar_item_formula .inputbar_selection_handles{
 	/*display: none;*/
 }
+
+.html-object-section {
+	display: block;
+	position: absolute;
+	cursor: pointer;
+	left: 0;
+	top: 0;
+	z-index: 11;
+	user-select: none;
+}

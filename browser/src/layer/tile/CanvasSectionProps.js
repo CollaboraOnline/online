@@ -41,6 +41,7 @@ L.CSections.Scroll =				{ name: 'scroll'			, zIndex: 8};
 L.CSections.Comment =				{ name: 'comment'			, zIndex: 9	}; // This class is for comment markers. It is a document object. One should change instance's name after initializing (there may be many instances of this class).
 
 L.CSections.AutoFillMarker = 		{ name: 'auto fill marker'	, zIndex: 10};
+L.CSections.HTMLObject     =        { zIndex: 10 };
 
 L.CSections.ContentControl =        { name: 'content control'   , zIndex: 11 };
 /* Processing and drawing orders are meaningful between sections with the same zIndex. */
@@ -90,8 +91,9 @@ L.CSections.Comment.drawingOrder =					1; // Writer & Imnpress & Calc.
 
 /* zIndex = 10  */
 L.CSections.AutoFillMarker.processingOrder =		1; // Calc.
-
 L.CSections.AutoFillMarker.drawingOrder =			1; // Calc.
+L.CSections.HTMLObject.drawingOrder     =           55; // Calc.
+L.CSections.HTMLObject.processingOrder     =        1; // Calc.
 
 
 /* zIndex = 11  */
