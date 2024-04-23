@@ -83,16 +83,17 @@ bool CheckFileInfo::checkFileInfo(int redirectLimit)
         std::string wopiResponse = httpResponse->getBody();
         const bool failed = (httpResponse->statusLine().statusCode() != http::StatusCode::OK);
 
-        Log::StreamLogger logRes = failed ? Log::error() : Log::trace();
-        if (logRes.enabled())
+        Log::Level level = failed ? Log::Level::ERR : Log::Level::TRC;
+        if (Log::isEnabled(level))
         {
-            logRes << "WOPI::CheckFileInfo " << (failed ? "failed" : "returned") << " for URI ["
-                   << uriAnonym << "]: " << httpResponse->statusLine().statusCode() << ' '
-                   << httpResponse->statusLine().reasonPhrase()
-                   << ". Headers: " << httpResponse->header()
-                   << (failed ? "\tBody: [" + wopiResponse + ']' : std::string());
-
-            LOG_END_FLUSH(logRes);
+            std::ostringstream oss;
+            oss << "WOPI::CheckFileInfo " << (failed ? "failed" : "returned") << " for URI ["
+                << uriAnonym << "]: " << httpResponse->statusLine().statusCode() << ' '
+                << httpResponse->statusLine().reasonPhrase()
+                << ". Headers: " << httpResponse->header()
+                << (failed ? "\tBody: [" + wopiResponse + ']' : std::string());
+            LOG_END_FLUSH(oss);
+            Log::log(level, oss.str());
         }
 
         if (failed)

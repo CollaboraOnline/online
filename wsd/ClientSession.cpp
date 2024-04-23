@@ -974,7 +974,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
                 LOG_INF("Thread-local logging level being set to default ["
                         << Log::getLevel()
                         << "]");
-                Log::setThreadLocalLogLevel(Log::getLevel());
+                Log::setThreadLocalLogLevel(Log::getLevelName());
             }
             else
             {

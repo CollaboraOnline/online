@@ -3217,7 +3217,7 @@ void lokit_main(
         if (bTraceStartup && LogLevel != LogLevelStartup)
         {
             LOG_INF("Kit initialization complete: setting log-level to [" << LogLevel << "] as configured.");
-            Log::logger().setLevel(LogLevel);
+            Log::setLevel(LogLevel);
         }
 #endif
 

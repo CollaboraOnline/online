@@ -805,7 +805,7 @@ WopiStorage::handleUploadToStorageResponse(const WopiUploadDetails& details,
                                       ? "WOPI::PutRelativeFile"
                                       : (details.isRename ? "WOPI::RenameFile" : "WOPI::PutFile"));
 
-        if (Log::infoEnabled())
+        if (Log::isEnabled(Log::Level::INF))
         {
             if (COOLWSD::AnonymizeUserData)
             {

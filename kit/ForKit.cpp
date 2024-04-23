@@ -156,7 +156,7 @@ protected:
         {
             // Set environment variable so that new children will also set their log levels accordingly.
             setenv("COOL_LOGLEVEL", tokens[1].c_str(), 1);
-            Log::logger().setLevel(tokens[1]);
+            Log::setLevel(tokens[1]);
         }
         else if (tokens.size() == 3 && tokens.equals(0, "setconfig"))
         {
@@ -784,7 +784,7 @@ int forkit_main(int argc, char** argv)
     if (LogLevel != LogLevelStartup)
     {
         LOG_INF("Forkit initialization complete: setting log-level to [" << LogLevel << "] as configured.");
-        Log::logger().setLevel(LogLevel);
+        Log::setLevel(LogLevel);
     }
 
     // The SocketPoll ctor which may, depending on COOL_WATCHDOG env variable,

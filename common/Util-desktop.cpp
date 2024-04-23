@@ -23,6 +23,7 @@
 #include <fstream>
 #include <iomanip>
 
+#include <Poco/Exception.h>
 #include "Log.hpp"
 
 namespace Util

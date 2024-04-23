@@ -148,7 +148,7 @@ void KitWebSocketHandler::handleMessage(const std::vector<char>& data)
     }
     else if (tokens.equals(0, "setloglevel"))
     {
-        Log::logger().setLevel(tokens[1]);
+        Log::setLevel(tokens[1]);
     }
     else
     {

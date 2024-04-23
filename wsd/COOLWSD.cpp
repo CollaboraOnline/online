@@ -4247,10 +4247,10 @@ int COOLWSD::innerMain()
     if (LogLevel != "trace")
     {
         LOG_INF("WSD initialization complete: setting log-level to [" << LogLevel << "] as configured.");
-        Log::logger().setLevel(LogLevel);
+        Log::setLevel(LogLevel);
     }
 
-    if (Log::logger().getLevel() >= Poco::Message::Priority::PRIO_INFORMATION)
+    if (Log::getLevel() >= Log::Level::INF)
         LOG_ERR("Log level is set very high to '" << LogLevel << "' this will have a "
                 "significant performance impact. Do not use this in production.");
 
