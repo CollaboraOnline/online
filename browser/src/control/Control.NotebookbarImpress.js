@@ -278,40 +278,9 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'text': _('Download'),
 				'accessibility': { focusBack: true, combination: 'DA', de: null }
 			});
+		}
 
-			if (!this._map['wopi'].HideRepairOption) {
-				content.push({
-					'type': 'container',
-					'children': [
-						{
-							'id': 'repair',
-							'class': 'unorepair',
-							'type': 'bigmenubartoolitem',
-							'text': _('Repair'),
-							'command': _('Repair'),
-							'accessibility': { focusBack: true, combination: 'RF', de: null }
-						}
-					],
-					'vertical': 'true'
-				});
-			}
-			if (!this._map['wopi'].HideRepairOption) {
-				content.push({
-					'type': 'container',
-					'children': [
-						{
-							'id': 'repair',
-							'class': 'unorepair',
-							'type': 'bigmenubartoolitem',
-							'text': _('Repair'),
-							'command': _('Repair'),
-							'accessibility': { focusBack: true, combination: 'RF', de: null }
-						}
-					],
-					'vertical': 'true'
-				});
-			}
-		} else if (!this._map['wopi'].HideRepairOption) {
+		if (!this._map['wopi'].HideRepairOption) {
 			content.push({
 				'type': 'container',
 				'children': [
