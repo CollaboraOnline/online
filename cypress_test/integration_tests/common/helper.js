@@ -1172,8 +1172,6 @@ function setDummyClipboardForCopy(type) {
 					},
 				};
 			},
-
-			useAsyncWrite: true,
 		};
 	});
 }
