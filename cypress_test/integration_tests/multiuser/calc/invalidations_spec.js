@@ -6,6 +6,10 @@ var desktopHelper = require('../../common/desktop_helper');
 describe(['tagmultiuser'], 'Joining a document should not trigger an invalidation', function() {
 
 	beforeEach(function() {
+		// Turn off SpellChecking by default because grammar checking,
+		// when available, currently adds an extra empty update when
+		// grammar checking kicks in at server-side idle after a change.
+		localStorage.setItem('SpellOnline', false);
 		helper.setupAndLoadDocument('calc/invalidations.ods',true);
 		desktopHelper.switchUIToNotebookbar();
 	});

@@ -8,6 +8,10 @@ var writerHelper = require('../../common/writer_helper');
 describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Invalidation tests.', function() {
 
 	beforeEach(function() {
+		// Turn off SpellChecking by default because grammar checking,
+		// when available, currently adds an extra empty update when
+		// grammar checking kicks in at server-side idle after a change.
+		localStorage.setItem('SpellOnline', false);
 		helper.setupAndLoadDocument('writer/invalidations.odt');
 		desktopHelper.switchUIToNotebookbar();
 		cy.cGet('div.clipboard').as('clipboard');
