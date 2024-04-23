@@ -1,20 +1,9 @@
-/* global describe it cy require Cypress */
+/* global describe it cy require */
 var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
-const { insertImage } = require('../../common/desktop_helper');
+var desktopHelper = require('../../common/desktop_helper');
 
 describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Open different file types', function () {
-
-	function openReadOnlyFile(filename) {
-		helper.loadTestDocNoIntegration(filename, 'calc', false, false, false);
-
-		//check doc is loaded
-		cy.cGet('.leaflet-canvas-container canvas', {timeout : Cypress.config('defaultCommandTimeout') * 2.0});
-
-		helper.isCanvasWhite(false);
-
-		cy.cGet('#PermissionMode').should('be.visible').should('have.text', ' Read-only ');
-	}
 
 	function assertData() {
 		var expectedData = [
@@ -32,7 +21,7 @@ describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Open different file t
 
 		assertData();
 
-		insertImage();
+		desktopHelper.insertImage();
 	});
 
 	it('Open xlsx file', { defaultCommandTimeout: 60000 }, function () {
@@ -41,23 +30,19 @@ describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Open different file t
 		assertData();
 	});
 
-	//we are not using before because it loads the document and directly asserts if document is loaded but in
-	//case of csv file 1st when you try to load the doc it opens up jsdialog to import csv which requires user
-	//input and after click ok the doc starts to load
 	it('Open csv file', { defaultCommandTimeout: 60000 }, function() {
 		//to fit csv jsdialog in window
 		cy.viewport(1280, 960);
 
-		helper.loadTestDocNoIntegration('testfile.csv', 'calc', false, false, false);
+		var newFileName = helper.setupDocument('testfile.csv','calc');
+		// Skip document check to click through import csv dialog first
+		helper.loadDocument(newFileName,'calc',true);
 
 		cy.cGet('form.jsdialog-container.lokdialog_container').should('exist');
-
 		cy.cGet('.ui-pushbutton.jsdialog.button-primary').click();
 
 		//check doc is loaded
-		cy.cGet('.leaflet-canvas-container canvas', {timeout : Cypress.config('defaultCommandTimeout') * 2.0});
-
-		helper.isCanvasWhite(false);
+		helper.documentChecks();
 
 		cy.cGet('#mobile-edit-button')
 			.should('be.visible')
@@ -69,7 +54,7 @@ describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Open different file t
 	});
 
 	it('Open xlsb file', { defaultCommandTimeout: 60000 }, function() {
-		openReadOnlyFile('testfile.xlsb');
+		desktopHelper.openReadOnlyFile('testfile.xlsb');
 
 		cy.cGet('#mobile-edit-button').should('be.visible').click();
 		cy.cGet('#modal-dialog-switch-to-edit-mode-modal-overlay').should('be.visible');
@@ -85,17 +70,17 @@ describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Open different file t
 
 		assertData();
 
-		insertImage();
+		desktopHelper.insertImage();
 	});
 
 	it('Open xltm file', { defaultCommandTimeout: 60000 }, function() {
-		openReadOnlyFile('testfile.xltm');
+		desktopHelper.openReadOnlyFile('testfile.xltm');
 
 		cy.cGet('#mobile-edit-button').should('not.be.visible');
 	});
 
 	it('Open xltx file', { defaultCommandTimeout: 60000 }, function() {
-		openReadOnlyFile('testfile.xltm');
+		desktopHelper.openReadOnlyFile('testfile.xltm');
 
 		cy.cGet('#mobile-edit-button').should('not.be.visible');
 	});
@@ -106,6 +91,6 @@ describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Open different file t
 		//select all the content of doc
 		assertData();
 
-		insertImage();
+		desktopHelper.insertImage();
 	});
 });

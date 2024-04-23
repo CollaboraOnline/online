@@ -2,9 +2,96 @@
 /* global cy Cypress expect */
 
 /*
+ * Prepares the test document by copying or uploading it
+ * fileName: test document file name (without path)
+ * subFolder: sub folder inside data folder (e.g. writer, calc, impress)
+ * returns new test document file name (without path)
+ */
+function setupDocument(fileName, subFolder) {
+	cy.log('>> setupDocument - start');
+	cy.log('Param - fileName: ' + fileName);
+	cy.log('Param - subFolder: ' + subFolder);
+
+	var newFileName;
+	if (Cypress.env('INTEGRATION') === 'nextcloud') {
+		upLoadFileToNextCloud(fileName, subFolder);
+		newFileName = fileName;
+	} else if (Cypress.env('SERVER') !== 'localhost') {
+		newFileName = fileName;
+	} else {
+		// Rename and copy file to use a clean test document for every test case.
+		var randomText = (Math.random() + 1).toString(36).substring(7);
+		newFileName = Cypress.currentTest.title.replace(/[\/\\ ]/g, '-') + '-'+ randomText + '-' + fileName;
+		copyFile(fileName, newFileName, subFolder);
+	}
+
+	cy.log('<< setupDocument - end');
+	return newFileName;
+}
+
+/*
+ * Opens the document and waits for it to be ready
+ * fileName: test document file name (without path)
+ * subFolder: sub folder inside data folder (e.g. writer, calc, impress)
+ * skipDocumentChecks: Skips the document checks that wait for it to be ready.
+ *   This is useful for documents that have an interaction before the
+ *   document is loaded, such as clearing a warning about macros.
+ * isMultiUser: Set to true for multiuser tests.
+ */
+function loadDocument(fileName, subFolder, skipDocumentChecks, isMultiUser) {
+	cy.log('>> loadDocument - start');
+	cy.log('Param - fileName: ' + fileName);
+	cy.log('Param - subFolder: ' + subFolder);
+	if (skipDocumentChecks) {
+		cy.log('Param - skipDocumentChecks: ' + skipDocumentChecks);
+	}
+	if (isMultiUser) {
+		cy.log('Param - isMultiUser: ' + isMultiUser);
+	}
+
+	// Set viewport
+	doIfOnMobile(function() {
+		// could be any phone type
+		cy.viewport('iphone-6');
+	});
+	if (isMultiUser) {
+		cy.viewport(2000,660);
+	}
+
+	// Set active frame
+	if (isMultiUser) {
+		cy.cSetActiveFrame('#iframe1');
+	} else {
+		cy.cSetActiveFrame('#coolframe');
+	}
+
+	// Load document
+	if (Cypress.env('INTEGRATION') === 'nextcloud') {
+		loadDocumentNextcloud(fileName, subFolder);
+	} else {
+		loadDocumentNoIntegration(fileName, subFolder, isMultiUser);
+	}
+
+	// Wait for and verify that document is loaded
+	if (!skipDocumentChecks) {
+		if (isMultiUser) {
+			cy.cSetActiveFrame('#iframe1');
+			documentChecks();
+			cy.cSetActiveFrame('#iframe2');
+			documentChecks();
+		} else {
+			// frame set above
+			documentChecks();
+		}
+	}
+
+	cy.log('<< loadDocument - end');
+}
+
+/*
  * Covers most use cases. For more flexibility,
  * call setupDocument and loadDocument directly
- * fileName: Includes subFolder, for example: 'calc/hello-world.ods'
+ * fullFileName: Includes subFolder, for example: 'calc/hello-world.ods'
  */
 function setupAndLoadDocument(fullFileName, isMultiUser = false) {
 	cy.log('>> setupAndLoadDocument - start');
@@ -20,14 +107,28 @@ function setupAndLoadDocument(fullFileName, isMultiUser = false) {
 		fileName = fullFileName;
 	}
 
-	// TODO: replace with loadDocument and setupDocument
+	var newFileName = setupDocument(fileName, subFolder);
 	if (isMultiUser) {
-		beforeAll(fileName, subFolder, undefined, isMultiUser);
+		loadDocument(newFileName, subFolder, undefined, isMultiUser);
 	} else {
-		beforeAll(fileName, subFolder);
+		loadDocument(newFileName, subFolder);
 	}
 
 	cy.log('<< setupAndLoadDocument - end');
+	return newFileName;
+}
+
+/*
+ * Covers most use cases. For more flexibility,
+ * call closeDocument and loadDocument directly
+ */
+function reloadDocument(fileName, subFolder) {
+	cy.log('>> reloadDocument - start');
+
+	closeDocument(fileName);
+	loadDocument(fileName, subFolder);
+
+	cy.log('<< reloadDocument - end');
 }
 
 function copyFile(fileName, newFileName, subFolder) {
@@ -48,88 +149,36 @@ function copyFile(fileName, newFileName, subFolder) {
 	}
 }
 
-function getRandomFileName(noRename, noFileCopy, originalName) {
-	if (noRename !== true && noFileCopy !== true) {
-		var randomName = (Math.random() + 1).toString(36).substring(7);
-		return Cypress.currentTest.title.replace(/[\/\\ ]/g, '-') + '-'+ randomName + '-' + originalName;
-	}
-	else {
-		return originalName;
-	}
-}
-
 function logError(event) {
 	Cypress.log({ name:'error:', message: (event.error.message ? event.error.message : 'no message')
 		      + '\n' + (event.error.stack ? event.error.stack : 'no stack') });
 }
 
-function logLoadingParameters(fileName, subFolder, noFileCopy, isMultiUser, subsequentLoad, hasInteractionBeforeLoad, noRename) {
-	cy.log('Param - fileName: ' + fileName);
-	cy.log('Param - subFolder: ' + subFolder);
-	if (noFileCopy !== undefined)
-		cy.log('Param - noFileCopy: ' + noFileCopy);
-	if (isMultiUser !== undefined)
-		cy.log('Param - isMultiUser: ' + isMultiUser);
-	if (subsequentLoad !== undefined)
-		cy.log('Param - subsequentLoad: ' + subsequentLoad);
-	if (hasInteractionBeforeLoad !== undefined)
-		cy.log('Param - hasInteractionBeforeLoad: ' + hasInteractionBeforeLoad);
-	if (noRename !== undefined)
-		cy.log('Param - noRename: ' + noRename);
-}
+/*
+ * Loads the test document directly in Collabora Online.
+ */
+function loadDocumentNoIntegration(fileName, subFolder, isMultiUser) {
+	cy.log('>> loadDocumentNoIntegration - start');
 
-function generateDocumentURL() {
 	var URI = '';
+
 	if (Cypress.env('INTEGRATION') === 'php-proxy') {
 		URI += 'http://' + Cypress.env('SERVER') + '/richproxy/proxy.php?req=';
 	}
 
-	return URI;
-}
-
-function generateDocumentURI(URL, subFolder, newFileName) {
-	var URI = '';
 	if (subFolder === undefined) {
-		URI = URL + '/browser/' +
+		URI += '/browser/' +
 			Cypress.env('WSD_VERSION_HASH') +
 			'/debug.html?lang=en-US&file_path=' +
-			Cypress.env('DATA_WORKDIR') + newFileName;
+			Cypress.env('DATA_WORKDIR') + fileName;
 	} else {
-		URI = URL + '/browser/' +
+		URI += '/browser/' +
 			Cypress.env('WSD_VERSION_HASH') +
 			'/debug.html?lang=en-US&file_path=' +
-			Cypress.env('DATA_WORKDIR') + subFolder + '/' + newFileName;
+			Cypress.env('DATA_WORKDIR') + subFolder + '/' + fileName;
 	}
-	return URI;
-}
-
-/*
-Loading the test document directly in Collabora Online.
-Parameters:
-	fileName - test document file name (without path)
-	subFolder - sub folder inside data folder (e.g. writer, calc, impress)
-	noFileCopy - whether to create a copy of the test file before run the test.
-					By default, we create a copy to have a clear test document but
-					but when we test saving functionality we need to open same document
-	isMultiUser - whether the test is for multiuser
-	noRename - whether or not to give the file a unique name, if noFileCopy is false.
- */
-function loadTestDocNoIntegration(fileName, subFolder, noFileCopy, isMultiUser, noRename) {
-	cy.log('>> loadTestDocNoIntegration - start');
-
-	var newFileName = getRandomFileName(noRename, noFileCopy, fileName);
-
-	cy.log('Param - fileName: ' + fileName + ' -> ' + newFileName);
-
-	// Get a clean test document, by creating a copy of it in the workdir. We overwrite this copy everytime we run a new test case.
-	if (noFileCopy !== true)
-		copyFile(fileName, newFileName, subFolder);
-
-	var URL = generateDocumentURL();
-	var URI = generateDocumentURI(URL, subFolder, newFileName);
 
 	if (isMultiUser) {
-		cy.viewport(2000,660);
 		URI = URI.replace('debug.html', 'cypress-multiuser.html');
 	}
 
@@ -144,25 +193,16 @@ function loadTestDocNoIntegration(fileName, subFolder, noFileCopy, isMultiUser, 
 		}
 	});
 
-	cy.log('<< loadTestDocNoIntegration - end');
-
-	return newFileName;
+	cy.log('<< loadDocumentNoIntegration - end');
 }
 
-// Loading the test document inside a Nextcloud integration.
-// Parameters:
-// fileName - test document file name (without path)
-// subFolder - sub folder inside data folder (e.g. writer, calc, impress)
-// subsequentLoad - whether we load a test document for the first time in the
-//                  test case or not. It's important because we need to sign in
-//                  with the username + password only for the first time.
-function loadTestDocNextcloud(fileName, subFolder, subsequentLoad) {
-	cy.log('>> loadTestDocNextcloud - start');
+/*
+ * Loads the test document inside a Nextcloud integration
+ */
+function loadDocumentNextcloud(fileName, subFolder) {
+	cy.log('>> loadDocumentNextcloud - start');
 	cy.log('Param - fileName: ' + fileName);
 	cy.log('Param - subFolder: ' + subFolder);
-	cy.log('Param - subsequentLoad: ' + subsequentLoad);
-
-	upLoadFileToNextCloud(fileName, subFolder, subsequentLoad);
 
 	// Open test document
 	cy.cGet('tr[data-file=\'' + fileName + '\']').click();
@@ -190,7 +230,7 @@ function loadTestDocNextcloud(fileName, subFolder, subsequentLoad) {
 			Cypress.env('IFRAME_LEVEL', '2');
 		});
 
-	cy.log('<< loadTestDocNextcloud - end');
+	cy.log('<< loadDocumentNextcloud - end');
 }
 
 // Hide NC's first run wizard, which is opened by the first run of
@@ -222,10 +262,13 @@ function hideNCFirstRunWizard() {
 //                  test case or not. It's important because we need to sign in
 //                  with the username + password only for the first time.
 function upLoadFileToNextCloud(fileName, subFolder, subsequentLoad) {
-	cy.log('>> loadTestDocNextcloud - start');
+	cy.log('>> upLoadFileToNextCloud - start');
 	cy.log('Param - fileName: ' + fileName);
 	cy.log('Param - subFolder: ' + subFolder);
 	cy.log('Param - subsequentLoad: ' + subsequentLoad);
+
+	// TODO: subsequentLoad appears to be unused
+	// TODO: see if cy.session can handle login
 
 	// Open local nextcloud installation
 	var url = 'http://' + Cypress.env('SERVER') + 'nextcloud/index.php/apps/files';
@@ -297,7 +340,7 @@ function upLoadFileToNextCloud(fileName, subFolder, subsequentLoad) {
 	cy.cGet('tr[data-file=\'' + fileName + '\']')
 		.should('be.visible');
 
-	cy.log('<< loadTestDocNextcloud - end');
+	cy.log('<< upLoadFileToNextCloud - end');
 }
 
 // Used for interference testing. We wait until the interfering user loads
@@ -315,53 +358,10 @@ function waitForInterferingUser() {
 	cy.log('<< waitForInterferingUser - end');
 }
 
-// Loading the test document inside Collabora Online (directly or via some integration).
-// Parameters:
-// fileName - test document file name (without path)
-// subFolder - sub folder inside data folder (e.g. writer, calc, impress)
-// noFileCopy - whether to create a copy of the test file before run the test.
-//				By default, we create a copy to have a clear test document but
-//				but when we test saving functionality we need to open same document
-// isMultiUser - whether test is a multiuser test
-// subsequentLoad - whether we load a test document for the first time in the
-//                  test case or not. It's important for nextcloud because we need to sign in
-//                  with the username + password only for the first time.
-// noRename - whether or not to give the file a unique name, if noFileCopy is false.
-function loadTestDoc(fileName, subFolder, noFileCopy, isMultiUser, subsequentLoad, hasInteractionBeforeLoad, noRename) {
-	cy.log('>> loadTestDoc - start');
-
-	var server = Cypress.env('SERVER');
-	logLoadingParameters(fileName, subFolder, noFileCopy, isMultiUser, subsequentLoad, hasInteractionBeforeLoad, noRename);
-
-	// We set the mobile screen size here. We could use any other phone type here.
-	doIfOnMobile(function() {
-		cy.viewport('iphone-6');
-	});
-
-	var destFileName = fileName;
-	if (Cypress.env('INTEGRATION') === 'nextcloud') {
-		loadTestDocNextcloud(fileName, subFolder, subsequentLoad);
-	} else {
-		if (server !== 'localhost') {
-			noFileCopy = noRename = true;
-		}
-		destFileName = loadTestDocNoIntegration(fileName, subFolder, noFileCopy, isMultiUser, noRename);
-	}
-
-	// When dialog appears before document load (eg. macro warning, csv import options)
-	if (hasInteractionBeforeLoad === true)
-		return;
-
-	checkIfDocIsLoaded(isMultiUser);
-
-	cy.log('<< loadTestDoc - end');
-	return destFileName;
-}
-
 function documentChecks() {
 	cy.log('>> documentChecks - start');
 
-	cy.cframe().find('#document-canvas', {timeout : Cypress.config('defaultCommandTimeout') * 2.0});
+	cy.cGet('#document-canvas', {timeout : Cypress.config('defaultCommandTimeout') * 2.0});
 
 	// With php-proxy the client is irresponsive for some seconds after load, because of the incoming messages.
 	if (Cypress.env('INTEGRATION') === 'php-proxy') {
@@ -397,27 +397,6 @@ function documentChecks() {
 	}
 
 	cy.log('<< documentChecks - end');
-}
-
-function checkIfDocIsLoaded(isMultiUser) {
-	cy.log('>> checkIfDocIsLoaded - start');
-
-	if (isMultiUser) {
-		cy.cSetActiveFrame('#iframe1');
-		cy.cframe('#iframe1').its('body').should('not.be.undefined');
-		documentChecks();
-
-		cy.cSetActiveFrame('#iframe2');
-		cy.cframe('#iframe2').its('body').should('not.be.undefined');
-		documentChecks();
-	}
-	else {
-		cy.cSetActiveFrame('#coolframe');
-		cy.cframe().its('body').should('not.be.undefined');
-		documentChecks();
-	}
-
-	cy.log('<< checkIfDocIsLoaded - end');
 }
 
 // Assert that NO keyboard input is accepted (i.e. keyboard should be HIDDEN).
@@ -552,26 +531,6 @@ function clipboardTextShouldBeDifferentThan(text) {
 	});
 
 	cy.log('<< clipboardTextShouldBeDifferentThan - end');
-}
-
-// This is called during a test to reload the same document after
-// some modification. The purpose is typically to verify that
-// said changes were preserved in the document upon closing.
-function reload(fileName, subFolder, noFileCopy, isMultiUser, subsequentLoad, hasInteractionBeforeLoad) {
-	cy.log('Reloading document: ' + subFolder + '/' + fileName);
-	cy.log('Reloading document - noFileCopy: ' + noFileCopy);
-	cy.log('Reloading document - subsequentLoad: ' + subsequentLoad);
-	closeDocument(fileName);
-	var noRename = true;
-	return loadTestDoc(fileName, subFolder, noFileCopy, isMultiUser, subsequentLoad, hasInteractionBeforeLoad, noRename);
-}
-
-// noRename - whether or not to give the file a unique name, if noFileCopy is false.
-function beforeAll(fileName, subFolder, noFileCopy, isMultiUser, subsequentLoad, hasInteractionBeforeLoad, noRename) {
-	// Set defaults here in order to remove checks from cy.cGet function.
-	cy.cSetActiveFrame('#coolframe');
-
-	return loadTestDoc(fileName, subFolder, noFileCopy, isMultiUser, subsequentLoad, hasInteractionBeforeLoad, noRename);
 }
 
 // This method is intended to call after each test case.
@@ -1208,9 +1167,11 @@ function copy() {
 	});
 }
 
+module.exports.setupDocument = setupDocument;
+module.exports.loadDocument = loadDocument;
 module.exports.setupAndLoadDocument = setupAndLoadDocument;
-module.exports.loadTestDoc = loadTestDoc;
-module.exports.checkIfDocIsLoaded = checkIfDocIsLoaded;
+module.exports.reloadDocument = reloadDocument;
+module.exports.documentChecks = documentChecks;
 module.exports.assertCursorAndFocus = assertCursorAndFocus;
 module.exports.assertNoKeyboardInput = assertNoKeyboardInput;
 module.exports.assertHaveKeyboardInput = assertHaveKeyboardInput;
@@ -1220,7 +1181,6 @@ module.exports.expectTextForClipboard = expectTextForClipboard;
 module.exports.matchClipboardText = matchClipboardText;
 module.exports.clipboardTextShouldBeDifferentThan = clipboardTextShouldBeDifferentThan;
 module.exports.closeDocument = closeDocument;
-module.exports.reload = reload;
 module.exports.initAliasToNegative = initAliasToNegative;
 module.exports.doIfInCalc = doIfInCalc;
 module.exports.doIfInImpress = doIfInImpress;
@@ -1228,7 +1188,6 @@ module.exports.doIfInWriter = doIfInWriter;
 module.exports.doIfNotInCalc = doIfNotInCalc;
 module.exports.doIfNotInImpress = doIfNotInImpress;
 module.exports.doIfNotInWriter = doIfNotInWriter;
-module.exports.beforeAll = beforeAll;
 module.exports.typeText = typeText;
 module.exports.isImageWhite = isImageWhite;
 module.exports.isCanvasWhite = isCanvasWhite;
@@ -1249,7 +1208,6 @@ module.exports.overlayItemHasDifferentBoundsThan = overlayItemHasDifferentBounds
 module.exports.typeIntoInputField = typeIntoInputField;
 module.exports.getVisibleBounds = getVisibleBounds;
 module.exports.assertFocus = assertFocus;
-module.exports.loadTestDocNoIntegration = loadTestDocNoIntegration;
 module.exports.getBlinkingCursorPosition = getBlinkingCursorPosition;
 module.exports.clickAt = clickAt;
 module.exports.setDummyClipboardForCopy = setDummyClipboardForCopy;

@@ -61,18 +61,19 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 });
 
 describe(['tagdesktop'], 'Collapsed Annotation Tests', function() {
-	var origTestFileName = 'comment_switching.odp';
-	var testFileName;
+	var newFileName;
 
 	beforeEach(function() {
-		testFileName = helper.beforeAll(origTestFileName, 'impress');
+		newFileName = helper.setupAndLoadDocument('impress/comment_switching.odp');
 		desktopHelper.switchUIToNotebookbar();
 
 		if (Cypress.env('INTEGRATION') === 'nextcloud') {
 			desktopHelper.hideSidebarIfVisible();
 		}
 
-		cy.cGet('#options-modify-page').click();
+		// TODO: skip sidebar detection on reload
+		// cy.cGet('#options-modify-page').click();
+
 		desktopHelper.selectZoomLevel('50');
 	});
 
@@ -133,8 +134,7 @@ describe(['tagdesktop'], 'Collapsed Annotation Tests', function() {
 		cy.cGet('#map').focus();
 		cy.cGet('.cool-annotation-info-collapsed').should('be.not.visible');
 
-		helper.closeDocument(testFileName, '');
-		helper.beforeAll(testFileName, 'impress', true, false, false, true);
+		helper.reloadDocument(newFileName, 'impress');
 		cy.cGet('.cool-annotation-img').click();
 		cy.cGet('.cool-annotation-content-wrapper').should('exist');
 		cy.cGet('#annotation-content-area-1').should('have.text','some text0');
@@ -195,19 +195,19 @@ describe(['tagdesktop'], 'Comment Scrolling',function() {
 });
 
 describe(['tagdesktop'], 'Annotation Autosave Tests', function() {
-	var origTestFileName = 'comment_switching.odp';
-	var testFileName;
+	var newFileName;
 
 	beforeEach(function() {
-		cy.viewport(1500, 600);
-		testFileName = helper.beforeAll(origTestFileName, 'impress');
+		cy.viewport(2400, 600);
+		newFileName = helper.setupAndLoadDocument('impress/comment_switching.odp');
 		desktopHelper.switchUIToNotebookbar();
 
-		if (Cypress.env('INTEGRATION') === 'nextcloud') {
-			desktopHelper.hideSidebarIfVisible();
-		}
+		// TODO: skip sidebar detection on reload
+		// if (Cypress.env('INTEGRATION') === 'nextcloud') {
+			// desktopHelper.hideSidebarIfVisible();
+		// }
+		// cy.cGet('#options-modify-page').click();
 
-		cy.cGet('#options-modify-page').click();
 		desktopHelper.selectZoomLevel('50');
 	});
 
@@ -217,8 +217,7 @@ describe(['tagdesktop'], 'Annotation Autosave Tests', function() {
 		cy.cGet('.cool-annotation-autosavelabel').should('be.visible');
 		cy.cGet('.cool-annotation-edit.modify-annotation').should('be.visible');
 
-		helper.closeDocument(testFileName);
-		helper.beforeAll(testFileName, 'impress', true, false, false, true);
+		helper.reloadDocument(newFileName,'impress');
 		cy.cGet('.leaflet-marker-icon').should('exist');
 		cy.cGet('.cool-annotation-content > div').should('have.text','some text0');
 	});
@@ -234,8 +233,7 @@ describe(['tagdesktop'], 'Annotation Autosave Tests', function() {
 		cy.cGet('.leaflet-marker-icon').should('exist');
 		cy.cGet('.cool-annotation-content > div').should('have.text','some text0');
 
-		helper.closeDocument(testFileName);
-		helper.beforeAll(testFileName, 'impress', true, false, false, true);
+		helper.reloadDocument(newFileName,'impress');
 		cy.cGet('.leaflet-marker-icon').should('exist');
 		cy.cGet('.cool-annotation-content > div').should('have.text','some text0');
 	});
@@ -251,8 +249,7 @@ describe(['tagdesktop'], 'Annotation Autosave Tests', function() {
 		cy.cGet('.leaflet-marker-icon').should('not.exist');
 		cy.cGet('.cool-annotation-content > div').should('not.exist');
 
-		helper.closeDocument(testFileName);
-		helper.beforeAll(testFileName, 'impress', true, false, false, true);
+		helper.reloadDocument(newFileName,'impress');
 		cy.cGet('.leaflet-marker-icon').should('not.exist');
 		cy.cGet('.cool-annotation-content > div').should('not.exist');
 	});
@@ -268,8 +265,7 @@ describe(['tagdesktop'], 'Annotation Autosave Tests', function() {
 		cy.cGet('.cool-annotation-autosavelabel').should('be.visible');
 		cy.cGet('.cool-annotation-edit.modify-annotation').should('be.visible');
 
-		helper.closeDocument(testFileName);
-		helper.beforeAll(testFileName, 'impress', true, false, false, true);
+		helper.reloadDocument(newFileName,'impress');
 		cy.cGet('.leaflet-marker-icon').should('exist');
 		cy.cGet('.cool-annotation-content > div').should('have.text','some other text, some text0');
 	});
@@ -288,8 +284,7 @@ describe(['tagdesktop'], 'Annotation Autosave Tests', function() {
 		cy.cGet('#annotation-content-area-1').should('have.text','some other text, some text0');
 		cy.cGet('.leaflet-marker-icon').should('exist');
 
-		helper.closeDocument(testFileName);
-		helper.beforeAll(testFileName, 'impress', true, false, false, true);
+		helper.reloadDocument(newFileName,'impress');
 		cy.cGet('.leaflet-marker-icon').should('exist');
 		cy.cGet('.cool-annotation-content > div').should('have.text','some other text, some text0');
 	});
@@ -308,8 +303,7 @@ describe(['tagdesktop'], 'Annotation Autosave Tests', function() {
 		cy.cGet('#annotation-content-area-1').should('have.text','some text0');
 		cy.cGet('.leaflet-marker-icon').should('exist');
 
-		helper.closeDocument(testFileName);
-		helper.beforeAll(testFileName, 'impress', true, false, false, true);
+		helper.reloadDocument(newFileName,'impress');
 		cy.cGet('.leaflet-marker-icon').should('exist');
 		cy.cGet('.cool-annotation-content > div').should('have.text','some text0');
 	});
@@ -327,8 +321,7 @@ describe(['tagdesktop'], 'Annotation Autosave Tests', function() {
 		cy.cGet('#annotation-modify-textarea-1').should('include.text', 'some text0');
 		cy.cGet('#annotation-modify-textarea-1').should('include.text', 'some reply text');
 
-		helper.closeDocument(testFileName);
-		helper.beforeAll(testFileName, 'impress', true, false, false, true);
+		helper.reloadDocument(newFileName,'impress');
 		cy.cGet('.cool-annotation-edit.reply-annotation').should('be.not.visible');
 		cy.cGet('.cool-annotation-content > div').should('include.text','some reply text');
 	});
@@ -351,8 +344,7 @@ describe(['tagdesktop'], 'Annotation Autosave Tests', function() {
 		cy.cGet('.cool-annotation-content > div').should('include.text','some text0');
 		cy.cGet('.cool-annotation-content > div').should('include.text','some reply text');
 
-		helper.closeDocument(testFileName);
-		helper.beforeAll(testFileName, 'impress', true, false, false, true);
+		helper.reloadDocument(newFileName,'impress');
 		cy.cGet('.cool-annotation-edit.reply-annotation').should('be.not.visible');
 		cy.cGet('.cool-annotation-content > div').should('include.text','some reply text');
 	});
@@ -374,8 +366,7 @@ describe(['tagdesktop'], 'Annotation Autosave Tests', function() {
 		cy.cGet('.cool-annotation-edit.reply-annotation').should('be.not.visible');
 		cy.cGet('.cool-annotation-content > div').should('have.text','some text0');
 
-		helper.closeDocument(testFileName);
-		helper.beforeAll(testFileName, 'impress', true, false, false, true);
+		helper.reloadDocument(newFileName,'impress');
 		cy.cGet('.cool-annotation-edit.reply-annotation').should('be.not.visible');
 		cy.cGet('.cool-annotation-content > div').should('have.text','some text0');
 	});

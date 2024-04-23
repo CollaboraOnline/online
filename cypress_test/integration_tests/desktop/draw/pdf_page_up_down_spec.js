@@ -4,11 +4,10 @@ var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
 
 describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'PDF View Tests', function() {
-	var origTestFileName = 'pdf_page_up_down.pdf';
-	var testFileName;
+	var newFileName;
 
 	beforeEach(function() {
-		testFileName = helper.beforeAll(origTestFileName, 'draw');
+		newFileName = helper.setupAndLoadDocument('draw/pdf_page_up_down.pdf');
 	});
 
 	it('PDF page down', { env: { 'pdf-view': true } }, function() {
@@ -27,11 +26,14 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'PDF View Tests', function(
 		cy.cGet('.cool-annotation-content-wrapper').should('exist');
 		cy.cGet('#annotation-content-area-1').should('contain','some text0');
 
-		// Reload to close and save. PDFs cannot really be edited,
+		// Close to test save. PDFs cannot really be edited,
 		// only comments can be inserted, so they are not saved
 		// directly, rather save-as is used. This failed because
 		// DocBroker expected to get ModifiedStatus=false, which
 		// never happens with save-as and so we couldn't unload.
-		helper.reload(testFileName, 'draw', true);
+		helper.closeDocument(newFileName);
+
+		// TODO: verify comment still exists
+		// helper.reloadDocument(newFileName,'draw');
 	});
 });

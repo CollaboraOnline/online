@@ -4,7 +4,14 @@ var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
 
 describe(['tagdesktop', 'tagproxy'], 'macro dialog tests', function() {
-	var testFileName = 'macro.ods';
+
+	beforeEach(function() {
+		var newFileName = helper.setupDocument('macro.ods','calc');
+		// Skip document check to click through accept macro dialog first
+		helper.loadDocument(newFileName,'calc',true);
+		acceptMacroExecution();
+		helper.documentChecks();
+	});
 
 	function acceptMacroExecution() {
 		cy.get('#MacroWarnMedium.jsdialog')
@@ -12,12 +19,6 @@ describe(['tagdesktop', 'tagproxy'], 'macro dialog tests', function() {
 
 		cy.cGet('#MacroWarnMedium.jsdialog #ok').click();
 	}
-
-	beforeEach(function() {
-		helper.beforeAll(testFileName, 'calc', undefined, undefined, undefined, true);
-		acceptMacroExecution();
-		helper.checkIfDocIsLoaded();
-	});
 
 	function expandEntryInTreeView(entryText) {
 		cy.cGet().contains('.jsdialog.ui-treeview-cell', entryText)

@@ -5,8 +5,8 @@ const { selectZoomLevel, openReadOnlyFile } = require('../../common/desktop_help
 
 describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Open different file types', function() {
 
-	function before(filename) {
-		helper.setupAndLoadDocument('impress/' + filename);
+	function before(fileName) {
+		helper.setupAndLoadDocument('impress/' + fileName);
 
 		selectZoomLevel('50');
 
