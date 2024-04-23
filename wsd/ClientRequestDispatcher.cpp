@@ -1489,6 +1489,15 @@ void ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
             if (serveAsAttachment && contentType != "image/svg+xml")
                 response.set("Content-Disposition", "attachment; filename=\"" + fileName + '"');
 
+#if !MOBILEAPP
+            if (COOLWSD::WASMState != COOLWSD::WASMActivationState::Disabled)
+            {
+                response.add("Cross-Origin-Opener-Policy", "same-origin");
+                response.add("Cross-Origin-Embedder-Policy", "require-corp");
+                response.add("Cross-Origin-Resource-Policy", "cross-origin");
+            }
+#endif // !MOBILEAPP
+
             try
             {
                 HttpHelper::sendFileAndShutdown(socket, filePath.toString(), response);
