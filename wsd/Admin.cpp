@@ -46,7 +46,6 @@ using Poco::Util::Application;
 
 const int Admin::MinStatsIntervalMs = 50;
 const int Admin::DefStatsIntervalMs = 1000;
-const std::string levelList[] = {"none", "fatal", "critical", "error", "warning", "notice", "information", "debug", "trace"};
 
 /// Process incoming websocket messages
 void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
@@ -227,7 +226,7 @@ void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
     else if (tokens.equals(0, "shutdown"))
     {
         LOG_INF("Setting ShutdownRequestFlag: Shutdown requested by admin.");
-        if (Admin::instance().logAdminAction() && Log::logger().getChannel())
+        if (Admin::instance().logAdminAction())
         {
             LOG_ANY("Shutdown requested by admin with source IPAddress [" << _clientIPAdress
                                                                           << ']');
@@ -785,10 +784,9 @@ unsigned Admin::getNetStatsInterval()
 
 std::string Admin::getChannelLogLevels()
 {
-    unsigned int wsdLogLevel = Log::logger().get("wsd").getLevel();
-    std::string result = "wsd=" + levelList[wsdLogLevel];
+    std::string result = "wsd=" + Log::getLogLevelName("wsd");
 
-    result += " kit=" + (_forkitLogLevel.empty() != true ? _forkitLogLevel: levelList[wsdLogLevel]);
+    result += " kit=" + (_forkitLogLevel.empty() != true ? _forkitLogLevel: Log::getLogLevelName("wsd"));
 
     return result;
 }
@@ -797,15 +795,9 @@ void Admin::setChannelLogLevel(const std::string& channelName, std::string level
 {
     ASSERT_CORRECT_THREAD();
 
-    // Get the list of channels..
-    std::vector<std::string> nameList;
-    Log::logger().names(nameList);
-
-    if (std::find(std::begin(levelList), std::end(levelList), level) == std::end(levelList))
-        level = "debug";
-
     if (channelName == "wsd")
-        Log::logger().get("wsd").setLevel(level);
+        Log::setLogLevelByName("wsd", level);
+
     else if (channelName == "kit")
     {
         COOLWSD::setLogLevelsOfKits(level); // For current kits.

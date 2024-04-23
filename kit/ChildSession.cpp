@@ -1447,7 +1447,7 @@ bool ChildSession::paste(const char* buffer, int length, const StringVector& tok
     {
         getLOKitDocument()->setView(_viewId);
 
-        if (Log::logger().trace())
+        if (Log::traceEnabled())
         {
             // Ensure 8 byte alignment for the start of the data, SpookyHash needs it.
             std::vector<char> toHash(data, data + size);

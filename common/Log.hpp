@@ -23,28 +23,27 @@
 #include <sstream>
 #include <string>
 
-#include <Poco/Logger.h>
-
 #ifdef __ANDROID__
 #include <android/log.h>
 #endif
 
 #include "Util.hpp"
 
-enum Level
-{
-    FTL = 1, // Fatal
-    CTL,     // Critical
-    ERR,     // Error
-    WRN,     // Warning
-    NTC,     // Notice
-    INF,     // Information
-    DBG,     // Debug
-    TRC      // Trace
-};
-
 namespace Log
 {
+    enum Level
+    {
+        FTL = 1, // Fatal
+        CTL,     // Critical
+        ERR,     // Error
+        WRN,     // Warning
+        NTC,     // Notice
+        INF,     // Information
+        DBG,     // Debug
+        TRC,     // Trace
+        MAX
+    };
+
     /// Initialize the logging system.
     void initialize(const std::string& name,
                     const std::string& logLevel,
@@ -52,18 +51,10 @@ namespace Log
                     const bool logToFile,
                     const std::map<std::string, std::string>& config);
 
-    /// Returns the underlying logging system. Return value is effectively thread-local.
-    Poco::Logger& logger();
-
     /// Shutdown and release the logging system.
     void shutdown();
 
     void setThreadLocalLogLevel(const std::string& logLevel);
-
-    extern bool IsShutdown;
-
-    /// Was static shutdown() called? If so, producing more logs should be avoided.
-    inline bool isShutdownCalled() { return IsShutdown && !Util::isMobileApp(); }
 
     /// Generates log entry prefix. Example follows (without the pipes).
     /// |wsd-07272-07298 2020-04-25 17:29:28.928697 -0400 [ websrv_poll ] TRC  |
@@ -77,15 +68,6 @@ namespace Log
         gettimeofday(&tv, NULL);
         return prefix(tv, buffer, level);
     }
-
-    inline bool traceEnabled() { return logger().trace(); }
-    inline bool debugEnabled() { return logger().debug(); }
-    inline bool infoEnabled() { return logger().information(); }
-    inline bool warnEnabled() { return logger().warning(); }
-    inline bool errorEnabled() { return logger().error(); }
-    inline bool fatalEnabled() { return logger().fatal(); }
-
-    const std::string& getLevel();
 
     /// The following is to write streaming logs.
     /// Log::info() << "Value: 0x" << std::hex << value
@@ -134,6 +116,7 @@ namespace Log
         }
 
         std::ostringstream& getStream() { return _stream; }
+        static StreamLogger& getFor(Level l);
 
     private:
         std::ostringstream _stream;
@@ -142,47 +125,29 @@ namespace Log
         const bool _enabled;
     };
 
-    inline StreamLogger trace()
+    /// is a certain level of logging enabled ?
+    bool isEnabled(Level l);
+
+    inline bool traceEnabled()
     {
-        return traceEnabled()
-             ? StreamLogger([](const std::string& msg) { logger().trace(msg); }, "TRC")
-             : StreamLogger();
+        return isEnabled(Log::Level::TRC);
     }
 
-    inline StreamLogger debug()
-    {
-        return debugEnabled()
-             ? StreamLogger([](const std::string& msg) { logger().debug(msg); }, "DBG")
-             : StreamLogger();
-    }
+    /// Main entry function for all logging
+    void log(Level l, const std::string &text);
 
-    inline StreamLogger info()
-    {
-        return infoEnabled()
-             ? StreamLogger([](const std::string& msg) { logger().information(msg); }, "INF")
-             : StreamLogger();
-    }
+    /// Setting the logging level
+    void setLevel(const std::string &l);
 
-    inline StreamLogger warn()
-    {
-        return warnEnabled()
-             ? StreamLogger([](const std::string& msg) { logger().warning(msg); }, "WRN")
-             : StreamLogger();
-    }
+    /// Getting the logging level
+    Level getLevel();
 
-    inline StreamLogger error()
-    {
-        return errorEnabled()
-             ? StreamLogger([](const std::string& msg) { logger().error(msg); }, "ERR")
-             : StreamLogger();
-    }
+    std::string getLogLevelName(const std::string &channel);
+    void setLogLevelByName(const std::string &channel,
+                           const std::string &level);
 
-    inline StreamLogger fatal()
-    {
-        return fatalEnabled()
-             ? StreamLogger([](const std::string& msg) { logger().fatal(msg); }, "FTL")
-             : StreamLogger();
-    }
+    /// Getting the logging level as a string
+    const std::string& getLevelName();
 
     /// Dump the invalid id as 0, otherwise dump in hex.
     /// Note: std::thread::id defines operator<< which
@@ -272,14 +237,12 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
 
 #ifdef __ANDROID__
 
-#define LOG_LOG(LOG, NAME, LVL, STR)                                     \
-    ((void)__android_log_print(ANDROID_LOG_DEBUG, "coolwsd", "%s %s", LVL, STR.c_str()))
-
+#define LOG_LOG(LVL, STR) \
+    ((void)__android_log_print(ANDROID_LOG_DEBUG, \
+                               "coolwsd", "%s %s", #LVL, STR.c_str()))
 #else
 
-#define LOG_LOG(LOG, NAME, LVL, STR)                                     \
-    LOG.log(Poco::Message(NAME, STR, static_cast<Poco::Message::Priority>(LVL)))
-
+#define LOG_LOG(LVL, STR)  Log::log(Log::LVL, STR)
 #endif
 
 #define LOG_END_NOFILE(LOG) (void)0
@@ -287,69 +250,57 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
 #define LOG_END(LOG) LOG << "| " << LOG_FILE_NAME(__FILE__) << ":" STRING(__LINE__)
 
 /// Used to end multi-statement logging via Log::StreamLogger.
-#define LOG_END_FLUSH(LOG)                                                                         \
-    do                                                                                             \
-    {                                                                                              \
-        LOG_END(LOG);                                                                              \
-        LOG.flush();                                                                               \
+#define LOG_END_FLUSH(LOG) \
+    do                     \
+    {                      \
+        LOG_END(LOG);      \
+        LOG.flush();       \
     } while (false)
 
-#define LOG_MESSAGE_(LVL, X, TYPE, PREFIX, SUFFIX)                                                 \
-    do                                                                                             \
-    {                                                                                              \
-        auto& log_ = Log::logger();                                                                \
-        if (LOG_CONDITIONAL(log_, TYPE))                                                           \
-        {                                                                                          \
-            LOG_BODY_(log_, LVL, X, PREFIX, SUFFIX);                                               \
-        }                                                                                          \
+#define LOG_MESSAGE_(LVL, X, PREFIX, SUFFIX)    \
+    do                                          \
+    {                                           \
+        if (LOG_CONDITIONAL(LVL))               \
+        {                                       \
+            LOG_BODY_(LVL, X, PREFIX, SUFFIX);  \
+        }                                       \
     } while (false)
 
 
-#define LOG_BODY_(LOG, LVL, X, PREFIX, END)                        \
-    char b_[1024];                                                                                 \
-    std::ostringstream oss_(Log::prefix<sizeof(b_) - 1>(b_, #LVL), std::ostringstream::ate);       \
-    PREFIX(oss_);                                                                                  \
-    oss_ << std::boolalpha << X;                                                                   \
-    END(oss_);                                                                                     \
-    LOG_LOG(LOG, LOG.name(), LVL, oss_.str())
+#define LOG_BODY_(LVL, X, PREFIX, END)          \
+    char b_[1024];                              \
+    std::ostringstream oss_(                    \
+        Log::prefix<sizeof(b_) - 1>(b_, #LVL),  \
+        std::ostringstream::ate);               \
+    PREFIX(oss_);                               \
+    oss_ << std::boolalpha << X;                \
+    END(oss_);                                  \
+    LOG_LOG(LVL, oss_.str())
 
-#define LOG_ANY(X)                                                                                 \
-    char b_[1024];                                                                                 \
-    std::ostringstream oss_(Log::prefix<sizeof(b_) - 1>(b_, "INF"), std::ostringstream::ate);      \
-    logPrefix(oss_);                                                                               \
-    oss_ << std::boolalpha << X;                                                                   \
-    LOG_END(oss_);                                                                                 \
-    Poco::AutoPtr<Poco::Channel> channel = Log::logger().getChannel();                             \
-    channel->log(Poco::Message("", oss_.str(), Poco::Message::Priority::PRIO_INFORMATION))
+#define LOG_ANY(X)                              \
+    char b_[1024];                              \
+    std::ostringstream oss_(                    \
+        Log::prefix<sizeof(b_) - 1>(b_, "INF"), \
+        std::ostringstream::ate);               \
+    logPrefix(oss_);                            \
+    oss_ << std::boolalpha << X;                \
+    LOG_END(oss_);                              \
+    Log::log(Log::Level::INF, oss_.str());
 
 #if defined __GNUC__ || defined __clang__
-#  define LOG_CONDITIONAL(log,type)                                                                \
-    __builtin_expect((!Log::isShutdownCalled() && log.type()), 0)
+#  define LOG_CONDITIONAL(type)                 \
+    __builtin_expect(Log::isEnabled(Log::Level::type), 0)
 #else
-#  define LOG_CONDITIONAL(log,type)                                                                \
-    (!Log::isShutdownCalled() && log.type())
+#  define LOG_CONDITIONAL(type) Log::isEnabled(Log::Level::type)
 #endif
 
-#define LOG_TRC(X)                                                                                 \
-    LOG_MESSAGE_(TRC, X, trace, logPrefix, LOG_END)                                                \
-
-#define LOG_TRC_NOFILE(X)                                                                          \
-    LOG_MESSAGE_(TRC, X, trace, logPrefix, LOG_END_NOFILE)                                         \
-
-#define LOG_DBG(X)                                                                                 \
-    LOG_MESSAGE_(DBG, X, debug, logPrefix, LOG_END)                                                \
-
-#define LOG_INF(X)                                                                                 \
-    LOG_MESSAGE_(INF, X, information, logPrefix, LOG_END)                                          \
-
-#define LOG_INF_NOFILE(X)                                                                          \
-    LOG_MESSAGE_(INF, X, information, logPrefix, LOG_END_NOFILE)                                   \
-
-#define LOG_WRN(X)                                                                                 \
-    LOG_MESSAGE_(WRN, X, warning, logPrefix, LOG_END)                                              \
-
-#define LOG_ERR(X)                                                                                 \
-    LOG_MESSAGE_(ERR, X, error, logPrefix, LOG_END)                                                \
+#define LOG_TRC(X)        LOG_MESSAGE_(TRC, X, logPrefix, LOG_END)
+#define LOG_TRC_NOFILE(X) LOG_MESSAGE_(TRC, X, logPrefix, LOG_END_NOFILE)
+#define LOG_DBG(X)        LOG_MESSAGE_(DBG, X, logPrefix, LOG_END)
+#define LOG_INF(X)        LOG_MESSAGE_(INF, X, logPrefix, LOG_END)
+#define LOG_INF_NOFILE(X) LOG_MESSAGE_(INF, X, logPrefix, LOG_END_NOFILE)
+#define LOG_WRN(X)        LOG_MESSAGE_(WRN, X, logPrefix, LOG_END)
+#define LOG_ERR(X)        LOG_MESSAGE_(ERR, X, logPrefix, LOG_END)
 
 /// Log an ERR entry with the given errno appended.
 #define LOG_SYS_ERRNO(ERRNO, X)                                                                    \
@@ -368,10 +319,9 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
     do                                                                                             \
     {                                                                                              \
         std::cerr << X << std::endl;                                                               \
-        auto& log_ = Log::logger();                                                                \
-        if (LOG_CONDITIONAL(log_, fatal))                                                          \
+        if (LOG_CONDITIONAL(FTL))                                                                  \
         {                                                                                          \
-            LOG_BODY_(log_, FTL, X, logPrefix, LOG_END);                                           \
+            LOG_BODY_(FTL, X, logPrefix, LOG_END);                                           \
         }                                                                                          \
     } while (false)
 
@@ -384,25 +334,12 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
         LOG_FTL(X << " (" << Util::symbolicErrno(onrre) << ": " << std::strerror(onrre) << ')');   \
     } while (false)
 
-/// No-prefix version of LOG_TRC.
-#define LOG_TRC_S(X)                                                                               \
-    LOG_MESSAGE_(TRC, X, debug, (void), LOG_END)                                                   \
-
-/// No-prefix version of LOG_DBG.
-#define LOG_DBG_S(X)                                                                               \
-    LOG_MESSAGE_(DBG, X, debug, (void), LOG_END)                                                   \
-
-/// No-prefix version of LOG_INF.
-#define LOG_INF_S(X)                                                                               \
-    LOG_MESSAGE_(INF, X, error, (void), LOG_END)                                                   \
-
-/// No-prefix version of LOG_WRN.
-#define LOG_WRN_S(X)                                                                               \
-    LOG_MESSAGE_(WRN, X, error, (void), LOG_END)                                                   \
-
-/// No-prefix version of LOG_ERR.
-#define LOG_ERR_S(X)                                                                               \
-    LOG_MESSAGE_(ERR, X, error, (void), LOG_END)                                                   \
+/// No-prefix versions:
+#define LOG_TRC_S(X) LOG_MESSAGE_(TRC, X, (void), LOG_END)
+#define LOG_DBG_S(X) LOG_MESSAGE_(DBG, X, (void), LOG_END)
+#define LOG_INF_S(X) LOG_MESSAGE_(INF, X, (void), LOG_END)
+#define LOG_WRN_S(X) LOG_MESSAGE_(WRN, X, (void), LOG_END)
+#define LOG_ERR_S(X) LOG_MESSAGE_(ERR, X, (void), LOG_END)
 
 #define LOG_CHECK(X)                                                                               \
     do                                                                                             \
