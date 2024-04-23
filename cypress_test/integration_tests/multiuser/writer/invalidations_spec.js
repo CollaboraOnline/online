@@ -8,6 +8,10 @@ var writerHelper = require('../../common/writer_helper');
 describe(['tagmultiuser'], 'Joining a document should not trigger an invalidation', function() {
 
 	beforeEach(function() {
+		// Turn off SpellChecking by default because grammar checking,
+		// when available, currently adds an extra empty update when
+		// grammar checking kicks in at server-side idle after a change.
+		localStorage.setItem('SpellOnline', false);
 		helper.setupAndLoadDocument('writer/invalidations.odt',true);
 		desktopHelper.switchUIToNotebookbar();
 	});
@@ -15,12 +19,6 @@ describe(['tagmultiuser'], 'Joining a document should not trigger an invalidatio
 	it('Join document', function() {
 		cy.cSetActiveFrame('#iframe1');
 		cy.cGet('div.clipboard').as('clipboard');
-
-		// Disable Grammar (and SpellChecking)
-		// TODO: Grammar checking, when available, adds an extra empty update when
-		// it kicks in after a change
-		cy.cGet('#Review-tab-label').click();
-		cy.cGet('.notebookbar > .unoSpellOnline > button').click();
 
 		ceHelper.type('X');
 
@@ -55,12 +53,6 @@ describe(['tagmultiuser'], 'Joining a document should not trigger an invalidatio
 	it('Join after document save and modify', function() {
 		cy.cSetActiveFrame('#iframe1');
 		cy.cGet('div.clipboard').as('clipboard');
-
-		// Disable Grammar (and SpellChecking)
-		// TODO: Grammar checking, when available, adds an extra empty update when
-		// it kicks in after a change
-		cy.cGet('#Review-tab-label').click();
-		cy.cGet('.notebookbar > .unoSpellOnline > button').click();
 
 		ceHelper.type('X');
 
