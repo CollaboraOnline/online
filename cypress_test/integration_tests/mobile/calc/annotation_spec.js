@@ -4,11 +4,10 @@ var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 
 describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Annotation Tests',function() {
-	var origTestFileName = 'annotation.ods';
-	var testFileName;
+	var newFileName;
 
 	beforeEach(function() {
-		testFileName = helper.beforeAll(origTestFileName, 'calc');
+		newFileName = helper.setupAndLoadDocument('calc/annotation.ods');
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
@@ -19,7 +18,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Annotation Tests',function(
 		cy.cGet('#comment-container-1').should('exist');
 		mobileHelper.selectHamburgerMenuItem(['File', 'Save']);
 
-		helper.reload(testFileName, 'calc', true);
+		helper.reloadDocument(newFileName, 'calc');
 		mobileHelper.enableEditingMobile();
 		mobileHelper.openCommentWizard();
 		helper.waitUntilIdle('#mobile-wizard-content', undefined);

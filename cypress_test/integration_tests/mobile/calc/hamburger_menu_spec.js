@@ -6,16 +6,11 @@ var mobileHelper = require('../../common/mobile_helper');
 var repairHelper = require('../../common/repair_document_helper');
 
 describe.skip(['tagmobile'], 'Trigger hamburger menu options.', function() {
-	var testFileName;
-
-	function before(testFile) {
-		helper.setupAndLoadDocument('calc' + testFile);
-
-		// Click on edit button
-		mobileHelper.enableEditingMobile();
-	}
 
 	it('Save', { defaultCommandTimeout: 60000 }, function() {
+		var newFileName = helper.setupAndLoadDocument('calc/hamburger_menu.ods');
+		mobileHelper.enableEditingMobile();
+
 		calcHelper.selectEntireSheet();
 
 		cy.cGet('#copy-paste-container table td').should('contain.text', 'Textx');
@@ -27,7 +22,7 @@ describe.skip(['tagmobile'], 'Trigger hamburger menu options.', function() {
 		mobileHelper.selectHamburgerMenuItem(['File', 'Save']);
 
 		// Reopen the document and check content.
-		helper.reload(testFileName, 'calc', true);
+		helper.reloadDocument(newFileName, 'calc');
 
 		mobileHelper.enableEditingMobile();
 		calcHelper.selectEntireSheet();
@@ -35,7 +30,8 @@ describe.skip(['tagmobile'], 'Trigger hamburger menu options.', function() {
 	});
 
 	it('Print', function() {
-		before('hamburger_menu.ods');
+		helper.setupAndLoadDocument('calc/hamburger_menu.ods');
+		mobileHelper.enableEditingMobile();
 
 		// A new window should be opened with the PDF.
 		cy.getFrameWindow()
@@ -49,32 +45,41 @@ describe.skip(['tagmobile'], 'Trigger hamburger menu options.', function() {
 	});
 
 	it('Download as PDF', function() {
-		before('hamburger_menu.ods');
+		helper.setupAndLoadDocument('calc/hamburger_menu.ods');
+		mobileHelper.enableEditingMobile();
+
 		mobileHelper.selectHamburgerMenuItem(['Download as', 'PDF Document (.pdf)']);
 		mobileHelper.pressPushButtonOfDialog('Export');
 		cy.cGet('iframe').should('have.attr', 'data-src').should('contain', 'download');
 	});
 
 	it('Download as ODS', function() {
-		before('hamburger_menu.ods');
+		helper.setupAndLoadDocument('calc/hamburger_menu.ods');
+		mobileHelper.enableEditingMobile();
+
 		mobileHelper.selectHamburgerMenuItem(['Download as', 'ODF spreadsheet (.ods)']);
 		cy.cGet('iframe').should('have.attr', 'data-src').should('contain', 'download');
 	});
 
 	it('Download as XLS', function() {
-		before('hamburger_menu.ods');
+		helper.setupAndLoadDocument('calc/hamburger_menu.ods');
+		mobileHelper.enableEditingMobile();
+
 		mobileHelper.selectHamburgerMenuItem(['Download as', 'Excel 2003 Spreadsheet (.xls)']);
 		cy.cGet('iframe').should('have.attr', 'data-src').should('contain', 'download');
 	});
 
 	it('Download as XLSX', function() {
-		before('hamburger_menu.ods');
+		helper.setupAndLoadDocument('calc/hamburger_menu.ods');
+		mobileHelper.enableEditingMobile();
+
 		mobileHelper.selectHamburgerMenuItem(['Download as', 'Excel Spreadsheet (.xlsx)']);
 		cy.cGet('iframe').should('have.attr', 'data-src').should('contain', 'download');
 	});
 
 	it('Undo/redo.', function() {
-		before('hamburger_menu.ods');
+		helper.setupAndLoadDocument('calc/hamburger_menu.ods');
+		mobileHelper.enableEditingMobile();
 
 		// Type a new character
 		calcHelper.clickOnFirstCell(true, true);
@@ -100,7 +105,8 @@ describe.skip(['tagmobile'], 'Trigger hamburger menu options.', function() {
 	});
 
 	it('Repair Document', function() {
-		before('hamburger_menu.ods');
+		helper.setupAndLoadDocument('calc/hamburger_menu.ods');
+		mobileHelper.enableEditingMobile();
 
 		// Type a new character
 		calcHelper.clickOnFirstCell(true, true);
@@ -121,35 +127,45 @@ describe.skip(['tagmobile'], 'Trigger hamburger menu options.', function() {
 	});
 
 	it('Cut.', function() {
-		before('hamburger_menu.ods');
+		helper.setupAndLoadDocument('calc/hamburger_menu.ods');
+		mobileHelper.enableEditingMobile();
+
 		calcHelper.selectEntireSheet();
 		mobileHelper.selectHamburgerMenuItem(['Edit', 'Cut']);
 		cy.cGet('#mobile-wizard-content-modal-dialog-copy_paste_warning-box').should('exist');
 	});
 
 	it('Copy.', function() {
-		before('hamburger_menu.ods');
+		helper.setupAndLoadDocument('calc/hamburger_menu.ods');
+		mobileHelper.enableEditingMobile();
+
 		calcHelper.selectEntireSheet();
 		mobileHelper.selectHamburgerMenuItem(['Edit', 'Copy']);
 		cy.cGet('#mobile-wizard-content-modal-dialog-copy_paste_warning-box').should('exist');
 	});
 
 	it('Paste.', function() {
-		before('hamburger_menu.ods');
+		helper.setupAndLoadDocument('calc/hamburger_menu.ods');
+		mobileHelper.enableEditingMobile();
+
 		calcHelper.selectEntireSheet();
 		mobileHelper.selectHamburgerMenuItem(['Edit', 'Paste']);
 		cy.cGet('#mobile-wizard-content-modal-dialog-copy_paste_warning-box').should('exist');
 	});
 
 	it('Select all.', function() {
-		before('hamburger_menu.ods');
+		helper.setupAndLoadDocument('calc/hamburger_menu.ods');
+		mobileHelper.enableEditingMobile();
+
 		mobileHelper.selectHamburgerMenuItem(['Edit', 'Select All']);
 		cy.cGet('.spreadsheet-cell-resize-marker').should('be.visible');
 		cy.cGet('#copy-paste-container table td').should('contain.text', 'Text');
 	});
 
 	it('Search some word.', function() {
-		before('hamburger_menu_search.ods');
+		helper.setupAndLoadDocument('calc/hamburger_menu_search.ods');
+		mobileHelper.enableEditingMobile();
+
 		mobileHelper.selectHamburgerMenuItem(['Search']);
 		// Search bar become visible
 		cy.cGet('#mobile-wizard-content').should('not.be.empty');
@@ -162,7 +178,9 @@ describe.skip(['tagmobile'], 'Trigger hamburger menu options.', function() {
 	});
 
 	it('Sheet: insert row before.', function() {
-		before('hamburger_menu_sheet.ods');
+		helper.setupAndLoadDocument('calc/hamburger_menu_sheet.ods');
+		mobileHelper.enableEditingMobile();
+
 		calcHelper.clickOnFirstCell();
 		mobileHelper.selectHamburgerMenuItem(['Sheet', 'Insert Rows', 'Rows Above']);
 		calcHelper.selectEntireSheet();
@@ -177,7 +195,9 @@ describe.skip(['tagmobile'], 'Trigger hamburger menu options.', function() {
 	});
 
 	it('Sheet: insert row after.', function() {
-		before('hamburger_menu_sheet.ods');
+		helper.setupAndLoadDocument('calc/hamburger_menu_sheet.ods');
+		mobileHelper.enableEditingMobile();
+
 		calcHelper.clickOnFirstCell();
 		mobileHelper.selectHamburgerMenuItem(['Sheet', 'Insert Rows', 'Rows Below']);
 		calcHelper.selectEntireSheet();
@@ -192,7 +212,9 @@ describe.skip(['tagmobile'], 'Trigger hamburger menu options.', function() {
 	});
 
 	it('Sheet: insert column before.', function() {
-		before('hamburger_menu_sheet.ods');
+		helper.setupAndLoadDocument('calc/hamburger_menu_sheet.ods');
+		mobileHelper.enableEditingMobile();
+
 		calcHelper.clickOnFirstCell();
 		mobileHelper.selectHamburgerMenuItem(['Sheet', 'Insert Columns', 'Columns Before']);
 		calcHelper.selectEntireSheet();
@@ -207,7 +229,9 @@ describe.skip(['tagmobile'], 'Trigger hamburger menu options.', function() {
 	});
 
 	it('Sheet: insert column after.', function() {
-		before('hamburger_menu_sheet.ods');
+		helper.setupAndLoadDocument('calc/hamburger_menu_sheet.ods');
+		mobileHelper.enableEditingMobile();
+
 		calcHelper.clickOnFirstCell();
 		mobileHelper.selectHamburgerMenuItem(['Sheet', 'Insert Columns', 'Columns After']);
 		calcHelper.selectEntireSheet();
@@ -222,7 +246,9 @@ describe.skip(['tagmobile'], 'Trigger hamburger menu options.', function() {
 	});
 
 	it('Sheet: delete rows.', function() {
-		before('hamburger_menu_sheet.ods');
+		helper.setupAndLoadDocument('calc/hamburger_menu_sheet.ods');
+		mobileHelper.enableEditingMobile();
+
 		calcHelper.clickOnFirstCell();
 		mobileHelper.selectHamburgerMenuItem(['Sheet', 'Delete Rows']);
 		calcHelper.selectEntireSheet();
@@ -235,7 +261,9 @@ describe.skip(['tagmobile'], 'Trigger hamburger menu options.', function() {
 	});
 
 	it('Sheet: delete columns.', function() {
-		before('hamburger_menu_sheet.ods');
+		helper.setupAndLoadDocument('calc/hamburger_menu_sheet.ods');
+		mobileHelper.enableEditingMobile();
+
 		calcHelper.clickOnFirstCell();
 		mobileHelper.selectHamburgerMenuItem(['Sheet', 'Delete Columns']);
 		calcHelper.selectEntireSheet();
@@ -248,7 +276,8 @@ describe.skip(['tagmobile'], 'Trigger hamburger menu options.', function() {
 	});
 
 	it('Data: sort ascending.', function() {
-		before('hamburger_menu_sort.ods');
+		helper.setupAndLoadDocument('calc/hamburger_menu_sort.ods');
+		mobileHelper.enableEditingMobile();
 
 		// Sort the first column's data
 		calcHelper.selectFirstColumn();
@@ -266,7 +295,8 @@ describe.skip(['tagmobile'], 'Trigger hamburger menu options.', function() {
 	});
 
 	it('Data: sort descending.', function() {
-		before('hamburger_menu_sort.ods');
+		helper.setupAndLoadDocument('calc/hamburger_menu_sort.ods');
+		mobileHelper.enableEditingMobile();
 
 		// Sort the first column's data
 		calcHelper.selectFirstColumn();
@@ -284,7 +314,8 @@ describe.skip(['tagmobile'], 'Trigger hamburger menu options.', function() {
 	});
 
 	it('Data: grouping / ungrouping.', function() {
-		before('hamburger_menu.ods');
+		helper.setupAndLoadDocument('calc/hamburger_menu.ods');
+		mobileHelper.enableEditingMobile();
 
 		// Group first
 		calcHelper.selectFirstColumn();
@@ -296,7 +327,8 @@ describe.skip(['tagmobile'], 'Trigger hamburger menu options.', function() {
 	});
 
 	it('Data: remove grouping outline.', function() {
-		before('hamburger_menu.ods');
+		helper.setupAndLoadDocument('calc/hamburger_menu.ods');
+		mobileHelper.enableEditingMobile();
 
 		// Group first
 		calcHelper.selectFirstColumn();
@@ -309,7 +341,8 @@ describe.skip(['tagmobile'], 'Trigger hamburger menu options.', function() {
 	});
 
 	it('Data: show / hide grouping details.', function() {
-		before('hamburger_menu.ods');
+		helper.setupAndLoadDocument('calc/hamburger_menu.ods');
+		mobileHelper.enableEditingMobile();
 
 		// Group first
 		calcHelper.selectFirstColumn();
@@ -341,7 +374,8 @@ describe.skip(['tagmobile'], 'Trigger hamburger menu options.', function() {
 	});
 
 	it('Check version information.', function() {
-		before('hamburger_menu.ods');
+		helper.setupAndLoadDocument('calc/hamburger_menu.ods');
+		mobileHelper.enableEditingMobile();
 
 		mobileHelper.selectHamburgerMenuItem(['About']);
 

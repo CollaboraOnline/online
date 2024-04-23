@@ -5,16 +5,12 @@ var mobileHelper = require('../../common/mobile_helper');
 var nextcloudHelper = require('../../common/nextcloud_helper');
 
 describe(['tagnextcloud'], 'Nextcloud specific tests.', function() {
-	var origTestFileName = 'nextcloud.odt';
-	var testFileName;
 
 	it('Insert image from storage.', function() {
-		helper.upLoadFileToNextCloud('image_to_insert.png', 'writer');
-
-		testFileName = helper.beforeAll(origTestFileName, 'writer', undefined, true);
-
+		helper.setupAndLoadDocument('writer/nextcloud.odt');
 		mobileHelper.enableEditingMobile();
 
+		helper.upLoadFileToNextCloud('image_to_insert.png', 'writer');
 		nextcloudHelper.insertImageFromStorage('image_to_insert.png');
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane svg g.Graphic')
@@ -22,11 +18,10 @@ describe(['tagnextcloud'], 'Nextcloud specific tests.', function() {
 	});
 
 	it('Save as.', function() {
-		testFileName = helper.beforeAll(origTestFileName, 'writer');
-
+		var newFileName = helper.setupAndLoadDocument('writer/nextcloud.odt');
 		mobileHelper.enableEditingMobile();
 
-		nextcloudHelper.saveFileAs('1' + testFileName);
+		nextcloudHelper.saveFileAs('1' + newFileName);
 
 		// Close the document
 		cy.get('#mobile-edit-button')
@@ -39,16 +34,15 @@ describe(['tagnextcloud'], 'Nextcloud specific tests.', function() {
 				Cypress.env('IFRAME_LEVEL', '');
 			});
 
-		cy.get('tr[data-file=\'1' + testFileName + '\']')
+		cy.get('tr[data-file=\'1' + newFileName + '\']')
 			.should('be.visible');
 
-		cy.get('tr[data-file=\'' + testFileName + '\']')
+		cy.get('tr[data-file=\'' + newFileName + '\']')
 			.should('be.visible');
 	});
 
 	it('Share.', function() {
-		testFileName = helper.beforeAll(origTestFileName, 'writer');
-
+		helper.setupAndLoadDocument('writer/nextcloud.odt');
 		mobileHelper.enableEditingMobile();
 
 		nextcloudHelper.checkAndCloseSharing();

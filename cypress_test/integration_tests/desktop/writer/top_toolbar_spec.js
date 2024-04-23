@@ -5,11 +5,10 @@ var desktopHelper = require('../../common/desktop_helper');
 var writerHelper = require('../../common/writer_helper');
 
 describe(['tagdesktop'], 'Top toolbar tests.', function() {
-	var origTestFileName = 'top_toolbar.odt';
-	var testFileName;
+	var newFileName;
 
 	beforeEach(function() {
-		testFileName = helper.beforeAll(origTestFileName, 'writer');
+		newFileName = helper.setupAndLoadDocument('writer/top_toolbar.odt');
 		desktopHelper.switchUIToNotebookbar();
 
 		if (Cypress.env('INTEGRATION') === 'nextcloud') {
@@ -283,14 +282,12 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 			.should('not.exist');
 	});
 
-	it('Save.', { defaultCommandTimeout: 60000 }, function() {
+	it('Save.', function() {
 		cy.cGet('.notebookbar > .unoBold > button').click();
 		cy.cGet('.notebookbar-shortcuts-bar .unoSave').click();
-		helper.reload(testFileName, 'writer', true);
+		helper.reloadDocument(newFileName,'writer');
 		helper.setDummyClipboardForCopy();
-		cy.wait(2000);
 		writerHelper.selectAllTextOfDoc();
-		cy.wait(2000);
 		helper.copy();
 		cy.cGet('#copy-paste-container p b').should('exist');
 	});

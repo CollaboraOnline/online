@@ -4,21 +4,18 @@ var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 
 describe(['tagmobile'], 'Annotation tests.', function() {
-	var origTestFileName = 'annotation.odt';
-	var testFileName;
+	var newFileName;
 
 	beforeEach(function() {
-		testFileName = helper.beforeAll(origTestFileName, 'writer');
+		newFileName = helper.setupAndLoadDocument('writer/annotation.odt');
 
-		// Click on edit button
 		mobileHelper.enableEditingMobile();
 	});
 
 	it('Saving comment.', { defaultCommandTimeout: 60000 }, function() {
-		cy.wait(1000);
 		mobileHelper.insertComment();
 		mobileHelper.selectHamburgerMenuItem(['File', 'Save']);
-		helper.reload(testFileName, 'writer', true);
+		helper.reloadDocument(newFileName, 'writer');
 		mobileHelper.enableEditingMobile();
 		mobileHelper.openCommentWizard();
 		helper.waitUntilIdle('#mobile-wizard-content', undefined);

@@ -27,10 +27,14 @@ describe(['tagmultiuser'], 'Joining a document should not trigger an invalidatio
 			const beforeCount = $before.text();
 
 			// joining triggered some theme related invalidations
+
+			// Reload page
 			cy.cSetActiveFrame('#iframe2');
 			cy.get('#form2').submit();
+			// Wait for page to unload
+			cy.wait(1000);
 			// Wait for page to finish loading
-			helper.checkIfDocIsLoaded(true);
+			helper.documentChecks();
 
 			cy.cSetActiveFrame('#iframe1');
 			cy.cGet('input#addressInput').should('have.prop', 'value', 'A1');

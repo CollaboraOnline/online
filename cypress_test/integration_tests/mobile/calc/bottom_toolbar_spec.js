@@ -1,4 +1,4 @@
-/* global describe it cy Cypress require */
+/* global describe it cy Cypress require beforeEach */
 
 var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
@@ -6,8 +6,8 @@ var mobileHelper = require('../../common/mobile_helper');
 
 describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Interact with bottom toolbar.', function() {
 
-	function before(fileName) {
-		helper.setupAndLoadDocument('calc/' + fileName);
+	beforeEach(function() {
+		helper.setupAndLoadDocument('calc/bottom_toolbar.ods');
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
@@ -15,7 +15,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Interact with bottom toolba
 		helper.waitUntilIdle('#toolbar-down');
 
 		calcHelper.clickOnFirstCell();
-	}
+	});
 
 	function getTextEndPosForFirstCell() {
 		calcHelper.dblClickOnFirstCell();
@@ -33,7 +33,6 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Interact with bottom toolba
 	}
 
 	it('Apply bold.', function() {
-		before('bottom_toolbar.ods');
 		helper.setDummyClipboardForCopy();
 		cy.cGet('#toolbar-down #bold').click();
 		calcHelper.selectEntireSheet();
@@ -42,7 +41,6 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Interact with bottom toolba
 	});
 
 	it('Apply italic.', function() {
-		before('bottom_toolbar.ods');
 		helper.setDummyClipboardForCopy();
 
 		cy.cGet('#toolbar-down #italic').click();
@@ -52,7 +50,6 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Interact with bottom toolba
 	});
 
 	it('Apply underline.', function() {
-		before('bottom_toolbar.ods');
 		helper.setDummyClipboardForCopy();
 		cy.cGet('#toolbar-down #underline').click();
 		calcHelper.selectEntireSheet();
@@ -61,14 +58,12 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Interact with bottom toolba
 	});
 
 	it.skip('Apply strikeout.', function() {
-		before('bottom_toolbar.ods');
 		cy.cGet('#toolbar-down #strikeout').click();
 		calcHelper.selectEntireSheet();
 		cy.cGet('#copy-paste-container table td s').should('exist');
 	});
 
 	it('Apply font color.', function() {
-		before('bottom_toolbar.ods');
 		helper.setDummyClipboardForCopy();
 		cy.cGet('#toolbar-down #fontcolor').click();
 		mobileHelper.selectFromColorPalette(0, 5);
@@ -78,7 +73,6 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Interact with bottom toolba
 	});
 
 	it('Apply highlight color.', function() {
-		before('bottom_toolbar.ods');
 		helper.setDummyClipboardForCopy();
 		cy.cGet('#toolbar-down #backcolor').click();
 		mobileHelper.selectFromColorPalette(0, 5);
@@ -88,7 +82,6 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Interact with bottom toolba
 	});
 
 	it.skip('Merge cells', function() {
-		before('bottom_toolbar.ods');
 		// Select 100 cells in first row
 		calcHelper.selectCellsInRange('A1:CV1');
 		// Despite the selection is there, merge cells needs more time here.
@@ -99,7 +92,6 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Interact with bottom toolba
 	});
 
 	it.skip('Enable text wrapping.', function() {
-		before('bottom_toolbar.ods');
 		helper.initAliasToNegative('originalTextEndPos');
 		getTextEndPosForFirstCell();
 		cy.get('@currentTextEndPos').as('originalTextEndPos');

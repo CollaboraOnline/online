@@ -5,21 +5,20 @@ var desktopHelper = require('../../common/desktop_helper');
 var calcHelper = require('../../common/calc_helper');
 
 describe(['tagdesktop'], 'Top toolbar tests.', function() {
-	var origTestFileName = 'top_toolbar.ods';
-	var testFileName;
+	var newFileName;
 
 	beforeEach(function() {
-		testFileName = helper.beforeAll(origTestFileName, 'calc');
+		newFileName = helper.setupAndLoadDocument('calc/top_toolbar.ods');
 		desktopHelper.switchUIToCompact();
 		calcHelper.clickOnFirstCell();
 	});
 
-	it('Save.', { defaultCommandTimeout: 60000 }, function() {
+	it('Save.', function() {
 		cy.cGet('#bold').click();
 		cy.cGet('#save').click();
 
-		helper.reload(testFileName, 'calc', true);
-		cy.log('reload happened');
+		helper.reloadDocument(newFileName,'calc');
+
 		helper.setDummyClipboardForCopy();
 		calcHelper.selectEntireSheet();
 		helper.copy();
