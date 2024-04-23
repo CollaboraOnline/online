@@ -2239,7 +2239,7 @@ void COOLWSD::innerInitialize(Application& self)
                 << LogLevel << "] until after WSD initialization.");
     }
 
-    if (getConfigValue<bool>(conf, "browser_logging", "false"))
+    if (getConfigValue<bool>(conf, "browser_logging", false))
     {
         LogToken = Util::rng::getHexString(16);
     }
