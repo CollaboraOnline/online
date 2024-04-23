@@ -171,7 +171,7 @@ L.Map.Scroll = L.Handler.extend({
 
 		if (newAnimation) {
 			this._inZoomAnimation = true;
-			this._map._docLayer.preZoomAnimation();
+			this._map._docLayer.preZoomAnimation(this._zoomCenter);
 			this._zoomInterpolateRAF = requestAnimationFrame(this._zoomInterpolateRAFFunc.bind(this));
 		}
 	},

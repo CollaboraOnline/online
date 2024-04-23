@@ -583,8 +583,9 @@ L.Map.TouchGesture = L.Handler.extend({
 		if (isNaN(e.center.x) || isNaN(e.center.y))
 			return;
 
-		this._pinchStartCenter = {x: e.center.x, y: e.center.y};
-		this._map._docLayer.preZoomAnimation();
+		this._pinchStartCenter = { x: e.center.x, y: e.center.y };
+		var _pinchStartLatLng = this._map.mouseEventToLatLng({ clientX: e.center.x, clientY: e.center.y });
+		this._map._docLayer.preZoomAnimation(_pinchStartLatLng);
 	},
 
 	_onPinch: function (e) {
@@ -598,11 +599,9 @@ L.Map.TouchGesture = L.Handler.extend({
 		var offset = {x: e.center.x - this._pinchStartCenter.x, y: e.center.y - this._pinchStartCenter.y};
 		var center = {x: this._pinchStartCenter.x - offset.x, y: this._pinchStartCenter.y - offset.y};
 		this._zoom = this._map._limitZoom(this._map.getScaleZoom(e.scale));
-		this._center = this._map._limitCenter(this._map.mouseEventToLatLng({clientX: center.x, clientY: center.y}),
-						      this._zoom, this._map.options.maxBounds);
+		this._center = this._map.mouseEventToLatLng({clientX: center.x, clientY: center.y});
+		this._origCenter = this._map.mouseEventToLatLng({clientX: center.x, clientY: center.y});
 
-		this._origCenter = this._map._limitCenter(this._map.mouseEventToLatLng({clientX: center.x, clientY: center.y}),
-							  this._map.getZoom(), this._map.options.maxBounds);
 
 		if (this._map._docLayer.zoomStep) {
 			this._map._docLayer.zoomStep(this._zoom, this._origCenter);
