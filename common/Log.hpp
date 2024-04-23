@@ -69,62 +69,6 @@ namespace Log
         return prefix(tv, buffer, level);
     }
 
-    /// The following is to write streaming logs.
-    /// Log::info() << "Value: 0x" << std::hex << value
-    ///             << ", pointer: " << this << Log::end;
-    static const struct _end_marker
-    {
-        _end_marker()
-        {
-        }
-    } end;
-
-    /// Helper class to support implementing streaming
-    /// operator for logging.
-    class StreamLogger
-    {
-    public:
-        /// No-op instance.
-        StreamLogger()
-          : _enabled(false)
-        {
-        }
-
-        StreamLogger(std::function<void(const std::string&)> func, const char*level)
-          : _func(std::move(func)),
-            _enabled(true)
-        {
-            char buffer[1024];
-            _stream << prefix<sizeof(buffer) - 1>(buffer, level);
-        }
-
-        StreamLogger(StreamLogger&& sl) noexcept
-          : _stream(sl._stream.str()),
-            _func(std::move(sl._func)),
-            _enabled(sl._enabled)
-        {
-        }
-
-        bool enabled() const { return _enabled; }
-
-        void flush() const
-        {
-            if (_enabled)
-            {
-                _func(_stream.str());
-            }
-        }
-
-        std::ostringstream& getStream() { return _stream; }
-        static StreamLogger& getFor(Level l);
-
-    private:
-        std::ostringstream _stream;
-
-        std::function<void(const std::string&)> _func;
-        const bool _enabled;
-    };
-
     /// is a certain level of logging enabled ?
     bool isEnabled(Level l);
 
@@ -165,39 +109,6 @@ namespace Log
     }
 
 } // namespace Log
-
-template <typename U> Log::StreamLogger& operator<<(Log::StreamLogger& lhs, const U& rhs)
-{
-    if (lhs.enabled())
-    {
-        lhs.getStream() << rhs;
-    }
-
-    return lhs;
-}
-
-template <typename U> Log::StreamLogger& operator<<(Log::StreamLogger&& lhs, U&& rhs)
-{
-    if (lhs.enabled())
-    {
-        lhs.getStream() << rhs;
-    }
-
-    return lhs;
-}
-
-inline Log::StreamLogger& operator<<(Log::StreamLogger& lhs,
-                                     const std::chrono::system_clock::time_point& rhs)
-{
-    if (lhs.enabled())
-    {
-        lhs.getStream() << Util::getIso8601FracformatTime(rhs);
-    }
-
-    return lhs;
-}
-
-inline void operator<<(Log::StreamLogger& lhs, const Log::_end_marker&) { lhs.flush(); }
 
 /// A default implementation that is a NOP.
 /// Any context can implement this to prefix its log entries.
