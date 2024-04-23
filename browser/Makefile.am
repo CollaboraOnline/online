@@ -225,6 +225,7 @@ COOL_JS_LST =\
 	src/layer/tile/TilesSection.ts \
 	src/layer/tile/AutoFillMarkerSection.ts \
 	src/layer/tile/CellCursorSection.ts \
+	src/layer/tile/HTMLObjectSection.ts \
 	src/layer/vector/CEventsHandler.ts \
 	src/layer/vector/CPointSet.ts \
 	src/layer/vector/CPath.ts \
