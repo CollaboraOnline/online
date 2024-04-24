@@ -89,6 +89,27 @@ L.Clipboard = L.Class.extend({
 		return tmp.textContent.trim() || tmp.innerText.trim() || '';
 	},
 
+	// Decides if `html` effectively contains just an image.
+	isHtmlImage: function(html) {
+		const startsWithMeta = html.substring(0, 5) == '<meta';
+		if (startsWithMeta) {
+			// Ignore leading <meta>.
+			const metaEnd = html.indexOf('>');
+			if (metaEnd != -1) {
+				// Start after '>'.
+				html = html.substring(metaEnd + 1);
+			}
+		}
+
+		// Starts with an <img> element.
+		if (html.substring(0, 4) === '<img') {
+			return true;
+		}
+
+		return false;
+	},
+
+
 	setKey: function(key) {
 		if (this._accessKey[0] === key)
 			return;
@@ -422,9 +443,9 @@ L.Clipboard = L.Class.extend({
 
 		// FIXME: do we want this section ?
 
-		// Images get a look in only if we have no content and are async
-		var htmlImage = htmlText.substring(0, 4) === '<img';
-		if (((content == null && htmlText === '') || htmlImage) && dataTransfer != null)
+		// Images get a look in only if we have no content and are async (used in the Ctrl-V
+		// case)
+		if (((content == null && htmlText === '') || this.isHtmlImage(htmlText)) && dataTransfer != null)
 		{
 			var types = dataTransfer.types;
 
@@ -736,7 +757,7 @@ L.Clipboard = L.Class.extend({
 		}
 	},
 
-	// ClipboardContent.getType() callback
+	// ClipboardContent.getType() callback: used with the Paste button
 	_navigatorClipboardGetTypeCallback: async function(clipboardContent, blob, type) {
 		if (type == 'image/png') {
 			this._pasteTypedBlob(type, blob);
@@ -751,7 +772,7 @@ L.Clipboard = L.Class.extend({
 			return;
 		}
 
-		if (type !== 'text/html' || text.substring(0, 4) !== '<img') {
+		if (type !== 'text/html' || !this.isHtmlImage(text)) {
 			this._navigatorClipboardTextCallback(text, type);
 			return;
 		}
