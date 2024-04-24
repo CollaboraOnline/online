@@ -1500,6 +1500,7 @@ button.leaflet-control-search-next
 	height: auto;
 	position: static;
 	text-align: left;
+	display: flex;
 }
 
 .insertshape-grid.insertconnectors .row {
