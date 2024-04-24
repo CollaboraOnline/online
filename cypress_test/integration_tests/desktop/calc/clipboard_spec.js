@@ -9,7 +9,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', fu
 		helper.setupAndLoadDocument('calc/clipboard.ods');
 	});
 
-	function setDummyClipboard(type, content, image = false, fail = false) {
+	function setDummyClipboard(type, content, image = false, fail = false, imageHtml = undefined) {
 		cy.window().then(win => {
 			var app = win['0'].app;
 			var metaURL = encodeURIComponent(app.map._clip.getMetaURL());
@@ -23,7 +23,10 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', fu
 					return {
 						then: function(resolve/*, reject*/) {
 							if (image && type === 'text/html') {
-								resolve(new Blob(['<img></img>']));
+								if (imageHtml === undefined) {
+									imageHtml = '<img></img>';
+								}
+								resolve(new Blob([imageHtml]));
 							} else {
 								resolve(blob);
 							}
@@ -123,6 +126,26 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', fu
 		cy.cGet('#home-paste-entries .ui-combobox-entry').contains('Paste').click();
 
 		// Then make sure the paste happened:
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g').should('exist');
+	});
+
+	it('Image paste with meta', function() {
+		// Given a Calc document:
+		cy.cGet('#map').focus();
+		calcHelper.clickOnFirstCell();
+		let base64 = 'iVBORw0KGgoAAAANSUhEUgAAAQAAAAEAAQMAAABmvDolAAAAA1BMVEW10NBjBBbqAAAAH0lEQVRo';
+		base64 += 'ge3BAQ0AAADCoPdPbQ43oAAAAAAAAAAAvg0hAAABmmDh1QAAAABJRU5ErkJggg==';
+		let blob = Cypress.Blob.base64StringToBlob(base64, 'image/png');
+		let imageHtml = '<meta http-equiv="content-type" content="text/html; charset=utf-8"><img></img>';
+		setDummyClipboard('image/png', blob, /*image=*/true, /*fail=*/false, imageHtml);
+
+		// When pasting the clipboard:
+		cy.cGet('#home-paste-button').click();
+		cy.cGet('#home-paste-entries .ui-combobox-entry').contains('Paste').click();
+
+		// Then make sure the paste happened:
+		// Without the accompanying fix in place, this test would have failed, no image was
+		// pasted.
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g').should('exist');
 	});
 
