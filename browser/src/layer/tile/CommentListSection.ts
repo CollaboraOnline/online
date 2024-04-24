@@ -1876,7 +1876,8 @@ export class CommentSection extends CanvasSectionObject {
 			const maxMaxHeight = Number(getComputedStyle(document.documentElement).getPropertyValue('--annotation-max-size'));
 			for (var i = 0; i < this.sectionProperties.commentList.length;i++) {
 				// Only if ContentNode is displayed.
-				if (this.sectionProperties.commentList[i].sectionProperties.contentNode.style.display !== 'none') {
+				if (this.sectionProperties.commentList[i].sectionProperties.contentNode.style.display !== 'none'
+				&& !this.sectionProperties.commentList[i].isEdit()) {
 					// act commentText height
 					var actHeight = this.sectionProperties.commentList[i].sectionProperties.contentText.getBoundingClientRect().height;
 					// if the comment is taller then minimal, we may want to make it taller
