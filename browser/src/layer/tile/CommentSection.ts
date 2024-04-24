@@ -171,6 +171,8 @@ export class Comment extends CanvasSectionObject {
 		var events = ['click', 'dblclick', 'mousedown', 'mouseup', 'mouseover', 'mouseout', 'keydown', 'keypress', 'keyup', 'touchstart', 'touchmove', 'touchend'];
 		L.DomEvent.on(this.sectionProperties.container, 'click', this.onMouseClick, this);
 		L.DomEvent.on(this.sectionProperties.container, 'keydown', this.onEscKey, this);
+		L.DomEvent.on(this.sectionProperties.container, 'wheel', this.map._docLayer._painter._sectionContainer.onMouseWheel, this.map._docLayer._painter._sectionContainer);
+		L.DomEvent.on(this.sectionProperties.contentNode, 'wheel', this.onMouseWheel, this);
 
 		for (var it = 0; it < events.length; it++) {
 			L.DomEvent.on(this.sectionProperties.container, events[it], L.DomEvent.stopPropagation, this);
@@ -187,6 +189,18 @@ export class Comment extends CanvasSectionObject {
 		this.update();
 
 		this.pendingInit = false;
+	}
+
+	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+	public onMouseWheel (e: any) : void {
+		if (e.currentTarget.clientHeight === e.currentTarget.scrollHeight)
+			return;
+
+		var _scrollTop = e.currentTarget.scrollTop;
+		if (e.deltaY < 0 && _scrollTop > 0)
+			e.stopPropagation();
+		else if (e.deltaY > 0 && _scrollTop + $(e.currentTarget).height() < e.target.scrollHeight)
+			e.stopPropagation();
 	}
 
 	public onInitialize (): void {
