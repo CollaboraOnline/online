@@ -170,9 +170,12 @@ L.Control.PartsPreview = L.Control.extend({
 			return;
 		}
 
-		this._getBottomBound();
 		for (var prev = 0; prev < this._previewTiles.length; prev++) {
-			this._layoutPreview(prev, this._previewTiles[prev]);
+			this._map.getPreview(prev, prev,
+					     this.options.maxWidth,
+					     this.options.maxHeight,
+					     {autoUpdate: this.options.autoUpdate,
+					      fetchThumbnail: this.options.fetchThumbnail});
 		}
 	},
 
@@ -350,7 +353,15 @@ L.Control.PartsPreview = L.Control.extend({
 			});
 		}, this);
 
-		this._layoutPreview(i, img);
+		var imgSize = this._map.getPreview(i, i,
+						   this.options.maxWidth,
+						   this.options.maxHeight,
+						   {autoUpdate: this.options.autoUpdate,
+						    fetchThumbnail: this.options.fetchThumbnail});
+
+		L.DomUtil.setStyle(img, 'width', imgSize.width + 'px');
+		L.DomUtil.setStyle(img, 'height', imgSize.height + 'px');
+
 		this._idNum++;
 
 		return img;
@@ -369,17 +380,6 @@ L.Control.PartsPreview = L.Control.extend({
 		} else {
 			this._previewContTop = previewContBB.top;
 		}
-	},
-
-	_layoutPreview: function (i, img) {
-		var imgSize = this._map.getPreview(i, i,
-						   this.options.maxWidth,
-						   this.options.maxHeight,
-						   {autoUpdate: this.options.autoUpdate,
-						    fetchThumbnail: this.options.fetchThumbnail});
-
-		L.DomUtil.setStyle(img, 'width', imgSize.width + 'px');
-		L.DomUtil.setStyle(img, 'height', imgSize.height + 'px');
 	},
 
 	_scrollToPart: function() {
