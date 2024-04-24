@@ -464,11 +464,11 @@ class CanvasOverlay extends CanvasSectionObject {
 	}
 
 	private fillStroke(path: CPath) {
-
 		if (path.fill) {
 			this.ctx.globalAlpha = path.fillOpacity;
 			this.ctx.fillStyle = path.fillColor || path.color;
-			if (!path.isTopOrLeftOfSplitPane) {
+
+			if (path.fillGradient) {
 				this.setBoxGradient(path);
 			}
 
