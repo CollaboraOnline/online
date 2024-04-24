@@ -812,6 +812,14 @@ export class TilesSection extends CanvasSectionObject {
 				false /* findFreePaneCenter? */
 			);
 
+			if (!freezeX) {
+				tsManager._zoomAtDocEdgeX = docPos.topLeft.x == splitPos.x;
+			}
+
+			if (!freezeY) {
+				tsManager._zoomAtDocEdgeY = docPos.topLeft.y == splitPos.y;
+			}
+
 			var docRange = new L.Bounds(docPos.topLeft, docPos.topLeft.add(docAreaSize));
 			if (tsManager._calcGridSection) {
 				tsManager._calcGridSection.onDrawArea(docRange, docRange.min.subtract(destPos), this.context);

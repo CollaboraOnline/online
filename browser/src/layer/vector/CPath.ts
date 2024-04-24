@@ -14,6 +14,7 @@ abstract class CPath extends CEventsHandler {
 	lineCap: CanvasLineCap = 'round';
 	lineJoin: CanvasLineJoin = 'round';
 	fill: boolean = false;
+	fillGradient: boolean = false;
 	fillColor: string = this.color;
 	fillOpacity: number = 0.2;
 	fillRule: CanvasFillRule = 'evenodd';
@@ -29,8 +30,6 @@ abstract class CPath extends CEventsHandler {
 	radiusY: number = 0;
 	point: cool.Point;
 	zIndex: number = 0;
-
-	isTopOrLeftOfSplitPane: boolean = true;
 
 	static countObjects: number = 0;
 	private id: number;

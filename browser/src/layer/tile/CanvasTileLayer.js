@@ -269,6 +269,9 @@ L.TileSectionManager = L.Class.extend({
 			that._layer._syncTileContainerSize();
 		});
 		this.resObserver.observe(canvasContainer);
+
+		this._zoomAtDocEdgeX = true;
+		this._zoomAtDocEdgeY = true;
 	},
 
 	// Map and TilesSection overlap entirely. Map is above tiles section. In order to handle events in tiles section, we need to mirror them from map.
@@ -6205,12 +6208,11 @@ L.CanvasTileLayer = L.Layer.extend({
 					+ ' splitx=' + Math.round(splitPos.x)
 					+ ' splity=' + Math.round(splitPos.y);
 
-		// Set transparent gradient over the area where cells are concealed
 		if (this._ySplitter) {
-			this._setSpliterGradient(this._ySplitter, visibleTopLeft.y);
+			this._ySplitter.onPositionChange();
 		}
 		if (this._xSplitter) {
-			this._setSpliterGradient(this._xSplitter, visibleTopLeft.x);
+			this._xSplitter.onPositionChange();
 		}
 		if (this._clientVisibleArea !== newClientVisibleArea || forceUpdate) {
 			// Visible area is dirty, update it on the server
@@ -6219,22 +6221,6 @@ L.CanvasTileLayer = L.Layer.extend({
 				this._clientVisibleArea = newClientVisibleArea;
 			if (this._debug.tileInvalidationsOn)
 				this._debug._tileInvalidationLayer.clearLayers();
-		}
-	},
-
-	_setSpliterGradient: function (splitter, visibleTopLeft) {
-
-		var origTopOrLeftOfSplitPane = splitter.isTopOrLeftOfSplitPane;
-
-		if (Math.round(visibleTopLeft) == 0) {
-			splitter.isTopOrLeftOfSplitPane = true;
-		}
-		else {
-			splitter.isTopOrLeftOfSplitPane = false;
-		}
-
-		if (origTopOrLeftOfSplitPane != splitter.isTopOrLeftOfSplitPane) {
-			splitter.onPositionChange();
 		}
 	},
 
