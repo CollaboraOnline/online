@@ -191,7 +191,7 @@ L.Control.PartsPreview = L.Control.extend({
 		img.setAttribute('alt', _('preview of page ') + String(i + 1));
 		img.id = 'preview-img-part-' + this._idNum;
 		img.hash = hashCode;
-		L.LOUtil.setImage(img, 'preview_placeholder.png', this._map);
+		L.LOUtil.setImage(img, 'preview_placeholder.svg', this._map);
 		img.fetched = false;
 		if (!window.mode.isDesktop()) {
 			(new Hammer(img, {recognizers: [[Hammer.Press]]}))
