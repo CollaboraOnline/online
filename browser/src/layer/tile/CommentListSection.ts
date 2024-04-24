@@ -693,16 +693,19 @@ export class CommentSection extends CanvasSectionObject {
 	}
 
 	public select (annotation: Comment, force: boolean = false): void {
-		if (annotation && ((!annotation.pendingInit && annotation !== this.sectionProperties.selectedComment) || force)) {
-			// Unselect first if there anything selected.
-			if (this.sectionProperties.selectedComment)
-				this.unselect();
-
+		if (force || (annotation && !annotation.pendingInit && annotation !== this.sectionProperties.selectedComment)) {
 			// Select the root comment
 			var idx = this.getRootIndexOf(annotation.sectionProperties.data.id);
 
-			if (this.sectionProperties.selectedComment && $(this.sectionProperties.selectedComment.sectionProperties.container).hasClass('annotation-active'))
-				$(this.sectionProperties.selectedComment.sectionProperties.container).removeClass('annotation-active');
+			// no need to reselect comment, it will cuase to scroll to root comment unnecessarily
+			if (this.sectionProperties.selectedComment === this.sectionProperties.commentList[idx]) {
+				this.update();
+				return;
+			}
+
+			// Unselect first if there anything selected
+			if (this.sectionProperties.selectedComment)
+				this.unselect();
 
 			this.sectionProperties.selectedComment = this.sectionProperties.commentList[idx];
 
@@ -740,7 +743,7 @@ export class CommentSection extends CanvasSectionObject {
 				const annotationHeight = this.cssToCorePixels(rect.height);
 				const annotationBottom = position[1] + annotationHeight;
 
-				if (!this.isInViewPort([annotationTop, annotationBottom]) && position[1] !== 0 && !annotation.isEdit()) {
+				if (!this.isInViewPort([annotationTop, annotationBottom]) && position[1] !== 0 && annotation === selectedComment) {
 					console.debug('Annotation outside view - scroll');
 					const scrollSection = app.sectionContainer.getSectionWithName(L.CSections.Scroll.name);
 					const screenTopBottom = this.getScreenTopBottom();
