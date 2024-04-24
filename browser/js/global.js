@@ -1281,4 +1281,15 @@ window.app = {
 			this.socket.onopen();
 		}
 	}
+
+	function handleViewportChange(event) {
+		var visualViewport = event.target;
+
+		document.body.style.height = visualViewport.height + 'px';
+	}
+
+	if (window.visualViewport !== undefined) {
+		window.visualViewport.addEventListener('scroll', handleViewportChange);
+		window.visualViewport.addEventListener('resize', handleViewportChange);
+	}
 }(window));
