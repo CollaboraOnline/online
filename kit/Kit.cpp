@@ -3062,13 +3062,14 @@ void lokit_main(
         {
             const char *instdir = instdir_path.c_str();
             const char *userdir = userdir_url.c_str();
+
+            if (!initFunction)
+                initFunction = lok_init_2;
+
             if (!Util::isKitInProcess())
-                kit = UnitKit::get().lok_init(instdir, userdir);
+                kit = UnitKit::get().lok_init(instdir, userdir, initFunction);
             if (!kit)
-            {
-                kit = (initFunction ? initFunction(instdir, userdir)
-                                    : lok_init_2(instdir, userdir));
-            }
+                kit = initFunction(instdir, userdir);
 
             loKit = std::make_shared<lok::Office>(kit);
             if (!loKit)
