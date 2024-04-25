@@ -53,7 +53,7 @@ class HTMLObjectSection extends CanvasSectionObject {
 		this.setPosition(this.position[0], this.position[1]);
 	}
 
-	public setVisibility(value: boolean) {
+	public setHTMLObjectVisibility(value: boolean) {
 		this.showSection = value;
 
 		if (!value)
@@ -75,12 +75,16 @@ class HTMLObjectSection extends CanvasSectionObject {
 	}
 
 	public onNewDocumentTopLeft(): void {
-		if (this.isVisible) {
+		if (this.isVisible && this.showSection) {
 			if (this.sectionProperties.objectDiv.style.display !== '')
 				this.sectionProperties.objectDiv.style.display = '';
 		}
 		else
 			this.sectionProperties.objectDiv.style.display = 'none';
+	}
+
+	public getPosition(): cool.SimplePoint {
+		return new cool.SimplePoint(this.position[0], this.position[1]);
 	}
 
 	public onRemove(): void {

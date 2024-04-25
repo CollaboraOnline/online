@@ -952,17 +952,17 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._graphicMarker = null;
 		// Graphic Selected?
 		this._hasActiveSelection = false;
-		// Selection handle marker
+
+		// Initiate selection handles.
 		this._selectionHandles = {};
-		['start', 'end'].forEach(L.bind(function (handle) {
-			this._selectionHandles[handle] = L.marker(new L.LatLng(0, 0), {
-				icon: L.divIcon({
-					className: 'leaflet-selection-marker-' + handle,
-					iconSize: null
-				}),
-				draggable: true
-			});
-		}, this));
+		this._selectionHandles.start = new app.definitions.textSelectionHandleSection('selection_start_handle', 30, 44, new app.definitions.simplePoint(0, 0), 'leaflet-selection-marker-start', false);
+		this._selectionHandles.end = new app.definitions.textSelectionHandleSection('selection_end_handle', 30, 44, new app.definitions.simplePoint(0, 0), 'leaflet-selection-marker-end', false);
+		this._selectionHandles.active = false;
+
+		setTimeout(function() {
+			app.sectionContainer.addSection(this._map._docLayer._selectionHandles.start);
+			app.sectionContainer.addSection(this._map._docLayer._selectionHandles.end);
+		}.bind(this), 400);
 
 		this._cellResizeMarkerStart = L.marker(new L.LatLng(0, 0), {
 			icon: L.divIcon({
@@ -2436,8 +2436,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				var docLayer = this._map._docLayer;
 				var paneRectsInLatLng = this.getPaneLatLngRectangles();
 				if (!this._graphicSelection.isInAny(paneRectsInLatLng) &&
-					!(this._selectionHandles.start && this._selectionHandles.start.isDragged) &&
-					!(this._selectionHandles.end && this._selectionHandles.end.isDragged) &&
+					!this._selectionHandles.active &&
 					!(docLayer._followEditor || docLayer._followUser) &&
 					!this._map.calcInputBarHasFocus()) {
 					this.scrollToPos(this._graphicSelection.getNorthWest());
@@ -3260,8 +3259,20 @@ L.CanvasTileLayer = L.Layer.extend({
 				this._selectionContentRequest = setTimeout(L.bind(function () {
 					app.socket.sendMessage('gettextselection mimetype=text/html,text/plain;charset=utf-8');}, this), 100);
 			}
+
+			this._selectionHandles.start.showSection = true;
+			this._selectionHandles.end.showSection = true;
+			this._selectionHandles.start.setHTMLObjectVisibility(true);
+			this._selectionHandles.end.setHTMLObjectVisibility(true);
+			this._selectionHandles.active = true;
 		}
 		else {
+			this._selectionHandles.start.showSection = false;
+			this._selectionHandles.end.showSection = false;
+			this._selectionHandles.start.setHTMLObjectVisibility(false);
+			this._selectionHandles.end.setHTMLObjectVisibility(false);
+			this._selectionHandles.active = false;
+
 			this._textCSelections.clear();
 			this._cellCSelections.clear();
 			if (this._map._clip && this._map._clip._selectionType === 'complex')
@@ -3931,8 +3942,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 			if (!app.isPointVisibleInTheDisplayedArea(new app.definitions.simplePoint(correctedCursor.x1, correctedCursor.y1).toArray()) ||
 				!app.isPointVisibleInTheDisplayedArea(new app.definitions.simplePoint(correctedCursor.x2, correctedCursor.y2).toArray())) {
-				if (!(this._selectionHandles.start && this._selectionHandles.start.isDragged) &&
-				    !(this._selectionHandles.end && this._selectionHandles.end.isDragged) &&
+				if (!this._selectionHandles.active &&
 				    !(docLayer._followEditor || docLayer._followUser) &&
 				    !this._map.calcInputBarHasFocus()) {
 					this.scrollToPos(new app.definitions.simplePoint(correctedCursor.x1, correctedCursor.y1));
@@ -4377,64 +4387,6 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	// Update dragged text selection.
-	_onSelectionHandleDrag: function (e) {
-		if (e.type === 'drag') {
-			window.IgnorePanning = true;
-			e.target.isDragged = true;
-
-			if (!e.originalEvent.pageX && !e.originalEvent.pageY) {
-				return;
-			}
-
-			// This is rather hacky, but it seems to be the only way to make the
-			// marker follow the mouse cursor if the document is autoscrolled under
-			// us. (This can happen when we're changing the selection if the cursor
-			// moves somewhere that is considered off screen.)
-
-			// Onscreen position of the cursor, i.e. relative to the browser window
-			var boundingrect = e.target._icon.getBoundingClientRect();
-			var cursorPos = L.point(boundingrect.left, boundingrect.top);
-
-			var expectedPos = L.point(e.originalEvent.pageX, e.originalEvent.pageY).subtract(e.target.dragging._draggable.startOffset);
-
-			// Dragging the selection handles vertically more than one line on a touch
-			// device is more or less impossible without this hack.
-			if (!(typeof e.originalEvent.type === 'string' && e.originalEvent.type === 'touchmove')) {
-				// If the map has been scrolled, but the cursor hasn't been updated yet, then
-				// the current mouse position differs.
-				if (!expectedPos.equals(cursorPos)) {
-					var correction = expectedPos.subtract(cursorPos);
-
-					e.target.dragging._draggable._startPoint = e.target.dragging._draggable._startPoint.add(correction);
-					e.target.dragging._draggable._startPos = e.target.dragging._draggable._startPos.add(correction);
-					e.target.dragging._draggable._newPos = e.target.dragging._draggable._newPos.add(correction);
-
-					e.target.dragging._draggable._updatePosition();
-				}
-			}
-			var containerPos = new L.Point(expectedPos.x - this._map._container.getBoundingClientRect().left,
-				expectedPos.y - this._map._container.getBoundingClientRect().top);
-
-			containerPos = containerPos.add(e.target.dragging._draggable.startOffset);
-			this._map.fire('handleautoscroll', {pos: containerPos, map: this._map});
-		}
-		if (e.type === 'dragend') {
-			window.IgnorePanning = undefined;
-			e.target.isDragged = false;
-			this._map.fire('scrollvelocity', {vx: 0, vy: 0});
-		}
-
-		var aPos = this._latLngToTwips(e.target.getLatLng());
-
-		if (this._selectionHandles.start === e.target) {
-			this._postSelectTextEvent('start', aPos.x, aPos.y);
-		}
-		else if (this._selectionHandles.end === e.target) {
-			this._postSelectTextEvent('end', aPos.x, aPos.y);
-		}
-	},
-
-	// Update dragged text selection.
 	_onCellResizeMarkerDrag: function (e) {
 		if (e.type === 'dragstart') {
 			e.target.isDragged = true;
@@ -4842,10 +4794,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	_onUpdateTextSelection: function () {
 		this._onUpdateCellResizeMarkers();
 
-		var startMarker = this._selectionHandles['start'];
-		var endMarker = this._selectionHandles['end'];
-
-		if (this._map.editorHasFocus() && (!this._textCSelections.empty() || startMarker.isDragged || endMarker.isDragged)) {
+		if (this._map.editorHasFocus() && (!this._textCSelections.empty() || this._selectionHandles.active)) {
 			this._updateMarkers();
 		}
 		else {
@@ -4858,63 +4807,52 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._textSelectionStart = null;
 		this._textSelectionEnd = null;
 		this._selectedTextContent = '';
-		for (var key in this._selectionHandles) {
-			this._map.removeLayer(this._selectionHandles[key]);
-			this._selectionHandles[key].isDragged = false;
-		}
+
+		this._selectionHandles.start.showSection = false;
+		this._selectionHandles.end.showSection = false;
+		this._selectionHandles.start.setHTMLObjectVisibility(false);
+		this._selectionHandles.end.setHTMLObjectVisibility(false);
+		this._selectionHandles.active = false;
+
 		this._textCSelections.clear();
 	},
 
 	_updateMarkers: function() {
-		if (!app.file.textCursor.visible)
+		if (!app.file.textCursor.visible || !this._textSelectionStart)
 			return;
-		var startMarker = this._selectionHandles['start'];
-		var endMarker = this._selectionHandles['end'];
 
-		if (!startMarker || !endMarker ||
-		    this._isEmptyRectangle(this._textSelectionStart) ||
-		    this._isEmptyRectangle(this._textSelectionEnd)) {
+		if (!this._selectionHandles.start.showSection || !this._selectionHandles.end.showSection)
 			return;
-		}
 
-		var startPos = this._map.project(this._textSelectionStart.getSouthWest());
-		var endPos = this._map.project(this._textSelectionEnd.getSouthWest());
-		var startMarkerPos = this._map.project(startMarker.getLatLng());
+		var startPos = this._map._docLayer._latLngToCorePixels(this._textSelectionStart.getSouthWest());
+		var endPos = this._map._docLayer._latLngToCorePixels(this._textSelectionEnd.getSouthWest());
+		var startMarkerPos = this._selectionHandles.start.getPosition();
 		// CalcRTL: position from core are in document coordinates. Conversion to layer coordinates for each maker is done
 		// in L.Layer.getLayerPositionVisibility(). Icons of RTL "start" and "end" has to be interchanged.
 		var calcRTL = this.isCalcRTL();
-		if (startMarkerPos.distanceTo(endPos) < startMarkerPos.distanceTo(startPos) && startMarker._icon && endMarker._icon) {
-			// if the start marker is actually closer to the end of the selection
-			// reverse icons and markers
-			L.DomUtil.removeClass(startMarker._icon, calcRTL ? 'leaflet-selection-marker-end' : 'leaflet-selection-marker-start');
-			L.DomUtil.removeClass(endMarker._icon, calcRTL ? 'leaflet-selection-marker-start' : 'leaflet-selection-marker-end');
-			L.DomUtil.addClass(startMarker._icon, calcRTL ? 'leaflet-selection-marker-start' : 'leaflet-selection-marker-end');
-			L.DomUtil.addClass(endMarker._icon, calcRTL ? 'leaflet-selection-marker-end' : 'leaflet-selection-marker-start');
-			var tmp = startMarker;
-			startMarker = endMarker;
-			endMarker = tmp;
+		if (startMarkerPos.pDistanceTo([endPos.x, endPos.y]) < startMarkerPos.pDistanceTo([startPos.x, startPos.y])) {
+			// If the start handle is actually closer to the end of the selection, reverse icons and markers.
+			L.DomUtil.removeClass(this._selectionHandles.start.getHTMLObject(), calcRTL ? 'leaflet-selection-marker-end' : 'leaflet-selection-marker-start');
+			L.DomUtil.removeClass(this._selectionHandles.end.getHTMLObject(), calcRTL ? 'leaflet-selection-marker-start' : 'leaflet-selection-marker-end');
+			L.DomUtil.addClass(this._selectionHandles.start.getHTMLObject(), calcRTL ? 'leaflet-selection-marker-start' : 'leaflet-selection-marker-end');
+			L.DomUtil.addClass(this._selectionHandles.end.getHTMLObject(), calcRTL ? 'leaflet-selection-marker-end' : 'leaflet-selection-marker-start');
+			var tmp = this._selectionHandles.start;
+			this._selectionHandles.start = this._selectionHandles.end;
+			this._selectionHandles.end = tmp;
 		}
-		else if (startMarker._icon && endMarker._icon) {
+		else {
 			// normal markers and normal icons
-			L.DomUtil.removeClass(startMarker._icon, calcRTL ? 'leaflet-selection-marker-start' : 'leaflet-selection-marker-end');
-			L.DomUtil.removeClass(endMarker._icon, calcRTL ? 'leaflet-selection-marker-end' : 'leaflet-selection-marker-start');
-			L.DomUtil.addClass(startMarker._icon, calcRTL ? 'leaflet-selection-marker-end' : 'leaflet-selection-marker-start');
-			L.DomUtil.addClass(endMarker._icon, calcRTL ? 'leaflet-selection-marker-start' : 'leaflet-selection-marker-end');
+			L.DomUtil.removeClass(this._selectionHandles.start.getHTMLObject(), calcRTL ? 'leaflet-selection-marker-start' : 'leaflet-selection-marker-end');
+			L.DomUtil.removeClass(this._selectionHandles.end.getHTMLObject(), calcRTL ? 'leaflet-selection-marker-end' : 'leaflet-selection-marker-start');
+			L.DomUtil.addClass(this._selectionHandles.start.getHTMLObject(), calcRTL ? 'leaflet-selection-marker-end' : 'leaflet-selection-marker-start');
+			L.DomUtil.addClass(this._selectionHandles.end.getHTMLObject(), calcRTL ? 'leaflet-selection-marker-start' : 'leaflet-selection-marker-end');
 		}
 
-		if (!startMarker.isDragged) {
-			var pos = this._map.project(this._textSelectionStart.getSouthWest());
-			pos = this._map.unproject(pos);
-			startMarker.setLatLng(pos);
-			this._map.addLayer(startMarker);
-		}
+		let newPosition = this._map._docLayer._latLngToCorePixels(this._textSelectionStart.getSouthWest());
+		this._selectionHandles.start.setPosition(newPosition.x, newPosition.y);
 
-		if (!endMarker.isDragged) {
-			pos = this._map.project(this._textSelectionEnd.getSouthEast());
-			pos = this._map.unproject(pos);
-			endMarker.setLatLng(pos);
-			this._map.addLayer(endMarker);
-		}
+		newPosition = this._map._docLayer._latLngToCorePixels(this._textSelectionEnd.getSouthEast());
+		this._selectionHandles.end.setPosition(newPosition.x, newPosition.y);
 	},
 
 	hasGraphicSelection: function() {
@@ -5575,10 +5513,6 @@ L.CanvasTileLayer = L.Layer.extend({
 			}
 		}, this);
 
-		for (var key in this._selectionHandles) {
-			this._selectionHandles[key].on('drag dragend', this._onSelectionHandleDrag, this);
-		}
-
 		this._cellResizeMarkerStart.on('dragstart drag dragend', this._onCellResizeMarkerDrag, this);
 		this._cellResizeMarkerEnd.on('dragstart drag dragend', this._onCellResizeMarkerDrag, this);
 		this._referenceMarkerStart.on('dragstart drag dragend', this._onReferenceMarkerDrag, this);
@@ -5632,9 +5566,9 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (this._graphicMarker) {
 			this._graphicMarker.remove();
 		}
-		for (var key in this._selectionHandles) {
-			this._selectionHandles[key].remove();
-		}
+
+		app.sectionContainer.removeSection(this._selectionHandles.start);
+		app.sectionContainer.removeSection(this._selectionHandles.end);
 
 		this._removeSplitters();
 		L.DomUtil.remove(this._canvasContainer);
@@ -5675,12 +5609,12 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._map.setOverlaysOpacity(0);
 			this._map.setMarkersOpacity(0);
 		}
-		if (this._selectionHandles['start']) {
-			this._selectionHandles['start'].setOpacity(0);
-		}
-		if (this._selectionHandles['end']) {
-			this._selectionHandles['end'].setOpacity(0);
-		}
+
+		if (this._selectionHandles.start.showSection)
+			this._selectionHandles.start.setOpacity(0);
+		if (this._selectionHandles.end.showSection)
+			this._selectionHandles.end.setOpacity(0);
+
 		this.eachView(this._viewCursors, function (item) {
 			var viewCursorMarker = item.marker;
 			if (viewCursorMarker) {
@@ -5703,12 +5637,11 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._map.setOverlaysOpacity(1);
 			this._map.setMarkersOpacity(1);
 		}
-		if (this._selectionHandles['start']) {
-			this._selectionHandles['start'].setOpacity(1);
-		}
-		if (this._selectionHandles['end']) {
-			this._selectionHandles['end'].setOpacity(1);
-		}
+
+		if (this._selectionHandles.start.showSection)
+			this._selectionHandles.start.setOpacity(1);
+		if (this._selectionHandles.end.showSection)
+			this._selectionHandles.end.setOpacity(1);
 
 		if (this._annotations) {
 			var annotations = this._annotations;
