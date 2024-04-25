@@ -5,10 +5,10 @@ var desktopHelper = require('../../common/desktop_helper');
 var calcHelper = require('../../common/calc_helper');
 
 describe(['tagdesktop'], 'Top toolbar tests.', function() {
-	var newFileName;
+	var newFilePath;
 
 	beforeEach(function() {
-		newFileName = helper.setupAndLoadDocument('calc/top_toolbar.ods');
+		newFilePath = helper.setupAndLoadDocument('calc/top_toolbar.ods');
 		desktopHelper.switchUIToCompact();
 		calcHelper.clickOnFirstCell();
 	});
@@ -17,7 +17,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		cy.cGet('#bold').click();
 		cy.cGet('#save').click();
 
-		helper.reloadDocument(newFileName,'calc');
+		helper.reloadDocument(newFilePath);
 
 		helper.setDummyClipboardForCopy();
 		calcHelper.selectEntireSheet();

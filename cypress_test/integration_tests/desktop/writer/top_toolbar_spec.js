@@ -5,10 +5,10 @@ var desktopHelper = require('../../common/desktop_helper');
 var writerHelper = require('../../common/writer_helper');
 
 describe(['tagdesktop'], 'Top toolbar tests.', function() {
-	var newFileName;
+	var newFilePath;
 
 	beforeEach(function() {
-		newFileName = helper.setupAndLoadDocument('writer/top_toolbar.odt');
+		newFilePath = helper.setupAndLoadDocument('writer/top_toolbar.odt');
 		desktopHelper.switchUIToNotebookbar();
 
 		if (Cypress.env('INTEGRATION') === 'nextcloud') {
@@ -285,7 +285,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 	it('Save.', function() {
 		cy.cGet('.notebookbar > .unoBold > button').click();
 		cy.cGet('.notebookbar-shortcuts-bar .unoSave').click();
-		helper.reloadDocument(newFileName,'writer');
+		helper.reloadDocument(newFilePath);
 		helper.setDummyClipboardForCopy();
 		writerHelper.selectAllTextOfDoc();
 		helper.copy();

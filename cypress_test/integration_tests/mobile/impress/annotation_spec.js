@@ -4,10 +4,10 @@ var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 
 describe(['tagmobile'], 'Annotation tests.', function() {
-	var newFileName;
+	var newFilePath;
 
 	beforeEach(function() {
-		newFileName = helper.setupAndLoadDocument('impress/annotation.odp');
+		newFilePath = helper.setupAndLoadDocument('impress/annotation.odp');
 
 		mobileHelper.enableEditingMobile();
 	});
@@ -17,7 +17,7 @@ describe(['tagmobile'], 'Annotation tests.', function() {
 
 		mobileHelper.selectHamburgerMenuItem(['File', 'Save']);
 
-		helper.reloadDocument(newFileName,'impress');
+		helper.reloadDocument(newFilePath);
 
 		mobileHelper.enableEditingMobile();
 

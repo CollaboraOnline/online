@@ -10,7 +10,7 @@ describe(['tagnextcloud'], 'Nextcloud specific tests.', function() {
 		helper.setupAndLoadDocument('calc/nextcloud.ods');
 		mobileHelper.enableEditingMobile();
 
-		helper.upLoadFileToNextCloud('image_to_insert.png', 'calc');
+		helper.upLoadFileToNextCloud('calc/image_to_insert.png');
 		nextcloudHelper.insertImageFromStorage('image_to_insert.png');
 
 		// TODO
@@ -19,7 +19,8 @@ describe(['tagnextcloud'], 'Nextcloud specific tests.', function() {
 	});
 
 	it('Save as.', function() {
-		var newFileName = helper.setupAndLoadDocument('calc/nextcloud.ods');
+		var newFilePath = helper.setupAndLoadDocument('calc/nextcloud.ods');
+		var newFileName = helper.getFileName(newFilePath);
 		mobileHelper.enableEditingMobile();
 
 		nextcloudHelper.saveFileAs('1' + newFileName);

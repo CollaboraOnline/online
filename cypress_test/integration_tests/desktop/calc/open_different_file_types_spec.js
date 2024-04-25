@@ -34,9 +34,9 @@ describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Open different file t
 		//to fit csv jsdialog in window
 		cy.viewport(1280, 960);
 
-		var newFileName = helper.setupDocument('testfile.csv','calc');
+		var newFilePath = helper.setupDocument('calc/testfile.csv');
 		// Skip document check to click through import csv dialog first
-		helper.loadDocument(newFileName,'calc',true);
+		helper.loadDocument(newFilePath,true);
 
 		cy.cGet('form.jsdialog-container.lokdialog_container').should('exist');
 		cy.cGet('.ui-pushbutton.jsdialog.button-primary').click();
@@ -54,7 +54,7 @@ describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Open different file t
 	});
 
 	it('Open xlsb file', { defaultCommandTimeout: 60000 }, function() {
-		desktopHelper.openReadOnlyFile('testfile.xlsb');
+		desktopHelper.openReadOnlyFile('calc/testfile.xlsb');
 
 		cy.cGet('#mobile-edit-button').should('be.visible').click();
 		cy.cGet('#modal-dialog-switch-to-edit-mode-modal-overlay').should('be.visible');
@@ -74,13 +74,13 @@ describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Open different file t
 	});
 
 	it('Open xltm file', { defaultCommandTimeout: 60000 }, function() {
-		desktopHelper.openReadOnlyFile('testfile.xltm');
+		desktopHelper.openReadOnlyFile('calc/testfile.xltm');
 
 		cy.cGet('#mobile-edit-button').should('not.be.visible');
 	});
 
 	it('Open xltx file', { defaultCommandTimeout: 60000 }, function() {
-		desktopHelper.openReadOnlyFile('testfile.xltm');
+		desktopHelper.openReadOnlyFile('calc/testfile.xltm');
 
 		cy.cGet('#mobile-edit-button').should('not.be.visible');
 	});

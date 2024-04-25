@@ -1,6 +1,7 @@
 /* global describe it cy require */
-const { assertImageSize, openReadOnlyFile } = require('../../common/desktop_helper');
+const { assertImageSize  } = require('../../common/desktop_helper');
 var helper = require('../../common/helper');
+var desktopHelper = require('../../common/desktop_helper');
 
 describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Open different file types', function() {
 
@@ -58,14 +59,14 @@ describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Open different file t
 	});
 
 	it('Open dot file', { defaultCommandTimeout: 60000 }, function() {
-		openReadOnlyFile('writer', 'testfile.dot');
+		desktopHelper.openReadOnlyFile('writer/testfile.dot');
 	});
 
 	it('Open dotm file', { defaultCommandTimeout: 60000 }, function() {
-		openReadOnlyFile('writer', 'testfile.dotm');
+		desktopHelper.openReadOnlyFile('writer/testfile.dotm');
 	});
 
 	it('Open dotx file', { defaultCommandTimeout: 60000 }, function() {
-		openReadOnlyFile('writer','testfile.dotx');
+		desktopHelper.openReadOnlyFile('writer/testfile.dotx');
 	});
 });

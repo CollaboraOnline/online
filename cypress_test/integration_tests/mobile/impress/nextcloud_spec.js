@@ -13,13 +13,14 @@ describe(['tagnextcloud'], 'Nextcloud specific tests.', function() {
 		helper.setupAndLoadDocument('impress/nextcloud.odp');
 		mobileHelper.enableEditingMobile();
 
-		helper.upLoadFileToNextCloud('image_to_insert.png', 'impress');
+		helper.upLoadFileToNextCloud('impress/image_to_insert.png');
 		nextcloudHelper.insertImageFromStorage('image_to_insert.png');
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g').should('exist');
 	});
 
 	it('Save as.', function() {
-		var newFileName = helper.setupAndLoadDocument('impress/nextcloud.odp');
+		var newFilePath = helper.setupAndLoadDocument('impress/nextcloud.odp');
+		var newFileName = helper.getFileName(newFilePath);
 		mobileHelper.enableEditingMobile();
 
 		nextcloudHelper.saveFileAs('1' + newFileName);

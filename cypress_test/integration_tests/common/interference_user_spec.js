@@ -31,7 +31,7 @@ describe('Interfering second user.', function() {
 				.then(function(text) {
 
 					// We open the same document
-					helper.loadDocument(text, getComponent(text));
+					helper.loadDocument(getComponent(text) + '/' + text);
 				});
 
 			cy.get('#toolbar-up #userlist', { timeout: Cypress.config('defaultCommandTimeout') * 2.0 })

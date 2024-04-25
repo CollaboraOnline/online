@@ -1,12 +1,13 @@
 /* global describe it cy require expect */
 var helper = require('../../common/helper');
-const { selectZoomLevel, openReadOnlyFile } = require('../../common/desktop_helper');
+const { selectZoomLevel } = require('../../common/desktop_helper');
+var desktopHelper = require('../../common/desktop_helper');
 // const { selectTextShapeInTheCenter } = require('../../common/impress_helper');
 
 describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Open different file types', function() {
 
-	function before(fileName) {
-		helper.setupAndLoadDocument('impress/' + fileName);
+	function before(filePath) {
+		helper.setupAndLoadDocument(filePath);
 
 		selectZoomLevel('50');
 
@@ -54,43 +55,43 @@ describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Open different file t
 	}
 
 	it('Open pptx file', { defaultCommandTimeout: 60000 }, function() {
-		before('testfile.pptx');
+		before('impress/testfile.pptx');
 
 		assertData();
 	});
 
 	it('Open ppt file', { defaultCommandTimeout: 60000 }, function() {
-		before('testfile.ppt');
+		before('impress/testfile.ppt');
 
 		assertData();
 	});
 
 	it('Open pptm file', { defaultCommandTimeout: 60000 }, function() {
-		before('testfile.pptm');
+		before('impress/testfile.pptm');
 
 		assertData();
 	});
 
 	it('Open pot file', { defaultCommandTimeout: 60000 }, function() {
-		openReadOnlyFile('impress', 'testfile.pot');
+		desktopHelper.openReadOnlyFile('impress/testfile.pot');
 	});
 
 	it('Open potx file', { defaultCommandTimeout: 60000 }, function() {
-		openReadOnlyFile('impress', 'testfile.potx');
+		desktopHelper.openReadOnlyFile('impress/testfile.potx');
 	});
 
 	it('Open potm file', { defaultCommandTimeout: 60000 }, function() {
-		openReadOnlyFile('impress', 'testfile.potm');
+		desktopHelper.openReadOnlyFile('impress/testfile.potm');
 	});
 
 	it('Open fodp file', { defaultCommandTimeout: 60000 }, function() {
-		before('testfile.fodp');
+		before('impress/testfile.fodp');
 
 		assertData();
 	});
 
 	it('Open ppsx file', { defaultCommandTimeout: 60000 }, function() {
-		before('testfile.ppsx');
+		before('impress/testfile.ppsx');
 
 		assertData();
 	});

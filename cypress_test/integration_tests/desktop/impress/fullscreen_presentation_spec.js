@@ -11,8 +11,8 @@ describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Fullscreen Presentati
 			});
 	}
 
-	function before(fileName) {
-		helper.setupAndLoadDocument('impress/' + fileName);
+	function before(filePath) {
+		helper.setupAndLoadDocument(filePath);
 
 		if (Cypress.env('INTEGRATION') === 'nextcloud') {
 			desktopHelper.hideSidebarIfVisible();
@@ -25,7 +25,7 @@ describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Fullscreen Presentati
 	}
 
 	it('Text fields.', function() {
-		before('text_fields.odp');
+		before('impress/text_fields.odp');
 
 		cy.wait(3000);
 
@@ -62,7 +62,7 @@ describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Fullscreen Presentati
 	});
 
 	it('Custom background.', function() {
-		before('slide-bitmap-background.odp');
+		before('impress/slide-bitmap-background.odp');
 
 		cy.wait(3000);
 
@@ -79,7 +79,7 @@ describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Fullscreen Presentati
 	});
 
 	it.skip('Leading spaces shorter than a text line.', function() {
-		before('white-spaces.odp');
+		before('impress/white-spaces.odp');
 
 		cy.wait(3000);
 
@@ -101,7 +101,7 @@ describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Fullscreen Presentati
 	});
 
 	it('Leading spaces as long as a text line.', function() {
-		before('white-spaces.odp');
+		before('impress/white-spaces.odp');
 
 		cy.wait(3000);
 
@@ -125,7 +125,7 @@ describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Fullscreen Presentati
 	});
 
 	it('Leading spaces longer than a text line.', function() {
-		before('white-spaces.odp');
+		before('impress/white-spaces.odp');
 
 		cy.wait(3000);
 
@@ -147,7 +147,7 @@ describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Fullscreen Presentati
 	});
 
 	it('Internal spaces up to the end of the line.', function() {
-		before('white-spaces.odp');
+		before('impress/white-spaces.odp');
 
 		cy.wait(3000);
 
@@ -168,7 +168,7 @@ describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Fullscreen Presentati
 	});
 
 	it('Internal spaces crossing two lines.', function() {
-		before('white-spaces.odp');
+		before('impress/white-spaces.odp');
 
 		cy.wait(3000);
 
@@ -190,7 +190,7 @@ describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Fullscreen Presentati
 	});
 
 	it('Animation: Emphasis: Spin.', function() {
-		before('anim-spin.odp');
+		before('impress/anim-spin.odp');
 
 		cy.wait(3000);
 
@@ -224,7 +224,7 @@ describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Fullscreen Presentati
 	});
 
 	it.skip('Animation: Emphasis: Grow and Shrink.', function() {
-		before('anim-grow-and-shrink.odp');
+		before('impress/anim-grow-and-shrink.odp');
 
 		cy.wait(3000);
 
