@@ -222,6 +222,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 					(this._map['wopi'].EnableShare) ?
 						{
 							'id': 'ShareAs',
+							'class': 'unoShareAs',
 							'type': 'customtoolitem',
 							'text': _('Share'),
 							'command': 'shareas',
@@ -231,6 +232,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 						(L.Params.revHistoryEnabled) ?
 						{
 							'id': 'Rev-History',
+							'class': 'unoRev-History',
 							'type': 'customtoolitem',
 							'text': _('See history'),
 							'command': 'rev-history',
