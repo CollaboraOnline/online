@@ -134,6 +134,7 @@
 /src/layer/tile/AutoFillMarkerSection.ts
 /src/layer/tile/CellCursorSection.ts
 /src/layer/tile/HTMLObjectSection.ts
+/src/layer/tile/TextSelectionHandleSection.ts
 /src/layer/tile/CalcTileLayer.js
 /src/layer/tile/CanvasSectionContainer.ts
 /src/layer/tile/CanvasSectionProps.js
