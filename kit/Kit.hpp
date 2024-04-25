@@ -50,6 +50,7 @@ bool globalPreinit(const std::string& loTemplate);
 /// Wrapper around private Document::ViewCallback().
 void documentViewCallback(const int type, const char* p, void* data);
 
+class Document;
 class DeltaGenerator;
 class DocumentManagerInterface;
 
@@ -57,18 +58,15 @@ class DocumentManagerInterface;
 /// callback to a specific view.
 struct CallbackDescriptor
 {
-    CallbackDescriptor(DocumentManagerInterface* const doc, const int viewId)
-        : _doc(doc)
-        , _viewId(viewId)
+    CallbackDescriptor(Document* const doc, const int viewId)
+        : _doc(doc), _viewId(viewId)
     {
     }
-
-    DocumentManagerInterface* getDoc() const { return _doc; }
-
+    Document* getDoc() const { return _doc; }
     int getViewId() const { return _viewId; }
 
 private:
-    DocumentManagerInterface* const _doc;
+    Document* const _doc;
     const int _viewId;
 };
 
@@ -215,8 +213,6 @@ public:
 
     virtual std::string getObfuscatedFileId() = 0;
 
-    virtual std::shared_ptr<TileQueue>& getTileQueue() = 0;
-
     virtual bool sendFrame(const char* buffer, int length, WSOpCode opCode = WSOpCode::Text) = 0;
 
     virtual void alertAllUsers(const std::string& cmd, const std::string& kind) = 0;
@@ -256,7 +252,6 @@ class Document final : public DocumentManagerInterface,
 public:
     Document(const std::shared_ptr<lok::Office>& loKit, const std::string& jailId,
              const std::string& docKey, const std::string& docId, const std::string& url,
-             std::shared_ptr<TileQueue> tileQueue,
              const std::shared_ptr<WebSocketHandler>& websocketHandler, unsigned mobileAppDocId);
     virtual ~Document();
 
@@ -325,8 +320,6 @@ private:
 
     std::map<int, UserInfo> getViewInfo() override { return _sessionUserInfo; }
 
-    std::shared_ptr<TileQueue>& getTileQueue() override { return _tileQueue; }
-
     int getEditorId() const override { return _editorId; }
 
     bool isDocPasswordProtected() const override { return _isDocPasswordProtected; }
@@ -375,6 +368,9 @@ private:
 
 public:
     bool processInputEnabled() const;
+
+    /// A new message from wsd for the queue
+    void queueMessage(const std::string &msg) { _tileQueue->put(msg); }
     bool hasQueueItems() const { return _tileQueue && !_tileQueue->isEmpty(); }
 
     // poll is idle, are we ?

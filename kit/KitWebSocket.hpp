@@ -36,7 +36,6 @@ public:
                         const std::string& jailId, std::shared_ptr<KitSocketPoll> ksPoll,
                         unsigned mobileAppDocId)
         : WebSocketHandler(/* isClient = */ true, /* isMasking */ false)
-        , _queue(std::make_shared<TileQueue>())
         , _socketName(socketName)
         , _loKit(loKit)
         , _jailId(jailId)
