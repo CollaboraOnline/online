@@ -3,45 +3,53 @@
 
 /*
  * Prepares the test document by copying or uploading it
- * fileName: test document file name (without path)
- * subFolder: sub folder inside data folder (e.g. writer, calc, impress)
- * returns new test document file name (without path)
+ * filePath: test document file path
+ * returns new test document file path
  */
-function setupDocument(fileName, subFolder) {
+function setupDocument(filePath) {
 	cy.log('>> setupDocument - start');
-	cy.log('Param - fileName: ' + fileName);
-	cy.log('Param - subFolder: ' + subFolder);
+	cy.log('Param - filePath: ' + filePath);
 
-	var newFileName;
+	var newFilePath;
 	if (Cypress.env('INTEGRATION') === 'nextcloud') {
-		upLoadFileToNextCloud(fileName, subFolder);
-		newFileName = fileName;
+		upLoadFileToNextCloud(filePath);
+		newFilePath = filePath;
 	} else if (Cypress.env('SERVER') !== 'localhost') {
-		newFileName = fileName;
+		newFilePath = filePath;
 	} else {
 		// Rename and copy file to use a clean test document for every test case.
-		var randomText = (Math.random() + 1).toString(36).substring(7);
-		newFileName = Cypress.currentTest.title.replace(/[\/\\ ]/g, '-') + '-'+ randomText + '-' + fileName;
-		copyFile(fileName, newFileName, subFolder);
+		var randomText = (Math.random() + 1).toString(36).substring(2,7);
+		var cypressTestName = Cypress.currentTest.title.replace(/[\/\\ \.]/g, '-'); // replace slashes and spaces and dots
+
+		// Check for extension. The '.' has to be in fileName specifically, not earlier in filePath
+		if (getFileName(filePath).includes('.')) {
+			// Add text to name before the extension
+			newFilePath = filePath.substr(0, filePath.lastIndexOf('.'))
+				+ '-' + cypressTestName + '-' + randomText
+				+ '.' + filePath.substr(filePath.lastIndexOf('.')+1, filePath.length);
+		} else {
+			// Add text to name at the end
+			newFilePath = filePath + '-' + cypressTestName + '-' + randomText;
+		}
+
+		copyFile(filePath, newFilePath);
 	}
 
 	cy.log('<< setupDocument - end');
-	return newFileName;
+	return newFilePath;
 }
 
 /*
  * Opens the document and waits for it to be ready
- * fileName: test document file name (without path)
- * subFolder: sub folder inside data folder (e.g. writer, calc, impress)
+ * filePath: test document path
  * skipDocumentChecks: Skips the document checks that wait for it to be ready.
  *   This is useful for documents that have an interaction before the
  *   document is loaded, such as clearing a warning about macros.
  * isMultiUser: Set to true for multiuser tests.
  */
-function loadDocument(fileName, subFolder, skipDocumentChecks, isMultiUser) {
+function loadDocument(filePath, skipDocumentChecks, isMultiUser) {
 	cy.log('>> loadDocument - start');
-	cy.log('Param - fileName: ' + fileName);
-	cy.log('Param - subFolder: ' + subFolder);
+	cy.log('Param - filePath: ' + filePath);
 	if (skipDocumentChecks) {
 		cy.log('Param - skipDocumentChecks: ' + skipDocumentChecks);
 	}
@@ -67,9 +75,9 @@ function loadDocument(fileName, subFolder, skipDocumentChecks, isMultiUser) {
 
 	// Load document
 	if (Cypress.env('INTEGRATION') === 'nextcloud') {
-		loadDocumentNextcloud(fileName, subFolder);
+		loadDocumentNextcloud(filePath);
 	} else {
-		loadDocumentNoIntegration(fileName, subFolder, isMultiUser);
+		loadDocumentNoIntegration(filePath, isMultiUser);
 	}
 
 	// Wait for and verify that document is loaded
@@ -91,62 +99,48 @@ function loadDocument(fileName, subFolder, skipDocumentChecks, isMultiUser) {
 /*
  * Covers most use cases. For more flexibility,
  * call setupDocument and loadDocument directly
- * fullFileName: Includes subFolder, for example: 'calc/hello-world.ods'
+ * filePath: test document path, for example: 'calc/hello-world.ods'
  */
-function setupAndLoadDocument(fullFileName, isMultiUser = false) {
+function setupAndLoadDocument(filePath, isMultiUser = false) {
 	cy.log('>> setupAndLoadDocument - start');
 
-	// split 'calc/hello-world.ods' to 'calc' and 'hello-world.ods'
-	var subFolder;
-	var fileName;
-	if (fullFileName.includes('/')) {
-		subFolder = fullFileName.substr(0, fullFileName.lastIndexOf('/'));
-		fileName = fullFileName.substr(fullFileName.lastIndexOf('/')+1, fullFileName.length);
-	} else {
-		subFolder = undefined;
-		fileName = fullFileName;
-	}
-
-	var newFileName = setupDocument(fileName, subFolder);
+	var newFilePath = setupDocument(filePath);
 	if (isMultiUser) {
-		loadDocument(newFileName, subFolder, undefined, isMultiUser);
+		loadDocument(newFilePath, undefined, isMultiUser);
 	} else {
-		loadDocument(newFileName, subFolder);
+		loadDocument(newFilePath);
 	}
 
 	cy.log('<< setupAndLoadDocument - end');
-	return newFileName;
+	return newFilePath;
 }
 
 /*
  * Covers most use cases. For more flexibility,
  * call closeDocument and loadDocument directly
  */
-function reloadDocument(fileName, subFolder) {
+function reloadDocument(filePath) {
 	cy.log('>> reloadDocument - start');
 
-	closeDocument(fileName);
-	loadDocument(fileName, subFolder);
+	closeDocument(filePath);
+	loadDocument(filePath);
 
 	cy.log('<< reloadDocument - end');
 }
 
-function copyFile(fileName, newFileName, subFolder) {
-	if (subFolder === undefined) {
-		cy.task('copyFile', {
-			sourceDir: Cypress.env('DATA_FOLDER'),
-			destDir: Cypress.env('DATA_WORKDIR'),
-			fileName: fileName,
-			destFileName: newFileName,
-		});
-	} else {
-		cy.task('copyFile', {
-			sourceDir: Cypress.env('DATA_FOLDER') + subFolder + '/',
-			destDir: Cypress.env('DATA_WORKDIR') + subFolder + '/',
-			fileName: fileName,
-			destFileName: newFileName,
-		});
-	}
+function copyFile(filePath, newFilePath) {
+	// subFolder can be '', if filePath does not have a slash
+	var subFolder = getSubFolder(filePath);
+	var newSubFolder = getSubFolder(newFilePath);
+	var fileName = getFileName(filePath);
+	var newFileName = getFileName(newFilePath);
+
+	cy.task('copyFile', {
+		sourceDir: Cypress.env('DATA_FOLDER') + subFolder + '/',
+		destDir: Cypress.env('DATA_WORKDIR') + newSubFolder + '/',
+		fileName: fileName,
+		destFileName: newFileName,
+	});
 }
 
 function logError(event) {
@@ -157,7 +151,7 @@ function logError(event) {
 /*
  * Loads the test document directly in Collabora Online.
  */
-function loadDocumentNoIntegration(fileName, subFolder, isMultiUser) {
+function loadDocumentNoIntegration(filePath, isMultiUser) {
 	cy.log('>> loadDocumentNoIntegration - start');
 
 	var URI = '';
@@ -166,17 +160,9 @@ function loadDocumentNoIntegration(fileName, subFolder, isMultiUser) {
 		URI += 'http://' + Cypress.env('SERVER') + '/richproxy/proxy.php?req=';
 	}
 
-	if (subFolder === undefined) {
-		URI += '/browser/' +
-			Cypress.env('WSD_VERSION_HASH') +
-			'/debug.html?lang=en-US&file_path=' +
-			Cypress.env('DATA_WORKDIR') + fileName;
-	} else {
-		URI += '/browser/' +
-			Cypress.env('WSD_VERSION_HASH') +
-			'/debug.html?lang=en-US&file_path=' +
-			Cypress.env('DATA_WORKDIR') + subFolder + '/' + fileName;
-	}
+	URI += '/browser/' + Cypress.env('WSD_VERSION_HASH') + '/debug.html'
+		+ '?lang=en-US'
+		+ '&file_path=' + Cypress.env('DATA_WORKDIR') + filePath;
 
 	if (isMultiUser) {
 		URI = URI.replace('debug.html', 'cypress-multiuser.html');
@@ -199,10 +185,11 @@ function loadDocumentNoIntegration(fileName, subFolder, isMultiUser) {
 /*
  * Loads the test document inside a Nextcloud integration
  */
-function loadDocumentNextcloud(fileName, subFolder) {
+function loadDocumentNextcloud(filePath) {
 	cy.log('>> loadDocumentNextcloud - start');
-	cy.log('Param - fileName: ' + fileName);
-	cy.log('Param - subFolder: ' + subFolder);
+	cy.log('Param - filePath: ' + filePath);
+
+	var fileName = getFileName(filePath);
 
 	// Open test document
 	cy.cGet('tr[data-file=\'' + fileName + '\']').click();
@@ -256,19 +243,19 @@ function hideNCFirstRunWizard() {
 
 // Upload a test document into Nexcloud and open it.
 // Parameters:
-// fileName - test document file name (without path)
-// subFolder - sub folder inside data folder (e.g. writer, calc, impress)
+// filePath - test document file path
 // subsequentLoad - whether we load a test document for the first time in the
 //                  test case or not. It's important because we need to sign in
 //                  with the username + password only for the first time.
-function upLoadFileToNextCloud(fileName, subFolder, subsequentLoad) {
+function upLoadFileToNextCloud(filePath, subsequentLoad) {
 	cy.log('>> upLoadFileToNextCloud - start');
-	cy.log('Param - fileName: ' + fileName);
-	cy.log('Param - subFolder: ' + subFolder);
+	cy.log('Param - filePath: ' + filePath);
 	cy.log('Param - subsequentLoad: ' + subsequentLoad);
 
 	// TODO: subsequentLoad appears to be unused
 	// TODO: see if cy.session can handle login
+
+	var fileName = getFileName(filePath);
 
 	// Open local nextcloud installation
 	var url = 'http://' + Cypress.env('SERVER') + 'nextcloud/index.php/apps/files';
@@ -319,19 +306,13 @@ function upLoadFileToNextCloud(fileName, subFolder, subsequentLoad) {
 	cy.cGet('tr[data-file=\'' + fileName + '\']').should('not.exist');
 
 	// Upload test document
-	var fileURI = '';
-	if (subFolder === undefined) {
-		fileURI += fileName;
-	} else {
-		fileURI += subFolder + '/' + fileName;
-	}
 	doIfOnDesktop(function() {
 		cy.cGet('input#file_upload_start')
-			.attachFile({ filePath: 'desktop/' + fileURI, encoding: 'binary' });
+			.attachFile({ filePath: 'desktop/' + filePath, encoding: 'binary' });
 	});
 	doIfOnMobile(function() {
 		cy.cGet('input#file_upload_start')
-			.attachFile({ filePath: 'mobile/' + fileURI, encoding: 'binary' });
+			.attachFile({ filePath: 'mobile/' + filePath, encoding: 'binary' });
 	});
 
 	cy.cGet('#uploadprogressbar')
@@ -537,10 +518,12 @@ function clipboardTextShouldBeDifferentThan(text) {
 // We use this method to close the document, before step
 // on to the next test case.
 // Parameters:
-// fileName - test document name (we can check it on the admin console).
+// filePath - test document path (we can check it on the admin console).
 // testState - whether the test passed or failed before this method was called.
-function closeDocument(fileName) {
+function closeDocument(filePath) {
 	cy.log('>> closeDocument - start');
+
+	var fileName = getFileName(filePath);
 
 	if (Cypress.env('INTEGRATION') === 'nextcloud') {
 		if (Cypress.env('IFRAME_LEVEL') === '2') {
@@ -1167,6 +1150,32 @@ function copy() {
 	});
 }
 
+/*
+ * Get 'hello.ods' from 'calc/hello.ods'
+ */
+function getFileName(filePath) {
+	var fileName;
+	if (filePath.includes('/')) {
+		fileName = filePath.substr(filePath.lastIndexOf('/')+1, filePath.length);
+	} else {
+		fileName = filePath;
+	}
+	return fileName;
+}
+
+/*
+ * Get 'calc' from 'calc/hello.ods'
+ */
+function getSubFolder(filePath) {
+	var subFolder;
+	if (filePath.includes('/')) {
+		subFolder = filePath.substr(0, filePath.lastIndexOf('/'));
+	} else {
+		subFolder = '';
+	}
+	return subFolder;
+}
+
 module.exports.setupDocument = setupDocument;
 module.exports.loadDocument = loadDocument;
 module.exports.setupAndLoadDocument = setupAndLoadDocument;
@@ -1212,3 +1221,5 @@ module.exports.getBlinkingCursorPosition = getBlinkingCursorPosition;
 module.exports.clickAt = clickAt;
 module.exports.setDummyClipboardForCopy = setDummyClipboardForCopy;
 module.exports.copy = copy;
+module.exports.getFileName = getFileName;
+module.exports.getSubFolder = getSubFolder;

@@ -6,10 +6,10 @@ var writerHelper = require('../../common/writer_helper');
 var repairHelper = require('../../common/repair_document_helper');
 
 describe.skip(['tagmobile'], 'Trigger hamburger menu options.', function() {
-	var newFileName;
+	var newFilePath;
 
 	beforeEach(function() {
-		newFileName = helper.setupAndLoadDocument('writer/hamburger_menu.odt');
+		newFilePath = helper.setupAndLoadDocument('writer/hamburger_menu.odt');
 
 		mobileHelper.enableEditingMobile();
 	});
@@ -47,7 +47,7 @@ describe.skip(['tagmobile'], 'Trigger hamburger menu options.', function() {
 		helper.expectTextForClipboard('new');
 		mobileHelper.selectHamburgerMenuItem(['File', 'Save']);
 		// Reopen the document and check content.
-		helper.reloadDocument(newFileName, 'writer');
+		helper.reloadDocument(newFilePath);
 		mobileHelper.enableEditingMobile();
 		writerHelper.selectAllTextOfDoc();
 		helper.expectTextForClipboard('new');

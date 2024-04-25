@@ -5,8 +5,8 @@ var desktopHelper = require('../../common/desktop_helper');
 
 describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Form field button tests.', function() {
 
-	function before(fileName) {
-		helper.setupAndLoadDocument('writer/' + fileName);
+	function before(filePath) {
+		helper.setupAndLoadDocument(filePath);
 
 		if (Cypress.env('INTEGRATION') === 'nextcloud') {
 			desktopHelper.showStatusBarIfHidden();
@@ -49,7 +49,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Form field button tests.',
 	}
 
 	it('Activate and deactivate form field button.', function() {
-		before('form_field.odt');
+		before('writer/form_field.odt');
 
 		// We don't have the button by default
 		buttonShouldNotExist();
@@ -76,7 +76,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Form field button tests.',
 	});
 
 	it('Check drop down list.', function() {
-		before('form_field.odt');
+		before('writer/form_field.odt');
 
 		// Move the cursor next to the form field
 		helper.moveCursor('right');
@@ -107,7 +107,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Form field button tests.',
 	});
 
 	it('Test field editing', function() {
-		before('form_field.odt');
+		before('writer/form_field.odt');
 
 		// Move the cursor next to the form field
 		helper.moveCursor('right');
@@ -143,7 +143,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Form field button tests.',
 	});
 
 	it('Multiple form field button activation.', function() {
-		before('multiple_form_fields.odt');
+		before('writer/multiple_form_fields.odt');
 
 		// We don't have the button by default
 		buttonShouldNotExist();
@@ -174,7 +174,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Form field button tests.',
 	});
 
 	it('Test drop-down field with no selection.', function() {
-		before('drop_down_form_field_noselection.odt');
+		before('writer/drop_down_form_field_noselection.odt');
 
 		// Move the cursor next to the form field
 		helper.moveCursor('right');
@@ -186,7 +186,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Form field button tests.',
 	});
 
 	it('Test drop-down field with no items.', function() {
-		before('drop_down_form_field_noitem.odt');
+		before('writer/drop_down_form_field_noitem.odt');
 
 		// Move the cursor next to the form field
 		helper.moveCursor('right');
@@ -202,7 +202,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Form field button tests.',
 	});
 
 	it('Test field button after zoom.', function() {
-		before('form_field.odt');
+		before('writer/form_field.odt');
 
 		// Move the cursor next to the form field
 		helper.moveCursor('right');
@@ -229,7 +229,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Form field button tests.',
 	});
 
 	it('Test dynamic font size.', function() {
-		before('form_field.odt');
+		before('writer/form_field.odt');
 
 		// Move the cursor next to the form field
 		helper.moveCursor('right');

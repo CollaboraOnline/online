@@ -8,7 +8,7 @@ var repairHelper = require('../../common/repair_document_helper');
 describe.skip(['tagmobile'], 'Trigger hamburger menu options.', function() {
 
 	it('Save', { defaultCommandTimeout: 60000 }, function() {
-		var newFileName = helper.setupAndLoadDocument('calc/hamburger_menu.ods');
+		var newFilePath = helper.setupAndLoadDocument('calc/hamburger_menu.ods');
 		mobileHelper.enableEditingMobile();
 
 		calcHelper.selectEntireSheet();
@@ -22,7 +22,7 @@ describe.skip(['tagmobile'], 'Trigger hamburger menu options.', function() {
 		mobileHelper.selectHamburgerMenuItem(['File', 'Save']);
 
 		// Reopen the document and check content.
-		helper.reloadDocument(newFileName, 'calc');
+		helper.reloadDocument(newFilePath);
 
 		mobileHelper.enableEditingMobile();
 		calcHelper.selectEntireSheet();

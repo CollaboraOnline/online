@@ -4,10 +4,10 @@ var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
 
 describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'PDF View Tests', function() {
-	var newFileName;
+	var newFilePath;
 
 	beforeEach(function() {
-		newFileName = helper.setupAndLoadDocument('draw/pdf_page_up_down.pdf');
+		newFilePath = helper.setupAndLoadDocument('draw/pdf_page_up_down.pdf');
 	});
 
 	it('PDF page down', { env: { 'pdf-view': true } }, function() {
@@ -31,9 +31,9 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'PDF View Tests', function(
 		// directly, rather save-as is used. This failed because
 		// DocBroker expected to get ModifiedStatus=false, which
 		// never happens with save-as and so we couldn't unload.
-		helper.closeDocument(newFileName);
+		helper.closeDocument(newFilePath);
 
 		// TODO: verify comment still exists
-		// helper.reloadDocument(newFileName,'draw');
+		// helper.reloadDocument(newFilePath);
 	});
 });

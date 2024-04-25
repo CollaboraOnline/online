@@ -420,12 +420,12 @@ function pressKey(n, key) {
 	cy.log('<< pressKey - end');
 }
 
-function openReadOnlyFile(subFolder, fileName) {
+function openReadOnlyFile(filePath) {
 	cy.log('>> openReadOnlyFile - start');
 
-	var newFileName = helper.setupDocument(fileName, subFolder);
+	var newFilePath = helper.setupDocument(filePath);
 	// Skip document checks because sidebar does not appear
-	helper.loadDocument(newFileName, subFolder, true);
+	helper.loadDocument(filePath, true);
 
 	//check doc is loaded
 	cy.cGet('.leaflet-canvas-container canvas', {timeout : Cypress.config('defaultCommandTimeout') * 2.0});
@@ -435,7 +435,7 @@ function openReadOnlyFile(subFolder, fileName) {
 	cy.cGet('#PermissionMode').should('be.visible').should('have.text', ' Read-only ');
 
 	cy.log('<< openReadOnlyFile - end');
-	return newFileName;
+	return newFilePath;
 }
 
 function checkAccessibilityEnabledToBe(state) {

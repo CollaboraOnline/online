@@ -10,7 +10,7 @@ describe(['tagnextcloud'], 'Nextcloud specific tests.', function() {
 		helper.setupAndLoadDocument('writer/nextcloud.odt');
 		mobileHelper.enableEditingMobile();
 
-		helper.upLoadFileToNextCloud('image_to_insert.png', 'writer');
+		helper.upLoadFileToNextCloud('writer/image_to_insert.png');
 		nextcloudHelper.insertImageFromStorage('image_to_insert.png');
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane svg g.Graphic')
@@ -18,7 +18,8 @@ describe(['tagnextcloud'], 'Nextcloud specific tests.', function() {
 	});
 
 	it('Save as.', function() {
-		var newFileName = helper.setupAndLoadDocument('writer/nextcloud.odt');
+		var newFilePath = helper.setupAndLoadDocument('writer/nextcloud.odt');
+		var newFileName = helper.getFileName(newFilePath);
 		mobileHelper.enableEditingMobile();
 
 		nextcloudHelper.saveFileAs('1' + newFileName);

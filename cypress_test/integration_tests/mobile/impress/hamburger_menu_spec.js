@@ -6,10 +6,10 @@ var mobileHelper = require('../../common/mobile_helper');
 var repairHelper = require('../../common/repair_document_helper');
 
 describe.skip(['tagmobile'], 'Trigger hamburger menu options.', function() {
-	var newFileName;
+	var newFilePath;
 
 	beforeEach(function() {
-		newFileName = helper.setupAndLoadDocument('impress/hamburger_menu.odp');
+		newFilePath = helper.setupAndLoadDocument('impress/hamburger_menu.odp');
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
@@ -35,7 +35,7 @@ describe.skip(['tagmobile'], 'Trigger hamburger menu options.', function() {
 		mobileHelper.selectHamburgerMenuItem(['File', 'Save']);
 
 		// Reopen the document and check content.
-		helper.reloadDocument(newFileName,'impress');
+		helper.reloadDocument(newFilePath);
 
 		mobileHelper.enableEditingMobile();
 

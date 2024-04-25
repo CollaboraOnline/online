@@ -6,9 +6,9 @@ var calcHelper = require('../../common/calc_helper');
 describe(['tagdesktop', 'tagproxy'], 'macro dialog tests', function() {
 
 	beforeEach(function() {
-		var newFileName = helper.setupDocument('macro.ods','calc');
+		var newFilePath = helper.setupDocument('calc/macro.ods');
 		// Skip document check to click through accept macro dialog first
-		helper.loadDocument(newFileName,'calc',true);
+		helper.loadDocument(newFilePath,true);
 		acceptMacroExecution();
 		helper.documentChecks();
 	});

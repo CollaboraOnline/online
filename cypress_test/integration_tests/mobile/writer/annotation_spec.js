@@ -4,10 +4,10 @@ var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 
 describe(['tagmobile'], 'Annotation tests.', function() {
-	var newFileName;
+	var newFilePath;
 
 	beforeEach(function() {
-		newFileName = helper.setupAndLoadDocument('writer/annotation.odt');
+		newFilePath = helper.setupAndLoadDocument('writer/annotation.odt');
 
 		mobileHelper.enableEditingMobile();
 	});
@@ -15,7 +15,7 @@ describe(['tagmobile'], 'Annotation tests.', function() {
 	it('Saving comment.', { defaultCommandTimeout: 60000 }, function() {
 		mobileHelper.insertComment();
 		mobileHelper.selectHamburgerMenuItem(['File', 'Save']);
-		helper.reloadDocument(newFileName, 'writer');
+		helper.reloadDocument(newFilePath);
 		mobileHelper.enableEditingMobile();
 		mobileHelper.openCommentWizard();
 		helper.waitUntilIdle('#mobile-wizard-content', undefined);
