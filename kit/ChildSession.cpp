@@ -103,7 +103,7 @@ std::string formatUnoCommandInfo(const std::string& unoCommand)
 
 ChildSession::ChildSession(const std::shared_ptr<ProtocolHandlerInterface>& protocol,
                            const std::string& id, const std::string& jailId,
-                           const std::string& jailRoot, DocumentManagerInterface& docManager)
+                           const std::string& jailRoot, Document& docManager)
     : Session(protocol, "ToMaster-" + id, id, false)
     , _jailId(jailId)
     , _jailRoot(jailRoot)

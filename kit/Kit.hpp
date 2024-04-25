@@ -52,7 +52,6 @@ void documentViewCallback(const int type, const char* p, void* data);
 
 class Document;
 class DeltaGenerator;
-class DocumentManagerInterface;
 
 /// Descriptor class used to link a LOK
 /// callback to a specific view.
@@ -179,66 +178,6 @@ public:
 class TileQueue;
 class ChildSession;
 
-// An abstract interface.
-class DocumentManagerInterface
-{
-public:
-    virtual ~DocumentManagerInterface() {}
-
-    /// Request loading a document, or a new view, if one exists.
-    virtual bool onLoad(const std::string& sessionId, const std::string& uriAnonym,
-                        const std::string& renderOpts) = 0;
-
-    /// Unload a client session, which unloads the document
-    /// if it is the last and only.
-    virtual void onUnload(const ChildSession& session) = 0;
-
-    /// Access to the Kit instance.
-    virtual std::shared_ptr<lok::Office> getLOKit() = 0;
-
-    /// Access to the document instance.
-    virtual std::shared_ptr<lok::Document> getLOKitDocument() = 0;
-
-    /// Send msg to all active sessions.
-    virtual bool notifyAll(const std::string& msg) = 0;
-
-    /// Send updated view info to all active sessions.
-    virtual void notifyViewInfo() = 0;
-    virtual void updateEditorSpeeds(int id, int speed) = 0;
-
-    virtual int getEditorId() const = 0;
-
-    /// Get a view ID <-> UserInfo map.
-    virtual std::map<int, UserInfo> getViewInfo() = 0;
-
-    virtual std::string getObfuscatedFileId() = 0;
-
-    virtual bool sendFrame(const char* buffer, int length, WSOpCode opCode = WSOpCode::Text) = 0;
-
-    virtual void alertAllUsers(const std::string& cmd, const std::string& kind) = 0;
-
-    virtual unsigned getMobileAppDocId() const = 0;
-
-    /// See if we should clear out our memory
-    virtual void trimIfInactive() = 0;
-
-    virtual bool isDocPasswordProtected() const = 0;
-
-    virtual bool haveDocPassword() const = 0;
-
-    virtual std::string getDocPassword() const = 0;
-
-    virtual DocumentPasswordType getDocPasswordType() const = 0;
-
-    virtual void updateActivityHeader() const = 0;
-
-    virtual bool joinThreads() = 0;
-
-    virtual bool forkToSave(const std::function<void()> &childSave, int viewId) = 0;
-
-    virtual void handleSaveMessage(const std::string &msg) = 0;
-};
-
 /// A document container.
 /// Owns LOKitDocument instance and connections.
 /// Manages the lifetime of a document.
@@ -246,8 +185,7 @@ public:
 /// per process. But for security reasons don't.
 /// However, we could have a coolkit instance
 /// per user or group of users (a trusted circle).
-class Document final : public DocumentManagerInterface,
-                       public std::enable_shared_from_this<Document>
+class Document final : public std::enable_shared_from_this<Document>
 {
 public:
     Document(const std::shared_ptr<lok::Office>& loKit, const std::string& jailId,
@@ -276,7 +214,7 @@ public:
         return sendFrame(message.data(), message.size());
     }
 
-    bool sendFrame(const char* buffer, int length, WSOpCode opCode = WSOpCode::Text) override;
+    bool sendFrame(const char* buffer, int length, WSOpCode opCode = WSOpCode::Text);
 
     void alertNotAsync()
     {
@@ -285,21 +223,22 @@ public:
             notifyAll("error: cmd=notasync kind=failure");
     }
 
-    void alertAllUsers(const std::string& cmd, const std::string& kind) override
+    void alertAllUsers(const std::string& cmd, const std::string& kind)
     {
         sendTextFrame("errortoall: cmd=" + cmd + " kind=" + kind);
     }
 
     /// Notify all views with the given message
-    bool notifyAll(const std::string& msg) override
+    bool notifyAll(const std::string& msg)
     {
         // Broadcast updated viewinfo to all clients.
         return sendTextFrame("client-all " + msg);
     }
 
-    unsigned getMobileAppDocId() const override { return _mobileAppDocId; }
+    unsigned getMobileAppDocId() const { return _mobileAppDocId; }
 
-    void trimIfInactive() override;
+    /// See if we should clear out our memory
+    void trimIfInactive();
     void trimAfterInactivity();
 
     // LibreOfficeKit callback entry points
@@ -313,35 +252,40 @@ private:
         _tileQueue->put("callback all " + std::to_string(type) + ' ' + payload);
     }
 
-    /// Load a document (or view) and register callbacks.
+public:
+    /// Request loading a document, or a new view, if one exists,
+    /// and register callbacks.
     bool onLoad(const std::string& sessionId, const std::string& uriAnonym,
-                const std::string& renderOpts) override;
-    void onUnload(const ChildSession& session) override;
+                const std::string& renderOpts);
 
-    std::map<int, UserInfo> getViewInfo() override { return _sessionUserInfo; }
+    /// Unload a client session, which unloads the document
+    /// if it is the last and only.
+    void onUnload(const ChildSession& session);
 
-    int getEditorId() const override { return _editorId; }
+    /// Get a view ID <-> UserInfo map.
+    std::map<int, UserInfo> getViewInfo() { return _sessionUserInfo; }
 
-    bool isDocPasswordProtected() const override { return _isDocPasswordProtected; }
+    int getEditorId() const { return _editorId; }
 
-    bool haveDocPassword() const override { return _haveDocPassword; }
+    bool isDocPasswordProtected() const { return _isDocPasswordProtected; }
 
-    std::string getDocPassword() const override { return _docPassword; }
+    bool haveDocPassword() const { return _haveDocPassword; }
 
-    DocumentPasswordType getDocPasswordType() const override { return _docPasswordType; }
+    std::string getDocPassword() const { return _docPassword; }
 
-    void updateActivityHeader() const override;
+    DocumentPasswordType getDocPasswordType() const { return _docPasswordType; }
 
-    bool joinThreads() override;
+    void updateActivityHeader() const;
 
+    bool joinThreads();
     void startThreads();
 
-    bool forkToSave(const std::function<void()> &childSave, int viewId) override;
+    bool forkToSave(const std::function<void()> &childSave, int viewId);
 
-    void handleSaveMessage(const std::string &msg) override;
+    void handleSaveMessage(const std::string &msg);
 
     /// Notify all views of viewId and their associated usernames
-    void notifyViewInfo() override;
+    void notifyViewInfo();
 
     std::shared_ptr<ChildSession> findSessionByViewId(int viewId);
 
@@ -349,7 +293,7 @@ private:
 
     std::string getViewProps(const std::shared_ptr<ChildSession>& session);
 
-    void updateEditorSpeeds(int id, int speed) override;
+    void updateEditorSpeeds(int id, int speed);
 
 private:
     // Get the color value for all author names from the core
@@ -380,14 +324,14 @@ public:
     void dumpState(std::ostream& oss);
 
     /// Return access to the lok::Office instance.
-    std::shared_ptr<lok::Office> getLOKit() override { return _loKit; }
+    std::shared_ptr<lok::Office> getLOKit() { return _loKit; }
 
     /// Return access to the lok::Document instance.
-    std::shared_ptr<lok::Document> getLOKitDocument() override;
+    std::shared_ptr<lok::Document> getLOKitDocument();
+
+    std::string getObfuscatedFileId() { return _obfuscatedFileId; }
 
 private:
-    std::string getObfuscatedFileId() override { return _obfuscatedFileId; }
-
     /// Stops theads, flushes buffers, and exits the process.
     void flushAndExit(int code);
 

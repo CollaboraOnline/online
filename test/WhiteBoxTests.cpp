@@ -49,7 +49,6 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testReplaceAllOf);
     CPPUNIT_TEST(testRegexListMatcher);
     CPPUNIT_TEST(testRegexListMatcher_Init);
-    CPPUNIT_TEST(testEmptyCellCursor);
     CPPUNIT_TEST(testTileDesc);
     CPPUNIT_TEST(testTileData);
     CPPUNIT_TEST(testRectanglesIntersect);
@@ -82,7 +81,6 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     void testReplaceAllOf();
     void testRegexListMatcher();
     void testRegexListMatcher_Init();
-    void testEmptyCellCursor();
     void testTileDesc();
     void testTileData();
     void testRectanglesIntersect();
@@ -551,137 +549,6 @@ void WhiteBoxTests::testRegexListMatcher_Init()
     LOK_ASSERT(matcher.match("192.168.1.134"));
     LOK_ASSERT(!matcher.match("192.169.1.1"));
     LOK_ASSERT(matcher.match("192.168.."));
-}
-
-#if 0
-/// A stub DocumentManagerInterface implementation for unit test purposes.
-class DummyDocument : public Document
-{
-    std::shared_ptr<TileQueue> _tileQueue;
-    std::mutex _mutex;
-    std::mutex _documentMutex;
-public:
-    DummyDocument()
-        : _tileQueue(new TileQueue())
-    {
-    }
-
-    bool onLoad(const std::string& /*sessionId*/,
-                const std::string& /*uriAnonym*/,
-                const std::string& /*renderOpts*/) override
-    {
-        return false;
-    }
-
-    void onUnload(const ChildSession& /*session*/) override
-    {
-    }
-
-    std::shared_ptr<lok::Office> getLOKit() override
-    {
-        return nullptr;
-    }
-
-    std::shared_ptr<lok::Document> getLOKitDocument() override
-    {
-        return nullptr;
-    }
-
-    bool notifyAll(const std::string&) override
-    {
-        return true;
-    }
-
-    void notifyViewInfo() override
-    {
-    }
-
-    void updateEditorSpeeds(int, int) override
-    {
-    }
-
-    int getEditorId() const override
-    {
-        return -1;
-    }
-
-    std::map<int, UserInfo> getViewInfo() override
-    {
-        return {};
-    }
-
-    std::string getObfuscatedFileId() override
-    {
-        return std::string();
-    }
-
-    bool sendFrame(const char* /*buffer*/, int /*length*/, WSOpCode /*opCode*/) override
-    {
-        return true;
-    }
-
-    void alertAllUsers(const std::string& /*cmd*/, const std::string& /*kind*/) override
-    {
-    }
-
-    unsigned getMobileAppDocId() const override
-    {
-        return 0;
-    }
-
-    void trimIfInactive() override
-    {
-    }
-
-    bool isDocPasswordProtected() const override
-    {
-        return false;
-    }
-
-    bool haveDocPassword() const override
-    {
-        return false;
-    }
-
-    std::string getDocPassword() const override
-    {
-        return "";
-    }
-
-    DocumentPasswordType getDocPasswordType() const override
-    {
-        return DocumentPasswordType::ToView;
-    }
-
-    void updateActivityHeader() const override
-    {
-    }
-
-    bool joinThreads() override
-    {
-        return false;
-    }
-
-    bool forkToSave(const std::function<void()> &, int) override
-    {
-        return false;
-    }
-
-    void handleSaveMessage(const std::string &) override
-    {
-    }
-};
-#endif
-
-void WhiteBoxTests::testEmptyCellCursor()
-{
-#if 0
-    auto office = std::make_shared<lok::Office>();
-    Document document(office, "", "", "", "", nullptr, 42);
-    CallbackDescriptor callbackDescriptor{&document, 0};
-    // This failed as stoi raised an std::invalid_argument exception.
-    documentViewCallback(LOK_CALLBACK_CELL_CURSOR, "EMPTY", &callbackDescriptor);
-#endif
 }
 
 void WhiteBoxTests::testTileDesc()
