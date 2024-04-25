@@ -92,7 +92,6 @@ void UnitSaveTorture::saveTortureOne(
 {
     auto timeout = std::chrono::seconds(10);
 
-    // Save same document from many threads together.
     std::string documentPath, documentURL;
     helpers::getDocumentPathAndURL(docName, documentPath, documentURL, name);
 
@@ -146,6 +145,7 @@ UnitSaveTorture::UnitSaveTorture()
     : UnitWSD("UnitSaveTorture"),
       forceAutosave(false)
 {
+    setHasKitHooks();
     // Double of the default.
     constexpr std::chrono::minutes timeout_minutes(1);
     setTimeout(timeout_minutes);

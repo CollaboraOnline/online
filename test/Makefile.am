@@ -32,6 +32,7 @@ AM_CXXFLAGS = $(CPPUNIT_CFLAGS) -DTDOC=\"$(abs_top_srcdir)/test/data\" -DTDIST=\
 # 'Finished in' in the `make check` output.
 # When adding new tests, please maintain order.
 all_la_unit_tests = \
+	unit-synthetic-lok.la \
 	unit-wopi-async-slow.la \
 	unit-tiletest.la \
 	unit-wopi-fail-upload.la \
@@ -272,6 +273,8 @@ unit_load_torture_la_SOURCES = UnitLoadTorture.cpp
 unit_load_torture_la_LIBADD = $(CPPUNIT_LIBS)
 unit_save_torture_la_SOURCES = UnitSaveTorture.cpp
 unit_save_torture_la_LIBADD = $(CPPUNIT_LIBS)
+unit_synthetic_lok_la_SOURCES = UnitSyntheticLok.cpp
+unit_synthetic_lok__la_LIBADD = $(CPPUNIT_LIBS)
 unit_rendering_options_la_SOURCES = UnitRenderingOptions.cpp
 unit_rendering_options_la_LIBADD = $(CPPUNIT_LIBS)
 unit_password_protected_la_SOURCES = UnitPasswordProtected.cpp
