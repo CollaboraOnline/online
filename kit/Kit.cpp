@@ -689,7 +689,6 @@ Document::Document(const std::shared_ptr<lok::Office>& loKit,
                    const std::string& docKey,
                    const std::string& docId,
                    const std::string& url,
-                   std::shared_ptr<TileQueue> tileQueue,
                    const std::shared_ptr<WebSocketHandler>& websocketHandler,
                    unsigned mobileAppDocId)
     : _loKit(loKit),
@@ -698,7 +697,7 @@ Document::Document(const std::shared_ptr<lok::Office>& loKit,
       _docId(docId),
       _url(url),
       _obfuscatedFileId(Util::getFilenameFromURL(docKey)),
-      _tileQueue(std::move(tileQueue)),
+      _tileQueue(std::make_shared<TileQueue>()),
       _websocketHandler(websocketHandler),
       _isBgSaveProcess(false),
       _haveDocPassword(false),
@@ -1082,7 +1081,7 @@ void Document::trimAfterInactivity()
     assert(descriptor && "Null callback data.");
     assert(descriptor->getDoc() && "Null Document instance.");
 
-    std::shared_ptr<TileQueue> tileQueue = descriptor->getDoc()->getTileQueue();
+    std::shared_ptr<TileQueue> tileQueue = descriptor->getDoc()->_tileQueue;
     assert(tileQueue && "Null TileQueue.");
 
     const std::string payload = p ? p : "(nil)";

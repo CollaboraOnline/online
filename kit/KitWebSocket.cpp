@@ -77,7 +77,7 @@ void KitWebSocketHandler::handleMessage(const std::vector<char>& data)
         if (!_document)
         {
             _document = std::make_shared<Document>(
-                _loKit, _jailId, _docKey, docId, url, _queue,
+                _loKit, _jailId, _docKey, docId, url,
                 std::static_pointer_cast<WebSocketHandler>(shared_from_this()), _mobileAppDocId);
             _ksPoll->setDocument(_document);
 
@@ -129,7 +129,7 @@ void KitWebSocketHandler::handleMessage(const std::vector<char>& data)
     {
         if (_document)
         {
-            _queue->put(message);
+            _document->queueMessage(message);
         }
         else
         {

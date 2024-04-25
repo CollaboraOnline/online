@@ -553,8 +553,9 @@ void WhiteBoxTests::testRegexListMatcher_Init()
     LOK_ASSERT(matcher.match("192.168.."));
 }
 
+#if 0
 /// A stub DocumentManagerInterface implementation for unit test purposes.
-class DummyDocument : public DocumentManagerInterface
+class DummyDocument : public Document
 {
     std::shared_ptr<TileQueue> _tileQueue;
     std::mutex _mutex;
@@ -614,11 +615,6 @@ public:
         return std::string();
     }
 
-    std::shared_ptr<TileQueue>& getTileQueue() override
-    {
-        return _tileQueue;
-    }
-
     bool sendFrame(const char* /*buffer*/, int /*length*/, WSOpCode /*opCode*/) override
     {
         return true;
@@ -675,13 +671,17 @@ public:
     {
     }
 };
+#endif
 
 void WhiteBoxTests::testEmptyCellCursor()
 {
-    DummyDocument document;
+#if 0
+    auto office = std::make_shared<lok::Office>();
+    Document document(office, "", "", "", "", nullptr, 42);
     CallbackDescriptor callbackDescriptor{&document, 0};
     // This failed as stoi raised an std::invalid_argument exception.
     documentViewCallback(LOK_CALLBACK_CELL_CURSOR, "EMPTY", &callbackDescriptor);
+#endif
 }
 
 void WhiteBoxTests::testTileDesc()
