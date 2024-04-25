@@ -470,6 +470,7 @@ var unoCommandsArray = {
 	'ThesaurusDialog':{global:{menu:_('~Thesaurus...'),},text:{menu:_('~Thesaurus...'),},},
 	'TitlePageDialog':{text:{menu:_('Title Page...'),},},
 	'ToggleMergeCells':{spreadsheet:{context:_('Merge and center or unmerge cells depending on the current toggle state'),menu:_('M~erge and Center Cells'),},},
+	'ToggleSheetGrid':{global:{menu:_('View ~Grid Lines'),},},
 	'ToolsMenu':{global:{menu:_('~Tools'),},},
 	'TrackChanges':{text:{context:_('Record Track Changes'),menu:_('~Record'),},},
 	'TransformDialog':{global:{menu:_('Position and Si~ze...'),},},

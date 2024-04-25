@@ -1139,6 +1139,13 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				],
 				'vertical': 'true'
 			},
+			{
+				'id': 'view-togglegrid',
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:ToggleSheetGrid'),
+				'command': '.uno:ToggleSheetGrid',
+				'accessibility': { focusBack: true,	combination: 'SG', de: null }
+			},
 			(window.mode.isTablet()) ?
 				{
 					'id': 'closemobile',
