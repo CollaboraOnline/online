@@ -393,6 +393,10 @@ L.TileSectionManager = L.Class.extend({
 		if (this.containerObject.isInZoomAnimation() || this.sectionProperties.tsManager.waitForTiles())
 			return;
 
+		// We don't show the sheet grid, so we don't draw it.
+		if (!this.sectionProperties.docLayer._sheetGrid)
+			return;
+
 		// grid-section's onDrawArea is TileSectionManager's _drawGridSectionArea().
 		this.onDrawArea();
 	},
