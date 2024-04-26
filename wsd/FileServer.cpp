@@ -528,7 +528,8 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
         LOG_TRC("Fileserver request: " << requestUri.toString());
         requestUri.normalize(); // avoid .'s and ..'s
 
-        if (requestUri.getPath().find("browser/" COOLWSD_VERSION_HASH "/") == std::string::npos)
+        if (requestUri.getPath().find("browser/" COOLWSD_VERSION_HASH "/") == std::string::npos &&
+            requestUri.getPath().find("admin/") == std::string::npos)
         {
             LOG_WRN("Client - server version mismatch, disabling browser cache. "
                     "Expected: " COOLWSD_VERSION_HASH "; Actual URI path with version hash: "
