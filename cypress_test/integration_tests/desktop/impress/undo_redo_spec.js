@@ -12,7 +12,7 @@ describe(['tagdesktop'], 'Editing Operations', function() {
 		desktopHelper.switchUIToCompact();
 		desktopHelper.selectZoomLevel('30');
 		impressHelper.selectTextShapeInTheCenter();
-		impressHelper.selectTextOfShape(false);
+		impressHelper.editTextInShape();
 	});
 
 	function undo() {
