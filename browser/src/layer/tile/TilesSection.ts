@@ -786,7 +786,7 @@ export class TilesSection extends CanvasSectionObject {
 			} else {
 				// Pane is free to move in X direction.
 				destPos.x = splitPos.x;
-				paneSize.x -= splitPos.x;
+				docAreaSize.x += splitPos.x / scale;
 				freezeX = false;
 			}
 
@@ -797,7 +797,7 @@ export class TilesSection extends CanvasSectionObject {
 			} else {
 				// Pane is free to move in Y direction.
 				destPos.y = splitPos.y;
-				paneSize.y -= splitPos.y;
+				docAreaSize.y += splitPos.y / scale;
 				freezeY = false;
 			}
 
