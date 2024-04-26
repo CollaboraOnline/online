@@ -161,12 +161,31 @@ function triggerNewSVGForShapeInTheCenter() {
 // Select the text inside a preselected shape. So we assume
 // we have already a shape selected. We try to select the
 // text of this shape by double clicking into it, until the
-// cursor becomes visible.
-function selectTextOfShape(selectAllText = true) {
+// cursor becomes visible and the text is selected
+function selectTextOfShape() {
 	cy.log('>> selectTextOfShape - start');
 
 	// Double click onto the selected shape
-	// Retry until the cursor appears
+	// Retry until the cursor appears and the text is selected
+	cy.waitUntil(function() {
+		cy.cGet('svg g svg').dblclick({force: true});
+		helper.typeIntoDocument('{ctrl}a');
+		return cy.cGet('.leaflet-marker-pane')
+			.then(function(markerPane) {
+				return markerPane.children().length !== 0;
+			});
+	});
+
+	helper.textSelectionShouldExist();
+
+	cy.log('<< selectTextOfShape - end');
+}
+
+// Double click on the shape to edit the text
+// and wait for the cursor to appear
+function editTextInShape() {
+	cy.log('>> editTextInShape - start');
+
 	cy.waitUntil(function() {
 		cy.cGet('svg g .leaflet-interactive').dblclick({force: true});
 		return cy.cGet('.cursor-overlay')
@@ -174,13 +193,9 @@ function selectTextOfShape(selectAllText = true) {
 				return overlay.children('.leaflet-cursor-container').length !== 0;
 			});
 	});
-
 	cy.cGet('.leaflet-cursor.blinking-cursor').should('exist');
 
-	if (selectAllText)
-		helper.selectAllText();
-
-	cy.log('<< selectTextOfShape - end');
+	cy.log('<< editTextInShape - end');
 }
 
 // Step into text editing of the preselected shape. So we assume
@@ -249,6 +264,7 @@ module.exports.selectTextShapeInTheCenter = selectTextShapeInTheCenter;
 module.exports.triggerNewSVGForShapeInTheCenter = triggerNewSVGForShapeInTheCenter;
 module.exports.removeShapeSelection = removeShapeSelection;
 module.exports.selectTextOfShape = selectTextOfShape;
+module.exports.editTextInShape =editTextInShape;
 module.exports.dblclickOnSelectedShape = dblclickOnSelectedShape;
 module.exports.addSlide = addSlide;
 module.exports.changeSlide = changeSlide;
