@@ -352,7 +352,8 @@ function documentChecks() {
 	// Wait for the sidebar to open.
 	if (Cypress.env('INTEGRATION') !== 'nextcloud') {
 		doIfOnDesktop(function() {
-			if (Cypress.env('pdf-view') !== true)
+			var showSidebar = localStorage.getItem('UIDefaults_text_ShowSidebar');
+			if (Cypress.env('pdf-view') !== true && showSidebar !== 'false')
 				cy.cframe().find('#sidebar-panel').should('be.visible');
 
 			// Check that the document does not take the whole window width.
