@@ -107,13 +107,22 @@ public:
 
     bool sendTileNow(const TileDesc &desc, const Tile &tile)
     {
+        static int deltathing, tilething, emptyThing;
+
         TileWireId lastSentId = _tracker.updateTileSeq(desc);
 
+        bool bDelta = false;
         std::string header;
         if (tile->needsKeyframe(lastSentId) || tile->isPng())
+        {
             header = desc.serialize("tile:", "\n");
+            ++tilething;
+        }
         else
+        {
             header = desc.serialize("delta:", "\n");
+            bDelta = true;
+        }
 
         // FIXME: performance - optimize away this copy ...
         std::vector<char> output;
@@ -122,8 +131,18 @@ public:
         output.resize(header.size());
         std::memcpy(output.data(), header.data(), header.size());
 
+        size_t before = output.size();
         bool hasContent = tile->appendChangesSince(output, tile->isPng() ? 0 : lastSentId);
+        size_t after = output.size();
         LOG_TRC("Sending tile message: " << header << " lastSendId " << lastSentId << " content " << hasContent);
+        if (bDelta)
+        {
+            if (after == before)
+                ++emptyThing;
+            else
+                ++deltathing;
+        }
+        fprintf(stderr, "sendTileNow %d %d %d\n", tilething, deltathing, emptyThing);
         return sendBinaryFrame(output.data(), output.size());
     }
 

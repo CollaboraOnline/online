@@ -154,9 +154,7 @@ L.Map = L.Evented.extend({
 
 		this._debug = new L.DebugManager(this);
 		this.on('docloaded', function() {
-			if (this.options.debug && !this._debug.debugOn) {
-				this._debug.toggle();
-			}
+			this._debug.toggle();
 		});
 
 		// When all these conditions are met, fire statusindicator:initializationcomplete

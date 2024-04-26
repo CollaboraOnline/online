@@ -897,6 +897,7 @@ void Document::setDocumentPassword(int passwordType)
 
 void Document::renderTiles(TileCombined &tileCombined)
 {
+    fprintf(stderr, "renderTiles %s\n", tileCombined.serialize().c_str());
     // Find a session matching our view / render settings.
     const auto session = _sessions.findByCanonicalId(tileCombined.getNormalizedViewId());
     if (!session)

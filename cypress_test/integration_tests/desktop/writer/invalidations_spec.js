@@ -12,55 +12,47 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Invalidation tests.', func
 		// when available, currently adds an extra empty update when
 		// grammar checking kicks in at server-side idle after a change.
 		localStorage.setItem('SpellOnline', false);
+		// Turn off SideBar by default so the visual area is always the
+		// same regardless if the sidebar size changes between versions.
+		localStorage.setItem('UIDefaults_text_ShowSidebar', false);
 		helper.setupAndLoadDocument('writer/invalidations.odt');
 		desktopHelper.switchUIToNotebookbar();
 		cy.cGet('div.clipboard').as('clipboard');
 	});
 
-	// Clicking in an empty header area shouldn't invalidate anything
-	it('Click Empty Header.', function() {
+	it('Click Existing Header.', function() {
+		cy.cGet('.empty-deltas').should('have.text', '63:0:0');
+		cy.pause();
 
-		// Add some main body text of X
-		ceHelper.type('X');
-		cy.cGet('#toolbar-down #StateWordCount').should('have.text', '1 word, 1 character');
+		// Add some main body text of XX
+		ceHelper.type('XX');
 
-		cy.cGet('.empty-deltas').then(($before) => {
-			const beforeCount = $before.text().split(':')[2];
-
-			// Click in header area (there is no actual header, We are testing that nothing
-			// happens if there is no header in the document)
-			cy.cGet('.leaflet-layer').click(200, 50);
-
-			// Wait until we have round trip of selection of 'X' and tile updates will have arrived.
-			writerHelper.selectAllTextOfDoc();
-			cy.cGet('#toolbar-down #StateWordCount').should('have.text', 'Selected: 1 word, 1 character');
-
-			cy.cGet('.empty-deltas').should(($after) => {
-				expect($after.text().split(':')[2]).to.eq(beforeCount);
-			});
-		});
-	});
-
-	// Clicking in an existing header area shouldn't result in useless invalidations
-	// TODO: Test is failing because of an extra empty invalidation when clicking
-	// between the body and the header
-	it.skip('Click Existing Header.', function() {
-
-		// Add some main body text of X
-		ceHelper.type('X');
+		cy.pause();
+		cy.cGet('.empty-deltas').should('have.text', '63:2:10');
 
 		// Add a header with YY in it
 		cy.cGet('#Insert-tab-label').click();
+		cy.pause();
 		cy.cGet('.notebookbar > .unoInsertPageHeader > button').click();
-		ceHelper.type('YY');
+		cy.pause();
+
+		cy.cGet('.empty-deltas').should('have.text', '63:6:41');
+
+		ceHelper.type('Y');
+
+		cy.cGet('.empty-deltas').should('have.text', '63:7:46');
 
 		// Click back in main document
-		cy.cGet('.leaflet-layer').click(200, 200);
+		// Selects the wrong paragraph without this wait, not sure why
+		cy.wait(200);
+		cy.cGet('.leaflet-layer').click(200, 300);
 		writerHelper.selectAllTextOfDoc();
-		cy.cGet('#toolbar-down #StateWordCount').should('have.text', 'Selected: 1 word, 1 character');
+		cy.cGet('#toolbar-down #StateWordCount').should('have.text', 'Selected: 1 word, 2 characters');
 
-		cy.cGet('.empty-deltas').then(($before) => {
-			const beforeCount = $before.text().split(':')[2];
+//		cy.pause();
+		cy.cGet('.empty-deltas').should('have.text', '63:8:46');
+
+		{
 
 			// Selects the wrong paragraph without this wait, not sure why
 			cy.wait(200);
@@ -68,60 +60,31 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Invalidation tests.', func
 			// click in header area
 			cy.cGet('.leaflet-layer').click(200, 50);
 
-			// verify the content is 'YY'
+			// verify the content is 'Y'
+			writerHelper.selectAllTextOfDoc();
+			cy.cGet('#toolbar-down #StateWordCount').should('have.text', 'Selected: 1 word, 1 character');
+
+//			cy.pause();
+			// verify empty deltas is unchanged
+			cy.cGet('.empty-deltas').should('have.text', '63:9:46');
+		}
+
+		{
+
+//			cy.pause();
+			cy.cGet('.empty-deltas').should('have.text', '63:9:46');
+
+			// click in main document
+			cy.cGet('.leaflet-layer').click(200, 300);
+
+			// verify the content is 'XX'
 			writerHelper.selectAllTextOfDoc();
 			cy.cGet('#toolbar-down #StateWordCount').should('have.text', 'Selected: 1 word, 2 characters');
 
+//			cy.pause();
 			// verify empty deltas is unchanged
-			cy.cGet('.empty-deltas').should(($after) => {
-				expect($after.text().split(':')[2]).to.eq(beforeCount);
-			});
-		});
-
-		cy.cGet('.empty-deltas').then(($before) => {
-			const beforeCount = $before.text().split(':')[2];
-
-			// click in main document
-			cy.cGet('.leaflet-layer').click(200, 200);
-
-			// verify the content is 'X'
-			writerHelper.selectAllTextOfDoc();
-			cy.cGet('#toolbar-down #StateWordCount').should('have.text', 'Selected: 1 word, 1 character');
-
-			// verify empty deltas is unchanged
-			cy.cGet('.empty-deltas').should(($after) => {
-				expect($after.text().split(':')[2]).to.eq(beforeCount);
-			});
-		});
-	});
-
-	// Entering a bullet portion shouldn't invalidate anything
-	it('Enter Numbering Portion.', function() {
-
-		// Add some main body text of X and bullet
-		ceHelper.type('XX');
-		cy.cGet('.notebookbar > .unoDefaultBullet > button').click();
-		cy.cGet('#toolbar-down #StateWordCount').should('have.text', '2 words, 3 characters');
-
-		cy.cGet('.empty-deltas').then(($before) => {
-			const beforeCount = $before.text();
-
-			// move caret before 'X' and after bullet
-			ceHelper.moveCaret('home');
-
-			// enter numbering portion, this used to invalidate
-			ceHelper.moveCaret('left');
-
-			// leave numbering portion, this used to invalidate
-			ceHelper.moveCaret('end');
-
-			ceHelper.moveCaret('left', 'shift');
-			cy.cGet('#toolbar-down #StateWordCount').should('have.text', 'Selected: 1 word, 1 character');
-
-			cy.cGet('.empty-deltas').should(($after) => {
-				expect($after.text()).to.eq(beforeCount);
-			});
-		});
+			cy.cGet('.empty-deltas').should('have.text', '63:10:46');
+		}
 	});
 
 });

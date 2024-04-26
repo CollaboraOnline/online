@@ -3353,6 +3353,7 @@ void DocumentBroker::handleTileRequest(const StringVector &tokens, bool forceKey
     Tile cachedTile = _tileCache->lookupTile(tile);
     if (cachedTile && cachedTile->isValid())
     {
+        fprintf(stderr, "sendTileNow 1\n");
         session->sendTileNow(tile, cachedTile);
         return;
     }
@@ -3390,6 +3391,7 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined, bool 
 
     LOG_TRC("TileCombined request for " << tileCombined.serialize() << " from " <<
             (forceKeyframe ? "client" : "wsd"));
+    fprintf(stderr, "handleTileCombinedRequest %s %s\n", tileCombined.serialize().c_str(), (forceKeyframe ? "client" : "wsd"));
     if (!hasTileCache())
     {
         LOG_WRN("Combined tile request without a loaded document?");
@@ -3625,6 +3627,7 @@ void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& se
                     tile.setWireId(cachedTile->_wids.back());
 
                 // TODO: Combine the response to reduce latency.
+                fprintf(stderr, "sendTileNow 2\n");
                 session->sendTileNow(tile, cachedTile);
             }
             else

@@ -1073,13 +1073,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		// check existing timeout and clear it before the new one
 		if (this._partTilePreFetcher)
 			clearTimeout(this._partTilePreFetcher);
-		this._partTilePreFetcher =
-			setTimeout(
-				L.bind(function() {
-					this._preFetchPartTiles(this._selectedPart + this._map._partsDirection, this._selectedMode);
-				},
-				this),
-				100 /*ms*/);
+		this._partTilePreFetcher = null;
 	},
 
 	_preFetchPartTiles: function(part, mode) {

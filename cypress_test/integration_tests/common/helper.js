@@ -350,7 +350,8 @@ function documentChecks() {
 	}
 
 	// Wait for the sidebar to open.
-	if (Cypress.env('INTEGRATION') !== 'nextcloud') {
+        var showSidebar = localStorage.getItem('UIDefaults_text_ShowSidebar');
+	if (Cypress.env('INTEGRATION') !== 'nextcloud' && showSidebar !== 'false') {
 		doIfOnDesktop(function() {
 			var showSidebar = localStorage.getItem('text.ShowSidebar');
 			if (Cypress.env('pdf-view') !== true && showSidebar !== 'false')
