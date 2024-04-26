@@ -166,13 +166,14 @@ function selectTextOfShape(selectAllText = true) {
 	cy.log('>> selectTextOfShape - start');
 
 	// Double click onto the selected shape
-	// Retry until the cursor appears
+	// Retry until the selection works (fails about 30% of the time).
+	// Note, retrying until the cursor (.leaflet-cursor-container) appears is not enough.
+	// There is no difference in the DOM to indicate the selection is working.
 	cy.waitUntil(function() {
 		cy.cGet('svg g .leaflet-interactive').dblclick({force: true});
-		return cy.cGet('.cursor-overlay')
-			.then(function(overlay) {
-				return overlay.children('.leaflet-cursor-container').length !== 0;
-			});
+		return cy.getFrameWindow().its('L').then(function(L) {
+			return L.Map.THIS._textInput._isEditingInSelection == true;
+		});
 	});
 
 	cy.cGet('.leaflet-cursor.blinking-cursor').should('exist');
