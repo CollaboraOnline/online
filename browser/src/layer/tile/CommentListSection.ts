@@ -1836,15 +1836,6 @@ export class CommentSection extends CanvasSectionObject {
 		this.update();
 	}
 
-	private updateResolvedState (comment: any): void {
-		var threadIndexFirst = this.getSubRootIndexOf(comment.sectionProperties.data.id);
-		if (threadIndexFirst !== -1 && this.sectionProperties.commentList[threadIndexFirst].sectionProperties.data.resolved !== comment.sectionProperties.data.resolved) {
-			comment.sectionProperties.data.resolved = this.sectionProperties.commentList[threadIndexFirst].sectionProperties.data.resolved;
-			comment.update();
-			this.update();
-		}
-	}
-
 	private orderCommentList (): void {
 		this.sectionProperties.commentList.sort(function(a: any, b: any) {
 			return Math.abs(a.sectionProperties.data.anchorPos[1]) - Math.abs(b.sectionProperties.data.anchorPos[1]) ||
@@ -2045,7 +2036,6 @@ export class CommentSection extends CanvasSectionObject {
 					continue;
 				this.sectionProperties.commentList.push(commentSection);
 				this.idIndexMap.set(commentSection.sectionProperties.data.id, i);
-				this.updateResolvedState(this.sectionProperties.commentList[i]);
 			}
 
 			if (this.sectionProperties.docLayer._docType === 'text')
