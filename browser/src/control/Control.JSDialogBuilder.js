@@ -383,8 +383,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			// returns docnotloaded error. Instead of this we can return to the integration
 			if (!builder.map._docLoaded &&
 				 !window._firstDialogHandled &&
-				 ((object.id === 'cancel' || eventType === 'close') ||
-				 (objectType === 'responsebutton' && (data == 0 || data == 7)))) {
+				 (eventType === 'close' ||
+				 (objectType === 'responsebutton' && data == 7))) {
 				window.onClose();
 			}
 			switch (typeof data) {
