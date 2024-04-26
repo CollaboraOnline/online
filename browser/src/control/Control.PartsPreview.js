@@ -374,7 +374,7 @@ L.Control.PartsPreview = L.Control.extend({
 		//var sliderSize, nodePos, nodeOffset, nodeMargin;
 		var node = this._partsPreviewCont.children[partNo];
 
-		if (node && (!this._previewTiles[partNo] || !this._isPreviewVisible(partNo, false))) {
+		if (node && (!this._previewTiles[partNo] || !this._isPreviewVisible(partNo))) {
 			var nodePos = this._direction === 'x' ? $(node).position().left : $(node).position().top;
 			var scrollDirection = window.mode.isDesktop() || window.mode.isTablet() ? 'scrollTop': (L.DomUtil.isPortrait() ? 'scrollLeft': 'scrollTop');
 			var that = this;
@@ -636,8 +636,7 @@ L.Control.PartsPreview = L.Control.extend({
 		}, this, e), 0);
 	},
 
-	_isPreviewVisible: function(part, isFetching) {
-		isFetching = isFetching || false;
+	_isPreviewVisible: function(part) {
 		var el = this._previewTiles[part];
 		if (!el)
 			return true;
@@ -655,19 +654,11 @@ L.Control.PartsPreview = L.Control.extend({
 			window.app.console.warn('PREVIEW: element comparing empty window size');
 
 		// dont skip the ones that are near visible or will be visible soon while scrolling.
-		if (isFetching)
-			isVisible = this._direction === 'x' ?
-				(0 - window.innerWidth / 3 <= elemLeft) && (elemRight <= window.innerWidth + window.innerWidth / 3) :
-				(0 - window.innerHeight / 3 <= elemTop) && (elemBottom <= window.innerHeight +  window.innerHeight / 3);
-		else
-			// this is for setPart function, should be completely visible for scrollto
-			isVisible = this._direction === 'x' ?
-				(elemLeft >= 0) && (elemRight <= window.innerWidth) :
-				(elemTop >= 0) && (elemBottom <= window.innerHeight);
+		// this is for setPart function, should be completely visible for scrollto
+		isVisible = this._direction === 'x' ?
+			(elemLeft >= 0) && (elemRight <= window.innerWidth) :
+			(elemTop >= 0) && (elemBottom <= window.innerHeight);
 
-		if (!isVisible && isFetching)
-			// mark as false, this will be canceled
-			el.fetched = false;
 		return isVisible;
 	},
 

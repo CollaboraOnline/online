@@ -175,7 +175,7 @@ L.Map.include({
 			var tile = this._previewQueue.shift();
 			if (!tile)
 				break;
-			var isVisible = this._docLayer._preview._isPreviewVisible(tile[0], true);
+			var isVisible = this._docLayer._preview._isPreviewVisible(tile[0]);
 			if (isVisible != true)
 				// skip this! we can't see it
 				continue;
