@@ -467,6 +467,11 @@ L.Clipboard = L.Class.extend({
 						this._asyncReadPasteImage(dataTransfer.items[t].getAsFile());
 				}
 			}
+
+			// If any paste special dialog is open, close it here, because we won't call
+			// _doInternalPaste() that would do the closing.
+			this._checkAndDisablePasteSpecial();
+
 			return;
 		}
 
