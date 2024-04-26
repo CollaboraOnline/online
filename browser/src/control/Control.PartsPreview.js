@@ -547,7 +547,7 @@ L.Control.PartsPreview = L.Control.extend({
 
 				for (it = 0; it < e.partNames.length; it++) {
 					this._previewTiles[it].hash = e.partNames[it];
-					L.LOUtil.setImage(this._previewTiles[it], 'preview_placeholder.png', this._map);
+					L.LOUtil.setImage(this._previewTiles[it], 'preview_placeholder.svg', this._map);
 					this._previewTiles[it].fetched = false;
 				}
 			}
