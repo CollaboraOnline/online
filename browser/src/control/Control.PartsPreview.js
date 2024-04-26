@@ -50,8 +50,6 @@ L.Control.PartsPreview = L.Control.extend({
 			(!window.mode.isDesktop() && L.DomUtil.isPortrait() ? 'x' : 'y') :
 			this.options.axis;
 		this._scrollY = 0;
-		// Hack for access this function outside of this class
-		map.isPreviewVisible = L.bind(this._isPreviewVisible, this);
 
 		map.on('updateparts', this._updateDisabled, this);
 		map.on('updatepart', this._updatePart, this);

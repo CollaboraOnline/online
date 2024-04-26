@@ -149,6 +149,9 @@ L.Map.include({
 		if (!this._docLayer._canonicalIdInitialized)
 			return;
 
+		if (!this._docLayer._preview)
+			return;
+
 		if (this._previewRequestsOnFly > 1) {
 			// we don't always get a response for each tile requests
 			// especially when we have more than one view
@@ -172,7 +175,7 @@ L.Map.include({
 			var tile = this._previewQueue.shift();
 			if (!tile)
 				break;
-			var isVisible = this.isPreviewVisible(tile[0], true);
+			var isVisible = this._docLayer._preview._isPreviewVisible(tile[0], true);
 			if (isVisible != true)
 				// skip this! we can't see it
 				continue;
