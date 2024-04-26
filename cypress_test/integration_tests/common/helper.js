@@ -441,7 +441,14 @@ function selectAllText() {
 
 	typeIntoDocument('{ctrl}a');
 
-	textSelectionShouldExist();
+	doesTextSelectionExist().then(function(result) {
+		if (!result) {
+			cy.log('>> TRYING selectAllText - again');
+			typeIntoDocument('{ctrl}a');
+		}
+	}).then(function() {
+		textSelectionShouldExist();
+	});
 
 	cy.log('<< selectAllText - end');
 }
@@ -916,6 +923,22 @@ function getCursorPos(offsetProperty, aliasName, cursorSelector = '.cursor-overl
 		.should('be.greaterThan', 0);
 
 	cy.log('<< getCursorPos - end');
+}
+
+function doesTextSelectionExist() {
+	return cy.cGet('body').then(function($body) {
+		let selectionMarker = $body.find('.leaflet-selection-marker-start');
+		if (selectionMarker.length) {
+			selectionMarker = $body.find('.leaflet-selection-marker-end');
+			if (selectionMarker.text) {
+				return cy.wrap(true);
+			}
+			else
+				return cy.wrap(false);
+		}
+		else
+			return cy.wrap(false);
+	});
 }
 
 // We make sure we have a text selection..
