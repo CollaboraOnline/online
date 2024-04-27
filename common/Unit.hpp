@@ -409,6 +409,10 @@ public:
 
     /// When a new child kit process reports
     virtual void newChild(const std::shared_ptr<ChildProcess>& /*child*/) {}
+
+    /// When we get a segfault message from forkit; override to test crashes ...
+    virtual void kitSegfault(int /* count */) { exitTest(TestResult::Failed, "kit segfault"); }
+
     /// Intercept createStorage
     virtual bool createStorage(const Poco::URI& /* uri */,
                                const std::string& /* jailRoot */,

@@ -33,6 +33,8 @@ public:
     {
     }
 
+    void kitSegfault(int /* count */) override { /* ignore */ }
+
     std::unique_ptr<http::Response> assertPutFileRequest(const Poco::Net::HTTPRequest&) override
     {
         failTest("Unexpected PutFile when there should be no file on disk to upload");
