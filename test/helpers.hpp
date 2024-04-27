@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include "Unit.hpp"
 #include <test/lokassert.hpp>
 #include <test/testlog.hpp>
 
@@ -569,6 +570,12 @@ connectLOKit(const std::shared_ptr<SocketPoll>& socketPoll, const Poco::URI& uri
             if (SigUtil::getShutdownRequestFlag())
             {
                 TST_LOG("Shutdown requested, giving up connectLOKit");
+                break;
+            }
+
+            if (UnitBase::get().isFinished())
+            {
+                TST_LOG("The test has finished, giving up connectLOKit");
                 break;
             }
 
