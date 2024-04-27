@@ -139,12 +139,18 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected text
 		cy.cGet('#CharBackColor .color-sample-selected')
 			.should('have.attr', 'style', 'background-color: rgb(204, 0, 0);');
 
+		helper.setDummyClipboardForCopy();
+
 		triggerNewSVG();
 
 		// TODO: highlight color is not in the SVG
 		// At least check the mobile wizard's state
 		impressHelper.selectTextOfShape();
 
+		// Wait for selection before opening mobile wizard
+		helper.copy();
+		helper.expectTextForClipboard('X');
+		cy.wait(200);
 		mobileHelper.openTextPropertiesPanel();
 
 		cy.cGet('#CharBackColor .color-sample-selected')
