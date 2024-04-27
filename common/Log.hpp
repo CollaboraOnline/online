@@ -54,6 +54,9 @@ namespace Log
     /// Shutdown and release the logging system.
     void shutdown();
 
+    /// Cleanup state after forking
+    void postFork();
+
     void setThreadLocalLogLevel(const std::string& logLevel);
 
     /// Generates log entry prefix. Example follows (without the pipes).

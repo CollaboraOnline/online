@@ -422,6 +422,8 @@ static int createLibreOfficeKit(const std::string& childRoot,
         {
             // Child
 
+            Log::postFork();
+
             // sort out thread local variables to get logging right from
             // as early as possible.
             Util::setThreadName("kit_spare_" + Util::encodeId(spareKitId, 3));
