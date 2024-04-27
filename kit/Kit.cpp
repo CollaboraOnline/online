@@ -2527,6 +2527,20 @@ int KitSocketPoll::kitPoll(int timeoutMicroS)
     }
 
 #if ENABLE_DEBUG
+#if !MOBILEAPP
+    auto &unitKit = UnitKit::get();
+    if (unitKit.isFinished())
+    {
+        static bool sentResult = false;
+        if (!sentResult && singletonDocument)
+        {
+            LOG_TRC("Sending unit test result");
+            singletonDocument->sendTextFrame(unitKit.getResultMessage());
+            sentResult = true;
+        }
+    }
+#endif
+
     static std::atomic<int> reentries = 0;
     static int lastWarned = 1;
     ReEntrancyGuard guard(reentries);

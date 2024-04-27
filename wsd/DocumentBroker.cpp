@@ -3249,6 +3249,12 @@ bool DocumentBroker::handleInput(const std::shared_ptr<Message>& message)
                                                       message->size() - firstLine.size() - 1);
             }
         }
+#if ENABLE_DEBUG
+        else if (message->firstTokenMatches("unitresult:"))
+        {
+            UnitWSD::get().processUnitResult(message->tokens());
+        }
+#endif
         else
         {
             LOG_ERR("Unexpected message: [" << message->abbr() << "].");

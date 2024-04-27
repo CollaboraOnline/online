@@ -326,8 +326,11 @@ private:
     static TestOptions GlobalTestOptions; //< The test options for this Test Suite.
     static TestResult GlobalResult; //< The result of all tests. Latches at first failure.
 
+    /// Did we set the result of the test yet ?
     bool _setRetValue;
     TestResult _result;
+    std::string _reason;
+
     std::chrono::milliseconds _timeoutMilliSeconds;
     /// The time at which this particular test started, relative to the start of the Test Suite.
     std::chrono::milliseconds _startTimeMilliSeconds;
@@ -406,6 +409,9 @@ public:
             exitTest(TestResult::Failed);
         }
     }
+
+    /// Process result message from kit
+    void processUnitResult(const StringVector &tokens);
 
     /// When a new child kit process reports
     virtual void newChild(const std::shared_ptr<ChildProcess>& /*child*/) {}
@@ -528,6 +534,9 @@ public:
     virtual void launchedKit(int /* pid */) {}
 
     // ---------------- Kit hooks ----------------
+
+    /// Build message with test result to send from kit -> wsd
+    std::string getResultMessage() const;
 
     /// Post fork hook - just before we init the child kit
     virtual void postFork();
