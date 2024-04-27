@@ -67,6 +67,7 @@ UnitBase** UnitBase::linkAndCreateUnit([[maybe_unused]] UnitType type,
 
     // avoid std:string de-allocation during failure / exit.
     UnitLibPath = strdup(unitLibPath.c_str());
+    TST_LOG_NAME("UnitBase", "Opened unit-test lib " << UnitLibPath);
 
     const char *symbol = nullptr;
     switch (type)
@@ -119,6 +120,7 @@ UnitBase** UnitBase::linkAndCreateUnit([[maybe_unused]] UnitType type,
         LOG_ERR("No " << symbol << " symbol in " << unitLibPath);
         return nullptr;
     }
+    TST_LOG_NAME("UnitBase", "Hooked symbol " << symbol << " from unit-test lib " << UnitLibPath);
 
     UnitBase* hooks = createHooks();
     if (hooks)
@@ -531,11 +533,39 @@ void UnitBase::exitTest(TestResult result, const std::string& reason)
     }
 
     _result = result;
-    endTest(reason);
+    _reason = reason;
     _setRetValue = true;
 
-    // Notify inheritors.
-    onExitTest(result, reason);
+    // the kit needs to send a 'unitresult:' message to wsd to exit there.
+    if (_type == UnitType::Kit)
+        SocketPoll::wakeupWorld();
+
+    else // otherwise exit.
+    {
+        endTest(reason);
+
+        // Notify inheritors.
+        onExitTest(result, reason);
+    }
+}
+
+std::string UnitKit::getResultMessage() const
+{
+    assert(isFinished());
+    return std::string("unitresult: ") +
+        toStringShort(_result) + " " + _reason;
+}
+
+void UnitWSD::processUnitResult(const StringVector &tokens)
+{
+    UnitBase::TestResult result = UnitBase::TestResult::TimedOut;
+    TST_LOG("Received " << tokens[0] << " from kit:" << tokens[1] << " " << tokens[2]);
+    assert (tokens[0] == "unitresult:");
+    if (tokens[1] == "Ok")
+        result = UnitBase::TestResult::Ok;
+    else if (tokens[1] == "Failed")
+        result = UnitBase::TestResult::Failed;
+    exitTest(result, tokens[2]);
 }
 
 void UnitBase::timeout()
