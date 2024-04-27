@@ -1054,6 +1054,7 @@ void ForKitProcWSHandler::handleMessage(const std::vector<char> &data)
         {
             Admin::instance().addSegFaultCount(count);
             LOG_INF(count << " coolkit processes crashed with segmentation fault.");
+            UnitWSD::get().kitSegfault(count);
         }
         else
         {
