@@ -103,6 +103,9 @@ void KitWebSocketHandler::handleMessage(const std::vector<char>& data)
         {
             LOG_INF("Terminating immediately due to parent 'exit' command.");
             flushTraceEventRecordings();
+            // flushes logging
+            if (_document)
+                _document->joinThreads();
             _document.reset();
             if (!Util::isKitInProcess())
                 Util::forcedExit(EX_OK);

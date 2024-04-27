@@ -1421,6 +1421,8 @@ bool Document::forkToSave(const std::function<void()> &childSave, int viewId)
 
     if (!pid) // Child
     {
+        Log::postFork();
+
         // sort out thread local variables to get logging right from
         // as early as possible.
         Util::setThreadName("kitbgsv_" + Util::encodeId(_mobileAppDocId, 3) +
