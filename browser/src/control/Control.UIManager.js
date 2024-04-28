@@ -960,7 +960,7 @@ L.Control.UIManager = L.Control.extend({
 	},
 
 	onUpdateViews: function () {
-		if (!this.map._docLayer || !this.map._docLayer._viewId)
+		if (!this.map._docLayer || typeof this.map._docLayer._viewId === 'undefined')
 			return;
 
 		var myViewId = this.map._docLayer._viewId;
