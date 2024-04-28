@@ -192,7 +192,8 @@ bool ChildSession::_handleInput(const char *buffer, int length)
 {
     LOG_TRC("handling [" << getAbbreviatedMessage(buffer, length) << ']');
     const std::string firstLine = getFirstLine(buffer, length);
-    const StringVector tokens = StringVector::tokenize(firstLine.data(), firstLine.size());
+    const StringVector tokens =
+        StringVector::tokenize_outside_quotes(firstLine.data(), firstLine.size());
 
     // if _clientVisibleArea.getWidth() == 0, then it is probably not a real user.. probably is a convert-to or similar
     LogUiCommands logUndoRelatedcommandAtfunctionEnd(this, &tokens);
