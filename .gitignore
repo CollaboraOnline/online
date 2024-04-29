@@ -166,3 +166,6 @@ Makecache
 
 # autoconf stuff
 autogen.input
+
+# MacOS file manager metadata
+.DS_Store
