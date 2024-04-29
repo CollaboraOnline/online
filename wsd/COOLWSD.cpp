@@ -1036,6 +1036,7 @@ std::string COOLWSD::OverrideWatermark;
 std::set<const Poco::Util::AbstractConfiguration*> COOLWSD::PluginConfigurations;
 std::chrono::steady_clock::time_point COOLWSD::StartTime;
 bool COOLWSD::IsBindMountingEnabled = true;
+bool COOLWSD::IndirectionServerEnabled = false;
 
 // If you add global state please update dumpState below too
 
@@ -2856,6 +2857,7 @@ void COOLWSD::innerInitialize(Application& self)
     NoCapsForKit =
         Util::isKitInProcess() || !getConfigValue<bool>(conf, "security.capabilities", true);
     AdminEnabled = getConfigValue<bool>(conf, "admin_console.enable", true);
+    IndirectionServerEnabled = !getConfigValue<std::string>(conf, "indirection_endpoint.url", "").empty();
 #if ENABLE_DEBUG
     if (Util::isKitInProcess())
         SingleKit = true;
@@ -3511,6 +3513,17 @@ void COOLWSD::autoSave(const std::string& docKey)
         std::shared_ptr<DocumentBroker> docBroker = docBrokerIt->second;
         docBroker->addCallback(
             [docBroker]() { docBroker->autoSave(/*force=*/true, /*dontSaveIfUnmodified=*/true); });
+    }
+}
+
+void COOLWSD::setMigrationMsgReceived(const std::string& docKey)
+{
+    std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
+    auto docBrokerIt = DocBrokers.find(docKey);
+    if (docBrokerIt != DocBrokers.end())
+    {
+        std::shared_ptr<DocumentBroker> docBroker = docBrokerIt->second;
+        docBroker->addCallback([docBroker]() { docBroker->setMigrationMsgReceived(); });
     }
 }
 

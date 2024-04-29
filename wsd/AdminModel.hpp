@@ -440,6 +440,7 @@ public:
     std::string getWopiSrcMap();
     std::string getFilename(int pid);
     void routeTokenSanityCheck();
+    void sendShutdownReceivedMsg();
 
 private:
     void doRemove(std::map<std::string, std::unique_ptr<Document>>::iterator &docIt);
