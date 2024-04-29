@@ -4725,20 +4725,8 @@ L.CanvasTileLayer = L.Layer.extend({
 			if (!app.sectionContainer.getSectionWithName('DropDownArrow')) {
 				let position = new app.definitions.simplePoint(app.calc.cellCursorRectangle.x2, app.calc.cellCursorRectangle.y1);
 
-				let dropDownSection = new app.definitions.htmlObjectSection('DropDownArrow', 16, 16, position, 'spreadsheet-drop-down-marker'); // spreadsheet-drop-down-marker
+				let dropDownSection = new app.definitions.calcValidityDropDown('DropDownArrow', position);
 				app.sectionContainer.addSection(dropDownSection);
-
-				dropDownSection.onClick = function() {
-					dropDownSection.stopPropagating(); // This will be enough after we remove leaflet.
-					if (this._validatedCellAddress && app.calc.cellCursorVisible && this._validatedCellAddress.equals(app.calc.cellAddress.toArray())) {
-						this._map.sendUnoCommand('.uno:DataSelect');
-					}
-				}.bind(this);
-
-				dropDownSection.getHTMLObject().onclick = function(e) {
-					e.stopPropagation(); // We need this because leaflet can catch the event.
-					dropDownSection.onClick();
-				};
 			}
 			else {
 				app.sectionContainer.getSectionWithName('DropDownArrow').setPosition(app.calc.cellCursorRectangle.pX2, app.calc.cellCursorRectangle.pY1);

@@ -36,14 +36,25 @@ class HTMLObjectSection extends CanvasSectionObject {
 		this.sectionProperties.objectHeight = objectHeight;
 		this.sectionProperties.objectDiv = document.createElement('div');
 		this.sectionProperties.objectDiv.className = 'html-object-section';
-		this.sectionProperties.objectDiv.style.width = objectWidth;
-		this.sectionProperties.objectDiv.style.height = objectHeight;
+		this.sectionProperties.objectDiv.style.width = objectWidth + 'px';
+		this.sectionProperties.objectDiv.style.height = objectHeight + 'px';
 
 		if (extraClass)
 			this.sectionProperties.objectDiv.classList.add(extraClass);
 
-		// document-container and canvas overlap entirely. We can append the html object to document-container.
-		document.getElementById('document-container').appendChild(this.sectionProperties.objectDiv);
+		// canvas-container and canvas overlap entirely. We can append the html object to canvas-container.
+		const tempFunction = function(elementToAdd: any) {
+			const container = document.getElementById('canvas-container');
+			if (container) {
+				container.appendChild(elementToAdd);
+			}
+			else {
+				setTimeout(() => {
+					tempFunction(elementToAdd);
+				}, 100);
+			}
+		}
+		tempFunction(this.sectionProperties.objectDiv);
 
 		if (!visible)
 			this.sectionProperties.objectDiv.style.display = 'none';
