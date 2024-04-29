@@ -2054,36 +2054,24 @@ kbd,
 }
 
 /* DocumentPropertiesDialog Custom props */
-#DocumentPropertiesDialog #customprops .jsdialog .ui-grid .menubutton {
+#DocumentPropertiesDialog #headerbox,
+#DocumentPropertiesDialog #properties > .jsdialog.ui-grid {
+	grid-template-columns: 128px 128px auto 26px !important;
+	align-items: center;
+	margin-block-start: 4px;
+}
+
+#DocumentPropertiesDialog #properties > .jsdialog.ui-grid > .ui-grid-cell > .ui-grid-cell {
+	align-items: center;
+	grid-column-gap: 4px;
+}
+
+#DocumentPropertiesDialog #customprops button {
 	line-height: 16px;
-}
-
-#DocumentPropertiesDialog #customprops div.jsdialog.ui-grid-cell,
-#DocumentPropertiesDialog #customprops .spinfieldcontainer,
-#DocumentPropertiesDialog #customprops input.ui-timefield {
-	margin-top: auto;
-	margin-bottom: auto;
-}
-
-#DocumentPropertiesDialog #customprops #properties > .ui-grid {
-	display: flex;
-}
-
-#DocumentPropertiesDialog #customprops #properties > .ui-grid > div:nth-child(1) {
-	width: 150px;
-}
-
-#DocumentPropertiesDialog #customprops #properties > .ui-grid > div:nth-child(2) {
-	width: 100px;
-}
-
-#DocumentPropertiesDialog #customprops #properties > .ui-grid > div:nth-child(3) {
 	width: 100%;
+	margin: 0;
 }
 
-#DocumentPropertiesDialog #customprops #properties > .ui-grid > div:nth-child(4) {
-	width: 45px;
-}
 #DocumentPropertiesDialog #customprops .jsdialog.ui-scrollwindow {
 	max-height: min-content;
 }
