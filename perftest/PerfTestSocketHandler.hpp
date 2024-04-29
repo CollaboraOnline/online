@@ -10,6 +10,7 @@
  */
 
 #include <iostream>
+#include <sys/wait.h>
 
 #include <TraceFile.hpp>
 #include <ReplaySocketHandler.hpp>
@@ -80,6 +81,9 @@ public:
 
 class CyclePerfTestSocketHandler : public PerfTestSocketHandler
 {
+    pid_t child_pid = -1;
+    std::chrono::steady_clock::time_point _startTime = std::chrono::steady_clock::now();
+    std::chrono::steady_clock::time_point _stopTime = std::chrono::steady_clock::now();
 public:
     CyclePerfTestSocketHandler(SocketPoll &poll,
                         const std::string &uri,
@@ -90,12 +94,41 @@ public:
 
     void startMeasurement() override
     {
+        //std::cerr << "starting" << std::endl;
+        pid_t pid;
+        pid = vfork();
+        if (pid < 0) {
+            perror("fork");
+            Util::forcedExit(EX_SOFTWARE);
+        } else if (pid == 0) {
+            //char* argument_list[] = {"perf","record","--freq=max","--call-graph","dwarf","--pid",std::to_string(getCoolwsdPid()).c_str(),"--output=perf-output.data",NULL};
+            //execvp("perf",argument_list);
+            std::string pid_str = "--pid="+std::to_string(getCoolwsdPid());
+            execlp("perf","perf","record","-s","-e","cycles","--freq=1000","--call-graph","dwarf",pid_str.c_str(),"--output=perf-output-coolwsd.data",(char *)NULL);
+        } else {
+            child_pid = pid;
+        }
+        _startTime = std::chrono::steady_clock::now();
+        //std::cerr << "started" << std::endl;
+        /*
         //system("callgrind_control --instr=on");
-        sendMessage("PERFTEST start");
+        //system("pkill --signal SIGTRAP coolwsd-inproc");
+        system("pkill --signal SIGUSR1 coolwsd-inproc");
+        //sendMessage("PERFTEST start");
+        */
     }
 
     void stopMeasurement() override
     {
+        _stopTime = std::chrono::steady_clock::now();
+        std::cerr << "stopping" << std::endl;
+        kill(child_pid,SIGINT);
+        std::cerr << "mid stop" << std::endl;
+        waitpid(child_pid, nullptr, 0);
+        std::cerr << "stopped" << std::endl;
+
+        /*
+        system("pkill --signal SIGUSR1 coolwsd-inproc");
         //std::cout << "s" << std::endl;
         //system("callgrind_control -s");
         //std::cout << "be" << std::endl;
@@ -103,14 +136,30 @@ public:
         //system("callgrind_control --dump");
         //system("callgrind_control --kill");
         //system("callgrind_control --instr=off");
-        sendMessage("PERFTEST stop " + _trace);
+        //sendMessage("PERFTEST stop " + _trace);
+        */
     }
 
     void printResults()
     {
         std::cout << "{\n"
                   << "    name: " << _trace << "\n"
+                  << "    time: " << getTime() << "\n"
                   << "}" << std::endl;
+    }
+
+private:
+    double getTime()
+    {
+        return std::chrono::duration_cast<std::chrono::microseconds>(_stopTime - _startTime).count()/1000000.0;
+    }
+    pid_t getCoolwsdPid()
+    {
+        std::ifstream file;
+        file.open("coolwsd.pid");
+        pid_t pid;
+        file >> pid;
+        return pid;
     }
 };
 
