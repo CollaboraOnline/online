@@ -3914,7 +3914,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		  || (this._graphicSelection && !this._isEmptyRectangle(this._graphicSelection)))
 		// Do not center view in Calc if no new cursor coordinates have arrived yet.
 		// ie, 'invalidatecursor' has not arrived after 'cursorvisible' yet.
-		&& (!this.isCalc() || !this._lastVisibleCursorRef.equals(app.file.textCursor.rectangle.toArray()))
+		&& (!this.isCalc() || (this._lastVisibleCursorRef && !this._lastVisibleCursorRef.equals(app.file.textCursor.rectangle.toArray())))
 		&& this._allowViewJump()) {
 
 			// Cursor invalidation should take most precedence among all the scrolling to follow the cursor
