@@ -1355,4 +1355,10 @@ void AdminModel::routeTokenSanityCheck()
     notify(oss.str());
 }
 
+void AdminModel::sendShutdownReceivedMsg()
+{
+    ASSERT_CORRECT_THREAD_OWNER(_owner);
+    notify("shutdown_received");
+}
+
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

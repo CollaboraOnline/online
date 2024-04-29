@@ -289,6 +289,7 @@ public:
     static bool IsProxyPrefixEnabled;
     static std::atomic<unsigned> NumConnections;
     static std::unique_ptr<TraceFileWriter> TraceDumper;
+    static bool IndirectionServerEnabled;
 #if !MOBILEAPP
     static std::unique_ptr<ClipboardCache> SavedClipboards;
 
@@ -516,7 +517,7 @@ public:
     }
     static void alertAllUsersInternal(const std::string& msg);
     static void alertUserInternal(const std::string& dockey, const std::string& msg);
-
+    static void setMigrationMsgReceived(const std::string& docKey);
 
 #if ENABLE_DEBUG
     /// get correct server URL with protocol + port number for this running server
