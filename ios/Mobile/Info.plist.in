@@ -260,6 +260,12 @@
 	<string>$(PRODUCT_NAME) requires access to the camera in order for you to be able to take photos to be inserted while editing a document.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>$(PRODUCT_NAME) requires access to the photo library in order for you to be able to insert images into documents.</string>
+	<key>NSPrivacyAccessedAPITypeReasons</key>
+	<array>
+		<string>AC6B.1</string><!-- Allow reading com.apple.configuration.managed preferences (to use username if it is set in a profile) -->
+		<string>35F9.1</string><!-- Allow reading boot time to use timers -->
+		<string>3B52.1</string><!-- Allow reading file metadata when the user opens a file in Collabora Mobile -->
+	</array>
 	<key>UIAppFonts</key>
 	<array>
 		<string>share/fonts/truetype/Alef-Bold.ttf</string>
