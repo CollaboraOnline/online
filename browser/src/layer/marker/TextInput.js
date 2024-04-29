@@ -990,7 +990,7 @@ L.TextInput = L.Layer.extend({
 		if (this.hasAccessibilitySupport()) {
 			if ((this._hasAnySelection && !this._isEditingInSelection && this._map.getDocType() !== 'spreadsheet') ||
 				(!this._hasAnySelection && this._map.getDocType() === 'presentation')) {
-				if (!L.browser.cypressTest) {
+				if (!L.Browser.cypressTest) {
 					var allowedKeyEvent =
 						this._map.keyboard.allowedKeyCodeWhenNotEditing[ev.keyCode] ||
 						ev.ctrlKey ||
