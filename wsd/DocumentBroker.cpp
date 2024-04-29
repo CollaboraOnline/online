@@ -338,6 +338,11 @@ void DocumentBroker::pollThread()
     const auto limStoreFailures =
         COOLWSD::getConfigValue<int>("per_document.limit_store_failures", 5);
 
+    bool waitingForMigrationMsg = false;
+    std::chrono::time_point<std::chrono::steady_clock> migrationMsgStartTime;
+    static const std::chrono::microseconds migrationMsgTimeout = std::chrono::seconds(
+        COOLWSD::getConfigValue<int>("indirection_endpoint.migration_timeout_secs", 180));
+
     // Main polling loop goodness.
     while (!_stop && _poll->continuePolling() && !SigUtil::getTerminationFlag())
     {
@@ -486,6 +491,31 @@ void DocumentBroker::pollThread()
                     }
 
                     autoSaveAndStop("dead");
+                }
+                else if (COOLWSD::IndirectionServerEnabled && SigUtil::getShutdownRequestFlag() &&
+                         !_migrateMsgReceived)
+                {
+                    if (!waitingForMigrationMsg)
+                    {
+                        migrationMsgStartTime = std::chrono::steady_clock::now();
+                        waitingForMigrationMsg = true;
+                        break;
+                    }
+
+                    const auto timeNow = std::chrono::steady_clock::now();
+                    const auto elapsedMicroS =
+                        std::chrono::duration_cast<std::chrono::microseconds>(
+                            timeNow - migrationMsgStartTime);
+                    if (elapsedMicroS > migrationMsgTimeout)
+                    {
+                        LOG_WRN("Timeout waiting for migration message for docKey[" << _docKey
+                                                                                    << ']');
+                        _migrateMsgReceived = true;
+                        break;
+                    }
+                    LOG_DBG("Waiting for migration message to arrive before closing the document "
+                            "for docKey["
+                            << _docKey << ']');
                 }
                 else if (_docState.isUnloadRequested() || SigUtil::getShutdownRequestFlag() ||
                          _docState.isCloseRequested())

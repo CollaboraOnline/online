@@ -746,6 +746,7 @@ app.definitions.Socket = L.Class.extend({
 		else if (textMsg.startsWith('migrate:') && window.indirectSocket) {
 			var migrate = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
 			var afterSave = migrate.afterSave;
+			app.idleHandler._serverRecycling = false;
 			if (!afterSave) {
 				window.migrating = true;
 				this._map.uiManager.closeAll();
