@@ -266,6 +266,18 @@
 		<string>35F9.1</string><!-- Allow reading boot time to use timers -->
 		<string>3B52.1</string><!-- Allow reading file metadata when the user opens a file in Collabora Mobile -->
 	</array>
+	<key>NSUbiquitousContainers</key>
+	<dict>
+		<key>iCloud.com.collabora.office.Mobile</key>
+		<dict>
+			<key>NSUbiquitousContainerIsDocumentScopePublic</key>
+			<true/>
+			<key>NSUbiquitousContainerSupportedFolderLevels</key>
+			<string>Any</string>
+			<key>NSUbiquitousContainerName</key>
+			<string>@APP_NAME@</string>
+		</dict>
+	</dict>
 	<key>UIAppFonts</key>
 	<array>
 		<string>share/fonts/truetype/Alef-Bold.ttf</string>
