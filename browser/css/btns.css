@@ -82,12 +82,14 @@ button.jsdialog img {
 }
 
 .jsdialog.ui-button-box-right {
+	grid-column: 2;
 	display: flex;
 	justify-self: end;
 	margin-inline-end: -5px;
 }
 
 .jsdialog.ui-button-box-left {
+	grid-column: 1;
 	display: flex;
 	justify-self: start;
 	margin-inline-start: -5px;
