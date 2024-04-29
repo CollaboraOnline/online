@@ -45,7 +45,7 @@ class Dispatcher {
 		};
 
 		this.actionsMap['remotelink'] = function () {
-			app.map.fire('postMessage', { msgId: 'UI UI_PickLink' });
+			app.map.fire('postMessage', { msgId: 'UI_PickLink' });
 		};
 		// TODO: deduplicate
 		this.actionsMap['hyperlinkdialog'] = function () {
