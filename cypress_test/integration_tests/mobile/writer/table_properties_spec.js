@@ -25,6 +25,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change table properties / l
 
 	function selectFullTable() {
 		cy.cGet('.unoSelectTable').click();
+		cy.cGet('#split_merge .unoMergeCells').should('not.have.attr', 'disabled');
 		helper.copy();
 		cy.cGet('#copy-paste-container table').should('exist');
 	}
