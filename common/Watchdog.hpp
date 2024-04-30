@@ -104,7 +104,7 @@ public:
                     }
                 }
             }
-            _condition.wait_for(guard, std::chrono::milliseconds(20));
+            _condition.wait_for(guard, std::chrono::milliseconds(50));
         }
     }
 
