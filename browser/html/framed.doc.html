@@ -36,13 +36,13 @@
       .vbox {
           display: flex;
           flex-direction: column;
-          gap: 1em;
+          gap: 0.5em;
       }
 
       .hbox {
           display: flex;
           flex-direction: row;
-          gap: 1em;
+          gap: 0.5em;
       }
 
       .grid {
@@ -56,7 +56,12 @@
           gap: 15px;
           grid-gap: 15px;
       }
-
+      h3 {
+          margin: 0.2em 0px;
+      }
+      pre {
+          margin: 0px;
+      }
 
     </style>
 
@@ -116,6 +121,12 @@
 
       function closeDocument() {
         post({'MessageId': 'Action_Close',
+              'Values': null
+            });
+      }
+
+      function closeSession() {
+        post({'MessageId': 'Close_Session',
               'Values': null
             });
       }
@@ -265,6 +276,10 @@
         if (!msg) {
           return;
         }
+
+        let messageOut = document.getElementById("messages");
+        messageOut.textContent = messageOut.textContent + JSON.stringify(msg) + "\n";
+
         if (msg.MessageId == 'App_LoadingStatus') {
           if (msg.Values) {
             if (msg.Values.Status == 'Document_Loaded') {
@@ -476,7 +491,9 @@
 
           <div class="grid">
             <button onclick="save(); return false;">Save</button>
+            <div></div>
             <button onclick="closeDocument(); return false;">Close</button>
+            <button onclick="closeSession(); return false;">Close Session</button>
 
             <button onclick="fullscreenDocument(); return false;">Fullscreen</button>
             <button onclick="startPresentation(); return false;">Start presentation</button>
@@ -506,14 +523,15 @@
           <div>
             <button onclick="reset_access_token(document.getElementById('new-access-token').value); return false;">Reset Access-Token</button>
           </div>
-	  <h3>User State</h3>
-	  <div class="hbox">
-	    <button onclick="GetUserState(); return false;">Get User State</button>
-	    <div id="DisplayUserState">
-	      <p>State: <span id="UserState_State">unknown</span>
-		Elapsed: <span id="UserState_Elapsed">0</span> sec.</p>
-	    </div>
-	  </div>
+
+          <h3>User State</h3>
+          <div class="hbox">
+            <button onclick="GetUserState(); return false;">Get User State</button>
+            <div id="DisplayUserState">
+              <p>State: <span id="UserState_State">unknown</span>
+          Elapsed: <span id="UserState_Elapsed">0</span> sec.</p>
+            </div>
+          </div>
         </form>
 
         <div class="vbox framed">
@@ -534,6 +552,13 @@
             <button onclick="executeMessage(); return false;">Execute</button>
           </form>
         </div>
+    </div>
+
+    <div class="framed hbox">
+      <div class="vbox">
+        <h3>Messages from editor</h3>
+
+        <pre id="messages"></pre>
       </div>
     </div>
 
