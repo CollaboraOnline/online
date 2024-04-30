@@ -75,7 +75,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		// Leave cell
 		helper.typeIntoDocument('{enter}');
 		// Wait for enter to work before clicking on first cell again
-		cy.cGet('input#addressInput').should('have.prop', 'value', 'A2');
+		cy.cGet('input#addressInput-input').should('have.prop', 'value', 'A2');
 		cy.wait(100);
 
 		// Turn text wrap on
@@ -85,7 +85,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		// Leave cell
 		helper.typeIntoDocument('{enter}');
 		// Wait for enter to work before clicking on first cell again
-		cy.cGet('input#addressInput').should('have.prop', 'value', 'A2');
+		cy.cGet('input#addressInput-input').should('have.prop', 'value', 'A2');
 		cy.wait(100);
 
 		// Get cursor position at end of line after wrap

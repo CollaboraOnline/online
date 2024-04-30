@@ -61,7 +61,7 @@ function clickOnFirstCell(firstClick = true, dblClick = false, isA1 = true) {
 	}
 
 	if (isA1)
-		cy.cGet('input#addressInput').should('have.prop', 'value', 'A1');
+		cy.cGet('input#addressInput-input').should('have.prop', 'value', 'A1');
 
 	cy.log('<< clickOnFirstCell - end');
 }
@@ -124,7 +124,7 @@ function removeTextSelection() {
 
 				moveY += 1.0;
 				var regex = /A([0-9]+):(AMJ|XFD)\1$/;
-				return cy.cGet('input#addressInput')
+				return cy.cGet('input#addressInput-input')
 					.should('have.prop', 'value')
 					.then(function(value) {
 						return regex.test(value);
@@ -160,7 +160,7 @@ function selectEntireSheet() {
 	});
 
 	var regex = /^A1:(AMJ|XFD)1048576$/;
-	cy.cGet('input#addressInput')
+	cy.cGet('input#addressInput-input')
 		.should('have.prop', 'value')
 		.then(function(value) {
 			return regex.test(value);
@@ -186,7 +186,7 @@ function selectFirstColumn() {
 			cy.cGet('body').click(XPos, YPos);
 		});
 
-		cy.cGet('input#addressInput').should('have.prop', 'value', 'A1:A1048576');
+		cy.cGet('input#addressInput-input').should('have.prop', 'value', 'A1:A1048576');
 
 	cy.log('<< selectFirstColumn - end');
 }
@@ -237,7 +237,7 @@ function assertDataClipboardTable(expectedData) {
 function selectCellsInRange(range) {
 	cy.log('>> selectCellsInRange - start');
 
-	cy.cGet('#formulabar #addressInput')
+	cy.cGet('#formulabar #addressInput-input')
 		.clear()
 		.type(range + '{enter}');
 

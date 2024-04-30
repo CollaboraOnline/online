@@ -20,7 +20,7 @@ function selectFirstRow() {
 		.should('not.be.visible');
 
 	var regex = /^A1:(AMJ|XFD)1$/;
-	cy.cGet('input#addressInput')
+	cy.cGet('input#addressInput-input')
 		.should('have.prop', 'value')
 		.then(function(value) {
 			return regex.test(value);

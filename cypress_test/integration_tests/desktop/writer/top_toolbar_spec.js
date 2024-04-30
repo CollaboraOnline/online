@@ -249,9 +249,9 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		cy.wait(500);
 		cy.cGet('#Insert-tab-label').click();
 		cy.cGet('#Insert-container .hyperlinkdialog button').click();
-		cy.cGet('#hyperlink-link-box').should('exist');
+		cy.cGet('#hyperlink-link-box-input').should('exist');
 		cy.cGet('#hyperlink-text-box').type('link');
-		cy.cGet('#hyperlink-link-box').type('www.something.com');
+		cy.cGet('#hyperlink-link-box-input').type('www.something.com');
 		cy.cGet('#response-ok').click();
 		helper.copy();
 		helper.expectTextForClipboard('text text1link');

@@ -57,14 +57,14 @@ describe(['tagmobile', 'tagnextcloud'], 'Calc insertion wizard.', function() {
 			.click();
 
 		// Dialog is opened
-		cy.cGet('#target')
+		cy.cGet('#target-input')
 			.should('exist');
 
 		// Type text and link
-		cy.cGet('#indication')
+		cy.cGet('#indication-input')
 			.clear()
 			.type('some text');
-		cy.cGet('#target')
+		cy.cGet('#target-input')
 			.type('www.something.com');
 
 		// Insert

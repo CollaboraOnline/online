@@ -16,29 +16,29 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Sheet switching tests', fu
 		cy.cGet('#spreadsheet-tab0').click();
 
 		desktopHelper.assertScrollbarPosition('vertical', 35, 45);
-		cy.cGet('input#addressInput').should('have.prop', 'value', 'G45');
+		cy.cGet('input#addressInput-input').should('have.prop', 'value', 'G45');
 
 		// go to sheet 2
 		cy.cGet('#spreadsheet-tab1').click();
-		cy.cGet('input#addressInput').should('have.prop', 'value', 'F720');
+		cy.cGet('input#addressInput-input').should('have.prop', 'value', 'F720');
 		desktopHelper.assertScrollbarPosition('vertical', 320, 330);
 
-		cy.cGet('input#addressInput').type('{selectAll}A2{enter}');
+		cy.cGet('input#addressInput-input').type('{selectAll}A2{enter}');
 		desktopHelper.assertScrollbarPosition('vertical', 15, 25);
 	});
 
 	it('Check view position on repeated selection of currently selected sheet', function() {
 		// initially we are on sheet 2 tab
-		cy.cGet('input#addressInput').should('have.prop', 'value', 'F720');
+		cy.cGet('input#addressInput-input').should('have.prop', 'value', 'F720');
 		desktopHelper.assertScrollbarPosition('vertical', 320, 330);
 
 		// click on sheet 2 tab (yes, current one)
 		cy.cGet('#spreadsheet-tab1').click();
-		cy.cGet('input#addressInput').should('have.prop', 'value', 'F720');
+		cy.cGet('input#addressInput-input').should('have.prop', 'value', 'F720');
 		desktopHelper.assertScrollbarPosition('vertical', 320, 330);
 
 		// go to different place in the spreadsheet
-		cy.cGet('input#addressInput').type('{selectAll}A2{enter}');
+		cy.cGet('input#addressInput-input').type('{selectAll}A2{enter}');
 		desktopHelper.assertScrollbarPosition('vertical', 15, 25);
 
 		// validate we didn't jump back after some time
@@ -52,7 +52,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Sheet switching tests', fu
 		cy.cGet('#spreadsheet-tab0').click();
 
 		desktopHelper.assertScrollbarPosition('vertical', 35, 45);
-		cy.cGet('input#addressInput').should('have.prop', 'value', 'G45');
+		cy.cGet('input#addressInput-input').should('have.prop', 'value', 'G45');
 		cy.cGet('#spreadsheet-tab0').should('have.class', 'spreadsheet-tab-selected');
 		cy.cGet('#spreadsheet-tab1').should('not.have.class', 'spreadsheet-tab-selected');
 
@@ -61,7 +61,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Sheet switching tests', fu
 
 		// we expect no effect
 		desktopHelper.assertScrollbarPosition('vertical', 35, 45);
-		cy.cGet('input#addressInput').should('have.prop', 'value', 'G45');
+		cy.cGet('input#addressInput-input').should('have.prop', 'value', 'G45');
 		cy.cGet('#spreadsheet-tab0').should('have.class', 'spreadsheet-tab-selected');
 		cy.cGet('#spreadsheet-tab1').should('not.have.class', 'spreadsheet-tab-selected');
 	});
@@ -73,7 +73,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Sheet switching tests', fu
 		cy.cGet('#spreadsheet-tab0').click();
 
 		desktopHelper.assertScrollbarPosition('vertical', 35, 45);
-		cy.cGet('input#addressInput').should('have.prop', 'value', 'G45');
+		cy.cGet('input#addressInput-input').should('have.prop', 'value', 'G45');
 		cy.cGet('#spreadsheet-tab0').should('have.class', 'spreadsheet-tab-selected');
 		cy.cGet('#spreadsheet-tab1').should('not.have.class', 'spreadsheet-tab-selected');
 
@@ -81,7 +81,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Sheet switching tests', fu
 		helper.typeIntoDocument('{ctrl}{shift}{pageDown}');
 
 		desktopHelper.assertScrollbarPosition('vertical', 320, 330);
-		cy.cGet('input#addressInput').should('have.prop', 'value', 'F720');
+		cy.cGet('input#addressInput-input').should('have.prop', 'value', 'F720');
 		cy.cGet('#spreadsheet-tab0').should('have.class', 'spreadsheet-tab-selected');
 		cy.cGet('#spreadsheet-tab1').should('have.class', 'spreadsheet-tab-selected');
 
@@ -89,14 +89,14 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Sheet switching tests', fu
 		helper.typeIntoDocument('{ctrl}{alt}{pageUp}');
 
 		// we still have selected two sheets so we see cell data from sheet 2
-		cy.cGet('input#addressInput').should('have.prop', 'value', 'F720');
+		cy.cGet('input#addressInput-input').should('have.prop', 'value', 'F720');
 
 		// go to sheet 2 using tab
 		cy.cGet('#spreadsheet-tab1').click();
-		cy.cGet('input#addressInput').should('have.prop', 'value', 'F720');
+		cy.cGet('input#addressInput-input').should('have.prop', 'value', 'F720');
 
 		// go to different place in the spreadsheet
-		cy.cGet('input#addressInput').type('{selectAll}A2{enter}');
+		cy.cGet('input#addressInput-input').type('{selectAll}A2{enter}');
 		helper.typeIntoDocument('some text');
 
 		// validate we didn't jump back after some time

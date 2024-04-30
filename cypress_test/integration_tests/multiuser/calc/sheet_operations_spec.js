@@ -67,7 +67,7 @@ describe(['tagmultiuser'], 'Check overlays after tab switching/operations', func
 	it('Check cell cursor overlay bounds after switching tab', function () {
 		cy.cSetActiveFrame('#iframe1');
 		cy.cGet('#spreadsheet-tab1').click();
-		cy.cGet('input#addressInput').should('have.prop', 'value', 'A14');
+		cy.cGet('input#addressInput-input').should('have.prop', 'value', 'A14');
 
 		let cellA14Bounds = new helper.Bounds();
 		helper.getOverlayItemBounds('#test-div-overlay-cell-cursor-border-0', cellA14Bounds);
@@ -75,7 +75,7 @@ describe(['tagmultiuser'], 'Check overlays after tab switching/operations', func
 		cy.cSetActiveFrame('#iframe2');
 		// Check that cell cursor have the same bounds in both views
 		cy.cGet('#spreadsheet-tab1').click();
-		cy.cGet('input#addressInput').should('have.prop', 'value', 'A14');
+		cy.cGet('input#addressInput-input').should('have.prop', 'value', 'A14');
 		helper.overlayItemHasBounds('#test-div-overlay-cell-cursor-border-0', cellA14Bounds);
 	});
 
@@ -104,11 +104,11 @@ describe(['tagmultiuser'], 'Check overlays after tab switching/operations', func
 
 	it('Check cell view cursor overlay bounds after inserting a new tab', function () {
 		cy.cSetActiveFrame('#iframe1');
-		cy.cGet('input#addressInput').should('have.prop', 'value', 'D8');
+		cy.cGet('input#addressInput-input').should('have.prop', 'value', 'D8');
 
 		cy.cSetActiveFrame('#iframe2');
-		helper.typeIntoInputField('input#addressInput', 'F6');
-		cy.cGet('input#addressInput').should('have.prop', 'value', 'F6');
+		helper.typeIntoInputField('input#addressInput-input', 'F6');
+		cy.cGet('input#addressInput-input').should('have.prop', 'value', 'F6');
 
 		cy.cSetActiveFrame('#iframe1');
 		cy.cGet('#insertsheet').click();

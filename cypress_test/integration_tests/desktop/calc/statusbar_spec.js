@@ -24,9 +24,9 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Statubar tests.', function
 
 	it('Multiple cell selection.', function() {
 		cy.cGet('#RowColSelCount').should('have.text', 'Select multiple cells');
-		helper.typeIntoInputField('input#addressInput', 'A1:A2');
+		helper.typeIntoInputField('input#addressInput-input', 'A1:A2');
 		cy.cGet('#RowColSelCount').should('have.text', 'Selected: 2 rows, 1 column');
-		helper.typeIntoInputField('input#addressInput', 'A1');
+		helper.typeIntoInputField('input#addressInput-input', 'A1');
 		cy.cGet('#RowColSelCount').should('have.text', 'Select multiple cells');
 	});
 
@@ -40,9 +40,9 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Statubar tests.', function
 
 	it('Selected data summary.', function() {
 		cy.cGet('#StateTableCell').should('have.text', 'Average: ; Sum: 0');
-		helper.typeIntoInputField('input#addressInput', 'A1:A2');
+		helper.typeIntoInputField('input#addressInput-input', 'A1:A2');
 		cy.cGet('#StateTableCell').should('have.text', 'Average: 15.5; Sum: 31');
-		helper.typeIntoInputField('input#addressInput', 'A1');
+		helper.typeIntoInputField('input#addressInput-input', 'A1');
 		cy.cGet('#StateTableCell').should('have.text', 'Average: 10; Sum: 10');
 	});
 

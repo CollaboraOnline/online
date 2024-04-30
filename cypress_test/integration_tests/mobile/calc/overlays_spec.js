@@ -19,13 +19,13 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Overlay bounds.', function 
 		var cellA1Bounds = new helper.Bounds();
 		helper.getOverlayItemBounds('#test-div-overlay-cell-cursor-border-0', cellA1Bounds);
 
-		helper.typeIntoInputField('input#addressInput', 'C3');
+		helper.typeIntoInputField('input#addressInput-input', 'C3');
 
 		var cellC3Bounds = new helper.Bounds();
 		helper.overlayItemHasDifferentBoundsThan('#test-div-overlay-cell-cursor-border-0', cellA1Bounds);
 		helper.getOverlayItemBounds('#test-div-overlay-cell-cursor-border-0', cellC3Bounds);
 
-		helper.typeIntoInputField('input#addressInput', 'B2');
+		helper.typeIntoInputField('input#addressInput-input', 'B2');
 
 		cy.wrap(true).then(function () {
 			cy.log('cellA1Bounds = ' + cellA1Bounds + ', cellC3Bounds = ' + cellC3Bounds);
@@ -49,13 +49,13 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Overlay bounds.', function 
 		var cellA1Bounds = new helper.Bounds();
 		helper.getOverlayItemBounds('#test-div-overlay-cell-cursor-border-0', cellA1Bounds);
 
-		helper.typeIntoInputField('input#addressInput', 'D4');
+		helper.typeIntoInputField('input#addressInput-input', 'D4');
 
 		var cellD4Bounds = new helper.Bounds();
 		helper.overlayItemHasDifferentBoundsThan('#test-div-overlay-cell-cursor-border-0', cellA1Bounds);
 		helper.getOverlayItemBounds('#test-div-overlay-cell-cursor-border-0', cellD4Bounds);
 
-		helper.typeIntoInputField('input#addressInput', 'A1:D4');
+		helper.typeIntoInputField('input#addressInput-input', 'A1:D4');
 
 		cy.wrap(true).then(function () {
 			cy.log('cellA1Bounds = ' + cellA1Bounds + ', cellD4Bounds = ' + cellD4Bounds);

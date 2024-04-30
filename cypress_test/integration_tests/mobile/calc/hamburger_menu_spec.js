@@ -90,7 +90,7 @@ describe.skip(['tagmobile'], 'Trigger hamburger menu options.', function() {
 		// Undo
 		mobileHelper.selectHamburgerMenuItem(['Edit', 'Undo']);
 
-		cy.cGet('input#addressInput').should('have.prop', 'value', 'A1');
+		cy.cGet('input#addressInput-input').should('have.prop', 'value', 'A1');
 
 		calcHelper.selectEntireSheet();
 
@@ -99,7 +99,7 @@ describe.skip(['tagmobile'], 'Trigger hamburger menu options.', function() {
 		// Redo
 		mobileHelper.selectHamburgerMenuItem(['Edit', 'Redo']);
 
-		cy.cGet('input#addressInput').should('have.prop', 'value', 'A1');
+		cy.cGet('input#addressInput-input').should('have.prop', 'value', 'A1');
 		calcHelper.selectEntireSheet();
 		cy.cGet('#copy-paste-container table td').should('contain.text', 'q');
 	});
@@ -119,7 +119,7 @@ describe.skip(['tagmobile'], 'Trigger hamburger menu options.', function() {
 		// Revert one undo step via Repair
 		repairHelper.rollbackPastChange('Undo', undefined, true);
 
-		cy.cGet('input#addressInput').should('have.prop', 'value', 'A1');
+		cy.cGet('input#addressInput-input').should('have.prop', 'value', 'A1');
 
 		calcHelper.selectEntireSheet();
 
@@ -174,7 +174,7 @@ describe.skip(['tagmobile'], 'Trigger hamburger menu options.', function() {
 		cy.cGet('#search').should('not.have.attr', 'disabled');
 		cy.cGet('#search').click();
 		// First cell should be selected
-		cy.cGet('input#addressInput').should('have.prop', 'value', 'A1');
+		cy.cGet('input#addressInput-input').should('have.prop', 'value', 'A1');
 	});
 
 	it('Sheet: insert row before.', function() {

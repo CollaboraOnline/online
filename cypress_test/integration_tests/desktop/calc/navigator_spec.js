@@ -15,18 +15,18 @@ describe.skip(['tagdesktop'], 'Navigator tests.', function () {
 	it('Jump to element. Navigator -> Document', function() {
 		// Doubleclick several items, and check if the view is jumed to there
 		cy.cGet('#contentbox').contains('.jsdialog.sidebar.ui-treeview-cell-text', 'Comment1').dblclick();
-		cy.cGet('input#addressInput').should('have.prop', 'value', 'O81');
+		cy.cGet('input#addressInput-input').should('have.prop', 'value', 'O81');
 		cy.cGet('#StatusDocPos').should('have.text', 'Sheet 3 of 24');
 
 		cy.cGet('#contentbox').contains('.jsdialog.sidebar.ui-treeview-cell-text', 'Sheet22').dblclick();
 		cy.cGet('#StatusDocPos').should('have.text', 'Sheet 22 of 24');
 
 		cy.cGet('#contentbox').contains('.jsdialog.sidebar.ui-treeview-cell-text', 'rName1').dblclick();
-		cy.cGet('input#addressInput').should('have.prop', 'value', 'rName1');
+		cy.cGet('input#addressInput-input').should('have.prop', 'value', 'rName1');
 		cy.cGet('#StatusDocPos').should('have.text', 'Sheet 2 of 24');
 
 		cy.cGet('#contentbox').contains('.jsdialog.sidebar.ui-treeview-cell-text', 'dRange').dblclick();
-		cy.cGet('input#addressInput').should('have.prop', 'value', 'S21:T22');
+		cy.cGet('input#addressInput-input').should('have.prop', 'value', 'S21:T22');
 		cy.cGet('#StatusDocPos').should('have.text', 'Sheet 3 of 24');
 	});
 
@@ -56,7 +56,7 @@ describe.skip(['tagdesktop'], 'Navigator tests.', function () {
 
 		// Check if clicking on it will move cursor there
 		cy.cGet('#contentbox').contains('.jsdialog.sidebar.ui-treeview-cell-text', 'rName2').dblclick();
-		cy.cGet('input#addressInput').should('have.prop', 'value', 'rName2');
+		cy.cGet('input#addressInput-input').should('have.prop', 'value', 'rName2');
 		cy.cGet('#StatusDocPos').should('have.text', 'Sheet 5 of 24');
 
 		// Insert a comment
