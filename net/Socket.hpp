@@ -806,6 +806,9 @@ public:
         return false;
     }
 
+    void disableWatchdog();
+    void enableWatchdog();
+
 protected:
     bool isStop() const
     {
