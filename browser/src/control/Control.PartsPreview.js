@@ -343,7 +343,7 @@ L.Control.PartsPreview = L.Control.extend({
 						   this.options.maxWidth,
 						   this.options.maxHeight,
 						   {autoUpdate: this.options.autoUpdate,
-						    fetchThumbnail: this.options.fetchThumbnail});
+						    fetchThumbnail: false});
 
 		L.DomUtil.setStyle(img, 'width', imgSize.width + 'px');
 		L.DomUtil.setStyle(img, 'height', imgSize.height + 'px');
