@@ -1,0 +1,35 @@
+#! /bin/bash
+#
+# get a flamegraph of where the watchdog is called from to create a
+# visualization of where interactive responsiveness is poor
+# a) systemwide profiles on the rare 'futimesat' syscall that x86_64 coolwsd
+# calls from its watchdog for the length of time requested. The env variable
+# COOL_WATCHDOG must be set to trigger these.
+# d) generates flamegraph after
+if ! test `id -u` = 0; then
+    echo "not root, if this doesn't work try sudo watchdog-cool"
+fi
+if [ $# -ne 1 ]; then
+    echo "Usage: watchdog-cool NUMBER[SUFFIX], e.g. watchdog-cool 1h"
+    exit 1
+fi
+if ! which flamegraph.pl > /dev/null 2>&1; then
+    REAL_USER_HOME="$(getent passwd $SUDO_USER | cut -d: -f6)"
+    PATH=$PATH:$HOME/FlameGraph:$REAL_USER_HOME/FlameGraph
+fi
+if ! which flamegraph.pl > /dev/null 2>&1; then
+    echo "no flamegraph.pl found"
+    echo "On fedora install systemwide with: sudo dnf install flamegraph"
+    echo "Otherwise install locally manually into ~/FlameGraph"
+    echo "    e.g. git clone https://github.com/brendangregg/FlameGraph ~/FlameGraph"
+    exit 1
+fi
+perf record -F50 -o perf.data.watchdog -e syscalls:sys_enter_futimesat --call-graph dwarf -a sleep $1
+#alternatively record every nth sample
+#perf record -c12 -o perf.data.watchdog -e syscalls:sys_enter_futimesat --call-graph dwarf -a sleep $1
+perf script -i perf.data.watchdog --no-inline | stackcollapse-perf.pl | \
+    sed -E -s "s/^kitbroker[^;]+/kitbroker/" | \
+    sed -E -s "s/^docbroker[^;]+/docbroker/" | \
+    sed -E -s "s/^kit_spare[^;]+/kit_spare/" | \
+    flamegraph.pl > watchdog.svg
+echo generated flamegraph output svg: watchdog.svg
