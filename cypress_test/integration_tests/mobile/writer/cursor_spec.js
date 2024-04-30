@@ -37,8 +37,8 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Text cursor tests.', functi
 		writerHelper.selectAllTextOfDoc();
 		cy.cGet('.blinking-cursor').should('be.visible');
 		// Blinking cursor and so the view should be at the end of the text selection.
-		cy.cGet('.leaflet-selection-marker-end').should('be.visible');
-		cy.cGet('.leaflet-selection-marker-start').should('not.be.visible');
+		cy.cGet('.text-selection-handle-end').should('be.visible');
+		cy.cGet('.text-selection-handle-start').should('not.be.visible');
 	});
 
 	it('Move cursor through table.', function() {

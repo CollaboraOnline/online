@@ -22,9 +22,9 @@ describe.skip('Spell checking menu.', function() {
 			.then(function(markers) {
 				expect(markers.length).to.have.greaterThan(1);
 				for (var i = 0; i < markers.length; i++) {
-					if (markers[i].classList.contains('leaflet-selection-marker-start')) {
+					if (markers[i].classList.contains('text-selection-handle-start')) {
 						var startPos = markers[i].getBoundingClientRect();
-					} else if (markers[i].classList.contains('leaflet-selection-marker-end')) {
+					} else if (markers[i].classList.contains('text-selection-handle-end')) {
 						var endPos = markers[i].getBoundingClientRect();
 					}
 				}

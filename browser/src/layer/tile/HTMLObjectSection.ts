@@ -53,7 +53,7 @@ class HTMLObjectSection extends CanvasSectionObject {
 					tempFunction(elementToAdd);
 				}, 100);
 			}
-		}
+		};
 		tempFunction(this.sectionProperties.objectDiv);
 
 		if (!visible)
@@ -95,7 +95,8 @@ class HTMLObjectSection extends CanvasSectionObject {
 	}
 
 	public getPosition(): cool.SimplePoint {
-		return new cool.SimplePoint(this.position[0], this.position[1]);
+		const twips = [Math.round(this.position[0] * app.pixelsToTwips), Math.round(this.position[1] * app.pixelsToTwips)];
+		return new cool.SimplePoint(twips[0], twips[1]);
 	}
 
 	public onRemove(): void {

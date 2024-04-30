@@ -23,7 +23,7 @@ describe.skip('Searching via search bar.', function() {
 		// A shape and some text should be selected
 		//cy.get('.transform-handler--rotate')
 		//	.should('be.not.visible');
-		cy.get('.leaflet-selection-marker-start')
+		cy.get('.text-selection-handle-start')
 			.should('be.visible');
 
 		helper.expectTextForClipboard('a');
@@ -53,7 +53,7 @@ describe.skip('Searching via search bar.', function() {
 		// A shape and some text should be selected
 		//cy.get('.transform-handler--rotate')
 		//	.should('be.not.visible');
-		cy.cGet('.leaflet-selection-marker-start').should('be.visible');
+		cy.cGet('.text-selection-handle-start').should('be.visible');
 
 		helper.getCursorPos('left', 'cursorOrigLeft');
 
@@ -64,7 +64,7 @@ describe.skip('Searching via search bar.', function() {
 
 		//cy.get('.transform-handler--rotate')
 		//	.should('be.not.visible');
-		cy.cGet('.leaflet-selection-marker-start').should('be.visible');
+		cy.cGet('.text-selection-handle-start').should('be.visible');
 
 		helper.expectTextForClipboard('a');
 
@@ -81,7 +81,7 @@ describe.skip('Searching via search bar.', function() {
 
 		//cy.get('.transform-handler--rotate')
 		//	.should('be.not.visible');
-		cy.cGet('.leaflet-selection-marker-start').should('be.visible');
+		cy.cGet('.text-selection-handle-start').should('be.visible');
 
 		helper.expectTextForClipboard('a');
 
@@ -102,7 +102,7 @@ describe.skip('Searching via search bar.', function() {
 		// A shape and some text should be selected
 		//cy.get('.transform-handler--rotate')
 		//	.should('be.not.visible');
-		cy.get('.leaflet-selection-marker-start')
+		cy.get('.text-selection-handle-start')
 			.should('be.visible');
 
 		helper.expectTextForClipboard('a');
@@ -114,7 +114,7 @@ describe.skip('Searching via search bar.', function() {
 
 		//cy.get('.transform-handler--rotate')
 		//	.should('be.not.visible');
-		cy.cGet('.leaflet-selection-marker-start').should('be.visible');
+		cy.cGet('.text-selection-handle-start').should('be.visible');
 
 		helper.expectTextForClipboard('a');
 
@@ -131,7 +131,7 @@ describe.skip('Searching via search bar.', function() {
 
 		//cy.get('.transform-handler--rotate')
 		//	.should('be.not.visible');
-		cy.cGet('.leaflet-selection-marker-start').should('be.visible');
+		cy.cGet('.text-selection-handle-start').should('be.visible');
 
 		helper.expectTextForClipboard('a');
 
@@ -151,7 +151,7 @@ describe.skip('Searching via search bar.', function() {
 
 		//cy.get('.transform-handler--rotate')
 		//	.should('be.not.visible');
-		cy.cGet('.leaflet-selection-marker-start').should('be.visible');
+		cy.cGet('.text-selection-handle-start').should('be.visible');
 
 		helper.expectTextForClipboard('a');
 
@@ -159,7 +159,7 @@ describe.skip('Searching via search bar.', function() {
 		searchHelper.cancelSearch();
 
 		cy.cGet('.transform-handler--rotate').should('not.exist');
-		cy.cGet('.leaflet-selection-marker-start').should('not.exist');
+		cy.cGet('.text-selection-handle-start').should('not.exist');
 		cy.cGet('input#search-input').should('be.visible');
 	});
 
@@ -170,7 +170,7 @@ describe.skip('Searching via search bar.', function() {
 
 		//cy.get('.transform-handler--rotate')
 		//	.should('be.not.visible');
-		cy.cGet('.leaflet-selection-marker-start').should('be.visible');
+		cy.cGet('.text-selection-handle-start').should('be.visible');
 
 		helper.expectTextForClipboard('a');
 

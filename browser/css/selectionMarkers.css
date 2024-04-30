@@ -1,16 +1,12 @@
-.leaflet-selection-marker-start {
+.text-selection-handle-start {
 	position: absolute;
-	margin-left: -30px;
-	margin-top: -2px;
 	width: 30px;
 	height: 44px;
 	background-image: url('images/handle_start.svg');
 }
 
-.leaflet-selection-marker-end {
+.text-selection-handle-end {
 	position: absolute;
-	margin-left: 0;
-	margin-top: -2px;
 	width: 30px;
 	height: 44px;
 	background-image: url('images/handle_end.svg');

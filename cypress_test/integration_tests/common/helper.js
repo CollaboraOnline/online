@@ -906,11 +906,11 @@ function getCursorPos(offsetProperty, aliasName, cursorSelector = '.cursor-overl
 function textSelectionShouldExist() {
 	cy.log('>> textSelectionShouldExist - start');
 
-	cy.cGet('.leaflet-selection-marker-start').should('exist');
-	cy.cGet('.leaflet-selection-marker-end').should('exist');
+	cy.cGet('.text-selection-handle-start').should('exist');
+	cy.cGet('.text-selection-handle-end').should('exist');
 
 	// One of the marker should be visible at least (if not both).
-	cy.cGet('.leaflet-selection-marker-start, .leaflet-selection-marker-end').should('be.visible');
+	cy.cGet('.text-selection-handle-start, .text-selection-handle-end').should('be.visible');
 
 	cy.log('<< textSelectionShouldExist - end');
 }
@@ -919,8 +919,8 @@ function textSelectionShouldExist() {
 function textSelectionShouldNotExist() {
 	cy.log('>> textSelectionShouldNotExist - start');
 
-	cy.cGet('.leaflet-selection-marker-start').should('not.exist');
-	cy.cGet('.leaflet-selection-marker-end').should('not.exist');
+	cy.cGet('.text-selection-handle-start').should('not.be.visible');
+	cy.cGet('.text-selection-handle-end').should('not.be.visible');
 
 	cy.log('<< textSelectionShouldNotExist - end');
 }
