@@ -612,7 +612,10 @@ void Admin::pollingThread()
             std::chrono::duration_cast<std::chrono::milliseconds>(now - lastMem).count();
         if (memWait <= MinStatsIntervalMs / 2) // Close enough
         {
+            // disable watchdog to avoid Document::updateMemoryDirty noise
+            disableWatchdog();
             _model.UpdateMemoryDirty();
+            enableWatchdog();
 
             const size_t totalMem = getTotalMemoryUsage();
             _model.addMemStats(totalMem);
