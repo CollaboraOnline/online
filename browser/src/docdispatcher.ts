@@ -303,7 +303,7 @@ class Dispatcher {
 			app.map.sendUnoCommand('.uno:ToggleRelative');
 		};
 		this.actionsMap['focusonaddressinput'] = function () {
-			document.getElementById('addressInput').focus();
+			document.getElementById('addressInput-input').focus();
 		};
 
 		// sheets toolbar

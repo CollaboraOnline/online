@@ -222,7 +222,7 @@ class StatusBar extends JSDialog.Toolbar {
 
 	getToolItems() {
 		return [
-			{type: 'edit',  id: 'search-input', placeholder: _('Search'), text: ''},
+			{type: 'edit',  id: 'search', placeholder: _('Search'), text: ''},
 			{type: 'customtoolitem',  id: 'searchprev', command: 'searchprev', text: _UNO('.uno:UpSearch'), enabled: false},
 			{type: 'customtoolitem',  id: 'searchnext', command: 'searchnext', text: _UNO('.uno:DownSearch'), enabled: false},
 			{type: 'customtoolitem',  id: 'cancelsearch', command: 'cancelsearch', text: _('Cancel the search'), visible: false},

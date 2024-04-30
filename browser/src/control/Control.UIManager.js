@@ -1469,10 +1469,10 @@ L.Control.UIManager = L.Control.extend({
 				id: 'info-modal-label1',
 				type: 'fixedtext',
 				text: message,
-				labelFor: 'input-modal-input',
+				labelFor: 'input-modal',
 			},
 			{
-				id: 'input-modal-input',
+				id: 'input-modal',
 				type: 'edit',
 				password: !!passwordInput,
 				text: defaultValue,

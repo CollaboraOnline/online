@@ -3416,7 +3416,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	_isWholeColumnSelected: function (cellAddress) {
 		if (!cellAddress)
-			cellAddress = document.getElementById('addressInput').value;
+			cellAddress = document.getElementById('addressInput-input').value;
 
 		var startEnd = cellAddress.split(':');
 		if (startEnd.length === 1)
@@ -3435,7 +3435,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	_isWholeRowSelected: function (cellAddress) {
 		if (!cellAddress)
-			cellAddress = document.getElementById('addressInput').value;
+			cellAddress = document.getElementById('addressInput-input').value;
 
 		var startEnd = cellAddress.split(':');
 		if (startEnd.length === 1)
@@ -3491,7 +3491,7 @@ L.CanvasTileLayer = L.Layer.extend({
 					newCenter.pX += scrollX;
 					newCenter.pY += scrollY;
 					if (!this._map.wholeColumnSelected && !this._map.wholeRowSelected) {
-						var address = document.getElementById('addressInput').value;
+						var address = document.getElementById('addressInput-input').value;
 						if (!this._isWholeColumnSelected(address) && !this._isWholeRowSelected(address))
 							this.scrollToPos(newCenter);
 					}
