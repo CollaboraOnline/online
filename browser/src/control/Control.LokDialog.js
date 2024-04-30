@@ -187,8 +187,8 @@ L.Control.LokDialog = L.Control.extend({
 	},
 
 	_isSelectionHandle: function(el) {
-		return L.DomUtil.hasClass(el, 'leaflet-selection-marker-start')	||
-			L.DomUtil.hasClass(el, 'leaflet-selection-marker-end');
+		return L.DomUtil.hasClass(el, 'text-selection-handle-start')	||
+			L.DomUtil.hasClass(el, 'text-selection-handle-end');
 	},
 
 	// Given a prefixed dialog id like 'lokdialog-323', gives a raw id, 323.

@@ -100,10 +100,7 @@ function selectTableInTheCenter() {
 				cy.cGet('body').click(XPos, YPos);
 			});
 
-		return cy.cGet('.leaflet-marker-pane')
-			.then(function (pane) {
-				return pane[0].children.length !== 0;
-			});
+		return cy.cGet('.text-selection-handle-start').should('be.visible');
 	});
 
 	cy.cGet('.leaflet-marker-icon.table-row-resize-marker').should($el => { expect(Cypress.dom.isDetached($el)).to.eq(false); }).should('be.visible');
@@ -170,10 +167,7 @@ function selectTextOfShape() {
 	cy.waitUntil(function() {
 		cy.cGet('svg g svg').dblclick({force: true});
 		helper.typeIntoDocument('{ctrl}a');
-		return cy.cGet('.leaflet-marker-pane')
-			.then(function(markerPane) {
-				return markerPane.children().length !== 0;
-			});
+		return cy.cGet('.text-selection-handle-start').should('be.visible');
 	});
 
 	helper.textSelectionShouldExist();

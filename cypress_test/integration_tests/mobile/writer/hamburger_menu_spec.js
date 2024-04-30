@@ -171,9 +171,9 @@ describe.skip(['tagmobile'], 'Trigger hamburger menu options.', function() {
 		// No actual text sent from core because of the removal.
 		helper.expectTextForClipboard('\n\n');
 		// We have a multiline selection
-		cy.cGet('.leaflet-selection-marker-start')
+		cy.cGet('.text-selection-handle-start')
 			.then(function(firstMarker) {
-				cy.cGet('.leaflet-selection-marker-end')
+				cy.cGet('.text-selection-handle-end')
 					.then(function(secondMarker) {
 						expect(firstMarker.offset().top).to.be.lessThan(secondMarker.offset().top);
 						expect(firstMarker.offset().left).to.be.lessThan(secondMarker.offset().left);
@@ -190,9 +190,9 @@ describe.skip(['tagmobile'], 'Trigger hamburger menu options.', function() {
 		helper.typeIntoDocument('{ctrl}a');
 
 		// Both selection markers should be in the same line
-		cy.cGet('.leaflet-selection-marker-start')
+		cy.cGet('.text-selection-handle-start')
 			.then(function(firstMarker) {
-				cy.cGet('.leaflet-selection-marker-end')
+				cy.cGet('.text-selection-handle-end')
 					.then(function(secondMarker) {
 						expect(firstMarker.offset().top).to.be.equal(secondMarker.offset().top);
 						expect(firstMarker.offset().left).to.be.lessThan(secondMarker.offset().left);

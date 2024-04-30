@@ -9,7 +9,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Clipboard operations.', fu
 		// Select some text
 		helper.selectAllText();
 
-		cy.cGet('.leaflet-marker-icon')
+		cy.cGet('.html-object-section')
 			.then(function(marker) {
 				expect(marker).to.have.lengthOf(2);
 				var XPos =  (marker[0].getBoundingClientRect().right + marker[1].getBoundingClientRect().left) / 2;

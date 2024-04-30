@@ -955,8 +955,8 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		// Initiate selection handles.
 		this._selectionHandles = {};
-		this._selectionHandles.start = new app.definitions.textSelectionHandleSection('selection_start_handle', 30, 44, new app.definitions.simplePoint(0, 0), 'leaflet-selection-marker-start', false);
-		this._selectionHandles.end = new app.definitions.textSelectionHandleSection('selection_end_handle', 30, 44, new app.definitions.simplePoint(0, 0), 'leaflet-selection-marker-end', false);
+		this._selectionHandles.start = new app.definitions.textSelectionHandleSection('selection_start_handle', 30, 44, new app.definitions.simplePoint(0, 0), 'text-selection-handle-start', false);
+		this._selectionHandles.end = new app.definitions.textSelectionHandleSection('selection_end_handle', 30, 44, new app.definitions.simplePoint(0, 0), 'text-selection-handle-end', false);
 		this._selectionHandles.active = false;
 
 		setTimeout(function() {
@@ -3259,12 +3259,6 @@ L.CanvasTileLayer = L.Layer.extend({
 				this._selectionContentRequest = setTimeout(L.bind(function () {
 					app.socket.sendMessage('gettextselection mimetype=text/html,text/plain;charset=utf-8');}, this), 100);
 			}
-
-			this._selectionHandles.start.showSection = true;
-			this._selectionHandles.end.showSection = true;
-			this._selectionHandles.start.setHTMLObjectVisibility(true);
-			this._selectionHandles.end.setHTMLObjectVisibility(true);
-			this._selectionHandles.active = true;
 		}
 		else {
 			this._selectionHandles.start.showSection = false;
@@ -3524,6 +3518,8 @@ L.CanvasTileLayer = L.Layer.extend({
 
 			this._updateScrollOnCellSelection(oldSelection, this._textSelectionEnd);
 			this._updateMarkers();
+			this._selectionHandles.end.showSection = true;
+			this._selectionHandles.end.setHTMLObjectVisibility(true);
 		}
 		else {
 			this._textSelectionEnd = null;
@@ -3545,6 +3541,10 @@ L.CanvasTileLayer = L.Layer.extend({
 				this._twipsToLatLng(bottomRightTwips, this._map.getZoom()));
 
 			this._updateScrollOnCellSelection(oldSelection, this._textSelectionStart);
+
+			this._selectionHandles.start.showSection = true;
+			this._selectionHandles.start.setHTMLObjectVisibility(true);
+			this._selectionHandles.active = true;
 		}
 		else {
 			this._textSelectionStart = null;
@@ -4814,33 +4814,41 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		var startPos = this._map._docLayer._latLngToCorePixels(this._textSelectionStart.getSouthWest());
 		var endPos = this._map._docLayer._latLngToCorePixels(this._textSelectionEnd.getSouthWest());
-		var startMarkerPos = this._selectionHandles.start.getPosition();
-		// CalcRTL: position from core are in document coordinates. Conversion to layer coordinates for each maker is done
-		// in L.Layer.getLayerPositionVisibility(). Icons of RTL "start" and "end" has to be interchanged.
-		var calcRTL = this.isCalcRTL();
-		if (startMarkerPos.pDistanceTo([endPos.x, endPos.y]) < startMarkerPos.pDistanceTo([startPos.x, startPos.y])) {
-			// If the start handle is actually closer to the end of the selection, reverse icons and markers.
-			L.DomUtil.removeClass(this._selectionHandles.start.getHTMLObject(), calcRTL ? 'leaflet-selection-marker-end' : 'leaflet-selection-marker-start');
-			L.DomUtil.removeClass(this._selectionHandles.end.getHTMLObject(), calcRTL ? 'leaflet-selection-marker-start' : 'leaflet-selection-marker-end');
-			L.DomUtil.addClass(this._selectionHandles.start.getHTMLObject(), calcRTL ? 'leaflet-selection-marker-start' : 'leaflet-selection-marker-end');
-			L.DomUtil.addClass(this._selectionHandles.end.getHTMLObject(), calcRTL ? 'leaflet-selection-marker-end' : 'leaflet-selection-marker-start');
-			var tmp = this._selectionHandles.start;
+
+		if (app.map._docLayer.isCalcRTL()) {
+			// Mirror position from right to left.
+			startPos.x = app.sectionContainer.getDocumentBounds()[2] - (startPos.x - app.sectionContainer.getDocumentBounds()[0]);
+			endPos.x = app.sectionContainer.getDocumentBounds()[2] - (endPos.x - app.sectionContainer.getDocumentBounds()[0]);
+		}
+
+		const oldStart = this._selectionHandles.start.getPosition();
+		const oldEnd = this._selectionHandles.end.getPosition();
+
+		startPos.x -= 30 * app.dpiScale;
+		this._selectionHandles.start.setPosition(startPos.x, startPos.y);
+		let newStart = this._selectionHandles.start.getPosition();
+
+
+		this._selectionHandles.end.setPosition(endPos.x, endPos.y);
+		const newEnd = this._selectionHandles.end.getPosition();
+
+		if (app.map._docLayer.isCalcRTL() && (newStart.y < newEnd.y || (newStart.y <= newEnd.y && newStart.x < newEnd.x))) {
+			// If the start handle is actually closer to the end of the selection, reverse positions (Right To Left case).
+			this._selectionHandles.start.setPosition(newEnd.pX, newEnd.pY);
+			this._selectionHandles.end.setPosition(newStart.pX, newStart.pY);
+		}
+		else if (
+			!app.map._docLayer.isCalcRTL() &&
+			(oldEnd.distanceTo(newStart.toArray()) < 20 || oldStart.distanceTo(newEnd.toArray()) < 20)
+		) {
+			/*
+				If the start handle is actually closer to the end of the selection, reverse positions.
+				This seems to be a core side issue to me. I think the start and end positions are switched but the handlers aren't on the core side.
+			*/
+			const temp = this._selectionHandles.start;
 			this._selectionHandles.start = this._selectionHandles.end;
-			this._selectionHandles.end = tmp;
+			this._selectionHandles.end = temp;
 		}
-		else {
-			// normal markers and normal icons
-			L.DomUtil.removeClass(this._selectionHandles.start.getHTMLObject(), calcRTL ? 'leaflet-selection-marker-start' : 'leaflet-selection-marker-end');
-			L.DomUtil.removeClass(this._selectionHandles.end.getHTMLObject(), calcRTL ? 'leaflet-selection-marker-end' : 'leaflet-selection-marker-start');
-			L.DomUtil.addClass(this._selectionHandles.start.getHTMLObject(), calcRTL ? 'leaflet-selection-marker-end' : 'leaflet-selection-marker-start');
-			L.DomUtil.addClass(this._selectionHandles.end.getHTMLObject(), calcRTL ? 'leaflet-selection-marker-start' : 'leaflet-selection-marker-end');
-		}
-
-		let newPosition = this._map._docLayer._latLngToCorePixels(this._textSelectionStart.getSouthWest());
-		this._selectionHandles.start.setPosition(newPosition.x, newPosition.y);
-
-		newPosition = this._map._docLayer._latLngToCorePixels(this._textSelectionEnd.getSouthEast());
-		this._selectionHandles.end.setPosition(newPosition.x, newPosition.y);
 	},
 
 	hasGraphicSelection: function() {

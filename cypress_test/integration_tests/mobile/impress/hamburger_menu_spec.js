@@ -207,7 +207,7 @@ describe.skip(['tagmobile'], 'Trigger hamburger menu options.', function() {
 		// A shape and some text should be selected
 		//cy.get('.transform-handler--rotate')
 		//	.should('be.not.visible');
-		cy.cGet('.leaflet-selection-marker-start')
+		cy.cGet('.text-selection-handle-start')
 			.should('be.visible');
 	});
 

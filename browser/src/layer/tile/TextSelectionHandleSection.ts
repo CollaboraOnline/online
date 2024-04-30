@@ -15,38 +15,66 @@ class TextSelectionHandle extends HTMLObjectSection {
 		super(sectionName, objectWidth, objectHeight, documentPosition, extraClass, visible);
 	}
 
-	onDrag(point: number[], dragDistance: number[], e: MouseEvent) {
+	onDrag(point: number[]) {
 		(<any>window).IgnorePanning = true;
-		this.setPosition(point[0], point[1]);
-		app.map.fire('handleautoscroll', {pos: { x: point[0] / app.dpiScale, y: point[1] / app.dpiScale }, map: app.map});
+		const candidateX = Math.round((this.myTopLeft[0] + point[0]) / app.dpiScale);
+		const candidateY = Math.round((this.myTopLeft[1] + point[1]) / app.dpiScale);
+
+		this.sectionProperties.objectDiv.style.left = candidateX + 'px';
+		this.sectionProperties.objectDiv.style.top = candidateY + 'px';
+
+		app.map.fire('handleautoscroll', {pos: { x: candidateX, y: candidateY }, map: app.map});
 	}
 
 	setOpacity(value: number) {
 		this.getHTMLObject().style.opacity = value;
 	}
 
-	onDragEnd(point: number[], e: MouseEvent) {
+	onDragEnd(point: number[]) {
 		(<any>window).IgnorePanning = undefined;
 
-		app.map.fire('scrollvelocity', {vx: 0, vy: 0});
+		let x = this.position[0] + point[0];
+		const y = this.position[1] + point[1];
+		this.setPosition(x, y);
 
-		if (this.name === 'selection_start_handle') {
-			app.map._docLayer._postSelectTextEvent('start', point[0] * app.pixelsToTwips, point[1] * app.pixelsToTwips);
+		app.map.fire('scrollvelocity', {vx: 0, vy: 0});
+		const type = this.name === 'selection_start_handle' ? 'start' : 'end';
+
+		if (type === 'start')
+			x += 30 / app.dpiScale;
+
+		if (!app.map._docLayer.isCalcRTL()) {
+			app.map._docLayer._postSelectTextEvent(type, Math.round(x * app.pixelsToTwips), Math.round(y * app.pixelsToTwips));
 		}
-		else if (this.name === 'selection_end_handle') {
-			app.map._docLayer._postSelectTextEvent('end', point[0] * app.pixelsToTwips, point[1] * app.pixelsToTwips);
+		else {
+			const referenceX = app.file.viewedRectangle.pX1 + (app.file.viewedRectangle.pX2 - this.position[0]);
+			app.map._docLayer._postSelectTextEvent(type, Math.round(referenceX * app.pixelsToTwips), Math.round(y * app.pixelsToTwips));
 		}
 	}
 
 	onMouseMove(point: number[], dragDistance: number[], e: MouseEvent): void {
+		e.stopPropagation();
 		if (this.containerObject.isDraggingSomething()) {
-			this.onDrag(point, dragDistance, e);
+			this.stopPropagating();
+			this.onDrag(point);
 		}
 	}
 
+	onClick(point: number[], e: MouseEvent): void {
+		e.stopPropagation();
+		this.stopPropagating();
+	}
+
+	onMouseDown(point: number[], e: MouseEvent): void {
+		e.stopPropagation();
+		this.stopPropagating();
+	}
+
 	onMouseUp(point: number[], e: MouseEvent): void {
+		e.stopPropagation();
 		if (this.containerObject.isDraggingSomething()) {
-			this.onDragEnd(point, e);
+			this.stopPropagating();
+			this.onDragEnd(point);
 		}
 	}
 }

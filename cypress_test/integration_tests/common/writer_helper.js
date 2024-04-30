@@ -13,14 +13,9 @@ function selectAllTextOfDoc() {
 	cy.log('>> selectAllTextOfDoc - start');
 
 	// Remove selection if exist
-	cy.cGet('.leaflet-marker-pane')
-		.then(function(body) {
-			if (body.find('.leaflet-selection-marker-start').length !== 0) {
-				helper.typeIntoDocument('{downarrow}');
-			}
-		});
+	helper.typeIntoDocument('{downarrow}');
 
-	cy.cGet('.leaflet-selection-marker-start').should('not.exist');
+	cy.cGet('.text-selection-handle-start').should('not.be.visible');
 
 	helper.selectAllText();
 
