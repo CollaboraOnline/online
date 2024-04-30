@@ -165,6 +165,28 @@ void ChildSession::disconnect()
     }
 }
 
+namespace
+{
+    // disable Watchdog for scope
+    class WatchdogGuard
+    {
+    public:
+        WatchdogGuard()
+        {
+            // disable watchdog - we want to just watch interactive responsiveness
+            if (KitSocketPoll* kitPoll = KitSocketPoll::getMainPoll())
+                kitPoll->disableWatchdog();
+        }
+
+        ~WatchdogGuard()
+        {
+            // reenable watchdog
+            if (KitSocketPoll* kitPoll = KitSocketPoll::getMainPoll())
+                kitPoll->enableWatchdog();
+        }
+    };
+}
+
 bool ChildSession::_handleInput(const char *buffer, int length)
 {
     LOG_TRC("handling [" << getAbbreviatedMessage(buffer, length) << ']');
@@ -269,6 +291,8 @@ bool ChildSession::_handleInput(const char *buffer, int length)
 
         // Disable processing of other messages while loading document
         InputProcessingManager processInput(getProtocol(), false);
+        // disable watchdog while loading
+        WatchdogGuard watchdogGuard;
         _isDocLoaded = loadDocument(tokens);
 
         LOG_TRC("isDocLoaded state after loadDocument: " << _isDocLoaded);
@@ -577,6 +601,8 @@ bool ChildSession::_handleInput(const char *buffer, int length)
             { // fallback to foreground save
                 // Disable processing of other messages while saving document
                 InputProcessingManager processInput(getProtocol(), false);
+                // disable watchdog while saving
+                WatchdogGuard watchdogGuard;
                 return unoCommand(unoSave);
             }
             else
