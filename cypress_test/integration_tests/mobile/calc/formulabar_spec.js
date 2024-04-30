@@ -17,12 +17,12 @@ describe(['tagmobile', 'tagnextcloud'], 'Formula bar tests.', function() {
 		calcHelper.clickOnFirstCell();
 
 		// Select a different cell using address input.
-		helper.typeIntoInputField('input#addressInput', 'B2');
+		helper.typeIntoInputField('input#addressInput-input', 'B2');
 
 		cy.cGet('.spreadsheet-cell-resize-marker[style=\'visibility: visible; transform: translate3d(-8px, -8px, 0px); z-index: -8;\']')
 			.should('not.exist');
 
-		helper.typeIntoInputField('input#addressInput', 'A1');
+		helper.typeIntoInputField('input#addressInput-input', 'A1');
 
 		cy.cGet('.spreadsheet-cell-resize-marker').should('exist');
 	});
@@ -32,7 +32,7 @@ describe(['tagmobile', 'tagnextcloud'], 'Formula bar tests.', function() {
 		calcHelper.clickOnFirstCell();
 
 		// Select a cell range using address input.
-		helper.typeIntoInputField('input#addressInput', 'B2:B3');
+		helper.typeIntoInputField('input#addressInput-input', 'B2:B3');
 
 		cy.cGet('.spreadsheet-cell-resize-marker[style=\'visibility: visible; transform: translate3d(-8px, -8px, 0px); z-index: -8;\']')
 			.should('not.exist');
@@ -43,7 +43,7 @@ describe(['tagmobile', 'tagnextcloud'], 'Formula bar tests.', function() {
 		cy.cGet('.spreadsheet-cell-resize-marker').should('exist');
 
 		// Select a cell range again using address input.
-		helper.typeIntoInputField('input#addressInput', 'B2:B3');
+		helper.typeIntoInputField('input#addressInput-input', 'B2:B3');
 
 		cy.cGet('.spreadsheet-cell-resize-marker[style=\'visibility: visible; transform: translate3d(-8px, -8px, 0px); z-index: -8;\']')
 			.should('not.exist');
@@ -57,7 +57,7 @@ describe(['tagmobile', 'tagnextcloud'], 'Formula bar tests.', function() {
 		helper.expectTextForClipboard('long line long line long line');
 
 		// A2 cell is empty
-		helper.typeIntoInputField('input#addressInput', 'A2');
+		helper.typeIntoInputField('input#addressInput-input', 'A2');
 
 		cy.cGet('[id="test-div-auto fill marker"]').should('exist');
 

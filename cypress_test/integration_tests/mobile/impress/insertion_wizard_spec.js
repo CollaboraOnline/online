@@ -114,10 +114,10 @@ describe(['tagmobile', 'tagnextcloud'], 'Impress insertion wizard.', function() 
 		// Open hyperlink dialog
 		cy.cGet('body').contains('.menu-entry-with-icon', 'Hyperlink...').click();
 		// Dialog is opened
-		cy.cGet('#hyperlink-link-box').should('exist');
+		cy.cGet('#hyperlink-link-box-input').should('exist');
 		// Type text and link
 		cy.cGet('#hyperlink-text-box').type('some text');
-		cy.cGet('#hyperlink-link-box').type('www.something.com');
+		cy.cGet('#hyperlink-link-box-input').type('www.something.com');
 		// Insert
 		cy.cGet('#response-ok').click();
 		// TODO: we have some wierd shape here instead of a text shape with the link
@@ -255,10 +255,10 @@ describe(['tagmobile', 'tagnextcloud'], 'Impress insertion wizard.', function() 
 		// Open hyperlink dialog
 		cy.cGet('body').contains('.menu-entry-with-icon', 'Hyperlink...').click();
 		// Dialog is opened
-		cy.cGet('#hyperlink-link-box').should('exist');
+		cy.cGet('#hyperlink-link-box-input').should('exist');
 		// Type text and link
 		cy.cGet('#hyperlink-text-box').type('some text');
-		cy.cGet('#hyperlink-link-box').type('www.something.com');
+		cy.cGet('#hyperlink-link-box-input').type('www.something.com');
 		// Insert
 		cy.cGet('#response-ok').click();
 		// Check the text

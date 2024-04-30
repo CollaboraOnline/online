@@ -16,18 +16,18 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Searching via search bar.'
 		searchHelper.searchNext();
 
 		// First cell should be selected
-		cy.cGet('input#addressInput').should('have.prop', 'value', 'A1');
+		cy.cGet('input#addressInput-input').should('have.prop', 'value', 'A1');
 		helper.copy();
 		cy.cGet('#copy-paste-container table td').should('have.text', 'a');
 	});
 
 	it('Search not existing word.', function() {
-		cy.cGet('input#addressInput').should('have.prop', 'value', 'A2');
+		cy.cGet('input#addressInput-input').should('have.prop', 'value', 'A2');
 
 		searchHelper.typeIntoSearchField('q');
 
 		// Should be no new selection
-		cy.cGet('input#addressInput').should('have.prop', 'value', 'A2');
+		cy.cGet('input#addressInput-input').should('have.prop', 'value', 'A2');
 	});
 
 	it('Search next / prev instance.', function() {
@@ -35,21 +35,21 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Searching via search bar.'
 		searchHelper.typeIntoSearchField('a');
 		searchHelper.searchNext();
 
-		cy.cGet('input#addressInput').should('have.prop', 'value', 'A1');
+		cy.cGet('input#addressInput-input').should('have.prop', 'value', 'A1');
 		helper.copy();
 		cy.cGet('#copy-paste-container table td').should('have.text', 'a');
 
 		// Search next instance
 		searchHelper.searchNext();
 
-		cy.cGet('input#addressInput').should('have.prop', 'value', 'B1');
+		cy.cGet('input#addressInput-input').should('have.prop', 'value', 'B1');
 		helper.copy();
 		cy.cGet('#copy-paste-container table td').should('have.text', 'a');
 
 		// Search prev instance
 		searchHelper.searchPrev();
 
-		cy.cGet('input#addressInput').should('have.prop', 'value', 'A1');
+		cy.cGet('input#addressInput-input').should('have.prop', 'value', 'A1');
 		helper.copy();
 		cy.cGet('#copy-paste-container table td').should('have.text', 'a');
 	});
@@ -60,21 +60,21 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Searching via search bar.'
 
 		searchHelper.searchNext();
 
-		cy.cGet('input#addressInput').should('have.prop', 'value', 'A1');
+		cy.cGet('input#addressInput-input').should('have.prop', 'value', 'A1');
 		helper.copy();
 		cy.cGet('#copy-paste-container table td').should('have.text', 'a');
 
 		// Search next instance
 		searchHelper.searchNext();
 
-		cy.cGet('input#addressInput').should('have.prop', 'value', 'B1');
+		cy.cGet('input#addressInput-input').should('have.prop', 'value', 'B1');
 		helper.copy();
 		cy.cGet('#copy-paste-container table td').should('have.text', 'a');
 
 		// Search next instance, which is in the beginning of the document.
 		searchHelper.searchNext();
 
-		cy.cGet('input#addressInput').should('have.prop', 'value', 'A1');
+		cy.cGet('input#addressInput-input').should('have.prop', 'value', 'A1');
 		helper.copy();
 		cy.cGet('#copy-paste-container table td').should('have.text', 'a');
 	});
@@ -85,7 +85,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Searching via search bar.'
 
 		searchHelper.searchNext();
 
-		cy.cGet('input#addressInput').should('have.prop', 'value', 'A1');
+		cy.cGet('input#addressInput-input').should('have.prop', 'value', 'A1');
 		helper.copy();
 		cy.cGet('#copy-paste-container table td').should('have.text', 'a');
 

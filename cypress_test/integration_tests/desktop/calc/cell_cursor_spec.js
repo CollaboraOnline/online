@@ -16,7 +16,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 	it('No jump on long merged cell', function() {
 		desktopHelper.assertScrollbarPosition('horizontal', 205, 315);
 		calcHelper.clickOnFirstCell(true, false, false);
-		cy.cGet('input#addressInput').should('have.prop', 'value', 'A1:Z1');
+		cy.cGet('input#addressInput-input').should('have.prop', 'value', 'A1:Z1');
 		desktopHelper.assertScrollbarPosition('horizontal', 205, 315);
 	});
 });
@@ -42,7 +42,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 			cy.cGet('body').click(XPos, YPos);
 		});
 
-		cy.cGet('input#addressInput').should('have.prop', 'value', 'B2:AA2');
+		cy.cGet('input#addressInput-input').should('have.prop', 'value', 'B2:AA2');
 		desktopHelper.assertScrollbarPosition('horizontal', 270, 390);
 	});
 });

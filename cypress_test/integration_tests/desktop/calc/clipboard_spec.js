@@ -59,7 +59,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', fu
 		cy.cGet('#map').focus();
 		calcHelper.clickOnFirstCell();
 		// A1 is 1, B1 is 2, so C1 is 3.
-		helper.typeIntoInputField('input#addressInput', 'C1');
+		helper.typeIntoInputField('input#addressInput-input', 'C1');
 		cy.window().then(win => {
 			var app = win['0'].app;
 			app.socket.sendMessage('uno .uno:Copy');
@@ -68,7 +68,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', fu
 		setDummyClipboard('text/html', html);
 
 		// When pasting C1 to D1:
-		helper.typeIntoInputField('input#addressInput', 'D1');
+		helper.typeIntoInputField('input#addressInput-input', 'D1');
 		cy.cGet('#home-paste-button').click();
 		cy.cGet('#home-paste-entries .ui-combobox-entry').contains('Paste').click();
 
@@ -153,7 +153,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', fu
 		// Given a document with an A1 cell copied to the clipboard:
 		cy.cGet('#map').focus();
 		calcHelper.clickOnFirstCell();
-		helper.typeIntoInputField('input#addressInput', 'A1');
+		helper.typeIntoInputField('input#addressInput-input', 'A1');
 		cy.window().then(win => {
 			var app = win['0'].app;
 			app.socket.sendMessage('uno .uno:Copy');
@@ -162,7 +162,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', fu
 		setDummyClipboard('text/html', html, /*image=*/false, /*fail=*/true);
 
 		// When pasting the clipboard to B1, which fails:
-		helper.typeIntoInputField('input#addressInput', 'B1');
+		helper.typeIntoInputField('input#addressInput-input', 'B1');
 		cy.cGet('#home-paste-button').click();
 		cy.cGet('#home-paste-entries .ui-combobox-entry').contains('Paste').click();
 

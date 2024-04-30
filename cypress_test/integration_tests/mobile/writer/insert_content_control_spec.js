@@ -30,8 +30,8 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Insert objects via insertio
 		// Add new entry
 		cy.cGet('body').contains('button', 'Add').click();
 		cy.cGet('#mobile-wizard-title').should('have.text', 'Content Control List Item Properties');
-		cy.cGet('#displayname').type('some text');
-		cy.cGet('#value').type('something');
+		cy.cGet('#displayname-input').type('some text');
+		cy.cGet('#value-input').type('something');
 		cy.cGet('#ContentControlListItemDialog button#ok').click();
 
 		// Verify we are back in parent window and added entries
