@@ -36,6 +36,11 @@ L.Map.SlideShow = L.Handler.extend({
 	},
 
 	_onFullScreen: function (e) {
+		if (this._checkPresentationDisabled()) {
+			this._notifyPresentationDisabled();
+			return;
+		}
+
 		if (this._checkAlreadyPresenting()) {
 			this._notifyAlreadyPresenting();
 			return;
@@ -94,6 +99,11 @@ L.Map.SlideShow = L.Handler.extend({
 	},
 
 	_onPresentWindow: function (e) {
+		if (this._checkPresentationDisabled()) {
+			this._notifyPresentationDisabled();
+			return;
+		}
+
 		if (this._checkAlreadyPresenting()) {
 			this._notifyAlreadyPresenting();
 			return;
@@ -295,6 +305,16 @@ L.Map.SlideShow = L.Handler.extend({
 			_('OK'), null, false);
 	},
 
+	_checkPresentationDisabled: function() {
+		return this._map['wopi'].DisablePresentation;
+	},
+
+	_notifyPresentationDisabled: function() {
+		this._map.uiManager.showInfoModal('presentation-disabled-modal',
+			_('Presentation disabled'),
+			_('Presentation mode has been disabled for this document'), '',
+			_('OK'), null, false);
+	},
 
 	_onSlideWindowKeyPress: function(e) {
 		if (e.code === 'Escape') {
