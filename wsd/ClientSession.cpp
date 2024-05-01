@@ -1493,6 +1493,12 @@ bool ClientSession::filterMessage(const std::string& message) const
                 allowed = false;
                 LOG_WRN("WOPI host has disabled export for this session");
             }
+            else if (id == "slideshow" && _wopiFileInfo &&
+                     (_wopiFileInfo->getDisableExport() || !_wopiFileInfo->getWatermarkText().empty()))
+            {
+                allowed = false;
+                LOG_WRN("WOPI host has disabled slideshow for this session");
+            }
         }
         else
         {

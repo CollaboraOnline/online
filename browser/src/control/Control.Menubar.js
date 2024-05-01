@@ -1324,7 +1324,6 @@ L.Control.Menubar = L.Control.extend({
 			!window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-pdf', !window.ThisIsAMobileApp ? 'exportepub' : 'downloadas-epub', // file menu
 			'downloadas-ods', 'downloadas-xls', 'downloadas-xlsx', 'downloadas-csv', 'closedocument', // file menu
 			'fullscreen', 'zoomin', 'zoomout', 'zoomreset', 'showstatusbar', 'togglemenubar', 'showresolved', 'toggledarktheme', // view menu
-			'fullscreen-presentation', 'presentation-currentslide', 'present-in-window', // slide menu
 			'about', 'keyboard-shortcuts', 'latestupdates', 'feedback', 'online-help', 'report-an-issue', // help menu
 			'insertcomment'
 		]
@@ -1341,6 +1340,10 @@ L.Control.Menubar = L.Control.extend({
 		// Use original template as provided by server
 		this._menubarCont = map.mainMenuTemplate.cloneNode(true);
 		$('#main-menu-state').after(this._menubarCont);
+
+		if (!this._map['wopi'].DisablePresentation)
+			this.options.allowedViewModeActions = this.options.allowedViewModeActions.concat(['fullscreen-presentation', 'presentation-currentslide', 'present-in-window']);
+
 		this._initializeMenu(this.options.initial);
 
 		map.on('doclayerinit', this._onDocLayerInit, this);

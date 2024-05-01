@@ -32,6 +32,7 @@ L.Map.WOPI = L.Handler.extend({
 	SupportsRename: false,
 	UserCanRename: false,
 	UserCanWrite: false,
+	DisablePresentation: false,
 
 	_appLoadedConditions: {
 		docloaded: false,
@@ -127,6 +128,7 @@ L.Map.WOPI = L.Handler.extend({
 		this.UserCanRename = !!wopiInfo['UserCanRename'];
 		this.EnableShare = !!wopiInfo['EnableShare'];
 		this.UserCanWrite = !!wopiInfo['UserCanWrite'];
+		this.DisablePresentation = wopiInfo['DisablePresentation'];
 
 		if (this.UserCanWrite && !app.isReadOnly()) // There are 2 places that set the file permissions, WOPI and URI. Don't change permission if URI doesn't allow.
 			app.setPermission('edit');

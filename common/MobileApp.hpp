@@ -81,6 +81,7 @@ public:
         bool getDisableExport() const { return false; }
         bool getDisableCopy() const { return false; }
         bool getEnableOwnerTermination() const { return false; }
+        std::string getWatermarkText() const { return std::string(); }
 
         TriState getDisableChangeTrackingShow() const { return TriState::Unset; }
         TriState getDisableChangeTrackingRecord() const { return TriState::Unset; }
