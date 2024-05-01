@@ -3326,6 +3326,16 @@ void COOLWSD::setMigrationMsgReceived(const std::string& docKey)
     }
 }
 
+void COOLWSD::setAllMigrationMsgReceived()
+{
+    std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
+    for (auto& brokerIt : DocBrokers)
+    {
+        std::shared_ptr<DocumentBroker> docBroker = brokerIt.second;
+        docBroker->addCallback([docBroker]() { docBroker->setMigrationMsgReceived(); });
+    }
+}
+
 void COOLWSD::setLogLevelsOfKits(const std::string& level)
 {
     std::lock_guard<std::mutex> docBrokersLock(DocBrokersMutex);
