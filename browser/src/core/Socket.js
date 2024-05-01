@@ -1617,6 +1617,7 @@ app.definitions.Socket = L.Class.extend({
 		var isActive = app.idleHandler._active;
 		this._map.hideBusy();
 		app.idleHandler._active = false;
+		app.idleHandler._serverRecycling = false;
 
 		if (this._map._docLayer) {
 			this._map._docLayer.removeAllViews();
