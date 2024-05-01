@@ -1113,15 +1113,6 @@ app.definitions.Socket = L.Class.extend({
 				}.bind(this));
 			}
 		}
-		else if (textMsg.startsWith('statusindicator:')) {
-			//FIXME: We should get statusindicator when saving too, no?
-			this._map.showBusy(window.ThisIsAMobileApp? _('Loading...'): _('Connecting...'), true);
-			if (textMsg.startsWith('statusindicator: ready')) {
-				// We're connected: cancel timer and dialog.
-				this.ReconnectCount = 0;
-				clearTimeout(this.timer);
-			}
-		}
 		else if (window.ThisIsAMobileApp && textMsg.startsWith('mobile:')) {
 			// allow passing some events easily from the mobile app
 			var mobileEvent = textMsg.substring('mobile: '.length);
@@ -1204,30 +1195,37 @@ app.definitions.Socket = L.Class.extend({
 		}
 
 		// These can arrive very early during the startup, and never again.
-		if (textMsg.startsWith('statusindicator')) {
-			if (textMsg.startsWith('statusindicatorstart:')) {
-				var tokens = textMsg.split(' ');
-				this._map.fire('statusindicator', {
-					statusType : 'start',
-					text: tokens.length > 1 ? tokens[1] : ''
-				});
+		if (textMsg.startsWith('progress:')) {
+			var info = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
+			if (!info)
+			{
+				window.app.console.error('Missing info in progress: message');
 				return;
 			}
-			else if (textMsg.startsWith('statusindicatorsetvalue:')) {
-				var value = textMsg.match(/\d+/g)[0];
-				this._map.fire('statusindicator', {statusType : 'setvalue', value : value});
-				return;
-			}
-			else if (textMsg.startsWith('statusindicatorfinish:')) {
-				this._map.fire('statusindicator', {statusType : 'finish'});
+			info.statusType = info.id;
+
+			if (info.id == 'find' || info.id == 'connect' || info.id == 'ready')
+			{
+				this._map.showBusy(window.ThisIsAMobileApp? _('Loading...'): _('Connecting...'), true);
+				if (info && info.id == "ready") {
+					// We're connected: cancel timer and dialog.
+					this.ReconnectCount = 0;
+					clearTimeout(this.timer);
+				}
+			} else if (info.id == 'start' || info.id == 'setvalue')
+				this._map.fire('statusindicator', info);
+
+			else if (info.id == 'finish') {
+				this._map.fire('statusindicator', info);
 				this._map._fireInitComplete('statusindicatorfinish');
 				// show shutting down popup after saving is finished
 				// if we show the popup just after the shuttingdown messsage, it will be overwitten by save popup
 				if (app.idleHandler._serverRecycling) {
 					this._map.showBusy(_('Server is shutting down'), false);
 				}
-				return;
-			}
+			} else
+				window.app.console.error('Unknown progress status ' + info.id);
+			return;
 		}
 		else if (textMsg.startsWith('jsdialog:')) {
 			this._onJSDialog(textMsg, e.callback);

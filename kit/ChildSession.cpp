@@ -2860,6 +2860,22 @@ std::string ChildSession::getBlockedCommandType(std::string command)
 }
 #endif
 
+bool ChildSession::sendProgressFrame(const char* id, const std::string &jsonProps)
+{
+    std::string msg = "progress: { \"id\":\"";
+    msg += id;
+    msg += "\"";
+    if (_docManager->isBackgroundSaveProcess())
+        msg += ", \"type\":\"bg\"";
+    if (!jsonProps.empty())
+    {
+        msg += ", ";
+        msg += jsonProps;
+    }
+    msg += " }";
+    return sendTextFrame(msg);
+}
+
 void ChildSession::loKitCallback(const int type, const std::string& payload)
 {
     const char* const typeName = lokCallbackTypeToString(type);
@@ -3078,13 +3094,13 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
         sendTextFrame("contextmenu: " + payload);
         break;
     case LOK_CALLBACK_STATUS_INDICATOR_START:
-        sendTextFrame("statusindicatorstart: " + payload);
+        sendProgressFrame("start", std::string("\"text\": \"") + JsonUtil::escapeJSONValue(payload) + "\"");
         break;
     case LOK_CALLBACK_STATUS_INDICATOR_SET_VALUE:
-        sendTextFrame("statusindicatorsetvalue: " + payload);
+        sendProgressFrame("setvalue", std::string("\"value\": ") + payload);
         break;
     case LOK_CALLBACK_STATUS_INDICATOR_FINISH:
-        sendTextFrame("statusindicatorfinish:");
+        sendProgressFrame("finish", "");
         break;
     case LOK_CALLBACK_INVALIDATE_VIEW_CURSOR:
         sendTextFrame("invalidateviewcursor: " + payload);

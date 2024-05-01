@@ -100,6 +100,8 @@ public:
         return _docManager->sendFrame(msg.data(), msg.size(), WSOpCode::Binary);
     }
 
+    bool sendProgressFrame(const char* id, const std::string &jsonProps);
+
     using Session::sendTextFrame;
 
     bool getClipboard(const StringVector& tokens);

@@ -982,14 +982,16 @@ public class LOActivity extends AppCompatActivity {
             });
 
         // update progress bar when loading
-        if (message.startsWith("'statusindicator") || message.startsWith("'error:")) {
+        if (message.startsWith("'progress") || message.startsWith("'error:")) {
             runOnUiThread(new Runnable() {
                 public void run() {
+                    // FIXME: parse properly with JSONObject if starts progress:
+
                     // update progress bar if it exists
-                    final String statusIndicatorSetValue = "'statusindicatorsetvalue: ";
+                    final String statusIndicatorSetValue = "'progress: { \"id\":\"setvalue\", \"value\":";
                     if (message.startsWith(statusIndicatorSetValue)) {
                         int start = statusIndicatorSetValue.length();
-                        int end = message.indexOf("'", start);
+                        int end = message.indexOf("}", start);
 
                         int progress = 0;
                         try {
@@ -999,7 +1001,8 @@ public class LOActivity extends AppCompatActivity {
 
                         mProgressDialog.determinateProgress(progress);
                     }
-                    else if (message.startsWith("'statusindicatorfinish:") || message.startsWith("'error:")) {
+                    else if (message.startsWith("'progress: { \"id\":\"finish\"") ||
+                             message.startsWith("'error:")) {
                         mProgressDialog.dismiss();
                         if (BuildConfig.GOOGLE_PLAY_ENABLED && rateAppController != null)
                             rateAppController.askUserForRating();

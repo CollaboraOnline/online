@@ -484,6 +484,12 @@ public:
     /// 0 for closed/invalid socket, and -1 for other errors.
     virtual int sendTextMessage(const char* msg, const size_t len, bool flush = false) const = 0;
 
+    /// Convenience wrapper
+    int sendTextMessage(const std::string &msg, bool flush = false) const
+    {
+        return sendTextMessage(msg.data(), msg.size(), flush);
+    }
+
     /// Sends a binary message.
     /// Returns the number of bytes written (including frame overhead) on success,
     /// 0 for closed/invalid socket, and -1 for other errors.

@@ -275,7 +275,7 @@ void Session::shutdown(bool goingAway, const std::string& statusMessage)
     {
         // skip the queue; FIXME: should we flush SessionClient's queue ?
         std::string closeMsg = "close: " + statusMessage;
-        _protocol->sendTextMessage(closeMsg.c_str(), closeMsg.size());
+        _protocol->sendTextMessage(closeMsg);
         _protocol->shutdown(goingAway, statusMessage);
     }
 }

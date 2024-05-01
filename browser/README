@@ -217,10 +217,11 @@ Parts (like slides in presentation, or sheets in spreadsheets):
             + [e.part] - if the preview is for a part
             + e.docType
 
-Statusindicator (when the document is loading):
+progress (when the document is loading):
     - events
-        map.on('statusindicator', function (e) {}) where:
+        map.on('progress', function (e) {}) where:
             + e.statusType = 'start' | 'setvalue' | 'finish' | 'coolloaded' | 'alltilesloaded'
+	    + e.type == 'bg' for a background operation
             + e.value == a value from 0 to 100 indicating the status
               if the statusType is 'setvalue
             + 'coolloaded' is fired when the JS code is initialized and the document

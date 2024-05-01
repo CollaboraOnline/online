@@ -320,9 +320,9 @@ bool RequestVettingStation::createDocBroker(const std::string& docKey, const std
         // Indicate to the client that we're connecting to the docbroker.
         if (_ws)
         {
-            const std::string statusConnect = "statusindicator: connect";
+            static constexpr const char* const statusConnect = "progress: { \"id\":\"connect\" }";
             LOG_TRC("Sending to Client [" << statusConnect << ']');
-            _ws->sendTextMessage(statusConnect.data(), statusConnect.size());
+            _ws->sendMessage(statusConnect);
         }
 
         LOG_DBG("DocBroker [" << docKey << "] acquired for [" << url << ']');

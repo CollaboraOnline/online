@@ -91,6 +91,9 @@ public:
     /// Returns true iff the subarray exists in the raw message.
     bool contains(const char* p, const std::size_t len) const { return find(p, len) >= 0; }
 
+    /// Returns true iff the subarray exists in the raw message.
+    bool contains(const std::string &msg) const { return contains(msg.c_str(), msg.size()); }
+
     const std::string& firstLine()
     {
         assignFirstLineIfEmpty();

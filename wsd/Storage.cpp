@@ -255,7 +255,7 @@ std::unique_ptr<StorageBase> StorageBase::create(const Poco::URI& uri, const std
                                                  const std::string& jailPath, bool takeOwnership)
 {
     // FIXME: By the time this gets called we have already sent to the client three
-    // 'statusindicator:' messages: 'find', 'connect' and 'ready'. We should ideally do the checks
+    // 'progress:' messages: "id":"find", "id":"connect" and "id":"ready". We should ideally do the checks
     // here much earlier. Also, using exceptions is lame and makes understanding the code harder,
     // but that is just my personal preference.
 

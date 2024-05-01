@@ -337,6 +337,8 @@ public:
 
     std::string getObfuscatedFileId() { return _obfuscatedFileId; }
 
+    bool isBackgroundSaveProcess() const { return _isBgSaveProcess; }
+
 private:
     /// Stops theads, flushes buffers, and exits the process.
     void flushAndExit(int code);
