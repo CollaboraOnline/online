@@ -60,6 +60,13 @@ class TextSelectionHandle extends HTMLObjectSection {
 		}
 	}
 
+	onDocumentObjectVisibilityChange(): void {
+		if (this.showSection && this.isVisible)
+			this.sectionProperties.objectDiv.style.display = '';
+		else
+			this.sectionProperties.objectDiv.style.display = 'none';
+	}
+
 	onClick(point: number[], e: MouseEvent): void {
 		e.stopPropagation();
 		this.stopPropagating();

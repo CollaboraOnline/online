@@ -3261,10 +3261,8 @@ L.CanvasTileLayer = L.Layer.extend({
 			}
 		}
 		else {
-			this._selectionHandles.start.showSection = false;
-			this._selectionHandles.end.showSection = false;
-			this._selectionHandles.start.setHTMLObjectVisibility(false);
-			this._selectionHandles.end.setHTMLObjectVisibility(false);
+			this._selectionHandles.start.setShowSection(false);
+			this._selectionHandles.end.setShowSection(false);
 			this._selectionHandles.active = false;
 
 			this._textCSelections.clear();
@@ -3517,9 +3515,8 @@ L.CanvasTileLayer = L.Layer.extend({
 				this._twipsToLatLng(bottomRightTwips, this._map.getZoom()));
 
 			this._updateScrollOnCellSelection(oldSelection, this._textSelectionEnd);
+			this._selectionHandles.end.setShowSection(true);
 			this._updateMarkers();
-			this._selectionHandles.end.showSection = true;
-			this._selectionHandles.end.setHTMLObjectVisibility(true);
 		}
 		else {
 			this._textSelectionEnd = null;
@@ -3542,8 +3539,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 			this._updateScrollOnCellSelection(oldSelection, this._textSelectionStart);
 
-			this._selectionHandles.start.showSection = true;
-			this._selectionHandles.start.setHTMLObjectVisibility(true);
+			this._selectionHandles.start.setShowSection(true);
 			this._selectionHandles.active = true;
 		}
 		else {
@@ -4796,10 +4792,8 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._textSelectionEnd = null;
 		this._selectedTextContent = '';
 
-		this._selectionHandles.start.showSection = false;
-		this._selectionHandles.end.showSection = false;
-		this._selectionHandles.start.setHTMLObjectVisibility(false);
-		this._selectionHandles.end.setHTMLObjectVisibility(false);
+		this._selectionHandles.start.setShowSection(false);
+		this._selectionHandles.end.setShowSection(false);
 		this._selectionHandles.active = false;
 
 		this._textCSelections.clear();
@@ -4809,7 +4803,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (!app.file.textCursor.visible || !this._textSelectionStart)
 			return;
 
-		if (!this._selectionHandles.start.showSection || !this._selectionHandles.end.showSection)
+		if (!this._selectionHandles.start.isSectionShown() || !this._selectionHandles.end.isSectionShown())
 			return;
 
 		var startPos = this._map._docLayer._latLngToCorePixels(this._textSelectionStart.getSouthWest());
@@ -5606,9 +5600,9 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._map.setMarkersOpacity(0);
 		}
 
-		if (this._selectionHandles.start.showSection)
+		if (this._selectionHandles.start.isSectionShown())
 			this._selectionHandles.start.setOpacity(0);
-		if (this._selectionHandles.end.showSection)
+		if (this._selectionHandles.end.isSectionShown())
 			this._selectionHandles.end.setOpacity(0);
 
 		this.eachView(this._viewCursors, function (item) {
@@ -5634,9 +5628,9 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._map.setMarkersOpacity(1);
 		}
 
-		if (this._selectionHandles.start.showSection)
+		if (this._selectionHandles.start.isSectionShown())
 			this._selectionHandles.start.setOpacity(1);
-		if (this._selectionHandles.end.showSection)
+		if (this._selectionHandles.end.isSectionShown())
 			this._selectionHandles.end.setOpacity(1);
 
 		if (this._annotations) {

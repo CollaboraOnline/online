@@ -76,14 +76,14 @@ class AutoFillMarkerSection extends CanvasSectionObject {
 		}
 
 		var position: Array<number> = [0, 0];
-		this.showSection = true;
+		this.setShowSection(true);
 
 		if (this.sectionProperties.selectedAreaPoint !== null)
 			position = [this.sectionProperties.selectedAreaPoint[0] - center, this.sectionProperties.selectedAreaPoint[1]];
 		else if (this.sectionProperties.cellCursorPoint !== null)
 			position = [this.sectionProperties.cellCursorPoint[0] - center, this.sectionProperties.cellCursorPoint[1]];
 		else
-			this.showSection = false;
+			this.setShowSection(false);
 
 		// At this point, position is calculated without taking splitter into account.
 		var splitPosCore = {x: 0, y: 0};
@@ -96,12 +96,12 @@ class AutoFillMarkerSection extends CanvasSectionObject {
 		if (position[0] <= splitPosCore.x)
 			position[0] += this.documentTopLeft[0];
 		else if (position[0] - this.documentTopLeft[0] <= splitPosCore.x)
-			this.showSection = false;
+			this.setShowSection(false);
 
 		if (position[1] <= splitPosCore.y)
 			position[1] += this.documentTopLeft[1];
 		else if (position[1] - this.documentTopLeft[1] <= splitPosCore.y)
-			this.showSection = false;
+			this.setShowSection(false);
 
 		this.setPosition(position[0], position[1]);
 	}
