@@ -718,6 +718,11 @@ void Admin::pollingThread()
         }
         poll(closeMonitorMsgTimeout - elapsedMicroS);
     }
+
+    // if monitor closes early we set the _migrateMsgReceived for each docbroker
+    // so that docbroker can cleanup the documents
+    if (_closeMonitor)
+        COOLWSD::setAllMigrationMsgReceived();
 }
 
 void Admin::modificationAlert(const std::string& dockey, pid_t pid, bool value){
