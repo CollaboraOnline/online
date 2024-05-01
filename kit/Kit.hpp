@@ -86,6 +86,7 @@ struct UserInfo
         , _userExtraInfo(userExtraInfo)
         , _userPrivateInfo(userPrivateInfo)
         , _readOnly(readOnly)
+        , _connected(true)
     {
     }
 
@@ -99,12 +100,17 @@ struct UserInfo
 
     bool isReadOnly() const { return _readOnly; }
 
+    bool isConnected() const { return _connected; }
+
+    void setDisconnected() { _connected = false; }
+
 private:
     std::string _userId;
     std::string _userName;
     std::string _userExtraInfo;
     std::string _userPrivateInfo;
     bool _readOnly;
+    bool _connected;
 };
 
 /// We have two types of password protected documents
