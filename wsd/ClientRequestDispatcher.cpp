@@ -82,7 +82,7 @@ inline void shutdownLimitReached(const std::shared_ptr<ProtocolHandlerInterface>
     try
     {
         // Let the client know we are shutting down.
-        proto->sendTextMessage(error.data(), error.size());
+        proto->sendTextMessage(error);
 
         // Shutdown.
         proto->shutdown(true, error);
@@ -1709,7 +1709,7 @@ void ClientRequestDispatcher::handleClientWsUpgrade(const Poco::Net::HTTPRequest
         }
 
         // Indicate to the client that document broker is searching.
-        static constexpr const char* const status = "statusindicator: find";
+        static constexpr const char* const status = "progress: { \"id\":\"find\" }";
         LOG_TRC("Sending to Client [" << status << ']');
         ws->sendMessage(status);
 

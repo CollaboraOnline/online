@@ -3070,7 +3070,7 @@ std::shared_ptr<ClientSession> DocumentBroker::createNewClientSession(
             if (ws)
             {
                 const std::string msg("error: cmd=load kind=docunloading");
-                ws->sendTextMessage(msg.data(), msg.size());
+                ws->sendTextMessage(msg);
                 ws->shutdown(true, msg);
             }
 
@@ -3080,9 +3080,9 @@ std::shared_ptr<ClientSession> DocumentBroker::createNewClientSession(
         // Now we have a DocumentBroker and we're ready to process client commands.
         if (ws)
         {
-            const std::string statusReady = "statusindicator: ready";
+            static constexpr const char* const statusReady = "progress: { \"id\":\"ready\" }";
             LOG_TRC("Sending to Client [" << statusReady << "].");
-            ws->sendTextMessage(statusReady.c_str(), statusReady.size());
+            ws->sendTextMessage(statusReady);
         }
 
         // In case of WOPI, if this session is not set as readonly, it might be set so

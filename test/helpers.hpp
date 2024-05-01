@@ -520,17 +520,48 @@ std::string assertNotInResponse(T& ws, const std::string& prefix, const std::str
     return res;
 }
 
+inline bool getProgressWithIdValue(const std::string &msg, const std::string &idValue)
+{
+    const std::string prefix = "progress:";
+    if (!COOLProtocol::matchPrefix(prefix, msg))
+        return false;
+
+    Poco::JSON::Object::Ptr obj;
+    if (!JsonUtil::parseJSON(msg, obj))
+        return false;
+
+    std::string jsonId = JsonUtil::getJSONValue<std::string>(obj, "id");
+    return jsonId == idValue;
+}
+
 inline bool isDocumentLoaded(
     const std::shared_ptr<http::WebSocketSession>& ws, const std::string& testname,
     bool isView = true,
     const std::chrono::milliseconds timeout = std::chrono::seconds(COMMAND_TIMEOUT_SECS * 4))
 {
-    const std::string prefix = isView ? "status:" : "statusindicatorfinish:";
-    const std::string message = getResponseString(ws, prefix, testname, timeout);
+    bool success = false;
 
-    const bool success = COOLProtocol::matchPrefix(prefix, message);
-    if (!success)
-        TST_LOG("ERROR: Timed out loading document. Did not get [" << prefix << "] in time.");
+    if (isView) // 2nd connection - someone else did the load
+    {
+        const std::string message = getResponseString(ws, "status:", testname, timeout);
+        success = COOLProtocol::matchPrefix("status:", message);
+    }
+    else
+    {
+        const std::string prefix = "progress:";
+        while (true)
+        {
+            const std::string message = getResponseString(ws, prefix, testname, timeout);
+            if (!COOLProtocol::matchPrefix(prefix, message))
+                break; // timeout
+            if (getProgressWithIdValue(message, "finish"))
+            {
+                success = true;
+                break;
+            }
+        }
+    }
+
     return success;
 }
 
@@ -558,11 +589,11 @@ connectLOKit(const std::shared_ptr<SocketPoll>& socketPoll, const Poco::URI& uri
             http::Request req(url);
             ws->asyncRequest(req, socketPoll);
 
-            const char* expected_response = "statusindicator: find";
-
-            TST_LOG("Connected to " << uri.toString() << ", waiting for response ["
-                                    << expected_response << "]");
-            if (getResponseString(ws, expected_response, testname) == expected_response)
+            TST_LOG("Connected to " << uri.toString() << ", waiting for progress: id:find response");
+            std::string msg;
+            if (!(msg = getResponseString(ws, "progress:", testname)).empty() &&
+                COOLProtocol::matchPrefix("progress:", msg) &&
+                getProgressWithIdValue(msg, "find"))
             {
                 return ws;
             }

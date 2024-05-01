@@ -100,8 +100,7 @@ private:
             if (pos != _queue.end())
                 _queue.erase(pos);
         }
-        else if (command == "statusindicatorsetvalue:" ||
-                 command == "invalidatecursor:" ||
+        else if (command == "invalidatecursor:" ||
                  command == "setpart:")
         {
             // Remove previous identical entries of this command,
@@ -114,6 +113,23 @@ private:
 
             if (pos != _queue.end())
                 _queue.erase(pos);
+        }
+        else if (command == "progress:")
+        {
+            // find other progress commands with similar content
+            static const std::string setvalueTag = "\"id\":\"setvalue\"";
+            if (item->contains(setvalueTag))
+            {
+                const auto& pos = std::find_if(_queue.begin(), _queue.end(),
+                                               [&command](const queue_item_t& cur)
+                {
+                    return cur->firstTokenMatches(command) &&
+                           cur->contains(setvalueTag);
+                });
+
+                if (pos != _queue.end())
+                    _queue.erase(pos);
+            }
         }
         else if (command == "invalidateviewcursor:")
         {

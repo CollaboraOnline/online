@@ -33,6 +33,7 @@ class TileQueueTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testViewOrder);
     CPPUNIT_TEST(testPreviewsDeprioritization);
     CPPUNIT_TEST(testSenderQueue);
+    CPPUNIT_TEST(testSenderQueueProgress);
     CPPUNIT_TEST(testSenderQueueTileDeduplication);
     CPPUNIT_TEST(testInvalidateViewCursorDeduplication);
     CPPUNIT_TEST(testCallbackModifiedStatusIsSkipped);
@@ -48,6 +49,7 @@ class TileQueueTests : public CPPUNIT_NS::TestFixture
     void testViewOrder();
     void testPreviewsDeprioritization();
     void testSenderQueue();
+    void testSenderQueueProgress();
     void testSenderQueueTileDeduplication();
     void testInvalidateViewCursorDeduplication();
     void testCallbackModifiedStatusIsSkipped();
@@ -262,6 +264,13 @@ void TileQueueTests::testPreviewsDeprioritization()
     LOK_ASSERT_EQUAL(0, static_cast<int>(queue.getQueue().size()));
 }
 
+namespace {
+    std::string msgStr(const std::shared_ptr<Message> &item)
+    {
+        return std::string(item->data().data(), item->data().size());
+    }
+}
+
 void TileQueueTests::testSenderQueue()
 {
     constexpr auto testname = __func__;
@@ -291,17 +300,51 @@ void TileQueueTests::testSenderQueue()
     LOK_ASSERT_EQUAL_STR(true, queue.dequeue(item));
     LOK_ASSERT_EQUAL(static_cast<size_t>(2), queue.size());
     LOK_ASSERT(item);
-    LOK_ASSERT_EQUAL(messages[0], std::string(item->data().data(), item->data().size()));
+    LOK_ASSERT_EQUAL(messages[0], msgStr(item));
 
     LOK_ASSERT_EQUAL_STR(true, queue.dequeue(item));
     LOK_ASSERT_EQUAL(static_cast<size_t>(1), queue.size());
     LOK_ASSERT(item);
-    LOK_ASSERT_EQUAL(messages[1], std::string(item->data().data(), item->data().size()));
+    LOK_ASSERT_EQUAL(messages[1], msgStr(item));
 
     LOK_ASSERT_EQUAL_STR(true, queue.dequeue(item));
     LOK_ASSERT_EQUAL(static_cast<size_t>(0), queue.size());
     LOK_ASSERT(item);
-    LOK_ASSERT_EQUAL(messages[2], std::string(item->data().data(), item->data().size()));
+    LOK_ASSERT_EQUAL(messages[2], msgStr(item));
+
+    LOK_ASSERT_EQUAL(static_cast<size_t>(0), queue.size());
+}
+
+void TileQueueTests::testSenderQueueProgress()
+{
+    constexpr auto testname = __func__;
+
+    SenderQueue<std::shared_ptr<Message>> queue;
+
+    std::shared_ptr<Message> item;
+
+    const std::vector<std::string> messages =
+    {
+        "progress: { \"id\":\"start\", \"text\":\"hello world\" }",
+        "progress: { \"id\":\"setvalue\", \"value\":1 }",
+        "progress: { \"id\":\"setvalue\", \"value\":5 }",
+        "progress: { \"id\":\"setvalue\", \"value\":25 }",
+        "progress: { \"id\":\"finish\" }"
+    };
+
+    for (const auto& msg : messages)
+        queue.enqueue(std::make_shared<Message>(msg, Message::Dir::Out));
+
+    LOK_ASSERT_EQUAL(static_cast<size_t>(3), queue.size());
+
+    LOK_ASSERT_EQUAL_STR(true, queue.dequeue(item));
+    LOK_ASSERT_EQUAL(messages[0], msgStr(item));
+
+    LOK_ASSERT_EQUAL_STR(true, queue.dequeue(item));
+    LOK_ASSERT_EQUAL(messages[3], msgStr(item));
+
+    LOK_ASSERT_EQUAL_STR(true, queue.dequeue(item));
+    LOK_ASSERT_EQUAL(messages[4], msgStr(item));
 
     LOK_ASSERT_EQUAL(static_cast<size_t>(0), queue.size());
 }
@@ -355,7 +398,7 @@ void TileQueueTests::testSenderQueueTileDeduplication()
     LOK_ASSERT(item);
 
     // The last one should persist.
-    LOK_ASSERT_EQUAL(dup_messages[2], std::string(item->data().data(), item->data().size()));
+    LOK_ASSERT_EQUAL(dup_messages[2], msgStr(item));
 
     LOK_ASSERT_EQUAL(static_cast<size_t>(0), queue.size());
 }
@@ -389,17 +432,17 @@ void TileQueueTests::testInvalidateViewCursorDeduplication()
     LOK_ASSERT_EQUAL_STR(true, queue.dequeue(item));
     LOK_ASSERT_EQUAL(static_cast<size_t>(2), queue.size());
     LOK_ASSERT(item);
-    LOK_ASSERT_EQUAL(view_messages[0], std::string(item->data().data(), item->data().size()));
+    LOK_ASSERT_EQUAL(view_messages[0], msgStr(item));
 
     LOK_ASSERT_EQUAL_STR(true, queue.dequeue(item));
     LOK_ASSERT_EQUAL(static_cast<size_t>(1), queue.size());
     LOK_ASSERT(item);
-    LOK_ASSERT_EQUAL(view_messages[1], std::string(item->data().data(), item->data().size()));
+    LOK_ASSERT_EQUAL(view_messages[1], msgStr(item));
 
     LOK_ASSERT_EQUAL_STR(true, queue.dequeue(item));
     LOK_ASSERT_EQUAL(static_cast<size_t>(0), queue.size());
     LOK_ASSERT(item);
-    LOK_ASSERT_EQUAL(view_messages[2], std::string(item->data().data(), item->data().size()));
+    LOK_ASSERT_EQUAL(view_messages[2], msgStr(item));
 
     LOK_ASSERT_EQUAL(static_cast<size_t>(0), queue.size());
 

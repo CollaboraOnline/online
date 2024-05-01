@@ -118,7 +118,7 @@ UnitBase::TestResult UnitSession::testHandshake()
 
     wsSession->sendMessage("load url=" + documentURL);
 
-    auto assertMessage = [&wsSession, this](const std::string expectedStr)
+    auto assertMessage = [&wsSession, this](const std::string expectedId)
     {
         wsSession->poll(
             [&](const std::vector<char>& message)
@@ -126,7 +126,8 @@ UnitBase::TestResult UnitSession::testHandshake()
                 const std::string msg(std::string(message.begin(), message.end()));
                 if (!msg.starts_with("error:"))
                 {
-                    LOK_ASSERT_EQUAL(expectedStr, msg);
+                    LOK_ASSERT_EQUAL(COOLProtocol::matchPrefix("progress:", msg), true);
+                    LOK_ASSERT(helpers::getProgressWithIdValue(msg, expectedId));
                 }
                 else
                 {
@@ -142,9 +143,9 @@ UnitBase::TestResult UnitSession::testHandshake()
             std::chrono::seconds(10), testname);
     };
 
-    assertMessage("statusindicator: find");
-    assertMessage("statusindicator: connect");
-    assertMessage("statusindicator: ready");
+    assertMessage("find");
+    assertMessage("connect");
+    assertMessage("ready");
 
     socketPoll->joinThread();
     return TestResult::Ok;
