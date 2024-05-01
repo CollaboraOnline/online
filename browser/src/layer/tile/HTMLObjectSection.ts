@@ -11,14 +11,14 @@
 
 class HTMLObjectSection extends CanvasSectionObject {
 
-	constructor (sectionName: string, objectWidth: number, objectHeight: number, documentPosition: cool.SimplePoint,  extraClass: string = "", visible: boolean = true) {
+	constructor (sectionName: string, objectWidth: number, objectHeight: number, documentPosition: cool.SimplePoint,  extraClass: string = "", showSection: boolean = true) {
         super({
 			name: "will-be-set-at-initialization", // There may be multiple instances of this class.
 			anchor: [],
 			position: new Array<number>(0),
 			size: new Array<number>(0),
 			expand: '',
-			showSection: true,
+			showSection: showSection,
 			processingOrder: L.CSections.HTMLObject.processingOrder,
 			drawingOrder: L.CSections.HTMLObject.drawingOrder,
 			zIndex: L.CSections.HTMLObject.zIndex,
@@ -56,7 +56,7 @@ class HTMLObjectSection extends CanvasSectionObject {
 		};
 		tempFunction(this.sectionProperties.objectDiv);
 
-		if (!visible)
+		if (!showSection)
 			this.sectionProperties.objectDiv.style.display = 'none';
 	}
 
@@ -64,13 +64,11 @@ class HTMLObjectSection extends CanvasSectionObject {
 		this.setPosition(this.position[0], this.position[1]);
 	}
 
-	public setHTMLObjectVisibility(value: boolean) {
-		this.showSection = value;
-
-		if (!value)
-			this.sectionProperties.objectDiv.style.display = 'none';
-		else
+	public onSectionShowStatusChange(): void {
+		if (this.showSection)
 			this.sectionProperties.objectDiv.style.display = '';
+		else
+			this.sectionProperties.objectDiv.style.display = 'none';
 	}
 
 	public onDraw() {
@@ -86,7 +84,7 @@ class HTMLObjectSection extends CanvasSectionObject {
 	}
 
 	public onNewDocumentTopLeft(): void {
-		if (this.isVisible && this.showSection) {
+		if (this.isVisible && this.isSectionShown()) {
 			if (this.sectionProperties.objectDiv.style.display !== '')
 				this.sectionProperties.objectDiv.style.display = '';
 		}

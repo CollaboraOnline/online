@@ -265,6 +265,24 @@ class CanvasSectionObject {
 			return this.callbacks.onMouseUp(point, e);
 	}
 
+	setShowSection(show: boolean) {
+		this.showSection = show;
+		if (this.onSectionShowStatusChange)
+			this.onSectionShowStatusChange();
+
+		if (this.containerObject) { // Is section added to container.
+			this.isVisible = this.containerObject.isDocumentObjectVisible(this);
+			this.onDocumentObjectVisibilityChange();
+		}
+	}
+
+	/// Called when setShowSection is called. This is a callback to be overwritten.
+	onSectionShowStatusChange() { return; }
+
+	isSectionShown() { return this.showSection; }
+
+	onDocumentObjectVisibilityChange() { return; } // We will turn this class definition into interface. Until then, let's keep these empty ones.
+
 	/// Parameters: Point [x, y], e (native event object)
 	onMouseEnter(point: Array<number>, e: MouseEvent): void {
 		if (this.callbacks.onMouseEnter)
@@ -415,7 +433,12 @@ class CanvasSectionObject {
 		this.myTopLeft[1] = this.containerObject.getDocumentAnchor()[1] + y - this.containerObject.getDocumentTopLeft()[1];
 		this.position[0] = x;
 		this.position[1] = y;
-		this.isVisible = this.containerObject.isDocumentObjectVisible(this);
+		const isVisible = this.containerObject.isDocumentObjectVisible(this);
+		if (isVisible !== this.isVisible) {
+			this.isVisible = isVisible;
+			this.onDocumentObjectVisibilityChange();
+		}
+
 		if (this.containerObject.testing)
 			this.containerObject.createUpdateSingleDivElement(this);
 	}
@@ -918,7 +941,11 @@ class CanvasSectionContainer {
 
 			if (section.documentObject === true) {
 				section.myTopLeft = [this.documentAnchor[0] + section.position[0] - this.documentTopLeft[0], this.documentAnchor[1] + section.position[1] - this.documentTopLeft[1]];
-				section.isVisible = this.isDocumentObjectVisible(section);
+				const isVisible = this.isDocumentObjectVisible(section);
+				if (isVisible !== section.isVisible) {
+					section.isVisible = isVisible;
+					section.onDocumentObjectVisibilityChange();
+				}
 			}
 
 			this.sections[i].onNewDocumentTopLeft(this.getDocumentTopLeft());

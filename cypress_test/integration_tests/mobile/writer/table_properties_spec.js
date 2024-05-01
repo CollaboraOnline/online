@@ -140,7 +140,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change table properties / l
 		mobileHelper.closeMobileWizard();
 		writerHelper.selectAllTextOfDoc();
 		// Check markers are in the same row (we have text selection only)
-		cy.cGet('.leaflet-marker-icon').should(function(markers) {
+		cy.cGet('.html-object-section').should(function(markers) {
 				expect(markers).to.have.lengthOf(2);
 				expect(markers[0].getBoundingClientRect().top).to.equal(markers[1].getBoundingClientRect().top);
 			});

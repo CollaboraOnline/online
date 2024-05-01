@@ -445,7 +445,7 @@ export class Comment extends CanvasSectionObject {
 				const sizeX = cellPos[2];
 				startX += sizeX;  // but adjust for width of the cell.
 			}
-			this.showSection = true;
+			this.setShowSection(true);
 			var position: Array<number> = [Math.round(cellPos[0] * ratio), Math.round(cellPos[1] * ratio)];
 			var splitPosCore = {x: 0, y: 0};
 			if (this.map._docLayer.getSplitPanesContext())
@@ -457,12 +457,12 @@ export class Comment extends CanvasSectionObject {
 			if (position[0] < splitPosCore.x)
 				position[0] += this.documentTopLeft[0];
 			else if (position[0] - this.documentTopLeft[0] < splitPosCore.x)
-				this.showSection = false;
+				this.setShowSection(false);
 
 			if (position[1] < splitPosCore.y)
 				position[1] += this.documentTopLeft[1];
 			else if (position[1] - this.documentTopLeft[1] < splitPosCore.y)
-				this.showSection = false;
+				this.setShowSection(false);
 
 			this.setPosition(position[0], position[1]);
 		}

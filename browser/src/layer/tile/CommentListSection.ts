@@ -130,7 +130,7 @@ export class CommentSection extends CanvasSectionObject {
 		this.initializeContextMenus();
 
 		if ((<any>window).mode.isMobile()) {
-			this.showSection = false;
+			this.setShowSection(false);
 			this.size[0] = 0;
 		}
 	}
