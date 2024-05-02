@@ -3509,17 +3509,16 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (rectangles.length) {
 			var topLeftTwips = rectangles[0].getTopLeft();
 			var bottomRightTwips = rectangles[0].getBottomRight();
-			var oldSelection = this._textSelectionEnd;
-			this._textSelectionEnd = new L.LatLngBounds(
-				this._twipsToLatLng(topLeftTwips, this._map.getZoom()),
-				this._twipsToLatLng(bottomRightTwips, this._map.getZoom()));
+			var oldSelection = this._selectionHandles.end.rectangle ? this._selectionHandles.end.rectangle.clone(): null;
 
-			this._updateScrollOnCellSelection(oldSelection, this._textSelectionEnd);
+			this._selectionHandles.end.rectangle = new app.definitions.simpleRectangle(topLeftTwips.x, topLeftTwips.y, (bottomRightTwips.x - topLeftTwips.x), (bottomRightTwips.y - topLeftTwips.y));
+
+			this._updateScrollOnCellSelection(oldSelection, this._selectionHandles.end.rectangle);
 			this._selectionHandles.end.setShowSection(true);
 			this._updateMarkers();
 		}
 		else {
-			this._textSelectionEnd = null;
+			this._selectionHandles.end.rectangle = null;
 		}
 	},
 
@@ -3529,21 +3528,19 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (rectangles.length) {
 			var topLeftTwips = rectangles[0].getTopLeft();
 			var bottomRightTwips = rectangles[0].getBottomRight();
-			var oldSelection = this._textSelectionStart;
+			let oldSelection = this._selectionHandles.start.rectangle ? this._selectionHandles.start.rectangle.clone(): null;
 			//FIXME: The selection is really not two points, as they can be
 			//FIXME: on top of each other, but on separate lines. We should
 			//FIXME: capture the whole area in _onTextSelectionMsg.
-			this._textSelectionStart = new L.LatLngBounds(
-				this._twipsToLatLng(topLeftTwips, this._map.getZoom()),
-				this._twipsToLatLng(bottomRightTwips, this._map.getZoom()));
+			this._selectionHandles.start.rectangle = new app.definitions.simpleRectangle(topLeftTwips.x, topLeftTwips.y, (bottomRightTwips.x - topLeftTwips.x), (bottomRightTwips.y - topLeftTwips.y));
 
-			this._updateScrollOnCellSelection(oldSelection, this._textSelectionStart);
+			this._updateScrollOnCellSelection(oldSelection, this._selectionHandles.start.rectangle);
 
 			this._selectionHandles.start.setShowSection(true);
 			this._selectionHandles.active = true;
 		}
 		else {
-			this._textSelectionStart = null;
+			this._selectionHandles.start.rectangle = null;
 		}
 	},
 
@@ -4788,8 +4785,8 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_removeSelection: function() {
-		this._textSelectionStart = null;
-		this._textSelectionEnd = null;
+		this._selectionHandles.start.rectangle = null;
+		this._selectionHandles.end.rectangle = null;
 		this._selectedTextContent = '';
 
 		this._selectionHandles.start.setShowSection(false);
@@ -4800,14 +4797,14 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_updateMarkers: function() {
-		if (!app.file.textCursor.visible || !this._textSelectionStart)
+		if (!app.file.textCursor.visible || !this._selectionHandles.start.rectangle)
 			return;
 
 		if (!this._selectionHandles.start.isSectionShown() || !this._selectionHandles.end.isSectionShown())
 			return;
 
-		var startPos = this._map._docLayer._latLngToCorePixels(this._textSelectionStart.getSouthWest());
-		var endPos = this._map._docLayer._latLngToCorePixels(this._textSelectionEnd.getSouthWest());
+		var startPos = { x: this._selectionHandles.start.rectangle.pX1, y: this._selectionHandles.start.rectangle.pY2 };
+		var endPos = { x: this._selectionHandles.end.rectangle.pX1, y: this._selectionHandles.end.rectangle.pY2 };
 
 		if (app.map._docLayer.isCalcRTL()) {
 			// Mirror position from right to left.
