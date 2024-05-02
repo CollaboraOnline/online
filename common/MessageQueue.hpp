@@ -21,7 +21,7 @@
 #include "Log.hpp"
 #include "Protocol.hpp"
 
-/// Thread-safe message queue (FIFO).
+/// Message queue (FIFO).
 class MessageQueue
 {
 public:
@@ -39,7 +39,7 @@ public:
     MessageQueue(const MessageQueue&) = delete;
     MessageQueue& operator=(const MessageQueue&) = delete;
 
-    /// Thread safe insert the message.
+    /// insert the message.
     void put(const Payload& value)
     {
         if (value.empty())
@@ -55,7 +55,7 @@ public:
         put(Payload(value.data(), value.data() + value.size()));
     }
 
-    /// Thread safe obtaining of the message.
+    /// Obtain the next message.
     /// timeoutMs can be 0 to signify infinity.
     /// Returns an empty payload on timeout.
     Payload get()
@@ -82,7 +82,7 @@ public:
         return _queue.size();
     }
 
-    /// Thread safe removal of all the pending messages.
+    /// Removal of all the pending messages.
     void clear()
     {
         clear_impl();
