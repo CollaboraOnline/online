@@ -216,7 +216,7 @@ nav:not(.spreadsheet-color-indicator) ~ #toolbar-wrapper #toolbar-up.w2ui-toolba
 	border-top: 1px solid #bbbbbb !important;
 	margin-bottom: 5px;
 }
-#formulabar > div > div {
+#formulabar > .root-container > .formulabar {
 	grid-template-columns: 70px auto;
 }
 #toolbar-search {
