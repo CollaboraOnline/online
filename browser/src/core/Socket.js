@@ -1203,11 +1203,12 @@ app.definitions.Socket = L.Class.extend({
 				return;
 			}
 			info.statusType = info.id;
+			info.background = info.type == 'bg';
 
 			if (info.id == 'find' || info.id == 'connect' || info.id == 'ready')
 			{
 				this._map.showBusy(window.ThisIsAMobileApp? _('Loading...'): _('Connecting...'), true);
-				if (info && info.id == "ready") {
+				if (info.id == "ready") {
 					// We're connected: cancel timer and dialog.
 					this.ReconnectCount = 0;
 					clearTimeout(this.timer);
