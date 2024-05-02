@@ -1319,12 +1319,6 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	border-top-color: var(--color-text-lighter);
 }
 
-/* sum button in formulabar */
-.formulabar.menubutton {
-	padding: 0px !important;
-	margin: 0 4px 0 0 !important;
-}
-
 /* toolbox */
 .jsdialog.toolbox {
 	display: flex;
@@ -1842,7 +1836,8 @@ input[type='number']:hover::-webkit-outer-spin-button {
 }
 
 .formulabar.unotoolbutton {
-	margin-inline-end: 4px !important;
+	margin: 0 !important;
+	padding: 0 !important;
 	opacity: 0.8;
 }
 
