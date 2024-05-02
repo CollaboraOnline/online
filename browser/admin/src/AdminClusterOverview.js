@@ -524,7 +524,7 @@ var AdminClusterOverview = AdminSocketBase.extend({
             }
             var serverId = tokens[0];
             var cardId = 'card-' + serverId;
-            var card = document.getElementById(cardId);
+            var card = document.getElementById(cardId).parentElement;
             if (card) {
                 card.remove();
             }
