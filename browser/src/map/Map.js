@@ -1421,17 +1421,43 @@ L.Map = L.Evented.extend({
 	},
 
 	_onUpdateProgress: function (e) {
-		if (e.statusType === 'start') {
-			if (e.text) {
-				// e.text translated by Core
-				this.showBusy(e.text);
+
+		// Minimal UX disruption for background save
+		if (e.background)
+		{
+			switch (e.statusType)
+			{
+			case 'start':
+				this.uiManager.documentNameInput.showLoadingAnimation();
+				break;
+			case 'setvalue':
+				// this.uiManager.documentNameInput.setValue(e.value);
+				break;
+			case 'finish':
+				this.uiManager.documentNameInput.hideLoadingAnimation();
+				break;
 			}
 		}
-		else if (e.statusType === 'setvalue') {
-			this._progressBar.setValue(e.value);
-		}
-		else if (e.statusType === 'finish' || e.statusType === 'coolloaded' || e.statusType === 'reconnected') {
-			this.hideBusy();
+		else
+		{
+			switch (e.statusType)
+			{
+			case 'start':
+				if (e.text) {
+					// e.text translated by Core
+					this.showBusy(e.text);
+				}
+				break;
+			case 'setvalue':
+				this._progressBar.setBar(true);
+				this._progressBar.setValue(e.value);
+				break;
+			case 'finish':
+			case 'coolloaded':
+			case 'reconnected':
+				this.hideBusy();
+				break;
+			}
 		}
 	},
 
