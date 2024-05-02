@@ -959,26 +959,16 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._selectionHandles.end = new app.definitions.textSelectionHandleSection('selection_end_handle', 30, 44, new app.definitions.simplePoint(0, 0), 'text-selection-handle-end', false);
 		this._selectionHandles.active = false;
 
+		// Cell selection handles (mobile & tablet).
+		this._cellSelectionHandleStart = new app.definitions.cellSelectionHandle('cell_selection_handle_start');
+		this._cellSelectionHandleEnd = new app.definitions.cellSelectionHandle('cell_selection_handle_end');
+
 		setTimeout(function() {
 			app.sectionContainer.addSection(this._map._docLayer._selectionHandles.start);
 			app.sectionContainer.addSection(this._map._docLayer._selectionHandles.end);
+			app.sectionContainer.addSection(this._map._docLayer._cellSelectionHandleStart);
+			app.sectionContainer.addSection(this._map._docLayer._cellSelectionHandleEnd);
 		}.bind(this), 400);
-
-		this._cellResizeMarkerStart = L.marker(new L.LatLng(0, 0), {
-			icon: L.divIcon({
-				className: 'spreadsheet-cell-resize-marker',
-				iconSize: null
-			}),
-			draggable: true
-		});
-
-		this._cellResizeMarkerEnd = L.marker(new L.LatLng(0, 0), {
-			icon: L.divIcon({
-				className: 'spreadsheet-cell-resize-marker',
-				iconSize: null
-			}),
-			draggable: true
-		});
 
 		this._referenceMarkerStart = L.marker(new L.LatLng(0, 0), {
 			icon: L.divIcon({
@@ -4379,92 +4369,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 	},
 
-	// Update dragged text selection.
-	_onCellResizeMarkerDrag: function (e) {
-		if (e.type === 'dragstart') {
-			e.target.isDragged = true;
-		}
-		else if (e.type === 'drag') {
-			var event = e.originalEvent;
-			if (e.originalEvent.touches && e.originalEvent.touches.length > 0) {
-				event = e.originalEvent.touches[0];
-			}
-			if (!event.pageX && !event.pageY) {
-				return;
-			}
-
-			// handle scrolling
-
-			// This is rather hacky, but it seems to be the only way to make the
-			// marker follow the mouse cursor if the document is autoscrolled under
-			// us. (This can happen when we're changing the selection if the cursor
-			// moves somewhere that is considered off screen.)
-
-			// Onscreen position of the cursor, i.e. relative to the browser window
-			var boundingrect = e.target._icon.getBoundingClientRect();
-			var cursorPos = L.point(boundingrect.left, boundingrect.top);
-			var expectedPos = L.point(event.pageX, event.pageY).subtract(e.target.dragging._draggable.startOffset);
-
-			// Dragging the selection handles vertically more than one line on a touch
-			// device is more or less impossible without this hack.
-			if (!(typeof e.originalEvent.type === 'string' && e.originalEvent.type === 'touchmove')) {
-				// If the map has been scrolled, but the cursor hasn't been updated yet, then
-				// the current mouse position differs.
-				if (!expectedPos.equals(cursorPos)) {
-					var correction = expectedPos.subtract(cursorPos);
-
-					e.target.dragging._draggable._startPoint = e.target.dragging._draggable._startPoint.add(correction);
-					e.target.dragging._draggable._startPos = e.target.dragging._draggable._startPos.add(correction);
-					e.target.dragging._draggable._newPos = e.target.dragging._draggable._newPos.add(correction);
-
-					e.target.dragging._draggable._updatePosition();
-				}
-			}
-			var containerPos = new L.Point(expectedPos.x - this._map._container.getBoundingClientRect().left,
-				expectedPos.y - this._map._container.getBoundingClientRect().top);
-
-			containerPos = containerPos.add(e.target.dragging._draggable.startOffset);
-			this._map.fire('handleautoscroll', {pos: containerPos, map: this._map});
-		}
-		else if (e.type === 'dragend') {
-			e.target.isDragged = false;
-
-			// handle scrolling
-			this._map.focus();
-			this._map.fire('scrollvelocity', {vx: 0, vy: 0});
-		}
-
-		// modify the mouse position - move to center of the marker
-		var aMousePosition = e.target.getLatLng();
-		aMousePosition = this._map.project(aMousePosition);
-		var size;
-		if (this._cellResizeMarkerStart === e.target) {
-			size = this._cellResizeMarkerStart._icon.getBoundingClientRect();
-		}
-		else if (this._cellResizeMarkerEnd === e.target) {
-			size = this._cellResizeMarkerEnd._icon.getBoundingClientRect();
-		}
-
-		aMousePosition = aMousePosition.add(new L.Point(size.width / 2, size.height / 2));
-		aMousePosition = this._map.unproject(aMousePosition);
-		aMousePosition = this._latLngToTwips(aMousePosition);
-
-		if (this._cellResizeMarkerStart === e.target) {
-			this._postSelectTextEvent('start', aMousePosition.x, aMousePosition.y);
-			if (e.type === 'dragend') {
-				this._onUpdateCellResizeMarkers();
-				window.IgnorePanning = undefined;
-			}
-		}
-		else if (this._cellResizeMarkerEnd === e.target) {
-			this._postSelectTextEvent('end', aMousePosition.x, aMousePosition.y);
-			if (e.type === 'dragend') {
-				this._onUpdateCellResizeMarkers();
-				window.IgnorePanning = undefined;
-			}
-		}
-	},
-
 	_onReferenceMarkerDrag: function(e) {
 		if (e.type === 'dragstart') {
 			e.target.isDragged = true;
@@ -4735,39 +4639,28 @@ L.CanvasTileLayer = L.Layer.extend({
 	_onUpdateCellResizeMarkers: function () {
 		var selectionOnDesktop = window.mode.isDesktop() && (this._cellSelectionArea || app.calc.cellCursorVisible);
 
-		if (!selectionOnDesktop &&
-			(!this._cellCSelections.empty() || app.calc.cellCursorVisible)) {
-			if (this._isEmptyRectangle(this._cellSelectionArea) && !app.calc.cellCursorVisible) {
+		if (!selectionOnDesktop && (!this._cellCSelections.empty() || app.calc.cellCursorVisible)) {
+
+			if (this._isEmptyRectangle(this._cellSelectionArea) && !app.calc.cellCursorVisible)
 				return;
-			}
+
+			this._cellSelectionHandleStart.setShowSection(true);
+			this._cellSelectionHandleEnd.setShowSection(true);
 
 			let latLngCursor = this._simpleRectangleToLatLngBounds(app.calc.cellCursorRectangle.clone());
 
 			var cellRectangle = this._cellSelectionArea ? this._cellSelectionArea : latLngCursor;
 
-			if (!this._cellResizeMarkerStart.isDragged) {
-				this._map.addLayer(this._cellResizeMarkerStart);
-				var posStart = this._map.project(cellRectangle.getNorthWest());
-				var sizeStart = this._cellResizeMarkerStart._icon.getBoundingClientRect();
-				posStart = posStart.subtract(new L.Point(sizeStart.width / 2, sizeStart.height / 2));
-				posStart = this._map.unproject(posStart);
-				this._cellResizeMarkerStart.setLatLng(posStart);
-			}
-			if (!this._cellResizeMarkerEnd.isDragged) {
-				this._map.addLayer(this._cellResizeMarkerEnd);
-				var posEnd = this._map.project(cellRectangle.getSouthEast());
-				var sizeEnd = this._cellResizeMarkerEnd._icon.getBoundingClientRect();
-				posEnd = posEnd.subtract(new L.Point(sizeEnd.width / 2, sizeEnd.height / 2));
-				posEnd = this._map.unproject(posEnd);
-				this._cellResizeMarkerEnd.setLatLng(posEnd);
-			}
+			const posStart = this._latLngToCorePixels(cellRectangle.getNorthWest());
+			const posEnd = this._latLngToCorePixels(cellRectangle.getSouthEast());
+
+			const offset = this._cellSelectionHandleStart.sectionProperties.circleRadius;
+			this._cellSelectionHandleStart.setPosition(posStart.x - offset, posStart.y - offset);
+			this._cellSelectionHandleEnd.setPosition(posEnd.x - offset, posEnd.y - offset);
 		}
-		else if (selectionOnDesktop) {
-			this._map.removeLayer(this._cellResizeMarkerStart);
-			this._map.removeLayer(this._cellResizeMarkerEnd);
-		} else {
-			this._map.removeLayer(this._cellResizeMarkerStart);
-			this._map.removeLayer(this._cellResizeMarkerEnd);
+		else {
+			this._cellSelectionHandleStart.setShowSection(false);
+			this._cellSelectionHandleEnd.setShowSection(false);
 		}
 	},
 
@@ -5500,8 +5393,6 @@ L.CanvasTileLayer = L.Layer.extend({
 			}
 		}, this);
 
-		this._cellResizeMarkerStart.on('dragstart drag dragend', this._onCellResizeMarkerDrag, this);
-		this._cellResizeMarkerEnd.on('dragstart drag dragend', this._onCellResizeMarkerDrag, this);
 		this._referenceMarkerStart.on('dragstart drag dragend', this._onReferenceMarkerDrag, this);
 		this._referenceMarkerEnd.on('dragstart drag dragend', this._onReferenceMarkerDrag, this);
 

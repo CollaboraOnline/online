@@ -416,7 +416,7 @@ class CanvasSectionObject {
 
 	/// Document objects only.
 	public setPosition(x: number, y: number): void {
-		if (this.documentObject !== true)
+		if (this.documentObject !== true || !this.containerObject)
 			return;
 
 		x = Math.round(x);
