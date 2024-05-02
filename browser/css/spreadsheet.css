@@ -251,7 +251,7 @@
 	vertical-align: top;
 }
 
-#formulabar > div > div {
+#formulabar > .root-container > .formulabar {
 	display: grid;
 	grid-template-columns: 110px 120px auto;
 }
