@@ -235,12 +235,6 @@
 	align-items: start;
 }
 
-#formulabar-buttons-toolbox > div {
-	align-items: start;
-	margin-left: auto;
-	text-align: center;
-}
-
 #formulabar {
 	padding: 4px;
 	background-color: var(--color-main-background);
@@ -253,7 +247,7 @@
 
 #formulabar > .root-container > .formulabar {
 	display: grid;
-	grid-template-columns: 110px 120px auto;
+	grid-template-columns: 110px 106px auto;
 }
 
 /* sheet tabs */
