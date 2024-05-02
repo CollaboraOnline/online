@@ -104,6 +104,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['listbox'] = this._listboxControl;
 		this._controlHandlers['valueset'] = this._valuesetControl;
 		this._controlHandlers['fixedtext'] = this._fixedtextControl;
+		this._controlHandlers['linkbutton'] = this._linkButtonControl;
 		this._controlHandlers['htmlcontrol'] = this._htmlControl;
 		this._controlHandlers['expander'] = this._expanderHandler;
 		this._controlHandlers['grid'] = JSDialog.grid;
@@ -1677,6 +1678,51 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (data.hidden)
 			$(wrapper).hide(); // Both pushbutton and its wrapper needs to be hidden.
 
+		return false;
+	},
+	
+	_linkButtonControl: function(parentContainer, data, builder) {
+		var textContent = L.DomUtil.create('label', builder.options.cssClass + " ui-linkbutton", parentContainer);
+
+		if (data.labelFor)
+			textContent.htmlFor = data.labelFor + '-input';
+
+		if (data.text)
+			textContent.textContent = builder._cleanText(data.text);
+		else if (data.html)
+			textContent.innerHTML = data.html;
+
+		var accKey = builder._getAccessKeyFromText(data.text);
+		builder._stressAccessKey(textContent, accKey);
+
+		setTimeout(function () {
+			var labelledControl = document.getElementById(data.labelFor);
+			if (labelledControl) {
+				var target = labelledControl;
+				var input = labelledControl.querySelector('input');
+				if (input)
+					target = input;
+				var select = labelledControl.querySelector('select');
+				if (select)
+					target = select;
+
+				builder._setAccessKey(target, accKey);
+			}
+		}, 0);
+
+		textContent.id = data.id;
+		if (data.style && data.style.length) {
+			L.DomUtil.addClass(textContent, data.style);
+		} else {
+			L.DomUtil.addClass(textContent, 'ui-text');
+		}
+		if (data.hidden)
+			$(textContent).hide();
+
+		var clickFunction = function () {
+				builder.callback('linkbutton', 'click', data, null, builder);
+		};
+		$(textContent).click(clickFunction);
 		return false;
 	},
 

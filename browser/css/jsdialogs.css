@@ -398,6 +398,18 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 .ui-expander-content > .root-container.jsdialog {
 	margin: 4px;
 }
+
+/* Link Button*/
+
+.ui-linkbutton {
+	color: var(--color-text-dark) !important;
+}
+
+.ui-linkbutton:hover {
+	cursor: pointer;
+	color: var(--color-text-lighter) !important;
+}
+
 /* TreeView */
 
 .ui-treeview {
