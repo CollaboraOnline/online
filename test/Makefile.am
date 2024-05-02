@@ -86,6 +86,7 @@ all_la_unit_tests = \
 	unit-prefork.la \
 	unit-bad-doc-load.la \
 	unit-hosting.la \
+	unit-join-disconnect.la \
 	unit-timeout.la \
 	unit-base.la
 #	unit-admin.la
@@ -211,6 +212,8 @@ unit_copy_paste_la_LIBADD = $(CPPUNIT_LIBS)
 unit_copy_paste_writer_la_SOURCES = UnitCopyPasteWriter.cpp
 unit_copy_paste_writer_la_LIBADD = $(CPPUNIT_LIBS)
 unit_convert_la_SOURCES = UnitConvert.cpp
+unit_join_disconnect_la_SOURCES = UnitJoinDisconnect.cpp
+unit_join_disconnect_la_LIBADD = $(CPPUNIT_LIBS)
 unit_timeout_la_SOURCES = UnitTimeout.cpp
 unit_timeout_la_LIBADD = $(CPPUNIT_LIBS)
 unit_prefork_la_SOURCES = UnitPrefork.cpp
