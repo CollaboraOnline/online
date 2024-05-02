@@ -278,10 +278,13 @@ L.Map.TouchGesture = L.Handler.extend({
 		if (app.calc.cellCursorVisible)
 			bContainsSel = docLayer.containsSelection(latlng);
 		var textSelection;
-		if (docLayer._textSelectionStart && docLayer._textSelectionEnd)
-			textSelection = new L.LatLngBounds(docLayer._textSelectionStart.getSouthWest(), docLayer._textSelectionEnd.getNorthEast());
+		if (docLayer._selectionHandles.start.rectangle && docLayer._selectionHandles.end.rectangle) {
+			// Oversimplication. See "inBand" function.
+			textSelection = new app.definitions.simpleRectangle(0, docLayer._selectionHandles.end.rectangle.y1, app.file.size.twips[0], 0);
+			textSelection.height = docLayer._selectionHandles.end.rectangle.y2 - docLayer._selectionHandles.start.rectangle.y1;
+		}
 
-		if ((textSelection && textSelection.inBand(latlng))
+		if ((textSelection && textSelection.pContainsPoint(posInTwips.toArray()))
 			|| (graphicSelection && graphicSelection.contains(latlng))
 			|| (app.calc.cellCursorVisible && app.calc.cellCursorRectangle.containsPoint(posInTwips.toArray())) || bContainsSel) {
 			// long touched an already selected object
