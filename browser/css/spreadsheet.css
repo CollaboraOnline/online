@@ -221,7 +221,7 @@
 
 /* formulabar */
 
-#addressInput {
+#addressInput-input {
 	height: 26px;
 	width: 100px;
 	color: var(--color-main-text);
