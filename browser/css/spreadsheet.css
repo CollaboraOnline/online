@@ -221,18 +221,38 @@
 
 /* formulabar */
 
+#addressInput {
+	display: flex;
+	flex-flow: column;
+}
 #addressInput-input {
-	height: 26px;
-	width: 100px;
 	color: var(--color-main-text);
 	background-color: var(--color-background-lighter);
 	border: 1px solid var(--color-border);
 	border-radius: var(--border-radius);
-	align-self: start;
+	align-self: stretch;
+	/* Same line-height as formulabar input */
+	line-height: 1.2;
+	flex-basis: 30px;
 }
 
-#formulabar-toolbox > div {
-	align-items: start;
+#formulabar-toolbox {
+	grid-template-rows: 30px;
+}
+
+#AutoSumMenu {
+	/* Make sure it matches buttons height*/
+	grid-template-rows: var(--btn-size);
+	/* Account for the arrow match width */
+	width: calc(var(--btn-size)*2);
+}
+
+#formulabar.expanded > .root-container > .formulabar {
+	grid-template-rows: 72px;
+}
+
+#formulabar.expanded #formulabar-toolbox {
+	grid-template-rows: 72px;
 }
 
 #formulabar {
@@ -241,13 +261,14 @@
 	border-top: 1px solid var(--color-border);
 }
 
-#formulabar.expanded #addressInput * {
-	vertical-align: top;
-}
-
 #formulabar > .root-container > .formulabar {
 	display: grid;
 	grid-template-columns: 110px 106px auto;
+	grid-template-rows: 30px;
+}
+
+#formulabar > .root-container > .formulabar * {
+	box-sizing: border-box;
 }
 
 /* sheet tabs */
