@@ -534,7 +534,7 @@ int forkit_main(int argc, char** argv)
     /*WARNING*/         checkCoolUser = false;
     /*WARNING*/ }
 
-    /*WARNING*/ if (!hasCorrectUID("coolforkit"))
+    /*WARNING*/ if (!hasCorrectUID(/* appName = */ "coolforkit"))
     /*WARNING*/ {
     /*WARNING*/     // don't allow if any capability is set (unless root; who runs this
     /*WARNING*/     // as root or runs this in a container and provides --disable-cool-user-checking knows what they

@@ -28,6 +28,8 @@
 #  error "include config.h for user id";
 #endif
 
+/*WARNING: PRIVILEGED CODE CHECKING START */
+
 inline int hasUID(const char *userId)
 {
     struct passwd *pw = getpwuid(getuid());
@@ -106,5 +108,7 @@ inline int hasAnyCapability()
     return 0;
 #endif
 }
+
+/*WARNING: PRIVILEGED CODE CHECKING END */
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
