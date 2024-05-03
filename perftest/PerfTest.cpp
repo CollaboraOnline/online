@@ -183,9 +183,10 @@ void CyclePerfTest::startMeasurement()
         perror("fork");
         Util::forcedExit(EX_SOFTWARE);
     } else if (pid == 0) {
-        std::cerr<<"**** CHILD PROCESS FOR PERF****"<<std::endl;
+        LOG_DBG("Starting perf");
         std::string pid_str = "--pid="+std::to_string(getCoolwsdPid());
-        execlp("perf","perf","record","-s","-e","cycles","--freq=1000","--call-graph","dwarf",pid_str.c_str(),"--output=perf-output-coolwsd.data",(char *)NULL);
+        std::string output_str = "--output=perf-"+_name+".data";
+        execlp("perf","perf","record","-s","-e","cycles","--freq=1000","--call-graph","dwarf",pid_str.c_str(),output_str.c_str(),(char *)NULL);
     } else {
         child_pid = pid;
     }

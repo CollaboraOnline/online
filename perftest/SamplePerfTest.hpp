@@ -15,7 +15,7 @@ class SamplePerfTest : public CyclePerfTest
 {
 public:
     SamplePerfTest(const std::string &server) :
-        CyclePerfTest("sample perf test", server)
+        CyclePerfTest("sample5", server)
     {
     }
 
@@ -43,6 +43,7 @@ public:
         waitForMessage("canonicalidchange");
         waitForIdle();
 
+        sleep(3000);
         startMeasurement();
         for (int i=0; i<100; i++) {
             sendMessage("uno .uno:ChangeTheme {\"NewTheme\":{\"type\":\"string\",\"value\":\"Dark\"}}");
