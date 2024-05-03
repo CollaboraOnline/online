@@ -699,6 +699,7 @@ Document::Document(const std::shared_ptr<lok::Office>& loKit,
       _obfuscatedFileId(Util::getFilenameFromURL(docKey)),
       _tileQueue(std::make_shared<TileQueue>()),
       _websocketHandler(websocketHandler),
+      _modified(ModifiedState::UnModified),
       _isBgSaveProcess(false),
       _haveDocPassword(false),
       _isDocPasswordProtected(false),
@@ -1481,6 +1482,8 @@ bool Document::forkToSave(const std::function<void()> &childSave, int viewId)
 
         parentSocket.reset();
         // now we have a socket to the child: childSocket
+
+        forceDocUnmodifiedForBgSave();
 
         auto bgSaveChild = std::make_shared<BgSaveParentWebSocketHandler>(
             "bgsv_kit_ws", pid, shared_from_this(),
@@ -2274,7 +2277,94 @@ std::shared_ptr<lok::Document> Document::getLOKitDocument()
     return _loKitDocument;
 }
 
-    /// Stops theads, flushes buffers, and exits the process.
+void Document::postForceModifiedCommand(bool modified)
+{
+    std::string args = "{ \"Modified\": { \"type\": \"boolean\", ";
+    args += "\"value\": \"";
+    args += (modified ? "true" : "false");
+    args += "\" } }";
+
+    LOG_TRC("post force modified command: .uno:Modified " << args);
+    getLOKitDocument()->postUnoCommand(
+        ".uno:Modified", args.c_str(), true);
+}
+
+void Document::forceDocUnmodifiedForBgSave()
+{
+    LOG_TRC("force document unmodified from state " << toString(_modified));
+    if (_modified == ModifiedState::Modified)
+    {
+        SigUtil::addActivity("Force clear modified");
+        _modified = ModifiedState::UnModifiedButSaving;
+        // but tell the core we are not modified to track real changes
+        postForceModifiedCommand(false);
+    }
+}
+
+void Document::updateModifiedOnFailedBgSave()
+{
+    if (_modified == ModifiedState::UnModifiedButSaving)
+    {
+        SigUtil::addActivity("Force re-modified");
+        _modified = ModifiedState::Modified;
+        postForceModifiedCommand(true);
+    }
+}
+
+void Document::notifySyntheticUnmodifiedState()
+{
+    // no need to change core state that happened earlier
+    if (_modified == ModifiedState::UnModifiedButSaving)
+    {
+        LOG_TRC("document was not modified while background saving");
+        _modified = ModifiedState::UnModified;
+        notifyAll("statechanged: .uno:ModifiedStatus=false");
+    }
+}
+
+bool Document::trackDocModifiedState(const std::string &stateChanged)
+{
+    bool filter = false;
+
+    StringVector tokens(StringVector::tokenize(stateChanged, '='));
+    bool modified = tokens.size() > 1 && tokens.equals(1, "true");
+    ModifiedState newState = _modified;
+    // NB. since 'modified' state is (oddly) notified per view we get
+    // several duplicate transitions from state A -> A again.
+    switch (_modified) {
+    case ModifiedState::Modified:
+        if (!modified)
+            newState = ModifiedState::UnModified;
+        // else duplicate
+        break;
+    // Only present in background save mode
+    case ModifiedState::UnModifiedButSaving:
+        if (modified)
+        {
+            // now we're really modified
+            newState = ModifiedState::Modified;
+        }
+        else // ignore being notified of our own force unmodification.
+        {
+            LOG_TRC("Ignore self generated unmodified notification");
+            filter = true;
+        }
+        break;
+    case ModifiedState::UnModified:
+        if (modified)
+            newState = ModifiedState::Modified;
+        // else duplicate
+        break;
+    }
+    if (_modified != newState)
+        LOG_TRC("Transition modified state from " <<
+                toString(_modified) << " to " << toString(newState));
+    _modified = newState;
+
+    return filter;
+}
+
+/// Stops theads, flushes buffers, and exits the process.
 void Document::flushAndExit(int code)
 {
     flushTraceEventRecordings();
@@ -2306,6 +2396,7 @@ void Document::dumpState(std::ostream& oss)
         << "\n\tmobileAppDocId: " << _mobileAppDocId
         << "\n\tinputProcessingEnabled: " << processInputEnabled()
         << "\n\tduringLoad: " << _duringLoad
+        << "\n\tmodified: " << toString(_modified)
         << "\n";
 
     // dumpState:
