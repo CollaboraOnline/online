@@ -152,14 +152,12 @@ textarea.cool-annotation-textarea {
 
 /* Related to toolbar.css */
 @-moz-document url-prefix() {
-	#formulabar #addressInput{
-		color: var(--color-main-text);
-		border: 1px solid var(--color-border) !important;
-		border-radius: 0px;
-	}
 	#toolbar-up{
 		top: -1px;
 	}
+}
+#formulabar:not(.expanded) #addressInput {
+	align-self: center;
 }
 #toolbar-up #redo.disabled, #toolbar-up #undo.disabled, #toolbar-up #mobile_wizard.disabled, #toolbar-up #insertion_mobile_wizard.disabled {
 	display: none;
@@ -194,27 +192,17 @@ nav:not(.spreadsheet-color-indicator) ~ #toolbar-wrapper #toolbar-up.w2ui-toolba
 	border-color: transparent;
 }
 .formulabar.unotoolbutton {
-	margin: 0 !important;
-}
-#expand.formulabar {
-	margin-inline-start: -8px !important;
-	height: 30px !important;
+	justify-self: center;
 }
 .formulabar.toolbox {
-	grid-column-gap: 8px;
 	/* fx = inputfield expander */
-	grid-template-columns: 32px auto 16px 0;
+	grid-template-columns: calc(var(--btn-size)*2) auto var(--btn-size);
 	display: grid;
 	grid-auto-flow: column;
 	align-items: start;
 }
 .expanded .formulabar.toolbox {
 	align-items: flex-start;
-}
-#formulabar {
-	padding: 0px !important;
-	border-top: 1px solid #bbbbbb !important;
-	margin-bottom: 5px;
 }
 #formulabar > .root-container > .formulabar {
 	grid-template-columns: 70px auto;
@@ -251,12 +239,6 @@ nav:not(.spreadsheet-color-indicator) ~ #toolbar-wrapper #toolbar-up.w2ui-toolba
 	-ms-transform: rotate(180deg);
 	-o-transform: rotate(180deg);
 	transform: rotate(180deg);
-}
-#addressInput{
-	margin-inline-start: 8px;
-	width: 50px;
-	height: 26px;
-	align-self: start;
 }
 .w2ui-icon.equal, .w2ui-icon.autosum{width: 38px !important;}
 
