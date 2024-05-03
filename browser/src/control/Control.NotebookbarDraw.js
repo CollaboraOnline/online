@@ -397,10 +397,12 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 						'type': 'toolbox',
 						'children': [
 							{
-								'id': 'collapsenotebookbar',
+								'id': 'showruler',
+								'class': 'unoshowruler',
 								'type': 'menubartoolitem',
-								'text': _('Collapse Tabs'),
-								'accessibility': { focusBack: true, combination: 'CN', de: null }
+								'text': _('Ruler'),
+								'command': _('Show Ruler'),
+								'accessibility': { focusBack: true, combination: 'R', de: 'L' }
 							}
 						]
 					},
@@ -413,12 +415,19 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 								'type': 'menubartoolitem',
 								'text': _('Status Bar'),
 								'command': _('Show Status Bar'),
-								'accessibility': { focusBack: true, combination: 'SS', de: null }
+								'accessibility': { focusBack: true, combination: 'SB', de: null }
 							}
 						]
 					}
 				],
 				'vertical': 'true'
+			},
+			{
+				'id': 'collapsenotebookbar',
+				'class': 'unocollapsenotebookbar',
+				'type': 'bigmenubartoolitem',
+				'text': _('Collapse Tabs'),
+				'accessibility': { focusBack: true, combination: 'CU', de: null }
 			},
 			{
 				'id':'toggledarktheme',
