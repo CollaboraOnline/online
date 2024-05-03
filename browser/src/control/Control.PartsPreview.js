@@ -655,21 +655,15 @@ L.Control.PartsPreview = L.Control.extend({
 	_isPreviewVisible: function(part) {
 		var el = this._previewTiles[part];
 		if (!el)
-			return true;
+			return false;
+
 		var elemRect = el.getBoundingClientRect();
-		var elemTop = elemRect.top;
-		var elemBottom = elemRect.bottom;
-		var elemLeft = elemRect.left;
-		var elemRight = elemRect.right;
-		var isVisible = false;
+		var viewRect = new DOMRect(0, 0, window.innerWidth, window.innerHeight);
 
-		// dont skip the ones that are near visible or will be visible soon while scrolling.
-		// this is for setPart function, should be completely visible for scrollto
-		isVisible = this._direction === 'x' ?
-			(elemLeft >= 0) && (elemRight <= window.innerWidth) :
-			(elemTop >= 0) && (elemBottom <= window.innerHeight);
-
-		return isVisible;
+		return (elemRect.left <= viewRect.right &&
+			viewRect.left <= elemRect.right &&
+			elemRect.top <= viewRect.bottom &&
+			viewRect.top <= elemRect.bottom)
 	},
 
 	_addDnDHandlers: function (elem) {
