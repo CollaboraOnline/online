@@ -1780,6 +1780,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	flex-grow: 1;
 	background-color: var(--color-background-lighter);
 	border-radius: var(--border-radius) 0 0 var(--border-radius);
+	align-self: stretch;
 }
 
 .ui-custom-textarea {
