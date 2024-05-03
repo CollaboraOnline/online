@@ -569,8 +569,8 @@ L.Control.PartsPreview = L.Control.extend({
 			return;
 
 		if (this._previewInitialized) {
-			clearInterval(this._resizeTimer);
-			this._resizeTimer = setInterval(L.bind(this._onScroll, this), 50);
+			clearTimeout(this._resizeTimer);
+			this._resizeTimer = setTimeout(L.bind(this._onScroll, this), 50);
 		}
 
 		this._height = window.innerHeight;
