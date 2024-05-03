@@ -347,10 +347,18 @@ protected:
 
 struct TileData;
 
+/// Abstract helper methods from WSD for unit tests
+class UnitWSDInterface {
+public:
+    virtual ~UnitWSDInterface() {}
+    virtual std::string getJailRoot(int pid) = 0;
+};
+
 /// Derive your WSD unit test / hooks from me.
 class UnitWSD : public UnitBase
 {
     bool _hasKitHooks;
+    UnitWSDInterface *_wsd;
 
 public:
     UnitWSD(const std::string& testname);
@@ -408,6 +416,18 @@ public:
             LOG_TST("ERROR: unexpected unknown exception while invoking WSD Test");
             exitTest(TestResult::Failed);
         }
+    }
+
+    /// set the concrete wsd implementation
+    void setWSD(UnitWSDInterface *wsd)
+    {
+        _wsd = wsd;
+    }
+
+    /// Locate the path of a document jail by pid (or -1 for the first jail)
+    std::string getJailRoot(int pid = -1)
+    {
+        return _wsd ? _wsd->getJailRoot(pid) : std::string();
     }
 
     /// Process result message from kit
