@@ -1081,36 +1081,27 @@ L.Map.include({
 	},
 
 	onFormulaBarBlur: function() {
-		// The timeout is needed because we want 'click' event on 'cancel',
-		// 'accept' button to act before we hide these buttons because
-		// once hidden, click event won't be processed.
-		// TODO: Some better way to do it ?
 		var map = this;
 
-		setTimeout(() => {
-			if ($('.leaflet-cursor').is(':visible'))
-				return;
+		if (window.mode.isMobile() && this.isEditMode()) {
+			var mobileTopBar = map.mobileTopBar;
+			mobileTopBar.showItem('cancelformula', false);
+			mobileTopBar.showItem('acceptformula', false);
+			mobileTopBar.showItem('undo', true);
+			mobileTopBar.showItem('redo', true);
+		} else {
+			var jsdialogFormulabar = map.formulabar;
+			jsdialogFormulabar.hide('cancelformula');
+			jsdialogFormulabar.hide('acceptformula');
+			jsdialogFormulabar.show('startformula');
+			jsdialogFormulabar.show('AutoSumMenu');
+		}
 
-			if (window.mode.isMobile() && this.isEditMode()) {
-				var mobileTopBar = map.mobileTopBar;
-				mobileTopBar.showItem('cancelformula', false);
-				mobileTopBar.showItem('acceptformula', false);
-				mobileTopBar.showItem('undo', true);
-				mobileTopBar.showItem('redo', true);
-			} else {
-				var jsdialogFormulabar = map.formulabar;
-				jsdialogFormulabar.hide('cancelformula');
-				jsdialogFormulabar.hide('acceptformula');
-				jsdialogFormulabar.show('startformula');
-				jsdialogFormulabar.show('AutoSumMenu');
-			}
+		$('#AutoSumMenu-button').css('margin-inline', '0');
+		$('#AutoSumMenu .unoarrow').css('margin', '0');
 
-			$('#AutoSumMenu-button').css('margin-inline', '0');
-			$('#AutoSumMenu .unoarrow').css('margin', '0');
-
-			// clear reference marks
-			map._docLayer._clearReferences();
-		}, 250);
+		// clear reference marks
+		map._docLayer._clearReferences();
 
 		map.formulabar.blurField();
 		$('#addressInput-input').blur();
