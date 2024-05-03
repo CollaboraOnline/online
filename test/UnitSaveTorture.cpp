@@ -14,9 +14,12 @@
 #include <Unit.hpp>
 #include <Util.hpp>
 #include <JsonUtil.hpp>
+#include <FileUtil.hpp>
 #include <helpers.hpp>
 #include <StringVector.hpp>
 #include <WebSocketSession.hpp>
+#include <wsd/COOLWSD.hpp>
+#include <wsd/DocumentBroker.hpp>
 #include <test/lokassert.hpp>
 #include <Poco/Util/LayeredConfiguration.h>
 
@@ -36,17 +39,33 @@ class UnitSaveTorture : public UnitWSD
     {
         UnitWSD::configure(config);
 
-#if 0
         // Force much faster auto-saving
-        config.setInt("per_document.idlesave_duration_secs", 1);
-        config.setInt("per_document.autosave_duration_secs", 2);
-#endif
+        config.setBool("per_document.background_autosave", true);
     }
 
     // Force background autosave when saving the modified document
     bool isAutosave() override
     {
+        LOG_TST("isAutosave returns " << forceAutosave);
         return forceAutosave;
+    }
+
+    std::string getJailRootPath(const std::string &name)
+    {
+        return getJailRoot() + "/tmp/" + name;
+    }
+
+    void createStamp(const std::string &name)
+    {
+        TST_LOG("create stamp " << name);
+        std::ofstream stamp(getJailRootPath(name));
+        stamp.close();
+    }
+
+    void removeStamp(const std::string &name)
+    {
+        FileUtil::removeFile(getJailRootPath(name));
+        TST_LOG("removed stamp " << name);
     }
 
 public:
@@ -111,9 +130,13 @@ void UnitSaveTorture::saveTortureOne(
 
     LOK_ASSERT_EQUAL(waitForModifiedStatus(name, wsSession), true);
 
+    createStamp("holdsave");
+
     // Force a synchronous save-as-auto-save now
     forceAutosave = true;
     wsSession->sendMessage(std::string("save dontTerminateEdit=0 dontSaveIfUnmodified=0"));
+
+    removeStamp("holdsave");
 
     // Check the save succeeded
     message = wsSession->waitForMessage("unocommandresult:", timeout, name);
@@ -160,6 +183,22 @@ void UnitSaveTorture::invokeWSDTest()
 // Inside the forkit & kit processes
 class UnitKitSaveTorture : public UnitKit
 {
+    void waitWhileStamp(const std::string &name)
+    {
+        std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
+        while (FileUtil::Stat(std::string("/tmp/") + name).exists())
+        {
+            TST_LOG("wait for stamp " << name);
+            if (std::chrono::steady_clock::now() - start > std::chrono::seconds(10))
+            {
+                LOK_ASSERT_FAIL("Timed out while waiting for stamp file " + name + " to go");
+                return;
+            }
+            std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        }
+        TST_LOG("found stamp " << name);
+    }
+
 public:
     UnitKitSaveTorture() : UnitKit("savetorture")
     {
@@ -174,6 +213,9 @@ public:
     virtual void postBackgroundSaveFork() override
     {
         std::cerr << "\n\npost background save process fork\n\n\n";
+
+        waitWhileStamp("holdsave");
+
         // FIXME: create stamp files in file-system to avoid collision
         // and to flag failure.
     }

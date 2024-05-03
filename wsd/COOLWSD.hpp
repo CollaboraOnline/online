@@ -236,7 +236,8 @@ public:
 
 /// The Server class which is responsible for all
 /// external interactions.
-class COOLWSD final : public Poco::Util::ServerApplication
+class COOLWSD final : public Poco::Util::ServerApplication,
+                      public UnitWSDInterface
 {
 public:
     COOLWSD();
@@ -652,6 +653,9 @@ private:
     static void appendAllowedAliasGroups(Poco::Util::LayeredConfiguration& conf, std::vector<std::string>& allowed);
 
 private:
+    /// UnitWSDInterface
+    virtual std::string getJailRoot(int pid) override;
+
     /// Settings passed from the command-line to override those in the config file.
     std::map<std::string, std::string> _overrideSettings;
 
