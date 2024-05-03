@@ -15,7 +15,7 @@ class SamplePerfTest : public CyclePerfTest
 {
 public:
     SamplePerfTest(const std::string &server) :
-        CyclePerfTest("sample5", server)
+        CyclePerfTest("sample100", server)
     {
     }
 
@@ -29,7 +29,7 @@ public:
         waitForMessage("statechanged: .uno:LeaveGroup=disabled");
         waitForIdle();
         stopMeasurement();
-        //disconnect();
+        disconnect();
     }
 
     void testDarkMode() {
@@ -54,6 +54,6 @@ public:
             waitForIdle();
         }
         stopMeasurement();
-        //disconnect();
+        disconnect();
     }
 };

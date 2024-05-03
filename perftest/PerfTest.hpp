@@ -12,6 +12,7 @@
 #pragma once
 
 #include <config.h>
+#include <atomic>
 #include <PerfTestSocketHandler.hpp>
 #include <chrono>
 
@@ -81,9 +82,10 @@ private:
 class MessagePerfTest : public PerfTest
 {
 private:
-    std::shared_ptr<bool> _measuring = std::make_shared<bool>(true);
-    std::shared_ptr<unsigned int> _messageCount = std::make_shared<unsigned int>(0);
-    std::shared_ptr<unsigned int> _messageBytes = std::make_shared<unsigned int>(0);
+    // Shared with MessagePerfTestSocketHandler
+    std::atomic<bool> _measuring = false;
+    std::atomic<unsigned int> _messageCount = 0;
+    std::atomic<unsigned int> _messageBytes = 0;
 
 public:
     MessagePerfTest(const std::string &name, const std::string &server);

@@ -22,44 +22,6 @@ PerfTestSocketHandler::PerfTestSocketHandler(const std::string &name, const std:
 {
 }
 
-int PerfTestSocketHandler::getPollEvents(std::chrono::steady_clock::time_point now, int64_t &timeoutMaxMicroS)
-{
-    LOG_TRC("PerfTestSocketHandler getPollEvents");
-    if (_connecting) {
-        LOG_TRC("PerfTestSocketHandler getPollEvents (Waiting for outbound connection)");
-        return POLLOUT;
-    }
-
-    while (!_outgoingMessages.isEmpty()) {
-        std::vector<char> message = _outgoingMessages.pop();
-        LOG_DBG("PerfTestSocketHandler Sending mesage: " << COOLProtocol::getFirstLine(message));
-        WebSocketHandler::sendTextMessage((char*)&message[0], message.size());
-    }
-
-    int events = WebSocketHandler::getPollEvents(now, timeoutMaxMicroS);
-    timeoutMaxMicroS = std::min(timeoutMaxMicroS, (int64_t)1000);
-    return events;
-}
-
-void PerfTestSocketHandler::handleMessage(const std::vector<char> &data)
-{
-    const std::string firstLine = COOLProtocol::getFirstLine(data.data(), data.size());
-    LOG_DBG("handleMessage: " + firstLine);
-
-    StringVector tokens = StringVector::tokenize(firstLine);
-    if (tokens.equals(0, "error:")) {
-        abort("Incoming error mesage: " + firstLine);
-    }
-
-    if (tokens.equals(0, "tile:")) {
-        // eg. tileprocessed tile=0:9216:0:3072:3072:0
-        TileDesc desc = TileDesc::parse(tokens);
-        sendMessage("tileprocessed tile=" + desc.generateID());
-    }
-
-    _incomingMessages.put(data);
-}
-
 void PerfTestSocketHandler::sendMessage(const std::string &message)
 {
     LOG_DBG("PerfTestSocketHandler sendMessage: " + message);
@@ -111,23 +73,74 @@ void PerfTestSocketHandler::loadDocument(const std::string &filePath)
     std::string fileabs = Poco::Path(filePath).makeAbsolute().toString();
     Poco::URI::encode("https://localhost:9980/wopi/files" + fileabs, ":/?", fileUri);
 
-    std::string message = "load url=" + fileUri;
-    sendMessage(message + " accessibilityState=false deviceFormFactor=desktop spellOnline=false textDarkTheme=true spreadsheetDarkTheme=false presentationDarkTheme=true timezone=America/Toronto");
+    std::string message = "load url=" + fileUri + " deviceFormFactor=desktop";
+    sendMessage(message);
+}
+
+void PerfTestSocketHandler::shutdown()
+{
+    LOG_DBG("PerfTestSocketHandler shutdown");
+    _shutdown = true;
+    _poll.joinThread();
+    LOG_DBG("PerfTestSocketHandler done");
+}
+
+int PerfTestSocketHandler::getPollEvents(std::chrono::steady_clock::time_point now, int64_t &timeoutMaxMicroS)
+{
+    LOG_TRC("PerfTestSocketHandler getPollEvents");
+    if (_connecting) {
+        LOG_TRC("PerfTestSocketHandler getPollEvents (Waiting for outbound connection)");
+        return POLLOUT;
+    }
+
+    while (!_outgoingMessages.isEmpty()) {
+        std::vector<char> message = _outgoingMessages.pop();
+        LOG_TRC("PerfTestSocketHandler Sending mesage: " << COOLProtocol::getFirstLine(message));
+        WebSocketHandler::sendTextMessage((char*)&message[0], message.size());
+    }
+
+    if (_shutdown) {
+        LOG_DBG("PerfTestSocketHandler shutdown1");
+        WebSocketHandler::shutdown();
+    }
+
+    int events = WebSocketHandler::getPollEvents(now, timeoutMaxMicroS);
+    timeoutMaxMicroS = std::min(timeoutMaxMicroS, (int64_t)1000);
+    return events;
+}
+
+void PerfTestSocketHandler::handleMessage(const std::vector<char> &data)
+{
+    const std::string firstLine = COOLProtocol::getFirstLine(data.data(), data.size());
+    LOG_TRC("handleMessage: " + firstLine);
+
+    StringVector tokens = StringVector::tokenize(firstLine);
+    if (tokens.equals(0, "error:")) {
+        abort("Incoming error mesage: " + firstLine);
+    }
+
+    if (tokens.equals(0, "tile:")) {
+        // eg. tileprocessed tile=0:9216:0:3072:3072:0
+        TileDesc desc = TileDesc::parse(tokens);
+        WebSocketHandler::sendMessage("tileprocessed tile=" + desc.generateID());
+    }
+
+    _incomingMessages.put(data);
 }
 
 void PerfTestSocketHandler::abort(const std::string &message)
 {
     LOG_ERR("PerfTestSocketHandler abort: " << message);
-    shutdown();
-    //Util::forcedExit(EX_SOFTWARE);
+    WebSocketHandler::shutdown();
+    Util::forcedExit(EX_SOFTWARE);
 }
 
 MessagePerfTestSocketHandler::MessagePerfTestSocketHandler(
         const std::string &name,
         const std::string &server,
-        std::shared_ptr<bool> measuring,
-        std::shared_ptr<unsigned int> messageCount,
-        std::shared_ptr<unsigned int> messageBytes) :
+        std::atomic<bool>* measuring,
+        std::atomic<unsigned int>* messageCount,
+        std::atomic<unsigned int>* messageBytes) :
     PerfTestSocketHandler(name, server),
     _measuring(measuring),
     _messageCount(messageCount),

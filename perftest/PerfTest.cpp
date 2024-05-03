@@ -44,7 +44,7 @@ bool PerfTest::isFinished()
 void PerfTest::abort(const std::string &message)
 {
     LOG_ERR("PerfTest abort: " << message);
-    _handler->shutdown();
+    disconnect();
     Util::forcedExit(EX_SOFTWARE);
 }
 
@@ -121,13 +121,20 @@ void PerfTest::waitForMessage(const std::string &substring, unsigned int timeout
         timedout = now > _waitingEnd;
         if (!found && !timedout) {
             LOG_TRC("Waiting for message " + substring);
-            std::this_thread::sleep_for(std::chrono::milliseconds(1));
+            // Wait at least 1ms, no longer than 1s
+            // Result: Finds items after 1ms, 2ms, 4ms, 8ms, and so on.
+            // Good balance between fast polling for fast operations (waitForIdle can take <1ms)
+            // and slow polling for slow operations (load document can take >1s)
+            // and everything in between
+            int elapsedms = std::chrono::duration_cast<std::chrono::milliseconds>(now - _waitingStart).count();
+            int sleepms = std::min(std::max(1,elapsedms), 1000);
+            std::this_thread::sleep_for(std::chrono::milliseconds(sleepms));
         }
     } while (!found && !timedout);
 
     double seconds = std::chrono::duration_cast<std::chrono::milliseconds>(now - _waitingStart).count()/1000.0;
     if (found) {
-        LOG_DBG("Found message: " + substring + " after " + std::to_string(seconds) + "s");
+        LOG_DBG("PerfTest waitForMessage Found message: " + substring + " after " + std::to_string(seconds) + "s");
     } else {
         abort("Timed out waiting for message \"" + substring + "\" after " + std::to_string(seconds) + "s");
     }
@@ -135,14 +142,14 @@ void PerfTest::waitForMessage(const std::string &substring, unsigned int timeout
 
 void PerfTest::waitForIdle(size_t timeout)
 {
-    LOG_DBG("PerfTest waitForIdle");
+    LOG_TRC("PerfTest waitForIdle");
     sendMessage("uno .uno:WaitForIdle");
     waitForMessage("WaitForIdle",timeout);
 }
 
 void PerfTest::sendMessage(const std::string &message)
 {
-    LOG_DBG("PerfTest sendMessage: " + message);
+    LOG_TRC("PerfTest sendMessage: " + message);
     _handler->sendMessage(message);
 }
 
@@ -156,17 +163,7 @@ void PerfTest::disconnect()
 {
     LOG_DBG("PerfTest disconnect");
     _handler->shutdown();
-    LOG_DBG("PerfTest Disconnected");
 }
-
-/*
-void PerfTest::log(const std::string &message)
-{
-    std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
-    unsigned int elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(now - TEST_START_TIME).count();
-    std::cerr << elapsedTime << "ms " <<  message << std::endl;
-}
-*/
 
 CyclePerfTest::CyclePerfTest(const std::string &name, const std::string &server) :
     PerfTest(name, server)
@@ -185,7 +182,7 @@ void CyclePerfTest::startMeasurement()
     } else if (pid == 0) {
         LOG_DBG("Starting perf");
         std::string pid_str = "--pid="+std::to_string(getCoolwsdPid());
-        std::string output_str = "--output=perf-"+_name+".data";
+        std::string output_str = "--output="+_name+".data";
         execlp("perf","perf","record","-s","-e","cycles","--freq=1000","--call-graph","dwarf",pid_str.c_str(),output_str.c_str(),(char *)NULL);
     } else {
         child_pid = pid;
@@ -212,20 +209,20 @@ pid_t CyclePerfTest::getCoolwsdPid()
 }
 
 MessagePerfTest::MessagePerfTest(const std::string &name, const std::string &server) :
-    PerfTest(name, std::make_shared<MessagePerfTestSocketHandler>(name, server, _measuring, _messageCount, _messageBytes))
+    PerfTest(name, std::make_shared<MessagePerfTestSocketHandler>(name, server, &_measuring, &_messageCount, &_messageBytes))
 {
 }
 
 void MessagePerfTest::startMeasurement()
 {
     PerfTest::startMeasurement();
-    *_measuring = true;
+    _measuring = true;
 }
 
 void MessagePerfTest::stopMeasurement()
 {
     PerfTest::stopMeasurement();
-    *_measuring = false;
-    addResult("messageCount",std::to_string(*_messageCount));
-    addResult("messageBytes",std::to_string(*_messageBytes));
+    _measuring = false;
+    addResult("messageCount",std::to_string(_messageCount));
+    addResult("messageBytes",std::to_string(_messageBytes));
 }
