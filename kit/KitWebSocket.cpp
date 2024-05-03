@@ -251,20 +251,13 @@ void BgSaveParentWebSocketHandler::handleMessage(const std::vector<char>& data)
             object->get("commandName").toString() == ".uno:Save")
         {
             if (object->get("success").toString() == "true")
-            {
-                // Force Modified state off, expecting a notification in a bit ...
-                LOG_TRC("Force modified state clear");
-                SigUtil::addActivity("Force clear modified");
-                _document->getLOKitDocument()->postUnoCommand(".uno:Modified", "{ \"Modified\": { \"type\": \"boolean\", \"value\": \"false\" } }", true);
-#if 0
-                // Synthesize modified status change
-                std::string modMsg = tokens[0] + " statechanged: .uno:ModifiedStatus=false";
-                LOG_TRC("Synthesize modified status clear");
-                _document->sendFrame(modMsg.c_str(), modMsg.size(), WSOpCode::Text);
-#endif
-            }
+                _document->notifySyntheticUnmodifiedState();
+
             else
+            {
+                _document->updateModifiedOnFailedBgSave();
                 LOG_DBG("Failed to save, not synthesizing modified state");
+            }
         }
     }
 }

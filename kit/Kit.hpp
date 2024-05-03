@@ -16,6 +16,7 @@
 #include <string>
 
 #include <common/Util.hpp>
+#include <common/StateEnum.hpp>
 #include <common/Session.hpp>
 #include <common/ThreadPool.hpp>
 #include <wsd/TileDesc.hpp>
@@ -215,6 +216,7 @@ public:
 
     void renderTiles(TileCombined& tileCombined);
 
+
     bool sendTextFrame(const std::string& message)
     {
         return sendFrame(message.data(), message.size());
@@ -339,7 +341,27 @@ public:
 
     bool isBackgroundSaveProcess() const { return _isBgSaveProcess; }
 
+    /// Save is async, so we need to set 'unmodified' while we are saving
+    /// but this can transition back to modified if save fails.
+    STATE_ENUM(ModifiedState, Modified, UnModifiedButSaving, UnModified);
+
+    ModifiedState getModified() const { return _modified; }
+
+    /// Lets us get notified whether a doc is modified during bgsave.
+    void forceDocUnmodifiedForBgSave();
+
+    /// Restore the Document's 'modified' state if necessary
+    void updateModifiedOnFailedBgSave();
+
+    /// Let WSD know our true modified state affter bg save success.
+    void notifySyntheticUnmodifiedState();
+
+    /// Snoop document modified, and return true if filtering notification
+    bool trackDocModifiedState(const std::string &stateChanged);
+
 private:
+    void postForceModifiedCommand(bool modified);
+
     /// Stops theads, flushes buffers, and exits the process.
     void flushAndExit(int code);
 
@@ -366,6 +388,7 @@ private:
 
     // Connection a child background save process has to its parent: a precious thing.
     std::weak_ptr<WebSocketHandler> _saveProcessParent;
+    ModifiedState _modified;
     bool _isBgSaveProcess;
 
     // Document password provided

@@ -891,16 +891,12 @@ bool ChildSession::saveDocumentBackground(const StringVector &tokens)
     // Keep the session alive over the lifetime of an async save
     if (!_docManager->forkToSave([this, tokens]{
 
-        sendTextFrame("asyncsave start");
-
         // FIXME: re-directing our sockets perhaps over
         // a pipe to our parent process ?
         unoCommand(tokens);
 
         // FIXME: did we send our responses properly ? ...
         SigUtil::addActivity("async save process exiting");
-
-        sendTextFrame("asyncsave end");
 
         LOG_TRC("Finished synchronous background saving ...");
         // Next: we wait for an async UNO_COMMAND_RESULT on .uno:Save
@@ -3005,13 +3001,20 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
         sendTextFrame("hyperlinkclicked: " + payload);
         break;
     case LOK_CALLBACK_STATE_CHANGED:
-        sendTextFrame("statechanged: " + payload);
+    {
+        bool filter = false;
+        if (payload.find(".uno:ModifiedStatus") != std::string::npos)
+            filter = _docManager->trackDocModifiedState(payload);
+
+        if (!filter)
+            sendTextFrame("statechanged: " + payload);
         if (payload.starts_with(".uno:SlideMasterPage"))
         {
             std::string status = LOKitHelper::documentStatus(getLOKitDocument()->get());
             sendTextFrame("status: " + status);
         }
         break;
+    }
     case LOK_CALLBACK_SEARCH_NOT_FOUND:
         sendTextFrame("searchnotfound: " + payload);
         break;
@@ -3034,6 +3037,7 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
         auto success = object->get("success");
 
         bool saveCommand = false;
+
         if (!commandName.isEmpty() && commandName.toString() == ".uno:Save")
         {
             if (!Util::isMobileApp())
