@@ -314,9 +314,12 @@ noinst_PROGRAMS += coolperftest
 
 coolperftest_CPPFLAGS = ${include_paths} #-DTDOC=\"$(abs_top_srcdir)/test/data\"
 coolperftest_SOURCES = $(shared_sources) \
+                       perftest/COOLPerfTest.cpp \
+                       perftest/PerfTest.hpp \
                        perftest/PerfTest.cpp \
                        perftest/PerfTestSocketHandler.hpp \
-                       perftest/ReplaySocketHandler.hpp \
+                       perftest/PerfTestSocketHandler.cpp \
+                       perftest/SamplePerfTest.hpp \
                        common/DummyTraceEventEmitter.cpp
 endif
 
@@ -421,11 +424,6 @@ noinst_HEADERS = $(wsd_headers) $(shared_headers) $(kit_headers) \
                  test/WOPIUploadConflictCommon.hpp \
                  test/UnitWSDClient.hpp \
                  test/helpers.hpp
-if ENABLE_PERFTEST
-noinst_HEADERS += perftest/valgrind.h \
-                  perftest/callgrind.h
-endif
-
 
 GIT_BRANCH := $(shell git symbolic-ref --short HEAD)
 GIT_HASH := $(shell git log -1 --format=%h)
