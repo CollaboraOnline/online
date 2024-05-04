@@ -507,22 +507,9 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
         noCache = !COOLWSD::ForceCaching; // for cypress
 #endif
         http::Response response(http::StatusCode::OK);
+        hstsHeaders(response);
 
         const auto& config = Application::instance().config();
-
-        // HSTS hardening. Disabled in debug builds.
-#if !ENABLE_DEBUG
-        if (COOLWSD::isSSLEnabled() || COOLWSD::isSSLTermination())
-        {
-            if (config.getBool("ssl.sts.enabled", false))
-            {
-                const auto maxAge =
-                    config.getInt("ssl.sts.max_age", 31536000); // Default 1 year.
-                response.add("Strict-Transport-Security",
-                                "max-age=" + std::to_string(maxAge) + "; includeSubDomains");
-            }
-        }
-#endif
 
         Poco::URI requestUri(request.getURI());
         LOG_TRC("Fileserver request: " << requestUri.toString());
