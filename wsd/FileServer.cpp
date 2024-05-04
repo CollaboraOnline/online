@@ -1,9 +1,5 @@
 /* -*- Mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4; fill-column: 100 -*- */
 /*
- * Copyright the Collabora Online contributors.
- *
- * SPDX-License-Identifier: MPL-2.0
- *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -76,8 +72,7 @@ using Poco::Util::Application;
 
 std::map<std::string, std::pair<std::string, std::string>> FileServerRequestHandler::FileHash;
 
-namespace
-{
+namespace {
 
 int functionConversation(int /*num_msg*/, const struct pam_message** /*msg*/,
                          struct pam_response **reply, void *appdata_ptr)
@@ -528,10 +523,9 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
         {
             if (config.getBool("ssl.sts.enabled", false))
             {
-                const auto maxAge =
-                    config.getInt("ssl.sts.max_age", 31536000); // Default 1 year.
+                const auto maxAge = config.getInt("ssl.sts.max_age", 31536000); // Default 1 year.
                 response.add("Strict-Transport-Security",
-                                "max-age=" + std::to_string(maxAge) + "; includeSubDomains");
+                             "max-age=" + std::to_string(maxAge) + "; includeSubDomains");
             }
         }
 #endif
@@ -863,7 +857,6 @@ std::string FileServerRequestHandler::getRequestPathname(const HTTPRequest& requ
     requestUri.normalize();
 
     std::string path(requestUri.getPath());
-
     Poco::RegularExpression gitHashRe("/([0-9a-f]+)/");
     std::string gitHash;
     if (gitHashRe.extract(path, gitHash))
@@ -1174,19 +1167,23 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
         LOG_TRC("Denied all frame ancestors");
     }
 
-    http::Response httpResponse(http::StatusCode::OK);
-    httpResponse.set("Last-Modified", Util::getHttpTimeNow());
-    httpResponse.set("Cache-Control", "max-age=11059200");
-    httpResponse.set("ETag", COOLWSD_VERSION_HASH);
-
-    httpResponse.add("X-Content-Type-Options", "nosniff");
-    httpResponse.add("X-XSS-Protection", "1; mode=block");
-    httpResponse.add("Referrer-Policy", "no-referrer");
-
     csp.merge(config.getString("net.content_security_policy", ""));
 
+    std::ostringstream oss;
+    oss << "HTTP/1.1 200 OK\r\n"
+        "Date: " << Util::getHttpTimeNow() << "\r\n"
+        "Last-Modified: " << Util::getHttpTimeNow() << "\r\n"
+        "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
+        "Cache-Control:max-age=11059200\r\n"
+        "ETag: \"" COOLWSD_VERSION_HASH "\"\r\n"
+        "Content-Length: " << preprocess.size() << "\r\n"
+        "Content-Type: " << mimeType << "\r\n"
+        "X-Content-Type-Options: nosniff\r\n"
+        "X-XSS-Protection: 1; mode=block\r\n"
+        "Referrer-Policy: no-referrer\r\n";
+
     // Append CSP to response headers too
-    httpResponse.add("Content-Security-Policy", csp.generate());
+    oss << "Content-Security-Policy: " << csp.generate() << "\r\n";
 
     // Setup HTTP Public key pinning
     if ((COOLWSD::isSSLEnabled() || COOLWSD::isSSLTermination()) && config.getBool("ssl.hpkp[@enable]", false))
@@ -1236,20 +1233,22 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
             {
                 // Only send validation failure reports to reportUri while still allowing UAs to
                 // connect to the server
-                httpResponse.add("Public-Key-Pins-Report-Only", hpkpOss.str());
+                oss << "Public-Key-Pins-Report-Only: " << hpkpOss.str() << "\r\n";
             }
             else
             {
-                httpResponse.add("Public-Key-Pins", hpkpOss.str());
+                oss << "Public-Key-Pins: " << hpkpOss.str() << "\r\n";
             }
         }
     }
 
-    httpResponse.setBody(preprocess, mimeType);
+    oss << "\r\n"
+        << preprocess;
 
-    socket->send(httpResponse);
+    socket->send(oss.str());
     LOG_TRC("Sent file: " << relPath << ": " << preprocess);
 }
+
 
 void FileServerRequestHandler::preprocessWelcomeFile(const HTTPRequest& request,
                                                      const RequestDetails &/*requestDetails*/,
