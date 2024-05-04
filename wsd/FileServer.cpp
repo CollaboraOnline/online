@@ -72,7 +72,8 @@ using Poco::Util::Application;
 
 std::map<std::string, std::pair<std::string, std::string>> FileServerRequestHandler::FileHash;
 
-namespace {
+namespace
+{
 
 int functionConversation(int /*num_msg*/, const struct pam_message** /*msg*/,
                          struct pam_response **reply, void *appdata_ptr)
@@ -502,21 +503,9 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
         noCache = !COOLWSD::ForceCaching; // for cypress
 #endif
         http::Response response(http::StatusCode::OK);
+        hstsHeaders(response);
 
         const auto& config = Application::instance().config();
-
-        // HSTS hardening. Disabled in debug builds.
-#if !ENABLE_DEBUG
-        if (COOLWSD::isSSLEnabled() || COOLWSD::isSSLTermination())
-        {
-            if (config.getBool("ssl.sts.enabled", false))
-            {
-                const auto maxAge = config.getInt("ssl.sts.max_age", 31536000); // Default 1 year.
-                response.add("Strict-Transport-Security",
-                             "max-age=" + std::to_string(maxAge) + "; includeSubDomains");
-            }
-        }
-#endif
 
         Poco::URI requestUri(request.getURI());
         LOG_TRC("Fileserver request: " << requestUri.toString());
@@ -1411,7 +1400,6 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     socket->send(oss.str());
     LOG_TRC("Sent file: " << relPath << ": " << preprocess);
 }
-
 
 void FileServerRequestHandler::preprocessWelcomeFile(const HTTPRequest& request,
                                                      const RequestDetails& requestDetails,
