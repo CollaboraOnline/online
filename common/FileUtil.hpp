@@ -140,6 +140,10 @@ namespace FileUtil
     /// have equal size and every byte of their contents match.
     bool compareFileContents(const std::string& rhsPath, const std::string& lhsPath);
 
+    /// Reads the whole file into the given buffer. Only for small files.
+    /// Does *not* clear the buffer before writing to it. Returns the number of bytes read, -1 for error.
+    ssize_t readFile(const std::string& path, std::vector<char>& buffer, int maxSize = 256 * 1024);
+
     /// Reads the whole file to memory. Only for small files.
     std::unique_ptr<std::vector<char>> readFile(const std::string& path, int maxSize = 256 * 1024);
 
