@@ -15,6 +15,7 @@
 
 #include <HttpRequest.hpp>
 #include <Socket.hpp>
+#include <COOLWSD.hpp>
 
 #include <Poco/MemoryStream.h>
 #include <Poco/Util/LayeredConfiguration.h>
@@ -73,6 +74,24 @@ public:
     static const std::string *getCompressedFile(const std::string &path);
 
     static const std::string *getUncompressedFile(const std::string &path);
+
+    /// If configured and necessary, sets the HSTS headers.
+    static void hstsHeaders([[maybe_unused]] http::Response& response)
+    {
+        // HSTS hardening. Disabled in debug builds.
+#if !ENABLE_DEBUG
+        if (COOLWSD::isSSLEnabled() || COOLWSD::isSSLTermination())
+        {
+            if (COOLWSD::getConfigValue<bool>("ssl.sts.enabled", false))
+            {
+                static const auto maxAge =
+                    COOLWSD::getConfigValue<int>("ssl.sts.max_age", 31536000); // Default 1 year.
+                response.add("Strict-Transport-Security",
+                             "max-age=" + std::to_string(maxAge) + "; includeSubDomains");
+            }
+        }
+#endif
+    }
 
 private:
     static std::map<std::string, std::pair<std::string, std::string>> FileHash;
