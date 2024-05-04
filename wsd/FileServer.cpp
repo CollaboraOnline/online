@@ -68,9 +68,7 @@
 #include <openssl/evp.h>
 
 using Poco::Net::HTMLForm;
-using Poco::Net::HTTPBasicCredentials;
 using Poco::Net::HTTPRequest;
-using Poco::Net::HTTPResponse;
 using Poco::Net::NameValueCollection;
 using Poco::Util::Application;
 
