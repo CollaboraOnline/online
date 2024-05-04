@@ -582,7 +582,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
 
         if (endPoint == "welcome.html")
         {
-            preprocessWelcomeFile(request, response, requestDetails, message, socket);
+            preprocessWelcomeFile(request, requestDetails, message, socket);
             return;
         }
 
@@ -593,7 +593,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
             endPoint == "uno-localizations.json" ||
             endPoint == "uno-localizations-override.json")
         {
-            preprocessFile(request, response, requestDetails, message, socket);
+            preprocessFile(request, requestDetails, message, socket);
             return;
         }
 
@@ -605,7 +605,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
                 endPoint == "adminAnalytics.html" ||
                 endPoint == "adminLog.html")
             {
-                preprocessAdminFile(request, response, requestDetails, socket);
+                preprocessAdminFile(request, requestDetails, socket);
                 return;
             }
 
@@ -881,8 +881,7 @@ constexpr char BRANDING_UNSUPPORTED[] = "branding-unsupported";
 #endif
 
 void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
-                                              http::Response& httpResponse,
-                                              const RequestDetails& requestDetails,
+                                              const RequestDetails &requestDetails,
                                               Poco::MemoryInputStream& message,
                                               const std::shared_ptr<StreamSocket>& socket)
 {
@@ -1175,6 +1174,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
         LOG_TRC("Denied all frame ancestors");
     }
 
+    http::Response httpResponse(http::StatusCode::OK);
     httpResponse.set("Last-Modified", Util::getHttpTimeNow());
     httpResponse.set("Cache-Control", "max-age=11059200");
     httpResponse.set("ETag", COOLWSD_VERSION_HASH);
@@ -1252,11 +1252,11 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
 }
 
 void FileServerRequestHandler::preprocessWelcomeFile(const HTTPRequest& request,
-                                                     http::Response& response,
-                                                     const RequestDetails& /*requestDetails*/,
+                                                     const RequestDetails &/*requestDetails*/,
                                                      Poco::MemoryInputStream& /*message*/,
                                                      const std::shared_ptr<StreamSocket>& socket)
 {
+    Poco::Net::HTTPResponse response;
     const std::string relPath = getRequestPathname(request);
     LOG_DBG("Preprocessing file: " << relPath);
     std::string templateWelcome = *getUncompressedFile(relPath);
@@ -1269,19 +1269,24 @@ void FileServerRequestHandler::preprocessWelcomeFile(const HTTPRequest& request,
     response.set("Server", HTTP_SERVER_STRING);
     response.set("Date", Util::getHttpTimeNow());
 
-    response.setBody(std::move(templateWelcome));
-    socket->send(response);
+    response.setContentType("text/html");
+    response.setChunkedTransferEncoding(false);
+
+    std::ostringstream oss;
+    response.write(oss);
+    oss << templateWelcome;
+    socket->send(oss.str());
     LOG_TRC("Sent file: " << relPath);
 }
 
 void FileServerRequestHandler::preprocessAdminFile(const HTTPRequest& request,
-                                                   http::Response& response,
-                                                   const RequestDetails& requestDetails,
+                                                   const RequestDetails &requestDetails,
                                                    const std::shared_ptr<StreamSocket>& socket)
 {
     if (!COOLWSD::AdminEnabled)
         throw Poco::FileAccessDeniedException("Admin console disabled");
 
+    http::Response response(http::StatusCode::OK);
     std::string jwtToken;
     if (!isAdminLoggedIn(request, jwtToken))
     {
