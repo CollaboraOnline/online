@@ -10,7 +10,13 @@
 #include <memory>
 #include <string>
 
-#include <HttpRequest.hpp>
+namespace Poco
+{
+    namespace Net
+    {
+        class HTTPResponse;
+    }
+}
 
 class StreamSocket;
 
@@ -29,7 +35,7 @@ void sendErrorAndShutdown(int errorCode, const std::shared_ptr<StreamSocket>& so
 /// Sends file as HTTP response and shutdown the socket.
 void sendFileAndShutdown(const std::shared_ptr<StreamSocket>& socket, const std::string& path,
                          const std::string& mediaType,
-                         http::Response& response, bool noCache = false,
+                         Poco::Net::HTTPResponse* optResponse = nullptr, bool noCache = false,
                          bool deflate = false, const bool headerOnly = false);
 
 } // namespace HttpHelper

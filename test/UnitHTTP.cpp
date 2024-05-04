@@ -176,20 +176,18 @@ public:
         LOG_TST("Receiving...");
         char buffer[4096] = { 0, };
         int got = socket->receiveBytes(buffer, 4096);
+        static const std::string start =
+            "HTTP/1.0 200 OK\r\n"
+            "Content-Disposition: attachment; filename=\"test.txt\"\r\n";
 
-        http::Response httpResponse;
-        LOK_ASSERT_MESSAGE("Expected to receive valid data",
-                           httpResponse.readData(buffer, got) > 0);
-        LOK_ASSERT(!httpResponse.statusLine().httpVersion().empty());
-        LOK_ASSERT(!httpResponse.statusLine().reasonPhrase().empty());
-        LOK_ASSERT_EQUAL(static_cast<int>(http::StatusCode::OK),
-                         static_cast<int>(httpResponse.statusLine().statusCode()));
-        LOK_ASSERT(httpResponse.statusLine().statusCategory() ==
-                   http::StatusLine::StatusCodeClass::Successful);
-        LOK_ASSERT_EQUAL(std::string("HTTP/1.1"), httpResponse.statusLine().httpVersion());
-        LOK_ASSERT_EQUAL(std::string("OK"), httpResponse.statusLine().reasonPhrase());
-        LOK_ASSERT_EQUAL(std::string("attachment; filename=\"test.txt\""),
-                         httpResponse.header().get("Content-Disposition"));
+        if (strncmp(buffer, start.c_str(), start.size()))
+        {
+            LOG_TST("missing pre-amble " << got << " [" << buffer << "] vs. expected [" << start
+                                         << ']');
+            LOK_ASSERT(Util::startsWith(std::string(buffer), start));
+            exitTest(TestResult::Failed);
+            return;
+        }
 
         // TODO: check content-length etc.
 

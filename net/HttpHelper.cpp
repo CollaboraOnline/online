@@ -85,9 +85,14 @@ void sendDeflatedFileContent(const std::shared_ptr<StreamSocket>& socket, const 
 }
 
 void sendFileAndShutdown(const std::shared_ptr<StreamSocket>& socket, const std::string& path,
-                         const std::string& mediaType, http::Response& response,
+                         const std::string& mediaType, Poco::Net::HTTPResponse* optResponse,
                          const bool noCache, const bool deflate, const bool headerOnly)
 {
+    Poco::Net::HTTPResponse* response = optResponse;
+    Poco::Net::HTTPResponse localResponse;
+    if (!response)
+        response = &localResponse;
+
     FileUtil::Stat st(path);
     if (st.bad())
     {
@@ -99,19 +104,19 @@ void sendFileAndShutdown(const std::shared_ptr<StreamSocket>& socket, const std:
     if (!noCache)
     {
         // 60 * 60 * 24 * 128 (days) = 11059200
-        response.set("Cache-Control", "max-age=11059200");
-        response.set("ETag", "\"" COOLWSD_VERSION_HASH "\"");
+        response->set("Cache-Control", "max-age=11059200");
+        response->set("ETag", "\"" COOLWSD_VERSION_HASH "\"");
     }
     else
     {
-        response.set("Cache-Control", "no-cache");
+        response->set("Cache-Control", "no-cache");
     }
 
-    response.setContentType(mediaType);
-    response.add("X-Content-Type-Options", "nosniff");
+    response->setContentType(mediaType);
+    response->add("X-Content-Type-Options", "nosniff");
     //Should we add the header anyway ?
     if (headerOnly)
-        response.add("Connection", "close");
+        response->add("Connection", "close");
 
     int bufferSize = std::min<std::size_t>(st.size(), Socket::MaximumSendBufferSize);
     if (static_cast<long>(st.size()) >= socket->getSendBufferSize())
@@ -125,20 +130,20 @@ void sendFileAndShutdown(const std::shared_ptr<StreamSocket>& socket, const std:
     // IE/Edge before enabling the deflate again
     if (!deflate || true)
     {
-        response.setContentLength(st.size());
+        response->setContentLength(st.size());
         LOG_TRC('#' << socket->getFD() << ": Sending " << (headerOnly ? "header for " : "")
                     << " file [" << path << "].");
-        socket->send(response);
+        socket->send(*response);
 
         if (!headerOnly)
             sendUncompressedFileContent(socket, path, bufferSize);
     }
     else
     {
-        response.set("Content-Encoding", "deflate");
+        response->set("Content-Encoding", "deflate");
         LOG_TRC('#' << socket->getFD() << ": Sending " << (headerOnly ? "header for " : "")
                     << " file [" << path << "].");
-        socket->send(response);
+        socket->send(*response);
 
         if (!headerOnly)
             sendDeflatedFileContent(socket, path, st.size());

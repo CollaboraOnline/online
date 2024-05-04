@@ -93,9 +93,7 @@ public:
         {
             LOG_TST("FakeWOPIHost: Handling template GetFile: " << uriReq.getPath());
 
-            http::Response response(http::StatusCode::OK);
-            HttpHelper::sendFileAndShutdown(socket, TDOC "/test.ott", /*mediaType=*/std::string(),
-                                            response);
+            HttpHelper::sendFileAndShutdown(socket, TDOC "/test.ott", "");
 
             return true;
         }

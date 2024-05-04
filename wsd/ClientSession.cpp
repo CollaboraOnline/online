@@ -774,7 +774,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     }
     else if (tokens.equals(0, "moveselectedclientparts"))
     {
-        if (!_isTextDocument)
+        if(!_isTextDocument)
         {
             int nPosition;
             if (tokens.size() != 2 ||
@@ -1729,11 +1729,11 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
                 LOG_TRC("Sending file: " << resultURL.getPath());
 
                 const std::string fileName = Poco::Path(resultURL.getPath()).getFileName();
-                http::Response response(http::StatusCode::OK);
+                Poco::Net::HTTPResponse response;
                 if (!fileName.empty())
                     response.set("Content-Disposition", "attachment; filename=\"" + fileName + '"');
 
-                HttpHelper::sendFileAndShutdown(_saveAsSocket, resultURL.getPath(), mimeType, response);
+                HttpHelper::sendFileAndShutdown(_saveAsSocket, resultURL.getPath(), mimeType, &response);
             }
 
             // Conversion is done, cleanup this fake session.
@@ -2138,20 +2138,20 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
             LOG_TRC("Sending get-thumbnail response.");
             bool error = false;
 
-                if (firstLine.find("error") != std::string::npos)
-                    error = true;
+            if (firstLine.find("error") != std::string::npos)
+                error = true;
 
-                if (!error)
-                {
-                    int firstLineSize = firstLine.size() + 1;
-                    std::string thumbnail(payload->data().data() + firstLineSize, payload->data().size() - firstLineSize);
+            if (!error)
+            {
+                int firstLineSize = firstLine.size() + 1;
+                std::string thumbnail(payload->data().data() + firstLineSize, payload->data().size() - firstLineSize);
 
-                    http::Response httpResponse(http::StatusCode::OK);
-                    httpResponse.set("Last-Modified", Util::getHttpTimeNow());
-                    httpResponse.set("X-Content-Type-Options", "nosniff");
-                    httpResponse.setBody(thumbnail, "image/png");
-                    _saveAsSocket->sendAndShutdown(httpResponse);
-                }
+                http::Response httpResponse(http::StatusCode::OK);
+                httpResponse.set("Last-Modified", Util::getHttpTimeNow());
+                httpResponse.set("X-Content-Type-Options", "nosniff");
+                httpResponse.setBody(thumbnail, "image/png");
+                _saveAsSocket->sendAndShutdown(httpResponse);
+            }
 
             if (error)
             {
