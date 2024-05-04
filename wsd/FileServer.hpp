@@ -69,7 +69,7 @@ public:
 
     /// Authenticate the admin.
     static bool authenticateAdmin(const Poco::Net::HTTPBasicCredentials& credentials,
-                                  http::Response& response, std::string& jwtToken);
+                                  Poco::Net::HTTPResponse& response, std::string& jwtToken);
 
     static void handleRequest(const Poco::Net::HTTPRequest& request,
                               const RequestDetails &requestDetails,
