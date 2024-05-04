@@ -348,7 +348,7 @@ public:
     ModifiedState getModified() const { return _modified; }
 
     /// Lets us get notified whether a doc is modified during bgsave.
-    void forceDocUnmodifiedForBgSave();
+    void forceDocUnmodifiedForBgSave(int viewId);
 
     /// Restore the Document's 'modified' state if necessary
     void updateModifiedOnFailedBgSave();
