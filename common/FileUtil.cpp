@@ -363,22 +363,23 @@ namespace FileUtil
                           std::istreambuf_iterator<char>(lhs.rdbuf()));
     }
 
-    std::unique_ptr<std::vector<char>> readFile(const std::string& path, int maxSize)
+    ssize_t readFile(const std::string& path, std::vector<char>& data, int maxSize)
     {
         const int fd = ::open(path.c_str(), O_RDONLY);
         if (fd < 0)
-            return nullptr;
+            return -1;
 
         struct stat st;
         if (::fstat(fd, &st) != 0 || st.st_size > maxSize)
         {
             ::close(fd);
-            return nullptr;
+            return -1;
         }
 
+        const std::size_t originalSize = data.size();
         auto remainingSize = st.st_size;
-        auto data = std::make_unique<std::vector<char>>(remainingSize);
-        off_t off = 0;
+        data.resize(originalSize + remainingSize);
+        off_t off = originalSize;
         for (;;)
         {
             if (remainingSize == 0)
@@ -388,7 +389,7 @@ namespace FileUtil
             }
 
             int n;
-            while ((n = ::read(fd, &(*data)[off], remainingSize)) < 0 && errno == EINTR)
+            while ((n = ::read(fd, &data[off], remainingSize)) < 0 && errno == EINTR)
             {
             }
 
@@ -398,7 +399,8 @@ namespace FileUtil
                     break;
 
                 ::close(fd);
-                return nullptr; // Error.
+                data.resize(originalSize);
+                return -1; // Error.
             }
 
             off += n;
@@ -406,7 +408,13 @@ namespace FileUtil
         }
 
         close(fd);
-        return data;
+        return st.st_size;
+    }
+
+    std::unique_ptr<std::vector<char>> readFile(const std::string& path, int maxSize)
+    {
+        auto data = std::make_unique<std::vector<char>>(maxSize);
+        return (readFile(path, *data, maxSize) >= 0) ? std::move(data) : nullptr;
     }
 
 } // namespace FileUtil
