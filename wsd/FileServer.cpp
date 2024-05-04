@@ -13,9 +13,8 @@
 #include "Auth.hpp"
 #include "COOLWSD.hpp"
 #include "Exceptions.hpp"
+#include "FileServer.hpp"
 #include "FileUtil.hpp"
-#include "HttpRequest.hpp"
-#include "RequestDetails.hpp"
 #include "ServerURL.hpp"
 #include <Common.hpp>
 #include <Crypto.hpp>
@@ -241,7 +240,8 @@ bool FileServerRequestHandler::isAdminLoggedIn(const Poco::Net::HTTPRequest& req
 }
 
 bool FileServerRequestHandler::authenticateAdmin(const Poco::Net::HTTPBasicCredentials& credentials,
-                                                 http::Response& response, std::string& jwtToken)
+                                                 Poco::Net::HTTPResponse& response,
+                                                 std::string& jwtToken)
 {
     assert(COOLWSD::AdminEnabled);
 
@@ -279,16 +279,35 @@ bool FileServerRequestHandler::authenticateAdmin(const Poco::Net::HTTPBasicCrede
     // bundlify appears to add an extra /dist -> dist/dist/admin
     cookie.setPath(COOLWSD::ServiceRoot + "/browser/dist/");
     cookie.setSecure(COOLWSD::isSSLEnabled());
-    response.header().addCookie(cookie.toString());
+    response.addCookie(cookie);
 
     return true;
 }
 
-bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http::Response& response)
+bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request,
+                                               HTTPResponse &response)
 {
     std::string jwtToken;
     return isAdminLoggedIn(request, jwtToken) ||
            authenticateAdmin(Poco::Net::HTTPBasicCredentials(request), response, jwtToken);
+}
+
+bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http::Response& response)
+{
+    // For now, we reuse the exiting implementation, which uses Poco HTTPCookie.
+    Poco::Net::HTTPResponse pocoResponse;
+    if (isAdminLoggedIn(request, pocoResponse))
+    {
+        // Copy the headers, including the cookies.
+        for (const auto& pair : pocoResponse)
+        {
+            response.set(pair.first, pair.second);
+        }
+
+        return true;
+    }
+
+    return false;
 }
 
 #if ENABLE_DEBUG
@@ -1285,7 +1304,7 @@ void FileServerRequestHandler::preprocessAdminFile(const HTTPRequest& request,
     if (!COOLWSD::AdminEnabled)
         throw Poco::FileAccessDeniedException("Admin console disabled");
 
-    http::Response response(http::StatusCode::OK);
+    Poco::Net::HTTPResponse response;
     std::string jwtToken;
     if (!isAdminLoggedIn(request, jwtToken))
     {
@@ -1349,8 +1368,13 @@ void FileServerRequestHandler::preprocessAdminFile(const HTTPRequest& request,
     response.set("Server", HTTP_SERVER_STRING);
     response.set("Date", Util::getHttpTimeNow());
 
-    response.setBody(std::move(templateFile));
-    socket->send(response);
+    response.setContentType("text/html");
+    response.setChunkedTransferEncoding(false);
+
+    std::ostringstream oss;
+    response.write(oss);
+    oss << templateFile;
+    socket->send(oss.str());
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
