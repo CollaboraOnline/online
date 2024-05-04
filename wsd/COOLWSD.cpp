@@ -3859,8 +3859,7 @@ private:
                      requestDetails.equals(1, "getMetrics"))
             {
                 // See metrics.txt
-                std::shared_ptr<http::Response> response =
-                    std::make_shared<http::Response>(http::StatusCode::OK);
+                std::shared_ptr<Poco::Net::HTTPResponse> response(new Poco::Net::HTTPResponse());
 
                 if (!COOLWSD::AdminEnabled)
                     throw Poco::FileAccessDeniedException("Admin console disabled");

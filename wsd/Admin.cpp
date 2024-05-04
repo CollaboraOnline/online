@@ -980,16 +980,13 @@ void Admin::getMetrics(std::ostringstream &metrics)
     _model.getMetrics(metrics);
 }
 
-void Admin::sendMetrics(const std::shared_ptr<StreamSocket>& socket,
-                        const std::shared_ptr<http::Response>& response)
+void Admin::sendMetrics(const std::shared_ptr<StreamSocket>& socket, const std::shared_ptr<Poco::Net::HTTPResponse>& response)
 {
     std::ostringstream oss;
-    getMetrics(oss);
-
     response->add("Connection", "close");
-    response->setBody(oss.str(), "text/plain");
-
-    socket->send(*response);
+    response->write(oss);
+    getMetrics(oss);
+    socket->send(oss.str());
     socket->shutdown();
 }
 
