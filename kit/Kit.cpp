@@ -1483,7 +1483,7 @@ bool Document::forkToSave(const std::function<void()> &childSave, int viewId)
         parentSocket.reset();
         // now we have a socket to the child: childSocket
 
-        forceDocUnmodifiedForBgSave();
+        forceDocUnmodifiedForBgSave(viewId);
 
         auto bgSaveChild = std::make_shared<BgSaveParentWebSocketHandler>(
             "bgsv_kit_ws", pid, shared_from_this(),
@@ -2285,15 +2285,20 @@ void Document::postForceModifiedCommand(bool modified)
     args += "\" } }";
 
     LOG_TRC("post force modified command: .uno:Modified " << args);
+
+    // Interestingly this seems not to notify the modified state change.
     getLOKitDocument()->postUnoCommand(
-        ".uno:Modified", args.c_str(), true);
+        ".uno:Modified", args.c_str(),
+        false /* avoid an un-necessary unocommandresult */);
 }
 
-void Document::forceDocUnmodifiedForBgSave()
+void Document::forceDocUnmodifiedForBgSave(int viewId)
 {
     LOG_TRC("force document unmodified from state " << toString(_modified));
     if (_modified == ModifiedState::Modified)
     {
+        getLOKitDocument()->setView(viewId);
+
         SigUtil::addActivity("Force clear modified");
         _modified = ModifiedState::UnModifiedButSaving;
         // but tell the core we are not modified to track real changes

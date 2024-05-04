@@ -33,7 +33,8 @@ class UnitSaveTorture : public UnitWSD
 
     void saveTortureOne(const std::string& name, const std::string& docName);
 
-    TestResult testSaveTorture();
+    void testModified();
+    void testSaveTorture();
 
     void configure(Poco::Util::LayeredConfiguration& config) override
     {
@@ -76,26 +77,33 @@ public:
 namespace {
     void modifyDocument(const std::shared_ptr<http::WebSocketSession> &wsSession)
     {
-        wsSession->sendMessage(std::string("key type=input char=97 key=0"));
-        wsSession->sendMessage(std::string("key type=up char=0 key=512"));
+        // move to another cell?
+        wsSession->sendMessage(std::string("key type=input char=13 key=1280"));
+        wsSession->sendMessage(std::string("key type=up char=0 key=1280"));
+        // enter - some text.
+        wsSession->sendMessage(std::string("textinput id=0 text=foo"));
+        // enter - commit to a cell in calc eg.
+        wsSession->sendMessage(std::string("key type=input char=13 key=1280"));
+        wsSession->sendMessage(std::string("key type=up char=0 key=1280"));
     }
 
-    bool waitForModifiedStatus(const std::string& name, const std::shared_ptr<http::WebSocketSession> &wsSession)
+    bool waitForModifiedStatus(const std::string& name, const std::shared_ptr<http::WebSocketSession> &wsSession,
+                               std::chrono::seconds timeout = std::chrono::seconds(10))
     {
         const auto testname = __func__;
 
-        auto timeout = std::chrono::seconds(10);
         std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
         while (true)
         {
-            if (std::chrono::steady_clock::now() - start > std::chrono::seconds(10))
+            if (std::chrono::steady_clock::now() - start > timeout)
             {
                 LOK_ASSERT_FAIL("Timed out waiting for modified status change");
                 break;
             }
             std::vector<char> message
                 = wsSession->waitForMessage("statechanged:", timeout, name);
-            LOK_ASSERT(message.size() > 0);
+            if (message.empty())
+                continue; // fail above more helpfully
 
             auto tokens = StringVector::tokenize(message.data(), message.size());
             if (tokens[1] == ".uno:ModifiedStatus=false")
@@ -103,6 +111,60 @@ namespace {
             else if (tokens[1] == ".uno:ModifiedStatus=true")
                 return true;
         }
+    }
+}
+
+void UnitSaveTorture::testModified()
+{
+    std::string name = "testModified";
+    std::string docName = "empty.ods";
+
+    std::string documentPath, documentURL;
+    helpers::getDocumentPathAndURL(docName, documentPath, documentURL, name);
+
+    TST_LOG("Starting test on " << documentURL << ' ' << documentPath);
+
+    std::shared_ptr<SocketPoll> poll = std::make_shared<SocketPoll>("WebSocketPoll");
+    poll->startThread();
+
+    Poco::URI uri(helpers::getTestServerURI());
+    auto wsSession = helpers::loadDocAndGetSession(poll, docName, uri, testname);
+
+    // It is vital that we can change the modified status successfully
+    // and also get correct notifications from the core for bgsave to work.
+    for (size_t i = 0; i < 4; ++i)
+    {
+        TST_LOG("modify document");
+        modifyDocument(wsSession);
+        LOK_ASSERT_EQUAL(waitForModifiedStatus(name, wsSession, std::chrono::seconds(3)), true);
+
+        std::string args = "{ \"Modified\": { \"type\": \"boolean\", \"value\": \"false\" } }";
+        TST_LOG("post force modified command: .uno:Modified " << args);
+        wsSession->sendMessage(std::string("uno .uno:Modified ") + args);
+
+        TST_LOG("wait for confirmation of (non-)modification:");
+        LOK_ASSERT_EQUAL(waitForModifiedStatus(name, wsSession, std::chrono::seconds(3)), false);
+    }
+
+    poll->joinThread();
+}
+
+namespace {
+    /*
+     * A sleep in a unit test !? but ... SfxBinding notifies its
+     * state changes around 250ms after they are made to reduce
+     * spamming clients; so - if we eg. do a save that forces an
+     * un-modified state, and then immediately do a modification
+     * we will get no notification - from the binding's perspective
+     * we continue to be unmodified - no sweat; no notification.
+     *
+     * But we want to see and check all those transitions - so
+     * in theory we need to wait.
+     */
+    void sleepForIdleModificationNotification(const std::string &testname)
+    {
+        LOG_TST("Sleep to let idle non-synthetic ModifiedState notification catch up");
+        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     }
 }
 
@@ -122,46 +184,103 @@ void UnitSaveTorture::saveTortureOne(
     Poco::URI uri(helpers::getTestServerURI());
     auto wsSession = helpers::loadDocAndGetSession(poll, docName, uri, testname);
 
-    std::vector<char> message
-        = wsSession->waitForMessage("status:", timeout, name);
-    const std::string status = COOLProtocol::getFirstLine(message);
-
-    modifyDocument(wsSession);
-
-    LOK_ASSERT_EQUAL(waitForModifiedStatus(name, wsSession), true);
-
-    createStamp("holdsave");
-
-    // Force a synchronous save-as-auto-save now
-    forceAutosave = true;
-    wsSession->sendMessage(std::string("save dontTerminateEdit=0 dontSaveIfUnmodified=0"));
-
-    removeStamp("holdsave");
-
-    // Check the save succeeded
-    message = wsSession->waitForMessage("unocommandresult:", timeout, name);
-    LOK_ASSERT(message.size() > 0);
-    Poco::JSON::Object::Ptr object;
-    LOK_ASSERT(JsonUtil::parseJSON(std::string(message.data(), message.size()), object));
-    LOK_ASSERT_EQUAL(JsonUtil::getJSONValue<bool>(object, "success"), true);
-
-    // Autosaves and notifies us of clean modification state
-    LOK_ASSERT_EQUAL(waitForModifiedStatus(name, wsSession), false);
-
+    // ----------------- simple load/modify/bgsave  -----------------
+    // ----------------- load/modify/bgsave+modify  -----------------
     // Next: Modify, force an autosave, and while saving, modify again ...
+
+    static struct {
+        bool modifyFirst;
+        bool modifyAfterSaveStarts;
+        const char *description;
+    } options[] = {
+        { true, false,  "simple load/modify/bgsave" },
+        { true, true,   "load/modify/bgsave-start + modify + bgsave-end" },
+//        { false, false, "un-modified, just save and lets see" }
+    };
+
+    for (size_t i = 0; i < std::size(options); ++i)
+    {
+        LOG_TST("saveTorture test stage " << i << " " << options[i].description);
+
+        if (options[i].modifyFirst)
+        {
+            modifyDocument(wsSession);
+
+            LOG_TST("wait for first modified status");
+            LOK_ASSERT_EQUAL(waitForModifiedStatus(name, wsSession), true);
+        }
+
+        createStamp("holdsave");
+
+        // Force a background save-as-auto-save now
+        forceAutosave = true;
+        wsSession->sendMessage(std::string("save dontTerminateEdit=0 dontSaveIfUnmodified=0"));
+
+        if (options[i].modifyAfterSaveStarts)
+        {
+            LOG_TST("Give the on-save modification clear - time to get emitted");
+            sleepForIdleModificationNotification(testname);
+
+            LOG_TST("Modify after saving starts");
+            modifyDocument(wsSession);
+
+            LOK_ASSERT_EQUAL(waitForModifiedStatus(name, wsSession, std::chrono::seconds(3)), true);
+        }
+
+        LOG_TST("Allow saving to continue");
+        removeStamp("holdsave");
+
+        std::vector<char> message;
+
+        // Check the save succeeded
+        while (true)
+        {
+            message = wsSession->waitForMessage("unocommandresult:", timeout, name);
+            LOK_ASSERT(message.size() > 0);
+            Poco::JSON::Object::Ptr object;
+            LOK_ASSERT(JsonUtil::parseJSON(std::string(message.data(), message.size()), object));
+
+            // We can get .uno:Modified here.
+            if (JsonUtil::getJSONValue<std::string>(object, "commandName") == ".uno:Save")
+            {
+                LOK_ASSERT_EQUAL(JsonUtil::getJSONValue<bool>(object, "success"), true);
+                break;
+            }
+        }
+
+        if (!options[i].modifyAfterSaveStarts)
+        {
+            LOG_TST("wait for modified status");
+
+            // Autosaves and synthetically notifies us of clean modification state
+            LOK_ASSERT_EQUAL(waitForModifiedStatus(name, wsSession), false);
+
+            sleepForIdleModificationNotification(testname);
+
+            // FIXME: if this happened in a progress callback during save; we'd ignore it (?)
+            LOK_ASSERT_EQUAL(waitForModifiedStatus(name, wsSession), false);
+        }
+        else // we don't get this - it is still modified
+        {
+            // Restore the document un-modified state
+            wsSession->sendMessage(std::string("save dontTerminateEdit=0 dontSaveIfUnmodified=0"));
+            LOG_TST("wait for cleanup of modified state before end of test");
+            LOK_ASSERT_EQUAL(waitForModifiedStatus(name, wsSession), false);
+        }
+    }
+
+    poll->joinThread();
 }
 
-UnitBase::TestResult UnitSaveTorture::testSaveTorture()
+void UnitSaveTorture::testSaveTorture()
 {
-    std::vector<std::string> docNames = { "empty.ods", "empty.odt" };
-    //, "empty.odp", "empty.odg" }; - modify command needs twekaing ...
+    std::vector<std::string> docNames = { "empty.odt", "empty.ods" };
+    // TODO: "empty.odp", "empty.odg" - modification method needs tweaking.
     for (const auto& docName : docNames)
     {
         const auto name = "saveTorture_" + docName + ' ';
         saveTortureOne(name, docName);
     }
-
-    return TestResult::Ok;
 }
 
 UnitSaveTorture::UnitSaveTorture()
@@ -176,8 +295,11 @@ UnitSaveTorture::UnitSaveTorture()
 
 void UnitSaveTorture::invokeWSDTest()
 {
-    auto result = testSaveTorture();
-    exitTest(result);
+    testModified();
+
+    testSaveTorture();
+
+    exitTest(TestResult::Ok);
 }
 
 // Inside the forkit & kit processes
@@ -215,9 +337,6 @@ public:
         std::cerr << "\n\npost background save process fork\n\n\n";
 
         waitWhileStamp("holdsave");
-
-        // FIXME: create stamp files in file-system to avoid collision
-        // and to flag failure.
     }
 
     virtual void preBackgroundSaveExit() override
