@@ -74,6 +74,9 @@ using Poco::Util::Application;
 
 std::map<std::string, std::pair<std::string, std::string>> FileServerRequestHandler::FileHash;
 
+// We have files that are at least 2.5 MB already.
+constexpr auto MaxFileSizeToCacheInBytes = 5 * 1024 * 1024;
+
 namespace
 {
 
@@ -826,22 +829,8 @@ void FileServerRequestHandler::readDirToHash(const std::string &basePath, const 
             filesRead.append(currentFile->d_name);
             filesRead += ' ';
 
-            std::ifstream file(basePath + relPath, std::ios::binary);
-
             std::string uncompressedFile;
-            uncompressedFile.resize(fileStat.st_size);
-            long unsigned int pos = 0;
-            do
-            {
-                file.read(&uncompressedFile[pos], fileStat.st_size);
-                const long unsigned int size = file.gcount();
-                if (size == 0)
-                    break;
-
-                pos += size;
-
-            } while (true);
-
+            FileUtil::readFile(basePath + relPath, uncompressedFile);
             FileHash.emplace(prefix + relPath,
                              std::make_pair(std::move(uncompressedFile), std::string()));
         }
@@ -862,43 +851,39 @@ void FileServerRequestHandler::readDirToHash(const std::string &basePath, const 
             filesRead.append(currentFile->d_name);
             filesRead += ' ';
 
-            std::ifstream file(basePath + relPath, std::ios::binary);
-
-            std::unique_ptr<char[]> buf = std::make_unique<char[]>(fileStat.st_size);
             std::string compressedFile;
-            compressedFile.reserve(fileStat.st_size);
             std::string uncompressedFile;
-            uncompressedFile.reserve(fileStat.st_size);
-            do
+            const ssize_t size =
+                FileUtil::readFile(basePath + relPath, uncompressedFile, MaxFileSizeToCacheInBytes);
+            assert(size < MaxFileSizeToCacheInBytes && "MaxFileSizeToCacheInBytes is too small for "
+                                                       "static-file serving; please increase it");
+            if (size > 0)
             {
-                file.read(&buf[0], fileStat.st_size);
-                const long unsigned int size = file.gcount();
-                if (size == 0)
-                    break;
-
                 const long unsigned int compSize = compressBound(size);
-                char *cbuf = (char *)calloc(compSize, sizeof(char));
-
-                strm.next_in = (unsigned char *)&buf[0];
+                compressedFile.resize(compSize);
+                strm.next_in = (unsigned char*)&uncompressedFile[0];
                 strm.avail_in = size;
                 strm.avail_out = compSize;
-                strm.next_out = (unsigned char *)&cbuf[0];
+                strm.next_out = (unsigned char*)&compressedFile[0];
                 strm.total_out = strm.total_in = 0;
 
                 const int deflateResult = deflate(&strm, Z_FINISH);
                 if (deflateResult != Z_OK && deflateResult != Z_STREAM_END)
                 {
-                    LOG_ERR("Failed to deflate, result: " << deflateResult);
-                    free(cbuf);
-                    break;
+                    LOG_ERR("Failed to deflate [" << basePath + relPath
+                                                  << "], result: " << deflateResult);
+                    compressedFile.clear();
                 }
-
-                compressedFile.append(cbuf, compSize - strm.avail_out);
-                free(cbuf);
-
-                uncompressedFile.append(buf.get(), size);
-
-            } while(true);
+                else
+                {
+                    compressedFile.resize(compSize - strm.avail_out);
+                }
+            }
+            else if (size != 0)
+            {
+                LOG_ERR("File [" << basePath + relPath
+                                 << "] is too large to cache and serve. Ignoring");
+            }
 
             FileHash.emplace(prefix + relPath, std::make_pair(std::move(uncompressedFile),
                                                               std::move(compressedFile)));
