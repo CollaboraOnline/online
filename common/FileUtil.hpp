@@ -13,6 +13,7 @@
 
 #include <cerrno>
 #include <chrono>
+#include <fcntl.h>
 #include <string>
 #include <sys/stat.h>
 
@@ -142,7 +143,54 @@ namespace FileUtil
 
     /// Reads the whole file into the given buffer. Only for small files.
     /// Does *not* clear the buffer before writing to it. Returns the number of bytes read, -1 for error.
-    ssize_t readFile(const std::string& path, std::vector<char>& buffer, int maxSize = 256 * 1024);
+    template <typename T>
+    ssize_t readFile(const std::string& path, T& data, int maxSize = 256 * 1024)
+    {
+        const int fd = ::open(path.c_str(), O_RDONLY);
+        if (fd < 0)
+            return -1;
+
+        struct stat st;
+        if (::fstat(fd, &st) != 0 || st.st_size > maxSize)
+        {
+            ::close(fd);
+            return -1;
+        }
+
+        const std::size_t originalSize = data.size();
+        auto remainingSize = st.st_size;
+        data.resize(originalSize + remainingSize);
+        off_t off = originalSize;
+        for (;;)
+        {
+            if (remainingSize == 0)
+            {
+                // Nothing to read.
+                break;
+            }
+
+            int n;
+            while ((n = ::read(fd, &data[off], remainingSize)) < 0 && errno == EINTR)
+            {
+            }
+
+            if (n <= 0)
+            {
+                if (n == 0) // EOF.
+                    break;
+
+                ::close(fd);
+                data.resize(originalSize);
+                return -1; // Error.
+            }
+
+            off += n;
+            remainingSize -= n;
+        }
+
+        close(fd);
+        return st.st_size;
+    }
 
     /// Reads the whole file to memory. Only for small files.
     std::unique_ptr<std::vector<char>> readFile(const std::string& path, int maxSize = 256 * 1024);

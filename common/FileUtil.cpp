@@ -363,54 +363,6 @@ namespace FileUtil
                           std::istreambuf_iterator<char>(lhs.rdbuf()));
     }
 
-    ssize_t readFile(const std::string& path, std::vector<char>& data, int maxSize)
-    {
-        const int fd = ::open(path.c_str(), O_RDONLY);
-        if (fd < 0)
-            return -1;
-
-        struct stat st;
-        if (::fstat(fd, &st) != 0 || st.st_size > maxSize)
-        {
-            ::close(fd);
-            return -1;
-        }
-
-        const std::size_t originalSize = data.size();
-        auto remainingSize = st.st_size;
-        data.resize(originalSize + remainingSize);
-        off_t off = originalSize;
-        for (;;)
-        {
-            if (remainingSize == 0)
-            {
-                // Nothing to read.
-                break;
-            }
-
-            int n;
-            while ((n = ::read(fd, &data[off], remainingSize)) < 0 && errno == EINTR)
-            {
-            }
-
-            if (n <= 0)
-            {
-                if (n == 0) // EOF.
-                    break;
-
-                ::close(fd);
-                data.resize(originalSize);
-                return -1; // Error.
-            }
-
-            off += n;
-            remainingSize -= n;
-        }
-
-        close(fd);
-        return st.st_size;
-    }
-
     std::unique_ptr<std::vector<char>> readFile(const std::string& path, int maxSize)
     {
         auto data = std::make_unique<std::vector<char>>(maxSize);
