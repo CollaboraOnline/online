@@ -289,7 +289,8 @@ button#button2.ui-pushbutton.jsdialog.sidebar {
 /* not available commands*/
 
 .sidebar #orientationcontrol,
-.sidebar #rotation {
+.sidebar #rotation,
+.sidebar #rotatemenu {
 	visibility: hidden;
 }
 
