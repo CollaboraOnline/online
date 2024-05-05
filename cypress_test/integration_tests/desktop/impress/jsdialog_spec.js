@@ -26,7 +26,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'JSDialog Tests', function(
 
 		// some options are enabled
 		cy.cGet('#start_effect_list-input').should('not.be.disabled');
-		cy.cGet('#combo-input').should('be.disabled');
+		cy.cGet('#combo-input').should('not.be.visible');
 		cy.cGet('#anim_duration-input').should('not.be.disabled');
 		cy.cGet('#delay_value-input').should('not.be.disabled');
 
