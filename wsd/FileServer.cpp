@@ -833,6 +833,27 @@ void FileServerRequestHandler::readDirToHash(const std::string &basePath, const 
         }
         else if (S_ISREG(fileStat.st_mode))
         {
+            std::string uncompressedFile;
+            const ssize_t size =
+                FileUtil::readFile(basePath + relPath, uncompressedFile, MaxFileSizeToCacheInBytes);
+            assert(size < MaxFileSizeToCacheInBytes && "MaxFileSizeToCacheInBytes is too small for "
+                                                       "static-file serving; please increase it");
+            if (size <= 0)
+            {
+                assert(uncompressedFile.empty() &&
+                       "Unexpected data in uncompressedFile after failed read");
+                if (size < 0)
+                {
+                    LOG_ERR("Failed to read file [" << basePath + relPath
+                                                    << "] or is too large to cache and serve");
+                }
+
+                // Always add the entry, even if the contents are empty.
+                FileHash.emplace(prefix + relPath,
+                                 std::make_pair(std::move(uncompressedFile), std::string()));
+                continue;
+            }
+
             z_stream strm;
             strm.zalloc = Z_NULL;
             strm.zfree = Z_NULL;
@@ -840,46 +861,40 @@ void FileServerRequestHandler::readDirToHash(const std::string &basePath, const 
             const int initResult = deflateInit2(&strm, Z_DEFAULT_COMPRESSION, Z_DEFLATED, 31, 8, Z_DEFAULT_STRATEGY);
             if (initResult != Z_OK)
             {
-                 LOG_ERR("Failed to deflateInit2, result: " << initResult);
-                 continue;
+                LOG_ERR("Failed to deflateInit2 for file [" << basePath + relPath
+                                                            << "], result: " << initResult);
+                // Add the uncompressed version; it's better to serve uncompressed than nothing at all.
+                FileHash.emplace(prefix + relPath,
+                                 std::make_pair(std::move(uncompressedFile), std::string()));
+                continue;
             }
 
             fileCount++;
             filesRead.append(currentFile->d_name);
             filesRead += ' ';
 
+            // Compress.
+            assert(size > 0 && "No data to compress");
+            assert(!uncompressedFile.empty() && "Unexpected empty uncompressedFile");
             std::string compressedFile;
-            std::string uncompressedFile;
-            const ssize_t size =
-                FileUtil::readFile(basePath + relPath, uncompressedFile, MaxFileSizeToCacheInBytes);
-            assert(size < MaxFileSizeToCacheInBytes && "MaxFileSizeToCacheInBytes is too small for "
-                                                       "static-file serving; please increase it");
-            if (size > 0)
-            {
-                const long unsigned int compSize = compressBound(size);
-                compressedFile.resize(compSize);
-                strm.next_in = (unsigned char*)&uncompressedFile[0];
-                strm.avail_in = size;
-                strm.avail_out = compSize;
-                strm.next_out = (unsigned char*)&compressedFile[0];
-                strm.total_out = strm.total_in = 0;
+            const long unsigned int compSize = compressBound(size);
+            compressedFile.resize(compSize);
+            strm.next_in = (unsigned char*)&uncompressedFile[0];
+            strm.avail_in = size;
+            strm.avail_out = compSize;
+            strm.next_out = (unsigned char*)&compressedFile[0];
+            strm.total_out = strm.total_in = 0;
 
-                const int deflateResult = deflate(&strm, Z_FINISH);
-                if (deflateResult != Z_OK && deflateResult != Z_STREAM_END)
-                {
-                    LOG_ERR("Failed to deflate [" << basePath + relPath
-                                                  << "], result: " << deflateResult);
-                    compressedFile.clear();
-                }
-                else
-                {
-                    compressedFile.resize(compSize - strm.avail_out);
-                }
-            }
-            else if (size != 0)
+            const int deflateResult = deflate(&strm, Z_FINISH);
+            if (deflateResult != Z_OK && deflateResult != Z_STREAM_END)
             {
-                LOG_ERR("File [" << basePath + relPath
-                                 << "] is too large to cache and serve. Ignoring");
+                LOG_ERR("Failed to deflate [" << basePath + relPath
+                                              << "], result: " << deflateResult);
+                compressedFile.clear(); // Can't trust the compressed data, if any.
+            }
+            else
+            {
+                compressedFile.resize(compSize - strm.avail_out);
             }
 
             FileHash.emplace(prefix + relPath, std::make_pair(std::move(uncompressedFile),
@@ -896,7 +911,9 @@ void FileServerRequestHandler::readDirToHash(const std::string &basePath, const 
 
 const std::string *FileServerRequestHandler::getCompressedFile(const std::string &path)
 {
-    return &FileHash[path].second;
+    // If a compressed version is not available, return the original uncompressed data.
+    const auto& pair = FileHash[path];
+    return pair.second.empty() ? &pair.first : &pair.second;
 }
 
 const std::string *FileServerRequestHandler::getUncompressedFile(const std::string &path)
