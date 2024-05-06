@@ -55,11 +55,6 @@ class PresentationBar {
 						command: 'presentation'
 					},
 					{
-						id: 'presentationbreak',
-						type: 'separator',
-						orientation: 'vertical',
-					},
-					{
 						id: 'insertpage',
 						type: 'customtoolitem',
 						text: this._getItemUnoName('insertpage'),
@@ -100,7 +95,6 @@ class PresentationBar {
 
 		if (this.map.getDocType() === 'drawing') {
 			this.showItem('presentation', false);
-			this.showItem('presentationbreak', false);
 		}
 	}
 
@@ -144,14 +138,12 @@ class PresentationBar {
 	onWopiProps(e) {
 		if (e.HideExportOption) {
 			this.showItem('presentation', false);
-			this.showItem('presentationbreak', false);
 		}
 	}
 
 	onDocLayerInit() {
 		if (!this.map['wopi'].HideExportOption && this.map.getDocType() !== 'drawing') {
 			this.showItem('presentation', true);
-			this.showItem('presentationbreak', true);
 		}
 
 		if (!window.mode.isMobile())
