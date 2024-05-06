@@ -218,17 +218,17 @@ COOL_JS_LST =\
 	src/layer/tile/SheetSwitch.ts \
 	src/layer/Layer.js \
 	src/layer/tile/SheetGeometry.ts \
-	src/layer/tile/CanvasSectionProps.js \
-	src/layer/tile/CanvasSectionContainer.ts \
-	src/layer/tile/CommentSection.ts \
-	src/layer/tile/CommentListSection.ts \
-	src/layer/tile/TilesSection.ts \
-	src/layer/tile/AutoFillMarkerSection.ts \
-	src/layer/tile/CellCursorSection.ts \
-	src/layer/tile/CellSelectionHandleSection.ts \
-	src/layer/tile/HTMLObjectSection.ts \
-	src/layer/tile/CalcValidityDropDownSection.ts \
-	src/layer/tile/TextSelectionHandleSection.ts \
+	src/canvas/CanvasSectionProps.js \
+	src/canvas/CanvasSectionContainer.ts \
+	src/canvas/sections/CommentSection.ts \
+	src/canvas/sections/CommentListSection.ts \
+	src/canvas/sections/TilesSection.ts \
+	src/canvas/sections/AutoFillMarkerSection.ts \
+	src/canvas/sections/CellCursorSection.ts \
+	src/canvas/sections/CellSelectionHandleSection.ts \
+	src/canvas/sections/HTMLObjectSection.ts \
+	src/canvas/sections/CalcValidityDropDownSection.ts \
+	src/canvas/sections/TextSelectionHandleSection.ts \
 	src/layer/vector/CEventsHandler.ts \
 	src/layer/vector/CPointSet.ts \
 	src/layer/vector/CPath.ts \
@@ -240,7 +240,7 @@ COOL_JS_LST =\
 	src/layer/vector/CSplitterLine.ts \
 	src/layer/marker/Cursor.ts \
 	src/layer/vector/CanvasOverlay.ts \
-	src/layer/tile/ScrollSection.ts \
+	src/canvas/sections/ScrollSection.ts \
 	src/layer/tile/CanvasTileLayer.js \
 	src/layer/vector/CDarkOverlay.ts \
 	src/layer/SplitPanesContext.ts \
@@ -249,7 +249,7 @@ COOL_JS_LST =\
 	src/layer/tile/WriterTileLayer.js \
 	src/layer/tile/ImpressTileLayer.js \
 	src/layer/tile/CalcTileLayer.js \
-	src/layer/tile/ContentControlSection.ts \
+	src/canvas/sections/ContentControlSection.ts \
 	src/layer/BackgroundColor.js \
 	src/layer/marker/ProgressOverlay.js \
 	src/layer/marker/TextInput.js \
@@ -828,8 +828,8 @@ pot:
 		src/docdispatcher.ts \
 		src/errormessages.js \
 		src/layer/tile/CanvasTileLayer.js \
-		src/layer/tile/CommentListSection.ts \
-		src/layer/tile/CommentSection.ts \
+		src/canvas/sections/CommentListSection.ts \
+		src/canvas/sections/CommentSection.ts \
 		src/main.js \
 		src/map/Clipboard.js \
 		src/map/Map.js \
