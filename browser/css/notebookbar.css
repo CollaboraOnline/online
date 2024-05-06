@@ -379,11 +379,14 @@ button.ui-tab.notebookbar {
 }
 
 #fontsizecombobox.notebookbar {
-	width: 50px !important;
+	width: 5em;
 }
 
 .notebookbar.ui-combobox * {
 	line-height: 22px;
+}
+.ui-combobox-content {
+	padding-inline: 5px;
 }
 
 /* Styles preview */
