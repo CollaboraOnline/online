@@ -338,12 +338,15 @@ void TileQueueTests::testSenderQueueProgress()
     LOK_ASSERT_EQUAL(static_cast<size_t>(3), queue.size());
 
     LOK_ASSERT_EQUAL_STR(true, queue.dequeue(item));
+    LOK_ASSERT(item);
     LOK_ASSERT_EQUAL(messages[0], msgStr(item));
 
     LOK_ASSERT_EQUAL_STR(true, queue.dequeue(item));
+    LOK_ASSERT(item);
     LOK_ASSERT_EQUAL(messages[3], msgStr(item));
 
     LOK_ASSERT_EQUAL_STR(true, queue.dequeue(item));
+    LOK_ASSERT(item);
     LOK_ASSERT_EQUAL(messages[4], msgStr(item));
 
     LOK_ASSERT_EQUAL(static_cast<size_t>(0), queue.size());
