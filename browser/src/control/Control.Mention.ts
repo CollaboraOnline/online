@@ -14,8 +14,53 @@
 
 /* global app */
 
+interface Data {
+	jsontype: string;
+	id: string;
+	control: Control;
+	posx: number;
+	posy: number;
+	children: Array<Children>;
+}
+
+interface Entry {
+	text: string;
+	columns: { text: any; }[];
+	row: string;
+}
+
+interface Control {
+	id: string;
+	type: string;
+	text: string;
+	enabled: boolean;
+	singleclickactivate: boolean;
+	fireKeyEvents: boolean;
+	entries: Array<Entry>;
+}
+
+interface Children {
+	id: string;
+	type: string;
+	text: string;
+	enabled: boolean;
+	children: Array<Control>;
+	vertical: boolean;
+}
+
+interface PopupData {
+	children: Children;
+	jsontype: string;
+	type: string;
+	isMention: boolean;
+	cancellable: boolean;
+	popupParent: string;
+	clickToClose: string;
+	id: string;
+}
+
 L.Control.Mention = L.Control.extend({
-	onAdd: function(map) {
+	onAdd: function(map: ReturnType<typeof L.map>) {
 		this.map = map;
 		this.map.on('openmentionpopup', this.openMentionPopup, this);
 		this.map.on('closementionpopup', this.closeMentionPopup, this);
@@ -44,7 +89,7 @@ L.Control.Mention = L.Control.extend({
 		this.itemList = null;
 	},
 
-	sendMentionText: function(ev) {
+	sendMentionText: function(ev: MessageEvent) {
 		var text = ev.data.join('').substring(1);
 		if (text.length === 1 && this.firstChar !== text[0]) {
 			this.map.fire('postMessage', { msgId: 'UI_Mention', args: { type: 'autocomplete', text: text } });
@@ -61,7 +106,7 @@ L.Control.Mention = L.Control.extend({
 		return new L.Point(Math.round(currPos.x + panePos.x - origin.x), Math.round(currPos.y + panePos.y - origin.y));
 	},
 
-	openMentionPopup: function(ev) {
+	openMentionPopup: function(ev: MessageEvent) {
 		var framePos = this.getCurrentCursorPosition();
 		this.users = ev.data;
 		if (this.users === null)
@@ -93,25 +138,27 @@ L.Control.Mention = L.Control.extend({
 				entries.push(entry);
 			}
 
-			var data;
-			var control = {
+			var data: Data;
+			var control: Control = {
 				'id': 'mentionList',
 				'type': 'treelistbox',
 				'text': '',
 				'enabled': true,
 				'singleclickactivate': false,
-				'fireKeyEvents': true
+				'fireKeyEvents': true,
+				'entries': []
 			};
 			// update the popup with list if mentionList already exist
 			if (L.DomUtil.get('mentionList')) {
 				data = {
 					'jsontype': 'dialog',
 					'id': 'mentionPopup',
-					'control': control
+					'control': control,
+					'posx': framePos.x,
+					'posy': framePos.y,
+					'children': undefined
 				};
 				data.control.entries = entries;
-				data.posx = framePos.x;
-				data.posy = framePos.y;
 				this.map.fire('jsdialogupdate', { data: data, callback: this.callback.bind(this) });
 				return;
 			}
@@ -121,20 +168,24 @@ L.Control.Mention = L.Control.extend({
 			data.children[0].children[0] = control;
 			data.children[0].children[0].entries = entries;
 		} else {
-			var control = {
+			var control: Control = {
 				'id': 'fixedtext',
 				'type': 'fixedtext',
 				'text': 'no search results found!',
 				'enabled': true,
+				'singleclickactivate': undefined,
+				'fireKeyEvents': undefined,
+				'entries': undefined
 			};
 			if (L.DomUtil.get('fixedtext')) {
 				data = {
 					'jsontype': 'dialog',
 					'id': 'mentionPopup',
-					'control': control
+					'control': control,
+					'posx': framePos.x,
+					'posy': framePos.y,
+					'children': undefined
 				};
-				data.posx = framePos.x;
-				data.posy = framePos.y;
 				this.map.fire('jsdialogupdate', { data: data, callback: this.callback.bind(this) });
 				return;
 			}
