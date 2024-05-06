@@ -43,18 +43,7 @@ class HTMLObjectSection extends CanvasSectionObject {
 			this.sectionProperties.objectDiv.classList.add(extraClass);
 
 		// canvas-container and canvas overlap entirely. We can append the html object to canvas-container.
-		const tempFunction = function(elementToAdd: any) {
-			const container = document.getElementById('canvas-container');
-			if (container) {
-				container.appendChild(elementToAdd);
-			}
-			else {
-				setTimeout(() => {
-					tempFunction(elementToAdd);
-				}, 100);
-			}
-		};
-		tempFunction(this.sectionProperties.objectDiv);
+		document.getElementById('canvas-container').appendChild(this.sectionProperties.objectDiv);
 
 		if (!showSection)
 			this.sectionProperties.objectDiv.style.display = 'none';

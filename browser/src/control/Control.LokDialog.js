@@ -395,9 +395,9 @@ L.Control.LokDialog = L.Control.extend({
 			$('#' + strId).remove();
 			this._launchDialog(e.id, null, null, width, height, this._dialogs[parseInt(e.id)].title, null, e.unique_id);
 			if (this._map._docLayer && this._map._docLayer._docType === 'spreadsheet') {
-				if (this._map._docLayer._painter._sectionContainer.doesSectionExist(L.CSections.RowHeader.name)) {
-					this._map._docLayer._painter._sectionContainer.getSectionWithName(L.CSections.RowHeader.name)._updateCanvas();
-					this._map._docLayer._painter._sectionContainer.getSectionWithName(L.CSections.ColumnHeader.name)._updateCanvas();
+				if (app.sectionContainer.doesSectionExist(L.CSections.RowHeader.name)) {
+					app.sectionContainer.getSectionWithName(L.CSections.RowHeader.name)._updateCanvas();
+					app.sectionContainer.getSectionWithName(L.CSections.ColumnHeader.name)._updateCanvas();
 				}
 			}
 		} else if (e.action === 'cursor_invalidate') {

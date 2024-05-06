@@ -330,7 +330,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		this._map.fire('scrolllimits', newSizePx.clone());
 
 		if (limitWidth || limitHeight || extendedLimit)
-			this._painter._sectionContainer.requestReDraw();
+			app.sectionContainer.requestReDraw();
 	},
 
 	_getCursorPosSize: function () {
@@ -608,32 +608,32 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 	_addRemoveGroupSections: function () {
 		// If there are row and column groups at the same time, add CornerGroup section.
 		if (this.sheetGeometry._rows._outlines._outlines.length > 0 && this.sheetGeometry._columns._outlines._outlines.length > 0) {
-			if (!this._painter._sectionContainer.doesSectionExist(L.CSections.CornerGroup.name))
-				this._painter._sectionContainer.addSection(L.control.cornerGroup());
+			if (!app.sectionContainer.doesSectionExist(L.CSections.CornerGroup.name))
+				app.sectionContainer.addSection(L.control.cornerGroup());
 		}
 		else { // If not, remove CornerGroup section.
-			this._painter._sectionContainer.removeSection(L.CSections.CornerGroup.name);
+			app.sectionContainer.removeSection(L.CSections.CornerGroup.name);
 		}
 
 		// If there are row groups, add RowGroup section.
 		if (this.sheetGeometry._rows._outlines._outlines.length > 0) {
-			if (!this._painter._sectionContainer.doesSectionExist(L.CSections.RowGroup.name))
-				this._painter._sectionContainer.addSection(L.control.rowGroup());
+			if (!app.sectionContainer.doesSectionExist(L.CSections.RowGroup.name))
+				app.sectionContainer.addSection(L.control.rowGroup());
 		}
 		else { // If not, remove RowGroup section.
-			this._painter._sectionContainer.removeSection(L.CSections.RowGroup.name);
+			app.sectionContainer.removeSection(L.CSections.RowGroup.name);
 		}
 
 		// If there are column groups, add ColumnGroup section.
 		if (this.sheetGeometry._columns._outlines._outlines.length > 0) {
-			if (!this._painter._sectionContainer.doesSectionExist(L.CSections.ColumnGroup.name)) {
-				this._painter._sectionContainer.addSection(L.control.columnGroup());
-				this._painter._sectionContainer.canvas.style.border = '1px solid darkgrey';
+			if (!app.sectionContainer.doesSectionExist(L.CSections.ColumnGroup.name)) {
+				app.sectionContainer.addSection(L.control.columnGroup());
+				app.sectionContainer.canvas.style.border = '1px solid darkgrey';
 			}
 		}
 		else { // If not, remove ColumnGroup section.
-			this._painter._sectionContainer.removeSection(L.CSections.ColumnGroup.name);
-			this._painter._sectionContainer.canvas.style.border = '0px solid darkgrey';
+			app.sectionContainer.removeSection(L.CSections.ColumnGroup.name);
+			app.sectionContainer.canvas.style.border = '0px solid darkgrey';
 		}
 	},
 
@@ -641,7 +641,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		var sheetIsRTL = this._rtlParts.indexOf(this._selectedPart) >= 0;
 		if (sheetIsRTL && this._layoutIsRTL !== true) {
 			console.log('debug: in LTR -> RTL canvas section adjustments');
-			var sectionContainer = this._painter._sectionContainer;
+			var sectionContainer = app.sectionContainer;
 
 			var tilesSection = sectionContainer.getSectionWithName(L.CSections.Tiles.name);
 			var rowHeaderSection = sectionContainer.getSectionWithName(L.CSections.RowHeader.name);
@@ -682,7 +682,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 
 			console.log('debug: in RTL -> LTR canvas section adjustments');
 			this._layoutIsRTL = false;
-			var sectionContainer = this._painter._sectionContainer;
+			var sectionContainer = app.sectionContainer;
 
 			var tilesSection = sectionContainer.getSectionWithName(L.CSections.Tiles.name);
 			var rowHeaderSection = sectionContainer.getSectionWithName(L.CSections.RowHeader.name);
@@ -725,9 +725,9 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 				this._tileWidthTwips, this._tileHeightTwips,
 				this._tileSize, this._selectedPart);
 
-			this._painter._sectionContainer.addSection(L.control.cornerHeader());
-			this._painter._sectionContainer.addSection(L.control.rowHeader());
-			this._painter._sectionContainer.addSection(L.control.columnHeader());
+			app.sectionContainer.addSection(L.control.cornerHeader());
+			app.sectionContainer.addSection(L.control.rowHeader());
+			app.sectionContainer.addSection(L.control.columnHeader());
 		}
 		else {
 			this.sheetGeometry.update(jsonMsgObj, /* checkCompleteness */ false, this._selectedPart);
@@ -847,7 +847,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 				let newState = trimmedState === 'true';
 				if (this._sheetGrid != newState) {
 					this._sheetGrid = newState;
-					this._painter._sectionContainer.requestReDraw();
+					app.sectionContainer.requestReDraw();
 				}
 			}
 		}

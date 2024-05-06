@@ -170,7 +170,7 @@ export class Comment extends CanvasSectionObject {
 		var events = ['click', 'dblclick', 'mousedown', 'mouseup', 'mouseover', 'mouseout', 'keydown', 'keypress', 'keyup', 'touchstart', 'touchmove', 'touchend'];
 		L.DomEvent.on(this.sectionProperties.container, 'click', this.onMouseClick, this);
 		L.DomEvent.on(this.sectionProperties.container, 'keydown', this.onEscKey, this);
-		L.DomEvent.on(this.sectionProperties.container, 'wheel', this.map._docLayer._painter._sectionContainer.onMouseWheel, this.map._docLayer._painter._sectionContainer);
+		L.DomEvent.on(this.sectionProperties.container, 'wheel', app.sectionContainer.onMouseWheel, app.sectionContainer);
 		L.DomEvent.on(this.sectionProperties.contentNode, 'wheel', this.onMouseWheel, this);
 
 		for (var it = 0; it < events.length; it++) {

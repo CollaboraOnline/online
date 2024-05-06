@@ -249,13 +249,10 @@ L.TileSectionManager = L.Class.extend({
 		var mapSize = this._map.getPixelBoundsCore().getSize();
 		this._tilesSection = null; // Shortcut.
 
-		this._sectionContainer = new CanvasSectionContainer(this._canvas, this._layer.isCalc() /* disableDrawing? */);
-
-		app.sectionContainer = this._sectionContainer;
 		if (L.Browser.cypressTest) // If cypress is active, create test divs.
-			this._sectionContainer.testing = true;
+			app.sectionContainer.testing = true;
 
-		this._sectionContainer.onResize(mapSize.x, mapSize.y);
+		app.sectionContainer.onResize(mapSize.x, mapSize.y);
 
 		var splitPanesContext = this._layer.getSplitPanesContext();
 		this._splitPos = splitPanesContext ?
@@ -276,18 +273,17 @@ L.TileSectionManager = L.Class.extend({
 
 	// Map and TilesSection overlap entirely. Map is above tiles section. In order to handle events in tiles section, we need to mirror them from map.
 	_mirrorEventsFromSourceToCanvasSectionContainer: function (sourceElement) {
-		var that = this;
-		sourceElement.addEventListener('mousedown', function (e) { that._sectionContainer.onMouseDown(e); }, true);
-		sourceElement.addEventListener('click', function (e) { that._sectionContainer.onClick(e); }, true);
-		sourceElement.addEventListener('dblclick', function (e) { that._sectionContainer.onDoubleClick(e); }, true);
-		sourceElement.addEventListener('contextmenu', function (e) { that._sectionContainer.onContextMenu(e); }, true);
-		sourceElement.addEventListener('wheel', function (e) { that._sectionContainer.onMouseWheel(e); }, true);
-		sourceElement.addEventListener('mouseleave', function (e) { that._sectionContainer.onMouseLeave(e); }, true);
-		sourceElement.addEventListener('mouseenter', function (e) { that._sectionContainer.onMouseEnter(e); }, true);
-		sourceElement.addEventListener('touchstart', function (e) { that._sectionContainer.onTouchStart(e); }, true);
-		sourceElement.addEventListener('touchmove', function (e) { that._sectionContainer.onTouchMove(e); }, true);
-		sourceElement.addEventListener('touchend', function (e) { that._sectionContainer.onTouchEnd(e); }, true);
-		sourceElement.addEventListener('touchcancel', function (e) { that._sectionContainer.onTouchCancel(e); }, true);
+		sourceElement.addEventListener('mousedown', function (e) { app.sectionContainer.onMouseDown(e); }, true);
+		sourceElement.addEventListener('click', function (e) { app.sectionContainer.onClick(e); }, true);
+		sourceElement.addEventListener('dblclick', function (e) { app.sectionContainer.onDoubleClick(e); }, true);
+		sourceElement.addEventListener('contextmenu', function (e) { app.sectionContainer.onContextMenu(e); }, true);
+		sourceElement.addEventListener('wheel', function (e) { app.sectionContainer.onMouseWheel(e); }, true);
+		sourceElement.addEventListener('mouseleave', function (e) { app.sectionContainer.onMouseLeave(e); }, true);
+		sourceElement.addEventListener('mouseenter', function (e) { app.sectionContainer.onMouseEnter(e); }, true);
+		sourceElement.addEventListener('touchstart', function (e) { app.sectionContainer.onTouchStart(e); }, true);
+		sourceElement.addEventListener('touchmove', function (e) { app.sectionContainer.onTouchMove(e); }, true);
+		sourceElement.addEventListener('touchend', function (e) { app.sectionContainer.onTouchEnd(e); }, true);
+		sourceElement.addEventListener('touchcancel', function (e) { app.sectionContainer.onTouchCancel(e); }, true);
 	},
 
 	startUpdates: function () {
@@ -356,14 +352,14 @@ L.TileSectionManager = L.Class.extend({
 	},
 
 	_addTilesSection: function () {
-		this._sectionContainer.addSection(L.getNewTilesSection());
-		this._tilesSection = this._sectionContainer.getSectionWithName('tiles');
+		app.sectionContainer.addSection(L.getNewTilesSection());
+		this._tilesSection = app.sectionContainer.getSectionWithName('tiles');
 		app.sectionContainer.setDocumentAnchorSection(L.CSections.Tiles.name);
 	},
 
 	_addGridSection: function () {
 		var that = this;
-		this._sectionContainer.createSection({
+		app.sectionContainer.createSection({
 			name: L.CSections.CalcGrid.name,
 			anchor: 'top left',
 			position: [0, 0],
@@ -383,12 +379,12 @@ L.TileSectionManager = L.Class.extend({
 			onDraw: that._onDrawGridSection,
 			onDrawArea: that._drawGridSectionArea
 		}, 'tiles'); // Its size and position will be copied from 'tiles' section.
-		this._calcGridSection = this._sectionContainer.getSectionWithName(L.CSections.CalcGrid.name);
+		this._calcGridSection = app.sectionContainer.getSectionWithName(L.CSections.CalcGrid.name);
 	},
 
 	_addOverlaySection: function () {
-		var canvasOverlay = this._layer._canvasOverlay = new CanvasOverlay(this._map, this._sectionContainer.getContext());
-		this._sectionContainer.addSection(canvasOverlay);
+		var canvasOverlay = this._layer._canvasOverlay = new CanvasOverlay(this._map, app.sectionContainer.getContext());
+		app.sectionContainer.addSection(canvasOverlay);
 		canvasOverlay.bindToSection(L.CSections.Tiles.name);
 	},
 
@@ -533,7 +529,7 @@ L.TileSectionManager = L.Class.extend({
 	// Debug tool. Splits are enabled for only Calc for now.
 	_addSplitsSection: function () {
 		var that = this;
-		this._sectionContainer.createSection({
+		app.sectionContainer.createSection({
 			name: L.CSections.Debug.Splits.name,
 			anchor: 'top left',
 			position: [0, 0],
@@ -550,23 +546,23 @@ L.TileSectionManager = L.Class.extend({
 			},
 			onDraw: that._onDrawSplitsSection
 		}, 'tiles'); // Its size and position will be copied from 'tiles' section.
-		this._sectionContainer.reNewAllSections(true);
+		app.sectionContainer.reNewAllSections(true);
 	},
 
 	_removeSplitsSection: function () {
-		var section = this._sectionContainer.getSectionWithName('calc grid');
+		var section = app.sectionContainer.getSectionWithName('calc grid');
 		if (section) {
 			section.setDrawingOrder(L.CSections.CalcGrid.drawingOrder);
 			section.sectionProperties.strokeStyle = '#c0c0c0';
 		}
-		this._sectionContainer.removeSection(L.CSections.Debug.Splits.name);
-		this._sectionContainer.reNewAllSections(true);
+		app.sectionContainer.removeSection(L.CSections.Debug.Splits.name);
+		app.sectionContainer.reNewAllSections(true);
 	},
 
 	// Debug tool
 	_addTilePixelGridSection: function () {
 		var that = this;
-		this._sectionContainer.createSection({
+		app.sectionContainer.createSection({
 			name: L.CSections.Debug.TilePixelGrid.name,
 			anchor: 'top left',
 			position: [0, 0],
@@ -579,12 +575,12 @@ L.TileSectionManager = L.Class.extend({
 			sectionProperties: {},
 			onDraw: that._onDrawTilePixelGrid
 		}, 'tiles'); // Its size and position will be copied from 'tiles' section.
-		this._sectionContainer.reNewAllSections(true);
+		app.sectionContainer.reNewAllSections(true);
 	},
 
 	_removeTilePixelGridSection: function () {
-		this._sectionContainer.removeSection(L.CSections.Debug.TilePixelGrid.name);
-		this._sectionContainer.reNewAllSections(true);
+		app.sectionContainer.removeSection(L.CSections.Debug.TilePixelGrid.name);
+		app.sectionContainer.reNewAllSections(true);
 	},
 
 	_onDrawTilePixelGrid: function() {
@@ -627,11 +623,11 @@ L.TileSectionManager = L.Class.extend({
 	_updateWithRAF: function () {
 		// update-loop with requestAnimationFrame
 		this._canvasRAF = L.Util.requestAnimFrame(this._updateWithRAF, this, false /* immediate */);
-		this._sectionContainer.requestReDraw();
+		app.sectionContainer.requestReDraw();
 	},
 
 	update: function () {
-		this._sectionContainer.requestReDraw();
+		app.sectionContainer.requestReDraw();
 	},
 
 	/**
@@ -783,7 +779,7 @@ L.TileSectionManager = L.Class.extend({
 		this._calcZoomFrameParams(zoom, newCenter);
 
 		if (!this._inZoomAnim) {
-			this._sectionContainer.setInZoomAnimation(true);
+			app.sectionContainer.setInZoomAnimation(true);
 			this._inZoomAnim = true;
 			// Start RAF loop for zoom-animation
 			this._zoomAnimation();
@@ -811,7 +807,7 @@ L.TileSectionManager = L.Class.extend({
 		// Calculate the final center at final zoom in advance.
 		var newMapCenter = this._getZoomMapCenter(zoom);
 		var newMapCenterLatLng = map.unproject(newMapCenter, zoom);
-		painter._sectionContainer.setZoomChanged(true);
+		app.sectionContainer.setZoomChanged(true);
 
 		var stopAnimation = noGap ? true : false;
 		var waitForTiles = false;
@@ -835,7 +831,7 @@ L.TileSectionManager = L.Class.extend({
 				// Draw one last frame at final zoom.
 				painter.rafFunc(undefined, true /* final? */);
 				painter._zoomFrameScale = undefined;
-				painter._sectionContainer.setInZoomAnimation(false);
+				app.sectionContainer.setInZoomAnimation(false);
 				painter._inZoomAnim = false;
 
 				painter.setWaitForTiles(true);
@@ -851,11 +847,11 @@ L.TileSectionManager = L.Class.extend({
 					waitForTiles = false;
 					cancelAnimationFrame(finishingRAF);
 					painter.setWaitForTiles(false);
-					painter._sectionContainer.setZoomChanged(false);
+					app.sectionContainer.setZoomChanged(false);
 					map.enableTextInput();
 					map.focus(map.canAcceptKeyboardInput());
 					// Paint everything.
-					painter._sectionContainer.requestReDraw();
+					app.sectionContainer.requestReDraw();
 					// Don't let a subsequent pinchZoom start before finishing all steps till this point.
 					painter._finishingZoom = false;
 					// Run the finish callback.
@@ -953,23 +949,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		// Graphic Selected?
 		this._hasActiveSelection = false;
 
-		// Initiate selection handles.
-		this._selectionHandles = {};
-		this._selectionHandles.start = new app.definitions.textSelectionHandleSection('selection_start_handle', 30, 44, new app.definitions.simplePoint(0, 0), 'text-selection-handle-start', false);
-		this._selectionHandles.end = new app.definitions.textSelectionHandleSection('selection_end_handle', 30, 44, new app.definitions.simplePoint(0, 0), 'text-selection-handle-end', false);
-		this._selectionHandles.active = false;
-
-		// Cell selection handles (mobile & tablet).
-		this._cellSelectionHandleStart = new app.definitions.cellSelectionHandle('cell_selection_handle_start');
-		this._cellSelectionHandleEnd = new app.definitions.cellSelectionHandle('cell_selection_handle_end');
-
-		setTimeout(function() {
-			app.sectionContainer.addSection(this._map._docLayer._selectionHandles.start);
-			app.sectionContainer.addSection(this._map._docLayer._selectionHandles.end);
-			app.sectionContainer.addSection(this._map._docLayer._cellSelectionHandleStart);
-			app.sectionContainer.addSection(this._map._docLayer._cellSelectionHandleEnd);
-		}.bind(this), 400);
-
 		this._referenceMarkerStart = L.marker(new L.LatLng(0, 0), {
 			icon: L.divIcon({
 				className: 'spreadsheet-cell-resize-marker',
@@ -1036,6 +1015,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 
 		this._canvas = L.DomUtil.createWithId('canvas', 'document-canvas', this._canvasContainer);
+		app.sectionContainer = new CanvasSectionContainer(this._canvas, this.isCalc() /* disableDrawing? */);
 		this._container.style.position = 'absolute';
 		this._cursorDataDiv = L.DomUtil.create('div', 'cell-cursor-data', this._canvasContainer);
 		this._selectionsDataDiv = L.DomUtil.create('div', 'selections-data', this._canvasContainer);
@@ -1049,9 +1029,9 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		this._painter = new L.TileSectionManager(this);
 		this._painter._addTilesSection();
-		this._painter._sectionContainer.getSectionWithName('tiles').onResize();
+		app.sectionContainer.getSectionWithName('tiles').onResize();
 		this._painter._addOverlaySection();
-		this._painter._sectionContainer.addSection(L.getNewScrollSection(() => this._map._docLayer.isCalcRTL()));
+		app.sectionContainer.addSection(L.getNewScrollSection(() => this._map._docLayer.isCalcRTL()));
 
 		// For mobile/tablet the hammerjs swipe handler already uses a requestAnimationFrame to fire move/drag events
 		// Using L.TileSectionManager's own requestAnimationFrame loop to do the updates in that case does not perform well.
@@ -3913,7 +3893,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 			// Cursor invalidation should take most precedence among all the scrolling to follow the cursor
 			// so here we disregard all the pending scrolling
-			this._map._docLayer._painter._sectionContainer.getSectionWithName(L.CSections.Scroll.name).pendingScrollEvent = null;
+			app.sectionContainer.getSectionWithName(L.CSections.Scroll.name).pendingScrollEvent = null;
 			var correctedCursor = app.file.textCursor.rectangle.clone();
 
 			if (this._docType === 'text') {
@@ -3948,7 +3928,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				setTimeout(function () {
 					var y = app.file.textCursor.rectangle.pY1 - that._cursorPreviousPositionCorePixels.pY1;
 					if (y) {
-						that._painter._sectionContainer.getSectionWithName(L.CSections.Scroll.name).scrollVerticalWithOffset(y);
+						app.sectionContainer.getSectionWithName(L.CSections.Scroll.name).scrollVerticalWithOffset(y);
 					}
 				}, 0);
 			}
@@ -5154,27 +5134,27 @@ L.CanvasTileLayer = L.Layer.extend({
 			var documentBounds = this._map.getPixelBoundsCore();
 			var documentPos = documentBounds.min;
 			var documentEndPos = documentBounds.max;
-			this._painter._sectionContainer.setDocumentBounds([documentPos.x, documentPos.y, documentEndPos.x, documentEndPos.y]);
+			app.sectionContainer.setDocumentBounds([documentPos.x, documentPos.y, documentEndPos.x, documentEndPos.y]);
 		}
 	},
 
 	pauseDrawing: function () {
-		if (this._painter && this._painter._sectionContainer)
-			this._painter._sectionContainer.pauseDrawing();
+		if (this._painter && app.sectionContainer)
+			app.sectionContainer.pauseDrawing();
 	},
 
 	resumeDrawing: function (topLevel) {
-		if (this._painter && this._painter._sectionContainer)
-			this._painter._sectionContainer.resumeDrawing(topLevel);
+		if (this._painter && app.sectionContainer)
+			app.sectionContainer.resumeDrawing(topLevel);
 	},
 
 	enableDrawing: function () {
-		if (this._painter && this._painter._sectionContainer)
-			this._painter._sectionContainer.enableDrawing();
+		if (this._painter && app.sectionContainer)
+			app.sectionContainer.enableDrawing();
 	},
 
 	_getUIWidth: function () {
-		var section = this._painter._sectionContainer.getSectionWithName(L.CSections.RowHeader.name);
+		var section = app.sectionContainer.getSectionWithName(L.CSections.RowHeader.name);
 		if (section) {
 			return Math.round(section.size[0] / app.dpiScale);
 		}
@@ -5184,7 +5164,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_getUIHeight: function () {
-		var section = this._painter._sectionContainer.getSectionWithName(L.CSections.ColumnHeader.name);
+		var section = app.sectionContainer.getSectionWithName(L.CSections.ColumnHeader.name);
 		if (section) {
 			return Math.round(section.size[1] / app.dpiScale);
 		}
@@ -5194,7 +5174,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_getGroupWidth: function () {
-		var section = this._painter._sectionContainer.getSectionWithName(L.CSections.RowGroup.name);
+		var section = app.sectionContainer.getSectionWithName(L.CSections.RowGroup.name);
 		if (section) {
 			return Math.round(section.size[0] / app.dpiScale);
 		}
@@ -5204,7 +5184,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_getGroupHeight: function () {
-		var section = this._painter._sectionContainer.getSectionWithName(L.CSections.ColumnGroup.name);
+		var section = app.sectionContainer.getSectionWithName(L.CSections.ColumnGroup.name);
 		if (section) {
 			return Math.round(section.size[1] / app.dpiScale);
 		}
@@ -5239,7 +5219,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			documentContainerSize = documentContainerSize.getBoundingClientRect();
 			documentContainerSize = [documentContainerSize.width, documentContainerSize.height];
 
-			this._painter._sectionContainer.onResize(documentContainerSize[0], documentContainerSize[1]); // Canvas's size = documentContainer's size.
+			app.sectionContainer.onResize(documentContainerSize[0], documentContainerSize[1]); // Canvas's size = documentContainer's size.
 
 			var oldSize = this._getRealMapSize();
 
@@ -5258,9 +5238,9 @@ L.CanvasTileLayer = L.Layer.extend({
 			var widthIncreased = oldSize.x < newSize.x;
 
 			if (this._docType === 'spreadsheet') {
-				if (this._painter._sectionContainer.doesSectionExist(L.CSections.RowHeader.name)) {
-					this._painter._sectionContainer.getSectionWithName(L.CSections.RowHeader.name)._updateCanvas();
-					this._painter._sectionContainer.getSectionWithName(L.CSections.ColumnHeader.name)._updateCanvas();
+				if (app.sectionContainer.doesSectionExist(L.CSections.RowHeader.name)) {
+					app.sectionContainer.getSectionWithName(L.CSections.RowHeader.name)._updateCanvas();
+					app.sectionContainer.getSectionWithName(L.CSections.ColumnHeader.name)._updateCanvas();
 				}
 			}
 
@@ -5301,7 +5281,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			}
 
 			if (heightIncreased || widthIncreased) {
-				this._painter._sectionContainer.requestReDraw();
+				app.sectionContainer.requestReDraw();
 				this._map.fire('sizeincreased');
 			}
 		}
@@ -5322,7 +5302,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	setZoomChanged: function (zoomChanged) {
-		this._painter._sectionContainer.setZoomChanged(zoomChanged);
+		app.sectionContainer.setZoomChanged(zoomChanged);
 	},
 
 	onAdd: function (map) {
@@ -5330,6 +5310,22 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._tileHeightPx = this.options.tileSize;
 
 		this._initContainer();
+
+		// Initiate selection handles.
+		this._selectionHandles = {};
+		this._selectionHandles.start = new app.definitions.textSelectionHandleSection('selection_start_handle', 30, 44, new app.definitions.simplePoint(0, 0), 'text-selection-handle-start', false);
+		this._selectionHandles.end = new app.definitions.textSelectionHandleSection('selection_end_handle', 30, 44, new app.definitions.simplePoint(0, 0), 'text-selection-handle-end', false);
+		this._selectionHandles.active = false;
+
+		// Cell selection handles (mobile & tablet).
+		this._cellSelectionHandleStart = new app.definitions.cellSelectionHandle('cell_selection_handle_start');
+		this._cellSelectionHandleEnd = new app.definitions.cellSelectionHandle('cell_selection_handle_end');
+
+		app.sectionContainer.addSection(this._map._docLayer._selectionHandles.start);
+		app.sectionContainer.addSection(this._map._docLayer._selectionHandles.end);
+		app.sectionContainer.addSection(this._map._docLayer._cellSelectionHandleStart);
+		app.sectionContainer.addSection(this._map._docLayer._cellSelectionHandleEnd);
+
 		this._getToolbarCommandsValues();
 		this._textCSelections = new CSelections(undefined, this._canvasOverlay,
 			this._selectionsDataDiv, this._map, false /* isView */, undefined, 'text');
@@ -6137,7 +6133,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		// Don't paint the tile, only dirty the sectionsContainer if it is in the visible area.
 		// _emitSlurpedTileEvents() will repaint canvas (if it is dirty).
 		if (this._painter.coordsIntersectVisible(coords)) {
-			this._painter._sectionContainer.setDirty(coords);
+			app.sectionContainer.setDirty(coords);
 		}
 	},
 
