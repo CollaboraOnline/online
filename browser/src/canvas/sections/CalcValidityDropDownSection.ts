@@ -15,12 +15,12 @@ class CalcValidityDropDown extends HTMLObjectSection {
 		super(sectionName, 16, 16, documentPosition, 'spreadsheet-drop-down-marker', visible);
 	}
 
-    onClick(point: number[], e: MouseEvent): void {
+	onClick(point: number[], e: MouseEvent): void {
 		this.stopPropagating();
 		if (app.map._docLayer._validatedCellAddress && app.calc.cellCursorVisible && app.map._docLayer._validatedCellAddress.equals(app.calc.cellAddress.toArray())) {
 			app.map.sendUnoCommand('.uno:DataSelect');
 		}
-    }
+	}
 }
 
 app.definitions.calcValidityDropDown = CalcValidityDropDown;
