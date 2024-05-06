@@ -56,7 +56,7 @@ class GenericLogger : public Poco::Logger
 public:
     GenericLogger(const std::string& name,
                   Poco::AutoPtr<Poco::Channel> chan, int lvl)
-        : Poco::Logger(name, chan, lvl)
+        : Poco::Logger(name, std::move(chan), lvl)
     {
     }
 
