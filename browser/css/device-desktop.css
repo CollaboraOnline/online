@@ -1,7 +1,7 @@
 /* CSS specific for desktop browsers. */
 
 /* Related to selectionMarkers.css on formulabar*/
-#tb_formulabar_item_formula .inputbar_selection_handles *{
+.inputbar_selection_handles *{
 	background-size: 20px;
 	background-position-y: top;
 	width: 20px;
@@ -9,7 +9,7 @@
 	margin-left: 1px !important;
 	transform: translateY(-12px);
 }
-#tb_formulabar_item_formula .inputbar_selection_handles .text-selection-handle-start{
+.inputbar_selection_handles .text-selection-handle-start{
 	margin-left: -20px !important;
 }
 
