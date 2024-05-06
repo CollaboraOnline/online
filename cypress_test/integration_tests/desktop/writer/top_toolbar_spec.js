@@ -44,7 +44,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Apply style.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('.notebookbar.ui-iconview-entry img[title=Title]').click({force: true});
+		cy.cGet('.notebookbar.ui-iconview-entry img[title=Title]').click();
 		refreshCopyPasteContainer();
 		helper.copy();
 		cy.cGet('#copy-paste-container p font font').should('have.attr', 'style', 'font-size: 28pt');
@@ -219,11 +219,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Insert/delete table.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#toolbar-up .ui-scroll-right').click();
-		cy.cGet('#toolbar-up .ui-scroll-right').click();
-		cy.cGet('#toolbar-up .ui-scroll-right').click();
-		cy.cGet('#toolbar-up .ui-scroll-right').click();
-		cy.cGet('#Home-container .unoInsertTable button').click();
+		cy.cGet('#Home-container .unoInsertTable button').click({force: true});
 		cy.cGet('.inserttable-grid > .row > .col').eq(3).click();
 		helper.typeIntoDocument('{ctrl}a');
 		helper.copy();
@@ -234,8 +230,6 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 	});
 
 	it('Insert image.', function() {
-		cy.cGet('#toolbar-up .ui-scroll-right').click();
-		cy.cGet('#toolbar-up .ui-scroll-right').click();
 		cy.cGet('#Home-container .unoInsertGraphic').click({force: true});
 		cy.cGet('#insertgraphic[type=file]').attachFile('/desktop/writer/image_to_insert.png');
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g.Graphic').should('exist');
@@ -314,7 +308,6 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		cy.cGet('#copy-paste-container p i').should('exist');
 
 		//Undo
-		cy.cGet('#toolbar-up .ui-scroll-left').click();
 		cy.cGet('#Home-container .unoUndo').should('not.be.disabled').click();
 		helper.copy();
 		cy.wait(500); // wait for new clipboard
@@ -371,16 +364,13 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 	});
 
 	it('Insert Special Character.', function() {
-		cy.cGet('#toolbar-up .ui-scroll-right').click();
-		cy.cGet('#toolbar-up .ui-scroll-right').click();
-		cy.wait(500);
 		cy.cGet('#Home-container .unospan-CharmapControl').click({force: true});
 		cy.cGet('.jsdialog-container.ui-dialog.ui-widget-content.lokdialog_container').should('be.visible');
 		cy.cGet('.ui-dialog-title').should('have.text', 'Special Characters');
 
 		// FIXME: dialog is not async, shows popup
-		cy.cGet('#favchar1').click({force: true});
-		cy.cGet('#SpecialCharactersDialog .ui-pushbutton.jsdialog.button-primary').click({force: true});
+		cy.cGet('#favchar1').click();
+		cy.cGet('#SpecialCharactersDialog .ui-pushbutton.jsdialog.button-primary').click();
 
 		//helper.expectTextForClipboard('€');
 	});
@@ -481,7 +471,6 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 	it('Insert/delete Fontwork', function() {
 		writerHelper.selectAllTextOfDoc();
 		cy.cGet('#Insert-tab-label').click();
-		cy.cGet('#toolbar-up .ui-scroll-right').click();
 		cy.cGet('#Insert-container .unoFontworkGalleryFloater').click();
 		cy.cGet('#ok').click();
 		cy.cGet('.leaflet-control-buttons-disabled path.leaflet-interactive').should('exist');
@@ -489,5 +478,63 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		//delete
 		helper.typeIntoDocument('{del}');
 		cy.cGet('.leaflet-control-buttons-disabled path.leaflet-interactive').should('not.exist');
+	});
+
+	it('Scroll', function() {
+		// Start all the way on the left side of the toolbar
+		cy.cGet('#Home-container #home-undo-redo').should('be.visible');
+		// TODO: Cypress thinks buttons are visible even though they are not
+		//cy.cGet('#Home-container #home-search-dialog').should('not.be.visible');
+		cy.cGet('#toolbar-up .ui-scroll-left').should('not.be.visible');
+		cy.cGet('#toolbar-up .ui-scroll-right').should('be.visible');
+
+		// Scroll right until the scroll right button is disabled
+		cy.waitUntil(function() {
+			cy.cGet('#toolbar-up .ui-scroll-right').click();
+			cy.wait(300); // Wait for scroll animation
+			return cy.cGet('#toolbar-up .ui-scroll-right')
+				.then(function(scrollRightButton) {
+					return !Cypress.dom.isVisible(scrollRightButton);
+				});
+		});
+
+		// Now we are all the way on the right side of the toolbar
+		// TODO: Cypress thinks buttons are visible even though they are not
+		//cy.cGet('#Home-container #home-undo-redo').should('not.be.visible');
+		cy.cGet('#Home-container #home-search-dialog').should('be.visible');
+		cy.cGet('#toolbar-up .ui-scroll-left').should('be.visible');
+		cy.cGet('#toolbar-up .ui-scroll-right').should('not.be.visible');
+
+		// Scroll left until the scroll left button is disabled
+		cy.waitUntil(function() {
+			cy.cGet('#toolbar-up .ui-scroll-left').click();
+			cy.wait(300); // Wait for scroll animation
+			return cy.cGet('#toolbar-up .ui-scroll-left')
+				.then(function(scrollLeftButton) {
+					return !Cypress.dom.isVisible(scrollLeftButton);
+				});
+		});
+
+		// Now back on the left side of the toolbar
+		cy.cGet('#Home-container #home-undo-redo').should('be.visible');
+		// TODO: Cypress thinks buttons are visible even though they are not
+		//cy.cGet('#Home-container #home-search-dialog').should('not.be.visible');
+		cy.cGet('#toolbar-up .ui-scroll-left').should('not.be.visible');
+		cy.cGet('#toolbar-up .ui-scroll-right').should('be.visible');
+	});
+
+	it('Switch Tabs', function() {
+		// Start in Home tab
+		cy.cGet('.notebookbar#Home').should('be.visible');
+		cy.cGet('#Home-tab-label').should('have.class','selected');
+		cy.cGet('.notebookbar#Insert').should('not.be.visible');
+		cy.cGet('#Insert-tab-label').should('not.have.class','selected');
+
+		// Switch to Insert tab
+		cy.cGet('#Insert-tab-label').click();
+		cy.cGet('.notebookbar#Home').should('not.be.visible');
+		cy.cGet('#Home-tab-label').should('not.have.class','selected');
+		cy.cGet('.notebookbar#Insert').should('be.visible');
+		cy.cGet('#Insert-tab-label').should('have.class','selected');
 	});
 });
