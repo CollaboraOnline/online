@@ -1,5 +1,5 @@
-/// <reference path="../../src/layer/tile/CanvasSectionContainer.ts" />
-/// <reference path="../../src/layer/tile/TilesSection.ts" />
+/// <reference path="../../src/canvas/CanvasSectionContainer.ts" />
+/// <reference path="../../src/canvas/sections/TilesSection.ts" />
 
 function canvasDomString() {
     return `
