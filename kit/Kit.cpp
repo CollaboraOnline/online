@@ -2846,7 +2846,7 @@ void lokit_main(
     LOG_INF("User-data anonymization is " << (AnonymizeUserData ? "enabled." : "disabled."));
 
     const char* pEnableWebsocketURP = std::getenv("ENABLE_WEBSOCKET_URP");
-    EnableWebsocketURP = std::string(pEnableWebsocketURP) == "true";
+    EnableWebsocketURP = pEnableWebsocketURP && std::string(pEnableWebsocketURP) == "true";
 
     assert(!childRoot.empty());
     assert(!sysTemplate.empty());
