@@ -427,10 +427,6 @@ experimental_msg="disabled by default"
 bundle_msg="using uglified bundled JS and CSS"
 LOK_LOG_ASSERTIONS=0
 log_asserts_msg="disabled"
-
-# a reasonable default
-NUM_PRESPAWN_CHILDREN=4
-
 AC_MSG_CHECKING([whether to enable debug build])
 if test "$enable_debug" = "yes"; then
    AC_MSG_RESULT([yes])
@@ -444,9 +440,6 @@ if test "$enable_debug" = "yes"; then
    COOLWSD_ANONYMIZE_USER_DATA=false
    BROWSER_LOGGING="true"
    debug_msg="low security debugging mode"
-
-   # helps attaching to the right process
-   NUM_PRESPAWN_CHILDREN=1
 
    AC_MSG_CHECKING([whether to bundle JS and CSS files])
    if test "$enable_bundle" != "yes"; then
@@ -474,7 +467,6 @@ AC_SUBST(ENABLE_BUNDLE)
 AC_SUBST(COOLWSD_LOGLEVEL)
 AC_SUBST(COOLWSD_LOG_TO_FILE)
 AC_SUBST(BROWSER_LOGGING)
-AC_SUBST(NUM_PRESPAWN_CHILDREN)
 
 if test "$enable_debug_protocol" = no; then
    ENABLE_DEBUG_PROTOCOL=false
