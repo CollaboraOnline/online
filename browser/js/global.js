@@ -1285,6 +1285,7 @@ window.app = {
 	function handleViewportChange(event) {
 		var visualViewport = event.target;
 
+		window.scroll(0, 0);
 		document.body.style.height = visualViewport.height + 'px';
 	}
 
