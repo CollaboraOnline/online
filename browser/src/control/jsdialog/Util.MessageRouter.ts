@@ -20,7 +20,7 @@ interface WidgetJSON {
 	type: string; // type of widget
 	enabled: boolean | undefined; // enabled state
 	visible: boolean | undefined; // visibility state
-	children: Array<JSDialogJSON> | undefined; // child nodes
+	children: Array<WidgetJSON> | undefined; // child nodes
 }
 
 interface JSDialogJSON extends WidgetJSON {
@@ -39,7 +39,7 @@ type JSDialogCallback = (
 
 class JSDialogMessageRouter {
 	// show labels instead of editable fields in message boxes
-	private _preProcessMessageDialog(msgData: JSDialogJSON) {
+	private _preProcessMessageDialog(msgData: WidgetJSON) {
 		for (var i in msgData.children) {
 			var child = msgData.children[i];
 			if (child.type === 'multilineedit') child.type = 'fixedtext';
