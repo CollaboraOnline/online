@@ -7157,7 +7157,7 @@ L.TilesPreFetcher = L.Class.extend({
 		if (app.file.fileBasedView && this._docLayer)
 			this._docLayer._updateFileBasedView();
 
-		if (this._docLayer._emptyTilesCount > 0 || !this._map || !this._docLayer || !this._canonicalIdInitialized) {
+		if (!this._docLayer || !this._map || this._docLayer._emptyTilesCount > 0 || !this._canonicalIdInitialized) {
 			return;
 		}
 
