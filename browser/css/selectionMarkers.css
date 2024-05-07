@@ -18,12 +18,6 @@
 	height: 44px;
 	background-image: url('images/cursor-handler.svg');
 }
-.inputbar_selection_handles * {
-	z-index: 1;
-}
-#tb_formulabar_item_formula .inputbar_selection_handles{
-	/*display: none;*/
-}
 
 .html-object-section {
 	display: block;

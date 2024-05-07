@@ -158,7 +158,7 @@ describe.skip(['tagmobile'], 'Trigger hamburger menu options.', function() {
 		mobileHelper.enableEditingMobile();
 
 		mobileHelper.selectHamburgerMenuItem(['Edit', 'Select All']);
-		cy.cGet('.spreadsheet-cell-resize-marker').should('be.visible');
+		cy.cGet('#test-div-cell_selection_handle_start').should('exist');
 		cy.cGet('#copy-paste-container table td').should('contain.text', 'Text');
 	});
 

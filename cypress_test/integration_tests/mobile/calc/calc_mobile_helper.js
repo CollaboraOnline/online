@@ -13,11 +13,9 @@ function selectFirstRow() {
 				.click(XPos, YPos);
 		});
 
-	cy.cGet('.spreadsheet-cell-resize-marker:nth-of-type(1)')
-		.should('be.visible');
+	cy.cGet('#test-div-cell_selection_handle_start').should('exist');
 
-	cy.cGet('.spreadsheet-cell-resize-marker:nth-of-type(2)')
-		.should('not.be.visible');
+	cy.cGet('#test-div-cell_selection_handle_end').should('exist');
 
 	var regex = /^A1:(AMJ|XFD)1$/;
 	cy.cGet('input#addressInput-input')

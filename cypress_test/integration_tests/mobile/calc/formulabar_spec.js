@@ -19,12 +19,9 @@ describe(['tagmobile', 'tagnextcloud'], 'Formula bar tests.', function() {
 		// Select a different cell using address input.
 		helper.typeIntoInputField('input#addressInput-input', 'B2');
 
-		cy.cGet('.spreadsheet-cell-resize-marker[style=\'visibility: visible; transform: translate3d(-8px, -8px, 0px); z-index: -8;\']')
-			.should('not.exist');
-
 		helper.typeIntoInputField('input#addressInput-input', 'A1');
 
-		cy.cGet('.spreadsheet-cell-resize-marker').should('exist');
+		cy.cGet('#test-div-cell_selection_handle_start').should('exist');
 	});
 
 	it('Select a cell range by address', function() {
@@ -34,19 +31,13 @@ describe(['tagmobile', 'tagnextcloud'], 'Formula bar tests.', function() {
 		// Select a cell range using address input.
 		helper.typeIntoInputField('input#addressInput-input', 'B2:B3');
 
-		cy.cGet('.spreadsheet-cell-resize-marker[style=\'visibility: visible; transform: translate3d(-8px, -8px, 0px); z-index: -8;\']')
-			.should('not.exist');
-
 		// Select first cell by clicking on it.
 		calcHelper.clickOnFirstCell();
-
-		cy.cGet('.spreadsheet-cell-resize-marker').should('exist');
 
 		// Select a cell range again using address input.
 		helper.typeIntoInputField('input#addressInput-input', 'B2:B3');
 
-		cy.cGet('.spreadsheet-cell-resize-marker[style=\'visibility: visible; transform: translate3d(-8px, -8px, 0px); z-index: -8;\']')
-			.should('not.exist');
+		cy.cGet('#test-div-cell_selection_handle_start').should('exist');
 	});
 
 	it.skip('Check input field content', function() {

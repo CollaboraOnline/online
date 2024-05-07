@@ -100,7 +100,7 @@ function selectTableInTheCenter() {
 				cy.cGet('body').click(XPos, YPos);
 			});
 
-		return cy.cGet('.text-selection-handle-start').should('be.visible');
+		return cy.cGet('.leaflet-cursor-container').should('be.visible');
 	});
 
 	cy.cGet('.leaflet-marker-icon.table-row-resize-marker').should($el => { expect(Cypress.dom.isDetached($el)).to.eq(false); }).should('be.visible');
