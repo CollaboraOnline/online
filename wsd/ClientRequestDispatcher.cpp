@@ -1903,9 +1903,9 @@ std::string ClientRequestDispatcher::getDiscoveryXML()
         }
         else if (elem->getAttribute("name") == "view_comment")
         {
-            const std::string ext = elem->getAttribute("ext");
-            if (COOLWSD::ViewWithCommentsFileExtensions.insert(ext).second) // Skip duplicates.
-                LOG_DBG_S("Enabling commenting on [" << ext << "] extension files");
+            // We don't seem to treat this list differently.
+            // The assumption seems to be that if a file is not editable,
+            // then it's view-only. And if it's view-only, it supports comments.
         }
     }
 
