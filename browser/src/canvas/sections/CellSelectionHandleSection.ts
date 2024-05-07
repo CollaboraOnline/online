@@ -61,15 +61,12 @@ class CellSelectionHandle extends CanvasSectionObject {
 	}
 
 	public onDraw() {
-		this.context.strokeStyle = 'black';
+		this.context.strokeStyle = app.map.uiManager.getDarkModeState() ? 'white' : 'black';
 		this.context.lineWidth = 2;
 
 		this.context.beginPath();
 		this.context.arc(this.sectionProperties.circleRadius, this.sectionProperties.circleRadius, this.sectionProperties.circleRadius, 0, 2 * Math.PI);
-		if (this.containerObject.isDraggingSomething() && this.containerObject.targetSection === this.name)
-			this.context.fill();
-		else
-			this.context.stroke();
+		this.context.stroke();
 	}
 
 	onMouseMove(point: number[], dragDistance: number[], e: MouseEvent): void {

@@ -30,7 +30,7 @@ describe(['tagmobile', 'tagnextcloud'], 'Calc insertion wizard.', function() {
 		cy.wait(1000);
 
 		// Select image
-		cy.cGet('.spreadsheet-cell-resize-marker:nth-of-type(2)')
+		cy.cGet('#test-div-cell_selection_handle_end')
 			.then(function(items) {
 				expect(items).to.have.lengthOf(1);
 				var XPos = items[0].getBoundingClientRect().right + 10;
