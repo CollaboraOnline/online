@@ -317,7 +317,6 @@ public:
 #endif
 
     static std::unordered_set<std::string> EditFileExtensions;
-    static std::unordered_set<std::string> ViewWithCommentsFileExtensions;
     static unsigned MaxConnections;
     static unsigned MaxDocuments;
     static std::string OverrideWatermark;
@@ -382,22 +381,6 @@ public:
             return false; // mark everything else editable on mobile
         }
         return EditFileExtensions.find(lowerCaseExtension) == EditFileExtensions.end();
-    }
-
-    /// Return true if extension is marked as view_comment action in discovery.xml.
-    static bool IsViewWithCommentsFileExtension(const std::string& extension)
-    {
-
-        std::string lowerCaseExtension = extension;
-        std::transform(lowerCaseExtension.begin(), lowerCaseExtension.end(), lowerCaseExtension.begin(), ::tolower);
-        if (Util::isMobileApp())
-        {
-            if (lowerCaseExtension == "pdf")
-                return true; // true for only pdf - it is not editable
-            return false; // mark everything else editable on mobile
-        }
-        return ViewWithCommentsFileExtensions.find(lowerCaseExtension) !=
-               ViewWithCommentsFileExtensions.end();
     }
 
     /// Returns the value of the specified application configuration,
