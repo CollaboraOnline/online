@@ -215,7 +215,7 @@ define start_coolwsd_instance
 			--unattended \
 			$(if $(findstring php-proxy, $(CYPRESS_INTEGRATION)),--o:net.proxy_prefix=true) \
 			 > $(COOLWSD_OUTPUT) 2>&1 &
-	$(V)$(WAIT_ON_BINARY) http://localhost:$(FREE_PORT) --timeout 60000
+	$(V)$(WAIT_ON_BINARY) http://localhost:$(FREE_PORT) --timeout 60000 || (echo ==dump coolwsd.log== && cat $(COOLWSD_OUTPUT) && exit 1)
 	$(V)echo
 endef
 
