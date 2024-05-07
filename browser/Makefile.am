@@ -374,6 +374,7 @@ COOL_JS_LST =\
 	src/control/Control.NotebookbarBuilder.js \
 	src/control/Control.Layers.js \
 	src/control/Control.Sidebar.js \
+	src/control/AutoCompletePopup.ts \
 	src/control/Control.Mention.ts \
 	src/control/Control.Zotero.js \
 	src/control/Search.js \
