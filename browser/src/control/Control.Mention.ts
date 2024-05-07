@@ -14,53 +14,49 @@
 
 /* global app */
 
+// TODO: duplicate from MessageRouter
+interface WidgetJSON {
+	id: string; // unique id of a widget
+	type: string; // type of widget
+	enabled: boolean | undefined; // enabled state
+	visible: boolean | undefined; // visibility state
+	children: Array<WidgetJSON> | undefined; // child nodes
+}
+
+interface JSDialogJSON extends WidgetJSON {
+	id: string; // unique windowId
+	jsontype: string; // specifies target componenet, on root level only
+	action: string | undefined; // optional name of an action
+	control?: WidgetJSON;
+}
+
+interface PopupData extends JSDialogJSON {
+	isMention?: boolean;
+	cancellable?: boolean;
+	popupParent?: string;
+	clickToClose?: string;
+	posx: number;
+	posy: number;
+}
+
 interface Entry {
 	text: string;
 	columns: { text: any }[];
 	row: string;
 }
 
-interface Control {
-	id: string;
-	type: string;
+interface MentionWidget extends WidgetJSON {
 	text: string;
-	enabled: boolean;
 	singleclickactivate: boolean;
 	fireKeyEvents: boolean;
 	entries: Array<Entry>;
 }
 
-interface Children {
-	id: string;
-	type: string;
-	text: string;
-	enabled: boolean;
-	children: Array<Control>;
-	vertical: boolean;
+interface FireEvent {
+	data?: any
 }
-
-interface Data {
-	jsontype: string;
-	id: string;
-	control: Control;
-	posx: number;
-	posy: number;
-	children: Array<Children>;
-}
-
-interface PopupData {
-	children: Children;
-	jsontype: string;
-	type: string;
-	isMention: boolean;
-	cancellable: boolean;
-	popupParent: string;
-	clickToClose: string;
-	id: string;
-}
-
-interface MessageEvent2 extends MessageEvent {
-	typingMention: boolean;
+interface CloseMessageEvent extends FireEvent {
+	typingMention?: boolean;
 }
 
 class Mention {
@@ -77,14 +73,15 @@ class Mention {
 		this.map.on('closementionpopup', this.closeMentionPopup, this);
 		this.map.on('sendmentiontext', this.sendMentionText, this);
 		this.newPopupData = {
-			children: {
-				id: 'container',
-				type: 'container',
-				text: '',
-				enabled: true,
-				children: [],
-				vertical: true,
-			},
+			children: [
+				{
+					id: 'container',
+					type: 'container',
+					enabled: true,
+					children: new Array<WidgetJSON>(),
+					vertical: true,
+				} as any as WidgetJSON
+			] as Array<WidgetJSON>,
 			jsontype: 'dialog',
 			type: 'modalpopup',
 			isMention: true,
@@ -92,13 +89,13 @@ class Mention {
 			popupParent: '_POPOVER_',
 			clickToClose: '_POPOVER_',
 			id: 'mentionPopup',
-		};
+		} as PopupData;
 		this.firstChar = null;
 		this.users = null;
 		this.itemList = null;
 	}
 
-	sendMentionText(ev: MessageEvent) {
+	sendMentionText(ev: FireEvent) {
 		var text = ev.data.join('').substring(1);
 		if (text.length === 1 && this.firstChar !== text[0]) {
 			this.map.fire('postMessage', {
@@ -121,7 +118,7 @@ class Mention {
 		);
 	}
 
-	openMentionPopup(ev: MessageEvent) {
+	openMentionPopup(ev: FireEvent) {
 		var framePos = this.getCurrentCursorPosition();
 		this.users = ev.data;
 		if (this.users === null) return;
@@ -152,27 +149,27 @@ class Mention {
 				entries.push(entry);
 			}
 
-			var data: Data;
-			var control: Control = {
+			var data: PopupData;
+			const control = {
 				id: 'mentionList',
 				type: 'treelistbox',
 				text: '',
 				enabled: true,
 				singleclickactivate: false,
 				fireKeyEvents: true,
-				entries: [],
-			};
+				entries: [] as Array<Entry>,
+			} as MentionWidget;
 			// update the popup with list if mentionList already exist
 			if (L.DomUtil.get('mentionList')) {
 				data = {
 					jsontype: 'dialog',
 					id: 'mentionPopup',
+					action: 'update',
 					control: control,
 					posx: framePos.x,
 					posy: framePos.y,
-					children: undefined,
-				};
-				data.control.entries = entries;
+				} as any as PopupData;
+				(data.control as MentionWidget).entries = entries;
 				this.map.fire('jsdialogupdate', {
 					data: data,
 					callback: this.callback.bind(this),
@@ -180,29 +177,29 @@ class Mention {
 				return;
 			}
 			if (L.DomUtil.get('mentionPopup'))
-				this.closeMentionPopup({ typingMention: true });
+				this.closeMentionPopup({ typingMention: true } as CloseMessageEvent);
 			data = this.newPopupData;
 			data.children[0].children[0] = control;
-			data.children[0].children[0].entries = entries;
+			(data.children[0].children[0] as MentionWidget).entries = entries;
 		} else {
-			var control: Control = {
+			const control = {
 				id: 'fixedtext',
 				type: 'fixedtext',
 				text: 'no search results found!',
 				enabled: true,
 				singleclickactivate: undefined,
 				fireKeyEvents: undefined,
-				entries: undefined,
-			};
+			} as MentionWidget;
 			if (L.DomUtil.get('fixedtext')) {
 				data = {
 					jsontype: 'dialog',
 					id: 'mentionPopup',
+					action: 'update',
 					control: control,
 					posx: framePos.x,
 					posy: framePos.y,
 					children: undefined,
-				};
+				} as any as PopupData;
 				this.map.fire('jsdialogupdate', {
 					data: data,
 					callback: this.callback.bind(this),
@@ -210,7 +207,7 @@ class Mention {
 				return;
 			}
 			if (L.DomUtil.get('mentionPopup'))
-				this.closeMentionPopup({ typingMention: true });
+				this.closeMentionPopup({ typingMention: true } as CloseMessageEvent);
 			data = this.newPopupData;
 			data.children[0].children[0] = control;
 		}
@@ -223,13 +220,13 @@ class Mention {
 		});
 	}
 
-	closeMentionPopup(ev: MessageEvent) {
+	closeMentionPopup(ev: CloseMessageEvent) {
 		var closePopupData = {
 			jsontype: 'dialog',
 			type: 'modalpopup',
 			action: 'close',
 			id: 'mentionPopup',
-		};
+		} as PopupData;
 		this.map.fire('jsdialog', { data: closePopupData, callback: undefined });
 		if (!ev.typingMention) {
 			this.map._docLayer._typingMention = false;
@@ -239,7 +236,7 @@ class Mention {
 
 	callback(objectType: any, eventType: any, object: any, index: number) {
 		if (eventType === 'close') {
-			this.closeMentionPopup({ typingMention: false });
+			this.closeMentionPopup({ typingMention: false } as CloseMessageEvent);
 		} else if (eventType === 'select' || eventType === 'activate') {
 			var command = {
 				'Hyperlink.Text': {
@@ -260,7 +257,7 @@ class Mention {
 				msgId: 'UI_Mention',
 				args: { type: 'selected', username: this.itemList[index].username },
 			});
-			this.closeMentionPopup({ typingMention: false });
+			this.closeMentionPopup({ typingMention: false } as CloseMessageEvent);
 		} else if (eventType === 'keydown') {
 			if (object.key !== 'Tab' && object.key !== 'Shift') {
 				this.map.focus();
