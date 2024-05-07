@@ -85,7 +85,7 @@ int COOLPerfTest::main(const std::vector<std::string>& args)
     }
 #endif
 
-    Log::setLevel("debug");
+    Log::setLevel("warning");
     /*
     //std::string filePath = "test/data/hello-world.odt";
     //std::string fileUri = ReplaySocketHandler::getFileUri(filePath);

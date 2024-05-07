@@ -20,7 +20,7 @@ public:
     }
 
     void runTest() {
-        testDarkMode();
+        testViewChange();
     }
 
     void testLoad() {
@@ -32,7 +32,8 @@ public:
         disconnect();
     }
 
-    void testDarkMode() {
+    void testViewChange() {
+        // Note: reuses same view, does not rerender every time
         connectAndLoad("test/data/hello-world.odt");
         waitForMessage("statechanged: .uno:LeaveGroup=disabled");
         waitForIdle();
@@ -42,8 +43,17 @@ public:
         sendMessage("uno .uno:ChangeTheme {\"NewTheme\":{\"type\":\"string\",\"value\":\"Light\"}}");
         waitForMessage("canonicalidchange");
         waitForIdle();
+        // Loop twice to make sure views are loaded
+        for (int i=0; i<3; i++) {
+            sendMessage("uno .uno:ChangeTheme {\"NewTheme\":{\"type\":\"string\",\"value\":\"Dark\"}}");
+            waitForMessage("canonicalidchange");
+            waitForIdle();
+            sendMessage("uno .uno:ChangeTheme {\"NewTheme\":{\"type\":\"string\",\"value\":\"Light\"}}");
+            waitForMessage("canonicalidchange");
+            waitForIdle();
+        }
+        sleep(10000);
 
-        sleep(3000);
         startMeasurement();
         for (int i=0; i<100; i++) {
             sendMessage("uno .uno:ChangeTheme {\"NewTheme\":{\"type\":\"string\",\"value\":\"Dark\"}}");
@@ -54,6 +64,13 @@ public:
             waitForIdle();
         }
         stopMeasurement();
+
         disconnect();
+    }
+
+    void testZoom() {
+        connectAndLoad("test/data/hello-world.odt");
+        waitForMessage("statechanged: .uno:LeaveGroup=disabled");
+        waitForIdle();
     }
 };

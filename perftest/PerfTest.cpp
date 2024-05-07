@@ -9,19 +9,19 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#include <stdio.h>
 #include <iostream>
 #include <sys/wait.h>
 #include <sysexits.h>
 
 #include <PerfTest.hpp>
 
-//const std::chrono::steady_clock::time_point PerfTest::TEST_START_TIME = std::chrono::steady_clock::now();
-
 PerfTest::PerfTest(const std::string &name, const std::string &server) :
     _name(name),
     _handler(std::make_shared<PerfTestSocketHandler>(name, server))
 {
     addResult("name",_name);
+    _fileName = _name;
 }
 
 PerfTest::PerfTest(const std::string &name, std::shared_ptr<PerfTestSocketHandler> handler) :
@@ -182,7 +182,8 @@ void CyclePerfTest::startMeasurement()
     } else if (pid == 0) {
         LOG_DBG("Starting perf");
         std::string pid_str = "--pid="+std::to_string(getCoolwsdPid());
-        std::string output_str = "--output="+_name+".data";
+        std::string output_str = "--output="+_fileName+".data";
+        LOG_DBG("Starting perf"<<"perf"<<"record"<<"-s"<<"-e"<<"cycles"<<"--freq=1000"<<"--call-graph"<<"dwarf"<<pid_str.c_str()<<output_str.c_str());
         execlp("perf","perf","record","-s","-e","cycles","--freq=1000","--call-graph","dwarf",pid_str.c_str(),output_str.c_str(),(char *)NULL);
     } else {
         child_pid = pid;
@@ -192,10 +193,31 @@ void CyclePerfTest::startMeasurement()
 void CyclePerfTest::stopMeasurement()
 {
     LOG_DBG("CyclePerfTest stopMeasurement");
+
+    // Stop measurement
     PerfTest::stopMeasurement();
     kill(child_pid,SIGINT);
     waitpid(child_pid, nullptr, 0);
-    addResult("cycles","0");
+    addResult("dataFile",_fileName+".data");
+
+    // Get result
+    // Use perf report to get summary statistics from the data file
+    // Use grep and awk to get the cpu cycle counts from the report output
+    // Use paste to format list of numbers for bc
+    // Use bc to sum numbers. bc, as an arbitrary precision calculator, is
+    // necessary because cycle counts can be >2^31 (too big for awk's sum)
+    std::string command = "perf report -i "+_fileName+".data --no-inline | grep \"# Event count (approx.): \" | awk '{print $5}' | paste -s -d+ | bc";
+    std::string cycles = getStringPopen(command);
+    addResult("cycles",cycles);
+
+    // Create flamegraph
+    std::string flamegraphCommand = "perf script -i "+_fileName+".data --no-inline | stackcollapse-perf.pl | flamegraph.pl > "+_fileName+".svg";
+    int systemResult = system(flamegraphCommand.c_str());
+    if (systemResult != 0) {
+        abort("Flamegraph failed");
+    }
+    addResult("flamegraph",_fileName+".svg");
+
     LOG_DBG("CyclePerfTest stopped");
 }
 
@@ -206,6 +228,31 @@ pid_t CyclePerfTest::getCoolwsdPid()
     pid_t pid;
     file >> pid;
     return pid;
+}
+
+std::string CyclePerfTest::getStringPopen(const std::string &command)
+{
+    std::array<char, 128> buffer;
+    FILE *f = popen(command.c_str(),"r");
+    if (!f) {
+        abort("popen failed");
+    }
+
+    // We expect exactly one number
+    char *c = fgets(buffer.data(), 32, f);
+    pclose(f);
+    if (c == NULL || strlen(c) == 0) {
+        abort("command returned no output: " + command);
+    }
+
+    std::string result = buffer.data();
+    // Trim newline
+    result.erase(std::remove(result.begin(), result.end(), '\n'), result.cend());
+    // Make sure the result is a number
+    if (!std::all_of(result.begin(), result.end(), ::isdigit)) {
+        abort("result is not a number: " + result);
+    }
+    return result;
 }
 
 MessagePerfTest::MessagePerfTest(const std::string &name, const std::string &server) :

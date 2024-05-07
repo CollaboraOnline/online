@@ -21,8 +21,8 @@
 class PerfTest
 {
 protected:
-    //static const std::chrono::steady_clock::time_point TEST_START_TIME;
     std::string _name;
+    std::string _fileName;
     std::shared_ptr<PerfTestSocketHandler> _handler;
 private:
     std::chrono::steady_clock::time_point _startTime;
@@ -59,11 +59,6 @@ protected:
     void sendMessage(const std::string &message);
     void sleep(unsigned int millis);
     void disconnect();
-
-//public:
-    //static void log(const std::string &message);
-    PerfTest(const std::string &name);
-    void setHandler(std::shared_ptr<PerfTestSocketHandler> handler);
 };
 
 class CyclePerfTest : public PerfTest
@@ -77,6 +72,7 @@ public:
     void stopMeasurement() override;
 private:
     pid_t getCoolwsdPid();
+    std::string getStringPopen(const std::string &command);
 };
 
 class MessagePerfTest : public PerfTest
