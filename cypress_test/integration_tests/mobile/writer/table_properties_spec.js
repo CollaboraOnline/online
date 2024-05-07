@@ -199,15 +199,13 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change table properties / l
 	it('Set minimal row height.', function() {
 		before('writer/table_with_text.odt');
 		helper.setDummyClipboardForCopy();
-		// Select full table (3x2)
-		helper.moveCursor('down', 'shift');
-		helper.moveCursor('down', 'shift');
-		helper.moveCursor('right', 'shift');
 		openTablePanel();
+		selectFullTable();
+		// Check old row height
+		cy.cGet('#copy-paste-container td').first().should('have.attr', 'height');
+
 		cy.cGet('#mobile-wizard .unoSetMinimalRowHeight').click();
-		helper.moveCursor('up', 'shift');
-		helper.moveCursor('up', 'shift');
-		helper.moveCursor('left', 'shift');
+		// Table still selected
 		helper.copy();
 		// Check new row height
 		cy.cGet('#copy-paste-container td').should('not.have.attr', 'height');
