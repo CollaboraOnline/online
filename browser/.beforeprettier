@@ -21,7 +21,6 @@
 /src/control/Control.LanguageDialog.js
 /src/control/Control.Layers.js
 /src/control/Control.LokDialog.js
-/src/control/Control.Mention.ts
 /src/control/Control.Menubar.js
 /src/control/Control.MobileBottomBar.js
 /src/control/Control.MobileSlide.js
