@@ -635,7 +635,7 @@ L.Control.JSDialog = L.Control.extend({
 		instance.startX = e.data.posx;
 		instance.startY = e.data.posy;
 		instance.updatePos = null;
-		instance.canHaveFocus = !instance.isSnackbar && instance.id !== 'busypopup' && !instance.isMention;
+		instance.canHaveFocus = !instance.isSnackbar && instance.id !== 'busypopup' && !instance.isAutoCompletePopup;
 		instance.isDocumentAreaPopup = instance.popupParent === '_POPOVER_' && instance.posx !== undefined && instance.posy !== undefined;
 		instance.isPopup = instance.isModalPopUp || instance.isDocumentAreaPopup || instance.isSnackbar;
 		instance.containerParent = instance.isDocumentAreaPopup ? document.getElementById('document-container'): document.body;

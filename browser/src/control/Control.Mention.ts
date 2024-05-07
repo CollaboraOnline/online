@@ -14,52 +14,7 @@
 
 /* global app */
 
-// TODO: duplicate from MessageRouter
-interface WidgetJSON {
-	id: string; // unique id of a widget
-	type: string; // type of widget
-	enabled: boolean | undefined; // enabled state
-	visible: boolean | undefined; // visibility state
-	children: Array<WidgetJSON> | undefined; // child nodes
-}
-
-interface JSDialogJSON extends WidgetJSON {
-	id: string; // unique windowId
-	jsontype: string; // specifies target componenet, on root level only
-	action: string | undefined; // optional name of an action
-	control?: WidgetJSON;
-}
-
-interface PopupData extends JSDialogJSON {
-	isMention?: boolean;
-	cancellable?: boolean;
-	popupParent?: string;
-	clickToClose?: string;
-	posx: number;
-	posy: number;
-}
-
-interface Entry {
-	text: string;
-	columns: { text: any }[];
-	row: string;
-}
-
-interface MentionWidget extends WidgetJSON {
-	text: string;
-	singleclickactivate: boolean;
-	fireKeyEvents: boolean;
-	entries: Array<Entry>;
-}
-
-interface FireEvent {
-	data?: any
-}
-interface CloseMessageEvent extends FireEvent {
-	typingMention?: boolean;
-}
-
-class Mention {
+class Mention extends L.Control.AutoCompletePopup {
 	map: ReturnType<typeof L.map>;
 	newPopupData: PopupData;
 	firstChar: string;
@@ -67,29 +22,17 @@ class Mention {
 	itemList: Array<any>;
 	data: MessageEvent<any>;
 
+	constructor(map: ReturnType<typeof L.map>) {
+		super(map);
+		this.onAdd(map);
+	}
+
 	onAdd(map: ReturnType<typeof L.map>) {
 		this.map = map;
 		this.map.on('openmentionpopup', this.openMentionPopup, this);
-		this.map.on('closementionpopup', this.closeMentionPopup, this);
+		this.map.on('closementionpopup', this.closePopup, this);
 		this.map.on('sendmentiontext', this.sendMentionText, this);
-		this.newPopupData = {
-			children: [
-				{
-					id: 'container',
-					type: 'container',
-					enabled: true,
-					children: new Array<WidgetJSON>(),
-					vertical: true,
-				} as any as WidgetJSON
-			] as Array<WidgetJSON>,
-			jsontype: 'dialog',
-			type: 'modalpopup',
-			isMention: true,
-			cancellable: true,
-			popupParent: '_POPOVER_',
-			clickToClose: '_POPOVER_',
-			id: 'mentionPopup',
-		} as PopupData;
+		super.onAdd('mentionPopup', true);
 		this.firstChar = null;
 		this.users = null;
 		this.itemList = null;
@@ -106,19 +49,6 @@ class Mention {
 		} else {
 			this.openMentionPopup({ data: this.users });
 		}
-	}
-
-	getCurrentCursorPosition() {
-		var currPos = {
-			x: app.file.textCursor.rectangle.cX1,
-			y: app.file.textCursor.rectangle.cY2,
-		};
-		var origin = this.map.getPixelOrigin();
-		var panePos = this.map._getMapPanePos();
-		return new L.Point(
-			Math.round(currPos.x + panePos.x - origin.x),
-			Math.round(currPos.y + panePos.y - origin.y),
-		);
 	}
 
 	openMentionPopup(ev: FireEvent) {
@@ -223,14 +153,8 @@ class Mention {
 		});
 	}
 
-	closeMentionPopup(ev: CloseMessageEvent) {
-		var closePopupData = {
-			jsontype: 'dialog',
-			type: 'modalpopup',
-			action: 'close',
-			id: 'mentionPopup',
-		} as PopupData;
-		this.map.fire('jsdialog', { data: closePopupData, callback: undefined });
+	closePopup(ev: CloseMessageEvent) {
+		super.closePopup('mentionPopup');
 		if (!ev.typingMention) {
 			this.map._docLayer._typingMention = false;
 			this.map._docLayer._mentionText = [];
@@ -270,6 +194,6 @@ class Mention {
 		return false;
 	}
 }
-L.control.mention = function () {
-	return new Mention();
+L.control.mention = function (map: any) {
+	return new Mention(map);
 };
