@@ -6738,6 +6738,8 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_applyDelta: function(tile, rawDelta, isKeyframe, wireMessage) {
+		// 'Uint8Array' rawDelta
+
 		if (this._debugDeltas)
 			window.app.console.log('Applying a raw ' + (isKeyframe ? 'keyframe' : 'delta') +
 					       ' of length ' + rawDelta.length +
@@ -6801,14 +6803,6 @@ L.CanvasTileLayer = L.Layer.extend({
 			tmp.set(tile.rawDeltas, 0);
 			tmp.set(rawDelta, tile.rawDeltas.byteLength);
 			tile.rawDeltas = tmp;
-		}
-
-		// 'Uint8Array' delta
-		if (!tile.canvas)
-		{
-			// defer constructing the image & applying these deltas
-			// until the tile is rendered via ensureCanvas.
-			return;
 		}
 
 		// apply potentially several deltas in turn.
