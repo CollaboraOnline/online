@@ -771,7 +771,6 @@ int forkit_main(int argc, char** argv)
     Util::setThreadName("forkit");
 
     LOG_INF("Preinit stage OK.");
-    LOG_DBG("ASDF Preinit stage OK.");
 
     // We must have at least one child, more are created dynamically.
     // Ask this first child to send version information to master process and trace startup.
@@ -782,7 +781,6 @@ int forkit_main(int argc, char** argv)
         LOG_FTL("Failed to create a kit process.");
         Util::forcedExit(EX_SOFTWARE);
     }
-    LOG_DBG("ASDF created kit process");
 
     // No need to trace subsequent children.
     ::unsetenv("COOL_TRACE_STARTUP");
@@ -795,22 +793,16 @@ int forkit_main(int argc, char** argv)
     // The SocketPoll ctor which may, depending on COOL_WATCHDOG env variable,
     // want to override the SIG2 handler so set user signal handlers before
     // that otherwise that choice is overwritten
-    LOG_DBG("ASDF setUserSignals");
     SigUtil::setUserSignals();
 
-    LOG_DBG("ASDF ForKitPoll reset");
     ForKitPoll.reset(new SocketPoll (Util::getThreadName()));
-    LOG_DBG("ASDF ForKitPoll runOnClientThread");
     ForKitPoll->runOnClientThread(); // We will do the polling on this thread.
 
-    LOG_DBG("ASDF setSigChildHandler");
     // Reap zombies when we get the signal
     SigUtil::setSigChildHandler(wakeupPoll);
 
-    LOG_DBG("ASDF ServerWSHandler");
     WSHandler = std::make_shared<ServerWSHandler>("forkit_ws");
 
-    LOG_DBG("ASDF about to connect?");
     if (!Util::isMobileApp() &&
         !ForKitPoll->insertNewUnixSocket(MasterLocation, FORKIT_URI, WSHandler))
     {

@@ -44,24 +44,16 @@ public:
     TraceFileRecord() :
         _dir(Direction::Invalid),
         _timestampUs(0),
-        _relativeTimestampUs(0),
         _pid(0)
     {
     }
 
     std::string toString() const
     {
-        if (_dir == Direction::Invalid)
-        {
-            return "Invalid TraceFileRecord";
-        }
-        else
-        {
-            std::ostringstream oss;
-            oss << static_cast<char>(_dir) << _pid << static_cast<char>(_dir)
-                << _sessionId << static_cast<char>(_dir) << _payload;
-            return oss.str();
-        }
+        std::ostringstream oss;
+        oss << static_cast<char>(_dir) << _pid << static_cast<char>(_dir)
+            << _sessionId << static_cast<char>(_dir) << _payload;
+        return oss.str();
     }
 
     void setDir(Direction dir) { _dir = dir; }
@@ -71,10 +63,6 @@ public:
     void setTimestampUs(unsigned timestampUs) { _timestampUs = timestampUs; }
 
     unsigned getTimestampUs() const { return _timestampUs; }
-
-    void setRelativeTimestampUs(unsigned relativeTimestampUs) { _relativeTimestampUs = relativeTimestampUs; }
-
-    unsigned getRelativeTimestampUs() const { return _relativeTimestampUs; }
 
     void setPid(unsigned pid) { _pid = pid; }
 
@@ -91,7 +79,6 @@ public:
 private:
     Direction _dir;
     unsigned _timestampUs;
-    unsigned _relativeTimestampUs;
     unsigned _pid;
     std::string _sessionId;
     std::string _payload;
@@ -489,16 +476,10 @@ private:
                     if (s[pos] == '+') { // incremental timestamps
                         unsigned time = std::atol(s.substr(pos, next - pos).c_str());
                         rec.setTimestampUs(lastTime + time);
-                        rec.setRelativeTimestampUs(time);
                         lastTime += time;
                     }
                     else
-                    {
-                        unsigned time = std::atol(s.substr(pos, next - pos).c_str());
-                        rec.setTimestampUs(time);
-                        rec.setRelativeTimestampUs(time - lastTime);
-                        lastTime = time;
-                    }
+                        rec.setTimestampUs(std::atol(s.substr(pos, next - pos).c_str()));
                     break;
                 case 1:
                     rec.setPid(std::atoi(s.substr(pos, next - pos).c_str()));

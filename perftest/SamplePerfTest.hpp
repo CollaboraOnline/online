@@ -52,7 +52,7 @@ public:
             waitForMessage("canonicalidchange");
             waitForIdle();
         }
-        sleep(10000);
+        sleep(5000);
 
         startMeasurement();
         for (int i=0; i<100; i++) {

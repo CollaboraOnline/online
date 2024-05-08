@@ -762,9 +762,7 @@ bool SocketPoll::insertNewUnixSocket(
     const std::shared_ptr<WebSocketHandler>& websocketHandler,
     const std::vector<int>* shareFDs)
 {
-    LOG_DBG("ASDF starting " << location << " " << pathAndQuery);
     LOG_DBG("Connecting to local UDS " << location);
-    LOG_DBG("ASDF AF_UNIX " << AF_UNIX << " SOCK_STREAM " << SOCK_STREAM << " SOCK_NONBLOCK " << SOCK_NONBLOCK << " SOCK_CLOEXEC " << SOCK_CLOEXEC);
     const int fd = socket(AF_UNIX, SOCK_STREAM | SOCK_NONBLOCK | SOCK_CLOEXEC, 0);
     if (fd < 0)
     {
@@ -781,11 +779,8 @@ bool SocketPoll::insertNewUnixSocket(
     addrunix.sun_path[0] = '0';
 #endif
     memcpy(&addrunix.sun_path[1], location.c_str(), location.length());
-    LOG_DBG("ASDF addrunix " << addrunix.sun_family << " " << std::string(addrunix.sun_path[1],100));
-    LOG_DBG("ASDF fd " << fd);
 
     const int res = connect(fd, (const struct sockaddr*)&addrunix, sizeof(addrunix));
-    LOG_DBG("ASDF res " << res);
     if (res < 0 && errno != EINPROGRESS)
     {
         LOG_SYS("Failed to connect to unix socket at " << location);
