@@ -35,6 +35,7 @@
 #include "ClientSession.hpp"
 #include "Exceptions.hpp"
 #include "COOLWSD.hpp"
+#include "FileServer.hpp"
 #include "Socket.hpp"
 #include "Storage.hpp"
 #include "TileCache.hpp"
@@ -814,7 +815,8 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
         if (_storage == nullptr)
         {
             // We should get an exception, not null.
-            LOG_ERR("Failed to create Storage instance for [" << _docKey << "] in " << jailPath.toString());
+            LOG_ERR("Failed to create Storage instance for [" << _docKey << "] in "
+                                                              << jailPath.toString());
             return false;
         }
         firstInstance = true;
@@ -909,7 +911,7 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
             wopiInfo->set("TemplateSaveAs", wopiFileInfo->getTemplateSaveAs());
 
         if (!templateSource.empty())
-                wopiInfo->set("TemplateSource", templateSource);
+            wopiInfo->set("TemplateSource", templateSource);
 
         wopiInfo->set("HidePrintOption", wopiFileInfo->getHidePrintOption());
         wopiInfo->set("HideSaveOption", wopiFileInfo->getHideSaveOption());
@@ -1113,7 +1115,8 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
                     // Extension matches, try the conversion. We convert the file to another one in
                     // the same (jail) directory, with just the new extension tacked on.
 
-                    const std::string newRootPath = _storage->getRootFilePath() + '.' + newExtension;
+                    const std::string newRootPath =
+                        _storage->getRootFilePath() + '.' + newExtension;
 
                     // The commandline must contain the space-separated substring @INPUT@ that is
                     // replaced with the input file name, and @OUTPUT@ for the output file name.
@@ -4118,10 +4121,10 @@ bool RenderSearchResultBroker::handleInput(const std::shared_ptr<Message>& messa
                 _aResposeData.resize(messageData.size() - commandStringVector.size());
                 std::copy(messageData.begin() + commandStringVector.size(), messageData.end(), _aResposeData.begin());
 
-                std::string aDataString(_aResposeData.data(), _aResposeData.size());
                 // really not ideal that the response works only with std::string
                 http::Response httpResponse(http::StatusCode::OK);
-                httpResponse.setBody(aDataString, "image/png");
+                FileServerRequestHandler::hstsHeaders(httpResponse);
+                httpResponse.setBody(std::string(_aResposeData.data(), _aResposeData.size()), "image/png");
                 httpResponse.set("Connection", "close");
                 _socket->sendAndShutdown(httpResponse);
 
