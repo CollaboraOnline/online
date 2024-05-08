@@ -150,7 +150,7 @@ void KitQueueTests::testTileRecombining()
     queue.put("tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840 tileposy=0,0 tilewidth=3840 tileheight=3840");
 
     // the tilecombine's get merged, resulting in 3 "tile" messages
-    LOK_ASSERT_EQUAL(3, static_cast<int>(queue.getQueue().size()));
+    LOK_ASSERT_EQUAL(3, static_cast<int>(queue.size()));
 
     // but when we later extract that, it is just one "tilecombine" message
     LOK_ASSERT_EQUAL_STR(
@@ -159,7 +159,7 @@ void KitQueueTests::testTileRecombining()
         queue.get());
 
     // and nothing remains in the queue
-    LOK_ASSERT_EQUAL(0, static_cast<int>(queue.getQueue().size()));
+    LOK_ASSERT_EQUAL(0, static_cast<int>(queue.size()));
 }
 
 void KitQueueTests::testViewOrder()
@@ -187,7 +187,7 @@ void KitQueueTests::testViewOrder()
     for (auto &tile : tiles)
         queue.put(tile);
 
-    LOK_ASSERT_EQUAL(4, static_cast<int>(queue.getQueue().size()));
+    LOK_ASSERT_EQUAL(4, static_cast<int>(queue.size()));
 
     // should result in the 3, 2, 1, 0 order of the tiles thanks to the cursor
     // positions
@@ -221,7 +221,7 @@ void KitQueueTests::testPreviewsDeprioritization()
     }
 
     // stays empty after all is done
-    LOK_ASSERT_EQUAL(0, static_cast<int>(queue.getQueue().size()));
+    LOK_ASSERT_EQUAL(0, static_cast<int>(queue.size()));
 
     // re-ordering case - put previews and normal tiles to the queue and get
     // everything back again but this time the tiles have to interleave with
@@ -248,7 +248,7 @@ void KitQueueTests::testPreviewsDeprioritization()
     LOK_ASSERT_EQUAL_STR(previews[3], queue.get());
 
     // stays empty after all is done
-    LOK_ASSERT_EQUAL(0, static_cast<int>(queue.getQueue().size()));
+    LOK_ASSERT_EQUAL(0, static_cast<int>(queue.size()));
 
     // cursor positioning case - the cursor position should not prioritize the
     // previews
@@ -261,7 +261,7 @@ void KitQueueTests::testPreviewsDeprioritization()
     LOK_ASSERT_EQUAL_STR(previews[0], queue.get());
 
     // stays empty after all is done
-    LOK_ASSERT_EQUAL(0, static_cast<int>(queue.getQueue().size()));
+    LOK_ASSERT_EQUAL(0, static_cast<int>(queue.size()));
 }
 
 namespace {
@@ -480,7 +480,7 @@ void KitQueueTests::testCallbackInvalidation()
     queue.put("callback all 0 284, 1418, 11105, 275, 0");
     queue.put("callback all 0 4299, 1418, 7090, 275, 0");
 
-    LOK_ASSERT_EQUAL(1, static_cast<int>(queue.getQueue().size()));
+    LOK_ASSERT_EQUAL(1, static_cast<int>(queue.size()));
 
     LOK_ASSERT_EQUAL_STR("callback all 0 284, 1418, 11105, 275, 0", queue.get());
 
@@ -490,11 +490,11 @@ void KitQueueTests::testCallbackInvalidation()
     queue.put("callback all 0 4299, 10418, 7090, 275, 0");
     queue.put("callback all 0 4299, 20418, 7090, 275, 0");
 
-    LOK_ASSERT_EQUAL(4, static_cast<int>(queue.getQueue().size()));
+    LOK_ASSERT_EQUAL(4, static_cast<int>(queue.size()));
 
     queue.put("callback all 0 EMPTY, 0");
 
-    LOK_ASSERT_EQUAL(2, static_cast<int>(queue.getQueue().size()));
+    LOK_ASSERT_EQUAL(2, static_cast<int>(queue.size()));
     LOK_ASSERT_EQUAL_STR("callback all 0 4299, 1418, 7090, 275, 1", queue.get());
     LOK_ASSERT_EQUAL_STR("callback all 0 EMPTY, 0", queue.get());
 }
@@ -509,7 +509,7 @@ void KitQueueTests::testCallbackIndicatorValue()
     queue.put("callback all 10 25");
     queue.put("callback all 10 50");
 
-    LOK_ASSERT_EQUAL(1, static_cast<int>(queue.getQueue().size()));
+    LOK_ASSERT_EQUAL(1, static_cast<int>(queue.size()));
     LOK_ASSERT_EQUAL_STR("callback all 10 50", queue.get());
 }
 
@@ -523,7 +523,7 @@ void KitQueueTests::testCallbackPageSize()
     queue.put("callback all 13 12474, 188626");
     queue.put("callback all 13 12474, 205748");
 
-    LOK_ASSERT_EQUAL(1, static_cast<int>(queue.getQueue().size()));
+    LOK_ASSERT_EQUAL(1, static_cast<int>(queue.size()));
     LOK_ASSERT_EQUAL_STR("callback all 13 12474, 205748", queue.get());
 }
 
@@ -548,7 +548,7 @@ void KitQueueTests::testCallbackModifiedStatusIsSkipped()
         queue.put(msg);
     }
 
-    LOK_ASSERT_EQUAL(static_cast<size_t>(4), queue.getQueue().size());
+    LOK_ASSERT_EQUAL(static_cast<size_t>(4), queue.size());
 
     LOK_ASSERT_EQUAL_STR(messages[0], queue.get());
     LOK_ASSERT_EQUAL_STR(messages[1], queue.get());

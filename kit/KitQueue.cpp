@@ -97,14 +97,14 @@ void KitQueue::removeTileDuplicate(const std::string& tileMsg)
         newMsgPos = tileMsg.size() - 1;
     }
 
-    for (size_t i = 0; i < getQueue().size(); ++i)
+    for (size_t i = 0; i < _queue.size(); ++i)
     {
-        auto& it = getQueue()[i];
+        auto& it = _queue[i];
         if (it.size() > newMsgPos &&
             strncmp(tileMsg.data(), it.data(), newMsgPos) == 0)
         {
             LOG_TRC("Remove duplicate tile request: " << std::string(it.data(), it.size()) << " -> " << COOLProtocol::getAbbreviatedMessage(tileMsg));
-            getQueue().erase(getQueue().begin() + i);
+            _queue.erase(_queue.begin() + i);
             break;
         }
     }
@@ -259,9 +259,9 @@ std::string KitQueue::removeCallbackDuplicate(const std::string& callbackMsg)
 
             // we always travel the entire queue
             std::size_t i = 0;
-            while (i < getQueue().size())
+            while (i < _queue.size())
             {
-                auto& it = getQueue()[i];
+                auto& it = _queue[i];
 
                 StringVector queuedTokens = StringVector::tokenize(it.data(), it.size());
                 if (queuedTokens.size() < 3)
@@ -309,7 +309,7 @@ std::string KitQueue::removeCallbackDuplicate(const std::string& callbackMsg)
                             << msgW << ' ' << msgH << ' ' << msgPart << ' ' << msgMode);
 
                     // remove from the queue
-                    getQueue().erase(getQueue().begin() + i);
+                    _queue.erase(_queue.begin() + i);
                     continue;
                 }
 
@@ -347,7 +347,7 @@ std::string KitQueue::removeCallbackDuplicate(const std::string& callbackMsg)
                     performedMerge = true;
 
                     // remove from the queue
-                    getQueue().erase(getQueue().begin() + i);
+                    _queue.erase(_queue.begin() + i);
                     continue;
                 }
 
@@ -385,14 +385,14 @@ std::string KitQueue::removeCallbackDuplicate(const std::string& callbackMsg)
             if (unoCommand == ".uno:ModifiedStatus")
                 return std::string();
 
-            if (getQueue().empty())
+            if (_queue.empty())
                 return std::string();
 
             // remove obsolete states of the same .uno: command
             isDuplicateCommand functor(unoCommand, tokens);
-            for (std::size_t i = 0; i < getQueue().size(); ++i)
+            for (std::size_t i = 0; i < _queue.size(); ++i)
             {
-                auto& it = getQueue()[i];
+                auto& it = _queue[i];
 
                 StringVector::tokenize_foreach(functor, it.data(), it.size());
 
@@ -401,7 +401,7 @@ std::string KitQueue::removeCallbackDuplicate(const std::string& callbackMsg)
                     LOG_TRC("Remove obsolete uno command: "
                             << std::string(it.data(), it.size()) << " -> "
                             << COOLProtocol::getAbbreviatedMessage(callbackMsg));
-                    getQueue().erase(getQueue().begin() + i);
+                    _queue.erase(_queue.begin() + i);
                     break;
                 }
                 functor.reset();
@@ -425,9 +425,9 @@ std::string KitQueue::removeCallbackDuplicate(const std::string& callbackMsg)
             const std::string viewId
                 = (isViewCallback ? extractViewId(callbackMsg, tokens) : std::string());
 
-            for (std::size_t i = 0; i < getQueue().size(); ++i)
+            for (std::size_t i = 0; i < _queue.size(); ++i)
             {
-                const auto& it = getQueue()[i];
+                const auto& it = _queue[i];
 
                 // skip non-callbacks quickly
                 if (!COOLProtocol::matchPrefix("callback", it))
@@ -443,7 +443,7 @@ std::string KitQueue::removeCallbackDuplicate(const std::string& callbackMsg)
                     LOG_TRC("Remove obsolete callback: "
                             << std::string(it.data(), it.size()) << " -> "
                             << COOLProtocol::getAbbreviatedMessage(callbackMsg));
-                    getQueue().erase(getQueue().begin() + i);
+                    _queue.erase(_queue.begin() + i);
                     break;
                 }
                 else if (isViewCallback
@@ -461,7 +461,7 @@ std::string KitQueue::removeCallbackDuplicate(const std::string& callbackMsg)
                         LOG_TRC("Remove obsolete view callback: "
                                 << std::string(it.data(), it.size()) << " -> "
                                 << COOLProtocol::getAbbreviatedMessage(callbackMsg));
-                        getQueue().erase(getQueue().begin() + i);
+                        _queue.erase(_queue.begin() + i);
                         break;
                     }
                 }
@@ -494,9 +494,9 @@ int KitQueue::priority(const std::string& tileMsg)
 
 void KitQueue::deprioritizePreviews()
 {
-    for (size_t i = 0; i < getQueue().size(); ++i)
+    for (size_t i = 0; i < _queue.size(); ++i)
     {
-        const Payload front = getQueue().front();
+        const Payload front = _queue.front();
         const std::string message(front.data(), front.size());
 
         // stop at the first non-tile or non-'id' (preview) message
@@ -507,16 +507,16 @@ void KitQueue::deprioritizePreviews()
             break;
         }
 
-        getQueue().erase(getQueue().begin());
-        getQueue().push_back(front);
+        _queue.erase(_queue.begin());
+        _queue.push_back(front);
     }
 }
 
 KitQueue::Payload KitQueue::get()
 {
-    LOG_TRC("KitQueue depth: " << getQueue().size());
+    LOG_TRC("KitQueue depth: " << _queue.size());
 
-    const Payload front = getQueue().front();
+    const Payload front = _queue.front();
 
     std::string msg(front.data(), front.size());
 
@@ -527,7 +527,7 @@ KitQueue::Payload KitQueue::get()
     {
         // Don't combine non-tiles or tiles with id.
         LOG_TRC("KitQueue res: " << COOLProtocol::getAbbreviatedMessage(msg));
-        getQueue().erase(getQueue().begin());
+        _queue.erase(_queue.begin());
 
         // de-prioritize the other tiles with id - usually the previews in
         // Impress
@@ -541,9 +541,9 @@ KitQueue::Payload KitQueue::get()
     // position, otherwise handle the one that is at the front
     int prioritized = 0;
     int prioritySoFar = -1;
-    for (size_t i = 0; i < getQueue().size(); ++i)
+    for (size_t i = 0; i < _queue.size(); ++i)
     {
-        auto& it = getQueue()[i];
+        auto& it = _queue[i];
         const std::string prio(it.data(), it.size());
 
         // avoid starving - stop the search when we reach a non-tile,
@@ -570,15 +570,15 @@ KitQueue::Payload KitQueue::get()
         }
     }
 
-    getQueue().erase(getQueue().begin() + prioritized);
+    _queue.erase(_queue.begin() + prioritized);
 
     std::vector<TileDesc> tiles;
     tiles.emplace_back(TileDesc::parse(msg));
 
     // Combine as many tiles as possible with the top one.
-    for (size_t i = 0; i < getQueue().size(); )
+    for (size_t i = 0; i < _queue.size(); )
     {
-        auto& it = getQueue()[i];
+        auto& it = _queue[i];
         msg = std::string(it.data(), it.size());
         if (!COOLProtocol::matchPrefix("tile", msg) ||
             COOLProtocol::getTokenStringFromMessage(msg, "id", id))
@@ -595,7 +595,7 @@ KitQueue::Payload KitQueue::get()
         if (tiles[0].canCombine(tile2))
         {
             tiles.emplace_back(tile2);
-            getQueue().erase(getQueue().begin() + i);
+            _queue.erase(_queue.begin() + i);
         }
         else
         {
@@ -603,7 +603,7 @@ KitQueue::Payload KitQueue::get()
         }
     }
 
-    LOG_TRC("Combined " << tiles.size() << " tiles, leaving " << getQueue().size() << " in queue.");
+    LOG_TRC("Combined " << tiles.size() << " tiles, leaving " << _queue.size() << " in queue.");
 
     if (tiles.size() == 1)
     {
@@ -653,10 +653,10 @@ std::string KitQueue::combineTextInput(const StringVector& tokens)
         !COOLProtocol::getTokenString(tokens, "text", text))
         return std::string();
 
-    int i = getQueue().size() - 1;
+    int i = _queue.size() - 1;
     while (i >= 0)
     {
-        auto& it = getQueue()[i];
+        auto& it = _queue[i];
 
         const std::string queuedMessage(it.data(), it.size());
         StringVector queuedTokens = StringVector::tokenize(it.data(), it.size());
@@ -680,7 +680,7 @@ std::string KitQueue::combineTextInput(const StringVector& tokens)
             COOLProtocol::getTokenString(queuedTokens, "text", queuedText))
         {
             // Remove the queued textinput message and combine it with the current one
-            getQueue().erase(getQueue().begin() + i);
+            _queue.erase(_queue.begin() + i);
 
             std::string newMsg;
             newMsg.reserve(it.size() * 2);
@@ -713,10 +713,10 @@ std::string KitQueue::combineRemoveText(const StringVector& tokens)
         !COOLProtocol::getTokenInteger(tokens, "after", after))
         return std::string();
 
-    int i = getQueue().size() - 1;
+    int i = _queue.size() - 1;
     while (i >= 0)
     {
-        auto& it = getQueue()[i];
+        auto& it = _queue[i];
 
         const std::string queuedMessage(it.data(), it.size());
         StringVector queuedTokens = StringVector::tokenize(it.data(), it.size());
@@ -742,7 +742,7 @@ std::string KitQueue::combineRemoveText(const StringVector& tokens)
             COOLProtocol::getTokenIntegerFromMessage(queuedMessage, "after", queuedAfter))
         {
             // Remove the queued removetextcontext message and combine it with the current one
-            getQueue().erase(getQueue().begin() + i);
+            _queue.erase(_queue.begin() + i);
 
             std::string newMsg = queuedTokens[0] + " removetextcontext id=" + id +
                 " before=" + std::to_string(queuedBefore + before) +

@@ -29,14 +29,8 @@ class KitQueue
 public:
     typedef std::vector<char> Payload;
 
-    KitQueue()
-    {
-    }
-
-    ~KitQueue()
-    {
-        clear();
-    }
+    KitQueue() { }
+    ~KitQueue() { }
 
     KitQueue(const KitQueue&) = delete;
     KitQueue& operator=(const KitQueue&) = delete;
@@ -81,8 +75,6 @@ public:
     void dumpState(std::ostream& oss);
 
 protected:
-    std::vector<Payload>& getQueue() { return _queue; }
-
     /// Search the queue for a previous textinput message and if found, remove it and combine its
     /// input with that in the current textinput message. We check that there aren't any interesting
     /// messages inbetween that would make it wrong to merge the textinput messages.
@@ -153,7 +145,7 @@ private:
     int priority(const std::string& tileMsg);
 
 private:
-    /// The underlying queue
+    /// The incoming underlying queue
     std::vector<Payload> _queue;
 
     std::map<int, CursorPosition> _cursorPositions;
