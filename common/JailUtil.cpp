@@ -88,7 +88,7 @@ bool remountReadonly(const std::string& source, const std::string& target)
 }
 
 /// Unmount a bind-mounted jail directory.
-static bool unmount(const std::string& target)
+static bool unmount(const std::string& target, bool silent = false)
 {
     LOG_DBG("Unmounting [" << target << ']');
     const bool res = coolmount("-u", "", target);
@@ -100,7 +100,7 @@ static bool unmount(const std::string& target)
         // Otherwise, it's a cleanup attempt of earlier mounts,
         // which may be left-over and now the config has changed.
         // This happens more often in dev labs than in prod.
-        if (JailUtil::isBindMountingEnabled())
+        if (JailUtil::isBindMountingEnabled() && !silent)
             LOG_ERR("Failed to unmount [" << target << ']');
         else
             LOG_DBG("Failed to unmount [" << target << ']');
@@ -139,7 +139,7 @@ bool isJailCopied(const std::string& root)
 static bool safeRemoveDir(const std::string& path)
 {
     // Always unmount, just in case.
-    unmount(path);
+    unmount(path, /*silent=*/true);
 
     // Regardless of the bind flag, check if the jail is marked as copied.
     const bool copied = isJailCopied(path);
