@@ -247,7 +247,11 @@ void cleanupJails(const std::string& root)
                     // legacy jails at the top-level
                     for (const auto& newJail : newJails)
                     {
-                        tryRemoveJail(Poco::Path(childDir, newJail).toString());
+                        const std::string path = Poco::Path(childDir, newJail).toString();
+                        if (newJail == CoolTestMountpoint)
+                            safeRemoveDir(path);
+                        else
+                            tryRemoveJail(path);
                     }
 
                     // top level linkable and tmp mount point.
