@@ -190,9 +190,17 @@ int main(int argc, char** argv)
                 retval = umount2(target, MNT_FORCE);
                 if (retval != 0)
                 {
-                    // Complain to capture the reason of failure.
-                    fprintf(stderr, "%s: forced unmount of [%s] failed: %s.\n", program, target,
-                            strerror(errno));
+                    // From man umount(2), MNT_FORCE is not commonly supported:
+                    // As at Linux 4.12, MNT_FORCE is supported only on the following filesystems: 9p (since
+                    // Linux 2.6.16), ceph (since Linux 2.6.34), cifs (since Linux 2.6.12),
+                    // fuse (since Linux 2.6.16), lustre (since Linux 3.11), and NFS (since Linux 2.1.116).
+                    if (errno != EINVAL)
+                    {
+                        // Complain to capture the reason of failure.
+                        fprintf(stderr, "%s: forced unmount of [%s] failed: %s.\n", program, target,
+                                strerror(errno));
+                    }
+
                     return EX_SOFTWARE;
                 }
             }
