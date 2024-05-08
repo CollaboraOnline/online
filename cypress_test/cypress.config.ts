@@ -19,7 +19,9 @@ export default defineConfig({
 	e2e: {
 		baseUrl: 'http://' + process.env.COOLWSD_SERVER + ':' + process.env.FREE_PORT,
 		setupNodeEvents(on, config) {
-			installLogsPrinter(on);
+			installLogsPrinter(on, {
+				printLogsToConsole: 'onFail', // 'always', 'onFail', 'never'
+			});
 			plugin(on, config);
 		},
 		specPattern: 'integration_tests/**/*_spec.js',
