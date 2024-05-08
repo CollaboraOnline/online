@@ -32,6 +32,9 @@
 
 namespace JailUtil
 {
+
+static const std::string CoolTestMountpoint = "cool_test_mount";
+
 bool coolmount(const std::string& arg, std::string source, std::string target)
 {
     source = Util::trim(source, '/');
@@ -181,7 +184,7 @@ bool tryRemoveJail(const std::string& root)
     unmount(Poco::Path(root, "lo").toString());
 
     // Unmount the test-mount directory too.
-    const std::string testMountPath = Poco::Path(root, "cool_test_mount").toString();
+    const std::string testMountPath = Poco::Path(root, CoolTestMountpoint).toString();
     if (FileUtil::Stat(testMountPath).exists())
         unmount(testMountPath);
 
@@ -296,7 +299,7 @@ void setupChildRoot(bool bindMount, const std::string& childRoot, const std::str
     {
         // Test mounting to verify it actually works,
         // as it might not function in some systems.
-        const std::string target = Poco::Path(childRoot, "cool_test_mount").toString();
+        const std::string target = Poco::Path(childRoot, CoolTestMountpoint).toString();
 
         // Make sure that we can both mount and unmount before enabling bind-mounting.
         if (bind(sysTemplate, target) && unmount(target))
