@@ -6565,7 +6565,8 @@ L.CanvasTileLayer = L.Layer.extend({
 				this._applyDelta(tile, tile.rawDeltas, true, false);
 			}
 		}
-		tile.lastRendered = now;
+		if (now !== null)
+			tile.lastRendered = now;
 		if (!tile.hasContent())
 			tile.missingContent++;
 	},
@@ -6674,7 +6675,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		// important this is after the garbagecollect
 		if (!tile.canvas)
-			this.ensureCanvas(tile);
+			this.ensureCanvas(tile, null);
 
 		if ((ctx = tile.canvas.getContext('2d')))
 			return ctx;
@@ -6683,7 +6684,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._garbageCollect();
 
 		if (!tile.canvas)
-			this.ensureCanvas(tile);
+			this.ensureCanvas(tile, null);
 		if ((ctx = tile.canvas.getContext('2d')))
 			return ctx;
 
@@ -6696,7 +6697,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				this._reclaimTileCanvasMemory(t);
 		}
 		if (!tile.canvas)
-			this.ensureCanvas(tile);
+			this.ensureCanvas(tile, null);
 		if ((ctx = tile.canvas.getContext('2d')))
 			return ctx;
 
@@ -6707,7 +6708,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._reclaimTileCanvasMemory(t);
 		}
 		if (!tile.canvas)
-			this.ensureCanvas(tile);
+			this.ensureCanvas(tile, null);
 		ctx = tile.canvas.getContext('2d');
 		if (!ctx)
 			window.app.console.log('Error: out of canvas memory.');
