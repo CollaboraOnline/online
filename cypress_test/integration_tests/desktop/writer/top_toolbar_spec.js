@@ -308,7 +308,8 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		cy.cGet('#copy-paste-container p i').should('exist');
 
 		//Undo
-		cy.cGet('#Home-container .unoUndo').should('not.be.disabled').click();
+		cy.cGet('#Home-container .unoUndo').should('not.have.attr','disabled');
+		cy.cGet('#Home-container .unoUndo button').click({force: true});
 		helper.copy();
 		cy.wait(500); // wait for new clipboard
 		cy.cGet('#copy-paste-container p i').should('not.exist');
@@ -319,7 +320,8 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		cy.cGet('[role="tooltip"]').should('not.exist');
 
 		//Redo
-		cy.cGet('#Home-container .unoRedo').should('not.be.disabled').click();
+		cy.cGet('#Home-container .unoRedo').should('not.have.attr','disabled');
+		cy.cGet('#Home-container .unoRedo button').click({force: true});
 		helper.copy();
 		cy.wait(500); // wait for new clipboard
 		cy.cGet('#copy-paste-container p i').should('exist');
