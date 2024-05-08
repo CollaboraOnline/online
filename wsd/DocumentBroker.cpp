@@ -37,6 +37,7 @@
 #include "Common.hpp"
 #include "Exceptions.hpp"
 #include "COOLWSD.hpp"
+#include "FileServer.hpp"
 #include "Socket.hpp"
 #include "Storage.hpp"
 #include "TileCache.hpp"
@@ -4283,6 +4284,7 @@ bool RenderSearchResultBroker::handleInput(const std::shared_ptr<Message>& messa
                 std::copy(messageData.begin() + commandStringVector.size(), messageData.end(), _aResposeData.begin());
 
                 http::Response httpResponse(http::StatusCode::OK);
+                FileServerRequestHandler::hstsHeaders(httpResponse);
                 // really not ideal that the response works only with std::string
                 httpResponse.setBody(std::string(_aResposeData.data(), _aResposeData.size()), "image/png");
                 httpResponse.set("Connection", "close");
