@@ -44,7 +44,11 @@ interface Entry {
 	row: string;
 }
 
-interface MentionWidget extends WidgetJSON {
+interface TextWidget extends WidgetJSON {
+	text: string;
+}
+
+interface TreeWidget extends WidgetJSON {
 	text: string;
 	singleclickactivate: boolean;
 	fireKeyEvents: boolean;
@@ -67,12 +71,11 @@ abstract class AutoCompletePopup {
 	protected map: ReturnType<typeof L.map>;
 	protected newPopupData: PopupData;
 	protected data: MessageEvent<any>;
+	protected popupId: string;
 
-	constructor(map: ReturnType<typeof L.map>) {
+	constructor(popupId: string, map: ReturnType<typeof L.map>) {
 		this.map = map;
-	}
-
-	onAdd(id: string, bAutoComplete: boolean): void {
+		this.popupId = popupId;
 		this.newPopupData = {
 			children: [
 				{
@@ -85,13 +88,16 @@ abstract class AutoCompletePopup {
 			] as Array<WidgetJSON>,
 			jsontype: 'dialog',
 			type: 'modalpopup',
-			isAutoCompletePopup: bAutoComplete,
 			cancellable: true,
 			popupParent: '_POPOVER_',
 			clickToClose: '_POPOVER_',
-			id: id,
+			id: this.popupId,
 		} as PopupData;
+
+		this.onAdd();
 	}
+
+	abstract onAdd(): void;
 
 	getCurrentCursorPosition(): Point {
 		var currPos = {
@@ -106,19 +112,105 @@ abstract class AutoCompletePopup {
 		);
 	}
 
-	closePopup(id: string): void {
+	closePopup(): void {
 		var closePopupData = {
 			jsontype: 'dialog',
 			type: 'modalpopup',
 			action: 'close',
-			id: id,
+			id: this.popupId,
 		} as PopupData;
 
 		this.map.fire('jsdialog', { data: closePopupData, callback: undefined });
 	}
 
-	abstract sendMentionText(ev: FireEvent): void;
-	abstract openMentionPopup(ev: FireEvent): void;
+	abstract getPopupEntries(ev: FireEvent): Array<Entry>;
+
+	getPopupJSON(control: any, framePos: any): PopupData {
+		return {
+			jsontype: 'dialog',
+			id: this.popupId,
+			action: 'update',
+			control: control,
+			posx: framePos.x,
+			posy: framePos.y,
+			children: undefined,
+		} as any as PopupData;
+	}
+
+	getTreeJSON(): TreeWidget {
+		return {
+			id: this.popupId + 'List',
+			type: 'treelistbox',
+			text: '',
+			enabled: true,
+			singleclickactivate: false,
+			fireKeyEvents: true,
+			entries: [] as Array<Entry>,
+		} as TreeWidget;
+	}
+
+	getSimpleTextJSON(): TextWidget {
+		return {
+			id: this.popupId + 'fixedtext',
+			type: 'fixedtext',
+			text: 'no search results found!',
+			enabled: true,
+		} as TextWidget;
+	}
+
+	sendUpdate(data: any): void {
+		this.map.fire('jsdialogupdate', {
+			data: data,
+			callback: this.callback.bind(this),
+		});
+	}
+
+	sendJSON(data: any): void {
+		this.map.fire('jsdialog', {
+			data: data,
+			callback: this.callback.bind(this),
+		});
+	}
+
+	openMentionPopup(ev: FireEvent): void {
+		const framePos = this.getCurrentCursorPosition();
+		const entries = this.getPopupEntries(ev);
+		let data: PopupData;
+
+		if (entries.length > 0) {
+			const control = this.getTreeJSON();
+			// update the popup with list if mentionList already exist
+			if (L.DomUtil.get(this.popupId + 'List')) {
+				data = this.getPopupJSON(control, framePos);
+				(data.control as TreeWidget).entries = entries;
+				this.sendUpdate(data);
+				return;
+			}
+			if (L.DomUtil.get(this.popupId))
+				this.closeMentionPopup({ typingMention: true } as CloseMessageEvent);
+			data = this.newPopupData;
+			data.children[0].children[0] = control;
+			(data.children[0].children[0] as TreeWidget).entries = entries;
+		} else {
+			const control = this.getSimpleTextJSON();
+			if (L.DomUtil.get(this.popupId + 'fixedtext')) {
+				data = this.getPopupJSON(control, framePos);
+				this.sendUpdate(data);
+				return;
+			}
+			if (L.DomUtil.get(this.popupId))
+				this.closeMentionPopup({ typingMention: true } as CloseMessageEvent);
+			data = this.newPopupData;
+			data.children[0].children[0] = control;
+		}
+		// add position
+		data.posx = framePos.x;
+		data.posy = framePos.y;
+		this.sendJSON(data);
+	}
+
+	abstract closeMentionPopup(ev: FireEvent): void;
+
 	abstract callback(
 		objectType: any,
 		eventType: any,
