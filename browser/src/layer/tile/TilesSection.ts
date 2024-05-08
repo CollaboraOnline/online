@@ -600,7 +600,7 @@ export class TilesSection extends CanvasSectionObject {
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	public ensureCanvas(tile: any, now: Date): void
 	{
-		this.sectionProperties.docLayer.ensureCanvas(tile, now);
+		this.sectionProperties.docLayer.ensureCanvas(tile, now, false);
 	}
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
