@@ -21,23 +21,25 @@
 #include "Log.hpp"
 #include "Protocol.hpp"
 
-/// Message queue (FIFO).
-class MessageQueue
+/// Queue for handling the Kit's messaging needs
+class TileQueue
 {
+    friend class TileQueueTests;
+
 public:
     typedef std::vector<char> Payload;
 
-    MessageQueue()
+    TileQueue()
     {
     }
 
-    virtual ~MessageQueue()
+    virtual ~TileQueue()
     {
         clear();
     }
 
-    MessageQueue(const MessageQueue&) = delete;
-    MessageQueue& operator=(const MessageQueue&) = delete;
+    TileQueue(const TileQueue&) = delete;
+    TileQueue& operator=(const TileQueue&) = delete;
 
     /// insert the message.
     void put(const Payload& value)
@@ -85,46 +87,19 @@ public:
     /// Removal of all the pending messages.
     void clear()
     {
-        clear_impl();
+        _queue.clear();
     }
+
+    void dumpState(std::ostream& oss);
 
 protected:
-    virtual void put_impl(const Payload& value)
-    {
-        StringVector tokens = StringVector::tokenize(value.data(), value.size());
-        if (tokens.equals(1, "textinput"))
-        {
-            const std::string newMsg = combineTextInput(tokens);
-            if (!newMsg.empty())
-            {
-                _queue.push_back(Payload(newMsg.data(), newMsg.data() + newMsg.size()));
-                return;
-            }
-        }
-        else if (tokens.equals(1, "removetextcontext"))
-        {
-            const std::string newMsg = combineRemoveText(tokens);
-            if (!newMsg.empty())
-            {
-                _queue.push_back(Payload(newMsg.data(), newMsg.data() + newMsg.size()));
-                return;
-            }
-        }
-
-        _queue.emplace_back(value);
-    }
-
-    virtual Payload get_impl()
-    {
+    void put_impl(const Payload& value);
+    Payload get_impl();
+/*    {
         Payload result = _queue.front();
         _queue.erase(_queue.begin());
         return result;
-    }
-
-    void clear_impl()
-    {
-        _queue.clear();
-    }
+        }*/
 
     std::vector<Payload>& getQueue() { return _queue; }
 
@@ -254,17 +229,6 @@ protected:
         return std::string();
     }
 
-    void dumpState(std::ostream& oss);
-
-private:
-    std::vector<Payload> _queue;
-};
-
-/// MessageQueue specialized for priority handling of tiles.
-class TileQueue : public MessageQueue
-{
-    friend class TileQueueTests;
-
 private:
     class CursorPosition
     {
@@ -330,13 +294,6 @@ public:
         _cursorPositions.erase(viewId);
     }
 
-    void dumpState(std::ostream& oss);
-
-protected:
-    virtual void put_impl(const Payload& value) override;
-
-    virtual Payload get_impl() override;
-
 private:
     /// Search the queue for a duplicate tile and remove it (if present).
     void removeTileDuplicate(const std::string& tileMsg);
@@ -359,6 +316,9 @@ private:
     int priority(const std::string& tileMsg);
 
 private:
+    /// The underlying queue
+    std::vector<Payload> _queue;
+
     std::map<int, CursorPosition> _cursorPositions;
 
     /// Check the views in the order of how the editing (cursor movement) has

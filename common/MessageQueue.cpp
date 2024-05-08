@@ -26,6 +26,8 @@
 
 void TileQueue::put_impl(const Payload& value)
 {
+    StringVector tokens = StringVector::tokenize(value.data(), value.size());
+
     const std::string firstToken = COOLProtocol::getFirstToken(value);
 
     if (firstToken == "tilecombine")
@@ -40,34 +42,42 @@ void TileQueue::put_impl(const Payload& value)
 
             removeTileDuplicate(newMsg);
 
-            MessageQueue::put_impl(Payload(newMsg.data(), newMsg.data() + newMsg.size()));
+            _queue.emplace_back(newMsg.data(), newMsg.data() + newMsg.size());
         }
-        return;
     }
     else if (firstToken == "tile")
     {
         removeTileDuplicate(std::string(value.data(), value.size()));
 
-        MessageQueue::put_impl(value);
-        return;
+        _queue.push_back(value);
     }
     else if (firstToken == "callback")
     {
         const std::string newMsg = removeCallbackDuplicate(std::string(value.data(), value.size()));
 
         if (newMsg.empty())
-        {
-            MessageQueue::put_impl(value);
-        }
+            _queue.push_back(value);
         else
-        {
-            MessageQueue::put_impl(Payload(newMsg.data(), newMsg.data() + newMsg.size()));
-        }
-
-        return;
+            _queue.emplace_back(newMsg.data(), newMsg.data() + newMsg.size());
     }
-
-    MessageQueue::put_impl(value);
+    else if (tokens.equals(1, "textinput"))
+    {
+        const std::string newMsg = combineTextInput(tokens);
+        if (!newMsg.empty())
+            _queue.emplace_back(newMsg.data(), newMsg.data() + newMsg.size());
+        else
+            _queue.emplace_back(value);
+    }
+    else if (tokens.equals(1, "removetextcontext"))
+    {
+        const std::string newMsg = combineRemoveText(tokens);
+        if (!newMsg.empty())
+            _queue.emplace_back(newMsg.data(), newMsg.data() + newMsg.size());
+        else
+            _queue.emplace_back(value);
+    }
+    else // not so special
+        _queue.emplace_back(value);
 }
 
 void TileQueue::removeTileDuplicate(const std::string& tileMsg)
@@ -656,11 +666,6 @@ void TileQueue::dumpState(std::ostream& oss)
     }
     oss << "]\n";
 
-    MessageQueue::dumpState(oss);
-}
-
-void MessageQueue::dumpState(std::ostream& oss)
-{
     oss << "\tQueue size: " << _queue.size() << "\n";
     size_t i = 0;
     for (Payload &it : _queue)
