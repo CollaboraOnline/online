@@ -128,7 +128,7 @@ wsd_sources = \
             ../wsd/ProofKey.cpp
 
 test_base_sources = \
-	TileQueueTests.cpp \
+	KitQueueTests.cpp \
 	RequestDetailsTests.cpp \
 	StringVectorTests.cpp \
 	FileServeWhiteBoxTests.cpp \
@@ -144,7 +144,6 @@ common_sources = \
 	../common/ConfigUtil.cpp \
 	../common/DummyTraceEventEmitter.cpp \
 	../common/Log.cpp \
-	../common/MessageQueue.cpp \
 	../common/Session.cpp \
 	../common/SigUtil.cpp \
 	../common/Unit.cpp \
@@ -154,6 +153,7 @@ common_sources = \
 	../common/StringVector.cpp \
 	../common/TraceEvent.cpp \
 	../common/Simd.cpp \
+	../kit/KitQueue.cpp \
 	../wsd/Exceptions.cpp \
 	../net/HttpRequest.cpp \
 	../net/Socket.cpp \

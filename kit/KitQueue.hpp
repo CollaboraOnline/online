@@ -22,24 +22,24 @@
 #include "Protocol.hpp"
 
 /// Queue for handling the Kit's messaging needs
-class TileQueue
+class KitQueue
 {
-    friend class TileQueueTests;
+    friend class KitQueueTests;
 
 public:
     typedef std::vector<char> Payload;
 
-    TileQueue()
+    KitQueue()
     {
     }
 
-    virtual ~TileQueue()
+    virtual ~KitQueue()
     {
         clear();
     }
 
-    TileQueue(const TileQueue&) = delete;
-    TileQueue& operator=(const TileQueue&) = delete;
+    KitQueue(const KitQueue&) = delete;
+    KitQueue& operator=(const KitQueue&) = delete;
 
     /// insert the message.
     void put(const Payload& value)
@@ -260,7 +260,7 @@ private:
 public:
     void updateCursorPosition(int viewId, int part, int x, int y, int width, int height)
     {
-        const TileQueue::CursorPosition cursorPosition = CursorPosition(part, x, y, width, height);
+        const KitQueue::CursorPosition cursorPosition = CursorPosition(part, x, y, width, height);
 
         auto it = _cursorPositions.lower_bound(viewId);
         if (it != _cursorPositions.end() && it->first == viewId)
@@ -325,8 +325,5 @@ private:
     /// been happening (0 == oldest, size() - 1 == newest).
     std::vector<int> _viewOrder;
 };
-
-// Really this queue is used only in the Kit process
-typedef TileQueue KitQueue;
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

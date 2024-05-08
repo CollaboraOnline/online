@@ -27,7 +27,6 @@ online_SOURCES = \
 	../common/FileUtil.cpp \
 	../common/CommandControl.cpp \
 	../common/Log.cpp \
-	../common/MessageQueue.cpp \
 	../common/TraceEvent.cpp \
 	../common/Protocol.cpp \
 	../common/StringVector.cpp \
@@ -40,6 +39,7 @@ online_SOURCES = \
 	../common/Util-mobile.cpp \
 	../kit/ChildSession.cpp \
 	../kit/Kit.cpp \
+	../kit/KitQueue.cpp \
 	../kit/KitWebSocket.cpp \
 	../kit/DeltaSimd.c \
 	../net/FakeSocket.cpp \

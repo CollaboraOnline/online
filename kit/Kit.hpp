@@ -19,7 +19,7 @@
 #include <common/StateEnum.hpp>
 #include <common/Session.hpp>
 #include <common/ThreadPool.hpp>
-#include <common/MessageQueue.hpp>
+#include <kit/KitQueue.hpp>
 
 #include <wsd/TileDesc.hpp>
 
@@ -184,7 +184,7 @@ public:
 #endif
 };
 
-class TileQueue;
+class KitQueue;
 class ChildSession;
 
 /// A document container.
@@ -259,7 +259,7 @@ private:
     /// Helper method to broadcast callback and its payload to all clients
     void broadcastCallbackToClients(const int type, const std::string& payload)
     {
-        _tileQueue->put("callback all " + std::to_string(type) + ' ' + payload);
+        _queue->put("callback all " + std::to_string(type) + ' ' + payload);
     }
 
 public:
@@ -324,8 +324,8 @@ public:
     bool processInputEnabled() const;
 
     /// A new message from wsd for the queue
-    void queueMessage(const std::string &msg) { _tileQueue->put(msg); }
-    bool hasQueueItems() const { return _tileQueue && !_tileQueue->isEmpty(); }
+    void queueMessage(const std::string &msg) { _queue->put(msg); }
+    bool hasQueueItems() const { return _queue && !_queue->isEmpty(); }
 
     // poll is idle, are we ?
     void checkIdle();
@@ -383,7 +383,7 @@ private:
 #ifdef __ANDROID__
     static std::shared_ptr<lok::Document> _loKitDocumentForAndroidOnly;
 #endif
-    std::shared_ptr<TileQueue> _tileQueue;
+    std::shared_ptr<KitQueue> _queue;
 
     // Connection to the coolwsd process
     std::shared_ptr<WebSocketHandler> _websocketHandler;

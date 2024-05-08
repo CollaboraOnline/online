@@ -16,18 +16,18 @@
 #include <Common.hpp>
 #include <Protocol.hpp>
 #include <Message.hpp>
-#include <MessageQueue.hpp>
+#include <kit/KitQueue.hpp>
 #include <SenderQueue.hpp>
 #include <Util.hpp>
 
 #include <cppunit/extensions/HelperMacros.h>
 
-/// TileQueue unit-tests.
-class TileQueueTests : public CPPUNIT_NS::TestFixture
+/// KitQueue unit-tests.
+class KitQueueTests : public CPPUNIT_NS::TestFixture
 {
-    CPPUNIT_TEST_SUITE(TileQueueTests);
+    CPPUNIT_TEST_SUITE(KitQueueTests);
 
-    CPPUNIT_TEST(testTileQueuePriority);
+    CPPUNIT_TEST(testKitQueuePriority);
     CPPUNIT_TEST(testTileCombinedRendering);
     CPPUNIT_TEST(testTileRecombining);
     CPPUNIT_TEST(testViewOrder);
@@ -43,7 +43,7 @@ class TileQueueTests : public CPPUNIT_NS::TestFixture
 
     CPPUNIT_TEST_SUITE_END();
 
-    void testTileQueuePriority();
+    void testKitQueuePriority();
     void testTileCombinedRendering();
     void testTileRecombining();
     void testViewOrder();
@@ -58,18 +58,18 @@ class TileQueueTests : public CPPUNIT_NS::TestFixture
     void testCallbackPageSize();
 };
 
-void TileQueueTests::testTileQueuePriority()
+void KitQueueTests::testKitQueuePriority()
 {
     constexpr auto testname = __func__;
 
     const std::string reqHigh = "tile nviewid=0 part=0 width=256 height=256 tileposx=0 tileposy=0 tilewidth=3840 tileheight=3840 oldwid=0 wid=0";
     const std::string resHigh = "tile nviewid=0 part=0 width=256 height=256 tileposx=0 tileposy=0 tilewidth=3840 tileheight=3840 oldwid=0 wid=0 ver=-1";
-    const TileQueue::Payload payloadHigh(resHigh.data(), resHigh.data() + resHigh.size());
+    const KitQueue::Payload payloadHigh(resHigh.data(), resHigh.data() + resHigh.size());
     const std::string reqLow = "tile nviewid=0 part=0 width=256 height=256 tileposx=0 tileposy=253440 tilewidth=3840 tileheight=3840 oldwid=0 wid=0";
     const std::string resLow = "tile nviewid=0 part=0 width=256 height=256 tileposx=0 tileposy=253440 tilewidth=3840 tileheight=3840 oldwid=0 wid=0 ver=-1";
-    const TileQueue::Payload payloadLow(resLow.data(), resLow.data() + resLow.size());
+    const KitQueue::Payload payloadLow(resLow.data(), resLow.data() + resLow.size());
 
-    TileQueue queue;
+    KitQueue queue;
 
     // Request the tiles.
     queue.put(reqLow);
@@ -106,7 +106,7 @@ void TileQueueTests::testTileQueuePriority()
     LOK_ASSERT_EQUAL_STR(payloadHigh, queue.get());
 }
 
-void TileQueueTests::testTileCombinedRendering()
+void KitQueueTests::testTileCombinedRendering()
 {
     constexpr auto testname = __func__;
 
@@ -115,13 +115,13 @@ void TileQueueTests::testTileCombinedRendering()
     const std::string req3 = "tile nviewid=0 part=0 width=256 height=256 tileposx=0 tileposy=3840 tilewidth=3840 tileheight=3840";
 
     const std::string resHor = "tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840 tileposy=0,0 imgsize=0,0 tilewidth=3840 tileheight=3840 ver=-1,-1 oldwid=0,0 wid=0,0";
-    const TileQueue::Payload payloadHor(resHor.data(), resHor.data() + resHor.size());
+    const KitQueue::Payload payloadHor(resHor.data(), resHor.data() + resHor.size());
     const std::string resVer = "tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,0 tileposy=0,3840 imgsize=0,0 tilewidth=3840 tileheight=3840 ver=-1,-1 oldwid=0,0 wid=0,0";
-    const TileQueue::Payload payloadVer(resVer.data(), resVer.data() + resVer.size());
+    const KitQueue::Payload payloadVer(resVer.data(), resVer.data() + resVer.size());
     const std::string resFull = "tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,0 tileposy=0,0,3840 imgsize=0,0,0 tilewidth=3840 tileheight=3840 ver=-1,-1,-1 oldwid=0,0,0 wid=0,0,0";
-    const TileQueue::Payload payloadFull(resFull.data(), resFull.data() + resFull.size());
+    const KitQueue::Payload payloadFull(resFull.data(), resFull.data() + resFull.size());
 
-    TileQueue queue;
+    KitQueue queue;
 
     // Horizontal.
     queue.put(req1);
@@ -140,11 +140,11 @@ void TileQueueTests::testTileCombinedRendering()
     LOK_ASSERT_EQUAL_STR(payloadFull, queue.get());
 }
 
-void TileQueueTests::testTileRecombining()
+void KitQueueTests::testTileRecombining()
 {
     constexpr auto testname = __func__;
 
-    TileQueue queue;
+    KitQueue queue;
 
     queue.put("tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680 tileposy=0,0,0 tilewidth=3840 tileheight=3840");
     queue.put("tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840 tileposy=0,0 tilewidth=3840 tileheight=3840");
@@ -162,11 +162,11 @@ void TileQueueTests::testTileRecombining()
     LOK_ASSERT_EQUAL(0, static_cast<int>(queue.getQueue().size()));
 }
 
-void TileQueueTests::testViewOrder()
+void KitQueueTests::testViewOrder()
 {
     constexpr auto testname = __func__;
 
-    TileQueue queue;
+    KitQueue queue;
 
     // should result in the 3, 2, 1, 0 order of the views
     queue.updateCursorPosition(0, 0, 0, 0, 10, 100);
@@ -197,11 +197,11 @@ void TileQueueTests::testViewOrder()
     }
 }
 
-void TileQueueTests::testPreviewsDeprioritization()
+void KitQueueTests::testPreviewsDeprioritization()
 {
     constexpr auto testname = __func__;
 
-    TileQueue queue;
+    KitQueue queue;
 
     // simple case - put previews to the queue and get everything back again
     const std::vector<std::string> previews =
@@ -271,7 +271,7 @@ namespace {
     }
 }
 
-void TileQueueTests::testSenderQueue()
+void KitQueueTests::testSenderQueue()
 {
     constexpr auto testname = __func__;
 
@@ -315,7 +315,7 @@ void TileQueueTests::testSenderQueue()
     LOK_ASSERT_EQUAL(static_cast<size_t>(0), queue.size());
 }
 
-void TileQueueTests::testSenderQueueProgress()
+void KitQueueTests::testSenderQueueProgress()
 {
     constexpr auto testname = __func__;
 
@@ -352,7 +352,7 @@ void TileQueueTests::testSenderQueueProgress()
     LOK_ASSERT_EQUAL(static_cast<size_t>(0), queue.size());
 }
 
-void TileQueueTests::testSenderQueueTileDeduplication()
+void KitQueueTests::testSenderQueueTileDeduplication()
 {
     constexpr auto testname = __func__;
 
@@ -406,7 +406,7 @@ void TileQueueTests::testSenderQueueTileDeduplication()
     LOK_ASSERT_EQUAL(static_cast<size_t>(0), queue.size());
 }
 
-void TileQueueTests::testInvalidateViewCursorDeduplication()
+void KitQueueTests::testInvalidateViewCursorDeduplication()
 {
     constexpr auto testname = __func__;
 
@@ -470,11 +470,11 @@ void TileQueueTests::testInvalidateViewCursorDeduplication()
     LOK_ASSERT_EQUAL(static_cast<size_t>(0), queue.size());
 }
 
-void TileQueueTests::testCallbackInvalidation()
+void KitQueueTests::testCallbackInvalidation()
 {
     constexpr auto testname = __func__;
 
-    TileQueue queue;
+    KitQueue queue;
 
     // join tiles
     queue.put("callback all 0 284, 1418, 11105, 275, 0");
@@ -499,11 +499,11 @@ void TileQueueTests::testCallbackInvalidation()
     LOK_ASSERT_EQUAL_STR("callback all 0 EMPTY, 0", queue.get());
 }
 
-void TileQueueTests::testCallbackIndicatorValue()
+void KitQueueTests::testCallbackIndicatorValue()
 {
     constexpr auto testname = __func__;
 
-    TileQueue queue;
+    KitQueue queue;
 
     // join tiles
     queue.put("callback all 10 25");
@@ -513,11 +513,11 @@ void TileQueueTests::testCallbackIndicatorValue()
     LOK_ASSERT_EQUAL_STR("callback all 10 50", queue.get());
 }
 
-void TileQueueTests::testCallbackPageSize()
+void KitQueueTests::testCallbackPageSize()
 {
     constexpr auto testname = __func__;
 
-    TileQueue queue;
+    KitQueue queue;
 
     // join tiles
     queue.put("callback all 13 12474, 188626");
@@ -527,11 +527,11 @@ void TileQueueTests::testCallbackPageSize()
     LOK_ASSERT_EQUAL_STR("callback all 13 12474, 205748", queue.get());
 }
 
-void TileQueueTests::testCallbackModifiedStatusIsSkipped()
+void KitQueueTests::testCallbackModifiedStatusIsSkipped()
 {
     constexpr auto testname = __func__;
 
-    TileQueue queue;
+    KitQueue queue;
     std::stringstream ss;
     ss << "callback all " << LOK_CALLBACK_STATE_CHANGED;
 
@@ -556,6 +556,6 @@ void TileQueueTests::testCallbackModifiedStatusIsSkipped()
     LOK_ASSERT_EQUAL_STR(messages[3], queue.get());
 }
 
-CPPUNIT_TEST_SUITE_REGISTRATION(TileQueueTests);
+CPPUNIT_TEST_SUITE_REGISTRATION(KitQueueTests);
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
