@@ -33,7 +33,7 @@ public:
     {
     }
 
-    virtual ~KitQueue()
+    ~KitQueue()
     {
         clear();
     }
@@ -42,16 +42,7 @@ public:
     KitQueue& operator=(const KitQueue&) = delete;
 
     /// insert the message.
-    void put(const Payload& value)
-    {
-        if (value.empty())
-        {
-            throw std::runtime_error("Cannot queue empty item.");
-        }
-
-        put_impl(value);
-    }
-
+    void put(const Payload& value);
     void put(const std::string& value)
     {
         put(Payload(value.data(), value.data() + value.size()));
@@ -60,17 +51,14 @@ public:
     /// Obtain the next message.
     /// timeoutMs can be 0 to signify infinity.
     /// Returns an empty payload on timeout.
-    Payload get()
-    {
-        return get_impl();
-    }
+    Payload get();
 
     /// Get a message without waiting
     Payload pop()
     {
         if (_queue.empty())
             return Payload();
-        return get_impl();
+        return get();
     }
 
     /// Anything in the queue ?
@@ -93,14 +81,6 @@ public:
     void dumpState(std::ostream& oss);
 
 protected:
-    void put_impl(const Payload& value);
-    Payload get_impl();
-/*    {
-        Payload result = _queue.front();
-        _queue.erase(_queue.begin());
-        return result;
-        }*/
-
     std::vector<Payload>& getQueue() { return _queue; }
 
     /// Search the queue for a previous textinput message and if found, remove it and combine its
@@ -108,63 +88,7 @@ protected:
     /// messages inbetween that would make it wrong to merge the textinput messages.
     ///
     /// @return New message to put into the queue. If empty, use what we got.
-    std::string combineTextInput(const StringVector& tokens)
-    {
-        std::string id;
-        std::string text;
-        if (!COOLProtocol::getTokenString(tokens, "id", id) ||
-            !COOLProtocol::getTokenString(tokens, "text", text))
-            return std::string();
-
-        int i = getQueue().size() - 1;
-        while (i >= 0)
-        {
-            auto& it = getQueue()[i];
-
-            const std::string queuedMessage(it.data(), it.size());
-            StringVector queuedTokens = StringVector::tokenize(it.data(), it.size());
-
-            // If any messages of these types are present before the current ("textinput") message,
-            // no combination is possible.
-            if (queuedTokens.size() == 1 ||
-                (queuedTokens.equals(0, tokens, 0) &&
-                 (queuedTokens.equals(1, "key") ||
-                  queuedTokens.equals(1, "mouse") ||
-                  queuedTokens.equals(1, "removetextcontext") ||
-                  queuedTokens.equals(1, "windowkey"))))
-                return std::string();
-
-            std::string queuedId;
-            std::string queuedText;
-            if (queuedTokens.equals(0, tokens, 0) &&
-                queuedTokens.equals(1, "textinput") &&
-                COOLProtocol::getTokenString(queuedTokens, "id", queuedId) &&
-                queuedId == id &&
-                COOLProtocol::getTokenString(queuedTokens, "text", queuedText))
-            {
-                // Remove the queued textinput message and combine it with the current one
-                getQueue().erase(getQueue().begin() + i);
-
-                std::string newMsg;
-                newMsg.reserve(it.size() * 2);
-                newMsg.append(queuedTokens[0]);
-                newMsg.append(" textinput id=");
-                newMsg.append(id);
-                newMsg.append(" text=");
-                newMsg.append(queuedText);
-                newMsg.append(text);
-
-                LOG_TRC("Combined [" << queuedMessage << "] with current message to [" << newMsg
-                                     << ']');
-
-                return newMsg;
-            }
-
-            --i;
-        }
-
-        return std::string();
-    }
+    std::string combineTextInput(const StringVector& tokens);
 
     /// Search the queue for a previous removetextcontext message (which actually means "remove text
     /// content", the word "context" is because of some misunderstanding lost in history) and if
@@ -173,61 +97,7 @@ protected:
     /// merge the removetextcontext messages.
     ///
     /// @return New message to put into the queue. If empty, use what we got.
-    std::string combineRemoveText(const StringVector& tokens)
-    {
-        std::string id;
-        int before = 0;
-        int after = 0;
-        if (!COOLProtocol::getTokenString(tokens, "id", id) ||
-            !COOLProtocol::getTokenInteger(tokens, "before", before) ||
-            !COOLProtocol::getTokenInteger(tokens, "after", after))
-            return std::string();
-
-        int i = getQueue().size() - 1;
-        while (i >= 0)
-        {
-            auto& it = getQueue()[i];
-
-            const std::string queuedMessage(it.data(), it.size());
-            StringVector queuedTokens = StringVector::tokenize(it.data(), it.size());
-
-            // If any messages of these types are present before the current (removetextcontext)
-            // message, no combination is possible.
-            if (queuedTokens.size() == 1 ||
-                (queuedTokens.equals(0, tokens, 0) &&
-                 (queuedTokens.equals(1, "key") ||
-                  queuedTokens.equals(1, "mouse") ||
-                  queuedTokens.equals(1, "textinput") ||
-                  queuedTokens.equals(1, "windowkey"))))
-                return std::string();
-
-            std::string queuedId;
-            int queuedBefore = 0;
-            int queuedAfter = 0;
-            if (queuedTokens.equals(0, tokens, 0) &&
-                queuedTokens.equals(1, "removetextcontext") &&
-                COOLProtocol::getTokenStringFromMessage(queuedMessage, "id", queuedId) &&
-                queuedId == id &&
-                COOLProtocol::getTokenIntegerFromMessage(queuedMessage, "before", queuedBefore) &&
-                COOLProtocol::getTokenIntegerFromMessage(queuedMessage, "after", queuedAfter))
-            {
-                // Remove the queued removetextcontext message and combine it with the current one
-                getQueue().erase(getQueue().begin() + i);
-
-                std::string newMsg = queuedTokens[0] + " removetextcontext id=" + id +
-                    " before=" + std::to_string(queuedBefore + before) +
-                    " after=" + std::to_string(queuedAfter + after);
-
-                LOG_TRC("Combined [" << queuedMessage << "] with current message to [" << newMsg << "]");
-
-                return newMsg;
-            }
-
-            --i;
-        }
-
-        return std::string();
-    }
+    std::string combineRemoveText(const StringVector& tokens);
 
 private:
     class CursorPosition
@@ -258,41 +128,8 @@ private:
     };
 
 public:
-    void updateCursorPosition(int viewId, int part, int x, int y, int width, int height)
-    {
-        const KitQueue::CursorPosition cursorPosition = CursorPosition(part, x, y, width, height);
-
-        auto it = _cursorPositions.lower_bound(viewId);
-        if (it != _cursorPositions.end() && it->first == viewId)
-        {
-            it->second = cursorPosition;
-        }
-        else
-        {
-            _cursorPositions.insert(it, std::make_pair(viewId, cursorPosition));
-        }
-
-        // Move to front, so the current front view
-        // becomes the second.
-        const auto view = std::find(_viewOrder.begin(), _viewOrder.end(), viewId);
-        if (view != _viewOrder.end())
-        {
-            _viewOrder.erase(view);
-        }
-
-        _viewOrder.push_back(viewId);
-    }
-
-    void removeCursorPosition(int viewId)
-    {
-        const auto view = std::find(_viewOrder.begin(), _viewOrder.end(), viewId);
-        if (view != _viewOrder.end())
-        {
-            _viewOrder.erase(view);
-        }
-
-        _cursorPositions.erase(viewId);
-    }
+    void updateCursorPosition(int viewId, int part, int x, int y, int width, int height);
+    void removeCursorPosition(int viewId);
 
 private:
     /// Search the queue for a duplicate tile and remove it (if present).
