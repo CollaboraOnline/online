@@ -425,6 +425,7 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
             fileInfo->stringify(jsonStream);
 
             http::Response httpResponse(http::StatusCode::OK);
+            FileServerRequestHandler::hstsHeaders(httpResponse);
             httpResponse.set("Last-Modified", Util::getHttpTime(localFile->fileLastModifiedTime));
             httpResponse.setBody(jsonStream.str(), "application/json; charset=utf-8");
             socket->send(httpResponse);
@@ -440,6 +441,7 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
             ss << inputFile.rdbuf();
 
             http::Response httpResponse(http::StatusCode::OK);
+            FileServerRequestHandler::hstsHeaders(httpResponse);
             httpResponse.set("Last-Modified", Util::getHttpTime(localFile->fileLastModifiedTime));
             httpResponse.setBody(ss.str(), "text/plain; charset=utf-8");
             socket->send(httpResponse);
@@ -484,6 +486,7 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
             const std::string body = "{\"LastModifiedTime\": \"" +
                 localFile->getLastModifiedTime() + "\" }";
             http::Response httpResponse(http::StatusCode::OK);
+            FileServerRequestHandler::hstsHeaders(httpResponse);
             httpResponse.setBody(body, "application/json; charset=utf-8");
             socket->send(httpResponse);
             return;
@@ -553,6 +556,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
                     LOG_ERR(message.rdbuf());
 
                     http::Response httpResponse(http::StatusCode::OK);
+                    FileServerRequestHandler::hstsHeaders(httpResponse);
                     socket->send(httpResponse);
                     return;
                 }
