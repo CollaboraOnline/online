@@ -841,10 +841,14 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			this.insertMode = e.state.trim() === '' ? false: true;
 		}
 		else if (e.commandName === '.uno:ToggleSheetGrid') {
-			let newState = e.state.trim() === 'true';
-			if (this._sheetGrid != newState) {
-				this._sheetGrid = newState;
-				this._painter._sectionContainer.requestReDraw();
+			let trimmedState = e.state.trim();
+			// Disabled mean we don't change the sheet grid state.
+			if (trimmedState != 'disabled') {
+				let newState = trimmedState === 'true';
+				if (this._sheetGrid != newState) {
+					this._sheetGrid = newState;
+					this._painter._sectionContainer.requestReDraw();
+				}
 			}
 		}
 	},
