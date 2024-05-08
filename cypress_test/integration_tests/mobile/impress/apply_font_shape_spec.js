@@ -148,7 +148,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected shap
 		triggerNewSVG();
 
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition')
-			.should('have.attr', 'y', '3285');
+			.should('have.attr', 'y', '3286');
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition tspan')
 			.should('have.attr', 'font-size', '368px');
 	});
