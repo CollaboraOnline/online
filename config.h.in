@@ -37,9 +37,6 @@
 /* Whether to compile and enable feature restrictions */
 #undef ENABLE_FEATURE_RESTRICTION
 
-/* Whether to compile performance test code */
-#undef ENABLE_PERFTEST
-
 /* Whether to enable SSL */
 #undef ENABLE_SSL
 

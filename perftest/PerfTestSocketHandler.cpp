@@ -9,11 +9,16 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#include <config.h>
+
 #include <iostream>
 #include <sysexits.h>
-#include <PerfTestSocketHandler.hpp>
-#include <wsd/TileDesc.hpp>
+
 #include <Poco/URI.h>
+
+#include <wsd/TileDesc.hpp>
+
+#include <perftest/PerfTestSocketHandler.hpp>
 
 PerfTestSocketHandler::PerfTestSocketHandler(const std::string &name, const std::string &server) :
     WebSocketHandler(true, true),

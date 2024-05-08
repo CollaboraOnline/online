@@ -24,9 +24,9 @@
 #endif
 #include <Log.hpp>
 
-#include <PerfTest.hpp>
-#include <SamplePerfTest.hpp>
-#include <PerfTestSocketHandler.hpp>
+#include <perftest/PerfTest.hpp>
+#include <perftest/SamplePerfTest.hpp>
+#include <perftest/PerfTestSocketHandler.hpp>
 
 class COOLPerfTest : public Poco::Util::Application
 {

@@ -14,7 +14,7 @@
 #include <sys/wait.h>
 #include <sysexits.h>
 
-#include <PerfTest.hpp>
+#include <perftest/PerfTest.hpp>
 
 PerfTest::PerfTest(const std::string &name, const std::string &server) :
     _name(name),

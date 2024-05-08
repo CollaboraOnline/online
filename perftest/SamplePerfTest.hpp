@@ -9,7 +9,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include <PerfTest.hpp>
+#include <perftest/PerfTest.hpp>
 
 class SamplePerfTest : public CyclePerfTest
 {

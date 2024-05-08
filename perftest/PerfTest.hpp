@@ -12,9 +12,11 @@
 #pragma once
 
 #include <config.h>
+
 #include <atomic>
-#include <PerfTestSocketHandler.hpp>
 #include <chrono>
+
+#include <perftest/PerfTestSocketHandler.hpp>
 
 #define PERFTEST_DEFAULT_TIMEOUT 10000
 

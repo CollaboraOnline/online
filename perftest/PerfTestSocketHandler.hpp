@@ -12,7 +12,9 @@
 #pragma once
 
 #include <config.h>
+
 #include <atomic>
+
 #include <WebSocketHandler.hpp>
 #include <net/Socket.hpp>
 #include <common/MessageQueue.hpp>

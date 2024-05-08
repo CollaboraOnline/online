@@ -382,10 +382,6 @@ AC_ARG_ENABLE([tests],
             AS_HELP_STRING([--disable-tests],
                            [Do not build and run unit tests.]))
 
-AC_ARG_ENABLE([perftest],
-            AS_HELP_STRING([--enable-perftest],
-                           [Enable performance tests.]))
-
 AC_ARG_WITH([help-url],
             AS_HELP_STRING([--with-help-url=<url>],
                 [Set the base URL of the online help. Default is https://help.collaboraoffice.com/help.html?])
@@ -1558,19 +1554,6 @@ else
 fi
 AM_CONDITIONAL([ENABLE_TESTS], [$ENABLE_TESTS])
 
-ENABLE_PERFTEST=
-if test "$enable_perftest" = "yes"; then
-    ENABLE_PERFTEST=true
-    perftest_msg="enabled: set up for performance tests"
-    CXXFLAGS="$CXXFLAGS -g -O2"
-    CFLAGS="$CFLAGS -g -O2"
-else
-    ENABLE_PERFTEST=false
-    perftest_msg="disabled: not set up for performance tests"
-fi
-AC_DEFINE_UNQUOTED([ENABLE_PERFTEST],[$ENABLE_PERFTEST],['Whether to compile performance test code'])
-AM_CONDITIONAL([ENABLE_PERFTEST], [$ENABLE_PERFTEST])
-
 
 AC_MSG_CHECKING([for URL of online help])
 if test -n "$with_help_url" -a "$with_help_url" != "no"; then
@@ -1839,7 +1822,6 @@ Configuration:
     cypress                   $cypress_msg
     C++ compiler flags        $CXXFLAGS
     Code-Coverage             $coverage_msg
-    Performance tests         $perftest_msg
 
     \$ make # to compile"
 if test -n "$with_lo_path"; then
