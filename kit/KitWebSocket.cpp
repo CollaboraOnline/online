@@ -24,9 +24,9 @@
 #include <common/Seccomp.hpp>
 #include <common/JsonUtil.hpp>
 #include <common/TraceEvent.hpp>
-#include <common/MessageQueue.hpp>
 
-#include <Kit.hpp>
+#include "Kit.hpp"
+#include "KitQueue.hpp"
 #include "KitWebSocket.hpp"
 
 using Poco::Exception;

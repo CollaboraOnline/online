@@ -18,10 +18,10 @@
 #include <Log.hpp>
 #include <Unit.hpp>
 #include <UnitHTTP.hpp>
-#include <MessageQueue.hpp>
 #include <WebSocketSession.hpp>
 #include <helpers.hpp>
 #include <wsd/TileDesc.hpp>
+#include <kit/KitQueue.hpp>
 
 #include <random>
 #include <iostream>
@@ -130,7 +130,7 @@ public:
         return TestResult::Ok;
     }
 
-    TestResult testMessageQueueMerging()
+    TestResult testKitQueueMerging()
     {
         KitQueue queue;
 
@@ -404,7 +404,7 @@ public:
         if (res != TestResult::Ok)
             return res;
 
-        res = testMessageQueueMerging();
+        res = testKitQueueMerging();
         if (res != TestResult::Ok)
             return res;
 

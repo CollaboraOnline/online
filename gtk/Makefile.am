@@ -23,7 +23,6 @@ common_sources = \
                  ../common/ConfigUtil.cpp \
                  ../common/FileUtil.cpp \
                  ../common/Log.cpp \
-                 ../common/MessageQueue.cpp \
                  ../common/Protocol.cpp \
                  ../common/Session.cpp \
                  ../common/SigUtil.cpp \
@@ -36,6 +35,7 @@ common_sources = \
 
 kit_sources = ../kit/ChildSession.cpp \
               ../kit/Kit.cpp \
+              ../kit/KitQueue.cpp \
               ../kit/KitWebSocket.cpp
 
 net_sources = ../net/FakeSocket.cpp \
