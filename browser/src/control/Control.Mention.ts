@@ -23,23 +23,21 @@ class Mention extends L.Control.AutoCompletePopup {
 	data: MessageEvent<any>;
 
 	constructor(map: ReturnType<typeof L.map>) {
-		super(map);
-		this.onAdd(map);
+		super('mentionPopup', map);
 	}
 
-	onAdd(map: ReturnType<typeof L.map>) {
-		this.map = map;
+	onAdd() {
+		this.newPopupData.isAutoCompletePopup = true;
 		this.map.on('openmentionpopup', this.openMentionPopup, this);
-		this.map.on('closementionpopup', this.closePopup, this);
+		this.map.on('closementionpopup', this.closeMentionPopup, this);
 		this.map.on('sendmentiontext', this.sendMentionText, this);
-		super.onAdd('mentionPopup', true);
 		this.firstChar = null;
 		this.users = null;
 		this.itemList = null;
 	}
 
 	sendMentionText(ev: FireEvent) {
-		var text = ev.data.join('').substring(1);
+		const text = ev.data.join('').substring(1);
 		if (text.length === 1 && this.firstChar !== text[0]) {
 			this.map.fire('postMessage', {
 				msgId: 'UI_Mention',
@@ -61,12 +59,13 @@ class Mention extends L.Control.AutoCompletePopup {
 		);
 	}
 
-	openMentionPopup(ev: FireEvent) {
-		var framePos = this.getCurrentCursorPosition();
+	getPopupEntries(ev: FireEvent): any[] {
+		const entries: any[] = [];
 		this.users = ev.data;
-		if (this.users === null) return;
+		if (this.users === null)
+			return entries;
 
-		var text = this.map._docLayer._mentionText.join('').substring(1);
+		const text = this.map._docLayer._mentionText.join('').substring(1);
 		// filterout the users from list according to the text
 		if (text.length > 1) {
 			this.itemList = this.users.filter((element: any) => {
@@ -78,7 +77,6 @@ class Mention extends L.Control.AutoCompletePopup {
 		}
 
 		if (this.itemList.length !== 0) {
-			var entries = [];
 			for (var i in this.itemList) {
 				var entry = {
 					text: this.itemList[i].username,
@@ -91,80 +89,13 @@ class Mention extends L.Control.AutoCompletePopup {
 				};
 				entries.push(entry);
 			}
-
-			var data: PopupData;
-			const control = {
-				id: 'mentionList',
-				type: 'treelistbox',
-				text: '',
-				enabled: true,
-				singleclickactivate: false,
-				fireKeyEvents: true,
-				entries: [] as Array<Entry>,
-			} as MentionWidget;
-			// update the popup with list if mentionList already exist
-			if (L.DomUtil.get('mentionList')) {
-				data = {
-					jsontype: 'dialog',
-					id: 'mentionPopup',
-					action: 'update',
-					control: control,
-					posx: framePos.x,
-					posy: framePos.y,
-				} as any as PopupData;
-				(data.control as MentionWidget).entries = entries;
-				this.map.fire('jsdialogupdate', {
-					data: data,
-					callback: this.callback.bind(this),
-				});
-				return;
-			}
-			if (L.DomUtil.get('mentionPopup'))
-				this.closeMentionPopup({ typingMention: true } as CloseMessageEvent);
-			data = this.newPopupData;
-			data.children[0].children[0] = control;
-			(data.children[0].children[0] as MentionWidget).entries = entries;
-		} else {
-			const control = {
-				id: 'fixedtext',
-				type: 'fixedtext',
-				text: 'no search results found!',
-				enabled: true,
-				singleclickactivate: undefined,
-				fireKeyEvents: undefined,
-			} as MentionWidget;
-			if (L.DomUtil.get('fixedtext')) {
-				data = {
-					jsontype: 'dialog',
-					id: 'mentionPopup',
-					action: 'update',
-					control: control,
-					posx: framePos.x,
-					posy: framePos.y,
-					children: undefined,
-				} as any as PopupData;
-				this.map.fire('jsdialogupdate', {
-					data: data,
-					callback: this.callback.bind(this),
-				});
-				return;
-			}
-			if (L.DomUtil.get('mentionPopup'))
-				this.closeMentionPopup({ typingMention: true } as CloseMessageEvent);
-			data = this.newPopupData;
-			data.children[0].children[0] = control;
 		}
-		// add position
-		data.posx = framePos.x;
-		data.posy = framePos.y;
-		this.map.fire('jsdialog', {
-			data: data,
-			callback: this.callback.bind(this),
-		});
+
+		return entries;
 	}
 
-	closePopup(ev: CloseMessageEvent) {
-		super.closePopup('mentionPopup');
+	closeMentionPopup(ev: CloseMessageEvent) {
+		super.closePopup();
 		if (!ev.typingMention) {
 			this.map._docLayer._typingMention = false;
 			this.map._docLayer._mentionText = [];
