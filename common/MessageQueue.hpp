@@ -366,4 +366,7 @@ private:
     std::vector<int> _viewOrder;
 };
 
+// Really this queue is used only in the Kit process
+typedef TileQueue KitQueue;
+
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
