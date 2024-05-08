@@ -6151,7 +6151,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._sendClientZoom();
 
 		if (queue.length !== 0)
-			this._addTiles(queue);
+			this._addTiles(queue, false);
 
 		if (this.isCalc() || this.isWriter())
 			this._initPreFetchAdjacentTiles(pixelBounds, zoom);
@@ -6186,7 +6186,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			queue = queue.concat(this._getMissingTiles(pixelBounds, zoom));
 
 			if (queue.length !== 0)
-				this._addTiles(queue);
+				this._addTiles(queue, true);
 
 		}.bind(this), 250 /*ms*/);
 	},
@@ -6332,7 +6332,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	// create tiles if needed for queued coordinates, and build a
 	// tilecombined request for any tiles we need to fetch.
-	_addTiles: function (coordsQueue) {
+	_addTiles: function (coordsQueue, preFetch) {
 		var coords, key;
 
 		for (var i = 0; i < coordsQueue.length; i++) {
@@ -6341,9 +6341,20 @@ L.CanvasTileLayer = L.Layer.extend({
 			key = this._tileCoordsToKey(coords);
 
 			if (coords.part === this._selectedPart &&
-			    coords.mode === this._selectedMode &&
-			    !this._tiles[key])
-				this.createTile(coords, key);
+			    coords.mode === this._selectedMode) {
+				var tile = this._tiles[key];
+				if (!tile) {
+					// We always want to ensure the tile
+					// exists.
+					tile = this.createTile(coords, key);
+				}
+				if (preFetch) {
+					// If preFetching at idle, take the
+					// opportunity to create an up to date
+					// canvas for the tile in advance.
+					this.ensureCanvas(tile, null, true);
+				}
+			}
 		}
 
 		// sort the tiles by the rows
@@ -6542,7 +6553,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	// Ensure we have a renderable canvas for a given tile
 	// Use this immediately before drawing a tile, pass in the time.
-	ensureCanvas: function(tile, now)
+	ensureCanvas: function(tile, now, forPrefetch)
 	{
 		if (!tile)
 			return;
@@ -6565,10 +6576,13 @@ L.CanvasTileLayer = L.Layer.extend({
 				this._applyDelta(tile, tile.rawDeltas, true, false);
 			}
 		}
-		if (now !== null)
-			tile.lastRendered = now;
-		if (!tile.hasContent())
-			tile.missingContent++;
+		if (!forPrefetch)
+		{
+			if (now !== null)
+				tile.lastRendered = now;
+			if (!tile.hasContent())
+				tile.missingContent++;
+		}
 	},
 
 	_maybeGarbageCollect: function() {
@@ -6675,7 +6689,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		// important this is after the garbagecollect
 		if (!tile.canvas)
-			this.ensureCanvas(tile, null);
+			this.ensureCanvas(tile, null, false);
 
 		if ((ctx = tile.canvas.getContext('2d')))
 			return ctx;
@@ -6684,7 +6698,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._garbageCollect();
 
 		if (!tile.canvas)
-			this.ensureCanvas(tile, null);
+			this.ensureCanvas(tile, null, false);
 		if ((ctx = tile.canvas.getContext('2d')))
 			return ctx;
 
@@ -6697,7 +6711,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				this._reclaimTileCanvasMemory(t);
 		}
 		if (!tile.canvas)
-			this.ensureCanvas(tile, null);
+			this.ensureCanvas(tile, null, false);
 		if ((ctx = tile.canvas.getContext('2d')))
 			return ctx;
 
@@ -6708,7 +6722,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._reclaimTileCanvasMemory(t);
 		}
 		if (!tile.canvas)
-			this.ensureCanvas(tile, null);
+			this.ensureCanvas(tile, null, false);
 		ctx = tile.canvas.getContext('2d');
 		if (!ctx)
 			window.app.console.log('Error: out of canvas memory.');
@@ -7387,7 +7401,7 @@ L.TilesPreFetcher = L.Class.extend({
 
 		if (finalQueue.length > 0) {
 			this._cumTileCount += finalQueue.length;
-			this._docLayer._addTiles(finalQueue);
+			this._docLayer._addTiles(finalQueue, !immediate);
 			tilesRequested = true;
 		}
 
