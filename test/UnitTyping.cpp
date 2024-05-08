@@ -18,6 +18,7 @@
 #include <Log.hpp>
 #include <Unit.hpp>
 #include <UnitHTTP.hpp>
+#include <MessageQueue.hpp>
 #include <WebSocketSession.hpp>
 #include <helpers.hpp>
 #include <wsd/TileDesc.hpp>
@@ -131,13 +132,12 @@ public:
 
     TestResult testMessageQueueMerging()
     {
-        MessageQueue queue;
+        KitQueue queue;
 
         queue.put("child-foo textinput id=0 text=a");
         queue.put("child-foo textinput id=0 text=b");
 
-        MessageQueue::Payload v;
-        v = queue.get();
+        auto v = queue.get();
 
         if (!queue.isEmpty())
         {
@@ -201,7 +201,7 @@ public:
         v = queue.get();
         if (!queue.isEmpty())
         {
-            LOG_ERR("MessageQueue contains more than was put into it");
+            LOG_ERR("KitQueue contains more than was put into it");
             return TestResult::Failed;
         }
 

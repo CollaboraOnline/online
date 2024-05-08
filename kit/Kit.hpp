@@ -19,6 +19,8 @@
 #include <common/StateEnum.hpp>
 #include <common/Session.hpp>
 #include <common/ThreadPool.hpp>
+#include <common/MessageQueue.hpp>
+
 #include <wsd/TileDesc.hpp>
 
 #include "Socket.hpp"
