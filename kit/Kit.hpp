@@ -259,7 +259,7 @@ private:
     /// Helper method to broadcast callback and its payload to all clients
     void broadcastCallbackToClients(const int type, const std::string& payload)
     {
-        _queue->put("callback all " + std::to_string(type) + ' ' + payload);
+        _queue->putCallback(-1, type, payload);
     }
 
 public:
@@ -326,10 +326,12 @@ public:
     /// A new message from wsd for the queue
     void queueMessage(const std::string &msg) { _queue->put(msg); }
     bool hasQueueItems() const { return _queue && !_queue->isEmpty(); }
+    bool hasCallbacks() const { return _queue && _queue->callbackSize() > 0; }
 
     // poll is idle, are we ?
     void checkIdle();
     void drainQueue();
+    void drainCallbacks();
 
     void dumpState(std::ostream& oss);
 

@@ -1082,8 +1082,8 @@ void Document::trimAfterInactivity()
     assert(descriptor && "Null callback data.");
     assert(descriptor->getDoc() && "Null Document instance.");
 
-    std::shared_ptr<KitQueue> tileQueue = descriptor->getDoc()->_queue;
-    assert(tileQueue && "Null KitQueue.");
+    std::shared_ptr<KitQueue> queue = descriptor->getDoc()->_queue;
+    assert(queue && "Null KitQueue.");
 
     const std::string payload = p ? p : "(nil)";
     LOG_TRC("Document::ViewCallback [" << descriptor->getViewId() <<
@@ -1104,7 +1104,7 @@ void Document::trimAfterInactivity()
             int cursorWidth = std::stoi(tokens[2]);
             int cursorHeight = std::stoi(tokens[3]);
 
-            tileQueue->updateCursorPosition(0, 0, cursorX, cursorY, cursorWidth, cursorHeight);
+            queue->updateCursorPosition(0, 0, cursorX, cursorY, cursorWidth, cursorHeight);
         }
     }
     else if (type == LOK_CALLBACK_INVALIDATE_VISIBLE_CURSOR)
@@ -1122,7 +1122,7 @@ void Document::trimAfterInactivity()
             int cursorWidth = std::stoi(tokens[2]);
             int cursorHeight = std::stoi(tokens[3]);
 
-            tileQueue->updateCursorPosition(0, 0, cursorX, cursorY, cursorWidth, cursorHeight);
+            queue->updateCursorPosition(0, 0, cursorX, cursorY, cursorWidth, cursorHeight);
         }
     }
     else if (type == LOK_CALLBACK_INVALIDATE_VIEW_CURSOR ||
@@ -1143,7 +1143,7 @@ void Document::trimAfterInactivity()
             int cursorWidth = std::stoi(tokens[2]);
             int cursorHeight = std::stoi(tokens[3]);
 
-            tileQueue->updateCursorPosition(std::stoi(targetViewId), std::stoi(part), cursorX, cursorY, cursorWidth, cursorHeight);
+            queue->updateCursorPosition(std::stoi(targetViewId), std::stoi(part), cursorX, cursorY, cursorWidth, cursorHeight);
         }
     }
     else if (type == LOK_CALLBACK_DOCUMENT_PASSWORD_RESET)
@@ -1189,11 +1189,11 @@ void Document::trimAfterInactivity()
     // merge various callback types together if possible
     if (type == LOK_CALLBACK_INVALIDATE_TILES)
     {
-        // all views have to be in sync
-        tileQueue->put("callback all " + std::to_string(type) + ' ' + payload);
+        // all views have to be in sync; FIXME: calc an issue here ?
+        queue->putCallback(-1, type, payload);
     }
     else
-        tileQueue->put("callback " + std::to_string(descriptor->getViewId()) + ' ' + std::to_string(type) + ' ' + payload);
+        queue->putCallback(descriptor->getViewId(), type, payload);
 
     LOG_TRC("Document::ViewCallback end.");
 }
@@ -2121,16 +2121,78 @@ bool Document::processInputEnabled() const
     return enabled;
 }
 
+void Document::drainCallbacks()
+{
+    KitQueue::Callback cb;
+
+    LOG_TRC("drainCallbacks with " << _queue->callbackSize() << " items");
+
+    while (_queue && _queue->getCallback(cb))
+    {
+        if (_stop || SigUtil::getTerminationFlag())
+        {
+            LOG_INF("_stop or TerminationFlag is set, breaking Document::drainCallbacks");
+            break;
+        }
+
+        LOG_TRC("Kit handling callback " << cb);
+
+        int viewId = cb._view;
+        bool broadcast = cb._view == -1;
+
+        const int type = cb._type;
+        const std::string &payload = cb._payload;
+
+        // Forward the callback to the same view, demultiplexing is done by the LibreOffice core.
+        bool isFound = false;
+        for (const auto& it : _sessions)
+        {
+            ChildSession& session = *it.second;
+            if (broadcast || (!broadcast && (session.getViewId() == viewId)))
+            {
+                if (!session.isCloseFrame())
+                {
+                    isFound = true;
+                    session.loKitCallback(type, payload);
+                }
+                else
+                {
+                    LOG_ERR("Session-thread of session ["
+                            << session.getId() << "] for view [" << viewId
+                            << "] is not running. Dropping ["
+                            << lokCallbackTypeToString(type) << "] payload ["
+                            << payload << ']');
+                }
+
+                if (!broadcast)
+                    break;
+            }
+
+            if (!isFound)
+                LOG_ERR("Document::ViewCallback. Session [" << viewId <<
+                        "] is no longer active to process [" << lokCallbackTypeToString(type) <<
+                        "] [" << payload << "] message to Master Session.");
+        }
+    }
+
+    if (_websocketHandler)
+        _websocketHandler->flush();
+}
+
 void Document::drainQueue()
 {
     try
     {
         std::vector<TileCombined> tileRequests;
 
+        if (hasCallbacks())
+            drainCallbacks();
+
         if (hasQueueItems())
             LOG_TRC("drainQueue with " << _queue->size() <<
                     " items: " << (processInputEnabled() ? "processing" : "blocked") );
 
+        // FIXME: do we really want to process all of these items ?
         while (processInputEnabled() && hasQueueItems())
         {
             if (_stop || SigUtil::getTerminationFlag())
@@ -2152,8 +2214,7 @@ void Document::drainQueue()
                 LOG_INF("Received EOF. Finishing.");
                 break;
             }
-
-            if (tokens.equals(0, "tile"))
+            else if (tokens.equals(0, "tile"))
             {
                 tileRequests.emplace_back(TileDesc::parse(tokens));
             }
@@ -2174,67 +2235,7 @@ void Document::drainQueue()
             }
             else if (tokens.equals(0, "callback"))
             {
-                if (tokens.size() >= 3)
-                {
-                    bool broadcast = false;
-                    int viewId = -1;
-
-                    const std::string& target = tokens[1];
-                    if (target == "all")
-                    {
-                        broadcast = true;
-                    }
-                    else
-                    {
-                        viewId = std::stoi(target);
-                    }
-
-                    const int type = std::stoi(tokens[2]);
-
-                    // payload is the rest of the message
-                    const std::size_t offset = tokens[0].length() + tokens[1].length()
-                        + tokens[2].length() + 3; // + delims
-                    const std::string payload(input.data() + offset, input.size() - offset);
-
-                    // Forward the callback to the same view, demultiplexing is done by the LibreOffice core.
-                    bool isFound = false;
-                    for (const auto& it : _sessions)
-                    {
-                        ChildSession& session = *it.second;
-                        if (broadcast || (!broadcast && (session.getViewId() == viewId)))
-                        {
-                            if (!session.isCloseFrame())
-                            {
-                                isFound = true;
-                                session.loKitCallback(type, payload);
-                            }
-                            else
-                            {
-                                LOG_ERR("Session-thread of session ["
-                                        << session.getId() << "] for view [" << viewId
-                                        << "] is not running. Dropping ["
-                                        << lokCallbackTypeToString(type) << "] payload ["
-                                        << payload << ']');
-                            }
-
-                            if (!broadcast)
-                            {
-                                break;
-                            }
-                        }
-                    }
-
-                    if (!isFound)
-                    {
-                        LOG_ERR("Document::ViewCallback. Session [" << viewId <<
-                                "] is no longer active to process [" << lokCallbackTypeToString(type) <<
-                                "] [" << payload << "] message to Master Session.");
-                    }
-                }
-                else
-                {
-                    LOG_ERR("Invalid callback message: [" << COOLProtocol::getAbbreviatedMessage(input) << "].");
-                }
+                assert(false && "callbacks cannot now appear on the incoming queue");
             }
             else
             {
@@ -2681,7 +2682,9 @@ int KitSocketPoll::kitPoll(int timeoutMicroS)
         do
         {
             int realTimeout = timeoutMicroS;
-            if (_document && _document->hasQueueItems() && _document->processInputEnabled())
+            if (_document &&
+                (_document->hasCallbacks() ||
+                 (_document->hasQueueItems() && _document->processInputEnabled())))
                 realTimeout = 0;
 
             if (poll(std::chrono::microseconds(realTimeout)) <= 0)

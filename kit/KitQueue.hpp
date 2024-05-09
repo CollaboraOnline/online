@@ -42,10 +42,46 @@ public:
         put(Payload(value.data(), value.data() + value.size()));
     }
 
+    struct Callback {
+        int _view; // -1 for all
+        int _type;
+        std::string _payload;
+
+        Callback() : _view(-1), _type(-1) { }
+        Callback(int view, int type, const std::string payload) :
+            _view(view), _type(type), _payload(payload) { }
+
+        static std::string toString(int view, int type, const std::string payload);
+    };
+
+    /// Queue a LibreOfficeKit callback for later emission
+    void putCallback(int view, int type, const std::string &message);
+
+    /// Work back over the queue to simplify & return false if we should not queue.
+    bool elideDuplicateCallback(int view, int type, const std::string &message);
+
     /// Obtain the next message.
     /// timeoutMs can be 0 to signify infinity.
     /// Returns an empty payload on timeout.
     Payload get();
+
+    /// Obtain the next callback
+    Callback getCallback()
+    {
+        assert(_callbacks.size() > 0);
+        const Callback front = _callbacks.front();
+        _callbacks.erase(_callbacks.begin());
+        return front;
+    }
+
+    bool getCallback(Callback &callback)
+    {
+        if (_callbacks.size() == 0)
+            return false;
+        callback = std::move(_callbacks.front());
+        _callbacks.erase(_callbacks.begin());
+        return true;
+    }
 
     /// Get a message without waiting
     Payload pop()
@@ -66,10 +102,16 @@ public:
         return _queue.size();
     }
 
+    size_t callbackSize() const
+    {
+        return _callbacks.size();
+    }
+
     /// Removal of all the pending messages.
     void clear()
     {
         _queue.clear();
+        _callbacks.clear();
     }
 
     void dumpState(std::ostream& oss);
@@ -148,11 +190,20 @@ private:
     /// The incoming underlying queue
     std::vector<Payload> _queue;
 
+    /// Outgoing queued callbacks
+    std::vector<Callback> _callbacks;
+
     std::map<int, CursorPosition> _cursorPositions;
 
     /// Check the views in the order of how the editing (cursor movement) has
     /// been happening (0 == oldest, size() - 1 == newest).
     std::vector<int> _viewOrder;
 };
+
+inline std::ostream& operator<<(std::ostream& os, const KitQueue::Callback &c)
+{
+    os << KitQueue::Callback::toString(c._view, c._type, c._payload);
+    return os;
+}
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
