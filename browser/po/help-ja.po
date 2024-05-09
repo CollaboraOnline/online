@@ -3,10 +3,10 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-04-12 19:29+0200\n"
-"PO-Revision-Date: 2024-05-09 07:29+0000\n"
+"PO-Revision-Date: 2024-05-09 07:43+0000\n"
 "Last-Translator: Shavazo <pleasure.7010@gmail.com>\n"
-"Language-Team: Japanese <https://hosted.weblate.org/projects/collabora-"
-"online/help/ja/>\n"
+"Language-Team: Japanese <https://hosted.weblate.org/projects/"
+"collabora-online/help/ja/>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1259,6 +1259,9 @@ msgid ""
 "data range that contains the cursor. A range is a contiguous cell range that "
 "contains data and is bounded by empty row and columns."
 msgstr ""
+"ここで(*)は数値キーパッドの乗算記号です。 "
+"カーソルを含むデータ範囲を選択します。 "
+"範囲は、データを含む連続したセル範囲で、空の行と列で区切られます。"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:230-269
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>*</kbd>"
@@ -1268,7 +1271,8 @@ msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>*</kbd>"
 msgid ""
 "where (/) is the division sign on the numeric key pad. Selects the matrix "
 "formula range that contains the cursor."
-msgstr ""
+msgstr "ここで(/) は数値キーパッドの除算記号です。 "
+"カーソルを含む行列式範囲を選択します。"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:231-178
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>/</kbd>"
@@ -1276,19 +1280,19 @@ msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>/</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:232-38
 msgid "Insert cells (as in menu Insert - Cells)"
-msgstr ""
+msgstr "セルの挿入 (メニューの挿入 - セル)"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:232-105
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Plus key</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Plus key</kbd>"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>プラスキー</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:233-38
 msgid "Delete cells (as in menu Edit - Delete Cells)"
-msgstr "セルの削除(メニューの編集 - セルの削除)"
+msgstr "セルの削除 (メニューの編集 - セルの削除)"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:233-110
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Minus key</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Minus key</kbd>"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>マイナスキー</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:237-9
 msgid "Cell formatting"
