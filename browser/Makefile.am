@@ -287,6 +287,7 @@ COOL_JS_LST =\
 	src/layer/vector/Path.Transform.SVG.VML.js \
 	src/layer/vector/Canvas.js \
 	src/layer/vector/Path.Transform.Canvas.js \
+	src/layer/vector/Path.Constraint.ts \
 	src/layer/FormFieldButtonLayer.js \
 	src/dom/DomEvent.js \
 	src/dom/Draggable.js \

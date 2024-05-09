@@ -120,6 +120,24 @@ export class Point {
 		return Math.sqrt(x * x + y * y);
 	}
 
+	/**
+	* Return the angle of the vector / point in rad.
+	*/
+	public angleOf(): number {
+		var angle;
+		if (this.x != 0) {
+			angle = Math.atan(this.y / Math.abs(this.x));
+		} else if (this.y > 0) {
+			angle = Math.PI / 2;
+		} else {
+			angle = - Math.PI / 2;
+		}
+		if (this.x < 0) {
+			angle = Math.PI - angle;
+		}
+		return angle;
+	}
+
 	public equals(point: Point): boolean {
 		point = Point.toPoint(point);
 
