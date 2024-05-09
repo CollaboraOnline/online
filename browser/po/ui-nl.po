@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-04-12 19:29+0200\n"
-"PO-Revision-Date: 2024-04-15 13:01+0000\n"
+"PO-Revision-Date: 2024-04-28 18:03+0000\n"
 "Last-Translator: Sebastiaan Veld <sebastiaan.veld@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/collabora-online/"
 "ui/nl/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.5-dev\n"
+"X-Generator: Weblate 5.5.1\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -1547,7 +1547,7 @@ msgstr "Presentatie"
 
 #: src/control/Control.NotebookbarImpress.js:380
 msgid "Present in Window"
-msgstr "Presenteer in huidig venster"
+msgstr "Presenteer in venster"
 
 #: src/control/Control.NotebookbarWriter.js:79
 msgid "Form"
@@ -1774,7 +1774,7 @@ msgstr "%user is vertrokken"
 
 #: src/control/Control.UserList.ts:56
 msgid "Following %user"
-msgstr "Volgen van %gebruiker"
+msgstr "%user volgen"
 
 #: src/control/Control.UserList.ts:57
 msgid "Following the editor"
@@ -1802,7 +1802,7 @@ msgstr "0 gebruikers"
 
 #: src/control/Control.UserList.ts:493
 msgid "Following"
-msgstr "Volgend"
+msgstr "Wordt gevolgd"
 
 #: src/control/Control.UserList.ts:549
 msgid "Always follow the editor"
@@ -2849,7 +2849,7 @@ msgstr "Presenteren al gestart"
 
 #: src/map/handler/Map.SlideShow.js:294
 msgid "You are already presenting this document"
-msgstr "U presenteert dit document al"
+msgstr "U presenteert dit document reeds in een ander venster"
 
 #: src/map/handler/Map.WOPI.js:150
 msgid "Creating new file from template..."
