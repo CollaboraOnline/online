@@ -1163,7 +1163,6 @@ msgid "Go to next sheet."
 msgstr "次のシートに移動。"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:223-82
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
 "class=\"kbd--plus\">+</span><kbd>Page Down</kbd>"
@@ -1176,7 +1175,6 @@ msgid "Go to previous sheet."
 msgstr "前のシートへ移動。"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:224-86
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
 "class=\"kbd--plus\">+</span><kbd>Page Up</kbd>"
@@ -1208,7 +1206,6 @@ msgid "Moves one sheet to the left."
 msgstr "シートを左に移動します."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:226-93
-#, fuzzy
 msgid "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up</kbd>"
 msgstr "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up</kbd>"
 
@@ -1217,7 +1214,6 @@ msgid "Moves one screen page to the right."
 msgstr "1つの画面を右側に移動します."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:227-100
-#, fuzzy
 msgid "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down</kbd>"
 msgstr "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down</kbd>"
 
@@ -1232,7 +1228,6 @@ msgstr ""
 "みを選択します。 前のシートを現在のシートにします."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:228-280
-#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span "
 "class=\"kbd--plus\">+</span><kbd>Page Up</kbd>"
@@ -1251,7 +1246,6 @@ msgstr ""
 "を選択します。 次のシートを現在のシートにします。"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:229-268
-#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span "
 "class=\"kbd--plus\">+</span><kbd>Page Down</kbd>"
@@ -1267,7 +1261,6 @@ msgid ""
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:230-269
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>*</kbd>"
 msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>*</kbd>"
 
@@ -1278,7 +1271,6 @@ msgid ""
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:231-178
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>/</kbd>"
 msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>/</kbd>"
 
@@ -1287,18 +1279,16 @@ msgid "Insert cells (as in menu Insert - Cells)"
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:232-105
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Plus key</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>P"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Plus key</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:233-38
 msgid "Delete cells (as in menu Edit - Delete Cells)"
 msgstr "セルの削除(メニューの編集 - セルの削除)"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:233-110
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Minus key</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Enter"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Minus key</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:237-9
 msgid "Cell formatting"
@@ -1309,9 +1299,8 @@ msgid "Display comment"
 msgstr "コメントの表示"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:245-80
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>F1</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>F1"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>F1</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:246-38
 msgid "Fill Down"
@@ -1326,65 +1315,60 @@ msgid "Two decimal places, thousands separator"
 msgstr "小数位２桁、千桁区切りあり"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:253-104
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
 "class=\"kbd--plus\">+</span><kbd>1</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>1"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>1</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:254-38
 msgid "Standard exponential format"
 msgstr "標準の指数書式"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:254-92
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
 "class=\"kbd--plus\">+</span><kbd>2</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>2"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>2</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:255-38
 msgid "Standard date format"
 msgstr "標準の日付書式"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:255-85
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
 "class=\"kbd--plus\">+</span><kbd>3</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>3"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>3</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:256-38
 msgid "Standard currency format"
 msgstr "標準の通貨書式"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:256-89
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
 "class=\"kbd--plus\">+</span><kbd>4</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>4"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>4</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:257-38
 msgid "Standard percentage format (two decimal places)"
 msgstr "標準のパーセント書式 (小数位２桁)"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:257-112
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
 "class=\"kbd--plus\">+</span><kbd>5</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>5"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>5</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:258-38
 msgid "Standard format"

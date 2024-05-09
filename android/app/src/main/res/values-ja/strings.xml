@@ -77,4 +77,5 @@
     <string name="local_file_system">ローカルファイルシステム</string>
     <string name="remove_from_list">リストから削除する</string>
     <string name="share_via">共有法</string>
+    <string name="failed_to_load_file">ファイルの読み込み先が特定できませんでした</string>
 </resources>

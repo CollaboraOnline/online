@@ -7,7 +7,7 @@
     <string name="view_only">表示のみ</string>
     <string name="edit_copy">コピーを編集する</string>
     <string name="ask_for_copy">このドキュメントは読み取り専用です。編集用にコピーを作成しますか？</string>
-    <string name="restarting">再起動しています...</string>
+    <string name="restarting">再起動中...</string>
     <string name="exiting">終了しています...</string>
     <string name="rate_our_app_title">%1$s をご利用いただきありがとうございます！</string>
     <string name="rate_now">今すぐ評価</string>
@@ -19,4 +19,7 @@
     <string name="ask_for_convert_odf">ファイルフォーマットの確認</string>
     <string name="convert_odf_message">このドキュメントには、現在選択されているファイル形式「テキスト」で保存できない形式やコンテンツが含まれる場合があります.</string>
     <string name="rate_our_app_text">お気に召されましたら、Google Playで5つ星を付与してください。 あなたの素晴らしいレビューは私たちにとって最高のモチベーションとなります。</string>
+    <string name="failed_to_load_file">ファイルの読み込み先が特定できませんでした</string>
+    <string name="cannot_open_file_chooser">選択したファイルを開けません</string>
+    <string name="preparing_for_the_first_start_after_an_update">更新後の開始を準備しています。</string>
 </resources>

@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-04-12 19:29+0200\n"
-"PO-Revision-Date: 2024-05-01 11:50+0000\n"
-"Last-Translator: Shavazo <pleasure.7010@gmail.com>\n"
+"PO-Revision-Date: 2024-05-09 07:26+0000\n"
+"Last-Translator: Poe Mon <p.poemon.awitd@gmail.com>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/"
 "collabora-online/ui/ja/>\n"
 "Language: ja\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.5.3-dev\n"
+"X-Generator: Weblate 5.5.4-rc\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -70,7 +70,7 @@ msgstr " ユーザー。"
 
 #: admin/admin.strings.js:27 admin/src/AdminSocketOverview.js:214
 msgid " document(s) open."
-msgstr " 開いているドキュメント"
+msgstr " 開いているドキュメント。"
 
 #: admin/admin.strings.js:28
 msgid "Number of Documents"
@@ -165,7 +165,6 @@ msgid "Cache size of CPU statistics"
 msgstr "CPU統計のキャッシュサイズ"
 
 #: admin/admin.strings.js:49
-#, fuzzy
 msgid "Time interval of CPU statistics (in ms)"
 msgstr "CPU統計時間(ms)"
 
@@ -380,11 +379,11 @@ msgstr " 秒"
 
 #: js/global.js:922
 msgid "Cluster is scaling, retrying..."
-msgstr "クラスターはスケーリング中再実行中です"
+msgstr "クラスターはスケーリング中再実行中です..."
 
 #: js/global.js:924
 msgid "Document is migrating to new server, retrying..."
-msgstr "ドキュメントは新しいサーバーに移行中です再実行中です"
+msgstr "ドキュメントは新しいサーバーに移行中です再実行中です..."
 
 #: js/global.js:926
 msgid "Failed to get RouteToken from controller"
@@ -429,7 +428,7 @@ msgstr "外部データソースが許可されていません"
 
 #: src/control/Control.AlertDialog.js:73
 msgid "It seems you have tried to insert external data."
-msgstr "外部のデータを挿入したようです"
+msgstr "外部のデータを挿入したようです。"
 
 #: src/control/Control.AlertDialog.js:74
 msgid ""
@@ -490,7 +489,7 @@ msgstr "いつ?"
 
 #: src/control/Control.DocumentRepair.js:159
 msgid "You have not done anything to rollback yet..."
-msgstr "ロールバックはまだ完了してないです"
+msgstr "ロールバックはまだ完了してないです..."
 
 #: src/control/Control.DocumentRepair.js:169
 msgid "Redo"
@@ -508,7 +507,7 @@ msgstr "選択中のものをダウンロード"
 msgid ""
 "If you want to share large elements outside of %productName it's necessary "
 "to first download them."
-msgstr "共有する場合はダウロードしてから共有してください"
+msgstr "%productNameを共有する場合はダウロードしてから共有してください。"
 
 #: src/control/Control.DownloadProgress.js:70
 #: src/control/Control.NotebookbarCalc.js:212
@@ -534,7 +533,7 @@ msgstr "ダウンロードが完了し、クリップボードにコピーする
 #: src/control/Control.DownloadProgress.js:120
 msgid ""
 "From now on clipboard notifications will discreetly appear at the bottom."
-msgstr ""
+msgstr "今後、クリップボードの通知は控えめに画面下部に表示されます。"
 
 #: src/control/Control.DownloadProgress.js:273
 msgid "Content copied to clipboard"
@@ -913,7 +912,7 @@ msgstr "引用符を追加"
 #: src/control/Control.Menubar.js:305
 #: src/control/Control.NotebookbarWriter.js:1873
 msgid "Add Bibliography"
-msgstr ""
+msgstr "参考文献を追加します"
 
 #: src/control/Control.Menubar.js:307
 #: src/control/Control.NotebookbarWriter.js:1916
@@ -963,7 +962,7 @@ msgstr "プロパティ"
 #: src/control/Control.Menubar.js:362 src/control/Control.Menubar.js:994
 #: src/control/Control.NotebookbarWriter.js:371
 msgid "Screen Reading"
-msgstr ""
+msgstr "スクリーンリーディング"
 
 #: src/control/Control.Menubar.js:375
 #: src/control/Control.NotebookbarWriter.js:337
@@ -1112,7 +1111,7 @@ msgstr "より少なく..."
 #: src/control/Control.Menubar.js:820
 #: src/control/jsdialog/Definitions.Menu.ts:311
 msgid "Equal to..."
-msgstr ""
+msgstr "に等しい..."
 
 #: src/control/Control.Menubar.js:821
 #: src/control/jsdialog/Definitions.Menu.ts:315
@@ -1122,7 +1121,7 @@ msgstr "と..."
 #: src/control/Control.Menubar.js:822
 #: src/control/jsdialog/Definitions.Menu.ts:319
 msgid "Duplicate..."
-msgstr "コピー"
+msgstr "コピー..."
 
 #: src/control/Control.Menubar.js:823
 #: src/control/jsdialog/Definitions.Menu.ts:323
@@ -1153,22 +1152,22 @@ msgstr "トップNパーセント..."
 #: src/control/Control.Menubar.js:830
 #: src/control/jsdialog/Definitions.Menu.ts:342
 msgid "Bottom N elements..."
-msgstr ""
+msgstr "最下位の N 要素..."
 
 #: src/control/Control.Menubar.js:831
 #: src/control/jsdialog/Definitions.Menu.ts:346
 msgid "Bottom N percent..."
-msgstr ""
+msgstr "最下位 N パーセント..."
 
 #: src/control/Control.Menubar.js:832
 #: src/control/jsdialog/Definitions.Menu.ts:350
 msgid "Above Average..."
-msgstr ""
+msgstr "平均以上..."
 
 #: src/control/Control.Menubar.js:833
 #: src/control/jsdialog/Definitions.Menu.ts:354
 msgid "Below Average..."
-msgstr ""
+msgstr "平均以下..."
 
 #: src/control/Control.Menubar.js:944 src/control/Control.Menubar.js:1009
 #: src/control/Control.Menubar.js:1073 src/control/Control.Menubar.js:1127
@@ -1213,7 +1212,6 @@ msgid "Use Tabbed view"
 msgstr "タブレットビューを使用"
 
 #: src/control/Control.Menubar.js:1795 src/control/Control.Menubar.js:1808
-#, fuzzy
 msgid "Read-only mode"
 msgstr "読み取り専用モード"
 
@@ -1242,11 +1240,11 @@ msgstr "背景色"
 
 #: src/control/Control.MobileWizardBuilder.js:524
 msgid "Gradient Start"
-msgstr ""
+msgstr "グラデーションスタート"
 
 #: src/control/Control.MobileWizardBuilder.js:526
 msgid "Gradient End"
-msgstr ""
+msgstr "グラデーションエンド"
 
 #: src/control/Control.NotebookbarBuilder.js:231
 msgid "Tap to expand"
@@ -1338,7 +1336,6 @@ msgstr "名前を付けて保存"
 #: src/control/Control.NotebookbarDraw.js:180
 #: src/control/Control.NotebookbarImpress.js:212
 #: src/control/Control.NotebookbarWriter.js:189
-#, fuzzy
 msgid "Export As"
 msgstr "形式を指定してエクスポート"
 
@@ -1392,7 +1389,7 @@ msgstr "時間"
 
 #: src/control/Control.NotebookbarCalc.js:599
 msgid "Scientific"
-msgstr ""
+msgstr "科学的"
 
 #: src/control/Control.NotebookbarCalc.js:600
 msgid "Fraction"
@@ -1400,7 +1397,7 @@ msgstr "小数部"
 
 #: src/control/Control.NotebookbarCalc.js:601
 msgid "Boolean Value"
-msgstr ""
+msgstr "Boolean 値"
 
 #: src/control/Control.NotebookbarCalc.js:602 src/control/Toolbar.js:909
 msgid "Text"
@@ -1481,7 +1478,7 @@ msgstr "コンパクト表示"
 #: src/control/Control.NotebookbarImpress.js:449
 #: src/control/Control.NotebookbarWriter.js:1424
 msgid "Collapse Tabs"
-msgstr ""
+msgstr "タブを折りたたみ"
 
 #: src/control/Control.NotebookbarCalc.js:1226
 #: src/control/Control.NotebookbarDraw.js:414
@@ -1535,7 +1532,7 @@ msgstr "プレゼンテーション"
 
 #: src/control/Control.NotebookbarImpress.js:380
 msgid "Present in Window"
-msgstr ""
+msgstr "ウィンドウに表示"
 
 #: src/control/Control.NotebookbarWriter.js:79
 msgid "Form"
@@ -1697,7 +1694,6 @@ msgid "Copy Sheet..."
 msgstr "シートをコピーする..."
 
 #: src/control/Control.Tabs.js:387
-#, fuzzy
 msgid "Are you sure you want to delete sheet, %sheet%?"
 msgstr "選択したシート %sheet% を削除しますか？"
 
@@ -1714,7 +1710,7 @@ msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to "
 "resolve"
 msgstr "複数のユーザーによる元に戻す・やり直しの処理が衝突しました。解決するにはドキ"
-"ュメントの修復を利用してください。"
+"ュメントの修復を利用してください"
 
 #: src/control/Control.TopToolbar.js:108
 msgid "Active Sheet"
@@ -1750,7 +1746,7 @@ msgstr "メニューを表示"
 
 #: src/control/Control.UIManager.js:1116
 msgid "Dismiss"
-msgstr ""
+msgstr "棄却する"
 
 #: src/control/Control.UserList.ts:54
 msgid "%user has joined"
@@ -1774,7 +1770,7 @@ msgstr "フォロー停止"
 
 #: src/control/Control.UserList.ts:59
 msgid "Avatar for %user"
-msgstr ""
+msgstr "%user のアバター"
 
 #: src/control/Control.UserList.ts:79
 msgid "%n users"
@@ -1798,11 +1794,11 @@ msgstr "常に編集者に従う"
 
 #: src/control/Control.Zotero.js:139
 msgid "Zotero API key is not configured"
-msgstr ""
+msgstr "Zotero APIキーが設定されていません"
 
 #: src/control/Control.Zotero.js:163
 msgid "Zotero API key is incorrect"
-msgstr ""
+msgstr "Zotero APIキーが間違っています"
 
 #: src/control/Control.Zotero.js:190
 msgid "Zotero Warning"
@@ -1839,7 +1835,7 @@ msgstr "ブックマーク"
 
 #: src/control/Control.Zotero.js:408
 msgid "Footnotes"
-msgstr ""
+msgstr "脚注"
 
 #: src/control/Control.Zotero.js:408
 msgid "Endnotes"
@@ -1847,7 +1843,7 @@ msgstr "エンドノート"
 
 #: src/control/Control.Zotero.js:472
 msgid "My Publications"
-msgstr ""
+msgstr "自分の出版物"
 
 #: src/control/Control.Zotero.js:478 src/control/Control.Zotero.js:705
 msgid "My Library"
@@ -1858,13 +1854,12 @@ msgid "Group Libraries"
 msgstr "グループライブラリ"
 
 #: src/control/Control.Zotero.js:721
-#, fuzzy
 msgid "Failed to load groups"
 msgstr "アイテム読み込みに失敗しました"
 
 #: src/control/Control.Zotero.js:739 src/control/Control.Zotero.js:1057
 msgid "Failed to load collections"
-msgstr ""
+msgstr "コレクションの読み込みに失敗しました"
 
 #: src/control/Control.Zotero.js:753
 msgid "Citation Style"
@@ -1900,13 +1895,13 @@ msgstr "アイテム読み込みに失敗しました"
 
 #: src/control/Control.Zotero.js:1146
 msgid "Citation warning"
-msgstr ""
+msgstr "引用の警告"
 
 #: src/control/Control.Zotero.js:1147
 msgid ""
 "Once citations are entered their storage and display type can not be "
 "changed."
-msgstr ""
+msgstr "一度入力された引用文の編集と表示タイプは変更できません。"
 
 #: src/control/Control.Zotero.js:1148 src/control/Control.Zotero.js:1450
 msgid "Confirm"
@@ -1922,25 +1917,26 @@ msgstr "ノート:"
 
 #: src/control/Control.Zotero.js:1257
 msgid "An error occurred while fetching notes"
-msgstr ""
+msgstr "ノートを取り出し中にエラーが発生しました"
 
 #: src/control/Control.Zotero.js:1388
 msgid "Updated citations"
-msgstr ""
+msgstr "最新引用"
 
 #: src/control/Control.Zotero.js:1390
 msgid "Citations update failed"
-msgstr ""
+msgstr "引用の更新が失敗しました"
 
 #: src/control/Control.Zotero.js:1394
 msgid "Updating citations"
-msgstr ""
+msgstr "引用を更新しています"
 
 #: src/control/Control.Zotero.js:1449
 msgid ""
 "Unlinking citations will prevent Collabora Online from updating citations "
 "and bibliography in this document."
-msgstr ""
+msgstr "引用のリンクを解除するこどて、コラボラオンラインをこのドキュメントの引用更新"
+"と参考文献から防げます。"
 
 #: src/control/Permission.js:27 src/control/Permission.js:28
 msgid "Edit document"
@@ -1952,7 +1948,7 @@ msgstr "ドキュメントはロックされず、読み取り専用モードで
 
 #: src/control/Permission.js:87 src/control/Permission.js:97
 msgid "Server returned this reason:"
-msgstr ""
+msgstr "サーバーからの戻り値:"
 
 #: src/control/Permission.js:95
 msgid "The document could not be locked."
@@ -2007,21 +2003,23 @@ msgstr "このドキュメントには、署名が無効になっています."
 
 #: src/control/Signing.js:35
 msgid "The signature was valid, but the document has been modified."
-msgstr ""
+msgstr "署名は有効でしたが、文書が変更されました。"
 
 #: src/control/Signing.js:39
 msgid "The signature is OK, but the certificate could not be validated."
-msgstr ""
+msgstr "署名は正常ですが、証明書を検証できませんでした。"
 
 #: src/control/Signing.js:43
 msgid "The signature is OK, but the document is only partially signed."
-msgstr ""
+msgstr "署名は正常ですが、ドキュメントには検証できない部分がありますので、確認してく"
+"ださい。"
 
 #: src/control/Signing.js:47
 msgid ""
 "The signature is OK, but the certificate could not be validated and the "
 "document is only partially signed."
-msgstr ""
+msgstr "署名は OK "
+"ですが、証明書は検証できず、ドキュメントは部分的にしか署名されていません。"
 
 #: src/control/Toolbar.js:54
 msgid "Font"
@@ -2045,11 +2043,11 @@ msgstr "このバージョンの %productName は以下で動作しています"
 
 #: src/control/Toolbar.js:800
 msgid "\"Slow Proxy\""
-msgstr ""
+msgstr "\"プロキシ減速\""
 
 #: src/control/Toolbar.js:819
 msgid "Copy all version information in English"
-msgstr ""
+msgstr "すべてのバージョン情報を英語でコピーします"
 
 #: src/control/Toolbar.js:902
 msgid "Insert hyperlink"
@@ -2093,7 +2091,7 @@ msgstr "とても広い"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:149
 msgid "No fill"
-msgstr ""
+msgstr "満たされていません"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:149
 msgid "Automatic"
@@ -2109,7 +2107,6 @@ msgid "Permission Mode"
 msgstr "パーミッションモード"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:36
-#, fuzzy
 msgid "Read-only"
 msgstr "読み取り専用"
 
@@ -2156,7 +2153,7 @@ msgstr "セルの罫線"
 
 #: src/control/jsdialog/Widget.TreeView.js:666
 msgid "Headings and objects that you add to the document will appear here"
-msgstr ""
+msgstr "追加した見出しとオブジェクトはここに表示されます"
 
 #: src/core/Socket.js:65
 msgid "Oops, there is a problem connecting to %productName: "
@@ -2164,11 +2161,11 @@ msgstr "あれれ〜？、ドキュメントへの接続に問題が発生しま
 
 #: src/core/Socket.js:594
 msgid "Server is now reachable. We have to refresh the page now."
-msgstr ""
+msgstr "サーバーが更新されました。ページをリロードしてください。"
 
 #: src/core/Socket.js:596
 msgid "Server is now reachable..."
-msgstr ""
+msgstr "サーバーが到達できました..."
 
 #: src/core/Socket.js:600
 msgid "RELOAD"
@@ -2176,11 +2173,11 @@ msgstr "再読み込み"
 
 #: src/core/Socket.js:613
 msgid "Cluster configuration warning"
-msgstr ""
+msgstr "クラスタ設定の警告"
 
 #: src/core/Socket.js:616
 msgid "Wrong server, reconnecting..."
-msgstr ""
+msgstr "セーバーが間違っています、再接続中..."
 
 #: src/core/Socket.js:625
 msgid "COOLWSD version:"
@@ -2188,7 +2185,7 @@ msgstr "COOLWSDバージョン:"
 
 #: src/core/Socket.js:637
 msgid "Served by:"
-msgstr ""
+msgstr "提供:"
 
 #: src/core/Socket.js:643
 msgid "Unsupported server version."
@@ -2200,7 +2197,7 @@ msgstr "LOKit バージョン:"
 
 #: src/core/Socket.js:754
 msgid "Document is getting migrated"
-msgstr ""
+msgstr "ドキュメントがマイグレーションされました"
 
 #: src/core/Socket.js:781
 msgid "Session terminated by document owner"
@@ -2230,11 +2227,11 @@ msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
 msgstr "以前のリビジョンを復元しています。 "
-"保存されていない変更はバージョン履歴で利用可能になります。"
+"保存されていない変更はバージョン履歴で利用可能になります"
 
 #: src/core/Socket.js:841
 msgid "Reloading the document after rename"
-msgstr ""
+msgstr "名前変更してドキュメントをレロードしてください"
 
 #: src/core/Socket.js:993
 msgid "Document requires password to view."
@@ -2254,19 +2251,19 @@ msgstr "パスワードが間違っています、再度挑戦してください
 
 #: src/core/Socket.js:1040
 msgid "Only the document owner can change the password."
-msgstr ""
+msgstr "ドキュメント所有者だけはパスワードを変更できます。"
 
 #: src/core/Socket.js:1071 src/core/Socket.js:1076
 msgid "Missing Fonts"
-msgstr ""
+msgstr "フォントが存在していません"
 
 #: src/core/Socket.js:1108
 msgid "Someone"
-msgstr ""
+msgstr "ユーザー"
 
 #: src/core/Socket.js:1109
 msgid "%userName saved this document as %fileName. Do you want to join?"
-msgstr ""
+msgstr "%userNameがドキュメントを %fileNameで保存しました。参加しませんか？"
 
 #: src/core/Socket.js:1118
 msgid "Connecting..."
@@ -2274,11 +2271,11 @@ msgstr "接続中..."
 
 #: src/core/Socket.js:1135
 msgid "The document is being renamed and will reload shortly"
-msgstr ""
+msgstr "ドキュメント名が変更されました・リロードしてください"
 
 #: src/core/Socket.js:1138
 msgid "The document is switching to Offline mode and will reload shortly"
-msgstr ""
+msgstr "ドキュメントがOfflineモードになっていますのでリロードしてください"
 
 #: src/core/Socket.js:1227
 msgid "Server is shutting down"
@@ -2312,7 +2309,7 @@ msgstr "ドキュメントが変更されました"
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
-msgstr ""
+msgstr "ドキュメントが変更されています。データを上書き保存しますか？"
 
 #: src/core/Socket.js:1553
 msgid ""
@@ -2369,7 +2366,6 @@ msgstr "ホストURLが空です。coolwsdサーバーの設定が誤ってい�
 
 # TODO: デプロイメントの訳語。いまはこれでOK
 #: src/errormessages.js:24
-#, fuzzy
 msgid ""
 "This is an unsupported version of {productname}. To avoid the impression "
 "that it is suitable for deployment in enterprises, this message appears "
@@ -2412,7 +2408,6 @@ msgstr "WOPISrcパラメータが間違っているか若しくは不足して�
 "ださい。"
 
 #: src/errormessages.js:30
-#, fuzzy
 msgid ""
 "Your session will expire in %time. Please save your work and refresh the "
 "session (or webpage) to continue. You might need to login again."
@@ -2420,7 +2415,6 @@ msgstr "セッションが %time 後に期限切れになります。継続す�
 "ン（あるいはウェブページ）を再読込してください。"
 
 #: src/errormessages.js:31
-#, fuzzy
 msgid ""
 "Your session has expired. Further changes to the document might not be "
 "saved. Please refresh the session (or webpage) to continue. You might need "
@@ -2439,13 +2433,14 @@ msgstr "ドキュメントの読み込みに失敗しました。ファイル形
 
 #: src/errormessages.js:33
 msgid "Invalid link: '%url'"
-msgstr ""
+msgstr "無効なリンク: '%url'"
 
 #: src/errormessages.js:34
 msgid ""
 "You are leaving the document. The following web page will open in a new "
 "tab: "
-msgstr ""
+msgstr "現在のドキュメントから脱退します。以下のウェブページが新しいタブで表示されま"
+"す: "
 
 #: src/errormessages.js:35
 msgid ""
@@ -2457,13 +2452,13 @@ msgstr "ドキュメントの読み込みに失敗しました。 "
 
 #: src/errormessages.js:36
 msgid "Cleaning up the document from the last session."
-msgstr ""
+msgstr "ドキュメントを最後セッションからクリーニングします。"
 
 #: src/errormessages.js:37
 msgid ""
 "We are in the process of cleaning up this document from the last session, "
 "please try again later."
-msgstr ""
+msgstr "現在のドキュメントはセッションクリーニング中なので、再接続してください。"
 
 #: src/errormessages.js:38
 msgid ""
@@ -2473,6 +2468,10 @@ msgid ""
 "storage and/or copy/paste problems. Expected serverId %0 for routeToken %1 "
 "but connected to serverId %2"
 msgstr ""
+"%productNameのクラスタが設定が間違っています-システム管理者に連絡してください"
+"。他のユーザーが同じデータに対して同時に変更を行っている場合はデータコンフリ"
+"クトする可能性が高いです。Expected serverId %0 for routeToken %1 but "
+"connected to serverId %2"
 
 #: src/errormessages.js:39
 msgid ""
@@ -2481,12 +2480,15 @@ msgid ""
 "administrator. For more info on proxy configuration please checkout https://"
 "sdk.collaboraonline.com/docs/installation/Proxy_settings.html"
 msgstr ""
+"ソケットのコネクションが失敗しました。プロキシの設定が間違っていますのでシス"
+"テム管理者に連絡してください。以下のURLhttps://sdk.collaboraonline.com/docs/"
+"installation/Proxy_settings.htmlで確認してください"
 
 #: src/errormessages.js:40
 msgid ""
 "Failed to establish socket connection or socket connection closed "
 "unexpectedly."
-msgstr ""
+msgstr "ソケットのコネクションが失敗しました。"
 
 #: src/errormessages.js:43
 msgid "Failed to load document."
@@ -2494,7 +2496,8 @@ msgstr "ドキュメントの読み込みに失敗しました。"
 
 #: src/errormessages.js:44
 msgid "Save failed due to no disk space left. Document will now be read-only."
-msgstr ""
+msgstr "disk spaceが足りないので保存できませんでした。現在ドキュメントが読み込みがで"
+"きます。"
 
 #: src/errormessages.js:45
 msgid ""
@@ -2519,27 +2522,28 @@ msgstr "ドキュメントの名前を変更することができませんでし
 #: src/errormessages.js:52
 msgid ""
 "Failed to read document from storage, please try to load the document again."
-msgstr ""
+msgstr "ドキュメントの読み込みが失敗しました、再接続してください。"
 
 #: src/errormessages.js:53
 msgid ""
 "Save failed due to no storage space left. Document will now be read-only. "
 "Please make sure enough disk space is available and try to save again."
-msgstr ""
+msgstr "ストレージが足りないので保存できません。現在ドキュメントは読み込みできます。"
+"ストレージを確認してから保存してください。"
 
 #: src/errormessages.js:54
 msgid ""
 "Save failed because the document is too large or exceeds the remaining "
 "storage space. The document will now be read-only but you may still "
 "download it now to preserve a copy locally."
-msgstr ""
+msgstr "ファイルサイズが大きすぎで保存できませんでした。ドキュメントは読み取り専用に"
+"なりますが、ローカルにコピーを保存するためにダウンロードできます。"
 
 #: src/errormessages.js:56
 msgid "Document cannot be saved, please check your permissions."
 msgstr "ドキュメントは保存できませんでした。アクセス権を確認してください。"
 
 #: src/errormessages.js:57
-#, fuzzy
 msgid "Document cannot be renamed, please check your permissions."
 msgstr "ドキュメントは保存できませんでした。アクセス権を確認してください。"
 
@@ -2549,11 +2553,11 @@ msgstr "ドキュメントのエクスポートができませんでした。再
 
 #: src/errormessages.js:63
 msgid "Uploading file to server failed, file not found."
-msgstr ""
+msgstr "ファイルのアップロードが失敗しました、ファイルが見つかりません。"
 
 #: src/errormessages.js:64
 msgid "Uploading file to server failed, the file is too large."
-msgstr ""
+msgstr "ファイルのサイズが大きすぎて、アップロードが失敗しました。"
 
 #: src/layer/tile/CanvasTileLayer.js:2024
 msgid "Functions"
@@ -2561,7 +2565,7 @@ msgstr "関数"
 
 #: src/layer/tile/CanvasTileLayer.js:2620
 msgid "and %COUNT more"
-msgstr ""
+msgstr "更に%COUNT"
 
 #: src/layer/tile/CanvasTileLayer.js:2634
 msgid "Copy link location"
@@ -2585,7 +2589,7 @@ msgstr "コメントは編集されています"
 
 #: src/layer/tile/CommentListSection.ts:140
 msgid "Please save or discard the comment currently being edited."
-msgstr ""
+msgstr "コメントが編集されました、保存それとも破棄を行ってください。"
 
 #: src/layer/tile/CommentListSection.ts:960
 msgid "Modify"
@@ -2605,7 +2609,6 @@ msgid "Remove Thread"
 msgstr "スレッドを削除"
 
 #: src/layer/tile/CommentListSection.ts:984
-#, fuzzy
 msgid "Resolve"
 msgstr "解決済"
 
@@ -2615,10 +2618,9 @@ msgstr "未解決"
 
 #: src/layer/tile/CommentListSection.ts:990
 msgid "Unresolve Thread"
-msgstr ""
+msgstr "未解決スラッド"
 
 #: src/layer/tile/CommentListSection.ts:990
-#, fuzzy
 msgid "Resolve Thread"
 msgstr "スレッドを削除"
 
@@ -2650,24 +2652,23 @@ msgstr "警告！あなたの使用しているブラウザはサポートされ
 #: src/map/Clipboard.js:155
 msgid ""
 "To paste outside %productName, please first click the 'download' button"
-msgstr ""
+msgstr "%productNameをコピーして、downloadボタンをクリックしてください"
 
 #: src/map/Clipboard.js:163
 msgid "Copying from the document disabled"
-msgstr ""
+msgstr "コピーが無効になっています"
 
 #: src/map/Clipboard.js:265
 msgid "warning: copy/paste request timed out"
-msgstr ""
+msgstr "警告:copy/pasteがタイムアウトしました"
 
 #: src/map/Clipboard.js:327
-#, fuzzy
 msgid "Failed to download clipboard, please re-copy"
 msgstr "クリップボードをダウンロードできない場合は、再コピーしてください"
 
 #: src/map/Clipboard.js:1095
 msgid "<p>Please use the copy/paste buttons on your on-screen keyboard.</p>"
-msgstr ""
+msgstr "<p> 画面上のキーボードのコピー/貼り付けボタンを使用してください。</p>"
 
 #: src/map/Clipboard.js:1097
 msgid ""
@@ -2678,6 +2679,13 @@ msgid ""
 "kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd></td></tr><tr><td>Copy</"
 "td><td>Cut</td><td>Paste</td></tr></table>"
 msgstr ""
+"<p>お使いのブラウザはクリップボードへのアクセスが非常に限られているため、キー"
+"ボードショートカットを使用してください:</p><table class=\"warn-copy-paste\""
+"><tr><td><kbd>Ctrl</kbd><span class=\"kbd--plus\""
+">+</span><kbd>C</kbd></td><td><kbd>Ctrl</kbd><span class=\"kbd--plus\""
+">+</span><kbd>X</kbd></td><td><kbd>Ctrl</kbd><span class=\"kbd--plus\">+</spa"
+"n><kbd>V</kbd></td></tr><tr><td>Copy</td><td>Cut</td><td>Paste</td></tr></tab"
+"le>"
 
 #: src/map/Clipboard.js:1116
 msgid ""
@@ -2685,6 +2693,8 @@ msgid ""
 "Please, wait for the current download or cancel it before starting a new "
 "one</p>"
 msgstr ""
+"<p>コピー/貼り付け操作によるダウンロードがすでに開始されています。新しいダウ"
+"ンロードを開始する前に、現在のダウンロードを待つかキャンセルしてください</p>"
 
 #: src/map/Clipboard.js:1134
 msgid ""
@@ -2693,8 +2703,8 @@ msgid ""
 "see more options</p><p>Close popup to ignore paste special</p>"
 msgstr ""
 "<p>お使いのブラウザはクリップボードへの</p><p><b>アクセスが制限されています</"
-"b><kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd>V</kbd>よりオ"
-"プションを表示</p><p>を無視するポップアップ[X204X204X]"
+"b> <kbd>Ctrl</kbd><span class=\"kbd--plus\""
+">+</span><kbd>V</kbd>よりオプションを表示</p><p>を無視するポップアップ</p>"
 
 #: src/map/Clipboard.js:1141
 msgid "Paste from this document"
@@ -2702,7 +2712,7 @@ msgstr "このドキュメントから貼り付ける"
 
 #: src/map/Clipboard.js:1141
 msgid "Cancel paste special"
-msgstr ""
+msgstr "特殊ペーストをキャンセル"
 
 #: src/map/Map.js:224
 msgid "Initializing..."
@@ -2710,7 +2720,7 @@ msgstr "初期化しています..."
 
 #: src/map/Map.js:450 src/map/Map.js:453 src/map/Map.js:456 src/map/Map.js:459
 msgid "Last saved:"
-msgstr ""
+msgstr "最後に保存した場所:"
 
 #: src/map/handler/Map.Feedback.js:82
 msgid "Please send us your feedback"
@@ -2720,13 +2730,13 @@ msgstr "ご意見をお寄せください"
 #, javascript-format
 msgid ""
 "The file of type: %0 cannot be uploaded to server since the file has no name"
-msgstr ""
+msgstr "タイプ: %0 のファイルは名前がないため、サーバーにアップロードできません"
 
 #: src/map/handler/Map.FileInserter.js:107
 #, javascript-format
 msgid ""
 "The file of type: %0 cannot be uploaded to server since the file is empty"
-msgstr ""
+msgstr "タイプ: %0 のファイルはないため、サーバーにアップロードできません"
 
 #: src/map/handler/Map.FileInserter.js:138
 msgid "Uploading..."
@@ -2734,7 +2744,7 @@ msgstr "アップロード中..."
 
 #: src/map/handler/Map.FileInserter.js:161
 msgid "Uploading file to server failed with status: %0"
-msgstr ""
+msgstr "ステータス: %0でファイルをサーバーにアップロードできませんでした"
 
 #: src/map/handler/Map.SlideShow.js:50
 msgid "Empty Slide Show"
@@ -2742,11 +2752,11 @@ msgstr "空のスライドショー"
 
 #: src/map/handler/Map.SlideShow.js:151
 msgid "Windowed Presentation: "
-msgstr ""
+msgstr "ウィンドープレゼンテーション: "
 
 #: src/map/handler/Map.SlideShow.js:158
 msgid "Windowed Presentation Blocked"
-msgstr ""
+msgstr "ウィンドープレゼンテーションがブロックされました"
 
 #: src/map/handler/Map.SlideShow.js:159
 msgid ""
@@ -2754,10 +2764,12 @@ msgid ""
 "slide shows to be displayed in separated windows, allowing for easy screen "
 "sharing."
 msgstr ""
+"プレゼンテーションがブロックされました。利用しているブラウザでのポップアップ"
+"を許可してください。スライドが別画面になり、画面共有が許可されます。"
 
 #: src/map/handler/Map.SlideShow.js:173
 msgid "Presenting in window"
-msgstr ""
+msgstr "ウィンドウズでプレゼンテーションします"
 
 #: src/map/handler/Map.SlideShow.js:174
 msgid "Close Presentation"
@@ -2773,7 +2785,7 @@ msgstr "プレゼンテーションを終了"
 
 #: src/map/handler/Map.SlideShow.js:293
 msgid "Already presenting"
-msgstr ""
+msgstr "プレゼンテーションされています"
 
 #: src/map/handler/Map.SlideShow.js:294
 msgid "You are already presenting this document"
@@ -2801,7 +2813,7 @@ msgstr "ようこそCollabora Onlineへ"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:26-7
 msgid "Explore The New %coolVersion"
-msgstr ""
+msgstr "新ヴァージョン%coolVersion"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:27-7
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:38-7
@@ -2815,6 +2827,10 @@ msgid ""
 "target=\"_blank\" href=\"https://www.collaboraoffice.com/solutions/"
 "collabora-office-android-ios/\">apps</a> are also available for mobile."
 msgstr ""
+"最新版のコラボラを無料でご利用いただけます。ブラウザ上で無料で使用したり、探"
+"索したり、他のユーザーと一緒に使用したりできます。 <a target=\"_blank\" href="
+"\"https://www.collaboraoffice.com/solutions/collabora-office-android-ios/\""
+">apps</a> ここからモバイルにも利用できます。"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:37-7
 msgid "Discover All The Changes"
@@ -2827,6 +2843,10 @@ msgid ""
 "latest Collabora Online Development Edition, aimed at home users and small "
 "teams."
 msgstr ""
+"<a target=\"_blank\" href=\"https://www.collaboraoffice.com/"
+"code-24-04-release-notes/\">release notes</a>から確認できます:最新版のデブロ"
+"ッパーヴァージョンのコラボオンラインは小規模の企業とホームユーザーには流行っ"
+"ています。"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:48-7
 msgid "Get Involved"
@@ -2847,6 +2867,13 @@ msgid ""
 "\">filing a bug report</a> with all the essential steps on how to reproduce "
 "it."
 msgstr ""
+"貢献することに興味がありますが、どこから始めればよいのか分からないですか? <a "
+"target=\"_blank\" href=\"https://collaboraonline.github.io/post/build-code/\""
+">step-by-step instructions</a> から構築してみてください. 翻訳 <a target="
+"\"_blank\" href=\"https://collaboraonline.github.io/post/translate/\""
+">translations</a> それともby <a target=\"_blank\" href=\"https"
+"://collaboraonline.github.io/post/filebugs/\">filing a bug report</a> "
+"バグレポートもできますので、よろしくお願いします。"
 
 #: welcome/welcome.html%2Bhtml.body.div.div:55-5
 msgid ""
@@ -2855,6 +2882,10 @@ msgid ""
 "translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
 "translate=\"true\">3</a>"
 msgstr ""
+"<a id=\"slide-1-indicator\" class=\"active\" href=\"#slide-1\" data-"
+"translate=\"true\">1</a> <a id=\"slide-2-indicator\" href=\"#slide-2\" data-"
+"translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
+"translate=\"true\">3</a>"
 
 #, fuzzy
 #~ msgid "ODF Spreadsheet (.ods)"
