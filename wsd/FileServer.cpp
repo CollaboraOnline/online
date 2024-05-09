@@ -1003,6 +1003,24 @@ std::string FileServerRequestHandler::getRequestPathname(const HTTPRequest& requ
     return path;
 }
 
+/*
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'>
+   <circle transform='rotate(0)' transform-origin='center' fill='none' stroke='#FF156D' stroke-width='15' stroke-linecap='round' stroke-dasharray='230 1000' stroke-dashoffset='0' cx='100' cy='100' r='70'>
+     <animateTransform
+         attributeName='transform'
+         type='rotate'
+         from='0'
+         to='360'
+         dur='2'
+         repeatCount='indefinite'>
+      </animateTransform>
+   </circle>
+</svg>
+
+<meta name="previewImg" content="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAyMDAgMjAwJz4KICAgPGNpcmNsZSB0cmFuc2Zvcm09J3JvdGF0ZSgwKScgdHJhbnNmb3JtLW9yaWdpbj0nY2VudGVyJyBmaWxsPSdub25lJyBzdHJva2U9JyNGRjE1NkQnIHN0cm9rZS13aWR0aD0nMTUnIHN0cm9rZS1saW5lY2FwPSdyb3VuZCcgc3Ryb2tlLWRhc2hhcnJheT0nMjMwIDEwMDAnIHN0cm9rZS1kYXNob2Zmc2V0PScwJyBjeD0nMTAwJyBjeT0nMTAwJyByPSc3MCc+CiAgICAgPGFuaW1hdGVUcmFuc2Zvcm0KICAgICAgICAgYXR0cmlidXRlTmFtZT0ndHJhbnNmb3JtJwogICAgICAgICB0eXBlPSdyb3RhdGUnCiAgICAgICAgIGZyb209JzAnCiAgICAgICAgIHRvPSczNjAnCiAgICAgICAgIGR1cj0nMicKICAgICAgICAgcmVwZWF0Q291bnQ9J2luZGVmaW5pdGUnPgogICAgICA8L2FuaW1hdGVUcmFuc2Zvcm0+CiAgIDwvY2lyY2xlPgo8L3N2Zz4=">
+
+*/
+
 constexpr std::string_view BRANDING = "branding";
 constexpr std::string_view SUPPORT_KEY_BRANDING_UNSUPPORTED = "branding-unsupported";
 
