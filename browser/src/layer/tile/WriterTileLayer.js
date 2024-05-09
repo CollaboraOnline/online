@@ -18,10 +18,9 @@ L.WriterTileLayer = L.CanvasTileLayer.extend({
 	newAnnotation: function (comment) {
 		if (app.file.textCursor.visible) {
 			comment.anchorPos = [app.file.textCursor.rectangle.x2, app.file.textCursor.rectangle.y1];
-		} else if (this._graphicSelection && !this._isEmptyRectangle(this._graphicSelection)) {
+		} else if (this._graphicSelection) {
 			// An image is selected, then guess the anchor based on the graphic selection.
-			const temp = this._latLngToTwips(this._graphicSelection.getSouthWest());
-			comment.anchorPos = [temp.x, temp.y];
+			comment.anchorPos = [this._graphicSelection.x1, this._graphicSelection.y2];
 		}
 
 		var annotation = app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).add(comment);

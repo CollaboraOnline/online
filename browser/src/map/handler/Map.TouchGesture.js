@@ -253,7 +253,7 @@ L.Map.TouchGesture = L.Handler.extend({
 			// check new selection if any
 			var graphicSelection = docLayer._graphicSelection;
 			if (!docLayer._cursorAtMispelledWord
-				&& (!graphicSelection || !graphicSelection.contains(latlng))
+				&& (!graphicSelection || !graphicSelection.containsPoint(posInTwips.toArray()))
 				&& (!app.calc.cellCursorVisible || !app.calc.cellCursorRectangle.containsPoint(posInTwips.toArray()))) {
 				// try to select text
 				doubleClick();
@@ -284,8 +284,8 @@ L.Map.TouchGesture = L.Handler.extend({
 			textSelection.height = docLayer._selectionHandles.end.rectangle.y2 - docLayer._selectionHandles.start.rectangle.y1;
 		}
 
-		if ((textSelection && textSelection.pContainsPoint(posInTwips.toArray()))
-			|| (graphicSelection && graphicSelection.contains(latlng))
+		if ((textSelection && textSelection.containsPoint(posInTwips.toArray()))
+			|| (graphicSelection && graphicSelection.containsPoint(posInTwips.toArray()))
 			|| (app.calc.cellCursorVisible && app.calc.cellCursorRectangle.containsPoint(posInTwips.toArray())) || bContainsSel) {
 			// long touched an already selected object
 			// send right click to trigger context menus

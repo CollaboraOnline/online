@@ -52,7 +52,7 @@ L.Map.Mouse = L.Handler.extend({
 			if (docLayer._graphicMarker.isDragged) {
 				return;
 			}
-			if (!docLayer._isEmptyRectangle(docLayer._graphicSelection)) {
+			if (docLayer._graphicSelection) {
 				// if we have a graphic selection and the user clicks inside the rectangle
 				var isInside = docLayer._graphicMarker.getBounds().contains(e.latlng);
 				if (e.type === 'mousedown' && isInside) {
