@@ -9,8 +9,8 @@
     <string name="preparing_for_the_first_start_after_an_update">Estamos a preparar o arranque após a atualização.</string>
     <string name="saving">A guardar...</string>
     <string name="exiting">A sair...</string>
-    <string name="rate_our_app_text">Se gostou da aplicação, assinale 5 estrelas na Google Play. As avaliações positivas proporcionam motivação.</string>
-    <string name="rate_our_app_title">Obrigado por utilizar %1$s!</string>
+    <string name="rate_our_app_text">Se gostou da aplicação, dê-nos 5 estrelas no Google Play. As avaliações positivas são a nossa maior motivação.</string>
+    <string name="rate_our_app_title">Obrigado por utilizar o %1$s!</string>
     <string name="later">Mais tarde</string>
     <string name="rate_now">Avaliar agora</string>
     <string name="file_chromeos_read_only">O ficheiro não pode ser guardado neste local. Mova-o para os ficheiros \'Play\' de modo a que o possa ler/escrever.</string>

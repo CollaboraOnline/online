@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-04-12 19:29+0200\n"
-"PO-Revision-Date: 2024-04-16 14:06+0000\n"
-"Last-Translator: NamelessGO <66227691+NameLessGO@users.noreply.github.com>\n"
+"PO-Revision-Date: 2024-04-23 16:51+0000\n"
+"Last-Translator: SC <lalocas@protonmail.com>\n"
 "Language-Team: Portuguese <https://hosted.weblate.org/projects/"
 "collabora-online/ui/pt/>\n"
 "Language: pt\n"
@@ -384,15 +384,16 @@ msgstr " segundos"
 
 #: js/global.js:922
 msgid "Cluster is scaling, retrying..."
-msgstr "Cluster está escalando, tentando novamente..."
+msgstr "O cluster está a escalar, a tentar novamente..."
 
 #: js/global.js:924
 msgid "Document is migrating to new server, retrying..."
-msgstr "A migrar documento para um novo servidor, tentando novamente..."
+msgstr ""
+"O documento está a ser migrado para um novo servidor, a tentar novamente..."
 
 #: js/global.js:926
 msgid "Failed to get RouteToken from controller"
-msgstr "Falhado para obter RouteToken do controlador"
+msgstr "Falha ao obter o RouteToken do controlador"
 
 #: src/control/ColorPicker.ts:269
 msgid "No color"
@@ -412,7 +413,7 @@ msgstr "Abrir hiperligação"
 
 #: src/control/Control.AlertDialog.js:66
 msgid "Copied external sources are not allowed"
-msgstr "Fontes externas copiadas não são permitidas"
+msgstr "Não é permitida a cópia de fontes externas"
 
 #: src/control/Control.AlertDialog.js:67
 msgid "It seems you have copied a selection that includes external images."
@@ -424,9 +425,9 @@ msgid ""
 "possible. Please right click in the image, choose \"Copy Image\" and paste "
 "it into the document instead."
 msgstr ""
-"O download de recursos externos é proibido, mas a colagem de imagens ainda é "
-"possível. Clique com o botão direito na imagem, escolha \"Copiar Imagem\" e "
-"cole-a no documento."
+"O descarregamento de recursos externos é proibido, mas a colagem de imagens "
+"continua a ser possível. Clique com o botão direito do rato na imagem, "
+"selecione \"Copiar imagem\" e cole-a no documento."
 
 #: src/control/Control.AlertDialog.js:72
 msgid "External data source not allowed"
@@ -441,12 +442,12 @@ msgid ""
 "Selected external data source is forbidden. Please contact the system "
 "administrator."
 msgstr ""
-"A fonte de dados externa selecionada está proibida. Entre em contato com o "
-"administrador do sistema."
+"A fonte de dados externa selecionada é proibida. Contacte o administrador do "
+"sistema."
 
 #: src/control/Control.AlertDialog.js:86
 msgid "Don't show this again"
-msgstr "Não mostrar novamente"
+msgstr "Não voltar a mostrar isto"
 
 #: src/control/Control.AlertDialog.js:105
 msgid "The server encountered a %0 error while parsing the %1 command."
@@ -1062,7 +1063,7 @@ msgstr "Mostrar diapositivo atual"
 
 #: src/control/Control.Menubar.js:518
 msgid "Present in new window"
-msgstr "Apresentar em nova janela"
+msgstr "Apresentar numa janela nova"
 
 #: src/control/Control.Menubar.js:554 src/control/Control.Menubar.js:1027
 #: src/control/Control.Menubar.js:1087
@@ -1155,12 +1156,12 @@ msgstr "Regras superiores/inferiores..."
 #: src/control/Control.Menubar.js:828
 #: src/control/jsdialog/Definitions.Menu.ts:334
 msgid "Top N elements..."
-msgstr "N elementos principais..."
+msgstr "N elementos superiores..."
 
 #: src/control/Control.Menubar.js:829
 #: src/control/jsdialog/Definitions.Menu.ts:338
 msgid "Top N percent..."
-msgstr "N por cento principais..."
+msgstr "N por cento superior..."
 
 #: src/control/Control.Menubar.js:830
 #: src/control/jsdialog/Definitions.Menu.ts:342
@@ -1218,11 +1219,11 @@ msgstr "Mais..."
 
 #: src/control/Control.Menubar.js:1727
 msgid "Use Compact view"
-msgstr "Usar vista Compacta"
+msgstr "Usar vista compacta"
 
 #: src/control/Control.Menubar.js:1729
 msgid "Use Tabbed view"
-msgstr "Usar vista com Separadores"
+msgstr "Usar vista com separadores"
 
 #: src/control/Control.Menubar.js:1795 src/control/Control.Menubar.js:1808
 msgid "Read-only mode"
@@ -1284,7 +1285,7 @@ msgstr "Ficheiro"
 #: src/control/Control.NotebookbarImpress.js:83
 #: src/control/Control.NotebookbarWriter.js:42
 msgid "Home"
-msgstr "Início"
+msgstr "Home"
 
 #: src/control/Control.NotebookbarCalc.js:36
 #: src/control/Control.NotebookbarDraw.js:75
@@ -1708,7 +1709,7 @@ msgstr "Copiar folha..."
 
 #: src/control/Control.Tabs.js:387
 msgid "Are you sure you want to delete sheet, %sheet%?"
-msgstr "Tem a certeza de que deseja apagar a folha %sheet%?"
+msgstr "Tem a certeza que deseja eliminar a folha %sheet%?"
 
 #: src/control/Control.Tabs.js:398
 msgid "Rename sheet"
@@ -1780,7 +1781,7 @@ msgstr "Seguindo o editor"
 
 #: src/control/Control.UserList.ts:58
 msgid "Stop following"
-msgstr "Pare de seguir"
+msgstr "Deixar de seguir"
 
 #: src/control/Control.UserList.ts:59
 msgid "Avatar for %user"
@@ -2296,11 +2297,12 @@ msgstr "O nome do documento está a ser alterado e será recarregado em breve"
 
 #: src/core/Socket.js:1138
 msgid "The document is switching to Offline mode and will reload shortly"
-msgstr "O documento está mudando para o modo offline e irá recarregar em breve"
+msgstr ""
+"O documento está a mudar para o modo offline e será recarregado em breve"
 
 #: src/core/Socket.js:1227
 msgid "Server is shutting down"
-msgstr "O servidor está desligando"
+msgstr "O servidor está a ser encerrado"
 
 #: src/core/Socket.js:1259
 msgid "Exported to storage"
@@ -2352,7 +2354,7 @@ msgstr "O servidor foi desconectado."
 
 #: src/core/Debug.js:54
 msgid "Debug Tools"
-msgstr "Ferramentas de Depuração"
+msgstr "Ferramentas de depuração"
 
 #: src/core/Debug.js:56
 msgid "Ctrl+Shift+Alt+D to exit"
@@ -2372,11 +2374,11 @@ msgstr "Cores do documento"
 
 #: src/docdispatcher.ts:356
 msgid "Are you sure you want to delete this slide?"
-msgstr "Tem a certeza que deseja apagar este diapositivo?"
+msgstr "Tem a certeza que deseja eliminar este diapositivo?"
 
 #: src/docdispatcher.ts:359
 msgid "Are you sure you want to delete this page?"
-msgstr "Tem a certeza de que deseja apagar esta página?"
+msgstr "Tem a certeza de que deseja eliminar esta página?"
 
 #: src/errormessages.js:22
 msgid "No disk space left on server."
@@ -2525,7 +2527,7 @@ msgid ""
 "Failed to establish socket connection or socket connection closed "
 "unexpectedly."
 msgstr ""
-"Falha ao estabelecer conexão de socket ou conexão foi fechada "
+"Falha ao estabelecer a conexão de socket ou a conexão foi fechada "
 "inesperadamente."
 
 #: src/errormessages.js:43
@@ -2535,8 +2537,8 @@ msgstr "Falha ao abrir o documento."
 #: src/errormessages.js:44
 msgid "Save failed due to no disk space left. Document will now be read-only."
 msgstr ""
-"Falhou a gravação devido à falta de espaço em disco. O documento será agora "
-"apenas de leitura."
+"Não foi possível guardar devido à falta de espaço em disco. O documento será "
+"agora apenas de leitura."
 
 #: src/errormessages.js:45
 msgid ""
@@ -2572,9 +2574,9 @@ msgid ""
 "Save failed due to no storage space left. Document will now be read-only. "
 "Please make sure enough disk space is available and try to save again."
 msgstr ""
-"A gravação falhou devido à falta de espaço de armazenamento. O documento "
-"passa a ser apenas de leitura. Certifique-se de que existe espaço suficiente "
-"no armazenamento e tente guardar novamente."
+"Não foi possível guardar devido à falta de espaço de armazenamento. O "
+"documento passa a ser apenas de leitura. Certifique-se de que existe espaço "
+"suficiente no disco e tente guardar novamente."
 
 #: src/errormessages.js:54
 msgid ""
@@ -2582,9 +2584,9 @@ msgid ""
 "storage space. The document will now be read-only but you may still "
 "download it now to preserve a copy locally."
 msgstr ""
-"A gravação falhou porque o documento é demasiado grande ou excede o espaço "
-"de armazenamento restante. O documento passa a ser apenas de leitura, mas "
-"pode descarregá-lo agora para preservar uma cópia localmente."
+"Não foi possível guardar porque o documento é demasiado grande ou excede o "
+"espaço de armazenamento restante. O documento passa a ser apenas de leitura, "
+"mas pode descarregá-lo agora para preservar uma cópia localmente."
 
 #: src/errormessages.js:56
 msgid "Document cannot be saved, please check your permissions."
@@ -2636,7 +2638,7 @@ msgstr "Sem comentários"
 
 #: src/layer/tile/CommentListSection.ts:139
 msgid "A comment is being edited"
-msgstr "Um comentário está sendo editado"
+msgstr "Está a ser editado um comentário"
 
 #: src/layer/tile/CommentListSection.ts:140
 msgid "Please save or discard the comment currently being edited."
@@ -2757,7 +2759,7 @@ msgid ""
 "press</b> <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to "
 "see more options</p><p>Close popup to ignore paste special</p>"
 msgstr ""
-"<p>Seu navegador tem acesso muito limitado à área de "
+"<p>O seu navegador tem um acesso muito limitado à área de "
 "transferência</p><p><b>Pressione</b> <kbd>Ctrl</kbd><span class=\"kbd--plus\""
 ">+</span><kbd>V</kbd> para ver mais opções</p><p>Feche o pop-up para ignorar "
 "a colagem especial</p>"
@@ -2824,9 +2826,9 @@ msgid ""
 "slide shows to be displayed in separated windows, allowing for easy screen "
 "sharing."
 msgstr ""
-"A apresentação foi bloqueada. Por favor, permita pop-ups no seu navegador "
-"para que os diapositivos sejam exibidos em janelas separadas e, para que a "
-"partilha de ecrã seja mais fácil."
+"A apresentação foi bloqueada. Permita pop-ups no seu navegador. Isto permite "
+"que as apresentações de diapositivos sejam apresentadas em janelas "
+"separadas, permitindo uma fácil partilha de ecrã."
 
 #: src/map/handler/Map.SlideShow.js:173
 msgid "Presenting in window"
@@ -2834,11 +2836,11 @@ msgstr "Apresentando na janela"
 
 #: src/map/handler/Map.SlideShow.js:174
 msgid "Close Presentation"
-msgstr "Fechar Apresentação"
+msgstr "Fechar apresentação"
 
 #: src/map/handler/Map.SlideShow.js:194
 msgid "Presenting in fullscreen"
-msgstr "Apresentando em tela cheia"
+msgstr "Apresentação em ecrã inteiro"
 
 #: src/map/handler/Map.SlideShow.js:195
 msgid "End Presentation"
@@ -2846,11 +2848,11 @@ msgstr "Terminar apresentação"
 
 #: src/map/handler/Map.SlideShow.js:293
 msgid "Already presenting"
-msgstr "Apresentação já em curso"
+msgstr "Já está a apresentar"
 
 #: src/map/handler/Map.SlideShow.js:294
 msgid "You are already presenting this document"
-msgstr "Já está apresentando este documento"
+msgstr "Já está a apresentar este documento"
 
 #: src/map/handler/Map.WOPI.js:150
 msgid "Creating new file from template..."

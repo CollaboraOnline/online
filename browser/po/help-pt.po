@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-04-12 19:29+0200\n"
-"PO-Revision-Date: 2024-04-16 14:06+0000\n"
-"Last-Translator: NamelessGO <66227691+NameLessGO@users.noreply.github.com>\n"
+"PO-Revision-Date: 2024-04-23 16:51+0000\n"
+"Last-Translator: SC <lalocas@protonmail.com>\n"
 "Language-Team: Portuguese <https://hosted.weblate.org/projects/"
 "collabora-online/help/pt/>\n"
 "Language: pt\n"
@@ -395,7 +395,9 @@ msgstr "Mover cursor para a esquerda com seleção"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:291-103
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:356-103
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Left</kbd>"
-msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>←</kbd>"
+msgstr ""
+"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Seta para a "
+"esquerda</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:135-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:292-38
@@ -407,7 +409,9 @@ msgstr "Ir para o início de uma palavra"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:292-90
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:357-90
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Left</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>←</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Seta para a "
+"esquerda</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:136-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:293-38
@@ -423,7 +427,7 @@ msgid ""
 "\"kbd--plus\">+</span><kbd>Arrow Left</kbd>"
 msgstr ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>←</kbd>"
+"\"kbd--plus\">+</span><kbd>Seta para a esquerda</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:137-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:294-38
@@ -448,7 +452,9 @@ msgstr "Mover cursor para a direita com seleção"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:360-104
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Right</kbd>"
-msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>→</kbd>"
+msgstr ""
+"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Seta para a "
+"direita</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:139-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:296-38
@@ -460,7 +466,9 @@ msgstr "Ir para o início da palavra seguinte"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:296-93
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:361-93
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Right</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>→</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Seta para a "
+"direita</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:140-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:297-38
@@ -476,7 +484,7 @@ msgid ""
 "\"kbd--plus\">+</span><kbd>Arrow Right</kbd>"
 msgstr ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>→</kbd>"
+"\"kbd--plus\">+</span><kbd>Seta para a direita</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:141-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:298-38
@@ -500,7 +508,8 @@ msgstr "Selecionar linhas de baixo para cima"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:299-98
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:364-98
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Up</kbd>"
-msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>↑</kbd>"
+msgstr ""
+"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Seta para cima</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:143-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:300-38
@@ -512,7 +521,8 @@ msgstr "Mover o cursor para o início do parágrafo anterior"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:300-115
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:365-115
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Up</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>↑</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Seta para cima</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:144-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:301-38
@@ -528,7 +538,7 @@ msgid ""
 "\"kbd--plus\">+</span><kbd>Arrow Up</kbd>"
 msgstr ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>↑</kbd>"
+"\"kbd--plus\">+</span><kbd>Seta para cima</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:145-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:302-38
@@ -552,7 +562,8 @@ msgstr "Selecionar linhas de cima para baixo"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:303-100
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:368-100
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Down</kbd>"
-msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>↓</kbd>"
+msgstr ""
+"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Seta para baixo</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:147-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:304-38
@@ -564,7 +575,8 @@ msgstr "Mover cursor para o início do parágrafo seguinte"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:304-111
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:369-111
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Down</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>↓</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Seta para baixo</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:148-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:305-38
@@ -580,7 +592,7 @@ msgid ""
 "\"kbd--plus\">+</span><kbd>Arrow Down</kbd>"
 msgstr ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>↓</kbd>"
+"\"kbd--plus\">+</span><kbd>Seta para baixo</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:149-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:306-38
@@ -593,7 +605,7 @@ msgstr "Ir para o início da linha"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:306-88
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:371-88
 msgid "Home"
-msgstr "Início"
+msgstr "Home"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:150-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:307-38
@@ -606,7 +618,7 @@ msgstr "Ir e selecionar até o início de uma linha"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:307-105
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:372-105
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Home</kbd>"
-msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Início</kbd>"
+msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Home</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:151-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:308-38
@@ -620,7 +632,7 @@ msgstr "Ir para o início do documento"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:308-88
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:373-88
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Home</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Início</kbd>"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Home</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:152-38
 msgid "Go and select text to start of document"
@@ -634,7 +646,7 @@ msgid ""
 "\"kbd--plus\">+</span><kbd>Home</kbd>"
 msgstr ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Início</kbd>"
+"\"kbd--plus\">+</span><kbd>Home</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:153-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:310-38
@@ -828,7 +840,8 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:176-38
 msgid "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Keys</kbd>"
-msgstr "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>↑, ↓, ← ou →</kbd>"
+msgstr ""
+"<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Teclas de setas</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:176-133
 msgid ""
@@ -843,7 +856,7 @@ msgid ""
 "\"kbd--plus\">+</span><kbd>Arrow Keys</kbd>"
 msgstr ""
 "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>↑, ↓, ← ou →</kbd>"
+"\"kbd--plus\">+</span><kbd>Teclas de setas</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:177-181
 msgid "Increase/decrease the size of the column/row on the left/top cell edge"
@@ -857,7 +870,7 @@ msgid ""
 "\"kbd--plus\">+</span><kbd>Arrow Keys</kbd>"
 msgstr ""
 "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
-"\"kbd--plus\">+</span><kbd>↑, ↓, ← ou →</kbd>"
+"\"kbd--plus\">+</span><kbd>Teclas de setas</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:178-180
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:179-228
@@ -871,8 +884,8 @@ msgid ""
 "span><kbd>Arrow Keys</kbd>"
 msgstr ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd--plus\""
-">+</span><kbd>↑, ↓, ← ou →</kbd>"
+"\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd--plus\">+</"
+"span><kbd>Teclas de setas</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:180-38
 msgid "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Insert</kbd>"
@@ -897,9 +910,9 @@ msgid ""
 "class=\"kbd--plus\">+</span><kbd>Arrow key</kbd> merges cell with "
 "neighboring cell"
 msgstr ""
-"3 segundos no modo de inserção, as teclas de seta apagam as linhas/colunas, "
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>tecla de seta</kbd> "
-"une as células adjacentes"
+"3 segundos no modo de inserção, as teclas de seta eliminam as linhas/"
+"colunas, <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>tecla de "
+"seta</kbd> une as células adjacentes"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:182-38
 msgid ""
@@ -1012,7 +1025,7 @@ msgid ""
 "\"kbd--plus\">+</span><kbd>Space</kbd>"
 msgstr ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Space</kbd>"
+"\"kbd--plus\">+</span><kbd>Espaço</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:199-38
 msgid "Insert line break"
@@ -1129,7 +1142,9 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:219-265
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Left Arrow</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>←</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Seta para a "
+"esquerda</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:220-38
 msgid ""
@@ -1143,7 +1158,9 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:220-269
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Right Arrow</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>→</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Seta para a "
+"direita</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:221-38
 msgid ""
@@ -1157,7 +1174,8 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:221-241
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Up Arrow</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>↑</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Seta para cima</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:222-38
 msgid ""
@@ -1171,7 +1189,8 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:222-246
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Down Arrow</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>↓</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Seta para baixo</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:223-38
 msgid "Go to next sheet."
@@ -1302,7 +1321,7 @@ msgstr "Insere células (como no menu Inserir - Células)"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:232-105
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Plus key</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>+</kbd>"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Tecla mais</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:233-38
 msgid "Delete cells (as in menu Edit - Delete Cells)"
@@ -1310,7 +1329,7 @@ msgstr "Elimina células (como no menu Editar - Eliminar células)"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:233-110
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Minus key</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>-</kbd>"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Tecla menos</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:237-9
 msgid "Cell formatting"
@@ -1633,8 +1652,8 @@ msgid ""
 "You can jump to the cursor of a user by clicking on the name (or avatar) of "
 "the user. It is possible to follow the editor."
 msgstr ""
-"Você pode saltar para o cursor de um utilizador se clicar no seu nome, ou no "
-"seu avatar. É possível assim seguir o editor."
+"Pode saltar para o cursor de um utilizador se clicar no seu nome (ou avatar)"
+". É possível assim seguir o editor."
 
 #: html/cool-help.html%2Bdiv.div.div.ul.li.p:436-11
 msgid ""
@@ -1674,20 +1693,20 @@ msgid ""
 "icon on the far right. Click on the <span style=\"height:0.6cm;width:0.6cm; "
 "margin: 0px;\" class=\"w2ui-icon unfold\"></span> icon to show the menu."
 msgstr ""
-"<span class=\"def\">A barra de menu:</span> O menu principal é colocado na "
+"<span class=\"def\">A barra de menu:</span> o menu principal é colocado na "
 "parte superior e inclui muitas opções, comandos para impressão, edição, "
-"visualização e outros comandos avançados. Você pode ocultar a barra de menu "
-"clicando em <span style=\"height:0.6cm;width:0.6cm; margin: 0px;\" class"
-"=\"w2ui-icon fold\"></span> ícone na extrema-direita. Clique em <span style="
-"\"height:0.6cm;width:0.6cm; margin: 0px;\" class=\"w2ui-icon unfold\"></"
-"span> ícone para mostrar o menu."
+"visualização e outros comandos avançados. Pode ocultar a barra de menus "
+"clicando no ícone <span style=\"height:0.6cm;width:0.6cm; margin: 0px;\" "
+"class=\"w2ui-icon fold\"></span> na extrema-direita. Clique no ícone <span "
+"style=\"height:0.6cm;width:0.6cm; margin: 0px;\" class=\"w2ui-icon unfold\""
+"></span> para mostrar o menu."
 
 #: html/cool-help.html%2Bdiv.div.div.p:451-5
 msgid ""
 "<span class=\"def\">Context menus:</span> On clicking with the right mouse "
 "button, a menu appears with commands associated with the underlying object."
 msgstr ""
-"<span class=\"def\">Menus de contexto:</span> Ao clicar com o botão direito "
+"<span class=\"def\">Menus de contexto:</span> ao clicar com o botão direito "
 "do rato, aparece um menu com comandos associados ao objeto subjacente."
 
 #: html/cool-help.html%2Bdiv.div.div.p:454-5
@@ -1696,18 +1715,18 @@ msgid ""
 "options for daily editing. Toolbar buttons are dynamic, meaning that their "
 "state (on or off) depends on different factors."
 msgstr ""
-"<span class=\"def\">A barra de ferramentas:</span> A barra de ferramentas "
-"contém as opções mais utilizadas para a edição diária. Os botões da barra de "
-"ferramentas são dinâmicos, o que significa que o seu estado (ligado ou "
-"desligado) depende de diferentes factores."
+"<span class=\"def\">A barra de ferramentas:</span> contém as opções mais "
+"utilizadas para a edição diária. Os botões da barra de ferramentas são "
+"dinâmicos, o que significa que o seu estado (ativado ou desativado) depende "
+"de diferentes fatores."
 
 #: html/cool-help.html%2Bdiv.div.div.p:457-5
 msgid ""
 "<span class=\"def\">The status bar:</span> The status bar is shown in the "
 "bottom, and contains several useful options and features."
 msgstr ""
-"<span class=\"def\">Barra de estado:</span> a barra de estado é mostrada em "
-"baixo e contém diversas opções e funcionalidades."
+"<span class=\"def\">Barra de estado:</span> é mostrada em baixo e contém "
+"diversas opções e funcionalidades."
 
 #: html/cool-help.html%2Bdiv.div.div.p:461-5
 msgid ""
@@ -1716,11 +1735,11 @@ msgid ""
 "automatically moves to the first occurrence found. Searching is not case-"
 "sensitive. There are three buttons right next to the search box:"
 msgstr ""
-"<span class=\"def\">A barra de pesquisa:</span> A pesquisa começa "
-"automaticamente quando o conteúdo é inserido na caixa de pesquisa, e a "
-"janela do documento move-se automaticamente para a primeira ocorrência "
-"encontrada. A pesquisa não é sensível a maiúsculas e minúsculas. Há três "
-"botões mesmo ao lado da caixa de pesquisa:"
+"<span class=\"def\">A barra de pesquisa:</span> a pesquisa começa "
+"automaticamente quando o conteúdo é inserido na caixa de pesquisa e a janela "
+"do documento move-se automaticamente para a primeira ocorrência encontrada. "
+"A pesquisa não é sensível a maiúsculas e minúsculas. Há três botões mesmo ao "
+"lado da caixa de pesquisa:"
 
 #: html/cool-help.html%2Bdiv.div.div.ul.li.p:463-11
 msgid "Search backwards"
@@ -1741,11 +1760,11 @@ msgid ""
 "in. The zoom applies to the document area, the user interface is not "
 "affected. The current level of zoom is shown in this area."
 msgstr ""
-"<span class=\"def\">A barra de ampliação:</span> À direita da barra de "
-"estado, existe um conjunto de botões que lhe permite ampliar até 100%, "
-"diminuir e aumentar a ampliação. A ampliação aplica-se à área do documento, "
-"a interface do utilizador não é afetada. O nível atual de ampliação é "
-"mostrado nesta área."
+"<span class=\"def\">A barra de ampliação:</span> à direita da barra de "
+"estado, existe um conjunto de botões que permitem ampliar até 100%, diminuir "
+"e aumentar a ampliação. A ampliação aplica-se à área do documento, a "
+"interface do utilizador não é afetada. O nível atual de ampliação é mostrado "
+"nesta área."
 
 #: html/cool-help.html%2Bdiv.div.div.p:470-5
 msgid ""
@@ -1768,9 +1787,9 @@ msgid ""
 "bar, a set of information on the document is displayed. The actual "
 "information depends on the nature of the document."
 msgstr ""
-"<span class=\"def\">A barra de informação:</span> À direita da barra de "
-"pesquisa, é exibido um conjunto de informações sobre o documento. A "
-"informação propriamente dita depende da natureza do documento."
+"<span class=\"def\">A barra de informação:</span> à direita da barra de "
+"pesquisa, é apresentado um conjunto de informações sobre o documento. As "
+"informações efetivas dependem da natureza do documento."
 
 #: html/cool-help.html%2Bdiv.div.p:481-5
 msgid ""
@@ -1787,7 +1806,7 @@ msgid ""
 "download formats available depends on the application. All applications "
 "exports documents in PDF format."
 msgstr ""
-"Para descarregar um documento, descarregue-o do menu de <span class=\"ui\""
+"Para descarregar um documento, descarregue-o do menu <span class=\"ui\""
 ">Ficheiros</span> da aplicação <span class=\"productname\">%productName</"
 "span>. Os formatos de descarregamento disponíveis dependem da aplicação. "
 "Todas as aplicações exportam documentos em formato PDF."
@@ -1810,7 +1829,7 @@ msgstr ""
 "Os documentos em <span class=\"productname\">%productName</span> guardam "
 "automaticamente, mas se estiver preocupado de que um documento seja "
 "sincronizado o mais rapidamente possível, pode também forçar a gravação "
-"usando a função <span class=\"ui\">Gravar</span> do menu <span class=\"ui\""
+"usando a função <span class=\"ui\">Guardar</span> do menu <span class=\"ui\""
 ">Ficheiro</span>."
 
 #: html/cool-help.html%2Bdiv.div.div.p:485-30
@@ -2135,7 +2154,7 @@ msgid ""
 msgstr ""
 "Inserir comentários em <span class=\"productname\">%productName</span> em "
 "locais que necessitem de atenção especial do leitor. Os comentários são "
-"exibidos à direita e contêm o nome e a data do emissor."
+"mostrados à direita e contêm a data e o nome que fez o comentário."
 
 #: html/cool-help.html%2Bdiv.div.div.div.img[alt]:548-29
 msgid "comment"
@@ -2147,7 +2166,7 @@ msgid ""
 "6cm;width:0.6cm;\"></span>) icon to reply, move and delete comments."
 msgstr ""
 "Clique no ícone do submenu (<span class=\"cool-annotation-menu\" style="
-"\"height:0.6cm;width:0.6cm;\"></span>) para responder, mover e excluir "
+"\"height:0.6cm;width:0.6cm;\"></span>) para responder, mover e eliminar "
 "comentários."
 
 #: html/cool-help.html%2Bdiv.div.div.h4:552-5
@@ -2674,10 +2693,10 @@ msgid ""
 "slide in the slide show. Slide transitions are property of the slide, use "
 "the side bar to set the slide transition when in edit mode."
 msgstr ""
-"<span class=\"def\">Transições de slides:</span> O <span class=\"productname"
-"\">%productName</span> Impress fornece efeitos visuais ao exibir um novo "
+"<span class=\"def\">Transições de slides:</span> <span class=\"productname\""
+">%productName</span> Impress fornece efeitos visuais ao mostrar um novo "
 "slide na apresentação de slides. As transições de slide são propriedades de "
-"cada slide utilize a barra lateral para definir a transição do slide quando "
+"cada slide. Utilize a barra lateral para definir a transição do slide quando "
 "estiver no modo de edição."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:714-30
@@ -2732,7 +2751,7 @@ msgstr "Apresentações: formatos Microsoft PPT, PPTX, OpenDocument Format ODP"
 
 #: html/cool-help.html%2Bdiv.div.div.h4:731-5
 msgid "How do I save a document with another name?"
-msgstr "Como gravar um documento com outro nome?"
+msgstr "Como guardar um documento com outro nome?"
 
 #: html/cool-help.html%2Bdiv.div.div.ol.li.p:733-11
 msgid "Hover the mouse on the document name in the menu bar."
@@ -2746,7 +2765,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.p:736-5
 msgid "A copy of the document is saved with the new name in the same folder."
-msgstr "Uma cópia do documento é salva com o novo nome na mesma pasta."
+msgstr "É guardada uma cópia do documento com o novo nome na mesma pasta."
 
 #: html/cool-help.html%2Bdiv.div.div.h4:739-5
 msgid ""
@@ -2763,10 +2782,11 @@ msgid ""
 "your changes, you must either undo them, or use the <span class=\"ui\""
 ">Revision History </span> in the <span class=\"ui\">File</span> menu."
 msgstr ""
-"O <span class=\"productname\">%productName</span> salva o documento na "
-"retaguarda regularmente e não se pode fechar sem gravar. Para abandonar as "
-"suas modificações pode desfazê-las ou utilizar o <span class=\"ui\""
-">Histórico de revisões</span> no menu <span class=\"ui\">Ficheiro</span>."
+"O <span class=\"productname\">%productName</span> guarda regularmente o "
+"documento em segundo plano, não é possível fechar sem o guardar. Para "
+"abandonar as suas alterações, tem de as desfazer ou utilizar a opção <span "
+"class=\"ui\">Histórico de revisões</span> no menu <span class=\"ui\""
+">Ficheiro</span>."
 
 #: html/cool-help.html%2Bdiv.div.div.h4:743-5
 msgid ""
@@ -2860,8 +2880,8 @@ msgid ""
 msgstr ""
 "O símbolo <span class=\"blue\">¶</span> é uma marca de formatação. É usado "
 "para ajudar o a edição e o alinhamento do texto e não é impresso. Para "
-"ativar e desativar na exibição do documento, escolha o menu <span class=\"ui"
-"\">Exibir</span> → <span class=\"ui\">Marcas de formatação</span>."
+"ativar e desativar na visualização do documento, escolha o menu <span class="
+"\"ui\">Ver</span> → <span class=\"ui\">Marcas de formatação</span>."
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:773-5
 msgid "How do I get a word count of my document?"
@@ -2970,7 +2990,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.ul.li.p:796-11
 msgid "Deletions are marked with colored strike-through characters."
-msgstr "Texto excluído é marcado com caracteres tachados coloridos."
+msgstr "O texto eliminado é marcado com caracteres riscados a cores."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ul.li.p:797-11
 msgid "Additions are marked with colored underlined characters."
@@ -3001,11 +3021,11 @@ msgid ""
 "Beware that if track changes are enabled but hidden, you still record "
 "changes and may inadvertently leave unwanted text available in the document."
 msgstr ""
-"Para exibir ou ocultar alterações de controle, escolha <span class=\"ui\""
-">Editar</span> → <span class=\"ui\">Controlar alterações </span> → <span "
-"class=\"ui\">Mostrar</span> . Esteja ciente de que se o controle de "
-"alterações estiver ativado, mas oculto, você ainda registrará as alterações "
-"e poderá inadvertidamente deixar texto indesejado disponível no documento."
+"Para mostrar ou ocultar alterações de controlo, escolha <span class=\"ui\""
+">Editar</span> → <span class=\"ui\">Controlar alterações</span> → <span "
+"class=\"ui\">Mostrar</span> . Tenha em atenção que se o controlo de "
+"alterações estiver ativado mas oculto, continua a registar as alterações e "
+"pode inadvertidamente deixar texto indesejado disponível no documento."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:804-5
 msgid ""
@@ -3293,7 +3313,7 @@ msgid ""
 "the slide panel:"
 msgstr ""
 "Escolha <span class=\"ui\">Apresentação de slides</span> → <span class=\"ui\""
-">Apresentação em tela cheia</span> ou clique no ícone mais à esquerda na "
+">Apresentação em ecrã inteiro</span> ou clique no ícone mais à esquerda na "
 "parte inferior do painel de slides:"
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:902-5
