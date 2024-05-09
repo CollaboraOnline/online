@@ -1007,6 +1007,20 @@ L.CanvasTileLayer = L.Layer.extend({
 	_moveEnd: function () {
 		this._move();
 		this._moveInProgress = false;
+
+		if (app.calc.cellCursorVisible) {
+			var cursorPos = this._map._docLayer._twipsToLatLng({ x: app.calc.cellCursorRectangle.x2, y: app.calc.cellCursorRectangle.y2 });
+			var centerOffset = this._map._getCenterOffset(cursorPos);
+			var viewHalf = this._map.getSize()._divideBy(2);
+			var cursorPositionInView =
+				centerOffset.x > -viewHalf.x && centerOffset.x < viewHalf.x &&
+				centerOffset.y > -viewHalf.y && centerOffset.y < viewHalf.y;
+			if (parseInt(app.getFollowedViewId()) === parseInt(this._viewId) && !cursorPositionInView) {
+				app.setFollowingOff();
+			} else if (parseInt(app.getFollowedViewId()) === -1 && cursorPositionInView) {
+				app.setFollowingUser(parseInt(this._viewId));
+			}
+		}
 	},
 
 	_requestNewTiles: function () {
@@ -2257,9 +2271,11 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		var sameAddress = oldCursorAddress.equals(app.calc.cellAddress.toArray());
 
-		var scrollToCursor = this._sheetSwitch.tryRestore(sameAddress, this._selectedPart);
+		var isFollowingOwnCursor = parseInt(app.getFollowedViewId()) === parseInt(this._viewId);
+		var notJump = sameAddress || !isFollowingOwnCursor;
+		var scrollToCursor = this._sheetSwitch.tryRestore(notJump, this._selectedPart);
 
-		this._onUpdateCellCursor(scrollToCursor, sameAddress);
+		this._onUpdateCellCursor(scrollToCursor, notJump);
 
 		// Remove input help if there is any:
 		this._removeInputHelpMarker();
