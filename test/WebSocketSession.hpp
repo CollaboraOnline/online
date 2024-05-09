@@ -256,7 +256,7 @@ public:
     {
         {
             std::unique_lock<std::mutex> lock(_outMutex);
-            _outQueue.emplace_back(std::vector<char>(msg.data(), msg.data() + msg.size()));
+            _outQueue.emplace_back(msg.data(), msg.data() + msg.size());
         }
 
         const auto pollPtr = _socketPoll.lock();
