@@ -1545,9 +1545,8 @@ app.definitions.Socket = L.Class.extend({
 		if (this._map._docLayer) {
 			this._map._docLayer.removeAllViews();
 			this._map._docLayer._resetClientVisArea();
-			var graphicSelection = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(0, 0));
-			if (!this._map._docLayer._graphicSelection.equals(graphicSelection)) {
-				this._map._docLayer._graphicSelection = graphicSelection;
+			if (this._map._docLayer._graphicSelection) {
+				this._map._docLayer._graphicSelection = null;
 				this._map._docLayer._onUpdateGraphicSelection();
 			}
 			if (this._map._docLayer._docType === 'presentation')

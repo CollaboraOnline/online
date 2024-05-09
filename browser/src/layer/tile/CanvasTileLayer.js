@@ -907,10 +907,8 @@ L.CanvasTileLayer = L.Layer.extend({
 		this.lastCursorPos = null;
 		// Are we zooming currently ? - if so, no cursor.
 		this._isZooming = false;
-		// Original rectangle graphic selection in twips
-		this._graphicSelectionTwips = new L.Bounds(new L.Point(0, 0), new L.Point(0, 0));
 		// Rectangle graphic selection
-		this._graphicSelection = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(0, 0));
+		this._graphicSelection = null;
 		// Rotation angle of selected graphic object
 		this._graphicSelectionAngle = 0;
 		app.calc.cellCursorVisible = false;
@@ -918,7 +916,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._prevCellCursorAddress = null;
 		this._cellCursorOnPgUp = null;
 		this._cellCursorOnPgDn = null;
-		this._shapeGridOffset = new L.Point(0, 0);
+		this._shapeGridOffset = new app.definitions.simplePoint(0, 0);
 
 		// Tile garbage collection counter
 		this._gcCounter = 0;
@@ -2223,14 +2221,9 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		var videoDesc = JSON.parse(textMsg);
 
-		if (this._graphicSelectionTwips) {
-			var topLeftPoint = this._twipsToCssPixels(
-				this._graphicSelectionTwips.getTopLeft(), this._map.getZoom());
-			var bottomRightPoint = this._twipsToCssPixels(
-				this._graphicSelectionTwips.getBottomRight(), this._map.getZoom());
-
-			videoDesc.width = bottomRightPoint.x - topLeftPoint.x;
-			videoDesc.height = bottomRightPoint.y - topLeftPoint.y;
+		if (this._graphicSelection) {
+			videoDesc.width = this._graphicSelection.cWidth;
+			videoDesc.height = this._graphicSelection.cHeight;
 		}
 		// proxy cannot identify RouteToken if it is encoded
 		var routeTokenIndex = videoDesc.url.indexOf('%26RouteToken=');
@@ -2253,8 +2246,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_resetSelectionRanges: function() {
-		this._graphicSelectionTwips = new L.Bounds(new L.Point(0, 0), new L.Point(0, 0));
-		this._graphicSelection = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(0, 0));
+		this._graphicSelection = null;
 		this._hasActiveSelection = false;
 	},
 
@@ -2267,53 +2259,41 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_extractAndSetGraphicSelection: function(messageJSON) {
-		var calcRTL = this.isCalcRTL();
-		var signX =  calcRTL ? -1 : 1;
+		var signX =  this.isCalcRTL() ? -1 : 1;
 		var hasExtraInfo = messageJSON.length > 5;
 		var hasGridOffset = false;
 		var extraInfo = null;
 		if (hasExtraInfo) {
 			extraInfo = messageJSON[5];
 			if (extraInfo.gridOffsetX || extraInfo.gridOffsetY) {
-				this._shapeGridOffset = new L.Point(signX * parseInt(extraInfo.gridOffsetX), parseInt(extraInfo.gridOffsetY));
+				this._shapeGridOffset = new app.definitions.simplePoint(signX * extraInfo.gridOffsetX, extraInfo.gridOffsetY);
 				hasGridOffset = true;
 			}
 		}
 
 		// Calc RTL: Negate positive X coordinates from core if grid offset is available.
-		signX = hasGridOffset && calcRTL ? -1 : 1;
-		var topLeftTwips = new L.Point(signX * messageJSON[0], messageJSON[1]);
-		var offset = new L.Point(signX * messageJSON[2], messageJSON[3]);
-		var bottomRightTwips = topLeftTwips.add(offset);
+		signX = hasGridOffset && this.isCalcRTL() ? -1 : 1;
+		this._graphicSelection = new app.definitions.simpleRectangle(signX * messageJSON[0], messageJSON[1], signX * messageJSON[2], messageJSON[3]);
 
-		if (hasGridOffset) {
-			this._graphicSelectionTwips = new L.Bounds(topLeftTwips.add(this._shapeGridOffset), bottomRightTwips.add(this._shapeGridOffset));
-		} else {
-			this._graphicSelectionTwips = this._getGraphicSelectionRectangle(
-				new L.Bounds(topLeftTwips, bottomRightTwips));
-		}
-		this._graphicSelection = new L.LatLngBounds(
-			this._twipsToLatLng(this._graphicSelectionTwips.getTopLeft(), this._map.getZoom()),
-			this._twipsToLatLng(this._graphicSelectionTwips.getBottomRight(), this._map.getZoom()));
+		if (hasGridOffset)
+			this._graphicSelection.moveBy([this._shapeGridOffset.x, this._shapeGridOffset.y]);
 
 		this._graphicSelection.extraInfo = extraInfo;
 	},
 
 	renderDarkOverlay: function () {
-		var zoom = this._map.getZoom();
-
-		var northEastPoint = this._latLngToCorePixels(this._graphicSelection.getNorthEast(), zoom);
-		var southWestPoint = this._latLngToCorePixels(this._graphicSelection.getSouthWest(), zoom);
+		var topLeft = new L.Point(this._graphicSelection.pX1, this._graphicSelection.pY1);
+		var bottomRight = new L.Point(this._graphicSelection.pX2, this._graphicSelection.pY2);
 
 		if (this.isCalcRTL()) {
 			// Dark overlays (like any other overlay) need regular document coordinates.
 			// But in calc-rtl mode, charts (like shapes) have negative x document coordinate
 			// internal representation.
-			northEastPoint.x = Math.abs(northEastPoint.x);
-			southWestPoint.x = Math.abs(southWestPoint.x);
+			topLeft.x = Math.abs(topLeft.x);
+			bottomRight.x = Math.abs(bottomRight.x);
 		}
 
-		var bounds = new L.Bounds(northEastPoint, southWestPoint);
+		var bounds = new L.Bounds(topLeft, bottomRight);
 
 		this._oleCSelections.setPointSet(CPointSet.fromBounds(bounds));
 	},
@@ -2346,7 +2326,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				}
 				this.renderDarkOverlay();
 
-				this._graphicSelection = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(0, 0));
+				this._graphicSelection = null;
 				this._onUpdateGraphicSelection();
 			}
 		}
@@ -2400,16 +2380,20 @@ L.CanvasTileLayer = L.Layer.extend({
 			}
 
 			// scroll to selected graphics, if it has no cursor
-			if (!this.isWriter() && !this._isEmptyRectangle(this._graphicSelection)
+			if (!this.isWriter() && this._graphicSelection
 				&& this._allowViewJump()) {
 
 				var docLayer = this._map._docLayer;
-				var paneRectsInLatLng = this.getPaneLatLngRectangles();
-				if (!this._graphicSelection.isInAny(paneRectsInLatLng) &&
+				if (
+					(
+						!app.isPointVisibleInTheDisplayedArea([this._graphicSelection.x1, this._graphicSelection.y1]) ||
+						!app.isPointVisibleInTheDisplayedArea([this._graphicSelection.x2, this._graphicSelection.y2])
+					)
+					&&
 					!this._selectionHandles.active &&
 					!(docLayer._followEditor || docLayer._followUser) &&
 					!this._map.calcInputBarHasFocus()) {
-					this.scrollToPos(this._graphicSelection.getNorthWest());
+					this.scrollToPos(new app.definitions.simplePoint(this._graphicSelection.x1, this._graphicSelection.y1));
 				}
 			}
 
@@ -3656,7 +3640,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		// hide the selection handles
 		this._onUpdateTextSelection();
 		// hide the graphic selection
-		this._graphicSelection = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(0, 0));
+		this._graphicSelection = null;
 		this._onUpdateGraphicSelection();
 		app.calc.cellCursorVisible = false;
 		this._prevCellCursor = null;
@@ -3860,7 +3844,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	// Scrolls the view to selected position
 	scrollToPos: function(pos) {
-		if (pos.pX) // Turn into lat/lng if required (pos may also be a simplePoint.).
+		if (pos instanceof app.definitions.simplePoint) // Turn into lat/lng if required (pos may also be a simplePoint.).
 			pos = this._twipsToLatLng({ x: pos.x, y: pos.y });
 
 		var center = this._map.project(pos);
@@ -3884,8 +3868,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		if (!zoom
 		&& scroll !== false
-		&& (app.file.textCursor.visible
-		  || (this._graphicSelection && !this._isEmptyRectangle(this._graphicSelection)))
+		&& (app.file.textCursor.visible || this._graphicSelection)
 		// Do not center view in Calc if no new cursor coordinates have arrived yet.
 		// ie, 'invalidatecursor' has not arrived after 'cursorvisible' yet.
 		&& (!this.isCalc() || (this._lastVisibleCursorRef && !this._lastVisibleCursorRef.equals(app.file.textCursor.rectangle.toArray())))
@@ -4206,12 +4189,9 @@ L.CanvasTileLayer = L.Layer.extend({
 				}
 			}
 			else {
-				var newPos = new L.Point(
-					// Choose the logical left of the shape.
-					this._graphicSelectionTwips.min.x + deltaPos.x,
-					this._graphicSelectionTwips.min.y + deltaPos.y);
-
-				var size = this._graphicSelectionTwips.getSize();
+				// Choose the logical left of the shape.
+				var newPos = new L.Point(this._graphicSelection.x1 + deltaPos.x, this._graphicSelection.y1 + deltaPos.y);
+				var size = { x: this._graphicSelection.width, y: this._graphicSelection.height };
 
 				if (calcRTL) {
 					// make x coordinate of newPos +ve
@@ -4262,8 +4242,8 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		var calcRTL = this.isCalcRTL();
 		var aPos = this._latLngToTwips(e.pos);
-		var selMin = this._graphicSelectionTwips.min;
-		var selMax = this._graphicSelectionTwips.max;
+		var selMin = { x: this._graphicSelection.x1, y: this._graphicSelection.y1 };
+		var selMax = { x: this._graphicSelection.x2, y: this._graphicSelection.y2 };
 
 		var handleId = e.handleId;
 
@@ -4325,7 +4305,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._graphicMarker.setVisible(true);
 		}
 		else if (e.type === 'rotateend') {
-			var center = this._graphicSelectionTwips.getCenter();
+			var center = { x: this._graphicSelection.center[0], y: this._graphicSelection.center[1] };
 			if (this.isCalc() && this.options.printTwipsMsgsEnabled) {
 				center = this.sheetGeometry.getPrintTwipsPointFromTile(center);
 			}
@@ -4415,7 +4395,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	// Update group layer selection handler.
 	_onUpdateGraphicSelection: function () {
-		if (this._graphicSelection && !this._isEmptyRectangle(this._graphicSelection)) {
+		if (this._graphicSelection) {
 			// Hide the keyboard on graphic selection, unless cursor is visible.
 			// Don't interrupt editing in dialogs
 			if (!this._isAnyInputFocused())
@@ -4716,8 +4696,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	hasGraphicSelection: function() {
-		return (this._graphicSelection !== null &&
-			!this._isEmptyRectangle(this._graphicSelection));
+		return !!this._graphicSelection;
 	},
 
 	_onDragOver: function (e) {
@@ -4942,7 +4921,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (!this.options.printTwipsMsgsEnabled || !this.sheetGeometry)
 			return point;
 		var newPoint = new L.Point(parseInt(point.x), parseInt(point.y));
-		var _offset = offset ? new L.Point(parseInt(offset.x), parseInt(offset.y)) : this._shapeGridOffset;
+		var _offset = offset ? new L.Point(parseInt(offset.x), parseInt(offset.y)) : new L.Point(this._shapeGridOffset.x, this._shapeGridOffset.y);
 		return newPoint.add(_offset);
 	},
 

@@ -3,7 +3,7 @@
  * L.SVGGroup
  */
 
-/* global _ */
+/* global _ app */
 
 L.SVGGroup = L.Layer.extend({
 
@@ -21,6 +21,9 @@ L.SVGGroup = L.Layer.extend({
 	}),
 
 	initialize: function (bounds, options) {
+		if (bounds.clone) // If this is a simpleRectangle.
+			bounds = app.map._docLayer._simpleRectangleToLatLngBounds(bounds.clone());
+
 		L.setOptions(this, options);
 		this._pathNodeCollection = new L.Path.PathNodeCollection();
 		this._bounds = bounds;
