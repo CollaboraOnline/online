@@ -2564,7 +2564,9 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._prevCellCursor = new L.LatLngBounds(this._cellCursor.getSouthWest(), this._cellCursor.getNorthEast());
 		}
 
-		var scrollToCursor = this._sheetSwitch.tryRestore(oldCursorXY.equals(this._cellCursorXY), this._selectedPart);
+		var isFollowingOwnCursor = true; // HERE USE REAL VALUE AND MAKE IT ASSIGNED SOMEWHERE
+		var notJump = oldCursorXY.equals(this._cellCursorXY) || !isFollowingOwnCursor;
+		var scrollToCursor = this._sheetSwitch.tryRestore(notJump, this._selectedPart);
 
 		this._onUpdateCellCursor(horizontalDirection, verticalDirection, onPgUpDn, scrollToCursor);
 
