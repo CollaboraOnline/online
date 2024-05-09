@@ -1703,13 +1703,20 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_onCalcFunctionUsageMsg: function (textMsg) {
-		var pos = this._map._docLayer._twipsToLatLng({ x: this._lastVisibleCursorRef.x2, y: this._lastVisibleCursorRef.y1 });
-		this._map.uiManager.showFormulaTooltip(textMsg, pos);
+		var formulaAutocompletePopup = L.DomUtil.get('formulaautocompletePopup');
+		if (formulaAutocompletePopup)
+			this._map.fire('closeformulapopup');
+		this._map.fire('sendformulausagetext', {data: textMsg});
 	},
 
 	_onCalcFunctionListMsg: function (textMsg) {
 		if (textMsg.startsWith('hidetip')) {
-			this._map.uiManager.hideFormulaTooltip();
+			var formulaAutocompletePopup = L.DomUtil.get('formulaautocompletePopup');
+            if (formulaAutocompletePopup)
+                this._map.fire('closeformulapopup');
+            var formulaUsagePopup = L.DomUtil.get('formulausagePopup');
+            if (formulaUsagePopup)
+                this._map.fire('closeformulausagepopup');
 		}
 		else {
 			var funcData = JSON.parse(textMsg);
@@ -1736,9 +1743,8 @@ L.CanvasTileLayer = L.Layer.extend({
 				this._openMobileWizard(data);
 			}
 			else {
-				var pos = this._map._docLayer._twipsToLatLng({ x: this._lastVisibleCursorRef.x2, y: this._lastVisibleCursorRef.y1 });
-				var tooltipinfo = this._getFunctionList(textMsg);
-				this._map.uiManager.showFormulaTooltip(tooltipinfo, pos);
+				var functionList = this._getFunctionList(textMsg);
+				this._map.fire('sendformulatext', {data: functionList});
 			}
 		}
 	},
@@ -2237,36 +2243,15 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_getFunctionList: function(textMsg) {
-		var maxSuggestion = 3;
-		var functionNameList = [];
-		var resultText = '';
-		var currentFuncDescription = '';
-
+		var resultList = [];
 		var suggestionArray = JSON.parse(textMsg);
-		if (suggestionArray.length < maxSuggestion) { maxSuggestion = suggestionArray.length; }
-
-		for (var i = 0; i < maxSuggestion; i++) {
-			if (i == 0)
-				currentFuncDescription = suggestionArray[i].description;
-
+		for (var i = 0; i < suggestionArray.length; i++) {
 			var signature = suggestionArray[i].signature;
-			functionNameList.push(signature.substring(0,signature.indexOf('(')));
+			var name = signature.substring(0,signature.indexOf('('));
+			var description = suggestionArray[i].description;
+			resultList.push({'name': name, 'description': description});
 		}
-
-		for (var i = 0; i < maxSuggestion; i++) {
-			if (i == 0)
-				resultText = resultText + '[' + functionNameList[i] + ']';
-			else
-				resultText = resultText + ', ' + functionNameList[i];
-		}
-
-		var remainingFuncCount = suggestionArray.length - maxSuggestion;
-		if (remainingFuncCount > 0)
-			resultText = resultText + ' ' + _('and %COUNT more').replace('%COUNT', remainingFuncCount);
-
-		resultText = resultText + ' : ' + currentFuncDescription;
-
-		return resultText;
+		return resultList;
 	},
 
 	_showURLPopUp: function(position, url) {
