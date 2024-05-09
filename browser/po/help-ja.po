@@ -4,7 +4,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-04-12 19:29+0200\n"
 "PO-Revision-Date: 2024-05-09 07:43+0000\n"
-"Last-Translator: Shavazo <pleasure.7010@gmail.com>\n"
+"Last-Translator: Poe Mon <p.poemon.awitd@gmail.com>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/"
 "collabora-online/help/ja/>\n"
 "Language: ja\n"
@@ -1379,13 +1379,12 @@ msgid "Standard format"
 msgstr "標準書式"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:258-80
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
 "class=\"kbd--plus\">+</span><kbd>6</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>6"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>6</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:282-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:347-38
@@ -1408,9 +1407,8 @@ msgstr "リスト項目のレベルを上げる（リスト項目を選択する
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:321-127
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:348-113
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:386-127
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Tab</kbd>"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Tab"
+msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Tab</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:287-9
 #: html/cool-help.html%2Bdiv.div.div.h2:352-9
@@ -1457,7 +1455,6 @@ msgid "Select objects in the reverse order in which they were created"
 msgstr "オブジェクトを、作成した逆順に選択します"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:322-38
-#, fuzzy
 msgid "Move to next text object on slide"
 msgstr "スライド/描画ページ内の次のテキストオブジェクトに移動"
 
@@ -1466,17 +1463,14 @@ msgid "Select all in slide"
 msgstr "すべてのスライドを選択"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:382-9
-#, fuzzy
 msgid "Draw page keyboard shortcuts"
 msgstr "スライド/ページのキーボードショートカットを描画する"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:387-38
-#, fuzzy
 msgid "Move to next text object on drawing page"
 msgstr "スライド/描画ページ内の次のテキストオブジェクトに移動"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:388-38
-#, fuzzy
 msgid "Select all in drawing page"
 msgstr "スライド/図面ページ内のすべてのオブジェクトを選択"
 
