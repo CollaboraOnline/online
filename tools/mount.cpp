@@ -170,7 +170,7 @@ int main(int argc, char** argv)
         const char* target = argv[2];
 
         struct stat sb;
-        const bool target_exists = (stat(target, &sb) == 0 && S_ISDIR(sb.st_mode));
+        const bool target_exists = (stat(target, &sb) == 0) && S_ISDIR(sb.st_mode);
 
         // Do nothing if target doesn't exist.
         if (target_exists)
