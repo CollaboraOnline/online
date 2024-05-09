@@ -328,6 +328,16 @@ public:
     bool hasQueueItems() const { return _queue && !_queue->isEmpty(); }
     bool hasCallbacks() const { return _queue && _queue->callbackSize() > 0; }
 
+    /// Should we get through the SocketPoll fast to process queus ?
+    bool needsQuickPoll() const
+    {
+        if (hasCallbacks())
+            return true;
+        if (hasQueueItems() && processInputEnabled())
+            return true;
+        return false;
+    }
+
     // poll is idle, are we ?
     void checkIdle();
     void drainQueue();

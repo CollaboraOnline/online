@@ -2682,9 +2682,7 @@ int KitSocketPoll::kitPoll(int timeoutMicroS)
         do
         {
             int realTimeout = timeoutMicroS;
-            if (_document &&
-                (_document->hasCallbacks() ||
-                 (_document->hasQueueItems() && _document->processInputEnabled())))
+            if (_document && _document->needsQuickPoll())
                 realTimeout = 0;
 
             if (poll(std::chrono::microseconds(realTimeout)) <= 0)
