@@ -24,6 +24,14 @@
 #include "Log.hpp"
 #include <TileDesc.hpp>
 
+/* static */ std::string KitQueue::Callback::toString(int view, int type, const std::string payload)
+{
+    std::ostringstream str;
+    str << view << " " << lokCallbackTypeToString(type) << " "
+        << COOLProtocol::getAbbreviatedMessage(payload);
+    return str.str();
+}
+
 void KitQueue::put(const Payload& value)
 {
     if (value.empty())
@@ -55,14 +63,8 @@ void KitQueue::put(const Payload& value)
         _queue.push_back(value);
     }
     else if (firstToken == "callback")
-    {
-        const std::string newMsg = removeCallbackDuplicate(std::string(value.data(), value.size()));
+        assert(false && "callbacks should not come from the client");
 
-        if (newMsg.empty())
-            _queue.push_back(value);
-        else
-            _queue.emplace_back(newMsg.data(), newMsg.data() + newMsg.size());
-    }
     else if (tokens.equals(1, "textinput"))
     {
         const std::string newMsg = combineTextInput(tokens);
@@ -112,14 +114,11 @@ void KitQueue::removeTileDuplicate(const std::string& tileMsg)
 
 namespace {
 
-/// Read the viewId from the tokens.
-std::string extractViewId(const std::string& origMsg, const StringVector& tokens)
+/// Read the viewId from the payload.
+std::string extractViewId(const std::string& payload)
 {
-    size_t nonJson = tokens[0].size() + tokens[1].size() + tokens[2].size() + 3; // including spaces
-    std::string jsonString(origMsg.data() + nonJson, origMsg.size() - nonJson);
-
     Poco::JSON::Parser parser;
-    const Poco::Dynamic::Var result = parser.parse(jsonString);
+    const Poco::Dynamic::Var result = parser.parse(payload);
     const auto& json = result.extract<Poco::JSON::Object::Ptr>();
     return json->get("viewId").toString();
 }
@@ -137,19 +136,7 @@ std::string extractUnoCommand(const std::string& command)
     return command;
 }
 
-bool containsUnoCommand(const std::string_view token, const std::string_view command)
-{
-    if (!COOLProtocol::matchPrefix(".uno:", token))
-        return false;
-
-    size_t equalPos = token.find('=');
-    if (equalPos != std::string::npos)
-        return token.substr(0, equalPos) == command;
-
-    return token == command;
-}
-
-/// Extract rectangle from the invalidation callback
+/// Extract rectangle from the invalidation callback payload
 bool extractRectangle(const StringVector& tokens, int& x, int& y, int& w, int& h, int& part, int& mode)
 {
     x = 0;
@@ -159,124 +146,70 @@ bool extractRectangle(const StringVector& tokens, int& x, int& y, int& w, int& h
     part = 0;
     mode = 0;
 
-    if (tokens.size() < 5)
+    if (tokens.size() < 2)
         return false;
 
-    if (tokens.equals(3, "EMPTY,"))
+    if (tokens.equals(0, "EMPTY,"))
     {
-        part = std::atoi(tokens[4].c_str());
+        part = std::atoi(tokens[0].c_str());
         return true;
     }
 
-    if (tokens.size() < 8)
+    if (tokens.size() < 5)
         return false;
 
-    x = std::atoi(tokens[3].c_str());
-    y = std::atoi(tokens[4].c_str());
-    w = std::atoi(tokens[5].c_str());
-    h = std::atoi(tokens[6].c_str());
-    part = std::atoi(tokens[7].c_str());
+    x = std::atoi(tokens[0].c_str());
+    y = std::atoi(tokens[1].c_str());
+    w = std::atoi(tokens[2].c_str());
+    h = std::atoi(tokens[3].c_str());
+    part = std::atoi(tokens[4].c_str());
 
-    if (tokens.size() == 9)
-        mode = std::atoi(tokens[8].c_str());
+    if (tokens.size() == 6)
+        mode = std::atoi(tokens[5].c_str());
 
     return true;
 }
 
-class isDuplicateCommand
-{
-private:
-    const std::string& m_unoCommand;
-    const StringVector& m_tokens;
-    bool m_is_duplicate_command;
-public:
-    isDuplicateCommand(const std::string& unoCommand, const StringVector& tokens)
-        : m_unoCommand(unoCommand)
-        , m_tokens(tokens)
-        , m_is_duplicate_command(false)
-    {
-    }
-
-    bool get_is_duplicate_command() const
-    {
-        return m_is_duplicate_command;
-    }
-
-    void reset()
-    {
-        m_is_duplicate_command = false;
-    }
-
-    bool operator()(size_t nIndex, std::string_view token)
-    {
-        switch (nIndex)
-        {
-            case 0:
-            case 1:
-            case 2:
-                // returns true to end tokenization as one of first 3 token doesn't match
-                return token != m_tokens[nIndex];
-            case 3:
-                // callback, the same target, state changed; now check it's
-                // the same .uno: command
-                m_is_duplicate_command = containsUnoCommand(token, m_unoCommand);
-                // returns true to end tokenization as 4 is all we need
-                return true;
-            break;
-        }
-        return false;
-    };
-};
-
 }
 
-std::string KitQueue::removeCallbackDuplicate(const std::string& callbackMsg)
+void KitQueue::putCallback(int view, int type, const std::string &payload)
 {
-    assert(COOLProtocol::matchPrefix("callback", callbackMsg, /*ignoreWhitespace*/ true));
+    if (!elideDuplicateCallback(view, type, payload))
+        _callbacks.emplace_back(view, type, payload);
+}
 
-    StringVector tokens = StringVector::tokenize(callbackMsg);
+bool KitQueue::elideDuplicateCallback(int view, int type, const std::string &payload)
+{
+    const auto callbackType = static_cast<LibreOfficeKitCallbackType>(type);
 
-    if (tokens.size() < 3)
-        return std::string();
-
-    // the message is "callback <view> <id> ..."
-    const auto pair = Util::i32FromString(tokens[2]);
-    if (!pair.second)
-        return std::string();
-
-    const auto callbackType = static_cast<LibreOfficeKitCallbackType>(pair.first);
+    // Nothing to combine in this case:
+    if (_callbacks.size() == 0)
+        return false;
 
     switch (callbackType)
     {
         case LOK_CALLBACK_INVALIDATE_TILES: // invalidation
         {
-            int msgX, msgY, msgW, msgH, msgPart, msgMode;
+            StringVector tokens = StringVector::tokenize(payload);
 
+            int msgX, msgY, msgW, msgH, msgPart, msgMode;
             if (!extractRectangle(tokens, msgX, msgY, msgW, msgH, msgPart, msgMode))
-                return std::string();
+                return false;
 
             bool performedMerge = false;
 
             // we always travel the entire queue
             std::size_t i = 0;
-            while (i < _queue.size())
+            while (i < _callbacks.size())
             {
-                auto& it = _queue[i];
+                auto& it = _callbacks[i];
 
-                StringVector queuedTokens = StringVector::tokenize(it.data(), it.size());
-                if (queuedTokens.size() < 3)
+                if (it._type != type || it._view != view)
                 {
                     ++i;
                     continue;
                 }
-
-                // not a invalidation callback
-                if (queuedTokens[0] != tokens[0] || queuedTokens[1] != tokens[1]
-                    || queuedTokens[2] != tokens[2])
-                {
-                    ++i;
-                    continue;
-                }
+                StringVector queuedTokens = StringVector::tokenize(it._payload);
 
                 int queuedX, queuedY, queuedW, queuedH, queuedPart, queuedMode;
 
@@ -298,18 +231,17 @@ std::string KitQueue::removeCallbackDuplicate(const std::string& callbackMsg)
                     continue;
                 }
 
-                // the invalidation in the queue is fully covered by the message,
+                // the invalidation in the queue is fully covered by the payload,
                 // just remove it
                 if (msgX <= queuedX && queuedX + queuedW <= msgX + msgW && msgY <= queuedY
                     && queuedY + queuedH <= msgY + msgH)
                 {
                     LOG_TRC("Removing smaller invalidation: "
-                            << std::string(it.data(), it.size()) << " -> " << tokens[0] << ' '
-                            << tokens[1] << ' ' << tokens[2] << ' ' << msgX << ' ' << msgY << ' '
+                            << it._payload << " -> " << ' ' << msgX << ' ' << msgY << ' '
                             << msgW << ' ' << msgH << ' ' << msgPart << ' ' << msgMode);
 
                     // remove from the queue
-                    _queue.erase(_queue.begin() + i);
+                    _callbacks.erase(_callbacks.begin() + i);
                     continue;
                 }
 
@@ -332,7 +264,7 @@ std::string KitQueue::removeCallbackDuplicate(const std::string& callbackMsg)
                     }
 
                     LOG_TRC("Merging invalidations: "
-                            << std::string(it.data(), it.size()) << " and "
+                            << Callback::toString(view, type, payload) << " and "
                             << tokens[0] << ' ' << tokens[1] << ' ' << tokens[2] << ' '
                             << msgX << ' ' << msgY << ' ' << msgW << ' ' << msgH << ' '
                             << msgPart << ' ' << msgMode << " -> "
@@ -347,7 +279,7 @@ std::string KitQueue::removeCallbackDuplicate(const std::string& callbackMsg)
                     performedMerge = true;
 
                     // remove from the queue
-                    _queue.erase(_queue.begin() + i);
+                    _callbacks.erase(_callbacks.begin() + i);
                     continue;
                 }
 
@@ -356,55 +288,48 @@ std::string KitQueue::removeCallbackDuplicate(const std::string& callbackMsg)
 
             if (performedMerge)
             {
-                std::size_t pre = tokens[0].size() + tokens[1].size() + tokens[2].size() + 3;
-                std::size_t post = pre + tokens[3].size() + tokens[4].size() + tokens[5].size()
-                              + tokens[6].size() + 4;
+                std::string newPayload =
+                    std::to_string(msgX) + ", " + std::to_string(msgY) + ", " +
+                    std::to_string(msgW) + ", " + std::to_string(msgH) + ", " +
+                    tokens.cat(' ', 4); // part etc. ...
 
-                std::string result = callbackMsg.substr(0, pre) + std::to_string(msgX) + ", "
-                                     + std::to_string(msgY) + ", " + std::to_string(msgW) + ", "
-                                     + std::to_string(msgH) + ", " + callbackMsg.substr(post);
+                LOG_TRC("Merge result: " << newPayload);
 
-                LOG_TRC("Merge result: " << result);
-
-                return result;
+                _callbacks.emplace_back(view, type, newPayload);
+                return true; // elide the original - use this instead
             }
         }
         break;
 
         case LOK_CALLBACK_STATE_CHANGED: // state changed
         {
-            if (tokens.size() < 4)
-                return std::string();
-
-            std::string unoCommand = extractUnoCommand(tokens[3]);
+            std::string unoCommand = extractUnoCommand(payload);
             if (unoCommand.empty())
-                return std::string();
+                return false;
 
             // This is needed because otherwise it creates some problems when
             // a save occurs while a cell is still edited in Calc.
             if (unoCommand == ".uno:ModifiedStatus")
-                return std::string();
-
-            if (_queue.empty())
-                return std::string();
+                return false;
 
             // remove obsolete states of the same .uno: command
-            isDuplicateCommand functor(unoCommand, tokens);
-            for (std::size_t i = 0; i < _queue.size(); ++i)
+            size_t unoCommandLen = unoCommand.size();
+            for (size_t i = 0; i < _callbacks.size(); ++i)
             {
-                auto& it = _queue[i];
+                Callback& it = _callbacks[i];
+                if (it._type != type || it._view != view)
+                    continue;
 
-                StringVector::tokenize_foreach(functor, it.data(), it.size());
+                size_t payloadLen = it._payload.size();
+                if (payloadLen < unoCommandLen + 1 ||
+                    unoCommand.compare(0, unoCommandLen, it._payload) != 0 ||
+                    it._payload[unoCommandLen] != '=')
+                    continue;
 
-                if (functor.get_is_duplicate_command())
-                {
-                    LOG_TRC("Remove obsolete uno command: "
-                            << std::string(it.data(), it.size()) << " -> "
-                            << COOLProtocol::getAbbreviatedMessage(callbackMsg));
-                    _queue.erase(_queue.begin() + i);
-                    break;
-                }
-                functor.reset();
+                LOG_TRC("Remove obsolete uno command: " << it << " -> "
+                        << Callback::toString(view, type, payload));
+                _callbacks.erase(_callbacks.begin() + i);
+                break;
             }
         }
         break;
@@ -418,50 +343,38 @@ std::string KitQueue::removeCallbackDuplicate(const std::string& callbackMsg)
         case LOK_CALLBACK_CELL_VIEW_CURSOR: // the view cell cursor has moved
         case LOK_CALLBACK_VIEW_CURSOR_VISIBLE: // the view cursor visibility has changed
         {
-            const bool isViewCallback = (callbackType == LOK_CALLBACK_INVALIDATE_VIEW_CURSOR
-                                         || callbackType == LOK_CALLBACK_CELL_VIEW_CURSOR
-                                         || callbackType == LOK_CALLBACK_VIEW_CURSOR_VISIBLE);
+            const bool isViewCallback = (callbackType == LOK_CALLBACK_INVALIDATE_VIEW_CURSOR ||
+                                         callbackType == LOK_CALLBACK_CELL_VIEW_CURSOR ||
+                                         callbackType == LOK_CALLBACK_VIEW_CURSOR_VISIBLE);
 
             const std::string viewId
-                = (isViewCallback ? extractViewId(callbackMsg, tokens) : std::string());
+                = (isViewCallback ? extractViewId(payload) : std::string());
 
-            for (std::size_t i = 0; i < _queue.size(); ++i)
+            for (std::size_t i = 0; i < _callbacks.size(); ++i)
             {
-                const auto& it = _queue[i];
+                const auto& it = _callbacks[i];
 
-                // skip non-callbacks quickly
-                if (!COOLProtocol::matchPrefix("callback", it))
+                if (it._type != type || it._view != view)
                     continue;
 
-                StringVector queuedTokens = StringVector::tokenize(it.data(), it.size());
-                if (queuedTokens.size() < 3)
-                    continue;
-
-                if (!isViewCallback
-                    && (queuedTokens.equals(1, tokens, 1) && queuedTokens.equals(2, tokens, 2)))
+                if (!isViewCallback)
                 {
-                    LOG_TRC("Remove obsolete callback: "
-                            << std::string(it.data(), it.size()) << " -> "
-                            << COOLProtocol::getAbbreviatedMessage(callbackMsg));
-                    _queue.erase(_queue.begin() + i);
+                    LOG_TRC("Remove obsolete callback: " << it <<  " -> "
+                            << Callback::toString(view, type, payload));
+                    _callbacks.erase(_callbacks.begin() + i);
                     break;
                 }
-                else if (isViewCallback
-                         && (queuedTokens.equals(1, tokens, 1)
-                             && queuedTokens.equals(2, tokens, 2)))
+                else if (isViewCallback)
                 {
                     // we additionally need to ensure that the payload is about
                     // the same viewid (otherwise we'd merge them all views into
                     // one)
-                    const std::string queuedViewId
-                        = extractViewId(std::string(it.data(), it.size()), queuedTokens);
-
+                    const std::string queuedViewId = extractViewId(it._payload);
                     if (viewId == queuedViewId)
                     {
-                        LOG_TRC("Remove obsolete view callback: "
-                                << std::string(it.data(), it.size()) << " -> "
-                                << COOLProtocol::getAbbreviatedMessage(callbackMsg));
-                        _queue.erase(_queue.begin() + i);
+                        LOG_TRC("Remove obsolete view callback: " << it << " -> "
+                                << Callback::toString(view, type, payload));
+                        _callbacks.erase(_callbacks.begin() + i);
                         break;
                     }
                 }
@@ -474,7 +387,8 @@ std::string KitQueue::removeCallbackDuplicate(const std::string& callbackMsg)
 
     } // switch
 
-    return std::string();
+    // Append the new command to the callbacks list
+    return false;
 }
 
 int KitQueue::priority(const std::string& tileMsg)
@@ -819,6 +733,11 @@ void KitQueue::dumpState(std::ostream& oss)
     size_t i = 0;
     for (Payload &it : _queue)
         oss << "\t\t" << i++ << ": " << COOLProtocol::getFirstLine(it) << "\n";
+
+    oss << "\tCallbacks size: " << _callbacks.size() << "\n";
+    i = 0;
+    for (auto &it : _callbacks)
+        oss << "\t\t" << i++ << ": " << it << "\n";
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

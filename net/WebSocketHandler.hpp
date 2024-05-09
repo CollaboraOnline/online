@@ -700,6 +700,13 @@ public:
         return true;
     }
 
+    void flush()
+    {
+        std::shared_ptr<StreamSocket> socket = _socket.lock();
+        if (socket)
+            socket->flush();
+    }
+
 protected:
 
 #if !MOBILEAPP

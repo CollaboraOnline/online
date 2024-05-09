@@ -470,33 +470,50 @@ void KitQueueTests::testInvalidateViewCursorDeduplication()
     LOK_ASSERT_EQUAL(static_cast<size_t>(0), queue.size());
 }
 
+// back-compatible method from before putCallback implementation
+void putCallback(KitQueue &queue, const std::string &str)
+{
+    StringVector tokens = StringVector::tokenize(str);
+    assert(tokens[0] == "callback");
+    int view = std::atoi(tokens[1].c_str());
+    if (tokens[1] == "all")
+        view = -1;
+    int type = std::atoi(tokens[2].c_str());
+    queue.putCallback(view, type, tokens.cat(' ', 3));
+}
+
 void KitQueueTests::testCallbackInvalidation()
 {
     constexpr auto testname = __func__;
 
     KitQueue queue;
+    KitQueue::Callback item;
 
     // join tiles
-    queue.put("callback all 0 284, 1418, 11105, 275, 0");
-    queue.put("callback all 0 4299, 1418, 7090, 275, 0");
+    putCallback(queue, "callback all 0 284, 1418, 11105, 275, 0");
+    putCallback(queue, "callback all 0 4299, 1418, 7090, 275, 0");
 
-    LOK_ASSERT_EQUAL(1, static_cast<int>(queue.size()));
+    LOK_ASSERT_EQUAL(1, static_cast<int>(queue.callbackSize()));
 
-    LOK_ASSERT_EQUAL_STR("callback all 0 284, 1418, 11105, 275, 0", queue.get());
+    item = queue.getCallback();
+    LOK_ASSERT_EQUAL_STR("284, 1418, 11105, 275, 0", item._payload);
 
     // invalidate everything with EMPTY, but keep the different part intact
-    queue.put("callback all 0 284, 1418, 11105, 275, 0");
-    queue.put("callback all 0 4299, 1418, 7090, 275, 1");
-    queue.put("callback all 0 4299, 10418, 7090, 275, 0");
-    queue.put("callback all 0 4299, 20418, 7090, 275, 0");
+    putCallback(queue, "callback all 0 284, 1418, 11105, 275, 0");
+    putCallback(queue, "callback all 0 4299, 1418, 7090, 275, 1");
+    putCallback(queue, "callback all 0 4299, 10418, 7090, 275, 0");
+    putCallback(queue, "callback all 0 4299, 20418, 7090, 275, 0");
 
-    LOK_ASSERT_EQUAL(4, static_cast<int>(queue.size()));
+    LOK_ASSERT_EQUAL(4, static_cast<int>(queue.callbackSize()));
 
-    queue.put("callback all 0 EMPTY, 0");
+    putCallback(queue, "callback all 0 EMPTY, 0");
 
-    LOK_ASSERT_EQUAL(2, static_cast<int>(queue.size()));
-    LOK_ASSERT_EQUAL_STR("callback all 0 4299, 1418, 7090, 275, 1", queue.get());
-    LOK_ASSERT_EQUAL_STR("callback all 0 EMPTY, 0", queue.get());
+    LOK_ASSERT_EQUAL(2, static_cast<int>(queue.callbackSize()));
+
+    item = queue.getCallback();
+    LOK_ASSERT_EQUAL_STR("4299, 1418, 7090, 275, 1", item._payload);
+    item = queue.getCallback();
+    LOK_ASSERT_EQUAL_STR("EMPTY, 0", item._payload);
 }
 
 void KitQueueTests::testCallbackIndicatorValue()
@@ -504,13 +521,17 @@ void KitQueueTests::testCallbackIndicatorValue()
     constexpr auto testname = __func__;
 
     KitQueue queue;
+    KitQueue::Callback item;
 
     // join tiles
-    queue.put("callback all 10 25");
-    queue.put("callback all 10 50");
+    putCallback(queue, "callback all 10 25");
+    putCallback(queue, "callback all 10 50");
 
-    LOK_ASSERT_EQUAL(1, static_cast<int>(queue.size()));
-    LOK_ASSERT_EQUAL_STR("callback all 10 50", queue.get());
+    LOK_ASSERT_EQUAL(1, static_cast<int>(queue.callbackSize()));
+    item = queue.getCallback();
+    LOK_ASSERT_EQUAL(item._view, -1);
+    LOK_ASSERT_EQUAL(item._type, 10);
+    LOK_ASSERT_EQUAL_STR("50", item._payload);
 }
 
 void KitQueueTests::testCallbackPageSize()
@@ -518,13 +539,17 @@ void KitQueueTests::testCallbackPageSize()
     constexpr auto testname = __func__;
 
     KitQueue queue;
+    KitQueue::Callback item;
 
     // join tiles
-    queue.put("callback all 13 12474, 188626");
-    queue.put("callback all 13 12474, 205748");
+    putCallback(queue, "callback all 13 12474, 188626");
+    putCallback(queue, "callback all 13 12474, 205748");
 
-    LOK_ASSERT_EQUAL(1, static_cast<int>(queue.size()));
-    LOK_ASSERT_EQUAL_STR("callback all 13 12474, 205748", queue.get());
+    LOK_ASSERT_EQUAL(1, static_cast<int>(queue.callbackSize()));
+    item = queue.getCallback();
+    LOK_ASSERT_EQUAL(item._view, -1);
+    LOK_ASSERT_EQUAL(item._type, 13);
+    LOK_ASSERT_EQUAL_STR("12474, 205748", item._payload);
 }
 
 void KitQueueTests::testCallbackModifiedStatusIsSkipped()
@@ -532,6 +557,8 @@ void KitQueueTests::testCallbackModifiedStatusIsSkipped()
     constexpr auto testname = __func__;
 
     KitQueue queue;
+    KitQueue::Callback item;
+
     std::stringstream ss;
     ss << "callback all " << LOK_CALLBACK_STATE_CHANGED;
 
@@ -545,15 +572,16 @@ void KitQueueTests::testCallbackModifiedStatusIsSkipped()
 
     for (const auto& msg : messages)
     {
-        queue.put(msg);
+        putCallback(queue, msg);
     }
 
-    LOK_ASSERT_EQUAL(static_cast<size_t>(4), queue.size());
+    LOK_ASSERT_EQUAL(static_cast<size_t>(4), queue.callbackSize());
 
-    LOK_ASSERT_EQUAL_STR(messages[0], queue.get());
-    LOK_ASSERT_EQUAL_STR(messages[1], queue.get());
-    LOK_ASSERT_EQUAL_STR(messages[2], queue.get());
-    LOK_ASSERT_EQUAL_STR(messages[3], queue.get());
+    for (size_t i = 0; i < std::size(messages); i++)
+    {
+        item = queue.getCallback();
+        LOK_ASSERT_EQUAL_STR(messages[i].substr(ss.str().size() + 1), item._payload);
+    }
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(KitQueueTests);
