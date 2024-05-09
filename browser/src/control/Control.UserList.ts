@@ -111,11 +111,7 @@ class UserList extends L.Control {
 	}
 
 	unfollowAll() {
-		if (this.getFollowedUser() !== undefined) {
-			this.followUser(this.map._docLayer._viewId);
-		} else if (app.isFollowingEditor()) {
-			app.setFollowingOff();
-		}
+		app.setFollowingOff();
 	}
 
 	followUser(viewId: number) {
