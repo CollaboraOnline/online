@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-04-12 19:29+0200\n"
-"PO-Revision-Date: 2024-04-21 19:07+0000\n"
+"PO-Revision-Date: 2024-05-01 11:50+0000\n"
 "Last-Translator: Shavazo <pleasure.7010@gmail.com>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/"
 "collabora-online/ui/ja/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.5-dev\n"
+"X-Generator: Weblate 5.5.3-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -61,7 +61,7 @@ msgstr "ユーザー名"
 
 #: admin/admin.strings.js:25
 msgid "Documents open"
-msgstr "文書を開く"
+msgstr "開いている文書"
 
 #: admin/admin.strings.js:26 admin/src/AdminSocketOverview.js:82
 #: admin/src/AdminSocketOverview.js:131 admin/src/AdminSocketOverview.js:358
@@ -478,11 +478,11 @@ msgstr "タイプ"
 
 #: src/control/Control.DocumentRepair.js:140
 msgid "What?"
-msgstr "なんだと？"
+msgstr "何を？"
 
 #: src/control/Control.DocumentRepair.js:140
 msgid "Who?"
-msgstr "誰?"
+msgstr "誰が?"
 
 #: src/control/Control.DocumentRepair.js:140
 msgid "When?"
@@ -778,9 +778,8 @@ msgstr "形式を指定してダウンロード"
 #: src/control/Control.NotebookbarBuilder.js:415
 #: src/control/Control.NotebookbarBuilder.js:445
 #: src/control/Control.NotebookbarBuilder.js:475
-#, fuzzy
 msgid "PDF Document (.pdf) as..."
-msgstr "PDFドキュメント (.pdf)"
+msgstr "PDFドキュメント (.pdf)..."
 
 #: src/control/Control.Menubar.js:99 src/control/Control.Menubar.js:410
 #: src/control/Control.Menubar.js:558 src/control/Control.Menubar.js:693
@@ -909,7 +908,7 @@ msgstr "引用を追加"
 #: src/control/Control.Menubar.js:304
 #: src/control/Control.NotebookbarWriter.js:1898
 msgid "Add Citation Note"
-msgstr ""
+msgstr "引用符を追加"
 
 #: src/control/Control.Menubar.js:305
 #: src/control/Control.NotebookbarWriter.js:1873
@@ -919,18 +918,18 @@ msgstr ""
 #: src/control/Control.Menubar.js:307
 #: src/control/Control.NotebookbarWriter.js:1916
 msgid "Refresh Citations"
-msgstr ""
+msgstr "引用をリフレッシュ"
 
 #: src/control/Control.Menubar.js:308
 #: src/control/Control.NotebookbarWriter.js:1928
 #: src/control/Control.Zotero.js:1448
 msgid "Unlink Citations"
-msgstr ""
+msgstr "非リンクの引用"
 
 #: src/control/Control.Menubar.js:309
 #: src/control/Control.NotebookbarWriter.js:1940
 msgid "Citation Preferences"
-msgstr ""
+msgstr "引用設定"
 
 #: src/control/Control.Menubar.js:337 src/control/Control.Menubar.js:1242
 msgid "Insert Rich Text"
@@ -1051,7 +1050,7 @@ msgstr "現在のスライドから開始"
 
 #: src/control/Control.Menubar.js:518
 msgid "Present in new window"
-msgstr ""
+msgstr "新しいウィンドウに表示"
 
 #: src/control/Control.Menubar.js:554 src/control/Control.Menubar.js:1027
 #: src/control/Control.Menubar.js:1087
@@ -1098,17 +1097,17 @@ msgstr "すべてのシート"
 #: src/control/Control.Menubar.js:817
 #: src/control/jsdialog/Definitions.Menu.ts:300
 msgid "Condition..."
-msgstr ""
+msgstr "条件..."
 
 #: src/control/Control.Menubar.js:818
 #: src/control/jsdialog/Definitions.Menu.ts:303
 msgid "Greater than..."
-msgstr ""
+msgstr "より大きい..."
 
 #: src/control/Control.Menubar.js:819
 #: src/control/jsdialog/Definitions.Menu.ts:307
 msgid "Less than..."
-msgstr ""
+msgstr "より少なく..."
 
 #: src/control/Control.Menubar.js:820
 #: src/control/jsdialog/Definitions.Menu.ts:311
@@ -1118,12 +1117,12 @@ msgstr ""
 #: src/control/Control.Menubar.js:821
 #: src/control/jsdialog/Definitions.Menu.ts:315
 msgid "Between..."
-msgstr ""
+msgstr "と..."
 
 #: src/control/Control.Menubar.js:822
 #: src/control/jsdialog/Definitions.Menu.ts:319
 msgid "Duplicate..."
-msgstr ""
+msgstr "コピー"
 
 #: src/control/Control.Menubar.js:823
 #: src/control/jsdialog/Definitions.Menu.ts:323
@@ -1134,7 +1133,7 @@ msgstr "テキストが含まれています..."
 #: src/control/jsdialog/Definitions.Menu.ts:327
 #: src/control/jsdialog/Definitions.Menu.ts:358
 msgid "More conditions..."
-msgstr ""
+msgstr "その他の条件..."
 
 #: src/control/Control.Menubar.js:827
 #: src/control/jsdialog/Definitions.Menu.ts:331
@@ -1144,12 +1143,12 @@ msgstr "トップ/ボトムルール..."
 #: src/control/Control.Menubar.js:828
 #: src/control/jsdialog/Definitions.Menu.ts:334
 msgid "Top N elements..."
-msgstr ""
+msgstr "トップN要素..."
 
 #: src/control/Control.Menubar.js:829
 #: src/control/jsdialog/Definitions.Menu.ts:338
 msgid "Top N percent..."
-msgstr ""
+msgstr "トップNパーセント..."
 
 #: src/control/Control.Menubar.js:830
 #: src/control/jsdialog/Definitions.Menu.ts:342
@@ -1256,7 +1255,7 @@ msgstr "タップで表示"
 #: src/control/Control.NotebookbarBuilder.js:232
 #: src/control/Control.NotebookbarBuilder.js:276
 msgid "Tap to collapse"
-msgstr ""
+msgstr "タップで非表示"
 
 #: src/control/Control.NotebookbarBuilder.js:435
 msgid "CSV File (.csv)"
@@ -1305,7 +1304,6 @@ msgstr "検査"
 #: src/control/Control.NotebookbarDraw.js:93
 #: src/control/Control.NotebookbarImpress.js:108
 #: src/control/Control.NotebookbarWriter.js:73
-#, fuzzy
 msgid "Format"
 msgstr "書式"
 
@@ -1313,7 +1311,7 @@ msgstr "書式"
 #: src/control/Control.NotebookbarDraw.js:106
 #: src/control/Control.NotebookbarWriter.js:92
 msgid "Draw"
-msgstr ""
+msgstr "描画"
 
 #: src/control/Control.NotebookbarCalc.js:73
 #: src/control/Control.NotebookbarDraw.js:113
@@ -1744,7 +1742,7 @@ msgstr "メニューを隠す"
 
 #: src/control/Control.UIManager.js:157
 msgid "Enter new name"
-msgstr ""
+msgstr "新しい名前を入力"
 
 #: src/control/Control.UIManager.js:783
 msgid "Show Menu"
@@ -1764,15 +1762,15 @@ msgstr "%user が離れました"
 
 #: src/control/Control.UserList.ts:56
 msgid "Following %user"
-msgstr ""
+msgstr "フォロー %user"
 
 #: src/control/Control.UserList.ts:57
 msgid "Following the editor"
-msgstr ""
+msgstr "エディタのフォロー"
 
 #: src/control/Control.UserList.ts:58
 msgid "Stop following"
-msgstr ""
+msgstr "フォロー停止"
 
 #: src/control/Control.UserList.ts:59
 msgid "Avatar for %user"
@@ -1792,7 +1790,7 @@ msgstr "0 ユーザー"
 
 #: src/control/Control.UserList.ts:493
 msgid "Following"
-msgstr ""
+msgstr "フォロー"
 
 #: src/control/Control.UserList.ts:549
 msgid "Always follow the editor"
@@ -1815,6 +1813,9 @@ msgid ""
 "The document contains some citations which may be unreachable through web "
 "API. It may cause some problems while editing citations or bibliography."
 msgstr ""
+"ドキュメントには、Web API "
+"を通して到達できない可能性のある引用が含まれています。 "
+"引用や伝記を編集する際に問題が発生することがあります."
 
 #: src/control/Control.Zotero.js:247 src/core/Socket.js:1118
 msgid "Loading..."
@@ -1826,15 +1827,15 @@ msgstr "言語:"
 
 #: src/control/Control.Zotero.js:280
 msgid "Store as:"
-msgstr ""
+msgstr "保存先:"
 
 #: src/control/Control.Zotero.js:286 src/control/Control.Zotero.js:410
 msgid "Fields"
-msgstr ""
+msgstr "フィールド"
 
 #: src/control/Control.Zotero.js:287 src/control/Control.Zotero.js:410
 msgid "Bookmarks"
-msgstr ""
+msgstr "ブックマーク"
 
 #: src/control/Control.Zotero.js:408
 msgid "Footnotes"
@@ -1842,7 +1843,7 @@ msgstr ""
 
 #: src/control/Control.Zotero.js:408
 msgid "Endnotes"
-msgstr ""
+msgstr "エンドノート"
 
 #: src/control/Control.Zotero.js:472
 msgid "My Publications"
@@ -1850,11 +1851,11 @@ msgstr ""
 
 #: src/control/Control.Zotero.js:478 src/control/Control.Zotero.js:705
 msgid "My Library"
-msgstr ""
+msgstr "私のライブラリ"
 
 #: src/control/Control.Zotero.js:479
 msgid "Group Libraries"
-msgstr ""
+msgstr "グループライブラリ"
 
 #: src/control/Control.Zotero.js:721
 #, fuzzy
@@ -1867,7 +1868,7 @@ msgstr ""
 
 #: src/control/Control.Zotero.js:753
 msgid "Citation Style"
-msgstr ""
+msgstr "引用スタイル"
 
 #: src/control/Control.Zotero.js:758
 msgid "Styles"
@@ -1875,7 +1876,7 @@ msgstr "スタイル"
 
 #: src/control/Control.Zotero.js:758
 msgid "An error occurred while fetching style list"
-msgstr ""
+msgstr "スタイルリストを取得する際にエラーが発生しました"
 
 #: src/control/Control.Zotero.js:766
 msgid "Failed to load styles"
@@ -2060,11 +2061,11 @@ msgstr "リンク"
 
 #: src/control/jsdialog/Definitions.Menu.ts:38
 msgid "Min"
-msgstr ""
+msgstr "最小値"
 
 #: src/control/jsdialog/Definitions.Menu.ts:39
 msgid "Max"
-msgstr ""
+msgstr "最大値"
 
 #: src/control/jsdialog/Definitions.Menu.ts:273
 msgid "Insert Local Image"
@@ -2564,7 +2565,7 @@ msgstr ""
 
 #: src/layer/tile/CanvasTileLayer.js:2634
 msgid "Copy link location"
-msgstr "リンクの場所をコピーする"
+msgstr "リンクをコピーする"
 
 #: src/layer/tile/CanvasTileLayer.js:2642
 msgid "Edit link"
