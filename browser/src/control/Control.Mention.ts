@@ -62,8 +62,7 @@ class Mention extends L.Control.AutoCompletePopup {
 	getPopupEntries(ev: FireEvent): any[] {
 		const entries: any[] = [];
 		this.users = ev.data;
-		if (this.users === null)
-			return entries;
+		if (this.users === null) return entries;
 
 		const text = this.map._docLayer._mentionText.join('').substring(1);
 		// filterout the users from list according to the text
