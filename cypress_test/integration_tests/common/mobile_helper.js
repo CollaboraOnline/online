@@ -233,8 +233,15 @@ function selectFromColorPicker(pickerId, groupNum, colorNum) {
 			.click();
 	}
 
+	// TODO: Verify color is selected in picker
+	// See: https://github.com/CollaboraOnline/online/issues/9036
+
 	cy.cGet('#mobile-wizard-back')
 		.click();
+
+	// TODO: Verify color is selected, as in:
+	//cy.cGet(pickerId + ' .color-sample-selected')
+	//    .should('have.attr', 'style', 'background-color: rgb(204, 0, 0);');
 
 	cy.log('<< selectFromColorPicker - end');
 }

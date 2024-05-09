@@ -11,164 +11,156 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected text
 		mobileHelper.enableEditingMobile();
 	});
 
-	function triggerNewSVG() {
-		mobileHelper.closeMobileWizard();
-		impressHelper.triggerNewSVGForShapeInTheCenter();
+	function selectText() {
+		// Select the text in the shape by double
+		// clicking in the center of the shape,
+		// which is in the center of the slide,
+		// which is in the center of the document
+		cy.cGet('#document-container').dblclick('center');
+		helper.typeIntoDocument('{ctrl}a');
+		helper.textSelectionShouldExist();
 	}
 
 	it('Apply bold on selected text.', function() {
-		impressHelper.selectTextShapeInTheCenter();
-		impressHelper.selectTextOfShape();
+		selectText();
 
 		mobileHelper.openTextPropertiesPanel();
-
 		cy.cGet('#mobile-wizard .unoBold').click();
+		mobileHelper.closeMobileWizard();
 
-		triggerNewSVG();
+		impressHelper.triggerNewSVGForShapeInTheCenter();
 
 		cy.cGet('text tspan.TextPosition tspan').not('.PlaceholderText').should('have.attr', 'font-weight', '700');
 	});
 
 	it('Apply italic on selected text.', function() {
-		impressHelper.selectTextShapeInTheCenter();
-		impressHelper.selectTextOfShape();
+		selectText();
 
 		mobileHelper.openTextPropertiesPanel();
-
 		cy.cGet('#mobile-wizard .unoItalic').click();
+		mobileHelper.closeMobileWizard();
 
-		triggerNewSVG();
+		impressHelper.triggerNewSVGForShapeInTheCenter();
 
 		cy.cGet('text tspan.TextPosition tspan').not('.PlaceholderText').should('have.attr', 'font-style', 'italic');
 	});
 
 	it('Apply underline on selected text.', function() {
-		impressHelper.selectTextShapeInTheCenter();
-		impressHelper.selectTextOfShape();
+		selectText();
 
 		mobileHelper.openTextPropertiesPanel();
-
 		cy.cGet('#mobile-wizard .unoUnderline').click();
+		mobileHelper.closeMobileWizard();
 
-		triggerNewSVG();
+		impressHelper.triggerNewSVGForShapeInTheCenter();
 
 		cy.cGet('text tspan.TextPosition tspan').not('.PlaceholderText').should('have.attr', 'text-decoration', 'underline');
 	});
 
 	it('Apply strikeout on selected text.', function() {
-		impressHelper.selectTextShapeInTheCenter();
-		impressHelper.selectTextOfShape();
+		selectText();
 
 		mobileHelper.openTextPropertiesPanel();
-
 		cy.cGet('#mobile-wizard .unoStrikeout').click();
+		mobileHelper.closeMobileWizard();
 
-		triggerNewSVG();
+		impressHelper.triggerNewSVGForShapeInTheCenter();
 
 		cy.cGet('text tspan.TextPosition tspan').not('.PlaceholderText').should('have.attr', 'text-decoration', 'line-through');
 	});
 
 	it('Apply shadowed on selected text.', function() {
-		impressHelper.selectTextShapeInTheCenter();
-		impressHelper.selectTextOfShape();
+		selectText();
 
 		mobileHelper.openTextPropertiesPanel();
-
 		cy.cGet('#mobile-wizard .unoShadowed').click();
+		mobileHelper.closeMobileWizard();
 
-		triggerNewSVG();
+		// Shadowed property is not in the SVG
+		// Check mobile wizard state instead
 
-		// TODO: shadowed property is not in the SVG
+		// Reselect text
+		impressHelper.removeShapeSelection();
+		selectText();
+
+		mobileHelper.openTextPropertiesPanel();
+		cy.cGet('#mobile-wizard .unoShadowed').should('have.class','selected');
 	});
 
 	it('Change font name of selected text.', function() {
-		impressHelper.selectTextShapeInTheCenter();
-		impressHelper.selectTextOfShape();
+		selectText();
 
 		mobileHelper.openTextPropertiesPanel();
 		cy.cGet('#font').click();
 		cy.cGet('#fontnamecombobox').contains('.mobile-wizard.ui-combobox-text', 'Linux Libertine G').click();
+		mobileHelper.closeMobileWizard();
 
-		triggerNewSVG();
+		impressHelper.triggerNewSVGForShapeInTheCenter();
 
 		cy.cGet('text tspan.TextPosition tspan').not('.PlaceholderText').should('have.attr', 'font-family', 'Linux Libertine G');
 	});
 
 	it('Change font size of selected text.', function() {
-		impressHelper.selectTextShapeInTheCenter();
-		impressHelper.selectTextOfShape();
+		selectText();
 
 		mobileHelper.openTextPropertiesPanel();
 		cy.cGet('#fontsizecombobox').click();
 		cy.cGet('#fontsizecombobox').contains('.mobile-wizard.ui-combobox-text', '24 pt').click();
+		mobileHelper.closeMobileWizard();
 
-		triggerNewSVG();
+		impressHelper.triggerNewSVGForShapeInTheCenter();
 
 		cy.cGet('text tspan.TextPosition tspan').not('.PlaceholderText').should('have.attr', 'font-size', '847px');
 	});
 
 	it('Apply text color on selected text.', function() {
-		impressHelper.selectTextShapeInTheCenter();
-		impressHelper.selectTextOfShape();
+		selectText();
 
 		cy.cGet('text tspan.TextPosition tspan').not('.PlaceholderText').should('have.attr', 'fill', 'rgb(0,0,0)');
 
 		mobileHelper.openTextPropertiesPanel();
-
 		cy.cGet('#Color .ui-header').click();
-
 		mobileHelper.selectFromColorPicker('#Color', 5, 2);
+		mobileHelper.closeMobileWizard();
 
-		triggerNewSVG();
-		// Not sure why this extra svg trigger is needed
 		impressHelper.triggerNewSVGForShapeInTheCenter();
 
 		cy.cGet('text tspan.TextPosition tspan').not('.PlaceholderText').should('have.attr', 'fill', 'rgb(106,168,79)');
 	});
 
 	it('Apply highlight on selected text.', function() {
-		impressHelper.selectTextShapeInTheCenter();
-		impressHelper.selectTextOfShape();
+		selectText();
 
 		mobileHelper.openTextPropertiesPanel();
-
+		cy.wait(200); // selectFromColorPicker sporadically fails if not given time to load
 		cy.cGet('#CharBackColor .ui-header').click();
-
 		mobileHelper.selectFromColorPicker('#CharBackColor', 2, 2);
-
 		cy.cGet('#CharBackColor .color-sample-selected')
 			.should('have.attr', 'style', 'background-color: rgb(204, 0, 0);');
+		mobileHelper.closeMobileWizard();
 
-		helper.setDummyClipboardForCopy();
+		// Highlight color is not in the SVG
+		// Check mobile wizard state instead
 
-		triggerNewSVG();
+		// Reselect text
+		impressHelper.removeShapeSelection();
+		selectText();
 
-		// TODO: highlight color is not in the SVG
-		// At least check the mobile wizard's state
-		impressHelper.selectTextOfShape();
-
-		// Wait for selection before opening mobile wizard
-		helper.copy();
-		helper.expectTextForClipboard('X');
-		cy.wait(200);
 		mobileHelper.openTextPropertiesPanel();
-
 		cy.cGet('#CharBackColor .color-sample-selected')
 			.should('have.attr', 'style', 'background-color: rgb(204, 0, 0);');
 	});
 
 	it('Apply superscript on selected text.', function() {
-		impressHelper.selectTextShapeInTheCenter();
-		impressHelper.selectTextOfShape();
-
-		mobileHelper.openTextPropertiesPanel();
-
+		selectText();
 		cy.cGet('text tspan.TextPosition').should('have.attr', 'y', '3495');
 		cy.cGet('text tspan.TextPosition tspan').should('have.attr', 'font-size', '635px');
 
+		mobileHelper.openTextPropertiesPanel();
 		cy.cGet('#mobile-wizard .unoSuperScript').click();
+		mobileHelper.closeMobileWizard();
 
-		triggerNewSVG();
+		impressHelper.triggerNewSVGForShapeInTheCenter();
 
 		cy.cGet('text tspan.TextPosition').invoke('attr','y').then((y)=>+y).should('be.gt',3250);
 		cy.cGet('text tspan.TextPosition').invoke('attr','y').then((y)=>+y).should('be.lt',3325);
@@ -176,17 +168,15 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected text
 	});
 
 	it('Apply subscript on selected text.', function() {
-		impressHelper.selectTextShapeInTheCenter();
-		impressHelper.selectTextOfShape();
+		selectText();
 
 		mobileHelper.openTextPropertiesPanel();
-
 		cy.cGet('text tspan.TextPosition').should('have.attr', 'y', '3495');
 		cy.cGet('text tspan.TextPosition tspan').should('have.attr', 'font-size', '635px');
-
 		cy.cGet('#mobile-wizard .unoSubScript').click();
+		mobileHelper.closeMobileWizard();
 
-		triggerNewSVG();
+		impressHelper.triggerNewSVGForShapeInTheCenter();
 
 		cy.cGet('text tspan.TextPosition').invoke('attr','y').then((y)=>+y).should('be.gt',3500);
 		cy.cGet('text tspan.TextPosition').invoke('attr','y').then((y)=>+y).should('be.lt',3575);
