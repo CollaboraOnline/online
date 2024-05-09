@@ -615,36 +615,17 @@ L.Control.PartsPreview = L.Control.extend({
 		}
 	},
 
-	_onScroll: function (e) {
-		setTimeout(L.bind(function (e) {
-			var scrollOffset = 0;
-			if (e) {
-				var prevScrollY = this._scrollY;
-				var rectangle = e.target.getBoundingClientRect();
-				this._scrollY = this._direction === 'x' ? -rectangle.left : -rectangle.top;
-				scrollOffset = this._scrollY - prevScrollY;
-			}
-
-			var previewContBB = this._partsPreviewCont.getBoundingClientRect();
-			var extra =  this._direction === 'x' ? previewContBB.width : previewContBB.height;
-			var topBound = this._previewContTop - (scrollOffset < 0 ? extra : extra / 2);
-			var bottomBound = this._previewContTop + extra + (scrollOffset > 0 ? extra : extra / 2);
+	_onScroll: function () {
+		setTimeout(L.bind(function () {
 			for (var i = 0; i < this._previewTiles.length; ++i) {
-				var img = this._previewTiles[i];
-				if (img && img.parentNode && !img.fetched) {
-					var previewFrameBB = img.parentNode.getBoundingClientRect();
-					if (this._direction === 'x') {
-						if ((previewFrameBB.left >= topBound && previewFrameBB.left <= bottomBound)
-						|| (previewFrameBB.right >= topBound && previewFrameBB.right <= bottomBound)) {
-							this._map.getPreview(i, i, this.options.maxWidth, this.options.maxHeight, {autoUpdate: this.options.autoUpdate});
-						}
-					} else if ((previewFrameBB.top >= topBound && previewFrameBB.top <= bottomBound)
-						|| (previewFrameBB.bottom >= topBound && previewFrameBB.bottom <= bottomBound)) {
+				if (this._isPreviewVisible(i)) {
+					var img = this._previewTiles[i];
+					if (img && !img.fetched) {
 						this._map.getPreview(i, i, this.options.maxWidth, this.options.maxHeight, {autoUpdate: this.options.autoUpdate});
 					}
 				}
 			}
-		}, this, e), 0);
+		}, this), 0);
 	},
 
 	_isPreviewVisible: function(part) {
