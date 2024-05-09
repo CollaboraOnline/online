@@ -514,8 +514,10 @@ L.Map = L.Evented.extend({
 		var newTopLeftPx = sheetGeom.getCellRect(topLeftCell.x, topLeftCell.y, zoomScaleAbs)
 			.getTopLeft().divideBy(app.dpiScale);
 
-		var cursorInBounds = app.file.textCursor.visible ?
-			cssBounds.contains({ x: app.file.textCursor.rectangle.cX1, y: app.file.textCursor.rectangle.cY1 }) : false;
+		var cursorInBounds = false;
+
+		if (app.file.textCursor.visible)
+			cursorInBounds = app.file.viewedRectangle.containsPoint([app.file.textCursor.rectangle.x1, app.file.textCursor.rectangle.y1]);
 
 		var cursorActive = calcLayer.isCursorVisible();
 		if (cursorActive && cursorInBounds) {
