@@ -1112,6 +1112,27 @@ L.TextInput = L.Layer.extend({
 				this._map.fire('closementionpopup', { 'typingMention': false });
 			}
 		}
+
+        var formulaAutocompletePopup = L.DomUtil.get('formulaautocompletePopup');
+        if (formulaAutocompletePopup) {
+            if (ev.key === 'ArrowDown') {
+                var initialFocusElement = document.querySelector('#formulaautocompletePopup span');
+                if (initialFocusElement) {
+                    initialFocusElement.tabIndex = 0;
+                    initialFocusElement.focus();
+                    ev.preventDefault();
+                    ev.stopPropagation();
+                }
+            }
+		    else if (ev.key === 'ArrowLeft' || ev.key === 'ArrowRight' ||
+                ev.key === 'ArrowUp' || ev.key === 'Home' ||
+                ev.key === 'End' || ev.key === 'PageUp' ||
+                ev.key === 'PageDown' || ev.key === 'Enter' ||
+                ev.key === 'Escape' || ev.key === 'Control' ||
+                ev.key === 'Tab') {
+                this._map.fire('closeformulapopup');
+            }
+        }
 	},
 
 	// Check arrow keys on 'keyup' event; using 'ArrowLeft' or 'ArrowRight'

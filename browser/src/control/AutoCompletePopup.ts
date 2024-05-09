@@ -20,6 +20,7 @@ interface WidgetJSON {
 	enabled: boolean | undefined; // enabled state
 	visible: boolean | undefined; // visibility state
 	children: Array<WidgetJSON> | undefined; // child nodes
+	title?: string;
 }
 
 interface JSDialogJSON extends WidgetJSON {
@@ -100,10 +101,7 @@ abstract class AutoCompletePopup {
 	abstract onAdd(): void;
 
 	getCurrentCursorPosition(): Point {
-		var currPos = {
-			x: app.file.textCursor.rectangle.cX1,
-			y: app.file.textCursor.rectangle.cY2,
-		};
+		var currPos = this.map._docLayer._corePixelsToCss(this.map._docLayer._cursorCorePixels.getBottomLeft());
 		var origin = this.map.getPixelOrigin();
 		var panePos = this.map._getMapPanePos();
 		return new L.Point(

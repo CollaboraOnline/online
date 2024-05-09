@@ -700,7 +700,7 @@ L.Control.JSDialog = L.Control.extend({
 			instance.updatePos = this.setPosition.bind(this, instance);
 
 			// Special case for nonModal dialogues. Core side doesn't send their initial coordinates. We need to center them.
-			if (instance.nonModal) {
+			if (instance.nonModal && !(instance.startX && instance.startY)) {
 				this.centerDialogPosition(instance);
 			} else {
 				instance.updatePos();
