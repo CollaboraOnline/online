@@ -596,7 +596,13 @@ function _getCurrentEntry(listElements) {
 	}
 	if (currIndex < 0) {
 		for (var i in listElements) {
-			var parent = listElements[i].parentNode.parentNode;
+			var parent = listElements[i].parentNode;
+
+			if (parent)
+				parent = parent.parentNode;
+			else
+				break;
+
 			if (parent && L.DomUtil.hasClass(parent, 'selected')) {
 				currIndex = listElements.index(listElements[i]);
 				break;

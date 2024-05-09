@@ -849,6 +849,10 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	border-bottom-right-radius: var(--border-radius);
 }
 
+#formulaautocompletePopup .lokdialog {
+	padding: 0px;
+}
+
 .lokdialog.ui-dialog-content [Id$='Page'] {
 	grid-column-gap: 24px;
 }

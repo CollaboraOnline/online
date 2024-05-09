@@ -215,6 +215,8 @@ L.Control.UIManager = L.Control.extend({
 			this.map.addControl(this.map.sidebar);
 
 			this.map.mention = L.control.mention(this.map);
+			this.map.formulaautocomplete = L.control.formulaautocomplete(this.map);
+			this.map.formulausage = L.control.formulausage(this.map);
 		}
 
 		this.map.jsdialog = L.control.jsDialog();

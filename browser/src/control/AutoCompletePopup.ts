@@ -20,6 +20,7 @@ interface WidgetJSON {
 	enabled: boolean | undefined; // enabled state
 	visible: boolean | undefined; // visibility state
 	children: Array<WidgetJSON> | undefined; // child nodes
+	title?: string;
 }
 
 interface JSDialogJSON extends WidgetJSON {
