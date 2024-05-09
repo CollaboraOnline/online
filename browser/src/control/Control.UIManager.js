@@ -76,9 +76,10 @@ L.Control.UIManager = L.Control.extend({
 	},
 
 	shouldUseNotebookbarMode: function() {
-		var forceCompact = this.getSavedStateOrDefault('compactMode', null);
-		return (window.userInterfaceMode === 'notebookbar' && forceCompact === null)
-			|| forceCompact === false;
+		let forceCompact = this.getSavedStateOrDefault('compactMode', null);
+		// all other cases should default to notebookbar
+		let shouldUseClassic = (window.userInterfaceMode === 'compact' && forceCompact == null) || forceCompact === true;
+		return !shouldUseClassic;
 	},
 
 	// Dark mode toggle
