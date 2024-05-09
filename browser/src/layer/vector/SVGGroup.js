@@ -91,7 +91,7 @@ L.SVGGroup = L.Layer.extend({
 
 		var videoContainer = svgLastChild.querySelector('body');
 		var videos = svgLastChild.getElementsByTagName('video');
-		this.addVideoSupportHandlers(videos);
+		this.addVideoEventHandlers(videos);
 
 		function _fixSVGPos() {
 			var mat = svgLastChild.getScreenCTM();
@@ -110,7 +110,7 @@ L.SVGGroup = L.Layer.extend({
 		}
 	},
 
-	addVideoSupportHandlers: function(videos) {
+	addVideoEventHandlers: function(videos) {
 		if (!videos)
 			return;
 
@@ -138,8 +138,17 @@ L.SVGGroup = L.Layer.extend({
 					that.showUnsupportedVideoWarning();
 				});
 			}
-		}
 
+			/* When we try to open the video context menu, don't block the rightclick sending to core */
+			video.addEventListener('contextmenu', (event) => {
+				const latLng = this._map.mouseEventToLatLng(event);
+				const position = this._map._docLayer._latLngToTwips(latLng);
+				this._map._docLayer._postMouseEvent('buttondown', position.x, position.y, 1, 4, 0);
+
+				event.preventDefault();
+				event.stopPropagation();
+			});
+		}
 	},
 
 	showUnsupportedVideoWarning: function() {
