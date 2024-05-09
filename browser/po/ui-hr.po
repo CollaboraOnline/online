@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-04-12 19:29+0200\n"
-"PO-Revision-Date: 2024-02-29 10:21+0000\n"
+"PO-Revision-Date: 2024-04-25 12:07+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: Croatian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/hr/>\n"
-"Language: \n"
+"Language: hr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Weblate 5.5-dev\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Weblate 5.5.1-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -1110,7 +1110,7 @@ msgstr "Svi listovi"
 #: src/control/Control.Menubar.js:817
 #: src/control/jsdialog/Definitions.Menu.ts:300
 msgid "Condition..."
-msgstr "Stanje …"
+msgstr "Uvjet …"
 
 #: src/control/Control.Menubar.js:818
 #: src/control/jsdialog/Definitions.Menu.ts:303
@@ -1135,18 +1135,18 @@ msgstr "Između …"
 #: src/control/Control.Menubar.js:822
 #: src/control/jsdialog/Definitions.Menu.ts:319
 msgid "Duplicate..."
-msgstr ""
+msgstr "Duplikat …"
 
 #: src/control/Control.Menubar.js:823
 #: src/control/jsdialog/Definitions.Menu.ts:323
 msgid "Contains text..."
-msgstr ""
+msgstr "Sadrži tekst …"
 
 #: src/control/Control.Menubar.js:825 src/control/Control.Menubar.js:835
 #: src/control/jsdialog/Definitions.Menu.ts:327
 #: src/control/jsdialog/Definitions.Menu.ts:358
 msgid "More conditions..."
-msgstr "Više stanja …"
+msgstr "Više uvjeta …"
 
 #: src/control/Control.Menubar.js:827
 #: src/control/jsdialog/Definitions.Menu.ts:331
@@ -1176,12 +1176,12 @@ msgstr ""
 #: src/control/Control.Menubar.js:832
 #: src/control/jsdialog/Definitions.Menu.ts:350
 msgid "Above Average..."
-msgstr ""
+msgstr "Iznad prosjeka …"
 
 #: src/control/Control.Menubar.js:833
 #: src/control/jsdialog/Definitions.Menu.ts:354
 msgid "Below Average..."
-msgstr ""
+msgstr "Ispod prosjeka …"
 
 #: src/control/Control.Menubar.js:944 src/control/Control.Menubar.js:1009
 #: src/control/Control.Menubar.js:1073 src/control/Control.Menubar.js:1127
@@ -1215,7 +1215,7 @@ msgstr "Vrati na standardni jezik"
 #: src/control/Control.Menubar.js:1446 src/control/Control.Toolbar.js:132
 #: src/control/Control.Toolbar.js:179
 msgid "More..."
-msgstr "Daljnje …"
+msgstr "Više …"
 
 #: src/control/Control.Menubar.js:1727
 msgid "Use Compact view"
@@ -1773,19 +1773,19 @@ msgstr "%user je napustio/la"
 
 #: src/control/Control.UserList.ts:56
 msgid "Following %user"
-msgstr ""
+msgstr "Praćenje korisnika %user"
 
 #: src/control/Control.UserList.ts:57
 msgid "Following the editor"
-msgstr ""
+msgstr "Praćenje urednika"
 
 #: src/control/Control.UserList.ts:58
 msgid "Stop following"
-msgstr ""
+msgstr "Prekini praćenje"
 
 #: src/control/Control.UserList.ts:59
 msgid "Avatar for %user"
-msgstr ""
+msgstr "Avatar za %user"
 
 #: src/control/Control.UserList.ts:79
 msgid "%n users"
@@ -2301,7 +2301,7 @@ msgstr ""
 
 #: src/core/Socket.js:1227
 msgid "Server is shutting down"
-msgstr ""
+msgstr "Server se gasi"
 
 #: src/core/Socket.js:1259
 msgid "Exported to storage"
@@ -2741,24 +2741,23 @@ msgstr ""
 "novi</p>"
 
 #: src/map/Clipboard.js:1134
-#, fuzzy
 msgid ""
 "<p>Your browser has very limited access to the clipboard</p><p><b>Please "
 "press</b> <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to "
 "see more options</p><p>Close popup to ignore paste special</p>"
 msgstr ""
-"<p>Tvoj preglednik ima vrlo ograničen pristup međuspremniku</p><p>Pritisni: "
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd> V</kbd> za prikaz "
-"više opcija</p><p>Zatvori skočni prozor za zanemarivanje posebnog "
-"umetanja</p>"
+"<p>Tvoj preglednik ima vrlo ograničen pristup "
+"međuspremniku</p><p><b>Pritisni</b> <kbd>Ctrl</kbd><span class=\"kbd--plus\""
+">+</span><kbd> V</kbd> za prikaz više opcija</p><p>Zatvori skočni prozor za "
+"zanemarivanje posebnog umetanja</p>"
 
 #: src/map/Clipboard.js:1141
 msgid "Paste from this document"
-msgstr ""
+msgstr "Umetni iz ovog dokumenta"
 
 #: src/map/Clipboard.js:1141
 msgid "Cancel paste special"
-msgstr ""
+msgstr "Prekini posebno umetanje"
 
 #: src/map/Map.js:224
 msgid "Initializing..."
@@ -2802,11 +2801,11 @@ msgstr "Prazna dijaprojekcija"
 
 #: src/map/handler/Map.SlideShow.js:151
 msgid "Windowed Presentation: "
-msgstr ""
+msgstr "Prezentacija u prozoru: "
 
 #: src/map/handler/Map.SlideShow.js:158
 msgid "Windowed Presentation Blocked"
-msgstr "Prezentacija u prozorima blokirana"
+msgstr "Prezentacija u prozoru je blokirana"
 
 #: src/map/handler/Map.SlideShow.js:159
 msgid ""
@@ -2934,6 +2933,10 @@ msgid ""
 "translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
 "translate=\"true\">3</a>"
 msgstr ""
+"<a id=\"slide-1-indicator\" class=\"active\" href=\"#slide-1\" data-"
+"translate=\"true\">1</a> <a id=\"slide-2-indicator\" href=\"#slide-2\" data-"
+"translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
+"translate=\"true\">3</a>"
 
 #~ msgid ""
 #~ "<a id=\"slide-1-indicator\" class=\"active\" href=\"#slide-1\">1</a> <a "
