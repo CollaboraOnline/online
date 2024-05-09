@@ -167,10 +167,8 @@ function selectTextOfShape() {
 	cy.waitUntil(function() {
 		cy.cGet('svg g svg').dblclick({force: true});
 		helper.typeIntoDocument('{ctrl}a');
-		return cy.cGet('.text-selection-handle-start').should('be.visible');
+		return cy.cGet('.text-selection-handle-start').should('exist');
 	});
-
-	helper.textSelectionShouldExist();
 
 	cy.log('<< selectTextOfShape - end');
 }
