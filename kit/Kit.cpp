@@ -2926,10 +2926,14 @@ void lokit_main(
         SigUtil::setUserSignals();
     }
 
+    // Are we the first ever kit ? if so, we havn't tweaked our logging by
+    // the time we get here; FIXME: much of this is un-necessary duplication.
+
     // Reinitialize logging when forked.
     const bool logToFile = std::getenv("COOL_LOGFILE");
     const char* logFilename = std::getenv("COOL_LOGFILENAME");
     const char* logLevel = std::getenv("COOL_LOGLEVEL");
+    const char* logDisabledAreas = std::getenv("COOL_LOGDISABLED_AREAS");
     const char* logLevelStartup = std::getenv("COOL_LOGLEVEL_STARTUP");
     const bool logColor = config::getBool("logging.color", true) && isatty(fileno(stderr));
     std::map<std::string, std::string> logProperties;
@@ -2942,6 +2946,7 @@ void lokit_main(
 
     const std::string LogLevel = logLevel ? logLevel : "trace";
     const std::string LogLevelStartup = logLevelStartup ? logLevelStartup : "trace";
+
     const bool bTraceStartup = (std::getenv("COOL_TRACE_STARTUP") != nullptr);
     Log::initialize("kit", bTraceStartup ? LogLevelStartup : logLevel, logColor, logToFile, logProperties);
     if (bTraceStartup && LogLevel != LogLevelStartup)
@@ -2949,6 +2954,7 @@ void lokit_main(
         LOG_INF("Setting log-level to [" << LogLevelStartup << "] and delaying "
                 "setting to [" << LogLevel << "] until after Kit initialization.");
     }
+    const std::string LogDisabledAreas = logDisabledAreas ? logDisabledAreas : "";
 
     const char* pAnonymizationSalt = std::getenv("COOL_ANONYMIZATION_SALT");
     if (pAnonymizationSalt)
@@ -3351,6 +3357,7 @@ void lokit_main(
             LOG_INF("Kit initialization complete: setting log-level to [" << LogLevel << "] as configured.");
             Log::setLevel(LogLevel);
         }
+        Log::setDisabledAreas(LogDisabledAreas);
 #endif
 
 #ifndef IOS
