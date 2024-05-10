@@ -183,6 +183,7 @@ L.Map.include({
 				// skip this! we can't see it
 				continue;
 			this._previewRequestsOnFly++;
+			this.fire('beforerequestpreview', { part: tile[0] });
 			app.socket.sendMessage(tile[1]);
 			previewParts.push(tile[0]);
 		}
