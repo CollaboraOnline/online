@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-04-12 19:29+0200\n"
-"PO-Revision-Date: 2024-05-09 08:49+0000\n"
+"PO-Revision-Date: 2024-05-10 23:02+0000\n"
 "Last-Translator: Poe Mon <p.poemon.awitd@gmail.com>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/"
 "collabora-online/help/ja/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.5.4-rc\n"
+"X-Generator: Weblate 5.5.4\n"
 
 #: html/cool-help.html%2Bdiv.h1:84-5
 msgid "Keyboard Shortcuts"
@@ -395,7 +395,7 @@ msgstr "１文字ずつ左に選択"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:291-103
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:356-103
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Left</kbd>"
-msgstr "</kbd>Shift</kbd><span class=\"kbd--plus\">+</span>左矢印<kbd>"
+msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>左矢印</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:135-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:292-38
@@ -448,9 +448,7 @@ msgstr "１文字ずつ右に選択"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:360-104
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Right</kbd>"
-msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>右矢印</kbd>"
+msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>右矢印</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:139-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:296-38
@@ -698,7 +696,7 @@ msgstr "表示を1ページ分上に移動"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:157-90
 msgid "PageUp"
-msgstr "PageUp"
+msgstr "ページアップ"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:158-38
 msgid "Switch cursor between text and header"
@@ -706,7 +704,7 @@ msgstr "カーソル位置をテキストまたはヘッダーに切り替える
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:158-102
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp</kbd>"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>ページアップ</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:159-38
 msgid "Extend the selection up one page"
@@ -714,7 +712,7 @@ msgstr "選択を1ページ分上に広げる"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:159-97
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp</kbd>"
-msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp</kbd>"
+msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>ページアップ</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:160-38
 msgid "Move the view down one page"
@@ -722,7 +720,7 @@ msgstr "表示を1ページ分下に移動"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:160-92
 msgid "PageDown"
-msgstr "PageDown"
+msgstr "ページダウン"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:161-38
 msgid "Switch cursor between text and footer"
@@ -730,7 +728,7 @@ msgstr "カーソル位置をテキストまたはフッターに切り替える
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:161-102
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown</kbd>"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>ページダウン</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:162-38
 msgid "Extend the selection down one page"
@@ -738,7 +736,7 @@ msgstr "選択を1ページ分下に広げる"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:162-99
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown</kbd>"
-msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown</kbd>"
+msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>ページダウン</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:163-38
 msgid "Delete to beginning of word"
@@ -1002,8 +1000,8 @@ msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
 "class=\"kbd--plus\">+</span><kbd>Space</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>Space</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>スペース</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:199-38
 msgid "Insert line break"
@@ -1489,7 +1487,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.p:397-5 html/cool-help.html%2Bdiv.div.h3:480-5
 msgid "Opening, closing, saving, printing and downloading documents"
-msgstr ""
+msgstr "ドキュメントを開く、閉じる、保存、印刷、ダウンロードする"
 
 #: html/cool-help.html%2Bdiv.p:398-5 html/cool-help.html%2Bdiv.div.h3:490-5
 msgid "Editing documents"
@@ -1690,7 +1688,7 @@ msgstr "順方向検索"
 
 #: html/cool-help.html%2Bdiv.div.div.ul.li.p:465-11
 msgid "Cancel the search (appears only when a text has been searched)"
-msgstr ""
+msgstr "検索をキャンセル(テキストは検索された場合のみ表示されます)"
 
 #: html/cool-help.html%2Bdiv.div.div.p:469-5
 msgid ""
@@ -1699,16 +1697,22 @@ msgid ""
 "in. The zoom applies to the document area, the user interface is not "
 "affected. The current level of zoom is shown in this area."
 msgstr ""
+"<span class=\"def\">The zoom bar:</span> サイドバーの右下に、ドキュメントを拡"
+"大できるボタンがあります。ドキュメントのみ拡大できます。拡大のレベルはエリア"
+"内で表示されています。現在の拡大レベルも確認できます。"
 
 #: html/cool-help.html%2Bdiv.div.div.p:470-5
 msgid ""
 "Text, charts, shapes and svg images will stay sharp, when zooming in, you "
 "will only see pixels appear at inserted images, such as jpg’s or png’s."
 msgstr ""
+"テキスト、グラフ、図形、SVG 画像は鮮明なままですが、ズームインすると、jpg や "
+"png などの挿入された画像にのみピクセルが表示されます。"
 
 #: html/cool-help.html%2Bdiv.div.div.p:471-5
 msgid "Using the browser zoom affects the document and user interface areas."
-msgstr ""
+msgstr "ブラウザから拡大・縮小する場合、ドキュメント、メニュー、サイドバーなど全てが"
+"拡大・縮小されます。"
 
 #: html/cool-help.html%2Bdiv.div.div.p:474-5
 msgid ""
@@ -1716,12 +1720,16 @@ msgid ""
 "bar, a set of information on the document is displayed. The actual "
 "information depends on the nature of the document."
 msgstr ""
+"<span class=\"def\">The information bar:</span>検索ボックスの右側にドキュメン"
+"トの情報が確認できます。ドキュメントにより情報が異なります。"
 
 #: html/cool-help.html%2Bdiv.div.p:481-5
 msgid ""
 "Your documents are stored and managed in the cloud storage that is "
 "integrated with <span class=\"productname\">%productName</span>."
 msgstr ""
+"ドキュメントは、<span class=\"productname\">%productName</span> "
+"と統合されたクラウド ストレージに保存および管理されます。"
 
 #: html/cool-help.html%2Bdiv.div.div.p:482-30
 msgid ""
@@ -1730,6 +1738,10 @@ msgid ""
 "class=\"ui\">File</span> menu. The download formats available depends on the "
 "application. All applications exports documents in PDF format."
 msgstr ""
+"ドキュメントをダウンロードするには、 <span class=\"productname\""
+">%productName</span> アプリケーションの<span class=\"ui\">File</span>メニュー"
+"からダウンロードできます。利用可能な拡張子はアプリケーションにより異なります"
+"。全てのアプリケーションはドキュメントをPDF拡張子でエクスポートできます。"
 
 #: html/cool-help.html%2Bdiv.div.div.p:483-30
 msgid ""
@@ -1737,6 +1749,9 @@ msgid ""
 "class=\"productname\">%productName</span> module associated to the document "
 "format."
 msgstr ""
+"ドキュメントを開くには、ファイルをクリックして、"
+"ドキュメント形式に関連付けられた <span class=\"productname\">%productName</"
+"span> モジュールを開きます。"
 
 #: html/cool-help.html%2Bdiv.div.div.p:484-30
 msgid ""
@@ -1745,6 +1760,9 @@ msgid ""
 "quickly as possible you can also force saving using the <span "
 "class=\"ui\">File</span> menu’s <span class=\"ui\">Save</span> entry."
 msgstr ""
+"<span class=\"productname\">%productName</span> 内のドキュメントは自動的に保"
+"存されていますが、ドキュメントができるだけ早く同期されることが心配な場合は、 "
+"<span class=\"ui\">File</span> menu’s <span class=\"ui\">Save</span> entry."
 
 #: html/cool-help.html%2Bdiv.div.div.p:485-30
 msgid ""
@@ -2090,7 +2108,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.div.img[alt]:592-34
 msgid "filter"
-msgstr ""
+msgstr "フィルター"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:594-11
 msgid ""
