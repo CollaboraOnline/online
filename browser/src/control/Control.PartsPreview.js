@@ -60,6 +60,8 @@ L.Control.PartsPreview = L.Control.extend({
 		map.on('deletepage', this._deletePreview, this);
 		map.on('scrolllimits', this._invalidateParts, this);
 		map.on('scrolltopart', this._scrollToPart, this);
+		map.on('beforerequestpreview', this._beforeRequestPreview, this);
+
 		window.addEventListener('resize', L.bind(this._resize, this));
 	},
 
@@ -557,6 +559,12 @@ L.Control.PartsPreview = L.Control.extend({
 
 		this._height = window.innerHeight;
 		this._width = window.innerWidth;
+	},
+
+	_beforeRequestPreview: function (e) {
+		if (e.part !== undefined && e.part >= 0 && e.part < this._previewTiles.length &&
+		   this._previewTiles[e.part].src === document.querySelector('meta[name="previewSmile"]').content)
+			this._previewTiles[e.part].src = document.querySelector('meta[name="previewImg"]').content;
 	},
 
 	_updatePreview: function (e) {
