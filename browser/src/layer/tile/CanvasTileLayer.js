@@ -949,22 +949,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		// Graphic Selected?
 		this._hasActiveSelection = false;
 
-		this._referenceMarkerStart = L.marker(new L.LatLng(0, 0), {
-			icon: L.divIcon({
-				className: 'spreadsheet-cell-resize-marker',
-				iconSize: null
-			}),
-			draggable: true
-		});
-
-		this._referenceMarkerEnd = L.marker(new L.LatLng(0, 0), {
-			icon: L.divIcon({
-				className: 'spreadsheet-cell-resize-marker',
-				iconSize: null
-			}),
-			draggable: true
-		});
-
 		this._initializeTableOverlay();
 
 		this._emptyTilesCount = 0;
@@ -3294,25 +3278,6 @@ L.CanvasTileLayer = L.Layer.extend({
 				&& this._selectedPart === this._referencesAll[i].part) {
 				this._references.addMark(this._referencesAll[i].mark);
 			}
-			if (!window.mode.isDesktop()) {
-				if (!this._referenceMarkerStart.isDragged) {
-					this._map.addLayer(this._referenceMarkerStart);
-					var sizeStart = this._referenceMarkerStart._icon.getBoundingClientRect();
-					var posStart = this._referencesAll[i].mark.getBounds().getTopLeft().divideBy(app.dpiScale);
-					posStart = posStart.subtract(new L.Point(sizeStart.width / 2, sizeStart.height / 2));
-					posStart = this._map.unproject(posStart);
-					this._referenceMarkerStart.setLatLng(posStart);
-				}
-
-				if (!this._referenceMarkerEnd.isDragged) {
-					this._map.addLayer(this._referenceMarkerEnd);
-					var sizeEnd = this._referenceMarkerEnd._icon.getBoundingClientRect();
-					var posEnd = this._referencesAll[i].mark.getBounds().getBottomRight().divideBy(app.dpiScale);
-					posEnd = posEnd.subtract(new L.Point(sizeEnd.width / 2, sizeEnd.height / 2));
-					posEnd = this._map.unproject(posEnd);
-					this._referenceMarkerEnd.setLatLng(posEnd);
-				}
-			}
 		}
 	},
 
@@ -3676,11 +3641,6 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	_clearReferences: function () {
 		this._references.clear();
-
-		if (!this._referenceMarkerStart.isDragged)
-			this._map.removeLayer(this._referenceMarkerStart);
-		if (!this._referenceMarkerEnd.isDragged)
-			this._map.removeLayer(this._referenceMarkerEnd);
 	},
 
 	_postMouseEvent: function(type, x, y, count, buttons, modifier) {
@@ -3854,8 +3814,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_allowViewJump: function() {
-		return (!this._map._clip || this._map._clip._selectionType !== 'complex') &&
-		!this._referenceMarkerStart.isDragged && !this._referenceMarkerEnd.isDragged;
+		return (!this._map._clip || this._map._clip._selectionType !== 'complex');
 	},
 
 	// Scrolls the view to selected position
@@ -3874,8 +3833,6 @@ L.CanvasTileLayer = L.Layer.extend({
 	_onUpdateCursor: function (scroll, zoom, keepCaretPositionRelativeToScreen) {
 
 		if (!app.file.textCursor.visible ||
-			this._referenceMarkerStart.isDragged ||
-			this._referenceMarkerEnd.isDragged ||
 			this._map.ignoreCursorUpdate()) {
 			return;
 		}
@@ -4346,31 +4303,6 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._map.sendUnoCommand('.uno:TransformDialog ', param);
 			this._graphicMarker.isDragged = false;
 			this._graphicMarker.setVisible(false);
-		}
-	},
-
-	_onReferenceMarkerDrag: function(e) {
-		if (e.type === 'dragstart') {
-			e.target.isDragged = true;
-			window.IgnorePanning = true;
-		}
-		else if (e.type === 'drag') {
-			var startPos = this._map.project(this._referenceMarkerStart.getLatLng());
-			var startSize = this._referenceMarkerStart._icon.getBoundingClientRect();
-			startPos = startPos.add(new L.Point(startSize.width, startSize.height));
-			var start = this.sheetGeometry.getCellFromPos(this._latLngToTwips(this._map.unproject(startPos)), 'tiletwips');
-
-			var endPos = this._map.project(this._referenceMarkerEnd.getLatLng());
-			var endSize = this._referenceMarkerEnd._icon.getBoundingClientRect();
-			endPos = endPos.subtract(new L.Point(endSize.width / 2, endSize.height / 2));
-			var end = this.sheetGeometry.getCellFromPos(this._latLngToTwips(this._map.unproject(endPos)), 'tiletwips');
-
-			this._sendReferenceRangeCommand(start.x, start.y, end.x, end.y);
-		}
-		else if (e.type === 'dragend') {
-			e.target.isDragged = false;
-			window.IgnorePanning = undefined;
-			this._updateReferenceMarks();
 		}
 	},
 
@@ -5388,9 +5320,6 @@ L.CanvasTileLayer = L.Layer.extend({
 				this._clearSelections();
 			}
 		}, this);
-
-		this._referenceMarkerStart.on('dragstart drag dragend', this._onReferenceMarkerDrag, this);
-		this._referenceMarkerEnd.on('dragstart drag dragend', this._onReferenceMarkerDrag, this);
 
 		map.setPermission(app.file.permission);
 

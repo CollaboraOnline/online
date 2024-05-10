@@ -167,16 +167,6 @@
 	cursor: row-resize;
 }
 
-.spreadsheet-cell-resize-marker {
-	margin-left: 0px;
-	margin-top: 0px;
-	width: 16px;
-	height: 16px;
-	background-image: url('images/cell-resize-marker.svg');
-	background-size: 100% 100%;
-	background-repeat: no-repeat;
-}
-
 .spreadsheet-cell-autofill-marker {
 	margin-left: 0px;
 	margin-top: 0px;
