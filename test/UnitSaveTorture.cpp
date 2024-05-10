@@ -34,6 +34,7 @@ class UnitSaveTorture : public UnitWSD
     void saveTortureOne(const std::string& name, const std::string& docName);
 
     void testModified();
+    void testTileCombineRace();
     void testSaveTorture();
 
     void configure(Poco::Util::LayeredConfiguration& config) override
@@ -67,6 +68,26 @@ class UnitSaveTorture : public UnitWSD
     {
         FileUtil::removeFile(getJailRootPath(name));
         TST_LOG("removed stamp " << name);
+    }
+
+    bool getSaveResult(const std::vector<char> &message, bool &success)
+    {
+        success = false;
+        if (message.size() == 0)
+            return false;
+
+        Poco::JSON::Object::Ptr object;
+        if (!JsonUtil::parseJSON(std::string(message.data(), message.size()), object))
+            return false;
+
+        // We can get .uno:Modified and other unocommandresults.
+        if (JsonUtil::getJSONValue<std::string>(object, "commandName") == ".uno:Save")
+        {
+            success = JsonUtil::getJSONValue<bool>(object, "success");
+            return true;
+        }
+
+        return false;
     }
 
 public:
@@ -144,6 +165,52 @@ void UnitSaveTorture::testModified()
 
         TST_LOG("wait for confirmation of (non-)modification:");
         LOK_ASSERT_EQUAL(waitForModifiedStatus(name, wsSession, std::chrono::seconds(3)), false);
+    }
+
+    poll->joinThread();
+}
+
+void UnitSaveTorture::testTileCombineRace()
+{
+    std::string name = "testModified";
+    std::string docName = "empty.ods";
+
+    std::string documentPath, documentURL;
+    helpers::getDocumentPathAndURL(docName, documentPath, documentURL, name);
+
+    TST_LOG("Starting test on " << documentURL << ' ' << documentPath);
+
+    std::shared_ptr<SocketPoll> poll = std::make_shared<SocketPoll>("WebSocketPoll");
+    poll->startThread();
+
+    Poco::URI uri(helpers::getTestServerURI());
+    auto wsSession = helpers::loadDocAndGetSession(poll, docName, uri, testname);
+
+    TST_LOG("modify document");
+    modifyDocument(wsSession);
+
+    // We need the tilecombine and save in the same drainQueue in this order:
+    createStamp("holddrainqueue");
+
+    wsSession->sendMessage(std::string("tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680 tileposy=0,0,0 tilewidth=3840 tileheight=3840"));
+
+    // Force a background save-as-auto-save now
+    forceAutosave = true;
+    wsSession->sendMessage(std::string("save dontTerminateEdit=0 dontSaveIfUnmodified=0"));
+
+    removeStamp("holddrainqueue");
+
+    // Check the save succeeded & kit didn't crash
+    while (true)
+    {
+        std::chrono::seconds timeout = std::chrono::seconds(10);
+        auto message = wsSession->waitForMessage("unocommandresult:", timeout, name);
+        bool success;
+        if (getSaveResult(message, success))
+        {
+            LOK_ASSERT_EQUAL(success, true);
+            break;
+        }
     }
 
     poll->joinThread();
@@ -236,14 +303,10 @@ void UnitSaveTorture::saveTortureOne(
         while (true)
         {
             message = wsSession->waitForMessage("unocommandresult:", timeout, name);
-            LOK_ASSERT(message.size() > 0);
-            Poco::JSON::Object::Ptr object;
-            LOK_ASSERT(JsonUtil::parseJSON(std::string(message.data(), message.size()), object));
-
-            // We can get .uno:Modified here.
-            if (JsonUtil::getJSONValue<std::string>(object, "commandName") == ".uno:Save")
+            bool success;
+            if (getSaveResult(message, success))
             {
-                LOK_ASSERT_EQUAL(JsonUtil::getJSONValue<bool>(object, "success"), true);
+                LOK_ASSERT_EQUAL(success, true);
                 break;
             }
         }
@@ -297,6 +360,8 @@ void UnitSaveTorture::invokeWSDTest()
 {
     testModified();
 
+    testTileCombineRace();
+
     testSaveTorture();
 
     exitTest(TestResult::Ok);
@@ -305,12 +370,17 @@ void UnitSaveTorture::invokeWSDTest()
 // Inside the forkit & kit processes
 class UnitKitSaveTorture : public UnitKit
 {
+    bool stampExists(const std::string &name)
+    {
+        return FileUtil::Stat(std::string("/tmp/") + name).exists();
+    }
+
     void waitWhileStamp(const std::string &name)
     {
         std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
-        while (FileUtil::Stat(std::string("/tmp/") + name).exists())
+        while (stampExists(name))
         {
-            TST_LOG("wait for stamp " << name);
+            TST_LOG("stamp exists " << name);
             if (std::chrono::steady_clock::now() - start > std::chrono::seconds(10))
             {
                 LOK_ASSERT_FAIL("Timed out while waiting for stamp file " + name + " to go");
@@ -318,7 +388,7 @@ class UnitKitSaveTorture : public UnitKit
             }
             std::this_thread::sleep_for(std::chrono::milliseconds(100));
         }
-        TST_LOG("found stamp " << name);
+        TST_LOG("stamp removed " << name);
     }
 
 public:
@@ -330,6 +400,11 @@ public:
     virtual bool filterKitMessage(WebSocketHandler *, std::string & /* message */) override
     {
         return false;
+    }
+
+    virtual bool filterDrainQueue() override
+    {
+        return stampExists("holddrainqueue");
     }
 
     virtual void postBackgroundSaveFork() override

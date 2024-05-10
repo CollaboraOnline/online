@@ -565,6 +565,12 @@ public:
     virtual void postBackgroundSaveFork() {}
     virtual void preBackgroundSaveExit() {}
 
+    /// Kit hit drainQueue
+    virtual bool filterDrainQueue()
+    {
+        return false;
+    }
+
     /// Kit got a message
     virtual bool filterKitMessage(WebSocketHandler *, std::string &/* message */ )
     {
