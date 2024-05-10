@@ -3,9 +3,13 @@
 #include "config.h"
 
 #include "Admin.hpp"
+#include <fuzzer/Common.hpp>
 
 extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size)
 {
+    static bool initialized = fuzzer::DoInitialization();
+    (void)initialized;
+
     Admin& admin = Admin::instance();
     auto handler = std::make_shared<AdminSocketHandler>(&admin);
 

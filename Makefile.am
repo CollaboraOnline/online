@@ -223,6 +223,7 @@ coolforkit_SOURCES += \
 		       common/DummyTraceEventEmitter.cpp
 
 common_fuzzer_sources = \
+		       fuzzer/Common.cpp \
 		       common/DummyTraceEventEmitter.cpp \
 		       $(coolwsd_sources) \
 		       wsd/coolwsd-inproc.cpp \

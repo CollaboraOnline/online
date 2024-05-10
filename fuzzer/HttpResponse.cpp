@@ -3,9 +3,13 @@
 #include "config.h"
 
 #include <net/HttpRequest.hpp>
+#include <fuzzer/Common.hpp>
 
 extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size)
 {
+    static bool initialized = fuzzer::DoInitialization();
+    (void)initialized;
+
     for (size_t i = 0; i < size; ++i)
     {
         http::Response response;
