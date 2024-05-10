@@ -106,6 +106,10 @@ L.LOUtil = {
 		if (path.substr(0,1) !== '/')
 			url += '/';
 		url += path;
+
+		// append WOPISrc
+		if (window.wopiSrc)
+			url += "?WOPISrc=" + encodeURIComponent(window.wopiSrc)
 		return url;
 	},
 	setImage: function(img, name, map) {
