@@ -808,6 +808,7 @@ L.Control.PartsPreview = L.Control.extend({
 			return;
 
 		for (var part = 0; part < this._previewTiles.length; part++) {
+			this._previewTiles[part].fetched = false;
 			this._map.getPreview(part, part,
 					     this.options.maxWidth,
 					     this.options.maxHeight,
