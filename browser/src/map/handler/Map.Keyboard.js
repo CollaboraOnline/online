@@ -457,7 +457,7 @@ L.Map.Keyboard = L.Handler.extend({
 		}
 
 		var docLayer = this._map._docLayer;
-		if (!keyEventFn && docLayer.postKeyboardEvent) {
+		if (!keyEventFn && docLayer && docLayer.postKeyboardEvent) {
 			// default is to post keyboard events on the document
 			keyEventFn = L.bind(docLayer.postKeyboardEvent, docLayer);
 		}
