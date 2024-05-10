@@ -514,6 +514,8 @@ L.TileSectionManager = L.Class.extend({
 		var canvasOverlay = this._layer._canvasOverlay;
 
 		var rafFunc = function (timeStamp, final) {
+			painter._layer._refreshRowColumnHeaders();
+
 			// Draw zoom frame with grids and directly from the tiles.
 			// This will clear the doc area first.
 			painter._tilesSection.drawZoomFrame(ctx);

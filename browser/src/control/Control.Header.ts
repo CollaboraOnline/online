@@ -696,51 +696,84 @@ export class HeaderInfo {
 
 	update(section: CanvasSectionObject): void {
 		const cellSelections: cool.Rectangle[] = this._map._docLayer._cellSelections;
-		let currentIndex = -1;
 
+		let currentIndex: number;
 		if (app.calc.cellCursorVisible) {
 			currentIndex = this._isColumn ? app.calc.cellAddress.x: app.calc.cellAddress.y;
+		} else {
+			currentIndex = -1;
 		}
 
-		const startPx = this._isColumn === true ? section.documentTopLeft[0]: section.documentTopLeft[1];
+		const tsManager = this._map._docLayer._painter;
+		const ctx = tsManager._paintContext();
+
+		const splitPos = this._isColumn ?
+			ctx.splitPos.x
+			: ctx.splitPos.y;
+
+		let startPx: number;
+		let scale: number;
+		if (tsManager._inZoomAnim) {
+			const viewBounds = ctx.viewBounds;
+			const freePaneBounds = new L.Bounds(viewBounds.min.add(ctx.splitPos), viewBounds.max);
+
+			scale = tsManager._zoomFrameScale;
+
+			const zoomPos = tsManager._getZoomDocPos(
+				tsManager._newCenter,
+				tsManager._layer._pinchStartCenter,
+				freePaneBounds,
+				{ freezeX: false, freezeY: false },
+				ctx.splitPos,
+				scale,
+				false
+			);
+
+			startPx = this._isColumn ?
+				zoomPos.topLeft.x
+				: zoomPos.topLeft.y;
+		} else {
+			startPx = this._isColumn ?
+				section.documentTopLeft[0] + splitPos
+				: section.documentTopLeft[1] + splitPos;
+			scale = 1;
+		}
+
+		const endPx = this._isColumn ?
+			startPx + section.size[0] / scale
+			: startPx + section.size[1] / scale;
+
 		this._docVisStart = startPx;
-		const endPx = startPx + (this._isColumn === true ? section.size[0]: section.size[1]);
 		let startIdx = this._dimGeom.getIndexFromPos(startPx, 'corepixels');
 		const endIdx = Math.min(this._dimGeom.getIndexFromPos(endPx - 1, 'corepixels'), 1048576 - 1);
 		this._elements = [];
 
-		const splitPosContext = this._map.getSplitPanesContext();
-
 		this._hasSplits = false;
 		this._splitIndex = 0;
-		let splitPos = 0;
 
-		if (splitPosContext) {
-
-			splitPos = (this._isColumn ? splitPosContext.getSplitPos().x : splitPosContext.getSplitPos().y) * app.dpiScale;
+		if (splitPos) {
 			const splitIndex = this._dimGeom.getIndexFromPos(splitPos + 1, 'corepixels');
 
 			if (splitIndex) {
-				// Make sure splitPos is aligned to the cell boundary.
-				splitPos = this._dimGeom.getElementData(splitIndex).startpos;
 				this._splitPos = splitPos;
-				this._dimGeom.forEachInRange(0, splitIndex - 1,
-					function (idx: number, data: DimensionPosSize) {
+				this._dimGeom.forEachInRange(0,
+					splitIndex - 1,
+					(idx: number, data: DimensionPosSize) => {
 						this._elements[idx] = {
 							index: idx,
-							pos: data.startpos + data.size, // end position on the header canvas
-							size: data.size,
+							pos: (data.startpos + data.size) * scale, // end position on the header canvas
+							size: data.size * scale,
 							origsize: data.size,
 							isHighlighted: this.isHeaderEntryHighLighted(cellSelections, data.startpos + data.size * 0.5),
-							isCurrent: idx === currentIndex ? true: false
+							isCurrent: idx === currentIndex
 						};
-					}.bind(this)
+					}
 				);
 
 				this._hasSplits = true;
 				this._splitIndex = splitIndex;
 
-				const freeStartPos = startPx + splitPos + 1;
+				const freeStartPos = startPx;
 				const freeStartIndex = this._dimGeom.getIndexFromPos(freeStartPos + 1, 'corepixels');
 
 				startIdx = freeStartIndex;
@@ -749,29 +782,31 @@ export class HeaderInfo {
 
 		// first free index
 		const dataFirstFree = this._dimGeom.getElementData(startIdx);
-		const firstFreeEnd = dataFirstFree.startpos + dataFirstFree.size - startPx;
+		const firstFreeEnd = dataFirstFree.startpos + dataFirstFree.size - startPx + splitPos;
 		const firstFreeStart = splitPos;
 		const firstFreeSize = Math.max(0, firstFreeEnd - firstFreeStart);
 		this._elements[startIdx] = {
 			index: startIdx,
-			pos: firstFreeEnd, // end position on the header canvas
-			size: firstFreeSize,
+			pos: firstFreeEnd * scale, // end position on the header canvas
+			size: firstFreeSize * scale,
 			origsize: dataFirstFree.size,
 			isHighlighted: this.isHeaderEntryHighLighted(cellSelections, dataFirstFree.startpos + dataFirstFree.size * 0.5),
-			isCurrent: startIdx === currentIndex ? true: false
+			isCurrent: startIdx === currentIndex
 		};
 
 		this._dimGeom.forEachInRange(startIdx + 1,
-			endIdx, function (idx: number, data: DimensionPosSize) {
+			endIdx,
+			(idx: number, data: DimensionPosSize) => {
 				this._elements[idx] = {
 					index: idx,
-					pos: data.startpos - startPx + data.size, // end position on the header canvas
-					size: data.size,
+					pos: (data.startpos - startPx + splitPos + data.size) * scale, // end position on the header canvas
+					size: data.size * scale,
 					origsize: data.size,
 					isHighlighted: this.isHeaderEntryHighLighted(cellSelections, data.startpos + data.size * 0.5),
-					isCurrent: idx === currentIndex ? true: false
+					isCurrent: idx === currentIndex
 				};
-			}.bind(this));
+			}
+		);
 
 		this._startIndex = startIdx;
 		this._endIndex = endIdx;
