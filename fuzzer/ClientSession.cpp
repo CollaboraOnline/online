@@ -3,11 +3,14 @@
 #include "config.h"
 
 #include "ClientSession.hpp"
+#include <fuzzer/Common.hpp>
 
 bool DoInitialization()
 {
     COOLWSD::ChildRoot = "/fuzz/child-root";
     UnitBase::init(UnitBase::UnitType::Wsd, std::string());
+
+    fuzzer::DoInitialization();
     return true;
 }
 
@@ -20,7 +23,7 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size)
     Poco::URI uriPublic;
     std::string docKey = "/fuzz/fuzz.odt";
     auto docBroker = std::make_shared<DocumentBroker>(DocumentBroker::ChildType::Interactive, uri,
-                                                      uriPublic, docKey);
+                                                      uriPublic, docKey, 0, nullptr);
 
     std::shared_ptr<ProtocolHandlerInterface> ws;
     std::string id;

@@ -33,6 +33,7 @@
 #include <net/HttpRequest.hpp>
 #include <FileUtil.hpp>
 #include <Util.hpp>
+#include <fuzzer/Common.hpp>
 
 class HttpRequestTests final
 {
@@ -125,6 +126,9 @@ public:
 
 extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size)
 {
+    static bool initialized = fuzzer::DoInitialization();
+    (void)initialized;
+
     static HttpRequestTests test;
 
     http::Request httpRequest("/inject/" + Util::bytesToHexString(data, size));
