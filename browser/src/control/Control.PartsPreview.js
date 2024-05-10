@@ -61,6 +61,7 @@ L.Control.PartsPreview = L.Control.extend({
 		map.on('scrolllimits', this._invalidateParts, this);
 		map.on('scrolltopart', this._scrollToPart, this);
 		map.on('beforerequestpreview', this._beforeRequestPreview, this);
+		map.on('inspectpreview', this._inspectPreviews, this);
 
 		window.addEventListener('resize', L.bind(this._resize, this));
 	},
@@ -816,6 +817,25 @@ L.Control.PartsPreview = L.Control.extend({
 					      fetchThumbnail: this.options.fetchThumbnail});
 		}
 
+	},
+
+	_inspectPreviews: function () {
+		var windowPreview = window.open('');
+		if (!windowPreview)
+			return;
+
+		windowPreview.document.title = 'Inspect Previews';
+		var container = L.DomUtil.create('div', '', windowPreview.document.body);
+		if (!container)
+			return;
+
+		for (var part = 0; part < this._previewTiles.length; part++) {
+			var img = L.DomUtil.create('img', '', container);
+			if (img) {
+				img.src = this._previewTiles[part].src;
+				img.style.display = 'block';
+			}
+		}
 	},
 });
 

@@ -777,8 +777,12 @@ L.Map.Keyboard = L.Handler.extend({
 				}
 			} else if (e.altKey) {
 				switch (e.keyCode) {
-					case this.keyCodes.D: // Ctrl + Shift + Alt + d for tile debugging mode
-						this._map._debug.toggle();
+				case this.keyCodes.D: // Ctrl + Shift + Alt + d for tile debugging mode
+					this._map._debug.toggle();
+					break;
+				case this.keyCodes.E: // Ctrl + Shift + Alt + e for inspect previews
+					this._map.fire('inspectpreview');
+					break;
 				}
 			}
 
