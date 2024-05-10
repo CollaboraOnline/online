@@ -301,8 +301,8 @@ unsigned AdminModel::getKitsMemoryUsage()
 
     if (docs > 0)
     {
-        LOG_TRC("Got total Kits memory of " << totalMem << " bytes for " << docs <<
-                " docs, avg: " << static_cast<double>(totalMem) / docs << " bytes / doc.");
+        LOGA_TRC(Admin, "Got total Kits memory of " << totalMem << " bytes for " << docs <<
+                 " docs, avg: " << static_cast<double>(totalMem) / docs << " bytes / doc.");
     }
 
     return totalMem;

@@ -283,9 +283,6 @@ static void cleanupChildren()
     int status = 0;
     int segFaultCount = 0;
 
-    LOG_TRC("cleanupChildren with " << childJails.size()
-                                    << (childJails.size() == 1 ? " child" : " children"));
-
     // Reap quickly without doing slow cleanup so WSD can spawn more rapidly.
     while ((exitedChildPid = waitpid(-1, &status, WUNTRACED | WNOHANG)) > 0)
     {
@@ -321,7 +318,7 @@ static void cleanupChildren()
         }
     }
 
-    if (Log::traceEnabled())
+    if (Log::traceEnabled() && cleanupJailPaths.size() > 0)
     {
         std::ostringstream oss;
         for (const auto& pair : childJails)
