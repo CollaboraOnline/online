@@ -93,6 +93,7 @@
         -->
         <level type="string" desc="Can be 0-8 (with the lowest numbers being the least verbose), or none (turns off logging), fatal, critical, error, warning, notice, information, debug, trace" default="@COOLWSD_LOGLEVEL@">@COOLWSD_LOGLEVEL@</level>
         <level_startup type="string" desc="As for level - but for the initial startup phase which is most problematic, logging reverts to level configured above when startup is complete" default="trace">trace</level_startup>
+        <disabled_areas type="string" desc="High verbosity logging ie. info to trace are disable-able, comma separated: Generic, Socket, WebSocket, Http, WebServer, Storage, WOPI, Admin, Javascript" default="Socket,WebSocket,Admin">Socket,WebSocket,Admin</disabled_areas>
         <most_verbose_level_settable_from_client type="string" desc="A loggingleveloverride message from the client can not set a more verbose log level than this" default="notice">notice</most_verbose_level_settable_from_client>
         <least_verbose_level_settable_from_client type="string" desc="A loggingleveloverride message from a client can not set a less verbose log level than this" default="fatal">fatal</least_verbose_level_settable_from_client>
         <protocol type="bool" desc="Enable minimal client-site JS protocol logging from the start">@ENABLE_DEBUG_PROTOCOL@</protocol>

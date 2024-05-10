@@ -28,6 +28,7 @@
 #endif
 
 #include "Util.hpp"
+#include "StateEnum.hpp"
 
 namespace Log
 {
@@ -43,6 +44,18 @@ namespace Log
         TRC,     // Trace
         MAX
     };
+
+    // Different logging domains
+    STATE_ENUM(Area,
+               Generic,
+               Socket,
+               WebSocket,
+               Http,
+               WebServer,
+               Storage,
+               WOPI,
+               Admin,
+               Javascript);
 
     /// Initialize the logging system.
     void initialize(const std::string& name,
@@ -73,7 +86,7 @@ namespace Log
     }
 
     /// is a certain level of logging enabled ?
-    bool isEnabled(Level l);
+    bool isEnabled(Level l, Area a = Area::Generic);
 
     inline bool traceEnabled()
     {
@@ -85,6 +98,9 @@ namespace Log
 
     /// Setting the logging level
     void setLevel(const std::string &l);
+
+    /// Set disabled areas
+    void setDisabledAreas(const std::string &areas);
 
     /// Getting the logging level
     Level getLevel();
@@ -171,17 +187,17 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
         LOG.flush();       \
     } while (false)
 
-#define LOG_MESSAGE_(LVL, X, PREFIX, SUFFIX)    \
+#define LOG_MESSAGE_(LVL, A, X, PREFIX, SUFFIX)  \
     do                                          \
     {                                           \
-        if (LOG_CONDITIONAL(LVL))               \
+        if (LOG_CONDITIONAL(LVL, A))              \
         {                                       \
-            LOG_BODY_(LVL, X, PREFIX, SUFFIX);  \
+            LOG_BODY_(LVL, X, PREFIX, SUFFIX);    \
         }                                       \
     } while (false)
 
 
-#define LOG_BODY_(LVL, X, PREFIX, END)          \
+#define LOG_BODY_(LVL, X, PREFIX, END)        \
     char b_[1024];                              \
     std::ostringstream oss_(                    \
         Log::prefix<sizeof(b_) - 1>(b_, #LVL),  \
@@ -202,19 +218,26 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
     Log::log(Log::Level::INF, oss_.str());
 
 #if defined __GNUC__ || defined __clang__
-#  define LOG_CONDITIONAL(type)                 \
-    __builtin_expect(Log::isEnabled(Log::Level::type), 0)
+#  define LOG_CONDITIONAL(type, area)  \
+    __builtin_expect(Log::isEnabled(Log::Level::type, Log::Area::area), 0)
 #else
-#  define LOG_CONDITIONAL(type) Log::isEnabled(Log::Level::type)
+#  define LOG_CONDITIONAL(type) Log::isEnabled(Log::Level::type, Log::Level::area)
 #endif
 
-#define LOG_TRC(X)        LOG_MESSAGE_(TRC, X, logPrefix, LOG_END)
-#define LOG_TRC_NOFILE(X) LOG_MESSAGE_(TRC, X, logPrefix, LOG_END_NOFILE)
-#define LOG_DBG(X)        LOG_MESSAGE_(DBG, X, logPrefix, LOG_END)
-#define LOG_INF(X)        LOG_MESSAGE_(INF, X, logPrefix, LOG_END)
-#define LOG_INF_NOFILE(X) LOG_MESSAGE_(INF, X, logPrefix, LOG_END_NOFILE)
-#define LOG_WRN(X)        LOG_MESSAGE_(WRN, X, logPrefix, LOG_END)
-#define LOG_ERR(X)        LOG_MESSAGE_(ERR, X, logPrefix, LOG_END)
+#define LOG_TRC(X)        LOGA_TRC(Generic, X)
+#define LOG_TRC_NOFILE(X) LOGA_TRC_NOFILE(Generic, X)
+#define LOG_DBG(X)        LOGA_DBG(Generic, X)
+#define LOG_INF(X)        LOGA_INF(Generic, X)
+#define LOG_INF_NOFILE(X) LOGA_INF_NOFILE(Generic, X)
+#define LOG_WRN(X)        LOG_MESSAGE_(WRN, Generic, X, logPrefix, LOG_END)
+#define LOG_ERR(X)        LOG_MESSAGE_(ERR, Generic, X, logPrefix, LOG_END)
+
+#define LOGA_TRC(A,X)        LOG_MESSAGE_(TRC, A, X, logPrefix, LOG_END)
+#define LOGA_TRC_NOFILE(A,X) LOG_MESSAGE_(TRC, A, X, logPrefix, LOG_END_NOFILE)
+#define LOGA_DBG(A,X)        LOG_MESSAGE_(DBG, A, X, logPrefix, LOG_END)
+#define LOGA_INF(A,X)        LOG_MESSAGE_(INF, A, X, logPrefix, LOG_END)
+#define LOGA_INF_NOFILE(A,X) LOG_MESSAGE_(INF, A, X, logPrefix, LOG_END_NOFILE)
+// WRN and ERR should not be filtered by area
 
 /// Log an ERR entry with the given errno appended.
 #define LOG_SYS_ERRNO(ERRNO, X)                                                                    \
@@ -233,9 +256,9 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
     do                                                                                             \
     {                                                                                              \
         std::cerr << X << std::endl;                                                               \
-        if (LOG_CONDITIONAL(FTL))                                                                  \
+        if (LOG_CONDITIONAL(FTL, Generic))                                      \
         {                                                                                          \
-            LOG_BODY_(FTL, X, logPrefix, LOG_END);                                           \
+            LOG_BODY_(FTL, X, logPrefix, LOG_END);  \
         }                                                                                          \
     } while (false)
 
@@ -249,11 +272,11 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
     } while (false)
 
 /// No-prefix versions:
-#define LOG_TRC_S(X) LOG_MESSAGE_(TRC, X, (void), LOG_END)
-#define LOG_DBG_S(X) LOG_MESSAGE_(DBG, X, (void), LOG_END)
-#define LOG_INF_S(X) LOG_MESSAGE_(INF, X, (void), LOG_END)
-#define LOG_WRN_S(X) LOG_MESSAGE_(WRN, X, (void), LOG_END)
-#define LOG_ERR_S(X) LOG_MESSAGE_(ERR, X, (void), LOG_END)
+#define LOG_TRC_S(X) LOG_MESSAGE_(TRC, Generic, X, (void), LOG_END)
+#define LOG_DBG_S(X) LOG_MESSAGE_(DBG, Generic, X, (void), LOG_END)
+#define LOG_INF_S(X) LOG_MESSAGE_(INF, Generic, X, (void), LOG_END)
+#define LOG_WRN_S(X) LOG_MESSAGE_(WRN, Generic, X, (void), LOG_END)
+#define LOG_ERR_S(X) LOG_MESSAGE_(ERR, Generic, X, (void), LOG_END)
 
 #define LOG_CHECK(X)                                                                               \
     do                                                                                             \

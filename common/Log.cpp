@@ -50,6 +50,9 @@ constexpr int LOG_FILE_FD = STDERR_FILENO;
 
 } // namespace
 
+/// Which log areas should be disabled
+bool AreasDisabled[Log::AreaMax] = { false, };
+
 /// Wrapper to expose protected 'log' and genericise
 class GenericLogger : public Poco::Logger
 {
@@ -665,14 +668,23 @@ namespace Log
                 &GenericLogger::get(Static.getInited() ? Static.getName() : std::string()));
     }
 
-    bool isEnabled(Level l)
+    bool isEnabled(Level l, Area a)
     {
         if (IsShutdown)
             return false;
 
         Log::Level logLevel = GenericLogger::mapToLevel(
             static_cast<Poco::Message::Priority>(logger().getLevel()));
-        return logLevel >= static_cast<int>(l);
+
+        if (logLevel < static_cast<int>(l))
+            return false;
+
+        bool disabled = AreasDisabled[static_cast<size_t>(a)];
+
+        // Areas shouldn't disable warnings & errors
+        assert(!disabled || logLevel > static_cast<int>(Level::WRN));
+
+        return !disabled;
     }
 
     void shutdown()
@@ -728,6 +740,28 @@ namespace Log
     {
         Log::logger().setLevel(l);
         // Update our public flags in the array now ...
+    }
+
+    /// Set disabled areas
+    void setDisabledAreas(const std::string &areaStr)
+    {
+        if (areaStr != "")
+            LOG_INF("Setting disabled log areas to [" << areaStr << "]");
+        StringVector areas = StringVector::tokenize(areaStr, ',');
+        std::vector<bool> enabled(Log::AreaMax, true);
+        for (size_t t = 0; t < areas.size(); ++t)
+        {
+            for (size_t i = 0; i < Log::AreaMax; ++i)
+            {
+                if (areas.equals(t, nameShort(static_cast<Log::Area>(i))))
+                {
+                    enabled[i] = false;
+                    break;
+                }
+            }
+        }
+        for (size_t i = 0; i < Log::AreaMax; ++i)
+            AreasDisabled[i] = !enabled[i];
     }
 
     void log(Level l, const std::string &text)

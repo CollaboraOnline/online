@@ -77,6 +77,7 @@
     {                                                                                              \
         return name(e);                                                                            \
     }                                                                                              \
+    static const size_t NAME##Max = COUNT_ARGS(__VA_ARGS__);                                       \
     enum class NAME : char                                                                         \
     {                                                                                              \
         __VA_ARGS__                                                                                \
