@@ -1222,6 +1222,26 @@ FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::prepro
     Poco::replaceInPlace(preprocess, CHECK_FILE_INFO_OVERRIDE,
                          checkFileInfoToJSON(urv[CHECK_FILE_INFO_OVERRIDE]));
 
+    std::string wopiSrc;
+    for (const auto& param : params)
+    {
+        if (param.first == "WOPISrc")
+        {
+            if (!HttpHelper::verifyWOPISrc(request.getURI(), param.second, socket))
+            {
+                return ResourceAccessDetails();
+            }
+            wopiSrc = Util::encodeURIComponent(param.second);
+            break;
+        }
+    }
+
+    std::string routingParam;
+    if (!wopiSrc.empty())
+        routingParam = "?WOPISrc=" + wopiSrc;
+
+    Poco::replaceInPlace(preprocess, std::string("%ROUTING_PARAM%"), routingParam);
+
     const auto& config = Application::instance().config();
 
     std::string protocolDebug = stringifyBoolFromConfig(config, "logging.protocol", false);
@@ -1237,11 +1257,14 @@ FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::prepro
         !theme.empty() &&
         FileUtil::Stat(COOLWSD::FileServerRoot + "/browser/dist/" + theme).exists();
     const std::string themePreFix = hasIntegrationTheme && useIntegrationTheme ? theme + "/" : "";
-    const std::string linkCSS("<link rel=\"stylesheet\" href=\"%s/browser/" COOLWSD_VERSION_HASH "/" + themePreFix + "%s.css\">");
-    const std::string scriptJS("<script src=\"%s/browser/" COOLWSD_VERSION_HASH "/" + themePreFix + "%s.js\"></script>");
+    const std::string linkCSS("<link rel=\"stylesheet\" href=\"%s/browser/" COOLWSD_VERSION_HASH
+                              "/" +
+                              themePreFix + "%s.css%s\">");
+    const std::string scriptJS("<script src=\"%s/browser/" COOLWSD_VERSION_HASH "/" + themePreFix +
+                               "%s.js%s\"></script>");
 
-    std::string brandCSS(Poco::format(linkCSS, responseRoot, std::string(BRANDING)));
-    std::string brandJS(Poco::format(scriptJS, responseRoot, std::string(BRANDING)));
+    std::string brandCSS(Poco::format(linkCSS, responseRoot, std::string(BRANDING), routingParam));
+    std::string brandJS(Poco::format(scriptJS, responseRoot, std::string(BRANDING), routingParam));
 
     if (config::isSupportKeyEnabled())
     {
@@ -1249,8 +1272,10 @@ FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::prepro
         SupportKey key(keyString);
         if (!key.verify() || key.validDaysRemaining() <= 0)
         {
-            brandCSS = Poco::format(linkCSS, responseRoot, SUPPORT_KEY_BRANDING_UNSUPPORTED);
-            brandJS = Poco::format(scriptJS, responseRoot, SUPPORT_KEY_BRANDING_UNSUPPORTED);
+            brandCSS =
+                Poco::format(linkCSS, responseRoot, SUPPORT_KEY_BRANDING_UNSUPPORTED, routingParam);
+            brandJS = Poco::format(scriptJS, responseRoot, SUPPORT_KEY_BRANDING_UNSUPPORTED,
+                                   routingParam);
         }
     }
 
@@ -1393,27 +1418,17 @@ FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::prepro
     if (uriHost.getHost() != configFrameAncestor)
         frameAncestors += ' ' + uriHost.getHost() + ":*";
 
-    std::string wopiSrc;
-    for (const auto& param : params)
+    if (!wopiSrc.empty())
     {
-        if (param.first == "WOPISrc")
+        const Poco::URI uriWopiFrameAncestor(Util::decodeURIComponent(wopiSrc));
+        wopiSrc = uriWopiFrameAncestor.toString();
+
+        // Remove parameters from URL
+        const std::string& wopiFrameAncestor = uriWopiFrameAncestor.getHost();
+        if (wopiFrameAncestor != uriHost.getHost() && wopiFrameAncestor != configFrameAncestor)
         {
-            if (!HttpHelper::verifyWOPISrc(request.getURI(), param.second, socket))
-            {
-                return ResourceAccessDetails();
-            }
-
-            const Poco::URI uriWopiFrameAncestor(Util::decodeURIComponent(param.second));
-            wopiSrc = uriWopiFrameAncestor.toString();
-
-            // Remove parameters from URL
-            const std::string& wopiFrameAncestor = uriWopiFrameAncestor.getHost();
-            if (wopiFrameAncestor != uriHost.getHost() && wopiFrameAncestor != configFrameAncestor)
-            {
-                frameAncestors += ' ' + wopiFrameAncestor + ":*";
-                LOG_TRC("Picking frame ancestor from WOPISrc: " << wopiFrameAncestor);
-            }
-            break;
+            frameAncestors += ' ' + wopiFrameAncestor + ":*";
+            LOG_TRC("Picking frame ancestor from WOPISrc: " << wopiFrameAncestor);
         }
     }
 

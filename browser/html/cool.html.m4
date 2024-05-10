@@ -129,14 +129,14 @@ m4_ifelse(EMSCRIPTENAPP,[true],[
 
 m4_ifelse(BUNDLE,[],
   <!-- Using individual CSS files -->
-  m4_foreachq([fileCSS],[COOL_CSS],[<link rel="stylesheet" href="][m4_ifelse(MOBILEAPP,[],[%SERVICE_ROOT%/browser/%VERSION%/])][fileCSS" />
+  m4_foreachq([fileCSS],[COOL_CSS],[<link rel="stylesheet" href="][m4_ifelse(MOBILEAPP,[],[%SERVICE_ROOT%/browser/%VERSION%/])][fileCSS%ROUTING_PARAM%" />
 ]),
   [<!-- Dynamically load the bundle.css -->
 <script>
 var link = document.createElement('link');
 link.setAttribute("rel", "stylesheet");
 link.setAttribute("type", "text/css");
-link.setAttribute("href", '][m4_ifelse(MOBILEAPP,[],[%SERVICE_ROOT%/browser/%VERSION%/])][bundle.css');
+link.setAttribute("href", '][m4_ifelse(MOBILEAPP,[],[%SERVICE_ROOT%/browser/%VERSION%/])][bundle.css%ROUTING_PARAM%');
 document.getElementsByTagName("head")[[0]].appendChild(link);
 </script>
 ])
@@ -158,11 +158,11 @@ m4_ifelse(MOBILEAPP,[true],
       <link rel="localizations" href="l10n/locore-localizations.json" type="application/vnd.oftn.l10n+json"/>
       <link rel="localizations" href="l10n/help-localizations.json" type="application/vnd.oftn.l10n+json"/>
       <link rel="localizations" href="l10n/uno-localizations.json" type="application/vnd.oftn.l10n+json"/>])],
-  [<link rel="localizations" href="%SERVICE_ROOT%/browser/%VERSION%/l10n/uno-localizations-override.json" type="application/vnd.oftn.l10n+json"/>
-   <link rel="localizations" href="%SERVICE_ROOT%/browser/%VERSION%/l10n/localizations.json" type="application/vnd.oftn.l10n+json"/>
-   <link rel="localizations" href="%SERVICE_ROOT%/browser/%VERSION%/l10n/locore-localizations.json" type="application/vnd.oftn.l10n+json"/>
-   <link rel="localizations" href="%SERVICE_ROOT%/browser/%VERSION%/l10n/help-localizations.json" type="application/vnd.oftn.l10n+json"/>
-   <link rel="localizations" href="%SERVICE_ROOT%/browser/%VERSION%/l10n/uno-localizations.json" type="application/vnd.oftn.l10n+json"/>]
+  [<link rel="localizations" href="%SERVICE_ROOT%/browser/%VERSION%/l10n/uno-localizations-override.json%ROUTING_PARAM%" type="application/vnd.oftn.l10n+json"/>
+   <link rel="localizations" href="%SERVICE_ROOT%/browser/%VERSION%/l10n/localizations.json%ROUTING_PARAM%" type="application/vnd.oftn.l10n+json"/>
+   <link rel="localizations" href="%SERVICE_ROOT%/browser/%VERSION%/l10n/locore-localizations.json%ROUTING_PARAM%" type="application/vnd.oftn.l10n+json"/>
+   <link rel="localizations" href="%SERVICE_ROOT%/browser/%VERSION%/l10n/help-localizations.json%ROUTING_PARAM%" type="application/vnd.oftn.l10n+json"/>
+   <link rel="localizations" href="%SERVICE_ROOT%/browser/%VERSION%/l10n/uno-localizations.json%ROUTING_PARAM%" type="application/vnd.oftn.l10n+json"/>]
 )m4_dnl
 </head>
 
@@ -384,14 +384,14 @@ if(window.useIntegrationTheme === 'true' && theme_name !== '') {
 }
 
 if (window.mode.isMobile()) {
-    [link.setAttribute("href", ']m4_ifelse(MOBILEAPP,[],[%SERVICE_ROOT%/browser/%VERSION%/])[device-mobile.css');]
-    [brandingLink.setAttribute("href", ']m4_ifelse(MOBILEAPP,[],[%SERVICE_ROOT%/browser/%VERSION%/])m4_ifelse(IOSAPP,[true],[Branding/])[' + theme_prefix + 'branding-mobile.css');]
+    [link.setAttribute("href", ']m4_ifelse(MOBILEAPP,[],[%SERVICE_ROOT%/browser/%VERSION%/])[device-mobile.css%ROUTING_PARAM%');]
+    [brandingLink.setAttribute("href", ']m4_ifelse(MOBILEAPP,[],[%SERVICE_ROOT%/browser/%VERSION%/])m4_ifelse(IOSAPP,[true],[Branding/])[' + theme_prefix + 'branding-mobile.css%ROUTING_PARAM%');]
 } else if (window.mode.isTablet()) {
-    [link.setAttribute("href", ']m4_ifelse(MOBILEAPP,[],[%SERVICE_ROOT%/browser/%VERSION%/])[device-tablet.css');]
-    [brandingLink.setAttribute("href", ']m4_ifelse(MOBILEAPP,[],[%SERVICE_ROOT%/browser/%VERSION%/])m4_ifelse(IOSAPP,[true],[Branding/])[' + theme_prefix + 'branding-tablet.css');]
+    [link.setAttribute("href", ']m4_ifelse(MOBILEAPP,[],[%SERVICE_ROOT%/browser/%VERSION%/])[device-tablet.css%ROUTING_PARAM%');]
+    [brandingLink.setAttribute("href", ']m4_ifelse(MOBILEAPP,[],[%SERVICE_ROOT%/browser/%VERSION%/])m4_ifelse(IOSAPP,[true],[Branding/])[' + theme_prefix + 'branding-tablet.css%ROUTING_PARAM%');]
 } else {
-    [link.setAttribute("href", ']m4_ifelse(MOBILEAPP,[],[%SERVICE_ROOT%/browser/%VERSION%/])[device-desktop.css');]
-    [brandingLink.setAttribute("href", ']m4_ifelse(MOBILEAPP,[],[%SERVICE_ROOT%/browser/%VERSION%/])[' + theme_prefix + 'branding-desktop.css');]
+    [link.setAttribute("href", ']m4_ifelse(MOBILEAPP,[],[%SERVICE_ROOT%/browser/%VERSION%/])[device-desktop.css%ROUTING_PARAM%');]
+    [brandingLink.setAttribute("href", ']m4_ifelse(MOBILEAPP,[],[%SERVICE_ROOT%/browser/%VERSION%/])[' + theme_prefix + 'branding-desktop.css%ROUTING_PARAM%');]
 }
 document.getElementsByTagName("head")[[0]].appendChild(link);
 document.getElementsByTagName("head")[[0]].appendChild(brandingLink);
@@ -400,18 +400,18 @@ document.getElementsByTagName("head")[[0]].appendChild(brandingLink);
 m4_ifelse(MOBILEAPP,[true],
   <!-- This is for a mobile app so the script files are in the same folder -->
   m4_ifelse(BUNDLE,[],m4_foreachq([fileJS],[COOL_JS],
-  [    <script src="fileJS" defer></script>
+  [    <script src="fileJS%ROUTING_PARAM%" defer></script>
   ]),
-  [    <script src="bundle.js" defer></script>
+  [    <script src="bundle.js%ROUTING_PARAM%" defer></script>
   ]),
   m4_ifelse(BUNDLE,[],
       <!-- Using indivisual JS files -->
       m4_foreachq([fileJS],[COOL_JS],
-      [ <script src="%SERVICE_ROOT%/browser/%VERSION%/fileJS" defer></script>
+      [ <script src="%SERVICE_ROOT%/browser/%VERSION%/fileJS%ROUTING_PARAM%" defer></script>
       ]),
   [
        <!-- Using bundled JS files -->
-       <script src="%SERVICE_ROOT%/browser/%VERSION%/bundle.js" defer></script>
+       <script src="%SERVICE_ROOT%/browser/%VERSION%/bundle.js%ROUTING_PARAM%" defer></script>
   ])
 )m4_dnl
 
