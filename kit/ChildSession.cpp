@@ -3145,9 +3145,10 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
         sendTextFrame("celladdress: " + payload);
         break;
     case LOK_CALLBACK_RULER_UPDATE:
-        sendTextFrame("rulerupdate: " + payload);
+        sendTextFrame("hrulerupdate: " + payload);
         break;
     case LOK_CALLBACK_VERTICAL_RULER_UPDATE:
+        sendTextFrame("vrulerupdate: " + payload);
         break;
     case LOK_CALLBACK_WINDOW:
         sendTextFrame("window: " + payload);

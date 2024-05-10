@@ -753,6 +753,12 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	bottom: -2.8em;
 	left: auto;
 }
+#vertical-ruler .cool-ruler-left[data-title]:after,
+#vertical-ruler .cool-ruler-right[data-title]:after {
+	bottom: 3em;
+	left: auto;
+	transform: rotate(-90deg);
+}
 [data-title] {
 	position: relative;
 }

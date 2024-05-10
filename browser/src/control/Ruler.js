@@ -28,7 +28,8 @@ L.Control.Ruler = L.Control.extend({
 		unit: null,
 		DraggableConvertRatio: null,
 		timer: null,
-		showruler: true
+		showruler: true,
+		isHorizontalRuler:true
 	},
 
 	onAdd: function(map) {
