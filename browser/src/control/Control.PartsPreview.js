@@ -51,7 +51,6 @@ L.Control.PartsPreview = L.Control.extend({
 		this._direction = this.options.allowOrientation ?
 			(!window.mode.isDesktop() && L.DomUtil.isPortrait() ? 'x' : 'y') :
 			this.options.axis;
-		this._scrollY = 0;
 
 		map.on('updateparts', this._updateDisabled, this);
 		map.on('updatepart', this._updatePart, this);
