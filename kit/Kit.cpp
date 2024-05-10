@@ -752,7 +752,14 @@ bool Document::postMessage(const char* data, int size, const WSOpCode code) cons
         if (socket)
         {
             LOG_TRC("postMessage forwarding to parent of save process: " << getAbbreviatedMessage(data, size));
-            return socket->sendMessage(data, size, code, /*flush=*/true) > 0;
+            if (code != WSOpCode::Text)
+            {
+                LOG_WRN("save process unexpectedly sending binary message to parent: " << getAbbreviatedMessage(data, size));
+                assert(false);
+                return false;
+            }
+            else
+                return socket->sendMessage(data, size, code, /*flush=*/true) > 0;
         }
         else
             LOG_TRC("Failed to forward to parent of save process: connection closed.");
@@ -2185,6 +2192,12 @@ void Document::drainCallbacks()
 
 void Document::drainQueue()
 {
+    if (UnitKit::get().filterDrainQueue())
+    {
+        LOG_TRC("Filter disabled drainQueue");
+        return;
+    }
+
     try
     {
         std::vector<TileCombined> tileRequests;
@@ -2247,7 +2260,7 @@ void Document::drainQueue()
             }
         }
 
-        if (!tileRequests.empty())
+        if (!tileRequests.empty() && !isBackgroundSaveProcess())
         {
             // Put requests that include tiles in the visible area to the front to handle those first
             std::partition(tileRequests.begin(), tileRequests.end(), [this](const TileCombined& req) {
