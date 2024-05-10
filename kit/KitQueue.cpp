@@ -43,13 +43,13 @@ namespace {
 
         size_t remaining = value.size() - firstToken.size();
 
-        if (!memcmp(value.data() + offset + 1, "textinput", std::min(remaining, size_t(9))))
+        if (!memcmp(value.data() + offset + 1, "textinput", std::min(remaining - 1, size_t(9))))
         {
             removeText = false;
             return true;
         }
 
-        if (!memcmp(value.data() + offset + 1, "removetextcontext", std::min(remaining, size_t(17))))
+        if (!memcmp(value.data() + offset + 1, "removetextcontext", std::min(remaining - 1, size_t(17))))
         {
             removeText = true;
             return true;
