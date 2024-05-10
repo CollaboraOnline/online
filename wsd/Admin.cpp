@@ -652,7 +652,7 @@ void Admin::pollingThread()
 
             if (_lastRecvCount != recvCount || _lastSentCount != sentCount)
             {
-                LOG_TRC("Total Data sent: " << sentCount << ", recv: " << recvCount);
+                LOGA_TRC(Admin, "Total Data sent: " << sentCount << ", recv: " << recvCount);
                 _lastRecvCount = recvCount;
                 _lastSentCount = sentCount;
             }
@@ -691,7 +691,7 @@ void Admin::pollingThread()
         // Handle websockets & other work.
         const auto timeout = std::chrono::milliseconds(capAndRoundInterval(
             std::min(std::min(std::min(cpuWait, memWait), netWait), cleanupWait)));
-        LOG_TRC("Admin poll for " << timeout);
+        LOGA_TRC(Admin, "Admin poll for " << timeout);
         poll(timeout); // continue with ms for admin, settings etc.
     }
 
@@ -969,12 +969,12 @@ void Admin::triggerMemoryCleanup(const size_t totalMem)
     static const double memLimit = COOLWSD::getConfigValue<double>("memproportion", 0.0);
     if (memLimit == 0.0 || _totalSysMemKb == 0)
     {
-        LOG_TRC("Total memory consumed: " << totalMem <<
+        LOGA_TRC(Admin, "Total memory consumed: " << totalMem <<
                 " KB. Not configured to do memory cleanup. Skipping memory cleanup.");
         return;
     }
 
-    LOG_TRC("Total memory consumed: " << totalMem << " KB. Configured COOL memory proportion: " <<
+    LOGA_TRC(Admin, "Total memory consumed: " << totalMem << " KB. Configured COOL memory proportion: " <<
             memLimit << "% (" << static_cast<size_t>(_totalSysMemKb * memLimit / 100.) << " KB).");
 
     const double memToFreePercentage = (totalMem / static_cast<double>(_totalSysMemKb)) - memLimit / 100.;

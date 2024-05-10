@@ -115,7 +115,7 @@ bool StreamSocket::simulateSocketError(bool read)
 {
     if ((socketErrorCount++ % 7) == 0)
     {
-        LOG_TRC("Simulating socket error during " << (read ? "read." : "write."));
+        LOGA_TRC(Socket, "Simulating socket error during " << (read ? "read." : "write."));
         errno = EAGAIN;
         return true;
     }

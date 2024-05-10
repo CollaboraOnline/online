@@ -1462,9 +1462,9 @@ public:
                 if (len < 0 && last_errno != EAGAIN && last_errno != EWOULDBLOCK)
                     LOG_SYS_ERRNO(last_errno, "Socket write returned " << len);
                 else if (len <= 0) // Trace errno for debugging, even for "unspecified result."
-                    LOG_TRC("Write failed, have " << _outBuffer.size() << " buffered bytes ("
-                                                  << Util::symbolicErrno(last_errno) << ": "
-                                                  << std::strerror(last_errno) << ')');
+                    LOGA_TRC(Socket, "Write failed, have " << _outBuffer.size() << " buffered bytes ("
+                             << Util::symbolicErrno(last_errno) << ": "
+                             << std::strerror(last_errno) << ')');
                 else // Success.
                     LOGA_TRC(Socket, "Wrote " << len << " bytes of " << _outBuffer.size() << " buffered data"
 #ifdef LOG_SOCKET_DATA
