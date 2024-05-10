@@ -174,7 +174,7 @@ L.Control.PartsPreview = L.Control.extend({
 		img.setAttribute('alt', _('preview of page ') + String(i + 1));
 		img.id = 'preview-img-part-' + this._idNum;
 		img.hash = hashCode;
-		img.src = document.querySelector('meta[name="previewImg"]').content;
+		img.src = document.querySelector('meta[name="previewSmile"]').content;
 		img.fetched = false;
 		if (!window.mode.isDesktop()) {
 			(new Hammer(img, {recognizers: [[Hammer.Press]]}))
@@ -529,7 +529,7 @@ L.Control.PartsPreview = L.Control.extend({
 
 				for (it = 0; it < e.partNames.length; it++) {
 					this._previewTiles[it].hash = e.partNames[it];
-					this._previewTiles[it].src = document.querySelector('meta[name="previewImg"]').content;
+					this._previewTiles[it].src = document.querySelector('meta[name="previewSmile"]').content;
 					this._previewTiles[it].fetched = false;
 				}
 			}
