@@ -1442,6 +1442,10 @@ bool Document::forkToSave(const std::function<void()> &childSave, int viewId)
 
         UnitKit::get().postBackgroundSaveFork();
 
+        // Background save should run at a lower priority
+        int prio = config::getInt("per_document.bgsave_priority", 5);
+        Util::setProcessAndThreadPriorities(getpid(), prio);
+
         // other queued messages should be handled in the parent kit
         if (_queue)
             _queue->clear();
