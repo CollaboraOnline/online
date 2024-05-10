@@ -869,8 +869,8 @@ private:
             _pollFds[i].fd = _pollSockets[i]->getFD();
             _pollFds[i].events = events;
             _pollFds[i].revents = 0;
-            LOG_TRC('#' << _pollFds[i].fd << ": setupPollFds getPollEvents: 0x" << std::hex
-                        << events << std::dec);
+            LOGA_TRC(Socket, '#' << _pollFds[i].fd << ": setupPollFds getPollEvents: 0x" << std::hex
+                     << events << std::dec);
         }
 
         // Add the read-end of the wake pipe.
@@ -1146,17 +1146,17 @@ public:
                     LOG_SYS_ERRNO(last_errno,
                                   "Read failed, have " << _inBuffer.size() << " buffered bytes");
                 else if (len < 0)
-                    LOG_TRC("Read failed ("
+                    LOGA_TRC(Socket, "Read failed ("
                             << len << "), have " << _inBuffer.size() << " buffered bytes ("
                             << Util::symbolicErrno(last_errno) << ": " << std::strerror(last_errno)
                             << ')');
                 else if (len == 0)
-                    LOG_TRC("Read closed (0), have " << _inBuffer.size() << " buffered bytes");
+                    LOGA_TRC(Socket, "Read closed (0), have " << _inBuffer.size() << " buffered bytes");
                 else // Success.
-                    LOG_TRC("Read " << len << " bytes in addition to " << _inBuffer.size()
-                                    << " buffered bytes"
+                    LOGA_TRC(Socket, "Read " << len << " bytes in addition to " << _inBuffer.size()
+                             << " buffered bytes"
 #ifdef LOG_SOCKET_DATA
-                            << (len ? Util::dumpHex(std::string(buf, len), ":\n") : std::string())
+                             << (len ? Util::dumpHex(std::string(buf, len), ":\n") : std::string())
 #endif
                     );
             } while (len < 0 && last_errno == EINTR);
@@ -1333,7 +1333,7 @@ protected:
             // Oddly enough, we don't necessarily get POLLHUP after read(2) returns 0.
             const int read = readIncomingData();
             const int last_errno = errno;
-            LOG_TRC("Incoming data buffer "
+            LOGA_TRC(Socket, "Incoming data buffer "
                     << _inBuffer.size() << " bytes, read result: " << read << ", events: 0x"
                     << std::hex << events << std::dec << " (" << (closed ? "closed" : "not closed")
                     << ')'
@@ -1466,7 +1466,7 @@ public:
                                                   << Util::symbolicErrno(last_errno) << ": "
                                                   << std::strerror(last_errno) << ')');
                 else // Success.
-                    LOG_TRC("Wrote " << len << " bytes of " << _outBuffer.size() << " buffered data"
+                    LOGA_TRC(Socket, "Wrote " << len << " bytes of " << _outBuffer.size() << " buffered data"
 #ifdef LOG_SOCKET_DATA
                             << (len ? Util::dumpHex(std::string(_outBuffer.getBlock(), len), ":\n")
                                     : std::string())
