@@ -46,6 +46,9 @@ bool has(const std::string& key);
 /// Returns the value of an entry as string or @def if it is not found.
 bool getBool(const std::string& key, const bool def);
 
+/// Returns the value of an entry as int or @def if it is not found.
+int getInt(const std::string& key, const int def);
+
 /// Return true if SSL is enabled in the config and no fuzzing is enabled.
 bool isSslEnabled();
 
