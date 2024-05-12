@@ -118,6 +118,14 @@ public:
 
     UnitKitSyntheticLok()
         : UnitKit("SyntheticLok")
+        , _kit(nullptr)
+        , _kitClass(nullptr)
+        , _kitClassClean(nullptr)
+        , _docClass(nullptr)
+        , _docClassClean(nullptr)
+        , _pollCallback(nullptr)
+        , _wakeCallback(nullptr)
+        , _pollData(nullptr)
         , _docCallback(nullptr)
         , _docCallbackData(nullptr)
     {
