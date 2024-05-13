@@ -13,6 +13,7 @@
 
 #include <string>
 #include <memory>
+#include <vector>
 
 // This file hosts network related common functionality
 // and helper/utility functions and classes.
@@ -31,6 +32,12 @@ std::string resolveHostAddress(const std::string& targetHost);
 
 /// Returns true if @targetHost is on the same host.
 bool isLocalhost(const std::string& targetHost);
+
+/// Returns the canonical host name of the given IP address or host name.
+std::string canonicalHostName(const std::string& addressToCheck);
+
+/// Returns a vector containing the IPAddresses for the host.
+std::vector<std::string> resolveAddresses(const std::string& addressToCheck);
 
 #endif
 
