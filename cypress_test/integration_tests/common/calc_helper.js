@@ -223,8 +223,9 @@ function assertSheetContents(expectedData, copy) {
 function assertDataClipboardTable(expectedData) {
 	cy.log('>> assertDataClipboardTable - start');
 
-	cy.cGet('#copy-paste-container table td').should(function($td) {
-		expect($td).to.have.length(expectedData.length);
+	cy.cGet('#copy-paste-container table td')
+		.should('have.length', expectedData.length)
+		.should(function($td) {
 		var actualData = $td.map(function(i,el) {
 			return Cypress.$(el).text();
 		}).get();

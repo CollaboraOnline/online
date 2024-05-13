@@ -13,7 +13,7 @@
  * local & remote clipboard data.
  */
 
-/* global app _ brandProductName $ ClipboardItem */
+/* global app _ brandProductName $ ClipboardItem Promise */
 
 // Get all interesting clipboard related events here, and handle
 // download logic in one place ...
@@ -37,6 +37,10 @@ L.Clipboard = L.Class.extend({
 		this._dummyDiv = div;
 		this._dummyPlainDiv = null;
 		this._dummyClipboard = {};
+
+		// Tracks waiting for UNO commands to complete
+		this._commandCompletion = [];
+		this._map.on('commandresult', this._onCommandResult, this);
 
 		div.setAttribute('id', this._dummyDivName);
 		div.setAttribute('style', 'user-select: text !important');
@@ -818,6 +822,25 @@ L.Clipboard = L.Class.extend({
 		this.paste(ev);
 	},
 
+	// Gets status of a copy/paste command from the remote Kit
+        _onCommandResult: function(e) {
+                if (e.commandName === '.uno:Copy' || e.commandName === '.uno:Cut')
+		{
+			window.app.console.log('Resolve clipboard command promise ' + e.commandName);
+			const that = this;
+			while (that._commandCompletion.length > 0)
+			{
+				let a = that._commandCompletion.shift();
+				a.resolve(a.fetch.then(function(text) {
+					const content = that.parseClipboard(text)[a.shorttype];
+					const blob = new Blob([content], { 'type': a.mimetype });
+					console.log('Generate blob of type ' + a.mimetype + ' from ' +a.shorttype + ' text: ' +content);
+					return blob;
+				}));
+			}
+		}
+	},
+
 	// Executes the navigator.clipboard.write() call, if it's available.
 	_navigatorClipboardWrite: function() {
 		if (!L.Browser.hasNavigatorClipboardWrite) {
@@ -828,26 +851,44 @@ L.Clipboard = L.Class.extend({
 			return false;
 		}
 
-		app.socket.sendMessage('uno ' + this._unoCommandForCopyCutPaste);
-		const url = this.getMetaURL() + '&MimeType=text/html,text/plain;charset=utf-8';
+		const command = this._unoCommandForCopyCutPaste;
+		app.socket.sendMessage('uno ' + command);
+
+		// This is sent down the websocket URL which can race with the
+		// web fetch - so first step is to wait for the result of
+		// that command so we are sure the clipboard is set before
+		// fetching it.
+
 		const that = this;
+
+		if (that._commandCompletion.length > 0)
+			window.app.console.error('Already have ' + that._commandCompletion.length +
+						 ' pending clipboard command(s)');
+
+		const url = that.getMetaURL() + '&MimeType=text/html,text/plain;charset=utf-8';
+
+		// Share a single fetch
+		var fetchPromise = new Promise((resolve, reject) => {
+			try {
+				var result = fetch(url).then(response => response.text());
+				resolve(result);
+			} catch (err) {
+				reject(err);
+			}
+		});
+
+		var awaitPromise = function(url, mimetype, shorttype) {
+			return new Promise((resolve, reject) => {
+				window.app.console.log('New ' + command + ' promise');
+				// FIXME: add a timeout cleanup too ...
+				that._commandCompletion.push({ fetch: fetchPromise, command: command,
+							       resolve: resolve, reject: reject,
+							       mimetype: mimetype, shorttype: shorttype});
+		}); };
+
 		const text = new ClipboardItem({
-			'text/html': fetch(url)
-				.then(response => response.text())
-				.then(function(text) {
-					const type = "text/html";
-					const content = that.parseClipboard(text)['html'];
-					const blob = new Blob([content], { 'type': type });
-					return blob;
-				}),
-			'text/plain': fetch(url)
-				.then(response => response.text())
-				.then(function(text) {
-					const type = 'text/plain';
-					const content = that.parseClipboard(text)['plain'];
-					const blob = new Blob([content], { 'type': type });
-					return blob;
-				}),
+			'text/html': awaitPromise(url, 'text/html', 'html'),
+			'text/plain': awaitPromise(url, 'text/plain', 'plain')
 		});
 		let clipboard = navigator.clipboard;
 		if (L.Browser.cypressTest) {
