@@ -29,22 +29,20 @@ describe('Singleton section container', function() {
     const docLayer = {};
     const tsManager = {};
 
-    sectionContainer.createSection({
-        name: 'OnlySection',
-        anchor: 'top left',
-        position: [originX, originY],
-        size: [1, 1],
-        expand: 'bottom right',
-        processingOrder: 1,
-        drawingOrder: 1,
-        zIndex: 1,
-        interactable: false,
-        sectionProperties: {
-            docLayer: docLayer,
-            tsManager: tsManager,
-            strokeStyle: '#c0c0c0'
-        },
-    });
+    let onlySection = new app.definitions.canvasSectionObject();
+    onlySection.name = 'OnlySection';
+    onlySection.anchor = ['top', 'left'];
+    onlySection.position = [originX, originY];
+    onlySection.size = [1, 1];
+    onlySection.expand = ['bottom', 'right'];
+    onlySection.processingOrder = onlySection.drawingOrder = onlySection.zIndex = 1;
+    onlySection.interactable = false;
+    onlySection.sectionProperties = {
+        docLayer: docLayer,
+        tsManager: tsManager,
+        strokeStyle: '#c0c0c0'
+    };
+    sectionContainer.addSection(onlySection);
 
     sectionContainer.enableDrawing();
     it('Container should have OnlySection', function() {
@@ -71,39 +69,36 @@ describe('Horizontally packed two section container', function() {
     const docLayer = {};
     const tsManager = {};
 
-    sectionContainer.createSection({
-        name: 'LeftSection',
-        anchor: 'top left',
-        position: [originX, originY],
-        size: [halfWidth, 1],
-        expand: 'bottom',
-        processingOrder: 1,
-        drawingOrder: 1,
-        zIndex: 1,
-        interactable: false,
-        sectionProperties: {
-            docLayer: docLayer,
-            tsManager: tsManager,
-            strokeStyle: '#c0c0c0'
-        },
-    });
+    let leftSection = new app.definitions.canvasSectionObject();
+    leftSection.name = 'LeftSection';
+    leftSection.anchor = ['top', 'left'];
+    leftSection.position = [originX, originY];
+    leftSection.size = [halfWidth, 1];
+    leftSection.expand = ['bottom'];
+    leftSection.processingOrder = leftSection.drawingOrder = leftSection.zIndex = 1;
+    leftSection.interactable = false;
+    leftSection.sectionProperties = {
+        docLayer: docLayer,
+        tsManager: tsManager,
+        strokeStyle: '#c0c0c0'
+    };
+    sectionContainer.addSection(leftSection);
 
-    sectionContainer.createSection({
-        name: 'RightSection',
-        anchor: ['top', ['LeftSection', 'right', 'left']],
-        position: [originX, originY],
-        size: [1, 1],
-        expand: 'bottom right',
-        processingOrder: 2,
-        drawingOrder: 2,
-        zIndex: 1,
-        interactable: false,
-        sectionProperties: {
-            docLayer: docLayer,
-            tsManager: tsManager,
-            strokeStyle: '#c0c0c0'
-        },
-    });
+    let rightSection = new app.definitions.canvasSectionObject();
+    rightSection.name = 'RightSection';
+    rightSection.anchor = ['top', ['LeftSection', 'right', 'left']];
+    rightSection.position = [originX, originY];
+    rightSection.size = [1, 1];
+    rightSection.expand = ['bottom', 'right'];
+    rightSection.processingOrder = rightSection.drawingOrder = 2;
+    rightSection.zIndex = 1;
+    rightSection.interactable = false;
+    rightSection.sectionProperties = {
+        docLayer: docLayer,
+        tsManager: tsManager,
+        strokeStyle: '#c0c0c0'
+    };
+    sectionContainer.addSection(rightSection);
 
     sectionContainer.enableDrawing();
     it('Container should have LeftSection', function() {
@@ -146,39 +141,36 @@ describe('Vertically packed two section container', function() {
     const docLayer = {};
     const tsManager = {};
 
-    sectionContainer.createSection({
-        name: 'TopSection',
-        anchor: 'top left',
-        position: [originX, originY],
-        size: [1, halfHeight],
-        expand: 'right',
-        processingOrder: 1,
-        drawingOrder: 1,
-        zIndex: 1,
-        interactable: false,
-        sectionProperties: {
-            docLayer: docLayer,
-            tsManager: tsManager,
-            strokeStyle: '#c0c0c0'
-        },
-    });
+    let topSection = new app.definitions.canvasSectionObject();
+    topSection.name = 'TopSection';
+    topSection.anchor = ['top', 'left'];
+    topSection.position = [originX, originY];
+    topSection.size = [1, halfHeight];
+    topSection.expand = ['right'];
+    topSection.processingOrder = topSection.drawingOrder = topSection.zIndex = 1;
+    topSection.interactable = false;
+    topSection.sectionProperties = {
+        docLayer: docLayer,
+        tsManager: tsManager,
+        strokeStyle: '#c0c0c0'
+    };
+    sectionContainer.addSection(topSection);
 
-    sectionContainer.createSection({
-        name: 'BottomSection',
-        anchor: [['TopSection', 'bottom', 'top'], 'left'],
-        position: [originX, originY],
-        size: [1, 1],
-        expand: 'bottom right',
-        processingOrder: 2,
-        drawingOrder: 2,
-        zIndex: 1,
-        interactable: false,
-        sectionProperties: {
-            docLayer: docLayer,
-            tsManager: tsManager,
-            strokeStyle: '#c0c0c0'
-        },
-    });
+    let bottomSection = new app.definitions.canvasSectionObject();
+    bottomSection.name = 'BottomSection';
+    bottomSection.anchor = [['TopSection', 'bottom', 'top'], 'left'];
+    bottomSection.position = [originX, originY];
+    bottomSection.size = [1, 1];
+    bottomSection.expand = ['bottom', 'right'];
+    bottomSection.processingOrder = bottomSection.drawingOrder = 2;
+    bottomSection.zIndex = 1;
+    bottomSection.interactable = false;
+    bottomSection.sectionProperties = {
+        docLayer: docLayer,
+        tsManager: tsManager,
+        strokeStyle: '#c0c0c0'
+    };
+    sectionContainer.addSection(bottomSection);
 
     sectionContainer.enableDrawing();
     it('Container should have TopSection', function() {
@@ -222,40 +214,36 @@ describe('Horizontally packed two section container with -left layout', function
     const docLayer = {};
     const tsManager = {};
 
-    sectionContainer.createSection({
-        name: 'RightSection',
-        anchor: 'top right',
-        position: [originX, originY],
-        size: [halfWidth, 1],
-        expand: 'bottom',
-        processingOrder: 1,
-        drawingOrder: 1,
-        zIndex: 1,
-        interactable: false,
-        sectionProperties: {
-            docLayer: docLayer,
-            tsManager: tsManager,
-            strokeStyle: '#c0c0c0'
-        },
-    });
+    let rightSection = new app.definitions.canvasSectionObject();
+    rightSection.name = 'RightSection';
+    rightSection.anchor = ['top', 'right'];
+    rightSection.position = [originX, originY];
+    rightSection.size = [halfWidth, 1];
+    rightSection.expand = ['bottom'];
+    rightSection.processingOrder = rightSection.drawingOrder = rightSection.zIndex = 1;
+    rightSection.interactable = false;
+    rightSection.sectionProperties = {
+        docLayer: docLayer,
+        tsManager: tsManager,
+        strokeStyle: '#c0c0c0'
+    };
+    sectionContainer.addSection(rightSection);
 
-    sectionContainer.createSection({
-        name: 'LeftSection',
-        // Attach LeftSection's right to left of RightSection.
-        anchor: ['top', ['RightSection', '-left', 'right']],
-        position: [originX, originY],
-        size: [1, 1],
-        expand: 'bottom left',
-        processingOrder: 2,
-        drawingOrder: 2,
-        zIndex: 1,
-        interactable: false,
-        sectionProperties: {
-            docLayer: docLayer,
-            tsManager: tsManager,
-            strokeStyle: '#c0c0c0'
-        },
-    });
+    let leftSection = new app.definitions.canvasSectionObject();
+    leftSection.name = 'LeftSection';
+    leftSection.anchor = ['top', ['RightSection', '-left', 'right']]; // Attach LeftSection's right to left of RightSection.
+    leftSection.position = [originX, originY];
+    leftSection.size = [1, 1];
+    leftSection.expand = ['bottom', 'left'];
+    leftSection.processingOrder = leftSection.drawingOrder = 2;
+    leftSection.zIndex = 1;
+    leftSection.interactable = false;
+    leftSection.sectionProperties = {
+        docLayer: docLayer,
+        tsManager: tsManager,
+        strokeStyle: '#c0c0c0'
+    };
+    sectionContainer.addSection(leftSection);
 
     sectionContainer.enableDrawing();
     it('Container should have LeftSection', function() {

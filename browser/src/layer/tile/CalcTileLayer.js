@@ -726,8 +726,8 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 				this._tileSize, this._selectedPart);
 
 			app.sectionContainer.addSection(L.control.cornerHeader());
-			app.sectionContainer.addSection(L.control.rowHeader());
-			app.sectionContainer.addSection(L.control.columnHeader());
+			app.sectionContainer.addSection(new app.definitions.rowHeader());
+			app.sectionContainer.addSection(new app.definitions.columnHeader());
 		}
 		else {
 			this.sheetGeometry.update(jsonMsgObj, /* checkCompleteness */ false, this._selectedPart);

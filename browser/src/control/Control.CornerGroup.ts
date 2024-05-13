@@ -21,24 +21,17 @@
 */
 namespace cool {
 
-export class CornerGroup extends CanvasSectionObject {
+export class CornerGroup extends app.definitions.canvasSectionObject {
+	name: string = L.CSections.CornerGroup.name;
+	anchor: string[] = ['top', 'left'];
+	processingOrder: number = L.CSections.CornerGroup.processingOrder;
+	drawingOrder: number = L.CSections.CornerGroup.drawingOrder;
+	zIndex: number = L.CSections.CornerGroup.zIndex;
+	sectionProperties: any = { cursor: 'pointer' };
+
 	_map: any;
-	constructor() {
-		super({
-			name: L.CSections.CornerGroup.name,
-			anchor: ['top', 'left'],
-			position: [0, 0],
-			size: [0, 0], // Width and height will be calculated on the fly, according to width of RowGroups and height of ColumnGroups.
-			expand: '', // Don't expand.
-			processingOrder: L.CSections.CornerGroup.processingOrder,
-			drawingOrder: L.CSections.CornerGroup.drawingOrder,
-			zIndex: L.CSections.CornerGroup.zIndex,
-			interactable: true,
-			sectionProperties: {
-				cursor: 'pointer'
-			},
-		});
-	}
+
+	constructor() { super(); }
 
 	public onInitialize(): void {
 		this._map = L.Map.THIS;

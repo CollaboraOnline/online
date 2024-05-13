@@ -138,9 +138,13 @@
 /src/canvas/sections/TextSelectionHandleSection.ts
 /src/layer/tile/CalcTileLayer.js
 /src/canvas/CanvasSectionContainer.ts
+/src/canvas/CanvasSectionObject.ts
 /src/canvas/CanvasSectionProps.js
 /src/layer/tile/CanvasTileLayer.js
 /src/canvas/sections/CommentListSection.ts
+/src/canvas/sections/CalcGridSection.ts
+/src/canvas/sections/SplitSection.ts
+/src/canvas/sections/PixelGridSection.ts
 /src/canvas/sections/CommentSection.ts
 /src/canvas/sections/ContentControlSection.ts
 /src/layer/tile/ImpressTileLayer.js

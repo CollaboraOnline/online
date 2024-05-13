@@ -9,26 +9,16 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-class HTMLObjectSection extends CanvasSectionObject {
+class HTMLObjectSection extends app.definitions.canvasSectionObject {
+	name: string = "will-be-set-at-initialization"; // There may be multiple instances of this class.
+	processingOrder: number = L.CSections.HTMLObject.processingOrder;
+	drawingOrder: number = L.CSections.HTMLObject.drawingOrder;
+	zIndex: number = L.CSections.HTMLObject.zIndex;
+	documentObject: boolean = true;
 
 	constructor (sectionName: string, objectWidth: number, objectHeight: number, documentPosition: cool.SimplePoint,  extraClass: string = "", showSection: boolean = true) {
-        super({
-			name: "will-be-set-at-initialization", // There may be multiple instances of this class.
-			anchor: [],
-			position: new Array<number>(0),
-			size: new Array<number>(0),
-			expand: '',
-			showSection: showSection,
-			processingOrder: L.CSections.HTMLObject.processingOrder,
-			drawingOrder: L.CSections.HTMLObject.drawingOrder,
-			zIndex: L.CSections.HTMLObject.zIndex,
-			interactable: true,
-			sectionProperties: {},
-		});
+        super();
 
-		this.documentObject = true;
-
-		this.myTopLeft = [0, 0];
 		this.name = sectionName;
 		this.size = [objectWidth * app.dpiScale, objectHeight * app.dpiScale];
 		this.position = [documentPosition.pX, documentPosition.pY];
@@ -45,8 +35,10 @@ class HTMLObjectSection extends CanvasSectionObject {
 		// canvas-container and canvas overlap entirely. We can append the html object to canvas-container.
 		document.getElementById('canvas-container').appendChild(this.sectionProperties.objectDiv);
 
-		if (!showSection)
+		if (!showSection) {
 			this.sectionProperties.objectDiv.style.display = 'none';
+			this.showSection = false;
+		}
 	}
 
 	onInitialize(): void {

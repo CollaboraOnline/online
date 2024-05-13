@@ -47,8 +47,14 @@ declare var _: any;
 
 namespace cool {
 
-export class CommentSection extends CanvasSectionObject {
-	map: any;
+export class CommentSection extends app.definitions.canvasSectionObject {
+	name: string = L.CSections.CommentList.name;
+	backgroundColor: string = app.sectionContainer.clearColor;
+	expand: string[] = ['bottom'];
+	processingOrder: number = L.CSections.CommentList.processingOrder;
+	drawingOrder: number = L.CSections.CommentList.drawingOrder;
+	zIndex: number = L.CSections.CommentList.zIndex;
+	interactable: boolean = false;
 	sectionProperties: {
 		commentList: Array<Comment>;
 		selectedComment: Comment | null;
@@ -62,6 +68,8 @@ export class CommentSection extends CanvasSectionObject {
 		commentsAreListed: boolean;
 		[key: string]: any;
 	};
+
+	map: any;
 	static autoSavedComment: cool.Comment;
 	static commentWasAutoAdded: boolean;
 
@@ -69,21 +77,8 @@ export class CommentSection extends CanvasSectionObject {
 	private idIndexMap: Map<any, number>;
 
 	constructor () {
-		super({
-			name: L.CSections.CommentList.name,
-			backgroundColor: app.sectionContainer.clearColor,
-			borderColor: null,
-			anchor: [],
-			position: [0, 0],
-			size: [0, 0],
-			expand: 'bottom',
-			showSection: true,
-			processingOrder: L.CSections.CommentList.processingOrder,
-			drawingOrder: L.CSections.CommentList.drawingOrder,
-			zIndex: L.CSections.CommentList.zIndex,
-			interactable: false,
-			sectionProperties: {},
-		});
+		super();
+
 		this.map = L.Map.THIS;
 		this.anchor = ['top', 'right'];
 		this.sectionProperties.docLayer = this.map._docLayer;

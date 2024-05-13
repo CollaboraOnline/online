@@ -9,22 +9,14 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-class CellCursorSection extends CanvasSectionObject {
+class CellCursorSection extends app.definitions.canvasSectionObject {
+	name: string = "cellcursor"; // There will be multiple instances of this class. For the viewer's cursor, name will be owncellcursor. Others will have viewId-cellcursor.
+	processingOrder: number = L.CSections.AutoFillMarker.processingOrder;
+	drawingOrder: number = L.CSections.AutoFillMarker.drawingOrder;
+	zIndex: number = L.CSections.AutoFillMarker.zIndex;
 
 	constructor (viewId: number) {
-        super({
-			name: "cellcursor", // There will be multiple instances of this class. For the viewer's cursor, name will be owncellcursor. Others will have viewId-cellcursor.
-			anchor: [],
-			position: new Array<number>(0),
-			size: new Array<number>(0),
-			expand: '',
-			showSection: true,
-			processingOrder: L.CSections.AutoFillMarker.processingOrder,
-			drawingOrder: L.CSections.AutoFillMarker.drawingOrder,
-			zIndex: L.CSections.AutoFillMarker.zIndex,
-			interactable: true,
-			sectionProperties: {},
-		});
+        super();
 
 		this.documentObject = true;
 

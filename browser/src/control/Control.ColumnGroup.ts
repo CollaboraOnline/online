@@ -25,24 +25,18 @@
 namespace cool {
 
 export class ColumnGroup extends GroupBase {
+	name: string = L.CSections.ColumnGroup.name;
+	anchor: any = ['top', [L.CSections.CornerGroup.name, 'right', 'left']];
+	expand: string[] = ['left', 'right']; // Expand horizontally.
+	processingOrder: number = L.CSections.ColumnGroup.processingOrder;
+	drawingOrder: number = L.CSections.ColumnGroup.drawingOrder;
+	zIndex: number = L.CSections.ColumnGroup.zIndex;
+
 	_sheetGeometry: cool.SheetGeometry;
 	_cornerHeaderWidth: number;
 	_splitPos: cool.Point;
 
-	constructor() {
-		super({
-			name: L.CSections.ColumnGroup.name,
-			anchor: ['top', [L.CSections.CornerGroup.name, 'right', 'left']],
-			position: [0, 0], // This section's myTopLeft is placed according to corner group section if exists, if not, this is placed at (0, 0).
-			size: [0, 0], // No initial width is necessary. Width will be expanded. Height is computed inside update function.
-			expand: 'left right', // Expand horizontally.
-			processingOrder: L.CSections.ColumnGroup.processingOrder,
-			drawingOrder: L.CSections.ColumnGroup.drawingOrder,
-			zIndex: L.CSections.ColumnGroup.zIndex,
-			interactable: true,
-			sectionProperties: {},
-		});
-	}
+	constructor() { super(); }
 
 	update(): void {
 		if (this.isRemoved) // Prevent calling while deleting the section. It causes errors.

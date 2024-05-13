@@ -1,4 +1,5 @@
 /// <reference path="../../src/canvas/CanvasSectionContainer.ts" />
+/// <reference path="../../src/canvas/CanvasSectionObject.ts" />
 /// <reference path="../../src/canvas/sections/TilesSection.ts" />
 
 function canvasDomString() {

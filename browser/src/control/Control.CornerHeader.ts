@@ -20,28 +20,19 @@
 
 namespace cool {
 
-export class CornerHeader extends CanvasSectionObject {
+export class CornerHeader extends app.definitions.canvasSectionObject {
+	name: string = L.CSections.CornerHeader.name;
+	anchor: any = [[L.CSections.ColumnGroup.name, 'bottom', 'top'], [L.CSections.RowGroup.name, 'right', 'left']];
+	size: number[] = [48 * app.dpiScale, 19 * app.dpiScale]; // These values are static.
+	processingOrder: number = L.CSections.CornerHeader.processingOrder;
+	drawingOrder: number = L.CSections.CornerHeader.drawingOrder;
+	zIndex: number = L.CSections.CornerHeader.zIndex;
+	sectionProperties: any = { cursor: 'pointer' }
 
 	_map: any;
 	_textColor: string;
 
-	constructor() {
-
-		super({
-			name: L.CSections.CornerHeader.name,
-			anchor: [[L.CSections.ColumnGroup.name, 'bottom', 'top'], [L.CSections.RowGroup.name, 'right', 'left']],
-			position: [0, 0], // If column group or row group sections exist, myTopleft will be set according to their positions.
-			size: [48 * app.dpiScale, 19 * app.dpiScale], // These values are static.
-			expand: '', // Don't expand.
-			processingOrder: L.CSections.CornerHeader.processingOrder,
-			drawingOrder: L.CSections.CornerHeader.drawingOrder,
-			zIndex: L.CSections.CornerHeader.zIndex,
-			interactable: true,
-			sectionProperties: {
-				cursor: 'pointer'
-			},
-		});
-	}
+	constructor() { super(); }
 
 	onInitialize():void {
 		this._map = L.Map.THIS;

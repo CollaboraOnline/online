@@ -16,25 +16,25 @@
 namespace cool {
 
 export class ColumnHeader extends Header {
+	name: string = L.CSections.ColumnHeader.name;
+	anchor: Array<Array<string>> = [[L.CSections.ColumnGroup.name, 'bottom', 'top'], [L.CSections.CornerHeader.name, 'right', 'left']];
+	position: number[] = [0, 0]; // This section's myTopLeft is placed according to corner header and column group sections.
+	size: number[] = [0, 19 * app.dpiScale]; // No initial width is necessary.
+	expand: Array<string> = ['right']; // Expand horizontally.
+	processingOrder: number = L.CSections.ColumnHeader.processingOrder;
+	drawingOrder: number = L.CSections.ColumnHeader.drawingOrder;
+	zIndex: number = L.CSections.ColumnHeader.zIndex;
+	cursor: string = 'col-resize';
 
 	_current: number;
 	_resizeHandleSize: number;
 	_selection: SelectionRange;
 
-	constructor(options?: HeaderExtraProperties) {
-		super({
-			name: L.CSections.ColumnHeader.name,
-			anchor: [[L.CSections.ColumnGroup.name, 'bottom', 'top'], [L.CSections.CornerHeader.name, 'right', 'left']],
-			position: [0, 0], // This section's myTopLeft is placed according to corner header and column group sections.
-			size: [0, 19 * app.dpiScale], // No initial width is necessary.
-			expand: 'right', // Expand horizontally.
-			processingOrder: L.CSections.ColumnHeader.processingOrder,
-			drawingOrder: L.CSections.ColumnHeader.drawingOrder,
-			zIndex: L.CSections.ColumnHeader.zIndex,
-			interactable: true,
-			sectionProperties: {},
-			cursor: (options == undefined || options.cursor === undefined) ? 'col-resize' : options.cursor,
-		});
+	constructor(cursor?: string) {
+		super();
+
+		if (cursor)
+			this.cursor = cursor;
 	}
 
 	onInitialize(): void {
@@ -317,8 +317,4 @@ export class ColumnHeader extends Header {
 
 }
 
-L.Control.ColumnHeader = cool.ColumnHeader;
-
-L.control.columnHeader = function (options?: cool.HeaderExtraProperties) {
-	return new L.Control.ColumnHeader(options);
-};
+app.definitions.columnHeader = cool.ColumnHeader;
