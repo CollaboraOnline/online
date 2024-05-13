@@ -15,7 +15,7 @@
     <string name="use_text">テキスト形式を使用する</string>
     <string name="use_odf">ODF フォーマットを使用する</string>
     <string name="cant_open_the_document">ドキュメントを開くことが出来ませんでした</string>
-    <string name="file_chromeos_read_only">このファイルは読み取り専用のため保存できません。 読み書き可能に設定することで編集が可能になります。</string>
+    <string name="file_chromeos_read_only">このファイルは選択した場所に保存できません。選択した場所は読み取り専用です。読み書き可能なフォルダを選択してください。</string>
     <string name="ask_for_convert_odf">ファイルフォーマットの確認</string>
     <string name="convert_odf_message">このドキュメントには、現在選択されているファイル形式「テキスト」で保存できない形式やコンテンツが含まれる場合があります.</string>
     <string name="rate_our_app_text">お気に召されましたら、Google Playで5つ星を付与してください。 あなたの素晴らしいレビューは私たちにとって最高のモチベーションとなります。</string>
