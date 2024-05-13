@@ -3157,12 +3157,6 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	_updateScrollOnCellSelection: function (oldSelection, newSelection) {
 		if (this.isCalc() && oldSelection) {
-			if (oldSelection._northEast) // Is object's type latLngBounds
-				oldSelection = this._latLngBoundsToSimpleRectangle(oldSelection);
-
-			if (newSelection._northEast) // Is object's type latLngBounds
-				newSelection = this._latLngBoundsToSimpleRectangle(newSelection);
-
 			if (!app.file.viewedRectangle.containsRectangle(newSelection.toArray()) && !newSelection.equals(oldSelection.toArray())) {
 				var spacingX = Math.abs(app.calc.cellCursorRectangle.pWidth) / 4.0;
 				var spacingY = Math.abs(app.calc.cellCursorRectangle.pHeight) / 2.0;
@@ -3245,18 +3239,13 @@ L.CanvasTileLayer = L.Layer.extend({
 			var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
 			var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
 			var bottomRightTwips = topLeftTwips.add(offset);
-			var boundsTwips = this._convertToTileTwipsSheetArea(
-				new L.Bounds(topLeftTwips, bottomRightTwips));
-			var oldSelection = this._cellSelectionArea;
-			this._cellSelectionArea = new L.LatLngBounds(
-				this._twipsToLatLng(boundsTwips.getTopLeft(), this._map.getZoom()),
-				this._twipsToLatLng(boundsTwips.getBottomRight(), this._map.getZoom()));
+			var boundsTwips = this._convertToTileTwipsSheetArea(new L.Bounds(topLeftTwips, bottomRightTwips));
 
-			var offsetPixels = this._twipsToCorePixels(boundsTwips.getSize());
-			var start = this._twipsToCorePixels(boundsTwips.min);
-			var cellSelectionAreaPixels = L.LOUtil.createRectangle(start.x, start.y, offsetPixels.x, offsetPixels.y);
+			var oldSelection = this._cellSelectionArea ? this._cellSelectionArea.clone(): null;
+			this._cellSelectionArea = new app.definitions.simpleRectangle(boundsTwips.min.x, boundsTwips.min.y, parseInt(strTwips[2]), parseInt(strTwips[3]));
+
 			if (autofillMarkerSection)
-				autofillMarkerSection.calculatePositionViaCellSelection([cellSelectionAreaPixels.getX2(), cellSelectionAreaPixels.getY2()]);
+				autofillMarkerSection.calculatePositionViaCellSelection([this._cellSelectionArea.pX2, this._cellSelectionArea.pY2]);
 
 			this._updateScrollOnCellSelection(oldSelection, this._cellSelectionArea);
 		} else {
@@ -4301,22 +4290,20 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		if (!selectionOnDesktop && (!this._cellCSelections.empty() || app.calc.cellCursorVisible)) {
 
-			if (this._isEmptyRectangle(this._cellSelectionArea) && !app.calc.cellCursorVisible)
+			if (!this._cellSelectionArea && !app.calc.cellCursorVisible)
 				return;
 
 			this._cellSelectionHandleStart.setShowSection(true);
 			this._cellSelectionHandleEnd.setShowSection(true);
 
-			let latLngCursor = this._simpleRectangleToLatLngBounds(app.calc.cellCursorRectangle.clone());
+			var cellRectangle = this._cellSelectionArea ? this._cellSelectionArea.clone() : app.calc.cellCursorRectangle.clone();
 
-			var cellRectangle = this._cellSelectionArea ? this._cellSelectionArea : latLngCursor;
-
-			const posStart = this._latLngToCorePixels(cellRectangle.getNorthWest());
-			const posEnd = this._latLngToCorePixels(cellRectangle.getSouthEast());
+			const posStart = new app.definitions.simplePoint(cellRectangle.x1, cellRectangle.y1);
+			const posEnd = new app.definitions.simplePoint(cellRectangle.x2, cellRectangle.y2);
 
 			const offset = this._cellSelectionHandleStart.sectionProperties.circleRadius;
-			this._cellSelectionHandleStart.setPosition(posStart.x - offset, posStart.y - offset);
-			this._cellSelectionHandleEnd.setPosition(posEnd.x - offset, posEnd.y - offset);
+			this._cellSelectionHandleStart.setPosition(posStart.pX - offset, posStart.pY - offset);
+			this._cellSelectionHandleEnd.setPosition(posEnd.pX - offset, posEnd.pY - offset);
 		}
 		else {
 			this._cellSelectionHandleStart.setShowSection(false);
