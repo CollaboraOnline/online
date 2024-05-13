@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-04-12 19:29+0200\n"
-"PO-Revision-Date: 2024-05-13 08:58+0000\n"
+"PO-Revision-Date: 2024-05-13 23:21+0000\n"
 "Last-Translator: Poe Mon <p.poemon.awitd@gmail.com>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/"
 "collabora-online/help/ja/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.5.5-dev\n"
+"X-Generator: Weblate 5.5.5\n"
 
 #: html/cool-help.html%2Bdiv.h1:84-5
 msgid "Keyboard Shortcuts"
@@ -2939,6 +2939,15 @@ msgid ""
 "dialog shows a list of all tracked changes. Use the dialog buttons "
 "accordingly."
 msgstr ""
+"変更は受け入れるか拒否することができます。変更を受け入れるか拒否するには、文"
+"書の右側のコメントボックスで対応するアイコンをクリックしてください。または、"
+"<span class=\"ui\">編集</span> → <span class=\"ui\">変更履歴</span> → <span "
+"class=\"ui\">受け入れる</span> または <span class=\"ui\">拒否する</span> を選"
+"択してください。さらに、変更を受け入れるか拒否する前にフィルタリングする必要"
+"がある場合は、<span class=\"ui\">編集</span> → <span class=\"ui\">変更履歴</"
+"span> → <span class=\"ui\">管理</span> を選択してください。ダイアログが表示さ"
+"れ、すべての追跡された変更のリストが表示されます。ダイアログボタンを適切に使"
+"用してください。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:808-5
 msgid "How do I set the margins of the document?"
@@ -2948,7 +2957,8 @@ msgstr "ドキュメントの余白を設定するにはどうすればよいで
 msgid ""
 "Using the ruler drag the leftmost edge of the ruler to adjust the left "
 "margin, or the rightmost for the right margin."
-msgstr ""
+msgstr "ルーラーを使用して、ルーラーの左端をドラッグして左マージンを調整するか、右端"
+"をドラッグして右マージンを調整します。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:810-5
 msgid "Using the page style"
@@ -2959,58 +2969,63 @@ msgid ""
 "Choose <span class=\"ui\">Format</span> → <span class=\"ui\">Page</span> and "
 "select the <span class=\"ui\">Page</span> tab"
 msgstr ""
+"<span class=\"ui\">フォーマット</span> → <span class=\"ui\""
+">ページ</span>を選択し、<span class=\"ui\">ページ</span>タブを選択する"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:813-11
 msgid "Set the page margins in the dialog."
-msgstr ""
+msgstr "ダイアログでページ余白を設定します。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:818-5
 msgid "How do I change the page orientation to landscape inside my document"
-msgstr ""
+msgstr "ドキュメント内でページの向きを横向きに変更するにはどうすればよいですか"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:820-11
 msgid ""
 "Place the cursor at the place where the page orientation is to change. Add "
 "an empty paragraph."
-msgstr ""
+msgstr "ページの向きを変更する場所にカーソルを置きます。 空の段落を追加します。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:821-11
 msgid ""
 "Choose <span class=\"ui\">Format</span> → <span class=\"ui\">Paragraph</"
 "span>, <span class=\"ui\">Text Flow </span> tab"
 msgstr ""
+"<span class=\"ui\">書式</span> → <span class=\"ui\">段落</span>、<span class="
+"\"ui\">テキストフロー</span>タブを選択します"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:822-11
 msgid ""
 "In the <span class=\"ui\">Breaks</span> area, mark Insert, Type: Page Break, "
 "Position: Before."
-msgstr ""
+msgstr "<span class=\"ui\">改行</span> "
+"エリアで、挿入を選択し、タイプをページ区切り、位置を前に設定します。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:823-11
 msgid "Select Landscape in “With Page Style”"
-msgstr ""
+msgstr "ページスタイルでで横向きを選択します"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:824-11
 msgid "Select if you want to change page numbering."
-msgstr ""
+msgstr "ページ番号を変更する場合は選択してください。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:826-5
 msgid ""
 "To return to portrait orientation, repeat the procedure, choosing Portrait "
 "in “With page style”."
-msgstr ""
+msgstr "縦向きに戻すには、手順を繰り返し、「ページスタイルで」で縦向きを選択します。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:829-5
 msgid "How can I make the new text look like other existing text?"
-msgstr ""
+msgstr "新しいテキストを他の既存のテキストのように見せるにはどうすればよいですか?"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:830-5
 msgid "Directly:"
-msgstr ""
+msgstr "直接："
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:832-11
 msgid "Select the text with the existing format"
-msgstr ""
+msgstr "既存の形式でテキストを選択します"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:833-11
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:876-11
@@ -3019,10 +3034,13 @@ msgid ""
 "alt=\"\" src=\"images/lc_formatpaintbrush.svg\">. The mouse pointer turns to "
 "a paint bucket."
 msgstr ""
+"クローンフォーマットのアイコン <img style=\"height:0.6cm;width:0.6cm;\" alt="
+"\"\" src=\"images/lc_formatpaintbrush.svg\"> "
+"をクリックします。マウスポインタがペイントバケットに変わります。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:834-11
 msgid "Select the text you want to apply the new format."
-msgstr ""
+msgstr "新しい書式を適用したいテキストを選択します。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:838-5
 msgid "Applying a paragraph style:"
@@ -3030,18 +3048,20 @@ msgstr "段落スタイルを適用する:"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:840-11
 msgid "Place the cursor at the paragraph to be formatted"
-msgstr ""
+msgstr "書式設定する段落にカーソルを置きます"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:841-11
 msgid ""
 "Select the style to apply in the style dropdown list. The paragraph displays "
 "the styles attributes."
-msgstr ""
+msgstr "スタイルドロップダウンリストから適用するスタイルを選択します。段落にスタイル"
+"の属性が表示されます。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:845-5
 msgid ""
 "Why did the text I just typed change automatically? How can I revert it?"
-msgstr ""
+msgstr "入力したばかりのテキストが自動的に変更された原因なんでしょうか? "
+"元に戻す方法を教えてください?"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:846-5
 msgid ""
@@ -3051,10 +3071,16 @@ msgid ""
 "necessary, disable it in <span class=\"ui\">Tools</span> → <span "
 "class=\"ui\">AutoCorrection</span> → <span class=\"ui\">While typing</span>."
 msgstr ""
+"オートコレクトが有効になっています。 オートコレクトは、対応するテキストの内部"
+"テーブルに入力されたテキストを変更します。 "
+"ほとんどの場合、入力中にオートコレクトによりタイプミスが修正されます。 "
+"オートコレクトが必要ない場合は、<span class=\"ui\">ツール</span> → <span "
+"class=\"ui\">オートコレクト</span> → <span class=\"ui\">入力中</span> "
+"で無効にします。 >。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:855-5
 msgid "How can I select data to print?"
-msgstr ""
+msgstr "印刷するデータを選択するにはどうすればよいですか?"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:856-5
 msgid ""
@@ -3062,22 +3088,27 @@ msgid ""
 "and print the document to download. On printing the PDF, select the pages of "
 "interest."
 msgstr ""
+"スプレッドシートに列区切りと行区切りを挿入して印刷範囲を狭め、ドキュメントを"
+"印刷してダウンロードします。 PDF を印刷するときに、目的のページを選択します。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:859-5
 msgid "How can I import CSV data?"
-msgstr ""
+msgstr "CSVのインポートする方法を教えてください？"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:861-11
 msgid ""
 "Load your CSV data in some native tool to your platform, select and copy it "
 "to the clipboard"
-msgstr ""
+msgstr "ネーティブツールでのCSVデータをプラットフォームにロードし、選択してクリップボ"
+"ードにコピーします"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:862-11
 msgid ""
 "Activate the <span class=\"productname\">%productName</span> spreadsheet "
 "window."
 msgstr ""
+"<span class=\"productname\">%productName</span> スプレッドシート "
+"ウィンドウをアクティブにしてください。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:864-9
 msgid ""
@@ -3086,6 +3117,11 @@ msgid ""
 "plus\">+</span><kbd>V</kbd>. The <span class=\"ui\">Text Import</span> "
 "dialog opens to let you describe the precise format of the CSV data."
 msgstr ""
+"ブラウザから<span class=\"ui\">編集</span> → <span class=\"ui\">貼り付け</"
+"span> を選択するか、<kbd>Ctrl</kbd><span class=\"kbd--plus\""
+">+</span><kbd>V</kbd>を押します。その後、<span class=\"ui\""
+">テキストインポート</span> ダイアログが開き、、CSV "
+"データの正確な形式を記述できます。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.div.img[alt]:866-31
 msgid "import"
@@ -3094,33 +3130,33 @@ msgstr "インポート"
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:867-11
 msgid ""
 "Select the character set, language and separator options for the CSV file."
-msgstr ""
+msgstr "CSVファイルの文字セット、言語、区切り文字のオプションを選択します。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:869-5
 msgid ""
 "The CSV data is loaded into the selected cell where you pasted, according to "
 "these settings."
-msgstr ""
+msgstr "これらの設定に従って、貼り付けたセルに CSV データが読み込まれます。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:872-5
 msgid "How can I copy the formatting of existing cells to new ones?"
-msgstr ""
+msgstr "既存のセルの書式設定を新しいセルにコピーするにはどうすればよいですか?"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:873-5
 msgid "This is easy to do using the Paintbrush tool in the toolbar."
-msgstr ""
+msgstr "ツールバーのペイントブラシツールを使用すると簡単に実行できます。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:875-11
 msgid "Format the source cell with the font, color background and more."
-msgstr ""
+msgstr "フォント、背景色などを使用してソース セルを書式設定します。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:877-11
 msgid "Select the cells you want to format. Release the mouse button."
-msgstr ""
+msgstr "書式設定したいセルを選択します。マウスボタンを離します。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:881-5
 msgid "What is “Clear Direct Formatting” icon?"
-msgstr ""
+msgstr "「クリアダイレクトフォーマット」アイコンとは何ですか？"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:882-5
 msgid ""
@@ -3130,6 +3166,11 @@ msgid ""
 "or spreadsheet cell and choose <span class=\"ui\">Format</span> → <span "
 "class=\"ui\">Clear Direct Formatting</span> or use the button in the toolbar."
 msgstr ""
+"直接書式設定は、段落やスプレッドシートのセルの選択された内容に直接適用される"
+"書式設定であり、割り当てられたスタイルの書式設定と重なります。書式設定をスタ"
+"イル設定に戻すには、テキストやスプレッドシートのセルを選択し、<span class="
+"\"ui\">フォーマット</span> → <span class=\"ui\">直接書式設定の消去</span> "
+"を選択するか、ツールバーのボタンを使用します。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:885-5
 msgid "How do I rename a sheet?"
@@ -3141,6 +3182,9 @@ msgid ""
 "right mouse button) over the sheet tab in the bottom. Enter the new sheet "
 "name in the dialog that follows."
 msgstr ""
+"スプレッドシートドキュメント内のシートをリネームするには、シートタブの上で右"
+"クリックしてコンテキストメニューを表示し、続くダイアログボックスに新しいシー"
+"ト名を入力します。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:895-5
 msgid "How can I run my slide show?"
@@ -3149,7 +3193,8 @@ msgstr "スライドショーの実行方法は?"
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:897-11
 msgid ""
 "Open the presentation in <span class=\"productname\">%productName</span>"
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> "
+"でプレゼンテーションを開きます"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:898-11
 msgid ""
@@ -3157,14 +3202,17 @@ msgid ""
 "Screen Presentation</span> or click on the left-most icon in the bottom of "
 "the slide panel:"
 msgstr ""
+"<span class=\"ui\">スライド ショー</span> → <span class=\"ui\""
+">全画面プレゼンテーション</span> を選択するか、スライド "
+"パネルの下部にある左端のアイコンをクリック："
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:902-5
 msgid "How can I change the line, area and position of a shape in my slides?"
-msgstr ""
+msgstr "スライド内の図形の線、領域、位置を変更するにはどうすればよいですか?"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:904-11
 msgid "Select the shape in your slide. A set of handles shows."
-msgstr ""
+msgstr "スライド内の図形を選択します。ハンドルが表示されます。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:906-9
 msgid ""
@@ -3172,6 +3220,9 @@ msgid ""
 "<span class=\"ui\">Area</span>, or <span class=\"ui\">Position and Size</"
 "span>). A dialog opens."
 msgstr ""
+"<span class=\"ui\">書式</span> → <span class=\"ui\">線</span>（または<span "
+"class=\"ui\">エリア</span>、または<span class=\"ui\""
+">位置とサイズ</span>）を選択します。ダイアログが開きます。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.div.img[alt]:908-31
 msgid "Position and Size"
@@ -3179,7 +3230,7 @@ msgstr "位置とサイズ"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:909-11
 msgid "Set the properties of the element of the object."
-msgstr ""
+msgstr "オブジェクトの要素のプロパティを設定します。"
 
 #~ msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>E"
 #~ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>E"
