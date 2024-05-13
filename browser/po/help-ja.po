@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-04-12 19:29+0200\n"
-"PO-Revision-Date: 2024-05-13 07:04+0000\n"
+"PO-Revision-Date: 2024-05-13 08:07+0000\n"
 "Last-Translator: Poe Mon <p.poemon.awitd@gmail.com>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/"
 "collabora-online/help/ja/>\n"
@@ -2041,6 +2041,10 @@ msgid ""
 "document from your local computer or from your cloud storage. Inserted "
 "images are always embedded in the document."
 msgstr ""
+"<span class=\"productname\">%productName</span> は、ローカル "
+"コンピュータまたはクラウド ストレージからテキスト "
+"ドキュメントに画像を挿入します。 "
+"挿入された画像は常にドキュメントに埋め込まれます。"
 
 #: html/cool-help.html%2Bdiv.div.div.p:541-5
 msgid ""
@@ -2048,12 +2052,18 @@ msgid ""
 "class=\"ui\">Insert image</span> icon allows you to choose an image from the "
 "cloud storage's folders and shares."
 msgstr ""
+"<span class=\"def\">画像の挿入:</span> <span class=\"ui\">画像の挿入</span> "
+"アイコンをクリックすると、クラウド "
+"ストレージのフォルダと共有から画像を選択できます。"
 
 #: html/cool-help.html%2Bdiv.div.div.p:542-5
 msgid ""
 "<span class=\"def\">Insert local image:</span> opens the browser file picker "
 "to upload the image from your local computer and insert it into the document."
 msgstr ""
+"<span class=\"def\">ローカル画像の挿入:</span> ブラウザのファイル "
+"ピッカーを開き、ローカル "
+"コンピュータから画像をアップロードしてドキュメントに挿入します。"
 
 #: html/cool-help.html%2Bdiv.div.div.p:543-5
 msgid ""
@@ -2061,11 +2071,13 @@ msgid ""
 "image. Select the image and open the context menu. Use the images handles to "
 "resize the image with the mouse."
 msgstr ""
+"画像はリサイズ、回転、アンカー設定が可能です。また、テキストは画像の周囲に折"
+"り返すことができます。画像を選択し、コンテキストメニューを開いてください。マ"
+"ウスを使用して画像のハンドルを操作し、画像のサイズを変更します。"
 
 #: html/cool-help.html%2Bdiv.div.div.h4:546-5
-#, fuzzy
 msgid "Comments in documents"
-msgstr "ドキュメント末にジャンプ"
+msgstr "文書内のコメント"
 
 #: html/cool-help.html%2Bdiv.div.div.p:547-5
 msgid ""
@@ -2073,10 +2085,13 @@ msgid ""
 "that need special reader attention. Comments are displayed on the right and "
 "carry the name and date of the issuer."
 msgstr ""
+"<span class=\"productname\">%productName</span> "
+"内の読者の特別な注意が必要な場所にコメントを挿入します。 "
+"コメントは右側に表示され、発行者の名前と日付が表示されます。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.img[alt]:548-29
 msgid "comment"
-msgstr ""
+msgstr "コメント"
 
 #: html/cool-help.html%2Bdiv.div.div.p:549-5
 msgid ""
@@ -2084,10 +2099,13 @@ msgid ""
 "style=\"height:0.6cm;width:0.6cm;\"></span>) icon to reply, move and delete "
 "comments."
 msgstr ""
+"コメントの返信、移動、削除を行うには、サブメニュー (<span class=\"cool-"
+"annotation-menu\" style=\"height:0.6cm;width:0.6cm;\"></span>) "
+"アイコンをクリックします。"
 
 #: html/cool-help.html%2Bdiv.div.div.h4:552-5
 msgid "Spellchecking"
-msgstr ""
+msgstr "スペルチェック"
 
 #: html/cool-help.html%2Bdiv.div.div.p:553-5
 msgid ""
@@ -2096,16 +2114,22 @@ msgid ""
 "misspelled words. Click on the right mouse button to open a context menu "
 "with suggested misspelling corrections."
 msgstr ""
+"<span class=\"productname\">%productName</span>は、テキストドキュメント、スプ"
+"レッドシート、プレゼンテーション内のスペルをチェックできます。赤い波線が下線"
+"付けされた言葉はスペルミスがあることを示します。右クリックしてコンテキストメ"
+"ニューを開くと、推奨されるスペルミス修正が表示されます。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.img[alt]:554-29
 msgid "spellchecking"
-msgstr ""
+msgstr "スペルチェック"
 
 #: html/cool-help.html%2Bdiv.div.div.p:555-5
 msgid ""
 "To systematically spell-check the whole document use the <span "
 "class=\"ui\">Tools</span> menu’s <span class=\"ui\">Spelling</span> option."
 msgstr ""
+"文書全体を体系的にスペルチェックするには、<span class=\"ui\">ツール</"
+"span>メニューの<span class=\"ui\">スペル</span>オプションを使用します。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:564-30
 msgid ""
@@ -2118,15 +2142,23 @@ msgid ""
 "cursor to the next cell to the right, and with an <kbd>Enter</kbd> to the "
 "cell below for easy further data entry."
 msgstr ""
+"オンラインのスプレッドシートを編集する方法は、デスクトップのスプレッドシート"
+"と同じです。データの入力、範囲、列、行、シートの選択などの操作は同じです。キ"
+"ーボード、メニュー、またはツールバーを使用して、スプレッドシートでの操作を実"
+"行します。セルの内容をドラッグしてデータを入力することもサポートされています"
+"。コピー、切り取り、貼り付けのコマンドは、コンテキストメニューから利用できま"
+"す。<kbd>Tab</kbd>キーを押してデータを入力した後、カーソルが右の次のセルに移"
+"動し、<kbd>Enter</kbd>キーを押して下のセルに移動します。これにより、簡単に追"
+"加のデータ入力が行えます。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:570-5
 msgid ""
 "Formulas are entered in the formula bar. Enter '=' and insert the formula."
-msgstr ""
+msgstr "数式は数式バーに入力されます。'='を入力して、数式を挿入してください。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:571-5
 msgid "All spreadsheets functions and mathematical rules applies."
-msgstr ""
+msgstr "すべてのスプレッドシート関数と数学的なルールが適用されます。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:573-5
 msgid ""
@@ -2136,6 +2168,10 @@ msgid ""
 "target=\"_blank\" rel=\"noopener noreferrer\">OASIS OpenFormula "
 "specification</a>."
 msgstr ""
+"数式の言語は、どのスプレッドシートのユーザーにも非常に馴染み深く、詳細には<a "
+"href=\"https://www.oasis-open.org/committees/download.php/16826/openformula-"
+"spec-20060221.html\" target=\"_blank\" rel=\"noopener noreferrer\">OASIS "
+"OpenFormula specification</a>で確認できます。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:580-5
 msgid ""
@@ -2173,12 +2209,18 @@ msgid ""
 "spreadsheets in <span class=\"productname\">%productName</span> there are "
 "various possibilities for applying filters."
 msgstr ""
+"<span class=\"def\">データのフィルタリング：</span>フィルターと高度なフィルタ"
+"ーを使用すると、データ範囲の特定のフィルターされた行（レコード）で作業できま"
+"す。 <span class=\"productname\">%productName</span>のスプレッドシートでは、"
+"さまざまなフィルターの適用方法があります。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:591-10
 msgid ""
 "One use for the <span class=\"ui\">AutoFilter</span> function is to quickly "
 "restrict the display to records with identical entries in a data field."
 msgstr ""
+"<span class=\"ui\">オートフィルタ</span> 関数の使用法の 1 つは、データ "
+"フィールドに同一のエントリを持つレコードのみに表示をするためです。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.div.img[alt]:592-34
 msgid "filter"
@@ -2191,6 +2233,9 @@ msgid ""
 "standard filter to connect the conditions with either a logical AND or a "
 "logical OR operator."
 msgstr ""
+"<span class=\"ui\">標準フィルター</span> ダイアログでは、特定のデータフィール"
+"ド内の値を含む範囲を定義することもできます。標準フィルターを使用して、"
+"条件を論理 AND または論理 OR 演算子で接続できます。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:595-11
 msgid ""
@@ -2198,6 +2243,8 @@ msgid ""
 "filter conditions. With advanced filters you enter the conditions directly "
 "into the sheet."
 msgstr ""
+"<span class=\"ui\">高度なフィルター</span>では、最大で合計8つのフィルター条件"
+"が許可されます。高度なフィルターを使用すると、条件を直接シートに入力します。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:599-5
 msgid ""
@@ -2205,6 +2252,9 @@ msgid ""
 "and group rows and columns together so that you can collapse and expand the "
 "groups with a single click making it easy to represent hierarchical data."
 msgstr ""
+"<span class=\"def\">アウトライン：</span>データのアウトラインを作成し、行と列"
+"をグループ化して、階層的なデータを表すのが簡単になります。グループを一括で折"
+"りたたんだり展開したりすることができます。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:603-5
 msgid ""
@@ -2212,17 +2262,23 @@ msgid ""
 "entries to be valid. Invalid entries to a cell will be rejected. To enable "
 "data validation:"
 msgstr ""
+"<span class=\"def\">データ検証:</span> "
+"セルごとに、有効なエントリを定義できます。 セルへの無効な入力は拒否されます。"
+" データ検証を有効にするには:"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:606-9
 msgid ""
 "Choose <span class=\"ui\">Validity</span> from the <span class=\"ui\">Data</"
 "span> menu. The <span class=\"ui\">Validity</span> dialog opens."
 msgstr ""
+"<span class=\"ui\">データ</span>メニューから<span class=\"ui\""
+">Validity</span>を選択します。 <span class=\"ui\""
+">Validity</span>ダイアログが開きます。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.div.img[alt]:608-31
 #: html/cool-help.html%2Bdiv.div.div.div.ol.div.img[alt]:613-31
 msgid "data validate"
-msgstr ""
+msgstr "データの検証"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:609-11
 msgid ""
@@ -2230,6 +2286,9 @@ msgid ""
 "box list. Depending on the criterion, more options shows. Fill the required "
 "data."
 msgstr ""
+"<span class=\"ui\">許可</span>のドロップダウンリストから検証基準を選択します"
+"。基準に応じて、さらにオプションが表示されます。必要なデータを入力してくださ"
+"い。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:611-9
 msgid ""
@@ -2237,12 +2296,17 @@ msgid ""
 "Alert</span> tabs to enhance the user interactions. Click <span "
 "class=\"ui\">OK</span> to close the dialog."
 msgstr ""
+"ユーザーインタラクションを向上させるために、<span class=\"ui\">入力ヘルプ</"
+"span>と<span class=\"ui\""
+">エラーアラート</span>タブを使用します。ダイアログを閉じるには、<span class="
+"\"ui\">OK</span>をクリックしてください。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:614-11
 msgid ""
 "To remove the validity of the cell, open the dialog and set the <span "
 "class=\"ui\">Allow</span> list to “All values”."
-msgstr ""
+msgstr "セルの妥当性を削除するには、ダイアログを開き、<span class=\"ui\""
+">許可</span>リストを「すべての値」に設定します。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:618-5
 msgid ""
@@ -2252,6 +2316,11 @@ msgid ""
 "dot shows on the top right corner of the cell when it has a comment. Hover "
 "the mouse on the cell to display comments."
 msgstr ""
+"<span class=\"def\">コメント：</span>スプレッドシートでは、1つのセルに1つのコ"
+"メントを挿入できます。 <span class=\"ui\">コメントを挿入</span> を選択すると"
+"、ポップアップが表示され、コメントの内容を入力できます。セルにコメントがある"
+"場合、セルの右上隅に赤い点が表示されます。コメントを表示するには、マウスをセ"
+"ルの上に重ねます。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:622-5
 msgid ""
@@ -2261,6 +2330,10 @@ msgid ""
 "class=\"ui\">Conditional Formatting</span> icon on the toolbar. Select the "
 "symbol set to apply on the range."
 msgstr ""
+"<span class=\"def\">条件付き書式設定：</span> <span class=\"productname\">%pr"
+"oductName</span>は、セルの条件に基づいて範囲内の各セルにシンボルを追加します"
+"。セル範囲を選択し、ツールバーの<span class=\"ui\">条件付き書式設定</span>ア"
+"イコンをクリックします。適用するシンボルセットを範囲に選択します。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:633-30
 msgid ""
@@ -2272,13 +2345,21 @@ msgid ""
 "tables and charts, are similar to a desktop word processor. Use the "
 "keyboard, menus and toolbars to interact with your document."
 msgstr ""
+"<span class=\"productname\">%productName</span>は、デスクトップのドキュメント"
+"を編集するのと同じ方法でテキストドキュメントを編集します。What You See Is "
+"What You Get（WYSIWYG）レイアウトを提供し、便利にドキュメントを印刷される形式"
+"でレイアウトします。テキストの入力、コピー、カット、貼り付け、テキストの選択"
+"、画像の挿入、サイズ変更、アンカリング、表やチャートの追加や操作などの操作は"
+"、デスクトップのワードプロセッサと類似しています。キーボード、メニュー、ツー"
+"ルバーを使用して、ドキュメントとやり取りします。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:638-30
 msgid ""
 "Context menus are available on clicking the right mouse button. The commands "
 "available in the context menu are related - not extensively - to the "
 "underlying object in the document."
-msgstr ""
+msgstr "右クリックすると、コンテキストメニューが利用できます。コンテキストメニューに"
+"は、文書内の対象に関連するコマンドが表示されます。"
 
 #: html/cool-help.html%2Bdiv.div.div.h3:642-5
 #, fuzzy
@@ -2296,6 +2377,13 @@ msgid ""
 "changes formatting as well, simplifying the effort of formatting many "
 "paragraph individually."
 msgstr ""
+"<span class=\"productname\">%productName</span>は、スタイルを介した段落のフォ"
+"ーマットに対するモダンな技術をサポートしています。スタイルは、名前（スタイル"
+"名）でラベル付けされたテキストのプロパティ（フォント、色、背景など）のセット"
+"です。スタイルを使用して、文書内の多くの段落に同じプロパティのセットを適用し"
+"、均一でプロフェッショナルな外観を作成します。また、スタイルのフォーマットプ"
+"ロパティの1つを変更すると、同じスタイルを持つすべての段落のフォーマットも変更"
+"されるため、多くの段落を個別にフォーマットする作業が簡素化されます。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:645-5
 msgid ""
@@ -2304,6 +2392,9 @@ msgid ""
 "in every text excerpt, turning text formatting a long task, subject to "
 "errors and delays."
 msgstr ""
+"直接書式設定では、文書コンテンツの選択された抜粋に書式設定が適用されます。 長"
+"い文書では、すべてのテキストの抜粋に直接書式設定を適用する必要があるため、テ"
+"キストの書式設定は長い作業となり、エラーや遅延が発生する可能性があります。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:647-30
 msgid ""
