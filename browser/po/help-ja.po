@@ -2422,7 +2422,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:657-5
 msgid "Handling Tables"
-msgstr ""
+msgstr "テーブルの操作"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:658-5
 msgid ""
