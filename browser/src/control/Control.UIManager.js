@@ -220,6 +220,7 @@ L.Control.UIManager = L.Control.extend({
 			this.map.addControl(L.control.mobileWizardPopup());
 
 			this.map.mention = L.control.mention(this.map);
+			this.map.autofilloptions = L.control.autofilloptions(this.map);
 		}
 
 		setupToolbar(this.map);
