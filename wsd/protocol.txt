@@ -242,9 +242,10 @@ dialog <command>
 
     <command> is unique identifier for the dialog that needs to be painted.
 
-uno <command>
+uno <command> [arguments]
 
     <command> is a line of text.
+    [argments] - JSON encoded arguments for the UNO command
 
 save dontTerminateEdit=<value> dontSaveIfUnmodified=<value>
 
