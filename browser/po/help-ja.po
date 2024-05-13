@@ -2485,7 +2485,8 @@ msgstr "その他の高度な機能"
 msgid ""
 "<span class=\"def\">Comments:</span> Comments are inserted in the text and "
 "displayed on the right side of the screen."
-msgstr ""
+msgstr "<span class=\"def\">コメント:</span> "
+"コメントはテキストに挿入され、画面の右側に表示されます。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:673-5
 msgid ""
