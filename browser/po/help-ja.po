@@ -2415,6 +2415,10 @@ msgid ""
 "class=\"ui\">Edit</span> → <span class=\"ui\">Edit styles</span> to change "
 "style."
 msgstr ""
+"<span class=\"def\">スタイルフォーマット：</span> <span class=\"productname\""
+">%productName</span>は段落スタイルをサポートしています。既存の段落スタイルを"
+"段落に適用できます。スタイルを変更するには、メニュー<span class=\"ui\">編集</"
+"span> → <span class=\"ui\">スタイルの編集</span>を選択します。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:657-5
 msgid "Handling Tables"
