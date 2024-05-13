@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-04-12 19:29+0200\n"
-"PO-Revision-Date: 2024-05-13 08:15+0000\n"
+"PO-Revision-Date: 2024-05-13 08:58+0000\n"
 "Last-Translator: Poe Mon <p.poemon.awitd@gmail.com>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/"
 "collabora-online/help/ja/>\n"
@@ -2362,7 +2362,6 @@ msgstr "右クリックすると、コンテキストメニューが利用でき
 "は、文書内の対象に関連するコマンドが表示されます。"
 
 #: html/cool-help.html%2Bdiv.div.div.h3:642-5
-#, fuzzy
 msgid "Formatting text"
 msgstr "テキスト整形"
 
@@ -2494,18 +2493,22 @@ msgid ""
 "spaces are shown as marks to assisting text alignment, editing and "
 "formatting."
 msgstr ""
+"<span class=\"def\">書式設定マーク:</span> 段落、ページ、改行不可能なスペース"
+"は、テキストの配置、編集、書式設定を補助するためにマークとして表示されます。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:674-5
 msgid ""
 "<span class=\"def\">Fields:</span> A basic set of fields is available to "
 "insert in the document."
-msgstr ""
+msgstr "<span class=\"def\">フィールド:</span> "
+"基本的なフィールドのセットをドキュメントに挿入できます。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:675-5
 msgid ""
 "<span class=\"def\">Alphabetical index:</span> Existing alphabetical index "
 "can be updated with new entries."
-msgstr ""
+msgstr "<span class=\"def\">アルファベット索引：</span> "
+"既存のアルファベット索引に新しいエントリを追加して更新できます。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:676-5
 msgid ""
@@ -2513,12 +2516,16 @@ msgid ""
 "available for the existing page style applied in the document at the cursor "
 "position."
 msgstr ""
+"<span class=\"def\">ページヘッダーとフッター：</span> ヘッダーとフッターは、"
+"文書のカーソル位置に適用されている既存のページスタイルで利用できます。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:677-5
 msgid ""
 "<span class=\"def\">Footnotes and endnotes:</span> Footnotes and endnotes "
 "are supported."
 msgstr ""
+"<span class=\"def\">Footnotes and endnotes:</span> ヘッダーとフッターは、文書"
+"のカーソル位置に適用されている既存のページスタイルで利用できます。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:687-30
 msgid ""
@@ -2529,6 +2536,12 @@ msgid ""
 "presentation application. Use the keyboard, menus and toolbars to perform "
 "actions in your document."
 msgstr ""
+"<span class=\"productname\">%productName</span> Impressは、プレゼンテーション"
+"を編集、作成できるツールです。テキストの入力、切り取り、コピー、貼り付け、テ"
+"キストの選択、画像の挿入、サイズ変更、アンカリング、テーブルの追加や操作など"
+"の操作は、デスクトップのプレゼンテーションアプリケーションと類似しています。"
+"キーボード、メニュー、ツールバーを使用して、ドキュメント内で操作を実行します"
+"。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:693-5
 msgid ""
@@ -2537,24 +2550,36 @@ msgid ""
 "the slide show from the menu or click on icon in the bottom left toolbar in "
 "the slide pane."
 msgstr ""
+"<span class=\"productname\">%productName</span> は、スライド "
+"トランジションやオブジェクト "
+"アニメーションのサブセットを含むプレゼンテーション スライド "
+"ショーを表示します。 メニューからスライド ショーを選択するか、スライド "
+"ペインの左下のツールバーにある アイコンをクリックします。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:694-5
 msgid ""
 "To exit a <span class=\"productname\">%productName</span> slide show, press "
 "the <kbd>Esc</kbd> key to return to the presentation edit mode."
 msgstr ""
+"<span class=\"productname\">%productName</span> スライド "
+"ショーを終了するには、<kbd>Esc</kbd> "
+"キーを押してプレゼンテーション編集モードに戻ります。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:701-5
 msgid ""
 "Click on any slide thumbnail in the pane to switch to this slide to view or "
 "edit it."
-msgstr ""
+msgstr "スライドペイン内の任意のスライドサムネイルをクリックすると、そのスライドに切"
+"り替わり、表示または編集ができます。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:702-5
 msgid ""
 "Use the slide pane toolbar in the bottom to start the slideshow, add slide, "
 "duplicate or delete the current slide."
 msgstr ""
+"スライドペインの下部にあるツールバーを使用して、スライドショーを開始したり、"
+"スライドを追加したり、現在のスライドを複製したり、削除したりすることができま"
+"す。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:709-5
 msgid ""
@@ -2562,12 +2587,18 @@ msgid ""
 "class=\"productname\">%productName</span> Impress let you change the slide "
 "layout. Select the desired slide layout in the drop-down layout list."
 msgstr ""
+"<span class=\"def\">スライドレイアウト：</span> <span class=\"productname\""
+">%productName</span> Impressでは、スライドのレイアウトを変更できます。ドロッ"
+"プダウンのレイアウトリストから、希望するスライドレイアウトを選択します。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:712-30
 msgid ""
 "<span class=\"def\">Master slide:</span> Select the master slide associated "
 "to the current slide. Format and arrange slide elements in the master slide."
 msgstr ""
+"<span class=\"def\">マスタースライド：</span> 現在のスライドに関連付けられた"
+"マスタースライドを選択します。マスタースライドでスライド要素の書式設定や配置"
+"を行います。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:713-30
 msgid ""
@@ -2577,6 +2608,11 @@ msgid ""
 "property of the slide, use the side bar to set the slide transition when in "
 "edit mode."
 msgstr ""
+"<span class=\"def\">スライドのトランジション：</span> <span class="
+"\"productname\">%productName</span> Impressは、スライドショーで新しいスライド"
+"を表示する際に視覚効果を提供します。スライドのトランジションはスライドのプロ"
+"パティであり、編集モードの場合にはサイドバーを使用してスライドのトランジショ"
+"ンを設定します。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:714-30
 msgid ""
@@ -2584,37 +2620,48 @@ msgid ""
 "can have animation. Use the side bar to configure the slide transition for a "
 "selected object or set of objects."
 msgstr ""
+"<span class=\"def\">オブジェクトアニメーション：</span> スライド内の個々のオ"
+"ブジェクトにアニメーションを設定できます。選択したオブジェクトまたはオブジェ"
+"クトのセットに対してスライドトランジションを構成するには、サイドバーを使用し"
+"ます。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:715-30
 msgid ""
 "<span class=\"def\">Tables:</span> Insert tables in the presentation. Use "
 "the sidebar to select the table theme."
 msgstr ""
+"<span class=\"def\">テーブル：</span> プレゼンテーションにテーブルを挿入しま"
+"す。サイドバーを使用してテーブルのテーマを選択します。"
 
 #: html/cool-help.html%2Bdiv.div.div.h4:722-5
 msgid ""
 "What are the documents file formats supported by <span "
 "class=\"productname\">%productName</span>?"
 msgstr ""
+"<span class=\"productname\">%productName</span> "
+"でサポートされているドキュメント ファイル形式は何ですか?"
 
 #: html/cool-help.html%2Bdiv.div.div.p:723-5
 msgid ""
 "<span class=\"productname\">%productName</span> supports both reading and "
 "writing for the following file formats:"
 msgstr ""
+"<span class=\"productname\">%productName</span>は、以下のファイル形式について"
+"読み取りと書き込みの両方をサポートしています："
 
 #: html/cool-help.html%2Bdiv.div.div.ul.li.p:725-11
 msgid ""
 "Text documents: Microsoft formats DOC, DOCX, RTF. OpenDocument Format ODT"
-msgstr ""
+msgstr "テキストドキュメント：Microsoft形式のDOC、DOCX、RTF、およびOpenDocument "
+"FormatのODT"
 
 #: html/cool-help.html%2Bdiv.div.div.ul.li.p:726-11
 msgid "Spreadsheets: Microsoft formats XLS, XLSX, OpenDocument Format ODS"
-msgstr ""
+msgstr "スプレッドシート：Microsoft形式のXLS、XLSX、OpenDocument FormatのODS"
 
 #: html/cool-help.html%2Bdiv.div.div.ul.li.p:727-11
 msgid "Presentations: Microsoft formats PPT, PPTX, OpenDocument Format ODP"
-msgstr ""
+msgstr "プレゼンテーション：Microsoft形式のPPT、PPTX、およびOpenDocument FormatのODP"
 
 #: html/cool-help.html%2Bdiv.div.div.h4:731-5
 msgid "How do I save a document with another name?"
@@ -2622,21 +2669,24 @@ msgstr "別の名前で文書を保存するにはどうすればよいですか
 
 #: html/cool-help.html%2Bdiv.div.div.ol.li.p:733-11
 msgid "Hover the mouse on the document name in the menu bar."
-msgstr ""
+msgstr "メニューバーのドキュメント名にマウスを合わせてください。"
 
 #: html/cool-help.html%2Bdiv.div.div.ol.li.p:734-11
 msgid "Type the new file name in the text box and press <kbd>Enter</kbd>."
-msgstr ""
+msgstr "テキストボックスに新しいファイル名を入力し、<kbd>Enter</kbd>キーを押してくだ"
+"さい。"
 
 #: html/cool-help.html%2Bdiv.div.div.p:736-5
 msgid "A copy of the document is saved with the new name in the same folder."
-msgstr ""
+msgstr "ドキュメントのコピーが新しい名前で同じフォルダに保存されます。"
 
 #: html/cool-help.html%2Bdiv.div.div.h4:739-5
 msgid ""
 "How can I quit <span class=\"productname\">%productName</span> without "
 "saving my edits?"
 msgstr ""
+"編集内容を保存せずに<span class=\"productname\""
+">%productName</span>どうやって終了すればいいでしょうか？"
 
 #: html/cool-help.html%2Bdiv.div.div.p:740-5
 msgid ""
@@ -2646,12 +2696,18 @@ msgid ""
 "class=\"ui\">Revision History </span> in the <span class=\"ui\">File</span> "
 "menu."
 msgstr ""
+"<span class=\"productname\">%productName</span>は定期的にバックグラウンドで文"
+"書を保存します。保存せずに単に閉じることはできません。変更を破棄するには、そ"
+"れらを元に戻すか、<span class=\"ui\">ファイル</span>メニューの<span class="
+"\"ui\">リビジョン履歴</span>を使用する必要があります。"
 
 #: html/cool-help.html%2Bdiv.div.div.h4:743-5
 msgid ""
 "Can <span class=\"productname\">%productName</span> open a password-"
 "protected document?"
 msgstr ""
+"<span class=\"productname\">%productName</span>はパスワードで保護されたドキュ"
+"メントを開くことができますか？"
 
 #: html/cool-help.html%2Bdiv.div.div.p:744-5
 msgid ""
@@ -2659,10 +2715,13 @@ msgid ""
 "protected documents, but it is necessary to supply the password in the "
 "“Enter password” prompt at load time."
 msgstr ""
+"<span class=\"productname\">%productName</span>はパスワードで保護されたドキュ"
+"メントを開くことができます。ただし、読み込み時に「パスワードを入力してくださ"
+"い」というプロンプトでパスワードを提供する必要があります。"
 
 #: html/cool-help.html%2Bdiv.div.div.h4:747-5
 msgid "How can I check spelling in my language?"
-msgstr ""
+msgstr "言語に応じてスペルをチェックするにはどうすればよいですか?"
 
 #: html/cool-help.html%2Bdiv.div.div.p:748-5
 msgid ""
@@ -2670,20 +2729,25 @@ msgid ""
 "span> and select the language for the whole document. Optionally you can set "
 "languages for the selected text and for the current paragraph."
 msgstr ""
+"メニュー <span class=\"ui\">ツール</span> → <span class=\"ui\">言語</span> "
+"を選択し、ドキュメント全体の言語を選択します。 "
+"オプションで、選択したテキストと現在の段落の言語を設定できます。"
 
 #: html/cool-help.html%2Bdiv.div.div.h4:751-5
 msgid "How can I remove the red wavy lines in my document?"
-msgstr ""
+msgstr "文書内の赤い波線を削除するにはどうすればよいですか?"
 
 #: html/cool-help.html%2Bdiv.div.div.p:752-5
 msgid ""
 "Choose menu <span class=\"ui\">Tools</span> and uncheck <span "
 "class=\"ui\">Automatic Spell Checking</span>."
 msgstr ""
+"メニューの [<span class=\"ui\">ツール</span>] を選択し、<span class=\"ui\""
+">自動スペル チェック</span> のチェックを外します。"
 
 #: html/cool-help.html%2Bdiv.div.div.h4:755-5
 msgid "What is the blue wavy underline in some words in the text?"
-msgstr ""
+msgstr "テキスト内の青い波線はどういう意味でしょうか？"
 
 #: html/cool-help.html%2Bdiv.div.div.p:756-5
 msgid ""
@@ -2692,10 +2756,13 @@ msgid ""
 "suggestions to correct the grammar error and the offended grammar rules. "
 "Select the right suggestion to change the text."
 msgstr ""
+"文中の文法エラーは青い波線で示されます。文法エラーがあるテキストを右クリック"
+"すると、文法エラーを修正するための提案と、違反している文法規則が表示されるメ"
+"ニューが開きます。正しい提案を選択してテキストを変更します。"
 
 #: html/cool-help.html%2Bdiv.div.div.h4:759-5
 msgid "Is there a thesaurus?"
-msgstr ""
+msgstr "thesaurusはありますか？"
 
 #: html/cool-help.html%2Bdiv.div.div.p:760-5
 msgid ""
@@ -2703,12 +2770,16 @@ msgid ""
 "<span class=\"ui\">Thesaurus</span>. A dialog opens with many suggestions "
 "for replacements."
 msgstr ""
+"目的の単語をクリックし、<span class=\"ui\">ツール</span> → <span class=\"ui\""
+">シソーラス</span> を選択します。 "
+"ダイアログが開き、置換に関する多くの提案が表示されます。"
 
 #: html/cool-help.html%2Bdiv.div.div.h4:764-5
 msgid ""
 "What are the blue <span class=\"blue\">¶</span> symbol and how can I remove "
 "from my text document?"
-msgstr ""
+msgstr "青い<span class=\"blue\""
+">¶</span>記号はなんの意味でしょうか？削除方法を教えて頂けますでしょうか？"
 
 #: html/cool-help.html%2Bdiv.div.div.p:765-5
 msgid ""
@@ -2717,6 +2788,10 @@ msgid ""
 "document display, choose menu <span class=\"ui\">View</span> → <span "
 "class=\"ui\">Formatting mark</span>."
 msgstr ""
+"<span class=\"blue\">¶</span> 記号は書式設定マークです。 "
+"これはテキストの配置と編集を支援するために使用され、印刷されません。 "
+"ドキュメント表示で切り替えるには、メニュー <span class=\"ui\">表示</span> → "
+"<span class=\"ui\">書式設定マーク</span> を選択します。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:773-5
 msgid "How do I get a word count of my document?"
@@ -2728,10 +2803,13 @@ msgid ""
 "class=\"ui\">Word count</span>. A dialog shows word counts for selection and "
 "for the whole document."
 msgstr ""
+"単語数は、<span class=\"ui\">ツール</span> → <span class=\"ui\">単語数</span>"
+"で利用できます。ダイアログボックスが表示され、選択範囲と文書全体の単語数が表"
+"示されます。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:775-29
 msgid "word count"
-msgstr ""
+msgstr "ワードカウント"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:776-5
 msgid ""
@@ -2739,21 +2817,26 @@ msgid ""
 "word count is for the whole document. Otherwise the word count is for the "
 "selected text."
 msgstr ""
+"ワードカウントはステータスバーにも表示されます。テキストが選択されていない場"
+"合、ワードカウントは文書全体に対して行われます。選択されているテキストがある"
+"場合、ワードカウントは選択されたテキストに対して行われます。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:779-5
 msgid ""
 "How can I insert a currency, copyright or trademark symbol in the document?"
-msgstr ""
+msgstr "通貨記号、著作権記号、商標記号を文書に挿入する方法を教えて頂けますでしょうか"
+"？"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:780-5
 msgid ""
 "You can insert these special characters in the document using the <span "
 "class=\"ui\">Special Character</span> dialog."
-msgstr ""
+msgstr "特殊文字を文書に挿入するには、<span class=\"ui\""
+">特殊文字</span>ダイアログを使用します。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:782-11
 msgid "Place the cursor in the position to insert the character."
-msgstr ""
+msgstr "文字を挿入したい位置にカーソルを置きます。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:784-9
 msgid ""
@@ -2761,10 +2844,12 @@ msgid ""
 "Characters </span> or click the corresponding icon in the toolbar. A dialog "
 "shows."
 msgstr ""
+"<span class=\"ui\">挿入</span> → <span class=\"ui\">特殊文字</span>を選択する"
+"か、ツールバーの対応するアイコンをクリックします。ダイアログが表示されます。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.div.img[alt]:786-31
 msgid "Special Characters"
-msgstr ""
+msgstr "特殊文字"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:787-11
 msgid ""
@@ -2773,16 +2858,22 @@ msgid ""
 "Unicode numeric code of the special character, enter in the boxes on the "
 "right."
 msgstr ""
+"表示されているドロップダウンリストから文字を選択するか、<span class=\"ui\">検"
+"索</span>ボックスに検索キーを入力します。特殊文字のUnicode数値コードの場合は"
+"、右側のボックスに入力します。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:788-11
 msgid ""
 "Press <span class=\"ui\">Insert</span> button. To close the dialog, press "
 "<span class=\"ui\">Cancel</span>."
 msgstr ""
+"<span class=\"ui\">挿入</span>ボタンを押します。ダイアログを閉じるには、"
+"<span class=\"ui\">キャンセル</span>を押します。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:792-5
 msgid "Why can't I delete text? It just gets a strike-through?"
-msgstr ""
+msgstr "テクストを削除できない原因はなんですか？テキストが取り消し線を表示しています"
+"が？"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:793-5
 msgid ""
@@ -2792,32 +2883,37 @@ msgid ""
 "enabled choosing <span class=\"ui\">Edit</span> → <span class=\"ui\">Track "
 "Changes </span> → <span class=\"ui\">Record</span>."
 msgstr ""
+"ドキュメントで「変更履歴」機能が有効になっています。変更履歴は、テキスト内の"
+"すべての変更を記録し、後で変更を確認するための版を表示します。テキストやスプ"
+"レッドシートの変更を追跡するのに役立ちます。変更履歴を有効にするには、"
+"次の手順に従います <span class=\"ui\">編集</span> → <span class=\"ui\""
+">変更履歴を追従</span> → <span class=\"ui\">レコード</span>。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:794-5
 msgid "With track changes enabled your document is shown the following manner:"
-msgstr ""
+msgstr "変更履歴が有効になっていると、ドキュメントは以下のように表示されます："
 
 #: html/cool-help.html%2Bdiv.div.div.div.ul.li.p:796-11
 msgid "Deletions are marked with colored strike-through characters."
-msgstr ""
+msgstr "削除は、色付きの取り消し線でマークされます。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ul.li.p:797-11
 msgid "Additions are marked with colored underlined characters."
-msgstr ""
+msgstr "追加されたテキストは、色付きの下線付き文字でマークされます。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ul.li.p:798-11
 msgid "All changes are marked with a vertical bar in the right margin."
-msgstr ""
+msgstr "すべての変更は、右側の余白に垂直バーでマークされます。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ul.li.p:799-11
 msgid "Changes are displayed as comment in the right of the document area."
-msgstr ""
+msgstr "変更は、文書領域の右側にコメントとして表示されます。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:802-5
 msgid ""
 "The color assigned to the changes depends on the user that changes the "
 "document."
-msgstr ""
+msgstr "変更に割り当てられる色は、ドキュメントを変更するユーザーによって異なります。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:803-5
 msgid ""
@@ -2826,6 +2922,10 @@ msgid ""
 "Beware that if track changes are enabled but hidden, you still record "
 "changes and may inadvertently leave unwanted text available in the document."
 msgstr ""
+"変更履歴を表示または非表示にするには、<span class=\"ui\">編集</span> → <span "
+"class=\"ui\">変更履歴</span> → <span class=\"ui\">表示</span>を選択します。た"
+"だし、変更履歴が有効になっている場合でも非表示にされている場合は、変更が記録"
+"され、不要なテキストが文書で利用可能になる可能性があるため注意してください。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:804-5
 msgid ""
