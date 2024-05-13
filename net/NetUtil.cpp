@@ -21,6 +21,7 @@
 
 #include <Poco/Exception.h>
 #include <Poco/Net/DNS.h>
+#include <Poco/Net/NetException.h>
 #include <Poco/Net/NetworkInterface.h>
 
 #include <netdb.h>
@@ -81,11 +82,20 @@ std::vector<std::string> resolveAddresses(const std::string& addressToCheck)
     return ret;
 }
 
+std::string resolveOneAddress(const std::string& addressToCheck)
+{
+    Poco::Net::HostEntry hostEntry = resolveDNS(addressToCheck);
+    const auto& addresses = hostEntry.addresses();
+    if (addresses.empty())
+        throw Poco::Net::NoAddressFoundException(addressToCheck);
+    return addresses[0].toString();
+}
+
 std::string resolveHostAddress(const std::string& targetHost)
 {
     try
     {
-        return Poco::Net::DNS::resolveOne(targetHost).toString();
+        return resolveOneAddress(targetHost);
     }
     catch (const Poco::Exception& exc)
     {
