@@ -46,7 +46,6 @@
 #include <Poco/DOM/NodeList.h>
 #include <Poco/File.h>
 #include <Poco/MemoryStream.h>
-#include <Poco/Net/DNS.h>
 #include <Poco/Net/HTMLForm.h>
 #include <Poco/Net/NetException.h>
 #include <Poco/Net/PartHandler.h>
@@ -427,14 +426,14 @@ bool ClientRequestDispatcher::allowConvertTo(const std::string& address,
             {
                 if (!allowPostFrom(addressToCheck))
                 {
-                    const std::string hostToCheck = Poco::Net::DNS::resolve(addressToCheck).name();
+                    const std::string hostToCheck = net::canonicalHostName(addressToCheck);
                     allow &= HostUtil::allowedWopiHost(hostToCheck);
                 }
             }
             catch (const Poco::Exception& exc)
             {
-                LOG_ERR_S("Poco::Net::DNS::resolve(\"" << addressToCheck
-                                                       << "\") failed: " << exc.displayText());
+                LOG_ERR_S("net::canonicalHostName(\"" << addressToCheck
+                                                      << "\") failed: " << exc.displayText());
                 // We can't find out the hostname, and it already failed the IP check
                 allow = false;
             }

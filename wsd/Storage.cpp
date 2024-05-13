@@ -22,7 +22,6 @@
 
 #include <Poco/Net/AcceptCertificateHandler.h>
 #include <Poco/Net/Context.h>
-#include <Poco/Net/DNS.h>
 #include <Poco/Net/HTTPClientSession.h>
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPResponse.h>
@@ -229,10 +228,10 @@ StorageBase::StorageType StorageBase::validate(const Poco::URI& uri, bool takeOw
         }
 
         // check if the IP address is in the list of allowed hosts
-        const auto hostAddresses(Poco::Net::DNS::resolve(targetHost));
-        for (const auto& address : hostAddresses.addresses())
+        const auto hostAddresses(net::resolveAddresses(targetHost));
+        for (const auto& address : hostAddresses)
         {
-            if (HostUtil::allowedWopiHost(address.toString()))
+            if (HostUtil::allowedWopiHost(address))
             {
                 LOG_DBG("Validated URI [" << COOLWSD::anonymizeUrl(uri.toString()) << "] as WOPI");
                 return StorageBase::StorageType::Wopi;

@@ -32,6 +32,55 @@ namespace net
 
 #if !MOBILEAPP
 
+struct DNSCacheEntry
+{
+    std::string queryAddress;
+    Poco::Net::HostEntry hostEntry;
+    std::chrono::steady_clock::time_point lookupTime;
+};
+
+Poco::Net::HostEntry resolveDNS(const std::string& addressToCheck)
+{
+    static std::vector<DNSCacheEntry> queries;
+
+    const auto now = std::chrono::steady_clock::now();
+
+    // remove entries >= 20 seconds old
+    std::erase_if(queries, [now](const auto& entry)->bool {
+                             auto ageMS = std::chrono::duration_cast<std::chrono::milliseconds>(now - entry.lookupTime).count();
+                             return ageMS > 20000;
+                           });
+
+    // search for hit
+    auto findIt = std::find_if(queries.begin(), queries.end(),
+                               [&addressToCheck](const auto& entry)->bool {
+                                 return entry.queryAddress == addressToCheck;
+                               });
+    if (findIt != queries.end())
+        return findIt->hostEntry;
+
+    // lookup and cache
+    auto hostEntry = Poco::Net::DNS::resolve(addressToCheck);
+    queries.push_back(DNSCacheEntry(addressToCheck, hostEntry, now));
+    return hostEntry;
+}
+
+std::string canonicalHostName(const std::string& addressToCheck)
+{
+    return resolveDNS(addressToCheck).name();
+}
+
+std::vector<std::string> resolveAddresses(const std::string& addressToCheck)
+{
+    Poco::Net::HostEntry hostEntry = resolveDNS(addressToCheck);
+    const auto& addresses = hostEntry.addresses();
+    std::vector<std::string> ret;
+    ret.reserve(addresses.size());
+    for (const auto& address : addresses)
+        ret.push_back(address.toString());
+    return ret;
+}
+
 std::string resolveHostAddress(const std::string& targetHost)
 {
     try
