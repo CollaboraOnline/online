@@ -394,6 +394,7 @@ COOL_JS_LST =\
 	src/control/Control.Mention.ts \
 	src/control/Control.FormulaUsagePopup.ts \
 	src/control/Control.FormulaAutoCompletePopup.ts \
+	src/control/Control.AutoFillOptions.ts \
 	src/control/Control.Zotero.js \
 	src/control/Search.js \
 	src/control/Permission.js \
