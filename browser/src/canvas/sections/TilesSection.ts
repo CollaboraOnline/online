@@ -16,25 +16,22 @@ declare var app: any;
 
 namespace cool {
 
-export class TilesSection extends CanvasSectionObject {
+export class TilesSection extends app.definitions.canvasSectionObject {
+	name: string = L.CSections.Tiles.name;
+
+	// Below anchor list may be expanded. For example, Writer may have ruler section. Then ruler section should also be added here.
+	anchor: any = [[L.CSections.ColumnHeader.name, 'bottom', 'top'], [L.CSections.RowHeader.name, 'right', 'left']];
+	expand: any = ['top', 'left', 'bottom', 'right'];
+	processingOrder: number = L.CSections.Tiles.processingOrder;
+	drawingOrder: number = L.CSections.Tiles.drawingOrder;
+	zIndex: number = L.CSections.Tiles.zIndex;
+
 	map: any;
 	isJSDOM: boolean = false; // testing
 	checkpattern: any;
 
 	constructor () {
-		super({
-			name: L.CSections.Tiles.name,
-			// Below anchor list may be expanded. For example, Writer may have ruler section. Then ruler section should also be added here.
-			anchor: [[L.CSections.ColumnHeader.name, 'bottom', 'top'], [L.CSections.RowHeader.name, 'right', 'left']],
-			position: [0, 0], // This section's myTopLeft will be anchored to other sections^. No initial position is needed.
-			size: [0, 0], // Going to be expanded, no initial width or height is necessary.
-			expand: 'top left bottom right',
-			processingOrder: L.CSections.Tiles.processingOrder,
-			drawingOrder: L.CSections.Tiles.drawingOrder,
-			zIndex: L.CSections.Tiles.zIndex,
-			interactable: true,
-			sectionProperties: {},
-		});
+		super();
 
 		this.map = L.Map.THIS;
 
@@ -68,14 +65,6 @@ export class TilesSection extends CanvasSectionObject {
 			patternOn = !patternOn;
 		}
 		return canvas;
-	}
-
-	public onInitialize (): void {
-		this.onResize();
-	}
-
-	public onResize (): void {
-		// empty: probably safe to remove this method and use parent CanvasSectionObject::onResize
 	}
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types

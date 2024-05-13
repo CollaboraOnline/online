@@ -220,8 +220,12 @@ COOL_JS_LST =\
 	src/layer/tile/SheetGeometry.ts \
 	src/canvas/CanvasSectionProps.js \
 	src/canvas/CanvasSectionContainer.ts \
+	src/canvas/CanvasSectionObject.ts \
 	src/canvas/sections/CommentSection.ts \
 	src/canvas/sections/CommentListSection.ts \
+	src/canvas/sections/CalcGridSection.ts \
+	src/canvas/sections/SplitSection.ts \
+	src/canvas/sections/PixelGridSection.ts \
 	src/canvas/sections/TilesSection.ts \
 	src/canvas/sections/AutoFillMarkerSection.ts \
 	src/canvas/sections/CellCursorSection.ts \

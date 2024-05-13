@@ -9,27 +9,20 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-class CellSelectionHandle extends CanvasSectionObject {
+class CellSelectionHandle extends app.definitions.canvasSectionObject {
+	showSection: false;
+	processingOrder: number = L.CSections.DefaultForDocumentObjects.processingOrder;
+	drawingOrder: number = L.CSections.DefaultForDocumentObjects.drawingOrder;
+	zIndex: number = L.CSections.DefaultForDocumentObjects.zIndex;
+	documentObject: boolean = true;
 
 	constructor (name: string) {
-        super({
-			name: name, // There will be multiple instances of this class. For the viewer's cursor, name will be owncellcursor. Others will have viewId-cellcursor.
-			anchor: [],
-			position: new Array<number>(0),
-			size: [10, 10],
-			expand: '',
-			showSection: false,
-			processingOrder: L.CSections.DefaultForDocumentObjects.processingOrder,
-			drawingOrder: L.CSections.DefaultForDocumentObjects.drawingOrder,
-			zIndex: L.CSections.DefaultForDocumentObjects.zIndex,
-			interactable: true,
-			sectionProperties: {},
-		});
+        super();
 
 		this.sectionProperties.circleRadius = 10 * app.dpiScale;
 		this.size = [this.sectionProperties.circleRadius * 2, this.sectionProperties.circleRadius * 2];
 
-		this.documentObject = true;
+		this.name = name; // There will be multiple instances of this class. For the viewer's cursor, name will be owncellcursor. Others will have viewId-cellcursor.
 	}
 
 	private onDragEnd(point: number[]) {

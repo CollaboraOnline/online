@@ -36,7 +36,7 @@ export interface GroupEntryStrings {
 	This class is an extended version of "CanvasSectionObject".
 */
 
-export abstract class GroupBase extends CanvasSectionObject {
+export abstract class GroupBase extends app.definitions.canvasSectionObject {
 	_map: any;
 	_textColor: string;
 	_getFont: () => string;
@@ -45,13 +45,7 @@ export abstract class GroupBase extends CanvasSectionObject {
 	_groups: Array<Array<GroupEntry>>;
 	isRemoved: boolean = false;
 
-	constructor (options: SectionInitProperties) {
-		super(options);
-		if (options.interactable === undefined)
-			this.interactable = true;
-		if (options.sectionProperties === undefined)
-			this.sectionProperties = {};
-	}
+	constructor () { super(); }
 
 	// This function is called by CanvasSectionContainer when the section is added to the sections list.
 	onInitialize(): void {

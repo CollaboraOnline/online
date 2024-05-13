@@ -351,201 +351,10 @@ L.TileSectionManager = L.Class.extend({
 		}
 	},
 
-	_addTilesSection: function () {
-		app.sectionContainer.addSection(L.getNewTilesSection());
-		this._tilesSection = app.sectionContainer.getSectionWithName('tiles');
-		app.sectionContainer.setDocumentAnchorSection(L.CSections.Tiles.name);
-	},
-
-	_addGridSection: function () {
-		var that = this;
-		app.sectionContainer.createSection({
-			name: L.CSections.CalcGrid.name,
-			anchor: 'top left',
-			position: [0, 0],
-			size: [0, 0],
-			expand: '',
-			processingOrder: L.CSections.CalcGrid.processingOrder, // Size and position will be copied, this value is not important.
-			drawingOrder: L.CSections.CalcGrid.drawingOrder,
-			zIndex: L.CSections.CalcGrid.zIndex,
-			// Even if this one is drawn on top, won't be able to catch events.
-			// Sections with "interactable: true" can catch events even if they are under a section with property "interactable: false".
-			interactable: false,
-			sectionProperties: {
-				docLayer: that._layer,
-				tsManager: that,
-				strokeStyle: '#c0c0c0'
-			},
-			onDraw: that._onDrawGridSection,
-			onDrawArea: that._drawGridSectionArea
-		}, 'tiles'); // Its size and position will be copied from 'tiles' section.
-		this._calcGridSection = app.sectionContainer.getSectionWithName(L.CSections.CalcGrid.name);
-	},
-
-	_addOverlaySection: function () {
-		var canvasOverlay = this._layer._canvasOverlay = new CanvasOverlay(this._map, app.sectionContainer.getContext());
-		app.sectionContainer.addSection(canvasOverlay);
-		canvasOverlay.bindToSection(L.CSections.Tiles.name);
-	},
-
-	_onDrawGridSection: function () {
-		if (this.containerObject.isInZoomAnimation() || this.sectionProperties.tsManager.waitForTiles())
-			return;
-
-		// We don't show the sheet grid, so we don't draw it.
-		if (!this.sectionProperties.docLayer._sheetGrid)
-			return;
-
-		// grid-section's onDrawArea is TileSectionManager's _drawGridSectionArea().
-		this.onDrawArea();
-	},
-
-	_drawGridSectionArea: function (repaintArea, paneTopLeft, canvasCtx) {
-		if (!this.sectionProperties.docLayer.sheetGeometry)
-			return;
-
-		var context = canvasCtx ? canvasCtx : this.context;
-		var tsManager = this.sectionProperties.tsManager;
-		context.strokeStyle = this.sectionProperties.strokeStyle;
-		context.lineWidth = 1.0;
-		var scale = 1.0;
-		if (tsManager._inZoomAnim && tsManager._zoomFrameScale)
-			scale = tsManager._zoomFrameScale;
-
-		var ctx = this.sectionProperties.tsManager._paintContext();
-		var isRTL = this.sectionProperties.docLayer.isLayoutRTL();
-		var sectionWidth = this.size[0];
-		var xTransform = function (xcoord) {
-			return isRTL ? sectionWidth - xcoord : xcoord;
-		};
-
-		// This is called just before and after the dashed line drawing.
-		var startEndDash = function (ctx2D, end) {
-			// Style the dashed lines.
-			var dashLen = 5;
-			var gapLen = 5;
-
-			// Restart the path to apply the dashed line style.
-			ctx2D.closePath();
-			ctx2D.beginPath();
-			ctx2D.setLineDash(end ? [] : [dashLen, gapLen]);
-		};
-
-		var docLayer = this.sectionProperties.docLayer;
-		var currentPart = docLayer._selectedPart;
-		// Draw the print range with dashed line if singleton to match desktop Calc.
-		var printRange = [];
-		if (docLayer._printRanges && docLayer._printRanges.length > currentPart
-			&& docLayer._printRanges[currentPart].length == 1)
-			printRange = docLayer._printRanges[currentPart][0];
-
-		for (var i = 0; i < ctx.paneBoundsList.length; ++i) {
-			// co-ordinates of this pane in core document pixels
-			var paneBounds = ctx.paneBoundsList[i];
-			// co-ordinates of the main-(bottom right) pane in core document pixels
-			var viewBounds = ctx.viewBounds;
-			// into real pixel-land ...
-			paneBounds.round();
-			viewBounds.round();
-
-			var paneOffset;
-			var doOnePane = false;
-			if (!repaintArea || !paneTopLeft) {
-				repaintArea = paneBounds;
-				paneOffset = paneBounds.getTopLeft(); // allocates
-				// Cute way to detect the in-canvas pixel offset of each pane
-				paneOffset.x = Math.min(paneOffset.x, viewBounds.min.x);
-				paneOffset.y = Math.min(paneOffset.y, viewBounds.min.y);
-			} else {
-				// do only for the predefined pane (paneOffset / repaintArea)
-				doOnePane = true;
-				paneOffset = paneTopLeft.clone();
-			}
-
-			// Vertical line rendering on large areas is ~10x as expensive
-			// as horizontal line rendering: due to cache effects - so to
-			// help our poor CPU renderers - render in horizontal strips.
-			var bandSize = 256;
-			var clearDash = false;
-			for (var miny = repaintArea.min.y; miny < repaintArea.max.y; miny += bandSize)
-			{
-				var maxy = Math.min(repaintArea.max.y, miny + bandSize);
-
-				context.beginPath();
-
-				// vertical lines
-				this.sectionProperties.docLayer.sheetGeometry._columns.forEachInCorePixelRange(
-					repaintArea.min.x, repaintArea.max.x,
-					function(pos, colIndex) {
-						var xcoord = xTransform(Math.floor(scale * (pos - paneOffset.x)) - 0.5);
-
-						clearDash = false;
-						if (printRange.length === 4
-							&& (printRange[0] === colIndex || printRange[2] + 1 === colIndex)) {
-							clearDash = true;
-							startEndDash(context, false /* end? */);
-						}
-
-						context.moveTo(xcoord, Math.floor(scale * (miny - paneOffset.y)) + 0.5);
-						context.lineTo(xcoord, Math.floor(scale * (maxy - paneOffset.y)) - 0.5);
-						context.stroke();
-
-						if (clearDash)
-							startEndDash(context, true /* end? */);
-					});
-
-				// horizontal lines
-				this.sectionProperties.docLayer.sheetGeometry._rows.forEachInCorePixelRange(
-					miny, maxy,
-					function(pos, rowIndex) {
-
-						clearDash = false;
-						if (printRange.length === 4
-							&& (printRange[1] === rowIndex || printRange[3] + 1 === rowIndex)) {
-							clearDash = true;
-							startEndDash(context, false /* end? */);
-						}
-
-						context.moveTo(
-							xTransform(Math.floor(scale * (repaintArea.min.x - paneOffset.x)) + 0.5),
-							Math.floor(scale * (pos - paneOffset.y)) - 0.5);
-						context.lineTo(
-							xTransform(Math.floor(scale * (repaintArea.max.x - paneOffset.x)) - 0.5),
-							Math.floor(scale * (pos - paneOffset.y)) - 0.5);
-						context.stroke();
-
-						if (clearDash)
-							startEndDash(context, true /* end? */);
-					});
-
-				context.closePath();
-			}
-
-			if (doOnePane)
-				break;
-		}
-	},
-
 	// Debug tool. Splits are enabled for only Calc for now.
 	_addSplitsSection: function () {
-		var that = this;
-		app.sectionContainer.createSection({
-			name: L.CSections.Debug.Splits.name,
-			anchor: 'top left',
-			position: [0, 0],
-			size: [0, 0],
-			expand: '',
-			processingOrder: L.CSections.Debug.Splits.processingOrder,
-			drawingOrder: L.CSections.Debug.Splits.drawingOrder,
-			zIndex: L.CSections.Debug.Splits.zIndex,
-			// Even if this one is drawn on top, won't be able to catch events.
-			// Sections with "interactable: true" can catch events even if they are under a section with property "interactable: false".
-			interactable: false,
-			sectionProperties: {
-				docLayer: that._layer
-			},
-			onDraw: that._onDrawSplitsSection
-		}, 'tiles'); // Its size and position will be copied from 'tiles' section.
+		const splitSection = new app.definitions.splitSection();
+		app.sectionContainer.addSection(splitSection);
 		app.sectionContainer.reNewAllSections(true);
 	},
 
@@ -561,63 +370,13 @@ L.TileSectionManager = L.Class.extend({
 
 	// Debug tool
 	_addTilePixelGridSection: function () {
-		var that = this;
-		app.sectionContainer.createSection({
-			name: L.CSections.Debug.TilePixelGrid.name,
-			anchor: 'top left',
-			position: [0, 0],
-			size: [0, 0],
-			expand: '',
-			processingOrder: L.CSections.Debug.TilePixelGrid.processingOrder, // Size and position will be copied, this value is not important.
-			drawingOrder: L.CSections.Debug.TilePixelGrid.drawingOrder,
-			zIndex: L.CSections.Debug.TilePixelGrid.zIndex,
-			interactable: false,
-			sectionProperties: {},
-			onDraw: that._onDrawTilePixelGrid
-		}, 'tiles'); // Its size and position will be copied from 'tiles' section.
+		app.sectionContainer.addSection(new app.definitions.pixelGridSection());
 		app.sectionContainer.reNewAllSections(true);
 	},
 
 	_removeTilePixelGridSection: function () {
 		app.sectionContainer.removeSection(L.CSections.Debug.TilePixelGrid.name);
 		app.sectionContainer.reNewAllSections(true);
-	},
-
-	_onDrawTilePixelGrid: function() {
-		var offset = 8;
-		var count;
-		this.context.lineWidth = 1;
-		var currentPos;
-		this.context.strokeStyle = '#ff0000';
-
-		currentPos = 0;
-		count = Math.round(this.context.canvas.height / offset);
-		for (var i = 0; i < count; i++) {
-			this.context.beginPath();
-			this.context.moveTo(0.5, currentPos + 0.5);
-			this.context.lineTo(this.context.canvas.width + 0.5, currentPos + 0.5);
-			this.context.stroke();
-			currentPos += offset;
-		}
-
-		currentPos = 0;
-		count = Math.round(this.context.canvas.width / offset);
-		for (var i = 0; i < count; i++) {
-			this.context.beginPath();
-			this.context.moveTo(currentPos + 0.5, 0.5);
-			this.context.lineTo(currentPos + 0.5, this.context.canvas.height + 0.5);
-			this.context.stroke();
-			currentPos += offset;
-		}
-	},
-
-	_onDrawSplitsSection: function () {
-		var splitPanesContext = this.sectionProperties.docLayer.getSplitPanesContext();
-		if (splitPanesContext) {
-			var splitPos = splitPanesContext.getSplitPos();
-			this.context.strokeStyle = 'red';
-			this.context.strokeRect(0, 0, splitPos.x * app.dpiScale, splitPos.y * app.dpiScale);
-		}
 	},
 
 	_updateWithRAF: function () {
@@ -1028,9 +787,16 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._splittersStyleData = new CStyleData(this._splittersDataDiv);
 
 		this._painter = new L.TileSectionManager(this);
-		this._painter._addTilesSection();
+
+		app.sectionContainer.addSection(L.getNewTilesSection());
+		this._painter._tilesSection = app.sectionContainer.getSectionWithName('tiles');
+		app.sectionContainer.setDocumentAnchorSection(L.CSections.Tiles.name);
+
 		app.sectionContainer.getSectionWithName('tiles').onResize();
-		this._painter._addOverlaySection();
+
+		this._canvasOverlay = new CanvasOverlay(this._map, app.sectionContainer.getContext());
+		app.sectionContainer.addSection(this._canvasOverlay);
+
 		app.sectionContainer.addSection(L.getNewScrollSection(() => this._map._docLayer.isCalcRTL()));
 
 		// For mobile/tablet the hammerjs swipe handler already uses a requestAnimationFrame to fire move/drag events
@@ -1056,7 +822,9 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._queuedProcessed = [];
 
 		if (this._docType === 'spreadsheet') {
-			this._painter._addGridSection();
+			const calcGridSection = new app.definitions.calcGridSection();
+			calcGridSection.sectionProperties.tsManager = this._painter;
+			app.sectionContainer.addSection(calcGridSection);
 		}
 
 		// Add it regardless of the file type.

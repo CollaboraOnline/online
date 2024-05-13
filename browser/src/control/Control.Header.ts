@@ -18,15 +18,12 @@
 
 namespace cool {
 
-export type HeaderExtraProperties = { cursor: string };
-export interface HeaderInitProperties extends SectionInitProperties, HeaderExtraProperties {}
-
 export interface SelectionRange {
 	start: number,
 	end: number,
 }
 
-export class Header extends CanvasSectionObject {
+export class Header extends app.definitions.canvasSectionObject {
 	_map: any;
 	_textColor: string;
 	_backgroundColor: string;
@@ -49,13 +46,12 @@ export class Header extends CanvasSectionObject {
 	_menuItem: any;
 	_dragDistance: number[];
 	_isColumn: boolean;
-	options: HeaderExtraProperties;
+	cursor: string;
 
 	getFont: () => string;
 
-	constructor (options?: HeaderInitProperties) {
-		super(options);
-		this.options =  { cursor: options.cursor };
+	constructor () {
+		super();
 	}
 
 	_initHeaderEntryStyles (className: string): void {
@@ -77,7 +73,7 @@ export class Header extends CanvasSectionObject {
 
 	_getFontSize(): number {
 		const map = this._map;
-		const zoomScale = map.getZoomScale(map.getZoom(),	map.options.defaultZoom);
+		const zoomScale = map.getZoomScale(map.getZoom(), map.options.defaultZoom);
 		if (zoomScale < 0.68)
 			return Math.round(8 * app.dpiScale);
 		else if (zoomScale < 0.8)
@@ -116,8 +112,8 @@ export class Header extends CanvasSectionObject {
 	}
 
 	_initHeaderEntryResizeStyles (className: string): void {
-		if (this.options.cursor) {
-			this._resizeCursor = this.options.cursor;
+		if (this.cursor) {
+			this._resizeCursor = this.cursor;
 		}
 		else {
 			const baseElem = document.getElementsByTagName('body')[0];
@@ -144,7 +140,7 @@ export class Header extends CanvasSectionObject {
 
 	_updateCanvas(): void {
 		if (this._headerInfo) {
-			this._headerInfo.update(this);
+			this._headerInfo.update(this as any as CanvasSectionObject);
 			this.containerObject.requestReDraw();
 		}
 	}

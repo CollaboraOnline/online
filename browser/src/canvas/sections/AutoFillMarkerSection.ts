@@ -13,31 +13,20 @@ declare var L: any;
 declare var app: any;
 
 app.definitions.AutoFillMarkerSection =
-class AutoFillMarkerSection extends CanvasSectionObject {
+class AutoFillMarkerSection extends app.definitions.canvasSectionObject {
+	name: string = L.CSections.AutoFillMarker.name;
+	processingOrder: number = L.CSections.AutoFillMarker.processingOrder;
+	drawingOrder: number = L.CSections.AutoFillMarker.drawingOrder;
+	zIndex: number = L.CSections.AutoFillMarker.zIndex;
+
 	map: any;
 	cursorBorderWidth: number = 2;
 	selectionBorderWidth: number = 1;
 
-	isCalcRTL: () => boolean;
-
 	constructor () {
-		super({
-			name: L.CSections.AutoFillMarker.name,
-			anchor: [],
-			position: new Array<number>(0),
-			size: new Array<number>(0),
-			expand: '',
-			showSection: true,
-			processingOrder: L.CSections.AutoFillMarker.processingOrder,
-			drawingOrder: L.CSections.AutoFillMarker.drawingOrder,
-			zIndex: L.CSections.AutoFillMarker.zIndex,
-			interactable: true,
-			sectionProperties: {}
-		});
-
+		super();
 		this.documentObject = true;
 		this.map = L.Map.THIS;
-
 		this.sectionProperties.docLayer = this.map._docLayer;
 		this.sectionProperties.selectedAreaPoint = null;
 		this.sectionProperties.cellCursorPoint = null;
@@ -141,7 +130,7 @@ class AutoFillMarkerSection extends CanvasSectionObject {
 		var translation = desktop ?
 			[this.size[0], this.size[1]] :
 			[Math.floor(this.size[0] * 0.5), Math.floor(this.size[1] * 0.5)];
-		const adjustForRTL = this.isCalcRTL();
+		const adjustForRTL = app.map._docLayer.isCalcRTL();
 		const transformX = (xcoord: number) => {
 			return adjustForRTL ? this.size[0] - xcoord : xcoord;
 		};
