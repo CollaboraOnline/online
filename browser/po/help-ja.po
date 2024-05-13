@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-04-12 19:29+0200\n"
-"PO-Revision-Date: 2024-05-13 08:08+0000\n"
+"PO-Revision-Date: 2024-05-13 08:14+0000\n"
 "Last-Translator: Poe Mon <p.poemon.awitd@gmail.com>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/"
 "collabora-online/help/ja/>\n"
@@ -2431,6 +2431,10 @@ msgid ""
 "cells with the <span class=\"ui\">Table</span> menu. The default paragraph "
 "style inside cells is “Table contents”."
 msgstr ""
+"ツールバーの適切なアイコンを使用してテーブルを挿入します。最初の行数と列数を"
+"選択します。セルのコンテキストメニューで行と列を追加します。"
+"セルのマージは<span class=\"ui\">テーブル</span>メニューで行います。セル内の"
+"デフォルトの段落スタイルは「テーブルの内容」です。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:662-5
 msgid ""
@@ -2439,10 +2443,14 @@ msgid ""
 "class=\"ui\">Properties</span>. Fine tune the table with the properties "
 "dialog."
 msgstr ""
+"<span class=\"def\">セルのフォーマット：</span> "
+"セルまたはセル範囲をクリックし、メニュー<span class=\"ui\">テーブル</span> → "
+"<span class=\"ui\">プロパティ</span>を選択します。プロパティダイアログでテー"
+"ブルを微調整します。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:665-5
 msgid "Track changes"
-msgstr ""
+msgstr "変更履歴を追跡"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:666-5
 msgid ""
@@ -2450,11 +2458,14 @@ msgid ""
 "span> marks up new changes made to the document. Select this option again to "
 "turn it off."
 msgstr ""
+"変更履歴を有効にすると、<span class=\"productname\">%productName</span>は文書"
+"に加えられた新しい変更をマークアップします。再度このオプションを選択して無効"
+"にします。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:667-29
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:801-29
 msgid "track changes"
-msgstr ""
+msgstr "変更履歴を追跡"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:668-5
 msgid ""
