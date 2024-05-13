@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-04-12 19:29+0200\n"
-"PO-Revision-Date: 2024-05-13 08:14+0000\n"
+"PO-Revision-Date: 2024-05-13 08:15+0000\n"
 "Last-Translator: Poe Mon <p.poemon.awitd@gmail.com>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/"
 "collabora-online/help/ja/>\n"
@@ -2479,7 +2479,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:671-5
 msgid "Other advanced features"
-msgstr ""
+msgstr "その他の高度な機能"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:672-5
 msgid ""
