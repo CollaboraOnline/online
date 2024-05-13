@@ -2473,6 +2473,9 @@ msgid ""
 "tracked change can be accepted or rejected, using the box the appears on the "
 "right. You can also add a comment there."
 msgstr ""
+"さまざまな人によって行われた変更は異なる色で表示され、追跡された各変更は、右"
+"側に表示されるボックスを使用して承認または拒否できます。 "
+"そこにコメントを追加することもできます。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:671-5
 msgid "Other advanced features"
