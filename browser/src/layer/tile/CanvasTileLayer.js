@@ -431,9 +431,11 @@ L.TileSectionManager = L.Class.extend({
 			yMin = splitPos.y;
 		}
 
-		const documentTopLeft = new L.Point(xMin, yMin);
+		const minTopLeft = new L.Point(xMin, yMin);
 
 		const paneSize = paneBounds.getSize();
+
+		pinchCenter = pinchCenter.subtract(this._offset);
 
 		let centerOffset = {
 			x: pinchCenter.x - pinchStartCenter.x,
@@ -442,26 +444,39 @@ L.TileSectionManager = L.Class.extend({
 
 		// Portion of the pane away that our pinchStart (which should be where we zoom round) is
 		const panePortion = {
-			x: (pinchStartCenter.x - paneBounds.min.x) / paneSize.x,
-			y: (pinchStartCenter.y - paneBounds.min.y) / paneSize.y,
+			x: (pinchStartCenter.x - this._offset.x - paneBounds.min.x) / paneSize.x,
+			y: (pinchStartCenter.y - this._offset.y - paneBounds.min.y) / paneSize.y,
 		};
 
-		// Top left in document coordinates.
-		const docTopLeft = new L.Point(
-			Math.max(documentTopLeft.x, pinchStartCenter.x + (centerOffset.x - paneSize.x * panePortion.x) / scale),
-			Math.max(documentTopLeft.y, pinchStartCenter.y + (centerOffset.y - paneSize.y * panePortion.y) / scale)
+		let docTopLeft = new L.Point(
+			pinchStartCenter.x + (centerOffset.x - paneSize.x * panePortion.x) / scale,
+			pinchStartCenter.y + (centerOffset.y - paneSize.y * panePortion.y) / scale
 		);
+
+		// Top left in document coordinates.
+		const clampedDocTopLeft = new L.Point(
+			Math.max(minTopLeft.x, docTopLeft.x),
+			Math.max(minTopLeft.y, docTopLeft.y)
+		);
+
+		const offset = clampedDocTopLeft.subtract(docTopLeft);
 
 		if (freezePane.freezeX) {
 			docTopLeft.x = paneBounds.min.x;
+		} else {
+			this._offset.x = Math.round(Math.max(this._offset.x, offset.x));
+			docTopLeft.x += this._offset.x;
 		}
 
 		if (freezePane.freezeY) {
 			docTopLeft.y = paneBounds.min.y;
+		} else {
+			this._offset.y = Math.round(Math.max(this._offset.y, offset.y));
+			docTopLeft.y += this._offset.y;
 		}
 
 		if (!findFreePaneCenter) {
-			return { topLeft: docTopLeft };
+			return { offset: this._offset, topLeft: docTopLeft };
 		}
 
 		const newPaneCenter = new L.Point(
@@ -469,7 +484,8 @@ L.TileSectionManager = L.Class.extend({
 			(docTopLeft.y - splitPos.y + (paneSize.y + splitPos.y) * 0.5 / scale) / app.dpiScale);
 
 		return {
-			topLeft: docTopLeft,
+			offset: this._offset,
+			topLeft: docTopLeft.add(this._offset),
 			center: this._map.project(this._map.unproject(newPaneCenter, this._map.getZoom()), this._map.getScaleZoom(scale))
 		};
 	},
@@ -5078,6 +5094,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	preZoomAnimation: function (pinchStartCenter) {
 		this._pinchStartCenter = this._map.project(pinchStartCenter).multiplyBy(app.dpiScale); // in core pixels
+		this._painter._offset = new L.Point(0, 0);
 
 		if (this.isCursorVisible()) {
 			this._cursorMarker.setOpacity(0);
