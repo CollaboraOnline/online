@@ -324,6 +324,9 @@ L.Control.Tabs = L.Control.extend({
 		if (part !== this._map._docLayer._selectedPart) {
 			this._setPartIndex(part);
 		}
+
+		if (this._map._docLayer.isAutoFillPopupOpen)
+			this._map.fire('closeautofillpopup');
 	},
 
 	//selected sheet is moved to new index
