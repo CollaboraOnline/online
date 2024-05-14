@@ -199,11 +199,15 @@ app.definitions.Socket = L.Class.extend({
 		// Always send the protocol version number.
 		// TODO: Move the version number somewhere sensible.
 
-		// Note that there is code also in global.socket.onopen() in global.js to send the
-		// exact same 'coolclient' message and a slightly different 'load' message. At least
-		// in a "make run" scenario it is that code that sends the 'coolclient' and 'load'
-		// messages. Not this code. But at least currently in the "WASM app" case, it is
-		// this code that gets invoked. Oh well.
+		// Note there are two socket "onopen" handlers, this one which ends up as part of
+		// bundle.js and the other in browser/js/global.js. The global.js one attempts to
+		// set up the connection early while bundle.js is still loading. If bundle.js
+		// starts before global.js has connected, then this _onSocketOpen will do the
+		// connection instead, after taking over the socket in "connect"
+
+		// Typically in a "make run" scenario it is the global.js case that sends the
+		// 'coolclient' and 'load' messages while currently in the "WASM app" case it is
+		// this code that gets invoked.
 
 		// Also send information about our performance timer epoch
 		var now0 = Date.now();
