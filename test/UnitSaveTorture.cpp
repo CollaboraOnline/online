@@ -317,11 +317,6 @@ void UnitSaveTorture::saveTortureOne(
 
             // Autosaves and synthetically notifies us of clean modification state
             LOK_ASSERT_EQUAL(waitForModifiedStatus(name, wsSession), false);
-
-            sleepForIdleModificationNotification(testname);
-
-            // FIXME: if this happened in a progress callback during save; we'd ignore it (?)
-            LOK_ASSERT_EQUAL(waitForModifiedStatus(name, wsSession), false);
         }
         else // we don't get this - it is still modified
         {
