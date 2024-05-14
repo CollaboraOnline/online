@@ -51,8 +51,8 @@ class AutoFillOptions extends L.Control.AutoCompletePopup {
 	}
 
 	getPopupEntries(): any[] {
-		const entries: any[] = [{ text: '', columns: [{ text: 'Copy cells' }], row: '' },
-		{ text: '', columns: [{ text: 'Fill series' }], row: '' }];
+		const entries: any[] = [{ text: 'copy', columns: [{ text: 'Copy cells' }], row: '0' },
+		{ text: 'fill', columns: [{ text: 'Fill series' }], row: '1' }];
 		return entries;
 	}
 
@@ -90,12 +90,20 @@ class AutoFillOptions extends L.Control.AutoCompletePopup {
 
 	callback(objectType: any, eventType: any, object: any, index: number) {
 		if (eventType === 'close') {
-			// console.error('close callback');
 			this.closeMentionPopup({ typingMention: false } as CloseMessageEvent);
 		} else if (eventType === 'select' || eventType === 'activate') {
-			// console.error('select or activate triggered');
+			this.map.fire('closeautofillpopup');
+
+			if (index == 0) {
+				// Copy cells
+				this.map.sendUnoCommand('.uno:FillSeries?FillStep:string=0');
+			} else if (index == 1) {
+				// Fill series
+				this.map.sendUnoCommand('.uno:FillSeries?FillStep:string=1');
+			}
+
 		} else if (eventType === 'keydown') {
-			// console.error('keydown');
+			// TODO: handle arrowDown key
 		}
 		return false;
 	}
