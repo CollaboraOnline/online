@@ -736,10 +736,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._container = L.DomUtil.create('div', 'leaflet-layer');
 		this._updateZIndex();
 
-		if (this.options.opacity < 1) {
-			this._updateOpacity();
-		}
-
 		this.getPane().appendChild(this._container);
 
 		var mapContainer = document.getElementById('document-container');
@@ -831,44 +827,12 @@ L.CanvasTileLayer = L.Layer.extend({
 		return this._docType === 'presentation';
 	},
 
-	bringToFront: function () {
-		if (this._map) {
-			L.DomUtil.toFront(this._container);
-			this._setAutoZIndex(Math.max);
-		}
-		return this;
-	},
-
-	bringToBack: function () {
-		if (this._map) {
-			L.DomUtil.toBack(this._container);
-			this._setAutoZIndex(Math.min);
-		}
-		return this;
-	},
-
 	getAttribution: function () {
 		return this.options.attribution;
 	},
 
 	getContainer: function () {
 		return this._container;
-	},
-
-	setOpacity: function (opacity) {
-		this.options.opacity = opacity;
-
-		if (this._map) {
-			this._updateOpacity();
-		}
-		return this;
-	},
-
-	setZIndex: function (zIndex) {
-		this.options.zIndex = zIndex;
-		this._updateZIndex();
-
-		return this;
 	},
 
 	redraw: function () {
@@ -882,27 +846,6 @@ L.CanvasTileLayer = L.Layer.extend({
 	_updateZIndex: function () {
 		if (this._container && this.options.zIndex !== undefined && this.options.zIndex !== null) {
 			this._container.style.zIndex = this.options.zIndex;
-		}
-	},
-
-	_setAutoZIndex: function (compare) {
-		// go through all other layers of the same pane, set zIndex to max + 1 (front) or min - 1 (back)
-
-		var layers = this.getPane().children,
-		    edgeZIndex = -compare(-Infinity, Infinity); // -Infinity for max, Infinity for min
-
-		for (var i = 0, len = layers.length, zIndex; i < len; i++) {
-
-			zIndex = layers[i].style.zIndex;
-
-			if (layers[i] !== this._container && zIndex) {
-				edgeZIndex = compare(edgeZIndex, +zIndex);
-			}
-		}
-
-		if (isFinite(edgeZIndex)) {
-			this.options.zIndex = edgeZIndex + compare(-1, 1);
-			this._updateZIndex();
 		}
 	},
 
@@ -5223,10 +5166,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 	},
 
-	_updateOpacity: function () {
-		this._pruneTiles();
-	},
-
 	_pruneTiles: function () {
 		// update tile.current for the view
 		if (app.file.fileBasedView)
@@ -5254,19 +5193,8 @@ L.CanvasTileLayer = L.Layer.extend({
 			bounds.max.divideBy(this._tileSize).floor());
 	},
 
-	_corePixelsToCss: function (corePixels) {
-		return corePixels.divideBy(app.dpiScale);
-	},
-
 	_cssPixelsToCore: function (cssPixels) {
 		return cssPixels.multiplyBy(app.dpiScale);
-	},
-
-	_cssBoundsToCore: function (bounds) {
-		return new L.Bounds(
-			this._cssPixelsToCore(bounds.min),
-			this._cssPixelsToCore(bounds.max)
-		);
 	},
 
 	_twipsToCorePixels: function (twips) {
@@ -5989,12 +5917,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 	},
 
-	_prefetchTilesSync: function () {
-		if (!this._prefetcher)
-			this._prefetcher = new L.TilesPreFetcher(this, this._map);
-		this._prefetcher.preFetchTiles(true /* forceBorderCalc */, true /* immediate */);
-	},
-
 	_preFetchTiles: function (forceBorderCalc) {
 		if (this._prefetcher) {
 			this._prefetcher.preFetchTiles(forceBorderCalc);
@@ -6012,12 +5934,6 @@ L.CanvasTileLayer = L.Layer.extend({
 	_clearPreFetch: function () {
 		if (this._prefetcher) {
 			this._prefetcher.clearPreFetch();
-		}
-	},
-
-	_clearTilesPreFetcher: function () {
-		if (this._prefetcher) {
-			this._prefetcher.clearTilesPreFetcher();
 		}
 	},
 
