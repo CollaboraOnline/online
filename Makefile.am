@@ -315,7 +315,6 @@ coolperftest_SOURCES = $(shared_sources) \
                        perftest/PerfTest.cpp \
                        perftest/PerfTestSocketHandler.hpp \
                        perftest/PerfTestSocketHandler.cpp \
-                       perftest/SamplePerfTest.hpp \
                        common/DummyTraceEventEmitter.cpp
 
 wsd_headers = wsd/Admin.hpp \
@@ -734,6 +733,18 @@ check-recursive: eslint
 
 check: check-for-system-nss prettier eslint check-recursive
 	$(GEN_COVERAGE_COMMAND)
+
+perftest_ldflags = -module -rpath /dummy
+all_perftests_la =
+
+all_perftests_la += perftest/sample/sample.la
+perftest_sample_sample_la_SOURCES=perftest/sample/SamplePerfTest.cpp
+perftest_sample_sample_la_LDFLAGS=$(perftest_ldflags)
+
+noinst_LTLIBRARIES=$(all_perftests_la)
+
+check-perf: $(all_perftests_la)
+	echo $(all_perftests_la)
 
 coverage-report:
 	$(GEN_COVERAGE_COMMAND)

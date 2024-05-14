@@ -11,16 +11,21 @@
 
 #include <perftest/PerfTest.hpp>
 
-class SamplePerfTest : public CyclePerfTest
+//class SamplePerfTest : public CyclePerfTest
+class SamplePerfTest : public PerfTest
 {
 public:
     SamplePerfTest(const std::string &server) :
-        CyclePerfTest("sample100", server)
+        PerfTest("sample100", server)
+        //CyclePerfTest("sample100", server)
     {
     }
 
     void runTest() {
-        testViewChange();
+        startMeasurement();
+        sleep(1000);
+        stopMeasurement();
+        //testViewChange();
     }
 
     void testLoad() {
@@ -74,3 +79,8 @@ public:
         waitForIdle();
     }
 };
+
+std::shared_ptr<PerfTest> create_perftest(std::string &server)
+{
+    return std::make_shared<SamplePerfTest>(server);
+}

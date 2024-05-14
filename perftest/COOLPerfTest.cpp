@@ -14,6 +14,7 @@
 #include <sysexits.h>
 #include <filesystem>
 #include <memory>
+#include <dlfcn.h>
 
 #include <Poco/Util/Application.h>
 #include <Poco/URI.h>
@@ -25,8 +26,9 @@
 #include <Log.hpp>
 
 #include <perftest/PerfTest.hpp>
-#include <perftest/SamplePerfTest.hpp>
 #include <perftest/PerfTestSocketHandler.hpp>
+
+typedef std::shared_ptr<PerfTest> (CreatePerfTestFunction)(std::string &server);
 
 class COOLPerfTest : public Poco::Util::Application
 {
@@ -44,20 +46,24 @@ int COOLPerfTest::main(const std::vector<std::string>& args)
     for (std::string arg : args) {
         std::cout << "Args: " << arg << std::endl;
     }
-    /*
-    if (args.size() != 1) {
-        std::cerr << "Usage: ./coolperftest <server>" << std::endl;
+
+    if (args.size() != 2) {
+        std::cerr << "Usage: ./coolperftest <name> <server>" << std::endl;
+        std::cerr << "       name: name of the perf test library" << std::endl;
         std::cerr << "       server : Started separately. URI must start with ws:// or wss://. eg: wss://localhost:9980" << std::endl;
         std::cerr << "       See README for more info." << std::endl;
         return EX_USAGE;
     }
-    std::string server = args[0];
+
+    //std::string name = "perftest/sample/SamplePerfTest";
+    std::string name = args[0];
+
+    //std::string server = "wss://localhost:9980";
+    std::string server = args[1];
     if (!server.starts_with("ws")) {
         std::cerr << "Server must start with ws:// or wss://. Server was: " << server << std::endl;
         return EX_USAGE;
     }
-    */
-    std::string server = "wss://localhost:9980";
 
 #if ENABLE_SSL
     ssl::Manager::initializeClientContext("", "", "",
@@ -69,26 +75,44 @@ int COOLPerfTest::main(const std::vector<std::string>& args)
     }
 #endif
 
-    std::cerr << "Starting" << std::endl;
-    Log::setLevel("warning");
+    LOG_DBG("Starting PerfTest " << name << " " << server);
+    Log::setLevel("debug");
 
-    SamplePerfTest perfTest(server);
-    std::cerr << "runTest..." << std::endl;
-    perfTest.runTest();
+    LOG_DBG("Dynamicaly linking library " << name);
+    void *dlhandle = dlopen(name.c_str(), RTLD_GLOBAL|RTLD_NOW);
+    if (!dlhandle)
+    {
+        LOG_ERR("Failed to load perftest lib " << dlerror());
+        return EX_SOFTWARE;
+    }
+    LOG_DBG("Successfully linked library " << name);
+
+    LOG_DBG("Finding create_perftest symbol in " << name);
+    CreatePerfTestFunction *createFunction =
+        reinterpret_cast<CreatePerfTestFunction*>(dlsym(dlhandle, "create_perftest"));
+    if (!createFunction) {
+        LOG_ERR("No 'create_perftest' symbol in " << name);
+        return EX_SOFTWARE;
+    }
+    LOG_DBG("Found create_perftest symbol in " << name);
+
+    std::shared_ptr<PerfTest> perfTest = createFunction(server);
+    perfTest->runTest();
+
     std::cerr << "runTest DONE" << std::endl;
 
-    if (perfTest.isFinished()) {
+    if (perfTest->isFinished()) {
         std::cerr << "Finished" << std::endl;
     } else {
         std::cerr << "Did not finish measurement";
-        if (!perfTest.isStarted()) {
+        if (!perfTest->isStarted()) {
             std::cerr << " (Never started)";
         }
         std::cerr << std::endl;
         return EX_SOFTWARE;
     }
 
-    perfTest.printResults();
+    perfTest->printResults();
 
     return EX_OK;
 }

@@ -92,3 +92,9 @@ public:
     void startMeasurement() override;
     void stopMeasurement() override;
 };
+
+extern "C"
+{
+    std::shared_ptr<PerfTest> create_perftest(std::string &server);
+}
+
