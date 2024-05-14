@@ -21,7 +21,6 @@ class AutoFillOptions extends L.Control.AutoCompletePopup {
 	users: any;
 	itemList: Array<any>;
 	data: MessageEvent<any>;
-	autoFillPopupPoint: Point;
 
 	constructor(map: ReturnType<typeof L.map>) {
 		super('autoFillPopup', map);
@@ -30,7 +29,7 @@ class AutoFillOptions extends L.Control.AutoCompletePopup {
 	onAdd() {
 		this.newPopupData.isAutoCompletePopup = true;
 		this.map.on('openautofillpopup', this.openAutoFillPopup, this);
-		this.map.on('closementionpopup', this.closeMentionPopup, this);
+		this.map.on('closeautofillpopup', this.closeMentionPopup, this);
 		this.map.on('sendautofilllocation', this.sendAutoFillLocation, this);
 		this.firstChar = null;
 		this.users = null;
@@ -76,20 +75,20 @@ class AutoFillOptions extends L.Control.AutoCompletePopup {
 		data.posx = framePos.x;
 		data.posy = framePos.y;
 		this.sendJSON(data);
+
+		this.map._docLayer.isAutoFillPopupOpen = true;
 	}
 
 	closeMentionPopup(ev: CloseMessageEvent) {
-		// console.error('close closeMentionPopup');
-
 		super.closePopup();
 		if (!ev.typingMention) {
 			this.map._docLayer._typingMention = false;
 			this.map._docLayer._mentionText = [];
 		}
+		this.map._docLayer.isAutoFillPopupOpen = false;
 	}
 
 	callback(objectType: any, eventType: any, object: any, index: number) {
-		// console.error("eventType: " + eventType);
 		if (eventType === 'close') {
 			// console.error('close callback');
 			this.closeMentionPopup({ typingMention: false } as CloseMessageEvent);

@@ -93,6 +93,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 
 		this.insertMode = false;
 		this.isFromAutoFill = false;
+		this.isAutoFillPopupOpen = false;
 		this._resetInternalState();
 		this._sheetSwitch = new L.SheetSwitchViewRestore(map);
 	},

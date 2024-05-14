@@ -914,6 +914,10 @@ L.Map.Keyboard = L.Handler.extend({
 						else {
 							partToSelect = currentSelectedPart != 0 ? currentSelectedPart - 1 : parts - 1;
 						}
+
+						if (this._map._docLayer.isAutoFillPopupOpen)
+							this._map.fire('closeautofillpopup');
+
 						this._map.setPart(parseInt(partToSelect), /*external:*/ false, /*calledFromSetPartHandler:*/ true);
 						return;
 					}

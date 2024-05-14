@@ -602,7 +602,8 @@ L.Control.JSDialog = L.Control.extend({
 			var dialog = this.dialogs[autoFilterDialogId];
 
 			// Check if the current dialog has the isAutofilter property set to true
-			if (dialog.isAutofilter) {
+			// and if it is not an autoFillPopup
+			if (dialog.isAutofilter && (autoFilterDialogId !== 'autoFillPopup')) {
 				// Call this.close(key, true) for the current dialog
 				this.close(autoFilterDialogId, true);
 			}
