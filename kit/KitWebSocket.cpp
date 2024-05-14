@@ -236,8 +236,15 @@ void BgSaveParentWebSocketHandler::handleMessage(const std::vector<char>& data)
     // FIXME: check for badness - jsdialogs and so on and bail ... ?
 
     // Should pass only:
-    // "error:", "asyncsave", "forcedtracevent", "unocommandresult:"
+    // "error:", "forcedtracevent", "unocommandresult:"
     // "statusindicator[start|finish|setvalue]"
+
+    // Badly don't want modified state coming from the background processx
+    if (tokens[1] == "statechanged:")
+    {
+        LOG_TRC("Don't send un-wanted message to parent: " << COOLProtocol::getAbbreviatedMessage(data));
+        return;
+    }
 
     // Messages already include client-foo prefixes inherited from ourselves
     _document->sendFrame(data.data(), data.size(), WSOpCode::Text);
