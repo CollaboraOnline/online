@@ -243,6 +243,21 @@ app.definitions.Socket = L.Class.extend({
 			if (spellOnline) {
 				msg += ' spellOnline=' + spellOnline;
 			}
+			var docTypes = ['text', 'spreadsheet', 'presentation', 'drawing'];
+			for (var i = 0; i < docTypes.length; ++i) {
+				var docType = docTypes[i];
+				var darkTheme = false;
+				if (window.uiDefaults) {
+					darkTheme = window.uiDefaults.darkTheme === true;
+				}
+				var item = window.localStorage.getItem('UIDefaults_' + docType + '_darkTheme');
+				if (item) {
+					darkTheme = item;
+				}
+				if (darkTheme) {
+					msg += ' ' + docType + 'DarkTheme=' + darkTheme;
+				}
+			}
 
 			var accessibilityState = window.localStorage.getItem('accessibilityState') === 'true';
 			accessibilityState = accessibilityState || L.Browser.cypressTest;
