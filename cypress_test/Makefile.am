@@ -203,7 +203,7 @@ define start_coolwsd_instance
 			--o:ssl.ca_file_path="$(abs_top_srcdir)/etc/ca-chain.cert.pem" \
 			--o:admin_console.username=admin --o:admin_console.password=admin \
 			--o:logging.file[@enable]=true --o:logging.level=trace \
-			--o:welcome.enable=false \
+			--o:logging.disabled_areas="" --o:welcome.enable=false \
 			--o:user_interface.mode=$(USER_INTERFACE) \
 			--o:accessibility.enable=$(A11Y_ENABLE) \
 			--o:security.enable_macros_execution=true \
