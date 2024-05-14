@@ -689,10 +689,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		// Rotation angle of selected graphic object
 		this._graphicSelectionAngle = 0;
 		app.calc.cellCursorVisible = false;
-		this._prevCellCursor = null;
 		this._prevCellCursorAddress = null;
-		this._cellCursorOnPgUp = null;
-		this._cellCursorOnPgDn = null;
 		this._shapeGridOffset = new app.definitions.simplePoint(0, 0);
 
 		// Tile garbage collection counter
@@ -2195,20 +2192,11 @@ L.CanvasTileLayer = L.Layer.extend({
 				autofillMarkerSection.calculatePositionViaCellCursor([app.calc.cellCursorRectangle.pX2, app.calc.cellCursorRectangle.pY2]);
 		}
 
-		var onPgUpDn = false;
-		if (app.calc.cellCursorVisible && this._prevCellCursor && !this._prevCellCursor.equals(app.calc.cellCursorRectangle.toArray())) {
-			if ((this._cellCursorOnPgUp && this._cellCursorOnPgUp.equals(this._prevCellCursor.toArray())) ||
-				(this._cellCursorOnPgDn && this._cellCursorOnPgDn.equals(this._prevCellCursor.toArray()))) {
-				onPgUpDn = true;
-			}
-			this._prevCellCursor = app.calc.cellCursorRectangle.clone();
-		}
-
 		var sameAddress = oldCursorAddress.equals(app.calc.cellAddress.toArray());
 
 		var scrollToCursor = this._sheetSwitch.tryRestore(sameAddress, this._selectedPart);
 
-		this._onUpdateCellCursor(onPgUpDn, scrollToCursor, sameAddress);
+		this._onUpdateCellCursor(scrollToCursor, sameAddress);
 
 		// Remove input help if there is any:
 		this._removeInputHelpMarker();
@@ -3326,7 +3314,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._graphicSelection = null;
 		this._onUpdateGraphicSelection();
 		app.calc.cellCursorVisible = false;
-		this._prevCellCursor = null;
 		this._onUpdateCellCursor();
 		if (this._map._clip)
 			this._map._clip.clearSelection();
@@ -3414,23 +3401,10 @@ L.CanvasTileLayer = L.Layer.extend({
 		var winId = this._map.getWinId();
 		if (
 			this.isCalc() &&
-			this._prevCellCursor &&
 			type === 'input' &&
 			winId === 0
 		) {
-			if (unoKeyCode === UNOKey.PAGEUP) {
-				if (this._cellCursorOnPgUp) {
-					return;
-				}
-				this._cellCursorOnPgUp = this._prevCellCursor.clone();
-			}
-			else if (unoKeyCode === UNOKey.PAGEDOWN) {
-				if (this._cellCursorOnPgDn) {
-					return;
-				}
-				this._cellCursorOnPgDn = this._prevCellCursor.clone();
-			}
-			else if (unoKeyCode === UNOKey.SPACE + UNOModifier.CTRL) { // Select whole column.
+			if (unoKeyCode === UNOKey.SPACE + UNOModifier.CTRL) { // Select whole column.
 				this._map.wholeColumnSelected = true;
 			}
 			else if (unoKeyCode === UNOKey.SPACE + UNOModifier.SHIFT) { // Select whole row.
@@ -4121,7 +4095,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	// TODO: used only in calc: move to CalcTileLayer
-	_onUpdateCellCursor: function (onPgUpDn, scrollToCursor, sameAddress) {
+	_onUpdateCellCursor: function (scrollToCursor, sameAddress) {
 		this._onUpdateCellResizeMarkers();
 		if (app.calc.cellCursorVisible) {
 			var mapBounds = this._map.getBounds();
@@ -4136,11 +4110,6 @@ L.CanvasTileLayer = L.Layer.extend({
 					this.scrollToPos(newCenter);
 				}
 				this._prevCellCursorAddress = app.calc.cellAddress.clone();
-			}
-
-			if (onPgUpDn) {
-				this._cellCursorOnPgUp = null;
-				this._cellCursorOnPgDn = null;
 			}
 
 			var corePxBounds = new L.Bounds(new L.Point(app.calc.cellCursorRectangle.pX1, app.calc.cellCursorRectangle.pY1),
