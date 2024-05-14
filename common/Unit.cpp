@@ -231,6 +231,11 @@ bool UnitBase::init(UnitType type, const std::string &unitLibPath)
             return false;
         }
 
+        // For now enable full logging
+        // FIXME: remove this when time sensitive WOPI
+        // tests are fixed.
+        Log::setDisabledAreas("");
+
         initTestSuiteOptions();
 
         // Filter tests.
