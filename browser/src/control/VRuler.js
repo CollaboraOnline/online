@@ -12,7 +12,7 @@
  * Ruler Handler
  */
 
-/* global app $ L _ Hammer */
+/* global _ */
 L.Control.VRuler = L.Control.extend({
 	options: {
 		interactive: true,
@@ -29,7 +29,6 @@ L.Control.VRuler = L.Control.extend({
 		DraggableConvertRatio: null,
 		timer: null,
 		showruler: true,
-		isHorizontalRuler:true
 	},
 
 	onAdd: function(map) {
@@ -92,6 +91,7 @@ L.Control.VRuler = L.Control.extend({
 		this.options.margin1 = parseInt(obj['margin1']);
 		this.options.margin2 = parseInt(obj['margin2']);
 		this.options.nullOffset = parseInt(obj['leftOffset']);
+		this.options.pageOffset = parseInt(obj['pageOffset']);
 
 		// pageWidth on the other hand *is* really in mm100.
 		this.options.pageWidth = parseInt(obj['pageWidth']);
@@ -101,13 +101,11 @@ L.Control.VRuler = L.Control.extend({
 
 		this._updateBreakPoints();
 		var scale = this._map.getZoomScale(this._map.getZoom(), 10);
-		if (this.options.isHorizontalRuler) {
-			this._rWrapper.style.visibility = '';
-			this._rWrapper.style.transform = 'rotate(90deg)';
-			var position = document.documentElement.dir === 'rtl' ? 'top right' : 'top left';
-			this._rWrapper.style.transformOrigin = position;
-			this._rWrapper.style.left = this.options.tileMargin * scale + 'px';
-		}
+		this._rWrapper.style.visibility = '';
+		this._rWrapper.style.transform = 'rotate(90deg)';
+		var position = document.documentElement.dir === 'rtl' ? 'top right' : 'top left';
+		this._rWrapper.style.transformOrigin = position;
+		this._rWrapper.style.left = this.options.tileMargin + 'px';
 	},
 
 	_updateBreakPoints: function() {
@@ -197,26 +195,25 @@ L.Control.VRuler = L.Control.extend({
 		var topLeft = this._map.latLngToLayerPoint(this._map.options.docBounds.getNorthWest());
 		var firstTileXTranslate = topLeft.y;
 
-		var tileContainer = mapPane.getElementsByClassName('leaflet-tile-container');
-		for (var i = 0; i < tileContainer.length; ++i) {
-			if (parseInt(tileContainer[i].style.zIndex) === this._map.getMaxZoom()) {
-				tileContainer = tileContainer[i];
-				break;
-			}
-		}
-		var tileContainerXTranslate = 0;
-		if (tileContainer.style !== undefined)
-			tileContainerXTranslate = parseInt(tileContainer.style.transform.match(/\(([-0-9]*)/)[1]);
-
 		var mapPaneYTranslate = 0;
 		var computedStyle = window.getComputedStyle(mapPane);
 		var transformValue = computedStyle.getPropertyValue('transform');
 		var transformMatrix = new DOMMatrixReadOnly(transformValue);
 
-		// Get the ranslateY values
+		// Get the translateY values
 		mapPaneYTranslate = transformMatrix.f;
 
-		var rulerOffset = mapPaneYTranslate + firstTileXTranslate + tileContainerXTranslate + (this.options.tileMargin * scale);
+		// we need to also consider  if there is more then 1 page then pageoffset is crucial to consider
+		// i have calculated current page using pageoffset and pageWidth coming from CORE
+		// based on that calculate the page offset
+		// so if cursor moves to other page we will see how many pages before current page are there
+		// and then add totalHeight of all those pages to our final calculation of rulerOffset
+		var currentPage = Math.floor(this.options.pageOffset/this.options.pageWidth);
+		var pageoffset = 0;
+		if (this._map._docLayer._docPixelSize)
+			pageoffset = currentPage * (this._map._docLayer._docPixelSize.y / this._map._docLayer._pages);
+
+		var rulerOffset = mapPaneYTranslate + firstTileXTranslate + pageoffset + (this.options.tileMargin * scale);
 
 		this._rFace.style.marginInlineStart = rulerOffset + 'px';
 

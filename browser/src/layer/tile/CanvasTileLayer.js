@@ -2844,8 +2844,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 		textMsg = textMsg.substring(13);
 		var obj = JSON.parse(textMsg);
-		obj.isHorizontalRuler = horizontalRuler;
-		// We will return just for temporarily untill next commit for vertical ruler design implementation
 		if (!horizontalRuler) {
 			this._map.fire('vrulerupdate', obj);
 		}
