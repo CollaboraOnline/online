@@ -3313,7 +3313,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		// hide the graphic selection
 		this._graphicSelection = null;
 		this._onUpdateGraphicSelection();
-		app.calc.cellCursorVisible = false;
 		this._onUpdateCellCursor();
 		if (this._map._clip)
 			this._map._clip.clearSelection();
@@ -4099,7 +4098,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._onUpdateCellResizeMarkers();
 		if (app.calc.cellCursorVisible) {
 			var mapBounds = this._map.getBounds();
-			if (scrollToCursor && (!this._prevCellCursorAddress || !app.calc.cellAddress.equals(this._prevCellCursorAddress.toArray())) &&
+			if (scrollToCursor &&
 			    !this._map.calcInputBarHasFocus()) {
 				var scroll = this._calculateScrollForNewCellCursor();
 				window.app.console.assert(scroll instanceof L.LatLng, '_calculateScrollForNewCellCursor returned wrong type');
