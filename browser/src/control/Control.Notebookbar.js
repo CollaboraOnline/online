@@ -336,7 +336,7 @@ L.Control.Notebookbar = L.Control.extend({
 	},
 
 	showNotebookbarButton: function(buttonId, show) {
-		var button = $(this.container).children('#' + buttonId);
+		var button = $(this.container).find('#' + buttonId);
 		if (show) {
 			button.show();
 		} else {
@@ -344,14 +344,14 @@ L.Control.Notebookbar = L.Control.extend({
 		}
 	},
 
-    showNotebookbarCommand: function(commandId, show) {
+	showNotebookbarCommand: function(commandId, show) {
 		var cssClass;
 		if (commandId.indexOf('.uno:') == 0) {
 			cssClass = 'uno' + commandId.substring(5);
 		} else {
 			cssClass = commandId;
 		}
-		var button = $(this.container).children('div.' + cssClass);
+		var button = $(this.container).find('div.' + cssClass);
 		if (show) {
 			button.show();
 		} else {
