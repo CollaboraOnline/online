@@ -194,7 +194,7 @@ class StatusBar extends JSDialog.Toolbar {
 		];
 		var selected = submenu.filter((item) => { return item.id === value; });
 		var text = selected.length ? selected[0].text : _('None');
-		return {type: 'menubutton', id: 'StateTableCellMenu', text: text, menu: submenu, visible: visible};
+		return {type: 'menubutton', id: 'StateTableCellMenu', text: text, image: false, menu: submenu, visible: visible};
 	}
 
 	_generateZoomItems() {
