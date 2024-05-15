@@ -366,6 +366,7 @@ shared_headers = common/Common.hpp \
                  common/ThreadPool.hpp \
                  common/Watchdog.hpp \
                  kit/KitQueue.hpp \
+                 net/AsyncDNS.hpp \
                  net/Buffer.hpp \
                  net/DelaySocket.hpp \
                  net/FakeSocket.hpp \
