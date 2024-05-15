@@ -1314,56 +1314,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._onInvalidateCursorMsg(textMsg);
 		}
 		else if (textMsg.startsWith('invalidatetiles:')) {
-			var payload = textMsg.substring('invalidatetiles:'.length + 1);
-			if (!payload.startsWith('EMPTY')) {
-				this._onInvalidateTilesMsg(textMsg);
-			}
-			else {
-				var msg = 'invalidatetiles: ';
-
-				// see invalidatetiles: in wsd/protocol.txt for structure
-				var tmp = payload.substring('EMPTY'.length).replaceAll(',', ' , ');
-				var tokens = tmp.split(/[ \n]+/);
-
-				var wireIdToken = undefined;
-				var commaargs = [];
-
-				var commaarg = false;
-				for (var i = 0; i < tokens.length; i++) {
-					if (tokens[i] === ',') {
-						commaarg = true;
-						continue;
-					}
-					if (commaarg) {
-						commaargs.push(tokens[i]);
-						commaarg = false;
-					}
-					else if (tokens[i].startsWith('wid=')) {
-						wireIdToken = tokens[i];
-					}
-					else if (tokens[i])
-						console.error('unsupported invalidatetile token: ' + tokens[i]);
-				}
-
-				if (this.isWriter()) {
-					msg += 'part=0 ';
-				} else {
-
-					var part = parseInt(commaargs.length > 0 ? commaargs[0] : '');
-					var mode = parseInt(commaargs.length > 1 ? commaargs[1] : '');
-
-					mode = (isNaN(mode) ? this._selectedMode : mode);
-					msg += 'part=' + (isNaN(part) ? this._selectedPart : part)
-						+ ((mode && mode !== 0) ? (' mode=' + mode) : '')
-						+ ' ';
-				}
-				msg += 'x=0 y=0 ';
-				msg += 'width=' + this._docWidthTwips + ' ';
-				msg += 'height=' + this._docHeightTwips;
-				if (wireIdToken !== undefined)
-					msg += ' ' + wireIdToken;
-				this._onInvalidateTilesMsg(msg);
-			}
+			console.error("Message should be filterd during slurp");
 		}
 		else if (textMsg.startsWith('mousepointer:')) {
 			this._onMousePointerMsg(textMsg);
@@ -1647,6 +1598,84 @@ L.CanvasTileLayer = L.Layer.extend({
 					delete app.colorPalettes[key];
 				}
 			}
+		}
+	},
+
+	// Returns a guess of how many tiles are yet to arrive
+	predictTilesToSlurp: function() {
+		var map = this._map;
+		if (!map)
+			return 0;
+		var size = map.getSize();
+
+		if (size.x === 0 || size.y === 0)
+			return 0;
+
+		var zoom = Math.round(map.getZoom());
+		var pixelBounds = map.getPixelBoundsCore(map.getCenter(), zoom);
+
+		var queue = this._getMissingTiles(pixelBounds, zoom);
+
+		return queue.length;
+	},
+
+	// Process messages early that won't mess with the DOM
+	filterSlurpedMessage: function(evt) {
+		var textMsg = evt.textMsg;
+
+		if (textMsg.startsWith('invalidatetiles:')) {
+			var payload = textMsg.substring('invalidatetiles:'.length + 1);
+			if (!payload.startsWith('EMPTY')) {
+				this._onInvalidateTilesMsg(textMsg);
+			}
+			else {
+				var msg = 'invalidatetiles: ';
+
+				// see invalidatetiles: in wsd/protocol.txt for structure
+				var tmp = payload.substring('EMPTY'.length).replaceAll(',', ' , ');
+				var tokens = tmp.split(/[ \n]+/);
+
+				var wireIdToken = undefined;
+				var commaargs = [];
+
+				var commaarg = false;
+				for (var i = 0; i < tokens.length; i++) {
+					if (tokens[i] === ',') {
+						commaarg = true;
+						continue;
+					}
+					if (commaarg) {
+						commaargs.push(tokens[i]);
+						commaarg = false;
+					}
+					else if (tokens[i].startsWith('wid=')) {
+						wireIdToken = tokens[i];
+					}
+					else if (tokens[i])
+						console.error('unsupported invalidatetile token: ' + tokens[i]);
+				}
+
+				if (this.isWriter()) {
+					msg += 'part=0 ';
+				} else {
+
+					var part = parseInt(commaargs.length > 0 ? commaargs[0] : '');
+					var mode = parseInt(commaargs.length > 1 ? commaargs[1] : '');
+
+					mode = (isNaN(mode) ? this._selectedMode : mode);
+					msg += 'part=' + (isNaN(part) ? this._selectedPart : part)
+						+ ((mode && mode !== 0) ? (' mode=' + mode) : '')
+						+ ' ';
+				}
+				msg += 'x=0 y=0 ';
+				msg += 'width=' + this._docWidthTwips + ' ';
+				msg += 'height=' + this._docHeightTwips;
+				if (wireIdToken !== undefined)
+					msg += ' ' + wireIdToken;
+				this._onInvalidateTilesMsg(msg);
+				return true; // filter
+			}
+			return false; // continue processing
 		}
 	},
 
@@ -5929,6 +5958,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		{
 			if (this._debugDeltas)
 				window.app.console.debug('invalidate tile ' + key + ' with wireId ' + wireId);
+			console.log('invalidate tile ' + key + ' with wireId ' + wireId);
 			if (wireId)
 				tile.invalidFrom = wireId;
 			else
