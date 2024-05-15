@@ -12,6 +12,7 @@
 #include <config.h>
 
 #include "NetUtil.hpp"
+#include "AsyncDNS.hpp"
 #include <common/Util.hpp>
 
 #include "Socket.hpp"
@@ -151,6 +152,88 @@ bool isLocalhost(const std::string& targetHost)
     LOG_TRC("Host [" << targetHost << "] is not on the same host as the client: \"" << targetAddress
                      << "\".");
     return false;
+}
+
+void AsyncDNS::startThread()
+{
+    assert(!_thread);
+    _exit = false;
+    _thread.reset(new std::thread(&AsyncDNS::resolveDNS, this));
+}
+
+void AsyncDNS::joinThread()
+{
+    _exit = true;
+    _condition.notify_all();
+    _thread->join();
+    _thread.reset();
+}
+
+AsyncDNS::AsyncDNS()
+    : _resolver(std::make_unique<DNSResolver>())
+{
+    startThread();
+}
+
+AsyncDNS::~AsyncDNS()
+{
+    joinThread();
+}
+
+void AsyncDNS::resolveDNS()
+{
+    std::unique_lock<std::mutex> guard(_lock);
+    while (true)
+    {
+        while (_lookups.empty() && !_exit)
+            _condition.wait(guard);
+
+        if (_exit)
+            break;
+
+        Lookup lookup = _lookups.front();
+        _lookups.pop();
+        std::string hostToCheck, exception;
+
+        try
+        {
+            hostToCheck = _resolver->resolveDNS(lookup.query).name();
+        }
+        catch (const Poco::Exception& exc)
+        {
+            exception = "net::canonicalHostName(\"" + lookup.query + "\") failed: " + exc.displayText();
+        }
+
+        lookup.cb(hostToCheck, exception);
+    }
+}
+
+void AsyncDNS::addLookup(const std::string& lookup, const DNSThreadFn& cb)
+{
+    std::unique_lock<std::mutex> guard(_lock);
+    _lookups.emplace(lookup, cb);
+    guard.unlock();
+    _condition.notify_one();
+}
+
+static std::unique_ptr<AsyncDNS> AsyncDNSThread;
+
+//static
+void AsyncDNS::startAsyncDNS()
+{
+    AsyncDNSThread = std::make_unique<AsyncDNS>();
+}
+
+//static
+void AsyncDNS::stopAsyncDNS()
+{
+    AsyncDNSThread.reset();
+}
+
+//static
+void AsyncDNS::canonicalHostName(const std::string& addressToCheck, const DNSThreadFn& cb)
+{
+    AsyncDNSThread->addLookup(addressToCheck, cb);
 }
 
 #endif //!MOBILEAPP
@@ -298,3 +381,4 @@ bool parseUri(std::string uri, std::string& scheme, std::string& host, std::stri
 }
 
 } // namespace net
+/* vim:set shiftwidth=4 softtabstop=4 expandtab: */
