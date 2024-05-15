@@ -437,11 +437,19 @@ app.definitions.Socket = L.Class.extend({
 	// buffer of web-socket messages in the client that we can't
 	// process so - slurp and the emit at idle - its faster to delay!
 	_slurpMessage: function(e) {
+		this._extractTextImg(e);
+
+		// Some messages - we want to process & filter early.
+		var docLayer = this._map ? this._map._docLayer : undefined;
+		if (docLayer && docLayer.filterSlurpedMessage(e))
+			return;
+
+		console.log('Predict ' + (docLayer ? docLayer.predictTilesToSlurp() : -1) + ' tiles');
+
 		if (!this._slurpQueue || !this._slurpQueue.length) {
 			this._queueSlurpEventEmission();
 			this._slurpQueue = [];
 		}
-		this._extractTextImg(e);
 		this._slurpQueue.push(e);
 	},
 
