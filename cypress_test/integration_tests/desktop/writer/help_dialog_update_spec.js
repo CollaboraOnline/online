@@ -16,7 +16,7 @@ describe(['tagscreenshot'], 'Help dialog screenshot updation', function() {
 
 	function copyScreenshot(fileName) {
 		cy.task('copyFile', {
-			sourceDir: Cypress.env('SCREENSHOT_FOLDER')+ '/writer/help_dialog_update_spec.js/',
+			sourceDir: Cypress.config('screenshotsFolder') + '/writer/help_dialog_update_spec.js/',
 			destDir: Cypress.env('IMAGES_FOLDER'),
 			fileName: fileName,
 		});
@@ -31,7 +31,7 @@ describe(['tagscreenshot'], 'Help dialog screenshot updation', function() {
 				var width = w2 - w1;
 				cy.log('w1 w2 ' + w1 + ' ' + w2);
 				cy.cGet('#toolbar-down').screenshot('status-bar', { clip: { x: 0, y: 0, height: 300, width: width } });
-				cy.log(Cypress.env('SCREENSHOT_FOLDER'), Cypress.env('IMAGES_FOLDER'));
+				cy.log(Cypress.config('screenshotsFolder'), Cypress.env('IMAGES_FOLDER'));
 				copyScreenshot('status-bar.png');
 			});
 		});
