@@ -34,7 +34,7 @@ describe(['tagscreenshot'], 'Help dialog update', function() {
 		cy.cGet('#main-document-content').screenshot('chart-wizard');
 
 		cy.task('copyFile', {
-			sourceDir: Cypress.env('SCREENSHOT_FOLDER')+ '/calc/help_dialog_update_spec.js/',
+			sourceDir: Cypress.config('screenshotsFolder') + '/calc/help_dialog_update_spec.js/',
 			destDir: Cypress.env('IMAGES_FOLDER'),
 			fileName: 'chart-wizard.png',
 		});
