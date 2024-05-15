@@ -40,30 +40,45 @@ struct DNSCacheEntry
     std::chrono::steady_clock::time_point lookupTime;
 };
 
-Poco::Net::HostEntry resolveDNS(const std::string& addressToCheck)
+static Poco::Net::HostEntry resolveDNS(const std::string& addressToCheck, std::vector<DNSCacheEntry>& querycache)
 {
-    static std::vector<DNSCacheEntry> queries;
-
     const auto now = std::chrono::steady_clock::now();
 
     // remove entries >= 20 seconds old
-    std::erase_if(queries, [now](const auto& entry)->bool {
-                             auto ageMS = std::chrono::duration_cast<std::chrono::milliseconds>(now - entry.lookupTime).count();
-                             return ageMS > 20000;
-                           });
+    std::erase_if(querycache, [now](const auto& entry)->bool {
+                                 auto ageMS = std::chrono::duration_cast<std::chrono::milliseconds>(now - entry.lookupTime).count();
+                                 return ageMS > 20000;
+                              });
 
     // search for hit
-    auto findIt = std::find_if(queries.begin(), queries.end(),
+    auto findIt = std::find_if(querycache.begin(), querycache.end(),
                                [&addressToCheck](const auto& entry)->bool {
                                  return entry.queryAddress == addressToCheck;
                                });
-    if (findIt != queries.end())
+    if (findIt != querycache.end())
         return findIt->hostEntry;
 
     // lookup and cache
     auto hostEntry = Poco::Net::DNS::resolve(addressToCheck);
-    queries.push_back(DNSCacheEntry{addressToCheck, hostEntry, now});
+    querycache.push_back(DNSCacheEntry{addressToCheck, hostEntry, now});
     return hostEntry;
+}
+
+class DNSResolver
+{
+private:
+    std::vector<DNSCacheEntry> _querycache;
+public:
+    Poco::Net::HostEntry resolveDNS(const std::string& addressToCheck)
+    {
+        return net::resolveDNS(addressToCheck, _querycache);
+    }
+};
+
+Poco::Net::HostEntry resolveDNS(const std::string& addressToCheck)
+{
+    static DNSResolver resolver;
+    return resolver.resolveDNS(addressToCheck);
 }
 
 std::string canonicalHostName(const std::string& addressToCheck)
