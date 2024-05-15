@@ -10,7 +10,7 @@
 */
 
 class CellSelectionHandle extends app.definitions.canvasSectionObject {
-	showSection: false;
+	showSection: boolean = false;
 	processingOrder: number = L.CSections.DefaultForDocumentObjects.processingOrder;
 	drawingOrder: number = L.CSections.DefaultForDocumentObjects.drawingOrder;
 	zIndex: number = L.CSections.DefaultForDocumentObjects.zIndex;
