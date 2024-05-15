@@ -12,13 +12,13 @@
  * Ruler Handler
  */
 
-/* global _ */
+/* global app L _ */
 L.Control.VRuler = L.Control.extend({
 	options: {
 		interactive: true,
 		marginSet: false,
 		displayNumber: true,
-		tileMargin: 18, // No idea what this means and where it comes from
+		tileMargin: 20, // No idea what this means and where it comes from
 		margin1: null,
 		margin2: null,
 		nullOffset: null,
@@ -60,6 +60,29 @@ L.Control.VRuler = L.Control.extend({
 		}
 	},
 
+	_initiateIndentationMarkers: function() {
+
+		// Paragraph indentation..
+		this._pStartMarker = document.createElement('div');
+		this._pStartMarker.id = 'lo-vertical-pstart-marker';
+		this._pStartMarker.classList.add('cool-ruler-indentation-marker-up');
+		this._rFace.appendChild(this._pStartMarker);
+
+		// Paragraph end..
+		this._pEndMarker = document.createElement('div');
+		this._pEndMarker.id = 'lo-vertical-pend-marker';
+		this._pEndMarker.classList.add('cool-ruler-indentation-marker-up');
+		this._rFace.appendChild(this._pEndMarker);
+
+		// While one of the markers is being dragged, a howrizontal line should be visible in order to indicate the new position of the marker..
+		this._markerHorizontalLine = L.DomUtil.create('div', 'cool-ruler-horizontal-indentation-marker-center');
+		this._rFace.appendChild(this._markerHorizontalLine);
+
+
+		L.DomEvent.on(this._pStartMarker, 'mousedown', window.touch.mouseOnly(this._initiateIndentationDrag), this);
+		L.DomEvent.on(this._pEndMarker, 'mousedown', window.touch.mouseOnly(this._initiateIndentationDrag), this);
+	},
+
 	_initLayout: function() {
 		this._rWrapper = L.DomUtil.create('div', 'cool-ruler leaflet-bar leaflet-control leaflet-control-custom');
 		this._rWrapper.id = 'vertical-ruler'
@@ -76,6 +99,10 @@ L.Control.VRuler = L.Control.extend({
 		// BP => Break Points
 		this._rBPWrapper = L.DomUtil.create('div', 'cool-ruler-breakwrapper', this._rFace);
 		this._rBPContainer = L.DomUtil.create('div', 'cool-ruler-breakcontainer', this._rBPWrapper);
+
+		// Tab stops
+		this._rTSContainer = L.DomUtil.create('div', 'cool-ruler-tabstopcontainer', this._rMarginWrapper);
+		this._initiateIndentationMarkers();
 
 		return this._rWrapper;
 	},
@@ -99,13 +126,50 @@ L.Control.VRuler = L.Control.extend({
 		// to be enabled only after adding support for other length units as well
 		// this.options.unit = obj['unit'].trim();
 
-		this._updateBreakPoints();
-		var scale = this._map.getZoomScale(this._map.getZoom(), 10);
 		this._rWrapper.style.visibility = '';
 		this._rWrapper.style.transform = 'rotate(90deg)';
 		var position = document.documentElement.dir === 'rtl' ? 'top right' : 'top left';
 		this._rWrapper.style.transformOrigin = position;
 		this._rWrapper.style.left = this.options.tileMargin + 'px';
+		this._updateBreakPoints();
+	},
+
+	_updateParagraphIndentations: function() {
+		var items = this._map['stateChangeHandler'];
+		var state = items.getItemValue('.uno:LeftRightParaMargin');
+
+		if (!state)
+			return;
+
+		this.options.leftParagraphIndent = parseFloat(state.left.replace(',', '.'));
+		this.options.rightParagraphIndent = parseFloat(state.right.replace(',', '.'));
+		this.options.indentUnit = state.unit;
+
+		var pxPerMm100 = this._map._docLayer._docPixelSize.x / (this._map._docLayer._docWidthTwips * 2540/1440);
+
+		// Conversion to mm100.
+		if (this.options.indentUnit === 'inch') {
+			this.options.leftParagraphIndent = this.options.leftParagraphIndent * 2540;
+			this.options.rightParagraphIndent = this.options.rightParagraphIndent * 2540;
+		}
+
+		this.options.leftParagraphIndent *= pxPerMm100;
+		this.options.rightParagraphIndent *= pxPerMm100;
+
+		// for horizontal Ruler we need to also consider height of navigation and toolbar-wrraper 
+		var documentTop = document.getElementById('document-container').getBoundingClientRect().top;
+		// rTSContainer is the reference element.
+		var pStartPosition = this._rTSContainer.getBoundingClientRect().top + this.options.leftParagraphIndent - documentTop;
+		var pEndPosition = this._rTSContainer.getBoundingClientRect().bottom - this.options.rightParagraphIndent - documentTop;
+
+		// We calculated the positions. Now we should move them to left in order to make their sharp edge point to the right direction..
+		this._pStartMarker.style.left = pStartPosition - this._pStartMarker.getBoundingClientRect().width  + 'px';
+		this._pEndMarker.style.left = pEndPosition - this._pEndMarker.getBoundingClientRect().width + 'px';
+
+		// we do similar operation as we do in Horizontal ruler 
+		// but this element rotated to 90deg so top of marker should be opposite to horizontal (Negative in this case)
+		this._markerHorizontalLine.style.top = '-100vw';
+		this._markerHorizontalLine.style.left = this._pStartMarker.style.left;
 	},
 
 	_updateBreakPoints: function() {
@@ -178,6 +242,12 @@ L.Control.VRuler = L.Control.extend({
 		this._lMarginDrag.style.width = (this.options.DraggableConvertRatio*lMargin) + 'px';
 		this._rMarginDrag.style.width = (this.options.DraggableConvertRatio*rMargin) + 'px';
 
+		// Put the _rTSContainer in the right place
+		this._rTSContainer.style.left = (this.options.DraggableConvertRatio * lMargin) + 'px';
+		this._rTSContainer.style.right = (this.options.DraggableConvertRatio * rMargin) + 'px';
+
+		this._updateParagraphIndentations();
+
 		if (this.options.interactive) {
 			this._changeInteractions({perm:'edit'});
 		}
@@ -218,6 +288,100 @@ L.Control.VRuler = L.Control.extend({
 		this._rFace.style.marginInlineStart = rulerOffset + 'px';
 
 		this.rulerOffset = rulerOffset; // Needed on different parts too..
+		this._updateParagraphIndentations();
+	},
+
+	_moveIndentation: function(e) {
+		if (e.type === 'panmove') {
+			e.clientX = e.center.x;
+		}
+
+		var element = document.getElementById(this._indentationElementId);
+		// for horizontal Ruler we need to also consider height of navigation and toolbar-wrraper 
+		var documentTop = document.getElementById('document-container').getBoundingClientRect().top;
+
+		// User is moving the cursor / their finger on the screen and we are moving the marker.
+		var newLeft = parseInt(element.style.left.replace('px', '')) + e.clientY - this._lastposition - documentTop;
+		element.style.left = String(newLeft) + 'px';
+		this._lastposition = e.clientY - documentTop;
+		// halfWidth..
+		var halfWidth = (element.getBoundingClientRect().right - element.getBoundingClientRect().left) * 0.5;
+		this._markerHorizontalLine.style.left = String(newLeft + halfWidth) + 'px';
+	},
+
+	_moveIndentationEnd: function(e) {
+		this._map.rulerActive = false;
+
+		if (e.type !== 'panend') {
+			L.DomEvent.off(this._rFace, 'mousemove', this._moveIndentation, this);
+			L.DomEvent.off(this._map, 'mouseup', this._moveIndentationEnd, this);
+		}
+
+		var unoObj = {}, indentType = '';
+
+		// Calculation step..
+		// The new coordinate of element subject to indentation is sent as a percentage of the page width..
+		// We need to calculate the percentage. Left margin (nullOffset) is not being added to the indentation (on the core part)..
+		// We can use TabStopContainer's position as the reference point, as they share the same reference point..
+		var element = document.getElementById(this._indentationElementId);
+
+		var leftValue;
+		// The halfWidth of the shape..
+		var halfWidth = (element.getBoundingClientRect().right - element.getBoundingClientRect().left) * 0.5;
+
+		// We need the pageWidth in pixels, so we can not use "this.options.pageWidth" here, since that's in mm..
+		var pageWidth = parseFloat(this._rFace.style.width.replace('px', ''));
+
+		if (element.id === 'lo-fline-marker') {
+			indentType = 'FirstLineIndent';
+			// FirstLine indentation is always positioned according to the left indent..
+			// We don't need to add halfWidth here..
+			leftValue = (parseFloat(this._firstLineMarker.style.left.replace('px', '')) - parseFloat(this._pStartMarker.style.left.replace('px', '')));
+		}
+		else if (element.id === 'lo-pstart-marker') {
+			indentType = 'LeftParaIndent';
+			leftValue = element.getBoundingClientRect().left - this._rTSContainer.getBoundingClientRect().left + halfWidth;
+		}
+		else if (element.id === 'lo-pend-marker') {
+			indentType = 'RightParaIndent';
+			// Right marker is positioned from right, this is rightValue..
+			leftValue = this._rTSContainer.getBoundingClientRect().right - element.getBoundingClientRect().right + halfWidth;
+		}
+
+		leftValue = leftValue / pageWidth; // Now it's a percentage..
+
+		if (indentType !== '') {
+			unoObj[indentType] = {};
+			unoObj[indentType]['type'] = 'string';
+			unoObj[indentType]['value'] = leftValue;
+			app.socket.sendMessage('uno .uno:ParagraphChangeState ' + JSON.stringify(unoObj));
+		}
+
+		this._indentationElementId = '';
+		this._markerHorizontalLine.style.display = 'none';
+	},
+
+	_initiateIndentationDrag: function(e) {
+		if (window.ThisIsTheiOSApp && !this._map.isEditMode())
+			return;
+
+		this._map.rulerActive = true;
+
+		this._indentationElementId = e.target.id.trim() === '' ? e.target.parentNode.id: e.target.id;
+
+		if (e.type !== 'panstart') {
+			L.DomEvent.on(this._rFace, 'mousemove', this._moveIndentation, this);
+			L.DomEvent.on(this._map, 'mouseup', this._moveIndentationEnd, this);
+		}
+		else {
+			e.clientX = e.center.x;
+		}
+		// for horizontal Ruler we need to also consider height of navigation and toolbar-wrraper 
+		var documentTop = document.getElementById('document-container').getBoundingClientRect().top;
+
+		this._initialposition = this._lastposition = e.clientY - documentTop;
+		this._markerHorizontalLine.style.display = 'block';
+		this._markerHorizontalLine.style.left = this._lastposition + 'px';
 	},
 
 });

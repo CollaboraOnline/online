@@ -923,10 +923,11 @@ input.clipboard {
 	background-repeat: no-repeat;
 }
 
-.cool-ruler-indentation-marker-center{
+.cool-ruler-indentation-marker-center,
+.cool-ruler-horizontal-indentation-marker-center
+{
 	position: fixed;
 	display: none;
-	height: 100vh;
 	top: 0;
 	bottom: 0;
 	left: 0;
