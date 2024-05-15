@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-12 19:29+0200\n"
+"POT-Creation-Date: 2024-05-15 14:13+0200\n"
 "PO-Revision-Date: 2024-05-13 23:21+0000\n"
 "Last-Translator: Poe Mon <p.poemon.awitd@gmail.com>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.5.5\n"
+"X-Generator: Translate Toolkit 3.6.0\n"
 
 #: html/cool-help.html%2Bdiv.h1:84-5
 msgid "Keyboard Shortcuts"
@@ -52,11 +52,11 @@ msgstr "書式設定されていないテキストを貼り付け"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:91-90
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>V</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>V</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>V</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>V</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:92-38
 msgid "Paste special"
@@ -64,13 +64,13 @@ msgstr "形式を選択して貼り付け"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:92-78
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd--plus\">+</"
-"span><kbd>V</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd--plus\""
+">+</span><kbd>V</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd--plus\">+</"
-"span><kbd>V</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd--plus\""
+">+</span><kbd>V</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:93-38
 msgid "Print (Download as PDF)"
@@ -86,11 +86,11 @@ msgstr "キーボードショートカットヘルプを表示"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:94-100
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>?</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>?</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>?</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>?</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:95-38
 msgid "Focus to notebookbar menu"
@@ -98,11 +98,11 @@ msgstr "ブックバーからのメニューを確認してください"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:95-90
 msgid ""
-"<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>F1</kbd>"
+"<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>F1</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>?</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>?</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:96-38
 msgid "Focus to document from menu"
@@ -189,11 +189,11 @@ msgstr "取り消し線"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:269-78
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:334-78
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>5</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
+"\"kbd--plus\">+</span><kbd>5</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>5</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
+"\"kbd--plus\">+</span><kbd>5</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:109-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:270-38
@@ -205,11 +205,11 @@ msgstr "上付き文字"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:270-76
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:335-76
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>P</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>P</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>P</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>P</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:110-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:271-38
@@ -221,11 +221,11 @@ msgstr "下付き文字"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:271-74
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:336-74
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>B</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>B</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>B</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>B</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:111-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:243-38
@@ -419,11 +419,11 @@ msgstr "単語ごとに選択 (左方向)"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:293-96
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:358-96
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>Arrow Left</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Arrow Left</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>左矢印</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>左矢印</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:137-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:294-38
@@ -472,11 +472,11 @@ msgstr "単語ごとに選択 (右方向)"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:297-97
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:362-97
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>Arrow Right</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Arrow Right</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>右矢印</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>右矢印</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:141-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:298-38
@@ -524,11 +524,11 @@ msgstr "段落頭まで選択"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:301-97
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:366-97
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>Arrow Up</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Arrow Up</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>上矢印</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>上矢印</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:145-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:302-38
@@ -576,11 +576,11 @@ msgstr "段落末まで選択"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:305-91
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:370-91
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>Arrow Down</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Arrow Down</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>下矢印</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>下矢印</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:149-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:306-38
@@ -630,11 +630,11 @@ msgstr "ドキュメントの始めまで選択"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:309-103
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:374-103
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>Home</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Home</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>Home</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Home</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:153-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:310-38
@@ -684,11 +684,11 @@ msgstr "ドキュメント末まで選択"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:313-101
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:378-101
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>End</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>End</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>End</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>End</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:157-38
 msgid "Move the view up one page"
@@ -760,11 +760,11 @@ msgstr "その文の始めまで削除"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:165-96
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>Backspace</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Backspace</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>Backspace</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Backspace</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:166-38
 msgid "Delete to end of sentence"
@@ -772,11 +772,11 @@ msgstr "文末まで削除"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:166-90
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>Del</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Del</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>Del</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Del</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:170-9
 msgid "Shortcut Keys for Tables"
@@ -786,8 +786,7 @@ msgstr "表用のショートカット"
 msgid ""
 "If the active cell is empty: selects the whole table. Otherwise: selects the "
 "contents of the active cell. Pressing again selects the entire table."
-msgstr ""
-"現在のセルが空白の場合は表全体が選択されます。それ以外の場合は現在のセル内容"
+msgstr "現在のセルが空白の場合は表全体が選択されます。それ以外の場合は現在のセル内容"
 "が選択され、もう一度操作すると表全体が選択されます。"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:173-128
@@ -820,9 +819,9 @@ msgid ""
 "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Tab</kbd> may be used "
 "instead."
 msgstr ""
-"タブストップを挿入します（表内のみ）。ウィンドウマネージャが利用している場"
-"合、<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Tab</kbd> が代わりに"
-"利用できます。"
+"タブストップを挿入します（表内のみ）。ウィンドウマネージャが利用している場合"
+"、<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Tab</kbd> "
+"が代わりに利用できます。"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:176-38
 msgid "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Keys</kbd>"
@@ -835,11 +834,11 @@ msgstr "列は右辺、行は下辺でサイズの拡大または縮小"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:177-38
 msgid ""
-"<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>Arrow Keys</kbd>"
+"<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Arrow Keys</kbd>"
 msgstr ""
-"<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>矢印</kbd>"
+"<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>矢印</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:177-181
 msgid "Increase/decrease the size of the column/row on the left/top cell edge"
@@ -847,11 +846,11 @@ msgstr "列は左辺、行は上辺でサイズの拡大または縮小"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:178-38
 msgid ""
-"<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>Arrow Keys</kbd>"
+"<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Arrow Keys</kbd>"
 msgstr ""
-"<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>矢印</kbd>"
+"<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
+"\"kbd--plus\">+</span><kbd>矢印</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:178-180
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:179-228
@@ -860,13 +859,13 @@ msgstr "Altと似ているが、こちらはアクティブセルだけが更新
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:179-38
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd--plus\">+</"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd--plus\">+</"
 "span><kbd>Arrow Keys</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd--plus\">+</"
-"span><kbd>矢印</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd--plus\""
+">+</span><kbd>矢印</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:180-38
 msgid "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Insert</kbd>"
@@ -895,11 +894,11 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:182-38
 msgid ""
-"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>Del</kbd>"
+"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Del</kbd>"
 msgstr ""
-"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>Del</kbd>"
+"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Del</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td.p:182-197
 msgid ""
@@ -916,8 +915,7 @@ msgid ""
 "If no whole cell is selected and the cursor is at the end of the table, the "
 "paragraph following the table will be deleted, unless it is the last "
 "paragraph in the document."
-msgstr ""
-"セル全体が選択されておらず、カーソルが表の末尾にある場合、それが文書の最後の"
+msgstr "セル全体が選択されておらず、カーソルが表の末尾にある場合、それが文書の最後の"
 "段落でなければ、表の後の段落は消去されます。"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td.p:184-1
@@ -925,8 +923,7 @@ msgid ""
 "If one or more cells are selected, the whole rows containing the selection "
 "will be deleted. If all rows are selected completely or partially, the "
 "entire table will be deleted."
-msgstr ""
-"1 つまたは複数のセルを選択すると、選択したセルを含む行全体が削除されます。す"
+msgstr "1 つまたは複数のセルを選択すると、選択したセルを含む行全体が削除されます。す"
 "べての行または一部を選択すると、表全体が削除されます。"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:189-9
@@ -939,11 +936,11 @@ msgstr "脚注の挿入"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:191-80
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>F</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
+"\"kbd--plus\">+</span><kbd>F</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>F</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
+"\"kbd--plus\">+</span><kbd>F</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:192-38
 msgid "Insert endnote"
@@ -951,11 +948,11 @@ msgstr "巻末注の挿入"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:192-79
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>D</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
+"\"kbd--plus\">+</span><kbd>D</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>D</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
+"\"kbd--plus\">+</span><kbd>D</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:193-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:244-38
@@ -965,11 +962,11 @@ msgstr "コメントの挿入"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:193-79
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:244-79
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>C</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
+"\"kbd--plus\">+</span><kbd>C</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>C</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
+"\"kbd--plus\">+</span><kbd>C</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:195-38
 msgid "Insert soft hyphen"
@@ -985,11 +982,11 @@ msgstr "非改行ハイフンの挿入"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:196-91
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>-</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>-</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>-</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>-</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:198-38
 msgid "Insert non-breaking space"
@@ -997,8 +994,8 @@ msgstr "非改行スペースの挿入"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:198-90
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>Space</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Space</kbd>"
 msgstr ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>スペース</kbd>"
@@ -1027,11 +1024,11 @@ msgstr "改段（段組み構成のテキスト）"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:201-101
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>Enter</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Enter</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>Enter</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Enter</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:202-38
 msgid ""
@@ -1047,8 +1044,7 @@ msgstr "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Enter</kbd>"
 msgid ""
 "Insert new paragraph without numbering inside a list. Does not work when the "
 "cursor is at the end of the list."
-msgstr ""
-"リストの内側に番号付けしないで段落を挿入する。カーソルがリストの最後にあると"
+msgstr "リストの内側に番号付けしないで段落を挿入する。カーソルがリストの最後にあると"
 "きは働きません。"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:209-9
@@ -1085,8 +1081,7 @@ msgstr "現在のセルから現在の行の最後のセルにセルを選択し
 msgid ""
 "Selects cells from the current cell up to one page in the current column or "
 "extends the existing selection one page up."
-msgstr ""
-"現在のセルから現在の列の1ページまで選択するか、既存の選択1ページを拡張します."
+msgstr "現在のセルから現在の列の1ページまで選択するか、既存の選択1ページを拡張します."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:217-184
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up</kbd>"
@@ -1096,8 +1091,7 @@ msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up</kbd>"
 msgid ""
 "Selects cells from the current cell down to one page in the current column "
 "or extends the existing selection one page down."
-msgstr ""
-"現在のセルから現在の列の1ページまで選択するか、既存の選択を1ページ下に拡張し"
+msgstr "現在のセルから現在の列の1ページまで選択するか、既存の選択を1ページ下に拡張し"
 "ます."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:218-188
@@ -1109,8 +1103,7 @@ msgid ""
 "Moves the cursor to the left edge of the current data range. If the column "
 "to the left of the cell that contains the cursor is empty, the cursor moves "
 "to the next column to the left that contains data"
-msgstr ""
-"カーソルを現在のデータ範囲の左端に移動します。 カーソルを含んだセルの左側の列"
+msgstr "カーソルを現在のデータ範囲の左端に移動します。 カーソルを含んだセルの左側の列"
 "が空の場合、カーソルはデータを含む左側の次の列に移動します"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:219-265
@@ -1122,8 +1115,7 @@ msgid ""
 "Moves the cursor to the right edge of the current data range. If the column "
 "to the right of the cell that contains the cursor is empty, the cursor moves "
 "to the next column to the right that contains data."
-msgstr ""
-"カーソルを現在のデータ範囲の右端に移動します。 カーソルを含むセルの右側の列が"
+msgstr "カーソルを現在のデータ範囲の右端に移動します。 カーソルを含むセルの右側の列が"
 "空の場合、カーソルはデータを含む右側の次の列に移動します."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:220-269
@@ -1135,8 +1127,7 @@ msgid ""
 "Moves the cursor to the top edge of the current data range. If the row above "
 "the cell that contains the cursor is empty, the cursor moves up to the next "
 "row that contains data."
-msgstr ""
-"カーソルを現在のデータ範囲の一番上端に移動します。 カーソルを含むセルの上の行"
+msgstr "カーソルを現在のデータ範囲の一番上端に移動します。 カーソルを含むセルの上の行"
 "が空の場合、カーソルはデータを含む次の行まで移動します."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:221-241
@@ -1148,8 +1139,7 @@ msgid ""
 "Moves the cursor to the bottom edge of the current data range. If the row "
 "below the cell that contains the cursor is empty, the cursor moves down to "
 "the next row that contains data."
-msgstr ""
-"カーソルを現在のデータ範囲の一番下端に移動します。 カーソルを含むセルの下の行"
+msgstr "カーソルを現在のデータ範囲の一番下端に移動します。 カーソルを含むセルの下の行"
 "が空の場合、カーソルはデータを含む次の行に移動します."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:222-246
@@ -1162,11 +1152,11 @@ msgstr "次のシートに移動。"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:223-82
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>Page Down</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Page Down</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>Page Down</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Page Down</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:224-38
 msgid "Go to previous sheet."
@@ -1174,11 +1164,11 @@ msgstr "前のシートへ移動。"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:224-86
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>Page Up</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Page Up</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>Page Up</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Page Up</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:225-38
 msgid ""
@@ -1188,16 +1178,16 @@ msgid ""
 "selected."
 msgstr ""
 "矢印の方向に、現在のセルからデータセルの連続範囲の終端までを含むすべてのセル"
-"を選択します。 行と列を一緒に選択するために使用される場合、長方形のセル範囲を"
-"選択します."
+"を選択します。 "
+"行と列を一緒に選択するために使用される場合、長方形のセル範囲を選択します."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:225-292
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>Arrow</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Arrow</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>矢印</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>矢印</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:226-38
 msgid "Moves one sheet to the left."
@@ -1227,11 +1217,11 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:228-280
 msgid ""
-"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>Page Up</kbd>"
+"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Page Up</kbd>"
 msgstr ""
-"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>Page Up</kbd>"
+"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Page Up</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:229-38
 msgid ""
@@ -1245,11 +1235,11 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:229-268
 msgid ""
-"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>Page Down</kbd>"
+"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Page Down</kbd>"
 msgstr ""
-"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>Page Down</kbd>"
+"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Page Down</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:230-38
 msgid ""
@@ -1318,11 +1308,11 @@ msgstr "小数位２桁、千桁区切りあり"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:253-104
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>1</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>1</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>1</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>1</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:254-38
 msgid "Standard exponential format"
@@ -1330,11 +1320,11 @@ msgstr "標準の指数書式"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:254-92
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>2</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>2</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>2</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>2</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:255-38
 msgid "Standard date format"
@@ -1342,11 +1332,11 @@ msgstr "標準の日付書式"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:255-85
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>3</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>3</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>3</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>3</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:256-38
 msgid "Standard currency format"
@@ -1354,11 +1344,11 @@ msgstr "標準の通貨書式"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:256-89
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>4</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>4</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>4</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>4</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:257-38
 msgid "Standard percentage format (two decimal places)"
@@ -1366,11 +1356,11 @@ msgstr "標準のパーセント書式 (小数位２桁)"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:257-112
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>5</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>5</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>5</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>5</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:258-38
 msgid "Standard format"
@@ -1378,8 +1368,8 @@ msgstr "標準書式"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:258-80
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>6</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>6</kbd>"
 msgstr ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>6</kbd>"
@@ -1433,8 +1423,7 @@ msgstr "スライド キーボードのショートカット"
 msgid ""
 "Escape current mode, i.e. from edit mode switch to object selection mode, "
 "from object selection mode switch to view mode."
-msgstr ""
-"現在のモードからエスケープする。すなわち、編集モードからオブジェクト選択モー"
+msgstr "現在のモードからエスケープする。すなわち、編集モードからオブジェクト選択モー"
 "ド、若しくはオブジェクト選択モードからビューモードへの切り替え。"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:319-186
@@ -1476,31 +1465,37 @@ msgstr "スライド/図面ページ内のすべてのオブジェクトを選�
 msgid "<span class=\"productname\">%productName</span> Help"
 msgstr "<span class=\"productname\">%productName</span> ヘルプ"
 
-#: html/cool-help.html%2Bdiv.p:395-5 html/cool-help.html%2Bdiv.div.h3:431-5
+#: html/cool-help.html%2Bdiv.p:395-5
+#: html/cool-help.html%2Bdiv.div.h3:431-5
 msgid "Collaborative editing"
 msgstr "共同編集"
 
-#: html/cool-help.html%2Bdiv.p:396-5 html/cool-help.html%2Bdiv.div.h3:442-5
+#: html/cool-help.html%2Bdiv.p:396-5
+#: html/cool-help.html%2Bdiv.div.h3:442-5
 msgid "<span class=\"productname\">%productName</span> user interface"
-msgstr ""
-"<span class=\"productname\">%productName</span> ユーザーインターフェイス"
+msgstr "<span class=\"productname\">%productName</span> ユーザーインターフェイス"
 
-#: html/cool-help.html%2Bdiv.p:397-5 html/cool-help.html%2Bdiv.div.h3:480-5
+#: html/cool-help.html%2Bdiv.p:397-5
+#: html/cool-help.html%2Bdiv.div.h3:480-5
 msgid "Opening, closing, saving, printing and downloading documents"
 msgstr "ドキュメントを開く、閉じる、保存、印刷、ダウンロードする"
 
-#: html/cool-help.html%2Bdiv.p:398-5 html/cool-help.html%2Bdiv.div.h3:490-5
+#: html/cool-help.html%2Bdiv.p:398-5
+#: html/cool-help.html%2Bdiv.div.h3:490-5
 msgid "Editing documents"
 msgstr "ドキュメントの編集"
 
-#: html/cool-help.html%2Bdiv.p:399-5 html/cool-help.html%2Bdiv.div.p:405-9
-#: html/cool-help.html%2Bdiv.div.p:420-9 html/cool-help.html%2Bdiv.div.h3:521-3
+#: html/cool-help.html%2Bdiv.p:399-5
+#: html/cool-help.html%2Bdiv.div.p:405-9
+#: html/cool-help.html%2Bdiv.div.p:420-9
+#: html/cool-help.html%2Bdiv.div.h3:521-3
 #: html/cool-help.html%2Bdiv.div.div.h3:586-5
 #: html/cool-help.html%2Bdiv.div.div.h3:707-5
 msgid "Advanced features"
 msgstr "高度な機能"
 
-#: html/cool-help.html%2Bdiv.div.p:401-9 html/cool-help.html%2Bdiv.div.h2:560-5
+#: html/cool-help.html%2Bdiv.div.p:401-9
+#: html/cool-help.html%2Bdiv.div.h2:560-5
 msgid "<span class=\"productname\">%productName</span> spreadsheets"
 msgstr "<span class=\"productname\">%productName</span> 表計算ドキュメント"
 
@@ -1525,7 +1520,8 @@ msgstr "表計算ドキュメントの書式設定"
 msgid "Spreadsheets"
 msgstr "表計算"
 
-#: html/cool-help.html%2Bdiv.div.p:409-9 html/cool-help.html%2Bdiv.div.h2:629-5
+#: html/cool-help.html%2Bdiv.div.p:409-9
+#: html/cool-help.html%2Bdiv.div.h2:629-5
 msgid "<span class=\"productname\">%productName</span> text documents"
 msgstr "<span class=\"productname\">%productName</span> テキスト文書"
 
@@ -1549,7 +1545,8 @@ msgstr "高度なテキスト文書エディタ機能"
 msgid "Text documents"
 msgstr "テキスト文書"
 
-#: html/cool-help.html%2Bdiv.div.p:416-9 html/cool-help.html%2Bdiv.div.h2:683-5
+#: html/cool-help.html%2Bdiv.div.p:416-9
+#: html/cool-help.html%2Bdiv.div.h2:683-5
 msgid "<span class=\"productname\">%productName</span> presentations"
 msgstr "<span class=\"productname\">%productName</span> プレゼンテーション"
 
@@ -1573,7 +1570,8 @@ msgstr "スライド ペイン"
 msgid "Presentations"
 msgstr "プレゼンテーション"
 
-#: html/cool-help.html%2Bdiv.p:423-5 html/cool-help.html%2Bdiv.div.h2:720-5
+#: html/cool-help.html%2Bdiv.p:423-5
+#: html/cool-help.html%2Bdiv.div.h2:720-5
 msgid "Frequently Asked Questions"
 msgstr "よくある質問"
 
@@ -1595,9 +1593,9 @@ msgid ""
 "the assigned color. Note: you will see your cursor as black, blinking "
 "cursor, although others will see you with a different color."
 msgstr ""
-"各ユーザーが色を割り当てます。 各ユーザのカーソルを割り当てられた色に表示しま"
-"す。 注意: カーソルを黒、点滅カーソルとして表示しますが、他の人は異なる色で表"
-"示されます."
+"各ユーザーが色を割り当てます。 "
+"各ユーザのカーソルを割り当てられた色に表示します。 注意: "
+"カーソルを黒、点滅カーソルとして表示しますが、他の人は異なる色で表示されます."
 
 #: html/cool-help.html%2Bdiv.div.div.ul.li.p:435-11
 msgid ""
@@ -1637,11 +1635,10 @@ msgstr ""
 msgid ""
 "<span class=\"def\">The menu bar:</span> The main menu is placed on the top "
 "and includes many options, commands for printing, editing, viewing and other "
-"advanced commands. You can hide the menu bar clicking on the <span "
-"style=\"height:0.6cm;width:0.6cm; margin: 0px;\" class=\"w2ui-icon fold\"></"
-"span> icon on the far right. Click on the <span style=\"height:0.6cm;"
-"width:0.6cm; margin: 0px;\" class=\"w2ui-icon unfold\"></span> icon to show "
-"the menu."
+"advanced commands. You can hide the menu bar clicking on the <span style="
+"\"height:0.6cm;width:0.6cm; margin: 0px;\" class=\"w2ui-icon fold\"></span> "
+"icon on the far right. Click on the <span style=\"height:0.6cm;width:0.6cm; "
+"margin: 0px;\" class=\"w2ui-icon unfold\"></span> icon to show the menu."
 msgstr ""
 "<span class=\"def\">メニューバー:</span> メインメニューは上に配置され、多くの"
 "オプション、印刷、編集、閲覧などの高度なコマンドを含む。 "
@@ -1744,10 +1741,10 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.p:482-30
 msgid ""
-"To download a document download it from the <span "
-"class=\"productname\">%productName</span> application’s <span "
-"class=\"ui\">File</span> menu. The download formats available depends on the "
-"application. All applications exports documents in PDF format."
+"To download a document download it from the <span class=\"productname\""
+">%productName</span> application’s <span class=\"ui\">File</span> menu. The "
+"download formats available depends on the application. All applications "
+"exports documents in PDF format."
 msgstr ""
 "ドキュメントをダウンロードするには、 <span class=\"productname\""
 ">%productName</span> アプリケーションの<span class=\"ui\">File</span>メニュー"
@@ -1756,9 +1753,8 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.p:483-30
 msgid ""
-"To open document, click on the file to open the <span "
-"class=\"productname\">%productName</span> module associated to the document "
-"format."
+"To open document, click on the file to open the <span class=\"productname\""
+">%productName</span> module associated to the document format."
 msgstr ""
 "ドキュメントを開くには、ファイルをクリックして、"
 "ドキュメント形式に関連付けられた <span class=\"productname\">%productName</"
@@ -1768,8 +1764,8 @@ msgstr ""
 msgid ""
 "Documents in <span class=\"productname\">%productName</span> save "
 "automatically, but if you are concerned that a document is synchronized as "
-"quickly as possible you can also force saving using the <span "
-"class=\"ui\">File</span> menu’s <span class=\"ui\">Save</span> entry."
+"quickly as possible you can also force saving using the <span class=\"ui\""
+">File</span> menu’s <span class=\"ui\">Save</span> entry."
 msgstr ""
 "<span class=\"productname\">%productName</span> 内のドキュメントは自動的に保"
 "存されていますが、ドキュメントができるだけ早く同期されることが心配な場合は、 "
@@ -1805,16 +1801,16 @@ msgstr "コピー&ペースト"
 #: html/cool-help.html%2Bdiv.div.div.p:494-5
 msgid ""
 "Rich content copy/cut and paste is supported, not only within a given "
-"document, but also across documents on the same or different <span "
-"class=\"productname\">%productName</span>. For these internal uses, users "
-"can copy/cut content, including images and mixed content, on PC by using the "
-"keyboard shortcuts directly (<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</"
-"span><kbd>X</kbd>, <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>C</"
-"kbd>, <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd>). For "
-"security reasons it is necessary to use <kbd>Ctrl</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>V</kbd> to paste on PC, but context menus can be used "
-"for cut and copy. On Android or iOS selecting text by double tapping, and "
-"using a long-tap to access copy/cut/paste via the context menu is required."
+"document, but also across documents on the same or different <span class="
+"\"productname\">%productName</span>. For these internal uses, users can copy/"
+"cut content, including images and mixed content, on PC by using the keyboard "
+"shortcuts directly (<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>X</"
+"kbd>, <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd>, "
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd>). For security "
+"reasons it is necessary to use <kbd>Ctrl</kbd><span class=\"kbd--plus\""
+">+</span><kbd>V</kbd> to paste on PC, but context menus can be used for cut "
+"and copy. On Android or iOS selecting text by double tapping, and using a "
+"long-tap to access copy/cut/paste via the context menu is required."
 msgstr ""
 "リッチコンテンツのコピー/切り取り/貼り付けは、ある文書内だけでなく、"
 "同じ<span class=\"productname\">%productName</span>内または異なる文書間でもサ"
@@ -1876,9 +1872,9 @@ msgstr "文書の修復"
 #: html/cool-help.html%2Bdiv.div.div.p:502-5
 msgid ""
 "This is particularly useful – say when a colleague inadvertently selected "
-"all text in the document with <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</"
-"span><kbd>A</kbd> and proceeded to type over it destroying it – while you "
-"were concurrently editing."
+"all text in the document with <kbd>Ctrl</kbd><span class=\"kbd--plus\""
+">+</span><kbd>A</kbd> and proceeded to type over it destroying it – while "
+"you were concurrently editing."
 msgstr ""
 "これは特に便利です。たとえば、同僚が誤って <kbd>Ctrl</kbd><span class=\"kbd--"
 "plus\">+</span><kbd>A</kbd> "
@@ -1983,8 +1979,7 @@ msgstr ""
 msgid ""
 "Select a table in text document, a range in a spreadsheet or a table in a "
 "presentation."
-msgstr ""
-"テキスト文書の表、スプレッドシートまたはプレゼンテーションの表の範囲を選択し"
+msgstr "テキスト文書の表、スプレッドシートまたはプレゼンテーションの表の範囲を選択し"
 "ます."
 
 #: html/cool-help.html%2Bdiv.div.div.ol.li.p:528-9
@@ -2048,9 +2043,9 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.p:541-5
 msgid ""
-"<span class=\"def\">Insert image:</span> Clicking on the <span "
-"class=\"ui\">Insert image</span> icon allows you to choose an image from the "
-"cloud storage's folders and shares."
+"<span class=\"def\">Insert image:</span> Clicking on the <span class=\"ui\""
+">Insert image</span> icon allows you to choose an image from the cloud "
+"storage's folders and shares."
 msgstr ""
 "<span class=\"def\">画像の挿入:</span> <span class=\"ui\">画像の挿入</span> "
 "アイコンをクリックすると、クラウド "
@@ -2095,9 +2090,8 @@ msgstr "コメント"
 
 #: html/cool-help.html%2Bdiv.div.div.p:549-5
 msgid ""
-"Click on the submenu (<span class=\"cool-annotation-menu\" "
-"style=\"height:0.6cm;width:0.6cm;\"></span>) icon to reply, move and delete "
-"comments."
+"Click on the submenu (<span class=\"cool-annotation-menu\" style=\"height:0."
+"6cm;width:0.6cm;\"></span>) icon to reply, move and delete comments."
 msgstr ""
 "コメントの返信、移動、削除を行うには、サブメニュー (<span class=\"cool-"
 "annotation-menu\" style=\"height:0.6cm;width:0.6cm;\"></span>) "
@@ -2125,8 +2119,8 @@ msgstr "スペルチェック"
 
 #: html/cool-help.html%2Bdiv.div.div.p:555-5
 msgid ""
-"To systematically spell-check the whole document use the <span "
-"class=\"ui\">Tools</span> menu’s <span class=\"ui\">Spelling</span> option."
+"To systematically spell-check the whole document use the <span class=\"ui\""
+">Tools</span> menu’s <span class=\"ui\">Spelling</span> option."
 msgstr ""
 "文書全体を体系的にスペルチェックするには、<span class=\"ui\">ツール</"
 "span>メニューの<span class=\"ui\">スペル</span>オプションを使用します。"
@@ -2164,9 +2158,8 @@ msgstr "すべてのスプレッドシート関数と数学的なルールが適
 msgid ""
 "The formula language should be extremely familiar to any spreadsheet user, "
 "and is specified in great detail in the <a href=\"https://www.oasis-open.org/"
-"committees/download.php/16826/openformula-spec-20060221.html\" "
-"target=\"_blank\" rel=\"noopener noreferrer\">OASIS OpenFormula "
-"specification</a>."
+"committees/download.php/16826/openformula-spec-20060221.html\" target="
+"\"_blank\" rel=\"noopener noreferrer\">OASIS OpenFormula specification</a>."
 msgstr ""
 "数式の言語は、どのスプレッドシートのユーザーにも非常に馴染み深く、詳細には<a "
 "href=\"https://www.oasis-open.org/committees/download.php/16826/openformula-"
@@ -2184,12 +2177,13 @@ msgid ""
 "background, cell protection and other options."
 msgstr ""
 "<span class=\"def\">直接フォーマット:</span> メニュー、ツールバー、コンテキス"
-"トメニューから直接フォーマットすることで、スプレッドシートのセル、列、行、"
-"シートをフォーマットできます。 直接フォーマットは、選択した現在のオブジェクト"
-"にのみ適用されます。 セルをフォーマットするには、<kbd>Ctrl</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>1</kbd>を押します。 ダイアログでは、複雑でカ"
-"スタム番号のフォーマット、フォント、複雑な境界、背景、セル保護、その他のオプ"
-"ションが可能になります."
+"トメニューから直接フォーマットすることで、スプレッドシートのセル、列、行、シ"
+"ートをフォーマットできます。 "
+"直接フォーマットは、選択した現在のオブジェクトにのみ適用されます。 "
+"セルをフォーマットするには、<kbd>Ctrl</kbd><span class=\"kbd--plus\""
+">+</span><kbd>1</kbd>を押します。 ダイアログでは、複雑でカスタム番号のフォー"
+"マット、フォント、複雑な境界、背景、セル保護、その他のオプションが可能になり"
+"ます."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:587-30
 msgid ""
@@ -2198,8 +2192,9 @@ msgid ""
 "span> automatically detects cells that are headers, and adjoining columns, "
 "to extend the selection."
 msgstr ""
-"<span class=\"def\">データのソート:</span> 数字またはテキストの昇順または降順"
-"のリストをソートできます。 <span class=\"productname\">%productName</span> "
+"<span class=\"def\">データのソート:</span> "
+"数字またはテキストの昇順または降順のリストをソートできます。 <span class="
+"\"productname\">%productName</span> "
 "は、ヘッダのセルを自動的に検出し、列を結合して選択を延長します。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:588-30
@@ -2293,8 +2288,8 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:611-9
 msgid ""
 "Use the <span class=\"ui\">Input Help</span> and <span class=\"ui\">Error "
-"Alert</span> tabs to enhance the user interactions. Click <span "
-"class=\"ui\">OK</span> to close the dialog."
+"Alert</span> tabs to enhance the user interactions. Click <span class=\"ui\""
+">OK</span> to close the dialog."
 msgstr ""
 "ユーザーインタラクションを向上させるために、<span class=\"ui\">入力ヘルプ</"
 "span>と<span class=\"ui\""
@@ -2303,8 +2298,8 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:614-11
 msgid ""
-"To remove the validity of the cell, open the dialog and set the <span "
-"class=\"ui\">Allow</span> list to “All values”."
+"To remove the validity of the cell, open the dialog and set the <span class="
+"\"ui\">Allow</span> list to “All values”."
 msgstr "セルの妥当性を削除するには、ダイアログを開き、<span class=\"ui\""
 ">許可</span>リストを「すべての値」に設定します。"
 
@@ -2324,11 +2319,11 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:622-5
 msgid ""
-"<span class=\"def\">Conditional formatting:</span> <span "
-"class=\"productname\">%productName</span> adds symbols to each cell of a "
-"range based on cells conditions. Select the cell range and click the <span "
-"class=\"ui\">Conditional Formatting</span> icon on the toolbar. Select the "
-"symbol set to apply on the range."
+"<span class=\"def\">Conditional formatting:</span> <span class=\"productname"
+"\">%productName</span> adds symbols to each cell of a range based on cells "
+"conditions. Select the cell range and click the <span class=\"ui\""
+">Conditional Formatting</span> icon on the toolbar. Select the symbol set to "
+"apply on the range."
 msgstr ""
 "<span class=\"def\">条件付き書式設定：</span> <span class=\"productname\">%pr"
 "oductName</span>は、セルの条件に基づいて範囲内の各セルにシンボルを追加します"
@@ -2408,11 +2403,10 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:649-5
 msgid ""
-"<span class=\"def\">Style formatting:</span> <span "
-"class=\"productname\">%productName</span> supports paragraph styles. You can "
-"apply an existing paragraph style to a paragraph. Choose menu <span "
-"class=\"ui\">Edit</span> → <span class=\"ui\">Edit styles</span> to change "
-"style."
+"<span class=\"def\">Style formatting:</span> <span class=\"productname\""
+">%productName</span> supports paragraph styles. You can apply an existing "
+"paragraph style to a paragraph. Choose menu <span class=\"ui\">Edit</span> → "
+"<span class=\"ui\">Edit styles</span> to change style."
 msgstr ""
 "<span class=\"def\">スタイルフォーマット：</span> <span class=\"productname\""
 ">%productName</span>は段落スタイルをサポートしています。既存の段落スタイルを"
@@ -2438,9 +2432,8 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.div.p:662-5
 msgid ""
 "<span class=\"def\">Formatting cells:</span> Click in the cell or range of "
-"cells and choose menu <span class=\"ui\">Table</span> → <span "
-"class=\"ui\">Properties</span>. Fine tune the table with the properties "
-"dialog."
+"cells and choose menu <span class=\"ui\">Table</span> → <span class=\"ui\""
+">Properties</span>. Fine tune the table with the properties dialog."
 msgstr ""
 "<span class=\"def\">セルのフォーマット：</span> "
 "セルまたはセル範囲をクリックし、メニュー<span class=\"ui\">テーブル</span> → "
@@ -2583,9 +2576,9 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:709-5
 msgid ""
-"<span class=\"def\">Slide layouts:</span> <span "
-"class=\"productname\">%productName</span> Impress let you change the slide "
-"layout. Select the desired slide layout in the drop-down layout list."
+"<span class=\"def\">Slide layouts:</span> <span class=\"productname\""
+">%productName</span> Impress let you change the slide layout. Select the "
+"desired slide layout in the drop-down layout list."
 msgstr ""
 "<span class=\"def\">スライドレイアウト：</span> <span class=\"productname\""
 ">%productName</span> Impressでは、スライドのレイアウトを変更できます。ドロッ"
@@ -2602,11 +2595,10 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:713-30
 msgid ""
-"<span class=\"def\">Slide transitions:</span> <span "
-"class=\"productname\">%productName</span> Impress provides visual effects "
-"when displaying a new slide in the slide show. Slide transitions are "
-"property of the slide, use the side bar to set the slide transition when in "
-"edit mode."
+"<span class=\"def\">Slide transitions:</span> <span class=\"productname\""
+">%productName</span> Impress provides visual effects when displaying a new "
+"slide in the slide show. Slide transitions are property of the slide, use "
+"the side bar to set the slide transition when in edit mode."
 msgstr ""
 "<span class=\"def\">スライドのトランジション：</span> <span class="
 "\"productname\">%productName</span> Impressは、スライドショーで新しいスライド"
@@ -2635,8 +2627,8 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.h4:722-5
 msgid ""
-"What are the documents file formats supported by <span "
-"class=\"productname\">%productName</span>?"
+"What are the documents file formats supported by <span class=\"productname\""
+">%productName</span>?"
 msgstr ""
 "<span class=\"productname\">%productName</span> "
 "でサポートされているドキュメント ファイル形式は何ですか?"
@@ -2692,9 +2684,8 @@ msgstr ""
 msgid ""
 "<span class=\"productname\">%productName</span> saves the document in the "
 "background regularly, you can't just close without saving it. To abandon "
-"your changes, you must either undo them, or use the <span "
-"class=\"ui\">Revision History </span> in the <span class=\"ui\">File</span> "
-"menu."
+"your changes, you must either undo them, or use the <span class=\"ui\""
+">Revision History </span> in the <span class=\"ui\">File</span> menu."
 msgstr ""
 "<span class=\"productname\">%productName</span>は定期的にバックグラウンドで文"
 "書を保存します。保存せずに単に閉じることはできません。変更を破棄するには、そ"
@@ -2712,8 +2703,8 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.p:744-5
 msgid ""
 "Yes. <span class=\"productname\">%productName</span> opens password-"
-"protected documents, but it is necessary to supply the password in the "
-"“Enter password” prompt at load time."
+"protected documents, but it is necessary to supply the password in the “"
+"Enter password” prompt at load time."
 msgstr ""
 "<span class=\"productname\">%productName</span>はパスワードで保護されたドキュ"
 "メントを開くことができます。ただし、読み込み時に「パスワードを入力してくださ"
@@ -2739,8 +2730,8 @@ msgstr "文書内の赤い波線を削除するにはどうすればよいです
 
 #: html/cool-help.html%2Bdiv.div.div.p:752-5
 msgid ""
-"Choose menu <span class=\"ui\">Tools</span> and uncheck <span "
-"class=\"ui\">Automatic Spell Checking</span>."
+"Choose menu <span class=\"ui\">Tools</span> and uncheck <span class=\"ui\""
+">Automatic Spell Checking</span>."
 msgstr ""
 "メニューの [<span class=\"ui\">ツール</span>] を選択し、<span class=\"ui\""
 ">自動スペル チェック</span> のチェックを外します。"
@@ -2785,8 +2776,8 @@ msgstr "青い<span class=\"blue\""
 msgid ""
 "The <span class=\"blue\">¶</span> symbol is a formatting mark. It is used to "
 "help text alignment and editing and is not printed. To toggle it in the "
-"document display, choose menu <span class=\"ui\">View</span> → <span "
-"class=\"ui\">Formatting mark</span>."
+"document display, choose menu <span class=\"ui\">View</span> → <span class="
+"\"ui\">Formatting mark</span>."
 msgstr ""
 "<span class=\"blue\">¶</span> 記号は書式設定マークです。 "
 "これはテキストの配置と編集を支援するために使用され、印刷されません。 "
@@ -2799,9 +2790,9 @@ msgstr "ドキュメントの単語数を取得するにはどうすればよい
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:774-5
 msgid ""
-"Word count is available in <span class=\"ui\">Tools</span> → <span "
-"class=\"ui\">Word count</span>. A dialog shows word counts for selection and "
-"for the whole document."
+"Word count is available in <span class=\"ui\">Tools</span> → <span class=\"ui"
+"\">Word count</span>. A dialog shows word counts for selection and for the "
+"whole document."
 msgstr ""
 "単語数は、<span class=\"ui\">ツール</span> → <span class=\"ui\">単語数</span>"
 "で利用できます。ダイアログボックスが表示され、選択範囲と文書全体の単語数が表"
@@ -2931,13 +2922,12 @@ msgstr ""
 msgid ""
 "Changes can be accepted or rejected. To accept or reject changes, click on "
 "the corresponding icons in the comment box on the right of the document. "
-"Alternatively, choose <span class=\"ui\">Edit</span> → <span "
-"class=\"ui\">Track Changes </span> → <span class=\"ui\">Accept</span> or "
-"<span class=\"ui\">Reject</span>. Furthermore, if you need to filter changes "
-"before accepting or rejecting, choose <span class=\"ui\">Edit</span> → <span "
-"class=\"ui\">Track Changes </span> → <span class=\"ui\">Manage</span>. A "
-"dialog shows a list of all tracked changes. Use the dialog buttons "
-"accordingly."
+"Alternatively, choose <span class=\"ui\">Edit</span> → <span class=\"ui\""
+">Track Changes </span> → <span class=\"ui\">Accept</span> or <span class=\"ui"
+"\">Reject</span>. Furthermore, if you need to filter changes before "
+"accepting or rejecting, choose <span class=\"ui\">Edit</span> → <span class="
+"\"ui\">Track Changes </span> → <span class=\"ui\">Manage</span>. A dialog "
+"shows a list of all tracked changes. Use the dialog buttons accordingly."
 msgstr ""
 "変更は受け入れるか拒否することができます。変更を受け入れるか拒否するには、文"
 "書の右側のコメントボックスで対応するアイコンをクリックしてください。または、"
@@ -3068,8 +3058,8 @@ msgid ""
 "You have the AutoCorrection enabled. AutoCorrection changes the text just "
 "typed into an internal table of corresponding text. In most cases, "
 "AutoCorrection fixes typos while you are typing. If AutoCorrection is not "
-"necessary, disable it in <span class=\"ui\">Tools</span> → <span "
-"class=\"ui\">AutoCorrection</span> → <span class=\"ui\">While typing</span>."
+"necessary, disable it in <span class=\"ui\">Tools</span> → <span class=\"ui\""
+">AutoCorrection</span> → <span class=\"ui\">While typing</span>."
 msgstr ""
 "オートコレクトが有効になっています。 オートコレクトは、対応するテキストの内部"
 "テーブルに入力されたテキストを変更します。 "
@@ -3112,10 +3102,10 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:864-9
 msgid ""
-"Paste from the browser <span class=\"ui\">Edit</span> → <span "
-"class=\"ui\">Paste</span> or press <kbd>Ctrl</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>V</kbd>. The <span class=\"ui\">Text Import</span> "
-"dialog opens to let you describe the precise format of the CSV data."
+"Paste from the browser <span class=\"ui\">Edit</span> → <span class=\"ui\""
+">Paste</span> or press <kbd>Ctrl</kbd><span class=\"kbd--plus\""
+">+</span><kbd>V</kbd>. The <span class=\"ui\">Text Import</span> dialog "
+"opens to let you describe the precise format of the CSV data."
 msgstr ""
 "ブラウザから<span class=\"ui\">編集</span> → <span class=\"ui\">貼り付け</"
 "span> を選択するか、<kbd>Ctrl</kbd><span class=\"kbd--plus\""
@@ -3217,8 +3207,8 @@ msgstr "スライド内の図形を選択します。ハンドルが表示され
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:906-9
 msgid ""
 "Choose <span class=\"ui\">Format</span> → <span class=\"ui\">Line</span> (or "
-"<span class=\"ui\">Area</span>, or <span class=\"ui\">Position and Size</"
-"span>). A dialog opens."
+"<span class=\"ui\">Area</span>, or <span class=\"ui\">Position and "
+"Size</span>). A dialog opens."
 msgstr ""
 "<span class=\"ui\">書式</span> → <span class=\"ui\">線</span>（または<span "
 "class=\"ui\">エリア</span>、または<span class=\"ui\""
