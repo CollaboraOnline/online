@@ -54,6 +54,7 @@
 
 #include <map>
 #include <memory>
+#include <queue>
 #include <string>
 
 std::map<std::string, std::string> ClientRequestDispatcher::StaticFileContentCache;
@@ -370,6 +371,60 @@ getConvertToBrokerImplementation(const std::string& requestType, const std::stri
     return nullptr;
 }
 
+class ConvertToAddressResolver
+{
+    std::queue<std::string> _addressesToResolve;
+    bool _allow;
+
+public:
+
+    ConvertToAddressResolver(std::queue<std::string> addressesToResolve)
+        : _addressesToResolve(addressesToResolve)
+        , _allow(true)
+    {
+    }
+
+    void testHostName(const std::string& hostToCheck)
+    {
+        _allow &= HostUtil::allowedWopiHost(hostToCheck);
+    }
+
+    // synchronous case
+    bool syncProcess()
+    {
+        while (!_addressesToResolve.empty())
+        {
+            const std::string& addressToCheck = _addressesToResolve.front();
+
+            try
+            {
+                std::string resolvedHostName = net::canonicalHostName(addressToCheck);
+                testHostName(resolvedHostName);
+            }
+            catch (const Poco::Exception& exc)
+            {
+                LOG_ERR_S("net::canonicalHostName(\"" << addressToCheck
+                                                      << "\") failed: " << exc.displayText());
+                // We can't find out the hostname, and it already failed the IP check
+                _allow = false;
+            }
+
+            if (_allow)
+            {
+                LOG_INF_S("convert-to: Requesting address is allowed: " << addressToCheck);
+            }
+            else
+            {
+                LOG_WRN_S("convert-to: Requesting address is denied: " << addressToCheck);
+                break;
+            }
+
+            _addressesToResolve.pop();
+        }
+        return _allow;
+    }
+};
+
 bool ClientRequestDispatcher::allowPostFrom(const std::string& address)
 {
     static bool init = false;
@@ -402,16 +457,17 @@ bool ClientRequestDispatcher::allowPostFrom(const std::string& address)
 bool ClientRequestDispatcher::allowConvertTo(const std::string& address,
                                              const Poco::Net::HTTPRequest& request)
 {
-    std::string addressToCheck = address;
-    bool allow = allowPostFrom(addressToCheck) || HostUtil::allowedWopiHost(request.getHost());
+    const bool allow = allowPostFrom(address) || HostUtil::allowedWopiHost(request.getHost());
 
     if (!allow)
     {
-        LOG_WRN_S("convert-to: Requesting address is denied: " << addressToCheck);
+        LOG_WRN_S("convert-to: Requesting address is denied: " << address);
         return false;
     }
 
-    LOG_TRC_S("convert-to: Requesting address is allowed: " << addressToCheck);
+    LOG_TRC_S("convert-to: Requesting address is allowed: " << address);
+
+    std::queue<std::string> addressesToResolve;
 
     // Handle forwarded header and make sure all participating IPs are allowed
     if (request.has("X-Forwarded-For"))
@@ -421,34 +477,23 @@ bool ClientRequestDispatcher::allowConvertTo(const std::string& address,
         for (const auto& token : tokens)
         {
             std::string param = tokens.getParam(token);
-            addressToCheck = Util::trim(param);
-            try
+            std::string addressToCheck = Util::trim(param);
+            if (!allowPostFrom(addressToCheck))
             {
-                if (!allowPostFrom(addressToCheck))
-                {
-                    const std::string hostToCheck = net::canonicalHostName(addressToCheck);
-                    allow &= HostUtil::allowedWopiHost(hostToCheck);
-                }
-            }
-            catch (const Poco::Exception& exc)
-            {
-                LOG_ERR_S("net::canonicalHostName(\"" << addressToCheck
-                                                      << "\") failed: " << exc.displayText());
-                // We can't find out the hostname, and it already failed the IP check
-                allow = false;
-            }
-
-            if (!allow)
-            {
-                LOG_WRN_S("convert-to: Requesting address is denied: " << addressToCheck);
-                return false;
+                // postpone resolving addresses until later
+                addressesToResolve.push(addressToCheck);
+                continue;
             }
 
             LOG_INF_S("convert-to: Requesting address is allowed: " << addressToCheck);
         }
     }
 
-    return allow;
+    if (addressesToResolve.empty())
+        return true;
+
+    std::shared_ptr<ConvertToAddressResolver> resolver = std::make_shared<ConvertToAddressResolver>(addressesToResolve);
+    return resolver->syncProcess();
 }
 
 #endif // !MOBILEAPP
