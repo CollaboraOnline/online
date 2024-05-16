@@ -28,6 +28,6 @@
     "url": "https://github.com/CollaboraOnline/online.git"
   },
   "dependencies": {
-    "cypress-tags": "^1.1.2"
+    "cypress-tags": "1.1.2"
   }
 }
