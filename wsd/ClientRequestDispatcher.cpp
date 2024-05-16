@@ -382,7 +382,7 @@ class ConvertToAddressResolver : public std::enable_shared_from_this<ConvertToAd
 public:
 
     ConvertToAddressResolver(std::queue<std::string> addressesToResolve, ClientRequestDispatcher::AsyncFn asyncCb)
-        : _addressesToResolve(addressesToResolve)
+        : _addressesToResolve(std::move(addressesToResolve))
         , _asyncCb(asyncCb)
         , _allow(true)
     {
@@ -553,7 +553,7 @@ bool ClientRequestDispatcher::allowConvertTo(const std::string& address,
         return true;
     }
 
-    std::shared_ptr<ConvertToAddressResolver> resolver = std::make_shared<ConvertToAddressResolver>(addressesToResolve, asyncCb);
+    auto resolver = std::make_shared<ConvertToAddressResolver>(std::move(addressesToResolve), asyncCb);
     if (asyncCb)
     {
         resolver->startAsyncProcessing();
