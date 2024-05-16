@@ -3,3 +3,4 @@
 *.la
 *.lo
 *.o
+workdir

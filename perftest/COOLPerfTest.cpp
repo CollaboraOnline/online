@@ -41,24 +41,20 @@ protected:
 // coverity[root_function] : don't warn about uncaught exceptions
 int COOLPerfTest::main(const std::vector<std::string>& args)
 {
-
-    // Temporarily silence unused parameter warning
-    for (std::string arg : args) {
-        std::cout << "Args: " << arg << std::endl;
-    }
-
     if (args.size() != 2) {
-        std::cerr << "Usage: ./coolperftest <name> <server>" << std::endl;
-        std::cerr << "       name: name of the perf test library" << std::endl;
-        std::cerr << "       server : Started separately. URI must start with ws:// or wss://. eg: wss://localhost:9980" << std::endl;
+        std::cerr << "Usage: ./coolperftest <object> <server>" << std::endl;
+        std::cerr << "       object: name of the perf test shared object" << std::endl;
+        std::cerr << "       server: Started separately. URI must start with ws:// or wss://. eg: wss://localhost:9980" << std::endl;
         std::cerr << "       See README for more info." << std::endl;
         return EX_USAGE;
     }
 
-    //std::string name = "perftest/sample/SamplePerfTest";
-    std::string name = args[0];
+    std::string object = args[0];
+    if (!object.ends_with("so")) {
+        std::cerr << "Object must end with .so. Object was: " << object << std::endl;
+        return EX_USAGE;
+    }
 
-    //std::string server = "wss://localhost:9980";
     std::string server = args[1];
     if (!server.starts_with("ws")) {
         std::cerr << "Server must start with ws:// or wss://. Server was: " << server << std::endl;
@@ -75,37 +71,45 @@ int COOLPerfTest::main(const std::vector<std::string>& args)
     }
 #endif
 
-    LOG_DBG("Starting PerfTest " << name << " " << server);
-    Log::setLevel("debug");
+    // Set up logging
+    std::cerr << "Starting PerfTest " << object << std::endl << "Logging to perftest/workdir/coolperftest.log" << std::endl;
+    std::map<std::string, std::string> logConfig;
+    logConfig.emplace("path","perftest/workdir/coolperftest.log");
+    Log::initialize("perftest","debug",false,true,logConfig);
+    LOG_DBG("Starting PerfTest. Object: " << object << " Server: " << server);
 
-    LOG_DBG("Dynamicaly linking library " << name);
-    void *dlhandle = dlopen(name.c_str(), RTLD_GLOBAL|RTLD_NOW);
+    LOG_DBG("Dynamicaly linking library " << object);
+    void *dlhandle = dlopen(object.c_str(), RTLD_GLOBAL|RTLD_NOW);
     if (!dlhandle)
     {
         LOG_ERR("Failed to load perftest lib " << dlerror());
         return EX_SOFTWARE;
     }
-    LOG_DBG("Successfully linked library " << name);
+    LOG_DBG("Successfully linked library " << object);
 
-    LOG_DBG("Finding create_perftest symbol in " << name);
+    LOG_DBG("Finding create_perftest symbol in " << object);
     CreatePerfTestFunction *createFunction =
         reinterpret_cast<CreatePerfTestFunction*>(dlsym(dlhandle, "create_perftest"));
     if (!createFunction) {
-        LOG_ERR("No 'create_perftest' symbol in " << name);
+        LOG_ERR("No 'create_perftest' symbol in " << object);
         return EX_SOFTWARE;
     }
-    LOG_DBG("Found create_perftest symbol in " << name);
+    LOG_DBG("Found create_perftest symbol in " << object);
 
+    LOG_DBG("Creating perftest");
     std::shared_ptr<PerfTest> perfTest = createFunction(server);
+    LOG_DBG("Running perftest");
     perfTest->runTest();
-
-    std::cerr << "runTest DONE" << std::endl;
+    LOG_DBG("PerfTest complete.");
 
     if (perfTest->isFinished()) {
+        LOG_DBG("PerfTest finished measurement");
         std::cerr << "Finished" << std::endl;
     } else {
+        LOG_DBG("PerfTest did not finish measurment");
         std::cerr << "Did not finish measurement";
         if (!perfTest->isStarted()) {
+            LOG_DBG("PerfTest never started measurment");
             std::cerr << " (Never started)";
         }
         std::cerr << std::endl;

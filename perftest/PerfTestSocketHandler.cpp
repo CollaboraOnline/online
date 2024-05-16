@@ -58,7 +58,6 @@ void PerfTestSocketHandler::connect(const std::string &filePath)
     Poco::URI::encode(fileUri, ":/?", wrap); // double encode.
     std::string serverUri = _server + "/cool/" + wrap + "/ws";
 
-    std::cerr << serverUri << std::endl;
     LOG_DBG("Connecting to: " + serverUri);
     // Cannot implement shared_from_this on PerfTestSocketHandler because it
     // is already implemented on ProtocolHandlerInterface. So do this cast instead.

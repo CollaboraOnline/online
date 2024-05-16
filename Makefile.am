@@ -734,17 +734,81 @@ check-recursive: eslint
 check: check-for-system-nss prettier eslint check-recursive
 	$(GEN_COVERAGE_COMMAND)
 
+perftest_workdir = $(abs_builddir)/perftest/workdir
+perftest_pid_file = $(perftest_workdir)/coolwsd.pid
+perftest_coolwsd_log = $(perftest_workdir)/coolwsd.log
+perftest_coolwsd_output = $(perftest_workdir)/coolwsd_output.log
 perftest_ldflags = -module -rpath /dummy
 all_perftests_la =
 
-all_perftests_la += perftest/sample/sample.la
-perftest_sample_sample_la_SOURCES=perftest/sample/SamplePerfTest.cpp
-perftest_sample_sample_la_LDFLAGS=$(perftest_ldflags)
+all_perftests_la += perftest/sample/SamplePerfTest.la
+perftest_sample_SamplePerfTest_la_SOURCES=perftest/sample/SamplePerfTest.cpp
+perftest_sample_SamplePerfTest_la_LDFLAGS=$(perftest_ldflags)
+all_perftests_la += perftest/example/ExamplePerfTest.la
+perftest_example_ExamplePerfTest_la_SOURCES=perftest/example/ExamplePerfTest.cpp
+perftest_example_ExamplePerfTest_la_LDFLAGS=$(perftest_ldflags)
 
 noinst_LTLIBRARIES=$(all_perftests_la)
 
-check-perf: $(all_perftests_la)
-	echo $(all_perftests_la)
+# Compile performance tests
+perf: coolperftest $(all_perftests_la)
+
+# Compile and run performance tests
+check-perf: perf @JAILS_PATH@
+	@echo Running make check-perf
+	$(if $(spec),\
+		$(call perftest_run_one,$(spec)),\
+		$(foreach perftest_la,$(all_perftests_la),$(call perftest_run_one,$(perftest_la)))\
+	)
+
+# Runs a single performance test
+# Parameters:
+# 1 - spec (.la or .cpp or no extension)
+define perftest_run_one
+	@printf "\n"
+	@printf "\n"
+	$(call perftest_cleanup_coolwsd)
+	$(call perftest_run_coolwsd)
+	@sleep 2 # wait for coolwsd to be ready to accept connections
+	$(call perftest_run_coolperftest,$(1))
+	$(call perftest_kill_coolwsd)
+	@printf "\n"
+	@printf "\n"
+endef
+
+define perftest_cleanup_coolwsd
+	@echo "Cleaning up coolwsd..."
+	@if test -d $(perftest_workdir); then rm -f $(perftest_workdir)/*; fi
+	@if test -s ./coolwsd; then ./coolwsd --disable-cool-user-checking --cleanup --o:logging.level=trace > $(perftest_workdir)/coolwsd_cleanup_output.log 2>&1; fi
+endef
+
+define perftest_run_coolwsd
+	@echo "Launching coolwsd..."
+	@fc-cache "@LO_PATH@"/share/fonts/truetype
+	@mkdir -p $(perftest_workdir)
+	@./coolwsd-inproc $(COMMON_PARAMS) \
+		--o:logging.file[@enable]=true --o:logging.level=trace \
+		--pidfile=$(perftest_pid_file) \
+		--o:logging.file.property[0]=$(perftest_coolwsd_log) \
+		--unattended \
+		> $(perftest_coolwsd_output) 2>&1 &
+endef
+
+# Parameters:
+# 1 - spec (.la or .cpp or no extension)
+define perftest_run_coolperftest
+	@echo "Running perftest $(1)"
+	$(eval so=$(dir $(1)).libs/$(basename $(notdir $1)).so)
+	@echo "Running perftest shared object $(so)"
+	@./coolperftest $(so) wss://localhost:9980
+endef
+
+define perftest_kill_coolwsd
+	@if pgrep -F $(perftest_pid_file); then \
+		echo "Killing coolwsd by pid: $(perftest_pid_file)";\
+		pkill -e -F $(perftest_pid_file) || pkill -e --signal SIGKILL -F $(perftest_pid_file) || true;\
+	fi
+endef
 
 coverage-report:
 	$(GEN_COVERAGE_COMMAND)

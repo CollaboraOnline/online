@@ -184,6 +184,9 @@ void CyclePerfTest::startMeasurement()
         std::string pid_str = "--pid="+std::to_string(getCoolwsdPid());
         std::string output_str = "--output="+_fileName+".data";
         LOG_DBG("Starting perf"<<"perf"<<"record"<<"-s"<<"-e"<<"cycles"<<"--freq=1000"<<"--call-graph"<<"dwarf"<<pid_str.c_str()<<output_str.c_str());
+        // If perf does not work because "perf_event_paranoid setting is 3"
+        // Run this command (on Debian or Ubuntu):
+        // sudo sysctl kernel.perf_event_paranoid=2
         execlp("perf","perf","record","-s","-e","cycles","--freq=1000","--call-graph","dwarf",pid_str.c_str(),output_str.c_str(),(char *)NULL);
     } else {
         child_pid = pid;
@@ -224,7 +227,7 @@ void CyclePerfTest::stopMeasurement()
 pid_t CyclePerfTest::getCoolwsdPid()
 {
     std::ifstream file;
-    file.open("coolwsd.pid");
+    file.open("perftest/workdir/coolwsd.pid");
     pid_t pid;
     file >> pid;
     return pid;
