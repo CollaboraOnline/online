@@ -188,6 +188,7 @@ m4_ifelse(MOBILEAPP,[true],
           <label class="visuallyhidden" for="document-name-input" aria-hidden="false">Document name</label>
           <input id="document-name-input" type="text" spellcheck="false" disabled="true" style="display: none"/>
           <div id="document-name-input-loading-bar"></div>
+          <progress id="document-name-input-progress-bar" value="0" max="99"></progress>
         </div>
       </div>
 

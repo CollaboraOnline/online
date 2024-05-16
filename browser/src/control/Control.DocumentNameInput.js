@@ -153,9 +153,26 @@ L.Control.DocumentNameInput = L.Control.extend({
 		}
 	},
 
+	showProgressBar : function() {
+		this.disableDocumentNameInput();
+		var progressBar = document.getElementById('document-name-input-progress-bar');
+		progressBar.style.display = 'block';
+	},
+
+	hideProgressBar : function() {
+		this.enableDocumentNameInput();
+		var progressBar = document.getElementById('document-name-input-progress-bar');
+		progressBar.style.display = 'none';
+	},
+
+	setProgressBarValue: function(value) {
+		var progressBar = document.getElementById('document-name-input-progress-bar');
+		progressBar.value = value;
+	},
+
 	showLoadingAnimation : function() {
 		this.disableDocumentNameInput();
-		$('#document-name-input-loading-bar').css('display', 'block');	
+		$('#document-name-input-loading-bar').css('display', 'block');
 	},
 
 	hideLoadingAnimation : function() {

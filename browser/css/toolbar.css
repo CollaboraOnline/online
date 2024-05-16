@@ -27,6 +27,30 @@
 	to { left: 100%; }
 }
 
+#document-name-input-progress-bar {
+	width: 100%;
+	height: 2px;
+	border: none;
+	background-color: var(--color-background-dark);
+	overflow: hidden;
+	position: relative;
+	display: none;
+	margin-block-end: -7px;
+	appearance: none;
+}
+
+#document-name-input-progress-bar::-webkit-progress-bar {
+	background-color: transparent;
+}
+
+#document-name-input-progress-bar::-webkit-progress-value {
+	background-color: var(--color-main-text);
+}
+
+#document-name-input-progress-bar::-moz-progress-bar {
+	background-color: var(--color-main-text);
+}
+
 /* general toolbar rules */
 
 .ui-toolbar {
