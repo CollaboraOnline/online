@@ -95,11 +95,21 @@ class AutoFillOptions extends L.Control.AutoCompletePopup {
 			this.map.fire('closeautofillpopup');
 
 			if (index == 0) {
-				// Copy cells
-				this.map.sendUnoCommand('.uno:FillSeries?FillStep:string=0');
+				/*
+					- Copy cells
+					undo needed here, "Copy cells" should operate on the original content,
+					not the new content of the cells.
+				*/
+				this.map.sendUnoCommand('.uno:Undo');
+				this.map.sendUnoCommand('.uno:AutoFill?Copy:bool=true');
 			} else if (index == 1) {
-				// Fill series
-				this.map.sendUnoCommand('.uno:FillSeries?FillStep:string=1');
+				/*
+					- Fill series
+					undo needed here, "Fill series" should operate on the original content,
+					not the new content of the cells.
+				*/
+				this.map.sendUnoCommand('.uno:Undo');
+				this.map.sendUnoCommand('.uno:AutoFill?Copy:bool=false');
 			}
 
 		} else if (eventType === 'keydown') {
