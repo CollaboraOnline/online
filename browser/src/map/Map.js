@@ -1430,13 +1430,13 @@ L.Map = L.Evented.extend({
 			switch (e.statusType)
 			{
 			case 'start':
-				this.uiManager.documentNameInput.showLoadingAnimation();
+				this.uiManager.documentNameInput.showProgressBar();
 				break;
 			case 'setvalue':
-				// this.uiManager.documentNameInput.setValue(e.value);
+				this.uiManager.documentNameInput.setProgressBarValue(e.value);
 				break;
 			case 'finish':
-				this.uiManager.documentNameInput.hideLoadingAnimation();
+				this.uiManager.documentNameInput.hideProgressBar();
 				break;
 			}
 		}
