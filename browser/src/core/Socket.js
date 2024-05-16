@@ -988,7 +988,13 @@ app.definitions.Socket = L.Class.extend({
 				this._map.fire('error', {msg: errorMessages.diskfull});
 			}
 			else if (command.errorKind === 'unauthorized') {
-				this._map.fire('error', {msg: errorMessages.unauthorized});
+				var postMessageObj = {
+					errorType: 'websocketunauthorized',
+					success: false,
+					errorMsg: errorMessages.unauthorized,
+					result: '',
+				};
+				this._map.fire('postMessage', { msgId: 'Action_Load_Resp', args: postMessageObj });
 			}
 
 			if (this._map._docLayer) {
