@@ -122,8 +122,8 @@ menuDefinitions.set('MenuPrintRanges', [
 ] as Array<MenuDefinition>);
 
 menuDefinitions.set('Print', [
-	{ text: _('Active sheet'), id: 'print-active-sheet', type: 'action' },
-	{ text: _('All Sheets'), id: 'print-all-sheets', type: 'action' },
+	{ text: _('Active sheet'), action: 'print-active-sheet' },
+	{ text: _('All Sheets'), action: 'print-all-sheets' },
 ] as Array<MenuDefinition>);
 
 menuDefinitions.set('MenuRowHeight', [
