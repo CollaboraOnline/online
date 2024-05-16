@@ -103,10 +103,6 @@ private:
     /// Process the discovery.xml file and return as string.
     static std::string getDiscoveryXML();
 
-    /// Create the /hosting/capabilities JSON and return as string.
-    std::string getCapabilitiesJson(const Poco::Net::HTTPRequest& request,
-                                    const std::shared_ptr<StreamSocket>& socket);
-
 private:
     // The socket that owns us (we can't own it).
     std::weak_ptr<StreamSocket> _socket;

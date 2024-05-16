@@ -911,24 +911,6 @@ void ClientRequestDispatcher::handleWopiDiscoveryRequest(
     LOG_INF("Sent discovery.xml successfully.");
 }
 
-void ClientRequestDispatcher::handleCapabilitiesRequest(const Poco::Net::HTTPRequest& request,
-                                                        const std::shared_ptr<StreamSocket>& socket)
-{
-    assert(socket && "Must have a valid socket");
-
-    LOG_DBG("Wopi capabilities request: " << request.getURI());
-
-    const std::string capabilities = getCapabilitiesJson(request, socket);
-
-    http::Response httpResponse(http::StatusCode::OK);
-    FileServerRequestHandler::hstsHeaders(httpResponse);
-    httpResponse.set("Last-Modified", Util::getHttpTimeNow());
-    httpResponse.setBody(capabilities, "application/json");
-    httpResponse.set("X-Content-Type-Options", "nosniff");
-    socket->sendAndShutdown(httpResponse);
-    LOG_INF("Sent capabilities.json successfully.");
-}
-
 void ClientRequestDispatcher::handleClipboardRequest(const Poco::Net::HTTPRequest& request,
                                                      Poco::MemoryInputStream& message,
                                                      SocketDisposition& disposition,
@@ -1878,26 +1860,17 @@ std::string ClientRequestDispatcher::getDiscoveryXML()
 #endif
 }
 
-/// Create the /hosting/capabilities JSON and return as string.
-std::string
-ClientRequestDispatcher::getCapabilitiesJson(const Poco::Net::HTTPRequest& request,
-                                             const std::shared_ptr<StreamSocket>& socket)
-{
-    assert(socket && "Must have a valid socket");
+#if !MOBILEAPP
 
+/// Create the /hosting/capabilities JSON and return as string.
+static std::string getCapabilitiesJson(bool convertToAvailable)
+{
     // Can the convert-to be used?
     Poco::JSON::Object::Ptr convert_to = new Poco::JSON::Object;
-#if !MOBILEAPP
-    Poco::Dynamic::Var available = allowConvertTo(socket->clientAddress(), request);
+    Poco::Dynamic::Var available = convertToAvailable;
     convert_to->set("available", available);
     if (available)
         convert_to->set("endpoint", "/cool/convert-to");
-#else
-    // convert-to is not supported on mobile apps as it requires wopi.
-    (void)request;
-    Poco::Dynamic::Var available = false;
-    convert_to->set("available", available);
-#endif // MOBILEAPP
 
     Poco::JSON::Object::Ptr capabilities = new Poco::JSON::Object;
     capabilities->set("convert-to", convert_to);
@@ -1934,15 +1907,40 @@ ClientRequestDispatcher::getCapabilitiesJson(const Poco::Net::HTTPRequest& reque
     // Set if this instance supports Zotero
     capabilities->set("hasZoteroSupport", config::getBool("zotero.enable", true));
 
-#if !MOBILEAPP
     // Set if this instance supports WASM.
     capabilities->set("hasWASMSupport",
                       COOLWSD::WASMState != COOLWSD::WASMActivationState::Disabled);
-#endif // !MOBILEAPP
 
     std::ostringstream ostrJSON;
     capabilities->stringify(ostrJSON);
     return ostrJSON.str();
 }
+
+/// Send the /hosting/capabilities JSON to socket
+static void sendCapabilities(bool convertToAvailable,
+                             const std::shared_ptr<StreamSocket>& socket)
+{
+    std::string capabilities = getCapabilitiesJson(convertToAvailable);
+    http::Response httpResponse(http::StatusCode::OK);
+    FileServerRequestHandler::hstsHeaders(httpResponse);
+    httpResponse.set("Last-Modified", Util::getHttpTimeNow());
+    httpResponse.setBody(capabilities, "application/json");
+    httpResponse.set("X-Content-Type-Options", "nosniff");
+    socket->sendAndShutdown(httpResponse);
+    LOG_INF("Sent capabilities.json successfully.");
+}
+
+void ClientRequestDispatcher::handleCapabilitiesRequest(const Poco::Net::HTTPRequest& request,
+                                                        const std::shared_ptr<StreamSocket>& socket)
+{
+    assert(socket && "Must have a valid socket");
+
+    LOG_DBG("Wopi capabilities request: " << request.getURI());
+
+    const bool convertToAvailable = allowConvertTo(socket->clientAddress(), request);
+    sendCapabilities(convertToAvailable, socket);
+}
+
+#endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
