@@ -1987,7 +1987,7 @@ bool Document::forwardToChild(const std::string& prefix, const std::vector<char>
                 if(session->getViewId() == _editorId) {
                     _editorId = -1;
                 }
-                LOG_DBG("Removing ChildSession [" << sessionId << "].");
+                LOG_INF("Removing ChildSession [" << sessionId << "].");
 
                 // Tell them we're going quietly.
                 session->sendTextFrame("disconnected:");
