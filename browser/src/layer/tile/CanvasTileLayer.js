@@ -2080,7 +2080,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	_onGraphicInnerTextAreaMsg: function (textMsg) {
 		var msgData = JSON.parse(textMsg.substr('graphicinnertextarea: "innerTextRect":'.length));
-		this._onUpdateGraphicInnerTextArea(msgData, true /*force add layer*/);
+		this._onUpdateGraphicInnerTextArea(msgData);
 	},
 
 	_onGraphicSelectionMsg: function (textMsg) {
@@ -3670,8 +3670,6 @@ L.CanvasTileLayer = L.Layer.extend({
 			&& !this._map.isSearching()  	// not when searching within the doc
 			&& !this._isZooming             // not when zooming
 		) {
-			if (this._innerTextRectMarker)
-				this._map.addLayer(this._innerTextRectMarker);
 			this._updateCursorPos();
 
 			var scrollSection = app.sectionContainer.getSectionWithName(L.CSections.Scroll.name);
@@ -3703,8 +3701,6 @@ L.CanvasTileLayer = L.Layer.extend({
 			if (this._map.editorHasFocus() && !this._map.uiManager.isAnyDialogOpen() && !this._map.isSearching()
 				&& !this._isAnyInputFocused())
 				this._map.focus(false);
-			if (this._innerTextRectMarker)
-				this._map.removeLayer(this._innerTextRectMarker);
 		}
 
 		// when first time we updated the cursor - document is loaded
@@ -4055,7 +4051,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		);
 	},
 
-	_onUpdateGraphicInnerTextArea: function (rect, force) {
+	_onUpdateGraphicInnerTextArea: function (rect) {
 		var topLeftTwips = new L.Point(rect[0], rect[1]);
 		var offset = new L.Point(rect[2], rect[3]);
 		var bottomRightTwips = topLeftTwips.add(offset);
@@ -4066,22 +4062,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._innerTextRect = new L.LatLngBounds(
 			this._twipsToLatLng(this._innerTextRectTwips.getTopLeft(), this._map.getZoom()),
 			this._twipsToLatLng(this._innerTextRectTwips.getBottomRight(), this._map.getZoom()));
-
-		if (this._innerTextRectMarker)
-			this._map.removeLayer(this._innerTextRectMarker);
-
-		this._innerTextRectMarker = L.svgGroup(this._innerTextRect, {
-			draggable: true,
-			dragConstraint: undefined,
-			transform: false,
-			stroke: false,
-			fillOpacity: 0,
-			fill: true,
-			isText: true
-		});
-
-		if (force)
-			this._map.addLayer(this._innerTextRectMarker);
 	},
 
 	// Update group layer selection handler.
