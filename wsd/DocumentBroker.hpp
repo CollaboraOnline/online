@@ -1642,6 +1642,8 @@ private:
     /// True iff the config per_document.background_autosave is true.
     const bool _backgroundAutoSave : 1;
 
+    const bool _backgroundManualSave : 1;
+
 #if !MOBILEAPP
     Admin& _admin;
 #endif
