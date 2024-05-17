@@ -897,6 +897,16 @@ L.Clipboard = L.Class.extend({
 		clipboard.write([text]).then(function() {
 		}, function(error) {
 			window.app.console.log('navigator.clipboard.write() failed: ' + error.message);
+
+			// Warn that the copy failed.
+			that._warnCopyPaste();
+			// Once broken, always broken.
+			L.Browser.hasNavigatorClipboardWrite = false;
+			if (window.isLocalStorageAllowed) {
+				window.localStorage.setItem('hasNavigatorClipboardWrite', 'false');
+			}
+			// Prefetch selection, so next time copy will work with the keyboard.
+			app.socket.sendMessage('gettextselection mimetype=text/html,text/plain;charset=utf-8');
 		});
 
 		return true;
