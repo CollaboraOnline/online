@@ -89,6 +89,9 @@ L.Control.Notebookbar = L.Control.extend({
 		$(docLogo).data('id', 'document-logo');
 		$(docLogo).data('type', 'action');
 		$('.main-nav').prepend(docLogoHeader);
+		var isDarkMode = this.map.uiManager.getDarkModeState();
+		if (isDarkMode)
+			$('#invertbackground').hide();
 
 		var that = this;
 		var retryNotebookbarInit = function() {
@@ -457,9 +460,11 @@ L.Control.Notebookbar = L.Control.extend({
 	onDarkModeToggleChange: function() {
 		if (this.map.uiManager.getDarkModeState()) {
 			$('#toggledarktheme').addClass('selected');
+			$('#invertbackground').show();
 		}
 		else {
 			$('#toggledarktheme').removeClass('selected');
+			$('#invertbackground').hide();
 		}
 	},
 

@@ -453,6 +453,13 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'accessibility': { focusBack: true, combination: 'TT', de: null }
 			},
 			{
+				'id':'invertbackground',
+				'class': 'unoinvertbackground',
+				'type': 'bigcustomtoolitem',
+				'text': _('Invert Background'),
+				'accessibility': { focusBack: true, combination: 'TT', de: null }
+			},
+			{
 				'id': 'view-side-bar',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:Sidebar'),
