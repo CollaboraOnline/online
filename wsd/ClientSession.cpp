@@ -170,7 +170,7 @@ bool ClientSession::disconnectFromKit()
 {
     assert(_state != SessionState::WAIT_DISCONNECT);
     auto docBroker = getDocumentBroker();
-    if (_state == SessionState::LIVE && docBroker)
+    if (docBroker && (_state == SessionState::LIVE || _state == SessionState::LOADING))
     {
         setState(SessionState::WAIT_DISCONNECT);
 
