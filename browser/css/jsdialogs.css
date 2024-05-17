@@ -1908,7 +1908,21 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	background-color: var(--color-background-lighter);
 	border: 1px solid var(--color-border-darker);
 }
-
+#toolbar-down .jsdialog.menubutton:not([disabled]):hover,
+#toolbar-down .ui-listbox:not([disabled]):hover,
+#toolbar-down .jsdialog.ui-edit:not([disabled]):hover,
+#toolbar-down .jsdialog.ui-textarea:not([disabled]):hover {
+	color: var(--color-text-darker);
+	background-color: transparent !important;
+	border-color: transparent;
+}
+#toolbar-down .unobutton .unolabel {
+	cursor: pointer;
+}
+#toolbar-down .unotoolbutton:hover {
+	background-color: transparent !important;
+	border-color: transparent;
+}
 /* Formula Wizard */
 #FormulaDialog #ParameterPage > .ui-grid-cell {
 	display: flex;
