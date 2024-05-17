@@ -169,18 +169,6 @@ public:
     }
 };
 
-#if 1
-
-UnitBase** unit_create_wsd_multi(void)
-{
-    return new UnitBase* [2]
-    {
-        new SecondJoinQuitNormal(), nullptr
-    };
-}
-
-#else
-
 /* In this case, we are currently failing.
 
    We have one user connected, the 2nd user join, and immediately drop
@@ -211,7 +199,5 @@ UnitBase** unit_create_wsd_multi(void)
         new SecondJoinQuitNormal(), new SecondJoinQuitEarly(), nullptr
     };
 }
-
-#endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
