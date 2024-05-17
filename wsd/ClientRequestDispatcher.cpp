@@ -55,8 +55,8 @@
 
 #include <map>
 #include <memory>
-#include <queue>
 #include <string>
+#include <vector>
 
 std::map<std::string, std::string> ClientRequestDispatcher::StaticFileContentCache;
 std::unordered_map<std::string, std::shared_ptr<RequestVettingStation>>
@@ -375,13 +375,13 @@ getConvertToBrokerImplementation(const std::string& requestType, const std::stri
 class ConvertToAddressResolver : public std::enable_shared_from_this<ConvertToAddressResolver>
 {
     std::shared_ptr<ConvertToAddressResolver> _selfLifecycle;
-    std::queue<std::string> _addressesToResolve;
+    std::vector<std::string> _addressesToResolve;
     ClientRequestDispatcher::AsyncFn _asyncCb;
     bool _allow;
 
 public:
 
-    ConvertToAddressResolver(std::queue<std::string> addressesToResolve, ClientRequestDispatcher::AsyncFn asyncCb)
+    ConvertToAddressResolver(std::vector<std::string> addressesToResolve, ClientRequestDispatcher::AsyncFn asyncCb)
         : _addressesToResolve(std::move(addressesToResolve))
         , _asyncCb(asyncCb)
         , _allow(true)
@@ -424,7 +424,7 @@ public:
                 break;
             }
 
-            _addressesToResolve.pop();
+            _addressesToResolve.pop_back();
         }
         return _allow;
     }
@@ -437,6 +437,15 @@ public:
         dispatchNextLookup();
     }
 
+    std::string toState() const
+    {
+        std::string state = "ConvertToAddressResolver: ";
+        for (const auto& address : _addressesToResolve)
+            state += address + ", ";
+        state += "\n";
+        return state;
+    }
+
     void dispatchNextLookup()
     {
         net::AsyncDNS::DNSThreadFn pushHostnameResolvedToPoll = [this](const std::string& hostname,
@@ -446,8 +455,12 @@ public:
             });
         };
 
+        net::AsyncDNS::DNSThreadDumpStateFn dumpState = [this]() -> std::string {
+            return toState();
+        };
+
         const std::string& addressToCheck = _addressesToResolve.front();
-        net::AsyncDNS::canonicalHostName(addressToCheck, pushHostnameResolvedToPoll);
+        net::AsyncDNS::canonicalHostName(addressToCheck, pushHostnameResolvedToPoll, dumpState);
     }
 
     void hostnameResolved(const std::string& hostToCheck, const std::string& exception)
@@ -466,7 +479,7 @@ public:
             LOG_INF_S("convert-to: Requesting address is allowed: " << addressToCheck);
         else
             LOG_WRN_S("convert-to: Requesting address is denied: " << addressToCheck);
-        _addressesToResolve.pop();
+        _addressesToResolve.pop_back();
 
         // If hostToCheck is not allowed, or there are no addresses
         // left to check, then do callback and end
@@ -524,7 +537,7 @@ bool ClientRequestDispatcher::allowConvertTo(const std::string& address,
 
     LOG_TRC_S("convert-to: Requesting address is allowed: " << address);
 
-    std::queue<std::string> addressesToResolve;
+    std::vector<std::string> addressesToResolve;
 
     // Handle forwarded header and make sure all participating IPs are allowed
     if (request.has("X-Forwarded-For"))
@@ -538,7 +551,7 @@ bool ClientRequestDispatcher::allowConvertTo(const std::string& address,
             if (!allowPostFrom(addressToCheck))
             {
                 // postpone resolving addresses until later
-                addressesToResolve.push(addressToCheck);
+                addressesToResolve.push_back(addressToCheck);
                 continue;
             }
 
