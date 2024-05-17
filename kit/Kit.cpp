@@ -2179,13 +2179,12 @@ void Document::drainCallbacks()
                 if (!broadcast)
                     break;
             }
-
-            if (!isFound)
-                LOG_ERR("Document::ViewCallback. Session [" << viewId <<
-                        "] is no longer active to process [" << lokCallbackTypeToString(type) <<
-                        "] [" << COOLProtocol::getAbbreviatedMessage(payload) <<
-                        "] message to Master Session.");
         }
+        if (!isFound)
+            LOG_ERR("Document::ViewCallback. Session [" << viewId <<
+                    "] is no longer active to process [" << lokCallbackTypeToString(type) <<
+                    "] [" << COOLProtocol::getAbbreviatedMessage(payload) <<
+                    "] message to Master Session.");
     }
 
     if (_websocketHandler)
