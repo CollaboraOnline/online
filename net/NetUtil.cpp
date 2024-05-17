@@ -169,6 +169,26 @@ void AsyncDNS::joinThread()
     _thread.reset();
 }
 
+void AsyncDNS::dumpQueueState(std::ostream& os) const
+{
+    // NOT thread-safe
+    auto activeLookup = _activeLookup;
+    auto lookups = _lookups;
+    os << "  active lookup: " << (activeLookup.cb ? "true" : "false") << '\n';
+    if (activeLookup.cb)
+    {
+        os << "    lookup: " << activeLookup.query << '\n';
+        os << "    callback: " << activeLookup.dumpState() << '\n';
+    }
+    os << "  queued lookups: " << lookups.size() << '\n';
+    while (!lookups.empty())
+    {
+        os << "    lookup: " << lookups.front().query << '\n';
+        os << "    callback: " << lookups.front().dumpState() << '\n';
+        lookups.pop();
+    }
+}
+
 AsyncDNS::AsyncDNS()
     : _resolver(std::make_unique<DNSResolver>())
 {
@@ -191,7 +211,7 @@ void AsyncDNS::resolveDNS()
         if (_exit)
             break;
 
-        Lookup lookup = _lookups.front();
+        _activeLookup = _lookups.front();
         _lookups.pop();
 
         // Unlock to allow entries to queue up in _lookups while
@@ -202,23 +222,26 @@ void AsyncDNS::resolveDNS()
 
         try
         {
-            hostToCheck = _resolver->resolveDNS(lookup.query).name();
+            hostToCheck = _resolver->resolveDNS(_activeLookup.query).name();
         }
         catch (const Poco::Exception& exc)
         {
-            exception = "net::canonicalHostName(\"" + lookup.query + "\") failed: " + exc.displayText();
+            exception = "net::canonicalHostName(\"" + _activeLookup.query + "\") failed: " + exc.displayText();
         }
 
-        lookup.cb(hostToCheck, exception);
+        _activeLookup.cb(hostToCheck, exception);
+
+        _activeLookup = {};
 
         _lock.lock();
     }
 }
 
-void AsyncDNS::addLookup(const std::string& lookup, const DNSThreadFn& cb)
+void AsyncDNS::addLookup(const std::string& lookup, const DNSThreadFn& cb,
+                         const DNSThreadDumpStateFn& dumpState)
 {
     std::unique_lock<std::mutex> guard(_lock);
-    _lookups.emplace(lookup, cb);
+    _lookups.emplace(lookup, cb, dumpState);
     guard.unlock();
     _condition.notify_one();
 }
@@ -232,15 +255,30 @@ void AsyncDNS::startAsyncDNS()
 }
 
 //static
+void AsyncDNS::dumpState(std::ostream& os)
+{
+    if (AsyncDNSThread)
+    {
+        os << "AsyncDNS:\n";
+        AsyncDNSThread->dumpQueueState(os);
+    }
+    else
+    {
+        os << "AsyncDNS : doesn't exist.\n";
+    }
+}
+
+//static
 void AsyncDNS::stopAsyncDNS()
 {
     AsyncDNSThread.reset();
 }
 
 //static
-void AsyncDNS::canonicalHostName(const std::string& addressToCheck, const DNSThreadFn& cb)
+void AsyncDNS::canonicalHostName(const std::string& addressToCheck, const DNSThreadFn& cb,
+                                 const DNSThreadDumpStateFn& dumpState)
 {
-    AsyncDNSThread->addLookup(addressToCheck, cb);
+    AsyncDNSThread->addLookup(addressToCheck, cb, dumpState);
 }
 
 #endif //!MOBILEAPP

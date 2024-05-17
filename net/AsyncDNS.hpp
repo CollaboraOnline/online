@@ -34,9 +34,13 @@ public:
     static void startAsyncDNS();
     static void stopAsyncDNS();
 
-    typedef std::function<void(const std::string& hostName, const std::string& exception)> DNSThreadFn;
+    static void dumpState(std::ostream& os);
 
-    static void canonicalHostName(const std::string& addressToCheck, const DNSThreadFn& cb);
+    typedef std::function<void(const std::string& hostName, const std::string& exception)> DNSThreadFn;
+    typedef std::function<std::string()> DNSThreadDumpStateFn;
+
+    static void canonicalHostName(const std::string& addressToCheck, const DNSThreadFn& cb,
+                                  const DNSThreadDumpStateFn& dumpState);
 
 private:
     std::atomic<bool> _exit;
@@ -48,15 +52,20 @@ private:
     {
         std::string query;
         AsyncDNS::DNSThreadFn cb;
+        AsyncDNS::DNSThreadDumpStateFn dumpState;
         // for now just canonicalHostName lookups
     };
     std::queue<Lookup> _lookups;
+    Lookup _activeLookup;
 
     void resolveDNS();
-    void addLookup(const std::string& lookup, const DNSThreadFn& cb);
+    void addLookup(const std::string& lookup, const DNSThreadFn& cb,
+                   const DNSThreadDumpStateFn& dumpState);
 
     void startThread();
     void joinThread();
+
+    void dumpQueueState(std::ostream& os) const;
 };
 
 }
