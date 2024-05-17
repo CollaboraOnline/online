@@ -91,7 +91,7 @@
 }
 
 #toolbar-down .ui-badge[disabled] {
-	background-color: var(--color-background-darker);
+	border-color: transparent;
 }
 
 #toolbar-down {
