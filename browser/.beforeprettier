@@ -131,9 +131,9 @@
 /src/layer/Popup.js
 /src/layer/SplitPanesContext.ts
 /src/canvas/sections/AutoFillMarkerSection.ts
+/src/canvas/sections/HTMLObjectSection.ts
 /src/canvas/sections/CellCursorSection.ts
 /src/canvas/sections/CellSelectionHandleSection.ts
-/src/canvas/sections/HTMLObjectSection.ts
 /src/canvas/sections/CalcValidityDropDownSection.ts
 /src/canvas/sections/TextSelectionHandleSection.ts
 /src/layer/tile/CalcTileLayer.js

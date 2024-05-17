@@ -229,9 +229,9 @@ COOL_JS_LST =\
 	src/canvas/sections/PixelGridSection.ts \
 	src/canvas/sections/TilesSection.ts \
 	src/canvas/sections/AutoFillMarkerSection.ts \
+	src/canvas/sections/HTMLObjectSection.ts \
 	src/canvas/sections/CellCursorSection.ts \
 	src/canvas/sections/CellSelectionHandleSection.ts \
-	src/canvas/sections/HTMLObjectSection.ts \
 	src/canvas/sections/CalcValidityDropDownSection.ts \
 	src/canvas/sections/TextSelectionHandleSection.ts \
 	src/layer/vector/CEventsHandler.ts \

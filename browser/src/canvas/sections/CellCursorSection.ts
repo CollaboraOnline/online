@@ -15,13 +15,14 @@ class CellCursorSection extends app.definitions.canvasSectionObject {
 	drawingOrder: number = L.CSections.AutoFillMarker.drawingOrder;
 	zIndex: number = L.CSections.AutoFillMarker.zIndex;
 
-	constructor (viewId: number) {
+	constructor (color: string, weight: number, viewId: number) {
         super();
 
 		this.documentObject = true;
 
 		this.sectionProperties.viewId = viewId;
-		this.sectionProperties.cursorWeight = 2;
+		this.sectionProperties.weight = weight;
+		this.sectionProperties.color = color;
 	}
 
 	public getViewId(): number {
@@ -33,15 +34,22 @@ class CellCursorSection extends app.definitions.canvasSectionObject {
 	}
 
 	public onDraw() {
-		this.context.strokeStyle = 'black';
-		this.context.lineJoin = 'miter';
-		this.context.lineCap = 'butt';
-		this.context.lineWidth = 1;
+		if (app.calc.cellCursorVisible) {
+			this.context.lineJoin = 'miter';
+			this.context.lineCap = 'butt';
+			this.context.lineWidth = 1;
 
-		// top white line
-		this.context.beginPath();
-		this.context.moveTo(-0.5, -0.5);
-		this.context.strokeRect(0, 0, app.calc.cellCursorRectangle.pWidth, app.calc.cellCursorRectangle.pHeight);
+			this.context.strokeStyle = this.sectionProperties.color;
+			for (let i: number = 0; i < this.sectionProperties.weight; i++)
+				this.context.strokeRect(-0.5 - i, -0.5 - i, app.calc.cellCursorRectangle.pWidth + i * 2, app.calc.cellCursorRectangle.pHeight + i * 2);
+
+			if (app.map.uiManager.getDarkModeState()) {
+				this.context.strokeStyle = 'white';
+				const diff = 1;
+				this.context.strokeRect(-0.5 + diff, -0.5 + diff, app.calc.cellCursorRectangle.pWidth - 2 * diff, app.calc.cellCursorRectangle.pHeight - 2 * diff);
+				this.context.strokeRect(-0.5 + diff, -0.5 + diff, app.calc.cellCursorRectangle.pWidth - 2 * diff, app.calc.cellCursorRectangle.pHeight - 2 * diff);
+			}
+		}
 	}
 }
 

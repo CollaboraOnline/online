@@ -2254,6 +2254,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			app.calc.cellAddress = new app.definitions.simplePoint(parseInt(strTwips[4]), parseInt(strTwips[5]));
 			let tempRectangle = _cellCursorTwips.toRectangle();
 			app.calc.cellCursorRectangle = new app.definitions.simpleRectangle(tempRectangle[0], tempRectangle[1], tempRectangle[2], tempRectangle[3]);
+			this._cellCursorSection.setPosition(app.calc.cellCursorRectangle.pX1, app.calc.cellCursorRectangle.pY1);
 			app.calc.cellCursorVisible = true;
 
 			app.sectionContainer.onCellAddressChanged();
@@ -4178,32 +4179,6 @@ L.CanvasTileLayer = L.Layer.extend({
 				this._prevCellCursorAddress = app.calc.cellAddress.clone();
 			}
 
-			var corePxBounds = new L.Bounds(new L.Point(app.calc.cellCursorRectangle.pX1, app.calc.cellCursorRectangle.pY1),
-											new L.Point(app.calc.cellCursorRectangle.pX2, app.calc.cellCursorRectangle.pY2));
-
-			if (this._cellCursorMarker) {
-				this._cellCursorMarker.setBounds(corePxBounds);
-				this._removeCellDropDownArrow();
-			}
-			else {
-				var cursorStyle = new CStyleData(this._cursorDataDiv);
-				var weight = cursorStyle.getFloatPropWithoutUnit('border-top-width');
-				this._cellCursorMarker = new CCellCursor(
-					corePxBounds,
-					{
-						name: 'cell-cursor',
-						pointerEvents: 'none',
-						fill: false,
-						color: cursorStyle.getPropValue('border-top-color'),
-						weight: Math.round(weight * app.dpiScale)
-					});
-				if (!this._cellCursorMarker) {
-					this._map.fire('error', {msg: 'Cell Cursor marker initialization', cmd: 'cellCursor', kind: 'failed', id: 1});
-					return;
-				}
-				this._canvasOverlay.initPathGroup(this._cellCursorMarker);
-			}
-
 			this._addCellDropDownArrow();
 
 			var focusOutOfDocument = document.activeElement === document.body;
@@ -4217,10 +4192,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			if (!dontFocusDocument)
 				this._map.fire('editorgotfocus');
 		}
-		else if (this._cellCursorMarker) {
-			this._canvasOverlay.removePathGroup(this._cellCursorMarker);
-			this._cellCursorMarker = undefined;
-		}
+
 		this._removeCellDropDownArrow();
 		this._closeURLPopUp();
 	},
@@ -4476,7 +4448,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	// Cells can change position during changes of zoom level in calc
 	// hence we need to request an updated cell cursor position for this level.
 	_onCellCursorShift: function (force) {
-		if ((this._cellCursorMarker && !this.options.sheetGeometryDataEnabled) || force) {
+		if ((this._cellCursorSection && !this.options.sheetGeometryDataEnabled) || force) {
 			this.requestCellCursor();
 		}
 	},
@@ -4978,15 +4950,23 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._selectionHandles.start = new app.definitions.textSelectionHandleSection('selection_start_handle', 30, 44, new app.definitions.simplePoint(0, 0), 'text-selection-handle-start', false);
 		this._selectionHandles.end = new app.definitions.textSelectionHandleSection('selection_end_handle', 30, 44, new app.definitions.simplePoint(0, 0), 'text-selection-handle-end', false);
 		this._selectionHandles.active = false;
+		app.sectionContainer.addSection(this._map._docLayer._selectionHandles.start);
+		app.sectionContainer.addSection(this._map._docLayer._selectionHandles.end);
 
 		// Cell selection handles (mobile & tablet).
 		this._cellSelectionHandleStart = new app.definitions.cellSelectionHandle('cell_selection_handle_start');
 		this._cellSelectionHandleEnd = new app.definitions.cellSelectionHandle('cell_selection_handle_end');
-
-		app.sectionContainer.addSection(this._map._docLayer._selectionHandles.start);
-		app.sectionContainer.addSection(this._map._docLayer._selectionHandles.end);
 		app.sectionContainer.addSection(this._map._docLayer._cellSelectionHandleStart);
 		app.sectionContainer.addSection(this._map._docLayer._cellSelectionHandleEnd);
+
+		if (this.isCalc()) {
+			var cursorStyle = new CStyleData(this._cursorDataDiv);
+			var weight = cursorStyle.getFloatPropWithoutUnit('border-top-width') * app.dpiScale;
+			var color = cursorStyle.getPropValue('border-top-color');
+			this._cellCursorSection = new app.definitions.cellCursorSection(color, weight);
+			this._cellCursorSection.name = 'OwnCellCursor';
+			app.sectionContainer.addSection(this._cellCursorSection);
+		}
 
 		this._getToolbarCommandsValues();
 		this._textCSelections = new CSelections(undefined, this._canvasOverlay,
@@ -5139,9 +5119,9 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (this._map._textInput._cursorHandler) {
 			this._map._textInput._cursorHandler.setOpacity(0);
 		}
-		if (this._cellCursorMarker) {
-			this._map.setOverlaysOpacity(0);
-			this._map.setMarkersOpacity(0);
+
+		if (this.isCalc()) {
+			this._cellCursorSection.setShowSection(false);
 		}
 
 		if (this._selectionHandles.start.isSectionShown())
@@ -5167,9 +5147,9 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (this._map._textInput._cursorHandler) {
 			this._map._textInput._cursorHandler.setOpacity(1);
 		}
-		if (this._cellCursorMarker) {
-			this._map.setOverlaysOpacity(1);
-			this._map.setMarkersOpacity(1);
+
+		if (this.isCalc()) {
+			this._cellCursorSection.setShowSection(true);
 		}
 
 		if (this._selectionHandles.start.isSectionShown())
