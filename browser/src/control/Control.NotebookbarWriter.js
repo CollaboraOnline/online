@@ -1461,6 +1461,13 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'accessibility': { focusBack: true, combination: 'D', de: null }
 			},
 			{
+			    'id':'invertbackground',
+			    'class': 'unoinvertbackground',
+			    'type': 'bigcustomtoolitem',
+			    'text': _('Invert Background'),
+			    'accessibility': { focusBack: true, combination: 'D', de: null }
+			},
+			{
 				'id': 'view-sidebar-property-deck',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:Sidebar'),

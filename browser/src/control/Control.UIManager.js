@@ -108,6 +108,10 @@ L.Control.UIManager = L.Control.extend({
 		}
 	},
 
+	invertBackground: function() {
+		// Implement this
+	},
+
 	toggleDarkMode: function() {
 		// get the initial mode
 		var selectedMode = this.getDarkModeState();
