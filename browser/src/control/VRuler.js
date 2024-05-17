@@ -12,7 +12,7 @@
  * Ruler Handler
  */
 
-/* global app L _ */
+/* global L _ */
 L.Control.VRuler = L.Control.extend({
 	options: {
 		interactive: true,
@@ -48,14 +48,14 @@ L.Control.VRuler = L.Control.extend({
 	},
 
 	_changeInteractions: function(e) {
-		if (this._lMarginDrag) {
+		if (this._tMarginDrag) {
 			if (e.perm === 'edit') {
-				this._lMarginDrag.style.cursor = 'e-resize';
-				this._rMarginDrag.style.cursor = 'w-resize';
+				this._tMarginDrag.style.cursor = 'e-resize';
+				this._bMarginDrag.style.cursor = 'w-resize';
 			}
 			else {
-				this._lMarginDrag.style.cursor = 'default';
-				this._rMarginDrag.style.cursor = 'default';
+				this._tMarginDrag.style.cursor = 'default';
+				this._bMarginDrag.style.cursor = 'default';
 			}
 		}
 	},
@@ -63,29 +63,29 @@ L.Control.VRuler = L.Control.extend({
 	_initiateIndentationMarkers: function() {
 
 		// Paragraph indentation..
-		this._pStartMarker = document.createElement('div');
-		this._pStartMarker.id = 'lo-vertical-pstart-marker';
-		this._pStartMarker.classList.add('cool-ruler-indentation-marker-up');
-		this._rFace.appendChild(this._pStartMarker);
+		this._pVerticalStartMarker = document.createElement('div');
+		this._pVerticalStartMarker.id = 'lo-vertical-pstart-marker';
+		this._pVerticalStartMarker.classList.add('cool-ruler-indentation-marker-up');
+		this._rFace.appendChild(this._pVerticalStartMarker);
 
 		// Paragraph end..
-		this._pEndMarker = document.createElement('div');
-		this._pEndMarker.id = 'lo-vertical-pend-marker';
-		this._pEndMarker.classList.add('cool-ruler-indentation-marker-up');
-		this._rFace.appendChild(this._pEndMarker);
+		this._pVerticalEndMarker = document.createElement('div');
+		this._pVerticalEndMarker.id = 'lo-vertical-pend-marker';
+		this._pVerticalEndMarker.classList.add('cool-ruler-indentation-marker-up');
+		this._rFace.appendChild(this._pVerticalEndMarker);
 
 		// While one of the markers is being dragged, a howrizontal line should be visible in order to indicate the new position of the marker..
 		this._markerHorizontalLine = L.DomUtil.create('div', 'cool-ruler-horizontal-indentation-marker-center');
 		this._rFace.appendChild(this._markerHorizontalLine);
 
 
-		L.DomEvent.on(this._pStartMarker, 'mousedown', window.touch.mouseOnly(this._initiateIndentationDrag), this);
-		L.DomEvent.on(this._pEndMarker, 'mousedown', window.touch.mouseOnly(this._initiateIndentationDrag), this);
+		L.DomEvent.on(this._pVerticalStartMarker, 'mousedown', window.touch.mouseOnly(this._initiateIndentationDrag), this);
+		L.DomEvent.on(this._pVerticalEndMarker, 'mousedown', window.touch.mouseOnly(this._initiateIndentationDrag), this);
 	},
 
 	_initLayout: function() {
 		this._rWrapper = L.DomUtil.create('div', 'cool-ruler leaflet-bar leaflet-control leaflet-control-custom');
-		this._rWrapper.id = 'vertical-ruler'
+		this._rWrapper.id = 'vertical-ruler';
 		this._rWrapper.style.visibility = 'hidden';
 
 		// We start it hidden rather than not initialzing at all.
@@ -123,8 +123,12 @@ L.Control.VRuler = L.Control.extend({
 		// pageWidth on the other hand *is* really in mm100.
 		this.options.pageWidth = parseInt(obj['pageWidth']);
 
-		// to be enabled only after adding support for other length units as well
-		// this.options.unit = obj['unit'].trim();
+		// set top and bottom margin of page default to nulloffset.
+		// this values only change based on which marker we drag on vertical ruler
+		if (!this.options.pageTopMargin && !this.options.pageBottomMargin) {
+			this.options.pageTopMargin = this.options.nullOffset;
+			this.options.pageBottomMargin = this.options.nullOffset;
+		}
 
 		this._rWrapper.style.visibility = '';
 		this._rWrapper.style.transform = 'rotate(90deg)';
@@ -163,13 +167,13 @@ L.Control.VRuler = L.Control.extend({
 		var pEndPosition = this._rTSContainer.getBoundingClientRect().bottom - this.options.rightParagraphIndent - documentTop;
 
 		// We calculated the positions. Now we should move them to left in order to make their sharp edge point to the right direction..
-		this._pStartMarker.style.left = pStartPosition - this._pStartMarker.getBoundingClientRect().width  + 'px';
-		this._pEndMarker.style.left = pEndPosition - this._pEndMarker.getBoundingClientRect().width + 'px';
+		this._pVerticalStartMarker.style.left = pStartPosition - this._pVerticalStartMarker.getBoundingClientRect().width  + 'px';
+		this._pVerticalEndMarker.style.left = pEndPosition - this._pVerticalEndMarker.getBoundingClientRect().width + 'px';
 
 		// we do similar operation as we do in Horizontal ruler 
 		// but this element rotated to 90deg so top of marker should be opposite to horizontal (Negative in this case)
 		this._markerHorizontalLine.style.top = '-100vw';
-		this._markerHorizontalLine.style.left = this._pStartMarker.style.left;
+		this._markerHorizontalLine.style.left = this._pVerticalStartMarker.style.left;
 	},
 
 	_updateBreakPoints: function() {
@@ -177,18 +181,18 @@ L.Control.VRuler = L.Control.extend({
 		if (this.options.margin1 == null || this.options.margin2 == null)
 			return;
 
-		var lMargin, rMargin, wPixel, scale;
+		var topMargin, bottomMargin, wPixel, scale;
 		var docLayer = this._map._docLayer;
 
-		lMargin = this.options.nullOffset;
+		topMargin = this.options.nullOffset;
 
 		// This is surely bogus. We take pageWidth, which is in mm100, and subtract a value
-		// that is in "arbitrary pixelish units". But the only thing rMargin is used for is
+		// that is in "arbitrary pixelish units". But the only thing bottomMargin is used for is
 		// to calculate the width of the part of the ruler that goes out over the right side
-		// of the window anyway (see the assignments to this._rMarginMarker.style.width and
-		// this._rMarginDrag.style.width near the end of this function), so presumably it
-		// doesn't matter that much what rMargin is.
-		rMargin = this.options.pageWidth - (this.options.nullOffset + this.options.margin2);
+		// of the window anyway (see the assignments to this._bMarginMarker.style.width and
+		// this._bMarginDrag.style.width near the end of this function), so presumably it
+		// doesn't matter that much what bottomMargin is.
+		bottomMargin = this.options.pageWidth - (this.options.nullOffset + this.options.margin2);
 
 		scale = this._map.getZoomScale(this._map.getZoom(), 10);
 		wPixel = (docLayer._docPixelSize.y/docLayer._pages) - (this.options.tileMargin * 2) * scale;
@@ -197,9 +201,9 @@ L.Control.VRuler = L.Control.extend({
 
 		this.options.DraggableConvertRatio = wPixel / this.options.pageWidth;
 		this._rFace.style.width = wPixel + 'px';
-		this._rBPContainer.style.marginLeft = (-1 * (this.options.DraggableConvertRatio * (500 - (lMargin % 1000))) + 1) + 'px';
+		this._rBPContainer.style.marginLeft = (-1 * (this.options.DraggableConvertRatio * (500 - (topMargin % 1000))) + 1) + 'px';
 
-		var numCounter = -1 * parseInt(lMargin / 1000);
+		var numCounter = -1 * parseInt(topMargin / 1000);
 
 		L.DomUtil.removeChildNodes(this._rBPContainer);
 
@@ -224,27 +228,25 @@ L.Control.VRuler = L.Control.extend({
 
 		if (!this.options.marginSet) {
 			this.options.marginSet = true;
-			this._lMarginMarker = L.DomUtil.create('div', 'cool-ruler-margin cool-ruler-left', this._rFace);
-			this._rMarginMarker =  L.DomUtil.create('div', 'cool-ruler-margin cool-ruler-right', this._rFace);
-			this._lMarginDrag = L.DomUtil.create('div', 'cool-ruler-drag cool-ruler-left', this._rMarginWrapper);
-			this._lToolTip = L.DomUtil.create('div', 'cool-ruler-ltooltip', this._lMarginDrag);
-			this._rMarginDrag = L.DomUtil.create('div', 'cool-ruler-drag cool-ruler-right', this._rMarginWrapper);
-			this._rToolTip = L.DomUtil.create('div', 'cool-ruler-rtooltip', this._rMarginDrag);
-			var lMarginTooltipText = _('Top Margin');
-			var rMarginTooltipText = _('Bottom Margin');
+			this._tMarginMarker = L.DomUtil.create('div', 'cool-ruler-margin cool-ruler-left', this._rFace);
+			this._bMarginMarker =  L.DomUtil.create('div', 'cool-ruler-margin cool-ruler-right', this._rFace);
+			this._tMarginDrag = L.DomUtil.create('div', 'cool-ruler-drag cool-ruler-left', this._rMarginWrapper);
+			this._bMarginDrag = L.DomUtil.create('div', 'cool-ruler-drag cool-ruler-right', this._rMarginWrapper);
+			var topMarginTooltipText = _('Top Margin');
+			var bottomMarginTooltipText = _('Bottom Margin');
 
-			this._lMarginDrag.dataset.title = lMarginTooltipText;
-			this._rMarginDrag.dataset.title = rMarginTooltipText;
+			this._tMarginDrag.dataset.title = topMarginTooltipText;
+			this._bMarginDrag.dataset.title = bottomMarginTooltipText;
 		}
 
-		this._lMarginMarker.style.width = (this.options.DraggableConvertRatio*lMargin) + 'px';
-		this._rMarginMarker.style.width = (this.options.DraggableConvertRatio*rMargin) + 'px';
-		this._lMarginDrag.style.width = (this.options.DraggableConvertRatio*lMargin) + 'px';
-		this._rMarginDrag.style.width = (this.options.DraggableConvertRatio*rMargin) + 'px';
+		this._tMarginMarker.style.width = (this.options.DraggableConvertRatio*topMargin) + 'px';
+		this._bMarginMarker.style.width = (this.options.DraggableConvertRatio*bottomMargin) + 'px';
+		this._tMarginDrag.style.width = (this.options.DraggableConvertRatio*topMargin) + 'px';
+		this._bMarginDrag.style.width = (this.options.DraggableConvertRatio*bottomMargin) + 'px';
 
 		// Put the _rTSContainer in the right place
-		this._rTSContainer.style.left = (this.options.DraggableConvertRatio * lMargin) + 'px';
-		this._rTSContainer.style.right = (this.options.DraggableConvertRatio * rMargin) + 'px';
+		this._rTSContainer.style.left = (this.options.DraggableConvertRatio * topMargin) + 'px';
+		this._rTSContainer.style.right = (this.options.DraggableConvertRatio * bottomMargin) + 'px';
 
 		this._updateParagraphIndentations();
 
@@ -317,45 +319,38 @@ L.Control.VRuler = L.Control.extend({
 			L.DomEvent.off(this._map, 'mouseup', this._moveIndentationEnd, this);
 		}
 
-		var unoObj = {}, indentType = '';
-
 		// Calculation step..
 		// The new coordinate of element subject to indentation is sent as a percentage of the page width..
 		// We need to calculate the percentage. Left margin (nullOffset) is not being added to the indentation (on the core part)..
 		// We can use TabStopContainer's position as the reference point, as they share the same reference point..
 		var element = document.getElementById(this._indentationElementId);
 
-		var leftValue;
 		// The halfWidth of the shape..
-		var halfWidth = (element.getBoundingClientRect().right - element.getBoundingClientRect().left) * 0.5;
+		var halfWidth = (element.getBoundingClientRect().bottom - element.getBoundingClientRect().top) * 0.5;
 
-		// We need the pageWidth in pixels, so we can not use "this.options.pageWidth" here, since that's in mm..
-		var pageWidth = parseFloat(this._rFace.style.width.replace('px', ''));
 
-		if (element.id === 'lo-fline-marker') {
-			indentType = 'FirstLineIndent';
-			// FirstLine indentation is always positioned according to the left indent..
-			// We don't need to add halfWidth here..
-			leftValue = (parseFloat(this._firstLineMarker.style.left.replace('px', '')) - parseFloat(this._pStartMarker.style.left.replace('px', '')));
+		var params = {};
+		var topMarginPX, bottomMarginPX;
+		var upperMargin = 'Space.Upper';
+		var lowerMargin = 'Space.Lower';
+		if (element.id == 'lo-vertical-pstart-marker') {
+			topMarginPX = this._pVerticalStartMarker.getBoundingClientRect().top - this._rTSContainer.getBoundingClientRect().top + halfWidth;
+			this.options.pageTopMargin = (topMarginPX / this.options.DraggableConvertRatio) + this.options.pageTopMargin;
 		}
-		else if (element.id === 'lo-pstart-marker') {
-			indentType = 'LeftParaIndent';
-			leftValue = element.getBoundingClientRect().left - this._rTSContainer.getBoundingClientRect().left + halfWidth;
-		}
-		else if (element.id === 'lo-pend-marker') {
-			indentType = 'RightParaIndent';
+		else if (element.id == 'lo-vertical-pend-marker') {
 			// Right marker is positioned from right, this is rightValue..
-			leftValue = this._rTSContainer.getBoundingClientRect().right - element.getBoundingClientRect().right + halfWidth;
+			bottomMarginPX = this._rTSContainer.getBoundingClientRect().bottom - this._pVerticalEndMarker.getBoundingClientRect().bottom + halfWidth;
+			this.options.pageBottomMargin = (bottomMarginPX / this.options.DraggableConvertRatio) + this.options.pageBottomMargin;
 		}
-
-		leftValue = leftValue / pageWidth; // Now it's a percentage..
-
-		if (indentType !== '') {
-			unoObj[indentType] = {};
-			unoObj[indentType]['type'] = 'string';
-			unoObj[indentType]['value'] = leftValue;
-			app.socket.sendMessage('uno .uno:ParagraphChangeState ' + JSON.stringify(unoObj));
-		}
+		params[upperMargin] = {
+			type: 'long',
+			value: this.options.pageTopMargin
+		};
+		params[lowerMargin] = {
+			type: 'long',
+			value: this.options.pageBottomMargin
+		};
+		this._map.sendUnoCommand('.uno:SetLongTopBottomMargin', params);
 
 		this._indentationElementId = '';
 		this._markerHorizontalLine.style.display = 'none';
