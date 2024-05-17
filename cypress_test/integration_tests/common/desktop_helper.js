@@ -318,8 +318,10 @@ function insertComment(text = 'some text0', save = true) {
 
 	var mode = Cypress.env('USER_INTERFACE');
 	if (mode === 'notebookbar') {
-		cy.cGet('#Insert-tab-label').click();
-		cy.cGet('#insert-insert-annotation').click({force: true});
+		helper.typeIntoDocument('{ctrl}{alt}c');
+		// FIXME: use UI to instert annoation
+		// cy.cGet('#Insert-tab-label').click();
+		// cy.cGet('#insert-insert-annotation').click({force: true});
 	} else {
 		cy.cGet('#menu-insert').click();
 		cy.cGet('#menu-insertcomment').click();
