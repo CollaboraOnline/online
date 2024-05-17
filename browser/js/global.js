@@ -470,6 +470,11 @@ window.app = {
 		}
 	})();
 
+	if (global.isLocalStorageAllowed && global.localStorage.getItem('hasNavigatorClipboardWrite') === 'false') {
+		// navigator.clipboard.write failed on us once, don't even try it.
+		global.L.Browser.hasNavigatorClipboardWrite = false;
+	}
+
 	global.deviceFormFactor = global.mode.getDeviceFormFactor();
 
 	if (global.ThisIsTheiOSApp) {
