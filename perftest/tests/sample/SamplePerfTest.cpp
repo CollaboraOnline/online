@@ -11,21 +11,16 @@
 
 #include <perftest/PerfTest.hpp>
 
-//class SamplePerfTest : public CyclePerfTest
-class SamplePerfTest : public PerfTest
+class SamplePerfTest : public MessagePerfTest
 {
 public:
     SamplePerfTest(const std::string &server) :
-        PerfTest("sample100", server)
-        //CyclePerfTest("sample100", server)
+        MessagePerfTest("sample100", server)
     {
     }
 
     void runTest() {
-        startMeasurement();
-        sleep(1000);
-        stopMeasurement();
-        //testViewChange();
+        testViewChange();
     }
 
     void testLoad() {

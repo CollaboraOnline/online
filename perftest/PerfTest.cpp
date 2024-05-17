@@ -66,6 +66,7 @@ void PerfTest::startMeasurement()
 {
     if (!isStarted()) {
         LOG_DBG("PerfTest Start measurement");
+        std::cerr << "Starting measurement" << std::endl;
         _measurementStarted = true;
         _startTime = std::chrono::steady_clock::now();
     } else {
@@ -77,6 +78,7 @@ void PerfTest::stopMeasurement()
 {
     if (!isFinished()) {
         LOG_DBG("PerfTest Stop measurement");
+        std::cerr << "Stopping measurement" << std::endl;
         _measurementFinished = true;
         _stopTime = std::chrono::steady_clock::now();
         std::chrono::duration elapsedTime = _stopTime - _startTime;

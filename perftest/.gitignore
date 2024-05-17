@@ -4,3 +4,4 @@
 *.lo
 *.o
 workdir
+results

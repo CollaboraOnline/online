@@ -59,6 +59,7 @@ void PerfTestSocketHandler::connect(const std::string &filePath)
     std::string serverUri = _server + "/cool/" + wrap + "/ws";
 
     LOG_DBG("Connecting to: " + serverUri);
+    std::cerr << "Connecting to: " << serverUri << std::endl;
     // Cannot implement shared_from_this on PerfTestSocketHandler because it
     // is already implemented on ProtocolHandlerInterface. So do this cast instead.
     std::shared_ptr<WebSocketHandler> ptr_to_this =
@@ -71,6 +72,7 @@ void PerfTestSocketHandler::connect(const std::string &filePath)
 void PerfTestSocketHandler::loadDocument(const std::string &filePath)
 {
     LOG_DBG("PerfTestSocketHandler loadDocument: " + filePath);
+    std::cerr << "Loading document: " << filePath << std::endl;
 
     sendMessage("coolclient 0.1 1713197290182 836");
 
