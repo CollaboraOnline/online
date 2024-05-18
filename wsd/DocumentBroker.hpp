@@ -402,9 +402,10 @@ public:
     /// @param force when true, will force saving if there
     /// has been any recent activity after the last save.
     /// @param dontSaveIfUnmodified when true, save will fail if the document is not modified.
+    /// @param finalWrite this is our last write before exit, lets make it synchronous
     /// @return true if attempts to save or it also waits
     /// and receives save notification. Otherwise, false.
-    bool autoSave(const bool force, const bool dontSaveIfUnmodified);
+    bool autoSave(const bool force, const bool dontSaveIfUnmodified, const bool finalWrite = false);
 
     /// Saves the document and stops if there was nothing to autosave.
     void autoSaveAndStop(const std::string& reason);
@@ -746,7 +747,7 @@ private:
 
     /// Sends the .uno:Save command to LoKit.
     bool sendUnoSave(const std::shared_ptr<ClientSession>& session, bool dontTerminateEdit = true,
-                     bool dontSaveIfUnmodified = true, bool isAutosave = false,
+                     bool dontSaveIfUnmodified = true, bool isAutosave = false, bool finalWrite = false,
                      const std::string& extendedData = std::string());
 
     /**
