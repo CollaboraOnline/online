@@ -108,4 +108,7 @@ public:
 protected:
     virtual void handleMessage(const std::vector<char>& data) override;
     virtual void onDisconnect() override;
+
+    // something weird happened, cleanup & notify of failure
+    void terminateSave(const std::string &session, const std::string &reason);
 };
