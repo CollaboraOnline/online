@@ -249,6 +249,9 @@ void BgSaveParentWebSocketHandler::handleMessage(const std::vector<char>& data)
     // Messages already include client-foo prefixes inherited from ourselves
     _document->sendFrame(data.data(), data.size(), WSOpCode::Text);
 
+    if (tokens[1] == "error:")
+        _document->disableBgSave("on save error");
+
     // Status update messages are stuck in the bgsave's Idle CallbackFlushHandler
     if (tokens[1] == "unocommandresult:")
     {
@@ -264,6 +267,7 @@ void BgSaveParentWebSocketHandler::handleMessage(const std::vector<char>& data)
             {
                 _document->updateModifiedOnFailedBgSave();
                 LOG_DBG("Failed to save, not synthesizing modified state");
+                _document->disableBgSave("on failed save");
             }
         }
     }

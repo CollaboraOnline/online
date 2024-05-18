@@ -374,6 +374,9 @@ public:
     /// Snoop document modified, and return true if filtering notification
     bool trackDocModifiedState(const std::string &stateChanged);
 
+    /// Permanantly disable background save for this process
+    void disableBgSave(const std::string &reason);
+
 private:
     void postForceModifiedCommand(bool modified);
 
@@ -405,6 +408,7 @@ private:
     std::weak_ptr<WebSocketHandler> _saveProcessParent;
     ModifiedState _modified;
     bool _isBgSaveProcess;
+    bool _isBgSaveDisabled;
 
     // Document password provided
     std::string _docPassword;
