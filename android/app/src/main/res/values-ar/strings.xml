@@ -66,4 +66,8 @@
     <string name="choose_theme">اختر حُلّة</string>
     <string name="filter_spreadsheets">جداول البيانات</string>
     <string name="share_document">مُشارَكة المستنَد</string>
+    <string name="about_notice">عرض الملاحظة</string>
+    <string name="sort_az">من الألف إلى الياء</string>
+    <string name="sort_za">من الياء إلى الألف</string>
+    <string name="file_actions_icon_desc">إجراءات الملفات</string>
 </resources>

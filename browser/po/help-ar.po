@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-15 14:13+0200\n"
-"PO-Revision-Date: 2022-07-28 16:23+0000\n"
-"Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
+"PO-Revision-Date: 2024-05-17 17:01+0000\n"
+"Last-Translator: Ali <alimahwer@yahoo.com>\n"
 "Language-Team: Arabic <https://hosted.weblate.org/projects/collabora-online/"
 "help/ar/>\n"
 "Language: ar\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.6-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:84-5
 msgid "Keyboard Shortcuts"
@@ -633,7 +633,7 @@ msgstr "الانتقال إلى بداية السطر"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:306-88
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:371-88
 msgid "Home"
-msgstr "Home"
+msgstr "الصفحة الرئيسية"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:150-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:307-38

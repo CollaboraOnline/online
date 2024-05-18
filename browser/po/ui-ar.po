@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-15 14:13+0200\n"
-"PO-Revision-Date: 2023-11-13 11:26+0000\n"
-"Last-Translator: meshari alnaim <malnaim@safedecision.com.sa>\n"
+"PO-Revision-Date: 2024-05-17 17:01+0000\n"
+"Last-Translator: Ali <alimahwer@yahoo.com>\n"
 "Language-Team: Arabic <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ar/>\n"
-"Language: \n"
+"Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
-"X-Generator: Weblate 5.2-dev\n"
+"X-Generator: Weblate 5.6-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -250,7 +250,7 @@ msgstr "معلومات الإصدار"
 
 #: admin/admin.strings.js:67
 msgid "License"
-msgstr ""
+msgstr "رخصة"
 
 #: admin/admin.strings.js:68 src/control/Control.Menubar.js:383
 #: src/control/Control.Menubar.js:539 src/control/Control.Menubar.js:668
@@ -385,15 +385,15 @@ msgstr " س"
 
 #: js/global.js:935
 msgid "Cluster is scaling, retrying..."
-msgstr ""
+msgstr "جارٍ الآن إعادة المحاولة بعد تعديل السِّعَة ..."
 
 #: js/global.js:937
 msgid "Document is migrating to new server, retrying..."
-msgstr ""
+msgstr "المستند يتمّ ترحيله إلى خادوم جديد. جارٍ الآن إعادة المحاولة ..."
 
 #: js/global.js:939
 msgid "Failed to get RouteToken from controller"
-msgstr ""
+msgstr "فشل في الحصول على أَمَارَة المسار RouteToken من الحاكمة controller"
 
 #: src/control/ColorPicker.ts:269
 msgid "No color"
@@ -413,11 +413,11 @@ msgstr "افتح الرابط"
 
 #: src/control/Control.AlertDialog.js:66
 msgid "Copied external sources are not allowed"
-msgstr ""
+msgstr "المصادر الخارجية المنسوخة غير مسموح بها"
 
 #: src/control/Control.AlertDialog.js:67
 msgid "It seems you have copied a selection that includes external images."
-msgstr ""
+msgstr "يبدو أن قمت بنسخ تحديدٍ يتضمن صوراً خارجيةً."
 
 #: src/control/Control.AlertDialog.js:68
 msgid ""
@@ -425,24 +425,27 @@ msgid ""
 "possible. Please right click in the image, choose \"Copy Image\" and paste "
 "it into the document instead."
 msgstr ""
+"يُحظَر تنزيل الموارد الخارجية ولكن لا يزال من الممكن لصق الصور. الرجاء النقر "
+"بزر الماوس الأيمن على الصورة واختيار \"نسخ الصورة\" ولصقها في المستند بدلاً "
+"من ذلك."
 
 #: src/control/Control.AlertDialog.js:72
 msgid "External data source not allowed"
-msgstr ""
+msgstr "مصادر البيانات الخارجية غير مسموحٍ بها"
 
 #: src/control/Control.AlertDialog.js:73
 msgid "It seems you have tried to insert external data."
-msgstr ""
+msgstr "يبدو أنك حاولت إدخال بيانات خارجية."
 
 #: src/control/Control.AlertDialog.js:74
 msgid ""
 "Selected external data source is forbidden. Please contact the system "
 "administrator."
-msgstr ""
+msgstr "مصدر البيانات الخارجي المحدد محظور. الرجاء الاتصال بمشرف النظام عندك."
 
 #: src/control/Control.AlertDialog.js:86
 msgid "Don't show this again"
-msgstr ""
+msgstr "لا تُظهِر هذا مُجدَّداً"
 
 #: src/control/Control.AlertDialog.js:105
 msgid "The server encountered a %0 error while parsing the %1 command."
@@ -963,7 +966,7 @@ msgstr "الخصائص"
 #: src/control/Control.Menubar.js:364 src/control/Control.Menubar.js:1002
 #: src/control/Control.NotebookbarWriter.js:371
 msgid "Screen Reading"
-msgstr ""
+msgstr "قراءة الشاشة"
 
 #: src/control/Control.Menubar.js:377
 #: src/control/Control.NotebookbarWriter.js:337
@@ -1050,7 +1053,7 @@ msgstr "عرض الشريحة الحالية"
 
 #: src/control/Control.Menubar.js:522
 msgid "Present in new window"
-msgstr ""
+msgstr "موجود في النافذة الجديدة"
 
 #: src/control/Control.Menubar.js:558 src/control/Control.Menubar.js:1035
 #: src/control/Control.Menubar.js:1095
@@ -1122,12 +1125,12 @@ msgstr "بين..."
 #: src/control/Control.Menubar.js:830
 #: src/control/jsdialog/Definitions.Menu.ts:319
 msgid "Duplicate..."
-msgstr ""
+msgstr "استنساخ ..."
 
 #: src/control/Control.Menubar.js:831
 #: src/control/jsdialog/Definitions.Menu.ts:323
 msgid "Contains text..."
-msgstr ""
+msgstr "يحتوي نصاً ..."
 
 #: src/control/Control.Menubar.js:833 src/control/Control.Menubar.js:843
 #: src/control/jsdialog/Definitions.Menu.ts:327
@@ -1138,37 +1141,37 @@ msgstr "المزيد من الشروط..."
 #: src/control/Control.Menubar.js:835
 #: src/control/jsdialog/Definitions.Menu.ts:331
 msgid "Top/Bottom Rules..."
-msgstr ""
+msgstr "قواعد أعلى/أسفل ..."
 
 #: src/control/Control.Menubar.js:836
 #: src/control/jsdialog/Definitions.Menu.ts:334
 msgid "Top N elements..."
-msgstr ""
+msgstr "العناصر الأعلى في القائمة ..."
 
 #: src/control/Control.Menubar.js:837
 #: src/control/jsdialog/Definitions.Menu.ts:338
 msgid "Top N percent..."
-msgstr ""
+msgstr "ضمن النسبة المئوية الأعلى ..."
 
 #: src/control/Control.Menubar.js:838
 #: src/control/jsdialog/Definitions.Menu.ts:342
 msgid "Bottom N elements..."
-msgstr ""
+msgstr "ضمن العناصر الأدنى في القائمة ..."
 
 #: src/control/Control.Menubar.js:839
 #: src/control/jsdialog/Definitions.Menu.ts:346
 msgid "Bottom N percent..."
-msgstr ""
+msgstr "ضمن النسبة المئوية الأدنى في القائمة ..."
 
 #: src/control/Control.Menubar.js:840
 #: src/control/jsdialog/Definitions.Menu.ts:350
 msgid "Above Average..."
-msgstr ""
+msgstr "أعلى من المتوسط ..."
 
 #: src/control/Control.Menubar.js:841
 #: src/control/jsdialog/Definitions.Menu.ts:354
 msgid "Below Average..."
-msgstr ""
+msgstr "تحت المتوسط ..."
 
 #: src/control/Control.Menubar.js:952 src/control/Control.Menubar.js:1017
 #: src/control/Control.Menubar.js:1081 src/control/Control.Menubar.js:1135
@@ -1264,46 +1267,40 @@ msgstr "ملف CSV (.csv)"
 #: src/control/Control.NotebookbarDraw.js:62
 #: src/control/Control.NotebookbarImpress.js:77
 #: src/control/Control.NotebookbarWriter.js:36
-#, fuzzy
 msgid "File"
-msgstr "~ملف"
+msgstr "ملف"
 
 #: src/control/Control.NotebookbarCalc.js:29
 #: src/control/Control.NotebookbarDraw.js:68
 #: src/control/Control.NotebookbarImpress.js:83
 #: src/control/Control.NotebookbarWriter.js:42
-#, fuzzy
 msgid "Home"
-msgstr "~الصفحة الرئيسية"
+msgstr "الصفحة الرئيسية"
 
 #: src/control/Control.NotebookbarCalc.js:36
 #: src/control/Control.NotebookbarDraw.js:75
 #: src/control/Control.NotebookbarImpress.js:90
 #: src/control/Control.NotebookbarWriter.js:49
-#, fuzzy
 msgid "Insert"
-msgstr "~إدراج"
+msgstr "إدراج"
 
 #: src/control/Control.NotebookbarCalc.js:42
 #: src/control/Control.NotebookbarDraw.js:81
 #: src/control/Control.NotebookbarImpress.js:96
 #: src/control/Control.NotebookbarWriter.js:55
-#, fuzzy
 msgid "Layout"
-msgstr "~نسق"
+msgstr "نَسَق"
 
 #: src/control/Control.NotebookbarCalc.js:48
-#, fuzzy
 msgid "Data"
-msgstr "~بيانات"
+msgstr "بيانات"
 
 #: src/control/Control.NotebookbarCalc.js:54
 #: src/control/Control.NotebookbarDraw.js:87
 #: src/control/Control.NotebookbarImpress.js:102
 #: src/control/Control.NotebookbarWriter.js:67
-#, fuzzy
 msgid "Review"
-msgstr "~مراجعة"
+msgstr "مُراجعة"
 
 #: src/control/Control.NotebookbarCalc.js:60
 #: src/control/Control.NotebookbarDraw.js:93
@@ -1316,25 +1313,22 @@ msgstr "صيغة"
 #: src/control/Control.NotebookbarCalc.js:66
 #: src/control/Control.NotebookbarDraw.js:106
 #: src/control/Control.NotebookbarWriter.js:92
-#, fuzzy
 msgid "Draw"
-msgstr "~ رسم"
+msgstr "رسم"
 
 #: src/control/Control.NotebookbarCalc.js:73
 #: src/control/Control.NotebookbarDraw.js:113
 #: src/control/Control.NotebookbarImpress.js:135
 #: src/control/Control.NotebookbarWriter.js:99
-#, fuzzy
 msgid "View"
-msgstr "المشاهدات"
+msgstr "منظور"
 
 #: src/control/Control.NotebookbarCalc.js:79
 #: src/control/Control.NotebookbarDraw.js:119
 #: src/control/Control.NotebookbarImpress.js:141
 #: src/control/Control.NotebookbarWriter.js:105
-#, fuzzy
 msgid "Help"
-msgstr "~ مساعدة"
+msgstr "مساعدة"
 
 #: src/control/Control.NotebookbarCalc.js:127
 #: src/control/Control.NotebookbarImpress.js:192
@@ -1347,9 +1341,8 @@ msgstr "حفظ باسم"
 #: src/control/Control.NotebookbarDraw.js:180
 #: src/control/Control.NotebookbarImpress.js:212
 #: src/control/Control.NotebookbarWriter.js:189
-#, fuzzy
 msgid "Export As"
-msgstr "تصدير ك"
+msgstr "تصدير كـ"
 
 #: src/control/Control.NotebookbarCalc.js:161
 #: src/control/Control.NotebookbarDraw.js:196
@@ -1518,9 +1511,8 @@ msgstr "الأشكال"
 #: src/control/Control.NotebookbarDraw.js:99
 #: src/control/Control.NotebookbarImpress.js:114
 #: src/control/Control.NotebookbarWriter.js:85
-#, fuzzy
 msgid "Table"
-msgstr "~ الجدول"
+msgstr "‫‫الجدول"
 
 #: src/control/Control.NotebookbarDraw.js:246
 msgid "Image (.png)"
@@ -1546,20 +1538,19 @@ msgstr "عرض"
 
 #: src/control/Control.NotebookbarImpress.js:351
 msgid "Present in Window"
-msgstr ""
+msgstr "موجود في النافذة"
 
 #: src/control/Control.NotebookbarWriter.js:79
-#, fuzzy
 msgid "Form"
-msgstr "المنتدى"
+msgstr "نموذج"
 
 #: src/control/Control.NotebookbarWriter.js:309
 msgid "Go Online"
-msgstr ""
+msgstr "الاتصال بالإنترنت"
 
 #: src/control/Control.NotebookbarWriter.js:309
 msgid "Go Offline"
-msgstr ""
+msgstr "قطع الاتصال بالإنترنت"
 
 #: src/control/Control.NotebookbarWriter.js:1302
 msgid "Rich Text"
@@ -1754,11 +1745,11 @@ msgstr "إخفاء القائمة"
 
 #: src/control/Control.UIManager.js:157
 msgid "Enter new name"
-msgstr ""
+msgstr "إدخال اسم جديد"
 
 #: src/control/Control.UIManager.js:783
 msgid "Show Menu"
-msgstr ""
+msgstr "عرض القائمة"
 
 #: src/control/Control.UIManager.js:1116
 msgid "Dismiss"
@@ -1774,19 +1765,19 @@ msgstr "غادر %user"
 
 #: src/control/Control.UserList.ts:56
 msgid "Following %user"
-msgstr ""
+msgstr "متابعة %user"
 
 #: src/control/Control.UserList.ts:57
 msgid "Following the editor"
-msgstr ""
+msgstr "متابعة المحرر"
 
 #: src/control/Control.UserList.ts:58
 msgid "Stop following"
-msgstr ""
+msgstr "التوقف عن المتابعة"
 
 #: src/control/Control.UserList.ts:59
 msgid "Avatar for %user"
-msgstr ""
+msgstr "آفاتار لـ %user"
 
 #: src/control/Control.UserList.ts:79
 msgid "%n users"
@@ -1881,9 +1872,8 @@ msgid "Citation Style"
 msgstr "نمط الاقتباس"
 
 #: src/control/Control.Zotero.js:758
-#, fuzzy
 msgid "Styles"
-msgstr "النمط"
+msgstr "أنماط"
 
 #: src/control/Control.Zotero.js:758
 msgid "An error occurred while fetching style list"
@@ -2107,7 +2097,7 @@ msgstr "مرن جداً"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:149
 msgid "No fill"
-msgstr ""
+msgstr "بدون ملء"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:149
 msgid "Automatic"
@@ -2286,7 +2276,7 @@ msgstr "تتم إعادة تسمية المستند وسيعاد تحميله ق
 
 #: src/core/Socket.js:1149
 msgid "The document is switching to Offline mode and will reload shortly"
-msgstr ""
+msgstr "يتمّ تحويل المستند الآن إلى وضع عدم الاتصال؛ و سوف يُعاد تحميله قريباً"
 
 #: src/core/Socket.js:1230
 msgid "Connecting..."
@@ -2294,7 +2284,7 @@ msgstr "يتصل..."
 
 #: src/core/Socket.js:1245
 msgid "Server is shutting down"
-msgstr ""
+msgstr "يتم الآن إطفاء الخادوم"
 
 #: src/core/Socket.js:1278
 msgid "Exported to storage"
@@ -2343,11 +2333,11 @@ msgstr "تم قطع اتصال الخادم."
 
 #: src/core/Debug.js:54
 msgid "Debug Tools"
-msgstr ""
+msgstr "أدوات التنقيح"
 
 #: src/core/Debug.js:56
 msgid "Ctrl+Shift+Alt+D to exit"
-msgstr ""
+msgstr "إضغط Ctrl+Shift+Alt+D للخروج"
 
 #: src/docstate.js:88
 msgid "Standard"
@@ -2359,7 +2349,7 @@ msgstr "ألوان الموضوع"
 
 #: src/docstate.js:100
 msgid "Document colors"
-msgstr ""
+msgstr "ألوان المستند"
 
 #: src/docdispatcher.ts:356
 msgid "Are you sure you want to delete this slide?"
@@ -2382,7 +2372,6 @@ msgstr ""
 "مع الإدارة."
 
 #: src/errormessages.js:24
-#, fuzzy
 msgid ""
 "This is an unsupported version of {productname}. To avoid the impression "
 "that it is suitable for deployment in enterprises, this message appears "
@@ -2390,8 +2379,8 @@ msgid ""
 "concurrently."
 msgstr ""
 "هذه نسخة غير مدعومة من {productname}. ولتفادي الانطباع بأنه مناسب للنشر في "
-"المؤسسات، تظهر هذه الرسالة عند استخدام أكثر من {docs} مستند أو {connections} "
-"اتصال بشكل متزامن"
+"المؤسسات، تظهر هذه الرسالة عند استخدام أكثر من {docs} مستندات أو "
+"{connections} اتصالات بشكل متزامن"
 
 #: src/errormessages.js:25
 msgid "More information and support"
@@ -2426,23 +2415,22 @@ msgid "Wrong or missing WOPISrc parameter, please contact support."
 msgstr "معلمة WOPISrc خاطئة أو مفقودة، يرجى الاتصال بالدعم."
 
 #: src/errormessages.js:30
-#, fuzzy
 msgid ""
 "Your session will expire in %time. Please save your work and refresh the "
 "session (or webpage) to continue. You might need to login again."
 msgstr ""
-"ستنتهي صلاحية الجلسة خلال %time. رجاءً احفظ عملك وأنعش الجلسة (أو صفحة الوب) "
-"للمتابعة."
+"ستنتهي جلستك خلال %time. يرجى حفظ عملك وتحديث الجلسة (أو صفحة الويب) "
+"للمتابعة. قد تحتاج إلى تسجيل الدخول مرة أخرى."
 
 #: src/errormessages.js:31
-#, fuzzy
 msgid ""
 "Your session has expired. Further changes to the document might not be "
 "saved. Please refresh the session (or webpage) to continue. You might need "
 "to login again."
 msgstr ""
-"لقد انهت صلاحية جلستك. التغييرات الإضافية على المستند قد لا تُحفظ. رجاءً "
-"أنعش الجلسة (أو صفحة الوب) للمتابعة."
+"انتهت صلاحية جلسة العمل الخاصة بك. قد لا يتم حفظ التغييرات الإضافية التي تم "
+"إجراؤها على المستند. يرجى تحديث الجلسة (أو صفحة الويب) للمتابعة. قد تحتاج "
+"إلى تسجيل الدخول مرة أخرى."
 
 #: src/errormessages.js:32
 msgid ""
