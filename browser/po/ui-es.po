@@ -7,16 +7,16 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-15 14:13+0200\n"
-"PO-Revision-Date: 2024-04-16 14:06+0000\n"
-"Last-Translator: NamelessGO <66227691+NameLessGO@users.noreply.github.com>\n"
+"PO-Revision-Date: 2024-05-16 09:02+0000\n"
+"Last-Translator: Francisco Gabriel Chardin <fran@camba.coop>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/es/>\n"
-"Language: \n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.5-dev\n"
+"X-Generator: Weblate 5.6-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -2852,11 +2852,11 @@ msgstr "Ya está presentando este documento"
 
 #: src/map/handler/Map.SlideShow.js:314
 msgid "Presentation disabled"
-msgstr ""
+msgstr "Presentación deshabilitada"
 
 #: src/map/handler/Map.SlideShow.js:315
 msgid "Presentation mode has been disabled for this document"
-msgstr ""
+msgstr "El modo presentación fué deshabilitado para este documento"
 
 #: src/map/handler/Map.WOPI.js:152
 msgid "Creating new file from template..."
