@@ -171,8 +171,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 				if (state === 'true') {
 					document.getElementById('save').classList.add('savemodified');
 					document.getElementById('file-save').classList.add('savemodified');
-				}
-				else {
+				} else {
 					document.getElementById('save').classList.remove('savemodified');
 					document.getElementById('file-save').classList.remove('savemodified');
 				}

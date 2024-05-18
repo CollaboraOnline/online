@@ -793,13 +793,13 @@ function processStateChangedCommand(commandName, state) {
 		}
 	}
 	else if (commandName === '.uno:ModifiedStatus') {
-		// // TODO: topToolbar case
-		// if (state === 'true') {
-		// 	toolbar.set('save', {img:'savemodified'});
-		// }
-		// else {
-		// 	toolbar.set('save', {img:'save'});
-		// }
+		if (document.getElementById('save')) {
+			if (state === 'true')
+				document.getElementById('save').classList.add('savemodified');
+			else
+				document.getElementById('save').classList.remove('savemodified');
+		}
+		state = ''; // stop processing below
 	}
 	else if (commandName === '.uno:DocumentRepair') {
 		if (state === 'true') {
