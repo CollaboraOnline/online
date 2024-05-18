@@ -226,14 +226,32 @@ BgSaveChildWebSocketHandler::~BgSaveChildWebSocketHandler()
 
 // Kit handler for messages from transient background save Kit
 
+void BgSaveParentWebSocketHandler::terminateSave(const std::string &session, const std::string &reason)
+{
+    LOG_WRN("terminating bgsave: " << reason);
+
+    // next time we get a non-background save.
+    _document->disableBgSave("on unexpected jsdialog");
+
+    // Hard terminate the bgsave child
+    sendMessage("exit");
+    shutdown(true, "unexpected jsdialog");
+
+    // Synthesize a failed save result
+    // FIXME: could this allow another new manual save to race against the ongoing bgsave ?
+    // either way - that's better than hanging and blocking if we get interactive dialogs on save.
+    std::string saveFailed = session + " unocommandresult: { \"commandName\": \".uno:Save\", \"success\": false }";
+    _document->sendFrame(saveFailed.c_str(), saveFailed.size(), WSOpCode::Text);
+
+    _document->updateModifiedOnFailedBgSave();
+}
+
 void BgSaveParentWebSocketHandler::handleMessage(const std::vector<char>& data)
 {
     LOG_DBG(_socketName << ": recv from parent [" <<
             COOLProtocol::getAbbreviatedMessage(data));
 
     const StringVector tokens = StringVector::tokenize(data.data(), data.size());
-
-    // FIXME: check for badness - jsdialogs and so on and bail ... ?
 
     // Should pass only:
     // "error:", "forcedtracevent", "unocommandresult:"
@@ -243,6 +261,13 @@ void BgSaveParentWebSocketHandler::handleMessage(const std::vector<char>& data)
     if (tokens[1] == "statechanged:")
     {
         LOG_TRC("Don't send un-wanted message to parent: " << COOLProtocol::getAbbreviatedMessage(data));
+        return;
+    }
+
+    if (tokens[1] == "jsdialog:")
+    {
+        terminateSave(tokens[0], "Unexpected jsdialog message: " +
+                      COOLProtocol::getAbbreviatedMessage(data));
         return;
     }
 
