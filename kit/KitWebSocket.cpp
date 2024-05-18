@@ -27,6 +27,7 @@
 
 #include "Kit.hpp"
 #include "KitQueue.hpp"
+#include "ChildSession.hpp"
 #include "KitWebSocket.hpp"
 
 using Poco::Exception;
@@ -226,24 +227,31 @@ BgSaveChildWebSocketHandler::~BgSaveChildWebSocketHandler()
 
 // Kit handler for messages from transient background save Kit
 
-void BgSaveParentWebSocketHandler::terminateSave(const std::string &session, const std::string &reason)
+void BgSaveParentWebSocketHandler::terminateSave(const std::string &reason)
 {
-    LOG_WRN("terminating bgsave: " << reason);
-
-    // next time we get a non-background save.
-    _document->disableBgSave("on unexpected jsdialog");
+    LOG_TRC("terminating bgsave: " << reason);
 
     // Hard terminate the bgsave child
     sendMessage("exit");
     shutdown(true, "unexpected jsdialog");
 
+    reportFailedSave(reason);
+}
+
+void BgSaveParentWebSocketHandler::reportFailedSave(const std::string &reason)
+{
+    // next time we get a non-background save.
+    _document->disableBgSave(reason);
+
     // Synthesize a failed save result
     // FIXME: could this allow another new manual save to race against the ongoing bgsave ?
     // either way - that's better than hanging and blocking if we get interactive dialogs on save.
-    std::string saveFailed = session + " unocommandresult: { \"commandName\": \".uno:Save\", \"success\": false }";
+    std::string saveFailed = "client-" + _session->getId() +
+        " unocommandresult: { \"commandName\": \".uno:Save\", \"success\": false }";
     _document->sendFrame(saveFailed.c_str(), saveFailed.size(), WSOpCode::Text);
 
     _document->updateModifiedOnFailedBgSave();
+    _saveCompleted = true;
 }
 
 void BgSaveParentWebSocketHandler::handleMessage(const std::vector<char>& data)
@@ -266,7 +274,7 @@ void BgSaveParentWebSocketHandler::handleMessage(const std::vector<char>& data)
 
     if (tokens[1] == "jsdialog:")
     {
-        terminateSave(tokens[0], "Unexpected jsdialog message: " +
+        terminateSave("Unexpected jsdialog message: " +
                       COOLProtocol::getAbbreviatedMessage(data));
         return;
     }
@@ -294,6 +302,7 @@ void BgSaveParentWebSocketHandler::handleMessage(const std::vector<char>& data)
                 LOG_DBG("Failed to save, not synthesizing modified state");
                 _document->disableBgSave("on failed save");
             }
+            _saveCompleted = true;
         }
     }
 }
@@ -301,12 +310,22 @@ void BgSaveParentWebSocketHandler::handleMessage(const std::vector<char>& data)
 void BgSaveParentWebSocketHandler::onDisconnect()
 {
     LOG_TRC("Disconnected background web socket to child " << _childPid);
+
     // reap and de-zombify children.
     int status = -1;
     if (waitpid(_childPid, &status, WUNTRACED | WNOHANG) > 0)
+    {
         LOG_TRC("Child " << _childPid << " terminated with status " << status);
+        if (WIFSIGNALED(status) && (WTERMSIG(status) == SIGSEGV ||
+                                    WTERMSIG(status) == SIGBUS ||
+                                    WTERMSIG(status) == SIGABRT))
+            reportFailedSave("crashed with status " + std::to_string(WTERMSIG(status)));
+    }
     else
-        LOG_TRC("Child disconnected but not terminated");
+        LOG_WRN("Background save process disconnected but not terminated " << _childPid);
+
+    if (!_saveCompleted)
+        reportFailedSave("terminated without saving");
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

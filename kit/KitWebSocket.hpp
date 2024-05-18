@@ -83,6 +83,7 @@ protected:
 class BgSaveParentWebSocketHandler final : public WebSocketHandler
 {
     pid_t _childPid;
+    bool _saveCompleted;
     std::string _socketName;
     std::shared_ptr<Document> _document;
     std::shared_ptr<ChildSession> _session;
@@ -94,6 +95,7 @@ public:
                                  const std::shared_ptr<ChildSession> &session)
         : WebSocketHandler(/* isClient = */ false, /* isMasking */ false)
         , _childPid(childPid)
+        , _saveCompleted(false)
         , _socketName(socketName)
         , _document(std::move(document))
         , _session(session)
@@ -109,6 +111,9 @@ protected:
     virtual void handleMessage(const std::vector<char>& data) override;
     virtual void onDisconnect() override;
 
-    // something weird happened, cleanup & notify of failure
-    void terminateSave(const std::string &session, const std::string &reason);
+    // something weird happened, cleanup & report save failure
+    void terminateSave(const std::string &reason);
+
+    // let WSD know something went wrong during the save
+    void reportFailedSave(const std::string &reason);
 };
