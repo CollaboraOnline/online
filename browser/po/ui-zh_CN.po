@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-15 14:13+0200\n"
-"PO-Revision-Date: 2024-03-18 14:01+0000\n"
-"Last-Translator: CloneWith <clonewith@users.noreply.hosted.weblate.org>\n"
+"PO-Revision-Date: 2024-05-17 17:01+0000\n"
+"Last-Translator: lsy223622 <lsy223622@outlook.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
 "collabora-online/ui/zh_Hans/>\n"
-"Language: \n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.5-dev\n"
+"X-Generator: Weblate 5.6-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -1122,7 +1122,7 @@ msgstr ""
 #: src/control/Control.Menubar.js:831
 #: src/control/jsdialog/Definitions.Menu.ts:323
 msgid "Contains text..."
-msgstr ""
+msgstr "包含文本..."
 
 #: src/control/Control.Menubar.js:833 src/control/Control.Menubar.js:843
 #: src/control/jsdialog/Definitions.Menu.ts:327
