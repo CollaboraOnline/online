@@ -74,6 +74,7 @@ if (ssl_flag === 'true')
     data = data.replace(/%HOST%/g, `wss://localhost:${port}`);
 else
     data = data.replace(/%HOST%/g, `ws://localhost:${port}`);
+data = data.replace(/%HEXIFY_URL%/g, '""');
 data = data.replace(/%ACCESS_TOKEN%/g, '');
 data = data.replace(/%ACCESS_TOKEN_TTL%/g, '0');
 data = data.replace(/%ACCESS_HEADER%/g, '');
@@ -92,12 +93,14 @@ data = data.replace(/%PROTOCOL_DEBUG%/g, 'true');
 data = data.replace(/%FRAME_ANCESTORS%/g, '');
 data = data.replace(/%SOCKET_PROXY%/g, 'false');
 data = data.replace(/%UI_DEFAULTS%/g, '{}');
-data = data.replace(/%HEXIFY_URL%/g, '""');
 data = data.replace(/%CHECK_FILE_INFO_OVERRIDE%/g, 'false');
 data = data.replace(/%DEEPL_ENABLED%/g, 'false');
 data = data.replace(/%ZOTERO_ENABLED%/g, 'false');
+data = data.replace(/%SAVED_UI_STATE%/g, 'false');
 data = data.replace(/%WASM_ENABLED%/g, 'false');
 data = data.replace(/%INDIRECTION_URL%/g, '');
+
+data = data.replace(/%BRANDING_THEME%/g, 'cool_brand');
 
 window = new JSDOM(data, {
 				runScripts: 'dangerously',
