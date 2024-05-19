@@ -1999,11 +1999,10 @@ static std::string getCapabilitiesJson(bool convertToAvailable)
 static void sendCapabilities(bool convertToAvailable,
                              const std::shared_ptr<StreamSocket>& socket)
 {
-    std::string capabilities = getCapabilitiesJson(convertToAvailable);
     http::Response httpResponse(http::StatusCode::OK);
     FileServerRequestHandler::hstsHeaders(httpResponse);
     httpResponse.set("Last-Modified", Util::getHttpTimeNow());
-    httpResponse.setBody(capabilities, "application/json");
+    httpResponse.setBody(getCapabilitiesJson(convertToAvailable), "application/json");
     httpResponse.set("X-Content-Type-Options", "nosniff");
     socket->sendAndShutdown(httpResponse);
     LOG_INF("Sent capabilities.json successfully.");
