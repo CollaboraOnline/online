@@ -383,7 +383,7 @@ public:
 
     ConvertToAddressResolver(std::vector<std::string> addressesToResolve, ClientRequestDispatcher::AsyncFn asyncCb)
         : _addressesToResolve(std::move(addressesToResolve))
-        , _asyncCb(asyncCb)
+        , _asyncCb(std::move(asyncCb))
         , _allow(true)
     {
     }
