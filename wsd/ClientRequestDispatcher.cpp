@@ -2019,7 +2019,7 @@ void ClientRequestDispatcher::handleCapabilitiesRequest(const Poco::Net::HTTPReq
         COOLWSD::getWebServerPoll()->addCallback([socket, allowedConvert]() { sendCapabilities(allowedConvert, socket); });
     };
 
-    allowConvertTo(socket->clientAddress(), request, convertToAllowedCb);
+    allowConvertTo(socket->clientAddress(), request, std::move(convertToAllowedCb));
 }
 
 #endif
