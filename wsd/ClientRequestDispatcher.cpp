@@ -1733,7 +1733,7 @@ void ClientRequestDispatcher::handleClientProxyRequest(const Poco::Net::HTTPRequ
     // need to move into the DocumentBroker context before doing session lookup / creation etc.
     docBroker->setupTransfer(
         disposition,
-        [docBroker, id = _id, uriPublic, isReadOnly,
+        [docBroker, id = _id, uriPublic = std::move(uriPublic), isReadOnly,
          requestDetails](const std::shared_ptr<Socket>& moveSocket)
         {
             // Now inside the document broker thread ...
