@@ -277,7 +277,7 @@ public:
                 LOG_TRC("WebSocketSession: queueing shutdown");
                 std::weak_ptr<WebSocketSession> weakptr
                     = std::static_pointer_cast<WebSocketSession>(shared_from_this());
-                pollPtr->addCallback([weakptr]() {
+                pollPtr->addCallback([weakptr=std::move(weakptr)]() {
                     auto ws = weakptr.lock();
                     if (ws)
                     {
