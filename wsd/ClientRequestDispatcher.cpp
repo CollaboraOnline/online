@@ -1720,55 +1720,54 @@ void ClientRequestDispatcher::handleClientProxyRequest(const Poco::Net::HTTPRequ
     auto docBroker = pair.first;
     auto errorMsg = pair.second;
 
-    if (docBroker)
-    {
-        // need to move into the DocumentBroker context before doing session lookup / creation etc.
-        docBroker->setupTransfer(
-            disposition,
-            [docBroker, id = _id, uriPublic, isReadOnly,
-             requestDetails](const std::shared_ptr<Socket>& moveSocket)
-            {
-                // Now inside the document broker thread ...
-                LOG_TRC_S("In the docbroker thread for " << docBroker->getDocKey());
-
-                const int fd = moveSocket->getFD();
-                auto streamSocket = std::static_pointer_cast<StreamSocket>(moveSocket);
-                try
-                {
-                    docBroker->handleProxyRequest(id, uriPublic, isReadOnly, requestDetails,
-                                                  streamSocket);
-                    return;
-                }
-                catch (const UnauthorizedRequestException& exc)
-                {
-                    LOG_ERR_S("Unauthorized Request while starting session on "
-                              << docBroker->getDocKey() << " for socket #" << fd
-                              << ". Terminating connection. Error: " << exc.what());
-                }
-                catch (const StorageConnectionException& exc)
-                {
-                    LOG_ERR_S("Storage error while starting session on "
-                              << docBroker->getDocKey() << " for socket #" << fd
-                              << ". Terminating connection. Error: " << exc.what());
-                }
-                catch (const std::exception& exc)
-                {
-                    LOG_ERR_S("Error while starting session on "
-                              << docBroker->getDocKey() << " for socket #" << fd
-                              << ". Terminating connection. Error: " << exc.what());
-                }
-                // badness occurred:
-                HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, streamSocket);
-            });
-    }
-    else
+    if (!docBroker)
     {
         LOG_ERR("Failed to find document [" << docKey << "]: " << errorMsg);
         // badness occurred:
         auto streamSocket = std::static_pointer_cast<StreamSocket>(disposition.getSocket());
         HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, streamSocket);
         // FIXME: send docunloading & re-try on client ?
+        return;
     }
+
+    // need to move into the DocumentBroker context before doing session lookup / creation etc.
+    docBroker->setupTransfer(
+        disposition,
+        [docBroker, id = _id, uriPublic, isReadOnly,
+         requestDetails](const std::shared_ptr<Socket>& moveSocket)
+        {
+            // Now inside the document broker thread ...
+            LOG_TRC_S("In the docbroker thread for " << docBroker->getDocKey());
+
+            const int fd = moveSocket->getFD();
+            auto streamSocket = std::static_pointer_cast<StreamSocket>(moveSocket);
+            try
+            {
+                docBroker->handleProxyRequest(id, uriPublic, isReadOnly, requestDetails,
+                                              streamSocket);
+                return;
+            }
+            catch (const UnauthorizedRequestException& exc)
+            {
+                LOG_ERR_S("Unauthorized Request while starting session on "
+                          << docBroker->getDocKey() << " for socket #" << fd
+                          << ". Terminating connection. Error: " << exc.what());
+            }
+            catch (const StorageConnectionException& exc)
+            {
+                LOG_ERR_S("Storage error while starting session on "
+                          << docBroker->getDocKey() << " for socket #" << fd
+                          << ". Terminating connection. Error: " << exc.what());
+            }
+            catch (const std::exception& exc)
+            {
+                LOG_ERR_S("Error while starting session on "
+                          << docBroker->getDocKey() << " for socket #" << fd
+                          << ". Terminating connection. Error: " << exc.what());
+            }
+            // badness occurred:
+            HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, streamSocket);
+        });
 }
 #endif
 
