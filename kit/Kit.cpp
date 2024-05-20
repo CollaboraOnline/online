@@ -1330,6 +1330,8 @@ void Document::startThreads()
 {
     if (SocketPoll::PollWatchdog)
         SocketPoll::PollWatchdog->startThread();
+
+    getLOKit()->startThreads();
 }
 
 void Document::handleSaveMessage(const std::string &)
