@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-15 14:13+0200\n"
-"PO-Revision-Date: 2024-05-17 17:01+0000\n"
+"PO-Revision-Date: 2024-05-19 19:01+0000\n"
 "Last-Translator: Ali <alimahwer@yahoo.com>\n"
 "Language-Team: Arabic <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ar/>\n"
@@ -238,7 +238,7 @@ msgstr "مستويات السجل"
 #: src/canvas/sections/CommentListSection.ts:135
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.div:51-7
 msgid "Close"
-msgstr "غلق"
+msgstr "إغلاق"
 
 #: admin/admin.strings.js:65
 msgid "Update Log Levels"
@@ -246,7 +246,7 @@ msgstr "تحديث مستويات السجل"
 
 #: admin/admin.strings.js:66
 msgid "Version Information"
-msgstr "معلومات الإصدار"
+msgstr "معلومات حول الإصدار"
 
 #: admin/admin.strings.js:67
 msgid "License"
@@ -576,7 +576,7 @@ msgstr "المستند خامل - رجاءً انقر عليه لإعادة تح
 
 #: src/control/Control.IdleHandler.ts:42
 msgid "Idle document - please tap to reload and resume editing"
-msgstr "المستند خامل - رجاءاً انقر عليه لإعادة تحميله ومتابعة التحرير"
+msgstr "المستند خامل - رجاءً، أنقُر عليه لإعادة تحميله ومتابعة التحرير"
 
 #: src/control/Control.JSDialogBuilder.js:481
 msgid "Solid"
@@ -1306,7 +1306,6 @@ msgstr "مُراجعة"
 #: src/control/Control.NotebookbarDraw.js:93
 #: src/control/Control.NotebookbarImpress.js:108
 #: src/control/Control.NotebookbarWriter.js:73
-#, fuzzy
 msgid "Format"
 msgstr "صيغة"
 
@@ -1349,14 +1348,14 @@ msgstr "تصدير كـ"
 #: src/control/Control.NotebookbarImpress.js:227
 #: src/control/Control.NotebookbarWriter.js:202
 msgid "Share"
-msgstr "شارك"
+msgstr "مشاركة"
 
 #: src/control/Control.NotebookbarCalc.js:171
 #: src/control/Control.NotebookbarDraw.js:206
 #: src/control/Control.NotebookbarImpress.js:237
 #: src/control/Control.NotebookbarWriter.js:211
 msgid "See history"
-msgstr "شاهد السجل"
+msgstr "أنظُر السجل التاريخي"
 
 #: src/control/Control.NotebookbarCalc.js:254
 #: src/control/Control.NotebookbarDraw.js:320
@@ -1450,7 +1449,7 @@ msgstr "إدراج أعمدة قبل"
 
 #: src/control/Control.NotebookbarCalc.js:948
 msgid "Delete Rows"
-msgstr "حذف الصفوف"
+msgstr "حذف صفوف"
 
 #: src/control/Control.NotebookbarCalc.js:960
 msgid "Insert Rows Below"
@@ -1462,7 +1461,7 @@ msgstr "إدراج أعمدة بعد"
 
 #: src/control/Control.NotebookbarCalc.js:974
 msgid "Delete Columns"
-msgstr "حذف الأعمدة"
+msgstr "حذف أعمدة"
 
 #: src/control/Control.NotebookbarCalc.js:1153
 #: src/control/Control.NotebookbarDraw.js:335
@@ -1523,7 +1522,6 @@ msgid "PDF Document (.pdf) - Expert"
 msgstr "مستند PDF (.pdf) - خبير"
 
 #: src/control/Control.NotebookbarDraw.js:1042
-#, fuzzy
 msgid "Page Layout"
 msgstr "تخطيط الصفحة"
 
@@ -1701,7 +1699,7 @@ msgstr "نسخ الورقة..."
 
 #: src/control/Control.Tabs.js:387
 msgid "Are you sure you want to delete sheet, %sheet%?"
-msgstr "أمتأكّد من حذف الورقة، %الورقة% ؟"
+msgstr "هل أنت متأكّد من حذف الورقة، %sheet%؟"
 
 #: src/control/Control.Tabs.js:398
 msgid "Rename sheet"
@@ -2073,7 +2071,7 @@ msgstr "الحد الاعلى"
 
 #: src/control/jsdialog/Definitions.Menu.ts:273
 msgid "Insert Local Image"
-msgstr "أدرج صورة محلية"
+msgstr "إدراج صورة محلية"
 
 #: src/control/jsdialog/Definitions.Menu.ts:278
 msgid "Very Tight"
@@ -2081,19 +2079,19 @@ msgstr "ضيق جداً"
 
 #: src/control/jsdialog/Definitions.Menu.ts:279
 msgid "Tight"
-msgstr "ضيق"
+msgstr "مُتراصّ"
 
 #: src/control/jsdialog/Definitions.Menu.ts:280
 msgid "Normal"
-msgstr "عادي"
+msgstr "اعتيادي"
 
 #: src/control/jsdialog/Definitions.Menu.ts:281
 msgid "Loose"
-msgstr "مرن"
+msgstr "فضفاض"
 
 #: src/control/jsdialog/Definitions.Menu.ts:282
 msgid "Very Loose"
-msgstr "مرن جداً"
+msgstr "فضفاض جداً"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:149
 msgid "No fill"
@@ -2163,7 +2161,7 @@ msgstr "ستظهر هنا العناوين والكائنات التي تضيف�
 
 #: src/core/Socket.js:65
 msgid "Oops, there is a problem connecting to %productName: "
-msgstr "آخ، حدثت مشكلة في الاتصال بـ%productName: "
+msgstr "عفواً؛ حدثت مشكلة في الاتصال بـ%productName: "
 
 #: src/core/Socket.js:613
 msgid "Server is now reachable. We have to refresh the page now."
@@ -2357,7 +2355,7 @@ msgstr "أمتأكد من حذف هذه الشريحة؟"
 
 #: src/docdispatcher.ts:359
 msgid "Are you sure you want to delete this page?"
-msgstr "أمتأكد من حذف هذه الصفحة؟"
+msgstr "هل أنت متأكد من حذف هذه الصفحة؟"
 
 #: src/errormessages.js:22
 msgid "No disk space left on server."
@@ -2380,7 +2378,7 @@ msgid ""
 msgstr ""
 "هذه نسخة غير مدعومة من {productname}. ولتفادي الانطباع بأنه مناسب للنشر في "
 "المؤسسات، تظهر هذه الرسالة عند استخدام أكثر من {docs} مستندات أو "
-"{connections} اتصالات بشكل متزامن"
+"{connections} اتصالات بشكل متزامن."
 
 #: src/errormessages.js:25
 msgid "More information and support"
@@ -2501,6 +2499,7 @@ msgid ""
 "Failed to establish socket connection or socket connection closed "
 "unexpectedly."
 msgstr ""
+"فشل في تأسيس مأخذ توصيل أو أن مأخذ التوصيل قد تمّ إغلاقه بشكل غير متوقع."
 
 #: src/errormessages.js:43
 msgid "Failed to load document."
@@ -2581,7 +2580,7 @@ msgstr "الدوال"
 
 #: src/layer/tile/CanvasTileLayer.js:2277
 msgid "and %COUNT more"
-msgstr ""
+msgstr "و %COUNT إضافي"
 
 #: src/layer/tile/CanvasTileLayer.js:2291
 msgid "Copy link location"
@@ -2601,11 +2600,11 @@ msgstr "لا تعليقات"
 
 #: src/canvas/sections/CommentListSection.ts:134
 msgid "A comment is being edited"
-msgstr ""
+msgstr "يتم الآن تحرير ملاحظة"
 
 #: src/canvas/sections/CommentListSection.ts:135
 msgid "Please save or discard the comment currently being edited."
-msgstr ""
+msgstr "رجاءً، قم بحفظ أو تجاهل الملاحظة التي يتم تحريرها الآن."
 
 #: src/canvas/sections/CommentListSection.ts:959
 msgid "Modify"
@@ -2660,9 +2659,8 @@ msgid "Reject change"
 msgstr "ارفض التغيير"
 
 #: src/canvas/sections/CommentSection.ts:349
-#, fuzzy
 msgid "Resolved"
-msgstr "حل"
+msgstr "تمّ الحل"
 
 #: src/main.js:134
 msgid "Warning! The browser you are using is not supported."
@@ -2717,24 +2715,22 @@ msgstr ""
 "الحالي أو قم بإلغائه قبل بدء تنزيل جديد </p>"
 
 #: src/map/Clipboard.js:1207
-#, fuzzy
 msgid ""
 "<p>Your browser has very limited access to the clipboard</p><p><b>Please "
 "press</b> <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to "
 "see more options</p><p>Close popup to ignore paste special</p>"
 msgstr ""
-"<p> متصفحك لديه وصول محدود للغاية إلى الحافظة </p> <p> الرجاء الضغط الآن: "
-"<kbd> Ctrl </kbd> <span class=\"kbd--plus\"> + </span> <kbd> V </kbd> "
-"لمشاهدة المزيد من الخيارات </p> <p class=\"vex-footnote\"> أغلق النافذة "
-"المنبثقة لتجاهل اللصق الخاص </p>"
+"<p>متصفحك لديه وصول مقيد إلى الحافظة</p><p><b>رجاءً، إضغط على</b> <kbd>Ctrl</"
+"kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> لمزيد من الخيارات</"
+"p><p>أغلق النافذة المنبثقة و تجاهل اللصق الخاص</p>"
 
 #: src/map/Clipboard.js:1214
 msgid "Paste from this document"
-msgstr ""
+msgstr "لصق من هذا المستند"
 
 #: src/map/Clipboard.js:1214
 msgid "Cancel paste special"
-msgstr ""
+msgstr "إلغاء اللصق الخاص"
 
 #: src/map/Map.js:224
 msgid "Initializing..."
@@ -2770,15 +2766,15 @@ msgstr "فشل تحميل الملف إلى الخادم مع الحالة:٪ 0"
 
 #: src/map/handler/Map.SlideShow.js:55
 msgid "Empty Slide Show"
-msgstr ""
+msgstr "عرض شريحة فارغة"
 
 #: src/map/handler/Map.SlideShow.js:161
 msgid "Windowed Presentation: "
-msgstr ""
+msgstr "عرض في نافذة: "
 
 #: src/map/handler/Map.SlideShow.js:168
 msgid "Windowed Presentation Blocked"
-msgstr ""
+msgstr "إيقاف العرض في نافذة"
 
 #: src/map/handler/Map.SlideShow.js:169
 msgid ""
@@ -2786,39 +2782,40 @@ msgid ""
 "slide shows to be displayed in separated windows, allowing for easy screen "
 "sharing."
 msgstr ""
+"تم حظر العرض التقديمي. يرجى السماح بالنوافذ المنبثقة في متصفحك. يتيح ذلك "
+"إمكانية عرض عروض الشرائح في نوافذ منفصلة، مما يسمح بمشاركة الشاشة بسهولة."
 
 #: src/map/handler/Map.SlideShow.js:183
 msgid "Presenting in window"
-msgstr ""
+msgstr "عرض في نافذة"
 
 #: src/map/handler/Map.SlideShow.js:184
 msgid "Close Presentation"
-msgstr ""
+msgstr "إغلاق العرض"
 
 #: src/map/handler/Map.SlideShow.js:204
 msgid "Presenting in fullscreen"
-msgstr ""
+msgstr "العرض ملء الشاشة"
 
 #: src/map/handler/Map.SlideShow.js:205
-#, fuzzy
 msgid "End Presentation"
-msgstr "عرض"
+msgstr "نهاية العرض"
 
 #: src/map/handler/Map.SlideShow.js:303
 msgid "Already presenting"
-msgstr ""
+msgstr "يتم عرضه حالياً"
 
 #: src/map/handler/Map.SlideShow.js:304
 msgid "You are already presenting this document"
-msgstr ""
+msgstr "أنت تعرض هذه المستند حالياً"
 
 #: src/map/handler/Map.SlideShow.js:314
 msgid "Presentation disabled"
-msgstr ""
+msgstr "تمّ تعطيل العرض"
 
 #: src/map/handler/Map.SlideShow.js:315
 msgid "Presentation mode has been disabled for this document"
-msgstr ""
+msgstr "وضعية العرض لهذا المستند تمّ تعطيلها"
 
 #: src/map/handler/Map.WOPI.js:152
 msgid "Creating new file from template..."
@@ -2841,9 +2838,8 @@ msgid "Collabora Online Welcome"
 msgstr "مرحبا بكم في Collabora Online"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:26-7
-#, fuzzy
 msgid "Explore The New %coolVersion"
-msgstr "استكشاف %coolVersion الجديد"
+msgstr "استكشف الإصدار %coolVersion"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:27-7
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:38-7
@@ -2863,9 +2859,8 @@ msgstr ""
 "collabora-office-android-ios/\">التطبيقات</a> للجوال."
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:37-7
-#, fuzzy
 msgid "Discover All The Changes"
-msgstr "اكتشف كل التغييرات"
+msgstr "استكشف كل التغييرات"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:39-7
 msgid ""
@@ -2913,6 +2908,10 @@ msgid ""
 "translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
 "translate=\"true\">3</a>"
 msgstr ""
+"<a id=\"slide-1-indicator\" class=\"active\" href=\"#slide-1\" data-"
+"translate=\"true\">1</a> <a id=\"slide-2-indicator\" href=\"#slide-2\" data-"
+"translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
+"translate=\"true\">3</a>"
 
 #~ msgid "ODF Spreadsheet (.ods)"
 #~ msgstr "جدول بيانات ODF (.ods)"
