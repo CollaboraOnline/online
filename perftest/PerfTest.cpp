@@ -29,6 +29,7 @@ PerfTest::PerfTest(const std::string &name, std::shared_ptr<PerfTestSocketHandle
     _handler(handler)
 {
     addResult("name",_name);
+    _fileName = _name;
 }
 
 bool PerfTest::isStarted()
@@ -173,6 +174,11 @@ CyclePerfTest::CyclePerfTest(const std::string &name, const std::string &server)
 {
 }
 
+CyclePerfTest::CyclePerfTest(const std::string &name, std::shared_ptr<PerfTestSocketHandler> handler) :
+    PerfTest(name, handler)
+{
+}
+
 void CyclePerfTest::startMeasurement()
 {
     LOG_DBG("CyclePerfTest startMeasurement");
@@ -275,6 +281,25 @@ void MessagePerfTest::startMeasurement()
 void MessagePerfTest::stopMeasurement()
 {
     PerfTest::stopMeasurement();
+    _measuring = false;
+    addResult("messageCount",std::to_string(_messageCount));
+    addResult("messageBytes",std::to_string(_messageBytes));
+}
+
+CombinedPerfTest::CombinedPerfTest(const std::string &name, const std::string &server) :
+    CyclePerfTest(name, std::make_shared<MessagePerfTestSocketHandler>(name, server, &_measuring, &_messageCount, &_messageBytes))
+{
+}
+
+void CombinedPerfTest::startMeasurement()
+{
+    CyclePerfTest::startMeasurement();
+    _measuring = true;
+}
+
+void CombinedPerfTest::stopMeasurement()
+{
+    CyclePerfTest::stopMeasurement();
     _measuring = false;
     addResult("messageCount",std::to_string(_messageCount));
     addResult("messageBytes",std::to_string(_messageBytes));

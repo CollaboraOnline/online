@@ -787,7 +787,7 @@ perf: coolperftest $(all_perftests_la)
 		echo "Set perf_event_paranoid to 2 in order to use perf:"; \
 		echo "  \`sudo sysctl kernel.perf_event_paranoid=2\`"; \
 	fi
-	mkdir -p $(perftest_workdir)
+	@mkdir -p $(perftest_workdir)
 
 # Compile and run performance tests
 # make check-perf

@@ -11,11 +11,11 @@
 
 #include <perftest/PerfTest.hpp>
 
-class LoadCalcLarge : public CyclePerfTest
+class LoadCalcLarge : public CombinedPerfTest
 {
 public:
     LoadCalcLarge(const std::string &server) :
-        CyclePerfTest(__func__, server)
+        CombinedPerfTest(__func__, server)
     {
     }
 

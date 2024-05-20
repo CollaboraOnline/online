@@ -70,6 +70,10 @@ private:
 
 public:
     CyclePerfTest(const std::string &name, const std::string &server);
+protected:
+    CyclePerfTest(const std::string &name, std::shared_ptr<PerfTestSocketHandler> handler);
+
+public:
     void startMeasurement() override;
     void stopMeasurement() override;
 private:
@@ -87,6 +91,26 @@ private:
 
 public:
     MessagePerfTest(const std::string &name, const std::string &server);
+
+public:
+    void startMeasurement() override;
+    void stopMeasurement() override;
+};
+
+// Measure both Cycles and Messages
+// Must reimplement one class to avoid diamond inheritance
+// Reimplement MessagePerfTest because it is simpler
+// Fortunately we do not have to reimplement MessagePerfTestSocketHandler
+class CombinedPerfTest : public CyclePerfTest
+{
+private:
+    // Shared with MessagePerfTestSocketHandler
+    std::atomic<bool> _measuring = false;
+    std::atomic<unsigned int> _messageCount = 0;
+    std::atomic<unsigned int> _messageBytes = 0;
+
+public:
+    CombinedPerfTest(const std::string &name, const std::string &server);
 
 public:
     void startMeasurement() override;

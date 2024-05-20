@@ -11,11 +11,11 @@
 
 #include <perftest/PerfTest.hpp>
 
-class LoadImpressSmall : public CyclePerfTest
+class LoadImpressSmall : public CombinedPerfTest
 {
 public:
     LoadImpressSmall(const std::string &server) :
-        CyclePerfTest(__func__, server)
+        CombinedPerfTest(__func__, server)
     {
     }
 
