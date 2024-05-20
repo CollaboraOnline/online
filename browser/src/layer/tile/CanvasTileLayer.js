@@ -679,7 +679,8 @@ L.CanvasTileLayer = L.Layer.extend({
 		// text, presentation, spreadsheet, etc
 		this._docType = options.docType;
 		this._documentInfo = '';
-		app.file.textCursor.visible = false;
+		if (this._docType !== 'text')
+			app.file.textCursor.visible = false; // Don't change the default for Writer.
 		// Last cursor position for invalidation
 		this.lastCursorPos = null;
 		// Are we zooming currently ? - if so, no cursor.
@@ -2363,8 +2364,6 @@ L.CanvasTileLayer = L.Layer.extend({
 			this.persistCursorPositionInWriter = false;
 			return;
 		}
-
-		app.file.textCursor.visible = true;
 
 		// tells who trigerred cursor invalidation, but recCursors is stil "our"
 		var modifierViewId = parseInt(obj.viewId);
