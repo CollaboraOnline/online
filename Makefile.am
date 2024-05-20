@@ -741,15 +741,27 @@ perftest_result_file = $(perftest_workdir)/result.txt
 perftest_ldflags = -module -rpath /dummy
 all_perftests_la =
 
-all_perftests_la += perftest/tests/sample/SamplePerfTest.la
-perftest_tests_sample_SamplePerfTest_la_SOURCES=perftest/tests/sample/SamplePerfTest.cpp
-perftest_tests_sample_SamplePerfTest_la_LDFLAGS=$(perftest_ldflags)
-all_perftests_la += perftest/tests/example/ExamplePerfTest.la
-perftest_tests_example_ExamplePerfTest_la_SOURCES=perftest/tests/example/ExamplePerfTest.cpp
-perftest_tests_example_ExamplePerfTest_la_LDFLAGS=$(perftest_ldflags)
-all_perftests_la += perftest/tests/sample/LoadHelloWorld.la
-perftest_tests_sample_LoadHelloWorld_la_SOURCES=perftest/tests/sample/LoadHelloWorld.cpp
-perftest_tests_sample_LoadHelloWorld_la_LDFLAGS=$(perftest_ldflags)
+all_perftests_la += perftest/tests/load/LoadCalcLarge.la
+perftest_tests_load_LoadCalcLarge_la_SOURCES=perftest/tests/load/LoadCalcLarge.cpp
+perftest_tests_load_LoadCalcLarge_la_LDFLAGS=$(perftest_ldflags)
+all_perftests_la += perftest/tests/load/LoadCalcSmall.la
+perftest_tests_load_LoadCalcSmall_la_SOURCES=perftest/tests/load/LoadCalcSmall.cpp
+perftest_tests_load_LoadCalcSmall_la_LDFLAGS=$(perftest_ldflags)
+all_perftests_la += perftest/tests/load/LoadDrawSmall.la
+perftest_tests_load_LoadDrawSmall_la_SOURCES=perftest/tests/load/LoadDrawSmall.cpp
+perftest_tests_load_LoadDrawSmall_la_LDFLAGS=$(perftest_ldflags)
+all_perftests_la += perftest/tests/load/LoadImpressLarge.la
+perftest_tests_load_LoadImpressLarge_la_SOURCES=perftest/tests/load/LoadImpressLarge.cpp
+perftest_tests_load_LoadImpressLarge_la_LDFLAGS=$(perftest_ldflags)
+all_perftests_la += perftest/tests/load/LoadImpressSmall.la
+perftest_tests_load_LoadImpressSmall_la_SOURCES=perftest/tests/load/LoadImpressSmall.cpp
+perftest_tests_load_LoadImpressSmall_la_LDFLAGS=$(perftest_ldflags)
+all_perftests_la += perftest/tests/load/LoadWriterLarge.la
+perftest_tests_load_LoadWriterLarge_la_SOURCES=perftest/tests/load/LoadWriterLarge.cpp
+perftest_tests_load_LoadWriterLarge_la_LDFLAGS=$(perftest_ldflags)
+all_perftests_la += perftest/tests/load/LoadWriterSmall.la
+perftest_tests_load_LoadWriterSmall_la_SOURCES=perftest/tests/load/LoadWriterSmall.cpp
+perftest_tests_load_LoadWriterSmall_la_LDFLAGS=$(perftest_ldflags)
 
 noinst_LTLIBRARIES=$(all_perftests_la)
 
@@ -775,6 +787,7 @@ perf: coolperftest $(all_perftests_la)
 		echo "Set perf_event_paranoid to 2 in order to use perf:"; \
 		echo "  \`sudo sysctl kernel.perf_event_paranoid=2\`"; \
 	fi
+	mkdir -p $(perftest_workdir)
 
 # Compile and run performance tests
 # make check-perf
