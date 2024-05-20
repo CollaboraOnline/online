@@ -69,7 +69,7 @@
 	align-self: center;
 }
 
-@media screen and (max-width: 1238px) {
+@media screen and (max-width: 900px) {
 	.main-nav.hasnotebookbar:not(.readonly) #document-titlebar {
 		display: none;
 	}
