@@ -99,6 +99,11 @@
 	border-top: 1px solid var(--color-border);
 	padding: 4px 0px;
 }
+#toolbar-down > .ui-scroll-wrapper > .vertical {
+	/* To do: test if all .ui-scroll-wrapper.vertical
+	   can be set with this and if so, remove this  */
+	align-items: center;
+}
 #toolbar-down:not(.mobile) {
 	background-color: var(--color-main-background);
 }
