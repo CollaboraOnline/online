@@ -607,6 +607,8 @@ public:
         if (!body.empty()) // Type is only meaningful if there is a body.
             _header.setContentType(std::move(contentType));
 
+        _header.add("Content-Length", std::to_string(body.size()));
+
         auto iss = std::make_shared<std::istringstream>(body, std::ios::binary);
 
         setBodySource(
