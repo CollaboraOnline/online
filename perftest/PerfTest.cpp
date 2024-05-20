@@ -43,6 +43,7 @@ bool PerfTest::isFinished()
 
 void PerfTest::abort(const std::string &message)
 {
+    std::cerr << "PerfTest abort: " << message << std::endl;
     LOG_ERR("PerfTest abort: " << message);
     disconnect();
     Util::forcedExit(EX_SOFTWARE);

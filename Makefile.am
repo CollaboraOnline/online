@@ -747,6 +747,9 @@ perftest_tests_sample_SamplePerfTest_la_LDFLAGS=$(perftest_ldflags)
 all_perftests_la += perftest/tests/example/ExamplePerfTest.la
 perftest_tests_example_ExamplePerfTest_la_SOURCES=perftest/tests/example/ExamplePerfTest.cpp
 perftest_tests_example_ExamplePerfTest_la_LDFLAGS=$(perftest_ldflags)
+all_perftests_la += perftest/tests/sample/LoadHelloWorld.la
+perftest_tests_sample_LoadHelloWorld_la_SOURCES=perftest/tests/sample/LoadHelloWorld.cpp
+perftest_tests_sample_LoadHelloWorld_la_LDFLAGS=$(perftest_ldflags)
 
 noinst_LTLIBRARIES=$(all_perftests_la)
 
@@ -825,16 +828,16 @@ define perftest_run_coolperftest
 	$(eval so=perftest/tests/$(dir $(1)).libs/$(basename $(notdir $1)).so)
 	@echo "Running perftest $(1) ($(so))"
 	@./coolperftest $(so) wss://localhost:9980 | tee $(perftest_result_file)
-	@if grep name $(perftest_result_file); then \
+	@if grep name $(perftest_result_file) > /dev/null 2>&1; then \
 		mkdir -p perftest/results/$(dir $(1)); \
 		cp $(perftest_result_file) perftest/results/$(basename $(1)).txt; \
 	fi
 endef
 
 define perftest_kill_coolwsd
-	@if pgrep -F $(perftest_pid_file); then \
+	@if pgrep -F $(perftest_pid_file) > /dev/null 2>&1; then \
 		sleep 1; \
-		if pgrep -F $(perftest_pid_file); then \
+		if pgrep -F $(perftest_pid_file) > /dev/null 2>&1; then \
 			echo "Killing coolwsd by pid: $(perftest_pid_file)";\
 			pkill -e -F $(perftest_pid_file) || pkill -e --signal SIGKILL -F $(perftest_pid_file) || true;\
 		fi; \

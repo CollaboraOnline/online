@@ -80,8 +80,10 @@ void PerfTestSocketHandler::loadDocument(const std::string &filePath)
     std::string fileabs = Poco::Path(filePath).makeAbsolute().toString();
     Poco::URI::encode("https://localhost:9980/wopi/files" + fileabs, ":/?", fileUri);
 
-    std::string message = "load url=" + fileUri + " deviceFormFactor=desktop";
-    sendMessage(message);
+    sendMessage("load url=" + fileUri + " deviceFormFactor=desktop");
+    // clientvisiblearea and clientzoom are necessary for tiles to be rendered and sent
+    sendMessage("clientvisiblearea x=0 y=0 width=99999 height=99999 splitx=0 splity=0");
+    sendMessage("clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3840 tiletwipheight=3840");
 }
 
 void PerfTestSocketHandler::shutdown()
@@ -138,6 +140,7 @@ void PerfTestSocketHandler::handleMessage(const std::vector<char> &data)
 
 void PerfTestSocketHandler::abort(const std::string &message)
 {
+    std::cerr << "PerfTestSocketHandler abort: " << message << std::endl;
     LOG_ERR("PerfTestSocketHandler abort: " << message);
     WebSocketHandler::shutdown();
     Util::forcedExit(EX_SOFTWARE);

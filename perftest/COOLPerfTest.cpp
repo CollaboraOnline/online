@@ -75,7 +75,7 @@ int COOLPerfTest::main(const std::vector<std::string>& args)
     std::cerr << "Starting PerfTest " << object << std::endl << "Logging to perftest/workdir/coolperftest.log" << std::endl;
     std::map<std::string, std::string> logConfig;
     logConfig.emplace("path","perftest/workdir/coolperftest.log");
-    Log::initialize("perftest","debug",false,true,logConfig);
+    Log::initialize("perftest","trace",false,true,logConfig);
     LOG_DBG("Starting PerfTest. Object: " << object << " Server: " << server);
 
     LOG_DBG("Dynamicaly linking library " << object);
