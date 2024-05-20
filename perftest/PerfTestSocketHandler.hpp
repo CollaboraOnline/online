@@ -51,17 +51,23 @@ public:
 class MessagePerfTestSocketHandler : public PerfTestSocketHandler
 {
 private:
+    const std::string _messageFile;
     // Shared with MessagePerfTest
     std::atomic<bool> *_measuring;
     std::atomic<unsigned int> *_messageCount;
     std::atomic<unsigned int> *_messageBytes;
+    std::atomic<unsigned int> *_messageCountTile;
+    std::atomic<unsigned int> *_messageBytesTile;
 
 public:
     MessagePerfTestSocketHandler(
             const std::string &name,
             const std::string &server,
+            const std::string &messageFile,
             std::atomic<bool>* measuring,
             std::atomic<unsigned int>* messageCount,
-            std::atomic<unsigned int>* messageBytes);
+            std::atomic<unsigned int>* messageBytes,
+            std::atomic<unsigned int>* messageCountTile,
+            std::atomic<unsigned int>* messageBytesTile);
     void handleMessage(const std::vector<char> &data) override;
 };

@@ -733,11 +733,13 @@ check-recursive: eslint
 check: check-for-system-nss prettier eslint check-recursive
 	$(GEN_COVERAGE_COMMAND)
 
-perftest_workdir = $(abs_builddir)/perftest/workdir
+perftest_dir = $(abs_builddir)/perftest
+perftest_workdir = $(perftest_dir)/workdir
 perftest_pid_file = $(perftest_workdir)/coolwsd.pid
 perftest_coolwsd_log = $(perftest_workdir)/coolwsd.log
 perftest_coolwsd_output = $(perftest_workdir)/coolwsd_output.log
-perftest_result_file = $(perftest_workdir)/result.txt
+perftest_coolperftest_output = $(perftest_workdir)/coolperftest_output.txt
+perftest_results_dir = $(perftest_dir)/results
 perftest_ldflags = -module -rpath /dummy
 all_perftests_la =
 
@@ -788,6 +790,7 @@ perf: coolperftest $(all_perftests_la)
 		echo "  \`sudo sysctl kernel.perf_event_paranoid=2\`"; \
 	fi
 	@mkdir -p $(perftest_workdir)
+	@mkdir -p $(perftest_results_dir)
 
 # Compile and run performance tests
 # make check-perf
@@ -840,10 +843,10 @@ endef
 define perftest_run_coolperftest
 	$(eval so=perftest/tests/$(dir $(1)).libs/$(basename $(notdir $1)).so)
 	@echo "Running perftest $(1) ($(so))"
-	@./coolperftest $(so) wss://localhost:9980 | tee $(perftest_result_file)
-	@if grep name $(perftest_result_file) > /dev/null 2>&1; then \
-		mkdir -p perftest/results/$(dir $(1)); \
-		cp $(perftest_result_file) perftest/results/$(basename $(1)).txt; \
+	@./coolperftest $(so) "$(perftest_results_dir)/$(dir $(1))" wss://localhost:9980 | tee $(perftest_coolperftest_output)
+	@if grep name $(perftest_coolperftest_output) > /dev/null 2>&1; then \
+		mkdir -p $(perftest_results_dir)/$(dir $(1)); \
+		cp $(perftest_coolperftest_output) $(perftest_results_dir)/$(basename $(1)).txt; \
 	fi
 endef
 

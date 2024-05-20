@@ -28,8 +28,6 @@
 #include <perftest/PerfTest.hpp>
 #include <perftest/PerfTestSocketHandler.hpp>
 
-typedef std::shared_ptr<PerfTest> (CreatePerfTestFunction)(std::string &server);
-
 class COOLPerfTest : public Poco::Util::Application
 {
 public:
@@ -41,9 +39,10 @@ protected:
 // coverity[root_function] : don't warn about uncaught exceptions
 int COOLPerfTest::main(const std::vector<std::string>& args)
 {
-    if (args.size() != 2) {
-        std::cerr << "Usage: ./coolperftest <object> <server>" << std::endl;
+    if (args.size() != 3) {
+        std::cerr << "Usage: ./coolperftest <object> <results_dir> <server>" << std::endl;
         std::cerr << "       object: name of the perf test shared object" << std::endl;
+        std::cerr << "       results_dir: Directory for results and data files" << std::endl;
         std::cerr << "       server: Started separately. URI must start with ws:// or wss://. eg: wss://localhost:9980" << std::endl;
         std::cerr << "       See README for more info." << std::endl;
         return EX_USAGE;
@@ -55,7 +54,9 @@ int COOLPerfTest::main(const std::vector<std::string>& args)
         return EX_USAGE;
     }
 
-    std::string server = args[1];
+    std::string resultsDir = args[1];
+
+    std::string server = args[2];
     if (!server.starts_with("ws")) {
         std::cerr << "Server must start with ws:// or wss://. Server was: " << server << std::endl;
         return EX_USAGE;
@@ -72,32 +73,31 @@ int COOLPerfTest::main(const std::vector<std::string>& args)
 #endif
 
     // Set up logging
-    std::cerr << "Starting PerfTest " << object << std::endl << "Logging to perftest/workdir/coolperftest.log" << std::endl;
+    std::cerr << "Starting PerfTest " << object << std::endl;
+    std::cerr << "Logging to perftest/workdir/coolperftest.log" << std::endl;
     std::map<std::string, std::string> logConfig;
     logConfig.emplace("path","perftest/workdir/coolperftest.log");
     Log::initialize("perftest","trace",false,true,logConfig);
     LOG_DBG("Starting PerfTest. Object: " << object << " Server: " << server);
 
+    // Link test's library
     LOG_DBG("Dynamicaly linking library " << object);
     void *dlhandle = dlopen(object.c_str(), RTLD_GLOBAL|RTLD_NOW);
-    if (!dlhandle)
-    {
+    if (!dlhandle) {
         LOG_ERR("Failed to load perftest lib " << dlerror());
         return EX_SOFTWARE;
     }
-    LOG_DBG("Successfully linked library " << object);
-
-    LOG_DBG("Finding create_perftest symbol in " << object);
     CreatePerfTestFunction *createFunction =
         reinterpret_cast<CreatePerfTestFunction*>(dlsym(dlhandle, "create_perftest"));
     if (!createFunction) {
         LOG_ERR("No 'create_perftest' symbol in " << object);
         return EX_SOFTWARE;
     }
-    LOG_DBG("Found create_perftest symbol in " << object);
+    LOG_DBG("Successfully linked library " << object);
 
+    // Run test
     LOG_DBG("Creating perftest");
-    std::shared_ptr<PerfTest> perfTest = createFunction(server);
+    std::shared_ptr<PerfTest> perfTest = createFunction(resultsDir, server);
     LOG_DBG("Running perftest");
     perfTest->runTest();
     LOG_DBG("PerfTest complete.");

@@ -14,8 +14,8 @@
 class LoadCalcSmall : public CombinedPerfTest
 {
 public:
-    LoadCalcSmall(const std::string &server) :
-        CombinedPerfTest(__func__, server)
+    LoadCalcSmall(const std::string resultsDir, const std::string &server) :
+        CombinedPerfTest(__func__, resultsDir, server)
     {
     }
 
@@ -30,7 +30,4 @@ public:
     }
 };
 
-std::shared_ptr<PerfTest> create_perftest(std::string &server)
-{
-    return std::make_shared<LoadCalcSmall>(server);
-}
+CREATE_PERFTEST(LoadCalcSmall)

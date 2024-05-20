@@ -16,16 +16,14 @@
 
 #include <perftest/PerfTest.hpp>
 
-PerfTest::PerfTest(const std::string &name, const std::string &server) :
-    _name(name),
-    _handler(std::make_shared<PerfTestSocketHandler>(name, server))
+PerfTest::PerfTest(const std::string &name, const std::string &resultsDir, const std::string &server) :
+    PerfTest(name, resultsDir, std::make_shared<PerfTestSocketHandler>(name, server))
 {
-    addResult("name",_name);
-    _fileName = _name;
 }
 
-PerfTest::PerfTest(const std::string &name, std::shared_ptr<PerfTestSocketHandler> handler) :
+PerfTest::PerfTest(const std::string &name, const std::string &resultsDir, std::shared_ptr<PerfTestSocketHandler> handler) :
     _name(name),
+    _resultsDir(resultsDir),
     _handler(handler)
 {
     addResult("name",_name);
@@ -169,13 +167,13 @@ void PerfTest::disconnect()
     _handler->shutdown();
 }
 
-CyclePerfTest::CyclePerfTest(const std::string &name, const std::string &server) :
-    PerfTest(name, server)
+CyclePerfTest::CyclePerfTest(const std::string &name, const std::string &resultsDir, const std::string &server) :
+    PerfTest(name, resultsDir, server)
 {
 }
 
-CyclePerfTest::CyclePerfTest(const std::string &name, std::shared_ptr<PerfTestSocketHandler> handler) :
-    PerfTest(name, handler)
+CyclePerfTest::CyclePerfTest(const std::string &name, const std::string &resultsDir, std::shared_ptr<PerfTestSocketHandler> handler) :
+    PerfTest(name, resultsDir, handler)
 {
 }
 
@@ -191,7 +189,7 @@ void CyclePerfTest::startMeasurement()
     } else if (pid == 0) {
         LOG_DBG("Starting perf");
         std::string pid_str = "--pid="+std::to_string(getCoolwsdPid());
-        std::string output_str = "--output="+_fileName+".data";
+        std::string output_str = "--output="+_resultsDir+_fileName+".data";
         LOG_DBG("Starting perf"<<"perf"<<"record"<<"-s"<<"-e"<<"cycles"<<"--freq=1000"<<"--call-graph"<<"dwarf"<<pid_str.c_str()<<output_str.c_str());
         // If perf does not work because "perf_event_paranoid setting is 3"
         // Run this command (on Debian or Ubuntu):
@@ -210,7 +208,7 @@ void CyclePerfTest::stopMeasurement()
     PerfTest::stopMeasurement();
     kill(child_pid,SIGINT);
     waitpid(child_pid, nullptr, 0);
-    addResult("dataFile",_fileName+".data");
+    addResult("dataFile",_resultsDir+_fileName+".data");
 
     // Get result
     // Use perf report to get summary statistics from the data file
@@ -218,17 +216,17 @@ void CyclePerfTest::stopMeasurement()
     // Use paste to format list of numbers for bc
     // Use bc to sum numbers. bc, as an arbitrary precision calculator, is
     // necessary because cycle counts can be >2^31 (too big for awk's sum)
-    std::string command = "perf report -i "+_fileName+".data --no-inline | grep \"# Event count (approx.): \" | awk '{print $5}' | paste -s -d+ | bc";
+    std::string command = "perf report -i "+_resultsDir+_fileName+".data --no-inline | grep \"# Event count (approx.): \" | awk '{print $5}' | paste -s -d+ | bc";
     std::string cycles = getStringPopen(command);
     addResult("cycles",cycles);
 
     // Create flamegraph
-    std::string flamegraphCommand = "perf script -i "+_fileName+".data --no-inline | stackcollapse-perf.pl | flamegraph.pl > "+_fileName+".svg";
+    std::string flamegraphCommand = "perf script -i "+_resultsDir+_fileName+".data --no-inline | stackcollapse-perf.pl | flamegraph.pl > "+_resultsDir+_fileName+".svg";
     int systemResult = system(flamegraphCommand.c_str());
     if (systemResult != 0) {
         abort("Flamegraph failed");
     }
-    addResult("flamegraph",_fileName+".svg");
+    addResult("flamegraph",_resultsDir+_fileName+".svg");
 
     LOG_DBG("CyclePerfTest stopped");
 }
@@ -267,8 +265,8 @@ std::string CyclePerfTest::getStringPopen(const std::string &command)
     return result;
 }
 
-MessagePerfTest::MessagePerfTest(const std::string &name, const std::string &server) :
-    PerfTest(name, std::make_shared<MessagePerfTestSocketHandler>(name, server, &_measuring, &_messageCount, &_messageBytes))
+MessagePerfTest::MessagePerfTest(const std::string &name, const std::string &resultsDir, const std::string &server) :
+    PerfTest(name, resultsDir, std::make_shared<MessagePerfTestSocketHandler>(name, server, resultsDir+name+".messages", &_measuring, &_messageCount, &_messageBytes, &_messageCountTile, &_messageBytesTile))
 {
 }
 
@@ -284,10 +282,12 @@ void MessagePerfTest::stopMeasurement()
     _measuring = false;
     addResult("messageCount",std::to_string(_messageCount));
     addResult("messageBytes",std::to_string(_messageBytes));
+    addResult("tileMessageCount",std::to_string(_messageCountTile));
+    addResult("tileMessageBytes",std::to_string(_messageBytesTile));
 }
 
-CombinedPerfTest::CombinedPerfTest(const std::string &name, const std::string &server) :
-    CyclePerfTest(name, std::make_shared<MessagePerfTestSocketHandler>(name, server, &_measuring, &_messageCount, &_messageBytes))
+CombinedPerfTest::CombinedPerfTest(const std::string &name, const std::string &resultsDir, const std::string &server) :
+    CyclePerfTest(name, resultsDir, std::make_shared<MessagePerfTestSocketHandler>(name, server, resultsDir+name+".messages", &_measuring, &_messageCount, &_messageBytes, &_messageCountTile, &_messageBytesTile))
 {
 }
 
@@ -303,4 +303,6 @@ void CombinedPerfTest::stopMeasurement()
     _measuring = false;
     addResult("messageCount",std::to_string(_messageCount));
     addResult("messageBytes",std::to_string(_messageBytes));
+    addResult("tileMessageCount",std::to_string(_messageCountTile));
+    addResult("tileMessageBytes",std::to_string(_messageBytesTile));
 }

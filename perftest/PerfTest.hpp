@@ -25,6 +25,7 @@ class PerfTest
 protected:
     std::string _name;
     std::string _fileName;
+    std::string _resultsDir;
     std::shared_ptr<PerfTestSocketHandler> _handler;
 private:
     std::chrono::steady_clock::time_point _startTime;
@@ -34,9 +35,9 @@ private:
     std::map<std::string, std::string> _results;
 
 public:
-    PerfTest(const std::string &name, const std::string &server);
+    PerfTest(const std::string &name, const std::string &resultsDir, const std::string &server);
 protected:
-    PerfTest(const std::string &name, std::shared_ptr<PerfTestSocketHandler> handler);
+    PerfTest(const std::string &name, const std::string &resultsDir, std::shared_ptr<PerfTestSocketHandler> handler);
 
 public:
     bool isStarted();
@@ -69,9 +70,9 @@ private:
     pid_t child_pid = -1;
 
 public:
-    CyclePerfTest(const std::string &name, const std::string &server);
+    CyclePerfTest(const std::string &name, const std::string &resultsDir, const std::string &server);
 protected:
-    CyclePerfTest(const std::string &name, std::shared_ptr<PerfTestSocketHandler> handler);
+    CyclePerfTest(const std::string &name, const std::string &resultsDir, std::shared_ptr<PerfTestSocketHandler> handler);
 
 public:
     void startMeasurement() override;
@@ -88,9 +89,11 @@ private:
     std::atomic<bool> _measuring = false;
     std::atomic<unsigned int> _messageCount = 0;
     std::atomic<unsigned int> _messageBytes = 0;
+    std::atomic<unsigned int> _messageCountTile = 0;
+    std::atomic<unsigned int> _messageBytesTile = 0;
 
 public:
-    MessagePerfTest(const std::string &name, const std::string &server);
+    MessagePerfTest(const std::string &name, const std::string &resultsDir, const std::string &server);
 
 public:
     void startMeasurement() override;
@@ -108,17 +111,26 @@ private:
     std::atomic<bool> _measuring = false;
     std::atomic<unsigned int> _messageCount = 0;
     std::atomic<unsigned int> _messageBytes = 0;
+    std::atomic<unsigned int> _messageCountTile = 0;
+    std::atomic<unsigned int> _messageBytesTile = 0;
 
 public:
-    CombinedPerfTest(const std::string &name, const std::string &server);
+    CombinedPerfTest(const std::string &name, const std::string &resultsDir, const std::string &server);
 
 public:
     void startMeasurement() override;
     void stopMeasurement() override;
 };
 
+// PerfTest factory function
+typedef std::shared_ptr<PerfTest> (CreatePerfTestFunction)(const std::string &resultsDir, std::string &server);
 extern "C"
 {
-    std::shared_ptr<PerfTest> create_perftest(std::string &server);
+    std::shared_ptr<PerfTest> create_perftest(const std::string &resultsDir, std::string &server);
+}
+#define CREATE_PERFTEST(TEST_NAME) \
+    std::shared_ptr<PerfTest> create_perftest(const std::string &resultsDir, std::string &server) \
+{ \
+    return std::make_shared<TEST_NAME>(resultsDir, server); \
 }
 

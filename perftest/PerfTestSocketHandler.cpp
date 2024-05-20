@@ -149,13 +149,19 @@ void PerfTestSocketHandler::abort(const std::string &message)
 MessagePerfTestSocketHandler::MessagePerfTestSocketHandler(
         const std::string &name,
         const std::string &server,
+        const std::string &messageFile,
         std::atomic<bool>* measuring,
         std::atomic<unsigned int>* messageCount,
-        std::atomic<unsigned int>* messageBytes) :
+        std::atomic<unsigned int>* messageBytes,
+        std::atomic<unsigned int>* messageCountTile,
+        std::atomic<unsigned int>* messageBytesTile) :
     PerfTestSocketHandler(name, server),
+    _messageFile(messageFile),
     _measuring(measuring),
     _messageCount(messageCount),
-    _messageBytes(messageBytes)
+    _messageBytes(messageBytes),
+    _messageCountTile(messageCountTile),
+    _messageBytesTile(messageBytesTile)
 {
 }
 
@@ -163,7 +169,20 @@ void MessagePerfTestSocketHandler::handleMessage(const std::vector<char> &data)
 {
     PerfTestSocketHandler::handleMessage(data);
     if (*_measuring) {
-        (*_messageCount)++;
-        (*_messageBytes) += data.size();
+        const std::string firstLine = COOLProtocol::getFirstLine(data.data(), data.size());
+        StringVector tokens = StringVector::tokenize(firstLine);
+        if (tokens.equals(0, "tile:") || tokens.equals(0,"invalidatetiles:")) {
+            (*_messageCountTile)++;
+            (*_messageBytesTile) += data.size();
+        } else {
+            (*_messageCount)++;
+            (*_messageBytes) += data.size();
+        }
+        std::ofstream ofs(_messageFile.c_str(), std::ios_base::out|std::ios_base::app);
+        for (auto iter = data.begin(); iter != data.end(); iter++) {
+            ofs << *iter;
+        }
+        ofs << std::endl;
+        ofs.close();
     }
 }

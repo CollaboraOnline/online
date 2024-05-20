@@ -14,8 +14,8 @@
 class LoadImpressLarge : public CombinedPerfTest
 {
 public:
-    LoadImpressLarge(const std::string &server) :
-        CombinedPerfTest(__func__, server)
+    LoadImpressLarge(const std::string resultsDir, const std::string &server) :
+        CombinedPerfTest(__func__, resultsDir, server)
     {
     }
 
@@ -40,7 +40,4 @@ public:
     }
 };
 
-std::shared_ptr<PerfTest> create_perftest(std::string &server)
-{
-    return std::make_shared<LoadImpressLarge>(server);
-}
+CREATE_PERFTEST(LoadImpressLarge)

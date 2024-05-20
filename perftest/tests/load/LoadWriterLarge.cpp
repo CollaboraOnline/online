@@ -14,8 +14,8 @@
 class LoadWriterLarge : public CombinedPerfTest
 {
 public:
-    LoadWriterLarge(const std::string &server) :
-        CombinedPerfTest(__func__, server)
+    LoadWriterLarge(const std::string resultsDir, const std::string &server) :
+        CombinedPerfTest(__func__, resultsDir, server)
     {
     }
 
@@ -40,7 +40,4 @@ public:
     }
 };
 
-std::shared_ptr<PerfTest> create_perftest(std::string &server)
-{
-    return std::make_shared<LoadWriterLarge>(server);
-}
+CREATE_PERFTEST(LoadWriterLarge)
