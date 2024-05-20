@@ -1099,9 +1099,7 @@ button.leaflet-control-search-next
 .w2ui-icon.selected{ background: url('images/lc_ok.svg') no-repeat center; }
 .w2ui-icon.users{ background: url('images/contacts-dark.svg') no-repeat center; }
 .w2ui-icon.fullscreen{ background: url('images/lc_fullscreen.svg') no-repeat center; }
-.w2ui-icon.closemobile{ background: url('images/lc_closedocmobile.svg') no-repeat center; }
 .w2ui-icon.editmode { background: url('images/lc_listitem-selected.svg') no-repeat center / 28px; }
-.w2ui-icon.closetoolbar{ background: url('images/close_toolbar.svg') no-repeat center; }
 .w2ui-icon.sidebar_modify_page{ background: url('images/lc_sidebar.svg') no-repeat center; }
 .w2ui-icon.sidebar_slide_change{ background: url('images/lc_slidechangewindow.svg') no-repeat center; }
 .w2ui-icon.sidebar_custom_animation{ background: url('images/lc_customanimation.svg') no-repeat center; }
@@ -1392,9 +1390,7 @@ button.leaflet-control-search-next
 [data-theme='dark'] .w2ui-icon.selected{ background: url('images/dark/lc_ok.svg') no-repeat center; }
 [data-theme='dark'] .w2ui-icon.users{ background: url('images/dark/contacts-dark.svg') no-repeat center; }
 [data-theme='dark'] .w2ui-icon.fullscreen{ background: url('images/dark/lc_fullscreen.svg') no-repeat center; }
-[data-theme='dark'] .w2ui-icon.closemobile{ background: url('images/dark/lc_closedocmobile.svg') no-repeat center; }
 [data-theme='dark'] .w2ui-icon.editmode { background: url('images/dark/lc_listitem-selected.svg') no-repeat center / 28px; }
-[data-theme='dark'] .w2ui-icon.closetoolbar{ background: url('images/dark/close_toolbar.svg') no-repeat center; }
 [data-theme='dark'] .w2ui-icon.sidebar_modify_page{ background: url('images/dark/lc_sidebar.svg') no-repeat center; }
 [data-theme='dark'] .w2ui-icon.sidebar_slide_change{ background: url('images/dark/lc_slidechangewindow.svg') no-repeat center; }
 [data-theme='dark'] .w2ui-icon.sidebar_custom_animation{ background: url('images/dark/lc_customanimation.svg') no-repeat center; }
