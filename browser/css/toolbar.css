@@ -133,15 +133,6 @@
 	color: var(--color-primary);
 }
 
-w2ui-toolbar {
-	position: absolute;
-	right: 10px;
-	top: 40px;
-	border: 1px solid var(--color-border);
-	z-index: 1000;
-	display: none;
-	overflow: visible !important;
-}
 .w2ui-toolbar table.w2ui-button .w2ui-tb-down > div,
 .select2-container--default .select2-selection--single .select2-selection__arrow b {
 	border-top: 5px solid var(--color-main-text);
