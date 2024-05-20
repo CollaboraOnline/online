@@ -335,14 +335,38 @@ app.definitions.Socket = L.Class.extend({
 			     'background:#ddf;color:black', color, 'color:');
 	},
 
-	_queueSlurpEventEmission: function() {
-		var that = this;
-		if (!that._slurpTimer)
+	_queueSlurpEventEmission: function(delayMS) {
+
+		if (this._slurpTimer && this._slurpTimerDelay != delayMS) {
+			// The timer already exists, but now want to change timeout _slurpTimerDelay to delayMS.
+			// Cancel it and reschedule by replacement with another timer using the desired delayMS
+			// adjusted as if used at the original launch time.
+			clearTimeout(this._slurpTimer);
+			this._slurpTimer = null;
+			this._slurpTimerDelay = delayMS;
+
+			var now = Date.now();
+			var sinceLaunchMS = now - this._slurpTimerLaunchTime;
+			delayMS -= sinceLaunchMS;
+			if (delayMS <= 0)
+				delayMS = 1;
+		}
+
+		if (!this._slurpTimer)
 		{
+			var that = this;
+			if (!that._slurpTimerLaunchTime) {
+				// The initial launch of the timer, rescheduling replacements retain
+				// the launch time
+				that._slurpTimerLaunchTime = now;
+				that._slurpTimerDelay = delayMS;
+			}
 			that._slurpTimer = setTimeout(function () {
 				that._slurpTimer = undefined;
+				that._slurpTimerLaunchTime = undefined;
+				that._slurpTimerDelay = undefined;
 				that._emitSlurpedEvents();
-			}, 1 /* ms */);
+			}, delayMS);
 		}
 	},
 
@@ -444,13 +468,15 @@ app.definitions.Socket = L.Class.extend({
 		if (docLayer && docLayer.filterSlurpedMessage(e))
 			return;
 
-		console.log('Predict ' + (docLayer ? docLayer.predictTilesToSlurp() : -1) + ' tiles');
+		var predictedTiles = docLayer ? docLayer.predictTilesToSlurp() : 0;
+		// scale delay, to a max of 50ms, according to the number of
+		// tiles predicted to arrive.
+		var delayMS = Math.max(Math.min(predictedTiles, 50), 1);
 
-		if (!this._slurpQueue || !this._slurpQueue.length) {
-			this._queueSlurpEventEmission();
+		if (!this._slurpQueue)
 			this._slurpQueue = [];
-		}
 		this._slurpQueue.push(e);
+		this._queueSlurpEventEmission(delayMS);
 	},
 
 	// make profiling easier
@@ -569,14 +595,14 @@ app.definitions.Socket = L.Class.extend({
 		e.image = new Image();
 		e.image.onload = function() {
 			e.imageIsComplete = true;
-			that._queueSlurpEventEmission();
+			that._queueSlurpEventEmission(1);
 			if (e.image.completeTraceEvent)
 				e.image.completeTraceEvent.finish();
 		};
 		e.image.onerror = function(err) {
 			window.app.console.log('Failed to load image ' + img + ' fun ' + err);
 			e.imageIsComplete = true;
-			that._queueSlurpEventEmission();
+			that._queueSlurpEventEmission(1);
 			if (e.image.completeTraceEvent)
 				e.image.completeTraceEvent.abort();
 		};
