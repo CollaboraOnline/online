@@ -113,7 +113,10 @@ class AutoFillOptions extends L.Control.AutoCompletePopup {
 			}
 
 		} else if (eventType === 'keydown') {
-			// TODO: handle arrowDown key
+			if (object.key !== 'Tab' && object.key !== 'Shift') {
+				this.map.focus();
+				return true;
+			}
 		}
 		return false;
 	}
