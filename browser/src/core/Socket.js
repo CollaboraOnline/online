@@ -435,7 +435,7 @@ app.definitions.Socket = L.Class.extend({
 	// this takes ~200ms on a large screen, and worse we get
 	// producer/consumer issues that can fill a multi-second long
 	// buffer of web-socket messages in the client that we can't
-	// process so - slurp and the emit at idle - its faster to delay!
+	// process so - slurp and then emit at idle - its faster to delay!
 	_slurpMessage: function(e) {
 		this._extractTextImg(e);
 
