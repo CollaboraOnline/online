@@ -64,13 +64,7 @@
 
 .notebookbar-tabs-container > div {
 	white-space: nowrap;
-	-webkit-box-flex: 1;
-	-webkit-flex: 1 0 auto;
-	-ms-flex: 1 0 auto;
-	flex: 1 0 auto;
-	display: -webkit-box;
-	display: -webkit-flex;
-	display: -ms-flexbox;
+	flex: 0 0 auto;
 	display: flex;
 	list-style-type: none;
 }
