@@ -1,2 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="app_name_settings">Parametros</string>
+    <string name="app_vendor">Iste version es fornite per $VENDOR.</string>
+    <string name="no_items">Necun elementos</string>
+    <string name="storage_permission_required">Es requirite un permission de immagazinage</string>
+    <string name="pref_show_hidden_files_summary">Activar pro monstrar files/dossieres celate</string>
+    <string name="title_activity_show_html">A proposito de</string>
+    <string name="theme">Thema</string>
+    <string name="choose_theme">Selige un thema</string>
+    <string name="theme_system_default">Predefinite del systema</string>
+    <string name="theme_dark">Obscur</string>
+    <string name="theme_light">Clar</string>
+    <string name="file_creation_failed">Falleva le creation del file</string>
+    <string name="pref_category_explorer">Parametros del gestor de files</string>
+    <string name="pref_show_hidden_files">Files/dossieres celate</string>
+    <string name="pref_viewmode_summary">Monstrar le files como grillia o in un lista.</string>
+    <string name="list_view">Lista</string>
+    <string name="grid_view">Grillia</string>
+</resources>
