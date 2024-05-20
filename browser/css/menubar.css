@@ -44,6 +44,7 @@
 	justify-content: center;
 	gap: 5px;
 	flex-direction: column;
+	width: fit-content;
 }
 
 .readonly .document-title {
