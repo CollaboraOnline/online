@@ -2097,6 +2097,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 
 		var iconURLAliases = {
+			// lc_closemobile.svg is generated when loading in NB mode then
+			// switch to compact mode: 1st hidden element in the top toolbar
+			'closemobile': 'closedocmobile',
 			'file-saveas': 'saveas',
 			'home-search': 'recsearch',
 			'addmb-menu': 'ok',
