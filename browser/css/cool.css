@@ -1113,3 +1113,27 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	-webkit-user-select: text;
 	user-select: text;
 }
+
+.progress-bar {
+	width: 100%;
+	height: 2px;
+	border: none;
+	background-color: var(--color-background-dark);
+	overflow: hidden;
+	position: relative;
+	display: none;
+	margin-block-end: -7px;
+	appearance: none;
+}
+
+.progress-bar::-webkit-progress-bar {
+	background-color: transparent;
+}
+
+.progress-bar::-webkit-progress-value {
+	background-color: var(--color-main-text);
+}
+
+.progress-bar::-moz-progress-bar {
+	background-color: var(--color-main-text);
+}

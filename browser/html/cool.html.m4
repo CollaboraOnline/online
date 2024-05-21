@@ -188,7 +188,7 @@ m4_ifelse(MOBILEAPP,[true],
           <label class="visuallyhidden" for="document-name-input" aria-hidden="false">Document name</label>
           <input id="document-name-input" type="text" spellcheck="false" disabled="true" style="display: none"/>
           <div id="document-name-input-loading-bar"></div>
-          <progress id="document-name-input-progress-bar" value="0" max="99"></progress>
+          <progress id="document-name-input-progress-bar" class="progress-bar" value="0" max="99"></progress>
         </div>
       </div>
 
@@ -217,6 +217,7 @@ m4_ifelse(MOBILEAPP,[true],
           </div>
         </div>
        <div colspan="4" id="formulabar" style="display: none"></div>
+       <progress id="mobile-progress-bar" class="progress-bar" value="0" max="99"></progress>
     </div>
 
     <input id="insertgraphic" aria-labelledby="menu-insertgraphic" type="file" accept="image/*" style="position: fixed; top: -100em">
