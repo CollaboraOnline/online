@@ -36,6 +36,8 @@ L.Control.VRuler = L.Control.extend({
 		map.on('scrolllimits', this._updatePaintTimer, this);
 		map.on('moveend', this._fixOffset, this);
 		map.on('updatepermission', this._changeInteractions, this);
+		map.on('resettopbottompagespacing', this._resetTopBottomPageSpacing, this);
+		map.on('commandstatechanged', this.onCommandStateChanged, this);
 		L.DomUtil.addClass(map.getContainer(), 'hasruler');
 		this._map = map;
 
@@ -45,6 +47,20 @@ L.Control.VRuler = L.Control.extend({
 	_updatePaintTimer: function() {
 		clearTimeout(this.options.timer);
 		this.options.timer = setTimeout(L.bind(this._updateBreakPoints, this), 300);
+	},
+
+	_resetTopBottomPageSpacing: function(e) {
+		this.options.pageTopMargin = undefined;
+		this.options.pageBottomMargin = undefined;
+		if (e)
+			this.options.disableMarker = e.disableMarker;
+	},
+
+	onCommandStateChanged(e) {
+		// reset Top bottom margin on style change
+		// Style will change when we do focus on section like Header, Footer, Main text section
+		if (e.commandName == '.uno:StyleApply')
+			this._resetTopBottomPageSpacing();
 	},
 
 	_changeInteractions: function(e) {
@@ -139,41 +155,27 @@ L.Control.VRuler = L.Control.extend({
 	},
 
 	_updateParagraphIndentations: function() {
-		var items = this._map['stateChangeHandler'];
-		var state = items.getItemValue('.uno:LeftRightParaMargin');
-
-		if (!state)
-			return;
-
-		this.options.leftParagraphIndent = parseFloat(state.left.replace(',', '.'));
-		this.options.rightParagraphIndent = parseFloat(state.right.replace(',', '.'));
-		this.options.indentUnit = state.unit;
-
-		var pxPerMm100 = this._map._docLayer._docPixelSize.x / (this._map._docLayer._docWidthTwips * 2540/1440);
-
-		// Conversion to mm100.
-		if (this.options.indentUnit === 'inch') {
-			this.options.leftParagraphIndent = this.options.leftParagraphIndent * 2540;
-			this.options.rightParagraphIndent = this.options.rightParagraphIndent * 2540;
-		}
-
-		this.options.leftParagraphIndent *= pxPerMm100;
-		this.options.rightParagraphIndent *= pxPerMm100;
 
 		// for horizontal Ruler we need to also consider height of navigation and toolbar-wrraper 
 		var documentTop = document.getElementById('document-container').getBoundingClientRect().top;
 		// rTSContainer is the reference element.
-		var pStartPosition = this._rTSContainer.getBoundingClientRect().top + this.options.leftParagraphIndent - documentTop;
-		var pEndPosition = this._rTSContainer.getBoundingClientRect().bottom - this.options.rightParagraphIndent - documentTop;
+		var pStartPosition = this._rTSContainer.getBoundingClientRect().top - documentTop;
+		var pEndPosition = this._rTSContainer.getBoundingClientRect().bottom - documentTop;
 
 		// We calculated the positions. Now we should move them to left in order to make their sharp edge point to the right direction..
-		this._pVerticalStartMarker.style.left = pStartPosition - this._pVerticalStartMarker.getBoundingClientRect().width  + 'px';
+		this._pVerticalStartMarker.style.left = pStartPosition - (this._pVerticalStartMarker.getBoundingClientRect().width/2) + 'px';
+		this._pVerticalStartMarker.style.display = 'block';
 		this._pVerticalEndMarker.style.left = pEndPosition - this._pVerticalEndMarker.getBoundingClientRect().width + 'px';
+		this._pVerticalEndMarker.style.display = 'block';
 
 		// we do similar operation as we do in Horizontal ruler 
 		// but this element rotated to 90deg so top of marker should be opposite to horizontal (Negative in this case)
 		this._markerHorizontalLine.style.top = '-100vw';
 		this._markerHorizontalLine.style.left = this._pVerticalStartMarker.style.left;
+		if (this.options.disableMarker) {
+			this._pVerticalStartMarker.style.display = 'none';
+			this._pVerticalEndMarker.style.display = 'none';
+		}
 	},
 
 	_updateBreakPoints: function() {
@@ -193,6 +195,7 @@ L.Control.VRuler = L.Control.extend({
 		// this._bMarginDrag.style.width near the end of this function), so presumably it
 		// doesn't matter that much what bottomMargin is.
 		bottomMargin = this.options.pageWidth - (this.options.nullOffset + this.options.margin2);
+		this.options.pageBottomMargin = bottomMargin;
 
 		scale = this._map.getZoomScale(this._map.getZoom(), 10);
 		wPixel = (docLayer._docPixelSize.y/docLayer._pages) - (this.options.tileMargin * 2) * scale;
@@ -333,14 +336,21 @@ L.Control.VRuler = L.Control.extend({
 		var topMarginPX, bottomMarginPX;
 		var upperMargin = 'Space.Upper';
 		var lowerMargin = 'Space.Lower';
-		if (element.id == 'lo-vertical-pstart-marker') {
+		if (this._pVerticalStartMarker.getBoundingClientRect().top > this._pVerticalEndMarker.getBoundingClientRect().top ) {
+			// do not change anything if Start marker goes beyond the end marker in that case we hold the last original postions or marker
+			this._fixOffset();
+		}
+		else if (element.id == 'lo-vertical-pstart-marker') {
 			topMarginPX = this._pVerticalStartMarker.getBoundingClientRect().top - this._rTSContainer.getBoundingClientRect().top + halfWidth;
-			this.options.pageTopMargin = (topMarginPX / this.options.DraggableConvertRatio) + this.options.pageTopMargin;
+			var top = (topMarginPX / this.options.DraggableConvertRatio) + this.options.pageTopMargin;
+			// margin should not go above page top
+			this.options.pageTopMargin = top < 0 ? this.options.pageTopMargin : top;
 		}
 		else if (element.id == 'lo-vertical-pend-marker') {
-			// Right marker is positioned from right, this is rightValue..
 			bottomMarginPX = this._rTSContainer.getBoundingClientRect().bottom - this._pVerticalEndMarker.getBoundingClientRect().bottom + halfWidth;
-			this.options.pageBottomMargin = (bottomMarginPX / this.options.DraggableConvertRatio) + this.options.pageBottomMargin;
+			var bottom = (bottomMarginPX / this.options.DraggableConvertRatio) + this.options.pageBottomMargin;
+			// margin should not go below page bottom
+			this.options.pageBottomMargin = bottom < 0 ? this.options.pageBottomMargin : bottom;
 		}
 		params[upperMargin] = {
 			type: 'long',
