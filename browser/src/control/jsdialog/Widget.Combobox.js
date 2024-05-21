@@ -279,7 +279,7 @@ JSDialog.combobox = function (parentContainer, data, builder) {
 		var callback = function(objectType, eventType, object, data) {
 			// send command with correct WindowId (from parent, not dropdown)
 			if (eventType !== 'close')
-				parentBuilder._defaultCallbackHandler(objectType, eventType, object, data, parentBuilder);
+				parentBuilder.callback(objectType, eventType, object, data, parentBuilder);
 
 			// close after selection
 			if (eventType === 'selected') {

@@ -1064,7 +1064,7 @@ L.Control.Zotero = L.Control.extend({
 		var targetEntry = this._findEntryWithUrl(searchArray, row);
 
 		if (entry && targetEntry) {
-			if (targetEntry.children.length === 1
+			if (targetEntry.children && targetEntry.children.length === 1
 				&& targetEntry.children[0].text === '<dummy>') {
 				targetEntry.children = [];
 				targetEntry.ondemand = undefined;
@@ -1133,7 +1133,8 @@ L.Control.Zotero = L.Control.extend({
 			}
 		}
 		if (element === 'edit' && data.id === 'zoterosearch') {
-			document.getElementById('zoterolist').filterEntries(data.value);
+			if (data.value)
+				document.getElementById('zoterolist').filterEntries(data.value);
 			return;
 		}
 		if (data.id == 'ok') {
