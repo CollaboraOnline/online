@@ -375,7 +375,7 @@ L.Map.TouchGesture = L.Handler.extend({
 		if (docLayer) {
 			if (docLayer.hasGraphicSelection()) {
 				// Need keyboard when cursor is visible.
-				acceptInput = this._map._docLayer.isCursorVisible();
+				acceptInput = app.file.textCursor.visible;
 			} else if (docLayer._docType === 'text') {
 				acceptInput = true; // Always show the keyboard in Writer on tap.
 			} else if (docLayer._docType === 'spreadsheet') {
@@ -427,7 +427,7 @@ L.Map.TouchGesture = L.Handler.extend({
 			}
 
 			// Show keyboard when no graphic selection, or  cursor is visible.
-			var acceptInput = !docLayer.hasGraphicSelection() || docLayer.isCursorVisible();
+			var acceptInput = !docLayer.hasGraphicSelection() || app.file.textCursor.visible;
 
 			if (navigator.platform === 'iPhone' && docLayer._docType === 'presentation')
 				acceptInput = true;

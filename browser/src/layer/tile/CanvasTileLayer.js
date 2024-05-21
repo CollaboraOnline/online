@@ -2852,7 +2852,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		var rectArray = this._getTextSelectionRectangles(textMsg);
 		var inTextSearch = $('input#search-input').is(':focus');
-		var isTextSelection = this.isCursorVisible() || inTextSearch;
+		var isTextSelection = app.file.textCursor.visible || inTextSearch;
 		if (rectArray.length) {
 
 			var rectangles = rectArray.map(function (rect) {
@@ -3556,7 +3556,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		this.eachView(this._viewCursors, function (item) {
 			var viewCursorMarker = item.marker;
 			if (viewCursorMarker) {
-				viewCursorMarker.setOpacity(this.isCursorVisible() && this._cursorMarker.getPosition().equals(viewCursorMarker.getPosition()) ? 0 : 1);
+				viewCursorMarker.setOpacity(app.file.textCursor.visible && this._cursorMarker.getPosition().equals(viewCursorMarker.getPosition()) ? 0 : 1);
 			}
 		}, this, true);
 	},
@@ -3663,7 +3663,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			else {
 				viewCursorMarker.setPositionSize(viewCursorPos, pixBounds.getSize());
 			}
-			viewCursorMarker.setOpacity(this.isCursorVisible() && this._cursorMarker.getPosition().equals(viewCursorMarker.getPosition()) ? 0 : 1);
+			viewCursorMarker.setOpacity(app.file.textCursor.visible && this._cursorMarker.getPosition().equals(viewCursorMarker.getPosition()) ? 0 : 1);
 			if (!viewCursorMarker.isDomAttached())
 				viewCursorMarker.add();
 		}
@@ -3685,10 +3685,6 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	updateAllGraphicViewSelections: function () {
 		this.eachView(this._graphicViewMarkers, this._onUpdateGraphicViewSelection, this, false);
-	},
-
-	isCursorVisible: function() {
-		return this._cursorMarker ? this._cursorMarker.isDomAttached() : false;
 	},
 
 	goToViewCursor: function(viewId) {
@@ -4008,7 +4004,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			// Hide the keyboard on graphic selection, unless cursor is visible.
 			// Don't interrupt editing in dialogs
 			if (!this._isAnyInputFocused())
-				this._map.focus(this.isCursorVisible());
+				this._map.focus(app.file.textCursor.visible);
 
 			if (this._graphicMarker) {
 				this._graphicMarker.removeEventParent(this._map);
@@ -5052,7 +5048,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._pinchStartCenter = this._map.project(pinchStartCenter).multiplyBy(app.dpiScale); // in core pixels
 		this._painter._offset = new L.Point(0, 0);
 
-		if (this.isCursorVisible()) {
+		if (app.file.textCursor.visible) {
 			this._cursorMarker.setOpacity(0);
 		}
 		if (this._map._textInput._cursorHandler) {
@@ -5080,7 +5076,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	postZoomAnimation: function () {
-		if (this.isCursorVisible()) {
+		if (app.file.textCursor.visible) {
 			this._cursorMarker.setOpacity(1);
 		}
 		if (this._map._textInput._cursorHandler) {
