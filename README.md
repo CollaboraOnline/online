@@ -35,7 +35,7 @@
 
 ## Website
 
-For many more details, build instructions, downloads and more please visit https://collaboraonline.github.io/
+For many more details, build instructions, downloads and more please visit https://collaboraonline.github.io/ and also you can check out the [SDK Documentation](https://sdk.collaboraonline.com/contents.html).
 
 ## Developer assistance
 Please ask your questions on any of the bridged Matrix/Telegram rooms
@@ -78,5 +78,9 @@ See the corresponding READMEs:
 ## GitPod
 
 Head over to https://collaboraonline.github.io/post/build-code/#build-code-on-gitpod and follow the steps.
+
+## Integrating
+
+To [integrate](https://sdk.collaboraonline.com/docs/why_integrate.html) Collabora Online into your own solution, you can see our [step-by-step tutorial](https://sdk.collaboraonline.com/docs/Step_by_step_tutorial.html), view the [available integrations](https://sdk.collaboraonline.com/docs/available_integrations.html), understand the [post message API](https://sdk.collaboraonline.com/docs/postmessage_api.html) used to customize and interact with Collabora Online, and a lot more.
 
 ## Enjoy!
