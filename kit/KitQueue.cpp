@@ -173,7 +173,7 @@ bool extractRectangle(const StringVector& tokens, int& x, int& y, int& w, int& h
 
     if (tokens.equals(0, "EMPTY,"))
     {
-        part = std::atoi(tokens[0].c_str());
+        part = std::atoi(tokens[1].c_str());
         return true;
     }
 
