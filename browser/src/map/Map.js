@@ -519,7 +519,7 @@ L.Map = L.Evented.extend({
 		if (app.file.textCursor.visible)
 			cursorInBounds = app.file.viewedRectangle.containsPoint([app.file.textCursor.rectangle.x1, app.file.textCursor.rectangle.y1]);
 
-		var cursorActive = calcLayer.isCursorVisible();
+		var cursorActive = app.file.textCursor.visible;
 		if (cursorActive && cursorInBounds) {
 			var cursorCenter = new L.Point(app.file.textCursor.rectangle.center[0], app.file.textCursor.rectangle.center[1]);
 			var newCursorCenter = sheetGeom.getTileTwipsAtZoom(cursorCenter, zoomScaleAbs);
@@ -596,7 +596,7 @@ L.Map = L.Evented.extend({
 			return;
 		this._ignoreCursorUpdate = !enable;
 
-		if (!docLayer.isCursorVisible())
+		if (!app.file.textCursor.visible)
 			return;
 
 		if (!enable) {

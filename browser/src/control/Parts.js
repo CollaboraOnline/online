@@ -78,7 +78,7 @@ L.Map.include({
 		this.fire('scrolltopart');
 
 		docLayer._selectedParts.push(docLayer._selectedPart);
-		if (docLayer.isCursorVisible()) {
+		if (app.file.textCursor.visible) {
 			// a click outside the slide to clear any selection
 			app.socket.sendMessage('resetselection');
 		}
