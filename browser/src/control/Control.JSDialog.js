@@ -600,10 +600,17 @@ L.Control.JSDialog = L.Control.extend({
 		for (var i = 0; i < dialogKeys.length; i++) {
 			var autoFilterDialogId = dialogKeys[i];
 			var dialog = this.dialogs[autoFilterDialogId];
+			var isAutoFillFromOnMouseUp = this.map._docLayer.isAutoFillFromOnMouseUp;
 
 			// Check if the current dialog has the isAutofilter property set to true
-			// and if it is not an autoFillPopup
-			if (dialog.isAutofilter && (autoFilterDialogId !== 'autoFillPopup')) {
+			if (dialog.isAutofilter) {
+
+				// don't hide AutoFill popup if it comes from onMouseUp event (see AutoFillMarkerSection.ts)
+				if (isAutoFillFromOnMouseUp && (autoFilterDialogId === 'autoFillPopup')) {
+					this.map._docLayer.isAutoFillFromOnMouseUp = false;
+					continue;
+				}
+
 				// Call this.close(key, true) for the current dialog
 				this.close(autoFilterDialogId, true);
 			}

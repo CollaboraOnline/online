@@ -334,9 +334,6 @@ L.Control.Tabs = L.Control.extend({
 		if (part !== this._map._docLayer._selectedPart) {
 			this._setPartIndex(part);
 		}
-
-		if (this._map._docLayer.isAutoFillPopupOpen)
-			this._map.fire('closeautofillpopup');
 	},
 
 	//selected sheet is moved to new index
@@ -429,10 +426,14 @@ L.Control.Tabs = L.Control.extend({
 
 	_showSheet: function() {
 		this._map.showPage();
+		// required for AutoFill popup on empty cells
+		this._map._docLayer.isAutoFillFromOnMouseUp = false;
 	},
 
 	_hideSheet: function() {
 		this._map.hidePage(this._tabForContextMenu);
+		// hiding the active sheet should close the AutoFill popup
+		this._map._docLayer.isAutoFillFromOnMouseUp = false;
 	},
 
 	_handleDragStart: function(e) {

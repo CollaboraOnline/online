@@ -208,7 +208,7 @@ class AutoFillMarkerSection extends CanvasSectionObject {
 			this.sectionProperties.docLayer._postMouseEvent('buttonup', pos.x, pos.y, 1, 1, 0);
 		}
 
-		this.map._docLayer.isFromAutoFill = true;
+		this.map._docLayer.isAutoFillFromOnMouseUp = true;
 
 		this.map.scrollingIsHandled = false;
 		this.stopPropagating();

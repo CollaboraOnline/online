@@ -3621,11 +3621,10 @@ L.CanvasTileLayer = L.Layer.extend({
 			var offsetPixels = this._twipsToCorePixels(offset);
 			this._cellAutoFillAreaPixels = L.LOUtil.createRectangle(topLeftPixels.x, topLeftPixels.y, offsetPixels.x, offsetPixels.y);
 
-			// if comes from onMouseUp event of browser/src/canvas/sections/AutoFillMarkerSection.ts
-			// open popup with location data
-			if (this._map._docLayer.isFromAutoFill) {
+			// if comes from onMouseUp event of AutoFillMarkerSection.ts, open AutoFill popup with location data
+			if (this._map._docLayer.isAutoFillFromOnMouseUp) {
+				// TODO: don't open AutoFill popup if empty cells are selected
 				this._map.fire('sendautofilllocation', { data: topLeftPixels });
-				this._map._docLayer.isFromAutoFill = false;
 			}
 		}
 		else {

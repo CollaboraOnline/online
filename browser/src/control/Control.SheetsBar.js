@@ -69,9 +69,7 @@ L.Control.SheetsBar = L.Control.extend({
 		}
 
 		if (id === 'insertsheet') {
-			if (this.map._docLayer.isAutoFillPopupOpen)
-				this._map.fire('closeautofillpopup');
-
+			this.map._docLayer.isAutoFillFromOnMouseUp = false;
 			var nPos = $('#spreadsheet-tab-scroll')[0].childElementCount;
 			this.map.insertPage(nPos);
 			this.map.insertPage.scrollToEnd = true;
