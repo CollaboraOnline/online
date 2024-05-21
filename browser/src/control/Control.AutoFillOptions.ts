@@ -51,8 +51,10 @@ class AutoFillOptions extends L.Control.AutoCompletePopup {
 	}
 
 	getPopupEntries(): any[] {
-		const entries: any[] = [{ text: 'copy', columns: [{ text: 'Copy cells' }], row: '0' },
-		{ text: 'fill', columns: [{ text: 'Fill series' }], row: '1' }];
+		const entries: any[] = [
+			{ text: 'copy', columns: [{ text: 'Copy cells' }], row: '0' },
+			{ text: 'fill', columns: [{ text: 'Fill series' }], row: '1' },
+		];
 		return entries;
 	}
 
@@ -75,20 +77,20 @@ class AutoFillOptions extends L.Control.AutoCompletePopup {
 		data.posx = framePos.x;
 		data.posy = framePos.y;
 		this.sendJSON(data);
-
-		this.map._docLayer.isAutoFillPopupOpen = true;
 	}
 
 	closeMentionPopup(ev: CloseMessageEvent) {
+		this.map._docLayer.isAutoFillFromOnMouseUp = false;
 		super.closePopup();
 		if (!ev.typingMention) {
 			this.map._docLayer._typingMention = false;
 			this.map._docLayer._mentionText = [];
 		}
-		this.map._docLayer.isAutoFillPopupOpen = false;
 	}
 
 	callback(objectType: any, eventType: any, object: any, index: number) {
+		this.map._docLayer.isAutoFillFromOnMouseUp = false;
+
 		if (eventType === 'close') {
 			this.closeMentionPopup({ typingMention: false } as CloseMessageEvent);
 		} else if (eventType === 'select' || eventType === 'activate') {
@@ -111,7 +113,6 @@ class AutoFillOptions extends L.Control.AutoCompletePopup {
 				this.map.sendUnoCommand('.uno:Undo');
 				this.map.sendUnoCommand('.uno:AutoFill?Copy:bool=false');
 			}
-
 		} else if (eventType === 'keydown') {
 			if (object.key !== 'Tab' && object.key !== 'Shift') {
 				this.map.focus();
