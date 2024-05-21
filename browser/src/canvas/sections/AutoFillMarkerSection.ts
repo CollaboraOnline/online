@@ -13,7 +13,7 @@ declare var L: any;
 declare var app: any;
 
 app.definitions.AutoFillMarkerSection =
-class AutoFillMarkerSection extends app.definitions.canvasSectionObject {
+class AutoFillMarkerSection extends CanvasSectionObject {
 	name: string = L.CSections.AutoFillMarker.name;
 	processingOrder: number = L.CSections.AutoFillMarker.processingOrder;
 	drawingOrder: number = L.CSections.AutoFillMarker.drawingOrder;

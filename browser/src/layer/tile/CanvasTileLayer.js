@@ -3191,7 +3191,9 @@ L.CanvasTileLayer = L.Layer.extend({
 			var boundsTwips = this._convertToTileTwipsSheetArea(new L.Bounds(topLeftTwips, bottomRightTwips));
 
 			var oldSelection = this._cellSelectionArea ? this._cellSelectionArea.clone(): null;
-			this._cellSelectionArea = new app.definitions.simpleRectangle(boundsTwips.min.x, boundsTwips.min.y, parseInt(strTwips[2]), parseInt(strTwips[3]));
+			const adjustedTwipsWidth = boundsTwips.max.x - boundsTwips.min.x;
+			const adjustedTwipsHeight = boundsTwips.max.y - boundsTwips.min.y;
+			this._cellSelectionArea = new app.definitions.simpleRectangle(boundsTwips.min.x, boundsTwips.min.y, adjustedTwipsWidth, adjustedTwipsHeight);
 
 			if (autofillMarkerSection)
 				autofillMarkerSection.calculatePositionViaCellSelection([this._cellSelectionArea.pX2, this._cellSelectionArea.pY2]);
