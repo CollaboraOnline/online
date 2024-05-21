@@ -75,7 +75,8 @@ using Poco::Util::Application;
 std::map<std::string, std::pair<std::string, std::string>> FileServerRequestHandler::FileHash;
 
 // We have files that are at least 2.5 MB already.
-constexpr auto MaxFileSizeToCacheInBytes = 5 * 1024 * 1024;
+// WASM files are in the order of 30 MB, however,
+constexpr auto MaxFileSizeToCacheInBytes = 50 * 1024 * 1024;
 
 namespace
 {
@@ -830,7 +831,21 @@ void FileServerRequestHandler::readDirToHash(const std::string &basePath, const 
             filesRead += ' ';
 
             std::string uncompressedFile;
-            FileUtil::readFile(basePath + relPath, uncompressedFile);
+            const ssize_t size =
+                FileUtil::readFile(basePath + relPath, uncompressedFile, MaxFileSizeToCacheInBytes);
+            assert(size < MaxFileSizeToCacheInBytes && "MaxFileSizeToCacheInBytes is too small for "
+                                                       "static-file serving; please increase it");
+            if (size <= 0)
+            {
+                assert(uncompressedFile.empty() &&
+                       "Unexpected data in uncompressedFile after failed read");
+                if (size < 0)
+                {
+                    LOG_ERR("Failed to read file [" << basePath + relPath
+                                                    << "] or is too large to cache and serve");
+                }
+            }
+
             FileHash.emplace(prefix + relPath,
                              std::make_pair(std::move(uncompressedFile), std::string()));
         }
