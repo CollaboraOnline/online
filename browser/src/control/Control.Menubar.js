@@ -143,7 +143,7 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('Show Status Bar'), id: 'showstatusbar', type: 'action'},
 					{name: _('Hide Menu Bar'), id: 'togglemenubar', type: 'action'},
 					{name: _('Dark Mode'), id: 'toggledarktheme', type: 'action'},
-					{name: _('Invert Background'), id: 'invertbackground', type: 'action'},
+					{name: _('Invert Background'), id: 'invertbackground', type: 'action', hidden: true},
 					{uno: '.uno:SidebarDeck.PropertyDeck', name: _UNO('.uno:Sidebar')},
 					{uno: '.uno:Navigator', id: 'navigator'},
 					{type: 'separator'},
@@ -441,7 +441,7 @@ L.Control.Menubar = L.Control.extend({
 				   {name: _('Show Status Bar'), id: 'showstatusbar', type: 'action'},
 				   {name: _('Hide Menu Bar'), id: 'togglemenubar', type: 'action'},
 				   {name: _('Dark Mode'), id: 'toggledarktheme', type: 'action'},
-				   {name: _('Invert Background'), id: 'invertbackground', type: 'action'},
+				   {name: _('Invert Background'), id: 'invertbackground', type: 'action', hidden: true},
 				   {name: _('Master View'), uno: '.uno:SlideMasterPage'},
 				   {uno: '.uno:SidebarDeck.PropertyDeck', name: _UNO('.uno:Sidebar')},
 				   {uno: '.uno:Navigator', id: 'navigator'},
@@ -589,7 +589,7 @@ L.Control.Menubar = L.Control.extend({
 					{type: 'separator'},
 					{name: _('Toggle UI Mode'), id: 'toggleuimode', type: 'action'},
 					{name: _('Dark Mode'), id: 'toggledarktheme', type: 'action'},
-					{name: _('Invert Background'), id: 'invertbackground', type: 'action'},
+					{name: _('Invert Background'), id: 'invertbackground', type: 'action', hidden: true},
 					{uno: '.uno:SidebarDeck.PropertyDeck', name: _UNO('.uno:Sidebar')},
 					{uno: '.uno:Navigator', id: 'navigator'},
 					{name: _('Show Status Bar'), id: 'showstatusbar', type: 'action'},
@@ -729,7 +729,7 @@ L.Control.Menubar = L.Control.extend({
 				   {name: _('Show Status Bar'), id: 'showstatusbar', type: 'action'},
 				   {name: _('Hide Menu Bar'), id: 'togglemenubar', type: 'action'},
 				   {name: _('Dark Mode'), id: 'toggledarktheme', type: 'action'},
-				   {name: _('Invert Background'), id: 'invertbackground', type: 'action'},
+				   {name: _('Invert Background'), id: 'invertbackground', type: 'action', hidden: true},
 				   {uno: '.uno:SidebarDeck.PropertyDeck', name: _UNO('.uno:Sidebar')},
 				   {uno: '.uno:Navigator', id: 'navigator'},
 				   {type: 'separator'},
@@ -1729,10 +1729,10 @@ L.Control.Menubar = L.Control.extend({
 					} else if (id == 'toggledarktheme') {
 						if (self._map.uiManager.getDarkModeState()) {
 							$(aItem).addClass(constChecked);
-							$('#menu-invertbackground').show();
+							// $('#menu-invertbackground').show();
 						} else {
 							$(aItem).removeClass(constChecked);
-							$('#menu-invertbackground').hide();
+							// $('#menu-invertbackground').hide();
 						}
 					} else if (id === 'showstatusbar') {
 						if (self._map.uiManager.isStatusBarVisible()) {
