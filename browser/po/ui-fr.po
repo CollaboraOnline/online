@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-21 07:27+0200\n"
-"PO-Revision-Date: 2024-03-22 23:12+0000\n"
-"Last-Translator: Méven Car <meven.car@collabora.com>\n"
+"PO-Revision-Date: 2024-05-21 14:10+0000\n"
+"Last-Translator: Hubert Figuière <hub@figuiere.net>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/collabora-online/"
 "ui/fr/>\n"
-"Language: \n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.5-dev\n"
+"X-Generator: Weblate 5.6-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -389,15 +389,15 @@ msgstr " s"
 
 #: js/global.js:935
 msgid "Cluster is scaling, retrying..."
-msgstr ""
+msgstr "Le cluster se redimensionne, réessaye..."
 
 #: js/global.js:937
 msgid "Document is migrating to new server, retrying..."
-msgstr ""
+msgstr "Le document est en train de migrer vers le nouveau serveur, réessaye..."
 
 #: js/global.js:939
 msgid "Failed to get RouteToken from controller"
-msgstr ""
+msgstr "Impossible d'obtenir le RouteToken du controlleur"
 
 #: src/control/ColorPicker.ts:269
 msgid "No color"
@@ -417,7 +417,7 @@ msgstr "Ouvrir le lien"
 
 #: src/control/Control.AlertDialog.js:66
 msgid "Copied external sources are not allowed"
-msgstr ""
+msgstr "Les sources externes copiées ne sont pas autorisées"
 
 #: src/control/Control.AlertDialog.js:67
 msgid "It seems you have copied a selection that includes external images."
@@ -430,6 +430,9 @@ msgid ""
 "possible. Please right click in the image, choose \"Copy Image\" and paste "
 "it into the document instead."
 msgstr ""
+"Télécharger des ressources externes est interdit, mais coller des images est "
+"toujours possible. Cliquez-droit sur l'image, choisissez \"Copier Image\" et "
+"collez la dans le document."
 
 #: src/control/Control.AlertDialog.js:72
 msgid "External data source not allowed"
@@ -437,13 +440,15 @@ msgstr "Source de donnée externe non permise"
 
 #: src/control/Control.AlertDialog.js:73
 msgid "It seems you have tried to insert external data."
-msgstr ""
+msgstr "Il semblerait que vous avez essayé d'insérer des données externes."
 
 #: src/control/Control.AlertDialog.js:74
 msgid ""
 "Selected external data source is forbidden. Please contact the system "
 "administrator."
 msgstr ""
+"La source de données externe sélectionnée n'est pas autorisée. Contactez "
+"l'administrateur système."
 
 #: src/control/Control.AlertDialog.js:86
 msgid "Don't show this again"
@@ -882,7 +887,7 @@ msgstr "Mode Sombre"
 #: src/control/Control.NotebookbarImpress.js:459
 #: src/control/Control.NotebookbarWriter.js:1467
 msgid "Invert Background"
-msgstr ""
+msgstr "Inverser le fond"
 
 #: src/control/Control.Menubar.js:154 src/control/Control.Menubar.js:455
 #: src/control/Control.Menubar.js:599 src/control/Control.Menubar.js:744
@@ -982,7 +987,7 @@ msgstr "Propriétés"
 #: src/control/Control.Menubar.js:365 src/control/Control.Menubar.js:1006
 #: src/control/Control.NotebookbarWriter.js:371
 msgid "Screen Reading"
-msgstr ""
+msgstr "Lecture de l'écran"
 
 #: src/control/Control.Menubar.js:378
 #: src/control/Control.NotebookbarWriter.js:337
@@ -1141,12 +1146,12 @@ msgstr "Entre..."
 #: src/control/Control.Menubar.js:834
 #: src/control/jsdialog/Definitions.Menu.ts:319
 msgid "Duplicate..."
-msgstr ""
+msgstr "Dupliquer..."
 
 #: src/control/Control.Menubar.js:835
 #: src/control/jsdialog/Definitions.Menu.ts:323
 msgid "Contains text..."
-msgstr ""
+msgstr "Contient le texte..."
 
 #: src/control/Control.Menubar.js:837 src/control/Control.Menubar.js:847
 #: src/control/jsdialog/Definitions.Menu.ts:327
@@ -1157,37 +1162,37 @@ msgstr "Autres conditions..."
 #: src/control/Control.Menubar.js:839
 #: src/control/jsdialog/Definitions.Menu.ts:331
 msgid "Top/Bottom Rules..."
-msgstr ""
+msgstr "Règles de premiers/derniers..."
 
 #: src/control/Control.Menubar.js:840
 #: src/control/jsdialog/Definitions.Menu.ts:334
 msgid "Top N elements..."
-msgstr ""
+msgstr "N premiers éléments..."
 
 #: src/control/Control.Menubar.js:841
 #: src/control/jsdialog/Definitions.Menu.ts:338
 msgid "Top N percent..."
-msgstr ""
+msgstr "N premiers pourcents..."
 
 #: src/control/Control.Menubar.js:842
 #: src/control/jsdialog/Definitions.Menu.ts:342
 msgid "Bottom N elements..."
-msgstr ""
+msgstr "N derniers éléments..."
 
 #: src/control/Control.Menubar.js:843
 #: src/control/jsdialog/Definitions.Menu.ts:346
 msgid "Bottom N percent..."
-msgstr ""
+msgstr "N derniers pourcents..."
 
 #: src/control/Control.Menubar.js:844
 #: src/control/jsdialog/Definitions.Menu.ts:350
 msgid "Above Average..."
-msgstr ""
+msgstr "Au dessus de la moyenne..."
 
 #: src/control/Control.Menubar.js:845
 #: src/control/jsdialog/Definitions.Menu.ts:354
 msgid "Below Average..."
-msgstr ""
+msgstr "En dessous de la moyenne..."
 
 #: src/control/Control.Menubar.js:956 src/control/Control.Menubar.js:1021
 #: src/control/Control.Menubar.js:1085 src/control/Control.Menubar.js:1139
@@ -1759,7 +1764,7 @@ msgstr "Masquer le menu"
 
 #: src/control/Control.UIManager.js:161
 msgid "Enter new name"
-msgstr ""
+msgstr "Entrez un nouveau nom"
 
 #: src/control/Control.UIManager.js:787
 msgid "Show Menu"
@@ -1787,7 +1792,7 @@ msgstr "Suivre l'éditeur"
 
 #: src/control/Control.UserList.ts:58
 msgid "Stop following"
-msgstr ""
+msgstr "Ne plus suivre"
 
 #: src/control/Control.UserList.ts:59
 msgid "Avatar for %user"
@@ -2118,7 +2123,7 @@ msgstr "Très lâche"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:149
 msgid "No fill"
-msgstr ""
+msgstr "Aucun remplissage"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:149
 msgid "Automatic"
@@ -2313,7 +2318,7 @@ msgstr "Connexion..."
 
 #: src/core/Socket.js:1251
 msgid "Server is shutting down"
-msgstr ""
+msgstr "Le serveur est en train de s'arrêter"
 
 #: src/core/Socket.js:1284
 msgid "Exported to storage"
@@ -2365,11 +2370,11 @@ msgstr "Le serveur a été déconnecté."
 
 #: src/core/Debug.js:54
 msgid "Debug Tools"
-msgstr ""
+msgstr "Outils de deboggage"
 
 #: src/core/Debug.js:56
 msgid "Ctrl+Shift+Alt+D to exit"
-msgstr ""
+msgstr "Ctrl+Maj+Alt+D pour sortir"
 
 #: src/docstate.js:88
 msgid "Standard"
@@ -2539,6 +2544,8 @@ msgid ""
 "Failed to establish socket connection or socket connection closed "
 "unexpectedly."
 msgstr ""
+"Échec d'établissement de connexion par socket ou fermeture inattendue de la "
+"connexion par socket."
 
 #: src/errormessages.js:43
 msgid "Failed to load document."
@@ -2627,7 +2634,7 @@ msgstr "Fonctions"
 
 #: src/layer/tile/CanvasTileLayer.js:2265
 msgid "and %COUNT more"
-msgstr ""
+msgstr "et encore %COUNT"
 
 #: src/layer/tile/CanvasTileLayer.js:2279
 msgid "Copy link location"
@@ -2647,11 +2654,11 @@ msgstr "Aucun commentaire"
 
 #: src/canvas/sections/CommentListSection.ts:134
 msgid "A comment is being edited"
-msgstr ""
+msgstr "Un commentaire est en train d'être édité"
 
 #: src/canvas/sections/CommentListSection.ts:135
 msgid "Please save or discard the comment currently being edited."
-msgstr ""
+msgstr "Sauvez ou annulez le commentaire en train d'être édité."
 
 #: src/canvas/sections/CommentListSection.ts:959
 msgid "Modify"
@@ -2726,7 +2733,7 @@ msgstr "Copie à partir du document désactivée"
 
 #: src/map/Clipboard.js:290
 msgid "warning: copy/paste request timed out"
-msgstr "avertissement: copier/coller la demande a expiré"
+msgstr "avertissement : la demande de copier/coller a expiré"
 
 #: src/map/Clipboard.js:352
 msgid "Failed to download clipboard, please re-copy"
@@ -2764,16 +2771,15 @@ msgstr ""
 "avant d'en démarrer un nouveau</p>"
 
 #: src/map/Clipboard.js:1207
-#, fuzzy
 msgid ""
 "<p>Your browser has very limited access to the clipboard</p><p><b>Please "
 "press</b> <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to "
 "see more options</p><p>Close popup to ignore paste special</p>"
 msgstr ""
 "<p>Votre navigateur n'a qu'un accès très limité au presse-papiers</"
-"p><p>Veuillez appuyer sur : <kbd>Ctrl</kbd> <span class=\"kbd--plus\">+</"
-"span> <kbd>V</kbd> pour voir plus d'options</p><p>Fermez ceci pour ignorer "
-"le collage spécial</p>"
+"p><p><b>Veuillez appuyer sur  :</b> <kbd>Ctrl</kbd> <span class=\"kbd--plus\""
+">+</span> <kbd>V</kbd> pour voir plus d'options</p><p>Fermez ceci pour "
+"ignorer le collage spécial</p>"
 
 #: src/map/Clipboard.js:1214
 msgid "Paste from this document"
@@ -2825,7 +2831,7 @@ msgstr "Présentation vide"
 
 #: src/map/handler/Map.SlideShow.js:161
 msgid "Windowed Presentation: "
-msgstr ""
+msgstr "Présentation dans une fenêtre : "
 
 #: src/map/handler/Map.SlideShow.js:168
 msgid "Windowed Presentation Blocked"
@@ -2837,6 +2843,9 @@ msgid ""
 "slide shows to be displayed in separated windows, allowing for easy screen "
 "sharing."
 msgstr ""
+"La présentation a été bloquée. Autorisez les fenêtres pop-up dans votre "
+"navigateur. Cela permettra au diaporama d'être affiché dans une fenêtre "
+"séparée, facilitant le partage d'écran."
 
 #: src/map/handler/Map.SlideShow.js:183
 msgid "Presenting in window"
@@ -2864,11 +2873,11 @@ msgstr "Vous présentez déjà ce document"
 
 #: src/map/handler/Map.SlideShow.js:314
 msgid "Presentation disabled"
-msgstr ""
+msgstr "Présentation désactivée"
 
 #: src/map/handler/Map.SlideShow.js:315
 msgid "Presentation mode has been disabled for this document"
-msgstr ""
+msgstr "Le mode présentation a été désactivé pour ce document"
 
 #: src/map/handler/Map.WOPI.js:152
 msgid "Creating new file from template..."
@@ -2963,6 +2972,10 @@ msgid ""
 "translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
 "translate=\"true\">3</a>"
 msgstr ""
+"<a id=\"slide-1-indicator\" class=\"active\" href=\"#slide-1\" data-"
+"translate=\"true\">1</a> <a id=\"slide-2-indicator\" href=\"#slide-2\" data-"
+"translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
+"translate=\"true\">3</a>"
 
 #~ msgid "ODF Spreadsheet (.ods)"
 #~ msgstr "Classeur ODF (.ods)"
