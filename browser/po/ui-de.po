@@ -12,16 +12,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-21 07:27+0200\n"
-"PO-Revision-Date: 2024-04-21 19:07+0000\n"
-"Last-Translator: Ettore Atalan <atalanttore@googlemail.com>\n"
+"PO-Revision-Date: 2024-05-21 14:10+0000\n"
+"Last-Translator: Lily Logua <lily.logua@gmail.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "ui/de/>\n"
-"Language: \n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.5-dev\n"
+"X-Generator: Weblate 5.6-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -892,7 +892,7 @@ msgstr "Dunkler Modus"
 #: src/control/Control.NotebookbarImpress.js:459
 #: src/control/Control.NotebookbarWriter.js:1467
 msgid "Invert Background"
-msgstr ""
+msgstr "Hintergrund umkehren"
 
 #: src/control/Control.Menubar.js:154 src/control/Control.Menubar.js:455
 #: src/control/Control.Menubar.js:599 src/control/Control.Menubar.js:744
@@ -1167,12 +1167,12 @@ msgstr "Mehr Bedingungen..."
 #: src/control/Control.Menubar.js:839
 #: src/control/jsdialog/Definitions.Menu.ts:331
 msgid "Top/Bottom Rules..."
-msgstr ""
+msgstr "Regeln oben/unten..."
 
 #: src/control/Control.Menubar.js:840
 #: src/control/jsdialog/Definitions.Menu.ts:334
 msgid "Top N elements..."
-msgstr ""
+msgstr "Top N elements..."
 
 #: src/control/Control.Menubar.js:841
 #: src/control/jsdialog/Definitions.Menu.ts:338
@@ -1182,12 +1182,12 @@ msgstr "Obere n-Prozent ..."
 #: src/control/Control.Menubar.js:842
 #: src/control/jsdialog/Definitions.Menu.ts:342
 msgid "Bottom N elements..."
-msgstr ""
+msgstr "Untere N-Elemente..."
 
 #: src/control/Control.Menubar.js:843
 #: src/control/jsdialog/Definitions.Menu.ts:346
 msgid "Bottom N percent..."
-msgstr ""
+msgstr "Untere N-Prozent."
 
 #: src/control/Control.Menubar.js:844
 #: src/control/jsdialog/Definitions.Menu.ts:350
@@ -1231,7 +1231,7 @@ msgstr "Auf Standardsprache zurücksetzen"
 #: src/control/Control.Menubar.js:1462 src/control/Control.Toolbar.js:132
 #: src/control/Control.Toolbar.js:179
 msgid "More..."
-msgstr "Weitere …"
+msgstr "Mehr …"
 
 #: src/control/Control.Menubar.js:1745
 msgid "Use Compact view"
@@ -2796,16 +2796,15 @@ msgstr ""
 "ab, bevor Sie einen neuen starten.</p>"
 
 #: src/map/Clipboard.js:1207
-#, fuzzy
 msgid ""
 "<p>Your browser has very limited access to the clipboard</p><p><b>Please "
 "press</b> <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to "
 "see more options</p><p>Close popup to ignore paste special</p>"
 msgstr ""
-"<p>Ihr Browser hat nur sehr eingeschränkten Zugriff auf die Zwischenablage</"
-"p><p>Bitte drücken Sie jetzt: <kbd>Strg</kbd><span class=\"kbd--plus\""
-">+</span><kbd>V</kbd>, um weitere Optionen zu sehen</p><p>Popup schließen, "
-"um Einfüge-Spezial zu ignorieren</p>"
+"<p>Ihr Browser hat nur relativ eingeschränkten Zugriff auf die "
+"Zwischenablage</p><p>Bitte drücken Sie jetzt: <kbd>Strg</kbd><span class="
+"\"kbd--plus\">+</span><kbd>V</kbd>, um weitere Optionen zu sehen</p><p>Popup "
+"schließen, um Einfüge-Spezial zu ignorieren</p>"
 
 #: src/map/Clipboard.js:1214
 msgid "Paste from this document"
@@ -2813,7 +2812,7 @@ msgstr "Aus diesem Dokument einfügen"
 
 #: src/map/Clipboard.js:1214
 msgid "Cancel paste special"
-msgstr ""
+msgstr "Abbrechen Einfügen Spezial"
 
 #: src/map/Map.js:224
 msgid "Initializing..."
@@ -2858,7 +2857,7 @@ msgstr "Leere Diashow"
 
 #: src/map/handler/Map.SlideShow.js:161
 msgid "Windowed Presentation: "
-msgstr ""
+msgstr "Fensterpräsentation "
 
 #: src/map/handler/Map.SlideShow.js:168
 msgid "Windowed Presentation Blocked"
@@ -2900,11 +2899,11 @@ msgstr "Sie präsentieren dieses Dokument bereits"
 
 #: src/map/handler/Map.SlideShow.js:314
 msgid "Presentation disabled"
-msgstr ""
+msgstr "Präsentation deaktiviert"
 
 #: src/map/handler/Map.SlideShow.js:315
 msgid "Presentation mode has been disabled for this document"
-msgstr ""
+msgstr "Der Präsentationsmodus wurde für dieses Dokument deaktiviert."
 
 #: src/map/handler/Map.WOPI.js:152
 msgid "Creating new file from template..."
