@@ -80,7 +80,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		L.CanvasTileLayer.prototype.onAdd.call(this, map);
 
 		map.on('resize', function () {
-			if (this.isCursorVisible()) {
+			if (app.file.textCursor.visible) {
 				this._onUpdateCursor(true /* scroll */);
 			}
 		}.bind(this));
