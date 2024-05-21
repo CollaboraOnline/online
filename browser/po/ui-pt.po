@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-21 07:27+0200\n"
-"PO-Revision-Date: 2024-05-18 13:08+0000\n"
-"Last-Translator: SC <lalocas@protonmail.com>\n"
+"PO-Revision-Date: 2024-05-21 14:10+0000\n"
+"Last-Translator: Pedro Silva <pedro.silva@collabora.com>\n"
 "Language-Team: Portuguese <https://hosted.weblate.org/projects/"
 "collabora-online/ui/pt/>\n"
-"Language: \n"
+"Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -883,7 +883,7 @@ msgstr "Modo escuro"
 #: src/control/Control.NotebookbarImpress.js:459
 #: src/control/Control.NotebookbarWriter.js:1467
 msgid "Invert Background"
-msgstr ""
+msgstr "Inverter fundo"
 
 #: src/control/Control.Menubar.js:154 src/control/Control.Menubar.js:455
 #: src/control/Control.Menubar.js:599 src/control/Control.Menubar.js:744
