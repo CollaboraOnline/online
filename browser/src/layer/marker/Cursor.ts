@@ -83,6 +83,8 @@ class Cursor {
 		if (this.domAttached && this.container && this.container.querySelector('.blinking-cursor') !== null) {
 			$('.leaflet-interactive').css('cursor', 'text');
 		}
+		this.addCursorClass(app.file.textCursor.visible);
+		this.setOpacity(app.file.textCursor.visible ? 1: 0);
 	}
 
 	remove() {
