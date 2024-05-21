@@ -17,6 +17,10 @@ L.Control.DocumentNameInput = L.Control.extend({
 
 	onAdd: function (map) {
 		this.map = map;
+		if (window.mode.isMobile())
+			this.progressBar = document.getElementById('mobile-progress-bar');
+		else
+			this.progressBar = document.getElementById('document-name-input-progress-bar');
 
 		map.on('doclayerinit', this.onDocLayerInit, this);
 		map.on('wopiprops', this.onWopiProps, this);
@@ -153,21 +157,18 @@ L.Control.DocumentNameInput = L.Control.extend({
 		}
 	},
 
-	showProgressBar : function() {
+	showProgressBar: function() {
 		this.disableDocumentNameInput();
-		var progressBar = document.getElementById('document-name-input-progress-bar');
-		progressBar.style.display = 'block';
+		this.progressBar.style.display = 'block';
 	},
 
-	hideProgressBar : function() {
+	hideProgressBar: function() {
 		this.enableDocumentNameInput();
-		var progressBar = document.getElementById('document-name-input-progress-bar');
-		progressBar.style.display = 'none';
+		this.progressBar.style.display = 'none';
 	},
 
 	setProgressBarValue: function(value) {
-		var progressBar = document.getElementById('document-name-input-progress-bar');
-		progressBar.value = value;
+		this.progressBar.value = value;
 	},
 
 	showLoadingAnimation : function() {

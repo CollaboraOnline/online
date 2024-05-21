@@ -705,3 +705,7 @@ div#fontstyletoolbox + div#style.mobile-wizard {
 	margin-left: 5px;
 	margin-right: 5px;
 }
+
+.progress-bar {
+	margin-block-end: 0px !important;
+}
