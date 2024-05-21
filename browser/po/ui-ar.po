@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-21 07:27+0200\n"
-"PO-Revision-Date: 2024-05-19 19:01+0000\n"
+"PO-Revision-Date: 2024-05-21 14:10+0000\n"
 "Last-Translator: Ali <alimahwer@yahoo.com>\n"
 "Language-Team: Arabic <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ar/>\n"
-"Language: \n"
+"Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -22,7 +22,7 @@ msgstr ""
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
-msgstr "وحدة التحكم المسؤولة"
+msgstr "شاشة التحكم"
 
 #: admin/admin.strings.js:16
 msgid "Settings"
@@ -30,7 +30,7 @@ msgstr "الإعدادات"
 
 #: admin/admin.strings.js:17
 msgid "Overview"
-msgstr "نظرة عامة"
+msgstr "لمحة عامة"
 
 #: admin/admin.strings.js:18
 msgid "(current)"
@@ -42,11 +42,11 @@ msgstr "التحليلات"
 
 #: admin/admin.strings.js:20
 msgid "History"
-msgstr "التاريخ"
+msgstr "السجل التاريخي"
 
 #: admin/admin.strings.js:21
 msgid "Log"
-msgstr "السجل"
+msgstr "سجل الحركات"
 
 #: admin/admin.strings.js:22
 msgid "Dashboard"
@@ -54,24 +54,24 @@ msgstr "لوحة التحكم"
 
 #: admin/admin.strings.js:23
 msgid "Users online"
-msgstr "المستخدمون المتصلون"
+msgstr "مستخدِمون مُتّصِلون"
 
 #: admin/admin.strings.js:24
 msgid "User Name"
-msgstr "اسم المستخدم"
+msgstr "اسم المستخدِم"
 
 #: admin/admin.strings.js:25
 msgid "Documents open"
-msgstr "المستندات المفتوحة"
+msgstr "مستندات مفتوحة"
 
 #: admin/admin.strings.js:26 admin/src/AdminSocketOverview.js:82
 #: admin/src/AdminSocketOverview.js:131 admin/src/AdminSocketOverview.js:358
 msgid " user(s)."
-msgstr " مستخدم."
+msgstr " مستخدِم(ون)."
 
 #: admin/admin.strings.js:27 admin/src/AdminSocketOverview.js:214
 msgid " document(s) open."
-msgstr " مستندات مفتوحة."
+msgstr " مستند(ات) مفتوحة."
 
 #: admin/admin.strings.js:28
 msgid "Number of Documents"
@@ -79,15 +79,15 @@ msgstr "عدد المستندات"
 
 #: admin/admin.strings.js:29
 msgid "Memory consumed"
-msgstr "استهلاك الذاكرة"
+msgstr "ذاكرة مستهلكة"
 
 #: admin/admin.strings.js:30
 msgid "Bytes sent"
-msgstr "البايتات المُرسلة"
+msgstr "بايتات مُرسَلة"
 
 #: admin/admin.strings.js:31
 msgid "Bytes received"
-msgstr "البايتات المُستقبلة"
+msgstr "بايتات مُستقبَلة"
 
 #: admin/admin.strings.js:32
 msgid "PID"
@@ -99,7 +99,7 @@ msgstr "المستند"
 
 #: admin/admin.strings.js:34
 msgid "Views"
-msgstr "المشاهدات"
+msgstr "مشاهدات"
 
 #: admin/admin.strings.js:35
 msgid "Elapsed time"
@@ -461,7 +461,7 @@ msgstr "حذف"
 
 #: src/control/Control.ContextMenu.js:218
 msgid "Paste Special"
-msgstr "لصق خاصّ"
+msgstr "لصقٌ خاصّ"
 
 #: src/control/Control.DocumentNameInput.js:109
 msgid "Path"
@@ -515,7 +515,7 @@ msgid ""
 "to first download them."
 msgstr ""
 "إذا كنت ترغب في مشاركة عناصر كبيرة خارج%productName ، فمن الضروري تنزيلها "
-"أولا."
+"أولاً."
 
 #: src/control/Control.DownloadProgress.js:70
 #: src/control/Control.NotebookbarCalc.js:212
@@ -875,7 +875,7 @@ msgstr "الوضع المظلم"
 #: src/control/Control.NotebookbarImpress.js:459
 #: src/control/Control.NotebookbarWriter.js:1467
 msgid "Invert Background"
-msgstr ""
+msgstr "عكس الخلفية"
 
 #: src/control/Control.Menubar.js:154 src/control/Control.Menubar.js:455
 #: src/control/Control.Menubar.js:599 src/control/Control.Menubar.js:744
@@ -949,7 +949,7 @@ msgstr "ادخل نص منسق"
 
 #: src/control/Control.Menubar.js:341 src/control/Control.Menubar.js:1255
 msgid "Insert Checkbox"
-msgstr "أدخل خانة الاختيار"
+msgstr "أدخِل اختيارك"
 
 #: src/control/Control.Menubar.js:342 src/control/Control.Menubar.js:1256
 msgid "Insert Dropdown"
@@ -1049,7 +1049,7 @@ msgstr "حفظ التعليقات"
 #: src/control/Control.Menubar.js:445
 #: src/control/Control.NotebookbarImpress.js:444
 msgid "Master View"
-msgstr "عرض رئيسي"
+msgstr "العرض الرئيسي"
 
 #: src/control/Control.Menubar.js:522 src/control/Control.Menubar.js:1078
 #: src/control/Control.PresentationBar.js:127
@@ -1218,11 +1218,11 @@ msgstr "أكثر..."
 
 #: src/control/Control.Menubar.js:1745
 msgid "Use Compact view"
-msgstr "استخدم العرض المضغوط"
+msgstr "استعمِل العرض المُدمج"
 
 #: src/control/Control.Menubar.js:1747
 msgid "Use Tabbed view"
-msgstr "استخدم العرض المبوب"
+msgstr "استعمِل العرض المُبوَّب"
 
 #: src/control/Control.Menubar.js:1813 src/control/Control.Menubar.js:1826
 msgid "Read-only mode"
@@ -1298,7 +1298,7 @@ msgstr "إدراج"
 #: src/control/Control.NotebookbarImpress.js:96
 #: src/control/Control.NotebookbarWriter.js:55
 msgid "Layout"
-msgstr "نَسَق"
+msgstr "مُخطَّط"
 
 #: src/control/Control.NotebookbarCalc.js:48
 msgid "Data"
@@ -1316,7 +1316,7 @@ msgstr "مُراجعة"
 #: src/control/Control.NotebookbarImpress.js:108
 #: src/control/Control.NotebookbarWriter.js:73
 msgid "Format"
-msgstr "صيغة"
+msgstr "نَسَق"
 
 #: src/control/Control.NotebookbarCalc.js:66
 #: src/control/Control.NotebookbarDraw.js:106
@@ -1329,7 +1329,7 @@ msgstr "رسم"
 #: src/control/Control.NotebookbarImpress.js:135
 #: src/control/Control.NotebookbarWriter.js:99
 msgid "View"
-msgstr "منظور"
+msgstr "عرض"
 
 #: src/control/Control.NotebookbarCalc.js:79
 #: src/control/Control.NotebookbarDraw.js:119
@@ -1484,7 +1484,7 @@ msgstr "وضع القراءة"
 #: src/control/Control.NotebookbarImpress.js:406
 #: src/control/Control.NotebookbarWriter.js:1414
 msgid "Compact view"
-msgstr "عرض مدمج (بسيط)"
+msgstr "عرض مُدمَج"
 
 #: src/control/Control.NotebookbarCalc.js:1221
 #: src/control/Control.NotebookbarDraw.js:402
@@ -1532,7 +1532,7 @@ msgstr "مستند PDF (.pdf) - خبير"
 
 #: src/control/Control.NotebookbarDraw.js:1049
 msgid "Page Layout"
-msgstr "تخطيط الصفحة"
+msgstr "مُخطَّط الصفحة"
 
 #: src/control/Control.NotebookbarImpress.js:128
 msgid "Master"
@@ -1581,7 +1581,7 @@ msgstr "مسطرة"
 
 #: src/control/Control.PartsPreview.js:176
 msgid "preview of page "
-msgstr "معاينة الصفحة "
+msgstr "مُعاينة الصفحة "
 
 #: src/control/Control.PartsPreview.js:235
 msgid "Paste Slide"
@@ -1589,7 +1589,7 @@ msgstr "لصق الشريحة"
 
 #: src/control/Control.PartsPreview.js:278
 msgid "Paste"
-msgstr "لصق"
+msgstr "لصقٌ"
 
 #: src/control/Control.Scroll.Annotation.js:19
 msgid "Scroll up annotations"
@@ -1712,11 +1712,11 @@ msgstr "هل أنت متأكّد من حذف الورقة، %sheet%؟"
 
 #: src/control/Control.Tabs.js:398
 msgid "Rename sheet"
-msgstr "إعادة تسمية الورقة"
+msgstr "إعادة تسمية الجدول"
 
 #: src/control/Control.Tabs.js:398
 msgid "Enter new sheet name"
-msgstr "أدخل اسم جديد للورقة"
+msgstr "أدخِل الاسم الجديد للجدول"
 
 #: src/control/Control.Toolbar.js:934
 msgid ""
@@ -1752,7 +1752,7 @@ msgstr "إخفاء القائمة"
 
 #: src/control/Control.UIManager.js:161
 msgid "Enter new name"
-msgstr "إدخال اسم جديد"
+msgstr "أدخِل الاسم الجديد"
 
 #: src/control/Control.UIManager.js:787
 msgid "Show Menu"
@@ -1970,11 +1970,11 @@ msgstr "تعذر تأمين المستند."
 
 #: src/control/Permission.js:149
 msgid "Enter a file name"
-msgstr "أدخل اسم الملف"
+msgstr "أدخِل اسم الملف"
 
 #: src/control/Permission.js:168
 msgid "Save as ODF format"
-msgstr "حفظ بتنسيق ODF"
+msgstr "حفظ بنَسَق ODF"
 
 #: src/control/Permission.js:169
 msgid "Continue editing"
@@ -1989,7 +1989,7 @@ msgid ""
 "This document may contain formatting or content that cannot be saved in the "
 "current file format."
 msgstr ""
-"قد يحتوي هذا المستند على تنسيق أو محتوى لا يمكن حفظه بتنسيق الملف الحالي."
+"قد يحتوي هذا المستند على نَسَق أو محتوى لا يمكن حفظه بنَسَق الملف الحالي."
 
 #: src/control/Ruler.js:368
 msgid "Left Margin"
@@ -2052,7 +2052,7 @@ msgstr "إعادة تسمية ..."
 
 #: src/control/Toolbar.js:788
 msgid "This version of %productName is powered by"
-msgstr "هذا الإصدار من %productName مدعوم من قبل"
+msgstr "هذا الإصدار من %productName مدعوم من قِبَل"
 
 #: src/control/Toolbar.js:800
 msgid "\"Slow Proxy\""
@@ -2060,7 +2060,7 @@ msgstr "\"وكيل بطيء\""
 
 #: src/control/Toolbar.js:819
 msgid "Copy all version information in English"
-msgstr "انسخ جميع معلومات الإصدار باللغة الإنجليزية"
+msgstr "إنسَخ جميع معلومات الإصدار"
 
 #: src/control/Toolbar.js:903
 msgid "Insert hyperlink"
@@ -2170,7 +2170,7 @@ msgstr "ستظهر هنا العناوين والكائنات التي تضيف�
 
 #: src/core/Socket.js:65
 msgid "Oops, there is a problem connecting to %productName: "
-msgstr "عفواً؛ حدثت مشكلة في الاتصال بـ%productName: "
+msgstr "عفواً؛ حدثت مشكلة في الاتصال مع %productName: "
 
 #: src/core/Socket.js:613
 msgid "Server is now reachable. We have to refresh the page now."
@@ -2247,7 +2247,7 @@ msgstr "إعادة تحميل المستند بعد إعادة تسميته"
 
 #: src/core/Socket.js:1019
 msgid "Document requires password to view."
-msgstr "يتطلب المستند كلمة سر لعرضه."
+msgstr "تلزم كلمة مرور لعرض المستند."
 
 #: src/core/Socket.js:1022
 msgid "Document requires password to modify."
@@ -2255,7 +2255,7 @@ msgstr "يتطلب المستند كلمة سر لتعديله."
 
 #: src/core/Socket.js:1024
 msgid "Hit Cancel to open in view-only mode."
-msgstr "انقر ”ألغِ“ للفتح في وضع العرض فقط."
+msgstr "أنقُر ”ألغِ“ للفتح في وضع العرض فقط."
 
 #: src/core/Socket.js:1028
 msgid "Wrong password provided. Please try again."
@@ -2279,7 +2279,7 @@ msgstr "قام %userName بحفظ هذا المستند باسم %fileName. هل
 
 #: src/core/Socket.js:1152
 msgid "The document is being renamed and will reload shortly"
-msgstr "تتم إعادة تسمية المستند وسيعاد تحميله قريبًا"
+msgstr "تتم الآن إعادة تسمية المستند وسيعاد تحميله بعدها"
 
 #: src/core/Socket.js:1155
 msgid "The document is switching to Offline mode and will reload shortly"
@@ -2311,7 +2311,7 @@ msgstr "اكتبها فوق التخزين"
 
 #: src/core/Socket.js:1324
 msgid "Save to new file"
-msgstr "احفظها في ملف جديد"
+msgstr "حفظ في ملف جديد"
 
 #: src/core/Socket.js:1334
 msgid "Document has been changed"
@@ -2321,8 +2321,7 @@ msgstr "تم تغيير المستند"
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
-msgstr ""
-"تغيّر المستند في التخزين. ما الذي تريد فعله حيال التغييرات هنا غير المحفوظة؟"
+msgstr "تغيّر المستند في التخزين. ما الذي تريد فعله حيال تغييراتك غير المحفوظة؟"
 
 #: src/core/Socket.js:1586
 msgid ""
@@ -2352,7 +2351,7 @@ msgstr "معيار"
 
 #: src/docstate.js:99
 msgid "Theme colors"
-msgstr "ألوان الموضوع"
+msgstr "ألوان الثيمة"
 
 #: src/docstate.js:100
 msgid "Document colors"
@@ -2486,10 +2485,10 @@ msgid ""
 "but connected to serverId %2"
 msgstr ""
 "يبدو أن مجموعة %productName الخاصة بك قد تم تكوينها بشكل خاطئ أو أنها تتغير "
-"بسرعة - يرجى الاتصال بمسؤول النظام لديك. قد يؤدي الاستمرار في التحرير إلى "
-"عدم رؤية العديد من المستخدمين لبعضهم البعض، وحدوث تعارضات في تخزين المستندات "
-"و/أو حدوث مشكلات في النسخ/اللصق. معرف الخادم المتوقع %0 للرمز المميز %1 "
-"ولكنه متصل بالخادم %2"
+"بسرعة - يرجى الاتصال بمشرف النظام لديك. قد يؤدي الاستمرار في التحرير إلى عدم "
+"رؤية العديد من المستخدمين لبعضهم البعض، وحدوث تعارضات في تخزين المستندات و/"
+"أو حدوث مشكلات في النسخ/اللصق. مُعرِّف الخادوم المتوقع %0 لأَمَارَة التمرير "
+"(routenToken) %1 ولكنه متصل بالخادوم %2"
 
 #: src/errormessages.js:39
 msgid ""
@@ -2498,10 +2497,10 @@ msgid ""
 "administrator. For more info on proxy configuration please checkout https://"
 "sdk.collaboraonline.com/docs/installation/Proxy_settings.html"
 msgstr ""
-"فشل إنشاء اتصال مأخذ توصيل أو تم إغلاق اتصال مأخذ التوصيل بشكل غير متوقع. "
-"ربما تم تكوين الوكيل العكسي بشكل خاطئ، يرجى الاتصال بالمسؤول. لمزيد من "
-"المعلومات حول تكوين الوكيل، يرجى الخروج https://sdk.collaboraonline.com/docs/"
-"installation/Proxy_settings.html"
+"فشل تأسيس مأخذ للتوصيل أو تم إغلاق مأخذ التوصيل بشكل غير متوقع. ربما تم "
+"تكوين الوكيل العكسي بشكل خاطئ، يرجى الاتصال بالمشرف. لمزيد من المعلومات حول "
+"تكوين الوكيل، يرجى مراجعة https://sdk.collaboraonline.com/docs/installation/"
+"Proxy_settings.html"
 
 #: src/errormessages.js:40
 msgid ""
@@ -2530,7 +2529,7 @@ msgstr ""
 
 #: src/errormessages.js:46 src/errormessages.js:55
 msgid "Document cannot be saved due to expired or invalid access token."
-msgstr "لا يمكن حفظ المستند بسبب انتهاء صلاحية رمز الوصول أو عدم صلاحيته."
+msgstr "لا يمكن حفظ المستند بسبب انتهاء صلاحيةأَمَارَة الوصول أو عدم صلاحيتها."
 
 #: src/errormessages.js:47
 msgid "Document cannot be saved."
@@ -2561,7 +2560,7 @@ msgid ""
 msgstr ""
 "فشل الحفظ لأن المستند كبير جدًا أو يتجاوز مساحة التخزين المتبقية. سيصبح "
 "المستند الآن للقراءة فقط ولكن لا يزال بإمكانك تنزيله الآن للاحتفاظ بنسخة "
-"محليًا."
+"محلية منه."
 
 #: src/errormessages.js:56
 msgid "Document cannot be saved, please check your permissions."
@@ -2707,12 +2706,12 @@ msgid ""
 "kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd></td></tr><tr><td>Copy</"
 "td><td>Cut</td><td>Paste</td></tr></table>"
 msgstr ""
-"<p> لدى متصفحك وصول محدود جدا إلى الحافظة، لذا استخدم اختصارات لوحة المفاتيح "
-"هذه:</p><table class=\"warn-copy-paste\"><tr><td><kbd>Ctrl</kbd><span class="
-"\"kbd--plus\">+</span><kbd>C</kbd></td><td><kbd>Ctrl</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>X</kbd></td><td><kbd>Ctrl</kbd><span class=\"kbd--plus\">"
-"+</span><kbd>V</kbd></td></tr><tr><td>نسخ</td><td>قص</td><td>لصق</td></tr></t"
-"able>"
+"<p> متصفحك عنده وصول محدود جدا إلى الحافظة؛ لذا استخدم اختصارات لوحة "
+"المفاتيح هذه:</p><table class=\"warn-copy-paste\"><tr><td><kbd>Ctrl</"
+"kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd></td><td><kbd>Ctrl</"
+"kbd><span class=\"kbd--plus\">+</span><kbd>X</kbd></td><td><kbd>Ctrl</"
+"kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd></td></tr><tr><td>نسخ</td><"
+"td>قص</td><td>لصق</td></tr></table>"
 
 #: src/map/Clipboard.js:1189
 msgid ""
@@ -2721,7 +2720,7 @@ msgid ""
 "one</p>"
 msgstr ""
 "<p> بدأ بالفعل التنزيل بسبب عملية نسخ / لصق كبيرة. من فضلك، انتظر التنزيل "
-"الحالي أو قم بإلغائه قبل بدء تنزيل جديد </p>"
+"الحالي أو قم بإلغائه قبل البدء في تنزيل جديد </p>"
 
 #: src/map/Clipboard.js:1207
 msgid ""
@@ -2757,7 +2756,7 @@ msgstr "الرجاء ارسال لنا ملاحظاتك"
 #, javascript-format
 msgid ""
 "The file of type: %0 cannot be uploaded to server since the file has no name"
-msgstr "الملف من النوع: % 0 لا يمكن تحميله على الخادم لأن الملف ليس له اسم"
+msgstr "الملف من النوع: % 0 لا يمكن تحميله على الخادوم لأن الملف ليس له اسم"
 
 #: src/map/handler/Map.FileInserter.js:107
 #, javascript-format
@@ -2879,9 +2878,9 @@ msgid ""
 "teams."
 msgstr ""
 "تحقق من <a target=\"_blank\" href=\"https://www.collaboraoffice.com/"
-"code-24-04-release-notes/\">ملاحظات الإصدار</a> وتعرف على كل شيء حول: أحدث "
-"تطوير لـ Collabora عبر الإنترنت النسخة تستهدف المستخدمين المنزليين والفرق "
-"الصغيرة."
+"code-24-04-release-notes/\">ملاحظات الإصدار</a> وتعرف على كل شيء حول: نسخة "
+"المطورين الأخيرة من Collabora عبر الإنترنت و التي تستهدف المستخدمين "
+"المنزليين والفرق الصغيرة."
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:48-7
 msgid "Get Involved"
