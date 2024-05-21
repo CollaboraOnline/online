@@ -1288,6 +1288,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._onShapeSelectionContent(textMsg);
 		}
 		else if (textMsg.startsWith('graphicselection:')) {
+			this._map.fire('resettopbottompagespacing');
 			this._onGraphicSelectionMsg(textMsg);
 		}
 		else if (textMsg.startsWith('graphicinnertextarea:')) {
