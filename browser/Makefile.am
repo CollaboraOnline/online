@@ -402,7 +402,7 @@ COOL_JS_LST =\
 	src/control/Scroll.js \
 	src/control/Styles.js \
 	src/control/Ruler.js \
-	src/control/VRuler.js \
+	src/control/VRuler.ts \
 	src/dom/PosAnimation.js \
 	src/map/anim/Map.PanAnimation.js \
 	src/dom/PosAnimation.Timer.js \
@@ -800,7 +800,7 @@ pot:
 		src/control/Parts.js \
 		src/control/Permission.js \
 		src/control/Ruler.js \
-		src/control/VRuler.js \
+		src/control/VRuler.ts \
 		src/control/Signing.js \
 		src/control/Toolbar.js \
 		src/control/jsdialog/Component.Toolbar.ts \
