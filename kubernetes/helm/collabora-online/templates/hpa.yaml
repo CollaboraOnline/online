@@ -29,4 +29,9 @@ spec:
           type: Utilization
           averageUtilization: {{ . }}
     {{- end }}
+  {{- if .Values.autoscaling.scaleDownDisabled }}
+  behavior:
+    scaleDown:
+      selectPolicy: Disabled
+  {{- end }}
 {{- end }}
