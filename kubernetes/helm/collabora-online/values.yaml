@@ -229,6 +229,7 @@ autoscaling:
   maxReplicas: 100
   targetCPUUtilizationPercentage: 70
   targetMemoryUtilizationPercentage: 50
+  scaleDownDisabled: false
 
 dynamicConfig:
   enabled: false
