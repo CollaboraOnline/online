@@ -90,11 +90,24 @@ private:
         {
             // Remove previous identical tile, if any, and use most recent (incoming).
             const TileDesc newTile = TileDesc::parse(item->firstLine());
+            uint32_t newTilePosHash = newTile.equalityHash();
+            // store a hash of position for this tile.
+            item->setHash(newTilePosHash);
+
             const auto& pos = std::find_if(_queue.begin(), _queue.end(),
-                [&newTile](const queue_item_t& cur)
+                                           [&newTile, newTilePosHash](const queue_item_t& cur)
                 {
-                    return cur->firstTokenMatches("tile:") &&
-                           newTile == TileDesc::parse(cur->firstLine());
+                    if (!cur->firstTokenMatches("tile:"))
+                        return false;
+                    if (newTilePosHash != cur->getHash()) // eliminate N^2 parsing
+                        return false;
+                    if (newTile != TileDesc::parse(cur->firstLine()))
+                    {
+                        LOG_TRC("Ununusal - tile " << newTile.serialize() << " has quality "
+                                " hash collision with " << cur->firstLine() << " of " << newTilePosHash);
+                        return false;
+                    }
+                    return true;
                 });
 
             if (pos != _queue.end())

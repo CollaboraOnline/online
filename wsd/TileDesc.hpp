@@ -23,7 +23,6 @@
 
 #define TILE_WIRE_ID
 using TileWireId = uint32_t;
-using TileBinaryHash = uint64_t;
 
 namespace TileParse
 {
@@ -131,6 +130,21 @@ public:
                _id == other._id &&
                _normalizedViewId == other._normalizedViewId &&
                _mode == other._mode;
+    }
+
+    // used to cache a hash of the key elements compared in ==
+    uint32_t equalityHash() const
+    {
+        uint32_t a = _normalizedViewId << 17;
+        uint32_t b = _tilePosX << 7;
+
+        a ^= _part;
+        b ^= _tilePosY;
+        a ^= _mode << 30;
+        b ^= _tileWidth << 20;
+        a ^= _width << 19;
+
+        return a ^ b;
     }
 
     static bool rectanglesIntersect(int x1, int y1, int w1, int h1, int x2, int y2, int w2, int h2)
