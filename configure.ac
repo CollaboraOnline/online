@@ -1394,11 +1394,7 @@ AS_IF([test `uname -s` = "Linux" -o `uname -s` = "FreeBSD" -o `uname -s` = "Darw
       # optional. If node and npm are not available, cool will have to be built on a Linux box.
       [AC_PATH_PROG(NODE, node, no)
        if test "$NODE" = "no"; then
-           if test `uname -s` = "Darwin"; then
-               AC_MSG_WARN([The cool bits will have to be built on a Linux machine and copied over])
-           else
-               AC_MSG_ERROR([node required to build cool, but not installed])
-           fi
+            AC_MSG_ERROR([node required to build cool, but not installed])
        else
            NODE_VER=`node --version | sed 's/^v//' | awk -F. '{ print (($1 * 100) + $2) * 100 + $3;}'`
            if test "$NODE_VER" -lt 100000; then
