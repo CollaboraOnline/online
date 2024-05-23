@@ -1938,6 +1938,9 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	display: grid;
 	grid-template-rows: auto 1fr;
 }
+#FormulaDialog #StructPage .ui-treeview-entry {
+	background-color: transparent;
+}
 #FormulaDialog #ParameterPage > .ui-grid-cell {
 	display: flex;
 	flex-direction: column;
