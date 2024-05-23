@@ -47,10 +47,10 @@ RUN --mount=type=secret,id=secret_key \
     secret_key=$(cat /run/secrets/secret_key); \
     if [ "$type" = "cool" ] && [ -n ${secret_key+set} ]; then \
         echo "Based on the provided build arguments Collabora Online from customer repo will be used."; \
-        repourl="${repourl}23.05/customer-deb-${secret_key}/"; \
+        repourl="${repourl}24.04/customer-deb-${secret_key}/"; \
     elif [ "$type" = "key" ]; then \
         echo "Based on the provided build arguments license key enabled Collabora Online will be used."; \
-        repourl="${repourl}23.05-key/"; \
+        repourl="${repourl}24.04-key/"; \
     else \
         echo "Based on the provided build arguments Collabora Online Development Edition will be used."; \
         repourl="${repourl}24.04-CODE/CODE-deb/"; \
