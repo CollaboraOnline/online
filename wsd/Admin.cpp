@@ -26,6 +26,7 @@
 #include "Auth.hpp"
 #include "ConfigUtil.hpp"
 #include <Common.hpp>
+#include <COOLWSD.hpp>
 #include <Log.hpp>
 #include <Protocol.hpp>
 #include <StringVector.hpp>
@@ -559,7 +560,7 @@ Admin::Admin()
     std::size_t minHeadroomKb = 1024;
 
     // If we have a manual percentage cap, apply it.
-    const double memLimit = COOLWSD::getConfigValue<double>("memproportion", 0.0);
+    const double memLimit = ConfigUtil::getConfigValue<double>("memproportion", 0.0);
     if (memLimit > 0.0)
     {
         const double headroom = _totalAvailMemKb * (100. - memLimit) / 100.;
@@ -740,7 +741,7 @@ void Admin::pollingThread()
     _model.sendShutdownReceivedMsg();
 
     static const std::chrono::microseconds closeMonitorMsgTimeout = std::chrono::seconds(
-        COOLWSD::getConfigValue<int>("indirection_endpoint.migration_timeout_secs", 180));
+        ConfigUtil::getConfigValue<int>("indirection_endpoint.migration_timeout_secs", 180));
 
     std::chrono::time_point<std::chrono::steady_clock> closeMonitorMsgStartTime =
         std::chrono::steady_clock::now();
@@ -891,7 +892,7 @@ std::string Admin::getLogLines()
 
     try
     {
-        static const std::string fName = COOLWSD::getPathFromConfig("logging.file.property[0]");
+        static const std::string fName = ConfigUtil::getPathFromConfig("logging.file.property[0]");
         std::ifstream infile(fName);
 
         std::size_t lineCount = 500;
@@ -1007,7 +1008,7 @@ template <typename T> T clamp(const T& n, const T& lower, const T& upper)
 void Admin::triggerMemoryCleanup(const size_t totalMem)
 {
     // Trigger mem cleanup when we are consuming too much memory (as configured by sysadmin)
-    static const double memLimit = COOLWSD::getConfigValue<double>("memproportion", 0.0);
+    static const double memLimit = ConfigUtil::getConfigValue<double>("memproportion", 0.0);
     if (memLimit == 0.0 || _totalSysMemKb == 0)
     {
         LOGA_TRC(Admin, "Total memory consumed: " << totalMem <<
@@ -1182,7 +1183,7 @@ void Admin::connectToMonitorSync(const std::string &uri)
 
     LOG_TRC("Add monitor " << uri);
     static const bool logMonitorConnect =
-        COOLWSD::getConfigValue<bool>("admin_console.logging.monitor_connect", true);
+        ConfigUtil::getConfigValue<bool>("admin_console.logging.monitor_connect", true);
     if (logMonitorConnect)
     {
         LOG_ANY("Connected to remote monitor with uri [" << uriWithoutParam << ']');
@@ -1231,9 +1232,9 @@ void Admin::sendMetrics(const std::shared_ptr<StreamSocket>& socket,
     socket->shutdown();
 
     static bool skipAuthentication =
-        COOLWSD::getConfigValue<bool>("security.enable_metrics_unauthenticated", false);
+        ConfigUtil::getConfigValue<bool>("security.enable_metrics_unauthenticated", false);
     static bool showLog =
-        COOLWSD::getConfigValue<bool>("admin_console.logging.metrics_fetch", true);
+        ConfigUtil::getConfigValue<bool>("admin_console.logging.metrics_fetch", true);
     if (!skipAuthentication && showLog)
     {
         LOG_ANY("Metrics endpoint has been accessed by source IPAddress [" << socket->clientAddress() << ']');
@@ -1254,7 +1255,7 @@ std::vector<std::pair<std::string, int>> Admin::getMonitorList()
     {
         const std::string path = "monitors.monitor[" + std::to_string(i) + ']';
         const std::string uri = config.getString(path, "");
-        const auto retryInterval = COOLWSD::getConfigValue<int>(path + "[@retryInterval]", 20);
+        const auto retryInterval = ConfigUtil::getConfigValue<int>(path + "[@retryInterval]", 20);
         if (!config.has(path))
             break;
         if (!uri.empty())

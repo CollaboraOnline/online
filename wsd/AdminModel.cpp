@@ -21,11 +21,12 @@
 #include <sstream>
 #include <string>
 
-#include <Protocol.hpp>
-#include <net/WebSocketHandler.hpp>
 #include <Log.hpp>
+#include <Protocol.hpp>
 #include <Unit.hpp>
 #include <Util.hpp>
+#include <common/ConfigUtil.hpp>
+#include <net/WebSocketHandler.hpp>
 #include <wsd/COOLWSD.hpp>
 #include <wsd/Exceptions.hpp>
 
@@ -561,7 +562,7 @@ void AdminModel::addDocument(const std::string& docKey, pid_t pid,
     const std::string& wopiHost = wopiSrc.getHost();
     oss << memoryAllocated << ' ' << wopiHost << ' ' << isViewReadOnly << ' ' << wopiSrc.toString()
         << ' ' << Uri::decode(docKey);
-    if (COOLWSD::getConfigValue<bool>("logging.docstats", false))
+    if (ConfigUtil::getConfigValue<bool>("logging.docstats", false))
     {
         std::string docstats = "docstats : adding a document : " + filename
                             + ", created by : " + COOLWSD::anonymizeUsername(userName)

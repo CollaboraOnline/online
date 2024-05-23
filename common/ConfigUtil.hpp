@@ -16,15 +16,13 @@
 
 #pragma once
 
-#include <string>
+#include <Poco/Path.h>
+#include <Poco/Util/Application.h>
+#include <Poco/Util/LayeredConfiguration.h>
 
-namespace Poco
-{
-namespace Util
-{
-class AbstractConfiguration;
-}
-} // namespace Poco
+#include <Util.hpp>
+
+#include <string>
 
 namespace ConfigUtil
 {
@@ -54,5 +52,141 @@ bool isSslEnabled();
 
 /// Return true if build is support key enabled (ENABLE_SUPPORT_KEY is defined)
 bool isSupportKeyEnabled();
+
+class ConfigValueGetter
+{
+    Poco::Util::LayeredConfiguration& _config;
+    const std::string& _name;
+
+public:
+    ConfigValueGetter(Poco::Util::LayeredConfiguration& config, const std::string& name)
+        : _config(config)
+        , _name(name)
+    {
+    }
+
+    void operator()(int& value) { value = _config.getInt(_name); }
+    void operator()(unsigned int& value) { value = _config.getUInt(_name); }
+    void operator()(uint64_t& value) { value = _config.getUInt64(_name); }
+    void operator()(bool& value) { value = _config.getBool(_name); }
+    void operator()(std::string& value) { value = _config.getString(_name); }
+    void operator()(double& value) { value = _config.getDouble(_name); }
+};
+
+template <typename T>
+static bool getSafeConfig(Poco::Util::LayeredConfiguration& config, const std::string& name,
+                          T& value)
+{
+    try
+    {
+        ConfigValueGetter(config, name)(value);
+        return true;
+    }
+    catch (...)
+    {
+    }
+
+    return false;
+}
+
+template <typename T>
+static T getConfigValue(Poco::Util::LayeredConfiguration& config, const std::string& name,
+                        const T def)
+{
+    T value = def;
+    if (getSafeConfig(config, name, value) || getSafeConfig(config, name + "[@default]", value))
+    {
+        return value;
+    }
+
+    return def;
+}
+
+/// Reads and processes path entries with the given property
+/// from the configuration.
+/// Converts relative paths to absolute.
+static std::string getPathFromConfig(Poco::Util::LayeredConfiguration& config,
+                                     const std::string& property)
+{
+    std::string path = config.getString(property);
+    if (path.empty() && config.hasProperty(property + "[@default]"))
+    {
+        // Use the default value if empty and a default provided.
+        path = config.getString(property + "[@default]");
+    }
+
+    // Reconstruct absolute path if relative.
+    if (!Poco::Path(path).isAbsolute() && config.hasProperty(property + "[@relative]") &&
+        config.getBool(property + "[@relative]"))
+    {
+        path = Poco::Path(Poco::Util::Application::instance().commandPath())
+                   .parent()
+                   .append(path)
+                   .toString();
+    }
+
+    return path;
+}
+
+/// Returns the value of the specified application configuration,
+/// or the default, if one doesn't exist.
+template <typename T> static T getConfigValue(const std::string& name, const T def)
+{
+    if (Util::isFuzzing())
+    {
+        return def;
+    }
+
+    return getConfigValue(Poco::Util::Application::instance().config(), name, def);
+}
+
+/// Returns the value of the specified application configuration,
+/// or the default, if one doesn't exist.
+template <typename T> static T getConfigValueNonZero(const std::string& name, const T def)
+{
+    static_assert(std::is_integral<T>::value, "Meaningless on non-integral types");
+
+    if (Util::isFuzzing())
+    {
+        return def;
+    }
+
+    const T res = getConfigValue(Poco::Util::Application::instance().config(), name, def);
+    return res <= T(0) ? T(0) : res;
+}
+
+/// Reads and processes path entries with the given property
+/// from the configuration.
+/// Converts relative paths to absolute.
+inline std::string getPathFromConfig(const std::string& name)
+{
+    return getPathFromConfig(Poco::Util::Application::instance().config(), name);
+}
+
+/// Reads and processes path entries with the given property
+/// from the configuration. If value is empty then it reads from fallback
+/// Converts relative paths to absolute.
+inline std::string getPathFromConfigWithFallback(const std::string& name,
+                                                 const std::string& fallbackName)
+{
+    std::string value;
+    // the expected path might not exist, in which case Poco throws an exception
+    try
+    {
+        value = getPathFromConfig(name);
+    }
+    catch (...)
+    {
+    }
+    if (value.empty())
+        return getPathFromConfig(fallbackName);
+    return value;
+}
+
+/// Returns true if and only if the property with the given key exists.
+inline bool hasProperty(const std::string& key)
+{
+    return Poco::Util::Application::instance().config().hasProperty(key);
+}
 
 } // namespace ConfigUtil
