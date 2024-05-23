@@ -191,7 +191,7 @@ namespace RenderTiles
                         data.reserve(pixmapWidth * pixmapHeight * 1);
 
                         // FIXME: don't try to store & create deltas for read-only documents.
-                        if (tiles[tileIndex].getId() < 0) // not a preview
+                        if (!tiles[tileIndex].isPreview())
                         {
                             // Can we create a delta ?
                             LOG_TRC("Compress new tile #" << tileIndex);

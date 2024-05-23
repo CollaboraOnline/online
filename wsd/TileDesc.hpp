@@ -109,8 +109,7 @@ public:
     void setVersion(const int ver) { _ver = ver; }
     int getImgSize() const { return _imgSize; }
     void setImgSize(const int imgSize) { _imgSize = imgSize; }
-    /// if non-zero: a preview.
-    int getId() const { return _id; }
+    bool isPreview() const { return _id >= 0; }
     void setId(TileWireId id) { _id = id; }
     void setOldWireId(TileWireId id) { _oldWireId = id; }
     void forceKeyframe() { setOldWireId(0); }

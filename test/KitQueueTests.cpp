@@ -56,6 +56,20 @@ class KitQueueTests : public CPPUNIT_NS::TestFixture
     void testCallbackInvalidation();
     void testCallbackIndicatorValue();
     void testCallbackPageSize();
+
+    // Compat helper for tests
+    std::string popHelper(KitQueue &queue)
+    {
+        TileCombined c = queue.popTileQueue();
+
+        std::string result;
+        if (c.getTiles().size() != 1)
+            result = c.serialize("tilecombine");
+        else
+            result = c.getTiles()[0].serialize("tile");
+
+        return result;
+    }
 };
 
 void KitQueueTests::testKitQueuePriority()
@@ -76,8 +90,8 @@ void KitQueueTests::testKitQueuePriority()
     queue.put(reqHigh);
 
     // Original order.
-    LOK_ASSERT_EQUAL_STR(payloadLow, queue.popTileQueue());
-    LOK_ASSERT_EQUAL_STR(payloadHigh, queue.popTileQueue());
+    LOK_ASSERT_EQUAL_STR(payloadLow, popHelper(queue));
+    LOK_ASSERT_EQUAL_STR(payloadHigh, popHelper(queue));
 
     // Request the tiles.
     queue.put(reqLow);
@@ -89,21 +103,21 @@ void KitQueueTests::testKitQueuePriority()
     queue.updateCursorPosition(0, 0, 0, 0, 10, 100);
 
     // Prioritized order.
-    LOK_ASSERT_EQUAL_STR(payloadHigh, queue.popTileQueue());
-    LOK_ASSERT_EQUAL_STR(payloadLow, queue.popTileQueue());
+    LOK_ASSERT_EQUAL_STR(payloadHigh, popHelper(queue));
+    LOK_ASSERT_EQUAL_STR(payloadLow, popHelper(queue));
 
     // Repeat with cursor position set.
     queue.put(reqLow);
     queue.put(reqHigh);
-    LOK_ASSERT_EQUAL_STR(payloadHigh, queue.popTileQueue());
-    LOK_ASSERT_EQUAL_STR(payloadLow, queue.popTileQueue());
+    LOK_ASSERT_EQUAL_STR(payloadHigh, popHelper(queue));
+    LOK_ASSERT_EQUAL_STR(payloadLow, popHelper(queue));
 
     // Repeat by changing cursor position.
     queue.put(reqLow);
     queue.put(reqHigh);
     queue.updateCursorPosition(0, 0, 0, 253450, 10, 100);
-    LOK_ASSERT_EQUAL_STR(payloadLow, queue.popTileQueue());
-    LOK_ASSERT_EQUAL_STR(payloadHigh, queue.popTileQueue());
+    LOK_ASSERT_EQUAL_STR(payloadLow, popHelper(queue));
+    LOK_ASSERT_EQUAL_STR(payloadHigh, popHelper(queue));
 }
 
 void KitQueueTests::testTileCombinedRendering()
@@ -126,18 +140,18 @@ void KitQueueTests::testTileCombinedRendering()
     // Horizontal.
     queue.put(req1);
     queue.put(req2);
-    LOK_ASSERT_EQUAL_STR(payloadHor, queue.popTileQueue());
+    LOK_ASSERT_EQUAL_STR(payloadHor, popHelper(queue));
 
     // Vertical.
     queue.put(req1);
     queue.put(req3);
-    LOK_ASSERT_EQUAL_STR(payloadVer, queue.popTileQueue());
+    LOK_ASSERT_EQUAL_STR(payloadVer, popHelper(queue));
 
     // Vertical.
     queue.put(req1);
     queue.put(req2);
     queue.put(req3);
-    LOK_ASSERT_EQUAL_STR(payloadFull, queue.popTileQueue());
+    LOK_ASSERT_EQUAL_STR(payloadFull, popHelper(queue));
 }
 
 void KitQueueTests::testTileRecombining()
@@ -156,7 +170,7 @@ void KitQueueTests::testTileRecombining()
     LOK_ASSERT_EQUAL_STR(
         "tilecombine nviewid=0 part=0 width=256 height=256 tileposx=7680,0,3840 tileposy=0,0,0 "
         "imgsize=0,0,0 tilewidth=3840 tileheight=3840 ver=-1,-1,-1 oldwid=0,0,0 wid=0,0,0",
-        queue.popTileQueue());
+        popHelper(queue));
 
     // and nothing remains in the queue
     LOK_ASSERT_EQUAL(0, static_cast<int>(queue.getTileQueueSize()));
@@ -193,7 +207,7 @@ void KitQueueTests::testViewOrder()
     // positions
     for (size_t i = 0; i < tiles.size(); ++i)
     {
-        LOK_ASSERT_EQUAL_STR(tiles[3 - i], queue.popTileQueue());
+        LOK_ASSERT_EQUAL_STR(tiles[3 - i], popHelper(queue));
     }
 }
 
@@ -206,10 +220,10 @@ void KitQueueTests::testPreviewsDeprioritization()
     // simple case - put previews to the queue and get everything back again
     const std::vector<std::string> previews =
     {
-        "tile nviewid=0 part=0 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 ver=-1 id=0",
-        "tile nviewid=0 part=1 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 ver=-1 id=1",
-        "tile nviewid=0 part=2 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 ver=-1 id=2",
-        "tile nviewid=0 part=3 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 ver=-1 id=3"
+        "tile nviewid=0 part=0 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 oldwid=0 wid=0 ver=-1 id=0",
+        "tile nviewid=0 part=1 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 oldwid=0 wid=0 ver=-1 id=1",
+        "tile nviewid=0 part=2 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 oldwid=0 wid=0 ver=-1 id=2",
+        "tile nviewid=0 part=3 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 oldwid=0 wid=0 ver=-1 id=3"
     };
 
     for (auto &preview : previews)
@@ -217,7 +231,7 @@ void KitQueueTests::testPreviewsDeprioritization()
 
     for (size_t i = 0; i < previews.size(); ++i)
     {
-        LOK_ASSERT_EQUAL_STR(previews[i], queue.popTileQueue());
+        LOK_ASSERT_EQUAL_STR(previews[i], popHelper(queue));
     }
 
     // stays empty after all is done
@@ -237,15 +251,15 @@ void KitQueueTests::testPreviewsDeprioritization()
 
     queue.put(tiles[0]);
 
-    LOK_ASSERT_EQUAL_STR(previews[0], queue.popTileQueue());
-    LOK_ASSERT_EQUAL_STR(tiles[0], queue.popTileQueue());
-    LOK_ASSERT_EQUAL_STR(previews[1], queue.popTileQueue());
+    LOK_ASSERT_EQUAL_STR(previews[0], popHelper(queue));
+    LOK_ASSERT_EQUAL_STR(tiles[0], popHelper(queue));
+    LOK_ASSERT_EQUAL_STR(previews[1], popHelper(queue));
 
     queue.put(tiles[1]);
 
-    LOK_ASSERT_EQUAL_STR(previews[2], queue.popTileQueue());
-    LOK_ASSERT_EQUAL_STR(tiles[1], queue.popTileQueue());
-    LOK_ASSERT_EQUAL_STR(previews[3], queue.popTileQueue());
+    LOK_ASSERT_EQUAL_STR(previews[2], popHelper(queue));
+    LOK_ASSERT_EQUAL_STR(tiles[1], popHelper(queue));
+    LOK_ASSERT_EQUAL_STR(previews[3], popHelper(queue));
 
     // stays empty after all is done
     LOK_ASSERT_EQUAL(0, static_cast<int>(queue.getTileQueueSize()));
@@ -257,8 +271,8 @@ void KitQueueTests::testPreviewsDeprioritization()
     queue.put(tiles[1]);
     queue.put(previews[0]);
 
-    LOK_ASSERT_EQUAL_STR(tiles[1], queue.popTileQueue());
-    LOK_ASSERT_EQUAL_STR(previews[0], queue.popTileQueue());
+    LOK_ASSERT_EQUAL_STR(tiles[1], popHelper(queue));
+    LOK_ASSERT_EQUAL_STR(previews[0], popHelper(queue));
 
     // stays empty after all is done
     LOK_ASSERT_EQUAL(0, static_cast<int>(queue.getTileQueueSize()));
