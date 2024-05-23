@@ -448,8 +448,11 @@ void KitQueue::deprioritizePreviews()
     }
 }
 
-KitQueue::Payload KitQueue::get()
+KitQueue::Payload KitQueue::pop()
 {
+    if (_queue.empty())
+        return Payload();
+
     LOG_TRC("KitQueue depth: " << _queue.size());
 
     const Payload front = _queue.front();

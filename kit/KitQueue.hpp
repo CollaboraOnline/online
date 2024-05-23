@@ -63,7 +63,8 @@ public:
     /// Obtain the next message.
     /// timeoutMs can be 0 to signify infinity.
     /// Returns an empty payload on timeout.
-    Payload get();
+    Payload pop();
+    Payload get() { return pop(); }
 
     /// Obtain the next callback
     Callback getCallback()
@@ -81,14 +82,6 @@ public:
         callback = std::move(_callbacks.front());
         _callbacks.erase(_callbacks.begin());
         return true;
-    }
-
-    /// Get a message without waiting
-    Payload pop()
-    {
-        if (_queue.empty())
-            return Payload();
-        return get();
     }
 
     /// Anything in the queue ?
