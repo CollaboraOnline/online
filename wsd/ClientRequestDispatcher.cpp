@@ -543,6 +543,7 @@ bool ClientRequestDispatcher::allowConvertTo(const std::string& address,
     if (request.has("X-Forwarded-For"))
     {
         const std::string fowardedData = request.get("X-Forwarded-For");
+        LOG_INF_S("convert-to: X-Forwarded-For is: " << fowardedData);
         StringVector tokens = StringVector::tokenize(fowardedData, ',');
         for (const auto& token : tokens)
         {
