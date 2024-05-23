@@ -428,7 +428,8 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
             Poco::JSON::Object::Ptr fileInfo = new Poco::JSON::Object();
 
             std::string postMessageOrigin;
-            config::isSslEnabled() ? postMessageOrigin = "https://" : postMessageOrigin = "http://";
+            ConfigUtil::isSslEnabled() ? postMessageOrigin = "https://"
+                                       : postMessageOrigin = "http://";
             postMessageOrigin += requestDetails.getHostUntrusted();
 
             fileInfo->set("BaseFileName", localFile->fileName);
@@ -1319,7 +1320,7 @@ FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::prepro
     std::string brandCSS(Poco::format(linkCSS, responseRoot, std::string(BRANDING)));
     std::string brandJS(Poco::format(scriptJS, responseRoot, std::string(BRANDING)));
 
-    if (config::isSupportKeyEnabled())
+    if (ConfigUtil::isSupportKeyEnabled())
     {
         const std::string keyString = config.getString("support_key", "");
         SupportKey key(keyString);
@@ -1717,7 +1718,7 @@ void FileServerRequestHandler::preprocessAdminFile(const HTTPRequest& request,
     std::string brandJS(Poco::format(scriptJS, responseRoot, std::string(BRANDING)));
     std::string brandFooter;
 
-    if (config::isSupportKeyEnabled())
+    if (ConfigUtil::isSupportKeyEnabled())
     {
         const auto& config = Application::instance().config();
         const std::string keyString = config.getString("support_key", "");

@@ -81,7 +81,8 @@ void HostUtil::parseAliases(Poco::Util::LayeredConfiguration& conf)
     if (conf.has("storage.wopi.alias_groups.group[0]"))
     {
         // group defined in alias_groups
-        if (Util::iequal(config::getString("storage.wopi.alias_groups[@mode]", "first"), "first"))
+        if (Util::iequal(ConfigUtil::getString("storage.wopi.alias_groups[@mode]", "first"),
+                         "first"))
         {
             LOG_ERR("Admins did not set the alias_groups mode to 'groups'");
             AliasHosts.clear();
@@ -165,7 +166,7 @@ void HostUtil::parseAliases(Poco::Util::LayeredConfiguration& conf)
 
 std::string HostUtil::getNewUri(const Poco::URI& uri)
 {
-    if (Util::iequal(config::getString("storage.wopi.alias_groups[@mode]", "first"), "compat"))
+    if (Util::iequal(ConfigUtil::getString("storage.wopi.alias_groups[@mode]", "first"), "compat"))
     {
         return uri.getPath();
     }
@@ -212,7 +213,7 @@ const Poco::URI HostUtil::getNewLockedUri(const Poco::URI& uri)
 
 void HostUtil::setFirstHost(const Poco::URI& uri)
 {
-    if (Util::iequal(config::getString("storage.wopi.alias_groups[@mode]", "first"), "compat"))
+    if (Util::iequal(ConfigUtil::getString("storage.wopi.alias_groups[@mode]", "first"), "compat"))
     {
         return;
     }

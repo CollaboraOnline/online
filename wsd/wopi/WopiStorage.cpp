@@ -289,7 +289,7 @@ WopiStorage::WOPIFileInfo::WOPIFileInfo(const FileInfo& fileInfo, Poco::JSON::Ob
     bool isUserLocked = false;
     JsonUtil::findJSONValue(object, "IsUserLocked", isUserLocked);
 
-    if (config::getBool("feature_lock.locked_hosts[@allow]", false))
+    if (ConfigUtil::getBool("feature_lock.locked_hosts[@allow]", false))
     {
         bool isReadOnly = false;
         isUserLocked = false;
@@ -306,9 +306,10 @@ WopiStorage::WOPIFileInfo::WOPIFileInfo(const FileInfo& fileInfo, Poco::JSON::Ob
         {
             LOG_INF("Could not find matching locked_host: " << host
                                                             << ",applying fallback settings");
-            isReadOnly = config::getBool("feature_lock.locked_hosts.fallback[@read_only]", false);
-            isUserLocked =
-                config::getBool("feature_lock.locked_hosts.fallback[@disabled_commands]", false);
+            isReadOnly =
+                ConfigUtil::getBool("feature_lock.locked_hosts.fallback[@read_only]", false);
+            isUserLocked = ConfigUtil::getBool(
+                "feature_lock.locked_hosts.fallback[@disabled_commands]", false);
         }
 
         if (isReadOnly)

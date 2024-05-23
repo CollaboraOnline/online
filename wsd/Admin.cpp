@@ -136,7 +136,8 @@ void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
         // Send COOL version information
         std::string timezoneName;
         if (COOLWSD::IndirectionServerEnabled && COOLWSD::GeolocationSetup)
-            timezoneName = config::getString("indirection_endpoint.geolocation_setup.timezone", "");
+            timezoneName =
+                ConfigUtil::getString("indirection_endpoint.geolocation_setup.timezone", "");
 
         sendTextFrame("coolserver " + Util::getVersionJSON(EnableExperimental, timezoneName));
 

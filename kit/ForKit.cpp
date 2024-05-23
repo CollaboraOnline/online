@@ -803,8 +803,8 @@ int forkit_main(int argc, char** argv)
     {
         // Parse the configuration.
         const auto conf = std::getenv("COOL_CONFIG");
-        config::initialize(std::string(conf ? conf : std::string()));
-        EnableExperimental = config::getBool("experimental_features", false);
+        ConfigUtil::initialize(std::string(conf ? conf : std::string()));
+        EnableExperimental = ConfigUtil::getBool("experimental_features", false);
     }
 
     Util::setThreadName("forkit");

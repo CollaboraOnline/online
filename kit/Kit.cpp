@@ -1483,7 +1483,7 @@ bool Document::forkToSave(const std::function<void()> &childSave, int viewId)
         UnitKit::get().postBackgroundSaveFork();
 
         // Background save should run at a lower priority
-        int prio = config::getInt("per_document.bgsave_priority", 5);
+        int prio = ConfigUtil::getInt("per_document.bgsave_priority", 5);
         Util::setProcessAndThreadPriorities(getpid(), prio);
 
         // other queued messages should be handled in the parent kit
@@ -2652,13 +2652,13 @@ void flushTraceEventRecordings()
 static void addRecording(const std::string &recording, bool force)
 {
     // This can be called before the config system is initialized. Guard against that, as calling
-    // config::getBool() would cause an assertion failure.
+    // ConfigUtil::getBool() would cause an assertion failure.
 
     static bool configChecked = false;
     static bool traceEventsEnabled;
-    if (!configChecked && config::isInitialized())
+    if (!configChecked && ConfigUtil::isInitialized())
     {
-        traceEventsEnabled = config::getBool("trace_event[@enable]", false);
+        traceEventsEnabled = ConfigUtil::getBool("trace_event[@enable]", false);
         configChecked = true;
     }
 
@@ -3024,7 +3024,7 @@ namespace
 #if !MOBILEAPP
 void copyCertificateDatabaseToTmp(Poco::Path const& jailPath)
 {
-    std::string aCertificatePathString = config::getString("certificates.database_path", "");
+    std::string aCertificatePathString = ConfigUtil::getString("certificates.database_path", "");
     if (!aCertificatePathString.empty())
     {
         auto aFileStat = FileUtil::Stat(aCertificatePathString);
@@ -3103,7 +3103,7 @@ void lokit_main(
     const char* logLevel = std::getenv("COOL_LOGLEVEL");
     const char* logDisabledAreas = std::getenv("COOL_LOGDISABLED_AREAS");
     const char* logLevelStartup = std::getenv("COOL_LOGLEVEL_STARTUP");
-    const bool logColor = config::getBool("logging.color", true) && isatty(fileno(stderr));
+    const bool logColor = ConfigUtil::getBool("logging.color", true) && isatty(fileno(stderr));
     std::map<std::string, std::string> logProperties;
     if (logToFile && logFilename)
     {
