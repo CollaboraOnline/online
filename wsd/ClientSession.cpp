@@ -634,7 +634,8 @@ bool ClientSession::_handleInput(const char *buffer, int length)
 
         std::string timezoneName;
         if (COOLWSD::IndirectionServerEnabled && COOLWSD::GeolocationSetup)
-            timezoneName = config::getString("indirection_endpoint.geolocation_setup.timezone", "");
+            timezoneName =
+                ConfigUtil::getString("indirection_endpoint.geolocation_setup.timezone", "");
 
         // Send COOL version information
         sendTextFrame("coolserver " + Util::getVersionJSON(EnableExperimental, timezoneName));

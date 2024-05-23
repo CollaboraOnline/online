@@ -361,7 +361,7 @@ void COOLWSD::writeTraceEventRecording(const std::string &recording)
 void COOLWSD::checkSessionLimitsAndWarnClients()
 {
 #if !MOBILEAPP
-    if (config::isSupportKeyEnabled())
+    if (ConfigUtil::isSupportKeyEnabled())
         return;
 
     ssize_t docBrokerCount = DocBrokers.size() - ConvertToBroker::getInstanceCount();
@@ -2629,12 +2629,12 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
     setenv("COOL_CONFIG", oss.str().c_str(), true);
 
     // Initialize the config subsystem too.
-    config::initialize(&config());
+    ConfigUtil::initialize(&config());
 
     Util::sleepFromEnvIfSet("Coolwsd", "SLEEPFORDEBUGGER");
 
     // For some reason I can't get at this setting in ChildSession::loKitCallback().
-    std::string fontsMissingHandling = config::getString("fonts_missing.handling", "log");
+    std::string fontsMissingHandling = ConfigUtil::getString("fonts_missing.handling", "log");
     setenv("FONTS_MISSING_HANDLING", fontsMissingHandling.c_str(), 1);
 
     IsBindMountingEnabled = getConfigValue<bool>(conf, "mount_jail_tree", true);
@@ -2842,7 +2842,7 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
     setenv("LOK_HELP_URL", "", 1);
 #endif
 
-    if (config::isSupportKeyEnabled())
+    if (ConfigUtil::isSupportKeyEnabled())
     {
         const std::string supportKeyString = getConfigValue<std::string>(conf, "support_key", "");
 
@@ -4312,7 +4312,7 @@ void COOLWSD::processFetchUpdate(SocketPoll& poll)
             return;
 
         Poco::URI uriFetch(url);
-        uriFetch.addQueryParameter("product", config::getString("product_name", APP_NAME));
+        uriFetch.addQueryParameter("product", ConfigUtil::getString("product_name", APP_NAME));
         uriFetch.addQueryParameter("version", Util::getCoolVersion());
         LOG_TRC("Infobar update request from " << uriFetch.toString());
         FetchHttpSession = StorageConnectionManager::getHttpSession(uriFetch);

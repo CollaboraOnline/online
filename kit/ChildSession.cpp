@@ -774,7 +774,8 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         }
         else if (tokens.equals(0, "traceeventrecording"))
         {
-            static const bool traceEventsEnabled = config::getBool("trace_event[@enable]", false);
+            static const bool traceEventsEnabled =
+                ConfigUtil::getBool("trace_event[@enable]", false);
             if (traceEventsEnabled)
             {
                 if (tokens.size() > 0)
@@ -1846,7 +1847,7 @@ bool ChildSession::keyEvent(const StringVector& tokens,
     {
         // Check if override mode is disabled.
         if (type == LOK_KEYEVENT_KEYINPUT && charcode == 0 && keycode == KEY_INSERT &&
-            !config::getBool("overwrite_mode.enable", false))
+            !ConfigUtil::getBool("overwrite_mode.enable", false))
             return true;
 
         getLOKitDocument()->postKeyEvent(type, charcode, keycode);

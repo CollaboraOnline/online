@@ -1281,9 +1281,9 @@ DocumentBroker::updateSessionWithWopiInfo(const std::shared_ptr<ClientSession>& 
     const std::string userExtraInfo = wopiFileInfo->getUserExtraInfo();
     const std::string userPrivateInfo = wopiFileInfo->getUserPrivateInfo();
     const std::string watermarkText =
-        (config::isSupportKeyEnabled() && !COOLWSD::OverrideWatermark.empty())
-        ? COOLWSD::OverrideWatermark
-        : wopiFileInfo->getWatermarkText();
+        (ConfigUtil::isSupportKeyEnabled() && !COOLWSD::OverrideWatermark.empty())
+            ? COOLWSD::OverrideWatermark
+            : wopiFileInfo->getWatermarkText();
     const std::string templateSource = wopiFileInfo->getTemplateSource();
 
     std::optional<bool> isAdminUser = wopiFileInfo->getIsAdminUser();
@@ -1402,7 +1402,7 @@ DocumentBroker::updateSessionWithWopiInfo(const std::shared_ptr<ClientSession>& 
     // document load fails, cool is able to tell its parent frame via PostMessage API.
     session->sendTextFrame("wopi: " + wopiInfoString);
 
-    if (config::getBool("logging.userstats", false))
+    if (ConfigUtil::getBool("logging.userstats", false))
     {
         // using json because fetching details from json string is easier and will be consistent
         Object::Ptr userStats = new Object();
@@ -1418,7 +1418,7 @@ DocumentBroker::updateSessionWithWopiInfo(const std::shared_ptr<ClientSession>& 
         LOG_ANY("User stats: " << userStatsString);
     }
 
-    if (config::getBool("logging.disable_server_audit", false))
+    if (ConfigUtil::getBool("logging.disable_server_audit", false))
     {
         _serverAudit.disable();
     }

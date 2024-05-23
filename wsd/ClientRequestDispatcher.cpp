@@ -170,7 +170,7 @@ findOrCreateDocBroker(DocumentBroker::ChildType type, const std::string& uri,
             LOG_WRN("Maximum number of open documents of "
                     << COOLWSD::MaxDocuments << " reached while loading new session [" << id
                     << "] for docKey [" << docKey << ']');
-            if (config::isSupportKeyEnabled())
+            if (ConfigUtil::isSupportKeyEnabled())
             {
                 const std::string error = Poco::format(PAYLOAD_UNAVAILABLE_LIMIT_REACHED,
                                                        COOLWSD::MaxDocuments, COOLWSD::MaxConnections);
@@ -1913,7 +1913,7 @@ bool ClientRequestDispatcher::handleClientWsUpgrade(const Poco::Net::HTTPRequest
         {
             LOG_INF("Limit on maximum number of connections of " << COOLWSD::MaxConnections
                                                                  << " reached.");
-            if (config::isSupportKeyEnabled())
+            if (ConfigUtil::isSupportKeyEnabled())
             {
                 shutdownLimitReached(ws);
                 return true;
@@ -2110,7 +2110,7 @@ static std::string getCapabilitiesJson(bool convertToAvailable)
     capabilities->set("hasMobileSupport", true);
 
     // Set the product name
-    capabilities->set("productName", config::getString("product_name", APP_NAME));
+    capabilities->set("productName", ConfigUtil::getString("product_name", APP_NAME));
 
     // Set the Server ID
     capabilities->set("serverId", Util::getProcessIdentifier());
@@ -2125,16 +2125,17 @@ static std::string getCapabilitiesJson(bool convertToAvailable)
     capabilities->set("hasProxyPrefix", COOLWSD::IsProxyPrefixEnabled);
 
     // Set if this instance supports Zotero
-    capabilities->set("hasZoteroSupport", config::getBool("zotero.enable", true));
+    capabilities->set("hasZoteroSupport", ConfigUtil::getBool("zotero.enable", true));
 
     // Set if this instance supports WASM.
     capabilities->set("hasWASMSupport",
                       COOLWSD::WASMState != COOLWSD::WASMActivationState::Disabled);
 
     // Set if this instance supports document signing.
-    capabilities->set("hasDocumentSigningSupport", config::getBool("document_signing.enable", true));
+    capabilities->set("hasDocumentSigningSupport",
+                      ConfigUtil::getBool("document_signing.enable", true));
 
-    const std::string serverName = config::getString("indirection_endpoint.server_name", "");
+    const std::string serverName = ConfigUtil::getString("indirection_endpoint.server_name", "");
     if (const char* podName = std::getenv("POD_NAME"))
         capabilities->set("podName", podName);
     else if (!serverName.empty())
@@ -2143,7 +2144,7 @@ static std::string getCapabilitiesJson(bool convertToAvailable)
     if (COOLWSD::IndirectionServerEnabled && COOLWSD::GeolocationSetup)
     {
         std::string timezoneName =
-            config::getString("indirection_endpoint.geolocation_setup.timezone", "");
+            ConfigUtil::getString("indirection_endpoint.geolocation_setup.timezone", "");
         if (!timezoneName.empty())
             capabilities->set("timezone", timezoneName);
     }
