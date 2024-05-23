@@ -558,7 +558,8 @@ void AdminModel::addDocument(const std::string& docKey, pid_t pid,
     }
 
     const std::string& wopiHost = wopiSrc.getHost();
-    oss << memoryAllocated << ' ' << wopiHost << ' ' << isViewReadOnly << ' ' << wopiSrc.toString();
+    oss << memoryAllocated << ' ' << wopiHost << ' ' << isViewReadOnly << ' ' << wopiSrc.toString()
+        << ' ' << Util::decodeURIComponent(docKey);
     if (COOLWSD::getConfigValue<bool>("logging.docstats", false))
     {
         std::string docstats = "docstats : adding a document : " + filename
