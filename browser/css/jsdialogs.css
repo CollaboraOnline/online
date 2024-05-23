@@ -1928,6 +1928,16 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	background-color: var(--color-background-tabs-group);
 	border-radius: var(--border-radius-large);
 }
+#FormulaDialog .jsdialog.ui-tabpage {
+	display: flex;
+}
+#FormulaDialog .jsdialog.ui-tabpage > .ui-grid {
+	grid-template-rows: 0 auto !important;
+}
+#FormulaDialog #StructPage {
+	display: grid;
+	grid-template-rows: auto 1fr;
+}
 #FormulaDialog #ParameterPage > .ui-grid-cell {
 	display: flex;
 	flex-direction: column;
