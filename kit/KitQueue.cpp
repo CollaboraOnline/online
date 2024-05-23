@@ -88,27 +88,15 @@ void KitQueue::put(const Payload& value)
         _queue.emplace_back(value);
 }
 
-void KitQueue::removeTileDuplicate(const std::string& tileMsg)
+void KitQueue::removeTileDuplicate(const TileDesc &desc)
 {
-    assert(COOLProtocol::matchPrefix("tile", tileMsg, /*ignoreWhitespace*/ true));
-
-    // Ver is always provided at this point and it is necessary to
-    // return back to clients the last rendered version of a tile
-    // in case there are new invalidations and requests while rendering.
-    // Here we compare duplicates without 'ver' since that's irrelevant.
-    size_t newMsgPos = tileMsg.find(" ver");
-    if (newMsgPos == std::string::npos)
-    {
-        newMsgPos = tileMsg.size() - 1;
-    }
-
     for (size_t i = 0; i < _tileQueue.size(); ++i)
     {
         auto& it = _tileQueue[i];
-        if (it.size() > newMsgPos &&
-            strncmp(tileMsg.data(), it.data(), newMsgPos) == 0)
+        if (it == desc)
         {
-            LOG_TRC("Remove duplicate tile request: " << std::string(it.data(), it.size()) << " -> " << COOLProtocol::getAbbreviatedMessage(tileMsg));
+            LOG_TRC("Remove duplicate tile request: " << it.serialize() <<
+                    " -> " << desc.serialize());
             _tileQueue.erase(_tileQueue.begin() + i);
             break;
         }
@@ -394,10 +382,8 @@ bool KitQueue::elideDuplicateCallback(int view, int type, const std::string &pay
     return false;
 }
 
-int KitQueue::priority(const std::string& tileMsg)
+int KitQueue::priority(const TileDesc &tile)
 {
-    TileDesc tile = TileDesc::parse(tileMsg); //FIXME: Expensive, avoid.
-
     for (int i = static_cast<int>(_viewOrder.size()) - 1; i >= 0; --i)
     {
         auto& cursor = _cursorPositions[_viewOrder[i]];
@@ -409,20 +395,17 @@ int KitQueue::priority(const std::string& tileMsg)
     return -1;
 }
 
+// FIXME: it's not that clear what good this does for us ...
+// we process all previews in the same batch of rendering
 void KitQueue::deprioritizePreviews()
 {
     for (size_t i = 0; i < _tileQueue.size(); ++i)
     {
-        const Payload front = _tileQueue.front();
-        const std::string message(front.data(), front.size());
+        const TileDesc front = _tileQueue.front();
 
         // stop at the first non-tile or non-'id' (preview) message
-        std::string id;
-        if (!COOLProtocol::matchPrefix("tile", message) ||
-            !COOLProtocol::getTokenStringFromMessage(message, "id", id))
-        {
+        if (!front.isPreview())
             break;
-        }
 
         _tileQueue.erase(_tileQueue.begin());
         _tileQueue.push_back(front);
@@ -446,48 +429,35 @@ KitQueue::Payload KitQueue::pop()
 
 std::vector<TileCombined> KitQueue::popWholeTileQueue()
 {
-    std::vector<TileCombined> tileQueue;
+    std::vector<TileCombined> result;
 
     while (!_tileQueue.empty())
-    {
-        Payload value = popTileQueue(); // can combine to a tilecombine
+        result.emplace_back(popTileQueue());
 
-        auto tokens = StringVector::tokenize(value.data(), value.size());
-        if (tokens.equals(0, "tile"))
-            tileQueue.emplace_back(TileDesc::parse(tokens));
-
-        else if (tokens.equals(0, "tilecombine"))
-            tileQueue.emplace_back(TileCombined::parse(tokens));
-    }
-    return tileQueue;
+    return result;
 }
 
-KitQueue::Payload KitQueue::popTileQueue()
+TileCombined KitQueue::popTileQueue()
 {
-    if (_tileQueue.empty())
-        return Payload();
+    assert(!_tileQueue.empty());
 
     LOG_TRC("KitQueue depth: " << _tileQueue.size());
 
-    const Payload front = _tileQueue.front();
+    TileDesc msg = _tileQueue.front();
 
-    std::string msg(front.data(), front.size());
+    std::vector<TileDesc> tiles;
 
-    std::string id;
-    bool isTile = COOLProtocol::matchPrefix("tile", msg);
-    bool isPreview = isTile && COOLProtocol::getTokenStringFromMessage(msg, "id", id);
-    if (!isTile || isPreview)
+    if (msg.isPreview())
     {
         // Don't combine non-tiles or tiles with id.
-        LOG_TRC("KitQueue res: " << COOLProtocol::getAbbreviatedMessage(msg));
+        LOG_TRC("KitQueue res: " << msg.serialize());
         _tileQueue.erase(_tileQueue.begin());
 
         // de-prioritize the other tiles with id - usually the previews in
         // Impress
-        if (isPreview)
-            deprioritizePreviews();
+        deprioritizePreviews();
 
-        return front;
+        return TileCombined(msg);
     }
 
     // We are handling a tile; first try to find one that is at the cursor's
@@ -496,17 +466,15 @@ KitQueue::Payload KitQueue::popTileQueue()
     int prioritySoFar = -1;
     for (size_t i = 0; i < _tileQueue.size(); ++i)
     {
-        auto& it = _tileQueue[i];
-        const std::string prio(it.data(), it.size());
+        auto& prio = _tileQueue[i];
 
+        // FIXME: does this make any sense ?
+        //
         // avoid starving - stop the search when we reach a non-tile,
         // otherwise we may keep growing the queue of unhandled stuff (both
         // tiles and non-tiles)
-        if (!COOLProtocol::matchPrefix("tile", prio) ||
-            COOLProtocol::getTokenStringFromMessage(prio, "id", id))
-        {
+        if (prio.isPreview())
             break;
-        }
 
         const int p = priority(prio);
         if (p > prioritySoFar)
@@ -525,29 +493,25 @@ KitQueue::Payload KitQueue::popTileQueue()
 
     _tileQueue.erase(_tileQueue.begin() + prioritized);
 
-    std::vector<TileDesc> tiles;
-    tiles.emplace_back(TileDesc::parse(msg));
+    tiles.emplace_back(msg);
 
     // Combine as many tiles as possible with the top one.
     for (size_t i = 0; i < _tileQueue.size(); )
     {
         auto& it = _tileQueue[i];
-        msg = std::string(it.data(), it.size());
-        if (!COOLProtocol::matchPrefix("tile", msg) ||
-            COOLProtocol::getTokenStringFromMessage(msg, "id", id))
+        if (it.isPreview())
         {
             // Don't combine non-tiles or tiles with id.
             ++i;
             continue;
         }
 
-        TileDesc tile2 = TileDesc::parse(msg);
-        LOG_TRC("Combining candidate: " << COOLProtocol::getAbbreviatedMessage(msg));
+        LOG_TRC("Combining candidate: " << it.serialize());
 
         // Check if it's on the same row.
-        if (tiles[0].canCombine(tile2))
+        if (tiles[0].canCombine(it))
         {
-            tiles.emplace_back(tile2);
+            tiles.emplace_back(it);
             _tileQueue.erase(_tileQueue.begin() + i);
         }
         else
@@ -560,9 +524,8 @@ KitQueue::Payload KitQueue::popTileQueue()
 
     if (tiles.size() == 1)
     {
-        msg = tiles[0].serialize("tile");
-        LOG_TRC("KitQueue res: " << COOLProtocol::getAbbreviatedMessage(msg));
-        return Payload(msg.data(), msg.data() + msg.size());
+        LOG_TRC("KitQueue res: " << tiles[0].serialize());
+        return TileCombined(tiles[0]);
     }
 
     // n^2 but lists are short.
@@ -593,9 +556,8 @@ KitQueue::Payload KitQueue::popTileQueue()
 
     TileCombined combined = TileCombined::create(tiles);
     assert(!combined.hasDuplicates());
-    std::string tileCombined = combined.serialize("tilecombine");
-    LOG_TRC("KitQueue res: " << COOLProtocol::getAbbreviatedMessage(tileCombined));
-    return Payload(tileCombined.data(), tileCombined.data() + tileCombined.size());
+    LOG_TRC("KitQueue res: " << combined.serialize());
+    return combined;
 }
 
 std::string KitQueue::combineTextInput(const StringVector& tokens)
@@ -661,24 +623,22 @@ void KitQueue::pushTileCombineRequest(const Payload &value)
     assert(COOLProtocol::getFirstToken(value) == "tilecombine");
 
     // Breakup tilecombine and deduplicate (we are re-combining
-    // the tiles inside pop() again)
+    // the tiles inside popTileQueue() again)
     const std::string msg = std::string(value.data(), value.size());
     const TileCombined tileCombined = TileCombined::parse(msg);
     for (const auto& tile : tileCombined.getTiles())
     {
-        const std::string newMsg = tile.serialize("tile");
-
-        removeTileDuplicate(newMsg);
-
-        _tileQueue.emplace_back(newMsg.data(), newMsg.data() + newMsg.size());
+        removeTileDuplicate(tile);
+        _tileQueue.emplace_back(tile);
     }
 }
 
 void KitQueue::pushTileQueue(const Payload &value)
 {
-    removeTileDuplicate(std::string(value.data(), value.size()));
-
-    _tileQueue.push_back(value);
+    const std::string msg = std::string(value.data(), value.size());
+    const TileDesc desc = TileDesc::parse(msg);
+    removeTileDuplicate(desc);
+    _tileQueue.push_back(desc);
 }
 
 std::string KitQueue::combineRemoveText(const StringVector& tokens)

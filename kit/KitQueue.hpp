@@ -71,7 +71,7 @@ public:
     void clearTileQueue() { _tileQueue.clear(); }
     void pushTileQueue(const Payload &value);
     void pushTileCombineRequest(const Payload &value);
-    Payload popTileQueue();
+    TileCombined popTileQueue();
     std::vector<TileCombined> popWholeTileQueue();
     size_t getTileQueueSize() const { return _tileQueue.size(); }
 
@@ -169,7 +169,7 @@ public:
 
 private:
     /// Search the queue for a duplicate tile and remove it (if present).
-    void removeTileDuplicate(const std::string& tileMsg);
+    void removeTileDuplicate(const TileDesc &desc);
 
     /// Search the queue for a duplicate callback and remove it (if present).
     ///
@@ -186,14 +186,14 @@ private:
     /// Priority of the given tile message.
     /// -1 means the lowest prio (the tile does not intersect any of the cursors),
     /// the higher the number, the bigger is priority [up to _viewOrder.size()-1].
-    int priority(const std::string& tileMsg);
+    int priority(const TileDesc &desc);
 
 private:
     /// The incoming underlying queue
     std::vector<Payload> _queue;
 
     /// Incoming tile request queue
-    std::vector<Payload> _tileQueue;
+    std::vector<TileDesc> _tileQueue;
 
     /// Outgoing queued callbacks
     std::vector<Callback> _callbacks;
