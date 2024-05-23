@@ -294,7 +294,7 @@
     </quarantine_files>
 
     <remote_config>
-        <remote_url desc="remote server to which you will send resquest to get remote config in response" type="string" default=""></remote_url>
+        <remote_url desc="remote server to which you will send request to get remote config in response" type="string" default=""></remote_url>
     </remote_config>
 
     <stop_on_config_change desc="Stop coolwsd whenever config files change." type="bool" default="false">false</stop_on_config_change>
