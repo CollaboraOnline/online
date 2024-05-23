@@ -336,7 +336,7 @@ L.Control.UIManager = L.Control.extend({
 				var showRuler = this.getSavedStateOrDefault('ShowRuler');
 				var interactiveRuler = this.map.isEditMode();
 				var isRTL = document.documentElement.dir === 'rtl';
-				L.control.ruler({position: (isRTL ? 'topright' : 'topleft'), interactive:interactiveRuler, showruler: showRuler}).addTo(this.map);
+				L.control.ruler(this.map, {position: (isRTL ? 'topright' : 'topleft'), interactive:interactiveRuler, showruler: showRuler});
 				this.map.fire('rulerchanged');
 			}
 

@@ -13,48 +13,162 @@
  */
 
 /* global app $ L _ Hammer */
-L.Control.Ruler = L.Control.extend({
-	options: {
+
+interface CustomHTMLDivElement extends HTMLDivElement {
+	tabStops?: any; // Define your custom property type here
+}
+
+interface TabStopLocation {
+	left: number;
+	right: number;
+	center: number;
+}
+
+interface TabStop {
+	tabStopLocation: TabStopLocation;
+	tabStopNumber: number
+	// Add other properties of TabStop if needed
+}
+
+interface TabStopContainer {
+	tabStops: TabStop[];
+}
+
+interface Params {
+	[key: string]: {
+		type: string;
+		value: any;
+	};
+}
+
+interface TabstopObject {
+	position: number;
+	style: number;
+}
+
+interface Options {
+	interactive: boolean;
+	marginSet: boolean;
+	displayNumber: boolean;
+	tileMargin: number;
+	margin1: number | null;
+	margin2: number | null;
+	leftOffset: number | null;
+	pageOffset: number | null;
+	pageWidth: number | null;
+	pageTopMargin: number | null;
+	pageBottomMargin: number | null;
+	firstLineIndent: number | null;
+	leftParagraphIndent: number | null;
+	rightParagraphIndent: number | null;
+	tabs: TabstopObject[] | string;
+	unit: string | null;
+	DraggableConvertRatio: number | null;
+	timer: ReturnType<typeof setTimeout>;
+	showruler: boolean;
+	position: string;
+	disableMarker: boolean;
+}
+
+class Ruler{
+
+	_firstLineMarker: HTMLDivElement;
+	_pStartMarker: HTMLDivElement;
+	_pEndMarker: HTMLDivElement;
+	_rFace: HTMLDivElement;
+	_markerVerticalLine: HTMLDivElement;
+	_rWrapper: HTMLDivElement;
+	_rMarginWrapper: HTMLDivElement;
+	_rBPWrapper: HTMLDivElement;
+	_rBPContainer: HTMLDivElement;
+	_rTSContainer: CustomHTMLDivElement;
+	_lMarginMarker: HTMLDivElement;
+	_rMarginMarker: HTMLDivElement;
+	_lMarginDrag: HTMLDivElement;
+	_rMarginDrag: HTMLDivElement;
+	_lToolTip: HTMLDivElement;
+	_rToolTip: HTMLDivElement;
+
+	// Hammer variable declaration
+	_hammer:any;
+	_firstLineHammer:any;
+	_pEndHammer:any;
+	_pStartHammer:any;
+
+	_indentationElementId: string;
+	_initialposition:number;
+	_lastposition:number;
+	currentPositionInTwips: number | null;
+	currentTabStopIndex: number | null;
+	_map: ReturnType<typeof L.map>;
+
+	options:Options = {
 		interactive: true,
 		marginSet: false,
 		displayNumber: true,
 		tileMargin: 18, // No idea what this means and where it comes from
 		margin1: null,
 		margin2: null,
-		nullOffset: null,
+		leftOffset: null,
 		pageOffset: null,
 		pageWidth: null,
-		tabs: [],
+		pageTopMargin: null,
+		pageBottomMargin: null,
+		firstLineIndent: null,
+		leftParagraphIndent: null,
+		rightParagraphIndent: null,
+		tabs: '',
 		unit: null,
 		DraggableConvertRatio: null,
 		timer: null,
-		showruler: true
-	},
+		showruler: true,
+		position:'topleft',
+		disableMarker: false
+	};
 
-	onAdd: function(map) {
-		map.on('rulerupdate', this._updateOptions, this);
-		map.on('tabstoplistupdate', this._updateTabStops, this);
-		map.on('scrolllimits', this._updatePaintTimer, this);
-		map.on('moveend', this._fixOffset, this);
-		map.on('updatepermission', this._changeInteractions, this);
-		L.DomUtil.addClass(map.getContainer(), 'hasruler');
+	constructor(map: ReturnType<typeof L.map>, options:Options) {
 		this._map = map;
+		Object.assign(this.options, options);
+		this.onAdd();
+	}
 
-		return this._initLayout();
-	},
+	onAdd() {
+		this._map.on('rulerupdate', this._updateOptions, this);
+		this._map.on('tabstoplistupdate', this._updateTabStops, this);
+		this._map.on('scrolllimits', this._updatePaintTimer, this);
+		this._map.on('moveend', this._fixOffset, this);
+		this._map.on('updatepermission', this._changeInteractions, this);
+		L.DomUtil.addClass(this._map.getContainer(), 'hasruler');
 
-	_updatePaintTimer: function() {
+		const container: HTMLDivElement = this._initLayout();
+		const corner: HTMLElement =
+			this._map._controlCorners[this.options.position];
+
+		L.DomUtil.addClass(container, 'leaflet-control');
+
+		if (this.options.position.indexOf('bottom') !== -1) {
+			corner.insertBefore(container, corner.firstChild);
+		} else {
+			corner.appendChild(container);
+		}
+	}
+
+	_updatePaintTimer() {
 		clearTimeout(this.options.timer);
 		this.options.timer = setTimeout(L.bind(this._updateBreakPoints, this), 300);
-	},
+	}
 
-	_changeInteractions: function(e) {
+	getWindowProperty<T>(propertyName: string): T | undefined {
+		return (window as any)[propertyName];
+	}
+
+	_changeInteractions(e:any) {
 		if (this._lMarginDrag) {
 			if (e.perm === 'edit') {
 				this._lMarginDrag.style.cursor = 'e-resize';
 				this._rMarginDrag.style.cursor = 'w-resize';
 
-				if (!window.ThisIsTheiOSApp) {
+				if (!this.getWindowProperty<boolean>('ThisIsTheiOSApp')) {
 					L.DomEvent.on(this._rMarginDrag, 'mousedown', this._initiateDrag, this);
 					L.DomEvent.on(this._lMarginDrag, 'mousedown', this._initiateDrag, this);
 				}
@@ -63,15 +177,15 @@ L.Control.Ruler = L.Control.extend({
 				this._lMarginDrag.style.cursor = 'default';
 				this._rMarginDrag.style.cursor = 'default';
 
-				if (!window.ThisIsTheiOSApp) {
+				if (!this.getWindowProperty<boolean>('ThisIsTheiOSApp')) {
 					L.DomEvent.off(this._rMarginDrag, 'mousedown', this._initiateDrag, this);
 					L.DomEvent.off(this._lMarginDrag, 'mousedown', this._initiateDrag, this);
 				}
 			}
 		}
-	},
+	}
 
-	_initiateIndentationMarkers: function() {
+	_initiateIndentationMarkers() {
 		// First line indentation..
 		this._firstLineMarker = document.createElement('div');
 		this._firstLineMarker.id = 'lo-fline-marker';
@@ -94,8 +208,6 @@ L.Control.Ruler = L.Control.extend({
 		this._markerVerticalLine = L.DomUtil.create('div', 'cool-ruler-indentation-marker-center');
 		this._rFace.appendChild(this._markerVerticalLine);
 
-		var self = this;
-
 		// Now we have indentation markers. Next we should bind drag initializers to them..
 		// We will use 3 hammers. 1 hammer is not usable for this case.
 		// Hammer for first line indentation..
@@ -104,14 +216,14 @@ L.Control.Ruler = L.Control.extend({
 		this._firstLineHammer.get('press').set({
 			time: 500
 		});
-		this._firstLineHammer.on('panstart', window.touch.touchOnly(function (event) {
-			self._initiateIndentationDrag(event);
+		this._firstLineHammer.on('panstart', (window as typeof window & { touch: any; }).touch.touchOnly(function (event: any) {
+			this._initiateIndentationDrag(event);
 		}));
-		this._firstLineHammer.on('panmove', window.touch.touchOnly(function (event) {
-			self._moveIndentation(event);
+		this._firstLineHammer.on('panmove', (window as typeof window & { touch: any; }).touch.touchOnly(function (event: any) {
+			this._moveIndentation(event);
 		}));
-		this._firstLineHammer.on('panend', window.touch.touchOnly(function (event) {
-			self._moveIndentationEnd(event);
+		this._firstLineHammer.on('panend', (window as typeof window & { touch: any; }).touch.touchOnly(function (event: Event) {
+			this._moveIndentationEnd(event);
 		}));
 
 		// Hammer for paragraph start indentation..
@@ -120,14 +232,14 @@ L.Control.Ruler = L.Control.extend({
 		this._pStartHammer.get('press').set({
 			time: 500
 		});
-		this._pStartHammer.on('panstart', window.touch.touchOnly(function(event) {
-			self._initiateIndentationDrag(event);
+		this._pStartHammer.on('panstart', (window as typeof window & { touch: any; }).touch.touchOnly(function(event: any) {
+			this._initiateIndentationDrag(event);
 		}));
-		this._pStartHammer.on('panmove', window.touch.touchOnly(function(event) {
-			self._moveIndentation(event);
+		this._pStartHammer.on('panmove', (window as typeof window & { touch: any; }).touch.touchOnly(function(event: any) {
+			this._moveIndentation(event);
 		}));
-		this._pStartHammer.on('panend', window.touch.touchOnly(function(event) {
-			self._moveIndentationEnd(event);
+		this._pStartHammer.on('panend', (window as typeof window & { touch: any; }).touch.touchOnly(function(event: Event) {
+			this._moveIndentationEnd(event);
 		}));
 
 		// Hammer for paragraph end indentation..
@@ -136,22 +248,22 @@ L.Control.Ruler = L.Control.extend({
 		this._pEndHammer.get('press').set({
 			time: 500
 		});
-		this._pEndHammer.on('panstart', window.touch.touchOnly(function(event) {
-			self._initiateIndentationDrag(event);
+		this._pEndHammer.on('panstart', (window as typeof window & { touch: any; }).touch.touchOnly(function(event: any) {
+			this._initiateIndentationDrag(event);
 		}));
-		this._pEndHammer.on('panmove', window.touch.touchOnly(function(event) {
-			self._moveIndentation(event);
+		this._pEndHammer.on('panmove', (window as typeof window & { touch: any; }).touch.touchOnly(function(event: any) {
+			this._moveIndentation(event);
 		}));
-		this._pEndHammer.on('panend', window.touch.touchOnly(function(event) {
-			self._moveIndentationEnd(event);
+		this._pEndHammer.on('panend', (window as typeof window & { touch: any; }).touch.touchOnly(function(event: Event) {
+			this._moveIndentationEnd(event);
 		}));
 
-		L.DomEvent.on(this._firstLineMarker, 'mousedown', window.touch.mouseOnly(this._initiateIndentationDrag), this);
-		L.DomEvent.on(this._pStartMarker, 'mousedown', window.touch.mouseOnly(this._initiateIndentationDrag), this);
-		L.DomEvent.on(this._pEndMarker, 'mousedown', window.touch.mouseOnly(this._initiateIndentationDrag), this);
-	},
+		L.DomEvent.on(this._firstLineMarker, 'mousedown', (window as typeof window & { touch: any; }).touch.mouseOnly(this._initiateIndentationDrag), this);
+		L.DomEvent.on(this._pStartMarker, 'mousedown', (window as typeof window & { touch: any; }).touch.mouseOnly(this._initiateIndentationDrag), this);
+		L.DomEvent.on(this._pEndMarker, 'mousedown', (window as typeof window & { touch: any; }).touch.mouseOnly(this._initiateIndentationDrag), this);
+	}
 
-	_initLayout: function() {
+	_initLayout() {
 		this._rWrapper = L.DomUtil.create('div', 'cool-ruler leaflet-bar leaflet-control leaflet-control-custom');
 		this._rWrapper.style.visibility = 'hidden';
 
@@ -168,35 +280,33 @@ L.Control.Ruler = L.Control.extend({
 		this._rBPContainer = L.DomUtil.create('div', 'cool-ruler-breakcontainer', this._rBPWrapper);
 
 		// Tab stops
-		this._rTSContainer = L.DomUtil.create('div', 'cool-ruler-tabstopcontainer', this._rMarginWrapper);
+		this._rTSContainer = L.DomUtil.create('div', 'cool-ruler-horizontal-tabstopcontainer', this._rMarginWrapper);
 		L.DomEvent.on(this._rTSContainer, 'mousedown', this._initiateTabstopDrag, this);
-
-		var self = this;
 
 		this._hammer = new Hammer(this._rTSContainer);
 		this._hammer.add(new Hammer.Pan({ threshold: 0, pointers: 0 }));
 		this._hammer.get('press').set({
 			time: 500
 		});
-		this._hammer.on('panstart', window.touch.touchOnly(function (event) {
-			self._initiateTabstopDrag(event);
+		this._hammer.on('panstart', (window as typeof window & { touch: any; }).touch.touchOnly(function (event: any) {
+			this._initiateTabstopDrag(event);
 		}));
-		this._hammer.on('panmove', window.touch.touchOnly(function (event) {
-			self._moveTabstop(event);
+		this._hammer.on('panmove', (window as typeof window & { touch: any; }).touch.touchOnly(function (event: any) {
+			this._moveTabstop(event);
 		}));
-		this._hammer.on('panend', window.touch.touchOnly(function (event) {
-			self._endTabstopDrag(event);
+		this._hammer.on('panend', (window as typeof window & { touch: any; }).touch.touchOnly(function (event: any) {
+			this._endTabstopDrag(event);
 		}));
-		this._hammer.on('press', window.touch.touchOnly(function (event) {
-			self._onTabstopContainerLongPress(event);
+		this._hammer.on('press', (window as typeof window & { touch: any; }).touch.touchOnly(function (event: any) {
+			this._onTabstopContainerLongPress(event);
 		}));
 
 		this._initiateIndentationMarkers();
 
 		return this._rWrapper;
-	},
+	}
 
-	_updateOptions: function(obj) {
+	_updateOptions(obj: Options) {
 		// window.app.console.log('===> _updateOptions');
 		// Note that the values for margin1, margin2 and leftOffset are not in any sane
 		// units. See the comment in SwCommentRuler::CreateJsonNotification(). The values
@@ -204,12 +314,12 @@ L.Control.Ruler = L.Control.extend({
 		// is running on at all, passed through convertTwipToMm100(), i.e. multiplied by
 		// approximately 1.76. Let's call these units "arbitrary pixelish units" in
 		// comments here.
-		this.options.margin1 = parseInt(obj['margin1']);
-		this.options.margin2 = parseInt(obj['margin2']);
-		this.options.nullOffset = parseInt(obj['leftOffset']);
+		this.options.margin1 = obj['margin1'];
+		this.options.margin2 = obj['margin2'];
+		this.options.leftOffset = obj['leftOffset'];
 
 		// pageWidth on the other hand *is* really in mm100.
-		this.options.pageWidth = parseInt(obj['pageWidth']);
+		this.options.pageWidth = obj['pageWidth'];
 
 		// to be enabled only after adding support for other length units as well
 		// this.options.unit = obj['unit'].trim();
@@ -217,9 +327,9 @@ L.Control.Ruler = L.Control.extend({
 		this._updateBreakPoints();
 
 		this._rWrapper.style.visibility = '';
-	},
+	}
 
-	_updateParagraphIndentations: function() {
+	_updateParagraphIndentations() {
 		var items = this._map['stateChangeHandler'];
 		var state = items.getItemValue('.uno:LeftRightParaMargin');
 
@@ -229,12 +339,12 @@ L.Control.Ruler = L.Control.extend({
 		this.options.firstLineIndent = parseFloat(state.firstline.replace(',', '.'));
 		this.options.leftParagraphIndent = parseFloat(state.left.replace(',', '.'));
 		this.options.rightParagraphIndent = parseFloat(state.right.replace(',', '.'));
-		this.options.indentUnit = state.unit;
+		this.options.unit = state.unit;
 
 		var pxPerMm100 = this._map._docLayer._docPixelSize.x / (this._map._docLayer._docWidthTwips * 2540/1440);
 
 		// Conversion to mm100.
-		if (this.options.indentUnit === 'inch') {
+		if (this.options.unit === 'inch') {
 			this.options.firstLineIndent = this.options.firstLineIndent * 2540;
 			this.options.leftParagraphIndent = this.options.leftParagraphIndent * 2540;
 			this.options.rightParagraphIndent = this.options.rightParagraphIndent * 2540;
@@ -255,31 +365,32 @@ L.Control.Ruler = L.Control.extend({
 		this._pEndMarker.style.left = (pEndPosition - (this._pEndMarker.getBoundingClientRect().width / 2.0)) + 'px';
 
 		this._markerVerticalLine.style.top = this._rTSContainer.getBoundingClientRect().bottom + 'px';
-	},
+	}
 
-	_updateTabStops: function(obj) {
+	_updateTabStops(obj: { tabstops: Array<{ position: string; type: string }> | string }) {
 		this.options.tabs = [];
 		var jsonTabstops = obj['tabstops'];
 		if (jsonTabstops === '')
 			return;
-		for (var i in jsonTabstops) {
-			var jsonTabstop = jsonTabstops[i];
-			this.options.tabs[i] = {
+		if (typeof jsonTabstops === 'string' || jsonTabstops.length === 0) return;
+
+		for (const jsonTabstop of jsonTabstops) {
+			this.options.tabs.push({
 				position: parseInt(jsonTabstop.position),
 				style: parseInt(jsonTabstop.type)
-			};
+			});
+			this._updateBreakPoints();
 		}
-		this._updateBreakPoints();
-	},
+	}
 
-	_updateBreakPoints: function() {
+	_updateBreakPoints() {
 
 		if (this.options.margin1 == null || this.options.margin2 == null)
 			return;
 
 		var lMargin, rMargin, wPixel, scale;
 
-		lMargin = this.options.nullOffset;
+		lMargin = this.options.leftOffset;
 
 		// This is surely bogus. We take pageWidth, which is in mm100, and subtract a value
 		// that is in "arbitrary pixelish units". But the only thing rMargin is used for is
@@ -287,7 +398,7 @@ L.Control.Ruler = L.Control.extend({
 		// of the window anyway (see the assignments to this._rMarginMarker.style.width and
 		// this._rMarginDrag.style.width near the end of this function), so presumably it
 		// doesn't matter that much what rMargin is.
-		rMargin = this.options.pageWidth - (this.options.nullOffset + this.options.margin2);
+		rMargin = this.options.pageWidth - (this.options.leftOffset + this.options.margin2);
 
 		scale = this._map.getZoomScale(this._map.getZoom(), 10);
 		wPixel = this._map._docLayer._docPixelSize.x - (this.options.tileMargin * 2) * scale;
@@ -298,7 +409,7 @@ L.Control.Ruler = L.Control.extend({
 		this._rFace.style.width = wPixel + 'px';
 		this._rBPContainer.style.marginLeft = (-1 * (this.options.DraggableConvertRatio * (500 - (lMargin % 1000))) + 1) + 'px';
 
-		var numCounter = -1 * parseInt(lMargin / 1000);
+		var numCounter = -1 * Math.floor(lMargin / 1000);
 
 		L.DomUtil.removeChildNodes(this._rBPContainer);
 
@@ -329,7 +440,7 @@ L.Control.Ruler = L.Control.extend({
 		this._rTSContainer.tabStops = [];
 		for (var tabstopIndex = 0; tabstopIndex < this.options.tabs.length; tabstopIndex++) {
 			var markerClass = null;
-			var currentTabstop = this.options.tabs[tabstopIndex];
+			var currentTabstop: any = this.options.tabs[tabstopIndex];
 			switch (currentTabstop.style) {
 			case 0:
 				markerClass = 'cool-ruler-tabstop-left';
@@ -389,9 +500,9 @@ L.Control.Ruler = L.Control.extend({
 		else {
 			this._changeInteractions({perm:'readonly'});
 		}
-	},
+	}
 
-	_fixOffset: function() {
+	_fixOffset() {
 		if (!this._map.options.docBounds)
 			return;
 
@@ -420,11 +531,10 @@ L.Control.Ruler = L.Control.extend({
 
 		this._rFace.style.marginInlineStart = rulerOffset + 'px';
 
-		this.rulerOffset = rulerOffset; // Needed on different parts too..
 		this._updateParagraphIndentations();
-	},
+	}
 
-	_moveIndentation: function(e) {
+	_moveIndentation(e: any) {
 		if (e.type === 'panmove') {
 			e.clientX = e.center.x;
 		}
@@ -438,9 +548,9 @@ L.Control.Ruler = L.Control.extend({
 		// halfWidth..
 		var halfWidth = (element.getBoundingClientRect().right - element.getBoundingClientRect().left) * 0.5;
 		this._markerVerticalLine.style.left = String(newLeft + halfWidth) + 'px';
-	},
+	}
 
-	_moveIndentationEnd: function(e) {
+	_moveIndentationEnd(e: Event) {
 		this._map.rulerActive = false;
 
 		if (e.type !== 'panend') {
@@ -448,11 +558,11 @@ L.Control.Ruler = L.Control.extend({
 			L.DomEvent.off(this._map, 'mouseup', this._moveIndentationEnd, this);
 		}
 
-		var unoObj = {}, indentType = '';
+		var unoObj:Params = {}, indentType = '';
 
 		// Calculation step..
 		// The new coordinate of element subject to indentation is sent as a percentage of the page width..
-		// We need to calculate the percentage. Left margin (nullOffset) is not being added to the indentation (on the core part)..
+		// We need to calculate the percentage. Left margin (leftOffset) is not being added to the indentation (on the core part)..
 		// We can use TabStopContainer's position as the reference point, as they share the same reference point..
 		var element = document.getElementById(this._indentationElementId);
 
@@ -482,7 +592,7 @@ L.Control.Ruler = L.Control.extend({
 		leftValue = leftValue / pageWidth; // Now it's a percentage..
 
 		if (indentType !== '') {
-			unoObj[indentType] = {};
+			unoObj[indentType] =  { type: "", value: null };
 			unoObj[indentType]['type'] = 'string';
 			unoObj[indentType]['value'] = leftValue;
 			app.socket.sendMessage('uno .uno:ParagraphChangeState ' + JSON.stringify(unoObj));
@@ -490,10 +600,10 @@ L.Control.Ruler = L.Control.extend({
 
 		this._indentationElementId = '';
 		this._markerVerticalLine.style.display = 'none';
-	},
+	}
 
-	_initiateIndentationDrag: function(e) {
-		if (window.ThisIsTheiOSApp && !this._map.isEditMode())
+	_initiateIndentationDrag(e: any) {
+		if (this.getWindowProperty<boolean>('ThisIsTheiOSApp') && !this._map.isEditMode())
 			return;
 
 		this._map.rulerActive = true;
@@ -511,16 +621,16 @@ L.Control.Ruler = L.Control.extend({
 		this._initialposition = this._lastposition = e.clientX;
 		this._markerVerticalLine.style.display = 'block';
 		this._markerVerticalLine.style.left = this._lastposition + 'px';
-	},
+	}
 
-	_initiateDrag: function(e) {
+	_initiateDrag(e: any) {
 		if (e.type === 'touchstart') {
 			if (e.touches.length !== 1)
 				return;
 			e.clientX = e.touches[0].clientX;
 		}
 
-		if (window.ThisIsTheiOSApp && !this._map.isEditMode())
+		if (this.getWindowProperty<boolean>('ThisIsTheiOSApp') && !this._map.isEditMode())
 			return;
 
 		this._map.rulerActive = true;
@@ -539,9 +649,9 @@ L.Control.Ruler = L.Control.extend({
 			L.DomUtil.addClass(this._lMarginDrag, 'leaflet-drag-moving');
 			this._rFace.style.cursor = 'e-resize';
 		}
-	},
+	}
 
-	_moveMargin: function(e) {
+	_moveMargin(e: any) {
 		if (e.type === 'touchmove')
 			e.clientX = e.touches[0].clientX;
 
@@ -549,7 +659,7 @@ L.Control.Ruler = L.Control.extend({
 		var posChange = e.clientX - this._initialposition;
 		var unit = this.options.unit ? this.options.unit : ' cm';
 		if (L.DomUtil.hasClass(this._rMarginDrag, 'leaflet-drag-moving')) {
-			var rMargin = this.options.pageWidth - (this.options.nullOffset + this.options.margin2);
+			var rMargin = this.options.pageWidth - (this.options.leftOffset + this.options.margin2);
 			var newPos = this.options.DraggableConvertRatio*rMargin - posChange;
 			this._rToolTip.style.display = 'block';
 			this._rToolTip.style.right = newPos - 25 + 'px';
@@ -557,15 +667,15 @@ L.Control.Ruler = L.Control.extend({
 			this._rMarginDrag.style.width = newPos + 'px';
 		}
 		else {
-			newPos = this.options.DraggableConvertRatio*this.options.nullOffset + posChange;
+			newPos = this.options.DraggableConvertRatio*this.options.leftOffset + posChange;
 			this._lToolTip.style.display = 'block';
 			this._lToolTip.style.left = newPos - 25 + 'px';
 			this._lToolTip.innerText = (Math.round(newPos / (this.options.DraggableConvertRatio * 100)) / 10).toString() + unit;
 			this._lMarginDrag.style.width = newPos + 'px';
 		}
-	},
+	}
 
-	_endDrag: function(e) {
+	_endDrag(e: any) {
 		this._map.rulerActive = false;
 
 		var posChange;
@@ -573,7 +683,7 @@ L.Control.Ruler = L.Control.extend({
 			posChange = this._lastposition - this._initialposition;
 		else
 			posChange = e.originalEvent.clientX - this._initialposition;
-		var unoObj = {}, marginType, fact;
+		var unoObj:Params = {}, marginType, fact;
 
 		L.DomEvent.off(this._rFace, 'mousemove', this._moveMargin, this);
 		L.DomEvent.off(this._map, 'mouseup', this._endDrag, this);
@@ -593,22 +703,22 @@ L.Control.Ruler = L.Control.extend({
 
 		this._rFace.style.cursor = 'default';
 
-		unoObj[marginType] = {};
+		unoObj[marginType] = { type: "", value: null };
 		unoObj[marginType]['type'] = 'string';
 		unoObj[marginType]['value'] = fact * posChange/(this.options.DraggableConvertRatio * this.options.pageWidth);
 		app.socket.sendMessage('uno .uno:RulerChangeState ' + JSON.stringify(unoObj));
-	},
+	}
 
-	_getTabStopHit: function(tabstopContainer, pointX) {
-		var tabstop = null;
-		var margin = 10;
-		var tabstopDiffFromCenter = 100000000; // just a big initial condition
-
-		for (var i = 0; i < tabstopContainer.tabStops.length; i++) {
-			var current = tabstopContainer.tabStops[i];
-			var location = current.tabStopLocation;
+	_getTabStopHit(tabstopContainer: TabStopContainer, pointX: number) {
+		let tabstop: TabStop | null = null;
+		const margin = 10;
+		let tabstopDiffFromCenter = 100000000; // just a big initial condition
+	
+		for (let i = 0; i < tabstopContainer.tabStops.length; i++) {
+			const current = tabstopContainer.tabStops[i];
+			const location = current.tabStopLocation;
 			if (pointX >= location.left - margin && pointX <= location.right + margin) {
-				var diff = Math.abs(pointX - location.center);
+				const diff = Math.abs(pointX - location.center);
 				if (diff < tabstopDiffFromCenter) {
 					tabstop = current;
 					tabstopDiffFromCenter = diff;
@@ -616,14 +726,15 @@ L.Control.Ruler = L.Control.extend({
 			}
 		}
 		return tabstop;
-	},
+	}
 
-	_showTabstopContextMenu: function(position, tabstopNumber) {
+	_showTabstopContextMenu(position: number, tabstopNumber: number) {
+		// eslint-disable-next-line @typescript-eslint/no-this-alias
 		var self = this;
 		this.currentPositionInTwips = position;
 		this.currentTabStopIndex = tabstopNumber;
 		$.contextMenu({
-			selector: '.cool-ruler-tabstopcontainer',
+			selector: '.cool-ruler-horizontal-tabstopcontainer',
 			className: 'cool-font',
 			items: {
 				inserttabstop: {
@@ -642,9 +753,9 @@ L.Control.Ruler = L.Control.extend({
 				}
 			}
 		});
-	},
+	}
 
-	_initiateTabstopDrag: function(event) {
+	_initiateTabstopDrag(event: any) {
 		// window.app.console.log('===> _initiateTabstopDrag ' + event.type);
 
 		var tabstopContainer = null;
@@ -690,14 +801,14 @@ L.Control.Ruler = L.Control.extend({
 		tabstopContainer.tabStopMarkerBeingDragged = tabstop;
 		tabstopContainer.tabStopInitialPosiiton = pointX;
 
-		if (!window.ThisIsTheiOSApp && event.pointerType !== 'touch') {
+		if (!this.getWindowProperty<boolean>('ThisIsTheiOSApp') && event.pointerType !== 'touch') {
 			L.DomEvent.on(this._rTSContainer, 'mousemove', this._moveTabstop, this);
 			L.DomEvent.on(this._rTSContainer, 'mouseup', this._endTabstopDrag, this);
 			L.DomEvent.on(this._rTSContainer, 'mouseout', this._endTabstopDrag, this);
 		}
-	},
+	}
 
-	_moveTabstop: function(event) {
+	_moveTabstop(event: any) {
 		var tabstopContainer = null;
 		var pointX = null;
 
@@ -720,9 +831,9 @@ L.Control.Ruler = L.Control.extend({
 
 		var pixelDiff = pointX - tabstopContainer.tabStopInitialPosiiton;
 		marker.style.left = (marker.tabStopLocation.left + pixelDiff) + 'px';
-	},
+	}
 
-	_endTabstopDrag: function(event) {
+	_endTabstopDrag(event: any) {
 		//window.app.console.log('===> _endTabstopDrag ' + event.type);
 
 		var tabstopContainer = null;
@@ -766,9 +877,9 @@ L.Control.Ruler = L.Control.extend({
 		L.DomEvent.off(this._rTSContainer, 'mousemove', this._moveTabstop, this);
 		L.DomEvent.off(this._rTSContainer, 'mouseup', this._endTabstopDrag, this);
 		L.DomEvent.off(this._rTSContainer, 'mouseout', this._endTabstopDrag, this);
-	},
+	}
 
-	_onTabstopContainerLongPress: function(event) {
+	_onTabstopContainerLongPress(event: any) {
 		var tabstopContainer = event.target;
 		var pointX = event.center.x - tabstopContainer.getBoundingClientRect().left;
 		var pointXTwip = this._map._docLayer._pixelsToTwips({x: pointX, y:0}).x;
@@ -789,14 +900,14 @@ L.Control.Ruler = L.Control.extend({
 		else {
 			var tabstopNumber = null;
 			if (tabstop != null) {
-				tabstopNumber = tabstop.tabstopNumber;
+				tabstopNumber = tabstop.tabStopNumber;
 				pointXTwip = null;
 			}
 			this._showTabstopContextMenu(pointXTwip, tabstopNumber);
 		}
-	},
+	}
 
-	_deleteTabstop: function() {
+	_deleteTabstop() {
 		if (this.currentTabStopIndex != null) {
 			var params = {
 				Index: {
@@ -815,9 +926,9 @@ L.Control.Ruler = L.Control.extend({
 			this._map.sendUnoCommand('.uno:ChangeTabStop', params);
 			this.currentTabStopIndex = null;
 		}
-	},
+	}
 
-	_insertTabstop: function() {
+	_insertTabstop() {
 		if (this.currentPositionInTwips != null) {
 			var params = {
 				Index: {
@@ -836,10 +947,10 @@ L.Control.Ruler = L.Control.extend({
 			this._map.sendUnoCommand('.uno:ChangeTabStop', params);
 			this.currentPositionInTwips = null;
 		}
-	},
+	}
 
-});
+}
 
-L.control.ruler = function (options) {
-	return new L.Control.Ruler(options);
+L.control.ruler = function (map:ReturnType<typeof L.map>,options:Options) {
+	return new Ruler(map, options);
 };

@@ -401,7 +401,7 @@ COOL_JS_LST =\
 	src/control/Parts.js \
 	src/control/Scroll.js \
 	src/control/Styles.js \
-	src/control/Ruler.js \
+	src/control/Ruler.ts \
 	src/dom/PosAnimation.js \
 	src/map/anim/Map.PanAnimation.js \
 	src/dom/PosAnimation.Timer.js \
@@ -798,7 +798,7 @@ pot:
 		src/control/Control.Zotero.js \
 		src/control/Parts.js \
 		src/control/Permission.js \
-		src/control/Ruler.js \
+		src/control/Ruler.ts \
 		src/control/Signing.js \
 		src/control/Toolbar.js \
 		src/control/jsdialog/Component.Toolbar.ts \
