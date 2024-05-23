@@ -650,7 +650,8 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         if constexpr (!Util::isMobileApp())
         {
             // If it is not mobile, it must be Linux (for now).
-            std::string osVersionInfo(COOLWSD::getConfigValue<std::string>("per_view.custom_os_info", ""));
+            std::string osVersionInfo(
+                ConfigUtil::getConfigValue<std::string>("per_view.custom_os_info", ""));
             if (osVersionInfo.empty())
                 osVersionInfo = Util::getLinuxVersion();
 
@@ -1115,7 +1116,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     }
     else if (tokens.equals(0, "traceeventrecording"))
     {
-        if (COOLWSD::getConfigValue<bool>("trace_event[@enable]", false))
+        if (ConfigUtil::getConfigValue<bool>("trace_event[@enable]", false))
         {
             if (tokens.size() > 0)
             {
@@ -1136,7 +1137,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     }
     else if (tokens.equals(0, "a11ystate"))
     {
-        if (COOLWSD::getConfigValue<bool>("accessibility.enable", false))
+        if (ConfigUtil::getConfigValue<bool>("accessibility.enable", false))
         {
             return forwardToChild(std::string(buffer, length), docBroker);
         }
@@ -1363,21 +1364,23 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/,
             std::string encodedWatermarkText;
             Poco::URI::encode(getWatermarkText(), "", encodedWatermarkText);
             oss << " watermarkText=" << encodedWatermarkText;
-            oss << " watermarkOpacity=" << COOLWSD::getConfigValue<double>("watermark.opacity", 0.2);
+            oss << " watermarkOpacity="
+                << ConfigUtil::getConfigValue<double>("watermark.opacity", 0.2);
         }
 
-        if (COOLWSD::hasProperty("security.enable_macros_execution"))
+        if (ConfigUtil::hasProperty("security.enable_macros_execution"))
         {
             oss << " enableMacrosExecution=" << std::boolalpha
-                << COOLWSD::getConfigValue<bool>("security.enable_macros_execution", false);
+                << ConfigUtil::getConfigValue<bool>("security.enable_macros_execution", false);
         }
 
-        if (COOLWSD::hasProperty("security.macro_security_level"))
+        if (ConfigUtil::hasProperty("security.macro_security_level"))
         {
-            oss << " macroSecurityLevel=" << COOLWSD::getConfigValue<int>("security.macro_security_level", 1);
+            oss << " macroSecurityLevel="
+                << ConfigUtil::getConfigValue<int>("security.macro_security_level", 1);
         }
 
-        if (COOLWSD::getConfigValue<bool>("accessibility.enable", false))
+        if (ConfigUtil::getConfigValue<bool>("accessibility.enable", false))
         {
             oss << " accessibilityState=" << std::boolalpha << getAccessibilityState();
         }

@@ -342,7 +342,7 @@ WopiStorage::WOPIFileInfo::WOPIFileInfo(const FileInfo& fileInfo, Poco::JSON::Ob
             (booleanFlag ? WOPIFileInfo::TriState::True : WOPIFileInfo::TriState::False);
 
     CONFIG_STATIC const std::string overrideWatermarks =
-        COOLWSD::getConfigValue<std::string>("watermark.text", "");
+        ConfigUtil::getConfigValue<std::string>("watermark.text", "");
     if (!overrideWatermarks.empty())
         _watermarkText = overrideWatermarks;
     if (isTemplate(getFilename()))

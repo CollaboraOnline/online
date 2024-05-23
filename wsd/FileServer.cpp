@@ -287,7 +287,7 @@ bool FileServerRequestHandler::authenticateAdmin(const Poco::Net::HTTPBasicCrede
     }
 
     // Check if the user is allowed to use the admin console
-    if (COOLWSD::getConfigValue<bool>("admin_console.enable_pam", false))
+    if (ConfigUtil::getConfigValue<bool>("admin_console.enable_pam", false))
     {
         // use PAM - it needs the username too
         if (!isPamAuthOk(userProvidedUsr, userProvidedPwd))
@@ -1301,7 +1301,7 @@ FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::prepro
     Poco::replaceInPlace(preprocess, std::string("%ENABLE_DEBUG%"), enableDebugStr);
 
     static const std::string hexifyEmbeddedUrls =
-        COOLWSD::getConfigValue<bool>("hexify_embedded_urls", false) ? "true" : "false";
+        ConfigUtil::getConfigValue<bool>("hexify_embedded_urls", false) ? "true" : "false";
     Poco::replaceInPlace(preprocess, std::string("%HEXIFY_URL%"), hexifyEmbeddedUrls);
 
     static const std::string useStatusbarSaveIndicator =
@@ -1421,17 +1421,23 @@ FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::prepro
     Poco::replaceInPlace(preprocess, std::string("%DEEPL_ENABLED%"), boolToString(config.getBool("deepl.enabled", false)));
     Poco::replaceInPlace(preprocess, std::string("%ZOTERO_ENABLED%"), boolToString(config.getBool("zotero.enable", true)));
     Poco::replaceInPlace(preprocess, std::string("%DOCUMENT_SIGNING_ENABLED%"), boolToString(config.getBool("document_signing.enable", true)));
-    Poco::replaceInPlace(preprocess, std::string("%WASM_ENABLED%"), boolToString(COOLWSD::getConfigValue<bool>("wasm.enable", false)));
+    Poco::replaceInPlace(preprocess, std::string("%WASM_ENABLED%"), boolToString(ConfigUtil::getConfigValue<bool>("wasm.enable", false)));
     Poco::URI indirectionURI(config.getString("indirection_endpoint.url", ""));
     Poco::replaceInPlace(preprocess, std::string("%INDIRECTION_URL%"), indirectionURI.toString());
 
     std::string extraExportFormats;
-    if (COOLWSD::getConfigValue<bool>("extra_export_formats.impress_swf", false)) extraExportFormats += " impress_swf";
-    if (COOLWSD::getConfigValue<bool>("extra_export_formats.impress_bmp", false)) extraExportFormats += " impress_bmp";
-    if (COOLWSD::getConfigValue<bool>("extra_export_formats.impress_gif", false)) extraExportFormats += " impress_gif";
-    if (COOLWSD::getConfigValue<bool>("extra_export_formats.impress_png", false)) extraExportFormats += " impress_png";
-    if (COOLWSD::getConfigValue<bool>("extra_export_formats.impress_svg", false)) extraExportFormats += " impress_svg";
-    if (COOLWSD::getConfigValue<bool>("extra_export_formats.impress_tiff", false)) extraExportFormats += " impress_tiff";
+    if (ConfigUtil::getConfigValue<bool>("extra_export_formats.impress_swf", false))
+        extraExportFormats += " impress_swf";
+    if (ConfigUtil::getConfigValue<bool>("extra_export_formats.impress_bmp", false))
+        extraExportFormats += " impress_bmp";
+    if (ConfigUtil::getConfigValue<bool>("extra_export_formats.impress_gif", false))
+        extraExportFormats += " impress_gif";
+    if (ConfigUtil::getConfigValue<bool>("extra_export_formats.impress_png", false))
+        extraExportFormats += " impress_png";
+    if (ConfigUtil::getConfigValue<bool>("extra_export_formats.impress_svg", false))
+        extraExportFormats += " impress_svg";
+    if (ConfigUtil::getConfigValue<bool>("extra_export_formats.impress_tiff", false))
+        extraExportFormats += " impress_tiff";
     Poco::replaceInPlace(preprocess, std::string("%EXTRA_EXPORT_FORMATS%"), extraExportFormats);
 
     bool geoLocationSetup = config.getBool("indirection_endpoint.geolocation_setup.enable", false);
@@ -1675,7 +1681,7 @@ void FileServerRequestHandler::preprocessAdminFile(const HTTPRequest& request,
 
         // New login, log.
         static bool showLog =
-            COOLWSD::getConfigValue<bool>("admin_console.logging.admin_login", true);
+            ConfigUtil::getConfigValue<bool>("admin_console.logging.admin_login", true);
         if (showLog)
         {
             LOG_ANY("Admin logged in with source IPAddress [" << socket->clientAddress() << ']');

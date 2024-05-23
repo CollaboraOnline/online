@@ -16,7 +16,6 @@
 #include <Poco/Path.h>
 #include <Poco/URI.h>
 #include "ClientSession.hpp"
-#include "COOLWSD.hpp"
 #include "DocumentBroker.hpp"
 #include "FileUtil.hpp"
 #include "Util.hpp"
@@ -54,17 +53,19 @@ Quarantine::Quarantine(DocumentBroker& docBroker, const std::string& docName)
 
 void Quarantine::initialize(const std::string& path)
 {
-    if (!COOLWSD::getConfigValue<bool>("quarantine_files[@enable]", false) ||
+    if (!ConfigUtil::getConfigValue<bool>("quarantine_files[@enable]", false) ||
         !QuarantinePath.empty())
     {
         return;
     }
 
-    MaxSizeBytes = COOLWSD::getConfigValue<std::size_t>("quarantine_files.limit_dir_size_mb", 250) *
-                   1024 * 1024;
-    MaxAgeSecs = COOLWSD::getConfigValue<std::size_t>("quarantine_files.expiry_min", 3000) * 60;
+    MaxSizeBytes =
+        ConfigUtil::getConfigValue<std::size_t>("quarantine_files.limit_dir_size_mb", 250) * 1024 *
+        1024;
+    MaxAgeSecs = ConfigUtil::getConfigValue<std::size_t>("quarantine_files.expiry_min", 3000) * 60;
     MaxVersions = std::max(
-        COOLWSD::getConfigValue<std::size_t>("quarantine_files.max_versions_to_maintain", 5), 1UL);
+        ConfigUtil::getConfigValue<std::size_t>("quarantine_files.max_versions_to_maintain", 5),
+        1UL);
     LOG_INF("Initializing Quarantine at [" << path << "] with Max Size: " << MaxSizeBytes
                                            << " bytes, Max Age: " << MaxAgeSecs
                                            << " seconds, Max Versions: " << MaxVersions);

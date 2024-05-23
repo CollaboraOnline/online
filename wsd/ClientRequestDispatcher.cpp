@@ -819,8 +819,8 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
             try
             {
                 /* WARNING: security point, we may skip authentication */
-                bool skipAuthentication =
-                    COOLWSD::getConfigValue<bool>("security.enable_metrics_unauthenticated", false);
+                bool skipAuthentication = ConfigUtil::getConfigValue<bool>(
+                    "security.enable_metrics_unauthenticated", false);
                 if (!skipAuthentication)
                     if (!COOLWSD::FileRequestHandler->isAdminLoggedIn(request, *response))
                         throw Poco::Net::NotAuthenticatedException("Invalid admin login");

@@ -93,7 +93,7 @@ ConvertToBroker::ConvertToBroker(const std::string& uri, const Poco::URI& uriPub
             << "].");
 
     CONFIG_STATIC const std::chrono::seconds limit_convert_secs(
-        COOLWSD::getConfigValue<int>("per_document.limit_convert_secs", 100));
+        ConfigUtil::getConfigValue<int>("per_document.limit_convert_secs", 100));
     _limitLifeSeconds = limit_convert_secs;
     ++gConvertToBrokerInstanceCouter;
 }

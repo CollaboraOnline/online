@@ -167,16 +167,16 @@ DocumentBroker::DocumentBroker(ChildType type, const std::string& uri, const Poc
     , _isViewFileExtension(false)
     , _saveManager(std::chrono::seconds(std::getenv("COOL_NO_AUTOSAVE") != nullptr
                                             ? 0
-                                            : COOLWSD::getConfigValueNonZero<int>(
+                                            : ConfigUtil::getConfigValueNonZero<int>(
                                                   "per_document.idlesave_duration_secs", 30)),
                    std::chrono::seconds(std::getenv("COOL_NO_AUTOSAVE") != nullptr
                                             ? 0
-                                            : COOLWSD::getConfigValueNonZero<int>(
+                                            : ConfigUtil::getConfigValueNonZero<int>(
                                                   "per_document.autosave_duration_secs", 300)),
-                   std::chrono::milliseconds(COOLWSD::getConfigValueNonZero<int>(
+                   std::chrono::milliseconds(ConfigUtil::getConfigValueNonZero<int>(
                        "per_document.min_time_between_saves_ms", 500)))
     , _storageManager(std::chrono::milliseconds(
-          COOLWSD::getConfigValueNonZero<int>("per_document.min_time_between_uploads_ms", 5000)))
+          ConfigUtil::getConfigValueNonZero<int>("per_document.min_time_between_uploads_ms", 5000)))
     , _isModified(false)
     , _cursorPosX(0)
     , _cursorPosY(0)
@@ -191,10 +191,11 @@ DocumentBroker::DocumentBroker(ChildType type, const std::string& uri, const Poc
     , _loadDuration(0)
     , _wopiDownloadDuration(0)
     , _mobileAppDocId(mobileAppDocId)
-    , _alwaysSaveOnExit(COOLWSD::getConfigValue<bool>("per_document.always_save_on_exit", false))
-    , _backgroundAutoSave(COOLWSD::getConfigValue<bool>("per_document.background_autosave", true))
+    , _alwaysSaveOnExit(ConfigUtil::getConfigValue<bool>("per_document.always_save_on_exit", false))
+    , _backgroundAutoSave(
+          ConfigUtil::getConfigValue<bool>("per_document.background_autosave", true))
     , _backgroundManualSave(
-          COOLWSD::getConfigValue<bool>("per_document.background_manualsave", true))
+          ConfigUtil::getConfigValue<bool>("per_document.background_manualsave", true))
 #if !MOBILEAPP
     , _admin(Admin::instance())
 #endif
@@ -232,7 +233,7 @@ void DocumentBroker::setupPriorities()
         return;
     if (_type == ChildType::Batch)
     {
-        const int prio = COOLWSD::getConfigValue<int>("per_document.batch_priority", 5);
+        const int prio = ConfigUtil::getConfigValue<int>("per_document.batch_priority", 5);
         Util::setProcessAndThreadPriorities(_childProcess->getPid(), prio);
     }
 }
@@ -342,7 +343,7 @@ void DocumentBroker::pollThread()
 
 #if !MOBILEAPP
     CONFIG_STATIC const std::size_t IdleDocTimeoutSecs =
-        COOLWSD::getConfigValue<int>("per_document.idle_timeout_secs", 3600);
+        ConfigUtil::getConfigValue<int>("per_document.idle_timeout_secs", 3600);
 
     // Used to accumulate B/W deltas.
     uint64_t adminSent = 0;
@@ -356,18 +357,18 @@ void DocumentBroker::pollThread()
         // ignore load time out
         std::getenv("PAUSEFORDEBUGGER") ? -1 :
 #endif
-        COOLWSD::getConfigValue<int>("per_document.limit_load_secs", 100);
+            ConfigUtil::getConfigValue<int>("per_document.limit_load_secs", 100);
 
     auto loadDeadline = std::chrono::steady_clock::now() + std::chrono::seconds(limit_load_secs);
 #endif
 
     const auto limStoreFailures =
-        COOLWSD::getConfigValue<int>("per_document.limit_store_failures", 5);
+        ConfigUtil::getConfigValue<int>("per_document.limit_store_failures", 5);
 
     bool waitingForMigrationMsg = false;
     std::chrono::time_point<std::chrono::steady_clock> migrationMsgStartTime;
     static const std::chrono::microseconds migrationMsgTimeout = std::chrono::seconds(
-        COOLWSD::getConfigValue<int>("indirection_endpoint.migration_timeout_secs", 180));
+        ConfigUtil::getConfigValue<int>("indirection_endpoint.migration_timeout_secs", 180));
 
     // Main polling loop goodness.
     while (!_stop && _poll->continuePolling() && !SigUtil::getTerminationFlag())
@@ -1007,6 +1008,7 @@ bool DocumentBroker::download(
 
     // Call the storage specific fileinfo functions
     std::string templateSource;
+
 #if !MOBILEAPP
     std::chrono::milliseconds checkFileInfoCallDurationMs = std::chrono::milliseconds::zero();
     WopiStorage* wopiStorage = dynamic_cast<WopiStorage*>(_storage.get());
@@ -1851,7 +1853,7 @@ void DocumentBroker::handleSaveResponse(const std::shared_ptr<ClientSession>& se
     // wasModified is only set when LOKit saves the document.
     // If the document was modified before saving, it would
     // be true. Otherwise, it's false. Meaningful when forced
-    // saving (i.e. dontSaveIfUnmodified=0), otherwise
+    // saving (i.e. dontSaveIfUnmodified=false), otherwise
     // result is blank in that case and we can't know if
     // the document saved was modified or not.
     if (json->has("wasModified"))
@@ -2905,7 +2907,7 @@ void DocumentBroker::autoSaveAndStop(const std::string& reason)
         if (_alwaysSaveOnExit && !_storageManager.lastUploadSuccessful())
         {
             CONFIG_STATIC const auto limStoreFailures =
-                COOLWSD::getConfigValue<int>("per_document.limit_store_failures", 5);
+                ConfigUtil::getConfigValue<int>("per_document.limit_store_failures", 5);
 
             if (limStoreFailures > 0 &&
                 _storageManager.uploadFailureCount() >= static_cast<std::size_t>(limStoreFailures))
