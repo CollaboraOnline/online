@@ -1007,7 +1007,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_requestNewTiles: function () {
-		this._onMessage('invalidatetiles: EMPTY', null);
+		this.handleInvalidateTilesMsg('invalidatetiles: EMPTY');
 		this._update();
 	},
 
@@ -1621,63 +1621,68 @@ L.CanvasTileLayer = L.Layer.extend({
 		return queue.length;
 	},
 
+	handleInvalidateTilesMsg: function(textMsg) {
+		var payload = textMsg.substring('invalidatetiles:'.length + 1);
+		if (!payload.startsWith('EMPTY')) {
+			this._onInvalidateTilesMsg(textMsg);
+		}
+		else {
+			var msg = 'invalidatetiles: ';
+
+			// see invalidatetiles: in wsd/protocol.txt for structure
+			var tmp = payload.substring('EMPTY'.length).replaceAll(',', ' , ');
+			var tokens = tmp.split(/[ \n]+/);
+
+			var wireIdToken = undefined;
+			var commaargs = [];
+
+			var commaarg = false;
+			for (var i = 0; i < tokens.length; i++) {
+				if (tokens[i] === ',') {
+					commaarg = true;
+					continue;
+				}
+				if (commaarg) {
+					commaargs.push(tokens[i]);
+					commaarg = false;
+				}
+				else if (tokens[i].startsWith('wid=')) {
+					wireIdToken = tokens[i];
+				}
+				else if (tokens[i])
+					console.error('unsupported invalidatetile token: ' + tokens[i]);
+			}
+
+			if (this.isWriter()) {
+				msg += 'part=0 ';
+			} else {
+
+				var part = parseInt(commaargs.length > 0 ? commaargs[0] : '');
+				var mode = parseInt(commaargs.length > 1 ? commaargs[1] : '');
+
+				mode = (isNaN(mode) ? this._selectedMode : mode);
+				msg += 'part=' + (isNaN(part) ? this._selectedPart : part)
+					+ ((mode && mode !== 0) ? (' mode=' + mode) : '')
+					+ ' ';
+			}
+			msg += 'x=0 y=0 ';
+			msg += 'width=' + this._docWidthTwips + ' ';
+			msg += 'height=' + this._docHeightTwips;
+			if (wireIdToken !== undefined)
+				msg += ' ' + wireIdToken;
+			this._onInvalidateTilesMsg(msg);
+		}
+	},
+
 	// Process messages early that won't mess with the DOM
 	filterSlurpedMessage: function(evt) {
 		var textMsg = evt.textMsg;
 
 		if (textMsg.startsWith('invalidatetiles:')) {
-			var payload = textMsg.substring('invalidatetiles:'.length + 1);
-			if (!payload.startsWith('EMPTY')) {
-				this._onInvalidateTilesMsg(textMsg);
-			}
-			else {
-				var msg = 'invalidatetiles: ';
-
-				// see invalidatetiles: in wsd/protocol.txt for structure
-				var tmp = payload.substring('EMPTY'.length).replaceAll(',', ' , ');
-				var tokens = tmp.split(/[ \n]+/);
-
-				var wireIdToken = undefined;
-				var commaargs = [];
-
-				var commaarg = false;
-				for (var i = 0; i < tokens.length; i++) {
-					if (tokens[i] === ',') {
-						commaarg = true;
-						continue;
-					}
-					if (commaarg) {
-						commaargs.push(tokens[i]);
-						commaarg = false;
-					}
-					else if (tokens[i].startsWith('wid=')) {
-						wireIdToken = tokens[i];
-					}
-					else if (tokens[i])
-						console.error('unsupported invalidatetile token: ' + tokens[i]);
-				}
-
-				if (this.isWriter()) {
-					msg += 'part=0 ';
-				} else {
-
-					var part = parseInt(commaargs.length > 0 ? commaargs[0] : '');
-					var mode = parseInt(commaargs.length > 1 ? commaargs[1] : '');
-
-					mode = (isNaN(mode) ? this._selectedMode : mode);
-					msg += 'part=' + (isNaN(part) ? this._selectedPart : part)
-						+ ((mode && mode !== 0) ? (' mode=' + mode) : '')
-						+ ' ';
-				}
-				msg += 'x=0 y=0 ';
-				msg += 'width=' + this._docWidthTwips + ' ';
-				msg += 'height=' + this._docHeightTwips;
-				if (wireIdToken !== undefined)
-					msg += ' ' + wireIdToken;
-				this._onInvalidateTilesMsg(msg);
-			}
+			this.handleInvalidateTilesMsg(textMsg);
 			return true; // filter
 		}
+
 		return false; // continue processing
 	},
 
