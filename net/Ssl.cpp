@@ -16,6 +16,7 @@
 #endif
 
 #include <sys/syscall.h>
+#include <common/Log.hpp>
 #include <Util.hpp>
 
 extern "C"
@@ -80,6 +81,24 @@ static inline void lock(int mode, int n, const char* /*file*/, int /*line*/)
 std::unique_ptr<SslContext> ssl::Manager::ServerInstance(nullptr);
 std::unique_ptr<SslContext> ssl::Manager::ClientInstance(nullptr);
 
+static const char* getCABundleFile()
+{
+    // Try the same locations that core's GetCABundleFile will
+    const char* locations[] = {
+        "/etc/pki/tls/certs/ca-bundle.crt",
+        "/etc/pki/tls/certs/ca-bundle.trust.crt",
+        "/etc/ssl/certs/ca-certificates.crt",
+        "/var/lib/ca-certificates/ca-bundle.pem",
+        "/etc/ssl/cert.pem"
+    };
+    for (const char* location : locations)
+    {
+        if (access(location, R_OK) == 0)
+            return location;
+    }
+    return nullptr;
+}
+
 SslContext::SslContext(const std::string& certFilePath, const std::string& keyFilePath,
                        const std::string& caFilePath, const std::string& cipherList,
                        ssl::CertificateVerification verification)
@@ -124,6 +143,16 @@ SslContext::SslContext(const std::string& certFilePath, const std::string& keyFi
     ERR_clear_error();
     SSL_CTX_set_options(_ctx, SSL_OP_ALL);
 
+    if (!getenv("SSL_CERT_FILE"))
+    {
+        const char* bundle = getCABundleFile();
+        if (!bundle)
+            throw std::runtime_error(std::string("Cannot load default CA bundle"));
+        LOG_INF("Using SSL_CERT_FILE of: " << bundle);
+        setenv("SSL_CERT_FILE", bundle, false);
+    }
+    SSL_CTX_set_default_verify_paths(_ctx);
+
     try
     {
         int errCode = 0;
@@ -157,7 +186,8 @@ SslContext::SslContext(const std::string& certFilePath, const std::string& keyFi
             }
         }
 
-        SSL_CTX_set_verify(_ctx, SSL_VERIFY_NONE, nullptr /*&verifyServerCallback*/);
+        SSL_CTX_set_verify(_ctx, SSL_VERIFY_PEER, nullptr /*&verifyServerCallback*/);
+
         SSL_CTX_set_cipher_list(_ctx, cipherList.c_str());
         SSL_CTX_set_verify_depth(_ctx, 9);
 
