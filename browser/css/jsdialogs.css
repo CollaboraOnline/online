@@ -1837,16 +1837,16 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	border-radius: var(--border-radius) 0 var(--border-radius) var(--border-radius) !important;
 }
 
+#formulabar-buttons-toolbox.formulabar {
+	display: grid;
+	grid-auto-flow: column;
+	height: min-content;
+}
+
 .formulabar.unotoolbutton {
 	margin: 0 !important;
 	padding: 0 !important;
 	opacity: 0.8;
-}
-
-#acceptformula {
-	/* Align it. Sum menu button occupies 2x a button size */
-	/* so, move acceptformula one button to the right */
-	margin-inline-start: var(--btn-size) !important;
 }
 
 .formulabar.unotoolbutton:hover {
