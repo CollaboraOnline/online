@@ -18,6 +18,7 @@
 	--color-background-darker: #000;  /* todo: apply to pressed (active), li:hover(top menu on classic mode)*/
 	--color-background-lighter: #262626; /* hover, toolbar, dialog, disabled */
 	--color-overlay: #1c5fa814;
+	--color-background-tabs-group: #303030;
 
 	--color-primary: #0b87e7; /* border-color */
 	--color-primary-text: #fff; /* text color when primary-lighter is background */
