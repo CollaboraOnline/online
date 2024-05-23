@@ -1941,6 +1941,12 @@ input[type='number']:hover::-webkit-outer-spin-button {
 #FormulaDialog #StructPage .ui-treeview-entry {
 	background-color: transparent;
 }
+#FormulaDialog #search {
+	display: flex;
+}
+#FormulaDialog #search-input {
+	flex-grow: 1;
+}
 #FormulaDialog #ParameterPage > .ui-grid-cell {
 	display: flex;
 	flex-direction: column;
