@@ -402,7 +402,10 @@ private:
             _tileWidth <= 0 ||
             _tileHeight <= 0)
         {
-            throw BadArgumentException("Invalid tilecombine descriptor.");
+            throw BadArgumentException("Invalid tilecombine descriptor. Elements: " +
+                    std::to_string(_part) + " " + std::to_string(_mode) + " " +
+                    std::to_string(_width) + " " + std::to_string(_height) + " " +
+                    std::to_string(_tileWidth) + " " + std::to_string(_tileHeight));
         }
 
         StringVector positionXtokens(StringVector::tokenize(tilePositionsX, ','));
@@ -453,13 +456,13 @@ private:
             TileWireId oldWireId = 0;
             if (!oldWireIdTokens.empty() && !COOLProtocol::stringToUInt32(oldWireIdTokens[i], oldWireId))
             {
-                throw BadArgumentException("Invalid tilecombine descriptor.");
+                throw BadArgumentException("Invalid tilecombine descriptor. oldWireIdToken: " + oldWireIdTokens[i]);
             }
 
             TileWireId wireId = 0;
             if (!wireIdTokens.empty() && !COOLProtocol::stringToUInt32(wireIdTokens[i], wireId))
             {
-                throw BadArgumentException("Invalid tilecombine descriptor.");
+                throw BadArgumentException("Invalid tilecombine descriptor. wireIdToken: " + wireIdTokens[i]);
             }
 
             _tiles.emplace_back(_normalizedViewId, _part, _mode, _width, _height, x, y, _tileWidth, _tileHeight, ver, imgSize, -1);
