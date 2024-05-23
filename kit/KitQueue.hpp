@@ -19,6 +19,7 @@
 #include <vector>
 
 #include "Log.hpp"
+#include "TileDesc.hpp"
 #include "Protocol.hpp"
 
 /// Queue for handling the Kit's messaging needs
@@ -65,6 +66,14 @@ public:
     /// Returns an empty payload on timeout.
     Payload pop();
     Payload get() { return pop(); }
+
+    /// Tiles are special manage a separate queue of them
+    void clearTileQueue() { _tileQueue.clear(); }
+    void pushTileQueue(const Payload &value);
+    void pushTileCombineRequest(const Payload &value);
+    Payload popTileQueue();
+    std::vector<TileCombined> popWholeTileQueue();
+    size_t getTileQueueSize() const { return _tileQueue.size(); }
 
     /// Obtain the next callback
     Callback getCallback()
@@ -182,6 +191,9 @@ private:
 private:
     /// The incoming underlying queue
     std::vector<Payload> _queue;
+
+    /// Incoming tile request queue
+    std::vector<Payload> _tileQueue;
 
     /// Outgoing queued callbacks
     std::vector<Callback> _callbacks;

@@ -76,8 +76,8 @@ void KitQueueTests::testKitQueuePriority()
     queue.put(reqHigh);
 
     // Original order.
-    LOK_ASSERT_EQUAL_STR(payloadLow, queue.get());
-    LOK_ASSERT_EQUAL_STR(payloadHigh, queue.get());
+    LOK_ASSERT_EQUAL_STR(payloadLow, queue.popTileQueue());
+    LOK_ASSERT_EQUAL_STR(payloadHigh, queue.popTileQueue());
 
     // Request the tiles.
     queue.put(reqLow);
@@ -89,21 +89,21 @@ void KitQueueTests::testKitQueuePriority()
     queue.updateCursorPosition(0, 0, 0, 0, 10, 100);
 
     // Prioritized order.
-    LOK_ASSERT_EQUAL_STR(payloadHigh, queue.get());
-    LOK_ASSERT_EQUAL_STR(payloadLow, queue.get());
+    LOK_ASSERT_EQUAL_STR(payloadHigh, queue.popTileQueue());
+    LOK_ASSERT_EQUAL_STR(payloadLow, queue.popTileQueue());
 
     // Repeat with cursor position set.
     queue.put(reqLow);
     queue.put(reqHigh);
-    LOK_ASSERT_EQUAL_STR(payloadHigh, queue.get());
-    LOK_ASSERT_EQUAL_STR(payloadLow, queue.get());
+    LOK_ASSERT_EQUAL_STR(payloadHigh, queue.popTileQueue());
+    LOK_ASSERT_EQUAL_STR(payloadLow, queue.popTileQueue());
 
     // Repeat by changing cursor position.
     queue.put(reqLow);
     queue.put(reqHigh);
     queue.updateCursorPosition(0, 0, 0, 253450, 10, 100);
-    LOK_ASSERT_EQUAL_STR(payloadLow, queue.get());
-    LOK_ASSERT_EQUAL_STR(payloadHigh, queue.get());
+    LOK_ASSERT_EQUAL_STR(payloadLow, queue.popTileQueue());
+    LOK_ASSERT_EQUAL_STR(payloadHigh, queue.popTileQueue());
 }
 
 void KitQueueTests::testTileCombinedRendering()
@@ -126,18 +126,18 @@ void KitQueueTests::testTileCombinedRendering()
     // Horizontal.
     queue.put(req1);
     queue.put(req2);
-    LOK_ASSERT_EQUAL_STR(payloadHor, queue.get());
+    LOK_ASSERT_EQUAL_STR(payloadHor, queue.popTileQueue());
 
     // Vertical.
     queue.put(req1);
     queue.put(req3);
-    LOK_ASSERT_EQUAL_STR(payloadVer, queue.get());
+    LOK_ASSERT_EQUAL_STR(payloadVer, queue.popTileQueue());
 
     // Vertical.
     queue.put(req1);
     queue.put(req2);
     queue.put(req3);
-    LOK_ASSERT_EQUAL_STR(payloadFull, queue.get());
+    LOK_ASSERT_EQUAL_STR(payloadFull, queue.popTileQueue());
 }
 
 void KitQueueTests::testTileRecombining()
@@ -150,16 +150,16 @@ void KitQueueTests::testTileRecombining()
     queue.put("tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840 tileposy=0,0 tilewidth=3840 tileheight=3840");
 
     // the tilecombine's get merged, resulting in 3 "tile" messages
-    LOK_ASSERT_EQUAL(3, static_cast<int>(queue.size()));
+    LOK_ASSERT_EQUAL(3, static_cast<int>(queue.getTileQueueSize()));
 
     // but when we later extract that, it is just one "tilecombine" message
     LOK_ASSERT_EQUAL_STR(
         "tilecombine nviewid=0 part=0 width=256 height=256 tileposx=7680,0,3840 tileposy=0,0,0 "
         "imgsize=0,0,0 tilewidth=3840 tileheight=3840 ver=-1,-1,-1 oldwid=0,0,0 wid=0,0,0",
-        queue.get());
+        queue.popTileQueue());
 
     // and nothing remains in the queue
-    LOK_ASSERT_EQUAL(0, static_cast<int>(queue.size()));
+    LOK_ASSERT_EQUAL(0, static_cast<int>(queue.getTileQueueSize()));
 }
 
 void KitQueueTests::testViewOrder()
@@ -187,13 +187,13 @@ void KitQueueTests::testViewOrder()
     for (auto &tile : tiles)
         queue.put(tile);
 
-    LOK_ASSERT_EQUAL(4, static_cast<int>(queue.size()));
+    LOK_ASSERT_EQUAL(4, static_cast<int>(queue.getTileQueueSize()));
 
     // should result in the 3, 2, 1, 0 order of the tiles thanks to the cursor
     // positions
     for (size_t i = 0; i < tiles.size(); ++i)
     {
-        LOK_ASSERT_EQUAL_STR(tiles[3 - i], queue.get());
+        LOK_ASSERT_EQUAL_STR(tiles[3 - i], queue.popTileQueue());
     }
 }
 
@@ -217,11 +217,11 @@ void KitQueueTests::testPreviewsDeprioritization()
 
     for (size_t i = 0; i < previews.size(); ++i)
     {
-        LOK_ASSERT_EQUAL_STR(previews[i], queue.get());
+        LOK_ASSERT_EQUAL_STR(previews[i], queue.popTileQueue());
     }
 
     // stays empty after all is done
-    LOK_ASSERT_EQUAL(0, static_cast<int>(queue.size()));
+    LOK_ASSERT_EQUAL(0, static_cast<int>(queue.getTileQueueSize()));
 
     // re-ordering case - put previews and normal tiles to the queue and get
     // everything back again but this time the tiles have to interleave with
@@ -237,18 +237,18 @@ void KitQueueTests::testPreviewsDeprioritization()
 
     queue.put(tiles[0]);
 
-    LOK_ASSERT_EQUAL_STR(previews[0], queue.get());
-    LOK_ASSERT_EQUAL_STR(tiles[0], queue.get());
-    LOK_ASSERT_EQUAL_STR(previews[1], queue.get());
+    LOK_ASSERT_EQUAL_STR(previews[0], queue.popTileQueue());
+    LOK_ASSERT_EQUAL_STR(tiles[0], queue.popTileQueue());
+    LOK_ASSERT_EQUAL_STR(previews[1], queue.popTileQueue());
 
     queue.put(tiles[1]);
 
-    LOK_ASSERT_EQUAL_STR(previews[2], queue.get());
-    LOK_ASSERT_EQUAL_STR(tiles[1], queue.get());
-    LOK_ASSERT_EQUAL_STR(previews[3], queue.get());
+    LOK_ASSERT_EQUAL_STR(previews[2], queue.popTileQueue());
+    LOK_ASSERT_EQUAL_STR(tiles[1], queue.popTileQueue());
+    LOK_ASSERT_EQUAL_STR(previews[3], queue.popTileQueue());
 
     // stays empty after all is done
-    LOK_ASSERT_EQUAL(0, static_cast<int>(queue.size()));
+    LOK_ASSERT_EQUAL(0, static_cast<int>(queue.getTileQueueSize()));
 
     // cursor positioning case - the cursor position should not prioritize the
     // previews
@@ -257,11 +257,11 @@ void KitQueueTests::testPreviewsDeprioritization()
     queue.put(tiles[1]);
     queue.put(previews[0]);
 
-    LOK_ASSERT_EQUAL_STR(tiles[1], queue.get());
-    LOK_ASSERT_EQUAL_STR(previews[0], queue.get());
+    LOK_ASSERT_EQUAL_STR(tiles[1], queue.popTileQueue());
+    LOK_ASSERT_EQUAL_STR(previews[0], queue.popTileQueue());
 
     // stays empty after all is done
-    LOK_ASSERT_EQUAL(0, static_cast<int>(queue.size()));
+    LOK_ASSERT_EQUAL(0, static_cast<int>(queue.getTileQueueSize()));
 }
 
 namespace {
