@@ -883,7 +883,7 @@ input.clipboard {
 }
 .cool-ruler {
 	background-color: var(--color-main-background);
-	height: 20px;
+	height: var(--ruler-height);
 	width: 100vw;
 	margin: 0px !important;
 	position: fixed;

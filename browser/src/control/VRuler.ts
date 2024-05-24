@@ -259,7 +259,7 @@ class VRuler {
 		const position: string =
 			document.documentElement.dir === 'rtl' ? 'top right' : 'top left';
 		this._rWrapper.style.transformOrigin = position;
-		this._rWrapper.style.left = this.options.tileMargin + 'px';
+		this._rWrapper.style.left = 'var(--ruler-height)';
 		this._updateBreakPoints();
 	}
 
