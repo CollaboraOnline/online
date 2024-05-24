@@ -487,88 +487,99 @@ L.Map = L.Evented.extend({
 		return Math.pow(1.2, (zoom - this.options.zoom));
 	},
 
+	getDesktopCalcZoomCenter: function() {
+		var docLayer = this._docLayer;
+		var visibleTopLeft = docLayer._latLngToTwips(this.getBounds().getNorthWest());
+		var visibleBottomRight = docLayer._latLngToTwips(this.getBounds().getSouthEast());
+		var viewBounds = new L.Bounds(visibleTopLeft, visibleBottomRight);
+
+		if (docLayer._cellCursor) {
+			var latLngTopLeft = docLayer._cellCursor.getNorthWest();
+			var twipsTopLeft = docLayer._latLngToTwips(latLngTopLeft);
+			var cursorInBounds = viewBounds.contains(twipsTopLeft);
+
+			if (cursorInBounds) {
+				return twipsTopLeft;
+			}
+		}
+
+		if (docLayer._cellSelectionArea) {
+			var twipsCenter = docLayer._cellSelectionArea.center;
+			var twipsCenterPoint = new L.Point(twipsCenter[0], twipsCenter[1]);
+			var selectionInBounds = viewBounds.contains(twipsCenterPoint);
+
+			if (selectionInBounds) {
+				return twipsCenterPoint;
+			}
+		}
+
+		var viewBounds = this.getPixelBoundsCore();
+		return docLayer._corePixelsToTwips(viewBounds.getCenter());
+	},
+
 	setDesktopCalcViewOnZoom: function (zoom, animate) {
-		var calcLayer = this._docLayer;
-		if (!calcLayer.options.sheetGeometryDataEnabled || !calcLayer.sheetGeometry)
+		zoom = this._limitZoom(zoom);
+
+		if (zoom === this.getZoom()) {
+			return;
+		}
+
+		var docLayer = this._docLayer;
+		if (!docLayer.options.sheetGeometryDataEnabled || !docLayer.sheetGeometry)
 			return false;
 
-		var sheetGeom = calcLayer.sheetGeometry;
-		var zoomScaleAbs = this.zoomToFactor(zoom);
+		var typing = docLayer.isCursorVisible();
 
-		var cssBounds = this.getPixelBounds();
-		var cssBoundsSize = cssBounds.getSize();
+		var tsManager = docLayer._painter;
 
-		var topLeftCell = sheetGeom.getCellFromPos(
-			cssBounds.getTopLeft().multiplyBy(app.dpiScale), 'corepixels');
-		// top-left w.r.t current zoom.
-		var topLeftPx = sheetGeom.getCellRect(topLeftCell.x, topLeftCell.y)
-			.getTopLeft().divideBy(window.devicePixelRatio);
-		// top-left w.r.t new zoom.
-		var newTopLeftPx = sheetGeom.getCellRect(topLeftCell.x, topLeftCell.y, zoomScaleAbs)
-			.getTopLeft().divideBy(app.dpiScale);
+		var ctx = tsManager._paintContext();
+		var splitPos = ctx.splitPos;
+		var viewBounds = ctx.viewBounds;
+		var freePaneBounds = new L.Bounds(viewBounds.min.add(splitPos), viewBounds.max);
 
-		var cursorInBounds = calcLayer._cursorCorePixels ?
-			cssBounds.contains(
-				L.point(calcLayer._cursorCorePixels.getTopLeft().divideBy(app.dpiScale))) : false;
+		var zoomCenter = docLayer._twipsToCorePixels(this.getDesktopCalcZoomCenter());
 
-		var cursorActive = calcLayer.isCursorVisible();
-		if (cursorActive && cursorInBounds) {
-			var cursorBounds = calcLayer._cursorCorePixels;
-			var cursorCenter = calcLayer._corePixelsToTwips(cursorBounds.getCenter());
-			var newCursorCenter = sheetGeom.getTileTwipsAtZoom(cursorCenter, zoomScaleAbs);
-			// convert to css pixels at zoomScale.
-			newCursorCenter._multiplyBy(zoomScaleAbs / 15 / app.dpiScale)._round();
-			var newBounds = new L.Bounds(newTopLeftPx, newTopLeftPx.add(cssBoundsSize));
+		tsManager._offset = new L.Point(0, 0);
+		var docPos = docLayer._painter._getZoomDocPos(
+			zoomCenter,
+			zoomCenter,
+			freePaneBounds,
+			{ freezeX: false, freezeY: false },
+			splitPos,
+			this.getZoomScale(zoom),
+			true
+		);
 
-			if (!newBounds.contains(newCursorCenter)) {
-				var margin = 10;
-				var diffX = 0;
-				var diffY = 0;
-				var docSize = sheetGeom.getSize('corepixels').divideBy(app.dpiScale);
-				if (newCursorCenter.x < newBounds.min.x) {
-					diffX = Math.max(0, newCursorCenter.x - margin) - newBounds.min.x;
-				} else if (newCursorCenter.x > newBounds.max.x) {
-					diffX = Math.min(docSize.x, newCursorCenter.x + margin) - newBounds.max.x;
-				}
-
-				if (newCursorCenter.y < newBounds.min.y) {
-					diffY = Math.max(0, newCursorCenter.y - margin) - newBounds.min.y;
-				} else if (newCursorCenter.y > newBounds.max.y) {
-					diffY = Math.min(docSize.y, newCursorCenter.y + margin) - newBounds.max.y;
-				}
-
-				newTopLeftPx._add(new L.Point(diffX, diffY));
-				topLeftPx._add(new L.Point(diffX / zoomScaleAbs, diffY / zoomScaleAbs));
-				// FIXME: pan to topLeftPx before the animation ?
-			}
-		}
-
-		var newHalfSize = cssBoundsSize.divideBy(2);
-		var newCenter = newTopLeftPx.add(newHalfSize);
-		var newCenterLatLng = this.unproject(newCenter, zoom);
-		// pinch center w.r.t current zoom scale.
-		var newPinchCenterLatLng = this.unproject(topLeftPx, this.getZoom());
+		var newCenterLatLng = this.unproject(docPos.center.divideBy(app.dpiScale), zoom);
 
 		this._ignoreCursorUpdate = true;
-		var thisObj = this;
-		var mapUpdater = function() {
-			thisObj._resetView(L.latLng(newCenterLatLng), thisObj._limitZoom(zoom));
-		};
-		var runAtFinish = function() {
-			thisObj._ignoreCursorUpdate = false;
-			if (cursorActive) {
-				calcLayer.activateCursor();
+
+		var mapUpdater = (function (animationCalculatedNewCenter) {
+			if (animationCalculatedNewCenter) {
+				this._resetView(L.latLng(animationCalculatedNewCenter), zoom);
+				return;
 			}
-		};
+
+			this._resetView(L.latLng(newCenterLatLng), zoom);
+		}).bind(this);
+		var runAtFinish = (function() {
+			this._ignoreCursorUpdate = false;
+			if (typing) {
+				docLayer.activateCursor();
+			}
+		}).bind(this);
 
 		if (animate) {
-			this._docLayer.runZoomAnimation(zoom, newPinchCenterLatLng,
+			this._docLayer.runZoomAnimation(
+				zoom,
+				this.unproject(zoomCenter.divideBy(app.dpiScale), this.getZoom()),
 				mapUpdater,
 				runAtFinish);
-		} else {
-			mapUpdater();
-			runAtFinish();
+			return;
 		}
+
+		mapUpdater(newCenterLatLng);
+		runAtFinish();
 	},
 
 	ignoreCursorUpdate: function () {
