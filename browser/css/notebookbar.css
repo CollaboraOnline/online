@@ -346,38 +346,9 @@ button.ui-tab.notebookbar {
 /* File Tab */
 
 /* Home tab */
-#table-HomeTab {
-	margin-left: -16px;/*force alignment: clipboard elements*/
-	margin-top: -5px;
-}
-
-#clearFormatting.notebookbar div img, #FormatPaintbrush.notebookbar div img {
-	width: 24px !important;
-	height: 24px !important;
-}
-
-#clearFormatting.notebookbar, #FormatPaintbrush.notebookbar{
-	height: 24px !important;
-}
-
-#fontsize.notebookbar {
-	width: 65px !important;
-}
-
-#fontnamecombobox.notebookbar {
-	width: 195px !important;
-	top: -1px;
-	padding-right: 0px;
-}
-
-#BackgroundColor.notebookbar {
-	margin-left: 0px !important;
-}
-
 #fontsizecombobox.notebookbar {
 	width: 4.6rem;
 }
-
 .notebookbar.ui-combobox * {
 	line-height: 22px;
 }
