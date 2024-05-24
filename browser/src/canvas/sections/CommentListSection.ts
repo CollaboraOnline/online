@@ -1216,6 +1216,25 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 
 	public onACKComment (obj: any): void {
 		var id;
+		const anyEdit = Comment.isAnyEdit();
+		if (anyEdit && anyEdit.sectionProperties.data.id === obj.comment.id) {
+			if (document.getElementById(this.map.uiManager.generateModalId('comments-update')))
+				return;
+			this.map.uiManager.showYesNoButton(
+				'comments-update',
+				_('Comments updated'),
+				_('Another user has updated the comment. Would you like to overwrite those changes?'),
+				_('Overwrite'),
+				_('Update'),
+				null,
+				() => {
+					this.clearAutoSaveStatus();
+					anyEdit.onCancelClick(null);
+					this.onACKComment(obj);
+				}, false
+			);
+			return;
+		}
 		var changetrack = obj.redline ? true : false;
 		var dataroot = changetrack ? 'redline' : 'comment';
 		if (changetrack) {
