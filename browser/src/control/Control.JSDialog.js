@@ -26,7 +26,7 @@ L.Control.JSDialog = L.Control.extend({
 		this.map.on('jsdialogaction', this.onJSAction, this);
 		this.map.on('zoomend', this.onZoomEnd, this);
 		this.map.on('closealldialogs', this.onCloseAll, this);
-		this.map.on('closeAutoFilterDialog', this.closeAutoFilterDialogsOnTabChange, this);
+		this.map.on('closeAutoFilterDialog', this.closePopupsOnTabChange, this);
 	},
 
 	onRemove: function() {
@@ -35,7 +35,7 @@ L.Control.JSDialog = L.Control.extend({
 		this.map.off('jsdialogaction', this.onJSAction, this);
 		this.map.off('zoomend', this.onZoomEnd, this);
 		this.map.off('closealldialogs', this.onCloseAll, this);
-		this.map.off('closeAutoFilterDialog', this.closeAutoFilterDialogsOnTabChange, this);
+		this.map.off('closeAutoFilterDialog', this.closePopupsOnTabChange, this);
 	},
 
 	hasDialogOpened: function() {
@@ -591,26 +591,28 @@ L.Control.JSDialog = L.Control.extend({
 		this.updatePosition(instance.container, instance.posx, instance.posy);
 	},
 
-	closeAutoFilterDialogsOnTabChange: function() {
+	closePopupsOnTabChange: function() {
 		//this.dialogs is an object
 		var dialogKeys = Object.keys(this.dialogs);
 
 		for (var i = 0; i < dialogKeys.length; i++) {
 			var autoFilterDialogId = dialogKeys[i];
 			var dialog = this.dialogs[autoFilterDialogId];
-			var isAutoFillFromOnMouseUp = this.map._docLayer.isAutoFillFromOnMouseUp;
 
 			// Check if the current dialog has the isAutofilter property set to true
 			if (dialog.isAutofilter) {
-
-				// don't hide AutoFill popup if it comes from onMouseUp event (see AutoFillMarkerSection.ts)
-				if (isAutoFillFromOnMouseUp && (autoFilterDialogId === 'autoFillPopup')) {
-					this.map._docLayer.isAutoFillFromOnMouseUp = false;
-					continue;
-				}
-
 				// Call this.close(key, true) for the current dialog
 				this.close(autoFilterDialogId, true);
+			}
+
+			if (dialog.isAutoFillPopup) {
+				var isAutoFillFromOnMouseUp = this.map._docLayer.isAutoFillFromOnMouseUp;
+
+				// hide AutoFill popup if it does not come from onMouseUp event (see AutoFillMarkerSection.ts)
+				if (!isAutoFillFromOnMouseUp)
+					this.close(autoFilterDialogId)
+				else
+					this.map._docLayer.isAutoFillFromOnMouseUp = false;
 			}
 		}
 	},
@@ -645,7 +647,8 @@ L.Control.JSDialog = L.Control.extend({
 		instance.isDocumentAreaPopup = instance.popupParent === '_POPOVER_' && instance.posx !== undefined && instance.posy !== undefined;
 		instance.isPopup = instance.isModalPopUp || instance.isDocumentAreaPopup || instance.isSnackbar;
 		instance.containerParent = instance.isDocumentAreaPopup ? document.getElementById('document-container'): document.body;
-		instance.isAutofilter = instance.isDocumentAreaPopup && this.map._docLayer.isCalc();
+		instance.isAutoFillPopup = instance.id === 'autoFillPopup';
+		instance.isAutofilter = instance.isDocumentAreaPopup && this.map._docLayer.isCalc() && !instance.isAutoFillPopup;
 		instance.haveTitlebar = (!instance.isModalPopUp && !instance.isSnackbar) || (instance.hasClose && instance.title && instance.title !== '');
 		instance.nonModal = !instance.isModalPopUp && !instance.isDocumentAreaPopup && !instance.isSnackbar;
 
@@ -713,6 +716,9 @@ L.Control.JSDialog = L.Control.extend({
 			}
 
 			if (instance.isAutofilter)
+				this.calculateAutoFilterPosition(instance);
+
+			if (instance.isAutoFillPopup)
 				this.calculateAutoFilterPosition(instance);
 
 			this.dialogs[instance.id] = instance;
