@@ -686,8 +686,8 @@ L.TileSectionManager = L.Class.extend({
 		}
 
 		var newPaneCenter = new L.Point(
-			(docTopLeft.x - splitPos.x + (paneSize.x + splitPos.x) * 0.5 / scale) / app.dpiScale,
-			(docTopLeft.y - splitPos.y + (paneSize.y + splitPos.y) * 0.5 / scale) / app.dpiScale);
+			(docTopLeft.x - splitPos.x + (paneSize.x + splitPos.x) * 0.5 / scale),
+			(docTopLeft.y - splitPos.y + (paneSize.y + splitPos.y) * 0.5 / scale));
 
 		return {
 			topLeft: docTopLeft,
@@ -785,7 +785,7 @@ L.TileSectionManager = L.Class.extend({
 		var map = this._map;
 
 		// Calculate the final center at final zoom in advance.
-		var newMapCenter = this._getZoomMapCenter(zoom);
+		var newMapCenter = this._getZoomMapCenter(zoom).divideBy(app.dpiScale);
 		var newMapCenterLatLng = map.unproject(newMapCenter, zoom);
 		painter._sectionContainer.setZoomChanged(true);
 
@@ -6507,7 +6507,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	preZoomAnimation: function (pinchStartCenter) {
 		this._pinchStartCenter = this._map.project(pinchStartCenter).multiplyBy(app.dpiScale); // in core pixels
 
-		if (this.isCursorVisible()) {
+		if (this._cursorMarker && this.isCursorVisible()) {
 			this._cursorMarker.setOpacity(0);
 		}
 		if (this._map._textInput._cursorHandler) {
