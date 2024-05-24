@@ -73,6 +73,10 @@ private:
     void createClientSession(const std::string& docKey, const std::string& url,
                              const Poco::URI& uriPublic, const bool isReadOnly);
 
+    /// Send unauthorized error to the client and disconnect the socket.
+    /// Includes SSL verification status, if available, as the error code.
+    void sendUnauthorizedErrorAndShutdown();
+
     /// Send an error to the client and disconnect the socket.
     static void sendErrorAndShutdown(const std::shared_ptr<WebSocketHandler>& ws,
                                      const std::string& msg,

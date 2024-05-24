@@ -21,6 +21,7 @@
 #include <DocumentBroker.hpp>
 #include <ClientSession.hpp>
 #include <common/JsonUtil.hpp>
+#include <Poco/Base64Encoder.h>
 #include <Util.hpp>
 
 extern std::pair<std::shared_ptr<DocumentBroker>, std::string>
@@ -93,8 +94,7 @@ void RequestVettingStation::handleRequest(const std::string& id)
         case StorageBase::StorageType::Unauthorized:
             LOG_ERR("No authorized hosts found matching the target host [" << uriPublic.getHost()
                                                                            << "] in config");
-            sendErrorAndShutdown(_ws, "error: cmd=internal kind=unauthorized",
-                                 WebSocketHandler::StatusCodes::POLICY_VIOLATION);
+            sendUnauthorizedErrorAndShutdown();
             break;
 
         case StorageBase::StorageType::FileSystem:
@@ -111,6 +111,29 @@ void RequestVettingStation::handleRequest(const std::string& id)
             break;
 #endif //!MOBILEAPP
     }
+}
+
+static std::string base64Encode(std::string& input)
+{
+    std::ostringstream oss;
+    Poco::Base64Encoder encoder(oss);
+    encoder << input;
+    encoder.close();
+    return oss.str();
+}
+
+void RequestVettingStation::sendUnauthorizedErrorAndShutdown()
+{
+    std::string error = "error: cmd=internal kind=unauthorized";
+
+    if (_checkFileInfo)
+    {
+        std::string sslVerifyResult = _checkFileInfo->getSslVerifyMessage();
+        if (!sslVerifyResult.empty())
+            error += " code=" + base64Encode(sslVerifyResult);
+    }
+    sendErrorAndShutdown(_ws, error,
+                         WebSocketHandler::StatusCodes::POLICY_VIOLATION);
 }
 
 void RequestVettingStation::handleRequest(const std::string& id,
@@ -165,8 +188,7 @@ void RequestVettingStation::handleRequest(const std::string& id,
         case StorageBase::StorageType::Unauthorized:
             LOG_ERR("No authorized hosts found matching the target host [" << uriPublic.getHost()
                                                                            << "] in config");
-            sendErrorAndShutdown(_ws, "error: cmd=internal kind=unauthorized",
-                                 WebSocketHandler::StatusCodes::POLICY_VIOLATION);
+            sendUnauthorizedErrorAndShutdown();
             break;
 
         case StorageBase::StorageType::FileSystem:
@@ -238,8 +260,8 @@ void RequestVettingStation::handleRequest(const std::string& id,
                                   << "], "
                                   << (_checkFileInfo ? CheckFileInfo::name(_checkFileInfo->state())
                                                      : "no CheckFileInfo"));
-                        sendErrorAndShutdown(_ws, "error: cmd=internal kind=unauthorized",
-                                             WebSocketHandler::StatusCodes::POLICY_VIOLATION);
+
+                        sendUnauthorizedErrorAndShutdown();
                     }
                 });
             break;
@@ -289,8 +311,7 @@ void RequestVettingStation::checkFileInfo(const Poco::URI& uri, bool isReadOnly,
             if (_ws)
             {
                 LOG_DBG("WOPI::CheckFileInfo failed, sending error and closing connection now");
-                sendErrorAndShutdown(_ws, "error: cmd=storage kind=unauthorized",
-                                     WebSocketHandler::StatusCodes::POLICY_VIOLATION);
+                sendUnauthorizedErrorAndShutdown();
             }
             else
             {

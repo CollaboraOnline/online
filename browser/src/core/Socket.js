@@ -607,6 +607,17 @@ app.definitions.Socket = L.Class.extend({
 		e.image.src = img;
 	},
 
+	_buildUnauthorizedMessage: function (command) {
+		var unauthorizedMsg = errorMessages.unauthorized;
+		if (command.errorCode) {
+			// X509_verify_cert_error_string output
+			var authError = window.atob(command.errorCode);
+			var verifyError = errorMessages.verificationerror.replace('%errorMessage', authError);
+			unauthorizedMsg += ' ' + verifyError;
+		}
+		return unauthorizedMsg;
+	},
+
 	_onMessage: function (e) {
 		var imgBytes, textMsg;
 
@@ -1020,7 +1031,7 @@ app.definitions.Socket = L.Class.extend({
 				var postMessageObj = {
 					errorType: 'websocketunauthorized',
 					success: false,
-					errorMsg: errorMessages.unauthorized,
+					errorMsg: this._buildUnauthorizedMessage(command),
 					result: '',
 				};
 				this._map.fire('postMessage', { msgId: 'Action_Load_Resp', args: postMessageObj });
@@ -1567,7 +1578,7 @@ app.definitions.Socket = L.Class.extend({
 				var command = this.parseServerCmd(reason);
 				if (command.errorCmd === 'internal' && command.errorKind === 'unauthorized') {
 					errorType = 'websocketunauthorized';
-					errorMsg = errorMessages.unauthorized;
+					errorMsg = this._buildUnauthorizedMessage(command);
 				} else if (command.errorCmd === 'storage' && command.errorKind === 'loadfailed') {
 					errorType = 'websocketloadfailed';
 					errorMsg = errorMessages.storage.loadfailed;
