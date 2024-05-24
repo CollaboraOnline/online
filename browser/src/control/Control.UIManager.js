@@ -1094,84 +1094,21 @@ L.Control.UIManager = L.Control.extend({
 	// Snack bar
 
 	closeSnackbar: function() {
-		var closeMessage = { id: 'snackbar', jsontype: 'dialog', type: 'snackbar', action: 'close' };
-		app.socket._onMessage({ textMsg: 'jsdialog: ' + JSON.stringify(closeMessage) });
+		JSDialog.SnackbarController.closeSnackbar();
 	},
 
 	showSnackbar: function(label, action, callback, timeout, hasProgress, withDismiss) {
-		if (!app.socket)
-			return;
-
-		this.closeSnackbar();
-
-		var buttonId = 'button';
-		var labelId = 'label';
-
-		var json = {
-			id: 'snackbar',
-			jsontype: 'dialog',
-			type: 'snackbar',
-			timeout: timeout,
-			'init_focus_id': action ? buttonId : undefined,
-			children: [
-				{
-					id: hasProgress ? 'snackbar-container-progress' : 'snackbar-container',
-					type: 'container',
-					children: [
-						action ? {id: labelId, type: 'fixedtext', text: label, labelFor: buttonId} : {id: 'label-no-action', type: 'fixedtext', text: label},
-						withDismiss ? {id: 'snackbar-dismiss-button', type: 'pushbutton', text: _('Dismiss')} : {},
-						hasProgress ? {id: 'progress', type: 'progressbar', value: 0, maxValue: 100} : {},
-						action ? {id: buttonId, type: 'pushbutton', text: action, labelledBy: labelId} : {}
-					]
-				}
-			]
-		};
-
-		var that = this;
-		var builderCallback = function(objectType, eventType, object, data) {
-			window.app.console.debug('control: \'' + objectType + '\' id:\'' + object.id + '\' event: \'' + eventType + '\' state: \'' + data + '\'');
-
-			if (object.id === buttonId && objectType === 'pushbutton' && eventType === 'click') {
-				if (callback)
-					callback();
-
-				that.closeSnackbar();
-			} else if (object.id === '__POPOVER__' && objectType === 'popover' && eventType === 'close') {
-				that.closeSnackbar();
-			}
-
-			if (object.id === 'snackbar-dismiss-button' && objectType === 'pushbutton' && eventType === 'click') {
-				that.closeSnackbar();
-			}
-		};
-
-		app.socket._onMessage({textMsg: 'jsdialog: ' + JSON.stringify(json), callback: builderCallback});
+		JSDialog.SnackbarController.showSnackbar(label, action, callback, timeout, hasProgress, withDismiss);
 	},
 
 	/// shows snackbar with progress
 	showProgressBar: function(message, buttonText, callback, timeout, withDismiss) {
-		this.showSnackbar(message, buttonText, callback, timeout ? timeout : -1, true, withDismiss);
+		JSDialog.SnackbarController.showSnackbar(message, buttonText, callback, timeout ? timeout : -1, true, withDismiss);
 	},
 
 	/// sets progressbar status, value should be in range 0-100
 	setSnackbarProgress: function(value) {
-		if (!app.socket)
-			return;
-
-		var json = {
-			id: 'snackbar',
-			jsontype: 'dialog',
-			type: 'snackbar',
-			action: 'update',
-			control: {
-				id: 'progress',
-				type: 'progressbar',
-				value: value,
-				maxValue: 100
-			}
-		};
-
-		app.socket._onMessage({textMsg: 'jsdialog: ' + JSON.stringify(json)});
+		JSDialog.SnackbarController.setSnackbarProgress(value);
 	},
 
 	// Modals
