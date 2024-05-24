@@ -1044,11 +1044,11 @@ export class Comment extends CanvasSectionObject {
 		       (this.sectionProperties.nodeReply && this.sectionProperties.nodeReply.style.display !== 'none'));
 	}
 
-	public static isAnyEdit (): boolean {
+	public static isAnyEdit (): Comment {
 		var section = app.sectionContainer && app.sectionContainer instanceof CanvasSectionContainer ?
 			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name) : null;
 		if (!section) {
-			return false;
+			return null;
 		}
 
 		var commentList = section.sectionProperties.commentList;
@@ -1058,9 +1058,9 @@ export class Comment extends CanvasSectionObject {
 			if (!commentList[i].pendingInit &&
 				((modifyNode && modifyNode.style.display !== 'none') ||
 				(replyNode && replyNode.style.display !== 'none')))
-					return true;
+					return commentList[i];
 		}
-		return false;
+		return null;
 	}
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
