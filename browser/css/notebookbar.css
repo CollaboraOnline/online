@@ -370,10 +370,6 @@ button.ui-tab.notebookbar {
 	padding-right: 0px;
 }
 
-#CharBackColor.notebookbar { /* remove when #2149 is fixed in impress/draw*/
-	margin-left: 44px !important;
-}
-
 #BackgroundColor.notebookbar {
 	margin-left: 0px !important;
 }
