@@ -15,28 +15,6 @@
 
 declare var JSDialog: any;
 
-interface WidgetJSON {
-	id: string; // unique id of a widget
-	type: string; // type of widget
-	enabled: boolean | undefined; // enabled state
-	visible: boolean | undefined; // visibility state
-	children: Array<WidgetJSON> | undefined; // child nodes
-}
-
-interface JSDialogJSON extends WidgetJSON {
-	id: string; // unique windowId
-	jsontype: string; // specifies target componenet, on root level only
-	action: string | undefined; // optional name of an action
-}
-
-type JSDialogCallback = (
-	objectType: string,
-	eventType: string,
-	object: any,
-	data: any,
-	builder: any,
-) => void;
-
 class JSDialogMessageRouter {
 	// show labels instead of editable fields in message boxes
 	private _preProcessMessageDialog(msgData: WidgetJSON) {
