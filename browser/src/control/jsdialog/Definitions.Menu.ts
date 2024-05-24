@@ -16,20 +16,6 @@
 declare var L: any;
 declare var JSDialog: any;
 
-type MenuDefinition = {
-	id: string; // unique identifier
-	type: undefined | 'action' | 'menu' | 'separator' | 'html'; // type of entry
-	text: string; // displayed text
-	hint: string; // hint text
-	uno: string; // uno command
-	action: string; // dispatch command
-	htmlId: string; // id of HTMLContent
-	img: string; // icon name
-	icon: string; // icon name FIXME: duplicated property, used in exportMenuButton
-	checked: boolean; // state of check mark
-	items: Array<any>; // submenu
-};
-
 const menuDefinitions = new Map<string, Array<MenuDefinition>>();
 
 menuDefinitions.set('AutoSumMenu', [

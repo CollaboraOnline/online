@@ -14,46 +14,10 @@
 
 /* global app */
 
-interface WidgetJSON {
-	id: string; // unique id of a widget
-	type: string; // type of widget
-	enabled: boolean | undefined; // enabled state
-	visible: boolean | undefined; // visibility state
-	children: Array<WidgetJSON> | undefined; // child nodes
-	title?: string;
-}
-
-interface JSDialogJSON extends WidgetJSON {
-	id: string; // unique windowId
-	jsontype: string; // specifies target componenet, on root level only
-	action: string | undefined; // optional name of an action
-	control?: WidgetJSON;
-}
-
-interface PopupData extends JSDialogJSON {
-	isAutoCompletePopup?: boolean;
-	cancellable?: boolean;
-	popupParent?: string;
-	clickToClose?: string;
-	posx: number;
-	posy: number;
-}
-
 interface Entry {
 	text: string;
 	columns: { text: any }[];
 	row: string;
-}
-
-interface TextWidget extends WidgetJSON {
-	text: string;
-}
-
-interface TreeWidget extends WidgetJSON {
-	text: string;
-	singleclickactivate: boolean;
-	fireKeyEvents: boolean;
-	entries: Array<Entry>;
 }
 
 interface Point {
