@@ -494,88 +494,94 @@ L.Map = L.Evented.extend({
 		return Math.pow(1.2, (zoom - this.options.zoom));
 	},
 
-	setDesktopCalcViewOnZoom: function (zoom, animate) {
-		var calcLayer = this._docLayer;
-		if (!calcLayer.options.sheetGeometryDataEnabled || !calcLayer.sheetGeometry)
-			return false;
+	getDesktopCalcZoomCenter: function() {
+		const docLayer = this._docLayer;
 
-		var sheetGeom = calcLayer.sheetGeometry;
-		var zoomScaleAbs = this.zoomToFactor(zoom);
+		if (app.calc.cellCursorRectangle) {
+			const twipsTopLeft = [app.calc.cellCursorRectangle.x1, app.calc.cellCursorRectangle.y1];
+			const cursorInBounds = app.file.viewedRectangle.containsPoint(twipsTopLeft);
 
-		var cssBounds = this.getPixelBounds();
-		var cssBoundsSize = cssBounds.getSize();
-
-		var topLeftCell = sheetGeom.getCellFromPos(
-			cssBounds.getTopLeft().multiplyBy(app.dpiScale), 'corepixels');
-		// top-left w.r.t current zoom.
-		var topLeftPx = sheetGeom.getCellRect(topLeftCell.x, topLeftCell.y)
-			.getTopLeft().divideBy(window.devicePixelRatio);
-		// top-left w.r.t new zoom.
-		var newTopLeftPx = sheetGeom.getCellRect(topLeftCell.x, topLeftCell.y, zoomScaleAbs)
-			.getTopLeft().divideBy(app.dpiScale);
-
-		var cursorInBounds = false;
-
-		if (app.file.textCursor.visible)
-			cursorInBounds = app.file.viewedRectangle.containsPoint([app.file.textCursor.rectangle.x1, app.file.textCursor.rectangle.y1]);
-
-		var cursorActive = app.file.textCursor.visible;
-		if (cursorActive && cursorInBounds) {
-			var cursorCenter = new L.Point(app.file.textCursor.rectangle.center[0], app.file.textCursor.rectangle.center[1]);
-			var newCursorCenter = sheetGeom.getTileTwipsAtZoom(cursorCenter, zoomScaleAbs);
-			// convert to css pixels at zoomScale.
-			newCursorCenter._multiplyBy(zoomScaleAbs / 15 / app.dpiScale)._round();
-			var newBounds = new L.Bounds(newTopLeftPx, newTopLeftPx.add(cssBoundsSize));
-
-			if (!newBounds.contains(newCursorCenter)) {
-				var margin = 10;
-				var diffX = 0;
-				var diffY = 0;
-				var docSize = sheetGeom.getSize('corepixels').divideBy(app.dpiScale);
-				if (newCursorCenter.x < newBounds.min.x) {
-					diffX = Math.max(0, newCursorCenter.x - margin) - newBounds.min.x;
-				} else if (newCursorCenter.x > newBounds.max.x) {
-					diffX = Math.min(docSize.x, newCursorCenter.x + margin) - newBounds.max.x;
-				}
-
-				if (newCursorCenter.y < newBounds.min.y) {
-					diffY = Math.max(0, newCursorCenter.y - margin) - newBounds.min.y;
-				} else if (newCursorCenter.y > newBounds.max.y) {
-					diffY = Math.min(docSize.y, newCursorCenter.y + margin) - newBounds.max.y;
-				}
-
-				newTopLeftPx._add(new L.Point(diffX, diffY));
-				topLeftPx._add(new L.Point(diffX / zoomScaleAbs, diffY / zoomScaleAbs));
-				// FIXME: pan to topLeftPx before the animation ?
+			if (cursorInBounds) {
+				return new L.Point(...twipsTopLeft);
 			}
 		}
 
-		var newHalfSize = cssBoundsSize.divideBy(2);
-		var newCenter = newTopLeftPx.add(newHalfSize);
-		var newCenterLatLng = this.unproject(newCenter, zoom);
-		// pinch center w.r.t current zoom scale.
-		var newPinchCenterLatLng = this.unproject(topLeftPx, this.getZoom());
+		if (docLayer._cellSelectionArea) {
+			const twipsCenter = docLayer._cellSelectionArea.center;
+			const selectionInBounds = app.file.viewedRectangle.containsPoint(twipsCenter);
+
+			if (selectionInBounds) {
+				return new L.Point(...twipsCenter);
+			}
+		}
+
+		const viewBounds = this.getPixelBoundsCore();
+		return docLayer._corePixelsToTwips(viewBounds.getCenter());
+	},
+
+	setDesktopCalcViewOnZoom: function (zoom, animate) {
+		zoom = this._limitZoom(zoom);
+
+		if (zoom === this.getZoom()) {
+			return;
+		}
+
+		const docLayer = this._docLayer;
+		if (!docLayer.options.sheetGeometryDataEnabled || !docLayer.sheetGeometry)
+			return false;
+
+		const typing = app.file.textCursor.visible;
+
+		const tsManager = docLayer._painter;
+
+		const ctx = tsManager._paintContext();
+		const splitPos = ctx.splitPos;
+		const viewBounds = ctx.viewBounds;
+		const freePaneBounds = new L.Bounds(viewBounds.min.add(splitPos), viewBounds.max);
+
+		const zoomCenter = docLayer._twipsToCorePixels(this.getDesktopCalcZoomCenter());
+
+		tsManager._offset = new L.Point(0, 0);
+		const docPos = docLayer._painter._getZoomDocPos(
+			zoomCenter,
+			zoomCenter,
+			freePaneBounds,
+			{ freezeX: false, freezeY: false },
+			splitPos,
+			this.getZoomScale(zoom),
+			true
+		);
+
+		const newCenterLatLng = this.unproject(docPos.center.divideBy(app.dpiScale), zoom);
 
 		this._ignoreCursorUpdate = true;
-		var thisObj = this;
-		var mapUpdater = function() {
-			thisObj._resetView(L.latLng(newCenterLatLng), thisObj._limitZoom(zoom));
+
+		const mapUpdater = (animationCalculatedNewCenter) => {
+			if (animationCalculatedNewCenter) {
+				this._resetView(L.latLng(animationCalculatedNewCenter), zoom);
+				return;
+			}
+
+			this._resetView(L.latLng(newCenterLatLng), zoom);
 		};
-		var runAtFinish = function() {
-			thisObj._ignoreCursorUpdate = false;
-			if (cursorActive) {
-				calcLayer.activateCursor();
+		const runAtFinish = () => {
+			this._ignoreCursorUpdate = false;
+			if (typing) {
+				docLayer.activateCursor();
 			}
 		};
 
 		if (animate) {
-			this._docLayer.runZoomAnimation(zoom, newPinchCenterLatLng,
+			this._docLayer.runZoomAnimation(
+				zoom,
+				this.unproject(zoomCenter.divideBy(app.dpiScale), this.getZoom()),
 				mapUpdater,
 				runAtFinish);
-		} else {
-			mapUpdater();
-			runAtFinish();
+			return;
 		}
+
+		mapUpdater(newCenterLatLng);
+		runAtFinish();
 	},
 
 	ignoreCursorUpdate: function () {

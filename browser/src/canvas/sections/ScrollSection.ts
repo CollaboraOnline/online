@@ -344,7 +344,7 @@ export class ScrollSection extends app.definitions.canvasSectionObject {
 	public onUpdateScrollOffset (): void {
 		if (this.map._docLayer._docType === 'spreadsheet') {
 			this.map._docLayer.refreshViewData();
-			this.map._docLayer.updateScollLimit();
+			this.map._docLayer.updateScrollLimit();
 		}
 	}
 
