@@ -955,6 +955,38 @@ L.TextInput = L.Layer.extend({
 		}
 	},
 
+	_handleKeyDownForPopup: function (ev, id) {
+		var popup = L.DomUtil.get(id);
+		if (popup) {
+			if (ev.key === 'ArrowDown') {
+				var initialFocusElement = document.querySelector('#' + id + ' span');
+				if (initialFocusElement) {
+					initialFocusElement.tabIndex = 0;
+					initialFocusElement.focus();
+					ev.preventDefault();
+					ev.stopPropagation();
+				}
+
+			} else if (ev.key === 'ArrowLeft' || ev.key === 'ArrowRight' ||
+				ev.key === 'ArrowUp' || ev.key === 'Home' ||
+				ev.key === 'End' || ev.key === 'PageUp' ||
+				ev.key === 'PageDown' || ev.key === 'Enter' ||
+				ev.key === 'Escape' || ev.key === 'Control' ||
+				ev.key === 'Tab') {
+
+				if (id === 'mentionPopup')
+					this._map.fire('closementionpopup', { 'typingMention': false });
+				else if (id === 'formulaautocompletePopup')
+					this._map.fire('closeformulapopup');
+				else if (id === 'autoFillPopup')
+					this._map.fire('closeautofillpopup');
+
+			} else if (ev.key === ' ' && id === 'autoFillPopup') { // special case for autoFillPopup, close if SPACE button pressed.
+				this._map.fire('closeautofillpopup');
+			}
+		}
+	},
+
 	_onKeyDown: function(ev) {
 		if (this._map.uiManager.isUIBlocked())
 			return;
@@ -1101,66 +1133,9 @@ L.TextInput = L.Layer.extend({
 			}
 		}
 
-		var mentionPopup = L.DomUtil.get('mentionPopup');
-		if (mentionPopup) {
-			if (ev.key === 'ArrowDown') {
-				var initialFocusElement = document.querySelector('#mentionPopup span');
-				if (initialFocusElement) {
-					initialFocusElement.tabIndex = 0;
-					initialFocusElement.focus();
-					ev.preventDefault();
-					ev.stopPropagation();
-				}
-			} else if (ev.key === 'ArrowLeft' || ev.key === 'ArrowRight' ||
-				ev.key === 'ArrowUp' || ev.key === 'Home' ||
-				ev.key === 'End' || ev.key === 'PageUp' ||
-				ev.key === 'PageDown' || ev.key === 'Enter' ||
-				ev.key === 'Escape' || ev.key === 'Control' ||
-				ev.key === 'Tab') {
-				this._map.fire('closementionpopup', { 'typingMention': false });
-			}
-		}
-
-        var formulaAutocompletePopup = L.DomUtil.get('formulaautocompletePopup');
-        if (formulaAutocompletePopup) {
-            if (ev.key === 'ArrowDown') {
-                var initialFocusElement = document.querySelector('#formulaautocompletePopup span');
-                if (initialFocusElement) {
-                    initialFocusElement.tabIndex = 0;
-                    initialFocusElement.focus();
-                    ev.preventDefault();
-                    ev.stopPropagation();
-                }
-            }
-		    else if (ev.key === 'ArrowLeft' || ev.key === 'ArrowRight' ||
-                ev.key === 'ArrowUp' || ev.key === 'Home' ||
-                ev.key === 'End' || ev.key === 'PageUp' ||
-                ev.key === 'PageDown' || ev.key === 'Enter' ||
-                ev.key === 'Escape' || ev.key === 'Control' ||
-                ev.key === 'Tab') {
-                this._map.fire('closeformulapopup');
-            }
-        }
-
-		var autoFillPopup = L.DomUtil.get('autoFillPopup');
-		if (autoFillPopup) {
-			if (ev.key === 'ArrowDown') {
-				var initialFocusElement = document.querySelector('#autoFillPopup span');
-				if (initialFocusElement) {
-					initialFocusElement.tabIndex = 0;
-					initialFocusElement.focus();
-					ev.preventDefault();
-					ev.stopPropagation();
-				}
-			} else if (ev.key === 'ArrowLeft' || ev.key === 'ArrowRight' ||
-				ev.key === 'ArrowUp' || ev.key === 'Home' ||
-				ev.key === 'End' || ev.key === 'PageUp' ||
-				ev.key === 'PageDown' || ev.key === 'Enter' ||
-				ev.key === 'Escape' || ev.key === 'Control' ||
-				ev.key === 'Tab' || ev.key === ' ') {
-				this._map.fire('closeautofillpopup', { 'typingMention': false });
-			}
-		}
+		this._handleKeyDownForPopup(ev, 'mentionPopup');
+		this._handleKeyDownForPopup(ev, 'formulaautocompletePopup');
+		this._handleKeyDownForPopup(ev, 'autoFillPopup');
 	},
 
 	// Check arrow keys on 'keyup' event; using 'ArrowLeft' or 'ArrowRight'
