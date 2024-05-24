@@ -176,12 +176,15 @@ abstract class AutoCompletePopup {
 
 	abstract closeMentionPopup(ev: FireEvent): void;
 
-	abstract callback(
-		objectType: any,
-		eventType: any,
-		object: any,
-		index: number,
-	): void;
+	callback(objectType: any, eventType: any, object: any, index: number) {
+		if (eventType === 'keydown') {
+			if (object.key !== 'Tab' && object.key !== 'Shift') {
+				this.map.focus();
+				return true;
+			}
+		}
+		return false;
+	}
 }
 
 L.Control.AutoCompletePopup = AutoCompletePopup;

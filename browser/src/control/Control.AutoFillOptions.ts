@@ -10,6 +10,11 @@
  */
 /*
  * Control.AutoFillOptions - class for auto fill popup
+ *
+ * Auto fill popup can be seen right after dragging the auto fill marker box.
+ * There are two options for auto fill popup:
+ * - Copy cells (copies the selected cells to the marked area)
+ * - Fill series (increases/decreases the values of selected cells and fills them to the marked area)
  */
 
 /* global app */
@@ -52,8 +57,8 @@ class AutoFillOptions extends L.Control.AutoCompletePopup {
 
 	getPopupEntries(): any[] {
 		const entries: any[] = [
-			{ text: 'copy', columns: [{ text: 'Copy cells' }], row: '0' },
-			{ text: 'fill', columns: [{ text: 'Fill series' }], row: '1' },
+			{ text: 'copy', columns: [{ text: _('Copy cells') }], row: '0' },
+			{ text: 'fill', columns: [{ text: _('Fill series') }], row: '1' },
 		];
 		return entries;
 	}
@@ -97,27 +102,14 @@ class AutoFillOptions extends L.Control.AutoCompletePopup {
 			this.map.fire('closeautofillpopup');
 
 			if (index == 0) {
-				/*
-					- Copy cells
-					undo needed here, "Copy cells" should operate on the original content,
-					not the new content of the cells.
-				*/
-				this.map.sendUnoCommand('.uno:Undo');
+				// Copy cells
 				this.map.sendUnoCommand('.uno:AutoFill?Copy:bool=true');
 			} else if (index == 1) {
-				/*
-					- Fill series
-					undo needed here, "Fill series" should operate on the original content,
-					not the new content of the cells.
-				*/
-				this.map.sendUnoCommand('.uno:Undo');
+				// Fill series
 				this.map.sendUnoCommand('.uno:AutoFill?Copy:bool=false');
 			}
-		} else if (eventType === 'keydown') {
-			if (object.key !== 'Tab' && object.key !== 'Shift') {
-				this.map.focus();
-				return true;
-			}
+		} else {
+			return super.callback(objectType, eventType, object, index);
 		}
 		return false;
 	}
