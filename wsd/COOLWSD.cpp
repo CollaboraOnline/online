@@ -96,6 +96,7 @@ using Poco::Net::PartHandler;
 
 #endif
 
+#include <Poco/Base64Encoder.h>
 #include <Poco/DOM/AutoPtr.h>
 #include <Poco/DOM/DOMParser.h>
 #include <Poco/DOM/DOMWriter.h>
@@ -4115,6 +4116,15 @@ static std::shared_ptr<ConvertToBroker> getConvertToBrokerImplementation(const s
 
 #endif
 
+static std::string base64Encode(const std::string& input)
+{
+    std::ostringstream oss;
+    Poco::Base64Encoder encoder(oss);
+    encoder << input;
+    encoder.close();
+    return oss.str();
+}
+
 /// Handles incoming connections and dispatches to the appropriate handler.
 class ClientRequestDispatcher final : public SimpleSocketHandler
 {
@@ -5472,7 +5482,16 @@ private:
                                       << docBroker->getDocKey() << " for socket #"
                                       << moveSocket->getFD()
                                       << ". Terminating connection. Error: " << exc.what());
-                            const std::string msg = "error: cmd=storage kind=loadfailed";
+                            std::string msg = "error: cmd=storage kind=loadfailed";
+                            std::string message = exc.toString();
+                            const std::string needle = ", SSL Message: ";
+                            size_t sslMessagePos = message.find(needle);
+                            if (sslMessagePos != std::string::npos)
+                            {
+                                std::string sslVerifyResult = message.substr(sslMessagePos + needle.size());
+                                if (!sslVerifyResult.empty())
+                                    msg += " code=" + base64Encode(sslVerifyResult);
+                            }
                             ws->shutdown(WebSocketHandler::StatusCodes::POLICY_VIOLATION, msg);
                             moveSocket->ignoreInput();
                         }

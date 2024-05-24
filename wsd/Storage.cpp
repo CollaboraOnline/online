@@ -714,7 +714,11 @@ WopiStorage::getWOPIFileInfoForUri(Poco::URI uriObject, const Authorization& aut
                 throw UnauthorizedRequestException(
                     "Access denied, 403. WOPI::CheckFileInfo failed on: " + uriAnonym);
 
-            throw StorageConnectionException("WOPI::CheckFileInfo failed: " + wopiResponse);
+            std::string exceptionMsg = "WOPI::CheckFileInfo failed: " + wopiResponse;
+            const std::string verifyMsg = httpSession->getSslVerifyMessage();
+            if (!verifyMsg.empty())
+                exceptionMsg += ", SSL Message: " + verifyMsg;
+            throw StorageConnectionException(exceptionMsg);
         }
     }
     catch (const Poco::Exception& pexc)
@@ -1147,8 +1151,11 @@ std::string WopiStorage::downloadDocument(const Poco::URI& uriObject, const std:
         const std::string responseString = httpResponse->getBody();
         LOG_ERR("WOPI::GetFile [" << uriAnonym << "] failed with Status Code: "
                                   << httpResponse->statusLine().statusCode());
-        throw StorageConnectionException("WOPI::GetFile [" + uriAnonym
-                                         + "] failed: " + responseString);
+        std::string exceptionMsg = "WOPI::GetFile [" + uriAnonym + "] failed: " + responseString;
+        const std::string verifyMsg = httpSession->getSslVerifyMessage();
+        if (!verifyMsg.empty())
+            exceptionMsg += ", SSL Message: " + verifyMsg;
+        throw StorageConnectionException(exceptionMsg);
     }
 
     // Successful
