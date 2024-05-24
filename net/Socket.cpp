@@ -106,10 +106,16 @@ static std::string X509_NAME_to_utf8(X509_NAME* name)
 
 bool SslStreamSocket::verifyCertificate()
 {
-    if (_verification == ssl::CertificateVerification::Disabled || net::isLocalhost(hostname()))
+    std::string sslVerifyResult = getSslVerifyString(SSL_get_verify_result(_ssl));
+    // If there is anything useful available from SSL_get_verify_result provide a warning about that.
+    if (!sslVerifyResult.empty())
     {
-        return true;
+        LOG_WRN("SSL verification warning: '" << sslVerifyResult << "' seen for host ["
+            << hostname() << "]");
     }
+
+    if (_verification == ssl::CertificateVerification::Disabled || net::isLocalhost(hostname()))
+        return true;
 
     LOG_TRC("Verifying certificate of [" << hostname() << ']');
     X509* x509 = SSL_get_peer_certificate(_ssl);

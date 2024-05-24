@@ -979,6 +979,7 @@ private:
         , _port(std::to_string(portNumber))
         , _protocol(protocolType)
         , _fd(-1)
+        , _handshakeSslVerifyFailure(0)
         , _timeout(getDefaultTimeout())
         , _connected(false)
     {
@@ -1218,6 +1219,18 @@ public:
         }
     }
 
+    std::string getSslVerifyMessage()
+    {
+#if ENABLE_SSL
+        std::shared_ptr<StreamSocket> socket = _socket.lock();
+        if (socket)
+            return SslStreamSocket::getSslVerifyString(socket->getSslVerifyResult());
+        return SslStreamSocket::getSslVerifyString(_handshakeSslVerifyFailure);
+#else
+        return std::string();
+#endif
+    }
+
     void disconnect()
     {
         LOG_TRC("disconnect");
@@ -1333,6 +1346,7 @@ private:
         {
             LOG_DBG("Error: onConnect without a valid socket");
             _fd = -1;
+            _handshakeSslVerifyFailure = 0;
             _connected = false;
         }
     }
@@ -1426,6 +1440,18 @@ private:
         }
     }
 
+    // on failure the stream will be discarded, so save the ssl verification
+    // result while it is still available
+    void onHandshakeFail() override
+    {
+        std::shared_ptr<StreamSocket> socket = _socket.lock();
+        if (socket)
+        {
+            LOG_TRC("onHandshakeFail");
+            _handshakeSslVerifyFailure = socket->getSslVerifyResult();
+        }
+    }
+
     void onDisconnect() override
     {
         // Make sure the socket is disconnected and released.
@@ -1433,7 +1459,6 @@ private:
         if (socket)
         {
             LOG_TRC("onDisconnect");
-
             socket->shutdown(); // Flag for shutdown for housekeeping in SocketPoll.
             socket->closeConnection(); // Immediately disconnect.
             _socket.reset();
@@ -1490,6 +1515,7 @@ private:
     const std::string _port;
     const Protocol _protocol;
     int _fd; //< The socket file-descriptor.
+    long _handshakeSslVerifyFailure; //< Save SslVerityResult at onHandshakeFail
     std::chrono::microseconds _timeout;
     std::chrono::steady_clock::time_point _startTime;
     bool _connected;

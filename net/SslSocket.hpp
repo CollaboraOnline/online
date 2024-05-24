@@ -73,6 +73,18 @@ public:
         }
     }
 
+    long getSslVerifyResult() override
+    {
+        return SSL_get_verify_result(_ssl);
+    }
+
+    static std::string getSslVerifyString(long lerr)
+    {
+        if (lerr != X509_V_OK)
+            return X509_verify_cert_error_string(lerr);
+        return std::string();
+    }
+
     ~SslStreamSocket()
     {
         LOG_TRC("SslStreamSocket dtor #" << getFD());
@@ -423,6 +435,9 @@ private:
                 LOG_TRC("Throwing SSL Error ("
                         << context << "): " << msg); // Locate the source of the exception.
                 errno = last_errno; // Restore errno.
+
+                handshakeFail();
+
                 throw std::runtime_error(msg);
             }
             break;
