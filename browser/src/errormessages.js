@@ -26,6 +26,7 @@ errorMessages.infoandsupport = _('More information and support');
 errorMessages.limitreachedprod = _('This service is limited to %0 documents, and %1 connections total by the admin. This limit has been reached. Please try again later.');
 errorMessages.serviceunavailable = _('Service is unavailable. Please try again later and report to your administrator if the issue persists.');
 errorMessages.unauthorized = _('Unauthorized WOPI host. Please try again later and report to your administrator if the issue persists.');
+errorMessages.verificationerror = _('Authorization error was: \'%errorMessage\'.');
 errorMessages.wrongwopisrc = _('Wrong or missing WOPISrc parameter, please contact support.');
 errorMessages.sessionexpiry = _('Your session will expire in %time. Please save your work and refresh the session (or webpage) to continue. You might need to login again.');
 errorMessages.sessionexpired = _('Your session has expired. Further changes to the document might not be saved. Please refresh the session (or webpage) to continue. You might need to login again.');
