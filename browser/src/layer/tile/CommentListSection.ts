@@ -45,6 +45,7 @@ declare var L: any;
 declare var app: any;
 declare var $: any;
 declare var _: any;
+declare var JSDialog: any;
 
 namespace cool {
 
@@ -64,7 +65,8 @@ export class CommentSection extends CanvasSectionObject {
 		[key: string]: any;
 	};
 	static autoSavedComment: cool.Comment;
-	static commentWasAutoAdded: boolean;
+	static commentWasAutoAdded: boolean = false;
+	static pendingImport: boolean = false;
 
 	// To associate comment id with its index in commentList array.
 	private idIndexMap: Map<any, number>;
@@ -1369,6 +1371,11 @@ export class CommentSection extends CanvasSectionObject {
 
 		if (this.sectionProperties.docLayer._docType === 'text')
 			this.updateReplyCount();
+
+		if (CommentSection.pendingImport) {
+			app.socket.sendMessage('commandvalues command=.uno:ViewAnnotations');
+			CommentSection.pendingImport = false;
+		}
 	}
 
 	public selectById (commentId: any): void {
@@ -2020,6 +2027,21 @@ export class CommentSection extends CanvasSectionObject {
 
 	public importComments (commentList: any): void {
 		var comment;
+		if (Comment.isAnyEdit()) {
+			this.map.uiManager.showConfirmModal(
+				'comments-update',
+				_('Comments updated'),
+				_('Another user has updated comments. Would you like to proceed updating?'),
+				_('OK'),
+				() => {
+					CommentSection.pendingImport = false;
+					this.clearList();
+					this.importComments(commentList);
+				}
+			);
+			CommentSection.pendingImport = true;
+			return;
+		}
 		this.clearList();
 		commentList = this.turnIntoAList(commentList);
 
@@ -2101,6 +2123,11 @@ export class CommentSection extends CanvasSectionObject {
 		this.checkSize();
 	}
 
+	private clearAutoSaveStatus () {
+		CommentSection.autoSavedComment = null;
+		CommentSection.commentWasAutoAdded = false;
+	}
+
 	// Remove only text comments from the document (excluding change tracking comments)
 	private clearList (): void {
 		this.containerObject.pauseDrawing();
@@ -2115,6 +2142,7 @@ export class CommentSection extends CanvasSectionObject {
 
 		this.sectionProperties.selectedComment = null;
 		this.checkSize();
+		this.clearAutoSaveStatus();
 	}
 
 	public onCommentsDataUpdate(): void {
