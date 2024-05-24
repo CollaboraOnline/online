@@ -95,6 +95,22 @@ L.LOUtil = {
 		return rectangles;
 	},
 
+	// Some items will only present in dark mode so we will not check errors for those in other mode
+	onlydarkModeItems : ['invertbackground'],
+
+	isDarkModeItem: function(name) {
+		// Remove the '.svg' suffix
+		var strippedName = name.replace(/\.svg$/, '');
+			
+		// Remove the 'lc_' prefix if it exists
+		if (strippedName.startsWith('lc_')) {
+			strippedName = strippedName.substring(3);
+		}
+
+		// Check if the stripped name is in the OnlydarkModeItems array
+		return this.onlydarkModeItems.includes(strippedName);
+	},
+
 	/// unwind things to get a good absolute URL
 	getURL: function(path) {
 		if (path === '')
@@ -148,6 +164,8 @@ L.LOUtil = {
 				return this.getURL('images/dark/' + imgName);
 			}
 		}
+		var dummyEmptyImg = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII='
+		defaultImageURL = this.isDarkModeItem(imgName) ? dummyEmptyImg : defaultImageURL;
 		return defaultImageURL;
 	},
 	checkIfImageExists: function (imageElement, imageIsLayoutCritical) {
