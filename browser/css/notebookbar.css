@@ -356,6 +356,11 @@ button.ui-tab.notebookbar {
 	padding-inline: 5px;
 }
 
+.has-colorpicker.menubutton img {
+	width: var(--btn-size-m) !important;
+	height: var(--btn-size-m) !important;
+	padding-bottom: calc(var(--btn-size) - var(--btn-size-m));
+}
 /* Styles preview */
 
 #stylesview {

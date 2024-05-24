@@ -2800,8 +2800,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			var menubutton = builder._controlHandlers['menubutton'](parentContainer, data, builder);
 
 			if (typeof menubutton === 'object') {
-				if (data.class)
-					L.DomUtil.addClass(menubutton.container, data.class);
+				L.DomUtil.addClass(menubutton.container, data.class ? data.class + ' has-colorpicker': 'has-colorpicker');
 
 				var valueNode = L.DomUtil.create('div', 'selected-color', menubutton.container);
 				valueNode.addEventListener('click', applyFunction);
