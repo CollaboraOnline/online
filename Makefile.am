@@ -519,6 +519,7 @@ setup-wsd: all @JAILS_PATH@
 	@cp $(abs_top_srcdir)/test/data/hello.odt $(abs_top_srcdir)/test/data/hello-world.odt
 	@cp $(abs_top_srcdir)/test/data/hello.ods $(abs_top_srcdir)/test/data/hello-world.ods
 	@cp $(abs_top_srcdir)/test/data/hello.odp $(abs_top_srcdir)/test/data/hello-world.odp
+	@cp $(abs_top_srcdir)/test/data/hello.odg $(abs_top_srcdir)/test/data/hello-world.odg
 	@echo
 
 COMMON_PARAMS = \
