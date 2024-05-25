@@ -3822,7 +3822,13 @@ class SslSocketFactory final : public SocketFactory
 
 #if !MOBILEAPP
         if (SimulatedLatencyMs > 0)
-            fd = Delay::create(SimulatedLatencyMs, physicalFd);
+        {
+            int delayFd = Delay::create(SimulatedLatencyMs, physicalFd);
+            if (delayFd == -1)
+                LOG_ERR("Delay creation failed, fallback to original fd");
+            else
+                fd = delayFd;
+        }
 #endif
 
         return StreamSocket::create<SslStreamSocket>(std::string(), fd, type, false,
