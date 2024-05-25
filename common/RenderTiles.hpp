@@ -55,14 +55,6 @@ namespace RenderTiles
         unsigned char *data() { return _data; }
     };
 
-    static void pushRendered(std::vector<TileDesc> &renderedTiles,
-                             const TileDesc &desc, TileWireId wireId, size_t imgSize)
-    {
-        renderedTiles.push_back(desc);
-        renderedTiles.back().setWireId(wireId);
-        renderedTiles.back().setImgSize(imgSize);
-    }
-
     // FIXME: we should perhaps increment only on a plausible edit
     static TileWireId getCurrentWireId(bool increment = false)
     {
@@ -148,7 +140,7 @@ namespace RenderTiles
         output.reserve(pixmapSize);
 
         // Compress the area as tiles
-        std::vector<TileDesc> renderedTiles;
+        TileCombinedBuilder renderedTiles;
         std::vector<TileWireId> renderingIds;
 
         size_t tileIndex = 0;
@@ -225,7 +217,7 @@ namespace RenderTiles
                         LOG_TRC("Tile " << tileIndex << " is " << data.size() << " bytes.");
                         std::unique_lock<std::mutex> pngLock(pngMutex);
                         output.insert(output.end(), data.begin(), data.end());
-                        pushRendered(renderedTiles, tiles[tileIndex], wireId, data.size());
+                        renderedTiles.pushRendered(tiles[tileIndex], wireId, data.size());
                     });
             }
             tileIndex++;
@@ -247,7 +239,7 @@ namespace RenderTiles
         std::string tileMsg;
         if (tileCombined.getCombined())
         {
-            tileMsg = tileCombined.serialize("tilecombine:", "\n", renderedTiles);
+            tileMsg = renderedTiles.serialize("tilecombine:", "\n");
 
             LOG_TRC("Sending back painted tiles for " << tileMsg << " of size " << output.size() << " bytes) for: " << tileMsg);
 
@@ -260,7 +252,7 @@ namespace RenderTiles
         else
         {
             size_t outputOffset = 0;
-            for (auto &i : renderedTiles)
+            for (const auto &i : renderedTiles.getTiles())
             {
                 tileMsg = i.serialize("tile:", "\n");
                 const size_t responseSize = tileMsg.size() + i.getImgSize();

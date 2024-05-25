@@ -552,6 +552,8 @@ void WhiteBoxTests::testRegexListMatcher_Init()
 
 void WhiteBoxTests::testTileDesc()
 {
+    constexpr auto testname = __func__;
+
     // simulate a previous overflow
     errno = ERANGE;
     TileDesc desc = TileDesc::parse(
@@ -560,6 +562,31 @@ void WhiteBoxTests::testTileDesc()
     TileCombined combined = TileCombined::parse(
         "tilecombine nviewid=0 part=5 width=256 height=256 tileposx=0,3072,6144,9216,12288,15360,18432,21504,0,3072,6144,9216,12288,15360,18432,21504,0,3072,6144,9216,12288,15360,18432,21504,0,3072,6144,9216,12288,15360,18432,21504,0,3072,6144,9216,12288,15360,18432,21504,0,3072,6144,9216,12288,15360,18432,21504,0,3072,6144,9216,12288,15360,18432,21504 tileposy=0,0,0,0,0,0,0,0,3072,3072,3072,3072,3072,3072,3072,3072,6144,6144,6144,6144,6144,6144,6144,6144,9216,9216,9216,9216,9216,9216,9216,9216,12288,12288,12288,12288,12288,12288,12288,12288,15360,15360,15360,15360,15360,15360,15360,15360,18432,18432,18432,18432,18432,18432,18432,18432 oldwid=2,3,4,5,6,7,8,8,9,10,11,12,13,14,15,16,17,18,19,20,21,0,0,0,24,25,26,27,28,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 tilewidth=3072 tileheight=3072");
     (void)combined; // exception in parse if we have problems.
+
+    // Test parsing removing un-used pieces
+    std::string base = "tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840 tileposy=0,0 ";
+    struct {
+        std::string inp;
+        std::string outp;
+    } tests[] = {
+        { "imgsize=0,0 tilewidth=3840 tileheight=3840 ver=-1,-1",
+          "tilewidth=3840 tileheight=3840 ver=-1,-1" },
+        { "imgsize=1,0 tilewidth=3840 tileheight=3840 ver=-1,-1",
+          "imgsize=1,0 tilewidth=3840 tileheight=3840 ver=-1,-1" },
+        { "wid=0,0 tilewidth=3840 tileheight=3840 ver=-1,-1",
+          "tilewidth=3840 tileheight=3840 ver=-1,-1" },
+        { "tilewidth=3840 tileheight=3840 ver=-1,-1 wid=0,1",
+          "tilewidth=3840 tileheight=3840 ver=-1,-1 wid=0,1" },
+        { "oldwid=0,0 tilewidth=3840 tileheight=3840 ver=-1,-1",
+          "tilewidth=3840 tileheight=3840 ver=-1,-1" },
+        { "tilewidth=3840 tileheight=3840 ver=-1,-1 oldwid=0,1",
+          "tilewidth=3840 tileheight=3840 ver=-1,-1 oldwid=0,1" },
+    };
+    for (auto &s : tests)
+    {
+        combined = TileCombined::parse(base + s.inp);
+        LOK_ASSERT_EQUAL(combined.serialize("tilecombine"), base + s.outp);
+    }
 }
 
 void WhiteBoxTests::testTileData()
