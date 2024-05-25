@@ -3390,6 +3390,7 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined, bool 
     // Check which newly requested tiles need rendering.
     const auto now = std::chrono::steady_clock::now();
     std::vector<TileDesc> tilesNeedsRendering;
+    bool hasOldWireId = false;
     for (auto& tile : tileCombined.getTiles())
     {
         tile.setVersion(++_tileVersion);
@@ -3406,6 +3407,7 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined, bool 
             session->resetTileSeq(tile);
             // don't force a keyframe to be rendered, only to be sent.
             tile.setOldWireId(1);
+            hasOldWireId = true;
         }
 
         Tile cachedTile = _tileCache->lookupTile(tile);
@@ -3418,6 +3420,8 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined, bool 
             tileCache().subscribeToTileRendering(tile, session, now);
         }
     }
+    if (hasOldWireId)
+        tileCombined.setHasOldWireId();
 
     // Send rendering request, prerender before we actually send the tiles
     if (!tilesNeedsRendering.empty())

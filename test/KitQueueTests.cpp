@@ -76,11 +76,11 @@ void KitQueueTests::testKitQueuePriority()
 {
     constexpr auto testname = __func__;
 
-    const std::string reqHigh = "tile nviewid=0 part=0 width=256 height=256 tileposx=0 tileposy=0 tilewidth=3840 tileheight=3840 oldwid=0 wid=0";
-    const std::string resHigh = "tile nviewid=0 part=0 width=256 height=256 tileposx=0 tileposy=0 tilewidth=3840 tileheight=3840 oldwid=0 wid=0 ver=-1";
+    const std::string reqHigh = "tile nviewid=0 part=0 width=256 height=256 tileposx=0 tileposy=0 tilewidth=3840 tileheight=3840";
+    const std::string resHigh = "tile nviewid=0 part=0 width=256 height=256 tileposx=0 tileposy=0 tilewidth=3840 tileheight=3840 ver=-1";
     const KitQueue::Payload payloadHigh(resHigh.data(), resHigh.data() + resHigh.size());
-    const std::string reqLow = "tile nviewid=0 part=0 width=256 height=256 tileposx=0 tileposy=253440 tilewidth=3840 tileheight=3840 oldwid=0 wid=0";
-    const std::string resLow = "tile nviewid=0 part=0 width=256 height=256 tileposx=0 tileposy=253440 tilewidth=3840 tileheight=3840 oldwid=0 wid=0 ver=-1";
+    const std::string reqLow = "tile nviewid=0 part=0 width=256 height=256 tileposx=0 tileposy=253440 tilewidth=3840 tileheight=3840";
+    const std::string resLow = "tile nviewid=0 part=0 width=256 height=256 tileposx=0 tileposy=253440 tilewidth=3840 tileheight=3840 ver=-1";
     const KitQueue::Payload payloadLow(resLow.data(), resLow.data() + resLow.size());
 
     KitQueue queue;
@@ -128,11 +128,11 @@ void KitQueueTests::testTileCombinedRendering()
     const std::string req2 = "tile nviewid=0 part=0 width=256 height=256 tileposx=3840 tileposy=0 tilewidth=3840 tileheight=3840";
     const std::string req3 = "tile nviewid=0 part=0 width=256 height=256 tileposx=0 tileposy=3840 tilewidth=3840 tileheight=3840";
 
-    const std::string resHor = "tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840 tileposy=0,0 imgsize=0,0 tilewidth=3840 tileheight=3840 ver=-1,-1 oldwid=0,0 wid=0,0";
+    const std::string resHor = "tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840 tileposy=0,0 tilewidth=3840 tileheight=3840 ver=-1,-1";
     const KitQueue::Payload payloadHor(resHor.data(), resHor.data() + resHor.size());
-    const std::string resVer = "tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,0 tileposy=0,3840 imgsize=0,0 tilewidth=3840 tileheight=3840 ver=-1,-1 oldwid=0,0 wid=0,0";
+    const std::string resVer = "tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,0 tileposy=0,3840 tilewidth=3840 tileheight=3840 ver=-1,-1";
     const KitQueue::Payload payloadVer(resVer.data(), resVer.data() + resVer.size());
-    const std::string resFull = "tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,0 tileposy=0,0,3840 imgsize=0,0,0 tilewidth=3840 tileheight=3840 ver=-1,-1,-1 oldwid=0,0,0 wid=0,0,0";
+    const std::string resFull = "tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,0 tileposy=0,0,3840 tilewidth=3840 tileheight=3840 ver=-1,-1,-1";
     const KitQueue::Payload payloadFull(resFull.data(), resFull.data() + resFull.size());
 
     KitQueue queue;
@@ -169,7 +169,7 @@ void KitQueueTests::testTileRecombining()
     // but when we later extract that, it is just one "tilecombine" message
     LOK_ASSERT_EQUAL_STR(
         "tilecombine nviewid=0 part=0 width=256 height=256 tileposx=7680,0,3840 tileposy=0,0,0 "
-        "imgsize=0,0,0 tilewidth=3840 tileheight=3840 ver=-1,-1,-1 oldwid=0,0,0 wid=0,0,0",
+        "tilewidth=3840 tileheight=3840 ver=-1,-1,-1",
         popHelper(queue));
 
     // and nothing remains in the queue
@@ -192,10 +192,10 @@ void KitQueueTests::testViewOrder()
 
     const std::vector<std::string> tiles =
     {
-        "tile nviewid=0 part=0 width=256 height=256 tileposx=0 tileposy=0 tilewidth=3840 tileheight=3840 oldwid=0 wid=0 ver=-1",
-        "tile nviewid=0 part=0 width=256 height=256 tileposx=0 tileposy=7680 tilewidth=3840 tileheight=3840 oldwid=0 wid=0 ver=-1",
-        "tile nviewid=0 part=0 width=256 height=256 tileposx=0 tileposy=15360 tilewidth=3840 tileheight=3840 oldwid=0 wid=0 ver=-1",
-        "tile nviewid=0 part=0 width=256 height=256 tileposx=0 tileposy=23040 tilewidth=3840 tileheight=3840 oldwid=0 wid=0 ver=-1"
+        "tile nviewid=0 part=0 width=256 height=256 tileposx=0 tileposy=0 tilewidth=3840 tileheight=3840 ver=-1",
+        "tile nviewid=0 part=0 width=256 height=256 tileposx=0 tileposy=7680 tilewidth=3840 tileheight=3840 ver=-1",
+        "tile nviewid=0 part=0 width=256 height=256 tileposx=0 tileposy=15360 tilewidth=3840 tileheight=3840 ver=-1",
+        "tile nviewid=0 part=0 width=256 height=256 tileposx=0 tileposy=23040 tilewidth=3840 tileheight=3840 ver=-1"
     };
 
     for (auto &tile : tiles)
@@ -220,10 +220,10 @@ void KitQueueTests::testPreviewsDeprioritization()
     // simple case - put previews to the queue and get everything back again
     const std::vector<std::string> previews =
     {
-        "tile nviewid=0 part=0 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 oldwid=0 wid=0 ver=-1 id=0",
-        "tile nviewid=0 part=1 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 oldwid=0 wid=0 ver=-1 id=1",
-        "tile nviewid=0 part=2 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 oldwid=0 wid=0 ver=-1 id=2",
-        "tile nviewid=0 part=3 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 oldwid=0 wid=0 ver=-1 id=3"
+        "tile nviewid=0 part=0 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 ver=-1 id=0",
+        "tile nviewid=0 part=1 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 ver=-1 id=1",
+        "tile nviewid=0 part=2 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 ver=-1 id=2",
+        "tile nviewid=0 part=3 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 ver=-1 id=3"
     };
 
     for (auto &preview : previews)
@@ -242,8 +242,8 @@ void KitQueueTests::testPreviewsDeprioritization()
     // the previews
     const std::vector<std::string> tiles =
     {
-        "tile nviewid=0 part=0 width=256 height=256 tileposx=0 tileposy=0 tilewidth=3840 tileheight=3840 oldwid=0 wid=0 ver=-1",
-        "tile nviewid=0 part=0 width=256 height=256 tileposx=0 tileposy=7680 tilewidth=3840 tileheight=3840 oldwid=0 wid=0 ver=-1"
+        "tile nviewid=0 part=0 width=256 height=256 tileposx=0 tileposy=0 tilewidth=3840 tileheight=3840 ver=-1",
+        "tile nviewid=0 part=0 width=256 height=256 tileposx=0 tileposy=7680 tilewidth=3840 tileheight=3840 ver=-1"
     };
 
     for (auto &preview : previews)
