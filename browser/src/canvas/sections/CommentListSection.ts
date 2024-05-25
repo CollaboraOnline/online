@@ -1214,25 +1214,48 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 		}
 	}
 
+	public overWriteCommentChanges(obj: any, editComment: Comment) {
+		this.clearAutoSaveStatus();
+		editComment.onCancelClick(null);
+		this.onACKComment(obj);
+	}
+
+	public handleCommentConflict(obj: any, editComment: Comment) {
+		if (document.getElementById(this.map.uiManager.generateModalId('comments-update')))
+			return;
+
+		if (obj.comment.action === 'Remove' || obj.comment.action === 'RedlinedDeletion') {
+			JSDialog.showInfoModalWithOptions(
+				'comments-update', {
+				'title':_('Comments Updated'),
+				'messages': [_('Another user has removed this comment.')],
+				'buttons': [{'text': _('OK'),
+				'callback': () => {
+					this.overWriteCommentChanges(obj, editComment);
+				}}],
+				'withCancel': false}
+			);
+			return;
+		}
+
+		this.map.uiManager.showYesNoButton(
+			'comments-update',
+			_('Comments Updated'),
+			_('Another user has updated the comment. Would you like to overwrite those changes?'),
+			_('Overwrite'),
+			_('Update'),
+			null,
+			() => {
+				this.overWriteCommentChanges(obj, editComment);
+			}, false
+		);
+	}
+
 	public onACKComment (obj: any): void {
 		var id;
 		const anyEdit = Comment.isAnyEdit();
-		if (anyEdit && anyEdit.sectionProperties.data.id === obj.comment.id) {
-			if (document.getElementById(this.map.uiManager.generateModalId('comments-update')))
-				return;
-			this.map.uiManager.showYesNoButton(
-				'comments-update',
-				_('Comments updated'),
-				_('Another user has updated the comment. Would you like to overwrite those changes?'),
-				_('Overwrite'),
-				_('Update'),
-				null,
-				() => {
-					this.clearAutoSaveStatus();
-					anyEdit.onCancelClick(null);
-					this.onACKComment(obj);
-				}, false
-			);
+		if (anyEdit && anyEdit.sectionProperties.data.id === obj.comment.id && CommentSection.autoSavedComment !== anyEdit) {
+			this.handleCommentConflict(obj, anyEdit);
 			return;
 		}
 		var changetrack = obj.redline ? true : false;
@@ -2044,7 +2067,7 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 		if (Comment.isAnyEdit()) {
 			this.map.uiManager.showConfirmModal(
 				'comments-update',
-				_('Comments updated'),
+				_('Comments Updated'),
 				_('Another user has updated comments. Would you like to proceed updating?'),
 				_('OK'),
 				() => {
