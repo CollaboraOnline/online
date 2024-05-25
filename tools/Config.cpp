@@ -484,10 +484,10 @@ int Config::main(const std::vector<std::string>& args)
                                      Poco::Crypto::RSAKey::Exponent::EXP_LARGE);
             proofKey.save(proofKeyPath + ".pub", proofKeyPath, "" /*no password*/);
 #if !ENABLE_DEBUG
-            chmod(proofKeyPath.c_str(), S_IRUSR | S_IWUSR);
-            const int ChResult = chown(proofKeyPath.c_str(), pwd->pw_uid, -1);
-            if (ChResult != 0)
-                std::cerr << "Changing owner of " + proofKeyPath + " failed." << std::endl;
+            if (chmod(proofKeyPath.c_str(), S_IRUSR | S_IWUSR) != 0)
+                std::cerr << "Changing mode of " + proofKeyPath + " failed: " << strerror(errno) << std::endl;
+            if (chown(proofKeyPath.c_str(), pwd->pw_uid, -1) != 0)
+                std::cerr << "Changing owner of " + proofKeyPath + " failed: " << strerror(errno) << std::endl;
 #endif
         }
         else
