@@ -160,7 +160,7 @@ protected:
         SharedPtr<InvalidCertificateHandler> invalidCertHandler = new AcceptCertificateHandler(false);
         Context::Params sslParams;
         Context::Ptr sslContext = new Poco::Net::Context(Poco::Net::Context::CLIENT_USE, sslParams);
-        SSLManager::instance().initializeClient(nullptr, invalidCertHandler, sslContext);
+        SSLManager::instance().initializeClient(nullptr, std::move(invalidCertHandler), std::move(sslContext));
 
         HTTPSClientSession cs(_uri.getHost(), _uri.getPort());
 #else

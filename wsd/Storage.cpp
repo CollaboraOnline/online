@@ -154,7 +154,9 @@ void StorageBase::initialize()
     sslClientContext->disableProtocols(Poco::Net::Context::Protocols::PROTO_SSLV2 |
                                        Poco::Net::Context::Protocols::PROTO_SSLV3 |
                                        Poco::Net::Context::Protocols::PROTO_TLSV1);
-    Poco::Net::SSLManager::instance().initializeClient(consoleClientHandler, invalidClientCertHandler, sslClientContext);
+    Poco::Net::SSLManager::instance().initializeClient(std::move(consoleClientHandler),
+                                                       std::move(invalidClientCertHandler),
+                                                       std::move(sslClientContext));
 
     // Initialize our client SSL context.
     ssl::Manager::initializeClientContext(
