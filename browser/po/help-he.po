@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-21 07:27+0200\n"
-"PO-Revision-Date: 2024-04-16 14:06+0000\n"
+"PO-Revision-Date: 2024-05-24 12:09+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://hosted.weblate.org/projects/collabora-online/"
 "help/he/>\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.6-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:84-5
 msgid "Keyboard Shortcuts"
@@ -330,27 +330,24 @@ msgstr "החלת סגנון פסקה „כותרת 3”"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:124-96
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:252-89
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>3</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>3"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>3</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:125-38
 msgid "Apply Heading 4 paragraph style"
 msgstr "החלת סגנון פסקה „כותרת 4”"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:125-96
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>4</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>4"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>4</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:126-38
 msgid "Apply Heading 5 paragraph style"
 msgstr "החלת סגנון פסקה „כותרת 5”"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:126-96
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>5</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>5"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>5</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:130-9
 msgid "Text selection and navigation in document"
@@ -374,9 +371,8 @@ msgstr "לבחור הכול"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:337-75
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:354-75
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:388-91
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>A</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>A"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>A</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:133-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:290-38
@@ -399,9 +395,8 @@ msgstr "הזזת הסמן עם הבחירה לשמאל"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:134-103
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:291-103
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:356-103
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Left</kbd>"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>חץ שמאלה"
+msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>חץ שמאלה</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:135-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:292-38
@@ -412,9 +407,8 @@ msgstr "מעבר לתחילת מילה"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:135-90
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:292-90
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:357-90
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Left</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>חץ שמאלה"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>חץ שמאלה</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:136-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:293-38
@@ -425,13 +419,12 @@ msgstr "בחירת המילה שמשמאל למילה"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:136-96
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:293-96
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:358-96
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Arrow Left</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>חץ שמאלה"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>חץ שמאלה</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:137-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:294-38
@@ -454,10 +447,9 @@ msgstr "הזזת הסמן עם הבחירה לימין"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:138-104
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:295-104
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:360-104
-#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Right</kbd>"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>חץ ימינה"
+msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>חץ ימינה</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:139-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:296-38
@@ -468,9 +460,8 @@ msgstr "מעבר לתחילת המילה הבאה"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:139-93
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:296-93
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:361-93
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Right</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>חץ ימינה"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>חץ ימינה</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:140-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:297-38
@@ -481,13 +472,12 @@ msgstr "בחירה המילה שמימין למילה"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:140-97
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:297-97
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:362-97
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Arrow Right</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>חץ ימינה"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>חץ ימינה</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:141-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:298-38
@@ -510,9 +500,8 @@ msgstr "בחירת שורות במעלה העמוד"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:142-98
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:299-98
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:364-98
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Up</kbd>"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>חץ למעלה"
+msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>חץ למעלה</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:143-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:300-38
@@ -523,9 +512,8 @@ msgstr "העברת הסמן לתחילת הפסקה הקודמת"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:143-115
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:300-115
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:365-115
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Up</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>חץ למעלה"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>חץ למעלה</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:144-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:301-38
@@ -536,13 +524,12 @@ msgstr "בחירה עד תחילת הפסקה"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:144-97
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:301-97
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:366-97
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Arrow Up</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>חץ למעלה"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>חץ למעלה</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:145-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:302-38
@@ -565,9 +552,8 @@ msgstr "בחירת שורות בכיוון מטה"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:146-100
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:303-100
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:368-100
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Down</kbd>"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>חץ למטה"
+msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>חץ למטה</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:147-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:304-38
@@ -578,9 +564,8 @@ msgstr "העברת הסמן לתחילת הפסקה הבאה"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:147-111
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:304-111
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:369-111
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Down</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>חץ למטה"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>חץ למטה</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:148-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:305-38
@@ -591,13 +576,12 @@ msgstr "בחירה עד סוף הפסקה"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:148-91
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:305-91
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:370-91
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Arrow Down</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>חץ למטה"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>חץ למטה</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:149-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:306-38
@@ -622,9 +606,8 @@ msgstr "מעבר ובחירה עד תחילת השורה"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:215-138
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:307-105
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:372-105
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Home</kbd>"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Home"
+msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Home</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:151-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:308-38
@@ -637,9 +620,8 @@ msgstr "מעבר לתחילת המסמך"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:211-118
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:308-88
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:373-88
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Home</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Home"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Home</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:152-38
 msgid "Go and select text to start of document"
@@ -648,13 +630,12 @@ msgstr "מעבר ובחירת טקסט עד תחילת המסמך"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:152-104
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:309-103
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:374-103
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Home</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>Home"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Home</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:153-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:310-38
@@ -679,9 +660,8 @@ msgstr "מעבר ובחירה עד סוף השורה"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:216-137
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:311-99
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:376-99
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>End</kbd>"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>End"
+msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>End</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:155-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:312-38
@@ -694,9 +674,8 @@ msgstr "מעבר לסוף המסמך"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:212-131
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:312-86
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:377-86
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>End</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>End"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>End</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:156-38
 msgid "Go and select text to end of document"
@@ -705,13 +684,12 @@ msgstr "מעבר ובחירת טקסט עד סוף המסמך"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:156-102
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:313-101
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:378-101
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>End</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>End"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>End</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:157-38
 msgid "Move the view up one page"
@@ -726,18 +704,16 @@ msgid "Switch cursor between text and header"
 msgstr "הקפצת הסמן בין הטקסט לכותרת וחזרה"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:158-102
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:159-38
 msgid "Extend the selection up one page"
 msgstr "הרחבת הבחירה בעמוד אחד כלפי מעלה"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:159-97
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp</kbd>"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp"
+msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:160-38
 msgid "Move the view down one page"
@@ -752,62 +728,56 @@ msgid "Switch cursor between text and footer"
 msgstr "החלפת הסמן בין הטקסט לכותרת העליונה"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:161-102
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:162-38
 msgid "Extend the selection down one page"
 msgstr "הרחבת הבחירה במורד העמוד"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:162-99
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown</kbd>"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown"
+msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:163-38
 msgid "Delete to beginning of word"
 msgstr "מחיקה עד תחילת המילה"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:163-92
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Backspace</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Backspace"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Backspace</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:164-38
 msgid "Delete to end of word"
 msgstr "מחיקה עד לסוף המילה"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:164-86
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Del</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Del"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Del</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:165-38
 msgid "Delete to beginning of sentence"
 msgstr "מחיקה עד תחילת המשפט"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:165-96
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Backspace</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>Backspace"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Backspace</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:166-38
 msgid "Delete to end of sentence"
 msgstr "מחיקה עד לסוף המשפט"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:166-90
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Del</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>Del"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Del</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:170-9
 msgid "Shortcut Keys for Tables"
@@ -840,9 +810,8 @@ msgstr ""
 "לחיצה שנייה לסוף הטבלה הנוכחית, לחיצה שלישית מעבירה לסוף המסמך."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:175-38
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Tab</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Tab"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Tab</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:175-127
 msgid ""
@@ -854,9 +823,8 @@ msgstr ""
 "ב־<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Tab</kbd>."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:176-38
-#, fuzzy
 msgid "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Keys</kbd>"
-msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>מקשי החצים"
+msgstr "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>מקשי חצים</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:176-133
 msgid ""
@@ -864,26 +832,24 @@ msgid ""
 msgstr "הגדלת/הקטנת גודל העמודה/שורה שבשול הימני/תחתון קיצוני"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:177-38
-#, fuzzy
 msgid ""
 "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Arrow Keys</kbd>"
 msgstr ""
-"Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>מקשי חצים"
+"<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>מקשי חצים</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:177-181
 msgid "Increase/decrease the size of the column/row on the left/top cell edge"
 msgstr "הגדלת/הקטנת גודל העמודה/שורה שבשול השמאלי/עליון קיצוני"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:178-38
-#, fuzzy
 msgid ""
 "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Arrow Keys</kbd>"
 msgstr ""
-"Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>מקשי חצים"
+"<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
+"\"kbd--plus\">+</span><kbd>מקשי חצים</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:178-180
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:179-228
@@ -891,20 +857,18 @@ msgid "Like Alt, but only the active cell is modified"
 msgstr "כמו Alt אבל רק התא הפעיל מושפע"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:179-38
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd--plus\">+</"
 "span><kbd>Arrow Keys</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>מקשי "
-"חצים"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd--plus\">+</"
+"span><kbd>מקשי חצים</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:180-38
-#, fuzzy
 msgid "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Insert</kbd>"
-msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Insert"
+msgstr "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Insert</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:180-129
 msgid ""
@@ -915,9 +879,8 @@ msgstr ""
 "kbd><span class=\"kbd--plus\">+</span><kbd>מקש חץ</kbd> מוסיף תא"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:181-38
-#, fuzzy
 msgid "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Del</kbd>"
-msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Del"
+msgstr "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Del</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:181-126
 msgid ""
@@ -929,13 +892,12 @@ msgstr ""
 "\"kbd--plus\">+</span><kbd>מקש חץ</kbd> ממזג את התא עם התאים הסמוכים"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:182-38
-#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Del</kbd>"
 msgstr ""
-"Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>Del"
+"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Del</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td.p:182-197
 msgid ""
@@ -973,26 +935,24 @@ msgid "Insert footnote"
 msgstr "הוספת כותרת תחתית"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:191-80
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
 "\"kbd--plus\">+</span><kbd>F</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>F"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
+"\"kbd--plus\">+</span><kbd>F</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:192-38
 msgid "Insert endnote"
 msgstr "הוספת הערת סיום"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:192-79
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
 "\"kbd--plus\">+</span><kbd>D</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>D"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
+"\"kbd--plus\">+</span><kbd>D</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:193-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:244-38
@@ -1001,57 +961,52 @@ msgstr "הוספת תגובה"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:193-79
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:244-79
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
 "\"kbd--plus\">+</span><kbd>C</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>C"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
+"\"kbd--plus\">+</span><kbd>C</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:195-38
 msgid "Insert soft hyphen"
 msgstr "הוספת מקף רך"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:195-83
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>-</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>-‎"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>-</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:196-38
 msgid "Insert non-breaking hyphen"
 msgstr "הוספת מקף ללא ירידת שורה"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:196-91
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>-</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>-‎"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>-</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:198-38
 msgid "Insert non-breaking space"
 msgstr "הוספת רווח ללא ירידת שורה"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:198-90
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Space</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>רווח"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>רווח</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:199-38
 msgid "Insert line break"
 msgstr "הוספת ירידת שורה"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:199-82
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Enter</kbd>"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Enter"
+msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Enter</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:200-38
 msgid "Manual page break"
@@ -1060,22 +1015,20 @@ msgstr "מעבר עמוד ידני"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:200-82
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:322-98
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:387-105
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Enter</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Enter"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Enter</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:201-38
 msgid "Column break (in multicolumnar text)"
 msgstr "מעבר עמודה (בטקסט שמסודר בעמודות)"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:201-101
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Enter</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>Enter"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Enter</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:202-38
 msgid ""
@@ -1084,9 +1037,8 @@ msgstr "הוספת פסקה חדשה ישירות לפני או אחרי מקט�
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:202-139
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:203-175
-#, fuzzy
 msgid "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Enter</kbd>"
-msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Enter"
+msgstr "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Enter</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:203-38
 msgid ""
@@ -1133,9 +1085,8 @@ msgstr ""
 "הנוכחית בעמוד אחד למעלה."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:217-184
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up</kbd>"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up"
+msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:218-38
 msgid ""
@@ -1146,9 +1097,8 @@ msgstr ""
 "בעמוד אחד למטה."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:218-188
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down</kbd>"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down"
+msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:219-38
 msgid ""
@@ -1160,9 +1110,8 @@ msgstr ""
 "לתא שמכיל את הסמן ריקה, הסמן יעבור לעמודה הבאה משמאל שמכילה נתונים"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:219-265
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Left Arrow</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>חץ שמאלה"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>חץ שמאלה</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:220-38
 msgid ""
@@ -1174,9 +1123,8 @@ msgstr ""
 "לתא שמכיל את הסמן ריקה, הסמן יעבור לעמודה הבאה מימין שמכילה נתונים."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:220-269
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Right Arrow</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>חץ ימינה"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>חץ ימינה</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:221-38
 msgid ""
@@ -1188,9 +1136,8 @@ msgstr ""
 "את הסמן ריקה, הסמן יעלה לשורה הבאה שמכילה נתונים."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:221-241
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Up Arrow</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>חץ למעלה"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>חץ למעלה</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:222-38
 msgid ""
@@ -1202,35 +1149,32 @@ msgstr ""
 "את הסמן ריקה, הסמן ירד לשורה הבאה שמכילה נתונים."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:222-246
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Down Arrow</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>חץ למטה"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>חץ למטה</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:223-38
 msgid "Go to next sheet."
-msgstr ""
+msgstr "מעבר לגיליון הבא."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:223-82
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Page Down</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>Page Down"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Page Down</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:224-38
 msgid "Go to previous sheet."
-msgstr ""
+msgstr "מעבר לגיליון הקודם."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:224-86
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Page Up</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>Page Up"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Page Up</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:225-38
 msgid ""
@@ -1244,31 +1188,28 @@ msgstr ""
 "מרובע."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:225-292
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Arrow</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>חץ"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>חץ</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:226-38
 msgid "Moves one sheet to the left."
 msgstr "עובר גיליון אחד שמאלה."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:226-93
-#, fuzzy
 msgid "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up</kbd>"
-msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up"
+msgstr "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:227-38
 msgid "Moves one screen page to the right."
 msgstr "עובר עמוד מסך אחד ימינה."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:227-100
-#, fuzzy
 msgid "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down</kbd>"
-msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down"
+msgstr "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:228-38
 msgid ""
@@ -1281,13 +1222,12 @@ msgstr ""
 "הקודם לגיליון הנוכחי."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:228-280
-#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Page Up</kbd>"
 msgstr ""
-"Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>Page Up"
+"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Page Up</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:229-38
 msgid ""
@@ -1300,13 +1240,12 @@ msgstr ""
 "לגיליון הנוכחי."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:229-268
-#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Page Down</kbd>"
 msgstr ""
-"Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>Page Down"
+"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Page Down</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:230-38
 msgid ""
@@ -1318,9 +1257,8 @@ msgstr ""
 "טווח הוא טווח תאים רציף שמכיל נתונים ותחום בשורות ועמודות ריקים."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:230-269
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>*</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>*"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>*</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:231-38
 msgid ""
@@ -1331,18 +1269,16 @@ msgstr ""
 "הסמן."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:231-178
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>/</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>/"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>/</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:232-38
 msgid "Insert cells (as in menu Insert - Cells)"
 msgstr "הוספת תאים (כמו בהוספה - תאים)"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:232-105
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Plus key</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>מקש פלוס"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>מקש פלוס</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:233-38
 msgid "Delete cells (as in menu Edit - Delete Cells)"
@@ -1361,9 +1297,8 @@ msgid "Display comment"
 msgstr "הצגת הערה"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:245-80
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>F1</kbd>"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>F1"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>F1</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:246-38
 msgid "Fill Down"
@@ -1378,78 +1313,72 @@ msgid "Two decimal places, thousands separator"
 msgstr "שני מקומות עשרוניים, מפריד אלפים"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:253-104
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>1</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>1"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>1</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:254-38
 msgid "Standard exponential format"
 msgstr "תצורה מעריכית רגילה"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:254-92
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>2</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>2"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>2</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:255-38
 msgid "Standard date format"
 msgstr "תצורת תאריך רגילה"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:255-85
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>3</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>3"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>3</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:256-38
 msgid "Standard currency format"
 msgstr "תצורת מטבע רגילה"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:256-89
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>4</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>4"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>4</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:257-38
 msgid "Standard percentage format (two decimal places)"
 msgstr "תצורת אחוזים רגילה (שני מקומות עשרוניים)"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:257-112
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>5</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>5"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>5</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:258-38
 msgid "Standard format"
 msgstr "תצורה רגילה"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:258-80
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>6</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>6"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>6</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:282-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:347-38
@@ -1472,9 +1401,8 @@ msgstr "קידום פריט ברשימה ברמה (חובה לבחור את הפ
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:321-127
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:348-113
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:386-127
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Tab</kbd>"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Tab"
+msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Tab</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:287-9
 #: html/cool-help.html%2Bdiv.div.div.h2:352-9
@@ -1919,7 +1847,6 @@ msgstr ""
 "\">קפיצה למצב</span>."
 
 #: html/cool-help.html%2Bdiv.div.div.div.img[alt]:501-29
-#, fuzzy
 msgid "document repair"
 msgstr "תיקון מסמכים"
 
@@ -1944,7 +1871,6 @@ msgid ""
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.img[alt]:507-29
-#, fuzzy
 msgid "inactive document"
 msgstr "מסמך בלתי פעיל"
 
@@ -1957,7 +1883,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.h4:511-5
 msgid "Pasting"
-msgstr ""
+msgstr "הדבקה"
 
 #: html/cool-help.html%2Bdiv.div.div.p:512-5
 msgid ""
@@ -2860,19 +2786,22 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:859-5
 msgid "How can I import CSV data?"
-msgstr ""
+msgstr "איך אפשר לייבא נתוני CSV?"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:861-11
 msgid ""
 "Load your CSV data in some native tool to your platform, select and copy it "
 "to the clipboard"
 msgstr ""
+"טעינת נתוני CSV בכלי שמתאים לפלטפורמה שלך, לבחור אותו ולהעתיק אותו ללוח "
+"הגזירים"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:862-11
 msgid ""
 "Activate the <span class=\"productname\">%productName</span> spreadsheet "
 "window."
 msgstr ""
+"הפעלת חלון גיליון נתונים של <span class=\"productname\">%productName</span>."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:864-9
 msgid ""
@@ -2884,7 +2813,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.div.img[alt]:866-31
 msgid "import"
-msgstr ""
+msgstr "ייבוא"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:867-11
 msgid ""
@@ -2976,7 +2905,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.div.img[alt]:908-31
 msgid "Position and Size"
-msgstr ""
+msgstr "מקום וגודל"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:909-11
 msgid "Set the properties of the element of the object."

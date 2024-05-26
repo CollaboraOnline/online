@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-21 07:27+0200\n"
-"PO-Revision-Date: 2024-04-15 13:01+0000\n"
+"PO-Revision-Date: 2024-05-24 12:09+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://hosted.weblate.org/projects/collabora-online/"
 "ui/he/>\n"
-"Language: \n"
+"Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Weblate 5.5-dev\n"
+"X-Generator: Weblate 5.6-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -869,7 +869,7 @@ msgstr "מצב כהה"
 #: src/control/Control.NotebookbarImpress.js:459
 #: src/control/Control.NotebookbarWriter.js:1467
 msgid "Invert Background"
-msgstr ""
+msgstr "היפוך הרקע"
 
 #: src/control/Control.Menubar.js:154 src/control/Control.Menubar.js:455
 #: src/control/Control.Menubar.js:599 src/control/Control.Menubar.js:744
@@ -2796,11 +2796,11 @@ msgstr "המסמך הזה כבר מוצג על ידיך"
 
 #: src/map/handler/Map.SlideShow.js:314
 msgid "Presentation disabled"
-msgstr ""
+msgstr "מצגת הושבתה"
 
 #: src/map/handler/Map.SlideShow.js:315
 msgid "Presentation mode has been disabled for this document"
-msgstr ""
+msgstr "מצב מצגת הושבת למסמך הזה"
 
 #: src/map/handler/Map.WOPI.js:152
 msgid "Creating new file from template..."
