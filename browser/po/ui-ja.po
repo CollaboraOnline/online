@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-21 07:27+0200\n"
-"PO-Revision-Date: 2024-05-09 07:26+0000\n"
+"PO-Revision-Date: 2024-05-26 13:50+0000\n"
 "Last-Translator: Poe Mon <p.poemon.awitd@gmail.com>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/"
 "collabora-online/ui/ja/>\n"
-"Language: \n"
+"Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.5.4-rc\n"
+"X-Generator: Weblate 5.6-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -869,7 +869,7 @@ msgstr "ダークモード"
 #: src/control/Control.NotebookbarImpress.js:459
 #: src/control/Control.NotebookbarWriter.js:1467
 msgid "Invert Background"
-msgstr ""
+msgstr "背景を変更"
 
 #: src/control/Control.Menubar.js:154 src/control/Control.Menubar.js:455
 #: src/control/Control.Menubar.js:599 src/control/Control.Menubar.js:744
@@ -2802,11 +2802,11 @@ msgstr "すでに文書は開かれています"
 
 #: src/map/handler/Map.SlideShow.js:314
 msgid "Presentation disabled"
-msgstr ""
+msgstr "Presentation 無効化"
 
 #: src/map/handler/Map.SlideShow.js:315
 msgid "Presentation mode has been disabled for this document"
-msgstr ""
+msgstr "現在のドキュメントのPresentation プレゼンテーションモードは無効になっています"
 
 #: src/map/handler/Map.WOPI.js:152
 msgid "Creating new file from template..."
