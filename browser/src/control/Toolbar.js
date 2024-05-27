@@ -892,8 +892,16 @@ L.Map.include({
 
 	makeURLFromStr: function(str) {
 		str = str.trim();
-		if (!(str.toLowerCase().startsWith('http://') || str.toLowerCase().startsWith('https://'))) {
-			str = 'http://' + str;
+		const lowerStr = str.toLowerCase();
+
+		if (!(lowerStr.startsWith('http://') || lowerStr.startsWith('https://') ||
+			  lowerStr.startsWith('ftp://') || lowerStr.startsWith('mailto:'))) {
+			// Regular expression to test if the string is an email address
+			const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+			if (emailPattern.test(str)) 
+				str = 'mailto:' + str;
+			else
+				str = 'http://' + str;
 		}
 		return str;
 	},
