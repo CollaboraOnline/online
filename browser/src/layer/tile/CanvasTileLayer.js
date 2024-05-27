@@ -717,8 +717,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._lastValidPart = -1;
 		// Cursor marker
 		this._cursorMarker = null;
-		// Graphic marker
-		this._graphicMarker = null;
 		// Graphic Selected?
 		this._hasActiveSelection = false;
 
@@ -1297,7 +1295,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._onGraphicSelectionMsg(textMsg);
 		}
 		else if (textMsg.startsWith('graphicinnertextarea:')) {
-			this._onGraphicInnerTextAreaMsg(textMsg);
+			return; // Not used.
 		}
 		else if (textMsg.startsWith('cellcursor:')) {
 			this._onCellCursorMsg(textMsg);
@@ -1965,24 +1963,17 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	_onShapeSelectionContent: function (textMsg) {
 		textMsg = textMsg.substring('shapeselectioncontent:'.length + 1);
-		if (this._graphicMarker) {
-			var extraInfo = this._graphicSelection.extraInfo;
-			if (extraInfo.id) {
-				this._map._cacheSVG[extraInfo.id] = textMsg;
-			}
-			var wasVisibleSVG = this._graphicMarker._hasVisibleEmbeddedSVG();
-			this._graphicMarker.removeEmbeddedSVG();
 
-			// video is handled in _onEmbeddedVideoContent
-			var isVideoSVG = textMsg.indexOf('<video') !== -1;
-			if (isVideoSVG) {
-				this._map._cacheSVG[extraInfo.id] = undefined;
-			} else {
-				this._graphicMarker.addEmbeddedSVG(textMsg);
-				if (wasVisibleSVG)
-					this._graphicMarker._showEmbeddedSVG();
-			}
+		var extraInfo = this._graphicSelection.extraInfo;
+		if (extraInfo.id) {
+			this._map._cacheSVG[extraInfo.id] = textMsg;
 		}
+
+		// video is handled in _onEmbeddedVideoContent
+		if (this._graphicMarker.sectionProperties.hasVideo)
+			this._map._cacheSVG[extraInfo.id] = undefined;
+		else
+			this._graphicMarker.setSVG(textMsg);
 	},
 
 	// shows the video inside current selection marker
@@ -2028,6 +2019,10 @@ L.CanvasTileLayer = L.Layer.extend({
 	_resetSelectionRanges: function() {
 		this._graphicSelection = null;
 		this._hasActiveSelection = false;
+		if (this._graphicMarker) {
+			this._graphicMarker.removeSubSections();
+			app.sectionContainer.removeSection(this._graphicMarker.name);
+		}
 	},
 
 	_openMobileWizard: function(data) {
@@ -2076,11 +2071,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		var bounds = new L.Bounds(topLeft, bottomRight);
 
 		this._oleCSelections.setPointSet(CPointSet.fromBounds(bounds));
-	},
-
-	_onGraphicInnerTextAreaMsg: function (textMsg) {
-		var msgData = JSON.parse(textMsg.substr('graphicinnertextarea: "innerTextRect":'.length));
-		this._onUpdateGraphicInnerTextArea(msgData);
 	},
 
 	_onGraphicSelectionMsg: function (textMsg) {
@@ -3848,222 +3838,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 	},
 
-	// Update dragged graphics selection
-	_onGraphicMove: function (e) {
-		if (!e.pos) { return; }
-		var aPos = this._latLngToTwips(e.pos);
-		var calcRTL = this.isCalcRTL();
-		if (e.type === 'graphicmovestart') {
-			this._graphicMarker.isDragged = true;
-			this._graphicMarker.setVisible(true);
-			this._graphicMarker._startPos = aPos;
-		}
-		else if (e.type === 'graphicmoveend' && this._graphicMarker._startPos) {
-			var deltaPos = aPos.subtract(this._graphicMarker._startPos);
-			if (deltaPos.x === 0 && deltaPos.y === 0) {
-				this._graphicMarker.isDragged = false;
-				this._graphicMarker.setVisible(false);
-				return;
-			}
-
-			var param;
-			var dragConstraint = this._graphicSelection.extraInfo.dragInfo;
-			if (dragConstraint) {
-				if (dragConstraint.dragMethod === 'PieSegmentDragging') {
-
-					deltaPos = this._twipsToPixels(deltaPos);
-					var dx = deltaPos.x;
-					var dy = deltaPos.y;
-
-					var initialOffset = dragConstraint.initialOffset;
-					var dragDirection = dragConstraint.dragDirection;
-					var additionalOffset = (dx * dragDirection.x + dy * dragDirection.y) / dragConstraint.range2;
-					if (additionalOffset < -initialOffset)
-						additionalOffset = -initialOffset;
-					else if (additionalOffset > (1.0 - initialOffset))
-						additionalOffset = 1.0 - initialOffset;
-
-					var offset = Math.round((initialOffset + additionalOffset) * 100);
-
-					// hijacking the uno:TransformDialog msg for sending the new offset value
-					// for the pie segment dragging method;
-					// indeed there isn't any uno msg dispatching on the core side, but a chart controller dispatching
-					param = {
-						Action: {
-							type: 'string',
-							value: 'PieSegmentDragging'
-						},
-						Offset: {
-							type: 'long',
-							value: offset
-						}
-					};
-				}
-			}
-			else {
-				// Choose the logical left of the shape.
-				var newPos = new L.Point(this._graphicSelection.x1 + deltaPos.x, this._graphicSelection.y1 + deltaPos.y);
-				var size = { x: this._graphicSelection.width, y: this._graphicSelection.height };
-
-				if (calcRTL) {
-					// make x coordinate of newPos +ve
-					newPos.x = -newPos.x;
-				}
-
-				// try to keep shape inside document
-				if (newPos.x + size.x > this._docWidthTwips)
-					newPos.x = this._docWidthTwips - size.x;
-				if (newPos.x < 0)
-					newPos.x = 0;
-
-				if (newPos.y + size.y > this._docHeightTwips)
-					newPos.y = this._docHeightTwips - size.y;
-				if (newPos.y < 0)
-					newPos.y = 0;
-
-				if (this.isCalc() && this.options.printTwipsMsgsEnabled) {
-					newPos = this.sheetGeometry.getPrintTwipsPointFromTile(newPos);
-				}
-
-				// restore the sign(negative) of x coordinate.
-				if (calcRTL) {
-					newPos.x = -newPos.x;
-				}
-
-				param = {
-					TransformPosX: {
-						type: 'long',
-						value: newPos.x
-					},
-					TransformPosY: {
-						type: 'long',
-						value: newPos.y
-					}
-				};
-			}
-			this._map.sendUnoCommand('.uno:TransformDialog ', param);
-			this._graphicMarker.isDragged = false;
-			this._graphicMarker.setVisible(false);
-		}
-	},
-
-	// Update dragged graphics selection resize.
-	_onGraphicEdit: function (e) {
-		if (!e.pos) { return; }
-		if (!e.handleId) { return; }
-
-		var calcRTL = this.isCalcRTL();
-		var aPos = this._latLngToTwips(e.pos);
-		var selMin = { x: this._graphicSelection.x1, y: this._graphicSelection.y1 };
-		var selMax = { x: this._graphicSelection.x2, y: this._graphicSelection.y2 };
-
-		var handleId = e.handleId;
-
-		if (e.type === 'scalestart') {
-			this._graphicMarker.isDragged = true;
-			this._graphicMarker.setVisible(true);
-			if (selMax.x - selMin.x < 2)
-				this._graphicMarker.dragHorizDir = 0; // overlapping handles
-			else if (Math.abs(selMin.x - aPos.x) < 2)
-				this._graphicMarker.dragHorizDir = -1; // left handle
-			else if (Math.abs(selMax.x - aPos.x) < 2)
-				this._graphicMarker.dragHorizDir = 1; // right handle
-			if (selMax.y - selMin.y < 2)
-				this._graphicMarker.dragVertDir = 0; // overlapping handles
-			else if (Math.abs(selMin.y - aPos.y) < 2)
-				this._graphicMarker.dragVertDir = -1; // up handle
-			else if (Math.abs(selMax.y - aPos.y) < 2)
-				this._graphicMarker.dragVertDir = 1; // down handle
-		}
-		else if (e.type === 'scaleend') {
-			// fill params for uno command
-			var param = {
-				HandleNum: {
-					type: 'long',
-					value: handleId
-				},
-				NewPosX: {
-					type: 'long',
-					// In Calc RTL mode ensure that we send positive X coordinates.
-					value: calcRTL ? -aPos.x : aPos.x
-				},
-				NewPosY: {
-					type: 'long',
-					value: aPos.y
-				}
-			};
-			if (e.ordNum)
-			{
-				var glueParams = {
-					OrdNum: {
-						type: 'long',
-						value: e.ordNum
-					}
-				};
-				param = L.Util.extend({}, param, glueParams);
-			}
-
-			this._map.sendUnoCommand('.uno:MoveShapeHandle', param);
-			this._graphicMarker.isDragged = false;
-			this._graphicMarker.setVisible(false);
-			this._graphicMarker.dragHorizDir = undefined;
-			this._graphicMarker.dragVertDir = undefined;
-		}
-	},
-
-	_onGraphicRotate: function (e) {
-		if (e.type === 'rotatestart') {
-			this._graphicMarker.isDragged = true;
-			this._graphicMarker.setVisible(true);
-		}
-		else if (e.type === 'rotateend') {
-			var center = { x: this._graphicSelection.center[0], y: this._graphicSelection.center[1] };
-			if (this.isCalc() && this.options.printTwipsMsgsEnabled) {
-				center = this.sheetGeometry.getPrintTwipsPointFromTile(center);
-			}
-			var param = {
-				TransformRotationDeltaAngle: {
-					type: 'long',
-					value: (((e.rotation * 18000) / Math.PI))
-				},
-				TransformRotationX: {
-					type: 'long',
-					value: center.x
-				},
-				TransformRotationY: {
-					type: 'long',
-					value: center.y
-				}
-			};
-			this._map.sendUnoCommand('.uno:TransformDialog ', param);
-			this._graphicMarker.isDragged = false;
-			this._graphicMarker.setVisible(false);
-		}
-	},
-
-	_sendReferenceRangeCommand: function(startCol, startRow, endCol, endRow) {
-		this._map.sendUnoCommand(
-			'.uno:CurrentFormulaRange?StartCol=' + startCol +
-			'&StartRow=' + startRow +
-			'&EndCol=' + endCol +
-			'&EndRow=' + endRow +
-			'&Table=' + this._map._docLayer._selectedPart
-		);
-	},
-
-	_onUpdateGraphicInnerTextArea: function (rect) {
-		var topLeftTwips = new L.Point(rect[0], rect[1]);
-		var offset = new L.Point(rect[2], rect[3]);
-		var bottomRightTwips = topLeftTwips.add(offset);
-
-		this._innerTextRectTwips = this._getGraphicSelectionRectangle(
-			new L.Bounds(topLeftTwips, bottomRightTwips));
-
-		this._innerTextRect = new L.LatLngBounds(
-			this._twipsToLatLng(this._innerTextRectTwips.getTopLeft(), this._map.getZoom()),
-			this._twipsToLatLng(this._innerTextRectTwips.getBottomRight(), this._map.getZoom()));
-	},
-
 	// Update group layer selection handler.
 	_onUpdateGraphicSelection: function () {
 		if (this._graphicSelection) {
@@ -4072,71 +3846,37 @@ L.CanvasTileLayer = L.Layer.extend({
 			if (!this._isAnyInputFocused())
 				this._map.focus(app.file.textCursor.visible);
 
-			if (this._graphicMarker) {
-				this._graphicMarker.removeEventParent(this._map);
-				this._graphicMarker.off('scalestart scaleend', this._onGraphicEdit, this);
-				this._graphicMarker.off('rotatestart rotateend', this._onGraphicRotate, this);
-				if (this._graphicMarker.dragging)
-					this._graphicMarker.dragging.disable();
-				this._graphicMarker.transform.disable();
-				this._map.removeLayer(this._graphicMarker);
-			}
-
 			if (!this._map.isEditMode()) {
 				return;
 			}
 
 			var extraInfo = this._graphicSelection.extraInfo;
-			this._graphicMarker = L.svgGroup(this._graphicSelection, {
-				draggable: extraInfo.isDraggable,
-				dragConstraint: extraInfo.dragInfo,
-				svg: this._map._cacheSVG[extraInfo.id],
-				transform: true,
-				stroke: false,
-				fillOpacity: 0,
-				fill: true
-			});
+			let addHandlesSection = false;
 
-			if (!this._graphicMarker) {
-				this._map.fire('error', {msg: 'Graphic marker initialization', cmd: 'marker', kind: 'failed', id: 1});
-				return;
+			if (!this._graphicMarker)
+				addHandlesSection = true;
+			else if (extraInfo.id !== this._graphicMarker.sectionProperties.info.id) { // Another shape is selected.
+				this._graphicMarker.removeSubSections();
+				app.sectionContainer.removeSection(this._graphicMarker.name);
+				addHandlesSection = true;
 			}
 
-			if (extraInfo.innerTextRect) {
-				this._onUpdateGraphicInnerTextArea(extraInfo.innerTextRect);
+			if (addHandlesSection) {
+				this._graphicMarker = new app.definitions.shapeHandlesSection({});
+				app.sectionContainer.addSection(this._graphicMarker);
 			}
 
-			this._graphicMarker.on('graphicmovestart graphicmoveend', this._onGraphicMove, this);
-			this._graphicMarker.on('scalestart scaleend', this._onGraphicEdit, this);
-			this._graphicMarker.on('rotatestart rotateend', this._onGraphicRotate, this);
-			this._map.addLayer(this._graphicMarker);
-			if (extraInfo.isDraggable)
-				this._graphicMarker.dragging.enable();
-			this._graphicMarker.transform.enable({
-				scaling: extraInfo.isResizable,
-				rotation: extraInfo.isRotatable && !this.hasTableSelection(),
-				uniformScaling: this._shouldScaleUniform(extraInfo),
-				isRotated: !this._isGraphicAngleDivisibleBy90(),
-				handles: (extraInfo.handles) ? extraInfo.handles.kinds || [] : [],
-				shapes: (extraInfo.GluePoints) ? extraInfo.GluePoints.shapes : [],
-				shapeType: extraInfo.type,
-				scaleSouthAndEastOnly: this.hasTableSelection()});
-			if (extraInfo.dragInfo && extraInfo.dragInfo.svg) {
-				this._graphicMarker.removeEmbeddedSVG();
-				this._graphicMarker.addEmbeddedSVG(extraInfo.dragInfo.svg);
-			}
+			this._graphicMarker.setPosition(this._graphicSelection.pX1, this._graphicSelection.pY1);
+			extraInfo.hasTableSelection = this.hasTableSelection(); // scaleSouthAndEastOnly
+			this._graphicMarker.refreshInfo(this._graphicSelection.extraInfo);
+			this._graphicMarker.setShowSection(true);
+			app.sectionContainer.requestReDraw();
+
 			this._hasActiveSelection = true;
 		}
-		else if (this._graphicMarker) {
-			this._graphicMarker.off('graphicmovestart graphicmoveend', this._onGraphicMove, this);
-			this._graphicMarker.off('scalestart scaleend', this._onGraphicEdit, this);
-			this._graphicMarker.off('rotatestart rotateend', this._onGraphicRotate, this);
-			if (this._graphicMarker.dragging)
-				this._graphicMarker.dragging.disable();
-			this._graphicMarker.transform.disable();
-			this._map.removeLayer(this._graphicMarker);
-			this._graphicMarker.isDragged = false;
-			this._graphicMarker.setVisible(false);
+		else if (this._graphicMarker && app.sectionContainer.doesSectionExist(this._graphicMarker.name)){
+			this._graphicMarker.removeSubSections();
+			app.sectionContainer.removeSection(this._graphicMarker.name);
 		}
 		this._updateCursorAndOverlay();
 	},
@@ -5055,9 +4795,6 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		if (this._cursorMarker && this._cursorMarker.isDomAttached()) {
 			this._cursorMarker.remove();
-		}
-		if (this._graphicMarker) {
-			this._graphicMarker.remove();
 		}
 
 		app.sectionContainer.removeSection(this._selectionHandles.start);

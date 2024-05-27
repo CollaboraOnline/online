@@ -298,7 +298,6 @@ L.Handler.PathDrag = L.Handler.extend(/** @lends  L.Path.Drag.prototype */ {
 		var diff = transformation.untransform(px, scale)
 			.subtract(transformation.untransform(L.point(0, 0), scale));
 		var applyTransform = !dest;
-		var bounds = path._bounds;
 
 		path._bounds = new L.LatLngBounds();
 
@@ -330,12 +329,6 @@ L.Handler.PathDrag = L.Handler.extend(/** @lends  L.Path.Drag.prototype */ {
 						rings[i][j]._add(px);
 					}
 				}
-			}
-		} else if (path instanceof L.SVGGroup) {
-			if (applyTransform) {
-				bounds._southWest = projection.unproject(projection.project(bounds._southWest)._add(diff));
-				bounds._northEast = projection.unproject(projection.project(bounds._northEast)._add(diff));
-				path._bounds = bounds;
 			}
 		}
 
@@ -396,23 +389,3 @@ L.Handler.PathDrag.makeDraggable = function(layer) {
 L.Path.prototype.makeDraggable = function() {
 	return L.Handler.PathDrag.makeDraggable(this);
 };
-
-var fnInitHook = function() {
-	if (this.options.draggable) {
-		// ensure interactive
-		this.options.interactive = true;
-
-		if (this.dragging) {
-			this.dragging.enable();
-		} else {
-			L.Handler.PathDrag.makeDraggable(this);
-			this.dragging.enable();
-		}
-		this.dragging.constraint = this.options.dragConstraint;
-	} else if (this.dragging) {
-		this.dragging.disable();
-		this.dragging.constraint = null;
-	}
-};
-
-L.SVGGroup.addInitHook(fnInitHook);

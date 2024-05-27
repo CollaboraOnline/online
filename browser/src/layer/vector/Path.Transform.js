@@ -605,9 +605,6 @@ L.Handler.PathTransform = L.Handler.extend({
 					path._bounds.extend(latlngs[i][j]);
 				}
 			}
-		} else if (path instanceof L.SVGGroup) {
-			path._bounds._southWest = this._transformPoint(path._bounds._southWest, projectedMatrix, map, zoom);
-			path._bounds._northEast = this._transformPoint(path._bounds._northEast, projectedMatrix, map, zoom);
 		}
 
 		path._reset();
@@ -1465,11 +1462,5 @@ L.Handler.PathTransform = L.Handler.extend({
 			translate: L.point(matrix[4], matrix[5]),
 			layer: this._path
 		});
-	}
-});
-
-L.SVGGroup.addInitHook(function() {
-	if (this.options.transform) {
-		this.transform = new L.Handler.PathTransform(this, this.options.transform);
 	}
 });

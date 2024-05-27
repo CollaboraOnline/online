@@ -14,7 +14,6 @@ L.Map.Mouse = L.Handler.extend({
 	initialize: function (map) {
 		this._map = map;
 		this._mouseEventsQueue = [];
-		this._prevMousePos = null;
 	},
 
 	addHooks: function () {
@@ -47,31 +46,6 @@ L.Map.Mouse = L.Handler.extend({
 		var docLayer = this._map._docLayer;
 		if (!docLayer || (this._map.slideShow && this._map.slideShow.fullscreen) || this._map.rulerActive) {
 			return;
-		}
-		if (docLayer._graphicMarker) {
-			if (docLayer._graphicMarker.isDragged) {
-				return;
-			}
-			if (docLayer._graphicSelection) {
-				// if we have a graphic selection and the user clicks inside the rectangle
-				var isInside = docLayer._graphicMarker.getBounds().contains(e.latlng);
-				if (e.type === 'mousedown' && isInside) {
-					this._prevMousePos = e.latlng;
-				}
-				else if (e.type === 'mousemove' && this._mouseDown) {
-					if (!this._prevMousePos && isInside) {
-						// if the user started to drag the shape before the selection
-						// has been drawn
-						this._prevMousePos = e.latlng;
-					}
-					else {
-						this._prevMousePos = e.latlng;
-					}
-				}
-				else if (e.type === 'mouseup') {
-					this._prevMousePos = null;
-				}
-			}
 		}
 
 		var modifier = 0;
