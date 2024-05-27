@@ -38,9 +38,18 @@ public:
     Rectangle(int x, int y, int width, int height)
         : _x1(x)
         , _y1(y)
-        , _x2(x + width)
-        , _y2(y + height)
-    {}
+        , _x2(x)
+        , _y2(y)
+    {
+        if (static_cast<long>(_x2) + width <= std::numeric_limits<int>::max())
+        {
+            _x2 += width;
+        }
+        if (static_cast<long>(_y2) + height <= std::numeric_limits<int>::max())
+        {
+            _y2 += height;
+        }
+    }
 
     void extend(Rectangle& rectangle)
     {
