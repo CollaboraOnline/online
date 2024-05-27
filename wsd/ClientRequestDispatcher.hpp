@@ -67,6 +67,10 @@ private:
     void handleCapabilitiesRequest(const Poco::Net::HTTPRequest& request,
                                    const std::shared_ptr<StreamSocket>& socket);
 
+    void handleWopiAccessCheckRequest(const Poco::Net::HTTPRequest& request,
+                                   Poco::MemoryInputStream& message,
+                                   const std::shared_ptr<StreamSocket>& socket);
+
     static void handleClipboardRequest(const Poco::Net::HTTPRequest& request,
                                        Poco::MemoryInputStream& message,
                                        SocketDisposition& disposition,
