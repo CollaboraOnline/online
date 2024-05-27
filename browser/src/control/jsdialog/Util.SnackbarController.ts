@@ -15,7 +15,24 @@
 
 declare var JSDialog: any;
 
+type SnackbarData = {
+	label: string;
+	action: string | undefined;
+	callback: () => void | undefined;
+	timeout: number;
+	hasProgress: boolean | undefined;
+	withDismiss: boolean | undefined;
+};
+
 class SnackbarController {
+	snackbarTimeout: number = 10000;
+	snackbarQueue: Array<SnackbarData>;
+	showingSnackbar: boolean = false;
+
+	constructor() {
+		this.snackbarQueue = new Array<SnackbarData>();
+	}
+
 	public closeSnackbar() {
 		var closeMessage = {
 			id: 'snackbar',
@@ -26,20 +43,46 @@ class SnackbarController {
 		app.socket._onMessage({
 			textMsg: 'jsdialog: ' + JSON.stringify(closeMessage),
 		});
+
+		this.showingSnackbar = false;
+		this.scheduleSnackbar();
 	}
 
 	public showSnackbar(
 		label: string,
-		action: string,
-		callback: () => void,
-		timeout: number,
-		hasProgress: boolean,
-		withDismiss: boolean,
+		action: string | undefined,
+		callback: () => void | undefined,
+		timeout: number | undefined,
+		hasProgress: boolean | undefined,
+		withDismiss: boolean | undefined,
 	) {
 		if (!app.socket) return;
 
-		this.closeSnackbar();
+		this.snackbarQueue.push({
+			label: label,
+			action: action,
+			callback: callback,
+			timeout: timeout,
+			hasProgress: hasProgress,
+			withDismiss: withDismiss,
+		});
 
+		this.scheduleSnackbar();
+	}
+
+	private extractTimeout(snackbarData: SnackbarData): number {
+		return snackbarData.timeout || this.snackbarTimeout;
+	}
+
+	private scheduleSnackbar() {
+		if (this.showingSnackbar || !this.snackbarQueue.length) return;
+
+		const snackbarData = this.snackbarQueue.shift();
+		this.showSnackbarImpl(snackbarData);
+		this.showingSnackbar = true;
+	}
+
+	private showSnackbarImpl(snackbarData: SnackbarData) {
 		var buttonId = 'button';
 		var labelId = 'label';
 
@@ -47,38 +90,42 @@ class SnackbarController {
 			id: 'snackbar',
 			jsontype: 'dialog',
 			type: 'snackbar',
-			timeout: timeout,
-			init_focus_id: action ? buttonId : undefined,
+			timeout: this.extractTimeout(snackbarData),
+			init_focus_id: snackbarData.action ? buttonId : undefined,
 			children: [
 				{
-					id: hasProgress
+					id: snackbarData.hasProgress
 						? 'snackbar-container-progress'
 						: 'snackbar-container',
 					type: 'container',
 					children: [
-						action
+						snackbarData.action
 							? {
 									id: labelId,
 									type: 'fixedtext',
-									text: label,
+									text: snackbarData.label,
 									labelFor: buttonId,
 								}
-							: { id: 'label-no-action', type: 'fixedtext', text: label },
-						withDismiss
+							: {
+									id: 'label-no-action',
+									type: 'fixedtext',
+									text: snackbarData.label,
+								},
+						snackbarData.withDismiss
 							? {
 									id: 'snackbar-dismiss-button',
 									type: 'pushbutton',
 									text: _('Dismiss'),
 								}
 							: {},
-						hasProgress
+						snackbarData.hasProgress
 							? { id: 'progress', type: 'progressbar', value: 0, maxValue: 100 }
 							: {},
-						action
+						snackbarData.action
 							? {
 									id: buttonId,
 									type: 'pushbutton',
-									text: action,
+									text: snackbarData.action,
 									labelledBy: labelId,
 								}
 							: {},
@@ -111,7 +158,8 @@ class SnackbarController {
 				objectType === 'pushbutton' &&
 				eventType === 'click'
 			) {
-				if (callback) callback();
+				if (typeof snackbarData.callback === 'function')
+					snackbarData.callback();
 
 				this.closeSnackbar();
 			} else if (

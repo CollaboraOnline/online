@@ -14,9 +14,7 @@
 
 /* global JSDialog Hammer app _ */
 L.Control.JSDialog = L.Control.extend({
-	options: {
-		snackbarTimeout: 10000
-	},
+	options: {},
 	dialogs: {},
 	draggingObject: null,
 
@@ -629,7 +627,7 @@ L.Control.JSDialog = L.Control.extend({
 		instance.isSnackbar = e.data.type === 'snackbar';
 		instance.isDropdown = e.data.type === 'dropdown';
 		instance.isModalPopUp = e.data.type === 'modalpopup' || instance.isDropdown;
-		instance.snackbarTimeout = e.data.timeout || this.options.snackbarTimeout;
+		instance.snackbarTimeout = e.data.timeout;
 		instance.isOnlyChild = false;
 		instance.that = this;
 		instance.startX = e.data.posx;
@@ -712,7 +710,7 @@ L.Control.JSDialog = L.Control.extend({
 			this.dialogs[instance.id] = instance;
 
 			if (instance.isSnackbar && instance.snackbarTimeout > 0) {
-				instance.timeoutId = setTimeout(function () { instance.that.closePopover(instance.id, false); }, instance.snackbarTimeout);
+				instance.timeoutId = setTimeout(function () { app.map.uiManager.closeSnackbar(); }, instance.snackbarTimeout);
 			}
 		}
 	},
