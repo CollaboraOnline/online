@@ -132,6 +132,7 @@ class Toolbar {
 
 	updateItem(data: ToolbarItem) {
 		this.builder.updateWidget(this.parentContainer, data);
+		this.updateVisibilityForToolbar('');
 		JSDialog.RefreshScrollables();
 	}
 
