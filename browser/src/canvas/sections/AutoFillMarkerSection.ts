@@ -197,8 +197,6 @@ class AutoFillMarkerSection extends CanvasSectionObject {
 			this.sectionProperties.docLayer._postMouseEvent('buttonup', pos.x, pos.y, 1, 1, 0);
 		}
 
-		this.map._docLayer.isAutoFillFromOnMouseUp = true;
-
 		this.map.scrollingIsHandled = false;
 		this.stopPropagating();
 		e.stopPropagation();
@@ -240,7 +238,6 @@ class AutoFillMarkerSection extends CanvasSectionObject {
 	}
 
 	public onMouseLeave () {
-		this.map._docLayer.isAutoFillFromOnMouseUp = false;
 		this.sectionProperties.mapPane.style.cursor = 'default';
 	}
 

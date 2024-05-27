@@ -85,7 +85,6 @@ class AutoFillOptions extends L.Control.AutoCompletePopup {
 	}
 
 	closeMentionPopup(ev: CloseMessageEvent) {
-		this.map._docLayer.isAutoFillFromOnMouseUp = false;
 		super.closePopup();
 		if (!ev.typingMention) {
 			this.map._docLayer._typingMention = false;
@@ -94,8 +93,6 @@ class AutoFillOptions extends L.Control.AutoCompletePopup {
 	}
 
 	callback(objectType: any, eventType: any, object: any, index: number) {
-		this.map._docLayer.isAutoFillFromOnMouseUp = false;
-
 		if (eventType === 'close') {
 			this.closeMentionPopup({ typingMention: false } as CloseMessageEvent);
 		} else if (eventType === 'select' || eventType === 'activate') {
