@@ -9,7 +9,15 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#include <Poco/Net/HTTPRequest.h>
+#include <Poco/Net/HTTPResponse.h>
+#include <Poco/Net/WebSocket.h>
 #include <config.h>
+#include <config_version.h>
+
+#include <ClientRequestDispatcher.hpp>
+#include <cstdio>
+#include <istream>
 
 #if ENABLE_FEATURE_LOCK
 #include "CommandControl.hpp"
@@ -51,9 +59,15 @@
 #include <Poco/Net/HTMLForm.h>
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/NetException.h>
+#include <Poco/Net/DNS.h>
 #include <Poco/Net/PartHandler.h>
+#if !MOBILEAPP
+#include <Poco/Net/SSLException.h>
+#include <Poco/Net/HTTPSClientSession.h>
+#endif // !MOBILEAPP
 #include <Poco/SAX/InputSource.h>
 #include <Poco/StreamCopier.h>
+#include <Poco/Timespan.h>
 
 #include <algorithm>
 #include <map>
@@ -867,6 +881,8 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
                 servedSync = handleWopiDiscoveryRequest(requestDetails, socket);
             else if (requestDetails.equals(1, "capabilities"))
                 servedSync = handleCapabilitiesRequest(request, socket);
+            else if (requestDetails.equals(1, "wopiAccessCheck"))
+                handleWopiAccessCheckRequest(request, message, socket);
             else
                 HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, socket);
         }
@@ -1087,6 +1103,156 @@ bool ClientRequestDispatcher::handleWopiDiscoveryRequest(
     LOG_TRC("Sending back discovery.xml: " << xml);
     socket->send(httpResponse);
     LOG_INF("Sent discovery.xml successfully.");
+    return true;
+}
+
+bool ClientRequestDispatcher::handleWopiAccessCheckRequest(const Poco::Net::HTTPRequest& request,
+                                                           Poco::MemoryInputStream& message,
+                                                           const std::shared_ptr<StreamSocket>& socket)
+{
+    assert(socket && "Must have a valid socket");
+
+    LOG_DBG("Wopi Access Check request: " << request.getURI());
+
+    // Poco::JSON
+    Poco::JSON::Parser jsonParser;
+    Poco::Dynamic::Var parsingResult;
+    Poco::JSON::Object::Ptr object;
+    Poco::URI uri;
+
+    std::string text(std::istreambuf_iterator<char>(message), {});
+    try
+    {
+        parsingResult = jsonParser.parse(text);
+        object = parsingResult.extract<Poco::JSON::Object::Ptr>();
+
+        auto callbackUrlStr = object->getValue<std::string>("callbackUrl");
+
+        uri = Poco::URI(callbackUrlStr);
+    }
+    catch (const std::exception& exception)
+    {
+        LOG_ERR_S("Wopi Access Check request error, json object expected got ["
+                  << text << "] on request to URL: " << request.getURI() << exception.what());
+
+        HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, socket);
+        return false;
+    }
+
+    enum class CheckStatus
+    {
+        Ok = 0,
+        NotHttpSucess,
+        HostNotFound,
+        HostUnReachable,
+        UnspecifiedError,
+        ConnectionAborted,
+        ConnectionRefused,
+        InvalidCertificate,
+        CertificateValidation,
+        NotHttps,
+        NoScheme,
+        Timeout,
+    };
+    std::map<CheckStatus, std::string> checkStatusNames = {
+        { CheckStatus::Ok, "Ok" },
+        { CheckStatus::NotHttpSucess, "NOT_HTTP_SUCESS" },
+        { CheckStatus::HostNotFound, "HOST_NOT_FOUND" },
+        { CheckStatus::HostUnReachable, "HOST_UNREACHABLE" },
+        { CheckStatus::UnspecifiedError, "UNSPECIFIED_ERROR" },
+        { CheckStatus::ConnectionAborted, "CONNECTION_ABORTED" },
+        { CheckStatus::ConnectionRefused, "CONNECTION_REFUSED" },
+        { CheckStatus::InvalidCertificate, "INVALID_CERTIFICATE" },
+        { CheckStatus::NotHttps, "NOT_HTTPS" },
+        { CheckStatus::NoScheme, "NO_SCHEME" },
+        { CheckStatus::Timeout, "TIMEOUT" }
+    };
+
+    CheckStatus result = CheckStatus::Ok;
+
+    if (uri.getScheme().empty())
+    {
+        result = CheckStatus::NoScheme;
+    }
+    else if (uri.getScheme() != "https")
+    {
+        result = CheckStatus::NotHttps;
+    }
+    else
+    {
+        // request the url
+        try
+        {
+            const auto hostAddress(Poco::Net::DNS::resolve(uri.getHost()));
+
+            Poco::Net::HTTPSClientSession httpSession(uri.getHost(), 443);
+            httpSession.setConnectTimeout(Poco::Timespan(0, 300));
+            Poco::Net::HTTPRequest httpRequest(Poco::Net::HTTPRequest::HTTP_GET,
+                                               uri.getPathAndQuery());
+            httpSession.sendRequest(httpRequest);
+            Poco::Net::HTTPResponse response;
+            std::istream* responseStream = &httpSession.receiveResponse(response);
+
+            std::cout << responseStream->rdbuf();
+            if (response.getStatus() != 200)
+            {
+                result = CheckStatus::NotHttpSucess;
+            }
+        }
+        catch (Poco::Net::HostNotFoundException& hostNotfound)
+        {
+            result = CheckStatus::HostNotFound;
+        }
+        catch (Poco::Net::NoAddressFoundException& noAddressFound)
+        {
+            result = CheckStatus::HostUnReachable;
+        }
+        catch (Poco::Net::ConnectionAbortedException& connectionAborted)
+        {
+            result = CheckStatus::ConnectionAborted;
+        }
+        catch (Poco::Net::ConnectionRefusedException& exception)
+        {
+            result = CheckStatus::ConnectionRefused;
+        }
+        catch (Poco::Net::InvalidCertificateException& invalidCertification)
+        {
+            result = CheckStatus::InvalidCertificate;
+        }
+        catch (Poco::Net::CertificateValidationException& certificateValidation)
+        {
+            result = CheckStatus::CertificateValidation;
+        }
+        catch (Poco::TimeoutException& timeout)
+        {
+            result = CheckStatus::Timeout;
+        }
+        catch (Poco::Exception& exception)
+        {
+            LOG_ERR_S("Wopi Access Check request error, query to callback ["
+                      << uri.toString() << "] failed:" << exception.what() << exception.className()
+                      << exception.name() << exception.message());
+
+            result = CheckStatus::UnspecifiedError;
+        }
+    }
+
+    // construct the result
+    Poco::JSON::Object::Ptr status = new Poco::JSON::Object;
+    status->set("status", (int)result);
+    status->set("details", checkStatusNames[result]);
+
+    std::ostringstream ostrJSON;
+    status->stringify(ostrJSON);
+    const auto output = ostrJSON.str();
+
+    http::Response httpResponse(http::StatusCode::OK);
+    FileServerRequestHandler::hstsHeaders(httpResponse);
+    httpResponse.set("Last-Modified", Util::getHttpTimeNow());
+    httpResponse.setBody(output, "application/json");
+    httpResponse.set("X-Content-Type-Options", "nosniff");
+    socket->sendAndShutdown(httpResponse);
+    LOG_INF("Sent capabilities.json successfully.");
     return true;
 }
 
