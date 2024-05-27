@@ -230,6 +230,13 @@ COOL_JS_LST =\
 	src/canvas/sections/TilesSection.ts \
 	src/canvas/sections/AutoFillMarkerSection.ts \
 	src/canvas/sections/HTMLObjectSection.ts \
+	src/canvas/sections/ShapeHandlesSection.ts \
+	src/canvas/sections/ShapeHandleCustomSubSection.ts \
+	src/canvas/sections/ShapeHandlePolySubSection.ts \
+	src/canvas/sections/ShapeHandleGluePointSubSection.ts \
+	src/canvas/sections/ShapeHandleAnchorSubSection.ts \
+	src/canvas/sections/ShapeHandleRotationSubSection.ts \
+	src/canvas/sections/ShapeHandleScalingSubSection.ts \
 	src/canvas/sections/CellCursorSection.ts \
 	src/canvas/sections/CellSelectionHandleSection.ts \
 	src/canvas/sections/CalcValidityDropDownSection.ts \
@@ -283,7 +290,6 @@ COOL_JS_LST =\
 	src/layer/vector/SplitPanesSVG.js \
 	src/layer/vector/Path.Transform.SVG.js \
 	src/core/Handler.js \
-	src/layer/vector/SVGGroup.js \
 	src/layer/vector/Path.Drag.Transform.js \
 	src/layer/vector/Path.Drag.js \
 	src/layer/vector/Path.Transform.Util.js \

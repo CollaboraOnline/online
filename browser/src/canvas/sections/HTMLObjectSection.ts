@@ -9,14 +9,14 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-class HTMLObjectSection extends app.definitions.canvasSectionObject {
+class HTMLObjectSection extends CanvasSectionObject {
 	name: string = "will-be-set-at-initialization"; // There may be multiple instances of this class.
 	processingOrder: number = L.CSections.HTMLObject.processingOrder;
 	drawingOrder: number = L.CSections.HTMLObject.drawingOrder;
 	zIndex: number = L.CSections.HTMLObject.zIndex;
 	documentObject: boolean = true;
 
-	constructor (sectionName: string, objectWidth: number, objectHeight: number, documentPosition: cool.SimplePoint,  extraClass: string = "", showSection: boolean = true) {
+	constructor (sectionName: string, objectWidth: number, objectHeight: number, documentPosition: cool.SimplePoint, extraClass: string = "", showSection: boolean = true) {
         super();
 
 		this.name = sectionName;
@@ -43,6 +43,7 @@ class HTMLObjectSection extends app.definitions.canvasSectionObject {
 
 	onInitialize(): void {
 		this.setPosition(this.position[0], this.position[1]);
+		this.adjustHTMLObjectPosition();
 	}
 
 	public onSectionShowStatusChange(): void {
@@ -52,12 +53,30 @@ class HTMLObjectSection extends app.definitions.canvasSectionObject {
 			this.sectionProperties.objectDiv.style.display = 'none';
 	}
 
-	public onDraw() {
-		if (this.sectionProperties.objectDiv.style.left !== Math.round(this.myTopLeft[0] / app.dpiScale) + 'px')
-			this.sectionProperties.objectDiv.style.left = Math.round(this.myTopLeft[0] / app.dpiScale) + 'px';
+	adjustHTMLObjectPosition() {
+		let leftAddition = 0;
+		let topAddition = 0;
 
-		if (this.sectionProperties.objectDiv.style.top !== Math.round(this.myTopLeft[1] / app.dpiScale) + 'px')
-			this.sectionProperties.objectDiv.style.top = Math.round(this.myTopLeft[1] / app.dpiScale) + 'px';
+		if (this.sectionProperties.objectDiv.parentNode.id === 'map') {
+			const clientRectMap = document.getElementById('map').getBoundingClientRect();
+			const clientRectCanvas = document.getElementById('canvas-container').getBoundingClientRect();
+
+			leftAddition = clientRectMap.width - clientRectCanvas.width;
+			topAddition = clientRectMap.height - clientRectCanvas.height;
+		}
+
+		const left = Math.round((this.myTopLeft[0] + leftAddition) / app.dpiScale) + 'px';
+		const top = Math.round((this.myTopLeft[1] + topAddition) / app.dpiScale) + 'px';
+
+		if (this.sectionProperties.objectDiv.style.left !== left)
+			this.sectionProperties.objectDiv.style.left = left;
+
+		if (this.sectionProperties.objectDiv.style.top !== top)
+			this.sectionProperties.objectDiv.style.top = top;
+	}
+
+	onDraw(frameCount?: number, elapsedTime?: number, subsetBounds?: Bounds): void {
+		this.adjustHTMLObjectPosition();
 	}
 
 	public getHTMLObject() {
@@ -65,6 +84,8 @@ class HTMLObjectSection extends app.definitions.canvasSectionObject {
 	}
 
 	public onNewDocumentTopLeft(): void {
+		this.adjustHTMLObjectPosition();
+
 		if (this.isVisible && this.isSectionShown()) {
 			if (this.sectionProperties.objectDiv.style.display !== '')
 				this.sectionProperties.objectDiv.style.display = '';
