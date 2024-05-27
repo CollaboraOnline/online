@@ -1603,6 +1603,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (data.enabled === 'false' || data.enabled === false)
 			$(edit).prop('disabled', true);
 
+		JSDialog.SynchronizeDisabledState(container, [edit]);
+
 		edit.addEventListener('keyup', function(e) {
 			var callbackToUse =
 				(e.key === 'Enter' && data.changedCallback) ? data.changedCallback : null;
