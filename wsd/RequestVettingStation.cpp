@@ -239,11 +239,19 @@ void RequestVettingStation::handleRequest(const std::string& id,
                              _checkFileInfo->state() == CheckFileInfo::State::Pass &&
                              _checkFileInfo->wopiInfo())
                     {
+                        std::string sslVerifyResult = _checkFileInfo->getSslVerifyMessage();
                         // We have a valid CheckFileInfo result; Create the DocBroker.
                         if (createDocBroker(docKey, url, uriPublic))
                         {
                             assert(_docBroker && "Must have docBroker");
                             createClientSession(docKey, url, uriPublic, isReadOnly);
+                            // If there is anything dubious about the ssl
+                            // connection provide a warning about that.
+                            if (!sslVerifyResult.empty())
+                            {
+                                LOG_WRN_S("SSL verification warning: '" << sslVerifyResult << "' seen on CheckFileInfo for ["
+                                              << docKey << "]");
+                            }
                         }
                     }
                     else if (_checkFileInfo == nullptr ||
