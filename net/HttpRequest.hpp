@@ -1024,7 +1024,7 @@ private:
         , _port(std::to_string(portNumber))
         , _protocol(protocolType)
         , _fd(-1)
-        , _lastSslVerifyResult(0)
+        , _handshakeSslVerifyFailure(0)
         , _timeout(getDefaultTimeout())
         , _connected(false)
     {
@@ -1267,7 +1267,10 @@ public:
     std::string getSslVerifyMessage()
     {
 #if ENABLE_SSL
-        return SslStreamSocket::getSslVerifyString(_lastSslVerifyResult);
+        std::shared_ptr<StreamSocket> socket = _socket.lock();
+        if (socket)
+            return SslStreamSocket::getSslVerifyString(socket->getSslVerifyResult());
+        return SslStreamSocket::getSslVerifyString(_handshakeSslVerifyFailure);
 #else
         return std::string();
 #endif
@@ -1397,7 +1400,7 @@ private:
         {
             LOG_DBG("Error: onConnect without a valid socket");
             _fd = -1;
-            _lastSslVerifyResult = 0;
+            _handshakeSslVerifyFailure = 0;
             _connected = false;
         }
     }
@@ -1492,7 +1495,7 @@ private:
         if (socket)
         {
             LOG_TRC("onHandshakeFail");
-            _lastSslVerifyResult = socket->getSslVerifyResult();
+            _handshakeSslVerifyFailure = socket->getSslVerifyResult();
         }
     }
 
@@ -1560,7 +1563,7 @@ private:
     const std::string _port;
     const Protocol _protocol;
     int _fd; //< The socket file-descriptor.
-    long _lastSslVerifyResult; //< Save SslVerityResult at onHandshakeFail
+    long _handshakeSslVerifyFailure; //< Save SslVerityResult at onHandshakeFail
     std::chrono::microseconds _timeout;
     std::chrono::steady_clock::time_point _startTime;
     bool _connected;
