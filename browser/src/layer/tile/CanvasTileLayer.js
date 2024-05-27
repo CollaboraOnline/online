@@ -1440,6 +1440,9 @@ L.CanvasTileLayer = L.Layer.extend({
 		else if (textMsg.startsWith('cellautofillarea:')) {
 			this._onCellAutoFillAreaMsg(textMsg);
 		}
+		else if (textMsg.startsWith('cellactions:')) {
+			this._onCellActionsMsg();
+		}
 		else if (textMsg.startsWith('complexselection:')) {
 			if (this._map._clip)
 				this._map._clip.onComplexSelection(textMsg.substr('complexselection:'.length));
@@ -3216,16 +3219,16 @@ L.CanvasTileLayer = L.Layer.extend({
 			var topLeftPixels = this._twipsToCorePixels(topLeftTwips);
 			var offsetPixels = this._twipsToCorePixels(offset);
 			this._cellAutoFillAreaPixels = L.LOUtil.createRectangle(topLeftPixels.x, topLeftPixels.y, offsetPixels.x, offsetPixels.y);
-
-			// if comes from onMouseUp event of AutoFillMarkerSection.ts, open AutoFill popup with location data
-			if (this._map._docLayer.isAutoFillFromOnMouseUp) {
-				// TODO: don't open AutoFill popup if empty cells are selected
-				this._map.fire('sendautofilllocation', { data: topLeftPixels });
-			}
+			this._map._docLayer.autoFillLocation = { data: topLeftPixels };
 		}
 		else {
 			this._cellAutoFillAreaPixels = null;
 		}
+	},
+
+	_onCellActionsMsg: function () {
+		// TODO: don't open AutoFill popup if empty cells are selected
+		this._map.fire('sendautofilllocation', this._map._docLayer.autoFillLocation);
 	},
 
 	_onDialogPaintMsg: function(textMsg, img) {

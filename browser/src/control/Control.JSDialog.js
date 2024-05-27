@@ -605,15 +605,8 @@ L.Control.JSDialog = L.Control.extend({
 				this.close(autoFilterDialogId, true);
 			}
 
-			if (dialog.isAutoFillPopup) {
-				var isAutoFillFromOnMouseUp = this.map._docLayer.isAutoFillFromOnMouseUp;
-
-				// hide AutoFill popup if it does not come from onMouseUp event (see AutoFillMarkerSection.ts)
-				if (!isAutoFillFromOnMouseUp)
-					this.close(autoFilterDialogId)
-				else
-					this.map._docLayer.isAutoFillFromOnMouseUp = false;
-			}
+			if (dialog.isAutoFillPopup)
+				this.close(autoFilterDialogId);
 		}
 	},
 
