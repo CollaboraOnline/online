@@ -458,6 +458,7 @@ std::chrono::microseconds SysStopwatch::elapsedTime() const
     uint64_t totalUs = (nowCPU - _startCPU) + (nowSys - _startSys);
     return std::chrono::microseconds(totalUs);
 }
+
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

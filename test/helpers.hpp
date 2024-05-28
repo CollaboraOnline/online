@@ -360,10 +360,10 @@ inline bool haveSsl()
 }
 
 /// Return a fully-qualified URI, with schema, to the test loopback server.
-inline std::string const& getTestServerURI()
+inline std::string const& getTestServerURI(std::string proto = "http")
 {
     static std::string serverURI(
-        (haveSsl() && config::isSslEnabled() ? "https://127.0.0.1:" : "http://127.0.0.1:")
+        (haveSsl() && config::isSslEnabled() ? proto + "s://127.0.0.1:" : proto + "://127.0.0.1:")
         + std::to_string(ClientPortNumber));
 
     return serverURI;

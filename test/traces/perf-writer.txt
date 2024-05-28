@@ -1,0 +1,185 @@
+~+3008950~FoWfKnRzxrKHTLC4~000~NewSession: https://localhost:9980/wopi/files/opt/libreoffice/online/test/data/hello-world.odt?access_token=test&access_token_ttl=0
+~+141759~FoWfKnRzxrKHTLC4~05f~NewSession: https://localhost:9980/wopi/files/opt/libreoffice/online/test/data/hello-world.odt?access_token=test&access_token_ttl=0
+>+480>FoWfKnRzxrKHTLC4>05f>coolclient 0.1 1716920949623 169.39999999850988
+>+5524>FoWfKnRzxrKHTLC4>05f>load url=https%3A%2F%2Flocalhost%3A9980%2Fwopi%2Ffiles%2Fopt%2Flibreoffice%2Fonline%2Ftest%2Fdata%2Fhello-world.odt accessibilityState=false deviceFormFactor=desktop spreadsheetDarkTheme=false timezone=Europe/London
+>+636629>FoWfKnRzxrKHTLC4>05f>uno .uno:ToolbarMode?Mode:string=notebookbar_online.ui
+>+18435>FoWfKnRzxrKHTLC4>05f>commandvalues command=.uno:StyleApply
+>+60>FoWfKnRzxrKHTLC4>05f>commandvalues command=.uno:CharFontName
+>+1526>FoWfKnRzxrKHTLC4>05f>commandvalues command=.uno:AcceptTrackedChanges
+>+12557>FoWfKnRzxrKHTLC4>05f>commandvalues command=.uno:LanguageStatus
+>+44>FoWfKnRzxrKHTLC4>05f>commandvalues command=.uno:ViewAnnotations
+>+38>FoWfKnRzxrKHTLC4>05f>commandvalues command=.uno:StyleApply
+>+78>FoWfKnRzxrKHTLC4>05f>commandvalues command=.uno:CharFontName
+>+15139>FoWfKnRzxrKHTLC4>05f>clientvisiblearea x=-3195 y=0 width=19185 height=8685 splitx=0 splity=0
+>+172>FoWfKnRzxrKHTLC4>05f>clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=2560 tiletwipheight=2560
+>+191>FoWfKnRzxrKHTLC4>05f>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,2560,5120,7680,10240,12800,0,2560,5120,7680,10240,12800,0,2560,5120,7680,10240,12800,0,2560,5120,7680,10240,12800 tileposy=0,0,0,0,0,0,2560,2560,2560,2560,2560,2560,5120,5120,5120,5120,5120,5120,7680,7680,7680,7680,7680,7680 oldwid=0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 tilewidth=2560 tileheight=2560
+>+73031>FoWfKnRzxrKHTLC4>05f>commandvalues command=.uno:ViewAnnotations
+>+191674>FoWfKnRzxrKHTLC4>05f>uno .uno:SidebarShow
+>+156>FoWfKnRzxrKHTLC4>05f>uno .uno:Navigator
+>+31468>FoWfKnRzxrKHTLC4>05f>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,2560,5120,7680,10240,12800,0,2560,5120,7680,10240,12800,0,2560,5120,7680,10240,12800,0,2560,5120,7680,10240,12800 tileposy=7680,7680,7680,7680,7680,7680,10240,10240,10240,10240,10240,10240,12800,12800,12800,12800,12800,12800,15360,15360,15360,15360,15360,15360 oldwid=0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 tilewidth=2560 tileheight=2560
+>+204079>FoWfKnRzxrKHTLC4>05f>clientvisiblearea x=-3045 y=0 width=18900 height=6975 splitx=0 splity=0
+>+14437>FoWfKnRzxrKHTLC4>05f>clientvisiblearea x=-2910 y=0 width=18615 height=6975 splitx=0 splity=0
+>+18439>FoWfKnRzxrKHTLC4>05f>clientvisiblearea x=-2640 y=0 width=18090 height=6975 splitx=0 splity=0
+>+8919>FoWfKnRzxrKHTLC4>05f>clientvisiblearea x=-2490 y=0 width=17790 height=6975 splitx=0 splity=0
+>+9385>FoWfKnRzxrKHTLC4>05f>clientvisiblearea x=-2340 y=0 width=17475 height=6975 splitx=0 splity=0
+>+8400>FoWfKnRzxrKHTLC4>05f>clientvisiblearea x=-2190 y=0 width=17175 height=6975 splitx=0 splity=0
+>+8378>FoWfKnRzxrKHTLC4>05f>clientvisiblearea x=-2040 y=0 width=16875 height=6975 splitx=0 splity=0
+>+8204>FoWfKnRzxrKHTLC4>05f>clientvisiblearea x=-1875 y=0 width=16545 height=6975 splitx=0 splity=0
+>+9187>FoWfKnRzxrKHTLC4>05f>clientvisiblearea x=-1680 y=0 width=16170 height=6975 splitx=0 splity=0
+>+7962>FoWfKnRzxrKHTLC4>05f>clientvisiblearea x=-1545 y=0 width=15885 height=6975 splitx=0 splity=0
+>+8336>FoWfKnRzxrKHTLC4>05f>clientvisiblearea x=-1425 y=0 width=15645 height=6975 splitx=0 splity=0
+>+8305>FoWfKnRzxrKHTLC4>05f>clientvisiblearea x=-1275 y=0 width=15360 height=6975 splitx=0 splity=0
+>+7706>FoWfKnRzxrKHTLC4>05f>clientvisiblearea x=-1155 y=0 width=15120 height=6975 splitx=0 splity=0
+>+8592>FoWfKnRzxrKHTLC4>05f>clientvisiblearea x=-1050 y=0 width=14895 height=6975 splitx=0 splity=0
+>+10255>FoWfKnRzxrKHTLC4>05f>clientvisiblearea x=-945 y=0 width=14685 height=6975 splitx=0 splity=0
+>+7821>FoWfKnRzxrKHTLC4>05f>clientvisiblearea x=-870 y=0 width=14550 height=6975 splitx=0 splity=0
+>+7816>FoWfKnRzxrKHTLC4>05f>clientvisiblearea x=-825 y=0 width=14445 height=6975 splitx=0 splity=0
+>+8780>FoWfKnRzxrKHTLC4>05f>clientvisiblearea x=-795 y=0 width=14385 height=6975 splitx=0 splity=0
+>+7607>FoWfKnRzxrKHTLC4>05f>clientvisiblearea x=-780 y=0 width=14370 height=6975 splitx=0 splity=0
+>+577925>FoWfKnRzxrKHTLC4>05f>mouse type=move x=4365 y=1609.99992 count=1 buttons=0 modifier=0
+>+309728>FoWfKnRzxrKHTLC4>05f>mouse type=buttondown x=4365 y=1609.99992 count=1 buttons=1 modifier=0
+>+358>FoWfKnRzxrKHTLC4>05f>mouse type=buttonup x=4365 y=1609.99992 count=1 buttons=1 modifier=0
+>+518611>FoWfKnRzxrKHTLC4>05f>key type=input char=13 key=1280
+>+119539>FoWfKnRzxrKHTLC4>05f>key type=up char=0 key=1280
+>+536327>FoWfKnRzxrKHTLC4>05f>mouse type=move x=3540 y=334.99992 count=1 buttons=0 modifier=0
+>+2265776>FoWfKnRzxrKHTLC4>05f>mouse type=move x=4800 y=3259.99992 count=1 buttons=0 modifier=0
+>+693554>FoWfKnRzxrKHTLC4>05f>key type=input char=0 key=1025
+>+135560>FoWfKnRzxrKHTLC4>05f>key type=up char=0 key=1025
+>+137413>FoWfKnRzxrKHTLC4>05f>key type=input char=0 key=8449
+>+274371>FoWfKnRzxrKHTLC4>05f>key type=input char=0 key=1024
+>+143563>FoWfKnRzxrKHTLC4>05f>key type=up char=0 key=1024
+>+820784>FoWfKnRzxrKHTLC4>05f>textinput id=0 text=T
+>+128839>FoWfKnRzxrKHTLC4>05f>textinput id=0 text=h
+>+79753>FoWfKnRzxrKHTLC4>05f>textinput id=0 text=i
+>+47507>FoWfKnRzxrKHTLC4>05f>textinput id=0 text=s
+>+46055>FoWfKnRzxrKHTLC4>05f>key type=input char=32 key=0
+>+226>FoWfKnRzxrKHTLC4>05f>key type=up char=0 key=1284
+>+92795>FoWfKnRzxrKHTLC4>05f>textinput id=0 text=i
+>+47172>FoWfKnRzxrKHTLC4>05f>textinput id=0 text=s
+>+62862>FoWfKnRzxrKHTLC4>05f>key type=input char=32 key=0
+>+196>FoWfKnRzxrKHTLC4>05f>key type=up char=0 key=1284
+>+217181>FoWfKnRzxrKHTLC4>05f>textinput id=0 text=s
+>+26635>FoWfKnRzxrKHTLC4>05f>textinput id=0 text=o
+>+121809>FoWfKnRzxrKHTLC4>05f>textinput id=0 text=n
+>+133808>FoWfKnRzxrKHTLC4>05f>textinput id=0 text=e
+>+207015>FoWfKnRzxrKHTLC4>05f>removetextcontext id=0 before=1 after=0
+>+146397>FoWfKnRzxrKHTLC4>05f>removetextcontext id=0 before=1 after=0
+>+114113>FoWfKnRzxrKHTLC4>05f>textinput id=0 text=m
+>+69434>FoWfKnRzxrKHTLC4>05f>textinput id=0 text=e
+>+93323>FoWfKnRzxrKHTLC4>05f>key type=input char=32 key=0
+>+269>FoWfKnRzxrKHTLC4>05f>key type=up char=0 key=1284
+>+99473>FoWfKnRzxrKHTLC4>05f>textinput id=0 text=b
+>+61278>FoWfKnRzxrKHTLC4>05f>textinput id=0 text=o
+>+208416>FoWfKnRzxrKHTLC4>05f>textinput id=0 text=y
+>+610658>FoWfKnRzxrKHTLC4>05f>removetextcontext id=0 before=1 after=0
+>+57365>FoWfKnRzxrKHTLC4>05f>textinput id=0 text=d
+>+145549>FoWfKnRzxrKHTLC4>05f>textinput id=0 text=y
+>+88078>FoWfKnRzxrKHTLC4>05f>key type=input char=32 key=0
+>+201>FoWfKnRzxrKHTLC4>05f>key type=up char=0 key=1284
+>+84196>FoWfKnRzxrKHTLC4>05f>textinput id=0 text=c
+>+74114>FoWfKnRzxrKHTLC4>05f>textinput id=0 text=o
+>+52910>FoWfKnRzxrKHTLC4>05f>textinput id=0 text=n
+>+96059>FoWfKnRzxrKHTLC4>05f>textinput id=0 text=t
+>+50147>FoWfKnRzxrKHTLC4>05f>textinput id=0 text=e
+>+66415>FoWfKnRzxrKHTLC4>05f>textinput id=0 text=n
+>+70558>FoWfKnRzxrKHTLC4>05f>textinput id=0 text=t
+>+80991>FoWfKnRzxrKHTLC4>05f>key type=input char=32 key=0
+>+269>FoWfKnRzxrKHTLC4>05f>key type=up char=0 key=1284
+>+136830>FoWfKnRzxrKHTLC4>05f>key type=input char=46 key=0
+>+365>FoWfKnRzxrKHTLC4>05f>key type=up char=0 key=190
+>+115502>FoWfKnRzxrKHTLC4>05f>key type=input char=46 key=0
+>+268>FoWfKnRzxrKHTLC4>05f>key type=up char=0 key=190
+>+124098>FoWfKnRzxrKHTLC4>05f>key type=input char=46 key=0
+>+332>FoWfKnRzxrKHTLC4>05f>key type=up char=0 key=190
+>+33281>FoWfKnRzxrKHTLC4>05f>key type=input char=13 key=1280
+>+122510>FoWfKnRzxrKHTLC4>05f>key type=up char=0 key=1280
+>+1761983>FoWfKnRzxrKHTLC4>05f>mouse type=move x=2910 y=394.99992 count=1 buttons=0 modifier=0
+>+3990487>FoWfKnRzxrKHTLC4>05f>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,2560,5120,7680,10240 tileposy=10240,10240,10240,10240,10240 oldwid=25,26,27,28,29 tilewidth=2560 tileheight=2560
+>+748309>FoWfKnRzxrKHTLC4>05f>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,2560,5120,7680,10240 tileposy=12800,12800,12800,12800,12800 oldwid=31,32,33,34,35 tilewidth=2560 tileheight=2560
+>+281386>FoWfKnRzxrKHTLC4>05f>uno .uno:InsertTable { "Columns": { "type": "long","value": 6 }, "Rows": { "type": "long","value": 4 }}
+>+1253134>FoWfKnRzxrKHTLC4>05f>mouse type=move x=3000 y=4579.99992 count=1 buttons=0 modifier=0
+>+449447>FoWfKnRzxrKHTLC4>05f>mouse type=move x=4005 y=79.99992 count=1 buttons=0 modifier=0
+>+575509>FoWfKnRzxrKHTLC4>05f>mouse type=move x=3600 y=4879.99992 count=1 buttons=0 modifier=0
+>+232572>FoWfKnRzxrKHTLC4>05f>mouse type=move x=3120 y=3484.99992 count=1 buttons=0 modifier=0
+>+225083>FoWfKnRzxrKHTLC4>05f>mouse type=move x=3030 y=3169.99992 count=1 buttons=0 modifier=0
+>+225273>FoWfKnRzxrKHTLC4>05f>mouse type=move x=3060 y=3049.99992 count=1 buttons=0 modifier=0
+>+449690>FoWfKnRzxrKHTLC4>05f>textinput id=0 text=T
+>+111812>FoWfKnRzxrKHTLC4>05f>textinput id=0 text=h
+>+33086>FoWfKnRzxrKHTLC4>05f>textinput id=0 text=i
+>+69187>FoWfKnRzxrKHTLC4>05f>textinput id=0 text=s
+>+60276>FoWfKnRzxrKHTLC4>05f>mouse type=move x=3060 y=3049.99992 count=1 buttons=0 modifier=0
+>+2025>FoWfKnRzxrKHTLC4>05f>key type=input char=32 key=0
+>+64>FoWfKnRzxrKHTLC4>05f>key type=up char=0 key=1284
+>+83090>FoWfKnRzxrKHTLC4>05f>textinput id=0 text=m
+>+207642>FoWfKnRzxrKHTLC4>05f>textinput id=0 text=s
+>+138232>FoWfKnRzxrKHTLC4>05f>removetextcontext id=0 before=1 after=0
+>+160223>FoWfKnRzxrKHTLC4>05f>removetextcontext id=0 before=1 after=0
+>+191466>FoWfKnRzxrKHTLC4>05f>textinput id=0 text=i
+>+76631>FoWfKnRzxrKHTLC4>05f>textinput id=0 text=s
+>+61878>FoWfKnRzxrKHTLC4>05f>key type=input char=32 key=0
+>+179>FoWfKnRzxrKHTLC4>05f>key type=up char=0 key=1284
+>+94738>FoWfKnRzxrKHTLC4>05f>textinput id=0 text=m
+>+31653>FoWfKnRzxrKHTLC4>05f>textinput id=0 text=e
+>+161862>FoWfKnRzxrKHTLC4>05f>key type=input char=32 key=0
+>+266>FoWfKnRzxrKHTLC4>05f>key type=up char=0 key=1284
+>+122203>FoWfKnRzxrKHTLC4>05f>textinput id=0 text=t
+>+144730>FoWfKnRzxrKHTLC4>05f>textinput id=0 text=y
+>+52627>FoWfKnRzxrKHTLC4>05f>textinput id=0 text=p
+>+160828>FoWfKnRzxrKHTLC4>05f>textinput id=0 text=i
+>+30744>FoWfKnRzxrKHTLC4>05f>textinput id=0 text=n
+>+33887>FoWfKnRzxrKHTLC4>05f>textinput id=0 text=g
+>+96272>FoWfKnRzxrKHTLC4>05f>key type=input char=32 key=0
+>+228>FoWfKnRzxrKHTLC4>05f>key type=up char=0 key=1284
+>+108560>FoWfKnRzxrKHTLC4>05f>textinput id=0 text=s
+>+34002>FoWfKnRzxrKHTLC4>05f>textinput id=0 text=o
+>+41278>FoWfKnRzxrKHTLC4>05f>textinput id=0 text=m
+>+87440>FoWfKnRzxrKHTLC4>05f>textinput id=0 text=e
+>+38380>FoWfKnRzxrKHTLC4>05f>textinput id=0 text=t
+>+299116>FoWfKnRzxrKHTLC4>05f>removetextcontext id=0 before=1 after=0
+>+128532>FoWfKnRzxrKHTLC4>05f>textinput id=0 text=w
+>+130235>FoWfKnRzxrKHTLC4>05f>textinput id=0 text=h
+>+39439>FoWfKnRzxrKHTLC4>05f>textinput id=0 text=a
+>+55210>FoWfKnRzxrKHTLC4>05f>textinput id=0 text=t
+>+320095>FoWfKnRzxrKHTLC4>05f>key type=input char=0 key=1282
+>+42673>FoWfKnRzxrKHTLC4>05f>key type=up char=0 key=1282
+>+559222>FoWfKnRzxrKHTLC4>05f>textinput id=0 text=A
+>+112521>FoWfKnRzxrKHTLC4>05f>textinput id=0 text=n
+>+51091>FoWfKnRzxrKHTLC4>05f>textinput id=0 text=d
+>+96998>FoWfKnRzxrKHTLC4>05f>key type=input char=32 key=0
+>+241>FoWfKnRzxrKHTLC4>05f>key type=up char=0 key=1284
+>+102527>FoWfKnRzxrKHTLC4>05f>textinput id=0 text=t
+>+94058>FoWfKnRzxrKHTLC4>05f>textinput id=0 text=h
+>+140060>FoWfKnRzxrKHTLC4>05f>mouse type=move x=3060 y=3049.99992 count=1 buttons=0 modifier=0
+>+120911>FoWfKnRzxrKHTLC4>05f>textinput id=0 text=a
+>+42703>FoWfKnRzxrKHTLC4>05f>textinput id=0 text=t
+>+96769>FoWfKnRzxrKHTLC4>05f>key type=input char=39 key=0
+>+229>FoWfKnRzxrKHTLC4>05f>key type=up char=0 key=192
+>+111310>FoWfKnRzxrKHTLC4>05f>textinput id=0 text=s
+>+54611>FoWfKnRzxrKHTLC4>05f>key type=input char=32 key=0
+>+206>FoWfKnRzxrKHTLC4>05f>key type=up char=0 key=1284
+>+213756>FoWfKnRzxrKHTLC4>05f>textinput id=0 text=g
+>+95040>FoWfKnRzxrKHTLC4>05f>textinput id=0 text=o
+>+103548>FoWfKnRzxrKHTLC4>05f>textinput id=0 text=o
+>+536356>FoWfKnRzxrKHTLC4>05f>textinput id=0 text=d
+>+163764>FoWfKnRzxrKHTLC4>05f>key type=input char=46 key=0
+>+156>FoWfKnRzxrKHTLC4>05f>key type=up char=0 key=190
+>+977226>FoWfKnRzxrKHTLC4>05f>mouse type=move x=2520 y=5809.99992 count=1 buttons=0 modifier=0
+>+22104>FoWfKnRzxrKHTLC4>05f>mouse type=buttondown x=2520 y=5809.99992 count=1 buttons=1 modifier=0
+>+199>FoWfKnRzxrKHTLC4>05f>mouse type=buttonup x=2520 y=5809.99992 count=1 buttons=1 modifier=0
+>+569814>FoWfKnRzxrKHTLC4>05f>key type=input char=13 key=1280
+>+83931>FoWfKnRzxrKHTLC4>05f>key type=up char=0 key=1280
+>+806824>FoWfKnRzxrKHTLC4>05f>mouse type=move x=2430 y=769.99992 count=1 buttons=0 modifier=0
+>+6240141>FoWfKnRzxrKHTLC4>05f>uno .uno:SymbolShapes.smiley
+>+57352>FoWfKnRzxrKHTLC4>05f>rendershapeselection mimetype=image/svg+xml
+>+12851>FoWfKnRzxrKHTLC4>05f>rendershapeselection mimetype=image/svg+xml
+>+817152>FoWfKnRzxrKHTLC4>05f>mouse type=move x=5760 y=4009.99992 count=1 buttons=0 modifier=0
+>+618579>FoWfKnRzxrKHTLC4>05f>uno .uno:TransformDialog  {"TransformPosX":{"type":"long","value":4209},"TransformPosY":{"type":"long","value":4186}}
+>+15637>FoWfKnRzxrKHTLC4>05f>rendershapeselection mimetype=image/svg+xml
+>+778430>FoWfKnRzxrKHTLC4>05f>mouse type=move x=1935 y=6199.99992 count=1 buttons=0 modifier=0
+>+40579>FoWfKnRzxrKHTLC4>05f>mouse type=buttondown x=1935 y=6199.99992 count=1 buttons=1 modifier=0
+>+237>FoWfKnRzxrKHTLC4>05f>mouse type=buttonup x=1935 y=6199.99992 count=1 buttons=1 modifier=0
+>+558805>FoWfKnRzxrKHTLC4>05f>mouse type=move x=3195 y=5749.99992 count=1 buttons=0 modifier=0
+>+48773>FoWfKnRzxrKHTLC4>05f>mouse type=buttondown x=3195 y=5749.99992 count=1 buttons=1 modifier=0
+>+235>FoWfKnRzxrKHTLC4>05f>mouse type=buttonup x=3195 y=5749.99992 count=1 buttons=1 modifier=0
+>+136577>FoWfKnRzxrKHTLC4>05f>mouse type=move x=3780 y=5059.99992 count=1 buttons=0 modifier=0
+~+4801295~FoWfKnRzxrKHTLC4~05f~EndSession: https://localhost:9980/wopi/files/opt/libreoffice/online/test/data/hello-world.odt?access_token=test&access_token_ttl=0
