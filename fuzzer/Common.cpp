@@ -20,7 +20,7 @@ namespace fuzzer
 {
 bool DoInitialization()
 {
-    std::string logLevel("none");
+    std::string logLevel("fatal");
     bool withColor = false;
     bool logToFile = false;
     std::map<std::string, std::string> logProperties;
