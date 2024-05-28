@@ -2247,6 +2247,7 @@ void COOLWSD::innerInitialize(Application& self)
         { "ssl.sts.max_age", "31536000" },
         { "ssl.key_file_path", COOLWSD_CONFIGDIR "/key.pem" },
         { "ssl.termination", "true" },
+        { "ssl.ssl_verification", SSL_VERIFY },
         { "stop_on_config_change", "false" },
         { "storage.filesystem[@allow]", "false" },
         // "storage.ssl.enable" - deliberately not set; for back-compat
