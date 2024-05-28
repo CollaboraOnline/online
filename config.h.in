@@ -40,6 +40,9 @@
 /* Whether to enable SSL */
 #undef ENABLE_SSL
 
+/* Whether to default to using SSL_VERIFY_PEER */
+#undef SSL_VERIFY
+
 /* Whether to enable support key */
 #undef ENABLE_SUPPORT_KEY
 

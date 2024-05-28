@@ -426,6 +426,7 @@ experimental_msg="disabled by default"
 bundle_msg="using uglified bundled JS and CSS"
 LOK_LOG_ASSERTIONS=0
 log_asserts_msg="disabled"
+SSL_VERIFY="true"
 
 # a reasonable default
 NUM_PRESPAWN_CHILDREN=4
@@ -443,6 +444,7 @@ if test "$enable_debug" = "yes"; then
    COOLWSD_ANONYMIZE_USER_DATA=false
    BROWSER_LOGGING="true"
    debug_msg="low security debugging mode"
+   SSL_VERIFY="false"
 
    # helps attaching to the right process
    NUM_PRESPAWN_CHILDREN=1
@@ -520,8 +522,14 @@ fi
 if test "$enable_experimental" = "yes" ; then
   ENABLE_EXPERIMENTAL=true
   experimental_msg="enabled by default"
+  SSL_VERIFY="false"
 fi
 AC_SUBST(ENABLE_EXPERIMENTAL)
+
+AC_MSG_CHECKING([if ssl verification is enabled by default])
+AC_MSG_RESULT([$SSL_VERIFY])
+AC_DEFINE_UNQUOTED([SSL_VERIFY],["$SSL_VERIFY"],[Default SSL Verification mode])
+AC_SUBST(SSL_VERIFY)
 
 dnl check for a file at a path with an env-var with a given suffix
 AC_DEFUN([CHK_FILE_VAR], dnl env-var, suffix, file-to-match, msg
@@ -1301,7 +1309,7 @@ AC_SUBST(LIBPFM_LIBS)
 
 ENABLE_SSL=true
 if test "$enable_ssl" != "no" -a "$mobile_app" != "true"; then
-   ssl_msg="ssl enabled"
+   ssl_msg="ssl enabled. cert verification: $SSL_VERIFY"
    ENABLE_SSL=true
    AC_DEFINE([ENABLE_SSL],1,[Whether to enable SSL])
 else

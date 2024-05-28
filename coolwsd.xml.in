@@ -197,6 +197,7 @@
         <cert_file_path desc="Path to the cert file" relative="false">/etc/coolwsd/cert.pem</cert_file_path>
         <key_file_path desc="Path to the key file" relative="false">/etc/coolwsd/key.pem</key_file_path>
         <ca_file_path desc="Path to the ca file" relative="false">/etc/coolwsd/ca-chain.cert.pem</ca_file_path>
+        <ssl_verification desc="Enable or disable SSL verification. You may have to disable it in test environments with self-signed certificates." type="string" default="@SSL_VERIFY@">@SSL_VERIFY@</ssl_verification>
         <cipher_list desc="List of OpenSSL ciphers to accept" default="ALL:!ADH:!LOW:!EXP:!MD5:@STRENGTH"></cipher_list>
         <hpkp desc="Enable HTTP Public key pinning" enable="false" report_only="false">
             <max_age desc="HPKP's max-age directive - time in seconds browser should remember the pins" enable="true">1000</max_age>
@@ -265,7 +266,8 @@
             <enable type="bool" desc="If as_scheme is false or not set, this can be set to force SSL encryption between storage and coolwsd. When empty this defaults to following the ssl.enable setting"></enable>
             <cert_file_path desc="Path to the cert file. When empty this defaults to following the ssl.cert_file_path setting" relative="false"></cert_file_path>
             <key_file_path desc="Path to the key file. When empty this defaults to following the ssl.key_file_path settinge" relative="false"></key_file_path>
-            <ca_file_path desc="Path to the ca file. When empty this defaults to following the ssl.ca_file_path setting. If either are not empty, then SSL verification will be strict, otherwise cert of storage (WOPI-like host) will not be verified." relative="false"></ca_file_path>
+            <ca_file_path desc="Path to the ca file. When empty this defaults to following the ssl.ca_file_path setting" relative="false"></ca_file_path>
+            <ssl_verification desc="Enable or disable SSL verification for storage. If true SSL verification will be strict, otherwise cert of storage (WOPI-like host) will not be verified. For backwards compatibility if this is empty then the default is false if both storage.ssl.ca_file_path and ssl.ca_file_path are empty, otherwise this defaults to following the ssl.ssl_verification setting"></ssl_verification>
             <cipher_list desc="List of OpenSSL ciphers to accept. If empty the defaults are used. These can be overridden only if absolutely needed."></cipher_list>
         </ssl>
     </storage>
