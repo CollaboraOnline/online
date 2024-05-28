@@ -3191,9 +3191,6 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
     case LOK_CALLBACK_CELL_AUTO_FILL_AREA:
         sendTextFrame("cellautofillarea: " + payload);
         break;
-    case LOK_CALLBACK_CELL_ACTIONS:
-        sendTextFrame("cellactions: " + payload);
-        break;
     case LOK_CALLBACK_TABLE_SELECTED:
         sendTextFrame("tableselected: " + payload);
         break;
