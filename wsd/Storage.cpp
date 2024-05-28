@@ -140,7 +140,11 @@ void StorageBase::initialize()
         sslClientParams.caLocation = COOLWSD::getPathFromConfigWithFallback("storage.ssl.ca_file_path", "ssl.ca_file_path");
         sslClientParams.cipherList = COOLWSD::getPathFromConfigWithFallback("storage.ssl.cipher_list", "ssl.cipher_list");
 
-        sslClientParams.verificationMode = (sslClientParams.caLocation.empty() ? Poco::Net::Context::VERIFY_NONE : Poco::Net::Context::VERIFY_STRICT);
+        const bool caLocationEmpty = sslClientParams.caLocation.empty();
+        // Fallback to false if caLocation is empty for back compatibility, otherwise inherit from ssl.ssl_verification
+        const bool sslVerification = caLocationEmpty ? false : COOLWSD::getConfigValue<bool>("ssl.ssl_verification", true);
+
+        sslClientParams.verificationMode = !sslVerification ? Poco::Net::Context::VERIFY_NONE : Poco::Net::Context::VERIFY_STRICT;
         sslClientParams.loadDefaultCAs = true;
     }
     else
@@ -159,8 +163,9 @@ void StorageBase::initialize()
     ssl::Manager::initializeClientContext(
         sslClientParams.certificateFile, sslClientParams.privateKeyFile, sslClientParams.caLocation,
         sslClientParams.cipherList,
-        sslClientParams.caLocation.empty() ? ssl::CertificateVerification::Disabled
-                                           : ssl::CertificateVerification::Required);
+        sslClientParams.verificationMode == Poco::Net::Context::VERIFY_NONE
+            ? ssl::CertificateVerification::Disabled
+            : ssl::CertificateVerification::Required);
     if (!ssl::Manager::isClientContextInitialized())
         LOG_ERR("Failed to initialize Client SSL.");
     else

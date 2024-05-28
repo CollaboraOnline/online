@@ -186,7 +186,8 @@ SslContext::SslContext(const std::string& certFilePath, const std::string& keyFi
             }
         }
 
-        SSL_CTX_set_verify(_ctx, SSL_VERIFY_PEER, nullptr /*&verifyServerCallback*/);
+        const int sslVerifyMode = _verification == ssl::CertificateVerification::Disabled ? SSL_VERIFY_NONE : SSL_VERIFY_PEER;
+        SSL_CTX_set_verify(_ctx, sslVerifyMode, nullptr /*&verifyServerCallback*/);
 
         SSL_CTX_set_cipher_list(_ctx, cipherList.c_str());
         SSL_CTX_set_verify_depth(_ctx, 9);
