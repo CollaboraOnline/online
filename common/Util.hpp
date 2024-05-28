@@ -134,6 +134,20 @@ namespace Util
         std::chrono::steady_clock::time_point _startTime;
     };
 
+    /// A utility class to time using system metrics
+    class SysStopwatch
+    {
+    public:
+        SysStopwatch();
+        void restart();
+        std::chrono::microseconds elapsedTime() const;
+
+    private:
+        static void readTime(uint64_t &cpu, uint64_t &sys);
+        uint64_t _startCPU;
+        uint64_t _startSys;
+    };
+
     class DirectoryCounter
     {
         void *_tasks;

@@ -32,8 +32,9 @@ struct StringToken
 };
 
 /**
- * Safe wrapper around an std::vector<std::string>. Gives you an empty string if you would read past
- * the ends of the vector.
+ * Safe wrapper around an std::vector<std::string>. Gives
+ * you an empty string if you would read past the ends
+ * of the vector.
  */
 class StringVector
 {
