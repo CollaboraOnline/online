@@ -1933,10 +1933,12 @@ input[type='number']:hover::-webkit-outer-spin-button {
 }
 #FormulaDialog .jsdialog.ui-tabpage > .ui-grid {
 	grid-template-rows: 0 auto !important;
+	grid-gap: 0px;
 }
 #FormulaDialog #StructPage {
 	display: grid;
 	grid-template-rows: auto 1fr;
+	grid-row-gap: 4px;
 }
 #FormulaDialog #StructPage .ui-treeview-entry {
 	background-color: transparent;
@@ -1967,6 +1969,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 #FormulaDialog .ui-tabs-content.jsdialog {
 	grid-auto-columns: 250px;
 	margin-right: 0.2em;
+	margin-top: 0px;
 }
 
 div [id^='TemplateDialog'] {
