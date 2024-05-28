@@ -2114,7 +2114,7 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 	public onCommentsDataUpdate(): void {
 		for (var i: number = this.sectionProperties.commentList.length -1; i > -1; i--) {
 			var comment = this.sectionProperties.commentList[i];
-			if (!comment.valid) {
+			if (!comment.valid && comment.sectionProperties.data.id !== 'new') {
 				comment.sectionProperties.commentListSection.removeItem(comment.sectionProperties.data.id);
 			}
 			comment.onCommentDataUpdate();
