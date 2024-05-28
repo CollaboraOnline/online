@@ -154,8 +154,7 @@ bool SslStreamSocket::verifyCertificate()
         }
     }
 
-    // No certificate; acceptable only if verification is not strictly required.
-    return (_verification == ssl::CertificateVerification::IfProvided);
+    return false;
 }
 #endif //ENABLE_SSL
 

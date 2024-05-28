@@ -30,7 +30,6 @@ namespace ssl
 enum class CertificateVerification
 {
     Disabled, //< No verification is performed or results ignored.
-    IfProvided, //< Verified if an optional certificate is provided.
     Required //< Certificate must be provided and will be verified.
 };
 } // namespace ssl
