@@ -2194,6 +2194,13 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'vertical': 'true'
 			},
 			{
+				'id': 'draw-convert-curve',
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:ChangeBezier'),
+				'command': '.uno:ChangeBezier',
+				'accessibility': { focusBack: true, combination: 'CB', de: null }
+			},
+			{
 				'type': 'container',
 				'children': [
 					{
