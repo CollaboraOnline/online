@@ -281,6 +281,113 @@ window.app = {
 		lang: navigatorLang
 	};
 
+	global.prefs = {
+		_localStorageChanges: {}, // TODO: change this to new Map() when JS version allows
+		canPersist: (function() {
+			var str = 'localstorage_test';
+			try {
+				global.localStorage.setItem(str, str);
+				global.localStorage.removeItem(str);
+				return true;
+			} catch (e) {
+				return false;
+			}
+		})(),
+
+		/// Similar to using window.uiDefaults directly, but this can handle dotted keys like "presentation.ShowSidebar" and does not allow partially referencing a value (like just "presentation")
+		_getUIDefault: function(key, defaultValue = undefined) {
+			const parts = key.split('.');
+			let result = global.uiDefaults;
+
+			for (const part of parts) {
+				if (!Object.prototype.hasOwnProperty.call(result, part)) {
+					return defaultValue;
+				}
+
+				if (typeof result === 'string') {
+					return defaultValue;
+				}
+
+				result = result[part];
+			}
+
+			if (typeof result !== 'string') {
+				return defaultValue;
+			}
+
+			return result;
+		},
+
+		get: function(key, defaultValue = undefined) {
+			if (key in global.prefs._localStorageChanges) {
+				return global.prefs._localStorageChanges[key];
+			}
+
+			const uiDefault = global.prefs._getUIDefault(key);
+			if (
+				global.prefs._getUIDefault('SavedUIState', 'true').toLowerCase() === 'false' &&
+				uiDefault !== undefined
+			) {
+				return uiDefault;
+			}
+
+			if (global.prefs.canPersist) {
+				const localStorageItem = global.localStorage.getItem(key);
+
+				if (localStorageItem) {
+					return localStorageItem;
+				}
+			}
+
+			if (uiDefault !== undefined) {
+				return uiDefault;
+			}
+
+			return defaultValue;
+		},
+
+		set: function(key, value) {
+			value = String(value); // NOT "new String(...)". We cannot use .toString here because value could be null/undefined
+			if (global.prefs.canPersist) {
+				global.localStorage.setItem(key, value);
+			}
+			global.prefs._localStorageChanges[key] = value;
+		},
+
+		remove: function(key) {
+			if (global.prefs.canPersist) {
+				global.localStorage.removeItem(key);
+			}
+			global.prefs._localStorageChanges[key] = undefined;
+		},
+
+		getBoolean: function(key, defaultValue = false) {
+			const value = global.prefs.get(key, '').toLowerCase();
+
+			if (value === 'false') {
+				return false;
+			}
+
+			if (value === 'true') {
+				return true;
+			}
+
+			return defaultValue;
+		},
+
+		getNumber: function(key, defaultValue = NaN) {
+			const value = global.prefs.get(key, '').toLowerCase();
+
+			const parsedValue = parseFloat(value);
+
+			if (isNaN(parsedValue)) {
+				return defaultValue;
+			}
+
+			return parsedValue;
+		},
+	};
+
 	global.keyboard = {
 		onscreenKeyboardHint: global.uiDefaults['onscreenKeyboardHint'],
 		// If there's an onscreen keyboard, we don't want to trigger it with innocuous actions like panning around a spreadsheet
@@ -459,18 +566,7 @@ window.app = {
 		}
 	};
 
-	global.isLocalStorageAllowed = (function() {
-		var str = 'localstorage_test';
-		try {
-			global.localStorage.setItem(str, str);
-			global.localStorage.removeItem(str);
-			return true;
-		} catch (e) {
-			return false;
-		}
-	})();
-
-	if (global.isLocalStorageAllowed && global.localStorage.getItem('hasNavigatorClipboardWrite') === 'false') {
+	if (!global.prefs.getBoolean('hasNavigatorClipboardWrite', true)) {
 		// navigator.clipboard.write failed on us once, don't even try it.
 		global.L.Browser.hasNavigatorClipboardWrite = false;
 	}
@@ -1210,7 +1306,7 @@ window.app = {
 				if (L.Browser.cypressTest && isCalcTest)
 					global.enableAccessibility = false;
 
-				var accessibilityState = global.localStorage.getItem('accessibilityState') === 'true';
+				var accessibilityState = global.prefs.getBoolean('accessibilityState', false);
 				accessibilityState = accessibilityState || (L.Browser.cypressTest && !isCalcTest);
 				msg += ' accessibilityState=' + accessibilityState;
 
@@ -1230,25 +1326,16 @@ window.app = {
 				if (global.deviceFormFactor) {
 					msg += ' deviceFormFactor=' + global.deviceFormFactor;
 				}
-				if (global.isLocalStorageAllowed) {
-					var spellOnline = global.localStorage.getItem('SpellOnline');
-					if (spellOnline) {
-						msg += ' spellOnline=' + spellOnline;
-					}
-					var docTypes = ['text', 'spreadsheet', 'presentation', 'drawing'];
-					for (var i = 0; i < docTypes.length; ++i) {
-						var docType = docTypes[i];
-						var darkTheme = false;
-						if (window.uiDefaults) {
-							darkTheme = window.uiDefaults.darkTheme === true;
-						}
-						var item = global.localStorage.getItem('UIDefaults_' + docType + '_darkTheme');
-						if (item) {
-							darkTheme = item;
-						}
-						if (darkTheme) {
-							msg += ' ' + docType + 'DarkTheme=' + darkTheme;
-						}
+				var spellOnline = window.prefs.get('SpellOnline');
+				if (spellOnline) {
+					msg += ' spellOnline=' + spellOnline;
+				}
+				var docTypes = ['text', 'spreadsheet', 'presentation', 'drawing'];
+				const darkTheme = window.prefs.getBoolean('darkTheme');
+				for (var i = 0; i < docTypes.length; ++i) {
+					var docType = docTypes[i];
+					if (darkTheme) {
+						msg += ' ' + docType + 'DarkTheme=' + darkTheme;
 					}
 				}
 

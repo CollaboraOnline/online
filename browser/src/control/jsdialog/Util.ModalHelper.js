@@ -66,18 +66,11 @@ function enableButtonInModal(id, buttonId, enable) {
 
 // check if user already set 'do not show again' option for a modal
 function shouldShowAgain(id) {
-	var showAgain = true;
-	if (window.isLocalStorageAllowed) {
-		var state = localStorage.getItem('UIShowAgain_' + id);
-		if (state === 'false')
-			showAgain = false;
-	}
-	return showAgain;
+    return window.prefs.getBoolean(`UIShowAgain_${id}`, true);
 }
 
 function setShowAgain(id, state) {
-	if (window.isLocalStorageAllowed)
-		localStorage.setItem('UIShowAgain_' + id, !state ? 'false' : 'true');
+    window.prefs.set(`UIShowAgain_${id}`, !state);
 }
 
 // helper to avoid using long list of optional parameters

@@ -126,8 +126,7 @@ L.LOUtil = {
 	},
 	setImage: function(img, name, map) {
 		var setupIcon = function () {
-			var docType = map.getDocType();
-			img.src = this.getImageURL(name, docType);
+			img.src = this.getImageURL(name);
 			this.checkIfImageExists(img);
 		}.bind(this);
 		setupIcon();
@@ -135,9 +134,8 @@ L.LOUtil = {
 		map.on('themechanged', setupIcon, this);
 	},
 	setUserImage: function(img, map, viewId) {
-		var docType = map.getDocType();
 		// set avatar image if it exist in user extract info
-		var defaultImage = L.LOUtil.getImageURL('user.svg', docType);
+		var defaultImage = L.LOUtil.getImageURL('user.svg');
 		var viewInfo = map._viewInfo[viewId];
 		if (
 			viewInfo !== undefined
@@ -156,14 +154,13 @@ L.LOUtil = {
 		img.src = defaultImage;
 		this.checkIfImageExists(img, true);
 	},
-	getImageURL: function(imgName, docType) {
+	getImageURL: function(imgName) {
 		var defaultImageURL = this.getURL('images/' + imgName);
-		if (window.isLocalStorageAllowed) {
-			var state = localStorage.getItem('UIDefaults_' + docType + '_darkTheme');
-			if ((state && (/true/).test(state.toLowerCase())) || (state === null &&  window.uiDefaults['darkTheme'])) {
-				return this.getURL('images/dark/' + imgName);
-			}
+
+		if (window.prefs.getBoolean('darkTheme')) {
+			return this.getURL('images/dark/' + imgName);
 		}
+
 		var dummyEmptyImg = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII='
 		defaultImageURL = this.isDarkModeItem(imgName) ? dummyEmptyImg : defaultImageURL;
 		return defaultImageURL;

@@ -365,7 +365,7 @@ export class ContentControlSection extends app.definitions.canvasSectionObject {
 	}
 
 	private changeBorderStyle(): void {
-		var borderColor = this.map.uiManager.getDarkModeState() ? 'white' : 'black';
+		var borderColor = (<any>window).prefs.getBoolean('darkTheme') ? 'white' : 'black';
 		this.sectionProperties.frame.color = borderColor;
 	}
 }

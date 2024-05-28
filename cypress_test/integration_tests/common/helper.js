@@ -352,7 +352,7 @@ function documentChecks() {
 	// Wait for the sidebar to open.
 	if (Cypress.env('INTEGRATION') !== 'nextcloud') {
 		doIfOnDesktop(function() {
-			var showSidebar = localStorage.getItem('UIDefaults_text_ShowSidebar');
+			var showSidebar = localStorage.getItem('text.ShowSidebar');
 			if (Cypress.env('pdf-view') !== true && showSidebar !== 'false')
 				cy.cframe().find('#sidebar-panel').should('be.visible');
 

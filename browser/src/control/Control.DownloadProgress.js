@@ -31,21 +31,11 @@ L.Control.DownloadProgress = L.Control.extend({
 	},
 
 	_userAlreadyWarned: function () {
-		var itemKey = this.options.userWarningKey;
-		var storage = localStorage;
-		if (storage && !storage.getItem(itemKey)) {
-			return false;
-		} else if (!storage)
-			return false;
-
-		return true;
+		return window.prefs.getBoolean(this.options.userWarningKey);
 	},
 
 	_setUserAlreadyWarned: function () {
-		var itemKey = this.options.userWarningKey;
-		var storage = localStorage;
-		if (storage && !storage.getItem(itemKey))
-			storage.setItem(itemKey, '1');
+		window.prefs.set(this.options.userWarningKey, true);
 	},
 
 	_getDialogTitle: function () {

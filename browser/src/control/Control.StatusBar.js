@@ -269,7 +269,7 @@ class StatusBar extends JSDialog.Toolbar {
 	}
 
 	onDocLayerInit() {
-		var showStatusbar = this.map.uiManager.getSavedStateOrDefault('ShowStatusbar');
+		var showStatusbar = this.map.uiManager.getBooleanDocTypePref('ShowStatusbar', true);
 		if (showStatusbar)
 			this.map.uiManager.showStatusBar();
 		else
