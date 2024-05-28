@@ -1,3 +1,4 @@
+/* -*- Mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4; fill-column: 100 -*- */
 /*
  * Copyright the Collabora Online contributors.
  *
@@ -12,6 +13,7 @@
 #include "Util.hpp"
 
 #ifdef __linux__
+#include <sys/time.h>
 #include <sys/resource.h>
 #elif defined __FreeBSD__
 #include <sys/resource.h>
@@ -424,4 +426,38 @@ void alertAllUsers(const std::string&) {}
 /// No-op implementation in the test programs
 void alertAllUsers(const std::string&, const std::string&) {}
 #endif
+
+SysStopwatch::SysStopwatch()
+{
+    restart();
 }
+
+void SysStopwatch::restart()
+{
+    readTime(_startCPU, _startSys);
+}
+
+void SysStopwatch::readTime(uint64_t &cpu, uint64_t &sys)
+{
+    cpu = 0;
+    sys = 0;
+#if defined __linux__
+    struct rusage times;
+    if (!getrusage(RUSAGE_SELF, &times))
+    {
+        cpu = uint64_t(times.ru_utime.tv_sec) * 1000000 + times.ru_utime.tv_usec;
+        sys = uint64_t(times.ru_stime.tv_sec) * 1000000 + times.ru_stime.tv_usec;
+    }
+#endif
+}
+
+std::chrono::microseconds SysStopwatch::elapsedTime() const
+{
+    uint64_t nowCPU, nowSys;
+    readTime(nowCPU, nowSys);
+    uint64_t totalUs = (nowCPU - _startCPU) + (nowSys - _startSys);
+    return std::chrono::microseconds(totalUs);
+}
+}
+
+/* vim:set shiftwidth=4 softtabstop=4 expandtab: */
