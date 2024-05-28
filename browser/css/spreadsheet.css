@@ -233,8 +233,6 @@
 #AutoSumMenu {
 	/* Make sure it matches buttons height*/
 	grid-template-rows: var(--btn-size);
-	/* Account for the arrow match width */
-	width: calc(var(--btn-size)*2);
 }
 
 #formulabar.expanded > .root-container > .formulabar {
