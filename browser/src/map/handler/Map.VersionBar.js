@@ -23,8 +23,8 @@ L.Map.VersionBar = L.Handler.extend({
 		    viewInfo.userextrainfo.is_admin) {
 			var laterDate = new Date();
 			var currentDate = new Date();
-			var timeValue = window.localStorage.getItem('InfoBarLaterDate');
-			if (!timeValue || isNaN(timeValue)) {
+			var timeValue = window.prefs.getNumber('InfoBarLaterDate');
+			if (isNaN(timeValue)) {
 				/* - 5 seconds */
 				laterDate.setTime(currentDate.getTime() - 5000);
 			} else {
@@ -50,7 +50,7 @@ L.Map.VersionBar = L.Handler.extend({
 
 				if (v1 > v2) {
 					var currentDate = new Date();
-					window.localStorage.setItem('InfoBarLaterDate', currentDate.getTime());
+					window.prefs.set('InfoBarLaterDate', currentDate.getTime());
 					snackbarMessage = snackbarMessage.replace('%0', e.coolwsd_version);
 					this._map.uiManager.showSnackbar(snackbarMessage);
 					break;
@@ -63,6 +63,6 @@ L.Map.VersionBar = L.Handler.extend({
 	}
 });
 
-if (window.isLocalStorageAllowed) {
+if (window.prefs.canPersist) {
 	L.Map.versionBar = new L.Map.VersionBar();
 }

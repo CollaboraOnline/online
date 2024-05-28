@@ -242,31 +242,22 @@ app.definitions.Socket = L.Class.extend({
 			};
 			msg += ' options=' + JSON.stringify(options);
 		}
-		if (window.isLocalStorageAllowed) {
-			var spellOnline = window.localStorage.getItem('SpellOnline');
-			if (spellOnline) {
-				msg += ' spellOnline=' + spellOnline;
-			}
-			var docTypes = ['text', 'spreadsheet', 'presentation', 'drawing'];
-			for (var i = 0; i < docTypes.length; ++i) {
-				var docType = docTypes[i];
-				var darkTheme = false;
-				if (window.uiDefaults) {
-					darkTheme = window.uiDefaults.darkTheme === true;
-				}
-				var item = window.localStorage.getItem('UIDefaults_' + docType + '_darkTheme');
-				if (item) {
-					darkTheme = item;
-				}
-				if (darkTheme) {
-					msg += ' ' + docType + 'DarkTheme=' + darkTheme;
-				}
-			}
-
-			var accessibilityState = window.localStorage.getItem('accessibilityState') === 'true';
-			accessibilityState = accessibilityState || L.Browser.cypressTest;
-			msg += ' accessibilityState=' + accessibilityState;
+		var spellOnline = window.prefs.get('SpellOnline');
+		if (spellOnline) {
+			msg += ' spellOnline=' + spellOnline;
 		}
+		var docTypes = ['text', 'spreadsheet', 'presentation', 'drawing'];
+		const darkTheme = window.prefs.getBoolean('darkTheme');
+		for (var i = 0; i < docTypes.length; ++i) {
+			var docType = docTypes[i];
+			if (darkTheme) {
+				msg += ' ' + docType + 'DarkTheme=' + darkTheme;
+			}
+		}
+
+		var accessibilityState = window.prefs.getBoolean('accessibilityState');
+		accessibilityState = accessibilityState || L.Browser.cypressTest;
+		msg += ' accessibilityState=' + accessibilityState;
 
 		this._doSend(msg);
 		for (var i = 0; i < this._msgQueue.length; i++) {
@@ -513,7 +504,7 @@ app.definitions.Socket = L.Class.extend({
 		if (data[0] != 0x89)
 			prefix = String.fromCharCode(0x89);
 		img = 'data:image/png;base64,' + window.btoa(this._strFromUint8(prefix,data));
-		if (L.Browser.cypressTest && localStorage.getItem('image_validation_test')) {
+		if (L.Browser.cypressTest && window.prefs.getBoolean('image_validation_test')) {
 			if (!window.imgDatas)
 				window.imgDatas = [];
 			window.imgDatas.push(img);
@@ -1493,7 +1484,7 @@ app.definitions.Socket = L.Class.extend({
 			this._map._docLayer._refreshTilesInBackground();
 			this._map.fire('statusindicator', { statusType: 'reconnected' });
 
-			var selectedMode = this._map.uiManager.getDarkModeState();
+			var selectedMode = window.prefs.getBoolean('darkTheme');
 			this._map.uiManager.activateDarkModeInCore(selectedMode);
 
 			var uiMode = this._map.uiManager.getCurrentMode();

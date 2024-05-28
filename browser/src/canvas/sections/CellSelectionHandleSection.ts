@@ -54,7 +54,7 @@ class CellSelectionHandle extends app.definitions.canvasSectionObject {
 	}
 
 	public onDraw() {
-		this.context.strokeStyle = app.map.uiManager.getDarkModeState() ? 'white' : 'black';
+		this.context.strokeStyle = (<any>window).prefs.getBoolean('darkTheme') ? 'white' : 'black';
 		this.context.lineWidth = 2;
 
 		this.context.beginPath();

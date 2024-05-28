@@ -76,7 +76,7 @@ L.Control.UIManager = L.Control.extend({
 	},
 
 	shouldUseNotebookbarMode: function() {
-		let forceCompact = this.getSavedStateOrDefault('compactMode', null);
+		let forceCompact = window.prefs.getBoolean('compactMode', null);
 		// all other cases should default to notebookbar
 		let shouldUseClassic = (window.userInterfaceMode === 'compact' && forceCompact == null) || forceCompact === true;
 		return !shouldUseClassic;
@@ -96,10 +96,6 @@ L.Control.UIManager = L.Control.extend({
 		this.map.fire('darkmodechanged');
 	},
 
-	getDarkModeState: function() {
-		return this.getSavedStateOrDefault('darkTheme', window.uiDefaults['darkTheme'] ?  window.uiDefaults['darkTheme'] : false);
-	},
-
 	setCanvasColorAfterModeChange: function() {
 		if (app.sectionContainer) {
 			app.sectionContainer.setBackgroundColorMode(false);
@@ -115,15 +111,15 @@ L.Control.UIManager = L.Control.extend({
 
 	toggleDarkMode: function() {
 		// get the initial mode
-		var selectedMode = this.getDarkModeState();
+		var inDarkTheme = window.prefs.getBoolean('darkTheme');
 		// swap them by invoking the appropriate load function and saving the state
-		if (selectedMode) {
-			this.setSavedState('darkTheme',false);
+		if (inDarkTheme) {
+			window.prefs.set('darkTheme', false);
 			this.loadLightMode();
 			this.activateDarkModeInCore(false);
 		}
 		else {
-			this.setSavedState('darkTheme',true);
+			window.prefs.set('darkTheme', true);
 			this.loadDarkMode();
 			this.activateDarkModeInCore(true);
 		}
@@ -134,17 +130,11 @@ L.Control.UIManager = L.Control.extend({
 	},
 
 	initDarkModeFromSettings: function() {
-		var selectedMode = this.getDarkModeState();
+		var inDarkTheme = window.prefs.getBoolean('darkTheme');
 
-		if (window.ThisIsTheAndroidApp) {
-			selectedMode = window.uiDefaults['darkTheme'] ?  window.uiDefaults['darkTheme'] : false;
-			this.setSavedState('darkTheme', selectedMode);
-		}
-
-		if (selectedMode) {
+		if (inDarkTheme) {
 			this.loadDarkMode();
-		}
-		else {
+		} else {
 			this.loadLightMode();
 		}
 	},
@@ -176,23 +166,18 @@ L.Control.UIManager = L.Control.extend({
 		// Wait for Coolwsd to initiate the switch.
 	},
 
-	getAccessibilityState: function() {
-		return window.isLocalStorageAllowed && window.localStorage.getItem('accessibilityState') === 'true';
-	},
-
 	toggleAccessibilityState: function() {
-		var savedA11yState = this.getAccessibilityState();
-		if (window.isLocalStorageAllowed)
-			window.localStorage.setItem('accessibilityState', !savedA11yState ? 'true' : 'false');
+		var prevAccessibilityState = window.prefs.getBoolean('accessibilityState');
+		window.prefs.set('accessibilityState', !prevAccessibilityState);
 		this.map.fire('a11ystatechanged');
-		this.map.setAccessibilityState(!savedA11yState);
+		this.map.setAccessibilityState(!prevAccessibilityState);
 	},
 
 	initializeBasicUI: function() {
 		var enableNotebookbar = this.shouldUseNotebookbarMode();
 		var that = this;
 
-		this.map._accessibilityState = this.getAccessibilityState();
+		this.map._accessibilityState = window.prefs.getBoolean('accessibilityState');
 
 		if (window.mode.isMobile() || !enableNotebookbar) {
 			var menubar = L.control.menubar();
@@ -306,7 +291,7 @@ L.Control.UIManager = L.Control.extend({
 			// makeSpaceForNotebookbar call in onUpdatePermission
 		}
 
-		if (window.uiDefaults[docType] && window.uiDefaults[docType]['ShowToolbar'] === false) {
+		if (!window.prefs.getBoolean(`${docType}.ShowToolbar`, true)) {
 			this.collapseNotebookbar();
 		}
 
@@ -335,7 +320,7 @@ L.Control.UIManager = L.Control.extend({
 			document.getElementById('selectbackground').parentNode.removeChild(document.getElementById('selectbackground'));
 
 			if ((window.mode.isTablet() || window.mode.isDesktop()) && !app.isReadOnly()) {
-				var showRuler = this.getSavedStateOrDefault('ShowRuler');
+				var showRuler = this.getBooleanDocTypePref('ShowRuler', true);
 				var interactiveRuler = this.map.isEditMode();
 				var isRTL = document.documentElement.dir === 'rtl';
 				L.control.ruler({position: (isRTL ? 'topright' : 'topleft'), interactive:interactiveRuler, showruler: showRuler}).addTo(this.map);
@@ -343,7 +328,7 @@ L.Control.UIManager = L.Control.extend({
 				this.map.fire('rulerchanged');
 			}
 
-			var showResolved = this.getSavedStateOrDefault('ShowResolved');
+			var showResolved = this.getBooleanDocTypePref('ShowResolved', true);
 			if (showResolved === false || showResolved === 'false')
 				this.map.sendUnoCommand('.uno:ShowResolvedAnnotations');
 		}
@@ -367,31 +352,31 @@ L.Control.UIManager = L.Control.extend({
 	initializeSidebar: function() {
 		// Hide the sidebar on start if saved state or UIDefault is set.
 		if (window.mode.isDesktop() && !window.ThisIsAMobileApp) {
-			var showSidebar = this.getSavedStateOrDefault('ShowSidebar');
+			var showSidebar = this.getBooleanDocTypePref('ShowSidebar', true);
 
-			if (this.getSavedStateOrDefault('PropertyDeck')) {
+			if (this.getBooleanDocTypePref('PropertyDeck', true)) {
 				app.socket.sendMessage('uno .uno:SidebarShow');
 			}
 
 			if (this.map.getDocType() === 'presentation') {
-				if (this.getSavedStateOrDefault('SdSlideTransitionDeck', false)) {
+				if (this.getBooleanDocTypePref('SdSlideTransitionDeck', false)) {
 					app.socket.sendMessage('uno .uno:SidebarShow');
 					app.socket.sendMessage('uno .uno:SlideChangeWindow');
 					this.map.sidebar.setupTargetDeck('.uno:SlideChangeWindow');
-				} else if (this.getSavedStateOrDefault('SdCustomAnimationDeck', false)) {
+				} else if (this.getBooleanDocTypePref('SdCustomAnimationDeck', false)) {
 					app.socket.sendMessage('uno .uno:SidebarShow');
 					app.socket.sendMessage('uno .uno:CustomAnimation');
 					this.map.sidebar.setupTargetDeck('.uno:CustomAnimation');
-				} else if (this.getSavedStateOrDefault('SdMasterPagesDeck', false)) {
+				} else if (this.getBooleanDocTypePref('SdMasterPagesDeck', false)) {
 					app.socket.sendMessage('uno .uno:SidebarShow');
 					app.socket.sendMessage('uno .uno:MasterSlidesPanel');
 					this.map.sidebar.setupTargetDeck('.uno:MasterSlidesPanel');
-				} else if (this.getSavedStateOrDefault('NavigatorDeck', false)) {
+				} else if (this.getBooleanDocTypePref('NavigatorDeck', false)) {
 					app.socket.sendMessage('uno .uno:SidebarShow');
 					app.socket.sendMessage('uno .uno:Navigator');
 					this.map.sidebar.setupTargetDeck('.uno:Navigator');
 				}
-			} else if (this.getSavedStateOrDefault('NavigatorDeck', false)) {
+			} else if (this.getBooleanDocTypePref('NavigatorDeck', false)) {
 				app.socket.sendMessage('uno .uno:SidebarShow');
 				app.socket.sendMessage('uno .uno:Navigator');
 				this.map.sidebar.setupTargetDeck('.uno:Navigator');
@@ -496,8 +481,8 @@ L.Control.UIManager = L.Control.extend({
 		ms = ms !== undefined ? ms : 400;
 		setTimeout(function () {
 			var message = 'dialogevent ' +
-			    (window.sidebarId !== undefined ? window.sidebarId : -1) +
-			    ' {"id":"-1"}';
+				(window.sidebarId !== undefined ? window.sidebarId : -1) +
+				' {"id":"-1"}';
 			app.socket.sendMessage(message);
 		}, ms);
 
@@ -560,7 +545,7 @@ L.Control.UIManager = L.Control.extend({
 			break;
 		}
 
-		this.setSavedState('compactMode', uiMode.mode === 'classic');
+		this.setDocTypePref('compactMode', uiMode.mode === 'classic');
 		this.initializeSidebar();
 		this.insertCustomButtons();
 
@@ -808,14 +793,14 @@ L.Control.UIManager = L.Control.extend({
 	showRuler: function() {
 		$('.cool-ruler').show();
 		$('#map').addClass('hasruler');
-		this.setSavedState('ShowRuler', true);
+		this.setDocTypePref('ShowRuler', true);
 		this.map.fire('rulerchanged');
 	},
 
 	hideRuler: function() {
 		$('.cool-ruler').hide();
 		$('#map').removeClass('hasruler');
-		this.setSavedState('ShowRuler', false);
+		this.setDocTypePref('ShowRuler', false);
 		this.map.fire('rulerchanged');
 	},
 
@@ -890,7 +875,7 @@ L.Control.UIManager = L.Control.extend({
 	showStatusBar: function() {
 		$('#document-container').css('bottom', this.documentBottom);
 		this.map.statusBar.show();
-		this.setSavedState('ShowStatusbar', true);
+		this.setDocTypePref('ShowStatusbar', true);
 		this.map.fire('statusbarchanged');
 	},
 
@@ -902,7 +887,7 @@ L.Control.UIManager = L.Control.extend({
 		$('#document-container').css('bottom', '0px');
 		this.map.statusBar.hide();
 		if (!firstStart)
-			this.setSavedState('ShowStatusbar', false);
+			this.setDocTypePref('ShowStatusbar', false);
 		this.map.fire('statusbarchanged');
 	},
 
@@ -1078,7 +1063,7 @@ L.Control.UIManager = L.Control.extend({
 				tooltipClass: 'functiontooltip',
 				content: tooltipInfo,
 				items: elem[0],
-                position: { my: 'left top', at: 'left+' + pt.x +  ' top+' +pt.y, collision: 'fit fit' }
+				position: { my: 'left top', at: 'left+' + pt.x +  ' top+' +pt.y, collision: 'fit fit' }
 			});
 			elem.tooltip('option', 'customClass', 'functiontooltip');
 			elem.tooltip('open');
@@ -1616,41 +1601,14 @@ L.Control.UIManager = L.Control.extend({
 		}
 	},
 
-	setSavedState: function(name, state) {
-		var docType = (name === 'compactMode') ? null : this.map.getDocType();
-		if (window.isLocalStorageAllowed)
-			localStorage.setItem('UIDefaults_' + docType + '_' + name, state);
+	setDocTypePref: function(name, value) {
+		const docType = this.map.getDocType();
+		return window.prefs.set(`${docType}.${name}`, value);
 	},
 
-	getSavedStateOrDefault: function(name, forcedDefault) {
-		var retval = forcedDefault !== undefined ? forcedDefault : true;
-		// we request compactMode very early, no info about doctype so unify all the calls
-		var docType = (name === 'compactMode') ? null : this.map.getDocType();
-		var state = null;
-		if (window.savedUIState && window.isLocalStorageAllowed)
-			state = localStorage.getItem('UIDefaults_' + docType + '_' + name);
-		switch (state) {
-		case 'true':
-			return true;
-		case 'false':
-			return false;
-		default:
-			// no saved state; must check the UIDefaults
-			if (window.uiDefaults && window.uiDefaults[docType])
-				retval = window.uiDefaults[docType][name];
-
-			// check UIDefaults root without limiting to the doctype
-			if (retval === undefined || retval === null)
-				retval = window.uiDefaults[name];
-
-			if (retval === undefined || retval === null) {
-				if (forcedDefault !== undefined)
-					return forcedDefault;
-				else
-					return true;
-			} else
-				return retval;
-		}
+	getBooleanDocTypePref: function(name, defaultValue = false) {
+		const docType = this.map.getDocType();
+		return window.prefs.getBoolean(`${docType}.${name}`, defaultValue);
 	},
 
 	enableTooltip: function(element) {

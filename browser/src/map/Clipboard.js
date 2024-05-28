@@ -902,9 +902,7 @@ L.Clipboard = L.Class.extend({
 			that._warnCopyPaste();
 			// Once broken, always broken.
 			L.Browser.hasNavigatorClipboardWrite = false;
-			if (window.isLocalStorageAllowed) {
-				window.localStorage.setItem('hasNavigatorClipboardWrite', 'false');
-			}
+			window.prefs.set('hasNavigatorClipboardWrite', false);
 			// Prefetch selection, so next time copy will work with the keyboard.
 			app.socket.sendMessage('gettextselection mimetype=text/html,text/plain;charset=utf-8');
 		});

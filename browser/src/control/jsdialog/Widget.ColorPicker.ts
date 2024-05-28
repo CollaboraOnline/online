@@ -24,12 +24,21 @@ type ColorItem = string;
 type CoreColorPalette = Array<Array<{ Value: ColorItem }>>;
 type ColorPalette = Array<Array<ColorItem>>;
 
+interface Window {
+	prefs: any;
+}
+
 function getCurrentPaletteName(): string {
-	return localStorage &&
-		localStorage.colorPalette &&
-		window.app.colorPalettes[localStorage.colorPalette]
-		? localStorage.colorPalette
-		: 'StandardColors';
+	const palette = window.prefs.get('colorPalette');
+
+	if (
+		palette === undefined ||
+		window.app.colorPalettes[palette] === undefined
+	) {
+		return 'StandardColors';
+	}
+
+	return palette;
 }
 
 // TODO: we don't need to use that format now - simplify?
@@ -52,16 +61,16 @@ function generatePalette(paletteName: string) {
 	const colorPalette = toW2Palette(
 		window.app.colorPalettes[paletteName].colors,
 	);
-	const customColorRow = localStorage.customColor;
-	const recentRow = localStorage.recentColor;
+	const customColorRow = window.prefs.get('customColor');
+	const recentRow = window.prefs.get('recentColor');
 
-	if (typeof customColorRow !== 'undefined') {
+	if (customColorRow !== undefined) {
 		colorPalette.push(JSON.parse(customColorRow));
 	} else {
 		colorPalette.push(['F2F2F2', 'F2F2F2', 'F2F2F2', 'F2F2F2', 'F2F2F2']); // custom colors (up to 4)
 	}
 
-	if (typeof recentRow !== 'undefined') {
+	if (recentRow !== undefined) {
 		colorPalette.push(JSON.parse(recentRow));
 	} else {
 		colorPalette.push([
@@ -133,7 +142,7 @@ function createColor(
 		if (recentRow.indexOf(colorItem) !== -1)
 			recentRow.splice(recentRow.indexOf(colorItem), 1);
 		recentRow.unshift(colorItem);
-		localStorage.setItem('recentColor', JSON.stringify(recentRow));
+		window.prefs.set('recentColor', JSON.stringify(recentRow));
 	});
 
 	return color;
@@ -261,7 +270,7 @@ function updatePalette(
 			customColorRow.splice(customColorRow.indexOf(color), 1);
 		}
 		customColorRow.unshift(color.toUpperCase());
-		localStorage.setItem('customColor', JSON.stringify(customColorRow));
+		window.prefs.set('customColor', JSON.stringify(customColorRow));
 		updatePalette(
 			paletteName,
 			data,
@@ -347,7 +356,7 @@ JSDialog.colorPicker = function (
 
 	listbox.addEventListener('change', () => {
 		const newPaletteName = listbox.value;
-		localStorage.setItem('colorPalette', newPaletteName);
+		window.prefs.set('colorPalette', newPaletteName);
 		updatePalette(
 			newPaletteName,
 			data,

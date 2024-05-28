@@ -40,22 +40,21 @@ L.Map.Feedback = L.Handler.extend({
 
 		this.initialized = true;
 
-		if (window.localStorage.getItem('WSDFeedbackEnabled') !== 'false') {
+		if (window.prefs.getBoolean('WSDFeedbackEnabled', true)) {
 			var laterDate = new Date();
 			var currentDate = new Date();
-			var timeValue = window.localStorage.getItem('WSDFeedbackLaterDate');
-			var docCount = window.localStorage.getItem('WSDFeedbackCount');
+			var timeValue = window.prefs.getNumber('WSDFeedbackLaterDate');
+			var docCount = window.prefs.getNumber('WSDFeedbackCount', 0);
 
-			docCount = parseInt(docCount);
-			docCount = isNaN(docCount) ? 1 : docCount + 1;
-			window.localStorage.setItem('WSDFeedbackCount', docCount);
+			docCount++;
 
-			if (!timeValue || isNaN(timeValue)) {
+			window.prefs.set('WSDFeedbackCount', docCount);
+
+			if (isNaN(timeValue)) {
 				/* - 5 seconds */
 				laterDate.setTime(currentDate.getTime() - 5000);
 			} else {
 				/* + 5 days (432,000,000 Milliseconds) */
-				timeValue = Number(timeValue);
 				laterDate.setTime(timeValue + 432000000);
 			}
 
@@ -106,7 +105,7 @@ L.Map.Feedback = L.Handler.extend({
 	},
 
 	onError: function () {
-		window.localStorage.removeItem('WSDFeedbackEnabled');
+		window.prefs.remove('WSDFeedbackEnabled');
 		this._iframeDialog.remove();
 	},
 
@@ -124,17 +123,17 @@ L.Map.Feedback = L.Handler.extend({
 			this._iframeDialog.show();
 		}
 		else if (data == 'feedback-never') {
-			window.localStorage.setItem('WSDFeedbackEnabled', 'false');
-			window.localStorage.removeItem('WSDFeedbackCount');
+			window.prefs.set('WSDFeedbackEnabled', false);
+			window.prefs.remove('WSDFeedbackCount');
 			this._iframeDialog.remove();
 		} else if (data == 'feedback-later') {
 			var currentDate = new Date();
 			this._iframeDialog.remove();
-			window.localStorage.setItem('WSDFeedbackLaterDate', currentDate.getTime());
-			window.localStorage.removeItem('WSDFeedbackCount');
+			window.prefs.set('WSDFeedbackLaterDate', currentDate.getTime());
+			window.prefs.remove('WSDFeedbackCount');
 		} else if (data == 'feedback-submit') {
-			window.localStorage.setItem('WSDFeedbackEnabled', 'false');
-			window.localStorage.removeItem('WSDFeedbackCount');
+			window.prefs.set('WSDFeedbackEnabled', false);
+			window.prefs.remove('WSDFeedbackCount');
 			var that = this;
 			setTimeout(function() {
 				that._iframeDialog.remove();
@@ -148,6 +147,6 @@ L.Map.Feedback = L.Handler.extend({
 		}
 	}
 });
-if (window.feedbackUrl && window.isLocalStorageAllowed) {
+if (window.feedbackUrl && window.prefs.canPersist) {
 	L.Map.addInitHook('addHandler', 'feedback', L.Map.Feedback);
 }

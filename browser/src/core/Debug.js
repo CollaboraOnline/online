@@ -458,7 +458,7 @@ L.DebugManager = L.Class.extend({
 
 	_randomizeSettings: function() {
 		// Toggle dark mode
-		var isDark = this._map.uiManager.getDarkModeState();
+		var isDark = window.prefs.getBoolean('darkTheme');
 		if (Math.random() < 0.5) {
 			window.app.console.log('Randomize Settings: Toggle dark mode to ' + (isDark?'Light':'Dark'));
 			this._map.uiManager.toggleDarkMode();

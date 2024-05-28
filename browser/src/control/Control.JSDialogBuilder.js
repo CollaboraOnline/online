@@ -1820,7 +1820,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			if (image) {
 				image = image.substr(0, image.lastIndexOf('.'));
 				image = image.substr(image.lastIndexOf('/') + 1);
-				image = 'url("' + L.LOUtil.getImageURL(image + '.svg', builder.map.getDocType()) + '")';
+				image = 'url("' + L.LOUtil.getImageURL(image + '.svg') + '")';
 			}
 
 			if (image64) {

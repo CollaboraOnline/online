@@ -45,10 +45,10 @@ L.Map.Welcome = L.Handler.extend({
 	},
 
 	shouldWelcome: function() {
-		var storedVersion = localStorage.getItem('WSDWelcomeVersion');
+		var storedVersion = window.prefs.get('WSDWelcomeVersion');
 		var currentVersion = app.socket.WSDServer.Version;
-		var welcomeDisabledCookie = localStorage.getItem('WSDWelcomeDisabled');
-		var welcomeDisabledDate = localStorage.getItem('WSDWelcomeDisabledDate');
+		var welcomeDisabledCookie = window.prefs.getBoolean('WSDWelcomeDisabled');
+		var welcomeDisabledDate = window.prefs.get('WSDWelcomeDisabledDate');
 		var isWelcomeDisabled = false;
 
 		if (welcomeDisabledCookie && welcomeDisabledDate) {
@@ -58,8 +58,8 @@ L.Map.Welcome = L.Handler.extend({
 				isWelcomeDisabled = true;
 			else {
 				//Values expired. Clear the local values
-				localStorage.removeItem('WSDWelcomeDisabled');
-				localStorage.removeItem('WSDWelcomeDisabledDate');
+				window.prefs.remove('WSDWelcomeDisabled');
+				window.prefs.remove('WSDWelcomeDisabledDate');
 			}
 		}
 
@@ -74,7 +74,7 @@ L.Map.Welcome = L.Handler.extend({
 		if (this._iframeWelcome && this._iframeWelcome.queryContainer())
 			this.remove();
 
-		var uiTheme = this._map.uiManager.getDarkModeState() ? 'dark' : 'light';
+		var uiTheme = window.prefs.getBoolean('darkTheme') ? 'dark' : 'light';
 		var params = [{'ui_theme' : uiTheme}];
 
 		this._iframeWelcome = L.iframeDialog(this._url, params, null, { prefix: 'iframe-welcome' });
@@ -111,7 +111,7 @@ L.Map.Welcome = L.Handler.extend({
 			}
 			this._iframeWelcome.postMessage(data);
 		} else if (data.MessageId === 'welcome-close') {
-			localStorage.setItem('WSDWelcomeVersion', app.socket.WSDServer.Version);
+			window.prefs.set('WSDWelcomeVersion', app.socket.WSDServer.Version);
 			this.remove();
 		} else if (data.MessageId == 'iframe-welcome-load' && !this._iframeWelcome.isVisible()) {
 			if (this._retries-- > 0) {
@@ -119,8 +119,8 @@ L.Map.Welcome = L.Handler.extend({
 				setTimeout(L.bind(this.showWelcomeDialog, this), 200);
 			} else if (this._fallback) {
 				var currentDate = new Date();
-				localStorage.setItem('WSDWelcomeDisabled', 'true');
-				localStorage.setItem('WSDWelcomeDisabledDate', currentDate.toDateString());
+				window.prefs.set('WSDWelcomeDisabled', true);
+				window.prefs.set('WSDWelcomeDisabledDate', currentDate.toDateString());
 				this.remove();
 			} else {
 				// fallback
@@ -132,6 +132,6 @@ L.Map.Welcome = L.Handler.extend({
 	}
 });
 
-if (!L.Browser.cypressTest && window.enableWelcomeMessage && window.isLocalStorageAllowed) {
+if (!L.Browser.cypressTest && window.enableWelcomeMessage && window.prefs.canPersist) {
 	L.Map.addInitHook('addHandler', 'welcome', L.Map.Welcome);
 }

@@ -127,9 +127,9 @@ L.Map = L.Evented.extend({
 
 		this._accessibilityState = false;
 
-		if (L.Browser.cypressTest && window.enableAccessibility && window.isLocalStorageAllowed) {
+		if (L.Browser.cypressTest && window.enableAccessibility) {
 			this._accessibilityState = true;
-			window.localStorage.setItem('accessibilityState', 'true');
+			window.prefs.set('accessibilityState', true);
 		}
 
 		this.callInitHooks();
