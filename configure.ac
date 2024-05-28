@@ -405,7 +405,6 @@ AC_ARG_ENABLE([experimental],
               AS_HELP_STRING([--enable-experimental],
                              [Enable experimental features and behavior]))
 
-
 # Handle options
 AS_IF([test "$enable_debug" = yes -a -n "$with_poco_libs"],
       [POCO_DEBUG_SUFFIX=d],
@@ -1282,6 +1281,23 @@ else
    AC_DEFINE([ENABLE_SIMD],1,[Whether to enable SIMD])
 fi
 AC_SUBST(SIMD_CFLAGS)
+
+
+has_pfm=no
+LIBPFM_LIBS=
+if test "$mobile_app" != "true"; then
+    AC_MSG_CHECKING([whether we have perf counter support])
+    AC_CHECK_LIB(pfm, pfm_initialize, [has_pfm=yes], [has_pfm=no])
+    AC_MSG_RESULT([${has_pfm}])
+fi
+
+if test "${has_pfm}" = "no" ; then
+   AC_DEFINE([ENABLE_PFM],0,[Whether to enable PFM])
+else
+   AC_DEFINE([ENABLE_PFM],1,[Whether to enable PFM])
+   LIBPFM_LIBS="$LIBS -lpfm"
+fi
+AC_SUBST(LIBPFM_LIBS)
 
 ENABLE_SSL=true
 if test "$enable_ssl" != "no" -a "$mobile_app" != "true"; then

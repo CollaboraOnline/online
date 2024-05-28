@@ -32,6 +32,7 @@ AM_CXXFLAGS = $(CPPUNIT_CFLAGS) -DTDOC=\"$(abs_top_srcdir)/test/data\" -DTDIST=\
 # 'Finished in' in the `make check` output.
 # When adding new tests, please maintain order.
 all_la_unit_tests = \
+	unit-perf.la \
 	unit-synthetic-lok.la \
 	unit-wopi-async-slow.la \
 	unit-tiletest.la \
@@ -308,6 +309,8 @@ unit_hosting_la_SOURCES = UnitHosting.cpp
 unit_hosting_la_LIBADD = $(CPPUNIT_LIBS)
 unit_quarantine_la_SOURCES = UnitQuarantine.cpp
 unit_quarantine_la_LIBADD = $(CPPUNIT_LIBS)
+unit_perf_la_SOURCES = UnitPerf.cpp
+unit_perf_la_LIBADD = $(CPPUNIT_LIBS) $(LIBPFM_LIBS)
 
 if HAVE_LO_PATH
 SYSTEM_STAMP = @SYSTEMPLATE_PATH@/system_stamp
