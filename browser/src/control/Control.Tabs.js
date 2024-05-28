@@ -272,6 +272,7 @@ L.Control.Tabs = L.Control.extend({
 				if (part === selectedPart) {
 					// close auto filter popups on sheet tab selected
 					this._map.fire('closeAutoFilterDialog');
+					this._map.fire('closepopups');
 					L.DomUtil.addClass(this._spreadsheetTabs[key], 'spreadsheet-tab-selected');
 				}
 			}

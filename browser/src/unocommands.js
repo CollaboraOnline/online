@@ -23,6 +23,7 @@ var unoCommandsArray = {
 	'AnchorMenu':{global:{menu:_('Anc~hor'),},},
 	'ArrangeFrameMenu':{text:{menu:_('Arrange'),},},
 	'ArrangeMenu':{global:{menu:_('A~rrange'),},presentation:{menu:_('~Arrange'),},},
+	'AutoFill':{spreadsheet:{menu:_('Auto Fill'),},},
 	'AutoFormatMenu':{text:{menu:_('AutoCorr~ect'),},},
 	'BackColor':{text:{menu:_('Character Highlighting Color'),},},
 	'BackgroundColor':{global:{menu:_('Background Color'),},},

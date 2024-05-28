@@ -88,7 +88,6 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		app.sectionContainer.addSection(new app.definitions.AutoFillMarkerSection());
 
 		this.insertMode = false;
-		this.autoFillLocation = {};
 		this._resetInternalState();
 		this._sheetSwitch = new L.SheetSwitchViewRestore(map);
 		this._sheetGrid = true;

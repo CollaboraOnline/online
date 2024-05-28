@@ -66,7 +66,7 @@ L.Control.ContextMenu = L.Control.extend({
 				      'RecalcPivotTable', 'DataDataPilotRun', 'DeletePivotTable',
 				      'FormatCellDialog', 'DeleteNote', 'SetAnchorToCell', 'SetAnchorToCellResize',
 				      'FormatSparklineMenu', 'InsertSparkline', 'DeleteSparkline', 'DeleteSparklineGroup',
-				      'EditSparklineGroup', 'EditSparkline', 'GroupSparklines', 'UngroupSparklines'],
+				      'EditSparklineGroup', 'EditSparkline', 'GroupSparklines', 'UngroupSparklines', 'AutoFill'],
 
 			presentation: ['SetDefault'],
 			drawing: []
@@ -97,7 +97,7 @@ L.Control.ContextMenu = L.Control.extend({
 			'SpellingAndGrammarDialog', 'FontDialog', 'FontDialogForParagraph',
 			// spreadsheet
 			'FormatCellDialog', 'DataDataPilotRun',
-			'GroupSparklines', 'UngroupSparklines'
+			'GroupSparklines', 'UngroupSparklines', 'AutoFill'
 		]
 	},
 
@@ -109,6 +109,7 @@ L.Control.ContextMenu = L.Control.extend({
 		map._contextMenu = this;
 		map.on('locontextmenu', this._onContextMenu, this);
 		map.on('mousedown', this._onMouseDown, this);
+		map.on('mouseup', this._onMouseUp, this);
 		map.on('keydown', this._onKeyDown, this);
 		map.on('closepopups', this._onClosePopup, this);
 	},
@@ -122,6 +123,10 @@ L.Control.ContextMenu = L.Control.extend({
 		this._prevMousePos = {x: e.originalEvent.pageX, y: e.originalEvent.pageY};
 
 		this._onClosePopup();
+	},
+
+	_onMouseUp: function (e) {
+		this._currMousePos = { x: e.originalEvent.pageX, y: e.originalEvent.pageY };
 	},
 
 	_onKeyDown: function(e) {
@@ -144,9 +149,13 @@ L.Control.ContextMenu = L.Control.extend({
 
 		var contextMenu = this._createContextMenuStructure(obj);
 		var spellingContextMenu = false;
+		var autoFillContextMenu = false;
 		for (var menuItem in contextMenu) {
 			if (menuItem.indexOf('.uno:SpellCheckIgnore') !== -1) {
 				spellingContextMenu = true;
+				break;
+			} else if (menuItem.indexOf('.uno:AutoFill') !== -1) {
+				autoFillContextMenu = true;
 				break;
 			}
 		}
@@ -178,7 +187,10 @@ L.Control.ContextMenu = L.Control.extend({
 				}
 			});
 
-			$('.leaflet-layer').contextMenu(this._prevMousePos);
+			if (autoFillContextMenu)
+				$('.leaflet-layer').contextMenu(this._currMousePos);
+			else
+				$('.leaflet-layer').contextMenu(this._prevMousePos);
 			this.hasContextMenu = true;
 		}
 	},
@@ -217,6 +229,22 @@ L.Control.ContextMenu = L.Control.extend({
 				&& item.menu && item.menu.length) {
 				item.text = _('Paste Special');
 				item.command = '.uno:PasteSpecial';
+				item.type = item.menu[0].type;
+				item.menu = undefined;
+			}
+
+			if (item.type === 'command' && item.text.replace('~', '') === 'Copy Cells'
+				&& item.menu && item.menu.length) {
+				item.text = _('Copy Cells');
+				item.command = '.uno:AutoFill?Copy:bool=true';
+				item.type = item.menu[0].type;
+				item.menu = undefined;
+			}
+
+			if (item.type === 'command' && item.text.replace('~', '') === 'Fill Series'
+				&& item.menu && item.menu.length) {
+				item.text = _('Fill Series');
+				item.command = '.uno:AutoFill?Copy:bool=false';
 				item.type = item.menu[0].type;
 				item.menu = undefined;
 			}

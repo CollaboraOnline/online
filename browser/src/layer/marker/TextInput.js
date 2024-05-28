@@ -978,11 +978,6 @@ L.TextInput = L.Layer.extend({
 					this._map.fire('closementionpopup', { 'typingMention': false });
 				else if (id === 'formulaautocompletePopup')
 					this._map.fire('closeformulapopup');
-				else if (id === 'autoFillPopup')
-					this._map.fire('closeautofillpopup');
-
-			} else if (ev.key === ' ' && id === 'autoFillPopup') { // special case for autoFillPopup, close if SPACE button pressed.
-				this._map.fire('closeautofillpopup');
 			}
 		}
 	},
@@ -1135,7 +1130,6 @@ L.TextInput = L.Layer.extend({
 
 		this._handleKeyDownForPopup(ev, 'mentionPopup');
 		this._handleKeyDownForPopup(ev, 'formulaautocompletePopup');
-		this._handleKeyDownForPopup(ev, 'autoFillPopup');
 	},
 
 	// Check arrow keys on 'keyup' event; using 'ArrowLeft' or 'ArrowRight'
