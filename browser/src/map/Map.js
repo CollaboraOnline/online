@@ -1684,7 +1684,7 @@ L.Map = L.Evented.extend({
 		var followEditor = true;
 		var followUser = false;
 
-		if (userDefined && viewId !== -1 && viewId !== this._docLayer.viewId) {
+		if (userDefined && viewId !== -1) {
 			followUser = true;
 			followEditor = false;
 		}
