@@ -1694,28 +1694,25 @@ L.Map = L.Evented.extend({
 			followUser = false;
 		}
 
-		this._docLayer._followUser = followUser;
-		this._docLayer._followEditor = followEditor;
-
 		if (followUser) {
 			this._goToViewId(viewId);
-			this._docLayer._followThis = viewId;
+			app.setFollowingUser(viewId);
 		}
 		else if (followEditor) {
 			var editorId = this._docLayer._editorId;
 			if (editorId !== -1 && editorId !== this._docLayer.viewId) {
 				this._goToViewId(editorId);
-				this._docLayer._followThis = editorId;
+				app.setFollowingEditor(editorId);
 			}
 		}
 		else {
-			this.fire('deselectuser', {viewId: this._docLayer._followThis});
-			this._docLayer._followThis = -1;
+			this.fire('deselectuser', {viewId: app.getFollowedViewId()});
+			app.setFollowingOff();
 		}
 
 		// Notify about changes
 		this.fire('postMessage', {msgId: 'FollowUser_Changed',
-			args: {FollowedViewId: this._docLayer._followThis,
+			args: {FollowedViewId: app.getFollowedViewId(),
 				IsFollowUser: followUser,
 				IsFollowEditor: followEditor}});
 	},

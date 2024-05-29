@@ -603,7 +603,7 @@ L.Map.Keyboard = L.Handler.extend({
 		}
 
 		// if any key is pressed, we stop the following other user feature.
-		if (this._map._docLayer._followUser) {
+		if (app.isFollowingUser()) {
 			this._map.userList.followUser(this._map._docLayer._viewId);
 		}
 
