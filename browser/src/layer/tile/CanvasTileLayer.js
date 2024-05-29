@@ -2577,6 +2577,9 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	goToCellViewCursor: function(viewId) {
 		if (this._cellViewCursors[viewId] && !this._isEmptyRectangle(this._cellViewCursors[viewId].bounds)) {
+			if (this._selectedPart !== this._cellViewCursors[viewId].part)
+				this._map.setPart(this._cellViewCursors[viewId].part);
+
 			if (!this._map.getBounds().contains(this._cellViewCursors[viewId].bounds)) {
 				var mapBounds = this._map.getBounds();
 				var scrollX = 0;
@@ -2604,7 +2607,9 @@ L.CanvasTileLayer = L.Layer.extend({
 			}
 
 			var backgroundColor = L.LOUtil.rgbToHex(this._map.getViewColor(viewId));
-			this._cellViewCursors[viewId].marker.bindPopup(this._map.getViewName(viewId), {autoClose: false, autoPan: false, backgroundColor: backgroundColor, color: 'white', closeButton: false});
+			var marker = this._cellViewCursors[viewId].marker;
+			if (marker)
+				marker.bindPopup(this._map.getViewName(viewId), {autoClose: false, autoPan: false, backgroundColor: backgroundColor, color: 'white', closeButton: false});
 		}
 	},
 
