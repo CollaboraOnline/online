@@ -1469,7 +1469,8 @@ app.definitions.Socket = L.Class.extend({
 			var options = {
 				tileWidthTwips: tileWidthTwips / app.dpiScale,
 				tileHeightTwips: tileHeightTwips / app.dpiScale,
-				docType: command.type
+				docType: command.type,
+				viewId: command.viewid
 			};
 			if (command.type === 'text')
 				docLayer = new L.WriterTileLayer(options);

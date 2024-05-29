@@ -728,7 +728,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._previewInvalidations = [];
 
 		this._editorId = -1;
-		app.setFollowingOff();
+		app.setFollowingUser(options.viewId);
 
 		this._selectedTextContent = '';
 		this._typingMention = false;
@@ -2428,7 +2428,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 
 		if ((app.isFollowingEditor() || app.isFollowingUser()) && this._map.lastActionByUser) {
-			this._map._setFollowing(false, null);
+			this._map._setFollowing(true, this._viewId);
 		}
 		this._map.lastActionByUser = false;
 
@@ -3602,7 +3602,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 			if (!app.isPointVisibleInTheDisplayedArea(new app.definitions.simplePoint(correctedCursor.x1, correctedCursor.y1).toArray()) ||
 				!app.isPointVisibleInTheDisplayedArea(new app.definitions.simplePoint(correctedCursor.x2, correctedCursor.y2).toArray())) {
-				if (!(app.isFollowingEditor() || app.isFollowingUser()) &&
+				if (!(app.isFollowingEditor() || (app.isFollowingUser() && app.getFollowedViewId() !== this._viewId)) &&
 				    !this._map.calcInputBarHasFocus()) {
 					this.scrollToPos(new app.definitions.simplePoint(correctedCursor.x1, correctedCursor.y1));
 				}
