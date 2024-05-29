@@ -536,6 +536,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 							},
 							{
 								'id': 'home-set-default',
+								'class': 'unoResetAttributes',
 								'type': 'toolitem',
 								'text': _UNO('.uno:SetDefault'),
 								'command': '.uno:SetDefault',
