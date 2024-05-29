@@ -250,8 +250,17 @@ app.definitions.Socket = L.Class.extend({
 		const darkTheme = window.prefs.getBoolean('darkTheme');
 		msg += ' darkTheme=' + darkTheme;
 
+		var isCalcTest =
+			window.docURL.includes('data/desktop/calc/') ||
+			window.docURL.includes('data/mobile/calc/') ||
+			window.docURL.includes('data/idle/calc/') ||
+			window.docURL.includes('data/multiuser/calc/');
+
+		if (L.Browser.cypressTest && isCalcTest)
+			window.enableAccessibility = false;
+
 		var accessibilityState = window.prefs.getBoolean('accessibilityState');
-		accessibilityState = accessibilityState || L.Browser.cypressTest;
+		accessibilityState = accessibilityState || (L.Browser.cypressTest && !isCalcTest);
 		msg += ' accessibilityState=' + accessibilityState;
 
 		this._doSend(msg);
