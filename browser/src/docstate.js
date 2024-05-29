@@ -72,6 +72,10 @@ window.app = {
 			pixels: [0, 0] // This can be larger than the document's size.
 		}
 	},
+	following: { // describes which cursor we follow with the view
+		mode: 'none', // none | user | editor
+		viewId: -1, // viewId of currently followed user
+	},
 	tile: {
 		size: {
 			pixels: [0, 0],

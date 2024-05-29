@@ -96,38 +96,33 @@ class UserList extends L.Control {
 	}
 
 	getFollowedUser(): undefined | [number, User] {
-		if (
-			this.map._docLayer._followThis === -1 ||
-			!this.map._docLayer._followUser
-		) {
+		const followedId = app.getFollowedViewId();
+		if (followedId === -1 || !app.isFollowingUser()) {
 			return undefined;
 		}
 
-		const followedUser = this.users.get(this.map._docLayer._followThis);
+		const followedUser = this.users.get(followedId);
 
 		if (followedUser === undefined) {
 			return undefined;
 		}
 
-		return [this.map._docLayer._followThis, followedUser];
+		return [followedId, followedUser];
 	}
 
 	unfollowAll() {
 		if (this.getFollowedUser() !== undefined) {
 			this.followUser(this.map._docLayer._viewId);
-		} else if (this.map._docLayer._followEditor) {
-			this.map._docLayer._followEditor = false;
-			this.map._docLayer._followThis = -1;
+		} else if (app.isFollowingEditor()) {
+			app.setFollowingOff();
 		}
 	}
 
 	followUser(viewId: number) {
 		const myViewId = this.map._docLayer._viewId;
-		const followingViewId = this.map._docLayer._followThis;
+		const followingViewId = app.getFollowedViewId();
 
 		const follow = viewId !== myViewId && viewId !== followingViewId;
-
-		var docLayer = this.map._docLayer;
 
 		if (!follow) {
 			this.map._goToViewId(myViewId);
@@ -138,9 +133,7 @@ class UserList extends L.Control {
 			this.map._setFollowing(false, null);
 		}
 
-		docLayer._followThis = viewId;
-		docLayer._followUser = true;
-		docLayer._followEditor = false;
+		app.setFollowingUser(viewId);
 
 		this.selectUser(viewId);
 	}
@@ -308,10 +301,7 @@ class UserList extends L.Control {
 
 		let displayCount: number;
 
-		if (
-			this.getFollowedUser() === undefined &&
-			!this.map._docLayer._followEditor
-		) {
+		if (this.getFollowedUser() === undefined && !app.isFollowingEditor()) {
 			displayCount = this.options.userLimitHeader;
 		} else {
 			displayCount = this.options.userLimitHeaderWhenFollowing;
@@ -413,7 +403,7 @@ class UserList extends L.Control {
 		const user = this.users.get(e.viewId);
 		this.users.delete(e.viewId);
 
-		if (e.viewId === this.map._docLayer._followThis) {
+		if (e.viewId === app.getFollowedViewId()) {
 			this.unfollowAll();
 		}
 
@@ -539,7 +529,7 @@ class UserList extends L.Control {
 			this.renderAll();
 		};
 		(followEditorCheckbox as HTMLInputElement).checked =
-			this.map._docLayer._followEditor;
+			app.isFollowingEditor();
 
 		const followEditorCheckboxLabel = L.DomUtil.create(
 			'label',
@@ -560,14 +550,14 @@ class UserList extends L.Control {
 
 		const following = this.getFollowedUser();
 
-		if (following === undefined && !this.map._docLayer._followEditor) {
+		if (following === undefined && !app.isFollowingEditor()) {
 			followingChipBackground.style.display = 'none';
 			return;
 		}
 
 		const topAvatarZIndex = this.options.userLimitHeaderWhenFollowing;
 
-		if (this.map._docLayer._followEditor) {
+		if (app.isFollowingEditor()) {
 			followingChip.innerText = this.options.followingChipTextEditor;
 			followingChip.style.borderColor = 'var(--color-main-text)';
 		} else {

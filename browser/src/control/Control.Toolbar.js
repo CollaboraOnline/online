@@ -996,18 +996,13 @@ function editorUpdate(e) { // eslint-disable-line no-unused-vars
 
 	if (e.target.checked) {
 		var editorId = docLayer._editorId;
-
-		docLayer._followUser = false;
-		docLayer._followEditor = true;
-		if (editorId !== -1 && editorId !== docLayer._viewId) {
+		app.setFollowingEditor(editorId);
+		if (editorId !== -1 && editorId !== docLayer._viewId)
 			map._goToViewId(editorId);
-			docLayer._followThis = editorId;
-		}
 	}
-	else {
-		docLayer._followEditor = false;
-		docLayer._followThis = -1;
-	}
+	else
+		app.setFollowingOff();
+
 	map.userList.hideTooltip();
 }
 

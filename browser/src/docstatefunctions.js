@@ -90,3 +90,34 @@ app.registerExportFormat = function (label, format) {
 		app.file.exportFormats.push({ label: label, format: format });
 	}
 };
+
+app.getFollowedViewId = function () {
+	return app.following.viewId;
+};
+
+app.setFollowingOff = function () {
+	app.following.mode = 'none';
+	app.following.viewId = -1;
+};
+
+app.setFollowingUser = function (viewId) {
+	app.following.mode = 'user';
+	app.following.viewId = viewId;
+};
+
+app.setFollowingEditor = function (viewId = -1) {
+	app.following.mode = 'editor';
+	app.following.viewId = viewId;
+};
+
+app.isFollowingOff = function () {
+	return app.following.mode === 'none';
+};
+
+app.isFollowingUser = function () {
+	return app.following.mode === 'user';
+};
+
+app.isFollowingEditor = function () {
+	return app.following.mode === 'editor';
+};
