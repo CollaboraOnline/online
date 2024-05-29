@@ -246,14 +246,9 @@ app.definitions.Socket = L.Class.extend({
 		if (spellOnline) {
 			msg += ' spellOnline=' + spellOnline;
 		}
-		var docTypes = ['text', 'spreadsheet', 'presentation', 'drawing'];
+
 		const darkTheme = window.prefs.getBoolean('darkTheme');
-		for (var i = 0; i < docTypes.length; ++i) {
-			var docType = docTypes[i];
-			if (darkTheme) {
-				msg += ' ' + docType + 'DarkTheme=' + darkTheme;
-			}
-		}
+		msg += ' darkTheme=' + darkTheme;
 
 		var accessibilityState = window.prefs.getBoolean('accessibilityState');
 		accessibilityState = accessibilityState || L.Browser.cypressTest;
