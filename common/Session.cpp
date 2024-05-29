@@ -195,24 +195,9 @@ void Session::parseDocOptions(const StringVector& tokens, int& part, std::string
             _spellOnline = value;
             ++offset;
         }
-        else if (name == "textDarkTheme")
+        else if (name == "darkTheme")
         {
-            _textDarkTheme = value;
-            ++offset;
-        }
-        else if (name == "spreadsheetDarkTheme")
-        {
-            _spreadsheetDarkTheme = value;
-            ++offset;
-        }
-        else if (name == "presentationDarkTheme")
-        {
-            _presentationDarkTheme = value;
-            ++offset;
-        }
-        else if (name == "drawingDarkTheme")
-        {
-            _drawingDarkTheme = value;
+            _darkTheme = value;
             ++offset;
         }
         else if (name == "batch")

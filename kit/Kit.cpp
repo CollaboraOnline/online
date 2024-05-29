@@ -1724,25 +1724,7 @@ std::map<std::string, int> Document::getViewColors()
 
 std::string Document::getDefaultTheme(const std::shared_ptr<ChildSession>& session) const
 {
-    bool darkTheme;
-    switch (_loKitDocument->getDocumentType())
-    {
-    case LOK_DOCTYPE_TEXT:
-        darkTheme = session->getTextDarkTheme() == "true";
-        break;
-    case LOK_DOCTYPE_SPREADSHEET:
-        darkTheme = session->getSpreadsheetDarkTheme() == "true";
-        break;
-    case LOK_DOCTYPE_PRESENTATION:
-        darkTheme = session->getPresentationDarkTheme() == "true";
-        break;
-    case LOK_DOCTYPE_DRAWING:
-        darkTheme = session->getDrawingDarkTheme() == "true";
-        break;
-    default:
-        darkTheme = false;
-        break;
-    }
+    bool darkTheme = session->getDarkTheme() == "true";
     return darkTheme ? "Dark" : "Light";
 }
 

@@ -1330,14 +1330,9 @@ window.app = {
 				if (spellOnline) {
 					msg += ' spellOnline=' + spellOnline;
 				}
-				var docTypes = ['text', 'spreadsheet', 'presentation', 'drawing'];
+
 				const darkTheme = window.prefs.getBoolean('darkTheme');
-				for (var i = 0; i < docTypes.length; ++i) {
-					var docType = docTypes[i];
-					if (darkTheme) {
-						msg += ' ' + docType + 'DarkTheme=' + darkTheme;
-					}
-				}
+				msg += ' darkTheme=' + darkTheme;
 
 				msg += ' timezone=' + Intl.DateTimeFormat().resolvedOptions().timeZone;
 

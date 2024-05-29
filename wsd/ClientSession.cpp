@@ -1257,24 +1257,9 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/,
             oss << " spellOnline=" << getSpellOnline();
         }
 
-        if (!getTextDarkTheme().empty())
+        if (!getDarkTheme().empty())
         {
-            oss << " textDarkTheme=" << getTextDarkTheme();
-        }
-
-        if (!getSpreadsheetDarkTheme().empty())
-        {
-            oss << " spreadsheetDarkTheme=" << getSpreadsheetDarkTheme();
-        }
-
-        if (!getPresentationDarkTheme().empty())
-        {
-            oss << " presentationDarkTheme=" << getPresentationDarkTheme();
-        }
-
-        if (!getDrawingDarkTheme().empty())
-        {
-            oss << " drawingDarkTheme=" << getDrawingDarkTheme();
+            oss << " darkTheme=" << getDarkTheme();
         }
 
         if (!getWatermarkText().empty())
