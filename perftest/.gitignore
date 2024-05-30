@@ -1,0 +1,7 @@
+.deps
+.libs
+*.la
+*.lo
+*.o
+workdir
+results

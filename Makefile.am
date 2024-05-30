@@ -306,6 +306,16 @@ coolsocketdump_SOURCES = tools/WebSocketDump.cpp \
 			 common/DummyTraceEventEmitter.cpp \
 			 $(shared_sources)
 
+noinst_PROGRAMS += coolperftest
+coolperftest_CPPFLAGS = ${include_paths} #-DTDOC=\"$(abs_top_srcdir)/test/data\"
+coolperftest_SOURCES = $(shared_sources) \
+                       perftest/COOLPerfTest.cpp \
+                       perftest/PerfTest.hpp \
+                       perftest/PerfTest.cpp \
+                       perftest/PerfTestSocketHandler.hpp \
+                       perftest/PerfTestSocketHandler.cpp \
+                       common/DummyTraceEventEmitter.cpp
+
 wsd_headers = wsd/Admin.hpp \
               wsd/AdminModel.hpp \
               wsd/Auth.hpp \
@@ -723,6 +733,134 @@ check-recursive: eslint
 
 check: check-for-system-nss prettier eslint check-recursive
 	$(GEN_COVERAGE_COMMAND)
+
+perftest_dir = $(abs_builddir)/perftest
+perftest_workdir = $(perftest_dir)/workdir
+perftest_pid_file = $(perftest_workdir)/coolwsd.pid
+perftest_coolwsd_log = $(perftest_workdir)/coolwsd.log
+perftest_coolwsd_output = $(perftest_workdir)/coolwsd_output.log
+perftest_coolperftest_output = $(perftest_workdir)/coolperftest_output.txt
+perftest_results_dir = $(perftest_dir)/results
+perftest_ldflags = -module -rpath /dummy
+all_perftests_la =
+
+all_perftests_la += perftest/tests/load/LoadCalcLarge.la
+perftest_tests_load_LoadCalcLarge_la_SOURCES=perftest/tests/load/LoadCalcLarge.cpp
+perftest_tests_load_LoadCalcLarge_la_LDFLAGS=$(perftest_ldflags)
+all_perftests_la += perftest/tests/load/LoadCalcSmall.la
+perftest_tests_load_LoadCalcSmall_la_SOURCES=perftest/tests/load/LoadCalcSmall.cpp
+perftest_tests_load_LoadCalcSmall_la_LDFLAGS=$(perftest_ldflags)
+all_perftests_la += perftest/tests/load/LoadDrawSmall.la
+perftest_tests_load_LoadDrawSmall_la_SOURCES=perftest/tests/load/LoadDrawSmall.cpp
+perftest_tests_load_LoadDrawSmall_la_LDFLAGS=$(perftest_ldflags)
+all_perftests_la += perftest/tests/load/LoadImpressLarge.la
+perftest_tests_load_LoadImpressLarge_la_SOURCES=perftest/tests/load/LoadImpressLarge.cpp
+perftest_tests_load_LoadImpressLarge_la_LDFLAGS=$(perftest_ldflags)
+all_perftests_la += perftest/tests/load/LoadImpressSmall.la
+perftest_tests_load_LoadImpressSmall_la_SOURCES=perftest/tests/load/LoadImpressSmall.cpp
+perftest_tests_load_LoadImpressSmall_la_LDFLAGS=$(perftest_ldflags)
+all_perftests_la += perftest/tests/load/LoadWriterLarge.la
+perftest_tests_load_LoadWriterLarge_la_SOURCES=perftest/tests/load/LoadWriterLarge.cpp
+perftest_tests_load_LoadWriterLarge_la_LDFLAGS=$(perftest_ldflags)
+all_perftests_la += perftest/tests/load/LoadWriterSmall.la
+perftest_tests_load_LoadWriterSmall_la_SOURCES=perftest/tests/load/LoadWriterSmall.cpp
+perftest_tests_load_LoadWriterSmall_la_LDFLAGS=$(perftest_ldflags)
+
+noinst_LTLIBRARIES=$(all_perftests_la)
+
+# Compile performance tests
+# Check for FlameGraph
+# Check for perf
+# Check for perf permissions
+perf: coolperftest $(all_perftests_la)
+	@if ! which flamegraph.pl > /dev/null 2>&1; then \
+		echo "No flamegraph.pl found"; \
+		echo "On fedora install systemwide with: \`sudo dnf install flamegraph\`"; \
+		echo "Otherwise install locally manually with: \`git clone https://github.com/brendangregg/FlameGraph\`"; \
+		echo "And add to \$$PATH"; \
+		exit 1; \
+	fi
+	@if ! which perf > /dev/null 2>&1; then \
+		echo "No perf found"; \
+		echo "On fedora install with: \`sudo dnf install perf`"; \
+		echo "ON debian install with: \`sudo apt install linux-perf`"; \
+		exit 1; \
+	fi
+	@if [ -e /proc/sys/kernel/perf_event_paranoid ] && grep 3 /proc/sys/kernel/perf_event_paranoid > /dev/null 2>&1; then \
+		echo "Set perf_event_paranoid to 2 in order to use perf:"; \
+		echo "  \`sudo sysctl kernel.perf_event_paranoid=2\`"; \
+		exit 1; \
+	fi
+	@mkdir -p $(perftest_workdir)
+	@mkdir -p $(perftest_results_dir)
+
+# Compile and run performance tests
+# make check-perf
+# or make check-perf spec=example/ExamplePerfTest
+# spec is relative to the perftest/tests directory
+check-perf: perf @JAILS_PATH@
+	@echo Running make check-perf
+	$(if $(spec),\
+		$(call perftest_run_one,$(spec)),\
+		$(foreach perftest_la,$(all_perftests_la),$(call perftest_run_one,$(perftest_la)))\
+	)
+
+# Runs a single performance test
+# Parameters:
+# 1 - spec (.la or .cpp or no extension) (can include perftest/tests/ or not)
+define perftest_run_one
+	@printf "\n"
+	@printf "\n"
+	$(call perftest_cleanup_coolwsd)
+	$(call perftest_run_coolwsd)
+	@sleep 2 # wait for coolwsd to be ready to accept connections
+	$(if $(findstring perftest/tests/,$(1)),
+		$(call perftest_run_coolperftest,$(subst perftest/tests/,,$(1))),
+		$(call perftest_run_coolperftest,$(1)))
+	$(call perftest_kill_coolwsd)
+	@printf "\n"
+	@printf "\n"
+endef
+
+define perftest_cleanup_coolwsd
+	@echo "Cleaning up coolwsd..."
+	@if test -d $(perftest_workdir); then rm -f $(perftest_workdir)/*; fi
+	@if test -s ./coolwsd; then ./coolwsd --disable-cool-user-checking --cleanup --o:logging.level=trace > $(perftest_workdir)/coolwsd_cleanup_output.log 2>&1; fi
+endef
+
+define perftest_run_coolwsd
+	@echo "Launching coolwsd..."
+	@fc-cache "@LO_PATH@"/share/fonts/truetype
+	@mkdir -p $(perftest_workdir)
+	@./coolwsd-inproc $(COMMON_PARAMS) \
+		--o:logging.file[@enable]=true --o:logging.level=trace \
+		--pidfile=$(perftest_pid_file) \
+		--o:logging.file.property[0]=$(perftest_coolwsd_log) \
+		--unattended \
+		> $(perftest_coolwsd_output) 2>&1 &
+endef
+
+# Parameters:
+# 1 - spec (.la or .cpp or no extension) (cannot include perftest/tests/)
+define perftest_run_coolperftest
+	$(eval so=perftest/tests/$(dir $(1)).libs/$(basename $(notdir $1)).so)
+	@echo "Running perftest $(1) ($(so))"
+	@./coolperftest $(so) "$(perftest_results_dir)/$(dir $(1))" wss://localhost:9980 | tee $(perftest_coolperftest_output)
+	@if grep name $(perftest_coolperftest_output) > /dev/null 2>&1; then \
+		mkdir -p $(perftest_results_dir)/$(dir $(1)); \
+		cp $(perftest_coolperftest_output) $(perftest_results_dir)/$(basename $(1)).txt; \
+	fi
+endef
+
+define perftest_kill_coolwsd
+	@if pgrep -F $(perftest_pid_file) > /dev/null 2>&1; then \
+		sleep 1; \
+		if pgrep -F $(perftest_pid_file) > /dev/null 2>&1; then \
+			echo "Killing coolwsd by pid: $(perftest_pid_file)";\
+			pkill -e -F $(perftest_pid_file) || pkill -e --signal SIGKILL -F $(perftest_pid_file) || true;\
+		fi; \
+	fi
+endef
 
 coverage-report:
 	$(GEN_COVERAGE_COMMAND)
