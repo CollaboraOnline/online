@@ -1187,7 +1187,7 @@ export class CommentSection extends CanvasSectionObject {
 			else {
 				var parentComment = this.sectionProperties.commentList[parentIdx];
 				if (parentComment && !parentComment.sectionProperties.children.includes(comment))
-					parentComment.sectionProperties.children.push(comment);
+					parentComment.sectionProperties.children.unshift(comment);
 			}
 		}
 
