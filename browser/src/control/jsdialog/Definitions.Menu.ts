@@ -283,34 +283,34 @@ menuDefinitions.set('PasteMenu', [
 
 menuDefinitions.set('ConditionalFormatMenu', [
 	{
-		text: _('Condition...'),
+		text: _('Highlight cells with...'),
 		items: [
 			{
-				text: _('Greater than...'),
+				text: _('Values greater than...'),
 				uno: '.uno:ConditionalFormatEasy?FormatRule:short=2',
 			},
 			{
-				text: _('Less than...'),
+				text: _('Values less than...'),
 				uno: '.uno:ConditionalFormatEasy?FormatRule:short=1',
 			},
 			{
-				text: _('Equal to...'),
+				text: _('Values equal to...'),
 				uno: '.uno:ConditionalFormatEasy?FormatRule:short=0',
 			},
 			{
-				text: _('Between...'),
+				text: _('Values between...'),
 				uno: '.uno:ConditionalFormatEasy?FormatRule:short=6',
 			},
 			{
-				text: _('Duplicate...'),
+				text: _('Values duplicate...'),
 				uno: '.uno:ConditionalFormatEasy?FormatRule:short=8',
 			},
 			{
-				text: _('Contains text...'),
+				text: _('Containing text...'),
 				uno: '.uno:ConditionalFormatEasy?FormatRule:short=23',
 			},
 			{ type: 'separator' },
-			{ text: _('More conditions...'), uno: '.uno:ConditionalFormatDialog' },
+			{ text: _('More highlights...'), uno: '.uno:ConditionalFormatDialog' },
 		],
 	},
 	{
@@ -341,7 +341,7 @@ menuDefinitions.set('ConditionalFormatMenu', [
 				uno: '.uno:ConditionalFormatEasy?FormatRule:short=16',
 			},
 			{ type: 'separator' },
-			{ text: _('More conditions...'), uno: '.uno:ConditionalFormatDialog' },
+			{ text: _('More highlights...'), uno: '.uno:ConditionalFormatDialog' },
 		],
 	},
 	{ type: 'separator' },

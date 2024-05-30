@@ -829,15 +829,15 @@ L.Control.Menubar = L.Control.extend({
 				    {uno: '.uno:UngroupSparklines'}
 				]},
 				{name: _UNO('.uno:ConditionalFormatMenu', 'spreadsheet'), type: 'menu', menu: [
-					{name: _('Condition...'), type: 'menu', menu: [
-						{name: _('Greater than...'), uno: '.uno:ConditionalFormatEasy?FormatRule:short=2'},
-						{name: _('Less than...'), uno: '.uno:ConditionalFormatEasy?FormatRule:short=1'},
-						{name: _('Equal to...'), uno: '.uno:ConditionalFormatEasy?FormatRule:short=0'},
-						{name: _('Between...'), uno: '.uno:ConditionalFormatEasy?FormatRule:short=6'},
-						{name: _('Duplicate...'), uno: '.uno:ConditionalFormatEasy?FormatRule:short=8'},
-						{name: _('Contains text...'), uno: '.uno:ConditionalFormatEasy?FormatRule:short=23'},
+					{name: _('Highlight cells with...'), type: 'menu', menu: [
+						{name: _('Values greater than...'), uno: '.uno:ConditionalFormatEasy?FormatRule:short=2'},
+						{name: _('Values less than...'), uno: '.uno:ConditionalFormatEasy?FormatRule:short=1'},
+						{name: _('Values equal to...'), uno: '.uno:ConditionalFormatEasy?FormatRule:short=0'},
+						{name: _('Values between...'), uno: '.uno:ConditionalFormatEasy?FormatRule:short=6'},
+						{name: _('Values duplicate...'), uno: '.uno:ConditionalFormatEasy?FormatRule:short=8'},
+						{name: _('Containing text...'), uno: '.uno:ConditionalFormatEasy?FormatRule:short=23'},
 						{type: 'separator'},
-						{name: _('More conditions...'), uno: '.uno:ConditionalFormatDialog'},
+						{name: _('More highlights...'), uno: '.uno:ConditionalFormatDialog'},
 					]},
 					{name: _('Top/Bottom Rules...'), type: 'menu', menu: [
 						{name: _('Top N elements...'), uno: '.uno:ConditionalFormatEasy?FormatRule:short=11'},
@@ -847,7 +847,7 @@ L.Control.Menubar = L.Control.extend({
 						{name: _('Above Average...'), uno: '.uno:ConditionalFormatEasy?FormatRule:short=15'},
 						{name: _('Below Average...'), uno: '.uno:ConditionalFormatEasy?FormatRule:short=16'},
 						{type: 'separator'},
-						{name: _('More conditions...'), uno: '.uno:ConditionalFormatDialog'},
+						{name: _('More highlights...'), uno: '.uno:ConditionalFormatDialog'},
 					]},
 					{uno: '.uno:ColorScaleFormatDialog'},
 					{uno: '.uno:DataBarFormatDialog'},
