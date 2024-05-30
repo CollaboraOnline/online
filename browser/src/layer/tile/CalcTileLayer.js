@@ -1159,11 +1159,12 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 				return new L.LatLng(0, 0); // no scroll needed.
 
 			var spacingY = app.calc.cellCursorRectangle.height / 4.0;
+			var halfSize = (freePane.y2 - freePane.y1) / 2;
 			if (app.calc.cellCursorRectangle.y1 < freePane.y1) {
-				scroll.y = app.calc.cellCursorRectangle.y1 - freePane.y1 - spacingY;
+				scroll.y = app.calc.cellCursorRectangle.y1 - freePane.y1 - halfSize - spacingY;
 			}
 			else if (app.calc.cellCursorRectangle.y2 > freePane.y2) {
-				scroll.y = app.calc.cellCursorRectangle.y2 - freePane.y2 + spacingY;
+				scroll.y = app.calc.cellCursorRectangle.y2 - freePane.y2 + halfSize + spacingY;
 			}
 		}
 
