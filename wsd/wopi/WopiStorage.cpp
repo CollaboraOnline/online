@@ -766,6 +766,9 @@ void WopiStorage::uploadLocalFileToStorageAsync(const Authorization& auth, LockC
         LOG_DBG(wopiLog << " async upload request: " << httpRequest.header().toString());
 
         // Make the request.
+
+        // FIXME: is there a timeout on an async request ? - there should be surely ...
+        // and it should be configurable...
         _uploadHttpSession->asyncRequest(httpRequest, socketPoll);
 
         scopedInvokeCallback.setArg(
@@ -777,11 +780,13 @@ void WopiStorage::uploadLocalFileToStorageAsync(const Authorization& auth, LockC
         LOG_ERR(wopiLog << " cannot upload file to WOPI storage uri [" << uriAnonym
                         << "]. Error: " << ex.displayText()
                         << (ex.nested() ? " (" + ex.nested()->displayText() + ')' : ""));
+        _uploadHttpSession.reset();
     }
     catch (const std::exception& ex)
     {
         LOG_ERR(wopiLog << " cannot upload file to WOPI storage uri [" + uriAnonym + "]. Error: "
                         << ex.what());
+        _uploadHttpSession.reset();
     }
 
     scopedInvokeCallback.setArg(AsyncUpload(

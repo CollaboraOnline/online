@@ -1533,6 +1533,8 @@ private:
     int sendTextMessage(const char*, const size_t, bool) const override { return 0; }
     int sendBinaryMessage(const char*, const size_t, bool) const override { return 0; }
 
+    // FIXME: no dumpState method at all and lots of state ...
+
 private:
     const std::string _host;
     const std::string _port;
@@ -1880,6 +1882,9 @@ private:
 
     int sendTextMessage(const char*, const size_t, bool) const override { return 0; }
     int sendBinaryMessage(const char*, const size_t, bool) const override { return 0; }
+
+    // FIXME: no dumpState method at all and lots of state ...
+    // All internal socket state must be dumped on kill -USR1 <pid>
 
 private:
     std::chrono::microseconds _timeout;

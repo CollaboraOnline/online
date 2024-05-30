@@ -1942,6 +1942,9 @@ void DocumentBroker::uploadToStorageInternal(const std::shared_ptr<ClientSession
                                      << DocumentState::name(_docState.activity()));
         _storageManager.setLastUploadResult(false);
 
+        // FIXME: where do we re-try the up-load ? looks like the async thing ends
+        // but when is this re-dispatched ? ...
+
         switch (_docState.activity())
         {
             case DocumentState::Activity::None:
