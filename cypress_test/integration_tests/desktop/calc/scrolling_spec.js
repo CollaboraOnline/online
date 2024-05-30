@@ -15,7 +15,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Scroll through document', 
 	it('Scrolling to bottom/top', function() {
 		desktopHelper.assertScrollbarPosition('vertical', 19, 21);
 		desktopHelper.pressKey(3,'pagedown');
-		desktopHelper.assertScrollbarPosition('vertical', 170, 200);
+		desktopHelper.assertScrollbarPosition('vertical', 200, 230);
 		desktopHelper.pressKey(3,'pageup');
 		desktopHelper.assertScrollbarPosition('vertical', 19, 21);
 	});
