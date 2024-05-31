@@ -1735,11 +1735,35 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				'vertical': 'true'
 			},
 			{
-				'id': 'data-calculate',
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:Calculate', 'spreadsheet'),
-				'command': '.uno:Calculate',
-				'accessibility': { focusBack: true,	combination: 'R', de: null }
+				'type': 'container',
+				'children': [ 
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'data-calculate',
+								'type': 'toolitem',
+								'text': _UNO('.uno:Calculate', 'spreadsheet'),
+								'command': '.uno:Calculate',
+								'accessibility': { focusBack: true,	combination: 'R', de: null }
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'data-convert-formula-to-value',
+								'type': 'toolitem',
+								'text': _UNO('.uno:ConvertFormulaToValue', 'spreadsheet'),
+								'command': '.uno:ConvertFormulaToValue',
+								'image': false,
+								'accessibility': { focusBack: true,	combination: 'R', de: null }
+							}
+						]
+					}
+				],
+				'vertical': 'true'
 			},
 			{
 				'type': 'container',
