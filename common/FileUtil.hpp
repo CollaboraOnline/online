@@ -36,13 +36,6 @@ namespace FileUtil
     /// Create a secure, random directory path.
     std::string createRandomDir(const std::string& path);
 
-    // Save data to a file (overwriting an existing file if necessary) with checks for errors. Write
-    // to a temporary file in the same directory that is then atomically renamed to the desired name
-    // if everything goes well. In case of any error, both the destination file (if it already
-    // exists) and the temporary file (if was created, or existed already) are removed. Return true
-    // if everything succeeded.
-    bool saveDataToFileSafely(const std::string& fileName, const char* data, std::size_t size);
-
     // We work around some of the mess of using the same sources both on the server side and in unit
     // tests with conditional compilation based on BUILDING_TESTS.
 
