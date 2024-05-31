@@ -806,9 +806,8 @@ bool Document::createSession(const std::string& sessionId)
         _lastUpdatedAt[viewId] = std::chrono::steady_clock::now();
         _speedCount[viewId] = 0;
 
-        LOG_DBG("Have " << _sessions.size() << " active sessions after creating "
-                << session->getId());
-        LOG_INF("New session [" << sessionId << "]");
+        LOG_INF("New session [" << sessionId << "] created. Have " << _sessions.size()
+                                << " sessions now");
 
         updateActivityHeader();
         return true;
