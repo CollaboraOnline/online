@@ -1246,53 +1246,56 @@ bool Document::onLoad(const std::string& sessionId,
 
 void Document::onUnload(const ChildSession& session)
 {
+    // This is called when we receive 'child-??? disconnect'.
+    // First, we _sessions.erase(), which destroys the ChildSession instance.
+    // We are called from ~ChildSession.
+
     const auto& sessionId = session.getId();
-    LOG_INF("Unloading session [" << sessionId << "] on url [" << anonymizeUrl(_url) << "].");
+    LOG_INF("Unloading session [" << sessionId << "] on url [" << anonymizeUrl(_url) << ']');
+
+    if (_loKitDocument == nullptr)
+    {
+        LOG_ERR("Unloading session [" << sessionId << "] without loKitDocument, exiting bluntly");
+        flushAndExit(EX_OK);
+        return;
+    }
+
+    // If we have no more sessions, we have nothing more to do.
+    if (!Util::isMobileApp() && _sessions.empty())
+    {
+        // Sanitiy check.
+        const int views = _loKitDocument->getViewsCount();
+        if (views > 1)
+        {
+            LOG_ERR("Document [" << anonymizeUrl(_url) << "] has no more sessions but " << views
+                                 << " views");
+            assert(views <= 1 && "Unexpected document views without matching child sessions");
+        }
+
+        LOG_INF("Document [" << anonymizeUrl(_url) << "] has no more sessions, exiting bluntly");
+        flushAndExit(EX_OK);
+        return;
+    }
 
     const int viewId = session.getViewId();
     _queue->removeCursorPosition(viewId);
 
-    if (_loKitDocument == nullptr)
-    {
-        LOG_ERR("Unloading session [" << sessionId << "] without loKitDocument.");
-        return;
-    }
-
+    // Unload the view.
     _loKitDocument->setView(viewId);
     _loKitDocument->registerCallback(nullptr, nullptr);
     _loKit->registerCallback(nullptr, nullptr);
-
-    int viewCount = _loKitDocument->getViewsCount();
-    if (viewCount == 1)
-    {
-        if (!Util::isMobileApp() && _sessions.empty())
-        {
-            LOG_INF("Document [" << anonymizeUrl(_url) << "] has no more views, exiting bluntly.");
-            flushAndExit(EX_OK);
-        }
-        LOG_INF("Document [" << anonymizeUrl(_url) << "] has no more views, but has " <<
-                _sessions.size() << " sessions still. Destroying the document.");
-#ifdef __ANDROID__
-        _loKitDocumentForAndroidOnly.reset();
-#endif
-        _loKitDocument.reset();
-        LOG_INF("Document [" << anonymizeUrl(_url) << "] session [" << sessionId << "] unloaded Document.");
-        return;
-    }
-    else
-    {
-        _loKitDocument->destroyView(viewId);
-    }
+    _loKitDocument->destroyView(viewId);
 
     // Since callback messages are processed on idle-timer,
     // we could receive callbacks after destroying a view.
     // Retain the CallbackDescriptor object, which is shared with Core.
     // Do not: _viewIdToCallbackDescr.erase(viewId);
 
-    viewCount = _loKitDocument->getViewsCount();
-    LOG_INF("Document [" << anonymizeUrl(_url) << "] session [" <<
-            sessionId << "] unloaded view [" << viewId << "]. Have " <<
-            viewCount << " view" << (viewCount != 1 ? "s." : "."));
+    const int viewCount = _loKitDocument->getViewsCount();
+    LOG_INF("Document [" << anonymizeUrl(_url) << "] session [" << sessionId << "] unloaded view ["
+                         << viewId << "]. Have " << viewCount << " view"
+                         << (viewCount != 1 ? "s" : "") << " and " << _sessions.size() << " session"
+                         << (_sessions.size() != 1 ? "s" : ""));
 
     if (viewCount > 0)
     {
