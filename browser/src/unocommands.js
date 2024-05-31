@@ -66,6 +66,7 @@ var unoCommandsArray = {
 	'ContinueNumbering':{text:{menu:_('~Add to List'),},},
 	'ContourDialog':{global:{menu:_('~Edit Contour...'),},},
 	'ControlCodes':{text:{context:_('Toggle Formatting Marks'),menu:_('For~matting Marks'),},},
+	'ConvertFormulaToValue':{spreadsheet:{menu:_('Formula to Value'),},},
 	'ConvertMenu':{presentation:{menu:_('~Convert'),},},
 	'Copy':{global:{menu:_('Cop~y'),},},
 	'CopyHyperlinkLocation':{global:{menu:_('Copy Hyperlink Location'),},},
