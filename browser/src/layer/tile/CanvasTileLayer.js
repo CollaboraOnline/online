@@ -3567,8 +3567,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 			if (!app.isPointVisibleInTheDisplayedArea(new app.definitions.simplePoint(correctedCursor.x1, correctedCursor.y1).toArray()) ||
 				!app.isPointVisibleInTheDisplayedArea(new app.definitions.simplePoint(correctedCursor.x2, correctedCursor.y2).toArray())) {
-				if (!this._selectionHandles.active &&
-				    !(app.isFollowingEditor() || app.isFollowingUser()) &&
+				if (!(app.isFollowingEditor() || app.isFollowingUser()) &&
 				    !this._map.calcInputBarHasFocus()) {
 					this.scrollToPos(new app.definitions.simplePoint(correctedCursor.x1, correctedCursor.y1));
 				}
