@@ -156,7 +156,7 @@ function selectEntireSheet() {
 		});
 
 	helper.doIfOnMobile(function() {
-		cy.cGet('#test-div-cell_selection_handle_start').should('exist');
+		cy.cGet('.text-selection-handle-start').should('exist');
 	});
 
 	var regex = /^A1:(AMJ|XFD)1048576$/;
