@@ -247,8 +247,8 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 		if (!this._map['wopi'].HidePrintOption) {
 			content.push(
 			{
-				'id': 'file-print',
-				'type': 'bigtoolitem',
+				'id': 'file-print:PrintOptions',
+				'type': 'exportmenubutton',
 				'text': _UNO('.uno:Print', 'presentation'),
 				'command': '.uno:Print',
 				'accessibility': { focusBack: true, combination: 'PF', de: null }

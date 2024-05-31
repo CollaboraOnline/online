@@ -40,6 +40,22 @@ class Dispatcher {
 		this.actionsMap['print'] = function () {
 			app.map.print();
 		};
+		this.actionsMap['print-notespages'] = function () {
+			// To Export only notes with slides both should be true (ExportNotesPages, ExportOnlyNotesPages).
+			// As ExportOnlyNotesPages is kind of child condition to ExportNotesPages.
+			const options = {
+				ExportNotesPages: {
+					type: 'boolean',
+					value: true,
+				},
+				ExportOnlyNotesPages: {
+					type: 'boolean',
+					value: true,
+				},
+			};
+			const optionsString = JSON.stringify(options);
+			app.map.print(optionsString);
+		};
 		this.actionsMap['repair'] = function () {
 			app.socket.sendMessage('commandvalues command=.uno:DocumentRepair');
 		};

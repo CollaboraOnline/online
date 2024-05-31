@@ -374,6 +374,8 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 			return builder._getSaveAsSubmenuOpts(docType);
 		case 'ExportAsMenu':
 			return builder._getExportAsSubmenuOpts(docType);
+		case 'PrintOptions':
+			return builder._getPrintSubmenuOpts(docType);
 		}
 		return [];
 	},
@@ -586,6 +588,25 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		submenuOpts.forEach(function mapIconToItem(menuItem) {
 			menuItem.icon = menuItem.action + '-submenu-icon';
 		});
+
+		return submenuOpts;
+	},
+
+	_getPrintSubmenuOpts: function(docType) {
+		var submenuOpts = [];
+
+		 if (docType === 'presentation') {
+			submenuOpts = [
+				{
+					'action': 'print',
+					'text':  _('Full Page Slides'),
+				},
+				{
+					'action': 'print-notespages',
+					'text':  _('Notes Pages'),
+				}
+			];
+		}
 
 		return submenuOpts;
 	},

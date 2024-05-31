@@ -409,7 +409,10 @@ L.Control.Menubar = L.Control.extend({
 				]},
 				{name: _UNO('.uno:SetDocumentProperties', 'presentation'), uno: '.uno:SetDocumentProperties', id: 'properties'},
 				{type: 'separator'},
-				{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:Print', 'presentation'), L.Control.MenubarShortcuts.shortcuts.PRINT), id: 'print', type: 'action'},
+				{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:Print', 'presentation'), L.Control.MenubarShortcuts.shortcuts.PRINT), id: 'print', type: 'menu', menu: [
+					{name: _('Full Page Slides'), id: 'print', type: 'action'},
+					{name: _('Notes Pages'), id: 'print-notespages' , type: 'action'},
+				]},
 				{name: _('Close document'), id: 'closedocument', type: 'action'}
 			]},
 			{name: _UNO('.uno:EditMenu', 'presentation'), id: 'editmenu', type: 'menu', menu: [
@@ -1889,8 +1892,8 @@ L.Control.Menubar = L.Control.extend({
 			app.dispatcher.dispatch('savecomments');
 		} else if (id === 'shareas' || id === 'ShareAs') {
 			app.dispatcher.dispatch('shareas');
-		} else if (id === 'print') {
-			this._map.print();
+		} else if (id === 'print' || id === 'print-notespages') {
+			app.dispatcher.dispatch(id);
 		} else if (id.startsWith('downloadas-')
 			|| id.startsWith('saveas-')
 			|| id.startsWith('export')
