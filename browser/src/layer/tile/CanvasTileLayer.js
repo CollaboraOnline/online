@@ -1785,20 +1785,14 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_onCalcFunctionUsageMsg: function (textMsg) {
-		var formulaAutocompletePopup = L.DomUtil.get('formulaautocompletePopup');
-		if (formulaAutocompletePopup)
-			this._map.fire('closeformulapopup');
+		this._map.fire('closeformulapopup');
 		this._map.fire('sendformulausagetext', {data: textMsg});
 	},
 
 	_onCalcFunctionListMsg: function (textMsg) {
 		if (textMsg.startsWith('hidetip')) {
-			var formulaAutocompletePopup = L.DomUtil.get('formulaautocompletePopup');
-            if (formulaAutocompletePopup)
-                this._map.fire('closeformulapopup');
-            var formulaUsagePopup = L.DomUtil.get('formulausagePopup');
-            if (formulaUsagePopup)
-                this._map.fire('closeformulausagepopup');
+            this._map.fire('closeformulapopup');
+            this._map.fire('closeformulausagepopup');
 		}
 		else {
 			var funcData = JSON.parse(textMsg);
