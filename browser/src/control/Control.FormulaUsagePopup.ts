@@ -43,8 +43,14 @@ class FormulaUsagePopup extends L.Control.AutoCompletePopup {
 	onAdd() {
 		this.newPopupData.isAutoCompletePopup = true;
 		this.map.on('openformulausagepopup', this.openFormulaUsagePopup, this);
-		this.map.on('closeformulausagepopup', this.closePopup, this);
+		this.map.on('closeformulausagepopup', this.closeFormulaUsagePopup, this);
 		this.map.on('sendformulausagetext', this.sendFormulaUsageText, this);
+	}
+
+	closeFormulaUsagePopup() {
+		var formulaUsagePopup = L.DomUtil.get('formulausagePopup');
+		if (formulaUsagePopup)
+			super.closePopup();
 	}
 
 	openFormulaUsagePopup(ev: FireEvent) {
