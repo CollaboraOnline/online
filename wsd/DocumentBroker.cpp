@@ -4475,6 +4475,13 @@ void DocumentBroker::onUrpMessage(const char* data, size_t len)
     }
 }
 
+std::string DocumentBroker::getServerAudit() const
+{
+    return "{ \"serverAudit\": [ \
+        { \"code\": \"is_admin\", \"status\": \"0\" } \
+    ] }";
+}
+
 #if !MOBILEAPP && !WASMAPP
 
 void DocumentBroker::switchMode(const std::shared_ptr<ClientSession>& session,

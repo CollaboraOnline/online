@@ -104,6 +104,8 @@ window.app = {
 		'DocumentColors': { name: _('Document colors'), colors: [] },
 	},
 	colorLastSelection: {}, // last used colors for uno commands
+
+	serverAudit: null, // contains list of warnings / errors detected on the server instance
 };
 
 var activateValidation = false;
