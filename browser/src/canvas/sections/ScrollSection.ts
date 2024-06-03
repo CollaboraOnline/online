@@ -360,7 +360,9 @@ export class ScrollSection extends app.definitions.canvasSectionObject {
 		this.context.fillStyle = 'white';
 
 		var circleStartY = scrollProps.startY + this.sectionProperties.circleSliderRadius;
-		var circleStartX = this.size[0] - this.sectionProperties.circleSliderRadius * 0.5;
+		var circleStartX = this.isRTL()
+			? this.sectionProperties.circleSliderRadius * 0.5
+			: this.size[0] - this.sectionProperties.circleSliderRadius * 0.5;
 
 		this.context.beginPath();
 		this.context.arc(circleStartX, circleStartY, this.sectionProperties.circleSliderRadius, 0, Math.PI * 2, true);
