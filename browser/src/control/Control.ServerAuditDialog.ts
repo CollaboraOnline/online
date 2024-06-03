@@ -45,7 +45,7 @@ class ServerAuditDialog {
 		app.serverAudit.forEach(function (entry: any) {
 			switch (entry.code) {
 				case 'is_admin': {
-					if (entry.status === '0') {
+					if (entry.status === 'missing') {
 						entries.push({
 							row: 0,
 							columns: [
