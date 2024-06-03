@@ -177,7 +177,7 @@ export class ScrollSection extends app.definitions.canvasSectionObject {
 				&& this.containerObject.isDraggingSomething()
 				&& L.Map.THIS._docLayer._docType === 'spreadsheet') {
 					var temp = this.containerObject.positionOnMouseDown;
-					var tempPos = [(this.isCalcRTL() ? this.map._size.x - temp[0] : temp[0]) * app.dpiScale, temp[1] * app.dpiScale];
+					var tempPos = [(this.isRTL() ? this.map._size.x - temp[0] : temp[0]) * app.dpiScale, temp[1] * app.dpiScale];
 					var docTopLeft = app.sectionContainer.getDocumentTopLeft();
 					tempPos = [tempPos[0] + docTopLeft[0], tempPos[1] + docTopLeft[1]];
 					tempPos = [Math.round(tempPos[0] * app.pixelsToTwips), Math.round(tempPos[1] * app.pixelsToTwips)];
@@ -198,8 +198,8 @@ export class ScrollSection extends app.definitions.canvasSectionObject {
 			vy = -50;
 		}
 
-		const mousePosX: number = this.isCalcRTL() ? e.map._size.x - e.pos.x : e.pos.x;
-		const mapLeft: number = this.isCalcRTL() ? e.map._size.x - e.map._getTopLeftPoint().x : e.map._getTopLeftPoint().x;
+		const mousePosX: number = this.isRTL() ? e.map._size.x - e.pos.x : e.pos.x;
+		const mapLeft: number = this.isRTL() ? e.map._size.x - e.map._getTopLeftPoint().x : e.map._getTopLeftPoint().x;
 		if (mousePosX > e.map._size.x - 50) {
 			vx = 50;
 		} else if (mousePosX < 50 && mapLeft > 50) {
@@ -403,7 +403,7 @@ export class ScrollSection extends app.definitions.canvasSectionObject {
 	private drawVerticalScrollBar (): void {
 		var scrollProps: any = this.getVerticalScrollProperties();
 
-		var startX = this.isCalcRTL() ? this.sectionProperties.edgeOffset : this.size[0] - this.sectionProperties.scrollBarThickness - this.sectionProperties.edgeOffset;
+		var startX = this.isRTL() ? this.sectionProperties.edgeOffset : this.size[0] - this.sectionProperties.scrollBarThickness - this.sectionProperties.edgeOffset;
 
 		if (this.sectionProperties.drawScrollBarRailway) {
 			this.context.globalAlpha = this.sectionProperties.scrollBarRailwayAlpha;
@@ -450,7 +450,7 @@ export class ScrollSection extends app.definitions.canvasSectionObject {
 
 		const sizeX = scrollProps.scrollSize - this.sectionProperties.scrollBarThickness;
 		const docWidth: number = this.map.getPixelBoundsCore().getSize().x;
-		const startX = this.isCalcRTL() ? docWidth - scrollProps.startX - sizeX : scrollProps.startX;
+		const startX = this.isRTL() ? docWidth - scrollProps.startX - sizeX : scrollProps.startX;
 
 		if (this.sectionProperties.drawScrollBarRailway) {
 			this.context.globalAlpha = this.sectionProperties.scrollBarRailwayAlpha;
@@ -639,7 +639,7 @@ export class ScrollSection extends app.definitions.canvasSectionObject {
 	}
 
 	private isMouseOnScrollBar (point: Array<number>): void {
-		const mirrorX = this.isCalcRTL();
+		const mirrorX = this.isRTL();
 		if (this.documentTopLeft[1] >= 0) {
 			if ((!mirrorX && point[0] >= this.size[0] - this.sectionProperties.usableThickness)
 				|| (mirrorX && point[0] <= this.sectionProperties.usableThickness)) {
@@ -777,7 +777,7 @@ export class ScrollSection extends app.definitions.canvasSectionObject {
 
 		const sizeX = scrollProps.scrollSize - this.sectionProperties.scrollBarThickness;
 		const docWidth: number = this.map.getPixelBoundsCore().getSize().x;
-		const startX = this.isCalcRTL() ? docWidth - scrollProps.startX - sizeX : scrollProps.startX;
+		const startX = this.isRTL() ? docWidth - scrollProps.startX - sizeX : scrollProps.startX;
 		const endX = startX + sizeX;
 
 		var pointerIsSyncWithScrollBar = false;
@@ -892,7 +892,7 @@ export class ScrollSection extends app.definitions.canvasSectionObject {
 		var props = this.getHorizontalScrollProperties();
 		const sizeX = props.scrollSize - this.sectionProperties.scrollBarThickness;
 		const docWidth: number = this.map.getPixelBoundsCore().getSize().x;
-		const startX = this.isCalcRTL() ? docWidth - props.startX - sizeX : props.startX;
+		const startX = this.isRTL() ? docWidth - props.startX - sizeX : props.startX;
 		var midX = startX + sizeX * 0.5;
 
 		if (this.stepByStepScrolling) {
@@ -941,7 +941,7 @@ export class ScrollSection extends app.definitions.canvasSectionObject {
 		this.onMouseMove(point, null, e);
 		this.isMouseOnScrollBar(point);
 
-		const mirrorX = this.isCalcRTL();
+		const mirrorX = this.isRTL();
 
 		if (this.documentTopLeft[1] >= 0) {
 			if ((!mirrorX && point[0] >= this.size[0] - this.sectionProperties.usableThickness)
