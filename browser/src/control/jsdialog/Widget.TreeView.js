@@ -30,7 +30,7 @@
  *     headers: [ { text: 'first column' }, { text: 'second' }],
  *     entries: [
  *         { row: 0, columns [ { text: 'a' }, { collapsed: 'collapsedIcon.svg' }, { collapsedimage: '<BASE64 encoded PNG>' } ] },
- *         { row: 1, columns [ { text: 'a2' }, { expanded: 'expandedIcon.svg' }, selected: true ]}
+ *         { row: 1, columns [ { link: 'http://example.com' }, { expanded: 'expandedIcon.svg' }, selected: true ]}
  *     ]
  * }
  *
@@ -232,6 +232,11 @@ function _treelistboxEntry(parentContainer, treeViewData, entry, builder, isTree
 			var iconName = builder._createIconURL(iconId, true);
 			L.LOUtil.setImage(icon, iconName, builder.map);
 			L.DomUtil.addClass(span, 'ui-listview-expandable-with-icon');
+		} else if (entry.columns[i].link && !_isSeparator(entry.columns[i])) {
+			var innerText = L.DomUtil.create('span', builder.options.cssClass + ' ui-treeview-cell-text', text);
+			var link = L.DomUtil.create('a', '', innerText);
+			link.href = entry.columns[i].link || entry.columns[i].text;
+			link.innerText = entry.columns[i].text || entry.text;
 		} else if (entry.columns[i].text && !_isSeparator(entry.columns[i])) {
 			var innerText = L.DomUtil.create('span', builder.options.cssClass + ' ui-treeview-cell-text', text);
 			innerText.innerText = entry.columns[i].text || entry.text;
@@ -395,8 +400,14 @@ function _headerlistboxEntry(parentContainer, treeViewData, entry, builder) {
 			L.DomUtil.addClass(icon, iconId + 'img');
 			var iconName = builder._createIconURL(iconId, true);
 			L.LOUtil.setImage(icon, iconName, builder.map);
-		} else if (entry.columns[i].text)
+		} else if (entry.columns[i].link) {
+			var link = L.DomUtil.create('a', '', td);
+			link.href = entry.columns[i].link || entry.columns[i].text;
+			link.target = '_blank';
+			link.innerText = entry.columns[i].text || entry.text;
+		} else if (entry.columns[i].text) {
 			td.innerText = entry.columns[i].text;
+		}
 
 		if (!disabled)
 			$(td).click(clickFunction);
