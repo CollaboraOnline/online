@@ -830,9 +830,8 @@ export class ScrollSection extends app.definitions.canvasSectionObject {
 
 			this.showHorizontalScrollBar();
 
-			var signX = this.isCalcRTL() ? -1 : 1;
 			var scrollProps: any = this.getHorizontalScrollProperties();
-			var diffX: number = signX * (dragDistance[0] - this.sectionProperties.previousDragDistance[0]);
+			var diffX: number = dragDistance[0] - this.sectionProperties.previousDragDistance[0];
 			var actualDistance = scrollProps.ratio * diffX;
 
 			if (this.isMousePointerSycnWithHorizontalScrollBar(scrollProps, position))
