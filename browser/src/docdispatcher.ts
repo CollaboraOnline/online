@@ -206,6 +206,10 @@ class Dispatcher {
 		this.actionsMap['close'] = this.actionsMap['closemobile'] = () => {
 			app.map.uiManager.enterReadonlyOrClose();
 		};
+
+		this.actionsMap['serveraudit'] = () => {
+			app.map.serverAuditDialog.open();
+		};
 	}
 
 	private addExportCommands() {

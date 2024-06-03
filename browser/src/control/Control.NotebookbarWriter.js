@@ -322,6 +322,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 		var hasAccessibilitySupport = window.enableAccessibility;
 		var hasAccessibilityCheck = this._map.getDocType() === 'text';
 		var hasAbout = L.DomUtil.get('about-dialog') !== null;
+		var hasServerAudit = !!this._map.serverAuditDialog;
 
 		var content = [
 			{
@@ -378,6 +379,14 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 							'text': _UNO('.uno:SidebarDeck.A11yCheckDeck', 'text'),
 							'command': '.uno:SidebarDeck.A11yCheckDeck',
 							'accessibility': { focusBack: false, combination: 'A', de: null }
+						} : {},
+					hasServerAudit ?
+						{
+							'id': 'server-audit',
+							'type': 'bigcustomtoolitem',
+							'text': _('Server audit'),
+							'command': 'serveraudit',
+							'accessibility': { focusBack: false, combination: 'SA', de: null }
 						} : {},
 					{
 						'type': 'toolbox',

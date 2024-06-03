@@ -140,10 +140,7 @@ L.Control.Zotero = L.Control.extend({
 	},
 
 	refreshUI: function () {
-		if (this.map.uiManager.notebookbar && !this.map._shouldStartReadOnly())
-			this.map.uiManager.refreshNotebookbar();
-		else
-			this.map.uiManager.refreshMenubar();
+		this.map.uiManager.refreshUI();
 	},
 
 	updateUserID: function () {

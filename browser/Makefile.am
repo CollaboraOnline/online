@@ -334,6 +334,7 @@ COOL_JS_LST =\
 	src/control/Control.Tabs.js \
 	src/control/Control.Permission.js \
 	src/control/Control.Selection.js \
+	src/control/Control.ServerAuditDialog.ts \
 	src/control/Control.LokDialog.js \
 	src/control/Control.AlertDialog.js \
 	src/control/ColorPicker.ts \
@@ -792,6 +793,7 @@ pot:
 		src/control/Control.PresentationBar.js \
 		src/control/Control.Scroll.Annotation.js \
 		src/control/Control.MobileSearchBar.ts \
+		src/control/Control.ServerAuditDialog.ts \
 		src/control/Control.SheetsBar.js \
 		src/control/Control.StatusBar.js \
 		src/control/Control.Tabs.js \
