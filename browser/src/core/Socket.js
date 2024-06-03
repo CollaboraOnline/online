@@ -1249,6 +1249,12 @@ app.definitions.Socket = L.Class.extend({
 			return;
 		}
 
+		if (textMsg.startsWith('serveraudit:')) {
+			var json = JSON.parse(textMsg.substr(12));
+			app.serverAudit = json.serverAudit;
+			app.map.fire('receivedserveraudit');
+		}
+
 		// These can arrive very early during the startup, and never again.
 		if (textMsg.startsWith('progress:')) {
 			var info = JSON.parse(textMsg.substring(textMsg.indexOf('{')));

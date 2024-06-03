@@ -283,7 +283,8 @@ void HTTPWSTest::testInactiveClient()
                                             token == "vrulerupdate:" ||
                                             token == "tableselected:" ||
                                             token == "colorpalettes:" ||
-                                            token == "jsdialog:");
+                                            token == "jsdialog:" ||
+                                            token == "serveraudit:");
 
                     // End when we get state changed.
                     return (token != "statechanged:");

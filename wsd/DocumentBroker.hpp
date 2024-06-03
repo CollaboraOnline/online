@@ -592,6 +592,9 @@ public:
 
     void setMigrationMsgReceived() { _migrateMsgReceived = true; }
 
+    // Get JSON with audit status
+    std::string getServerAudit() const;
+
 #if !MOBILEAPP && !WASMAPP
     /// Switch between Online and Offline modes.
     void switchMode(const std::shared_ptr<ClientSession>& session, const std::string& mode);

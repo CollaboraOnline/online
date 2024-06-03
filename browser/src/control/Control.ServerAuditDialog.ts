@@ -40,17 +40,24 @@ class ServerAuditDialog {
 
 		if (!app.serverAudit) return entries;
 
+		const errorIcon = { collapsed: 'serveraudit.svg' };
+
 		app.serverAudit.forEach(function (entry: any) {
 			switch (entry.code) {
 				case 'is_admin':
 					{
-						entries.push({
-							row: 0,
-							columns: [
-								{ collapsed: 'serveraudit.svg' },
-								{ text: _('Admin user property not set') },
-							],
-						} as TreeEntryJSON);
+						if (entry.status === '0') {
+							entries.push({
+								row: 0,
+								columns: [
+									errorIcon,
+									{ text: _('Admin user property not set') },
+									{
+										text: 'https://sdk.collaboraonline.com/docs/advanced_integration.html?highlight=userprivateinfo#userprivateinfo',
+									},
+								],
+							} as TreeEntryJSON);
+						}
 					}
 					break;
 			}
