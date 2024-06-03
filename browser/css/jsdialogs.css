@@ -2146,3 +2146,7 @@ kbd,
 #DocumentPropertiesDialog #customprops .jsdialog.ui-scrollwindow {
 	max-height: min-content;
 }
+
+#ServerAuditDialog #ServerAuditDialog-mainbox {
+	min-width: 800px;
+}
