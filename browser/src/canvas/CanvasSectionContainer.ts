@@ -251,7 +251,9 @@ class CanvasSectionContainer {
 		this.scrollLineHeight = parseInt(window.getComputedStyle(tempElement).fontSize);
 		document.body.removeChild(tempElement); // Remove the temporary element.
 
-		this.clearColor = window.getComputedStyle(document.documentElement).getPropertyValue('--color-canvas');
+		const colorCanvasPropety = (window as any).prefs.get('darkTheme') ? '--color-canvas-dark' : '--color-canvas-light';
+
+		this.clearColor = window.getComputedStyle(document.documentElement).getPropertyValue(colorCanvasPropety);
 		// Set document background color to the app background color for now until we get the real color from the kit
 		// through a LOK_CALLBACK_DOCUMENT_BACKGROUND_COLOR
 		this.documentBackgroundColor = window.getComputedStyle(document.documentElement).getPropertyValue('--color-background-document');
