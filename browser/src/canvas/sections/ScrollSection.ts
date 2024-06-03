@@ -734,7 +734,7 @@ export class ScrollSection extends app.definitions.canvasSectionObject {
 	}
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-	private isMousePointerSycnWithVerticalScrollBar (scrollProps: any, position: Array<number>): boolean {
+	private isMousePointerSyncedWithVerticalScrollBar (scrollProps: any, position: Array<number>): boolean {
 		// Keep this desktop-only for now.
 		if (!(<any>window).mode.isDesktop())
 			return true;
@@ -765,7 +765,7 @@ export class ScrollSection extends app.definitions.canvasSectionObject {
 	}
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-	private isMousePointerSycnWithHorizontalScrollBar (scrollProps: any, position: Array<number>): boolean {
+	private isMousePointerSyncedWithHorizontalScrollBar (scrollProps: any, position: Array<number>): boolean {
 		// Keep this desktop-only for now.
 		if (!(<any>window).mode.isDesktop())
 			return true;
@@ -815,7 +815,7 @@ export class ScrollSection extends app.definitions.canvasSectionObject {
 			var diffY: number = dragDistance[1] - this.sectionProperties.previousDragDistance[1];
 			var actualDistance = scrollProps.ratio * diffY;
 
-			if (this.isMousePointerSycnWithVerticalScrollBar(scrollProps, position))
+			if (this.isMousePointerSyncedWithVerticalScrollBar(scrollProps, position))
 				this.scrollVerticalWithOffset(actualDistance);
 
 			this.sectionProperties.previousDragDistance[1] = dragDistance[1];
@@ -834,7 +834,7 @@ export class ScrollSection extends app.definitions.canvasSectionObject {
 			var diffX: number = dragDistance[0] - this.sectionProperties.previousDragDistance[0];
 			var actualDistance = scrollProps.ratio * diffX;
 
-			if (this.isMousePointerSycnWithHorizontalScrollBar(scrollProps, position))
+			if (this.isMousePointerSyncedWithHorizontalScrollBar(scrollProps, position))
 				this.scrollHorizontalWithOffset(actualDistance);
 
 			this.sectionProperties.previousDragDistance[0] = dragDistance[0];
