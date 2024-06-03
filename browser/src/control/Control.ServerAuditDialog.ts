@@ -133,12 +133,21 @@ class ServerAuditDialog {
 	}
 
 	private onServerAudit() {
+		var docLayer = this.map._docLayer || {};
+		var viewInfo = this.map._viewInfo
+			? this.map._viewInfo[docLayer._viewId]
+			: null;
+
 		if (app.serverAudit.length) {
-			this.map.uiManager.showSnackbar(
-				_('Check security warnings of your server'),
-				_('OPEN'),
-				this.open.bind(this),
-			);
+			// TODO: enable annoying snackbar later
+			if (viewInfo && viewInfo.userextrainfo.is_admin === true) {
+				this.map.uiManager.showSnackbar(
+					_('Check security warnings of your server'),
+					_('OPEN'),
+					this.open.bind(this),
+				);
+			}
+
 			this.map.uiManager.refreshUI();
 		}
 	}
