@@ -1100,9 +1100,6 @@ L.Map.include({
 		$('#AutoSumMenu-button').css('margin-inline', '0');
 		$('#AutoSumMenu .unoarrow').css('margin', '0');
 
-		// clear reference marks
-		map._docLayer._clearReferences();
-
 		map.formulabar.blurField();
 		$('#addressInput-input').blur();
 	},
