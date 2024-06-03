@@ -95,10 +95,14 @@ L.Control.UIManager = L.Control.extend({
 		this.map.fire('darkmodechanged');
 	},
 
-	setCanvasColorAfterModeChange: function() {
+	setCanvasColorAfterModeChange: function(nColor) {
 		if (app.sectionContainer) {
 			app.sectionContainer.setBackgroundColorMode(false);
-			app.sectionContainer.setClearColor(window.getComputedStyle(document.documentElement).getPropertyValue('--color-canvas'));
+			if (nColor == undefined ) {
+				const colorCanvasPropety = window.prefs.getBoolean('darkTheme') ? '--color-canvas-dark' : '--color-canvas-light';
+				nColor = window.getComputedStyle(document.documentElement).getPropertyValue(colorCanvasPropety);
+			}
+			app.sectionContainer.setClearColor(nColor);
 			//change back to it's default value after setting canvas color
 			app.sectionContainer.setBackgroundColorMode(true);
 		}
@@ -106,6 +110,14 @@ L.Control.UIManager = L.Control.extend({
 
 	invertBackground: function() {
 		app.socket.sendMessage('uno .uno:InvertBackground');
+		if (this.map.getDocType() == 'spreadsheet') {
+			var lightCanvasColor = window.getComputedStyle(document.documentElement).getPropertyValue('--color-canvas-light');
+			var darkCanvasColor = window.getComputedStyle(document.documentElement).getPropertyValue('--color-canvas-dark');
+			var nColor = app.sectionContainer.getClearColor(); // Current color of the canvas
+			// invert canvas color
+			nColor == lightCanvasColor ? nColor = darkCanvasColor : nColor = lightCanvasColor
+			this.setCanvasColorAfterModeChange(nColor);
+		}
 	},
 
 	toggleDarkMode: function() {
