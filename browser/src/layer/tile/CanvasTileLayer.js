@@ -6159,6 +6159,18 @@ L.CanvasTileLayer = L.Layer.extend({
 					       ' of length ' + rawDelta.length +
 					       (this._debugDeltasDetail ? (' hex: ' + hex2string(rawDelta)) : ''));
 
+		if (isKeyframe) {
+			// Important to do this before ensuring the context, or we'll needlessly
+			// reconstitute the old keyframe from compressed data.
+			if (tile.rawDeltas && tile.rawDeltas != rawDelta) { // help the gc?
+				tile.rawDeltas.length = 0;
+				tile.rawDeltas = null;
+				if (tile.imgDataCache)
+					tile.imgDataCache.length = 0;
+				tile.imgDataCache = null;
+			}
+		}
+
 		// Important to recurse & re-constitute from tile.rawDeelts
 		// before appending rawDelta and then applying it again.
 		var ctx = this._ensureContext(tile);
@@ -6201,8 +6213,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		// better.
 		if (isKeyframe)
 		{
-			if (tile.rawDeltas && tile.rawDeltas != rawDelta) // help the gc?
-				tile.rawDeltas.length = 0;
 			tile.rawDeltas = rawDelta; // overwrite
 		}
 		else if (!tile.rawDeltas)
