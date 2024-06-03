@@ -65,8 +65,7 @@ L.Control.UIManager = L.Control.extend({
 				that.map.fire('editorgotfocus');}
 		});
 
-		if (window.zoteroEnabled)
-			this.map.on('updateviewslist', this.onUpdateViews, this);
+		this.map.on('updateviewslist', this.onUpdateViews, this);
 	},
 
 	// UI initialization
@@ -949,6 +948,13 @@ L.Control.UIManager = L.Control.extend({
 		this.map.invalidateSize();
 	},
 
+	refreshUI: function () {
+		if (this.notebookbar && !this.map._shouldStartReadOnly())
+			this.refreshNotebookbar();
+		else
+			this.refreshMenubar();
+	},
+
 	onUpdateViews: function () {
 		if (!this.map._docLayer || typeof this.map._docLayer._viewId === 'undefined')
 			return;
@@ -961,7 +967,7 @@ L.Control.UIManager = L.Control.extend({
 		}
 
 		var userPrivateInfo = myViewData.userprivateinfo;
-		if (userPrivateInfo) {
+		if (userPrivateInfo && window.zoteroEnabled) {
 			var apiKey = userPrivateInfo.ZoteroAPIKey;
 			if (apiKey !== undefined && !this.map.zotero) {
 				this.map.zotero = L.control.zotero(this.map);
@@ -969,6 +975,12 @@ L.Control.UIManager = L.Control.extend({
 				this.map.addControl(this.map.zotero);
 				this.map.zotero.updateUserID();
 			}
+		}
+
+		// if is_admin property is not set by integration - show audit dialog for all users
+		var userExtraInfo = myViewData.userextrainfo;
+		if (!userExtraInfo || userExtraInfo.is_admin !== false) {
+			this._map.serverAuditDialog = JSDialog.serverAuditDialog(this._map);
 		}
 	},
 

@@ -17,17 +17,27 @@
 interface WidgetJSON {
 	id: string; // unique id of a widget
 	type: string; // type of widget
-	enabled: boolean | undefined; // enabled state
-	visible: boolean | undefined; // visibility state
-	children: Array<WidgetJSON> | undefined; // child nodes
+	enabled?: boolean; // enabled state
+	visible?: boolean; // visibility state
+	children: Array<WidgetJSON>; // child nodes
 	title?: string;
 }
 
+interface DialogResponse {
+	id: string;
+	response: number;
+}
+
+interface DialogJSON extends WidgetJSON {
+	dialogid: string; // unique id for a dialog type, not instance
+	responses?: Array<DialogResponse>;
+}
+
 // JSDialog message (full, update or action)
-interface JSDialogJSON extends WidgetJSON {
+interface JSDialogJSON extends DialogJSON {
 	id: string; // unique windowId
 	jsontype: string; // specifies target componenet, on root level only
-	action: string | undefined; // optional name of an action
+	action?: string; // optional name of an action
 	control?: WidgetJSON;
 }
 
@@ -53,7 +63,7 @@ type JSDialogCallback = (
 // used to define menus
 type MenuDefinition = {
 	id: string; // unique identifier
-	type: undefined | 'action' | 'menu' | 'separator' | 'html'; // type of entry
+	type?: 'action' | 'menu' | 'separator' | 'html'; // type of entry
 	text: string; // displayed text
 	hint: string; // hint text
 	uno: string; // uno command
@@ -65,13 +75,23 @@ type MenuDefinition = {
 	items: Array<any>; // submenu
 };
 
+interface ContainerWidgetJSON extends WidgetJSON {
+	layoutstyle?: string | 'start' | 'end'; // describes alignment of the elements
+	vertical?: boolean; // is horizontal or vertical container
+}
+
 interface TextWidget extends WidgetJSON {
 	text: string;
 }
 
+interface TreeEntryJSON {
+	row: number | string;
+	text: string;
+	columns: Array<{ text: any } | { collapsed: string }>;
+}
 interface TreeWidget extends WidgetJSON {
 	text: string;
 	singleclickactivate: boolean;
 	fireKeyEvents: boolean;
-	entries: Array<Entry>;
+	entries: Array<TreeEntryJSON>;
 }

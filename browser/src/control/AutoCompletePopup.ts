@@ -14,12 +14,6 @@
 
 /* global app */
 
-interface Entry {
-	text: string;
-	columns: { text: any }[];
-	row: string;
-}
-
 interface Point {
 	x: number;
 	y: number;
@@ -88,7 +82,7 @@ abstract class AutoCompletePopup {
 		this.map.fire('jsdialog', { data: closePopupData, callback: undefined });
 	}
 
-	abstract getPopupEntries(ev: FireEvent): Array<Entry>;
+	abstract getPopupEntries(ev: FireEvent): Array<TreeEntryJSON>;
 
 	getPopupJSON(control: any, framePos: any): PopupData {
 		return {
@@ -110,7 +104,7 @@ abstract class AutoCompletePopup {
 			enabled: true,
 			singleclickactivate: false,
 			fireKeyEvents: true,
-			entries: [] as Array<Entry>,
+			entries: [] as Array<TreeEntryJSON>,
 		} as TreeWidget;
 	}
 
