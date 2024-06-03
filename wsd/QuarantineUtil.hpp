@@ -46,6 +46,8 @@ private:
 
     void removeQuarantine();
 
+    static std::vector<std::string> getAllFilesSorted(const std::string& path);
+
 private:
     static std::unordered_map<std::string, std::vector<std::string>> QuarantineMap;
     /// Protects the shared QuarantineMap from concurrent modification.

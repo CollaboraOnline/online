@@ -67,19 +67,8 @@ void Quarantine::initialize(const std::string& path)
 
     QuarantineMap.clear();
 
-    std::vector<std::string> files;
-    Poco::File(path).list(files);
-
-    std::sort(files.begin(), files.end(),
-              [](const auto& lhs, const auto& rhs)
-              {
-                  const auto lhsPair = Util::u64FromString(Util::split(lhs, Delimiter).first);
-                  const auto rhsPair = Util::u64FromString(Util::split(rhs, Delimiter).first);
-                  return lhsPair.first && rhsPair.first && lhsPair.second < rhsPair.second;
-              });
-
     std::vector<StringToken> tokens;
-    for (const std::string& file : files)
+    for (const std::string& file : getAllFilesSorted(path))
     {
         StringVector::tokenize(file.c_str(), file.size(), Delimiter, tokens);
         if (tokens.size() >= 3)
@@ -111,10 +100,8 @@ std::size_t Quarantine::quarantineSize()
     if (!isEnabled())
         return 0;
 
-    std::vector<std::string> files;
-    Poco::File(QuarantinePath).list(files);
     std::size_t size = 0;
-    for (const auto& file : files)
+    for (const std::string& file : getAllFilesSorted(QuarantinePath))
     {
         FileUtil::Stat f(QuarantinePath + file);
         size += f.size();
@@ -130,18 +117,9 @@ void Quarantine::makeQuarantineSpace()
 
     LOG_ASSERT_MSG(!Mutex.try_lock(), "Quarantine Mutex must be taken");
 
-    std::vector<std::string> files;
-    Poco::File(QuarantinePath).list(files);
+    std::vector<std::string> files = getAllFilesSorted(QuarantinePath);
     if (files.empty())
         return;
-
-    std::sort(files.begin(), files.end(),
-              [](const auto& lhs, const auto& rhs)
-              {
-                  const auto lhsPair = Util::u64FromString(Util::split(lhs, Delimiter).first);
-                  const auto rhsPair = Util::u64FromString(Util::split(rhs, Delimiter).first);
-                  return lhsPair.first && rhsPair.first && lhsPair.second < rhsPair.second;
-              });
 
     const std::size_t now = getSecondsSinceEpoch();
 
@@ -204,6 +182,22 @@ void Quarantine::clearOldQuarantineVersions()
         // And remove them from the container.
         container.erase(container.begin(), container.begin() + excess);
     }
+}
+
+std::vector<std::string> Quarantine::getAllFilesSorted(const std::string& path)
+{
+    std::vector<std::string> files;
+    Poco::File(path).list(files);
+
+    std::sort(files.begin(), files.end(),
+              [](const auto& lhs, const auto& rhs)
+              {
+                  const auto lhsPair = Util::u64FromString(Util::split(lhs, Delimiter).first);
+                  const auto rhsPair = Util::u64FromString(Util::split(rhs, Delimiter).first);
+                  return lhsPair.first && rhsPair.first && lhsPair.second < rhsPair.second;
+              });
+
+    return files;
 }
 
 bool Quarantine::quarantineFile(const std::string& docPath)
