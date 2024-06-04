@@ -1265,6 +1265,16 @@ public:
 #endif
     }
 
+    std::string getSslCert(std::string& subjectHash)
+    {
+#if ENABLE_SSL
+        std::shared_ptr<StreamSocket> socket = _socket.lock();
+        if (socket)
+            return socket->getSslCert(subjectHash);
+#endif
+        return std::string();
+    }
+
     void disconnect()
     {
         LOG_TRC("disconnect");

@@ -165,6 +165,21 @@ bool SslStreamSocket::verifyCertificate()
 
     return false;
 }
+
+std::string SslStreamSocket::getSslCert(std::string& subjectHash)
+{
+    std::ostringstream strstream;
+    if (X509* x509 = SSL_get_peer_certificate(_ssl))
+    {
+        Poco::Net::X509Certificate cert(x509);
+        cert.save(strstream);
+
+        std::stringstream hexstream;
+        hexstream << std::setfill('0') << std::setw(8) << std::hex << X509_subject_name_hash(x509);
+        subjectHash = hexstream.str();
+    }
+    return strstream.str();
+}
 #endif //ENABLE_SSL
 
 // help with initialization order
