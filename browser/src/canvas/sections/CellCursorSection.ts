@@ -43,7 +43,7 @@ class CellCursorSection extends app.definitions.canvasSectionObject {
 			for (let i: number = 0; i < this.sectionProperties.weight; i++)
 				this.context.strokeRect(-0.5 - i, -0.5 - i, app.calc.cellCursorRectangle.pWidth + i * 2, app.calc.cellCursorRectangle.pHeight + i * 2);
 
-			if (app.map.uiManager.getDarkModeState()) {
+			if (window.prefs.getBoolean('darkTheme')) {
 				this.context.strokeStyle = 'white';
 				const diff = 1;
 				this.context.strokeRect(-0.5 + diff, -0.5 + diff, app.calc.cellCursorRectangle.pWidth - 2 * diff, app.calc.cellCursorRectangle.pHeight - 2 * diff);
