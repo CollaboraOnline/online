@@ -157,6 +157,18 @@ static LokHookFunction2* initFunction = nullptr;
 
 namespace
 {
+    std::string pathFromFileURL(const std::string &uri)
+    {
+        std::string decoded;
+        Poco::URI::decode(uri, decoded);
+        if (decoded.rfind("file://", 0) != 0)
+        {
+            LOG_ERR("Asked to load a very unusual file path: '" << uri << "' -> '" << decoded << "'");
+            return std::string();
+        }
+        return decoded.substr(7);
+    }
+
 #ifndef BUILDING_TESTS
     enum class LinkOrCopyType
     {
@@ -1432,6 +1444,10 @@ private:
 
         if (!userTimezone.empty())
             options += ",Timezone=" + userTimezone;
+
+        const std::string wopiCertDir = pathFromFileURL(session->getJailedFilePath() + ".certs");
+        if (FileUtil::Stat(wopiCertDir).exists())
+            ::setenv("LO_CERTIFICATE_AUTHORITY_PATH", wopiCertDir.c_str(), 1);
 
         std::string spellOnline;
         if (!_loKitDocument)

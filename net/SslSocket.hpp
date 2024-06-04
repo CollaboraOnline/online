@@ -85,6 +85,8 @@ public:
         return std::string();
     }
 
+    std::string getSslCert(std::string& subjectHash) override;
+
     ~SslStreamSocket()
     {
         LOG_TRC("SslStreamSocket dtor #" << getFD());
