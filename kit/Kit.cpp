@@ -1781,6 +1781,10 @@ std::shared_ptr<lok::Document> Document::load(const std::shared_ptr<ChildSession
     if (!userTimezone.empty())
         options += ",Timezone=" + userTimezone;
 
+    const std::string wopiCertDir = session->getJailedFilePath() + ".certs";
+    if (FileUtil::Stat(pathFromFileURL(wopiCertDir)).exists())
+        ::setenv("LO_CERTIFICATE_AUTHORITY_PATH", wopiCertDir.c_str(), 1);
+
     std::string spellOnline = session->getSpellOnline();
     if (!_loKitDocument)
     {
