@@ -16,10 +16,22 @@ declare var JSDialog: any;
 class ServerAuditDialog {
 	map: any;
 	id: string = 'ServerAuditDialog';
+	errorCodes: any;
 
 	constructor(map: any) {
 		this.map = map;
 		this.map.on('receivedserveraudit', this.onServerAudit.bind(this), this);
+
+		this.errorCodes = {
+			is_admin: {
+				missing: [
+					_('The is_admin user property is not set'),
+					'SDK: userextrainfo',
+					'https://sdk.collaboraonline.com/docs/advanced_integration.html?highlight=userprivateinfo#userextrainfo',
+				],
+				ok: [_('The is_admin user property is set'), '', ''],
+			},
+		};
 	}
 
 	public open() {
@@ -40,26 +52,30 @@ class ServerAuditDialog {
 
 		if (!app.serverAudit) return entries;
 
-		const errorIcon = { collapsed: 'serveraudit.svg' };
+		const errorIcon = { collapsed: 'serverauditerror.svg' };
+		const okIcon = { collapsed: 'serverauditok.svg' };
 
-		app.serverAudit.forEach(function (entry: any) {
-			switch (entry.code) {
-				case 'is_admin': {
-					if (entry.status === 'missing') {
-						entries.push({
-							row: 0,
-							columns: [
-								errorIcon,
-								{ text: _('Admin user property not set') },
-								{
-									text: 'SDK: userextrainfo',
-									link: 'https://sdk.collaboraonline.com/docs/advanced_integration.html?highlight=userprivateinfo#userextrainfo',
-								},
-							],
-						} as TreeEntryJSON);
-					}
-					break;
+		app.serverAudit.forEach((entry: any) => {
+			const found = this.errorCodes[entry.code];
+			if (found) {
+				const status = found[entry.status];
+				if (status) {
+					entries.push({
+						row: 0,
+						columns: [
+							entry.status === 'ok' ? okIcon : errorIcon,
+							{ text: status[0] },
+							status[1] && status[2]
+								? {
+										text: status[1],
+										link: status[2],
+									}
+								: { text: '' },
+						],
+					} as TreeEntryJSON);
 				}
+			} else {
+				console.warn('Unknown server audit entry: ' + entry.code);
 			}
 		});
 
@@ -67,6 +83,13 @@ class ServerAuditDialog {
 	}
 
 	private getJSON(entries: Array<any>): JSDialogJSON {
+		let hasErrors = false;
+		app.serverAudit.forEach((entry: any) => {
+			if (entry.status !== 'ok') {
+				hasErrors = true;
+			}
+		});
+
 		return {
 			id: this.id,
 			dialogid: this.id,
@@ -86,21 +109,20 @@ class ServerAuditDialog {
 					type: 'container',
 					vertical: true,
 					children: [
-						entries.length
+						!hasErrors
 							? {
-									id: 'auditlist',
-									type: 'treelistbox',
-									headers: [
-										/* icon */ { text: _('Status') },
-										{ text: _('Help') },
-									],
-									entries: entries,
-								}
-							: {
 									id: 'auditsuccess',
 									type: 'fixedtext',
 									text: _('No issues found'),
-								},
+								}
+							: {},
+						{
+							id: 'auditlist',
+							type: 'treelistbox',
+							headers: [/* icon */ { text: _('Status') }, { text: _('Help') }],
+							entries: entries,
+							enabled: entries.length > 0,
+						},
 						{
 							id: this.id + '-buttonbox',
 							type: 'buttonbox',

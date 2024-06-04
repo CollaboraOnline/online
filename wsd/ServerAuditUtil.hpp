@@ -22,6 +22,8 @@ class ServerAuditUtil
     static std::map<std::string, std::string> entries;
 
 public:
+    static void initialize();
+
     static std::string getResultsJSON();
 
     static void set(std::string code, std::string status);

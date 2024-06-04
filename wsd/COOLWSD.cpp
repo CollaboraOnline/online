@@ -98,6 +98,7 @@ using Poco::Net::PartHandler;
 #include "Auth.hpp"
 #include "FileServer.hpp"
 #include "UserMessages.hpp"
+#include "ServerAuditUtil.hpp"
 
 #endif
 
@@ -1949,6 +1950,10 @@ void COOLWSD::innerInitialize(Application& self)
     Util::setApplicationPath(Poco::Path(Application::instance().commandPath()).parent().toString());
 
     StartTime = std::chrono::steady_clock::now();
+
+#if !MOBILEAPP
+    ServerAuditUtil::initialize();
+#endif
 
     LayeredConfiguration& conf = config();
 
