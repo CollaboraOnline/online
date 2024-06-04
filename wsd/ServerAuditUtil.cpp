@@ -16,14 +16,22 @@ std::map<std::string, std::string> ServerAuditUtil::entries;
 void ServerAuditUtil::initialize()
 {
     ServerAuditUtil::set("is_admin", "ok");
+    ServerAuditUtil::set("certwarning", "ok");
 }
 
 std::string ServerAuditUtil::getResultsJSON()
 {
     std::string result = "{\"serverAudit\": [";
 
+    bool bFirst = true;
     for (auto entry : entries)
+    {
+        if (!bFirst)
+            result += ", ";
+        bFirst = false;
+
         result += "{\"code\": \"" + entry.first + "\", \"status\": \"" + entry.second + "\"}";
+    }
 
     result += "]}";
     return result;
