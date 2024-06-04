@@ -103,6 +103,9 @@ public:
     /// Returns true iff the view is either non-readonly or can change comments.
     bool isEditable() const { return !isReadOnly() || isAllowChangeComments(); }
 
+    /// if certification verification was disabled for the wopi server
+    bool isDisableVerifyHost() const { return _disableVerifyHost; }
+
     /// overridden to prepend client ids on messages by the Kit
     virtual bool sendBinaryFrame(const char* buffer, int length);
     virtual bool sendTextFrame(const char* buffer, const int length);
@@ -384,6 +387,10 @@ private:
 
     /// Level of Macro security.
     std::string _macroSecurityLevel;
+
+    /// Specifies whether certification verification for the wopi server
+    /// should be disabled in core
+    bool _disableVerifyHost;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

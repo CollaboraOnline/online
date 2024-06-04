@@ -108,6 +108,12 @@ public:
             new SslContext(certFilePath, keyFilePath, caFilePath, cipherList, verification));
     }
 
+    static ssl::CertificateVerification getClientVerification()
+    {
+        assert(isClientContextInitialized() && "client context must be initialized");
+        return ClientInstance->verification();
+    }
+
     static void uninitializeClientContext() { ClientInstance.reset(); }
 
     /// Returns true iff the SslContext has been initialized.
