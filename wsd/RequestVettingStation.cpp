@@ -23,6 +23,7 @@
 #include <common/JsonUtil.hpp>
 #include <Poco/Base64Encoder.h>
 #include <Util.hpp>
+#include <ServerAuditUtil.hpp>
 
 extern std::pair<std::shared_ptr<DocumentBroker>, std::string>
 findOrCreateDocBroker(DocumentBroker::ChildType type, const std::string& uri,
@@ -251,6 +252,9 @@ void RequestVettingStation::handleRequest(const std::string& id,
                             {
                                 LOG_WRN_S("SSL verification warning: '" << sslVerifyResult << "' seen on CheckFileInfo for ["
                                               << docKey << "]");
+#if !MOBILEAPP && !WASMAPP
+                                _docBroker->setCertAuditWarning();
+#endif
                             }
                         }
                     }

@@ -599,6 +599,11 @@ public:
     /// Get server audit util
     const ServerAuditUtil& getServerAudit() const { return _serverAudit; }
 
+    void setCertAuditWarning()
+    {
+        _serverAudit.set("certwarning", "sslverifyfail");
+    }
+
     /// Switch between Online and Offline modes.
     void switchMode(const std::shared_ptr<ClientSession>& session, const std::string& mode);
 #endif // !MOBILEAPP && !WASMAPP
