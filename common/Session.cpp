@@ -42,7 +42,8 @@ Session::Session(const std::shared_ptr<ProtocolHandlerInterface> &protocol,
     _haveDocPassword(false),
     _isDocPasswordProtected(false),
     _watermarkOpacity(0.2),
-    _accessibilityState(false)
+    _accessibilityState(false),
+    _disableVerifyHost(false)
 {
 }
 
@@ -213,6 +214,11 @@ void Session::parseDocOptions(const StringVector& tokens, int& part, std::string
         else if (name == "accessibilityState")
         {
             _accessibilityState = value == "true";
+            ++offset;
+        }
+        else if (name == "verifyHost")
+        {
+            _disableVerifyHost = value == "false";
             ++offset;
         }
     }
