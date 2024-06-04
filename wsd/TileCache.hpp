@@ -109,8 +109,6 @@ struct TileData
         }
         else
         {
-            // FIXME: too many/large deltas means we should reset -
-            // but not here - when requesting the tiles.
             _wids.push_back(id);
             _offsets.push_back(_deltas.size());
             if (dataSize > 1)
@@ -124,6 +122,16 @@ struct TileData
         _valid = true;
 
         return size() - oldCacheSize;
+    }
+
+    // At what point do we stop stacking deltas & render a keyframe ?
+    bool tooLarge() const
+    {
+        // keyframe gets a free size pass
+        if (_offsets.size() <= 1)
+            return false;
+        size_t deltaSize = size() - _offsets[1];
+        return deltaSize > 128 * 1024; // deltas should be cumulatively small.
     }
 
     bool isPng() const { return (_deltas.size() > 1 &&
@@ -143,18 +151,18 @@ struct TileData
     std::vector<size_t> _offsets; // offset of the start of data
     BlobData _deltas; // first item is a key-frame, followed by deltas at _offsets
 
-    size_t size()
+    size_t size() const
     {
         return _deltas.size();
     }
 
-    const BlobData &data()
+    const BlobData &data() const
     {
         return _deltas;
     }
 
     /// if we send changes since this seq - do we need to first send the keyframe ?
-    bool needsKeyframe(TileWireId since)
+    bool needsKeyframe(TileWireId since) const
     {
         return since < _wids[0];
     }
@@ -199,6 +207,7 @@ struct TileData
             {
                 os << i << ": " << _wids[i] << " -> " << _offsets[i] << " ";
             }
+            os << (tooLarge() ? "too-large " : "");
         }
     }
 };
