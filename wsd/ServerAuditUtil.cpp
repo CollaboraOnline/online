@@ -13,6 +13,11 @@
 
 std::map<std::string, std::string> ServerAuditUtil::entries;
 
+void ServerAuditUtil::initialize()
+{
+    ServerAuditUtil::set("is_admin", "ok");
+}
+
 std::string ServerAuditUtil::getResultsJSON()
 {
     std::string result = "{\"serverAudit\": [";
