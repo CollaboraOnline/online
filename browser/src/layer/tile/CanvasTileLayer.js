@@ -1599,6 +1599,10 @@ L.CanvasTileLayer = L.Layer.extend({
 					delete app.colorPalettes[key];
 				}
 			}
+		} else if (textMsg.startsWith('serveraudit:')) {
+			var json = JSON.parse(textMsg.substr(12));
+			app.serverAudit = json.serverAudit;
+			app.map.fire('receivedserveraudit');
 		}
 	},
 
