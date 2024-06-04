@@ -1316,6 +1316,11 @@ public:
         return 0;
     }
 
+    virtual std::string getSslCert(std::string&)
+    {
+        return std::string();
+    }
+
 protected:
 
     std::vector<std::pair<size_t, size_t>> findChunks(Poco::Net::HTTPRequest &request);

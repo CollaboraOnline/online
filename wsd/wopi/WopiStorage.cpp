@@ -504,6 +504,16 @@ std::string WopiStorage::downloadDocument(const Poco::URI& uriObject, const std:
 
     LOG_TRC("Downloading from [" << uriAnonym << "] to [" << getRootFilePath()
                                  << "]: " << httpRequest.header());
+
+    std::string wopiCert;
+    std::string subjectHash;
+    http::Session::FinishedCallback finishedCallback =
+        [&wopiCert, &subjectHash](const std::shared_ptr<http::Session>& session)
+    {
+        wopiCert = session->getSslCert(subjectHash);
+    };
+    httpSession->setFinishedHandler(std::move(finishedCallback));
+
     const std::shared_ptr<const http::Response> httpResponse =
         httpSession->syncDownload(httpRequest, getRootFilePath());
 
@@ -550,6 +560,30 @@ std::string WopiStorage::downloadDocument(const Poco::URI& uriObject, const std:
     const std::size_t filesize = (fileStat.good() ? fileStat.size() : 0);
     LOG_INF("WOPI::GetFile downloaded " << filesize << " bytes from [" << uriAnonym << "] -> "
                                         << getRootFilePathAnonym() << " in " << diff);
+
+    // Put the wopi server cert, which has been designated valid by 'online',
+    // into the "certs" dir so 'core' will designate it valid too.
+    std::string wopiCertDestDir = getRootFilePath() + ".certs";
+    if (::mkdir(wopiCertDestDir.c_str(), S_IRWXU) < 0)
+        LOG_SYS("Failed to create certificate authority directory [" << wopiCertDestDir << ']');
+    else
+    {
+        // save as "subjectHash".0 to be a suitable entry for caPath
+        std::string wopiCertDest = Poco::Path(wopiCertDestDir, subjectHash + ".0").toString();
+        std::ofstream outfile;
+        outfile.open(wopiCertDest);
+        if (!outfile.is_open())
+        {
+            const std::string wopiCertDestAnonym = COOLWSD::anonymizeUrl(wopiCertDest);
+            LOG_ERR("Cannot open file [" << wopiCertDestAnonym << "] to save wopi cert.");
+        }
+        else
+        {
+            outfile.write(wopiCert.data(), wopiCert.size());
+            outfile.close();
+        }
+    }
+
     setDownloaded(true);
 
     // Now return the jailed path.
