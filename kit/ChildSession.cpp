@@ -1411,19 +1411,44 @@ bool ChildSession::setClipboard(const char* buffer, int length, const StringVect
         std::string command; // skip command
         std::getline(stream, command, '\n');
 
-        data.read(stream);
+        // See if the data is in the usual mimetype-size-content format or is just plain HTML.
+        std::streampos pos = stream.tellg();
+        std::string firstLine;
+        std::getline(stream, firstLine, '\n');
+        std::vector<char> html;
+        bool hasHTML = firstLine.starts_with("<!DOCTYPE html>");
+        stream.seekg(pos, stream.beg);
+        if (hasHTML)
+        {
+            // It's just HTML: copy that as-is.
+            std::vector<char> buf(std::istreambuf_iterator<char>(stream), {});
+            html = std::move(buf);
+        }
+        else
+        {
+            data.read(stream);
+        }
 //        data.dumpState(std::cerr);
 
-        const size_t nInCount = data.size();
+        const size_t nInCount = html.empty() ? data.size() : 1;
         std::vector<size_t> pInSizes(nInCount);
         std::vector<const char*> pInMimeTypes(nInCount);
         std::vector<const char*> pInStreams(nInCount);
 
-        for (size_t i = 0; i < nInCount; ++i)
+        if (html.empty())
         {
-            pInSizes[i] = data._content[i].length();
-            pInStreams[i] = data._content[i].c_str();
-            pInMimeTypes[i] = data._mimeTypes[i].c_str();
+            for (size_t i = 0; i < nInCount; ++i)
+            {
+                pInSizes[i] = data._content[i].length();
+                pInStreams[i] = data._content[i].c_str();
+                pInMimeTypes[i] = data._mimeTypes[i].c_str();
+            }
+        }
+        else
+        {
+            pInSizes[0] = html.size();
+            pInStreams[0] = html.data();
+            pInMimeTypes[0] = "text/html";
         }
 
         getLOKitDocument()->setView(_viewId);
