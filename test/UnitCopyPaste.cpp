@@ -364,6 +364,17 @@ public:
                                   existing + newcontent + '\n'))
             return;
 
+        // Test setting HTML clipboard:
+        std::string html("<!DOCTYPE html><html><body>myword</body></html>");
+        // Intentionally no buildClipboardText() here, just raw HTML.
+        if (!setClipboard(_clipURI, html, HTTPResponse::HTTP_OK))
+            return;
+        // This failed with: ERROR: Forced failure: Missing clipboard mime type, because we tried to
+        // parse HTML when we expected a list of mimetype-size-bytes entries.
+        if (!fetchClipboardAssert(_clipURI, "text/html", html))
+            return;
+
+        // Setup state that will be also asserte in postCloseTest():
         LOG_TST("Setup clipboards:");
         if (!setClipboard(_clipURI2, buildClipboardText("kippers"), HTTPResponse::HTTP_OK))
             return;
