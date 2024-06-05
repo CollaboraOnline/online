@@ -11,15 +11,13 @@
 
 #include "ServerAuditUtil.hpp"
 
-std::map<std::string, std::string> ServerAuditUtil::entries;
-
-void ServerAuditUtil::initialize()
+ServerAuditUtil::ServerAuditUtil()
 {
-    ServerAuditUtil::set("is_admin", "ok");
-    ServerAuditUtil::set("certwarning", "ok");
+    set("is_admin", "ok");
+    set("certwarning", "ok");
 }
 
-std::string ServerAuditUtil::getResultsJSON()
+std::string ServerAuditUtil::getResultsJSON() const
 {
     std::string result = "{\"serverAudit\": [";
 
