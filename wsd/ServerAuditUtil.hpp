@@ -19,14 +19,14 @@
 class ServerAuditUtil
 {
     // <code, status>
-    static std::map<std::string, std::string> entries;
+    std::map<std::string, std::string> entries;
 
 public:
-    static void initialize();
+    ServerAuditUtil();
 
-    static std::string getResultsJSON();
+    std::string getResultsJSON() const;
 
-    static void set(std::string code, std::string status);
+    void set(std::string code, std::string status);
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
