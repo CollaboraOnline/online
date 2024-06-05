@@ -212,6 +212,8 @@ L.Control.Ruler = L.Control.extend({
 		// pageWidth on the other hand *is* really in mm100.
 		this.options.pageWidth = parseInt(obj['pageWidth']);
 
+		this.options.tileMargin = this._map.isPresentationOrDrawing() ? 0 : this.options.tileMargin;
+
 		// to be enabled only after adding support for other length units as well
 		// this.options.unit = obj['unit'].trim();
 
@@ -223,13 +225,15 @@ L.Control.Ruler = L.Control.extend({
 	_updateParagraphIndentations: function() {
 		var items = this._map['stateChangeHandler'];
 		var state = items.getItemValue('.uno:LeftRightParaMargin');
+		// in impress/draw values are not as per Inch factore we should consider this case
+		var conversionFactorToInches = this._map.isPresentationOrDrawing() ? 1.76 : 1;
 
 		if (!state)
 			return;
 
-		this.options.firstLineIndent = parseFloat(state.firstline.replace(',', '.'));
-		this.options.leftParagraphIndent = parseFloat(state.left.replace(',', '.'));
-		this.options.rightParagraphIndent = parseFloat(state.right.replace(',', '.'));
+		this.options.firstLineIndent = parseFloat(state.firstline.replace(',', '.')) / conversionFactorToInches ;
+		this.options.leftParagraphIndent = parseFloat(state.left.replace(',', '.')) / conversionFactorToInches ;
+		this.options.rightParagraphIndent = parseFloat(state.right.replace(',', '.')) / conversionFactorToInches ;
 		this.options.indentUnit = state.unit;
 
 		var pxPerMm100 = this._map._docLayer._docPixelSize.x / (this._map._docLayer._docWidthTwips * 2540/1440);
@@ -250,10 +254,11 @@ L.Control.Ruler = L.Control.extend({
 		var fLinePosition = pStartPosition + this.options.firstLineIndent;
 		var pEndPosition = this._rTSContainer.getBoundingClientRect().right - this.options.rightParagraphIndent;
 
+		var presentationControlsWrapperWidth = this._getpresentationControlWrapperWidth();
 		// We calculated the positions. Now we should move them to left in order to make their sharp edge point to the right direction..
-		this._firstLineMarker.style.left = (fLinePosition - (this._firstLineMarker.getBoundingClientRect().width / 2.0)) + 'px';
-		this._pStartMarker.style.left = (pStartPosition - (this._pStartMarker.getBoundingClientRect().width / 2.0)) + 'px';
-		this._pEndMarker.style.left = (pEndPosition - (this._pEndMarker.getBoundingClientRect().width / 2.0)) + 'px';
+		this._firstLineMarker.style.left = (fLinePosition - presentationControlsWrapperWidth - (this._firstLineMarker.getBoundingClientRect().width / 2.0)) + 'px';
+		this._pStartMarker.style.left = (pStartPosition - presentationControlsWrapperWidth - (this._pStartMarker.getBoundingClientRect().width / 2.0)) + 'px';
+		this._pEndMarker.style.left = (pEndPosition - presentationControlsWrapperWidth - (this._pEndMarker.getBoundingClientRect().width / 2.0)) + 'px';
 
 		this._markerVerticalLine.style.top = this._rTSContainer.getBoundingClientRect().bottom + 'px';
 	},
@@ -438,7 +443,9 @@ L.Control.Ruler = L.Control.extend({
 		this._lastposition = e.clientX;
 		// halfWidth..
 		var halfWidth = (element.getBoundingClientRect().right - element.getBoundingClientRect().left) * 0.5;
-		this._markerVerticalLine.style.left = String(newLeft + halfWidth) + 'px';
+
+		var presentationControlsWrapperWidth = this._getpresentationControlWrapperWidth();
+		this._markerVerticalLine.style.left = String(newLeft + halfWidth + presentationControlsWrapperWidth) + 'px';
 	},
 
 	_moveIndentationEnd: function(e) {
@@ -449,7 +456,7 @@ L.Control.Ruler = L.Control.extend({
 			L.DomEvent.off(this._map, 'mouseup', this._moveIndentationEnd, this);
 		}
 
-		var unoObj = {}, indentType = '';
+		var unoObj = {};
 
 		// Calculation step..
 		// The new coordinate of element subject to indentation is sent as a percentage of the page width..
@@ -457,37 +464,33 @@ L.Control.Ruler = L.Control.extend({
 		// We can use TabStopContainer's position as the reference point, as they share the same reference point..
 		var element = document.getElementById(this._indentationElementId);
 
-		var leftValue;
 		// The halfWidth of the shape..
 		var halfWidth = (element.getBoundingClientRect().right - element.getBoundingClientRect().left) * 0.5;
 
-		// We need the pageWidth in pixels, so we can not use "this.options.pageWidth" here, since that's in mm..
-		var pageWidth = parseFloat(this._rFace.style.width.replace('px', ''));
+		var firstLineMargin = this.options.firstLineIndent / this.options.DraggableConvertRatio;
+		var leftValue = this.options.leftParagraphIndent / this.options.DraggableConvertRatio
+		var rightValue = this.options.rightParagraphIndent / this.options.DraggableConvertRatio
 
+		// Calculate and update left, right and firstLine margin according to selected marker
 		if (element.id === 'lo-fline-marker') {
-			indentType = 'FirstLineIndent';
-			// FirstLine indentation is always positioned according to the left indent..
-			// We don't need to add halfWidth here..
-			leftValue = (parseFloat(this._firstLineMarker.style.left.replace('px', '')) - parseFloat(this._pStartMarker.style.left.replace('px', '')));
-		}
-		else if (element.id === 'lo-pstart-marker') {
-			indentType = 'LeftParaIndent';
-			leftValue = element.getBoundingClientRect().left - this._rTSContainer.getBoundingClientRect().left + halfWidth;
+			firstLineMargin = Math.ceil((this._firstLineMarker.getBoundingClientRect().left - this._pStartMarker.getBoundingClientRect().left + halfWidth) / this.options.DraggableConvertRatio);
+			this.options.firstLineIndent = firstLineMargin * this.options.DraggableConvertRatio;
 		}
 		else if (element.id === 'lo-pend-marker') {
-			indentType = 'RightParaIndent';
-			// Right marker is positioned from right, this is rightValue..
-			leftValue = this._rTSContainer.getBoundingClientRect().right - element.getBoundingClientRect().right + halfWidth;
+			rightValue = Math.ceil((this._rTSContainer.getBoundingClientRect().right - this._pEndMarker.getBoundingClientRect().right + halfWidth) / this.options.DraggableConvertRatio);
+		}
+		else if (element.id === 'lo-pstart-marker') {
+			leftValue = Math.ceil((this._pStartMarker.getBoundingClientRect().left - this._rTSContainer.getBoundingClientRect().left + halfWidth) / this.options.DraggableConvertRatio);
 		}
 
-		leftValue = leftValue / pageWidth; // Now it's a percentage..
+		// it is kind of necessary to send all prams details to set values right in CORE other vise for missing values it will take default as 0
+		unoObj['LRSpace.FirstLineIndent'] = { type: 'long', value: firstLineMargin };
+		unoObj['LRSpace.LeftMargin'] = { type: 'long', value: leftValue };
+		unoObj['LRSpace.RightMargin'] = { type: 'long', value: rightValue };
+	
+		// Send the command
+		this._map.sendUnoCommand('.uno:LeftRightParaMargin', unoObj);
 
-		if (indentType !== '') {
-			unoObj[indentType] = {};
-			unoObj[indentType]['type'] = 'string';
-			unoObj[indentType]['value'] = leftValue;
-			app.socket.sendMessage('uno .uno:ParagraphChangeState ' + JSON.stringify(unoObj));
-		}
 
 		this._indentationElementId = '';
 		this._markerVerticalLine.style.display = 'none';
@@ -837,6 +840,16 @@ L.Control.Ruler = L.Control.extend({
 			this._map.sendUnoCommand('.uno:ChangeTabStop', params);
 			this.currentPositionInTwips = null;
 		}
+	},
+
+	_getpresentationControlWrapperWidth: function() {
+		// for Impress/Draw we need to remove presentation controls wrapper width to place marker at correct position
+		var presentationControlsWrapper = document.getElementById('presentation-controls-wrapper');
+		var presentationControlsWrapperWidth = 0;
+
+		if (presentationControlsWrapper)
+			presentationControlsWrapperWidth = presentationControlsWrapper.getBoundingClientRect().width;
+		return presentationControlsWrapperWidth;
 	},
 
 });
