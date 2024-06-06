@@ -325,7 +325,7 @@ window.app = {
 
 			const uiDefault = global.prefs._getUIDefault(key);
 			if (
-				global.prefs._getUIDefault('SavedUIState', 'true').toLowerCase() === 'false' &&
+				!global.savedUIState &&
 				uiDefault !== undefined
 			) {
 				return uiDefault;
