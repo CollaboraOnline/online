@@ -161,8 +161,17 @@ class ServerAuditDialog {
 			: null;
 
 		if (app.serverAudit.length) {
-			// TODO: enable annoying snackbar later
+			let hasErrors = false;
+			app.serverAudit.forEach((entry: any) => {
+				if (entry.status !== 'ok') {
+					hasErrors = true;
+				}
+			});
+
+			// only show the snackbar if there are specific warnings
+			// and if the current view is_admin
 			if (
+				hasErrors &&
 				viewInfo &&
 				viewInfo.userextrainfo &&
 				viewInfo.userextrainfo.is_admin === true
@@ -174,6 +183,7 @@ class ServerAuditDialog {
 				);
 			}
 
+			// but if we any results, enable the toolbar entry for the server audit
 			this.map.uiManager.refreshUI();
 		}
 	}
