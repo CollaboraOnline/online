@@ -128,7 +128,7 @@ class TopToolbar extends JSDialog.Toolbar {
 			{type: 'separator', orientation: 'vertical', id: 'breakformatting'},
 			{type: 'colorlistbox',  id: 'fontcolorwriter:ColorPickerMenu', command: '.uno:FontColor', text: _UNO('.uno:FontColor'), visible: false, lockUno: '.uno:FontColor'},
 			{type: 'colorlistbox',  id: 'fontcolor:ColorPickerMenu', command: '.uno:Color', text: _UNO('.uno:FontColor'), lockUno: '.uno:FontColor'},
-			{type: 'colorlistbox',  id: 'backcolor:ColorPickerMenu', command: '.uno:BackColor', text: _UNO('.uno:BackColor', 'text'), visible: false, lockUno: '.uno:BackColor'},
+			{type: 'colorlistbox',  id: 'backcolor:ColorPickerMenu', command: '.uno:CharBackColor', text: _UNO('.uno:CharBackColor', 'text'), visible: false, lockUno: '.uno:CharBackColor'},
 			{type: 'colorlistbox',  id: 'backgroundcolor:ColorPickerMenu', command: '.uno:BackgroundColor', text: _UNO('.uno:BackgroundColor'), visible: false, lockUno: '.uno:BackgroundColor'},
 			{type: 'separator', orientation: 'vertical' , id: 'breakcolor', mobile:false},
 			{type: 'toolitem',  id: 'leftpara',  command: '.uno:LeftPara', text: _UNO('.uno:LeftPara', '', true), visible: false},

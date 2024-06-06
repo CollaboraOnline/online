@@ -631,7 +631,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 									{
 										'id': 'home-char-back-color:ColorPickerMenu',
 										'noLabel': true,
-										'class': 'unospan-BackColor',
+										'class': 'unospan-CharBackColor',
 										'type': 'toolitem',
 										'text': _UNO('.uno:CharBackColor'),
 										'command': '.uno:CharBackColor',

@@ -158,7 +158,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._toolitemHandlers = {};
 		this._toolitemHandlers['.uno:XLineColor'] = this._colorControl;
 		this._toolitemHandlers['.uno:FontColor'] = this._colorControl;
-		this._toolitemHandlers['.uno:BackColor'] = this._colorControl;
 		this._toolitemHandlers['.uno:CharBackColor'] = this._colorControl;
 		this._toolitemHandlers['.uno:BackgroundColor'] = this._colorControl;
 		this._toolitemHandlers['.uno:FrameLineColor'] = this._colorControl;
@@ -1682,7 +1681,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		return false;
 	},
-	
+
 	_linkButtonControl: function(parentContainer, data, builder) {
 		var textContent = L.DomUtil.create('label', builder.options.cssClass + " ui-linkbutton", parentContainer);
 
@@ -2730,9 +2729,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_getDefaultColorForCommand: function(command) {
-		if (command == '.uno:BackColor')
-			return '#';
-		else if (command == '.uno:CharBackColor')
+		if (command == '.uno:CharBackColor')
 			return '#';
 		else if (command == '.uno:BackgroundColor')
 			return '#';

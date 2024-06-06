@@ -627,11 +627,11 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 									},
 									{
 										'id': 'home-back-color:ColorPickerMenu',
-										'class': 'unospan-BackColor',
+										'class': 'unospan-CharBackColor',
 										'type': 'toolitem',
 										'noLabel': true,
-										'text': _UNO('.uno:BackColor', 'text'),
-										'command': '.uno:BackColor',
+										'text': _UNO('.uno:CharBackColor', 'text'),
+										'command': '.uno:CharBackColor',
 										'accessibility': { focusBack: true,	combination: 'HC',	de:	null }
 									},
 									{
