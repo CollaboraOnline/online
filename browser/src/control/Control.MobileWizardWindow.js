@@ -254,6 +254,8 @@ L.Control.MobileWizardWindow = L.Control.extend({
 		else
 			$(contentToShow).children('.ui-content').first().show();
 
+		this.mobileWizard.scrollTop(0);
+
 		this._currentDepth++;
 		if (!this._inBuilding)
 			history.pushState({context: 'mobile-wizard', level: this._currentDepth}, 'mobile-wizard-level-' + this._currentDepth);
@@ -323,6 +325,8 @@ L.Control.MobileWizardWindow = L.Control.extend({
 			$('#mobile-wizard.funcwizard div#mobile-wizard-content').removeClass('showHelpBG');
 			$('#mobile-wizard.funcwizard div#mobile-wizard-content').addClass('hideHelpBG');
 			headers.show('slide', { direction: 'left' }, 'fast');
+
+			this.mobileWizard.scrollTop(0);
 
 			if (this._currentDepth == 0 || (this._isTabMode && this._currentDepth == 1)) {
 				this._inMainMenu = true;
