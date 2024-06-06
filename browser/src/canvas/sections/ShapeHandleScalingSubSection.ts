@@ -129,8 +129,8 @@ class ShapeHandleScalingSubSection extends HTMLObjectSection {
 			const svg = this.sectionProperties.parentHandlerSection.sectionProperties.svg;
 			const selection = app.map._docLayer._graphicSelection;
 			const center: number[] = [];
-			center.push(selection.pX1 - this.documentTopLeft[0]);
-			center.push(selection.pY1 - this.documentTopLeft[1]);
+			center.push(shapeRecProps.center[0] - this.documentTopLeft[0]);
+			center.push(shapeRecProps.center[1] - this.documentTopLeft[1]);
 
 			svg.style.width = Math.abs(shapeRecProps.width) + 'px';
 			svg.style.height = Math.abs(shapeRecProps.height) + 'px';
@@ -142,7 +142,6 @@ class ShapeHandleScalingSubSection extends HTMLObjectSection {
 			svg.children[0].setAttribute('preserveAspectRatio', 'none');
 			svg.style.preserveAspectRatio = 'none';
 			svg.style.transform = 'scale(' + scaleX + ', ' + scaleY  + ')';
-			svg.style.transformOrigin = 'left top';
 			svg.style.display = '';
 		}
 	}

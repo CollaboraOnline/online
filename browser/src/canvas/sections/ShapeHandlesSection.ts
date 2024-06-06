@@ -577,22 +577,35 @@ class ShapeHandlesSection extends CanvasSectionObject {
 	}
 
 	adjustSVGProperties() {
-		if (this.sectionProperties.svg && this.sectionProperties.svg.style.display === '' && app.map._docLayer._graphicSelection) {
-			const selection = app.map._docLayer._graphicSelection;
-			const center: number[] = [];
-			center.push(selection.pX1 - this.documentTopLeft[0]);
-			center.push(selection.pY1 - this.documentTopLeft[1]);
+		if (this.sectionProperties.svg && this.sectionProperties.svg.style.display === '' && app.map._docLayer._graphicSelection && this.sectionProperties.shapeRectangleProperties) {
+			const shapeRecProps = this.sectionProperties.shapeRectangleProperties;
+			const clientRect = this.sectionProperties.svg.children[0].getBoundingClientRect();
 
-			this.sectionProperties.svg.style.width = selection.pWidth + 'px';
-			this.sectionProperties.svg.style.height = selection.pHeight + 'px';
+			let x = 0, y = 0;
+
+			x = parseInt(this.sectionProperties.info.handles.kinds.rectangle['2'][0].point.x) * app.twipsToPixels;
+			y = parseInt(this.sectionProperties.info.handles.kinds.rectangle['2'][0].point.y) * app.twipsToPixels;
+
+			const diffX = shapeRecProps.height * 0.5 * Math.cos(Math.PI * 0.5 + shapeRecProps.angleRadian);
+			const diffY = shapeRecProps.height * 0.5 * Math.sin(Math.PI * 0.5 + shapeRecProps.angleRadian);
+
+			x += (-clientRect.width * 0.5 - diffX);
+			y += (-clientRect.height * 0.5 + diffY);
+
+			x -= this.documentTopLeft[0];
+			y -= this.documentTopLeft[1];
+
+			this.sectionProperties.svg.style.width = 'auto';
+			this.sectionProperties.svg.style.height = 'auto';
 			this.sectionProperties.svg.style.position = 'absolute';
 			this.sectionProperties.svg.style.textAlign = 'center';
 			this.sectionProperties.svg.style.alignContent = 'center';
-			this.sectionProperties.svg.style.left = center[0] + 'px';
-			this.sectionProperties.svg.style.top = center[1] + 'px';
-			this.sectionProperties.svg.children[0].setAttribute('preserveAspectRatio', 'none');
+			this.sectionProperties.svg.style.left = x + 'px';
+			this.sectionProperties.svg.style.top = y + 'px';
 			this.sectionProperties.svg.style.transform =  'scale(' + app.getScale() + ')';
-			this.sectionProperties.svg.style.transformOrigin = 'left top';
+			this.sectionProperties.svg.style.transformOrigin = 'center';
+			this.sectionProperties.svg.children[0].style.transformOrigin = 'center';
+			this.sectionProperties.svg.children[0].setAttribute('preserveAspectRatio', 'none');
 		}
 		this.hideSVG();
 	}
