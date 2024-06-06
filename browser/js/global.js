@@ -294,6 +294,22 @@ window.app = {
 			}
 		})(),
 
+		_renameLocalStoragePref: function(oldName, newName) {
+			if (!global.prefs.canPersist) {
+				return;
+			}
+
+			const oldValue = global.localStorage.getItem(oldName);
+			const newValue = global.localStorage.getItem(newName);
+
+			if (oldValue === null || newValue !== null) {
+				return;
+			}
+
+			// we do not remove the old value, both for downgrades and incase we split an old global preference to a per-app one
+			global.localStorage.setItem(newName, oldValue);
+		},
+
 		/// Similar to using window.uiDefaults directly, but this can handle dotted keys like "presentation.ShowSidebar" and does not allow partially referencing a value (like just "presentation")
 		_getUIDefault: function(key, defaultValue = undefined) {
 			const parts = key.split('.');
@@ -387,6 +403,32 @@ window.app = {
 			return parsedValue;
 		},
 	};
+
+	// Renamed in 24.04.4.1
+	const prefDocTypes = ['text', 'spreadsheet', 'presentation', 'drawing'];
+	for (const docType of prefDocTypes) {
+		global.prefs._renameLocalStoragePref(`UIDefaults_${docType}_darkTheme`, 'darkTheme');
+	}
+
+	const oldDocTypePrefs = [
+		"A11yCheckDeck",
+		"NavigatorDeck",
+		"PropertyDeck",
+		"SdCustomAnimationDeck",
+		"SdMasterPagesDeck",
+		"SdSlideTransitionDeck",
+		"ShowResolved",
+		"ShowRuler",
+		"ShowSidebar",
+		"ShowStatusbar",
+		"ShowToolbar",
+	];
+	for (const pref of oldDocTypePrefs) {
+		for (const docType of prefDocTypes) {
+			global.prefs._renameLocalStoragePref(`UIDefaults_${docType}_${pref}`, `${docType}.${pref}`);
+		}
+	}
+	// End 24.04.4.1 renames
 
 	global.keyboard = {
 		onscreenKeyboardHint: global.uiDefaults['onscreenKeyboardHint'],
