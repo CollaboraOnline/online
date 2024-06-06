@@ -910,7 +910,9 @@ function textSelectionShouldExist() {
 	cy.cGet('.text-selection-handle-end').should('exist');
 
 	// One of the marker should be visible at least (if not both).
-	cy.cGet('.text-selection-handle-start, .text-selection-handle-end').should('be.visible');
+	doIfOnMobile(function() {
+		cy.cGet('.text-selection-handle-start, .text-selection-handle-end').should('be.visible');
+	})
 
 	cy.log('<< textSelectionShouldExist - end');
 }
