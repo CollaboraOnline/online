@@ -239,7 +239,7 @@ void HTTPServerTest::testCoolPost()
         std::string::npos);
     LOK_ASSERT(
         html.find(
-            R"xx(window.uiDefaults = {"presentation":{"ShowSidebar":false,"ShowStatusbar":false},"spreadsheet":{"ShowSidebar":false,"ShowStatusbar":false},"text":{"ShowRuler":false,"ShowSidebar":false,"ShowStatusbar":false},"uiMode":"classic"};)xx") !=
+            R"xx(window.uiDefaults = {"presentation":{"ShowSidebar":"false","ShowStatusbar":"false"},"spreadsheet":{"ShowSidebar":"false","ShowStatusbar":"false"},"text":{"ShowRuler":"false","ShowSidebar":"false","ShowStatusbar":"false"},"uiMode":"classic"};)xx") !=
         std::string::npos);
     LOK_ASSERT(
         html.find(
