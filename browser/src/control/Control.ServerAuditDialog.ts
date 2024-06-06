@@ -162,7 +162,11 @@ class ServerAuditDialog {
 
 		if (app.serverAudit.length) {
 			// TODO: enable annoying snackbar later
-			if (viewInfo && viewInfo.userextrainfo && viewInfo.userextrainfo.is_admin === true) {
+			if (
+				viewInfo &&
+				viewInfo.userextrainfo &&
+				viewInfo.userextrainfo.is_admin === true
+			) {
 				this.map.uiManager.showSnackbar(
 					_('Check security warnings of your server'),
 					_('OPEN'),
