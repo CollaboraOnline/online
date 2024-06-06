@@ -94,7 +94,6 @@ UnitBase::TestResult UnitUNOCommand::testStateUnoCommandWriter()
 {
     std::set<std::string> writerCommands
     {
-        ".uno:BackColor=",
         ".uno:BackgroundColor=",
         ".uno:Bold=",
         ".uno:CenterPara=",

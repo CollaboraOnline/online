@@ -39,7 +39,6 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 
 		this._toolitemHandlers['.uno:XLineColor'] = this._colorControl;
 		this._toolitemHandlers['.uno:FontColor'] = this._colorControl;
-		this._toolitemHandlers['.uno:BackColor'] = this._colorControl;
 		this._toolitemHandlers['.uno:CharBackColor'] = this._colorControl;
 		this._toolitemHandlers['.uno:BackgroundColor'] = this._colorControl;
 		this._toolitemHandlers['.uno:FrameLineColor'] = this._colorControl;

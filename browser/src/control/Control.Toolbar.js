@@ -558,10 +558,8 @@ function getColorPickerData(type) {
 	} else if (type === 'Highlight Color') {
 		if (map.getDocType() === 'spreadsheet')
 			uno = '.uno:BackgroundColor';
-		else if (map.getDocType() === 'presentation')
-			uno = '.uno:CharBackColor';
 		else
-			uno = '.uno:BackColor';
+			uno = '.uno:CharBackColor';
 	}
 	var data = {
 		id: 'colorpicker',
@@ -768,7 +766,7 @@ function processStateChangedCommand(commandName, state) {
 			L.DomUtil.setStyle(div, 'background', color);
 		}
 	}
-	else if (commandName === '.uno:BackColor' || commandName === '.uno:BackgroundColor' || commandName === '.uno:CharBackColor') {
+	else if (commandName === '.uno:BackgroundColor' || commandName === '.uno:CharBackColor') {
 		if (!toolbar) return;
 		// confusingly, the .uno: command is named differently in Writer, Calc and Impress
 		color = parseInt(state);

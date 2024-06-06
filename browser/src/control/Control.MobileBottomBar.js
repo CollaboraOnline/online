@@ -33,7 +33,7 @@ class MobileBottomBar extends JSDialog.Toolbar {
 				{type: 'toolitem', id: 'underline', text: _UNO('.uno:Underline'), command: '.uno:Underline', context: ['default', 'Text', 'DrawText', 'Table']},
 				{type: 'separator', id: 'breakcolor', context: ['default', 'Text', 'DrawText', 'Table']},
 				{type: 'customtoolitem', id: 'fontcolor', text: _UNO('.uno:FontColor'), lockUno: '.uno:FontColor', context: ['default', 'Text', 'DrawText', 'Table']},
-				{type: 'customtoolitem', id: 'backcolor', text: _UNO('.uno:BackColor', 'text'), lockUno: '.uno:BackColor', context: ['default', 'Text', 'DrawText', 'Table']},
+				{type: 'customtoolitem', id: 'backcolor', text: _UNO('.uno:CharBackColor', 'text'), lockUno: '.uno:CharBackColor', context: ['default', 'Text', 'DrawText', 'Table']},
 				{type: 'menubutton', id: 'setborderstyle:BorderStyleMenu', noLabel: true, command: '.uno:SetBorderStyle', text: _('Borders'), hidden: true, context: ['Table']},
 				{type: 'separator', id: 'breakalign-text', context: ['default', 'Text', 'DrawText']},
 				{type: 'menubutton', id: 'aligntext', noLabel: true, command: 'alignblock', text: _UNO('.uno:TextAlign'), lockUno: '.uno:TextAlign', context: ['default', 'Text'],
