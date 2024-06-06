@@ -19,7 +19,7 @@ describe.skip(['tagmobile'], 'Trigger hamburger menu options.', function() {
 		// Change the document content and save it
 		impressHelper.selectTextShapeInTheCenter();
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition tspan')
+		cy.cGet('#document-container g.Page .TextPosition tspan')
 			.should('have.text', 'X');
 
 		// Type a new text
@@ -29,7 +29,7 @@ describe.skip(['tagmobile'], 'Trigger hamburger menu options.', function() {
 
 		impressHelper.triggerNewSVGForShapeInTheCenter();
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition tspan')
+		cy.cGet('#document-container g.Page .TextPosition tspan')
 			.should('have.text', 'Xnew');
 
 		mobileHelper.selectHamburgerMenuItem(['File', 'Save']);
@@ -41,7 +41,7 @@ describe.skip(['tagmobile'], 'Trigger hamburger menu options.', function() {
 
 		impressHelper.selectTextShapeInTheCenter();
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition tspan')
+		cy.cGet('#document-container g.Page .TextPosition tspan')
 			.should('have.text', 'Xnew');
 	});
 
@@ -93,7 +93,7 @@ describe.skip(['tagmobile'], 'Trigger hamburger menu options.', function() {
 	it('Undo/redo.', function() {
 		impressHelper.selectTextShapeInTheCenter();
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition tspan')
+		cy.cGet('#document-container g.Page .TextPosition tspan')
 			.should('have.text', 'X');
 
 		// Type a new character
@@ -103,7 +103,7 @@ describe.skip(['tagmobile'], 'Trigger hamburger menu options.', function() {
 
 		impressHelper.triggerNewSVGForShapeInTheCenter();
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition tspan')
+		cy.cGet('#document-container g.Page .TextPosition tspan')
 			.should('have.text', 'Xq');
 
 		// Undo
@@ -111,7 +111,7 @@ describe.skip(['tagmobile'], 'Trigger hamburger menu options.', function() {
 
 		impressHelper.triggerNewSVGForShapeInTheCenter();
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition tspan')
+		cy.cGet('#document-container g.Page .TextPosition tspan')
 			.should('have.text', 'X');
 
 		// Redo
@@ -119,14 +119,14 @@ describe.skip(['tagmobile'], 'Trigger hamburger menu options.', function() {
 
 		impressHelper.triggerNewSVGForShapeInTheCenter();
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition tspan')
+		cy.cGet('#document-container g.Page .TextPosition tspan')
 			.should('have.text', 'Xq');
 	});
 
 	it('Repair.', function() {
 		impressHelper.selectTextShapeInTheCenter();
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition tspan')
+		cy.cGet('#document-container g.Page .TextPosition tspan')
 			.should('have.text', 'X');
 
 		// Type a new character
@@ -136,14 +136,14 @@ describe.skip(['tagmobile'], 'Trigger hamburger menu options.', function() {
 
 		impressHelper.triggerNewSVGForShapeInTheCenter();
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition tspan')
+		cy.cGet('#document-container g.Page .TextPosition tspan')
 			.should('have.text', 'Xq');
 
 		repairHelper.rollbackPastChange('Undo', undefined, true);
 
 		impressHelper.triggerNewSVGForShapeInTheCenter();
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition tspan')
+		cy.cGet('#document-container g.Page .TextPosition tspan')
 			.should('have.text', 'X');
 	});
 

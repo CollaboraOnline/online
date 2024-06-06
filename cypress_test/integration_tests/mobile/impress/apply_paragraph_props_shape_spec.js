@@ -41,7 +41,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 	}
 
 	it.skip('Apply left/right alignment on text shape.', function() {
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('#document-container g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '1400');
 
 		// Set right alignment first
@@ -51,7 +51,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 
 		triggerNewSVG();
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('#document-container g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '23586');
 
 		// Set left alignment
@@ -61,12 +61,12 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 
 		triggerNewSVG();
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('#document-container g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '1400');
 	});
 
 	it.skip('Apply center alignment on text shape.', function() {
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('#document-container g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '1400');
 
 		openParagraphPropertiesPanel();
@@ -75,12 +75,12 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 
 		triggerNewSVG();
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('#document-container g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '12493');
 	});
 
 	it.skip('Apply justified alignment on text shape.', function() {
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('#document-container g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '1400');
 
 		// Set right alignment first
@@ -90,7 +90,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 
 		triggerNewSVG();
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('#document-container g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '23586');
 
 		// Then set justified alignment
@@ -100,12 +100,12 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 
 		triggerNewSVG();
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('#document-container g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '1400');
 	});
 
 	it.skip('Set top/bottom alignment on text shape.', function() {
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('#document-container g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'y', '4834');
 
 		// Set bottom alignment first
@@ -115,7 +115,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 
 		triggerNewSVG();
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('#document-container g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'y', '10811');
 
 		// Then set top alignment
@@ -125,12 +125,12 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 
 		triggerNewSVG();
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('#document-container g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'y', '4834');
 	});
 
 	it.skip('Apply center vertical alignment on text shape.', function() {
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('#document-container g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'y', '4834');
 
 		openParagraphPropertiesPanel();
@@ -139,13 +139,13 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 
 		triggerNewSVG();
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('#document-container g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'y', '7822');
 	});
 
 	it('Apply default bulleting on text shape.', function() {
 		// We have no bulleting by default
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .BulletChars')
+		cy.cGet('#document-container g.Page .BulletChars')
 			.should('not.exist');
 
 		openListsPropertiesPanel();
@@ -154,13 +154,13 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 
 		triggerNewSVG();
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .BulletChars')
+		cy.cGet('#document-container g.Page .BulletChars')
 			.should('exist');
 	});
 
 	it('Apply default numbering on text shape.', function() {
 		// We have no bulleting by default
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .SVGTextShape tspan')
+		cy.cGet('#document-container g.Page .SVGTextShape tspan')
 			.should('not.have.attr', 'ooo:numbering-type');
 
 		openListsPropertiesPanel();
@@ -169,12 +169,12 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 
 		triggerNewSVG();
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .SVGTextShape tspan')
+		cy.cGet('#document-container g.Page .SVGTextShape tspan')
 			.should('have.attr', 'ooo:numbering-type', 'number-style');
 	});
 
 	it.skip('Apply spacing above on text shape.', function() {
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph:nth-of-type(2) tspan')
+		cy.cGet('#document-container g.Page .TextParagraph:nth-of-type(2) tspan')
 			.should('have.attr', 'y', '6600');
 
 		openParagraphPropertiesPanel();
@@ -183,12 +183,12 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 
 		triggerNewSVG();
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph:nth-of-type(2) tspan')
+		cy.cGet('#document-container g.Page .TextParagraph:nth-of-type(2) tspan')
 			.should('have.attr', 'y', '11180');
 	});
 
 	it.skip('Apply spacing below on text shape.', function() {
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph:nth-of-type(2) tspan')
+		cy.cGet('#document-container g.Page .TextParagraph:nth-of-type(2) tspan')
 			.should('have.attr', 'y', '6600');
 
 		openParagraphPropertiesPanel();
@@ -197,7 +197,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 
 		triggerNewSVG();
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph:nth-of-type(2) tspan')
+		cy.cGet('#document-container g.Page .TextParagraph:nth-of-type(2) tspan')
 			.should('have.attr', 'y', '11180');
 	});
 });

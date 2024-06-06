@@ -39,7 +39,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 
 	it('Apply horizontal alignment on selected text.', function() {
 		selectText();
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('#document-container g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '1400');
 
 		// Set right alignment first
@@ -49,7 +49,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 
 		impressHelper.removeShapeSelection();
 		selectText();
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('#document-container g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '23586');
 
 		// Set left alignment
@@ -59,7 +59,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 
 		impressHelper.removeShapeSelection();
 		selectText();
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('#document-container g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '1400');
 
 		// Set center alignment
@@ -69,7 +69,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 
 		impressHelper.removeShapeSelection();
 		selectText();
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('#document-container g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '12493');
 
 		// Set justified alignment
@@ -79,13 +79,13 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 
 		impressHelper.removeShapeSelection();
 		selectText();
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('#document-container g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '1400');
 	});
 
 	it('Apply vertical alignment on selected text.', function() {
 		selectText();
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('#document-container g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'y', '4834');
 
 		// Set bottom alignment
@@ -95,7 +95,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 
 		impressHelper.removeShapeSelection();
 		selectText();
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('#document-container g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'y', '10811');
 
 		// Set top alignment
@@ -105,7 +105,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 
 		impressHelper.removeShapeSelection();
 		selectText();
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('#document-container g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'y', '4834');
 
 		// Set center alignment
@@ -115,14 +115,14 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 
 		impressHelper.removeShapeSelection();
 		selectText();
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition').should('have.attr', 'y');
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition').invoke('attr', 'y').then(parseInt).should('be.closeTo', 7822, 5);
+		cy.cGet('#document-container g.Page .TextParagraph .TextPosition').should('have.attr', 'y');
+		cy.cGet('#document-container g.Page .TextParagraph .TextPosition').invoke('attr', 'y').then(parseInt).should('be.closeTo', 7822, 5);
 	});
 
 	it('Apply default bulleting on selected text.', function() {
 		selectText();
 		// We have no bulleting by default
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .BulletChars')
+		cy.cGet('#document-container g.Page .BulletChars')
 			.should('not.exist');
 
 		// Apply bulleting
@@ -132,14 +132,14 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 
 		impressHelper.removeShapeSelection();
 		selectText();
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .BulletChars')
+		cy.cGet('#document-container g.Page .BulletChars')
 			.should('exist');
 	});
 
 	it('Apply default numbering on selected text.', function() {
 		selectText();
 		// We have no bulleting by default
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .SVGTextShape tspan')
+		cy.cGet('#document-container g.Page .SVGTextShape tspan')
 			.should('not.have.attr', 'ooo:numbering-type');
 
 		// Apply numbering
@@ -149,13 +149,13 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 
 		impressHelper.removeShapeSelection();
 		selectText();
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .SVGTextShape tspan')
+		cy.cGet('#document-container g.Page .SVGTextShape tspan')
 			.should('have.attr', 'ooo:numbering-type', 'number-style');
 	});
 
 	it('Apply spacing above on selected text.', function() {
 		selectText();
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph:nth-of-type(2) tspan')
+		cy.cGet('#document-container g.Page .TextParagraph:nth-of-type(2) tspan')
 			.should('have.attr', 'y', '6600');
 
 		// Apply spacing above
@@ -165,13 +165,13 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 
 		impressHelper.removeShapeSelection();
 		selectText();
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph:nth-of-type(2) tspan')
+		cy.cGet('#document-container g.Page .TextParagraph:nth-of-type(2) tspan')
 			.should('have.attr', 'y', '11180');
 	});
 
 	it('Apply spacing below on selected text.', function() {
 		selectText();
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph:nth-of-type(2) tspan')
+		cy.cGet('#document-container g.Page .TextParagraph:nth-of-type(2) tspan')
 			.should('have.attr', 'y', '6600');
 
 		// Apply spacing below
@@ -181,13 +181,13 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 
 		impressHelper.removeShapeSelection();
 		selectText();
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph:nth-of-type(2) tspan')
+		cy.cGet('#document-container g.Page .TextParagraph:nth-of-type(2) tspan')
 			.should('have.attr', 'y', '11180');
 	});
 
 	it('Increase/decrease spacing of selected text.', function() {
 		selectText();
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph:nth-of-type(2) tspan')
+		cy.cGet('#document-container g.Page .TextParagraph:nth-of-type(2) tspan')
 			.should('have.attr', 'y', '6600');
 
 		// Increase spacing
@@ -197,7 +197,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 
 		impressHelper.removeShapeSelection();
 		selectText();
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph:nth-of-type(2) tspan')
+		cy.cGet('#document-container g.Page .TextParagraph:nth-of-type(2) tspan')
 			.should('have.attr', 'y', '6700');
 
 		// Decrease spacing
@@ -207,13 +207,13 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 
 		impressHelper.removeShapeSelection();
 		selectText();
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph:nth-of-type(2) tspan')
+		cy.cGet('#document-container g.Page .TextParagraph:nth-of-type(2) tspan')
 			.should('have.attr', 'y', '6600');
 	});
 
 	it('Change writing direction of selected text.', function() {
 		selectText();
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('#document-container g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '1400');
 
 		// Change right-to-left first
@@ -223,7 +223,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 
 		impressHelper.removeShapeSelection();
 		selectText();
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('#document-container g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '23586');
 
 		// Change back to the default left-to-right
@@ -233,14 +233,14 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 
 		impressHelper.removeShapeSelection();
 		selectText();
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('#document-container g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '1400');
 	});
 
 	it('Change bulleting level of selected text.', function() {
 		selectText();
 		// We have no bulleting by default
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .BulletChars')
+		cy.cGet('#document-container g.Page .BulletChars')
 			.should('not.exist');
 
 		// Apply bulleting first
@@ -250,9 +250,9 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 
 		impressHelper.removeShapeSelection();
 		selectText();
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .BulletChars')
+		cy.cGet('#document-container g.Page .BulletChars')
 			.should('exist');
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .BulletChar:nth-of-type(2) g')
+		cy.cGet('#document-container g.Page .BulletChar:nth-of-type(2) g')
 			.should('have.attr', 'transform', 'translate(1700,4563)');
 
 		// Change bulleting level
@@ -262,7 +262,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 
 		impressHelper.removeShapeSelection();
 		selectText();
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .BulletChar:nth-of-type(2) g')
+		cy.cGet('#document-container g.Page .BulletChar:nth-of-type(2) g')
 			.should('have.attr', 'transform', 'translate(2900,4536)');
 
 		// Change bulleting level back to default
@@ -272,7 +272,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 
 		impressHelper.removeShapeSelection();
 		selectText();
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .BulletChar:nth-of-type(2) g')
+		cy.cGet('#document-container g.Page .BulletChar:nth-of-type(2) g')
 			.should('have.attr', 'transform', 'translate(1700,4563)');
 	});
 });
