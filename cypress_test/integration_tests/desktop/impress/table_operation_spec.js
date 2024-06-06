@@ -48,7 +48,7 @@ describe(['tagdesktop'], 'Table operations', function() {
 		selectOptionNotebookbar('#table-insert-rows-before-button');
 		cy.cGet('.leaflet-marker-icon.table-row-resize-marker').should('have.length', 4);
 		retriggerNewSvgForTableInTheCenter();
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page g').should('have.class', 'com.sun.star.drawing.TableShape');
+		cy.cGet('#document-container g.Page g').should('have.class', 'com.sun.star.drawing.TableShape');
 
 		//assert the number of cells
 		cy.cGet('g.Page path[fill^="rgb"]')
@@ -57,10 +57,10 @@ describe(['tagdesktop'], 'Table operations', function() {
 			});
 
 		//assert the text position
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('#document-container g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '7290');
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('#document-container g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'y', '6643');
 	});
 
@@ -72,7 +72,7 @@ describe(['tagdesktop'], 'Table operations', function() {
 		cy.cGet('.leaflet-marker-icon.table-row-resize-marker').should('have.length', 4);
 		retriggerNewSvgForTableInTheCenter();
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page g')
+		cy.cGet('#document-container g.Page g')
 			.should('have.class', 'com.sun.star.drawing.TableShape');
 
 		//assert the number of cells
@@ -81,10 +81,10 @@ describe(['tagdesktop'], 'Table operations', function() {
 				expect(cells).to.have.lengthOf(8);
 			});
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('#document-container g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '7290');
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('#document-container g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'y', '5644');
 	});
 
@@ -98,7 +98,7 @@ describe(['tagdesktop'], 'Table operations', function() {
 
 		retriggerNewSvgForTableInTheCenter();
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page g')
+		cy.cGet('#document-container g.Page g')
 			.should('have.class', 'com.sun.star.drawing.TableShape');
 
 		//assert the number of cells
@@ -107,10 +107,10 @@ describe(['tagdesktop'], 'Table operations', function() {
 				expect(cells).to.have.lengthOf(9);
 			});
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('#document-container g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '14339');
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('#document-container g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'y', '5644');
 	});
 
@@ -124,7 +124,7 @@ describe(['tagdesktop'], 'Table operations', function() {
 
 		retriggerNewSvgForTableInTheCenter();
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page g')
+		cy.cGet('#document-container g.Page g')
 			.should('have.class', 'com.sun.star.drawing.TableShape');
 
 		//assert the number of cells
@@ -133,10 +133,10 @@ describe(['tagdesktop'], 'Table operations', function() {
 				expect(cells).to.have.lengthOf(9);
 			});
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('#document-container g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '7290');
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('#document-container g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'y', '5644');
 	});
 
@@ -150,7 +150,7 @@ describe(['tagdesktop'], 'Table operations', function() {
 
 		retriggerNewSvgForTableInTheCenter();
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page g')
+		cy.cGet('#document-container g.Page g')
 			.should('have.class', 'com.sun.star.drawing.TableShape');
 
 		//assert the number of cells
@@ -159,7 +159,7 @@ describe(['tagdesktop'], 'Table operations', function() {
 				expect(cells).to.have.lengthOf(4);
 			});
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('#document-container g.Page .TextParagraph .TextPosition')
 			.should('not.exist');
 	});
 
@@ -178,7 +178,7 @@ describe(['tagdesktop'], 'Table operations', function() {
 
 		retriggerNewSvgForTableInTheCenter();
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page g')
+		cy.cGet('#document-container g.Page g')
 			.should('have.class', 'com.sun.star.drawing.TableShape');
 
 		//assert the number of cells
@@ -187,10 +187,10 @@ describe(['tagdesktop'], 'Table operations', function() {
 				expect(cells).to.have.lengthOf(6);
 			});
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('#document-container g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '7290');
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('#document-container g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'y', '5644');
 	});
 
@@ -204,7 +204,7 @@ describe(['tagdesktop'], 'Table operations', function() {
 		cy.cGet('.leaflet-marker-icon.table-column-resize-marker')
 			.should('not.exist');
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page g')
+		cy.cGet('#document-container g.Page g')
 			.should('not.exist');
 	});
 
@@ -221,7 +221,7 @@ describe(['tagdesktop'], 'Table operations', function() {
 
 		retriggerNewSvgForTableInTheCenter();
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page g')
+		cy.cGet('#document-container g.Page g')
 			.should('have.class', 'com.sun.star.drawing.TableShape');
 
 		//assert the number of cells
@@ -230,10 +230,10 @@ describe(['tagdesktop'], 'Table operations', function() {
 				expect(cells).to.have.lengthOf(5);
 			});
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('#document-container g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '7290');
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('#document-container g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'y', '5644');
 	});
 
@@ -250,7 +250,7 @@ describe(['tagdesktop'], 'Table operations', function() {
 
 		retriggerNewSvgForTableInTheCenter();
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page g')
+		cy.cGet('#document-container g.Page g')
 			.should('have.class', 'com.sun.star.drawing.TableShape');
 
 		//assert the number of cells
@@ -259,10 +259,10 @@ describe(['tagdesktop'], 'Table operations', function() {
 				expect(cells).to.have.lengthOf(4);
 			});
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('#document-container g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '7290');
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('#document-container g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'y', '5644');
 	});
 

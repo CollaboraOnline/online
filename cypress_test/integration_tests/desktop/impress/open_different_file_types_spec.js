@@ -29,7 +29,7 @@ describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Open different file t
 		        expect(height).to.be.closeTo(7397, 10);
 		    });
 
-		var selector = '.leaflet-pane.leaflet-overlay-pane g.Page';
+		var selector = '#document-container g.Page';
 
 		cy.cGet(selector + ' g')
 			.should('have.class', 'com.sun.star.drawing.TableShape');
