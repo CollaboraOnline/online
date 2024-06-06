@@ -162,6 +162,9 @@ L.Control.Ruler = L.Control.extend({
 		if (!this.options.showruler) {
 			L.DomUtil.setStyle(this._rWrapper, 'display', 'none');
 		}
+		else {
+			this._map.sendUnoCommand('.uno:ShowRuler');
+		}
 		this._rFace = L.DomUtil.create('div', 'cool-ruler-face', this._rWrapper);
 		this._rMarginWrapper = L.DomUtil.create('div', 'cool-ruler-marginwrapper', this._rFace);
 		// BP => Break Points
