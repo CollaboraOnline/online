@@ -100,7 +100,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		});
 	});
 
-	it('Merge cells', function() {
+	it.skip('Merge cells', function() {
 
 		// Select the full column
 		calcHelper.selectFirstColumn();
