@@ -318,7 +318,24 @@ void ClientSession::handleClipboardRequest(DocumentBroker::ClipboardRequest     
         if (data.get())
         {
             preProcessSetClipboardPayload(*data);
-            docBroker->forwardToChild(client_from_this(), "setclipboard\n" + *data, true);
+
+            if (data->starts_with("http"))
+            {
+                // We got a URL, download that and set the result as the clipboard.
+                std::shared_ptr<http::Session> httpSession = http::Session::create(*data);
+                std::shared_ptr<const http::Response> httpResponse =
+                    httpSession->syncRequest(http::Request(Poco::URI(*data).getPathAndQuery()));
+                if (httpResponse->statusLine().statusCode() == http::StatusCode::OK)
+                {
+                    std::string body = httpResponse->getBody();
+                    docBroker->forwardToChild(client_from_this(), "setclipboard\n" + body, true);
+                }
+            }
+            else
+            {
+                // List of mimetype-size-data tuples, pass that over as-is.
+                docBroker->forwardToChild(client_from_this(), "setclipboard\n" + *data, true);
+            }
 
             // FIXME: work harder for error detection ?
             std::ostringstream oss;
