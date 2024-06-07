@@ -347,10 +347,18 @@ void ClientSession::handleClipboardRequest(DocumentBroker::ClipboardRequest     
 
                     std::shared_ptr<http::Session> httpSession = http::Session::create(url);
                     httpSession->setFinishedHandler(std::move(finishedCallback));
-                    http::Request httpRequest(Poco::URI(url).getPathAndQuery());
-                    if (!httpSession->asyncRequest(httpRequest, docBroker->getPoll()))
+                    std::string pathAndQuery = Poco::URI(url).getPathAndQuery();
+                    if (pathAndQuery.find("/cool/clipboard") != std::string::npos)
                     {
-                        LOG_ERR("Failed to start an async clipboard download request");
+                        http::Request httpRequest(Poco::URI(url).getPathAndQuery());
+                        if (!httpSession->asyncRequest(httpRequest, docBroker->getPoll()))
+                        {
+                            LOG_ERR("Failed to start an async clipboard download request");
+                        }
+                    }
+                    else
+                    {
+                        LOG_ERR("Clipboard download URL does not look like a clipboard one");
                     }
                 }
             }
