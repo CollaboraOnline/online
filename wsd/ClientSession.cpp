@@ -316,16 +316,25 @@ void ClientSession::handleClipboardRequest(DocumentBroker::ClipboardRequest     
         {
             preProcessSetClipboardPayload(*data);
 
-            if (Util::startsWith(*data, "http"))
+            if (Util::startsWith(*data, "{"))
             {
-                // We got a URL, download that and set the result as the clipboard.
-                std::shared_ptr<http::Session> httpSession = http::Session::create(*data);
-                std::shared_ptr<const http::Response> httpResponse =
-                    httpSession->syncRequest(http::Request(Poco::URI(*data).getPathAndQuery()));
-                if (httpResponse->statusLine().statusCode() == http::StatusCode::OK)
+                // We got JSON, extract the URL and the UNO command name.
+                Poco::JSON::Object::Ptr json;
+                if (JsonUtil::parseJSON(*data, json))
                 {
-                    std::string body = httpResponse->getBody();
-                    docBroker->forwardToChild(client_from_this(), "setclipboard\n" + body, true);
+                    std::string url;
+                    JsonUtil::findJSONValue(json, "url", url);
+                    std::string commandName;
+                    JsonUtil::findJSONValue(json, "commandName", commandName);
+                    std::shared_ptr<http::Session> httpSession = http::Session::create(url);
+                    std::shared_ptr<const http::Response> httpResponse =
+                        httpSession->syncRequest(http::Request(Poco::URI(url).getPathAndQuery()));
+                    if (httpResponse->statusLine().statusCode() == http::StatusCode::OK)
+                    {
+                        std::string body = httpResponse->getBody();
+                        docBroker->forwardToChild(client_from_this(), "setclipboard\n" + body, true);
+                        docBroker->forwardToChild(client_from_this(), "uno " + commandName);
+                    }
                 }
             }
             else
