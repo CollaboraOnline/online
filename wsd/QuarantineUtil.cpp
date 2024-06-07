@@ -275,3 +275,84 @@ void Quarantine::removeQuarantinedFiles()
 
     QuarantineMap.erase(_docKey);
 }
+
+Quarantine::Entry::Entry(const std::string& root, const std::string& filename)
+{
+    LOG_TRC("Quarantine file name: [" << filename << ']');
+
+    _fullPath = Poco::Path(root, filename).toString();
+
+    std::vector<StringToken> tokens;
+    StringVector::tokenize(filename.c_str(), filename.size(), Delimiter, tokens);
+    LOG_TRC("Quarantine file name: [" << filename << "]: " << tokens.size());
+    if (tokens.size() > 3)
+    {
+        _secondsSinceEpoch =
+            Util::u64FromString(filename.substr(tokens[0]._index, tokens[0]._length), /*def=*/0)
+                .first;
+
+        _pid = Util::u64FromString(filename.substr(tokens[1]._index, tokens[1]._length), /*def=*/0)
+                   .first;
+
+        // Note: this is unreliable since both the dockey and filename can (and often do) contain the Delimiter '_'.
+        _docKey = filename.substr(tokens[2]._index,
+                                  tokens[tokens.size() - 1]._index - tokens[2]._index - 1);
+
+        _filename =
+            filename.substr(tokens[tokens.size() - 1]._index, tokens[tokens.size() - 1]._length);
+
+        FileUtil::Stat f(_fullPath);
+        _size = f.good() ? f.size() : 0;
+    }
+
+    LOG_TRC("Legacy quarantine file for [" << _docKey << "], name: [" << _filename << "], size: "
+                                           << _size << ", created: " << _secondsSinceEpoch);
+}
+
+Quarantine::Entry::Entry(const std::string& root, const std::string& docKey,
+                         const std::string& filename)
+{
+    _fullPath = Poco::Path(Poco::Path(root, docKey), filename).toString();
+    _docKey = docKey;
+
+    std::vector<StringToken> tokens;
+    StringVector::tokenize(filename.c_str(), filename.size(), Delimiter, tokens);
+    LOG_TRC("Quarantine file for [" << _docKey << "], name: [" << filename
+                                    << "]: " << tokens.size());
+    if (tokens.size() >= 3)
+    {
+        _secondsSinceEpoch =
+            Util::u64FromString(filename.substr(tokens[0]._index, tokens[0]._length), /*def=*/0)
+                .first;
+
+        _pid = Util::u64FromString(filename.substr(tokens[1]._index, tokens[1]._length), /*def=*/0)
+                   .first;
+
+        _filename = filename.substr(tokens[2]._index, tokens[2]._length);
+
+        FileUtil::Stat f(_fullPath);
+        _size = f.good() ? f.size() : 0;
+    }
+
+    LOG_TRC("Quarantine file for [" << _docKey << "], name: [" << _filename << "], size: " << _size
+                                    << ", created: " << _secondsSinceEpoch);
+}
+
+Quarantine::Entry::Entry(const std::string& root, const std::string& docKey,
+                         uint64_t secondsSinceEpoch, const std::string& filename, uint64_t size)
+{
+    const std::string newFilename = std::to_string(secondsSinceEpoch) + filename;
+    _fullPath = Poco::Path(Poco::Path(root, docKey), newFilename).toString();
+    _docKey = docKey;
+
+    _secondsSinceEpoch = secondsSinceEpoch;
+
+    _pid = getpid();
+
+    _filename = filename;
+
+    _size = size; // The file isn't quarantined yet, so we use the size of the source.
+
+    LOG_TRC("New quarantine file for [" << _docKey << "], name: [" << _filename << "], size: "
+                                        << _size << ", created: " << _secondsSinceEpoch);
+}
