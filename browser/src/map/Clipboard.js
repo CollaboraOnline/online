@@ -354,15 +354,15 @@ L.Clipboard = L.Class.extend({
 				}
 
 				var formData = new FormData();
-				formData.append('data', new Blob([fallbackHtml]), 'clipboard');
+				formData.append('data', new Blob([src]), 'clipboard');
 				that._doAsyncDownload(
 					'POST', dest, formData, false,
 					function() {
 						if (that._checkAndDisablePasteSpecial()) {
-							window.app.console.log('up-load of fallback done, now paste special');
+							window.app.console.log('up-load of URL done, now paste special');
 							app.socket.sendMessage('uno .uno:PasteSpecial');
 						} else {
-							window.app.console.log('up-load of fallback done, now paste');
+							window.app.console.log('up-load of URL done, now paste');
 							app.socket.sendMessage('uno .uno:Paste');
 						}
 
