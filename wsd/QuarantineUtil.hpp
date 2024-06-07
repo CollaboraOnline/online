@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <cstdint>
 #include <mutex>
 #include <string>
 #include <unordered_map>
@@ -20,6 +21,35 @@ class DocumentBroker;
 
 class Quarantine
 {
+    class Entry
+    {
+    public:
+        /// This parses the filename per the original format, which is ambiguous.
+        Entry(const std::string& root, const std::string& filename);
+
+        /// This parses the new filename, which is shorter and more reliable.
+        Entry(const std::string& root, const std::string& docKey, const std::string& filename);
+
+        /// This creates an entry when quarantining a new file.
+        Entry(const std::string& root, const std::string& docKey, uint64_t secondsSinceEpoch,
+              const std::string& filename, uint64_t size);
+
+        const std::string& fullPath() const { return _fullPath; }
+        uint64_t secondsSinceEpoch() const { return _secondsSinceEpoch; }
+        int pid() const { return _pid; }
+        const std::string& docKey() const { return _docKey; }
+        const std::string& filename() const { return _filename; }
+        uint64_t size() const { return _size; }
+
+    private:
+        std::string _fullPath; //< The full path, including the quarantine directory and filename.
+        uint64_t _secondsSinceEpoch = 0; //< The timestamp in the filename.
+        int _pid = 0; //< The PID that generated it; informational.
+        std::string _docKey; //< The DocKey the file belongs to.
+        std::string _filename; //< The filename, without the path or other components.
+        uint64_t _size = 0; //< The size of the file in bytes.
+    };
+
 public:
     Quarantine(DocumentBroker& docBroker, const std::string& docName);
 
@@ -47,6 +77,12 @@ private:
     void removeQuarantine();
 
     static std::vector<std::string> getAllFilesSorted(const std::string& path);
+
+    /// Parses the given Old quarantine-filename into its components, which includes the DocKey.
+    static Entry parseOldFilename(const std::string& filename);
+
+    /// Parses the given New quarantine-filename into its components, which doesn't include the DocKey.
+    static Entry parseNewFilename(const std::string& filename, const std::string& docKey);
 
 private:
     static std::unordered_map<std::string, std::vector<std::string>> QuarantineMap;
