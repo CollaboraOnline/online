@@ -443,6 +443,8 @@ public:
     /// Transfer this socket into our polling thread / loop.
     void addSocketToPoll(const std::shared_ptr<StreamSocket>& socket);
 
+    SocketPoll& getPoll();
+
     void alertAllUsers(const std::string& msg);
 
     void alertAllUsers(const std::string& cmd, const std::string& kind)

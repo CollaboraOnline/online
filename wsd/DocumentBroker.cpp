@@ -3165,6 +3165,10 @@ void DocumentBroker::addSocketToPoll(const std::shared_ptr<StreamSocket>& socket
 {
     _poll->insertNewSocket(socket);
 }
+SocketPoll& DocumentBroker::getPoll()
+{
+    return *_poll;
+}
 
 void DocumentBroker::alertAllUsers(const std::string& msg)
 {
