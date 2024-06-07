@@ -329,14 +329,30 @@ void ClientSession::handleClipboardRequest(DocumentBroker::ClipboardRequest     
                     JsonUtil::findJSONValue(json, "url", url);
                     std::string commandName;
                     JsonUtil::findJSONValue(json, "commandName", commandName);
-                    std::shared_ptr<http::Session> httpSession = http::Session::create(url);
-                    std::shared_ptr<const http::Response> httpResponse =
-                        httpSession->syncRequest(http::Request(Poco::URI(url).getPathAndQuery()));
-                    if (httpResponse->statusLine().statusCode() == http::StatusCode::OK)
+                    http::Session::FinishedCallback finishedCallback =
+                        [this, docBroker,
+                         commandName](const std::shared_ptr<http::Session>& session)
                     {
+                        const std::shared_ptr<const http::Response> httpResponse =
+                            session->response();
+                        if (httpResponse->statusLine().statusCode() != http::StatusCode::OK)
+                        {
+                            LOG_ERR("Clipboard download request failed");
+                            return;
+                        }
+
                         std::string body = httpResponse->getBody();
-                        docBroker->forwardToChild(client_from_this(), "setclipboard\n" + body, true);
+                        docBroker->forwardToChild(client_from_this(), "setclipboard\n" + body,
+                                                  true);
                         docBroker->forwardToChild(client_from_this(), "uno " + commandName);
+                    };
+
+                    std::shared_ptr<http::Session> httpSession = http::Session::create(url);
+                    httpSession->setFinishedHandler(std::move(finishedCallback));
+                    http::Request httpRequest(Poco::URI(url).getPathAndQuery());
+                    if (!httpSession->asyncRequest(httpRequest, docBroker->getPoll()))
+                    {
+                        LOG_ERR("Failed to start an async clipboard download request");
                     }
                 }
             }
