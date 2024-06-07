@@ -200,7 +200,20 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 		}
 	}
 
+	private isEditing(): boolean {
+		const sections = this.containerObject.sections;
+		const textBoxes = sections
+			.flatMap((section: any) => [section.sectionProperties.nodeModifyText, section.sectionProperties.nodeReplyText])
+			.filter((textBox: any) => textBox !== undefined);
+
+		return textBoxes.includes(document.activeElement);
+	}
+
 	public setCollapsed(): void {
+		if (this.isEditing()) {
+			return;
+		}
+
 		this.isCollapsed = true;
 		this.unselect();
 		for (var i: number = 0; i < this.sectionProperties.commentList.length; i++) {
