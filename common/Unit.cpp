@@ -204,7 +204,7 @@ void UnitBase::selfTest()
     GlobalTool = nullptr;
 }
 
-bool UnitBase::init(UnitType type, const std::string &unitLibPath)
+bool UnitBase::init([[maybe_unused]] UnitType type, [[maybe_unused]] const std::string& unitLibPath)
 {
     if (!Util::isMobileApp())
         LOG_ASSERT(!get(type));
@@ -222,6 +222,9 @@ bool UnitBase::init(UnitType type, const std::string &unitLibPath)
     GlobalKit = nullptr;
     GlobalWSD = nullptr;
     GlobalTool = nullptr;
+
+    // Only in debug builds do we support tests.
+#if ENABLE_DEBUG
     if (!unitLibPath.empty())
     {
         GlobalArray = linkAndCreateUnit(type, unitLibPath);
@@ -277,6 +280,7 @@ bool UnitBase::init(UnitType type, const std::string &unitLibPath)
             return get(type) != nullptr;
         }
     }
+#endif // ENABLE_DEBUG
 
     // Fallback.
     switch (type)
@@ -352,6 +356,8 @@ void UnitBase::rememberInstance(UnitType type, UnitBase* instance)
 
 int UnitBase::uninit()
 {
+    // Only in debug builds do we support tests.
+#if ENABLE_DEBUG
     TST_LOG_NAME("UnitBase", "Uninitializing unit-tests: "
                                  << (GlobalResult == TestResult::Ok ? "SUCCESS" : "FAILED"));
 
@@ -389,6 +395,9 @@ int UnitBase::uninit()
     DlHandle = nullptr;
 
     return GlobalResult == TestResult::Ok ? EX_OK : EX_SOFTWARE;
+#else // ENABLE_DEBUG
+    return EX_OK; // Always success in release.
+#endif // !ENABLE_DEBUG
 }
 
 std::shared_ptr<SocketPoll> UnitBase::socketPoll()
@@ -516,8 +525,11 @@ void UnitBase::exitTest(TestResult result, const std::string& reason)
     if (isFinished())
     {
         if (result != _result)
+        {
             LOG_TST("exitTest got " << name(result) << " but is already finished with "
                                     << name(_result));
+        }
+
         return;
     }
 
@@ -590,7 +602,7 @@ void UnitBase::returnValue(int& retValue)
         retValue = (_result == TestResult::Ok ? EX_OK : EX_SOFTWARE);
 }
 
-void UnitBase::endTest(const std::string& reason)
+void UnitBase::endTest([[maybe_unused]] const std::string& reason)
 {
     LOG_TST("Ending test by stopping SocketPoll [" << getTestname() << "]: " << reason);
     if (_socketPoll)

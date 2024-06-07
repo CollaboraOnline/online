@@ -89,6 +89,7 @@ inline void tstLog(const std::ostringstream& stream) { writeTestLog(stream.str()
         TST_LOG_END_X(oss_log_end);                                                                \
     } while (false)
 
+#if ENABLE_DEBUG
 #define TST_LOG_NAME(NAME, X)                                                                      \
     do                                                                                             \
     {                                                                                              \
@@ -96,6 +97,12 @@ inline void tstLog(const std::ostringstream& stream) { writeTestLog(stream.str()
         TST_LOG_NAME_BEGIN(oss_log_name, NAME, X, false);                                          \
         TST_LOG_END_X(oss_log_name);                                                               \
     } while (false)
+#else // Disable test logs in release.
+#define TST_LOG_NAME(NAME, X)                                                                      \
+    do                                                                                             \
+    {                                                                                              \
+    } while (0)
+#endif // !ENABLE_DEBUG
 
 /// Used by the "old-style" tests. FIXME: Unify.
 #define TST_LOG(X) TST_LOG_NAME(testname, X)
