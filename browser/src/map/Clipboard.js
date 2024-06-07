@@ -319,18 +319,20 @@ L.Clipboard = L.Class.extend({
 				}
 
 				var formData = new FormData();
-				formData.append('data', new Blob([src]), 'clipboard');
+				var commandName = null;
+				if (that._checkAndDisablePasteSpecial()) {
+					commandName = '.uno:PasteSpecial';
+				} else {
+					commandName = '.uno:Paste';
+				}
+				var data = JSON.stringify({
+					url: src,
+					commandName: commandName,
+				});
+				formData.append('data', new Blob([data]), 'clipboard');
 				that._doAsyncDownload(
 					'POST', dest, formData, false,
 					function() {
-						if (that._checkAndDisablePasteSpecial()) {
-							window.app.console.log('up-load of URL done, now paste special');
-							app.socket.sendMessage('uno .uno:PasteSpecial');
-						} else {
-							window.app.console.log('up-load of URL done, now paste');
-							app.socket.sendMessage('uno .uno:Paste');
-						}
-
 					}.bind(this),
 					function(progress) { return 50 + progress/2; },
 					function() {
