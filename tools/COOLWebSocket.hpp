@@ -52,7 +52,7 @@ public:
 
     /// Should we also factor out the handling of non-final and continuation frames into this?
     int receiveFrame(char* buffer, const int length, int& flags,
-                     const std::string& testname = std::string())
+                     [[maybe_unused]] const std::string& testname = std::string())
     {
         // Timeout is in microseconds. We don't need this, except to yield the cpu.
         static const Poco::Timespan waitTime(POLL_TIMEOUT_MICRO_S / 10);
@@ -100,7 +100,7 @@ public:
 
     /// Wrapper for Poco::Net::WebSocket::sendFrame() that handles large frames.
     int sendFrame(const char* buffer, const int length, const int flags = FRAME_TEXT,
-                  const std::string& testname = std::string())
+                  [[maybe_unused]] const std::string& testname = std::string())
     {
         const int result = Poco::Net::WebSocket::sendFrame(buffer, length, flags);
 
@@ -128,7 +128,7 @@ public:
     /// Safe shutdown by sending a specific close frame, if socket is not in error,
     /// or, otherwise, close the socket without sending close frame, if it is.
     void shutdown(Poco::UInt16 statusCode, const std::string& statusMessage = std::string(),
-                  const std::string& testname = std::string())
+                  [[maybe_unused]] const std::string& testname = std::string())
     {
         try
         {

@@ -724,7 +724,7 @@ int forkit_main(int argc, char** argv)
         return EX_USAGE;
     }
 
-    LOG_ERR("About to init Kit UnitBase with " << UnitTestLibrary);
+    LOG_DBG("About to init Kit UnitBase with test [" << UnitTestLibrary << ']');
     if (!Util::isKitInProcess() && !UnitBase::init(UnitBase::UnitType::Kit, UnitTestLibrary))
     {
         LOG_FTL("Failed to load kit unit test library");
