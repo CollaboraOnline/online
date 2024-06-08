@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-06-06 08:34+0200\n"
-"PO-Revision-Date: 2024-05-21 14:10+0000\n"
-"Last-Translator: Pedro Silva <pedro.silva@collabora.com>\n"
+"PO-Revision-Date: 2024-06-08 18:12+0000\n"
+"Last-Translator: SC <lalocas@protonmail.com>\n"
 "Language-Team: Portuguese <https://hosted.weblate.org/projects/"
 "collabora-online/ui/pt/>\n"
-"Language: \n"
+"Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -483,11 +483,11 @@ msgstr "Colar especial"
 
 #: src/control/Control.ContextMenu.js:239
 msgid "Copy Cells"
-msgstr ""
+msgstr "Copiar células"
 
 #: src/control/Control.ContextMenu.js:247
 msgid "Fill Series"
-msgstr ""
+msgstr "Preencher séries"
 
 #: src/control/Control.DocumentNameInput.js:113
 msgid "Path"
@@ -1079,12 +1079,12 @@ msgstr "Guardar comentários"
 #: src/control/Control.Menubar.js:413
 #: src/control/Control.NotebookbarBuilder.js:602
 msgid "Full Page Slides"
-msgstr ""
+msgstr "Diapositivos de página completa"
 
 #: src/control/Control.Menubar.js:414
 #: src/control/Control.NotebookbarBuilder.js:606
 msgid "Notes Pages"
-msgstr ""
+msgstr "Páginas de notas"
 
 #: src/control/Control.Menubar.js:448
 #: src/control/Control.NotebookbarImpress.js:444
@@ -1324,7 +1324,7 @@ msgstr "Ficheiro"
 #: src/control/Control.NotebookbarImpress.js:83
 #: src/control/Control.NotebookbarWriter.js:42
 msgid "Home"
-msgstr "Home"
+msgstr "Início"
 
 #: src/control/Control.NotebookbarCalc.js:36
 #: src/control/Control.NotebookbarDraw.js:75
@@ -1604,7 +1604,7 @@ msgstr "Fique off-line"
 #: src/control/Control.ServerAuditDialog.ts:97
 #: src/control/Control.ServerAuditDialog.ts:98
 msgid "Server audit"
-msgstr ""
+msgstr "Auditoria do servidor"
 
 #: src/control/Control.NotebookbarWriter.js:1312
 msgid "Rich Text"
@@ -1656,28 +1656,27 @@ msgstr "Limpar campo de pesquisa"
 
 #: src/control/Control.ServerAuditDialog.ts:28
 msgid "The is_admin user property is not set"
-msgstr ""
+msgstr "A propriedade do utilizador is_admin não está definida"
 
 #: src/control/Control.ServerAuditDialog.ts:32
 msgid "The is_admin user property is set"
-msgstr ""
+msgstr "A propriedade do utilizador is_admin está definida"
 
 #: src/control/Control.ServerAuditDialog.ts:116
 msgid "No issues found"
-msgstr ""
+msgstr "Nenhum problema encontrado"
 
 #: src/control/Control.ServerAuditDialog.ts:122
-#, fuzzy
 msgid "Status"
-msgstr "Estado:"
+msgstr "Estado"
 
 #: src/control/Control.ServerAuditDialog.ts:167
 msgid "Check security warnings of your server"
-msgstr ""
+msgstr "Verifique os avisos de segurança do seu servidor"
 
 #: src/control/Control.ServerAuditDialog.ts:168
 msgid "OPEN"
-msgstr ""
+msgstr "ABRIR"
 
 #: src/control/Control.SheetsBar.js:48
 msgid "Scroll to the first sheet"
@@ -2081,11 +2080,11 @@ msgstr "Eliminar marca de tabulação"
 
 #: src/control/VRuler.ts:377
 msgid "Top Margin"
-msgstr ""
+msgstr "Margem superior"
 
 #: src/control/VRuler.ts:378
 msgid "Bottom Margin"
-msgstr ""
+msgstr "Margem inferior"
 
 #: src/control/Signing.js:27
 msgid "This document is digitally signed and the signature is valid."

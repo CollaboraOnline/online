@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-06-06 08:34+0200\n"
-"PO-Revision-Date: 2024-04-23 16:51+0000\n"
+"PO-Revision-Date: 2024-06-08 18:12+0000\n"
 "Last-Translator: SC <lalocas@protonmail.com>\n"
 "Language-Team: Portuguese <https://hosted.weblate.org/projects/"
 "collabora-online/help/pt/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.6-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:84-5
 msgid "Keyboard Shortcuts"
@@ -605,7 +605,7 @@ msgstr "Ir para o início da linha"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:306-88
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:371-88
 msgid "Home"
-msgstr "Home"
+msgstr "Início"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:150-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:307-38
