@@ -118,31 +118,32 @@ class ShapeHandleScalingSubSection extends HTMLObjectSection {
 	}
 
 	adjustSVGProperties(shapeRecProps: any) {
-		const scale = app.getScale();
-
-		const shapeRecPropsOrg = this.sectionProperties.parentHandlerSection.sectionProperties.shapeRectangleProperties;
-
-		const scaleX = (shapeRecProps.width / shapeRecPropsOrg.width) * scale;
-		const scaleY = (shapeRecProps.height / shapeRecPropsOrg.height) * scale;
-
 		if (this.sectionProperties.parentHandlerSection.sectionProperties.svg) {
 			const svg = this.sectionProperties.parentHandlerSection.sectionProperties.svg;
-			const selection = app.map._docLayer._graphicSelection;
-			const center: number[] = [];
-			center.push(shapeRecProps.center[0] - this.documentTopLeft[0]);
-			center.push(shapeRecProps.center[1] - this.documentTopLeft[1]);
+			let left = shapeRecProps.center[0] - shapeRecProps.width * 0.5 - this.documentTopLeft[0];
+			let top = shapeRecProps.center[1] - shapeRecProps.height * 0.5 - this.documentTopLeft[1];
 
-			svg.style.width = Math.abs(shapeRecProps.width) + 'px';
-			svg.style.height = Math.abs(shapeRecProps.height) + 'px';
-			svg.style.position = 'absolute';
-			svg.style.textAlign = 'left';
-			svg.style.alignContent = 'start';
-			svg.style.left = center[0] + 'px';
-			svg.style.top = center[1] + 'px';
-			svg.children[0].setAttribute('preserveAspectRatio', 'none');
-			svg.style.preserveAspectRatio = 'none';
-			svg.style.transform = 'scale(' + scaleX + ', ' + scaleY  + ')';
-			svg.style.display = '';
+			let scaleX = 1, scaleY = 1;
+
+			if (shapeRecProps.width < 0) {
+				left += shapeRecProps.width;
+				scaleX = -1;
+			}
+
+			if (shapeRecProps.height < 0) {
+				top += shapeRecProps.height;
+				scaleY = -1
+			}
+
+			if (scaleX === -1 || scaleY === -1)
+				svg.children[0].style.transform = 'scale(' + scaleX + ', ' + scaleY + ')';
+
+			svg.children[0].style.width = Math.abs(shapeRecProps.width) + 'px';
+			svg.children[0].style.height = Math.abs(shapeRecProps.height) + 'px';
+			svg.style.left = left + 'px';
+			svg.style.top = top + 'px';
+
+			this.sectionProperties.parentHandlerSection.showSVG();
 		}
 	}
 
