@@ -378,10 +378,11 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		this.sectionProperties.svg = document.createElement('svg');
 		document.getElementById('canvas-container').appendChild(this.sectionProperties.svg);
 		this.sectionProperties.svg.innerHTML = data; // Sanitize data here before pushing.
+		this.sectionProperties.svg.style.position = 'absolute';
 
-		const clientRect = (this.sectionProperties.svg as SVGElement).getBoundingClientRect();
-		this.sectionProperties.svgClientWidth = clientRect.width;
-		this.sectionProperties.svgClientHeight = clientRect.height;
+		this.sectionProperties.svg.children[0].style.width = this.sectionProperties.svg.children[0].style.height = 'auto'; // Precaution.
+		this.sectionProperties.svg.children[0].style.transformOrigin = 'center';
+		this.sectionProperties.svg.children[0].setAttribute('preserveAspectRatio', 'none');
 
 		this.adjustSVGProperties();
 	}
@@ -576,42 +577,42 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		}
 	}
 
+	getViewBox(svg: any): number[] {
+		let viewBox: any = svg.getAttribute('viewBox');
+
+		if (viewBox) {
+			viewBox = viewBox.split(' ');
+			for (let i = 0; i < viewBox.length; i++) viewBox[i] = parseInt(viewBox[i]);
+		}
+		else
+			viewBox = null;
+
+		return viewBox;
+	}
+
 	adjustSVGProperties() {
 		if (this.sectionProperties.svg && this.sectionProperties.svg.style.display === '' && app.map._docLayer._graphicSelection && this.sectionProperties.shapeRectangleProperties) {
-			const shapeRecProps = this.sectionProperties.shapeRectangleProperties;
-			const clientRect = this.sectionProperties.svg.children[0].getBoundingClientRect();
 
-			let x = 0, y = 0;
+			const clientRect = (this.sectionProperties.svg.children[0] as SVGElement).getBoundingClientRect();
+			const width: number = clientRect.width;
+			const height: number = clientRect.height;
 
-			x = parseInt(this.sectionProperties.info.handles.kinds.rectangle['2'][0].point.x) * app.twipsToPixels;
-			y = parseInt(this.sectionProperties.info.handles.kinds.rectangle['2'][0].point.y) * app.twipsToPixels;
+			const viewBox: number[] = this.getViewBox(this.sectionProperties.svg.children[0]);
+			const widthPixelRatio = viewBox[2] / width;
+			const heightPixelRatio = viewBox[3] / height;
 
-			const diffX = shapeRecProps.height * 0.5 * Math.cos(Math.PI * 0.5 + shapeRecProps.angleRadian);
-			const diffY = shapeRecProps.height * 0.5 * Math.sin(Math.PI * 0.5 + shapeRecProps.angleRadian);
+			const left = viewBox[0] / widthPixelRatio;
+			const top = viewBox[1] / heightPixelRatio;
 
-			x += (-clientRect.width * 0.5 - diffX);
-			y += (-clientRect.height * 0.5 + diffY);
-
-			x -= this.documentTopLeft[0];
-			y -= this.documentTopLeft[1];
-
-			this.sectionProperties.svg.style.width = 'auto';
-			this.sectionProperties.svg.style.height = 'auto';
-			this.sectionProperties.svg.style.position = 'absolute';
-			this.sectionProperties.svg.style.textAlign = 'center';
-			this.sectionProperties.svg.style.alignContent = 'center';
-			this.sectionProperties.svg.style.left = x + 'px';
-			this.sectionProperties.svg.style.top = y + 'px';
-			this.sectionProperties.svg.style.transform =  'scale(' + app.getScale() + ')';
-			this.sectionProperties.svg.style.transformOrigin = 'center';
-			this.sectionProperties.svg.children[0].style.transformOrigin = 'center';
-			this.sectionProperties.svg.children[0].setAttribute('preserveAspectRatio', 'none');
+			this.sectionProperties.svg.style.left = (left - this.documentTopLeft[0]) + 'px';
+			this.sectionProperties.svg.style.top = (top - this.documentTopLeft[1]) + 'px';
 		}
 		this.hideSVG();
 	}
 
 	onNewDocumentTopLeft(size: number[]): void {
-		this.adjustSVGProperties();
+		this.sectionProperties.svg.style.left = (app.map._docLayer._graphicSelection.pX1 - this.documentTopLeft[0]) + 'px';
+		this.sectionProperties.svg.style.top = (app.map._docLayer._graphicSelection.pY1 - this.documentTopLeft[1]) + 'px';
 	}
 
 	public onDraw() {
