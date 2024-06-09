@@ -569,7 +569,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 	}
 
 	onMouseMove(position: number[], dragDistance: number[]) {
-		if (this.containerObject.isDraggingSomething()) {
+		if (this.containerObject.isDraggingSomething() && this.sectionProperties.svg) {
 			this.sectionProperties.svg.style.left = String(this.myTopLeft[0] + dragDistance[0]) + 'px';
 			this.sectionProperties.svg.style.top = String(this.myTopLeft[1] + dragDistance[1]) + 'px';
 			this.sectionProperties.svg.style.opacity = 0.5;

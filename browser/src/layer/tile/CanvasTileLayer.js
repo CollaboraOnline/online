@@ -1965,7 +1965,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		textMsg = textMsg.substring('shapeselectioncontent:'.length + 1);
 
 		var extraInfo = this._graphicSelection.extraInfo;
-		if (extraInfo.id) {
+		if (extraInfo && extraInfo.id) {
 			this._map._cacheSVG[extraInfo.id] = textMsg;
 		}
 
