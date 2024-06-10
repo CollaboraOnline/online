@@ -380,7 +380,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		this.sectionProperties.svg.innerHTML = data; // Sanitize data here before pushing.
 		this.sectionProperties.svg.style.position = 'absolute';
 
-		this.sectionProperties.svg.children[0].style.width = this.sectionProperties.svg.children[0].style.height = 'auto'; // Precaution.
+		this.sectionProperties.svg.children[0].style.width = this.sectionProperties.svg.children[0].style.height = 'auto';
 		this.sectionProperties.svg.children[0].style.transformOrigin = 'center';
 		this.sectionProperties.svg.children[0].setAttribute('preserveAspectRatio', 'none');
 
@@ -597,12 +597,20 @@ class ShapeHandlesSection extends CanvasSectionObject {
 			const width: number = clientRect.width;
 			const height: number = clientRect.height;
 
-			const viewBox: number[] = this.getViewBox(this.sectionProperties.svg.children[0]);
-			const widthPixelRatio = viewBox[2] / width;
-			const heightPixelRatio = viewBox[3] / height;
+			let left = 0, top = 0;
 
-			const left = viewBox[0] / widthPixelRatio;
-			const top = viewBox[1] / heightPixelRatio;
+			const viewBox: number[] = this.getViewBox(this.sectionProperties.svg.children[0]);
+			if (viewBox) {
+				const widthPixelRatio = viewBox[2] / width;
+				const heightPixelRatio = viewBox[3] / height;
+
+				left = viewBox[0] / widthPixelRatio;
+				top = viewBox[1] / heightPixelRatio;
+			}
+			else {
+				left = this.position[0];
+				top = this.position[1];
+			}
 
 			this.sectionProperties.svg.style.left = (left - this.documentTopLeft[0] + this.containerObject.getDocumentAnchor()[0]) + 'px';
 			this.sectionProperties.svg.style.top = (top - this.documentTopLeft[1] + this.containerObject.getDocumentAnchor()[1]) + 'px';
