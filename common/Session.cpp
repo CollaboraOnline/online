@@ -41,6 +41,7 @@ Session::Session(const std::shared_ptr<ProtocolHandlerInterface> &protocol,
     _isAllowChangeComments(false),
     _haveDocPassword(false),
     _isDocPasswordProtected(false),
+    _isAdminUser(false),
     _watermarkOpacity(0.2),
     _accessibilityState(false),
     _disableVerifyHost(false)

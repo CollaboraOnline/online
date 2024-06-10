@@ -13,6 +13,7 @@ window.app = { // Shouldn't have any functions defined.
 	definitions: {}, // Class instances are created using definitions under this variable.
 	dpiScale: window.devicePixelRatio,
 	roundedDpiScale: Math.round(window.devicePixelRatio),
+	isAdminUser: null, // Is admin on the integrator side - used eg. to show update warnings
 	map: null, // Make map object a part of this.
 	twipsToPixels: 0, // Twips to pixels multiplier.
 	pixelsToTwips: 0, // Pixels to twips multiplier.

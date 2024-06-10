@@ -1948,6 +1948,16 @@ L.CanvasTileLayer = L.Layer.extend({
 					delete app.colorPalettes[key];
 				}
 			}
+		} else if (textMsg.startsWith('adminuser:')) {
+			var value = textMsg.substr(10).trim();
+			if (value === 'true')
+				app.isAdminUser = true;
+			else if (value === 'false')
+				app.isAdminUser = false;
+			else {
+				console.warn('Integrator didn\'t set IsAdminUser property for the session');
+				app.isAdminUser = null;
+			}
 		}
 		else if (textMsg.startsWith('readonlyhyperlinkclicked: ')) {
 			var jsonString = textMsg.replace('readonlyhyperlinkclicked: ', '');

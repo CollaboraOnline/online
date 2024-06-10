@@ -621,6 +621,8 @@ public:
         bool getSupportsLocks() const { return _supportsLocks; }
         bool getUserCanRename() const { return _userCanRename; }
 
+        bool getIsAdminUser() const { return _isAdminUser; }
+
         TriState getDisableChangeTrackingShow() const { return _disableChangeTrackingShow; }
         TriState getDisableChangeTrackingRecord() const { return _disableChangeTrackingRecord; }
         TriState getHideChangeTrackingControls() const { return _hideChangeTrackingControls; }
@@ -698,6 +700,8 @@ public:
         bool _supportsRename = false;
         /// If user is allowed to rename the document
         bool _userCanRename = false;
+        /// If user is considered as admin on the integrator side
+        bool _isAdminUser = false;
     };
 
     /// Returns the response of CheckFileInfo WOPI call for URI that was
