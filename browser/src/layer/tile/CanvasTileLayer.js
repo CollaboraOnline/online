@@ -920,6 +920,10 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._viewId = undefined;
 	},
 
+	_resetDocumentInfo: function () {
+		this._documentInfo = "";
+	},
+
 	_getViewId: function () {
 		return this._viewId;
 	},

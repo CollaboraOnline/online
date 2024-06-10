@@ -1608,6 +1608,7 @@ app.definitions.Socket = L.Class.extend({
 
 			this._map._docLayer._resetCanonicalIdStatus();
 			this._map._docLayer._resetViewId();
+			this._map._docLayer._resetDocumentInfo();
 		}
 
 		if (isActive && this._reconnecting) {
