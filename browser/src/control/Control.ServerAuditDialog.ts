@@ -25,11 +25,18 @@ class ServerAuditDialog {
 		this.errorCodes = {
 			is_admin: {
 				missing: [
-					_('The is_admin user property is not set'),
-					'SDK: userextrainfo',
-					'https://sdk.collaboraonline.com/docs/advanced_integration.html?highlight=userprivateinfo#userextrainfo',
+					_('The IsAdminUser property is not set by integration'),
+					'SDK: IsAdminUser',
+					'https://sdk.collaboraonline.com/docs/advanced_integration.html?highlight=IsAdminUser#isadminuser',
 				],
-				ok: [_('The is_admin user property is set'), '', ''],
+				deprecated: [
+					_(
+						'Used deprecated is_admin field, integration should use IsAdminUser property instead',
+					),
+					'SDK: IsAdminUser',
+					'https://sdk.collaboraonline.com/docs/advanced_integration.html?highlight=IsAdminUser#isadminuser',
+				],
+				ok: [_('The IsAdminUser user property is set by integration'), '', ''],
 			},
 		};
 	}

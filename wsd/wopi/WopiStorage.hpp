@@ -81,6 +81,9 @@ public:
         bool getSupportsLocks() const { return _supportsLocks; }
         bool getUserCanRename() const { return _userCanRename; }
 
+        bool getIsAdminUser() const { return _isAdminUser; }
+        const std::string& getIsAdminUserError() const { return _isAdminUserError; }
+
         TriState getDisableChangeTrackingShow() const { return _disableChangeTrackingShow; }
         TriState getDisableChangeTrackingRecord() const { return _disableChangeTrackingRecord; }
         TriState getHideChangeTrackingControls() const { return _hideChangeTrackingControls; }
@@ -158,6 +161,11 @@ public:
         bool _supportsRename = false;
         /// If user is allowed to rename the document
         bool _userCanRename = false;
+        /// If user is considered as admin on the integrator side
+        bool _isAdminUser = false;
+
+        /// error code if integration does not use isAdminUser field properly
+        std::string _isAdminUserError = "";
     };
 
     WopiStorage(const Poco::URI& uri, const std::string& localStorePath,
