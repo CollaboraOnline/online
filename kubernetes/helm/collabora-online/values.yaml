@@ -30,12 +30,12 @@ collabora:
   aliasgroups: []
 
   extra_params: --o:ssl.enable=false
-  
-  # External hostname:port of the server running coolwsd. 
-  # If empty, it's derived from the request (please set it if this doesn't work). 
+
+  # External hostname:port of the server running coolwsd.
+  # If empty, it's derived from the request (please set it if this doesn't work).
   # May be specified when behind a reverse-proxy or when the hostname is not reachable directly.
   server_name: null
-  
+
   existingSecret:
     enabled: false
     secretName: ""
@@ -68,6 +68,9 @@ prometheus:
         critical: 50
         warning: 2
         info: 0
+      errorUnauthorizedRequest:
+        observationInterval: "60m"
+        eventCounter: 8
       errorStorageConnections:
         critical: 50
         warning: 2
@@ -113,6 +116,8 @@ logging:
     - "default"
 
 podAnnotations: {}
+
+podLabels: {}
 
 podSecurityContext: {}
 #  fsGroup: 2000
@@ -237,8 +242,8 @@ dynamicConfig:
     enabled: false
     ecs: false
     dedot:
-    additionalFilters: [ ]
-    localOutputRefs: [ ]
+    additionalFilters: []
+    localOutputRefs: []
     globalOutputRefs:
       - "default"
 
@@ -288,8 +293,8 @@ dynamicConfig:
       enabled: false
       ecs: false
       dedot:
-      additionalFilters: [ ]
-      localOutputRefs: [ ]
+      additionalFilters: []
+      localOutputRefs: []
       globalOutputRefs:
         - "default"
 
