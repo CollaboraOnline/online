@@ -419,6 +419,9 @@ private:
 
     /// the canonical id unique to the set of rendering properties of this session
     int _canonicalViewId;
+
+    /// If server audit was already sent
+    bool _sentAudit;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

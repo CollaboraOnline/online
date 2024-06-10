@@ -3,7 +3,7 @@
  * L.CanvasTileLayer is a layer with canvas based rendering.
  */
 
-/* global app L CanvasSectionContainer CanvasOverlay CDarkOverlay CSplitterLine $ _ CPointSet CPolyUtil CPolygon Cursor CCellCursor CCellSelection PathGroupType UNOKey UNOModifier Uint8ClampedArray Uint8Array Uint32Array */
+/* global app L JSDialog CanvasSectionContainer CanvasOverlay CDarkOverlay CSplitterLine $ _ CPointSet CPolyUtil CPolygon Cursor CCellCursor CCellSelection PathGroupType UNOKey UNOModifier Uint8ClampedArray Uint8Array Uint32Array */
 
 /*eslint no-extend-native:0*/
 if (typeof String.prototype.startsWith !== 'function') {
@@ -1603,6 +1603,18 @@ L.CanvasTileLayer = L.Layer.extend({
 			var json = JSON.parse(textMsg.substr(12));
 			app.serverAudit = json.serverAudit;
 			app.map.fire('receivedserveraudit');
+		} else if (textMsg.startsWith('adminuser:')) {
+			var value = textMsg.substr(10).trim();
+			if (value === 'true')
+				app.isAdminUser = true;
+			else if (value === 'false')
+				app.isAdminUser = false;
+			else
+				app.isAdminUser = null;
+
+			// if isAdminUser property is not set by integration - show audit dialog for all users
+			if (app.isAdminUser !== false)
+				this._map.serverAuditDialog = JSDialog.serverAuditDialog(this._map);
 		}
 	},
 
