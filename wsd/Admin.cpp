@@ -30,7 +30,6 @@
 #include <Util.hpp>
 #include <common/JsonUtil.hpp>
 
-
 #include <net/Socket.hpp>
 #if ENABLE_SSL
 #include <SslSocket.hpp>
@@ -697,6 +696,25 @@ void Admin::pollingThread()
 
     if (!COOLWSD::IndirectionServerEnabled)
         return;
+
+    // if don't have monitor connection to the controller we set the _migrateMsgReceived
+    // for each docbroker so that docbroker can cleanup the documents
+    bool controllerMonitorConnection = false;
+    for (const auto& pair : _monitorSockets)
+    {
+        if (pair.first.find("controller") != std::string::npos)
+        {
+            controllerMonitorConnection = true;
+            break;
+        }
+    }
+
+    if (!controllerMonitorConnection)
+    {
+        LOG_WRN("Monitor connection to the controller doesn't exist, skipping shutdown migration");
+        COOLWSD::setAllMigrationMsgReceived();
+        return;
+    }
 
     _model.sendShutdownReceivedMsg();
 
