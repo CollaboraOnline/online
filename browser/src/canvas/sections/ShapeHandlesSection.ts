@@ -604,15 +604,16 @@ class ShapeHandlesSection extends CanvasSectionObject {
 			const left = viewBox[0] / widthPixelRatio;
 			const top = viewBox[1] / heightPixelRatio;
 
-			this.sectionProperties.svg.style.left = (left - this.documentTopLeft[0]) + 'px';
-			this.sectionProperties.svg.style.top = (top - this.documentTopLeft[1]) + 'px';
+			this.sectionProperties.svg.style.left = (left - this.documentTopLeft[0] + this.containerObject.getDocumentAnchor()[0]) + 'px';
+			this.sectionProperties.svg.style.top = (top - this.documentTopLeft[1] + this.containerObject.getDocumentAnchor()[1]) + 'px';
+			this.sectionProperties.svgPosition = [left, top];
 		}
 		this.hideSVG();
 	}
 
 	onNewDocumentTopLeft(size: number[]): void {
-		this.sectionProperties.svg.style.left = (app.map._docLayer._graphicSelection.pX1 - this.documentTopLeft[0]) + 'px';
-		this.sectionProperties.svg.style.top = (app.map._docLayer._graphicSelection.pY1 - this.documentTopLeft[1]) + 'px';
+		this.sectionProperties.svg.style.left = (this.sectionProperties.svgPosition[0] - this.documentTopLeft[0] + this.containerObject.getDocumentAnchor()[0]) + 'px';
+		this.sectionProperties.svg.style.top = (this.sectionProperties.svgPosition[1] - this.documentTopLeft[1] + this.containerObject.getDocumentAnchor()[1]) + 'px';
 	}
 
 	public onDraw() {
