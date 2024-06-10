@@ -21,6 +21,7 @@ window.app = {
 	roundedDpiScale: Math.round(window.devicePixelRatio),
 	canvasSize: null, // To be assigned SimplePoint.
 	viewId: null, // Unique view id of the user.
+	isAdminUser: null, // Is admin on the integrator side - used eg. to show update warnings
 	calc: {
 		cellAddress: null, // To be assigned SimplePoint.
 		cellCursorVisible: false,

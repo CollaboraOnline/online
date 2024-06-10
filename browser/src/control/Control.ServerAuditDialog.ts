@@ -162,11 +162,6 @@ class ServerAuditDialog {
 	}
 
 	private onServerAudit() {
-		var docLayer = this.map._docLayer || {};
-		var viewInfo = this.map._viewInfo
-			? this.map._viewInfo[docLayer._viewId]
-			: null;
-
 		if (app.serverAudit.length) {
 			let hasErrors = false;
 			app.serverAudit.forEach((entry: any) => {
@@ -176,13 +171,8 @@ class ServerAuditDialog {
 			});
 
 			// only show the snackbar if there are specific warnings
-			// and if the current view is_admin
-			if (
-				hasErrors &&
-				viewInfo &&
-				viewInfo.userextrainfo &&
-				viewInfo.userextrainfo.is_admin === true
-			) {
+			// and if the current view isadminuser
+			if (hasErrors && app.isAdminUser) {
 				this.map.uiManager.showSnackbar(
 					_('Check security warnings of your server'),
 					_('OPEN'),

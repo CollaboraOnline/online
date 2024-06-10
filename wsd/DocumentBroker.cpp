@@ -1176,6 +1176,7 @@ DocumentBroker::updateSessionWithWopiInfo(const std::shared_ptr<ClientSession>& 
         : wopiFileInfo->getWatermarkText();
     const std::string templateSource = wopiFileInfo->getTemplateSource();
 
+    const bool isAdminUser = wopiFileInfo->getIsAdminUser();
     if (!wopiFileInfo->getIsAdminUserError().empty())
         _serverAudit.set("is_admin", wopiFileInfo->getIsAdminUserError());
 
@@ -1299,6 +1300,7 @@ DocumentBroker::updateSessionWithWopiInfo(const std::shared_ptr<ClientSession>& 
     session->setUserId(userId);
     session->setUserName(username);
     session->setUserExtraInfo(userExtraInfo);
+    session->setIsAdminUser(isAdminUser);
     session->setUserPrivateInfo(userPrivateInfo);
     session->setWatermarkText(watermarkText);
 

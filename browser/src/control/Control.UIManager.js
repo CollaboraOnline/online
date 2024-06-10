@@ -976,12 +976,6 @@ L.Control.UIManager = L.Control.extend({
 				this.map.zotero.updateUserID();
 			}
 		}
-
-		// if is_admin property is not set by integration - show audit dialog for all users
-		var userExtraInfo = myViewData.userextrainfo;
-		if (!userExtraInfo || userExtraInfo.is_admin !== false) {
-			this._map.serverAuditDialog = JSDialog.serverAuditDialog(this._map);
-		}
 	},
 
 	enterReadonlyOrClose: function() {

@@ -16,11 +16,7 @@ L.Map.VersionBar = L.Handler.extend({
 	},
 
 	onUpdateInfo: function () {
-		var docLayer = this._map._docLayer || {};
-		var viewInfo = this._map._viewInfo[docLayer._viewId];
-
-		if (viewInfo && viewInfo.userextrainfo &&
-		    viewInfo.userextrainfo.is_admin) {
+		if (app.isAdminUser) {
 			var laterDate = new Date();
 			var currentDate = new Date();
 			var timeValue = window.prefs.getNumber('InfoBarLaterDate');
