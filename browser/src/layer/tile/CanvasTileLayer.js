@@ -2402,6 +2402,12 @@ L.CanvasTileLayer = L.Layer.extend({
 			return;
 		}
 
+		if (obj.scroll) {
+			this.scrollToPos(new app.definitions.simplePoint(recCursor.getTopLeft().x,
+									 recCursor.getTopLeft().y));
+			return;
+		}
+
 		// tells who trigerred cursor invalidation, but recCursors is stil "our"
 		var modifierViewId = parseInt(obj.viewId);
 		var weAreModifier = (modifierViewId === this._viewId);
