@@ -1970,9 +1970,9 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 
 		// video is handled in _onEmbeddedVideoContent
-		if (this._graphicMarker.sectionProperties.hasVideo)
+		if (this._graphicMarker && this._graphicMarker.sectionProperties.hasVideo)
 			this._map._cacheSVG[extraInfo.id] = undefined;
-		else
+		else if (this._graphicMarker)
 			this._graphicMarker.setSVG(textMsg);
 	},
 
