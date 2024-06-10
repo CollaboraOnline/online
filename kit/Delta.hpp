@@ -662,8 +662,10 @@ class DeltaGenerator {
         const TileLocation &loc,
         std::vector<char>& output,
         TileWireId wid, bool forceKeyframe,
-        LibreOfficeKitTileMode mode)
+        LibreOfficeKitTileMode mode,
+        std::shared_ptr<DeltaData> &rleData)
     {
+        rleData = nullptr;
         if ((width & 0x1) != 0) // power of two - RGBA
         {
             LOG_TRC("Bad width to create deltas " << width);
@@ -711,7 +713,10 @@ class DeltaGenerator {
         // no two threads can be working on the same DeltaData.
         cacheEntry->replaceAndFree(update);
 
+        rleData = cacheEntry;
+
         cacheEntry->unuse();
+
         return delta;
     }
 
@@ -771,11 +776,11 @@ class DeltaGenerator {
             tileFile.write(pngOutput.data(), pngOutput.size());
         }
 
+        std::shared_ptr<DeltaData> rleData;
         if (!createDelta(pixmap, startX, startY, width, height,
                          bufferWidth, bufferHeight,
-                         loc, output, wid, forceKeyframe, mode))
+                         loc, output, wid, forceKeyframe, mode, rleData))
         {
-            // FIXME: should stream it in =)
             size_t maxCompressed = ZSTD_COMPRESSBOUND((size_t)width * height * 4);
 
             std::unique_ptr<char, void (*)(void*)> compressed((char*)malloc(maxCompressed), free);
