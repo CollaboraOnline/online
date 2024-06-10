@@ -120,28 +120,14 @@ class ShapeHandleScalingSubSection extends HTMLObjectSection {
 	adjustSVGProperties(shapeRecProps: any) {
 		if (this.sectionProperties.parentHandlerSection.sectionProperties.svg) {
 			const svg = this.sectionProperties.parentHandlerSection.sectionProperties.svg;
-			let left = shapeRecProps.center[0] - shapeRecProps.width * 0.5 - this.documentTopLeft[0];
-			let top = shapeRecProps.center[1] - shapeRecProps.height * 0.5 - this.documentTopLeft[1];
 
-			let scaleX = 1, scaleY = 1;
+			const scaleX = shapeRecProps.width / this.sectionProperties.parentHandlerSection.sectionProperties.shapeRectangleProperties.width;
+			const scaleY = shapeRecProps.height / this.sectionProperties.parentHandlerSection.sectionProperties.shapeRectangleProperties.height;
 
-			if (shapeRecProps.width < 0) {
-				left += shapeRecProps.width;
-				scaleX = -1;
-			}
+			const diffX = shapeRecProps.center[0] - this.sectionProperties.parentHandlerSection.sectionProperties.shapeRectangleProperties.center[0];
+			const diffY = shapeRecProps.center[1] - this.sectionProperties.parentHandlerSection.sectionProperties.shapeRectangleProperties.center[1];
 
-			if (shapeRecProps.height < 0) {
-				top += shapeRecProps.height;
-				scaleY = -1
-			}
-
-			if (scaleX === -1 || scaleY === -1)
-				svg.children[0].style.transform = 'scale(' + scaleX + ', ' + scaleY + ')';
-
-			svg.children[0].style.width = Math.abs(shapeRecProps.width) + 'px';
-			svg.children[0].style.height = Math.abs(shapeRecProps.height) + 'px';
-			svg.style.left = (left + this.containerObject.getDocumentAnchor()[0]) + 'px';
-			svg.style.top = (top + this.containerObject.getDocumentAnchor()[1]) + 'px';
+			svg.children[0].style.transform = 'translate(' + Math.round(diffX) + 'px, ' + Math.round(diffY) + 'px)' + 'rotate(' + -shapeRecProps.angleRadian + 'rad) scale(' + scaleX + ', ' + scaleY + ') rotate(' + shapeRecProps.angleRadian + 'rad)';
 
 			this.sectionProperties.parentHandlerSection.showSVG();
 		}
