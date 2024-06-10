@@ -600,7 +600,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 			let left = 0, top = 0;
 
 			const viewBox: number[] = this.getViewBox(this.sectionProperties.svg.children[0]);
-			if (viewBox) {
+			if (viewBox && clientRect.width > 0 && clientRect.height > 0) {
 				const widthPixelRatio = viewBox[2] / width;
 				const heightPixelRatio = viewBox[3] / height;
 
@@ -610,6 +610,8 @@ class ShapeHandlesSection extends CanvasSectionObject {
 			else {
 				left = this.position[0];
 				top = this.position[1];
+				this.sectionProperties.svg.style.width = this.size[0] + 'px';
+				this.sectionProperties.svg.style.height = this.size[1] + 'px';
 			}
 
 			this.sectionProperties.svg.style.left = (left - this.documentTopLeft[0] + this.containerObject.getDocumentAnchor()[0]) + 'px';
