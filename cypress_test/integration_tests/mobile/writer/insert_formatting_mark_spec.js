@@ -18,7 +18,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Insert formatting mark via 
 
 	it('Insert non-breaking space.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('body').contains('.menu-entry-with-icon', 'Insert non-breaking space').click();
+		cy.cGet('body').contains('.menu-entry-with-icon', 'No-break Space').click();
 		writerHelper.selectAllTextOfDoc();
 		helper.copy();
 		cy.cGet('#copy-paste-container p').should('contain.text', '\u00a0');
@@ -26,7 +26,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Insert formatting mark via 
 
 	it('Insert non-breaking hyphen.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('body').contains('.menu-entry-with-icon', 'Insert non-breaking hyphen').click();
+		cy.cGet('body').contains('.menu-entry-with-icon', 'Non-breaking Hyphen').click();
 		writerHelper.selectAllTextOfDoc();
 		helper.copy();
 		cy.cGet('#copy-paste-container p').should('contain.text', '\u2011');
@@ -34,7 +34,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Insert formatting mark via 
 
 	it('Insert soft hyphen.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('body').contains('.menu-entry-with-icon', 'Insert soft Hyphen').click();
+		cy.cGet('body').contains('.menu-entry-with-icon', 'Soft Hyphen').click();
 		writerHelper.selectAllTextOfDoc();
 		helper.copy();
 		cy.cGet('#copy-paste-container p').should('contain.text', '\u00ad');
@@ -42,7 +42,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Insert formatting mark via 
 
 	it('Insert no-width optional break.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('body').contains('.menu-entry-with-icon', 'No-width Optional Break').click();
+		cy.cGet('body').contains('.menu-entry-with-icon', 'Zero-width Space').click();
 		writerHelper.selectAllTextOfDoc();
 		helper.copy();
 		cy.cGet('#copy-paste-container p').should('contain.text', '\u200b');
@@ -59,7 +59,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Insert formatting mark via 
 
 	it('Insert left-to-right mark.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('body').contains('.menu-entry-with-icon', 'Left-to-right Mark').click();
+		cy.cGet('body').contains('.menu-entry-with-icon', 'Left-to-Right Mark').click();
 		writerHelper.selectAllTextOfDoc();
 		helper.copy();
 		cy.cGet('#copy-paste-container p').should('contain.text', '\u200e');
@@ -67,7 +67,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Insert formatting mark via 
 
 	it('Insert right-to-left mark.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('body').contains('.menu-entry-with-icon', 'Right-to-left Mark').click();
+		cy.cGet('body').contains('.menu-entry-with-icon', 'Right-to-Left Mark').click();
 		writerHelper.selectAllTextOfDoc();
 		helper.copy();
 		cy.cGet('#copy-paste-container p').should('contain.text', '\u200f');
