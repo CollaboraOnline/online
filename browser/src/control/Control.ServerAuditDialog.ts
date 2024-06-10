@@ -26,8 +26,8 @@ class ServerAuditDialog {
 			is_admin: {
 				missing: [
 					_('The is_admin user property is not set'),
-					'SDK: userextrainfo',
-					'https://sdk.collaboraonline.com/docs/advanced_integration.html?highlight=userprivateinfo#userextrainfo',
+					'SDK: UserExtraInfo',
+					'https://sdk.collaboraonline.com/docs/advanced_integration.html?highlight=is_admin#userextrainfo',
 				],
 				ok: [_('The is_admin user property is set'), '', ''],
 			},
