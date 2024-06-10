@@ -140,8 +140,8 @@ class ShapeHandleScalingSubSection extends HTMLObjectSection {
 
 			svg.children[0].style.width = Math.abs(shapeRecProps.width) + 'px';
 			svg.children[0].style.height = Math.abs(shapeRecProps.height) + 'px';
-			svg.style.left = left + 'px';
-			svg.style.top = top + 'px';
+			svg.style.left = (left + this.containerObject.getDocumentAnchor()[0]) + 'px';
+			svg.style.top = (top + this.containerObject.getDocumentAnchor()[1]) + 'px';
 
 			this.sectionProperties.parentHandlerSection.showSVG();
 		}
@@ -198,8 +198,8 @@ class ShapeHandleScalingSubSection extends HTMLObjectSection {
 	// While dragging a handle, we want to simulate handles to their final positions.
 	moveHandlesOnDrag(point: number[]) {
 		const shapeRecProps = this.calculateNewShapeRectangleProperties([
-			point[0] + this.myTopLeft[0] + this.documentTopLeft[0],
-			point[1] + this.myTopLeft[1] + this.documentTopLeft[1]
+			point[0] + this.myTopLeft[0] + this.documentTopLeft[0] - this.containerObject.getDocumentAnchor()[0],
+			point[1] + this.myTopLeft[1] + this.documentTopLeft[1] - this.containerObject.getDocumentAnchor()[1]
 		]);
 
 		this.sectionProperties.parentHandlerSection.calculateInitialAnglesOfShapeHandlers(shapeRecProps);
