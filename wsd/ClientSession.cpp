@@ -94,7 +94,8 @@ ClientSession::ClientSession(
     _serverURL(requestDetails),
     _isTextDocument(false),
     _thumbnailSession(false),
-    _canonicalViewId(0)
+    _canonicalViewId(0),
+    _sentAdmin(false)
 {
     const std::size_t curConnections = ++COOLWSD::NumConnections;
     LOG_INF("ClientSession ctor [" << getName() << "] for URI: [" << _uriPublic.toString()
@@ -2353,6 +2354,23 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
                 LOG_ERR("invalidatecursor parsing failure: " << exception.what());
             }
         }
+#if !MOBILEAPP
+        // don't sent it again, eg when some user joins
+        else if (!_sentAdmin && tokens.equals(0, "viewinfo:"))
+        {
+            bool status = forwardToClient(payload);
+
+            if (docBroker)
+            {
+                _sentAdmin = true;
+                // send information about admin user
+                const std::string admin = std::string("adminuser: ") + std::string(getIsAdminUser() ? "true" : "false");
+                forwardToClient(std::make_shared<Message>(admin, Message::Dir::Out));
+            }
+
+            return status;
+        }
+#endif
         else if (tokens.equals(0, "renderfont:"))
         {
             std::string font, text;

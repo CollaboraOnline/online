@@ -208,6 +208,8 @@ public:
 
     void setWatermarkText(const std::string& watermarkText) { _watermarkText = watermarkText; }
 
+    void setIsAdminUser(const bool isAdminUser) { _isAdminUser = isAdminUser; }
+
     void setUserExtraInfo(const std::string& userExtraInfo) { _userExtraInfo = userExtraInfo; }
 
     void setUserPrivateInfo(const std::string& userPrivateInfo) { _userPrivateInfo = userPrivateInfo; }
@@ -239,6 +241,8 @@ public:
     void setDocPassword(const std::string& password) { _docPassword = password; }
 
     const std::string& getDocPassword() const { return _docPassword; }
+
+    bool getIsAdminUser() const { return _isAdminUser; }
 
     const std::string& getUserExtraInfo() const { return _userExtraInfo; }
 
@@ -345,6 +349,9 @@ private:
 
     /// Name of the user to whom the session belongs to, anonymized for logging.
     std::string _userNameAnonym;
+
+    /// If user is admin on the integrator side
+    bool _isAdminUser;
 
     /// Extra info per user, mostly mail, avatar, links, etc.
     std::string _userExtraInfo;
