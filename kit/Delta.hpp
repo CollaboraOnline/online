@@ -18,6 +18,9 @@
 #include <assert.h>
 #include <zlib.h>
 #include <zstd.h>
+#include <stdint.h>
+#include <endian.h>
+
 #include <Log.hpp>
 #include <Common.hpp>
 #include <FileUtil.hpp>
@@ -146,6 +149,35 @@ class DeltaGenerator {
         size_t sizeBytes()
         {
             return sizeof(DeltaBitmapRow) + _rleSize * 4;
+        }
+
+        // <rle data size> (byte), <bitmask>, [<unique pixel data>]
+        size_t packForNetwork(unsigned char *output,
+                              LibreOfficeKitTileMode mode) const
+        {
+            assert(_rleSize < 65536);
+
+            // we can RLE larger tiles - but just give
+            // up RLE'ing after 256 pixels
+            output[0] = _rleSize & 0xff;
+            output[1] = _rleSize >> 8;
+
+            // network byte order the bitmask if necessary:
+            uint64_t rleLE[DeltaGenerator::_rleMaskUnits];
+            for (size_t i = 0; i < DeltaGenerator::_rleMaskUnits; ++i)
+                rleLE[i] = htole64(_rleMask[i]);
+
+            memcpy(output + 2, rleLE, sizeof(rleLE));
+            if (_rleSize > 0)
+                copy_row(output + 2 + sizeof(rleLE),
+                         reinterpret_cast<const unsigned char *>(_rleData),
+                         _rleSize, mode);
+
+            size_t size = 2 + sizeof(rleLE) + _rleSize * 4;
+            LOG_TRC("packed row of size " << size << " bytes "
+                    << Util::dumpHex(std::string((char *)output, size)));
+
+            return size;
         }
 
     private:
@@ -696,6 +728,7 @@ class DeltaGenerator {
             if (it == _deltaEntries.end())
             {
                 _deltaEntries.insert(update);
+                rleData = update;
                 return false;
             }
             cacheEntry = *it;
@@ -776,12 +809,14 @@ class DeltaGenerator {
             tileFile.write(pngOutput.data(), pngOutput.size());
         }
 
+        size_t spaceForBitmask = DeltaGenerator::_rleMaskUnits * 64/8;
         std::shared_ptr<DeltaData> rleData;
         if (!createDelta(pixmap, startX, startY, width, height,
                          bufferWidth, bufferHeight,
                          loc, output, wid, forceKeyframe, mode, rleData))
         {
-            size_t maxCompressed = ZSTD_COMPRESSBOUND((size_t)width * height * 4);
+            assert(rleData);
+            size_t maxCompressed = ZSTD_COMPRESSBOUND((size_t)width * height * 4 + spaceForBitmask);
 
             std::unique_ptr<char, void (*)(void*)> compressed((char*)malloc(maxCompressed), free);
             if (!compressed)
@@ -799,16 +834,17 @@ class DeltaGenerator {
             outb.size = maxCompressed;
             outb.pos = 0;
 
-            unsigned char fixedupLine[width * 4];
+            unsigned char packedLine[1 + spaceForBitmask + width * 4];
 
-            // FIXME: should we RLE in pixels first ?
             for (int y = 0; y < height; ++y)
             {
-                copy_row(fixedupLine, pixmap + ((startY + y) * bufferWidth * 4) + (startX * 4), width, mode);
+                const DeltaBitmapRow& row = rleData->getRow(y);
+
+                size_t packedSize = row.packForNetwork(packedLine, mode);
 
                 ZSTD_inBuffer inb;
-                inb.src = fixedupLine;
-                inb.size = width * 4;
+                inb.src = packedLine;
+                inb.size = packedSize;
                 inb.pos = 0;
 
                 bool lastRow = (y == height - 1);
@@ -827,7 +863,7 @@ class DeltaGenerator {
 
             size_t compSize = outb.pos;
             LOG_TRC("Compressed image of size " << (width * height * 4) << " to size " << compSize);
-//                    << Util::dumpHex(std::string((char *)compressed, compSize)));
+//            << Util::dumpHex(std::string((char *)compressed, compSize)));
 
             // FIXME: get zstd to compress directly into this buffer.
             output.push_back('Z');

@@ -6288,23 +6288,73 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		if (isKeyframe)
 		{
-			// Debugging paranoia: if we get this wrong bad things happen.
-			if (allDeltas.length < canvas.width * canvas.height * 4)
+			if (this._debugDeltas)
+				window.app.console.log('Applying a raw RLE keyframe of length ' + allDeltas.length +
+						       ' hex: ' + hex2string(allDeltas));;
+
+			// Byte bashing fun
+			var width = canvas.width;
+			var height = canvas.height;
+
+			var offset = 0;
+
+			var resultu32 = new Uint32Array(width * height);
+			var resultu8 = new Uint8ClampedArray(resultu32.buffer, resultu32.byteOffset, resultu32.byteLength);
+
+			for (var y = 0; y < height; ++y)
 			{
-				window.app.console.log('Unusual keyframe possibly mis-tagged, suspicious size vs. type ' +
-						       allDeltas.length + ' vs. ' + (canvas.width * canvas.height * 4));
+				var rleSize = allDeltas[offset] + allDeltas[offset+1] * 256;
+				offset += 2;
+				if (this._debugDeltas)
+					window.app.console.log('rle size ' + rleSize);
+
+				var rleMask = offset;
+				var rleMaskSizeBytes = 256/8;
+
+				offset += rleMaskSizeBytes;
+
+				var uniquePixels;
+				if (rleSize > 0)
+				{
+					// copy pixels so they are suitably aligned for a Uint32Array view
+					// FIXME: re-use this array rather than re-allocating it.
+					var tmpu8 = new Uint8Array(allDeltas.subarray(offset, offset + rleSize * 4));
+					var unique8 = this._unpremultiply(tmpu8, tmpu8.length);
+					uniquePixels = new Uint32Array(unique8.buffer, unique8.byteOffset, unique8.byteLength / 4);
+					if (this._debugDeltas)
+						window.app.console.log('Pixels hex: ' + hex2string(unique8));;
+				}
+
+				// It would be rather nice to have real 64bit types [!]
+				var lastPix = 0;
+				var lastMask = 0;
+				var bitToCheck = 256;
+				var rleMaskOffset = rleMask;
+
+				var pixOffset = y * width;
+				var pixSrc = 0;
+
+				for (var x = 0; x < width; ++x)
+				{
+					if (bitToCheck > 128)
+					{
+						bitToCheck = 1;
+						lastMask = allDeltas[rleMaskOffset++];
+					}
+					if (!(lastMask & bitToCheck))
+						lastPix = uniquePixels[pixSrc++];
+					bitToCheck = bitToCheck << 1;
+					resultu32[pixOffset++] = lastPix;
+				}
+
+				offset += rleSize * 4;
 			}
 
-			// FIXME: use zstd to de-compress directly into a Uint8ClampedArray
-			var len = canvas.width * canvas.height * 4;
-			var pixelArray = this._unpremultiply(allDeltas, len);
-			imgData = new ImageData(pixelArray, canvas.width, canvas.height);
+			imgData = new ImageData(resultu8, canvas.width, canvas.height);
 
 			if (this._debugDeltas)
-				window.app.console.log('Applied keyframe ' + i++ + ' of total size ' + allDeltas.length +
-						       ' at stream offset ' + offset + ' size ' + len);
-
-			offset = len;
+				window.app.console.log('Applied keyframe of total size ' + offset +
+						       ' at stream offset 0');
 		}
 
 		while (offset < allDeltas.length)
