@@ -868,6 +868,8 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 			}
 		};
 
+		var removedComment = this.getComment(id);
+		removedComment.sectionProperties.selfRemoved = true;
 		if (app.file.fileBasedView) // We have to set the part from which the comment will be removed as selected part before the process.
 			this.map.setPart(this.sectionProperties.docLayer._selectedPart, false);
 
@@ -1254,7 +1256,10 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 	public onACKComment (obj: any): void {
 		var id;
 		const anyEdit = Comment.isAnyEdit();
-		if (anyEdit && anyEdit.sectionProperties.data.id === obj.comment.id && CommentSection.autoSavedComment !== anyEdit) {
+		if (anyEdit
+			&& !anyEdit.sectionProperties.selfRemoved
+			&& anyEdit.sectionProperties.data.id === obj.comment.id
+			&& CommentSection.autoSavedComment !== anyEdit) {
 			this.handleCommentConflict(obj, anyEdit);
 			return;
 		}
