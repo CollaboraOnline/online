@@ -594,13 +594,16 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		if (this.sectionProperties.svg && this.sectionProperties.svg.style.display === '' && app.map._docLayer._graphicSelection && this.sectionProperties.shapeRectangleProperties) {
 
 			const clientRect = (this.sectionProperties.svg.children[0] as SVGElement).getBoundingClientRect();
-			const width: number = clientRect.width;
-			const height: number = clientRect.height;
+			const width: number = clientRect.width * app.getScale();
+			const height: number = clientRect.height * app.getScale();
 
 			let left = 0, top = 0;
 
 			const viewBox: number[] = this.getViewBox(this.sectionProperties.svg.children[0]);
 			if (viewBox && clientRect.width > 0 && clientRect.height > 0) {
+				this.sectionProperties.svg.children[0].style.width = width + 'px';
+				this.sectionProperties.svg.children[0].style.height = height + 'px';
+
 				const widthPixelRatio = viewBox[2] / width;
 				const heightPixelRatio = viewBox[3] / height;
 
