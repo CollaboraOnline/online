@@ -72,12 +72,6 @@ Cypress.on('fail', function(error) {
 	message += error.codeFrame.frame;
 	Cypress.log({name: 'fail:', message: message});
 
-	//https://stackoverflow.com/a/63519375/1592055
-	//returning false here prevents Cypress from failing the test */
-	if (error.message.includes('ResizeObserver loop limit exceeded')) {
-		return false;
-	}
-
 	throw error;
 });
 
