@@ -19,6 +19,7 @@ spec:
     - parser:
         hash_value_field: "nginx"
         reserve_data: true
+        reserve_time: true
         remove_key_name_field: true
         parse:
           type: "multi_format"
@@ -53,9 +54,8 @@ spec:
             # TODO split ip and port
             nginx.ingress_controller.upstream.address.merged: '${ [record["upstream_address_list"]].flatten&.last }'
             http.response.body.bytes: '${ record["nginx"]["size"] }'
-            event.created: '${ time * 1000 }'
-            event.kind: "event"
             event.category: "web"
+            event.kind: "event"
             event.type: "access"
             event.outcome: '${ record["nginx"]["code"].to_i < 400 ? "success" : "failure" }'
             # for dashboard

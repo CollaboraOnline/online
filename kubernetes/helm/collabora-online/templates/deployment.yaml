@@ -33,6 +33,9 @@ spec:
       labels:
         {{- include "collabora-online.selectorLabels" . | nindent 8 }}
         type: main
+        {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
     spec:
       {{- with .Values.deployment.hostAliases }}
       hostAliases:
