@@ -12,7 +12,7 @@
  * L.Socket contains methods for the communication with the server
  */
 
-/* global app JSDialog _ $ errorMessages Uint8Array brandProductName */
+/* global app JSDialog _ $ errorMessages Uint8Array brandProductName Map */
 
 app.definitions.Socket = L.Class.extend({
 	ProtocolVersionNumber: '0.1',
@@ -41,6 +41,13 @@ app.definitions.Socket = L.Class.extend({
 		this._msgQueue = [];
 		this._delayedMessages = [];
 		this._handlingDelayedMessages = false;
+		if (window.Worker) {
+			window.app.console.log('Creating pre-processor worker');
+			this._msgPreProcessor = new Worker('src/core/MessagePreProcessor.js');
+			this._msgPreProcessor.addEventListener('message', (e) => this._onPreProcessorMessage(e));
+			this._msgPreProcessorMap = new Map();
+			this._msgPreProcessorId = 0;
+		}
 	},
 
 	getWebSocketBaseURI: function(map) {
@@ -457,7 +464,21 @@ app.definitions.Socket = L.Class.extend({
 	// process so - slurp and then emit at idle - its faster to delay!
 	_slurpMessage: function(e) {
 		this._extractTextImg(e);
+		if (e.image && e.image.rawData) {
+			try {
+				var id = this._msgPreProcessorId++;
+				this._msgPreProcessor.postMessage({ 'id': id, 'message': 'image.rawData', 'rawData' : e.image.rawData, 'isKeyframe' : e.image.isKeyframe }, [e.image.rawData.buffer])
+				this._msgPreProcessorMap.set(id, e);
+				return
+			} catch (error) {
+				window.app.console.error('Failed to post message to pre-processor worker: ' + error)
+				window.app.console.log(e);
+			}
+		}
+		this._queueSlurpEvent(e);
+	},
 
+	_queueSlurpEvent: function(e) {
 		// Some messages - we want to process & filter early.
 		var docLayer = this._map ? this._map._docLayer : undefined;
 		if (docLayer && docLayer.filterSlurpedMessage(e))
@@ -472,6 +493,21 @@ app.definitions.Socket = L.Class.extend({
 			this._slurpQueue = [];
 		this._slurpQueue.push(e);
 		this._queueSlurpEventEmission(delayMS);
+	},
+
+	_onPreProcessorMessage: function(e) {
+        switch(e.data.message) {
+		case 'image.rawData':
+			var processedEvent = this._msgPreProcessorMap.get(e.data.id);
+			this._msgPreProcessorMap.delete(e.data.id);
+			processedEvent.image.rawData = e.data.rawData;
+			processedEvent.image.processedData = e.data.processedData;
+			this._queueSlurpEvent(processedEvent);
+			break;
+
+		default:
+			console.error('Unrecognised preprocessor message', e);
+		}
 	},
 
 	// make profiling easier

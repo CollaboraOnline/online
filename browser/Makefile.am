@@ -201,6 +201,7 @@ COOL_JS_LST =\
 	src/core/Rectangle.ts \
 	src/core/Class.js \
 	src/core/Events.js \
+	src/core/MessagePreProcessor.js \
 	src/core/Socket.js \
 	src/core/Matrix.js \
 	src/core/Debug.js \
@@ -246,6 +247,7 @@ COOL_JS_LST =\
 	src/layer/vector/CanvasOverlay.ts \
 	src/canvas/sections/ScrollSection.ts \
 	src/layer/tile/CanvasTileLayer.js \
+	src/layer/tile/CanvasTileUtils.js \
 	src/layer/vector/CDarkOverlay.ts \
 	src/layer/SplitPanesContext.ts \
 	src/layer/CalcSplitPanesContext.ts \
@@ -835,6 +837,7 @@ pot:
 		src/control/jsdialog/Widget.ScrolledWindow.js \
 		src/control/jsdialog/Widget.Timefield.js \
 		src/control/jsdialog/Widget.TreeView.js \
+		src/core/MessagePreProcessor.js \
 		src/core/Socket.js \
 		src/core/Debug.js \
 		src/docstate.js \
@@ -842,6 +845,7 @@ pot:
 		src/docdispatcher.ts \
 		src/errormessages.js \
 		src/layer/tile/CanvasTileLayer.js \
+		src/layer/tile/CanvasTileUtils.js \
 		src/canvas/sections/CommentListSection.ts \
 		src/canvas/sections/CommentSection.ts \
 		src/main.js \
