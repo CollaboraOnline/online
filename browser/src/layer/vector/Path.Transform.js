@@ -1253,11 +1253,22 @@ L.Handler.PathTransform = L.Handler.extend({
 		var isCornerMarker = (this._activeMarker.options.index % 2) == 0;
 		var mobileScaling = window.ThisIsAMobileApp && !this._polyEdges.length;
 		var scaleUniform = this.options.isRotated || (mobileScaling && isCornerMarker);
+		var rotatedUniformScalling = this.options.isRotated && !isCornerMarker;
 		// toggle with shift key when it does not matter whether it is scaled or not
 		if (!scaleUniform && isCornerMarker)
 			scaleUniform = this.options.uniformScaling ^ this._map._docLayer.shiftKeyPressed;
 
-		if (scaleUniform) {
+		if (rotatedUniformScalling) {
+			var distance = originPoint.distanceTo(evtLayerPoint) - this._initialDist;
+			var boundingRectPoints = this._rect._parts[0];
+			var boundingWidth = Math.abs(boundingRectPoints[0].x - boundingRectPoints[2].x);
+			var boundingHeight = Math.abs(boundingRectPoints[0].y - boundingRectPoints[1].y);
+
+			var angle = Math.atan2(originPoint.y - this._activeMarker._point.y, this._activeMarker._point.x - originPoint.x);
+			ratioX = ((Math.cos(angle) * distance) + boundingWidth) / boundingWidth;
+			ratioY = ((Math.sin(angle) * distance) + boundingHeight) / boundingHeight;
+		}
+		else if (scaleUniform) {
 			ratioX = originPoint.distanceTo(evtLayerPoint) / this._initialDist;
 			ratioY = ratioX;
 		} else {
