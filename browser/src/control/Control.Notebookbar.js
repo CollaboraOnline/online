@@ -90,7 +90,7 @@ L.Control.Notebookbar = L.Control.extend({
 		$(docLogo).data('type', 'action');
 		$('.main-nav').prepend(docLogoHeader);
 		var isDarkMode = window.prefs.getBoolean('darkTheme');
-		if (isDarkMode)
+		if (!isDarkMode)
 			$('#invertbackground').hide();
 
 		var that = this;
