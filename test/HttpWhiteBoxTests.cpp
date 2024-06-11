@@ -13,6 +13,7 @@
 
 #include <string>
 
+#include <common/Clipboard.hpp>
 #include <net/HttpRequest.hpp>
 
 #include <test/lokassert.hpp>
@@ -36,6 +37,7 @@ class HttpWhiteBoxTests : public CPPUNIT_NS::TestFixture
 
     CPPUNIT_TEST(testRequestParserValidComplete);
     CPPUNIT_TEST(testRequestParserValidIncomplete);
+    CPPUNIT_TEST(testClipboardIsOwnFormat);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -46,6 +48,7 @@ class HttpWhiteBoxTests : public CPPUNIT_NS::TestFixture
     void testHeader();
     void testRequestParserValidComplete();
     void testRequestParserValidIncomplete();
+    void testClipboardIsOwnFormat();
 };
 
 void HttpWhiteBoxTests::testStatusLineParserValidComplete()
@@ -224,6 +227,29 @@ void HttpWhiteBoxTests::testRequestParserValidIncomplete()
     LOK_ASSERT_EQUAL(expUrl, req.getUrl());
     LOK_ASSERT_EQUAL(expVersion, req.getVersion());
     LOK_ASSERT_EQUAL(expHost, req.header().get("Host"));
+}
+
+void HttpWhiteBoxTests::testClipboardIsOwnFormat()
+{
+    constexpr auto testname = __func__;
+    {
+        std::string body = R"x(application/x-openoffice-embed-source-xml;windows_formatname="Star Embed Source (XML)"
+1def
+PK)x";
+        std::istringstream stream(body);
+
+        LOK_ASSERT_EQUAL(ClipboardData::isOwnFormat(stream), true);
+    }
+    {
+        std::string body = R"(<!DOCTYPE html>
+<html>
+<head>)";
+        std::istringstream stream(body);
+
+        // This is expected to fail: format is mimetype-length-bytes tuples and here the second line
+        // is not a hex size.
+        LOK_ASSERT_EQUAL(ClipboardData::isOwnFormat(stream), false);
+    }
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(HttpWhiteBoxTests);
