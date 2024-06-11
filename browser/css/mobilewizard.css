@@ -1167,6 +1167,7 @@ label.disabled {
 .ui-explorable-entry .cool-annotation {
 	position: relative !important;
 	z-index: auto;
+	width: inherit;
 }
 
 .ui-explorable-entry .cool-annotation-header {
