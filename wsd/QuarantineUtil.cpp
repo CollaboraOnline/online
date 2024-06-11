@@ -38,7 +38,7 @@ std::size_t getSecondsSinceEpoch()
 } // namespace
 
 std::string Quarantine::QuarantinePath;
-std::unordered_map<std::string, std::vector<std::string>> Quarantine::QuarantineMap;
+std::unordered_map<std::string, std::vector<Quarantine::Entry>> Quarantine::QuarantineMap;
 std::mutex Quarantine::Mutex;
 std::size_t Quarantine::MaxSizeBytes;
 std::size_t Quarantine::MaxAgeSecs;
@@ -47,8 +47,7 @@ std::size_t Quarantine::MaxVersions;
 Quarantine::Quarantine(DocumentBroker& docBroker, const std::string& docName)
     : _docKey(docBroker.getDocKey())
     , _docName(Util::encodeURIComponent(docName, std::string(",/?:@&=+$#") + Delimiter))
-    , _quarantinedFilename(Delimiter + std::to_string(docBroker.getPid()) + Delimiter +
-                           docBroker.getDocKey() + Delimiter + _docName)
+    , _quarantinedFilename(Delimiter + std::to_string(docBroker.getPid()) + Delimiter + _docName)
 {
     LOG_DBG("Quarantine ctor for [" << _docKey << ']');
 }
@@ -58,6 +57,9 @@ void Quarantine::initialize(const std::string& path)
     if (!COOLWSD::getConfigValue<bool>("quarantine_files[@enable]", false) ||
         !QuarantinePath.empty())
         return;
+
+    // Make sure the quarantine directories exists, or we throw if we can't create it.
+    Poco::File(path).createDirectories();
 
     MaxSizeBytes = COOLWSD::getConfigValue<std::size_t>("quarantine_files.limit_dir_size_mb", 250) *
                    1024 * 1024;
@@ -70,21 +72,44 @@ void Quarantine::initialize(const std::string& path)
 
     QuarantineMap.clear();
 
-    std::vector<StringToken> tokens;
-    for (const std::string& file : getAllFilesSorted(path))
+    std::vector<Poco::File> legacyFiles;
+    std::vector<Poco::File> files;
+    Poco::File(path).list(files);
+    for (const Poco::File& file : files)
     {
-        StringVector::tokenize(file.c_str(), file.size(), Delimiter, tokens);
-        if (tokens.size() >= 3)
+        if (file.isFile())
         {
-            const auto docKey = file.substr(tokens[2]._index, tokens[tokens.size() - 1]._index -
-                                                                  tokens[2]._index - 1);
-            const auto fullpath = path + file;
-            LOG_TRC("Adding quarantine file [" << fullpath << "] for docKey [" << docKey
-                                               << "] from quarantine directory");
-            QuarantineMap[docKey].emplace_back(fullpath);
+            legacyFiles.emplace_back(file);
         }
+        else if (file.isDirectory())
+        {
+            const std::string docKey = file.path();
+            std::vector<Poco::File> newFiles;
+            Poco::File(Poco::Path(path, docKey)).list(newFiles);
 
-        tokens.clear();
+            std::vector<Entry> entries;
+            entries.reserve(newFiles.size());
+            for (const Poco::File& newFile : newFiles)
+            {
+                entries.emplace_back(path, file.path(), newFile.path());
+            }
+
+            QuarantineMap[docKey] = entries;
+        }
+    }
+
+    for (const Poco::File& legacyFile : legacyFiles)
+    {
+        Entry entry(path, legacyFile.path());
+
+        QuarantineMap[entry.docKey()].emplace_back(entry);
+    }
+
+    // Now we need to sort the files for each DocKey from oldest to newest.
+    for (auto& pair : QuarantineMap)
+    {
+        std::sort(pair.second.begin(), pair.second.end(), [](const auto& lhs, const auto& rhs)
+                  { return lhs.secondsSinceEpoch() < rhs.secondsSinceEpoch(); });
     }
 
     QuarantinePath = path;
@@ -175,7 +200,7 @@ void Quarantine::clearOldQuarantineVersions()
                             << ']');
         for (std::size_t i = 0; i < excess; ++i)
         {
-            const std::string& path = container[i];
+            const std::string& path = container[i].fullPath();
             LOG_TRC("Removing excess quarantined file version #" << (i + 1) << " [" << path
                                                                  << "] for [" << _docKey << ']');
 
@@ -215,8 +240,11 @@ bool Quarantine::quarantineFile(const std::string& docPath)
         return false;
     }
 
-    const std::string linkedFilePath =
-        QuarantinePath + std::to_string(getSecondsSinceEpoch()) + _quarantinedFilename;
+    Entry entry(QuarantinePath, _docKey, getSecondsSinceEpoch(), _quarantinedFilename,
+                sourceStat.size());
+
+    const std::string linkedFilePath = entry.fullPath();
+    LOG_TRC("Quarantining [" << docPath << "] to [" << linkedFilePath << ']');
 
     std::lock_guard<std::mutex> lock(Mutex);
 
@@ -224,13 +252,14 @@ bool Quarantine::quarantineFile(const std::string& docPath)
     if (!fileList.empty())
     {
         const auto& lastFile = fileList[fileList.size() - 1];
-        FileUtil::Stat lastFileStat(lastFile);
+        FileUtil::Stat lastFileStat(lastFile.fullPath());
 
         if (lastFileStat.isIdenticalTo(sourceStat))
         {
             LOG_WRN("Quarantining of file ["
                     << docPath << "] to [" << linkedFilePath
-                    << "] is skipped because this file version is already quarantined as: " << lastFile);
+                    << "] is skipped because this file version is already quarantined as ["
+                    << lastFile.fullPath() << ']');
             return false;
         }
     }
@@ -239,7 +268,7 @@ bool Quarantine::quarantineFile(const std::string& docPath)
 
     if (FileUtil::linkOrCopyFile(docPath, linkedFilePath))
     {
-        fileList.emplace_back(linkedFilePath);
+        fileList.emplace_back(entry);
         clearOldQuarantineVersions();
         makeQuarantineSpace();
 
@@ -259,7 +288,7 @@ std::string Quarantine::lastQuarantinedFilePath() const
     std::lock_guard<std::mutex> lock(Mutex);
 
     const auto& fileList = QuarantineMap[_docKey];
-    return fileList.empty() ? std::string() : fileList[fileList.size() - 1];
+    return fileList.empty() ? std::string() : fileList[fileList.size() - 1].fullPath();
 }
 
 void Quarantine::removeQuarantinedFiles()
@@ -269,8 +298,8 @@ void Quarantine::removeQuarantinedFiles()
     LOG_DBG("Removing all quarantined files for [" << _docKey << ']');
     for (const auto& file : QuarantineMap[_docKey])
     {
-        LOG_TRC("Removing quarantined file [" << file << "] for [" << _docKey << ']');
-        FileUtil::removeFile(file);
+        LOG_TRC("Removing quarantined file [" << file.fullPath() << "] for [" << _docKey << ']');
+        FileUtil::removeFile(file.fullPath());
     }
 
     QuarantineMap.erase(_docKey);

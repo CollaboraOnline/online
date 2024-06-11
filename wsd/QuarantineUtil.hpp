@@ -85,7 +85,8 @@ private:
     static Entry parseNewFilename(const std::string& filename, const std::string& docKey);
 
 private:
-    static std::unordered_map<std::string, std::vector<std::string>> QuarantineMap;
+    /// DocKey to Quarantine Entries map.
+    static std::unordered_map<std::string, std::vector<Entry>> QuarantineMap;
     /// Protects the shared QuarantineMap from concurrent modification.
     static std::mutex Mutex;
     static std::string QuarantinePath;
