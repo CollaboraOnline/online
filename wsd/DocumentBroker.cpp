@@ -1659,6 +1659,12 @@ void DocumentBroker::handleSaveResponse(const std::shared_ptr<ClientSession>& se
     const std::string oldName = _storage->getRootFilePathToUpload();
     const std::string newName = _storage->getRootFilePathUploading();
 
+    if (_quarantine && FileUtil::Stat(oldName).exists())
+    {
+        // Quarantine the file before renaming, if it exists.
+        _quarantine->quarantineFile(oldName);
+    }
+
     // Rename even if no new save, in case we have an older version.
     if (rename(oldName.c_str(), newName.c_str()) < 0)
     {
@@ -1677,9 +1683,6 @@ void DocumentBroker::handleSaveResponse(const std::shared_ptr<ClientSession>& se
     {
         LOG_TRC("Renamed [" << oldName << "] to [" << newName << ']');
     }
-
-    if (_quarantine)
-        _quarantine->quarantineFile(newName);
 #endif //!MOBILEAPP
 
     // Let the clients know of any save failures.
