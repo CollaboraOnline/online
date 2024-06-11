@@ -721,6 +721,13 @@ namespace Log
         auto& logger = GenericLogger::create(Static.getName() + "." + std::to_string(counter++),
                                              std::move(channel),
                                              Poco::Logger::parseLevel(logLevel));
+
+        if (Util::isFuzzing())
+        {
+            // Ignore errors for fuzzing, even if the log level would be increased.
+            return;
+        }
+
         Static.setThreadLocalLogger(&logger);
     }
 
