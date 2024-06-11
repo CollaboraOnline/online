@@ -2274,6 +2274,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			'cancelsearch': 'cancel',
 			'printoptions': 'print',
 			'togglesheetgrid': 'show',
+			'hamburger-tablet': 'fold',
+			'exportdirectpdf': 'exportpdf',
 		};
 		if (iconURLAliases[cleanName]) {
 			cleanName = iconURLAliases[cleanName];
