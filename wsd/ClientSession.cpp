@@ -343,9 +343,18 @@ void ClientSession::handleClipboardRequest(DocumentBroker::ClipboardRequest     
                         }
 
                         std::string body = httpResponse->getBody();
-                        docBroker->forwardToChild(client_from_this(), "setclipboard\n" + body,
-                                                  true);
-                        docBroker->forwardToChild(client_from_this(), "uno " + commandName);
+                        std::istringstream stream(body);
+                        if (ClipboardData::isOwnFormat(stream))
+                        {
+                            docBroker->forwardToChild(client_from_this(), "setclipboard\n" + body,
+                                    true);
+                            docBroker->forwardToChild(client_from_this(), "uno " + commandName);
+                        }
+                        else
+                        {
+                            LOG_ERR("Clipboard download: unexpected data format");
+                            return;
+                        }
                     };
 
                     std::shared_ptr<http::Session> httpSession = http::Session::create(url);
