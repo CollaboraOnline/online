@@ -208,6 +208,13 @@ bool Quarantine::quarantineFile(const std::string& docPath)
     if (!isEnabled())
         return false;
 
+    FileUtil::Stat sourceStat(docPath);
+    if (!sourceStat.exists())
+    {
+        LOG_WRN("Quarantining of file [" << docPath << "] failed because it does not exist");
+        return false;
+    }
+
     const std::string linkedFilePath =
         QuarantinePath + std::to_string(getSecondsSinceEpoch()) + _quarantinedFilename;
 
@@ -216,7 +223,6 @@ bool Quarantine::quarantineFile(const std::string& docPath)
     auto& fileList = QuarantineMap[_docKey];
     if (!fileList.empty())
     {
-        FileUtil::Stat sourceStat(docPath);
         const auto& lastFile = fileList[fileList.size() - 1];
         FileUtil::Stat lastFileStat(lastFile);
 
