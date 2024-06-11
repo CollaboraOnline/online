@@ -2399,17 +2399,6 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
         LOG_INF("Ignoring notification on password protected document: " << firstLine);
     }
 
-#if !MOBILEAPP
-    if (tokens.equals(0, "viewinfo:"))
-    {
-        // send server audit results after we received information about users (who is admin)
-        const std::string message = std::string("serveraudit: ") + docBroker->getServerAudit();
-        bool status = forwardToClient(payload);
-        forwardToClient(std::make_shared<Message>(message, Message::Dir::In));
-        return status;
-    }
-#endif
-
     // Forward everything else.
     return forwardToClient(payload);
 }
