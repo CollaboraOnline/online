@@ -1275,8 +1275,6 @@ L.Handler.PathTransform = L.Handler.extend({
 			.scale(this._scale, originPoint);
 
 		this._update();
-		this._path.fire('scale', {
-			layer: this._path, scale: this._scale.clone() });
 	},
 
 
