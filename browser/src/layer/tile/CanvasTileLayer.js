@@ -3047,6 +3047,15 @@ L.CanvasTileLayer = L.Layer.extend({
 			delete this._cellViewCursors[viewId];
 		}
 
+		// update graphicviewselection
+		if (typeof this._graphicViewMarkers[viewId] !== 'undefined') {
+			this._graphicViewMarkers[viewId].bounds = L.LatLngBounds.createDefault();
+			this._graphicViewMarkers[viewId].part = 0;
+			this._graphicViewMarkers[viewId].mode = 0;
+			this._onUpdateGraphicViewSelection(viewId);
+			delete this._graphicViewMarkers[viewId];
+		}
+
 		this._map.removeView(viewId);
 	},
 
