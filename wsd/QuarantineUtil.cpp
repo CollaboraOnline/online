@@ -168,14 +168,15 @@ void Quarantine::removeQuarantine()
 
 std::size_t Quarantine::quarantineSize()
 {
-    if (!isEnabled())
-        return 0;
+    LOG_ASSERT_MSG(!Mutex.try_lock(), "Quarantine Mutex must be taken");
 
     std::size_t size = 0;
-    for (const std::string& file : getAllFilesSorted(QuarantinePath))
+    for (const auto& pair : QuarantineMap)
     {
-        FileUtil::Stat f(QuarantinePath + file);
-        size += f.size();
+        for (const Entry& entry : pair.second)
+        {
+            size += entry.size();
+        }
     }
 
     return size;
