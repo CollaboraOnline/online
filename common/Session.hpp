@@ -16,6 +16,7 @@
 #include <memory>
 #include <map>
 #include <ostream>
+#include <optional>
 #include <type_traits>
 
 #include <Poco/Path.h>
@@ -211,7 +212,7 @@ public:
 
     void setWatermarkText(const std::string& watermarkText) { _watermarkText = watermarkText; }
 
-    void setIsAdminUser(const bool isAdminUser) { _isAdminUser = isAdminUser; }
+    void setIsAdminUser(const std::optional<bool> isAdminUser) { _isAdminUser = isAdminUser; }
 
     void setUserExtraInfo(const std::string& userExtraInfo) { _userExtraInfo = userExtraInfo; }
 
@@ -245,7 +246,7 @@ public:
 
     const std::string& getDocPassword() const { return _docPassword; }
 
-    bool getIsAdminUser() const { return _isAdminUser; }
+    const std::optional<bool> getIsAdminUser() const { return _isAdminUser; }
 
     const std::string& getUserExtraInfo() const { return _userExtraInfo; }
 
@@ -354,7 +355,7 @@ private:
     std::string _userNameAnonym;
 
     /// If user is admin on the integrator side
-    bool _isAdminUser;
+    std::optional<bool> _isAdminUser;
 
     /// Extra info per user, mostly mail, avatar, links, etc.
     std::string _userExtraInfo;

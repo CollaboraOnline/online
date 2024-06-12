@@ -867,13 +867,20 @@ WopiStorage::WOPIFileInfo::WOPIFileInfo(const FileInfo& fileInfo,
     JsonUtil::findJSONValue(object, "FileUrl", _fileUrl);
 
     // check if user is admin on the integrator side
-    if (!JsonUtil::findJSONValue(object, "IsAdminUser", _isAdminUser))
+    bool isAdminUser = false;
+    if (!JsonUtil::findJSONValue(object, "IsAdminUser", isAdminUser))
     {
+        _isAdminUser = std::nullopt;
+
         // check deprecated is_admin inside UserExtraInfo
         if (_userExtraInfo.find("is_admin") != std::string::npos)
             LOG_DBG("Integration is using depreated is_admin property. Please use IsAdminUser instead.");
         else
             LOG_DBG("Missing IsAdminUser property in CheckFileInfo.");
+    }
+    else
+    {
+        _isAdminUser = isAdminUser;
     }
 
     // Update the scheme to https if ssl or ssl termination is on

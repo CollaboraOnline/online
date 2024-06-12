@@ -830,7 +830,7 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
     std::string userPrivateInfo;
     std::string watermarkText;
     std::string templateSource;
-    bool isAdminUser = false;
+    std::optional<bool> isAdminUser;
 
 #if !MOBILEAPP
     std::chrono::milliseconds checkFileInfoCallDurationMs = std::chrono::milliseconds::zero();
