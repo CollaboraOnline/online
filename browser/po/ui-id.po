@@ -12,16 +12,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-06-06 08:34+0200\n"
-"PO-Revision-Date: 2024-01-21 16:42+0000\n"
+"PO-Revision-Date: 2024-06-12 10:40+0000\n"
 "Last-Translator: Andika Triwidada <andika@gmail.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/id/>\n"
-"Language: \n"
+"Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.4-dev\n"
+"X-Generator: Weblate 5.6-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -78,7 +78,7 @@ msgstr " dokumen terbuka."
 
 #: admin/admin.strings.js:28
 msgid "Number of Documents"
-msgstr "Nomor dari Dokumen"
+msgstr "Banyaknya Dokumen"
 
 #: admin/admin.strings.js:29
 msgid "Memory consumed"
@@ -110,7 +110,7 @@ msgstr "Waktu berjalan"
 
 #: admin/admin.strings.js:36
 msgid "Idle time"
-msgstr "Waktu jeda"
+msgstr "Waktu menganggur"
 
 #: admin/admin.strings.js:37
 msgid "Modified"
@@ -178,13 +178,11 @@ msgstr "Matikan sesi."
 
 #: admin/admin.strings.js:51
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
-msgstr ""
-"Dokumen Maksimum yang diporoses Memori virtual (dalam MB) - kurangi saja"
+msgstr "Memori virtual proses Dokumen maksimum (dalam MB) - kurangi saja"
 
 #: admin/admin.strings.js:52
 msgid "Maximum Document process stack memory (in KB) - reduce only"
-msgstr ""
-"Dokumen Maksimum yang diporoses Memori virtual (dalam kB) - Hanya kurangi"
+msgstr "Memori virtual proses Dokumen maksimum (dalam KB) - kurangi saja"
 
 #: admin/admin.strings.js:53
 msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
@@ -203,7 +201,7 @@ msgstr "Kedaluwarsa:"
 #: admin/admin.strings.js:56 admin/src/AdminSocketBase.js:61
 #: src/control/Control.Zotero.js:209
 msgid "Refresh"
-msgstr "Perbarui"
+msgstr "Segarkan"
 
 #: admin/admin.strings.js:57
 msgid "Shutdown Server"
@@ -211,7 +209,7 @@ msgstr "Matikan Server"
 
 #: admin/admin.strings.js:58
 msgid "Server uptime"
-msgstr "Lama nyala peladen"
+msgstr "Lama nyala server"
 
 #: admin/admin.strings.js:59
 msgid "Refresh Log"
@@ -486,11 +484,11 @@ msgstr "Tempel Khusus"
 
 #: src/control/Control.ContextMenu.js:239
 msgid "Copy Cells"
-msgstr ""
+msgstr "Salin Sel"
 
 #: src/control/Control.ContextMenu.js:247
 msgid "Fill Series"
-msgstr ""
+msgstr "Isi Seri"
 
 #: src/control/Control.DocumentNameInput.js:113
 msgid "Path"
@@ -543,6 +541,8 @@ msgid ""
 "If you want to share large elements outside of %productName it's necessary "
 "to first download them."
 msgstr ""
+"Jika Anda ingin berbagi elemen besar di luar %productName maka perlu "
+"mengunduhnya terlebih dahulu."
 
 #: src/control/Control.DownloadProgress.js:60
 #: src/control/Control.NotebookbarCalc.js:212
@@ -553,7 +553,7 @@ msgstr "Unduh"
 
 #: src/control/Control.DownloadProgress.js:79
 msgid "Downloading clipboard content"
-msgstr ""
+msgstr "Mengunduh konten papan klip"
 
 #: src/control/Control.DownloadProgress.js:86
 #: src/control/Control.DownloadProgress.js:111
@@ -563,20 +563,21 @@ msgstr "Salin"
 
 #: src/control/Control.DownloadProgress.js:109
 msgid "Download completed and ready to be copied to clipboard."
-msgstr ""
+msgstr "Pengunduhan selesai dan siap untuk disalin ke papan klip."
 
 #: src/control/Control.DownloadProgress.js:110
 msgid ""
 "From now on clipboard notifications will discreetly appear at the bottom."
 msgstr ""
+"Mulai sekarang notifikasi papan klip akan muncul secara diam-diam di dasar."
 
 #: src/control/Control.DownloadProgress.js:263
 msgid "Content copied to clipboard"
-msgstr ""
+msgstr "Isi disalin ke papan klip"
 
 #: src/control/Control.DownloadProgress.js:305
 msgid "Download failed"
-msgstr ""
+msgstr "Pengunduhan gagal"
 
 #: src/control/Control.FormulaBarJSDialog.js:102
 #: src/control/Control.FormulaBarJSDialog.js:162
@@ -630,11 +631,11 @@ msgstr "Elipsoid"
 
 #: src/control/Control.JSDialogBuilder.js:497
 msgid "Quadratic"
-msgstr "Kuadrat"
+msgstr "Kuadratis"
 
 #: src/control/Control.JSDialogBuilder.js:500
 msgid "Square"
-msgstr "Kotak"
+msgstr "Bujur Sangkar"
 
 #: src/control/Control.JSDialogBuilder.js:503
 msgid "Fixed size"
@@ -905,7 +906,7 @@ msgstr "Modus Gelap"
 #: src/control/Control.NotebookbarImpress.js:459
 #: src/control/Control.NotebookbarWriter.js:1477
 msgid "Invert Background"
-msgstr ""
+msgstr "Balikkan Latar Belakang"
 
 #: src/control/Control.Menubar.js:154 src/control/Control.Menubar.js:458
 #: src/control/Control.Menubar.js:602 src/control/Control.Menubar.js:747
@@ -1005,7 +1006,7 @@ msgstr "Properti"
 #: src/control/Control.Menubar.js:365 src/control/Control.Menubar.js:1009
 #: src/control/Control.NotebookbarWriter.js:372
 msgid "Screen Reading"
-msgstr ""
+msgstr "Pembacaan Layar"
 
 #: src/control/Control.Menubar.js:378
 #: src/control/Control.NotebookbarWriter.js:338
@@ -1079,12 +1080,12 @@ msgstr "Simpan Komentar"
 #: src/control/Control.Menubar.js:413
 #: src/control/Control.NotebookbarBuilder.js:602
 msgid "Full Page Slides"
-msgstr ""
+msgstr "Salindia Halaman Penuh"
 
 #: src/control/Control.Menubar.js:414
 #: src/control/Control.NotebookbarBuilder.js:606
 msgid "Notes Pages"
-msgstr ""
+msgstr "Halaman Catatan"
 
 #: src/control/Control.Menubar.js:448
 #: src/control/Control.NotebookbarImpress.js:444
@@ -1102,7 +1103,7 @@ msgstr "Sajikan salindia saat ini"
 
 #: src/control/Control.Menubar.js:527
 msgid "Present in new window"
-msgstr ""
+msgstr "Ada di jendela baru"
 
 #: src/control/Control.Menubar.js:563 src/control/Control.Menubar.js:1042
 #: src/control/Control.Menubar.js:1102
@@ -1149,78 +1150,78 @@ msgstr "Semua Lembar"
 #: src/control/Control.Menubar.js:832
 #: src/control/jsdialog/Definitions.Menu.ts:286
 msgid "Condition..."
-msgstr ""
+msgstr "Kondisi..."
 
 #: src/control/Control.Menubar.js:833
 #: src/control/jsdialog/Definitions.Menu.ts:289
 msgid "Greater than..."
-msgstr ""
+msgstr "Lebih dari..."
 
 #: src/control/Control.Menubar.js:834
 #: src/control/jsdialog/Definitions.Menu.ts:293
 msgid "Less than..."
-msgstr ""
+msgstr "Kurang dari..."
 
 #: src/control/Control.Menubar.js:835
 #: src/control/jsdialog/Definitions.Menu.ts:297
 msgid "Equal to..."
-msgstr ""
+msgstr "Sama dengan..."
 
 #: src/control/Control.Menubar.js:836
 #: src/control/jsdialog/Definitions.Menu.ts:301
 msgid "Between..."
-msgstr ""
+msgstr "Antara..."
 
 #: src/control/Control.Menubar.js:837
 #: src/control/jsdialog/Definitions.Menu.ts:305
 msgid "Duplicate..."
-msgstr ""
+msgstr "Duplikat..."
 
 #: src/control/Control.Menubar.js:838
 #: src/control/jsdialog/Definitions.Menu.ts:309
 msgid "Contains text..."
-msgstr ""
+msgstr "Memuat teks..."
 
 #: src/control/Control.Menubar.js:840 src/control/Control.Menubar.js:850
 #: src/control/jsdialog/Definitions.Menu.ts:313
 #: src/control/jsdialog/Definitions.Menu.ts:344
 msgid "More conditions..."
-msgstr ""
+msgstr "Lebih banyak kondisi..."
 
 #: src/control/Control.Menubar.js:842
 #: src/control/jsdialog/Definitions.Menu.ts:317
 msgid "Top/Bottom Rules..."
-msgstr ""
+msgstr "Aturan Puncak/Dasar..."
 
 #: src/control/Control.Menubar.js:843
 #: src/control/jsdialog/Definitions.Menu.ts:320
 msgid "Top N elements..."
-msgstr ""
+msgstr "Elemen N tertinggi..."
 
 #: src/control/Control.Menubar.js:844
 #: src/control/jsdialog/Definitions.Menu.ts:324
 msgid "Top N percent..."
-msgstr ""
+msgstr "Tertinggi N persen..."
 
 #: src/control/Control.Menubar.js:845
 #: src/control/jsdialog/Definitions.Menu.ts:328
 msgid "Bottom N elements..."
-msgstr ""
+msgstr "Elemen N terbawah..."
 
 #: src/control/Control.Menubar.js:846
 #: src/control/jsdialog/Definitions.Menu.ts:332
 msgid "Bottom N percent..."
-msgstr ""
+msgstr "Terbawah N persen..."
 
 #: src/control/Control.Menubar.js:847
 #: src/control/jsdialog/Definitions.Menu.ts:336
 msgid "Above Average..."
-msgstr ""
+msgstr "Di Atas Rata-rata..."
 
 #: src/control/Control.Menubar.js:848
 #: src/control/jsdialog/Definitions.Menu.ts:340
 msgid "Below Average..."
-msgstr ""
+msgstr "Di Bawah Rata-rata..."
 
 #: src/control/Control.Menubar.js:959 src/control/Control.Menubar.js:1024
 #: src/control/Control.Menubar.js:1088 src/control/Control.Menubar.js:1142
@@ -1572,9 +1573,8 @@ msgid "PDF Document (.pdf) - Expert"
 msgstr "Dokumen PDF (.pdf) - Tingkat Lanjut"
 
 #: src/control/Control.NotebookbarDraw.js:1049
-#, fuzzy
 msgid "Page Layout"
-msgstr "Tata letak halaman"
+msgstr "Tata Letak Halaman"
 
 #: src/control/Control.NotebookbarImpress.js:128
 msgid "Master"
@@ -1587,7 +1587,7 @@ msgstr "Presentasi"
 
 #: src/control/Control.NotebookbarImpress.js:351
 msgid "Present in Window"
-msgstr ""
+msgstr "Ada dalam Jendela"
 
 #: src/control/Control.NotebookbarWriter.js:79
 msgid "Form"
@@ -1595,17 +1595,17 @@ msgstr "Formulir"
 
 #: src/control/Control.NotebookbarWriter.js:309
 msgid "Go Online"
-msgstr ""
+msgstr "Pergi Daring"
 
 #: src/control/Control.NotebookbarWriter.js:309
 msgid "Go Offline"
-msgstr ""
+msgstr "Pergi Luring"
 
 #: src/control/Control.NotebookbarWriter.js:387
 #: src/control/Control.ServerAuditDialog.ts:97
 #: src/control/Control.ServerAuditDialog.ts:98
 msgid "Server audit"
-msgstr ""
+msgstr "Audit server"
 
 #: src/control/Control.NotebookbarWriter.js:1312
 msgid "Rich Text"
@@ -1657,28 +1657,27 @@ msgstr "Bersihkan ruas pencarian"
 
 #: src/control/Control.ServerAuditDialog.ts:28
 msgid "The is_admin user property is not set"
-msgstr ""
+msgstr "Properti pengguna is_admin tidak diatur"
 
 #: src/control/Control.ServerAuditDialog.ts:32
 msgid "The is_admin user property is set"
-msgstr ""
+msgstr "Properti pengguna is_admin diatur"
 
 #: src/control/Control.ServerAuditDialog.ts:116
 msgid "No issues found"
-msgstr ""
+msgstr "Tidak ditemukan masalah"
 
 #: src/control/Control.ServerAuditDialog.ts:122
-#, fuzzy
 msgid "Status"
-msgstr "Status:"
+msgstr "Status"
 
 #: src/control/Control.ServerAuditDialog.ts:167
 msgid "Check security warnings of your server"
-msgstr ""
+msgstr "Periksa peringatan keamanan dari server Anda"
 
 #: src/control/Control.ServerAuditDialog.ts:168
 msgid "OPEN"
-msgstr ""
+msgstr "BUKA"
 
 #: src/control/Control.SheetsBar.js:48
 msgid "Scroll to the first sheet"
@@ -1825,11 +1824,11 @@ msgstr "Sembunyikan Menu"
 
 #: src/control/Control.UIManager.js:151
 msgid "Enter new name"
-msgstr ""
+msgstr "Masukkan nama baru"
 
 #: src/control/Control.UIManager.js:776
 msgid "Show Menu"
-msgstr ""
+msgstr "Tampilkan Menu"
 
 #: src/control/Control.UserList.ts:54
 msgid "%user has joined"
@@ -1841,19 +1840,19 @@ msgstr "%user telah keluar"
 
 #: src/control/Control.UserList.ts:56
 msgid "Following %user"
-msgstr ""
+msgstr "Mengikuti %user"
 
 #: src/control/Control.UserList.ts:57
 msgid "Following the editor"
-msgstr ""
+msgstr "Mengikuti editor"
 
 #: src/control/Control.UserList.ts:58
 msgid "Stop following"
-msgstr ""
+msgstr "Berhenti mengikuti"
 
 #: src/control/Control.UserList.ts:59
 msgid "Avatar for %user"
-msgstr ""
+msgstr "Avatar bagi %user"
 
 #: src/control/Control.UserList.ts:79
 msgid "%n users"
@@ -2026,7 +2025,7 @@ msgstr ""
 
 #: src/control/Permission.js:27 src/control/Permission.js:28
 msgid "Edit document"
-msgstr ""
+msgstr "Edit dokumen"
 
 #: src/control/Permission.js:85
 msgid "The document could not be locked, and is opened in read-only mode."
@@ -2082,11 +2081,11 @@ msgstr "Hapus posisi tab"
 
 #: src/control/VRuler.ts:377
 msgid "Top Margin"
-msgstr ""
+msgstr "Margin Atas"
 
 #: src/control/VRuler.ts:378
 msgid "Bottom Margin"
-msgstr ""
+msgstr "Margin Bawah"
 
 #: src/control/Signing.js:27
 msgid "This document is digitally signed and the signature is valid."
@@ -2363,7 +2362,7 @@ msgstr "Dokumen sedang diganti namanya dan akan segera dimuat ulang"
 
 #: src/core/Socket.js:1184
 msgid "The document is switching to Offline mode and will reload shortly"
-msgstr ""
+msgstr "Dokumen beralih ke mode Luring dan akan dimuat ulang sebentar lagi"
 
 #: src/core/Socket.js:1265
 msgid "Connecting..."
@@ -2371,7 +2370,7 @@ msgstr "Menghubungkan..."
 
 #: src/core/Socket.js:1280
 msgid "Server is shutting down"
-msgstr ""
+msgstr "Server sedang menuju mati"
 
 #: src/core/Socket.js:1313
 msgid "Exported to storage"
@@ -2423,23 +2422,23 @@ msgstr "Server telah terputus."
 
 #: src/core/Debug.js:54
 msgid "Debug Tools"
-msgstr ""
+msgstr "Alat Debug"
 
 #: src/core/Debug.js:56
 msgid "Ctrl+Shift+Alt+D to exit"
-msgstr ""
+msgstr "Ctrl+Shift+Alt+D untuk keluar"
 
 #: src/docstate.js:92
 msgid "Standard"
-msgstr ""
+msgstr "Standar"
 
 #: src/docstate.js:103
 msgid "Theme colors"
-msgstr ""
+msgstr "Warna tema"
 
 #: src/docstate.js:104
 msgid "Document colors"
-msgstr ""
+msgstr "Warna dokumen"
 
 #: src/docdispatcher.ts:379
 msgid "Are you sure you want to delete this slide?"
@@ -2451,7 +2450,7 @@ msgstr "Anda yakin ingin menghapus halaman ini?"
 
 #: src/errormessages.js:22
 msgid "No disk space left on server."
-msgstr "Tidak ada lagi ruang diska yang tersedia di peladen."
+msgstr "Tidak ada lagi ruang diska yang tersedia di server."
 
 #: src/errormessages.js:23
 msgid ""
@@ -2498,8 +2497,8 @@ msgid ""
 "Unauthorized WOPI host. Please try again later and report to your "
 "administrator if the issue persists."
 msgstr ""
-"host WOPI tidak resmi. Silakan coba lagi nanti dan laporkan ke administrator "
-"Anda jika masalah berlanjut."
+"Host WOPI tanpa otorisasi. Silakan coba lagi nanti dan laporkan ke "
+"administrator Anda jika masalah berlanjut."
 
 #: src/errormessages.js:29
 msgid "Wrong or missing WOPISrc parameter, please contact support."
@@ -2586,12 +2585,16 @@ msgid ""
 "administrator. For more info on proxy configuration please checkout https://"
 "sdk.collaboraonline.com/docs/installation/Proxy_settings.html"
 msgstr ""
+"Gagal menjalin koneksi soket atau koneksi soket tertutup tidak terduga. "
+"Proksi terbalik mungkin salah konfigurasi, silakan hubungi administrator. "
+"Untuk info lebih lanjut tentang konfigurasi proksi silakan periksa "
+"https://sdk.collaboraonline.com/docs/installation/Proxy_settings.html"
 
 #: src/errormessages.js:40
 msgid ""
 "Failed to establish socket connection or socket connection closed "
 "unexpectedly."
-msgstr ""
+msgstr "Gagal menjalin koneksi soket atau koneksi soket tertutup tidak terduga."
 
 #: src/errormessages.js:43
 msgid "Failed to load document."
@@ -2661,7 +2664,7 @@ msgstr "Dokumen tidak dapat diekspor. Harap coba lagi."
 
 #: src/errormessages.js:63
 msgid "Uploading file to server failed, file not found."
-msgstr "Mengunggah berkas ke peladen gagal, berkas tidak ditemukan."
+msgstr "Mengunggah berkas ke server gagal, berkas tidak ditemukan."
 
 #: src/errormessages.js:64
 msgid "Uploading file to server failed, the file is too large."
@@ -2689,11 +2692,11 @@ msgstr "Tidak ada komentar"
 
 #: src/canvas/sections/CommentListSection.ts:134
 msgid "A comment is being edited"
-msgstr ""
+msgstr "Suatu komentar sedang disunting"
 
 #: src/canvas/sections/CommentListSection.ts:135
 msgid "Please save or discard the comment currently being edited."
-msgstr ""
+msgstr "Silakan simpan atau buang komentar yang saat ini sedang disunting."
 
 #: src/canvas/sections/CommentListSection.ts:959
 msgid "Modify"
@@ -2804,24 +2807,23 @@ msgstr ""
 "unduhan baru</p>"
 
 #: src/map/Clipboard.js:1215
-#, fuzzy
 msgid ""
 "<p>Your browser has very limited access to the clipboard</p><p><b>Please "
 "press</b> <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to "
 "see more options</p><p>Close popup to ignore paste special</p>"
 msgstr ""
-"<p> Browser Anda memiliki akses yang sangat terbatas ke papan klip</"
-"p><p>Silakan tekan: <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</"
-"kbd> untuk melihat lebih banyak pilihan</p><p> Tutup popup untuk mengabaikan "
-"tempel khusus</p>"
+"<p>Peramban Anda memiliki akses yang sangat terbatas ke papan klip</"
+"p><p><b>Silakan tekan</b> <kbd>Ctrl</kbd><span class=\"kbd--plus\""
+">+</span><kbd>V</kbd> untuk melihat lebih banyak pilihan</p><p>Tutup popup "
+"untuk mengabaikan tempel khusus</p>"
 
 #: src/map/Clipboard.js:1222
 msgid "Paste from this document"
-msgstr ""
+msgstr "Tempel dari dokumen ini"
 
 #: src/map/Clipboard.js:1222
 msgid "Cancel paste special"
-msgstr ""
+msgstr "Batalkan tempel khusus"
 
 #: src/map/Map.js:224
 msgid "Initializing..."
@@ -2840,15 +2842,14 @@ msgstr "Kirimkan tanggapan Anda kepada kami"
 msgid ""
 "The file of type: %0 cannot be uploaded to server since the file has no name"
 msgstr ""
-"Tipe berkas: %0 tidak dapat di unggah ke peladen karena berkas tidak "
+"Berkas bertipe: %0 tidak dapat diunggah ke server karena berkas tidak "
 "memiliki nama"
 
 #: src/map/handler/Map.FileInserter.js:107
 #, javascript-format
 msgid ""
 "The file of type: %0 cannot be uploaded to server since the file is empty"
-msgstr ""
-"Tipe berkas: %0 tidak dapat diunggah ke peladen karena isi berkas kosong"
+msgstr "Berkas bertipe: %0 tidak dapat diunggah ke server karena berkas kosong"
 
 #: src/map/handler/Map.FileInserter.js:138
 msgid "Uploading..."
@@ -2856,19 +2857,19 @@ msgstr "Memuat..."
 
 #: src/map/handler/Map.FileInserter.js:161
 msgid "Uploading file to server failed with status: %0"
-msgstr "Mengunggah berkas ke peladen gagal dengan status: %0"
+msgstr "Mengunggah berkas ke server gagal dengan status: %0"
 
 #: src/map/handler/Map.SlideShow.js:55
 msgid "Empty Slide Show"
-msgstr ""
+msgstr "Pertunjukan Salindia Kosong"
 
 #: src/map/handler/Map.SlideShow.js:161
 msgid "Windowed Presentation: "
-msgstr ""
+msgstr "Presentasi Dalam Jendela: "
 
 #: src/map/handler/Map.SlideShow.js:168
 msgid "Windowed Presentation Blocked"
-msgstr ""
+msgstr "Presentasi Dalam Jendela Diblokir"
 
 #: src/map/handler/Map.SlideShow.js:169
 msgid ""
@@ -2876,39 +2877,41 @@ msgid ""
 "slide shows to be displayed in separated windows, allowing for easy screen "
 "sharing."
 msgstr ""
+"Presentasi diblokir. Harap izinkan pop-up di peramban Anda. Ini memungkinkan "
+"pertunjukan salindia ditampilkan dalam jendela terpisah, memungkinkan untuk "
+"berbagi layar secara mudah."
 
 #: src/map/handler/Map.SlideShow.js:183
 msgid "Presenting in window"
-msgstr ""
+msgstr "Menyajikan dalam jendela"
 
 #: src/map/handler/Map.SlideShow.js:184
 msgid "Close Presentation"
-msgstr ""
+msgstr "Tutup Presentasi"
 
 #: src/map/handler/Map.SlideShow.js:204
 msgid "Presenting in fullscreen"
-msgstr ""
+msgstr "Menyajikan dalam layar penuh"
 
 #: src/map/handler/Map.SlideShow.js:205
-#, fuzzy
 msgid "End Presentation"
-msgstr "Presentasi"
+msgstr "Akhiri Presentasi"
 
 #: src/map/handler/Map.SlideShow.js:303
 msgid "Already presenting"
-msgstr ""
+msgstr "Sudah menyajikan"
 
 #: src/map/handler/Map.SlideShow.js:304
 msgid "You are already presenting this document"
-msgstr ""
+msgstr "Anda sudah mulai menyajikan dokumen ini"
 
 #: src/map/handler/Map.SlideShow.js:314
 msgid "Presentation disabled"
-msgstr ""
+msgstr "Presentasi dinonaktifkan"
 
 #: src/map/handler/Map.SlideShow.js:315
 msgid "Presentation mode has been disabled for this document"
-msgstr ""
+msgstr "Mode presentasi telah dinonaktifkan untuk dokumen ini"
 
 #: src/map/handler/Map.WOPI.js:152
 msgid "Creating new file from template..."
@@ -2932,7 +2935,7 @@ msgstr "Selamat Datang di Collabora Online"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:26-7
 msgid "Explore The New %coolVersion"
-msgstr "Jelajahi Sang %coolVersion Baru"
+msgstr "Jelajahi %coolVersion Baru"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:27-7
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:38-7
@@ -3002,6 +3005,10 @@ msgid ""
 "translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
 "translate=\"true\">3</a>"
 msgstr ""
+"<a id=\"slide-1-indicator\" class=\"active\" href=\"#slide-1\" data-"
+"translate=\"true\">1</a> <a id=\"slide-2-indicator\" href=\"#slide-2\" data-"
+"translate=\"true\">2 </a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
+"translate=\"true\">3 </a>"
 
 #~ msgid "ODF Spreadsheet (.ods)"
 #~ msgstr "Lembar sebar ODF (.ods)"
