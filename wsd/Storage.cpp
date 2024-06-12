@@ -141,8 +141,10 @@ void StorageBase::initialize()
         sslClientParams.cipherList = COOLWSD::getPathFromConfigWithFallback("storage.ssl.cipher_list", "ssl.cipher_list");
 
         const bool caLocationEmpty = sslClientParams.caLocation.empty();
-        // Fallback to false if caLocation is empty for back compatibility, otherwise inherit from ssl.ssl_verification
-        const bool sslVerification = caLocationEmpty ? false : COOLWSD::getConfigValue<bool>("ssl.ssl_verification", true);
+        // Fallback to false if caLocation is empty for back compatibility, otherwise the fallback is to inherit from ssl.ssl_verification
+        const bool sslDefaultVerification = caLocationEmpty ? false : COOLWSD::getConfigValue<bool>("ssl.ssl_verification", true);
+        // Get storage.ssl.ssl_verification, and use sslDefaultVerification as fallback
+        const bool sslVerification = COOLWSD::getConfigValue<bool>("storage.ssl.ssl_verification", sslDefaultVerification);
 
         sslClientParams.verificationMode = !sslVerification ? Poco::Net::Context::VERIFY_NONE : Poco::Net::Context::VERIFY_STRICT;
         sslClientParams.loadDefaultCAs = true;
