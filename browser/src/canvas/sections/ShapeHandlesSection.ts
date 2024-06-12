@@ -591,7 +591,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 	}
 
 	adjustSVGProperties() {
-		if (this.sectionProperties.svg && this.sectionProperties.svg.style.display === '' && app.map._docLayer._graphicSelection && this.sectionProperties.shapeRectangleProperties) {
+		if (this.sectionProperties.svg && this.sectionProperties.svg.style.display === '' && app.map._docLayer._graphicSelection) {
 
 			const clientRect = (this.sectionProperties.svg.children[0] as SVGElement).getBoundingClientRect();
 			const width: number = clientRect.width * app.getScale();
