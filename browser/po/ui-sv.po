@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-06-06 08:34+0200\n"
-"PO-Revision-Date: 2024-05-22 15:02+0000\n"
-"Last-Translator: bittin1ddc447d824349b2 <bittin@reimu.nl>\n"
+"PO-Revision-Date: 2024-06-11 11:25+0000\n"
+"Last-Translator: Leif-Jöran Olsson <info@friprogramvarusyndikatet.se>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/sv/>\n"
-"Language: \n"
+"Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -479,11 +479,11 @@ msgstr "Klistra in special"
 
 #: src/control/Control.ContextMenu.js:239
 msgid "Copy Cells"
-msgstr ""
+msgstr "Kopiera celler"
 
 #: src/control/Control.ContextMenu.js:247
 msgid "Fill Series"
-msgstr ""
+msgstr "Fyll serie"
 
 #: src/control/Control.DocumentNameInput.js:113
 msgid "Path"
@@ -1073,12 +1073,12 @@ msgstr "Spara kommentarer"
 #: src/control/Control.Menubar.js:413
 #: src/control/Control.NotebookbarBuilder.js:602
 msgid "Full Page Slides"
-msgstr ""
+msgstr "Bildspel på helsida"
 
 #: src/control/Control.Menubar.js:414
 #: src/control/Control.NotebookbarBuilder.js:606
 msgid "Notes Pages"
-msgstr ""
+msgstr "Anteckningssidor"
 
 #: src/control/Control.Menubar.js:448
 #: src/control/Control.NotebookbarImpress.js:444
@@ -1598,7 +1598,7 @@ msgstr "Gå Offline"
 #: src/control/Control.ServerAuditDialog.ts:97
 #: src/control/Control.ServerAuditDialog.ts:98
 msgid "Server audit"
-msgstr ""
+msgstr "Serverkoll"
 
 #: src/control/Control.NotebookbarWriter.js:1312
 msgid "Rich Text"
@@ -1650,28 +1650,27 @@ msgstr "Töm sökfältet"
 
 #: src/control/Control.ServerAuditDialog.ts:28
 msgid "The is_admin user property is not set"
-msgstr ""
+msgstr "Egenskapen is_admin är inte satt"
 
 #: src/control/Control.ServerAuditDialog.ts:32
 msgid "The is_admin user property is set"
-msgstr ""
+msgstr "Egenskapen is_admin är satt"
 
 #: src/control/Control.ServerAuditDialog.ts:116
 msgid "No issues found"
-msgstr ""
+msgstr "Inga problem hittades"
 
 #: src/control/Control.ServerAuditDialog.ts:122
-#, fuzzy
 msgid "Status"
-msgstr "Status:"
+msgstr "Status"
 
 #: src/control/Control.ServerAuditDialog.ts:167
 msgid "Check security warnings of your server"
-msgstr ""
+msgstr "Kontrollera säkerhetsvarningarna för din server"
 
 #: src/control/Control.ServerAuditDialog.ts:168
 msgid "OPEN"
-msgstr ""
+msgstr "ÖPPNA"
 
 #: src/control/Control.SheetsBar.js:48
 msgid "Scroll to the first sheet"
@@ -2074,11 +2073,11 @@ msgstr "Ta bort tabbstopp"
 
 #: src/control/VRuler.ts:377
 msgid "Top Margin"
-msgstr ""
+msgstr "Övre kant"
 
 #: src/control/VRuler.ts:378
 msgid "Bottom Margin"
-msgstr ""
+msgstr "Undre kant"
 
 #: src/control/Signing.js:27
 msgid "This document is digitally signed and the signature is valid."
