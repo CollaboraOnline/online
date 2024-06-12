@@ -536,7 +536,7 @@ class CanvasSectionContainer {
 				section.position[0] >= this.documentTopLeft[0] && section.position[0] <= this.documentBottomRight[0] ||
 				section.position[0] + section.size[0] >= this.documentTopLeft[0] && section.position[0] + section.size[0] <= this.documentBottomRight[0]
 			)
-			&&
+			||
 			(
 				section.position[1] >= this.documentTopLeft[1] && section.position[1] <= this.documentBottomRight[1] ||
 				section.position[1] + section.size[1] >= this.documentTopLeft[1] && section.position[1] + section.size[1] <= this.documentBottomRight[1]
