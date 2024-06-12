@@ -98,17 +98,34 @@ L.LOUtil = {
 	// Some items will only present in dark mode so we will not check errors for those in other mode
 	onlydarkModeItems : ['invertbackground'],
 
-	isDarkModeItem: function(name) {
+	// Common images used in all modes, so the default one will be used.
+	commonItems: ['serverauditok', 'serverauditerror'],
+
+	// Helper function to strip '.svg' suffix and 'lc_' prefix
+	stripName: function(name) {
 		// Remove the '.svg' suffix
 		var strippedName = name.replace(/\.svg$/, '');
-			
+
 		// Remove the 'lc_' prefix if it exists
 		if (strippedName.startsWith('lc_')) {
 			strippedName = strippedName.substring(3);
 		}
 
-		// Check if the stripped name is in the OnlydarkModeItems array
+		return strippedName;
+	},
+
+	isDarkModeItem: function(name) {
+		var strippedName = this.stripName(name);
+		
+		// Check if the stripped name is in the onlydarkModeItems array
 		return this.onlydarkModeItems.includes(strippedName);
+	},
+
+	isCommonForAllMode: function(name) {
+		var strippedName = this.stripName(name);
+
+		// Check if the stripped name is in the commonItems array
+		return this.commonItems.includes(strippedName);
 	},
 
 	/// unwind things to get a good absolute URL
@@ -154,17 +171,24 @@ L.LOUtil = {
 		img.src = defaultImage;
 		this.checkIfImageExists(img, true);
 	},
+
 	getImageURL: function(imgName) {
 		var defaultImageURL = this.getURL('images/' + imgName);
-
+	
+		// Check if the image name is in the commonItems list and return the normal image path
+		if (this.isCommonForAllMode(imgName)) {
+			return defaultImageURL;
+		}
+	
 		if (window.prefs.getBoolean('darkTheme')) {
 			return this.getURL('images/dark/' + imgName);
 		}
-
-		var dummyEmptyImg = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII='
+	
+		var dummyEmptyImg = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=';
 		defaultImageURL = this.isDarkModeItem(imgName) ? dummyEmptyImg : defaultImageURL;
 		return defaultImageURL;
 	},
+
 	checkIfImageExists: function (imageElement, imageIsLayoutCritical) {
 		imageElement.addEventListener('error', function (e) {
 			if (e.loUtilProcessed) {
