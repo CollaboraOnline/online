@@ -633,8 +633,10 @@ class ShapeHandlesSection extends CanvasSectionObject {
 	}
 
 	onNewDocumentTopLeft(size: number[]): void {
-		this.sectionProperties.svg.style.left = (this.sectionProperties.svgPosition[0] - this.documentTopLeft[0] + this.containerObject.getDocumentAnchor()[0]) + 'px';
-		this.sectionProperties.svg.style.top = (this.sectionProperties.svgPosition[1] - this.documentTopLeft[1] + this.containerObject.getDocumentAnchor()[1]) + 'px';
+		if (this.sectionProperties.svgPosition) {
+			this.sectionProperties.svg.style.left = (this.sectionProperties.svgPosition[0] - this.documentTopLeft[0] + this.containerObject.getDocumentAnchor()[0]) + 'px';
+			this.sectionProperties.svg.style.top = (this.sectionProperties.svgPosition[1] - this.documentTopLeft[1] + this.containerObject.getDocumentAnchor()[1]) + 'px';
+		}
 	}
 
 	public onDraw() {
