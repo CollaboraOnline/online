@@ -339,6 +339,14 @@ void ClientSession::handleClipboardRequest(DocumentBroker::ClipboardRequest     
                             return;
                         }
 
+                        // Check if this is likely produced by us.
+                        std::string clipboardHeader = httpResponse->get("X-COOL-Clipboard");
+                        if (clipboardHeader != "true")
+                        {
+                            LOG_ERR("Clipboard response is missing the required 'X-COOL-Clipboard: true' header");
+                            return;
+                        }
+
                         std::string body = httpResponse->getBody();
                         std::istringstream stream(body);
                         if (ClipboardData::isOwnFormat(stream))
@@ -2042,12 +2050,14 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
                 continue;
 
             std::ostringstream oss;
+            // The custom header for the clipboard of a living document.
             oss << "HTTP/1.1 200 OK\r\n"
                 << "Last-Modified: " << Util::getHttpTimeNow() << "\r\n"
                 << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
                 << "Content-Length: " << (empty ? 0 : (payload->size() - header)) << "\r\n"
                 << "Content-Type: application/octet-stream\r\n"
                 << "X-Content-Type-Options: nosniff\r\n"
+                << "X-COOL-Clipboard: true\r\n"
                 << "Connection: close\r\n"
                 << "\r\n";
 
