@@ -600,7 +600,8 @@ class ShapeHandlesSection extends CanvasSectionObject {
 			let left = 0, top = 0;
 
 			const viewBox: number[] = this.getViewBox(this.sectionProperties.svg.children[0]);
-			if (viewBox && clientRect.width > 0 && clientRect.height > 0) {
+			const isImage = this.sectionProperties.svg.querySelectorAll('.Graphic').length > 0;
+			if (viewBox && clientRect.width > 0 && clientRect.height > 0 && !isImage) {
 				this.sectionProperties.svg.children[0].style.width = width + 'px';
 				this.sectionProperties.svg.children[0].style.height = height + 'px';
 
@@ -613,8 +614,15 @@ class ShapeHandlesSection extends CanvasSectionObject {
 			else {
 				left = this.position[0];
 				top = this.position[1];
-				this.sectionProperties.svg.style.width = this.size[0] + 'px';
-				this.sectionProperties.svg.style.height = this.size[1] + 'px';
+				const widthText = this.size[0] + 'px';
+				const heightText = this.size[1] + 'px';
+
+				this.sectionProperties.svg.style.width = widthText;
+				this.sectionProperties.svg.style.height = heightText;
+				if (isImage) {
+					this.sectionProperties.svg.children[0].setAttribute('width', widthText);
+					this.sectionProperties.svg.children[0].setAttribute('height', heightText);
+				}
 			}
 
 			this.sectionProperties.svg.style.left = (left - this.documentTopLeft[0] + this.containerObject.getDocumentAnchor()[0]) + 'px';
