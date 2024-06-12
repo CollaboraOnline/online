@@ -71,7 +71,8 @@ private:
     /// Returns quarantine directory size in bytes.
     static std::size_t quarantineSize();
 
-    void makeQuarantineSpace();
+    /// Cleans up quarantined files to make sure we don't exceed MaxSizeBytes.
+    static void makeQuarantineSpace(std::size_t headroomBytes);
 
     /// Removes old quarantined files for the given DocKey based on MaxVersions and @oldestTimestamp.
     /// Doesn't remove the DocKey from QuarantineMap if it's empty nor does it remove the DocKey directory.
