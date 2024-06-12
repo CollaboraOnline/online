@@ -483,7 +483,8 @@ bool ChildSession::_handleInput(const char *buffer, int length)
                tokens.equals(0, "a11ystate") ||
                tokens.equals(0, "geta11yfocusedparagraph") ||
                tokens.equals(0, "geta11ycaretposition") ||
-               tokens.equals(0, "toggletiledumping"));
+               tokens.equals(0, "toggletiledumping") ||
+               tokens.equals(0, "getslideshowinfo"));
 
         ProfileZone pz("ChildSession::_handleInput:" + tokens[0]);
         if (tokens.equals(0, "clientzoom"))
@@ -725,6 +726,10 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         else if (tokens.equals(0, "toggletiledumping"))
         {
             setDumpTiles(tokens[1] == "true");
+        }
+        else if (tokens.equals(0, "getslideshowinfo"))
+        {
+            return getSlideShowInfo();
         }
         else
         {
@@ -2730,6 +2735,18 @@ bool ChildSession::getA11yCaretPosition()
     getLOKitDocument()->setView(_viewId);
     int pos = getLOKitDocument()->getA11yCaretPosition();
     sendTextFrame("a11ycaretposition: " + std::to_string(pos));
+    return true;
+}
+
+bool ChildSession::getSlideShowInfo()
+{
+    getLOKitDocument()->setView(_viewId);
+
+    char* info = nullptr;
+    info = getLOKitDocument()->getSlideShowInfo();
+    std::string data(info);
+    free(info);
+    sendTextFrame("slideshowinfo: " + data);
     return true;
 }
 

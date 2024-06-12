@@ -1600,6 +1600,17 @@ L.CanvasTileLayer = L.Layer.extend({
 				}
 			}
 		}
+		else if (textMsg.startsWith('slideshowinfo:')) {
+			window.app.console.log('_onMessage: ' + textMsg);
+			obj = JSON.parse(textMsg.substring('slideshowinfo:'.length + 1));
+			if (this._map.slideShow) {
+				window.app.console.log('onMessage: this._map.slideShow');
+				this._map.slideShow.initializeSlideShowInfo(obj.slides);
+			}
+		}
+		else if (textMsg.startsWith('sliderenderingcomplete:')) {
+			this._map.fire('sliderenderingcomplete');
+		}
 	},
 
 	// Returns a guess of how many tiles are yet to arrive

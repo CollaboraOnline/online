@@ -3,36 +3,343 @@
  * L.Map.SlideShow is handling the slideShow action
  */
 
-/* global _ sanitizeUrl */
+/* global _ app */
 L.Map.mergeOptions({
 	slideShow: true
 });
 
 L.Map.SlideShow = L.Handler.extend({
 
-	_slideURL: '', // store the URL for svg
 	_presentInWindow: false,
-	_cypressSVGPresentationTest: false,
 	_slideShowWindowProxy: null,
+	_slideShowInfo: {},
+	_firstSlideHash: '',
+	_lastSlideHash: '',
+	_requestedSlideHash: '',
+	_displayedSlideHash: '',
+	_canvasWidth: 960,
+	_canvasHeight: 540,
+	_cachedBackgrounds: {},
+	_cachedMasterPages: {},
+	_cachedDrawPages: {},
+	_offscreenCanvas: null,
+	_offscreenContext: null,
+	_currentCanvas: null,
+	_currentCanvasContext: null,
 
 	initialize: function (map) {
 		this._map = map;
-		window.app.console.log('L.Map.SlideShow: Cypress in window: ' + ('Cypress' in window));
-		this._cypressSVGPresentationTest =
-			L.Browser.cypressTest && 'Cypress' in window
-			&& window.Cypress.spec.name === 'impress/fullscreen_presentation_spec.js';
 	},
 
 	addHooks: function () {
 		this._map.on('fullscreen', this._onFullScreen, this);
 		this._map.on('presentinwindow', this._onPresentWindow, this);
-		this._map.on('slidedownloadready', this._onSlideDownloadReady, this);
+		this._map.on('sliderenderingcomplete', this._onSlideRenderingComplete, this);
 	},
 
 	removeHooks: function () {
 		this._map.off('fullscreen', this._onFullScreen, this);
 		this._map.off('presentinwindow', this._onPresentWindow, this);
-		this._map.off('slidedownloadready', this._onSlideDownloadReady, this);
+		this._map.off('sliderenderingcomplete', this._onSlideRenderingComplete, this);
+	},
+
+	initializeSlideShowInfo: function(slides) {
+		window.app.console.log('SlideShow.initializeSlideShowInfo: slide count: ' + slides.length);
+		let numberOfSlides = slides.length;
+		if (numberOfSlides === 0)
+			return;
+		this._firstSlideHash = slides[0].hash;
+		this._lastSlideHash = slides[numberOfSlides - 1].hash;
+
+		let prevSlideHash = this._lastSlideHash;
+		for (let i = 0; i < numberOfSlides; ++i) {
+			const slide = slides[i];
+			this._slideShowInfo[slide.hash] = {
+				index: slide.index,
+				empty: slide.empty,
+				masterPage: slide.masterPage,
+				masterPageObjectsVisible: slide.masterPageObjectsVisible || false,
+				background: slide.background,
+				prev: prevSlideHash,
+				next: i+1 < numberOfSlides ? slides[i+1].hash : this._firstSlideHash
+			};
+			prevSlideHash = slide.hash;
+		}
+		this._map.fire('slideshowinforeceived');
+	},
+
+	_requestSlideShowInfo: function() {
+		app.socket.sendMessage('getslideshowinfo');
+	},
+
+	_onPresentWindow: function (e) {
+		if (this._checkPresentationDisabled()) {
+			this._notifyPresentationDisabled();
+			return;
+		}
+
+		if (this._checkAlreadyPresenting()) {
+			this._notifyAlreadyPresenting();
+			return;
+		}
+
+		this._presentInWindow = true;
+		this._startSlideNumber = 0;
+		if (e.startSlideNumber !== undefined) {
+			this._startSlideNumber = e.startSlideNumber;
+		}
+
+		this._startSlideShow();
+	},
+
+	_startSlideShow: function() {
+		this._computeInitialCanvasSize();
+		window.app.console.log('SlideShow._startSlideShow: canvas width: ' + this._canvasWidth + ', height: ' + this._canvasHeight);
+		this._initialSlide = true;
+		this._offscreenCanvas = new OffscreenCanvas(this._canvasWidth, this._canvasHeight);
+		this._offscreenContext = this._offscreenCanvas.getContext('2d');
+
+		this._map.on('slideshowinforeceived', this._requestInitialSlide, this);
+		this._requestSlideShowInfo();
+	},
+
+	_requestInitialSlide: function() {
+		this._map.off('slideshowinforeceived', this._requestInitialSlide, this);
+		this._requestSlide(this._firstSlideHash);
+	},
+
+	_requestSlide: function(slideHash) {
+		window.app.console.log('SlideShow._requestSlide: ' + slideHash);
+		this._requestedSlideHash = slideHash;
+		const slideInfo = this._slideShowInfo[slideHash];
+		if (!slideInfo) {
+			window.app.console.log('SlideShow._requestSlide: No info for requested slide: hash: ' + slideHash);
+			return;
+		}
+
+		if (!this._offscreenContext) {
+			window.app.console.log('SlideShow._requestSlide: No offscreen context initialized');
+			return;
+		}
+
+		this._offscreenContext.clearRect(0, 0, this._canvasWidth, this._canvasHeight);
+
+		const backgroundRendered = this._drawBackground(slideHash);
+		const masterPageRendered = this._drawMasterPage(slideHash);
+		if (backgroundRendered && masterPageRendered) {
+			if (this._drawDrawPage(slideHash)) {
+				this._onSlideRenderingComplete();
+				return;
+			}
+		}
+
+		window.app.console.log(`getslide hash=${slideHash} width=${this._canvasWidth} height=${this._canvasHeight} ` +
+			`renderBackground=${!backgroundRendered} renderMasterPage=${!masterPageRendered}`);
+
+		// app.socket.sendMessage(
+		// 	`getslide hash=${slideHash} width=${this._canvasWidth} height=${this._canvasHeight} ` +
+		// 	`renderBackground=${!backgroundRendered} renderMasterPage=${!masterPageRendered}`);
+	},
+
+	_drawSlide: function(hash) {
+		const slideInfo = this._slideShowInfo[hash];
+		if (!slideInfo) {
+			window.app.console.log('No info for requested slide: hash: ' + hash);
+			return;
+		}
+
+		this._drawBackground(hash);
+		this._drawMasterPage(hash);
+		this._drawDrawPage(hash);
+	},
+
+	_drawBackground: function(slideHash) {
+		const slideInfo = this._slideShowInfo[slideHash];
+		if (!slideInfo.background)
+			return true;
+
+		if (slideInfo.background.fillColor) {
+			this._offscreenContext.fillStyle = '#' + slideInfo.background.fillColor;
+			window.app.console.log('SlideShow._drawBackground: ' + this._offscreenContext.fillStyle);
+			this._offscreenContext.fillRect(0, 0, this._canvasWidth, this._canvasHeight);
+			return true;
+		}
+
+		let backgroundHash = slideInfo.background.hash;
+		if (!backgroundHash) {
+			const masterPageLayers = this._cachedMasterPages[slideInfo.masterPage];
+			if (masterPageLayers) {
+				backgroundHash = masterPageLayers.backgroundHash;
+			}
+		}
+		if (!backgroundHash)
+			return false;
+
+		const background = this._cachedBackgrounds[backgroundHash];
+		if (!background) {
+			window.app.console.log('No cached background: slide hash: ' + slideHash);
+			return false;
+		}
+
+		this._drawBitmap(background);
+		return true;
+	},
+
+	_drawMasterPage: function(slideHash) {
+		const slideInfo = this._slideShowInfo[slideHash];
+		if (!slideInfo.masterPageObjectsVisible)
+			return true;
+
+		const masterPageLayers = this._cachedMasterPages[slideInfo.masterPage];
+		if (!masterPageLayers) {
+			window.app.console.log('No layer cached for master page: ' + slideInfo.masterPage);
+			return false;
+		}
+
+		for (let i = 0; i < masterPageLayers.length; ++i) {
+			if (masterPageLayers[i].type === 'bitmap') {
+				this._drawBitmap(masterPageLayers[i].image);
+			}
+		}
+		return true;
+	},
+
+	_drawDrawPage: function(slideHash) {
+		const slideInfo = this._slideShowInfo[slideHash];
+		if (slideInfo.empty) {
+			return true;
+		}
+
+		const pageLayers = this._cachedDrawPages[slideHash];
+		if (!pageLayers) {
+			window.app.console.log('No layer cached for draw page: ' + slideHash);
+			return false;
+		}
+
+		for (let i = 0; i < pageLayers.length; ++i) {
+			if (pageLayers[i].type === 'bitmap') {
+				this._drawBitmap(pageLayers[i].image);
+			}
+		}
+		return true;
+	},
+
+	_drawBitmap: function(image) {
+		window.app.console.log('SlideShow._drawBitmap: ' + image);
+	},
+
+	_onSlideRenderingComplete: function() {
+		if (this._initialSlide) {
+			this._initialSlide = false;
+			this._startPlaying();
+		}
+		this._showRenderedSlide();
+	},
+
+	_startPlaying: function() {
+		// Windowed Presentation
+		if (this._presentInWindow) {
+			window.app.console.log('SlideShow._startPlaying');
+			var popupTitle = _('Windowed Presentation: ') + this._map['wopi'].BaseFileName;
+			const htmlContent = this.generateSlideWindowHtml(popupTitle);
+
+			this._slideShowWindowProxy = window.open('', '_blank', 'popup');
+
+			// this._slideShowWindowProxy.addEventListener('load', this._handleSlideWindowLoaded.bind(this), false);
+
+			if (!this._slideShowWindowProxy) {
+				this._map.uiManager.showInfoModal('popup-blocked-modal',
+					_('Windowed Presentation Blocked'),
+					_('Presentation was blocked. Please allow pop-ups in your browser. This lets slide shows to be displayed in separated windows, allowing for easy screen sharing.'), '',
+					_('OK'), null, false);
+			}
+
+			this._slideShowWindowProxy.document.documentElement.innerHTML = htmlContent;
+			this._slideShowWindowProxy.document.close();
+			this._slideShowWindowProxy.focus();
+
+			const canvas = this._slideShowWindowProxy.document.getElementById('canvas');
+			if (!canvas) {
+				window.app.console.log('SlideShow._startPlaying: no canvas element found');
+				return;
+			}
+			canvas.width = this._canvasWidth;
+			canvas.height = this._canvasHeight;
+
+			const ctx = canvas.getContext("bitmaprenderer");
+			if (!ctx) {
+				window.app.console.log('SlideShow._startPlaying: can not get a valid context for current canvas');
+				return;
+			}
+			this._currentCanvas = canvas;
+			this._currentCanvasContext = ctx;
+
+			this._slideShowWindowProxy.addEventListener('keydown', this._onSlideWindowKeyPress.bind(this));
+			this._slideShowWindowProxy.addEventListener('resize', this._onSlideWindowResize.bind(this));
+
+			this._centerCanvasInSlideWindow();
+		}
+	},
+
+	_showRenderedSlide: function() {
+		if (!this._offscreenCanvas) {
+			window.app.console.log('SlideShow._showRenderedSlide: no offscreen canvas available.');
+			return;
+		}
+		if (!this._currentCanvasContext) {
+			window.app.console.log('SlideShow._showRenderedSlide: no valid context for current canvas');
+			return;
+		}
+
+		this._displayedSlideHash = this._requestedSlideHash;
+		const bitmap = this._offscreenCanvas.transferToImageBitmap();
+		this._currentCanvasContext.transferFromImageBitmap(bitmap);
+	},
+
+	generateSlideWindowHtml: function(title) {
+		window.app.console.log('SlideShow.generateSlideWindowHtml: title: ' + title);
+
+		var sanitizer = document.createElement('div');
+		sanitizer.innerText = title;
+		var sanitizedTitle = sanitizer.innerHTML;
+
+		return `
+		<!DOCTYPE html>
+		<html lang="en">
+		<head>
+			<meta charset="UTF-8">
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+			<title>${sanitizedTitle}</title>
+			<style>
+				body, html {
+					margin: 0;
+					padding: 0;
+					height: 100%;
+					overflow: hidden; /* Prevent scrollbars */
+				}
+		        .vertical-center {
+					margin: 0;
+					position: absolute;
+					width: 100%;
+					top: 50%;
+					/*-ms-transform: translateY(-50%);*/
+					transform: translateY(-50%);
+				}
+				.horizontal-center {
+					margin: 0;
+					position: absolute;
+					height: 100%;
+					left: 50%;
+					/*-ms-transform: translateY(-50%);*/
+					transform: translateX(-50%);
+				}
+			</style>
+		</head>
+		<body>
+			<canvas id="canvas"></canvas>
+		</body>
+		</html>
+		`;
 	},
 
 	_onFullScreen: function (e) {
@@ -53,7 +360,7 @@ L.Map.SlideShow = L.Handler.extend({
 
 		if (this._map._docLayer.hiddenSlides() >= this._map.getNumberOfParts()) {
 			this._map.uiManager.showInfoModal('allslidehidden-modal', _('Empty Slide Show'),
-					'All slides are hidden!', '', _('OK'), function () { }, false, 'allslidehidden-modal-response');
+				'All slides are hidden!', '', _('OK'), function () { }, false, 'allslidehidden-modal-response');
 			return;
 		}
 
@@ -64,7 +371,7 @@ L.Map.SlideShow = L.Handler.extend({
 			if (typeof e.startSlideNumber !== 'undefined') {
 				that._startSlideNumber = e.startSlideNumber;
 			}
-			that.fullscreen = !that._cypressSVGPresentationTest;
+			// that.fullscreen = !that._cypressSVGPresentationTest;
 			that._map.downloadAs('slideshow.svg', 'svg', null, 'slideshow');
 
 			L.DomEvent.on(document, 'fullscreenchange', that._onFullScreenChange, that);
@@ -80,48 +387,26 @@ L.Map.SlideShow = L.Handler.extend({
 			doPresentation(that, e);
 		};
 
-		if (!(this._cypressSVGPresentationTest || this._map['wopi'].DownloadAsPostMessage)) {
-			this._slideShow = L.DomUtil.create('iframe', 'leaflet-slideshow', this._map._container);
-			if (this._slideShow.requestFullscreen) {
+		this._slideShow = L.DomUtil.create('iframe', 'leaflet-slideshow', this._map._container);
+		if (this._slideShow.requestFullscreen) {
 
-				let that = this;
-				this._slideShow.requestFullscreen()
-					.then(function () { doPresentation(that, e); })
-					.catch(function () {
-						fallback(that, e);
-					});
+			let that = this;
+			this._slideShow.requestFullscreen()
+				.then(function () { doPresentation(that, e); })
+				.catch(function () {
+					fallback(that, e);
+				});
 
-				return;
-			}
+			return;
 		}
 
 		fallback(this, e);
 	},
 
-	_onPresentWindow: function (e) {
-		if (this._checkPresentationDisabled()) {
-			this._notifyPresentationDisabled();
-			return;
-		}
-
-		if (this._checkAlreadyPresenting()) {
-			this._notifyAlreadyPresenting();
-			return;
-		}
-
-		this._presentInWindow = true;
-		this._startSlideNumber = 0;
-		if (e.startSlideNumber !== undefined) {
-			this._startSlideNumber = e.startSlideNumber;
-		}
-
-		this._map.downloadAs('slideshow.svg', 'svg', null, 'slideshow');
-	},
-
 	_onFullScreenChange: function () {
-		if (this._map['wopi'].DownloadAsPostMessage) {
-			return;
-		}
+		// if (this._map['wopi'].DownloadAsPostMessage) {
+		// 	return;
+		// }
 
 		this.fullscreen = document.fullscreenElement;
 		if (!this.fullscreen) {
@@ -138,156 +423,55 @@ L.Map.SlideShow = L.Handler.extend({
 		this._map.focus();
 	},
 
-	_onSlideDownloadReady: function (e) {
-		if ('processCoolUrl' in window) {
-			e.url = window.processCoolUrl({ url: e.url, type: 'slideshow' });
-		}
-
-		this._slideURL = e.url;
-		window.app.console.debug('slide file url : ', this._slideURL);
-
-		if ('processCoolUrl' in window) {
-			this._processSlideshowLinks();
-		}
-		this._processSlideshowVideoForSafari();
-
-		this._startPlaying();
-	},
-
-	_startPlaying: function() {
-		// Windowed Presentation
-		if (this._presentInWindow) {
-
-			var popupTitle = _('Windowed Presentation: ') + this._map['wopi'].BaseFileName;
-			const htmlContent = this._generateSlideWindowHtml(popupTitle, this._slideURL);
-
-			this._slideShowWindowProxy = window.open('', '_blank', 'popup');
-			
-			if (!this._slideShowWindowProxy) {
-				this._map.uiManager.showInfoModal('popup-blocked-modal',
-					_('Windowed Presentation Blocked'),
-					_('Presentation was blocked. Please allow pop-ups in your browser. This lets slide shows to be displayed in separated windows, allowing for easy screen sharing.'), '',
-					_('OK'), null, false);
-			}
-
-			this._slideShowWindowProxy.document.documentElement.innerHTML = htmlContent;
-			this._slideShowWindowProxy.document.close();
-			this._slideShowWindowProxy.focus();
-
-			this._slideShowWindowProxy.onload = this._handleSlideWindowLoaded.bind(this);
-
-			// this event listener catches keypresses if the user somehow manages to unfocus the iframe
-			this._slideShowWindowProxy.addEventListener('keydown', this._onSlideWindowKeyPress.bind(this));
-
-			var slideShowWindow = this._slideShowWindowProxy;
-			this._map.uiManager.showSnackbar(_('Presenting in window'),
-				_('Close Presentation'),
-				function() {slideShowWindow.close();},
-				-1, false, true);
-
-			this._windowCloseInterval = setInterval(function() {
-				if (slideShowWindow.closed) {
-					clearInterval(this._windowCloseInterval);
-					this._map.uiManager.closeSnackbar();
-					this._slideShowWindowProxy = null;
-				}
-			}.bind(this), 500);
-			return;
-		}
-		// Cypress Presentation
-		if (this._cypressSVGPresentationTest || !this._slideShow) {
-			window.open(this._slideURL, '_self');
-			return;
-		}
-		// Fullscreen Presentation
-
-		this._map.uiManager.showSnackbar(_('Presenting in fullscreen'),
-			_('End Presentation'),
-			function() {this._stopFullScreen();},
-			null, false, true);
-
-		var separator = (this._slideURL.indexOf('?') === -1) ? '?' : '&';
-		this._slideShow.src = this._slideURL + separator + 'StartSlideNumber=' + this._startSlideNumber;
-		this._slideShow.contentWindow.focus();
-	},
-
 	_handleSlideWindowLoaded: function() {
-		const iframe = this._slideShowWindowProxy.document.querySelector('iframe');
+		window.app.console.log('SlideShow._handleSlideWindowLoaded');
+	},
 
-		if (iframe) {
-			iframe.contentWindow.focus();
-			iframe.contentWindow.addEventListener('keydown', this._onSlideWindowKeyPress.bind(this));
+	_computeInitialCanvasSize: function() {
+		let viewWidth = window.innerWidth;
+		let viewHeight = window.innerHeight;
+		if (!this._presentInWindow) {
+			viewWidth = window.screen.width;
+			viewHeight = window.screen.height;
+		}
+		this._computeCanvasSize(viewWidth, viewHeight)
+	},
+
+	_computeCanvasSize: function(viewWidth, viewHeight) {
+		viewWidth *= 1.20;
+		viewHeight *= 1.20;
+
+		if (viewWidth > 1920 || viewHeight > 1080) {
+			this._canvasWidth = 1920;
+			this._canvasHeight = 1080
+		}
+		else if (viewWidth > 1280 || viewHeight > 720) {
+			this._canvasWidth = 1280;
+			this._canvasHeight = 720
+		}
+		else if (viewWidth > 960 || viewHeight > 540) {
+			this._canvasWidth = 940;
+			this._canvasHeight = 540;
+		}
+		else {
+			this._canvasWidth = 640;
+			this._canvasHeight = 360;
 		}
 	},
 
-	_generateSlideWindowHtml: function(title, slideURL) {
-		var sanitizer = document.createElement('div');
-		sanitizer.innerText = title;
-
-		var sanitizedTitle = sanitizer.innerHTML;
-		var sanitizedUrl = sanitizeUrl(slideURL);
-		return `
-		<!DOCTYPE html>
-		<html lang="en">
-		<head>
-			<meta charset="UTF-8">
-			<meta name="viewport" content="width=device-width, initial-scale=1.0">
-			<title>${sanitizedTitle}</title>
-			<style>
-				body, html {
-					margin: 0;
-					padding: 0;
-					height: 100%;
-					overflow: hidden; /* Prevent scrollbars */
-				}
-				iframe {
-					width: 100%;
-					height: 100%;
-					border: none;
-				}
-			</style>
-		</head>
-		<body>
-			<iframe src="${sanitizedUrl}"></iframe>
-		</body>
-		</html>
-		`;
+	_centerCanvasInSlideWindow: function() {
+		const winWidth = this._slideShowWindowProxy.innerWidth;
+		const winHeight = this._slideShowWindowProxy.innerHeight;
+		if (winWidth * this._canvasHeight < winHeight * this._canvasWidth) {
+			this._currentCanvas.className = 'vertical-center';
+		} else {
+			this._currentCanvas.className = 'horizontal-center';
+		}
 	},
 
-	_processSlideshowLinks: function() {
-		this._slideShow.addEventListener('load', (function onLoadSlideshow() {
-			var linkElements = [].slice.call(this._slideShow.contentDocument.querySelectorAll('a'))
-				.filter(function(el) {
-					return el.getAttribute('href') || el.getAttribute('xlink:href');
-				})
-				.map(function(el) {
-					return {
-						el: el,
-						link: el.getAttribute('href') || el.getAttribute('xlink:href'),
-						parent: el.parentNode
-					};
-				});
-
-			var setAttributeNs = function(el, link) {
-				link = window.processCoolUrl({ url: link, type: 'slide' });
-
-				el.setAttributeNS('http://www.w3.org/1999/xlink', 'href', link);
-				el.setAttribute('target', '_blank');
-			};
-
-			linkElements.forEach(function(item) {
-				setAttributeNs(item.el, item.link);
-
-				var parentLink = item.parent.getAttribute('xlink:href');
-
-				if (parentLink) {
-					setAttributeNs(item.parent, parentLink);
-				}
-
-				item.parent.parentNode.insertBefore(item.parent.cloneNode(true), item.parent.nextSibling);
-				item.parent.parentNode.removeChild(item.parent);
-			});
-		}).bind(this));
+	_onSlideWindowResize: function() {
+		window.app.console.log('SlideShow._onSlideWindowResize');
+		this._centerCanvasInSlideWindow();
 	},
 
 	_checkAlreadyPresenting: function() {
@@ -317,78 +501,20 @@ L.Map.SlideShow = L.Handler.extend({
 	},
 
 	_onSlideWindowKeyPress: function(e) {
+		window.app.console.log('SlideShow._onSlideWindowKeyPress: ' + e.code);
 		if (e.code === 'Escape') {
 			this._slideShowWindowProxy.opener.focus();
 			this._slideShowWindowProxy.close();
 			this._map.uiManager.closeSnackbar();
 		}
-	},
-
-	_processSlideshowVideoForSafari: function() {
-		// There is an issue where Safari without LBSE renders the video in the wrong place, so we
-		// must move it back into frame
-		// GH#7399 fixed the same issue, but not in presentation mode
-		if (!L.Browser.safari) {
-			return;
+		else if (e.code === 'ArrowRight') {
+			const slideInfo = this._slideShowInfo[this._displayedSlideHash];
+			this._requestSlide(slideInfo.next);
 		}
-
-		if (!this._slideShow) {
-			console.error('In Safari without fixing slideshow videos, this may cause videos to be offset');
-			return;
+		else if (e.code === 'ArrowLeft') {
+			const slideInfo = this._slideShowInfo[this._displayedSlideHash];
+			this._requestSlide(slideInfo.prev);
 		}
-
-		this._slideShow.addEventListener('load', (function onLoadSlideshow() {
-			var videos = this._slideShow.contentDocument.querySelectorAll('video');
-
-			var fixSVGPos = function(video) {
-				var videoContainer = video.parentNode;
-				var foreignObject = videoContainer.parentNode;
-				var svg = foreignObject.closest('svg');
-
-				return function() {
-					var widthRatio = svg.width.baseVal.value / svg.viewBox.baseVal.width;
-					var heightRatio = svg.height.baseVal.value / svg.viewBox.baseVal.height;
-					var minRatio = Math.min(widthRatio, heightRatio);
-
-					var leftRightBorders = svg.width.baseVal.value - minRatio * svg.viewBox.baseVal.width;
-					var topBottomBorders = svg.height.baseVal.value - minRatio * svg.viewBox.baseVal.height;
-
-					// revert the scaling positioning to center (back to top-left) by subtracting at 1/2 of width
-					var offsetX = -foreignObject.width.baseVal.value / 2.0;
-					var offsetY = -foreignObject.height.baseVal.value / 2.0;
-
-					// revert the object position
-					offsetX = offsetX - foreignObject.x.baseVal.value + (leftRightBorders / 4.0);
-					offsetY = offsetY - foreignObject.y.baseVal.value + (topBottomBorders / 4.0);
-
-					// reapply the scaling positioning to center by adding 1/2 of the non-scaled width
-					offsetX = offsetX + (foreignObject.width.baseVal.value * widthRatio / 2.0);
-					offsetY = offsetY + (foreignObject.height.baseVal.value * heightRatio / 2.0);
-
-					// reapply the object positioning
-					offsetX = offsetX + foreignObject.x.baseVal.value * widthRatio;
-					offsetY = offsetY + foreignObject.y.baseVal.value * heightRatio;
-
-					var scaleString = 'scale(' + minRatio + ')';
-					var translateString = 'translate(' + offsetX + 'px, ' + offsetY + 'px)';
-
-					videoContainer.style.transform = translateString + ' ' + scaleString;
-				};
-			};
-
-			for (var i = 0; i < videos.length; i++) {
-				var fixThisVideoPos = fixSVGPos(videos[i]);
-
-				fixThisVideoPos();
-				var observer = new MutationObserver(fixThisVideoPos);
-
-				observer.observe(this._slideShow, {
-					attributes: true
-				});
-
-				this._slideShow.contentDocument.defaultView.addEventListener('resize', fixThisVideoPos);
-			}
-		}).bind(this));
 	}
 });
 
