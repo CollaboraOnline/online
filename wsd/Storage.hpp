@@ -16,6 +16,7 @@
 #include <memory>
 #include <string>
 #include <chrono>
+#include <optional>
 
 #include <Poco/URI.h>
 #include <Poco/Util/Application.h>
@@ -621,7 +622,7 @@ public:
         bool getSupportsLocks() const { return _supportsLocks; }
         bool getUserCanRename() const { return _userCanRename; }
 
-        bool getIsAdminUser() const { return _isAdminUser; }
+        std::optional<bool> getIsAdminUser() const { return _isAdminUser; }
 
         TriState getDisableChangeTrackingShow() const { return _disableChangeTrackingShow; }
         TriState getDisableChangeTrackingRecord() const { return _disableChangeTrackingRecord; }
@@ -701,7 +702,7 @@ public:
         /// If user is allowed to rename the document
         bool _userCanRename = false;
         /// If user is considered as admin on the integrator side
-        bool _isAdminUser = false;
+        std::optional<bool> _isAdminUser = std::nullopt;
     };
 
     /// Returns the response of CheckFileInfo WOPI call for URI that was
