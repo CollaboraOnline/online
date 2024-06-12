@@ -12,12 +12,13 @@
  * Table Overlay
  */
 
+/* global app */
+
 L.CanvasTileLayer.include({
 	_initializeTableOverlay: function () {
 		this._tableColumnMarkers = [];
 		this._tableRowMarkers = [];
 		this._tableMarkersDragged = false;
-		this._initMoveMarkers();
 		this._tableSelectionColumnMarkers = [];
 		this._tableSelectionRowMarkers = [];
 		this._selectionHeaderDistanceFromTable = 6;
@@ -40,17 +41,6 @@ L.CanvasTileLayer.include({
 		if (!this._currentTableData)
 			return false;
 		return this._currentTableData.rows != null || this._currentTableData.columns != null;
-	},
-	_initMoveMarkers: function () {
-		this._tableMoveMarker = L.marker(new L.LatLng(0, 0), {
-			icon: L.divIcon({
-				className: 'table-move-marker',
-				iconSize: null
-			}),
-			draggable: true
-		});
-
-		this._tableMoveMarker.on('dragstart drag dragend', this._onTableMoveMarkerDrag, this);
 	},
 	_setMarkerPosition: function(marker) {
 		var point = this._twipsToLatLng(marker._positionTwips, this._map.getZoom());
@@ -120,7 +110,20 @@ L.CanvasTileLayer.include({
 		marker.on('dragstart drag dragend', this._onTableBorderResizeMarkerDrag, this);
 		return marker;
 	},
+	_addMoveMarker() {
+		let x = parseInt(this._currentTableData.rectangle.x); // * app.twipsToPixels;
+		let y = parseInt(this._currentTableData.rectangle.y); // * app.twipsToPixels;
 
+		x -= 750 * Math.cos(Math.PI * 0.25);
+		y -= 750 * Math.sin(Math.PI * 0.25);
+
+		this._tableAnchorSection = new app.definitions.shapeHandleAnchorSubSection(null, 'table-anchor', [20, 20], new app.definitions.simplePoint(x, y), null);
+		app.sectionContainer.addSection(this._tableAnchorSection);
+	},
+	_removeMoveMarker() {
+		if (this._tableAnchorSection)
+			app.sectionContainer.removeSection(this._tableAnchorSection.name);
+	},
 	_clearTableMarkers: function() {
 		var markerIndex;
 		for (markerIndex = 0; markerIndex < this._tableColumnMarkers.length; markerIndex++) {
@@ -143,18 +146,18 @@ L.CanvasTileLayer.include({
 		}
 		this._tableSelectionRowMarkers = [];
 
-		this._map.removeLayer(this._tableMoveMarker);
+		this._removeMoveMarker();
 	},
 
 	_updateTableMoveMarkerVisibility: function() {
 		if (this._map._docLayer._cursorMarker && this._map._docLayer._cursorMarker.isVisible())
-			this._map.removeLayer(this._tableMoveMarker);
+			this._removeMoveMarker();
 		else if (this._currentTableData
 			&& this._currentTableMarkerJson === this._lastTableMarkerJson
 			&& this._currentTableData.rows && this._currentTableData.columns
 			&& this._map.getDocType() === 'presentation' && this._currentTableData.rectangle
-			&& !this._map.hasLayer(this._tableMoveMarker))
-			this._map.addLayer(this._tableMoveMarker);
+			&& !this._tableAnchorSection)
+			this._addMoveMarker();
 	},
 
 	_updateTableMarkers: function() {
@@ -224,23 +227,7 @@ L.CanvasTileLayer.include({
 			this._addSelectionMarkers('row', rowPositions, firstColumnPosition, lastColumnPosition);
 
 			if (this._map.getDocType() === 'presentation' && this._currentTableData.rectangle) {
-				var topLeftTwips = new L.Point(parseInt(this._currentTableData.rectangle.x), parseInt(this._currentTableData.rectangle.y));
-				var offset = new L.Point(parseInt(this._currentTableData.rectangle.width), parseInt(this._currentTableData.rectangle.height));
-				var bottomRightTwips = topLeftTwips.add(offset);
-
-				var tableRectangle = new L.LatLngBounds(
-					this._twipsToLatLng(topLeftTwips, this._map.getZoom()),
-					this._twipsToLatLng(bottomRightTwips, this._map.getZoom()));
-				this._map.addLayer(this._tableMoveMarker);
-
-				var markerRect;
-				var movePosition = new L.LatLng(tableRectangle.getNorth(), tableRectangle.getWest());
-				movePosition = this._map.project(movePosition);
-				markerRect = this._tableMoveMarker._icon.getBoundingClientRect();
-				movePosition = movePosition.subtract(new L.Point(markerRect.width + 4, markerRect.height + 4));
-				movePosition = this._map.unproject(movePosition);
-				this._tableMoveMarker.setLatLng(movePosition);
-
+				this._addMoveMarker();
 				this._updateTableMoveMarkerVisibility();
 			}
 		}
@@ -407,22 +394,5 @@ L.CanvasTileLayer.include({
 		if (e.originalEvent)
 			e.originalEvent.preventDefault();
 	},
-	_onTableMoveMarkerDrag: function (event) {
-		var mouseEvent;
-		if (this._graphicMarker == null)
-			return;
-		if (event.type == 'dragstart') {
-			mouseEvent = this._createNewMouseEvent('mousedown', event.originalEvent);
-			this._graphicMarker._onDragStart(mouseEvent);
-		}
-		else if (event.type == 'drag') {
-			mouseEvent = this._createNewMouseEvent('mousemove', event.originalEvent);
-			this._graphicMarker._onDrag(mouseEvent);
-		}
-		else if (event.type == 'dragend') {
-			mouseEvent = this._createNewMouseEvent('mouseup', event.originalEvent);
-			this._graphicMarker._onDragEnd(mouseEvent);
-		}
-	}
 });
 
