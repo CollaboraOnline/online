@@ -64,9 +64,6 @@ public:
     /// Returns the last quarantined file's path.
     std::string lastQuarantinedFilePath() const;
 
-    /// Removes the quarantined files for our DocKey.
-    void removeQuarantinedFiles();
-
 private:
     /// Returns quarantine directory size in bytes.
     static std::size_t quarantineSize();
@@ -77,10 +74,6 @@ private:
     /// Removes old quarantined files for the given DocKey based on MaxVersions and @oldestTimestamp.
     /// Doesn't remove the DocKey from QuarantineMap if it's empty nor does it remove the DocKey directory.
     static void deleteOldQuarantineVersions(const std::string& docKey, std::size_t oldestTimestamp);
-
-    void removeQuarantine();
-
-    static std::vector<std::string> getAllFilesSorted(const std::string& path);
 
     /// Parses the given Old quarantine-filename into its components, which includes the DocKey.
     static Entry parseOldFilename(const std::string& filename);

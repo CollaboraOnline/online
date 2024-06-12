@@ -158,14 +158,6 @@ void Quarantine::initialize(const std::string& path)
                      << quarantineSize() << " bytes");
 }
 
-void Quarantine::removeQuarantine()
-{
-    if (!isEnabled())
-        return;
-
-    FileUtil::removeFile(QuarantinePath, true);
-}
-
 std::size_t Quarantine::quarantineSize()
 {
     LOG_ASSERT_MSG(!Mutex.try_lock(), "Quarantine Mutex must be taken");
@@ -322,22 +314,6 @@ void Quarantine::deleteOldQuarantineVersions(const std::string& docKey, std::siz
     }
 }
 
-std::vector<std::string> Quarantine::getAllFilesSorted(const std::string& path)
-{
-    std::vector<std::string> files;
-    Poco::File(path).list(files);
-
-    std::sort(files.begin(), files.end(),
-              [](const auto& lhs, const auto& rhs)
-              {
-                  const auto lhsPair = Util::u64FromString(Util::split(lhs, Delimiter).first);
-                  const auto rhsPair = Util::u64FromString(Util::split(rhs, Delimiter).first);
-                  return lhsPair.first && rhsPair.first && lhsPair.second < rhsPair.second;
-              });
-
-    return files;
-}
-
 bool Quarantine::quarantineFile(const std::string& docPath)
 {
     if (!isEnabled())
@@ -399,20 +375,6 @@ std::string Quarantine::lastQuarantinedFilePath() const
 
     const auto& fileList = QuarantineMap[_docKey];
     return fileList.empty() ? std::string() : fileList[fileList.size() - 1].fullPath();
-}
-
-void Quarantine::removeQuarantinedFiles()
-{
-    std::lock_guard<std::mutex> lock(Mutex);
-
-    LOG_DBG("Removing all quarantined files for [" << _docKey << ']');
-    for (const auto& file : QuarantineMap[_docKey])
-    {
-        LOG_TRC("Removing quarantined file [" << file.fullPath() << "] for [" << _docKey << ']');
-        FileUtil::removeFile(file.fullPath());
-    }
-
-    QuarantineMap.erase(_docKey);
 }
 
 Quarantine::Entry::Entry(const std::string& root, const std::string& filename)
