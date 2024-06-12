@@ -1908,7 +1908,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 }
 
 #zoterolist.jsdialog {
-	width: 800px;
+	width: calc(min(800px, 80vw));
 }
 
 .jsdialog[id^='zotero'][id$='-label'] {
@@ -2148,5 +2148,5 @@ kbd,
 }
 
 #ServerAuditDialog #ServerAuditDialog-mainbox {
-	min-width: 800px;
+	min-width: calc(min(800px, 80vw));
 }
