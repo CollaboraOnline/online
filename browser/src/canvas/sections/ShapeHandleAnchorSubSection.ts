@@ -53,24 +53,49 @@ class ShapeHandleAnchorSubSection extends HTMLObjectSection {
 		this.containerObject.requestReDraw();
 	}
 
+	tableMouseUp(point: number[], e: MouseEvent) {
+		const parameters = {
+			'TransformPosX': {
+				'type': 'long',
+				'value': Math.round((point[0] + this.position[0]) * app.pixelsToTwips)
+			},
+			'TransformPosY': {
+				'type': 'long',
+				'value': Math.round((point[1] + this.position[1]) * app.pixelsToTwips)
+			}
+		};
+
+		app.map.sendUnoCommand('.uno:TransformDialog', parameters);
+	}
+
+	shapeMouseUp(point: number[], e: MouseEvent) {
+		const parameters = {
+			'HandleNum': {
+				'type': 'long',
+				'value': this.sectionProperties.ownInfo.id
+			},
+			'NewPosX': {
+				'type': 'long',
+				'value': Math.round((point[0] + this.position[0]) * app.pixelsToTwips)
+			},
+			'NewPosY': {
+				'type': 'long',
+				'value': Math.round((point[1] + this.position[1]) * app.pixelsToTwips)
+			}
+		};
+
+		app.map.sendUnoCommand('.uno:MoveShapeHandle', parameters);
+	}
+
 	onMouseUp(point: number[], e: MouseEvent): void {
 		if (this.containerObject.isDraggingSomething()) {
-			const parameters = {
-				'HandleNum': {
-					'type': 'long',
-					'value': this.sectionProperties.ownInfo.id
-				},
-				'NewPosX': {
-					'type': 'long',
-					'value': Math.round((point[0] + this.position[0]) * app.pixelsToTwips)
-				},
-				'NewPosY': {
-					'type': 'long',
-					'value': Math.round((point[1] + this.position[1]) * app.pixelsToTwips)
-				}
-			};
-
-			app.map.sendUnoCommand('.uno:MoveShapeHandle', parameters);
+			// Tables don't have parent sections. This is used for separating table anchors from other anchors.
+			if (this.sectionProperties.parentHandlerSection) {
+				this.shapeMouseUp(point, e);
+			}
+			else {
+				this.tableMouseUp(point, e);
+			}
 		}
 	}
 
