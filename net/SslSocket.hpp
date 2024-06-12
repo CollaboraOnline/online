@@ -438,6 +438,11 @@ private:
 
                 handshakeFail();
 
+                std::string sslVerifyResult = getSslVerifyString(SSL_get_verify_result(_ssl));
+                // If there is anything useful available from SSL_get_verify_result provide a warning about that.
+                if (!sslVerifyResult.empty())
+                    LOG_ERR("SSL verification warning (" << context << "): " << sslVerifyResult);
+
                 throw std::runtime_error(msg);
             }
             break;
