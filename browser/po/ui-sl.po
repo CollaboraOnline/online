@@ -5,18 +5,18 @@ msgstr ""
 "Project-Id-Version: Collabora Online UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-06-06 08:34+0200\n"
-"PO-Revision-Date: 2024-04-07 12:12+0000\n"
+"PO-Revision-Date: 2024-06-11 11:25+0000\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/sl/>\n"
-"Language: \n"
+"Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
-"%100==4 ? 2 : 3;\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3;\n"
 "X-Accelerator-Marker: ~\n"
-"X-Generator: Weblate 5.5-dev\n"
+"X-Generator: Weblate 5.6-dev\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #: admin/admin.strings.js:15
@@ -483,11 +483,11 @@ msgstr "Posebno lepljenje"
 
 #: src/control/Control.ContextMenu.js:239
 msgid "Copy Cells"
-msgstr ""
+msgstr "Kopiraj celice"
 
 #: src/control/Control.ContextMenu.js:247
 msgid "Fill Series"
-msgstr ""
+msgstr "Zapolni nize"
 
 #: src/control/Control.DocumentNameInput.js:113
 msgid "Path"
@@ -903,7 +903,7 @@ msgstr "Temni način"
 #: src/control/Control.NotebookbarImpress.js:459
 #: src/control/Control.NotebookbarWriter.js:1477
 msgid "Invert Background"
-msgstr ""
+msgstr "Preobrni ozadje"
 
 #: src/control/Control.Menubar.js:154 src/control/Control.Menubar.js:458
 #: src/control/Control.Menubar.js:602 src/control/Control.Menubar.js:747
@@ -1077,12 +1077,12 @@ msgstr "Shrani komentarje"
 #: src/control/Control.Menubar.js:413
 #: src/control/Control.NotebookbarBuilder.js:602
 msgid "Full Page Slides"
-msgstr ""
+msgstr "Prosojnice čez celo stran"
 
 #: src/control/Control.Menubar.js:414
 #: src/control/Control.NotebookbarBuilder.js:606
 msgid "Notes Pages"
-msgstr ""
+msgstr "Strani opomb"
 
 #: src/control/Control.Menubar.js:448
 #: src/control/Control.NotebookbarImpress.js:444
@@ -1602,7 +1602,7 @@ msgstr "V nepovezan način"
 #: src/control/Control.ServerAuditDialog.ts:97
 #: src/control/Control.ServerAuditDialog.ts:98
 msgid "Server audit"
-msgstr ""
+msgstr "Revizija strežnika"
 
 #: src/control/Control.NotebookbarWriter.js:1312
 msgid "Rich Text"
@@ -1654,28 +1654,27 @@ msgstr "Počisti iskalno polje"
 
 #: src/control/Control.ServerAuditDialog.ts:28
 msgid "The is_admin user property is not set"
-msgstr ""
+msgstr "Lastnost uporabnika is_admin ni nastavljena"
 
 #: src/control/Control.ServerAuditDialog.ts:32
 msgid "The is_admin user property is set"
-msgstr ""
+msgstr "Lastnost is_admin uporabnika je nastavljena"
 
 #: src/control/Control.ServerAuditDialog.ts:116
 msgid "No issues found"
-msgstr ""
+msgstr "Ni zaznanih težav"
 
 #: src/control/Control.ServerAuditDialog.ts:122
-#, fuzzy
 msgid "Status"
-msgstr "Stanje:"
+msgstr "Stanje"
 
 #: src/control/Control.ServerAuditDialog.ts:167
 msgid "Check security warnings of your server"
-msgstr ""
+msgstr "Preverite varnostna opozorila svojega strežnika"
 
 #: src/control/Control.ServerAuditDialog.ts:168
 msgid "OPEN"
-msgstr ""
+msgstr "ODPRI"
 
 #: src/control/Control.SheetsBar.js:48
 msgid "Scroll to the first sheet"
@@ -2079,11 +2078,11 @@ msgstr "Izbriši tabulator"
 
 #: src/control/VRuler.ts:377
 msgid "Top Margin"
-msgstr ""
+msgstr "Zgornji rob"
 
 #: src/control/VRuler.ts:378
 msgid "Bottom Margin"
-msgstr ""
+msgstr "Spodnji rob"
 
 #: src/control/Signing.js:27
 msgid "This document is digitally signed and the signature is valid."
@@ -2866,7 +2865,7 @@ msgstr "Prazna projekcija"
 
 #: src/map/handler/Map.SlideShow.js:161
 msgid "Windowed Presentation: "
-msgstr ""
+msgstr "Predstavitev v oknu: "
 
 #: src/map/handler/Map.SlideShow.js:168
 msgid "Windowed Presentation Blocked"
@@ -2908,11 +2907,11 @@ msgstr "Dokument že predstavljate"
 
 #: src/map/handler/Map.SlideShow.js:314
 msgid "Presentation disabled"
-msgstr ""
+msgstr "Predstavitev je onemogočena"
 
 #: src/map/handler/Map.SlideShow.js:315
 msgid "Presentation mode has been disabled for this document"
-msgstr ""
+msgstr "Način predstavitve je za ta dokument onemogočena"
 
 #: src/map/handler/Map.WOPI.js:152
 msgid "Creating new file from template..."
@@ -3008,6 +3007,10 @@ msgid ""
 "translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
 "translate=\"true\">3</a>"
 msgstr ""
+"<a id=\"slide-1-indicator\" class=\"active\" href=\"#slide-1\" data-"
+"translate=\"true\">1</a> <a id=\"slide-2-indicator\" href=\"#slide-2\" data-"
+"translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
+"translate=\"true\">3</a>"
 
 #~ msgid "and %COUNT more"
 #~ msgstr "in še %COUNT drugih"
