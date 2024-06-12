@@ -182,50 +182,95 @@ std::size_t Quarantine::quarantineSize()
     return size;
 }
 
-void Quarantine::makeQuarantineSpace()
+void Quarantine::makeQuarantineSpace(std::size_t headroomBytes)
 {
+    LOG_ASSERT_MSG(!Mutex.try_lock(), "Quarantine Mutex must be taken");
+
     if (!isEnabled())
         return;
 
-    LOG_ASSERT_MSG(!Mutex.try_lock(), "Quarantine Mutex must be taken");
-
-    std::vector<std::string> files = getAllFilesSorted(QuarantinePath);
-    if (files.empty())
-        return;
-
-    const std::size_t now = getSecondsSinceEpoch();
-
-    std::size_t currentSize = quarantineSize();
-    auto index = files.begin();
-    while (index != files.end())
+    std::size_t currentSize = quarantineSize() + headroomBytes;
+    if (currentSize > MaxSizeBytes)
     {
-        bool purge = currentSize >= MaxSizeBytes;
-        if (!purge)
+        LOG_INF("Quarantine directory is too large at "
+                << currentSize - headroomBytes << " bytes for incoming file of " << headroomBytes
+                << " bytes (Max Size: " << MaxSizeBytes << " bytes). Shrinking.");
+    }
+
+    // We have to remove some files. Start with culling old entries.
+    const std::size_t now = getSecondsSinceEpoch();
+    for (const auto& pair : QuarantineMap)
+    {
+        deleteOldQuarantineVersions(pair.first, now - MaxAgeSecs);
+    }
+
+    // Check the size again.
+    currentSize = quarantineSize() + headroomBytes;
+    if (currentSize <= MaxSizeBytes)
+    {
+        return; // We are good, for now.
+    }
+
+    // Ok, we need to remove the oldest entry, but target the document with the most versions first.
+    // First, get a reference into all the Entry containers.
+    std::vector<std::vector<Entry>*> entries;
+    entries.reserve(QuarantineMap.size());
+    for (auto& pair : QuarantineMap)
+    {
+        if (!pair.second.empty())
         {
-            // Parse the timestamp from the quarantined filename (first token).
-            const auto pair = Util::u64FromString(Util::split(*index, Delimiter).first);
-            const auto age = (now - pair.first);
-            if (!pair.second || (now > pair.first && age > MaxAgeSecs))
+            entries.emplace_back(&pair.second);
+        }
+    }
+
+    // Sort by the one with the most entries followed by the one with the older entry.
+    std::sort(entries.begin(), entries.end(),
+              [](const std::vector<Entry>* const& lhs, const std::vector<Entry>* const& rhs)
+              {
+                  assert(!lhs->empty() && !rhs->empty() && "Unexpected empty Quarantine Entries");
+                  if (lhs->size() != rhs->size())
+                  {
+                      return lhs->size() > rhs->size();
+                  }
+
+                  return (*lhs)[0].secondsSinceEpoch() < (*rhs)[0].secondsSinceEpoch();
+              });
+
+    while (!entries.empty())
+    {
+        // Remove the first entry of the first container.
+        assert(!(*entries[0]).empty() && "Unexpected empty Quarantine Entries");
+        Entry& entry = *entries[0]->begin();
+        LOG_DBG("Removing quarantined file [" << entry.filename() << "] for [" << entry.docKey()
+                                              << "] with " << entry.size() << " bytes");
+        FileUtil::removeFile(entry.fullPath());
+        entries[0]->erase(entries[0]->begin());
+
+        currentSize -= entry.size();
+        if (currentSize <= MaxSizeBytes)
+        {
+            return; // We are good, for now.
+        }
+
+        if (entries[0]->empty())
+        {
+            entries.erase(entries.begin()); // No quarantines left; remove this container.
+            continue; // The next container (if any) should be correctly sorted.
+        }
+
+        // Order the top two entries if their sorting has now changed.
+        if (entries.size() >= 2)
+        {
+            const std::vector<Entry>* first = entries[0];
+            const std::vector<Entry>* second = entries[1];
+            assert(!first->empty() && !second->empty() && "Unexpected empty Quarantine Entries");
+            if (second->size() > first->size() ||
+                ((second->size() == first->size()) &&
+                 (*second)[0].secondsSinceEpoch() < (*first)[0].secondsSinceEpoch()))
             {
-                LOG_TRC("Will remove quarantined file [" << *index << "] which is " << age
-                                                         << " secs old (max " << MaxAgeSecs
-                                                         << " secs)");
-                purge = true;
+                std::swap(entries[0], entries[1]);
             }
         }
-
-        if (purge)
-        {
-            FileUtil::Stat file(QuarantinePath + *index);
-            LOG_TRC("Removing quarantined file ["
-                    << *index << "] (" << file.size() << " bytes). Current quarantine size: "
-                    << currentSize << " (max " << MaxSizeBytes << " bytes)");
-            currentSize -= file.size();
-            FileUtil::removeFile(QuarantinePath + *index, true);
-            index = files.erase(index);
-        }
-        else
-            index++;
     }
 }
 
@@ -257,7 +302,7 @@ void Quarantine::deleteOldQuarantineVersions(const std::string& docKey, std::siz
 
     if (excessAge > 0)
     {
-        LOG_DBG("Removing " << excessAge << " excess quarantined file versions for [" << docKey
+        LOG_DBG("Removing " << excessAge << " excess quarantined-file versions for [" << docKey
                             << "] from current " << container.size() << " versions, "
                             << excessVersions << " due to exceeding MaxVersions (" << MaxVersions
                             << ") including " << excessAge << " due to being older than "
@@ -266,7 +311,7 @@ void Quarantine::deleteOldQuarantineVersions(const std::string& docKey, std::siz
         for (std::size_t i = 0; i < excessAge; ++i)
         {
             const std::string& path = container[i].fullPath();
-            LOG_TRC("Removing excess quarantined file version #" << (i + 1) << " [" << path
+            LOG_TRC("Removing excess quarantined-file version #" << (i + 1) << " [" << path
                                                                  << "] for [" << docKey << ']');
 
             FileUtil::removeFile(path);
@@ -331,15 +376,13 @@ bool Quarantine::quarantineFile(const std::string& docPath)
         }
     }
 
-    makeQuarantineSpace();
+    // Clean-up the quarantine directory and make room for the incoming file.
+    makeQuarantineSpace(entry.size());
 
     if (FileUtil::linkOrCopyFile(docPath, linkedFilePath))
     {
         fileList.emplace_back(entry);
-        deleteOldQuarantineVersions(docPath, getSecondsSinceEpoch() - MaxAgeSecs);
-        makeQuarantineSpace();
-
-        LOG_WRN("Quarantined [" << docPath << "] to [" << linkedFilePath << ']');
+        LOG_INF("Quarantined [" << docPath << "] to [" << linkedFilePath << ']');
         return true;
     }
 
