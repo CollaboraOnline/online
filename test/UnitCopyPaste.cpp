@@ -75,6 +75,10 @@ public:
         std::shared_ptr<const http::Response> httpResponse =
             httpSession->syncRequest(http::Request(Poco::URI(clipURIstr).getPathAndQuery()));
 
+        // Note that this is expected for both living and closed documents.
+        // This failed when either case didn't add the custom header.
+        LOK_ASSERT_EQUAL(std::string("true"), httpResponse->get("X-COOL-Clipboard"));
+
         LOG_TST("getClipboard: sent request: " << clipURI.getPathAndQuery());
 
         try {
