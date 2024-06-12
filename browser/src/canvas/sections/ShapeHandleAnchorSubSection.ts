@@ -101,6 +101,26 @@ class ShapeHandleAnchorSubSection extends HTMLObjectSection {
 
 	onMouseMove(point: Array<number>, dragDistance: Array<number>, e: MouseEvent) {
 		if (this.containerObject.isDraggingSomething()) {
+			// Show preview in its final position.
+			let svg;
+			let initialPosition;
+			if (this.sectionProperties.parentHandlerSection) {
+				this.sectionProperties.parentHandlerSection.showSVG();
+				svg = this.sectionProperties.parentHandlerSection.sectionProperties.svg;
+				initialPosition = this.sectionProperties.parentHandlerSection.sectionProperties.svgPosition;
+			}
+			else {
+				// Table..
+				svg = document.getElementById('canvas-container').querySelector('svg');
+				svg.style.display = '';
+				if (!this.sectionProperties.initialPosition) {
+					this.sectionProperties.initialPosition = [parseFloat(svg.style.left.replace('px', '')), parseFloat(svg.style.top.replace('px', ''))];
+				}
+				initialPosition = this.sectionProperties.initialPosition;
+			}
+			svg.style.left = (dragDistance[0] + initialPosition[0]) + 'px';
+			svg.style.top = (dragDistance[1] + initialPosition[1]) + 'px';
+
 			this.stopPropagating();
 			e.stopPropagation();
 		}
