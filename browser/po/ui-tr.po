@@ -14,11 +14,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-06-06 08:34+0200\n"
-"PO-Revision-Date: 2024-05-24 12:09+0000\n"
-"Last-Translator: Sabri Ünal <yakushabb@gmail.com>\n"
+"PO-Revision-Date: 2024-06-11 11:59+0000\n"
+"Last-Translator: Gokay Satir <gokaysatir@gmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/tr/>\n"
-"Language: \n"
+"Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -483,11 +483,11 @@ msgstr "Özel Yapıştır"
 
 #: src/control/Control.ContextMenu.js:239
 msgid "Copy Cells"
-msgstr ""
+msgstr "Hücreleri Kopyala"
 
 #: src/control/Control.ContextMenu.js:247
 msgid "Fill Series"
-msgstr ""
+msgstr "Otomatik Doldur"
 
 #: src/control/Control.DocumentNameInput.js:113
 msgid "Path"
@@ -1078,12 +1078,12 @@ msgstr "Yorumları Kaydet"
 #: src/control/Control.Menubar.js:413
 #: src/control/Control.NotebookbarBuilder.js:602
 msgid "Full Page Slides"
-msgstr ""
+msgstr "Sunum Sayfaları"
 
 #: src/control/Control.Menubar.js:414
 #: src/control/Control.NotebookbarBuilder.js:606
 msgid "Notes Pages"
-msgstr ""
+msgstr "Not Sayfaları"
 
 #: src/control/Control.Menubar.js:448
 #: src/control/Control.NotebookbarImpress.js:444
@@ -1603,7 +1603,7 @@ msgstr "Çevrimdışı Ol"
 #: src/control/Control.ServerAuditDialog.ts:97
 #: src/control/Control.ServerAuditDialog.ts:98
 msgid "Server audit"
-msgstr ""
+msgstr "Sunucu Denetimi"
 
 #: src/control/Control.NotebookbarWriter.js:1312
 msgid "Rich Text"
@@ -1655,28 +1655,27 @@ msgstr "Arama alanını temizle"
 
 #: src/control/Control.ServerAuditDialog.ts:28
 msgid "The is_admin user property is not set"
-msgstr ""
+msgstr "\"is_admin\" özelliği atanmamış."
 
 #: src/control/Control.ServerAuditDialog.ts:32
 msgid "The is_admin user property is set"
-msgstr ""
+msgstr "\"is_admin\" özelliği atanmamış"
 
 #: src/control/Control.ServerAuditDialog.ts:116
 msgid "No issues found"
-msgstr ""
+msgstr "Sorun bulunmadı"
 
 #: src/control/Control.ServerAuditDialog.ts:122
-#, fuzzy
 msgid "Status"
-msgstr "Durum:"
+msgstr "Durum"
 
 #: src/control/Control.ServerAuditDialog.ts:167
 msgid "Check security warnings of your server"
-msgstr ""
+msgstr "Sunucunuzun güvenlik uyarılarını inceleyin"
 
 #: src/control/Control.ServerAuditDialog.ts:168
 msgid "OPEN"
-msgstr ""
+msgstr "AÇ"
 
 #: src/control/Control.SheetsBar.js:48
 msgid "Scroll to the first sheet"
@@ -2078,11 +2077,11 @@ msgstr "Sekme durağını sil"
 
 #: src/control/VRuler.ts:377
 msgid "Top Margin"
-msgstr ""
+msgstr "Üst Boşluk"
 
 #: src/control/VRuler.ts:378
 msgid "Bottom Margin"
-msgstr ""
+msgstr "Alt Boşluk"
 
 #: src/control/Signing.js:27
 msgid "This document is digitally signed and the signature is valid."
