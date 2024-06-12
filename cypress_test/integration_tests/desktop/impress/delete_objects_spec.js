@@ -46,7 +46,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function(
 		cy.cGet('#test-div-shapeHandlesSection').should('not.exist');
 	});
 
-	it.only('Delete Table',function() {
+	it('Delete Table',function() {
 		desktopHelper.selectZoomLevel('50');
 
 		cy.cGet('#menu-table').click();
@@ -57,7 +57,13 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function(
 
 		// Table is inserted with the markers shown
 		cy.cGet('.leaflet-marker-icon.table-column-resize-marker').should('exist');
-		cy.cGet('#test-div-shapeHandlesSection').rightclick({force:true});
+		cy.cGet('#test-div-shapeHandlesSection').then(function(element) {
+			const x = element[0].getBoundingClientRect().left;
+			const y = element[0].getBoundingClientRect().top;
+
+			cy.cGet('body').rightclick(x + 20, y + 20);
+		});
+
 		cy.cGet('body').contains('.context-menu-item', 'Delete').click();
 		cy.cGet('.leaflet-marker-icon.table-column-resize-marker').should('not.exist');
 	});
