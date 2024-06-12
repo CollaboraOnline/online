@@ -3487,12 +3487,14 @@ bool DocumentBroker::lookupSendClipboardTag(const std::shared_ptr<StreamSocket> 
     if (saved)
     {
             std::ostringstream oss;
+            // The custom header for the clipboard of an already closed document.
             oss << "HTTP/1.1 200 OK\r\n"
                 << "Last-Modified: " << Util::getHttpTimeNow() << "\r\n"
                 << "User-Agent: " << http::getAgentString() << "\r\n"
                 << "Content-Length: " << saved->length() << "\r\n"
                 << "Content-Type: application/octet-stream\r\n"
                 << "X-Content-Type-Options: nosniff\r\n"
+                << "X-COOL-Clipboard: true\r\n"
                 << "Connection: close\r\n"
                 << "\r\n";
             oss.write(saved->c_str(), saved->length());
