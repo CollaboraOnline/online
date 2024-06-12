@@ -13,11 +13,11 @@ if (typeof String.prototype.startsWith !== 'function') {
 }
 
 // debugging aid.
-function hex2string(inData)
+function hex2string(inData, length)
 {
 	var hexified = [];
 	var data = new Uint8Array(inData);
-	for (var i = 0; i < data.length; i++) {
+	for (var i = 0; i < length; i++) {
 		var hex = data[i].toString(16);
 		var paddedHex = ('00' + hex).slice(-2);
 		hexified.push(paddedHex);
@@ -739,6 +739,8 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._moveInProgress = false;
 		this._canonicalIdInitialized = false;
 		this._nullDeltaUpdate = 0;
+
+		this._unpremult = new L.UnPremult(256);
 	},
 
 	_initContainer: function () {
@@ -6173,36 +6175,13 @@ L.CanvasTileLayer = L.Layer.extend({
 		return ctx;
 	},
 
-	_unpremultiply: function(rawDelta, byteLength) {
-		var len = byteLength / 4;
-		var delta32 = new Uint32Array(rawDelta.buffer, rawDelta.byteOffset, len);
-		var resultu32 = new Uint32Array(len);
-		var resultu8 = new Uint8ClampedArray(resultu32.buffer, resultu32.byteOffset, resultu32.byteLength);
-		for (var i32 = 0; i32 < len; ++i32) {
-			// premultiplied rgba -> unpremultiplied rgba
-			var alpha = delta32[i32] >>> 24;
-			if (alpha === 255) {
-				resultu32[i32] = delta32[i32];
-			}
-			else if (alpha !== 0) { // dest can remain at ctored 0 if alpha is 0
-				var i8 = i32 * 4;
-				// forced to do the math
-				resultu8[i8] = Math.ceil(rawDelta[i8] * 255 / alpha);
-				resultu8[i8 + 1] = Math.ceil(rawDelta[i8 + 1] * 255 / alpha);
-				resultu8[i8 + 2] = Math.ceil(rawDelta[i8 + 2] * 255 / alpha);
-				resultu8[i8 + 3] = alpha;
-			}
-		}
-		return resultu8;
-	},
-
 	_applyDelta: function(tile, rawDelta, isKeyframe, wireMessage) {
 		// 'Uint8Array' rawDelta
 
 		if (this._debugDeltas)
 			window.app.console.log('Applying a raw ' + (isKeyframe ? 'keyframe' : 'delta') +
 					       ' of length ' + rawDelta.length +
-					       (this._debugDeltasDetail ? (' hex: ' + hex2string(rawDelta)) : ''));
+					       (this._debugDeltasDetail ? (' hex: ' + hex2string(rawDelta, rawDelta.length)) : ''));
 
 		if (isKeyframe) {
 			// Important to do this before ensuring the context, or we'll needlessly
@@ -6290,7 +6269,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		{
 			if (this._debugDeltas)
 				window.app.console.log('Applying a raw RLE keyframe of length ' + allDeltas.length +
-						       ' hex: ' + hex2string(allDeltas));;
+						       ' hex: ' + hex2string(allDeltas, allDeltas.length));;
 
 			// Byte bashing fun
 			var width = canvas.width;
@@ -6316,13 +6295,11 @@ L.CanvasTileLayer = L.Layer.extend({
 				var uniquePixels;
 				if (rleSize > 0)
 				{
-					// copy pixels so they are suitably aligned for a Uint32Array view
-					// FIXME: re-use this array rather than re-allocating it.
-					var tmpu8 = new Uint8Array(allDeltas.subarray(offset, offset + rleSize * 4));
-					var unique8 = this._unpremultiply(tmpu8, tmpu8.length);
-					uniquePixels = new Uint32Array(unique8.buffer, unique8.byteOffset, unique8.byteLength / 4);
+					this._unpremult.unpremultiply(allDeltas, rleSize * 4, offset);
+					uniquePixels = this._unpremult._pixels;
 					if (this._debugDeltas)
-						window.app.console.log('Pixels hex: ' + hex2string(unique8));;
+						window.app.console.log(
+							'Pixels hex: ' + hex2string(this._unpremult._bytes, rleSize * 4));;
 				}
 
 				// It would be rather nice to have real 64bit types [!]
@@ -6407,7 +6384,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (this._debugDeltas)
 			window.app.console.log('Applying a delta of length ' +
 					       delta.length + ' canvas size: ' + pixSize);
-			// + ' hex: ' + hex2string(delta));
+			// + ' hex: ' + hex2string(delta, delta.length));
 
 		var offset = 0;
 
@@ -6459,11 +6436,10 @@ L.CanvasTileLayer = L.Layer.extend({
 				i += 4;
 				span *= 4;
 				// copy so this is suitably aligned for a Uint32Array view
-				var tmpu8 = new Uint8Array(delta.subarray(i, i + span));
-				var pixelData = this._unpremultiply(tmpu8, tmpu8.length);
+				this._unpremult.unpremultiply(delta, span, i);
 				// imgData.data[offset + 1] = 256; // debug - greener start
 				for (var j = 0; j < span; ++j)
-					imgData.data[offset++] = pixelData[j];
+					imgData.data[offset++] = this._unpremult._bytes[j];
 				i += span;
 				// imgData.data[offset - 2] = 256; // debug - blue terminator
 				break;
