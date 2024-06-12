@@ -33,8 +33,8 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function()
 		cy.cGet('body').contains('.menu-entry-with-icon', 'Shape').click();
 		cy.cGet('.col.w2ui-icon.basicshapes_rectangle').click();
 		// Check that the shape is there
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g').should('exist');
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg').then(function(svg) {
+		cy.cGet('#document-container svg g').should('exist');
+		cy.cGet('#document-container svg').then(function(svg) {
 				expect(svg[0].getBBox().width).to.be.greaterThan(0);
 				expect(svg[0].getBBox().height).to.be.greaterThan(0);
 			});
@@ -46,7 +46,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function()
 			.trigger('pointerup', eventOptions);
 
 		cy.cGet('body').contains('.menu-entry-with-icon', 'Delete').should('be.visible').click();
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g').should('not.exist');
+		cy.cGet('#document-container svg g').should('not.exist');
 	});
 
 	it('Delete Table', function() {
@@ -84,23 +84,23 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function()
 		cy.cGet('#FontworkGalleryDialog').should('exist');
 		cy.cGet('#ok').click();
 		cy.wait(1000);
-		cy.cGet('.leaflet-control-buttons-disabled path.leaflet-interactive').should('exist');
+		cy.cGet('#test-div-shapeHandlesSection').should('exist');
 		cy.cGet('.leaflet-control-buttons-disabled > .leaflet-interactive').trigger('pointerdown', eventOptions);
 		cy.wait(1000);
 		cy.cGet('body').contains('.menu-entry-with-icon', 'Delete').should('be.visible').click();
-		cy.cGet('.leaflet-control-buttons-disabled path.leaflet-interactive').should('not.exist');
+		cy.cGet('#test-div-shapeHandlesSection').should('not.exist');
 	});
 
 	it('Delete Chart' , function() {
 		mobileHelper.openInsertionWizard();
 		cy.cGet('body').contains('.menu-entry-with-icon', 'Chart...').click();
-		cy.cGet('.leaflet-control-buttons-disabled path.leaflet-interactive').should('exist');
+		cy.cGet('#test-div-shapeHandlesSection').should('exist');
 		cy.cGet('.leaflet-control-buttons-disabled > .leaflet-interactive')
 			.trigger('pointerdown', eventOptions)
 			.wait(1000)
 			.trigger('pointerup', eventOptions);
 
 		cy.cGet('body').contains('.menu-entry-with-icon', 'Delete').should('be.visible').click();
-		cy.cGet('.leaflet-control-buttons-disabled path.leaflet-interactive').should('not.exist');
+		cy.cGet('#test-div-shapeHandlesSection').should('not.exist');
 	});
 });

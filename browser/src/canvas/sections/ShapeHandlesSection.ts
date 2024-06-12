@@ -448,12 +448,12 @@ class ShapeHandlesSection extends CanvasSectionObject {
 	}
 
 	checkRotationSubSection(handle: any) {
-		let newSubSection = app.sectionContainer.getSectionWithName(this.sectionProperties.subSectionPrefix + handle.info.id);
+		let newSubSection = app.sectionContainer.getSectionWithName(this.sectionProperties.subSectionPrefix + 'rotation');
 
 		if (!newSubSection) {
 			newSubSection = new app.definitions.shapeHandleRotationSubSection(
 				this,
-				this.sectionProperties.subSectionPrefix + handle.info.id,
+				this.sectionProperties.subSectionPrefix + 'rotation',
 				[this.sectionProperties.handleWidth, this.sectionProperties.handleHeight],
 				handle.point.clone(),
 				handle.info

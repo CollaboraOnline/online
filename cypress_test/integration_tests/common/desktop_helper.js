@@ -283,7 +283,7 @@ function insertImage(docType) {
 	}
 
 	cy.cGet('#insertgraphic[type=file]').attachFile('/desktop/writer/image_to_insert.png');
-	cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g').should('exist');
+	cy.cGet('#document-container svg g').should('exist');
 
 	cy.log('<< insertImage - end');
 }
@@ -292,7 +292,7 @@ function deleteImage() {
 	cy.log('>> deleteImage - start');
 
 	helper.typeIntoDocument('{del}');
-	cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g').should('not.exist');
+	cy.cGet('#document-container svg g').should('not.exist');
 
 	cy.log('<< deleteImage - end');
 }
@@ -300,11 +300,11 @@ function deleteImage() {
 function assertImageSize(expectedWidth, expectedHeight) {
 	cy.log('>> assertImageSize - start');
 
-	cy.cGet('.leaflet-pane.leaflet-overlay-pane svg svg')
-		.should('exist')
-		.then($ele => {
-			const actualWidth = parseInt($ele.attr('width'));
-			const actualHeight = parseInt($ele.attr('height'));
+	cy.cGet('#canvas-container > svg')
+		.then(function(element) {
+			expect(element).to.have.length(1);
+			const actualWidth = parseInt(element[0].style.width.replace('px', ''));
+			const actualHeight = parseInt(element[0].style.height.replace('px', ''));
 
 			expect(actualWidth).to.be.closeTo(expectedWidth, 10);
 			expect(actualHeight).to.be.closeTo(expectedHeight, 10);

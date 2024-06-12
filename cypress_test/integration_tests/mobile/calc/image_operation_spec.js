@@ -32,7 +32,6 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Image Operation Tests', fun
 		cy.cGet('body').contains('.menu-entry-with-icon', 'Delete')
 			.should('be.visible').click();
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g')
-			.should('not.exist');
+		cy.cGet('#document-container svg g').should('not.exist');
 	});
 });

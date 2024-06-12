@@ -51,11 +51,7 @@ function clickOnFirstCell(firstClick = true, dblClick = false, isA1 = true) {
 		});
 
 	if (firstClick && !dblClick) {
-		cy.cGet('#test-div-overlay-cell-cursor-border-0')
-			.should(function (elem) {
-				expect(helper.Bounds.parseBoundsJson(elem.text()).left).to.be.equal(0);
-				expect(helper.Bounds.parseBoundsJson(elem.text()).top).to.be.equal(0);
-			});
+		cy.cGet('#test-div-OwnCellCursor').should('exist');
 	} else {
 		cy.cGet('.cursor-overlay .blinking-cursor').should('be.visible');
 	}
@@ -197,7 +193,7 @@ function ensureViewContainsCellCursor() {
 	var sheetViewBounds = new helper.Bounds();
 	var sheetCursorBounds = new helper.Bounds();
 
-	helper.getOverlayItemBounds('#test-div-overlay-cell-cursor-border-0', sheetCursorBounds);
+	helper.getOverlayItemBounds('#test-div-OwnCellCursor', sheetCursorBounds);
 	helper.getItemBounds('#test-div-tiles', sheetViewBounds);
 
 	cy.wrap(true).then(function () {

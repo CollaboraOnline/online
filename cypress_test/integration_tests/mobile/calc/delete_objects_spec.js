@@ -39,7 +39,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Delete Objects',function() 
 		cy.cGet('.col.w2ui-icon.basicshapes_rectangle').click();
 
 		// Check that the shape is there
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g').should('exist');
+		cy.cGet('#document-container svg g').should('exist');
 
 		//deletion
 		cy.cGet('.bottomright-svg-pane > .leaflet-control-buttons-disabled > .leaflet-interactive')
@@ -48,7 +48,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Delete Objects',function() 
 			.trigger('pointerup', eventOptions);
 
 		cy.cGet('body').contains('.menu-entry-with-icon', 'Delete').should('be.visible').click();
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g').should('not.exist');
+		cy.cGet('#document-container svg g').should('not.exist');
 	});
 
 	it('Delete Chart' , function() {

@@ -14,15 +14,14 @@ describe(['tagmobile', 'tagnextcloud'], 'Impress insertion wizard.', function() 
 
 	function selectionShouldBeTextShape(checkShape) {
 		// Check that the shape is there
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg')
+		cy.cGet('#document-container svg')
 			.should(function(svg) {
 				expect(svg[0].getBBox().width).to.be.greaterThan(0);
 				expect(svg[0].getBBox().height).to.be.greaterThan(0);
 			});
 
 		if (checkShape) {
-			cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g.Page g')
-				.should('be.visible');
+			cy.cGet('#document-container svg g.Page g').should('be.visible');
 		}
 
 		// Check also that the shape is fully visible
@@ -54,7 +53,7 @@ describe(['tagmobile', 'tagnextcloud'], 'Impress insertion wizard.', function() 
 		// We can't use the menu item directly, because it would open file picker.
 		cy.cGet('body').contains('.menu-entry-with-icon', 'Local Image...').should('be.visible');
 		cy.cGet('#insertgraphic[type=file]').attachFile('/mobile/impress/image_to_insert.png');
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g').should('exist');
+		cy.cGet('#document-container svg g').should('exist');
 	});
 
 	it('Insert comment.', function() {
@@ -121,7 +120,7 @@ describe(['tagmobile', 'tagnextcloud'], 'Impress insertion wizard.', function() 
 		// Insert
 		cy.cGet('#response-ok').click();
 		// TODO: we have some wierd shape here instead of a text shape with the link
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g path.leaflet-interactive').should('exist');
+		cy.cGet('#document-container svg g path.leaflet-interactive').should('exist');
 	});
 
 	it('Insert shape.', function() {
@@ -129,8 +128,8 @@ describe(['tagmobile', 'tagnextcloud'], 'Impress insertion wizard.', function() 
 		cy.cGet('body').contains('.menu-entry-with-icon', 'Shape').click();
 		cy.cGet('.col.w2ui-icon.basicshapes_rectangle').click();
 		// Check that the shape is there
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g').should('exist');
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg')
+		cy.cGet('#document-container svg g').should('exist');
+		cy.cGet('#document-container svg')
 			.should(function(svg) {
 				expect(svg[0].getBBox().width).to.be.greaterThan(0);
 				expect(svg[0].getBBox().height).to.be.greaterThan(0);

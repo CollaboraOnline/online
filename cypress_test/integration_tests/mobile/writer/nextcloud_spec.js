@@ -13,7 +13,7 @@ describe(['tagnextcloud'], 'Nextcloud specific tests.', function() {
 		helper.upLoadFileToNextCloud('writer/image_to_insert.png');
 		nextcloudHelper.insertImageFromStorage('image_to_insert.png');
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane svg g.Graphic')
+		cy.get('#document-container svg g.Graphic')
 			.should('exist');
 	});
 

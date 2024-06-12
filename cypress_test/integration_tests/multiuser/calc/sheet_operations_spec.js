@@ -70,13 +70,13 @@ describe(['tagmultiuser'], 'Check overlays after tab switching/operations', func
 		cy.cGet('input#addressInput-input').should('have.prop', 'value', 'A14');
 
 		let cellA14Bounds = new helper.Bounds();
-		helper.getOverlayItemBounds('#test-div-overlay-cell-cursor-border-0', cellA14Bounds);
+		helper.getOverlayItemBounds('#test-div-OwnCellCursor', cellA14Bounds);
 
 		cy.cSetActiveFrame('#iframe2');
 		// Check that cell cursor have the same bounds in both views
 		cy.cGet('#spreadsheet-tab1').click();
 		cy.cGet('input#addressInput-input').should('have.prop', 'value', 'A14');
-		helper.overlayItemHasBounds('#test-div-overlay-cell-cursor-border-0', cellA14Bounds);
+		helper.overlayItemHasBounds('#test-div-OwnCellCursor', cellA14Bounds);
 	});
 
 	it('Check cell view cursor overlay bounds after switching tab', function () {
@@ -84,7 +84,7 @@ describe(['tagmultiuser'], 'Check overlays after tab switching/operations', func
 		cy.cGet('#spreadsheet-tab1').click();
 
 		let cellA14Bounds = new helper.Bounds();
-		helper.getOverlayItemBounds('#test-div-overlay-cell-cursor-border-0', cellA14Bounds);
+		helper.getOverlayItemBounds('#test-div-OwnCellCursor', cellA14Bounds);
 
 		cy.cSetActiveFrame('#iframe2');
 		cy.cGet('#spreadsheet-tab1').click();

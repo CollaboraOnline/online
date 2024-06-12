@@ -126,7 +126,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', fu
 		cy.cGet('#home-paste-entries .ui-combobox-entry').contains('Paste').click();
 
 		// Then make sure the paste happened:
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g').should('exist');
+		cy.cGet('#document-container svg g').should('exist');
 	});
 
 	it('Image paste with meta', function() {
@@ -146,7 +146,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', fu
 		// Then make sure the paste happened:
 		// Without the accompanying fix in place, this test would have failed, no image was
 		// pasted.
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g').should('exist');
+		cy.cGet('#document-container svg g').should('exist');
 	});
 
 	it('HTML paste, internal case failing', function() {

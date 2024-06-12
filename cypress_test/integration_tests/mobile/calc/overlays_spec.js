@@ -17,13 +17,13 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Overlay bounds.', function 
 		calcHelper.clickOnFirstCell();
 
 		var cellA1Bounds = new helper.Bounds();
-		helper.getOverlayItemBounds('#test-div-overlay-cell-cursor-border-0', cellA1Bounds);
+		helper.getOverlayItemBounds('#test-div-OwnCellCursor', cellA1Bounds);
 
 		helper.typeIntoInputField('input#addressInput-input', 'C3');
 
 		var cellC3Bounds = new helper.Bounds();
-		helper.overlayItemHasDifferentBoundsThan('#test-div-overlay-cell-cursor-border-0', cellA1Bounds);
-		helper.getOverlayItemBounds('#test-div-overlay-cell-cursor-border-0', cellC3Bounds);
+		helper.overlayItemHasDifferentBoundsThan('#test-div-OwnCellCursor', cellA1Bounds);
+		helper.getOverlayItemBounds('#test-div-OwnCellCursor', cellC3Bounds);
 
 		helper.typeIntoInputField('input#addressInput-input', 'B2');
 
@@ -38,7 +38,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Overlay bounds.', function 
 			cellB2Bounds.width = cellC3Bounds.left - cellB2Bounds.left;
 			cellB2Bounds.height = cellC3Bounds.top - cellB2Bounds.top;
 
-			helper.overlayItemHasBounds('#test-div-overlay-cell-cursor-border-0', cellB2Bounds);
+			helper.overlayItemHasBounds('#test-div-OwnCellCursor', cellB2Bounds);
 		});
 	});
 
@@ -47,13 +47,13 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Overlay bounds.', function 
 		calcHelper.clickOnFirstCell();
 
 		var cellA1Bounds = new helper.Bounds();
-		helper.getOverlayItemBounds('#test-div-overlay-cell-cursor-border-0', cellA1Bounds);
+		helper.getOverlayItemBounds('#test-div-OwnCellCursor', cellA1Bounds);
 
 		helper.typeIntoInputField('input#addressInput-input', 'D4');
 
 		var cellD4Bounds = new helper.Bounds();
-		helper.overlayItemHasDifferentBoundsThan('#test-div-overlay-cell-cursor-border-0', cellA1Bounds);
-		helper.getOverlayItemBounds('#test-div-overlay-cell-cursor-border-0', cellD4Bounds);
+		helper.overlayItemHasDifferentBoundsThan('#test-div-OwnCellCursor', cellA1Bounds);
+		helper.getOverlayItemBounds('#test-div-OwnCellCursor', cellD4Bounds);
 
 		helper.typeIntoInputField('input#addressInput-input', 'A1:D4');
 

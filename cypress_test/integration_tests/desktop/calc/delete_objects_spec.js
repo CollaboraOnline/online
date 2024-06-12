@@ -27,13 +27,13 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function(
 		cy.cGet('#insertshapes').click();
 		cy.cGet('.col.w2ui-icon.symbolshapes').should($el => { expect(Cypress.dom.isDetached($el)).to.eq(false); }).click();
 
-		cy.cGet('.leaflet-control-buttons-disabled path.leaflet-interactive')
+		cy.cGet('#test-div-shapeHandlesSection')
 			.should('exist');
 
 		//delete
 		helper.typeIntoDocument('{del}');
 
-		cy.cGet('.leaflet-control-buttons-disabled path.leaflet-interactive')
+		cy.cGet('#test-div-shapeHandlesSection')
 			.should('not.exist');
 	});
 
@@ -42,9 +42,9 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function(
 		//insert
 		cy.cGet('#insertobjectchart').click();
 		cy.cGet('.ui-pushbutton.jsdialog.button-primary').should($el => { expect(Cypress.dom.isDetached($el)).to.eq(false); }).click();
-		cy.cGet('.leaflet-control-buttons-disabled path.leaflet-interactive').should('exist');
+		cy.cGet('#test-div-shapeHandlesSection').should('exist');
 		//delete
 		helper.typeIntoDocument('{del}');
-		cy.cGet('.leaflet-control-buttons-disabled path.leaflet-interactive').should('not.exist');
+		cy.cGet('#test-div-shapeHandlesSection').should('not.exist');
 	});
 });
