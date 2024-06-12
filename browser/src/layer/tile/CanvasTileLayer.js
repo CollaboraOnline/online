@@ -2022,6 +2022,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (this._graphicMarker) {
 			this._graphicMarker.removeSubSections();
 			app.sectionContainer.removeSection(this._graphicMarker.name);
+			this._graphicMarker = null;
 		}
 	},
 
@@ -3858,6 +3859,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			else if (extraInfo.id !== this._graphicMarker.sectionProperties.info.id) { // Another shape is selected.
 				this._graphicMarker.removeSubSections();
 				app.sectionContainer.removeSection(this._graphicMarker.name);
+				this._graphicMarker = null;
 				addHandlesSection = true;
 			}
 
@@ -3877,6 +3879,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		else if (this._graphicMarker && app.sectionContainer.doesSectionExist(this._graphicMarker.name)){
 			this._graphicMarker.removeSubSections();
 			app.sectionContainer.removeSection(this._graphicMarker.name);
+			this._graphicMarker = null;
 		}
 		this._updateCursorAndOverlay();
 	},

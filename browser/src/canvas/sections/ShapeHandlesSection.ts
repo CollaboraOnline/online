@@ -561,20 +561,45 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		this.sectionProperties.mouseIsInside = false;
 	}
 
+	sendTransformCommand(point: number[]) {
+		const parameters = {
+			'TransformPosX': {
+				'type': 'long',
+				'value': Math.round((point[0] + this.position[0]) * app.pixelsToTwips)
+			},
+			'TransformPosY': {
+				'type': 'long',
+				'value': Math.round((point[1] + this.position[1]) * app.pixelsToTwips)
+			}
+		};
+
+		app.map.sendUnoCommand('.uno:TransformDialog', parameters);
+	}
+
 	onMouseUp(point: number[], e: MouseEvent): void {
 		if (this.sectionProperties.svg)
 			this.sectionProperties.svg.style.opacity = 1;
 
 		this.hideSVG();
+
+		(window as any).IgnorePanning = false;
+
+		// This is for tablet and mobbile but we can use this for also desktop, if we want to avoid sending mouse events for shapes to core side.
+		if (this.containerObject.isDraggingSomething() && (window as any).mode.isTablet() || (window as any).mode.isMobile())
+			this.sendTransformCommand(point);
 	}
 
 	onMouseMove(position: number[], dragDistance: number[]) {
 		if (this.containerObject.isDraggingSomething() && this.sectionProperties.svg) {
+			(window as any).IgnorePanning = true;
+
 			this.sectionProperties.svg.style.left = String(this.myTopLeft[0] + dragDistance[0]) + 'px';
 			this.sectionProperties.svg.style.top = String(this.myTopLeft[1] + dragDistance[1]) + 'px';
 			this.sectionProperties.svg.style.opacity = 0.5;
 			this.showSVG();
 		}
+		else
+			(window as any).IgnorePanning = false;
 	}
 
 	getViewBox(svg: any): number[] {
