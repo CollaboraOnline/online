@@ -235,13 +235,18 @@ WopiStorage::WOPIFileInfo::WOPIFileInfo(const FileInfo& fileInfo, Poco::JSON::Ob
     JsonUtil::findJSONValue(object, "FileUrl", _fileUrl);
 
     // check if user is admin on the integrator side
-    if (!JsonUtil::findJSONValue(object, "IsAdminUser", _isAdminUser))
+    bool isAdminUser = false;
+    if (!JsonUtil::findJSONValue(object, "IsAdminUser", isAdminUser))
     {
         _isAdminUserError = "missing";
 
         // check deprecated is_admin inside UserExtraInfo
         if (_userExtraInfo.find("is_admin") != std::string::npos)
             _isAdminUserError = "deprecated";
+    }
+    else
+    {
+        _isAdminUser = isAdminUser;
     }
 
     // Update the scheme to https if ssl or ssl termination is on

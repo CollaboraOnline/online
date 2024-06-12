@@ -2331,7 +2331,7 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
             {
                 _sentAudit = true;
                 // send information about admin user
-                const std::string admin = std::string("adminuser: ") + std::string(getIsAdminUser() ? "true" : "false");
+                const std::string admin = std::string("adminuser: ") + getIsAdminUserStatus();
                 forwardToClient(std::make_shared<Message>(admin, Message::Dir::Out));
 
                 // send server audit results after we received information about users (who is admin)
@@ -2924,6 +2924,11 @@ std::string ClientSession::processSVGContent(const std::string& svg)
     }
 
     return broken ? svg : oss.str();
+}
+
+std::string ClientSession::getIsAdminUserStatus() const
+{
+    return getIsAdminUser().has_value() ? (getIsAdminUser().value() ? "true" : "false") : "null";
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
