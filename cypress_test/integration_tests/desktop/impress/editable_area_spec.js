@@ -1,4 +1,4 @@
-/* global describe expect it cy beforeEach require Cypress */
+/* global describe expect it cy beforeEach require */
 
 var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
@@ -22,8 +22,8 @@ function selectTextShape(i) {
             cy.cGet('body').click(XPos, YPos);
         });
 
-    cy.cGet('.leaflet-drag-transform-marker').should($el => { expect(Cypress.dom.isDetached($el)).to.eq(false); }).should('be.visible');
-    cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g path.leaflet-interactive').should('exist');
+    cy.cGet('#map .html-object-section').should('have.length', 9);
+    cy.cGet('#document-container svg g path').should('exist');
     cy.log('Selecting text shape - end.');
 }
 
@@ -63,7 +63,7 @@ describe(['taga11yenabled'], 'Editable area - Basic typing and caret moving', fu
     it('Deleting text', function () {
         // select shape and activate editing
         selectTextShape(1);
-        impressHelper.editTextInShape();
+        impressHelper.dblclickOnSelectedShape();
         // initial position
         ceHelper.checkHTMLContent('');
         ceHelper.checkCaretPosition(0);

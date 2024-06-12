@@ -47,9 +47,9 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function()
 		cy.cGet('.col.w2ui-icon.basicshapes_rectangle').click();
 
 		// Check that the shape is there
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g').should('exist');
+		cy.cGet('#document-container svg g').should('exist');
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg')
+		cy.cGet('#document-container svg')
 			.then(function(svg) {
 				expect(svg[0].getBBox().width).to.be.greaterThan(0);
 				expect(svg[0].getBBox().height).to.be.greaterThan(0);
@@ -65,8 +65,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function()
 		cy.cGet('body').contains('.menu-entry-with-icon', 'Delete')
 			.should('be.visible').click();
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g')
-			.should('not.exist');
+		cy.cGet('#document-container svg g').should('not.exist');
 	});
 
 	it('Delete Table', function() {
@@ -113,7 +112,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function()
 
 		cy.wait(200);
 
-		cy.cGet('.leaflet-control-buttons-disabled path.leaflet-interactive')
+		cy.cGet('#test-div-shapeHandlesSection')
 			.should('exist');
 
 		cy.cGet('.leaflet-control-buttons-disabled > .leaflet-interactive')
@@ -124,7 +123,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function()
 		cy.cGet('body').contains('.menu-entry-with-icon', 'Delete')
 			.should('be.visible').click();
 
-		cy.cGet('.leaflet-control-buttons-disabled path.leaflet-interactive')
+		cy.cGet('#test-div-shapeHandlesSection')
 			.should('not.exist');
 	});
 
@@ -134,7 +133,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function()
 		cy.cGet('body').contains('.menu-entry-with-icon', 'Chart...')
 			.click();
 
-		cy.cGet('.leaflet-control-buttons-disabled path.leaflet-interactive')
+		cy.cGet('#test-div-shapeHandlesSection')
 			.should('exist');
 
 		cy.cGet('.leaflet-control-buttons-disabled > .leaflet-interactive')
@@ -145,7 +144,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function()
 		cy.cGet('body').contains('.menu-entry-with-icon', 'Delete')
 			.should('be.visible').click();
 
-		cy.cGet('.leaflet-control-buttons-disabled path.leaflet-interactive')
+		cy.cGet('#test-div-shapeHandlesSection')
 			.should('not.exist');
 	});
 });

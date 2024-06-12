@@ -12,14 +12,14 @@ describe(['tagdesktop'], 'Editing Operations', function() {
 		desktopHelper.switchUIToCompact();
 		desktopHelper.selectZoomLevel('30');
 		impressHelper.selectTextShapeInTheCenter();
-		impressHelper.editTextInShape();
+		impressHelper.dblclickOnSelectedShape();
 	});
 
 	function undo() {
 		helper.typeIntoDocument('Hello World');
-		impressHelper.selectTextOfShape();
+		impressHelper.dblclickOnSelectedShape();
 		helper.typeIntoDocument('{ctrl}z');
-		impressHelper.selectTextOfShape();
+		impressHelper.dblclickOnSelectedShape();
 		helper.copy();
 		helper.clipboardTextShouldBeDifferentThan('Hello World');
 	}

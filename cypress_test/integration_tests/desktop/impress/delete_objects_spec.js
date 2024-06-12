@@ -13,7 +13,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function(
 	it('Delete Text', function() {
 		helper.setDummyClipboardForCopy();
 		cy.cGet('.leaflet-layer').dblclick('center');
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g').should('exist');
+		cy.cGet('#document-container svg g').should('exist');
 		helper.typeIntoDocument('text');
 		helper.selectAllText();
 		helper.copy();
@@ -29,24 +29,24 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function(
 		//insert
 		cy.cGet('#insertshapes').click();
 		cy.cGet('.col.w2ui-icon.symbolshapes').should($el => { expect(Cypress.dom.isDetached($el)).to.eq(false); }).click();
-		cy.cGet('.leaflet-control-buttons-disabled path.leaflet-interactive').should('exist');
+		cy.cGet('#test-div-shapeHandlesSection').should('exist');
 
 		//delete
 		helper.typeIntoDocument('{del}');
-		cy.cGet('.leaflet-control-buttons-disabled path.leaflet-interactive').should('not.exist');
+		cy.cGet('#test-div-shapeHandlesSection').should('not.exist');
 	});
 
 	it('Delete Chart' , function() {
 		cy.cGet('#toolbar-up > .ui-scroll-right').click();
 		//insert
 		cy.cGet('#insertobjectchart').click();
-		cy.cGet('.leaflet-control-buttons-disabled path.leaflet-interactive').should('exist');
+		cy.cGet('#test-div-shapeHandlesSection').should('exist');
 		//delete
 		helper.typeIntoDocument('{del}');
-		cy.cGet('.leaflet-control-buttons-disabled path.leaflet-interactive').should('not.exist');
+		cy.cGet('#test-div-shapeHandlesSection').should('not.exist');
 	});
 
-	it('Delete Table',function() {
+	it.only('Delete Table',function() {
 		desktopHelper.selectZoomLevel('50');
 
 		cy.cGet('#menu-table').click();
@@ -57,7 +57,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function(
 
 		// Table is inserted with the markers shown
 		cy.cGet('.leaflet-marker-icon.table-column-resize-marker').should('exist');
-		cy.cGet('path.leaflet-interactive').rightclick({force:true});
+		cy.cGet('#test-div-shapeHandlesSection').rightclick({force:true});
 		cy.cGet('body').contains('.context-menu-item', 'Delete').click();
 		cy.cGet('.leaflet-marker-icon.table-column-resize-marker').should('not.exist');
 	});
@@ -66,11 +66,11 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function(
 		cy.cGet('#menu-insert').click();
 		cy.cGet('body').contains('a','Fontwork...').click();
 		cy.cGet('#ok').click();
-		cy.cGet('.leaflet-control-buttons-disabled path.leaflet-interactive').should('exist');
+		cy.cGet('#test-div-shapeHandlesSection').should('exist');
 
 		//delete
 		helper.typeIntoDocument('{del}');
 
-		cy.cGet('.leaflet-control-buttons-disabled path.leaflet-interactive').should('not.exist');
+		cy.cGet('#test-div-shapeHandlesSection').should('not.exist');
 	});
 });

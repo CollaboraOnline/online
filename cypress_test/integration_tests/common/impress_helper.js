@@ -21,7 +21,7 @@ function assertInTextEditMode() {
 	// In edit mode, we should have the edit container.
 	cy.cGet('#doc-clipboard-container').should('exist');
 	cy.cGet('.leaflet-interactive').should('exist');
-	cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g').should('exist');
+	cy.cGet('#document-container svg g').should('exist');
 	helper.assertCursorAndFocus();
 
 	cy.log('<< assertInTextEditMode - end');
@@ -80,8 +80,8 @@ function selectTextShapeInTheCenter() {
 			cy.cGet('body').click(XPos, YPos);
 		});
 
-	cy.cGet('.leaflet-drag-transform-marker').should($el => { expect(Cypress.dom.isDetached($el)).to.eq(false); }).should('be.visible');
-	cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g.Page g').should('exist');
+	cy.cGet('#test-div-shape-handle-rotation').should('exist');
+	cy.cGet('#document-container svg g.Page g').should('exist');
 
 	cy.log('<< selectTextShapeInTheCenter - end');
 }
@@ -104,7 +104,7 @@ function selectTableInTheCenter() {
 	});
 
 	cy.cGet('.leaflet-marker-icon.table-row-resize-marker').should($el => { expect(Cypress.dom.isDetached($el)).to.eq(false); }).should('be.visible');
-	cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g.Page g').should('exist');
+	cy.cGet('#document-container svg g.Page g').should('exist');
 
 	cy.log('<< selectTableInTheCenter - end');
 }
@@ -165,7 +165,7 @@ function selectTextOfShape() {
 	// Double click onto the selected shape
 	// Retry until the cursor appears and the text is selected
 	cy.waitUntil(function() {
-		cy.cGet('svg g svg').dblclick({force: true});
+		cy.cGet('#canvas-container svg').dblclick({force: true});
 		helper.typeIntoDocument('{ctrl}a');
 		return cy.cGet('.text-selection-handle-start').should('exist');
 	});
@@ -179,7 +179,7 @@ function editTextInShape() {
 	cy.log('>> editTextInShape - start');
 
 	cy.waitUntil(function() {
-		cy.cGet('svg g .leaflet-interactive').dblclick({force: true});
+		cy.cGet('#document-container svg g').dblclick({force: true});
 		return cy.cGet('.cursor-overlay')
 			.then(function(overlay) {
 				return overlay.children('.leaflet-cursor-container').length !== 0;
@@ -196,7 +196,7 @@ function editTextInShape() {
 function dblclickOnSelectedShape() {
 	cy.log('>> dblclickOnSelectedShape - start');
 
-	cy.cGet('.transform-handler--rotate')
+	cy.cGet('#test-div-shape-handle-rotation')
 		.then(function(items) {
 			expect(items).to.have.length(1);
 			var XPos = (items[0].getBoundingClientRect().left + items[0].getBoundingClientRect().right) / 2;

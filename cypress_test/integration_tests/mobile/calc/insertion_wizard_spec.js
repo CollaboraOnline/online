@@ -38,8 +38,7 @@ describe(['tagmobile', 'tagnextcloud'], 'Calc insertion wizard.', function() {
 				cy.cGet('body').click(XPos, YPos);
 			});
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g.Graphic')
-			.should('exist');
+		cy.cGet('#document-container svg g.Graphic').should('exist');
 	});
 
 	it('Insert chart.', function() {
@@ -93,10 +92,9 @@ describe(['tagmobile', 'tagnextcloud'], 'Calc insertion wizard.', function() {
 			click();
 
 		// Check that the shape is there
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g')
-			.should('exist');
+		cy.cGet('#document-container svg g').should('exist');
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg.bottomright-svg-pane')
+		cy.cGet('#document-container svg.bottomright-svg-pane')
 			.should(function(svg) {
 				expect(svg[0].getBBox().width).to.be.greaterThan(0);
 				expect(svg[0].getBBox().height).to.be.greaterThan(0);

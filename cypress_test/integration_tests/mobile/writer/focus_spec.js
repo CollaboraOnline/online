@@ -66,9 +66,9 @@ describe(['tagmobile', 'tagproxy'], 'Focus tests', function() {
 		cy.cGet('body').contains('.menu-entry-with-icon', 'Shape').click();
 		cy.cGet('.col.w2ui-icon.basicshapes_rectangle').click();
 		// Check that the shape is there
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g').should('exist');
+		cy.cGet('#document-container svg g').should('exist');
 		// One tap on the shape
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg')
+		cy.cGet('#document-container svg')
 			.then(function(svg) {
 				expect(svg[0].getBBox().width).to.be.greaterThan(0);
 				expect(svg[0].getBBox().height).to.be.greaterThan(0);
@@ -81,7 +81,7 @@ describe(['tagmobile', 'tagproxy'], 'Focus tests', function() {
 		helper.assertFocus('tagName', 'BODY');
 
 		// Double tap on the shape
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg')
+		cy.cGet('#document-container svg')
 			.then(function(svg) {
 				expect(svg[0].getBBox().width).to.be.greaterThan(0);
 				expect(svg[0].getBBox().height).to.be.greaterThan(0);

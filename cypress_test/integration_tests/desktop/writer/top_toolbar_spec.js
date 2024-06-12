@@ -232,7 +232,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 	it('Insert image.', function() {
 		cy.cGet('#Home-container .unoInsertGraphic').click({force: true});
 		cy.cGet('#insertgraphic[type=file]').attachFile('/desktop/writer/image_to_insert.png');
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g.Graphic').should('exist');
+		cy.cGet('#document-container svg g.Graphic').should('exist');
 	});
 
 	it('Insert hyperlink.', function() {
@@ -256,24 +256,25 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		cy.cGet('#Insert-tab-label').click();
 		cy.cGet('#Insert-container .unoBasicShapes button').click();
 		cy.cGet('.col.w2ui-icon.basicshapes_octagon').click();
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g').should('exist');
+		cy.cGet('#document-container svg g').should('exist');
 
 		//delete
 		helper.typeIntoDocument('{del}');
 
-		cy.cGet('.leaflet-control-buttons-disabled path.leaflet-interactive')
+		cy.cGet('#test-div-shapeHandlesSection')
 			.should('not.exist');
 	});
 
 	it('Insert/delete chart.', function() {
 		cy.cGet('#Insert-tab-label').click();
 		cy.cGet('#Insert-container .unoInsertObjectChart button').click();
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g').should('exist');
+
+		cy.cGet('#test-div-shapeHandlesSection').should('exist');
 
 		//delete
 		helper.typeIntoDocument('{del}');
-		cy.cGet('.leaflet-control-buttons-disabled path.leaflet-interactive')
-			.should('not.exist');
+
+		cy.cGet('#test-div-shapeHandlesSection').should('not.exist');
 	});
 
 	it('Save.', function() {
@@ -475,11 +476,11 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		cy.cGet('#Insert-tab-label').click();
 		cy.cGet('#Insert-container .unoFontworkGalleryFloater').click();
 		cy.cGet('#ok').click();
-		cy.cGet('.leaflet-control-buttons-disabled path.leaflet-interactive').should('exist');
+		cy.cGet('#test-div-shapeHandlesSection').should('exist');
 
 		//delete
 		helper.typeIntoDocument('{del}');
-		cy.cGet('.leaflet-control-buttons-disabled path.leaflet-interactive').should('not.exist');
+		cy.cGet('#test-div-shapeHandlesSection').should('not.exist');
 	});
 
 	it('Scroll', function() {

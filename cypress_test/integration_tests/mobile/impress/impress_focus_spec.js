@@ -39,7 +39,7 @@ describe(['tagmobile', 'tagproxy'], 'Impress focus tests', function() {
 		cy.wait(1000);
 
 		// Shape selection.
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g').should('exist');
+		cy.cGet('#document-container svg g').should('exist');
 
 		// But no editing.
 		impressHelper.assertNotInTextEditMode();

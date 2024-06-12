@@ -16,7 +16,7 @@ describe(['tagdesktop'], 'Image Operation Tests', function() {
 		insertImage();
 
 		//make sure that image is in focus
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g.leaflet-control-buttons-disabled')
+		cy.cGet('#document-container svg g')
 			.should('exist');
 
 		deleteImage();

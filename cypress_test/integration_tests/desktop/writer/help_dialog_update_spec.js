@@ -55,7 +55,7 @@ describe(['tagscreenshot'], 'Help dialog screenshot updation', function() {
 		//insert
 		cy.cGet('#insertshapes').click();
 		cy.cGet('.col.w2ui-icon.symbolshapes').click();
-		cy.cGet('.leaflet-control-buttons-disabled path.leaflet-interactive').should('exist');
+		cy.cGet('#test-div-shapeHandlesSection').should('exist');
 		cy.cGet('#menu-editmenu').click();
 		cy.cGet('#menu-repair').click();
 		cy.cGet('.jsdialog-container.lokdialog_container').should('exist');
@@ -126,7 +126,7 @@ describe(['tagscreenshot'], 'Help dialog screenshot updation', function() {
 		cy.cGet('#insertshapes').click();
 		cy.cGet('.col.w2ui-icon.symbolshapes').click();
 
-		cy.cGet('.leaflet-control-buttons-disabled path.leaflet-interactive').should('exist');
+		cy.cGet('#test-div-shapeHandlesSection').should('exist');
 
 		cy.cGet('#menu-editmenu').click();
 		cy.cGet('#menu-changesmenu').click();
@@ -151,7 +151,7 @@ describe(['tagscreenshot'], 'Help dialog screenshot updation', function() {
 		cy.cGet('#menu-insert').click();
 		cy.cGet('#menu-insert').contains('Chart...').click();
 		cy.wait(1000);
-		cy.cGet('.leaflet-control-buttons-disabled path.leaflet-interactive')
+		cy.cGet('#test-div-shapeHandlesSection')
 			.should('exist').screenshot('chart', {padding: 10});
 
 		copyScreenshot('chart.png');

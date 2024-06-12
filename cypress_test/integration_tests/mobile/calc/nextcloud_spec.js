@@ -14,7 +14,7 @@ describe(['tagnextcloud'], 'Nextcloud specific tests.', function() {
 		nextcloudHelper.insertImageFromStorage('image_to_insert.png');
 
 		// TODO
-		//cy.get('.leaflet-pane.leaflet-overlay-pane svg g.Graphic')
+		//cy.get('#document-container svg g.Graphic')
 		//	.should('exist');
 	});
 

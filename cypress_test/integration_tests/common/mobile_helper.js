@@ -351,7 +351,7 @@ function insertImage() {
 	cy.cGet('#insertgraphic[type=file]')
 		.attachFile('/mobile/writer/image_to_insert.png');
 
-	cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g')
+	cy.cGet('#document-container svg g')
 		.should('exist');
 
 	cy.log('<< insertImage - end');
@@ -375,7 +375,7 @@ function deleteImage() {
 	cy.cGet('body').contains('.menu-entry-with-icon', 'Delete')
 		.should('be.visible').click();
 
-	cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g')
+	cy.cGet('#document-container svg g')
 		.should('not.exist');
 
 	cy.log('<< deleteImage - end');
