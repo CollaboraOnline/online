@@ -30,9 +30,9 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		this.sectionProperties.subSections = [];
 		this.sectionProperties.activeHandleIndex = null;
 		this.sectionProperties.mouseIsInside = false;
-		this.sectionProperties.handleWidth = 20;
-		this.sectionProperties.handleHeight = 20;
-		this.sectionProperties.gluePointRadius = 10;
+		this.sectionProperties.handleWidth = 20 * app.dpiScale;
+		this.sectionProperties.handleHeight = 20 * app.dpiScale;
+		this.sectionProperties.gluePointRadius = 10 * app.dpiScale;
 		this.sectionProperties.subSectionPrefix = 'shape-handle-';
 		this.sectionProperties.previousCursorStyle = null;
 		this.sectionProperties.svg = null; // This is for preview of modifications.
@@ -203,7 +203,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 	getRotationHandlePosition(rotationInfo: any) {
 		const centerX = parseInt(this.sectionProperties.info.handles.kinds.rectangle['2'][0].point.x) * app.twipsToPixels - this.position[0];
 		const centerY = parseInt(this.sectionProperties.info.handles.kinds.rectangle['2'][0].point.y) * app.twipsToPixels - this.position[1];
-		const diff = 30;
+		const diff = 30 * app.dpiScale;
 
 		let y = centerY - diff * Math.sin(rotationInfo.coreAngle + Math.PI * 0.5);
 		let x = centerX + diff * Math.cos(rotationInfo.coreAngle + Math.PI * 0.5);
@@ -414,7 +414,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 			newSubSection = new app.definitions.shapeHandleAnchorSubSection(
 				this,
 				this.sectionProperties.subSectionPrefix + handle.info.id,
-				[this.sectionProperties.handleWidth, this.sectionProperties.handleHeight],
+				[this.sectionProperties.handleWidth / app.dpiScale, this.sectionProperties.handleHeight / app.dpiScale],
 				handle.point.clone(),
 				handle.info
 			);
@@ -454,7 +454,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 			newSubSection = new app.definitions.shapeHandleRotationSubSection(
 				this,
 				this.sectionProperties.subSectionPrefix + 'rotation',
-				[this.sectionProperties.handleWidth, this.sectionProperties.handleHeight],
+				[this.sectionProperties.handleWidth / app.dpiScale, this.sectionProperties.handleHeight / app.dpiScale],
 				handle.point.clone(),
 				handle.info
 			);

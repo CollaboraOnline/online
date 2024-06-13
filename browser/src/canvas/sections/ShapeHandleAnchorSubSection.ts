@@ -118,8 +118,8 @@ class ShapeHandleAnchorSubSection extends HTMLObjectSection {
 				}
 				initialPosition = this.sectionProperties.initialPosition;
 			}
-			svg.style.left = (dragDistance[0] + initialPosition[0]) + 'px';
-			svg.style.top = (dragDistance[1] + initialPosition[1]) + 'px';
+			svg.style.left = (dragDistance[0] + initialPosition[0]) / app.dpiScale + 'px';
+			svg.style.top = (dragDistance[1] + initialPosition[1]) / app.dpiScale + 'px';
 
 			this.stopPropagating();
 			e.stopPropagation();
