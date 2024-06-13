@@ -2523,6 +2523,8 @@ void COOLWSD::innerInitialize(Application& self)
     // Initialize the config subsystem too.
     config::initialize(&config());
 
+    Util::sleepFromEnvIfSet("Coolwsd", "SLEEPFORDEBUGGER");
+
     // For some reason I can't get at this setting in ChildSession::loKitCallback().
     std::string fontsMissingHandling = config::getString("fonts_missing.handling", "log");
     setenv("FONTS_MISSING_HANDLING", fontsMissingHandling.c_str(), 1);
