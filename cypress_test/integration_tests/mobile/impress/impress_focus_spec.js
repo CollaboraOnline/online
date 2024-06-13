@@ -45,7 +45,7 @@ describe(['tagmobile', 'tagproxy'], 'Impress focus tests', function() {
 		impressHelper.assertNotInTextEditMode();
 	});
 
-	it.only('Double-click to edit', function() {
+	it('Double-click to edit', function() {
 		helper.setDummyClipboardForCopy();
 
 		mobileHelper.enableEditingMobile();

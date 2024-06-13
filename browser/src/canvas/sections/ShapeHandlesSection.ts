@@ -585,7 +585,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		(window as any).IgnorePanning = false;
 
 		// This is for tablet and mobbile but we can use this for also desktop, if we want to avoid sending mouse events for shapes to core side.
-		if (this.containerObject.isDraggingSomething() && (window as any).mode.isTablet() || (window as any).mode.isMobile())
+		if (this.containerObject.isDraggingSomething() && ((window as any).mode.isTablet() || (window as any).mode.isMobile()))
 			this.sendTransformCommand(point);
 	}
 

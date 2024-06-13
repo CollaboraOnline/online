@@ -20,7 +20,6 @@ function assertInTextEditMode() {
 
 	// In edit mode, we should have the edit container.
 	cy.cGet('#doc-clipboard-container').should('exist');
-	cy.cGet('.leaflet-interactive').should('exist');
 	cy.cGet('#document-container svg g').should('exist');
 	helper.assertCursorAndFocus();
 

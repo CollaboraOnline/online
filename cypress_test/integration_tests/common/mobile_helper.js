@@ -367,7 +367,7 @@ function deleteImage() {
 		pointerType: 'mouse'
 	};
 
-	cy.cGet('.leaflet-control-buttons-disabled > .leaflet-interactive')
+	cy.cGet('.leaflet-layer')
 		.trigger('pointerdown', eventOptions)
 		.wait(500) // Wait for long press
 		.trigger('pointerup', eventOptions);
