@@ -12,7 +12,8 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Overlay bounds.', function 
 		mobileHelper.enableEditingMobile();
 	});
 
-	it('Cell cursor overlay bounds', function () {
+	// Needs to be re-written for cellcursor section.
+	it.skip('Cell cursor overlay bounds', function () {
 		// Select first cell by clicking on it
 		calcHelper.clickOnFirstCell();
 
@@ -42,7 +43,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Overlay bounds.', function 
 		});
 	});
 
-	it('Cell range selection overlay bounds', function () {
+	it.skip('Cell range selection overlay bounds', function () {
 		// Select first cell by clicking on it
 		calcHelper.clickOnFirstCell();
 

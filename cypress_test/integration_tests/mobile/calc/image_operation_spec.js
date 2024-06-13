@@ -24,7 +24,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Image Operation Tests', fun
 			pointerType: 'mouse'
 		};
 
-		cy.cGet('.bottomright-svg-pane > .leaflet-control-buttons-disabled > .leaflet-interactive')
+		cy.cGet('.leaflet-layer')
 			.trigger('pointerdown', eventOptions)
 			.wait(1000)
 			.trigger('pointerup', eventOptions);

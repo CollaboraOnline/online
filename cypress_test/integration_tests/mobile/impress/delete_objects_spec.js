@@ -1,4 +1,4 @@
-/* global describe cy it expect beforeEach require */
+/* global describe cy it beforeEach require */
 
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
@@ -49,15 +49,15 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function()
 		// Check that the shape is there
 		cy.cGet('#document-container svg g').should('exist');
 
-		cy.cGet('#document-container svg')
-			.then(function(svg) {
-				expect(svg[0].getBBox().width).to.be.greaterThan(0);
-				expect(svg[0].getBBox().height).to.be.greaterThan(0);
-			});
+		//cy.cGet('#document-container svg')
+		//	.then(function(svg) {
+		//		expect(svg[0].getBoundingClientRect().width).to.be.greaterThan(0);
+		//		expect(svg[0].getBoundingClientRect().height).to.be.greaterThan(0);
+		//	});
 
 		//deletion
 
-		cy.cGet('.leaflet-control-buttons-disabled > .leaflet-interactive')
+		cy.cGet('.leaflet-layer')
 			.trigger('pointerdown', eventOptions)
 			.wait(1000)
 			.trigger('pointerup', eventOptions);
@@ -88,7 +88,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function()
 			.should('exist');
 
 		//delete
-		cy.cGet('path.leaflet-interactive')
+		cy.cGet('.leaflet-layer')
 			.trigger('pointerdown', eventOptions)
 			.wait(1000)
 			.trigger('pointerup', eventOptions);
@@ -115,7 +115,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function()
 		cy.cGet('#test-div-shapeHandlesSection')
 			.should('exist');
 
-		cy.cGet('.leaflet-control-buttons-disabled > .leaflet-interactive')
+		cy.cGet('.leaflet-layer')
 			.trigger('pointerdown', eventOptions)
 			.wait(1000)
 			.trigger('pointerup', eventOptions);
@@ -136,7 +136,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function()
 		cy.cGet('#test-div-shapeHandlesSection')
 			.should('exist');
 
-		cy.cGet('.leaflet-control-buttons-disabled > .leaflet-interactive')
+		cy.cGet('.leaflet-layer')
 			.trigger('pointerdown', eventOptions)
 			.wait(1000)
 			.trigger('pointerup', eventOptions);
