@@ -49,23 +49,28 @@ Quarantine::Quarantine(DocumentBroker& docBroker, const std::string& docName)
     , _docName(Util::encodeURIComponent(docName, std::string(",/?:@&=+$#") + Delimiter))
     , _quarantinedFilename(Delimiter + std::to_string(docBroker.getPid()) + Delimiter + _docName)
 {
-    LOG_DBG("Quarantine ctor for [" << _docKey << ']');
+    LOG_DBG("Quarantine ctor for [" << _docKey << "], filename: [" << _quarantinedFilename << ']');
 }
 
 void Quarantine::initialize(const std::string& path)
 {
     if (!COOLWSD::getConfigValue<bool>("quarantine_files[@enable]", false) ||
         !QuarantinePath.empty())
+    {
         return;
-
-    // Make sure the quarantine directories exists, or we throw if we can't create it.
-    Poco::File(path).createDirectories();
+    }
 
     MaxSizeBytes = COOLWSD::getConfigValue<std::size_t>("quarantine_files.limit_dir_size_mb", 250) *
                    1024 * 1024;
     MaxAgeSecs = COOLWSD::getConfigValue<std::size_t>("quarantine_files.expiry_min", 3000) * 60;
     MaxVersions = std::max(
         COOLWSD::getConfigValue<std::size_t>("quarantine_files.max_versions_to_maintain", 5), 1UL);
+    LOG_INF("Initializing Quarantine at [" << path << "] with Max Size: " << MaxSizeBytes
+                                           << " bytes, Max Age: " << MaxAgeSecs
+                                           << " seconds, Max Versions: " << MaxVersions);
+
+    // Make sure the quarantine directories exists, or we throw if we can't create it.
+    Poco::File(path).createDirectories();
 
     // This function should ever be called once, but for consistency, take the lock.
     std::lock_guard<std::mutex> lock(Mutex);
@@ -83,24 +88,43 @@ void Quarantine::initialize(const std::string& path)
         }
         else if (file.isDirectory())
         {
-            const std::string docKey = file.path();
+            // Directories are always DocKeys.
+            Poco::Path filePath = file.path();
+            const std::string& docKey = filePath.directory(filePath.depth());
+            const std::string fullPath = file.path();
+
             std::vector<Poco::File> newFiles;
-            Poco::File(Poco::Path(path, docKey)).list(newFiles);
+            Poco::File(fullPath).list(newFiles);
+            if (newFiles.empty())
+            {
+                // Remove empty directories.
+                LOG_TRC("Removing empty quarantine directory [" << fullPath << ']');
+                FileUtil::removeFile(fullPath, /*recursive=*/true);
+                continue;
+            }
 
             std::vector<Entry> entries;
             entries.reserve(newFiles.size());
             for (const Poco::File& newFile : newFiles)
             {
-                entries.emplace_back(path, file.path(), newFile.path());
+                if (newFile.isFile())
+                {
+                    entries.emplace_back(path, docKey, Poco::Path(newFile.path()).getFileName());
+                }
             }
 
-            QuarantineMap[docKey] = entries;
+            LOG_TRC("Found " << entries.size() << " quarantine file for DocKey [" << docKey << ']');
+            if (!entries.empty())
+            {
+                QuarantineMap[docKey] = entries;
+            }
         }
     }
 
+    LOG_TRC("Found " << legacyFiles.size() << " quarantine legacy files");
     for (const Poco::File& legacyFile : legacyFiles)
     {
-        Entry entry(path, legacyFile.path());
+        Entry entry(path, Poco::Path(legacyFile.path()).getFileName());
 
         QuarantineMap[entry.docKey()].emplace_back(entry);
     }
@@ -112,7 +136,26 @@ void Quarantine::initialize(const std::string& path)
                   { return lhs.secondsSinceEpoch() < rhs.secondsSinceEpoch(); });
     }
 
+    // We are initialized at this point.
     QuarantinePath = path;
+
+    for (auto& pair : QuarantineMap)
+    {
+        LOG_TRC("BC Found " << pair.second.size() << " quarantine file(s) for DocKey ["
+                            << pair.first << ']');
+    }
+
+    // Clean up.
+    makeQuarantineSpace(/*headroomBytes=*/0);
+
+    for (auto& pair : QuarantineMap)
+    {
+        LOG_TRC("AC Found " << pair.second.size() << " quarantine file(s) for DocKey ["
+                            << pair.first << ']');
+    }
+
+    LOG_DBG("Found " << QuarantineMap.size() << " DocKey quarantines with total "
+                     << quarantineSize() << " bytes");
 }
 
 void Quarantine::removeQuarantine()
@@ -242,12 +285,14 @@ bool Quarantine::quarantineFile(const std::string& docPath)
 
     Entry entry(QuarantinePath, _docKey, getSecondsSinceEpoch(), _quarantinedFilename,
                 sourceStat.size());
+    Poco::File(Poco::Path(QuarantinePath, _docKey)).createDirectories();
 
     const std::string linkedFilePath = entry.fullPath();
     LOG_TRC("Quarantining [" << docPath << "] to [" << linkedFilePath << ']');
 
     std::lock_guard<std::mutex> lock(Mutex);
 
+    // Check if we have a duplicate or a new version.
     auto& fileList = QuarantineMap[_docKey];
     if (!fileList.empty())
     {
