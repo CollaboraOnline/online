@@ -1142,7 +1142,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 			{
 				'id': 'view-togglegrid',
 				'type': 'bigtoolitem',
-				'text': _UNO('.uno:ToggleSheetGrid'),
+				'text': _UNO('.uno:ToggleSheetGrid','spreadsheet'),
 				'command': '.uno:ToggleSheetGrid',
 				'accessibility': { focusBack: true,	combination: 'SG', de: null }
 			},
