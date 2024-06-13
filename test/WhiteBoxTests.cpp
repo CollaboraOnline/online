@@ -1336,19 +1336,20 @@ size_t WhiteBoxTests::waitForThreads(size_t count)
 void WhiteBoxTests::testThreadPool()
 {
     constexpr auto testname = __func__;
-    setenv("MAX_CONCURRENCY","7",1);
+    const size_t existingUnrelatedThreads = Util::getCurrentThreadCount();
+    setenv("MAX_CONCURRENCY","8",1);
     ThreadPool pool;
-    LOK_ASSERT_EQUAL(int(7), pool._maxConcurrency);
+    LOK_ASSERT_EQUAL(int(8), pool._maxConcurrency);
     LOK_ASSERT_EQUAL(size_t(7), pool._threads.size());
-    LOK_ASSERT_EQUAL(size_t(7), waitForThreads(7));
+    LOK_ASSERT_EQUAL(size_t(7 + existingUnrelatedThreads), waitForThreads(8 + existingUnrelatedThreads));
 
     pool.stop();
     LOK_ASSERT_EQUAL(size_t(0), pool._threads.size());
-    LOK_ASSERT_EQUAL(size_t(1), waitForThreads(1));
+    LOK_ASSERT_EQUAL(size_t(existingUnrelatedThreads), waitForThreads(existingUnrelatedThreads));
 
     pool.start();
     LOK_ASSERT_EQUAL(size_t(7), pool._threads.size());
-    LOK_ASSERT_EQUAL(size_t(7), waitForThreads(7));
+    LOK_ASSERT_EQUAL(size_t(7 + existingUnrelatedThreads), waitForThreads(8 + existingUnrelatedThreads));
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(WhiteBoxTests);
