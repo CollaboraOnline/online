@@ -565,11 +565,11 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		const parameters = {
 			'TransformPosX': {
 				'type': 'long',
-				'value': Math.round((point[0] + this.position[0]) * app.pixelsToTwips)
+				'value': Math.round((point[0] + this.position[0] - app.map._docLayer._graphicSelection.pWidth * 0.5) * app.pixelsToTwips)
 			},
 			'TransformPosY': {
 				'type': 'long',
-				'value': Math.round((point[1] + this.position[1]) * app.pixelsToTwips)
+				'value': Math.round((point[1] + this.position[1] - app.map._docLayer._graphicSelection.pHeight * 0.5) * app.pixelsToTwips)
 			}
 		};
 
@@ -593,8 +593,8 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		if (this.containerObject.isDraggingSomething() && this.sectionProperties.svg) {
 			(window as any).IgnorePanning = true;
 
-			this.sectionProperties.svg.style.left = String(this.myTopLeft[0] + dragDistance[0]) + 'px';
-			this.sectionProperties.svg.style.top = String(this.myTopLeft[1] + dragDistance[1]) + 'px';
+			this.sectionProperties.svg.style.left = String((this.myTopLeft[0] + dragDistance[0]) / app.dpiScale) + 'px';
+			this.sectionProperties.svg.style.top = String((this.myTopLeft[1] + dragDistance[1]) / app.dpiScale) + 'px';
 			this.sectionProperties.svg.style.opacity = 0.5;
 			this.showSVG();
 		}
@@ -619,28 +619,33 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		if (this.sectionProperties.svg && this.sectionProperties.svg.style.display === '' && app.map._docLayer._graphicSelection) {
 
 			const clientRect = (this.sectionProperties.svg.children[0] as SVGElement).getBoundingClientRect();
-			const width: number = clientRect.width * app.getScale();
-			const height: number = clientRect.height * app.getScale();
+			let width: number = clientRect.width;
+			let height: number = clientRect.height;
+
+			if (app.map._docLayer._docType !== 'presentation') {
+				width *= app.getScale();
+				height *= app.getScale();
+			}
 
 			let left = 0, top = 0;
 
 			const viewBox: number[] = this.getViewBox(this.sectionProperties.svg.children[0]);
 			const isImage = this.sectionProperties.svg.querySelectorAll('.Graphic').length > 0;
 			if (viewBox && clientRect.width > 0 && clientRect.height > 0 && !isImage) {
-				this.sectionProperties.svg.children[0].style.width = width + 'px';
-				this.sectionProperties.svg.children[0].style.height = height + 'px';
+				this.sectionProperties.svg.children[0].style.width = (width / app.dpiScale) + 'px';
+				this.sectionProperties.svg.children[0].style.height = (height / app.dpiScale) + 'px';
 
 				const widthPixelRatio = viewBox[2] / width;
 				const heightPixelRatio = viewBox[3] / height;
 
-				left = viewBox[0] / widthPixelRatio;
-				top = viewBox[1] / heightPixelRatio;
+				left = (viewBox[0] / widthPixelRatio) / app.dpiScale;
+				top = (viewBox[1] / heightPixelRatio) / app.dpiScale;
 			}
 			else {
-				left = this.position[0];
-				top = this.position[1];
-				const widthText = this.size[0] + 'px';
-				const heightText = this.size[1] + 'px';
+				left = (this.position[0] / app.dpiScale);
+				top = (this.position[1] / app.dpiScale);
+				const widthText = (this.size[0] / app.dpiScale) + 'px';
+				const heightText = (this.size[1] / app.dpiScale) + 'px';
 
 				this.sectionProperties.svg.style.width = widthText;
 				this.sectionProperties.svg.style.height = heightText;
@@ -650,8 +655,8 @@ class ShapeHandlesSection extends CanvasSectionObject {
 				}
 			}
 
-			this.sectionProperties.svg.style.left = (left - this.documentTopLeft[0] + this.containerObject.getDocumentAnchor()[0]) + 'px';
-			this.sectionProperties.svg.style.top = (top - this.documentTopLeft[1] + this.containerObject.getDocumentAnchor()[1]) + 'px';
+			this.sectionProperties.svg.style.left = (left - (this.documentTopLeft[0] - this.containerObject.getDocumentAnchor()[0]) / app.dpiScale) + 'px';
+			this.sectionProperties.svg.style.top = (top - (this.documentTopLeft[1] - this.containerObject.getDocumentAnchor()[1]) / app.dpiScale) + 'px';
 			this.sectionProperties.svgPosition = [left, top];
 		}
 		this.hideSVG();
@@ -659,8 +664,8 @@ class ShapeHandlesSection extends CanvasSectionObject {
 
 	onNewDocumentTopLeft(size: number[]): void {
 		if (this.sectionProperties.svgPosition) {
-			this.sectionProperties.svg.style.left = (this.sectionProperties.svgPosition[0] - this.documentTopLeft[0] + this.containerObject.getDocumentAnchor()[0]) + 'px';
-			this.sectionProperties.svg.style.top = (this.sectionProperties.svgPosition[1] - this.documentTopLeft[1] + this.containerObject.getDocumentAnchor()[1]) + 'px';
+			this.sectionProperties.svg.style.left = (this.sectionProperties.svgPosition[0] - (this.documentTopLeft[0] + this.containerObject.getDocumentAnchor()[0]) / app.dpiScale) + 'px';
+			this.sectionProperties.svg.style.top = (this.sectionProperties.svgPosition[1] - (this.documentTopLeft[1] + this.containerObject.getDocumentAnchor()[1]) / app.dpiScale) + 'px';
 		}
 	}
 

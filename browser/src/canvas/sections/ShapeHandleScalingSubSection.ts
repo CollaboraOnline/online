@@ -115,6 +115,8 @@ class ShapeHandleScalingSubSection extends HTMLObjectSection {
 			app.map.sendUnoCommand('.uno:MoveShapeHandle', parameters);
 			this.sectionProperties.parentHandlerSection.hideSVG();
 		}
+
+		(window as any).IgnorePanning = false;
 	}
 
 	adjustSVGProperties(shapeRecProps: any) {
@@ -124,8 +126,11 @@ class ShapeHandleScalingSubSection extends HTMLObjectSection {
 			const scaleX = shapeRecProps.width / this.sectionProperties.parentHandlerSection.sectionProperties.shapeRectangleProperties.width;
 			const scaleY = shapeRecProps.height / this.sectionProperties.parentHandlerSection.sectionProperties.shapeRectangleProperties.height;
 
-			const diffX = shapeRecProps.center[0] - this.sectionProperties.parentHandlerSection.sectionProperties.shapeRectangleProperties.center[0];
-			const diffY = shapeRecProps.center[1] - this.sectionProperties.parentHandlerSection.sectionProperties.shapeRectangleProperties.center[1];
+			let diffX = shapeRecProps.center[0] - this.sectionProperties.parentHandlerSection.sectionProperties.shapeRectangleProperties.center[0];
+			let diffY = shapeRecProps.center[1] - this.sectionProperties.parentHandlerSection.sectionProperties.shapeRectangleProperties.center[1];
+
+			diffX = diffX / app.dpiScale;
+			diffY = diffY / app.dpiScale;
 
 			svg.children[0].style.transform = 'translate(' + Math.round(diffX) + 'px, ' + Math.round(diffY) + 'px)' + 'rotate(' + -shapeRecProps.angleRadian + 'rad) scale(' + scaleX + ', ' + scaleY + ') rotate(' + shapeRecProps.angleRadian + 'rad)';
 
@@ -210,12 +215,15 @@ class ShapeHandleScalingSubSection extends HTMLObjectSection {
 
 	onMouseMove(point: Array<number>, dragDistance: Array<number>, e: MouseEvent) {
 		if (this.containerObject.isDraggingSomething() && this.containerObject.targetSection === this.name) {
+			(window as any).IgnorePanning = true;
 			this.stopPropagating();
 			e.stopPropagation();
 			this.moveHandlesOnDrag(point);
 			this.containerObject.requestReDraw();
 			this.sectionProperties.parentHandlerSection.showSVG();
 		}
+		else
+			(window as any).IgnorePanning = false;
 	}
 }
 
