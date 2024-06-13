@@ -89,12 +89,15 @@ L.Map.Feedback = L.Handler.extend({
 
 		var lokitHash = document.querySelector('#lokit-version a') || {};
 		lokitHash = lokitHash ? lokitHash.innerText : '';
+		var wopiHostId = document.querySelector('#wopi-host-id') || {};
+		wopiHostId = wopiHostId ? wopiHostId.innerText : '';
 
 		var cssVar = getComputedStyle(document.documentElement).getPropertyValue('--co-primary-element');
 		var params = [{ mobile : window.mode.isMobile() },
 			      { cssvar : cssVar},
 			      { wsdhash : window.app.socket.WSDServer.Hash },
-			      { 'lokit_hash' : lokitHash }];
+			      { 'lokit_hash' : lokitHash },
+			      { 'wopi_host_id' : wopiHostId }];
 
 		var options = {
 			prefix: 'iframe-dialog',
