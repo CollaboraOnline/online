@@ -1328,10 +1328,12 @@ bool Document::joinThreads()
 // Most threads are opportunisticaly created but some need to be started
 void Document::startThreads()
 {
-    if (SocketPoll::PollWatchdog)
-        SocketPoll::PollWatchdog->startThread();
+    _deltaPool.start();
 
     getLOKit()->startThreads();
+
+    if (SocketPoll::PollWatchdog)
+        SocketPoll::PollWatchdog->startThread();
 }
 
 void Document::handleSaveMessage(const std::string &)

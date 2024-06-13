@@ -22,6 +22,8 @@
 
 class ThreadPool
 {
+    friend class WhiteBoxTests;
+
     std::mutex _mutex;
     std::condition_variable _cond;
     std::condition_variable _complete;
@@ -29,32 +31,44 @@ class ThreadPool
     std::queue<ThreadFn> _work;
     std::vector<std::thread> _threads;
     size_t _working;
+    int _maxConcurrency;
     bool _shutdown;
     std::atomic<bool> _running;
 
 public:
     ThreadPool()
         : _working(0)
+        , _maxConcurrency(2)
         , _shutdown(false)
         , _running(false)
     {
-        int maxConcurrency = 2;
 #if WASMAPP
         // Leave it at that.
 #elif MOBILEAPP && !defined(GTKAPP)
-        maxConcurrency = std::max<int>(std::thread::hardware_concurrency(), 2);
+        _maxConcurrency = std::max<int>(std::thread::hardware_concurrency(), 2);
 #else
         // coverity[tainted_return_value] - we trust the contents of this variable
         const char* max = getenv("MAX_CONCURRENCY");
         if (max)
-            maxConcurrency = atoi(max);
+            _maxConcurrency = atoi(max);
 #endif
-        LOG_TRC("PNG compression thread pool size " << maxConcurrency);
-        for (int i = 1; i < maxConcurrency; ++i)
-            _threads.push_back(std::thread(&ThreadPool::work, this));
+        LOG_TRC("PNG compression thread pool size " << _maxConcurrency);
+        start();
     }
 
     ~ThreadPool() { stop(); }
+
+    void start()
+    {
+        {
+            std::unique_lock<std::mutex> lock(_mutex);
+            assert(!_running);
+            assert(_working == 0);
+            _shutdown = false;
+        }
+        for (int i = _threads.size(); i < _maxConcurrency; ++i)
+            _threads.emplace_back(&ThreadPool::work, this);
+    }
 
     void stop()
     {
@@ -75,6 +89,7 @@ public:
     {
         std::unique_lock<std::mutex> lock(_mutex);
         assert(!_running);
+        assert(!_shutdown);
         assert(_working == 0);
         _work.push(fn);
     }
