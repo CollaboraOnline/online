@@ -107,6 +107,18 @@ m4_ifelse(EMSCRIPTENAPP,[true],
   [   window.ThisIsTheEmscriptenApp = false;]
 )
 
+// This function may look unused, but it's needed in WASM and Android to send data through the fake websocket. Please
+// don't remove it without first grepping for 'Base64ToArrayBuffer' in the C++ code
+var Base64ToArrayBuffer = function(base64Str) {
+  var binStr = atob(base64Str);
+  var ab = new ArrayBuffer(binStr.length);
+  var bv = new Uint8Array(ab);
+  for (var i = 0, l = binStr.length; i < l; i++) {
+    bv[[i]] = binStr.charCodeAt(i);
+  }
+  return ab;
+}
+
   window.bundlejsLoaded = false;
   window.fullyLoadedAndReady = false;
   window.addEventListener('load', function() {
