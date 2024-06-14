@@ -21,12 +21,17 @@ class ServerAuditUtil
     // <code, status>
     std::map<std::string, std::string> entries;
 
+    bool disabled;
+
 public:
     ServerAuditUtil();
 
     std::string getResultsJSON() const;
 
     void set(std::string code, std::string status);
+
+    void disable() { disabled = true; }
+    bool isDisabled() const { return disabled; }
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
