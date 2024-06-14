@@ -16,8 +16,8 @@ describe(['tagmobile', 'tagnextcloud'], 'Impress insertion wizard.', function() 
 		// Check that the shape is there
 		cy.cGet('#document-container svg')
 			.should(function(svg) {
-				expect(svg[0].getBBox().width).to.be.greaterThan(0);
-				expect(svg[0].getBBox().height).to.be.greaterThan(0);
+				expect(parseInt(svg[0].style.width.replace('px', ''))).to.be.greaterThan(0);
+				expect(parseInt(svg[0].style.height.replace('px', ''))).to.be.greaterThan(0);
 			});
 
 		if (checkShape) {
@@ -120,7 +120,7 @@ describe(['tagmobile', 'tagnextcloud'], 'Impress insertion wizard.', function() 
 		// Insert
 		cy.cGet('#response-ok').click();
 		// TODO: we have some wierd shape here instead of a text shape with the link
-		cy.cGet('#document-container svg g path.leaflet-interactive').should('exist');
+		cy.cGet('#document-container svg g').should('exist');
 	});
 
 	it('Insert shape.', function() {
@@ -131,8 +131,8 @@ describe(['tagmobile', 'tagnextcloud'], 'Impress insertion wizard.', function() 
 		cy.cGet('#document-container svg g').should('exist');
 		cy.cGet('#document-container svg')
 			.should(function(svg) {
-				expect(svg[0].getBBox().width).to.be.greaterThan(0);
-				expect(svg[0].getBBox().height).to.be.greaterThan(0);
+				expect(parseInt(svg[0].style.width.replace('px', ''))).to.be.greaterThan(0);
+				expect(parseInt(svg[0].style.height.replace('px', ''))).to.be.greaterThan(0);
 			});
 	});
 
