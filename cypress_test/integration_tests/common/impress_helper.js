@@ -164,9 +164,13 @@ function selectTextOfShape() {
 	// Double click onto the selected shape
 	// Retry until the cursor appears and the text is selected
 	cy.waitUntil(function() {
-		cy.cGet('#canvas-container svg').dblclick({force: true});
+		cy.cGet('#canvas-container > svg').then(function(element) {
+			const x = parseInt(element[0].style.left.replace('px', '')) + parseInt(element[0].style.width.replace('px', '')) / 2;
+			const y = parseInt(element[0].style.top.replace('px', '')) + parseInt(element[0].style.height.replace('px', '')) / 2;
+			cy.cGet('.leaflet-layer').dblclick(x, y, { force: true });
+		});
 		helper.typeIntoDocument('{ctrl}a');
-		return cy.cGet('.text-selection-handle-start').should('exist');
+		return cy.cGet('.text-selection-handle-start').should('be.visible');
 	});
 
 	cy.log('<< selectTextOfShape - end');
