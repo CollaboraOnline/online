@@ -28,13 +28,16 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Spell checking menu.', func
 		helper.textSelectionShouldNotExist();
 
 		// Open context menu
-		cy.cGet('g path.leaflet-interactive')
+		cy.cGet('#canvas-container svg')
 			.then(function(shape) {
 				expect(shape.length).to.be.equal(2);
-				var XPos = (shape[0].getBoundingClientRect().left + shape[0].getBoundingClientRect().right) / 2;
-				var YPos = (shape[0].getBoundingClientRect().top + shape[0].getBoundingClientRect().bottom) / 2;
+				var x = parseInt(shape[0].style.left.replace('px', '')) + parseInt(shape[0].style.width.replace('px', '')) / 2;
+				var y = parseInt(shape[0].style.top.replace('px', '')) + parseInt(shape[0].style.height.replace('px', '')) / 2;
 
-				mobileHelper.longPressOnDocument(XPos, YPos);
+				cy.cGet('.leaflet-layer')
+				.trigger('pointerdown', x, y, { force: true, button: 0, pointerType: 'mouse' })
+				.wait(2000)
+				.trigger('pointerup', x, y, { force: true, button: 0, pointerType: 'mouse' });
 			});
 
 		cy.cGet('#mobile-wizard-content').should('be.visible');
@@ -45,7 +48,6 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Spell checking menu.', func
 		openContextMenu();
 
 		cy.cGet('body').contains('.context-menu-link', 'hello').click();
-
 		impressHelper.selectTextOfShape();
 		helper.copy();
 

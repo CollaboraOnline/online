@@ -33,14 +33,14 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function()
 		cy.cGet('body').contains('.menu-entry-with-icon', 'Shape').click();
 		cy.cGet('.col.w2ui-icon.basicshapes_rectangle').click();
 		// Check that the shape is there
-		cy.cGet('#document-container svg g').should('exist');
-		cy.cGet('#document-container svg').then(function(svg) {
-				expect(svg[0].getBBox().width).to.be.greaterThan(0);
-				expect(svg[0].getBBox().height).to.be.greaterThan(0);
+		cy.cGet('#canvas-container > svg').should('exist');
+		cy.cGet('#canvas-container > svg > svg').then(function(svg) {
+				expect(parseInt(svg[0].style.width.replace('px', ''))).to.be.greaterThan(0);
+				expect(parseInt(svg[0].style.height.replace('px', ''))).to.be.greaterThan(0);
 			});
 
 		//deletion
-		cy.cGet('.leaflet-control-buttons-disabled > .leaflet-interactive')
+		cy.cGet('.leaflet-layer')
 			.trigger('pointerdown', eventOptions)
 			.wait(1000)
 			.trigger('pointerup', eventOptions);
@@ -84,8 +84,20 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function()
 		cy.cGet('#FontworkGalleryDialog').should('exist');
 		cy.cGet('#ok').click();
 		cy.wait(1000);
+
 		cy.cGet('#test-div-shapeHandlesSection').should('exist');
-		cy.cGet('.leaflet-control-buttons-disabled > .leaflet-interactive').trigger('pointerdown', eventOptions);
+
+		cy.cGet('#canvas-container')
+			.then(function(container) {
+				var x = parseInt(container[0].style.left.replace('px', '')) + parseInt(container[0].style.width.replace('px', '')) / 2;
+				var y = parseInt(container[0].style.top.replace('px', '')) + parseInt(container[0].style.height.replace('px', '')) / 2;
+
+				cy.cGet('.leaflet-layer')
+				.trigger('pointerdown', x, y, { force: true, button: 0, pointerType: 'mouse' })
+				.wait(2000)
+				.trigger('pointerup', x, y, { force: true, button: 0, pointerType: 'mouse' });
+			});
+
 		cy.wait(1000);
 		cy.cGet('body').contains('.menu-entry-with-icon', 'Delete').should('be.visible').click();
 		cy.cGet('#test-div-shapeHandlesSection').should('not.exist');
@@ -95,10 +107,17 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function()
 		mobileHelper.openInsertionWizard();
 		cy.cGet('body').contains('.menu-entry-with-icon', 'Chart...').click();
 		cy.cGet('#test-div-shapeHandlesSection').should('exist');
-		cy.cGet('.leaflet-control-buttons-disabled > .leaflet-interactive')
-			.trigger('pointerdown', eventOptions)
-			.wait(1000)
-			.trigger('pointerup', eventOptions);
+
+		cy.cGet('#canvas-container')
+		.then(function(container) {
+			var x = parseInt(container[0].style.left.replace('px', '')) + parseInt(container[0].style.width.replace('px', '')) / 2;
+			var y = parseInt(container[0].style.top.replace('px', '')) + parseInt(container[0].style.height.replace('px', '')) / 2;
+
+			cy.cGet('.leaflet-layer')
+			.trigger('pointerdown', x, y, { force: true, button: 0, pointerType: 'mouse' })
+			.wait(2000)
+			.trigger('pointerup', x, y, { force: true, button: 0, pointerType: 'mouse' });
+		});
 
 		cy.cGet('body').contains('.menu-entry-with-icon', 'Delete').should('be.visible').click();
 		cy.cGet('#test-div-shapeHandlesSection').should('not.exist');
