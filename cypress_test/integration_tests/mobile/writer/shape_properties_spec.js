@@ -103,23 +103,23 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change shape properties via
 	it('Check default shape geometry.', function() {
 		// Geometry
 		const matcher = new TriangleCoordinatesMatcher(defaultStartPoint, defaultBase, defaultAltitude);
-		cy.cGet('#document-container svg g svg g g g path').invoke('attr', 'd').should(matcher.match.bind(matcher));
+		cy.cGet('#canvas-container svg svg g g g path').invoke('attr', 'd').should(matcher.match.bind(matcher));
 		// Fill color
-		cy.cGet('#document-container svg g svg g g g path').should('have.attr', 'fill', 'rgb(114,159,207)');
+		cy.cGet('#canvas-container svg svg g g g path').should('have.attr', 'fill', 'rgb(114,159,207)');
 	});
 
 	it('Change shape width.', function() {
 		openPosSizePanel();
 		helper.typeIntoInputField('#mobile-wizard #selectwidth .spinfield', '4.2', true, false);
 		const matcher = new TriangleCoordinatesMatcher(defaultStartPoint, Math.floor(4.2 * unitScale) /* new base */, defaultAltitude);
-		cy.cGet('#document-container svg g svg g g g path').invoke('attr', 'd').should(matcher.match.bind(matcher));
+		cy.cGet('#canvas-container svg svg g g g path').invoke('attr', 'd').should(matcher.match.bind(matcher));
 	});
 
 	it('Change shape height.', function() {
 		openPosSizePanel();
 		helper.typeIntoInputField('#mobile-wizard #selectheight .spinfield', '5.2', true, false);
 		const matcher = new TriangleCoordinatesMatcher(defaultStartPoint, defaultBase, Math.ceil(5.2 * unitScale) /* new altitude */);
-		cy.cGet('#document-container svg g svg g g g path').invoke('attr', 'd').should(matcher.match.bind(matcher));
+		cy.cGet('#canvas-container svg svg g g g path').invoke('attr', 'd').should(matcher.match.bind(matcher));
 	});
 
 	it('Change size with keep ratio enabled.', function() {
@@ -130,14 +130,14 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change shape properties via
 		// Change height
 		helper.typeIntoInputField('#selectheight .spinfield', '5.2');
 		const matcher = new TriangleCoordinatesMatcher(defaultStartPoint, Math.floor(5.2 * unitScale), Math.ceil(5.2 * unitScale));
-		cy.cGet('#document-container svg g svg g g g path').invoke('attr', 'd').should(matcher.match.bind(matcher));
+		cy.cGet('#canvas-container svg svg g g g path').invoke('attr', 'd').should(matcher.match.bind(matcher));
 	});
 
 	it('Vertical mirroring', function() {
 		openPosSizePanel();
 		cy.cGet('#mobile-wizard .unoFlipVertical').click();
 		const matcher = new TriangleCoordinatesMatcher(defaultStartPoint, defaultBase, defaultAltitude, false /* horiz mirroring */, true /* vert mirroring */);
-		cy.cGet('#document-container svg g svg g g g path').invoke('attr', 'd').should(matcher.match.bind(matcher));
+		cy.cGet('#canvas-container svg svg g g g path').invoke('attr', 'd').should(matcher.match.bind(matcher));
 	});
 
 	it('Horizontal mirroring', function() {
@@ -145,7 +145,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change shape properties via
 		cy.cGet('#mobile-wizard .unoFlipHorizontal').click();
 		triggerNewSVG();
 		const matcher = new TriangleCoordinatesMatcher(defaultStartPoint, defaultBase, defaultAltitude, true /* horiz mirroring */, false /* vert mirroring */);
-		cy.cGet('#document-container svg g svg g g g path').invoke('attr', 'd').should(matcher.match.bind(matcher));
+		cy.cGet('#canvas-container svg svg g g g path').invoke('attr', 'd').should(matcher.match.bind(matcher));
 	});
 
 	it('Trigger moving backward / forward', function() {
@@ -167,14 +167,14 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change shape properties via
 		cy.cGet('#mobile-wizard .unoXLineColor').click();
 		cy.cGet('.ui-content[title="Line Color"] .color-sample-small[style="background-color: rgb(152, 0, 0);"]').click();
 		triggerNewSVG();
-		cy.cGet('#document-container svg g svg g g g path[fill="none"]').should('have.attr', 'stroke', 'rgb(152,0,0)');
+		cy.cGet('#canvas-container svg svg g g g path[fill="none"]').should('have.attr', 'stroke', 'rgb(152,0,0)');
 	});
 
 	it.skip('Change line style', function() {
 		openLinePropertyPanel();
 		mobileHelper.selectListBoxItem2('#linestyle', 'Ultrafine Dashed');
 		triggerNewSVG();
-		cy.cGet('#document-container svg g svg g g g path[fill="none"]').should('have.length.greaterThan', 12);
+		cy.cGet('#canvas-container svg svg g g g path[fill="none"]').should('have.length.greaterThan', 12);
 	});
 
 	it.skip('Change line width', function() {
@@ -182,11 +182,11 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change shape properties via
 		cy.cGet('#linewidth .spinfield').should('have.attr', 'readonly', 'readonly');
 		cy.cGet('#linewidth .plus').click();
 		triggerNewSVG();
-		cy.cGet('#document-container svg g svg g g g path[fill="none"]').should('have.attr', 'stroke-width', '141');
+		cy.cGet('#canvas-container svg svg g g g path[fill="none"]').should('have.attr', 'stroke-width', '141');
 		openLinePropertyPanel();
 		cy.cGet('#linewidth .minus').click();
 		triggerNewSVG();
-		cy.cGet('#document-container svg g svg g g g path[fill="none"]').should('have.attr', 'stroke-width', '88');
+		cy.cGet('#canvas-container svg svg g g g path[fill="none"]').should('have.attr', 'stroke-width', '88');
 	});
 
 	it.skip('Change line transparency', function() {

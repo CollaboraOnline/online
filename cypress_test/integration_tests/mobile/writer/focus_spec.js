@@ -66,27 +66,27 @@ describe(['tagmobile', 'tagproxy'], 'Focus tests', function() {
 		cy.cGet('body').contains('.menu-entry-with-icon', 'Shape').click();
 		cy.cGet('.col.w2ui-icon.basicshapes_rectangle').click();
 		// Check that the shape is there
-		cy.cGet('#document-container svg g').should('exist');
+		cy.cGet('#canvas-container > svg').should('exist');
 		// One tap on the shape
-		cy.cGet('#document-container svg')
+		cy.cGet('#canvas-container > svg > svg')
 			.then(function(svg) {
-				expect(svg[0].getBBox().width).to.be.greaterThan(0);
-				expect(svg[0].getBBox().height).to.be.greaterThan(0);
-				var posX = svg[0].getBBox().x + svg[0].getBBox().width / 2;
-				var posY = svg[0].getBBox().y + svg[0].getBBox().height / 2;
-				cy.cGet('#document-container').click(posX, posY);
+				expect(parseInt(svg[0].style.width.replace('px', ''))).to.be.greaterThan(0);
+				expect(parseInt(svg[0].style.height.replace('px', ''))).to.be.greaterThan(0);
+				var posX = parseInt(svg[0].style.width.replace('px', '')) + parseInt(svg[0].style.left.replace('px', '')) / 2;
+				var posY = parseInt(svg[0].style.height.replace('px', '')) + parseInt(svg[0].style.top.replace('px', '')) / 2;
+				cy.cGet('.leaflet-layer').click(posX, posY);
 			});
 
 		// No focus on the document
 		helper.assertFocus('tagName', 'BODY');
 
 		// Double tap on the shape
-		cy.cGet('#document-container svg')
+		cy.cGet('#canvas-container > svg > svg')
 			.then(function(svg) {
-				expect(svg[0].getBBox().width).to.be.greaterThan(0);
-				expect(svg[0].getBBox().height).to.be.greaterThan(0);
-				var posX = svg[0].getBBox().x + svg[0].getBBox().width / 2;
-				var posY = svg[0].getBBox().y + svg[0].getBBox().height / 2;
+				expect(parseInt(svg[0].style.width.replace('px', ''))).to.be.greaterThan(0);
+				expect(parseInt(svg[0].style.height.replace('px', ''))).to.be.greaterThan(0);
+				var posX = parseInt(svg[0].style.width.replace('px', '')) + parseInt(svg[0].style.left.replace('px', '')) / 2;
+				var posY = parseInt(svg[0].style.height.replace('px', '')) + parseInt(svg[0].style.top.replace('px', '')) / 2;
 
 				cy.cGet('#document-container').dblclick(posX, posY);
 			});

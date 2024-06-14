@@ -533,13 +533,13 @@ class CanvasSectionContainer {
 	public isDocumentObjectVisible (section: CanvasSectionObject): boolean {
 		if (
 			(
-				section.position[0] >= this.documentTopLeft[0] && section.position[0] <= this.documentBottomRight[0] ||
-				section.position[0] + section.size[0] >= this.documentTopLeft[0] && section.position[0] + section.size[0] <= this.documentBottomRight[0]
+				(section.position[0] >= this.documentTopLeft[0] && section.position[0] <= this.documentBottomRight[0]) ||
+				(section.position[0] + section.size[0] >= this.documentTopLeft[0] && section.position[0] + section.size[0] <= this.documentBottomRight[0])
 			)
-			||
+			&&
 			(
-				section.position[1] >= this.documentTopLeft[1] && section.position[1] <= this.documentBottomRight[1] ||
-				section.position[1] + section.size[1] >= this.documentTopLeft[1] && section.position[1] + section.size[1] <= this.documentBottomRight[1]
+				(section.position[1] >= this.documentTopLeft[1] && section.position[1] <= this.documentBottomRight[1]) ||
+				(section.position[1] + section.size[1] >= this.documentTopLeft[1] && section.position[1] + section.size[1] <= this.documentBottomRight[1])
 			)
 		) {
 			return true;

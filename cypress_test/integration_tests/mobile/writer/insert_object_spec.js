@@ -224,9 +224,9 @@ describe(['tagmobile', 'tagnextcloud'], 'Insert objects via insertion wizard.', 
 		cy.cGet('.col.w2ui-icon.basicshapes_rectangle').click();
 		// Check that the shape is there
 		cy.cGet('#document-container svg g').should('exist');
-		cy.cGet('#document-container svg').then(function(svg) {
-			expect(svg[0].getBBox().width).to.be.greaterThan(0);
-			expect(svg[0].getBBox().height).to.be.greaterThan(0);
+		cy.cGet('#canvas-container > svg > svg').then(function(svg) {
+			expect(parseInt(svg[0].style.width.replace('px', ''))).to.be.greaterThan(0);
+			expect(parseInt(svg[0].style.height.replace('px', ''))).to.be.greaterThan(0);
 		});
 	});
 });
