@@ -118,6 +118,7 @@
         </anonymize>
         <docstats type="bool" desc="Enable to see document handling information in logs." default="false">false</docstats>
         <userstats desc="Enable user stats. i.e: logs the details of a file and user" type="bool" default="false">false</userstats>
+        <disable_server_audit type="bool" desc="Disabled server audit dialog and notification. Admin will no longer see warnings in the application user interface. This doesn't affect log file." default="false">false</disable_server_audit>
     </logging>
 
     <!--

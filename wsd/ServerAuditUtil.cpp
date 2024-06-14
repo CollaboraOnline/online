@@ -12,6 +12,7 @@
 #include "ServerAuditUtil.hpp"
 
 ServerAuditUtil::ServerAuditUtil()
+: disabled(false)
 {
     set("is_admin", "ok");
     set("certwarning", "ok");

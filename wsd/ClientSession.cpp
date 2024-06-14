@@ -2345,8 +2345,10 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
                 forwardToClient(std::make_shared<Message>(admin, Message::Dir::Out));
 
                 // send server audit results after we received information about users (who is admin)
-                const std::string serverAudit = std::string("serveraudit: ") + docBroker->getServerAudit();
-                forwardToClient(std::make_shared<Message>(serverAudit, Message::Dir::Out));
+                const ServerAuditUtil& serverAudit = docBroker->getServerAudit();
+                std::string audit = serverAudit.isDisabled() ? "disabled" : serverAudit.getResultsJSON();
+                const std::string auditMessage = std::string("serveraudit: ") + audit;
+                forwardToClient(std::make_shared<Message>(auditMessage, Message::Dir::Out));
             }
 
             return status;

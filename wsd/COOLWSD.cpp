@@ -1994,6 +1994,7 @@ void COOLWSD::innerInitialize(Application& self)
         { "logging.lokit_sal_log", "-INFO-WARN" },
         { "logging.docstats", "false" },
         { "logging.userstats", "false" },
+        { "logging.disable_server_audit", "false" },
         { "browser_logging", "false" },
         { "mount_jail_tree", "true" },
         { "net.connection_timeout_secs", "30" },

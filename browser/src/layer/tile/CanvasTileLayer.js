@@ -1604,9 +1604,16 @@ L.CanvasTileLayer = L.Layer.extend({
 				}
 			}
 		} else if (textMsg.startsWith('serveraudit:')) {
-			var json = JSON.parse(textMsg.substr(12));
-			app.serverAudit = json.serverAudit;
-			app.map.fire('receivedserveraudit');
+			var serverAudit = textMsg.substr(12).trim();
+			if (serverAudit !== 'disabled') {
+				// if isAdminUser property is not set by integration - enable audit dialog for all users
+				if (app.isAdminUser !== false)
+					this._map.serverAuditDialog = JSDialog.serverAuditDialog(this._map);
+
+				var json = JSON.parse(serverAudit);
+				app.serverAudit = json.serverAudit;
+				app.map.fire('receivedserveraudit');
+			}
 		} else if (textMsg.startsWith('adminuser:')) {
 			var value = textMsg.substr(10).trim();
 			if (value === 'true')
@@ -1615,10 +1622,6 @@ L.CanvasTileLayer = L.Layer.extend({
 				app.isAdminUser = false;
 			else
 				app.isAdminUser = null;
-
-			// if isAdminUser property is not set by integration - show audit dialog for all users
-			if (app.isAdminUser !== false)
-				this._map.serverAuditDialog = JSDialog.serverAuditDialog(this._map);
 		}
 	},
 
