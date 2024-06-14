@@ -40,7 +40,7 @@ sub check_whitespaces($)
             print STDERR "$filename:$lineno:$line\n";
         }
     }
-    open( FILES, "git-diff-index -p -M --cached $h |" ) ||  die "Cannot run git diff-index.";
+    open( FILES, "git diff-index -p -M --cached $h |" ) ||  die "Cannot run git diff-index.";
     while (<FILES>)
     {
         if (m|^diff --git a/(.*) b/\1$|)
@@ -169,7 +169,7 @@ EOM
 }
 
 # Block large files.
-open( FILES, "git diff --cached --name-only --diff-filter=A -z $against |" ) ||  die "Cannot run git diff-index.";
+open( FILES, "git diff --cached --name-only --diff-filter=A -z $against |" ) ||  die "Cannot run git diff.";
 while (<FILES>)
 {
     if (/\.ui$/) # .ui files can get large
