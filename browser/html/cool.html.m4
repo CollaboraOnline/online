@@ -290,7 +290,7 @@ m4_ifelse(MOBILEAPP,[true],
             <div id="slow-proxy"></div>
             m4_ifelse(DEBUG,[true],[<div id="js-dialog">JSDialogs: <a href="javascript:void(function() { app.socket.sendMessage('uno .uno:WidgetTestDialog') }() )">View widgets</a></div>])
             <div id="routeToken"></div>
-	    <div id="wopi-host-id">%WOPI_HOST_ID%</div>
+            <div id="wopi-host-id" style="display: none">%WOPI_HOST_ID%</div>
             <p style="margin-inline-end: auto;"><span dir="ltr">Copyright © _YEAR_, VENDOR.</span></p>
           </div>
         </div>
