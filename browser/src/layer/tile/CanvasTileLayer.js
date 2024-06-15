@@ -2246,6 +2246,8 @@ L.CanvasTileLayer = L.Layer.extend({
 			let tempRectangle = _cellCursorTwips.toRectangle();
 			app.calc.cellCursorRectangle = new app.definitions.simpleRectangle(tempRectangle[0], tempRectangle[1], tempRectangle[2], tempRectangle[3]);
 			this._cellCursorSection.setPosition(app.calc.cellCursorRectangle.pX1, app.calc.cellCursorRectangle.pY1);
+			this._cellCursorSection.size[0] = app.calc.cellCursorRectangle.pWidth;
+			this._cellCursorSection.size[1] = app.calc.cellCursorRectangle.pHeight;
 			app.calc.cellCursorVisible = true;
 
 			app.sectionContainer.onCellAddressChanged();
