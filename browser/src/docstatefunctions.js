@@ -51,7 +51,7 @@ app.isReadOnly = function () {
 	return app.file.readOnly;
 };
 
-app.getScale = function() {
+app.getScale = function () {
 	return (app.tile.size.pixels[0] / app.tile.size.twips[0]) * 15;
 };
 
