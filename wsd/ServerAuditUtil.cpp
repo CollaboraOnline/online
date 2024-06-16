@@ -38,6 +38,7 @@ std::string ServerAuditUtil::getResultsJSON() const
 
 void ServerAuditUtil::set(std::string code, std::string status)
 {
+    std::lock_guard<std::mutex> lock(mapMutex);
     entries[code] = std::move(status);
 }
 
