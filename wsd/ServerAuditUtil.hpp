@@ -13,6 +13,7 @@
 
 #include <string>
 #include <map>
+#include <mutex>
 
 /** This class helps to build list of security warnings for a server instance
  */
@@ -20,6 +21,7 @@ class ServerAuditUtil
 {
     // <code, status>
     std::map<std::string, std::string> entries;
+    std::mutex mapMutex;
 
     bool disabled;
 
