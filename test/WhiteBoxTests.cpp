@@ -1338,7 +1338,7 @@ size_t WhiteBoxTests::waitForThreads(size_t count)
 void WhiteBoxTests::testThreadPool()
 {
     constexpr auto testname = __func__;
-    const size_t existingUnrelatedThreads = Util::getCurrentThreadCount();
+//    const size_t existingUnrelatedThreads = Util::getCurrentThreadCount();
     setenv("MAX_CONCURRENCY","8",1);
     ThreadPool pool;
     LOK_ASSERT_EQUAL(int(8), pool._maxConcurrency);
