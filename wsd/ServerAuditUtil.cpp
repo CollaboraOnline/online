@@ -37,7 +37,7 @@ std::string ServerAuditUtil::getResultsJSON() const
 
 void ServerAuditUtil::set(std::string code, std::string status)
 {
-    entries[code] = status;
+    entries[code] = std::move(status);
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
