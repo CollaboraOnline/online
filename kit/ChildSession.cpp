@@ -819,7 +819,7 @@ bool ChildSession::loadDocument(const StringVector& tokens)
 
     LOG_INF("Created new view with viewid: [" << _viewId << "] for username: ["
                                               << getUserNameAnonym() << "] in session: [" << getId()
-                                              << ']');
+                                              << "], template: [" << doctemplate << ']');
 
     if (!doctemplate.empty())
     {
@@ -831,7 +831,9 @@ bool ChildSession::loadDocument(const StringVector& tokens)
         if (!_jailRoot.empty())
         {
             url = Protocol + _jailRoot;
-            if (getJailedFilePath().starts_with(Protocol))
+            if (getJailedFilePath().starts_with(url))
+                url = getJailedFilePath(); // JailedFilePath is already the absolute path.
+            else if (getJailedFilePath().starts_with(Protocol))
                 url += getJailedFilePath().substr(sizeof(Protocol) - 1);
             else
                 url += getJailedFilePath();
@@ -839,7 +841,9 @@ bool ChildSession::loadDocument(const StringVector& tokens)
         else
             url += getJailedFilePath();
 
-        LOG_INF("Saving the template document after loading to [" << url << ']');
+        LOG_INF("Saving the template document after loading to ["
+                << url << "], jailRoot: [" << _jailRoot << "], jailedFilePath: ["
+                << getJailedFilePath() << ']');
 
         const bool success = getLOKitDocument()->saveAs(url.c_str(), nullptr, "TakeOwnership,FromTemplate");
         if (!success)
