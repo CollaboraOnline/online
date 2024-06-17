@@ -1701,6 +1701,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		var textMsg = evt.textMsg;
 
 		if (textMsg.startsWith('invalidatetiles:')) {
+			app.socket._logSocket('INCOMING', textMsg);
 			this.handleInvalidateTilesMsg(textMsg);
 			return true; // filter
 		}

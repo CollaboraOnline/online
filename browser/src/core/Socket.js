@@ -176,11 +176,9 @@ app.definitions.Socket = L.Class.extend({
 	},
 
 	_doSend: function(msg) {
-		if (this._map._debug.debugNeverStarted || this._map._debug.logOutgoingMessages) {
-			// Only attempt to log text frames, not binary ones.
-			if (typeof msg === 'string')
-				this._logSocket('OUTGOING', msg);
-		}
+		// Only attempt to log text frames, not binary ones.
+		if (typeof msg === 'string')
+			this._logSocket('OUTGOING', msg);
 
 		this.socket.send(msg);
 	},
@@ -302,6 +300,10 @@ app.definitions.Socket = L.Class.extend({
 	},
 
 	_logSocket: function(type, msg) {
+		var logMessage = this._map._debug.debugNeverStarted || this._map._debug.logIncomingMessages;
+		if (!logMessage)
+			return;
+
 		if (window.ThisIsTheGtkApp)
 			window.postMobileDebug(type + ' ' + msg);
 
@@ -611,9 +613,7 @@ app.definitions.Socket = L.Class.extend({
 		textMsg = e.textMsg;
 		imgBytes = e.imgBytes;
 
-		if (this._map._debug.debugNeverStarted || this._map._debug.logIncomingMessages) {
-			this._logSocket('INCOMING', textMsg);
-		}
+		this._logSocket('INCOMING', textMsg);
 
 		var command = this.parseServerCmd(textMsg);
 		if (textMsg.startsWith('coolserver ')) {
