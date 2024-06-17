@@ -17,7 +17,7 @@
 
 class UnitWopiLanguages : public WopiTestServer
 {
-    STATE_ENUM(Phase, Load, Save, Done) _phase;
+    STATE_ENUM(Phase, Load, Save, Finish, Done) _phase;
 
     int _loaded_count;
 
@@ -27,6 +27,14 @@ public:
         , _phase(Phase::Load)
         , _loaded_count(0)
     {
+    }
+
+    std::unique_ptr<http::Response>
+    assertPutFileRequest(const Poco::Net::HTTPRequest& /*request*/) override
+    {
+        LOK_ASSERT_STATE(_phase, Phase::Save);
+        TRANSITION_STATE(_phase, Phase::Finish);
+        return nullptr;
     }
 
     /// The document is loaded.
@@ -53,10 +61,11 @@ public:
     {
         if (success || result == "unmodified")
         {
-            passTest("Document saved successfully: " + message);
+            LOG_TST("Document saved as expected");
         }
         else
         {
+            LOG_TST("Document failed to save");
             failTest("Failed to save the document (Core is out-of-date or it has a regression: " +
                      message);
         }
@@ -85,6 +94,12 @@ public:
             }
             case Phase::Save:
             {
+            }
+            break;
+            case Phase::Finish:
+            {
+                TRANSITION_STATE(_phase, Phase::Done);
+                passTest("Document uploaded successfully");
             }
             case Phase::Done:
             {
