@@ -12,13 +12,13 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Invalidation tests.', func
 		// when available, currently adds an extra empty update when
 		// grammar checking kicks in at server-side idle after a change.
 		localStorage.setItem('SpellOnline', false);
-		helper.setupAndLoadDocument('writer/invalidations.odt');
-		desktopHelper.switchUIToNotebookbar();
-		cy.cGet('div.clipboard').as('clipboard');
 	});
 
 	// Clicking in an empty header area shouldn't invalidate anything
 	it('Click Empty Header.', function() {
+		helper.setupAndLoadDocument('writer/invalidations.odt');
+		desktopHelper.switchUIToNotebookbar();
+		cy.cGet('div.clipboard').as('clipboard');
 
 		// Add some main body text of X
 		ceHelper.type('X');
@@ -42,28 +42,16 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Invalidation tests.', func
 	});
 
 	// Clicking in an existing header area shouldn't result in useless invalidations
-	// TODO: Test is failing because of an extra empty invalidation when clicking
-	// between the body and the header
-	it.skip('Click Existing Header.', function() {
+	it('Click Existing Header.', function() {
+		helper.setupAndLoadDocument('writer/invalidations_headers.odt');
+		desktopHelper.switchUIToNotebookbar();
+		cy.cGet('div.clipboard').as('clipboard');
 
-		// Add some main body text of X
-		ceHelper.type('X');
-
-		// Add a header with YY in it
-		cy.cGet('#Insert-tab-label').click();
-		cy.cGet('.notebookbar > .unoInsertPageHeader > button').click();
-		ceHelper.type('YY');
-
-		// Click back in main document
-		cy.cGet('.leaflet-layer').click(200, 200);
 		writerHelper.selectAllTextOfDoc();
 		cy.cGet('#toolbar-down #StateWordCount').should('have.text', 'Selected: 1 word, 1 character');
 
 		cy.cGet('.empty-deltas').then(($before) => {
 			const beforeCount = $before.text();
-
-			// Selects the wrong paragraph without this wait, not sure why
-			cy.wait(200);
 
 			// click in header area
 			cy.cGet('.leaflet-layer').click(200, 50);
@@ -82,7 +70,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Invalidation tests.', func
 			const beforeCount = $before.text();
 
 			// click in main document
-			cy.cGet('.leaflet-layer').click(200, 200);
+			cy.cGet('.leaflet-layer').click(200, 400);
 
 			// verify the content is 'X'
 			writerHelper.selectAllTextOfDoc();
@@ -97,6 +85,9 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Invalidation tests.', func
 
 	// Entering a bullet portion shouldn't invalidate anything
 	it('Enter Numbering Portion.', function() {
+		helper.setupAndLoadDocument('writer/invalidations.odt');
+		desktopHelper.switchUIToNotebookbar();
+		cy.cGet('div.clipboard').as('clipboard');
 
 		// Add some main body text of X and bullet
 		ceHelper.type('XX');
