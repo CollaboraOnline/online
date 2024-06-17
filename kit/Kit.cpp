@@ -1264,15 +1264,23 @@ void Document::onUnload(const ChildSession& session)
     if (!Util::isMobileApp() && _sessions.empty())
     {
         // Sanitiy check.
+        std::ostringstream msg;
         const int views = _loKitDocument->getViewsCount();
-        if (views > 1)
+        if (views > 1 || isBackgroundSaveProcess())
         {
-            LOG_ERR("Document [" << anonymizeUrl(_url) << "] has no more sessions but " << views
-                                 << " views");
-            assert(views <= 1 && "Unexpected document views without matching child sessions");
+            // Normally, this is a race between the save notification
+            // sent from the background-save process being processed
+            // by DocBroker and we processing the disconnection from
+            // said background-save process before getting here.
+            // However, this could also be an indication of a save
+            // still in progress and DocBroker unloading--a bug.
+            msg << " but " << views << " views"
+                << (isBackgroundSaveProcess() ? " and background-save in progress" : "");
         }
 
-        LOG_INF("Document [" << anonymizeUrl(_url) << "] has no more sessions, exiting bluntly");
+        LOG_INF("Document [" << anonymizeUrl(_url) << "] has no more sessions" << msg.str()
+                             << "; exiting bluntly");
+
         flushAndExit(EX_OK);
         return;
     }
