@@ -291,6 +291,7 @@ m4_ifelse(MOBILEAPP,[true],
             m4_ifelse(DEBUG,[true],[<div id="js-dialog">JSDialogs: <a href="javascript:void(function() { app.socket.sendMessage('uno .uno:WidgetTestDialog') }() )">View widgets</a></div>])
             <div id="routeToken"></div>
             <div id="wopi-host-id" style="display: none">%WOPI_HOST_ID%</div>
+            <div id="proxy-prefix-id" style="display: none">%PROXY_PREFIX_ENABLED%</div>
             <p style="margin-inline-end: auto;"><span dir="ltr">Copyright © _YEAR_, VENDOR.</span></p>
           </div>
         </div>
