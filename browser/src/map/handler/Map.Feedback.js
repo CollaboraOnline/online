@@ -91,13 +91,16 @@ L.Map.Feedback = L.Handler.extend({
 		lokitHash = lokitHash ? lokitHash.innerText : '';
 		var wopiHostId = document.querySelector('#wopi-host-id') || {};
 		wopiHostId = wopiHostId ? wopiHostId.innerText : '';
+		var proxyPrefixEnabled = document.querySelector('#proxy-prefix-id') || {};
+		proxyPrefixEnabled = proxyPrefixEnabled ? proxyPrefixEnabled.innerText : '';
 
 		var cssVar = getComputedStyle(document.documentElement).getPropertyValue('--co-primary-element');
 		var params = [{ mobile : window.mode.isMobile() },
 			      { cssvar : cssVar},
 			      { wsdhash : window.app.socket.WSDServer.Hash },
 			      { 'lokit_hash' : lokitHash },
-			      { 'wopi_host_id' : wopiHostId }];
+			      { 'wopi_host_id' : wopiHostId },
+			      { 'proxy_prefix_enabled' : proxyPrefixEnabled }];
 
 		var options = {
 			prefix: 'iframe-dialog',
