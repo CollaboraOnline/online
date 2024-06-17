@@ -1339,6 +1339,7 @@ void WhiteBoxTests::testThreadPool()
 {
     constexpr auto testname = __func__;
 //    const size_t existingUnrelatedThreads = Util::getCurrentThreadCount();
+    // coverity[tainted_data_argument : FALSE] - we trust this variable in tests
     setenv("MAX_CONCURRENCY","8",1);
     ThreadPool pool;
     LOK_ASSERT_EQUAL(int(8), pool._maxConcurrency);
