@@ -5616,10 +5616,16 @@ L.CanvasTileLayer = L.Layer.extend({
 			//
 			// request separately from the current viewPort to get
 			// those tiles first.
+			var pixelTopLeft = pixelBounds.getTopLeft();
+			pixelTopLeft.y = Math.floor(pixelTopLeft.y / this._tileSize) * this._tileSize;
+			pixelTopLeft.y -= 1;
+			var pixelBottomRight = pixelBounds.getBottomRight();
+			pixelBottomRight.y = Math.ceil(pixelBottomRight.y / this._tileSize) * this._tileSize;
+			pixelBottomRight.y += 1;
+			pixelBounds = new L.Bounds(pixelTopLeft, pixelBottomRight);
+
 			var pixelHeight = pixelBounds.getSize().y;
 			var pixelPrevNextHeight = pixelHeight;
-			var pixelTopLeft = pixelBounds.getTopLeft();
-			var pixelBottomRight = pixelBounds.getBottomRight();
 
 			if (this.isCalc())
 				pixelPrevNextHeight = ~~ (pixelPrevNextHeight * 1.5);
