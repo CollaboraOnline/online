@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-06-12 12:42+0200\n"
-"PO-Revision-Date: 2024-06-15 13:50+0000\n"
-"Last-Translator: Shavazo <pleasure.7010@gmail.com>\n"
+"PO-Revision-Date: 2024-06-18 04:09+0000\n"
+"Last-Translator: Poe Mon <p.poemon.awitd@gmail.com>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/"
 "collabora-online/ui/ja/>\n"
 "Language: ja\n"
@@ -480,7 +480,7 @@ msgstr "セルのコピー"
 
 #: src/control/Control.ContextMenu.js:248
 msgid "Fill Series"
-msgstr ""
+msgstr "系列塗りつぶし"
 
 #: src/control/Control.DocumentNameInput.js:113
 msgid "Path"
@@ -1066,12 +1066,12 @@ msgstr "コメントの保存"
 #: src/control/Control.Menubar.js:413
 #: src/control/Control.NotebookbarBuilder.js:601
 msgid "Full Page Slides"
-msgstr ""
+msgstr "フルページスライド"
 
 #: src/control/Control.Menubar.js:414
 #: src/control/Control.NotebookbarBuilder.js:605
 msgid "Notes Pages"
-msgstr ""
+msgstr "ノートページ"
 
 #: src/control/Control.Menubar.js:448
 #: src/control/Control.NotebookbarImpress.js:444
@@ -1643,17 +1643,18 @@ msgstr "検索フィールドをクリアする"
 
 #: src/control/Control.ServerAuditDialog.ts:28
 msgid "The IsAdminUser property is not set by integration"
-msgstr ""
+msgstr "IsAdminUserプロパティは統合されていません"
 
 #: src/control/Control.ServerAuditDialog.ts:34
 msgid ""
 "Used deprecated is_admin field, integration should use IsAdminUser property "
 "instead"
-msgstr ""
+msgstr "is_adminフィールドは非推奨されていて、統合する時は代わりにIsAdminUserプロパテ"
+"ィは推奨されています"
 
 #: src/control/Control.ServerAuditDialog.ts:39
 msgid "The IsAdminUser user property is set by integration"
-msgstr ""
+msgstr "IsAdminUserユーザープロパティは統合によって設定されます"
 
 #: src/control/Control.ServerAuditDialog.ts:43
 msgid "Your WOPI server is not secure: SSL verification failed"
@@ -2076,11 +2077,11 @@ msgstr "タブストップの削除"
 
 #: src/control/VRuler.ts:377
 msgid "Top Margin"
-msgstr ""
+msgstr "トップマージン"
 
 #: src/control/VRuler.ts:378
 msgid "Bottom Margin"
-msgstr ""
+msgstr "下余白"
 
 #: src/control/Signing.js:27
 msgid "This document is digitally signed and the signature is valid."
@@ -2485,7 +2486,7 @@ msgstr "認証されていないWOPIホストです。後ほど再度試して�
 
 #: src/errormessages.js:29
 msgid "Authorization error was: '%errorMessage'."
-msgstr ""
+msgstr "認証エラーは「%errorMessage」です。"
 
 #: src/errormessages.js:30
 msgid "Wrong or missing WOPISrc parameter, please contact support."
@@ -2732,7 +2733,7 @@ msgstr "自動保存"
 
 #: src/canvas/sections/CommentListSection.ts:2078
 msgid "Another user has updated comments. Would you like to proceed updating?"
-msgstr ""
+msgstr "別のユーザーがコメントを更新しました。更新を続行しますか?"
 
 #: src/canvas/sections/CommentSection.ts:300
 msgid "Open menu"
