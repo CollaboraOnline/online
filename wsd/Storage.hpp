@@ -622,7 +622,9 @@ public:
         bool getSupportsLocks() const { return _supportsLocks; }
         bool getUserCanRename() const { return _userCanRename; }
 
+#if !MOBILEAPP
         std::optional<bool> getIsAdminUser() const { return _isAdminUser; }
+#endif
 
         TriState getDisableChangeTrackingShow() const { return _disableChangeTrackingShow; }
         TriState getDisableChangeTrackingRecord() const { return _disableChangeTrackingRecord; }
@@ -701,8 +703,11 @@ public:
         bool _supportsRename = false;
         /// If user is allowed to rename the document
         bool _userCanRename = false;
+
+#if !MOBILEAPP
         /// If user is considered as admin on the integrator side
         std::optional<bool> _isAdminUser = std::nullopt;
+#endif
     };
 
     /// Returns the response of CheckFileInfo WOPI call for URI that was
