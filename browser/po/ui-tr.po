@@ -14,11 +14,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-06-12 12:42+0200\n"
-"PO-Revision-Date: 2024-06-11 11:59+0000\n"
-"Last-Translator: Gokay Satir <gokaysatir@gmail.com>\n"
+"PO-Revision-Date: 2024-06-14 08:35+0000\n"
+"Last-Translator: \"PhD. Ayhan YALÇINSOY\" <ayhanyalcinsoy@pisilinux.org>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/tr/>\n"
-"Language: \n"
+"Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1674,7 +1674,7 @@ msgstr ""
 
 #: src/control/Control.ServerAuditDialog.ts:47
 msgid "No problems with SSL verification detected"
-msgstr ""
+msgstr "SSL doğrulaması ile ilgili herhangi bir sorun tespit edilmedi"
 
 #: src/control/Control.ServerAuditDialog.ts:131
 msgid "No issues found"
@@ -2509,6 +2509,8 @@ msgstr ""
 #: src/errormessages.js:29
 msgid "Authorization error was: '%errorMessage'."
 msgstr ""
+"Yetkilendirme hatası:\n"
+"'%errorMessage'."
 
 #: src/errormessages.js:30
 msgid "Wrong or missing WOPISrc parameter, please contact support."
@@ -2749,21 +2751,23 @@ msgstr "Sorunu Çöz"
 #: src/canvas/sections/CommentListSection.ts:1247
 #: src/canvas/sections/CommentListSection.ts:2077
 msgid "Comments Updated"
-msgstr ""
+msgstr "Açıklamalar Güncellendi"
 
 #: src/canvas/sections/CommentListSection.ts:1235
 msgid "Another user has removed this comment."
-msgstr ""
+msgstr "Bu açıklamayı başka bir kullanıcı kaldırdı."
 
 #: src/canvas/sections/CommentListSection.ts:1248
 msgid ""
 "Another user has updated the comment. Would you like to overwrite those "
 "changes?"
 msgstr ""
+"Açıklamayı başka bir kullanıcı güncelledi. Bu değişiklikleri üzerine yazmak "
+"ister misiniz?"
 
 #: src/canvas/sections/CommentListSection.ts:1250
 msgid "Update"
-msgstr ""
+msgstr "Güncelle"
 
 #: src/canvas/sections/CommentListSection.ts:1321
 #: src/canvas/sections/CommentListSection.ts:1383
@@ -2773,6 +2777,8 @@ msgstr "Kaydedildi (Otomatik Kayıt)"
 #: src/canvas/sections/CommentListSection.ts:2078
 msgid "Another user has updated comments. Would you like to proceed updating?"
 msgstr ""
+"Açıklamayı başka bir kullanıcı güncelledi. Güncellemeyi devam ettirmek ister "
+"misiniz?"
 
 #: src/canvas/sections/CommentSection.ts:300
 msgid "Open menu"
