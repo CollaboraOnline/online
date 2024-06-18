@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-06-12 12:42+0200\n"
-"PO-Revision-Date: 2024-06-06 07:58+0000\n"
+"PO-Revision-Date: 2024-06-13 11:09+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/hu/>\n"
-"Language: \n"
+"Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1656,25 +1656,27 @@ msgstr "Keresőmező törlése"
 
 #: src/control/Control.ServerAuditDialog.ts:28
 msgid "The IsAdminUser property is not set by integration"
-msgstr ""
+msgstr "Az integráció nem állította be az IsAdminUser tulajdonságot"
 
 #: src/control/Control.ServerAuditDialog.ts:34
 msgid ""
 "Used deprecated is_admin field, integration should use IsAdminUser property "
 "instead"
 msgstr ""
+"Az integráció az elavult is_admin mezőt használja, ehelyett az IsAdminUser "
+"tulajdonságot kellene használnia"
 
 #: src/control/Control.ServerAuditDialog.ts:39
 msgid "The IsAdminUser user property is set by integration"
-msgstr ""
+msgstr "Az integráció beállította az IsAdminUser tulajdonságot"
 
 #: src/control/Control.ServerAuditDialog.ts:43
 msgid "Your WOPI server is not secure: SSL verification failed"
-msgstr ""
+msgstr "A WOPI-kiszolgáló nem biztonságos: az SSL-ellenőrzés sikertelen volt"
 
 #: src/control/Control.ServerAuditDialog.ts:47
 msgid "No problems with SSL verification detected"
-msgstr ""
+msgstr "Az SSL-ellenőrzés során nem volt probléma"
 
 #: src/control/Control.ServerAuditDialog.ts:131
 msgid "No issues found"
@@ -2516,7 +2518,7 @@ msgstr ""
 
 #: src/errormessages.js:29
 msgid "Authorization error was: '%errorMessage'."
-msgstr ""
+msgstr "Az authorizációs hiba: '%errorMessage'."
 
 #: src/errormessages.js:30
 msgid "Wrong or missing WOPISrc parameter, please contact support."
@@ -2760,21 +2762,23 @@ msgstr "Szál megoldása"
 #: src/canvas/sections/CommentListSection.ts:1247
 #: src/canvas/sections/CommentListSection.ts:2077
 msgid "Comments Updated"
-msgstr ""
+msgstr "Megjegyzések frissítve"
 
 #: src/canvas/sections/CommentListSection.ts:1235
 msgid "Another user has removed this comment."
-msgstr ""
+msgstr "Egy másik felhasználó eltávolította ezt a megjegyzést."
 
 #: src/canvas/sections/CommentListSection.ts:1248
 msgid ""
 "Another user has updated the comment. Would you like to overwrite those "
 "changes?"
 msgstr ""
+"Egy másik felhasználó frissítette ezt a megjegyzést. Felülírja azokat a "
+"változtatásokat?"
 
 #: src/canvas/sections/CommentListSection.ts:1250
 msgid "Update"
-msgstr ""
+msgstr "Frissítés"
 
 #: src/canvas/sections/CommentListSection.ts:1321
 #: src/canvas/sections/CommentListSection.ts:1383
@@ -2784,6 +2788,7 @@ msgstr "Automatikusan mentve"
 #: src/canvas/sections/CommentListSection.ts:2078
 msgid "Another user has updated comments. Would you like to proceed updating?"
 msgstr ""
+"Egy másik felhasználó frissítette a megjegyzéseket. Folytatja a frissítést?"
 
 #: src/canvas/sections/CommentSection.ts:300
 msgid "Open menu"
