@@ -561,26 +561,29 @@ std::string WopiStorage::downloadDocument(const Poco::URI& uriObject, const std:
     LOG_INF("WOPI::GetFile downloaded " << filesize << " bytes from [" << uriAnonym << "] -> "
                                         << getRootFilePathAnonym() << " in " << diff);
 
-    // Put the wopi server cert, which has been designated valid by 'online',
-    // into the "certs" dir so 'core' will designate it valid too.
-    std::string wopiCertDestDir = getRootFilePath() + ".certs";
-    if (::mkdir(wopiCertDestDir.c_str(), S_IRWXU) < 0)
-        LOG_SYS("Failed to create certificate authority directory [" << wopiCertDestDir << ']');
-    else
+    if (!wopiCert.empty() && !subjectHash.empty())
     {
-        // save as "subjectHash".0 to be a suitable entry for caPath
-        std::string wopiCertDest = Poco::Path(wopiCertDestDir, subjectHash + ".0").toString();
-        std::ofstream outfile;
-        outfile.open(wopiCertDest);
-        if (!outfile.is_open())
-        {
-            const std::string wopiCertDestAnonym = COOLWSD::anonymizeUrl(wopiCertDest);
-            LOG_ERR("Cannot open file [" << wopiCertDestAnonym << "] to save wopi cert.");
-        }
+        // Put the wopi server cert, which has been designated valid by 'online',
+        // into the "certs" dir so 'core' will designate it valid too.
+        std::string wopiCertDestDir = getRootFilePath() + ".certs";
+        if (::mkdir(wopiCertDestDir.c_str(), S_IRWXU) < 0)
+            LOG_SYS("Failed to create certificate authority directory [" << wopiCertDestDir << ']');
         else
         {
-            outfile.write(wopiCert.data(), wopiCert.size());
-            outfile.close();
+            // save as "subjectHash".0 to be a suitable entry for caPath
+            std::string wopiCertDest = Poco::Path(wopiCertDestDir, subjectHash + ".0").toString();
+            std::ofstream outfile;
+            outfile.open(wopiCertDest);
+            if (!outfile.is_open())
+            {
+                const std::string wopiCertDestAnonym = COOLWSD::anonymizeUrl(wopiCertDest);
+                LOG_ERR("Cannot open file [" << wopiCertDestAnonym << "] to save wopi cert.");
+            }
+            else
+            {
+                outfile.write(wopiCert.data(), wopiCert.size());
+                outfile.close();
+            }
         }
     }
 
