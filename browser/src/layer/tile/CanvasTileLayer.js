@@ -1970,6 +1970,8 @@ L.CanvasTileLayer = L.Layer.extend({
 					console.warn('Integrator didn\'t set IsAdminUser property for the session');
 				}
 			}
+
+			this._map.fire('adminuser');
 		}
 		else if (textMsg.startsWith('readonlyhyperlinkclicked: ')) {
 			var jsonString = textMsg.replace('readonlyhyperlinkclicked: ', '');
