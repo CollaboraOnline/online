@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-06-12 12:42+0200\n"
-"PO-Revision-Date: 2024-06-12 08:13+0000\n"
+"PO-Revision-Date: 2024-06-14 16:47+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: Croatian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/hr/>\n"
-"Language: \n"
+"Language: hr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Weblate 5.6-dev\n"
 
 #: admin/admin.strings.js:15
@@ -204,11 +204,11 @@ msgstr "Aktualiziraj"
 
 #: admin/admin.strings.js:57
 msgid "Shutdown Server"
-msgstr "Isključi poslužitelja"
+msgstr "Isključi server"
 
 #: admin/admin.strings.js:58
 msgid "Server uptime"
-msgstr "Vrijeme rada poslužitelja"
+msgstr "Vrijeme rada servera"
 
 #: admin/admin.strings.js:59
 msgid "Refresh Log"
@@ -272,7 +272,7 @@ msgstr "Poslano"
 
 #: admin/src/AdminSocketBase.js:62
 msgid "Server has been shut down; please reload the page."
-msgstr "Poslužitelj je bio isključen, učitaj stranicu ponovo."
+msgstr "Server je bio isključen. Ponovo učitaj stranicu."
 
 #: admin/src/AdminSocketBase.js:63 admin/src/AdminSocketBase.js:74
 #: admin/src/AdminSocketOverview.js:108 admin/src/AdminSocketOverview.js:431
@@ -338,7 +338,7 @@ msgstr "Upozorenje"
 
 #: admin/src/AdminSocketSettings.js:46
 msgid "Are you sure you want to shut down the server?"
-msgstr "Stvarno želiš isključiti poslužitelja?"
+msgstr "Stvarno želiš isključiti server?"
 
 #: admin/src/Util.js:26
 msgid "kB"
@@ -394,7 +394,7 @@ msgstr "Cluster raste. Pokušaj se ponavlja …"
 
 #: js/global.js:1080
 msgid "Document is migrating to new server, retrying..."
-msgstr "Dokument se migrira na novi poslužitelj. Pokušaj se ponavlja …"
+msgstr "Dokument se migrira na novi server. Pokušaj se ponavlja …"
 
 #: js/global.js:1082
 msgid "Failed to get RouteToken from controller"
@@ -468,7 +468,7 @@ msgstr "Ovo više nemoj prikazivati"
 
 #: src/control/Control.AlertDialog.js:105
 msgid "The server encountered a %0 error while parsing the %1 command."
-msgstr "Poslužitelj je naišao na grešku %0 prilikom izvršavanja naredbe %1."
+msgstr "Server je naišao na grešku %0 prilikom izvršavanja naredbe %1."
 
 #: src/control/Control.Command.js:89
 msgid "Unlock"
@@ -484,11 +484,11 @@ msgstr "Posebno umetanje"
 
 #: src/control/Control.ContextMenu.js:240
 msgid "Copy Cells"
-msgstr ""
+msgstr "Kopiraj polja"
 
 #: src/control/Control.ContextMenu.js:248
 msgid "Fill Series"
-msgstr ""
+msgstr "Ispuni nizove"
 
 #: src/control/Control.DocumentNameInput.js:113
 msgid "Path"
@@ -1080,12 +1080,12 @@ msgstr "Spremi komentar"
 #: src/control/Control.Menubar.js:413
 #: src/control/Control.NotebookbarBuilder.js:601
 msgid "Full Page Slides"
-msgstr ""
+msgstr "Slajdovi preko cijele stranice"
 
 #: src/control/Control.Menubar.js:414
 #: src/control/Control.NotebookbarBuilder.js:605
 msgid "Notes Pages"
-msgstr ""
+msgstr "Stranice s napomenama"
 
 #: src/control/Control.Menubar.js:448
 #: src/control/Control.NotebookbarImpress.js:444
@@ -1191,27 +1191,27 @@ msgstr "Više uvjeta …"
 #: src/control/Control.Menubar.js:842
 #: src/control/jsdialog/Definitions.Menu.ts:317
 msgid "Top/Bottom Rules..."
-msgstr ""
+msgstr "Pravila gornjih/donjih …"
 
 #: src/control/Control.Menubar.js:843
 #: src/control/jsdialog/Definitions.Menu.ts:320
 msgid "Top N elements..."
-msgstr ""
+msgstr "Gornjih N elemenata …"
 
 #: src/control/Control.Menubar.js:844
 #: src/control/jsdialog/Definitions.Menu.ts:324
 msgid "Top N percent..."
-msgstr ""
+msgstr "Gornjih N posto …"
 
 #: src/control/Control.Menubar.js:845
 #: src/control/jsdialog/Definitions.Menu.ts:328
 msgid "Bottom N elements..."
-msgstr ""
+msgstr "Doljnih N elemenata …"
 
 #: src/control/Control.Menubar.js:846
 #: src/control/jsdialog/Definitions.Menu.ts:332
 msgid "Bottom N percent..."
-msgstr ""
+msgstr "Doljnih N posto …"
 
 #: src/control/Control.Menubar.js:847
 #: src/control/jsdialog/Definitions.Menu.ts:336
@@ -1605,7 +1605,7 @@ msgstr "Prebaci na izvanmrežni način rada"
 #: src/control/Control.ServerAuditDialog.ts:112
 #: src/control/Control.ServerAuditDialog.ts:113
 msgid "Server audit"
-msgstr ""
+msgstr "Revizija servera"
 
 #: src/control/Control.NotebookbarWriter.js:1312
 msgid "Rich Text"
@@ -1653,29 +1653,31 @@ msgstr "Sakrij traku pretrage"
 
 #: src/control/Control.MobileSearchBar.ts:45
 msgid "Clear the search field"
-msgstr "Poništi polje pretrage"
+msgstr "Isprazni polje pretrage"
 
 #: src/control/Control.ServerAuditDialog.ts:28
 msgid "The IsAdminUser property is not set by integration"
-msgstr ""
+msgstr "Integracija nije postavila svojstvo „IsAdminUser”"
 
 #: src/control/Control.ServerAuditDialog.ts:34
 msgid ""
 "Used deprecated is_admin field, integration should use IsAdminUser property "
 "instead"
 msgstr ""
+"Koristilo se zastarjelo polje „is_admin”. Integracija bi umjesto toga "
+"trebala koristiti svojstvo „IsAdminUser”"
 
 #: src/control/Control.ServerAuditDialog.ts:39
 msgid "The IsAdminUser user property is set by integration"
-msgstr ""
+msgstr "Integracija je postavila svojstvo „IsAdminUser”"
 
 #: src/control/Control.ServerAuditDialog.ts:43
 msgid "Your WOPI server is not secure: SSL verification failed"
-msgstr ""
+msgstr "Tvoj WOPI server nije siguran: SSL provjera nije uspjela"
 
 #: src/control/Control.ServerAuditDialog.ts:47
 msgid "No problems with SSL verification detected"
-msgstr ""
+msgstr "Nisu otkriveni problemi sa SSL provjerom"
 
 #: src/control/Control.ServerAuditDialog.ts:131
 msgid "No issues found"
@@ -1794,7 +1796,7 @@ msgstr "Kopiraj list …"
 
 #: src/control/Control.Tabs.js:388
 msgid "Are you sure you want to delete sheet, %sheet%?"
-msgstr "Stvarno želiš ukloniti list %sheet%?"
+msgstr "Stvarno želiš izbrisati list %sheet%?"
 
 #: src/control/Control.Tabs.js:399
 msgid "Rename sheet"
@@ -2046,7 +2048,7 @@ msgstr "Dokument nije moguće zaključati i otvoren je u načinu samo-za-čitanj
 
 #: src/control/Permission.js:87 src/control/Permission.js:97
 msgid "Server returned this reason:"
-msgstr "Odgovor poslužitelja:"
+msgstr "Obrazloženje servera:"
 
 #: src/control/Permission.js:95
 msgid "The document could not be locked."
@@ -2260,11 +2262,11 @@ msgstr "Ups, postoji problem s povezivanjem na %productName: "
 
 #: src/core/Socket.js:653
 msgid "Server is now reachable. We have to refresh the page now."
-msgstr "Poslužitelj je sada dostupan. Moramo aktualizirati stranicu."
+msgstr "Server je sada dostupan. Moramo aktualizirati stranicu."
 
 #: src/core/Socket.js:655
 msgid "Server is now reachable..."
-msgstr "Poslužitelj je sada dostupan …"
+msgstr "Server je sada dostupan …"
 
 #: src/core/Socket.js:659
 msgid "RELOAD"
@@ -2276,7 +2278,7 @@ msgstr "Upozorenje konfiguracije klastera"
 
 #: src/core/Socket.js:675
 msgid "Wrong server, reconnecting..."
-msgstr "Pogrešan poslužitelj, ponovno povezivanje …"
+msgstr "Pogrešan server, ponovno povezivanje …"
 
 #: src/core/Socket.js:684
 msgid "COOLWSD version:"
@@ -2288,7 +2290,7 @@ msgstr "Uslugu pruža:"
 
 #: src/core/Socket.js:702
 msgid "Unsupported server version."
-msgstr "Nepodržana verzija poslužitelja."
+msgstr "Nepodržana verzija servera."
 
 #: src/core/Socket.js:706
 msgid "LOKit version:"
@@ -2304,7 +2306,7 @@ msgstr "Sesiju je prekinuo vlasnik dokumenta"
 
 #: src/core/Socket.js:852
 msgid "Server is shutting down for maintenance (auto-saving)"
-msgstr "Poslužitelj se gasi radi održavanja (automatsko spremanje)"
+msgstr "Server se gasi radi održavanja (automatsko spremanje)"
 
 #: src/core/Socket.js:858
 msgid "Oops, there is a problem connecting the document"
@@ -2312,7 +2314,7 @@ msgstr "Ups, postoji problem s povezivanjem dokumenta"
 
 #: src/core/Socket.js:862
 msgid "Server is down, restarting automatically. Please wait."
-msgstr "Poslužitelj ne radi, automatski će se ponovo pokrenuti. Pričekaj."
+msgstr "Server ne radi, automatski će se ponovo pokrenuti. Pričekaj."
 
 #: src/core/Socket.js:889
 msgid ""
@@ -2430,7 +2432,7 @@ msgstr "Ponovno povezivanje …"
 
 #: src/core/Socket.js:1653
 msgid "The server has been disconnected."
-msgstr "Poslužitelj je odspojen."
+msgstr "Server je odspojen."
 
 #: src/core/Debug.js:54
 msgid "Debug Tools"
@@ -2454,23 +2456,23 @@ msgstr "Boje dokumenta"
 
 #: src/docdispatcher.ts:379
 msgid "Are you sure you want to delete this slide?"
-msgstr "Stvarno želiš izbrisati slajd?"
+msgstr "Stvarno želiš izbrisati ovaj slajd?"
 
 #: src/docdispatcher.ts:382
 msgid "Are you sure you want to delete this page?"
-msgstr "Stvarno želiš obrisati ovu stranicu?"
+msgstr "Stvarno želiš izbrisati ovu stranicu?"
 
 #: src/errormessages.js:22
 msgid "No disk space left on server."
-msgstr "Memorija poslužitelja je puna."
+msgstr "Memorija servera je puna."
 
 #: src/errormessages.js:23
 msgid ""
 "The host URL is empty. The coolwsd server is probably misconfigured, please "
 "contact the administrator."
 msgstr ""
-"URL hosta je prazan. Vjerojatno je coolwsd poslužitelj pogrešno podešen, "
-"obrati se administratoru."
+"URL hosta je prazan. Vjerojatno je coolwsd server pogrešno konfiguriran. "
+"Obrati se administratoru."
 
 #: src/errormessages.js:24
 msgid ""
@@ -2513,7 +2515,7 @@ msgstr ""
 
 #: src/errormessages.js:29
 msgid "Authorization error was: '%errorMessage'."
-msgstr ""
+msgstr "Greška ovlaštenja: '%errorMessage'."
 
 #: src/errormessages.js:30
 msgid "Wrong or missing WOPISrc parameter, please contact support."
@@ -2600,9 +2602,8 @@ msgid ""
 msgstr ""
 "Neuspjelo uspostavljanje veze s utičnicom ili je veza s utičnicom "
 "neočekivano zatvorena. Obrnuti proxy je možda krivo konfiguriran. Obrati se "
-"administratoru. Za daljnje informacije o konfiguraciji proxy poslužitelja "
-"pogledaj https://sdk.collaboraonline.com/docs/installation/Proxy_settings."
-"html"
+"administratoru. Za daljnje informacije o konfiguraciji proxya pogledaj "
+"https://sdk.collaboraonline.com/docs/installation/Proxy_settings.html"
 
 #: src/errormessages.js:41
 msgid ""
@@ -2681,11 +2682,11 @@ msgstr "Dokument se ne može izvesti. Pokušaj ponovo."
 
 #: src/errormessages.js:64
 msgid "Uploading file to server failed, file not found."
-msgstr "Neuspjelo prenošenje datoteke na poslužitelj, datoteka nije pronađena."
+msgstr "Neuspjelo prenošenje datoteke na server, datoteka nije pronađena."
 
 #: src/errormessages.js:65
 msgid "Uploading file to server failed, the file is too large."
-msgstr "Neuspjelo prenošenje datoteke na poslužitelj, datoteka je prevelika."
+msgstr "Neuspjelo prenošenje datoteke na server, datoteka je prevelika."
 
 #: src/layer/tile/CanvasTileLayer.js:1784
 msgid "Functions"
@@ -2752,21 +2753,23 @@ msgstr "Riješi raspravu"
 #: src/canvas/sections/CommentListSection.ts:1247
 #: src/canvas/sections/CommentListSection.ts:2077
 msgid "Comments Updated"
-msgstr ""
+msgstr "Aktualizirani komentari"
 
 #: src/canvas/sections/CommentListSection.ts:1235
 msgid "Another user has removed this comment."
-msgstr ""
+msgstr "Jedan drugi korisnik je uklonio ovaj komentar."
 
 #: src/canvas/sections/CommentListSection.ts:1248
 msgid ""
 "Another user has updated the comment. Would you like to overwrite those "
 "changes?"
 msgstr ""
+"Jedan drugi korisnik je aktualizirao ovaj komentar. Želiš li prepisati te "
+"promjene?"
 
 #: src/canvas/sections/CommentListSection.ts:1250
 msgid "Update"
-msgstr ""
+msgstr "Aktualiziraj"
 
 #: src/canvas/sections/CommentListSection.ts:1321
 #: src/canvas/sections/CommentListSection.ts:1383
@@ -2776,6 +2779,8 @@ msgstr "Automatski spremljeno"
 #: src/canvas/sections/CommentListSection.ts:2078
 msgid "Another user has updated comments. Would you like to proceed updating?"
 msgstr ""
+"Jedan drugi korisnik je aktualizirao komentare. Želiš li nastaviti s "
+"aktualiziranjem?"
 
 #: src/canvas/sections/CommentSection.ts:300
 msgid "Open menu"
@@ -2882,17 +2887,14 @@ msgstr "Pošalji nam povratne inormacije"
 #, javascript-format
 msgid ""
 "The file of type: %0 cannot be uploaded to server since the file has no name"
-msgstr ""
-"Vrsta datoteke: %0 nije moguće prenijeti na poslužitelja, jer datoteka nema "
-"ime"
+msgstr "Vrsta datoteke: %0 se ne može prenijeti na server jer datoteka nema ime"
 
 #: src/map/handler/Map.FileInserter.js:107
 #, javascript-format
 msgid ""
 "The file of type: %0 cannot be uploaded to server since the file is empty"
 msgstr ""
-"Vrsta datoteke: %0 nije moguće prenijeti na poslužitelja, jer je datoteka "
-"prazna"
+"Vrsta datoteke: %0 se ne može prenijeti na server jer je datoteka prazna"
 
 #: src/map/handler/Map.FileInserter.js:138
 msgid "Uploading..."
@@ -2900,7 +2902,7 @@ msgstr "Prenošenje …"
 
 #: src/map/handler/Map.FileInserter.js:161
 msgid "Uploading file to server failed with status: %0"
-msgstr "Neuspjelo prenošenje datoteke na poslužitelj sa stanjem: %0"
+msgstr "Neuspjelo prenošenje datoteke na server sa stanjem: %0"
 
 #: src/map/handler/Map.SlideShow.js:55
 msgid "Empty Slide Show"
