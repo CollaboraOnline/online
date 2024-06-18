@@ -861,6 +861,7 @@ WopiStorage::WOPIFileInfo::WOPIFileInfo(const FileInfo& fileInfo,
     JsonUtil::findJSONValue(object, "BreadcrumbDocName", _breadcrumbDocName);
     JsonUtil::findJSONValue(object, "FileUrl", _fileUrl);
 
+#if !MOBILEAPP
     // check if user is admin on the integrator side
     bool isAdminUser = false;
     if (!JsonUtil::findJSONValue(object, "IsAdminUser", isAdminUser))
@@ -877,6 +878,7 @@ WopiStorage::WOPIFileInfo::WOPIFileInfo(const FileInfo& fileInfo,
     {
         _isAdminUser = isAdminUser;
     }
+#endif
 
     // Update the scheme to https if ssl or ssl termination is on
     if (Util::startsWith(_postMessageOrigin, "http://") &&

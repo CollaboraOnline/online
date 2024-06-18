@@ -94,8 +94,10 @@ ClientSession::ClientSession(
     _serverURL(requestDetails),
     _isTextDocument(false),
     _thumbnailSession(false),
-    _canonicalViewId(0),
-    _sentAdmin(false)
+    _canonicalViewId(0)
+#if !MOBILEAPP
+    ,_sentAdmin(false)
+#endif
 {
     const std::size_t curConnections = ++COOLWSD::NumConnections;
     LOG_INF("ClientSession ctor [" << getName() << "] for URI: [" << _uriPublic.toString()
@@ -2969,9 +2971,11 @@ std::string ClientSession::processSVGContent(const std::string& svg)
     return broken ? svg : oss.str();
 }
 
+#if !MOBILEAPP
 std::string ClientSession::getIsAdminUserStatus() const
 {
     return getIsAdminUser().has_value() ? (getIsAdminUser().value() ? "true" : "false") : "null";
 }
+#endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

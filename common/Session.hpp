@@ -209,7 +209,9 @@ public:
 
     void setWatermarkText(const std::string& watermarkText) { _watermarkText = watermarkText; }
 
+#if !MOBILEAPP
     void setIsAdminUser(const std::optional<bool> isAdminUser) { _isAdminUser = isAdminUser; }
+#endif
 
     void setUserExtraInfo(const std::string& userExtraInfo) { _userExtraInfo = userExtraInfo; }
 
@@ -243,7 +245,9 @@ public:
 
     const std::string& getDocPassword() const { return _docPassword; }
 
+#if !MOBILEAPP
     const std::optional<bool> getIsAdminUser() const { return _isAdminUser; }
+#endif
 
     const std::string& getUserExtraInfo() const { return _userExtraInfo; }
 
@@ -351,8 +355,10 @@ private:
     /// Name of the user to whom the session belongs to, anonymized for logging.
     std::string _userNameAnonym;
 
+#if !MOBILEAPP
     /// If user is admin on the integrator side
     std::optional<bool> _isAdminUser;
+#endif
 
     /// Extra info per user, mostly mail, avatar, links, etc.
     std::string _userExtraInfo;
