@@ -7,11 +7,11 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-06-12 12:42+0200\n"
-"PO-Revision-Date: 2024-06-06 07:58+0000\n"
+"PO-Revision-Date: 2024-06-13 11:09+0000\n"
 "Last-Translator: gallegonovato <fran-carro@hotmail.es>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/es/>\n"
-"Language: \n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -198,7 +198,7 @@ msgstr "Caducados:"
 #: admin/admin.strings.js:56 admin/src/AdminSocketBase.js:61
 #: src/control/Control.Zotero.js:209
 msgid "Refresh"
-msgstr "Actualizar"
+msgstr "Refrescar"
 
 #: admin/admin.strings.js:57
 msgid "Shutdown Server"
@@ -1655,25 +1655,27 @@ msgstr "Vaciar campo de búsqueda"
 
 #: src/control/Control.ServerAuditDialog.ts:28
 msgid "The IsAdminUser property is not set by integration"
-msgstr ""
+msgstr "La propiedad IsAdminUser no está establecida por integración"
 
 #: src/control/Control.ServerAuditDialog.ts:34
 msgid ""
 "Used deprecated is_admin field, integration should use IsAdminUser property "
 "instead"
 msgstr ""
+"Se utilizó el campo is_admin obsoleto; la integración debería utilizar la "
+"propiedad IsAdminUser en su lugar"
 
 #: src/control/Control.ServerAuditDialog.ts:39
 msgid "The IsAdminUser user property is set by integration"
-msgstr ""
+msgstr "La propiedad de usuario IsAdminUser se establece mediante integración"
 
 #: src/control/Control.ServerAuditDialog.ts:43
 msgid "Your WOPI server is not secure: SSL verification failed"
-msgstr ""
+msgstr "Su servidor WOPI no es seguro: la verificación SSL falló"
 
 #: src/control/Control.ServerAuditDialog.ts:47
 msgid "No problems with SSL verification detected"
-msgstr ""
+msgstr "No se detectaron problemas con la verificación SSL"
 
 #: src/control/Control.ServerAuditDialog.ts:131
 msgid "No issues found"
@@ -2513,7 +2515,7 @@ msgstr ""
 
 #: src/errormessages.js:29
 msgid "Authorization error was: '%errorMessage'."
-msgstr ""
+msgstr "El error de autorización fue: '%errorMessage'."
 
 #: src/errormessages.js:30
 msgid "Wrong or missing WOPISrc parameter, please contact support."
@@ -2760,21 +2762,23 @@ msgstr "Hilo resuelto"
 #: src/canvas/sections/CommentListSection.ts:1247
 #: src/canvas/sections/CommentListSection.ts:2077
 msgid "Comments Updated"
-msgstr ""
+msgstr "Comentarios actualizados"
 
 #: src/canvas/sections/CommentListSection.ts:1235
 msgid "Another user has removed this comment."
-msgstr ""
+msgstr "Otro usuario ha eliminado este comentario."
 
 #: src/canvas/sections/CommentListSection.ts:1248
 msgid ""
 "Another user has updated the comment. Would you like to overwrite those "
 "changes?"
 msgstr ""
+"Otro usuario ha actualizado el comentario. ¿Te gustaría sobrescribir esos "
+"cambios?"
 
 #: src/canvas/sections/CommentListSection.ts:1250
 msgid "Update"
-msgstr ""
+msgstr "Actualizar"
 
 #: src/canvas/sections/CommentListSection.ts:1321
 #: src/canvas/sections/CommentListSection.ts:1383
@@ -2784,6 +2788,8 @@ msgstr "Guardado automáticamente"
 #: src/canvas/sections/CommentListSection.ts:2078
 msgid "Another user has updated comments. Would you like to proceed updating?"
 msgstr ""
+"Otro usuario ha actualizado los comentarios. ¿Te gustaría continuar con la "
+"actualización?"
 
 #: src/canvas/sections/CommentSection.ts:300
 msgid "Open menu"
