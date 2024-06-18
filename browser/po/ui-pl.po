@@ -13,17 +13,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-06-12 12:42+0200\n"
-"PO-Revision-Date: 2024-06-06 10:22+0000\n"
+"PO-Revision-Date: 2024-06-13 11:09+0000\n"
 "Last-Translator: Matthaiks <kitynska@gmail.com>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/pl/>\n"
-"Language: \n"
+"Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n"
-"%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n"
-"%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && ("
+"n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && "
+"n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
 "X-Generator: Weblate 5.6-dev\n"
 
 #: admin/admin.strings.js:15
@@ -1656,25 +1656,27 @@ msgstr "Wyczyść pole wyszukiwania"
 
 #: src/control/Control.ServerAuditDialog.ts:28
 msgid "The IsAdminUser property is not set by integration"
-msgstr ""
+msgstr "Właściwość IsAdminUser nie jest ustawiana przez integrację"
 
 #: src/control/Control.ServerAuditDialog.ts:34
 msgid ""
 "Used deprecated is_admin field, integration should use IsAdminUser property "
 "instead"
 msgstr ""
+"Użyto przestarzałego pola is_admin. W ramach integracji należy zamiast tego "
+"używać właściwości IsAdminUser"
 
 #: src/control/Control.ServerAuditDialog.ts:39
 msgid "The IsAdminUser user property is set by integration"
-msgstr ""
+msgstr "Właściwość użytkownika IsAdminUser jest ustawiana przez integrację"
 
 #: src/control/Control.ServerAuditDialog.ts:43
 msgid "Your WOPI server is not secure: SSL verification failed"
-msgstr ""
+msgstr "Twój serwer WOPI nie jest bezpieczny: weryfikacja SSL nie powiodła się"
 
 #: src/control/Control.ServerAuditDialog.ts:47
 msgid "No problems with SSL verification detected"
-msgstr ""
+msgstr "Nie wykryto żadnych problemów z weryfikacją SSL"
 
 #: src/control/Control.ServerAuditDialog.ts:131
 msgid "No issues found"
@@ -2517,7 +2519,7 @@ msgstr ""
 
 #: src/errormessages.js:29
 msgid "Authorization error was: '%errorMessage'."
-msgstr ""
+msgstr "Błąd autoryzacji: '%errorMessage'."
 
 #: src/errormessages.js:30
 msgid "Wrong or missing WOPISrc parameter, please contact support."
@@ -2760,21 +2762,21 @@ msgstr "Rozwiąż wątek"
 #: src/canvas/sections/CommentListSection.ts:1247
 #: src/canvas/sections/CommentListSection.ts:2077
 msgid "Comments Updated"
-msgstr ""
+msgstr "Komentarze zaktualizowano"
 
 #: src/canvas/sections/CommentListSection.ts:1235
 msgid "Another user has removed this comment."
-msgstr ""
+msgstr "Inny użytkownik usunął ten komentarz."
 
 #: src/canvas/sections/CommentListSection.ts:1248
 msgid ""
 "Another user has updated the comment. Would you like to overwrite those "
 "changes?"
-msgstr ""
+msgstr "Inny użytkownik zaktualizował komentarz. Czy chcesz zastąpić te zmiany?"
 
 #: src/canvas/sections/CommentListSection.ts:1250
 msgid "Update"
-msgstr ""
+msgstr "Zaktualizuj"
 
 #: src/canvas/sections/CommentListSection.ts:1321
 #: src/canvas/sections/CommentListSection.ts:1383
@@ -2784,6 +2786,8 @@ msgstr "Automatycznie zapisano"
 #: src/canvas/sections/CommentListSection.ts:2078
 msgid "Another user has updated comments. Would you like to proceed updating?"
 msgstr ""
+"Inny użytkownik zaktualizował komentarze. Czy chcesz kontynuować "
+"aktualizację?"
 
 #: src/canvas/sections/CommentSection.ts:300
 msgid "Open menu"
