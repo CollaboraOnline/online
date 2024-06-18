@@ -1949,14 +1949,26 @@ L.CanvasTileLayer = L.Layer.extend({
 				}
 			}
 		} else if (textMsg.startsWith('adminuser:')) {
+			// this message arrives after first viewinfo:
+
 			var value = textMsg.substr(10).trim();
 			if (value === 'true')
 				app.isAdminUser = true;
 			else if (value === 'false')
 				app.isAdminUser = false;
 			else {
-				console.warn('Integrator didn\'t set IsAdminUser property for the session');
 				app.isAdminUser = null;
+
+				if (!this._map._viewInfo)
+					return;
+
+				var viewInfo = this._map._viewInfo[this._viewId];
+				if (viewInfo && viewInfo.userextrainfo && viewInfo.userextrainfo.is_admin !== undefined) {
+					app.isAdminUser = !!viewInfo.userextrainfo.is_admin;
+					console.warn('Integrator uses deprecated is_admin property. Please Use IsAdminUser instead.');
+				} else {
+					console.warn('Integrator didn\'t set IsAdminUser property for the session');
+				}
 			}
 		}
 		else if (textMsg.startsWith('readonlyhyperlinkclicked: ')) {
