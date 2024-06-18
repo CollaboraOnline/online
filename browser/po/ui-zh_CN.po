@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-06-12 12:42+0200\n"
-"PO-Revision-Date: 2024-05-17 17:01+0000\n"
-"Last-Translator: lsy223622 <lsy223622@outlook.com>\n"
+"PO-Revision-Date: 2024-06-16 19:57+0000\n"
+"Last-Translator: TUCAOEVER5023416dba724da7 <814697582@qq.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
 "collabora-online/ui/zh_Hans/>\n"
-"Language: \n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -474,11 +474,11 @@ msgstr "选择性粘贴"
 
 #: src/control/Control.ContextMenu.js:240
 msgid "Copy Cells"
-msgstr ""
+msgstr "复制单元格"
 
 #: src/control/Control.ContextMenu.js:248
 msgid "Fill Series"
-msgstr ""
+msgstr "文件系列"
 
 #: src/control/Control.DocumentNameInput.js:113
 msgid "Path"
@@ -890,7 +890,7 @@ msgstr "深色模式"
 #: src/control/Control.NotebookbarImpress.js:459
 #: src/control/Control.NotebookbarWriter.js:1477
 msgid "Invert Background"
-msgstr ""
+msgstr "插入背景"
 
 #: src/control/Control.Menubar.js:154 src/control/Control.Menubar.js:458
 #: src/control/Control.Menubar.js:602 src/control/Control.Menubar.js:747
@@ -1064,12 +1064,12 @@ msgstr "保存批注"
 #: src/control/Control.Menubar.js:413
 #: src/control/Control.NotebookbarBuilder.js:601
 msgid "Full Page Slides"
-msgstr ""
+msgstr "完整页边栏"
 
 #: src/control/Control.Menubar.js:414
 #: src/control/Control.NotebookbarBuilder.js:605
 msgid "Notes Pages"
-msgstr ""
+msgstr "笔记页面"
 
 #: src/control/Control.Menubar.js:448
 #: src/control/Control.NotebookbarImpress.js:444
@@ -1159,7 +1159,7 @@ msgstr "介于..."
 #: src/control/Control.Menubar.js:837
 #: src/control/jsdialog/Definitions.Menu.ts:305
 msgid "Duplicate..."
-msgstr ""
+msgstr "重复..."
 
 #: src/control/Control.Menubar.js:838
 #: src/control/jsdialog/Definitions.Menu.ts:309
@@ -1175,37 +1175,37 @@ msgstr "更多条件..."
 #: src/control/Control.Menubar.js:842
 #: src/control/jsdialog/Definitions.Menu.ts:317
 msgid "Top/Bottom Rules..."
-msgstr ""
+msgstr "顶部/底部规则..."
 
 #: src/control/Control.Menubar.js:843
 #: src/control/jsdialog/Definitions.Menu.ts:320
 msgid "Top N elements..."
-msgstr ""
+msgstr "顶部 N 个元素..."
 
 #: src/control/Control.Menubar.js:844
 #: src/control/jsdialog/Definitions.Menu.ts:324
 msgid "Top N percent..."
-msgstr ""
+msgstr "顶部 N 百分比..."
 
 #: src/control/Control.Menubar.js:845
 #: src/control/jsdialog/Definitions.Menu.ts:328
 msgid "Bottom N elements..."
-msgstr ""
+msgstr "底部 N 个元素..."
 
 #: src/control/Control.Menubar.js:846
 #: src/control/jsdialog/Definitions.Menu.ts:332
 msgid "Bottom N percent..."
-msgstr ""
+msgstr "底部 N 百分百..."
 
 #: src/control/Control.Menubar.js:847
 #: src/control/jsdialog/Definitions.Menu.ts:336
 msgid "Above Average..."
-msgstr ""
+msgstr "超出平均..."
 
 #: src/control/Control.Menubar.js:848
 #: src/control/jsdialog/Definitions.Menu.ts:340
 msgid "Below Average..."
-msgstr ""
+msgstr "低于平均..."
 
 #: src/control/Control.Menubar.js:959 src/control/Control.Menubar.js:1024
 #: src/control/Control.Menubar.js:1088 src/control/Control.Menubar.js:1142
@@ -1589,7 +1589,7 @@ msgstr "脱机"
 #: src/control/Control.ServerAuditDialog.ts:112
 #: src/control/Control.ServerAuditDialog.ts:113
 msgid "Server audit"
-msgstr ""
+msgstr "服务器审计"
 
 #: src/control/Control.NotebookbarWriter.js:1312
 msgid "Rich Text"
@@ -1641,42 +1641,41 @@ msgstr "清空搜索栏"
 
 #: src/control/Control.ServerAuditDialog.ts:28
 msgid "The IsAdminUser property is not set by integration"
-msgstr ""
+msgstr "IsAdminUser 属性未被集成设置"
 
 #: src/control/Control.ServerAuditDialog.ts:34
 msgid ""
 "Used deprecated is_admin field, integration should use IsAdminUser property "
 "instead"
-msgstr ""
+msgstr "使用过时的 is_admin 字段，集成应该使用 IsAdminUser 属性"
 
 #: src/control/Control.ServerAuditDialog.ts:39
 msgid "The IsAdminUser user property is set by integration"
-msgstr ""
+msgstr "IsAdminUser 属性已被集成设置"
 
 #: src/control/Control.ServerAuditDialog.ts:43
 msgid "Your WOPI server is not secure: SSL verification failed"
-msgstr ""
+msgstr "你的 WOPI 服务器不安全：SSL 验证失败"
 
 #: src/control/Control.ServerAuditDialog.ts:47
 msgid "No problems with SSL verification detected"
-msgstr ""
+msgstr "SSL验证检测无误"
 
 #: src/control/Control.ServerAuditDialog.ts:131
 msgid "No issues found"
-msgstr ""
+msgstr "未发现问题"
 
 #: src/control/Control.ServerAuditDialog.ts:137
-#, fuzzy
 msgid "Status"
-msgstr "状态:"
+msgstr "状态"
 
 #: src/control/Control.ServerAuditDialog.ts:185
 msgid "Check security warnings of your server"
-msgstr ""
+msgstr "检查你服务器的安全警告"
 
 #: src/control/Control.ServerAuditDialog.ts:186
 msgid "OPEN"
-msgstr ""
+msgstr "打开"
 
 #: src/control/Control.SheetsBar.js:48
 msgid "Scroll to the first sheet"
@@ -1845,7 +1844,7 @@ msgstr "正在跟随编辑器"
 
 #: src/control/Control.UserList.ts:58
 msgid "Stop following"
-msgstr ""
+msgstr "停止跟踪"
 
 #: src/control/Control.UserList.ts:59
 msgid "Avatar for %user"
@@ -2070,11 +2069,11 @@ msgstr "删除制表位"
 
 #: src/control/VRuler.ts:377
 msgid "Top Margin"
-msgstr ""
+msgstr "居上"
 
 #: src/control/VRuler.ts:378
 msgid "Bottom Margin"
-msgstr ""
+msgstr "居底"
 
 #: src/control/Signing.js:27
 msgid "This document is digitally signed and the signature is valid."
@@ -2350,7 +2349,7 @@ msgstr "正在连接..."
 
 #: src/core/Socket.js:1291
 msgid "Server is shutting down"
-msgstr ""
+msgstr "服务器正在关闭"
 
 #: src/core/Socket.js:1324
 msgid "Exported to storage"
@@ -2468,7 +2467,7 @@ msgstr "未授权的WOPI主机。请稍后重试，若问题持续存在请反�
 
 #: src/errormessages.js:29
 msgid "Authorization error was: '%errorMessage'."
-msgstr ""
+msgstr "验证错误： '%errorMessage%'。"
 
 #: src/errormessages.js:30
 msgid "Wrong or missing WOPISrc parameter, please contact support."
@@ -2682,21 +2681,21 @@ msgstr "已解决的主题"
 #: src/canvas/sections/CommentListSection.ts:1247
 #: src/canvas/sections/CommentListSection.ts:2077
 msgid "Comments Updated"
-msgstr ""
+msgstr "评论更新"
 
 #: src/canvas/sections/CommentListSection.ts:1235
 msgid "Another user has removed this comment."
-msgstr ""
+msgstr "其他用户已经移除该评论。"
 
 #: src/canvas/sections/CommentListSection.ts:1248
 msgid ""
 "Another user has updated the comment. Would you like to overwrite those "
 "changes?"
-msgstr ""
+msgstr "其他用户已经更新该评论。你想要覆盖这些修改吗？"
 
 #: src/canvas/sections/CommentListSection.ts:1250
 msgid "Update"
-msgstr ""
+msgstr "更新"
 
 #: src/canvas/sections/CommentListSection.ts:1321
 #: src/canvas/sections/CommentListSection.ts:1383
@@ -2705,7 +2704,7 @@ msgstr "自动保存"
 
 #: src/canvas/sections/CommentListSection.ts:2078
 msgid "Another user has updated comments. Would you like to proceed updating?"
-msgstr ""
+msgstr "其他用户已经更新评论。你想要继续更新吗？"
 
 #: src/canvas/sections/CommentSection.ts:300
 msgid "Open menu"
@@ -2830,7 +2829,7 @@ msgstr "空白演示文稿"
 
 #: src/map/handler/Map.SlideShow.js:161
 msgid "Windowed Presentation: "
-msgstr ""
+msgstr "演示窗口： "
 
 #: src/map/handler/Map.SlideShow.js:168
 msgid "Windowed Presentation Blocked"
@@ -2870,11 +2869,11 @@ msgstr "您已经在演示此文档"
 
 #: src/map/handler/Map.SlideShow.js:314
 msgid "Presentation disabled"
-msgstr ""
+msgstr "演示已禁用"
 
 #: src/map/handler/Map.SlideShow.js:315
 msgid "Presentation mode has been disabled for this document"
-msgstr ""
+msgstr "该文档演示模式已被禁用"
 
 #: src/map/handler/Map.WOPI.js:152
 msgid "Creating new file from template..."
@@ -2964,6 +2963,10 @@ msgid ""
 "translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
 "translate=\"true\">3</a>"
 msgstr ""
+"<a id=\"slide-1-indicator\" class=\"active\" href=\"#slide-1\" data-"
+"translate=\"true\">1</a> <a id=\"slide-2-indicator\" href=\"#slide-2\" data-"
+"translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
+"translate=\"true\">3</a>"
 
 #~ msgid "and %COUNT more"
 #~ msgstr "还有 %COUNT 个"
