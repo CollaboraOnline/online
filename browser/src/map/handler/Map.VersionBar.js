@@ -6,13 +6,13 @@
 
 L.Map.VersionBar = L.Handler.extend({
 	onAdd: function () {
-		this._map.on('updateviewslist', this.onUpdateInfo, this);
+		this._map.on('adminuser', this.onUpdateInfo, this);
 		this._map.on('versionbar', this.onversionbar, this);
 	},
 
 	onRemove: function () {
 		this._map.off('versionbar', this.onversionbar, this);
-		this._map.off('updateviewslist', this.onUpdateInfo, this);
+		this._map.off('adminuser', this.onUpdateInfo, this);
 	},
 
 	onUpdateInfo: function () {
