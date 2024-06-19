@@ -211,7 +211,7 @@ public:
                            { return !_inQueue.empty() || SigUtil::getShutdownRequestFlag(); });
         }
 
-        LOG_DBG(context << "Giving up polling after " << sw.elapsed());
+        LOG_DBG(context << " giving up polling after " << sw.elapsed());
         return std::vector<char>();
     }
 
@@ -219,7 +219,7 @@ public:
     std::vector<char> waitForMessage(const std::string& prefix, std::chrono::milliseconds timeout,
                                      const std::string& context = std::string())
     {
-        LOG_DBG(context << "Waiting for [" << prefix << "] for " << timeout);
+        LOG_DBG(context << " waiting for [" << prefix << "] for " << timeout);
 
         return poll(
             [&](const std::vector<char>& message) {
