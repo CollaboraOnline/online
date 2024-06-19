@@ -117,10 +117,11 @@ namespace {
         std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
         while (true)
         {
-            if (std::chrono::steady_clock::now() - start > timeout)
+            if (std::chrono::duration_cast<std::chrono::seconds>(
+                    std::chrono::steady_clock::now() - start).count() > timeout.count())
             {
                 LOK_ASSERT_FAIL("Timed out waiting for modified status change");
-                break;
+                return false; // arbitrary but why not.
             }
             std::vector<char> message
                 = wsSession->waitForMessage("statechanged:", timeout, name);
@@ -173,7 +174,7 @@ void UnitSaveTorture::testModified()
 
 void UnitSaveTorture::testTileCombineRace()
 {
-    std::string name = "testModified";
+    std::string name = "testTileCombineRace";
     std::string docName = "empty.ods";
 
     std::string documentPath, documentURL;
@@ -370,6 +371,8 @@ void UnitSaveTorture::saveTortureOne(
         {
             message = wsSession->waitForMessage("unocommandresult:", timeout, name);
             LOK_ASSERT(message.size() > 0);
+            if (message.size() == 0)
+                break;
             bool success;
             if (getSaveResult(message, success))
             {
