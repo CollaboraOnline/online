@@ -91,6 +91,14 @@ L.SVGGroup = L.Layer.extend({
 
 		var videoContainer = svgLastChild.querySelector('body');
 		var videos = svgLastChild.getElementsByTagName('video');
+
+		// fix URL, it's important to have correct WOPISrc, we need to decode "&" before other params
+		// like ServerId and Tag so load balancer will not use it as a part of WOPISrc
+		// this has to be done here (after parseSVG), because it other case we will fail to get
+		// the svg object
+		var source = svgLastChild.getElementsByTagName('source');
+		source[0].src = decodeURIComponent(source[0].src);
+
 		this.addVideoSupportHandlers(videos);
 
 		function _fixSVGPos() {
