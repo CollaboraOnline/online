@@ -112,9 +112,7 @@ namespace LOKitHelper
                     }
                     else if (name == "mode" && mode.empty())
                     {
-                        std::ostringstream modess;
-                        modess << prop.second;
-                        mode = modess.str();
+                        mode = prop.second;
                     }
                 }
             }
