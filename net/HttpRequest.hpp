@@ -1134,7 +1134,7 @@ public:
     /// Get the timeout, in microseconds.
     std::chrono::microseconds getTimeout() const { return _timeout; }
 
-    std::shared_ptr<Response> response() { return _response; }
+    /// The response we _got_ for our request. Do *not* use this to _send_ a response!
     const std::shared_ptr<Response>& response() const { return _response; }
     const std::string& getUrl() const { return _request.getUrl(); }
 
