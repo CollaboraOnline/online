@@ -48,6 +48,7 @@ namespace Log
     // Different logging domains
     STATE_ENUM(Area,
                Generic,
+               Pixel,
                Socket,
                WebSocket,
                Http,

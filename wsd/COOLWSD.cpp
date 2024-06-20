@@ -721,7 +721,7 @@ bool COOLWSD::EnableAccessibility = false;
 FILE *COOLWSD::TraceEventFile = NULL;
 std::string COOLWSD::LogLevel = "trace";
 std::string COOLWSD::LogLevelStartup = "trace";
-std::string COOLWSD::LogDisabledAreas = "Socket,WebSocket,Admin";
+std::string COOLWSD::LogDisabledAreas = "Socket,WebSocket,Admin,Pixel";
 std::string COOLWSD::LogToken;
 std::string COOLWSD::MostVerboseLogLevelSettableFromClient = "notice";
 std::string COOLWSD::LeastVerboseLogLevelSettableFromClient = "fatal";
