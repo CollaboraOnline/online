@@ -462,7 +462,6 @@ public:
     UnitKitSaveTorture() : UnitKit("savetorture")
     {
         std::cerr << "\n\nYour Kit process has Save torturing hooks\n\n\n";
-        setTimeout(std::chrono::hours(1));
     }
     virtual bool filterKitMessage(WebSocketHandler *, std::string & /* message */) override
     {
