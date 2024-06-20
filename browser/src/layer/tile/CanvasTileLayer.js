@@ -6275,8 +6275,6 @@ L.CanvasTileLayer = L.Layer.extend({
 			var width = canvas.width;
 			var height = canvas.height;
 
-			var offset = 0;
-
 			var resultu32 = new Uint32Array(width * height);
 			var resultu8 = new Uint8ClampedArray(resultu32.buffer, resultu32.byteOffset, resultu32.byteLength);
 

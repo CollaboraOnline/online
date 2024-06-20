@@ -909,7 +909,60 @@ class DeltaGenerator {
         }
         img->resize(dSize);
 
-        return img;
+
+        // cf. CanvasTileLayer's _applyDelta
+        size_t offset = 0;
+        constexpr size_t width = 256;
+        constexpr size_t height = 256;
+
+        Blob result = std::make_shared<BlobData>();
+        result->resize(width * height * 4);
+
+        for (size_t y = 0; y < height; ++y)
+        {
+            size_t rleSize = static_cast<unsigned char>((*img)[offset]) +
+                static_cast<unsigned char>((*img)[offset+1]) * 256;
+            offset += 2;
+            LOGA_TRC(Pixel, "rle size " << rleSize);
+
+            size_t rleMask = offset;
+            constexpr int rleMaskSizeBytes = 256/8;
+
+            offset += rleMaskSizeBytes;
+
+            uint32_t uniquePixels[256];
+            if (rleSize > 0) // align
+            {
+                // leave pre-multiplied.
+                memcpy(uniquePixels, img->data() + offset, rleSize * 4);
+            }
+
+            // It would be rather nice to have real 64bit types [!]
+            uint32_t lastPix = 0;
+            uint32_t lastMask = 0;
+            uint32_t bitToCheck = 256;
+            size_t rleMaskOffset = rleMask;
+
+            size_t pixOffset = y * width;
+            size_t pixSrc = 0;
+
+            for (size_t x = 0; x < width; ++x)
+            {
+                if (bitToCheck > 128)
+                {
+                    bitToCheck = 1;
+                    lastMask = (*img)[rleMaskOffset++];
+                }
+                if (!(lastMask & bitToCheck))
+                    lastPix = uniquePixels[pixSrc++];
+                bitToCheck = bitToCheck << 1;
+                (*result)[pixOffset++] = lastPix;
+            }
+
+            offset += rleSize * 4;
+        }
+
+        return result;
     }
 };
 
