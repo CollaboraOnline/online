@@ -97,7 +97,11 @@ if ${trace} \
 	exit 0
 else
 	echo "Test $tst FAILED. Finished in ${SECONDS}s."
-	cat $tst_log
+        if test $(stat -c %s $tst_log) -le 1000000000; then
+            cat $tst_log
+        else
+            echo "Not showing $tst_log, which is larger than 1GB in size."
+        fi
 	echo "============================================================="
 	echo "Test failed on $tst after ${SECONDS}s. Re-run with (remove --unattended to run without gdb and get prompted):"
 	echo "   $ gdb --args ${abs_top_builddir}/coolwsd --o:sys_template_path=\"$systemplate_path\" \\"
