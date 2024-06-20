@@ -177,8 +177,8 @@ class DeltaGenerator {
                          _rleSize, mode);
 
             size_t size = 2 + sizeof(_rleMask) + _rleSize * 4;
-            LOG_TRC("packed row of size " << size << " bytes "
-                    << Util::dumpHex(std::string((char *)output, size)));
+            LOGA_TRC(Pixel,"packed row of size " << size << " bytes "
+                     << Util::dumpHex(std::string((char *)output, size)));
 
             return size;
         }
@@ -347,7 +347,7 @@ class DeltaGenerator {
                               (const unsigned char *)(scratch),
                               diff, mode);
 
-                    LOG_TRC("row " << curY << " different " << diff << "pixels");
+                    LOGA_TRC(Pixel, "row " << curY << " different " << diff << "pixels");
                     x += diff;
                 }
             }
@@ -375,9 +375,9 @@ class DeltaGenerator {
             assert (startX + width <= (size_t)bufferWidth);
             assert (startY + height <= (size_t)bufferHeight);
 
-            LOG_TRC("Converting pixel data to delta data of size "
-                    << (width * height * 4) << " width " << width
-                    << " height " << height);
+            LOGA_TRC(Pixel, "Converting pixel data to delta data of size "
+                     << (width * height * 4) << " width " << width
+                     << " height " << height);
 
             for (int y = 0; y < height; ++y)
             {
@@ -543,8 +543,8 @@ class DeltaGenerator {
             return false;
         }
 
-        LOG_TRC("building delta of a " << cur.getWidth() << 'x' << cur.getHeight() << " bitmap " <<
-                "between old wid " << prev.getWid() << " and " << cur.getWid());
+        LOGA_TRC(Pixel, "building delta of a " << cur.getWidth() << 'x' << cur.getHeight() << " bitmap " <<
+                 "between old wid " << prev.getWid() << " and " << cur.getWid());
 
         // let's use uint8_t instead of char to avoid implicit sign extension
         std::vector<uint8_t> output;
@@ -605,11 +605,11 @@ class DeltaGenerator {
             // Our row is just that different:
             prev.getRow(y).diffRowTo(cur.getRow(y), prev.getWidth(), y, output, mode);
         }
-        LOG_TRC("Created delta of size " << output.size());
+        LOGA_TRC(Pixel, "Created delta of size " << output.size());
         if (output.empty())
         {
             // The tile content is identical to what the client already has, so skip it
-            LOG_TRC("Identical / un-changed tile");
+            LOGA_TRC(Pixel, "Identical / un-changed tile");
             // Return a zero length delta to inform WSD we didn't need that.
             // This allows WSD side TileCache to send updates to waiting subscribers.
             outStream.push_back('D');
@@ -633,7 +633,7 @@ class DeltaGenerator {
             return false;
         }
 
-        LOG_TRC("Compressed delta of size " << output.size() << " to size " << compSize);
+        LOGA_TRC(Pixel, "Compressed delta of size " << output.size() << " to size " << compSize);
 //                << Util::dumpHex(std::string((char *)compressed.get(), compSize)));
 
         // FIXME: should get zstd to drop it directly in-place really.
@@ -865,7 +865,7 @@ class DeltaGenerator {
             ZSTD_freeCCtx(cctx);
 
             size_t compSize = outb.pos;
-            LOG_TRC("Compressed image of size " << (width * height * 4) << " to size " << compSize);
+            LOGA_TRC(Pixel, "Compressed image of size " << (width * height * 4) << " to size " << compSize);
 //            << Util::dumpHex(std::string((char *)compressed, compSize)));
 
             // FIXME: get zstd to compress directly into this buffer.
