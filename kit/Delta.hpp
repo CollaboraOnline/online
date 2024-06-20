@@ -162,18 +162,21 @@ class DeltaGenerator {
             output[0] = _rleSize & 0xff;
             output[1] = _rleSize >> 8;
 
-            // network byte order the bitmask if necessary:
+#if __BYTE_ORDER != __BIG_ENDIAN || defined(IOS)
+            memcpy(output + 2, _rleMask, sizeof(_rleMask));
+#else
+            // rare machine: little-endianize the bitmask if necessary:
             uint64_t rleLE[DeltaGenerator::_rleMaskUnits];
             for (size_t i = 0; i < DeltaGenerator::_rleMaskUnits; ++i)
                 rleLE[i] = htole64(_rleMask[i]);
-
             memcpy(output + 2, rleLE, sizeof(rleLE));
+#endif
             if (_rleSize > 0)
-                copy_row(output + 2 + sizeof(rleLE),
+                copy_row(output + 2 + sizeof(_rleMask),
                          reinterpret_cast<const unsigned char *>(_rleData),
                          _rleSize, mode);
 
-            size_t size = 2 + sizeof(rleLE) + _rleSize * 4;
+            size_t size = 2 + sizeof(_rleMask) + _rleSize * 4;
             LOG_TRC("packed row of size " << size << " bytes "
                     << Util::dumpHex(std::string((char *)output, size)));
 
