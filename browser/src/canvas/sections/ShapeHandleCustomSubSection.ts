@@ -20,7 +20,6 @@ class ShapeHandleCustomSubSection extends HTMLObjectSection {
     processingOrder: number = L.CSections.DefaultForDocumentObjects.processingOrder;
 	drawingOrder: number = L.CSections.DefaultForDocumentObjects.drawingOrder + 1; // Handle events before the parent section.
 	zIndex: number = L.CSections.DefaultForDocumentObjects.zIndex;
-    documentObject: boolean = true;
     backgroundColor: string = null;
 
 	constructor (parentHandlerSection: ShapeHandlesSection, sectionName: string, size: number[], documentPosition: cool.SimplePoint, ownInfo: any) {
@@ -29,36 +28,17 @@ class ShapeHandleCustomSubSection extends HTMLObjectSection {
 		this.getHTMLObject().style.opacity = 0.5;
 		this.getHTMLObject().style.backgroundColor = 'yellow';
 		this.getHTMLObject().style.borderRadius = '50%';
-		this.getHTMLObject().remove();
-		document.getElementById('map').appendChild(this.getHTMLObject());
+		app.definitions.shapeHandlesSection.moveHTMLObjectToMapElement(this);
 
-		this.mirrorEventsFromSourceToCanvasSectionContainer(this.getHTMLObject());
+		app.definitions.shapeHandlesSection.mirrorEventsFromSourceToCanvasSectionContainer(this.getHTMLObject());
 
-        this.name = sectionName;
         this.size = size;
-        this.position = [documentPosition.pX, documentPosition.pY];
 
 		this.sectionProperties.parentHandlerSection = parentHandlerSection;
 		this.sectionProperties.ownInfo = ownInfo;
-		this.sectionProperties.mouseIsInside = false;
-		this.sectionProperties.mousePointerType = null;
 		this.sectionProperties.previousCursorStyle = null;
 
 		this.sectionProperties.mousePointerType = 'grab';
-	}
-
-	mirrorEventsFromSourceToCanvasSectionContainer (sourceElement: HTMLElement): void {
-		sourceElement.addEventListener('mousedown', function (e) { app.sectionContainer.onMouseDown(e); e.stopPropagation(); }, true);
-		sourceElement.addEventListener('click', function (e) { app.sectionContainer.onClick(e); e.stopPropagation(); }, true);
-		sourceElement.addEventListener('dblclick', function (e) { app.sectionContainer.onDoubleClick(e); e.stopPropagation(); }, true);
-		sourceElement.addEventListener('contextmenu', function (e) { app.sectionContainer.onContextMenu(e); e.stopPropagation(); }, true);
-		sourceElement.addEventListener('wheel', function (e) { app.sectionContainer.onMouseWheel(e); e.stopPropagation(); }, true);
-		sourceElement.addEventListener('mouseleave', function (e) { app.sectionContainer.onMouseLeave(e); e.stopPropagation(); }, true);
-		sourceElement.addEventListener('mouseenter', function (e) { app.sectionContainer.onMouseEnter(e); e.stopPropagation(); }, true);
-		sourceElement.addEventListener('touchstart', function (e) { app.sectionContainer.onTouchStart(e); e.stopPropagation(); }, true);
-		sourceElement.addEventListener('touchmove', function (e) { app.sectionContainer.onTouchMove(e); e.stopPropagation(); }, true);
-		sourceElement.addEventListener('touchend', function (e) { app.sectionContainer.onTouchEnd(e); e.stopPropagation(); }, true);
-		sourceElement.addEventListener('touchcancel', function (e) { app.sectionContainer.onTouchCancel(e); e.stopPropagation(); }, true);
 	}
 
 	onMouseEnter(point: number[], e: MouseEvent) {
@@ -76,7 +56,6 @@ class ShapeHandleCustomSubSection extends HTMLObjectSection {
 		this.stopPropagating();
 		e.stopPropagation();
 		this.containerObject.requestReDraw();
-
 	}
 
 	onMouseUp(point: number[], e: MouseEvent): void {
