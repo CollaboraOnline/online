@@ -28,18 +28,14 @@ class ShapeHandleScalingSubSection extends HTMLObjectSection {
         super(sectionName, size[0], size[1], documentPosition, null, true);
 
 		this.getHTMLObject().style.opacity = 0.3;
-		this.getHTMLObject().remove();
-		document.getElementById('map').appendChild(this.getHTMLObject());
+		app.definitions.shapeHandlesSection.moveHTMLObjectToMapElement(this);
 
-		this.mirrorEventsFromSourceToCanvasSectionContainer(this.getHTMLObject());
+		app.definitions.shapeHandlesSection.mirrorEventsFromSourceToCanvasSectionContainer(this.getHTMLObject());
 
-        this.name = sectionName;
         this.size = size;
-        this.position = [documentPosition.pX, documentPosition.pY];
 
 		this.sectionProperties.parentHandlerSection = parentHandlerSection;
 		this.sectionProperties.ownInfo = ownInfo;
-		this.sectionProperties.mouseIsInside = false;
 		this.sectionProperties.mousePointerType = null;
 		this.sectionProperties.previousCursorStyle = null;
 
@@ -48,20 +44,6 @@ class ShapeHandleScalingSubSection extends HTMLObjectSection {
 		this.sectionProperties.distanceToCenter = null; // Distance to center.
 
 		this.setMousePointerType();
-	}
-
-	mirrorEventsFromSourceToCanvasSectionContainer (sourceElement: HTMLElement): void {
-		sourceElement.addEventListener('mousedown', function (e) { app.sectionContainer.onMouseDown(e); e.stopPropagation(); }, true);
-		sourceElement.addEventListener('click', function (e) { app.sectionContainer.onClick(e); e.stopPropagation(); }, true);
-		sourceElement.addEventListener('dblclick', function (e) { app.sectionContainer.onDoubleClick(e); e.stopPropagation(); }, true);
-		sourceElement.addEventListener('contextmenu', function (e) { app.sectionContainer.onContextMenu(e); e.stopPropagation(); }, true);
-		sourceElement.addEventListener('wheel', function (e) { app.sectionContainer.onMouseWheel(e); e.stopPropagation(); }, true);
-		sourceElement.addEventListener('mouseleave', function (e) { app.sectionContainer.onMouseLeave(e); e.stopPropagation(); }, true);
-		sourceElement.addEventListener('mouseenter', function (e) { app.sectionContainer.onMouseEnter(e); e.stopPropagation(); }, true);
-		sourceElement.addEventListener('touchstart', function (e) { app.sectionContainer.onTouchStart(e); e.stopPropagation(); }, true);
-		sourceElement.addEventListener('touchmove', function (e) { app.sectionContainer.onTouchMove(e); e.stopPropagation(); }, true);
-		sourceElement.addEventListener('touchend', function (e) { app.sectionContainer.onTouchEnd(e); e.stopPropagation(); }, true);
-		sourceElement.addEventListener('touchcancel', function (e) { app.sectionContainer.onTouchCancel(e); e.stopPropagation(); }, true);
 	}
 
 	setMousePointerType() {
@@ -84,21 +66,20 @@ class ShapeHandleScalingSubSection extends HTMLObjectSection {
 	}
 
 	onMouseEnter(point: number[], e: MouseEvent) {
+		e.stopPropagation();
+		this.stopPropagating();
 		this.backgroundColor = 'grey';
 		this.sectionProperties.previousCursorStyle = this.getHTMLObject().style.cursor;
 		this.getHTMLObject().style.cursor = this.sectionProperties.mousePointerType;
-		this.stopPropagating();
-		e.stopPropagation();
 		this.containerObject.requestReDraw();
 	}
 
 	onMouseLeave(point: number[], e: MouseEvent) {
-		this.getHTMLObject().style.cursor = this.sectionProperties.previousCursorStyle;
-		this.backgroundColor = null;
-		this.stopPropagating();
 		e.stopPropagation();
+		this.stopPropagating();
+		this.backgroundColor = null;
+		this.getHTMLObject().style.cursor = this.sectionProperties.previousCursorStyle;
 		this.containerObject.requestReDraw();
-
 	}
 
 	onMouseUp(point: number[], e: MouseEvent): void {
