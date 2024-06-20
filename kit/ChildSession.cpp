@@ -1845,9 +1845,8 @@ bool ChildSession::keyEvent(const StringVector& tokens,
     if (target == LokEventTargetEnum::Document)
     {
         // Check if override mode is disabled.
-        if ( type == LOK_KEYEVENT_KEYINPUT && charcode == 0 && keycode == KEY_INSERT &&
-            (!config::getBool("overwrite_mode.enable", true) ||
-             config::getBool("experimental_features", false) ))
+        if (type == LOK_KEYEVENT_KEYINPUT && charcode == 0 && keycode == KEY_INSERT &&
+            !config::getBool("overwrite_mode.enable", false))
             return true;
 
         getLOKitDocument()->postKeyEvent(type, charcode, keycode);
