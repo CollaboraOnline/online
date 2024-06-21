@@ -603,7 +603,7 @@ L.Map.Keyboard = L.Handler.extend({
 		}
 
 		// if any key is pressed, we stop the following other users
-		app.setFollowingUser(this._map._docLayer._viewId);
+		this._map.userList.followUser(this._map._docLayer._viewId);
 
 		L.DomEvent.stopPropagation(ev);
 	},

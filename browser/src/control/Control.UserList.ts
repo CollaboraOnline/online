@@ -97,7 +97,14 @@ class UserList extends L.Control {
 
 	getFollowedUser(): undefined | [number, User] {
 		const followedId = app.getFollowedViewId();
-		if (followedId === -1 || !app.isFollowingUser()) {
+		const myViewId =
+			this.map && this.map._docLayer && this.map._docLayer._viewId;
+
+		if (
+			myViewId === followedId ||
+			followedId === -1 ||
+			!app.isFollowingUser()
+		) {
 			return undefined;
 		}
 
