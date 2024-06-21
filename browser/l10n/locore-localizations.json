@@ -129,6 +129,8 @@
     "zh-cn": "%SERVICE_ROOT%/browser/%VERSION%/l10n/locore/zh-CN.json",
     "zh-CN": "%SERVICE_ROOT%/browser/%VERSION%/l10n/locore/zh-CN.json",
     "zh-Hans": "%SERVICE_ROOT%/browser/%VERSION%/l10n/locore/zh-CN.json",
+    "zh-hk": "%SERVICE_ROOT%/browser/%VERSION%/l10n/locore/zh-TW.json",
+    "zh-HK": "%SERVICE_ROOT%/browser/%VERSION%/l10n/locore/zh-TW.json",
     "zh-tw": "%SERVICE_ROOT%/browser/%VERSION%/l10n/locore/zh-TW.json",
     "zh-TW": "%SERVICE_ROOT%/browser/%VERSION%/l10n/locore/zh-TW.json",
     "zh-Hant": "%SERVICE_ROOT%/browser/%VERSION%/l10n/locore/zh-TW.json",
