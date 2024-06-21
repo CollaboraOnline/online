@@ -79,6 +79,8 @@
     "zh-cn": "%SERVICE_ROOT%/browser/%VERSION%/l10n/ui-zh_CN.json",
     "zh-CN": "%SERVICE_ROOT%/browser/%VERSION%/l10n/ui-zh_CN.json",
     "zh-Hans": "%SERVICE_ROOT%/browser/%VERSION%/l10n/ui-zh_CN.json",
+    "zh-hk": "%SERVICE_ROOT%/browser/%VERSION%/l10n/ui-zh_TW.json",
+    "zh-HK": "%SERVICE_ROOT%/browser/%VERSION%/l10n/ui-zh_TW.json",
     "zh-tw": "%SERVICE_ROOT%/browser/%VERSION%/l10n/ui-zh_TW.json",
     "zh-TW": "%SERVICE_ROOT%/browser/%VERSION%/l10n/ui-zh_TW.json",
     "zh-Hant": "%SERVICE_ROOT%/browser/%VERSION%/l10n/ui-zh_TW.json"
