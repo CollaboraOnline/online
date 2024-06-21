@@ -191,31 +191,60 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			});
 		}
 
-		content.push(
-			{
+		if (hasShare && hasRevisionHistory) {
+			content.push(
+				{
+					'type': 'container',
+					'children': [
+						{
+							'id': 'ShareAs',
+							'class': 'unoShareAs',
+							'type': 'customtoolitem',
+							'text': _('Share'),
+							'command': 'shareas',
+							'inlineLabel': true,
+							'accessibility': { focusBack: true, combination: 'SH' }
+						}, {
+							'id': 'Rev-History',
+							'class': 'unoRev-History',
+							'type': 'customtoolitem',
+							'text': _('See history'),
+							'command': 'rev-history',
+							'inlineLabel': true,
+							'accessibility': { focusBack: true, combination: 'RH' }
+						}
+					],
+					'vertical': true
+				});
+		} else if (hasShare) {
+			content.push({
 				'type': 'container',
 				'children': [
-					hasShare ? {
+					{
 						'id': 'ShareAs',
 						'class': 'unoShareAs',
-						'type': 'customtoolitem',
+						'type': 'bigcustomtoolitem',
 						'text': _('Share'),
 						'command': 'shareas',
-						'inlineLabel': true,
-						'accessibility': { focusBack: true,	combination: 'SH' }
-					}: {},
-					hasRevisionHistory ? {
+						'accessibility': { focusBack: true, combination: 'SH' }
+					}
+				]
+			});
+		} else if (hasRevisionHistory) {
+			content.push({
+				'type': 'container',
+				'children': [
+					{
 						'id': 'Rev-History',
 						'class': 'unoRev-History',
-						'type': 'customtoolitem',
+						'type': 'bigcustomtoolitem',
 						'text': _('See history'),
 						'command': 'rev-history',
-						'inlineLabel': true,
-						'accessibility': { focusBack: true,	combination: 'RH' }
-					}: {}
-				],
-				'vertical': true
+						'accessibility': { focusBack: true, combination: 'RH' }
+					}
+				]
 			});
+		}
 
 		if (hasPrint) {
 			content.push(
