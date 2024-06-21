@@ -123,6 +123,8 @@
     "zh-cn": "../l10n/ui-zh_CN.json",
     "zh-CN": "../l10n/ui-zh_CN.json",
     "zh-Hans": "../l10n/ui-zh_CN.json",
+    "zh-hk": "../l10n/ui-zh_TW.json",
+    "zh-HK": "../l10n/ui-zh_TW.json",
     "zh-tw": "../l10n/ui-zh_TW.json",
     "zh-TW": "../l10n/ui-zh_TW.json",
     "zh-Hant": "../l10n/ui-zh_TW.json",
