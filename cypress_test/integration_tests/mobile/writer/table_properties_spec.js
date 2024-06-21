@@ -177,7 +177,6 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change table properties / l
 		before('writer/table_properties.odt');
 		helper.setDummyClipboardForCopy();
 		openTablePanel();
-		cy.wait(500);
 		cy.cGet('#rowheight .spinfield').should('have.value', '0');
 		helper.typeIntoInputField('#rowheight .spinfield', '1.4', true, false);
 		selectFullTable();
@@ -189,7 +188,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change table properties / l
 		before('writer/table_properties.odt');
 		helper.setDummyClipboardForCopy();
 		openTablePanel();
-		cy.wait(500);
+		cy.cGet('#columnwidth .spinfield').should('have.value', '1.42');
 		helper.typeIntoInputField('#columnwidth .spinfield', '1.6', true, false);
 		selectFullTable();
 		// Check column width
