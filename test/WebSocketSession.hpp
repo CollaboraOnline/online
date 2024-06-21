@@ -179,7 +179,7 @@ public:
                            std::chrono::milliseconds timeout,
                            const std::string& context = std::string())
     {
-        LOG_DBG(context << "Polling for " << timeout);
+        LOG_DBG(context << " polling for " << timeout);
 
         // Note: ideally, this lock will be timed, but that
         // might prove expensive and we don't expect draining
