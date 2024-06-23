@@ -23,18 +23,18 @@
  * }
  */
 
-/* global JSDialog $ */
+declare var JSDialog: any;
 
-function _iconViewEntry (parentContainer, parentData, entry, builder) {
-	var disabled = parentData.enabled === 'false' || parentData.enabled === false;
+function _iconViewEntry (parentContainer: Element, parentData: any, entry: any, builder: any) {
+	var disabled = parentData.enabled === false;
 
-	if (entry.separator && (entry.separator === 'true' || entry.separator === true)) {
+	if (entry.separator && entry.separator === true) {
 		L.DomUtil.create('hr', builder.options.cssClass + ' ui-iconview-separator', parentContainer);
 		return;
 	}
 
 	var entryContainer = L.DomUtil.create('div', builder.options.cssClass + ' ui-iconview-entry', parentContainer);
-	if (entry.selected && (entry.selected === 'true' || entry.selected === true))
+	if (entry.selected && entry.selected === true)
 		$(entryContainer).addClass('selected');
 
 	var icon = L.DomUtil.create('div', builder.options.cssClass + ' ui-iconview-icon', entryContainer);
@@ -48,7 +48,7 @@ function _iconViewEntry (parentContainer, parentData, entry, builder) {
 		img.title = entry.text;
 
 	if (!disabled) {
-		var singleClick = parentData.singleclickactivate === 'true' || parentData.singleclickactivate === true;
+		var singleClick = parentData.singleclickactivate === true;
 		$(entryContainer).click(function() {
 			$('#' + parentData.id + ' .ui-treeview-entry').removeClass('selected');
 			builder.callback('iconview', 'select', parentData, entry.row, builder);
@@ -66,11 +66,11 @@ function _iconViewEntry (parentContainer, parentData, entry, builder) {
 	}
 }
 
-JSDialog.iconView = function (parentContainer, data, builder) {
+JSDialog.iconView = function (parentContainer: Element, data: any, builder: any) {
 	var container = L.DomUtil.create('div', builder.options.cssClass + ' ui-iconview', parentContainer);
 	container.id = data.id;
 
-	var disabled = data.enabled === 'false' || data.enabled === false;
+	var disabled = data.enabled === false;
 	if (disabled)
 		L.DomUtil.addClass(container, 'disabled');
 
@@ -83,7 +83,7 @@ JSDialog.iconView = function (parentContainer, data, builder) {
 	if (firstSelected)
 		firstSelected.scrollIntoView({behavior: 'smooth', block: blockOption, inline: 'nearest'});
 
-	container.onSelect = function (position) {
+	container.onSelect = (position: number) => {
 		$(container).children('.selected').removeClass('selected');
 
 		var entry = container.children.length > position ? container.children[position] : null;
