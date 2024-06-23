@@ -58,38 +58,8 @@ JSDialog.comboboxEntry = function (parentContainer, data, builder) {
 	else if (data.checked !== undefined)
 		L.DomUtil.addClass(entry, 'notchecked');
 
-	if (data.customRenderer) {
-		var cachedComboboxEntries = builder.rendersCache[data.comboboxId];
-		var requestRender = true;
-
-		if (cachedComboboxEntries && cachedComboboxEntries.images[data.pos]) {
-			L.DomUtil.remove(content);
-			content = L.DomUtil.create('img', '', entry);
-			content.src = cachedComboboxEntries.images[data.pos];
-			content.alt = data.text;
-			requestRender = !cachedComboboxEntries.persistent;
-		}
-
-		if (requestRender) {
-			// render on demand
-			var onIntersection = function (entries) {
-				entries.forEach(function (entry) {
-					if (entry.isIntersecting) {
-						builder.callback('combobox', 'render_entry', {id: data.comboboxId},
-							data.pos + ';' + Math.floor(100 * window.devicePixelRatio) + ';' + Math.floor(100 * window.devicePixelRatio),
-							builder);
-					}
-				});
-			};
-
-			var observer = new IntersectionObserver(onIntersection, {
-				root: null,
-				threshold: 0.5 // percentage of visible area
-			});
-
-			observer.observe(content);
-		}
-	}
+	if (data.customRenderer)
+		JSDialog.OnDemandRenderer(builder, data.comboboxId, 'combobox', data.pos, content, entry, data.text);
 
 	var entryData = data.pos + ';' + data.text;
 
