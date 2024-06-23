@@ -1738,31 +1738,24 @@ void DocumentBroker::handleSaveResponse(const std::shared_ptr<ClientSession>& se
     // because we don't know if the last upload worked or not.
     // DocBroker will have to decide to upload or skip.
     const std::string oldName = _storage->getRootFilePathToUpload();
-    const std::string newName = _storage->getRootFilePathUploading();
-
-    if (_quarantine && FileUtil::Stat(oldName).exists())
+    if (FileUtil::Stat(oldName).exists())
     {
-        // Quarantine the file before renaming, if it exists.
-        _quarantine->quarantineFile(oldName);
-    }
+        if (_quarantine)
+        {
+            // Quarantine the file before renaming, if it exists.
+            _quarantine->quarantineFile(oldName);
+        }
 
-    // Rename even if no new save, in case we have an older version.
-    if (rename(oldName.c_str(), newName.c_str()) < 0)
-    {
-        // It's not an error if there was no file to rename, when the document isn't modified.
-        const auto onrre = errno;
-        if (success || onrre != ENOENT)
-            LOG_ERR("Failed to rename [" << oldName << "] to [" << newName << "] ("
-                                         << Util::symbolicErrno(onrre) << ": "
-                                         << std::strerror(onrre) << ')');
+        // Rename even if no new save, in case we have an older version.
+        const std::string newName = _storage->getRootFilePathUploading();
+        if (::rename(oldName.c_str(), newName.c_str()) < 0)
+        {
+            LOG_SYS("Failed to rename [" << oldName << "] to [" << newName << ']');
+        }
         else
-            LOG_DBG("Failed to rename [" << oldName << "] to [" << newName << "] ("
-                                         << Util::symbolicErrno(onrre) << ": "
-                                         << std::strerror(onrre) << ')');
-    }
-    else
-    {
-        LOG_TRC("Renamed [" << oldName << "] to [" << newName << ']');
+        {
+            LOG_TRC("Renamed [" << oldName << "] to [" << newName << ']');
+        }
     }
 #endif //!MOBILEAPP
 
@@ -1930,7 +1923,7 @@ void DocumentBroker::uploadAfterLoadingTemplate(const std::shared_ptr<ClientSess
     // (save is done in Kit right after loading a template).
     const std::string oldName = _storage->getRootFilePathToUpload();
     const std::string newName = _storage->getRootFilePathUploading();
-    if (rename(oldName.c_str(), newName.c_str()) < 0)
+    if (::rename(oldName.c_str(), newName.c_str()) < 0)
     {
         // It's not an error if there was no file to rename, when the document isn't modified.
         LOG_SYS("Expected to renamed the document [" << oldName << "] after template-loading to ["
