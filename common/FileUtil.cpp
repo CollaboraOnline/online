@@ -248,6 +248,25 @@ namespace FileUtil
 #endif
     }
 
+    /// Remove directories only, which must be empty for this to work.
+    static int nftw_rmdir_cb(const char* fpath, const struct stat*, int type, struct FTW*)
+    {
+        if (type == FTW_DP)
+        {
+            rmdir(fpath);
+        }
+
+        // Always continue even when things go wrong.
+        return 0;
+    }
+
+    void removeEmptyDirTree(const std::string& path)
+    {
+        LOG_DBG("Removing empty directories at [" << path << "] recursively");
+
+        nftw(path.c_str(), nftw_rmdir_cb, 128, FTW_DEPTH | FTW_PHYS);
+    }
+
     std::string realpath(const char* path)
     {
         char* resolved = ::realpath(path, nullptr);

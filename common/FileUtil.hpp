@@ -65,6 +65,10 @@ namespace FileUtil
         removeFile(path.toString(), recursive);
     }
 
+    /// Remove empty directories recursively.
+    /// We seem to leave behind empty directories in jails and that causes a lot of noise.
+    void removeEmptyDirTree(const std::string& path);
+
     /// Returns true iff the directory is empty (or doesn't exist).
     bool isEmptyDirectory(const char* path);
     inline bool isEmptyDirectory(const std::string& path) { return isEmptyDirectory(path.c_str()); }

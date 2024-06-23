@@ -152,9 +152,16 @@ static bool safeRemoveDir(const std::string& path)
     }
 
     // Recursively remove if link/copied.
-    const bool recursive = copied;
-    //FIXME: do not delete the 'copied' marker until the very end.
-    FileUtil::removeFile(path, recursive);
+    if (copied)
+    {
+        //FIXME: do not delete the 'copied' marker until the very end.
+        FileUtil::removeFile(path, /*recursive=*/true);
+    }
+    else
+    {
+        FileUtil::removeEmptyDirTree(path);
+    }
+
     return true;
 }
 
