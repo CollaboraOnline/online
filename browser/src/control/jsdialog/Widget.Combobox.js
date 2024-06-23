@@ -287,8 +287,10 @@ JSDialog.combobox = function (parentContainer, data, builder) {
 
 	container.onSelect = function (pos) {
 		resetSelection();
-		if (pos >= 0)
+		if (pos >= 0 && entries[pos])
 			entries[pos].selected = true;
+		else if (!entries[pos])
+			console.warn('Cannot find entry with pos: "' + pos + '" in "' + data.id + '"');
 	};
 
 	container.onSetText = function (text) {
