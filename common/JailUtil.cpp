@@ -101,7 +101,7 @@ static bool unmount(const std::string& target, bool silent = false)
         // which may be left-over and now the config has changed.
         // This happens more often in dev labs than in prod.
         if (JailUtil::isBindMountingEnabled() && !silent)
-            LOG_ERR("Failed to unmount [" << target << ']');
+            LOG_WRN("Failed to unmount [" << target << ']');
         else
             LOG_DBG("Failed to unmount [" << target << ']');
     }
