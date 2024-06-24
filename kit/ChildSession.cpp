@@ -329,6 +329,69 @@ bool ChildSession::_handleInput(const char *buffer, int length)
 
         return success;
     }
+    else if (tokens.equals(0, "extractdocumentstructure"))
+    {
+        if (tokens.size() < 2)
+        {
+            sendTextFrameAndLogError("error: cmd=extractdocumentstructure kind=syntax");
+            return false;
+        }
+
+        if (!_isDocLoaded)
+        {
+            sendTextFrameAndLogError("error: cmd=extractdocumentstructure kind=docnotloaded");
+            return false;
+        }
+
+        assert(!getDocURL().empty());
+        assert(!getJailedFilePath().empty());
+
+        char* data = _docManager->getLOKit()->extractDocumentStructureRequest(getJailedFilePath().c_str());
+        if (!data)
+        {
+            LOG_TRC("extractDocumentStructureRequest returned no data.");
+            sendTextFrame("extracteddocumentstructure: { }");
+            return false;
+        }
+
+        LOG_TRC("Extracted document structure: " << data);
+        bool success = sendTextFrame("extracteddocumentstructure: " + std::string(data));
+        free(data);
+
+        return success;
+    }
+    else if (tokens.equals(0, "transformdocumentstructure"))
+    {
+        if (tokens.size() < 3)
+        {
+            sendTextFrameAndLogError("error: cmd=transformdocumentstructure kind=syntax");
+            return false;
+        }
+
+        if (!_isDocLoaded)
+        {
+            sendTextFrameAndLogError("error: cmd=transformdocumentstructure kind=docnotloaded");
+            return false;
+        }
+
+        assert(!getDocURL().empty());
+        assert(!getJailedFilePath().empty());
+
+        const std::string command = ".uno:transformdocumentstructure";
+        std::string transforms;
+        getTokenString(tokens[2], "transforms", transforms);
+
+        //send uno command
+        getLOKitDocument()->setView(_viewId);
+        getLOKitDocument()->postUnoCommand(command.c_str(), transforms.c_str(), false);
+
+        //char* data = _docManager->getLOKit()->transformDocumentStructureRequest(getJailedFilePath().c_str());
+        //LOG_TRC("transformed document structure: " << data);
+        bool success =true; // = sendTextFrame("transformeddocumentstructure: " + std::string(data));
+        //free(data);
+
+        return success;
+    }
     else if (tokens.equals(0, "getthumbnail"))
     {
         if (tokens.size() < 3)
