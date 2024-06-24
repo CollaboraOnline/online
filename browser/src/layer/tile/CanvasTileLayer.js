@@ -1498,8 +1498,14 @@ L.CanvasTileLayer = L.Layer.extend({
 			message = message.split(' ');
 			if (message.length > 1) {
 				var old = this._map.context || {};
-				this._map.context = {appId: message[0], context: message[1]};
-				this._map.fire('contextchange', {appId: message[0], context: message[1], oldAppId: old.appId, oldContext: old.context});
+				var newContext = {appId: message[0], context: message[1]};
+				if (old.appId !== newContext.appId || old.context !== newContext.context) {
+					this._map.context = newContext;
+					this._map.fire('contextchange', {
+						appId: newContext.appId, context: newContext.context,
+						oldAppId: old.appId, oldContext: old.context
+					});
+				}
 			}
 		}
 		else if (textMsg.startsWith('formfieldbutton:')) {
