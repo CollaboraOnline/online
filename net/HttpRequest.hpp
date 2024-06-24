@@ -1282,6 +1282,8 @@ public:
         std::shared_ptr<StreamSocket> socket = _socket.lock();
         if (socket)
             return socket->getSslCert(subjectHash);
+#else
+        (void) subjectHash;
 #endif
         return std::string();
     }
