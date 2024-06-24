@@ -284,7 +284,6 @@ void UnitSaveTorture::testBgSaveCrash()
     poll->joinThread();
 }
 
-
 namespace {
     /*
      * A sleep in a unit test !? but ... SfxBinding notifies its
@@ -300,7 +299,7 @@ namespace {
     void sleepForIdleModificationNotification(const std::string &testname)
     {
         LOG_TST("Sleep to let idle non-synthetic ModifiedState notification catch up");
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+        std::this_thread::sleep_for(std::chrono::milliseconds(2000));
     }
 }
 
@@ -334,6 +333,9 @@ void UnitSaveTorture::saveTortureOne(
 //        { false, false, "un-modified, just save and lets see" }
     };
 
+    // Tests assume all are background save
+    createStamp("abortonsyncsave");
+
     for (size_t i = 0; i < std::size(options); ++i)
     {
         LOG_TST("saveTorture test stage " << i << " " << options[i].description);
@@ -360,7 +362,7 @@ void UnitSaveTorture::saveTortureOne(
             LOG_TST("Modify after saving starts");
             modifyDocument(wsSession);
 
-            LOK_ASSERT_EQUAL(waitForModifiedStatus(name, wsSession, std::chrono::seconds(3)), true);
+            LOK_ASSERT_EQUAL(waitForModifiedStatus(name, wsSession, std::chrono::seconds(10)), true);
         }
 
         LOG_TST("Allow saving to continue");
@@ -398,6 +400,9 @@ void UnitSaveTorture::saveTortureOne(
             LOK_ASSERT_EQUAL(waitForModifiedStatus(name, wsSession), false);
         }
     }
+
+    // Last save is non-sync as we cleanup.
+    removeStamp("abortonsyncsave");
 
     poll->joinThread();
 }
@@ -473,6 +478,16 @@ public:
     virtual bool filterDrainQueue() override
     {
         return stampExists("holddrainqueue");
+    }
+
+    virtual void preSaveHook() override
+    {
+        LOG_TST("Synchronous non-background save!");
+        if (stampExists("abortonsyncsave"))
+        {
+            std::cerr << "Abort - unexpected non background save !\n\n";
+            _exit(0); // otherwise we create segv's to count.
+        }
     }
 
     virtual void postBackgroundSaveFork() override

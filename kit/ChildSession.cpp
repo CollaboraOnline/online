@@ -599,10 +599,14 @@ bool ChildSession::_handleInput(const char *buffer, int length)
 
             if (!saving)
             { // fallback to foreground save
+
+                UnitKit::get().preSaveHook();
+
                 // Disable processing of other messages while saving document
                 InputProcessingManager processInput(getProtocol(), false);
                 // disable watchdog while saving
                 WatchdogGuard watchdogGuard;
+
                 return unoCommand(unoSave);
             }
             else
@@ -894,6 +898,8 @@ bool ChildSession::saveDocumentBackground(const StringVector &tokens)
 
     // Keep the session alive over the lifetime of an async save
     if (!_docManager->forkToSave([this, tokens]{
+
+        // Called back in the bgsave process: so do the save !
 
         // FIXME: re-directing our sockets perhaps over
         // a pipe to our parent process ?
