@@ -127,12 +127,14 @@ void RequestVettingStation::sendUnauthorizedErrorAndShutdown()
 {
     std::string error = "error: cmd=internal kind=unauthorized";
 
+#if !MOBILEAPP
     if (_checkFileInfo)
     {
         std::string sslVerifyResult = _checkFileInfo->getSslVerifyMessage();
         if (!sslVerifyResult.empty())
             error += " code=" + base64Encode(sslVerifyResult);
     }
+#endif
     sendErrorAndShutdown(_ws, error,
                          WebSocketHandler::StatusCodes::POLICY_VIOLATION);
 }
