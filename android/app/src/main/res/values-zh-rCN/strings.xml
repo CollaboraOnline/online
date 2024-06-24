@@ -66,7 +66,7 @@
     <string name="sort_largest">从大到小</string>
     <string name="sort_smallest">从小到大</string>
     <string name="sort">排序方式</string>
-    <string name="filter">筛选依据</string>
+    <string name="filter">筛选…</string>
     <string name="default_document_name">未命名</string>
     <string name="new_spreadsheet">新建电子表格</string>
     <string name="new_presentation">新建演示文稿</string>
