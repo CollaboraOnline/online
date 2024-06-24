@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-06-12 12:42+0200\n"
-"PO-Revision-Date: 2024-06-16 19:57+0000\n"
+"PO-Revision-Date: 2024-06-20 08:02+0000\n"
 "Last-Translator: TUCAOEVER5023416dba724da7 <814697582@qq.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
 "collabora-online/ui/zh_Hans/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.6-dev\n"
+"X-Generator: Weblate 5.6-rc\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -890,7 +890,7 @@ msgstr "深色模式"
 #: src/control/Control.NotebookbarImpress.js:459
 #: src/control/Control.NotebookbarWriter.js:1477
 msgid "Invert Background"
-msgstr "插入背景"
+msgstr "反转背景"
 
 #: src/control/Control.Menubar.js:154 src/control/Control.Menubar.js:458
 #: src/control/Control.Menubar.js:602 src/control/Control.Menubar.js:747
