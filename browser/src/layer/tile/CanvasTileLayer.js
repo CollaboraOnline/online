@@ -4356,25 +4356,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		return new L.Point(0, 0);
 	},
 
-	getPaneLatLngRectangles: function () {
-		var map = this._map;
-
-		if (!this._splitPanesContext) {
-			return [ map.getBounds() ];
-		}
-
-		// These paneRects are in core pixels.
-		var paneRects = this._splitPanesContext.getPxBoundList();
-		window.app.console.assert(paneRects.length, 'number of panes cannot be zero!');
-
-		return paneRects.map(function (pxBound) {
-			return new L.LatLngBounds(
-				map.unproject(pxBound.getTopLeft().divideBy(app.dpiScale)),
-				map.unproject(pxBound.getBottomRight().divideBy(app.dpiScale))
-			);
-		});
-	},
-
 	/// onlyThread - takes annotation indicating which thread will be generated
 	getCommentWizardStructure: function(menuStructure, onlyThread) {
 		var customTitleBar = L.DomUtil.create('div');
