@@ -2286,14 +2286,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._onUpdateCellCursor(scrollToCursor, notJump);
 
 		// Remove input help if there is any:
-		this._removeInputHelpMarker();
-	},
-
-	_removeInputHelpMarker: function() {
-		if (this._inputHelpPopUp) {
-			this._map.removeLayer(this._inputHelpPopUp);
-			this._inputHelpPopUp = null;
-		}
+		app.definitions.validityInputHelpSection.removeValidityInputHelp();
 	},
 
 	_onDocumentRepair: function (textMsg) {
@@ -3964,22 +3957,8 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_onValidityInputHelpMsg: function(textMsg) {
-		var message = textMsg.replace('validityinputhelp: ', '');
-		message = JSON.parse(message);
-
-		var icon = L.divIcon({
-			html: '<div class="input-help"><h4 id="input-help-title"></h4><p id="input-help-content"></p></div>',
-			iconSize: [0, 0],
-			iconAnchor: [0, 0]
-		});
-
-		this._removeInputHelpMarker();
-		var pos = this._twipsToLatLng({ x: app.calc.cellCursorRectangle.x2, y: app.calc.cellCursorRectangle.y1 });
-		var inputHelpMarker = L.marker(pos, { icon: icon });
-		inputHelpMarker.addTo(this._map);
-		document.getElementById('input-help-title').innerText = message.title;
-		document.getElementById('input-help-content').innerText = message.content;
-		this._inputHelpPopUp = inputHelpMarker;
+		app.definitions.validityInputHelpSection.removeValidityInputHelp();
+		app.definitions.validityInputHelpSection.showValidityInputHelp(textMsg, new app.definitions.simplePoint(app.calc.cellCursorRectangle.x2, app.calc.cellCursorRectangle.y1));
 	},
 
 	_addCellDropDownArrow: function () {

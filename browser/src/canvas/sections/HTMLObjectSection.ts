@@ -26,8 +26,12 @@ class HTMLObjectSection extends CanvasSectionObject {
 		this.sectionProperties.objectHeight = objectHeight;
 		this.sectionProperties.objectDiv = document.createElement('div');
 		this.sectionProperties.objectDiv.className = 'html-object-section';
-		this.sectionProperties.objectDiv.style.width = objectWidth + 'px';
-		this.sectionProperties.objectDiv.style.height = objectHeight + 'px';
+
+		if (objectWidth === null) this.sectionProperties.objectDiv.style.width = 'auto';
+		else this.sectionProperties.objectDiv.style.width = objectWidth + 'px';
+
+		if (objectHeight === null) this.sectionProperties.objectDiv.style.height = 'auto';
+		else this.sectionProperties.objectDiv.style.height = objectHeight + 'px';
 
 		if (extraClass)
 			this.sectionProperties.objectDiv.classList.add(extraClass);

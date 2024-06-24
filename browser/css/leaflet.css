@@ -1090,8 +1090,6 @@ path.leaflet-pane-splitter:hover {
 */
 
 .input-help {
-	border-radius: 15px;
-	padding: 5px;
 	box-sizing: content-box;
 	border: 1px solid var(--color-border-dark);
 	color: var(--color-text-dark);
