@@ -1752,6 +1752,43 @@ private:
                           const std::string& encodedFrom) override;
 };
 
+class ExtractDocumentStructureBroker final : public ConvertToBroker
+{
+public:
+    /// Construct DocumentBroker with URI and docKey
+    ExtractDocumentStructureBroker(const std::string& uri,
+                    const Poco::URI& uriPublic,
+                    const std::string& docKey,
+                    const std::string& lang)
+                    : ConvertToBroker(uri, uriPublic, docKey, Poco::Path(uri).getExtension(), "",
+                                      lang)
+                    {}
+
+private:
+    void sendStartMessage(const std::shared_ptr<ClientSession>& clientSession,
+                          const std::string& encodedFrom) override;
+};
+
+class TransformDocumentStructureBroker final : public ConvertToBroker
+{
+public:
+    const std::string _transformJSON;
+    /// Construct DocumentBroker with URI and docKey
+    TransformDocumentStructureBroker(const std::string& uri,
+                    const Poco::URI& uriPublic,
+                    const std::string& docKey,
+                    const std::string& lang,
+                    const std::string& transformJSON)
+                    : ConvertToBroker(uri, uriPublic, docKey, Poco::Path(uri).getExtension(), "",
+                                      lang)
+                    , _transformJSON(transformJSON)
+                    {}
+
+private:
+    void sendStartMessage(const std::shared_ptr<ClientSession>& clientSession,
+                          const std::string& encodedFrom) override;
+};
+
 class GetThumbnailBroker final : public ConvertToBroker
 {
     std::string _target;

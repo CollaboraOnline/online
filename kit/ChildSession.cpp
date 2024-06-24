@@ -20,6 +20,7 @@
 #include <fstream>
 #include <memory>
 #include <sstream>
+#include <regex>
 
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKitEnums.h>
@@ -328,6 +329,83 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         free(data);
 
         return success;
+    }
+    else if (tokens.equals(0, "extractdocumentstructure"))
+    {
+        if (tokens.size() < 2)
+        {
+            sendTextFrameAndLogError("error: cmd=extractdocumentstructure kind=syntax");
+            return false;
+        }
+
+        if (!_isDocLoaded)
+        {
+            sendTextFrameAndLogError("error: cmd=extractdocumentstructure kind=docnotloaded");
+            return false;
+        }
+
+        assert(!getDocURL().empty());
+        assert(!getJailedFilePath().empty());
+
+        char* data = _docManager->getLOKit()->extractDocumentStructureRequest(getJailedFilePath().c_str());
+        if (!data)
+        {
+            LOG_TRC("extractDocumentStructureRequest returned no data.");
+            sendTextFrame("extracteddocumentstructure: { }");
+            return false;
+        }
+
+        LOG_TRC("Extracted document structure: " << data);
+        bool success = sendTextFrame("extracteddocumentstructure: " + std::string(data));
+        free(data);
+
+        return success;
+    }
+    else if (tokens.equals(0, "transformdocumentstructure"))
+    {
+        if (tokens.size() < 3)
+        {
+            sendTextFrameAndLogError("error: cmd=transformdocumentstructure kind=syntax");
+            return false;
+        }
+
+        if (!_isDocLoaded)
+        {
+            sendTextFrameAndLogError("error: cmd=transformdocumentstructure kind=docnotloaded");
+            return false;
+        }
+
+        assert(!getDocURL().empty());
+        assert(!getJailedFilePath().empty());
+
+        const std::string command = ".uno:TransformDocumentStructure";
+
+        std::string encodedTransformQueryJSON;
+        getTokenString(tokens[2], "transform", encodedTransformQueryJSON);
+
+        if (encodedTransformQueryJSON.empty())
+        {
+            LOG_TRC("Transformation JSON was not provided.");
+            return false;
+        }
+
+        std::string transformQueryJSON;
+        Poco::URI::decode(encodedTransformQueryJSON, transformQueryJSON);
+
+        // we put JSON inside JSON - avoid plain quote characters
+        std::string encodedJSON = regex_replace(transformQueryJSON, std::regex("\""), "\\\"");
+
+        const std::string arguments = "{"
+            "\"DataJson\":{"
+                "\"type\":\"string\","
+                "\"value\":\"" + encodedJSON + "\""
+            "}}";
+
+        getLOKitDocument()->postUnoCommand(command.c_str(), arguments.c_str(), false);
+
+        LOG_TRC("Transformation JSON application was requested.");
+
+        return true;
     }
     else if (tokens.equals(0, "getthumbnail"))
     {
