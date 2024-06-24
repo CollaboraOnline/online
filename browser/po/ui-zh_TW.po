@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-03-08 16:42+0100\n"
-"PO-Revision-Date: 2022-04-12 07:41+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"PO-Revision-Date: 2024-06-23 15:09+0000\n"
+"Last-Translator: TY Wong <wongty@peoplewarehk.com>\n"
 "Language-Team: Chinese (Traditional) <https://hosted.weblate.org/projects/"
 "collabora-online/ui/zh_Hant/>\n"
-"Language: \n"
+"Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.12-dev\n"
+"X-Generator: Weblate 5.6-rc\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -60,20 +60,17 @@ msgid "User Name"
 msgstr "使用者名稱"
 
 #: admin/admin.strings.js:25
-#, fuzzy
 msgid "Documents open"
-msgstr "開啟的文件"
+msgstr "已開啟的文件"
 
 #: admin/admin.strings.js:26 admin/src/AdminSocketOverview.js:82
 #: admin/src/AdminSocketOverview.js:131 admin/src/AdminSocketOverview.js:358
-#, fuzzy
 msgid " user(s)."
-msgstr "0 位使用者"
+msgstr " . 位使用者"
 
 #: admin/admin.strings.js:27 admin/src/AdminSocketOverview.js:214
-#, fuzzy
 msgid " document(s) open."
-msgstr "開啟的文件"
+msgstr " 開啟的文件"
 
 #: admin/admin.strings.js:28
 msgid "Number of Documents"
@@ -101,7 +98,7 @@ msgstr "文件"
 
 #: admin/admin.strings.js:34
 msgid "Views"
-msgstr ""
+msgstr "查閱"
 
 #: admin/admin.strings.js:35
 msgid "Elapsed time"
@@ -117,11 +114,11 @@ msgstr "最後修改"
 
 #: admin/admin.strings.js:38
 msgid "Uploaded"
-msgstr ""
+msgstr "已上載"
 
 #: admin/admin.strings.js:39
 msgid "WOPI host"
-msgstr ""
+msgstr "WOPI 主機"
 
 #: admin/admin.strings.js:40
 msgid "Kill"
@@ -173,7 +170,7 @@ msgstr "CPU 統計資料的時間間隔（單位毫秒）"
 
 #: admin/admin.strings.js:50 admin/src/AdminSocketOverview.js:100
 msgid "Kill session."
-msgstr ""
+msgstr "關掉."
 
 #: admin/admin.strings.js:51
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
@@ -214,7 +211,7 @@ msgstr "重新整理紀錄"
 
 #: admin/admin.strings.js:60
 msgid "Channel Filter:"
-msgstr ""
+msgstr "頻道篩選:"
 
 #: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:577
 #: src/control/Control.StatusBar.js:345
@@ -230,9 +227,9 @@ msgid "Log Levels"
 msgstr "紀錄層級"
 
 #: admin/admin.strings.js:64 src/control/Control.AlertDialog.js:30
-#: src/control/Control.AlertDialog.js:36
-#: src/control/Control.AlertDialog.js:103 src/control/Control.Zotero.js:192
-#: src/control/Parts.js:467 src/core/Socket.js:1066 src/core/Socket.js:1071
+#: src/control/Control.AlertDialog.js:36 src/control/Control.AlertDialog.js:103
+#: src/control/Control.Zotero.js:192 src/control/Parts.js:467
+#: src/core/Socket.js:1066 src/core/Socket.js:1071
 #: src/layer/tile/CommentListSection.ts:141
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.div:51-7
 msgid "Close"
@@ -244,11 +241,11 @@ msgstr "更新紀錄層級"
 
 #: admin/admin.strings.js:66
 msgid "Version Information"
-msgstr ""
+msgstr "版本資訊"
 
 #: admin/admin.strings.js:67
 msgid "License"
-msgstr ""
+msgstr "版權"
 
 #: admin/admin.strings.js:68 src/control/Control.Menubar.js:377
 #: src/control/Control.Menubar.js:531 src/control/Control.Menubar.js:658
@@ -269,7 +266,7 @@ msgstr "已送出"
 
 #: admin/src/AdminSocketBase.js:62
 msgid "Server has been shut down; please reload the page."
-msgstr ""
+msgstr "伺服器已關閉; 請重新載入頁面."
 
 #: admin/src/AdminSocketBase.js:63 admin/src/AdminSocketBase.js:74
 #: admin/src/AdminSocketOverview.js:108 admin/src/AdminSocketOverview.js:431
@@ -303,15 +300,14 @@ msgid "Are you sure you want to terminate this session?"
 msgstr "您確定要終止本次的作業階段？"
 
 #: admin/src/AdminSocketOverview.js:109 admin/src/AdminSocketOverview.js:432
-#: admin/src/AdminSocketSettings.js:48
-#: src/control/Control.DocumentRepair.js:71
+#: admin/src/AdminSocketSettings.js:48 src/control/Control.DocumentRepair.js:71
 #: src/control/Control.DownloadProgress.js:90
 #: src/control/Control.LanguageDialog.js:113
-#: src/control/Control.MobileTopBar.js:52
-#: src/control/Control.UIManager.js:1287 src/control/Control.UIManager.js:1354
-#: src/control/Control.UIManager.js:1489 src/control/Control.UIManager.js:1631
-#: src/control/Control.Zotero.js:333 src/control/Toolbar.js:933
-#: src/core/Socket.js:1281 src/layer/tile/CommentListSection.ts:425
+#: src/control/Control.MobileTopBar.js:52 src/control/Control.UIManager.js:1287
+#: src/control/Control.UIManager.js:1354 src/control/Control.UIManager.js:1489
+#: src/control/Control.UIManager.js:1631 src/control/Control.Zotero.js:333
+#: src/control/Toolbar.js:933 src/core/Socket.js:1281
+#: src/layer/tile/CommentListSection.ts:425
 #: src/layer/tile/CommentSection.ts:157 src/layer/tile/CommentSection.ts:160
 #: src/map/Clipboard.js:1047
 msgid "Cancel"
@@ -327,7 +323,7 @@ msgstr "無法透過 %0 協定進行此作業階段的身分核對"
 
 #: admin/src/AdminSocketOverview.js:429
 msgid "Warning"
-msgstr ""
+msgstr "警告"
 
 #: admin/src/AdminSocketSettings.js:46
 msgid "Are you sure you want to shut down the server?"
@@ -383,11 +379,11 @@ msgstr " 秒"
 
 #: js/global.js:913
 msgid "Cluster is scaling, retrying..."
-msgstr ""
+msgstr "叢集擴大, 正在重試..."
 
 #: js/global.js:915
 msgid "Document is migrating to new server, retrying..."
-msgstr ""
+msgstr "文件正在遷移到新伺服器,重試中..."
 
 #: js/global.js:917
 msgid "Failed to get RouteToken from controller"
@@ -415,7 +411,7 @@ msgstr "自動色彩"
 
 #: src/control/Control.AlertDialog.js:51
 msgid "External link"
-msgstr ""
+msgstr "外部連結"
 
 #: src/control/Control.AlertDialog.js:52
 msgid "Open link"
@@ -426,8 +422,9 @@ msgid "Copied external sources are not allowed"
 msgstr ""
 
 #: src/control/Control.AlertDialog.js:65
+#, fuzzy
 msgid "It seems you have copied a selection that includes external images."
-msgstr ""
+msgstr "您似乎複製了包含外部圖像的選擇。"
 
 #: src/control/Control.AlertDialog.js:66
 msgid ""
@@ -438,7 +435,7 @@ msgstr ""
 
 #: src/control/Control.AlertDialog.js:70
 msgid "External data source not allowed"
-msgstr ""
+msgstr "不允許外部資料來源"
 
 #: src/control/Control.AlertDialog.js:71
 msgid "It seems you have tried to insert external data."
@@ -452,7 +449,7 @@ msgstr ""
 
 #: src/control/Control.AlertDialog.js:84
 msgid "Don't show this again"
-msgstr ""
+msgstr "不再顯示"
 
 #: src/control/Control.AlertDialog.js:100
 msgid "The server encountered a %0 error while parsing the %1 command."
@@ -460,7 +457,7 @@ msgstr "伺服器在解析 %1 指令時遭遇 %0 錯誤。"
 
 #: src/control/Control.Command.js:89
 msgid "Unlock"
-msgstr ""
+msgstr "解鎖"
 
 #: src/control/Control.ContextMenu.js:196 src/control/Toolbar.js:1228
 msgid "Delete"
@@ -514,7 +511,7 @@ msgstr "取消動作"
 
 #: src/control/Control.DownloadProgress.js:52
 msgid "Download Selection"
-msgstr ""
+msgstr "下載精選"
 
 #: src/control/Control.DownloadProgress.js:57
 msgid ""
@@ -531,17 +528,17 @@ msgstr ""
 
 #: src/control/Control.DownloadProgress.js:89
 msgid "Downloading clipboard content"
-msgstr ""
+msgstr "下載剪貼簿內容"
 
 #: src/control/Control.DownloadProgress.js:96
 #: src/control/Control.DownloadProgress.js:121
 #: src/control/Control.PartsPreview.js:280
 msgid "Copy"
-msgstr ""
+msgstr "複製"
 
 #: src/control/Control.DownloadProgress.js:119
 msgid "Download completed and ready to be copied to clipboard."
-msgstr ""
+msgstr "下載已完成並可複製到剪貼簿."
 
 #: src/control/Control.DownloadProgress.js:120
 msgid ""
@@ -550,11 +547,11 @@ msgstr ""
 
 #: src/control/Control.DownloadProgress.js:273
 msgid "Content copied to clipboard"
-msgstr ""
+msgstr "內容已複製到剪貼簿"
 
 #: src/control/Control.DownloadProgress.js:317
 msgid "Download failed"
-msgstr ""
+msgstr "下載失敗"
 
 #: src/control/Control.FormulaBar.js:54
 msgid "cell address"
@@ -696,7 +693,7 @@ msgstr "評註"
 
 #: src/control/Control.JSDialogBuilder.js:2139
 msgid "Insert Comment"
-msgstr ""
+msgstr "插入評論"
 
 #: src/control/Control.JSDialogBuilder.js:3031
 #: src/control/Control.Menubar.js:829
@@ -722,11 +719,11 @@ msgstr "無 (不檢查拼字)"
 
 #: src/control/Control.LanguageDialog.js:82
 msgid "Select language"
-msgstr ""
+msgstr "選擇語言"
 
 #: src/control/Control.LanguageDialog.js:103
 msgid "Language"
-msgstr ""
+msgstr "語言"
 
 #: src/control/Control.Menubar.js:76 src/control/Control.Menubar.js:91
 #: src/control/Control.Menubar.js:944
@@ -832,9 +829,8 @@ msgstr "下載為"
 #: src/control/Control.NotebookbarBuilder.js:557
 #: src/control/Control.NotebookbarBuilder.js:587
 #: src/control/Control.NotebookbarBuilder.js:617
-#, fuzzy
 msgid "PDF Document (.pdf) as..."
-msgstr "PDF 文件 (.pdf)"
+msgstr "PDF 文件 (.pdf) 已..."
 
 #: src/control/Control.Menubar.js:99 src/control/Control.Menubar.js:406
 #: src/control/Control.Menubar.js:554 src/control/Control.Menubar.js:689
@@ -1091,9 +1087,8 @@ msgid "PowerPoint Presentation (.pptx)"
 msgstr "PowerPoint 簡報 (.pptx)"
 
 #: src/control/Control.Menubar.js:393 src/control/Control.Menubar.js:543
-#, fuzzy
 msgid "Save Comments"
-msgstr "評註"
+msgstr "保存評註"
 
 #: src/control/Control.Menubar.js:437
 #: src/control/Control.NotebookbarImpress.js:543
@@ -1107,20 +1102,19 @@ msgstr "全螢幕呈現"
 
 #: src/control/Control.Menubar.js:513
 msgid "Present current slide"
-msgstr ""
+msgstr "展示目前投影片"
 
 #: src/control/Control.Menubar.js:514
 msgid "Present in new window"
-msgstr ""
+msgstr "在新視窗展示"
 
 #: src/control/Control.Menubar.js:550 src/control/Control.Menubar.js:1011
 #: src/control/Control.Menubar.js:1071
 #: src/control/Control.NotebookbarBuilder.js:599
 #: src/control/Control.NotebookbarDraw.js:237
 #: src/control/Control.NotebookbarImpress.js:312
-#, fuzzy
 msgid "ODF Drawing (.odg)"
-msgstr "ODF 簡報 (.odp)"
+msgstr "ODF 簡報 (.odg)"
 
 #: src/control/Control.Menubar.js:667 src/control/Control.Menubar.js:679
 #: src/control/Control.Menubar.js:1128
@@ -1147,7 +1141,7 @@ msgstr "Excel 試算表 (.xlsx)"
 
 #: src/control/Control.Menubar.js:682
 msgid "CSV file (.csv)"
-msgstr ""
+msgstr "CSV 文件 (.csv)"
 
 #: src/control/Control.Menubar.js:813
 #: src/control/Control.NotebookbarBuilder.js:815
@@ -1156,23 +1150,24 @@ msgstr ""
 
 #: src/control/Control.Menubar.js:814
 #: src/control/Control.NotebookbarBuilder.js:816
+#, fuzzy
 msgid "Greater than..."
-msgstr ""
+msgstr "大於..."
 
 #: src/control/Control.Menubar.js:815
 #: src/control/Control.NotebookbarBuilder.js:817
 msgid "Less than..."
-msgstr ""
+msgstr "少於..."
 
 #: src/control/Control.Menubar.js:816
 #: src/control/Control.NotebookbarBuilder.js:818
 msgid "Equal to..."
-msgstr ""
+msgstr "等於..."
 
 #: src/control/Control.Menubar.js:817
 #: src/control/Control.NotebookbarBuilder.js:819
 msgid "Between..."
-msgstr ""
+msgstr "在...之間..."
 
 #: src/control/Control.Menubar.js:819
 #: src/control/Control.NotebookbarBuilder.js:821
@@ -1813,8 +1808,7 @@ msgstr "下一張投影片"
 
 #: src/control/Control.Toolbar.js:1276
 msgid ""
-"Conflict Undo/Redo with multiple users. Please use document repair to "
-"resolve"
+"Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr "多位使用者間取消動作/再次動作發生衝突。請使用文件修復來解決問題"
 
 #: src/control/Control.TopToolbar.js:107
@@ -1994,8 +1988,7 @@ msgstr ""
 
 #: src/control/Control.Zotero.js:1147
 msgid ""
-"Once citations are entered their storage and display type can not be "
-"changed."
+"Once citations are entered their storage and display type can not be changed."
 msgstr ""
 
 #: src/control/Control.Zotero.js:1148 src/control/Control.Zotero.js:1450
@@ -2140,8 +2133,9 @@ msgid "\"Slow Proxy\""
 msgstr "「緩慢代理」"
 
 #: src/control/Toolbar.js:815
+#, fuzzy
 msgid "Copy all version information in English"
-msgstr ""
+msgstr "用英文將所有版本資訊複製"
 
 #: src/control/Toolbar.js:898
 msgid "Insert hyperlink"
@@ -2359,8 +2353,8 @@ msgstr "主機 URL 空白。coolwsd 伺服器可能設定錯誤，請聯絡管�
 #, fuzzy
 msgid ""
 "This is an unsupported version of {productname}. To avoid the impression "
-"that it is suitable for deployment in enterprises, this message appears "
-"when more than {docs} documents or {connections} connections are in use "
+"that it is suitable for deployment in enterprises, this message appears when "
+"more than {docs} documents or {connections} connections are in use "
 "concurrently."
 msgstr ""
 "這是 {productname} 的未支援版本。為了避免這個版本被誤認為適合企業佈署的假象，"
@@ -2397,7 +2391,8 @@ msgstr "WOPISrc 參數錯誤或遺失，請聯絡支援單位。"
 msgid ""
 "Your session will expire in %time. Please save your work and refresh the "
 "session (or webpage) to continue. You might need to login again."
-msgstr "您的作業階段將在 %time 內過期。請儲存您的工作並重整作業階段（或網頁）來繼續。"
+msgstr ""
+"您的作業階段將在 %time 內過期。請儲存您的工作並重整作業階段（或網頁）來繼續。"
 
 #: src/errormessages.js:31
 #, fuzzy
@@ -2405,7 +2400,8 @@ msgid ""
 "Your session has expired. Further changes to the document might not be "
 "saved. Please refresh the session (or webpage) to continue. You might need "
 "to login again."
-msgstr "您的作業階段已過期。後續之文件變更可能無法儲存。請重整作業階段（或網頁）來繼"
+msgstr ""
+"您的作業階段已過期。後續之文件變更可能無法儲存。請重整作業階段（或網頁）來繼"
 "續。"
 
 #: src/errormessages.js:32
@@ -2420,16 +2416,16 @@ msgstr "無效的連結：「%url」"
 
 #: src/errormessages.js:34
 msgid ""
-"You are leaving the document. The following web page will open in a new "
-"tab: "
+"You are leaving the document. The following web page will open in a new tab: "
 msgstr ""
 
 #: src/errormessages.js:35
 msgid ""
 "Failed to load the document. This document is either malformed or is taking "
 "more resources than allowed. Please contact the administrator."
-msgstr "無法載入文件。這份文件可能格式錯誤，或是消耗比所允許還多的資源。請聯絡管理員"
-"。"
+msgstr ""
+"無法載入文件。這份文件可能格式錯誤，或是消耗比所允許還多的資源。請聯絡管理"
+"員。"
 
 #: src/errormessages.js:36
 msgid "Cleaning up the document from the last session."
@@ -2444,10 +2440,10 @@ msgstr ""
 #: src/errormessages.js:38
 msgid ""
 "Your %productName cluster appear to be mis-configured or scaling rapidly - "
-"please contact your system administrator. Continuing with editing may "
-"result in multiple users not seeing each other, conflicts in the document "
-"storage and/or copy/paste problems. Expected serverId %0 for routeToken %1 "
-"but connected to serverId %2"
+"please contact your system administrator. Continuing with editing may result "
+"in multiple users not seeing each other, conflicts in the document storage "
+"and/or copy/paste problems. Expected serverId %0 for routeToken %1 but "
+"connected to serverId %2"
 msgstr ""
 
 #: src/errormessages.js:39
@@ -2504,8 +2500,8 @@ msgstr ""
 #: src/errormessages.js:54
 msgid ""
 "Save failed because the document is too large or exceeds the remaining "
-"storage space. The document will now be read-only but you may still "
-"download it now to preserve a copy locally."
+"storage space. The document will now be read-only but you may still download "
+"it now to preserve a copy locally."
 msgstr ""
 
 #: src/errormessages.js:56
@@ -2628,8 +2624,7 @@ msgid "Warning! The browser you are using is not supported."
 msgstr ""
 
 #: src/map/Clipboard.js:143
-msgid ""
-"To paste outside %productName, please first click the 'download' button"
+msgid "To paste outside %productName, please first click the 'download' button"
 msgstr "若要貼到 %productName 之外，請先按「下載」按鈕"
 
 #: src/map/Clipboard.js:151
@@ -2663,7 +2658,8 @@ msgid ""
 "<p>A download due to a large copy/paste operation has already started. "
 "Please, wait for the current download or cancel it before starting a new "
 "one</p>"
-msgstr "<p>因為有大量複製/貼上操作而已經啟動下載。請先等候目前下載完成，或是在開始新"
+msgstr ""
+"<p>因為有大量複製/貼上操作而已經啟動下載。請先等候目前下載完成，或是在開始新"
 "的下載前先將它取消</p>"
 
 #: src/map/Clipboard.js:1040
@@ -2777,8 +2773,8 @@ msgstr ""
 msgid ""
 "Enjoy the latest developments in online productivity, free for you to use, "
 "to explore and to use with others in the browser. Various <a "
-"target=\"_blank\" href=\"https://www.collaboraoffice.com/solutions/"
-"collabora-office-android-ios/\">apps</a> are also available for mobile."
+"target=\"_blank\" href=\"https://www.collaboraoffice.com/solutions/collabora-"
+"office-android-ios/\">apps</a> are also available for mobile."
 msgstr ""
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:37-7
@@ -2799,25 +2795,30 @@ msgstr ""
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:49-7
 msgid "https://collaboraonline.github.io/"
-msgstr ""
+msgstr "https://collaboraonline.github.io/"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:50-7
 msgid ""
 "Are you interested in contributing but don’t know where to start? Head over "
 "to the <a target=\"_blank\" href=\"https://collaboraonline.github.io/post/"
-"build-code/\">step-by-step instructions</a> and build CODE from scratch. "
-"You can also help out with <a target=\"_blank\" href=\"https://"
-"collaboraonline.github.io/post/translate/\">translations</a> or by <a "
-"target=\"_blank\" href=\"https://collaboraonline.github.io/post/filebugs/"
-"\">filing a bug report</a> with all the essential steps on how to reproduce "
-"it."
+"build-code/\">step-by-step instructions</a> and build CODE from scratch. You "
+"can also help out with <a target=\"_blank\" href=\"https://collaboraonline."
+"github.io/post/translate/\">translations</a> or by <a target=\"_blank\" "
+"href=\"https://collaboraonline.github.io/post/filebugs/\">filing a bug "
+"report</a> with all the essential steps on how to reproduce it."
 msgstr ""
+"有興趣做出貢獻但不知道從哪裡開始？前往<a target=\"_blank\" href=\"https://"
+"collaboraonline.github.io/post/build-code/\">逐步說明</a>並從頭開始建立程式"
+"碼。您還可以幫忙<a target=\"_blank\" href=\"https://collaboraonline.github."
+"io/post/translate/\">翻譯</a>或透過<a target=\"_blank\" href=\"https://"
+"collaboraonline.github.io/post/filebugs/\">提交錯誤報告</a>以及如何重現它的所"
+"有基本步驟。"
 
 #: welcome/welcome.html%2Bhtml.body.div.div:55-5
 msgid ""
 "<a id=\"slide-1-indicator\" class=\"active\" href=\"#slide-1\">1</a> <a "
-"id=\"slide-2-indicator\" href=\"#slide-2\">2</a> <a id=\"slide-3-"
-"indicator\" href=\"#slide-3\">3</a>"
+"id=\"slide-2-indicator\" href=\"#slide-2\">2</a> <a id=\"slide-3-indicator\" "
+"href=\"#slide-3\">3</a>"
 msgstr ""
 
 #~ msgid "Start download"
@@ -2828,13 +2829,15 @@ msgstr ""
 
 #~ msgid ""
 #~ "<p>If you would like to share larger elements of your document with other "
-#~ "applications it is necessary to first download them onto your device. To do "
-#~ "that press the \"Start download\" button below, and when complete click "
-#~ "\"Confirm copy to clipboard\".</p><p>If you are copy and pasting between "
-#~ "documents inside %productName, there is no need to download.</p>"
+#~ "applications it is necessary to first download them onto your device. To "
+#~ "do that press the \"Start download\" button below, and when complete "
+#~ "click \"Confirm copy to clipboard\".</p><p>If you are copy and pasting "
+#~ "between documents inside %productName, there is no need to download.</p>"
 #~ msgstr ""
-#~ "<p>如果您希望和其他應用程式分享您文件裡的大型元素，則需要先將內容下載至您的裝置中。如果要這麼做，請按下方的「開始下載」，完成後請按「確認複製到剪貼簿」"
-#~ "。</p><p>如果您是打算在 %productName 下的文件間交叉複製貼上，則無需下載。</p>"
+#~ "<p>如果您希望和其他應用程式分享您文件裡的大型元素，則需要先將內容下載至您"
+#~ "的裝置中。如果要這麼做，請按下方的「開始下載」，完成後請按「確認複製到剪貼"
+#~ "簿」。</p><p>如果您是打算在 %productName 下的文件間交叉複製貼上，則無需下"
+#~ "載。</p>"
 
 #~ msgid ""
 #~ "No disk space left on server, please contact the server administrator to "
@@ -2845,7 +2848,9 @@ msgstr ""
 #~ msgid ""
 #~ "Failed to read document from storage. Please contact your storage server "
 #~ "(%storageserver) administrator."
-#~ msgstr "無法讀取儲存空間中的文件。請聯絡您的儲存空間伺服器 (%storageserver) 管理員。"
+#~ msgstr ""
+#~ "無法讀取儲存空間中的文件。請聯絡您的儲存空間伺服器 (%storageserver) 管理"
+#~ "員。"
 
 #~ msgid ""
 #~ "Document cannot be saved. Check your permissions or contact the storage "
@@ -2855,17 +2860,20 @@ msgstr ""
 #~ msgid ""
 #~ "Document cannot be renamed. Check your permissions or contact the storage "
 #~ "server administrator."
-#~ msgstr "文件無法重新命名。請檢查您的權限設定，或請聯絡儲存空間伺服器的管理員。"
+#~ msgstr ""
+#~ "文件無法重新命名。請檢查您的權限設定，或請聯絡儲存空間伺服器的管理員。"
 
 #~ msgid "Sign document"
 #~ msgstr "簽署文件"
 
 #, javascript-format
 #~ msgid ""
-#~ "Save failed due to no disk space left on storage server. Document will now "
-#~ "be read-only. Please contact the server (%storageserver) administrator to "
-#~ "continue editing."
-#~ msgstr "由於儲存空間的伺服器磁碟空間不足而儲存失敗。文件現在只能唯讀。請聯絡伺服器 (%storageserver) 管理員以便繼續編輯。"
+#~ "Save failed due to no disk space left on storage server. Document will "
+#~ "now be read-only. Please contact the server (%storageserver) "
+#~ "administrator to continue editing."
+#~ msgstr ""
+#~ "由於儲存空間的伺服器磁碟空間不足而儲存失敗。文件現在只能唯讀。請聯絡伺服"
+#~ "器 (%storageserver) 管理員以便繼續編輯。"
 
 #~ msgid "Please enter the PIN Code"
 #~ msgstr "請輸入 PIN 碼"
@@ -2993,14 +3001,15 @@ msgstr ""
 #~ msgstr "%d 分鐘前"
 
 #~ msgid ""
-#~ "IE11 has reached its maximum number of connections. Please see this document "
-#~ "to increase this limit if needed: https://docs.microsoft.com/en-us/previous-"
-#~ "versions/windows/internet-explorer/ie-developer/general-info/"
+#~ "IE11 has reached its maximum number of connections. Please see this "
+#~ "document to increase this limit if needed: https://docs.microsoft.com/en-"
+#~ "us/previous-versions/windows/internet-explorer/ie-developer/general-info/"
 #~ "ee330736(v=vs.85)#websocket-maximum-server-connections"
 #~ msgstr ""
-#~ "IE11 已達其最大連線數。請查看此文件視需要調高限制數：https://docs.microsoft.com/en-us/"
-#~ "previous-versions/windows/internet-explorer/ie-developer/general-info/"
-#~ "ee330736(v=vs.85)#websocket-maximum-server-connections"
+#~ "IE11 已達其最大連線數。請查看此文件視需要調高限制數：https://docs."
+#~ "microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-"
+#~ "developer/general-info/ee330736(v=vs.85)#websocket-maximum-server-"
+#~ "connections"
 
 #~ msgid "Start upload"
 #~ msgstr "開始上傳"
@@ -3016,8 +3025,9 @@ msgstr ""
 #~ "keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For copying.</li><li><b>Ctrl+X</"
 #~ "b>: For cutting.</li><li><b>Ctrl+V</b>: For pasting.</li></ul></p>"
 #~ msgstr ""
-#~ "<p>您的瀏覽器對剪貼簿有存取上的限制，請改用以下這些鍵盤快捷鍵：<ul><li><b>Ctrl+C</b>：複製。</li><li><b>Ctrl+X<"
-#~ "/b>：剪下。</li><li><b>Ctrl+V</b>：貼上。</li></ul></p>"
+#~ "<p>您的瀏覽器對剪貼簿有存取上的限制，請改用以下這些鍵盤快捷鍵："
+#~ "<ul><li><b>Ctrl+C</b>：複製。</li><li><b>Ctrl+X</b>：剪下。</"
+#~ "li><li><b>Ctrl+V</b>：貼上。</li></ul></p>"
 
 #~ msgid "Server is recycling and will be available shortly"
 #~ msgstr "伺服器正在重啟循環，即將無法使用"
