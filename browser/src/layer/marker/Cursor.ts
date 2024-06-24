@@ -57,9 +57,6 @@ class Cursor {
 
 		this.update();
 
-		let cursor_css = getComputedStyle(this.cursor, null);
-		this.width = parseFloat(cursor_css.getPropertyValue("width"));
-
 		if (this.map._docLayer.isCalc())
 			this.map.on('splitposchanged move', this.update, this);
 		else
@@ -258,6 +255,9 @@ class Cursor {
 		L.DomEvent
 			.disableClickPropagation(this.cursor)
 			.disableScrollPropagation(this.container);
+
+		let cursorCss = getComputedStyle(this.cursor, null);
+		this.width = parseFloat(cursorCss.getPropertyValue('width'));
 	}
 
 	private transformX(xpos: number): number {
