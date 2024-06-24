@@ -561,6 +561,9 @@ public:
     /// Post fork hook - just before we init the child kit
     virtual void postFork();
 
+    // pre non background save
+    virtual void preSaveHook() {}
+
     /// Called just after and before bg save process events
     virtual void postBackgroundSaveFork() {}
     virtual void preBackgroundSaveExit() {}
