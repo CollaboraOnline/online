@@ -1008,7 +1008,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._move();
 		this._moveInProgress = false;
 
-		if (app.calc.cellCursorVisible) {
+		if (app.calc.cellCursorVisible || app.file.textCursor.visible) {
 			var cursorPos = this._map._docLayer._twipsToLatLng({ x: app.calc.cellCursorRectangle.x2, y: app.calc.cellCursorRectangle.y2 });
 			var centerOffset = this._map._getCenterOffset(cursorPos);
 			var viewHalf = this._map.getSize()._divideBy(2);
@@ -3626,8 +3626,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 			if (!app.isPointVisibleInTheDisplayedArea(new app.definitions.simplePoint(correctedCursor.x1, correctedCursor.y1).toArray()) ||
 				!app.isPointVisibleInTheDisplayedArea(new app.definitions.simplePoint(correctedCursor.x2, correctedCursor.y2).toArray())) {
-				if (!(app.isFollowingEditor() || (app.isFollowingUser() && app.getFollowedViewId() !== this._viewId)) &&
-				    !this._map.calcInputBarHasFocus()) {
+				if (app.isFollowingUser() && app.getFollowedViewId() === this._viewId && !this._map.calcInputBarHasFocus()) {
 					this.scrollToPos(new app.definitions.simplePoint(correctedCursor.x1, correctedCursor.y1));
 				}
 			}
