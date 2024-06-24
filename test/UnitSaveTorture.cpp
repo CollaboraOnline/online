@@ -284,25 +284,6 @@ void UnitSaveTorture::testBgSaveCrash()
     poll->joinThread();
 }
 
-namespace {
-    /*
-     * A sleep in a unit test !? but ... SfxBinding notifies its
-     * state changes around 250ms after they are made to reduce
-     * spamming clients; so - if we eg. do a save that forces an
-     * un-modified state, and then immediately do a modification
-     * we will get no notification - from the binding's perspective
-     * we continue to be unmodified - no sweat; no notification.
-     *
-     * But we want to see and check all those transitions - so
-     * in theory we need to wait.
-     */
-    void sleepForIdleModificationNotification(const std::string &testname)
-    {
-        LOG_TST("Sleep to let idle non-synthetic ModifiedState notification catch up");
-        std::this_thread::sleep_for(std::chrono::milliseconds(2000));
-    }
-}
-
 void UnitSaveTorture::saveTortureOne(
     const std::string& name, const std::string& docName)
 {
@@ -356,9 +337,6 @@ void UnitSaveTorture::saveTortureOne(
 
         if (options[i].modifyAfterSaveStarts)
         {
-            LOG_TST("Give the on-save modification clear - time to get emitted");
-            sleepForIdleModificationNotification(testname);
-
             LOG_TST("Modify after saving starts");
             modifyDocument(wsSession);
 
