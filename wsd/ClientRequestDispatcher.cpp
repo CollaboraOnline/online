@@ -359,13 +359,19 @@ std::shared_ptr<ConvertToBroker>
 getConvertToBrokerImplementation(const std::string& requestType, const std::string& fromPath,
                                  const Poco::URI& uriPublic, const std::string& docKey,
                                  const std::string& format, const std::string& options,
-                                 const std::string& lang, const std::string& target)
+                                 const std::string& lang, const std::string& target,
+                                 const std::string& transformJSON)
 {
     if (requestType == "convert-to")
         return std::make_shared<ConvertToBroker>(fromPath, uriPublic, docKey, format, options,
                                                  lang);
     else if (requestType == "extract-link-targets")
         return std::make_shared<ExtractLinkTargetsBroker>(fromPath, uriPublic, docKey, lang);
+    else if (requestType == "extract-document-structure")
+        return std::make_shared<ExtractDocumentStructureBroker>(fromPath, uriPublic, docKey, lang);
+    else if (requestType == "transform-document-structure")
+        return std::make_shared<TransformDocumentStructureBroker>(fromPath, uriPublic, docKey, lang,
+                                                                  transformJSON);
     else if (requestType == "get-thumbnail")
         return std::make_shared<GetThumbnailBroker>(fromPath, uriPublic, docKey, lang, target);
 
@@ -1399,6 +1405,8 @@ void ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
 
     if (requestDetails.equals(1, "convert-to") ||
         requestDetails.equals(1, "extract-link-targets") ||
+        requestDetails.equals(1, "extract-document-structure") ||
+        requestDetails.equals(1, "transform-document-structure") ||
         requestDetails.equals(1, "get-thumbnail"))
     {
         // Validate sender - FIXME: should do this even earlier.
@@ -1468,13 +1476,18 @@ void ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
             std::string lang = (form.has("lang") ? form.get("lang") : std::string());
             std::string target = (form.has("target") ? form.get("target") : std::string());
 
+            std::string transformJSON = form.get("transform");
+            std::string encodedTransformJSON;
+            Poco::URI::encode(transformJSON, "", encodedTransformJSON);
+
             // This lock could become a bottleneck.
             // In that case, we can use a pool and index by publicPath.
             std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
 
             LOG_DBG("New DocumentBroker for docKey [" << docKey << "].");
             auto docBroker = getConvertToBrokerImplementation(
-                requestDetails[1], fromPath, uriPublic, docKey, format, options, lang, target);
+                requestDetails[1], fromPath, uriPublic, docKey, format, options, lang, target,
+                encodedTransformJSON);
             handler.takeFile();
 
             cleanupDocBrokers();

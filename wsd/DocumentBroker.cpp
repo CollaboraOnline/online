@@ -4251,6 +4251,24 @@ void ExtractLinkTargetsBroker::sendStartMessage(const std::shared_ptr<ClientSess
     forwardToChild(clientSession, command);
 }
 
+void ExtractDocumentStructureBroker::sendStartMessage(const std::shared_ptr<ClientSession>& clientSession,
+                                                const std::string& encodedFrom)
+{
+    ConvertToBroker::sendStartMessage(clientSession, encodedFrom);
+
+    const auto command = "extractdocumentstructure url=" + encodedFrom;
+    forwardToChild(clientSession, command);
+}
+
+void TransformDocumentStructureBroker::sendStartMessage(const std::shared_ptr<ClientSession>& clientSession,
+                                                const std::string& encodedFrom)
+{
+    ConvertToBroker::sendStartMessage(clientSession, encodedFrom);
+
+    const auto command = "transformdocumentstructure url=" + encodedFrom + " transform=" + _transformJSON;
+    forwardToChild(clientSession, command);
+}
+
 void GetThumbnailBroker::sendStartMessage(const std::shared_ptr<ClientSession>& clientSession,
                                           const std::string& encodedFrom)
 {
