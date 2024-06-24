@@ -109,7 +109,7 @@
     <string name="theme">主题</string>
     <string name="pref_user_name_info">新增注释时使用</string>
     <string name="pref_user_name_guest">访客</string>
-    <string name="bmp_null">Bmp 无效！</string>
+    <string name="bmp_null">Bmp 不可用！</string>
     <string name="no_items">没有项目</string>
     <string name="pref_user_name">用户名</string>
 </resources>
