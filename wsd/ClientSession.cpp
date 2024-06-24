@@ -2410,6 +2410,48 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
             docBroker->closeDocument("extractedlinktargets");
             return true;
         }
+        else if (tokens.equals(0, "extracteddocumentstructure:"))
+        {
+            LOG_TRC("Sending extracted document structure response.");
+            if (!_saveAsSocket)
+                LOG_ERR("Error in extracteddocumentstructure: not in isConvertTo mode");
+            else
+            {
+                const std::string stringJSON = payload->jsonString();
+
+                http::Response httpResponse(http::StatusCode::OK);
+                FileServerRequestHandler::hstsHeaders(httpResponse);
+                httpResponse.set("Last-Modified", Util::getHttpTimeNow());
+                httpResponse.set("X-Content-Type-Options", "nosniff");
+                httpResponse.setBody(stringJSON, "application/json");
+                _saveAsSocket->sendAndShutdown(httpResponse);
+            }
+
+            // Now terminate.
+            docBroker->closeDocument("extracteddocumentstructure");
+            return true;
+        }
+        else if (tokens.equals(0, "transformeddocumentstructure:"))
+        {
+            LOG_TRC("Sending transformed document structure response.");
+            if (!_saveAsSocket)
+                LOG_ERR("Error in transformeddocumentstructure: not in isConvertTo mode");
+            else
+            {
+                const std::string stringJSON = payload->jsonString();
+
+                http::Response httpResponse(http::StatusCode::OK);
+                FileServerRequestHandler::hstsHeaders(httpResponse);
+                httpResponse.set("Last-Modified", Util::getHttpTimeNow());
+                httpResponse.set("X-Content-Type-Options", "nosniff");
+                httpResponse.setBody(stringJSON, "application/json");
+                _saveAsSocket->sendAndShutdown(httpResponse);
+            }
+
+            // Now terminate.
+            docBroker->closeDocument("transformeddocumentstructure");
+            return true;
+        }
         else if (tokens.equals(0, "sendthumbnail:"))
         {
             LOG_TRC("Sending get-thumbnail response.");
