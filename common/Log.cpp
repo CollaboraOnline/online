@@ -714,7 +714,7 @@ namespace Log
 
         if (Util::isFuzzing())
         {
-            // Ignore errors for fuzzing, even if the log level would be increased.
+            // loggingleveloverride tries to increase log level, ignore.
             return;
         }
 
@@ -788,6 +788,12 @@ namespace Log
     void setLogLevelByName(const std::string &channel,
                            const std::string &level)
     {
+        if (Util::isFuzzing())
+        {
+            // update-log-levels tries to increase log level, ignore.
+            return;
+        }
+
         // FIXME: seems redundant do we need that ?
         std::string lvl = level;
 
