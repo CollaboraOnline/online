@@ -125,6 +125,7 @@ static std::string base64Encode(std::string& input)
 
 void RequestVettingStation::sendUnauthorizedErrorAndShutdown()
 {
+#if !MOBILEAPP
     std::string error = "error: cmd=internal kind=unauthorized";
 
     if (_checkFileInfo)
@@ -135,6 +136,7 @@ void RequestVettingStation::sendUnauthorizedErrorAndShutdown()
     }
     sendErrorAndShutdown(_ws, error,
                          WebSocketHandler::StatusCodes::POLICY_VIOLATION);
+#endif //!MOBILEAPP
 }
 
 void RequestVettingStation::handleRequest(const std::string& id,

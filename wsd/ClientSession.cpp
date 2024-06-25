@@ -1259,10 +1259,12 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/,
         std::ostringstream oss;
         oss << "load url=" << docBroker->getPublicUri().toString();
 
+#if !MOBILEAPP
         // if ssl client verification was disabled in online for the wopi server,
         // then exempt that host from ssl host verification also in core
         if (ssl::Manager::getClientVerification() == ssl::CertificateVerification::Disabled)
             oss << " verifyHost=false";
+#endif
 
         if (!getUserId().empty() && !getUserName().empty())
         {
