@@ -25,12 +25,18 @@ class OtherViewGraphicSelectionSection extends CanvasSectionObject {
 
         this.size = [rectangle.pWidth, rectangle.pHeight];
         this.position = [rectangle.pX1, rectangle.pY1];
-        this.borderColor = L.LOUtil.rgbToHex(L.LOUtil.getViewIdColor(viewId));
+        this.sectionProperties.color = L.LOUtil.rgbToHex(L.LOUtil.getViewIdColor(viewId));
         this.name = OtherViewGraphicSelectionSection.sectionNamePrefix + viewId;
 
         this.sectionProperties.viewId = viewId;
         this.sectionProperties.part = part;
         this.sectionProperties.mode = mode;
+    }
+
+    onDraw(frameCount?: number, elapsedTime?: number, subsetBounds?: Bounds): void {
+        this.context.strokeStyle = this.sectionProperties.color;
+        this.context.lineWidth = 2;
+        this.context.strokeRect(-0.5, -0.5, this.size[0], this.size[1]);
     }
 
     checkMyVisibility() {
