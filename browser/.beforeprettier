@@ -144,6 +144,7 @@
 /src/canvas/sections/CellSelectionHandleSection.ts
 /src/canvas/sections/CalcValidityDropDownSection.ts
 /src/canvas/sections/TextSelectionHandleSection.ts
+/src/canvas/sections/OtherViewGraphicSelectionSection.ts
 /src/layer/tile/CalcTileLayer.js
 /src/canvas/CanvasSectionContainer.ts
 /src/canvas/CanvasSectionObject.ts
