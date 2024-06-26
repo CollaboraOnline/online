@@ -953,13 +953,11 @@ bool DocumentBroker::download(
                 {
                     LOG_DBG("Setting session [" << sessionId << "] as readonly");
                     session->setReadOnly(true);
-                    if (_isViewFileExtension)
-                    {
-                        LOG_DBG("Allow session ["
-                                << sessionId << "] to change comments on document with extension ["
-                                << localStorage->getFileExtension() << ']');
-                        session->setAllowChangeComments(true);
-                    }
+                    LOG_DBG("Allow session [" << sessionId
+                                              << "] to change comments on document with extension ["
+                                              << localStorage->getFileExtension() << ']');
+                    session->setAllowChangeComments(true);
+
                     // Related to fix for issue #5887: only send a read-only
                     // message for "view file extension" document types
                     session->sendFileMode(session->isReadOnly(), session->isAllowChangeComments());
