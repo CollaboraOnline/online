@@ -139,7 +139,13 @@ void StorageBase::initialize()
 
     if (SSLEnabled || SSLAsScheme)
     {
-        if (!COOLWSD::isSSLTermination())
+        if (COOLWSD::isSSLTermination())
+        {
+            sslClientParams.certificateFile = COOLWSD::getPathFromConfig("storage.ssl.cert_file_path");
+            sslClientParams.privateKeyFile = COOLWSD::getPathFromConfig("storage.ssl.key_file_path");
+            sslClientParams.caLocation = COOLWSD::getPathFromConfig("storage.ssl.ca_file_path");
+        }
+        else
         {
             sslClientParams.certificateFile = COOLWSD::getPathFromConfigWithFallback("storage.ssl.cert_file_path", "ssl.cert_file_path");
             sslClientParams.privateKeyFile = COOLWSD::getPathFromConfigWithFallback("storage.ssl.key_file_path", "ssl.key_file_path");
