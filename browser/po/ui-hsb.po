@@ -328,8 +328,8 @@ msgid "Failed to set jwt authentication cookie over insecure connection"
 msgstr "Awtentifikaciski plack JWT njeda so přez njewěsty zwisk stajić"
 
 #: admin/src/AdminSocketOverview.js:424
-msgid "Failed to authenticate this session over protocol %0"
-msgstr "Tute posedźenje njeda so přez protokol %0 awtentifikować"
+msgid "Failed to authenticate this session over protocol {0}"
+msgstr "Tute posedźenje njeda so přez protokol {0} awtentifikować"
 
 #: admin/src/AdminSocketOverview.js:429
 msgid "Warning"
@@ -408,8 +408,8 @@ msgid "Automatic color"
 msgstr "Awtomatiska barba"
 
 #: src/control/Control.AboutDialog.ts:72
-msgid "This version of %productName is powered by"
-msgstr "Tuta wersija %productName spěchuje so wot"
+msgid "This version of {productname} is powered by"
+msgstr "Tuta wersija {productname} spěchuje so wot"
 
 #: src/control/Control.AboutDialog.ts:95
 msgid "\"Slow Proxy\""
@@ -461,8 +461,8 @@ msgid "Don't show this again"
 msgstr ""
 
 #: src/control/Control.AlertDialog.js:105
-msgid "The server encountered a %0 error while parsing the %1 command."
-msgstr "Serwer je při wuwjedźenju přikaza %1 na zmylk %0 storčił."
+msgid "The server encountered a {0} error while parsing the {1} command."
+msgstr "Serwer je při wuwjedźenju přikaza {1} na zmylk {0} storčił."
 
 #: src/control/Control.Command.js:89
 msgid "Unlock"
@@ -532,7 +532,7 @@ msgstr ""
 
 #: src/control/Control.DownloadProgress.js:47
 msgid ""
-"If you want to share large elements outside of %productName it's necessary "
+"If you want to share large elements outside of {productname} it's necessary "
 "to first download them."
 msgstr ""
 
@@ -1808,8 +1808,8 @@ msgstr ""
 
 #: src/control/Control.Tabs.js:388
 #, fuzzy
-msgid "Are you sure you want to delete sheet, %sheet%?"
-msgstr "Chceće tabelu %sheet% woprawdźe zhašeć?"
+msgid "Are you sure you want to delete sheet, {sheet}?"
+msgstr "Chceće tabelu {sheet} woprawdźe zhašeć?"
 
 #: src/control/Control.Tabs.js:399
 msgid "Rename sheet"
@@ -1860,15 +1860,15 @@ msgid "Show Menu"
 msgstr ""
 
 #: src/control/Control.UserList.ts:54
-msgid "%user has joined"
-msgstr "%user je so přidružił"
+msgid "{user} has joined"
+msgstr "{user} je so přidružił"
 
 #: src/control/Control.UserList.ts:55
-msgid "%user has left"
-msgstr "%user je wopušćił"
+msgid "{user} has left"
+msgstr "{user} je wopušćił"
 
 #: src/control/Control.UserList.ts:56
-msgid "Following %user"
+msgid "Following {user}"
 msgstr ""
 
 #: src/control/Control.UserList.ts:57
@@ -1880,7 +1880,7 @@ msgid "Stop following"
 msgstr ""
 
 #: src/control/Control.UserList.ts:59
-msgid "Avatar for %user"
+msgid "Avatar for {user}"
 msgstr ""
 
 #: src/control/Control.UserList.ts:79
@@ -2265,7 +2265,7 @@ msgstr ""
 
 #: src/core/Socket.js:65
 #, fuzzy
-msgid "Oops, there is a problem connecting to %productName: "
+msgid "Oops, there is a problem connecting to {productname}: "
 msgstr "Hopla, je problem při zwjazowanju z dokumentom"
 
 #: src/core/Socket.js:653
@@ -2374,7 +2374,7 @@ msgid "Someone"
 msgstr ""
 
 #: src/core/Socket.js:1175
-msgid "%userName saved this document as %fileName. Do you want to join?"
+msgid "{user}Name saved this document as {filename}. Do you want to join?"
 msgstr ""
 
 #: src/core/Socket.js:1192
@@ -2498,10 +2498,10 @@ msgstr "Dalše informacije a podpěra"
 
 #: src/errormessages.js:26
 msgid ""
-"This service is limited to %0 documents, and %1 connections total by the "
+"This service is limited to {0} documents, and {1} connections total by the "
 "admin. This limit has been reached. Please try again later."
 msgstr ""
-"Tuta słužba bu wot administratora na dohromady %0 dokumentow a %1 zwiskow "
+"Tuta słužba bu wot administratora na dohromady {0} dokumentow a {1} zwiskow "
 "wobmjezowana. Tutón limit je so docpěł. Prošu spytajće pozdźišo hišće raz."
 
 #: src/errormessages.js:27
@@ -2521,7 +2521,7 @@ msgstr ""
 "swojeho administratora, jeli problem dale wobsteji."
 
 #: src/errormessages.js:29
-msgid "Authorization error was: '%errorMessage'."
+msgid "Authorization error was: '{errormessage}'."
 msgstr ""
 
 #: src/errormessages.js:30
@@ -2532,10 +2532,10 @@ msgstr ""
 #: src/errormessages.js:31
 #, fuzzy
 msgid ""
-"Your session will expire in %time. Please save your work and refresh the "
+"Your session will expire in {time}. Please save your work and refresh the "
 "session (or webpage) to continue. You might need to login again."
 msgstr ""
-"Waše posedźenje za %time spadnje. Prošu składujće swoje dźěło a wobnowće "
+"Waše posedźenje za {time} spadnje. Prošu składujće swoje dźěło a wobnowće "
 "posedźenje (abo webstronu), zo byšće pokročował."
 
 #: src/errormessages.js:32
@@ -2557,8 +2557,8 @@ msgstr ""
 "podpěruje a wobškodźeny njeje, a spytajće potom hišće raz."
 
 #: src/errormessages.js:34
-msgid "Invalid link: '%url'"
-msgstr "Njepłaćiwy wotkaz: '%url'"
+msgid "Invalid link: '{url}'"
+msgstr "Njepłaćiwy wotkaz: '{url}'"
 
 #: src/errormessages.js:35
 msgid ""
@@ -2586,11 +2586,11 @@ msgstr ""
 
 #: src/errormessages.js:39
 msgid ""
-"Your %productName cluster appear to be mis-configured or scaling rapidly - "
+"Your {productname} cluster appear to be mis-configured or scaling rapidly - "
 "please contact your system administrator. Continuing with editing may "
 "result in multiple users not seeing each other, conflicts in the document "
-"storage and/or copy/paste problems. Expected serverId %0 for routeToken %1 "
-"but connected to serverId %2"
+"storage and/or copy/paste problems. Expected serverId {0} for routeToken {1} "
+"but connected to serverId {2}"
 msgstr ""
 
 #: src/errormessages.js:40
@@ -2788,9 +2788,9 @@ msgstr ""
 
 #: src/map/Clipboard.js:180
 msgid ""
-"To paste outside %productName, please first click the 'download' button"
+"To paste outside {productname}, please first click the 'download' button"
 msgstr ""
-"Zo byšće zwonka %productName zasadźił, klikńće prošu najprjedy na tłóčatko "
+"Zo byšće zwonka {productname} zasadźił, klikńće prošu najprjedy na tłóčatko "
 "‚sćahnyć‘."
 
 #: src/map/Clipboard.js:188
@@ -2861,22 +2861,22 @@ msgstr ""
 #: src/map/handler/Map.FileInserter.js:105
 #, javascript-format
 msgid ""
-"The file of type: %0 cannot be uploaded to server since the file has no name"
-msgstr "Dataja typa %0 njeda so na serwer nahrać, dokelž dataja mjeno nima"
+"The file of type: {0} cannot be uploaded to server since the file has no name"
+msgstr "Dataja typa {0} njeda so na serwer nahrać, dokelž dataja mjeno nima"
 
 #: src/map/handler/Map.FileInserter.js:107
 #, javascript-format
 msgid ""
-"The file of type: %0 cannot be uploaded to server since the file is empty"
-msgstr "Dataja typa %0 njeda so na serwer nahrać, dokelž dataja je prózdna"
+"The file of type: {0} cannot be uploaded to server since the file is empty"
+msgstr "Dataja typa {0} njeda so na serwer nahrać, dokelž dataja je prózdna"
 
 #: src/map/handler/Map.FileInserter.js:138
 msgid "Uploading..."
 msgstr "Nahrawa so..."
 
 #: src/map/handler/Map.FileInserter.js:161
-msgid "Uploading file to server failed with status: %0"
-msgstr "Nahrawanje dataje na serwer njeje so ze statusom %0 poradźiło"
+msgid "Uploading file to server failed with status: {0}"
+msgstr "Nahrawanje dataje na serwer njeje so ze statusom {0} poradźiło"
 
 #: src/map/handler/Map.SlideShow.js:55
 msgid "Empty Slide Show"
@@ -2950,7 +2950,7 @@ msgid "Collabora Online Welcome"
 msgstr ""
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:26-7
-msgid "Explore The New %coolVersion"
+msgid "Explore The New {coolversion}"
 msgstr ""
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:27-7
@@ -3041,13 +3041,13 @@ msgstr ""
 #~ "applications it is necessary to first download them onto your device. To do "
 #~ "that press the \"Start download\" button below, and when complete click "
 #~ "\"Confirm copy to clipboard\".</p><p>If you are copy and pasting between "
-#~ "documents inside %productName, there is no need to download.</p>"
+#~ "documents inside {productname}, there is no need to download.</p>"
 #~ msgstr ""
 #~ "<p>Jeli chceće wjetše elementy swojeho dokumenta z druhimi nałoženjemi "
 #~ "dźělić, je trjeba, je najprjedy do wašeho grata sćahnyć. Zo byšće to činił, "
 #~ "klikńće na tłóčatko „Sćehnjenje započeć“ deleka a klikńce, hdyž sćehnjenje "
 #~ "je dokónčene, na „Kopěrowanje do mjezyskłada wobkrućić“.</p><p>Jeli mjez "
-#~ "dokumentami w %productName kopěrujeće, njetrjebaće sćahnyć.</p>"
+#~ "dokumentami w {productname} kopěrujeće, njetrjebaće sćahnyć.</p>"
 
 #~ msgid "Reference~s"
 #~ msgstr "Referen_cy"
@@ -3177,7 +3177,7 @@ msgstr ""
 #~ msgid ""
 #~ "You are leaving the editor, are you sure you want to visit the following "
 #~ "URL?"
-#~ msgstr "Chceće editor wopušćić, chceće %url woprawdźe wopytać?"
+#~ msgstr "Chceće editor wopušćić, chceće {url} woprawdźe wopytać?"
 
 #~ msgid "Index"
 #~ msgstr "Indeks"

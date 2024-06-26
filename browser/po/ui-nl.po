@@ -328,8 +328,8 @@ msgid "Failed to set jwt authentication cookie over insecure connection"
 msgstr "Kan jwt-verificatiecookie niet instellen via een onveilige verbinding"
 
 #: admin/src/AdminSocketOverview.js:424
-msgid "Failed to authenticate this session over protocol %0"
-msgstr "Kan deze sessie niet verifiëren via protocol %0"
+msgid "Failed to authenticate this session over protocol {0}"
+msgstr "Kan deze sessie niet verifiëren via protocol {0}"
 
 #: admin/src/AdminSocketOverview.js:429
 msgid "Warning"
@@ -408,8 +408,8 @@ msgid "Automatic color"
 msgstr "Automatische kleur"
 
 #: src/control/Control.AboutDialog.ts:72
-msgid "This version of %productName is powered by"
-msgstr "Deze versie van %productName werk op basis van"
+msgid "This version of {productname} is powered by"
+msgstr "Deze versie van {productname} werk op basis van"
 
 #: src/control/Control.AboutDialog.ts:95
 msgid "\"Slow Proxy\""
@@ -469,9 +469,9 @@ msgid "Don't show this again"
 msgstr "Laat dit niet meer zien"
 
 #: src/control/Control.AlertDialog.js:105
-msgid "The server encountered a %0 error while parsing the %1 command."
+msgid "The server encountered a {0} error while parsing the {1} command."
 msgstr ""
-"De server ondervond een %0-fout tijdens het uitvoeren van de %1-opdracht."
+"De server ondervond een {0}-fout tijdens het uitvoeren van de {1}-opdracht."
 
 #: src/control/Control.Command.js:89
 msgid "Unlock"
@@ -541,10 +541,10 @@ msgstr "Selectie downloaden"
 
 #: src/control/Control.DownloadProgress.js:47
 msgid ""
-"If you want to share large elements outside of %productName it's necessary "
+"If you want to share large elements outside of {productname} it's necessary "
 "to first download them."
 msgstr ""
-"Als u grote elementen buiten %productName wilt delen, moet u deze eerst "
+"Als u grote elementen buiten {productname} wilt delen, moet u deze eerst "
 "downloaden."
 
 #: src/control/Control.DownloadProgress.js:60
@@ -1796,8 +1796,8 @@ msgid "Copy Sheet..."
 msgstr "Kopieer blad..."
 
 #: src/control/Control.Tabs.js:388
-msgid "Are you sure you want to delete sheet, %sheet%?"
-msgstr "Weet u zeker dat u blad %sheet% wilt verwijderen?"
+msgid "Are you sure you want to delete sheet, {sheet}?"
+msgstr "Weet u zeker dat u blad {sheet} wilt verwijderen?"
 
 #: src/control/Control.Tabs.js:399
 msgid "Rename sheet"
@@ -1848,16 +1848,16 @@ msgid "Show Menu"
 msgstr "Menu weergeven"
 
 #: src/control/Control.UserList.ts:54
-msgid "%user has joined"
-msgstr "%user is toegetreden"
+msgid "{user} has joined"
+msgstr "{user} is toegetreden"
 
 #: src/control/Control.UserList.ts:55
-msgid "%user has left"
-msgstr "%user is vertrokken"
+msgid "{user} has left"
+msgstr "{user} is vertrokken"
 
 #: src/control/Control.UserList.ts:56
-msgid "Following %user"
-msgstr "%user volgen"
+msgid "Following {user}"
+msgstr "{user} volgen"
 
 #: src/control/Control.UserList.ts:57
 msgid "Following the editor"
@@ -1868,7 +1868,7 @@ msgid "Stop following"
 msgstr "Stop met volgen"
 
 #: src/control/Control.UserList.ts:59
-msgid "Avatar for %user"
+msgid "Avatar for {user}"
 msgstr "Avatar voor %gebruiker"
 
 #: src/control/Control.UserList.ts:79
@@ -2261,8 +2261,8 @@ msgid "Headings and objects that you add to the document will appear here"
 msgstr "Hier verschijnen koppen en objecten die je aan het document toevoegt"
 
 #: src/core/Socket.js:65
-msgid "Oops, there is a problem connecting to %productName: "
-msgstr "Oeps, er is een probleem met het verbinden met %productName: "
+msgid "Oops, there is a problem connecting to {productname}: "
+msgstr "Oeps, er is een probleem met het verbinden met {productname}: "
 
 #: src/core/Socket.js:653
 msgid "Server is now reachable. We have to refresh the page now."
@@ -2369,8 +2369,8 @@ msgid "Someone"
 msgstr "Iemand"
 
 #: src/core/Socket.js:1175
-msgid "%userName saved this document as %fileName. Do you want to join?"
-msgstr "%userName heeft dit document opgeslagen als %fileName. Wilt u meedoen?"
+msgid "{user}Name saved this document as {filename}. Do you want to join?"
+msgstr "{user}Name heeft dit document opgeslagen als {filename}. Wilt u meedoen?"
 
 #: src/core/Socket.js:1192
 msgid "The document is being renamed and will reload shortly"
@@ -2495,10 +2495,10 @@ msgstr "Meer informatie en ondersteuning"
 
 #: src/errormessages.js:26
 msgid ""
-"This service is limited to %0 documents, and %1 connections total by the "
+"This service is limited to {0} documents, and {1} connections total by the "
 "admin. This limit has been reached. Please try again later."
 msgstr ""
-"Deze dienst is in het geheel door de beheerder beperkt tot %0 documenten en "
+"Deze dienst is in het geheel door de beheerder beperkt tot {0} documenten en "
 "%1 verbindingen. Deze limiet werd bereikt. Probeer later opnieuw."
 
 #: src/errormessages.js:27
@@ -2518,8 +2518,8 @@ msgstr ""
 "beheerder als het probleem zich blijft voordoen."
 
 #: src/errormessages.js:29
-msgid "Authorization error was: '%errorMessage'."
-msgstr "Autorisatiefout was: '%errorMessage'."
+msgid "Authorization error was: '{errormessage}'."
+msgstr "Autorisatiefout was: '{errormessage}'."
 
 #: src/errormessages.js:30
 msgid "Wrong or missing WOPISrc parameter, please contact support."
@@ -2528,10 +2528,10 @@ msgstr ""
 
 #: src/errormessages.js:31
 msgid ""
-"Your session will expire in %time. Please save your work and refresh the "
+"Your session will expire in {time}. Please save your work and refresh the "
 "session (or webpage) to continue. You might need to login again."
 msgstr ""
-"Uw sessie verloopt over %time. Sla uw werk op en vernieuw de sessie (of "
+"Uw sessie verloopt over {time}. Sla uw werk op en vernieuw de sessie (of "
 "webpagina) om door te gaan. Mogelijk moet u opnieuw aanmelden."
 
 #: src/errormessages.js:32
@@ -2553,8 +2553,8 @@ msgstr ""
 "ondersteund is en niet beschadigd is en probeer opnieuw."
 
 #: src/errormessages.js:34
-msgid "Invalid link: '%url'"
-msgstr "Ongeldige koppeling: '%url'"
+msgid "Invalid link: '{url}'"
+msgstr "Ongeldige koppeling: '{url}'"
 
 #: src/errormessages.js:35
 msgid ""
@@ -2586,17 +2586,17 @@ msgstr ""
 
 #: src/errormessages.js:39
 msgid ""
-"Your %productName cluster appear to be mis-configured or scaling rapidly - "
+"Your {productname} cluster appear to be mis-configured or scaling rapidly - "
 "please contact your system administrator. Continuing with editing may "
 "result in multiple users not seeing each other, conflicts in the document "
-"storage and/or copy/paste problems. Expected serverId %0 for routeToken %1 "
-"but connected to serverId %2"
+"storage and/or copy/paste problems. Expected serverId {0} for routeToken {1} "
+"but connected to serverId {2}"
 msgstr ""
-"Uw %productName cluster lijkt verkeerd geconfigureerd te zijn of snel te "
+"Uw {productname} cluster lijkt verkeerd geconfigureerd te zijn of snel te "
 "schalen - neem contact op met uw systeembeheerder. Doorgaan met bewerken kan "
 "resulteren in meerdere gebruikers die elkaar niet zien, conflicten in de "
-"documentopslag en/of kopieer/plakproblemen. Verwacht serverId %0 voor "
-"routeToken %1 maar verbonden met serverId %2"
+"documentopslag en/of kopieer/plakproblemen. Verwacht serverId {0} voor "
+"routeToken {1} maar verbonden met serverId {2}"
 
 #: src/errormessages.js:40
 msgid ""
@@ -2819,8 +2819,8 @@ msgstr "Waarschuwing! De browser die u gebruikt wordt niet ondersteund."
 
 #: src/map/Clipboard.js:180
 msgid ""
-"To paste outside %productName, please first click the 'download' button"
-msgstr "Klik eerst op de knop 'download', om buiten %productName te plakken"
+"To paste outside {productname}, please first click the 'download' button"
+msgstr "Klik eerst op de knop 'download', om buiten {productname} te plakken"
 
 #: src/map/Clipboard.js:188
 msgid "Copying from the document disabled"
@@ -2897,17 +2897,17 @@ msgstr "Stuur ons uw bevindingen"
 #: src/map/handler/Map.FileInserter.js:105
 #, javascript-format
 msgid ""
-"The file of type: %0 cannot be uploaded to server since the file has no name"
+"The file of type: {0} cannot be uploaded to server since the file has no name"
 msgstr ""
-"Bestand van het type: %0 kan niet geüpload worden naar de server omdat het "
+"Bestand van het type: {0} kan niet geüpload worden naar de server omdat het "
 "bestand geen naam heeft"
 
 #: src/map/handler/Map.FileInserter.js:107
 #, javascript-format
 msgid ""
-"The file of type: %0 cannot be uploaded to server since the file is empty"
+"The file of type: {0} cannot be uploaded to server since the file is empty"
 msgstr ""
-"Bestand van het type: %0 kan niet geüpload worden naar de server omdat het "
+"Bestand van het type: {0} kan niet geüpload worden naar de server omdat het "
 "bestand leeg is"
 
 #: src/map/handler/Map.FileInserter.js:138
@@ -2915,8 +2915,8 @@ msgid "Uploading..."
 msgstr "Bezig met uploaden…"
 
 #: src/map/handler/Map.FileInserter.js:161
-msgid "Uploading file to server failed with status: %0"
-msgstr "Het uploaden van het bestand naar de server is mislukt met status: %0"
+msgid "Uploading file to server failed with status: {0}"
+msgstr "Het uploaden van het bestand naar de server is mislukt met status: {0}"
 
 #: src/map/handler/Map.SlideShow.js:55
 msgid "Empty Slide Show"
@@ -2993,8 +2993,8 @@ msgid "Collabora Online Welcome"
 msgstr "Collabora Online Welkom"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:26-7
-msgid "Explore The New %coolVersion"
-msgstr "Maak kennis met versie %coolVersion"
+msgid "Explore The New {coolversion}"
+msgstr "Maak kennis met versie {coolversion}"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:27-7
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:38-7
@@ -3132,13 +3132,13 @@ msgstr ""
 #~ "applications it is necessary to first download them onto your device. To do "
 #~ "that press the \"Start download\" button below, and when complete click "
 #~ "\"Confirm copy to clipboard\".</p><p>If you are copy and pasting between "
-#~ "documents inside %productName, there is no need to download.</p>"
+#~ "documents inside {productname}, there is no need to download.</p>"
 #~ msgstr ""
 #~ "<p>Als u grotere delen van het document wilt delen met andere programma's, "
 #~ "is het nodig die eerst te downloaden naar uw apparaat. Om dat te doen klik u "
 #~ "de knop 'Start download' hieronder, en klik daarna 'Bevestig kopiëren naar "
 #~ "klembord'. </p><p>Downloaden is niet nodig als u kopieert en plakt tussen "
-#~ "documenten in %productName.</p>"
+#~ "documenten in {productname}.</p>"
 
 #~ msgid "Collapse Notebook Bar"
 #~ msgstr "Notebook Balk samenvouwen"
@@ -3319,7 +3319,7 @@ msgstr ""
 #~ msgid ""
 #~ "You are leaving the editor, are you sure you want to visit the following "
 #~ "URL?"
-#~ msgstr "U verlaat de editor, weet u zeker dat u %url wilt bezoeken?"
+#~ msgstr "U verlaat de editor, weet u zeker dat u {url} wilt bezoeken?"
 
 #~ msgid "Add/Edit Citation"
 #~ msgstr "Citaat toevoegen/bewerken"
@@ -3373,21 +3373,21 @@ msgstr ""
 #~ msgstr "Ik begrijp de risico's"
 
 #, javascript-format
-#~ msgid "Explore the new %coolVersion"
-#~ msgstr "Ontdek de nieuwe %coolVersion"
+#~ msgid "Explore the new {coolversion}"
+#~ msgstr "Ontdek de nieuwe {coolversion}"
 
 #, javascript-format
 #~ msgid ""
 #~ "Enjoy the latest developments in online productivity, free for you to use, "
 #~ "to explore and to use with others in the browser. <a href=\"%coolAppsURL\" "
 #~ "target=\"_blank\">Apps</a> are also available for Android and iOS. "
-#~ "%coolVersion introduces important improvements, in the areas of usability, "
+#~ "{coolversion} introduces important improvements, in the areas of usability, "
 #~ "visual presentation and performance."
 #~ msgstr ""
 #~ "Geniet van de laatste ontwikkelingen in online productiviteit, vrij voor "
 #~ "jouw om te gebruiken, te ontdekken en met anderen samen te werken in de "
 #~ "browser. <a href=\"%coolAppsURL\" target=\"_blank\">Apps</a> zijn ook "
-#~ "beschikbaar voor Android en iOS. %coolVersion introduceert belangrijke "
+#~ "beschikbaar voor Android en iOS. {coolversion} introduceert belangrijke "
 #~ "verbeteringen, op het gebied van gebruiksgemak, visuele presentatie en "
 #~ "snelheid."
 

@@ -539,11 +539,11 @@ L.Map.include({
 			}
 		}
 
-		// Substitute %productName in Online Help and replace special Mac key names
+		// Substitute {productname} in Online Help and replace special Mac key names
 		if (id === 'online-help-content') {
 			var productNameContent = contentElement.querySelectorAll('span.productname');
 			for (i = 0, max = productNameContent.length; i < max; i++) {
-				productNameContent[i].innerHTML = productNameContent[i].innerHTML.replace(/%productName/g, productName);
+				productNameContent[i].innerHTML = productNameContent[i].innerHTML.replace('{productname}', productName);
 			}
 			document.getElementById('online-help-content').innerHTML = L.Util.replaceCtrlAltInMac(document.getElementById('online-help-content').innerHTML);
 		}
@@ -740,7 +740,7 @@ L.Map.include({
 			  lowerStr.startsWith('ftp://') || lowerStr.startsWith('mailto:'))) {
 			// Regular expression to test if the string is an email address
 			const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-			if (emailPattern.test(str)) 
+			if (emailPattern.test(str))
 				str = 'mailto:' + str;
 			else
 				str = 'http://' + str;

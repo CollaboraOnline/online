@@ -323,8 +323,8 @@ msgid "Failed to set jwt authentication cookie over insecure connection"
 msgstr "接続が安全ではないのでJWT 認証 Cookie の設定が失敗しました"
 
 #: admin/src/AdminSocketOverview.js:424
-msgid "Failed to authenticate this session over protocol %0"
-msgstr "プロトコル %0 でこのセッションを認証できませんでした"
+msgid "Failed to authenticate this session over protocol {0}"
+msgstr "プロトコル {0} でこのセッションを認証できませんでした"
 
 #: admin/src/AdminSocketOverview.js:429
 msgid "Warning"
@@ -403,8 +403,8 @@ msgid "Automatic color"
 msgstr "色の自動設定"
 
 #: src/control/Control.AboutDialog.ts:72
-msgid "This version of %productName is powered by"
-msgstr "このバージョンの %productName は以下で動作しています"
+msgid "This version of {productname} is powered by"
+msgstr "このバージョンの {productname} は以下で動作しています"
 
 #: src/control/Control.AboutDialog.ts:95
 msgid "\"Slow Proxy\""
@@ -459,8 +459,8 @@ msgid "Don't show this again"
 msgstr "今後表示しない"
 
 #: src/control/Control.AlertDialog.js:105
-msgid "The server encountered a %0 error while parsing the %1 command."
-msgstr "サーバーでの %1 コマンドの解析中に %0 エラーが発生しました。"
+msgid "The server encountered a {0} error while parsing the {1} command."
+msgstr "サーバーでの {1} コマンドの解析中に {0} エラーが発生しました。"
 
 #: src/control/Control.Command.js:89
 msgid "Unlock"
@@ -530,9 +530,9 @@ msgstr "選択中のものをダウンロード"
 
 #: src/control/Control.DownloadProgress.js:47
 msgid ""
-"If you want to share large elements outside of %productName it's necessary "
+"If you want to share large elements outside of {productname} it's necessary "
 "to first download them."
-msgstr "%productNameを共有する場合はダウロードしてから共有してください。"
+msgstr "{productname}を共有する場合はダウロードしてから共有してください。"
 
 #: src/control/Control.DownloadProgress.js:60
 #: src/control/Control.NotebookbarCalc.js:212
@@ -1780,8 +1780,8 @@ msgid "Copy Sheet..."
 msgstr "シートをコピーする..."
 
 #: src/control/Control.Tabs.js:388
-msgid "Are you sure you want to delete sheet, %sheet%?"
-msgstr "選択したシート %sheet% を削除しますか？"
+msgid "Are you sure you want to delete sheet, {sheet}?"
+msgstr "選択したシート {sheet} を削除しますか？"
 
 #: src/control/Control.Tabs.js:399
 msgid "Rename sheet"
@@ -1831,16 +1831,16 @@ msgid "Show Menu"
 msgstr "メニューを表示"
 
 #: src/control/Control.UserList.ts:54
-msgid "%user has joined"
-msgstr "%user が加わりました"
+msgid "{user} has joined"
+msgstr "{user} が加わりました"
 
 #: src/control/Control.UserList.ts:55
-msgid "%user has left"
-msgstr "%user が離れました"
+msgid "{user} has left"
+msgstr "{user} が離れました"
 
 #: src/control/Control.UserList.ts:56
-msgid "Following %user"
-msgstr "フォロー %user"
+msgid "Following {user}"
+msgstr "フォロー {user}"
 
 #: src/control/Control.UserList.ts:57
 msgid "Following the editor"
@@ -1851,8 +1851,8 @@ msgid "Stop following"
 msgstr "フォロー停止"
 
 #: src/control/Control.UserList.ts:59
-msgid "Avatar for %user"
-msgstr "%user のアバター"
+msgid "Avatar for {user}"
+msgstr "{user} のアバター"
 
 #: src/control/Control.UserList.ts:79
 msgid "%n users"
@@ -2238,7 +2238,7 @@ msgid "Headings and objects that you add to the document will appear here"
 msgstr "追加した見出しとオブジェクトはここに表示されます"
 
 #: src/core/Socket.js:65
-msgid "Oops, there is a problem connecting to %productName: "
+msgid "Oops, there is a problem connecting to {productname}: "
 msgstr "あれれ〜？、ドキュメントへの接続に問題が発生しました "
 
 #: src/core/Socket.js:653
@@ -2344,8 +2344,8 @@ msgid "Someone"
 msgstr "ユーザー"
 
 #: src/core/Socket.js:1175
-msgid "%userName saved this document as %fileName. Do you want to join?"
-msgstr "%userNameがドキュメントを %fileNameで保存しました。参加しませんか？"
+msgid "{user}Name saved this document as {filename}. Do you want to join?"
+msgstr "{user}Nameがドキュメントを {filename}で保存しました。参加しませんか？"
 
 #: src/core/Socket.js:1192
 msgid "The document is being renamed and will reload shortly"
@@ -2465,9 +2465,9 @@ msgstr "詳しいサポート情報"
 
 #: src/errormessages.js:26
 msgid ""
-"This service is limited to %0 documents, and %1 connections total by the "
+"This service is limited to {0} documents, and {1} connections total by the "
 "admin. This limit has been reached. Please try again later."
-msgstr "このサーバーは管理者によってドキュメント数 %0 、コネクション数 %1 "
+msgstr "このサーバーは管理者によってドキュメント数 {0} 、コネクション数 {1} "
 "に制限されています。制限に到達しました。後ほど再度試してください。"
 
 #: src/errormessages.js:27
@@ -2485,8 +2485,8 @@ msgstr "認証されていないWOPIホストです。後ほど再度試して�
 "報告してください。"
 
 #: src/errormessages.js:29
-msgid "Authorization error was: '%errorMessage'."
-msgstr "認証エラーは「%errorMessage」です。"
+msgid "Authorization error was: '{errormessage}'."
+msgstr "認証エラーは「{errormessage}」です。"
 
 #: src/errormessages.js:30
 msgid "Wrong or missing WOPISrc parameter, please contact support."
@@ -2495,9 +2495,9 @@ msgstr "WOPISrcパラメータが間違っているか若しくは不足して�
 
 #: src/errormessages.js:31
 msgid ""
-"Your session will expire in %time. Please save your work and refresh the "
+"Your session will expire in {time}. Please save your work and refresh the "
 "session (or webpage) to continue. You might need to login again."
-msgstr "セッションが %time 後に期限切れになります。継続するには作業を保存してセッショ"
+msgstr "セッションが {time} 後に期限切れになります。継続するには作業を保存してセッショ"
 "ン（あるいはウェブページ）を再読込してください。"
 
 #: src/errormessages.js:32
@@ -2518,8 +2518,8 @@ msgstr "ドキュメントの読み込みに失敗しました。ファイル形
 "ファイルが壊れていないことを確認した上で、再度試してください。"
 
 #: src/errormessages.js:34
-msgid "Invalid link: '%url'"
-msgstr "無効なリンク: '%url'"
+msgid "Invalid link: '{url}'"
+msgstr "無効なリンク: '{url}'"
 
 #: src/errormessages.js:35
 msgid ""
@@ -2548,16 +2548,16 @@ msgstr "現在のドキュメントはセッションクリーニング中なの
 
 #: src/errormessages.js:39
 msgid ""
-"Your %productName cluster appear to be mis-configured or scaling rapidly - "
+"Your {productname} cluster appear to be mis-configured or scaling rapidly - "
 "please contact your system administrator. Continuing with editing may "
 "result in multiple users not seeing each other, conflicts in the document "
-"storage and/or copy/paste problems. Expected serverId %0 for routeToken %1 "
-"but connected to serverId %2"
+"storage and/or copy/paste problems. Expected serverId {0} for routeToken {1} "
+"but connected to serverId {2}"
 msgstr ""
-"%productNameのクラスタが設定が間違っています-システム管理者に連絡してください"
+"{productname}のクラスタが設定が間違っています-システム管理者に連絡してください"
 "。他のユーザーが同じデータに対して同時に変更を行っている場合はデータコンフリ"
-"クトする可能性が高いです。Expected serverId %0 for routeToken %1 but "
-"connected to serverId %2"
+"クトする可能性が高いです。Expected serverId {0} for routeToken {1} but "
+"connected to serverId {2}"
 
 #: src/errormessages.js:40
 msgid ""
@@ -2759,8 +2759,8 @@ msgstr "警告！あなたの使用しているブラウザはサポートされ
 
 #: src/map/Clipboard.js:180
 msgid ""
-"To paste outside %productName, please first click the 'download' button"
-msgstr "%productNameをコピーして、downloadボタンをクリックしてください"
+"To paste outside {productname}, please first click the 'download' button"
+msgstr "{productname}をコピーして、downloadボタンをクリックしてください"
 
 #: src/map/Clipboard.js:188
 msgid "Copying from the document disabled"
@@ -2837,22 +2837,22 @@ msgstr "ご意見をお寄せください"
 #: src/map/handler/Map.FileInserter.js:105
 #, javascript-format
 msgid ""
-"The file of type: %0 cannot be uploaded to server since the file has no name"
-msgstr "タイプ: %0 のファイルは名前がないため、サーバーにアップロードできません"
+"The file of type: {0} cannot be uploaded to server since the file has no name"
+msgstr "タイプ: {0} のファイルは名前がないため、サーバーにアップロードできません"
 
 #: src/map/handler/Map.FileInserter.js:107
 #, javascript-format
 msgid ""
-"The file of type: %0 cannot be uploaded to server since the file is empty"
-msgstr "タイプ: %0 のファイルはないため、サーバーにアップロードできません"
+"The file of type: {0} cannot be uploaded to server since the file is empty"
+msgstr "タイプ: {0} のファイルはないため、サーバーにアップロードできません"
 
 #: src/map/handler/Map.FileInserter.js:138
 msgid "Uploading..."
 msgstr "アップロード中..."
 
 #: src/map/handler/Map.FileInserter.js:161
-msgid "Uploading file to server failed with status: %0"
-msgstr "ステータス: %0でファイルをサーバーにアップロードできませんでした"
+msgid "Uploading file to server failed with status: {0}"
+msgstr "ステータス: {0}でファイルをサーバーにアップロードできませんでした"
 
 #: src/map/handler/Map.SlideShow.js:55
 msgid "Empty Slide Show"
@@ -2928,8 +2928,8 @@ msgid "Collabora Online Welcome"
 msgstr "ようこそCollabora Onlineへ"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:26-7
-msgid "Explore The New %coolVersion"
-msgstr "新ヴァージョン%coolVersion"
+msgid "Explore The New {coolversion}"
+msgstr "新ヴァージョン{coolversion}"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:27-7
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:38-7

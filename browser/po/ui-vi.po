@@ -323,8 +323,8 @@ msgid "Failed to set jwt authentication cookie over insecure connection"
 msgstr "Không đặt được cookie xác thực jwt qua kết nối không an toàn"
 
 #: admin/src/AdminSocketOverview.js:424
-msgid "Failed to authenticate this session over protocol %0"
-msgstr "Không xác thực được phiên này qua giao thức %0"
+msgid "Failed to authenticate this session over protocol {0}"
+msgstr "Không xác thực được phiên này qua giao thức {0}"
 
 #: admin/src/AdminSocketOverview.js:429
 msgid "Warning"
@@ -403,8 +403,8 @@ msgid "Automatic color"
 msgstr "Màu tự động"
 
 #: src/control/Control.AboutDialog.ts:72
-msgid "This version of %productName is powered by"
-msgstr "Phiên bản %productName này được cung cấp bởi"
+msgid "This version of {productname} is powered by"
+msgstr "Phiên bản {productname} này được cung cấp bởi"
 
 #: src/control/Control.AboutDialog.ts:95
 msgid "\"Slow Proxy\""
@@ -456,8 +456,8 @@ msgid "Don't show this again"
 msgstr ""
 
 #: src/control/Control.AlertDialog.js:105
-msgid "The server encountered a %0 error while parsing the %1 command."
-msgstr "Máy chủ gặp lỗi %0 khi phân tích cú pháp lệnh %1."
+msgid "The server encountered a {0} error while parsing the {1} command."
+msgstr "Máy chủ gặp lỗi {0} khi phân tích cú pháp lệnh {1}."
 
 #: src/control/Control.Command.js:89
 msgid "Unlock"
@@ -527,7 +527,7 @@ msgstr ""
 
 #: src/control/Control.DownloadProgress.js:47
 msgid ""
-"If you want to share large elements outside of %productName it's necessary "
+"If you want to share large elements outside of {productname} it's necessary "
 "to first download them."
 msgstr ""
 
@@ -1780,8 +1780,8 @@ msgid "Copy Sheet..."
 msgstr "Sao chép trang..."
 
 #: src/control/Control.Tabs.js:388
-msgid "Are you sure you want to delete sheet, %sheet%?"
-msgstr "Bạn có chắc muốn xóa trang tính, %sheet%?"
+msgid "Are you sure you want to delete sheet, {sheet}?"
+msgstr "Bạn có chắc muốn xóa trang tính, {sheet}?"
 
 #: src/control/Control.Tabs.js:399
 msgid "Rename sheet"
@@ -1832,15 +1832,15 @@ msgid "Show Menu"
 msgstr ""
 
 #: src/control/Control.UserList.ts:54
-msgid "%user has joined"
-msgstr "%user đã tham gia"
+msgid "{user} has joined"
+msgstr "{user} đã tham gia"
 
 #: src/control/Control.UserList.ts:55
-msgid "%user has left"
-msgstr "%user đã rời đi"
+msgid "{user} has left"
+msgstr "{user} đã rời đi"
 
 #: src/control/Control.UserList.ts:56
-msgid "Following %user"
+msgid "Following {user}"
 msgstr ""
 
 #: src/control/Control.UserList.ts:57
@@ -1852,7 +1852,7 @@ msgid "Stop following"
 msgstr ""
 
 #: src/control/Control.UserList.ts:59
-msgid "Avatar for %user"
+msgid "Avatar for {user}"
 msgstr ""
 
 #: src/control/Control.UserList.ts:79
@@ -2242,8 +2242,8 @@ msgid "Headings and objects that you add to the document will appear here"
 msgstr "Các tiêu đề và đối tượng mà bạn thêm vào tài liệu sẽ xuất hiện ở đây"
 
 #: src/core/Socket.js:65
-msgid "Oops, there is a problem connecting to %productName: "
-msgstr "Rất tiếc, đã xảy ra sự cố khi kết nối với %productName: "
+msgid "Oops, there is a problem connecting to {productname}: "
+msgstr "Rất tiếc, đã xảy ra sự cố khi kết nối với {productname}: "
 
 #: src/core/Socket.js:653
 msgid "Server is now reachable. We have to refresh the page now."
@@ -2352,9 +2352,9 @@ msgid "Someone"
 msgstr "Ai đó"
 
 #: src/core/Socket.js:1175
-msgid "%userName saved this document as %fileName. Do you want to join?"
+msgid "{user}Name saved this document as {filename}. Do you want to join?"
 msgstr ""
-"%userName đã lưu tài liệu này dưới dạng %fileName. Bạn có muốn tham gia "
+"{user}Name đã lưu tài liệu này dưới dạng {filename}. Bạn có muốn tham gia "
 "không?"
 
 #: src/core/Socket.js:1192
@@ -2476,7 +2476,7 @@ msgstr "Thêm thông tin và hỗ trợ"
 
 #: src/errormessages.js:26
 msgid ""
-"This service is limited to %0 documents, and %1 connections total by the "
+"This service is limited to {0} documents, and {1} connections total by the "
 "admin. This limit has been reached. Please try again later."
 msgstr ""
 "Dịch vụ này được quản trị viên giới hạn cho% 0 tài liệu và% 1 kết nối. Giới "
@@ -2499,7 +2499,7 @@ msgstr ""
 "trị viên của bạn nếu sự cố vẫn tiếp diễn."
 
 #: src/errormessages.js:29
-msgid "Authorization error was: '%errorMessage'."
+msgid "Authorization error was: '{errormessage}'."
 msgstr ""
 
 #: src/errormessages.js:30
@@ -2509,10 +2509,10 @@ msgstr ""
 
 #: src/errormessages.js:31
 msgid ""
-"Your session will expire in %time. Please save your work and refresh the "
+"Your session will expire in {time}. Please save your work and refresh the "
 "session (or webpage) to continue. You might need to login again."
 msgstr ""
-"Phiên làm việc của bạn sẽ hết hạn sau %time. Vui lòng lưu công việc của bạn "
+"Phiên làm việc của bạn sẽ hết hạn sau {time}. Vui lòng lưu công việc của bạn "
 "và làm mới phiên (hoặc trang web) để tiếp tục."
 
 #: src/errormessages.js:32
@@ -2533,8 +2533,8 @@ msgstr ""
 "bị hỏng, sau đó thử lại."
 
 #: src/errormessages.js:34
-msgid "Invalid link: '%url'"
-msgstr "Liên kết không hợp lệ: '%url'"
+msgid "Invalid link: '{url}'"
+msgstr "Liên kết không hợp lệ: '{url}'"
 
 #: src/errormessages.js:35
 msgid ""
@@ -2564,17 +2564,17 @@ msgstr ""
 
 #: src/errormessages.js:39
 msgid ""
-"Your %productName cluster appear to be mis-configured or scaling rapidly - "
+"Your {productname} cluster appear to be mis-configured or scaling rapidly - "
 "please contact your system administrator. Continuing with editing may "
 "result in multiple users not seeing each other, conflicts in the document "
-"storage and/or copy/paste problems. Expected serverId %0 for routeToken %1 "
-"but connected to serverId %2"
+"storage and/or copy/paste problems. Expected serverId {0} for routeToken {1} "
+"but connected to serverId {2}"
 msgstr ""
-"Cụm %productName của bạn dường như bị định cấu hình sai hoặc mở rộng quy mô "
+"Cụm {productname} của bạn dường như bị định cấu hình sai hoặc mở rộng quy mô "
 "nhanh chóng - vui lòng liên hệ với quản trị viên hệ thống của bạn. Việc tiếp "
 "tục chỉnh sửa có thể dẫn đến việc nhiều người dùng không nhìn thấy nhau, "
 "xung đột trong việc lưu trữ tài liệu và/hoặc các vấn đề về sao chép/dán. Dự "
-"kiến kết nối serverId %0 cho routeToken %1 nhưng lại kết nối đến serverId %2"
+"kiến kết nối serverId {0} cho routeToken {1} nhưng lại kết nối đến serverId {2}"
 
 #: src/errormessages.js:40
 msgid ""
@@ -2777,9 +2777,9 @@ msgstr "Cảnh báo! Trình duyệt bạn đang sử dụng không được hỗ
 
 #: src/map/Clipboard.js:180
 msgid ""
-"To paste outside %productName, please first click the 'download' button"
+"To paste outside {productname}, please first click the 'download' button"
 msgstr ""
-"Để dán bên ngoài %productName, trước tiên, vui lòng nhấp vào nút 'tải xuống'"
+"Để dán bên ngoài {productname}, trước tiên, vui lòng nhấp vào nút 'tải xuống'"
 
 #: src/map/Clipboard.js:188
 msgid "Copying from the document disabled"
@@ -2859,22 +2859,22 @@ msgstr "Xin vui lòng gửi cho chúng tôi thông tin phản hồi của bạn"
 #: src/map/handler/Map.FileInserter.js:105
 #, javascript-format
 msgid ""
-"The file of type: %0 cannot be uploaded to server since the file has no name"
-msgstr "Tệp loại: %0 không thể được tải lên máy chủ vì tệp không có tên"
+"The file of type: {0} cannot be uploaded to server since the file has no name"
+msgstr "Tệp loại: {0} không thể được tải lên máy chủ vì tệp không có tên"
 
 #: src/map/handler/Map.FileInserter.js:107
 #, javascript-format
 msgid ""
-"The file of type: %0 cannot be uploaded to server since the file is empty"
-msgstr "Tệp loại: %0 không thể được tải lên máy chủ vì tệp trống"
+"The file of type: {0} cannot be uploaded to server since the file is empty"
+msgstr "Tệp loại: {0} không thể được tải lên máy chủ vì tệp trống"
 
 #: src/map/handler/Map.FileInserter.js:138
 msgid "Uploading..."
 msgstr "Đang tải lên..."
 
 #: src/map/handler/Map.FileInserter.js:161
-msgid "Uploading file to server failed with status: %0"
-msgstr "Tải tệp lên máy chủ không thành công với trạng thái: %0"
+msgid "Uploading file to server failed with status: {0}"
+msgstr "Tải tệp lên máy chủ không thành công với trạng thái: {0}"
 
 #: src/map/handler/Map.SlideShow.js:55
 msgid "Empty Slide Show"
@@ -2949,8 +2949,8 @@ msgid "Collabora Online Welcome"
 msgstr "Collabora Online Chào mừng"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:26-7
-msgid "Explore The New %coolVersion"
-msgstr "Khám phá phiên bản mới %coolVersion"
+msgid "Explore The New {coolversion}"
+msgstr "Khám phá phiên bản mới {coolversion}"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:27-7
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:38-7
@@ -3059,13 +3059,13 @@ msgstr ""
 #~ "applications it is necessary to first download them onto your device. To do "
 #~ "that press the \"Start download\" button below, and when complete click "
 #~ "\"Confirm copy to clipboard\".</p><p>If you are copy and pasting between "
-#~ "documents inside %productName, there is no need to download.</p>"
+#~ "documents inside {productname}, there is no need to download.</p>"
 #~ msgstr ""
 #~ "<p> Nếu bạn muốn chia sẻ các phần tử lớn hơn của tài liệu với các ứng dụng "
 #~ "khác, trước tiên bạn cần tải chúng xuống thiết bị của mình. Để thực hiện "
 #~ "việc đó, hãy nhấn nút \"Bắt đầu tải xuống\" bên dưới và khi hoàn tất, hãy "
 #~ "nhấp vào \"Xác nhận sao chép vào khay nhớ tạm\". </p> <p> Nếu bạn đang sao "
-#~ "chép và dán giữa các tài liệu bên trong %productName, thì không cần tải "
+#~ "chép và dán giữa các tài liệu bên trong {productname}, thì không cần tải "
 #~ "xuống. </p>"
 
 #~ msgid "Collapse Notebook Bar"
@@ -3276,13 +3276,13 @@ msgstr ""
 #~ "Enjoy the latest developments in online productivity, free for you to use, "
 #~ "to explore and to use with others in the browser. <a href=\"%coolAppsURL\" "
 #~ "target=\"_blank\">Apps</a> are also available for Android and iOS. "
-#~ "%coolVersion introduces important improvements, in the areas of usability, "
+#~ "{coolversion} introduces important improvements, in the areas of usability, "
 #~ "visual presentation and performance."
 #~ msgstr ""
 #~ "Hãy tận hưởng những sự phát triển mới nhất trong năng suất trực tuyến, miễn "
 #~ "phí sử dụng, khám phá và sử dụng cùng những người khác trong trình duyệt. <a "
 #~ "href=\"%coolAppsURL\" target=\"_blank\">Các ứng dụng</a> cũng có sẵn cho "
-#~ "Android và iOS. %coolVersion giới thiệu các cải thiện quan trọng về mặt độ "
+#~ "Android và iOS. {coolversion} giới thiệu các cải thiện quan trọng về mặt độ "
 #~ "dễ sử dụng, ngoại hình và hiệu năng."
 
 #, javascript-format

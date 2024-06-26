@@ -44,7 +44,7 @@ L.Control.DownloadProgress = L.Control.extend({
 
 	_getLargeCopyPasteMessage: function () {
 		return this._map._clip._substProductName(
-			_('If you want to share large elements outside of %productName it\'s necessary to first download them.'));
+			_('If you want to share large elements outside of {productname} it\'s necessary to first download them.'));
 	},
 
 	_getDownloadProgressDialogId: function () {

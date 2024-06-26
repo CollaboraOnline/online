@@ -1500,8 +1500,8 @@ msgid "Select all in drawing page"
 msgstr "Вибрати все на сторінці"
 
 #: html/cool-help.html%2Bdiv.h1:394-5
-msgid "<span class=\"productname\">%productName</span> Help"
-msgstr "<span class=\"productname\">%productName</span> Довідка"
+msgid "<span class=\"productname\">{productname}</span> Help"
+msgstr "<span class=\"productname\">{productname}</span> Довідка"
 
 #: html/cool-help.html%2Bdiv.p:395-5
 #: html/cool-help.html%2Bdiv.div.h3:431-5
@@ -1510,8 +1510,8 @@ msgstr "Спільне редагування"
 
 #: html/cool-help.html%2Bdiv.p:396-5
 #: html/cool-help.html%2Bdiv.div.h3:442-5
-msgid "<span class=\"productname\">%productName</span> user interface"
-msgstr "інтерфейс користувача <span class=\"productname\">%productName</span>"
+msgid "<span class=\"productname\">{productname}</span> user interface"
+msgstr "інтерфейс користувача <span class=\"productname\">{productname}</span>"
 
 #: html/cool-help.html%2Bdiv.p:397-5
 #: html/cool-help.html%2Bdiv.div.h3:480-5
@@ -1534,8 +1534,8 @@ msgstr "Більше функцій"
 
 #: html/cool-help.html%2Bdiv.div.p:401-9
 #: html/cool-help.html%2Bdiv.div.h2:560-5
-msgid "<span class=\"productname\">%productName</span> spreadsheets"
-msgstr "<span class=\"productname\">%productName</span> таблиці"
+msgid "<span class=\"productname\">{productname}</span> spreadsheets"
+msgstr "<span class=\"productname\">{productname}</span> таблиці"
 
 #: html/cool-help.html%2Bdiv.div.p:402-9
 #: html/cool-help.html%2Bdiv.div.div.h3:563-5
@@ -1560,8 +1560,8 @@ msgstr "Таблиці"
 
 #: html/cool-help.html%2Bdiv.div.p:409-9
 #: html/cool-help.html%2Bdiv.div.h2:629-5
-msgid "<span class=\"productname\">%productName</span> text documents"
-msgstr "<span class=\"productname\">%productName</span> текстові документи"
+msgid "<span class=\"productname\">{productname}</span> text documents"
+msgstr "<span class=\"productname\">{productname}</span> текстові документи"
 
 #: html/cool-help.html%2Bdiv.div.p:410-9
 #: html/cool-help.html%2Bdiv.div.div.h3:632-5
@@ -1585,8 +1585,8 @@ msgstr "Текстові документи"
 
 #: html/cool-help.html%2Bdiv.div.p:416-9
 #: html/cool-help.html%2Bdiv.div.h2:683-5
-msgid "<span class=\"productname\">%productName</span> presentations"
-msgstr "<span class=\"productname\">%productName</span> презентації"
+msgid "<span class=\"productname\">{productname}</span> presentations"
+msgstr "<span class=\"productname\">{productname}</span> презентації"
 
 #: html/cool-help.html%2Bdiv.div.p:417-9
 #: html/cool-help.html%2Bdiv.div.div.h3:686-5
@@ -1615,12 +1615,12 @@ msgstr "Часто запитувані питання"
 
 #: html/cool-help.html%2Bdiv.div.p:426-5
 msgid ""
-"<span class=\"productname\">%productName</span> allows you to create and "
+"<span class=\"productname\">{productname}</span> allows you to create and "
 "edit office documents text documents, spreadsheets and presentations "
 "directly in your browser, in a simple and straight-forward way. You can work "
 "alone on a document, or collaboratively as part of a team."
 msgstr ""
-"<span class=\"productname\">%productName</span> дозволяє Вам створювати та "
+"<span class=\"productname\">{productname}</span> дозволяє Вам створювати та "
 "редагувати офісні текстові документи, таблиці та презентації прямо у Вашому "
 "браузері, просто і зрозуміло. Ви можете працювати над документом самостійно "
 "або спільно, у складі команди."
@@ -1645,21 +1645,21 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.ul.li.p:436-11
 msgid ""
-"<span class=\"productname\">%productName</span> notifies you with a small "
+"<span class=\"productname\">{productname}</span> notifies you with a small "
 "notification in the footer when a new user enters or when a user leaves."
 msgstr ""
-"<span class=\"productname\">%productName</span> показує невелике сповіщення "
+"<span class=\"productname\">{productname}</span> показує невелике сповіщення "
 "у нижньому колонтитулі, коли входить новий користувач або коли хтось "
 "виходить."
 
 #: html/cool-help.html%2Bdiv.div.div.p:443-30
 msgid ""
-"<span class=\"productname\">%productName</span> uses modern browser "
+"<span class=\"productname\">{productname}</span> uses modern browser "
 "resources to adapt the user interface to the size of the viewing area, "
 "including small screens found in mobile devices. The interface is composed "
 "of:"
 msgstr ""
-"<span class=\"productname\">%productName</span> використовує сучасні ресурси "
+"<span class=\"productname\">{productname}</span> використовує сучасні ресурси "
 "браузера для адаптації користувальницького інтерфейсу до розміру області "
 "перегляду, зокрема до невеликих екранів мобільних пристроів. Інтерфейс "
 "складається з:"
@@ -1780,39 +1780,39 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.p:481-5
 msgid ""
 "Your documents are stored and managed in the cloud storage that is "
-"integrated with <span class=\"productname\">%productName</span>."
+"integrated with <span class=\"productname\">{productname}</span>."
 msgstr ""
 "Ваші документи збережено до хмарного сховища, інтегрованого з <span class="
-"\"productname\">%productName</span>."
+"\"productname\">{productname}</span>."
 
 #: html/cool-help.html%2Bdiv.div.div.p:482-30
 msgid ""
 "To download a document download it from the <span class=\"productname\""
-">%productName</span> application’s <span class=\"ui\">File</span> menu. The "
+">{productname}</span> application’s <span class=\"ui\">File</span> menu. The "
 "download formats available depends on the application. All applications "
 "exports documents in PDF format."
 msgstr ""
 "Щоб завантажити документ, зробіть це з меню <span class=\"ui\">Файл</span> "
-"програми <span class=\"productname\">%productName</span>. Формати для "
+"програми <span class=\"productname\">{productname}</span>. Формати для "
 "завантаження залежать від програми. Всі програми можуть експортувати у PDF "
 "формат."
 
 #: html/cool-help.html%2Bdiv.div.div.p:483-30
 msgid ""
 "To open document, click on the file to open the <span class=\"productname\""
-">%productName</span> module associated to the document format."
+">{productname}</span> module associated to the document format."
 msgstr ""
 "Щоб відкрити документ, клацніть на файлі. Це відкриє модуль <span class="
-"\"productname\">%productName</span>, асоційований з форматом документа."
+"\"productname\">{productname}</span>, асоційований з форматом документа."
 
 #: html/cool-help.html%2Bdiv.div.div.p:484-30
 msgid ""
-"Documents in <span class=\"productname\">%productName</span> save "
+"Documents in <span class=\"productname\">{productname}</span> save "
 "automatically, but if you are concerned that a document is synchronized as "
 "quickly as possible you can also force saving using the <span class=\"ui\""
 ">File</span> menu’s <span class=\"ui\">Save</span> entry."
 msgstr ""
-"Документи у <span class=\"productname\">%productName</span> зберігаються "
+"Документи у <span class=\"productname\">{productname}</span> зберігаються "
 "автоматично, але якщо Вам потрібно синхронізувати документ швидше, зайдіть у "
 "меню <span class=\"ui\">Файл</span>, пункт <span class=\"ui\""
 ">Зберегти</span>."
@@ -1849,7 +1849,7 @@ msgstr "Копіювання і вставка"
 msgid ""
 "Rich content copy/cut and paste is supported, not only within a given "
 "document, but also across documents on the same or different <span class="
-"\"productname\">%productName</span>. For these internal uses, users can copy/"
+"\"productname\">{productname}</span>. For these internal uses, users can copy/"
 "cut content, including images and mixed content, on PC by using the keyboard "
 "shortcuts directly (<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>X</"
 "kbd>, <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd>, "
@@ -1861,7 +1861,7 @@ msgid ""
 msgstr ""
 "Існує підтримка копіювання/вирізки насиченого вмісту, не лише в межах одного "
 "документа, але й між документами одного або різних <span class=\"productname"
-"\">%productName</span>. Для цих внутрішніх використань на ПК користувачі "
+"\">{productname}</span>. Для цих внутрішніх використань на ПК користувачі "
 "можуть копіювати/вирізати вміст, включно з зображеннями та іншим вмістом, за "
 "допомогою комбінацій клавіш (<kbd>Ctrl</kbd><span class=\"kbd--plus\""
 ">+</span><kbd>X</kbd>, <kbd>Ctrl</kbd><span class=\"kbd--plus\""
@@ -1936,12 +1936,12 @@ msgstr "Неактивний документ"
 
 #: html/cool-help.html%2Bdiv.div.div.p:506-5
 msgid ""
-"When <span class=\"productname\">%productName</span> detects that there has "
+"When <span class=\"productname\">{productname}</span> detects that there has "
 "not been any activity in the browser for a while, it puts the document in an "
 "“Inactive” state. The document is shown with a transparent gray overlay, "
 "with the message “Inactive document – please click to resume editing”."
 msgstr ""
-"Коли <span class=\"productname\">%productName</span> виявляє, що у браузері "
+"Коли <span class=\"productname\">{productname}</span> виявляє, що у браузері "
 "протягом певного часу не було ніякої активності, він переводить документ у "
 "\"Неактивний\" стан. Документ буде показано з прозорою сірою шаллю і "
 "повідомленням \"Неактивний документ - натисніть будь-яку клавішу для "
@@ -2019,10 +2019,10 @@ msgstr "Вставлення діаграм"
 
 #: html/cool-help.html%2Bdiv.div.div.p:524-5
 msgid ""
-"<span class=\"productname\">%productName</span> supports inserting and "
+"<span class=\"productname\">{productname}</span> supports inserting and "
 "visualization of charts in documents. To add a chart:"
 msgstr ""
-"<span class=\"productname\">%productName</span> підтримує вставлення та "
+"<span class=\"productname\">{productname}</span> підтримує вставлення та "
 "візуалізацію діаграм у документи. Щоб додати діаграму:"
 
 #: html/cool-help.html%2Bdiv.div.div.ol.li.p:526-11
@@ -2085,11 +2085,11 @@ msgstr "Обробка зображень"
 
 #: html/cool-help.html%2Bdiv.div.div.p:540-5
 msgid ""
-"<span class=\"productname\">%productName</span> inserts images in the text "
+"<span class=\"productname\">{productname}</span> inserts images in the text "
 "document from your local computer or from your cloud storage. Inserted "
 "images are always embedded in the document."
 msgstr ""
-"<span class=\"productname\">%productName</span> вставляє зображення в "
+"<span class=\"productname\">{productname}</span> вставляє зображення в "
 "текстовий документ з локального комп’ютера або з хмарного сховища. Вставлені "
 "зображення завжди вбудовуються в документ."
 
@@ -2129,11 +2129,11 @@ msgstr "Коментарі в документах"
 
 #: html/cool-help.html%2Bdiv.div.div.p:547-5
 msgid ""
-"Insert comments in <span class=\"productname\">%productName</span> in places "
+"Insert comments in <span class=\"productname\">{productname}</span> in places "
 "that need special reader attention. Comments are displayed on the right and "
 "carry the name and date of the issuer."
 msgstr ""
-"Вставляйте коментарі в <span class=\"productname\">%productName</span> у "
+"Вставляйте коментарі в <span class=\"productname\">{productname}</span> у "
 "місця, які потребують особливої уваги читачів. Коментарі відображаються "
 "праворуч і містять ім’я та дату видавця."
 
@@ -2156,12 +2156,12 @@ msgstr "Перевірка правопису"
 
 #: html/cool-help.html%2Bdiv.div.div.p:553-5
 msgid ""
-"<span class=\"productname\">%productName</span> can check spelling in text "
+"<span class=\"productname\">{productname}</span> can check spelling in text "
 "documents, spreadsheets and presentations. A red wavy underline indicates "
 "misspelled words. Click on the right mouse button to open a context menu "
 "with suggested misspelling corrections."
 msgstr ""
-"<span class=\"productname\">%productName</span> може перевіряти правопис у "
+"<span class=\"productname\">{productname}</span> може перевіряти правопис у "
 "текстових документах, електронних таблицях та презентаціях. Червоне хвилясте "
 "підкреслення вказує на неправильно написані слова. Клацніть правою кнопкою "
 "миші, щоб відкрити контекстне меню із запропонованими виправленнями помилок."
@@ -2243,25 +2243,25 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.div.p:587-30
 msgid ""
 "<span class=\"def\">Sorting data:</span> You can sort a list of numbers or "
-"text ascending or descending. <span class=\"productname\">%productName</"
+"text ascending or descending. <span class=\"productname\">{productname}</"
 "span> automatically detects cells that are headers, and adjoining columns, "
 "to extend the selection."
 msgstr ""
 "<span class=\"def\">Сортування даних:</span> Ви можете сортувати список "
 "чисел або тексту за зростанням або спаданням. <span class=\"productname\""
-">%productName</span> автоматично виявляє комірки, які є заголовками та "
+">{productname}</span> автоматично виявляє комірки, які є заголовками та "
 "суміжними стовпцями, щоб розширити виділення."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:588-30
 msgid ""
 "<span class=\"def\">Filtering data:</span> Filters and advanced filters "
 "allow you to work on certain filtered rows (records) of a data range. In the "
-"spreadsheets in <span class=\"productname\">%productName</span> there are "
+"spreadsheets in <span class=\"productname\">{productname}</span> there are "
 "various possibilities for applying filters."
 msgstr ""
 "<span class=\"def\">Фільтрування даних:</span> Фільтри та розширені фільтри "
 "дозволяють працювати з певними відфільтрованими рядками (записами) діапазону "
-"даних. У електронних таблицях у <span class=\"productname\">%productName</"
+"даних. У електронних таблицях у <span class=\"productname\">{productname}</"
 "span> є різні можливості застосування фільтрів."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:591-10
@@ -2378,20 +2378,20 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.div.p:622-5
 msgid ""
 "<span class=\"def\">Conditional formatting:</span> <span class=\"productname"
-"\">%productName</span> adds symbols to each cell of a range based on cells "
+"\">{productname}</span> adds symbols to each cell of a range based on cells "
 "conditions. Select the cell range and click the <span class=\"ui\""
 ">Conditional Formatting</span> icon on the toolbar. Select the symbol set to "
 "apply on the range."
 msgstr ""
 "<span class=\"def\">Умовне форматування:</span> <span class=\"productname\""
-">%productName</span> додає символи до кожної комірки діапазону на основі "
+">{productname}</span> додає символи до кожної комірки діапазону на основі "
 "умов комірок. Виділіть діапазон комірок і клацніть піктограму <span class="
 "\"ui\">Умовне форматування</span> на панелі інструментів. Виберіть набір "
 "символів, який застосовуватиметься до діапазону."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:633-30
 msgid ""
-"<span class=\"productname\">%productName</span> edits text documents in the "
+"<span class=\"productname\">{productname}</span> edits text documents in the "
 "same way you edit a desktop document. It provides a What You See Is What You "
 "Get (WYSIWYG) layout – that conveniently lays out the document as it will be "
 "printed. Operations like typing text, cut, copy and pasting contents, "
@@ -2399,7 +2399,7 @@ msgid ""
 "tables and charts, are similar to a desktop word processor. Use the "
 "keyboard, menus and toolbars to interact with your document."
 msgstr ""
-"<span class=\"productname\">%productName</span> редагує текстові документи "
+"<span class=\"productname\">{productname}</span> редагує текстові документи "
 "так само як ви редагуєте документ на комп'ютері. Він забезпечує макет «Ти "
 "бачиш — те, що отримуєш\" (WYSIWYG) — документ виглядаю так, як виглядатиме "
 "надрукованим. Такі операції, як набір тексту, вирізання, копіювання та "
@@ -2424,7 +2424,7 @@ msgstr "Форматування тексту"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:644-5
 msgid ""
-"<span class=\"productname\">%productName</span> supports modern techniques "
+"<span class=\"productname\">{productname}</span> supports modern techniques "
 "for paragraph formatting through styles. A style is a set of text properties "
 "(font, color, background and many more) labeled with a name, the style name. "
 "Use style to apply the same set of properties to many paragraphs in the "
@@ -2433,7 +2433,7 @@ msgid ""
 "changes formatting as well, simplifying the effort of formatting many "
 "paragraph individually."
 msgstr ""
-"<span class=\"productname\">%productName</span> підтримує сучасні методи "
+"<span class=\"productname\">{productname}</span> підтримує сучасні методи "
 "форматування абзаців за допомогою стилів. Стиль — це набір властивостей "
 "тексту (шрифт, колір, тло та багато іншого), позначений іменем, назвою "
 "стилю. Використовуйте стиль, щоб застосувати однаковий набір властивостей до "
@@ -2468,12 +2468,12 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.div.p:649-5
 msgid ""
 "<span class=\"def\">Style formatting:</span> <span class=\"productname\""
-">%productName</span> supports paragraph styles. You can apply an existing "
+">{productname}</span> supports paragraph styles. You can apply an existing "
 "paragraph style to a paragraph. Choose menu <span class=\"ui\">Edit</span> → "
 "<span class=\"ui\">Edit styles</span> to change style."
 msgstr ""
 "<span class=\"def\">Форматування стилів:</span> <span class=\"productname\""
-">%productName</span> підтримує стилі абзаців. До абзацу можна застосувати "
+">{productname}</span> підтримує стилі абзаців. До абзацу можна застосувати "
 "теперішній стиль абзацу. Виберіть меню <span class=\"ui\">Змінити</span> → "
 "<span class=\"ui\">Змінити стилі</span>, щоб змінити стиль."
 
@@ -2511,12 +2511,12 @@ msgstr "Відстеження змін"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:666-5
 msgid ""
-"When you turn on Track Changes, <span class=\"productname\">%productName</"
+"When you turn on Track Changes, <span class=\"productname\">{productname}</"
 "span> marks up new changes made to the document. Select this option again to "
 "turn it off."
 msgstr ""
 "Коли ви вмикаєте стеження за змінами, <span class=\"productname\""
-">%productName</span> позначає нові зміни, внесені в документ. Виберіть цей "
+">{productname}</span> позначає нові зміни, внесені в документ. Виберіть цей "
 "параметр ще раз, щоб вимкнути його."
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:667-29
@@ -2592,14 +2592,14 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:687-30
 msgid ""
-"<span class=\"productname\">%productName</span> Impress edits presentations "
+"<span class=\"productname\">{productname}</span> Impress edits presentations "
 "in a way that should be familiar to people. Operations like typing text, "
 "cut, copy and pasting contents, selecting text , inserting, resizing, "
 "anchoring images, adding and handling tables, are similar to a desktop "
 "presentation application. Use the keyboard, menus and toolbars to perform "
 "actions in your document."
 msgstr ""
-"<span class=\"productname\">%productName</span> Impress редагує презентації "
+"<span class=\"productname\">{productname}</span> Impress редагує презентації "
 "таким чином, щоб це було звично для людей. Такі операції, як набір тексту, "
 "вирізання, копіювання та вставлення вмісту, виділення тексту, вставка, зміна "
 "розміру, закріплення зображень, додавання та обробка таблиць, подібні до "
@@ -2608,22 +2608,22 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:693-5
 msgid ""
-"<span class=\"productname\">%productName</span> displays presentation slide "
+"<span class=\"productname\">{productname}</span> displays presentation slide "
 "shows, including a subset of slide transitions and object animations. Choose "
 "the slide show from the menu or click on icon in the bottom left toolbar in "
 "the slide pane."
 msgstr ""
-"<span class=\"productname\">%productName</span> показує слайд-шоу "
+"<span class=\"productname\">{productname}</span> показує слайд-шоу "
 "презентації, включно з підмножиною переходів слайдів та анімаціями об’єктів. "
 "Виберіть слайд-шоу з меню або натисніть на піктограму в нижній лівій панелі "
 "інструментів на панелі слайдів."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:694-5
 msgid ""
-"To exit a <span class=\"productname\">%productName</span> slide show, press "
+"To exit a <span class=\"productname\">{productname}</span> slide show, press "
 "the <kbd>Esc</kbd> key to return to the presentation edit mode."
 msgstr ""
-"Щоб вийти зі слайд-шоу <span class=\"productname\">%productName</span>, "
+"Щоб вийти зі слайд-шоу <span class=\"productname\">{productname}</span>, "
 "натисніть клавішу <kbd>Esc</kbd>, щоб повернутися в режим редагування "
 "презентації."
 
@@ -2646,11 +2646,11 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.div.p:709-5
 msgid ""
 "<span class=\"def\">Slide layouts:</span> <span class=\"productname\""
-">%productName</span> Impress let you change the slide layout. Select the "
+">{productname}</span> Impress let you change the slide layout. Select the "
 "desired slide layout in the drop-down layout list."
 msgstr ""
 "<span class=\"def\">Макети слайдів:</span> <span class=\"productname\""
-">%productName</span> Impress дозволяє змінити макет слайда. Виберіть "
+">{productname}</span> Impress дозволяє змінити макет слайда. Виберіть "
 "потрібний макет слайда у розкривному списку макетів."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:712-30
@@ -2665,12 +2665,12 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.div.p:713-30
 msgid ""
 "<span class=\"def\">Slide transitions:</span> <span class=\"productname\""
-">%productName</span> Impress provides visual effects when displaying a new "
+">{productname}</span> Impress provides visual effects when displaying a new "
 "slide in the slide show. Slide transitions are property of the slide, use "
 "the side bar to set the slide transition when in edit mode."
 msgstr ""
 "<span class=\"def\">Переходи між слайдами:</span> <span class=\"productname\""
-">%productName</span> Impress надає візуальні ефекти під час показу слайдів. "
+">{productname}</span> Impress надає візуальні ефекти під час показу слайдів. "
 "Переходи між слайдами є властивістю слайда, за допомогою бічної панелі "
 "налаштуйте перехід слайдів у режимі редагування."
 
@@ -2695,17 +2695,17 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.h4:722-5
 msgid ""
 "What are the documents file formats supported by <span class=\"productname\""
-">%productName</span>?"
+">{productname}</span>?"
 msgstr ""
 "Які формати файлів документів підтримує <span class=\"productname\""
-">%productName</span>?"
+">{productname}</span>?"
 
 #: html/cool-help.html%2Bdiv.div.div.p:723-5
 msgid ""
-"<span class=\"productname\">%productName</span> supports both reading and "
+"<span class=\"productname\">{productname}</span> supports both reading and "
 "writing for the following file formats:"
 msgstr ""
-"<span class=\"productname\">%productName</span> підтримує і читання, і запис "
+"<span class=\"productname\">{productname}</span> підтримує і читання, і запис "
 "таких форматів файлів:"
 
 #: html/cool-help.html%2Bdiv.div.div.ul.li.p:725-11
@@ -2742,39 +2742,39 @@ msgstr "Копія документа зберігається з новою н�
 
 #: html/cool-help.html%2Bdiv.div.div.h4:739-5
 msgid ""
-"How can I quit <span class=\"productname\">%productName</span> without "
+"How can I quit <span class=\"productname\">{productname}</span> without "
 "saving my edits?"
 msgstr ""
-"Як вийти з <span class=\"productname\">%productName</span> без збереження "
+"Як вийти з <span class=\"productname\">{productname}</span> без збереження "
 "змін?"
 
 #: html/cool-help.html%2Bdiv.div.div.p:740-5
 msgid ""
-"<span class=\"productname\">%productName</span> saves the document in the "
+"<span class=\"productname\">{productname}</span> saves the document in the "
 "background regularly, you can't just close without saving it. To abandon "
 "your changes, you must either undo them, or use the <span class=\"ui\""
 ">Revision History </span> in the <span class=\"ui\">File</span> menu."
 msgstr ""
-"<span class=\"productname\">%productName</span> регулярно зберігає документ "
+"<span class=\"productname\">{productname}</span> регулярно зберігає документ "
 "у фоновому режимі, ви не можете просто закрити його не зберігши. Щоб "
 "відмовитись від змін, потрібно або скасувати їх, або скористатися <span "
 "class=\"ui\">Історією редакцій</span> у меню <span class=\"ui\">Файл</span>."
 
 #: html/cool-help.html%2Bdiv.div.div.h4:743-5
 msgid ""
-"Can <span class=\"productname\">%productName</span> open a password-"
+"Can <span class=\"productname\">{productname}</span> open a password-"
 "protected document?"
 msgstr ""
-"Чи може <span class=\"productname\">%productName</span> відкрити захищений "
+"Чи може <span class=\"productname\">{productname}</span> відкрити захищений "
 "паролем документ?"
 
 #: html/cool-help.html%2Bdiv.div.div.p:744-5
 msgid ""
-"Yes. <span class=\"productname\">%productName</span> opens password-"
+"Yes. <span class=\"productname\">{productname}</span> opens password-"
 "protected documents, but it is necessary to supply the password in the “"
 "Enter password” prompt at load time."
 msgstr ""
-"Так. <span class=\"productname\">%productName</span> відкриває захищені "
+"Так. <span class=\"productname\">{productname}</span> відкриває захищені "
 "паролем документи, але необхідно вказати пароль у запиті «Ввести пароль» під "
 "час завантаження."
 
@@ -3177,11 +3177,11 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:862-11
 msgid ""
-"Activate the <span class=\"productname\">%productName</span> spreadsheet "
+"Activate the <span class=\"productname\">{productname}</span> spreadsheet "
 "window."
 msgstr ""
 "Активуйте вікно електронної таблиці <span class=\"productname\""
-">%productName</span>."
+">{productname}</span>."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:864-9
 msgid ""
@@ -3268,8 +3268,8 @@ msgstr "Як запустити показ слайдів?"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:897-11
 msgid ""
-"Open the presentation in <span class=\"productname\">%productName</span>"
-msgstr "Відкрийте презентацію в <span class=\"productname\">%productName</span>"
+"Open the presentation in <span class=\"productname\">{productname}</span>"
+msgstr "Відкрийте презентацію в <span class=\"productname\">{productname}</span>"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:898-11
 msgid ""

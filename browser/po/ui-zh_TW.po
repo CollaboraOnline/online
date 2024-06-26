@@ -323,8 +323,8 @@ msgid "Failed to set jwt authentication cookie over insecure connection"
 msgstr "無法透過不安全的連線設定 jwt 身分核對 Cookie"
 
 #: admin/src/AdminSocketOverview.js:424
-msgid "Failed to authenticate this session over protocol %0"
-msgstr "無法透過 %0 協定進行此作業階段的身分核對"
+msgid "Failed to authenticate this session over protocol {0}"
+msgstr "無法透過 {0} 協定進行此作業階段的身分核對"
 
 #: admin/src/AdminSocketOverview.js:429
 msgid "Warning"
@@ -403,8 +403,8 @@ msgid "Automatic color"
 msgstr "自動色彩"
 
 #: src/control/Control.AboutDialog.ts:72
-msgid "This version of %productName is powered by"
-msgstr "此 %productName 版本源自"
+msgid "This version of {productname} is powered by"
+msgstr "此 {productname} 版本源自"
 
 #: src/control/Control.AboutDialog.ts:95
 msgid "\"Slow Proxy\""
@@ -458,8 +458,8 @@ msgid "Don't show this again"
 msgstr "不再顯示"
 
 #: src/control/Control.AlertDialog.js:105
-msgid "The server encountered a %0 error while parsing the %1 command."
-msgstr "伺服器在解析 %1 指令時遭遇 %0 錯誤。"
+msgid "The server encountered a {0} error while parsing the {1} command."
+msgstr "伺服器在解析 {1} 指令時遭遇 {0} 錯誤。"
 
 #: src/control/Control.Command.js:89
 msgid "Unlock"
@@ -529,7 +529,7 @@ msgstr "下載精選"
 
 #: src/control/Control.DownloadProgress.js:47
 msgid ""
-"If you want to share large elements outside of %productName it's necessary "
+"If you want to share large elements outside of {productname} it's necessary "
 "to first download them."
 msgstr ""
 
@@ -1796,8 +1796,8 @@ msgstr ""
 
 #: src/control/Control.Tabs.js:388
 #, fuzzy
-msgid "Are you sure you want to delete sheet, %sheet%?"
-msgstr "您確定要刪除這份工作表：%sheet%？"
+msgid "Are you sure you want to delete sheet, {sheet}?"
+msgstr "您確定要刪除這份工作表：{sheet}？"
 
 #: src/control/Control.Tabs.js:399
 msgid "Rename sheet"
@@ -1846,15 +1846,15 @@ msgid "Show Menu"
 msgstr ""
 
 #: src/control/Control.UserList.ts:54
-msgid "%user has joined"
-msgstr "%user 已加入"
+msgid "{user} has joined"
+msgstr "{user} 已加入"
 
 #: src/control/Control.UserList.ts:55
-msgid "%user has left"
-msgstr "%user 已離開"
+msgid "{user} has left"
+msgstr "{user} 已離開"
 
 #: src/control/Control.UserList.ts:56
-msgid "Following %user"
+msgid "Following {user}"
 msgstr ""
 
 #: src/control/Control.UserList.ts:57
@@ -1866,7 +1866,7 @@ msgid "Stop following"
 msgstr ""
 
 #: src/control/Control.UserList.ts:59
-msgid "Avatar for %user"
+msgid "Avatar for {user}"
 msgstr ""
 
 #: src/control/Control.UserList.ts:79
@@ -2252,7 +2252,7 @@ msgstr ""
 
 #: src/core/Socket.js:65
 #, fuzzy
-msgid "Oops, there is a problem connecting to %productName: "
+msgid "Oops, there is a problem connecting to {productname}: "
 msgstr "糟糕…連接文件時發生了問題"
 
 #: src/core/Socket.js:653
@@ -2356,7 +2356,7 @@ msgid "Someone"
 msgstr ""
 
 #: src/core/Socket.js:1175
-msgid "%userName saved this document as %fileName. Do you want to join?"
+msgid "{user}Name saved this document as {filename}. Do you want to join?"
 msgstr ""
 
 #: src/core/Socket.js:1192
@@ -2475,9 +2475,9 @@ msgstr "其他資訊與支援"
 
 #: src/errormessages.js:26
 msgid ""
-"This service is limited to %0 documents, and %1 connections total by the "
+"This service is limited to {0} documents, and {1} connections total by the "
 "admin. This limit has been reached. Please try again later."
-msgstr "本服務經管理員限制總共 %0 份文件、%1 個連線。已達上限。請稍後重試。"
+msgstr "本服務經管理員限制總共 {0} 份文件、%1 個連線。已達上限。請稍後重試。"
 
 #: src/errormessages.js:27
 msgid ""
@@ -2492,7 +2492,7 @@ msgid ""
 msgstr "未授權的 WOPI 主機。請稍後重試，若問題持續發生請回報給您的管理員。"
 
 #: src/errormessages.js:29
-msgid "Authorization error was: '%errorMessage'."
+msgid "Authorization error was: '{errormessage}'."
 msgstr ""
 
 #: src/errormessages.js:30
@@ -2502,9 +2502,9 @@ msgstr "WOPISrc 參數錯誤或遺失，請聯絡支援單位。"
 #: src/errormessages.js:31
 #, fuzzy
 msgid ""
-"Your session will expire in %time. Please save your work and refresh the "
+"Your session will expire in {time}. Please save your work and refresh the "
 "session (or webpage) to continue. You might need to login again."
-msgstr "您的作業階段將在 %time 內過期。請儲存您的工作並重整作業階段（或網頁）來繼續。"
+msgstr "您的作業階段將在 {time} 內過期。請儲存您的工作並重整作業階段（或網頁）來繼續。"
 
 #: src/errormessages.js:32
 #, fuzzy
@@ -2522,8 +2522,8 @@ msgid ""
 msgstr "無法載入文件。請確認檔案類型有支援且並未毀損，確認後請再重試。"
 
 #: src/errormessages.js:34
-msgid "Invalid link: '%url'"
-msgstr "無效的連結：「%url」"
+msgid "Invalid link: '{url}'"
+msgstr "無效的連結：「{url}」"
 
 #: src/errormessages.js:35
 msgid ""
@@ -2550,11 +2550,11 @@ msgstr ""
 
 #: src/errormessages.js:39
 msgid ""
-"Your %productName cluster appear to be mis-configured or scaling rapidly - "
+"Your {productname} cluster appear to be mis-configured or scaling rapidly - "
 "please contact your system administrator. Continuing with editing may "
 "result in multiple users not seeing each other, conflicts in the document "
-"storage and/or copy/paste problems. Expected serverId %0 for routeToken %1 "
-"but connected to serverId %2"
+"storage and/or copy/paste problems. Expected serverId {0} for routeToken {1} "
+"but connected to serverId {2}"
 msgstr ""
 
 #: src/errormessages.js:40
@@ -2750,8 +2750,8 @@ msgstr ""
 
 #: src/map/Clipboard.js:180
 msgid ""
-"To paste outside %productName, please first click the 'download' button"
-msgstr "若要貼到 %productName 之外，請先按「下載」按鈕"
+"To paste outside {productname}, please first click the 'download' button"
+msgstr "若要貼到 {productname} 之外，請先按「下載」按鈕"
 
 #: src/map/Clipboard.js:188
 msgid "Copying from the document disabled"
@@ -2817,22 +2817,22 @@ msgstr ""
 #: src/map/handler/Map.FileInserter.js:105
 #, javascript-format
 msgid ""
-"The file of type: %0 cannot be uploaded to server since the file has no name"
-msgstr "檔案類型：%0 由於沒有檔名而無法上傳至伺服器"
+"The file of type: {0} cannot be uploaded to server since the file has no name"
+msgstr "檔案類型：{0} 由於沒有檔名而無法上傳至伺服器"
 
 #: src/map/handler/Map.FileInserter.js:107
 #, javascript-format
 msgid ""
-"The file of type: %0 cannot be uploaded to server since the file is empty"
-msgstr "檔案類型：%0 由於檔案空白而無法上傳至伺服器"
+"The file of type: {0} cannot be uploaded to server since the file is empty"
+msgstr "檔案類型：{0} 由於檔案空白而無法上傳至伺服器"
 
 #: src/map/handler/Map.FileInserter.js:138
 msgid "Uploading..."
 msgstr "上傳中..."
 
 #: src/map/handler/Map.FileInserter.js:161
-msgid "Uploading file to server failed with status: %0"
-msgstr "檔案上傳至伺服器失敗，狀態：%0"
+msgid "Uploading file to server failed with status: {0}"
+msgstr "檔案上傳至伺服器失敗，狀態：{0}"
 
 #: src/map/handler/Map.SlideShow.js:55
 msgid "Empty Slide Show"
@@ -2906,7 +2906,7 @@ msgid "Collabora Online Welcome"
 msgstr ""
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:26-7
-msgid "Explore The New %coolVersion"
+msgid "Explore The New {coolversion}"
 msgstr ""
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:27-7
@@ -3003,10 +3003,10 @@ msgstr ""
 #~ "applications it is necessary to first download them onto your device. To do "
 #~ "that press the \"Start download\" button below, and when complete click "
 #~ "\"Confirm copy to clipboard\".</p><p>If you are copy and pasting between "
-#~ "documents inside %productName, there is no need to download.</p>"
+#~ "documents inside {productname}, there is no need to download.</p>"
 #~ msgstr ""
 #~ "<p>如果您希望和其他應用程式分享您文件裡的大型元素，則需要先將內容下載至您的裝置中。如果要這麼做，請按下方的「開始下載」，完成後請按「確認複製到剪貼簿」"
-#~ "。</p><p>如果您是打算在 %productName 下的文件間交叉複製貼上，則無需下載。</p>"
+#~ "。</p><p>如果您是打算在 {productname} 下的文件間交叉複製貼上，則無需下載。</p>"
 
 #~ msgid ""
 #~ "No disk space left on server, please contact the server administrator to "
@@ -3118,7 +3118,7 @@ msgstr ""
 #~ msgid ""
 #~ "You are leaving the editor, are you sure you want to visit the following "
 #~ "URL?"
-#~ msgstr "您正要離開編輯器，是否確定要造訪 %url？"
+#~ msgstr "您正要離開編輯器，是否確定要造訪 {url}？"
 
 #~ msgid "Index"
 #~ msgstr "索引"

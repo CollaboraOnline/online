@@ -328,8 +328,8 @@ msgstr ""
 "Nastavitev piškotka overjanja jwt prek nezavarovane povezave je spodletela"
 
 #: admin/src/AdminSocketOverview.js:424
-msgid "Failed to authenticate this session over protocol %0"
-msgstr "Overitev te seje prek protokola %0 je spodletela"
+msgid "Failed to authenticate this session over protocol {0}"
+msgstr "Overitev te seje prek protokola {0} je spodletela"
 
 #: admin/src/AdminSocketOverview.js:429
 msgid "Warning"
@@ -409,8 +409,8 @@ msgid "Automatic color"
 msgstr "Samodejna barva"
 
 #: src/control/Control.AboutDialog.ts:72
-msgid "This version of %productName is powered by"
-msgstr "To različico %productName poganja"
+msgid "This version of {productname} is powered by"
+msgstr "To različico {productname} poganja"
 
 #: src/control/Control.AboutDialog.ts:95
 msgid "\"Slow Proxy\""
@@ -467,8 +467,8 @@ msgid "Don't show this again"
 msgstr "Tega ne kaži več"
 
 #: src/control/Control.AlertDialog.js:105
-msgid "The server encountered a %0 error while parsing the %1 command."
-msgstr "Strežnik je naletel na napako %0 pri razčlenjevanju ukaza %1."
+msgid "The server encountered a {0} error while parsing the {1} command."
+msgstr "Strežnik je naletel na napako {0} pri razčlenjevanju ukaza {1}."
 
 #: src/control/Control.Command.js:89
 msgid "Unlock"
@@ -538,10 +538,10 @@ msgstr "Prenesi izbor"
 
 #: src/control/Control.DownloadProgress.js:47
 msgid ""
-"If you want to share large elements outside of %productName it's necessary "
+"If you want to share large elements outside of {productname} it's necessary "
 "to first download them."
 msgstr ""
-"Če želite deliti velike elemente izven %productName, jih je obvezno najprej "
+"Če želite deliti velike elemente izven {productname}, jih je obvezno najprej "
 "prenesti."
 
 #: src/control/Control.DownloadProgress.js:60
@@ -1793,8 +1793,8 @@ msgid "Copy Sheet..."
 msgstr "Kopiraj delovni list ..."
 
 #: src/control/Control.Tabs.js:388
-msgid "Are you sure you want to delete sheet, %sheet%?"
-msgstr "Ali ste prepričani, da želite izbrisati delovni list %sheet%?"
+msgid "Are you sure you want to delete sheet, {sheet}?"
+msgstr "Ali ste prepričani, da želite izbrisati delovni list {sheet}?"
 
 #: src/control/Control.Tabs.js:399
 msgid "Rename sheet"
@@ -1845,16 +1845,16 @@ msgid "Show Menu"
 msgstr "Pokaži meni"
 
 #: src/control/Control.UserList.ts:54
-msgid "%user has joined"
-msgstr "Pridružil se je uporabnik %user"
+msgid "{user} has joined"
+msgstr "Pridružil se je uporabnik {user}"
 
 #: src/control/Control.UserList.ts:55
-msgid "%user has left"
-msgstr "Odšel je uporabnik %user"
+msgid "{user} has left"
+msgstr "Odšel je uporabnik {user}"
 
 #: src/control/Control.UserList.ts:56
-msgid "Following %user"
-msgstr "Sledite: %user"
+msgid "Following {user}"
+msgstr "Sledite: {user}"
 
 #: src/control/Control.UserList.ts:57
 msgid "Following the editor"
@@ -1865,8 +1865,8 @@ msgid "Stop following"
 msgstr "Nehaj slediti"
 
 #: src/control/Control.UserList.ts:59
-msgid "Avatar for %user"
-msgstr "Avatar - %user"
+msgid "Avatar for {user}"
+msgstr "Avatar - {user}"
 
 #: src/control/Control.UserList.ts:79
 msgid "%n users"
@@ -2256,8 +2256,8 @@ msgid "Headings and objects that you add to the document will appear here"
 msgstr "Naslovi in predmeti, ki jih dodate dokumentu, se pojavijo tukaj"
 
 #: src/core/Socket.js:65
-msgid "Oops, there is a problem connecting to %productName: "
-msgstr "Pri povezovanju z %productName je prišlo do težave: "
+msgid "Oops, there is a problem connecting to {productname}: "
+msgstr "Pri povezovanju z {productname} je prišlo do težave: "
 
 #: src/core/Socket.js:653
 msgid "Server is now reachable. We have to refresh the page now."
@@ -2364,9 +2364,9 @@ msgid "Someone"
 msgstr "Nekdo"
 
 #: src/core/Socket.js:1175
-msgid "%userName saved this document as %fileName. Do you want to join?"
+msgid "{user}Name saved this document as {filename}. Do you want to join?"
 msgstr ""
-"%userName je shranil/a dokument kot %fileName. Ali se želite pridružiti?"
+"{user}Name je shranil/a dokument kot {filename}. Ali se želite pridružiti?"
 
 #: src/core/Socket.js:1192
 msgid "The document is being renamed and will reload shortly"
@@ -2489,10 +2489,10 @@ msgstr "Dodatne informacije in podpora"
 
 #: src/errormessages.js:26
 msgid ""
-"This service is limited to %0 documents, and %1 connections total by the "
+"This service is limited to {0} documents, and {1} connections total by the "
 "admin. This limit has been reached. Please try again later."
 msgstr ""
-"Ta storitev je omejena na skupno %0 dokumentov in %1 povezav s strani "
+"Ta storitev je omejena na skupno {0} dokumentov in {1} povezav s strani "
 "skrbnika. Ta meja je dosežena. Poskusite znova kasneje."
 
 #: src/errormessages.js:27
@@ -2512,8 +2512,8 @@ msgstr ""
 "če težava ne izigne."
 
 #: src/errormessages.js:29
-msgid "Authorization error was: '%errorMessage'."
-msgstr "Napaka overjanja: %errorMessage."
+msgid "Authorization error was: '{errormessage}'."
+msgstr "Napaka overjanja: {errormessage}."
 
 #: src/errormessages.js:30
 msgid "Wrong or missing WOPISrc parameter, please contact support."
@@ -2521,10 +2521,10 @@ msgstr "Napačen ali manjkajoči parameter WOPIS, obrnite se na podporo."
 
 #: src/errormessages.js:31
 msgid ""
-"Your session will expire in %time. Please save your work and refresh the "
+"Your session will expire in {time}. Please save your work and refresh the "
 "session (or webpage) to continue. You might need to login again."
 msgstr ""
-"Vaša seja bo potekla čez %time. Shranite svoje delo in osvežite sejo (ali "
+"Vaša seja bo potekla čez {time}. Shranite svoje delo in osvežite sejo (ali "
 "spletno stran) za nadaljevanje z delom. Morda se boste morali ponovno "
 "prijaviti."
 
@@ -2547,8 +2547,8 @@ msgstr ""
 "in da datoteka ni poškodovana, in poskusite znova."
 
 #: src/errormessages.js:34
-msgid "Invalid link: '%url'"
-msgstr "Neveljavna povezava: »%url«"
+msgid "Invalid link: '{url}'"
+msgstr "Neveljavna povezava: »{url}«"
 
 #: src/errormessages.js:35
 msgid ""
@@ -2579,17 +2579,17 @@ msgstr ""
 
 #: src/errormessages.js:39
 msgid ""
-"Your %productName cluster appear to be mis-configured or scaling rapidly - "
+"Your {productname} cluster appear to be mis-configured or scaling rapidly - "
 "please contact your system administrator. Continuing with editing may "
 "result in multiple users not seeing each other, conflicts in the document "
-"storage and/or copy/paste problems. Expected serverId %0 for routeToken %1 "
-"but connected to serverId %2"
+"storage and/or copy/paste problems. Expected serverId {0} for routeToken {1} "
+"but connected to serverId {2}"
 msgstr ""
-"Zdi se, da je vaša gruča %productName napačno prilagojena ali se hitro "
+"Zdi se, da je vaša gruča {productname} napačno prilagojena ali se hitro "
 "povečuje - obrnite se na skrbnika sistema. Nadaljevanje urejanja lahko "
 "povzroči, da se več uporabnikov med seboj ne bo videlo, da bo prišlo do "
 "sporov pri shranjevanju dokumentov in/ali težav s kopiranjem/prilepljanjem. "
-"Pričakovani serverId %0 za routeToken %1, vendar ste povezani s serverId %2"
+"Pričakovani serverId {0} za routeToken {1}, vendar ste povezani s serverId {2}"
 
 #: src/errormessages.js:40
 msgid ""
@@ -2806,9 +2806,9 @@ msgstr "Pozor! Brskalnik, ki ga uporabljate, ni podprt."
 
 #: src/map/Clipboard.js:180
 msgid ""
-"To paste outside %productName, please first click the 'download' button"
+"To paste outside {productname}, please first click the 'download' button"
 msgstr ""
-"Če želite prilepiti vsebino izven %productName, najprej kliknite gumb "
+"Če želite prilepiti vsebino izven {productname}, najprej kliknite gumb "
 "»Prenesi«."
 
 #: src/map/Clipboard.js:188
@@ -2888,24 +2888,24 @@ msgstr "Pošljite nam svoje mnenje"
 #: src/map/handler/Map.FileInserter.js:105
 #, javascript-format
 msgid ""
-"The file of type: %0 cannot be uploaded to server since the file has no name"
+"The file of type: {0} cannot be uploaded to server since the file has no name"
 msgstr ""
-"Datoteke vrste %0 ni mogoče prenesti na strežnik, ker datoteka ni poimenovana"
+"Datoteke vrste {0} ni mogoče prenesti na strežnik, ker datoteka ni poimenovana"
 
 #: src/map/handler/Map.FileInserter.js:107
 #, javascript-format
 msgid ""
-"The file of type: %0 cannot be uploaded to server since the file is empty"
+"The file of type: {0} cannot be uploaded to server since the file is empty"
 msgstr ""
-"Datoteke vrste %0 ni mogoče prenesti na strežnik, ker je datoteka prazna"
+"Datoteke vrste {0} ni mogoče prenesti na strežnik, ker je datoteka prazna"
 
 #: src/map/handler/Map.FileInserter.js:138
 msgid "Uploading..."
 msgstr "Prenašanje na strežnik ..."
 
 #: src/map/handler/Map.FileInserter.js:161
-msgid "Uploading file to server failed with status: %0"
-msgstr "Nalaganje datoteke na strežnik je spodletelo s stanjem: %0"
+msgid "Uploading file to server failed with status: {0}"
+msgstr "Nalaganje datoteke na strežnik je spodletelo s stanjem: {0}"
 
 #: src/map/handler/Map.SlideShow.js:55
 msgid "Empty Slide Show"
@@ -2982,8 +2982,8 @@ msgid "Collabora Online Welcome"
 msgstr "Dobrodošli v Collabora Online"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:26-7
-msgid "Explore The New %coolVersion"
-msgstr "Odkrijte novo različico %coolVersion"
+msgid "Explore The New {coolversion}"
+msgstr "Odkrijte novo različico {coolversion}"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:27-7
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:38-7
@@ -3122,12 +3122,12 @@ msgstr ""
 #~ "applications it is necessary to first download them onto your device. To do "
 #~ "that press the \"Start download\" button below, and when complete click "
 #~ "\"Confirm copy to clipboard\".</p><p>If you are copy and pasting between "
-#~ "documents inside %productName, there is no need to download.</p>"
+#~ "documents inside {productname}, there is no need to download.</p>"
 #~ msgstr ""
 #~ "<p>Če želite z drugimi programi deliti večje dele dokumenta, jih je potrebno "
 #~ "najprej prenesti na vašo napravo. V ta namen pritisnite spodnji gumb »Začni "
 #~ "prenos s strežnika«, po zaključku pa kliknite »Potrjujem kopiranje na "
-#~ "odložišče«.</p><p>Če kopirate in lepite med dokumentoma v %productName, ni "
+#~ "odložišče«.</p><p>Če kopirate in lepite med dokumentoma v {productname}, ni "
 #~ "nobene potrebe za prenos.</p>"
 
 #~ msgid "Collapse Notebook Bar"
@@ -3363,21 +3363,21 @@ msgstr ""
 #~ msgstr "Razumem tveganje"
 
 #, javascript-format
-#~ msgid "Explore the new %coolVersion"
-#~ msgstr "Raziščite novo %coolVersion"
+#~ msgid "Explore the new {coolversion}"
+#~ msgstr "Raziščite novo {coolversion}"
 
 #, javascript-format
 #~ msgid ""
 #~ "Enjoy the latest developments in online productivity, free for you to use, "
 #~ "to explore and to use with others in the browser. <a href=\"%coolAppsURL\" "
 #~ "target=\"_blank\">Apps</a> are also available for Android and iOS. "
-#~ "%coolVersion introduces important improvements, in the areas of usability, "
+#~ "{coolversion} introduces important improvements, in the areas of usability, "
 #~ "visual presentation and performance."
 #~ msgstr ""
 #~ "Uživajte v najnovejšem razvoju spletne produktivnosti, brezplačnem za "
 #~ "uporabo, raziskovanje in souporabo z drugimi v brskalniku. <a href=\"%"
 #~ "coolAppsURL\" target=\"_blank\">Aplikacije</a> so na voljo tudi za Android "
-#~ "in iOS. %coolVersion prinaša pomembne izboljšave na področju uporabnosti, "
+#~ "in iOS. {coolversion} prinaša pomembne izboljšave na področju uporabnosti, "
 #~ "vizualne podobe in hitrosti delovanja."
 
 #, javascript-format

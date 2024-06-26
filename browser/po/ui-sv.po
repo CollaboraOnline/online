@@ -326,8 +326,8 @@ msgstr ""
 "Det gick inte att ställa in jwt-autentiseringskaka över en osäker anslutning"
 
 #: admin/src/AdminSocketOverview.js:424
-msgid "Failed to authenticate this session over protocol %0"
-msgstr "Det gick inte att autentisera den här sessionen över protokoll %0"
+msgid "Failed to authenticate this session over protocol {0}"
+msgstr "Det gick inte att autentisera den här sessionen över protokoll {0}"
 
 #: admin/src/AdminSocketOverview.js:429
 msgid "Warning"
@@ -406,8 +406,8 @@ msgid "Automatic color"
 msgstr "Automatisk färg"
 
 #: src/control/Control.AboutDialog.ts:72
-msgid "This version of %productName is powered by"
-msgstr "Denna version av %productName drivs av"
+msgid "This version of {productname} is powered by"
+msgstr "Denna version av {productname} drivs av"
 
 #: src/control/Control.AboutDialog.ts:95
 msgid "\"Slow Proxy\""
@@ -463,8 +463,8 @@ msgid "Don't show this again"
 msgstr "Visa inte detta igen"
 
 #: src/control/Control.AlertDialog.js:105
-msgid "The server encountered a %0 error while parsing the %1 command."
-msgstr "Servern stötte på ett %0-fel vid utförandet av kommandot %1."
+msgid "The server encountered a {0} error while parsing the {1} command."
+msgstr "Servern stötte på ett {0}-fel vid utförandet av kommandot {1}."
 
 #: src/control/Control.Command.js:89
 msgid "Unlock"
@@ -534,10 +534,10 @@ msgstr "Ladda ned vald"
 
 #: src/control/Control.DownloadProgress.js:47
 msgid ""
-"If you want to share large elements outside of %productName it's necessary "
+"If you want to share large elements outside of {productname} it's necessary "
 "to first download them."
 msgstr ""
-"Om du vill dela stora element utanför %productName är det nödvändigt att "
+"Om du vill dela stora element utanför {productname} är det nödvändigt att "
 "först ladda ner dem."
 
 #: src/control/Control.DownloadProgress.js:60
@@ -1789,8 +1789,8 @@ msgid "Copy Sheet..."
 msgstr "Kopiera blad ..."
 
 #: src/control/Control.Tabs.js:388
-msgid "Are you sure you want to delete sheet, %sheet%?"
-msgstr "Är du säker på att du vill ta bort bladet, %sheet%?"
+msgid "Are you sure you want to delete sheet, {sheet}?"
+msgstr "Är du säker på att du vill ta bort bladet, {sheet}?"
 
 #: src/control/Control.Tabs.js:399
 msgid "Rename sheet"
@@ -1841,16 +1841,16 @@ msgid "Show Menu"
 msgstr "Visa meny"
 
 #: src/control/Control.UserList.ts:54
-msgid "%user has joined"
-msgstr "%user deltar nu"
+msgid "{user} has joined"
+msgstr "{user} deltar nu"
 
 #: src/control/Control.UserList.ts:55
-msgid "%user has left"
-msgstr "%user har lämnat"
+msgid "{user} has left"
+msgstr "{user} har lämnat"
 
 #: src/control/Control.UserList.ts:56
-msgid "Following %user"
-msgstr "Följer %user"
+msgid "Following {user}"
+msgstr "Följer {user}"
 
 #: src/control/Control.UserList.ts:57
 msgid "Following the editor"
@@ -1861,8 +1861,8 @@ msgid "Stop following"
 msgstr "Sluta följa"
 
 #: src/control/Control.UserList.ts:59
-msgid "Avatar for %user"
-msgstr "Avatar för %user"
+msgid "Avatar for {user}"
+msgstr "Avatar för {user}"
 
 #: src/control/Control.UserList.ts:79
 msgid "%n users"
@@ -2251,8 +2251,8 @@ msgid "Headings and objects that you add to the document will appear here"
 msgstr "Rubriker och objekt som du lägger till i dokumentet visas här"
 
 #: src/core/Socket.js:65
-msgid "Oops, there is a problem connecting to %productName: "
-msgstr "Oj, det är problem med att ansluta %productName: "
+msgid "Oops, there is a problem connecting to {productname}: "
+msgstr "Oj, det är problem med att ansluta {productname}: "
 
 #: src/core/Socket.js:653
 msgid "Server is now reachable. We have to refresh the page now."
@@ -2359,8 +2359,8 @@ msgid "Someone"
 msgstr "Någon"
 
 #: src/core/Socket.js:1175
-msgid "%userName saved this document as %fileName. Do you want to join?"
-msgstr "%userName sparade detta dokument som %fileName. Vill du vara med?"
+msgid "{user}Name saved this document as {filename}. Do you want to join?"
+msgstr "{user}Name sparade detta dokument som {filename}. Vill du vara med?"
 
 #: src/core/Socket.js:1192
 msgid "The document is being renamed and will reload shortly"
@@ -2482,10 +2482,10 @@ msgstr "Mer information och support"
 
 #: src/errormessages.js:26
 msgid ""
-"This service is limited to %0 documents, and %1 connections total by the "
+"This service is limited to {0} documents, and {1} connections total by the "
 "admin. This limit has been reached. Please try again later."
 msgstr ""
-"Denna tjänst är begränsad till totalt %0 dokument och %1 anslutningar av "
+"Denna tjänst är begränsad till totalt {0} dokument och {1} anslutningar av "
 "administratören. Denna gräns har nu nåtts. Vänligen försök igen senare."
 
 #: src/errormessages.js:27
@@ -2505,8 +2505,8 @@ msgstr ""
 "administratören ifall problemet kvarstår."
 
 #: src/errormessages.js:29
-msgid "Authorization error was: '%errorMessage'."
-msgstr "Auktoriseringsfelet var: '%errorMessage'."
+msgid "Authorization error was: '{errormessage}'."
+msgstr "Auktoriseringsfelet var: '{errormessage}'."
 
 #: src/errormessages.js:30
 msgid "Wrong or missing WOPISrc parameter, please contact support."
@@ -2514,7 +2514,7 @@ msgstr "Fel eller saknad WOPISrc parameter, kontakta support."
 
 #: src/errormessages.js:31
 msgid ""
-"Your session will expire in %time. Please save your work and refresh the "
+"Your session will expire in {time}. Please save your work and refresh the "
 "session (or webpage) to continue. You might need to login again."
 msgstr ""
 "Din session kommer att upphöra om %tid. Spara ditt arbete och uppdatera "
@@ -2539,8 +2539,8 @@ msgstr ""
 "filen inte är korrupt och försök igen."
 
 #: src/errormessages.js:34
-msgid "Invalid link: '%url'"
-msgstr "Ogiltig länk: '%url'"
+msgid "Invalid link: '{url}'"
+msgstr "Ogiltig länk: '{url}'"
 
 #: src/errormessages.js:35
 msgid ""
@@ -2570,17 +2570,17 @@ msgstr ""
 
 #: src/errormessages.js:39
 msgid ""
-"Your %productName cluster appear to be mis-configured or scaling rapidly - "
+"Your {productname} cluster appear to be mis-configured or scaling rapidly - "
 "please contact your system administrator. Continuing with editing may "
 "result in multiple users not seeing each other, conflicts in the document "
-"storage and/or copy/paste problems. Expected serverId %0 for routeToken %1 "
-"but connected to serverId %2"
+"storage and/or copy/paste problems. Expected serverId {0} for routeToken {1} "
+"but connected to serverId {2}"
 msgstr ""
-"Ditt %productName-kluster verkar vara felkonfigurerat eller skalar upp "
+"Ditt {productname}-kluster verkar vara felkonfigurerat eller skalar upp "
 "väldigt snabbt - kontakta din systemadministratör. Om du fortsätter redigera "
 "kan det leda till att användare inte ser varandra, konflikter vid lagring av "
-"dokument och / eller kopiera-klistra-in-problem. Förväntat server-id %0 för "
-"rutt-token %1 men är ansluten till server-id %2"
+"dokument och / eller kopiera-klistra-in-problem. Förväntat server-id {0} för "
+"rutt-token {1} men är ansluten till server-id {2}"
 
 #: src/errormessages.js:40
 msgid ""
@@ -2796,9 +2796,9 @@ msgstr "Varning! Den webbläsare du använder stöds inte."
 
 #: src/map/Clipboard.js:180
 msgid ""
-"To paste outside %productName, please first click the 'download' button"
+"To paste outside {productname}, please first click the 'download' button"
 msgstr ""
-"För att klistra in utanför %productName, klicka först på knappen för "
+"För att klistra in utanför {productname}, klicka först på knappen för "
 "'nedladdning'"
 
 #: src/map/Clipboard.js:188
@@ -2878,24 +2878,24 @@ msgstr "Skicka din återkoppling"
 #: src/map/handler/Map.FileInserter.js:105
 #, javascript-format
 msgid ""
-"The file of type: %0 cannot be uploaded to server since the file has no name"
+"The file of type: {0} cannot be uploaded to server since the file has no name"
 msgstr ""
-"En fil av typ %0 kan inte uppladdas till servern eftersom filen inte har ett "
+"En fil av typ {0} kan inte uppladdas till servern eftersom filen inte har ett "
 "namn"
 
 #: src/map/handler/Map.FileInserter.js:107
 #, javascript-format
 msgid ""
-"The file of type: %0 cannot be uploaded to server since the file is empty"
-msgstr "Filen av typ %0 kan inte uppladdas till servern eftersom den är tom"
+"The file of type: {0} cannot be uploaded to server since the file is empty"
+msgstr "Filen av typ {0} kan inte uppladdas till servern eftersom den är tom"
 
 #: src/map/handler/Map.FileInserter.js:138
 msgid "Uploading..."
 msgstr "Laddar upp..."
 
 #: src/map/handler/Map.FileInserter.js:161
-msgid "Uploading file to server failed with status: %0"
-msgstr "Uppladdning misslyckades med status: %0"
+msgid "Uploading file to server failed with status: {0}"
+msgstr "Uppladdning misslyckades med status: {0}"
 
 #: src/map/handler/Map.SlideShow.js:55
 msgid "Empty Slide Show"
@@ -2972,8 +2972,8 @@ msgid "Collabora Online Welcome"
 msgstr "Collabora Online Välkommen"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:26-7
-msgid "Explore The New %coolVersion"
-msgstr "Utforska den nya %coolVersion"
+msgid "Explore The New {coolversion}"
+msgstr "Utforska den nya {coolversion}"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:27-7
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:38-7
@@ -3108,7 +3108,7 @@ msgstr ""
 #~ "applications it is necessary to first download them onto your device. To do "
 #~ "that press the \"Start download\" button below, and when complete click "
 #~ "\"Confirm copy to clipboard\".</p><p>If you are copy and pasting between "
-#~ "documents inside %productName, there is no need to download.</p>"
+#~ "documents inside {productname}, there is no need to download.</p>"
 #~ msgstr ""
 #~ "<p>Om du vill dela större delar av ditt dokument med andra program krävs att "
 #~ "du hämtar dem till din enhet. För att göra det tryck på knappen \"Starta "
@@ -3343,20 +3343,20 @@ msgstr ""
 #~ msgstr "Jag förstår riskerna"
 
 #, javascript-format
-#~ msgid "Explore the new %coolVersion"
-#~ msgstr "Utforska den nya %coolVersion"
+#~ msgid "Explore the new {coolversion}"
+#~ msgstr "Utforska den nya {coolversion}"
 
 #, javascript-format
 #~ msgid ""
 #~ "Enjoy the latest developments in online productivity, free for you to use, "
 #~ "to explore and to use with others in the browser. <a href=\"%coolAppsURL\" "
 #~ "target=\"_blank\">Apps</a> are also available for Android and iOS. "
-#~ "%coolVersion introduces important improvements, in the areas of usability, "
+#~ "{coolversion} introduces important improvements, in the areas of usability, "
 #~ "visual presentation and performance."
 #~ msgstr ""
 #~ "Upplev det senaste inom online-produktivitet, fritt att använda, utforska "
 #~ "och använda med andra i webbläsaren. <a href=\"%coolAppsURL\" target=\""
-#~ "_blank\">Appar</a> finns för Android och iOS. %coolVersion innehåller "
+#~ "_blank\">Appar</a> finns för Android och iOS. {coolversion} innehåller "
 #~ "förbättringar för användarvänlighet, visuell presentation och prestanda."
 
 #, javascript-format

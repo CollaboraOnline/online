@@ -332,8 +332,8 @@ msgstr ""
 "connexió no segura"
 
 #: admin/src/AdminSocketOverview.js:424
-msgid "Failed to authenticate this session over protocol %0"
-msgstr "No s'ha pogut autenticar aquesta sessió amb el protocol %0"
+msgid "Failed to authenticate this session over protocol {0}"
+msgstr "No s'ha pogut autenticar aquesta sessió amb el protocol {0}"
 
 #: admin/src/AdminSocketOverview.js:429
 msgid "Warning"
@@ -412,8 +412,8 @@ msgid "Automatic color"
 msgstr "Color automàtic"
 
 #: src/control/Control.AboutDialog.ts:72
-msgid "This version of %productName is powered by"
-msgstr "Aquesta versió del %productName funciona amb"
+msgid "This version of {productname} is powered by"
+msgstr "Aquesta versió del {productname} funciona amb"
 
 #: src/control/Control.AboutDialog.ts:95
 msgid "\"Slow Proxy\""
@@ -465,8 +465,8 @@ msgid "Don't show this again"
 msgstr ""
 
 #: src/control/Control.AlertDialog.js:105
-msgid "The server encountered a %0 error while parsing the %1 command."
-msgstr "Aquest servidor ha trobat un error %0 en processar l'ordre %1."
+msgid "The server encountered a {0} error while parsing the {1} command."
+msgstr "Aquest servidor ha trobat un error {0} en processar l'ordre {1}."
 
 #: src/control/Control.Command.js:89
 msgid "Unlock"
@@ -536,7 +536,7 @@ msgstr ""
 
 #: src/control/Control.DownloadProgress.js:47
 msgid ""
-"If you want to share large elements outside of %productName it's necessary "
+"If you want to share large elements outside of {productname} it's necessary "
 "to first download them."
 msgstr ""
 
@@ -1810,8 +1810,8 @@ msgstr ""
 
 #: src/control/Control.Tabs.js:388
 #, fuzzy
-msgid "Are you sure you want to delete sheet, %sheet%?"
-msgstr "Esteu segur que voleu suprimir el full «%sheet%»?"
+msgid "Are you sure you want to delete sheet, {sheet}?"
+msgstr "Esteu segur que voleu suprimir el full «{sheet}»?"
 
 #: src/control/Control.Tabs.js:399
 msgid "Rename sheet"
@@ -1862,15 +1862,15 @@ msgid "Show Menu"
 msgstr ""
 
 #: src/control/Control.UserList.ts:54
-msgid "%user has joined"
-msgstr "%user s'ha unit"
+msgid "{user} has joined"
+msgstr "{user} s'ha unit"
 
 #: src/control/Control.UserList.ts:55
-msgid "%user has left"
-msgstr "%user ha eixit"
+msgid "{user} has left"
+msgstr "{user} ha eixit"
 
 #: src/control/Control.UserList.ts:56
-msgid "Following %user"
+msgid "Following {user}"
 msgstr ""
 
 #: src/control/Control.UserList.ts:57
@@ -1882,7 +1882,7 @@ msgid "Stop following"
 msgstr ""
 
 #: src/control/Control.UserList.ts:59
-msgid "Avatar for %user"
+msgid "Avatar for {user}"
 msgstr ""
 
 #: src/control/Control.UserList.ts:79
@@ -2268,7 +2268,7 @@ msgstr ""
 
 #: src/core/Socket.js:65
 #, fuzzy
-msgid "Oops, there is a problem connecting to %productName: "
+msgid "Oops, there is a problem connecting to {productname}: "
 msgstr "Ep, hi ha un problema en connectar al document"
 
 #: src/core/Socket.js:653
@@ -2377,7 +2377,7 @@ msgid "Someone"
 msgstr ""
 
 #: src/core/Socket.js:1175
-msgid "%userName saved this document as %fileName. Do you want to join?"
+msgid "{user}Name saved this document as {filename}. Do you want to join?"
 msgstr ""
 
 #: src/core/Socket.js:1192
@@ -2504,10 +2504,10 @@ msgstr "Més informació i assistència"
 
 #: src/errormessages.js:26
 msgid ""
-"This service is limited to %0 documents, and %1 connections total by the "
+"This service is limited to {0} documents, and {1} connections total by the "
 "admin. This limit has been reached. Please try again later."
 msgstr ""
-"Aquest servei és limitat a %0 documents i %1 connexions totals per "
+"Aquest servei és limitat a {0} documents i {1} connexions totals per "
 "l'administrador. Heu assolit aquest límit. Torneu a intentar-ho més tard."
 
 #: src/errormessages.js:27
@@ -2527,7 +2527,7 @@ msgstr ""
 "l'administrador si el problema persisteix."
 
 #: src/errormessages.js:29
-msgid "Authorization error was: '%errorMessage'."
+msgid "Authorization error was: '{errormessage}'."
 msgstr ""
 
 #: src/errormessages.js:30
@@ -2539,10 +2539,10 @@ msgstr ""
 #: src/errormessages.js:31
 #, fuzzy
 msgid ""
-"Your session will expire in %time. Please save your work and refresh the "
+"Your session will expire in {time}. Please save your work and refresh the "
 "session (or webpage) to continue. You might need to login again."
 msgstr ""
-"La sessió finalitzarà en %time. Guardeu la faena i actualitzeu la sessió (o "
+"La sessió finalitzarà en {time}. Guardeu la faena i actualitzeu la sessió (o "
 "la pàgina web) per a continuar."
 
 #: src/errormessages.js:32
@@ -2564,8 +2564,8 @@ msgstr ""
 "suportat i no estiga malmés, i torneu a intentar-ho més tard."
 
 #: src/errormessages.js:34
-msgid "Invalid link: '%url'"
-msgstr "L'enllaç no és vàlid: «%url»"
+msgid "Invalid link: '{url}'"
+msgstr "L'enllaç no és vàlid: «{url}»"
 
 #: src/errormessages.js:35
 msgid ""
@@ -2593,11 +2593,11 @@ msgstr ""
 
 #: src/errormessages.js:39
 msgid ""
-"Your %productName cluster appear to be mis-configured or scaling rapidly - "
+"Your {productname} cluster appear to be mis-configured or scaling rapidly - "
 "please contact your system administrator. Continuing with editing may "
 "result in multiple users not seeing each other, conflicts in the document "
-"storage and/or copy/paste problems. Expected serverId %0 for routeToken %1 "
-"but connected to serverId %2"
+"storage and/or copy/paste problems. Expected serverId {0} for routeToken {1} "
+"but connected to serverId {2}"
 msgstr ""
 
 #: src/errormessages.js:40
@@ -2794,8 +2794,8 @@ msgstr ""
 
 #: src/map/Clipboard.js:180
 msgid ""
-"To paste outside %productName, please first click the 'download' button"
-msgstr "Per a enganxar fora del %productName, primer feu clic al botó «Baixa»"
+"To paste outside {productname}, please first click the 'download' button"
+msgstr "Per a enganxar fora del {productname}, primer feu clic al botó «Baixa»"
 
 #: src/map/Clipboard.js:188
 msgid "Copying from the document disabled"
@@ -2863,22 +2863,22 @@ msgstr ""
 #: src/map/handler/Map.FileInserter.js:105
 #, javascript-format
 msgid ""
-"The file of type: %0 cannot be uploaded to server since the file has no name"
-msgstr "El fitxer de tipus «%0» no es pot pujar al servidor perquè no té un nom"
+"The file of type: {0} cannot be uploaded to server since the file has no name"
+msgstr "El fitxer de tipus «{0}» no es pot pujar al servidor perquè no té un nom"
 
 #: src/map/handler/Map.FileInserter.js:107
 #, javascript-format
 msgid ""
-"The file of type: %0 cannot be uploaded to server since the file is empty"
-msgstr "El fitxer de tipus «%0» no es pot pujar al servidor perquè és buit"
+"The file of type: {0} cannot be uploaded to server since the file is empty"
+msgstr "El fitxer de tipus «{0}» no es pot pujar al servidor perquè és buit"
 
 #: src/map/handler/Map.FileInserter.js:138
 msgid "Uploading..."
 msgstr "S'està pujant..."
 
 #: src/map/handler/Map.FileInserter.js:161
-msgid "Uploading file to server failed with status: %0"
-msgstr "Ha fallat la pujada del fitxer al servidor amb l'estat: %0"
+msgid "Uploading file to server failed with status: {0}"
+msgstr "Ha fallat la pujada del fitxer al servidor amb l'estat: {0}"
 
 #: src/map/handler/Map.SlideShow.js:55
 msgid "Empty Slide Show"
@@ -2952,7 +2952,7 @@ msgid "Collabora Online Welcome"
 msgstr ""
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:26-7
-msgid "Explore The New %coolVersion"
+msgid "Explore The New {coolversion}"
 msgstr ""
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:27-7
@@ -3043,13 +3043,13 @@ msgstr ""
 #~ "applications it is necessary to first download them onto your device. To do "
 #~ "that press the \"Start download\" button below, and when complete click "
 #~ "\"Confirm copy to clipboard\".</p><p>If you are copy and pasting between "
-#~ "documents inside %productName, there is no need to download.</p>"
+#~ "documents inside {productname}, there is no need to download.</p>"
 #~ msgstr ""
 #~ "<p>Si voleu compartir elements més grans que el vostre document amb altres "
 #~ "aplicacions cal baixar-los primer en el vostre aparell. Per a fer això "
 #~ "pitgeu el botó «Inicia la baixada» de sota i aleshores feu clic en «Confirma "
 #~ "la còpia al porta-retalls».</p><p>Si esteu copiant i baixant entre documents "
-#~ "del %productName, no cal baixar-los.</p>"
+#~ "del {productname}, no cal baixar-los.</p>"
 
 #~ msgid "Reference~s"
 #~ msgstr "Referèncie~s"
@@ -3175,7 +3175,7 @@ msgstr ""
 #~ msgid ""
 #~ "You are leaving the editor, are you sure you want to visit the following "
 #~ "URL?"
-#~ msgstr "Esteu a punt d'abandonar l'editor. Segur que voleu visitar %url?"
+#~ msgstr "Esteu a punt d'abandonar l'editor. Segur que voleu visitar {url}?"
 
 #~ msgid "Index"
 #~ msgstr "Índex"

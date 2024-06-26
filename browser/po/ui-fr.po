@@ -331,8 +331,8 @@ msgstr ""
 "sécurisée"
 
 #: admin/src/AdminSocketOverview.js:424
-msgid "Failed to authenticate this session over protocol %0"
-msgstr "Échec de l'authentification de cette session sur le protocole %0"
+msgid "Failed to authenticate this session over protocol {0}"
+msgstr "Échec de l'authentification de cette session sur le protocole {0}"
 
 #: admin/src/AdminSocketOverview.js:429
 msgid "Warning"
@@ -411,8 +411,8 @@ msgid "Automatic color"
 msgstr "Couleur automatique"
 
 #: src/control/Control.AboutDialog.ts:72
-msgid "This version of %productName is powered by"
-msgstr "Cette version de %productName est fournie par"
+msgid "This version of {productname} is powered by"
+msgstr "Cette version de {productname} est fournie par"
 
 #: src/control/Control.AboutDialog.ts:95
 msgid "\"Slow Proxy\""
@@ -470,9 +470,9 @@ msgid "Don't show this again"
 msgstr "Ne plus montrer à nouveau"
 
 #: src/control/Control.AlertDialog.js:105
-msgid "The server encountered a %0 error while parsing the %1 command."
+msgid "The server encountered a {0} error while parsing the {1} command."
 msgstr ""
-"Le serveur a rencontré une erreur %0 lors de l'analyse de la commande %1."
+"Le serveur a rencontré une erreur {0} lors de l'analyse de la commande {1}."
 
 #: src/control/Control.Command.js:89
 msgid "Unlock"
@@ -542,10 +542,10 @@ msgstr "Télécharger la sélection"
 
 #: src/control/Control.DownloadProgress.js:47
 msgid ""
-"If you want to share large elements outside of %productName it's necessary "
+"If you want to share large elements outside of {productname} it's necessary "
 "to first download them."
 msgstr ""
-"Si vous souhaitez partager de grands éléments en dehors de %productName, il "
+"Si vous souhaitez partager de grands éléments en dehors de {productname}, il "
 "est nécessaire de les télécharger d'abord."
 
 #: src/control/Control.DownloadProgress.js:60
@@ -1797,8 +1797,8 @@ msgid "Copy Sheet..."
 msgstr "Copier la feuille de calcul…"
 
 #: src/control/Control.Tabs.js:388
-msgid "Are you sure you want to delete sheet, %sheet%?"
-msgstr "Voulez-vous vraiment supprimer la feuille, %sheet% ?"
+msgid "Are you sure you want to delete sheet, {sheet}?"
+msgstr "Voulez-vous vraiment supprimer la feuille, {sheet} ?"
 
 #: src/control/Control.Tabs.js:399
 msgid "Rename sheet"
@@ -1849,16 +1849,16 @@ msgid "Show Menu"
 msgstr "Montrer le menu"
 
 #: src/control/Control.UserList.ts:54
-msgid "%user has joined"
-msgstr "%user a rejoint"
+msgid "{user} has joined"
+msgstr "{user} a rejoint"
 
 #: src/control/Control.UserList.ts:55
-msgid "%user has left"
-msgstr "%user a quitté"
+msgid "{user} has left"
+msgstr "{user} a quitté"
 
 #: src/control/Control.UserList.ts:56
-msgid "Following %user"
-msgstr "Suivre %user"
+msgid "Following {user}"
+msgstr "Suivre {user}"
 
 #: src/control/Control.UserList.ts:57
 msgid "Following the editor"
@@ -1869,8 +1869,8 @@ msgid "Stop following"
 msgstr "Ne plus suivre"
 
 #: src/control/Control.UserList.ts:59
-msgid "Avatar for %user"
-msgstr "Avatar pour %user"
+msgid "Avatar for {user}"
+msgstr "Avatar pour {user}"
 
 #: src/control/Control.UserList.ts:79
 msgid "%n users"
@@ -2262,8 +2262,8 @@ msgid "Headings and objects that you add to the document will appear here"
 msgstr "Les titres et les objets que vous ajoutez au document apparaîtront ici"
 
 #: src/core/Socket.js:65
-msgid "Oops, there is a problem connecting to %productName: "
-msgstr "Oups, il y a un problème de connexion au %productName : "
+msgid "Oops, there is a problem connecting to {productname}: "
+msgstr "Oups, il y a un problème de connexion au {productname} : "
 
 #: src/core/Socket.js:653
 msgid "Server is now reachable. We have to refresh the page now."
@@ -2372,9 +2372,9 @@ msgid "Someone"
 msgstr "Quelqu'un"
 
 #: src/core/Socket.js:1175
-msgid "%userName saved this document as %fileName. Do you want to join?"
+msgid "{user}Name saved this document as {filename}. Do you want to join?"
 msgstr ""
-"%userName a enregistré ce document sous %fileName. Voulez-vous le rejoindre ?"
+"{user}Name a enregistré ce document sous {filename}. Voulez-vous le rejoindre ?"
 
 #: src/core/Socket.js:1192
 msgid "The document is being renamed and will reload shortly"
@@ -2500,10 +2500,10 @@ msgstr "Informations complémentaires et support"
 
 #: src/errormessages.js:26
 msgid ""
-"This service is limited to %0 documents, and %1 connections total by the "
+"This service is limited to {0} documents, and {1} connections total by the "
 "admin. This limit has been reached. Please try again later."
 msgstr ""
-"Ce service est limité à %0 documents, et à un total de %1 connexions par "
+"Ce service est limité à {0} documents, et à un total de {1} connexions par "
 "l'administrateur. Cette limite a été atteinte. Veuillez essayer de nouveau "
 "ultérieurement."
 
@@ -2524,7 +2524,7 @@ msgstr ""
 "part à votre administrateur si le problème persiste."
 
 #: src/errormessages.js:29
-msgid "Authorization error was: '%errorMessage'."
+msgid "Authorization error was: '{errormessage}'."
 msgstr ""
 
 #: src/errormessages.js:30
@@ -2533,10 +2533,10 @@ msgstr "Paramètre WOPISrc manquant ou faux, veuillez contacter le support."
 
 #: src/errormessages.js:31
 msgid ""
-"Your session will expire in %time. Please save your work and refresh the "
+"Your session will expire in {time}. Please save your work and refresh the "
 "session (or webpage) to continue. You might need to login again."
 msgstr ""
-"La session va expirer dans %time. Veuillez enregistrer votre travail et "
+"La session va expirer dans {time}. Veuillez enregistrer votre travail et "
 "rafraîchir la session (ou page web) pour continuer. Il se peut que vous "
 "deviez vous connecter à nouveau."
 
@@ -2559,8 +2559,8 @@ msgstr ""
 "fichier est pris en charge, qu'il n'est pas corrompu et essayez de nouveau."
 
 #: src/errormessages.js:34
-msgid "Invalid link: '%url'"
-msgstr "Lien incorrect : '%url'"
+msgid "Invalid link: '{url}'"
+msgstr "Lien incorrect : '{url}'"
 
 #: src/errormessages.js:35
 msgid ""
@@ -2592,17 +2592,17 @@ msgstr ""
 
 #: src/errormessages.js:39
 msgid ""
-"Your %productName cluster appear to be mis-configured or scaling rapidly - "
+"Your {productname} cluster appear to be mis-configured or scaling rapidly - "
 "please contact your system administrator. Continuing with editing may "
 "result in multiple users not seeing each other, conflicts in the document "
-"storage and/or copy/paste problems. Expected serverId %0 for routeToken %1 "
-"but connected to serverId %2"
+"storage and/or copy/paste problems. Expected serverId {0} for routeToken {1} "
+"but connected to serverId {2}"
 msgstr ""
-"Votre %productName cluster semble être malconfiguré ou scaling rapidement - "
+"Votre {productname} cluster semble être malconfiguré ou scaling rapidement - "
 "veuillez contacter votre administrateur système. Poursuivre l'édition peut "
 "entraîner plusieurs utilisateurs qui ne se voient pas, des conflits dans le "
 "stockage de documents et/ou des problèmes de copie/coller. Attendu serveurId "
-"%0 pour routeToken %1 mais connecté à serverId %2"
+"{0} pour routeToken {1} mais connecté à serverId {2}"
 
 #: src/errormessages.js:40
 msgid ""
@@ -2820,9 +2820,9 @@ msgstr "Attention ! Le navigateur que vous utilisez n'est pas pris en charge."
 
 #: src/map/Clipboard.js:180
 msgid ""
-"To paste outside %productName, please first click the 'download' button"
+"To paste outside {productname}, please first click the 'download' button"
 msgstr ""
-"Pour coller en dehors de %productName, veuillez d'abord cliquer sur le "
+"Pour coller en dehors de {productname}, veuillez d'abord cliquer sur le "
 "bouton « télécharger »"
 
 #: src/map/Clipboard.js:188
@@ -2902,17 +2902,17 @@ msgstr "Veuillez nous faire part de vos commentaires"
 #: src/map/handler/Map.FileInserter.js:105
 #, javascript-format
 msgid ""
-"The file of type: %0 cannot be uploaded to server since the file has no name"
+"The file of type: {0} cannot be uploaded to server since the file has no name"
 msgstr ""
-"Le fichier du type : %0 ne peut pas être téléversé sur le serveur dans la "
+"Le fichier du type : {0} ne peut pas être téléversé sur le serveur dans la "
 "mesure où il n'a pas de nom"
 
 #: src/map/handler/Map.FileInserter.js:107
 #, javascript-format
 msgid ""
-"The file of type: %0 cannot be uploaded to server since the file is empty"
+"The file of type: {0} cannot be uploaded to server since the file is empty"
 msgstr ""
-"Le fichier du type : %0 ne peut pas être téléversé sur le serveur dans la "
+"Le fichier du type : {0} ne peut pas être téléversé sur le serveur dans la "
 "mesure où il est vide"
 
 #: src/map/handler/Map.FileInserter.js:138
@@ -2920,8 +2920,8 @@ msgid "Uploading..."
 msgstr "Téléversement…"
 
 #: src/map/handler/Map.FileInserter.js:161
-msgid "Uploading file to server failed with status: %0"
-msgstr "Le téléversement sur le serveur a échoué avec le statut : %0"
+msgid "Uploading file to server failed with status: {0}"
+msgstr "Le téléversement sur le serveur a échoué avec le statut : {0}"
 
 #: src/map/handler/Map.SlideShow.js:55
 msgid "Empty Slide Show"
@@ -2998,8 +2998,8 @@ msgid "Collabora Online Welcome"
 msgstr "Bienvenue dans Collabora Online"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:26-7
-msgid "Explore The New %coolVersion"
-msgstr "Explorez la nouvelle version %coolVersion"
+msgid "Explore The New {coolversion}"
+msgstr "Explorez la nouvelle version {coolversion}"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:27-7
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:38-7
@@ -3119,14 +3119,14 @@ msgstr ""
 #~ "applications it is necessary to first download them onto your device. To do "
 #~ "that press the \"Start download\" button below, and when complete click "
 #~ "\"Confirm copy to clipboard\".</p><p>If you are copy and pasting between "
-#~ "documents inside %productName, there is no need to download.</p>"
+#~ "documents inside {productname}, there is no need to download.</p>"
 #~ msgstr ""
 #~ "<p>Si vous voulez partager des éléments plus volumineux du document avec "
 #~ "d'autres applications, il est nécessaire de d'abord les télécharger sur "
 #~ "votre périphérique. Pour ce faire, appuyez sur le bouton « Démarrer le "
 #~ "téléchargement » au-dessous, et lorsque complété, cliquez sur « Confirmer la "
 #~ "copie vers le presse-papiers ».</p><p>Si la copie et le collage s'effectuent "
-#~ "entre des documents à l'intérieur de %productName, il n'y a pas besoin de "
+#~ "entre des documents à l'intérieur de {productname}, il n'y a pas besoin de "
 #~ "téléchargement.</p>"
 
 #~ msgid "~View"
@@ -3355,22 +3355,22 @@ msgstr ""
 #~ msgstr "Je comprends les risques"
 
 #, javascript-format
-#~ msgid "Explore the new %coolVersion"
-#~ msgstr "Découvrez le nouveau %coolVersion"
+#~ msgid "Explore the new {coolversion}"
+#~ msgstr "Découvrez le nouveau {coolversion}"
 
 #, javascript-format
 #~ msgid ""
 #~ "Enjoy the latest developments in online productivity, free for you to use, "
 #~ "to explore and to use with others in the browser. <a href=\"%coolAppsURL\" "
 #~ "target=\"_blank\">Apps</a> are also available for Android and iOS. "
-#~ "%coolVersion introduces important improvements, in the areas of usability, "
+#~ "{coolversion} introduces important improvements, in the areas of usability, "
 #~ "visual presentation and performance."
 #~ msgstr ""
 #~ "Profitez des derniers développements en matière de productivité en ligne, "
 #~ "gratuitement pour vous, afin de les utiliser, les explorer et les utiliser "
 #~ "avec d'autres personnes dans le navigateur. Des <a href=\"%coolAppsURL\" "
 #~ "target=\"_blank\">applications</a> sont également disponibles pour Android "
-#~ "et iOS. %coolVersion introduit des améliorations importantes, dans les "
+#~ "et iOS. {coolversion} introduit des améliorations importantes, dans les "
 #~ "domaines de la convivialité, de la présentation visuelle et des performances."
 
 #, javascript-format

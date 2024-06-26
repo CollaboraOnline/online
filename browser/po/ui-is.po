@@ -324,8 +324,8 @@ msgid "Failed to set jwt authentication cookie over insecure connection"
 msgstr "Mistókst að setja jwt auðkenningarköku yfir óörugga tengingu"
 
 #: admin/src/AdminSocketOverview.js:424
-msgid "Failed to authenticate this session over protocol %0"
-msgstr "Tókst ekki að auðkenna þessa setu með %0 samskiptamátanum"
+msgid "Failed to authenticate this session over protocol {0}"
+msgstr "Tókst ekki að auðkenna þessa setu með {0} samskiptamátanum"
 
 #: admin/src/AdminSocketOverview.js:429
 msgid "Warning"
@@ -404,8 +404,8 @@ msgid "Automatic color"
 msgstr "Sjálfvirkur litur"
 
 #: src/control/Control.AboutDialog.ts:72
-msgid "This version of %productName is powered by"
-msgstr "Þessi útgáfa %productName er keyrð með"
+msgid "This version of {productname} is powered by"
+msgstr "Þessi útgáfa {productname} er keyrð með"
 
 #: src/control/Control.AboutDialog.ts:95
 msgid "\"Slow Proxy\""
@@ -457,8 +457,8 @@ msgid "Don't show this again"
 msgstr "Ekki birta þetta aftur"
 
 #: src/control/Control.AlertDialog.js:105
-msgid "The server encountered a %0 error while parsing the %1 command."
-msgstr "Þjónninn rakst á %0 villu við að þátta %1 skipunina."
+msgid "The server encountered a {0} error while parsing the {1} command."
+msgstr "Þjónninn rakst á {0} villu við að þátta {1} skipunina."
 
 #: src/control/Control.Command.js:89
 msgid "Unlock"
@@ -528,10 +528,10 @@ msgstr "Hlaða niður vali"
 
 #: src/control/Control.DownloadProgress.js:47
 msgid ""
-"If you want to share large elements outside of %productName it's necessary "
+"If you want to share large elements outside of {productname} it's necessary "
 "to first download them."
 msgstr ""
-"Ef þú ætlar að deila stórum atriðum utan %productName er nauðsynlegt að "
+"Ef þú ætlar að deila stórum atriðum utan {productname} er nauðsynlegt að "
 "sækja þau fyrst."
 
 #: src/control/Control.DownloadProgress.js:60
@@ -1783,8 +1783,8 @@ msgid "Copy Sheet..."
 msgstr "Afrita blað..."
 
 #: src/control/Control.Tabs.js:388
-msgid "Are you sure you want to delete sheet, %sheet%?"
-msgstr "Ertu viss um að þú viljir eyða blaðinu %sheet%?"
+msgid "Are you sure you want to delete sheet, {sheet}?"
+msgstr "Ertu viss um að þú viljir eyða blaðinu {sheet}?"
 
 #: src/control/Control.Tabs.js:399
 msgid "Rename sheet"
@@ -1835,15 +1835,15 @@ msgid "Show Menu"
 msgstr ""
 
 #: src/control/Control.UserList.ts:54
-msgid "%user has joined"
-msgstr "%user hefur tengst"
+msgid "{user} has joined"
+msgstr "{user} hefur tengst"
 
 #: src/control/Control.UserList.ts:55
-msgid "%user has left"
-msgstr "%user er farinn"
+msgid "{user} has left"
+msgstr "{user} er farinn"
 
 #: src/control/Control.UserList.ts:56
-msgid "Following %user"
+msgid "Following {user}"
 msgstr ""
 
 #: src/control/Control.UserList.ts:57
@@ -1855,7 +1855,7 @@ msgid "Stop following"
 msgstr ""
 
 #: src/control/Control.UserList.ts:59
-msgid "Avatar for %user"
+msgid "Avatar for {user}"
 msgstr ""
 
 #: src/control/Control.UserList.ts:79
@@ -2246,8 +2246,8 @@ msgid "Headings and objects that you add to the document will appear here"
 msgstr "Fyrirsagnir og hlutir sem þú bætir í skjalið munu birtast hér"
 
 #: src/core/Socket.js:65
-msgid "Oops, there is a problem connecting to %productName: "
-msgstr "Úbbs, það kom upp villa við að tengjast %productName: "
+msgid "Oops, there is a problem connecting to {productname}: "
+msgstr "Úbbs, það kom upp villa við að tengjast {productname}: "
 
 #: src/core/Socket.js:653
 msgid "Server is now reachable. We have to refresh the page now."
@@ -2355,8 +2355,8 @@ msgid "Someone"
 msgstr "Einhver"
 
 #: src/core/Socket.js:1175
-msgid "%userName saved this document as %fileName. Do you want to join?"
-msgstr "%userName vistaði þetta skjal sem %fileName. Vilt þú taka þátt?"
+msgid "{user}Name saved this document as {filename}. Do you want to join?"
+msgstr "{user}Name vistaði þetta skjal sem {filename}. Vilt þú taka þátt?"
 
 #: src/core/Socket.js:1192
 msgid "The document is being renamed and will reload shortly"
@@ -2480,10 +2480,10 @@ msgstr "Meiri upplýsingar og aðstoð"
 
 #: src/errormessages.js:26
 msgid ""
-"This service is limited to %0 documents, and %1 connections total by the "
+"This service is limited to {0} documents, and {1} connections total by the "
 "admin. This limit has been reached. Please try again later."
 msgstr ""
-"Þessi þjónusta er takmörkuð við %0 skjöl og %1 tengingar, takmörk sem eru "
+"Þessi þjónusta er takmörkuð við {0} skjöl og {1} tengingar, takmörk sem eru "
 "sett af kerfisstjóra. Takmörkunum hefur verið náð. Reyndu aftur síðar."
 
 #: src/errormessages.js:27
@@ -2503,7 +2503,7 @@ msgstr ""
 "kerfisstjóra ef það verður viðvarandi."
 
 #: src/errormessages.js:29
-msgid "Authorization error was: '%errorMessage'."
+msgid "Authorization error was: '{errormessage}'."
 msgstr ""
 
 #: src/errormessages.js:30
@@ -2512,10 +2512,10 @@ msgstr "WOPISrc viðfang er rangt eða vantar, hafðu samband við hjálparteymi
 
 #: src/errormessages.js:31
 msgid ""
-"Your session will expire in %time. Please save your work and refresh the "
+"Your session will expire in {time}. Please save your work and refresh the "
 "session (or webpage) to continue. You might need to login again."
 msgstr ""
-"Setan þín rennur út eftir %time. Vistaðu skjölin þín og endurlestu setuna ("
+"Setan þín rennur út eftir {time}. Vistaðu skjölin þín og endurlestu setuna ("
 "eða vefsíðuna) til að halda áfram. Þú gætir þurft að skrá þig inn aftur."
 
 #: src/errormessages.js:32
@@ -2537,8 +2537,8 @@ msgstr ""
 "það sé ekki skemmt, og reyndu síðan aftur."
 
 #: src/errormessages.js:34
-msgid "Invalid link: '%url'"
-msgstr "Ógildur tengill: '%url'"
+msgid "Invalid link: '{url}'"
+msgstr "Ógildur tengill: '{url}'"
 
 #: src/errormessages.js:35
 msgid ""
@@ -2571,11 +2571,11 @@ msgstr ""
 
 #: src/errormessages.js:39
 msgid ""
-"Your %productName cluster appear to be mis-configured or scaling rapidly - "
+"Your {productname} cluster appear to be mis-configured or scaling rapidly - "
 "please contact your system administrator. Continuing with editing may "
 "result in multiple users not seeing each other, conflicts in the document "
-"storage and/or copy/paste problems. Expected serverId %0 for routeToken %1 "
-"but connected to serverId %2"
+"storage and/or copy/paste problems. Expected serverId {0} for routeToken {1} "
+"but connected to serverId {2}"
 msgstr ""
 
 #: src/errormessages.js:40
@@ -2781,8 +2781,8 @@ msgstr "Aðvörun! Vafrinn sem þú ert að nota er ekki studdur."
 
 #: src/map/Clipboard.js:180
 msgid ""
-"To paste outside %productName, please first click the 'download' button"
-msgstr "Til að líma utan %productName, smelltu fyrst á 'niðurhal' hnappinn"
+"To paste outside {productname}, please first click the 'download' button"
+msgstr "Til að líma utan {productname}, smelltu fyrst á 'niðurhal' hnappinn"
 
 #: src/map/Clipboard.js:188
 msgid "Copying from the document disabled"
@@ -2862,17 +2862,17 @@ msgstr "Endilega sendu okkur athugasemdir"
 #: src/map/handler/Map.FileInserter.js:105
 #, javascript-format
 msgid ""
-"The file of type: %0 cannot be uploaded to server since the file has no name"
+"The file of type: {0} cannot be uploaded to server since the file has no name"
 msgstr ""
-"Þessa tegund skráar: %0 er ekki hægt að senda inn til þjónsins, því skráin "
+"Þessa tegund skráar: {0} er ekki hægt að senda inn til þjónsins, því skráin "
 "er ekki með neitt nafn"
 
 #: src/map/handler/Map.FileInserter.js:107
 #, javascript-format
 msgid ""
-"The file of type: %0 cannot be uploaded to server since the file is empty"
+"The file of type: {0} cannot be uploaded to server since the file is empty"
 msgstr ""
-"Þessa tegund skráar: %0 er ekki hægt að senda inn til þjónsins, því skráin "
+"Þessa tegund skráar: {0} er ekki hægt að senda inn til þjónsins, því skráin "
 "er tóm"
 
 #: src/map/handler/Map.FileInserter.js:138
@@ -2880,8 +2880,8 @@ msgid "Uploading..."
 msgstr "Sendi inn ..."
 
 #: src/map/handler/Map.FileInserter.js:161
-msgid "Uploading file to server failed with status: %0"
-msgstr "Sending á skrá til þjónsins mistókst, með stöðutilkynninguna: %0"
+msgid "Uploading file to server failed with status: {0}"
+msgstr "Sending á skrá til þjónsins mistókst, með stöðutilkynninguna: {0}"
 
 #: src/map/handler/Map.SlideShow.js:55
 msgid "Empty Slide Show"
@@ -2956,8 +2956,8 @@ msgid "Collabora Online Welcome"
 msgstr "Velkomin í Collabora Online"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:26-7
-msgid "Explore The New %coolVersion"
-msgstr "Kynntu þér nýju útgáfuna af %coolVersion"
+msgid "Explore The New {coolversion}"
+msgstr "Kynntu þér nýju útgáfuna af {coolversion}"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:27-7
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:38-7
@@ -3073,13 +3073,13 @@ msgstr ""
 #~ "applications it is necessary to first download them onto your device. To do "
 #~ "that press the \"Start download\" button below, and when complete click "
 #~ "\"Confirm copy to clipboard\".</p><p>If you are copy and pasting between "
-#~ "documents inside %productName, there is no need to download.</p>"
+#~ "documents inside {productname}, there is no need to download.</p>"
 #~ msgstr ""
 #~ "<p>Ef þú ætlar að deila stærri hlutum skjalsins með öðrum forritum, er "
 #~ "nauðsynlegt að sækja þau fyrst yfir á tækið þitt. Það er gert með því að ýta "
 #~ "á \"Hefja niðurhal\" hnappinn hér fyrir neðan, og þegar því er lokið að ýta "
 #~ "á \"Staðfesta afritun á klippispjald\".</p><p>Ef þú ert að afrita og líma "
-#~ "milli skjala innan %productName, er ekki þörf á að sækja skjölin.</p>"
+#~ "milli skjala innan {productname}, er ekki þörf á að sækja skjölin.</p>"
 
 #~ msgid "~View"
 #~ msgstr "S~koða"
@@ -3303,8 +3303,8 @@ msgstr ""
 #~ msgstr "Ég skil áhættuna"
 
 #, javascript-format
-#~ msgid "Explore the new %coolVersion"
-#~ msgstr "Kanna nýju %coolVersion"
+#~ msgid "Explore the new {coolversion}"
+#~ msgstr "Kanna nýju {coolversion}"
 
 #~ msgid "Integrate Collabora Online into your webapp"
 #~ msgstr "Samþættu Collabora Online við vefhugbúnaðinn þinn"

@@ -1563,8 +1563,8 @@ msgid "Select all in drawing page"
 msgstr "Hautatu guztia marrazketa orrian"
 
 #: html/cool-help.html%2Bdiv.h1:394-5
-msgid "<span class=\"productname\">%productName</span> Help"
-msgstr "<span class=\"productname\">%productName</span> laguntza"
+msgid "<span class=\"productname\">{productname}</span> Help"
+msgstr "<span class=\"productname\">{productname}</span> laguntza"
 
 #: html/cool-help.html%2Bdiv.p:395-5
 #: html/cool-help.html%2Bdiv.div.h3:431-5
@@ -1573,8 +1573,8 @@ msgstr "Elkarlaneko edizioa"
 
 #: html/cool-help.html%2Bdiv.p:396-5
 #: html/cool-help.html%2Bdiv.div.h3:442-5
-msgid "<span class=\"productname\">%productName</span> user interface"
-msgstr "<span class=\"productname\">%productName</span> erabiltzaile-interfazea"
+msgid "<span class=\"productname\">{productname}</span> user interface"
+msgstr "<span class=\"productname\">{productname}</span> erabiltzaile-interfazea"
 
 #: html/cool-help.html%2Bdiv.p:397-5
 #: html/cool-help.html%2Bdiv.div.h3:480-5
@@ -1597,8 +1597,8 @@ msgstr "Eginbide aurreratuak"
 
 #: html/cool-help.html%2Bdiv.div.p:401-9
 #: html/cool-help.html%2Bdiv.div.h2:560-5
-msgid "<span class=\"productname\">%productName</span> spreadsheets"
-msgstr "<span class=\"productname\">%productName</span> kalkulu-orriak"
+msgid "<span class=\"productname\">{productname}</span> spreadsheets"
+msgstr "<span class=\"productname\">{productname}</span> kalkulu-orriak"
 
 #: html/cool-help.html%2Bdiv.div.p:402-9
 #: html/cool-help.html%2Bdiv.div.div.h3:563-5
@@ -1623,8 +1623,8 @@ msgstr "Kalkulu-orriak"
 
 #: html/cool-help.html%2Bdiv.div.p:409-9
 #: html/cool-help.html%2Bdiv.div.h2:629-5
-msgid "<span class=\"productname\">%productName</span> text documents"
-msgstr "<span class=\"productname\">%productName</span> testu-dokumentuak"
+msgid "<span class=\"productname\">{productname}</span> text documents"
+msgstr "<span class=\"productname\">{productname}</span> testu-dokumentuak"
 
 #: html/cool-help.html%2Bdiv.div.p:410-9
 #: html/cool-help.html%2Bdiv.div.div.h3:632-5
@@ -1648,8 +1648,8 @@ msgstr "Testu-dokumentuak"
 
 #: html/cool-help.html%2Bdiv.div.p:416-9
 #: html/cool-help.html%2Bdiv.div.h2:683-5
-msgid "<span class=\"productname\">%productName</span> presentations"
-msgstr "<span class=\"productname\">%productName</span> aurkezpenak"
+msgid "<span class=\"productname\">{productname}</span> presentations"
+msgstr "<span class=\"productname\">{productname}</span> aurkezpenak"
 
 #: html/cool-help.html%2Bdiv.div.p:417-9
 #: html/cool-help.html%2Bdiv.div.div.h3:686-5
@@ -1678,12 +1678,12 @@ msgstr "Ohiko galderak"
 
 #: html/cool-help.html%2Bdiv.div.p:426-5
 msgid ""
-"<span class=\"productname\">%productName</span> allows you to create and "
+"<span class=\"productname\">{productname}</span> allows you to create and "
 "edit office documents text documents, spreadsheets and presentations "
 "directly in your browser, in a simple and straight-forward way. You can work "
 "alone on a document, or collaboratively as part of a team."
 msgstr ""
-"<span class=\"productname\">%productName</span> erabilita, testu-"
+"<span class=\"productname\">{productname}</span> erabilita, testu-"
 "dokumentuak, kalkulu-orriak eta aurkezpenak zuzenean zure nabigatzailean "
 "sortu ditzakezu, modu erraz eta zuzenean. Bakarka egin dezakezu lan "
 "dokumentu batean, edo beste batzuekin elkarlanean talde modura."
@@ -1708,21 +1708,21 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.ul.li.p:436-11
 msgid ""
-"<span class=\"productname\">%productName</span> notifies you with a small "
+"<span class=\"productname\">{productname}</span> notifies you with a small "
 "notification in the footer when a new user enters or when a user leaves."
 msgstr ""
-"<span class=\"productname\">%productName</span> aplikazioak jakinarazpen "
+"<span class=\"productname\">{productname}</span> aplikazioak jakinarazpen "
 "txiki bat erakusten ditu orri-oinean erabiltzaile berri bat sartzen denean "
 "edo erabiltzaile batek edizioa uzten duenean."
 
 #: html/cool-help.html%2Bdiv.div.div.p:443-30
 msgid ""
-"<span class=\"productname\">%productName</span> uses modern browser "
+"<span class=\"productname\">{productname}</span> uses modern browser "
 "resources to adapt the user interface to the size of the viewing area, "
 "including small screens found in mobile devices. The interface is composed "
 "of:"
 msgstr ""
-"<span class=\"productname\">%productName</span> aplikazioak nabigatzaile "
+"<span class=\"productname\">{productname}</span> aplikazioak nabigatzaile "
 "modernoen baliabideak erabiltzen ditu erabiltzaile-interfazea ikusgai dagoen "
 "areara moldatzeko. Horrek gailu mugikorretako pantaila txikietan ere "
 "funtzionatzen du. Interfazeak honako osagaiak ditu:"
@@ -1845,19 +1845,19 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.p:481-5
 msgid ""
 "Your documents are stored and managed in the cloud storage that is "
-"integrated with <span class=\"productname\">%productName</span>."
+"integrated with <span class=\"productname\">{productname}</span>."
 msgstr ""
-"Zure dokumentuak <span class=\"productname\">%productName</span> "
+"Zure dokumentuak <span class=\"productname\">{productname}</span> "
 "aplikazioarekin integratu den hodei-biltegiratzean gorde eta kudeatuko da."
 
 #: html/cool-help.html%2Bdiv.div.div.p:482-30
 msgid ""
 "To download a document download it from the <span class=\"productname\""
-">%productName</span> application’s <span class=\"ui\">File</span> menu. The "
+">{productname}</span> application’s <span class=\"ui\">File</span> menu. The "
 "download formats available depends on the application. All applications "
 "exports documents in PDF format."
 msgstr ""
-"Dokumentu bat deskargatzeko, <span class=\"productname\">%productName</span> "
+"Dokumentu bat deskargatzeko, <span class=\"productname\">{productname}</span> "
 "aplikazioaren <span class=\"ui\">Fitxategi</span> menutik deskargatu "
 "daiteke. Deskargaren formatua aplikazioaren araberakoa da. Aplikazio guztiek "
 "esportatu dezakete PDF formatura."
@@ -1865,19 +1865,19 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.p:483-30
 msgid ""
 "To open document, click on the file to open the <span class=\"productname\""
-">%productName</span> module associated to the document format."
+">{productname}</span> module associated to the document format."
 msgstr ""
 "Dokumentu bat irekitzeko, egin klik fitxategian haren dokumentu-formatuari "
-"lotutako <span class=\"productname\">%productName</span> modulua irekitzeko."
+"lotutako <span class=\"productname\">{productname}</span> modulua irekitzeko."
 
 #: html/cool-help.html%2Bdiv.div.div.p:484-30
 msgid ""
-"Documents in <span class=\"productname\">%productName</span> save "
+"Documents in <span class=\"productname\">{productname}</span> save "
 "automatically, but if you are concerned that a document is synchronized as "
 "quickly as possible you can also force saving using the <span class=\"ui\""
 ">File</span> menu’s <span class=\"ui\">Save</span> entry."
 msgstr ""
-"<span class=\"productname\">%productName</span> dokumentuak automatikoki "
+"<span class=\"productname\">{productname}</span> dokumentuak automatikoki "
 "gordetzen dira, baina hala ere, dokumentu bat ahalik eta azkarren "
 "sinkronizatua izan dadin nahi baduzu, gordetzea behartu dezakezu <span class="
 "\"ui\">Fitxategia</span> menuko <span class=\"ui\">Gorde</span> aukera "
@@ -1916,7 +1916,7 @@ msgstr "Kopiatzea eta itsastea"
 msgid ""
 "Rich content copy/cut and paste is supported, not only within a given "
 "document, but also across documents on the same or different <span class="
-"\"productname\">%productName</span>. For these internal uses, users can copy/"
+"\"productname\">{productname}</span>. For these internal uses, users can copy/"
 "cut content, including images and mixed content, on PC by using the keyboard "
 "shortcuts directly (<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>X</"
 "kbd>, <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd>, "
@@ -1928,7 +1928,7 @@ msgid ""
 msgstr ""
 "Eduki aberatsak kopiatzea/moztea eta itsastea onartzen da, es soilik "
 "dokumentu barruan, baina dokumentu desberdinen artean ere <span class="
-"\"productname\">%productName</span> barruan edo kanpoan. Barneko erabilera "
+"\"productname\">{productname}</span> barruan edo kanpoan. Barneko erabilera "
 "horietarako, erabiltzaileek edukia ordenagailura kopiatu/moztu dezakete, "
 "baita irudiak eta eduki mistoak ere, lasterbideak erabilita (<kbd>Ctrl</"
 "kbd><span class=\"kbd--plus\">+</span><kbd>X</kbd>, <kbd>Ctrl</kbd><span "
@@ -2006,12 +2006,12 @@ msgstr "Dokumentu inaktiboa"
 
 #: html/cool-help.html%2Bdiv.div.div.p:506-5
 msgid ""
-"When <span class=\"productname\">%productName</span> detects that there has "
+"When <span class=\"productname\">{productname}</span> detects that there has "
 "not been any activity in the browser for a while, it puts the document in an "
 "“Inactive” state. The document is shown with a transparent gray overlay, "
 "with the message “Inactive document – please click to resume editing”."
 msgstr ""
-"<span class=\"productname\">%productName</span> aplikazioak antzematen "
+"<span class=\"productname\">{productname}</span> aplikazioak antzematen "
 "duenean nabigatzailean ez dela jarduerarik egon tarte batez, dokumentua "
 "egoera \"inaktiboan\" jartzen du. Dokumentua gainazal gris gardenarekin "
 "erakusten da orduan, \"Dokumentu inaktiboa - egin klik edizioa "
@@ -2091,10 +2091,10 @@ msgstr "Diagramak gehitzea"
 
 #: html/cool-help.html%2Bdiv.div.div.p:524-5
 msgid ""
-"<span class=\"productname\">%productName</span> supports inserting and "
+"<span class=\"productname\">{productname}</span> supports inserting and "
 "visualization of charts in documents. To add a chart:"
 msgstr ""
-"<span class=\"productname\">%productName</span> aplikazioak dokumentuetan "
+"<span class=\"productname\">{productname}</span> aplikazioak dokumentuetan "
 "diagramak txertatzea eta bistaratzea onartzen du. Diagrama bat gehitzeko:"
 
 #: html/cool-help.html%2Bdiv.div.div.ol.li.p:526-11
@@ -2158,11 +2158,11 @@ msgstr "Irudiak maneiatzea"
 
 #: html/cool-help.html%2Bdiv.div.div.p:540-5
 msgid ""
-"<span class=\"productname\">%productName</span> inserts images in the text "
+"<span class=\"productname\">{productname}</span> inserts images in the text "
 "document from your local computer or from your cloud storage. Inserted "
 "images are always embedded in the document."
 msgstr ""
-"<span class=\"productname\">%productName</span> aplikazioak irudiak txertatu "
+"<span class=\"productname\">{productname}</span> aplikazioak irudiak txertatu "
 "ditzake testu-dokumentuetan, bai ordenagailutik bertatik bai hodeiko biltegi "
 "batetik. Txertatutako irudiak beti kapsulatuko dira dokumentuan."
 
@@ -2202,12 +2202,12 @@ msgstr "Iruzkinak dokumentuetan"
 
 #: html/cool-help.html%2Bdiv.div.div.p:547-5
 msgid ""
-"Insert comments in <span class=\"productname\">%productName</span> in places "
+"Insert comments in <span class=\"productname\">{productname}</span> in places "
 "that need special reader attention. Comments are displayed on the right and "
 "carry the name and date of the issuer."
 msgstr ""
 "Txertatu iruzkinak irakurlearen arreta berezia behar duten tokietan <span "
-"class=\"productname\">%productName</span> aplikazioan. Iruzkinak eskuinean "
+"class=\"productname\">{productname}</span> aplikazioan. Iruzkinak eskuinean "
 "bistaratzen dira eta egilearen izena eta data dituzte."
 
 #: html/cool-help.html%2Bdiv.div.div.div.img[alt]:548-29
@@ -2229,12 +2229,12 @@ msgstr "Ortografia-egiaztapena"
 
 #: html/cool-help.html%2Bdiv.div.div.p:553-5
 msgid ""
-"<span class=\"productname\">%productName</span> can check spelling in text "
+"<span class=\"productname\">{productname}</span> can check spelling in text "
 "documents, spreadsheets and presentations. A red wavy underline indicates "
 "misspelled words. Click on the right mouse button to open a context menu "
 "with suggested misspelling corrections."
 msgstr ""
-"<span class=\"productname\">%productName</span> aplikazioak testu-"
+"<span class=\"productname\">{productname}</span> aplikazioak testu-"
 "dokumentuetako, kalkulu-orrietako eta aurkezpenetako ortografia egiaztatu "
 "dezake. Marra uhindu gorriek gaizki idatzitako hitzak markatuko dituzte. "
 "Egin klik saguaren eskuineko botoiarekin hitzak zuzentzeko iradokizunak "
@@ -2317,25 +2317,25 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.div.p:587-30
 msgid ""
 "<span class=\"def\">Sorting data:</span> You can sort a list of numbers or "
-"text ascending or descending. <span class=\"productname\">%productName</"
+"text ascending or descending. <span class=\"productname\">{productname}</"
 "span> automatically detects cells that are headers, and adjoining columns, "
 "to extend the selection."
 msgstr ""
 "<span class=\"def\">Datuak ordenatzea:</span> Zenbakien edo testuen "
 "zerrendak gorantz edo beherantz ordenatu daitezke. <span class=\"productname"
-"\">%productName</span> aplikazioak automatikoki detektatzen ditu goiburukoak "
+"\">{productname}</span> aplikazioak automatikoki detektatzen ditu goiburukoak "
 "diren gelaxkak, eta elkarren alboko zutabeak, hautapena hedatzeko."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:588-30
 msgid ""
 "<span class=\"def\">Filtering data:</span> Filters and advanced filters "
 "allow you to work on certain filtered rows (records) of a data range. In the "
-"spreadsheets in <span class=\"productname\">%productName</span> there are "
+"spreadsheets in <span class=\"productname\">{productname}</span> there are "
 "various possibilities for applying filters."
 msgstr ""
 "<span class=\"def\">Datuak iragaztea:</span> Iragazkiak eta iragazki "
 "aurreratuak erabilita, datu-barrutietako errenkada (erregistro) iragazietan "
-"lan egin daiteke. <span class=\"productname\">%productName</span> kalkulu-"
+"lan egin daiteke. <span class=\"productname\">{productname}</span> kalkulu-"
 "orrietan iragazkiak aplikatzeko hainbat aukera daude."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:591-10
@@ -2454,20 +2454,20 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.div.p:622-5
 msgid ""
 "<span class=\"def\">Conditional formatting:</span> <span class=\"productname"
-"\">%productName</span> adds symbols to each cell of a range based on cells "
+"\">{productname}</span> adds symbols to each cell of a range based on cells "
 "conditions. Select the cell range and click the <span class=\"ui\""
 ">Conditional Formatting</span> icon on the toolbar. Select the symbol set to "
 "apply on the range."
 msgstr ""
 "<span class=\"def\">Baldintzapeko formatua:</span> <span class=\"productname"
-"\">%productName</span> aplikazioak ikurrak gehitzen dizkie barruti bateko "
+"\">{productname}</span> aplikazioak ikurrak gehitzen dizkie barruti bateko "
 "gelaxkei, gelaxken baldintzetan oinarrituta. Hautatu gelaxka-barrutia eta "
 "egin klik tresna-barrako <span class=\"ui\">Baldintzapeko formatua</span> "
 "ikonoan. Hautatu barrutian aplikatuko den ikur multzoa."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:633-30
 msgid ""
-"<span class=\"productname\">%productName</span> edits text documents in the "
+"<span class=\"productname\">{productname}</span> edits text documents in the "
 "same way you edit a desktop document. It provides a What You See Is What You "
 "Get (WYSIWYG) layout – that conveniently lays out the document as it will be "
 "printed. Operations like typing text, cut, copy and pasting contents, "
@@ -2475,7 +2475,7 @@ msgid ""
 "tables and charts, are similar to a desktop word processor. Use the "
 "keyboard, menus and toolbars to interact with your document."
 msgstr ""
-"<span class=\"productname\">%productName</span> aplikazioarekin testu-"
+"<span class=\"productname\">{productname}</span> aplikazioarekin testu-"
 "dokumentuak editatzeko modua mahaigaineko dokumentuetan erabiltzen den bera "
 "da. Ikusten Duzuna Eskuratzen Duzu (WYSIWYG) motako diseinua du: horren "
 "arabera, dokumentuaren diseinua inprimatuta agertuko den bera da. Testua "
@@ -2500,7 +2500,7 @@ msgstr "Testuari formatua ematea"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:644-5
 msgid ""
-"<span class=\"productname\">%productName</span> supports modern techniques "
+"<span class=\"productname\">{productname}</span> supports modern techniques "
 "for paragraph formatting through styles. A style is a set of text properties "
 "(font, color, background and many more) labeled with a name, the style name. "
 "Use style to apply the same set of properties to many paragraphs in the "
@@ -2509,7 +2509,7 @@ msgid ""
 "changes formatting as well, simplifying the effort of formatting many "
 "paragraph individually."
 msgstr ""
-"<span class=\"productname\">%productName</span> aplikazioak teknika "
+"<span class=\"productname\">{productname}</span> aplikazioak teknika "
 "modernoak onartzen ditu paragrafoen formatua estiloen bidez ezartzeko. "
 "Estilo bat testu-propietateen multzo bat da (letra-tipoa, kolorea, atzeko "
 "planoa eta beste hainbat). Estiloak izen bat dauka. Erabili estiloa "
@@ -2545,12 +2545,12 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.div.p:649-5
 msgid ""
 "<span class=\"def\">Style formatting:</span> <span class=\"productname\""
-">%productName</span> supports paragraph styles. You can apply an existing "
+">{productname}</span> supports paragraph styles. You can apply an existing "
 "paragraph style to a paragraph. Choose menu <span class=\"ui\">Edit</span> → "
 "<span class=\"ui\">Edit styles</span> to change style."
 msgstr ""
 "<span class=\"def\">Estiloen bidezko formatua:</span> <span class="
-"\"productname\">%productName</span> aplikazioak paragrafo-estiloak onartzen "
+"\"productname\">{productname}</span> aplikazioak paragrafo-estiloak onartzen "
 "ditu. Lehendik dagoen paragrafo-estiloak aplika dakizkieke paragrafoei. "
 "Aukeratu <span class=\"ui\">Editatu</span> → <span class=\"ui\">Editatu "
 "estiloak</span> estiloa aldatzeko."
@@ -2589,12 +2589,12 @@ msgstr "Aldaketen segimendua"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:666-5
 msgid ""
-"When you turn on Track Changes, <span class=\"productname\">%productName</"
+"When you turn on Track Changes, <span class=\"productname\">{productname}</"
 "span> marks up new changes made to the document. Select this option again to "
 "turn it off."
 msgstr ""
 "Aldaketen segimendua aktibatzen denean, <span class=\"productname\""
-">%productName</span> aplikazioak dokumentuari egindako aldaketa berriak "
+">{productname}</span> aplikazioak dokumentuari egindako aldaketa berriak "
 "markatuta geratzen dira. Hautatu aukera hori berriro segimendua "
 "desaktibatzeko."
 
@@ -2672,14 +2672,14 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:687-30
 msgid ""
-"<span class=\"productname\">%productName</span> Impress edits presentations "
+"<span class=\"productname\">{productname}</span> Impress edits presentations "
 "in a way that should be familiar to people. Operations like typing text, "
 "cut, copy and pasting contents, selecting text , inserting, resizing, "
 "anchoring images, adding and handling tables, are similar to a desktop "
 "presentation application. Use the keyboard, menus and toolbars to perform "
 "actions in your document."
 msgstr ""
-"<span class=\"productname\">%productName</span> Impress aplikazioak jende "
+"<span class=\"productname\">{productname}</span> Impress aplikazioak jende "
 "gehienarentzat ezaguna izango den moduan editatzen ditu aurkezpenak. Testua "
 "idaztea, edukiak moztu, kopiatu eta itsastea, testua hautatzea, irudiak "
 "txertatu, tamainaz aldatu eta ainguratzea eta taulak maneiatzea mahaigaineko "
@@ -2688,22 +2688,22 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:693-5
 msgid ""
-"<span class=\"productname\">%productName</span> displays presentation slide "
+"<span class=\"productname\">{productname}</span> displays presentation slide "
 "shows, including a subset of slide transitions and object animations. Choose "
 "the slide show from the menu or click on icon in the bottom left toolbar in "
 "the slide pane."
 msgstr ""
-"<span class=\"productname\">%productName</span> aplikazioak diapositiba-"
+"<span class=\"productname\">{productname}</span> aplikazioak diapositiba-"
 "aurkezpenak bistaratzen ditu, diapositiba-trantsizioen eta objektu-"
 "animazioen azpimultzo bat barne. Aukeratu diapositiba-aurkezpena menuan edo "
 "egin klik diapositiba-paneleko behe ezkerreko tresna-barrako ikonoan."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:694-5
 msgid ""
-"To exit a <span class=\"productname\">%productName</span> slide show, press "
+"To exit a <span class=\"productname\">{productname}</span> slide show, press "
 "the <kbd>Esc</kbd> key to return to the presentation edit mode."
 msgstr ""
-"<span class=\"productname\">%productName</span> diapositiba-aurzkezpen "
+"<span class=\"productname\">{productname}</span> diapositiba-aurzkezpen "
 "batetik irteteko, dakatu <kbd>Esc</kbd> tekla aurkezpena editatzeko modura "
 "itzultzeko."
 
@@ -2726,11 +2726,11 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.div.p:709-5
 msgid ""
 "<span class=\"def\">Slide layouts:</span> <span class=\"productname\""
-">%productName</span> Impress let you change the slide layout. Select the "
+">{productname}</span> Impress let you change the slide layout. Select the "
 "desired slide layout in the drop-down layout list."
 msgstr ""
 "<span class=\"def\">Diapositiba-diseinuak:</span> <span class=\"productname\""
-">%productName</span> Impressen diapositiben diseinuak aldatu daitezke. "
+">{productname}</span> Impressen diapositiben diseinuak aldatu daitezke. "
 "Hautatu erabili nahi duzun diapositiba-diseinua goitibeherako diseinu-"
 "zerrendan."
 
@@ -2746,12 +2746,12 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.div.p:713-30
 msgid ""
 "<span class=\"def\">Slide transitions:</span> <span class=\"productname\""
-">%productName</span> Impress provides visual effects when displaying a new "
+">{productname}</span> Impress provides visual effects when displaying a new "
 "slide in the slide show. Slide transitions are property of the slide, use "
 "the side bar to set the slide transition when in edit mode."
 msgstr ""
 "<span class=\"def\">Diapositiba-trantsizioak:</span> <span class="
-"\"productname\">%productName</span> Impressek efektu bisualak eskaintzen "
+"\"productname\">{productname}</span> Impressek efektu bisualak eskaintzen "
 "ditu diapositiba-aurkezpenean hurrengo diapositiba erakusten denerako. "
 "Diapositiba-trantsizioak diapositibaren propietate dira, edizioan zehar "
 "erabili alboko barra diapositiba-aurkezpena ezartzeko."
@@ -2777,17 +2777,17 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.h4:722-5
 msgid ""
 "What are the documents file formats supported by <span class=\"productname\""
-">%productName</span>?"
+">{productname}</span>?"
 msgstr ""
-"Zein dira <span class=\"productname\">%productName</span> aplikazioak "
+"Zein dira <span class=\"productname\">{productname}</span> aplikazioak "
 "onartzen ditu fitxategi-formatuak?"
 
 #: html/cool-help.html%2Bdiv.div.div.p:723-5
 msgid ""
-"<span class=\"productname\">%productName</span> supports both reading and "
+"<span class=\"productname\">{productname}</span> supports both reading and "
 "writing for the following file formats:"
 msgstr ""
-"<span class=\"productname\">%productName</span> aplikazioak honako fitxategi-"
+"<span class=\"productname\">{productname}</span> aplikazioak honako fitxategi-"
 "formatuak irakurri eta idatzi ditzake:"
 
 #: html/cool-help.html%2Bdiv.div.div.ul.li.p:725-11
@@ -2824,20 +2824,20 @@ msgstr "Dokumentuaren kopia bat gordeko da izen berriarekin karpeta berean."
 
 #: html/cool-help.html%2Bdiv.div.div.h4:739-5
 msgid ""
-"How can I quit <span class=\"productname\">%productName</span> without "
+"How can I quit <span class=\"productname\">{productname}</span> without "
 "saving my edits?"
 msgstr ""
-"Nola irten naiteke <span class=\"productname\">%productName</span> "
+"Nola irten naiteke <span class=\"productname\">{productname}</span> "
 "aplikaziotik nire edizioak gorde gabe?"
 
 #: html/cool-help.html%2Bdiv.div.div.p:740-5
 msgid ""
-"<span class=\"productname\">%productName</span> saves the document in the "
+"<span class=\"productname\">{productname}</span> saves the document in the "
 "background regularly, you can't just close without saving it. To abandon "
 "your changes, you must either undo them, or use the <span class=\"ui\""
 ">Revision History </span> in the <span class=\"ui\">File</span> menu."
 msgstr ""
-"<span class=\"productname\">%productName</span> aplikazioak atzeko planoan "
+"<span class=\"productname\">{productname}</span> aplikazioak atzeko planoan "
 "gordetzen ditu dokumentuak aldizka, aplikazioa aldaketak gorde gabe itxi "
 "daiteke arazorik gabe. Aldaketak baztertzeko, haiek desegin behar dira edo "
 "<span class=\"ui\">Fitxategia</span> menuko <span class=\"ui\">Berrikuspenen "
@@ -2845,19 +2845,19 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.h4:743-5
 msgid ""
-"Can <span class=\"productname\">%productName</span> open a password-"
+"Can <span class=\"productname\">{productname}</span> open a password-"
 "protected document?"
 msgstr ""
-"Ireki ahal du <span class=\"productname\">%productName</span> aplikazioak "
+"Ireki ahal du <span class=\"productname\">{productname}</span> aplikazioak "
 "pasahitzez babestutako dokumentu bat?"
 
 #: html/cool-help.html%2Bdiv.div.div.p:744-5
 msgid ""
-"Yes. <span class=\"productname\">%productName</span> opens password-"
+"Yes. <span class=\"productname\">{productname}</span> opens password-"
 "protected documents, but it is necessary to supply the password in the “"
 "Enter password” prompt at load time."
 msgstr ""
-"Bai. <span class=\"productname\">%productName</span>k pasahitzez babestutako "
+"Bai. <span class=\"productname\">{productname}</span>k pasahitzez babestutako "
 "dokumentuak irekitzen ditu, baina derrigorrezkoa da pasahitza idaztea 'Sartu "
 "pasahitza' gonbitean kargako unean."
 
@@ -3272,10 +3272,10 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:862-11
 msgid ""
-"Activate the <span class=\"productname\">%productName</span> spreadsheet "
+"Activate the <span class=\"productname\">{productname}</span> spreadsheet "
 "window."
 msgstr ""
-"Aktibatu <span class=\"productname\">%productName</span> kalkulu-orriaren "
+"Aktibatu <span class=\"productname\">{productname}</span> kalkulu-orriaren "
 "leihoa."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:864-9
@@ -3366,9 +3366,9 @@ msgstr "Nola exekutatu dezaket diapositiba-aurkezpen bat?"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:897-11
 msgid ""
-"Open the presentation in <span class=\"productname\">%productName</span>"
+"Open the presentation in <span class=\"productname\">{productname}</span>"
 msgstr ""
-"Ireki aurkezpena <span class=\"productname\">%productName</span> aplikazioan"
+"Ireki aurkezpena <span class=\"productname\">{productname}</span> aplikazioan"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:898-11
 msgid ""

@@ -1532,8 +1532,8 @@ msgid "Select all in drawing page"
 msgstr "Alles auf der Zeichenfläche auswählen"
 
 #: html/cool-help.html%2Bdiv.h1:394-5
-msgid "<span class=\"productname\">%productName</span> Help"
-msgstr "<span class=\"productname\">%productName</span> Hilfe"
+msgid "<span class=\"productname\">{productname}</span> Help"
+msgstr "<span class=\"productname\">{productname}</span> Hilfe"
 
 #: html/cool-help.html%2Bdiv.p:395-5
 #: html/cool-help.html%2Bdiv.div.h3:431-5
@@ -1542,8 +1542,8 @@ msgstr "Gemeinsame Bearbeitung"
 
 #: html/cool-help.html%2Bdiv.p:396-5
 #: html/cool-help.html%2Bdiv.div.h3:442-5
-msgid "<span class=\"productname\">%productName</span> user interface"
-msgstr "<span class=\"productname\">%productName</span> Benutzeroberfläche"
+msgid "<span class=\"productname\">{productname}</span> user interface"
+msgstr "<span class=\"productname\">{productname}</span> Benutzeroberfläche"
 
 #: html/cool-help.html%2Bdiv.p:397-5
 #: html/cool-help.html%2Bdiv.div.h3:480-5
@@ -1566,8 +1566,8 @@ msgstr "Zusätzliche Funktionen"
 
 #: html/cool-help.html%2Bdiv.div.p:401-9
 #: html/cool-help.html%2Bdiv.div.h2:560-5
-msgid "<span class=\"productname\">%productName</span> spreadsheets"
-msgstr "<span class=\"productname\">%productName</span> Tabellendokumente"
+msgid "<span class=\"productname\">{productname}</span> spreadsheets"
+msgstr "<span class=\"productname\">{productname}</span> Tabellendokumente"
 
 #: html/cool-help.html%2Bdiv.div.p:402-9
 #: html/cool-help.html%2Bdiv.div.div.h3:563-5
@@ -1592,8 +1592,8 @@ msgstr "Tabellendokumente"
 
 #: html/cool-help.html%2Bdiv.div.p:409-9
 #: html/cool-help.html%2Bdiv.div.h2:629-5
-msgid "<span class=\"productname\">%productName</span> text documents"
-msgstr "<span class=\"productname\">%productName</span> Textdokumente"
+msgid "<span class=\"productname\">{productname}</span> text documents"
+msgstr "<span class=\"productname\">{productname}</span> Textdokumente"
 
 #: html/cool-help.html%2Bdiv.div.p:410-9
 #: html/cool-help.html%2Bdiv.div.div.h3:632-5
@@ -1617,8 +1617,8 @@ msgstr "Textdokumente"
 
 #: html/cool-help.html%2Bdiv.div.p:416-9
 #: html/cool-help.html%2Bdiv.div.h2:683-5
-msgid "<span class=\"productname\">%productName</span> presentations"
-msgstr "<span class=\"productname\">%productName</span> Präsentationen"
+msgid "<span class=\"productname\">{productname}</span> presentations"
+msgstr "<span class=\"productname\">{productname}</span> Präsentationen"
 
 #: html/cool-help.html%2Bdiv.div.p:417-9
 #: html/cool-help.html%2Bdiv.div.div.h3:686-5
@@ -1647,12 +1647,12 @@ msgstr "FAQs"
 
 #: html/cool-help.html%2Bdiv.div.p:426-5
 msgid ""
-"<span class=\"productname\">%productName</span> allows you to create and "
+"<span class=\"productname\">{productname}</span> allows you to create and "
 "edit office documents text documents, spreadsheets and presentations "
 "directly in your browser, in a simple and straight-forward way. You can work "
 "alone on a document, or collaboratively as part of a team."
 msgstr ""
-"Mit <span class=\"productname\">%productName</span> können Sie auf einfache "
+"Mit <span class=\"productname\">{productname}</span> können Sie auf einfache "
 "und unkomplizierte Weise Textdokumente, Tabellendokumente und Präsentationen "
 "direkt in Ihrem Browser erstellen und bearbeiten. Sie können alleine oder "
 "gemeinsam als Teil eines Teams an einem Dokument arbeiten."
@@ -1678,21 +1678,21 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.ul.li.p:436-11
 msgid ""
-"<span class=\"productname\">%productName</span> notifies you with a small "
+"<span class=\"productname\">{productname}</span> notifies you with a small "
 "notification in the footer when a new user enters or when a user leaves."
 msgstr ""
-"<span class=\"productname\">%productName</span> informiert Sie mit einer "
+"<span class=\"productname\">{productname}</span> informiert Sie mit einer "
 "kleinen Benachrichtigung in der Fußzeile, wenn ein neuer Benutzer hinzukommt "
 "oder einer das Dokument verlässt."
 
 #: html/cool-help.html%2Bdiv.div.div.p:443-30
 msgid ""
-"<span class=\"productname\">%productName</span> uses modern browser "
+"<span class=\"productname\">{productname}</span> uses modern browser "
 "resources to adapt the user interface to the size of the viewing area, "
 "including small screens found in mobile devices. The interface is composed "
 "of:"
 msgstr ""
-"<span class=\"productname\">%productName</span> verwendet moderne Browser-"
+"<span class=\"productname\">{productname}</span> verwendet moderne Browser-"
 "Ressourcen, um die Benutzeroberfläche an die Größe des Anzeigebereichs "
 "anzupassen, einschließlich kleiner Bildschirme auf Mobilgeräten. Die "
 "Schnittstelle besteht aus:"
@@ -1816,40 +1816,40 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.p:481-5
 msgid ""
 "Your documents are stored and managed in the cloud storage that is "
-"integrated with <span class=\"productname\">%productName</span>."
+"integrated with <span class=\"productname\">{productname}</span>."
 msgstr ""
 "Ihre Dokumente werden im Cloud-Speicher, in welchen <span class=\"productname"
-"\">%productName</span> integriert ist, gespeichert und verwaltet."
+"\">{productname}</span> integriert ist, gespeichert und verwaltet."
 
 #: html/cool-help.html%2Bdiv.div.div.p:482-30
 msgid ""
 "To download a document download it from the <span class=\"productname\""
-">%productName</span> application’s <span class=\"ui\">File</span> menu. The "
+">{productname}</span> application’s <span class=\"ui\">File</span> menu. The "
 "download formats available depends on the application. All applications "
 "exports documents in PDF format."
 msgstr ""
 "Um ein Dokument herunterzuladen, laden Sie es aus der <span class="
-"\"productname\">%productName</span> Anwendung über das Menü <span class=\"ui"
+"\"productname\">{productname}</span> Anwendung über das Menü <span class=\"ui"
 "\">Datei</span> herunter. Die verfügbaren Downloadformate hängen von der "
 "Anwendung ab. Alle Anwendungen können Dokumente ins PDF-Format exporteieren."
 
 #: html/cool-help.html%2Bdiv.div.div.p:483-30
 msgid ""
 "To open document, click on the file to open the <span class=\"productname\""
-">%productName</span> module associated to the document format."
+">{productname}</span> module associated to the document format."
 msgstr ""
 "Zum Öffnen eines Dokuments klicken Sie auf die Datei, um das <span class="
-"\"productname\">%productName</span>-Modul, welches dem Dokumentformat "
+"\"productname\">{productname}</span>-Modul, welches dem Dokumentformat "
 "zugeordnet ist, zu öffnen."
 
 #: html/cool-help.html%2Bdiv.div.div.p:484-30
 msgid ""
-"Documents in <span class=\"productname\">%productName</span> save "
+"Documents in <span class=\"productname\">{productname}</span> save "
 "automatically, but if you are concerned that a document is synchronized as "
 "quickly as possible you can also force saving using the <span class=\"ui\""
 ">File</span> menu’s <span class=\"ui\">Save</span> entry."
 msgstr ""
-"Dokumente in <span class=\"productname\">%productName</span> werden "
+"Dokumente in <span class=\"productname\">{productname}</span> werden "
 "automatisch gespeichert, aber wenn Sie möchten, dass ein Dokument so schnell "
 "wie möglich synchronisiert wird, können Sie das Speichern auch erzwingen, "
 "indem Sie <span class=\"ui\">Datei</span> – <span class=\"ui\">Speichern</"
@@ -1888,7 +1888,7 @@ msgstr "Kopieren-und-Einfügen"
 msgid ""
 "Rich content copy/cut and paste is supported, not only within a given "
 "document, but also across documents on the same or different <span class="
-"\"productname\">%productName</span>. For these internal uses, users can copy/"
+"\"productname\">{productname}</span>. For these internal uses, users can copy/"
 "cut content, including images and mixed content, on PC by using the keyboard "
 "shortcuts directly (<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>X</"
 "kbd>, <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd>, "
@@ -1901,7 +1901,7 @@ msgstr ""
 "Das Kopieren/Ausschneiden und Einfügen umfangreicher Inhalte wird nicht nur "
 "innerhalb eines bestimmten Dokuments unterstützt, sondern auch zwischen "
 "Dokumenten auf derselben oder einer anderen <span class=\"productname\""
-">%productName</span>-Instanz. Hierfür können Benutzer Inhalte, "
+">{productname}</span>-Instanz. Hierfür können Benutzer Inhalte, "
 "einschließlich Bilder und gemischter Inhalte, auf dem PC kopieren/"
 "ausschneiden und einfügen, indem sie direkt die Tastaturkürzel (<kbd>Strg</"
 "kbd><span class=\"kbd--plus\">+</span><kbd>X</kbd>, <kbd>Strg</kbd><span "
@@ -1978,12 +1978,12 @@ msgstr "Inaktives Dokument"
 
 #: html/cool-help.html%2Bdiv.div.div.p:506-5
 msgid ""
-"When <span class=\"productname\">%productName</span> detects that there has "
+"When <span class=\"productname\">{productname}</span> detects that there has "
 "not been any activity in the browser for a while, it puts the document in an "
 "“Inactive” state. The document is shown with a transparent gray overlay, "
 "with the message “Inactive document – please click to resume editing”."
 msgstr ""
-"Wenn <span class=\"productname\">%productName</span> feststellt, dass im "
+"Wenn <span class=\"productname\">{productname}</span> feststellt, dass im "
 "Browser eine Zeit lang keine Aktivität stattgefunden hat, versetzt es das "
 "Dokument in den Status \"Inaktiv\". Das Dokument wird mit einer "
 "transparenten grauen Überlagerung mit der Meldung \"Inaktives Dokument - "
@@ -2062,10 +2062,10 @@ msgstr "Diagramme einfügen"
 
 #: html/cool-help.html%2Bdiv.div.div.p:524-5
 msgid ""
-"<span class=\"productname\">%productName</span> supports inserting and "
+"<span class=\"productname\">{productname}</span> supports inserting and "
 "visualization of charts in documents. To add a chart:"
 msgstr ""
-"<span class=\"productname\">%productName</span> unterstützt das Einfügen und "
+"<span class=\"productname\">{productname}</span> unterstützt das Einfügen und "
 "Anzeigen von Diagrammen in Dokumente. So fügen Sie ein Diagramm hinzu:"
 
 #: html/cool-help.html%2Bdiv.div.div.ol.li.p:526-11
@@ -2129,11 +2129,11 @@ msgstr "Umgang mit Bildern"
 
 #: html/cool-help.html%2Bdiv.div.div.p:540-5
 msgid ""
-"<span class=\"productname\">%productName</span> inserts images in the text "
+"<span class=\"productname\">{productname}</span> inserts images in the text "
 "document from your local computer or from your cloud storage. Inserted "
 "images are always embedded in the document."
 msgstr ""
-"<span class=\"productname\">%productName</span> fügt Bilder von Ihrem "
+"<span class=\"productname\">{productname}</span> fügt Bilder von Ihrem "
 "lokalen Computer oder von Ihrem Cloud-Speicher in das Textdokument ein. "
 "Eingefügte Bilder werden immer in das Dokument eingebettet."
 
@@ -2172,11 +2172,11 @@ msgstr "Kommentare in Dokumenten"
 
 #: html/cool-help.html%2Bdiv.div.div.p:547-5
 msgid ""
-"Insert comments in <span class=\"productname\">%productName</span> in places "
+"Insert comments in <span class=\"productname\">{productname}</span> in places "
 "that need special reader attention. Comments are displayed on the right and "
 "carry the name and date of the issuer."
 msgstr ""
-"Fügen Sie Kommentare in <span class=\"productname\">%productName</span> an "
+"Fügen Sie Kommentare in <span class=\"productname\">{productname}</span> an "
 "Stellen ein, die besondere Aufmerksamkeit des Lesers erfordern. Kommentare "
 "werden rechts angezeigt und tragen den Namen und das Datum des Erstellers."
 
@@ -2199,12 +2199,12 @@ msgstr "Rechtschreibprüfung"
 
 #: html/cool-help.html%2Bdiv.div.div.p:553-5
 msgid ""
-"<span class=\"productname\">%productName</span> can check spelling in text "
+"<span class=\"productname\">{productname}</span> can check spelling in text "
 "documents, spreadsheets and presentations. A red wavy underline indicates "
 "misspelled words. Click on the right mouse button to open a context menu "
 "with suggested misspelling corrections."
 msgstr ""
-"<span class=\"productname\">%productName</span> kann die Rechtschreibung in "
+"<span class=\"productname\">{productname}</span> kann die Rechtschreibung in "
 "Textdokumenten, Tabellendokumenten und Präsentationen überprüfen. Eine rote "
 "wellenförmige Unterstreichung zeigt falsch geschriebene Wörter an. Klicken "
 "Sie mit der rechten Maustaste, um ein Kontextmenü mit vorgeschlagenen "
@@ -2292,26 +2292,26 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.div.p:587-30
 msgid ""
 "<span class=\"def\">Sorting data:</span> You can sort a list of numbers or "
-"text ascending or descending. <span class=\"productname\">%productName</"
+"text ascending or descending. <span class=\"productname\">{productname}</"
 "span> automatically detects cells that are headers, and adjoining columns, "
 "to extend the selection."
 msgstr ""
 "<span class=\"def\">Daten sortieren:</span> Sie können eine Liste von Zahlen "
 "oder Text aufsteigend oder absteigend sortieren. <span class=\"productname\""
-">%productName</span> erkennt automatisch Zellen, die Überschriften und "
+">{productname}</span> erkennt automatisch Zellen, die Überschriften und "
 "angrenzende Spalten sind, um die Auswahl zu erweitern."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:588-30
 msgid ""
 "<span class=\"def\">Filtering data:</span> Filters and advanced filters "
 "allow you to work on certain filtered rows (records) of a data range. In the "
-"spreadsheets in <span class=\"productname\">%productName</span> there are "
+"spreadsheets in <span class=\"productname\">{productname}</span> there are "
 "various possibilities for applying filters."
 msgstr ""
 "<span class=\"def\">Daten filtern:</span> Mit Filtern und erweiterten "
 "Filtern können Sie bestimmte gefilterte Zeilen (Datensätze) eines "
 "Datenbereichs bearbeiten. In den Tabellen in <span class=\"productname\""
-">%productName</span> gibt es verschiedene Möglichkeiten, Filter anzuwenden."
+">{productname}</span> gibt es verschiedene Möglichkeiten, Filter anzuwenden."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:591-10
 msgid ""
@@ -2430,13 +2430,13 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.div.p:622-5
 msgid ""
 "<span class=\"def\">Conditional formatting:</span> <span class=\"productname"
-"\">%productName</span> adds symbols to each cell of a range based on cells "
+"\">{productname}</span> adds symbols to each cell of a range based on cells "
 "conditions. Select the cell range and click the <span class=\"ui\""
 ">Conditional Formatting</span> icon on the toolbar. Select the symbol set to "
 "apply on the range."
 msgstr ""
 "<span class=\"def\">Bedingte Formatierung:</span> <span class=\"productname\""
-">%productName</span> fügt jeder Zelle eines Bereichs basierend auf den "
+">{productname}</span> fügt jeder Zelle eines Bereichs basierend auf den "
 "Zellenbedingungen Symbole hinzu. Wählen Sie den Zellbereich aus und klicken "
 "Sie in der Symbolleiste auf das Symbol <span class=\"ui\">Bedingte "
 "Formatierung</span>. Wählen Sie den Symbolsatz aus, der auf den Bereich "
@@ -2444,7 +2444,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:633-30
 msgid ""
-"<span class=\"productname\">%productName</span> edits text documents in the "
+"<span class=\"productname\">{productname}</span> edits text documents in the "
 "same way you edit a desktop document. It provides a What You See Is What You "
 "Get (WYSIWYG) layout – that conveniently lays out the document as it will be "
 "printed. Operations like typing text, cut, copy and pasting contents, "
@@ -2452,7 +2452,7 @@ msgid ""
 "tables and charts, are similar to a desktop word processor. Use the "
 "keyboard, menus and toolbars to interact with your document."
 msgstr ""
-"<span class=\"productname\">%productName</span> bearbeitet Textdokumente "
+"<span class=\"productname\">{productname}</span> bearbeitet Textdokumente "
 "genauso, wie Sie ein Desktop-Dokument bearbeiten. Es bietet ein WYSIWYG-"
 "Layout (What You See Is What You Get), welches das Dokument bequem so "
 "anzeigt, wie es gedruckt wird. Vorgänge wie das Eingeben von Text, "
@@ -2478,7 +2478,7 @@ msgstr "Text formatieren"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:644-5
 msgid ""
-"<span class=\"productname\">%productName</span> supports modern techniques "
+"<span class=\"productname\">{productname}</span> supports modern techniques "
 "for paragraph formatting through styles. A style is a set of text properties "
 "(font, color, background and many more) labeled with a name, the style name. "
 "Use style to apply the same set of properties to many paragraphs in the "
@@ -2487,7 +2487,7 @@ msgid ""
 "changes formatting as well, simplifying the effort of formatting many "
 "paragraph individually."
 msgstr ""
-"<span class=\"productname\">%productName</span> unterstützt moderne "
+"<span class=\"productname\">{productname}</span> unterstützt moderne "
 "Techniken zur Absatzformatierung durch Vorlagen. Eine Vorlage ist eine Reihe "
 "von Texteigenschaften (Schriftart, Farbe, Hintergrund und vieles mehr), die "
 "mit einem Namen, dem Vorlagennamen, gekennzeichnet ist. Verwenden Sie die "
@@ -2524,12 +2524,12 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.div.p:649-5
 msgid ""
 "<span class=\"def\">Style formatting:</span> <span class=\"productname\""
-">%productName</span> supports paragraph styles. You can apply an existing "
+">{productname}</span> supports paragraph styles. You can apply an existing "
 "paragraph style to a paragraph. Choose menu <span class=\"ui\">Edit</span> → "
 "<span class=\"ui\">Edit styles</span> to change style."
 msgstr ""
 "<span class=\"def\">Formatierung mit Vorlagen:</span> <span class="
-"\"productname\">%productName</span> unterstützt Absatzvorlagen. Sie können "
+"\"productname\">{productname}</span> unterstützt Absatzvorlagen. Sie können "
 "eine vorhandenen Absatzvorlage auf einen Absatz anwenden. Wählen Sie <span "
 "class=\"ui\">Vorlagen</span> – <span class=\"ui\">Absatzvorlage bearbeiten…</"
 "span>, um eine Vorlage zu ändern."
@@ -2568,12 +2568,12 @@ msgstr "Änderungen verfolgen"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:666-5
 msgid ""
-"When you turn on Track Changes, <span class=\"productname\">%productName</"
+"When you turn on Track Changes, <span class=\"productname\">{productname}</"
 "span> marks up new changes made to the document. Select this option again to "
 "turn it off."
 msgstr ""
 "Wenn Sie Änderungen verfolgen aktivieren, markiert <span class=\"productname"
-"\">%productName</span> neue Änderungen, die am Dokument vorgenommen wurden. "
+"\">{productname}</span> neue Änderungen, die am Dokument vorgenommen wurden. "
 "Wählen Sie diese Option erneut aus, um sie zu deaktivieren."
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:667-29
@@ -2650,14 +2650,14 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:687-30
 msgid ""
-"<span class=\"productname\">%productName</span> Impress edits presentations "
+"<span class=\"productname\">{productname}</span> Impress edits presentations "
 "in a way that should be familiar to people. Operations like typing text, "
 "cut, copy and pasting contents, selecting text , inserting, resizing, "
 "anchoring images, adding and handling tables, are similar to a desktop "
 "presentation application. Use the keyboard, menus and toolbars to perform "
 "actions in your document."
 msgstr ""
-"<span class=\"productname\">%productName</span> Impress bearbeitet "
+"<span class=\"productname\">{productname}</span> Impress bearbeitet "
 "Präsentationen auf eine Weise, die den Menschen vertraut sein sollte. "
 "Vorgänge wie das Eingeben von Text, Ausschneiden, Kopieren und Einfügen von "
 "Inhalten, Auswählen von Text, Einfügen, Ändern der Größe, Verankern von "
@@ -2667,12 +2667,12 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:693-5
 msgid ""
-"<span class=\"productname\">%productName</span> displays presentation slide "
+"<span class=\"productname\">{productname}</span> displays presentation slide "
 "shows, including a subset of slide transitions and object animations. Choose "
 "the slide show from the menu or click on icon in the bottom left toolbar in "
 "the slide pane."
 msgstr ""
-"<span class=\"productname\">%productName</span> zeigt "
+"<span class=\"productname\">{productname}</span> zeigt "
 "Bildschirmpräsentations an, einschließlich einer Teilmenge von "
 "Folienübergängen und Objektanimationen. Wählen Sie die "
 "Bildschirmpräsentation aus dem Menü oder klicken Sie auf das Symbol in der "
@@ -2680,10 +2680,10 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:694-5
 msgid ""
-"To exit a <span class=\"productname\">%productName</span> slide show, press "
+"To exit a <span class=\"productname\">{productname}</span> slide show, press "
 "the <kbd>Esc</kbd> key to return to the presentation edit mode."
 msgstr ""
-"Um eine Bildschirmpräsentation in <span class=\"productname\">%productName</"
+"Um eine Bildschirmpräsentation in <span class=\"productname\">{productname}</"
 "span> zu beenden, drücken Sie die Taste <kbd>Esc</kbd>, um zum "
 "Bearbeitungsmodus der Präsentation zurückzukehren."
 
@@ -2707,11 +2707,11 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.div.p:709-5
 msgid ""
 "<span class=\"def\">Slide layouts:</span> <span class=\"productname\""
-">%productName</span> Impress let you change the slide layout. Select the "
+">{productname}</span> Impress let you change the slide layout. Select the "
 "desired slide layout in the drop-down layout list."
 msgstr ""
 "<span class=\"def\">Folienlayouts:</span> Mit <span class=\"productname\""
-">%productName</span> Impress können Sie das Folienlayout ändern. Wählen Sie "
+">{productname}</span> Impress können Sie das Folienlayout ändern. Wählen Sie "
 "das gewünschte Folienlayout in der Dropdown-Liste Layout aus."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:712-30
@@ -2726,12 +2726,12 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.div.p:713-30
 msgid ""
 "<span class=\"def\">Slide transitions:</span> <span class=\"productname\""
-">%productName</span> Impress provides visual effects when displaying a new "
+">{productname}</span> Impress provides visual effects when displaying a new "
 "slide in the slide show. Slide transitions are property of the slide, use "
 "the side bar to set the slide transition when in edit mode."
 msgstr ""
 "<span class=\"def\">Folienübergänge:</span> <span class=\"productname\""
-">%productName</span> Impress bietet visuelle Effekte beim Anzeigen einer "
+">{productname}</span> Impress bietet visuelle Effekte beim Anzeigen einer "
 "neuen Folie in der Bildschirmpräsentation. Folienübergänge sind "
 "Eigenschaften der Folie. Verwenden Sie die Seitenleiste, um den "
 "Folienübergang im Bearbeitungsmodus festzulegen."
@@ -2757,17 +2757,17 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.h4:722-5
 msgid ""
 "What are the documents file formats supported by <span class=\"productname\""
-">%productName</span>?"
+">{productname}</span>?"
 msgstr ""
 "Welche Dateiformate für Dokumente werden von <span class=\"productname\""
-">%productName</span> unterstützt?"
+">{productname}</span> unterstützt?"
 
 #: html/cool-help.html%2Bdiv.div.div.p:723-5
 msgid ""
-"<span class=\"productname\">%productName</span> supports both reading and "
+"<span class=\"productname\">{productname}</span> supports both reading and "
 "writing for the following file formats:"
 msgstr ""
-"<span class=\"productname\">%productName</span> unterstützt sowohl das Lesen "
+"<span class=\"productname\">{productname}</span> unterstützt sowohl das Lesen "
 "als auch das Schreiben für die folgenden Dateiformate:"
 
 #: html/cool-help.html%2Bdiv.div.div.ul.li.p:725-11
@@ -2807,20 +2807,20 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.h4:739-5
 msgid ""
-"How can I quit <span class=\"productname\">%productName</span> without "
+"How can I quit <span class=\"productname\">{productname}</span> without "
 "saving my edits?"
 msgstr ""
-"Wie kann ich <span class=\"productname\">%productName</span> beenden, ohne "
+"Wie kann ich <span class=\"productname\">{productname}</span> beenden, ohne "
 "meine Änderungen zu speichern?"
 
 #: html/cool-help.html%2Bdiv.div.div.p:740-5
 msgid ""
-"<span class=\"productname\">%productName</span> saves the document in the "
+"<span class=\"productname\">{productname}</span> saves the document in the "
 "background regularly, you can't just close without saving it. To abandon "
 "your changes, you must either undo them, or use the <span class=\"ui\""
 ">Revision History </span> in the <span class=\"ui\">File</span> menu."
 msgstr ""
-"<span class=\"productname\">%productName</span> speichert das Dokument "
+"<span class=\"productname\">{productname}</span> speichert das Dokument "
 "regelmäßig im Hintergrund. Sie können es nicht einfach schließen, ohne es zu "
 "speichern. Um Ihre Änderungen abzubrechen, müssen Sie sie entweder "
 "rückgängig machen oder den <span class=\"ui\">Versionsverlauf</span> im Menü "
@@ -2828,19 +2828,19 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.h4:743-5
 msgid ""
-"Can <span class=\"productname\">%productName</span> open a password-"
+"Can <span class=\"productname\">{productname}</span> open a password-"
 "protected document?"
 msgstr ""
-"Kann <span class=\"productname\">%productName</span> ein passwortgeschütztes "
+"Kann <span class=\"productname\">{productname}</span> ein passwortgeschütztes "
 "Dokument öffnen?"
 
 #: html/cool-help.html%2Bdiv.div.div.p:744-5
 msgid ""
-"Yes. <span class=\"productname\">%productName</span> opens password-"
+"Yes. <span class=\"productname\">{productname}</span> opens password-"
 "protected documents, but it is necessary to supply the password in the “"
 "Enter password” prompt at load time."
 msgstr ""
-"Ja. <span class=\"productname\">%productName</span> öffnet "
+"Ja. <span class=\"productname\">{productname}</span> öffnet "
 "kennwortgeschützte Dokumente, das Kennwort muss jedoch beim Laden in der "
 "Eingabeaufforderung \"Kennwort eingeben\" angegeben werden."
 
@@ -3258,10 +3258,10 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:862-11
 msgid ""
-"Activate the <span class=\"productname\">%productName</span> spreadsheet "
+"Activate the <span class=\"productname\">{productname}</span> spreadsheet "
 "window."
 msgstr ""
-"Erstelen Sie ein neues <span class=\"productname\">%productName</span> "
+"Erstelen Sie ein neues <span class=\"productname\">{productname}</span> "
 "Tabellendokument."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:864-9
@@ -3358,10 +3358,10 @@ msgstr "Wie kann ich meine Bildschirmpräsentation ausführen?"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:897-11
 msgid ""
-"Open the presentation in <span class=\"productname\">%productName</span>"
+"Open the presentation in <span class=\"productname\">{productname}</span>"
 msgstr ""
 "Öffnen Sie die Präsentation in <span class=\"productname\""
-">%productName</span>"
+">{productname}</span>"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:898-11
 msgid ""
