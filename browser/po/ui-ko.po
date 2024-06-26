@@ -324,7 +324,7 @@ msgid "Failed to set jwt authentication cookie over insecure connection"
 msgstr "안전하지 않은 연결을 통한 JWT 인증을 할 수 없습니다."
 
 #: admin/src/AdminSocketOverview.js:424
-msgid "Failed to authenticate this session over protocol %0"
+msgid "Failed to authenticate this session over protocol {0}"
 msgstr ""
 
 #: admin/src/AdminSocketOverview.js:429
@@ -404,8 +404,8 @@ msgid "Automatic color"
 msgstr "자동 색상"
 
 #: src/control/Control.AboutDialog.ts:72
-msgid "This version of %productName is powered by"
-msgstr "%productName 의 버전의 제공자"
+msgid "This version of {productname} is powered by"
+msgstr "{productname} 의 버전의 제공자"
 
 #: src/control/Control.AboutDialog.ts:95
 msgid "\"Slow Proxy\""
@@ -459,8 +459,8 @@ msgid "Don't show this again"
 msgstr "다시 보지 않기"
 
 #: src/control/Control.AlertDialog.js:105
-msgid "The server encountered a %0 error while parsing the %1 command."
-msgstr "서버에서 %1 명령을 구문 분석하는 동안 %0 오류가 발생했습니다."
+msgid "The server encountered a {0} error while parsing the {1} command."
+msgstr "서버에서 {1} 명령을 구문 분석하는 동안 {0} 오류가 발생했습니다."
 
 #: src/control/Control.Command.js:89
 msgid "Unlock"
@@ -530,7 +530,7 @@ msgstr "선택 다운로드"
 
 #: src/control/Control.DownloadProgress.js:47
 msgid ""
-"If you want to share large elements outside of %productName it's necessary "
+"If you want to share large elements outside of {productname} it's necessary "
 "to first download them."
 msgstr ""
 
@@ -1798,8 +1798,8 @@ msgstr "시트 복사..."
 
 #: src/control/Control.Tabs.js:388
 #, fuzzy
-msgid "Are you sure you want to delete sheet, %sheet%?"
-msgstr "%sheet% 시트를 정말 삭제하겠습니까?"
+msgid "Are you sure you want to delete sheet, {sheet}?"
+msgstr "{sheet} 시트를 정말 삭제하겠습니까?"
 
 #: src/control/Control.Tabs.js:399
 msgid "Rename sheet"
@@ -1849,15 +1849,15 @@ msgid "Show Menu"
 msgstr "메뉴 보기"
 
 #: src/control/Control.UserList.ts:54
-msgid "%user has joined"
-msgstr "%user 참여"
+msgid "{user} has joined"
+msgstr "{user} 참여"
 
 #: src/control/Control.UserList.ts:55
-msgid "%user has left"
-msgstr "%user 나감"
+msgid "{user} has left"
+msgstr "{user} 나감"
 
 #: src/control/Control.UserList.ts:56
-msgid "Following %user"
+msgid "Following {user}"
 msgstr ""
 
 #: src/control/Control.UserList.ts:57
@@ -1869,7 +1869,7 @@ msgid "Stop following"
 msgstr ""
 
 #: src/control/Control.UserList.ts:59
-msgid "Avatar for %user"
+msgid "Avatar for {user}"
 msgstr ""
 
 #: src/control/Control.UserList.ts:79
@@ -2259,7 +2259,7 @@ msgstr ""
 
 #: src/core/Socket.js:65
 #, fuzzy
-msgid "Oops, there is a problem connecting to %productName: "
+msgid "Oops, there is a problem connecting to {productname}: "
 msgstr "문서를 여는데 문제가 발생했습니다."
 
 #: src/core/Socket.js:653
@@ -2365,7 +2365,7 @@ msgid "Someone"
 msgstr ""
 
 #: src/core/Socket.js:1175
-msgid "%userName saved this document as %fileName. Do you want to join?"
+msgid "{user}Name saved this document as {filename}. Do you want to join?"
 msgstr ""
 
 #: src/core/Socket.js:1192
@@ -2486,10 +2486,10 @@ msgstr "더 많은 정보와 지원"
 
 #: src/errormessages.js:26
 msgid ""
-"This service is limited to %0 documents, and %1 connections total by the "
+"This service is limited to {0} documents, and {1} connections total by the "
 "admin. This limit has been reached. Please try again later."
 msgstr ""
-"이 서비스는 관리자에 의해 %0 문서, 총 %1 개의 연결로 제한되었습니다. 이 "
+"이 서비스는 관리자에 의해 {0} 문서, 총 {1} 개의 연결로 제한되었습니다. 이 "
 "한도에 도달했습니다. 나중에 다시 시도 해주십시오."
 
 #: src/errormessages.js:27
@@ -2507,7 +2507,7 @@ msgstr "인증되지 않은 WOPI 호스트입니다. 나중에 다시 시도하�
 "경우 관리자에게 문의하십시오."
 
 #: src/errormessages.js:29
-msgid "Authorization error was: '%errorMessage'."
+msgid "Authorization error was: '{errormessage}'."
 msgstr ""
 
 #: src/errormessages.js:30
@@ -2517,9 +2517,9 @@ msgstr "WOPISrc 매개 변수가 잘못되었거나 누락되었습니다. 지�
 #: src/errormessages.js:31
 #, fuzzy
 msgid ""
-"Your session will expire in %time. Please save your work and refresh the "
+"Your session will expire in {time}. Please save your work and refresh the "
 "session (or webpage) to continue. You might need to login again."
-msgstr "세션이 %time 내에 만료됩니다. 계속하려면 작업을 저장하고 세션(또는 웹페이지)"
+msgstr "세션이 {time} 내에 만료됩니다. 계속하려면 작업을 저장하고 세션(또는 웹페이지)"
 "를 새로 고침하십시오."
 
 #: src/errormessages.js:32
@@ -2539,8 +2539,8 @@ msgstr "문서를 불러오지 못했습니다. 지원되는 파일 형식인지
 "확인하고 재시도하십시오."
 
 #: src/errormessages.js:34
-msgid "Invalid link: '%url'"
-msgstr "잘못된 바로가기: '%url'"
+msgid "Invalid link: '{url}'"
+msgstr "잘못된 바로가기: '{url}'"
 
 #: src/errormessages.js:35
 msgid ""
@@ -2567,11 +2567,11 @@ msgstr ""
 
 #: src/errormessages.js:39
 msgid ""
-"Your %productName cluster appear to be mis-configured or scaling rapidly - "
+"Your {productname} cluster appear to be mis-configured or scaling rapidly - "
 "please contact your system administrator. Continuing with editing may "
 "result in multiple users not seeing each other, conflicts in the document "
-"storage and/or copy/paste problems. Expected serverId %0 for routeToken %1 "
-"but connected to serverId %2"
+"storage and/or copy/paste problems. Expected serverId {0} for routeToken {1} "
+"but connected to serverId {2}"
 msgstr ""
 
 #: src/errormessages.js:40
@@ -2769,8 +2769,8 @@ msgstr ""
 
 #: src/map/Clipboard.js:180
 msgid ""
-"To paste outside %productName, please first click the 'download' button"
-msgstr "%productName 밖으로 붙이려면, '다운로드' 버큰을 먼저 클릭하세요"
+"To paste outside {productname}, please first click the 'download' button"
+msgstr "{productname} 밖으로 붙이려면, '다운로드' 버큰을 먼저 클릭하세요"
 
 #: src/map/Clipboard.js:188
 msgid "Copying from the document disabled"
@@ -2837,22 +2837,22 @@ msgstr ""
 #: src/map/handler/Map.FileInserter.js:105
 #, javascript-format
 msgid ""
-"The file of type: %0 cannot be uploaded to server since the file has no name"
-msgstr "파일 이름이 없으므로, 파일 유형:  %0를 서버에 업로드할 수 없습니다"
+"The file of type: {0} cannot be uploaded to server since the file has no name"
+msgstr "파일 이름이 없으므로, 파일 유형:  {0}를 서버에 업로드할 수 없습니다"
 
 #: src/map/handler/Map.FileInserter.js:107
 #, javascript-format
 msgid ""
-"The file of type: %0 cannot be uploaded to server since the file is empty"
-msgstr "파일이 비었기때문에, 파일 유형:  %0를 서버에 업로드할 수 없습니다"
+"The file of type: {0} cannot be uploaded to server since the file is empty"
+msgstr "파일이 비었기때문에, 파일 유형:  {0}를 서버에 업로드할 수 없습니다"
 
 #: src/map/handler/Map.FileInserter.js:138
 msgid "Uploading..."
 msgstr "업로드 중..."
 
 #: src/map/handler/Map.FileInserter.js:161
-msgid "Uploading file to server failed with status: %0"
-msgstr "서버로 파일 업로드가 실패되었음, 상태: %0"
+msgid "Uploading file to server failed with status: {0}"
+msgstr "서버로 파일 업로드가 실패되었음, 상태: {0}"
 
 #: src/map/handler/Map.SlideShow.js:55
 msgid "Empty Slide Show"
@@ -2928,7 +2928,7 @@ msgid "Collabora Online Welcome"
 msgstr ""
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:26-7
-msgid "Explore The New %coolVersion"
+msgid "Explore The New {coolversion}"
 msgstr ""
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:27-7
@@ -3129,7 +3129,7 @@ msgstr ""
 #~ msgid ""
 #~ "You are leaving the editor, are you sure you want to visit the following "
 #~ "URL?"
-#~ msgstr "편집기에서 나가면, %url 로 방문하겠습니까?"
+#~ msgstr "편집기에서 나가면, {url} 로 방문하겠습니까?"
 
 #~ msgid "Index"
 #~ msgstr "차례"

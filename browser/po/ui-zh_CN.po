@@ -323,8 +323,8 @@ msgid "Failed to set jwt authentication cookie over insecure connection"
 msgstr "无法通过不安全的连接设置 JSON 网络令牌 (JWT) 的身份验证 cookie"
 
 #: admin/src/AdminSocketOverview.js:424
-msgid "Failed to authenticate this session over protocol %0"
-msgstr "无法通过 %0 协议验证此会话"
+msgid "Failed to authenticate this session over protocol {0}"
+msgstr "无法通过 {0} 协议验证此会话"
 
 #: admin/src/AdminSocketOverview.js:429
 msgid "Warning"
@@ -403,8 +403,8 @@ msgid "Automatic color"
 msgstr "自动颜色"
 
 #: src/control/Control.AboutDialog.ts:72
-msgid "This version of %productName is powered by"
-msgstr "当前版本 %productName 的提供者为"
+msgid "This version of {productname} is powered by"
+msgstr "当前版本 {productname} 的提供者为"
 
 #: src/control/Control.AboutDialog.ts:95
 msgid "\"Slow Proxy\""
@@ -457,8 +457,8 @@ msgid "Don't show this again"
 msgstr "不再显示"
 
 #: src/control/Control.AlertDialog.js:105
-msgid "The server encountered a %0 error while parsing the %1 command."
-msgstr "服务器在处理 %1 命令时遇到了 %0 错误。"
+msgid "The server encountered a {0} error while parsing the {1} command."
+msgstr "服务器在处理 {1} 命令时遇到了 {0} 错误。"
 
 #: src/control/Control.Command.js:89
 msgid "Unlock"
@@ -528,9 +528,9 @@ msgstr "下载选中项目"
 
 #: src/control/Control.DownloadProgress.js:47
 msgid ""
-"If you want to share large elements outside of %productName it's necessary "
+"If you want to share large elements outside of {productname} it's necessary "
 "to first download them."
-msgstr "如果你想在 %productName 以外分享大型项目，有必要先下载他们。"
+msgstr "如果你想在 {productname} 以外分享大型项目，有必要先下载他们。"
 
 #: src/control/Control.DownloadProgress.js:60
 #: src/control/Control.NotebookbarCalc.js:212
@@ -1777,8 +1777,8 @@ msgid "Copy Sheet..."
 msgstr "复制工作表..."
 
 #: src/control/Control.Tabs.js:388
-msgid "Are you sure you want to delete sheet, %sheet%?"
-msgstr "您确定要删除工作表 %sheet% 吗？"
+msgid "Are you sure you want to delete sheet, {sheet}?"
+msgstr "您确定要删除工作表 {sheet} 吗？"
 
 #: src/control/Control.Tabs.js:399
 msgid "Rename sheet"
@@ -1827,16 +1827,16 @@ msgid "Show Menu"
 msgstr "显示菜单"
 
 #: src/control/Control.UserList.ts:54
-msgid "%user has joined"
-msgstr "用户 %user 已加入"
+msgid "{user} has joined"
+msgstr "用户 {user} 已加入"
 
 #: src/control/Control.UserList.ts:55
-msgid "%user has left"
-msgstr "用户 %user 已离开"
+msgid "{user} has left"
+msgstr "用户 {user} 已离开"
 
 #: src/control/Control.UserList.ts:56
-msgid "Following %user"
-msgstr "正在跟随 %user"
+msgid "Following {user}"
+msgstr "正在跟随 {user}"
 
 #: src/control/Control.UserList.ts:57
 msgid "Following the editor"
@@ -1847,8 +1847,8 @@ msgid "Stop following"
 msgstr "停止跟踪"
 
 #: src/control/Control.UserList.ts:59
-msgid "Avatar for %user"
-msgstr "%user 的头像"
+msgid "Avatar for {user}"
+msgstr "{user} 的头像"
 
 #: src/control/Control.UserList.ts:79
 msgid "%n users"
@@ -2228,8 +2228,8 @@ msgid "Headings and objects that you add to the document will appear here"
 msgstr "您添加到文档中的标题和对象将显示在此处"
 
 #: src/core/Socket.js:65
-msgid "Oops, there is a problem connecting to %productName: "
-msgstr "糟糕，连接到 %productName 时出现问题： "
+msgid "Oops, there is a problem connecting to {productname}: "
+msgstr "糟糕，连接到 {productname} 时出现问题： "
 
 #: src/core/Socket.js:653
 msgid "Server is now reachable. We have to refresh the page now."
@@ -2332,8 +2332,8 @@ msgid "Someone"
 msgstr "某人"
 
 #: src/core/Socket.js:1175
-msgid "%userName saved this document as %fileName. Do you want to join?"
-msgstr "%userName 将此文档保存为 %fileName。 你想要加入吗？"
+msgid "{user}Name saved this document as {filename}. Do you want to join?"
+msgstr "{user}Name 将此文档保存为 {filename}。 你想要加入吗？"
 
 #: src/core/Socket.js:1192
 msgid "The document is being renamed and will reload shortly"
@@ -2449,9 +2449,9 @@ msgstr "更多信息和支持"
 
 #: src/errormessages.js:26
 msgid ""
-"This service is limited to %0 documents, and %1 connections total by the "
+"This service is limited to {0} documents, and {1} connections total by the "
 "admin. This limit has been reached. Please try again later."
-msgstr "本服务经管理员限制为 %0 份文档、%1 个连接。目前已经到达上限，请稍后重试。"
+msgstr "本服务经管理员限制为 {0} 份文档、%1 个连接。目前已经到达上限，请稍后重试。"
 
 #: src/errormessages.js:27
 msgid ""
@@ -2466,8 +2466,8 @@ msgid ""
 msgstr "未授权的WOPI主机。请稍后重试，若问题持续存在请反馈给您的管理员。"
 
 #: src/errormessages.js:29
-msgid "Authorization error was: '%errorMessage'."
-msgstr "验证错误： '%errorMessage%'。"
+msgid "Authorization error was: '{errormessage}'."
+msgstr "验证错误： '{errormessage}%'。"
 
 #: src/errormessages.js:30
 msgid "Wrong or missing WOPISrc parameter, please contact support."
@@ -2475,9 +2475,9 @@ msgstr "错误或缺少WOPISrc参数，请联系支持。"
 
 #: src/errormessages.js:31
 msgid ""
-"Your session will expire in %time. Please save your work and refresh the "
+"Your session will expire in {time}. Please save your work and refresh the "
 "session (or webpage) to continue. You might need to login again."
-msgstr "您的会话将在 %time "
+msgstr "您的会话将在 {time} "
 "内过期，请保存您的工作并刷新会话（或页面）以继续。您可能并不需要重新登录。"
 
 #: src/errormessages.js:32
@@ -2495,8 +2495,8 @@ msgid ""
 msgstr "无法载入文件，请确认文件类型正确且文件并未受损，请重试。"
 
 #: src/errormessages.js:34
-msgid "Invalid link: '%url'"
-msgstr "无效链接: 「%url」"
+msgid "Invalid link: '{url}'"
+msgstr "无效链接: 「{url}」"
 
 #: src/errormessages.js:35
 msgid ""
@@ -2523,15 +2523,15 @@ msgstr "我们正在清理上一会话的文档，请稍后重试。"
 
 #: src/errormessages.js:39
 msgid ""
-"Your %productName cluster appear to be mis-configured or scaling rapidly - "
+"Your {productname} cluster appear to be mis-configured or scaling rapidly - "
 "please contact your system administrator. Continuing with editing may "
 "result in multiple users not seeing each other, conflicts in the document "
-"storage and/or copy/paste problems. Expected serverId %0 for routeToken %1 "
-"but connected to serverId %2"
+"storage and/or copy/paste problems. Expected serverId {0} for routeToken {1} "
+"but connected to serverId {2}"
 msgstr ""
-"您的 %productName 集群似乎配置错误或扩展迅速 - 请联系您的系统管理员。 "
+"您的 {productname} 集群似乎配置错误或扩展迅速 - 请联系您的系统管理员。 "
 "继续编辑可能会导致多个用户看不到对方、文档存储冲突和/或复制/粘贴问题。 "
-"RouteToken %1 预期为 serverId %0，但已连接到 serverId %2"
+"RouteToken {1} 预期为 serverId {0}，但已连接到 serverId {2}"
 
 #: src/errormessages.js:40
 msgid ""
@@ -2730,8 +2730,8 @@ msgstr "警告！你的浏览器不受支持。"
 
 #: src/map/Clipboard.js:180
 msgid ""
-"To paste outside %productName, please first click the 'download' button"
-msgstr "想要向 %productName 以外粘贴，请先点击「下载」按钮"
+"To paste outside {productname}, please first click the 'download' button"
+msgstr "想要向 {productname} 以外粘贴，请先点击「下载」按钮"
 
 #: src/map/Clipboard.js:188
 msgid "Copying from the document disabled"
@@ -2806,22 +2806,22 @@ msgstr "向我们提供您的反馈意见"
 #: src/map/handler/Map.FileInserter.js:105
 #, javascript-format
 msgid ""
-"The file of type: %0 cannot be uploaded to server since the file has no name"
-msgstr "无法将类型为 %0 的文件上传到服务器，因为该文件没有文件名"
+"The file of type: {0} cannot be uploaded to server since the file has no name"
+msgstr "无法将类型为 {0} 的文件上传到服务器，因为该文件没有文件名"
 
 #: src/map/handler/Map.FileInserter.js:107
 #, javascript-format
 msgid ""
-"The file of type: %0 cannot be uploaded to server since the file is empty"
-msgstr "无法将类型为 %0 的文件上传到服务器，因为该文件空白"
+"The file of type: {0} cannot be uploaded to server since the file is empty"
+msgstr "无法将类型为 {0} 的文件上传到服务器，因为该文件空白"
 
 #: src/map/handler/Map.FileInserter.js:138
 msgid "Uploading..."
 msgstr "正在上传..."
 
 #: src/map/handler/Map.FileInserter.js:161
-msgid "Uploading file to server failed with status: %0"
-msgstr "向服务器上传文件失败，失败状态为 %0"
+msgid "Uploading file to server failed with status: {0}"
+msgstr "向服务器上传文件失败，失败状态为 {0}"
 
 #: src/map/handler/Map.SlideShow.js:55
 msgid "Empty Slide Show"
@@ -2896,8 +2896,8 @@ msgid "Collabora Online Welcome"
 msgstr "Collabora Online 欢迎"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:26-7
-msgid "Explore The New %coolVersion"
-msgstr "体验新版本 %coolVersion"
+msgid "Explore The New {coolversion}"
+msgstr "体验新版本 {coolversion}"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:27-7
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:38-7
@@ -3021,10 +3021,10 @@ msgstr ""
 #~ "applications it is necessary to first download them onto your device. To do "
 #~ "that press the \"Start download\" button below, and when complete click "
 #~ "\"Confirm copy to clipboard\".</p><p>If you are copy and pasting between "
-#~ "documents inside %productName, there is no need to download.</p>"
+#~ "documents inside {productname}, there is no need to download.</p>"
 #~ msgstr ""
 #~ "<p>若要将文档中的较大元素与其他应用程序共享，必须先将其下载到您的设备上。要进行该操作，请点击下方的“开始下载”按钮，并在下载完成之后点击“确认复制到剪"
-#~ "贴板”。</p><p>若是在 %productName 之内的文档间复制和粘贴，则无需下载。</p>"
+#~ "贴板”。</p><p>若是在 {productname} 之内的文档间复制和粘贴，则无需下载。</p>"
 
 #~ msgid "Reference~s"
 #~ msgstr "引用(~S)"

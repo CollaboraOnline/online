@@ -385,7 +385,7 @@ L.Control.Tabs = L.Control.extend({
 
 	_deleteSheet: function() {
 		var nPos = this._tabForContextMenu;
-		var message = _('Are you sure you want to delete sheet, %sheet%?').replace('%sheet%', $('#spreadsheet-tab' + this._tabForContextMenu).text());
+		var message = _('Are you sure you want to delete sheet, {sheet}?').replace('{sheet}', $('#spreadsheet-tab' + this._tabForContextMenu).text());
 
 		this._map.uiManager.showInfoModal('delete-sheet-modal', '', message, '', _('OK'), function() {
 			this._map.deletePage(nPos);

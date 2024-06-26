@@ -327,8 +327,8 @@ msgid "Failed to set jwt authentication cookie over insecure connection"
 msgstr "Ezin izan da jwt autentifikazio-cookiea ezarri segurua ez den konexioan"
 
 #: admin/src/AdminSocketOverview.js:424
-msgid "Failed to authenticate this session over protocol %0"
-msgstr "Ezin izan da saio hau autentifikatu %0 protokoloa erabilita"
+msgid "Failed to authenticate this session over protocol {0}"
+msgstr "Ezin izan da saio hau autentifikatu {0} protokoloa erabilita"
 
 #: admin/src/AdminSocketOverview.js:429
 msgid "Warning"
@@ -408,8 +408,8 @@ msgid "Automatic color"
 msgstr "Kolore automatikoa"
 
 #: src/control/Control.AboutDialog.ts:72
-msgid "This version of %productName is powered by"
-msgstr "%productName bertsio honen oinarria"
+msgid "This version of {productname} is powered by"
+msgstr "{productname} bertsio honen oinarria"
 
 #: src/control/Control.AboutDialog.ts:95
 msgid "\"Slow Proxy\""
@@ -466,8 +466,8 @@ msgid "Don't show this again"
 msgstr "Ez erakutsi hau berriro"
 
 #: src/control/Control.AlertDialog.js:105
-msgid "The server encountered a %0 error while parsing the %1 command."
-msgstr "Zerbitzariak %0 errore bat aurkitu du %1 komandoa analizatzean."
+msgid "The server encountered a {0} error while parsing the {1} command."
+msgstr "Zerbitzariak {0} errore bat aurkitu du {1} komandoa analizatzean."
 
 #: src/control/Control.Command.js:89
 msgid "Unlock"
@@ -537,10 +537,10 @@ msgstr "Deskargatu hautaketa"
 
 #: src/control/Control.DownloadProgress.js:47
 msgid ""
-"If you want to share large elements outside of %productName it's necessary "
+"If you want to share large elements outside of {productname} it's necessary "
 "to first download them."
 msgstr ""
-"%productNametik kanpo elementu handiak partekatu nahi badituzu, beharrezkoa "
+"{productname}tik kanpo elementu handiak partekatu nahi badituzu, beharrezkoa "
 "da lehenik deskargatzea."
 
 #: src/control/Control.DownloadProgress.js:60
@@ -1792,8 +1792,8 @@ msgid "Copy Sheet..."
 msgstr "Kopiatu orria..."
 
 #: src/control/Control.Tabs.js:388
-msgid "Are you sure you want to delete sheet, %sheet%?"
-msgstr "Ziur zaude %sheet% orria ezabatu nahi duzula?"
+msgid "Are you sure you want to delete sheet, {sheet}?"
+msgstr "Ziur zaude {sheet} orria ezabatu nahi duzula?"
 
 #: src/control/Control.Tabs.js:399
 msgid "Rename sheet"
@@ -1844,15 +1844,15 @@ msgid "Show Menu"
 msgstr "Erakutsi menua"
 
 #: src/control/Control.UserList.ts:54
-msgid "%user has joined"
-msgstr "%user batu da"
+msgid "{user} has joined"
+msgstr "{user} batu da"
 
 #: src/control/Control.UserList.ts:55
-msgid "%user has left"
-msgstr "%user joan da"
+msgid "{user} has left"
+msgstr "{user} joan da"
 
 #: src/control/Control.UserList.ts:56
-msgid "Following %user"
+msgid "Following {user}"
 msgstr "% erabiltzaileari jarraitzen"
 
 #: src/control/Control.UserList.ts:57
@@ -1864,8 +1864,8 @@ msgid "Stop following"
 msgstr ""
 
 #: src/control/Control.UserList.ts:59
-msgid "Avatar for %user"
-msgstr "%user erabiltzailearen avatarra"
+msgid "Avatar for {user}"
+msgstr "{user} erabiltzailearen avatarra"
 
 #: src/control/Control.UserList.ts:79
 msgid "%n users"
@@ -2256,8 +2256,8 @@ msgstr ""
 "Dokumentuan gehitzen dituzun goiburuak eta objektuak hemen agertuko dira"
 
 #: src/core/Socket.js:65
-msgid "Oops, there is a problem connecting to %productName: "
-msgstr "Arazo bat dago %productName-rekin konektatzean: "
+msgid "Oops, there is a problem connecting to {productname}: "
+msgstr "Arazo bat dago {productname}-rekin konektatzean: "
 
 #: src/core/Socket.js:653
 msgid "Server is now reachable. We have to refresh the page now."
@@ -2366,8 +2366,8 @@ msgid "Someone"
 msgstr "Norbaitek"
 
 #: src/core/Socket.js:1175
-msgid "%userName saved this document as %fileName. Do you want to join?"
-msgstr "%userName-k dokumentu hau %fileName gisa gorde du. Sartu nahi duzu?"
+msgid "{user}Name saved this document as {filename}. Do you want to join?"
+msgstr "{user}Name-k dokumentu hau {filename} gisa gorde du. Sartu nahi duzu?"
 
 #: src/core/Socket.js:1192
 msgid "The document is being renamed and will reload shortly"
@@ -2490,10 +2490,10 @@ msgstr "Informazio gehiago eta laguntza"
 
 #: src/errormessages.js:26
 msgid ""
-"This service is limited to %0 documents, and %1 connections total by the "
+"This service is limited to {0} documents, and {1} connections total by the "
 "admin. This limit has been reached. Please try again later."
 msgstr ""
-"Administratzaileak zerbitzu hau %0 dokumentu, eta guztira %1 konexioetara "
+"Administratzaileak zerbitzu hau {0} dokumentu, eta guztira {1} konexioetara "
 "mugatu du. Muga hau heldu da. Saiatu beranduago."
 
 #: src/errormessages.js:27
@@ -2513,7 +2513,7 @@ msgstr ""
 "administratzaileari arazoak jarraitzen badu."
 
 #: src/errormessages.js:29
-msgid "Authorization error was: '%errorMessage'."
+msgid "Authorization error was: '{errormessage}'."
 msgstr ""
 
 #: src/errormessages.js:30
@@ -2524,10 +2524,10 @@ msgstr ""
 
 #: src/errormessages.js:31
 msgid ""
-"Your session will expire in %time. Please save your work and refresh the "
+"Your session will expire in {time}. Please save your work and refresh the "
 "session (or webpage) to continue. You might need to login again."
 msgstr ""
-"Zure saioa %time barru bukatuko da. Gorde zure lana eta freskatu saioa (edo "
+"Zure saioa {time} barru bukatuko da. Gorde zure lana eta freskatu saioa (edo "
 "orrialdea) jarraitzeko. Baliteke berriro saioa hasi behar izatea."
 
 #: src/errormessages.js:32
@@ -2549,8 +2549,8 @@ msgstr ""
 "eta ez dagoela matxuratuta, eta saiatu berriro."
 
 #: src/errormessages.js:34
-msgid "Invalid link: '%url'"
-msgstr "Baliogabeko esteka: '%url'"
+msgid "Invalid link: '{url}'"
+msgstr "Baliogabeko esteka: '{url}'"
 
 #: src/errormessages.js:35
 msgid ""
@@ -2580,17 +2580,17 @@ msgstr "Azken saioko dokumentu hau garbitzen ari gara. Saiatu berriro geroago."
 
 #: src/errormessages.js:39
 msgid ""
-"Your %productName cluster appear to be mis-configured or scaling rapidly - "
+"Your {productname} cluster appear to be mis-configured or scaling rapidly - "
 "please contact your system administrator. Continuing with editing may "
 "result in multiple users not seeing each other, conflicts in the document "
-"storage and/or copy/paste problems. Expected serverId %0 for routeToken %1 "
-"but connected to serverId %2"
+"storage and/or copy/paste problems. Expected serverId {0} for routeToken {1} "
+"but connected to serverId {2}"
 msgstr ""
-"Zure %productName klusterra gaizki konfiguratuta dagoela edo azkar "
+"Zure {productname} klusterra gaizki konfiguratuta dagoela edo azkar "
 "eskalatzen ari dela dirudi. Jarri harremanetan zure sistema-"
 "administratzailearekin. Editatzen jarraitzeak hainbat erabiltzailek elkar ez "
 "ikustea, dokumentuak biltegiratzeko gatazkak edota kopiatu/itsatsi arazoak "
-"sor ditzake. %0 zerbitzariaren IDa espero zen %1 routeTokenerako baina %2 "
+"sor ditzake. {0} zerbitzariaren IDa espero zen {1} routeTokenerako baina {2} "
 "zerbitzariaren IDarekin konektatu da"
 
 #: src/errormessages.js:40
@@ -2806,8 +2806,8 @@ msgstr "Abisua! Erabiltzen ari zaren nabigatzailea ez da onartzen."
 
 #: src/map/Clipboard.js:180
 msgid ""
-"To paste outside %productName, please first click the 'download' button"
-msgstr "%productName kanpora itsasteko, lehenago egin klik 'deskarga' botoian"
+"To paste outside {productname}, please first click the 'download' button"
+msgstr "{productname} kanpora itsasteko, lehenago egin klik 'deskarga' botoian"
 
 #: src/map/Clipboard.js:188
 msgid "Copying from the document disabled"
@@ -2887,22 +2887,22 @@ msgstr "Mesedez, bidali zure iruzkinak"
 #: src/map/handler/Map.FileInserter.js:105
 #, javascript-format
 msgid ""
-"The file of type: %0 cannot be uploaded to server since the file has no name"
-msgstr "%0 motako fitxategia ezin izan da zerbitzarira igo, ez baitu izenik"
+"The file of type: {0} cannot be uploaded to server since the file has no name"
+msgstr "{0} motako fitxategia ezin izan da zerbitzarira igo, ez baitu izenik"
 
 #: src/map/handler/Map.FileInserter.js:107
 #, javascript-format
 msgid ""
-"The file of type: %0 cannot be uploaded to server since the file is empty"
-msgstr "%0 motako fitxategia ezin izan da zerbitzarira igo, hutsik baitago"
+"The file of type: {0} cannot be uploaded to server since the file is empty"
+msgstr "{0} motako fitxategia ezin izan da zerbitzarira igo, hutsik baitago"
 
 #: src/map/handler/Map.FileInserter.js:138
 msgid "Uploading..."
 msgstr "Igotzen..."
 
 #: src/map/handler/Map.FileInserter.js:161
-msgid "Uploading file to server failed with status: %0"
-msgstr "Fitxategia zerbitzarira igotzeak huts egin du honako egoerarekin: %0"
+msgid "Uploading file to server failed with status: {0}"
+msgstr "Fitxategia zerbitzarira igotzeak huts egin du honako egoerarekin: {0}"
 
 #: src/map/handler/Map.SlideShow.js:55
 msgid "Empty Slide Show"
@@ -2980,8 +2980,8 @@ msgid "Collabora Online Welcome"
 msgstr "Collabora Online-ren ongi etorria"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:26-7
-msgid "Explore The New %coolVersion"
-msgstr "Begiratu %coolVersion berria"
+msgid "Explore The New {coolversion}"
+msgstr "Begiratu {coolversion} berria"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:27-7
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:38-7
@@ -3105,12 +3105,12 @@ msgstr ""
 #~ "applications it is necessary to first download them onto your device. To do "
 #~ "that press the \"Start download\" button below, and when complete click "
 #~ "\"Confirm copy to clipboard\".</p><p>If you are copy and pasting between "
-#~ "documents inside %productName, there is no need to download.</p>"
+#~ "documents inside {productname}, there is no need to download.</p>"
 #~ msgstr ""
 #~ "<p>Zure dokumentuaren elementu handiagok partekatu nahi badituzu beste "
 #~ "aplikazio batzuekin, lehenengo zure gailura deskargatu beharko dituzu. Hori "
 #~ "egiteko, sakatu beheko 'Hasi deskarga' botoia, eta osatuta dagoenean, sakatu "
-#~ "'Berretsi arbelera kopiatzea'.</p><p>%productName barruko dokumentuen artean "
+#~ "'Berretsi arbelera kopiatzea'.</p><p>{productname} barruko dokumentuen artean "
 #~ "kopiatzen eta itsasten ari bazara, ez dago deskargatzeko beharrik.</p>"
 
 #~ msgid "Collapse Notebook Bar"

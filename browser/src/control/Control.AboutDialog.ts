@@ -74,7 +74,7 @@ class AboutDialog {
 					.toLowerCase(),
 		);
 
-		var productString = _('This version of %productName is powered by');
+		var productString = _('This version of {productname} is powered by');
 		var productNameWithURL;
 		if (!windowAny.ThisIsAMobileApp)
 			productNameWithURL =
@@ -90,7 +90,7 @@ class AboutDialog {
 		) as HTMLElement;
 		if (productStringElement)
 			productStringElement.innerText = productString.replace(
-				'%productName',
+				'{productname}',
 				productNameWithURL,
 			);
 

@@ -324,8 +324,8 @@ msgid "Failed to set jwt authentication cookie over insecure connection"
 msgstr "Methwyd gosod cwci dilysu jwt dros gysylltiad anniogel"
 
 #: admin/src/AdminSocketOverview.js:424
-msgid "Failed to authenticate this session over protocol %0"
-msgstr "Methwyd dilysu'r sesiwn hon dros brotocol %0"
+msgid "Failed to authenticate this session over protocol {0}"
+msgstr "Methwyd dilysu'r sesiwn hon dros brotocol {0}"
 
 #: admin/src/AdminSocketOverview.js:429
 msgid "Warning"
@@ -404,8 +404,8 @@ msgid "Automatic color"
 msgstr "Lliw awtomatig"
 
 #: src/control/Control.AboutDialog.ts:72
-msgid "This version of %productName is powered by"
-msgstr "Mae'r fersiwn yma o %productName yn cael ei yrru gan"
+msgid "This version of {productname} is powered by"
+msgstr "Mae'r fersiwn yma o {productname} yn cael ei yrru gan"
 
 #: src/control/Control.AboutDialog.ts:95
 msgid "\"Slow Proxy\""
@@ -463,8 +463,8 @@ msgid "Don't show this again"
 msgstr "Peidio dangos eto"
 
 #: src/control/Control.AlertDialog.js:105
-msgid "The server encountered a %0 error while parsing the %1 command."
-msgstr "Profodd y gweinydd wall %0 wrth ddidoli'r gorchymyn %1."
+msgid "The server encountered a {0} error while parsing the {1} command."
+msgstr "Profodd y gweinydd wall {0} wrth ddidoli'r gorchymyn {1}."
 
 #: src/control/Control.Command.js:89
 msgid "Unlock"
@@ -534,10 +534,10 @@ msgstr "Detholiad Llwytho i Lawr"
 
 #: src/control/Control.DownloadProgress.js:47
 msgid ""
-"If you want to share large elements outside of %productName it's necessary "
+"If you want to share large elements outside of {productname} it's necessary "
 "to first download them."
 msgstr ""
-"Os ydych am rannu elfennau mawr y tu allan i %productName mae angen eu "
+"Os ydych am rannu elfennau mawr y tu allan i {productname} mae angen eu "
 "llwytho i lawr yn gyntaf."
 
 #: src/control/Control.DownloadProgress.js:60
@@ -1788,8 +1788,8 @@ msgid "Copy Sheet..."
 msgstr "Copïo'r Ddalen..."
 
 #: src/control/Control.Tabs.js:388
-msgid "Are you sure you want to delete sheet, %sheet%?"
-msgstr "Ydych chi'n siŵr eich bod am ddileu'r ddalen, %sheet% ?"
+msgid "Are you sure you want to delete sheet, {sheet}?"
+msgstr "Ydych chi'n siŵr eich bod am ddileu'r ddalen, {sheet} ?"
 
 #: src/control/Control.Tabs.js:399
 msgid "Rename sheet"
@@ -1840,16 +1840,16 @@ msgid "Show Menu"
 msgstr "Dangos Dewislen"
 
 #: src/control/Control.UserList.ts:54
-msgid "%user has joined"
-msgstr "Mae %user wedi ymuno"
+msgid "{user} has joined"
+msgstr "Mae {user} wedi ymuno"
 
 #: src/control/Control.UserList.ts:55
-msgid "%user has left"
-msgstr "Mae %user wedi gadael"
+msgid "{user} has left"
+msgstr "Mae {user} wedi gadael"
 
 #: src/control/Control.UserList.ts:56
-msgid "Following %user"
-msgstr "Yn dilyn %user"
+msgid "Following {user}"
+msgstr "Yn dilyn {user}"
 
 #: src/control/Control.UserList.ts:57
 msgid "Following the editor"
@@ -1860,8 +1860,8 @@ msgid "Stop following"
 msgstr "Peidio â dilyn"
 
 #: src/control/Control.UserList.ts:59
-msgid "Avatar for %user"
-msgstr "Avatar %user"
+msgid "Avatar for {user}"
+msgstr "Avatar {user}"
 
 #: src/control/Control.UserList.ts:79
 msgid "%n users"
@@ -2254,8 +2254,8 @@ msgstr ""
 "ymddangos yma"
 
 #: src/core/Socket.js:65
-msgid "Oops, there is a problem connecting to %productName: "
-msgstr "Wps, mae problem cysylltu â %productName: "
+msgid "Oops, there is a problem connecting to {productname}: "
+msgstr "Wps, mae problem cysylltu â {productname}: "
 
 #: src/core/Socket.js:653
 msgid "Server is now reachable. We have to refresh the page now."
@@ -2364,8 +2364,8 @@ msgid "Someone"
 msgstr "Rhywun"
 
 #: src/core/Socket.js:1175
-msgid "%userName saved this document as %fileName. Do you want to join?"
-msgstr "Cadwodd %userName y ddogfen hon fel %fileName. Ydych chi eisiau ymuno?"
+msgid "{user}Name saved this document as {filename}. Do you want to join?"
+msgstr "Cadwodd {user}Name y ddogfen hon fel {filename}. Ydych chi eisiau ymuno?"
 
 #: src/core/Socket.js:1192
 msgid "The document is being renamed and will reload shortly"
@@ -2488,10 +2488,10 @@ msgstr "Rhagor o wybodaeth a chefnogaeth"
 
 #: src/errormessages.js:26
 msgid ""
-"This service is limited to %0 documents, and %1 connections total by the "
+"This service is limited to {0} documents, and {1} connections total by the "
 "admin. This limit has been reached. Please try again later."
 msgstr ""
-"Mae'r gwasanaeth wedi ei gyfyngu i %0 dogfen a chyfanswm o %1 cysylltiad gan "
+"Mae'r gwasanaeth wedi ei gyfyngu i {0} dogfen a chyfanswm o {1} cysylltiad gan "
 "y gweinyddwr. Mae'r terfyn yna wedi ei gyrraedd. Ceisiwch eto'n hwyrach."
 
 #: src/errormessages.js:27
@@ -2511,7 +2511,7 @@ msgstr ""
 "gweinyddwr os yw problemau'n parhau."
 
 #: src/errormessages.js:29
-msgid "Authorization error was: '%errorMessage'."
+msgid "Authorization error was: '{errormessage}'."
 msgstr ""
 
 #: src/errormessages.js:30
@@ -2520,10 +2520,10 @@ msgstr "Paramedrau WOPISrc anghywir neu coll, cysylltwch â'ch cefnogaeth."
 
 #: src/errormessages.js:31
 msgid ""
-"Your session will expire in %time. Please save your work and refresh the "
+"Your session will expire in {time}. Please save your work and refresh the "
 "session (or webpage) to continue. You might need to login again."
 msgstr ""
-"Bydd eich sesiwn yn dod i ben yn %time. Cadwch eich gwaith ac adnewyddwch y "
+"Bydd eich sesiwn yn dod i ben yn {time}. Cadwch eich gwaith ac adnewyddwch y "
 "sesiwn (neu'r dudalen we) i barhau. Efallai y bydd angen i chi fewngofnodi "
 "eto."
 
@@ -2546,8 +2546,8 @@ msgstr ""
 "ei gynnal ac nad yw wedi ei llygru a cheisiwch eto."
 
 #: src/errormessages.js:34
-msgid "Invalid link: '%url'"
-msgstr "Dolen annilys: '%url'"
+msgid "Invalid link: '{url}'"
+msgstr "Dolen annilys: '{url}'"
 
 #: src/errormessages.js:35
 msgid ""
@@ -2579,17 +2579,17 @@ msgstr ""
 
 #: src/errormessages.js:39
 msgid ""
-"Your %productName cluster appear to be mis-configured or scaling rapidly - "
+"Your {productname} cluster appear to be mis-configured or scaling rapidly - "
 "please contact your system administrator. Continuing with editing may "
 "result in multiple users not seeing each other, conflicts in the document "
-"storage and/or copy/paste problems. Expected serverId %0 for routeToken %1 "
-"but connected to serverId %2"
+"storage and/or copy/paste problems. Expected serverId {0} for routeToken {1} "
+"but connected to serverId {2}"
 msgstr ""
-"Mae'n ymddangos bod eich clwstwr %productName wedi'i gam-ffurfweddu neu'n "
+"Mae'n ymddangos bod eich clwstwr {productname} wedi'i gam-ffurfweddu neu'n "
 "graddio'n gyflym - cysylltwch â gweinyddwr eich system. Gall parhau â'r "
 "golygu olygu na fydd defnyddwyr lluosog yn gweld ei gilydd, y bydd gwrthdaro "
-"o ran storio dogfennau a/neu broblemau copïo/gludo. Yn disgwyl serverId %0 "
-"ar gyfer routeToken %1 but wedi'i gysylltu â serverId %2"
+"o ran storio dogfennau a/neu broblemau copïo/gludo. Yn disgwyl serverId {0} "
+"ar gyfer routeToken {1} but wedi'i gysylltu â serverId {2}"
 
 #: src/errormessages.js:40
 msgid ""
@@ -2798,9 +2798,9 @@ msgstr "Rhybudd! Nid yw'r porwr rydych chi'n ei ddefnyddio yn cael ei gefnogi."
 
 #: src/map/Clipboard.js:180
 msgid ""
-"To paste outside %productName, please first click the 'download' button"
+"To paste outside {productname}, please first click the 'download' button"
 msgstr ""
-"I ludo tu allan i %productName, cliciwch y botwm 'llwytho i lawr' yn gyntaf"
+"I ludo tu allan i {productname}, cliciwch y botwm 'llwytho i lawr' yn gyntaf"
 
 #: src/map/Clipboard.js:188
 msgid "Copying from the document disabled"
@@ -2880,16 +2880,16 @@ msgstr "Anfonwch eich adborth atom"
 #: src/map/handler/Map.FileInserter.js:105
 #, javascript-format
 msgid ""
-"The file of type: %0 cannot be uploaded to server since the file has no name"
+"The file of type: {0} cannot be uploaded to server since the file has no name"
 msgstr ""
-"Nid oes modd llwytho ffeil o fath: %0 i weinydd gan nad oes gan y ffeil enw"
+"Nid oes modd llwytho ffeil o fath: {0} i weinydd gan nad oes gan y ffeil enw"
 
 #: src/map/handler/Map.FileInserter.js:107
 #, javascript-format
 msgid ""
-"The file of type: %0 cannot be uploaded to server since the file is empty"
+"The file of type: {0} cannot be uploaded to server since the file is empty"
 msgstr ""
-"Nid oes modd llwytho ffeil o fath: %0 i weinydd gan nad oes gan fod y ffeil "
+"Nid oes modd llwytho ffeil o fath: {0} i weinydd gan nad oes gan fod y ffeil "
 "yn wag"
 
 #: src/map/handler/Map.FileInserter.js:138
@@ -2897,8 +2897,8 @@ msgid "Uploading..."
 msgstr "Yn llwytho..."
 
 #: src/map/handler/Map.FileInserter.js:161
-msgid "Uploading file to server failed with status: %0"
-msgstr "Methodd llwytho ffeil i weinydd gyda statws: %0"
+msgid "Uploading file to server failed with status: {0}"
+msgstr "Methodd llwytho ffeil i weinydd gyda statws: {0}"
 
 #: src/map/handler/Map.SlideShow.js:55
 msgid "Empty Slide Show"
@@ -2975,8 +2975,8 @@ msgid "Collabora Online Welcome"
 msgstr "Croeso i Collabora Ar-lein"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:26-7
-msgid "Explore The New %coolVersion"
-msgstr "Archwiliwch y %coolVersion Newydd"
+msgid "Explore The New {coolversion}"
+msgstr "Archwiliwch y {coolversion} Newydd"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:27-7
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:38-7
@@ -3095,13 +3095,13 @@ msgstr ""
 #~ "applications it is necessary to first download them onto your device. To do "
 #~ "that press the \"Start download\" button below, and when complete click "
 #~ "\"Confirm copy to clipboard\".</p><p>If you are copy and pasting between "
-#~ "documents inside %productName, there is no need to download.</p>"
+#~ "documents inside {productname}, there is no need to download.</p>"
 #~ msgstr ""
 #~ "<p>Os hoffech chi rannu elfennau mwy o'ch dogfennau gyda rhaglenni eraill "
 #~ "mae'n angenrheidiol i'w llwytho i lawr i'ch dyfais yn gyntaf. I wneud hynny, "
 #~ "cliciwch y botwm \"Cychwyn llwytho i lawr\" isod a phan fydd wedi cwblhau, "
 #~ "clicio \"Cadarnhau copïo i'r clipfwrdd\". </p><p>Os ydych yn copïo a gludo "
-#~ "rhwng dogfennau o fewn %productName, nid oes angen llwytho i lawr.</p>"
+#~ "rhwng dogfennau o fewn {productname}, nid oes angen llwytho i lawr.</p>"
 
 #~ msgid "Reference~s"
 #~ msgstr "C~yfeirnodau"
@@ -3231,7 +3231,7 @@ msgstr ""
 #~ "You are leaving the editor, are you sure you want to visit the following "
 #~ "URL?"
 #~ msgstr ""
-#~ "Rydych yn gadael y golygydd, ydych chi'n siŵr eich bod am ymweld â %url?"
+#~ "Rydych yn gadael y golygydd, ydych chi'n siŵr eich bod am ymweld â {url}?"
 
 #~ msgid "Index"
 #~ msgstr "Mynegai"

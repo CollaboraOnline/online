@@ -62,7 +62,7 @@ app.definitions.Socket = L.Class.extend({
 			try {
 				this.socket = window.createWebSocket(this.getWebSocketBaseURI(map));
 			} catch (e) {
-				this._map.fire('error', {msg: _('Oops, there is a problem connecting to %productName: ').replace('%productName', (typeof brandProductName !== 'undefined' ? brandProductName : 'Collabora Online Development Edition (unbranded)')) + e, cmd: 'socket', kind: 'failed', id: 3});
+				this._map.fire('error', {msg: _('Oops, there is a problem connecting to {productname}: ').replace('{productname}', (typeof brandProductName !== 'undefined' ? brandProductName : 'Collabora Online Development Edition (unbranded)')) + e, cmd: 'socket', kind: 'failed', id: 3});
 				return;
 			}
 		}
@@ -101,7 +101,7 @@ app.definitions.Socket = L.Class.extend({
 		var dateTime = new Date(parseInt(this._map.options.docParams.access_token_ttl));
 		var dateOptions = { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' };
 		var timerepr = dateTime.toLocaleDateString(String.locale, dateOptions);
-		this._map.fire('warn', {msg: expirymsg.replace('%time', timerepr)});
+		this._map.fire('warn', {msg: expirymsg.replace('{time}', timerepr)});
 
 		// If user still doesn't refresh the session, warn again periodically
 		this._accessTokenExpireTimeout = setTimeout(L.bind(this._sessionExpiredWarning, this),
@@ -612,7 +612,7 @@ app.definitions.Socket = L.Class.extend({
 		if (command.errorCode) {
 			// X509_verify_cert_error_string output
 			var authError = window.atob(command.errorCode);
-			var verifyError = errorMessages.verificationerror.replace('%errorMessage', authError);
+			var verifyError = errorMessages.verificationerror.replace('{errormessage}', authError);
 			unauthorizedMsg += ' ' + verifyError;
 		}
 		return unauthorizedMsg;
@@ -665,10 +665,10 @@ app.definitions.Socket = L.Class.extend({
 			if (window.indirectSocket) {
 				if (window.expectedServerId && window.expectedServerId != this.WSDServer.Id) {
 					if (this.IndirectSocketReconnectCount++ >= 3) {
-						var msg = errorMessages.clusterconfiguration.replace('%productName', (typeof brandProductName !== 'undefined' ? brandProductName : 'Collabora Online Development Edition (unbranded)'));
-						msg = msg.replace(/%0/g, window.expectedServerId);
-						msg = msg.replace(/%1/g, window.routeToken);
-						msg = msg.replace(/%2/g, this.WSDServer.Id);
+						var msg = errorMessages.clusterconfiguration.replace('{productname}', (typeof brandProductName !== 'undefined' ? brandProductName : 'Collabora Online Development Edition (unbranded)'));
+						msg = msg.replace('{0}', window.expectedServerId);
+						msg = msg.replace('{1}', window.routeToken);
+						msg = msg.replace('{2}', this.WSDServer.Id);
 						this._map.uiManager.showInfoModal('wrong-server-modal', _('Cluster configuration warning'), msg, '', _('OK'), null, false);
 						this.IndirectSocketReconnectCount = 0;
 					} else {
@@ -1112,8 +1112,8 @@ app.definitions.Socket = L.Class.extend({
 			if (command.errorKind === 'hardlimitreached') {
 
 				textMsg = errorMessages.limitreachedprod;
-				textMsg = textMsg.replace(/%0/g, command.params[0]);
-				textMsg = textMsg.replace(/%1/g, command.params[1]);
+				textMsg = textMsg.replace('{0}', command.params[0]);
+				textMsg = textMsg.replace('{1}', command.params[1]);
 			}
 			else if (command.errorKind === 'serviceunavailable') {
 				textMsg = errorMessages.serviceunavailable;
@@ -1146,9 +1146,9 @@ app.definitions.Socket = L.Class.extend({
 			if (command.errorKind === 'limitreached' && !this.WasShownLimitDialog) {
 				this.WasShownLimitDialog = true;
 				textMsg = errorMessages.limitreached;
-				textMsg = textMsg.replace(/{docs}/g, command.params[0]);
-				textMsg = textMsg.replace(/{connections}/g, command.params[1]);
-				textMsg = textMsg.replace(/{productname}/g, (typeof brandProductName !== 'undefined' ?
+				textMsg = textMsg.replace('{docs}', command.params[0]);
+				textMsg = textMsg.replace('{connections}', command.params[1]);
+				textMsg = textMsg.replace('{productname}', (typeof brandProductName !== 'undefined' ?
 					brandProductName : 'Collabora Online Development Edition (unbranded)'));
 				this._map.fire('infobar',
 					{
@@ -1172,7 +1172,7 @@ app.definitions.Socket = L.Class.extend({
 			textMsg = textMsg.substring(len);
 			if (textMsg.startsWith('saveas:')) {
 				var userName = command.username ? command.username : _('Someone');
-				var message = _('%userName saved this document as %fileName. Do you want to join?').replace('%userName', userName).replace('%fileName', command.filename);
+				var message = _('{user}Name saved this document as {filename}. Do you want to join?').replace('{user}Name', userName).replace('{filename}', command.filename);
 
 				this._map.uiManager.showConfirmModal('save-as-warning', '', message, _('OK'), function() {
 					this._renameOrSaveAsCallback(textMsg, command);
