@@ -910,10 +910,11 @@ bool DocumentBroker::download(
     WopiStorage* wopiStorage = dynamic_cast<WopiStorage*>(_storage.get());
     if (wopiStorage != nullptr)
     {
-        LOG_DBG("CheckFileInfo for docKey [" << _docKey << ']');
-        std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
+        LOG_DBG("CheckFileInfo for docKey [" << _docKey << "] "
+                                             << (wopiFileInfo ? "already exists" : "is missing"));
         if (!wopiFileInfo)
         {
+            std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
             auto poller = std::make_shared<TerminatingPoll>("CFISynReqPoll");
             poller->startThread();
             CheckFileInfo checkFileInfo(poller, session->getPublicUri(), [](CheckFileInfo&) {});
@@ -924,12 +925,12 @@ bool DocumentBroker::download(
                 throw std::runtime_error(
                     "CheckFileInfo failed or timed out while adding session #" + session->getId());
             }
+
+            checkFileInfoCallDurationMs = std::chrono::duration_cast<std::chrono::milliseconds>(
+                std::chrono::steady_clock::now() - start);
         }
 
         wopiStorage->handleWOPIFileInfo(*wopiFileInfo, *_lockCtx);
-
-        checkFileInfoCallDurationMs = std::chrono::duration_cast<std::chrono::milliseconds>(
-            std::chrono::steady_clock::now() - start);
 
         if (session)
         {
