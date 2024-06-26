@@ -1639,6 +1639,9 @@ L.CanvasTileLayer = L.Layer.extend({
 				app.isAdminUser = null;
 
 			this._map.fire('adminuser');
+		} else if (textMsg.startsWith('presentationinfo:')) {
+			window.app.console.log('_onMessage: ' + textMsg);
+			//content = JSON.parse(textMsg.substring('presentationinfo:'.length + 1));
 		}
 	},
 
