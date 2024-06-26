@@ -1575,8 +1575,8 @@ msgid "Select all in drawing page"
 msgstr "Chọn tất cả trong trang vẽ"
 
 #: html/cool-help.html%2Bdiv.h1:394-5
-msgid "<span class=\"productname\">%productName</span> Help"
-msgstr "<span class=\"productname\">%productName</span> Trợ giúp"
+msgid "<span class=\"productname\">{productname}</span> Help"
+msgstr "<span class=\"productname\">{productname}</span> Trợ giúp"
 
 #: html/cool-help.html%2Bdiv.p:395-5
 #: html/cool-help.html%2Bdiv.div.h3:431-5
@@ -1585,8 +1585,8 @@ msgstr "Cộng tác chỉnh sửa"
 
 #: html/cool-help.html%2Bdiv.p:396-5
 #: html/cool-help.html%2Bdiv.div.h3:442-5
-msgid "<span class=\"productname\">%productName</span> user interface"
-msgstr "<span class=\"productname\">%productName</span> giao diện người dùng"
+msgid "<span class=\"productname\">{productname}</span> user interface"
+msgstr "<span class=\"productname\">{productname}</span> giao diện người dùng"
 
 #: html/cool-help.html%2Bdiv.p:397-5
 #: html/cool-help.html%2Bdiv.div.h3:480-5
@@ -1609,8 +1609,8 @@ msgstr "Các tính năng nâng cao"
 
 #: html/cool-help.html%2Bdiv.div.p:401-9
 #: html/cool-help.html%2Bdiv.div.h2:560-5
-msgid "<span class=\"productname\">%productName</span> spreadsheets"
-msgstr "<span class=\"productname\">%productName</span> trang tính"
+msgid "<span class=\"productname\">{productname}</span> spreadsheets"
+msgstr "<span class=\"productname\">{productname}</span> trang tính"
 
 #: html/cool-help.html%2Bdiv.div.p:402-9
 #: html/cool-help.html%2Bdiv.div.div.h3:563-5
@@ -1635,8 +1635,8 @@ msgstr "Trang tính"
 
 #: html/cool-help.html%2Bdiv.div.p:409-9
 #: html/cool-help.html%2Bdiv.div.h2:629-5
-msgid "<span class=\"productname\">%productName</span> text documents"
-msgstr "<span class=\"productname\">%productName</span> tài liệu văn bản"
+msgid "<span class=\"productname\">{productname}</span> text documents"
+msgstr "<span class=\"productname\">{productname}</span> tài liệu văn bản"
 
 #: html/cool-help.html%2Bdiv.div.p:410-9
 #: html/cool-help.html%2Bdiv.div.div.h3:632-5
@@ -1660,8 +1660,8 @@ msgstr "Tài liệu văn bản"
 
 #: html/cool-help.html%2Bdiv.div.p:416-9
 #: html/cool-help.html%2Bdiv.div.h2:683-5
-msgid "<span class=\"productname\">%productName</span> presentations"
-msgstr "<span class=\"productname\">%productName</span> bản trình bày"
+msgid "<span class=\"productname\">{productname}</span> presentations"
+msgstr "<span class=\"productname\">{productname}</span> bản trình bày"
 
 #: html/cool-help.html%2Bdiv.div.p:417-9
 #: html/cool-help.html%2Bdiv.div.div.h3:686-5
@@ -1690,12 +1690,12 @@ msgstr "Các câu hỏi thường gặp"
 
 #: html/cool-help.html%2Bdiv.div.p:426-5
 msgid ""
-"<span class=\"productname\">%productName</span> allows you to create and "
+"<span class=\"productname\">{productname}</span> allows you to create and "
 "edit office documents text documents, spreadsheets and presentations "
 "directly in your browser, in a simple and straight-forward way. You can work "
 "alone on a document, or collaboratively as part of a team."
 msgstr ""
-"<span class=\"productname\">%productName</span> cho phép bạn tạo và chỉnh "
+"<span class=\"productname\">{productname}</span> cho phép bạn tạo và chỉnh "
 "sửa tài liệu văn phòng, tài liệu văn bản, trang tính và bản trình bày trực "
 "tiếp trong trình duyệt của bạn một cách đơn giản. Bạn có thể làm việc một "
 "mình trên tài liệu hoặc cộng tác như một phần của nhóm."
@@ -1721,20 +1721,20 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.ul.li.p:436-11
 msgid ""
-"<span class=\"productname\">%productName</span> notifies you with a small "
+"<span class=\"productname\">{productname}</span> notifies you with a small "
 "notification in the footer when a new user enters or when a user leaves."
 msgstr ""
-"<span class=\"productname\">%productName</span> thông báo cho bạn bằng một "
+"<span class=\"productname\">{productname}</span> thông báo cho bạn bằng một "
 "thông báo nhỏ ở chân trang khi người dùng mới vào hoặc khi người dùng rời đi."
 
 #: html/cool-help.html%2Bdiv.div.div.p:443-30
 msgid ""
-"<span class=\"productname\">%productName</span> uses modern browser "
+"<span class=\"productname\">{productname}</span> uses modern browser "
 "resources to adapt the user interface to the size of the viewing area, "
 "including small screens found in mobile devices. The interface is composed "
 "of:"
 msgstr ""
-"<span class=\"productname\">%productName</span> sử dụng tài nguyên trình "
+"<span class=\"productname\">{productname}</span> sử dụng tài nguyên trình "
 "duyệt hiện đại để điều chỉnh giao diện người dùng theo kích thước của khu "
 "vực xem, bao gồm cả màn hình nhỏ được tìm thấy trong thiết bị di động. Giao "
 "diện bao gồm:"
@@ -1855,39 +1855,39 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.p:481-5
 msgid ""
 "Your documents are stored and managed in the cloud storage that is "
-"integrated with <span class=\"productname\">%productName</span>."
+"integrated with <span class=\"productname\">{productname}</span>."
 msgstr ""
 "Tài liệu của bạn được lưu trữ và quản lý trong bộ lưu trữ đám mây được tích "
-"hợp với <span class=\"productname\">%productName</span>."
+"hợp với <span class=\"productname\">{productname}</span>."
 
 #: html/cool-help.html%2Bdiv.div.div.p:482-30
 msgid ""
 "To download a document download it from the <span class=\"productname\""
-">%productName</span> application’s <span class=\"ui\">File</span> menu. The "
+">{productname}</span> application’s <span class=\"ui\">File</span> menu. The "
 "download formats available depends on the application. All applications "
 "exports documents in PDF format."
 msgstr ""
 "Để tải xuống tài liệu, tải xuống từ menu <span class=\"productname\""
-">%productName</span> <span class=\"ui\">Tài liệu</span>của ứng dụng. Các "
+">{productname}</span> <span class=\"ui\">Tài liệu</span>của ứng dụng. Các "
 "định dạng tải xuống có sẵn phụ thuộc vào ứng dụng. Tất cả các ứng dụng xuất "
 "tài liệu ở định dạng PDF."
 
 #: html/cool-help.html%2Bdiv.div.div.p:483-30
 msgid ""
 "To open document, click on the file to open the <span class=\"productname\""
-">%productName</span> module associated to the document format."
+">{productname}</span> module associated to the document format."
 msgstr ""
 "Để mở tài liệu, nhấp vào tệp để mở mô-đun <span class=\"productname\""
-">%productName</span> được liên kết với định dạng tài liệu."
+">{productname}</span> được liên kết với định dạng tài liệu."
 
 #: html/cool-help.html%2Bdiv.div.div.p:484-30
 msgid ""
-"Documents in <span class=\"productname\">%productName</span> save "
+"Documents in <span class=\"productname\">{productname}</span> save "
 "automatically, but if you are concerned that a document is synchronized as "
 "quickly as possible you can also force saving using the <span class=\"ui\""
 ">File</span> menu’s <span class=\"ui\">Save</span> entry."
 msgstr ""
-"Tài liệu trong <span class=\"productname\">%productName</span> lưu tự động, "
+"Tài liệu trong <span class=\"productname\">{productname}</span> lưu tự động, "
 "nhưng nếu bạn muốn tài liệu được đồng bộ hóa càng nhanh càng tốt, bạn cũng "
 "có thể buộc lưu bằng cách sử dụng mục nhập <span class=\"ui\">Tài liệu</"
 "span> <span class=\"ui\">Lưu</span> của menu."
@@ -1925,7 +1925,7 @@ msgstr "Sao chép và Dán"
 msgid ""
 "Rich content copy/cut and paste is supported, not only within a given "
 "document, but also across documents on the same or different <span class="
-"\"productname\">%productName</span>. For these internal uses, users can copy/"
+"\"productname\">{productname}</span>. For these internal uses, users can copy/"
 "cut content, including images and mixed content, on PC by using the keyboard "
 "shortcuts directly (<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>X</"
 "kbd>, <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd>, "
@@ -1937,7 +1937,7 @@ msgid ""
 msgstr ""
 "Sao chép / cắt và dán nội dung phong phú được hỗ trợ, không chỉ trong một "
 "tài liệu nhất định mà còn trên các tài liệu trên <span class=\"productname\""
-">%productName </span>giống hoặc khác nhau. Đối với những mục đích sử dụng "
+">{productname} </span>giống hoặc khác nhau. Đối với những mục đích sử dụng "
 "nội bộ này, người dùng có thể sao chép / cắt nội dung, bao gồm cả hình ảnh "
 "và nội dung hỗn hợp, trên PC bằng cách sử dụng trực tiếp các phím tắt "
 "(<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>X</kbd>, <kbd>Ctrl</"
@@ -2013,12 +2013,12 @@ msgstr "Tài liệu không hoạt động"
 
 #: html/cool-help.html%2Bdiv.div.div.p:506-5
 msgid ""
-"When <span class=\"productname\">%productName</span> detects that there has "
+"When <span class=\"productname\">{productname}</span> detects that there has "
 "not been any activity in the browser for a while, it puts the document in an "
 "“Inactive” state. The document is shown with a transparent gray overlay, "
 "with the message “Inactive document – please click to resume editing”."
 msgstr ""
-"Khi <span class=\"productname\">%productName </span> phát hiện rằng không có "
+"Khi <span class=\"productname\">{productname} </span> phát hiện rằng không có "
 "bất kỳ hoạt động nào trong trình duyệt trong một thời gian, nó sẽ đặt tài "
 "liệu ở trạng thái “Không hoạt động”. Tài liệu được hiển thị với lớp phủ màu "
 "xám trong suốt, với thông báo “Tài liệu không hoạt động - vui lòng nhấp để "
@@ -2098,10 +2098,10 @@ msgstr "Thêm biểu đồ"
 
 #: html/cool-help.html%2Bdiv.div.div.p:524-5
 msgid ""
-"<span class=\"productname\">%productName</span> supports inserting and "
+"<span class=\"productname\">{productname}</span> supports inserting and "
 "visualization of charts in documents. To add a chart:"
 msgstr ""
-"<span class=\"productname\">%productName </span> hỗ trợ chèn và hiển thị "
+"<span class=\"productname\">{productname} </span> hỗ trợ chèn và hiển thị "
 "biểu đồ trong tài liệu. Để thêm biểu đồ:"
 
 #: html/cool-help.html%2Bdiv.div.div.ol.li.p:526-11
@@ -2164,11 +2164,11 @@ msgstr "Xử lý hình ảnh"
 
 #: html/cool-help.html%2Bdiv.div.div.p:540-5
 msgid ""
-"<span class=\"productname\">%productName</span> inserts images in the text "
+"<span class=\"productname\">{productname}</span> inserts images in the text "
 "document from your local computer or from your cloud storage. Inserted "
 "images are always embedded in the document."
 msgstr ""
-"<span class=\"productname\">%productName </span> chèn hình ảnh vào tài liệu "
+"<span class=\"productname\">{productname} </span> chèn hình ảnh vào tài liệu "
 "văn bản từ máy tính cục bộ hoặc từ bộ nhớ đám mây của bạn. Hình ảnh đã chèn "
 "luôn được nhúng trong tài liệu."
 
@@ -2207,11 +2207,11 @@ msgstr "Nhận xét trong tài liệu"
 
 #: html/cool-help.html%2Bdiv.div.div.p:547-5
 msgid ""
-"Insert comments in <span class=\"productname\">%productName</span> in places "
+"Insert comments in <span class=\"productname\">{productname}</span> in places "
 "that need special reader attention. Comments are displayed on the right and "
 "carry the name and date of the issuer."
 msgstr ""
-"Chèn nhận xét vào <span class=\"productname\">%productName </span> ở những "
+"Chèn nhận xét vào <span class=\"productname\">{productname} </span> ở những "
 "vị trí cần người đọc chú ý đặc biệt. Bình luận được hiển thị ở bên phải và "
 "mang tên và ngày của người phát hành."
 
@@ -2231,12 +2231,12 @@ msgstr "Kiểm tra chính tả"
 
 #: html/cool-help.html%2Bdiv.div.div.p:553-5
 msgid ""
-"<span class=\"productname\">%productName</span> can check spelling in text "
+"<span class=\"productname\">{productname}</span> can check spelling in text "
 "documents, spreadsheets and presentations. A red wavy underline indicates "
 "misspelled words. Click on the right mouse button to open a context menu "
 "with suggested misspelling corrections."
 msgstr ""
-"<span class=\"productname\">%productName </span> có thể kiểm tra chính tả "
+"<span class=\"productname\">{productname} </span> có thể kiểm tra chính tả "
 "trong tài liệu văn bản, bảng tính và bản trình bày. Gạch chân gợn sóng màu "
 "đỏ cho biết các từ sai chính tả. Nhấp vào nút chuột phải để mở menu ngữ cảnh "
 "với các sửa lỗi chính tả được đề xuất."
@@ -2318,25 +2318,25 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.div.p:587-30
 msgid ""
 "<span class=\"def\">Sorting data:</span> You can sort a list of numbers or "
-"text ascending or descending. <span class=\"productname\">%productName</"
+"text ascending or descending. <span class=\"productname\">{productname}</"
 "span> automatically detects cells that are headers, and adjoining columns, "
 "to extend the selection."
 msgstr ""
 "<span class=\"def\">Sắp xếp dữ liệu:</span> Bạn có thể sắp xếp danh sách các "
 "số hoặc văn bản tăng dần hoặc giảm dần. <span class=\"productname\""
-">%productName</span> tự động phát hiện các ô là tiêu đề và cột liền kề, để "
+">{productname}</span> tự động phát hiện các ô là tiêu đề và cột liền kề, để "
 "mở rộng lựa chọn."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:588-30
 msgid ""
 "<span class=\"def\">Filtering data:</span> Filters and advanced filters "
 "allow you to work on certain filtered rows (records) of a data range. In the "
-"spreadsheets in <span class=\"productname\">%productName</span> there are "
+"spreadsheets in <span class=\"productname\">{productname}</span> there are "
 "various possibilities for applying filters."
 msgstr ""
 "<span class=\"def\">Lọc dữ liệu: </span> Bộ lọc và bộ lọc nâng cao cho phép "
 "bạn làm việc trên các hàng (bản ghi) được lọc nhất định của phạm vi dữ liệu. "
-"Trong các bảng tính trong <span class=\"productname\">%productName </span>, "
+"Trong các bảng tính trong <span class=\"productname\">{productname} </span>, "
 "có nhiều khả năng áp dụng bộ lọc."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:591-10
@@ -2452,20 +2452,20 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.div.p:622-5
 msgid ""
 "<span class=\"def\">Conditional formatting:</span> <span class=\"productname"
-"\">%productName</span> adds symbols to each cell of a range based on cells "
+"\">{productname}</span> adds symbols to each cell of a range based on cells "
 "conditions. Select the cell range and click the <span class=\"ui\""
 ">Conditional Formatting</span> icon on the toolbar. Select the symbol set to "
 "apply on the range."
 msgstr ""
 "<span class=\"def\">Định dạng có điều kiện:</span> <span class=\"productname"
-"\">%productName </span> thêm ký hiệu vào mỗi ô của một dải ô dựa trên điều "
+"\">{productname} </span> thêm ký hiệu vào mỗi ô của một dải ô dựa trên điều "
 "kiện ô. Chọn phạm vi ô và nhấp vào biểu tượng <span class=\"ui\">Định dạng "
 "có điều kiện</span> trên thanh công cụ. Chọn bộ ký hiệu để áp dụng trên phạm "
 "vi."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:633-30
 msgid ""
-"<span class=\"productname\">%productName</span> edits text documents in the "
+"<span class=\"productname\">{productname}</span> edits text documents in the "
 "same way you edit a desktop document. It provides a What You See Is What You "
 "Get (WYSIWYG) layout – that conveniently lays out the document as it will be "
 "printed. Operations like typing text, cut, copy and pasting contents, "
@@ -2473,7 +2473,7 @@ msgid ""
 "tables and charts, are similar to a desktop word processor. Use the "
 "keyboard, menus and toolbars to interact with your document."
 msgstr ""
-"<span class=\"productname\">%productName </span> chỉnh sửa tài liệu văn bản "
+"<span class=\"productname\">{productname} </span> chỉnh sửa tài liệu văn bản "
 "giống như cách bạn chỉnh sửa tài liệu trên máy tính. Nó cung cấp một bố cục "
 "những gì bạn thấy là điều bạn nhận được (WYSIWYG) - thuận tiện đặt tài liệu "
 "khi nó sẽ được in. Các thao tác như nhập văn bản, cắt, sao chép và dán nội "
@@ -2497,7 +2497,7 @@ msgstr "Định dạng văn bản"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:644-5
 msgid ""
-"<span class=\"productname\">%productName</span> supports modern techniques "
+"<span class=\"productname\">{productname}</span> supports modern techniques "
 "for paragraph formatting through styles. A style is a set of text properties "
 "(font, color, background and many more) labeled with a name, the style name. "
 "Use style to apply the same set of properties to many paragraphs in the "
@@ -2506,7 +2506,7 @@ msgid ""
 "changes formatting as well, simplifying the effort of formatting many "
 "paragraph individually."
 msgstr ""
-"<span class=\"productname\">%productName</span> hỗ trợ các kỹ thuật hiện đại "
+"<span class=\"productname\">{productname}</span> hỗ trợ các kỹ thuật hiện đại "
 "để định dạng đoạn văn thông qua các kiểu. Kiểu là một tập hợp các thuộc tính "
 "văn bản (phông chữ, màu sắc, nền và nhiều đặc tính khác) được đặt tên. Sử "
 "dụng style để áp dụng cùng một tập hợp các thuộc tính cho nhiều đoạn văn "
@@ -2541,12 +2541,12 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.div.p:649-5
 msgid ""
 "<span class=\"def\">Style formatting:</span> <span class=\"productname\""
-">%productName</span> supports paragraph styles. You can apply an existing "
+">{productname}</span> supports paragraph styles. You can apply an existing "
 "paragraph style to a paragraph. Choose menu <span class=\"ui\">Edit</span> → "
 "<span class=\"ui\">Edit styles</span> to change style."
 msgstr ""
 "<span class=\"def\">Định dạng kiểu:</span> <span class=\"productname\""
-">%productName </span> hỗ trợ kiểu đoạn văn. Bạn có thể áp dụng một kiểu đoạn "
+">{productname} </span> hỗ trợ kiểu đoạn văn. Bạn có thể áp dụng một kiểu đoạn "
 "văn hiện có cho một đoạn văn. Chọn menu <span class=\"ui\">Chỉnh sửa</span> →"
 " <span class=\"ui\">Chỉnh sửa kiểu</span> để thay đổi kiểu."
 
@@ -2582,11 +2582,11 @@ msgstr "Theo dõi các thay đổi"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:666-5
 msgid ""
-"When you turn on Track Changes, <span class=\"productname\">%productName</"
+"When you turn on Track Changes, <span class=\"productname\">{productname}</"
 "span> marks up new changes made to the document. Select this option again to "
 "turn it off."
 msgstr ""
-"Khi bạn bật Theo dõi thay đổi, <span class=\"productname\">%productName </"
+"Khi bạn bật Theo dõi thay đổi, <span class=\"productname\">{productname} </"
 "span> đánh dấu các thay đổi mới được thực hiện đối với tài liệu. Chọn lại "
 "tùy chọn này để tắt."
 
@@ -2663,14 +2663,14 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:687-30
 msgid ""
-"<span class=\"productname\">%productName</span> Impress edits presentations "
+"<span class=\"productname\">{productname}</span> Impress edits presentations "
 "in a way that should be familiar to people. Operations like typing text, "
 "cut, copy and pasting contents, selecting text , inserting, resizing, "
 "anchoring images, adding and handling tables, are similar to a desktop "
 "presentation application. Use the keyboard, menus and toolbars to perform "
 "actions in your document."
 msgstr ""
-"<span class=\"productname\">%productName </span> Gây ấn tượng chỉnh sửa bản "
+"<span class=\"productname\">{productname} </span> Gây ấn tượng chỉnh sửa bản "
 "trình bày theo cách quen thuộc với mọi người. Các thao tác như nhập văn bản, "
 "cắt, sao chép và dán nội dung, chọn văn bản, chèn, thay đổi kích thước, neo "
 "hình ảnh, thêm và xử lý bảng, tương tự như một ứng dụng trình chiếu trên máy "
@@ -2679,22 +2679,22 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:693-5
 msgid ""
-"<span class=\"productname\">%productName</span> displays presentation slide "
+"<span class=\"productname\">{productname}</span> displays presentation slide "
 "shows, including a subset of slide transitions and object animations. Choose "
 "the slide show from the menu or click on icon in the bottom left toolbar in "
 "the slide pane."
 msgstr ""
-"<span class=\"productname\">%productName </span> hiển thị các trình chiếu "
+"<span class=\"productname\">{productname} </span> hiển thị các trình chiếu "
 "bản trình bày, bao gồm một tập hợp con các chuyển đổi trang chiếu và hoạt "
 "ảnh đối tượng. Chọn trình chiếu từ menu hoặc nhấp vào biểu tượng ở thanh "
 "công cụ dưới cùng bên trái trong ngăn trình chiếu."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:694-5
 msgid ""
-"To exit a <span class=\"productname\">%productName</span> slide show, press "
+"To exit a <span class=\"productname\">{productname}</span> slide show, press "
 "the <kbd>Esc</kbd> key to return to the presentation edit mode."
 msgstr ""
-"Để thoát trình chiếu <span class=\"productname\">%productName </span>, nhấn "
+"Để thoát trình chiếu <span class=\"productname\">{productname} </span>, nhấn "
 "phím <kbd>Esc</kbd> để quay lại chế độ chỉnh sửa bản trình bày."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:701-5
@@ -2716,11 +2716,11 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.div.p:709-5
 msgid ""
 "<span class=\"def\">Slide layouts:</span> <span class=\"productname\""
-">%productName</span> Impress let you change the slide layout. Select the "
+">{productname}</span> Impress let you change the slide layout. Select the "
 "desired slide layout in the drop-down layout list."
 msgstr ""
 "<span class=\"def\">Bố cục trang trình bày:</span> <span class=\"productname"
-"\">%productName </span> cho phép bạn thay đổi bố cục trang trình bày. Chọn "
+"\">{productname} </span> cho phép bạn thay đổi bố cục trang trình bày. Chọn "
 "bố cục trang chiếu mong muốn trong danh sách bố cục thả xuống."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:712-30
@@ -2735,12 +2735,12 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.div.p:713-30
 msgid ""
 "<span class=\"def\">Slide transitions:</span> <span class=\"productname\""
-">%productName</span> Impress provides visual effects when displaying a new "
+">{productname}</span> Impress provides visual effects when displaying a new "
 "slide in the slide show. Slide transitions are property of the slide, use "
 "the side bar to set the slide transition when in edit mode."
 msgstr ""
 "<span class=\"def\">Chuyển tiếp trang trình bày:</span> <span class="
-"\"productname\">%productName </span> cung cấp hiệu ứng hình ảnh khi hiển thị "
+"\"productname\">{productname} </span> cung cấp hiệu ứng hình ảnh khi hiển thị "
 "trang trình bày mới trong trình chiếu. Chuyển tiếp trang chiếu là thuộc "
 "tính của trang chiếu, sử dụng thanh bên để đặt chuyển đổi trang chiếu khi ở "
 "chế độ chỉnh sửa."
@@ -2766,17 +2766,17 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.h4:722-5
 msgid ""
 "What are the documents file formats supported by <span class=\"productname\""
-">%productName</span>?"
+">{productname}</span>?"
 msgstr ""
-"Định dạng tệp tài liệu được <span class=\"productname\">%productName </span> "
+"Định dạng tệp tài liệu được <span class=\"productname\">{productname} </span> "
 "hỗ trợ là gì?"
 
 #: html/cool-help.html%2Bdiv.div.div.p:723-5
 msgid ""
-"<span class=\"productname\">%productName</span> supports both reading and "
+"<span class=\"productname\">{productname}</span> supports both reading and "
 "writing for the following file formats:"
 msgstr ""
-"<span class=\"productname\">%productName </span> hỗ trợ cả đọc và ghi cho "
+"<span class=\"productname\">{productname} </span> hỗ trợ cả đọc và ghi cho "
 "các định dạng tệp sau:"
 
 #: html/cool-help.html%2Bdiv.div.div.ul.li.p:725-11
@@ -2811,39 +2811,39 @@ msgstr "Một bản sao của tài liệu được lưu với tên mới trong c
 
 #: html/cool-help.html%2Bdiv.div.div.h4:739-5
 msgid ""
-"How can I quit <span class=\"productname\">%productName</span> without "
+"How can I quit <span class=\"productname\">{productname}</span> without "
 "saving my edits?"
 msgstr ""
-"Làm cách nào để thoát khỏi <span class=\"productname\">%productName </span> "
+"Làm cách nào để thoát khỏi <span class=\"productname\">{productname} </span> "
 "mà không lưu các chỉnh sửa của mình?"
 
 #: html/cool-help.html%2Bdiv.div.div.p:740-5
 msgid ""
-"<span class=\"productname\">%productName</span> saves the document in the "
+"<span class=\"productname\">{productname}</span> saves the document in the "
 "background regularly, you can't just close without saving it. To abandon "
 "your changes, you must either undo them, or use the <span class=\"ui\""
 ">Revision History </span> in the <span class=\"ui\">File</span> menu."
 msgstr ""
-"<span class=\"productname\">%productName </span> thường xuyên lưu tài liệu "
+"<span class=\"productname\">{productname} </span> thường xuyên lưu tài liệu "
 "trong background, bạn không thể đóng mà không lưu. Để từ bỏ các thay đổi của "
 "mình, bạn phải hoàn tác chúng, hoặc sử dụng <span class=\"ui\">Lịch sử sửa "
 "đổi</span> trong menu <span class=\"ui\">Tệp</span>."
 
 #: html/cool-help.html%2Bdiv.div.div.h4:743-5
 msgid ""
-"Can <span class=\"productname\">%productName</span> open a password-"
+"Can <span class=\"productname\">{productname}</span> open a password-"
 "protected document?"
 msgstr ""
-"<span class=\"productname\">%productName </span> có thể mở tài liệu được bảo "
+"<span class=\"productname\">{productname} </span> có thể mở tài liệu được bảo "
 "vệ bằng mật khẩu không?"
 
 #: html/cool-help.html%2Bdiv.div.div.p:744-5
 msgid ""
-"Yes. <span class=\"productname\">%productName</span> opens password-"
+"Yes. <span class=\"productname\">{productname}</span> opens password-"
 "protected documents, but it is necessary to supply the password in the “"
 "Enter password” prompt at load time."
 msgstr ""
-"Đúng. <span class=\"productname\">%productName </span> mở tài liệu được bảo "
+"Đúng. <span class=\"productname\">{productname} </span> mở tài liệu được bảo "
 "vệ bằng mật khẩu, nhưng cần phải cung cấp mật khẩu trong lời nhắc “Nhập mật "
 "khẩu” tại thời điểm tải."
 
@@ -3250,10 +3250,10 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:862-11
 msgid ""
-"Activate the <span class=\"productname\">%productName</span> spreadsheet "
+"Activate the <span class=\"productname\">{productname}</span> spreadsheet "
 "window."
 msgstr ""
-"Kích hoạt cửa sổ bảng tính <span class=\"productname\">%productName </span>."
+"Kích hoạt cửa sổ bảng tính <span class=\"productname\">{productname} </span>."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:864-9
 msgid ""
@@ -3338,8 +3338,8 @@ msgstr "Làm cách nào tôi có thể chạy trình chiếu của mình?"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:897-11
 msgid ""
-"Open the presentation in <span class=\"productname\">%productName</span>"
-msgstr "Mở bản trình bày trong <span class=\"productname\">%productName </span>"
+"Open the presentation in <span class=\"productname\">{productname}</span>"
+msgstr "Mở bản trình bày trong <span class=\"productname\">{productname} </span>"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:898-11
 msgid ""

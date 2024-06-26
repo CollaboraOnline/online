@@ -331,8 +331,8 @@ msgstr ""
 "Ошибка установки cookie аутентификации jwt через небезопасное соединение"
 
 #: admin/src/AdminSocketOverview.js:424
-msgid "Failed to authenticate this session over protocol %0"
-msgstr "Ошибка аутентификации сессии через протокол %0"
+msgid "Failed to authenticate this session over protocol {0}"
+msgstr "Ошибка аутентификации сессии через протокол {0}"
 
 #: admin/src/AdminSocketOverview.js:429
 msgid "Warning"
@@ -411,8 +411,8 @@ msgid "Automatic color"
 msgstr "Автоматический цвет"
 
 #: src/control/Control.AboutDialog.ts:72
-msgid "This version of %productName is powered by"
-msgstr "Эта версия %productName работает на"
+msgid "This version of {productname} is powered by"
+msgstr "Эта версия {productname} работает на"
 
 #: src/control/Control.AboutDialog.ts:95
 msgid "\"Slow Proxy\""
@@ -469,8 +469,8 @@ msgid "Don't show this again"
 msgstr "Не показывать снова"
 
 #: src/control/Control.AlertDialog.js:105
-msgid "The server encountered a %0 error while parsing the %1 command."
-msgstr "Сервер столкнулся с ошибкой %0 при анализе команды %1."
+msgid "The server encountered a {0} error while parsing the {1} command."
+msgstr "Сервер столкнулся с ошибкой {0} при анализе команды {1}."
 
 #: src/control/Control.Command.js:89
 msgid "Unlock"
@@ -540,10 +540,10 @@ msgstr "Загрузить выделение"
 
 #: src/control/Control.DownloadProgress.js:47
 msgid ""
-"If you want to share large elements outside of %productName it's necessary "
+"If you want to share large elements outside of {productname} it's necessary "
 "to first download them."
 msgstr ""
-"Если Вы хотите предоставить доступ к большим элементам вне %productName, "
+"Если Вы хотите предоставить доступ к большим элементам вне {productname}, "
 "необходимо сначала загрузить их."
 
 #: src/control/Control.DownloadProgress.js:60
@@ -1795,8 +1795,8 @@ msgid "Copy Sheet..."
 msgstr "Копировать лист..."
 
 #: src/control/Control.Tabs.js:388
-msgid "Are you sure you want to delete sheet, %sheet%?"
-msgstr "Действительно удалить лист %sheet% ?"
+msgid "Are you sure you want to delete sheet, {sheet}?"
+msgstr "Действительно удалить лист {sheet} ?"
 
 #: src/control/Control.Tabs.js:399
 msgid "Rename sheet"
@@ -1847,16 +1847,16 @@ msgid "Show Menu"
 msgstr "Показать меню"
 
 #: src/control/Control.UserList.ts:54
-msgid "%user has joined"
-msgstr "%user присоединился"
+msgid "{user} has joined"
+msgstr "{user} присоединился"
 
 #: src/control/Control.UserList.ts:55
-msgid "%user has left"
-msgstr "%user отсоединился"
+msgid "{user} has left"
+msgstr "{user} отсоединился"
 
 #: src/control/Control.UserList.ts:56
-msgid "Following %user"
-msgstr "Следую за %user"
+msgid "Following {user}"
+msgstr "Следую за {user}"
 
 #: src/control/Control.UserList.ts:57
 msgid "Following the editor"
@@ -1867,8 +1867,8 @@ msgid "Stop following"
 msgstr "Остановить следование"
 
 #: src/control/Control.UserList.ts:59
-msgid "Avatar for %user"
-msgstr "Аватар %user"
+msgid "Avatar for {user}"
+msgstr "Аватар {user}"
 
 #: src/control/Control.UserList.ts:79
 msgid "%n users"
@@ -2257,8 +2257,8 @@ msgid "Headings and objects that you add to the document will appear here"
 msgstr "Заголовки и объекты, которые вы добавите в документ, появятся здесь"
 
 #: src/core/Socket.js:65
-msgid "Oops, there is a problem connecting to %productName: "
-msgstr "Упс, неполадки при подключении к %productName: "
+msgid "Oops, there is a problem connecting to {productname}: "
+msgstr "Упс, неполадки при подключении к {productname}: "
 
 #: src/core/Socket.js:653
 msgid "Server is now reachable. We have to refresh the page now."
@@ -2365,9 +2365,9 @@ msgid "Someone"
 msgstr "Кто-то"
 
 #: src/core/Socket.js:1175
-msgid "%userName saved this document as %fileName. Do you want to join?"
+msgid "{user}Name saved this document as {filename}. Do you want to join?"
 msgstr ""
-"%userName сохранил(а) этот документ как %fileName. Вы хотите присоединиться?"
+"{user}Name сохранил(а) этот документ как {filename}. Вы хотите присоединиться?"
 
 #: src/core/Socket.js:1192
 msgid "The document is being renamed and will reload shortly"
@@ -2489,10 +2489,10 @@ msgstr "Больше информации и технической поддер
 
 #: src/errormessages.js:26
 msgid ""
-"This service is limited to %0 documents, and %1 connections total by the "
+"This service is limited to {0} documents, and {1} connections total by the "
 "admin. This limit has been reached. Please try again later."
 msgstr ""
-"Этот сервис ограничен %0 документами и %1 соединениями суммарно для "
+"Этот сервис ограничен {0} документами и {1} соединениями суммарно для "
 "администратора. Это ограничение было достигнуто. Пожалуйста, попробуйте "
 "позже."
 
@@ -2513,7 +2513,7 @@ msgstr ""
 "администратору."
 
 #: src/errormessages.js:29
-msgid "Authorization error was: '%errorMessage'."
+msgid "Authorization error was: '{errormessage}'."
 msgstr ""
 
 #: src/errormessages.js:30
@@ -2524,10 +2524,10 @@ msgstr ""
 
 #: src/errormessages.js:31
 msgid ""
-"Your session will expire in %time. Please save your work and refresh the "
+"Your session will expire in {time}. Please save your work and refresh the "
 "session (or webpage) to continue. You might need to login again."
 msgstr ""
-"Ваша сессия истекает через %time. Пожалуйста, сохраните работу и обновите "
+"Ваша сессия истекает через {time}. Пожалуйста, сохраните работу и обновите "
 "сессию (или веб-страницу) для продолжения. Вам может понадобиться повторный "
 "вход."
 
@@ -2550,8 +2550,8 @@ msgstr ""
 "тип файла и файл не повреждён."
 
 #: src/errormessages.js:34
-msgid "Invalid link: '%url'"
-msgstr "Неправильная ссылка: '%url'"
+msgid "Invalid link: '{url}'"
+msgstr "Неправильная ссылка: '{url}'"
 
 #: src/errormessages.js:35
 msgid ""
@@ -2579,17 +2579,17 @@ msgstr "Мы очищаем этот документ с последнего с
 
 #: src/errormessages.js:39
 msgid ""
-"Your %productName cluster appear to be mis-configured or scaling rapidly - "
+"Your {productname} cluster appear to be mis-configured or scaling rapidly - "
 "please contact your system administrator. Continuing with editing may "
 "result in multiple users not seeing each other, conflicts in the document "
-"storage and/or copy/paste problems. Expected serverId %0 for routeToken %1 "
-"but connected to serverId %2"
+"storage and/or copy/paste problems. Expected serverId {0} for routeToken {1} "
+"but connected to serverId {2}"
 msgstr ""
-"Ваш кластер %productName, вероятно, неверно настроен или быстро растёт - "
+"Ваш кластер {productname}, вероятно, неверно настроен или быстро растёт - "
 "пожалуйста, свяжитесь с Вашим системным администратором. Продолжение "
 "редактирования может привести к отсутствию связи между пользователями, "
 "конфликтам при сохранении документа и/или проблемам копирования/вставки. "
-"Ожидается serverId %0 для routeToken %1, но соединён с serverId %2"
+"Ожидается serverId {0} для routeToken {1}, но соединён с serverId {2}"
 
 #: src/errormessages.js:40
 msgid ""
@@ -2803,8 +2803,8 @@ msgstr "Внимание! Используемый вами браузер не 
 
 #: src/map/Clipboard.js:180
 msgid ""
-"To paste outside %productName, please first click the 'download' button"
-msgstr "Чтобы вставить вне %productName, сначала нажмите кнопку \"загрузить\""
+"To paste outside {productname}, please first click the 'download' button"
+msgstr "Чтобы вставить вне {productname}, сначала нажмите кнопку \"загрузить\""
 
 #: src/map/Clipboard.js:188
 msgid "Copying from the document disabled"
@@ -2882,23 +2882,23 @@ msgstr "Пожалуйста, отправьте нам свой отзыв"
 #: src/map/handler/Map.FileInserter.js:105
 #, javascript-format
 msgid ""
-"The file of type: %0 cannot be uploaded to server since the file has no name"
+"The file of type: {0} cannot be uploaded to server since the file has no name"
 msgstr ""
-"Файл типа: %0 не может быть загружен на сервер, поскольку у файла нет имени"
+"Файл типа: {0} не может быть загружен на сервер, поскольку у файла нет имени"
 
 #: src/map/handler/Map.FileInserter.js:107
 #, javascript-format
 msgid ""
-"The file of type: %0 cannot be uploaded to server since the file is empty"
-msgstr "Файл типа: %0 не может быть загружен на сервер, поскольку файл пуст"
+"The file of type: {0} cannot be uploaded to server since the file is empty"
+msgstr "Файл типа: {0} не может быть загружен на сервер, поскольку файл пуст"
 
 #: src/map/handler/Map.FileInserter.js:138
 msgid "Uploading..."
 msgstr "Выгрузка…"
 
 #: src/map/handler/Map.FileInserter.js:161
-msgid "Uploading file to server failed with status: %0"
-msgstr "Загрузка файла на сервер не удалась, результат: %0"
+msgid "Uploading file to server failed with status: {0}"
+msgstr "Загрузка файла на сервер не удалась, результат: {0}"
 
 #: src/map/handler/Map.SlideShow.js:55
 msgid "Empty Slide Show"
@@ -2975,8 +2975,8 @@ msgid "Collabora Online Welcome"
 msgstr "Добро пожаловать в Collabora Online"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:26-7
-msgid "Explore The New %coolVersion"
-msgstr "Узнайте о новой %coolVersion"
+msgid "Explore The New {coolversion}"
+msgstr "Узнайте о новой {coolversion}"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:27-7
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:38-7
@@ -3103,7 +3103,7 @@ msgstr ""
 #~ "applications it is necessary to first download them onto your device. To do "
 #~ "that press the \"Start download\" button below, and when complete click "
 #~ "\"Confirm copy to clipboard\".</p><p>If you are copy and pasting between "
-#~ "documents inside %productName, there is no need to download.</p>"
+#~ "documents inside {productname}, there is no need to download.</p>"
 #~ msgstr ""
 #~ "<p>Для обмена крупными частями документа с другими приложениями необходимо "
 #~ "сначала загрузить их на ваше устройство. Для этого нажмите кнопку \"Начать "

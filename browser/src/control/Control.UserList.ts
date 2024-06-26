@@ -51,12 +51,12 @@ class UserList extends L.Control {
 		userLimitHeader: 6,
 		userLimitHeaderWhenFollowing: 3,
 		userPopupTimeout: null,
-		userJoinedPopupMessage: _('%user has joined'),
-		userLeftPopupMessage: _('%user has left'),
-		followingChipTextUser: _('Following %user'),
+		userJoinedPopupMessage: _('{user} has joined'),
+		userLeftPopupMessage: _('{user} has left'),
+		followingChipTextUser: _('Following {user}'),
 		followingChipTextEditor: _('Following the editor'),
 		followingChipTooltipText: _('Stop following'),
-		userAvatarAlt: _('Avatar for %user'),
+		userAvatarAlt: _('Avatar for {user}'),
 		nUsers: undefined,
 		oneUser: undefined,
 		noUser: undefined,
@@ -161,7 +161,7 @@ class UserList extends L.Control {
 
 		L.LOUtil.setUserImage(img, this.map, viewId);
 
-		img.alt = this.options.userAvatarAlt.replace('%user', username);
+		img.alt = this.options.userAvatarAlt.replace('{user}', username);
 
 		img.style.zIndex = zIndex.toString();
 		img.style.borderColor = color;
@@ -453,9 +453,9 @@ class UserList extends L.Control {
 		let message;
 
 		if (type === 'join') {
-			message = this.options.userJoinedPopupMessage.replace('%user', username);
+			message = this.options.userJoinedPopupMessage.replace('{user}', username);
 		} else {
-			message = this.options.userLeftPopupMessage.replace('%user', username);
+			message = this.options.userLeftPopupMessage.replace('{user}', username);
 		}
 
 		const sanitizer = document.createElement('div');
@@ -565,7 +565,7 @@ class UserList extends L.Control {
 			followingChip.style.borderColor = 'var(--color-main-text)';
 		} else {
 			followingChip.innerText = this.options.followingChipTextUser.replace(
-				'%user',
+				'{user}',
 				following[1].username,
 			);
 			followingChip.style.borderColor = following[1].color;

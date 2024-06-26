@@ -329,8 +329,8 @@ msgstr ""
 "siguruar"
 
 #: admin/src/AdminSocketOverview.js:424
-msgid "Failed to authenticate this session over protocol %0"
-msgstr "S’u arrit të mirëfilltësohej sesioni përmes protokolli %0"
+msgid "Failed to authenticate this session over protocol {0}"
+msgstr "S’u arrit të mirëfilltësohej sesioni përmes protokolli {0}"
 
 #: admin/src/AdminSocketOverview.js:429
 msgid "Warning"
@@ -409,8 +409,8 @@ msgid "Automatic color"
 msgstr "Ngjyrë e automatizuar"
 
 #: src/control/Control.AboutDialog.ts:72
-msgid "This version of %productName is powered by"
-msgstr "Ky version i %productName bazohet në"
+msgid "This version of {productname} is powered by"
+msgstr "Ky version i {productname} bazohet në"
 
 #: src/control/Control.AboutDialog.ts:95
 msgid "\"Slow Proxy\""
@@ -467,8 +467,8 @@ msgid "Don't show this again"
 msgstr "Mos e rishfaq këtë"
 
 #: src/control/Control.AlertDialog.js:105
-msgid "The server encountered a %0 error while parsing the %1 command."
-msgstr "Shërbyesi hasi një gabim %0 teksa analizonte urdhrin."
+msgid "The server encountered a {0} error while parsing the {1} command."
+msgstr "Shërbyesi hasi një gabim {0} teksa analizonte urdhrin."
 
 #: src/control/Control.Command.js:89
 msgid "Unlock"
@@ -538,10 +538,10 @@ msgstr "Shkarko Përzgjedhjen"
 
 #: src/control/Control.DownloadProgress.js:47
 msgid ""
-"If you want to share large elements outside of %productName it's necessary "
+"If you want to share large elements outside of {productname} it's necessary "
 "to first download them."
 msgstr ""
-"Nëse doni të ndani me të tjerë elemente të mëdhenj jashtë %productName, "
+"Nëse doni të ndani me të tjerë elemente të mëdhenj jashtë {productname}, "
 "është e nevojshme që fillimisht t’i shkarkoni ata."
 
 #: src/control/Control.DownloadProgress.js:60
@@ -1796,8 +1796,8 @@ msgid "Copy Sheet..."
 msgstr "Kopjoni Fletë…"
 
 #: src/control/Control.Tabs.js:388
-msgid "Are you sure you want to delete sheet, %sheet%?"
-msgstr "Jeni i sigurt se doni të fshihet fleta %sheet%?"
+msgid "Are you sure you want to delete sheet, {sheet}?"
+msgstr "Jeni i sigurt se doni të fshihet fleta {sheet}?"
 
 #: src/control/Control.Tabs.js:399
 msgid "Rename sheet"
@@ -1848,16 +1848,16 @@ msgid "Show Menu"
 msgstr "Shfaq Menu"
 
 #: src/control/Control.UserList.ts:54
-msgid "%user has joined"
-msgstr "%user erdhi"
+msgid "{user} has joined"
+msgstr "{user} erdhi"
 
 #: src/control/Control.UserList.ts:55
-msgid "%user has left"
-msgstr "%user iku"
+msgid "{user} has left"
+msgstr "{user} iku"
 
 #: src/control/Control.UserList.ts:56
-msgid "Following %user"
-msgstr "Po ndiqet %user"
+msgid "Following {user}"
+msgstr "Po ndiqet {user}"
 
 #: src/control/Control.UserList.ts:57
 msgid "Following the editor"
@@ -1868,8 +1868,8 @@ msgid "Stop following"
 msgstr ""
 
 #: src/control/Control.UserList.ts:59
-msgid "Avatar for %user"
-msgstr "Avatar për %user"
+msgid "Avatar for {user}"
+msgstr "Avatar për {user}"
 
 #: src/control/Control.UserList.ts:79
 msgid "%n users"
@@ -2259,8 +2259,8 @@ msgid "Headings and objects that you add to the document will appear here"
 msgstr "Krye dhe objekte që shtoni te dokumenti do të duken këtu"
 
 #: src/core/Socket.js:65
-msgid "Oops, there is a problem connecting to %productName: "
-msgstr "Oh, ka një problem në lidhjen me %productName: "
+msgid "Oops, there is a problem connecting to {productname}: "
+msgstr "Oh, ka një problem në lidhjen me {productname}: "
 
 #: src/core/Socket.js:653
 msgid "Server is now reachable. We have to refresh the page now."
@@ -2367,8 +2367,8 @@ msgid "Someone"
 msgstr "Dikush"
 
 #: src/core/Socket.js:1175
-msgid "%userName saved this document as %fileName. Do you want to join?"
-msgstr "%userName e ruajti këtë dokument si %fileName. Doni të merrni pjesë?"
+msgid "{user}Name saved this document as {filename}. Do you want to join?"
+msgstr "{user}Name e ruajti këtë dokument si {filename}. Doni të merrni pjesë?"
 
 #: src/core/Socket.js:1192
 msgid "The document is being renamed and will reload shortly"
@@ -2493,10 +2493,10 @@ msgstr "Më tepër hollësi dhe asistencë"
 
 #: src/errormessages.js:26
 msgid ""
-"This service is limited to %0 documents, and %1 connections total by the "
+"This service is limited to {0} documents, and {1} connections total by the "
 "admin. This limit has been reached. Please try again later."
 msgstr ""
-"Ky shërbim, nga përgjegjësi kufizohet në %0 dokumente dhe %1 lidhje "
+"Ky shërbim, nga përgjegjësi kufizohet në {0} dokumente dhe {1} lidhje "
 "gjithsej. Është mbërritur në këtë kufi. Ju lutemi, riprovoni më vonë."
 
 #: src/errormessages.js:27
@@ -2516,7 +2516,7 @@ msgstr ""
 "përgjegjësin tuaj, nëse problemi vazhdon."
 
 #: src/errormessages.js:29
-msgid "Authorization error was: '%errorMessage'."
+msgid "Authorization error was: '{errormessage}'."
 msgstr ""
 
 #: src/errormessages.js:30
@@ -2526,10 +2526,10 @@ msgstr ""
 
 #: src/errormessages.js:31
 msgid ""
-"Your session will expire in %time. Please save your work and refresh the "
+"Your session will expire in {time}. Please save your work and refresh the "
 "session (or webpage) to continue. You might need to login again."
 msgstr ""
-"Sesioni juaj do të skadojë pas %time. Ju lutemi, që të vazhdohet, ruani ç’"
+"Sesioni juaj do të skadojë pas {time}. Ju lutemi, që të vazhdohet, ruani ç’"
 "keni bërë dhe rifreskoni sesionin (ose faqen web). Mund t’ju duhet të ribëni "
 "hyrjen."
 
@@ -2552,8 +2552,8 @@ msgstr ""
 "mbulohet dhe se ajo s’është e dëmtuar dhe riprovoni."
 
 #: src/errormessages.js:34
-msgid "Invalid link: '%url'"
-msgstr "Lidhje e pavlefshme: '%url'"
+msgid "Invalid link: '{url}'"
+msgstr "Lidhje e pavlefshme: '{url}'"
 
 #: src/errormessages.js:35
 msgid ""
@@ -2584,18 +2584,18 @@ msgstr ""
 
 #: src/errormessages.js:39
 msgid ""
-"Your %productName cluster appear to be mis-configured or scaling rapidly - "
+"Your {productname} cluster appear to be mis-configured or scaling rapidly - "
 "please contact your system administrator. Continuing with editing may "
 "result in multiple users not seeing each other, conflicts in the document "
-"storage and/or copy/paste problems. Expected serverId %0 for routeToken %1 "
-"but connected to serverId %2"
+"storage and/or copy/paste problems. Expected serverId {0} for routeToken {1} "
+"but connected to serverId {2}"
 msgstr ""
-"Instanca juaj %productName duket të jetë formësuar gabim, ose po "
+"Instanca juaj {productname} duket të jetë formësuar gabim, ose po "
 "përshkallëzohet shumë shpejt -ju lutemi, lidhuni me përgjegjësin e sistemit "
 "tuaj. Vazhdimi me përpunimin mund të sjellë që përdorues të shumtë të mos "
 "shohin njëri-tjetrin, përplasje në depozitim dokumentesh dhe probleme "
-"kopjimi/ngjitjeje. Pritej serverId %0 për routeToken %1, por u lidh te "
-"serverId %2"
+"kopjimi/ngjitjeje. Pritej serverId {0} për routeToken {1}, por u lidh te "
+"serverId {2}"
 
 #: src/errormessages.js:40
 msgid ""
@@ -2810,9 +2810,9 @@ msgstr "Kujdes! Nuk mbulohet shfletuesi që po përdorni."
 
 #: src/map/Clipboard.js:180
 msgid ""
-"To paste outside %productName, please first click the 'download' button"
+"To paste outside {productname}, please first click the 'download' button"
 msgstr ""
-"Që të ngjitni diçka jashtë %productName, ju lutemi, së pari klikoni mbi "
+"Që të ngjitni diçka jashtë {productname}, ju lutemi, së pari klikoni mbi "
 "butonin 'shkarkoje'"
 
 #: src/map/Clipboard.js:188
@@ -2893,16 +2893,16 @@ msgstr "Ju lutemi, dërgonani përshtypjet tuaja"
 #: src/map/handler/Map.FileInserter.js:105
 #, javascript-format
 msgid ""
-"The file of type: %0 cannot be uploaded to server since the file has no name"
+"The file of type: {0} cannot be uploaded to server since the file has no name"
 msgstr ""
-"Lloji %0 i kartelave s’mund të ngarkohet në shërbyes, ngaqë kartela s’ka emër"
+"Lloji {0} i kartelave s’mund të ngarkohet në shërbyes, ngaqë kartela s’ka emër"
 
 #: src/map/handler/Map.FileInserter.js:107
 #, javascript-format
 msgid ""
-"The file of type: %0 cannot be uploaded to server since the file is empty"
+"The file of type: {0} cannot be uploaded to server since the file is empty"
 msgstr ""
-"Lloji %0 i kartelave s’mund të ngarkohet në shërbyes, ngaqë kartela është e "
+"Lloji {0} i kartelave s’mund të ngarkohet në shërbyes, ngaqë kartela është e "
 "zbrazët"
 
 #: src/map/handler/Map.FileInserter.js:138
@@ -2910,8 +2910,8 @@ msgid "Uploading..."
 msgstr "Po ngarkohet…"
 
 #: src/map/handler/Map.FileInserter.js:161
-msgid "Uploading file to server failed with status: %0"
-msgstr "Ngarkim i kartelës te shërbyesi dështoi me gjendjen: %0"
+msgid "Uploading file to server failed with status: {0}"
+msgstr "Ngarkim i kartelës te shërbyesi dështoi me gjendjen: {0}"
 
 #: src/map/handler/Map.SlideShow.js:55
 msgid "Empty Slide Show"
@@ -2988,8 +2988,8 @@ msgid "Collabora Online Welcome"
 msgstr "Mirëseardhje në Collabora Online"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:26-7
-msgid "Explore The New %coolVersion"
-msgstr "Eksploroni %coolVersion e Ri"
+msgid "Explore The New {coolversion}"
+msgstr "Eksploroni {coolversion} e Ri"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:27-7
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:38-7
@@ -3110,13 +3110,13 @@ msgstr ""
 #~ "applications it is necessary to first download them onto your device. To do "
 #~ "that press the \"Start download\" button below, and when complete click "
 #~ "\"Confirm copy to clipboard\".</p><p>If you are copy and pasting between "
-#~ "documents inside %productName, there is no need to download.</p>"
+#~ "documents inside {productname}, there is no need to download.</p>"
 #~ msgstr ""
 #~ "<p>Nëse doni të jepni për aplikacione të tjera elementë më të mëdhenj të "
 #~ "dokumentit tuaj, është e nevojshme së pari t’i shkarkoni ato në pajisjen "
 #~ "tuaj. Për ta bërë këtë shtypni butonin “Nis shkarkimi” më poshtë dhe, kur të "
 #~ "jetë plotësuar, klikoni “Ripohoni kopjimin në të papastër”.</p><p>Nëse po "
-#~ "kopjoni dhe ngjitni mes dokumentesh brenda %productName, s’ka nevojë për "
+#~ "kopjoni dhe ngjitni mes dokumentesh brenda {productname}, s’ka nevojë për "
 #~ "shkarkime.</p>"
 
 #~ msgid "~View"

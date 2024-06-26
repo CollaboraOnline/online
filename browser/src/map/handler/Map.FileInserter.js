@@ -102,10 +102,10 @@ L.Map.FileInserter = L.Handler.extend({
 		}
 
 		if (!(file.filename && file.url) && (file.name === '' || file.size === 0)) {
-			var errMsg =  _('The file of type: %0 cannot be uploaded to server since the file has no name');
+			var errMsg =  _('The file of type: {0} cannot be uploaded to server since the file has no name');
 			if (file.size === 0)
-				errMsg = _('The file of type: %0 cannot be uploaded to server since the file is empty');
-			errMsg = errMsg.replace('%0', file.type);
+				errMsg = _('The file of type: {0} cannot be uploaded to server since the file is empty');
+			errMsg = errMsg.replace('{0}', file.type);
 			map.fire('error', {msg: errMsg, critical: false});
 			return;
 		}
@@ -158,8 +158,8 @@ L.Map.FileInserter = L.Handler.extend({
 						map.fire('error', {msg: errorMessages.uploadfile.toolarge});
 					}
 					else {
-						var msg = _('Uploading file to server failed with status: %0');
-						msg = msg.replace('%0', xmlHttp.status);
+						var msg = _('Uploading file to server failed with status: {0}');
+						msg = msg.replace('{0}', xmlHttp.status);
 						map.fire('error', {msg: msg});
 					}
 				}

@@ -549,8 +549,8 @@ var AdminClusterOverview = AdminSocketBase.extend({
                 msg = _('Failed to set jwt authentication cookie over insecure connection');
             }
             else {
-                msg = _('Failed to authenticate this session over protocol %0');
-                msg = msg.replace('%0', window.location.protocol);
+                msg = _('Failed to authenticate this session over protocol {0}');
+                msg = msg.replace('{0}', window.location.protocol);
             }
 
             var dialog = (new DlgYesNo())

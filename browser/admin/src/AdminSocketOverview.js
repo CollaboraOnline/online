@@ -421,8 +421,8 @@ var AdminSocketOverview = AdminSocketBase.extend({
 			}
 			else
 			{
-				msg =  _('Failed to authenticate this session over protocol %0');
-				msg = msg.replace('%0', window.location.protocol);
+				msg =  _('Failed to authenticate this session over protocol {0}');
+				msg = msg.replace('{0}', window.location.protocol);
 			}
 
 			var dialog = (new DlgYesNo())

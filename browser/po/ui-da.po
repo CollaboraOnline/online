@@ -328,8 +328,8 @@ msgstr ""
 "forbindelse"
 
 #: admin/src/AdminSocketOverview.js:424
-msgid "Failed to authenticate this session over protocol %0"
-msgstr "Kunne ikke autentificere denne session over protokol %0"
+msgid "Failed to authenticate this session over protocol {0}"
+msgstr "Kunne ikke autentificere denne session over protokol {0}"
 
 #: admin/src/AdminSocketOverview.js:429
 msgid "Warning"
@@ -408,8 +408,8 @@ msgid "Automatic color"
 msgstr "Automatisk farve"
 
 #: src/control/Control.AboutDialog.ts:72
-msgid "This version of %productName is powered by"
-msgstr "Denne version af %productName drives af"
+msgid "This version of {productname} is powered by"
+msgstr "Denne version af {productname} drives af"
 
 #: src/control/Control.AboutDialog.ts:95
 msgid "\"Slow Proxy\""
@@ -461,8 +461,8 @@ msgid "Don't show this again"
 msgstr ""
 
 #: src/control/Control.AlertDialog.js:105
-msgid "The server encountered a %0 error while parsing the %1 command."
-msgstr "Serveren har fundet en %0-fejl under udførelse af kommandoen %1."
+msgid "The server encountered a {0} error while parsing the {1} command."
+msgstr "Serveren har fundet en {0}-fejl under udførelse af kommandoen {1}."
 
 #: src/control/Control.Command.js:89
 msgid "Unlock"
@@ -532,7 +532,7 @@ msgstr ""
 
 #: src/control/Control.DownloadProgress.js:47
 msgid ""
-"If you want to share large elements outside of %productName it's necessary "
+"If you want to share large elements outside of {productname} it's necessary "
 "to first download them."
 msgstr ""
 
@@ -1806,8 +1806,8 @@ msgstr ""
 
 #: src/control/Control.Tabs.js:388
 #, fuzzy
-msgid "Are you sure you want to delete sheet, %sheet%?"
-msgstr "Er du sikker på, at du vil slette arket %sheet%?"
+msgid "Are you sure you want to delete sheet, {sheet}?"
+msgstr "Er du sikker på, at du vil slette arket {sheet}?"
 
 #: src/control/Control.Tabs.js:399
 msgid "Rename sheet"
@@ -1858,15 +1858,15 @@ msgid "Show Menu"
 msgstr ""
 
 #: src/control/Control.UserList.ts:54
-msgid "%user has joined"
-msgstr "%user har meldt sig"
+msgid "{user} has joined"
+msgstr "{user} har meldt sig"
 
 #: src/control/Control.UserList.ts:55
-msgid "%user has left"
-msgstr "%user har forladt"
+msgid "{user} has left"
+msgstr "{user} har forladt"
 
 #: src/control/Control.UserList.ts:56
-msgid "Following %user"
+msgid "Following {user}"
 msgstr ""
 
 #: src/control/Control.UserList.ts:57
@@ -1878,7 +1878,7 @@ msgid "Stop following"
 msgstr ""
 
 #: src/control/Control.UserList.ts:59
-msgid "Avatar for %user"
+msgid "Avatar for {user}"
 msgstr ""
 
 #: src/control/Control.UserList.ts:79
@@ -2263,7 +2263,7 @@ msgstr ""
 
 #: src/core/Socket.js:65
 #, fuzzy
-msgid "Oops, there is a problem connecting to %productName: "
+msgid "Oops, there is a problem connecting to {productname}: "
 msgstr "Ups, der er et problem med at forbinde til dokumentet"
 
 #: src/core/Socket.js:653
@@ -2371,7 +2371,7 @@ msgid "Someone"
 msgstr ""
 
 #: src/core/Socket.js:1175
-msgid "%userName saved this document as %fileName. Do you want to join?"
+msgid "{user}Name saved this document as {filename}. Do you want to join?"
 msgstr ""
 
 #: src/core/Socket.js:1192
@@ -2496,10 +2496,10 @@ msgstr "Yderligere information og understøttelse"
 
 #: src/errormessages.js:26
 msgid ""
-"This service is limited to %0 documents, and %1 connections total by the "
+"This service is limited to {0} documents, and {1} connections total by the "
 "admin. This limit has been reached. Please try again later."
 msgstr ""
-"Denne service er begrænset af admin, til %0 dokumenter og %1 forbindelser i "
+"Denne service er begrænset af admin, til {0} dokumenter og {1} forbindelser i "
 "alt. Denne begrænsning er nået. Prøv venligst senere."
 
 #: src/errormessages.js:27
@@ -2519,7 +2519,7 @@ msgstr ""
 "administrator hvis problemet fortsætter."
 
 #: src/errormessages.js:29
-msgid "Authorization error was: '%errorMessage'."
+msgid "Authorization error was: '{errormessage}'."
 msgstr ""
 
 #: src/errormessages.js:30
@@ -2530,10 +2530,10 @@ msgstr ""
 #: src/errormessages.js:31
 #, fuzzy
 msgid ""
-"Your session will expire in %time. Please save your work and refresh the "
+"Your session will expire in {time}. Please save your work and refresh the "
 "session (or webpage) to continue. You might need to login again."
 msgstr ""
-"Din session vil udløbe om %time. Gem venligst dit arbejde og genindlæs "
+"Din session vil udløbe om {time}. Gem venligst dit arbejde og genindlæs "
 "sessionen (eller hjemmesiden) for at fortsætte."
 
 #: src/errormessages.js:32
@@ -2555,8 +2555,8 @@ msgstr ""
 "understøttet og ubeskadiget, og prøv igen."
 
 #: src/errormessages.js:34
-msgid "Invalid link: '%url'"
-msgstr "Ugyldigt link: '%url'"
+msgid "Invalid link: '{url}'"
+msgstr "Ugyldigt link: '{url}'"
 
 #: src/errormessages.js:35
 msgid ""
@@ -2584,11 +2584,11 @@ msgstr ""
 
 #: src/errormessages.js:39
 msgid ""
-"Your %productName cluster appear to be mis-configured or scaling rapidly - "
+"Your {productname} cluster appear to be mis-configured or scaling rapidly - "
 "please contact your system administrator. Continuing with editing may "
 "result in multiple users not seeing each other, conflicts in the document "
-"storage and/or copy/paste problems. Expected serverId %0 for routeToken %1 "
-"but connected to serverId %2"
+"storage and/or copy/paste problems. Expected serverId {0} for routeToken {1} "
+"but connected to serverId {2}"
 msgstr ""
 
 #: src/errormessages.js:40
@@ -2786,9 +2786,9 @@ msgstr ""
 
 #: src/map/Clipboard.js:180
 msgid ""
-"To paste outside %productName, please first click the 'download' button"
+"To paste outside {productname}, please first click the 'download' button"
 msgstr ""
-"For at indsætte uden for %productName klikker du først må knappen 'Download\""
+"For at indsætte uden for {productname} klikker du først må knappen 'Download\""
 
 #: src/map/Clipboard.js:188
 msgid "Copying from the document disabled"
@@ -2856,23 +2856,23 @@ msgstr ""
 #: src/map/handler/Map.FileInserter.js:105
 #, javascript-format
 msgid ""
-"The file of type: %0 cannot be uploaded to server since the file has no name"
+"The file of type: {0} cannot be uploaded to server since the file has no name"
 msgstr ""
-"Filen af typen: %0 kan ikke uploades til serveren, da filen ikke har et navn"
+"Filen af typen: {0} kan ikke uploades til serveren, da filen ikke har et navn"
 
 #: src/map/handler/Map.FileInserter.js:107
 #, javascript-format
 msgid ""
-"The file of type: %0 cannot be uploaded to server since the file is empty"
-msgstr "Filen af typen: %0 kan ikke uploades til serveren, da filen er tom"
+"The file of type: {0} cannot be uploaded to server since the file is empty"
+msgstr "Filen af typen: {0} kan ikke uploades til serveren, da filen er tom"
 
 #: src/map/handler/Map.FileInserter.js:138
 msgid "Uploading..."
 msgstr "Indlæser..."
 
 #: src/map/handler/Map.FileInserter.js:161
-msgid "Uploading file to server failed with status: %0"
-msgstr "Upload af filen til serveren slog fejl med status: %0"
+msgid "Uploading file to server failed with status: {0}"
+msgstr "Upload af filen til serveren slog fejl med status: {0}"
 
 #: src/map/handler/Map.SlideShow.js:55
 msgid "Empty Slide Show"
@@ -2946,7 +2946,7 @@ msgid "Collabora Online Welcome"
 msgstr ""
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:26-7
-msgid "Explore The New %coolVersion"
+msgid "Explore The New {coolversion}"
 msgstr ""
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:27-7
@@ -3041,13 +3041,13 @@ msgstr ""
 #~ "applications it is necessary to first download them onto your device. To do "
 #~ "that press the \"Start download\" button below, and when complete click "
 #~ "\"Confirm copy to clipboard\".</p><p>If you are copy and pasting between "
-#~ "documents inside %productName, there is no need to download.</p>"
+#~ "documents inside {productname}, there is no need to download.</p>"
 #~ msgstr ""
 #~ "<p>Hvis du vil dele større dele af dit dokument med andre programmer, er det "
 #~ "nødvendigt først at downloade dem til din enhed. For at gøre det trykker du "
 #~ "på knappen \"Begynd download\" herunder og klik så på \"Bekræft kopiering "
 #~ "til udklipsholder\".</p><p> Hvis du kopierer og indsætter mellem dokumenter "
-#~ "i  %productName, er der ingen grund til at downloade.</p>"
+#~ "i  {productname}, er der ingen grund til at downloade.</p>"
 
 #~ msgid "Reference~s"
 #~ msgstr "Referencer"
@@ -3185,7 +3185,7 @@ msgstr ""
 #~ "URL?"
 #~ msgstr ""
 #~ "Du er ved at forlade redigeringsværktøjet; er du sikker på, at du vil besøge "
-#~ "%url?"
+#~ "{url}?"
 
 #~ msgid "Index"
 #~ msgstr "Indeks"

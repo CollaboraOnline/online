@@ -329,8 +329,8 @@ msgstr ""
 "keresztül"
 
 #: admin/src/AdminSocketOverview.js:424
-msgid "Failed to authenticate this session over protocol %0"
-msgstr "Nem lehet hitelesíteni ezt a munkamenetet %0 protokollon keresztül"
+msgid "Failed to authenticate this session over protocol {0}"
+msgstr "Nem lehet hitelesíteni ezt a munkamenetet {0} protokollon keresztül"
 
 #: admin/src/AdminSocketOverview.js:429
 msgid "Warning"
@@ -409,8 +409,8 @@ msgid "Automatic color"
 msgstr "Automatikus szín"
 
 #: src/control/Control.AboutDialog.ts:72
-msgid "This version of %productName is powered by"
-msgstr "%productName verzióinformációk:"
+msgid "This version of {productname} is powered by"
+msgstr "{productname} verzióinformációk:"
 
 #: src/control/Control.AboutDialog.ts:95
 msgid "\"Slow Proxy\""
@@ -466,8 +466,8 @@ msgid "Don't show this again"
 msgstr "Ne jelenjen meg újra"
 
 #: src/control/Control.AlertDialog.js:105
-msgid "The server encountered a %0 error while parsing the %1 command."
-msgstr "A kiszolgáló %0 hibába ütközött a(z) %1 parancs feldolgozása közben."
+msgid "The server encountered a {0} error while parsing the {1} command."
+msgstr "A kiszolgáló {0} hibába ütközött a(z) {1} parancs feldolgozása közben."
 
 #: src/control/Control.Command.js:89
 msgid "Unlock"
@@ -537,10 +537,10 @@ msgstr "Kijelölés letöltése"
 
 #: src/control/Control.DownloadProgress.js:47
 msgid ""
-"If you want to share large elements outside of %productName it's necessary "
+"If you want to share large elements outside of {productname} it's necessary "
 "to first download them."
 msgstr ""
-"Ha a %productName-on kívül szeretne felhasználni nagyobb, komplexebb "
+"Ha a {productname}-on kívül szeretne felhasználni nagyobb, komplexebb "
 "objektumokat, először le kell azokat tölteni."
 
 #: src/control/Control.DownloadProgress.js:60
@@ -1794,8 +1794,8 @@ msgid "Copy Sheet..."
 msgstr "Munkalap másolása..."
 
 #: src/control/Control.Tabs.js:388
-msgid "Are you sure you want to delete sheet, %sheet%?"
-msgstr "Biztosan törli ezt a munkalapot: %sheet%?"
+msgid "Are you sure you want to delete sheet, {sheet}?"
+msgstr "Biztosan törli ezt a munkalapot: {sheet}?"
 
 #: src/control/Control.Tabs.js:399
 msgid "Rename sheet"
@@ -1846,16 +1846,16 @@ msgid "Show Menu"
 msgstr "Menü megjelenítése"
 
 #: src/control/Control.UserList.ts:54
-msgid "%user has joined"
-msgstr "%user csatlakozott"
+msgid "{user} has joined"
+msgstr "{user} csatlakozott"
 
 #: src/control/Control.UserList.ts:55
-msgid "%user has left"
-msgstr "%user kilépett"
+msgid "{user} has left"
+msgstr "{user} kilépett"
 
 #: src/control/Control.UserList.ts:56
-msgid "Following %user"
-msgstr "%user követése"
+msgid "Following {user}"
+msgstr "{user} követése"
 
 #: src/control/Control.UserList.ts:57
 msgid "Following the editor"
@@ -1866,8 +1866,8 @@ msgid "Stop following"
 msgstr "Követés megszüntetése"
 
 #: src/control/Control.UserList.ts:59
-msgid "Avatar for %user"
-msgstr "%user avatárja"
+msgid "Avatar for {user}"
+msgstr "{user} avatárja"
 
 #: src/control/Control.UserList.ts:79
 msgid "%n users"
@@ -2258,8 +2258,8 @@ msgid "Headings and objects that you add to the document will appear here"
 msgstr "Itt jelennek meg a dokumentumhoz hozzáadott címsorok és objektumok."
 
 #: src/core/Socket.js:65
-msgid "Oops, there is a problem connecting to %productName: "
-msgstr "Probléma történt a %productName-hoz kapcsolódás során: "
+msgid "Oops, there is a problem connecting to {productname}: "
+msgstr "Probléma történt a {productname}-hoz kapcsolódás során: "
 
 #: src/core/Socket.js:653
 msgid "Server is now reachable. We have to refresh the page now."
@@ -2367,9 +2367,9 @@ msgid "Someone"
 msgstr "Valaki"
 
 #: src/core/Socket.js:1175
-msgid "%userName saved this document as %fileName. Do you want to join?"
+msgid "{user}Name saved this document as {filename}. Do you want to join?"
 msgstr ""
-"%userName a következő néven mentette ezt a dokumentumot: %fileName. "
+"{user}Name a következő néven mentette ezt a dokumentumot: {filename}. "
 "Csatlakozik?"
 
 #: src/core/Socket.js:1192
@@ -2493,10 +2493,10 @@ msgstr "További információ és terméktámogatás"
 
 #: src/errormessages.js:26
 msgid ""
-"This service is limited to %0 documents, and %1 connections total by the "
+"This service is limited to {0} documents, and {1} connections total by the "
 "admin. This limit has been reached. Please try again later."
 msgstr ""
-"A szolgáltatást a rendszergazda korlátozta: összesen %0 dokumentum és %1 "
+"A szolgáltatást a rendszergazda korlátozta: összesen {0} dokumentum és {1} "
 "kapcsolat lehet nyitva. A rendszer elérte ezt a korlátot. Próbálkozzon "
 "később."
 
@@ -2517,8 +2517,8 @@ msgstr ""
 "ha a probléma tartósan fennáll."
 
 #: src/errormessages.js:29
-msgid "Authorization error was: '%errorMessage'."
-msgstr "Az authorizációs hiba: '%errorMessage'."
+msgid "Authorization error was: '{errormessage}'."
+msgstr "Az authorizációs hiba: '{errormessage}'."
 
 #: src/errormessages.js:30
 msgid "Wrong or missing WOPISrc parameter, please contact support."
@@ -2528,10 +2528,10 @@ msgstr ""
 
 #: src/errormessages.js:31
 msgid ""
-"Your session will expire in %time. Please save your work and refresh the "
+"Your session will expire in {time}. Please save your work and refresh the "
 "session (or webpage) to continue. You might need to login again."
 msgstr ""
-"A munkamenet %time múlva lejár. Mentse a munkáját, és a folytatáshoz "
+"A munkamenet {time} múlva lejár. Mentse a munkáját, és a folytatáshoz "
 "frissítse a munkamenetet (vagy a weboldalt). Lehet, hogy újra be kell "
 "jelentkeznie."
 
@@ -2554,8 +2554,8 @@ msgstr ""
 "és a fájl nem sérült, majd próbálkozzon újra."
 
 #: src/errormessages.js:34
-msgid "Invalid link: '%url'"
-msgstr "Érvénytelen hivatkozás: „%url”"
+msgid "Invalid link: '{url}'"
+msgstr "Érvénytelen hivatkozás: „{url}”"
 
 #: src/errormessages.js:35
 msgid ""
@@ -2586,18 +2586,18 @@ msgstr ""
 
 #: src/errormessages.js:39
 msgid ""
-"Your %productName cluster appear to be mis-configured or scaling rapidly - "
+"Your {productname} cluster appear to be mis-configured or scaling rapidly - "
 "please contact your system administrator. Continuing with editing may "
 "result in multiple users not seeing each other, conflicts in the document "
-"storage and/or copy/paste problems. Expected serverId %0 for routeToken %1 "
-"but connected to serverId %2"
+"storage and/or copy/paste problems. Expected serverId {0} for routeToken {1} "
+"but connected to serverId {2}"
 msgstr ""
-"A %productName-klaszter rosszul van konfigurálva vagy gyorsan skálázódik – "
+"A {productname}-klaszter rosszul van konfigurálva vagy gyorsan skálázódik – "
 "vegye fel a kapcsolatot a rendszergazdával. Ha folytatja a szerkesztést, azt "
 "kockáztatja, hogy a felhasználók nem fogják egymás szerkesztéseit látni, a "
 "dokumentum-tárhelyen ütközések lehetnek és/vagy problémák lesznek a vágólap "
-"használatával. A %1 routeToken-hez várt serverId %0 volt, de a serverId "
-"valójában %2."
+"használatával. A {1} routeToken-hez várt serverId {0} volt, de a serverId "
+"valójában {2}."
 
 #: src/errormessages.js:40
 msgid ""
@@ -2814,8 +2814,8 @@ msgstr "Figyelem! Az Ön által használt böngésző nem támogatott."
 
 #: src/map/Clipboard.js:180
 msgid ""
-"To paste outside %productName, please first click the 'download' button"
-msgstr "Ha másolni akar a %productName-ból, kattintson a „Letöltés” gombra."
+"To paste outside {productname}, please first click the 'download' button"
+msgstr "Ha másolni akar a {productname}-ból, kattintson a „Letöltés” gombra."
 
 #: src/map/Clipboard.js:188
 msgid "Copying from the document disabled"
@@ -2896,23 +2896,23 @@ msgstr "Kérjük, küldje el visszajelzését"
 #: src/map/handler/Map.FileInserter.js:105
 #, javascript-format
 msgid ""
-"The file of type: %0 cannot be uploaded to server since the file has no name"
+"The file of type: {0} cannot be uploaded to server since the file has no name"
 msgstr ""
-"A fájltípus (%0) nem tölthető fel a kiszolgálóra, mert a fájlnak nincs neve."
+"A fájltípus ({0}) nem tölthető fel a kiszolgálóra, mert a fájlnak nincs neve."
 
 #: src/map/handler/Map.FileInserter.js:107
 #, javascript-format
 msgid ""
-"The file of type: %0 cannot be uploaded to server since the file is empty"
-msgstr "A fájltípus (%0) nem tölthető fel a kiszolgálóra, mert a fájl üres."
+"The file of type: {0} cannot be uploaded to server since the file is empty"
+msgstr "A fájltípus ({0}) nem tölthető fel a kiszolgálóra, mert a fájl üres."
 
 #: src/map/handler/Map.FileInserter.js:138
 msgid "Uploading..."
 msgstr "Feltöltés…"
 
 #: src/map/handler/Map.FileInserter.js:161
-msgid "Uploading file to server failed with status: %0"
-msgstr "A fájl feltöltése a kiszolgálóra nem sikerült, állapot: %0"
+msgid "Uploading file to server failed with status: {0}"
+msgstr "A fájl feltöltése a kiszolgálóra nem sikerült, állapot: {0}"
 
 #: src/map/handler/Map.SlideShow.js:55
 msgid "Empty Slide Show"
@@ -2989,8 +2989,8 @@ msgid "Collabora Online Welcome"
 msgstr "Üdvözli a Collabora Online"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:26-7
-msgid "Explore The New %coolVersion"
-msgstr "Fedezze fel az új %coolVersion-t"
+msgid "Explore The New {coolversion}"
+msgstr "Fedezze fel az új {coolversion}-t"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:27-7
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:38-7
@@ -3126,12 +3126,12 @@ msgstr ""
 #~ "applications it is necessary to first download them onto your device. To do "
 #~ "that press the \"Start download\" button below, and when complete click "
 #~ "\"Confirm copy to clipboard\".</p><p>If you are copy and pasting between "
-#~ "documents inside %productName, there is no need to download.</p>"
+#~ "documents inside {productname}, there is no need to download.</p>"
 #~ msgstr ""
 #~ "<p>Ha a dokumentum nagyobb darabját akarja egy külső alkalmazással "
 #~ "megosztani, akkor először le kell töltenie azt az eszközre. Ehhez nyomja meg "
 #~ "a az alábbi „Letöltés indítása” gombot, és amikor a letöltés kész, nyomja "
-#~ "meg a „Vágólapra másolás megerősítése” gombot.</p><p>Ha a %productName-on "
+#~ "meg a „Vágólapra másolás megerősítése” gombot.</p><p>Ha a {productname}-on "
 #~ "belül másol egyik dokumentumból a másikba, akkor nem kell a dokumentumot "
 #~ "letöltenie.</p>"
 
@@ -3366,21 +3366,21 @@ msgstr ""
 #~ msgstr "Megértettem a kockázatokat"
 
 #, javascript-format
-#~ msgid "Explore the new %coolVersion"
-#~ msgstr "Megjelent az új %coolVersion. Fedezze fel!"
+#~ msgid "Explore the new {coolversion}"
+#~ msgstr "Megjelent az új {coolversion}. Fedezze fel!"
 
 #, javascript-format
 #~ msgid ""
 #~ "Enjoy the latest developments in online productivity, free for you to use, "
 #~ "to explore and to use with others in the browser. <a href=\"%coolAppsURL\" "
 #~ "target=\"_blank\">Apps</a> are also available for Android and iOS. "
-#~ "%coolVersion introduces important improvements, in the areas of usability, "
+#~ "{coolversion} introduces important improvements, in the areas of usability, "
 #~ "visual presentation and performance."
 #~ msgstr ""
 #~ "Élvezze a legújabb fejlesztések eredményét, használja ingyen és szabadon ezt "
 #~ "a böngészőben futó szoftvert önállóan vagy másokkal közösen. Androidot és "
 #~ "iOS-t futtató mobileszközére is letöltheti az <a href=\"%coolAppsURL\" "
-#~ "target=\"_blank\">alkalmazást</a>. A %coolVersion a használhatóság, a "
+#~ "target=\"_blank\">alkalmazást</a>. A {coolversion} a használhatóság, a "
 #~ "megjelenés és a teljesítmény terén számos újdonsággal jelentkezik."
 
 #, javascript-format
