@@ -814,6 +814,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (this._docType === 'spreadsheet') {
 			const calcGridSection = new app.definitions.calcGridSection();
 			calcGridSection.sectionProperties.tsManager = this._painter;
+			this._painter._calcGridSection = calcGridSection;
 			app.sectionContainer.addSection(calcGridSection);
 		}
 
