@@ -2086,9 +2086,8 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_onGraphicSelectionMsg: function (textMsg) {
-		if (this._map.hyperlinkPopup !== null) {
-			this._closeURLPopUp();
-		}
+		app.definitions.urlPopUpSection.closeURLPopUp();
+
 		if (textMsg.match('EMPTY')) {
 			this._resetSelectionRanges();
 		}
@@ -2283,12 +2282,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 	},
 
-	_setupClickFuncForId: function(targetId, func) {
-		var target = document.getElementById(targetId);
-		target.style.cursor = 'pointer';
-		target.onclick = target.ontouchend = func;
-	},
-
 	_getFunctionList: function(textMsg) {
 		var resultList = [];
 		var suggestionArray = JSON.parse(textMsg);
@@ -2299,92 +2292,6 @@ L.CanvasTileLayer = L.Layer.extend({
 			resultList.push({'name': name, 'description': description});
 		}
 		return resultList;
-	},
-
-	_showURLPopUp: function(position, url) {
-		var parent = L.DomUtil.create('div', '');
-		L.DomUtil.createWithId('div', 'hyperlink-pop-up-preview', parent);
-		var link = L.DomUtil.createWithId('a', 'hyperlink-pop-up', parent);
-		link.innerText = url;
-		var copyBtn = L.DomUtil.createWithId('div', 'hyperlink-pop-up-copy', parent);
-		L.DomUtil.addClass(copyBtn, 'hyperlink-popup-btn');
-		copyBtn.setAttribute('title', _('Copy link location'));
-		var imgCopyBtn = L.DomUtil.create('img', 'hyperlink-pop-up-copyimg', copyBtn);
-		L.LOUtil.setImage(imgCopyBtn, 'lc_copyhyperlinklocation.svg', this._map);
-		imgCopyBtn.setAttribute('width', 18);
-		imgCopyBtn.setAttribute('height', 18);
-		imgCopyBtn.setAttribute('style', 'padding: 4px');
-		var editBtn = L.DomUtil.createWithId('div', 'hyperlink-pop-up-edit', parent);
-		L.DomUtil.addClass(editBtn, 'hyperlink-popup-btn');
-		editBtn.setAttribute('title', _('Edit link'));
-		var imgEditBtn = L.DomUtil.create('img', 'hyperlink-pop-up-editimg', editBtn);
-		L.LOUtil.setImage(imgEditBtn, 'lc_edithyperlink.svg', this._map);
-		imgEditBtn.setAttribute('width', 18);
-		imgEditBtn.setAttribute('height', 18);
-		imgEditBtn.setAttribute('style', 'padding: 4px');
-		var removeBtn = L.DomUtil.createWithId('div', 'hyperlink-pop-up-remove', parent);
-		L.DomUtil.addClass(removeBtn, 'hyperlink-popup-btn');
-		removeBtn.setAttribute('title', _('Remove link'));
-		var imgRemoveBtn = L.DomUtil.create('img', 'hyperlink-pop-up-removeimg', removeBtn);
-		L.LOUtil.setImage(imgRemoveBtn, 'lc_removehyperlink.svg', this._map);
-		imgRemoveBtn.setAttribute('width', 18);
-		imgRemoveBtn.setAttribute('height', 18);
-		imgRemoveBtn.setAttribute('style', 'padding: 4px');
-		this._map.hyperlinkPopup = new L.Popup({className: 'hyperlink-popup', closeButton: false, closeOnClick: false, autoPan: false})
-			.setHTMLContent(parent)
-			.setLatLng(position)
-			.openOn(this._map);
-		document.getElementById('hyperlink-pop-up').title = url;
-		var offsetDiffTop = $('.hyperlink-popup').offset().top - $('#map').offset().top;
-		var offsetDiffLeft = $('.hyperlink-popup').offset().left - $('#map').offset().left;
-		if (offsetDiffTop < 10) this._movePopUpBelow();
-		if (offsetDiffLeft < 10) this._movePopUpRight();
-		var map_ = this._map;
-		this._setupClickFuncForId('hyperlink-pop-up', function() {
-			if (!url.startsWith('#'))
-				map_.fire('warn', {url: url, map: map_, cmd: 'openlink'});
-			else
-				map_.sendUnoCommand('.uno:JumpToMark?Bookmark:string=' + encodeURIComponent(url.substring(1)));
-		});
-		this._setupClickFuncForId('hyperlink-pop-up-copy', function () {
-			map_.sendUnoCommand('.uno:CopyHyperlinkLocation');
-		});
-		this._setupClickFuncForId('hyperlink-pop-up-edit', function () {
-			map_.sendUnoCommand('.uno:EditHyperlink');
-		});
-		this._setupClickFuncForId('hyperlink-pop-up-remove', function () {
-			map_.sendUnoCommand('.uno:RemoveHyperlink');
-		});
-
-		if (this._map['wopi'].EnableRemoteLinkPicker)
-			this._map.fire('postMessage', { msgId: 'Action_GetLinkPreview', args: { url: url } });
-	},
-
-	_movePopUpBelow: function() {
-		var popUp = $('.hyperlink-popup').first();
-		var bottom = parseInt(popUp.css('bottom')) - popUp.height();
-
-		popUp.css({
-			'bottom': bottom ? bottom + 'px': '',
-			'display': 'flex',
-			'flex-direction': 'column-reverse'
-		});
-		$('.leaflet-popup-tip-container').first().css('transform', 'rotate(180deg)');
-	},
-
-	_movePopUpRight: function() {
-		$('.leaflet-popup-content-wrapper').first().css({
-			'position': 'relative',
-			'left': (this._map.hyperlinkPopup._containerWidth / 2)
-		});
-		$('.leaflet-popup-tip-container').first().css({
-			'left': '25px'
-		});
-	},
-
-	_closeURLPopUp: function() {
-		this._map.closePopup(this._map.hyperlinkPopup);
-		this._map.hyperlinkPopup = null;
 	},
 
 	_onInvalidateCursorMsg: function (textMsg) {
@@ -2423,10 +2330,9 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._map.lastActionByUser = false;
 
 		this._map.hyperlinkUnderCursor = obj.hyperlink;
-		this._closeURLPopUp();
-		if (obj.hyperlink && obj.hyperlink.link) {
-			this._showURLPopUp(this._map._docLayer._twipsToLatLng({ x: app.file.textCursor.rectangle.x1, y: app.file.textCursor.rectangle.y1 }), obj.hyperlink.link);
-		}
+		app.definitions.urlPopUpSection.closeURLPopUp();
+		if (obj.hyperlink && obj.hyperlink.link)
+			app.definitions.urlPopUpSection.showURLPopUP(obj.hyperlink.link, new app.definitions.simplePoint(app.file.textCursor.rectangle.x1, app.file.textCursor.rectangle.y1));
 
 		if (!this._map.editorHasFocus() && app.file.textCursor.visible && weAreModifier) {
 			// Regain cursor if we had been out of focus and now have input.
@@ -3867,7 +3773,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 
 		this._removeCellDropDownArrow();
-		this._closeURLPopUp();
+		app.definitions.urlPopUpSection.closeURLPopUp();
 	},
 
 	_onValidityListButtonMsg: function(textMsg) {

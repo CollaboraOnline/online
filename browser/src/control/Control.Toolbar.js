@@ -1046,16 +1046,8 @@ function setupToolbar(e) {
 		if (e.url) {
 			if (e.coordinates) {
 				var strTwips = e.coordinates.match(/\d+/g);
-				var topLeftTwips = new L.Point(parseInt(strTwips[6]), parseInt(strTwips[1]));
-				var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
-				var bottomRightTwips = topLeftTwips.add(offset);
-				var cellCursor = new L.LatLngBounds(
-					map._docLayer._twipsToLatLng(topLeftTwips, map.getZoom()),
-					map._docLayer._twipsToLatLng(bottomRightTwips, map.getZoom()));
-				//click pos tweak
-				cellCursor._northEast.lng = cellCursor._southWest.lng;
-				map._docLayer._closeURLPopUp();
-				map._docLayer._showURLPopUp(cellCursor._northEast, e.url);
+				app.definitions.urlPopUpSection.closeURLPopUp();
+				app.definitions.urlPopUpSection.showURLPopUP(e.url, new app.definitions.simplePoint(parseInt(strTwips[6]), parseInt(strTwips[1])));
 			} else {
 				map.fire('warn', {url: e.url, map: map, cmd: 'openlink'});
 			}
