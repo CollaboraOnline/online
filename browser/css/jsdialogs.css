@@ -61,7 +61,7 @@
 	max-width: 498px;
 	border: 1px solid var(--color-border-darker) !important;
 	border-radius: var(--border-radius);
-	box-shadow: 0 0 3px var(--color-border-darker);
+	box-shadow: 0 0 3px var(--color-box-shadow);
 	overflow: auto;
 	position: relative;
 	margin: auto;
