@@ -103,6 +103,7 @@ interface IconViewEntry {
 	image: string; // base64 encoded image
 	text: string; // label of an entry
 	tooltip: string; // tooltip of an entry
+	ondemand: boolean; // if true then we ignore image property and request it on demand (when shown)
 }
 interface IconViewJSON extends WidgetJSON {
 	entries: Array<IconViewEntry>;

@@ -55,11 +55,28 @@ function _iconViewEntry(
 		builder.options.cssClass + ' ui-iconview-icon',
 		entryContainer,
 	);
-	var img = L.DomUtil.create('img', builder.options.cssClass, icon);
-	if (entry.image) img.src = entry.image;
-	img.alt = entry.text;
-	if (entry.tooltip) img.title = entry.tooltip;
-	else img.title = entry.text;
+
+	if (entry.ondemand) {
+		var placeholder = L.DomUtil.create('span', builder.options.cssClass, icon);
+		placeholder.innerText = entry.text;
+		if (entry.tooltip) placeholder.title = entry.tooltip;
+		else placeholder.title = entry.text;
+		JSDialog.OnDemandRenderer(
+			builder,
+			parentData.id,
+			'iconview',
+			entry.row,
+			placeholder,
+			icon,
+			entry.text,
+		);
+	} else {
+		var img = L.DomUtil.create('img', builder.options.cssClass, icon);
+		if (entry.image) img.src = entry.image;
+		img.alt = entry.text;
+		if (entry.tooltip) img.title = entry.tooltip;
+		else img.title = entry.text;
+	}
 
 	if (!disabled) {
 		var singleClick = parentData.singleclickactivate === true;
@@ -140,6 +157,20 @@ JSDialog.iconView = function (
 			console.warn(
 				'not found entry: "' + position + '" in: "' + container.id + '"',
 			);
+	};
+
+	container.updateRenders = (pos: number) => {
+		var dropdown = container.querySelectorAll('.ui-iconview-entry');
+		if (dropdown[pos]) {
+			dropdown[pos].innerHTML = '';
+			var img = L.DomUtil.create('img', '', dropdown[pos]);
+			img.src = builder.rendersCache[data.id].images[pos];
+
+			const entry = data.entries[pos];
+			img.alt = entry.text;
+			if (entry.tooltip) img.title = entry.tooltip;
+			else img.title = entry.text;
+		}
 	};
 
 	return false;
