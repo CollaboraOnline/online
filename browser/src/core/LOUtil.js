@@ -317,5 +317,12 @@ L.LOUtil = {
 	isFileODF: function (map) {
 		var ext = this.getFileExtension(map);
 		return ext === 'odt' || ext === 'ods' || ext === 'odp' || ext == 'odg';
+	},
+
+	containsDOMRect: function (viewRect, rect) {
+		return (rect.left <= viewRect.right &&
+			viewRect.left <= rect.right &&
+			rect.top <= viewRect.bottom &&
+			viewRect.top <= rect.bottom)
 	}
 };
