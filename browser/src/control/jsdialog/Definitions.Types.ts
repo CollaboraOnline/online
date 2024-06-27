@@ -85,13 +85,26 @@ interface TextWidget extends WidgetJSON {
 }
 
 interface TreeEntryJSON {
-	row: number | string;
-	text: string;
-	columns: Array<{ text: any } | { collapsed: string }>;
+	row: number | string; // unique id of the entry
+	text: string; // deprecated: simple text for an entry
+	columns: Array<{ text: any } | { collapsed: string }>; // entry data
 }
 interface TreeWidget extends WidgetJSON {
 	text: string;
-	singleclickactivate: boolean;
+	singleclickactivate: boolean; // activates element on single click instead of just selection
 	fireKeyEvents: boolean;
 	entries: Array<TreeEntryJSON>;
+}
+
+interface IconViewEntry {
+	row: number | string; // unique id of the entry
+	separator: boolean; // is separator
+	selected: boolean; // is currently selected
+	image: string; // base64 encoded image
+	text: string; // label of an entry
+	tooltip: string; // tooltip of an entry
+}
+interface IconViewJSON extends WidgetJSON {
+	entries: Array<IconViewEntry>;
+	singleclickactivate: boolean; // activates element on single click instead of just selection
 }
