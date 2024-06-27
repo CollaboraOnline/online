@@ -2005,6 +2005,9 @@ bool ChildSession::unoCommand(const StringVector& tokens)
 
     getLOKitDocument()->setView(_viewId);
 
+    if (tokens.equals(1, ".uno:Copy") || tokens.equals(1, ".uno:CopyHyperlinkLocation"))
+        _copyToClipboard = true;
+
     if (tokens.size() == 2)
     {
         if (tokens.equals(1, ".uno:fakeDiskFull"))
@@ -2013,9 +2016,6 @@ bool ChildSession::unoCommand(const StringVector& tokens)
         }
         else
         {
-            if (tokens.equals(1, ".uno:Copy") || tokens.equals(1, ".uno:CopyHyperlinkLocation"))
-                _copyToClipboard = true;
-
             getLOKitDocument()->postUnoCommand(tokens[1].c_str(), nullptr, bNotify);
         }
     }
