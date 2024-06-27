@@ -626,8 +626,7 @@ private:
 
     /// Actual document download and post-download processing.
     /// Must be called only when creating the storage for the first time.
-    bool doDownloadDocument(const std::shared_ptr<ClientSession>& session,
-                            const Authorization& auth, const std::string& templateSource,
+    bool doDownloadDocument(const Authorization& auth, const std::string& templateSource,
                             const std::string& filename,
                             std::chrono::milliseconds& getFileCallDurationMs);
 
@@ -645,9 +644,15 @@ private:
     bool isLoaded() const { return _docState.hadLoaded(); }
     bool isInteractive() const { return _docState.isInteractive(); }
 
+    void lockIfEditing(const std::shared_ptr<ClientSession>& session, const Poco::URI& uriPublic,
+                       bool userCanWrite);
+
     /// Updates the document's lock in storage to either locked or unlocked.
     /// Returns true iff the operation was successful.
     bool updateStorageLockState(ClientSession& session, bool lock, std::string& error);
+
+    /// Take the lock before loading the first session, if we know we can edit.
+    bool updateStorageLockState(const Authorization& auth, std::string& error);
 
     std::size_t getIdleTimeSecs() const
     {
