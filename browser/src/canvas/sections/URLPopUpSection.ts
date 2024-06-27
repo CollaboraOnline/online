@@ -8,7 +8,7 @@ class URLPopUpSection extends HTMLObjectSection {
 	editButtonId = 'hyperlink-pop-up-edit';
 	removeButtonId = 'hyperlink-pop-up-remove';
 
-    constructor (url: string, documentPosition: cool.SimplePoint) {
+	constructor(url: string, documentPosition: cool.SimplePoint, linkPosition?: cool.SimplePoint) {
         super(URLPopUpSection.sectionName, null, null, documentPosition, URLPopUpSection.cssClass);
 
 		const objectDiv = this.getHTMLObject();
@@ -18,7 +18,7 @@ class URLPopUpSection extends HTMLObjectSection {
 		this.sectionProperties.url = url;
 
 		this.createUIElements(url);
-		this.setUpCallbacks();
+		this.setUpCallbacks(linkPosition);
 
 		app.map.hyperlinkPopup = this;
 
@@ -66,7 +66,7 @@ class URLPopUpSection extends HTMLObjectSection {
 		imgRemoveBtn.setAttribute('style', 'padding: 4px');
 	}
 
-	setUpCallbacks() {
+	setUpCallbacks(linkPosition?: cool.SimplePoint) {
 		document.getElementById(this.linkId).onclick = () => {
 			if (!this.sectionProperties.url.startsWith('#'))
 				app.map.fire('warn', {url: this.sectionProperties.url, map: app.map, cmd: 'openlink'});
@@ -75,7 +75,20 @@ class URLPopUpSection extends HTMLObjectSection {
 		};
 
 		document.getElementById(this.copyButtonId).onclick = () => {
-			app.map.sendUnoCommand('.uno:CopyHyperlinkLocation');
+			var params;
+			if (linkPosition) {
+				params = {
+					PositionX: {
+						type: 'long',
+						value: linkPosition.x
+					},
+					PositionY: {
+						type: 'long',
+						value: linkPosition.y
+					}
+				};
+			}
+			app.map.sendUnoCommand('.uno:CopyHyperlinkLocation', params);
 		};
 
 		document.getElementById(this.editButtonId).onclick = () => {
@@ -87,11 +100,11 @@ class URLPopUpSection extends HTMLObjectSection {
 		};
 	}
 
-    public static showURLPopUP(url: string, documentPosition: cool.SimplePoint) {
+	public static showURLPopUP(url: string, documentPosition: cool.SimplePoint, linkPosition?: cool.SimplePoint) {
 		if (URLPopUpSection.isOpen())
 			URLPopUpSection.closeURLPopUp();
 
-		const section = new URLPopUpSection(url, documentPosition);
+		const section = new URLPopUpSection(url, documentPosition, linkPosition);
 		app.sectionContainer.addSection(section);
 		section.setPosition(section.position[0], section.position[1] - 35 * app.dpiScale);
     }
