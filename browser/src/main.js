@@ -72,6 +72,7 @@ var map = L.map('map', {
 
 map.uiManager = L.control.uiManager();
 map.addControl(map.uiManager);
+map.tooltip = L.control.tooltip();
 
 map.uiManager.initializeBasicUI();
 
