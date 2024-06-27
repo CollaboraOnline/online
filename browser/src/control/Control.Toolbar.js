@@ -1404,7 +1404,14 @@ function setupToolbar(e) {
 				//click pos tweak
 				cellCursor._northEast.lng = cellCursor._southWest.lng;
 				map._docLayer._closeURLPopUp();
-				map._docLayer._showURLPopUp(cellCursor._northEast, e.url);
+				var linkPosition;
+				if (strTwips.length > 7) {
+					linkPosition = {
+						x: parseInt(strTwips[6]),
+						y: parseInt(strTwips[7])
+					};
+				}
+				map._docLayer._showURLPopUp(cellCursor._northEast, e.url, linkPosition);
 			} else {
 				map.fire('warn', {url: e.url, map: map, cmd: 'openlink'});
 			}
