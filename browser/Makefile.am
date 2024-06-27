@@ -147,7 +147,8 @@ COOL_CSS_LST =\
 	$(srcdir)/css/jssidebar.css \
 	$(srcdir)/css/override-smartmenus.css \
 	$(srcdir)/css/jquery-ui-lightness.css \
-	$(srcdir)/css/infobar.css
+	$(srcdir)/css/infobar.css \
+	$(srcdir)/css/tooltip.css
 
 COOL_CSS = $(filter %,$(COOL_CSS_LST))
 
@@ -336,6 +337,7 @@ COOL_JS_LST =\
 	src/control/Control.ServerAuditDialog.ts \
 	src/control/Control.LokDialog.js \
 	src/control/Control.AlertDialog.js \
+	src/control/Control.Tooltip.js \
 	src/control/ColorPicker.ts \
 	src/control/jsdialog/Component.Toolbar.ts \
 	src/control/jsdialog/Definitions.Menu.ts \
