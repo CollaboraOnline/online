@@ -1,0 +1,10 @@
+.cooltip-text {
+	visibility: hidden;
+	position: absolute;
+	z-index: 2147483647;
+	color: var(--color-primary-text);
+	background-color: var(--color-background-darker);
+	border-radius: 6px;
+	white-space: nowrap;
+	padding: 10px;
+}

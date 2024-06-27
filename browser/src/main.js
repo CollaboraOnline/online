@@ -72,6 +72,8 @@ var map = L.map('map', {
 
 map.uiManager = L.control.uiManager();
 map.addControl(map.uiManager);
+if (!L.Browser.cypressTest)
+	map.tooltip = L.control.tooltip();
 
 map.uiManager.initializeBasicUI();
 
