@@ -104,6 +104,12 @@
             });
       }
 
+      function insertGraphic(text) {
+        post({'MessageId': 'Action_InsertGraphic',
+              'Values': {'filename': 'date.png', 'url': 'https://sdk.collaboraonline.com/_static/collabora.svg'}
+            });
+      }
+
       function capitalize() {
         post({'MessageId': 'CallPythonScript',
               'SendTime': Date.now(),
@@ -576,6 +582,7 @@
           </div>
           <div class="vbox">
             <button onclick="ShowInsertButton(); return false;" title="via Insert_Button">Insert custom button</button>
+            <button onclick="insertGraphic(); return false;">Sent InsertGraphic post message</button>
           </div>
           <div class="vbox">
             <button onclick="ShowNotebookbar(false); return false;">Compact Toolbar</button>
