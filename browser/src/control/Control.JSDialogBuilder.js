@@ -3087,6 +3087,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			}
 			break;
 
+		case 'rendered_entry':
 		case 'rendered_combobox_entry':
 			if (!this.rendersCache[control.id])
 				this.rendersCache[control.id] = { persistent: false, images: [] };
