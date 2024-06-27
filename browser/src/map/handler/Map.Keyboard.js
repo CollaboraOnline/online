@@ -447,7 +447,7 @@ L.Map.Keyboard = L.Handler.extend({
 			return;
 
 		app.idleHandler.notifyActive();
-		if (this._map.slideShow && this._map.slideShow.fullscreen) {
+		if (this._map.slideShow && this._map.slideShow.isFullscreen()) {
 			return;
 		}
 

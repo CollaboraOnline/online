@@ -202,6 +202,7 @@
 /src/map/handler/Map.Print.js
 /src/map/handler/Map.Scroll.js
 /src/map/handler/Map.SlideShow.js
+/src/map/handler/SlideShow.ts
 /src/map/handler/Map.StateChanges.js
 /src/map/handler/Map.TouchGesture.js
 /src/map/handler/Map.VersionBar.js

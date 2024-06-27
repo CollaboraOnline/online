@@ -44,7 +44,7 @@ L.Map.Mouse = L.Handler.extend({
 
 		app.idleHandler.notifyActive();
 		var docLayer = this._map._docLayer;
-		if (!docLayer || (this._map.slideShow && this._map.slideShow.fullscreen) || this._map.rulerActive) {
+		if (!docLayer || (this._map.slideShow && this._map.slideShow.isFullscreen()) || this._map.rulerActive) {
 			return;
 		}
 

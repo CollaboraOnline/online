@@ -1641,6 +1641,16 @@ L.CanvasTileLayer = L.Layer.extend({
 			if (this._presentationHelper)
 				this._presentationHelper.onSlidesInfoMsg(content);
 		}
+		else if (textMsg.startsWith('slidelayer:')) {
+			const content = JSON.parse(textMsg.substring('slidelayer:'.length + 1));
+			this._map.fire('slidelayer', {
+				message: content,
+				image: img
+			});
+		}
+		else if (textMsg.startsWith('sliderenderingcomplete')) {
+			this._map.fire('sliderenderingcomplete');
+		}
 	},
 
 	// Returns a guess of how many tiles are yet to arrive
