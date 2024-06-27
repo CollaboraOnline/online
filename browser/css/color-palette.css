@@ -20,6 +20,8 @@
 	--color-background-lighter: #fff; /* hover, toolbar, dialog, disabled */
 	--color-overlay: #1c5fa814;
 	--color-background-tabs-group: #f1f1f1;
+	--color-stylesview-background: var(--color-background-lighter);
+	--brightness-stylesview: 1;
 
 
 	--color-primary: #0b87e7; /* border-color */
@@ -35,6 +37,8 @@
 
 	--color-btn-border: #b6b6b6;
 	--color-btn-border-dis: #c0bfbc;
+
+	--color-stylesview-border: var(--color-border);
 
 	--color-error: #e9322d;
 	--color-warning: #eca700;
