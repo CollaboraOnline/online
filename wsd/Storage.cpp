@@ -135,17 +135,17 @@ void StorageBase::initialize()
 
     if (SSLEnabled || SSLAsScheme)
     {
-        if (COOLWSD::isSSLTermination())
-        {
-            sslClientParams.certificateFile = COOLWSD::getPathFromConfig("storage.ssl.cert_file_path");
-            sslClientParams.privateKeyFile = COOLWSD::getPathFromConfig("storage.ssl.key_file_path");
-            sslClientParams.caLocation = COOLWSD::getPathFromConfig("storage.ssl.ca_file_path");
-        }
-        else
+        if (COOLWSD::isSSLEnabled())
         {
             sslClientParams.certificateFile = COOLWSD::getPathFromConfigWithFallback("storage.ssl.cert_file_path", "ssl.cert_file_path");
             sslClientParams.privateKeyFile = COOLWSD::getPathFromConfigWithFallback("storage.ssl.key_file_path", "ssl.key_file_path");
             sslClientParams.caLocation = COOLWSD::getPathFromConfigWithFallback("storage.ssl.ca_file_path", "ssl.ca_file_path");
+        }
+        else
+        {
+            sslClientParams.certificateFile = COOLWSD::getPathFromConfig("storage.ssl.cert_file_path");
+            sslClientParams.privateKeyFile = COOLWSD::getPathFromConfig("storage.ssl.key_file_path");
+            sslClientParams.caLocation = COOLWSD::getPathFromConfig("storage.ssl.ca_file_path");
         }
         sslClientParams.cipherList = COOLWSD::getPathFromConfigWithFallback("storage.ssl.cipher_list", "ssl.cipher_list");
         const bool sslVerification = COOLWSD::getConfigValue<bool>("ssl.ssl_verification", true);
