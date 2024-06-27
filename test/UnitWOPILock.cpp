@@ -148,7 +148,9 @@ public:
 /// when the first view is read-only.
 class UnitWopiLockReadOnly : public WopiTestServer
 {
-    STATE_ENUM(Phase, LoadViewer, LoadEditor, Lock, WaitModify, Unlock, WaitUnload, Done) _phase;
+    STATE_ENUM(Phase, Connect, FirstCheckFileInfo, Lock, LoadViewer, WaitModify, Upload, Unlock,
+               WaitUnload, Done)
+    _phase;
 
     std::string _lockState;
     std::string _lockToken;
@@ -158,7 +160,7 @@ class UnitWopiLockReadOnly : public WopiTestServer
 public:
     UnitWopiLockReadOnly()
         : WopiTestServer("UnitWopiLockReadOnly")
-        , _phase(Phase::LoadViewer)
+        , _phase(Phase::Connect)
         , _lockState("UNLOCK")
         , _checkFileInfoCount(0)
         , _viewCount(0)
@@ -169,8 +171,9 @@ public:
                              Poco::JSON::Object::Ptr& fileInfo) override
     {
         // Make the first session the editor, subsequent ones read-only.
-        const bool firstView = _checkFileInfoCount == 0;
         ++_checkFileInfoCount;
+
+        const bool firstView = _checkFileInfoCount == 1;
 
         LOG_TST("CheckFileInfo: " << (firstView ? "viewer" : "editor"));
 
@@ -191,6 +194,8 @@ public:
         LOG_TST("In " << toString(_phase) << ", X-WOPI-Lock: " << lockToken << ", X-WOPI-Override: "
                       << newLockState << ", for URI: " << request.getURI());
 
+        LOG_ASSERT_MSG(_checkFileInfoCount == 2, "Must have had two CheckFileInfo requests");
+
         if (_phase == Phase::Lock)
         {
             LOK_ASSERT_EQUAL_MESSAGE("Expected X-WOPI-Override:LOCK", std::string("LOCK"),
@@ -206,7 +211,7 @@ public:
             LOK_ASSERT_EQUAL_MESSAGE("Document is not locked", std::string("LOCK"), _lockState);
             LOK_ASSERT_EQUAL_MESSAGE("The lock token has changed", _lockToken, lockToken);
 
-            // TRANSITION_STATE(_phase, Phase::Done);
+            TRANSITION_STATE(_phase, Phase::WaitUnload);
             // exitTest(TestResult::Ok);
         }
         else
@@ -220,8 +225,8 @@ public:
     std::unique_ptr<http::Response>
     assertPutFileRequest(const Poco::Net::HTTPRequest& request) override
     {
-        LOK_ASSERT_STATE(_phase, Phase::Unlock);
-        TRANSITION_STATE(_phase, Phase::WaitUnload);
+        LOK_ASSERT_STATE(_phase, Phase::Upload);
+        TRANSITION_STATE(_phase, Phase::Unlock);
 
         // The document is modified.
         LOK_ASSERT_EQUAL(std::string("true"), request.get("X-COOL-WOPI-IsModifiedByUser"));
@@ -250,7 +255,7 @@ public:
         ++_viewCount;
         if (_viewCount == 1)
         {
-            LOK_ASSERT_STATE(_phase, Phase::LoadEditor);
+            LOK_ASSERT_STATE(_phase, Phase::LoadViewer);
             TRANSITION_STATE(_phase, Phase::Lock);
 
             LOG_TST("Loading second view (editor)");
@@ -273,15 +278,14 @@ public:
     {
         LOG_TST("onDocumentModified: [" << message << ']');
 
-        if (_phase != Phase::Unlock)
+        // We get this twice, skip the second one.
+        if (_phase != Phase::Upload)
         {
             LOK_ASSERT_STATE(_phase, Phase::WaitModify);
-            TRANSITION_STATE(_phase, Phase::Unlock);
+            TRANSITION_STATE_MSG(_phase, Phase::Upload, "Disconnecting Editor, expecting PutFile");
+            // Simulate the editor closing browser.
+            deleteSocketAt(1);
         }
-
-        // Simulate the editor closing browser.
-        LOG_TST("Disconnecting Editor");
-        deleteSocketAt(1);
 
         return true;
     }
@@ -309,24 +313,30 @@ public:
     {
         switch (_phase)
         {
-            case Phase::LoadViewer:
+            case Phase::Connect:
             {
                 // Always transition before issuing commands.
-                TRANSITION_STATE(_phase, Phase::LoadEditor);
-
-                LOG_TST("Creating first connection");
+                TRANSITION_STATE_MSG(_phase, Phase::FirstCheckFileInfo,
+                                     "Creating first connection, expecting first CheckFileInfo");
                 initWebsocket("/wopi/files/0?access_token=anything");
 
-                LOG_TST("Creating second connection");
+                // With async loading, we download based the initial connection,
+                // ahead of the load command. By then, we have done CheckFileInfo
+                // and found out that this is an editor, and so must take the lock.
+                TRANSITION_STATE_MSG(
+                    _phase, Phase::Lock,
+                    "Creating second connection, expecting second CheckFileInfo+Lock");
                 addWebSocket();
 
-                LOG_TST("Loading first view (viewer)");
+                TRANSITION_STATE_MSG(_phase, Phase::LoadViewer, "Loading viewer");
                 WSD_CMD_BY_CONNECTION_INDEX(0, "load url=" + getWopiSrc());
                 break;
             }
-            case Phase::LoadEditor:
+            case Phase::FirstCheckFileInfo:
             case Phase::Lock:
+            case Phase::LoadViewer:
             case Phase::WaitModify:
+            case Phase::Upload:
             case Phase::Unlock:
             case Phase::WaitUnload:
             case Phase::Done:

@@ -904,7 +904,7 @@ bool DocumentBroker::download(
 
     // Call the storage specific fileinfo functions
     std::string templateSource;
-
+    bool userCanWrite = false;
 #if !MOBILEAPP
     std::chrono::milliseconds checkFileInfoCallDurationMs = std::chrono::milliseconds::zero();
     WopiStorage* wopiStorage = dynamic_cast<WopiStorage*>(_storage.get());
@@ -932,6 +932,7 @@ bool DocumentBroker::download(
 
         wopiStorage->handleWOPIFileInfo(*wopiFileInfo, *_lockCtx);
         _isViewFileExtension = COOLWSD::IsViewFileExtension(wopiStorage->getFileExtension());
+        userCanWrite = wopiFileInfo->getUserCanWrite();
 
         if (session)
         {
@@ -1038,13 +1039,16 @@ bool DocumentBroker::download(
     if (session)
         broadcastLastModificationTime(session);
 
+    // Only lock the document on storage for editing sessions.
+    lockIfEditing(session, uriPublic, userCanWrite);
+
     // Let's download the document now, if not downloaded.
     std::chrono::milliseconds getFileCallDurationMs = std::chrono::milliseconds::zero();
     if (!_storage->isDownloaded())
     {
         const Authorization auth =
             session ? session->getAuthorization() : Authorization::create(uriPublic);
-        if (!doDownloadDocument(session, auth, templateSource, fileInfo.getFilename(),
+        if (!doDownloadDocument(auth, templateSource, fileInfo.getFilename(),
                                 getFileCallDurationMs))
         {
             LOG_DBG("Failed to download or process downloaded document");
@@ -1073,8 +1077,65 @@ bool DocumentBroker::download(
     return true;
 }
 
-bool DocumentBroker::doDownloadDocument(const std::shared_ptr<ClientSession>& session,
-                                        const Authorization& auth,
+void DocumentBroker::lockIfEditing(const std::shared_ptr<ClientSession>& session,
+                                   const Poco::URI& uriPublic, bool userCanWrite)
+{
+    if (_lockCtx == nullptr || !_lockCtx->_supportsLocks || _lockCtx->_isLocked)
+    {
+        return; // Nothing to do.
+    }
+
+    if (session)
+    {
+        // If we have a session, isReadOnly() will be correctly set
+        // based on the URI (which may include a readonly permission),
+        // as well as the WOPI Info that we got above.
+        if (!session->isReadOnly())
+        {
+            LOG_DBG("Locking docKey [" << _docKey << "], which is editable");
+            std::string error;
+            if (!updateStorageLockState(*session, /*lock=*/true, error))
+            {
+                LOG_ERR("Failed to lock docKey [" << _docKey << "] with session ["
+                                                  << session->getId()
+                                                  << "] after downloading: " << error);
+            }
+        }
+
+        return;
+    }
+
+    // No Session yet, we need to rely on the URI and
+    // the WOPI Info we got above, explicitly.
+    bool isReadOnly = _isViewFileExtension || !userCanWrite;
+    if (!isReadOnly)
+    {
+        // See if we have permission override from the UI.
+        // Primarily used by mobile, which starts in read-only
+        // mode until the user clicks on the "edit" button.
+        for (const auto& param : uriPublic.getQueryParameters())
+        {
+            LOG_TRC("Query param: " << param.first << ", value: " << param.second);
+            if (param.first == "permission" && param.second == "readonly")
+            {
+                isReadOnly = true;
+                break;
+            }
+        }
+
+        if (!isReadOnly)
+        {
+            LOG_DBG("Locking docKey [" << _docKey << "], which is editable");
+            std::string error;
+            if (!updateStorageLockState(Authorization::create(uriPublic), error))
+            {
+                LOG_ERR("Failed to lock docKey [" << _docKey << "] in advance: " << error);
+            }
+        }
+    }
+}
+
+bool DocumentBroker::doDownloadDocument(const Authorization& auth,
                                         const std::string& templateSource,
                                         const std::string& filename,
                                         std::chrono::milliseconds& getFileCallDurationMs)
@@ -1093,18 +1154,6 @@ bool DocumentBroker::doDownloadDocument(const std::shared_ptr<ClientSession>& se
         std::chrono::steady_clock::now() - start);
 
     _docState.setStatus(DocumentState::Status::Loading); // Done downloading.
-
-    // Only lock the document on storage for editing sessions
-    // FIXME: why not lock before downloadStorageFileToLocal? Would also prevent race conditions
-    if (session && !session->isReadOnly())
-    {
-        std::string error;
-        if (!updateStorageLockState(*session, /*lock=*/true, error))
-        {
-            LOG_ERR("Failed to lock docKey [" << _docKey << "] with session [" << session->getId()
-                                              << "] after downloading: " << error);
-        }
-    }
 
 #if !MOBILEAPP
     if (!processPlugins(localPath))
@@ -1458,6 +1507,39 @@ void DocumentBroker::endRenameFileCommand()
     unblockUI();
 
     endActivity();
+}
+
+bool DocumentBroker::updateStorageLockState(const Authorization& auth, std::string& error)
+{
+    assert(_lockCtx && "Expected an initialized LockContext");
+    assert(_lockCtx->_supportsLocks && "Expected to have lock support");
+    assert(!_lockCtx->_isLocked && "Expected not to have locked already");
+
+    const StorageBase::LockUpdateResult result =
+        _storage->updateLockState(auth, *_lockCtx, /*lock=*/true, _currentStorageAttrs);
+    error = _lockCtx->_lockFailureReason;
+
+    switch (result)
+    {
+        case StorageBase::LockUpdateResult::UNSUPPORTED:
+            LOG_DBG("Locks on docKey [" << _docKey << "] are unsupported");
+            return true; // Not an error.
+            break;
+        case StorageBase::LockUpdateResult::OK:
+            LOG_DBG("Locked docKey [" << _docKey << "] successfully");
+            return true;
+            break;
+        case StorageBase::LockUpdateResult::UNAUTHORIZED:
+            LOG_ERR("Failed to " << "Locked docKey [" << _docKey
+                                 << "]. Invalid or expired access token");
+            break;
+        case StorageBase::LockUpdateResult::FAILED:
+            LOG_ERR("Failed to " << "Locked docKey [" << _docKey << "] with reason [" << error
+                                 << ']');
+            break;
+    }
+
+    return false;
 }
 
 bool DocumentBroker::updateStorageLockState(ClientSession& session, bool lock, std::string& error)
