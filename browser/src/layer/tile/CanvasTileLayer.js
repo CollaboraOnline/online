@@ -2598,7 +2598,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		return resultList;
 	},
 
-	_showURLPopUp: function(position, url) {
+	_showURLPopUp: function (position, url, linkPosition) {
 		var parent = L.DomUtil.create('div', '');
 		L.DomUtil.createWithId('div', 'hyperlink-pop-up-preview', parent);
 		var link = L.DomUtil.createWithId('a', 'hyperlink-pop-up', parent);
@@ -2654,8 +2654,22 @@ L.CanvasTileLayer = L.Layer.extend({
 				map_.sendUnoCommand('.uno:JumpToMark?Bookmark:string=' + encodeURIComponent(url.substring(1)));
 		});
 		this._setupClickFuncForId('hyperlink-pop-up-copy', function () {
-			if (app.file.permission !== 'readonly')
-				map_.sendUnoCommand('.uno:CopyHyperlinkLocation');
+			if (app.file.permission !== 'readonly') {
+				var params;
+				if (linkPosition) {
+					params = {
+						PositionX: {
+							type: 'long',
+							value: linkPosition.x
+						},
+						PositionY: {
+							type: 'long',
+							value: linkPosition.y
+						}
+					};
+				}
+				map_.sendUnoCommand('.uno:CopyHyperlinkLocation', params);
+			}
 			else {
 				var json = { content: url, mimeType: 'text/plain' };
 				map_._docLayer._onMessage('clipboardchanged: ' + JSON.stringify(json));
