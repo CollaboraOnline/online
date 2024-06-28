@@ -52,7 +52,7 @@ void getPartHashCodes(const std::string& testname, const std::string& response,
     TST_LOG("Status reports " << totalParts << " parts.");
 
     Poco::RegularExpression endLine("[^\n\r]+");
-    Poco::RegularExpression number("^[0-9]+$");
+    Poco::RegularExpression number("^-?[0-9]+$");
     Poco::RegularExpression::MatchVec matches;
     int offset = 0;
 
