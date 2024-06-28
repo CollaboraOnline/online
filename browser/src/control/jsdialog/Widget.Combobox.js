@@ -282,6 +282,7 @@ JSDialog.combobox = function (parentContainer, data, builder) {
 			var img = L.DomUtil.create('img', '', dropdown[pos]);
 			img.src = builder.rendersCache[data.id].images[pos];
 			img.alt = entries[pos].text;
+			img.title = entries[pos].text;
 		}
 	};
 
