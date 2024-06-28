@@ -222,6 +222,9 @@ L.Control.UIManager = L.Control.extend({
 		this.map.addControl(this.map.userList);
 		this.map.aboutDialog = JSDialog.aboutDialog(this.map);
 
+		if (L.Map.versionBar && window.allowUpdateNotification)
+			this.map.addControl(L.Map.versionBar);
+
 		var openBusyPopup = function(label) {
 			this.busyPopupTimer = setTimeout(function() {
 				var json = {

@@ -1169,6 +1169,14 @@ private:
     const std::string _blank;
 };
 
+namespace
+{
+std::string boolToString(const bool value)
+{
+    return value ? std::string("true"): std::string("false");
+}
+}
+
 FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::preprocessFile(
     const HTTPRequest& request, http::Response& httpResponse, const RequestDetails& requestDetails,
     Poco::MemoryInputStream& message, const std::shared_ptr<StreamSocket>& socket)
@@ -1337,15 +1345,17 @@ FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::prepro
         Poco::replaceInPlace(preprocess, std::string("%AUTO_SHOW_FEEDBACK%"), (std::string)"true");
     }
 
+    bool allowUpdateNotification = config.getBool("allow_update_popup", true);
+    Poco::replaceInPlace(preprocess, std::string("%ENABLE_UPDATE_NOTIFICATION%"), boolToString(allowUpdateNotification));
 
     Poco::replaceInPlace(preprocess, std::string("%FEEDBACK_URL%"), std::string(FEEDBACK_URL));
     Poco::replaceInPlace(preprocess, std::string("%WELCOME_URL%"), std::string(WELCOME_URL));
 
     Poco::replaceInPlace(preprocess, BUYPRODUCT_URL, urv[BUYPRODUCT_URL]);
 
-    Poco::replaceInPlace(preprocess, std::string("%DEEPL_ENABLED%"), (config.getBool("deepl.enabled", false) ? std::string("true"): std::string("false")));
-    Poco::replaceInPlace(preprocess, std::string("%ZOTERO_ENABLED%"), (config.getBool("zotero.enable", true) ? std::string("true"): std::string("false")));
-    Poco::replaceInPlace(preprocess, std::string("%WASM_ENABLED%"), (COOLWSD::getConfigValue<bool>("wasm.enable", false) ? std::string("true"): std::string("false")));
+    Poco::replaceInPlace(preprocess, std::string("%DEEPL_ENABLED%"), boolToString(config.getBool("deepl.enabled", false)));
+    Poco::replaceInPlace(preprocess, std::string("%ZOTERO_ENABLED%"), boolToString(config.getBool("zotero.enable", true)));
+    Poco::replaceInPlace(preprocess, std::string("%WASM_ENABLED%"), boolToString(COOLWSD::getConfigValue<bool>("wasm.enable", false)));
     Poco::URI indirectionURI(config.getString("indirection_endpoint.url", ""));
     Poco::replaceInPlace(preprocess, std::string("%INDIRECTION_URL%"), indirectionURI.toString());
 
