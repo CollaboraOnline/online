@@ -3178,7 +3178,6 @@ void lokit_main(
 
 #ifndef __FreeBSD__
             dropCapability(CAP_SYS_CHROOT);
-            dropCapability(CAP_MKNOD);
             dropCapability(CAP_FOWNER);
             dropCapability(CAP_CHOWN);
 #endif
