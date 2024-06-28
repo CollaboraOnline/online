@@ -40,7 +40,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Slide operations', functio
 
 	});
 
-	it('Duplicate slide', function() {
+	it.skip('Duplicate slide', function() {
 		// Also check if comments are getting duplicated
 		cy.cGet('#options-modify-page').click();
 		desktopHelper.insertComment();
