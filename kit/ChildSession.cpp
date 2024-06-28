@@ -2975,7 +2975,7 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
 
                 sendTextFrame("invalidatetiles:"
                               " part=" + std::to_string(part) +
-                              ((mode > 0) ? (" mode=" + std::to_string(mode)) : "") +
+                              " mode=" + std::to_string(mode) +
                               " x=" + std::to_string(x) +
                               " y=" + std::to_string(y) +
                               " width=" + std::to_string(width) +
