@@ -12,7 +12,7 @@
  * L.Socket contains methods for the communication with the server
  */
 
-/* global app JSDialog _ $ errorMessages Uint8Array brandProductName */
+/* global app JSDialog _ $ errorMessages Uint8Array brandProductName Map */
 
 app.definitions.Socket = L.Class.extend({
 	ProtocolVersionNumber: '0.1',
@@ -41,6 +41,24 @@ app.definitions.Socket = L.Class.extend({
 		this._msgQueue = [];
 		this._delayedMessages = [];
 		this._handlingDelayedMessages = false;
+		if (window.Worker) {
+			window.app.console.info('Creating SocketWorker');
+			this._worker = new Worker('src/core/SocketWorker.js');
+			this._worker.addEventListener('message', (e) => this._onWorkerMessage(e));
+			this._workerTimer = null;
+			this._workerPendingEvents = [];
+			this._workerMap = new Map();
+			this._workerId = 0;
+
+			const bufferSize = window.tileSize * window.tileSize * 4 * 4;
+			const nBuffers = 128;
+
+			this._workerBuffers = [];
+			this._workerBuffersPendingSlurp = [];
+			for (var i = 0; i < nBuffers; ++i) {
+				this._workerBuffers.push(new Uint8Array(bufferSize));
+			}
+		}
 	},
 
 	getWebSocketBaseURI: function(map) {
@@ -447,6 +465,13 @@ app.definitions.Socket = L.Class.extend({
 			// Let other layers / overlays catch up.
 			this._map.fire('messagesdone');
 
+			// Process any tiles that overflowed the queue or were received during
+			// tile processing.
+			while (this._workerBuffersPendingSlurp.length)
+				this._workerBuffers.push(this._workerBuffersPendingSlurp.shift());
+			if (this._workerPendingEvents.length)
+				this._queueWorkerTileProcessing();
+
 			this._renderEventTimerStart = performance.now();
 		}
 	},
@@ -459,7 +484,14 @@ app.definitions.Socket = L.Class.extend({
 	// process so - slurp and then emit at idle - its faster to delay!
 	_slurpMessage: function(e) {
 		this._extractTextImg(e);
+		if (e.image && e.image.rawData && this._worker) {
+			this._queueWorkerTileProcessing(e);
+		} else {
+			this._queueSlurpEvent(e);
+		}
+	},
 
+	_queueSlurpEvent: function(e) {
 		// Some messages - we want to process & filter early.
 		var docLayer = this._map ? this._map._docLayer : undefined;
 		if (docLayer && docLayer.filterSlurpedMessage(e))
@@ -474,6 +506,68 @@ app.definitions.Socket = L.Class.extend({
 			this._slurpQueue = [];
 		this._slurpQueue.push(e);
 		this._queueSlurpEventEmission(delayMS);
+	},
+
+	_queueWorkerTileProcessing: function(e) {
+		if (e)
+			this._workerPendingEvents.push(e);
+		if (this._workerTimer !== null || !this._workerBuffers.length || this._workerPendingEvents.length == 0)
+			return;
+
+		var that = this;
+		this._workerTimer = setTimeout(function() {
+			while (that._workerPendingEvents.length && that._workerBuffers.length) {
+				var tiles = [];
+				var buffer = that._workerBuffers.shift();
+				var transferBuffers = [buffer.buffer];
+				var totalSize = 0;
+
+				// Send as many tiles as will fit in a single buffer
+				while (that._workerPendingEvents.length) {
+					// FIXME: Have server include delta size on event. This size is over-allocated for tile deltas.
+					var size = (window.tileSize * window.tileSize * 4);
+					if (totalSize + size > buffer.length)
+						break;
+
+					totalSize += size;
+					var e = that._workerPendingEvents.shift();
+					var id = that._workerId++;
+					that._workerMap.set(id, e);
+					tiles.push({ 'id': id,
+								'rawData': e.image.rawData,
+								'isKeyframe': e.image.isKeyframe,
+								'tileSize': window.tileSize,
+								'size': size });
+					transferBuffers.push(e.image.rawData.buffer);
+				}
+				try {
+					that._worker.postMessage({ 'message': 'tile', 'tiles' : tiles, 'buffer': buffer }, transferBuffers)
+				} catch (error) {
+					window.app.console.error('Failed to post message to pre-processor worker', error)
+					// FIXME: How can we sensibly recover here? We should probably disable workers,
+					//        flush the tile cache and refresh the screen.
+				}
+			}
+			that._workerTimer = null;
+		}, 1);
+	},
+
+	_onWorkerMessage: function(e) {
+        switch(e.data.message) {
+		case 'tile':
+			this._workerBuffersPendingSlurp.push(e.data.buffer);
+			for (const tile of e.data.tiles) {
+				var processedEvent = this._workerMap.get(tile.id);
+				this._workerMap.delete(tile.id);
+				processedEvent.image.rawData = tile.rawData;
+				processedEvent.image.processedData = tile.processedData;
+				this._queueSlurpEvent(processedEvent);
+			}
+			break;
+
+		default:
+			window.app.console.error('Unrecognised preprocessor message', e);
+		}
 	},
 
 	// make profiling easier

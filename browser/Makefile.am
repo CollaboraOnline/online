@@ -203,6 +203,7 @@ COOL_JS_LST =\
 	src/core/Rectangle.ts \
 	src/core/Class.js \
 	src/core/Events.js \
+	src/core/SocketWorker.js \
 	src/core/Socket.js \
 	src/core/Matrix.js \
 	src/core/Debug.js \
@@ -262,6 +263,7 @@ COOL_JS_LST =\
 	src/layer/vector/CanvasOverlay.ts \
 	src/canvas/sections/ScrollSection.ts \
 	src/layer/tile/CanvasTileLayer.js \
+	src/layer/tile/CanvasTileUtils.ts \
 	src/layer/vector/CDarkOverlay.ts \
 	src/layer/SplitPanesContext.ts \
 	src/layer/CalcSplitPanesContext.ts \
@@ -905,6 +907,7 @@ pot:
 		src/slideshow/transition/SlideWipeTransition.ts \
 		src/slideshow/transition/BarWipeTransition.ts \
 		src/core/Socket.js \
+		src/core/SocketWorker.js \
 		src/core/Debug.js \
 		src/docstate.js \
 		src/docstatefunctions.js \
@@ -912,6 +915,7 @@ pot:
 		src/app/DocEvents.ts \
 		src/errormessages.js \
 		src/layer/tile/CanvasTileLayer.js \
+		src/layer/tile/CanvasTileUtils.ts \
 		src/canvas/sections/CommentListSection.ts \
 		src/canvas/sections/CommentSection.ts \
 		src/main.js \

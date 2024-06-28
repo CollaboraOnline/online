@@ -3,7 +3,7 @@
  * L.CanvasTileLayer is a layer with canvas based rendering.
  */
 
-/* global app L JSDialog CanvasSectionContainer CanvasOverlay CDarkOverlay CSplitterLine $ _ CPointSet CPolyUtil CPolygon Cursor CCellSelection PathGroupType UNOKey UNOModifier Uint8ClampedArray Uint8Array Uint32Array */
+/* global app cool L JSDialog CanvasSectionContainer CanvasOverlay CDarkOverlay CSplitterLine $ _ CPointSet CPolyUtil CPolygon Cursor CCellSelection PathGroupType UNOKey UNOModifier Uint8ClampedArray Uint8Array */
 
 /*eslint no-extend-native:0*/
 if (typeof String.prototype.startsWith !== 'function') {
@@ -727,8 +727,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._moveInProgress = false;
 		this._canonicalIdInitialized = false;
 		this._nullDeltaUpdate = 0;
-
-		this._unpremult = new L.UnPremult(256);
 	},
 
 	_initContainer: function () {
@@ -5364,7 +5362,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				if (this._debugDeltas)
 					window.app.console.log('Restoring a tile from cached delta at ' +
 							       this._tileCoordsToKey(tile.coords));
-				this._applyDelta(tile, tile.rawDeltas, true, false);
+				this._applyDelta(tile, tile.rawDeltas, null, true, false);
 			}
 		}
 		if (!forPrefetch)
@@ -5520,8 +5518,8 @@ L.CanvasTileLayer = L.Layer.extend({
 		return ctx;
 	},
 
-	_applyDelta: function(tile, rawDelta, isKeyframe, wireMessage) {
-		// 'Uint8Array' rawDelta
+	_applyDelta: function(tile, rawDelta, decompressedDeltas, isKeyframe, wireMessage) {
+		// 'Uint8Array' rawDelta, decompressedDeltas
 
 		if (this._debugDeltas)
 			window.app.console.log('Applying a raw ' + (isKeyframe ? 'keyframe' : 'delta') +
@@ -5601,88 +5599,49 @@ L.CanvasTileLayer = L.Layer.extend({
 		// apply potentially several deltas in turn.
 		var i = 0;
 		var offset = 0;
-
-		// FIXME:used clamped array ... as a 2nd parameter
-		var allDeltas = window.fzstd.decompress(rawDelta);
-
+		var needsUnpremultiply = false;
 		var imgData;
 
 		// May have been changed by _ensureContext garbage collection
 		var canvas = tile.canvas;
 
-		if (isKeyframe)
-		{
-			if (this._debugDeltas)
-				window.app.console.log('Applying a raw RLE keyframe of length ' + allDeltas.length +
-						       ' hex: ' + hex2string(allDeltas, allDeltas.length));;
+		if (!decompressedDeltas) {
+			// FIXME:used clamped array ... as a 2nd parameter
+			decompressedDeltas = window.fzstd.decompress(rawDelta);
 
-			// Byte bashing fun
-			var width = canvas.width;
-			var height = canvas.height;
-
-			var resultu32 = new Uint32Array(width * height);
-			var resultu8 = new Uint8ClampedArray(resultu32.buffer, resultu32.byteOffset, resultu32.byteLength);
-
-			for (var y = 0; y < height; ++y)
-			{
-				var rleSize = allDeltas[offset] + allDeltas[offset+1] * 256;
-				offset += 2;
+			if (isKeyframe) {
 				if (this._debugDeltas)
-					window.app.console.log('rle size ' + rleSize);
+					window.app.console.log('Applying a raw RLE keyframe of length ' + decompressedDeltas.length +
+								   ' hex: ' + hex2string(decompressedDeltas, decompressedDeltas.length));;
 
-				var rleMask = offset;
-				var rleMaskSizeBytes = 256/8;
+				var width = canvas.width;
+				var height = canvas.height;
 
-				offset += rleMaskSizeBytes;
+				var result = new Uint8Array(width * height * 4);
+				offset = cool.CanvasTileUtils.unrle(decompressedDeltas, width, height, result);
 
-				var uniquePixels;
-				if (rleSize > 0)
-				{
-					this._unpremult.unpremultiply(allDeltas, rleSize * 4, offset);
-					uniquePixels = this._unpremult._pixels;
-					if (this._debugDeltas)
-						window.app.console.log(
-							'Pixels hex: ' + hex2string(this._unpremult._bytes, rleSize * 4));;
-				}
+				imgData = new ImageData(new Uint8ClampedArray(result.buffer), width, height);
 
-				// It would be rather nice to have real 64bit types [!]
-				var lastPix = 0;
-				var lastMask = 0;
-				var bitToCheck = 256;
-				var rleMaskOffset = rleMask;
-
-				var pixOffset = y * width;
-				var pixSrc = 0;
-
-				for (var x = 0; x < width; ++x)
-				{
-					if (bitToCheck > 128)
-					{
-						bitToCheck = 1;
-						lastMask = allDeltas[rleMaskOffset++];
-					}
-					if (!(lastMask & bitToCheck))
-						lastPix = uniquePixels[pixSrc++];
-					bitToCheck = bitToCheck << 1;
-					resultu32[pixOffset++] = lastPix;
-				}
-
-				offset += rleSize * 4;
+				if (this._debugDeltas)
+					window.app.console.log('Applied keyframe of total size ' + offset +
+								   ' at stream offset 0');
 			}
 
-			imgData = new ImageData(resultu8, canvas.width, canvas.height);
-
-			if (this._debugDeltas)
-				window.app.console.log('Applied keyframe of total size ' + offset +
-						       ' at stream offset 0');
+			// delta updates will need to be unpremultiplied
+			needsUnpremultiply = true;
+		} else if (isKeyframe) {
+			var width = canvas.width;
+			var height = canvas.height;
+			imgData = new ImageData(new Uint8ClampedArray(decompressedDeltas.buffer, decompressedDeltas.byteOffset, decompressedDeltas.byteLength), width, height);
+			offset = width * height * 4;
 		}
 
-		while (offset < allDeltas.length)
+		while (offset < decompressedDeltas.length)
 		{
 			if (this._debugDeltas)
-				window.app.console.log('Next delta at ' + offset + ' length ' + (allDeltas.length - offset));
+				window.app.console.log('Next delta at ' + offset + ' length ' + (decompressedDeltas.length - offset));
 
-			var delta = !offset ? allDeltas : allDeltas.subarray(offset);
+			var delta = !offset ? decompressedDeltas : decompressedDeltas.subarray(offset);
 
 			// Debugging paranoia: if we get this wrong bad things happen.
 			if (delta.length >= canvas.width * canvas.height * 4)
@@ -5703,7 +5662,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			// copy old data to work from:
 			var oldData = new Uint8ClampedArray(imgData.data);
 
-			var len = this._applyDeltaChunk(imgData, delta, oldData, canvas.width, canvas.height);
+			var len = this._applyDeltaChunk(imgData, delta, oldData, canvas.width, canvas.height, needsUnpremultiply);
 			if (this._debugDeltas)
 				window.app.console.log('Applied chunk ' + i++ + ' of total size ' + delta.length +
 						       ' at stream offset ' + offset + ' size ' + len);
@@ -5722,7 +5681,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			traceEvent.finish();
 	},
 
-	_applyDeltaChunk: function(imgData, delta, oldData, width, height) {
+	_applyDeltaChunk: function(imgData, delta, oldData, width, height, needsUnpremultiply) {
 		var pixSize = width * height * 4;
 		if (this._debugDeltas)
 			window.app.console.log('Applying a delta of length ' +
@@ -5778,11 +5737,11 @@ L.CanvasTileLayer = L.Layer.extend({
 							       ' at pos ' + destCol + ', ' + destRow + ' into delta at byte: ' + offset);
 				i += 4;
 				span *= 4;
-				// copy so this is suitably aligned for a Uint32Array view
-				this._unpremult.unpremultiply(delta, span, i);
+				if (needsUnpremultiply)
+					cool.CanvasTileUtils.unpremultiply(delta, span, i);
 				// imgData.data[offset + 1] = 256; // debug - greener start
-				for (var j = 0; j < span; ++j)
-					imgData.data[offset++] = this._unpremult._bytes[j];
+				imgData.data.set(delta.subarray(i, i + span), offset);
+				offset += span;
 				i += span;
 				// imgData.data[offset - 2] = 256; // debug - blue terminator
 				break;
@@ -5791,7 +5750,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				i++;
 				break;
 			default:
-				console.log('[' + i + ']: ERROR: Unknown delta code ' + delta[i]);
+				console.error('[' + i + ']: ERROR: Unknown delta code ' + delta[i]);
 				i = delta.length;
 				break;
 			}
@@ -5874,7 +5833,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		// updates don't need more chattiness with a tileprocessed
 		if (hasContent)
 		{
-			this._applyDelta(tile, img.rawData, img.isKeyframe, true);
+			this._applyDelta(tile, img.rawData, img.processedData, img.isKeyframe, true);
 			this._tileReady(coords);
 		}
 
