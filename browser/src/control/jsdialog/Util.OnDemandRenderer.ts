@@ -33,6 +33,7 @@ function onDemandRenderer(
 		const placeholderImg = placeholder as HTMLImageElement;
 		placeholderImg.src = cachedComboboxEntries.images[entryId];
 		placeholderImg.alt = entryText;
+		placeholderImg.title = entryText;
 		requestRender = !cachedComboboxEntries.persistent;
 	}
 
@@ -58,7 +59,7 @@ function onDemandRenderer(
 
 		var observer = new IntersectionObserver(onIntersection, {
 			root: null,
-			threshold: 0.5, // percentage of visible area
+			threshold: 0.01, // percentage of visible area
 		});
 
 		observer.observe(placeholder);
