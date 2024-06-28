@@ -31,7 +31,7 @@ function _iconViewEntry(
 	entry: IconViewEntry,
 	builder: any,
 ) {
-	var disabled = parentData.enabled === false;
+	const disabled = parentData.enabled === false;
 
 	if (entry.separator && entry.separator === true) {
 		L.DomUtil.create(
@@ -42,7 +42,7 @@ function _iconViewEntry(
 		return;
 	}
 
-	var entryContainer = L.DomUtil.create(
+	const entryContainer = L.DomUtil.create(
 		'div',
 		builder.options.cssClass + ' ui-iconview-entry',
 		parentContainer,
@@ -50,14 +50,18 @@ function _iconViewEntry(
 	if (entry.selected && entry.selected === true)
 		$(entryContainer).addClass('selected');
 
-	var icon = L.DomUtil.create(
+	const icon = L.DomUtil.create(
 		'div',
 		builder.options.cssClass + ' ui-iconview-icon',
 		entryContainer,
 	);
 
 	if (entry.ondemand) {
-		var placeholder = L.DomUtil.create('span', builder.options.cssClass, icon);
+		const placeholder = L.DomUtil.create(
+			'span',
+			builder.options.cssClass,
+			icon,
+		);
 		placeholder.innerText = entry.text;
 		if (entry.tooltip) placeholder.title = entry.tooltip;
 		else placeholder.title = entry.text;
@@ -71,7 +75,7 @@ function _iconViewEntry(
 			entry.text,
 		);
 	} else {
-		var img = L.DomUtil.create('img', builder.options.cssClass, icon);
+		const img = L.DomUtil.create('img', builder.options.cssClass, icon);
 		if (entry.image) img.src = entry.image;
 		img.alt = entry.text;
 		if (entry.tooltip) img.title = entry.tooltip;
@@ -79,7 +83,7 @@ function _iconViewEntry(
 	}
 
 	if (!disabled) {
-		var singleClick = parentData.singleclickactivate === true;
+		const singleClick = parentData.singleclickactivate === true;
 		$(entryContainer).click(function () {
 			$('#' + parentData.id + ' .ui-treeview-entry').removeClass('selected');
 			builder.callback('iconview', 'select', parentData, entry.row, builder);
@@ -114,22 +118,22 @@ JSDialog.iconView = function (
 	data: IconViewJSON,
 	builder: any,
 ) {
-	var container = L.DomUtil.create(
+	const container = L.DomUtil.create(
 		'div',
 		builder.options.cssClass + ' ui-iconview',
 		parentContainer,
 	);
 	container.id = data.id;
 
-	var disabled = data.enabled === false;
+	const disabled = data.enabled === false;
 	if (disabled) L.DomUtil.addClass(container, 'disabled');
 
-	for (var i in data.entries) {
+	for (const i in data.entries) {
 		_iconViewEntry(container, data, data.entries[i], builder);
 	}
 
-	var firstSelected = $(container).children('.selected').get(0);
-	var blockOption = JSDialog._scrollIntoViewBlockOption('nearest');
+	const firstSelected = $(container).children('.selected').get(0);
+	const blockOption = JSDialog._scrollIntoViewBlockOption('nearest');
 	if (firstSelected)
 		firstSelected.scrollIntoView({
 			behavior: 'smooth',
@@ -140,14 +144,14 @@ JSDialog.iconView = function (
 	container.onSelect = (position: number) => {
 		$(container).children('.selected').removeClass('selected');
 
-		var entry =
+		const entry =
 			container.children.length > position
 				? container.children[position]
 				: null;
 
 		if (entry) {
 			L.DomUtil.addClass(entry, 'selected');
-			var blockOption = JSDialog._scrollIntoViewBlockOption('nearest');
+			const blockOption = JSDialog._scrollIntoViewBlockOption('nearest');
 			entry.scrollIntoView({
 				behavior: 'smooth',
 				block: blockOption,
@@ -160,10 +164,10 @@ JSDialog.iconView = function (
 	};
 
 	container.updateRenders = (pos: number) => {
-		var dropdown = container.querySelectorAll('.ui-iconview-entry');
+		const dropdown = container.querySelectorAll('.ui-iconview-entry');
 		if (dropdown[pos]) {
 			dropdown[pos].innerHTML = '';
-			var img = L.DomUtil.create('img', '', dropdown[pos]);
+			const img = L.DomUtil.create('img', '', dropdown[pos]);
 			img.src = builder.rendersCache[data.id].images[pos];
 
 			const entry = data.entries[pos];
