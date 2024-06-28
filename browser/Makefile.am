@@ -286,21 +286,11 @@ COOL_JS_LST =\
 	src/geometry/PolyUtil.js \
 	src/layer/vector/Polygon.js \
 	src/layer/vector/Rectangle.js \
-	src/layer/vector/CircleMarker.js \
-	src/layer/vector/Circle.js \
-	src/layer/vector/SVG.js \
-	src/layer/vector/SplitPanesRenderer.js \
-	src/layer/vector/SplitPanesSVG.js \
-	src/layer/vector/Path.Transform.SVG.js \
 	src/core/Handler.js \
 	src/layer/vector/Path.Drag.Transform.js \
 	src/layer/vector/Path.Drag.js \
 	src/layer/vector/Path.Transform.Util.js \
-	src/layer/vector/Path.Transform.js \
-	src/layer/vector/SVG.VML.js \
-	src/layer/vector/Path.Transform.SVG.VML.js \
 	src/layer/vector/Canvas.js \
-	src/layer/vector/Path.Transform.Canvas.js \
 	src/layer/FormFieldButtonLayer.js \
 	src/dom/DomEvent.js \
 	src/dom/Draggable.js \
