@@ -287,7 +287,3 @@ L.Polygon.prototype._containsPoint = function (p) {
 	// also check if it's on polygon stroke
 	return inside || L.Polyline.prototype._containsPoint.call(this, p, true);
 };
-
-L.CircleMarker.prototype._containsPoint = function (p) {
-	return p.distanceTo(this._point) <= this._radius + this._clickTolerance();
-};
