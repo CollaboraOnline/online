@@ -27,6 +27,10 @@
 #include <TraceFile.hpp>
 #include <wsd/TileDesc.hpp>
 
+#include <iostream>
+#include <fstream>
+
+
 // store buckets of latency
 struct Histogram {
     const size_t incLowMs = 10;
@@ -81,6 +85,31 @@ struct Histogram {
             std::cout << "< " << std::setw(4) << ms << " ms |" << std::string(chrs, '-') << "| " << _buckets[i] << "\n";
         }
     }
+
+    void dumpLatencyToCSV(std::string fileName)
+    {
+        std::ofstream file(fileName + "Latency.csv", std::ios::out | std::ios::app);
+
+        if (file.tellp() == 0)
+        {
+            file << "Total Items,Too Long";
+            for (size_t i = 0; i < _buckets.size(); ++i) {
+                size_t bucketUpperLimit = (i < 10) ? (incLowMs * (i + 1)) : (maxLowMs + (i + 1 - 10) * incHighMs);
+                file << ",<" << bucketUpperLimit << "ms";
+            }
+            file << "\n";
+        }
+
+        file << _items << ",";
+        file << _tooLong << ",";
+
+        for(size_t i = 0; i < _buckets.size(); i++)
+        {
+            file << _buckets[i] << ",";
+        }
+        file << "\n";
+    }
+
 };
 
 struct Stats {
@@ -174,11 +203,44 @@ struct Stats {
             " server sent " << Util::getHumanizedBytes(_bytesRecvd) <<
             " (" << recvKbps << " kB/s) to " << _connections << " connections.\n";
 
+        _pingLatency.dumpLatencyToCSV("Ping");
+        _tileLatency.dumpLatencyToCSV("Tile");
+
+        dumpStressToCSV(runMs);
+        dumpNetworkStatsToCSV(recvKbps,sentKbps);
+
         std::cout << "we sent:\n";
         dumpMap(_sent);
 
         std::cout << "server sent us:\n";
         dumpMap(_recvd);
+    }
+
+    void dumpStressToCSV(size_t runMs)
+    {
+        std::ofstream file("CPU.csv", std::ios::out | std::ios::app);
+
+        if (file.tellp() == 0)
+        {
+            file << "Stress (m/s)";
+            file << "\n";
+        }
+
+        file << runMs << "\n";
+    }
+
+    void dumpNetworkStatsToCSV(size_t recievedKbs, size_t sentKbs)
+    {
+        std::ofstream file("Network.csv", std::ios::out | std::ios::app);
+
+        if(file.tellp() == 0)
+        {
+            file << "Incoming bandwidth (kB/s)" << ",Outgoing bandwidth (kB/s)";
+            file << "\n";
+        }
+
+        file << recievedKbs << "," << sentKbs << ",";
+        file << "\n";
     }
 };
 

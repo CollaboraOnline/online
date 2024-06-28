@@ -14,3 +14,7 @@ gdb.txt
 ./unithttplib
 run_unit.sh
 run_unit_standalone.sh
+CPU.csv
+Network.csv
+PingLatency.csv
+TileLatency.csv
