@@ -43,6 +43,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 	});
 
 	it('Apply style.', function() {
+		cy.cGet('#toolbar-up .ui-scroll-right').click();
 		helper.setDummyClipboardForCopy();
 		cy.cGet('.notebookbar.ui-iconview-entry img[title=Title]').click();
 		refreshCopyPasteContainer();
