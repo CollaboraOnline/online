@@ -65,6 +65,9 @@ void ProxyRequestHandler::handleRequest(const std::string& relPath,
 
                         CacheFileHash[httpSession->getUrl()] = httpResponse;
 
+                        // We're proxying, we take responsibility.
+                        httpResponse->set("Server", http::getServerString());
+
                         socket->sendAndShutdown(*httpResponse);
                     }
                     else
