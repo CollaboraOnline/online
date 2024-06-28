@@ -3,20 +3,17 @@ class URLPopUpSection extends HTMLObjectSection {
     static sectionName = 'URL PopUp';
 	containerId = 'hyperlink-pop-up-preview';
 	linkId = 'hyperlink-pop-up';
+	static cssClass = 'hyperlink-pop-up-container';
 	copyButtonId = 'hyperlink-pop-up-copy';
 	editButtonId = 'hyperlink-pop-up-edit';
 	removeButtonId = 'hyperlink-pop-up-remove';
 
     constructor (url: string, documentPosition: cool.SimplePoint) {
-        super(URLPopUpSection.sectionName, null, null, documentPosition);
+        super(URLPopUpSection.sectionName, null, null, documentPosition, URLPopUpSection.cssClass);
 
 		const objectDiv = this.getHTMLObject();
 		objectDiv.remove();
 		document.getElementById('document-container').appendChild(objectDiv);
-
-		objectDiv.style.backgroundColor = 'floralwhite';
-		objectDiv.style.borderRadius = '5px';
-		objectDiv.style.border = '1px solid black';
 
 		this.sectionProperties.url = url;
 

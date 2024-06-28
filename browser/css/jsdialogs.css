@@ -56,7 +56,8 @@
 	margin: 0 !important;
 }
 
-.jsdialog-window.modalpopup:not(.snackbar) {
+.jsdialog-window.modalpopup:not(.snackbar),
+.hyperlink-pop-up-container {
 	min-width: 198px;
 	max-width: 498px;
 	border: 1px solid var(--color-border-darker) !important;
