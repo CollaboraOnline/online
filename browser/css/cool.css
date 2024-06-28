@@ -945,19 +945,26 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	overflow: hidden;
 }
 
-#hyperlink-pop-up {
-	padding: 6px 0;
+.hyperlink-pop-up-container {
+	padding: 6px;
 	display: inline-block;
 	line-height: 1;
+	background-color: var(--color-background-lighter);
+}
+
+.hyperlink-pop-up-container a {
+	display: inline-block;
+	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	max-width: 188px;
+	color: #0078A8;
 }
 
 .hyperlink-popup-btn {
 	display: inline-block;
 	margin-left: 12px;
-	vertical-align: baseline;
+	vertical-align: middle;
 	width: 26px;
 	height: 26px;
 }
