@@ -18,7 +18,7 @@ declare var JSDialog: any;
 
 JSDialog.buttonBox = function (
 	parentContainer: Element,
-	data: ButtonBoxWidgetJSON,
+	data: ContainerWidgetJSON,
 	builder: any,
 ) {
 	var container = L.DomUtil.create(
@@ -30,14 +30,12 @@ JSDialog.buttonBox = function (
 	);
 	container.id = data.id;
 
-	var isButtonBoxLeft = data.leftaligned === true || data.leftaligned === 'true';
 	var leftAlignButtons = [];
 	var rightAlignButton = [];
 
 	for (var i in data.children) {
 		var child = data.children[i];
-		if (child.id === 'help' || isButtonBoxLeft === true)
-			leftAlignButtons.push(child);
+		if (child.id === 'help') leftAlignButtons.push(child);
 		else rightAlignButton.push(child);
 	}
 
