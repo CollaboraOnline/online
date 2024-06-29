@@ -88,6 +88,14 @@ interface GridWidgetJSON extends ContainerWidgetJSON {
 	rows: number; // numer of grid rows
 }
 
+interface PanelWidgetJSON extends WidgetJSON {
+	hidden: boolean; // is hidden
+	command: string; // command to trigger options for a panel
+	text: string; // panel title
+}
+
+type ExpanderWidgetJSON = any;
+
 interface TextWidget extends WidgetJSON {
 	text: string;
 }
