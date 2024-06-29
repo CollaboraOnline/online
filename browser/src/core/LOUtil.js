@@ -228,6 +228,10 @@ L.LOUtil = {
 	commandWithoutIcon: [
 		'InsertPageHeader',
 		'InsertPageFooter',
+		'FLD_COL_NUMBER',
+		'MTR_FLD_COL_SPACING',
+		'rows',
+		'cols',
 		'None'
 	],
 

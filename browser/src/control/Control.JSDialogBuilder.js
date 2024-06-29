@@ -2121,6 +2121,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			'fieldtransparency': 'linetransparency',
 			'lb_glow_transparency': 'linetransparency',
 			'settransparency': 'linetransparency',
+			'field_transparency': 'linetransparency',
 			'selectionlanugagedefault': 'updateall',
 			'connectortoolbox': 'connectorlines',
 			'conditionalformatdialog': 'conditionalformatmenu',
@@ -2277,6 +2278,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			'togglesheetgrid': 'show',
 			'hamburger-tablet': 'fold',
 			'exportdirectpdf': 'exportpdf',
+			'textcolumnspropertypanel':'entirecolumn',
 		};
 		if (iconURLAliases[cleanName]) {
 			cleanName = iconURLAliases[cleanName];
