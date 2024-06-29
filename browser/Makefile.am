@@ -375,6 +375,7 @@ COOL_JS_LST =\
 	src/control/jsdialog/Widget.MultilineEdit.js \
 	src/control/jsdialog/Widget.Progressbar.js \
 	src/control/jsdialog/Widget.ScrolledWindow.js \
+	src/control/jsdialog/Widget.SidebarContainers.ts \
 	src/control/jsdialog/Widget.Timefield.js \
 	src/control/jsdialog/Widget.TreeView.js \
 	src/control/Control.JSDialog.js \
@@ -847,6 +848,7 @@ pot:
 		src/control/jsdialog/Widget.MultilineEdit.js \
 		src/control/jsdialog/Widget.Progressbar.js \
 		src/control/jsdialog/Widget.ScrolledWindow.js \
+		src/control/jsdialog/Widget.SidebarContainers.ts \
 		src/control/jsdialog/Widget.Timefield.js \
 		src/control/jsdialog/Widget.TreeView.js \
 		src/core/Socket.js \

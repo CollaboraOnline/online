@@ -111,8 +111,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['alignment'] = this._alignmentHandler;
 		this._controlHandlers['buttonbox'] = JSDialog.buttonBox;
 		this._controlHandlers['frame'] = JSDialog.frame;
-		this._controlHandlers['deck'] = this._deckHandler;
-		this._controlHandlers['panel'] = this._panelHandler;
+		this._controlHandlers['deck'] = JSDialog.deck;
+		this._controlHandlers['panel'] = JSDialog.panel;
 		this._controlHandlers['calcfuncpanel'] = this._calcFuncListPanelHandler;
 		this._controlHandlers['tabcontrol'] = this._tabsControlHandler;
 		this._controlHandlers['tabpage'] = this._tabPageHandler;
@@ -832,40 +832,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		} else {
 			window.app.console.debug('Builder used outside of mobile wizard: please implement the click handler');
 		}
-	},
-
-	_deckHandler: function(parentContainer, data, builder) {
-		var deck = L.DomUtil.create('div', 'deck ' + builder.options.cssClass, parentContainer);
-		deck.id = data.id;
-
-		for (var i = 0; i < data.children.length; i++) {
-			builder.build(deck, [data.children[i]]);
-		}
-
-		return false;
-	},
-
-	_panelHandler: function(parentContainer, data, builder) {
-		// we want to show the contents always, hidden property decides if we collapse the panel
-		if (data.children && data.children.length)
-			data.children[0].visible = true;
-
-		data.type = 'expander';
-		data.children = [{text: data.text}].concat(data.children);
-		data.id = data.id + 'PanelExpander';
-		builder._expanderHandler(parentContainer, data, builder, function() {});
-
-		var expander = $(parentContainer).children('#' + data.id);
-		if (data.hidden === 'true' || data.hidden === true)
-			expander.hide();
-
-		if (data.command) {
-			var iconParent = expander.children('.ui-expander').get(0);
-			var icon = L.DomUtil.create('div', 'ui-expander-icon-right ' + builder.options.cssClass, iconParent);
-			builder._controlHandlers['toolitem'](icon, {type: 'toolitem', command: data.command, icon: builder._createIconURL('morebutton')}, builder);
-		}
-
-		return false;
 	},
 
 	_calcFuncListPanelHandler: function(parentContainer, data, builder) {
