@@ -21,6 +21,9 @@ interface WidgetJSON {
 	visible?: boolean; // visibility state
 	children: Array<WidgetJSON>; // child nodes
 	title?: string;
+	top?: string; // placement in the grid - row
+	left?: string; // placement in the grid - column
+	width?: string; // inside grid - width in number of columns
 }
 
 interface DialogResponse {
@@ -78,6 +81,11 @@ type MenuDefinition = {
 interface ContainerWidgetJSON extends WidgetJSON {
 	layoutstyle?: string | 'start' | 'end'; // describes alignment of the elements
 	vertical?: boolean; // is horizontal or vertical container
+}
+
+interface GridWidgetJSON extends ContainerWidgetJSON {
+	cols: number; // number of grid columns
+	rows: number; // numer of grid rows
 }
 
 interface TextWidget extends WidgetJSON {

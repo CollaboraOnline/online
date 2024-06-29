@@ -15,24 +15,27 @@
 
 declare var JSDialog: any;
 
-interface WidgetData {
-	id: string;
-	type: string;
-	enabled: boolean;
-	children: Array<WidgetData>;
-}
-
-interface GridData extends WidgetData {
-	cols: number;
-	rows: number;
+function _getGridChild(
+	children: Array<WidgetJSON>,
+	row: number,
+	col: number,
+): WidgetJSON {
+	for (var index in children) {
+		if (
+			parseInt(children[index].top) == row &&
+			parseInt(children[index].left) == col
+		)
+			return children[index];
+	}
+	return null;
 }
 
 JSDialog.container = function (
 	parentContainer: Element,
-	data: WidgetData | GridData,
+	data: ContainerWidgetJSON | GridWidgetJSON,
 	builder: any,
 ) {
-	if ((data as GridData).cols && (data as GridData).rows)
+	if ((data as GridWidgetJSON).cols && (data as GridWidgetJSON).rows)
 		return JSDialog.grid(parentContainer, data, builder);
 
 	if (parentContainer && !parentContainer.id) parentContainer.id = data.id;
@@ -42,7 +45,7 @@ JSDialog.container = function (
 
 JSDialog.grid = function (
 	parentContainer: Element,
-	data: GridData,
+	data: GridWidgetJSON,
 	builder: any,
 ) {
 	const rows = builder._getGridRows(data.children);
@@ -71,7 +74,7 @@ JSDialog.grid = function (
 		let prevChild = null;
 
 		for (let col = 0; col < cols; col++) {
-			const child = builder._getGridChild(data.children, row, col);
+			const child = _getGridChild(data.children, row, col);
 			const isMergedCell =
 				prevChild &&
 				prevChild.width &&
@@ -119,7 +122,7 @@ JSDialog.grid = function (
 
 JSDialog.toolbox = function (
 	parentContainer: Element,
-	data: WidgetData,
+	data: WidgetJSON,
 	builder: any,
 ) {
 	const levelClass =
@@ -168,7 +171,7 @@ JSDialog.toolbox = function (
 
 JSDialog.spacer = function (
 	parentContainer: Element,
-	data: WidgetData,
+	data: WidgetJSON,
 	builder: any,
 ) {
 	const spacer = L.DomUtil.create(
