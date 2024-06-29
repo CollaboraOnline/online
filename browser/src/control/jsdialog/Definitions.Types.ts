@@ -88,6 +88,10 @@ interface GridWidgetJSON extends ContainerWidgetJSON {
 	rows: number; // numer of grid rows
 }
 
+interface ButtonBoxWidgetJSON extends ContainerWidgetJSON {
+	leftaligned?: boolean | string; // deprecated?: align items to the left
+}
+
 interface TextWidget extends WidgetJSON {
 	text: string;
 }

@@ -109,7 +109,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['expander'] = this._expanderHandler;
 		this._controlHandlers['grid'] = JSDialog.grid;
 		this._controlHandlers['alignment'] = this._alignmentHandler;
-		this._controlHandlers['buttonbox'] = this._buttonBox;
+		this._controlHandlers['buttonbox'] = JSDialog.buttonBox;
 		this._controlHandlers['frame'] = JSDialog.frame;
 		this._controlHandlers['deck'] = this._deckHandler;
 		this._controlHandlers['panel'] = this._panelHandler;
@@ -559,55 +559,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				rows = parseInt(children[index].top);
 		}
 		return rows + 1;
-	},
-
-	_buttonBox: function(parentContainer, data, builder) {
-		var container = L.DomUtil.create('div', builder.options.cssClass + ' ui-button-box '
-												+ (data.layoutstyle ? data.layoutstyle : ''), parentContainer);
-		container.id = data.id;
-
-		var isButtonBoxLeft = data.leftaligned === 'true';
-		var leftAlignButtons = [];
-		var rightAlignButton = [];
-
-		for (var i in data.children) {
-			var child = data.children[i];
-			if (child.id === 'help' || isButtonBoxLeft === true)
-				leftAlignButtons.push(child);
-			else
-				rightAlignButton.push(child);
-		}
-
-		var left = L.DomUtil.create('div', builder.options.cssClass + ' ui-button-box-left', container);
-
-		for (i in leftAlignButtons) {
-			child = leftAlignButtons[i];
-			if (builder._controlHandlers[child.type]) {
-				builder._controlHandlers[child.type](left, child, builder);
-				builder.postProcess(left, child);
-			}
-		}
-
-		var right = L.DomUtil.create('div', builder.options.cssClass + ' ui-button-box-right', container);
-		if (data.layoutstyle && data.layoutstyle === 'end')
-			L.DomUtil.addClass(container, 'end');
-
-		for (i in rightAlignButton) {
-			child = rightAlignButton[i];
-			if (builder._controlHandlers[child.type]) {
-				builder._controlHandlers[child.type](right, child, builder);
-				builder.postProcess(right, child);
-			}
-		}
-
-		if (data.vertical === 'true' || data.vertical === true) {
-			left.style.display = 'grid';
-			left.style.margin = 'auto';
-			right.style.display = 'grid';
-			right.style.margin = 'auto';
-		}
-
-		return false;
 	},
 
 	_explorableEntry: function(parentContainer, data, content, builder, valueNode, iconURL, updateCallback) {

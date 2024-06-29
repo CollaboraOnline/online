@@ -359,6 +359,7 @@ COOL_JS_LST =\
 	src/control/jsdialog/Util.ScrollableBar.ts \
 	src/control/jsdialog/Util.SnackbarController.ts \
 	src/control/jsdialog/Util.StateChange.ts \
+	src/control/jsdialog/Widget.ButtonBox.ts \
 	src/control/jsdialog/Widget.Calendar.js \
 	src/control/jsdialog/Widget.ColorPicker.ts \
 	src/control/jsdialog/Widget.Combobox.js \
@@ -830,6 +831,7 @@ pot:
 		src/control/jsdialog/Util.ScrollableBar.ts \
 		src/control/jsdialog/Util.SnackbarController.ts \
 		src/control/jsdialog/Util.StateChange.ts \
+		src/control/jsdialog/Widget.ButtonBox.ts \
 		src/control/jsdialog/Widget.Calendar.js \
 		src/control/jsdialog/Widget.ColorPicker.ts \
 		src/control/jsdialog/Widget.Combobox.js \
