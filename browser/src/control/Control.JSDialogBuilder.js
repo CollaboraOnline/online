@@ -561,15 +561,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		return rows + 1;
 	},
 
-	_getGridChild: function(children, row, col) {
-		for (var index in children) {
-			if (parseInt(children[index].top) == row
-				&& parseInt(children[index].left) == col)
-				return children[index];
-		}
-		return null;
-	},
-
 	_buttonBox: function(parentContainer, data, builder) {
 		var container = L.DomUtil.create('div', builder.options.cssClass + ' ui-button-box '
 												+ (data.layoutstyle ? data.layoutstyle : ''), parentContainer);
