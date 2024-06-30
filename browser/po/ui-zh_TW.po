@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-06-28 11:57+0200\n"
-"PO-Revision-Date: 2024-06-23 15:09+0000\n"
+"PO-Revision-Date: 2024-06-30 06:51+0000\n"
 "Last-Translator: TY Wong <wongty@peoplewarehk.com>\n"
 "Language-Team: Chinese (Traditional) <https://hosted.weblate.org/projects/"
 "collabora-online/ui/zh_Hant/>\n"
-"Language: \n"
+"Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.6-rc\n"
+"X-Generator: Weblate 5.7-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -411,7 +411,6 @@ msgid "\"Slow Proxy\""
 msgstr "「緩慢代理」"
 
 #: src/control/Control.AboutDialog.ts:136
-#, fuzzy
 msgid "Copy all version information in English"
 msgstr "用英文將所有版本資訊複製"
 
@@ -424,11 +423,11 @@ msgid "Open link"
 msgstr "開啟連結"
 
 #: src/control/Control.AlertDialog.js:66
+#, fuzzy
 msgid "Copied external sources are not allowed"
-msgstr ""
+msgstr "不允許複製外部來源"
 
 #: src/control/Control.AlertDialog.js:67
-#, fuzzy
 msgid "It seems you have copied a selection that includes external images."
 msgstr "您似乎複製了包含外部圖像的選擇。"
 
@@ -445,13 +444,13 @@ msgstr "不允許外部資料來源"
 
 #: src/control/Control.AlertDialog.js:73
 msgid "It seems you have tried to insert external data."
-msgstr ""
+msgstr "您似乎正在嘗試插入外部資料。"
 
 #: src/control/Control.AlertDialog.js:74
 msgid ""
 "Selected external data source is forbidden. Please contact the system "
 "administrator."
-msgstr ""
+msgstr "已選擇外部資料來源禁止。請聯絡系統管理員。"
 
 #: src/control/Control.AlertDialog.js:86
 msgid "Don't show this again"
@@ -475,15 +474,15 @@ msgstr "選擇性貼上"
 
 #: src/control/Control.ContextMenu.js:240
 msgid "Copy Cells"
-msgstr ""
+msgstr "複製儲存格"
 
 #: src/control/Control.ContextMenu.js:248
 msgid "Fill Series"
-msgstr ""
+msgstr "填入系列"
 
 #: src/control/Control.DocumentNameInput.js:113
 msgid "Path"
-msgstr ""
+msgstr "路徑"
 
 #: src/control/Control.DocumentRepair.js:27
 #: src/control/Control.DocumentRepair.js:28
@@ -531,14 +530,14 @@ msgstr "下載精選"
 msgid ""
 "If you want to share large elements outside of {productname} it's necessary "
 "to first download them."
-msgstr ""
+msgstr "如果您想在 {productname} 之外共用大型元素，則必須先下載它們。"
 
 #: src/control/Control.DownloadProgress.js:60
 #: src/control/Control.NotebookbarCalc.js:212
 #: src/control/Control.NotebookbarImpress.js:280
 #: src/control/Control.NotebookbarWriter.js:252
 msgid "Download"
-msgstr ""
+msgstr "下載"
 
 #: src/control/Control.DownloadProgress.js:79
 msgid "Downloading clipboard content"
@@ -591,7 +590,6 @@ msgid "Idle document - please click to reload and resume editing"
 msgstr "閒置文件 - 請點按以重新載入並繼續編輯"
 
 #: src/control/Control.IdleHandler.ts:42
-#, fuzzy
 msgid "Idle document - please tap to reload and resume editing"
 msgstr "閒置文件 - 請點按以重新載入並繼續編輯"
 
@@ -658,13 +656,12 @@ msgid "Style"
 msgstr "樣式"
 
 #: src/control/Control.JSDialogBuilder.js:2000
-#, fuzzy
 msgid "reply"
 msgstr "回覆"
 
 #: src/control/Control.JSDialogBuilder.js:2003
 msgid "replies"
-msgstr ""
+msgstr "所有回覆"
 
 #: src/control/Control.JSDialogBuilder.js:2014
 #: src/layer/tile/CanvasTileLayer.js:4273
@@ -688,7 +685,6 @@ msgid "Columns"
 msgstr "欄"
 
 #: src/control/Control.JSDialogBuilder.js:2953
-#, fuzzy
 msgid "Insert Table"
 msgstr "插入表格"
 
@@ -773,9 +769,8 @@ msgid "EPUB (.epub)"
 msgstr "EPUB 電子書(.epub)"
 
 #: src/control/Control.Menubar.js:85 src/control/Control.UIManager.js:151
-#, fuzzy
 msgid "Rename Document"
-msgstr "修復文件"
+msgstr "重新命名"
 
 #: src/control/Control.Menubar.js:86 src/control/Control.Menubar.js:402
 #: src/control/Control.Menubar.js:559 src/control/Control.Menubar.js:693
@@ -852,7 +847,7 @@ msgstr "重設遠近"
 #: src/control/Control.NotebookbarImpress.js:407
 #: src/control/Control.NotebookbarWriter.js:1425
 msgid "Toggle UI Mode"
-msgstr ""
+msgstr "切換 UI 模式"
 
 #: src/control/Control.Menubar.js:142 src/control/Control.Menubar.js:444
 #: src/control/Control.NotebookbarDraw.js:404
@@ -872,12 +867,12 @@ msgstr "顯示尺規"
 #: src/control/Control.NotebookbarWriter.js:847
 #: src/control/Control.NotebookbarWriter.js:1452
 msgid "Show Status Bar"
-msgstr ""
+msgstr "顯示狀態欄"
 
 #: src/control/Control.Menubar.js:144 src/control/Control.Menubar.js:446
 #: src/control/Control.Menubar.js:601 src/control/Control.Menubar.js:736
 msgid "Hide Menu Bar"
-msgstr ""
+msgstr "隱藏選項欄"
 
 #: src/control/Control.Menubar.js:145 src/control/Control.Menubar.js:447
 #: src/control/Control.Menubar.js:596 src/control/Control.Menubar.js:737
@@ -897,7 +892,7 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:485
 #: src/control/Control.NotebookbarWriter.js:1477
 msgid "Invert Background"
-msgstr ""
+msgstr "反轉背景"
 
 #: src/control/Control.Menubar.js:154 src/control/Control.Menubar.js:459
 #: src/control/Control.Menubar.js:604 src/control/Control.Menubar.js:750
