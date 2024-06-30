@@ -2383,9 +2383,9 @@ msgid "Someone"
 msgstr "Seseorang"
 
 #: src/core/Socket.js:1175
-msgid "{user}Name saved this document as {filename}. Do you want to join?"
+msgid "{username} saved this document as {filename}. Do you want to join?"
 msgstr ""
-"{user}Name menyimpan dokumen ini sebagai {filename}. Apakah Anda ingin "
+"{username} menyimpan dokumen ini sebagai {filename}. Apakah Anda ingin "
 "bergabung?"
 
 #: src/core/Socket.js:1192

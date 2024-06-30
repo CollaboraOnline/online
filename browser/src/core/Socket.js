@@ -1172,7 +1172,7 @@ app.definitions.Socket = L.Class.extend({
 			textMsg = textMsg.substring(len);
 			if (textMsg.startsWith('saveas:')) {
 				var userName = command.username ? command.username : _('Someone');
-				var message = _('{user}Name saved this document as {filename}. Do you want to join?').replace('{user}Name', userName).replace('{filename}', command.filename);
+				var message = _('{username} saved this document as {filename}. Do you want to join?').replace('{username}', userName).replace('{filename}', command.filename);
 
 				this._map.uiManager.showConfirmModal('save-as-warning', '', message, _('OK'), function() {
 					this._renameOrSaveAsCallback(textMsg, command);

@@ -2381,9 +2381,9 @@ msgid "Someone"
 msgstr "Někdo"
 
 #: src/core/Socket.js:1175
-msgid "{user}Name saved this document as {filename}. Do you want to join?"
+msgid "{username} saved this document as {filename}. Do you want to join?"
 msgstr ""
-"Tento dokument byl uložen uživatelem {user}Name jako {filename}. Chcete se "
+"Tento dokument byl uložen uživatelem {username} jako {filename}. Chcete se "
 "přidat?"
 
 #: src/core/Socket.js:1192

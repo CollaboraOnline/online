@@ -2366,9 +2366,9 @@ msgid "Someone"
 msgstr "Ai đó"
 
 #: src/core/Socket.js:1175
-msgid "{user}Name saved this document as {filename}. Do you want to join?"
+msgid "{username} saved this document as {filename}. Do you want to join?"
 msgstr ""
-"{user}Name đã lưu tài liệu này dưới dạng {filename}. Bạn có muốn tham gia "
+"{username} đã lưu tài liệu này dưới dạng {filename}. Bạn có muốn tham gia "
 "không?"
 
 #: src/core/Socket.js:1192

@@ -2381,9 +2381,9 @@ msgid "Someone"
 msgstr "Valaki"
 
 #: src/core/Socket.js:1175
-msgid "{user}Name saved this document as {filename}. Do you want to join?"
+msgid "{username} saved this document as {filename}. Do you want to join?"
 msgstr ""
-"{user}Name a következő néven mentette ezt a dokumentumot: {filename}. "
+"{username} a következő néven mentette ezt a dokumentumot: {filename}. "
 "Csatlakozik?"
 
 #: src/core/Socket.js:1192
