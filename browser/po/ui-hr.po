@@ -2380,9 +2380,9 @@ msgid "Someone"
 msgstr "Netko"
 
 #: src/core/Socket.js:1175
-msgid "{user}Name saved this document as {filename}. Do you want to join?"
+msgid "{username} saved this document as {filename}. Do you want to join?"
 msgstr ""
-"{user}Name je spremio/la ovaj dokument kao {filename}. Želiš li se "
+"{username} je spremio/la ovaj dokument kao {filename}. Želiš li se "
 "pridružiti?"
 
 #: src/core/Socket.js:1192

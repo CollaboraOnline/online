@@ -2390,7 +2390,7 @@ msgid "Someone"
 msgstr ""
 
 #: src/core/Socket.js:1175
-msgid "{user}Name saved this document as {filename}. Do you want to join?"
+msgid "{username} saved this document as {filename}. Do you want to join?"
 msgstr ""
 
 #: src/core/Socket.js:1192

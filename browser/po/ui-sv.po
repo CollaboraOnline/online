@@ -2374,8 +2374,8 @@ msgid "Someone"
 msgstr "Någon"
 
 #: src/core/Socket.js:1175
-msgid "{user}Name saved this document as {filename}. Do you want to join?"
-msgstr "{user}Name sparade detta dokument som {filename}. Vill du vara med?"
+msgid "{username} saved this document as {filename}. Do you want to join?"
+msgstr "{username} sparade detta dokument som {filename}. Vill du vara med?"
 
 #: src/core/Socket.js:1192
 msgid "The document is being renamed and will reload shortly"
