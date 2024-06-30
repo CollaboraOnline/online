@@ -12,8 +12,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-06-28 11:57+0200\n"
-"PO-Revision-Date: 2024-06-28 19:51+0000\n"
-"Last-Translator: Lily Logua <lily.logua@gmail.com>\n"
+"PO-Revision-Date: 2024-06-30 13:16+0000\n"
+"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "ui/de/>\n"
 "Language: de\n"
@@ -1198,15 +1198,14 @@ msgstr "Werte duplizieren..."
 
 #: src/control/Control.Menubar.js:841
 #: src/control/jsdialog/Definitions.Menu.ts:309
-#, fuzzy
 msgid "Containing text..."
-msgstr "Enthält Text ..."
+msgstr "Enthält Text..."
 
 #: src/control/Control.Menubar.js:843 src/control/Control.Menubar.js:853
 #: src/control/jsdialog/Definitions.Menu.ts:313
 #: src/control/jsdialog/Definitions.Menu.ts:344
 msgid "More highlights..."
-msgstr "Weitere Highlights.."
+msgstr "Weitere Highlights..."
 
 #: src/control/Control.Menubar.js:845
 #: src/control/jsdialog/Definitions.Menu.ts:317
@@ -1216,12 +1215,12 @@ msgstr "Regeln oben/unten..."
 #: src/control/Control.Menubar.js:846
 #: src/control/jsdialog/Definitions.Menu.ts:320
 msgid "Top N elements..."
-msgstr "Top N elements..."
+msgstr "Obere N-Elemente..."
 
 #: src/control/Control.Menubar.js:847
 #: src/control/jsdialog/Definitions.Menu.ts:324
 msgid "Top N percent..."
-msgstr "Obere n-Prozent ..."
+msgstr "Obere N-Prozent..."
 
 #: src/control/Control.Menubar.js:848
 #: src/control/jsdialog/Definitions.Menu.ts:328
@@ -1231,17 +1230,17 @@ msgstr "Untere N-Elemente..."
 #: src/control/Control.Menubar.js:849
 #: src/control/jsdialog/Definitions.Menu.ts:332
 msgid "Bottom N percent..."
-msgstr "Untere N-Prozent."
+msgstr "Untere N-Prozent..."
 
 #: src/control/Control.Menubar.js:850
 #: src/control/jsdialog/Definitions.Menu.ts:336
 msgid "Above Average..."
-msgstr "Überdurchschnittlich ..."
+msgstr "Überdurchschnittlich..."
 
 #: src/control/Control.Menubar.js:851
 #: src/control/jsdialog/Definitions.Menu.ts:340
 msgid "Below Average..."
-msgstr "Unterdurchschnittlich ..."
+msgstr "Unterdurchschnittlich..."
 
 #: src/control/Control.Menubar.js:963 src/control/Control.Menubar.js:1028
 #: src/control/Control.Menubar.js:1092 src/control/Control.Menubar.js:1146
@@ -1275,7 +1274,7 @@ msgstr "Auf Standardsprache zurücksetzen"
 #: src/control/Control.Menubar.js:1469 src/control/Control.Toolbar.js:132
 #: src/control/Control.Toolbar.js:179
 msgid "More..."
-msgstr "Mehr …"
+msgstr "Mehr…"
 
 #: src/control/Control.Menubar.js:1752
 msgid "Use Compact view"
@@ -2921,9 +2920,9 @@ msgid ""
 "see more options</p><p>Close popup to ignore paste special</p>"
 msgstr ""
 "<p>Ihr Browser hat nur relativ eingeschränkten Zugriff auf die "
-"Zwischenablage</p><p>Bitte drücken Sie jetzt: <kbd>Strg</kbd><span class="
-"\"kbd--plus\">+</span><kbd>V</kbd>, um weitere Optionen zu sehen</p><p>Popup "
-"schließen, um Einfüge-Spezial zu ignorieren</p>"
+"Zwischenablage</p><p><b>Bitte drücken Sie jetzt: </b><kbd>Strg</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>V</kbd>, um weitere Optionen zu sehen</"
+"p><p>Popup schließen, um Einfüge-Spezial zu ignorieren</p>"
 
 #: src/map/Clipboard.js:1224
 msgid "Paste from this document"
