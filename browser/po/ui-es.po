@@ -7,16 +7,16 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-06-28 11:57+0200\n"
-"PO-Revision-Date: 2024-06-14 16:47+0000\n"
-"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
+"PO-Revision-Date: 2024-06-30 06:51+0000\n"
+"Last-Translator: gallegonovato <fran-carro@hotmail.es>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/es/>\n"
-"Language: \n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.6-dev\n"
+"X-Generator: Weblate 5.7-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -1158,44 +1158,43 @@ msgstr "Todas las hojas"
 #: src/control/Control.Menubar.js:835
 #: src/control/jsdialog/Definitions.Menu.ts:286
 msgid "Highlight cells with..."
-msgstr ""
+msgstr "Resaltar celdas con..."
 
 #: src/control/Control.Menubar.js:836
 #: src/control/jsdialog/Definitions.Menu.ts:289
 msgid "Values greater than..."
-msgstr ""
+msgstr "Valores mayores que..."
 
 #: src/control/Control.Menubar.js:837
 #: src/control/jsdialog/Definitions.Menu.ts:293
 msgid "Values less than..."
-msgstr ""
+msgstr "Valores menores a..."
 
 #: src/control/Control.Menubar.js:838
 #: src/control/jsdialog/Definitions.Menu.ts:297
 msgid "Values equal to..."
-msgstr ""
+msgstr "Valores iguales a..."
 
 #: src/control/Control.Menubar.js:839
 #: src/control/jsdialog/Definitions.Menu.ts:301
 msgid "Values between..."
-msgstr ""
+msgstr "Valores entre..."
 
 #: src/control/Control.Menubar.js:840
 #: src/control/jsdialog/Definitions.Menu.ts:305
 msgid "Values duplicate..."
-msgstr ""
+msgstr "Valores duplicados..."
 
 #: src/control/Control.Menubar.js:841
 #: src/control/jsdialog/Definitions.Menu.ts:309
-#, fuzzy
 msgid "Containing text..."
-msgstr "Contiene el texto…"
+msgstr "Contiene texto…"
 
 #: src/control/Control.Menubar.js:843 src/control/Control.Menubar.js:853
 #: src/control/jsdialog/Definitions.Menu.ts:313
 #: src/control/jsdialog/Definitions.Menu.ts:344
 msgid "More highlights..."
-msgstr ""
+msgstr "Más aspectos destacados..."
 
 #: src/control/Control.Menubar.js:845
 #: src/control/jsdialog/Definitions.Menu.ts:317
@@ -1606,11 +1605,11 @@ msgstr "Presente en la ventana"
 
 #: src/control/Control.NotebookbarImpress.js:455
 msgid "Normal View"
-msgstr ""
+msgstr "Vista normal"
 
 #: src/control/Control.NotebookbarImpress.js:461
 msgid "Notes View"
-msgstr ""
+msgstr "Vista de notas"
 
 #: src/control/Control.NotebookbarWriter.js:79
 msgid "Form"
