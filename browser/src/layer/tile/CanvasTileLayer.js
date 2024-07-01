@@ -705,9 +705,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		// Eg: 1: {rectangle: 'x, y, w, h', visible: false}
 		this._viewCursors = {};
 
-		// View cell cursors with viewId to 'cursor info' mapping.
-		this._cellViewCursors = {};
-
 		// View selection of other views
 		this._viewSelections = {};
 
@@ -2410,6 +2407,17 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._saveMessageForReplay(textMsg, viewId);
 	},
 
+	_convertRawTwipsToTileTwips: function(strTwips) {
+		if (!strTwips)
+			return null;
+
+		var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
+		var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
+		var bottomRightTwips = topLeftTwips.add(offset);
+		strTwips = this._convertToTileTwipsSheetArea(new L.Bounds(topLeftTwips, bottomRightTwips)).toRectangle();
+		return strTwips;
+	},
+
 	_onCellViewCursorMsg: function (textMsg) {
 		var obj = JSON.parse(textMsg.substring('cellviewcursor:'.length + 1));
 		var viewId = parseInt(obj.viewId);
@@ -2419,106 +2427,34 @@ L.CanvasTileLayer = L.Layer.extend({
 			return;
 		}
 
-		this._cellViewCursors[viewId] = this._cellViewCursors[viewId] || {};
-		if (!this._cellViewCursors[viewId].bounds) {
-			this._cellViewCursors[viewId].bounds = L.LatLngBounds.createDefault();
-			this._cellViewCursors[viewId].corePixelBounds = new L.Bounds();
-		}
-		if (obj.rectangle.match('EMPTY')) {
-			this._cellViewCursors[viewId].bounds = L.LatLngBounds.createDefault();
-			this._cellViewCursors[viewId].corePixelBounds = new L.Bounds();
-		}
+		if (obj.rectangle.match('EMPTY'))
+			app.definitions.otherViewCellCursorSection.removeView(viewId);
 		else {
-			var strTwips = obj.rectangle.match(/\d+/g);
-			var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
-			var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
-			var bottomRightTwips = topLeftTwips.add(offset);
-			var boundsTwips = this._convertToTileTwipsSheetArea(
-				new L.Bounds(topLeftTwips, bottomRightTwips));
-			this._cellViewCursors[viewId].bounds = new L.LatLngBounds(
-				this._twipsToLatLng(boundsTwips.getTopLeft(), this._map.getZoom()),
-				this._twipsToLatLng(boundsTwips.getBottomRight(), this._map.getZoom()));
-			var corePixelBounds = this._twipsToCorePixelsBounds(boundsTwips);
-			corePixelBounds.round();
-			this._cellViewCursors[viewId].corePixelBounds = corePixelBounds;
-		}
+			let strTwips = obj.rectangle.match(/\d+/g);
+			strTwips = this._convertRawTwipsToTileTwips(strTwips);
 
-		this._cellViewCursors[viewId].part = parseInt(obj.part);
-		this._onUpdateCellViewCursor(viewId);
+			app.definitions.otherViewCellCursorSection.addOrUpdateOtherViewCellCursor(viewId, strTwips, parseInt(obj.part));
+		}
 
 		if (this.isCalc()) {
 			this._saveMessageForReplay(textMsg, viewId);
 		}
 	},
 
-	_onUpdateCellViewCursor: function (viewId) {
-		if (!this._cellViewCursors[viewId] || !this._cellViewCursors[viewId].bounds)
-			return;
-
-		var cellViewCursorMarker = this._cellViewCursors[viewId].marker;
-		var viewPart = this._cellViewCursors[viewId].part;
-		var viewMode = this._cellViewCursors[viewId].mode ? this._cellViewCursors[viewId].mode : 0;
-
-		if (!this._isEmptyRectangle(this._cellViewCursors[viewId].bounds)
-			&& this._selectedPart === viewPart && this._selectedMode === viewMode
-			&& this._map.hasInfoForView(viewId)) {
-			if (!cellViewCursorMarker) {
-				var backgroundColor = L.LOUtil.rgbToHex(this._map.getViewColor(viewId));
-				cellViewCursorMarker = new CCellCursor(this._cellViewCursors[viewId].corePixelBounds, {
-					name: 'cell-view-cursor-' + viewId,
-					viewId: viewId,
-					fill: false,
-					color: backgroundColor,
-					weight: 2 * app.dpiScale,
-					toCompatUnits: function (corePx) {
-						return this._map.unproject(L.point(corePx)
-							.divideBy(app.dpiScale));
-					}.bind(this)
-				});
-				this._cellViewCursors[viewId].marker = cellViewCursorMarker;
-				cellViewCursorMarker.bindPopup(this._map.getViewName(viewId), {autoClose: false, autoPan: false, backgroundColor: backgroundColor, color: 'white', closeButton: false});
-				this._canvasOverlay.initPathGroup(cellViewCursorMarker);
-			}
-			else {
-				cellViewCursorMarker.setBounds(this._cellViewCursors[viewId].corePixelBounds);
-			}
-		}
-		else if (cellViewCursorMarker) {
-			this._canvasOverlay.removePathGroup(cellViewCursorMarker);
-			this._cellViewCursors[viewId].marker = undefined;
-		}
-	},
-
 	goToCellViewCursor: function(viewId) {
-		if (this._cellViewCursors[viewId] && !this._isEmptyRectangle(this._cellViewCursors[viewId].bounds)) {
-			if (this._selectedPart !== this._cellViewCursors[viewId].part)
-				this._map.setPart(this._cellViewCursors[viewId].part);
+		if (app.definitions.otherViewCellCursorSection.doesViewCursorExist(viewId)) {
+			const viewCursorSection = app.definitions.otherViewCellCursorSection.getViewCursorSection(viewId);
 
-			if (!this._map.getBounds().contains(this._cellViewCursors[viewId].bounds)) {
-				var mapBounds = this._map.getBounds();
-				var scrollX = 0;
-				var scrollY = 0;
-				var spacingX = Math.abs(this._cellViewCursors[viewId].bounds.getEast() - this._cellViewCursors[viewId].bounds.getWest()) / 4.0;
-				var spacingY = Math.abs(this._cellViewCursors[viewId].bounds.getSouth() - this._cellViewCursors[viewId].bounds.getNorth()) / 4.0;
-				if (this._cellViewCursors[viewId].bounds.getWest() < mapBounds.getWest()) {
-					scrollX = this._cellViewCursors[viewId].bounds.getWest() - mapBounds.getWest() - spacingX;
-				} else if (this._cellViewCursors[viewId].bounds.getEast() > mapBounds.getEast()) {
-					scrollX = this._cellViewCursors[viewId].bounds.getEast() - mapBounds.getEast() + spacingX;
-				}
+			if (this._selectedPart !== viewCursorSection.sectionProperties.part)
+				this._map.setPart(viewCursorSection.sectionProperties.part);
 
-				if (this._cellViewCursors[viewId].bounds.getNorth() > mapBounds.getNorth()) {
-					scrollY = this._cellViewCursors[viewId].bounds.getNorth() - mapBounds.getNorth() + spacingY;
-				} else if (this._cellViewCursors[viewId].bounds.getSouth() < mapBounds.getSouth()) {
-					scrollY = this._cellViewCursors[viewId].bounds.getSouth() - mapBounds.getSouth() - spacingY;
-				}
-
-				if (scrollX !== 0 || scrollY !== 0) {
-					var newCenter = mapBounds.getCenter();
-					newCenter.lng += scrollX;
-					newCenter.lat += scrollY;
-					this.scrollToPos(newCenter);
-				}
+			if (!viewCursorSection.isVisible) {
+				const scrollX = viewCursorSection.position[0] - app.file.viewedRectangle.pWidth * 0;
+				const scrollY = viewCursorSection.position[1] - app.file.viewedRectangle.pHeight * 0;
+				this.scrollToPos(new app.definitions.simplePoint(scrollX * app.pixelsToTwips, scrollY * app.pixelsToTwips));
 			}
+
+			return;
 
 			var backgroundColor = L.LOUtil.rgbToHex(this._map.getViewColor(viewId));
 			var marker = this._cellViewCursors[viewId].marker;
@@ -2576,14 +2512,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			delete this._viewCursors[viewId];
 		}
 
-		//  update cellviewcursor in calc
-		if (typeof this._cellViewCursors[viewId] !== 'undefined') {
-			this._cellViewCursors[viewId].bounds = L.LatLngBounds.createDefault();
-			this._cellViewCursors[viewId].corePixelBounds = new L.Bounds();
-			this._onUpdateCellViewCursor(viewId);
-			delete this._cellViewCursors[viewId];
-		}
-
+		app.definitions.otherViewCellCursorSection.removeView(viewId);
 		app.definitions.otherViewGraphicSelectionSection.removeView(viewId);
 		this._map.removeView(viewId);
 	},
@@ -4284,7 +4213,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_replayPrintTwipsMsgAllViews: function (msgType) {
-		Object.keys(this._cellViewCursors).forEach(function (viewId) {
+		Object.keys(this._map._viewInfo).forEach(function (viewId) {
 			var msg = this._printTwipsMessagesForReplay.get(msgType, parseInt(viewId));
 			if (msg)
 				this._onMessage(msg);
