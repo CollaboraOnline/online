@@ -4,6 +4,7 @@
  */
 
 /* global _ sanitizeUrl */
+
 L.Map.mergeOptions({
 	slideShow: true
 });

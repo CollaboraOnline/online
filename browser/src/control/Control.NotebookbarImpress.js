@@ -349,7 +349,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 					'id': 'view-presentation-in-window',
 					'type': 'bigcustomtoolitem',
 					'text': _('Present in Window'),
-					'command': 'presentinwindow',
+					'command': 'start-slide-show-command',
 					'accessibility': { focusBack: true, combination: 'PW', de: null }
 				} : {},
 			{
