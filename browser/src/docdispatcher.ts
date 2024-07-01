@@ -361,7 +361,8 @@ class Dispatcher {
 			app.map.fire('fullscreen');
 		};
 		this.actionsMap['present-in-window'] = function () {
-			app.map.fire('presentinwindow');
+			if (app.map._debug.debugOn) app.map.fire('start-slide-show');
+			else app.map.fire('presentinwindow');
 		};
 		this.actionsMap['fullscreen-drawing'] = () => {
 			L.toggleFullScreen();
@@ -370,7 +371,8 @@ class Dispatcher {
 			app.map.fire('fullscreen');
 		};
 		this.actionsMap['presentinwindow'] = function () {
-			app.map.fire('presentinwindow');
+			if (app.map._debug.debugOn) app.map.fire('start-slide-show');
+			else app.map.fire('presentinwindow');
 		};
 
 		this.actionsMap['deletepage'] = function () {

@@ -1641,7 +1641,10 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._map.fire('adminuser');
 		} else if (textMsg.startsWith('presentationinfo:')) {
 			window.app.console.log('_onMessage: ' + textMsg);
-			//content = JSON.parse(textMsg.substring('presentationinfo:'.length + 1));
+			var content = JSON.parse(textMsg.substring('presentationinfo:'.length + 1));
+			if (this._map.slideShow2) {
+				this._map.slideShow2.initializeSlideShowInfo(content);
+			}
 		}
 	},
 
