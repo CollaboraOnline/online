@@ -160,6 +160,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._toolitemHandlers['.uno:FontColor'] = this._colorControl;
 		this._toolitemHandlers['.uno:CharBackColor'] = this._colorControl;
 		this._toolitemHandlers['.uno:BackgroundColor'] = this._colorControl;
+		this._toolitemHandlers['.uno:TableCellBackgroundColor'] = this._colorControl;
 		this._toolitemHandlers['.uno:FrameLineColor'] = this._colorControl;
 		this._toolitemHandlers['.uno:Color'] = this._colorControl;
 		this._toolitemHandlers['.uno:FillColor'] = this._colorControl;
@@ -2721,10 +2722,13 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				valueNode.addEventListener('click', applyFunction);
 
 				var updateFunction = function () {
-					if (app.colorLastSelection[data.command] !== undefined)
+					if (app.colorLastSelection[data.command] !== undefined) {
 						var selectedColor = app.colorLastSelection[data.command];
-					else
+					}
+					else {
 						selectedColor = builder._getCurrentColor(data, builder);
+						app.colorLastSelection[data.command] = selectedColor;
+					}
 
 					valueNode.style.backgroundColor =
 						selectedColor[0] !== '#' ? '#' + selectedColor : selectedColor;
