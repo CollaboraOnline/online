@@ -14,8 +14,10 @@
 #include "FileUtil.hpp"
 #include "JailUtil.hpp"
 
+#include <sys/mount.h>
 #include <sys/stat.h>
 #include <sys/types.h>
+#include <sysexits.h>
 #include <fcntl.h>
 #include <unistd.h>
 #ifdef __linux__
@@ -25,20 +27,112 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
+#include <fstream>
 #include <string>
 
 #include "Log.hpp"
 #include <SigUtil.hpp>
+
+extern int domount(int argc, const char* const* argv);
 
 namespace JailUtil
 {
 
 static const std::string CoolTestMountpoint = "cool_test_mount";
 
+static void setdeny()
+{
+    std::ofstream of("/proc/self/setgroups");
+    of << "deny";
+}
+
+static void mapuser(uid_t origuid, uid_t newuid, gid_t origgid, gid_t newgid)
+{
+    {
+        std::ofstream of("/proc/self/uid_map");
+        of << newuid << " " << origuid << " 1";
+    }
+
+    {
+        std::ofstream of("/proc/self/gid_map");
+        of << newgid << " " << origgid << " 1";
+    }
+}
+
+bool becomeMountingUser(uid_t uid, gid_t gid)
+{
+#ifdef __linux__
+    // Put this process into its own user and mount namespace.
+    if (unshare(CLONE_NEWNS | CLONE_NEWUSER) != 0)
+    {
+        // having multiple threads is a source of failure f.e.
+        fprintf(stderr, "becomeMountingUser, unshare failed %s\n", strerror(errno));
+        return false;
+    }
+
+    // Do not propagate any mounts from this new namespace to the system.
+    if (mount("none", "/", nullptr, MS_REC | MS_PRIVATE, nullptr) != 0)
+    {
+        fprintf(stderr, "becomeMountingUser, root mount failed %s\n", strerror(errno));
+        return false;
+    }
+
+    setdeny();
+
+    // Map this user as the root user of the new namespace
+    mapuser(uid, 0, gid, 0);
+
+    return true;
+#else
+    (void)uid;
+    (void)gid;
+    return false;
+#endif
+}
+
+bool restorePremountUser(uid_t uid, gid_t gid)
+{
+#ifdef __linux__
+    if (unshare(CLONE_NEWUSER) != 0)
+    {
+        // having multiple threads is a source of failure f.e.
+        fprintf(stderr, "restorePremountUser, unshare failed %s\n", strerror(errno));
+        return false;
+    }
+
+    // undo map of this user to root
+    mapuser(0, uid, 0, gid);
+
+    assert(geteuid() == uid);
+    assert(getegid() == gid);
+
+    return true;
+#else
+    (void)uid;
+    (void)gid;
+    return false;
+#endif
+}
+
 bool coolmount(const std::string& arg, std::string source, std::string target)
 {
     source = Util::trim(source, '/');
     target = Util::trim(target, '/');
+
+    if (isMountNamespacesEnabled())
+    {
+        const char *argv[4];
+        argv[0] = "notcoolmount";
+        int argc = 1;
+        if (!arg.empty())
+            argv[argc++] = arg.c_str();
+        if (!source.empty())
+            argv[argc++] = source.c_str();
+        if (!target.empty())
+            argv[argc++] = target.c_str();
+        return domount(argc, argv) == EX_OK;
+    }
+
     const std::string cmd = Poco::Path(Util::getApplicationPath(), "coolmount").toString() + ' '
                             + arg + ' ' + source + ' ' + target;
     LOG_TRC("Executing coolmount command: " << cmd);
@@ -342,6 +436,21 @@ bool isBindMountingEnabled()
     // Check if we have a valid envar set.
     return std::getenv(BIND_MOUNTING_ENVAR_NAME) != nullptr;
 }
+
+constexpr const char* NAMESPACE_MOUNTING_ENVAR_NAME = "COOL_NAMESPACE_MOUNT";
+
+void enableMountNamespaces()
+{
+    // Set the envar to enable.
+    setenv(NAMESPACE_MOUNTING_ENVAR_NAME, "1", 1);
+}
+
+bool isMountNamespacesEnabled()
+{
+    // Check if we have a valid envar set.
+    return std::getenv(NAMESPACE_MOUNTING_ENVAR_NAME) != nullptr;
+}
+
 
 namespace SysTemplate
 {

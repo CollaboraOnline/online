@@ -28,6 +28,14 @@ constexpr const char CHILDROOT_TMP_INCOMING_PATH[] = "/tmp/incoming";
 /// The LO installation directory with jail.
 constexpr const char LO_JAIL_SUBPATH[] = "lo";
 
+/// Try to put this process into its own user and mount namespace and
+/// set as root within that namespace to allow mounting
+/// There cannot be other threads running when calling these or it will
+/// fail.
+bool becomeMountingUser(uid_t uid, gid_t gid);
+/// We could switch back to normal user within the namespace too
+bool restorePremountUser(uid_t uid, gid_t gid);
+
 /// Bind mount a jail directory.
 bool bind(const std::string& source, const std::string& target);
 
@@ -60,6 +68,12 @@ void disableBindMounting();
 
 /// Returns true iff bind-mounting is enabled in this process.
 bool isBindMountingEnabled();
+
+/// Enable namespace-mounting in this process.
+void enableMountNamespaces();
+
+/// Returns true iff namespace-mounting is enabled in this process.
+bool isMountNamespacesEnabled();
 
 namespace SysTemplate
 {

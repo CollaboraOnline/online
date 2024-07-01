@@ -276,6 +276,7 @@ public:
     static std::string LOKitVersion;
     static bool EnableTraceEventLogging;
     static bool EnableAccessibility;
+    static bool EnableMountNamespaces;
     static FILE *TraceEventFile;
     static void writeTraceEventRecording(const char *data, std::size_t nbytes);
     static void writeTraceEventRecording(const std::string &recording);

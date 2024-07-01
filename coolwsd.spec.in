@@ -57,6 +57,7 @@ echo "account    required     pam_unix.so" >>  %{buildroot}/etc/pam.d/coolwsd
 /usr/bin/coolwsd-systemplate-setup
 /usr/bin/loolwsd-systemplate-setup
 /usr/bin/coolforkit
+/usr/bin/coolforkitns
 /usr/bin/coolconvert
 /usr/bin/coolconfig
 /usr/bin/loolconfig
