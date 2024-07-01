@@ -421,6 +421,8 @@ COOL_JS_LST =\
 	src/dom/PosAnimation.js \
 	src/map/anim/Map.PanAnimation.js \
 	src/dom/PosAnimation.Timer.js \
+	src/control/transition/Transition2d.ts \
+	src/control/transition/FadeTransition.ts \
 	src/control/Control.Scroll.Annotation.js \
 	src/main.js
 
