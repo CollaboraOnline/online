@@ -34,10 +34,16 @@ window.addEventListener('load', function () {
 	);
 });
 
+app.getViewRectangles = function () {
+	if (app.map._docLayer._splitPanesContext)
+		return app.map._docLayer._splitPanesContext.getViewRectangles();
+	else return [app.file.viewedRectangle.clone()];
+};
+
 // ToDo: _splitPanesContext should be an app variable.
 app.isPointVisibleInTheDisplayedArea = function (twipsArray) {
-	if (app.map._splitPanesContext) {
-		let rectangles = app.map._splitPanesContext.getViewRectangles();
+	if (app.map._docLayer._splitPanesContext) {
+		let rectangles = app.map._docLayer._splitPanesContext.getViewRectangles();
 		for (let i = 0; i < rectangles.length; i++) {
 			if (rectangles[i].containsPoint(twipsArray)) return true;
 		}
