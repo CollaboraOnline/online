@@ -251,12 +251,12 @@ static bool haveCapability(cap_value_t capability)
     return true;
 }
 
-static bool haveCorrectCapabilities()
+static bool haveCorrectCapabilities(bool useMountNamespaces)
 {
     bool result = true;
 
     // Do check them all, don't shortcut with &&
-    if (!haveCapability(CAP_SYS_CHROOT))
+    if (!useMountNamespaces && !haveCapability(CAP_SYS_CHROOT))
         result = false;
     if (!haveCapability(CAP_FOWNER))
         result = false;
@@ -266,7 +266,7 @@ static bool haveCorrectCapabilities()
     return result;
 }
 #else
-static bool haveCorrectCapabilities()
+static bool haveCorrectCapabilities(bool /*useMountNamespaces*/)
 {
     // chroot() can only be called by root
     return getuid() == 0;
@@ -621,6 +621,7 @@ int forkit_main(int argc, char** argv)
     }
     LogDisabledAreas = logDisabledAreas ? logDisabledAreas : "";
 
+    bool useMountNamespaces = false;
     std::string childRoot;
     std::string sysTemplate;
     std::string loTemplate;
@@ -709,6 +710,9 @@ int forkit_main(int argc, char** argv)
             NoSeccomp = true;
         }
 
+        else if (std::strstr(cmd, "--namespace") == cmd)
+            useMountNamespaces = true;
+
         else if (std::strstr(cmd, "--ui") == cmd)
         {
             eq = std::strchr(cmd, '=');
@@ -736,7 +740,7 @@ int forkit_main(int argc, char** argv)
     if (!std::getenv("LD_BIND_NOW")) // must be set by parent.
         LOG_INF("Note: LD_BIND_NOW is not set.");
 
-    if (!NoCapsForKit && !haveCorrectCapabilities())
+    if (!NoCapsForKit && !haveCorrectCapabilities(useMountNamespaces))
     {
         LOG_FTL("Capabilities are not set for the coolforkit program.");
         LOG_FTL("Please make sure that the current partition was *not* mounted with the 'nosuid' option.");

@@ -20,6 +20,7 @@ export ENABLE_DEBUG
 
 bin_PROGRAMS = \
 	coolforkit \
+	coolforkitns \
 	coolmount \
         coolstress \
 	coolconvert coolconfig
@@ -120,6 +121,7 @@ shared_sources = common/FileUtil.cpp \
                  common/Authorization.cpp \
                  common/CommandControl.cpp \
                  common/Simd.cpp \
+                 common/CoolMount.cpp \
                  kit/KitQueue.cpp \
                  net/DelaySocket.cpp \
                  net/HttpRequest.cpp \
@@ -209,6 +211,12 @@ coolforkit_SOURCES = $(coolforkit_sources) \
 
 coolforkit_LDADD = libsimd.a
 
+coolforkitns_SOURCES = $(coolforkit_sources) \
+                       $(shared_sources) \
+                       kit/forkit-main.cpp
+
+coolforkitns_LDADD = libsimd.a
+
 if ENABLE_DEBUG
 coolwsd_inproc_SOURCES = $(coolwsd_sources) \
                          $(shared_sources) \
@@ -273,7 +281,8 @@ clientnb_SOURCES = net/clientnb.cpp \
                    common/Util.cpp \
                    common/Util-desktop.cpp
 
-coolmount_SOURCES = tools/mount.cpp
+coolmount_SOURCES = tools/mount.cpp \
+                    common/CoolMount.cpp
 
 coolmap_SOURCES = tools/map.cpp
 
@@ -476,7 +485,7 @@ endif
 if ENABLE_LIBFUZZER
 CLEANUP_DEPS=
 else
-CLEANUP_DEPS=coolwsd coolmount coolforkit
+CLEANUP_DEPS=coolwsd coolmount coolforkit coolforkitns
 endif
 
 # Build coolwsd and coolmount first, so we can cleanup before updating
