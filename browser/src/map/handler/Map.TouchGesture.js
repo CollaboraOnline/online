@@ -613,6 +613,9 @@ L.Map.TouchGesture = L.Handler.extend({
 		if (this._map.uiManager.isUIBlocked())
 			return;
 
+		if (window.IgnorePanning)
+			return;
+
 		let velocityX = this._map._docLayer.isCalcRTL() ? -e.velocityX : e.velocityX;
 		let pointVelocity = new L.Point(velocityX, e.velocityY);
 		if (this._inSwipeAction) {
