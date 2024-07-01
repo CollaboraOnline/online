@@ -2433,7 +2433,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			let strTwips = obj.rectangle.match(/\d+/g);
 			strTwips = this._convertRawTwipsToTileTwips(strTwips);
 
-			app.definitions.otherViewCellCursorSection.addOrUpdateOtherViewCellCursor(viewId, strTwips, parseInt(obj.part));
+			app.definitions.otherViewCellCursorSection.addOrUpdateOtherViewCellCursor(viewId, this._map.getViewName(viewId), strTwips, parseInt(obj.part));
 		}
 
 		if (this.isCalc()) {
@@ -2454,12 +2454,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				this.scrollToPos(new app.definitions.simplePoint(scrollX * app.pixelsToTwips, scrollY * app.pixelsToTwips));
 			}
 
-			return;
-
-			var backgroundColor = L.LOUtil.rgbToHex(this._map.getViewColor(viewId));
-			var marker = this._cellViewCursors[viewId].marker;
-			if (marker)
-				marker.bindPopup(this._map.getViewName(viewId), {autoClose: false, autoPan: false, backgroundColor: backgroundColor, color: 'white', closeButton: false});
+			app.definitions.otherViewCellCursorSection.showPopUpForView(viewId);
 		}
 	},
 
