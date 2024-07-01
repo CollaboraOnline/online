@@ -1118,7 +1118,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			return new L.LatLng(0, 0);
 		}
 
-		let paneRectangles = this._splitPanesContext.getViewRectangles(); // SimpleRectangle array.
+		let paneRectangles = app.getViewRectangles(); // SimpleRectangle array.
 		let contained = false;
 		for (let i = 0; i < paneRectangles.length; i++) {
 			if (paneRectangles[i].containsRectangle(app.calc.cellCursorRectangle.toArray()))

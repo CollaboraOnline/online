@@ -4473,8 +4473,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		// The overlay-pane with split-panes is still based on svg renderer,
 		// and not available for VML or canvas yet.
 		if (this.isCalc() &&
-			this.options.sheetGeometryDataEnabled &&
-			L.Browser.svg) {
+			this.options.sheetGeometryDataEnabled) {
 			return true;
 		}
 
