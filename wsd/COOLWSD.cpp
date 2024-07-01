@@ -1451,7 +1451,7 @@ public:
         }
         catch (const Poco::NullPointerException&)
         {
-            LOG_INF("Overriding the remote font config URL failed because the remove_font_config entry does not exist");
+            LOG_INF("Overriding the remote font config URL failed because the remote_font_config entry does not exist");
         }
         catch (const std::exception& exc)
         {
