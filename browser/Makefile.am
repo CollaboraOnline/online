@@ -320,6 +320,7 @@ COOL_JS_LST =\
 	src/map/handler/Map.Mouse.js \
 	src/map/handler/Map.Print.js \
 	src/map/handler/Map.SlideShow.js \
+	src/map/handler/Map.SlideShowPresenter.js \
 	src/map/handler/Map.FileInserter.js \
 	src/map/handler/Map.StateChanges.js \
 	src/map/handler/Map.WOPI.js \
