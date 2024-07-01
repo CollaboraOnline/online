@@ -361,10 +361,10 @@ class Dispatcher {
 			app.map.fire('fullscreen');
 		};
 		this.actionsMap['present-in-window'] = function () {
-			if (app.map._debug.debugOn)
-				app.map.fire('start-slide-show');
-			else
-				app.map.fire('presentinwindow');
+		if (this._debug.debugOn)
+			this._map.fire('start-slide-show');
+		else
+			this._map.fire('presentinwindow');
 		};
 		this.actionsMap['fullscreen-drawing'] = () => {
 			L.toggleFullScreen();
