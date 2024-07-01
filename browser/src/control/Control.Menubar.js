@@ -1953,7 +1953,10 @@ L.Control.Menubar = L.Control.extend({
 		} else if (id === 'presentation-currentslide' && this._map.getDocType() === 'presentation') {
 			this._map.fire('fullscreen', {startSlideNumber: this._map.getCurrentPartNumber()});
 		} else if (id === 'present-in-window' && this._map.getDocType() === 'presentation') {
-			this._map.fire('presentinwindow');
+			if (this._map._debug.debugOn)
+				this._map.fire('start-slide-show');
+			else
+				this._map.fire('presentinwindow');
 		} else if (id === 'insertpage') {
 			this._map.insertPage();
 		} else if (id === 'insertshape') {
