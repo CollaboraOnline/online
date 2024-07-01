@@ -1785,16 +1785,14 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_onCalcFunctionUsageMsg: function (textMsg) {
-		this._map.fire('closeformulapopup');
+		this._map.fire('closepopup');
 		this._map.fire('sendformulausagetext', {data: textMsg});
 	},
 
 	_onCalcFunctionListMsg: function (textMsg) {
 		if (textMsg.startsWith('hidetip')) {
-            this._map.fire('closeformulapopup');
-            this._map.fire('closeformulausagepopup');
-		}
-		else {
+			this._map.fire('closepopup');
+		} else {
 			var funcData = JSON.parse(textMsg);
 
 			if (window.mode.isMobile()) {

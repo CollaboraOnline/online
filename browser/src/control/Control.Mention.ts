@@ -83,14 +83,6 @@ class Mention extends L.Control.AutoCompletePopup {
 		return entries;
 	}
 
-	closeMentionPopup(ev: CloseMessageEvent) {
-		super.closePopup();
-		if (!ev.typingMention) {
-			this.map._docLayer._typingMention = false;
-			this.map._docLayer._mentionText = [];
-		}
-	}
-
 	callback(objectType: any, eventType: any, object: any, index: number) {
 		if (eventType === 'close') {
 			this.closeMentionPopup({ typingMention: false } as CloseMessageEvent);
