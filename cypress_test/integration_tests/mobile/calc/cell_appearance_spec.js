@@ -73,6 +73,10 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change cell appearance.', f
 		// First add left border
 		cy.cGet('#border-2').click();
 
+		// Close mobile wizard gracefully now to avoid sporadic
+		// failures when reopening it later
+		mobileHelper.closeMobileWizard();
+
 		calcHelper.selectEntireSheet();
 		helper.copy();
 
