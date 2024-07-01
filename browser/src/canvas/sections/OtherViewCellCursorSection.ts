@@ -30,9 +30,16 @@ class OtherViewCellCursorSection extends CanvasSectionObject {
 
         this.sectionProperties.viewId = viewId;
         this.sectionProperties.part = part;
+
+        this.sectionProperties.popUpContainer = null;
+        this.sectionProperties.popUpShown = false;
+
+        this.sectionProperties.username = null;
     }
 
     onDraw(frameCount?: number, elapsedTime?: number, subsetBounds?: Bounds): void {
+        this.adjustPopUpPosition();
+
         this.context.strokeStyle = this.sectionProperties.color;
         this.context.lineWidth = 2;
         this.context.strokeRect(-0.5, -0.5, this.size[0], this.size[1]);
@@ -45,7 +52,64 @@ class OtherViewCellCursorSection extends CanvasSectionObject {
             return true;
     }
 
-    public static addOrUpdateOtherViewCellCursor(viewId: number, rectangleData: Array<string>, part: number) {
+    adjustPopUpPosition() {
+        if (!this.showSection || !this.sectionProperties.popUpShown)
+            return;
+
+        const pos = [this.myTopLeft[0], this.myTopLeft[1]];
+        this.sectionProperties.popUpContainer.style.left = pos[0] + 'px';
+        this.sectionProperties.popUpContainer.style.top = (pos[1] - 110) + 'px';
+    }
+
+    prepareUsernamePopUp() {
+        if (this.sectionProperties.popUpContainer === null) {
+            const popUpContainer = document.createElement('div');
+
+            popUpContainer.style.width = '110px';
+            popUpContainer.style.height = '65px';
+            popUpContainer.style.display = 'none';
+            popUpContainer.style.position = 'absolute';
+            popUpContainer.style.textAlign = 'center';
+            popUpContainer.style.zIndex = '11';
+
+            const nameContainer = document.createElement('div');
+            popUpContainer.appendChild(nameContainer);
+
+            const nameParagraph = document.createElement('p');
+            nameContainer.appendChild(nameParagraph);
+            nameParagraph.textContent = this.sectionProperties.username;
+
+            const arrowDiv = document.createElement('div');
+            arrowDiv.style.width = arrowDiv.style.height = '30px';
+            arrowDiv.style.transform = 'rotate(45deg)';
+            arrowDiv.style.display = 'inline-block';
+            popUpContainer.appendChild(arrowDiv);
+
+            popUpContainer.style.backgroundColor = nameContainer.style.backgroundColor = this.sectionProperties.color;
+            arrowDiv.style.backgroundColor = nameParagraph.style.backgroundColor = this.sectionProperties.color;
+            nameParagraph.style.color = 'white';
+
+            document.getElementById('document-container').appendChild(popUpContainer);
+
+            this.sectionProperties.popUpContainer = popUpContainer;
+        }
+    }
+
+    showUsernamePopUp() {
+        if (this.sectionProperties.popUpContainer) {
+            this.sectionProperties.popUpShown = true;
+            this.sectionProperties.popUpContainer.style.display = '';
+        }
+    }
+
+    hideUsernamePopUp() {
+        if (this.sectionProperties.popUpContainer) {
+            this.sectionProperties.popUpShown = false;
+            this.sectionProperties.popUpContainer.style.display = 'none';
+        }
+    }
+
+    public static addOrUpdateOtherViewCellCursor(viewId: number, username: string, rectangleData: Array<string>, part: number) {
         let rectangle = new cool.SimpleRectangle(0, 0, 0, 0);
         if (rectangleData)
             rectangle = new app.definitions.simpleRectangle(parseInt(rectangleData[0]), parseInt(rectangleData[1]), parseInt(rectangleData[2]), parseInt(rectangleData[3]));
@@ -65,7 +129,14 @@ class OtherViewCellCursorSection extends CanvasSectionObject {
             OtherViewCellCursorSection.sectionPointers.push(section);
         }
 
+        section.sectionProperties.username = username;
+        section.prepareUsernamePopUp();
+
         section.setShowSection(section.checkMyVisibility());
+
+        if (section.showSection)
+            section.showUsernamePopUp();
+
         app.sectionContainer.requestReDraw();
     }
 
@@ -95,6 +166,14 @@ class OtherViewCellCursorSection extends CanvasSectionObject {
     public static doesViewCursorExist(viewId: number) {
         const name = OtherViewCellCursorSection.sectionNamePrefix + viewId;
         return app.sectionContainer.doesSectionExist(name);
+    }
+
+    public static showPopUpForView(viewId: number) {
+        if (OtherViewCellCursorSection.doesViewCursorExist(viewId)) {
+            const section = OtherViewCellCursorSection.getViewCursorSection(viewId);
+
+            section.showUsernamePopUp();
+        }
     }
 }
 
