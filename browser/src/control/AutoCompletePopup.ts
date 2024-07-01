@@ -54,6 +54,8 @@ abstract class AutoCompletePopup {
 		} as PopupData;
 
 		this.onAdd();
+
+		this.map.on('closepopup', this.closePopup, this);
 	}
 
 	abstract onAdd(): void;
@@ -72,6 +74,9 @@ abstract class AutoCompletePopup {
 	}
 
 	closePopup(): void {
+		var popupExists = L.DomUtil.get(this.popupId);
+		if (!popupExists) return;
+
 		var closePopupData = {
 			jsontype: 'dialog',
 			type: 'modalpopup',
@@ -168,7 +173,13 @@ abstract class AutoCompletePopup {
 		this.sendJSON(data);
 	}
 
-	abstract closeMentionPopup(ev: FireEvent): void;
+	closeMentionPopup(ev: CloseMessageEvent): void {
+		this.closePopup();
+		if (!ev.typingMention) {
+			this.map._docLayer._typingMention = false;
+			this.map._docLayer._mentionText = [];
+		}
+	}
 
 	callback(objectType: any, eventType: any, object: any, index: number) {
 		if (eventType === 'keydown') {

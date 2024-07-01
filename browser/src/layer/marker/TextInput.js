@@ -977,7 +977,7 @@ L.TextInput = L.Layer.extend({
 				if (id === 'mentionPopup')
 					this._map.fire('closementionpopup', { 'typingMention': false });
 				else if (id === 'formulaautocompletePopup')
-					this._map.fire('closeformulapopup');
+					this._map.fire('closepopup');
 			}
 		}
 	},

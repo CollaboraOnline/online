@@ -28,19 +28,12 @@ class FormulaAutoCompletePopup extends L.Control.AutoCompletePopup {
 			this.openFormulaAutoCompletePopup,
 			this,
 		);
-		this.map.on('closeformulapopup', this.closeFormulaPopup, this);
 		this.map.on('sendformulatext', this.sendFormulaText, this);
 		this.functionList = null;
 	}
 
-	closeFormulaPopup() {
-		var formulaAutocompletePopup = L.DomUtil.get('formulaautocompletePopup');
-		if (formulaAutocompletePopup)
-			super.closePopup();
-	}
-
 	openFormulaAutoCompletePopup(ev: FireEvent) {
-		this.map.fire('closeformulausagepopup');
+		this.map.fire('closepopup');
 		this.openMentionPopup({ data: ev });
 	}
 
