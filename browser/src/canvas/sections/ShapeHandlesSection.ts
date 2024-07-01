@@ -38,6 +38,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		this.sectionProperties.svg = null; // This is for preview of modifications.
 		this.sectionProperties.hasVideo = false; // Don't hide svg when there is video content.
 		this.sectionProperties.shapeRectangleProperties = null; // Not null when there are scaling handles.
+		this.sectionProperties.lastDragDistance = [0, 0];
 
 		this.refreshInfo(info);
 	}
@@ -593,11 +594,11 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		const parameters = {
 			'TransformPosX': {
 				'type': 'long',
-				'value': Math.round((point[0] + this.position[0] - app.map._docLayer._graphicSelection.pWidth * 0.5) * app.pixelsToTwips)
+				'value': Math.round((this.sectionProperties.lastDragDistance[0] + this.position[0]) * app.pixelsToTwips)
 			},
 			'TransformPosY': {
 				'type': 'long',
-				'value': Math.round((point[1] + this.position[1] - app.map._docLayer._graphicSelection.pHeight * 0.5) * app.pixelsToTwips)
+				'value': Math.round((this.sectionProperties.lastDragDistance[1] + this.position[1]) * app.pixelsToTwips)
 			}
 		};
 
@@ -624,6 +625,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 			this.sectionProperties.svg.style.left = String((this.myTopLeft[0] + dragDistance[0]) / app.dpiScale) + 'px';
 			this.sectionProperties.svg.style.top = String((this.myTopLeft[1] + dragDistance[1]) / app.dpiScale) + 'px';
 			this.sectionProperties.svg.style.opacity = 0.5;
+			this.sectionProperties.lastDragDistance = [dragDistance[0], dragDistance[1]];
 			this.showSVG();
 		}
 		else
