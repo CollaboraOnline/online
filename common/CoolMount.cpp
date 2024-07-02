@@ -15,13 +15,13 @@
 #include <config.h>
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <errno.h>
 #include <sys/mount.h>
 #include <sys/stat.h>
 #include <sysexits.h>
 #include <unistd.h>
-
-#include <security.h>
 
 #ifdef __FreeBSD__
 #include <stdlib.h>
@@ -149,14 +149,6 @@ void usage(const char* program)
 
 int domount(int argc, const char* const* argv)
 {
-    /*WARNING: PRIVILEGED CODE CHECKING START */
-    /*WARNING*/ if (!hasCorrectUID(/* appName = */ "coolmount"))
-    /*WARNING*/ {
-    /*WARNING*/    fprintf(stderr, "Aborting.\n");
-    /*WARNING*/    return EX_SOFTWARE;
-    /*WARNING*/ }
-    /*WARNING: PRIVILEGED CODE CHECKING END */
-
     const char* program = argv[0];
     if (argc < 3)
     {
