@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-06-28 11:57+0200\n"
-"PO-Revision-Date: 2024-05-12 15:23+0000\n"
+"PO-Revision-Date: 2024-07-01 14:09+0000\n"
 "Last-Translator: Rob Pearson <rob.dunedin@gmail.com>\n"
 "Language-Team: English (South Africa) <https://hosted.weblate.org/projects/"
 "collabora-online/ui/en_ZA/>\n"
-"Language: \n"
+"Language: en_ZA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.5.4\n"
+"X-Generator: Weblate 5.7-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -478,11 +478,11 @@ msgstr "Paste Special"
 
 #: src/control/Control.ContextMenu.js:240
 msgid "Copy Cells"
-msgstr ""
+msgstr "Copy Cells"
 
 #: src/control/Control.ContextMenu.js:248
 msgid "Fill Series"
-msgstr ""
+msgstr "Fill Series"
 
 #: src/control/Control.DocumentNameInput.js:113
 msgid "Path"
@@ -899,7 +899,7 @@ msgstr "Dark Mode"
 #: src/control/Control.NotebookbarImpress.js:485
 #: src/control/Control.NotebookbarWriter.js:1477
 msgid "Invert Background"
-msgstr ""
+msgstr "Invert Background"
 
 #: src/control/Control.Menubar.js:154 src/control/Control.Menubar.js:459
 #: src/control/Control.Menubar.js:604 src/control/Control.Menubar.js:750
@@ -1046,7 +1046,7 @@ msgstr "Send Feedback"
 #: src/control/Control.ServerAuditDialog.ts:112
 #: src/control/Control.ServerAuditDialog.ts:113
 msgid "Server audit"
-msgstr ""
+msgstr "Server audit"
 
 #: src/control/Control.Menubar.js:387 src/control/Control.Menubar.js:548
 #: src/control/Control.Menubar.js:679 src/control/Control.Menubar.js:959
@@ -1081,12 +1081,12 @@ msgstr "Save Comments"
 #: src/control/Control.Menubar.js:414
 #: src/control/Control.NotebookbarBuilder.js:601
 msgid "Full Page Slides"
-msgstr ""
+msgstr "Full Page Slides"
 
 #: src/control/Control.Menubar.js:415
 #: src/control/Control.NotebookbarBuilder.js:605
 msgid "Notes Pages"
-msgstr ""
+msgstr "Notes Pages"
 
 #: src/control/Control.Menubar.js:449
 #: src/control/Control.NotebookbarImpress.js:470
@@ -1151,44 +1151,43 @@ msgstr "All Sheets"
 #: src/control/Control.Menubar.js:835
 #: src/control/jsdialog/Definitions.Menu.ts:286
 msgid "Highlight cells with..."
-msgstr ""
+msgstr "Highlight cells with..."
 
 #: src/control/Control.Menubar.js:836
 #: src/control/jsdialog/Definitions.Menu.ts:289
 msgid "Values greater than..."
-msgstr ""
+msgstr "Values greater than..."
 
 #: src/control/Control.Menubar.js:837
 #: src/control/jsdialog/Definitions.Menu.ts:293
 msgid "Values less than..."
-msgstr ""
+msgstr "Values less than..."
 
 #: src/control/Control.Menubar.js:838
 #: src/control/jsdialog/Definitions.Menu.ts:297
 msgid "Values equal to..."
-msgstr ""
+msgstr "Values equal to..."
 
 #: src/control/Control.Menubar.js:839
 #: src/control/jsdialog/Definitions.Menu.ts:301
 msgid "Values between..."
-msgstr ""
+msgstr "Values between..."
 
 #: src/control/Control.Menubar.js:840
 #: src/control/jsdialog/Definitions.Menu.ts:305
 msgid "Values duplicate..."
-msgstr ""
+msgstr "Values duplicate..."
 
 #: src/control/Control.Menubar.js:841
 #: src/control/jsdialog/Definitions.Menu.ts:309
-#, fuzzy
 msgid "Containing text..."
-msgstr "Contains text..."
+msgstr "Containing text..."
 
 #: src/control/Control.Menubar.js:843 src/control/Control.Menubar.js:853
 #: src/control/jsdialog/Definitions.Menu.ts:313
 #: src/control/jsdialog/Definitions.Menu.ts:344
 msgid "More highlights..."
-msgstr ""
+msgstr "More highlights..."
 
 #: src/control/Control.Menubar.js:845
 #: src/control/jsdialog/Definitions.Menu.ts:317
@@ -1599,11 +1598,11 @@ msgstr "Present in Window"
 
 #: src/control/Control.NotebookbarImpress.js:455
 msgid "Normal View"
-msgstr ""
+msgstr "Normal View"
 
 #: src/control/Control.NotebookbarImpress.js:461
 msgid "Notes View"
-msgstr ""
+msgstr "Notes View"
 
 #: src/control/Control.NotebookbarWriter.js:79
 msgid "Form"
@@ -1663,42 +1662,43 @@ msgstr "Clear the search field"
 
 #: src/control/Control.ServerAuditDialog.ts:28
 msgid "The IsAdminUser property is not set by integration"
-msgstr ""
+msgstr "The IsAdminUser property is not set by integration"
 
 #: src/control/Control.ServerAuditDialog.ts:34
 msgid ""
 "Used deprecated is_admin field, integration should use IsAdminUser property "
 "instead"
 msgstr ""
+"Used deprecated is_admin field, integration should use IsAdminUser property "
+"instead"
 
 #: src/control/Control.ServerAuditDialog.ts:39
 msgid "The IsAdminUser user property is set by integration"
-msgstr ""
+msgstr "The IsAdminUser user property is set by integration"
 
 #: src/control/Control.ServerAuditDialog.ts:43
 msgid "Your WOPI server is not secure: SSL verification failed"
-msgstr ""
+msgstr "Your WOPI server is not secure: SSL verification failed"
 
 #: src/control/Control.ServerAuditDialog.ts:47
 msgid "No problems with SSL verification detected"
-msgstr ""
+msgstr "No problems with SSL verification detected"
 
 #: src/control/Control.ServerAuditDialog.ts:131
 msgid "No issues found"
-msgstr ""
+msgstr "No issues found"
 
 #: src/control/Control.ServerAuditDialog.ts:137
-#, fuzzy
 msgid "Status"
-msgstr "Status:"
+msgstr "Status"
 
 #: src/control/Control.ServerAuditDialog.ts:185
 msgid "Check security warnings of your server"
-msgstr ""
+msgstr "Check security warnings of your server"
 
 #: src/control/Control.ServerAuditDialog.ts:186
 msgid "OPEN"
-msgstr ""
+msgstr "OPEN"
 
 #: src/control/Control.SheetsBar.js:48
 msgid "Scroll to the first sheet"
@@ -2099,11 +2099,11 @@ msgstr "Delete tabstop"
 
 #: src/control/VRuler.ts:377
 msgid "Top Margin"
-msgstr ""
+msgstr "Top Margin"
 
 #: src/control/VRuler.ts:378
 msgid "Bottom Margin"
-msgstr ""
+msgstr "Bottom Margin"
 
 #: src/control/Signing.js:27
 msgid "This document is digitally signed and the signature is valid."
@@ -2517,7 +2517,7 @@ msgstr ""
 
 #: src/errormessages.js:29
 msgid "Authorization error was: '{errormessage}'."
-msgstr ""
+msgstr "Authorization error was: '{errormessage}'."
 
 #: src/errormessages.js:30
 msgid "Wrong or missing WOPISrc parameter, please contact support."
@@ -2751,21 +2751,23 @@ msgstr "Resolve Thread"
 #: src/canvas/sections/CommentListSection.ts:1260
 #: src/canvas/sections/CommentListSection.ts:2090
 msgid "Comments Updated"
-msgstr ""
+msgstr "Comments Updated"
 
 #: src/canvas/sections/CommentListSection.ts:1248
 msgid "Another user has removed this comment."
-msgstr ""
+msgstr "Another user has removed this comment."
 
 #: src/canvas/sections/CommentListSection.ts:1261
 msgid ""
 "Another user has updated the comment. Would you like to overwrite those "
 "changes?"
 msgstr ""
+"Another user has updated the comment. Would you like to overwrite those "
+"changes?"
 
 #: src/canvas/sections/CommentListSection.ts:1263
 msgid "Update"
-msgstr ""
+msgstr "Update"
 
 #: src/canvas/sections/CommentListSection.ts:1334
 #: src/canvas/sections/CommentListSection.ts:1396
@@ -2774,7 +2776,7 @@ msgstr "Autosaved"
 
 #: src/canvas/sections/CommentListSection.ts:2091
 msgid "Another user has updated comments. Would you like to proceed updating?"
-msgstr ""
+msgstr "Another user has updated comments. Would you like to proceed updating?"
 
 #: src/canvas/sections/CommentSection.ts:300
 msgid "Open menu"
@@ -2947,11 +2949,11 @@ msgstr "You are already presenting this document"
 
 #: src/map/handler/Map.SlideShow.js:314
 msgid "Presentation disabled"
-msgstr ""
+msgstr "Presentation disabled"
 
 #: src/map/handler/Map.SlideShow.js:315
 msgid "Presentation mode has been disabled for this document"
-msgstr ""
+msgstr "Presentation mode has been disabled for this document"
 
 #: src/map/handler/Map.WOPI.js:152
 msgid "Creating new file from template..."
