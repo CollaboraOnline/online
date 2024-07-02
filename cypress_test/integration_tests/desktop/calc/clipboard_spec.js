@@ -169,4 +169,18 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', fu
 		// Then make sure a warning popup is shown:
 		cy.cGet('#copy_paste_warning-box').should('exist');
 	});
+
+	it('Copy Hyperlink from pop-up', function () {
+		helper.setDummyClipboardForCopy();
+
+		calcHelper.dblClickOnFirstCell();
+		helper.clearAllText();
+		let url = 'http://www.example.com/';
+		helper.typeIntoDocument(url + '{enter}');
+
+		calcHelper.clickOnFirstCell();
+		cy.cGet('#hyperlink-pop-up-copy').click();
+
+		cy.cGet('#copy-paste-container').should('have.text', url);
+	});
 });
