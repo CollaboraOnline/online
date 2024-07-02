@@ -2964,12 +2964,6 @@ L.CanvasTileLayer = L.Layer.extend({
 			return false;
 	},
 
-	_simpleRectangleToLatLngBounds: function(simpleRectangle) {
-		return new L.LatLngBounds(
-			this._twipsToLatLng({ x: simpleRectangle.x1, y: simpleRectangle.y1 }, this._map.getZoom()),
-			this._twipsToLatLng({ x: simpleRectangle.x2, y: simpleRectangle.y2 }, this._map.getZoom()));
-	},
-
 	_updateScrollOnCellSelection: function (oldSelection, newSelection) {
 		if (this.isCalc() && oldSelection) {
 			if (!app.file.viewedRectangle.containsRectangle(newSelection.toArray()) && !newSelection.equals(oldSelection.toArray())) {
