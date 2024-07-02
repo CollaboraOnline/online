@@ -433,6 +433,7 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	background-size: 100% 100%;
 	background-repeat: no-repeat;
 	outline: none;
+	opacity: 0.3;
 }
 
 .cool-scrolled {
