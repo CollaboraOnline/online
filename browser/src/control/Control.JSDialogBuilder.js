@@ -2320,24 +2320,17 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				var label = L.DomUtil.create('label', 'ui-content unolabel', button);
 				label.htmlFor = buttonId;
 				label.textContent = builder._cleanText(data.text);
-				button.setAttribute('alt', label.textContent);
-				if (buttonImage !== false) {
-					buttonImage.alt = label.textContent;
-				}
 				builder._stressAccessKey(label, button.accessKey);
 				controls['label'] = label;
 				$(div).addClass('has-label');
 			} else if (builder.options.useInLineLabelsForUnoButtons === true) {
 				$(div).addClass('no-label');
 			} else {
-				div.title = data.text;
-				button.setAttribute('alt', data.text);
-				if (buttonImage !== false) {
-					buttonImage.alt = data.text;
-				}
 				builder.map.uiManager.enableTooltip(div);
 				$(div).addClass('no-label');
 			}
+
+			div.setAttribute('data-cooltip', builder._cleanText(data.text));
 
 			if (builder.options.useInLineLabelsForUnoButtons === true) {
 				$(div).addClass('inline');
@@ -2449,8 +2442,18 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			e.stopPropagation();
 		};
 
+		var mouseEnterFunction = function () {
+			builder.map.tooltip.beginShow(div);
+		};
+
+		var mouseLeaveFunction = function () {
+			builder.map.tooltip.beginHide(div);
+		};
+
 		$(controls.button).on('click', clickFunction);
 		$(controls.label).on('click', clickFunction);
+		$(div).on('mouseenter', mouseEnterFunction);
+		$(div).on('mouseleave', mouseLeaveFunction);
 
 		div.addEventListener('keydown', function(e) {
 			switch (e.key) {
