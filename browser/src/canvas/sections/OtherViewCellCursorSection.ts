@@ -35,6 +35,7 @@ class OtherViewCellCursorSection extends CanvasSectionObject {
         this.sectionProperties.popUpShown = false;
 
         this.sectionProperties.username = null;
+        this.sectionProperties.popUpTimer = null;
     }
 
     onDraw(frameCount?: number, elapsedTime?: number, subsetBounds?: Bounds): void {
@@ -56,9 +57,9 @@ class OtherViewCellCursorSection extends CanvasSectionObject {
         if (!this.showSection || !this.sectionProperties.popUpShown)
             return;
 
-        const pos = [this.myTopLeft[0], this.myTopLeft[1]];
+        const pos = [this.myTopLeft[0] / app.dpiScale + this.size[0] * 0.5 / app.dpiScale - 55, (this.myTopLeft[1] / app.dpiScale) - 60];
         this.sectionProperties.popUpContainer.style.left = pos[0] + 'px';
-        this.sectionProperties.popUpContainer.style.top = (pos[1] - 110) + 'px';
+        this.sectionProperties.popUpContainer.style.top = pos[1] + 'px';
     }
 
     prepareUsernamePopUp() {
@@ -66,7 +67,7 @@ class OtherViewCellCursorSection extends CanvasSectionObject {
             const popUpContainer = document.createElement('div');
 
             popUpContainer.style.width = '110px';
-            popUpContainer.style.height = '65px';
+            popUpContainer.style.height = '45px';
             popUpContainer.style.display = 'none';
             popUpContainer.style.position = 'absolute';
             popUpContainer.style.textAlign = 'center';
@@ -78,11 +79,16 @@ class OtherViewCellCursorSection extends CanvasSectionObject {
             const nameParagraph = document.createElement('p');
             nameContainer.appendChild(nameParagraph);
             nameParagraph.textContent = this.sectionProperties.username;
+            nameParagraph.style.padding = '0';
+            nameParagraph.style.lineHeight = '45px';
+            nameParagraph.style.margin = 'auto';
 
             const arrowDiv = document.createElement('div');
-            arrowDiv.style.width = arrowDiv.style.height = '30px';
+            arrowDiv.style.width = arrowDiv.style.height = '20px';
             arrowDiv.style.transform = 'rotate(45deg)';
             arrowDiv.style.display = 'inline-block';
+            arrowDiv.style.position = 'relative';
+            arrowDiv.style.top = '-10px';
             popUpContainer.appendChild(arrowDiv);
 
             popUpContainer.style.backgroundColor = nameContainer.style.backgroundColor = this.sectionProperties.color;
@@ -95,10 +101,23 @@ class OtherViewCellCursorSection extends CanvasSectionObject {
         }
     }
 
+    clearPopUpTimer() {
+        if (this.sectionProperties.popUpTimer) {
+            clearTimeout(this.sectionProperties.popUpTimer);
+            this.sectionProperties.popUpTimer = null;
+        }
+    }
+
     showUsernamePopUp() {
         if (this.sectionProperties.popUpContainer) {
             this.sectionProperties.popUpShown = true;
             this.sectionProperties.popUpContainer.style.display = '';
+
+            this.clearPopUpTimer();
+
+            this.sectionProperties.popUpTimer = setTimeout(() => {
+                this.hideUsernamePopUp();
+            }, 3000);
         }
     }
 
@@ -107,6 +126,7 @@ class OtherViewCellCursorSection extends CanvasSectionObject {
             this.sectionProperties.popUpShown = false;
             this.sectionProperties.popUpContainer.style.display = 'none';
         }
+        this.clearPopUpTimer();
     }
 
     public static addOrUpdateOtherViewCellCursor(viewId: number, username: string, rectangleData: Array<string>, part: number) {
