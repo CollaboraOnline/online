@@ -40,7 +40,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Slide operations', functio
 
 	});
 
-	it.skip('Duplicate slide', function() {
+	it('Duplicate slide', function() {
 		// Also check if comments are getting duplicated
 		cy.cGet('#options-modify-page').click();
 		desktopHelper.insertComment();
@@ -49,7 +49,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Slide operations', functio
 
 		impressHelper.assertNumberOfSlidePreviews(2);
 		cy.cGet('#SlideStatus').should('have.text', 'Slide 2 of 2');
-		cy.cGet('#annotation-content-area-2').should('include.text', 'some text0');
+		cy.cGet('[id^=annotation-content-area-]').should('include.text', 'some text0');
 
 	});
 
