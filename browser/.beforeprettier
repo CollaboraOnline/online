@@ -161,6 +161,7 @@
 /src/canvas/sections/CursorHeaderSection.ts
 /src/canvas/sections/ContentControlSection.ts
 /src/layer/tile/ImpressTileLayer.js
+/src/layer/PresentationHelper.ts
 /src/canvas/sections/ScrollSection.ts
 /src/layer/tile/SheetGeometry.ts
 /src/layer/tile/SheetSwitch.ts

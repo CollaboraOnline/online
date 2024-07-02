@@ -12,7 +12,7 @@
  * Impress tile layer is used to display a presentation document
  */
 
-/* global app $ L Set */
+/* global app $ L PresentationHelper Set */
 
 L.ImpressTileLayer = L.CanvasTileLayer.extend({
 
@@ -94,6 +94,9 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 		map.on('updateparts', this.onUpdateParts, this);
 		map.on('updatepermission', this.onUpdatePermission, this);
 
+		this._presentationHelper = new PresentationHelper(this._map, this);
+		app.socket.sendMessage('getpresentationinfo');
+
 		if (!map._docPreviews)
 			map._docPreviews = {};
 
@@ -129,6 +132,7 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 
 	onRemove: function () {
 		clearTimeout(this._previewInvalidator);
+		this._presentationHelper.cleanup();
 	},
 
 	_openMobileWizard: function(data) {
