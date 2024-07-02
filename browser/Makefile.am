@@ -244,6 +244,7 @@ COOL_JS_LST =\
 	src/canvas/sections/CalcValidityDropDownSection.ts \
 	src/canvas/sections/TextSelectionHandleSection.ts \
 	src/canvas/sections/OtherViewGraphicSelectionSection.ts \
+	src/canvas/sections/OtherViewCellCursorSection.ts \
 	src/layer/vector/CEventsHandler.ts \
 	src/layer/vector/CPointSet.ts \
 	src/layer/vector/CPath.ts \
