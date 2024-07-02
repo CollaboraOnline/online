@@ -264,7 +264,7 @@ describe(['tagmobile', 'tagnextcloud'], 'Impress insertion wizard.', function() 
 		impressHelper.selectTextOfShape();
 		helper.copy();
 		helper.expectTextForClipboard('some text');
-		cy.cGet('.leaflet-popup-content a').should('have.text', 'http://www.something.com');
+		cy.cGet('.hyperlink-pop-up-container a').should('have.text', 'http://www.something.com');
 	});
 
 	it('Insert date field (fixed) inside existing text shape.', function() {
