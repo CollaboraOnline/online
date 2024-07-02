@@ -2469,7 +2469,12 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 								'type': 'toolitem',
 								'text': _UNO('.uno:SelectTable', 'text'),
 								'command': '.uno:SelectTable'
-							}
+							},
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:EntireRow', 'text'),
+								'command': '.uno:EntireRow'
+							},
 						]
 					},
 					{
@@ -2477,14 +2482,14 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'children': [
 							{
 								'type': 'toolitem',
-								'text': _UNO('.uno:EntireRow', 'text'),
-								'command': '.uno:EntireRow'
+								'text': _UNO('.uno:DeleteTable', 'text'),
+								'command': '.uno:DeleteTable'
 							},
 							{
 								'type': 'toolitem',
-								'text': _UNO('.uno:DeleteTable', 'text'),
-								'command': '.uno:DeleteTable'
-							}
+								'text': _UNO('.uno:TableCellBackgroundColor', 'text'),
+								'command': '.uno:TableCellBackgroundColor',
+							},
 						]
 					}
 				],
