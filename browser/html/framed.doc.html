@@ -217,6 +217,16 @@
           post({'MessageId': messageId});
       }
 
+      function ShowSidebar(visible) {
+          var messageId = visible ? 'Show_Sidebar' : 'Hide_Sidebar';
+          post({'MessageId': messageId});
+      }
+
+      function ShowNavigator(visible) {
+          var messageId = visible ? 'Show_Navigator' : 'Hide_Navigator';
+          post({'MessageId': messageId});
+      }
+
       function ShowStatusBar(visible) {
           var messageId = visible ? 'Show_StatusBar' : 'Hide_StatusBar';
           post({'MessageId': messageId});
@@ -599,6 +609,14 @@
           <div class="vbox">
             <button onclick="ShowRuler(false); return false;">Hide Ruler</button>
             <button onclick="ShowRuler(true); return false;">Show Ruler</button>
+          </div>
+          <div class="vbox">
+            <button onclick="ShowSidebar(false); return false;">Hide Sidebar</button>
+            <button onclick="ShowSidebar(true); return false;">Show Sidebar</button>
+          </div>
+          <div class="vbox">
+            <button onclick="ShowNavigator(false); return false;">Hide Navigator</button>
+            <button onclick="ShowNavigator(true); return false;">Show Navigator</button>
           </div>
         </div>
       </div>
