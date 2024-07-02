@@ -195,7 +195,7 @@ static bool unmount(const std::string& target, bool silent = false)
         // which may be left-over and now the config has changed.
         // This happens more often in dev labs than in prod.
         if (JailUtil::isBindMountingEnabled() && !silent)
-            LOG_ERR("Failed to unmount [" << target << ']');
+            LOG_WRN("Failed to unmount [" << target << ']');
         else
             LOG_DBG("Failed to unmount [" << target << ']');
     }
@@ -246,9 +246,16 @@ static bool safeRemoveDir(const std::string& path)
     }
 
     // Recursively remove if link/copied.
-    const bool recursive = copied;
-    //FIXME: do not delete the 'copied' marker until the very end.
-    FileUtil::removeFile(path, recursive);
+    if (copied)
+    {
+        //FIXME: do not delete the 'copied' marker until the very end.
+        FileUtil::removeFile(path, /*recursive=*/true);
+    }
+    else
+    {
+        FileUtil::removeEmptyDirTree(path);
+    }
+
     return true;
 }
 
