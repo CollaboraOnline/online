@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-06-28 11:57+0200\n"
-"PO-Revision-Date: 2024-06-30 13:16+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"PO-Revision-Date: 2024-07-01 14:09+0000\n"
+"Last-Translator: TY Wong <wongty@peoplewarehk.com>\n"
 "Language-Team: Chinese (Traditional) <https://hosted.weblate.org/projects/"
 "collabora-online/help/zh_Hant/>\n"
 "Language: zh_TW\n"
@@ -24,7 +24,7 @@ msgstr "常用快捷鍵"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:88-38
 msgid "Undo"
-msgstr "還原"
+msgstr "取消動作"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:88-69
 #, fuzzy
