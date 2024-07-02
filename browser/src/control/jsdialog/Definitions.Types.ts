@@ -15,6 +15,7 @@
 
 // common for all widgets
 interface WidgetJSON {
+	text: string;
 	id: string; // unique id of a widget
 	type: string; // type of widget
 	enabled?: boolean; // enabled state
