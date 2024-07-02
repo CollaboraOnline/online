@@ -89,45 +89,28 @@ button.ui-tab.notebookbar {
 	margin: 0 !important;
 }
 
+.unoSave.savemodified .unobutton img,
+.savemodified.unotoolbutton .unobutton img {
+	box-sizing: border-box;
+	padding-left: 24px;
+}
+
+html:not([data-theme='dark']) .unoSave.savemodified .unobutton img,
+html:not([data-theme='dark']) .savemodified.unotoolbutton .unobutton img {
+	background: url('images/lc_savemodified.svg') no-repeat center;
+}
+
+html[data-theme='dark'] .unoSave.savemodified .unobutton img,
+html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
+	background: url('images/dark/lc_savemodified.svg') no-repeat center;
+}
+
 .notebookbar-shortcuts-bar .notebookbar.unotoolbutton {
 	margin: 0px !important;
 }
 
 .notebookbar-shortcuts-bar .cell.notebookbar {
 	padding: 0 2px;
-}
-
-#save.savemodified:after {
-	content: '';
-	display: block;
-	width: 4px;
-	height: 4px;
-	border-radius: 20px;
-	filter: none !important;
-	background: var(--color-primary-lighter);
-	box-shadow: 0 0 0 2px var(--color-main-background);
-	border: 1px solid var(--color-primary);
-	position: absolute;
-	top: 6px;
-	margin-left: 11px;
-}
-
-#File .unoSave.savemodified {
-	position: relative;
-}
-#File .unoSave.savemodified:after {
-	content: '';
-	display: block;
-	width: 6px;
-	height: 6px;
-	border-radius: 30px;
-	filter: none !important;
-	background: var(--color-primary-lighter);
-	box-shadow: 0 0 0 2px var(--color-main-background);
-	border: 1px solid var(--color-primary);
-	position: absolute;
-	top: 0;
-	margin-left: 28px;
 }
 
 .hasnotebookbar .notebookbar-shortcuts-bar #Menubar,
