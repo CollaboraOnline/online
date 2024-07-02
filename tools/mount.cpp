@@ -15,11 +15,22 @@
 #include <config.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <sysexits.h>
+
+#include <security.h>
 
 extern int domount(int argc, const char* const* argv);
 
 int main(int argc, char** argv)
 {
+    /*WARNING: PRIVILEGED CODE CHECKING START */
+    /*WARNING*/ if (!hasCorrectUID(/* appName = */ "coolmount"))
+    /*WARNING*/ {
+    /*WARNING*/    fprintf(stderr, "Aborting.\n");
+    /*WARNING*/    return EX_SOFTWARE;
+    /*WARNING*/ }
+    /*WARNING: PRIVILEGED CODE CHECKING END */
+
     return domount(argc, argv);
 }
 
