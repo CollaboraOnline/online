@@ -236,6 +236,11 @@ autoscaling:
   targetMemoryUtilizationPercentage: 50
   scaleDownDisabled: false
 
+podDisruptionBudget:
+  enabled: false
+  # minAvailable: 1
+  # maxUnavailable: 1
+
 dynamicConfig:
   enabled: false
   logging:
