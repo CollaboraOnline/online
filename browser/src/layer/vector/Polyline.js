@@ -130,7 +130,7 @@ L.Polyline = L.Path.extend({
 
 	// clip polyline by renderer bounds so that we have less to render for performance
 	_clipPoints: function () {
-		if (this.options.noClip || this._renderer instanceof L.SplitPanesSVG) {
+		if (this.options.noClip) {
 			this._parts = this._rings;
 			return;
 		}
