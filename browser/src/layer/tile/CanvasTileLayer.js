@@ -2449,8 +2449,8 @@ L.CanvasTileLayer = L.Layer.extend({
 				this._map.setPart(viewCursorSection.sectionProperties.part);
 
 			if (!viewCursorSection.isVisible) {
-				const scrollX = viewCursorSection.position[0] - app.file.viewedRectangle.pWidth * 0;
-				const scrollY = viewCursorSection.position[1] - app.file.viewedRectangle.pHeight * 0;
+				const scrollX = viewCursorSection.position[0];
+				const scrollY = viewCursorSection.position[1];
 				this.scrollToPos(new app.definitions.simplePoint(scrollX * app.pixelsToTwips, scrollY * app.pixelsToTwips));
 			}
 
