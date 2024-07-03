@@ -92,8 +92,8 @@ L.Map.include({
 			docType: docLayer._docType
 		});
 
-		docLayer.eachView(docLayer._viewCursors, docLayer._onUpdateViewCursor, docLayer);
 		app.definitions.otherViewCellCursorSection.updateVisibilities();
+		app.definitions.otherViewCursorSection.updateVisibilities();
 		app.definitions.otherViewGraphicSelectionSection.updateVisibilities();
 		docLayer.eachView(docLayer._viewSelections, docLayer._onUpdateTextViewSelection, docLayer);
 		docLayer._clearSelections(calledFromSetPartHandler);
