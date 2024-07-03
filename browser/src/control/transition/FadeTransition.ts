@@ -17,8 +17,7 @@ class FadeTransition extends Transition2d {
 }
 
 
-app.definitions.FadeTransition = function() {
-    const canvas = document.getElementById('fullscreen-canvas') as HTMLCanvasElement;
+app.definitions.FadeTransition = function(canvas: HTMLCanvasElement, image1: HTMLImageElement, image2: HTMLImageElement) {
     const vertexShaderSource = `#version 300 es
 in vec4 a_position;
 in vec2 a_texCoord;
@@ -67,13 +66,5 @@ void main() {
     }
 }`
 
-    const image1 = new Image();
-    const image2 = new Image();
-    console.log("I'm in fade function")
-
-    image1.src = "images/columnline_52x60.svg";
-    image2.src = "images/columnline_52x60.svg";
-    
-    
     return new FadeTransition(canvas, vertexShaderSource, fragmentShaderSource, image1, image2);
 }

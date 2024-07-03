@@ -358,7 +358,8 @@ class Dispatcher {
 
 	private addImpressAndDrawCommands() {
 		this.actionsMap['presentation'] = function () {
-			app.map.fire('fullscreen');
+			// TODO: Need to add debug condition
+			app.map.fire('newfullscreen');
 		};
 		this.actionsMap['present-in-window'] = function () {
 		if (this._debug.debugOn)
@@ -379,7 +380,7 @@ class Dispatcher {
 				app.map.fire('presentinwindow');
 		};
 
-		this.actionsMap['deletepage'] = function () {
+		this.actionsMap['deletepage'] = function () {	
 			let msg: string;
 			if (app.map.getDocType() === 'presentation') {
 				msg = _('Are you sure you want to delete this slide?');
