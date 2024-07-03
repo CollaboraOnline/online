@@ -231,6 +231,7 @@ COOL_JS_LST =\
 	src/canvas/sections/AutoFillMarkerSection.ts \
 	src/canvas/sections/HTMLObjectSection.ts \
 	src/canvas/sections/URLPopUpSection.ts \
+	src/canvas/sections/InvalidationRectangleSection.ts \
 	src/canvas/sections/ShapeHandlesSection.ts \
 	src/canvas/sections/ShapeHandleCustomSubSection.ts \
 	src/canvas/sections/ShapeHandlePolySubSection.ts \

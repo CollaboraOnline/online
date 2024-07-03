@@ -150,7 +150,6 @@ L.DebugManager = L.Class.extend({
 			startsOn: false,
 			onAdd: function () {
 				self.tileInvalidationsOn = true;
-				self._tileInvalidationRectangles = {};
 				self._tileInvalidationMessages = {};
 				self._tileInvalidationId = 0;
 				self._tileInvalidationKeypressQueue = [];
@@ -910,19 +909,9 @@ L.DebugManager = L.Class.extend({
 	},
 
 	_tileInvalidationTimeout: function() {
-		for (var key in this._tileInvalidationRectangles) {
-			var rect = this._tileInvalidationRectangles[key];
-			var opac = rect.options.fillOpacity;
-			if (opac <= 0.04) {
-				if (key < this._tileInvalidationId - 5) {
-					this._tileInvalidationLayer.removeLayer(rect);
-					delete this._tileInvalidationRectangles[key];
-					delete this._tileInvalidationMessages[key];
-				} else {
-					rect.setStyle({fillOpacity: 0, opacity: 1 - (this._tileInvalidationId - key) / 7});
-				}
-			} else {
-				rect.setStyle({fillOpacity: opac - 0.04});
+		for (var key in this._tileInvalidationMessages) {
+			if (key < this._tileInvalidationId - 5) {
+				delete this._tileInvalidationMessages[key];
 			}
 		}
 		this._tileInvalidationTimeoutId = setTimeout(L.bind(this._tileInvalidationTimeout, this), 50);
@@ -962,16 +951,14 @@ L.DebugManager = L.Class.extend({
 		var absTopLeftTwips = L.point(topLeftTwips.x * signX, topLeftTwips.y);
 		var absBottomRightTwips = L.point(bottomRightTwips.x * signX, bottomRightTwips.y);
 
-		var invalidBoundCoords = new L.LatLngBounds(
-			this._docLayer._twipsToLatLng(absTopLeftTwips, this._docLayer._tileZoom),
-			this._docLayer._twipsToLatLng(absBottomRightTwips, this._docLayer._tileZoom)
-		);
-		var rect = L.rectangle(invalidBoundCoords, {color: 'red', weight: 1, opacity: 1, fillOpacity: 0.4, pointerEvents: 'none'});
-		this._tileInvalidationRectangles[this._tileInvalidationId] = rect;
 		this._tileInvalidationMessages[this._tileInvalidationId] = command;
 		this._tileInvalidationId++;
-		this._tileInvalidationLayer.addLayer(rect);
 
+		const x = absTopLeftTwips.x * app.twipsToPixels;
+		const y = absTopLeftTwips.y * app.twipsToPixels;
+		const w = (absBottomRightTwips.x - absTopLeftTwips.x) * app.twipsToPixels;
+		const h = (absBottomRightTwips.y - absTopLeftTwips.y) * app.twipsToPixels;
+		app.definitions.invalidationRectangleSection.setRectangle(x, y, w, h);
 
 		// There is not always an invalidation for every keypress.
 		// Keypresses at the front of the queue that are older than 1s
