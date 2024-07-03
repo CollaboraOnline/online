@@ -320,8 +320,8 @@ L.CanvasTileLayer.include({
 		this._postSelectTextEvent('end', e.target._end.x - 5, e.target._end.y - 5);
 	},
 	_onSelectRowColumnDrag: function(e) {
-		e.target.freezeX(true);
-		e.target.freezeY(true);
+		e.target.dragging.freezeX(true);
+		e.target.dragging.freezeY(true);
 	},
 
 	// Update dragged text selection.
