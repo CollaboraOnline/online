@@ -154,8 +154,6 @@ L.DebugManager = L.Class.extend({
 				self._tileInvalidationId = 0;
 				self._tileInvalidationKeypressQueue = [];
 				self._tileInvalidationKeypressTimes = self.getTimeArray();
-				self._tileInvalidationLayer = new L.LayerGroup();
-				self._map.addLayer(self._tileInvalidationLayer);
 				self._tileInvalidationTimeout();
 			},
 			onRemove: function () {
@@ -163,7 +161,6 @@ L.DebugManager = L.Class.extend({
 				self.clearOverlayMessage('tileInvalidationMessages');
 				self.clearOverlayMessage('tileInvalidationTime');
 				clearTimeout(self._tileInvalidationTimeoutId);
-				self._map.removeLayer(self._tileInvalidationLayer);
 				self._painter.update();
 			},
 		});

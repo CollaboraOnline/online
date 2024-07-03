@@ -5024,8 +5024,6 @@ L.CanvasTileLayer = L.Layer.extend({
 			app.socket.sendMessage(newClientVisibleArea);
 			if (!this._map._fatal && app.idleHandler._active && app.socket.connected())
 				this._clientVisibleArea = newClientVisibleArea;
-			if (this._debug.tileInvalidationsOn)
-				this._debug._tileInvalidationLayer.clearLayers();
 		}
 	},
 
