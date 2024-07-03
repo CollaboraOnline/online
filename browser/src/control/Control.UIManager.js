@@ -14,7 +14,7 @@
  *			 and allows to controll them (show/hide)
  */
 
-/* global app $ setupToolbar _ Hammer JSDialog */
+/* global app $ setupToolbar _ Hammer JSDialog SlideShow */
 L.Control.UIManager = L.Control.extend({
 	mobileWizard: null,
 	documentNameInput: null,
@@ -326,6 +326,7 @@ L.Control.UIManager = L.Control.extend({
 			L.DomUtil.remove(L.DomUtil.get('spreadsheet-toolbar'));
 			$('#presentation-controls-wrapper').show();
 			this.initializeRuler();
+			this.map.slideShowPresenter = new SlideShow.SlideShowPresenter(this.map);
 		}
 
 		if (docType === 'text') {
