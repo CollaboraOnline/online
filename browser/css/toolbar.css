@@ -1057,7 +1057,7 @@ button.leaflet-control-search-next
 .w2ui-icon.sign_not_ok{ background: url('images/sign_not_ok.svg') no-repeat center; }
 .w2ui-icon.save{ background: url('images/lc_save.svg') no-repeat center; }
 .w2ui-icon.saveas{ background: url('images/lc_saveas.svg') no-repeat center; }
-.w2ui-icon.savemodified{ background: url('images/savemodified_large.svg') no-repeat center; }
+.w2ui-icon.savemodified{ background: url('images/lc_savemodified_large.svg') no-repeat center; }
 .w2ui-icon.zoomin{ background: url('images/plus.svg') no-repeat center; }
 .w2ui-icon.zoomout{ background: url('images/minus.svg') no-repeat center; }
 .w2ui-icon.zoomreset{ background: url('images/lc_view100.svg') no-repeat center; }
@@ -1348,7 +1348,7 @@ button.leaflet-control-search-next
 [data-theme='dark'] .w2ui-icon.sign_not_ok{ background: url('images/dark/sign_not_ok.svg') no-repeat center; }
 [data-theme='dark'] .w2ui-icon.save{ background: url('images/dark/lc_save.svg') no-repeat center; }
 [data-theme='dark'] .w2ui-icon.saveas{ background: url('images/dark/lc_saveas.svg') no-repeat center; }
-[data-theme='dark'] .w2ui-icon.savemodified{ background: url('images/dark/savemodified_large.svg') no-repeat center; }
+[data-theme='dark'] .w2ui-icon.savemodified{ background: url('images/dark/lc_savemodified_large.svg') no-repeat center; }
 [data-theme='dark'] .w2ui-icon.zoomin{ background: url('images/dark/plus.svg') no-repeat center; }
 [data-theme='dark'] .w2ui-icon.zoomout{ background: url('images/dark/minus.svg') no-repeat center; }
 [data-theme='dark'] .w2ui-icon.zoomreset{ background: url('images/dark/lc_view100.svg') no-repeat center; }
