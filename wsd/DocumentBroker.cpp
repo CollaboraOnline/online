@@ -4205,7 +4205,7 @@ bool ConvertToBroker::startConversion(SocketDisposition &disposition, const std:
     std::shared_ptr<ConvertToBroker> docBroker = std::static_pointer_cast<ConvertToBroker>(shared_from_this());
 
     // Create a session to load the document.
-    const bool isReadOnly = true;
+    const bool isReadOnly = docBroker->isReadOnly();
     // FIXME: associate this with moveSocket (?)
     std::shared_ptr<ProtocolHandlerInterface> nullPtr;
     RequestDetails requestDetails("convert-to");
