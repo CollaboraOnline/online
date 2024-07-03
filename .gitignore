@@ -101,6 +101,7 @@ clientnb
 libsimd.a
 coolwsd-inproc
 coolbench
+coolforkitns
 
 # Fuzzer
 *_fuzzer
