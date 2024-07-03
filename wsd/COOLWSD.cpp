@@ -2055,6 +2055,10 @@ void COOLWSD::innerInitialize(Application& self)
         { "stop_on_config_change", "false" },
         { "storage.filesystem[@allow]", "false" },
         // "storage.ssl.enable" - deliberately not set; for back-compat
+        { "storage.ssl.ca_file_path", "" },
+        { "storage.ssl.cert_file_path", "" },
+        { "storage.ssl.cipher_list", "" },
+        { "storage.ssl.key_file_path", "" },
         { "storage.wopi.max_file_size", "0" },
         { "storage.wopi[@allow]", "true" },
         { "storage.wopi.locking.refresh", "900" },
