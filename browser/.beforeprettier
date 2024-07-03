@@ -158,6 +158,7 @@
 /src/canvas/sections/SplitSection.ts
 /src/canvas/sections/PixelGridSection.ts
 /src/canvas/sections/CommentSection.ts
+/src/canvas/sections/CursorHeaderSection.ts
 /src/canvas/sections/ContentControlSection.ts
 /src/layer/tile/ImpressTileLayer.js
 /src/canvas/sections/ScrollSection.ts

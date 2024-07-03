@@ -266,6 +266,7 @@ COOL_JS_LST =\
 	src/layer/tile/WriterTileLayer.js \
 	src/layer/tile/ImpressTileLayer.js \
 	src/layer/tile/CalcTileLayer.js \
+	src/canvas/sections/CursorHeaderSection.ts \
 	src/canvas/sections/ContentControlSection.ts \
 	src/layer/BackgroundColor.js \
 	src/layer/marker/ProgressOverlay.js \
