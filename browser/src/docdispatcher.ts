@@ -360,19 +360,20 @@ class Dispatcher {
 	}
 
 	private addImpressAndDrawCommands() {
-		this.actionsMap['presentation'] = () => {
-			app.map.fire('fullscreen');
+		this.actionsMap['presentation'] = this.actionsMap[
+			'fullscreen-presentation'
+		] = () => {
+			if (app.map._debug.debugOn) app.map.fire('newfullscreen');
+			else app.map.fire('fullscreen');
 		};
+
 		this.actionsMap['presentinwindow'] = this.actionsMap['present-in-window'] =
 			() => {
-				if (this._map._debug.debugOn) this._map.fire('start-slide-show');
-				else this._map.fire('presentinwindow');
+				app.map.fire('presentinwindow');
 			};
+
 		this.actionsMap['fullscreen-drawing'] = () => {
 			L.toggleFullScreen();
-		};
-		this.actionsMap['fullscreen-presentation'] = () => {
-			app.map.fire('fullscreen');
 		};
 
 		this.actionsMap['deletepage'] = function () {
