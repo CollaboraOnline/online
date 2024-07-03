@@ -2374,7 +2374,9 @@ L.CanvasTileLayer = L.Layer.extend({
 			return;
 		}
 
-		app.definitions.otherViewCursorSection.addOrUpdateOtherViewCursor(viewId, obj.rectangle.split(','), parseInt(obj.part), (obj.mode ? parseInt(obj.mode): 0));
+		const username = this._map._viewInfo[viewId].username;
+		const mode = obj.mode ? parseInt(obj.mode): 0;
+		app.definitions.otherViewCursorSection.addOrUpdateOtherViewCursor(viewId, username, obj.rectangle.split(','), parseInt(obj.part), mode);
 
 		if (app.getFollowedViewId() === viewId && (app.isFollowingEditor() || app.isFollowingUser())) {
 			if (this._map.getDocType() === 'text' || this._map.getDocType() === 'presentation') {
@@ -3472,9 +3474,9 @@ L.CanvasTileLayer = L.Layer.extend({
 		const section = app.definitions.otherViewCursorSection.getViewCursorSection(viewId);
 
 		if (section && section.showSection) {
-			const point = app.definitions.simplePoint(section.position[0], section.position[1]);
+			const point = new app.definitions.simplePoint(section.position[0] * app.pixelsToTwips, section.position[1] * app.pixelsToTwips);
 			this.scrollToPos(point);
-			section.showCursorHeader();
+			app.definitions.cursorHeaderSection.showCursorHeader(viewId);
 		}
 	},
 
