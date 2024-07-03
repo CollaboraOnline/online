@@ -19,7 +19,7 @@
 
 #include <security.h>
 
-extern int domount(int argc, const char* const* argv);
+extern int domount(bool namespace_mount, int argc, const char* const* argv);
 
 int main(int argc, char** argv)
 {
@@ -31,7 +31,7 @@ int main(int argc, char** argv)
     /*WARNING*/ }
     /*WARNING: PRIVILEGED CODE CHECKING END */
 
-    return domount(argc, argv);
+    return domount(false, argc, argv);
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
