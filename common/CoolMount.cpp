@@ -147,7 +147,7 @@ void usage(const char* program)
     fprintf(stderr, "       -u to unmount the target.\n");
 }
 
-int domount(int argc, const char* const* argv)
+int domount(bool namespace_mount, int argc, const char* const* argv)
 {
     const char* program = argv[0];
     if (argc < 3)
@@ -300,10 +300,17 @@ int domount(int argc, const char* const* argv)
         else if (strcmp(option, "-r") == 0) // Readonly Mount.
         {
             // Now we need to set read-only and other flags with a remount.
-            int retval = MOUNT(source, target, nullptr,
-                               (MS_BIND | MS_REC | MS_REMOUNT | MS_NOATIME | MS_NODEV | MS_NOSUID
-                                | MS_RDONLY | MS_SILENT),
-                               nullptr);
+            unsigned long mountflags = (MS_BIND | MS_REC | MS_REMOUNT | MS_NODEV | MS_NOSUID
+                                        | MS_RDONLY | MS_SILENT);
+            // In the linux namespace mount case, setting MS_NOATIME results in EPERM on remounting
+            // something hosted in a toplevel [rel]atime mount. man 2 mount states 'An attempt was
+            // made to modify (MS_REMOUNT) the MS_RDONLY, MS_NOSUID, or MS_NOEXEC flag, or one of
+            // the "atime" flags (MS_NOATIME, MS_NODIRATIME, MS_RELATIME) of an existing mount, but
+            // the mount is locked'. Presumably we can add flags that drop privs, but not those
+            // that could circumvent original mount policy.
+            if (!namespace_mount)
+                mountflags |= MS_NOATIME;
+            int retval = MOUNT(source, target, nullptr, mountflags, nullptr);
             if (retval)
             {
                 fprintf(stderr, "%s: mount failed remount [%s] readonly: %s.\n", program, target,
