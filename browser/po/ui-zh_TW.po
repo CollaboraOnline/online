@@ -66,11 +66,11 @@ msgstr "已開啟的文件"
 #: admin/admin.strings.js:26 admin/src/AdminSocketOverview.js:82
 #: admin/src/AdminSocketOverview.js:131 admin/src/AdminSocketOverview.js:358
 msgid " user(s)."
-msgstr " . 位使用者"
+msgstr " 個使用者"
 
 #: admin/admin.strings.js:27 admin/src/AdminSocketOverview.js:214
 msgid " document(s) open."
-msgstr " 開啟的文件"
+msgstr " .個文件開啟"
 
 #: admin/admin.strings.js:28
 msgid "Number of Documents"
@@ -203,7 +203,7 @@ msgstr "關閉伺服器"
 
 #: admin/admin.strings.js:58
 msgid "Server uptime"
-msgstr "伺服器 uptime"
+msgstr "服務時間"
 
 #: admin/admin.strings.js:59
 msgid "Refresh Log"
@@ -227,8 +227,7 @@ msgid "Log Levels"
 msgstr "紀錄層級"
 
 #: admin/admin.strings.js:64 src/control/Control.AlertDialog.js:32
-#: src/control/Control.AlertDialog.js:38
-#: src/control/Control.AlertDialog.js:101
+#: src/control/Control.AlertDialog.js:38 src/control/Control.AlertDialog.js:101
 #: src/control/Control.AlertDialog.js:108 src/control/Control.Zotero.js:189
 #: src/control/Parts.js:480 src/core/Socket.js:1137 src/core/Socket.js:1142
 #: src/canvas/sections/CommentListSection.ts:137
@@ -275,19 +274,19 @@ msgstr "伺服器已關閉; 請重新載入頁面."
 #: src/control/Control.AlertDialog.js:54
 #: src/control/Control.DocumentRepair.js:77
 #: src/control/Control.LanguageDialog.js:119
-#: src/control/Control.ServerAuditDialog.ts:148
-#: src/control/Control.Tabs.js:390 src/control/Control.Tabs.js:399
-#: src/control/Control.Zotero.js:335 src/control/Control.Zotero.js:373
-#: src/control/Permission.js:89 src/control/Permission.js:99
-#: src/control/Permission.js:149 src/control/Toolbar.js:703
-#: src/control/Toolbar.js:794 src/core/Socket.js:672 src/core/Socket.js:1107
-#: src/core/Socket.js:1177 src/core/Socket.js:1324 src/core/Socket.js:1328
-#: src/docdispatcher.ts:389 src/canvas/sections/CommentListSection.ts:1236
-#: src/canvas/sections/CommentListSection.ts:2079 src/main.js:79
-#: src/main.js:82 src/main.js:134 src/map/Clipboard.js:1185
-#: src/map/handler/Map.Feedback.js:82 src/map/handler/Map.SlideShow.js:56
-#: src/map/handler/Map.SlideShow.js:170 src/map/handler/Map.SlideShow.js:305
-#: src/map/handler/Map.SlideShow.js:316 src/map/handler/Map.WOPI.js:603
+#: src/control/Control.ServerAuditDialog.ts:148 src/control/Control.Tabs.js:390
+#: src/control/Control.Tabs.js:399 src/control/Control.Zotero.js:335
+#: src/control/Control.Zotero.js:373 src/control/Permission.js:89
+#: src/control/Permission.js:99 src/control/Permission.js:149
+#: src/control/Toolbar.js:703 src/control/Toolbar.js:794 src/core/Socket.js:672
+#: src/core/Socket.js:1107 src/core/Socket.js:1177 src/core/Socket.js:1324
+#: src/core/Socket.js:1328 src/docdispatcher.ts:389
+#: src/canvas/sections/CommentListSection.ts:1236
+#: src/canvas/sections/CommentListSection.ts:2079 src/main.js:79 src/main.js:82
+#: src/main.js:134 src/map/Clipboard.js:1185 src/map/handler/Map.Feedback.js:82
+#: src/map/handler/Map.SlideShow.js:56 src/map/handler/Map.SlideShow.js:170
+#: src/map/handler/Map.SlideShow.js:305 src/map/handler/Map.SlideShow.js:316
+#: src/map/handler/Map.WOPI.js:603
 msgid "OK"
 msgstr "確定"
 
@@ -304,15 +303,14 @@ msgid "Are you sure you want to terminate this session?"
 msgstr "您確定要終止本次的作業階段？"
 
 #: admin/src/AdminSocketOverview.js:109 admin/src/AdminSocketOverview.js:432
-#: admin/src/AdminSocketSettings.js:48
-#: src/control/Control.DocumentRepair.js:71
+#: admin/src/AdminSocketSettings.js:48 src/control/Control.DocumentRepair.js:71
 #: src/control/Control.DownloadProgress.js:80
 #: src/control/Control.LanguageDialog.js:113
-#: src/control/Control.MobileTopBar.ts:43
-#: src/control/Control.UIManager.js:1225 src/control/Control.UIManager.js:1292
-#: src/control/Control.UIManager.js:1427 src/control/Control.UIManager.js:1569
-#: src/control/Control.Zotero.js:330 src/control/Toolbar.js:789
-#: src/core/Socket.js:1349 src/canvas/sections/CommentListSection.ts:423
+#: src/control/Control.MobileTopBar.ts:43 src/control/Control.UIManager.js:1225
+#: src/control/Control.UIManager.js:1292 src/control/Control.UIManager.js:1427
+#: src/control/Control.UIManager.js:1569 src/control/Control.Zotero.js:330
+#: src/control/Toolbar.js:789 src/core/Socket.js:1349
+#: src/canvas/sections/CommentListSection.ts:423
 #: src/canvas/sections/CommentSection.ts:146
 #: src/canvas/sections/CommentSection.ts:149
 msgid "Cancel"
@@ -392,7 +390,7 @@ msgstr "文件正在遷移到新伺服器,重試中..."
 
 #: js/global.js:1082
 msgid "Failed to get RouteToken from controller"
-msgstr ""
+msgstr "無法從控制器取得 RouteToken"
 
 #: src/control/ColorPicker.ts:269
 msgid "No color"
@@ -411,7 +409,6 @@ msgid "\"Slow Proxy\""
 msgstr "「緩慢代理」"
 
 #: src/control/Control.AboutDialog.ts:131
-#, fuzzy
 msgid "Copy all version information in English"
 msgstr "用英文將所有版本資訊複製"
 
@@ -425,10 +422,9 @@ msgstr "開啟連結"
 
 #: src/control/Control.AlertDialog.js:66
 msgid "Copied external sources are not allowed"
-msgstr ""
+msgstr "不允許複製外部來源"
 
 #: src/control/Control.AlertDialog.js:67
-#, fuzzy
 msgid "It seems you have copied a selection that includes external images."
 msgstr "您似乎複製了包含外部圖像的選擇。"
 
@@ -438,6 +434,8 @@ msgid ""
 "possible. Please right click in the image, choose \"Copy Image\" and paste "
 "it into the document instead."
 msgstr ""
+"禁止下載外部資源，但仍可貼上圖像。請右鍵單擊圖像，選擇“複製圖像”並將其貼上到"
+"文件中。"
 
 #: src/control/Control.AlertDialog.js:72
 msgid "External data source not allowed"
@@ -445,13 +443,13 @@ msgstr "不允許外部資料來源"
 
 #: src/control/Control.AlertDialog.js:73
 msgid "It seems you have tried to insert external data."
-msgstr ""
+msgstr "您似乎正在嘗試插入外部資料。"
 
 #: src/control/Control.AlertDialog.js:74
 msgid ""
 "Selected external data source is forbidden. Please contact the system "
 "administrator."
-msgstr ""
+msgstr "已選擇外部資料來源禁止。請聯絡系統管理員。"
 
 #: src/control/Control.AlertDialog.js:86
 msgid "Don't show this again"
@@ -475,15 +473,15 @@ msgstr "選擇性貼上"
 
 #: src/control/Control.ContextMenu.js:240
 msgid "Copy Cells"
-msgstr ""
+msgstr "複製儲存格"
 
 #: src/control/Control.ContextMenu.js:248
 msgid "Fill Series"
-msgstr ""
+msgstr "填入系列"
 
 #: src/control/Control.DocumentNameInput.js:113
 msgid "Path"
-msgstr ""
+msgstr "路徑"
 
 #: src/control/Control.DocumentRepair.js:27
 #: src/control/Control.DocumentRepair.js:28
@@ -501,19 +499,19 @@ msgstr "類型"
 
 #: src/control/Control.DocumentRepair.js:140
 msgid "What?"
-msgstr ""
+msgstr "什麼？"
 
 #: src/control/Control.DocumentRepair.js:140
 msgid "Who?"
-msgstr ""
+msgstr "誰?"
 
 #: src/control/Control.DocumentRepair.js:140
 msgid "When?"
-msgstr ""
+msgstr "何時？"
 
 #: src/control/Control.DocumentRepair.js:159
 msgid "You have not done anything to rollback yet..."
-msgstr ""
+msgstr "您尚未執行任何操作來復原..."
 
 #: src/control/Control.DocumentRepair.js:169
 msgid "Redo"
@@ -531,14 +529,14 @@ msgstr "下載精選"
 msgid ""
 "If you want to share large elements outside of %productName it's necessary "
 "to first download them."
-msgstr ""
+msgstr "如果您想在 %productName 之外共用大型元素，則必須先下載它們。"
 
 #: src/control/Control.DownloadProgress.js:60
 #: src/control/Control.NotebookbarCalc.js:212
 #: src/control/Control.NotebookbarImpress.js:280
 #: src/control/Control.NotebookbarWriter.js:252
 msgid "Download"
-msgstr ""
+msgstr "下載"
 
 #: src/control/Control.DownloadProgress.js:79
 msgid "Downloading clipboard content"
@@ -557,7 +555,7 @@ msgstr "下載已完成並可複製到剪貼簿."
 #: src/control/Control.DownloadProgress.js:110
 msgid ""
 "From now on clipboard notifications will discreetly appear at the bottom."
-msgstr ""
+msgstr "從現在開始，剪貼簿通知將顯示在底部。"
 
 #: src/control/Control.DownloadProgress.js:263
 msgid "Content copied to clipboard"
@@ -570,7 +568,7 @@ msgstr "下載失敗"
 #: src/control/Control.FormulaBarJSDialog.js:102
 #: src/control/Control.FormulaBarJSDialog.js:162
 msgid "cell address"
-msgstr ""
+msgstr "儲存格位址"
 
 #: src/control/Control.FormulaBarJSDialog.js:112
 #: src/control/Control.FormulaBarJSDialog.js:171
@@ -579,7 +577,7 @@ msgstr "函式精靈"
 
 #: src/control/Control.FormulaBarJSDialog.js:124
 msgid "Formula"
-msgstr ""
+msgstr "公式"
 
 #: src/control/Control.FormulaBarJSDialog.js:130
 #: src/control/Control.MobileTopBar.ts:42
@@ -591,7 +589,6 @@ msgid "Idle document - please click to reload and resume editing"
 msgstr "閒置文件 - 請點按以重新載入並繼續編輯"
 
 #: src/control/Control.IdleHandler.ts:42
-#, fuzzy
 msgid "Idle document - please tap to reload and resume editing"
 msgstr "閒置文件 - 請點按以重新載入並繼續編輯"
 
@@ -658,13 +655,12 @@ msgid "Style"
 msgstr "樣式"
 
 #: src/control/Control.JSDialogBuilder.js:2000
-#, fuzzy
 msgid "reply"
 msgstr "回覆"
 
 #: src/control/Control.JSDialogBuilder.js:2003
 msgid "replies"
-msgstr ""
+msgstr "所有回覆"
 
 #: src/control/Control.JSDialogBuilder.js:2014
 #: src/layer/tile/CanvasTileLayer.js:4637
@@ -688,7 +684,6 @@ msgid "Columns"
 msgstr "欄"
 
 #: src/control/Control.JSDialogBuilder.js:2953
-#, fuzzy
 msgid "Insert Table"
 msgstr "插入表格"
 
@@ -773,9 +768,8 @@ msgid "EPUB (.epub)"
 msgstr "EPUB 電子書(.epub)"
 
 #: src/control/Control.Menubar.js:85 src/control/Control.UIManager.js:151
-#, fuzzy
 msgid "Rename Document"
-msgstr "修復文件"
+msgstr "重新命名"
 
 #: src/control/Control.Menubar.js:86 src/control/Control.Menubar.js:401
 #: src/control/Control.Menubar.js:557 src/control/Control.Menubar.js:690
@@ -852,7 +846,7 @@ msgstr "重設遠近"
 #: src/control/Control.NotebookbarImpress.js:407
 #: src/control/Control.NotebookbarWriter.js:1425
 msgid "Toggle UI Mode"
-msgstr ""
+msgstr "切換 UI 模式"
 
 #: src/control/Control.Menubar.js:142 src/control/Control.Menubar.js:443
 #: src/control/Control.NotebookbarWriter.js:1439
@@ -870,12 +864,12 @@ msgstr "顯示尺規"
 #: src/control/Control.NotebookbarWriter.js:847
 #: src/control/Control.NotebookbarWriter.js:1452
 msgid "Show Status Bar"
-msgstr ""
+msgstr "顯示狀態欄"
 
 #: src/control/Control.Menubar.js:144 src/control/Control.Menubar.js:445
 #: src/control/Control.Menubar.js:599 src/control/Control.Menubar.js:733
 msgid "Hide Menu Bar"
-msgstr ""
+msgstr "隱藏選項欄"
 
 #: src/control/Control.Menubar.js:145 src/control/Control.Menubar.js:446
 #: src/control/Control.Menubar.js:594 src/control/Control.Menubar.js:734
@@ -886,7 +880,7 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:452
 #: src/control/Control.NotebookbarWriter.js:1470
 msgid "Dark Mode"
-msgstr ""
+msgstr "深色模式"
 
 #: src/control/Control.Menubar.js:146 src/control/Control.Menubar.js:447
 #: src/control/Control.Menubar.js:595 src/control/Control.Menubar.js:735
@@ -895,7 +889,7 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:459
 #: src/control/Control.NotebookbarWriter.js:1477
 msgid "Invert Background"
-msgstr ""
+msgstr "反轉背景"
 
 #: src/control/Control.Menubar.js:154 src/control/Control.Menubar.js:458
 #: src/control/Control.Menubar.js:602 src/control/Control.Menubar.js:747
@@ -916,7 +910,7 @@ msgstr "所有"
 #: src/control/Control.NotebookbarImpress.js:1219
 #: src/control/Control.NotebookbarWriter.js:1075
 msgid "Smart Picker"
-msgstr ""
+msgstr "聰明揀選器"
 
 #: src/control/Control.Menubar.js:230
 msgid "Text orientation"
@@ -925,64 +919,63 @@ msgstr "文字方向"
 #: src/control/Control.Menubar.js:294
 #: src/control/Control.NotebookbarWriter.js:61
 msgid "References"
-msgstr ""
+msgstr "參照"
 
 #: src/control/Control.Menubar.js:297
 #: src/control/Control.NotebookbarWriter.js:1837
 msgid "Update Index"
-msgstr ""
+msgstr "更新索引"
 
 #: src/control/Control.Menubar.js:306
 #: src/control/Control.NotebookbarWriter.js:1933
 msgid "Add Citation"
-msgstr ""
+msgstr "添加引文"
 
 #: src/control/Control.Menubar.js:307
 #: src/control/Control.NotebookbarWriter.js:1945
 msgid "Add Citation Note"
-msgstr ""
+msgstr "添加引文註釋"
 
 #: src/control/Control.Menubar.js:308
 #: src/control/Control.NotebookbarWriter.js:1920
 msgid "Add Bibliography"
-msgstr ""
+msgstr "添加參考書目"
 
 #: src/control/Control.Menubar.js:310
 #: src/control/Control.NotebookbarWriter.js:1963
 msgid "Refresh Citations"
-msgstr ""
+msgstr "刷新引文"
 
 #: src/control/Control.Menubar.js:311
 #: src/control/Control.NotebookbarWriter.js:1975
 #: src/control/Control.Zotero.js:1444
 msgid "Unlink Citations"
-msgstr ""
+msgstr "取消引文"
 
 #: src/control/Control.Menubar.js:312
 #: src/control/Control.NotebookbarWriter.js:1987
 msgid "Citation Preferences"
-msgstr ""
+msgstr "引文偏好"
 
 #: src/control/Control.Menubar.js:340 src/control/Control.Menubar.js:1257
 msgid "Insert Rich Text"
-msgstr ""
+msgstr "插入格式文本"
 
 #: src/control/Control.Menubar.js:341 src/control/Control.Menubar.js:1258
 msgid "Insert Checkbox"
-msgstr ""
+msgstr "插入複選框"
 
 #: src/control/Control.Menubar.js:342 src/control/Control.Menubar.js:1259
 msgid "Insert Dropdown"
-msgstr ""
+msgstr "插入下拉式選單"
 
 #: src/control/Control.Menubar.js:343 src/control/Control.Menubar.js:1260
 msgid "Insert Picture"
-msgstr ""
+msgstr "插入圖片"
 
-#: src/control/Control.Menubar.js:344 src/control/Control.Menubar.js:1261
-#, fuzzy
+#: src/control/Control.Menubar.js:344 src/control/Control.Menubar.js:1265
 msgid "Insert Date"
-msgstr "插入表格"
+msgstr "插入日期"
 
 #: src/control/Control.Menubar.js:345 src/control/Control.Menubar.js:1262
 #: src/control/Control.NotebookbarCalc.js:241
@@ -991,17 +984,17 @@ msgstr "插入表格"
 #: src/control/Control.NotebookbarWriter.js:281
 #: src/control/Control.NotebookbarWriter.js:1347
 msgid "Properties"
-msgstr ""
+msgstr "屬性"
 
 #: src/control/Control.Menubar.js:365 src/control/Control.Menubar.js:1009
 #: src/control/Control.NotebookbarWriter.js:372
 msgid "Screen Reading"
-msgstr ""
+msgstr "螢幕閱讀"
 
 #: src/control/Control.Menubar.js:378
 #: src/control/Control.NotebookbarWriter.js:338
 msgid "Forum"
-msgstr ""
+msgstr "論壇"
 
 #: src/control/Control.Menubar.js:379 src/control/Control.Menubar.js:539
 #: src/control/Control.Menubar.js:669 src/control/Control.Menubar.js:948
@@ -1035,7 +1028,7 @@ msgstr "最新更新"
 #: src/control/Control.Menubar.js:1137 src/control/Control.Menubar.js:1211
 #: src/control/Control.NotebookbarWriter.js:422
 msgid "Send Feedback"
-msgstr ""
+msgstr "傳送意見回饋"
 
 #: src/control/Control.Menubar.js:386 src/control/Control.Menubar.js:546
 #: src/control/Control.Menubar.js:676 src/control/Control.Menubar.js:955
@@ -1070,17 +1063,17 @@ msgstr "保存評註"
 #: src/control/Control.Menubar.js:413
 #: src/control/Control.NotebookbarBuilder.js:601
 msgid "Full Page Slides"
-msgstr ""
+msgstr "全頁投影片"
 
 #: src/control/Control.Menubar.js:414
 #: src/control/Control.NotebookbarBuilder.js:605
 msgid "Notes Pages"
-msgstr ""
+msgstr "筆記頁面"
 
 #: src/control/Control.Menubar.js:448
 #: src/control/Control.NotebookbarImpress.js:444
 msgid "Master View"
-msgstr ""
+msgstr "母片檢視"
 
 #: src/control/Control.Menubar.js:525 src/control/Control.Menubar.js:1081
 #: src/control/Control.PresentationBar.js:127
@@ -1130,43 +1123,42 @@ msgstr "CSV 文件 (.csv)"
 #: src/control/Control.Menubar.js:702
 #: src/control/jsdialog/Definitions.Menu.ts:111
 msgid "Active sheet"
-msgstr ""
+msgstr "活動工作表"
 
 #: src/control/Control.Menubar.js:703 src/control/Control.TopToolbar.js:109
 #: src/control/jsdialog/Definitions.Menu.ts:112
 msgid "All Sheets"
-msgstr ""
+msgstr "所有工作表"
 
 #: src/control/Control.Menubar.js:832
 #: src/control/jsdialog/Definitions.Menu.ts:286
 msgid "Condition..."
-msgstr ""
+msgstr "突出顯示單元格..."
 
 #: src/control/Control.Menubar.js:833
 #: src/control/jsdialog/Definitions.Menu.ts:289
-#, fuzzy
 msgid "Greater than..."
-msgstr "大於..."
+msgstr "值大於..."
 
 #: src/control/Control.Menubar.js:834
 #: src/control/jsdialog/Definitions.Menu.ts:293
 msgid "Less than..."
-msgstr "少於..."
+msgstr "值小於..."
 
 #: src/control/Control.Menubar.js:835
 #: src/control/jsdialog/Definitions.Menu.ts:297
 msgid "Equal to..."
-msgstr "等於..."
+msgstr "值等於..."
 
 #: src/control/Control.Menubar.js:836
 #: src/control/jsdialog/Definitions.Menu.ts:301
 msgid "Between..."
-msgstr "在...之間..."
+msgstr "值介乎於..."
 
 #: src/control/Control.Menubar.js:837
 #: src/control/jsdialog/Definitions.Menu.ts:305
 msgid "Duplicate..."
-msgstr "複製..."
+msgstr "重複值..."
 
 #: src/control/Control.Menubar.js:838
 #: src/control/jsdialog/Definitions.Menu.ts:309
@@ -1177,37 +1169,37 @@ msgstr "包含文字..."
 #: src/control/jsdialog/Definitions.Menu.ts:313
 #: src/control/jsdialog/Definitions.Menu.ts:344
 msgid "More conditions..."
-msgstr ""
+msgstr "更多突出顯示..."
 
 #: src/control/Control.Menubar.js:842
 #: src/control/jsdialog/Definitions.Menu.ts:317
 msgid "Top/Bottom Rules..."
-msgstr ""
+msgstr "頂部/底部規則..."
 
 #: src/control/Control.Menubar.js:843
 #: src/control/jsdialog/Definitions.Menu.ts:320
 msgid "Top N elements..."
-msgstr ""
+msgstr "頂部 N 個元素..."
 
 #: src/control/Control.Menubar.js:844
 #: src/control/jsdialog/Definitions.Menu.ts:324
 msgid "Top N percent..."
-msgstr ""
+msgstr "頂部 N 百分率..."
 
 #: src/control/Control.Menubar.js:845
 #: src/control/jsdialog/Definitions.Menu.ts:328
 msgid "Bottom N elements..."
-msgstr ""
+msgstr "底部 N 元素..."
 
 #: src/control/Control.Menubar.js:846
 #: src/control/jsdialog/Definitions.Menu.ts:332
 msgid "Bottom N percent..."
-msgstr ""
+msgstr "倒數百分之N..."
 
 #: src/control/Control.Menubar.js:847
 #: src/control/jsdialog/Definitions.Menu.ts:336
 msgid "Above Average..."
-msgstr ""
+msgstr "高於平均..."
 
 #: src/control/Control.Menubar.js:848
 #: src/control/jsdialog/Definitions.Menu.ts:340
@@ -1232,11 +1224,11 @@ msgstr "頁面設定"
 
 #: src/control/Control.Menubar.js:1153
 msgid "Define print area"
-msgstr ""
+msgstr "定義列印區域"
 
 #: src/control/Control.Menubar.js:1154
 msgid "Remove print area"
-msgstr ""
+msgstr "清除列印區域"
 
 #: src/control/Control.Menubar.js:1432 src/control/Control.StatusBar.js:476
 msgid "Reset to Default Language"
@@ -1250,15 +1242,15 @@ msgstr "其他..."
 
 #: src/control/Control.Menubar.js:1748
 msgid "Use Compact view"
-msgstr ""
+msgstr "使用緊湊顯示"
 
 #: src/control/Control.Menubar.js:1750
 msgid "Use Tabbed view"
-msgstr ""
+msgstr "使用選項卡式顯示"
 
 #: src/control/Control.Menubar.js:1816 src/control/Control.Menubar.js:1829
 msgid "Read-only mode"
-msgstr ""
+msgstr "唯讀模式"
 
 #: src/control/Control.Menubar.js:1850
 msgid "Insert Shape"
@@ -1266,7 +1258,7 @@ msgstr "插入形狀"
 
 #: src/control/Control.Menubar.js:2071
 msgid "file type icon"
-msgstr ""
+msgstr "文件類別圖示"
 
 #: src/control/Control.MobileBottomBar.js:28
 #: src/control/Control.MobileBottomBar.js:129
@@ -1293,77 +1285,75 @@ msgstr "漸層終止"
 
 #: src/control/Control.NotebookbarBuilder.js:229
 msgid "Tap to expand"
-msgstr ""
+msgstr "點擊展開"
 
 #: src/control/Control.NotebookbarBuilder.js:230
 #: src/control/Control.NotebookbarBuilder.js:274
 msgid "Tap to collapse"
-msgstr ""
+msgstr "點擊折疊"
 
 #: src/control/Control.NotebookbarBuilder.js:436
 msgid "CSV File (.csv)"
-msgstr ""
+msgstr "CSV 文件 (.csv)"
 
 #: src/control/Control.NotebookbarCalc.js:23
 #: src/control/Control.NotebookbarDraw.js:62
 #: src/control/Control.NotebookbarImpress.js:77
 #: src/control/Control.NotebookbarWriter.js:36
 msgid "File"
-msgstr ""
+msgstr "檔案"
 
 #: src/control/Control.NotebookbarCalc.js:29
 #: src/control/Control.NotebookbarDraw.js:68
 #: src/control/Control.NotebookbarImpress.js:83
 #: src/control/Control.NotebookbarWriter.js:42
 msgid "Home"
-msgstr ""
+msgstr "回家"
 
 #: src/control/Control.NotebookbarCalc.js:36
 #: src/control/Control.NotebookbarDraw.js:75
 #: src/control/Control.NotebookbarImpress.js:90
 #: src/control/Control.NotebookbarWriter.js:49
-#, fuzzy
 msgid "Insert"
-msgstr "插入表格"
+msgstr "插入"
 
 #: src/control/Control.NotebookbarCalc.js:42
 #: src/control/Control.NotebookbarDraw.js:81
 #: src/control/Control.NotebookbarImpress.js:96
 #: src/control/Control.NotebookbarWriter.js:55
 msgid "Layout"
-msgstr ""
+msgstr "版面配置"
 
 #: src/control/Control.NotebookbarCalc.js:48
 msgid "Data"
-msgstr ""
+msgstr "資料"
 
 #: src/control/Control.NotebookbarCalc.js:54
 #: src/control/Control.NotebookbarDraw.js:87
 #: src/control/Control.NotebookbarImpress.js:102
 #: src/control/Control.NotebookbarWriter.js:67
-#, fuzzy
 msgid "Review"
-msgstr "概覽"
+msgstr "審閱"
 
 #: src/control/Control.NotebookbarCalc.js:60
 #: src/control/Control.NotebookbarDraw.js:93
 #: src/control/Control.NotebookbarImpress.js:108
 #: src/control/Control.NotebookbarWriter.js:73
 msgid "Format"
-msgstr ""
+msgstr "格式"
 
 #: src/control/Control.NotebookbarCalc.js:66
 #: src/control/Control.NotebookbarDraw.js:106
 #: src/control/Control.NotebookbarWriter.js:92
 msgid "Draw"
-msgstr ""
+msgstr "繪畫"
 
 #: src/control/Control.NotebookbarCalc.js:73
 #: src/control/Control.NotebookbarDraw.js:113
 #: src/control/Control.NotebookbarImpress.js:135
 #: src/control/Control.NotebookbarWriter.js:99
 msgid "View"
-msgstr ""
+msgstr "檢視"
 
 #: src/control/Control.NotebookbarCalc.js:79
 #: src/control/Control.NotebookbarDraw.js:119
@@ -1371,20 +1361,19 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:105
 #: src/control/Control.ServerAuditDialog.ts:137
 msgid "Help"
-msgstr ""
+msgstr "說明"
 
 #: src/control/Control.NotebookbarCalc.js:127
 #: src/control/Control.NotebookbarImpress.js:192
 #: src/control/Control.NotebookbarWriter.js:169
 #: src/control/Control.NotebookbarWriter.js:252
 msgid "Save As"
-msgstr ""
+msgstr "另存為"
 
 #: src/control/Control.NotebookbarCalc.js:146
 #: src/control/Control.NotebookbarDraw.js:180
 #: src/control/Control.NotebookbarImpress.js:212
 #: src/control/Control.NotebookbarWriter.js:189
-#, fuzzy
 msgid "Export As"
 msgstr "匯出為"
 
@@ -1393,14 +1382,14 @@ msgstr "匯出為"
 #: src/control/Control.NotebookbarImpress.js:227
 #: src/control/Control.NotebookbarWriter.js:202
 msgid "Share"
-msgstr ""
+msgstr "共享"
 
 #: src/control/Control.NotebookbarCalc.js:171
 #: src/control/Control.NotebookbarDraw.js:206
 #: src/control/Control.NotebookbarImpress.js:237
 #: src/control/Control.NotebookbarWriter.js:211
 msgid "See history"
-msgstr ""
+msgstr "瀏覽歷史"
 
 #: src/control/Control.NotebookbarCalc.js:254
 #: src/control/Control.NotebookbarDraw.js:320
@@ -1408,46 +1397,45 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:295
 #: src/control/Control.UIManager.js:151
 msgid "Rename"
-msgstr ""
+msgstr "重新命名"
 
 #: src/control/Control.NotebookbarCalc.js:593
 msgid "General"
-msgstr ""
+msgstr "一般"
 
 #: src/control/Control.NotebookbarCalc.js:594
 msgid "Number"
-msgstr ""
+msgstr "數字"
 
 #: src/control/Control.NotebookbarCalc.js:595
 msgid "Percent"
-msgstr ""
+msgstr "百分比"
 
 #: src/control/Control.NotebookbarCalc.js:596
-#, fuzzy
 msgid "Currency"
-msgstr "目前"
+msgstr "貨幣"
 
 #: src/control/Control.NotebookbarCalc.js:597
 #: src/control/Control.NotebookbarWriter.js:1340
 #: src/control/Control.Zotero.js:1080 src/control/Control.Zotero.js:1517
 msgid "Date"
-msgstr ""
+msgstr "日期"
 
 #: src/control/Control.NotebookbarCalc.js:598
 msgid "Time"
-msgstr ""
+msgstr "時間"
 
 #: src/control/Control.NotebookbarCalc.js:599
 msgid "Scientific"
-msgstr ""
+msgstr "科學記號"
 
 #: src/control/Control.NotebookbarCalc.js:600
 msgid "Fraction"
-msgstr ""
+msgstr "分數"
 
 #: src/control/Control.NotebookbarCalc.js:601
 msgid "Boolean Value"
-msgstr ""
+msgstr "布林值"
 
 #: src/control/Control.NotebookbarCalc.js:602 src/control/Toolbar.js:761
 msgid "Text"
@@ -1455,97 +1443,91 @@ msgstr "文字"
 
 #: src/control/Control.NotebookbarCalc.js:766
 msgid "Default"
-msgstr ""
+msgstr "預設"
 
 #: src/control/Control.NotebookbarCalc.js:773
 msgid "Heading 1"
-msgstr ""
+msgstr "標題 1"
 
 #: src/control/Control.NotebookbarCalc.js:780
 msgid "Heading 2"
-msgstr ""
+msgstr "標題 2"
 
 #: src/control/Control.NotebookbarCalc.js:793
 msgid "Good"
-msgstr ""
+msgstr "優良"
 
 #: src/control/Control.NotebookbarCalc.js:800
 msgid "Neutral"
-msgstr ""
+msgstr "中等"
 
 #: src/control/Control.NotebookbarCalc.js:807
 msgid "Bad"
-msgstr ""
+msgstr "不佳"
 
 #: src/control/Control.NotebookbarCalc.js:913
 msgid "Row Height"
-msgstr ""
+msgstr "列高"
 
 #: src/control/Control.NotebookbarCalc.js:921
 msgid "Column Width"
-msgstr ""
+msgstr "欄寬"
 
 #: src/control/Control.NotebookbarCalc.js:934
-#, fuzzy
 msgid "Insert Rows Above"
-msgstr "插入表格"
+msgstr "於上方插入列"
 
 #: src/control/Control.NotebookbarCalc.js:941
-#, fuzzy
 msgid "Insert Columns Before"
-msgstr "在這之前插入工作表"
+msgstr "前方插入欄"
 
 #: src/control/Control.NotebookbarCalc.js:948
-#, fuzzy
 msgid "Delete Rows"
-msgstr "刪除"
+msgstr "刪除列"
 
 #: src/control/Control.NotebookbarCalc.js:960
-#, fuzzy
 msgid "Insert Rows Below"
-msgstr "插入工作表"
+msgstr "於下方插入列"
 
 #: src/control/Control.NotebookbarCalc.js:967
-#, fuzzy
 msgid "Insert Columns After"
-msgstr "在這之後插入工作表"
+msgstr "後方插入欄"
 
 #: src/control/Control.NotebookbarCalc.js:974
-#, fuzzy
 msgid "Delete Columns"
-msgstr "欄"
+msgstr "刪除欄"
 
 #: src/control/Control.NotebookbarCalc.js:1153
 #: src/control/Control.NotebookbarDraw.js:335
 #: src/control/Control.NotebookbarImpress.js:336
 #: src/control/Control.NotebookbarWriter.js:1363
 msgid "Read mode"
-msgstr ""
+msgstr "閱讀模式"
 
 #: src/control/Control.NotebookbarCalc.js:1207
 #: src/control/Control.NotebookbarDraw.js:389
 #: src/control/Control.NotebookbarImpress.js:406
 #: src/control/Control.NotebookbarWriter.js:1424
 msgid "Compact view"
-msgstr ""
+msgstr "緊湊式顯示"
 
 #: src/control/Control.NotebookbarCalc.js:1221
 #: src/control/Control.NotebookbarDraw.js:402
 #: src/control/Control.NotebookbarImpress.js:420
 #: src/control/Control.NotebookbarWriter.js:1464
 msgid "Collapse Tabs"
-msgstr ""
+msgstr "折疊頁面"
 
 #: src/control/Control.NotebookbarCalc.js:1233
 #: src/control/Control.NotebookbarDraw.js:414
 #: src/control/Control.NotebookbarImpress.js:432
 #: src/control/Control.NotebookbarWriter.js:1451
 msgid "Status Bar"
-msgstr ""
+msgstr "狀態列"
 
 #: src/control/Control.NotebookbarCalc.js:1327
 msgid "Sparkline"
-msgstr ""
+msgstr "迷你圖"
 
 #: src/control/Control.NotebookbarCalc.js:1461
 #: src/control/Control.NotebookbarCalc.js:2263
@@ -1557,88 +1539,88 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:1031
 #: src/control/Control.NotebookbarWriter.js:2809
 msgid "Shapes"
-msgstr ""
+msgstr "形狀"
 
 #: src/control/Control.NotebookbarDraw.js:99
 #: src/control/Control.NotebookbarImpress.js:114
 #: src/control/Control.NotebookbarWriter.js:85
 msgid "Table"
-msgstr ""
+msgstr "表格"
 
 #: src/control/Control.NotebookbarDraw.js:246
 msgid "Image (.png)"
-msgstr ""
+msgstr "圖片(.png)"
 
 #: src/control/Control.NotebookbarDraw.js:273
 msgid "PDF Document (.pdf) - Expert"
-msgstr ""
+msgstr "PDF 文件 (.pdf) - 導出"
 
 #: src/control/Control.NotebookbarDraw.js:1049
 msgid "Page Layout"
-msgstr ""
+msgstr "頁面版面配置"
 
 #: src/control/Control.NotebookbarImpress.js:128
 msgid "Master"
-msgstr ""
+msgstr "母片"
 
 #: src/control/Control.NotebookbarImpress.js:343
 #: src/control/Control.NotebookbarImpress.js:987
 msgid "Presentation"
-msgstr ""
+msgstr "簡報"
 
 #: src/control/Control.NotebookbarImpress.js:351
 msgid "Present in Window"
-msgstr ""
+msgstr "在新視窗展示"
 
 #: src/control/Control.NotebookbarWriter.js:79
 msgid "Form"
-msgstr ""
+msgstr "表單"
 
 #: src/control/Control.NotebookbarWriter.js:309
 msgid "Go Online"
-msgstr ""
+msgstr "連接在線"
 
 #: src/control/Control.NotebookbarWriter.js:309
 msgid "Go Offline"
-msgstr ""
+msgstr "離線"
 
 #: src/control/Control.NotebookbarWriter.js:387
 #: src/control/Control.ServerAuditDialog.ts:112
 #: src/control/Control.ServerAuditDialog.ts:113
 msgid "Server audit"
-msgstr ""
+msgstr "伺服器審核"
 
 #: src/control/Control.NotebookbarWriter.js:1312
 msgid "Rich Text"
-msgstr ""
+msgstr "格式文本"
 
 #: src/control/Control.NotebookbarWriter.js:1319
 msgid "Checkbox"
-msgstr ""
+msgstr "複選框"
 
 #: src/control/Control.NotebookbarWriter.js:1326
 msgid "Dropdown"
-msgstr ""
+msgstr "下拉框"
 
 #: src/control/Control.NotebookbarWriter.js:1333
 msgid "Picture"
-msgstr ""
+msgstr "圖片"
 
 #: src/control/Control.NotebookbarWriter.js:1438
 msgid "Ruler"
-msgstr ""
+msgstr "尺規"
 
 #: src/control/Control.PartsPreview.js:176
 msgid "preview of page "
-msgstr ""
+msgstr "頁面預覽 "
 
 #: src/control/Control.PartsPreview.js:235
 msgid "Paste Slide"
-msgstr ""
+msgstr "貼上投映片"
 
 #: src/control/Control.PartsPreview.js:278
 msgid "Paste"
-msgstr ""
+msgstr "貼上"
 
 #: src/control/Control.Scroll.Annotation.js:19
 msgid "Scroll up annotations"
@@ -1658,58 +1640,57 @@ msgstr "清除搜尋欄位"
 
 #: src/control/Control.ServerAuditDialog.ts:28
 msgid "The IsAdminUser property is not set by integration"
-msgstr ""
+msgstr "IsAdminUser 屬性不是由整合設定的"
 
 #: src/control/Control.ServerAuditDialog.ts:34
 msgid ""
 "Used deprecated is_admin field, integration should use IsAdminUser property "
 "instead"
-msgstr ""
+msgstr "使用已棄用的 is_admin 字段, 整合應使用 IsAdminUser 屬性"
 
 #: src/control/Control.ServerAuditDialog.ts:39
 msgid "The IsAdminUser user property is set by integration"
-msgstr ""
+msgstr "IsAdminUser 使用者屬性已被集成設置"
 
 #: src/control/Control.ServerAuditDialog.ts:43
 msgid "Your WOPI server is not secure: SSL verification failed"
-msgstr ""
+msgstr "您的 WOPI 伺服器不安全：SSL 驗證失敗"
 
 #: src/control/Control.ServerAuditDialog.ts:47
 msgid "No problems with SSL verification detected"
-msgstr ""
+msgstr "未偵測到 SSL 驗證問題"
 
 #: src/control/Control.ServerAuditDialog.ts:131
 msgid "No issues found"
-msgstr ""
+msgstr "沒有發現問題"
 
 #: src/control/Control.ServerAuditDialog.ts:137
-#, fuzzy
 msgid "Status"
-msgstr "狀態："
+msgstr "狀態"
 
 #: src/control/Control.ServerAuditDialog.ts:185
 msgid "Check security warnings of your server"
-msgstr ""
+msgstr "檢查伺服器的安全警告"
 
 #: src/control/Control.ServerAuditDialog.ts:186
 msgid "OPEN"
-msgstr ""
+msgstr "開啟"
 
 #: src/control/Control.SheetsBar.js:48
 msgid "Scroll to the first sheet"
-msgstr ""
+msgstr "滑動到第一張工作表"
 
 #: src/control/Control.SheetsBar.js:55
 msgid "Scroll left"
-msgstr ""
+msgstr "向左捲動"
 
 #: src/control/Control.SheetsBar.js:62
 msgid "Scroll right"
-msgstr ""
+msgstr "向右滑動"
 
 #: src/control/Control.SheetsBar.js:69
 msgid "Scroll to the last sheet"
-msgstr ""
+msgstr "滑動到最後一張工作表"
 
 #: src/control/Control.SheetsBar.js:76
 msgid "Insert sheet"
@@ -1752,27 +1733,27 @@ msgstr "取消搜尋"
 
 #: src/control/Control.StatusBar.js:420
 msgid "Select multiple cells"
-msgstr ""
+msgstr "選擇多個儲存格"
 
 #: src/control/Control.StatusBar.js:423
 msgid "Insert mode: inactive"
-msgstr ""
+msgstr "插入模式：未激活"
 
 #: src/control/Control.StatusBar.js:435
 msgid "Selection mode: inactive"
-msgstr ""
+msgstr "選擇模式：未激活"
 
 #: src/control/Control.StatusBar.js:493
 msgid "Set Language for All text"
-msgstr ""
+msgstr "設定所有文字的語言"
 
 #: src/control/Control.StatusBar.js:496
 msgid "Set Language for Paragraph"
-msgstr ""
+msgstr "設定段落語言"
 
 #: src/control/Control.StatusBar.js:497
 msgid "Set Language for Selection"
-msgstr ""
+msgstr "設定選擇語言"
 
 #: src/control/Control.Tabs.js:53
 msgid "Insert sheet before this"
@@ -1784,24 +1765,23 @@ msgstr "在這之後插入工作表"
 
 #: src/control/Control.Tabs.js:89
 msgid "Move Sheet Left"
-msgstr ""
+msgstr "向左滑動工作表"
 
 #: src/control/Control.Tabs.js:94
 msgid "Move Sheet Right"
-msgstr ""
+msgstr "向右滑動工作表"
 
 #: src/control/Control.Tabs.js:110
 msgid "Copy Sheet..."
-msgstr ""
+msgstr "複製表格..."
 
 #: src/control/Control.Tabs.js:388
-#, fuzzy
 msgid "Are you sure you want to delete sheet, %sheet%?"
 msgstr "您確定要刪除這份工作表：%sheet%？"
 
 #: src/control/Control.Tabs.js:399
 msgid "Rename sheet"
-msgstr ""
+msgstr "重新命名"
 
 #: src/control/Control.Tabs.js:399
 msgid "Enter new sheet name"
@@ -1809,13 +1789,12 @@ msgstr "請輸入新的工作表名稱"
 
 #: src/control/Control.Toolbar.js:932
 msgid ""
-"Conflict Undo/Redo with multiple users. Please use document repair to "
-"resolve"
+"Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr "多位使用者間取消動作/再次動作發生衝突。請使用文件修復來解決問題"
 
 #: src/control/Control.TopToolbar.js:108
 msgid "Active Sheet"
-msgstr ""
+msgstr "當前工作表"
 
 #: src/control/Control.TopToolbar.js:120
 msgid "Default Style"
@@ -1831,19 +1810,19 @@ msgstr "插入形狀"
 
 #: src/control/Control.TopToolbar.js:185
 msgid "Insert connectors"
-msgstr ""
+msgstr "插入連接器"
 
 #: src/control/Control.TopToolbar.js:199 src/control/Control.UIManager.js:753
 msgid "Hide Menu"
-msgstr ""
+msgstr "隱藏選單"
 
 #: src/control/Control.UIManager.js:151
 msgid "Enter new name"
-msgstr ""
+msgstr "輸入新名稱"
 
 #: src/control/Control.UIManager.js:776
 msgid "Show Menu"
-msgstr ""
+msgstr "顯示選單"
 
 #: src/control/Control.UserList.ts:54
 msgid "%user has joined"
@@ -1855,19 +1834,19 @@ msgstr "%user 已離開"
 
 #: src/control/Control.UserList.ts:56
 msgid "Following %user"
-msgstr ""
+msgstr "追蹤 %user"
 
 #: src/control/Control.UserList.ts:57
 msgid "Following the editor"
-msgstr ""
+msgstr "追蹤編輯"
 
 #: src/control/Control.UserList.ts:58
 msgid "Stop following"
-msgstr ""
+msgstr "停止追蹤"
 
 #: src/control/Control.UserList.ts:59
 msgid "Avatar for %user"
-msgstr ""
+msgstr "頭像為 %user"
 
 #: src/control/Control.UserList.ts:79
 msgid "%n users"
@@ -1883,7 +1862,7 @@ msgstr "0 位使用者"
 
 #: src/control/Control.UserList.ts:483
 msgid "Following"
-msgstr ""
+msgstr "追蹤中"
 
 #: src/control/Control.UserList.ts:539
 msgid "Always follow the editor"
@@ -1891,21 +1870,23 @@ msgstr "總是跟隨編輯器"
 
 #: src/control/Control.Zotero.js:139
 msgid "Zotero API key is not configured"
-msgstr ""
+msgstr "Zotero API 金鑰未配置"
 
 #: src/control/Control.Zotero.js:160
 msgid "Zotero API key is incorrect"
-msgstr ""
+msgstr "Zotero API 金鑰不正確"
 
 #: src/control/Control.Zotero.js:187
 msgid "Zotero Warning"
-msgstr ""
+msgstr "Zotero 警告"
 
 #: src/control/Control.Zotero.js:188
 msgid ""
 "The document contains some citations which may be unreachable through web "
 "API. It may cause some problems while editing citations or bibliography."
 msgstr ""
+"該文件包含一些可能無法透過 Web API 存取的引用。編輯引文或參考書目時可能會出現"
+"一些問題。"
 
 #: src/control/Control.Zotero.js:244 src/core/Socket.js:1276
 msgid "Loading..."
@@ -1913,163 +1894,160 @@ msgstr "載入中..."
 
 #: src/control/Control.Zotero.js:262
 msgid "Language:"
-msgstr ""
+msgstr "語言："
 
 #: src/control/Control.Zotero.js:277
 msgid "Store as:"
-msgstr ""
+msgstr "儲存為:"
 
 #: src/control/Control.Zotero.js:283 src/control/Control.Zotero.js:407
 msgid "Fields"
-msgstr ""
+msgstr "欄位"
 
 #: src/control/Control.Zotero.js:284 src/control/Control.Zotero.js:407
 msgid "Bookmarks"
-msgstr ""
+msgstr "書籤"
 
 #: src/control/Control.Zotero.js:405
 msgid "Footnotes"
-msgstr ""
+msgstr "註腳"
 
 #: src/control/Control.Zotero.js:405
 msgid "Endnotes"
-msgstr ""
+msgstr "尾註"
 
 #: src/control/Control.Zotero.js:469
 msgid "My Publications"
-msgstr ""
+msgstr "我的出版品"
 
 #: src/control/Control.Zotero.js:475 src/control/Control.Zotero.js:702
 msgid "My Library"
-msgstr ""
+msgstr "我的書架"
 
 #: src/control/Control.Zotero.js:476
 msgid "Group Libraries"
-msgstr ""
+msgstr "群組書架"
 
 #: src/control/Control.Zotero.js:718
 msgid "Failed to load groups"
-msgstr ""
+msgstr "載入群組失敗"
 
 #: src/control/Control.Zotero.js:736 src/control/Control.Zotero.js:1052
 msgid "Failed to load collections"
-msgstr ""
+msgstr "無法載入收藏"
 
 #: src/control/Control.Zotero.js:750
 msgid "Citation Style"
-msgstr ""
+msgstr "引文風格"
 
 #: src/control/Control.Zotero.js:755
-#, fuzzy
 msgid "Styles"
-msgstr "樣式"
+msgstr "風格"
 
 #: src/control/Control.Zotero.js:755
 msgid "An error occurred while fetching style list"
-msgstr ""
+msgstr "取得樣式清單時發生錯誤"
 
 #: src/control/Control.Zotero.js:763
 msgid "Failed to load styles"
-msgstr ""
+msgstr "載入樣式失敗"
 
 #: src/control/Control.Zotero.js:1080 src/control/Control.Zotero.js:1517
 msgid "Title"
-msgstr ""
+msgstr "標題"
 
 #: src/control/Control.Zotero.js:1080 src/control/Control.Zotero.js:1517
 msgid "Creator(s)"
-msgstr ""
+msgstr "作者"
 
 #: src/control/Control.Zotero.js:1080 src/control/Control.Zotero.js:1517
 msgid "Your library is empty"
-msgstr ""
+msgstr "你的書架是空的"
 
 #: src/control/Control.Zotero.js:1091
 msgid "Failed to load items"
-msgstr ""
+msgstr "無法載入項目"
 
 #: src/control/Control.Zotero.js:1142
 msgid "Citation warning"
-msgstr ""
+msgstr "引文警告"
 
 #: src/control/Control.Zotero.js:1143
 msgid ""
-"Once citations are entered their storage and display type can not be "
-"changed."
-msgstr ""
+"Once citations are entered their storage and display type can not be changed."
+msgstr "一旦輸入引文，其儲存和顯示類型就無法變更。"
 
 #: src/control/Control.Zotero.js:1144 src/control/Control.Zotero.js:1446
 msgid "Confirm"
-msgstr ""
+msgstr "確認"
 
 #: src/control/Control.Zotero.js:1250
 msgid "Add Note"
-msgstr ""
+msgstr "新增註釋"
 
 #: src/control/Control.Zotero.js:1253
 msgid "Notes"
-msgstr ""
+msgstr "註釋"
 
 #: src/control/Control.Zotero.js:1253
 msgid "An error occurred while fetching notes"
-msgstr ""
+msgstr "取得註釋時發生錯誤"
 
 #: src/control/Control.Zotero.js:1384
 msgid "Updated citations"
-msgstr ""
+msgstr "更新引文"
 
 #: src/control/Control.Zotero.js:1386
 msgid "Citations update failed"
-msgstr ""
+msgstr "引文更新失敗"
 
 #: src/control/Control.Zotero.js:1390
 msgid "Updating citations"
-msgstr ""
+msgstr "更新引文"
 
 #: src/control/Control.Zotero.js:1445
 msgid ""
 "Unlinking citations will prevent Collabora Online from updating citations "
 "and bibliography in this document."
-msgstr ""
+msgstr "取消引用連結將阻止 Collabora Online 更新本文檔中的引用和參考書目。"
 
 #: src/control/Permission.js:27 src/control/Permission.js:28
 msgid "Edit document"
-msgstr ""
+msgstr "編輯文檔"
 
 #: src/control/Permission.js:85
 msgid "The document could not be locked, and is opened in read-only mode."
-msgstr ""
+msgstr "文件無法鎖定，並以唯讀模式開啟."
 
 #: src/control/Permission.js:87 src/control/Permission.js:97
 msgid "Server returned this reason:"
-msgstr ""
+msgstr "伺服器傳回此原因："
 
 #: src/control/Permission.js:95
-#, fuzzy
 msgid "The document could not be locked."
 msgstr "無法儲存文件。"
 
 #: src/control/Permission.js:149
 msgid "Enter a file name"
-msgstr ""
+msgstr "輸入檔名"
 
 #: src/control/Permission.js:168
 msgid "Save as ODF format"
-msgstr ""
+msgstr "另存為 ODF 格式"
 
 #: src/control/Permission.js:169
 msgid "Continue editing"
-msgstr ""
+msgstr "繼續編輯"
 
 #: src/control/Permission.js:169
 msgid "Continue read only"
-msgstr ""
+msgstr "繼續唯讀"
 
 #: src/control/Permission.js:182
 msgid ""
 "This document may contain formatting or content that cannot be saved in the "
 "current file format."
-msgstr ""
+msgstr "該文件可能包含無法以目前文件格式儲存的格式或內容。"
 
 #: src/control/Ruler.js:369
 msgid "Left Margin"
@@ -2089,11 +2067,11 @@ msgstr "刪除定位落點"
 
 #: src/control/VRuler.ts:377
 msgid "Top Margin"
-msgstr ""
+msgstr "上邊距"
 
 #: src/control/VRuler.ts:378
 msgid "Bottom Margin"
-msgstr ""
+msgstr "下邊距"
 
 #: src/control/Signing.js:27
 msgid "This document is digitally signed and the signature is valid."
@@ -2104,24 +2082,22 @@ msgid "This document has an invalid signature."
 msgstr "此文件有簽章無效。"
 
 #: src/control/Signing.js:35
-#, fuzzy
 msgid "The signature was valid, but the document has been modified."
-msgstr "簽章有效，但文件已被修改"
+msgstr "簽章有效，但文件已被修改。"
 
 #: src/control/Signing.js:39
 msgid "The signature is OK, but the certificate could not be validated."
 msgstr "簽章沒有問題，但憑證無法通過驗證。"
 
 #: src/control/Signing.js:43
-#, fuzzy
 msgid "The signature is OK, but the document is only partially signed."
-msgstr "簽章沒有問題，但文件僅部分有簽署"
+msgstr "簽章沒有問題，但文件僅部分有簽署."
 
 #: src/control/Signing.js:47
 msgid ""
 "The signature is OK, but the certificate could not be validated and the "
 "document is only partially signed."
-msgstr ""
+msgstr "簽章沒有問題，但憑證無法通過驗證，文件僅有部分簽署。"
 
 #: src/control/Toolbar.js:54
 msgid "Font"
@@ -2149,11 +2125,11 @@ msgstr "連結"
 
 #: src/control/jsdialog/Definitions.Menu.ts:24
 msgid "Min"
-msgstr ""
+msgstr "最小"
 
 #: src/control/jsdialog/Definitions.Menu.ts:25
 msgid "Max"
-msgstr ""
+msgstr "最大"
 
 #: src/control/jsdialog/Definitions.Menu.ts:259
 msgid "Insert Local Image"
@@ -2161,47 +2137,46 @@ msgstr "插入本機影像"
 
 #: src/control/jsdialog/Definitions.Menu.ts:264
 msgid "Very Tight"
-msgstr ""
+msgstr "非常緊密"
 
 #: src/control/jsdialog/Definitions.Menu.ts:265
 msgid "Tight"
-msgstr ""
+msgstr "緊密"
 
 #: src/control/jsdialog/Definitions.Menu.ts:266
 msgid "Normal"
-msgstr ""
+msgstr "一般"
 
 #: src/control/jsdialog/Definitions.Menu.ts:267
 msgid "Loose"
-msgstr ""
+msgstr "疏鬆"
 
 #: src/control/jsdialog/Definitions.Menu.ts:268
 msgid "Very Loose"
-msgstr ""
+msgstr "非常疏鬆"
 
 #: src/control/jsdialog/Util.SnackbarController.ts:118
 msgid "Dismiss"
-msgstr ""
+msgstr "取消"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:158
 msgid "No fill"
-msgstr ""
+msgstr "無填滿"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:158
 msgid "Automatic"
-msgstr ""
+msgstr "自動"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:339
 msgid "Recent"
-msgstr ""
+msgstr "最近"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:41
 #: src/control/jsdialog/Widget.HTMLContent.ts:51
 msgid "Permission Mode"
-msgstr ""
+msgstr "權限模式"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:43
-#, fuzzy
 msgid "Read-only"
 msgstr "唯讀"
 
@@ -2248,36 +2223,35 @@ msgstr "儲存格邊框"
 
 #: src/control/jsdialog/Widget.TreeView.js:698
 msgid "Headings and objects that you add to the document will appear here"
-msgstr ""
+msgstr "您新增至文件中的標題和物件將顯示在此處"
 
 #: src/core/Socket.js:65
-#, fuzzy
 msgid "Oops, there is a problem connecting to %productName: "
-msgstr "糟糕…連接文件時發生了問題"
+msgstr "糟糕, 連接 {product name} 時發生了問題 . "
 
 #: src/core/Socket.js:653
 msgid "Server is now reachable. We have to refresh the page now."
-msgstr ""
+msgstr "伺服器現在可達。我們現在必須刷新頁面。"
 
 #: src/core/Socket.js:655
 msgid "Server is now reachable..."
-msgstr ""
+msgstr "伺服器現在可達..."
 
 #: src/core/Socket.js:659
 msgid "RELOAD"
-msgstr ""
+msgstr "重新載入"
 
 #: src/core/Socket.js:672
 msgid "Cluster configuration warning"
-msgstr ""
+msgstr "叢集配置警告"
 
 #: src/core/Socket.js:675
 msgid "Wrong server, reconnecting..."
-msgstr ""
+msgstr "伺服器錯誤，正在重新連接..."
 
 #: src/core/Socket.js:684
 msgid "COOLWSD version:"
-msgstr ""
+msgstr "COOLWSD 版本："
 
 #: src/core/Socket.js:696
 msgid "Served by:"
@@ -2289,11 +2263,11 @@ msgstr "未支援的伺服器版本。"
 
 #: src/core/Socket.js:706
 msgid "LOKit version:"
-msgstr ""
+msgstr "LOKit 版本："
 
 #: src/core/Socket.js:814
 msgid "Document is getting migrated"
-msgstr ""
+msgstr "文件正在遷移"
 
 #: src/core/Socket.js:841
 msgid "Session terminated by document owner"
@@ -2309,7 +2283,7 @@ msgstr "糟糕…連接文件時發生了問題"
 
 #: src/core/Socket.js:862
 msgid "Server is down, restarting automatically. Please wait."
-msgstr ""
+msgstr "伺服器關閉，自動重啟中，請稍候。"
 
 #: src/core/Socket.js:889
 msgid ""
@@ -2325,7 +2299,7 @@ msgstr "還原舊的版本。任何尚未儲存的變更都會放在版本歷史
 
 #: src/core/Socket.js:901
 msgid "Reloading the document after rename"
-msgstr ""
+msgstr "重新命名後載入文件"
 
 #: src/core/Socket.js:1059
 msgid "Document requires password to view."
@@ -2345,27 +2319,27 @@ msgstr "提供的密碼錯誤。請重試。"
 
 #: src/core/Socket.js:1106
 msgid "Only the document owner can change the password."
-msgstr ""
+msgstr "只有文檔所有者才能更改密碼。"
 
 #: src/core/Socket.js:1137 src/core/Socket.js:1142
 msgid "Missing Fonts"
-msgstr ""
+msgstr "缺少字體"
 
 #: src/core/Socket.js:1174
 msgid "Someone"
-msgstr ""
+msgstr "有人"
 
 #: src/core/Socket.js:1175
 msgid "%userName saved this document as %fileName. Do you want to join?"
-msgstr ""
+msgstr "%userName 將此文件另存為 %fileName. 你想要加入嗎？"
 
 #: src/core/Socket.js:1192
 msgid "The document is being renamed and will reload shortly"
-msgstr ""
+msgstr "該文檔正在重新命名並將很快重新加載"
 
 #: src/core/Socket.js:1195
 msgid "The document is switching to Offline mode and will reload shortly"
-msgstr ""
+msgstr "該文件正在切換到離線模式並將很快重新載入"
 
 #: src/core/Socket.js:1276
 msgid "Connecting..."
@@ -2373,15 +2347,15 @@ msgstr "連接中..."
 
 #: src/core/Socket.js:1291
 msgid "Server is shutting down"
-msgstr ""
+msgstr "伺服器正在關閉"
 
 #: src/core/Socket.js:1324
 msgid "Exported to storage"
-msgstr ""
+msgstr "匯出到存儲"
 
 #: src/core/Socket.js:1324
 msgid "Successfully exported: "
-msgstr ""
+msgstr "成功匯出： "
 
 #: src/core/Socket.js:1352
 msgid "Discard"
@@ -2397,7 +2371,7 @@ msgstr "儲存為新檔案"
 
 #: src/core/Socket.js:1374
 msgid "Document has been changed"
-msgstr ""
+msgstr "文件已更改"
 
 #: src/core/Socket.js:1375
 msgid ""
@@ -2412,33 +2386,32 @@ msgid ""
 msgstr "啊，這尷尬了... 我們沒辦法連接您的文件。請重試一次。"
 
 #: src/core/Socket.js:1643
-#, fuzzy
 msgid "Reconnecting..."
 msgstr "連接中..."
 
 #: src/core/Socket.js:1653
 msgid "The server has been disconnected."
-msgstr ""
+msgstr "伺服器已斷開連線。"
 
 #: src/core/Debug.js:54
 msgid "Debug Tools"
-msgstr ""
+msgstr "偵錯工具"
 
 #: src/core/Debug.js:56
 msgid "Ctrl+Shift+Alt+D to exit"
-msgstr ""
+msgstr "Ctrl+Shift+Alt+D 退出"
 
 #: src/docstate.js:93
 msgid "Standard"
-msgstr ""
+msgstr "標準"
 
 #: src/docstate.js:104
 msgid "Theme colors"
-msgstr ""
+msgstr "主題顏色"
 
 #: src/docstate.js:105
 msgid "Document colors"
-msgstr ""
+msgstr "文檔顏色"
 
 #: src/docdispatcher.ts:379
 msgid "Are you sure you want to delete this slide?"
@@ -2450,7 +2423,7 @@ msgstr "您確定要刪除這個頁面？"
 
 #: src/errormessages.js:22
 msgid "No disk space left on server."
-msgstr ""
+msgstr "伺服器上沒有剩餘磁碟空間。"
 
 #: src/errormessages.js:23
 msgid ""
@@ -2459,11 +2432,10 @@ msgid ""
 msgstr "主機 URL 空白。coolwsd 伺服器可能設定錯誤，請聯絡管理員。"
 
 #: src/errormessages.js:24
-#, fuzzy
 msgid ""
 "This is an unsupported version of {productname}. To avoid the impression "
-"that it is suitable for deployment in enterprises, this message appears "
-"when more than {docs} documents or {connections} connections are in use "
+"that it is suitable for deployment in enterprises, this message appears when "
+"more than {docs} documents or {connections} connections are in use "
 "concurrently."
 msgstr ""
 "這是 {productname} 的未支援版本。為了避免這個版本被誤認為適合企業佈署的假象，"
@@ -2493,27 +2465,28 @@ msgstr "未授權的 WOPI 主機。請稍後重試，若問題持續發生請回
 
 #: src/errormessages.js:29
 msgid "Authorization error was: '%errorMessage'."
-msgstr ""
+msgstr "授權錯誤為：'%errorMessage'."
 
 #: src/errormessages.js:30
 msgid "Wrong or missing WOPISrc parameter, please contact support."
 msgstr "WOPISrc 參數錯誤或遺失，請聯絡支援單位。"
 
 #: src/errormessages.js:31
-#, fuzzy
 msgid ""
 "Your session will expire in %time. Please save your work and refresh the "
 "session (or webpage) to continue. You might need to login again."
-msgstr "您的作業階段將在 %time 內過期。請儲存您的工作並重整作業階段（或網頁）來繼續。"
+msgstr ""
+"您的作業階段將在 %time 內過期。請儲存您的工作並重新載入作業階段（或網頁）來"
+"繼續。您可能需要重新登入。"
 
 #: src/errormessages.js:32
-#, fuzzy
 msgid ""
 "Your session has expired. Further changes to the document might not be "
 "saved. Please refresh the session (or webpage) to continue. You might need "
 "to login again."
-msgstr "您的作業階段已過期。後續之文件變更可能無法儲存。請重整作業階段（或網頁）來繼"
-"續。"
+msgstr ""
+"您的作業階段已過期。後續之文件變更可能無法儲存。請重整作業階段（或網頁）來繼"
+"續。您可能需要重新登入。"
 
 #: src/errormessages.js:33
 msgid ""
@@ -2527,35 +2500,38 @@ msgstr "無效的連結：「%url」"
 
 #: src/errormessages.js:35
 msgid ""
-"You are leaving the document. The following web page will open in a new "
-"tab: "
-msgstr ""
+"You are leaving the document. The following web page will open in a new tab: "
+msgstr "您將離開該文件。以下網頁將在新分頁中開啟： "
 
 #: src/errormessages.js:36
 msgid ""
 "Failed to load the document. This document is either malformed or is taking "
 "more resources than allowed. Please contact the administrator."
-msgstr "無法載入文件。這份文件可能格式錯誤，或是消耗比所允許還多的資源。請聯絡管理員"
-"。"
+msgstr ""
+"無法載入文件。這份文件可能格式錯誤，或是消耗比所允許還多的資源。請聯絡管理"
+"員。"
 
 #: src/errormessages.js:37
 msgid "Cleaning up the document from the last session."
-msgstr ""
+msgstr "清理上次使用時段中的文件。"
 
 #: src/errormessages.js:38
 msgid ""
 "We are in the process of cleaning up this document from the last session, "
 "please try again later."
-msgstr ""
+msgstr "我們正在清理上次使用時段中的文檔，請稍後再試。"
 
 #: src/errormessages.js:39
 msgid ""
 "Your %productName cluster appear to be mis-configured or scaling rapidly - "
-"please contact your system administrator. Continuing with editing may "
-"result in multiple users not seeing each other, conflicts in the document "
-"storage and/or copy/paste problems. Expected serverId %0 for routeToken %1 "
-"but connected to serverId %2"
+"please contact your system administrator. Continuing with editing may result "
+"in multiple users not seeing each other, conflicts in the document storage "
+"and/or copy/paste problems. Expected serverId %0 for routeToken %1 but "
+"connected to serverId %2"
 msgstr ""
+"您的 %productName 叢集似乎配置錯誤或擴充功能迅速 - 請聯絡您的系統管理員。繼"
+"續編輯可能會導致多個使用者看不到對方、文件儲存衝突和/或複製/貼上問題。 "
+"RouteToken %1 需要 serverId %0，但已連線到 serverId %2"
 
 #: src/errormessages.js:40
 msgid ""
@@ -2564,12 +2540,15 @@ msgid ""
 "administrator. For more info on proxy configuration please checkout https://"
 "sdk.collaboraonline.com/docs/installation/Proxy_settings.html"
 msgstr ""
+"無法建立套接字連線或套接字連線意外關閉。反向代理可能配置錯誤，請聯絡管理員。"
+"有關代理配置的更多信息，請查看 https://sdk.collaboraonline.com/docs/"
+"installation/Proxy_settings.html"
 
 #: src/errormessages.js:41
 msgid ""
 "Failed to establish socket connection or socket connection closed "
 "unexpectedly."
-msgstr ""
+msgstr "無法建立套接字連線或套接字連線意外關閉。"
 
 #: src/errormessages.js:44
 msgid "Failed to load document."
@@ -2583,7 +2562,7 @@ msgstr "因磁碟空間不足而儲存失敗。文件現在為唯讀模式。"
 msgid ""
 "The document is too large or no disk space left to save. Document will now "
 "be read-only."
-msgstr ""
+msgstr "文件太大或沒有剩餘磁碟空間可儲存。文件現在將是唯讀的。"
 
 #: src/errormessages.js:47 src/errormessages.js:56
 msgid "Document cannot be saved due to expired or invalid access token."
@@ -2600,32 +2579,36 @@ msgstr "無法重新命名文件。"
 #: src/errormessages.js:53
 msgid ""
 "Failed to read document from storage, please try to load the document again."
-msgstr ""
+msgstr "無法從儲存讀取文檔，請嘗試重新載入文檔。"
 
 #: src/errormessages.js:54
 msgid ""
 "Save failed due to no storage space left. Document will now be read-only. "
 "Please make sure enough disk space is available and try to save again."
 msgstr ""
+"由於沒有剩餘儲存空間，保存失敗。文件現在將是唯讀的。請確保有足夠的可用磁碟空"
+"間並再次嘗試儲存。"
 
 #: src/errormessages.js:55
 msgid ""
 "Save failed because the document is too large or exceeds the remaining "
-"storage space. The document will now be read-only but you may still "
-"download it now to preserve a copy locally."
+"storage space. The document will now be read-only but you may still download "
+"it now to preserve a copy locally."
 msgstr ""
+"由於文件太大或超出剩餘儲存空間，保存失敗。該文件現在將是唯讀的，但您仍然可以"
+"立即下載它以在本地保留副本。"
 
 #: src/errormessages.js:57
 msgid "Document cannot be saved, please check your permissions."
-msgstr ""
+msgstr "無法儲存文檔，請檢查您的權限。"
 
 #: src/errormessages.js:58
 msgid "Document cannot be renamed, please check your permissions."
-msgstr ""
+msgstr "文件無法重新命名，請檢查您的權限。"
 
 #: src/errormessages.js:59
 msgid "Document cannot be exported. Please try again."
-msgstr ""
+msgstr "文檔無法匯出。請再試一次。"
 
 #: src/errormessages.js:64
 msgid "Uploading file to server failed, file not found."
@@ -2636,33 +2619,32 @@ msgid "Uploading file to server failed, the file is too large."
 msgstr "檔案上傳至伺服器失敗，檔案過大。"
 
 #: src/layer/tile/CanvasTileLayer.js:1784
-#, fuzzy
 msgid "Functions"
-msgstr "函式精靈"
+msgstr "功能"
 
 #: src/layer/tile/CanvasTileLayer.js:2317
 msgid "Copy link location"
-msgstr ""
+msgstr "複製連結地址"
 
 #: src/layer/tile/CanvasTileLayer.js:2325
 msgid "Edit link"
-msgstr ""
+msgstr "編輯連結"
 
 #: src/layer/tile/CanvasTileLayer.js:2333
 msgid "Remove link"
-msgstr ""
+msgstr "刪除連結"
 
 #: src/layer/tile/CanvasTileLayer.js:4665
 msgid "No Comments"
-msgstr ""
+msgstr "暫無評論"
 
 #: src/canvas/sections/CommentListSection.ts:136
 msgid "A comment is being edited"
-msgstr ""
+msgstr "評論被編輯中"
 
 #: src/canvas/sections/CommentListSection.ts:137
 msgid "Please save or discard the comment currently being edited."
-msgstr ""
+msgstr "請儲存或放棄目前正在編輯的評論。"
 
 #: src/canvas/sections/CommentListSection.ts:964
 msgid "Modify"
@@ -2679,7 +2661,7 @@ msgstr "移除"
 
 #: src/canvas/sections/CommentListSection.ts:982
 msgid "Remove Thread"
-msgstr ""
+msgstr "移除線程"
 
 #: src/canvas/sections/CommentListSection.ts:988
 msgid "Resolve"
@@ -2687,44 +2669,44 @@ msgstr "解決"
 
 #: src/canvas/sections/CommentListSection.ts:988
 msgid "Unresolve"
-msgstr ""
+msgstr "未解決"
 
 #: src/canvas/sections/CommentListSection.ts:994
 msgid "Unresolve Thread"
-msgstr ""
+msgstr "未解決線程"
 
 #: src/canvas/sections/CommentListSection.ts:994
 msgid "Resolve Thread"
-msgstr ""
+msgstr "解決線程"
 
 #: src/canvas/sections/CommentListSection.ts:1234
 #: src/canvas/sections/CommentListSection.ts:1247
 #: src/canvas/sections/CommentListSection.ts:2077
 msgid "Comments Updated"
-msgstr ""
+msgstr "評論已更新"
 
 #: src/canvas/sections/CommentListSection.ts:1235
 msgid "Another user has removed this comment."
-msgstr ""
+msgstr "另一位用戶已刪除此評論。"
 
 #: src/canvas/sections/CommentListSection.ts:1248
 msgid ""
 "Another user has updated the comment. Would you like to overwrite those "
 "changes?"
-msgstr ""
+msgstr "另一位用戶更新了評論。您想覆蓋這些變更嗎？"
 
 #: src/canvas/sections/CommentListSection.ts:1250
 msgid "Update"
-msgstr ""
+msgstr "覆蓋"
 
 #: src/canvas/sections/CommentListSection.ts:1321
 #: src/canvas/sections/CommentListSection.ts:1383
 msgid "Autosaved"
-msgstr ""
+msgstr "自動儲存"
 
 #: src/canvas/sections/CommentListSection.ts:2078
 msgid "Another user has updated comments. Would you like to proceed updating?"
-msgstr ""
+msgstr "另一位用戶更新了評論。您想繼續更新嗎？"
 
 #: src/canvas/sections/CommentSection.ts:300
 msgid "Open menu"
@@ -2746,20 +2728,19 @@ msgstr "已解決"
 
 #: src/main.js:134
 msgid "Warning! The browser you are using is not supported."
-msgstr ""
+msgstr "警告！您使用的瀏覽器不受支援。"
 
 #: src/map/Clipboard.js:180
-msgid ""
-"To paste outside %productName, please first click the 'download' button"
+msgid "To paste outside %productName, please first click the 'download' button"
 msgstr "若要貼到 %productName 之外，請先按「下載」按鈕"
 
 #: src/map/Clipboard.js:188
 msgid "Copying from the document disabled"
-msgstr ""
+msgstr "從文件複製已停用"
 
 #: src/map/Clipboard.js:290
 msgid "warning: copy/paste request timed out"
-msgstr ""
+msgstr "警告：複製/貼上請求逾時"
 
 #: src/map/Clipboard.js:352
 msgid "Failed to download clipboard, please re-copy"
@@ -2778,13 +2759,20 @@ msgid ""
 "kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd></td></tr><tr><td>Copy</"
 "td><td>Cut</td><td>Paste</td></tr></table>"
 msgstr ""
+"<p>您的瀏覽器對剪貼簿的存取非常有限，因此請使用以下鍵盤快捷鍵：</p><table "
+"class=\"warn-copy-paste\"><tr><td><kbd>Ctrl</kbd><span class=\"kbd--"
+"plus\">+</span><kbd>C</kbd></td><td><kbd>Ctrl</kbd><span class=\"kbd--"
+"plus\">+</span><kbd>X</kbd></td><td><kbd>Ctrl</kbd><span class=\"kbd--"
+"plus\">+</span><kbd>V</kbd></td></tr><tr><td>複製</td><td>\n"
+"剪下</td><td>貼上</td></tr></table>"
 
 #: src/map/Clipboard.js:1199
 msgid ""
 "<p>A download due to a large copy/paste operation has already started. "
 "Please, wait for the current download or cancel it before starting a new "
 "one</p>"
-msgstr "<p>因為有大量複製/貼上操作而已經啟動下載。請先等候目前下載完成，或是在開始新"
+msgstr ""
+"<p>因為有大量複製/貼上操作而已經啟動下載。請先等候目前下載完成，或是在開始新"
 "的下載前先將它取消</p>"
 
 #: src/map/Clipboard.js:1217
@@ -2793,14 +2781,17 @@ msgid ""
 "press</b> <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to "
 "see more options</p><p>Close popup to ignore paste special</p>"
 msgstr ""
+"<p>您的瀏覽器對剪貼簿的存取非常有限</p><p><b>請按</b><kbd>Ctrl</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>V</kbd>查看更多選項</p><p>關閉彈出視窗以忽略"
+"特殊貼上</p>"
 
 #: src/map/Clipboard.js:1224
 msgid "Paste from this document"
-msgstr ""
+msgstr "從此文件貼上"
 
 #: src/map/Clipboard.js:1224
 msgid "Cancel paste special"
-msgstr ""
+msgstr "取消特殊貼上"
 
 #: src/map/Map.js:224
 msgid "Initializing..."
@@ -2808,11 +2799,11 @@ msgstr "初始化中..."
 
 #: src/map/Map.js:450 src/map/Map.js:453 src/map/Map.js:456 src/map/Map.js:459
 msgid "Last saved:"
-msgstr ""
+msgstr "最後保存："
 
 #: src/map/handler/Map.Feedback.js:81
 msgid "Please send us your feedback"
-msgstr ""
+msgstr "請給我們您的回饋"
 
 #: src/map/handler/Map.FileInserter.js:105
 #, javascript-format
@@ -2836,15 +2827,15 @@ msgstr "檔案上傳至伺服器失敗，狀態：%0"
 
 #: src/map/handler/Map.SlideShow.js:55
 msgid "Empty Slide Show"
-msgstr ""
+msgstr "清空投映片展示"
 
 #: src/map/handler/Map.SlideShow.js:161
 msgid "Windowed Presentation: "
-msgstr ""
+msgstr "視窗演示： "
 
 #: src/map/handler/Map.SlideShow.js:168
 msgid "Windowed Presentation Blocked"
-msgstr ""
+msgstr "視窗演示阻止"
 
 #: src/map/handler/Map.SlideShow.js:169
 msgid ""
@@ -2852,38 +2843,40 @@ msgid ""
 "slide shows to be displayed in separated windows, allowing for easy screen "
 "sharing."
 msgstr ""
+"演示被阻止。請允許您的瀏覽器中出現彈出視窗。這使得幻燈片可以在單獨的視窗中顯"
+"示，從而輕鬆共享螢幕。"
 
 #: src/map/handler/Map.SlideShow.js:183
 msgid "Presenting in window"
-msgstr ""
+msgstr "在新視窗展示"
 
 #: src/map/handler/Map.SlideShow.js:184
 msgid "Close Presentation"
-msgstr ""
+msgstr "關閉演示"
 
 #: src/map/handler/Map.SlideShow.js:204
 msgid "Presenting in fullscreen"
-msgstr ""
+msgstr "全螢幕呈現"
 
 #: src/map/handler/Map.SlideShow.js:205
 msgid "End Presentation"
-msgstr ""
+msgstr "演示結束"
 
 #: src/map/handler/Map.SlideShow.js:303
 msgid "Already presenting"
-msgstr ""
+msgstr "已經呈現"
 
 #: src/map/handler/Map.SlideShow.js:304
 msgid "You are already presenting this document"
-msgstr ""
+msgstr "您已經在呈現此文檔"
 
 #: src/map/handler/Map.SlideShow.js:314
 msgid "Presentation disabled"
-msgstr ""
+msgstr "演示已停用"
 
 #: src/map/handler/Map.SlideShow.js:315
 msgid "Presentation mode has been disabled for this document"
-msgstr ""
+msgstr "該文檔的演示模式已停用"
 
 #: src/map/handler/Map.WOPI.js:152
 msgid "Creating new file from template..."
@@ -2891,11 +2884,11 @@ msgstr "從範本製作新檔案..."
 
 #: src/map/handler/Map.WOPI.js:603
 msgid "Error"
-msgstr ""
+msgstr "錯誤"
 
 #: src/map/handler/Map.WOPI.js:603
 msgid "File name should contain an extension."
-msgstr ""
+msgstr "檔案名稱應包含副檔名。"
 
 #: src/map/handler/Map.WOPI.js:611
 msgid "Creating copy..."
@@ -2903,28 +2896,31 @@ msgstr "製作副本中..."
 
 #: welcome/welcome.html%2Bhtml.head.title:9-3
 msgid "Collabora Online Welcome"
-msgstr ""
+msgstr "Collabora Online 歡迎"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:26-7
 msgid "Explore The New %coolVersion"
-msgstr ""
+msgstr "探索新事物 %coolVersion"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:27-7
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:38-7
 msgid "Collabora Online Development Edition"
-msgstr ""
+msgstr "Collabora線上開發版"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:28-7
 msgid ""
 "Enjoy the latest developments in online productivity, free for you to use, "
 "to explore and to use with others in the browser. Various <a "
-"target=\"_blank\" href=\"https://www.collaboraoffice.com/solutions/"
-"collabora-office-android-ios/\">apps</a> are also available for mobile."
+"target=\"_blank\" href=\"https://www.collaboraoffice.com/solutions/collabora-"
+"office-android-ios/\">apps</a> are also available for mobile."
 msgstr ""
+"享受線上生產力的最新發展，您可以在瀏覽器中免費使用、探索以及與其他人一起使"
+"用。各個<a target=\"_blank\" href=\"https://www.collaboraoffice.com/"
+"solutions/collabora-office-android-ios/\">應用程式</a>也可用於移動設備。"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:37-7
 msgid "Discover All The Changes"
-msgstr ""
+msgstr "發現所有變化"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:39-7
 msgid ""
@@ -2933,10 +2929,13 @@ msgid ""
 "latest Collabora Online Development Edition, aimed at home users and small "
 "teams."
 msgstr ""
+"檢查<a target=\"_blank\" href=\"https://www.collaboraoffice.com/code-24-04-"
+"release-notes/\">發佈說明</a>並了解關於: 最新的 Collabora 線上開發版，針對家"
+"庭用戶和小型團隊。"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:48-7
 msgid "Get Involved"
-msgstr ""
+msgstr "加入"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:49-7
 msgid "https://collaboraonline.github.io/"
@@ -2946,19 +2945,18 @@ msgstr "https://collaboraonline.github.io/"
 msgid ""
 "Are you interested in contributing but don’t know where to start? Head over "
 "to the <a target=\"_blank\" href=\"https://collaboraonline.github.io/post/"
-"build-code/\">step-by-step instructions</a> and build CODE from scratch. "
-"You can also help out with <a target=\"_blank\" href=\"https://"
-"collaboraonline.github.io/post/translate/\">translations</a> or by <a "
-"target=\"_blank\" href=\"https://collaboraonline.github.io/post/filebugs/"
-"\">filing a bug report</a> with all the essential steps on how to reproduce "
-"it."
+"build-code/\">step-by-step instructions</a> and build CODE from scratch. You "
+"can also help out with <a target=\"_blank\" href=\"https://collaboraonline."
+"github.io/post/translate/\">translations</a> or by <a target=\"_blank\" "
+"href=\"https://collaboraonline.github.io/post/filebugs/\">filing a bug "
+"report</a> with all the essential steps on how to reproduce it."
 msgstr ""
-"有興趣做出貢獻但不知道從哪裡開始？前往<a target=\"_blank\" href=\"https"
-"://collaboraonline.github.io/post/build-code/\""
-">逐步說明</a>並從頭開始建立程式碼。您還可以幫忙<a target=\"_blank\" href="
-"\"https://collaboraonline.github.io/post/translate/\">翻譯</a>或透過<a "
-"target=\"_blank\" href=\"https://collaboraonline.github.io/post/filebugs/\""
-">提交錯誤報告</a>以及如何重現它的所有基本步驟。"
+"有興趣做出貢獻但不知道從哪裡開始？前往<a target=\"_blank\" href=\"https://"
+"collaboraonline.github.io/post/build-code/\">逐步說明</a>並從頭開始建立程式"
+"碼。您還可以幫忙<a target=\"_blank\" href=\"https://collaboraonline.github."
+"io/post/translate/\">翻譯</a>或透過<a target=\"_blank\" href=\"https://"
+"collaboraonline.github.io/post/filebugs/\">提交錯誤報告</a>以及如何重現它的所"
+"有基本步驟。"
 
 #: welcome/welcome.html%2Bhtml.body.div.div:55-5
 msgid ""
@@ -2967,265 +2965,7 @@ msgid ""
 "translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
 "translate=\"true\">3</a>"
 msgstr ""
-
-#, fuzzy
-#~ msgid "ODF Spreadsheet (.ods)"
-#~ msgstr "ODF 試算表 (.ods)"
-
-#, fuzzy
-#~ msgid "ODF Presentation (.odp)"
-#~ msgstr "ODF 簡報 (.odp)"
-
-#, fuzzy
-#~ msgid "ODF Text Document (.odt)"
-#~ msgstr "ODF 文字文件 (.odt)"
-
-#~ msgid "Previous slide"
-#~ msgstr "上一張投影片"
-
-#~ msgid "Next slide"
-#~ msgstr "下一張投影片"
-
-#~ msgid "Readonly"
-#~ msgstr "唯讀"
-
-#~ msgid "Current"
-#~ msgstr "目前"
-
-#~ msgid "Start download"
-#~ msgstr "開始下載"
-
-#~ msgid "Confirm copy to clipboard"
-#~ msgstr "確認複製到剪貼簿"
-
-#~ msgid ""
-#~ "<p>If you would like to share larger elements of your document with other "
-#~ "applications it is necessary to first download them onto your device. To do "
-#~ "that press the \"Start download\" button below, and when complete click "
-#~ "\"Confirm copy to clipboard\".</p><p>If you are copy and pasting between "
-#~ "documents inside %productName, there is no need to download.</p>"
-#~ msgstr ""
-#~ "<p>如果您希望和其他應用程式分享您文件裡的大型元素，則需要先將內容下載至您的裝置中。如果要這麼做，請按下方的「開始下載」，完成後請按「確認複製到剪貼簿」"
-#~ "。</p><p>如果您是打算在 %productName 下的文件間交叉複製貼上，則無需下載。</p>"
-
-#~ msgid ""
-#~ "No disk space left on server, please contact the server administrator to "
-#~ "continue."
-#~ msgstr "伺服器上已無剩餘磁碟空間，請聯絡伺服器管理員才得以繼續。"
-
-#, javascript-format
-#~ msgid ""
-#~ "Failed to read document from storage. Please contact your storage server "
-#~ "(%storageserver) administrator."
-#~ msgstr "無法讀取儲存空間中的文件。請聯絡您的儲存空間伺服器 (%storageserver) 管理員。"
-
-#~ msgid ""
-#~ "Document cannot be saved. Check your permissions or contact the storage "
-#~ "server administrator."
-#~ msgstr "文件無法儲存。請檢查您的權限，或請聯絡儲存空間伺服器管理員。"
-
-#~ msgid ""
-#~ "Document cannot be renamed. Check your permissions or contact the storage "
-#~ "server administrator."
-#~ msgstr "文件無法重新命名。請檢查您的權限設定，或請聯絡儲存空間伺服器的管理員。"
-
-#~ msgid "Sign document"
-#~ msgstr "簽署文件"
-
-#, javascript-format
-#~ msgid ""
-#~ "Save failed due to no disk space left on storage server. Document will now "
-#~ "be read-only. Please contact the server (%storageserver) administrator to "
-#~ "continue editing."
-#~ msgstr "由於儲存空間的伺服器磁碟空間不足而儲存失敗。文件現在只能唯讀。請聯絡伺服器 (%storageserver) 管理員以便繼續編輯。"
-
-#~ msgid "Please enter the PIN Code"
-#~ msgstr "請輸入 PIN 碼"
-
-#~ msgid "Error at login."
-#~ msgstr "登入時發生錯誤。"
-
-#~ msgid "Please scan the code"
-#~ msgstr "請掃描圖碼"
-
-#~ msgid "Couldn't get the QR code image."
-#~ msgstr "無法取得 QR 圖碼影像。"
-
-#~ msgid "Error when trying to restore access to identity."
-#~ msgstr "嘗試還原身份存取時發生錯誤。"
-
-#~ msgid "PIN Code"
-#~ msgstr "PIN 碼"
-
-#~ msgid "Please enter the PIN code from the EMail or SMS"
-#~ msgstr "請輸入電子郵件或 SMS 簡訊中的 PIN 碼"
-
-#~ msgid "Login from email or mobile number"
-#~ msgstr "以電子郵件或行動電話登入"
-
-#~ msgid "Select document type to upload"
-#~ msgstr "選取要上傳的文件類型"
-
-#~ msgid "Type:"
-#~ msgstr "類型："
-
-#~ msgid "Document uploaded."
-#~ msgstr "文件已上傳。"
-
-#~ msgid "Select identity:"
-#~ msgstr "選取身份："
-
-#~ msgid "Login from mobile"
-#~ msgstr "以手機登入"
-
-#~ msgid "Recover from email"
-#~ msgstr "以電子郵件復原"
-
-#~ msgid "Select passport"
-#~ msgstr "選擇通行護照"
-
-#~ msgid "Passport: N/A"
-#~ msgstr "通行護照：無法使用"
-
-#~ msgid "Sign"
-#~ msgstr "簽署"
-
-#~ msgid "N/A"
-#~ msgstr "無法使用"
-
-#~ msgid "Login"
-#~ msgstr "登入"
-
-#~ msgid "Not Signed"
-#~ msgstr "未簽署"
-
-#~ msgid "Signed and validated"
-#~ msgstr "已簽署和驗證"
-
-#~ msgid "Signature broken"
-#~ msgstr "簽章損毀"
-
-#~ msgid "Signed but document modified"
-#~ msgstr "已簽署但文件已修改"
-
-#~ msgid "Signed but not validated"
-#~ msgstr "已簽署但驗證未過"
-
-#~ msgid "Signed but not all files are signed"
-#~ msgstr "有簽署但非所有檔案皆簽署"
-
-#, fuzzy
-#~ msgid ""
-#~ "You are leaving the editor, are you sure you want to visit the following "
-#~ "URL?"
-#~ msgstr "您正要離開編輯器，是否確定要造訪 %url？"
-
-#~ msgid "Index"
-#~ msgstr "索引"
-
-#~ msgid "User name"
-#~ msgstr "使用者名稱"
-
-#~ msgid "Timestamp"
-#~ msgstr "時間戳記"
-
-#~ msgid "Jump to state"
-#~ msgstr "跳回狀態"
-
-#, fuzzy
-#~ msgid "Next"
-#~ msgstr "文字"
-
-#~ msgid "Start Presentation"
-#~ msgstr "開始播放投影片"
-
-#, fuzzy
-#~ msgid "Reset Zoom"
-#~ msgstr "重設遠近"
-
-#~ msgid "I understand the risks"
-#~ msgstr "我瞭解相關風險"
-
-#~ msgid ""
-#~ "We are sorry, the information about the latest updates is not available."
-#~ msgstr "很抱歉，目前沒有最新更新的相關資訊。"
-
-#~ msgid "Inactive document - please click to resume editing"
-#~ msgstr "非使用中文件 - 請點按按鍵繼續編輯"
-
-#, javascript-format
-#~ msgid "%d seconds ago"
-#~ msgstr "%d 秒前"
-
-#, javascript-format
-#~ msgid "%d minutes ago"
-#~ msgstr "%d 分鐘前"
-
-#~ msgid ""
-#~ "IE11 has reached its maximum number of connections. Please see this document "
-#~ "to increase this limit if needed: https://docs.microsoft.com/en-us/previous-"
-#~ "versions/windows/internet-explorer/ie-developer/general-info/"
-#~ "ee330736(v=vs.85)#websocket-maximum-server-connections"
-#~ msgstr ""
-#~ "IE11 已達其最大連線數。請查看此文件視需要調高限制數：https://docs.microsoft.com/en-us/"
-#~ "previous-versions/windows/internet-explorer/ie-developer/general-info/"
-#~ "ee330736(v=vs.85)#websocket-maximum-server-connections"
-
-#~ msgid "Start upload"
-#~ msgstr "開始上傳"
-
-#~ msgid "Start cross copy/paste"
-#~ msgstr "開始交叉複製/貼上"
-
-#~ msgid "Line style:"
-#~ msgstr "線條樣式:"
-
-#~ msgid ""
-#~ "<p>Your browser has very limited access to the clipboard, so use these "
-#~ "keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For copying.</li><li><b>Ctrl+X</"
-#~ "b>: For cutting.</li><li><b>Ctrl+V</b>: For pasting.</li></ul></p>"
-#~ msgstr ""
-#~ "<p>您的瀏覽器對剪貼簿有存取上的限制，請改用以下這些鍵盤快捷鍵：<ul><li><b>Ctrl+C</b>：複製。</li><li><b>Ctrl+X<"
-#~ "/b>：剪下。</li><li><b>Ctrl+V</b>：貼上。</li></ul></p>"
-
-#~ msgid "Server is recycling and will be available shortly"
-#~ msgstr "伺服器正在重啟循環，即將無法使用"
-
-#~ msgid "Oops, there is a problem connecting to Collabora Online : "
-#~ msgstr "糟糕，連接至 Collabora Online 時發生問題： "
-
-#~ msgid "Number of views"
-#~ msgstr "檢視的次數"
-
-#~ msgid "Documents"
-#~ msgstr "文件"
-
-#~ msgid "First sheet"
-#~ msgstr "第一個工作表"
-
-#~ msgid "Previous sheet"
-#~ msgstr "上一個工作表"
-
-#~ msgid "Next sheet"
-#~ msgstr "下一個工作表"
-
-#~ msgid "Last sheet"
-#~ msgstr "最後的工作表"
-
-#~ msgid "Gradient"
-#~ msgstr "漸層"
-
-#~ msgid "Hatching"
-#~ msgstr "陰影線"
-
-#~ msgid "Pattern"
-#~ msgstr "樣式"
-
-#~ msgid "Portrait"
-#~ msgstr "縱向"
-
-#~ msgid "Landscape"
-#~ msgstr "橫向"
-
-#~ msgid "Toggle Page Orientation"
-#~ msgstr "切換頁面方向"
+"<a id=\"slide-1-indicator\" class=\"active\" href=\"#slide-1\" data-"
+"translate=\"true\">1</a> <a id=\"slide-2-indicator\" href=\"#slide-2\" data-"
+"translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
+"translate=\"true\">3</a>"
