@@ -147,6 +147,7 @@
 /src/canvas/sections/TextSelectionHandleSection.ts
 /src/canvas/sections/OtherViewGraphicSelectionSection.ts
 /src/canvas/sections/OtherViewCellCursorSection.ts
+/src/canvas/sections/OtherViewCursorSection.ts
 /src/layer/tile/CalcTileLayer.js
 /src/canvas/CanvasSectionContainer.ts
 /src/canvas/CanvasSectionObject.ts

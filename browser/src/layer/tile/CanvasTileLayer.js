@@ -701,10 +701,6 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		// Position and size of the selection start (as if there would be a cursor caret there).
 
-		// View cursors with viewId to 'cursor info' mapping
-		// Eg: 1: {rectangle: 'x, y, w, h', visible: false}
-		this._viewCursors = {};
-
 		// View selection of other views
 		this._viewSelections = {};
 
@@ -1351,7 +1347,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			// update tiles and selection because mode could be changed
 			this._update();
 			app.definitions.otherViewGraphicSelectionSection.updateVisibilities();
-			this.updateAllViewCursors();
+			app.definitions.otherViewCursorSection.updateVisibilities();
 			this.updateAllTextViewSelection();
 		}
 		else if (textMsg.startsWith('textselection:')) {
@@ -2378,25 +2374,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			return;
 		}
 
-		var rectangle = this._getEditCursorRectangle(obj);
-		if (rectangle === undefined) {
-			return;
-		}
-
-		this._viewCursors[viewId] = this._viewCursors[viewId] || {};
-		this._viewCursors[viewId].bounds = new L.LatLngBounds(
-			this._twipsToLatLng(rectangle.getTopLeft(), this._map.getZoom()),
-			this._twipsToLatLng(rectangle.getBottomRight(), this._map.getZoom())),
-		this._viewCursors[viewId].corepxBounds = this._twipsToCorePixelsBounds(rectangle);
-		this._viewCursors[viewId].part = parseInt(obj.part);
-		this._viewCursors[viewId].mode = (obj.mode !== undefined) ? parseInt(obj.mode) : 0;
-
-		// FIXME. Server not sending view visible cursor
-		if (typeof this._viewCursors[viewId].visible === 'undefined') {
-			this._viewCursors[viewId].visible = true;
-		}
-
-		this._onUpdateViewCursor(viewId);
+		app.definitions.otherViewCursorSection.addOrUpdateOtherViewCursor(viewId, obj.rectangle.split(','), parseInt(obj.part), (obj.mode ? parseInt(obj.mode): 0));
 
 		if (app.getFollowedViewId() === viewId && (app.isFollowingEditor() || app.isFollowingUser())) {
 			if (this._map.getDocType() === 'text' || this._map.getDocType() === 'presentation') {
@@ -2471,11 +2449,12 @@ L.CanvasTileLayer = L.Layer.extend({
 			return;
 		}
 
-		if (typeof this._viewCursors[viewId] !== 'undefined') {
-			this._viewCursors[viewId].visible = (obj.visible === 'true');
+		const section = app.definitions.otherViewCursorSection.getViewCursorSection(viewId);
+		if (section) {
+			const showCursor = obj.visible === 'true';
+			section.sectionProperties.showCursor = showCursor;
+			section.setShowSection(showCursor);
 		}
-
-		this._onUpdateViewCursor(viewId);
 	},
 
 	_addView: function(viewInfo) {
@@ -2484,13 +2463,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 
 		this._map.addView(viewInfo);
-
-		//TODO: We can initialize color and other properties here.
-		if (typeof this._viewCursors[viewInfo.id] !== 'undefined') {
-			this._viewCursors[viewInfo.id] = {};
-		}
-
-		this._onUpdateViewCursor(viewInfo.id);
 	},
 
 	_removeView: function(viewId) {
@@ -2503,12 +2475,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			delete this._viewSelections[viewId];
 		}
 
-		// update viewcursor in writer
-		if (typeof this._viewCursors[viewId] !== 'undefined') {
-			this._viewCursors[viewId].visible = false;
-			this._onUpdateViewCursor(viewId);
-			delete this._viewCursors[viewId];
-		}
+		app.definitions.otherViewCursorSection.removeView(viewId);
 
 		app.definitions.otherViewCellCursorSection.removeView(viewId);
 		app.definitions.otherViewGraphicSelectionSection.removeView(viewId);
@@ -3321,7 +3288,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (!this.isCalc())
 			this._replayPrintTwipsMsgs(false);
 		this._onUpdateCursor(null, true);
-		this.updateAllViewCursors();
+		app.definitions.otherViewCursorSection.updateVisibilities();
 	},
 
 	_updateCursorPos: function () {
@@ -3425,12 +3392,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		this._updateCursorAndOverlay();
 
-		this.eachView(this._viewCursors, function (item) {
-			var viewCursorMarker = item.marker;
-			if (viewCursorMarker) {
-				viewCursorMarker.setOpacity(app.file.textCursor.visible && this._cursorMarker.getPosition().equals(viewCursorMarker.getPosition()) ? 0 : 1);
-			}
-		}, this, true);
+		app.definitions.otherViewCursorSection.updateVisibilities();
 	},
 
 	activateCursor: function () {
@@ -3497,56 +3459,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 	},
 
-	// Update colored non-blinking view cursor
-	_onUpdateViewCursor: function (viewId) {
-		if (typeof this._viewCursors[viewId] !== 'object' ||
-		    typeof this._viewCursors[viewId].bounds !== 'object') {
-			return;
-		}
-
-		var pixBounds = this._viewCursors[viewId].corepxBounds;
-		var viewCursorPos = pixBounds.getTopLeft();
-		var viewCursorMarker = this._viewCursors[viewId].marker;
-		var viewCursorVisible = this._viewCursors[viewId].visible;
-		var viewPart = this._viewCursors[viewId].part;
-		var viewMode = this._viewCursors[viewId].mode ? this._viewCursors[viewId].mode : 0;
-
-		if (!this._map.isViewReadOnly(viewId) &&
-		    viewCursorVisible &&
-		    !this._isZooming &&
-		    !this._isEmptyRectangle(this._viewCursors[viewId].bounds) &&
-		    (this.isWriter() || (this._selectedPart === viewPart && this._selectedMode === viewMode))) {
-			if (!viewCursorMarker) {
-				var viewCursorOptions = {
-					color: L.LOUtil.rgbToHex(this._map.getViewColor(viewId)),
-					blink: false,
-					header: true, // we want a 'hat' to our view cursors (which will contain view user names)
-					headerTimeout: 3000, // hide after some interval
-					zIndex: viewId,
-					headerName: this._map.getViewName(viewId)
-				};
-				viewCursorMarker = new Cursor(viewCursorPos, pixBounds.getSize(), this._map, viewCursorOptions);
-				this._viewCursors[viewId].marker = viewCursorMarker;
-			}
-			else {
-				viewCursorMarker.setPositionSize(viewCursorPos, pixBounds.getSize());
-			}
-			viewCursorMarker.setOpacity(app.file.textCursor.visible && this._cursorMarker.getPosition().equals(viewCursorMarker.getPosition()) ? 0 : 1);
-			if (!viewCursorMarker.isDomAttached())
-				viewCursorMarker.add();
-		}
-		else if (viewCursorMarker && viewCursorMarker.isDomAttached()) {
-			viewCursorMarker.remove();
-		}
-
-		if (this._viewCursors[viewId].marker && this._viewCursors[viewId].marker.isDomAttached())
-			this._viewCursors[viewId].marker.showCursorHeader();
-	},
-
-	updateAllViewCursors: function() {
-		this.eachView(this._viewCursors, this._onUpdateViewCursor, this, false);
-	},
-
 	updateAllTextViewSelection: function() {
 		this.eachView(this._viewSelections, this._onUpdateTextViewSelection, this, false);
 	},
@@ -3557,13 +3469,12 @@ L.CanvasTileLayer = L.Layer.extend({
 			return;
 		}
 
-		if (this._viewCursors[viewId] && this._viewCursors[viewId].visible && !this._isEmptyRectangle(this._viewCursors[viewId].bounds)) {
-			if (!this._map.getBounds().contains(this._viewCursors[viewId].bounds)) {
-				var viewCursorPos = this._viewCursors[viewId].bounds.getNorthWest();
-				this.scrollToPos(viewCursorPos);
-			}
+		const section = app.definitions.otherViewCursorSection.getViewCursorSection(viewId);
 
-			this._viewCursors[viewId].marker.showCursorHeader();
+		if (section && section.showSection) {
+			const point = app.definitions.simplePoint(section.position[0], section.position[1]);
+			this.scrollToPos(point);
+			section.showCursorHeader();
 		}
 	},
 
@@ -4457,7 +4368,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (this._docType === 'spreadsheet') {
 			map.on('zoomend', this._onCellCursorShift, this);
 		}
-		map.on('zoomend', L.bind(this.eachView, this, this._viewCursors, this._onUpdateViewCursor, this, false));
 		map.on('dragstart', this._onDragStart, this);
 		map.on('error', this._mapOnError, this);
 		if (map.options.autoFitWidth !== false) {
@@ -4577,15 +4487,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (this._selectionHandles.end.isSectionShown())
 			this._selectionHandles.end.setOpacity(0);
 
-		this.eachView(this._viewCursors, function (item) {
-			var viewCursorMarker = item.marker;
-			if (viewCursorMarker) {
-				viewCursorMarker.setOpacity(0);
-			}
-		}, this, true);
-
-
-
+		app.definitions.otherViewCursorSection.updateVisibilities(true);
 	},
 
 	postZoomAnimation: function () {
