@@ -1,45 +1,56 @@
-/* -*- js-indent-level: 8 -*- */
 /*
- * L.Map.SlideShowPresenter is responsible for presenting the slide show and transitions
+ * Copyright the Collabora Online contributors.
+ *
+ * SPDX-License-Identifier: MPL-2.0
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+/*
+ * SlideShowPresenter is responsible for presenting the slide show and transitions
  */
 
-/* global _ app */
+declare var SlideShow: any;
 
-L.Map.mergeOptions({
-	slideShow2: true,
-});
+interface PresentationInfo {
+	slides: Array<any>;
+	docWidth: number;
+	docHeight: number;
+}
 
-L.Map.SlideShowPresenter = L.Handler.extend({
-	_presentationInfo: null,
-	_docWidth: 0,
-	_docHeight: 0,
-	_slideCurrent: null,
-	_slideNext: null,
+class SlideShowPresenter {
+	_map: any = null;
+	_presentationInfo: any = null;
+	_docWidth: number = 0;
+	_docHeight: number = 0;
+	_slideCurrent: string = null;
+	_slideNext: string = null;
 
-	initialize: function (map) {
+	constructor(map: any) {
 		this._map = map;
 		this.addHooks();
-	},
+	}
 
-	addHooks: function () {
+	addHooks() {
 		this._map.on('start-slide-show', this._onStart, this);
 		this._map.on('tilepreview', this._onGotPreview);
-	},
+	}
 
-	removeHooks: function () {
+	removeHooks() {
 		this._map.off('start-slide-show', this._onStart, this);
 		this._map.off('tilepreview', this._onGotPreview);
-	},
+	}
 
-	_onStart: function (e) {
+	_onStart() {
 		app.socket.sendMessage('getpresentationinfo');
-	},
+	}
 
-	_onGotPreview: function (e) {
+	_onGotPreview(e: any) {
 		this._slideCurrent = e.tile;
-	},
+	}
 
-	initializeSlideShowInfo: function (data) {
+	initializeSlideShowInfo(data: PresentationInfo) {
 		const slides = data.slides;
 		const numberOfSlides = slides.length;
 		if (numberOfSlides === 0) return;
@@ -55,7 +66,7 @@ L.Map.SlideShowPresenter = L.Handler.extend({
 		this._map.getPreview(1001, 1, this._docWidth, this._docHeight, {
 			autoUpdate: false,
 		});
-	},
-});
+	}
+}
 
-L.Map.addInitHook('addHandler', 'slideShowPresenter', L.Map.SlideShowPresenter);
+SlideShow.SlideShowPresenter = SlideShowPresenter;
