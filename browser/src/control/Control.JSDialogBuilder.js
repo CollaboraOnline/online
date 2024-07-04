@@ -2335,6 +2335,14 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				$(div).addClass('no-label');
 			}
 
+			if (buttonImage !== false) {
+				if(data.aria) {
+					buttonImage.alt = data.aria.label;
+				} else {
+					buttonImage.alt = builder._cleanText(data.text);
+				}
+			}
+
 			div.setAttribute('data-cooltip', builder._cleanText(data.text));
 
 			if (builder.options.useInLineLabelsForUnoButtons === true) {
