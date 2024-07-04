@@ -71,6 +71,19 @@ class SlideShowPresenter {
 		return canvas;
 	}
 
+	_fetchSlide(slideNumber: number) {
+		return this._map._docLayer._preview._previewTiles[slideNumber].src;
+	}
+
+	_doTransition(previousSlide: HTMLImageElement, nextSlideNumber: number) {
+		const nextSlide = new Image();
+		nextSlide.src = this._fetchSlide(nextSlideNumber);
+		nextSlide.onload = () => {
+			SlideShow.FadeTransition(this._slideShowCanvas, previousSlide, nextSlide).start(3);
+			this._currentSlide++;
+		};
+	}
+
 	_onFullScreen() {
 		if (this._checkPresentationDisabled()) {
 			this._notifyPresentationDisabled();
@@ -107,25 +120,16 @@ class SlideShowPresenter {
 		}
 
 		const doPresentation = () => {
-			// TODO: Replace Image here with Scaled Slide Preview
-			const image1 = new Image();
-			const image2 = new Image();
+			const previousSlide = new Image();
 
-			/*
-			TODO:
-			logic for webgl presentation window. here are initial thoughts
+			if (this._currentSlide === 0) {
+				// TODO: use black background as an initial slide
+				previousSlide.src = this._fetchSlide(0);
+			} else {
+				previousSlide.src = this._fetchSlide(this._currentSlide);
+			}
 
-			keep the context and "current slide" texture outside of the class, then on transition load the slide into next texture and add to the transition class as a parameter,
-			the transition class will only do transition from one texture (slide) to another texture and then get destroyed
-			*/
-
-			image1.onload = () => {
-				image2.onload = () => {
-					SlideShow.FadeTransition(this._slideShowCanvas, image1, image2).start(3);
-				};
-				image2.src = this._map._docLayer._preview._previewTiles[1].src;
-			};
-			image1.src = this._map._docLayer._preview._previewTiles[0].src;
+			this._doTransition(previousSlide, this._currentSlide);
 
 			L.DomEvent.on(
 				document,
