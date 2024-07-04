@@ -130,7 +130,7 @@ class SlideShowPresenter {
 
 			image1.onload = () => {
 				image2.onload = () => {
-					app.definitions.FadeTransition(canvas, image1, image2).start(3);
+					SlideShow.FadeTransition(canvas, image1, image2).start(3);
 				};
 				image2.src = 'images/help/pt-BR/manage-changes-filter.png';
 			};
