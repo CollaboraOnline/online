@@ -1476,9 +1476,12 @@ void ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
             std::string lang = (form.has("lang") ? form.get("lang") : std::string());
             std::string target = (form.has("target") ? form.get("target") : std::string());
 
-            std::string transformJSON = form.get("transform");
             std::string encodedTransformJSON;
-            Poco::URI::encode(transformJSON, "", encodedTransformJSON);
+            if (form.has("transform"))
+            {
+                std::string transformJSON = form.get("transform");
+                Poco::URI::encode(transformJSON, "", encodedTransformJSON);
+            }
 
             // This lock could become a bottleneck.
             // In that case, we can use a pool and index by publicPath.
