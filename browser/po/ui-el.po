@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-28 11:57+0200\n"
+"POT-Creation-Date: 2024-07-04 13:43+0200\n"
 "PO-Revision-Date: 2023-09-19 19:52+0000\n"
 "Last-Translator: Theo <tbousiou@gmail.com>\n"
 "Language-Team: Greek <https://hosted.weblate.org/projects/collabora-online/"
@@ -215,7 +215,7 @@ msgstr "Ανανέωση σύνδεσης"
 msgid "Channel Filter:"
 msgstr "Φίλτρο καναλιού:"
 
-#: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:477
+#: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:478
 #: src/control/Control.StatusBar.js:194 src/control/Control.StatusBar.js:197
 msgid "None"
 msgstr "Καμία"
@@ -255,7 +255,7 @@ msgstr ""
 #: src/control/Control.Menubar.js:957 src/control/Control.Menubar.js:1024
 #: src/control/Control.Menubar.js:1088 src/control/Control.Menubar.js:1142
 #: src/control/Control.Menubar.js:1216
-#: src/control/Control.NotebookbarWriter.js:434
+#: src/control/Control.NotebookbarWriter.js:463
 msgid "About"
 msgstr "Περί"
 
@@ -288,7 +288,7 @@ msgstr ""
 #: src/core/Socket.js:1177 src/core/Socket.js:1324 src/core/Socket.js:1328
 #: src/docdispatcher.ts:389 src/canvas/sections/CommentListSection.ts:1249
 #: src/canvas/sections/CommentListSection.ts:2092 src/main.js:79
-#: src/main.js:82 src/main.js:134 src/map/Clipboard.js:1185
+#: src/main.js:82 src/main.js:131 src/map/Clipboard.js:1185
 #: src/map/handler/Map.Feedback.js:82 src/map/handler/Map.SlideShow.js:56
 #: src/map/handler/Map.SlideShow.js:170 src/map/handler/Map.SlideShow.js:305
 #: src/map/handler/Map.SlideShow.js:316 src/map/handler/Map.WOPI.js:603
@@ -313,8 +313,8 @@ msgstr "Είστε βέβαιοι ότι θέλετε να τερματίσετ�
 #: src/control/Control.DownloadProgress.js:80
 #: src/control/Control.LanguageDialog.js:113
 #: src/control/Control.MobileTopBar.ts:43
-#: src/control/Control.UIManager.js:1233 src/control/Control.UIManager.js:1300
-#: src/control/Control.UIManager.js:1435 src/control/Control.UIManager.js:1577
+#: src/control/Control.UIManager.js:1248 src/control/Control.UIManager.js:1315
+#: src/control/Control.UIManager.js:1450 src/control/Control.UIManager.js:1592
 #: src/control/Control.Zotero.js:330 src/control/Toolbar.js:789
 #: src/core/Socket.js:1349 src/canvas/sections/CommentListSection.ts:436
 #: src/canvas/sections/CommentSection.ts:146
@@ -539,7 +539,7 @@ msgstr ""
 #: src/control/Control.DownloadProgress.js:60
 #: src/control/Control.NotebookbarCalc.js:212
 #: src/control/Control.NotebookbarImpress.js:280
-#: src/control/Control.NotebookbarWriter.js:252
+#: src/control/Control.NotebookbarWriter.js:281
 msgid "Download"
 msgstr "Λήψη"
 
@@ -601,98 +601,98 @@ msgid "Idle document - please tap to reload and resume editing"
 msgstr ""
 "Αδρανές έγγραφο - πατήστε για επαναφόρτωση και συνέχιση της επεξεργασίας"
 
-#: src/control/Control.JSDialogBuilder.js:480
+#: src/control/Control.JSDialogBuilder.js:481
 msgid "Solid"
 msgstr "Συμπαγές"
 
-#: src/control/Control.JSDialogBuilder.js:483
+#: src/control/Control.JSDialogBuilder.js:484
 msgid "Linear"
 msgstr "Γραμμικό"
 
-#: src/control/Control.JSDialogBuilder.js:486
+#: src/control/Control.JSDialogBuilder.js:487
 msgid "Axial"
 msgstr "Αξονικό"
 
-#: src/control/Control.JSDialogBuilder.js:489
+#: src/control/Control.JSDialogBuilder.js:490
 msgid "Radial"
 msgstr "Ακτινικό"
 
-#: src/control/Control.JSDialogBuilder.js:492
+#: src/control/Control.JSDialogBuilder.js:493
 msgid "Ellipsoid"
 msgstr "Ελλειψοειδές"
 
-#: src/control/Control.JSDialogBuilder.js:496
+#: src/control/Control.JSDialogBuilder.js:497
 msgid "Quadratic"
 msgstr "Δευτεροβάθμιο"
 
-#: src/control/Control.JSDialogBuilder.js:499
+#: src/control/Control.JSDialogBuilder.js:500
 msgid "Square"
 msgstr "Τετράγωνο"
 
-#: src/control/Control.JSDialogBuilder.js:502
+#: src/control/Control.JSDialogBuilder.js:503
 msgid "Fixed size"
 msgstr "Σταθερό μέγεθος"
 
-#: src/control/Control.JSDialogBuilder.js:1504
+#: src/control/Control.JSDialogBuilder.js:1413
 msgid "From"
 msgstr "Από"
 
-#: src/control/Control.JSDialogBuilder.js:1507
+#: src/control/Control.JSDialogBuilder.js:1416
 msgid "To"
 msgstr "Σε"
 
-#: src/control/Control.JSDialogBuilder.js:1510
+#: src/control/Control.JSDialogBuilder.js:1419
 msgid "Color"
 msgstr "Χρώμα"
 
-#: src/control/Control.JSDialogBuilder.js:1633
+#: src/control/Control.JSDialogBuilder.js:1542
 msgid "Select range"
 msgstr "Επιλογή περιοχής"
 
-#: src/control/Control.JSDialogBuilder.js:1732
+#: src/control/Control.JSDialogBuilder.js:1641
 #: src/control/Control.NotebookbarBuilder.js:160
 msgid "Font Name"
 msgstr "Όνομα γραμματοσειράς"
 
-#: src/control/Control.JSDialogBuilder.js:1734 src/control/Toolbar.js:132
+#: src/control/Control.JSDialogBuilder.js:1643 src/control/Toolbar.js:132
 msgid "Font Size"
 msgstr "Μέγεθος γραμματοσειράς"
 
-#: src/control/Control.JSDialogBuilder.js:1736
+#: src/control/Control.JSDialogBuilder.js:1645
 #: src/control/Control.TopToolbar.js:454
 msgid "Style"
 msgstr "Τεχνοτροπία"
 
-#: src/control/Control.JSDialogBuilder.js:2000
+#: src/control/Control.JSDialogBuilder.js:1909
 msgid "reply"
 msgstr "απάντηση"
 
-#: src/control/Control.JSDialogBuilder.js:2003
+#: src/control/Control.JSDialogBuilder.js:1912
 msgid "replies"
 msgstr "απαντήσεις"
 
-#: src/control/Control.JSDialogBuilder.js:2014
-#: src/layer/tile/CanvasTileLayer.js:4273
-#: src/layer/tile/CanvasTileLayer.js:4284
+#: src/control/Control.JSDialogBuilder.js:1923
+#: src/layer/tile/CanvasTileLayer.js:3999
+#: src/layer/tile/CanvasTileLayer.js:4010
 #: src/canvas/sections/CommentListSection.ts:1035
 msgid "Comment"
 msgstr "Σχόλιο"
 
-#: src/control/Control.JSDialogBuilder.js:2078
+#: src/control/Control.JSDialogBuilder.js:1987
 msgid "Insert Comment"
 msgstr "Εισαγωγή σχολίου"
 
-#: src/control/Control.JSDialogBuilder.js:2932
+#: src/control/Control.JSDialogBuilder.js:2850
 #: src/control/Control.Menubar.js:863
 msgid "Rows"
 msgstr "Γραμμές"
 
-#: src/control/Control.JSDialogBuilder.js:2933
+#: src/control/Control.JSDialogBuilder.js:2851
 #: src/control/Control.Menubar.js:866
 msgid "Columns"
 msgstr "Στήλες"
 
-#: src/control/Control.JSDialogBuilder.js:2953
+#: src/control/Control.JSDialogBuilder.js:2871
 msgid "Insert Table"
 msgstr "Εισαγωγή πίνακα"
 
@@ -777,7 +777,7 @@ msgstr "Έγγραφο PDF (.pdf)"
 msgid "EPUB (.epub)"
 msgstr "EPUB (.epub)"
 
-#: src/control/Control.Menubar.js:85 src/control/Control.UIManager.js:151
+#: src/control/Control.Menubar.js:85 src/control/Control.UIManager.js:163
 #, fuzzy
 msgid "Rename Document"
 msgstr "Επισκευή εγγράφου"
@@ -816,7 +816,7 @@ msgstr "Έγγραφο PDF (.pdf)"
 
 #: src/control/Control.Menubar.js:99 src/control/Control.Menubar.js:417
 #: src/control/Control.Menubar.js:569 src/control/Control.Menubar.js:708
-#: src/control/Control.Toolbar.js:1072
+#: src/control/Control.Toolbar.js:1070
 msgid "Close document"
 msgstr "Κλείσιμο εγγράφου"
 
@@ -830,8 +830,8 @@ msgstr "Κλείσιμο εγγράφου"
 #: src/control/Control.NotebookbarDraw.js:293
 #: src/control/Control.NotebookbarImpress.js:293
 #: src/control/Control.NotebookbarImpress.js:294
-#: src/control/Control.NotebookbarWriter.js:265
-#: src/control/Control.NotebookbarWriter.js:266
+#: src/control/Control.NotebookbarWriter.js:294
+#: src/control/Control.NotebookbarWriter.js:295
 msgid "Repair"
 msgstr "Επιδιόρθωση"
 
@@ -845,8 +845,8 @@ msgstr "Επιδιόρθωση"
 #: src/control/Control.NotebookbarDraw.js:350
 #: src/control/Control.NotebookbarImpress.js:366
 #: src/control/Control.NotebookbarImpress.js:367
-#: src/control/Control.NotebookbarWriter.js:1384
-#: src/control/Control.NotebookbarWriter.js:1385
+#: src/control/Control.NotebookbarWriter.js:1413
+#: src/control/Control.NotebookbarWriter.js:1414
 #: src/control/Control.StatusBar.js:251
 msgid "Reset zoom"
 msgstr "Επαναφορά εστίασης"
@@ -856,14 +856,14 @@ msgstr "Επαναφορά εστίασης"
 #: src/control/Control.NotebookbarCalc.js:1208
 #: src/control/Control.NotebookbarDraw.js:390
 #: src/control/Control.NotebookbarImpress.js:407
-#: src/control/Control.NotebookbarWriter.js:1425
+#: src/control/Control.NotebookbarWriter.js:1454
 msgid "Toggle UI Mode"
 msgstr "Εναλλαγή κατάστασης UI"
 
 #: src/control/Control.Menubar.js:142 src/control/Control.Menubar.js:444
 #: src/control/Control.NotebookbarDraw.js:404
 #: src/control/Control.NotebookbarImpress.js:421
-#: src/control/Control.NotebookbarWriter.js:1439
+#: src/control/Control.NotebookbarWriter.js:1468
 msgid "Show Ruler"
 msgstr "Εμφάνιση χάρακα"
 
@@ -875,8 +875,8 @@ msgstr "Εμφάνιση χάρακα"
 #: src/control/Control.NotebookbarDraw.js:976
 #: src/control/Control.NotebookbarImpress.js:434
 #: src/control/Control.NotebookbarImpress.js:1028
-#: src/control/Control.NotebookbarWriter.js:847
-#: src/control/Control.NotebookbarWriter.js:1452
+#: src/control/Control.NotebookbarWriter.js:876
+#: src/control/Control.NotebookbarWriter.js:1481
 msgid "Show Status Bar"
 msgstr "Εμφάνιση επιλεγμένων φύλλων"
 
@@ -892,7 +892,7 @@ msgstr ""
 #: src/control/Control.NotebookbarCalc.js:1246
 #: src/control/Control.NotebookbarDraw.js:435
 #: src/control/Control.NotebookbarImpress.js:478
-#: src/control/Control.NotebookbarWriter.js:1470
+#: src/control/Control.NotebookbarWriter.js:1499
 msgid "Dark Mode"
 msgstr ""
 
@@ -901,7 +901,7 @@ msgstr ""
 #: src/control/Control.NotebookbarCalc.js:1253
 #: src/control/Control.NotebookbarDraw.js:442
 #: src/control/Control.NotebookbarImpress.js:485
-#: src/control/Control.NotebookbarWriter.js:1477
+#: src/control/Control.NotebookbarWriter.js:1506
 msgid "Invert Background"
 msgstr ""
 
@@ -922,7 +922,7 @@ msgstr "Όλα"
 #: src/control/Control.NotebookbarCalc.js:1377
 #: src/control/Control.NotebookbarDraw.js:1265
 #: src/control/Control.NotebookbarImpress.js:1245
-#: src/control/Control.NotebookbarWriter.js:1075
+#: src/control/Control.NotebookbarWriter.js:1104
 msgid "Smart Picker"
 msgstr ""
 
@@ -936,38 +936,38 @@ msgid "References"
 msgstr "Παραπομπές"
 
 #: src/control/Control.Menubar.js:297
-#: src/control/Control.NotebookbarWriter.js:1837
+#: src/control/Control.NotebookbarWriter.js:1866
 msgid "Update Index"
 msgstr ""
 
 #: src/control/Control.Menubar.js:306
-#: src/control/Control.NotebookbarWriter.js:1933
+#: src/control/Control.NotebookbarWriter.js:1962
 msgid "Add Citation"
 msgstr ""
 
 #: src/control/Control.Menubar.js:307
-#: src/control/Control.NotebookbarWriter.js:1945
+#: src/control/Control.NotebookbarWriter.js:1974
 msgid "Add Citation Note"
 msgstr ""
 
 #: src/control/Control.Menubar.js:308
-#: src/control/Control.NotebookbarWriter.js:1920
+#: src/control/Control.NotebookbarWriter.js:1949
 msgid "Add Bibliography"
 msgstr ""
 
 #: src/control/Control.Menubar.js:310
-#: src/control/Control.NotebookbarWriter.js:1963
+#: src/control/Control.NotebookbarWriter.js:1992
 msgid "Refresh Citations"
 msgstr ""
 
 #: src/control/Control.Menubar.js:311
-#: src/control/Control.NotebookbarWriter.js:1975
+#: src/control/Control.NotebookbarWriter.js:2004
 #: src/control/Control.Zotero.js:1444
 msgid "Unlink Citations"
 msgstr ""
 
 #: src/control/Control.Menubar.js:312
-#: src/control/Control.NotebookbarWriter.js:1987
+#: src/control/Control.NotebookbarWriter.js:2016
 msgid "Citation Preferences"
 msgstr ""
 
@@ -995,36 +995,36 @@ msgstr "Εισαγωγή ημερομηνίας"
 #: src/control/Control.NotebookbarCalc.js:241
 #: src/control/Control.NotebookbarDraw.js:307
 #: src/control/Control.NotebookbarImpress.js:309
-#: src/control/Control.NotebookbarWriter.js:281
-#: src/control/Control.NotebookbarWriter.js:1347
+#: src/control/Control.NotebookbarWriter.js:310
+#: src/control/Control.NotebookbarWriter.js:1376
 msgid "Properties"
 msgstr "Ιδιότητες"
 
 #: src/control/Control.Menubar.js:365 src/control/Control.Menubar.js:1013
-#: src/control/Control.NotebookbarWriter.js:372
+#: src/control/Control.NotebookbarWriter.js:401
 msgid "Screen Reading"
 msgstr ""
 
 #: src/control/Control.Menubar.js:378
-#: src/control/Control.NotebookbarWriter.js:338
+#: src/control/Control.NotebookbarWriter.js:367
 msgid "Forum"
 msgstr "Φόρουμ"
 
 #: src/control/Control.Menubar.js:379 src/control/Control.Menubar.js:540
 #: src/control/Control.Menubar.js:671 src/control/Control.Menubar.js:951
-#: src/control/Control.NotebookbarWriter.js:350
+#: src/control/Control.NotebookbarWriter.js:379
 msgid "Online Help"
 msgstr "Διαδικτυακή βοήθεια"
 
 #: src/control/Control.Menubar.js:380 src/control/Control.Menubar.js:541
 #: src/control/Control.Menubar.js:672 src/control/Control.Menubar.js:952
-#: src/control/Control.NotebookbarWriter.js:362
+#: src/control/Control.NotebookbarWriter.js:391
 msgid "Keyboard shortcuts"
 msgstr "Συντομεύσεις πληκτρολογίου"
 
 #: src/control/Control.Menubar.js:381 src/control/Control.Menubar.js:542
 #: src/control/Control.Menubar.js:673 src/control/Control.Menubar.js:953
-#: src/control/Control.NotebookbarWriter.js:397
+#: src/control/Control.NotebookbarWriter.js:426
 msgid "Report an issue"
 msgstr "Αναφορά ως πρόβλημα"
 
@@ -1032,7 +1032,7 @@ msgstr "Αναφορά ως πρόβλημα"
 #: src/control/Control.Menubar.js:674 src/control/Control.Menubar.js:954
 #: src/control/Control.Menubar.js:1022 src/control/Control.Menubar.js:1086
 #: src/control/Control.Menubar.js:1140 src/control/Control.Menubar.js:1214
-#: src/control/Control.NotebookbarWriter.js:410
+#: src/control/Control.NotebookbarWriter.js:439
 msgid "Latest Updates"
 msgstr "Τελευταίες ενημερώσεις"
 
@@ -1040,13 +1040,13 @@ msgstr "Τελευταίες ενημερώσεις"
 #: src/control/Control.Menubar.js:675 src/control/Control.Menubar.js:955
 #: src/control/Control.Menubar.js:1023 src/control/Control.Menubar.js:1087
 #: src/control/Control.Menubar.js:1141 src/control/Control.Menubar.js:1215
-#: src/control/Control.NotebookbarWriter.js:422
+#: src/control/Control.NotebookbarWriter.js:451
 msgid "Send Feedback"
 msgstr "Αποστολή Σχολίου"
 
 #: src/control/Control.Menubar.js:384 src/control/Control.Menubar.js:545
 #: src/control/Control.Menubar.js:676 src/control/Control.Menubar.js:956
-#: src/control/Control.NotebookbarWriter.js:387
+#: src/control/Control.NotebookbarWriter.js:416
 #: src/control/Control.ServerAuditDialog.ts:112
 #: src/control/Control.ServerAuditDialog.ts:113
 msgid "Server audit"
@@ -1233,7 +1233,7 @@ msgstr ""
 #: src/control/Control.NotebookbarCalc.js:826
 #: src/control/Control.NotebookbarDraw.js:975
 #: src/control/Control.NotebookbarImpress.js:1027
-#: src/control/Control.NotebookbarWriter.js:846
+#: src/control/Control.NotebookbarWriter.js:875
 #: src/control/Control.MobileSearchBar.ts:29
 #: src/control/Control.StatusBar.js:226 src/control/Control.Zotero.js:218
 #: src/control/Toolbar.js:554
@@ -1293,15 +1293,15 @@ msgstr "Εμφάνιση της γραμμής αναζήτησης"
 msgid "Borders"
 msgstr "Περιγράμματα"
 
-#: src/control/Control.MobileWizardBuilder.js:526
+#: src/control/Control.MobileWizardBuilder.js:525
 msgid "Background Color"
 msgstr "Χρώμα παρασκηνίου"
 
-#: src/control/Control.MobileWizardBuilder.js:528
+#: src/control/Control.MobileWizardBuilder.js:527
 msgid "Gradient Start"
 msgstr "Έναρξη διαβάθμισης"
 
-#: src/control/Control.MobileWizardBuilder.js:530
+#: src/control/Control.MobileWizardBuilder.js:529
 msgid "Gradient End"
 msgstr "Τέλος διαβάθμισης"
 
@@ -1398,7 +1398,7 @@ msgstr "~Βοήθεια"
 #: src/control/Control.NotebookbarCalc.js:127
 #: src/control/Control.NotebookbarImpress.js:192
 #: src/control/Control.NotebookbarWriter.js:169
-#: src/control/Control.NotebookbarWriter.js:252
+#: src/control/Control.NotebookbarWriter.js:281
 msgid "Save As"
 msgstr "Αποθήκευση ως"
 
@@ -1413,7 +1413,8 @@ msgstr "Εξαγωγή ως"
 #: src/control/Control.NotebookbarCalc.js:161
 #: src/control/Control.NotebookbarDraw.js:196
 #: src/control/Control.NotebookbarImpress.js:227
-#: src/control/Control.NotebookbarWriter.js:202
+#: src/control/Control.NotebookbarWriter.js:203
+#: src/control/Control.NotebookbarWriter.js:227
 msgid "Share"
 msgstr "Κοινοποίηση"
 
@@ -1421,14 +1422,15 @@ msgstr "Κοινοποίηση"
 #: src/control/Control.NotebookbarDraw.js:206
 #: src/control/Control.NotebookbarImpress.js:237
 #: src/control/Control.NotebookbarWriter.js:211
+#: src/control/Control.NotebookbarWriter.js:241
 msgid "See history"
 msgstr "Εμφάνιση ιστορικού"
 
 #: src/control/Control.NotebookbarCalc.js:254
 #: src/control/Control.NotebookbarDraw.js:320
 #: src/control/Control.NotebookbarImpress.js:321
-#: src/control/Control.NotebookbarWriter.js:295
-#: src/control/Control.UIManager.js:151
+#: src/control/Control.NotebookbarWriter.js:324
+#: src/control/Control.UIManager.js:163
 msgid "Rename"
 msgstr "Μετονομασία"
 
@@ -1449,7 +1451,7 @@ msgid "Currency"
 msgstr "Νόμισμα"
 
 #: src/control/Control.NotebookbarCalc.js:597
-#: src/control/Control.NotebookbarWriter.js:1340
+#: src/control/Control.NotebookbarWriter.js:1369
 #: src/control/Control.Zotero.js:1080 src/control/Control.Zotero.js:1517
 msgid "Date"
 msgstr "Ημερομηνία"
@@ -1533,14 +1535,14 @@ msgstr "Διαγραφή στηλών"
 #: src/control/Control.NotebookbarCalc.js:1153
 #: src/control/Control.NotebookbarDraw.js:335
 #: src/control/Control.NotebookbarImpress.js:336
-#: src/control/Control.NotebookbarWriter.js:1363
+#: src/control/Control.NotebookbarWriter.js:1392
 msgid "Read mode"
 msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:1207
 #: src/control/Control.NotebookbarDraw.js:389
 #: src/control/Control.NotebookbarImpress.js:406
-#: src/control/Control.NotebookbarWriter.js:1424
+#: src/control/Control.NotebookbarWriter.js:1453
 #, fuzzy
 msgid "Compact view"
 msgstr "Χρήση συμπτυγμένης προβολής"
@@ -1548,14 +1550,14 @@ msgstr "Χρήση συμπτυγμένης προβολής"
 #: src/control/Control.NotebookbarCalc.js:1221
 #: src/control/Control.NotebookbarDraw.js:429
 #: src/control/Control.NotebookbarImpress.js:446
-#: src/control/Control.NotebookbarWriter.js:1464
+#: src/control/Control.NotebookbarWriter.js:1493
 msgid "Collapse Tabs"
 msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:1233
 #: src/control/Control.NotebookbarDraw.js:416
 #: src/control/Control.NotebookbarImpress.js:433
-#: src/control/Control.NotebookbarWriter.js:1451
+#: src/control/Control.NotebookbarWriter.js:1480
 msgid "Status Bar"
 msgstr ""
 
@@ -1570,8 +1572,8 @@ msgstr "Γράφημα sparkline"
 #: src/control/Control.NotebookbarImpress.js:899
 #: src/control/Control.NotebookbarImpress.js:1350
 #: src/control/Control.NotebookbarImpress.js:2386
-#: src/control/Control.NotebookbarWriter.js:1031
-#: src/control/Control.NotebookbarWriter.js:2809
+#: src/control/Control.NotebookbarWriter.js:1060
+#: src/control/Control.NotebookbarWriter.js:2838
 msgid "Shapes"
 msgstr "Σχήματα"
 
@@ -1592,7 +1594,7 @@ msgstr ""
 
 #: src/control/Control.NotebookbarDraw.js:403
 #: src/control/Control.NotebookbarImpress.js:420
-#: src/control/Control.NotebookbarWriter.js:1438
+#: src/control/Control.NotebookbarWriter.js:1467
 msgid "Ruler"
 msgstr "Χάρακας"
 
@@ -1626,27 +1628,27 @@ msgstr ""
 msgid "Form"
 msgstr "Φόρμα"
 
-#: src/control/Control.NotebookbarWriter.js:309
+#: src/control/Control.NotebookbarWriter.js:338
 msgid "Go Online"
 msgstr ""
 
-#: src/control/Control.NotebookbarWriter.js:309
+#: src/control/Control.NotebookbarWriter.js:338
 msgid "Go Offline"
 msgstr ""
 
-#: src/control/Control.NotebookbarWriter.js:1312
+#: src/control/Control.NotebookbarWriter.js:1341
 msgid "Rich Text"
 msgstr ""
 
-#: src/control/Control.NotebookbarWriter.js:1319
+#: src/control/Control.NotebookbarWriter.js:1348
 msgid "Checkbox"
 msgstr ""
 
-#: src/control/Control.NotebookbarWriter.js:1326
+#: src/control/Control.NotebookbarWriter.js:1355
 msgid "Dropdown"
 msgstr ""
 
-#: src/control/Control.NotebookbarWriter.js:1333
+#: src/control/Control.NotebookbarWriter.js:1362
 msgid "Picture"
 msgstr "Εικόνα"
 
@@ -1857,15 +1859,15 @@ msgstr "Εισαγωγή σχημάτων"
 msgid "Insert connectors"
 msgstr "Εισαγωγή συνδέσμων"
 
-#: src/control/Control.TopToolbar.js:199 src/control/Control.UIManager.js:760
+#: src/control/Control.TopToolbar.js:199 src/control/Control.UIManager.js:775
 msgid "Hide Menu"
 msgstr ""
 
-#: src/control/Control.UIManager.js:151
+#: src/control/Control.UIManager.js:163
 msgid "Enter new name"
 msgstr ""
 
-#: src/control/Control.UIManager.js:783
+#: src/control/Control.UIManager.js:798
 msgid "Show Menu"
 msgstr ""
 
@@ -2274,6 +2276,10 @@ msgstr "Αριθμός διαφανειών"
 #: src/control/jsdialog/Widget.MobileBorderSelector.js:96
 msgid "Cell borders"
 msgstr "Περιγράμματα κελιού"
+
+#: src/control/jsdialog/Widget.SidebarContainers.ts:72
+msgid "More options for {name}"
+msgstr ""
 
 #: src/control/jsdialog/Widget.TreeView.js:698
 msgid "Headings and objects that you add to the document will appear here"
@@ -2701,23 +2707,11 @@ msgstr ""
 "Αποτυχία αποστολής του αρχείου στον διακομιστή, το αρχείο είναι υπερβολικά "
 "μεγάλο."
 
-#: src/layer/tile/CanvasTileLayer.js:1811
+#: src/layer/tile/CanvasTileLayer.js:1800
 msgid "Functions"
 msgstr "Λειτουργίες"
 
-#: src/layer/tile/CanvasTileLayer.js:2310
-msgid "Copy link location"
-msgstr ""
-
-#: src/layer/tile/CanvasTileLayer.js:2318
-msgid "Edit link"
-msgstr ""
-
-#: src/layer/tile/CanvasTileLayer.js:2326
-msgid "Remove link"
-msgstr ""
-
-#: src/layer/tile/CanvasTileLayer.js:4301
+#: src/layer/tile/CanvasTileLayer.js:4027
 msgid "No Comments"
 msgstr "Χωρίς σχόλια"
 
@@ -2809,7 +2803,7 @@ msgstr "Απόρριψη αλλαγής"
 msgid "Resolved"
 msgstr "Επιλύθηκε"
 
-#: src/main.js:134
+#: src/main.js:131
 msgid "Warning! The browser you are using is not supported."
 msgstr ""
 "Προειδοποίηση! Το πρόγραμμα περιήγησης που χρησιμοποιείτε δεν υποστηρίζεται."

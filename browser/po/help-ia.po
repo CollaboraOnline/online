@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-28 11:57+0200\n"
+"POT-Creation-Date: 2024-07-04 13:43+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -50,8 +50,8 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:91-90
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>V</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>V</kbd>"
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:92-38
@@ -60,9 +60,9 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:92-78
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd--plus\">+</"
-"span><kbd>V</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd--plus\""
+">+</span><kbd>V</kbd>"
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:93-38
@@ -79,8 +79,8 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:94-100
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>?</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>?</kbd>"
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:95-38
@@ -89,8 +89,8 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:95-90
 msgid ""
-"<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>F1</kbd>"
+"<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>F1</kbd>"
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:96-38
@@ -178,8 +178,8 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:269-78
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:334-78
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>5</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
+"\"kbd--plus\">+</span><kbd>5</kbd>"
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:109-38
@@ -192,8 +192,8 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:270-76
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:335-76
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>P</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>P</kbd>"
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:110-38
@@ -206,8 +206,8 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:271-74
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:336-74
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>B</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>B</kbd>"
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:111-38
@@ -402,8 +402,8 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:293-96
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:358-96
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>Arrow Left</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Arrow Left</kbd>"
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:137-38
@@ -453,8 +453,8 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:297-97
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:362-97
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>Arrow Right</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Arrow Right</kbd>"
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:141-38
@@ -503,8 +503,8 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:301-97
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:366-97
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>Arrow Up</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Arrow Up</kbd>"
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:145-38
@@ -553,8 +553,8 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:305-91
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:370-91
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>Arrow Down</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Arrow Down</kbd>"
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:149-38
@@ -605,8 +605,8 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:309-103
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:374-103
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>Home</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Home</kbd>"
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:153-38
@@ -657,8 +657,8 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:313-101
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:378-101
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>End</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>End</kbd>"
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:157-38
@@ -731,8 +731,8 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:165-96
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>Backspace</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Backspace</kbd>"
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:166-38
@@ -741,8 +741,8 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:166-90
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>Del</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Del</kbd>"
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.h2:170-9
@@ -791,8 +791,8 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:177-38
 msgid ""
-"<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>Arrow Keys</kbd>"
+"<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Arrow Keys</kbd>"
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:177-181
@@ -801,8 +801,8 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:178-38
 msgid ""
-"<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>Arrow Keys</kbd>"
+"<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Arrow Keys</kbd>"
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:178-180
@@ -812,8 +812,8 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:179-38
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd--plus\">+</"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd--plus\">+</"
 "span><kbd>Arrow Keys</kbd>"
 msgstr ""
 
@@ -840,8 +840,8 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:182-38
 msgid ""
-"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>Del</kbd>"
+"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Del</kbd>"
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td.p:182-197
@@ -875,8 +875,8 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:191-80
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>F</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
+"\"kbd--plus\">+</span><kbd>F</kbd>"
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:192-38
@@ -885,8 +885,8 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:192-79
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>D</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
+"\"kbd--plus\">+</span><kbd>D</kbd>"
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:193-38
@@ -897,8 +897,8 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:193-79
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:244-79
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>C</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
+"\"kbd--plus\">+</span><kbd>C</kbd>"
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:195-38
@@ -915,8 +915,8 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:196-91
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>-</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>-</kbd>"
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:198-38
@@ -925,8 +925,8 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:198-90
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>Space</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Space</kbd>"
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:199-38
@@ -953,8 +953,8 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:201-101
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>Enter</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Enter</kbd>"
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:202-38
@@ -1073,8 +1073,8 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:223-82
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>Page Down</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Page Down</kbd>"
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:224-38
@@ -1083,8 +1083,8 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:224-86
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>Page Up</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Page Up</kbd>"
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:225-38
@@ -1097,8 +1097,8 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:225-292
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>Arrow</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Arrow</kbd>"
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:226-38
@@ -1126,8 +1126,8 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:228-280
 msgid ""
-"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>Page Up</kbd>"
+"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Page Up</kbd>"
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:229-38
@@ -1139,8 +1139,8 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:229-268
 msgid ""
-"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>Page Down</kbd>"
+"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Page Down</kbd>"
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:230-38
@@ -1206,8 +1206,8 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:253-104
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>1</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>1</kbd>"
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:254-38
@@ -1216,8 +1216,8 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:254-92
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>2</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>2</kbd>"
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:255-38
@@ -1226,8 +1226,8 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:255-85
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>3</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>3</kbd>"
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:256-38
@@ -1236,8 +1236,8 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:256-89
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>4</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>4</kbd>"
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:257-38
@@ -1246,8 +1246,8 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:257-112
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>5</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>5</kbd>"
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:258-38
@@ -1256,8 +1256,8 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:258-80
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>6</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>6</kbd>"
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:282-38
@@ -1349,30 +1349,37 @@ msgstr ""
 msgid "<span class=\"productname\">{productname}</span> Help"
 msgstr ""
 
-#: html/cool-help.html%2Bdiv.p:395-5 html/cool-help.html%2Bdiv.div.h3:431-5
+#: html/cool-help.html%2Bdiv.p:395-5
+#: html/cool-help.html%2Bdiv.div.h3:431-5
 msgid "Collaborative editing"
 msgstr ""
 
-#: html/cool-help.html%2Bdiv.p:396-5 html/cool-help.html%2Bdiv.div.h3:442-5
+#: html/cool-help.html%2Bdiv.p:396-5
+#: html/cool-help.html%2Bdiv.div.h3:442-5
 msgid "<span class=\"productname\">{productname}</span> user interface"
 msgstr ""
 
-#: html/cool-help.html%2Bdiv.p:397-5 html/cool-help.html%2Bdiv.div.h3:480-5
+#: html/cool-help.html%2Bdiv.p:397-5
+#: html/cool-help.html%2Bdiv.div.h3:480-5
 msgid "Opening, closing, saving, printing and downloading documents"
 msgstr ""
 
-#: html/cool-help.html%2Bdiv.p:398-5 html/cool-help.html%2Bdiv.div.h3:490-5
+#: html/cool-help.html%2Bdiv.p:398-5
+#: html/cool-help.html%2Bdiv.div.h3:490-5
 msgid "Editing documents"
 msgstr ""
 
-#: html/cool-help.html%2Bdiv.p:399-5 html/cool-help.html%2Bdiv.div.p:405-9
-#: html/cool-help.html%2Bdiv.div.p:420-9 html/cool-help.html%2Bdiv.div.h3:521-3
+#: html/cool-help.html%2Bdiv.p:399-5
+#: html/cool-help.html%2Bdiv.div.p:405-9
+#: html/cool-help.html%2Bdiv.div.p:420-9
+#: html/cool-help.html%2Bdiv.div.h3:521-3
 #: html/cool-help.html%2Bdiv.div.div.h3:586-5
 #: html/cool-help.html%2Bdiv.div.div.h3:707-5
 msgid "Advanced features"
 msgstr ""
 
-#: html/cool-help.html%2Bdiv.div.p:401-9 html/cool-help.html%2Bdiv.div.h2:560-5
+#: html/cool-help.html%2Bdiv.div.p:401-9
+#: html/cool-help.html%2Bdiv.div.h2:560-5
 msgid "<span class=\"productname\">{productname}</span> spreadsheets"
 msgstr ""
 
@@ -1397,7 +1404,8 @@ msgstr ""
 msgid "Spreadsheets"
 msgstr ""
 
-#: html/cool-help.html%2Bdiv.div.p:409-9 html/cool-help.html%2Bdiv.div.h2:629-5
+#: html/cool-help.html%2Bdiv.div.p:409-9
+#: html/cool-help.html%2Bdiv.div.h2:629-5
 msgid "<span class=\"productname\">{productname}</span> text documents"
 msgstr ""
 
@@ -1421,7 +1429,8 @@ msgstr ""
 msgid "Text documents"
 msgstr ""
 
-#: html/cool-help.html%2Bdiv.div.p:416-9 html/cool-help.html%2Bdiv.div.h2:683-5
+#: html/cool-help.html%2Bdiv.div.p:416-9
+#: html/cool-help.html%2Bdiv.div.h2:683-5
 msgid "<span class=\"productname\">{productname}</span> presentations"
 msgstr ""
 
@@ -1445,7 +1454,8 @@ msgstr ""
 msgid "Presentations"
 msgstr ""
 
-#: html/cool-help.html%2Bdiv.p:423-5 html/cool-help.html%2Bdiv.div.h2:720-5
+#: html/cool-help.html%2Bdiv.p:423-5
+#: html/cool-help.html%2Bdiv.div.h2:720-5
 msgid "Frequently Asked Questions"
 msgstr ""
 
@@ -1494,11 +1504,10 @@ msgstr ""
 msgid ""
 "<span class=\"def\">The menu bar:</span> The main menu is placed on the top "
 "and includes many options, commands for printing, editing, viewing and other "
-"advanced commands. You can hide the menu bar clicking on the <span "
-"style=\"height:0.6cm;width:0.6cm; margin: 0px;\" class=\"w2ui-icon fold\"></"
-"span> icon on the far right. Click on the <span style=\"height:0.6cm;"
-"width:0.6cm; margin: 0px;\" class=\"w2ui-icon unfold\"></span> icon to show "
-"the menu."
+"advanced commands. You can hide the menu bar clicking on the <span style="
+"\"height:0.6cm;width:0.6cm; margin: 0px;\" class=\"w2ui-icon fold\"></span> "
+"icon on the far right. Click on the <span style=\"height:0.6cm;width:0.6cm; "
+"margin: 0px;\" class=\"w2ui-icon unfold\"></span> icon to show the menu."
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.p:451-5
@@ -1573,25 +1582,24 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.p:482-30
 msgid ""
-"To download a document download it from the <span "
-"class=\"productname\">{productname}</span> application’s <span "
-"class=\"ui\">File</span> menu. The download formats available depends on the "
-"application. All applications exports documents in PDF format."
+"To download a document download it from the <span class=\"productname\""
+">{productname}</span> application’s <span class=\"ui\">File</span> menu. The "
+"download formats available depends on the application. All applications "
+"exports documents in PDF format."
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.p:483-30
 msgid ""
-"To open document, click on the file to open the <span "
-"class=\"productname\">{productname}</span> module associated to the document "
-"format."
+"To open document, click on the file to open the <span class=\"productname\""
+">{productname}</span> module associated to the document format."
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.p:484-30
 msgid ""
 "Documents in <span class=\"productname\">{productname}</span> save "
 "automatically, but if you are concerned that a document is synchronized as "
-"quickly as possible you can also force saving using the <span "
-"class=\"ui\">File</span> menu’s <span class=\"ui\">Save</span> entry."
+"quickly as possible you can also force saving using the <span class=\"ui\""
+">File</span> menu’s <span class=\"ui\">Save</span> entry."
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.p:485-30
@@ -1619,16 +1627,17 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.p:494-5
 msgid ""
 "Rich content copy/cut and paste is supported, not only within a given "
-"document, but also across documents on the same or different <span "
-"class=\"productname\">{productname}</span>. For these internal uses, users "
-"can copy/cut content, including images and mixed content, on PC by using the "
-"keyboard shortcuts directly (<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</"
-"span><kbd>X</kbd>, <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>C</"
-"kbd>, <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd>). For "
-"security reasons it is necessary to use <kbd>Ctrl</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>V</kbd> to paste on PC, but context menus can be used "
-"for cut and copy. On Android or iOS selecting text by double tapping, and "
-"using a long-tap to access copy/cut/paste via the context menu is required."
+"document, but also across documents on the same or different <span class="
+"\"productname\">{productname}</span>. For these internal uses, users can "
+"copy/cut content, including images and mixed content, on PC by using the "
+"keyboard shortcuts directly (<kbd>Ctrl</kbd><span class=\"kbd--plus\""
+">+</span><kbd>X</kbd>, <kbd>Ctrl</kbd><span class=\"kbd--plus\""
+">+</span><kbd>C</kbd>, <kbd>Ctrl</kbd><span class=\"kbd--plus\""
+">+</span><kbd>V</kbd>). For security reasons it is necessary to use "
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to paste on "
+"PC, but context menus can be used for cut and copy. On Android or iOS "
+"selecting text by double tapping, and using a long-tap to access copy/cut/"
+"paste via the context menu is required."
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.p:495-5
@@ -1667,9 +1676,9 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.p:502-5
 msgid ""
 "This is particularly useful – say when a colleague inadvertently selected "
-"all text in the document with <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</"
-"span><kbd>A</kbd> and proceeded to type over it destroying it – while you "
-"were concurrently editing."
+"all text in the document with <kbd>Ctrl</kbd><span class=\"kbd--plus\""
+">+</span><kbd>A</kbd> and proceeded to type over it destroying it – while "
+"you were concurrently editing."
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.h4:505-5
@@ -1796,9 +1805,9 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.p:541-5
 msgid ""
-"<span class=\"def\">Insert image:</span> Clicking on the <span "
-"class=\"ui\">Insert image</span> icon allows you to choose an image from the "
-"cloud storage's folders and shares."
+"<span class=\"def\">Insert image:</span> Clicking on the <span class=\"ui\""
+">Insert image</span> icon allows you to choose an image from the cloud "
+"storage's folders and shares."
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.p:542-5
@@ -1831,9 +1840,8 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.p:549-5
 msgid ""
-"Click on the submenu (<span class=\"cool-annotation-menu\" "
-"style=\"height:0.6cm;width:0.6cm;\"></span>) icon to reply, move and delete "
-"comments."
+"Click on the submenu (<span class=\"cool-annotation-menu\" style=\"height:0."
+"6cm;width:0.6cm;\"></span>) icon to reply, move and delete comments."
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.h4:552-5
@@ -1854,8 +1862,8 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.p:555-5
 msgid ""
-"To systematically spell-check the whole document use the <span "
-"class=\"ui\">Tools</span> menu’s <span class=\"ui\">Spelling</span> option."
+"To systematically spell-check the whole document use the <span class=\"ui\""
+">Tools</span> menu’s <span class=\"ui\">Spelling</span> option."
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:564-30
@@ -1883,9 +1891,8 @@ msgstr ""
 msgid ""
 "The formula language should be extremely familiar to any spreadsheet user, "
 "and is specified in great detail in the <a href=\"https://www.oasis-open.org/"
-"committees/download.php/16826/openformula-spec-20060221.html\" "
-"target=\"_blank\" rel=\"noopener noreferrer\">OASIS OpenFormula "
-"specification</a>."
+"committees/download.php/16826/openformula-spec-20060221.html\" target="
+"\"_blank\" rel=\"noopener noreferrer\">OASIS OpenFormula specification</a>."
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:580-5
@@ -1975,14 +1982,14 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:611-9
 msgid ""
 "Use the <span class=\"ui\">Input Help</span> and <span class=\"ui\">Error "
-"Alert</span> tabs to enhance the user interactions. Click <span "
-"class=\"ui\">OK</span> to close the dialog."
+"Alert</span> tabs to enhance the user interactions. Click <span class=\"ui\""
+">OK</span> to close the dialog."
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:614-11
 msgid ""
-"To remove the validity of the cell, open the dialog and set the <span "
-"class=\"ui\">Allow</span> list to “All values”."
+"To remove the validity of the cell, open the dialog and set the <span class="
+"\"ui\">Allow</span> list to “All values”."
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:618-5
@@ -1996,11 +2003,11 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:622-5
 msgid ""
-"<span class=\"def\">Conditional formatting:</span> <span "
-"class=\"productname\">{productname}</span> adds symbols to each cell of a "
-"range based on cells conditions. Select the cell range and click the <span "
-"class=\"ui\">Conditional Formatting</span> icon on the toolbar. Select the "
-"symbol set to apply on the range."
+"<span class=\"def\">Conditional formatting:</span> <span class=\"productname"
+"\">{productname}</span> adds symbols to each cell of a range based on cells "
+"conditions. Select the cell range and click the <span class=\"ui\""
+">Conditional Formatting</span> icon on the toolbar. Select the symbol set to "
+"apply on the range."
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:633-30
@@ -2054,11 +2061,10 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:649-5
 msgid ""
-"<span class=\"def\">Style formatting:</span> <span "
-"class=\"productname\">{productname}</span> supports paragraph styles. You "
-"can apply an existing paragraph style to a paragraph. Choose menu <span "
-"class=\"ui\">Edit</span> → <span class=\"ui\">Edit styles</span> to change "
-"style."
+"<span class=\"def\">Style formatting:</span> <span class=\"productname\""
+">{productname}</span> supports paragraph styles. You can apply an existing "
+"paragraph style to a paragraph. Choose menu <span class=\"ui\">Edit</span> → "
+"<span class=\"ui\">Edit styles</span> to change style."
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:657-5
@@ -2076,9 +2082,8 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.div.p:662-5
 msgid ""
 "<span class=\"def\">Formatting cells:</span> Click in the cell or range of "
-"cells and choose menu <span class=\"ui\">Table</span> → <span "
-"class=\"ui\">Properties</span>. Fine tune the table with the properties "
-"dialog."
+"cells and choose menu <span class=\"ui\">Table</span> → <span class=\"ui\""
+">Properties</span>. Fine tune the table with the properties dialog."
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:665-5
@@ -2184,9 +2189,9 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:709-5
 msgid ""
-"<span class=\"def\">Slide layouts:</span> <span "
-"class=\"productname\">{productname}</span> Impress let you change the slide "
-"layout. Select the desired slide layout in the drop-down layout list."
+"<span class=\"def\">Slide layouts:</span> <span class=\"productname\""
+">{productname}</span> Impress let you change the slide layout. Select the "
+"desired slide layout in the drop-down layout list."
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:712-30
@@ -2197,11 +2202,10 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:713-30
 msgid ""
-"<span class=\"def\">Slide transitions:</span> <span "
-"class=\"productname\">{productname}</span> Impress provides visual effects "
-"when displaying a new slide in the slide show. Slide transitions are "
-"property of the slide, use the side bar to set the slide transition when in "
-"edit mode."
+"<span class=\"def\">Slide transitions:</span> <span class=\"productname\""
+">{productname}</span> Impress provides visual effects when displaying a new "
+"slide in the slide show. Slide transitions are property of the slide, use "
+"the side bar to set the slide transition when in edit mode."
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:714-30
@@ -2219,8 +2223,8 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.h4:722-5
 msgid ""
-"What are the documents file formats supported by <span "
-"class=\"productname\">{productname}</span>?"
+"What are the documents file formats supported by <span class=\"productname\""
+">{productname}</span>?"
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.p:723-5
@@ -2268,9 +2272,8 @@ msgstr ""
 msgid ""
 "<span class=\"productname\">{productname}</span> saves the document in the "
 "background regularly, you can't just close without saving it. To abandon "
-"your changes, you must either undo them, or use the <span "
-"class=\"ui\">Revision History </span> in the <span class=\"ui\">File</span> "
-"menu."
+"your changes, you must either undo them, or use the <span class=\"ui\""
+">Revision History </span> in the <span class=\"ui\">File</span> menu."
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.h4:743-5
@@ -2282,8 +2285,8 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.p:744-5
 msgid ""
 "Yes. <span class=\"productname\">{productname}</span> opens password-"
-"protected documents, but it is necessary to supply the password in the "
-"“Enter password” prompt at load time."
+"protected documents, but it is necessary to supply the password in the “"
+"Enter password” prompt at load time."
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.h4:747-5
@@ -2303,8 +2306,8 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.p:752-5
 msgid ""
-"Choose menu <span class=\"ui\">Tools</span> and uncheck <span "
-"class=\"ui\">Automatic Spell Checking</span>."
+"Choose menu <span class=\"ui\">Tools</span> and uncheck <span class=\"ui\""
+">Automatic Spell Checking</span>."
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.h4:755-5
@@ -2340,8 +2343,8 @@ msgstr ""
 msgid ""
 "The <span class=\"blue\">¶</span> symbol is a formatting mark. It is used to "
 "help text alignment and editing and is not printed. To toggle it in the "
-"document display, choose menu <span class=\"ui\">View</span> → <span "
-"class=\"ui\">Formatting mark</span>."
+"document display, choose menu <span class=\"ui\">View</span> → <span class="
+"\"ui\">Formatting mark</span>."
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:773-5
@@ -2350,9 +2353,9 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:774-5
 msgid ""
-"Word count is available in <span class=\"ui\">Tools</span> → <span "
-"class=\"ui\">Word count</span>. A dialog shows word counts for selection and "
-"for the whole document."
+"Word count is available in <span class=\"ui\">Tools</span> → <span class=\"ui"
+"\">Word count</span>. A dialog shows word counts for selection and for the "
+"whole document."
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:775-29
@@ -2457,13 +2460,12 @@ msgstr ""
 msgid ""
 "Changes can be accepted or rejected. To accept or reject changes, click on "
 "the corresponding icons in the comment box on the right of the document. "
-"Alternatively, choose <span class=\"ui\">Edit</span> → <span "
-"class=\"ui\">Track Changes </span> → <span class=\"ui\">Accept</span> or "
-"<span class=\"ui\">Reject</span>. Furthermore, if you need to filter changes "
-"before accepting or rejecting, choose <span class=\"ui\">Edit</span> → <span "
-"class=\"ui\">Track Changes </span> → <span class=\"ui\">Manage</span>. A "
-"dialog shows a list of all tracked changes. Use the dialog buttons "
-"accordingly."
+"Alternatively, choose <span class=\"ui\">Edit</span> → <span class=\"ui\""
+">Track Changes </span> → <span class=\"ui\">Accept</span> or <span class=\"ui"
+"\">Reject</span>. Furthermore, if you need to filter changes before "
+"accepting or rejecting, choose <span class=\"ui\">Edit</span> → <span class="
+"\"ui\">Track Changes </span> → <span class=\"ui\">Manage</span>. A dialog "
+"shows a list of all tracked changes. Use the dialog buttons accordingly."
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:808-5
@@ -2574,8 +2576,8 @@ msgid ""
 "You have the AutoCorrection enabled. AutoCorrection changes the text just "
 "typed into an internal table of corresponding text. In most cases, "
 "AutoCorrection fixes typos while you are typing. If AutoCorrection is not "
-"necessary, disable it in <span class=\"ui\">Tools</span> → <span "
-"class=\"ui\">AutoCorrection</span> → <span class=\"ui\">While typing</span>."
+"necessary, disable it in <span class=\"ui\">Tools</span> → <span class=\"ui\""
+">AutoCorrection</span> → <span class=\"ui\">While typing</span>."
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:855-5
@@ -2607,10 +2609,10 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:864-9
 msgid ""
-"Paste from the browser <span class=\"ui\">Edit</span> → <span "
-"class=\"ui\">Paste</span> or press <kbd>Ctrl</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>V</kbd>. The <span class=\"ui\">Text Import</span> "
-"dialog opens to let you describe the precise format of the CSV data."
+"Paste from the browser <span class=\"ui\">Edit</span> → <span class=\"ui\""
+">Paste</span> or press <kbd>Ctrl</kbd><span class=\"kbd--plus\""
+">+</span><kbd>V</kbd>. The <span class=\"ui\">Text Import</span> dialog "
+"opens to let you describe the precise format of the CSV data."
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.div.img[alt]:866-31
@@ -2695,8 +2697,8 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:906-9
 msgid ""
 "Choose <span class=\"ui\">Format</span> → <span class=\"ui\">Line</span> (or "
-"<span class=\"ui\">Area</span>, or <span class=\"ui\">Position and Size</"
-"span>). A dialog opens."
+"<span class=\"ui\">Area</span>, or <span class=\"ui\">Position and "
+"Size</span>). A dialog opens."
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.div.img[alt]:908-31
@@ -2705,281 +2707,4 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:909-11
 msgid "Set the properties of the element of the object."
-msgstr ""
-
-#: html/cool-help.html%2Bdiv.h1:394-5
-msgid "<span class=\"productname\">%productName</span> Help"
-msgstr ""
-
-#: html/cool-help.html%2Bdiv.p:396-5 html/cool-help.html%2Bdiv.div.h3:442-5
-msgid "<span class=\"productname\">%productName</span> user interface"
-msgstr ""
-
-#: html/cool-help.html%2Bdiv.div.p:401-9 html/cool-help.html%2Bdiv.div.h2:560-5
-msgid "<span class=\"productname\">%productName</span> spreadsheets"
-msgstr ""
-
-#: html/cool-help.html%2Bdiv.div.p:409-9 html/cool-help.html%2Bdiv.div.h2:629-5
-msgid "<span class=\"productname\">%productName</span> text documents"
-msgstr ""
-
-#: html/cool-help.html%2Bdiv.div.p:416-9 html/cool-help.html%2Bdiv.div.h2:683-5
-msgid "<span class=\"productname\">%productName</span> presentations"
-msgstr ""
-
-#: html/cool-help.html%2Bdiv.div.p:426-5
-msgid ""
-"<span class=\"productname\">%productName</span> allows you to create and "
-"edit office documents text documents, spreadsheets and presentations "
-"directly in your browser, in a simple and straight-forward way. You can work "
-"alone on a document, or collaboratively as part of a team."
-msgstr ""
-
-#: html/cool-help.html%2Bdiv.div.div.ul.li.p:436-11
-msgid ""
-"<span class=\"productname\">%productName</span> notifies you with a small "
-"notification in the footer when a new user enters or when a user leaves."
-msgstr ""
-
-#: html/cool-help.html%2Bdiv.div.div.p:443-30
-msgid ""
-"<span class=\"productname\">%productName</span> uses modern browser "
-"resources to adapt the user interface to the size of the viewing area, "
-"including small screens found in mobile devices. The interface is composed "
-"of:"
-msgstr ""
-
-#: html/cool-help.html%2Bdiv.div.p:481-5
-msgid ""
-"Your documents are stored and managed in the cloud storage that is "
-"integrated with <span class=\"productname\">%productName</span>."
-msgstr ""
-
-#: html/cool-help.html%2Bdiv.div.div.p:482-30
-msgid ""
-"To download a document download it from the <span "
-"class=\"productname\">%productName</span> application’s <span "
-"class=\"ui\">File</span> menu. The download formats available depends on the "
-"application. All applications exports documents in PDF format."
-msgstr ""
-
-#: html/cool-help.html%2Bdiv.div.div.p:483-30
-msgid ""
-"To open document, click on the file to open the <span "
-"class=\"productname\">%productName</span> module associated to the document "
-"format."
-msgstr ""
-
-#: html/cool-help.html%2Bdiv.div.div.p:484-30
-msgid ""
-"Documents in <span class=\"productname\">%productName</span> save "
-"automatically, but if you are concerned that a document is synchronized as "
-"quickly as possible you can also force saving using the <span "
-"class=\"ui\">File</span> menu’s <span class=\"ui\">Save</span> entry."
-msgstr ""
-
-#: html/cool-help.html%2Bdiv.div.div.p:494-5
-msgid ""
-"Rich content copy/cut and paste is supported, not only within a given "
-"document, but also across documents on the same or different <span "
-"class=\"productname\">%productName</span>. For these internal uses, users "
-"can copy/cut content, including images and mixed content, on PC by using the "
-"keyboard shortcuts directly (<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</"
-"span><kbd>X</kbd>, <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>C</"
-"kbd>, <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd>). For "
-"security reasons it is necessary to use <kbd>Ctrl</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>V</kbd> to paste on PC, but context menus can be used "
-"for cut and copy. On Android or iOS selecting text by double tapping, and "
-"using a long-tap to access copy/cut/paste via the context menu is required."
-msgstr ""
-
-#: html/cool-help.html%2Bdiv.div.div.p:506-5
-msgid ""
-"When <span class=\"productname\">%productName</span> detects that there has "
-"not been any activity in the browser for a while, it puts the document in an "
-"“Inactive” state. The document is shown with a transparent gray overlay, "
-"with the message “Inactive document – please click to resume editing”."
-msgstr ""
-
-#: html/cool-help.html%2Bdiv.div.div.p:524-5
-msgid ""
-"<span class=\"productname\">%productName</span> supports inserting and "
-"visualization of charts in documents. To add a chart:"
-msgstr ""
-
-#: html/cool-help.html%2Bdiv.div.div.p:540-5
-msgid ""
-"<span class=\"productname\">%productName</span> inserts images in the text "
-"document from your local computer or from your cloud storage. Inserted "
-"images are always embedded in the document."
-msgstr ""
-
-#: html/cool-help.html%2Bdiv.div.div.p:547-5
-msgid ""
-"Insert comments in <span class=\"productname\">%productName</span> in places "
-"that need special reader attention. Comments are displayed on the right and "
-"carry the name and date of the issuer."
-msgstr ""
-
-#: html/cool-help.html%2Bdiv.div.div.p:553-5
-msgid ""
-"<span class=\"productname\">%productName</span> can check spelling in text "
-"documents, spreadsheets and presentations. A red wavy underline indicates "
-"misspelled words. Click on the right mouse button to open a context menu "
-"with suggested misspelling corrections."
-msgstr ""
-
-#: html/cool-help.html%2Bdiv.div.div.div.p:587-30
-msgid ""
-"<span class=\"def\">Sorting data:</span> You can sort a list of numbers or "
-"text ascending or descending. <span class=\"productname\">%productName</"
-"span> automatically detects cells that are headers, and adjoining columns, "
-"to extend the selection."
-msgstr ""
-
-#: html/cool-help.html%2Bdiv.div.div.div.p:588-30
-msgid ""
-"<span class=\"def\">Filtering data:</span> Filters and advanced filters "
-"allow you to work on certain filtered rows (records) of a data range. In the "
-"spreadsheets in <span class=\"productname\">%productName</span> there are "
-"various possibilities for applying filters."
-msgstr ""
-
-#: html/cool-help.html%2Bdiv.div.div.div.p:622-5
-msgid ""
-"<span class=\"def\">Conditional formatting:</span> <span "
-"class=\"productname\">%productName</span> adds symbols to each cell of a "
-"range based on cells conditions. Select the cell range and click the <span "
-"class=\"ui\">Conditional Formatting</span> icon on the toolbar. Select the "
-"symbol set to apply on the range."
-msgstr ""
-
-#: html/cool-help.html%2Bdiv.div.div.div.p:633-30
-msgid ""
-"<span class=\"productname\">%productName</span> edits text documents in the "
-"same way you edit a desktop document. It provides a What You See Is What You "
-"Get (WYSIWYG) layout – that conveniently lays out the document as it will be "
-"printed. Operations like typing text, cut, copy and pasting contents, "
-"selecting text, inserting, resizing, anchoring images, adding and handling "
-"tables and charts, are similar to a desktop word processor. Use the "
-"keyboard, menus and toolbars to interact with your document."
-msgstr ""
-
-#: html/cool-help.html%2Bdiv.div.div.div.p:644-5
-msgid ""
-"<span class=\"productname\">%productName</span> supports modern techniques "
-"for paragraph formatting through styles. A style is a set of text properties "
-"(font, color, background and many more) labeled with a name, the style name. "
-"Use style to apply the same set of properties to many paragraphs in the "
-"document and produce a uniform, professional look. Also, if you change one "
-"of the style formatting properties, all paragraphs with the same style "
-"changes formatting as well, simplifying the effort of formatting many "
-"paragraph individually."
-msgstr ""
-
-#: html/cool-help.html%2Bdiv.div.div.div.p:649-5
-msgid ""
-"<span class=\"def\">Style formatting:</span> <span "
-"class=\"productname\">%productName</span> supports paragraph styles. You can "
-"apply an existing paragraph style to a paragraph. Choose menu <span "
-"class=\"ui\">Edit</span> → <span class=\"ui\">Edit styles</span> to change "
-"style."
-msgstr ""
-
-#: html/cool-help.html%2Bdiv.div.div.div.p:666-5
-msgid ""
-"When you turn on Track Changes, <span class=\"productname\">%productName</"
-"span> marks up new changes made to the document. Select this option again to "
-"turn it off."
-msgstr ""
-
-#: html/cool-help.html%2Bdiv.div.div.div.p:687-30
-msgid ""
-"<span class=\"productname\">%productName</span> Impress edits presentations "
-"in a way that should be familiar to people. Operations like typing text, "
-"cut, copy and pasting contents, selecting text , inserting, resizing, "
-"anchoring images, adding and handling tables, are similar to a desktop "
-"presentation application. Use the keyboard, menus and toolbars to perform "
-"actions in your document."
-msgstr ""
-
-#: html/cool-help.html%2Bdiv.div.div.div.p:693-5
-msgid ""
-"<span class=\"productname\">%productName</span> displays presentation slide "
-"shows, including a subset of slide transitions and object animations. Choose "
-"the slide show from the menu or click on icon in the bottom left toolbar in "
-"the slide pane."
-msgstr ""
-
-#: html/cool-help.html%2Bdiv.div.div.div.p:694-5
-msgid ""
-"To exit a <span class=\"productname\">%productName</span> slide show, press "
-"the <kbd>Esc</kbd> key to return to the presentation edit mode."
-msgstr ""
-
-#: html/cool-help.html%2Bdiv.div.div.div.p:709-5
-msgid ""
-"<span class=\"def\">Slide layouts:</span> <span "
-"class=\"productname\">%productName</span> Impress let you change the slide "
-"layout. Select the desired slide layout in the drop-down layout list."
-msgstr ""
-
-#: html/cool-help.html%2Bdiv.div.div.div.p:713-30
-msgid ""
-"<span class=\"def\">Slide transitions:</span> <span "
-"class=\"productname\">%productName</span> Impress provides visual effects "
-"when displaying a new slide in the slide show. Slide transitions are "
-"property of the slide, use the side bar to set the slide transition when in "
-"edit mode."
-msgstr ""
-
-#: html/cool-help.html%2Bdiv.div.div.h4:722-5
-msgid ""
-"What are the documents file formats supported by <span "
-"class=\"productname\">%productName</span>?"
-msgstr ""
-
-#: html/cool-help.html%2Bdiv.div.div.p:723-5
-msgid ""
-"<span class=\"productname\">%productName</span> supports both reading and "
-"writing for the following file formats:"
-msgstr ""
-
-#: html/cool-help.html%2Bdiv.div.div.h4:739-5
-msgid ""
-"How can I quit <span class=\"productname\">%productName</span> without "
-"saving my edits?"
-msgstr ""
-
-#: html/cool-help.html%2Bdiv.div.div.p:740-5
-msgid ""
-"<span class=\"productname\">%productName</span> saves the document in the "
-"background regularly, you can't just close without saving it. To abandon "
-"your changes, you must either undo them, or use the <span "
-"class=\"ui\">Revision History </span> in the <span class=\"ui\">File</span> "
-"menu."
-msgstr ""
-
-#: html/cool-help.html%2Bdiv.div.div.h4:743-5
-msgid ""
-"Can <span class=\"productname\">%productName</span> open a password-"
-"protected document?"
-msgstr ""
-
-#: html/cool-help.html%2Bdiv.div.div.p:744-5
-msgid ""
-"Yes. <span class=\"productname\">%productName</span> opens password-"
-"protected documents, but it is necessary to supply the password in the "
-"“Enter password” prompt at load time."
-msgstr ""
-
-#: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:862-11
-msgid ""
-"Activate the <span class=\"productname\">%productName</span> spreadsheet "
-"window."
-msgstr ""
-
-#: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:897-11
-msgid ""
-"Open the presentation in <span class=\"productname\">%productName</span>"
 msgstr ""

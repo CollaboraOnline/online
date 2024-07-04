@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-28 11:57+0200\n"
+"POT-Creation-Date: 2024-07-04 13:43+0200\n"
 "PO-Revision-Date: 2024-06-26 20:36+0000\n"
 "Last-Translator: Sabri Ünal <yakushabb@gmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/collabora-online/"
@@ -220,7 +220,7 @@ msgstr "Günlüğü Tazele"
 msgid "Channel Filter:"
 msgstr "Kanal Filtresi:"
 
-#: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:477
+#: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:478
 #: src/control/Control.StatusBar.js:194 src/control/Control.StatusBar.js:197
 msgid "None"
 msgstr "Hiçbiri"
@@ -260,7 +260,7 @@ msgstr "Lisans"
 #: src/control/Control.Menubar.js:957 src/control/Control.Menubar.js:1024
 #: src/control/Control.Menubar.js:1088 src/control/Control.Menubar.js:1142
 #: src/control/Control.Menubar.js:1216
-#: src/control/Control.NotebookbarWriter.js:434
+#: src/control/Control.NotebookbarWriter.js:463
 msgid "About"
 msgstr "Hakkında"
 
@@ -291,7 +291,7 @@ msgstr "Sunucu kapatıldı; lütfen sayfayı yeniden yükleyin."
 #: src/core/Socket.js:1177 src/core/Socket.js:1324 src/core/Socket.js:1328
 #: src/docdispatcher.ts:389 src/canvas/sections/CommentListSection.ts:1249
 #: src/canvas/sections/CommentListSection.ts:2092 src/main.js:79
-#: src/main.js:82 src/main.js:134 src/map/Clipboard.js:1185
+#: src/main.js:82 src/main.js:131 src/map/Clipboard.js:1185
 #: src/map/handler/Map.Feedback.js:82 src/map/handler/Map.SlideShow.js:56
 #: src/map/handler/Map.SlideShow.js:170 src/map/handler/Map.SlideShow.js:305
 #: src/map/handler/Map.SlideShow.js:316 src/map/handler/Map.WOPI.js:603
@@ -316,8 +316,8 @@ msgstr "Bu oturumu kapatmak istediğinizden emin misiniz?"
 #: src/control/Control.DownloadProgress.js:80
 #: src/control/Control.LanguageDialog.js:113
 #: src/control/Control.MobileTopBar.ts:43
-#: src/control/Control.UIManager.js:1233 src/control/Control.UIManager.js:1300
-#: src/control/Control.UIManager.js:1435 src/control/Control.UIManager.js:1577
+#: src/control/Control.UIManager.js:1248 src/control/Control.UIManager.js:1315
+#: src/control/Control.UIManager.js:1450 src/control/Control.UIManager.js:1592
 #: src/control/Control.Zotero.js:330 src/control/Toolbar.js:789
 #: src/core/Socket.js:1349 src/canvas/sections/CommentListSection.ts:436
 #: src/canvas/sections/CommentSection.ts:146
@@ -547,7 +547,7 @@ msgstr ""
 #: src/control/Control.DownloadProgress.js:60
 #: src/control/Control.NotebookbarCalc.js:212
 #: src/control/Control.NotebookbarImpress.js:280
-#: src/control/Control.NotebookbarWriter.js:252
+#: src/control/Control.NotebookbarWriter.js:281
 msgid "Download"
 msgstr "İndir"
 
@@ -608,98 +608,98 @@ msgid "Idle document - please tap to reload and resume editing"
 msgstr ""
 "Boş belge - yeniden yüklemek ve düzenlemeye devam etmek için lütfen dokunun"
 
-#: src/control/Control.JSDialogBuilder.js:480
+#: src/control/Control.JSDialogBuilder.js:481
 msgid "Solid"
 msgstr "Katı"
 
-#: src/control/Control.JSDialogBuilder.js:483
+#: src/control/Control.JSDialogBuilder.js:484
 msgid "Linear"
 msgstr "Doğrusal"
 
-#: src/control/Control.JSDialogBuilder.js:486
+#: src/control/Control.JSDialogBuilder.js:487
 msgid "Axial"
 msgstr "Eksenel"
 
-#: src/control/Control.JSDialogBuilder.js:489
+#: src/control/Control.JSDialogBuilder.js:490
 msgid "Radial"
 msgstr "Dairesel"
 
-#: src/control/Control.JSDialogBuilder.js:492
+#: src/control/Control.JSDialogBuilder.js:493
 msgid "Ellipsoid"
 msgstr "Eliptik"
 
-#: src/control/Control.JSDialogBuilder.js:496
+#: src/control/Control.JSDialogBuilder.js:497
 msgid "Quadratic"
 msgstr "Karesel"
 
-#: src/control/Control.JSDialogBuilder.js:499
+#: src/control/Control.JSDialogBuilder.js:500
 msgid "Square"
 msgstr "Kare"
 
-#: src/control/Control.JSDialogBuilder.js:502
+#: src/control/Control.JSDialogBuilder.js:503
 msgid "Fixed size"
 msgstr "Sabit boyut"
 
-#: src/control/Control.JSDialogBuilder.js:1504
+#: src/control/Control.JSDialogBuilder.js:1413
 msgid "From"
 msgstr "Başlangıç"
 
-#: src/control/Control.JSDialogBuilder.js:1507
+#: src/control/Control.JSDialogBuilder.js:1416
 msgid "To"
 msgstr "Bitiş"
 
-#: src/control/Control.JSDialogBuilder.js:1510
+#: src/control/Control.JSDialogBuilder.js:1419
 msgid "Color"
 msgstr "Renk"
 
-#: src/control/Control.JSDialogBuilder.js:1633
+#: src/control/Control.JSDialogBuilder.js:1542
 msgid "Select range"
 msgstr "Aralığı seç"
 
-#: src/control/Control.JSDialogBuilder.js:1732
+#: src/control/Control.JSDialogBuilder.js:1641
 #: src/control/Control.NotebookbarBuilder.js:160
 msgid "Font Name"
 msgstr "Yazıtipi Adı"
 
-#: src/control/Control.JSDialogBuilder.js:1734 src/control/Toolbar.js:132
+#: src/control/Control.JSDialogBuilder.js:1643 src/control/Toolbar.js:132
 msgid "Font Size"
 msgstr "Yazıtipi Boyutu"
 
-#: src/control/Control.JSDialogBuilder.js:1736
+#: src/control/Control.JSDialogBuilder.js:1645
 #: src/control/Control.TopToolbar.js:454
 msgid "Style"
 msgstr "Biçem"
 
-#: src/control/Control.JSDialogBuilder.js:2000
+#: src/control/Control.JSDialogBuilder.js:1909
 msgid "reply"
 msgstr "yanıt"
 
-#: src/control/Control.JSDialogBuilder.js:2003
+#: src/control/Control.JSDialogBuilder.js:1912
 msgid "replies"
 msgstr "yanıt"
 
-#: src/control/Control.JSDialogBuilder.js:2014
-#: src/layer/tile/CanvasTileLayer.js:4273
-#: src/layer/tile/CanvasTileLayer.js:4284
+#: src/control/Control.JSDialogBuilder.js:1923
+#: src/layer/tile/CanvasTileLayer.js:3999
+#: src/layer/tile/CanvasTileLayer.js:4010
 #: src/canvas/sections/CommentListSection.ts:1035
 msgid "Comment"
 msgstr "Açıklama"
 
-#: src/control/Control.JSDialogBuilder.js:2078
+#: src/control/Control.JSDialogBuilder.js:1987
 msgid "Insert Comment"
 msgstr "Yorum Ekle"
 
-#: src/control/Control.JSDialogBuilder.js:2932
+#: src/control/Control.JSDialogBuilder.js:2850
 #: src/control/Control.Menubar.js:863
 msgid "Rows"
 msgstr "Satırlar"
 
-#: src/control/Control.JSDialogBuilder.js:2933
+#: src/control/Control.JSDialogBuilder.js:2851
 #: src/control/Control.Menubar.js:866
 msgid "Columns"
 msgstr "Sütunlar"
 
-#: src/control/Control.JSDialogBuilder.js:2953
+#: src/control/Control.JSDialogBuilder.js:2871
 msgid "Insert Table"
 msgstr "Tablo Ekle"
 
@@ -783,7 +783,7 @@ msgstr "PDF Belgesi (.pdf)"
 msgid "EPUB (.epub)"
 msgstr "EPUB (.epub)"
 
-#: src/control/Control.Menubar.js:85 src/control/Control.UIManager.js:151
+#: src/control/Control.Menubar.js:85 src/control/Control.UIManager.js:163
 msgid "Rename Document"
 msgstr "Belgeyi Yeniden Adlandır"
 
@@ -820,7 +820,7 @@ msgstr "PDF Belgesi (.pdf) olarak..."
 
 #: src/control/Control.Menubar.js:99 src/control/Control.Menubar.js:417
 #: src/control/Control.Menubar.js:569 src/control/Control.Menubar.js:708
-#: src/control/Control.Toolbar.js:1072
+#: src/control/Control.Toolbar.js:1070
 msgid "Close document"
 msgstr "Belgeyi kapat"
 
@@ -834,8 +834,8 @@ msgstr "Belgeyi kapat"
 #: src/control/Control.NotebookbarDraw.js:293
 #: src/control/Control.NotebookbarImpress.js:293
 #: src/control/Control.NotebookbarImpress.js:294
-#: src/control/Control.NotebookbarWriter.js:265
-#: src/control/Control.NotebookbarWriter.js:266
+#: src/control/Control.NotebookbarWriter.js:294
+#: src/control/Control.NotebookbarWriter.js:295
 msgid "Repair"
 msgstr "Onar"
 
@@ -849,8 +849,8 @@ msgstr "Onar"
 #: src/control/Control.NotebookbarDraw.js:350
 #: src/control/Control.NotebookbarImpress.js:366
 #: src/control/Control.NotebookbarImpress.js:367
-#: src/control/Control.NotebookbarWriter.js:1384
-#: src/control/Control.NotebookbarWriter.js:1385
+#: src/control/Control.NotebookbarWriter.js:1413
+#: src/control/Control.NotebookbarWriter.js:1414
 #: src/control/Control.StatusBar.js:251
 msgid "Reset zoom"
 msgstr "Yakınlaştırmayı sıfırla"
@@ -860,14 +860,14 @@ msgstr "Yakınlaştırmayı sıfırla"
 #: src/control/Control.NotebookbarCalc.js:1208
 #: src/control/Control.NotebookbarDraw.js:390
 #: src/control/Control.NotebookbarImpress.js:407
-#: src/control/Control.NotebookbarWriter.js:1425
+#: src/control/Control.NotebookbarWriter.js:1454
 msgid "Toggle UI Mode"
 msgstr "Arayüz Kipini Değiştir"
 
 #: src/control/Control.Menubar.js:142 src/control/Control.Menubar.js:444
 #: src/control/Control.NotebookbarDraw.js:404
 #: src/control/Control.NotebookbarImpress.js:421
-#: src/control/Control.NotebookbarWriter.js:1439
+#: src/control/Control.NotebookbarWriter.js:1468
 msgid "Show Ruler"
 msgstr "Cetveli Göster"
 
@@ -879,8 +879,8 @@ msgstr "Cetveli Göster"
 #: src/control/Control.NotebookbarDraw.js:976
 #: src/control/Control.NotebookbarImpress.js:434
 #: src/control/Control.NotebookbarImpress.js:1028
-#: src/control/Control.NotebookbarWriter.js:847
-#: src/control/Control.NotebookbarWriter.js:1452
+#: src/control/Control.NotebookbarWriter.js:876
+#: src/control/Control.NotebookbarWriter.js:1481
 msgid "Show Status Bar"
 msgstr "Durum Çubuğunu Göster"
 
@@ -896,7 +896,7 @@ msgstr "Menü Çubuğunu Gizle"
 #: src/control/Control.NotebookbarCalc.js:1246
 #: src/control/Control.NotebookbarDraw.js:435
 #: src/control/Control.NotebookbarImpress.js:478
-#: src/control/Control.NotebookbarWriter.js:1470
+#: src/control/Control.NotebookbarWriter.js:1499
 msgid "Dark Mode"
 msgstr "Karanlık Kip"
 
@@ -905,7 +905,7 @@ msgstr "Karanlık Kip"
 #: src/control/Control.NotebookbarCalc.js:1253
 #: src/control/Control.NotebookbarDraw.js:442
 #: src/control/Control.NotebookbarImpress.js:485
-#: src/control/Control.NotebookbarWriter.js:1477
+#: src/control/Control.NotebookbarWriter.js:1506
 msgid "Invert Background"
 msgstr "Arka Planı Ters Çevir"
 
@@ -926,7 +926,7 @@ msgstr "Tümü"
 #: src/control/Control.NotebookbarCalc.js:1377
 #: src/control/Control.NotebookbarDraw.js:1265
 #: src/control/Control.NotebookbarImpress.js:1245
-#: src/control/Control.NotebookbarWriter.js:1075
+#: src/control/Control.NotebookbarWriter.js:1104
 msgid "Smart Picker"
 msgstr "Akıllı Seçici"
 
@@ -940,38 +940,38 @@ msgid "References"
 msgstr "Başvurular"
 
 #: src/control/Control.Menubar.js:297
-#: src/control/Control.NotebookbarWriter.js:1837
+#: src/control/Control.NotebookbarWriter.js:1866
 msgid "Update Index"
 msgstr "Dizini Güncelle"
 
 #: src/control/Control.Menubar.js:306
-#: src/control/Control.NotebookbarWriter.js:1933
+#: src/control/Control.NotebookbarWriter.js:1962
 msgid "Add Citation"
 msgstr "Atıf Ekle"
 
 #: src/control/Control.Menubar.js:307
-#: src/control/Control.NotebookbarWriter.js:1945
+#: src/control/Control.NotebookbarWriter.js:1974
 msgid "Add Citation Note"
 msgstr "Atıf Notu Ekle"
 
 #: src/control/Control.Menubar.js:308
-#: src/control/Control.NotebookbarWriter.js:1920
+#: src/control/Control.NotebookbarWriter.js:1949
 msgid "Add Bibliography"
 msgstr "Kaynakça Ekle"
 
 #: src/control/Control.Menubar.js:310
-#: src/control/Control.NotebookbarWriter.js:1963
+#: src/control/Control.NotebookbarWriter.js:1992
 msgid "Refresh Citations"
 msgstr "Atıfları Yenile"
 
 #: src/control/Control.Menubar.js:311
-#: src/control/Control.NotebookbarWriter.js:1975
+#: src/control/Control.NotebookbarWriter.js:2004
 #: src/control/Control.Zotero.js:1444
 msgid "Unlink Citations"
 msgstr "Atıfların Bağlantısını Kaldır"
 
 #: src/control/Control.Menubar.js:312
-#: src/control/Control.NotebookbarWriter.js:1987
+#: src/control/Control.NotebookbarWriter.js:2016
 msgid "Citation Preferences"
 msgstr "Atıf Tercihleri"
 
@@ -999,36 +999,36 @@ msgstr "Tarih Ekle"
 #: src/control/Control.NotebookbarCalc.js:241
 #: src/control/Control.NotebookbarDraw.js:307
 #: src/control/Control.NotebookbarImpress.js:309
-#: src/control/Control.NotebookbarWriter.js:281
-#: src/control/Control.NotebookbarWriter.js:1347
+#: src/control/Control.NotebookbarWriter.js:310
+#: src/control/Control.NotebookbarWriter.js:1376
 msgid "Properties"
 msgstr "Özellikler"
 
 #: src/control/Control.Menubar.js:365 src/control/Control.Menubar.js:1013
-#: src/control/Control.NotebookbarWriter.js:372
+#: src/control/Control.NotebookbarWriter.js:401
 msgid "Screen Reading"
 msgstr "Seslendirme"
 
 #: src/control/Control.Menubar.js:378
-#: src/control/Control.NotebookbarWriter.js:338
+#: src/control/Control.NotebookbarWriter.js:367
 msgid "Forum"
 msgstr "Forum"
 
 #: src/control/Control.Menubar.js:379 src/control/Control.Menubar.js:540
 #: src/control/Control.Menubar.js:671 src/control/Control.Menubar.js:951
-#: src/control/Control.NotebookbarWriter.js:350
+#: src/control/Control.NotebookbarWriter.js:379
 msgid "Online Help"
 msgstr "Çevrimiçi Yardım"
 
 #: src/control/Control.Menubar.js:380 src/control/Control.Menubar.js:541
 #: src/control/Control.Menubar.js:672 src/control/Control.Menubar.js:952
-#: src/control/Control.NotebookbarWriter.js:362
+#: src/control/Control.NotebookbarWriter.js:391
 msgid "Keyboard shortcuts"
 msgstr "Klavye kısayolları"
 
 #: src/control/Control.Menubar.js:381 src/control/Control.Menubar.js:542
 #: src/control/Control.Menubar.js:673 src/control/Control.Menubar.js:953
-#: src/control/Control.NotebookbarWriter.js:397
+#: src/control/Control.NotebookbarWriter.js:426
 msgid "Report an issue"
 msgstr "Bir hata olarak bildir"
 
@@ -1036,7 +1036,7 @@ msgstr "Bir hata olarak bildir"
 #: src/control/Control.Menubar.js:674 src/control/Control.Menubar.js:954
 #: src/control/Control.Menubar.js:1022 src/control/Control.Menubar.js:1086
 #: src/control/Control.Menubar.js:1140 src/control/Control.Menubar.js:1214
-#: src/control/Control.NotebookbarWriter.js:410
+#: src/control/Control.NotebookbarWriter.js:439
 msgid "Latest Updates"
 msgstr "En Son Güncellemeler"
 
@@ -1044,13 +1044,13 @@ msgstr "En Son Güncellemeler"
 #: src/control/Control.Menubar.js:675 src/control/Control.Menubar.js:955
 #: src/control/Control.Menubar.js:1023 src/control/Control.Menubar.js:1087
 #: src/control/Control.Menubar.js:1141 src/control/Control.Menubar.js:1215
-#: src/control/Control.NotebookbarWriter.js:422
+#: src/control/Control.NotebookbarWriter.js:451
 msgid "Send Feedback"
 msgstr "Geri Bildirim Gönder"
 
 #: src/control/Control.Menubar.js:384 src/control/Control.Menubar.js:545
 #: src/control/Control.Menubar.js:676 src/control/Control.Menubar.js:956
-#: src/control/Control.NotebookbarWriter.js:387
+#: src/control/Control.NotebookbarWriter.js:416
 #: src/control/Control.ServerAuditDialog.ts:112
 #: src/control/Control.ServerAuditDialog.ts:113
 msgid "Server audit"
@@ -1238,7 +1238,7 @@ msgstr "Ortalamanın Altı..."
 #: src/control/Control.NotebookbarCalc.js:826
 #: src/control/Control.NotebookbarDraw.js:975
 #: src/control/Control.NotebookbarImpress.js:1027
-#: src/control/Control.NotebookbarWriter.js:846
+#: src/control/Control.NotebookbarWriter.js:875
 #: src/control/Control.MobileSearchBar.ts:29
 #: src/control/Control.StatusBar.js:226 src/control/Control.Zotero.js:218
 #: src/control/Toolbar.js:554
@@ -1298,15 +1298,15 @@ msgstr "Aramayı çubuğunu göster"
 msgid "Borders"
 msgstr "Kenarlık"
 
-#: src/control/Control.MobileWizardBuilder.js:526
+#: src/control/Control.MobileWizardBuilder.js:525
 msgid "Background Color"
 msgstr "Arkaplan Rengi"
 
-#: src/control/Control.MobileWizardBuilder.js:528
+#: src/control/Control.MobileWizardBuilder.js:527
 msgid "Gradient Start"
 msgstr "Gradyan Başlangıcı"
 
-#: src/control/Control.MobileWizardBuilder.js:530
+#: src/control/Control.MobileWizardBuilder.js:529
 msgid "Gradient End"
 msgstr "Gradyan Sonu"
 
@@ -1393,7 +1393,7 @@ msgstr "Yardım"
 #: src/control/Control.NotebookbarCalc.js:127
 #: src/control/Control.NotebookbarImpress.js:192
 #: src/control/Control.NotebookbarWriter.js:169
-#: src/control/Control.NotebookbarWriter.js:252
+#: src/control/Control.NotebookbarWriter.js:281
 msgid "Save As"
 msgstr "Farklı Kaydet"
 
@@ -1407,7 +1407,8 @@ msgstr "Dışarıya farklı aktar"
 #: src/control/Control.NotebookbarCalc.js:161
 #: src/control/Control.NotebookbarDraw.js:196
 #: src/control/Control.NotebookbarImpress.js:227
-#: src/control/Control.NotebookbarWriter.js:202
+#: src/control/Control.NotebookbarWriter.js:203
+#: src/control/Control.NotebookbarWriter.js:227
 msgid "Share"
 msgstr "Paylaş"
 
@@ -1415,14 +1416,15 @@ msgstr "Paylaş"
 #: src/control/Control.NotebookbarDraw.js:206
 #: src/control/Control.NotebookbarImpress.js:237
 #: src/control/Control.NotebookbarWriter.js:211
+#: src/control/Control.NotebookbarWriter.js:241
 msgid "See history"
 msgstr "Geçmişi gör"
 
 #: src/control/Control.NotebookbarCalc.js:254
 #: src/control/Control.NotebookbarDraw.js:320
 #: src/control/Control.NotebookbarImpress.js:321
-#: src/control/Control.NotebookbarWriter.js:295
-#: src/control/Control.UIManager.js:151
+#: src/control/Control.NotebookbarWriter.js:324
+#: src/control/Control.UIManager.js:163
 msgid "Rename"
 msgstr "Yeniden Adlandır"
 
@@ -1443,7 +1445,7 @@ msgid "Currency"
 msgstr "Para Birimi"
 
 #: src/control/Control.NotebookbarCalc.js:597
-#: src/control/Control.NotebookbarWriter.js:1340
+#: src/control/Control.NotebookbarWriter.js:1369
 #: src/control/Control.Zotero.js:1080 src/control/Control.Zotero.js:1517
 msgid "Date"
 msgstr "Tarih"
@@ -1527,28 +1529,28 @@ msgstr "Sütunları Sil"
 #: src/control/Control.NotebookbarCalc.js:1153
 #: src/control/Control.NotebookbarDraw.js:335
 #: src/control/Control.NotebookbarImpress.js:336
-#: src/control/Control.NotebookbarWriter.js:1363
+#: src/control/Control.NotebookbarWriter.js:1392
 msgid "Read mode"
 msgstr "Okuma kipi"
 
 #: src/control/Control.NotebookbarCalc.js:1207
 #: src/control/Control.NotebookbarDraw.js:389
 #: src/control/Control.NotebookbarImpress.js:406
-#: src/control/Control.NotebookbarWriter.js:1424
+#: src/control/Control.NotebookbarWriter.js:1453
 msgid "Compact view"
 msgstr "Sıkışık görünüm"
 
 #: src/control/Control.NotebookbarCalc.js:1221
 #: src/control/Control.NotebookbarDraw.js:429
 #: src/control/Control.NotebookbarImpress.js:446
-#: src/control/Control.NotebookbarWriter.js:1464
+#: src/control/Control.NotebookbarWriter.js:1493
 msgid "Collapse Tabs"
 msgstr "Sekmeleri Daralt"
 
 #: src/control/Control.NotebookbarCalc.js:1233
 #: src/control/Control.NotebookbarDraw.js:416
 #: src/control/Control.NotebookbarImpress.js:433
-#: src/control/Control.NotebookbarWriter.js:1451
+#: src/control/Control.NotebookbarWriter.js:1480
 msgid "Status Bar"
 msgstr "Durum Çubuğu"
 
@@ -1563,8 +1565,8 @@ msgstr "Mini Grafik"
 #: src/control/Control.NotebookbarImpress.js:899
 #: src/control/Control.NotebookbarImpress.js:1350
 #: src/control/Control.NotebookbarImpress.js:2386
-#: src/control/Control.NotebookbarWriter.js:1031
-#: src/control/Control.NotebookbarWriter.js:2809
+#: src/control/Control.NotebookbarWriter.js:1060
+#: src/control/Control.NotebookbarWriter.js:2838
 msgid "Shapes"
 msgstr "Şekiller"
 
@@ -1584,7 +1586,7 @@ msgstr "PDF - Gelişmiş"
 
 #: src/control/Control.NotebookbarDraw.js:403
 #: src/control/Control.NotebookbarImpress.js:420
-#: src/control/Control.NotebookbarWriter.js:1438
+#: src/control/Control.NotebookbarWriter.js:1467
 msgid "Ruler"
 msgstr "Cetvel"
 
@@ -1617,27 +1619,27 @@ msgstr ""
 msgid "Form"
 msgstr "Forum"
 
-#: src/control/Control.NotebookbarWriter.js:309
+#: src/control/Control.NotebookbarWriter.js:338
 msgid "Go Online"
 msgstr "Çevrimiçi Ol"
 
-#: src/control/Control.NotebookbarWriter.js:309
+#: src/control/Control.NotebookbarWriter.js:338
 msgid "Go Offline"
 msgstr "Çevrimdışı Ol"
 
-#: src/control/Control.NotebookbarWriter.js:1312
+#: src/control/Control.NotebookbarWriter.js:1341
 msgid "Rich Text"
 msgstr "Zengin Metin"
 
-#: src/control/Control.NotebookbarWriter.js:1319
+#: src/control/Control.NotebookbarWriter.js:1348
 msgid "Checkbox"
 msgstr "Onay Kutusu"
 
-#: src/control/Control.NotebookbarWriter.js:1326
+#: src/control/Control.NotebookbarWriter.js:1355
 msgid "Dropdown"
 msgstr "Açılır Menü"
 
-#: src/control/Control.NotebookbarWriter.js:1333
+#: src/control/Control.NotebookbarWriter.js:1362
 msgid "Picture"
 msgstr "Resim"
 
@@ -1846,15 +1848,15 @@ msgstr "Şekil ekle"
 msgid "Insert connectors"
 msgstr "Bağlayıcıları ekle"
 
-#: src/control/Control.TopToolbar.js:199 src/control/Control.UIManager.js:760
+#: src/control/Control.TopToolbar.js:199 src/control/Control.UIManager.js:775
 msgid "Hide Menu"
 msgstr "Menüyü Gizle"
 
-#: src/control/Control.UIManager.js:151
+#: src/control/Control.UIManager.js:163
 msgid "Enter new name"
 msgstr "Yeni adı girin"
 
-#: src/control/Control.UIManager.js:783
+#: src/control/Control.UIManager.js:798
 msgid "Show Menu"
 msgstr "Menüyü Göster"
 
@@ -2262,6 +2264,10 @@ msgstr "Slayt Sayısı"
 #: src/control/jsdialog/Widget.MobileBorderSelector.js:96
 msgid "Cell borders"
 msgstr "Hücre kenarlıkları"
+
+#: src/control/jsdialog/Widget.SidebarContainers.ts:72
+msgid "More options for {name}"
+msgstr ""
 
 #: src/control/jsdialog/Widget.TreeView.js:698
 msgid "Headings and objects that you add to the document will appear here"
@@ -2699,23 +2705,11 @@ msgstr "Dosya sunucuya yükleme başarısız, dosya bulunamadı."
 msgid "Uploading file to server failed, the file is too large."
 msgstr "Doya sunucuya yükleme başarısız oldu, dosya çok büyük."
 
-#: src/layer/tile/CanvasTileLayer.js:1811
+#: src/layer/tile/CanvasTileLayer.js:1800
 msgid "Functions"
 msgstr "İşlevler"
 
-#: src/layer/tile/CanvasTileLayer.js:2310
-msgid "Copy link location"
-msgstr "Bağlantı konumunu kopyala"
-
-#: src/layer/tile/CanvasTileLayer.js:2318
-msgid "Edit link"
-msgstr "Bağlantıyı düzenle"
-
-#: src/layer/tile/CanvasTileLayer.js:2326
-msgid "Remove link"
-msgstr "Bağlantıyı kaldır"
-
-#: src/layer/tile/CanvasTileLayer.js:4301
+#: src/layer/tile/CanvasTileLayer.js:4027
 msgid "No Comments"
 msgstr "Yorum Yok"
 
@@ -2811,7 +2805,7 @@ msgstr "Değişikliği reddet"
 msgid "Resolved"
 msgstr "Çözüldü"
 
-#: src/main.js:134
+#: src/main.js:131
 msgid "Warning! The browser you are using is not supported."
 msgstr "Uyarı! Kullandığınız tarayıcı desteklenmiyor."
 
@@ -3067,6 +3061,15 @@ msgstr ""
 "translate=\"true\">1</a> <a id=\"slide-2-indicator\" href=\"#slide-2\" data-"
 "translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
 "translate=\"true\">3</a>"
+
+#~ msgid "Copy link location"
+#~ msgstr "Bağlantı konumunu kopyala"
+
+#~ msgid "Edit link"
+#~ msgstr "Bağlantıyı düzenle"
+
+#~ msgid "Remove link"
+#~ msgstr "Bağlantıyı kaldır"
 
 #~ msgid "Condition..."
 #~ msgstr "Koşul..."
