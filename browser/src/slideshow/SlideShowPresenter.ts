@@ -24,13 +24,9 @@ class SlideShowPresenter {
 	_presentationInfo: any = null;
 	_docWidth: number = 0;
 	_docHeight: number = 0;
-	_slideCurrent: string = null;
-	_slideNext: string = null;
 	_fullscreen: Element = null;
-	_slideShow: Element = null;
-	_startSlideNumber: number = 0;
-	_presentInWindow: boolean = null;
-	_cypressSVGPresentationTest: boolean = false; // TODO: unused
+	_slideShowCanvas: HTMLCanvasElement = null;
+	_currentSlide: number = 0;
 
 	constructor(map: any) {
 		this._map = map;
@@ -38,38 +34,44 @@ class SlideShowPresenter {
 	}
 
 	addHooks() {
-		this._map.on('newfullscreen', this._onFullScreen, this);
-		this._map.on('start-slide-show', this._onStart, this);
-		this._map.on('tilepreview', this._onGotPreview);
+		this._map.on('newfullscreen', this._onStart, this);
 	}
 
 	removeHooks() {
-		this._map.off('newfullscreen', this._onFullScreen, this);
-		this._map.off('start-slide-show', this._onStart, this);
-		this._map.off('tilepreview', this._onGotPreview);
+		this._map.off('newfullscreen', this._onStart, this);
 	}
 
 	_onFullScreenChange() {
 		this._fullscreen = document.fullscreenElement;
-		if (!this._fullscreen) {
+		if (!this._fullscreen)
 			this._stopFullScreen();
-			const canvas = document.getElementById('fullscreen-canvas');
-			if (canvas) {
-				L.DomUtil.removeChild(canvas);
-			}
-		}
 	}
 
 	_stopFullScreen() {
-		L.DomUtil.remove(this._slideShow);
-		this._slideShow = null;
+		if (!this._slideShowCanvas)
+			return;
+
+		L.DomUtil.remove(this._slideShowCanvas);
+		this._slideShowCanvas = null;
 		// #7102 on exit from fullscreen we don't get a 'focus' event
 		// in chome so a later second attempt at launching a presentation
 		// fails
 		this._map.focus();
 	}
 
-	_onFullScreen(e: any) {
+	_createCanvas(width: number, height: number) {
+		const canvas = L.DomUtil.create(
+			'canvas',
+			'leaflet-slideshow2',
+			this._map._container,
+		);
+		canvas.id = 'fullscreen-canvas';
+		canvas.width = width;
+		canvas.height = height;
+		return canvas;
+	}
+
+	_onFullScreen() {
 		if (this._checkPresentationDisabled()) {
 			this._notifyPresentationDisabled();
 			return;
@@ -104,18 +106,7 @@ class SlideShowPresenter {
 			return;
 		}
 
-		const doPresentation = (e: any) => {
-			this._presentInWindow = false;
-			this._startSlideNumber = 0; // Default: start from page 0
-			if (typeof e.startSlideNumber !== 'undefined') {
-				this._startSlideNumber = e.startSlideNumber;
-			}
-
-			// TODO: Need to start Slide from _startSlideNumber
-
-			const canvas = document.getElementById('fullscreen-canvas');
-			this._slideShow = canvas;
-
+		const doPresentation = () => {
 			// TODO: Replace Image here with Scaled Slide Preview
 			const image1 = new Image();
 			const image2 = new Image();
@@ -130,7 +121,7 @@ class SlideShowPresenter {
 
 			image1.onload = () => {
 				image2.onload = () => {
-					SlideShow.FadeTransition(canvas, image1, image2).start(3);
+					SlideShow.FadeTransition(this._slideShowCanvas, image1, image2).start(3);
 				};
 				image2.src = this._map._docLayer._preview._previewTiles[1].src;
 			};
@@ -144,50 +135,32 @@ class SlideShowPresenter {
 			);
 		};
 
-		const fallback = function (e: any) {
+		const fallback = () => {
 			// fallback to "open in new tab"
-			if (this._slideShow) {
-				L.DomUtil.remove(this._slideShow);
-				this._slideShow = null;
-			}
-
-			doPresentation(e);
+			this._stopFullScreen();
+			doPresentation();
 		};
 
-		if (
-			!(
-				this._cypressSVGPresentationTest ||
-				this._map['wopi'].DownloadAsPostMessage
-			)
-		) {
-			const canvas = L.DomUtil.create(
-				'canvas',
-				'leaflet-slideshow2',
-				this._map._container,
-			);
-			this._slideShow = canvas;
-			canvas.id = 'fullscreen-canvas';
-			canvas.width = window.innerWidth;
-			canvas.height = window.innerHeight;
-
-			if (canvas.requestFullscreen) {
-				canvas
+		if (!(this._map['wopi'].DownloadAsPostMessage)) {
+			this._slideShowCanvas = this._createCanvas(window.innerWidth, window.innerHeight);
+			if (this._slideShowCanvas.requestFullscreen) {
+				this._slideShowCanvas
 					.requestFullscreen()
 					.then(() => {
-						doPresentation(e);
+						doPresentation();
 					})
 					.catch(() => {
-						fallback(e);
+						fallback();
 					});
 				return;
 			}
 		}
 
-		fallback(e);
+		fallback();
 	}
 
 	_checkAlreadyPresenting() {
-		if (this._slideShow) return true;
+		if (this._slideShowCanvas) return true;
 		return false;
 	}
 
@@ -219,30 +192,44 @@ class SlideShowPresenter {
 		);
 	}
 
+	/// called when user triggers the presentation using UI
 	_onStart() {
+		this._onFullScreen(); // opens full screen, has to be on user interaction
+
+		this._currentSlide = 0; // TODO: setup from parameter
 		app.socket.sendMessage('getpresentationinfo');
 	}
 
+	/// called when we receive slide content
 	_onGotPreview(e: any) {
-		this._slideCurrent = e.tile;
+		console.debug('SlideShow: received slide: ' + (e ? e.id : 'none'));
+		this._map.off('tilepreview', this._onGotPreview, this);
+
+		if (e.id === this._currentSlide) {
+			// fetch the next slide for transition...
+			this._map.getPreview(1001, this._currentSlide + 1, this._docWidth, this._docHeight, {
+				autoUpdate: false,
+			});
+		}
 	}
 
-	initializeSlideShowInfo(data: PresentationInfo) {
+	/// called as a response on getpresentationinfo
+	onSlideShowInfo(data: PresentationInfo) {
+		console.debug('SlideShow: received information about presentation');
 		const slides = data.slides;
 		const numberOfSlides = slides.length;
 		if (numberOfSlides === 0) return;
 
 		this._presentationInfo = data;
-
 		this._docWidth = data.docWidth;
 		this._docHeight = data.docHeight;
 
-		this._map.getPreview(1000, 0, this._docWidth, this._docHeight, {
+		this._map.getPreview(1000, this._currentSlide, this._docWidth, this._docHeight, {
 			autoUpdate: false,
 		});
-		this._map.getPreview(1001, 1, this._docWidth, this._docHeight, {
-			autoUpdate: false,
-		});
+
+		// wait for first slide content
+		this._map.on('tilepreview', this._onGotPreview, this);
 	}
 }
 
