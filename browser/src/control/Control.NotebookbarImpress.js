@@ -255,7 +255,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 			});
 		}
 
-		if (!(window.enableMacrosExecution  === 'false')) {
+		if (window.enableMacrosExecution) {
 			content.push(
 			{
 				'type': 'toolbox',

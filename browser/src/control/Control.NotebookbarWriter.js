@@ -138,7 +138,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 		var hasShare = this._map['wopi'].EnableShare;
 		var hideDownload = this._map['wopi'].HideExportOption;
 		var hasGroupedSaveAs = window.prefs.get('saveAsMode') === 'group';
-		var hasRunMacro = !(window.enableMacrosExecution  === 'false');
+		var hasRunMacro = window.enableMacrosExecution;
 		var hasSave = !this._map['wopi'].HideSaveOption;
 		var content = [];
 
