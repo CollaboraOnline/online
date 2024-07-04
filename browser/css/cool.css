@@ -1111,7 +1111,7 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 }
 
 .username-pop-up {
-	width: 110px;
+	min-width: 110px;
 	height: 45px;
 	position: absolute;
 	text-align: center;
