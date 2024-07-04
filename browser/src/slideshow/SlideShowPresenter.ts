@@ -27,6 +27,7 @@ class SlideShowPresenter {
 	_fullscreen: Element = null;
 	_slideShowCanvas: HTMLCanvasElement = null;
 	_currentSlide: number = 0;
+	_FETCH_ID_: number = 1000; // TODO
 
 	constructor(map: any) {
 		this._map = map;
@@ -39,6 +40,10 @@ class SlideShowPresenter {
 
 	removeHooks() {
 		this._map.off('newfullscreen', this._onStart, this);
+	}
+
+	_getSlidesCount() {
+		return this._presentationInfo ? this._presentationInfo.slides.length : 0;
 	}
 
 	_onFullScreenChange() {
@@ -59,20 +64,53 @@ class SlideShowPresenter {
 		this._map.focus();
 	}
 
+	_onCanvasClick() {
+		if (this._currentSlide + 1 >= this._getSlidesCount())
+			this._stopFullScreen();
+
+		const previousSlide = new Image();
+		previousSlide.src = this._fetchSlide(this._currentSlide);
+		this._doTransition(previousSlide, this._currentSlide + 1);
+		this._currentSlide++;
+	}
+
 	_createCanvas(width: number, height: number) {
 		const canvas = L.DomUtil.create(
 			'canvas',
 			'leaflet-slideshow2',
 			this._map._container,
 		);
+
 		canvas.id = 'fullscreen-canvas';
 		canvas.width = width;
 		canvas.height = height;
+
+		canvas.addEventListener('click', this._onCanvasClick.bind(this));
+
 		return canvas;
 	}
 
+	/// called when we receive slide content
+	_onGotPreview(e: any) {
+		console.debug('SlideShow: received slide: ' + (e ? e.id : 'none'));
+		this._map.off('tilepreview', this._onGotPreview, this);
+
+		this._doPresentation();
+	}
+
+	_requestPreview(slideNumber: number) {
+		this._map.getPreview(this._FETCH_ID_, slideNumber, this._docWidth, this._docHeight, {
+			autoUpdate: false,
+		});
+	}
+
 	_fetchSlide(slideNumber: number) {
-		return this._map._docLayer._preview._previewTiles[slideNumber].src;
+		const slide = this._map._docLayer._preview._previewTiles[slideNumber].src;
+
+		// pre-fetch next slide
+		this._requestPreview(slideNumber + 1);
+
+		return slide;
 	}
 
 	_doTransition(previousSlide: HTMLImageElement, nextSlideNumber: number) {
@@ -80,9 +118,34 @@ class SlideShowPresenter {
 		nextSlide.src = this._fetchSlide(nextSlideNumber);
 		nextSlide.onload = () => {
 			SlideShow.FadeTransition(this._slideShowCanvas, previousSlide, nextSlide).start(3);
-			this._currentSlide++;
 		};
 	}
+
+	_doPresentation() {
+		const previousSlide = new Image();
+
+		if (this._currentSlide === 0) {
+			// TODO: use black background as an initial slide
+			previousSlide.src = this._fetchSlide(0);
+		} else {
+			previousSlide.src = this._fetchSlide(this._currentSlide);
+		}
+
+		this._doTransition(previousSlide, this._currentSlide);
+
+		L.DomEvent.on(
+			document,
+			'fullscreenchange',
+			this._onFullScreenChange,
+			this,
+		);
+	}
+
+	_doFallbackPresentation = () => {
+		// fallback to "open in new tab"
+		this._stopFullScreen();
+		this._doPresentation();
+	};
 
 	_onFullScreen() {
 		if (this._checkPresentationDisabled()) {
@@ -119,48 +182,22 @@ class SlideShowPresenter {
 			return;
 		}
 
-		const doPresentation = () => {
-			const previousSlide = new Image();
-
-			if (this._currentSlide === 0) {
-				// TODO: use black background as an initial slide
-				previousSlide.src = this._fetchSlide(0);
-			} else {
-				previousSlide.src = this._fetchSlide(this._currentSlide);
-			}
-
-			this._doTransition(previousSlide, this._currentSlide);
-
-			L.DomEvent.on(
-				document,
-				'fullscreenchange',
-				this._onFullScreenChange,
-				this,
-			);
-		};
-
-		const fallback = () => {
-			// fallback to "open in new tab"
-			this._stopFullScreen();
-			doPresentation();
-		};
-
 		if (!(this._map['wopi'].DownloadAsPostMessage)) {
 			this._slideShowCanvas = this._createCanvas(window.innerWidth, window.innerHeight);
 			if (this._slideShowCanvas.requestFullscreen) {
 				this._slideShowCanvas
 					.requestFullscreen()
 					.then(() => {
-						doPresentation();
+						// wait for slides...
 					})
 					.catch(() => {
-						fallback();
+						this._doFallbackPresentation();
 					});
 				return;
 			}
 		}
 
-		fallback();
+		this._doFallbackPresentation();
 	}
 
 	_checkAlreadyPresenting() {
@@ -204,35 +241,19 @@ class SlideShowPresenter {
 		app.socket.sendMessage('getpresentationinfo');
 	}
 
-	/// called when we receive slide content
-	_onGotPreview(e: any) {
-		console.debug('SlideShow: received slide: ' + (e ? e.id : 'none'));
-		this._map.off('tilepreview', this._onGotPreview, this);
-
-		if (e.id === this._currentSlide) {
-			// fetch the next slide for transition...
-			this._map.getPreview(1001, this._currentSlide + 1, this._docWidth, this._docHeight, {
-				autoUpdate: false,
-			});
-		}
-	}
-
 	/// called as a response on getpresentationinfo
 	onSlideShowInfo(data: PresentationInfo) {
 		console.debug('SlideShow: received information about presentation');
-		const slides = data.slides;
-		const numberOfSlides = slides.length;
+		this._presentationInfo = data;
+
+		const numberOfSlides = this._getSlidesCount();
 		if (numberOfSlides === 0) return;
 
-		this._presentationInfo = data;
 		this._docWidth = data.docWidth;
 		this._docHeight = data.docHeight;
 
-		this._map.getPreview(1000, this._currentSlide, this._docWidth, this._docHeight, {
-			autoUpdate: false,
-		});
-
-		// wait for first slide content
+		this._requestPreview(this._currentSlide);
+		// notification when we receive slide content
 		this._map.on('tilepreview', this._onGotPreview, this);
 	}
 }
