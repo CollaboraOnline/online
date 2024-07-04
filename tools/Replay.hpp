@@ -391,6 +391,10 @@ public:
 
         if (tokens.equals(0, "tileprocessed"))
             out.clear(); // we do this accurately below
+        else if (tokens.equals(0, "requestloksession") || (tokens.equals(0, "canceltiles")))
+            out.clear(); // These commands have been removed.
+        else if (tokens.equals(0, "uno .uno:Save"))
+            out = "save dontTerminateEdit=0 dontSaveIfUnmodified=1"; // .uno:Save will crash in debug
 
         else if (tokens.equals(0, "load")) {
             std::string url = tokens[1];
