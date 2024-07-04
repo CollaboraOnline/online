@@ -27,6 +27,7 @@ class SlideShowPresenter {
 	_fullscreen: Element = null;
 	_slideShowCanvas: HTMLCanvasElement = null;
 	_currentSlide: number = 0;
+	_slides: Array<string | null> = null;
 	_FETCH_ID_: number = 1000; // TODO
 
 	constructor(map: any) {
@@ -36,6 +37,7 @@ class SlideShowPresenter {
 
 	addHooks() {
 		this._map.on('newfullscreen', this._onStart, this);
+		this._map.on('tilepreview', this._onGotPreview, this);
 	}
 
 	removeHooks() {
@@ -48,13 +50,11 @@ class SlideShowPresenter {
 
 	_onFullScreenChange() {
 		this._fullscreen = document.fullscreenElement;
-		if (!this._fullscreen)
-			this._stopFullScreen();
+		if (!this._fullscreen) this._stopFullScreen();
 	}
 
 	_stopFullScreen() {
-		if (!this._slideShowCanvas)
-			return;
+		if (!this._slideShowCanvas) return;
 
 		L.DomUtil.remove(this._slideShowCanvas);
 		this._slideShowCanvas = null;
@@ -68,8 +68,14 @@ class SlideShowPresenter {
 		if (this._currentSlide + 1 >= this._getSlidesCount())
 			this._stopFullScreen();
 
+		const slide = this._fetchSlide(this._currentSlide);
+		if (!slide) {
+			console.debug('SlideShow: no content for next slide yet.');
+			return;
+		}
+
 		const previousSlide = new Image();
-		previousSlide.src = this._fetchSlide(this._currentSlide);
+		previousSlide.src = slide;
 		this._doTransition(previousSlide, this._currentSlide + 1);
 		this._currentSlide++;
 	}
@@ -92,20 +98,30 @@ class SlideShowPresenter {
 
 	/// called when we receive slide content
 	_onGotPreview(e: any) {
-		console.debug('SlideShow: received slide: ' + (e ? e.id : 'none'));
-		this._map.off('tilepreview', this._onGotPreview, this);
+		if (!this._slides || !this._slides.length) return;
 
-		this._doPresentation();
+		console.debug('SlideShow: received slide: ' + e.part);
+		this._slides[parseInt(e.part)] = e.tile.src;
 	}
 
 	_requestPreview(slideNumber: number) {
-		this._map.getPreview(this._FETCH_ID_, slideNumber, this._docWidth, this._docHeight, {
-			autoUpdate: false,
-		});
+		this._map.getPreview(
+			this._FETCH_ID_,
+			slideNumber,
+			this._docWidth,
+			this._docHeight,
+			{
+				autoUpdate: false,
+			},
+		);
 	}
 
 	_fetchSlide(slideNumber: number) {
-		const slide = this._map._docLayer._preview._previewTiles[slideNumber].src;
+		// use cache if possible
+		const slide =
+			this._slides && this._slides[slideNumber]
+				? this._slides[slideNumber]
+				: this._map._docLayer._preview._previewTiles[slideNumber].src;
 
 		// pre-fetch next slide
 		this._requestPreview(slideNumber + 1);
@@ -117,7 +133,11 @@ class SlideShowPresenter {
 		const nextSlide = new Image();
 		nextSlide.src = this._fetchSlide(nextSlideNumber);
 		nextSlide.onload = () => {
-			SlideShow.FadeTransition(this._slideShowCanvas, previousSlide, nextSlide).start(3);
+			SlideShow.FadeTransition(
+				this._slideShowCanvas,
+				previousSlide,
+				nextSlide,
+			).start(3);
 		};
 	}
 
@@ -132,13 +152,6 @@ class SlideShowPresenter {
 		}
 
 		this._doTransition(previousSlide, this._currentSlide);
-
-		L.DomEvent.on(
-			document,
-			'fullscreenchange',
-			this._onFullScreenChange,
-			this,
-		);
 	}
 
 	_doFallbackPresentation = () => {
@@ -182,13 +195,18 @@ class SlideShowPresenter {
 			return;
 		}
 
-		if (!(this._map['wopi'].DownloadAsPostMessage)) {
-			this._slideShowCanvas = this._createCanvas(window.innerWidth, window.innerHeight);
+		L.DomEvent.on(document, 'fullscreenchange', this._onFullScreenChange, this);
+
+		if (!this._map['wopi'].DownloadAsPostMessage) {
+			this._slideShowCanvas = this._createCanvas(
+				window.innerWidth,
+				window.innerHeight,
+			);
 			if (this._slideShowCanvas.requestFullscreen) {
 				this._slideShowCanvas
 					.requestFullscreen()
 					.then(() => {
-						// wait for slides...
+						this._doPresentation();
 					})
 					.catch(() => {
 						this._doFallbackPresentation();
@@ -249,12 +267,12 @@ class SlideShowPresenter {
 		const numberOfSlides = this._getSlidesCount();
 		if (numberOfSlides === 0) return;
 
+		this._slides = new Array<string>(numberOfSlides);
+
 		this._docWidth = data.docWidth;
 		this._docHeight = data.docHeight;
 
 		this._requestPreview(this._currentSlide);
-		// notification when we receive slide content
-		this._map.on('tilepreview', this._onGotPreview, this);
 	}
 }
 
