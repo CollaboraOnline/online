@@ -837,7 +837,7 @@ class DeltaGenerator {
             outb.size = maxCompressed;
             outb.pos = 0;
 
-            unsigned char packedLine[1 + spaceForBitmask + width * 4];
+            unsigned char packedLine[2 + spaceForBitmask + width * 4];
 
             for (int y = 0; y < height; ++y)
             {
