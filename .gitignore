@@ -135,8 +135,9 @@ zstdlib-symlink
 ICU.dat
 ios/Mobile/Assets.xcassets/AppIcon.appiconset
 
-# iOS app build number
+# build numbers/versions
 BUNDLE-VERSION
+/dist_git_hash
 
 # android stuff
 /android/lib/src/main/assets/dist
