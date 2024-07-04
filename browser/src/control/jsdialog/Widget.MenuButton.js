@@ -146,6 +146,7 @@ function _menubuttonControl (parentContainer, data, builder) {
 		if (data.image) {
 			var image = L.DomUtil.create('img', '', button);
 			image.src = data.image;
+			image.setAttribute('alt', '');
 		}
 		var label = L.DomUtil.create('span', '', button);
 		label.innerText = data.text ? data.text : '';
