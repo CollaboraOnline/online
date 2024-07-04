@@ -434,7 +434,6 @@ var unoCommandsArray = {
 	'ShowTrackedChanges':{text:{context:_('Show track changes'),menu:_('Show'),},},
 	'Shrink':{global:{context:_('Decrease Font Size'),menu:_('Decrease Size'),},},
 	'Sidebar':{global:{menu:_('Sidebar'),},},
-	'SidebarDeck.A11yCheckDeck':{text:{menu:_('Open the Accessibility Check Deck'),},},
 	'SidebarDeck.ElementsDeck':{global:{menu:_('Open the Elements Deck'),},},
 	'Signature':{global:{menu:_('Digital Signatu~res...'),},},
 	'SlideChangeWindow':{presentation:{menu:_('Slide Transition'),},},
