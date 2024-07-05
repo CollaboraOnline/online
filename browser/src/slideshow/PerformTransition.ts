@@ -112,6 +112,13 @@ SlideShow.PerformTransition = function (
             ).start();
             break;
 
+        case 'VENETIAN':
+            new VenetianTransition(
+                canvas,
+                image1,
+                image2,
+            ).start(1);
+            break;
 
 
 
