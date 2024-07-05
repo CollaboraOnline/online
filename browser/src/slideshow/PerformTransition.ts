@@ -134,13 +134,22 @@ SlideShow.PerformTransition = function (
                 image1,
                 image2,
             ).start(1);
-            break;   
+            break;
+
         case 'DISSOLVE':
             new SimpleDissolveTransition(
                 canvas,
                 image1,
                 image2,
             ).start();
+            break;
+
+        case 'PUSH':
+            new PushTransition(
+                canvas,
+                image1,
+                image2,
+            ).start(1);
             break;
 
 
