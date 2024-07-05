@@ -423,6 +423,7 @@ COOL_JS_LST =\
 	src/slideshow/transition/BoxTransition.ts \
 	src/slideshow/transition/DiamondTransition.ts\
 	src/slideshow/transition/CheckersTransition.ts \
+	src/slideshow/transition/PushTransition.ts \
 	src/slideshow/transition/SimpleDissolveTransition.ts \
 	src/slideshow/transition/BarsTransition.ts \
 	src/slideshow/transition/CutTransition.ts \
@@ -874,6 +875,7 @@ pot:
 		src/slideshow/transition/OvalTransition.ts\
 		src/slideshow/transition/DiamondTransition.ts\
 		src/slideshow/transition/CheckersTransition.ts \
+		src/slideshow/transition/PushTransition.ts \
 		src/slideshow/transition/SimpleDissolveTransition.ts \
 		src/slideshow/transition/BarsTransition.ts \
 		src/slideshow/transition/CutTransition.ts \
