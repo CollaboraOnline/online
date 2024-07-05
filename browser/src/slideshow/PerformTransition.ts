@@ -95,6 +95,18 @@ SlideShow.PerformTransition = function (
                 image2,
             ).start(1);
             break;
+
+        case 'BOX':
+            new BoxTransition(
+                canvas,
+                image1,
+                image2,
+            ).start(1);
+            break;
+
+
+
+
         default:
             console.error('Unknown transition type');
             break;
