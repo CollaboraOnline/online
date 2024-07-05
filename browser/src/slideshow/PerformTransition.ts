@@ -152,6 +152,13 @@ SlideShow.PerformTransition = function (
             ).start(1);
             break;
 
+        case 'SPLIT':
+            new SplitTransition(
+                canvas,
+                image1,
+                image2,
+            ).start(1);
+            break;
 
         default:
             console.error('Unknown transition type');
