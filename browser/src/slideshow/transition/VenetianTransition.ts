@@ -84,3 +84,5 @@ class VenetianTransition extends Transition2d {
                 `;
 	}
 }
+
+SlideShow.VenetianTransition = VenetianTransition;

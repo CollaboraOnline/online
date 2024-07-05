@@ -81,3 +81,5 @@ class BoxTransition extends Transition2d {
                 `;
 	}
 }
+
+SlideShow.BoxTransition = BoxTransition;

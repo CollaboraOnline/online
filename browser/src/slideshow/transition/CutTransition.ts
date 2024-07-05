@@ -60,3 +60,5 @@ class CutTransition extends SlideShow.Transition2d {
                 `;
 	}
 }
+
+SlideShow.CutTransition = CutTransition;

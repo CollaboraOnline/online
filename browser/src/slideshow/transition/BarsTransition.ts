@@ -88,3 +88,5 @@ class BarsTransition extends Transition2d {
                 `;
 	}
 }
+
+SlideShow.BarsTransition = BarsTransition;

@@ -72,3 +72,5 @@ class DiamondTransition extends SlideShow.Transition2d {
 `;
 	}
 }
+
+SlideShow.DiamondTransition = DiamondTransition;
