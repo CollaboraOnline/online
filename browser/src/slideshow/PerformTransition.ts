@@ -104,6 +104,14 @@ SlideShow.PerformTransition = function (
             ).start(1);
             break;
 
+        case 'WEDGE':
+            new WedgeTransition(
+                canvas,
+                image1,
+                image2,
+            ).start();
+            break;
+
 
 
 
