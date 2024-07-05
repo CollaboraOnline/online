@@ -20,6 +20,14 @@ app.definitions.PerformTransition = function (
                 image2,
             ).start(1);
             break;
+        case 'WHEEL':
+            // 1,2,3, 4, 8
+            new WheelTransition(
+                canvas,
+                image1,
+                image2,
+            ).start(2);
+            break;
         default:
             console.error('Unknown transition type');
             break;
