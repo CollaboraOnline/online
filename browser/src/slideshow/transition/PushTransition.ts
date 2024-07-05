@@ -96,3 +96,5 @@ class PushTransition extends Transition2d {
                 `;
 	}
 }
+
+SlideShow.PushTransition = PushTransition;
