@@ -2042,6 +2042,7 @@ void COOLWSD::innerInitialize(Application& self)
         { "server_name", "" },
         { "ssl.ca_file_path", COOLWSD_CONFIGDIR "/ca-chain.cert.pem" },
         { "ssl.cert_file_path", COOLWSD_CONFIGDIR "/cert.pem" },
+        { "ssl.cipher_list", "" },
         { "ssl.enable", "true" },
         { "ssl.hpkp.max_age[@enable]", "true" },
         { "ssl.hpkp.report_uri[@enable]", "false" },
