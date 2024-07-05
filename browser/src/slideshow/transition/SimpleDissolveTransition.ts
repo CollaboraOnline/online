@@ -78,3 +78,4 @@ class SimpleDissolveTransition extends SlideShow.Transition2d {
 				`;
 	}
 }
+SlideShow.SimpleDissolveTransition = SimpleDissolveTransition;
