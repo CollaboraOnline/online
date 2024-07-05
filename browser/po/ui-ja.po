@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-04 13:43+0200\n"
+"POT-Creation-Date: 2024-07-05 13:52+0200\n"
 "PO-Revision-Date: 2024-06-29 10:46+0000\n"
 "Last-Translator: Shavazo <pleasure.7010@gmail.com>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/"
@@ -2613,10 +2613,11 @@ msgid ""
 msgstr "ドキュメントの容量が大きすぎるか、またはディスク容量が不足しています。このド"
 "キュメントは読み取り専用になります。"
 
-#: src/errormessages.js:47 src/errormessages.js:56
-msgid "Document cannot be saved due to expired or invalid access token."
-msgstr "アクセストークンの有効期限が切れているか不正なためドキュメントが保存できませ"
-"んでした。"
+#: src/errormessages.js:47
+msgid ""
+"Document cannot be saved due to expired session, please reopen the document "
+"to continue."
+msgstr ""
 
 #: src/errormessages.js:48
 msgid "Document cannot be saved."
@@ -2645,6 +2646,12 @@ msgid ""
 "download it now to preserve a copy locally."
 msgstr "ファイルサイズが大きすぎで保存できませんでした。ドキュメントは読み取り専用に"
 "なりますが、ローカルにコピーを保存するためにダウンロードできます。"
+
+#: src/errormessages.js:56
+msgid ""
+"Document cannot be saved due to expired session, please reload the page to "
+"continue."
+msgstr ""
 
 #: src/errormessages.js:57
 msgid "Document cannot be saved, please check your permissions."
@@ -3012,6 +3019,10 @@ msgstr ""
 "translate=\"true\">1</a> <a id=\"slide-2-indicator\" href=\"#slide-2\" data-"
 "translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
 "translate=\"true\">3</a>"
+
+#~ msgid "Document cannot be saved due to expired or invalid access token."
+#~ msgstr "アクセストークンの有効期限が切れているか不正なためドキュメントが保存できませ"
+#~ "んでした。"
 
 #~ msgid "Copy link location"
 #~ msgstr "リンクをコピーする"

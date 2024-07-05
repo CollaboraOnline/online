@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Collabora Online UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-04 13:43+0200\n"
+"POT-Creation-Date: 2024-07-05 13:52+0200\n"
 "PO-Revision-Date: 2024-06-25 09:12+0000\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <https://hosted.weblate.org/projects/"
@@ -2652,11 +2652,11 @@ msgstr ""
 "Dokument je prevelik ali pa ni dovolj prostora za njegovo shranjevanje. "
 "Dovoljeno bo samo branje dokumenta."
 
-#: src/errormessages.js:47 src/errormessages.js:56
-msgid "Document cannot be saved due to expired or invalid access token."
+#: src/errormessages.js:47
+msgid ""
+"Document cannot be saved due to expired session, please reopen the document "
+"to continue."
 msgstr ""
-"Dokumenta ni mogoče shraniti zaradi poteklega ali neveljavnega žetona za "
-"dostop."
 
 #: src/errormessages.js:48
 msgid "Document cannot be saved."
@@ -2690,6 +2690,12 @@ msgstr ""
 "Shranjevanje ni uspelo, ker je dokument prevelik ali ker presega preostali "
 "prostor za shranjevanje. Dokument bo zdaj namenjen samo branju, vendar ga "
 "lahko še vedno prenesete, da ohranite krajevno kopijo."
+
+#: src/errormessages.js:56
+msgid ""
+"Document cannot be saved due to expired session, please reload the page to "
+"continue."
+msgstr ""
 
 #: src/errormessages.js:57
 msgid "Document cannot be saved, please check your permissions."
@@ -3071,6 +3077,11 @@ msgstr ""
 "translate=\"true\">1</a> <a id=\"slide-2-indicator\" href=\"#slide-2\" data-"
 "translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
 "translate=\"true\">3</a>"
+
+#~ msgid "Document cannot be saved due to expired or invalid access token."
+#~ msgstr ""
+#~ "Dokumenta ni mogoče shraniti zaradi poteklega ali neveljavnega žetona za "
+#~ "dostop."
 
 #~ msgid "Copy link location"
 #~ msgstr "Kopiraj mesto povezave"

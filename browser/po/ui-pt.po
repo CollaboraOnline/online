@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-04 13:43+0200\n"
+"POT-Creation-Date: 2024-07-05 13:52+0200\n"
 "PO-Revision-Date: 2024-06-19 16:09+0000\n"
 "Last-Translator: SC <larcansal@users.noreply.hosted.weblate.org>\n"
 "Language-Team: Portuguese <https://hosted.weblate.org/projects/"
@@ -2656,11 +2656,11 @@ msgstr ""
 "O documento é demasiado grande ou já não há espaço em disco para guardar. O "
 "documento será agora apenas de leitura."
 
-#: src/errormessages.js:47 src/errormessages.js:56
-msgid "Document cannot be saved due to expired or invalid access token."
+#: src/errormessages.js:47
+msgid ""
+"Document cannot be saved due to expired session, please reopen the document "
+"to continue."
 msgstr ""
-"Não foi possível guardar o documento porque o 'token' de acesso expirou ou é "
-"inválido."
 
 #: src/errormessages.js:48
 msgid "Document cannot be saved."
@@ -2695,6 +2695,12 @@ msgstr ""
 "Não foi possível guardar porque o documento é demasiado grande ou excede o "
 "espaço de armazenamento restante. O documento passa a ser apenas de leitura, "
 "mas pode descarregá-lo agora para preservar uma cópia localmente."
+
+#: src/errormessages.js:56
+msgid ""
+"Document cannot be saved due to expired session, please reload the page to "
+"continue."
+msgstr ""
 
 #: src/errormessages.js:57
 msgid "Document cannot be saved, please check your permissions."
@@ -3080,6 +3086,11 @@ msgstr ""
 "translate=\"true\">1</a> <a id=\"slide-2-indicator\" href=\"#slide-2\" data-"
 "translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
 "translate=\"true\">3</a>"
+
+#~ msgid "Document cannot be saved due to expired or invalid access token."
+#~ msgstr ""
+#~ "Não foi possível guardar o documento porque o 'token' de acesso expirou ou é "
+#~ "inválido."
 
 #~ msgid "Copy link location"
 #~ msgstr "Copiar localização da hiperligação"

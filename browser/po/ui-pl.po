@@ -12,18 +12,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-04 13:43+0200\n"
+"POT-Creation-Date: 2024-07-05 13:52+0200\n"
 "PO-Revision-Date: 2024-07-04 19:09+0000\n"
 "Last-Translator: Matthaiks <kitynska@gmail.com>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/pl/>\n"
-"Language: pl\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && ("
-"n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && "
-"n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n"
+"%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n"
+"%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
 "X-Generator: Weblate 5.7-dev\n"
 
 #: admin/admin.strings.js:15
@@ -2657,11 +2657,11 @@ msgstr ""
 "Dokument jest zbyt duży lub nie ma już miejsca na dysku, aby go zapisać. "
 "Dokument będzie teraz tylko do odczytu."
 
-#: src/errormessages.js:47 src/errormessages.js:56
-msgid "Document cannot be saved due to expired or invalid access token."
+#: src/errormessages.js:47
+msgid ""
+"Document cannot be saved due to expired session, please reopen the document "
+"to continue."
 msgstr ""
-"Dokument nie może zostać zapisany z powodu wygasłego lub niewłaściwego "
-"tokenu dostępu."
 
 #: src/errormessages.js:48
 msgid "Document cannot be saved."
@@ -2696,6 +2696,12 @@ msgstr ""
 "Zapisywanie nie powiodło się, ponieważ dokument jest zbyt duży lub "
 "przekracza pozostałą przestrzeń dyskową. Dokument będzie teraz tylko do "
 "odczytu, ale nadal możesz go pobrać, aby zachować kopię lokalnie."
+
+#: src/errormessages.js:56
+msgid ""
+"Document cannot be saved due to expired session, please reload the page to "
+"continue."
+msgstr ""
 
 #: src/errormessages.js:57
 msgid "Document cannot be saved, please check your permissions."
@@ -3070,6 +3076,11 @@ msgstr ""
 "translate=\"true\">1</a> <a id=\"slide-2-indicator\" href=\"#slide-2\" data-"
 "translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
 "translate=\"true\">3</a>"
+
+#~ msgid "Document cannot be saved due to expired or invalid access token."
+#~ msgstr ""
+#~ "Dokument nie może zostać zapisany z powodu wygasłego lub niewłaściwego "
+#~ "tokenu dostępu."
 
 #~ msgid "Copy link location"
 #~ msgstr "Skopiuj adres łącza"

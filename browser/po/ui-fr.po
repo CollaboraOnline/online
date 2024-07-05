@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-04 13:43+0200\n"
+"POT-Creation-Date: 2024-07-05 13:52+0200\n"
 "PO-Revision-Date: 2024-06-12 08:13+0000\n"
 "Last-Translator: Hubert Figuière <hub@figuiere.net>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/collabora-online/"
@@ -2665,11 +2665,11 @@ msgstr ""
 "Le document est trop lourd ou il n'y a plus suffisamment d'espace disque "
 "pour l'enregistrer. Le document sera désormais en lecture seule."
 
-#: src/errormessages.js:47 src/errormessages.js:56
-msgid "Document cannot be saved due to expired or invalid access token."
+#: src/errormessages.js:47
+msgid ""
+"Document cannot be saved due to expired session, please reopen the document "
+"to continue."
 msgstr ""
-"Le document ne peut pas être sauvegardé en raison d'un jeton d'accès expiré "
-"ou incorrect."
 
 #: src/errormessages.js:48
 msgid "Document cannot be saved."
@@ -2704,6 +2704,12 @@ msgstr ""
 "L'enregistrement a échoué car le document est trop lourd ou dépasse l'espace "
 "de stockage restant. Le document sera désormais en lecture seule mais vous "
 "pouvez toujours le télécharger pour en conserver une copie locale."
+
+#: src/errormessages.js:56
+msgid ""
+"Document cannot be saved due to expired session, please reload the page to "
+"continue."
+msgstr ""
 
 #: src/errormessages.js:57
 msgid "Document cannot be saved, please check your permissions."
@@ -3085,6 +3091,11 @@ msgstr ""
 "translate=\"true\">1</a> <a id=\"slide-2-indicator\" href=\"#slide-2\" data-"
 "translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
 "translate=\"true\">3</a>"
+
+#~ msgid "Document cannot be saved due to expired or invalid access token."
+#~ msgstr ""
+#~ "Le document ne peut pas être sauvegardé en raison d'un jeton d'accès expiré "
+#~ "ou incorrect."
 
 #~ msgid "Copy link location"
 #~ msgstr "Copier l'emplacement du lien"

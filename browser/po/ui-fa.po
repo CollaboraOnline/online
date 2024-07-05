@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-04 13:43+0200\n"
+"POT-Creation-Date: 2024-07-05 13:52+0200\n"
 "PO-Revision-Date: 2023-08-20 07:59+0000\n"
 "Last-Translator: Ali Elminia <ali.elminia@gmail.com>\n"
 "Language-Team: Persian <https://hosted.weblate.org/projects/collabora-online/"
@@ -2634,9 +2634,11 @@ msgstr ""
 "سند خیلی بزرگ است یا فضای دیسکی برای ذخیره وجود ندارد. اکنون سند فقط خواندنی "
 "خواهد بود."
 
-#: src/errormessages.js:47 src/errormessages.js:56
-msgid "Document cannot be saved due to expired or invalid access token."
-msgstr "به دلیل منقضی شدن یا نامعتبر بودن رمز دسترسی، سند قابل ذخیره نیست."
+#: src/errormessages.js:47
+msgid ""
+"Document cannot be saved due to expired session, please reopen the document "
+"to continue."
+msgstr ""
 
 #: src/errormessages.js:48
 msgid "Document cannot be saved."
@@ -2669,6 +2671,12 @@ msgstr ""
 "ذخیره انجام نشد زیرا سند خیلی بزرگ است یا از فضای ذخیره باقیمانده بیشتر است. "
 "سند اکنون فقط خواندنی خواهد بود، اما همچنان می‌توانید آن را دانلود کنید تا "
 "یک کپی به صورت محلی حفظ شود."
+
+#: src/errormessages.js:56
+msgid ""
+"Document cannot be saved due to expired session, please reload the page to "
+"continue."
+msgstr ""
 
 #: src/errormessages.js:57
 msgid "Document cannot be saved, please check your permissions."
@@ -3030,6 +3038,9 @@ msgid ""
 "translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
 "translate=\"true\">3</a>"
 msgstr ""
+
+#~ msgid "Document cannot be saved due to expired or invalid access token."
+#~ msgstr "به دلیل منقضی شدن یا نامعتبر بودن رمز دسترسی، سند قابل ذخیره نیست."
 
 #~ msgid "Copy link location"
 #~ msgstr "مکان پیوند را کپی کنید"

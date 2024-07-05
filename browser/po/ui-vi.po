@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-04 13:43+0200\n"
+"POT-Creation-Date: 2024-07-05 13:52+0200\n"
 "PO-Revision-Date: 2023-10-10 08:40+0000\n"
 "Last-Translator: Nguyễn Hoàng Minh <mingu03@yandex.com>\n"
 "Language-Team: Vietnamese <https://hosted.weblate.org/projects/"
@@ -2629,9 +2629,11 @@ msgstr ""
 "Tài liệu quá lớn hoặc không còn dung lượng đĩa để lưu. Tài liệu bây giờ sẽ ở "
 "chế độ chỉ đọc."
 
-#: src/errormessages.js:47 src/errormessages.js:56
-msgid "Document cannot be saved due to expired or invalid access token."
-msgstr "Không thể lưu tài liệu do mã truy cập đã hết hạn hoặc không hợp lệ."
+#: src/errormessages.js:47
+msgid ""
+"Document cannot be saved due to expired session, please reopen the document "
+"to continue."
+msgstr ""
 
 #: src/errormessages.js:48
 msgid "Document cannot be saved."
@@ -2663,6 +2665,12 @@ msgstr ""
 "Lưu không thành công do tài liệu quá lớn hoặc vượt quá dung lượng lưu trữ "
 "còn lại. Bây giờ tài liệu sẽ ở chế độ chỉ đọc nhưng bạn vẫn có thể tải xuống "
 "ngay bây giờ để lưu bản sao cục bộ."
+
+#: src/errormessages.js:56
+msgid ""
+"Document cannot be saved due to expired session, please reload the page to "
+"continue."
+msgstr ""
 
 #: src/errormessages.js:57
 msgid "Document cannot be saved, please check your permissions."
@@ -3030,6 +3038,9 @@ msgid ""
 "translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
 "translate=\"true\">3</a>"
 msgstr ""
+
+#~ msgid "Document cannot be saved due to expired or invalid access token."
+#~ msgstr "Không thể lưu tài liệu do mã truy cập đã hết hạn hoặc không hợp lệ."
 
 #~ msgid "Copy link location"
 #~ msgstr "Sao chép vị trí liên kết"

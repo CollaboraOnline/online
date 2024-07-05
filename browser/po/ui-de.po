@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-04 13:43+0200\n"
+"POT-Creation-Date: 2024-07-05 13:52+0200\n"
 "PO-Revision-Date: 2024-06-30 13:16+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
@@ -2680,11 +2680,11 @@ msgstr ""
 "Das Dokument ist zu groß oder kein Speicherplatz zum speichern verfügbar. "
 "Das Dokument ist jetzt schreibgeschützt."
 
-#: src/errormessages.js:47 src/errormessages.js:56
-msgid "Document cannot be saved due to expired or invalid access token."
+#: src/errormessages.js:47
+msgid ""
+"Document cannot be saved due to expired session, please reopen the document "
+"to continue."
 msgstr ""
-"Das Dokument kann aufgrund eines abgelaufenen oder ungültigen Zugangs nicht "
-"gespeichert werden."
 
 #: src/errormessages.js:48
 msgid "Document cannot be saved."
@@ -2720,6 +2720,12 @@ msgstr ""
 "verbleibenden Speicherplatz überschreitet. Das Dokument ist nun "
 "schreibgeschützt, aber Sie können es jetzt noch herunterladen, um eine Kopie "
 "lokal zu speichern."
+
+#: src/errormessages.js:56
+msgid ""
+"Document cannot be saved due to expired session, please reload the page to "
+"continue."
+msgstr ""
 
 #: src/errormessages.js:57
 msgid "Document cannot be saved, please check your permissions."
@@ -3115,6 +3121,11 @@ msgstr ""
 "translate=\"true\">1</a> <a id=\"slide-2-indicator\" href=\"#slide-2\" data-"
 "translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
 "translate=\"true\">3</a>"
+
+#~ msgid "Document cannot be saved due to expired or invalid access token."
+#~ msgstr ""
+#~ "Das Dokument kann aufgrund eines abgelaufenen oder ungültigen Zugangs nicht "
+#~ "gespeichert werden."
 
 #~ msgid "Copy link location"
 #~ msgstr "Linkspeicherort kopieren"

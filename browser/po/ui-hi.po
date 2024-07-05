@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-04 13:43+0200\n"
+"POT-Creation-Date: 2024-07-05 13:52+0200\n"
 "PO-Revision-Date: 2024-05-21 14:10+0000\n"
 "Last-Translator: Darshan Upadhyay <darshan.upadhyay1188@gmail.com>\n"
 "Language-Team: Hindi <https://hosted.weblate.org/projects/collabora-online/"
@@ -2631,9 +2631,11 @@ msgid ""
 "be read-only."
 msgstr ""
 
-#: src/errormessages.js:47 src/errormessages.js:56
-msgid "Document cannot be saved due to expired or invalid access token."
-msgstr "अवैध टोकन के कारण दस्तावेज़ को सहेजा नही जा सका।"
+#: src/errormessages.js:47
+msgid ""
+"Document cannot be saved due to expired session, please reopen the document "
+"to continue."
+msgstr ""
 
 #: src/errormessages.js:48
 msgid "Document cannot be saved."
@@ -2659,6 +2661,12 @@ msgid ""
 "Save failed because the document is too large or exceeds the remaining "
 "storage space. The document will now be read-only but you may still "
 "download it now to preserve a copy locally."
+msgstr ""
+
+#: src/errormessages.js:56
+msgid ""
+"Document cannot be saved due to expired session, please reload the page to "
+"continue."
 msgstr ""
 
 #: src/errormessages.js:57
@@ -2993,6 +3001,9 @@ msgid ""
 "translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
 "translate=\"true\">3</a>"
 msgstr ""
+
+#~ msgid "Document cannot be saved due to expired or invalid access token."
+#~ msgstr "अवैध टोकन के कारण दस्तावेज़ को सहेजा नही जा सका।"
 
 #, fuzzy
 #~ msgid "ODF Spreadsheet (.ods)"

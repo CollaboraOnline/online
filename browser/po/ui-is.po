@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-04 13:43+0200\n"
+"POT-Creation-Date: 2024-07-05 13:52+0200\n"
 "PO-Revision-Date: 2024-01-02 19:06+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <https://hosted.weblate.org/projects/"
@@ -2630,9 +2630,11 @@ msgstr ""
 "Skjalið er of stórt eða of lítið pláss eftir á diski, Skjalið verður núna "
 "aðeins lesanlegt."
 
-#: src/errormessages.js:47 src/errormessages.js:56
-msgid "Document cannot be saved due to expired or invalid access token."
-msgstr "Ekki er hægt að vista skjal vegna útrunnins eða ógilds aðgangsteikns."
+#: src/errormessages.js:47
+msgid ""
+"Document cannot be saved due to expired session, please reopen the document "
+"to continue."
+msgstr ""
 
 #: src/errormessages.js:48
 msgid "Document cannot be saved."
@@ -2666,6 +2668,12 @@ msgstr ""
 "Vistun mistókst vegna þess að skjalið er of stórt eða fyllir allt pláss sem "
 "eftir er. Skjalið verður núna skrifvarið en þú getur ennþá sótt það og "
 "vistað hjá þér."
+
+#: src/errormessages.js:56
+msgid ""
+"Document cannot be saved due to expired session, please reload the page to "
+"continue."
+msgstr ""
 
 #: src/errormessages.js:57
 msgid "Document cannot be saved, please check your permissions."
@@ -3037,6 +3045,9 @@ msgid ""
 "translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
 "translate=\"true\">3</a>"
 msgstr ""
+
+#~ msgid "Document cannot be saved due to expired or invalid access token."
+#~ msgstr "Ekki er hægt að vista skjal vegna útrunnins eða ógilds aðgangsteikns."
 
 #~ msgid "Copy link location"
 #~ msgstr "Afrita staðsetningu tengils"

@@ -7,12 +7,12 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-04 13:43+0200\n"
+"POT-Creation-Date: 2024-07-05 13:52+0200\n"
 "PO-Revision-Date: 2024-07-04 19:09+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/hu/>\n"
-"Language: hu\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2657,10 +2657,11 @@ msgstr ""
 "A dokumentum túl nagy, vagy nem maradt lemezterület a mentéshez. A "
 "dokumentum mostantól csak olvasható lesz."
 
-#: src/errormessages.js:47 src/errormessages.js:56
-msgid "Document cannot be saved due to expired or invalid access token."
+#: src/errormessages.js:47
+msgid ""
+"Document cannot be saved due to expired session, please reopen the document "
+"to continue."
 msgstr ""
-"A dokumentum nem menthető, mert a hozzáférési token lejárt vagy érvénytelen."
 
 #: src/errormessages.js:48
 msgid "Document cannot be saved."
@@ -2695,6 +2696,12 @@ msgstr ""
 "A mentés nem sikerült, mert a dokumentum túl nagy, vagy meghaladja a "
 "fennmaradó tárhelyet. A dokumentum mostantól csak olvasható lesz, de "
 "továbbra is letöltheti, hogy helyben megőrizzen egy másolatot."
+
+#: src/errormessages.js:56
+msgid ""
+"Document cannot be saved due to expired session, please reload the page to "
+"continue."
+msgstr ""
 
 #: src/errormessages.js:57
 msgid "Document cannot be saved, please check your permissions."
@@ -3072,6 +3079,10 @@ msgstr ""
 "translate=\"true\">1</a> <a id=\"slide-2-indicator\" href=\"#slide-2\" data-"
 "translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
 "translate=\"true\">3</a>"
+
+#~ msgid "Document cannot be saved due to expired or invalid access token."
+#~ msgstr ""
+#~ "A dokumentum nem menthető, mert a hozzáférési token lejárt vagy érvénytelen."
 
 #~ msgid "Copy link location"
 #~ msgstr "Hivatkozás helyének másolása"

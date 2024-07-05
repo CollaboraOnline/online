@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-04 13:43+0200\n"
+"POT-Creation-Date: 2024-07-05 13:52+0200\n"
 "PO-Revision-Date: 2023-09-23 08:08+0000\n"
 "Last-Translator: Cosmin Humeniuc <cosmin.humeniuc@1and1.ro>\n"
 "Language-Team: Romanian <https://hosted.weblate.org/projects/"
@@ -2610,8 +2610,10 @@ msgid ""
 "be read-only."
 msgstr ""
 
-#: src/errormessages.js:47 src/errormessages.js:56
-msgid "Document cannot be saved due to expired or invalid access token."
+#: src/errormessages.js:47
+msgid ""
+"Document cannot be saved due to expired session, please reopen the document "
+"to continue."
 msgstr ""
 
 #: src/errormessages.js:48
@@ -2638,6 +2640,12 @@ msgid ""
 "Save failed because the document is too large or exceeds the remaining "
 "storage space. The document will now be read-only but you may still "
 "download it now to preserve a copy locally."
+msgstr ""
+
+#: src/errormessages.js:56
+msgid ""
+"Document cannot be saved due to expired session, please reload the page to "
+"continue."
 msgstr ""
 
 #: src/errormessages.js:57
