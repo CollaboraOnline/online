@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-07-04 13:43+0200\n"
-"PO-Revision-Date: 2024-07-03 19:44+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"PO-Revision-Date: 2024-07-05 02:26+0000\n"
+"Last-Translator: Jeff Huang <s8321414@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <https://hosted.weblate.org/projects/"
 "collabora-online/ui/zh_Hant/>\n"
-"Language: \n"
+"Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2241,7 +2241,7 @@ msgstr "儲存格邊框"
 
 #: src/control/jsdialog/Widget.SidebarContainers.ts:72
 msgid "More options for {name}"
-msgstr ""
+msgstr "{name} 的更多選項"
 
 #: src/control/jsdialog/Widget.TreeView.js:698
 msgid "Headings and objects that you add to the document will appear here"
@@ -2249,15 +2249,15 @@ msgstr "您新增至文件中的標題和物件將顯示在此處"
 
 #: src/core/Socket.js:65
 msgid "Oops, there is a problem connecting to {productname}: "
-msgstr "糟糕, 連接 {product name} 時發生了問題 . "
+msgstr "糟糕，連線到 {productname} 時發生了一點問題： "
 
 #: src/core/Socket.js:653
 msgid "Server is now reachable. We have to refresh the page now."
-msgstr "伺服器現在可達。我們現在必須刷新頁面。"
+msgstr "可以連線到伺服器了。現在我們會重新整理頁面。"
 
 #: src/core/Socket.js:655
 msgid "Server is now reachable..."
-msgstr "伺服器現在可達..."
+msgstr "可以連線到伺服器了……"
 
 #: src/core/Socket.js:659
 msgid "RELOAD"
@@ -2265,11 +2265,11 @@ msgstr "重新載入"
 
 #: src/core/Socket.js:672
 msgid "Cluster configuration warning"
-msgstr "叢集配置警告"
+msgstr "叢集設定警告"
 
 #: src/core/Socket.js:675
 msgid "Wrong server, reconnecting..."
-msgstr "伺服器錯誤，正在重新連接..."
+msgstr "伺服器錯誤，正在重新連線……"
 
 #: src/core/Socket.js:684
 msgid "COOLWSD version:"
