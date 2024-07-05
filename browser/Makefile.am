@@ -412,7 +412,8 @@ COOL_JS_LST =\
 	src/control/Ruler.js \
 	src/control/VRuler.ts \
 	src/slideshow/SlideShowPresenter.ts \
-	src/slideshow/transition/Transition2d.ts \
+	src/slideshow/Transition2d.ts \
+	src/slideshow/PerformTransition.ts \
 	src/slideshow/transition/FadeTransition.ts \
 	src/slideshow/transition/WipeTransition.ts \
 	src/dom/PosAnimation.js \
@@ -848,7 +849,8 @@ pot:
 		src/control/jsdialog/Widget.Timefield.js \
 		src/control/jsdialog/Widget.TreeView.js \
 		src/slideshow/SlideShowPresenter.ts \
-		src/slideshow/transition/Transition2d.ts \
+		src/slideshow/Transition2d.ts \
+		src/slideshow/PerformTransition.ts \
 		src/slideshow/transition/FadeTransition.ts \
 		src/core/Socket.js \
 		src/core/Debug.js \
