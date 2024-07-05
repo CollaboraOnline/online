@@ -18,3 +18,5 @@ CPU.csv
 Network.csv
 PingLatency.csv
 TileLatency.csv
+CPUUsage.csv
+PeakMemoryUsage.csv
