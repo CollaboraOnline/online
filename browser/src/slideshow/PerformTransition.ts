@@ -135,7 +135,13 @@ SlideShow.PerformTransition = function (
                 image2,
             ).start(1);
             break;   
-        
+        case 'DISSOLVE':
+            new SimpleDissolveTransition(
+                canvas,
+                image1,
+                image2,
+            ).start();
+            break;
 
 
         default:
