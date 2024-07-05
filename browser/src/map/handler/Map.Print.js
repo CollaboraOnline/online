@@ -3,6 +3,8 @@
  * L.Map.Print is handling the print action
  */
 
+/* global _ */
+
 L.Map.mergeOptions({
 	printHandler: true
 });
@@ -39,6 +41,7 @@ L.Map.Print = L.Handler.extend({
 		var blob = new Blob([e.response], {type: 'application/pdf'});
 		var url = URL.createObjectURL(blob);
 		this._printIframe = L.DomUtil.create('iframe', '', document.body);
+		this._printIframe.title = _('Print dialog');
 		this._printIframe.onload = L.bind(this._onIframeLoaded, this);
 		L.DomUtil.setStyle(this._printIframe, 'visibility', 'hidden');
 		L.DomUtil.setStyle(this._printIframe, 'position', 'fixed');

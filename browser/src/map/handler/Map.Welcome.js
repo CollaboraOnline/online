@@ -78,6 +78,7 @@ L.Map.Welcome = L.Handler.extend({
 		var params = [{'ui_theme' : uiTheme}];
 
 		this._iframeWelcome = L.iframeDialog(this._url, params, null, { prefix: 'iframe-welcome' });
+		this._iframeWelcome._iframe.title = _('Welcome Dialog');
 	},
 
 	removeHooks: function () {
