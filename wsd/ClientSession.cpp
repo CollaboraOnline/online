@@ -366,20 +366,30 @@ void ClientSession::handleClipboardRequest(DocumentBroker::ClipboardRequest     
                         }
                     };
 
-                    std::shared_ptr<http::Session> httpSession = http::Session::create(url);
-                    httpSession->setFinishedHandler(std::move(finishedCallback));
-                    std::string pathAndQuery = Poco::URI(url).getPathAndQuery();
+                    const std::string pathAndQuery = Poco::URI(url).getPathAndQuery();
                     if (pathAndQuery.find("/cool/clipboard") != std::string::npos)
                     {
-                        http::Request httpRequest(Poco::URI(url).getPathAndQuery());
-                        if (!httpSession->asyncRequest(httpRequest, docBroker->getPoll()))
+                        std::shared_ptr<http::Session> httpSession = http::Session::create(url);
+                        if (httpSession)
                         {
-                            LOG_ERR("Failed to start an async clipboard download request");
+                            httpSession->setFinishedHandler(std::move(finishedCallback));
+                            http::Request httpRequest(Poco::URI(url).getPathAndQuery());
+                            if (!httpSession->asyncRequest(httpRequest, docBroker->getPoll()))
+                            {
+                                LOG_ERR(
+                                    "Failed to start an async clipboard download request with URL ["
+                                    << url << ']');
+                            }
+                        }
+                        else
+                        {
+                            LOG_ERR("Failed to create clipboard request with URL [" << url << ']');
                         }
                     }
                     else
                     {
-                        LOG_ERR("Clipboard download URL does not look like a clipboard one");
+                        LOG_ERR("Clipboard download URL ["
+                                << url << "] does not look like a clipboard one");
                     }
                 }
             }
