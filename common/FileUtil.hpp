@@ -303,6 +303,8 @@ namespace FileUtil
         const int _errno;
     };
 
+    void lslr(const std::string& dir);
+
 } // end namespace FileUtil
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
