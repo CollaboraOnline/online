@@ -10,8 +10,7 @@
 
 declare var SlideShow: any;
 
-class OvalTransition extends Transition2d {
-	private direction: number = 0;
+class CutTransition extends SlideShow.Transition2d {
 	constructor(
 		canvas: HTMLCanvasElement,
 		image1: HTMLImageElement,
@@ -19,18 +18,11 @@ class OvalTransition extends Transition2d {
 	) {
 		super(canvas, image1, image2);
 		this.prepareTransition();
-		this.animationTime = 2000;
+		this.animationTime = 3000;
 	}
 
-	public renderUniformValue(): void {
-		this.gl.uniform1i(
-			this.gl.getUniformLocation(this.program, 'direction'),
-			this.direction,
-		);
-	}
 
-	public start(direction: number): void {
-		this.direction = direction;
+	public start(): void {
 		this.startTransition();
 	}
 
@@ -54,36 +46,16 @@ class OvalTransition extends Transition2d {
                 uniform sampler2D leavingSlideTexture;
                 uniform sampler2D enteringSlideTexture;
                 uniform float time;
-                uniform int direction;
-
 
                 in vec2 v_texCoord;
                 out vec4 outColor;
 
                 void main() {
-                    vec2 uv = v_texCoord;
-                    float progress = time;
-
-                    vec2 center = vec2(0.5, 0.5);
-
-                    vec2 dist = abs(uv - center);
-
-                    if (direction == 1) {
-                        dist.x *= 2.0; 
+                    if (time < 1.0) {
+                        outColor =  vec4(0.0f, 0.0f, 0.0f, 1.0f);
                     } else {
-                        dist.y *= 2.0;  
+                        outColor = texture(enteringSlideTexture, v_texCoord);
                     }
-
-                    float size = progress * 1.2;
-
-                    float mask = step(length(dist), size);
-
-                    mask = min(mask, 1.0);
-
-                    vec4 color1 = texture(leavingSlideTexture, uv);
-                    vec4 color2 = texture(enteringSlideTexture, uv);
-
-                    outColor = mix(color1, color2, mask);
                 }
                 `;
 	}
