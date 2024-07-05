@@ -80,3 +80,5 @@ class WedgeTransition extends SlideShow.Transition2d {
                 `;
 	}
 }
+
+SlideShow.WedgeTransition = WedgeTransition;

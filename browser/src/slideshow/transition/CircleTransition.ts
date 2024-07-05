@@ -72,3 +72,5 @@ class CircleTransition extends SlideShow.Transition2d {
                 `;
 	}
 }
+
+SlideShow.CircleTransition = CircleTransition;

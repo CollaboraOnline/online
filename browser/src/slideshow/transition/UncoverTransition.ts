@@ -106,3 +106,5 @@ class UncoverTransition extends Transition2d {
                 `;
 	}
 }
+
+SlideShow.UncoverTransition = UncoverTransition;

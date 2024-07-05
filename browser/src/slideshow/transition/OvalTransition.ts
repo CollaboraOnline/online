@@ -88,3 +88,5 @@ class OvalTransition extends Transition2d {
                 `;
 	}
 }
+
+SlideShow.OvalTransition = OvalTransition;

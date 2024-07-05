@@ -87,3 +87,5 @@ class FadeTransition extends SlideShow.Transition2d {
 				`;
 	}
 }
+
+SlideShow.FadeTransition = FadeTransition;
