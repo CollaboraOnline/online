@@ -8,6 +8,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+declare var SlideShow: any;
+
 class WheelTransition extends Transition2d {
     private stocks: number = 0;
 	constructor(
