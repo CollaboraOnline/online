@@ -88,3 +88,5 @@ class CheckersTransition extends Transition2d {
                 `;
 	}
 }
+
+SlideShow.CheckersTransition = CheckersTransition;

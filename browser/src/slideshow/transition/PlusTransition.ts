@@ -71,3 +71,5 @@ class PlusTransition extends SlideShow.Transition2d {
                 }`;
 	}
 }
+
+SlideShow.PlusTransition = PlusTransition;

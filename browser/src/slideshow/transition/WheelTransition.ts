@@ -74,3 +74,5 @@ class WheelTransition extends Transition2d {
                 `;
 	}
 }
+
+SlideShow.WheelTransition = WheelTransition;

@@ -91,3 +91,5 @@ class WipeTransition extends Transition2d {
 				}`;
 	}
 }
+
+SlideShow.WipeTransition = WipeTransition;
