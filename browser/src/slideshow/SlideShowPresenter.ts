@@ -133,12 +133,12 @@ class SlideShowPresenter {
 		const nextSlide = new Image();
 		nextSlide.src = this._fetchSlide(nextSlideNumber);
 		nextSlide.onload = () => {
-			const transition = new SlideShow.FadeTransition(
+			SlideShow.PerformTransition(
 				this._slideShowCanvas,
 				previousSlide,
 				nextSlide,
+				"FADE"
 			);
-			transition.start(3);
 		};
 	}
 

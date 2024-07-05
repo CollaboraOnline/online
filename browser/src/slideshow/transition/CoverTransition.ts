@@ -120,3 +120,5 @@ class CoverTransition extends Transition2d {
                 `;
 	}
 }
+
+SlideShow.CoverTransition = CoverTransition;
