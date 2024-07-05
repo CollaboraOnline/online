@@ -47,6 +47,14 @@ SlideShow.PerformTransition = function (
                 image2,
             ).start(2);
             break;
+        
+        case 'BARS':
+            new BarsTransition(
+                canvas,
+                image1,
+                image2,
+            ).start(1);
+            break;
         default:
             console.error('Unknown transition type');
             break;
