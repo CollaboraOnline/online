@@ -1406,8 +1406,22 @@ bool Document::forkToSave(const std::function<void()> &childSave, int viewId)
     size_t threads = getCurrentThreadCount();
     if (threads != 1)
     {
-        LOG_WRN("Failed to ensure we have just one, we have: " << threads);
-        return false;
+        LOG_DBG("Failed to ensure we have just one thread on 1st try, we have: " << threads);
+        // Potentially the kernel can take time to cleanup after pthread_join
+        int countDown = 10;
+        while (true)
+        {
+            std::this_thread::sleep_for(std::chrono::milliseconds(10));
+            if ((threads = getCurrentThreadCount()) == 1)
+                break;
+            countDown--;
+            if (countDown < 1)
+            {
+                LOG_WRN("Failed to ensure we have just one thread for bgsave, "
+                        "we have: " << threads << " synchronously saving");
+                return false;
+            }
+        }
     }
 
     // Oddly we have seen this broken in the past.
