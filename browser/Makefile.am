@@ -415,6 +415,7 @@ COOL_JS_LST =\
 	src/slideshow/Transition2d.ts \
 	src/slideshow/PerformTransition.ts \
 	src/slideshow/transition/FadeTransition.ts \
+	src/slideshow/transition/WheelTransition.ts \
 	src/slideshow/transition/WipeTransition.ts \
 	src/dom/PosAnimation.js \
 	src/map/anim/Map.PanAnimation.js \
@@ -852,6 +853,7 @@ pot:
 		src/slideshow/Transition2d.ts \
 		src/slideshow/PerformTransition.ts \
 		src/slideshow/transition/FadeTransition.ts \
+		src/slideshow/transition/WheelTransition.ts \
 		src/core/Socket.js \
 		src/core/Debug.js \
 		src/docstate.js \
