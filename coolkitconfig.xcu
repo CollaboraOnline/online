@@ -101,14 +101,6 @@
                 <value>0</value>
             </prop>
         </node>
-        <node oor:name="Links">
-            <prop oor:name="Color" oor:op="fuse">
-                <value>128</value>
-            </prop>
-            <prop oor:name="IsVisible" oor:op="fuse">
-                <value>true</value>
-            </prop>
-        </node>
         <node oor:name="LinksVisited">
             <prop oor:name="Color" oor:op="fuse">
                 <value>204</value>
@@ -418,14 +410,6 @@
         <node oor:name="FontColor">
             <prop oor:name="Color" oor:op="fuse">
                 <value>0xFFFFFF</value>
-            </prop>
-        </node>
-        <node oor:name="Links">
-            <prop oor:name="Color" oor:op="fuse">
-                <value>1939955</value>
-            </prop>
-            <prop oor:name="IsVisible" oor:op="fuse">
-                <value>true</value>
             </prop>
         </node>
         <node oor:name="LinksVisited">
