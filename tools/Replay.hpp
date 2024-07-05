@@ -120,6 +120,9 @@ struct Stats {
         _tileCount(0),
         _connections(0)
     {
+        initialCPUStat = GetProcessTimes();
+        _startUpMemoryUsage = GetMemoryUsage();
+        _peakMemoryUsage = 0;
     }
     std::chrono::steady_clock::time_point _start;
     size_t _bytesSent;
@@ -129,6 +132,20 @@ struct Stats {
     Histogram _pingLatency;
     Histogram _tileLatency;
 
+    size_t _peakMemoryUsage;
+    size_t _startUpMemoryUsage;
+
+    // cpu metrics breakdown
+    struct CPUStat
+    {
+        double userCPUTime;
+        double kernelCPUTime;
+        double elapsedTime;
+    };
+
+    CPUStat initialCPUStat;
+
+
     // message size breakdown
     struct MessageStat {
         size_t size;
@@ -136,6 +153,68 @@ struct Stats {
     };
     std::unordered_map<std::string, MessageStat> _recvd;
     std::unordered_map<std::string, MessageStat> _sent;
+
+    CPUStat GetProcessTimes() {
+
+        std::ifstream fileStat("/proc/" + std::to_string(getpid()) + "/stat");
+        std::ifstream fileUpTime("/proc/uptime");
+
+        std::string statLine, upTimeLine;
+        std::getline(fileStat, statLine);
+        std::getline(fileUpTime, upTimeLine);
+
+        std::stringstream ss(statLine), us(upTimeLine);
+
+        std::vector<std::string> vStat;
+        std::string token;
+        while (ss >> token) {
+            vStat.push_back(token);
+        }
+
+        std::vector<std::string> uStat;
+        while (us >> token) {
+            uStat.push_back(token);
+        }
+
+        size_t userTime = std::stoull(vStat[13]);
+        size_t kernelTime = std::stoull(vStat[14]);
+        double startTime = std::stod(vStat[21]);
+        double upTime = std::stod(uStat[0]);
+
+        long clockTick = sysconf(_SC_CLK_TCK);
+
+        double userProcessTimeInSeconds = userTime / static_cast<double>(clockTick);
+        double kernelProcessTimeInSeconds = kernelTime / static_cast<double>(clockTick);
+        double elaspedTime = upTime - (startTime / clockTick);
+
+        CPUStat cpuStat = {
+            userProcessTimeInSeconds,
+            kernelProcessTimeInSeconds,
+            elaspedTime
+        };
+
+        return cpuStat;
+    }
+
+    size_t GetMemoryUsage()
+    {
+        std::ifstream smapsFile("/proc/" + std::to_string(getpid()) + "/smaps");
+
+        std::string line;
+        size_t totalPss = 0;
+
+        while (std::getline(smapsFile, line)) {
+            if (line.find("Pss:") == 0) {
+                std::stringstream ss(line);
+                std::string key;
+                size_t value;
+                ss >> key >> value;
+                totalPss += value;
+            }
+        }
+
+        return totalPss;
+    }
 
     void accumulate(std::unordered_map<std::string, MessageStat> &map,
                     const std::string token, size_t size)
@@ -192,6 +271,17 @@ struct Stats {
     {
         const auto now = std::chrono::steady_clock::now();
         const size_t runMs = std::chrono::duration_cast<std::chrono::milliseconds>(now - _start).count();
+
+        CPUStat finalCPUStat = GetProcessTimes();
+        double userCPUTimeDiff = finalCPUStat.userCPUTime - initialCPUStat.userCPUTime;
+        double kernelCPUTimeDiff = finalCPUStat.kernelCPUTime - initialCPUStat.kernelCPUTime;
+        double elapsedTimeDiff = finalCPUStat.elapsedTime - initialCPUStat.elapsedTime;
+        double cpuUsagePercentage = ((userCPUTimeDiff + kernelCPUTimeDiff) * 100) / elapsedTimeDiff;
+
+        std::cout << "Peak memory usage: " << _peakMemoryUsage << "kB";
+
+        std::cout << "Percentage of CPU: " << cpuUsagePercentage << "%\n";
+
         std::cout << "Stress run took " << runMs << " ms\n";
         std::cout << "  tiles: " << _tileCount << " => TPS: " << ((_tileCount * 1000.0)/runMs) << "\n";
         _pingLatency.dump("ping latency:");
@@ -208,6 +298,10 @@ struct Stats {
 
         dumpStressToCSV(runMs);
         dumpNetworkStatsToCSV(recvKbps,sentKbps);
+
+        dumpCPUUsageStatsToCSV(userCPUTimeDiff, kernelCPUTimeDiff, elapsedTimeDiff);
+
+        dumpPeakMemoryUsageToCPU(_peakMemoryUsage);
 
         std::cout << "we sent:\n";
         dumpMap(_sent);
@@ -240,6 +334,35 @@ struct Stats {
         }
 
         file << recievedKbs << "," << sentKbs << ",";
+        file << "\n";
+    }
+    void dumpCPUUsageStatsToCSV(double userTime, double kernelTime, double elapsedTime)
+    {
+        double percentageOfCPU = ((userTime + kernelTime) * 100) / elapsedTime;
+
+        std::ofstream file("CPUUsage.csv", std::ios::out | std::ios::app);
+
+        if(file.tellp() == 0)
+        {
+            file << "User CPU Time" << ",Kernel CPU Time" << ",Percentage Of CPU";
+            file << "\n";
+        }
+
+        file << userTime << "," << kernelTime << "," << percentageOfCPU;
+        file << "\n";
+    }
+
+    void dumpPeakMemoryUsageToCPU(size_t peakMemory)
+    {
+        std::ofstream file("PeakMemoryUsage.csv", std::ios::out | std::ios::app);
+
+        if(file.tellp() == 0)
+        {
+            file << "Peak memory usage per document (kB)";
+            file << "\n";
+        }
+
+        file << peakMemory;
         file << "\n";
     }
 };
@@ -407,6 +530,11 @@ public:
             std::cerr << _logPre << "msg " << out << "\n";
         }
 
+        size_t postDocumentLoadingMemory = _stats->GetMemoryUsage() - _stats->_startUpMemoryUsage;
+        if((postDocumentLoadingMemory > _stats->_peakMemoryUsage))
+        {
+            _stats->_peakMemoryUsage = postDocumentLoadingMemory;
+        }
         // FIXME: translate mouse events relative to view-port etc.
         return out;
     }
