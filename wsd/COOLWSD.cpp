@@ -4816,6 +4816,13 @@ void dump_state()
     LOG_TRC(msg);
 }
 
+void lslr_childroot()
+{
+    std::cout << "lslr: " << COOLWSD::ChildRoot << "\n";
+    FileUtil::lslr(COOLWSD::ChildRoot.c_str());
+    std::cout << std::flush;
+}
+
 void forwardSigUsr2()
 {
     LOG_TRC("forwardSigUsr2");
