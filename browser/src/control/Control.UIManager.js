@@ -1535,21 +1535,38 @@ L.Control.UIManager = L.Control.extend({
 				type: 'fixedtext',
 				text: message
 			},
+			{
+				id: '',
+				type: 'buttonbox',
+				text: '',
+				enabled: true,
+				children: [
+					{
+						id: dialogId + '-response',
+						type: 'pushbutton',
+						text: _(linkText),
+						'has_default': true,
+					}
+				],
+				vertical: false,
+				layoutstyle: 'end'
+			},
 		]);
 
-		this.showModal(json);
+		this.showModal(json,
+		[{
+			id : dialogId + '-response',
+			func : function() {
+				if (!link || !linkText)
+					return;
+				var win = window.open(window.sanitizeUrl(link), '_blank');
+				win.focus();
+			}
+		}]);
 
 		if (!window.mode.isMobile()) {
 			document.getElementById(dialogId).style.marginRight = '0';
 			document.getElementById(dialogId).style.marginBottom = '0';
-		}
-
-		if (link && linkText) {
-			document.getElementById(dialogId + '-text').style.textDecoration = 'underline';
-			document.getElementById(dialogId + '-text').onclick = function() {
-				var win = window.open(link, '_blank');
-				win.focus();
-			};
 		}
 	},
 
