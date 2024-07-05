@@ -79,6 +79,14 @@ SlideShow.PerformTransition = function (
                 image2,
             ).start();
             break;
+
+        case 'DIAMOND':
+            new DiamondTransition(
+                canvas,
+                image1,
+                image2,
+            ).start();
+            break;
         default:
             console.error('Unknown transition type');
             break;
