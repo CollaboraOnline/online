@@ -81,3 +81,5 @@ class SplitTransition extends Transition2d {
                 `;
 	}
 }
+
+SlideShow.SplitTransition = SplitTransition;

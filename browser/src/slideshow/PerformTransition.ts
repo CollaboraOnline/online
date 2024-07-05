@@ -18,14 +18,14 @@ SlideShow.PerformTransition = function (
 
     switch (type) {
         case 'FADE':
-            new FadeTransition(
+            new SlideShow.FadeTransition(
                 canvas,
                 image1,
                 image2,
             ).start(2);
             break;
         case 'WIPE':
-            new WipeTransition(
+            new SlideShow.WipeTransition(
                 canvas,
                 image1,
                 image2,
@@ -33,7 +33,7 @@ SlideShow.PerformTransition = function (
             break;
         case 'WHEEL':
             // 1,2,3, 4, 8
-            new WheelTransition(
+            new SlideShow.WheelTransition(
                 canvas,
                 image1,
                 image2,
@@ -41,7 +41,7 @@ SlideShow.PerformTransition = function (
             break;
 
         case 'UNCOVER':
-            new UncoverTransition(
+            new SlideShow.UncoverTransition(
                 canvas,
                 image1,
                 image2,
@@ -49,7 +49,7 @@ SlideShow.PerformTransition = function (
             break;
         
         case 'BARS':
-            new BarsTransition(
+            new SlideShow.BarsTransition(
                 canvas,
                 image1,
                 image2,
@@ -57,7 +57,7 @@ SlideShow.PerformTransition = function (
             break;
         
         case 'CHECKERS':
-            new CheckersTransition(
+            new SlideShow.CheckersTransition(
                 canvas,
                 image1,
                 image2,
@@ -65,7 +65,7 @@ SlideShow.PerformTransition = function (
             break;
 
         case 'PLUS':
-            new PlusTransition(
+            new SlideShow.PlusTransition(
                 canvas,
                 image1,
                 image2,
@@ -73,7 +73,7 @@ SlideShow.PerformTransition = function (
             break;
         
         case 'CIRCLE':
-            new CircleTransition(
+            new SlideShow.CircleTransition(
                 canvas,
                 image1,
                 image2,
@@ -81,7 +81,7 @@ SlideShow.PerformTransition = function (
             break;
 
         case 'DIAMOND':
-            new DiamondTransition(
+            new SlideShow.DiamondTransition(
                 canvas,
                 image1,
                 image2,
@@ -89,7 +89,7 @@ SlideShow.PerformTransition = function (
             break;
 
         case 'OVAL':
-            new OvalTransition(
+            new SlideShow.OvalTransition(
                 canvas,
                 image1,
                 image2,
@@ -97,7 +97,7 @@ SlideShow.PerformTransition = function (
             break;
 
         case 'BOX':
-            new BoxTransition(
+            new SlideShow.BoxTransition(
                 canvas,
                 image1,
                 image2,
@@ -105,7 +105,7 @@ SlideShow.PerformTransition = function (
             break;
 
         case 'WEDGE':
-            new WedgeTransition(
+            new SlideShow.WedgeTransition(
                 canvas,
                 image1,
                 image2,
@@ -113,7 +113,7 @@ SlideShow.PerformTransition = function (
             break;
 
         case 'VENETIAN':
-            new VenetianTransition(
+            new SlideShow.VenetianTransition(
                 canvas,
                 image1,
                 image2,
@@ -121,7 +121,7 @@ SlideShow.PerformTransition = function (
             break;
         
         case 'CUT':
-            new CutTransition(
+            new SlideShow.CutTransition(
                 canvas,
                 image1,
                 image2,
@@ -129,7 +129,7 @@ SlideShow.PerformTransition = function (
             break;
         
         case 'COVER':
-            new CoverTransition(
+            new SlideShow.CoverTransition(
                 canvas,
                 image1,
                 image2,
@@ -137,7 +137,7 @@ SlideShow.PerformTransition = function (
             break;
 
         case 'DISSOLVE':
-            new SimpleDissolveTransition(
+            new SlideShow.SimpleDissolveTransition(
                 canvas,
                 image1,
                 image2,
@@ -145,7 +145,7 @@ SlideShow.PerformTransition = function (
             break;
 
         case 'PUSH':
-            new PushTransition(
+            new SlideShow.PushTransition(
                 canvas,
                 image1,
                 image2,
@@ -153,7 +153,7 @@ SlideShow.PerformTransition = function (
             break;
 
         case 'SPLIT':
-            new SplitTransition(
+            new SlideShow.SplitTransition(
                 canvas,
                 image1,
                 image2,
