@@ -518,6 +518,36 @@ extern "C" {
     }
 }
 
+// Define in order to dump a trace whenever a thread is created.
+// #define THREAD_TRACKER
+
+#ifdef THREAD_TRACKER
+
+#include <execinfo.h>
+
+typedef int (*PThreadCreateFn) (pthread_t * __newthread, const pthread_attr_t * __attr,
+                                void *(*__start_routine) (void *), void * __arg);
+PThreadCreateFn OrigPThreadCreate;
+
+int pthread_create (pthread_t *a, const pthread_attr_t *b, void *(*c) (void *), void *d)
+{
+    void *buffer[128];
+
+    std::cerr << "\npthread_create from:\n";
+    auto nptrs = backtrace(buffer, 128);
+    backtrace_symbols_fd(buffer, nptrs, STDERR_FILENO);
+    std::cerr << "\n";
+
+    return OrigPThreadCreate(a, b, c, d);
+}
+
+__attribute__((constructor))
+void init(void) {
+    OrigPThreadCreate = reinterpret_cast<PThreadCreateFn>(dlsym(RTLD_NEXT, "pthread_create"));
+}
+
+#endif // THREAD_TRACKER
+
 int forkit_main(int argc, char** argv)
 {
     /*WARNING: PRIVILEGED CODE CHECKING START */
