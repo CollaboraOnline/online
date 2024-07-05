@@ -22,8 +22,6 @@ class Transition2d {
 
 	constructor(
 		canvas: HTMLCanvasElement,
-		vertexShaderSource: string,
-		fragmentShaderSource: string,
 		image1: HTMLImageElement,
 		image2: HTMLImageElement,
 	) {
@@ -33,6 +31,9 @@ class Transition2d {
 			console.error('WebGL2 not supported');
 			throw new Error('WebGL2 not supported');
 		}
+
+		const vertexShaderSource = this.getVertexShader();
+		const fragmentShaderSource = this.getFragmentShader();
 
 		const vertexShader = this.createShader(
 			this.gl.VERTEX_SHADER,
@@ -47,6 +48,38 @@ class Transition2d {
 		this.textures = this.loadTextures([image1, image2]);
 		this.time = 0;
 		this.startTime = null;
+	}
+
+	public getVertexShader(): string {
+		return `#version 300 es
+				in vec4 a_position;
+				in vec2 a_texCoord;
+				out vec2 v_texCoord;
+
+				void main() {
+					gl_Position = a_position;
+					v_texCoord = a_texCoord;
+				}
+				`;
+	}
+
+	public getFragmentShader(): string {
+		return `#version 300 es
+				precision mediump float;
+
+				uniform sampler2D leavingSlideTexture;
+				uniform sampler2D enteringSlideTexture;
+				uniform float time;
+
+				in vec2 v_texCoord;
+				out vec4 outColor;
+
+				void main() {
+					vec4 color0 = texture(leavingSlideTexture, v_texCoord);
+					vec4 color1 = texture(enteringSlideTexture, v_texCoord);
+					outColor = mix(color0, color1, time);
+				}
+				`;
 	}
 
 	public prepareTransition(): void {
