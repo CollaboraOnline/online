@@ -1111,7 +1111,8 @@ function getInitializerClass() {
 			//global.app.console.debug('send msg - ' + that.msgInflight + ' on session ' +
 			//	      that.sessionId + '  queue: "' + that.sendQueue + '"');
 			var req = new XMLHttpRequest();
-			req.open('POST', that.getEndPoint('write'));
+			const url = that.getEndPoint('write');
+			req.open('POST', url);
 			req.responseType = 'arraybuffer';
 			req.addEventListener('load', function() {
 				if (this.status == 200)
@@ -1185,7 +1186,9 @@ function getInitializerClass() {
 			global.lastCreatedProxySocket = performance.now();
 
 			var req = new XMLHttpRequest();
-			req.open('POST', that.getEndPoint('open'));
+			const endPoint = that.getEndPoint('open');
+
+			req.open('POST', endPoint);
 			req.responseType = 'text';
 			req.addEventListener('load', function() {
 				global.app.console.debug('got session: ' + this.responseText);
@@ -1230,7 +1233,8 @@ function getInitializerClass() {
 			}
 		};
 		this.sendCloseMsg = function(beacon) {
-			var url = that.getEndPoint('close');
+			const url = that.getEndPoint('close');
+
 			if (!beacon)
 			{
 				var req = new XMLHttpRequest();
@@ -1377,7 +1381,8 @@ function getInitializerClass() {
 		};
 
 		var http = new XMLHttpRequest();
-		http.open('GET', global.indirectionUrl + '?Uri=' + encodeURIComponent(that.uri), true);
+		let url = global.indirectionUrl + '?Uri=' + encodeURIComponent(that.uri);
+		http.open('GET', url, true);
 		http.responseType = 'json';
 		http.addEventListener('load', function() {
 			if (this.status === 200) {
