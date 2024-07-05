@@ -208,6 +208,7 @@ std::string COOLWSD::BuyProductUrl;
 std::string COOLWSD::LatestVersion;
 std::mutex COOLWSD::FetchUpdateMutex;
 std::mutex COOLWSD::RemoteConfigMutex;
+std::shared_ptr<http::Session> FetchHttpSession;
 #endif
 
 // Tracks the set of prisoners / children waiting to be used.
@@ -4156,30 +4157,38 @@ void COOLWSD::processFetchUpdate()
         if (url.empty())
             return; // No url, nothing to do.
 
+        if (FetchHttpSession)
+            return;
+
         Poco::URI uriFetch(url);
         uriFetch.addQueryParameter("product", config::getString("product_name", APP_NAME));
         uriFetch.addQueryParameter("version", COOLWSD_VERSION);
         LOG_TRC("Infobar update request from " << uriFetch.toString());
-        std::shared_ptr<http::Session> sessionFetch = StorageBase::getHttpSession(uriFetch);
-        if (!sessionFetch)
+        FetchHttpSession = StorageBase::getHttpSession(uriFetch);
+        if (!FetchHttpSession)
             return;
 
         http::Request request(uriFetch.getPathAndQuery());
         request.add("Accept", "application/json");
 
-        const std::shared_ptr<const http::Response> httpResponse =
-            sessionFetch->syncRequest(request);
-        if (httpResponse->statusLine().statusCode() == http::StatusCode::OK)
-        {
-            LOG_DBG("Infobar update returned: " << httpResponse->getBody());
+        FetchHttpSession->setFinishedHandler([](const std::shared_ptr<http::Session>& httpSession) {
+            std::shared_ptr<http::Response> httpResponse = httpSession->response();
 
-            std::lock_guard<std::mutex> lock(COOLWSD::FetchUpdateMutex);
-            COOLWSD::LatestVersion = httpResponse->getBody();
-        }
-        else
-            LOG_WRN("Failed to update the infobar. Got: "
-                    << httpResponse->statusLine().statusCode() << ' '
-                    << httpResponse->statusLine().reasonPhrase());
+            FetchHttpSession.reset();
+            if (httpResponse->statusLine().statusCode() == http::StatusCode::OK)
+            {
+                LOG_DBG("Infobar update returned: " << httpResponse->getBody());
+
+                std::lock_guard<std::mutex> lock(COOLWSD::FetchUpdateMutex);
+                COOLWSD::LatestVersion = httpResponse->getBody();
+            }
+            else
+                LOG_WRN("Failed to update the infobar. Got: "
+                        << httpResponse->statusLine().statusCode() << ' '
+                        << httpResponse->statusLine().reasonPhrase());
+        });
+
+        FetchHttpSession->asyncRequest(request, *COOLWSD::getWebServerPoll());
     }
     catch(const Poco::Exception& exc)
     {
