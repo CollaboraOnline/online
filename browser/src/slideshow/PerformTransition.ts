@@ -64,6 +64,14 @@ SlideShow.PerformTransition = function (
             ).start(1);
             break;
 
+        case 'PLUS':
+            new PlusTransition(
+                canvas,
+                image1,
+                image2,
+            ).start();
+            break;
+
         default:
             console.error('Unknown transition type');
             break;
