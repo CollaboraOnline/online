@@ -54,6 +54,8 @@ public:
     /// Returns the state of the request.
     State state() const { return _state; }
 
+    bool completed() const { return _state != State::None && _state != State::Active; }
+
     /// Returns the sanitized document URL.
     const Poco::URI& url() const { return _url; }
 
@@ -97,6 +99,4 @@ private:
     std::atomic<State> _state;
     Poco::JSON::Object::Ptr _wopiInfo;
     ProfileZone _profileZone;
-    std::mutex _mutex;
-    std::condition_variable _cv;
 };

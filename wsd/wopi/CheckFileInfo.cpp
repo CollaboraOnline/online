@@ -137,9 +137,6 @@ bool CheckFileInfo::checkFileInfo(int redirectLimit)
         {
             _onFinishCallback(*this);
         }
-
-        std::lock_guard<std::mutex> lock(_mutex);
-        _cv.notify_all();
     };
 
     _httpSession->setFinishedHandler(std::move(finishedCallback));
@@ -165,10 +162,24 @@ bool CheckFileInfo::checkFileInfo(int redirectLimit)
 
 void CheckFileInfo::checkFileInfoSync(int redirectionLimit)
 {
-    std::unique_lock<std::mutex> lock(_mutex);
     if (checkFileInfo(redirectionLimit))
     {
-        _cv.wait_for(lock, std::chrono::seconds(30));
+        assert(_poll);
+
+        std::chrono::steady_clock::time_point deadline =
+            std::chrono::steady_clock::now() +
+            std::chrono::seconds(30); // hmm ?
+        while (!completed())
+        {
+            const auto now = std::chrono::steady_clock::now();
+            if (now > deadline)
+            {
+                LOG_WRN("timed out waiting for CheckFileInfo");
+                break;
+            }
+            _poll->poll(std::chrono::duration_cast<
+                        std::chrono::microseconds>(deadline - now));
+        }
     }
 }
 
