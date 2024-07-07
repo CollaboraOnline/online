@@ -137,7 +137,7 @@ class SlideShowPresenter {
 				this._slideShowCanvas,
 				previousSlide,
 				nextSlide,
-				"FADE"
+				'FADE',
 			);
 		};
 	}

@@ -11,7 +11,7 @@
 declare var SlideShow: any;
 
 class WheelTransition extends Transition2d {
-    private stocks: number = 0;
+	private stocks: number = 0;
 	constructor(
 		canvas: HTMLCanvasElement,
 		image1: HTMLImageElement,
