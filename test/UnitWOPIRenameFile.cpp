@@ -11,6 +11,7 @@
 
 #include <config.h>
 
+#include "Util.hpp"
 #include <WopiTestServer.hpp>
 #include <Log.hpp>
 #include <Unit.hpp>
@@ -21,8 +22,11 @@
 
 class UnitWOPIRenameFile : public WopiTestServer
 {
-    STATE_ENUM(Phase, Load, RenameFile, Done)
+    STATE_ENUM(Phase, Load, RenameFile, WaitRenameNotification, Done)
     _phase;
+
+    static constexpr auto FilenameUtf8 = "a new filename";
+    static constexpr auto FilenameUtf7 = "a new filename";
 
 public:
     UnitWOPIRenameFile()
@@ -34,7 +38,7 @@ public:
     void assertRenameFileRequest(const Poco::Net::HTTPRequest& request) override
     {
         // spec says UTF-7...
-        LOK_ASSERT_EQUAL(std::string("hello"), request.get("X-WOPI-RequestedName"));
+        LOK_ASSERT_EQUAL(std::string(FilenameUtf7), request.get("X-WOPI-RequestedName"));
     }
 
     bool onFilterSendWebSocketMessage(const char* data, const std::size_t len,
@@ -43,12 +47,16 @@ public:
     {
         const std::string message(data, len);
 
-        const std::string expected("renamefile: filename=hello");
+        const std::string expected("renamefile filename=" + Util::encodeURIComponent(FilenameUtf8));
+
+        LOG_TST("Got [" << message << "], expect: [" << expected << ']');
         if (message.find(expected) == 0)
         {
+            LOK_ASSERT_STATE(_phase, Phase::WaitRenameNotification);
+
             // successfully exit the test if we also got the outgoing message
             // notifying about saving the file
-            exitTest(TestResult::Ok);
+            TRANSITION_STATE(_phase, Phase::Done);
         }
 
         return false;
@@ -69,14 +77,19 @@ public:
             }
             case Phase::RenameFile:
             {
-                TRANSITION_STATE(_phase, Phase::Done);
+                TRANSITION_STATE(_phase, Phase::WaitRenameNotification);
 
-                WSD_CMD("renamefile filename=hello");
+                WSD_CMD("renamefile filename=" + Util::encodeURIComponent(FilenameUtf8));
+                break;
+            }
+            case Phase::WaitRenameNotification:
+            {
+                // just wait for the results
                 break;
             }
             case Phase::Done:
             {
-                // just wait for the results
+                passTest("Got the expected renamefile command");
                 break;
             }
         }
