@@ -3365,8 +3365,7 @@ bool DocumentBroker::handleInput(const std::shared_ptr<Message>& message)
             COOLProtocol::getTokenString((*message)[3], "clientid", clientId);
             LOG_CHECK_RET(!clientId.empty(), false);
 
-            std::string decoded;
-            Poco::URI::decode(url, decoded);
+            const std::string decoded = Util::decodeURIComponent(url);
             const std::string filePath(FileUtil::buildLocalPathToJail(COOLWSD::EnableMountNamespaces,
                                                                       COOLWSD::ChildRoot + getJailId(),
                                                                       JAILED_DOCUMENT_ROOT + decoded));

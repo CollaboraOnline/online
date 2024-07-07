@@ -804,9 +804,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
                         COOLProtocol::stringToInteger(attr[1], dontSaveIfUnmodified);
                     else if (attr[0] == "extendedData")
                     {
-                        std::string decoded;
-                        Poco::URI::decode(attr[1], decoded);
-                        extendedData = decoded;
+                        extendedData = Util::decodeURIComponent(attr[1]);
                     }
                 }
             }
@@ -1001,8 +999,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
             return false;
         }
 
-        std::string wopiFilename;
-        Poco::URI::decode(encodedWopiFilename, wopiFilename);
+        std::string wopiFilename = Util::decodeURIComponent(encodedWopiFilename);
         const std::string error =
             docBroker->handleRenameFileCommand(getId(), std::move(wopiFilename));
         if (!error.empty())
@@ -1939,8 +1936,7 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
         }
 
         // Save-as completed, inform the ClientSession.
-        std::string wopiFilename;
-        Poco::URI::decode(encodedWopiFilename, wopiFilename);
+        const std::string wopiFilename = Util::decodeURIComponent(encodedWopiFilename);
 
         // URI constructor implicitly decodes when it gets std::string as param
         Poco::URI resultURL(encodedURL);
@@ -1950,7 +1946,7 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
         {
             std::string relative;
             if (isConvertTo || isExportAs)
-                Poco::URI::decode(resultURL.getPath(), relative);
+                relative = Util::decodeURIComponent(resultURL.getPath());
             else
                 relative = resultURL.getPath();
 

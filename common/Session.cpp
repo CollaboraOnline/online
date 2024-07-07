@@ -115,32 +115,32 @@ void Session::parseDocOptions(const StringVector& tokens, int& part, std::string
         }
         else if (name == "authorid")
         {
-            Poco::URI::decode(value, _userId);
+            _userId = Util::decodeURIComponent(value);
             ++offset;
         }
         else if (name == "xauthorid")
         {
-            Poco::URI::decode(value, _userIdAnonym);
+            _userIdAnonym = Util::decodeURIComponent(value);
             ++offset;
         }
         else if (name == "author")
         {
-            Poco::URI::decode(value, _userName);
+            _userName = Util::decodeURIComponent(value);
             ++offset;
         }
         else if (name == "xauthor")
         {
-            Poco::URI::decode(value, _userNameAnonym);
+            _userNameAnonym = Util::decodeURIComponent(value);
             ++offset;
         }
         else if (name == "authorextrainfo")
         {
-            Poco::URI::decode(value, _userExtraInfo);
+            _userExtraInfo = Util::decodeURIComponent(value);
             ++offset;
         }
         else if (name == "authorprivateinfo")
         {
-            Poco::URI::decode(value, _userPrivateInfo);
+            _userPrivateInfo = Util::decodeURIComponent(value);
             ++offset;
         }
         else if (name == "readonly")
@@ -169,7 +169,7 @@ void Session::parseDocOptions(const StringVector& tokens, int& part, std::string
         }
         else if (name == "watermarkText")
         {
-            Poco::URI::decode(value, _watermarkText);
+            _watermarkText = Util::decodeURIComponent(value);
             ++offset;
         }
         else if (name == "watermarkOpacity")

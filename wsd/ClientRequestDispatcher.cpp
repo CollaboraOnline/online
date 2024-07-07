@@ -834,7 +834,7 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
         else if (requestDetails.equals(RequestDetails::Field::Type, "cool") &&
                  requestDetails.equals(1, "clipboard"))
         {
-//          Util::dumpHex(std::cerr, socket->getInBuffer(), "clipboard:\n"); // lots of data ...
+            //              Util::dumpHex(std::cerr, socket->getInBuffer(), "clipboard:\n"); // lots of data ...
             handleClipboardRequest(request, message, disposition, socket);
         }
 
@@ -1166,8 +1166,7 @@ void ClientRequestDispatcher::handleMediaRequest(const Poco::Net::HTTPRequest& r
 
     LOG_DBG_S("Media request: " << request.getURI());
 
-    std::string decoded;
-    Poco::URI::decode(request.getURI(), decoded);
+    const std::string decoded = Util::decodeURIComponent(request.getURI());
     Poco::URI requestUri(decoded);
     Poco::URI::QueryParameters params = requestUri.getQueryParameters();
     std::string WOPISrc, serverId, viewId, tag, mime;
@@ -1606,8 +1605,7 @@ void ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
 
         bool foundDownloadId = !url.empty();
 
-        std::string decoded;
-        Poco::URI::decode(url, decoded);
+        const std::string decoded = Util::decodeURIComponent(url);
 
         const Poco::Path filePath(FileUtil::buildLocalPathToJail(COOLWSD::EnableMountNamespaces, COOLWSD::ChildRoot + jailId,
                                                                  JAILED_DOCUMENT_ROOT + decoded));

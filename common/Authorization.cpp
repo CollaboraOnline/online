@@ -96,12 +96,12 @@ Authorization Authorization::create(const Poco::URI& uri)
     {
         if (param.first == "access_token")
         {
-            Poco::URI::decode(param.second, decoded);
+            decoded = Util::decodeURIComponent(param.second);
             return Authorization(Authorization::Type::Token, decoded);
         }
 
         if (param.first == "access_header")
-            Poco::URI::decode(param.second, decoded);
+            decoded = Util::decodeURIComponent(param.second);
     }
 
     if (!decoded.empty())
