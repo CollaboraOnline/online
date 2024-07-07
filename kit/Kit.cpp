@@ -182,8 +182,7 @@ namespace
 
     std::string pathFromFileURL(const std::string &uri)
     {
-        std::string decoded;
-        Poco::URI::decode(uri, decoded);
+        const std::string decoded = Util::decodeURIComponent(uri);
         if (decoded.rfind("file://", 0) != 0)
         {
             LOG_ERR("Asked to load a very unusual file path: '" << uri << "' -> '" << decoded << "'");
