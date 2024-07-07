@@ -69,6 +69,7 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 		commentsAreListed: boolean;
 		[key: string]: any;
 	};
+	disableLayoutAnimation: boolean = false;
 
 	map: any;
 	static autoSavedComment: cool.Comment;
@@ -1596,12 +1597,16 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 		return (this.sectionProperties.docLayer._docType === 'presentation' || this.sectionProperties.docLayer._docType === 'drawing') && !app.file.fileBasedView;
 	}
 
+	private getAnimationDuration() :number {
+		return this.disableLayoutAnimation ? 0 : undefined; // undefined means it will use default value
+	}
+
 	private layoutUp (subList: any, actualPosition: Array<number>, lastY: number): number {
 		var height: number;
 		for (var i = 0; i < subList.length; i++) {
 			height = subList[i].sectionProperties.container.getBoundingClientRect().height;
 			lastY = subList[i].sectionProperties.data.anchorPix[1] + height < lastY ? subList[i].sectionProperties.data.anchorPix[1]: lastY - (height * app.dpiScale);
-			(new L.PosAnimation()).run(subList[i].sectionProperties.container, {x: Math.round(actualPosition[0] / app.dpiScale), y: Math.round(lastY / app.dpiScale)});
+			(new L.PosAnimation()).run(subList[i].sectionProperties.container, {x: Math.round(actualPosition[0] / app.dpiScale), y: Math.round(lastY / app.dpiScale)}, this.getAnimationDuration());
 			if (!subList[i].isEdit())
 				subList[i].show();
 		}
@@ -1647,9 +1652,9 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 			var isRTL = document.documentElement.dir === 'rtl';
 
 			if (selectedComment)
-				(new L.PosAnimation()).run(subList[i].sectionProperties.container, {x: Math.round(actualPosition[0] / app.dpiScale) - this.sectionProperties.deflectionOfSelectedComment * (isRTL ? -1 : 1), y: Math.round(lastY / app.dpiScale)});
+				(new L.PosAnimation()).run(subList[i].sectionProperties.container, {x: Math.round(actualPosition[0] / app.dpiScale) - this.sectionProperties.deflectionOfSelectedComment * (isRTL ? -1 : 1), y: Math.round(lastY / app.dpiScale)}, this.getAnimationDuration());
 			else
-				(new L.PosAnimation()).run(subList[i].sectionProperties.container, {x: Math.round(actualPosition[0] / app.dpiScale), y: Math.round(lastY / app.dpiScale)});
+				(new L.PosAnimation()).run(subList[i].sectionProperties.container, {x: Math.round(actualPosition[0] / app.dpiScale), y: Math.round(lastY / app.dpiScale)}, this.getAnimationDuration());
 
 			lastY += (subList[i].sectionProperties.container.getBoundingClientRect().height * app.dpiScale);
 			if (!subList[i].isEdit())
@@ -1800,6 +1805,8 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 		}
 		else
 			app.view.size.pixels[1] = app.file.size.pixels[1];
+
+		this.disableLayoutAnimation = false;
 	}
 
 	private layout (zoom: any = null): void {
@@ -1986,7 +1993,7 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 								// move up
 								var posX = this.sectionProperties.commentList[i].sectionProperties.container._leaflet_pos.x;
 								var posY = this.sectionProperties.commentList[i].sectionProperties.container._leaflet_pos.y-moveUp;
-								(new L.PosAnimation()).run(this.sectionProperties.commentList[i].sectionProperties.container, {x: Math.round(posX), y: Math.round(posY)});
+								(new L.PosAnimation()).run(this.sectionProperties.commentList[i].sectionProperties.container, {x: Math.round(posX), y: Math.round(posY)}, this.getAnimationDuration());
 								// increase comment height
 								maxSize += moveUp;
 							}
@@ -2083,6 +2090,7 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 	}
 
 	public importComments (commentList: any): void {
+		this.disableLayoutAnimation = true;
 		var comment;
 		if (Comment.isAnyEdit()) {
 			this.map.uiManager.showConfirmModal(
