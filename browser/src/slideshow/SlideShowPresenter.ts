@@ -78,8 +78,10 @@ class SlideShowPresenter {
 	}
 
 	_onCanvasClick() {
-		if (this._currentSlide + 1 >= this._getSlidesCount())
+		if (this._currentSlide + 1 >= this._getSlidesCount()) {
 			this._stopFullScreen();
+			return;
+		}
 
 		const slide = this._fetchSlide(this._currentSlide);
 		if (!slide) {
@@ -157,15 +159,10 @@ class SlideShowPresenter {
 
 	_doPresentation() {
 		const previousSlide = new Image();
-
-		if (this._currentSlide === 0) {
-			// TODO: use black background as an initial slide
-			previousSlide.src = this._fetchSlide(0);
-		} else {
-			previousSlide.src = this._fetchSlide(this._currentSlide);
-		}
-
-		this._doTransition(previousSlide, this._currentSlide);
+		previousSlide.src = this._fetchSlide(this._currentSlide);
+		previousSlide.onload = () => {
+			this._doTransition(previousSlide, this._currentSlide);
+		};
 	}
 
 	_doFallbackPresentation = () => {
