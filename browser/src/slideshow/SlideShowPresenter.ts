@@ -33,14 +33,11 @@ interface PresentationInfo {
 
 class SlideShowPresenter {
 	_map: any = null;
-	_presentationInfo: any = null;
-	_docWidth: number = 0;
-	_docHeight: number = 0;
+	_presentationInfo: PresentationInfo = null;
+	_slideCompositor: SlideCompositor = null;
 	_fullscreen: Element = null;
 	_slideShowCanvas: HTMLCanvasElement = null;
 	_currentSlide: number = 0;
-	_slides: Array<string | null> = null;
-	_FETCH_ID_: number = 1000; // TODO
 
 	constructor(map: any) {
 		this._map = map;
@@ -49,12 +46,10 @@ class SlideShowPresenter {
 
 	addHooks() {
 		this._map.on('newfullscreen', this._onStart, this);
-		this._map.on('tilepreview', this._onGotPreview, this);
 	}
 
 	removeHooks() {
 		this._map.off('newfullscreen', this._onStart, this);
-		this._map.off('tilepreview', this._onGotPreview, this);
 	}
 
 	_getSlidesCount() {
@@ -83,14 +78,8 @@ class SlideShowPresenter {
 			return;
 		}
 
-		const slide = this._fetchSlide(this._currentSlide);
-		if (!slide) {
-			console.debug('SlideShow: no content for next slide yet.');
-			return;
-		}
+		const previousSlide = this._slideCompositor.getSlide(this._currentSlide);
 
-		const previousSlide = new Image();
-		previousSlide.src = slide;
 		this._doTransition(previousSlide, this._currentSlide + 1);
 		this._currentSlide++;
 	}
@@ -111,42 +100,8 @@ class SlideShowPresenter {
 		return canvas;
 	}
 
-	/// called when we receive slide content
-	_onGotPreview(e: any) {
-		if (!this._slides || !this._slides.length) return;
-
-		console.debug('SlideShow: received slide: ' + e.part);
-		this._slides[parseInt(e.part)] = e.tile.src;
-	}
-
-	_requestPreview(slideNumber: number) {
-		this._map.getPreview(
-			this._FETCH_ID_,
-			slideNumber,
-			this._docWidth,
-			this._docHeight,
-			{
-				autoUpdate: false,
-			},
-		);
-	}
-
-	_fetchSlide(slideNumber: number) {
-		// use cache if possible
-		const slide =
-			this._slides && this._slides[slideNumber]
-				? this._slides[slideNumber]
-				: this._map._docLayer._preview._previewTiles[slideNumber].src;
-
-		// pre-fetch next slide
-		this._requestPreview(slideNumber + 1);
-
-		return slide;
-	}
-
 	_doTransition(previousSlide: HTMLImageElement, nextSlideNumber: number) {
-		const nextSlide = new Image();
-		nextSlide.src = this._fetchSlide(nextSlideNumber);
+		const nextSlide = this._slideCompositor.getSlide(nextSlideNumber);
 		nextSlide.onload = () => {
 			SlideShow.PerformTransition(
 				this._slideShowCanvas,
@@ -158,11 +113,8 @@ class SlideShowPresenter {
 	}
 
 	_doPresentation() {
-		const previousSlide = new Image();
-		previousSlide.src = this._fetchSlide(this._currentSlide);
-		previousSlide.onload = () => {
-			this._doTransition(previousSlide, this._currentSlide);
-		};
+		const previousSlide = this._slideCompositor.getSlide(this._currentSlide);
+		this._doTransition(previousSlide, this._currentSlide);
 	}
 
 	_doFallbackPresentation = () => {
@@ -282,12 +234,10 @@ class SlideShowPresenter {
 		const numberOfSlides = this._getSlidesCount();
 		if (numberOfSlides === 0) return;
 
-		this._slides = new Array<string>(numberOfSlides);
-
-		this._docWidth = data.docWidth;
-		this._docHeight = data.docHeight;
-
-		this._requestPreview(this._currentSlide);
+		if (this._slideCompositor)
+			this._slideCompositor.updatePresentationInfo(this._presentationInfo);
+		else
+			this._slideCompositor = new SlideShow.SlideCompositor(this._presentationInfo);
 	}
 }
 
