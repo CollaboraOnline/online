@@ -78,10 +78,11 @@ class SlideShowPresenter {
 			return;
 		}
 
-		const previousSlide = this._slideCompositor.getSlide(this._currentSlide);
-
-		this._doTransition(previousSlide, this._currentSlide + 1);
-		this._currentSlide++;
+		this._slideCompositor.fetchAndRun(this._currentSlide, () => {
+			const previousSlide = this._slideCompositor.getSlide(this._currentSlide);
+			this._doTransition(previousSlide, this._currentSlide + 1);
+			this._currentSlide++;
+		});
 	}
 
 	_createCanvas(width: number, height: number) {
@@ -101,26 +102,27 @@ class SlideShowPresenter {
 	}
 
 	_doTransition(previousSlide: HTMLImageElement, nextSlideNumber: number) {
-		const nextSlide = this._slideCompositor.getSlide(nextSlideNumber);
-		nextSlide.onload = () => {
+		this._slideCompositor.fetchAndRun(nextSlideNumber, () => {
+			const nextSlide = this._slideCompositor.getSlide(nextSlideNumber);
 			SlideShow.PerformTransition(
 				this._slideShowCanvas,
 				previousSlide,
 				nextSlide,
 				'FADE',
 			);
-		};
+		});
 	}
 
 	_doPresentation() {
-		const previousSlide = this._slideCompositor.getSlide(this._currentSlide);
-		this._doTransition(previousSlide, this._currentSlide);
+		this._slideCompositor.fetchAndRun(this._currentSlide, () => {
+			const previousSlide = this._slideCompositor.getSlide(this._currentSlide);
+			this._doTransition(previousSlide, this._currentSlide);
+		});
 	}
 
 	_doFallbackPresentation = () => {
-		// fallback to "open in new tab"
+		// TODO: fallback to "open in new tab"
 		this._stopFullScreen();
-		this._doPresentation();
 	};
 
 	_onFullScreen() {
@@ -158,7 +160,7 @@ class SlideShowPresenter {
 				this._slideShowCanvas
 					.requestFullscreen()
 					.then(() => {
-						this._doPresentation();
+						// success
 					})
 					.catch(() => {
 						this._doFallbackPresentation();
@@ -237,7 +239,10 @@ class SlideShowPresenter {
 		if (this._slideCompositor)
 			this._slideCompositor.updatePresentationInfo(this._presentationInfo);
 		else
-			this._slideCompositor = new SlideShow.SlideCompositor(this._presentationInfo);
+			this._slideCompositor = new SlideShow.SlideCompositor(this, this._presentationInfo,
+				this._slideShowCanvas.width, this._slideShowCanvas.height);
+
+		this._slideCompositor.fetchAndRun(0, () => { this._doPresentation(); });
 	}
 }
 

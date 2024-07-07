@@ -14,12 +14,22 @@
 declare var SlideShow: any;
 
 class SlideCompositor {
+	_slideShowPresenter: SlideShowPresenter = null;
 	_presentationInfo: PresentationInfo = null;
 	_slides: Array<HTMLImageElement> = null;
+	_width: number = 0;
+	_height: number = 0;
+	_initialSlideNumber: number = 0;
+	_onGotSlideCallback: VoidFunction = null;
 	_FETCH_ID_: number = 1000; // TODO
 
-	constructor(presentationInfo: PresentationInfo) {
+	constructor(slideShowPresenter: SlideShowPresenter, presentationInfo: PresentationInfo,
+		width: number, height: number
+	) {
+		this._slideShowPresenter = slideShowPresenter;
 		this._presentationInfo = presentationInfo;
+		this._width = width;
+		this._height = height;
 
 		const numberOfSlides = this._getSlidesCount();
 		this._slides = new Array<HTMLImageElement>(numberOfSlides);
@@ -37,6 +47,13 @@ class SlideCompositor {
 
 	public updatePresentationInfo(presentationInfo: PresentationInfo) {
 		this._presentationInfo = presentationInfo;
+		this._requestPreview(this._initialSlideNumber);
+	}
+
+	public fetchAndRun(slideNumber: number, callback: VoidFunction) {
+		this._initialSlideNumber = slideNumber;
+		this._onGotSlideCallback = callback;
+		this._requestPreview(this._initialSlideNumber);
 	}
 
 	private _getSlidesCount() {
@@ -44,11 +61,11 @@ class SlideCompositor {
 	}
 
 	private _getSlideWidth() {
-		return this._presentationInfo.docHeight;
+		return this._width;
 	}
 
 	private _getSlideHeight() {
-		return this._presentationInfo.docHeight;
+		return this._height;
 	}
 
 	/// called when we receive slide content
@@ -56,7 +73,16 @@ class SlideCompositor {
 		if (!this._slides || !this._slides.length) return;
 
 		console.debug('SlideCompositor: received slide: ' + e.part);
-		this._slides[parseInt(e.part)] = e.tile.src;
+		const received = new Image();
+		received.src = e.tile.src;
+		this._slides[e.part] = received;
+
+		if (e.part === this._initialSlideNumber && this._onGotSlideCallback) {
+			const callback = this._onGotSlideCallback; // allow nesting
+			this._onGotSlideCallback = null;
+			callback.call(this._slideShowPresenter);
+		}
+
 	}
 
 	private _requestPreview(slideNumber: number) {
@@ -68,16 +94,14 @@ class SlideCompositor {
 			this._getSlideHeight(),
 			{
 				autoUpdate: false,
+				fetchThumbnail: false,
 			},
 		);
 	}
 
 	public getSlide(slideNumber: number): HTMLImageElement {
 		// use cache if possible
-		const slide =
-			this._slides && this._slides[slideNumber]
-				? this._slides[slideNumber]
-				: app.map._docLayer._preview._previewTiles[slideNumber].src;
+		const slide = this._slides[slideNumber];
 
 		// pre-fetch next slide
 		this._requestPreview(slideNumber + 1);
