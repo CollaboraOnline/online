@@ -13,8 +13,20 @@
 
 declare var SlideShow: any;
 
+interface SlideInfo {
+	hash: string;
+	index: number;
+	empty: boolean;
+	masterPage: string;
+	masterPageObjectsVisible: boolean;
+	background: {
+		isCustom: boolean;
+		fillColor: string;
+	};
+}
+
 interface PresentationInfo {
-	slides: Array<any>;
+	slides: Array<SlideInfo>;
 	docWidth: number;
 	docHeight: number;
 }
