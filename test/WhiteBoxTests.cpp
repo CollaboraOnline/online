@@ -64,9 +64,6 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testParseUrl);
     CPPUNIT_TEST(testSafeAtoi);
     CPPUNIT_TEST(testJsonUtilEscapeJSONValue);
-#if ENABLE_DEBUG
-    CPPUNIT_TEST(testUtf8);
-#endif
     CPPUNIT_TEST(testFindInVector);
     CPPUNIT_TEST(testThreadPool);
     CPPUNIT_TEST_SUITE_END();
@@ -95,7 +92,6 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     void testParseUrl();
     void testSafeAtoi();
     void testJsonUtilEscapeJSONValue();
-    void testUtf8();
     void testFindInVector();
     void testThreadPool();
 
@@ -1240,18 +1236,6 @@ void WhiteBoxTests::testJsonUtilEscapeJSONValue()
     const std::string in = "domain\\username";
     const std::string expected = "domain\\\\username";
     LOK_ASSERT_EQUAL(JsonUtil::escapeJSONValue(in), expected);
-}
-
-void WhiteBoxTests::testUtf8()
-{
-#if ENABLE_DEBUG
-    constexpr auto testname = __func__;
-    LOK_ASSERT(Util::isValidUtf8("foo"));
-    LOK_ASSERT(Util::isValidUtf8("©")); // 2 char
-    LOK_ASSERT(Util::isValidUtf8("→ ")); // 3 char
-    LOK_ASSERT(Util::isValidUtf8("🏃 is not 🏊."));
-    LOK_ASSERT(!Util::isValidUtf8("\xff\x03"));
-#endif
 }
 
 void WhiteBoxTests::testFindInVector()

@@ -25,12 +25,16 @@ class UtilTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testStringifyHexLine);
     CPPUNIT_TEST(testHexify);
     CPPUNIT_TEST(testBytesToHex);
+#if ENABLE_DEBUG
+    CPPUNIT_TEST(testUtf8);
+#endif
 
     CPPUNIT_TEST_SUITE_END();
 
     void testStringifyHexLine();
     void testHexify();
     void testBytesToHex();
+    void testUtf8();
 };
 
 void UtilTests::testStringifyHexLine()
@@ -79,6 +83,18 @@ void UtilTests::testBytesToHex()
         const std::string s = Util::hexStringToBytes(hex);
         LOK_ASSERT_EQUAL(d, s);
     }
+}
+
+void UtilTests::testUtf8()
+{
+#if ENABLE_DEBUG
+    constexpr auto testname = __func__;
+    LOK_ASSERT(Util::isValidUtf8("foo"));
+    LOK_ASSERT(Util::isValidUtf8("©")); // 2 char
+    LOK_ASSERT(Util::isValidUtf8("→ ")); // 3 char
+    LOK_ASSERT(Util::isValidUtf8("🏃 is not 🏊."));
+    LOK_ASSERT(!Util::isValidUtf8("\xff\x03"));
+#endif
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(UtilTests);
