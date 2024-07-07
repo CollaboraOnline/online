@@ -349,6 +349,7 @@ wsd_headers = wsd/Admin.hpp \
               wsd/wopi/WopiStorage.hpp
 
 shared_headers = common/Common.hpp \
+                 common/CharacterConverter.hpp \
                  common/Clipboard.hpp \
                  common/Crypto.hpp \
                  common/JsonUtil.hpp \
