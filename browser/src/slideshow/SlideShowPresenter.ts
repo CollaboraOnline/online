@@ -54,6 +54,7 @@ class SlideShowPresenter {
 
 	removeHooks() {
 		this._map.off('newfullscreen', this._onStart, this);
+		this._map.off('tilepreview', this._onGotPreview, this);
 	}
 
 	_getSlidesCount() {
