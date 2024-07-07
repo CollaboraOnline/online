@@ -94,7 +94,7 @@ class SlideCompositor {
 			this._getSlideHeight(),
 			{
 				autoUpdate: false,
-				fetchThumbnail: false,
+				slideshow: true,
 			},
 		);
 	}
