@@ -179,7 +179,7 @@ L.Map.include({
 			if (!tile)
 				break;
 			var isVisible = this._docLayer._preview._isPreviewVisible(tile[0]);
-			if (isVisible != true)
+			if (isVisible != true && tile[1].indexOf('slideshow') < 0)
 				// skip this! we can't see it
 				continue;
 			this._previewRequestsOnFly++;
@@ -207,6 +207,7 @@ L.Map.include({
 		}
 		var autoUpdate = options ? !!options.autoUpdate : false;
 		var fetchThumbnail = options && options.fetchThumbnail ? options.fetchThumbnail : true;
+		var isSlideshow = options && options.slideshow ? options.slideshow : false;
 		this._docPreviews[id] = {id: id, index: index, maxWidth: maxWidth, maxHeight: maxHeight, autoUpdate: autoUpdate, invalid: false};
 
 		var docLayer = this._docLayer;
@@ -242,7 +243,8 @@ L.Map.include({
 							'tileposy=' + tilePosY + ' ' +
 							'tilewidth=' + tileWidth + ' ' +
 							'tileheight=' + tileHeight + ' ' +
-							'id=' + id);
+							'id=' + id +
+							(isSlideshow ? ' slideshow=1' : ''));
 			this._processPreviewQueue();
 		}
 
