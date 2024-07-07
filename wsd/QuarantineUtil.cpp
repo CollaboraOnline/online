@@ -344,7 +344,7 @@ bool Quarantine::quarantineFile(const std::string& docPath)
 
         if (lastFileStat.isIdenticalTo(sourceStat))
         {
-            LOG_WRN("Quarantining of file ["
+            LOG_INF("Quarantining of file ["
                     << docPath << "] to [" << linkedFilePath
                     << "] is skipped because this file version is already quarantined as ["
                     << lastFile.fullPath() << ']');
