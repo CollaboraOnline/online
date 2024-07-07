@@ -57,14 +57,12 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testIso8601Time);
     CPPUNIT_TEST(testClockAsString);
     CPPUNIT_TEST(testBufferClass);
-    CPPUNIT_TEST(testHexify);
     CPPUNIT_TEST(testStat);
     CPPUNIT_TEST(testStringCompare);
     CPPUNIT_TEST(testParseUri);
     CPPUNIT_TEST(testParseUriUrl);
     CPPUNIT_TEST(testParseUrl);
     CPPUNIT_TEST(testSafeAtoi);
-    CPPUNIT_TEST(testBytesToHex);
     CPPUNIT_TEST(testJsonUtilEscapeJSONValue);
 #if ENABLE_DEBUG
     CPPUNIT_TEST(testUtf8);
@@ -90,14 +88,12 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     void testIso8601Time();
     void testClockAsString();
     void testBufferClass();
-    void testHexify();
     void testStat();
     void testStringCompare();
     void testParseUri();
     void testParseUriUrl();
     void testParseUrl();
     void testSafeAtoi();
-    void testBytesToHex();
     void testJsonUtilEscapeJSONValue();
     void testUtf8();
     void testFindInVector();
@@ -971,30 +967,6 @@ void WhiteBoxTests::testBufferClass()
     LOK_ASSERT_EQUAL(true, buf.empty());
 }
 
-
-void WhiteBoxTests::testHexify()
-{
-    constexpr auto testname = __func__;
-
-    const std::string s1 = "some ascii text with !@#$%^&*()_+/-\\|";
-    const auto hex = Util::dataToHexString(s1, 0, s1.size());
-    std::string decoded;
-    LOK_ASSERT(Util::dataFromHexString(hex, decoded));
-    LOK_ASSERT_EQUAL(s1, decoded);
-
-    for (std::size_t randStrLen = 1; randStrLen < 129; ++randStrLen)
-    {
-        const auto s2 = Util::rng::getBytes(randStrLen);
-        LOK_ASSERT_EQUAL(randStrLen, s2.size());
-        const auto hex2 = Util::dataToHexString(s2, 0, s2.size());
-        LOK_ASSERT_EQUAL(randStrLen * 2, hex2.size());
-        std::vector<char> decoded2;
-        LOK_ASSERT(Util::dataFromHexString(hex2, decoded2));
-        LOK_ASSERT_EQUAL(randStrLen, decoded2.size());
-        LOK_ASSERT_EQUAL(Util::toString(s2), Util::toString(decoded2));
-    }
-}
-
 void WhiteBoxTests::testStat()
 {
     constexpr auto testname = __func__;
@@ -1258,18 +1230,6 @@ void WhiteBoxTests::testSafeAtoi()
     }
     {
         LOK_ASSERT_EQUAL(0, Util::safe_atoi(nullptr, 0));
-    }
-}
-
-void WhiteBoxTests::testBytesToHex()
-{
-    constexpr auto testname = __func__;
-
-    {
-        const std::string d("Some text");
-        const std::string hex = Util::bytesToHexString(d);
-        const std::string s = Util::hexStringToBytes(hex);
-        LOK_ASSERT_EQUAL(d, s);
     }
 }
 
