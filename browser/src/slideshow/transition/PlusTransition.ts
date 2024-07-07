@@ -21,7 +21,6 @@ class PlusTransition extends SlideShow.Transition2d {
 		this.animationTime = 1500;
 	}
 
-
 	public start(): void {
 		this.startTransition();
 	}

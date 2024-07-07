@@ -21,7 +21,6 @@ class SimpleDissolveTransition extends SlideShow.Transition2d {
 		this.animationTime = 2000;
 	}
 
-
 	public start(): void {
 		this.startTransition();
 	}
