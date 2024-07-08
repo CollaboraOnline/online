@@ -88,6 +88,7 @@ SlideShow.PerformTransition = function (
 			break;
 
 		default:
+			new SlideShow.NoTransition(canvas, image1, image2).start();
 			console.error('Unknown transition type');
 			break;
 	}
