@@ -230,6 +230,8 @@ endif
 if ENABLE_LIBFUZZER
 coolforkit_SOURCES += \
 		       common/DummyTraceEventEmitter.cpp
+coolforkitns_SOURCES += \
+		       common/DummyTraceEventEmitter.cpp
 
 common_fuzzer_sources = \
 		       fuzzer/Common.cpp \
