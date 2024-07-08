@@ -75,10 +75,10 @@ class CheckersTransition extends Transition2d {
                     float adjustedProgress = isWhiteSquare ? progress : progress - 1.0;
                     adjustedProgress = clamp(adjustedProgress, 0.0, 1.0);
 
-                    if (direction == 1) {
-                        showEntering = localUV.y < adjustedProgress; // Vertical
+                    if (direction == 2) {
+                        showEntering = localUV.y < adjustedProgress; // Across
                     } else {
-                        showEntering = localUV.x < adjustedProgress; // Horizontal
+                        showEntering = localUV.x < adjustedProgress; // Down
                     }
 
                     vec4 color1 = texture(leavingSlideTexture, uv);

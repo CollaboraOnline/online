@@ -64,15 +64,14 @@ class FadeTransition extends SlideShow.Transition2d {
 					vec4 color1 = texture(enteringSlideTexture, v_texCoord);
 					vec4 transitionColor;
 
-					if (effectType == 0) {
+					if (effectType == 1) {
 						// Fade through black
 						transitionColor = vec4(0.0, 0.0, 0.0, 1.0);
-					} else if (effectType == 1) {
+					} else if (effectType == 2) {
 						// Fade through white
 						transitionColor = vec4(1.0, 1.0, 1.0, 1.0);
 					}
-
-					if (effectType == 2) {
+					if (effectType == 3) {
 						// Smooth fade
 						float smoothTime = smoothstep(0.0, 1.0, time);
 						outColor = mix(color0, color1, smoothTime);
