@@ -729,35 +729,9 @@ void WopiStorage::uploadLocalFileToStorageAsync(const Authorization& auth, LockC
             // the suggested target has to be in UTF-7; default to extension
             // only when the conversion fails
             std::string suggestedTarget = '.' + Poco::Path(saveAsFilename).getExtension();
-
-            //TODO: Perhaps we should cache this descriptor and reuse, as iconv_open might be expensive.
-            iconv_t cd = iconv_open("UTF-7", "UTF-8");
-            if (cd == (iconv_t)-1)
-                LOG_ERR(wopiLog << " failed to initialize iconv for UTF-7 conversion, using ["
-                                << suggestedTarget << ']');
-            else
-            {
-                std::vector<char> input(saveAsFilename.begin(), saveAsFilename.end());
-                std::vector<char> buffer(8 * saveAsFilename.size());
-
-                char* in = &input[0];
-                std::size_t in_left = input.size();
-                char* out = &buffer[0];
-                std::size_t out_left = buffer.size();
-
-                if (iconv(cd, &in, &in_left, &out, &out_left) == (size_t)-1)
-                    LOG_ERR(wopiLog << " failed to convert [" << saveAsFilename
-                                    << "] to UTF-7, using [" << suggestedTarget << ']');
-                else
-                {
-                    // conversion succeeded
-                    suggestedTarget = std::string(&buffer[0], buffer.size() - out_left);
-                    LOG_TRC(wopiLog << " converted [" << saveAsFilename << "] to UTF-7 as ["
-                                    << suggestedTarget << ']');
-                }
-
-                iconv_close(cd);
-            }
+            suggestedTarget = _utf7Converter.convert(saveAsFilename);
+            LOG_TRC(wopiLog << " converted [" << saveAsFilename << "] to UTF-7 as ["
+                            << suggestedTarget << ']');
 
             if (isRename)
             {

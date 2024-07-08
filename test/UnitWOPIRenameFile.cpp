@@ -25,8 +25,9 @@ class UnitWOPIRenameFile : public WopiTestServer
     STATE_ENUM(Phase, Load, RenameFile, WaitRenameNotification, Done)
     _phase;
 
-    static constexpr auto FilenameUtf8 = "a new filename";
-    static constexpr auto FilenameUtf7 = "a new filename";
+    static constexpr auto FilenameUtf8 = "Ḽơᶉëᶆ ȋṕšᶙṁ ḍỡḽǭᵳ ʂǐť";
+    static constexpr auto FilenameUtf7 =
+        "+HjwBoR2JAOsdhg +AgseVQFhHZkeQQ +Hg0e4R49Ae0dcw +AoIB0AFl-";
 
 public:
     UnitWOPIRenameFile()
