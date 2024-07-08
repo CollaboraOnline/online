@@ -433,6 +433,7 @@ COOL_JS_LST =\
 	src/slideshow/transition/CoverTransition.ts \
 	src/slideshow/transition/SplitTransition.ts \
 	src/slideshow/transition/WipeTransition.ts \
+	src/slideshow/transition/NoTransition.ts \
 	src/dom/PosAnimation.js \
 	src/map/anim/Map.PanAnimation.js \
 	src/dom/PosAnimation.Timer.js \
