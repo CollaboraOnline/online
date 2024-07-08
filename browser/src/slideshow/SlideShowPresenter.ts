@@ -19,8 +19,9 @@ interface SlideInfo {
 	empty: boolean;
 	masterPage: string;
 	masterPageObjectsVisible: boolean;
-	transitionSubtype: string | undefined;
+	transitionDirection : boolean;
 	transitionType: string | undefined;
+	transitionSubtype: string | undefined;
 	background: {
 		isCustom: boolean;
 		fillColor: string;
