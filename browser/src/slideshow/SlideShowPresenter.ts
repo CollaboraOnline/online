@@ -72,7 +72,7 @@ class SlideShowPresenter {
 		this._map.focus();
 	}
 
-	_onCanvasClick() {
+	_nextSlide() {
 		if (this._currentSlide + 1 >= this._getSlidesCount()) {
 			this._stopFullScreen();
 			return;
@@ -83,6 +83,28 @@ class SlideShowPresenter {
 			this._doTransition(previousSlide, this._currentSlide + 1);
 			this._currentSlide++;
 		});
+	}
+
+	_previoustSlide() {
+		if (this._currentSlide <= 0) {
+			return;
+		}
+
+		this._slideCompositor.fetchAndRun(this._currentSlide, () => {
+			const previousSlide = this._slideCompositor.getSlide(this._currentSlide);
+			this._doTransition(previousSlide, this._currentSlide - 1);
+			this._currentSlide--;
+		});
+	}
+	_onCanvasClick() {
+		this._nextSlide();
+	}
+
+	_onCanvasKeyDown(event : KeyboardEvent) {
+		if (event.code === "Space")
+			this._nextSlide();
+		else if (event.code === "Backspace")
+			this._previoustSlide();
 	}
 
 	_createCanvas(width: number, height: number) {
@@ -97,6 +119,7 @@ class SlideShowPresenter {
 		canvas.height = height;
 
 		canvas.addEventListener('click', this._onCanvasClick.bind(this));
+		window.addEventListener('keydown',this._onCanvasKeyDown.bind(this));
 
 		return canvas;
 	}
