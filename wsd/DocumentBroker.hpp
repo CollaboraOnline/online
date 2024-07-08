@@ -1779,10 +1779,10 @@ public:
     TransformDocumentStructureBroker(const std::string& uri,
                     const Poco::URI& uriPublic,
                     const std::string& docKey,
+                    const std::string& format,
                     const std::string& lang,
                     const std::string& transformJSON)
-                    : ConvertToBroker(uri, uriPublic, docKey, Poco::Path(uri).getExtension(), "",
-                                      lang)
+                    : ConvertToBroker(uri, uriPublic, docKey, format, "", lang)
                     , _transformJSON(transformJSON)
                     {}
 
