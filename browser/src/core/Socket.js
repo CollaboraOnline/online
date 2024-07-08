@@ -532,6 +532,7 @@ app.definitions.Socket = L.Class.extend({
 					e.data.startsWith('delta:') ||
 					e.data.startsWith('renderfont:') ||
 					e.data.startsWith('rendersearchlist:') ||
+					e.data.startsWith('slidelayer:') ||
 					e.data.startsWith('windowpaint:')) {
 				var index;
 				index = e.data.indexOf('\n');
@@ -561,6 +562,7 @@ app.definitions.Socket = L.Class.extend({
 		var isDelta = e.textMsg.startsWith('delta:');
 		if (!isTile && !isDelta &&
 		    !e.textMsg.startsWith('renderfont:') &&
+			!e.textMsg.startsWith('slidelayer:') &&
 		    !e.textMsg.startsWith('windowpaint:'))
 			return;
 
@@ -1231,7 +1233,8 @@ app.definitions.Socket = L.Class.extend({
 			window.location.reload(false);
 		}
 		else if (!textMsg.startsWith('tile:') && !textMsg.startsWith('delta:') &&
-			 !textMsg.startsWith('renderfont:') && !textMsg.startsWith('windowpaint:')) {
+			     !textMsg.startsWith('renderfont:') && !textMsg.startsWith('slidelayer:') &&
+			     !textMsg.startsWith('windowpaint:')) {
 
 			if (imgBytes !== undefined) {
 				try {
