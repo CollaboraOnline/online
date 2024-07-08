@@ -128,6 +128,7 @@ void KitWebSocketHandler::handleMessage(const std::vector<char>& data)
         }
     }
     else if (tokens.equals(0, "tile") || tokens.equals(0, "tilecombine") ||
+             tokens.equals(0, "getslide") ||
              tokens.equals(0, "paintwindow") || tokens.equals(0, "resizewindow") ||
              COOLProtocol::getFirstToken(tokens[0], '-') == "child")
     {
