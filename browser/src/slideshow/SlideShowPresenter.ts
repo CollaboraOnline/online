@@ -131,14 +131,15 @@ class SlideShowPresenter {
 		this._slideCompositor.fetchAndRun(nextSlideNumber, () => {
 			const nextSlide = this._slideCompositor.getSlide(nextSlideNumber);
 			const slideInfo = this._slideCompositor.getSlideInfo(nextSlideNumber)
-			if (slideInfo.transitionType && slideInfo.transitionType.length > 0) {
-				SlideShow.PerformTransition(
-					this._slideShowCanvas,
-					previousSlide,
-					nextSlide,
-					slideInfo,
-				);
+			if (slideInfo.transitionType == undefined || slideInfo.transitionType.length == 0) {
+				slideInfo.transitionType = 'NONE';
 			}
+			SlideShow.PerformTransition(
+				this._slideShowCanvas,
+				previousSlide,
+				nextSlide,
+				slideInfo,
+			);
 		});
 	}
 
