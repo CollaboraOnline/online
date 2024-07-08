@@ -13,31 +13,37 @@ SlideShow.PerformTransition = function (
 	canvas: HTMLCanvasElement,
 	image1: HTMLImageElement,
 	image2: HTMLImageElement,
-	type: string,
+	slideInfo: SlideInfo,
 ) {
-	switch (type) {
-		case 'FADE':
+	switch (slideInfo.transitionType) {
+		case 'Fade':
 			new SlideShow.FadeTransition(canvas, image1, image2).start(2);
 			break;
-		case 'WIPE':
+		
+		case 'BarWipe':
 			new SlideShow.WipeTransition(canvas, image1, image2).start(1);
 			break;
-		case 'WHEEL':
+		
+		case 'PineWheelWipe':
 			// 1,2,3, 4, 8
 			new SlideShow.WheelTransition(canvas, image1, image2).start(2);
 			break;
 
-		case 'UNCOVER':
+			case 'SlideWipe':
 			new SlideShow.UncoverTransition(canvas, image1, image2).start(2);
 			break;
 
-		case 'BARS':
+		case 'RandomBarWipe':
 			new SlideShow.BarsTransition(canvas, image1, image2).start(1);
 			break;
 
-		case 'CHECKERS':
+		case 'CheckerBoardWipe':
 			new SlideShow.CheckersTransition(canvas, image1, image2).start(1);
 			break;
+
+		case "FourBoxWipe":
+			// All Shapes come here
+            break;
 
 		case 'PLUS':
 			new SlideShow.PlusTransition(canvas, image1, image2).start();
@@ -55,19 +61,20 @@ SlideShow.PerformTransition = function (
 			new SlideShow.OvalTransition(canvas, image1, image2).start(1);
 			break;
 
-		case 'BOX':
+		case 'IrisWipe':
 			new SlideShow.BoxTransition(canvas, image1, image2).start(1);
 			break;
 
-		case 'WEDGE':
+		case 'FanWipe':
 			new SlideShow.WedgeTransition(canvas, image1, image2).start();
 			break;
 
-		case 'VENETIAN':
+		case 'BlindWipe':
 			new SlideShow.VenetianTransition(canvas, image1, image2).start(1);
 			break;
 
 		case 'CUT':
+			// todo: subtype of "BarWipe" to "FadeOverColor"
 			new SlideShow.CutTransition(canvas, image1, image2).start();
 			break;
 
@@ -75,21 +82,29 @@ SlideShow.PerformTransition = function (
 			new SlideShow.CoverTransition(canvas, image1, image2).start(1);
 			break;
 
-		case 'DISSOLVE':
+		case 'Dissolve':
 			new SlideShow.SimpleDissolveTransition(canvas, image1, image2).start();
 			break;
 
-		case 'PUSH':
+		case 'PushWipe':
 			new SlideShow.PushTransition(canvas, image1, image2).start(1);
 			break;
 
-		case 'SPLIT':
+		case 'BarnDoorWipe':
 			new SlideShow.SplitTransition(canvas, image1, image2).start(1);
+			break;
+	
+		case 'EllipseWipe':
+			// todo: have to find!
+			break;
+
+		case 'WaterfallWipe':
+			// TODO: Need to implement
 			break;
 
 		default:
 			new SlideShow.NoTransition(canvas, image1, image2).start();
-			console.error('Unknown transition type');
+			console.error('Unknown transition type', slideInfo.transitionType);
 			break;
 	}
 
