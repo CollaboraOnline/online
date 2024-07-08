@@ -19,6 +19,8 @@ interface SlideInfo {
 	empty: boolean;
 	masterPage: string;
 	masterPageObjectsVisible: boolean;
+	transitionSubtype: string | undefined;
+	transitionType: string | undefined;
 	background: {
 		isCustom: boolean;
 		fillColor: string;
@@ -127,12 +129,15 @@ class SlideShowPresenter {
 	_doTransition(previousSlide: HTMLImageElement, nextSlideNumber: number) {
 		this._slideCompositor.fetchAndRun(nextSlideNumber, () => {
 			const nextSlide = this._slideCompositor.getSlide(nextSlideNumber);
-			SlideShow.PerformTransition(
-				this._slideShowCanvas,
-				previousSlide,
-				nextSlide,
-				'NONE',
-			);
+			const slideInfo = this._slideCompositor.getSlideInfo(nextSlideNumber)
+			if (slideInfo.transitionType && slideInfo.transitionType.length > 0) {
+				SlideShow.PerformTransition(
+					this._slideShowCanvas,
+					previousSlide,
+					nextSlide,
+					slideInfo,
+				);
+			}
 		});
 	}
 
