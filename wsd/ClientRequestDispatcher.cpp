@@ -370,8 +370,14 @@ getConvertToBrokerImplementation(const std::string& requestType, const std::stri
     else if (requestType == "extract-document-structure")
         return std::make_shared<ExtractDocumentStructureBroker>(fromPath, uriPublic, docKey, lang);
     else if (requestType == "transform-document-structure")
-        return std::make_shared<TransformDocumentStructureBroker>(fromPath, uriPublic, docKey, lang,
-                                                                  transformJSON);
+    {
+        if (format.empty())
+            return std::make_shared<TransformDocumentStructureBroker>(fromPath, uriPublic, docKey,
+                Poco::Path(fromPath).getExtension(), lang, transformJSON);
+        else
+            return std::make_shared<TransformDocumentStructureBroker>(fromPath, uriPublic, docKey,
+                format, lang, transformJSON);
+    }
     else if (requestType == "get-thumbnail")
         return std::make_shared<GetThumbnailBroker>(fromPath, uriPublic, docKey, lang, target);
 

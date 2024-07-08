@@ -53,6 +53,8 @@ class HTTPServerTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testConvertToWithForwardedIP_Deny);
     CPPUNIT_TEST(testConvertToWithForwardedIP_Allow);
     CPPUNIT_TEST(testConvertToWithForwardedIP_DenyMulti);
+    CPPUNIT_TEST(testExtractDocStructure);
+    CPPUNIT_TEST(testTransformDocStructure);
     CPPUNIT_TEST(testRenderSearchResult);
 
     CPPUNIT_TEST_SUITE_END();
@@ -67,6 +69,8 @@ class HTTPServerTest : public CPPUNIT_NS::TestFixture
     void testConvertToWithForwardedIP_Deny();
     void testConvertToWithForwardedIP_Allow();
     void testConvertToWithForwardedIP_DenyMulti();
+    void testExtractDocStructure();
+    void testTransformDocStructure();
     void testRenderSearchResult();
 
 protected:
@@ -609,6 +613,126 @@ void HTTPServerTest::testConvertToWithForwardedIP_DenyMulti()
     catch(const Poco::Exception& exc)
     {
         LOK_ASSERT_FAIL(exc.displayText() + ": " + (exc.nested() ? exc.nested()->displayText() : ""));
+    }
+}
+
+void HTTPServerTest::testExtractDocStructure()
+{
+    const char *testname = "testExtractDocStructure";
+    const std::string srcPath = helpers::getTempFileCopyPath(TDOC, "docStructure.docx", "docStructure_");
+    std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
+    session->setTimeout(Poco::Timespan(COMMAND_TIMEOUT_SECS * 2, 0)); // 10 seconds.
+
+    TST_LOG("extract-document-structure");
+
+    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, "/cool/extract-document-structure");
+    Poco::Net::HTMLForm form;
+    form.setEncoding(Poco::Net::HTMLForm::ENCODING_MULTIPART);
+    form.addPart("data", new Poco::Net::FilePartSource(srcPath));
+    form.prepareSubmit(request);
+    try
+    {
+        form.write(session->sendRequest(request));
+    }
+    catch (const std::exception& ex)
+    {
+        // In case the server is still starting up.
+        sleep(COMMAND_TIMEOUT_SECS);
+        form.write(session->sendRequest(request));
+    }
+
+    Poco::Net::HTTPResponse response;
+    std::stringstream actualStream;
+    std::istream& responseStream = session->receiveResponse(response);
+    Poco::StreamCopier::copyStream(responseStream, actualStream);
+
+    // Remove the temp files.
+    FileUtil::removeFile(srcPath);
+
+    std::string actualString = actualStream.str();
+    std::string expectedString = " { \"DocStructure\": { \"ContentControls.ByIndex.0\": { \"id\": -428815899, \"tag\": \"machine-readable\", \"alias\": \"Human Readable\", \"content\": \"plain text value\", \"type\": \"plain-text\"}, \"ContentControls.ByIndex.1\": { \"id\": -1833055349, \"tag\": \"name\", \"alias\": \"Name\", \"content\": \"\", \"type\": \"plain-text\"}}}";
+
+    LOK_ASSERT(actualString == expectedString);
+}
+
+void HTTPServerTest::testTransformDocStructure()
+{
+    const char *testname = "testTransformDocStructure";
+    {
+        const std::string srcPath = helpers::getTempFileCopyPath(TDOC, "docStructure.docx", "docStructure_");
+        std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
+        session->setTimeout(Poco::Timespan(COMMAND_TIMEOUT_SECS * 2, 0)); // 10 seconds.
+
+        TST_LOG("transform-document-structure");
+
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, "/cool/transform-document-structure");
+        Poco::Net::HTMLForm form;
+        form.setEncoding(Poco::Net::HTMLForm::ENCODING_MULTIPART);
+        form.set("format", "docx");
+        form.set("transform", "{\"Transforms\":{\"ContentControls.ByIndex.0\":{\"content\":\"Short text\"}}}");
+        form.addPart("data", new Poco::Net::FilePartSource(srcPath));
+        form.prepareSubmit(request);
+        try
+        {
+            form.write(session->sendRequest(request));
+        }
+        catch (const std::exception& ex)
+        {
+            // In case the server is still starting up.
+            sleep(COMMAND_TIMEOUT_SECS);
+            form.write(session->sendRequest(request));
+        }
+
+        Poco::Net::HTTPResponse response;
+        std::stringstream actualStream;
+        std::istream& responseStream = session->receiveResponse(response);
+        Poco::StreamCopier::copyStream(responseStream, actualStream);
+
+        // Remove the temp files.
+        FileUtil::removeFile(srcPath);
+
+        std::string actualString = actualStream.str();
+
+        std::ofstream fileStream(TDOC "/docStructureTransformed.docx");
+        fileStream << actualString;
+    }
+    //To check the result, extract Document Structure
+    {
+        const std::string srcPath2 = helpers::getTempFileCopyPath(TDOC, "docStructureTransformed.docx", "docStructureTransformed_");
+        std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
+        session->setTimeout(Poco::Timespan(COMMAND_TIMEOUT_SECS * 2, 0)); // 10 seconds.
+
+        TST_LOG("transform-document-structure-check");
+
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, "/cool/extract-document-structure");
+        Poco::Net::HTMLForm form;
+        form.setEncoding(Poco::Net::HTMLForm::ENCODING_MULTIPART);
+        form.set("format", "docx");
+        form.addPart("data", new Poco::Net::FilePartSource(srcPath2));
+        form.prepareSubmit(request);
+        try
+        {
+            form.write(session->sendRequest(request));
+        }
+        catch (const std::exception& ex)
+        {
+            // In case the server is still starting up.
+            sleep(COMMAND_TIMEOUT_SECS);
+            form.write(session->sendRequest(request));
+        }
+
+        Poco::Net::HTTPResponse response;
+        std::stringstream actualStream;
+        std::istream& responseStream = session->receiveResponse(response);
+        Poco::StreamCopier::copyStream(responseStream, actualStream);
+
+        // Remove the temp files.
+        FileUtil::removeFile(srcPath2);
+
+        std::string actualString = actualStream.str();
+        std::string expectedString = " { \"DocStructure\": { \"ContentControls.ByIndex.0\": { \"id\": -428815899, \"tag\": \"machine-readable\", \"alias\": \"Human Readable\", \"content\": \"Short text\", \"type\": \"plain-text\"}, \"ContentControls.ByIndex.1\": { \"id\": -1833055349, \"tag\": \"name\", \"alias\": \"Name\", \"content\": \"\", \"type\": \"plain-text\"}}}";
+
+        LOK_ASSERT(actualString == expectedString);
     }
 }
 
