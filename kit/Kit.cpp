@@ -1063,8 +1063,8 @@ void Document::trimAfterInactivity()
             if (session && !session->isCloseFrame())
             {
                 session->loKitCallback(type, payload);
-                // TODO.  It should filter some messages
-                // before loading the document
+                if (self->isLoadOngoing())
+                    LOG_DBG("Enable processing input due to event of " << type << " during load");
                 session->getProtocol()->enableProcessInput(true);
                 return;
             }
@@ -1213,9 +1213,7 @@ bool Document::onLoad(const std::string& sessionId,
     LOG_INF("Loading url [" << uriAnonym << "] for session [" << sessionId <<
             "] which has " << (_sessions.size() - 1) << " sessions.");
 
-    _duringLoad++;
-    // wouldn't it be nice to have a custom destructor to do this.
-    std::unique_ptr<void, std::function<void(void *)>> guard(nullptr, [&](void*) { _duringLoad--; });
+    Util::ReferenceHolder duringLoad(_duringLoad);
 
     // This shouldn't happen, but for sanity.
     const auto it = _sessions.find(sessionId);
@@ -2288,7 +2286,8 @@ void Document::drainQueue()
             }
         }
 
-        if (processInputEnabled() && !isBackgroundSaveProcess() && _queue->getTileQueueSize() > 0)
+        if (processInputEnabled() && !isLoadOngoing() &&
+            !isBackgroundSaveProcess() && _queue->getTileQueueSize() > 0)
         {
             std::vector<TileCombined> tileRequests = _queue->popWholeTileQueue();
 

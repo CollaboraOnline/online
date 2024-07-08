@@ -377,6 +377,9 @@ public:
     /// Permanantly disable background save for this process
     void disableBgSave(const std::string &reason);
 
+    /// Are we currently performing a load ?
+    bool isLoadOngoing() const { return _duringLoad > 0; }
+
 private:
     void postForceModifiedCommand(bool modified);
 

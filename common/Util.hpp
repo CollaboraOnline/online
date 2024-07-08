@@ -221,6 +221,14 @@ namespace Util
         return true;
     }
 
+    /// Exception safe scope count/guard
+    struct ReferenceHolder
+    {
+        int &_count;
+        ReferenceHolder(int &count) : _count(count) { _count++; }
+        ~ReferenceHolder() { _count--; }
+    };
+
     /// Encode an integral ID into a string, with padding support.
     std::string encodeId(const std::uint64_t number, const int padding = 5);
     /// Decode an integral ID from a string.
