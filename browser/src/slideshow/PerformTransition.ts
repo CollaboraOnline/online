@@ -27,6 +27,36 @@ enum TransitionType {
     WATERFALLWIPE,
 }
 
+enum TransitionSubType {
+    LEFTTORIGHT,
+    TOPTOBOTTOM,
+    EIGHTBLADE,
+    FOURBLADE,
+    THREEBLADE,
+    TWOBLADEVERTICAL,
+    ONEBLADE,
+    FROMTOPLEFT,
+    FROMTOPRIGHT,
+    FROMBOTTOMLEFT,
+    FROMBOTTOMRIGHT,
+    VERTICAL,
+    HORIZONTAL,
+    DOWN,
+    ACROSS,
+    CORNERSOUT,
+    DIAMOND,
+    CIRCLE,
+    RECTANGLE,
+    CENTERTOP,
+    CROSSFADE,
+    FADEOVERCOLOR,
+    FROMLEFT,
+    FROMRIGHT,
+    FROMTOP,
+    HORIZONTALLEFT,
+    HORIZONTALRIGHT,
+}
+
 const stringToTransitionTypeMap: Record<string, TransitionType> = {
     'BarWipe': TransitionType.BARWIPE,
     'PineWheelWipe': TransitionType.PINWHEELWIPE,
@@ -45,44 +75,185 @@ const stringToTransitionTypeMap: Record<string, TransitionType> = {
     'WaterfallWipe': TransitionType.WATERFALLWIPE,
 };
 
+const stringToTransitionSubTypeMap: Record<string, TransitionSubType> = {
+    'LeftToRight': TransitionSubType.LEFTTORIGHT,
+    'TopToBottom': TransitionSubType.TOPTOBOTTOM,
+    '8Blade': TransitionSubType.EIGHTBLADE,
+    '4Blade': TransitionSubType.FOURBLADE,
+    '3Blade': TransitionSubType.THREEBLADE,
+    '2BladeVertical': TransitionSubType.TWOBLADEVERTICAL,
+    '1Blade': TransitionSubType.ONEBLADE,
+    'FromTopLeft': TransitionSubType.FROMTOPLEFT,
+    'FromTopRight': TransitionSubType.FROMTOPRIGHT,
+    'FromBottomLeft': TransitionSubType.FROMBOTTOMLEFT,
+    'FromBottomRight': TransitionSubType.FROMBOTTOMRIGHT,
+    'Vertical': TransitionSubType.VERTICAL,
+    'Horizontal': TransitionSubType.HORIZONTAL,
+    'Down': TransitionSubType.DOWN,
+    'Across': TransitionSubType.ACROSS,
+    'CornersOut': TransitionSubType.CORNERSOUT,
+    'Diamond': TransitionSubType.DIAMOND,
+    'Circle': TransitionSubType.CIRCLE,
+    'Rectangle': TransitionSubType.RECTANGLE,
+    'CenterTop': TransitionSubType.CENTERTOP,
+    'CrossFade': TransitionSubType.CROSSFADE,
+    'FadeOverColor': TransitionSubType.FADEOVERCOLOR,
+    'FromLeft': TransitionSubType.FROMLEFT,
+    'FromRight': TransitionSubType.FROMRIGHT,
+    'FromTop': TransitionSubType.FROMTOP,
+    'HorizontalLeft': TransitionSubType.HORIZONTALLEFT,
+    'HorizontalRight': TransitionSubType.HORIZONTALRIGHT,
+};
+
 SlideShow.PerformTransition = function (
 	canvas: HTMLCanvasElement,
 	image1: HTMLImageElement,
 	image2: HTMLImageElement,
 	slideInfo: SlideInfo,
 ) {
+	let subTypeIndex = 1; 
+	const transitionSubType = stringToTransitionSubTypeMap[slideInfo.transitionSubtype]
 	switch (stringToTransitionTypeMap[slideInfo.transitionType]) {
 		case TransitionType.FADE:
-			new SlideShow.FadeTransition(canvas, image1, image2).start(2);
+			if (slideInfo.transitionSubtype && slideInfo.transitionSubtype.length > 0) {
+				if (transitionSubType == TransitionSubType.CROSSFADE) {
+					subTypeIndex = 2;
+				}
+				else if (transitionSubType == TransitionSubType.FADEOVERCOLOR && slideInfo.transitionDirection) {
+					subTypeIndex = 1;
+				}
+				else {
+					subTypeIndex = 0;
+				}
+			}
+			new SlideShow.FadeTransition(canvas, image1, image2).start(subTypeIndex);
 			break;
 		
 		case TransitionType.BARWIPE:
-			new SlideShow.WipeTransition(canvas, image1, image2).start(1);
+			if (slideInfo.transitionSubtype && slideInfo.transitionSubtype.length > 0) {
+				if (transitionSubType == TransitionSubType.FADEOVERCOLOR) {
+					new SlideShow.CutTransition(canvas, image1, image2).start();
+					return;	
+				}
+				else if (transitionSubType == TransitionSubType.TOPTOBOTTOM && slideInfo.transitionDirection) {
+					subTypeIndex = 3;
+				}
+				else if (transitionSubType == TransitionSubType.TOPTOBOTTOM && !slideInfo.transitionDirection) {
+					subTypeIndex = 4;
+				}
+				else if (transitionSubType == TransitionSubType.LEFTTORIGHT && slideInfo.transitionDirection) {
+					subTypeIndex = 1;
+				} 
+				else {
+					subTypeIndex = 2;
+				}
+			}
+			new SlideShow.WipeTransition(canvas, image1, image2).start(subTypeIndex);
 			break;
 		
 		case TransitionType.PINWHEELWIPE:
-			// 1,2,3, 4, 8
-			new SlideShow.WheelTransition(canvas, image1, image2).start(2);
+			if (slideInfo.transitionSubtype && slideInfo.transitionSubtype.length > 0) {
+				if (transitionSubType == TransitionSubType.TWOBLADEVERTICAL) {
+					subTypeIndex = 2;
+				}
+				else if (transitionSubType == TransitionSubType.THREEBLADE) {
+					subTypeIndex = 3;
+				}
+				else if (transitionSubType == TransitionSubType.FOURBLADE ) {
+					subTypeIndex = 4;
+				} 
+				else if (transitionSubType == TransitionSubType.EIGHTBLADE ) {
+					subTypeIndex = 8;
+				} 
+				else {
+					subTypeIndex = 1;
+				}
+			}
+			new SlideShow.WheelTransition(canvas, image1, image2).start(subTypeIndex);
 			break;
 
 		case TransitionType.SLIDEWIPE:
-			new SlideShow.UncoverTransition(canvas, image1, image2).start(2);
+			if (slideInfo.transitionSubtype && slideInfo.transitionSubtype.length > 0) {
+				if (transitionSubType == TransitionSubType.FROMTOP ) {
+					subTypeIndex = 1;
+				}
+				else if (transitionSubType == TransitionSubType.FROMLEFT ) {
+					subTypeIndex = 2;
+				} 
+				else if (transitionSubType == TransitionSubType.FROMRIGHT) {
+					subTypeIndex = 4;
+				}
+				else {
+					subTypeIndex = 3;
+				}
+			}
+			// todo: differentiate uncover and cover transition
+			new SlideShow.UncoverTransition(canvas, image1, image2).start(subTypeIndex);
 			break;
 
 		case TransitionType.RANDOMBARWIPE:
-			new SlideShow.BarsTransition(canvas, image1, image2).start(1);
+			if (slideInfo.transitionSubtype && slideInfo.transitionSubtype.length > 0) {
+				if (transitionSubType == TransitionSubType.VERTICAL ) {
+					subTypeIndex = 1;
+				}
+				else if (transitionSubType == TransitionSubType.HORIZONTAL ) {
+					subTypeIndex = 2;
+				} 
+			}
+			new SlideShow.BarsTransition(canvas, image1, image2).start(subTypeIndex);
 			break;
 
 		case TransitionType.CHECKERBOARDWIPE:
-			new SlideShow.CheckersTransition(canvas, image1, image2).start(1);
+			if (slideInfo.transitionSubtype && slideInfo.transitionSubtype.length > 0) {
+				if (transitionSubType == TransitionSubType.DOWN ) {
+					subTypeIndex = 1;
+				}
+				else if (transitionSubType == TransitionSubType.ACROSS ) {
+					// todo : fix transition, It seems like vertical not across
+					subTypeIndex = 2;
+				} 
+			}
+			new SlideShow.CheckersTransition(canvas, image1, image2).start(subTypeIndex);
 			break;
 
 		case TransitionType.FOURBOXWIPE:
-			// All Shapes come here
+			if (slideInfo.transitionSubtype && slideInfo.transitionSubtype.length > 0) {
+				if (transitionSubType == TransitionSubType.CORNERSOUT ) {
+					new SlideShow.PlusTransition(canvas, image1, image2).start();
+					return;
+				}
+			}
             break;
 
 		case TransitionType.IRISWIPE:
-			new SlideShow.BoxTransition(canvas, image1, image2).start(1);
+			if (slideInfo.transitionSubtype && slideInfo.transitionSubtype.length > 0) {
+				if (transitionSubType == TransitionSubType.DIAMOND ) {
+					new SlideShow.DiamondTransition(canvas, image1, image2).start();
+					return;
+				}
+				else if (transitionSubType == TransitionSubType.RECTANGLE && slideInfo.transitionDirection) {
+					subTypeIndex = 1
+				} else {
+					subTypeIndex = 0
+				}
+			}
+			new SlideShow.BoxTransition(canvas, image1, image2).start(subTypeIndex);
+			break;
+
+		case TransitionType.ELLIPSEWIPE:
+			if (slideInfo.transitionSubtype && slideInfo.transitionSubtype.length > 0) {
+				if (transitionSubType == TransitionSubType.CIRCLE ) {
+					new SlideShow.CircleTransition(canvas, image1, image2).start();
+					return;
+				}
+				else if (transitionSubType == TransitionSubType.HORIZONTAL) {
+					new SlideShow.OvalTransition(canvas, image1, image2).start(1);
+				}
+				else if (transitionSubType == TransitionSubType.VERTICAL) {
+					new SlideShow.OvalTransition(canvas, image1, image2).start(0);
+				}
+			}
+			
 			break;
 
 		case TransitionType.FANWIPE:
@@ -90,6 +261,7 @@ SlideShow.PerformTransition = function (
 			break;
 
 		case TransitionType.BLINDSWIPE:
+			// todo : add Venetian to online UI
 			new SlideShow.VenetianTransition(canvas, image1, image2).start(1);
 			break;
 
@@ -98,15 +270,40 @@ SlideShow.PerformTransition = function (
 			break;
 
 		case TransitionType.PUSHWIPE:
-			new SlideShow.PushTransition(canvas, image1, image2).start(1);
+			if (slideInfo.transitionSubtype && slideInfo.transitionSubtype.length > 0) {
+				if (transitionSubType == TransitionSubType.FROMTOP ) {
+					subTypeIndex = 4
+				}
+				else if (transitionSubType == TransitionSubType.FROMRIGHT) {
+					subTypeIndex = 3
+				}
+				else if (transitionSubType == TransitionSubType.FROMLEFT) {
+					subTypeIndex = 2
+				}
+				else {
+					subTypeIndex = 1
+				}
+			}
+
+			new SlideShow.PushTransition(canvas, image1, image2).start(subTypeIndex);
 			break;
 
 		case TransitionType.BARNDOORWIPE:
-			new SlideShow.SplitTransition(canvas, image1, image2).start(1);
-			break;
-	
-		case TransitionType.ELLIPSEWIPE:
-			// todo: have to find!
+			if (slideInfo.transitionSubtype && slideInfo.transitionSubtype.length > 0) {
+				if (transitionSubType == TransitionSubType.HORIZONTAL && slideInfo.transitionDirection == false ) {
+					subTypeIndex = 1
+				}
+				else if (transitionSubType == TransitionSubType.HORIZONTAL && slideInfo.transitionDirection == true) {
+					subTypeIndex = 2
+				}
+				else if (transitionSubType == TransitionSubType.VERTICAL && slideInfo.transitionDirection == false ) {
+					subTypeIndex = 3
+				}
+				else if (transitionSubType == TransitionSubType.VERTICAL && slideInfo.transitionDirection == true) {
+					subTypeIndex = 4
+				}
+			}
+			new SlideShow.SplitTransition(canvas, image1, image2).start(subTypeIndex);
 			break;
 
 		case TransitionType.WATERFALLWIPE:
