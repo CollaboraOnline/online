@@ -56,6 +56,10 @@ class SlideCompositor {
 		this._requestPreview(this._initialSlideNumber);
 	}
 
+	public getSlideInfo(slideNumber: number): SlideInfo | null{
+		return this._presentationInfo? this._presentationInfo.slides[slideNumber] : null;
+	}
+
 	private _getSlidesCount() {
 		return this._presentationInfo ? this._presentationInfo.slides.length : 0;
 	}
