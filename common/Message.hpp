@@ -180,6 +180,7 @@ private:
             _tokens.equals(0, "delta:") ||
             _tokens.equals(0, "renderfont:") ||
             _tokens.equals(0, "rendersearchresult:") ||
+            _tokens.equals(0, "slidelayer:") ||
             _tokens.equals(0, "windowpaint:") ||
             _tokens.equals(0, "urp:") )
         {
