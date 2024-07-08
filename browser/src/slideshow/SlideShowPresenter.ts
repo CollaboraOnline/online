@@ -153,8 +153,8 @@ class SlideShowPresenter {
 
 		if (!this._map['wopi'].DownloadAsPostMessage) {
 			this._slideShowCanvas = this._createCanvas(
-				window.innerWidth,
-				window.innerHeight,
+				window.screen.width,
+				window.screen.height,
 			);
 			if (this._slideShowCanvas.requestFullscreen) {
 				this._slideShowCanvas
