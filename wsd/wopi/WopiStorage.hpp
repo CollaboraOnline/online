@@ -166,7 +166,7 @@ public:
         std::optional<bool> _isAdminUser = std::nullopt;
 
         /// error code if integration does not use isAdminUser field properly
-        std::string _isAdminUserError = "";
+        std::string _isAdminUserError;
     };
 
     WopiStorage(const Poco::URI& uri, const std::string& localStorePath,
