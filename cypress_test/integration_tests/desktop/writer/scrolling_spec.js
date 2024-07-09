@@ -40,6 +40,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Scroll through document', 
 		cy.cGet('.leaflet-layer').click('bottom');
 		cy.wait(1000);
 		helper.typeIntoDocument('{home}{end}{home}');
+		cy.wait(1000);
 		cy.cGet('#test-div-horizontal-scrollbar').should('have.text', '0');
 		helper.typeIntoDocument('{end}{home}{end}');
 		desktopHelper.assertScrollbarPosition('horizontal', 430, 653);

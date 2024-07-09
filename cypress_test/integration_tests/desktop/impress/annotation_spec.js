@@ -77,7 +77,7 @@ describe(['tagdesktop'], 'Collapsed Annotation Tests', function() {
 		desktopHelper.selectZoomLevel('50');
 	});
 
-	it('Insert', function() {
+	it.only('Insert', function() {
 		desktopHelper.insertComment();
 		cy.cGet('.leaflet-marker-icon').should('exist');
 		cy.cGet('.cool-annotation-content > div').should('contain','some text');

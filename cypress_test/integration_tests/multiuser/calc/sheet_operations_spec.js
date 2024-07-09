@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach require expect */
+/* global describe it cy beforeEach require */
 
 var helper = require('../../common/helper');
 
@@ -69,7 +69,6 @@ describe(['tagmultiuser'], 'Check overlays after tab switching/operations', func
 		cy.cGet('#spreadsheet-tab1').click();
 		cy.cGet('input#addressInput-input').should('have.prop', 'value', 'A14');
 
-		let cellA14Bounds = new helper.Bounds();
 		cy.cGet('#test-div-OwnCellCursor').should('exist');
 
 		cy.cSetActiveFrame('#iframe2');
@@ -83,7 +82,6 @@ describe(['tagmultiuser'], 'Check overlays after tab switching/operations', func
 		cy.cSetActiveFrame('#iframe1');
 		cy.cGet('#spreadsheet-tab1').click();
 
-		let cellA14Bounds = new helper.Bounds();
 		cy.cGet('#test-div-OwnCellCursor').should('exist');
 
 		cy.cSetActiveFrame('#iframe2');

@@ -111,12 +111,9 @@
 /src/geometry/Point.ts
 /src/geometry/PolyUtil.js
 /src/geometry/Transformation.ts
-/src/layer/BackgroundColor.js
 /src/layer/CalcSplitPanesContext.ts
-/src/layer/FeatureGroup.js
 /src/layer/FormFieldButtonLayer.js
 /src/layer/Layer.js
-/src/layer/Layer.Popup.js
 /src/layer/LayerGroup.js
 /src/layer/marker/A11yTextInput.js
 /src/layer/marker/Cursor.ts
@@ -125,7 +122,6 @@
 /src/layer/marker/Icon.js
 /src/layer/marker/Marker.Drag.js
 /src/layer/marker/Marker.js
-/src/layer/marker/Marker.Popup.js
 /src/layer/marker/ProgressOverlay.js
 /src/layer/marker/TextInput.js
 /src/layer/Popup.js
@@ -182,7 +178,6 @@
 /src/layer/vector/Path.Drag.js
 /src/layer/vector/Path.Drag.Transform.js
 /src/layer/vector/Path.js
-/src/layer/vector/Path.Popup.js
 /src/layer/vector/Path.Transform.Util.js
 /src/layer/vector/Polygon.js
 /src/layer/vector/Polyline.js

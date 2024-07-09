@@ -86,10 +86,6 @@ L.Marker = L.Layer.extend({
 			this.update();
 		}
 
-		if (this._popup) {
-			this.bindPopup(this._popup, this._popup.options);
-		}
-
 		return this;
 	},
 
