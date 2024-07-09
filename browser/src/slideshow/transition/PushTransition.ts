@@ -10,16 +10,26 @@
 
 declare var SlideShow: any;
 
+enum PushSubType {
+	FROMBOTTOM,
+	FROMLEFT,
+	FROMRIGHT,
+	FROMTOP,
+}
+
 class PushTransition extends Transition2d {
 	private direction: number = 0;
+	private slideInfo: SlideInfo;
 	constructor(
 		canvas: HTMLCanvasElement,
 		image1: HTMLImageElement,
 		image2: HTMLImageElement,
+		slideInfo: SlideInfo,
 	) {
 		super(canvas, image1, image2);
 		this.prepareTransition();
 		this.animationTime = 2000;
+		this.slideInfo = slideInfo;
 	}
 
 	public renderUniformValue(): void {
@@ -29,8 +39,19 @@ class PushTransition extends Transition2d {
 		);
 	}
 
-	public start(direction: number): void {
-		this.direction = direction;
+	public start(): void {
+		const transitionSubType =
+			stringToTransitionSubTypeMap[this.slideInfo.transitionSubtype];
+
+		if (transitionSubType == TransitionSubType.FROMTOP) {
+			this.direction = PushSubType.FROMTOP;
+		} else if (transitionSubType == TransitionSubType.FROMRIGHT) {
+			this.direction = PushSubType.FROMRIGHT;
+		} else if (transitionSubType == TransitionSubType.FROMLEFT) {
+			this.direction = PushSubType.FROMLEFT;
+		} else {
+			this.direction = PushSubType.FROMBOTTOM;
+		}
 		this.startTransition();
 	}
 
@@ -66,28 +87,28 @@ class PushTransition extends Transition2d {
                     vec2 leavingUV = uv;
                     vec2 enteringUV = uv;
 
-                    if (direction == 1) {
+                    if (direction == 0) {
                         // bottom to top
                         leavingUV = uv + vec2(0.0, progress);
                         enteringUV = uv + vec2(0.0, -1.0 + progress);
-                    } else if (direction == 2) {
+                    } else if (direction == 1) {
                         // left to right
                         leavingUV = uv + vec2(-progress, 0.0);
                         enteringUV = uv + vec2(1.0 - progress, 0.0);
-                    } else if (direction == 3) {
+                    } else if (direction == 2) {
                         // right to left
                         leavingUV = uv + vec2(progress, 0.0);
                         enteringUV = uv + vec2(-1.0 + progress, 0.0);
-                    } else if (direction == 4) {
+                    } else if (direction == 3) {
                         // top to bottom
                         leavingUV = uv + vec2(0.0, -progress);
                         enteringUV = uv + vec2(0.0, 1.0 - progress);
                     }
 
-                    if ((direction == 1 && uv.y > 1.0 - progress) ||
-                        (direction == 2 && uv.x < progress) ||
-                        (direction == 3 && uv.x > 1.0 - progress) ||
-                        (direction == 4 && uv.y < progress)) {
+                    if ((direction == 0 && uv.y > 1.0 - progress) ||
+                        (direction == 1 && uv.x < progress) ||
+                        (direction == 2 && uv.x > 1.0 - progress) ||
+                        (direction == 3 && uv.y < progress)) {
                         outColor = texture(enteringSlideTexture, enteringUV);
                     } else {
                         outColor = texture(leavingSlideTexture, leavingUV);

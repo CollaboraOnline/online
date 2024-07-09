@@ -176,22 +176,7 @@ SlideShow.PerformTransition = function (
 			break;
 
 		case TransitionType.PUSHWIPE:
-			if (
-				slideInfo.transitionSubtype &&
-				slideInfo.transitionSubtype.length > 0
-			) {
-				if (transitionSubType == TransitionSubType.FROMTOP) {
-					subTypeIndex = 4;
-				} else if (transitionSubType == TransitionSubType.FROMRIGHT) {
-					subTypeIndex = 3;
-				} else if (transitionSubType == TransitionSubType.FROMLEFT) {
-					subTypeIndex = 2;
-				} else {
-					subTypeIndex = 1;
-				}
-			}
-
-			new SlideShow.PushTransition(canvas, image1, image2).start(subTypeIndex);
+			new SlideShow.PushTransition(canvas, image1, image2, slideInfo).start();
 			break;
 
 		case TransitionType.BARNDOORWIPE:
