@@ -195,6 +195,8 @@ ingress:
   #
   # # HAProxy - Community: https://haproxy-ingress.github.io/
   #  haproxy-ingress.github.io/timeout-tunnel: 3600s
+  #  haproxy-ingress.github.io/assign-backend-server-id: "true"
+  #  haproxy-ingress.github.io/slots-min-free: "0"
   #  haproxy-ingress.github.io/balance-algorithm: url_param WOPISrc check_post
   #  haproxy-ingress.github.io/config-backend:
   #    hash-type consistent
