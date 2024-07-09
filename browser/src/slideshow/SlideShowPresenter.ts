@@ -18,7 +18,7 @@ interface SlideInfo {
 	index: number;
 	empty: boolean;
 	masterPage: string;
-	masterPageObjectsVisible: boolean;
+	masterPageObjectsVisibility: boolean;
 	transitionDuration: number;
 	nextSlideDuration: number;
 	transitionDirection: boolean;
@@ -279,9 +279,7 @@ class SlideShowPresenter {
 		const numberOfSlides = this._getSlidesCount();
 		if (numberOfSlides === 0) return;
 
-		if (this._slideCompositor)
-			this._slideCompositor.updatePresentationInfo(this._presentationInfo);
-		else
+		if (!this._slideCompositor)
 			this._slideCompositor = new SlideShow.PreviewsCompositor(
 				this,
 				this._presentationInfo,
@@ -289,6 +287,7 @@ class SlideShowPresenter {
 				this._slideShowCanvas.height,
 			);
 
+		this._slideCompositor.updatePresentationInfo(this._presentationInfo);
 		this._slideCompositor.fetchAndRun(0, () => {
 			this._doPresentation();
 		});
