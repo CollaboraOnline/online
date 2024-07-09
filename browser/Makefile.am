@@ -434,6 +434,7 @@ COOL_JS_LST =\
 	src/slideshow/transition/UncoverTransition.ts \
 	src/slideshow/transition/CoverTransition.ts \
 	src/slideshow/transition/SplitTransition.ts \
+	src/slideshow/transition/BarWipeTransition.ts \
 	src/slideshow/transition/WipeTransition.ts \
 	src/slideshow/transition/NoTransition.ts \
 	src/dom/PosAnimation.js \
@@ -891,6 +892,7 @@ pot:
 		src/slideshow/transition/UncoverTransition.ts \
 		src/slideshow/transition/CoverTransition.ts \
 		src/slideshow/transition/SplitTransition.ts \
+		src/slideshow/transition/BarWipeTransition.ts \
 		src/core/Socket.js \
 		src/core/Debug.js \
 		src/docstate.js \

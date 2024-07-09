@@ -121,33 +121,7 @@ SlideShow.PerformTransition = function (
 			break;
 
 		case TransitionType.BARWIPE:
-			if (
-				slideInfo.transitionSubtype &&
-				slideInfo.transitionSubtype.length > 0
-			) {
-				if (transitionSubType == TransitionSubType.FADEOVERCOLOR) {
-					new SlideShow.CutTransition(canvas, image1, image2).start();
-					return;
-				} else if (
-					transitionSubType == TransitionSubType.TOPTOBOTTOM &&
-					slideInfo.transitionDirection
-				) {
-					subTypeIndex = 3;
-				} else if (
-					transitionSubType == TransitionSubType.TOPTOBOTTOM &&
-					!slideInfo.transitionDirection
-				) {
-					subTypeIndex = 4;
-				} else if (
-					transitionSubType == TransitionSubType.LEFTTORIGHT &&
-					slideInfo.transitionDirection
-				) {
-					subTypeIndex = 1;
-				} else {
-					subTypeIndex = 2;
-				}
-			}
-			new SlideShow.WipeTransition(canvas, image1, image2).start(subTypeIndex);
+			BarWipeTransition(canvas, image1, image2, slideInfo).start();
 			break;
 
 		case TransitionType.PINWHEELWIPE:
