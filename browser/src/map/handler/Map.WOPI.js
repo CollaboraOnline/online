@@ -554,6 +554,8 @@ L.Map.WOPI = L.Handler.extend({
 				if (msg.Values.image && msg.Values.image.indexOf('data:') === 0) {
 					var image = L.DomUtil.create('img', '', preview);
 					image.src = msg.Values.image;
+				} else {
+					L.DomUtil.addClass(preview, 'no-preview');
 				}
 				if (msg.Values.title) {
 					var title = L.DomUtil.create('p', '', preview);
