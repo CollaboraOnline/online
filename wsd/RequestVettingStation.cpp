@@ -261,14 +261,19 @@ void RequestVettingStation::handleRequest(const std::string& id,
                         }
                     }
                     else if (_checkFileInfo == nullptr ||
-                             _checkFileInfo->state() == CheckFileInfo::State::None)
+                             _checkFileInfo->state() == CheckFileInfo::State::None ||
+                             _checkFileInfo->state() == CheckFileInfo::State::Timedout)
                     {
-                        // We don't have CheckFileInfo
+                        // We haven't tried or we timed-out. Retry.
+                        _checkFileInfo.reset();
                         checkFileInfo(uriPublic, isReadOnly, RedirectionLimit);
                     }
                     else
                     {
-                        // E.g. Timeout.
+                        // We had a response, but it was empty/error. Meaning the user is unauthorized.
+                        assert(_checkFileInfo && _checkFileInfo->wopiInfo() == nullptr &&
+                               "Unexpected to have wopiInfo");
+
                         LOG_ERR_S('#'
                                   << moveSocket->getFD() << ": CheckFileInfo failed for [" << docKey
                                   << "], "

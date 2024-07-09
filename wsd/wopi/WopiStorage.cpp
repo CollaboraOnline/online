@@ -803,11 +803,13 @@ void WopiStorage::uploadLocalFileToStorageAsync(const Authorization& auth, LockC
         LOG_ERR(wopiLog << " cannot upload file to WOPI storage uri [" << uriAnonym
                         << "]. Error: " << ex.displayText()
                         << (ex.nested() ? " (" + ex.nested()->displayText() + ')' : ""));
+        _uploadHttpSession.reset();
     }
     catch (const std::exception& ex)
     {
         LOG_ERR(wopiLog << " cannot upload file to WOPI storage uri [" + uriAnonym + "]. Error: "
                         << ex.what());
+        _uploadHttpSession.reset();
     }
 
     scopedInvokeCallback.setArg(AsyncUpload(
