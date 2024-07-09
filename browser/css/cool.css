@@ -960,6 +960,7 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	text-overflow: ellipsis;
 	max-width: 188px;
 	color: #0078A8;
+	vertical-align: middle;
 }
 
 .hyperlink-popup-btn {
@@ -1148,6 +1149,7 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 #hyperlink-pop-up-preview p {
 	text-overflow: ellipsis;
 	overflow: hidden;
+	font-size: 14px;
 }
 
 .prevent-select {
