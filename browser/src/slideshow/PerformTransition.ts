@@ -133,17 +133,7 @@ SlideShow.PerformTransition = function (
 			break;
 
 		case TransitionType.RANDOMBARWIPE:
-			if (
-				slideInfo.transitionSubtype &&
-				slideInfo.transitionSubtype.length > 0
-			) {
-				if (transitionSubType == TransitionSubType.VERTICAL) {
-					subTypeIndex = 1;
-				} else if (transitionSubType == TransitionSubType.HORIZONTAL) {
-					subTypeIndex = 2;
-				}
-			}
-			new SlideShow.BarsTransition(canvas, image1, image2).start(subTypeIndex);
+			new SlideShow.BarsTransition(canvas, image1, image2, slideInfo).start();
 			break;
 
 		case TransitionType.CHECKERBOARDWIPE:
