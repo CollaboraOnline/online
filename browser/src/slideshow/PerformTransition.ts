@@ -137,20 +137,12 @@ SlideShow.PerformTransition = function (
 			break;
 
 		case TransitionType.CHECKERBOARDWIPE:
-			if (
-				slideInfo.transitionSubtype &&
-				slideInfo.transitionSubtype.length > 0
-			) {
-				if (transitionSubType == TransitionSubType.DOWN) {
-					subTypeIndex = 1;
-				} else if (transitionSubType == TransitionSubType.ACROSS) {
-					// todo : fix transition, It seems like vertical not across
-					subTypeIndex = 2;
-				}
-			}
-			new SlideShow.CheckersTransition(canvas, image1, image2).start(
-				subTypeIndex,
-			);
+			new SlideShow.CheckersTransition(
+				canvas,
+				image1,
+				image2,
+				slideInfo,
+			).start();
 			break;
 
 		case TransitionType.FOURBOXWIPE:
