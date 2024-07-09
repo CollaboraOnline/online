@@ -10,16 +10,27 @@
 
 declare var SlideShow: any;
 
+enum WheelSubType {
+	ONEWHEEL = 1,
+	TWOWHEEL = 2,
+	THREEWHEEL = 3,
+	FOURWHEEL = 4,
+	EIGHTWHEEL = 8,
+}
+
 class WheelTransition extends Transition2d {
 	private stocks: number = 0;
+	private slideInfo: SlideInfo;
 	constructor(
 		canvas: HTMLCanvasElement,
 		image1: HTMLImageElement,
 		image2: HTMLImageElement,
+		slideInfo: SlideInfo,
 	) {
 		super(canvas, image1, image2);
 		this.prepareTransition();
 		this.animationTime = 1500;
+		this.slideInfo = slideInfo;
 	}
 
 	public renderUniformValue(): void {
@@ -29,8 +40,22 @@ class WheelTransition extends Transition2d {
 		);
 	}
 
-	public start(stocks: number): void {
-		this.stocks = stocks;
+	public start(): void {
+		const transitionSubType =
+			stringToTransitionSubTypeMap[this.slideInfo.transitionSubtype];
+
+		if (transitionSubType == TransitionSubType.TWOBLADEVERTICAL) {
+			this.stocks = WheelSubType.TWOWHEEL;
+		} else if (transitionSubType == TransitionSubType.THREEBLADE) {
+			this.stocks = WheelSubType.THREEWHEEL;
+		} else if (transitionSubType == TransitionSubType.FOURBLADE) {
+			this.stocks = WheelSubType.FOURWHEEL;
+		} else if (transitionSubType == TransitionSubType.EIGHTBLADE) {
+			this.stocks = WheelSubType.EIGHTWHEEL;
+		} else {
+			this.stocks = WheelSubType.ONEWHEEL;
+		}
+
 		this.startTransition();
 	}
 
