@@ -268,7 +268,6 @@ COOL_JS_LST =\
 	src/layer/tile/CalcTileLayer.js \
 	src/canvas/sections/CursorHeaderSection.ts \
 	src/canvas/sections/ContentControlSection.ts \
-	src/layer/BackgroundColor.js \
 	src/layer/marker/ProgressOverlay.js \
 	src/layer/marker/TextInput.js \
 	src/layer/marker/A11yTextInput.js \
@@ -277,13 +276,9 @@ COOL_JS_LST =\
 	src/layer/marker/Marker.js \
 	src/layer/marker/DivIcon.js \
 	src/layer/Popup.js \
-	src/layer/Layer.Popup.js \
-	src/layer/marker/Marker.Popup.js \
 	src/layer/LayerGroup.js \
-	src/layer/FeatureGroup.js \
 	src/layer/vector/Renderer.js \
 	src/layer/vector/Path.js \
-	src/layer/vector/Path.Popup.js \
 	src/geometry/LineUtil.js \
 	src/layer/vector/Polyline.js \
 	src/geometry/PolyUtil.js \

@@ -278,43 +278,6 @@ abstract class CPath extends CEventsHandler {
 		}
 	}
 
-	// Popup related methods
-	bindPopup(content: any, options: any): CPath {
-
-		if (content instanceof L.Popup) {
-			this.popup = content;
-		} else {
-			if (!this.popup || options) {
-				this.popup = new L.Popup(options, this);
-			}
-			this.popup.setContent(content);
-		}
-
-		if (!this.popupHandlersAdded) {
-			this.on('add', this.firstPopup);
-			this.on('remove', this.closePopup);
-			this.on('mouseenter', this.openPopup);
-			this.on('mouseleave', this.delayClosePopup);
-
-			this.popupHandlersAdded = true;
-		}
-
-		return this;
-	}
-
-	unbindPopup(): CPath {
-		if (this.popup) {
-			this.popup = null;
-			this.off('add', this.firstPopup);
-			this.off('remove', this.closePopup);
-			this.off('mouseenter', this.openPopup);
-			this.off('mouseleave', this.delayClosePopup);
-
-			this.popupHandlersAdded = false;
-		}
-		return this;
-	}
-
 	protected firstPopup(e: EventData) {
 		if (this.popup) {
 			this.openPopup({
