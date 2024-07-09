@@ -12,6 +12,7 @@
     "@types/w2ui": "^1.4.37",
     "@typescript-eslint/eslint-plugin": "^4.21.0",
     "@typescript-eslint/parser": "^4.21.0",
+    "@types/offscreencanvas": "^2019.7.3",
     "autolinker": "3.14.1",
     "browserify": "16.5.1",
     "browserify-css": "0.15.0",

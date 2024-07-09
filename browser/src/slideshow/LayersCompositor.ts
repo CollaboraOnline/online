@@ -11,6 +11,7 @@
  * LayersCompositor generates slide from layers
  */
 
+declare var app: any;
 declare var SlideShow: any;
 
 class LayersCompositor extends SlideShow.SlideCompositor {
@@ -20,6 +21,7 @@ class LayersCompositor extends SlideShow.SlideCompositor {
 	private partHashes: Map<number, string> = new Map();
 	private backgroundChecksums: Map<string, string> = new Map();
 	private cachedBackgrounds: Map<string, HTMLImageElement> = new Map();
+	private layerDrawing: LayerDrawing = null;
 
 	constructor(
 		slideShowPresenter: SlideShowPresenter,
@@ -32,10 +34,13 @@ class LayersCompositor extends SlideShow.SlideCompositor {
 
 	protected _addHooks() {
 		app.map.on('slidebackground', this.onSlideBackground, this);
+		this.layerDrawing = new SlideShow.LayerDrawing(app.map);
+		this.layerDrawing.addHooks();
 	}
 
 	public removeHooks() {
 		app.map.off('slidebackground', this.onSlideBackground, this);
+		this.layerDrawing.removeHooks();
 	}
 
 	private onSlideBackground(e: any) {
@@ -48,12 +53,12 @@ class LayersCompositor extends SlideShow.SlideCompositor {
 		this.handleBackgroundLayer(e.data, e.image);
 	}
 
-	private getSlideInfo(slideHash: string) {
+	public getSlideInfo(slideHash: string) {
 		return this.slidesInfo.get(slideHash);
 	}
 
 	public updatePresentationInfo(presentationInfo: PresentationInfo) {
-		this.super(presentationInfo);
+		this._presentationInfo = presentationInfo;
 		this.onSlidesInfo(presentationInfo);
 	}
 
@@ -78,7 +83,7 @@ class LayersCompositor extends SlideShow.SlideCompositor {
 		this.docWidth = data.docWidth;
 		this.docHeight = data.docHeight;
 
-		this.map.fire('presentationinfoupdated');
+		app.map.fire('presentationinfoupdated');
 	}
 
 	private handleBackgroundLayer(data: any, img: any) {
@@ -109,13 +114,13 @@ class LayersCompositor extends SlideShow.SlideCompositor {
 						: currentSlideInfo.masterPage;
 				if (pageHash === data.pageHash) {
 					const image = this.cachedBackgrounds.get(data.checksum);
-					this.map.fire('slidebackgroundready', {image: image});
+					app.map.fire('slidebackgroundready', {image: image});
 				}
 			}
 		}
 	}
 
-	private getBackgroundForPage(slideHash: string, masterPageMode: boolean) {
+	public getBackgroundForPage(slideHash: string, masterPageMode: boolean) {
 		const slideInfo = this.slidesInfo.get(slideHash);
 		if (slideInfo && slideInfo.background) {
 			const pageHash = (!masterPageMode && slideInfo.background.isCustom) ? slideHash : slideInfo.masterPage;
@@ -123,7 +128,7 @@ class LayersCompositor extends SlideShow.SlideCompositor {
 			if (checksum) {
 				window.app.console.log('PresentationHelper.getBackgroundForPage: already cached');
 				const image = this.cachedBackgrounds.get(checksum);
-				this.map.fire('slidebackgroundready', {image: image});
+				app.map.fire('slidebackgroundready', {image: image});
 			} else {
 				this.requestBackgroundForPage(slideInfo.index, masterPageMode);
 			}
@@ -136,27 +141,27 @@ class LayersCompositor extends SlideShow.SlideCompositor {
 		app.socket.sendMessage(`getslidebackground part=${slideIndex} mode=${mode} width=${layerSize[0]} height=${layerSize[1]}`);
 	}
 
-	private getCurrentSlideIndex(): number {
+	public getCurrentSlideIndex(): number {
 		return this.docLayer._selectedPart;
 	}
 
-	private getCurrentSlideHash() {
+	public getCurrentSlideHash() {
 		return this.getSlideHash(this.getCurrentSlideIndex());
 	}
 
-	private getSlideHash(slideIndex: number) {
+	public getSlideHash(slideIndex: number) {
 		return this.partHashes.get(slideIndex);
 	}
 
-	private isMasterPageMode() {
+	public isMasterPageMode() {
 		return this.docLayer._selectedMode === 1;
 	}
 
-	private getSlideSizePixel() {
+	public getSlideSizePixel() {
 		return [app.twipsToPixels * this.docWidth, app.twipsToPixels * this.docHeight];
 	}
 
-	private computeLayerResolution(width: number, height: number) {
+	public computeLayerResolution(width: number, height: number) {
 		width *= 1.20;
 		height *= 1.20;
 
@@ -173,7 +178,7 @@ class LayersCompositor extends SlideShow.SlideCompositor {
 		return [resolutionWidth, resolutionHeight];
 	}
 
-	private computeLayerSize(width: number, height: number) {
+	public computeLayerSize(width: number, height: number) {
 		// compute the slide size in pixel with respect to the current resolution
 		const slideWidth = this.docWidth;
 		const slideHeight = this.docHeight;
@@ -187,7 +192,7 @@ class LayersCompositor extends SlideShow.SlideCompositor {
 		return [width, height];
 	}
 
-	private getLayerSize() {
+	public getLayerSize() {
 		const slideSize = this.getSlideSizePixel();
 		const resolution = this.computeLayerResolution(slideSize[0], slideSize[1]);
 		return this.computeLayerSize(resolution[0], resolution[1]);
