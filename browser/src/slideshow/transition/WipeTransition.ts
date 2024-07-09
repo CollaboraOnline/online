@@ -10,16 +10,26 @@
 
 declare var SlideShow: any;
 
+enum WipeSubType {
+	LEFTTORIGHT,
+	RIGHTTOLEFT,
+	TOPTOBOTTOM,
+	BOTTOMTOTOP,
+}
+
 class WipeTransition extends Transition2d {
 	private direction: number = 0;
+	private slideInfo: SlideInfo;
 	constructor(
 		canvas: HTMLCanvasElement,
 		image1: HTMLImageElement,
 		image2: HTMLImageElement,
+		slideInfo: SlideInfo,
 	) {
 		super(canvas, image1, image2);
 		this.prepareTransition();
 		this.animationTime = 1500;
+		this.slideInfo = slideInfo;
 	}
 
 	public renderUniformValue(): void {
@@ -29,8 +39,27 @@ class WipeTransition extends Transition2d {
 		);
 	}
 
-	public start(direction: number): void {
-		this.direction = direction;
+	public start(): void {
+		const transitionSubType =
+			stringToTransitionSubTypeMap[this.slideInfo.transitionSubtype];
+		if (
+			transitionSubType == TransitionSubType.TOPTOBOTTOM &&
+			this.slideInfo.transitionDirection
+		) {
+			this.direction = WipeSubType.TOPTOBOTTOM;
+		} else if (
+			transitionSubType == TransitionSubType.TOPTOBOTTOM &&
+			!this.slideInfo.transitionDirection
+		) {
+			this.direction = WipeSubType.BOTTOMTOTOP;
+		} else if (
+			transitionSubType == TransitionSubType.LEFTTORIGHT &&
+			this.slideInfo.transitionDirection
+		) {
+			this.direction = WipeSubType.LEFTTORIGHT;
+		} else {
+			this.direction = WipeSubType.RIGHTTOLEFT;
+		}
 		this.startTransition();
 	}
 
@@ -54,7 +83,7 @@ class WipeTransition extends Transition2d {
 				uniform sampler2D leavingSlideTexture;
 				uniform sampler2D enteringSlideTexture;
 				uniform float time;
-				uniform int direction; // 1: Left to Right, 2: Right to Left, 3: Top to Bottom, 4: Bottom to Top
+				uniform int direction; // 0: Left to Right, 1: Right to Left, 2: Top to Bottom, 4: Bottom to Top
 
 				in vec2 v_texCoord;
 				out vec4 outColor;
@@ -63,25 +92,25 @@ class WipeTransition extends Transition2d {
 					vec2 uv = v_texCoord;
 					float progress = time;
 
-					if (direction == 1) {
+					if (direction == 0) {
 						if (uv.x < progress) {
 							outColor = texture(enteringSlideTexture, uv);
 						} else {
 							outColor = texture(leavingSlideTexture, uv);
 						}
-					} else if (direction == 2) {
+					} else if (direction == 1) {
 						if (uv.x > 1.0 - progress) {
 							outColor = texture(enteringSlideTexture, uv);
 						} else {
 							outColor = texture(leavingSlideTexture, uv);
 						}
-					} else if (direction == 3) {
+					} else if (direction == 2) {
 						if (uv.y < progress) {
 							outColor = texture(enteringSlideTexture, uv);
 						} else {
 							outColor = texture(leavingSlideTexture, uv);
 						}
-					} else if (direction == 4) {
+					} else if (direction == 3) {
 						if (uv.y > 1.0 - progress) {
 							outColor = texture(enteringSlideTexture, uv);
 						} else {
