@@ -950,6 +950,7 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	display: inline-block;
 	line-height: 1;
 	background-color: var(--color-background-lighter);
+	width: 301px;
 }
 
 .hyperlink-pop-up-container a {
