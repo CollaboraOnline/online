@@ -144,9 +144,8 @@ class Transition2d {
 		this.time =
 			(performance.now() - this.startTime) /
 			(this.animationTime > 0 ? this.animationTime : 1500);
-		
-		if (this.time > 1)
-			this.time = 1;
+
+		if (this.time > 1) this.time = 1;
 
 		this.gl.viewport(0, 0, this.canvas.width, this.canvas.height);
 		this.gl.clearColor(0.0, 0.0, 0.0, 1.0);

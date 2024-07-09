@@ -23,8 +23,11 @@ class SlideCompositor {
 	_onGotSlideCallback: VoidFunction = null;
 	_FETCH_ID_: number = 1000; // TODO
 
-	constructor(slideShowPresenter: SlideShowPresenter, presentationInfo: PresentationInfo,
-		width: number, height: number
+	constructor(
+		slideShowPresenter: SlideShowPresenter,
+		presentationInfo: PresentationInfo,
+		width: number,
+		height: number,
 	) {
 		this._slideShowPresenter = slideShowPresenter;
 		this._presentationInfo = presentationInfo;
@@ -56,8 +59,10 @@ class SlideCompositor {
 		this._requestPreview(this._initialSlideNumber);
 	}
 
-	public getSlideInfo(slideNumber: number): SlideInfo | null{
-		return this._presentationInfo? this._presentationInfo.slides[slideNumber] : null;
+	public getSlideInfo(slideNumber: number): SlideInfo | null {
+		return this._presentationInfo
+			? this._presentationInfo.slides[slideNumber]
+			: null;
 	}
 
 	private _getSlidesCount() {
@@ -86,7 +91,6 @@ class SlideCompositor {
 			this._onGotSlideCallback = null;
 			callback.call(this._slideShowPresenter);
 		}
-
 	}
 
 	private _requestPreview(slideNumber: number) {
