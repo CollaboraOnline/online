@@ -146,35 +146,11 @@ SlideShow.PerformTransition = function (
 			break;
 
 		case TransitionType.FOURBOXWIPE:
-			if (
-				slideInfo.transitionSubtype &&
-				slideInfo.transitionSubtype.length > 0
-			) {
-				if (transitionSubType == TransitionSubType.CORNERSOUT) {
-					new SlideShow.PlusTransition(canvas, image1, image2).start();
-					return;
-				}
-			}
+			new SlideShow.PlusTransition(canvas, image1, image2).start();
 			break;
 
 		case TransitionType.IRISWIPE:
-			if (
-				slideInfo.transitionSubtype &&
-				slideInfo.transitionSubtype.length > 0
-			) {
-				if (transitionSubType == TransitionSubType.DIAMOND) {
-					new SlideShow.DiamondTransition(canvas, image1, image2).start();
-					return;
-				} else if (
-					transitionSubType == TransitionSubType.RECTANGLE &&
-					slideInfo.transitionDirection
-				) {
-					subTypeIndex = 1;
-				} else {
-					subTypeIndex = 0;
-				}
-			}
-			new SlideShow.BoxTransition(canvas, image1, image2).start(subTypeIndex);
+			SlideShow.IrisWipeTransition(canvas, image1, image2, slideInfo).start();
 			break;
 
 		case TransitionType.ELLIPSEWIPE:
