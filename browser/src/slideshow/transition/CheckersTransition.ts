@@ -10,16 +10,24 @@
 
 declare var SlideShow: any;
 
+enum CheckersSubType {
+	ACROSS,
+	DOWN,
+}
+
 class CheckersTransition extends Transition2d {
 	private direction: number = 0;
+	private slideInfo: SlideInfo;
 	constructor(
 		canvas: HTMLCanvasElement,
 		image1: HTMLImageElement,
 		image2: HTMLImageElement,
+		slideInfo: SlideInfo,
 	) {
 		super(canvas, image1, image2);
 		this.prepareTransition();
 		this.animationTime = 1500;
+		this.slideInfo = slideInfo;
 	}
 
 	public renderUniformValue(): void {
@@ -29,8 +37,16 @@ class CheckersTransition extends Transition2d {
 		);
 	}
 
-	public start(direction: number): void {
-		this.direction = direction;
+	public start(): void {
+		const transitionSubType =
+			stringToTransitionSubTypeMap[this.slideInfo.transitionSubtype];
+
+		if (transitionSubType == TransitionSubType.DOWN) {
+			this.direction = CheckersSubType.DOWN;
+		} else if (transitionSubType == TransitionSubType.ACROSS) {
+			this.direction = CheckersSubType.ACROSS;
+		}
+
 		this.startTransition();
 	}
 
@@ -75,7 +91,7 @@ class CheckersTransition extends Transition2d {
                     float adjustedProgress = isWhiteSquare ? progress : progress - 1.0;
                     adjustedProgress = clamp(adjustedProgress, 0.0, 1.0);
 
-                    if (direction == 2) {
+                    if (direction == 1) {
                         showEntering = localUV.y < adjustedProgress; // Across
                     } else {
                         showEntering = localUV.x < adjustedProgress; // Down
