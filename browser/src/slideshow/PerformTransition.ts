@@ -125,23 +125,7 @@ SlideShow.PerformTransition = function (
 			break;
 
 		case TransitionType.PINWHEELWIPE:
-			if (
-				slideInfo.transitionSubtype &&
-				slideInfo.transitionSubtype.length > 0
-			) {
-				if (transitionSubType == TransitionSubType.TWOBLADEVERTICAL) {
-					subTypeIndex = 2;
-				} else if (transitionSubType == TransitionSubType.THREEBLADE) {
-					subTypeIndex = 3;
-				} else if (transitionSubType == TransitionSubType.FOURBLADE) {
-					subTypeIndex = 4;
-				} else if (transitionSubType == TransitionSubType.EIGHTBLADE) {
-					subTypeIndex = 8;
-				} else {
-					subTypeIndex = 1;
-				}
-			}
-			new SlideShow.WheelTransition(canvas, image1, image2).start(subTypeIndex);
+			new SlideShow.WheelTransition(canvas, image1, image2, slideInfo).start();
 			break;
 
 		case TransitionType.SLIDEWIPE:
