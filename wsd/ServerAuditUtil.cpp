@@ -12,7 +12,7 @@
 #include "ServerAuditUtil.hpp"
 
 ServerAuditUtil::ServerAuditUtil()
-: disabled(false)
+    : _disabled(false)
 {
     set("is_admin", "ok");
     set("certwarning", "ok");
@@ -20,14 +20,16 @@ ServerAuditUtil::ServerAuditUtil()
 
 std::string ServerAuditUtil::getResultsJSON() const
 {
+    std::lock_guard<std::mutex> lock(_mutex);
+
     std::string result = "{\"serverAudit\": [";
 
-    bool bFirst = true;
-    for (auto entry : entries)
+    bool isFirst = true;
+    for (auto entry : _entries)
     {
-        if (!bFirst)
+        if (!isFirst)
             result += ", ";
-        bFirst = false;
+        isFirst = false;
 
         result += "{\"code\": \"" + entry.first + "\", \"status\": \"" + entry.second + "\"}";
     }
@@ -38,8 +40,9 @@ std::string ServerAuditUtil::getResultsJSON() const
 
 void ServerAuditUtil::set(std::string code, std::string status)
 {
-    std::lock_guard<std::mutex> lock(mapMutex);
-    entries[code] = std::move(status);
+    std::lock_guard<std::mutex> lock(_mutex);
+
+    _entries[code] = std::move(status);
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
