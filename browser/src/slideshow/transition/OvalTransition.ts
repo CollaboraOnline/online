@@ -10,16 +10,24 @@
 
 declare var SlideShow: any;
 
+enum OvalSubType {
+	HORIZONTAL,
+	VERTICAL,
+}
+
 class OvalTransition extends Transition2d {
 	private direction: number = 0;
+	private slideInfo: SlideInfo;
 	constructor(
 		canvas: HTMLCanvasElement,
 		image1: HTMLImageElement,
 		image2: HTMLImageElement,
+		slideInfo: SlideInfo,
 	) {
 		super(canvas, image1, image2);
 		this.prepareTransition();
 		this.animationTime = 2000;
+		this.slideInfo = slideInfo;
 	}
 
 	public renderUniformValue(): void {
@@ -29,8 +37,15 @@ class OvalTransition extends Transition2d {
 		);
 	}
 
-	public start(direction: number): void {
-		this.direction = direction;
+	public start(): void {
+		const transitionSubType =
+			stringToTransitionSubTypeMap[this.slideInfo.transitionSubtype];
+		if (transitionSubType == TransitionSubType.HORIZONTAL) {
+			this.direction = OvalSubType.HORIZONTAL;
+		} else if (transitionSubType == TransitionSubType.VERTICAL) {
+			this.direction = OvalSubType.VERTICAL;
+		}
+
 		this.startTransition();
 	}
 
