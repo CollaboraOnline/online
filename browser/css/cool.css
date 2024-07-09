@@ -1137,7 +1137,7 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	top: -10px;
 }
 
-#hyperlink-pop-up-preview {
+#hyperlink-pop-up-preview:not(.no-preview) {
 	text-align: center;
 }
 
