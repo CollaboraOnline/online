@@ -19,11 +19,12 @@
  */
 class ServerAuditUtil
 {
-    // <code, status>
-    std::map<std::string, std::string> entries;
-    std::mutex mapMutex;
+    mutable std::mutex _mutex;
 
-    bool disabled;
+    // <code, status>
+    std::map<std::string, std::string> _entries;
+
+    bool _disabled;
 
 public:
     ServerAuditUtil();
@@ -32,8 +33,8 @@ public:
 
     void set(std::string code, std::string status);
 
-    void disable() { disabled = true; }
-    bool isDisabled() const { return disabled; }
+    void disable() { _disabled = true; }
+    bool isDisabled() const { return _disabled; }
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
