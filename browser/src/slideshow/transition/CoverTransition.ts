@@ -10,16 +10,26 @@
 
 declare var SlideShow: any;
 
+enum CoverSubType {
+	FROMBOTTOM,
+	FROMLEFT,
+	FROMRIGHT,
+	FROMTOP,
+}
+
 class CoverTransition extends Transition2d {
 	private direction: number = 0;
+	private slideInfo: SlideInfo;
 	constructor(
 		canvas: HTMLCanvasElement,
 		image1: HTMLImageElement,
 		image2: HTMLImageElement,
+		slideInfo: SlideInfo,
 	) {
 		super(canvas, image1, image2);
 		this.prepareTransition();
 		this.animationTime = 2000;
+		this.slideInfo = slideInfo;
 	}
 
 	public renderUniformValue(): void {
@@ -29,8 +39,19 @@ class CoverTransition extends Transition2d {
 		);
 	}
 
-	public start(direction: number): void {
-		this.direction = direction;
+	public start(): void {
+		const transitionSubType =
+			stringToTransitionSubTypeMap[this.slideInfo.transitionSubtype];
+
+		if (transitionSubType == TransitionSubType.FROMTOP) {
+			this.direction = CoverSubType.FROMTOP;
+		} else if (transitionSubType == TransitionSubType.FROMLEFT) {
+			this.direction = CoverSubType.FROMLEFT;
+		} else if (transitionSubType == TransitionSubType.FROMRIGHT) {
+			this.direction = CoverSubType.FROMRIGHT;
+		} else {
+			this.direction = CoverSubType.FROMBOTTOM;
+		}
 		this.startTransition();
 	}
 
@@ -66,48 +87,44 @@ class CoverTransition extends Transition2d {
                     vec2 leavingUV = uv;
                     vec2 enteringUV = uv;
 
-                    if (direction == 1) {
-                        // bottom to top
+                    if (direction == 0) {
                         enteringUV = uv + vec2(0.0, -1.0 + progress);
-                    } else if (direction == 2) {
-                        // left to right
+                    } else if (direction == 1) {
                         enteringUV = uv + vec2(1.0 - progress, 0.0);
-                    } else if (direction == 3) {
-                        // right to left
+                    } else if (direction == 2) {
                         enteringUV = uv + vec2(-1.0 + progress, 0.0);
-                    } else if (direction == 4) {
-                        // top to bottom
+                    } else if (direction == 3) {
                         enteringUV = uv + vec2(0.0, 1.0 - progress);
-                    } else if (direction == 5) {
+                    } else if (direction == 4) {
                         // bottom left to top right
                         enteringUV = uv + vec2(1.0 - progress, -1.0 + progress);
-                    } else if (direction == 6) {
+                    } else if (direction == 5) {
                         // top right to bottom left
                         enteringUV = uv + vec2(-1.0 + progress, 1.0 - progress);
-                    } else if (direction == 7) {
+                    } else if (direction == 6) {
                         // top left to bottom right
                         enteringUV = uv + vec2(1.0 - progress, 1.0 - progress);
-                    } else if (direction == 8) {
+                    } else if (direction == 7) {
                         // bottom right to top left
                         enteringUV = uv + vec2(-1.0 + progress, -1.0 + progress);
                     }
 
                     bool showEntering = false;
-                    if (direction == 1) {
+                    if (direction == 0) {
                         showEntering = uv.y > 1.0 - progress;
-                    } else if (direction == 2) {
+                    } else if (direction == 1) {
                         showEntering = uv.x < progress;
-                    } else if (direction == 3) {
+                    } else if (direction == 2) {
                         showEntering = uv.x > 1.0 - progress;
-                    } else if (direction == 4) {
+                    } else if (direction == 3) {
                         showEntering = uv.y < progress;
-                    } else if (direction == 5) {
+                    } else if (direction == 4) {
                         showEntering = uv.x < progress && uv.y > 1.0 - progress;
-                    } else if (direction == 6) {
+                    } else if (direction == 5) {
                         showEntering = uv.x > 1.0 - progress && uv.y < progress;
-                    } else if (direction == 7) {
+                    } else if (direction == 6) {
                         showEntering = uv.x < progress && uv.y < progress;
-                    } else if (direction == 8) {
+                    } else if (direction == 7) {
                         showEntering = uv.x > 1.0 - progress && uv.y > 1.0 - progress;
                     }
 
