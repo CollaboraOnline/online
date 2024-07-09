@@ -14,7 +14,7 @@ class NoTransition extends Transition2d {
 	constructor(
 		canvas: HTMLCanvasElement,
 		image1: HTMLImageElement,
-        image2: HTMLImageElement,
+		image2: HTMLImageElement,
 	) {
 		super(canvas, image1, image2);
 		this.prepareTransition();

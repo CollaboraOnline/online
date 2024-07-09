@@ -19,7 +19,7 @@ interface SlideInfo {
 	empty: boolean;
 	masterPage: string;
 	masterPageObjectsVisible: boolean;
-	transitionDirection : boolean;
+	transitionDirection: boolean;
 	transitionType: string | undefined;
 	transitionSubtype: string | undefined;
 	background: {
@@ -103,11 +103,9 @@ class SlideShowPresenter {
 		this._nextSlide();
 	}
 
-	_onCanvasKeyDown(event : KeyboardEvent) {
-		if (event.code === "Space")
-			this._nextSlide();
-		else if (event.code === "Backspace")
-			this._previoustSlide();
+	_onCanvasKeyDown(event: KeyboardEvent) {
+		if (event.code === 'Space') this._nextSlide();
+		else if (event.code === 'Backspace') this._previoustSlide();
 	}
 
 	_createCanvas(width: number, height: number) {
@@ -122,7 +120,7 @@ class SlideShowPresenter {
 		canvas.height = height;
 
 		canvas.addEventListener('click', this._onCanvasClick.bind(this));
-		window.addEventListener('keydown',this._onCanvasKeyDown.bind(this));
+		window.addEventListener('keydown', this._onCanvasKeyDown.bind(this));
 
 		return canvas;
 	}
@@ -130,8 +128,11 @@ class SlideShowPresenter {
 	_doTransition(previousSlide: HTMLImageElement, nextSlideNumber: number) {
 		this._slideCompositor.fetchAndRun(nextSlideNumber, () => {
 			const nextSlide = this._slideCompositor.getSlide(nextSlideNumber);
-			const slideInfo = this._slideCompositor.getSlideInfo(nextSlideNumber)
-			if (slideInfo.transitionType == undefined || slideInfo.transitionType.length == 0) {
+			const slideInfo = this._slideCompositor.getSlideInfo(nextSlideNumber);
+			if (
+				slideInfo.transitionType == undefined ||
+				slideInfo.transitionType.length == 0
+			) {
 				slideInfo.transitionType = 'NONE';
 			}
 			SlideShow.PerformTransition(
@@ -269,10 +270,16 @@ class SlideShowPresenter {
 		if (this._slideCompositor)
 			this._slideCompositor.updatePresentationInfo(this._presentationInfo);
 		else
-			this._slideCompositor = new SlideShow.SlideCompositor(this, this._presentationInfo,
-				this._slideShowCanvas.width, this._slideShowCanvas.height);
+			this._slideCompositor = new SlideShow.SlideCompositor(
+				this,
+				this._presentationInfo,
+				this._slideShowCanvas.width,
+				this._slideShowCanvas.height,
+			);
 
-		this._slideCompositor.fetchAndRun(0, () => { this._doPresentation(); });
+		this._slideCompositor.fetchAndRun(0, () => {
+			this._doPresentation();
+		});
 	}
 }
 
