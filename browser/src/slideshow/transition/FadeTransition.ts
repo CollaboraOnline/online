@@ -10,16 +10,25 @@
 
 declare var SlideShow: any;
 
+enum FadeSubType {
+	FADEOVERBLACK,
+	FADEOVERWHITE,
+	SMOOTHLY,
+}
+
 class FadeTransition extends SlideShow.Transition2d {
 	private effectTransition: number = 0;
+	private slideInfo: SlideInfo;
 	constructor(
 		canvas: HTMLCanvasElement,
 		image1: HTMLImageElement,
 		image2: HTMLImageElement,
+		slideInfo: SlideInfo,
 	) {
 		super(canvas, image1, image2);
 		this.prepareTransition();
 		this.animationTime = 1500;
+		this.slideInfo = slideInfo;
 	}
 
 	public renderUniformValue(): void {
@@ -29,8 +38,23 @@ class FadeTransition extends SlideShow.Transition2d {
 		);
 	}
 
-	public start(selectedEffectType: number): void {
-		this.effectTransition = selectedEffectType;
+	public start(): void {
+		const transitionSubType =
+			stringToTransitionSubTypeMap[this.slideInfo.transitionSubtype];
+
+		this.effectTransition = FadeSubType.FADEOVERBLACK; // default
+
+		if (transitionSubType == TransitionSubType.CROSSFADE) {
+			this.effectTransition = FadeSubType.SMOOTHLY;
+		} else if (
+			transitionSubType == TransitionSubType.FADEOVERCOLOR &&
+			this.slideInfo.transitionDirection
+		) {
+			this.effectTransition = FadeSubType.FADEOVERWHITE;
+		} else {
+			this.effectTransition = FadeSubType.FADEOVERBLACK;
+		}
+
 		this.startTransition();
 	}
 
