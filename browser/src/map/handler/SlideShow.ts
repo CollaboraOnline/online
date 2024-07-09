@@ -72,6 +72,7 @@ class SlideShow {
 	private requestedSlideHash: string = null;
 	private displayedSlideHash: string = null;
 	private prefetchedSlideHash: string = null;
+	private lastRenderedSlideHash: string;
 	private resolutionWidth: number = 960;
 	private resolutionHeight: number = 540;
 	private canvasWidth: number = 0;
@@ -188,6 +189,11 @@ class SlideShow {
 			this.requestedSlideHash = slideHash;
 		}
 
+		if (this.lastRenderedSlideHash === slideHash) {
+			this.onSlideRenderingComplete();
+			return;
+		}
+
 		const backgroundRendered = this.drawBackground(slideHash);
 		const masterPageRendered = this.drawMasterPage(slideHash);
 		if (backgroundRendered && masterPageRendered) {
@@ -264,10 +270,8 @@ class SlideShow {
 			this.backgroundChecksums.set(pageHash, imageInfo.checksum);
 			this.cachedBackgrounds.set(imageInfo.checksum, imageInfo);
 
-			if (info.slideHash === this.requestedSlideHash) {
-				this.clearCanvas();
-				this.drawBitmap(imageInfo);
-			}
+			this.clearCanvas();
+			this.drawBitmap(imageInfo);
 		}
 	}
 
@@ -293,9 +297,7 @@ class SlideShow {
 		}
 		layers.push(layerEntry);
 
-		if (info.slideHash === this.requestedSlideHash) {
-			this.drawMasterPageLayer(layerEntry, info.slideHash);
-		}
+		this.drawMasterPageLayer(layerEntry, info.slideHash);
 	}
 
 	private handleDrawPageLayerMsg(info: LayerInfo, img: any) {
@@ -322,9 +324,7 @@ class SlideShow {
 		}
 		layers.push(layerEntry);
 
-		if (info.slideHash === this.requestedSlideHash) {
-			this.drawDrawPageLayer(layerEntry);
-		}
+		this.drawDrawPageLayer(layerEntry);
 	}
 
 	private clearCanvas() {
@@ -435,11 +435,20 @@ class SlideShow {
 	}
 
 	onSlideRenderingComplete() {
+		this.lastRenderedSlideHash = this.requestedSlideHash || this.prefetchedSlideHash;
+		if (this.prefetchedSlideHash) {
+			this.prefetchedSlideHash = null;
+			return;
+		}
+		const reqSlideInfo = this.getSlideInfo(this.requestedSlideHash);
+
 		if (this.initialSlide) {
 			this.initialSlide = false;
 			this.startPlaying();
 		}
 		this.showRenderedSlide();
+		// fetch next slide and draw it on offscreen canvas
+		this.requestSlide(reqSlideInfo.next, true);
 	}
 
 	private startPlaying() {
@@ -706,6 +715,7 @@ class SlideShow {
 
 	onSlideWindowKeyPress(e: any) {
 		if (e.code === 'Escape') {
+			this.lastRenderedSlideHash = null;
 			this.slideShowWindowProxy.opener.focus();
 			this.slideShowWindowProxy.close();
 			this.map.uiManager.closeSnackbar();
