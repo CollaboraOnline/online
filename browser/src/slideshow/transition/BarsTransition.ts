@@ -10,16 +10,24 @@
 
 declare var SlideShow: any;
 
+enum BarsSubType {
+	VERTICAL,
+	HORIZONTAL,
+}
+
 class BarsTransition extends Transition2d {
 	private direction: number = 0;
+	private slideInfo: SlideInfo;
 	constructor(
 		canvas: HTMLCanvasElement,
 		image1: HTMLImageElement,
 		image2: HTMLImageElement,
+		slideInfo: SlideInfo,
 	) {
 		super(canvas, image1, image2);
 		this.prepareTransition();
 		this.animationTime = 1500;
+		this.slideInfo = slideInfo;
 	}
 
 	public renderUniformValue(): void {
@@ -29,8 +37,15 @@ class BarsTransition extends Transition2d {
 		);
 	}
 
-	public start(direction: number): void {
-		this.direction = direction;
+	public start(): void {
+		const transitionSubType =
+			stringToTransitionSubTypeMap[this.slideInfo.transitionSubtype];
+
+		if (transitionSubType == TransitionSubType.VERTICAL) {
+			this.direction = BarsSubType.VERTICAL;
+		} else if (transitionSubType == TransitionSubType.HORIZONTAL) {
+			this.direction = BarsSubType.HORIZONTAL;
+		}
 		this.startTransition();
 	}
 
@@ -70,7 +85,7 @@ class BarsTransition extends Transition2d {
                     float numBars = 70.0; 
                     float randValue;
 
-                    if (direction == 1) {
+                    if (direction == 0) {
                         // Vertical bars
                         randValue = random(vec2(floor(uv.x * numBars), 0.0));
                     } else {
