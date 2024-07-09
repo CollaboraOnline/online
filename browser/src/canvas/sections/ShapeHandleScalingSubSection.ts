@@ -21,16 +21,18 @@ class ShapeHandleScalingSubSection extends HTMLObjectSection {
 	drawingOrder: number = L.CSections.DefaultForDocumentObjects.drawingOrder + 1; // Handle events before the parent section.
 	zIndex: number = L.CSections.DefaultForDocumentObjects.zIndex;
     documentObject: boolean = true;
-    borderColor: string = 'grey'; // borderColor and backgroundColor are used so we don't need an "onDraw" function for now.
-    backgroundColor: string = null;
 
 	constructor (parentHandlerSection: ShapeHandlesSection, sectionName: string, size: number[], documentPosition: cool.SimplePoint, ownInfo: any) {
         super(sectionName, size[0], size[1], documentPosition, null, true);
 
-		this.getHTMLObject().style.opacity = 0.3;
+		const htmlObject = this.getHTMLObject();
+		htmlObject.style.opacity = 1;
+		htmlObject.style.border = '1px solid black';
+		htmlObject.style.borderRadius = '50%';
+		htmlObject.style.backgroundColor = 'wheat';
 		app.definitions.shapeHandlesSection.moveHTMLObjectToMapElement(this);
 
-		app.definitions.shapeHandlesSection.mirrorEventsFromSourceToCanvasSectionContainer(this.getHTMLObject());
+		app.definitions.shapeHandlesSection.mirrorEventsFromSourceToCanvasSectionContainer(htmlObject);
 
         this.size = size;
 

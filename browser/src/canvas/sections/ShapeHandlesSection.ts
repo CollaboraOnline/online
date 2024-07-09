@@ -30,8 +30,12 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		this.sectionProperties.subSections = [];
 		this.sectionProperties.activeHandleIndex = null;
 		this.sectionProperties.mouseIsInside = false;
-		this.sectionProperties.handleWidth = 20 * app.dpiScale;
-		this.sectionProperties.handleHeight = 20 * app.dpiScale;
+		this.sectionProperties.handleWidth = 10 * app.dpiScale;
+		this.sectionProperties.handleHeight = 10 * app.dpiScale;
+		this.sectionProperties.anchorWidth = 20 * app.dpiScale;
+		this.sectionProperties.anchorHeight = 20 * app.dpiScale;
+		this.sectionProperties.rotationHandleWidth = 15 * app.dpiScale;
+		this.sectionProperties.rotationHandleHeight = 15 * app.dpiScale;
 		this.sectionProperties.gluePointRadius = 10 * app.dpiScale;
 		this.sectionProperties.subSectionPrefix = 'shape-handle-';
 		this.sectionProperties.previousCursorStyle = null;
@@ -228,8 +232,8 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		let y = centerY - diff * Math.sin(rotationInfo.coreAngle + Math.PI * 0.5);
 		let x = centerX + diff * Math.cos(rotationInfo.coreAngle + Math.PI * 0.5);
 
-		x -= this.sectionProperties.handleWidth * 0.5;
-		y -= this.sectionProperties.handleHeight * 0.5;
+		x -= this.sectionProperties.rotationHandleWidth * 0.5;
+		y -= this.sectionProperties.rotationHandleHeight * 0.5;
 
 		return new app.definitions.simplePoint((this.position[0] + x) * app.pixelsToTwips, (this.position[1] + y) * app.pixelsToTwips);
 	}
@@ -443,7 +447,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 			newSubSection = new app.definitions.shapeHandleAnchorSubSection(
 				this,
 				this.sectionProperties.subSectionPrefix + handle.info.id,
-				[this.sectionProperties.handleWidth / app.dpiScale, this.sectionProperties.handleHeight / app.dpiScale],
+				[this.sectionProperties.anchorWidth / app.dpiScale, this.sectionProperties.anchorHeight / app.dpiScale],
 				handle.point.clone(),
 				handle.info
 			);
@@ -463,7 +467,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 			newSubSection = new app.definitions.shapeHandleScalingSubSection(
 				this,
 				this.sectionProperties.subSectionPrefix + handle.info.id,
-				[this.sectionProperties.handleWidth, this.sectionProperties.handleHeight],
+				[this.sectionProperties.handleWidth / app.dpiScale, this.sectionProperties.handleHeight / app.dpiScale],
 				handle.point.clone(),
 				handle.info
 			);
@@ -483,7 +487,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 			newSubSection = new app.definitions.shapeHandleRotationSubSection(
 				this,
 				this.sectionProperties.subSectionPrefix + 'rotation',
-				[this.sectionProperties.handleWidth / app.dpiScale, this.sectionProperties.handleHeight / app.dpiScale],
+				[this.sectionProperties.rotationHandleWidth / app.dpiScale, this.sectionProperties.rotationHandleHeight / app.dpiScale],
 				handle.point.clone(),
 				handle.info
 			);
