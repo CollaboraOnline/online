@@ -261,26 +261,15 @@ void HTTPServerTest::testCoolPost()
     const std::string html = httpResponse->getBody();
     fprintf(stderr, "%s\n", html.c_str());
     LOK_ASSERT(html.find(_uri.getHost()) != std::string::npos);
-    LOK_ASSERT(html.find("window.versionPath = '" COOLWSD_VERSION_HASH "';") != std::string::npos);
-    LOK_ASSERT(html.find("window.coolwsdVersion = '" COOLWSD_VERSION "';") != std::string::npos);
-    LOK_ASSERT(html.find("window.accessToken = 'choMXq0rSMcsm0RoZZWDWsrgAcE5AHwc';") !=
-               std::string::npos);
-    LOK_ASSERT(html.find("window.accessTokenTTL = '0';") != std::string::npos);
-    LOK_ASSERT(html.find("window.accessHeader = '';") != std::string::npos);
-    LOK_ASSERT(html.find("window.postMessageOriginExt = 'https://www.example.com:8080';") !=
-               std::string::npos);
-    LOK_ASSERT(
-        html.find(
-            "window.frameAncestors = decodeURIComponent('%20127.0.0.1:%2A%20localhost:%2A');") !=
-        std::string::npos);
-    LOK_ASSERT(
-        html.find(
-            R"xx(window.uiDefaults = {"presentation":{"ShowSidebar":"false","ShowStatusbar":"false"},"spreadsheet":{"ShowSidebar":"false","ShowStatusbar":"false"},"text":{"ShowRuler":"false","ShowSidebar":"false","ShowStatusbar":"false"},"uiMode":"classic"};)xx") !=
-        std::string::npos);
-    LOK_ASSERT(
-        html.find(
-            R"xx(<style>:root {--co-primary-text:#ffffff;--co-primary-element:#0082c9;--co-text-accent:#0082c9;--co-primary-light:#e6f3fa;--co-primary-element-light:#17adff;--co-color-error:#e9322d;--co-color-warning:#eca700;--co-color-success:#46ba61;--co-border-radius:3px;--co-border-radius-large:10px;--co-loading-light:#ccc;--co-loading-dark:#444;--co-box-shadow:rgba(77, 77, 77, 0.5);--co-border:#ededed;--co-border-dark:#dbdbdb;--co-border-radius-pill:100px;}</style>)xx") !=
-        std::string::npos);
+    LOK_ASSERT(html.find("data-version-path = \"" COOLWSD_VERSION_HASH "\"") != std::string::npos);
+    LOK_ASSERT(html.find("data-coolwsd-version = \"" COOLWSD_VERSION "\"") != std::string::npos);
+    LOK_ASSERT(html.find("choMXq0rSMcsm0RoZZWDWsrgAcE5AHwc") != std::string::npos);
+    LOK_ASSERT(html.find("data-access-token-ttl = \"0\"") != std::string::npos);
+    LOK_ASSERT(html.find("data-access-header = \"\"") != std::string::npos);
+    LOK_ASSERT(html.find("data-post-message-origin-ext = \"https://www.example.com:8080\"") != std::string::npos);
+    LOK_ASSERT(html.find("data-frame-ancestors = \"%20127.0.0.1:%2A%20localhost:%2A\"") != std::string::npos);
+    LOK_ASSERT(html.find("data-ui-defaults = \"{\"presentation\":{\"ShowSidebar\":\"false\",\"ShowStatusbar\":\"false\"},\"spreadsheet\":{\"ShowSidebar\":\"false\",\"ShowStatusbar\":\"false\"},\"text\":{\"ShowRuler\":\"false\",\"ShowSidebar\":\"false\",\"ShowStatusbar\":\"false\"},\"uiMode\":\"classic\"}\"") != std::string::npos);
+    LOK_ASSERT(html.find(R"xx(<style>:root {--co-primary-text:#ffffff;--co-primary-element:#0082c9;--co-text-accent:#0082c9;--co-primary-light:#e6f3fa;--co-primary-element-light:#17adff;--co-color-error:#e9322d;--co-color-warning:#eca700;--co-color-success:#46ba61;--co-border-radius:3px;--co-border-radius-large:10px;--co-loading-light:#ccc;--co-loading-dark:#444;--co-box-shadow:rgba(77, 77, 77, 0.5);--co-border:#ededed;--co-border-dark:#dbdbdb;--co-border-radius-pill:100px;}</style>)xx") != std::string::npos);
 }
 
 void HTTPServerTest::assertHTTPFilesExist(const Poco::URI& uri, Poco::RegularExpression& expr,
