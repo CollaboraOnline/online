@@ -154,20 +154,12 @@ SlideShow.PerformTransition = function (
 			break;
 
 		case TransitionType.ELLIPSEWIPE:
-			if (
-				slideInfo.transitionSubtype &&
-				slideInfo.transitionSubtype.length > 0
-			) {
-				if (transitionSubType == TransitionSubType.CIRCLE) {
-					new SlideShow.CircleTransition(canvas, image1, image2).start();
-					return;
-				} else if (transitionSubType == TransitionSubType.HORIZONTAL) {
-					new SlideShow.OvalTransition(canvas, image1, image2).start(1);
-				} else if (transitionSubType == TransitionSubType.VERTICAL) {
-					new SlideShow.OvalTransition(canvas, image1, image2).start(0);
-				}
-			}
-
+			SlideShow.EllipseWipeTransition(
+				canvas,
+				image1,
+				image2,
+				slideInfo,
+			).start();
 			break;
 
 		case TransitionType.FANWIPE:
