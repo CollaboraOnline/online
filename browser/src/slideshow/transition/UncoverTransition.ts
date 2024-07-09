@@ -10,16 +10,26 @@
 
 declare var SlideShow: any;
 
+enum UncoverSubType {
+	FROMTOP,
+	FROMRIGHT,
+	FROMLEFT,
+	FROMBOTTOM,
+}
+
 class UncoverTransition extends Transition2d {
 	private direction: number = 0;
+	private slideInfo: SlideInfo;
 	constructor(
 		canvas: HTMLCanvasElement,
 		image1: HTMLImageElement,
 		image2: HTMLImageElement,
+		slideInfo: SlideInfo,
 	) {
 		super(canvas, image1, image2);
 		this.prepareTransition();
 		this.animationTime = 1500;
+		this.slideInfo = slideInfo;
 	}
 
 	public renderUniformValue(): void {
@@ -29,8 +39,21 @@ class UncoverTransition extends Transition2d {
 		);
 	}
 
-	public start(direction: number): void {
-		this.direction = direction;
+	public start(): void {
+		// this.direction = direction;
+		const transitionSubType =
+			stringToTransitionSubTypeMap[this.slideInfo.transitionSubtype];
+
+		if (transitionSubType == TransitionSubType.FROMTOP) {
+			this.direction = UncoverSubType.FROMTOP;
+		} else if (transitionSubType == TransitionSubType.FROMLEFT) {
+			this.direction = UncoverSubType.FROMLEFT;
+		} else if (transitionSubType == TransitionSubType.FROMRIGHT) {
+			this.direction = UncoverSubType.FROMRIGHT;
+		} else {
+			this.direction = UncoverSubType.FROMBOTTOM;
+		}
+
 		this.startTransition();
 	}
 
@@ -49,61 +72,57 @@ class UncoverTransition extends Transition2d {
 
 	public getFragmentShader(): string {
 		return `#version 300 es
-                precision mediump float;
+				precision mediump float;
 
-                uniform sampler2D leavingSlideTexture;
-                uniform sampler2D enteringSlideTexture;
-                uniform float time;
-                uniform int direction;
+				uniform sampler2D leavingSlideTexture;
+				uniform sampler2D enteringSlideTexture;
+				uniform float time;
+				uniform int direction;
 
-                in vec2 v_texCoord;
-                out vec4 outColor;
+				in vec2 v_texCoord;
+				out vec4 outColor;
 
-                void main() {
-                    vec2 uv = v_texCoord;
-                    float progress = time;
+				void main() {
+					vec2 uv = v_texCoord;
+					float progress = time;
 
-                    vec2 leavingUV = uv;
-                    vec2 enteringUV = uv;
+					vec2 leavingUV = uv;
+					vec2 enteringUV = uv;
 
-                    if (direction == 1) {
-                        // Top to bottom
-                        leavingUV = uv + vec2(0.0, -progress);
-                    } else if (direction == 2) {
-                        // Right to left
-                        leavingUV = uv + vec2(progress, 0.0);
-                    } else if (direction == 3) {
-                        // Left to right
-                        leavingUV = uv + vec2(-progress, 0.0);
-                    } else if (direction == 4) {
-                        // Bottom to top
-                        leavingUV = uv + vec2(0.0, progress);
-                    }
-                    else if (direction == 5) {
-                        // TODO: Meed to fix this bug, top right to bottom left
-                        leavingUV = uv + vec2(progress, -progress);
-                    }
+					if (direction == 0) {
+						leavingUV = uv + vec2(0.0, -progress);
+					} else if (direction == 1) {
+						leavingUV = uv + vec2(progress, 0.0);
+					} else if (direction == 2) {
+						leavingUV = uv + vec2(-progress, 0.0);
+					} else if (direction == 3) {
+						leavingUV = uv + vec2(0.0, progress);
+					}
+					else if (direction == 4) {
+						// TODO: Meed to fix this bug, top right to bottom left
+						leavingUV = uv + vec2(progress, -progress);
+					}
 
-                    bool showEntering = false;
-                    if (direction == 1) {
-                        showEntering = uv.y < progress;
-                    } else if (direction == 2) {
-                        showEntering = uv.x > 1.0 - progress;
-                    } else if (direction == 3) {
-                        showEntering = uv.x < progress;
-                    } else if (direction == 4) {
-                        showEntering = uv.y > 1.0 - progress;
-                    } else if (direction == 5) {
-                        showEntering = uv.x > 1.0 - progress && uv.y < progress;
-                    }
+					bool showEntering = false;
+					if (direction == 0) {
+						showEntering = uv.y < progress;
+					} else if (direction == 1) {
+						showEntering = uv.x > 1.0 - progress;
+					} else if (direction == 2) {
+						showEntering = uv.x < progress;
+					} else if (direction == 3) {
+						showEntering = uv.y > 1.0 - progress;
+					} else if (direction == 4) {
+						showEntering = uv.x > 1.0 - progress && uv.y < progress;
+					}
 
-                    if (showEntering) {
-                        outColor = texture(enteringSlideTexture, enteringUV);
-                    } else {
-                        outColor = texture(leavingSlideTexture, leavingUV);
-                    }
-                }
-                `;
+					if (showEntering) {
+						outColor = texture(enteringSlideTexture, enteringUV);
+					} else {
+						outColor = texture(leavingSlideTexture, leavingUV);
+					}
+				}
+				`;
 	}
 }
 
