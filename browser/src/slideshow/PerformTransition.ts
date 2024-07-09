@@ -129,24 +129,7 @@ SlideShow.PerformTransition = function (
 			break;
 
 		case TransitionType.SLIDEWIPE:
-			if (
-				slideInfo.transitionSubtype &&
-				slideInfo.transitionSubtype.length > 0
-			) {
-				if (transitionSubType == TransitionSubType.FROMTOP) {
-					subTypeIndex = 1;
-				} else if (transitionSubType == TransitionSubType.FROMLEFT) {
-					subTypeIndex = 2;
-				} else if (transitionSubType == TransitionSubType.FROMRIGHT) {
-					subTypeIndex = 4;
-				} else {
-					subTypeIndex = 3;
-				}
-			}
-			// todo: differentiate uncover and cover transition
-			new SlideShow.UncoverTransition(canvas, image1, image2).start(
-				subTypeIndex,
-			);
+			SlideWipeTransition(canvas, image1, image2, slideInfo).start();
 			break;
 
 		case TransitionType.RANDOMBARWIPE:
