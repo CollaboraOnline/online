@@ -411,6 +411,7 @@ COOL_JS_LST =\
 	src/control/Ruler.js \
 	src/control/VRuler.ts \
 	src/slideshow/SlideCompositor.ts \
+	src/slideshow/LayerDrawing.ts \
 	src/slideshow/LayersCompositor.ts \
 	src/slideshow/PreviewsCompositor.ts \
 	src/slideshow/SlideShowPresenter.ts \
@@ -872,6 +873,7 @@ pot:
 		src/control/jsdialog/Widget.Timefield.js \
 		src/control/jsdialog/Widget.TreeView.js \
 		src/slideshow/SlideCompositor.ts \
+		src/slideshow/LayerDrawing.ts \
 		src/slideshow/LayersCompositor.ts \
 		src/slideshow/PreviewsCompositor.ts \
 		src/slideshow/SlideShowPresenter.ts \
