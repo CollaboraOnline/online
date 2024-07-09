@@ -17,6 +17,7 @@ class LayersCompositor extends SlideShow.SlideCompositor {
 	private firstSlideHash: string = null;
 	private lastSlideHash: string = null;
 	private slidesInfo: Map<string, SlideInfo> = new Map();
+	private partHashes: Map<number, string> = new Map();
 	private backgroundChecksums: Map<string, string> = new Map();
 	private cachedBackgrounds: Map<string, HTMLImageElement> = new Map();
 
@@ -70,7 +71,7 @@ class LayersCompositor extends SlideShow.SlideCompositor {
 			slide.prev = prevSlideHash;
 			slide.next = i + 1 < numberOfSlides ? slides[i + 1].hash : this.firstSlideHash;
 			this.slidesInfo.set(slide.hash, slide);
-
+			this.partHashes.set(slide.index, slide.hash);
 			prevSlideHash = slide.hash;
 		}
 
@@ -144,7 +145,7 @@ class LayersCompositor extends SlideShow.SlideCompositor {
 	}
 
 	private getSlideHash(slideIndex: number) {
-		return this.docLayer._partHashes[slideIndex] as string;
+		return this.partHashes.get(slideIndex);
 	}
 
 	private isMasterPageMode() {
