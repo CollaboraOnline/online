@@ -114,24 +114,10 @@ SlideShow.PerformTransition = function (
 	let subTypeIndex = 1;
 	const transitionSubType =
 		stringToTransitionSubTypeMap[slideInfo.transitionSubtype];
+
 	switch (stringToTransitionTypeMap[slideInfo.transitionType]) {
 		case TransitionType.FADE:
-			if (
-				slideInfo.transitionSubtype &&
-				slideInfo.transitionSubtype.length > 0
-			) {
-				if (transitionSubType == TransitionSubType.CROSSFADE) {
-					subTypeIndex = 2;
-				} else if (
-					transitionSubType == TransitionSubType.FADEOVERCOLOR &&
-					slideInfo.transitionDirection
-				) {
-					subTypeIndex = 1;
-				} else {
-					subTypeIndex = 0;
-				}
-			}
-			new SlideShow.FadeTransition(canvas, image1, image2).start(subTypeIndex);
+			new SlideShow.FadeTransition(canvas, image1, image2, slideInfo).start();
 			break;
 
 		case TransitionType.BARWIPE:
