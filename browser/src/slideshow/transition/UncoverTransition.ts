@@ -40,7 +40,6 @@ class UncoverTransition extends Transition2d {
 	}
 
 	public start(): void {
-		// this.direction = direction;
 		const transitionSubType =
 			stringToTransitionSubTypeMap[this.slideInfo.transitionSubtype];
 

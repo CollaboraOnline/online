@@ -10,16 +10,26 @@
 
 declare var SlideShow: any;
 
+enum SplitSubType {
+	HORIZONTALIN,
+	HORIZONTALOUT,
+	VERTICALIN,
+	VERTICALOUT,
+}
+
 class SplitTransition extends Transition2d {
 	private direction: number = 0;
+	private slideInfo: SlideInfo;
 	constructor(
 		canvas: HTMLCanvasElement,
 		image1: HTMLImageElement,
 		image2: HTMLImageElement,
+		slideInfo: SlideInfo,
 	) {
 		super(canvas, image1, image2);
 		this.prepareTransition();
 		this.animationTime = 2000;
+		this.slideInfo = slideInfo;
 	}
 
 	public renderUniformValue(): void {
@@ -29,8 +39,31 @@ class SplitTransition extends Transition2d {
 		);
 	}
 
-	public start(direction: number): void {
-		this.direction = direction;
+	public start(): void {
+		const transitionSubType =
+			stringToTransitionSubTypeMap[this.slideInfo.transitionSubtype];
+
+		if (
+			transitionSubType == TransitionSubType.HORIZONTAL &&
+			this.slideInfo.transitionDirection == false
+		) {
+			this.direction = SplitSubType.HORIZONTALIN;
+		} else if (
+			transitionSubType == TransitionSubType.HORIZONTAL &&
+			this.slideInfo.transitionDirection == true
+		) {
+			this.direction = SplitSubType.HORIZONTALOUT;
+		} else if (
+			transitionSubType == TransitionSubType.VERTICAL &&
+			this.slideInfo.transitionDirection == false
+		) {
+			this.direction = SplitSubType.VERTICALIN;
+		} else if (
+			transitionSubType == TransitionSubType.VERTICAL &&
+			this.slideInfo.transitionDirection == true
+		) {
+			this.direction = SplitSubType.VERTICALOUT;
+		}
 		this.startTransition();
 	}
 
@@ -67,16 +100,16 @@ class SplitTransition extends Transition2d {
 
                     vec2 dist = abs(uv - center);
 
-                    float size = (direction == 2 || direction == 4) ? progress * 1.5 : (1.0 - progress * 1.5);
+                    float size = (direction == 1 || direction == 3) ? progress * 1.5 : (1.0 - progress * 1.5);
 
-                    float mask = (direction == 1 || direction == 2 ) ? step(dist.y, size / 2.0) : step(dist.x, size / 2.0);
+                    float mask = (direction == 0 || direction == 1 ) ? step(dist.y, size / 2.0) : step(dist.x, size / 2.0);
 
                     mask = min(mask, 1.0);
 
                     vec4 color1 = texture(leavingSlideTexture, uv);
                     vec4 color2 = texture(enteringSlideTexture, uv);
 
-                    outColor = (direction == 2 || direction == 4) ? mix(color1, color2, mask) : mix(color2, color1, mask);
+                    outColor = (direction == 1 || direction == 3) ? mix(color1, color2, mask) : mix(color2, color1, mask);
                 }
                 `;
 	}

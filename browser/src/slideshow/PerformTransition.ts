@@ -111,10 +111,6 @@ SlideShow.PerformTransition = function (
 	image2: HTMLImageElement,
 	slideInfo: SlideInfo,
 ) {
-	let subTypeIndex = 1;
-	const transitionSubType =
-		stringToTransitionSubTypeMap[slideInfo.transitionSubtype];
-
 	switch (stringToTransitionTypeMap[slideInfo.transitionType]) {
 		case TransitionType.FADE:
 			new SlideShow.FadeTransition(canvas, image1, image2, slideInfo).start();
@@ -180,33 +176,7 @@ SlideShow.PerformTransition = function (
 			break;
 
 		case TransitionType.BARNDOORWIPE:
-			if (
-				slideInfo.transitionSubtype &&
-				slideInfo.transitionSubtype.length > 0
-			) {
-				if (
-					transitionSubType == TransitionSubType.HORIZONTAL &&
-					slideInfo.transitionDirection == false
-				) {
-					subTypeIndex = 1;
-				} else if (
-					transitionSubType == TransitionSubType.HORIZONTAL &&
-					slideInfo.transitionDirection == true
-				) {
-					subTypeIndex = 2;
-				} else if (
-					transitionSubType == TransitionSubType.VERTICAL &&
-					slideInfo.transitionDirection == false
-				) {
-					subTypeIndex = 3;
-				} else if (
-					transitionSubType == TransitionSubType.VERTICAL &&
-					slideInfo.transitionDirection == true
-				) {
-					subTypeIndex = 4;
-				}
-			}
-			new SlideShow.SplitTransition(canvas, image1, image2).start(subTypeIndex);
+			new SlideShow.SplitTransition(canvas, image1, image2, slideInfo).start();
 			break;
 
 		case TransitionType.WATERFALLWIPE:
