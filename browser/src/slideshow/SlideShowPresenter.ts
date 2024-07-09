@@ -28,6 +28,8 @@ interface SlideInfo {
 		isCustom: boolean;
 		fillColor: string;
 	};
+	next: string;
+	prev: string;
 }
 
 interface PresentationInfo {
