@@ -3,7 +3,7 @@
  * L.Control.Infobar used for displaying non-annoying info messages
  */
 
-/* global vex $ */
+/* global vex $ sanitizeUrl */
 L.Control.Infobar = L.Control.extend({
 	onAdd: function (map) {
 		map.on('infobar', this._onInfobar, this);
@@ -23,7 +23,7 @@ L.Control.Infobar = L.Control.extend({
 					return;
 
 				if (e.action.startsWith('http')) { // We have a link
-					var win = window.open(e.action, '_blank');
+					var win = window.open(sanitizeUrl.sanitizeUrl(e.action), '_blank');
 					win.focus();
 				}
 			};
