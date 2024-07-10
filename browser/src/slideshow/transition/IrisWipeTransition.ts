@@ -18,7 +18,7 @@ function IrisWipeTransition(
 	const transitionSubType =
 		stringToTransitionSubTypeMap[slideInfo.transitionSubtype];
 	if (transitionSubType == TransitionSubType.DIAMOND) {
-		return new SlideShow.DiamondTransition(canvas, image1, image2);
+		return new SlideShow.DiamondTransition(canvas, image1, image2, slideInfo);
 	} else {
 		return new SlideShow.BoxTransition(canvas, image1, image2, slideInfo);
 	}

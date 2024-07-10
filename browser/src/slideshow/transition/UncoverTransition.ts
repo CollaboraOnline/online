@@ -28,7 +28,8 @@ class UncoverTransition extends Transition2d {
 	) {
 		super(canvas, image1, image2);
 		this.prepareTransition();
-		this.animationTime = 1500;
+		this.animationTime =
+			slideInfo?.transitionDuration > 0 ? slideInfo.transitionDuration : 2000;
 		this.slideInfo = slideInfo;
 	}
 

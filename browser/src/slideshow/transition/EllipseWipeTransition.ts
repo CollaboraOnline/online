@@ -18,7 +18,7 @@ function EllipseWipeTransition(
 	const transitionSubType =
 		stringToTransitionSubTypeMap[slideInfo.transitionSubtype];
 	if (transitionSubType == TransitionSubType.CIRCLE) {
-		return new SlideShow.CircleTransition(canvas, image1, image2);
+		return new SlideShow.CircleTransition(canvas, image1, image2, slideInfo);
 	} else {
 		return new SlideShow.OvalTransition(canvas, image1, image2, slideInfo);
 	}
