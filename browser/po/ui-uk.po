@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-07-05 13:52+0200\n"
-"PO-Revision-Date: 2024-03-21 05:11+0000\n"
+"PO-Revision-Date: 2024-07-07 13:09+0000\n"
 "Last-Translator: Ihor Hordiichuk <igor_ck@outlook.com>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/uk/>\n"
-"Language: \n"
+"Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Weblate 5.5-dev\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Weblate 5.7-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -26,7 +26,7 @@ msgstr "Консоль адміністратора"
 
 #: admin/admin.strings.js:16
 msgid "Settings"
-msgstr "Параметри"
+msgstr "Налаштування"
 
 #: admin/admin.strings.js:17
 msgid "Overview"
@@ -482,7 +482,7 @@ msgstr "Вставити як"
 
 #: src/control/Control.ContextMenu.js:240
 msgid "Copy Cells"
-msgstr ""
+msgstr "Копіювати комірки"
 
 #: src/control/Control.ContextMenu.js:248
 msgid "Fill Series"
@@ -904,7 +904,7 @@ msgstr "Темний режим"
 #: src/control/Control.NotebookbarImpress.js:485
 #: src/control/Control.NotebookbarWriter.js:1506
 msgid "Invert Background"
-msgstr ""
+msgstr "Інвертувати тло"
 
 #: src/control/Control.Menubar.js:154 src/control/Control.Menubar.js:459
 #: src/control/Control.Menubar.js:604 src/control/Control.Menubar.js:750
@@ -1051,7 +1051,7 @@ msgstr "Надіслати відгук"
 #: src/control/Control.ServerAuditDialog.ts:112
 #: src/control/Control.ServerAuditDialog.ts:113
 msgid "Server audit"
-msgstr ""
+msgstr "Аудит сервера"
 
 #: src/control/Control.Menubar.js:387 src/control/Control.Menubar.js:548
 #: src/control/Control.Menubar.js:679 src/control/Control.Menubar.js:959
@@ -1694,9 +1694,8 @@ msgid "No issues found"
 msgstr ""
 
 #: src/control/Control.ServerAuditDialog.ts:137
-#, fuzzy
 msgid "Status"
-msgstr "Стан:"
+msgstr "Стан"
 
 #: src/control/Control.ServerAuditDialog.ts:185
 msgid "Check security warnings of your server"
@@ -1704,7 +1703,7 @@ msgstr ""
 
 #: src/control/Control.ServerAuditDialog.ts:186
 msgid "OPEN"
-msgstr ""
+msgstr "ВІДКРИТИ"
 
 #: src/control/Control.SheetsBar.js:48
 msgid "Scroll to the first sheet"
@@ -1875,7 +1874,7 @@ msgstr "Відстеження редактора"
 
 #: src/control/Control.UserList.ts:58
 msgid "Stop following"
-msgstr ""
+msgstr "Припинити стежити"
 
 #: src/control/Control.UserList.ts:59
 msgid "Avatar for {user}"
@@ -2107,11 +2106,11 @@ msgstr "Видалити табулятор"
 
 #: src/control/VRuler.ts:377
 msgid "Top Margin"
-msgstr ""
+msgstr "Верхнє поле"
 
 #: src/control/VRuler.ts:378
 msgid "Bottom Margin"
-msgstr ""
+msgstr "Нижнє поле"
 
 #: src/control/Signing.js:27
 msgid "This document is digitally signed and the signature is valid."
@@ -2265,7 +2264,7 @@ msgstr "Краї комірки"
 
 #: src/control/jsdialog/Widget.SidebarContainers.ts:72
 msgid "More options for {name}"
-msgstr ""
+msgstr "Більше опцій для {name}"
 
 #: src/control/jsdialog/Widget.TreeView.js:698
 msgid "Headings and objects that you add to the document will appear here"
@@ -2397,7 +2396,7 @@ msgstr "З'єднання..."
 
 #: src/core/Socket.js:1291
 msgid "Server is shutting down"
-msgstr ""
+msgstr "Сервер вимикається"
 
 #: src/core/Socket.js:1324
 msgid "Exported to storage"
@@ -2528,7 +2527,7 @@ msgstr ""
 
 #: src/errormessages.js:29
 msgid "Authorization error was: '{errormessage}'."
-msgstr ""
+msgstr "Помилка авторизації: '{errormessage}'."
 
 #: src/errormessages.js:30
 msgid "Wrong or missing WOPISrc parameter, please contact support."
@@ -2763,11 +2762,11 @@ msgstr "Позначити ланцюжок розв'язаним"
 #: src/canvas/sections/CommentListSection.ts:1260
 #: src/canvas/sections/CommentListSection.ts:2090
 msgid "Comments Updated"
-msgstr ""
+msgstr "Коментарі оновлено"
 
 #: src/canvas/sections/CommentListSection.ts:1248
 msgid "Another user has removed this comment."
-msgstr ""
+msgstr "Інший користувач вилучив цей коментар."
 
 #: src/canvas/sections/CommentListSection.ts:1261
 msgid ""
@@ -2777,7 +2776,7 @@ msgstr ""
 
 #: src/canvas/sections/CommentListSection.ts:1263
 msgid "Update"
-msgstr ""
+msgstr "Оновити"
 
 #: src/canvas/sections/CommentListSection.ts:1334
 #: src/canvas/sections/CommentListSection.ts:1396
@@ -3057,6 +3056,10 @@ msgid ""
 "translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
 "translate=\"true\">3</a>"
 msgstr ""
+"<a id=\"slide-1-indicator\" class=\"active\" href=\"#slide-1\" data-"
+"translate=\"true\">1</a> <a id=\"slide-2-indicator\" href=\"#slide-2\" data-"
+"translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
+"translate=\"true\">3</a>"
 
 #~ msgid "Document cannot be saved due to expired or invalid access token."
 #~ msgstr ""

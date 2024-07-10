@@ -25,7 +25,7 @@
     <string name="app_vendor">Цей випуск надано $VENDOR.</string>
     <string name="app_description">$APP_NAME це сучасний, простий у використанні набір програм з відкритим кодом для обробки текстів, електронних таблиць, презентацій тощо.</string>
     <string name="app_version">Версія: %1$s, збірка: %2$s</string>
-    <string name="app_name_settings">Параметри</string>
+    <string name="app_name_settings">Налаштування</string>
     <string name="otg_missing_error">Недійсний файл привілеїв. Перевірте Ваш OTG пристрій і/або налаштування.</string>
     <string name="ext_document_provider_error">Недійсний файл привілеїв. Перевірте свої налаштування SD-карти.</string>
     <string name="owncloud_unspecified_error">Помилка підключення до хмарного сервера. Перевірте свої налаштування і/або спробуйте пізніше.</string>
@@ -46,7 +46,7 @@
     <string name="share_via">Поділитися через</string>
     <string name="share">Поділитися</string>
     <string name="open">Відкрити</string>
-    <string name="action_settings">Параметри</string>
+    <string name="action_settings">Налаштування</string>
     <string name="action_about">Про програму</string>
     <string name="title_browser">Усі файли</string>
     <string name="title_recents">Недавні файли</string>
