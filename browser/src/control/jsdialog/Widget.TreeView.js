@@ -826,13 +826,77 @@ function _treelistboxControl(parentContainer, data, builder) {
 	return false;
 }
 
+class TreeViewControl {
+	constructor(data, builder) {
+		this._tableContainer = L.DomUtil.create('table', builder.options.cssClass + ' ui-treeview');
+
+		if (!data.headers || data.headers.length === 0)
+			this._ulContainer = L.DomUtil.create('ul', builder.options.cssClass + ' ui-treeview');
+	}
+
+	fillItems(entries, builder, ulParent, tableParent) {
+		let ulChild, tableChild;
+
+		for (let index in entries) {
+			if (this._ulContainer && entries[index].columns &&
+			    entries[index].columns.length > 1)
+				delete this._ulContainer;
+
+			if (this._ulContainer && ulParent) {
+				ulChild = this.createUlItem(entries[index], builder, ulParent);
+			}
+
+			if (this._tableContainer && tableParent) {
+				tableChild = this.createTableItem(entries[index], builder, tableParent);
+			}
+
+			this.fillItems(entries.children, builder, ulChild, tableChild);
+		}
+	}
+
+	buildTreeView(data, builder, parentContainer) {
+		this.fillItems(data.entries, builder, this._ulContainer, this._tableContainer);
+
+		if (this._ulContainer && this._ulContainer.hasChildNodes()) {
+			parentContainer.appendChild(this._ulContainer);
+			return true;
+		}
+
+		if (this._tableContainer && this._tableContainer.hasChildNodes()) {
+			parentContainer.appendChild(this._tableContainer);
+			return true;
+		}
+
+		return false;
+	}
+
+	createUlItem(entry, builder, parent) {
+		let li = L.DomUtil.create('li', builder.options.cssClass, parent);
+		let span0 = L.DomUtil.create('span', builder.options.cssClass +
+					     ' ui-treeview-entry ui-treeview-notexpandable', li);
+		let span1 = L.DomUtil.create('span', builder.options.cssClass +
+					     ' ui-treeview-cell', span0);
+		let text = L.DomUtil.create('span', builder.options.cssClass +
+					    ' ui-treeview-cell-text', span1);
+		text.innerText = entry.text;
+		return li;
+	}
+
+	createTableItem() {
+		return null;
+	}
+}
+
 JSDialog.treeView = function (parentContainer, data, builder) {
 	var id = data.parent ? (data.parent.parent ? (data.parent.parent.parent ? (data.parent.parent.parent.id ? data.parent.parent.parent.id: null): null): null): null;
 
 	if (id && typeof(id) === 'string' && id.startsWith('Navigator'))
 		treeType = 'navigator';
 
-	var buildInnerData = _treelistboxControl(parentContainer, data, builder);
+	var treeViewControl = new TreeViewControl(data, builder);
+	var buildInnerData = treeViewControl.buildTreeView(data, builder, parentContainer);
+	if (!buildInnerData)
+		buildInnerData = _treelistboxControl(parentContainer, data, builder);
 	return buildInnerData;
 };
 
