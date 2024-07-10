@@ -74,29 +74,30 @@ class URLPopUpSection extends HTMLObjectSection {
 				app.map.sendUnoCommand('.uno:JumpToMark?Bookmark:string=' + encodeURIComponent(this.sectionProperties.url.substring(1)));
 		};
 
+		var params: any;
+		if (linkPosition) {
+			params = {
+				PositionX: {
+					type: 'long',
+					value: linkPosition.x
+				},
+				PositionY: {
+					type: 'long',
+					value: linkPosition.y
+				}
+			};
+		}
+
 		document.getElementById(this.copyButtonId).onclick = () => {
-			var params;
-			if (linkPosition) {
-				params = {
-					PositionX: {
-						type: 'long',
-						value: linkPosition.x
-					},
-					PositionY: {
-						type: 'long',
-						value: linkPosition.y
-					}
-				};
-			}
 			app.map.sendUnoCommand('.uno:CopyHyperlinkLocation', params);
 		};
 
 		document.getElementById(this.editButtonId).onclick = () => {
-			app.map.sendUnoCommand('.uno:EditHyperlink');
+			app.map.sendUnoCommand('.uno:EditHyperlink', params);
 		};
 
 		document.getElementById(this.removeButtonId).onclick = () => {
-			app.map.sendUnoCommand('.uno:RemoveHyperlink');
+			app.map.sendUnoCommand('.uno:RemoveHyperlink', params);
 		};
 	}
 
