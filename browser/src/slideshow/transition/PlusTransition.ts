@@ -11,16 +11,9 @@
 declare var SlideShow: any;
 
 class PlusTransition extends SlideShow.Transition2d {
-	constructor(
-		canvas: HTMLCanvasElement,
-		image1: HTMLImageElement,
-		image2: HTMLImageElement,
-		slideInfo: SlideInfo,
-	) {
-		super(canvas, image1, image2);
+	constructor(transitionParameters: TransitionParameters) {
+		super(transitionParameters);
 		this.prepareTransition();
-		this.animationTime =
-			slideInfo?.transitionDuration > 0 ? slideInfo.transitionDuration : 2000;
 	}
 
 	public start(): void {
@@ -59,7 +52,7 @@ class PlusTransition extends SlideShow.Transition2d {
 
                     vec2 dist = abs(uv - center);
 
-                    float size = (1.0 - progress) * 2.0; 
+                    float size = (1.0 - progress) * 2.0;
 
                     float mask = step(dist.x, size / 5.0) + step(dist.y, size / 5.0);
 
@@ -68,7 +61,7 @@ class PlusTransition extends SlideShow.Transition2d {
                     vec4 color1 = texture(leavingSlideTexture, uv);
                     vec4 color2 = texture(enteringSlideTexture, uv);
 
-                    outColor = mix(color2, color1, mask); 
+                    outColor = mix(color2, color1, mask);
                 }`;
 	}
 }

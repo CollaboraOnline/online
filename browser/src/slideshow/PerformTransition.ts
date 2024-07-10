@@ -7,6 +7,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
 declare var SlideShow: any;
 
 enum TransitionType {
@@ -105,87 +106,64 @@ const stringToTransitionSubTypeMap: Record<string, TransitionSubType> = {
 	HorizontalRight: TransitionSubType.HORIZONTALRIGHT,
 };
 
-SlideShow.PerformTransition = function (
-	canvas: HTMLCanvasElement,
-	image1: HTMLImageElement,
-	image2: HTMLImageElement,
-	slideInfo: SlideInfo,
-) {
-	switch (stringToTransitionTypeMap[slideInfo.transitionType]) {
+
+SlideShow.PerformTransition = function(transitionParameters: TransitionParameters) {
+	switch (stringToTransitionTypeMap[transitionParameters.slideInfo.transitionType]) {
 		case TransitionType.FADE:
-			new SlideShow.FadeTransition(canvas, image1, image2, slideInfo).start();
+			new SlideShow.FadeTransition(transitionParameters).start();
 			break;
 
 		case TransitionType.BARWIPE:
-			BarWipeTransition(canvas, image1, image2, slideInfo).start();
+			BarWipeTransition(transitionParameters).start();
 			break;
 
 		case TransitionType.PINWHEELWIPE:
-			new SlideShow.WheelTransition(canvas, image1, image2, slideInfo).start();
+			new SlideShow.WheelTransition(transitionParameters).start();
 			break;
 
 		case TransitionType.SLIDEWIPE:
-			SlideWipeTransition(canvas, image1, image2, slideInfo).start();
+			SlideWipeTransition(transitionParameters).start();
 			break;
 
 		case TransitionType.RANDOMBARWIPE:
-			new SlideShow.BarsTransition(canvas, image1, image2, slideInfo).start();
+			new SlideShow.BarsTransition(transitionParameters).start();
 			break;
 
 		case TransitionType.CHECKERBOARDWIPE:
-			new SlideShow.CheckersTransition(
-				canvas,
-				image1,
-				image2,
-				slideInfo,
-			).start();
+			new SlideShow.CheckersTransition(transitionParameters).start();
 			break;
 
 		case TransitionType.FOURBOXWIPE:
-			new SlideShow.PlusTransition(canvas, image1, image2, slideInfo).start();
+			new SlideShow.PlusTransition(transitionParameters).start();
 			break;
 
 		case TransitionType.IRISWIPE:
-			SlideShow.IrisWipeTransition(canvas, image1, image2, slideInfo).start();
+			SlideShow.IrisWipeTransition(transitionParameters).start();
 			break;
 
 		case TransitionType.ELLIPSEWIPE:
-			SlideShow.EllipseWipeTransition(
-				canvas,
-				image1,
-				image2,
-				slideInfo,
-			).start();
+			SlideShow.EllipseWipeTransition(transitionParameters).start();
 			break;
 
 		case TransitionType.FANWIPE:
-			new SlideShow.WedgeTransition(canvas, image1, image2, slideInfo).start();
+			new SlideShow.WedgeTransition(transitionParameters).start();
 			break;
 
 		case TransitionType.BLINDSWIPE:
-			new SlideShow.VenetianTransition(
-				canvas,
-				image1,
-				image2,
-				slideInfo,
-			).start();
+			// todo : add Venetian to online UI
+			new SlideShow.VenetianTransition(transitionParameters).start(1);
 			break;
 
 		case TransitionType.DISSOLVE:
-			new SlideShow.SimpleDissolveTransition(
-				canvas,
-				image1,
-				image2,
-				slideInfo,
-			).start();
+			new SlideShow.SimpleDissolveTransition(transitionParameters).start();
 			break;
 
 		case TransitionType.PUSHWIPE:
-			new SlideShow.PushTransition(canvas, image1, image2, slideInfo).start();
+			new SlideShow.PushTransition(transitionParameters).start();
 			break;
 
 		case TransitionType.BARNDOORWIPE:
-			new SlideShow.SplitTransition(canvas, image1, image2, slideInfo).start();
+			new SlideShow.SplitTransition(transitionParameters).start();
 			break;
 
 		case TransitionType.WATERFALLWIPE:
@@ -193,8 +171,8 @@ SlideShow.PerformTransition = function (
 			break;
 
 		default:
-			new SlideShow.NoTransition(canvas, image1, image2).start();
-			console.log('Unknown transition type', slideInfo.transitionType);
+			new SlideShow.NoTransition(transitionParameters).start();
+			console.log('Unknown transition type', transitionParameters.slideInfo.transitionType);
 			break;
 	}
 

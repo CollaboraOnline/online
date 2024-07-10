@@ -19,17 +19,10 @@ enum FadeSubType {
 class FadeTransition extends SlideShow.Transition2d {
 	private effectTransition: number = 0;
 	private slideInfo: SlideInfo;
-	constructor(
-		canvas: HTMLCanvasElement,
-		image1: HTMLImageElement,
-		image2: HTMLImageElement,
-		slideInfo: SlideInfo,
-	) {
-		super(canvas, image1, image2);
+
+	constructor(transitionParameters: TransitionParameters) {
+		super(transitionParameters);
 		this.prepareTransition();
-		this.animationTime =
-			slideInfo?.transitionDuration > 0 ? slideInfo.transitionDuration : 2000;
-		this.slideInfo = slideInfo;
 	}
 
 	public renderUniformValue(): void {

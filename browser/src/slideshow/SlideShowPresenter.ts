@@ -7,6 +7,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
 /*
  * SlideShowPresenter is responsible for presenting the slide show and transitions
  */
@@ -45,6 +46,7 @@ class SlideShowPresenter {
 	_fullscreen: Element = null;
 	_slideShowCanvas: HTMLCanvasElement = null;
 	_currentSlide: number = 0;
+	_slideRenderer: SlideRenderer = new SlideRenderer();
 
 	constructor(map: any) {
 		this._map = map;
@@ -100,9 +102,8 @@ class SlideShowPresenter {
 		}
 
 		this._slideCompositor.fetchAndRun(this._currentSlide, () => {
-			const previousSlide = this._slideCompositor.getSlide(this._currentSlide);
-			this._doTransition(previousSlide, this._currentSlide + 1);
 			this._currentSlide++;
+			this._doTransition(this._slideRenderer._slideTexture, this._currentSlide);
 		});
 	}
 
@@ -112,11 +113,12 @@ class SlideShowPresenter {
 		}
 
 		this._slideCompositor.fetchAndRun(this._currentSlide, () => {
-			const previousSlide = this._slideCompositor.getSlide(this._currentSlide);
-			this._doTransition(previousSlide, this._currentSlide - 1);
 			this._currentSlide--;
+			this._doTransition(this._slideRenderer._slideTexture, this._currentSlide);
+
 		});
 	}
+
 	_onCanvasClick() {
 		this._nextSlide();
 	}
@@ -140,10 +142,12 @@ class SlideShowPresenter {
 		canvas.addEventListener('click', this._onCanvasClick.bind(this));
 		window.addEventListener('keydown', this._onCanvasKeyDown.bind(this));
 
+		this._slideRenderer.setup(canvas);
+
 		return canvas;
 	}
 
-	_doTransition(previousSlide: ImageBitmap, nextSlideNumber: number) {
+	_doTransition(currentTexture: WebGLTexture, nextSlideNumber: number) {
 		this._slideCompositor.fetchAndRun(nextSlideNumber, () => {
 			const nextSlide = this._slideCompositor.getSlide(nextSlideNumber);
 			const slideInfo = this.getSlideInfo(nextSlideNumber);
@@ -153,12 +157,19 @@ class SlideShowPresenter {
 			) {
 				slideInfo.transitionType = 'NONE';
 			}
-			SlideShow.PerformTransition(
-				this._slideShowCanvas,
-				previousSlide,
-				nextSlide,
-				slideInfo,
-			);
+
+			const nextTexture = this._slideRenderer.createTexture(nextSlide);
+
+			const transitionParameters = new TransitionParameters();
+			transitionParameters.context = this._slideRenderer._context;
+			transitionParameters.current = currentTexture;
+			transitionParameters.next =  nextTexture;
+			transitionParameters.slideInfo = slideInfo;
+			transitionParameters.callback = () => {
+				this._slideRenderer.renderFrame(nextTexture);
+			}
+
+			SlideShow.PerformTransition(transitionParameters);
 
 			if (slideInfo?.nextSlideDuration && slideInfo.nextSlideDuration > 0) {
 				setTimeout(() => {
@@ -170,8 +181,9 @@ class SlideShowPresenter {
 
 	_doPresentation() {
 		this._slideCompositor.fetchAndRun(this._currentSlide, () => {
-			const previousSlide = this._slideCompositor.getSlide(this._currentSlide);
-			this._doTransition(previousSlide, this._currentSlide);
+			const slideImage = this._slideCompositor.getSlide(this._currentSlide);
+			const currentTexture = this._slideRenderer.createTexture(slideImage);
+			this._slideRenderer.renderFrame(currentTexture);
 		});
 	}
 

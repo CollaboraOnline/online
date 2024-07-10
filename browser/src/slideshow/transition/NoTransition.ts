@@ -11,12 +11,8 @@
 declare var SlideShow: any;
 
 class NoTransition extends Transition2d {
-	constructor(
-		canvas: HTMLCanvasElement,
-		image1: HTMLImageElement,
-		image2: HTMLImageElement,
-	) {
-		super(canvas, image1, image2);
+	constructor(transitionParameters: TransitionParameters) {
+		super(transitionParameters);
 		this.prepareTransition();
 		this.animationTime = 10;
 	}

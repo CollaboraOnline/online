@@ -415,6 +415,8 @@ COOL_JS_LST =\
 	src/slideshow/LayerDrawing.ts \
 	src/slideshow/LayersCompositor.ts \
 	src/slideshow/PreviewsCompositor.ts \
+	src/slideshow/RenderContext.ts \
+	src/slideshow/SlideRenderer.ts \
 	src/slideshow/SlideShowPresenter.ts \
 	src/slideshow/Transition2d.ts \
 	src/slideshow/PerformTransition.ts \
@@ -877,6 +879,8 @@ pot:
 		src/slideshow/LayerDrawing.ts \
 		src/slideshow/LayersCompositor.ts \
 		src/slideshow/PreviewsCompositor.ts \
+		src/slideshow/RenderContext.ts \
+		src/slideshow/SlideRenderer.ts \
 		src/slideshow/SlideShowPresenter.ts \
 		src/slideshow/Transition2d.ts \
 		src/slideshow/PerformTransition.ts \

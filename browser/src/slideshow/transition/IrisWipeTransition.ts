@@ -7,20 +7,16 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
 declare var SlideShow: any;
 
-function IrisWipeTransition(
-	canvas: HTMLCanvasElement,
-	image1: HTMLImageElement,
-	image2: HTMLImageElement,
-	slideInfo: SlideInfo,
-) {
+function IrisWipeTransition(transitionParameters: TransitionParameters) {
 	const transitionSubType =
-		stringToTransitionSubTypeMap[slideInfo.transitionSubtype];
+		stringToTransitionSubTypeMap[transitionParameters.slideInfo.transitionSubtype];
 	if (transitionSubType == TransitionSubType.DIAMOND) {
-		return new SlideShow.DiamondTransition(canvas, image1, image2, slideInfo);
+		return new SlideShow.DiamondTransition(transitionParameters);
 	} else {
-		return new SlideShow.BoxTransition(canvas, image1, image2, slideInfo);
+		return new SlideShow.BoxTransition(transitionParameters);
 	}
 }
 

@@ -11,16 +11,9 @@
 declare var SlideShow: any;
 
 class DiamondTransition extends SlideShow.Transition2d {
-	constructor(
-		canvas: HTMLCanvasElement,
-		image1: HTMLImageElement,
-		image2: HTMLImageElement,
-		slideInfo: SlideInfo,
-	) {
-		super(canvas, image1, image2);
+	constructor(transitionParameters: TransitionParameters) {
+		super(transitionParameters);
 		this.prepareTransition();
-		this.animationTime =
-			slideInfo?.transitionDuration > 0 ? slideInfo.transitionDuration : 2000;
 	}
 
 	public start(): void {
@@ -59,7 +52,7 @@ class DiamondTransition extends SlideShow.Transition2d {
 
                     vec2 dist = abs(uv - center);
 
-                    float size = progress * 1.5; 
+                    float size = progress * 1.5;
 
                     float mask = step(dist.x + dist.y, size);
 

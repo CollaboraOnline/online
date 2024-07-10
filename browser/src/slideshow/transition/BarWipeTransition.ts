@@ -7,20 +7,16 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
 declare var SlideShow: any;
 
-function BarWipeTransition(
-	canvas: HTMLCanvasElement,
-	image1: HTMLImageElement,
-	image2: HTMLImageElement,
-	slideInfo: SlideInfo,
-) {
+function BarWipeTransition(transitionParameters: TransitionParameters) {
 	const transitionSubType =
-		stringToTransitionSubTypeMap[slideInfo.transitionSubtype];
+		stringToTransitionSubTypeMap[transitionParameters.slideInfo.transitionSubtype];
 	if (transitionSubType == TransitionSubType.FADEOVERCOLOR) {
-		return new SlideShow.CutTransition(canvas, image1, image2, slideInfo);
+		return new SlideShow.CutTransition(transitionParameters);
 	} else {
-		return new SlideShow.WipeTransition(canvas, image1, image2, slideInfo);
+		return new SlideShow.WipeTransition(transitionParameters);
 	}
 }
 

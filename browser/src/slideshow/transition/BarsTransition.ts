@@ -17,18 +17,10 @@ enum BarsSubType {
 
 class BarsTransition extends Transition2d {
 	private direction: number = 0;
-	private slideInfo: SlideInfo;
-	constructor(
-		canvas: HTMLCanvasElement,
-		image1: HTMLImageElement,
-		image2: HTMLImageElement,
-		slideInfo: SlideInfo,
-	) {
-		super(canvas, image1, image2);
+
+	constructor(transitionParameters: TransitionParameters) {
+		super(transitionParameters);
 		this.prepareTransition();
-		this.animationTime =
-			slideInfo?.transitionDuration > 0 ? slideInfo.transitionDuration : 2000;
-		this.slideInfo = slideInfo;
 	}
 
 	public renderUniformValue(): void {
@@ -83,7 +75,7 @@ class BarsTransition extends Transition2d {
                     vec2 uv = v_texCoord;
                     float progress = time;
 
-                    float numBars = 70.0; 
+                    float numBars = 70.0;
                     float randValue;
 
                     if (direction == 0) {

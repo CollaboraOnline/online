@@ -10,42 +10,42 @@
 
 declare var SlideShow: any;
 
+class TransitionParameters {
+	public context: RenderContext = null;
+	public current: WebGLTexture = null;
+	public next: WebGLTexture = null;
+	public slideInfo: SlideInfo = null;
+	public callback: VoidFunction = null;
+}
+
 class Transition2d {
 	public canvas: HTMLCanvasElement;
 	public gl: WebGL2RenderingContext;
 	public program: WebGLProgram;
 	public animationTime: number = 1500;
 	private vao!: WebGLVertexArrayObject | null;
-	private textures: WebGLTexture[];
 	private time: number;
 	private startTime: number | null;
+	private transitionParameters: TransitionParameters;
+	protected slideInfo: SlideInfo = null;
+	private context: any;
 
-	constructor(
-		canvas: HTMLCanvasElement,
-		image1: HTMLImageElement,
-		image2: HTMLImageElement,
-	) {
-		this.canvas = canvas;
-		this.gl = this.canvas.getContext('webgl2') as WebGL2RenderingContext;
-		if (!this.gl) {
-			console.error('WebGL2 not supported');
-			throw new Error('WebGL2 not supported');
-		}
+	constructor(transitionParameters: TransitionParameters) {
+		this.transitionParameters = transitionParameters;
+		this.context = transitionParameters.context;
+		this.gl = transitionParameters.context.gl;
+		this.slideInfo = transitionParameters.slideInfo;
+		this.animationTime =
+			this.slideInfo?.transitionDuration > 0 ? this.slideInfo.transitionDuration : 2000;
 
 		const vertexShaderSource = this.getVertexShader();
 		const fragmentShaderSource = this.getFragmentShader();
 
-		const vertexShader = this.createShader(
-			this.gl.VERTEX_SHADER,
-			vertexShaderSource,
-		);
-		const fragmentShader = this.createShader(
-			this.gl.FRAGMENT_SHADER,
-			fragmentShaderSource,
-		);
-		this.program = this.createProgram(vertexShader, fragmentShader);
+		const vertexShader = this.context.createVertexShader(vertexShaderSource);
+		const fragmentShader = this.context.createFragmentShader(fragmentShaderSource);
 
-		this.textures = this.loadTextures([image1, image2]);
+		this.program = this.context.createProgram(vertexShader, fragmentShader);
+
 		this.time = 0;
 		this.startTime = null;
 	}
@@ -84,7 +84,7 @@ class Transition2d {
 
 	public prepareTransition(): void {
 		this.initBuffers();
-		this.initUniforms();
+		this.gl.useProgram(this.program);
 	}
 
 	public startTransition(): void {
@@ -135,130 +135,49 @@ class Transition2d {
 		);
 	}
 
-	public initUniforms(): void {
-		this.gl.useProgram(this.program);
-	}
-
-	public render(): void {
+	public render() {
 		if (!this.startTime) this.startTime = performance.now();
 		this.time =
 			(performance.now() - this.startTime) /
 			(this.animationTime > 0 ? this.animationTime : 1500);
 
 		if (this.time > 1) this.time = 1;
+		const gl = this.gl;
 
-		this.gl.viewport(0, 0, this.canvas.width, this.canvas.height);
-		this.gl.clearColor(0.0, 0.0, 0.0, 1.0);
-		this.gl.clear(this.gl.COLOR_BUFFER_BIT);
+		gl.viewport(0, 0, this.context.canvas.width, this.context.canvas.height);
+		gl.clearColor(0.0, 0.0, 0.0, 1.0);
+		gl.clear(gl.COLOR_BUFFER_BIT);
 
-		this.gl.useProgram(this.program);
-		this.gl.uniform1f(
-			this.gl.getUniformLocation(this.program, 'time'),
+		gl.useProgram(this.program);
+		gl.uniform1f(
+			gl.getUniformLocation(this.program, 'time'),
 			this.time,
 		);
 
-		this.gl.activeTexture(this.gl.TEXTURE0);
-		this.gl.bindTexture(this.gl.TEXTURE_2D, this.textures[0]);
-		this.gl.uniform1i(
-			this.gl.getUniformLocation(this.program, 'leavingSlideTexture'),
-			0,
-		);
+		gl.activeTexture(gl.TEXTURE0);
+		gl.bindTexture(gl.TEXTURE_2D, this.transitionParameters.current);
+		gl.uniform1i(gl.getUniformLocation(this.program, 'leavingSlideTexture'), 0);
 
-		this.gl.activeTexture(this.gl.TEXTURE1);
-		this.gl.bindTexture(this.gl.TEXTURE_2D, this.textures[1]);
-		this.gl.uniform1i(
-			this.gl.getUniformLocation(this.program, 'enteringSlideTexture'),
-			1,
-		);
+		gl.activeTexture(gl.TEXTURE1);
+		gl.bindTexture(gl.TEXTURE_2D, this.transitionParameters.next);
+		gl.uniform1i(
+			gl.getUniformLocation(this.program, 'enteringSlideTexture'), 1);
 
 		this.renderUniformValue();
 
-		this.gl.bindVertexArray(this.vao);
-		this.gl.drawArrays(this.gl.TRIANGLE_STRIP, 0, 4);
+		gl.bindVertexArray(this.vao);
+		gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 
 		if (this.time < 1) {
 			requestAnimationFrame(this.render.bind(this));
 		} else {
+			this.transitionParameters.callback();
 			console.log('Transition completed');
 		}
 	}
 
 	// eslint-disable-next-line @typescript-eslint/no-empty-function
 	public renderUniformValue(): void {}
-
-	private loadTextures(images: HTMLImageElement[]): WebGLTexture[] {
-		return images.map((image, index) => {
-			const texture = this.gl.createTexture();
-			if (!texture) {
-				throw new Error('Failed to create texture');
-			}
-			this.gl.bindTexture(this.gl.TEXTURE_2D, texture);
-			this.gl.texImage2D(
-				this.gl.TEXTURE_2D,
-				0,
-				this.gl.RGBA,
-				this.gl.RGBA,
-				this.gl.UNSIGNED_BYTE,
-				image,
-			);
-			this.gl.texParameteri(
-				this.gl.TEXTURE_2D,
-				this.gl.TEXTURE_MIN_FILTER,
-				this.gl.LINEAR,
-			);
-			this.gl.texParameteri(
-				this.gl.TEXTURE_2D,
-				this.gl.TEXTURE_WRAP_S,
-				this.gl.CLAMP_TO_EDGE,
-			);
-			this.gl.texParameteri(
-				this.gl.TEXTURE_2D,
-				this.gl.TEXTURE_WRAP_T,
-				this.gl.CLAMP_TO_EDGE,
-			);
-			console.log(`Texture ${index + 1} loaded:`, image.src);
-			return texture;
-		});
-	}
-
-	public createShader(type: number, source: string): WebGLShader {
-		const shader = this.gl.createShader(type);
-		if (!shader) {
-			throw new Error('Failed to create shader');
-		}
-		this.gl.shaderSource(shader, source);
-		this.gl.compileShader(shader);
-		if (!this.gl.getShaderParameter(shader, this.gl.COMPILE_STATUS)) {
-			const info = this.gl.getShaderInfoLog(shader);
-			this.gl.deleteShader(shader);
-			throw new Error(`Could not compile shader: ${info}`);
-		}
-		console.log(
-			'Shader compiled successfully:',
-			type === this.gl.VERTEX_SHADER ? 'VERTEX' : 'FRAGMENT',
-		);
-		return shader;
-	}
-
-	public createProgram(
-		vertexShader: WebGLShader,
-		fragmentShader: WebGLShader,
-	): WebGLProgram {
-		const program = this.gl.createProgram();
-		if (!program) {
-			throw new Error('Failed to create program');
-		}
-		this.gl.attachShader(program, vertexShader);
-		this.gl.attachShader(program, fragmentShader);
-		this.gl.linkProgram(program);
-		if (!this.gl.getProgramParameter(program, this.gl.LINK_STATUS)) {
-			const info = this.gl.getProgramInfoLog(program);
-			this.gl.deleteProgram(program);
-			throw new Error(`Could not link program: ${info}`);
-		}
-		console.log('Program linked successfully');
-		return program;
-	}
 }
 
 SlideShow.Transition2d = Transition2d;

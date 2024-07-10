@@ -17,18 +17,10 @@ enum OvalSubType {
 
 class OvalTransition extends Transition2d {
 	private direction: number = 0;
-	private slideInfo: SlideInfo;
-	constructor(
-		canvas: HTMLCanvasElement,
-		image1: HTMLImageElement,
-		image2: HTMLImageElement,
-		slideInfo: SlideInfo,
-	) {
-		super(canvas, image1, image2);
+
+	constructor(transitionParameters: TransitionParameters) {
+		super(transitionParameters);
 		this.prepareTransition();
-		this.animationTime =
-			slideInfo?.transitionDuration > 0 ? slideInfo.transitionDuration : 2000;
-		this.slideInfo = slideInfo;
 	}
 
 	public renderUniformValue(): void {
@@ -85,9 +77,9 @@ class OvalTransition extends Transition2d {
                     vec2 dist = abs(uv - center);
 
                     if (direction == 1) {
-                        dist.x *= 2.0; 
+                        dist.x *= 2.0;
                     } else {
-                        dist.y *= 2.0;  
+                        dist.y *= 2.0;
                     }
 
                     float size = progress * 1.2;
