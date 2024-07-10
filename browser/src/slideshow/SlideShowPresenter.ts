@@ -19,6 +19,8 @@ interface SlideInfo {
 	empty: boolean;
 	masterPage: string;
 	masterPageObjectsVisible: boolean;
+	transitionDuration: number;
+	nextSlideDuration: number;
 	transitionDirection: boolean;
 	transitionType: string | undefined;
 	transitionSubtype: string | undefined;
