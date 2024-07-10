@@ -2376,7 +2376,25 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		const username = this._map._viewInfo[viewId].username;
 		const mode = obj.mode ? parseInt(obj.mode): 0;
-		app.definitions.otherViewCursorSection.addOrUpdateOtherViewCursor(viewId, username, obj.rectangle.split(','), parseInt(obj.part), mode);
+
+		const rectangle = obj.rectangle.split(',');
+		for (let i = 0; i < rectangle.length; i++) rectangle[i] = parseInt(rectangle[i]);
+
+		if (obj.refpoint) {
+			let refPoint = obj.refpoint.split(',');
+			refPoint.push(0);
+			refPoint.push(0);
+
+			refPoint = this._convertRawTwipsToTileTwips(refPoint);
+
+			rectangle[0] = refPoint[0];
+			rectangle[1] = refPoint[1];
+
+			rectangle[0] += parseInt(obj.relrect.split(',')[0]);
+			rectangle[1] += parseInt(obj.relrect.split(',')[1]);
+		}
+
+		app.definitions.otherViewCursorSection.addOrUpdateOtherViewCursor(viewId, username, rectangle, parseInt(obj.part), mode);
 
 		if (app.getFollowedViewId() === viewId && (app.isFollowingEditor() || app.isFollowingUser())) {
 			if (this._map.getDocType() === 'text' || this._map.getDocType() === 'presentation') {
