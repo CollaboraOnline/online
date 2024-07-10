@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-07-05 13:52+0200\n"
 "PO-Revision-Date: 2024-07-07 13:56+0000\n"
-"Last-Translator: Cyan Ling <stepbystep.jl@gmail.com>\n"
+"Last-Translator: TY Wong <wongty@peoplewarehk.com>\n"
 "Language-Team: Chinese (Traditional) <https://hosted.weblate.org/projects/"
 "collabora-online/ui/zh_Hant/>\n"
 "Language: zh_TW\n"
@@ -66,11 +66,11 @@ msgstr "已開啟的文件"
 #: admin/admin.strings.js:26 admin/src/AdminSocketOverview.js:82
 #: admin/src/AdminSocketOverview.js:131 admin/src/AdminSocketOverview.js:358
 msgid " user(s)."
-msgstr " 個使用者"
+msgstr " 個使用者."
 
 #: admin/admin.strings.js:27 admin/src/AdminSocketOverview.js:214
 msgid " document(s) open."
-msgstr " .個文件開啟"
+msgstr " .個文件開啟."
 
 #: admin/admin.strings.js:28
 msgid "Number of Documents"
@@ -2315,7 +2315,7 @@ msgstr "儲存空間內的文件已經變更。載入新文件中。您的版本
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
-msgstr "還原舊的版本。任何尚未儲存的變更都會放在版本歷史中。"
+msgstr "還原舊的版本。任何尚未儲存的變更都會放在版本歷史中"
 
 #: src/core/Socket.js:901
 msgid "Reloading the document after rename"
@@ -2780,8 +2780,8 @@ msgstr ""
 "class=\"warn-copy-paste\"><tr><td><kbd>Ctrl</kbd><span class=\"kbd--"
 "plus\">+</span><kbd>C</kbd></td><td><kbd>Ctrl</kbd><span class=\"kbd--"
 "plus\">+</span><kbd>X</kbd></td><td><kbd>Ctrl</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>V</kbd></td></tr><tr><td>複製</td><td>\n"
-"剪下</td><td>貼上</td></tr></table>"
+"plus\">+</span><kbd>V</kbd></td></tr><tr><td>複製</td><td>剪下</td><td>貼上</"
+"td></tr></table>"
 
 #: src/map/Clipboard.js:1199
 msgid ""
