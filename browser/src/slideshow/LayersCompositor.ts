@@ -34,13 +34,25 @@ class LayersCompositor extends SlideShow.SlideCompositor {
 
 	protected _addHooks() {
 		app.map.on('slidebackground', this.onSlideBackground, this);
-		this.layerDrawing = new SlideShow.LayerDrawing(app.map, this);
+		this.layerDrawing = new SlideShow.LayerDrawing(
+			app.map,
+			this
+		);
 		this.layerDrawing.addHooks();
 	}
 
 	public removeHooks() {
 		app.map.off('slidebackground', this.onSlideBackground, this);
 		this.layerDrawing.removeHooks();
+	}
+
+	public fetchAndRun(slideNumber: number, callback: VoidFunction) {
+		super.fetchAndRun(slideNumber, callback);
+		this.layerDrawing.requestSlide(this._initialSlideNumber, () => {
+			const oldCallback = this._onGotSlideCallback;
+			this._onGotSlideCallback = null;
+			oldCallback.call(this._slideShowPresenter);
+		});
 	}
 
 	private onSlideBackground(e: any) {
@@ -60,7 +72,6 @@ class LayersCompositor extends SlideShow.SlideCompositor {
 	public updatePresentationInfo(presentationInfo: PresentationInfo) {
 		this._presentationInfo = presentationInfo;
 		this.onSlidesInfo(presentationInfo);
-		this.layerDrawing.startPresentation(0, false);
 	}
 
 	private onSlidesInfo(data: any) {
@@ -83,8 +94,6 @@ class LayersCompositor extends SlideShow.SlideCompositor {
 
 		this.docWidth = data.docWidth;
 		this.docHeight = data.docHeight;
-
-		app.map.fire('presentationinfoupdated');
 	}
 
 	private handleBackgroundLayer(data: any, img: any) {
@@ -214,8 +223,8 @@ class LayersCompositor extends SlideShow.SlideCompositor {
 		return this.computeLayerSize(resolution[0], resolution[1]);
 	}
 
-	public getSlide(slideNumber: number): HTMLImageElement {
-		return null;
+	public getSlide(slideNumber: number): ImageBitmap {
+		return this.layerDrawing.getSlide(slideNumber);
 	}
 }
 

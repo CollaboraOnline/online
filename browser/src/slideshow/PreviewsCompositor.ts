@@ -14,7 +14,7 @@
 declare var SlideShow: any;
 
 class PreviewsCompositor extends SlideShow.SlideCompositor {
-	_slides: Array<HTMLImageElement> = null;
+	_slides: Array<ImageBitmap> = null;
 	_FETCH_ID_: number = 1000; // TODO
 
 	constructor(
@@ -25,7 +25,7 @@ class PreviewsCompositor extends SlideShow.SlideCompositor {
 	) {
 		super(slideShowPresenter, presentationInfo, width, height);
 		const numberOfSlides = this._getSlidesCount();
-		this._slides = new Array<HTMLImageElement>(numberOfSlides);
+		this._slides = new Array<ImageBitmap>(numberOfSlides);
 	}
 
 	protected _addHooks() {
@@ -53,13 +53,18 @@ class PreviewsCompositor extends SlideShow.SlideCompositor {
 		console.debug('PreviewsCompositor: received slide: ' + e.part);
 		const received = new Image();
 		received.src = e.tile.src;
-		this._slides[e.part] = received;
 
-		if (e.part === this._initialSlideNumber && this._onGotSlideCallback) {
-			const callback = this._onGotSlideCallback; // allow nesting
-			this._onGotSlideCallback = null;
-			callback.call(this._slideShowPresenter);
-		}
+		received.onload = () => {
+			createImageBitmap(received).then((result: ImageBitmap) => {
+				this._slides[e.part] = result;
+
+				if (e.part === this._initialSlideNumber && this._onGotSlideCallback) {
+					const callback = this._onGotSlideCallback; // allow nesting
+					this._onGotSlideCallback = null;
+					callback.call(this._slideShowPresenter);
+				}
+			});
+		};
 	}
 
 	private _requestPreview(slideNumber: number) {
@@ -76,7 +81,7 @@ class PreviewsCompositor extends SlideShow.SlideCompositor {
 		);
 	}
 
-	public getSlide(slideNumber: number): HTMLImageElement {
+	public getSlide(slideNumber: number): ImageBitmap {
 		// use cache if possible
 		const slide = this._slides[slideNumber];
 
