@@ -70,10 +70,8 @@ class LayerDrawing {
 	private map: any = null;
 	private helper: LayersCompositor;
 
-	private presentInWindow: boolean = false;
-	private slideShowWindowProxy: any = null;
+	private renderedSlides: Map<string, ImageBitmap> = new Map();
 	private requestedSlideHash: string = null;
-	private displayedSlideHash: string = null;
 	private prefetchedSlideHash: string = null;
 	private resolutionWidth: number = 960;
 	private resolutionHeight: number = 540;
@@ -88,18 +86,35 @@ class LayerDrawing {
 		new Map();
 	private offscreenCanvas: OffscreenCanvas = null;
 	private offscreenContext: OffscreenCanvasRenderingContext2D = null;
-	private currentCanvas: HTMLCanvasElement = null;
+	private currentCanvas: OffscreenCanvas = null;
 	private currentCanvasContext: ImageBitmapRenderingContext = null;
+	private onSlideRenderingCompleteCallback: VoidFunction = null;
 
-	private startSlideNumber: number = 0;
-	private initialSlide: boolean;
-	private slideShow: HTMLIFrameElement;
-
-	private fullscreen: Element;
-
-	constructor(mapObj: any, helper: LayersCompositor) {
+	constructor(
+		mapObj: any,
+		helper: LayersCompositor
+	) {
 		this.map = mapObj;
 		this.helper = helper;
+
+		this.currentCanvas = new OffscreenCanvas(
+			this.canvasWidth,
+			this.canvasHeight,
+		);
+		if (!this.currentCanvas) {
+			window.app.console.log(
+				'LayerDrawing: no canvas element found',
+			);
+			return;
+		}
+
+		this.currentCanvasContext = this.currentCanvas.getContext('bitmaprenderer');
+		if (!this.currentCanvasContext) {
+			window.app.console.log(
+				'LayerDrawing: can not get a valid context for current canvas',
+			);
+			return;
+		}
 	}
 
 	addHooks() {
@@ -112,35 +127,22 @@ class LayerDrawing {
 		this.map.off('sliderenderingcomplete', this.onSlideRenderingComplete, this);
 	}
 
-	isFullscreen(): boolean {
-		return !!this.fullscreen;
-	}
-
 	private getSlideInfo(slideHash: string) {
 		return this.helper.getSlideInfo(slideHash);
 	}
 
-	startPresentation(startSlideNumber: number, presentInWindow: boolean) {
-		if (this.checkPresentationDisabled()) {
-			this.notifyPresentationDisabled();
-			return;
-		}
-
-		if (this.isPresenting()) {
-			this.notifyAlreadyPresenting();
-			return;
-		}
-
-		this.presentInWindow = presentInWindow;
-		this.startSlideNumber = startSlideNumber;
-
-		this.initializeSlideShow();
+	public getSlide(slideNumber: number): ImageBitmap {
+		const startSlideHash = this.helper.getSlideHash(slideNumber);
+		return this.renderedSlides.get(startSlideHash);
 	}
 
-	initializeSlideShow() {
+	public requestSlide(slideNumber: number, callback: VoidFunction) {
+		this.onSlideRenderingCompleteCallback = callback;
 		this.computeInitialResolution();
 		this.initializeCanvas();
-		this.requestInitialSlide();
+
+		const startSlideHash = this.helper.getSlideHash(slideNumber);
+		this.requestSlideImpl(startSlideHash);
 	}
 
 	private initializeCanvas() {
@@ -156,17 +158,11 @@ class LayerDrawing {
 		this.offscreenContext = this.offscreenCanvas.getContext('2d');
 	}
 
-	requestInitialSlide() {
-		this.initialSlide = true;
-		const startSlideHash = this.helper.getSlideHash(this.startSlideNumber);
-		this.requestSlide(startSlideHash);
-	}
-
-	requestSlide(slideHash: string, prefetch: boolean = false) {
+	private requestSlideImpl(slideHash: string, prefetch: boolean = false) {
 		const slideInfo = this.getSlideInfo(slideHash);
 		if (!slideInfo) {
 			window.app.console.log(
-				'LayerDrawing.requestSlide: No info for requested slide: hash: ' +
+				'LayerDrawing.requestSlideImpl: No info for requested slide: hash: ' +
 					slideHash,
 			);
 			return;
@@ -176,8 +172,10 @@ class LayerDrawing {
 			slideHash === this.prefetchedSlideHash
 		)
 			return;
+
+		// TODO: queue
 		if (this.requestedSlideHash || this.prefetchedSlideHash) {
-			setTimeout(this.requestSlide.bind(this), 500, slideHash, prefetch);
+			setTimeout(this.requestSlideImpl.bind(this), 500, slideHash, prefetch);
 		}
 
 		if (prefetch) {
@@ -240,8 +238,6 @@ class LayerDrawing {
 	}
 
 	handleTextFieldMsg(info: LayerInfo, img: any) {
-		const slideInfo = this.getSlideInfo(info.slideHash);
-
 		const textFieldInfo = info.content as TextFieldInfo;
 		const imageInfo = textFieldInfo.content;
 		if (!this.checkAndAttachImageData(imageInfo, img)) return;
@@ -459,149 +455,23 @@ class LayerDrawing {
 	}
 
 	onSlideRenderingComplete() {
-		if (this.initialSlide) {
-			this.initialSlide = false;
-			this.startPlaying();
-		}
-		this.showRenderedSlide();
-	}
-
-	private startPlaying() {
-		// Windowed Presentation
-		if (this.presentInWindow) {
-			const popupTitle =
-				_('Windowed Presentation: ') + this.map['wopi'].BaseFileName;
-			const htmlContent = this.generateSlideWindowHtml(popupTitle);
-
-			this.slideShowWindowProxy = window.open('', '_blank', 'popup');
-
-			// this.slideShowWindowProxy.addEventListener('load', this._handleSlideWindowLoaded.bind(this), false);
-
-			if (!this.slideShowWindowProxy) {
-				this.map.uiManager.showInfoModal(
-					'popup-blocked-modal',
-					_('Windowed Presentation Blocked'),
-					_(
-						'Presentation was blocked. Please allow pop-ups in your browser. This lets slide shows to be displayed in separated windows, allowing for easy screen sharing.',
-					),
-					'',
-					_('OK'),
-					null,
-					false,
-				);
-			}
-
-			this.slideShowWindowProxy.document.documentElement.innerHTML =
-				htmlContent;
-			this.slideShowWindowProxy.document.close();
-			this.slideShowWindowProxy.focus();
-
-			const canvas = this.slideShowWindowProxy.document.getElementById(
-				'canvas',
-			) as HTMLCanvasElement;
-			if (!canvas) {
-				window.app.console.log(
-					'LayerDrawing.startPlaying: no canvas element found',
-				);
-				return;
-			}
-			canvas.width = this.canvasWidth;
-			canvas.height = this.canvasHeight;
-
-			const ctx = canvas.getContext('bitmaprenderer');
-			if (!ctx) {
-				window.app.console.log(
-					'LayerDrawing.startPlaying: can not get a valid context for current canvas',
-				);
-				return;
-			}
-			this.currentCanvas = canvas;
-			this.currentCanvasContext = ctx;
-
-			this.slideShowWindowProxy.addEventListener(
-				'keydown',
-				this.onSlideWindowKeyPress.bind(this),
-			);
-			this.slideShowWindowProxy.addEventListener(
-				'resize',
-				this.onSlideWindowResize.bind(this),
-			);
-
-			this.centerCanvasInSlideWindow();
-		}
-	}
-
-	private showRenderedSlide() {
 		if (!this.offscreenCanvas) {
 			window.app.console.log(
-				'LayerDrawing.showRenderedSlide: no offscreen canvas available.',
-			);
-			return;
-		}
-		if (!this.currentCanvasContext) {
-			window.app.console.log(
-				'LayerDrawing.showRenderedSlide: no valid context for current canvas',
+				'LayerDrawing.onSlideRenderingComplete: no offscreen canvas available.',
 			);
 			return;
 		}
 
-		if (this.requestedSlideHash) {
-			this.displayedSlideHash = this.requestedSlideHash;
+		const renderedSlide = this.offscreenCanvas.transferToImageBitmap();
+		this.renderedSlides.set(this.requestedSlideHash, renderedSlide);
+
+		if (this.requestedSlideHash)
 			this.requestedSlideHash = null;
-		}
-		const bitmap = this.offscreenCanvas.transferToImageBitmap();
-		this.currentCanvasContext.transferFromImageBitmap(bitmap);
-	}
 
-	private generateSlideWindowHtml(title: string) {
-		const sanitizer = document.createElement('div');
-		sanitizer.innerText = title;
-		const sanitizedTitle = sanitizer.innerHTML;
-
-		return `
-		<!DOCTYPE html>
-		<html lang="en">
-		<head>
-			<meta charset="UTF-8">
-			<meta name="viewport" content="width=device-width, initial-scale=1.0">
-			<title>${sanitizedTitle}</title>
-			<style>
-				body, html {
-					margin: 0;
-					padding: 0;
-					height: 100%;
-					overflow: hidden; /* Prevent scrollbars */
-				}
-		        .vertical-center {
-					margin: 0;
-					position: absolute;
-					width: 100%;
-					top: 50%;
-					/*-ms-transform: translateY(-50%);*/
-					transform: translateY(-50%);
-				}
-				.horizontal-center {
-					margin: 0;
-					position: absolute;
-					height: 100%;
-					left: 50%;
-					/*-ms-transform: translateY(-50%);*/
-					transform: translateX(-50%);
-				}
-			</style>
-		</head>
-		<body>
-			<canvas id="canvas"></canvas>
-		</body>
-		</html>
-		`;
+		const oldCallback = this.onSlideRenderingCompleteCallback;
+		this.onSlideRenderingCompleteCallback = null;
+		oldCallback.call(this.helper);
 	}
-
-	/*
-	handleSlideWindowLoaded () {
-		window.app.console.log('LayerDrawing._handleSlideWindowLoaded');
-	}
-	*/
 
 	private checkAndAttachImageData(imageInfo: ImageInfo, img: any): boolean {
 		if (!img || (imageInfo.type === 'png' && !img.src)) {
@@ -615,12 +485,8 @@ class LayerDrawing {
 	}
 
 	private computeInitialResolution() {
-		let viewWidth = window.innerWidth;
-		let viewHeight = window.innerHeight;
-		if (!this.presentInWindow) {
-			viewWidth = window.screen.width;
-			viewHeight = window.screen.height;
-		}
+		const viewWidth = window.screen.width;
+		const viewHeight = window.screen.height;
 		this.computeResolution(viewWidth, viewHeight);
 	}
 
@@ -634,69 +500,6 @@ class LayerDrawing {
 			resWidth,
 			resHeight,
 		);
-	}
-
-	private centerCanvasInSlideWindow() {
-		const winWidth = this.slideShowWindowProxy.innerWidth;
-		const winHeight = this.slideShowWindowProxy.innerHeight;
-		if (winWidth * this.canvasHeight < winHeight * this.canvasWidth) {
-			this.currentCanvas.className = 'vertical-center';
-		} else {
-			this.currentCanvas.className = 'horizontal-center';
-		}
-	}
-
-	onSlideWindowResize() {
-		this.centerCanvasInSlideWindow();
-	}
-
-	isPresenting() {
-		if (this.slideShowWindowProxy && !this.slideShowWindowProxy.closed)
-			return true;
-		if (this.slideShow) return true;
-		return false;
-	}
-
-	notifyAlreadyPresenting() {
-		this.map.uiManager.showInfoModal(
-			'already-presenting-modal',
-			_('Already presenting'),
-			_('You are already presenting this document'),
-			'',
-			_('OK'),
-			null,
-			false,
-		);
-	}
-
-	checkPresentationDisabled() {
-		return this.map['wopi'].DisablePresentation;
-	}
-
-	notifyPresentationDisabled() {
-		this.map.uiManager.showInfoModal(
-			'presentation-disabled-modal',
-			_('Presentation disabled'),
-			_('Presentation mode has been disabled for this document'),
-			'',
-			_('OK'),
-			null,
-			false,
-		);
-	}
-
-	onSlideWindowKeyPress(e: any) {
-		if (e.code === 'Escape') {
-			this.slideShowWindowProxy.opener.focus();
-			this.slideShowWindowProxy.close();
-			this.map.uiManager.closeSnackbar();
-		} else if (e.code === 'ArrowRight') {
-			const slideInfo = this.getSlideInfo(this.displayedSlideHash);
-			this.requestSlide(slideInfo.next);
-		} else if (e.code === 'ArrowLeft') {
-			const slideInfo = this.getSlideInfo(this.displayedSlideHash);
-			this.requestSlide(slideInfo.prev);
-		}
 	}
 }
 
