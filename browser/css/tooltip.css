@@ -2,9 +2,10 @@
 	visibility: hidden;
 	position: absolute;
 	z-index: 2147483647;
-	color: var(--color-primary-text);
-	background-color: var(--color-background-darker);
+	color: var(--color-main-text);
+	background-color: var(--color-background-lighter);
+	box-shadow: 0px 0px 4px 0 var(--color-box-shadow);
 	border-radius: 6px;
 	white-space: nowrap;
-	padding: 10px;
+	padding: 7px 9px;
 }
