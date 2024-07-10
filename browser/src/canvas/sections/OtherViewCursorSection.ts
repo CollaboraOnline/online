@@ -59,7 +59,7 @@ class OtherViewCursorSection extends HTMLObjectSection {
         const color = L.LOUtil.rgbToHex(L.LOUtil.getViewIdColor(viewId));
 
         if (rectangleData) {
-            rectangle = new app.definitions.simpleRectangle(parseInt(rectangleData[0]), parseInt(rectangleData[1]), parseInt(rectangleData[2]), parseInt(rectangleData[3]));
+            rectangle = new app.definitions.simpleRectangle(rectangleData[0], rectangleData[1], rectangleData[2], rectangleData[3]);
         }
 
         if (rectangle.pWidth === 0)
