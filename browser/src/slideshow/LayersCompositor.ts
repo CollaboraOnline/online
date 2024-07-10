@@ -21,7 +21,7 @@ class LayersCompositor extends SlideShow.SlideCompositor {
 	private partHashes: Map<number, string> = new Map();
 	private backgroundChecksums: Map<string, string> = new Map();
 	private cachedBackgrounds: Map<string, HTMLImageElement> = new Map();
-	private layerDrawing: LayerDrawing = null;
+	private layerDrawing: LayerDrawing; // setup in constructor
 
 	constructor(
 		slideShowPresenter: SlideShowPresenter,
@@ -34,7 +34,7 @@ class LayersCompositor extends SlideShow.SlideCompositor {
 
 	protected _addHooks() {
 		app.map.on('slidebackground', this.onSlideBackground, this);
-		this.layerDrawing = new SlideShow.LayerDrawing(app.map);
+		this.layerDrawing = new SlideShow.LayerDrawing(app.map, this);
 		this.layerDrawing.addHooks();
 	}
 
@@ -60,13 +60,13 @@ class LayersCompositor extends SlideShow.SlideCompositor {
 	public updatePresentationInfo(presentationInfo: PresentationInfo) {
 		this._presentationInfo = presentationInfo;
 		this.onSlidesInfo(presentationInfo);
+		this.layerDrawing.startPresentation(0, false);
 	}
 
 	private onSlidesInfo(data: any) {
 		const slides = data.slides as Array<SlideInfo>;
 		const numberOfSlides = slides.length;
-		if (numberOfSlides === 0)
-			return;
+		if (numberOfSlides === 0) return;
 		this.firstSlideHash = slides[0].hash;
 		this.lastSlideHash = slides[numberOfSlides - 1].hash;
 
@@ -74,7 +74,8 @@ class LayersCompositor extends SlideShow.SlideCompositor {
 		for (let i = 0; i < numberOfSlides; ++i) {
 			const slide = slides[i];
 			slide.prev = prevSlideHash;
-			slide.next = i + 1 < numberOfSlides ? slides[i + 1].hash : this.firstSlideHash;
+			slide.next =
+				i + 1 < numberOfSlides ? slides[i + 1].hash : this.firstSlideHash;
 			this.slidesInfo.set(slide.hash, slide);
 			this.partHashes.set(slide.index, slide.hash);
 			prevSlideHash = slide.hash;
@@ -90,7 +91,9 @@ class LayersCompositor extends SlideShow.SlideCompositor {
 		console.error(data);
 		if (data.type === 'bitmap') {
 			if (!img || !img.src) {
-				window.app.console.log('LayersCompositor.handleBackgroundLayer: no bitmap available.');
+				window.app.console.log(
+					'LayersCompositor.handleBackgroundLayer: no bitmap available.',
+				);
 				return;
 			}
 			data.image = img as HTMLImageElement;
@@ -105,16 +108,16 @@ class LayersCompositor extends SlideShow.SlideCompositor {
 			}
 
 			// if the background belongs to current slide signal it to SlideBackgroundSection
-			const currentSlideHash = this.getCurrentSlideHash()
+			const currentSlideHash = this.getCurrentSlideHash();
 			const currentSlideInfo = this.slidesInfo.get(currentSlideHash);
 			if (currentSlideInfo && currentSlideInfo.background) {
 				const pageHash =
-					(!this.isMasterPageMode() && currentSlideInfo.background.isCustom)
+					!this.isMasterPageMode() && currentSlideInfo.background.isCustom
 						? currentSlideHash
 						: currentSlideInfo.masterPage;
 				if (pageHash === data.pageHash) {
 					const image = this.cachedBackgrounds.get(data.checksum);
-					app.map.fire('slidebackgroundready', {image: image});
+					app.map.fire('slidebackgroundready', { image: image });
 				}
 			}
 		}
@@ -123,22 +126,32 @@ class LayersCompositor extends SlideShow.SlideCompositor {
 	public getBackgroundForPage(slideHash: string, masterPageMode: boolean) {
 		const slideInfo = this.slidesInfo.get(slideHash);
 		if (slideInfo && slideInfo.background) {
-			const pageHash = (!masterPageMode && slideInfo.background.isCustom) ? slideHash : slideInfo.masterPage;
+			const pageHash =
+				!masterPageMode && slideInfo.background.isCustom
+					? slideHash
+					: slideInfo.masterPage;
 			const checksum = this.backgroundChecksums.get(pageHash);
 			if (checksum) {
-				window.app.console.log('PresentationHelper.getBackgroundForPage: already cached');
+				window.app.console.log(
+					'PresentationHelper.getBackgroundForPage: already cached',
+				);
 				const image = this.cachedBackgrounds.get(checksum);
-				app.map.fire('slidebackgroundready', {image: image});
+				app.map.fire('slidebackgroundready', { image: image });
 			} else {
 				this.requestBackgroundForPage(slideInfo.index, masterPageMode);
 			}
 		}
 	}
 
-	private requestBackgroundForPage(slideIndex: number, masterPageMode: boolean) {
+	private requestBackgroundForPage(
+		slideIndex: number,
+		masterPageMode: boolean,
+	) {
 		const mode = masterPageMode ? 1 : 0;
 		const layerSize = this.getLayerSize();
-		app.socket.sendMessage(`getslidebackground part=${slideIndex} mode=${mode} width=${layerSize[0]} height=${layerSize[1]}`);
+		app.socket.sendMessage(
+			`getslidebackground part=${slideIndex} mode=${mode} width=${layerSize[0]} height=${layerSize[1]}`,
+		);
 	}
 
 	public getCurrentSlideIndex(): number {
@@ -158,22 +171,25 @@ class LayersCompositor extends SlideShow.SlideCompositor {
 	}
 
 	public getSlideSizePixel() {
-		return [app.twipsToPixels * this.docWidth, app.twipsToPixels * this.docHeight];
+		return [
+			app.twipsToPixels * this.docWidth,
+			app.twipsToPixels * this.docHeight,
+		];
 	}
 
 	public computeLayerResolution(width: number, height: number) {
-		width *= 1.20;
-		height *= 1.20;
+		width *= 1.2;
+		height *= 1.2;
 
 		let resolutionWidth = 960;
 		let resolutionHeight = 540;
 
 		if (width > 1920 || height > 1080) {
 			resolutionWidth = 1920;
-			resolutionHeight = 1080
+			resolutionHeight = 1080;
 		} else if (width > 1280 || height > 720) {
 			resolutionWidth = 1280;
-			resolutionHeight = 720
+			resolutionHeight = 720;
 		}
 		return [resolutionWidth, resolutionHeight];
 	}
