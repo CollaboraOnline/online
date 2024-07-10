@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-07-05 13:52+0200\n"
-"PO-Revision-Date: 2024-07-05 02:26+0000\n"
-"Last-Translator: Jeff Huang <s8321414@gmail.com>\n"
+"PO-Revision-Date: 2024-07-07 13:56+0000\n"
+"Last-Translator: Cyan Ling <stepbystep.jl@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <https://hosted.weblate.org/projects/"
 "collabora-online/ui/zh_Hant/>\n"
-"Language: \n"
+"Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -21,7 +21,7 @@ msgstr ""
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
-msgstr "管理主控臺"
+msgstr "管理員面板"
 
 #: admin/admin.strings.js:16
 msgid "Settings"
@@ -41,7 +41,7 @@ msgstr "分析"
 
 #: admin/admin.strings.js:20
 msgid "History"
-msgstr "最後使用記錄"
+msgstr "使用歷程"
 
 #: admin/admin.strings.js:21
 msgid "Log"
@@ -49,7 +49,7 @@ msgstr "紀錄"
 
 #: admin/admin.strings.js:22
 msgid "Dashboard"
-msgstr "控制面板"
+msgstr "儀表板"
 
 #: admin/admin.strings.js:23
 msgid "Users online"
@@ -78,7 +78,7 @@ msgstr "文件數"
 
 #: admin/admin.strings.js:29
 msgid "Memory consumed"
-msgstr "消耗的記憶體"
+msgstr "已使用記憶體"
 
 #: admin/admin.strings.js:30
 msgid "Bytes sent"
@@ -98,7 +98,7 @@ msgstr "文件"
 
 #: admin/admin.strings.js:34
 msgid "Views"
-msgstr "查閱"
+msgstr "閱覽次數"
 
 #: admin/admin.strings.js:35
 msgid "Elapsed time"
@@ -122,7 +122,7 @@ msgstr "WOPI 主機"
 
 #: admin/admin.strings.js:40
 msgid "Kill"
-msgstr "截殺"
+msgstr "強制中止"
 
 #: admin/admin.strings.js:41
 msgid "Graphs"
@@ -170,7 +170,7 @@ msgstr "CPU 統計資料的時間間隔（單位毫秒）"
 
 #: admin/admin.strings.js:50 admin/src/AdminSocketOverview.js:100
 msgid "Kill session."
-msgstr "關掉."
+msgstr "中止會議."
 
 #: admin/admin.strings.js:51
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
@@ -203,7 +203,7 @@ msgstr "關閉伺服器"
 
 #: admin/admin.strings.js:58
 msgid "Server uptime"
-msgstr "服務時間"
+msgstr "伺服器服務時長"
 
 #: admin/admin.strings.js:59
 msgid "Refresh Log"
@@ -227,8 +227,7 @@ msgid "Log Levels"
 msgstr "紀錄層級"
 
 #: admin/admin.strings.js:64 src/control/Control.AlertDialog.js:32
-#: src/control/Control.AlertDialog.js:38
-#: src/control/Control.AlertDialog.js:101
+#: src/control/Control.AlertDialog.js:38 src/control/Control.AlertDialog.js:101
 #: src/control/Control.AlertDialog.js:108 src/control/Control.Zotero.js:189
 #: src/control/Parts.js:480 src/core/Socket.js:1137 src/core/Socket.js:1142
 #: src/canvas/sections/CommentListSection.ts:137
@@ -275,19 +274,19 @@ msgstr "伺服器已關閉; 請重新載入頁面."
 #: src/control/Control.AlertDialog.js:54
 #: src/control/Control.DocumentRepair.js:77
 #: src/control/Control.LanguageDialog.js:119
-#: src/control/Control.ServerAuditDialog.ts:148
-#: src/control/Control.Tabs.js:390 src/control/Control.Tabs.js:399
-#: src/control/Control.Zotero.js:335 src/control/Control.Zotero.js:373
-#: src/control/Permission.js:89 src/control/Permission.js:99
-#: src/control/Permission.js:149 src/control/Toolbar.js:703
-#: src/control/Toolbar.js:794 src/core/Socket.js:672 src/core/Socket.js:1107
-#: src/core/Socket.js:1177 src/core/Socket.js:1324 src/core/Socket.js:1328
-#: src/docdispatcher.ts:389 src/canvas/sections/CommentListSection.ts:1249
-#: src/canvas/sections/CommentListSection.ts:2092 src/main.js:79
-#: src/main.js:82 src/main.js:131 src/map/Clipboard.js:1185
-#: src/map/handler/Map.Feedback.js:82 src/map/handler/Map.SlideShow.js:56
-#: src/map/handler/Map.SlideShow.js:170 src/map/handler/Map.SlideShow.js:305
-#: src/map/handler/Map.SlideShow.js:316 src/map/handler/Map.WOPI.js:603
+#: src/control/Control.ServerAuditDialog.ts:148 src/control/Control.Tabs.js:390
+#: src/control/Control.Tabs.js:399 src/control/Control.Zotero.js:335
+#: src/control/Control.Zotero.js:373 src/control/Permission.js:89
+#: src/control/Permission.js:99 src/control/Permission.js:149
+#: src/control/Toolbar.js:703 src/control/Toolbar.js:794 src/core/Socket.js:672
+#: src/core/Socket.js:1107 src/core/Socket.js:1177 src/core/Socket.js:1324
+#: src/core/Socket.js:1328 src/docdispatcher.ts:389
+#: src/canvas/sections/CommentListSection.ts:1249
+#: src/canvas/sections/CommentListSection.ts:2092 src/main.js:79 src/main.js:82
+#: src/main.js:131 src/map/Clipboard.js:1185 src/map/handler/Map.Feedback.js:82
+#: src/map/handler/Map.SlideShow.js:56 src/map/handler/Map.SlideShow.js:170
+#: src/map/handler/Map.SlideShow.js:305 src/map/handler/Map.SlideShow.js:316
+#: src/map/handler/Map.WOPI.js:603
 msgid "OK"
 msgstr "確定"
 
@@ -304,15 +303,14 @@ msgid "Are you sure you want to terminate this session?"
 msgstr "您確定要終止本次的作業階段？"
 
 #: admin/src/AdminSocketOverview.js:109 admin/src/AdminSocketOverview.js:432
-#: admin/src/AdminSocketSettings.js:48
-#: src/control/Control.DocumentRepair.js:71
+#: admin/src/AdminSocketSettings.js:48 src/control/Control.DocumentRepair.js:71
 #: src/control/Control.DownloadProgress.js:80
 #: src/control/Control.LanguageDialog.js:113
-#: src/control/Control.MobileTopBar.ts:43
-#: src/control/Control.UIManager.js:1248 src/control/Control.UIManager.js:1315
-#: src/control/Control.UIManager.js:1450 src/control/Control.UIManager.js:1592
-#: src/control/Control.Zotero.js:330 src/control/Toolbar.js:789
-#: src/core/Socket.js:1349 src/canvas/sections/CommentListSection.ts:436
+#: src/control/Control.MobileTopBar.ts:43 src/control/Control.UIManager.js:1248
+#: src/control/Control.UIManager.js:1315 src/control/Control.UIManager.js:1450
+#: src/control/Control.UIManager.js:1592 src/control/Control.Zotero.js:330
+#: src/control/Toolbar.js:789 src/core/Socket.js:1349
+#: src/canvas/sections/CommentListSection.ts:436
 #: src/canvas/sections/CommentSection.ts:146
 #: src/canvas/sections/CommentSection.ts:149
 msgid "Cancel"
@@ -435,7 +433,8 @@ msgid ""
 "Downloading external resources is forbidden but pasting images is still "
 "possible. Please right click in the image, choose \"Copy Image\" and paste "
 "it into the document instead."
-msgstr "禁止下載外部資源，但仍可貼上圖像。請右鍵單擊圖像，選擇“複製圖像”並將其貼上到"
+msgstr ""
+"禁止下載外部資源，但仍可貼上圖像。請右鍵單擊圖像，選擇“複製圖像”並將其貼上到"
 "文件中。"
 
 #: src/control/Control.AlertDialog.js:72
@@ -450,7 +449,7 @@ msgstr "您似乎正在嘗試插入外部資料。"
 msgid ""
 "Selected external data source is forbidden. Please contact the system "
 "administrator."
-msgstr "已選擇外部資料來源禁止。請聯絡系統管理員。"
+msgstr "被選擇的外部來源資料已被禁止。請聯絡系統管理員。"
 
 #: src/control/Control.AlertDialog.js:86
 msgid "Don't show this again"
@@ -524,7 +523,7 @@ msgstr "取消動作"
 
 #: src/control/Control.DownloadProgress.js:42
 msgid "Download Selection"
-msgstr "下載精選"
+msgstr "下載已選"
 
 #: src/control/Control.DownloadProgress.js:47
 msgid ""
@@ -541,7 +540,7 @@ msgstr "下載"
 
 #: src/control/Control.DownloadProgress.js:79
 msgid "Downloading clipboard content"
-msgstr "下載剪貼簿內容"
+msgstr "正在下載剪貼簿內容"
 
 #: src/control/Control.DownloadProgress.js:86
 #: src/control/Control.DownloadProgress.js:111
@@ -668,7 +667,7 @@ msgstr "所有回覆"
 #: src/layer/tile/CanvasTileLayer.js:4010
 #: src/canvas/sections/CommentListSection.ts:1035
 msgid "Comment"
-msgstr "評註"
+msgstr "評論"
 
 #: src/control/Control.JSDialogBuilder.js:1987
 msgid "Insert Comment"
@@ -1069,7 +1068,7 @@ msgstr "PowerPoint 簡報 (.pptx)"
 
 #: src/control/Control.Menubar.js:401 src/control/Control.Menubar.js:558
 msgid "Save Comments"
-msgstr "保存評註"
+msgstr "保存評論"
 
 #: src/control/Control.Menubar.js:414
 #: src/control/Control.NotebookbarBuilder.js:601
@@ -1089,7 +1088,7 @@ msgstr "母片檢視"
 #: src/control/Control.Menubar.js:526 src/control/Control.Menubar.js:1085
 #: src/control/Control.PresentationBar.js:127
 msgid "Fullscreen presentation"
-msgstr "全螢幕呈現"
+msgstr "全螢幕展示"
 
 #: src/control/Control.Menubar.js:527
 msgid "Present current slide"
@@ -1104,7 +1103,7 @@ msgstr "在新視窗展示"
 #: src/control/Control.NotebookbarBuilder.js:458
 #: src/control/Control.NotebookbarDraw.js:238
 msgid "ODF Drawing (.odg)"
-msgstr "ODF 簡報 (.odg)"
+msgstr "ODF 繪圖 (.odg)"
 
 #: src/control/Control.Menubar.js:686 src/control/Control.Menubar.js:698
 #: src/control/Control.Menubar.js:1163
@@ -1134,7 +1133,7 @@ msgstr "CSV 文件 (.csv)"
 #: src/control/Control.Menubar.js:705
 #: src/control/jsdialog/Definitions.Menu.ts:111
 msgid "Active sheet"
-msgstr "活動工作表"
+msgstr "現行工作表"
 
 #: src/control/Control.Menubar.js:706 src/control/Control.TopToolbar.js:109
 #: src/control/jsdialog/Definitions.Menu.ts:112
@@ -1144,32 +1143,32 @@ msgstr "所有工作表"
 #: src/control/Control.Menubar.js:835
 #: src/control/jsdialog/Definitions.Menu.ts:286
 msgid "Highlight cells with..."
-msgstr "突出顯示單元格..."
+msgstr "用以強調儲存格…"
 
 #: src/control/Control.Menubar.js:836
 #: src/control/jsdialog/Definitions.Menu.ts:289
 msgid "Values greater than..."
-msgstr "值大於..."
+msgstr "數值大於..."
 
 #: src/control/Control.Menubar.js:837
 #: src/control/jsdialog/Definitions.Menu.ts:293
 msgid "Values less than..."
-msgstr "值小於..."
+msgstr "數值小於..."
 
 #: src/control/Control.Menubar.js:838
 #: src/control/jsdialog/Definitions.Menu.ts:297
 msgid "Values equal to..."
-msgstr "值等於..."
+msgstr "數值等於..."
 
 #: src/control/Control.Menubar.js:839
 #: src/control/jsdialog/Definitions.Menu.ts:301
 msgid "Values between..."
-msgstr "值介乎於..."
+msgstr "數值介乎於..."
 
 #: src/control/Control.Menubar.js:840
 #: src/control/jsdialog/Definitions.Menu.ts:305
 msgid "Values duplicate..."
-msgstr "重複值..."
+msgstr "複製數值至..."
 
 #: src/control/Control.Menubar.js:841
 #: src/control/jsdialog/Definitions.Menu.ts:309
@@ -1180,7 +1179,7 @@ msgstr "包含文字..."
 #: src/control/jsdialog/Definitions.Menu.ts:313
 #: src/control/jsdialog/Definitions.Menu.ts:344
 msgid "More highlights..."
-msgstr "更多突出顯示..."
+msgstr "更多已強調項目..."
 
 #: src/control/Control.Menubar.js:845
 #: src/control/jsdialog/Definitions.Menu.ts:317
@@ -1210,7 +1209,7 @@ msgstr "倒數百分之N..."
 #: src/control/Control.Menubar.js:850
 #: src/control/jsdialog/Definitions.Menu.ts:336
 msgid "Above Average..."
-msgstr "高於平均..."
+msgstr "高於平均水平..."
 
 #: src/control/Control.Menubar.js:851
 #: src/control/jsdialog/Definitions.Menu.ts:340
@@ -1319,7 +1318,7 @@ msgstr "檔案"
 #: src/control/Control.NotebookbarImpress.js:83
 #: src/control/Control.NotebookbarWriter.js:42
 msgid "Home"
-msgstr "回家"
+msgstr "首頁"
 
 #: src/control/Control.NotebookbarCalc.js:36
 #: src/control/Control.NotebookbarDraw.js:75
@@ -1492,7 +1491,7 @@ msgstr "於上方插入列"
 
 #: src/control/Control.NotebookbarCalc.js:941
 msgid "Insert Columns Before"
-msgstr "前方插入欄"
+msgstr "於前方插入欄"
 
 #: src/control/Control.NotebookbarCalc.js:948
 msgid "Delete Rows"
@@ -1504,7 +1503,7 @@ msgstr "於下方插入列"
 
 #: src/control/Control.NotebookbarCalc.js:967
 msgid "Insert Columns After"
-msgstr "後方插入欄"
+msgstr "於後方插入欄"
 
 #: src/control/Control.NotebookbarCalc.js:974
 msgid "Delete Columns"
@@ -1566,7 +1565,7 @@ msgstr "圖片(.png)"
 
 #: src/control/Control.NotebookbarDraw.js:273
 msgid "PDF Document (.pdf) - Expert"
-msgstr "PDF 文件 (.pdf) - 導出"
+msgstr "PDF 文件 (.pdf) - 專業"
 
 #: src/control/Control.NotebookbarDraw.js:403
 #: src/control/Control.NotebookbarImpress.js:420
@@ -1609,7 +1608,7 @@ msgstr "連接在線"
 
 #: src/control/Control.NotebookbarWriter.js:338
 msgid "Go Offline"
-msgstr "離線"
+msgstr "離線使用"
 
 #: src/control/Control.NotebookbarWriter.js:1341
 msgid "Rich Text"
@@ -1657,17 +1656,17 @@ msgstr "清除搜尋欄位"
 
 #: src/control/Control.ServerAuditDialog.ts:28
 msgid "The IsAdminUser property is not set by integration"
-msgstr "IsAdminUser 屬性不是由整合設定的"
+msgstr "IsAdminUser 屬性未被整合設定"
 
 #: src/control/Control.ServerAuditDialog.ts:34
 msgid ""
 "Used deprecated is_admin field, integration should use IsAdminUser property "
 "instead"
-msgstr "使用已棄用的 is_admin 字段, 整合應使用 IsAdminUser 屬性"
+msgstr "使用的is_admin 字段已被棄用, 整合時應使用 IsAdminUser 屬性"
 
 #: src/control/Control.ServerAuditDialog.ts:39
 msgid "The IsAdminUser user property is set by integration"
-msgstr "IsAdminUser 使用者屬性已被集成設置"
+msgstr "IsAdminUser 使用者屬性已被整合設定"
 
 #: src/control/Control.ServerAuditDialog.ts:43
 msgid "Your WOPI server is not secure: SSL verification failed"
@@ -1695,7 +1694,7 @@ msgstr "開啟"
 
 #: src/control/Control.SheetsBar.js:48
 msgid "Scroll to the first sheet"
-msgstr "滑動到第一張工作表"
+msgstr "捲動到第一張工作表"
 
 #: src/control/Control.SheetsBar.js:55
 msgid "Scroll left"
@@ -1703,11 +1702,11 @@ msgstr "向左捲動"
 
 #: src/control/Control.SheetsBar.js:62
 msgid "Scroll right"
-msgstr "向右滑動"
+msgstr "向右捲動"
 
 #: src/control/Control.SheetsBar.js:69
 msgid "Scroll to the last sheet"
-msgstr "滑動到最後一張工作表"
+msgstr "捲動到最後一張工作表"
 
 #: src/control/Control.SheetsBar.js:76
 msgid "Insert sheet"
@@ -1725,7 +1724,7 @@ msgstr "全計數"
 #: src/control/Control.StatusBar.js:189
 #: src/control/jsdialog/Definitions.Menu.ts:26
 msgid "Count"
-msgstr "數計數"
+msgstr "計數"
 
 #: src/control/Control.StatusBar.js:190
 msgid "Maximum"
@@ -1766,11 +1765,11 @@ msgstr "設定所有文字的語言"
 
 #: src/control/Control.StatusBar.js:496
 msgid "Set Language for Paragraph"
-msgstr "設定段落語言"
+msgstr "設定該段落語言"
 
 #: src/control/Control.StatusBar.js:497
 msgid "Set Language for Selection"
-msgstr "設定選擇語言"
+msgstr "設定已選文字語言"
 
 #: src/control/Control.Tabs.js:53
 msgid "Insert sheet before this"
@@ -1782,15 +1781,15 @@ msgstr "在這之後插入工作表"
 
 #: src/control/Control.Tabs.js:89
 msgid "Move Sheet Left"
-msgstr "向左滑動工作表"
+msgstr "向左移動工作表"
 
 #: src/control/Control.Tabs.js:94
 msgid "Move Sheet Right"
-msgstr "向右滑動工作表"
+msgstr "向右移動工作表"
 
 #: src/control/Control.Tabs.js:110
 msgid "Copy Sheet..."
-msgstr "複製表格..."
+msgstr "複製工作表..."
 
 #: src/control/Control.Tabs.js:388
 msgid "Are you sure you want to delete sheet, {sheet}?"
@@ -1798,7 +1797,7 @@ msgstr "您確定要刪除這份工作表：{sheet}？"
 
 #: src/control/Control.Tabs.js:399
 msgid "Rename sheet"
-msgstr "重新命名"
+msgstr "重新命名工作表"
 
 #: src/control/Control.Tabs.js:399
 msgid "Enter new sheet name"
@@ -1806,8 +1805,7 @@ msgstr "請輸入新的工作表名稱"
 
 #: src/control/Control.Toolbar.js:932
 msgid ""
-"Conflict Undo/Redo with multiple users. Please use document repair to "
-"resolve"
+"Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr "多位使用者間取消動作/再次動作發生衝突。請使用文件修復來解決問題"
 
 #: src/control/Control.TopToolbar.js:108
@@ -1856,7 +1854,7 @@ msgstr "追蹤 {user}"
 
 #: src/control/Control.UserList.ts:57
 msgid "Following the editor"
-msgstr "追蹤編輯"
+msgstr "追蹤編輯者"
 
 #: src/control/Control.UserList.ts:58
 msgid "Stop following"
@@ -1864,7 +1862,7 @@ msgstr "停止追蹤"
 
 #: src/control/Control.UserList.ts:59
 msgid "Avatar for {user}"
-msgstr "頭像為 {user}"
+msgstr "此頭像為 {user}"
 
 #: src/control/Control.UserList.ts:79
 msgid "%n users"
@@ -1884,7 +1882,7 @@ msgstr "追蹤中"
 
 #: src/control/Control.UserList.ts:542
 msgid "Always follow the editor"
-msgstr "總是跟隨編輯器"
+msgstr "總是跟隨編輯者"
 
 #: src/control/Control.Zotero.js:139
 msgid "Zotero API key is not configured"
@@ -1902,12 +1900,13 @@ msgstr "Zotero 警告"
 msgid ""
 "The document contains some citations which may be unreachable through web "
 "API. It may cause some problems while editing citations or bibliography."
-msgstr "該文件包含一些可能無法透過 Web API "
-"存取的引用。編輯引文或參考書目時可能會出現一些問題。"
+msgstr ""
+"該文件包含一些可能無法透過 Web API 存取的引用。編輯引用或參考書目時可能會出現"
+"一些問題。"
 
 #: src/control/Control.Zotero.js:244 src/core/Socket.js:1276
 msgid "Loading..."
-msgstr "載入中..."
+msgstr "正在載入..."
 
 #: src/control/Control.Zotero.js:262
 msgid "Language:"
@@ -1935,7 +1934,7 @@ msgstr "尾註"
 
 #: src/control/Control.Zotero.js:469
 msgid "My Publications"
-msgstr "我的出版品"
+msgstr "我的發布"
 
 #: src/control/Control.Zotero.js:475 src/control/Control.Zotero.js:702
 msgid "My Library"
@@ -1955,11 +1954,11 @@ msgstr "無法載入收藏"
 
 #: src/control/Control.Zotero.js:750
 msgid "Citation Style"
-msgstr "引文風格"
+msgstr "引用樣式"
 
 #: src/control/Control.Zotero.js:755
 msgid "Styles"
-msgstr "風格"
+msgstr "樣式"
 
 #: src/control/Control.Zotero.js:755
 msgid "An error occurred while fetching style list"
@@ -1983,7 +1982,7 @@ msgstr "你的書架是空的"
 
 #: src/control/Control.Zotero.js:1091
 msgid "Failed to load items"
-msgstr "無法載入項目"
+msgstr "項目載入失敗"
 
 #: src/control/Control.Zotero.js:1142
 msgid "Citation warning"
@@ -1991,8 +1990,7 @@ msgstr "引文警告"
 
 #: src/control/Control.Zotero.js:1143
 msgid ""
-"Once citations are entered their storage and display type can not be "
-"changed."
+"Once citations are entered their storage and display type can not be changed."
 msgstr "一旦輸入引文，其儲存和顯示類型就無法變更。"
 
 #: src/control/Control.Zotero.js:1144 src/control/Control.Zotero.js:1446
@@ -2013,7 +2011,7 @@ msgstr "取得註釋時發生錯誤"
 
 #: src/control/Control.Zotero.js:1384
 msgid "Updated citations"
-msgstr "更新引文"
+msgstr "引文已更新"
 
 #: src/control/Control.Zotero.js:1386
 msgid "Citations update failed"
@@ -2021,7 +2019,7 @@ msgstr "引文更新失敗"
 
 #: src/control/Control.Zotero.js:1390
 msgid "Updating citations"
-msgstr "更新引文"
+msgstr "正在更新引文"
 
 #: src/control/Control.Zotero.js:1445
 msgid ""
@@ -2043,7 +2041,7 @@ msgstr "伺服器傳回此原因："
 
 #: src/control/Permission.js:95
 msgid "The document could not be locked."
-msgstr "無法儲存文件。"
+msgstr "無法鎖定文件。"
 
 #: src/control/Permission.js:149
 msgid "Enter a file name"
@@ -2059,7 +2057,7 @@ msgstr "繼續編輯"
 
 #: src/control/Permission.js:169
 msgid "Continue read only"
-msgstr "繼續唯讀"
+msgstr "繼續唯讀模式"
 
 #: src/control/Permission.js:182
 msgid ""
@@ -2077,11 +2075,11 @@ msgstr "右邊距"
 
 #: src/control/Ruler.js:637
 msgid "Insert tabstop"
-msgstr "插入定位落點"
+msgstr "插入停駐點"
 
 #: src/control/Ruler.js:644
 msgid "Delete tabstop"
-msgstr "刪除定位落點"
+msgstr "刪除停駐點"
 
 #: src/control/VRuler.ts:377
 msgid "Top Margin"
@@ -2097,7 +2095,7 @@ msgstr "此文件已數位簽署，且簽章有效。"
 
 #: src/control/Signing.js:31
 msgid "This document has an invalid signature."
-msgstr "此文件有簽章無效。"
+msgstr "此文件存在無效簽章。"
 
 #: src/control/Signing.js:35
 msgid "The signature was valid, but the document has been modified."
@@ -2105,17 +2103,17 @@ msgstr "簽章有效，但文件已被修改。"
 
 #: src/control/Signing.js:39
 msgid "The signature is OK, but the certificate could not be validated."
-msgstr "簽章沒有問題，但憑證無法通過驗證。"
+msgstr "簽章正常，但憑證無法通過驗證。"
 
 #: src/control/Signing.js:43
 msgid "The signature is OK, but the document is only partially signed."
-msgstr "簽章沒有問題，但文件僅部分有簽署."
+msgstr "簽章正常，但文件僅部分有簽署."
 
 #: src/control/Signing.js:47
 msgid ""
 "The signature is OK, but the certificate could not be validated and the "
 "document is only partially signed."
-msgstr "簽章沒有問題，但憑證無法通過驗證，文件僅有部分簽署。"
+msgstr "簽章正常，但憑證無法通過驗證，文件僅有部分簽署。"
 
 #: src/control/Toolbar.js:54
 msgid "Font"
@@ -2269,7 +2267,7 @@ msgstr "叢集設定警告"
 
 #: src/core/Socket.js:675
 msgid "Wrong server, reconnecting..."
-msgstr "伺服器錯誤，正在重新連線……"
+msgstr "錯誤的伺服器，正在重新連線……"
 
 #: src/core/Socket.js:684
 msgid "COOLWSD version:"
@@ -2456,12 +2454,12 @@ msgstr "主機 URL 空白。coolwsd 伺服器可能設定錯誤，請聯絡管�
 #: src/errormessages.js:24
 msgid ""
 "This is an unsupported version of {productname}. To avoid the impression "
-"that it is suitable for deployment in enterprises, this message appears "
-"when more than {docs} documents or {connections} connections are in use "
+"that it is suitable for deployment in enterprises, this message appears when "
+"more than {docs} documents or {connections} connections are in use "
 "concurrently."
 msgstr ""
-"這是 {productname} 的未支援版本。為了避免這個版本被誤認為適合企業佈署的假象，"
-"此訊息會在同時間使用超過 {docs} 份文件或 {connections} 連線數時出現。"
+"這個版本的 {productname}未受支援。為了避免這個版本被誤認為適合配置於企業，此"
+"訊息會在同時間使用超過 {docs} 份文件或 {connections} 連線數時出現。"
 
 #: src/errormessages.js:25
 msgid "More information and support"
@@ -2491,13 +2489,14 @@ msgstr "授權錯誤為：'{errormessage}'."
 
 #: src/errormessages.js:30
 msgid "Wrong or missing WOPISrc parameter, please contact support."
-msgstr "WOPISrc 參數錯誤或遺失，請聯絡支援單位。"
+msgstr "WOPISrc 參數錯誤或遺失，請聯絡技術支援。"
 
 #: src/errormessages.js:31
 msgid ""
 "Your session will expire in {time}. Please save your work and refresh the "
 "session (or webpage) to continue. You might need to login again."
-msgstr "您的作業階段將在 {time} 內過期。請儲存您的工作並重新載入作業階段（或網頁）來"
+msgstr ""
+"您的作業階段將在 {time} 內過期。請儲存您的工作並重新載入作業階段（或網頁）來"
 "繼續。您可能需要重新登入。"
 
 #: src/errormessages.js:32
@@ -2505,14 +2504,15 @@ msgid ""
 "Your session has expired. Further changes to the document might not be "
 "saved. Please refresh the session (or webpage) to continue. You might need "
 "to login again."
-msgstr "您的作業階段已過期。後續之文件變更可能無法儲存。請重整作業階段（或網頁）來繼"
+msgstr ""
+"您的作業階段已過期。後續之文件變更可能無法儲存。請重整作業階段（或網頁）來繼"
 "續。您可能需要重新登入。"
 
 #: src/errormessages.js:33
 msgid ""
 "Failed to load the document. Please ensure the file type is supported and "
 "not corrupted, and try again."
-msgstr "無法載入文件。請確認檔案類型有支援且並未毀損，確認後請再重試。"
+msgstr "載入文件失敗。請確認檔案類型是受支援的且並未毀損，確認後請再重試。"
 
 #: src/errormessages.js:34
 msgid "Invalid link: '{url}'"
@@ -2520,16 +2520,16 @@ msgstr "無效的連結：「{url}」"
 
 #: src/errormessages.js:35
 msgid ""
-"You are leaving the document. The following web page will open in a new "
-"tab: "
+"You are leaving the document. The following web page will open in a new tab: "
 msgstr "您將離開該文件。以下網頁將在新分頁中開啟： "
 
 #: src/errormessages.js:36
 msgid ""
 "Failed to load the document. This document is either malformed or is taking "
 "more resources than allowed. Please contact the administrator."
-msgstr "無法載入文件。這份文件可能格式錯誤，或是消耗比所允許還多的資源。請聯絡管理員"
-"。"
+msgstr ""
+"無法載入文件。這份文件可能格式錯誤，或是消耗比所允許還多的資源。請聯絡管理"
+"員。"
 
 #: src/errormessages.js:37
 msgid "Cleaning up the document from the last session."
@@ -2539,15 +2539,15 @@ msgstr "清理上次使用時段中的文件。"
 msgid ""
 "We are in the process of cleaning up this document from the last session, "
 "please try again later."
-msgstr "我們正在清理上次使用時段中的文檔，請稍後再試。"
+msgstr "我們正在清理上次使用時段中的文件，請稍後再試。"
 
 #: src/errormessages.js:39
 msgid ""
 "Your {productname} cluster appear to be mis-configured or scaling rapidly - "
-"please contact your system administrator. Continuing with editing may "
-"result in multiple users not seeing each other, conflicts in the document "
-"storage and/or copy/paste problems. Expected serverId {0} for routeToken "
-"{1} but connected to serverId {2}"
+"please contact your system administrator. Continuing with editing may result "
+"in multiple users not seeing each other, conflicts in the document storage "
+"and/or copy/paste problems. Expected serverId {0} for routeToken {1} but "
+"connected to serverId {2}"
 msgstr ""
 "您的 {productname} 叢集似乎配置錯誤或擴充功能迅速 - 請聯絡您的系統管理員。繼"
 "續編輯可能會導致多個使用者看不到對方、文件儲存衝突和/或複製/貼上問題。 "
@@ -2560,15 +2560,15 @@ msgid ""
 "administrator. For more info on proxy configuration please checkout https://"
 "sdk.collaboraonline.com/docs/installation/Proxy_settings.html"
 msgstr ""
-"無法建立套接字連線或套接字連線意外關閉。反向代理可能配置錯誤，請聯絡管理員。"
-"有關代理配置的更多信息，請查看 https://sdk.collaboraonline.com/docs/"
-"installation/Proxy_settings.html"
+"無法建立插座連線或插座連線意外關閉。反向代理可能配置錯誤，請聯絡管理員。有關"
+"代理配置的更多信息，請查看 https://sdk.collaboraonline.com/docs/installation/"
+"Proxy_settings.html"
 
 #: src/errormessages.js:41
 msgid ""
 "Failed to establish socket connection or socket connection closed "
 "unexpectedly."
-msgstr "無法建立套接字連線或套接字連線意外關閉。"
+msgstr "無法建立插座連線或插座連線意外關閉。"
 
 #: src/errormessages.js:44
 msgid "Failed to load document."
@@ -2588,7 +2588,7 @@ msgstr "文件太大或沒有剩餘磁碟空間可儲存。文件現在將是唯
 msgid ""
 "Document cannot be saved due to expired session, please reopen the document "
 "to continue."
-msgstr ""
+msgstr "因為作業階段已過期，文件無法儲存，請重新開啟文檔以繼續。"
 
 #: src/errormessages.js:48
 msgid "Document cannot be saved."
@@ -2607,26 +2607,28 @@ msgstr "無法從儲存讀取文檔，請嘗試重新載入文檔。"
 msgid ""
 "Save failed due to no storage space left. Document will now be read-only. "
 "Please make sure enough disk space is available and try to save again."
-msgstr "由於沒有剩餘儲存空間，保存失敗。文件現在將是唯讀的。請確保有足夠的可用磁碟空"
+msgstr ""
+"由於沒有剩餘儲存空間，保存失敗。文件現在將是唯讀的。請確保有足夠的可用磁碟空"
 "間並再次嘗試儲存。"
 
 #: src/errormessages.js:55
 msgid ""
 "Save failed because the document is too large or exceeds the remaining "
-"storage space. The document will now be read-only but you may still "
-"download it now to preserve a copy locally."
-msgstr "由於文件太大或超出剩餘儲存空間，保存失敗。該文件現在將是唯讀的，但您仍然可以"
+"storage space. The document will now be read-only but you may still download "
+"it now to preserve a copy locally."
+msgstr ""
+"由於文件太大或超出剩餘儲存空間，保存失敗。該文件現在將是唯讀的，但您仍然可以"
 "立即下載它以在本地保留副本。"
 
 #: src/errormessages.js:56
 msgid ""
 "Document cannot be saved due to expired session, please reload the page to "
 "continue."
-msgstr ""
+msgstr "因為作業階段已過期，文件無法儲存，請重新整理頁面以繼續。"
 
 #: src/errormessages.js:57
 msgid "Document cannot be saved, please check your permissions."
-msgstr "無法儲存文檔，請檢查您的權限。"
+msgstr "無法儲存文件，請檢查您的權限。"
 
 #: src/errormessages.js:58
 msgid "Document cannot be renamed, please check your permissions."
@@ -2634,7 +2636,7 @@ msgstr "文件無法重新命名，請檢查您的權限。"
 
 #: src/errormessages.js:59
 msgid "Document cannot be exported. Please try again."
-msgstr "文檔無法匯出。請再試一次。"
+msgstr "文件無法匯出。請再試一次。"
 
 #: src/errormessages.js:64
 msgid "Uploading file to server failed, file not found."
@@ -2675,7 +2677,7 @@ msgstr "移除"
 
 #: src/canvas/sections/CommentListSection.ts:995
 msgid "Remove Thread"
-msgstr "移除線程"
+msgstr "移除討論串"
 
 #: src/canvas/sections/CommentListSection.ts:1001
 msgid "Resolve"
@@ -2687,11 +2689,11 @@ msgstr "未解決"
 
 #: src/canvas/sections/CommentListSection.ts:1007
 msgid "Unresolve Thread"
-msgstr "未解決線程"
+msgstr "未解決討論串"
 
 #: src/canvas/sections/CommentListSection.ts:1007
 msgid "Resolve Thread"
-msgstr "解決線程"
+msgstr "解決討論串"
 
 #: src/canvas/sections/CommentListSection.ts:1247
 #: src/canvas/sections/CommentListSection.ts:1260
@@ -2711,12 +2713,12 @@ msgstr "另一位用戶更新了評論。您想覆蓋這些變更嗎？"
 
 #: src/canvas/sections/CommentListSection.ts:1263
 msgid "Update"
-msgstr "覆蓋"
+msgstr "更新"
 
 #: src/canvas/sections/CommentListSection.ts:1334
 #: src/canvas/sections/CommentListSection.ts:1396
 msgid "Autosaved"
-msgstr "自動儲存"
+msgstr "已自動儲存"
 
 #: src/canvas/sections/CommentListSection.ts:2091
 msgid "Another user has updated comments. Would you like to proceed updating?"
@@ -2775,10 +2777,10 @@ msgid ""
 "td><td>Cut</td><td>Paste</td></tr></table>"
 msgstr ""
 "<p>您的瀏覽器對剪貼簿的存取非常有限，因此請使用以下鍵盤快捷鍵：</p><table "
-"class=\"warn-copy-paste\"><tr><td><kbd>Ctrl</kbd><span class=\"kbd--plus\""
-">+</span><kbd>C</kbd></td><td><kbd>Ctrl</kbd><span class=\"kbd--plus\""
-">+</span><kbd>X</kbd></td><td><kbd>Ctrl</kbd><span class=\"kbd--plus\""
-">+</span><kbd>V</kbd></td></tr><tr><td>複製</td><td>\n"
+"class=\"warn-copy-paste\"><tr><td><kbd>Ctrl</kbd><span class=\"kbd--"
+"plus\">+</span><kbd>C</kbd></td><td><kbd>Ctrl</kbd><span class=\"kbd--"
+"plus\">+</span><kbd>X</kbd></td><td><kbd>Ctrl</kbd><span class=\"kbd--"
+"plus\">+</span><kbd>V</kbd></td></tr><tr><td>複製</td><td>\n"
 "剪下</td><td>貼上</td></tr></table>"
 
 #: src/map/Clipboard.js:1199
@@ -2786,8 +2788,9 @@ msgid ""
 "<p>A download due to a large copy/paste operation has already started. "
 "Please, wait for the current download or cancel it before starting a new "
 "one</p>"
-msgstr "<p>因為有大量複製/貼上操作而已經啟動下載。請先等候目前下載完成，或是在開始新"
-"的下載前先將它取消</p>"
+msgstr ""
+"<p>因為有大量複製/貼上操作而已經啟動下載程序。請先等候目前下載程序完成，或是"
+"在開始新的下載程序前先將它取消</p>"
 
 #: src/map/Clipboard.js:1217
 msgid ""
@@ -2796,8 +2799,8 @@ msgid ""
 "see more options</p><p>Close popup to ignore paste special</p>"
 msgstr ""
 "<p>您的瀏覽器對剪貼簿的存取非常有限</p><p><b>請按</b><kbd>Ctrl</kbd><span "
-"class=\"kbd--plus\""
-">+</span><kbd>V</kbd>查看更多選項</p><p>關閉彈出視窗以忽略特殊貼上</p>"
+"class=\"kbd--plus\">+</span><kbd>V</kbd>查看更多選項</p><p>關閉彈出視窗以忽略"
+"選擇性貼上</p>"
 
 #: src/map/Clipboard.js:1224
 msgid "Paste from this document"
@@ -2805,7 +2808,7 @@ msgstr "從此文件貼上"
 
 #: src/map/Clipboard.js:1224
 msgid "Cancel paste special"
-msgstr "取消特殊貼上"
+msgstr "取消選擇性貼上"
 
 #: src/map/Map.js:224
 msgid "Initializing..."
@@ -2813,7 +2816,7 @@ msgstr "初始化中..."
 
 #: src/map/Map.js:450 src/map/Map.js:453 src/map/Map.js:456 src/map/Map.js:459
 msgid "Last saved:"
-msgstr "最後保存："
+msgstr "最後保存於："
 
 #: src/map/handler/Map.Feedback.js:81
 msgid "Please send us your feedback"
@@ -2822,8 +2825,7 @@ msgstr "請給我們您的回饋"
 #: src/map/handler/Map.FileInserter.js:105
 #, javascript-format
 msgid ""
-"The file of type: {0} cannot be uploaded to server since the file has no "
-"name"
+"The file of type: {0} cannot be uploaded to server since the file has no name"
 msgstr "檔案類型：{0} 由於沒有檔名而無法上傳至伺服器"
 
 #: src/map/handler/Map.FileInserter.js:107
@@ -2850,14 +2852,15 @@ msgstr "視窗演示： "
 
 #: src/map/handler/Map.SlideShow.js:168
 msgid "Windowed Presentation Blocked"
-msgstr "視窗演示阻止"
+msgstr "視窗演示受阻"
 
 #: src/map/handler/Map.SlideShow.js:169
 msgid ""
 "Presentation was blocked. Please allow pop-ups in your browser. This lets "
 "slide shows to be displayed in separated windows, allowing for easy screen "
 "sharing."
-msgstr "演示被阻止。請允許您的瀏覽器中出現彈出視窗。這使得幻燈片可以在單獨的視窗中顯"
+msgstr ""
+"演示被阻止。請允許您的瀏覽器中出現彈出視窗。這使得幻燈片可以在單獨的視窗中顯"
 "示，從而輕鬆共享螢幕。"
 
 #: src/map/handler/Map.SlideShow.js:183
@@ -2866,31 +2869,31 @@ msgstr "在新視窗展示"
 
 #: src/map/handler/Map.SlideShow.js:184
 msgid "Close Presentation"
-msgstr "關閉演示"
+msgstr "關閉展示"
 
 #: src/map/handler/Map.SlideShow.js:204
 msgid "Presenting in fullscreen"
-msgstr "全螢幕呈現"
+msgstr "全螢幕展示"
 
 #: src/map/handler/Map.SlideShow.js:205
 msgid "End Presentation"
-msgstr "演示結束"
+msgstr "展示結束"
 
 #: src/map/handler/Map.SlideShow.js:303
 msgid "Already presenting"
-msgstr "已經呈現"
+msgstr "正在展示"
 
 #: src/map/handler/Map.SlideShow.js:304
 msgid "You are already presenting this document"
-msgstr "您已經在呈現此文檔"
+msgstr "您已經正在展示此文檔"
 
 #: src/map/handler/Map.SlideShow.js:314
 msgid "Presentation disabled"
-msgstr "演示已停用"
+msgstr "展示已停用"
 
 #: src/map/handler/Map.SlideShow.js:315
 msgid "Presentation mode has been disabled for this document"
-msgstr "該文檔的演示模式已停用"
+msgstr "該文檔的展示模式已停用"
 
 #: src/map/handler/Map.WOPI.js:152
 msgid "Creating new file from template..."
@@ -2910,7 +2913,7 @@ msgstr "製作副本中..."
 
 #: welcome/welcome.html%2Bhtml.head.title:9-3
 msgid "Collabora Online Welcome"
-msgstr "Collabora Online 歡迎"
+msgstr "歡近來到Collabora Online"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:26-7
 msgid "Explore The New {coolversion}"
@@ -2925,16 +2928,16 @@ msgstr "Collabora線上開發版"
 msgid ""
 "Enjoy the latest developments in online productivity, free for you to use, "
 "to explore and to use with others in the browser. Various <a "
-"target=\"_blank\" href=\"https://www.collaboraoffice.com/solutions/"
-"collabora-office-android-ios/\">apps</a> are also available for mobile."
+"target=\"_blank\" href=\"https://www.collaboraoffice.com/solutions/collabora-"
+"office-android-ios/\">apps</a> are also available for mobile."
 msgstr ""
-"享受線上生產力的最新發展，您可以在瀏覽器中免費使用、探索以及與其他人一起使用"
-"。各個<a target=\"_blank\" href=\"https://www.collaboraoffice.com/solutions/"
-"collabora-office-android-ios/\">應用程式</a>也可用於移動設備。"
+"享受線上生產力的最新發展，您可以在瀏覽器中免費使用、探索以及與其他人一起使"
+"用。各個<a target=\"_blank\" href=\"https://www.collaboraoffice.com/"
+"solutions/collabora-office-android-ios/\">應用程式</a>也可用於移動設備。"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:37-7
 msgid "Discover All The Changes"
-msgstr "發現所有變化"
+msgstr "發現所有更新"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:39-7
 msgid ""
@@ -2943,9 +2946,9 @@ msgid ""
 "latest Collabora Online Development Edition, aimed at home users and small "
 "teams."
 msgstr ""
-"檢查<a target=\"_blank\" href=\"https://www.collaboraoffice.com/"
-"code-24-04-release-notes/\">發佈說明</a>並了解關於: 最新的 Collabora "
-"線上開發版，針對家庭用戶和小型團隊。"
+"檢查<a target=\"_blank\" href=\"https://www.collaboraoffice.com/code-24-04-"
+"release-notes/\">發佈說明</a>並了解關於: 最新的 Collabora 線上開發版，針對家"
+"庭用戶和小型團隊。"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:48-7
 msgid "Get Involved"
@@ -2959,19 +2962,18 @@ msgstr "https://collaboraonline.github.io/"
 msgid ""
 "Are you interested in contributing but don’t know where to start? Head over "
 "to the <a target=\"_blank\" href=\"https://collaboraonline.github.io/post/"
-"build-code/\">step-by-step instructions</a> and build CODE from scratch. "
-"You can also help out with <a target=\"_blank\" href=\"https://"
-"collaboraonline.github.io/post/translate/\">translations</a> or by <a "
-"target=\"_blank\" href=\"https://collaboraonline.github.io/post/filebugs/"
-"\">filing a bug report</a> with all the essential steps on how to reproduce "
-"it."
+"build-code/\">step-by-step instructions</a> and build CODE from scratch. You "
+"can also help out with <a target=\"_blank\" href=\"https://collaboraonline."
+"github.io/post/translate/\">translations</a> or by <a target=\"_blank\" "
+"href=\"https://collaboraonline.github.io/post/filebugs/\">filing a bug "
+"report</a> with all the essential steps on how to reproduce it."
 msgstr ""
-"有興趣做出貢獻但不知道從哪裡開始？前往<a target=\"_blank\" href=\"https"
-"://collaboraonline.github.io/post/build-code/\""
-">逐步說明</a>並從頭開始建立程式碼。您還可以幫忙<a target=\"_blank\" href="
-"\"https://collaboraonline.github.io/post/translate/\">翻譯</a>或透過<a "
-"target=\"_blank\" href=\"https://collaboraonline.github.io/post/filebugs/\""
-">提交錯誤報告</a>以及如何重現它的所有基本步驟。"
+"有興趣做出貢獻但不知道從哪裡開始？前往<a target=\"_blank\" href=\"https://"
+"collaboraonline.github.io/post/build-code/\">逐步說明</a>並從頭開始建立程式"
+"碼。您還可以幫忙<a target=\"_blank\" href=\"https://collaboraonline.github."
+"io/post/translate/\">翻譯</a>或透過<a target=\"_blank\" href=\"https://"
+"collaboraonline.github.io/post/filebugs/\">提交錯誤報告</a>以及如何重現它的所"
+"有基本步驟。"
 
 #: welcome/welcome.html%2Bhtml.body.div.div:55-5
 msgid ""
