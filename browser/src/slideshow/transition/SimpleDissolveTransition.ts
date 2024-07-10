@@ -11,16 +11,9 @@
 declare var SlideShow: any;
 
 class SimpleDissolveTransition extends SlideShow.Transition2d {
-	constructor(
-		canvas: HTMLCanvasElement,
-		image1: HTMLImageElement,
-		image2: HTMLImageElement,
-		slideInfo: SlideInfo,
-	) {
-		super(canvas, image1, image2);
+	constructor(transitionParameters: TransitionParameters) {
+		super(transitionParameters);
 		this.prepareTransition();
-		this.animationTime =
-			slideInfo?.transitionDuration > 0 ? slideInfo.transitionDuration : 2000;
 	}
 
 	public start(): void {
@@ -58,10 +51,10 @@ class SimpleDissolveTransition extends SlideShow.Transition2d {
 
 				void main() {
 					vec2 uv = v_texCoord;
-					
+
 					float progress = time;
 
-					float numSquares = 10.0; 
+					float numSquares = 10.0;
 
 					vec2 squareSize = vec2(1.0 / numSquares, 1.0 / numSquares);
 

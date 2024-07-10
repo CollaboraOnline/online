@@ -17,18 +17,10 @@ enum BoxSubType {
 
 class BoxTransition extends Transition2d {
 	private direction: number = 0;
-	private slideInfo: SlideInfo;
-	constructor(
-		canvas: HTMLCanvasElement,
-		image1: HTMLImageElement,
-		image2: HTMLImageElement,
-		slideInfo: SlideInfo,
-	) {
-		super(canvas, image1, image2);
+
+	constructor(transitionParameters: TransitionParameters) {
+		super(transitionParameters);
 		this.prepareTransition();
-		this.animationTime =
-			slideInfo?.transitionDuration > 0 ? slideInfo.transitionDuration : 2000;
-		this.slideInfo = slideInfo;
 	}
 
 	public renderUniformValue(): void {
@@ -73,7 +65,7 @@ class BoxTransition extends Transition2d {
                 uniform sampler2D leavingSlideTexture;
                 uniform sampler2D enteringSlideTexture;
                 uniform float time;
-                uniform int direction; 
+                uniform int direction;
 
                 in vec2 v_texCoord;
                 out vec4 outColor;
