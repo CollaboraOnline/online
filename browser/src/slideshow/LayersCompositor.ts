@@ -33,7 +33,9 @@ class LayersCompositor extends SlideShow.SlideCompositor {
 
 	private onSlideBackground(e: any) {
 		if (!e.data) {
-			window.app.console.log('LayersCompositor.onSlideLayer: no json data available.');
+			window.app.console.log(
+				'LayersCompositor.onSlideLayer: no json data available.',
+			);
 			return;
 		}
 	}
