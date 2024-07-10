@@ -10,16 +10,24 @@
 
 declare var SlideShow: any;
 
+enum VenetianSubType {
+	HORIZONTAL,
+	VERTICAL,
+}
+
 class VenetianTransition extends Transition2d {
 	private direction: number = 0;
+	private slideInfo: SlideInfo;
 	constructor(
 		canvas: HTMLCanvasElement,
 		image1: HTMLImageElement,
 		image2: HTMLImageElement,
+		slideInfo: SlideInfo,
 	) {
 		super(canvas, image1, image2);
 		this.prepareTransition();
 		this.animationTime = 2000;
+		this.slideInfo = slideInfo;
 	}
 
 	public renderUniformValue(): void {
@@ -33,8 +41,16 @@ class VenetianTransition extends Transition2d {
 		]);
 	}
 
-	public start(direction: number): void {
-		this.direction = direction;
+	public start(): void {
+		const transitionSubType =
+			stringToTransitionSubTypeMap[this.slideInfo.transitionSubtype];
+
+		if (transitionSubType == TransitionSubType.HORIZONTAL) {
+			this.direction = VenetianSubType.HORIZONTAL;
+		} else {
+			this.direction = VenetianSubType.VERTICAL;
+		}
+
 		this.startTransition();
 	}
 
