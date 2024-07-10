@@ -48,12 +48,6 @@ abstract class SlideCompositor {
 		this._onGotSlideCallback = callback;
 	}
 
-	public getSlideInfo(slideNumber: number): SlideInfo | null {
-		return this._presentationInfo
-			? this._presentationInfo.slides[slideNumber]
-			: null;
-	}
-
 	protected _getSlidesCount() {
 		return this._presentationInfo ? this._presentationInfo.slides.length : 0;
 	}
@@ -66,7 +60,7 @@ abstract class SlideCompositor {
 		return this._height;
 	}
 
-	public abstract getSlide(slideNumber: number): HTMLImageElement;
+	public abstract getSlide(slideNumber: number): ImageBitmap;
 }
 
 SlideShow.SlideCompositor = SlideCompositor;
