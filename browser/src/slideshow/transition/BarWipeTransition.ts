@@ -18,7 +18,7 @@ function BarWipeTransition(
 	const transitionSubType =
 		stringToTransitionSubTypeMap[slideInfo.transitionSubtype];
 	if (transitionSubType == TransitionSubType.FADEOVERCOLOR) {
-		return new SlideShow.CutTransition(canvas, image1, image2);
+		return new SlideShow.CutTransition(canvas, image1, image2, slideInfo);
 	} else {
 		return new SlideShow.WipeTransition(canvas, image1, image2, slideInfo);
 	}

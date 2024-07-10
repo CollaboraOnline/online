@@ -15,10 +15,12 @@ class PlusTransition extends SlideShow.Transition2d {
 		canvas: HTMLCanvasElement,
 		image1: HTMLImageElement,
 		image2: HTMLImageElement,
+		slideInfo: SlideInfo,
 	) {
 		super(canvas, image1, image2);
 		this.prepareTransition();
-		this.animationTime = 1500;
+		this.animationTime =
+			slideInfo?.transitionDuration > 0 ? slideInfo.transitionDuration : 2000;
 	}
 
 	public start(): void {
