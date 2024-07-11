@@ -111,7 +111,7 @@
             <property name="compress" desc="Enable/disable log file compression.">true</property>
             <property name="purgeAge" desc="The maximum age of log files to preserve. See Poco FileChannel.">10 days</property>
             <property name="purgeCount" desc="The maximum number of log archives to preserve. Use 'none' to disable purging. See Poco FileChannel.">10</property>
-            <property name="rotateOnOpen" desc="Enable/disable log file rotation on opening.">true</property>
+            <property name="rotateOnOpen" desc="Enable/disable log file rotation on opening.">false</property>
             <property name="flush" desc="Enable/disable flushing after logging each line. May harm performance. Note that without flushing after each line, the log lines from the different processes will not appear in chronological order.">false</property>
         </file>
         <anonymize>
