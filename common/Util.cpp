@@ -458,6 +458,16 @@ namespace Util
         return decoded;
     }
 
+    std::string trimURI(const std::string &uriStr)
+    {
+        Poco::URI uri(uriStr);
+        uri.setUserInfo("");
+        uri.setPath("");
+        uri.setQuery("");
+        uri.setFragment("");
+        return uri.toString();
+    }
+
     bool needsURIEncoding(const std::string& uri, const std::string& reserved)
     {
         const std::string decoded = decodeURIComponent(uri);

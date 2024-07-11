@@ -156,6 +156,7 @@ void HTTPServerTest::testCoolPostPoco()
     Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, "/browser/dist/cool.html");
     Poco::Net::HTMLForm form;
     form.set("access_token", "2222222222");
+    form.set("buy_product", "https://jim:bob@nowhere.com/other/stuff?a=b;c=d#somethingelse");
     form.prepareSubmit(request);
     std::ostream& ostr = session->sendRequest(request);
     form.write(ostr);
@@ -168,7 +169,35 @@ void HTTPServerTest::testCoolPostPoco()
     Poco::StreamCopier::copyToString(rs, html);
 
     LOK_ASSERT(html.find(form["access_token"]) != std::string::npos);
+    LOK_ASSERT(html.find(form["buy_product"]) != std::string::npos);
     LOK_ASSERT(html.find(_uri.getHost()) != std::string::npos);
+
+    std::string csp = response["Content-Security-Policy"];
+    StringVector lines = StringVector::tokenize(csp, ';');
+    LOG_TST("CSP - " << csp << " tokens " << lines.size());
+    for (size_t i = 0; i < lines.size(); ++i)
+    {
+        if(lines.startsWith(i, " connect-src") ||
+           lines.startsWith(i, " frame-src") ||
+           lines.startsWith(i, " img-src"))
+        {
+            StringVector split = StringVector::tokenize(lines[i], ' ');
+
+            for (size_t j = 1; j < split.size(); ++j)
+            {
+                if (split[j] == "'self'" || split[j] == "data:" || split[j] == "blob:")
+                    continue;
+
+                Poco::URI uri(split[j]);
+                LOG_TST("URL - " << split[j]);
+                LOK_ASSERT_EQUAL(std::string(""), uri.getUserInfo());
+                LOK_ASSERT(uri.getPath() == std::string("") ||
+                           uri.getPath() == std::string("*"));
+                LOK_ASSERT_EQUAL(std::string(""), uri.getQuery());
+                LOK_ASSERT_EQUAL(std::string(""), uri.getFragment());
+            }
+        }
+    }
 }
 
 void HTTPServerTest::testCoolPost()

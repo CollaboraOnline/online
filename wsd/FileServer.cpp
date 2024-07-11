@@ -1366,16 +1366,16 @@ FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::prepro
     ContentSecurityPolicy csp;
     csp.appendDirective("default-src", "'none'");
     csp.appendDirective("frame-src", "'self'");
-    csp.appendDirective("frame-src", WELCOME_URL);
-    csp.appendDirective("frame-src", FEEDBACK_URL);
-    csp.appendDirective("frame-src", Util::decodeURIComponent(urv[BUYPRODUCT_URL]));
+    csp.appendDirectiveUrl("frame-src", WELCOME_URL);
+    csp.appendDirectiveUrl("frame-src", FEEDBACK_URL);
+    csp.appendDirectiveUrl("frame-src", Util::decodeURIComponent(urv[BUYPRODUCT_URL]));
     csp.appendDirective("frame-src", "blob:"); // Equivalent to unsafe-eval!
     csp.appendDirective("connect-src", "'self'");
-    csp.appendDirective("connect-src", "https://www.zotero.org");
-    csp.appendDirective("connect-src", "https://api.zotero.org");
-    csp.appendDirective("connect-src", cnxDetails.getWebSocketUrl());
-    csp.appendDirective("connect-src", cnxDetails.getWebServerUrl());
-    csp.appendDirective("connect-src", indirectionURI.getAuthority());
+    csp.appendDirectiveUrl("connect-src", "https://www.zotero.org");
+    csp.appendDirectiveUrl("connect-src", "https://api.zotero.org");
+    csp.appendDirectiveUrl("connect-src", cnxDetails.getWebSocketUrl());
+    csp.appendDirectiveUrl("connect-src", cnxDetails.getWebServerUrl());
+    csp.appendDirectiveUrl("connect-src", indirectionURI.getAuthority());
     csp.appendDirective("script-src", "'self'");
     csp.appendDirective("script-src", "'unsafe-inline'");
     csp.appendDirective("style-src", "'self'");
@@ -1385,10 +1385,10 @@ FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::prepro
     csp.appendDirective("object-src", "'self'");
     csp.appendDirective("object-src", "blob:"); // Equivalent to unsafe-eval!
     csp.appendDirective("media-src", "'self'");
-    csp.appendDirective("media-src", cnxDetails.getWebServerUrl());
+    csp.appendDirectiveUrl("media-src", cnxDetails.getWebServerUrl());
     csp.appendDirective("img-src", "'self'");
     csp.appendDirective("img-src", "data:"); // Equivalent to unsafe-inline!
-    csp.appendDirective("img-src", "https://www.collaboraoffice.com/");
+    csp.appendDirectiveUrl("img-src", "https://www.collaboraoffice.com/");
 
     // Frame ancestors: Allow coolwsd host, wopi host and anything configured.
     const std::string configFrameAncestor = config.getString("net.frame_ancestors", "");
