@@ -3096,6 +3096,8 @@ void lokit_main(
                 return true;
             };
 
+            bool usingMountNamespace = false;
+
             // Copy (link) LO installation and other necessary files into it from the template.
             bool bindMount = JailUtil::isBindMountingEnabled();
             if (bindMount)
@@ -3107,7 +3109,6 @@ void lokit_main(
 #endif // CODE_COVERAGE
 
 #ifndef __FreeBSD__
-                bool usingMountNamespace = false;
                 const uid_t origuid = geteuid();
                 const gid_t origgid = getegid();
 
@@ -3220,12 +3221,23 @@ void lokit_main(
             }
 
 #ifndef __FreeBSD__
-            dropCapability(CAP_SYS_CHROOT);
-            dropCapability(CAP_FOWNER);
-            dropCapability(CAP_CHOWN);
+            if (usingMountNamespace)
+            {
+                // Drop all capabilities, we have the full set in our namespace
+                cap_t caps = cap_init();
+                cap_set_proc(caps);
+                cap_free(caps);
+            }
+            else
+            {
+                dropCapability(CAP_SYS_CHROOT);
+                dropCapability(CAP_FOWNER);
+                dropCapability(CAP_CHOWN);
+            }
 #endif
-
-            LOG_DBG("Initialized jail nodes, dropped caps.");
+            char *capText = cap_to_text(cap_get_proc(), nullptr);
+            LOG_DBG("Initialized jail nodes, dropped caps. Final caps are: " << capText);
+            cap_free(capText);
         }
         else // noCapabilities set
         {
