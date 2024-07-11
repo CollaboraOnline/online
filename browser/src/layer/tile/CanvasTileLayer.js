@@ -2312,11 +2312,6 @@ L.CanvasTileLayer = L.Layer.extend({
 			app.sectionContainer.onCursorPositionChanged();
 		}
 
-		if ((app.isFollowingEditor() || app.isFollowingUser()) && this._map.lastActionByUser) {
-			this._map._setFollowing(true, this._viewId);
-		}
-		this._map.lastActionByUser = false;
-
 		this._map.hyperlinkUnderCursor = obj.hyperlink;
 		app.definitions.urlPopUpSection.closeURLPopUp();
 		if (obj.hyperlink && obj.hyperlink.link)
