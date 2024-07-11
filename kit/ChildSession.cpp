@@ -347,7 +347,14 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         assert(!getDocURL().empty());
         assert(!getJailedFilePath().empty());
 
-        char* data = _docManager->getLOKit()->extractDocumentStructureRequest(getJailedFilePath().c_str());
+        std::string filter;
+        if (tokens.size() > 2)
+        {
+            getTokenString(tokens[2], "filter", filter);
+        }
+
+        char* data = _docManager->getLOKit()->extractDocumentStructureRequest(getJailedFilePath().c_str(),
+                                                                              filter.c_str());
         if (!data)
         {
             LOG_TRC("extractDocumentStructureRequest returned no data.");
