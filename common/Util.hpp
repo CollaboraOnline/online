@@ -1098,6 +1098,9 @@ int main(int argc, char**argv)
     /// Decode a URI encoded with encodeURIComponent.
     std::string decodeURIComponent(const std::string& uri);
 
+    /// Remove all but scheme://hostname:port/ from a URI.
+    std::string trimURI(const std::string& uri);
+
     /// Checks whether or not the given string is encoded.
     /// That is, a string that is identical when encoded
     /// will return false. Similarly, a string that is
