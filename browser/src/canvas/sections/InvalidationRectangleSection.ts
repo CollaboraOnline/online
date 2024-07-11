@@ -9,6 +9,8 @@
 */
 
 const sectionName = 'TileInvalidationRectangle';
+let counter = 0; // Unique counter.
+let sectionCount = 0;
 
 class InvalidationRectangleSection extends CanvasSectionObject {
     name: string = sectionName;
@@ -21,30 +23,33 @@ class InvalidationRectangleSection extends CanvasSectionObject {
     constructor() {
         super();
 
+        this.name += ' ' + counter;
+        counter += 1;
+        sectionCount++;
+
         this.sectionProperties.deletionTimeout = null;
     }
 
     onDraw(frameCount?: number, elapsedTime?: number, subsetBounds?: Bounds): void {
-        if (!app.map._docLayer._debug.tileInvalidationsOn && !this.sectionProperties.deletionTimeout) {
-            this.sectionProperties.deletionTimeout = setTimeout(() => {
-                this.deleteThisSection();
-            }, 200);
-        }
+        if (!this.sectionProperties.deletionTimeout && (sectionCount > 1 || !app.map._docLayer._debug.tileInvalidationsOn))
+            this.deleteThisSection();
+
+        this.context.globalAlpha = 0.5;
         this.context.strokeStyle = 'red';
         this.context.strokeRect(0, 0, this.size[0], this.size[1]);
+        this.context.globalAlpha = 1;
     }
 
     deleteThisSection() {
-        app.sectionContainer.removeSection(sectionName);
+        sectionCount--;
+        this.sectionProperties.deletionTimeout = setTimeout(() => {
+            app.sectionContainer.removeSection(this.name);
+        }, 1000);
     }
 
     public static setRectangle(x: number, y: number, width: number, height: number) {
-        let section = app.sectionContainer.getSectionWithName(sectionName);
-        if (!section) {
-            section = new InvalidationRectangleSection();
-            app.sectionContainer.addSection(section);
-        }
-
+        const section = new InvalidationRectangleSection();
+        app.sectionContainer.addSection(section);
         section.size[0] = width;
         section.size[1] = height;
         section.setPosition(x, y);
