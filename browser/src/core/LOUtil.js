@@ -320,9 +320,9 @@ L.LOUtil = {
 	},
 
 	containsDOMRect: function (viewRect, rect) {
-		return (rect.left <= viewRect.right &&
-			viewRect.left <= rect.right &&
-			rect.top <= viewRect.bottom &&
-			viewRect.top <= rect.bottom)
+		return (rect.top >= viewRect.top &&
+			rect.right <= viewRect.right &&
+			rect.bottom <= viewRect.bottom &&
+			rect.left >= viewRect.left)
 	}
 };

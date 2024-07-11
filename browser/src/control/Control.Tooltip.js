@@ -51,24 +51,55 @@ class Tooltip {
 			);
 	}
 
+	/**
+	 * Calculate one of the 8 different position
+	 * of the tooltip, around the elem parameter
+	 *
+	 * - bottom-right, bottom-left, top-right, top-left
+	 * - and their left/right aligned versions
+	 *
+	 * @param elem - element that the cursor is over
+	 * @param popup - tooltip rectangle
+	 * @param index - used to determine one of the 8 tooltip location
+	 * @returns tooltip rectangle with its location calculated
+	 */
 	position(elem, popup, index) {
 		let rect = new DOMRect();
 		switch (index) {
-			case 0:
-				rect.x = elem.left + elem.width / 2 - popup.width / 2;
-				rect.y = elem.bottom;
-				break;
-			case 1:
-				rect.x = elem.right;
-				rect.y = elem.top + elem.height / 2 - popup.height / 2;
-				break;
-			case 2:
-				rect.x = elem.left + elem.width / 2 - popup.width / 2;
-				rect.y = elem.top;
-				break;
-			case 3:
+			case 0: // below cursor, bottom-right (aligned to left)
 				rect.x = elem.left;
-				rect.y = elem.top + elem.height / 2 - popup.height / 2;
+				rect.y = elem.bottom + 12;
+				break;
+			case 1: // below cursor, bottom-left (aligned to right)
+				rect.x = elem.right - popup.width;
+				rect.y = elem.bottom + 12;
+				break;
+			case 2: // above cursor, top-right (aligned to left)
+				rect.x = elem.left;
+				rect.y = elem.top - popup.height - 8;
+				break;
+			case 3: // above cursor, top-left (aligned to right)
+				rect.x = elem.right - popup.width;
+				rect.y = elem.top - popup.height - 8;
+				break;
+			case 4: // below cursor, bottom-right
+				rect.x = elem.right;
+				rect.y = elem.bottom + 4;
+				break;
+			case 5: // below cursor, bottom-left
+				rect.x = elem.left - popup.width;
+				rect.y = elem.bottom + 4;
+				break;
+			case 6: // above cursor, top-right
+				rect.x = elem.right;
+				rect.y = elem.top - popup.height - 4;
+				break;
+			case 7: // above cursor, top-left
+				rect.x = elem.left - popup.width;
+				rect.y = elem.top - popup.height - 4;
+				break;
+			default:
+				break;
 		}
 
 		rect.width = popup.width;
@@ -82,7 +113,7 @@ class Tooltip {
 			rectView = new DOMRect(0, 0, window.innerWidth, window.innerHeight),
 			rectElem = elem.getBoundingClientRect(),
 			rectCont,
-			rect,
+			rectTooltip,
 			index = 0;
 
 		this._container.textContent = content;
@@ -91,11 +122,12 @@ class Tooltip {
 		rectCont = this._container.getBoundingClientRect();
 
 		do {
-			rect = this.position(rectElem, rectCont, index++);
-		} while (index < 4 && !L.LOUtil.containsDOMRect(rectView, rect));
+			rectTooltip = this.position(rectElem, rectCont, index++);
+		} while (index < 8 && !L.LOUtil.containsDOMRect(rectView, rectTooltip));
+		// containsDOMRect() checks if the tooltip box(rectTooltip) is inside the boundaries of the window(rectView)
 
-		this._container.style.left = rect.left + 'px';
-		this._container.style.top = rect.top + 'px';
+		this._container.style.left = rectTooltip.left + 'px';
+		this._container.style.top = rectTooltip.top + 'px';
 		this._container.style.visibility = 'visible';
 		this._current = elem;
 	}
