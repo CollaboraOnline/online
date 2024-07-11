@@ -2175,12 +2175,6 @@ void COOLWSD::innerInitialize(Application& self)
     // Experimental features.
     EnableExperimental = getConfigValue<bool>(conf, "experimental_features", false);
 
-    const bool UseMountNamespaces = EnableExperimental && getConfigValue<bool>(conf, "mount_namespaces", false);
-    // attempt this early before starting logging which spawns a thread
-    EnableMountNamespaces = UseMountNamespaces && JailUtil::becomeMountingUser(geteuid(), getegid());
-    if (EnableMountNamespaces)
-        JailUtil::enableMountNamespaces();
-
     EnableAccessibility = getConfigValue<bool>(conf, "accessibility.enable", false);
 
     // Setup user interface mode
@@ -2546,9 +2540,6 @@ void COOLWSD::innerInitialize(Application& self)
     std::string fontsMissingHandling = config::getString("fonts_missing.handling", "log");
     setenv("FONTS_MISSING_HANDLING", fontsMissingHandling.c_str(), 1);
 
-    if (UseMountNamespaces && !EnableMountNamespaces)
-        LOG_WRN("Using mount namespaces failed.");
-
     IsBindMountingEnabled = getConfigValue<bool>(conf, "mount_jail_tree", true);
 #if CODE_COVERAGE
     // Code coverage is not supported with bind-mounting.
@@ -2560,8 +2551,30 @@ void COOLWSD::innerInitialize(Application& self)
 #endif // CODE_COVERAGE
 
     // Setup the jails.
+    const bool UseMountNamespaces = getConfigValue<bool>(conf, "mount_namespaces", false);
+    const uid_t origuid = geteuid();
+    const uid_t origgid = getegid();
+    if (UseMountNamespaces)
+    {
+        LOG_DBG("Move into user namespace as uid 0");
+        EnableMountNamespaces = JailUtil::enterMountingNS(origuid, origgid);
+        if (EnableMountNamespaces)
+            JailUtil::enableMountNamespaces();
+        else
+            LOG_ERR("creating usernamespace for mount user failed.");
+    }
+
     JailUtil::cleanupJails(CleanupChildRoot);
     JailUtil::setupChildRoot(IsBindMountingEnabled, ChildRoot, SysTemplate);
+
+    if (UseMountNamespaces)
+    {
+        LOG_DBG("Move into user namespace as uid " << origuid);
+        if (!JailUtil::enterUserNS(origuid, origgid))
+            LOG_ERR("creating usernamespace for orig user failed.");
+        assert(origuid == geteuid());
+        assert(origgid == getegid());
+    }
 
     LOG_DBG("FileServerRoot before config: " << FileServerRoot);
     FileServerRoot = getPathFromConfig("file_server_root_path");

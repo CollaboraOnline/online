@@ -2945,6 +2945,7 @@ void lokit_main(
                 const std::string& loTemplate,
                 bool noCapabilities,
                 bool noSeccomp,
+                bool useMountNamespaces,
                 bool queryVersion,
                 bool displayVersion,
 #else
@@ -3105,6 +3106,22 @@ void lokit_main(
                 assert(!"Mounting is not compatible with code-coverage.");
 #endif // CODE_COVERAGE
 
+#ifndef __FreeBSD__
+                bool usingMountNamespace = false;
+                const uid_t origuid = geteuid();
+                const gid_t origgid = getegid();
+
+                // create a namespace and map to root uid/gid
+                if (useMountNamespaces)
+                {
+                    LOG_DBG("Move into user namespace as uid 0");
+                    if (!JailUtil::enterMountingNS(origuid, origgid))
+                        LOG_ERR("Linux mount namespace for kit failed: " << strerror(errno));
+                    else
+                        usingMountNamespace = true;
+                }
+#endif
+
                 if (!mountJail())
                 {
                     LOG_INF("Cleaning up jail before linking/copying.");
@@ -3112,6 +3129,19 @@ void lokit_main(
                     bindMount = false;
                     JailUtil::disableBindMounting();
                 }
+
+#ifndef __FreeBSD__
+                if (usingMountNamespace)
+                {
+                    // create another namespace, map back to original uid/gid after chroot
+                    LOG_DBG("Move into user namespace as uid " << origuid);
+                    if (!JailUtil::enterUserNS(origuid, origgid))
+                        LOG_ERR("Linux user namespace for kit failed: " << strerror(errno));
+                }
+
+                assert(origuid == geteuid());
+                assert(origgid == getegid());
+#endif
             }
 
             if (!bindMount)
