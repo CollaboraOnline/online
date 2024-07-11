@@ -106,9 +106,12 @@ const stringToTransitionSubTypeMap: Record<string, TransitionSubType> = {
 	HorizontalRight: TransitionSubType.HORIZONTALRIGHT,
 };
 
-
-SlideShow.PerformTransition = function(transitionParameters: TransitionParameters) {
-	switch (stringToTransitionTypeMap[transitionParameters.slideInfo.transitionType]) {
+SlideShow.PerformTransition = function (
+	transitionParameters: TransitionParameters,
+) {
+	switch (
+		stringToTransitionTypeMap[transitionParameters.slideInfo.transitionType]
+	) {
 		case TransitionType.FADE:
 			new SlideShow.FadeTransition(transitionParameters).start();
 			break;
@@ -172,7 +175,10 @@ SlideShow.PerformTransition = function(transitionParameters: TransitionParameter
 
 		default:
 			new SlideShow.NoTransition(transitionParameters).start();
-			console.log('Unknown transition type', transitionParameters.slideInfo.transitionType);
+			console.log(
+				'Unknown transition type',
+				transitionParameters.slideInfo.transitionType,
+			);
 			break;
 	}
 

@@ -35,10 +35,7 @@ class LayersCompositor extends SlideShow.SlideCompositor {
 
 	protected _addHooks() {
 		app.map.on('slidebackground', this.onSlideBackground, this);
-		this.layerDrawing = new SlideShow.LayerDrawing(
-			app.map,
-			this
-		);
+		this.layerDrawing = new SlideShow.LayerDrawing(app.map, this);
 		this.layerDrawing.addHooks();
 	}
 

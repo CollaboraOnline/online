@@ -115,7 +115,6 @@ class SlideShowPresenter {
 		this._slideCompositor.fetchAndRun(this._currentSlide, () => {
 			this._currentSlide--;
 			this._doTransition(this._slideRenderer._slideTexture, this._currentSlide);
-
 		});
 	}
 
@@ -163,11 +162,11 @@ class SlideShowPresenter {
 			const transitionParameters = new TransitionParameters();
 			transitionParameters.context = this._slideRenderer._context;
 			transitionParameters.current = currentTexture;
-			transitionParameters.next =  nextTexture;
+			transitionParameters.next = nextTexture;
 			transitionParameters.slideInfo = slideInfo;
 			transitionParameters.callback = () => {
 				this._slideRenderer.renderFrame(nextTexture);
-			}
+			};
 
 			SlideShow.PerformTransition(transitionParameters);
 
