@@ -114,6 +114,43 @@ bool restorePremountUser(uid_t uid, gid_t gid)
 #endif
 }
 
+std::string buildLocalPathToJail(bool usingMountNamespaces, std::string localStorePath, std::string localPath)
+{
+    // Use where mountJail of kit/Kit.cpp mounts /tmp for this path *from* rather than
+    // where it is mounted *to*, so this process doesn't need the mount visible to it
+    if (usingMountNamespaces && !localPath.empty())
+    {
+        Poco::Path jailPath(localPath);
+        const std::string jailPathDir = jailPath[0];
+        if (jailPathDir == "tmp")
+        {
+            jailPath.popFrontDirectory();
+
+            Poco::Path localStorageDir(localStorePath);
+            localStorageDir.makeDirectory();
+            const std::string jailId = localStorageDir[localStorageDir.depth() - 1];
+            localStorageDir.popDirectory();
+
+            localStorageDir.pushDirectory(jailPathDir);
+
+            std::string tmpMapping("cool-");
+            tmpMapping.append(jailId);
+
+            localStorageDir.pushDirectory(tmpMapping);
+
+            localStorePath = localStorageDir.toString();
+
+            localPath = jailPath.toString();
+        }
+    }
+
+    // /chroot/jailId/user/doc/childId
+    const Poco::Path rootPath = Poco::Path(localStorePath, localPath);
+    Poco::File(rootPath).createDirectories();
+
+    return rootPath.toString();
+}
+
 bool coolmount(const std::string& arg, std::string source, std::string target)
 {
     source = Util::trim(source, '/');

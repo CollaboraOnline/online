@@ -47,6 +47,7 @@
 #include <Common.hpp>
 #include <Exceptions.hpp>
 #include <Storage.hpp>
+#include <JailUtil.hpp>
 #include <Log.hpp>
 #include <Unit.hpp>
 #include <Util.hpp>
@@ -74,7 +75,6 @@ bool StorageBase::SSLEnabled = false;
 
 std::string StorageBase::getLocalRootPath() const
 {
-    std::string localStorePath(_localStorePath);
     std::string localPath = _jailPath;
     if (localPath[0] == '/')
     {
@@ -82,39 +82,7 @@ std::string StorageBase::getLocalRootPath() const
         localPath.erase(0, 1);
     }
 
-    // Use where mountJail of kit/Kit.cpp mounts /tmp for this path *from* rather than
-    // where it is mounted *to*, so this process doesn't need the mount visible to it
-    if (COOLWSD::EnableMountNamespaces && !localPath.empty())
-    {
-        Poco::Path jailPath(localPath);
-        const std::string jailPathDir = jailPath[0];
-        if (jailPathDir == "tmp")
-        {
-            jailPath.popFrontDirectory();
-
-            Poco::Path localStorageDir(localStorePath);
-            localStorageDir.makeDirectory();
-            const std::string jailId = localStorageDir[localStorageDir.depth() - 1];
-            localStorageDir.popDirectory();
-
-            localStorageDir.pushDirectory(jailPathDir);
-
-            std::string tmpMapping("cool-");
-            tmpMapping.append(jailId);
-
-            localStorageDir.pushDirectory(tmpMapping);
-
-            localStorePath = localStorageDir.toString();
-
-            localPath = jailPath.toString();
-        }
-    }
-
-    // /chroot/jailId/user/doc/childId
-    const Poco::Path rootPath = Poco::Path(localStorePath, localPath);
-    Poco::File(rootPath).createDirectories();
-
-    return rootPath.toString();
+    return JailUtil::buildLocalPathToJail(COOLWSD::EnableMountNamespaces, _localStorePath, std::move(localPath));
 }
 #endif
 
