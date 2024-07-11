@@ -12,7 +12,9 @@ declare var SlideShow: any;
 
 function BarWipeTransition(transitionParameters: TransitionParameters) {
 	const transitionSubType =
-		stringToTransitionSubTypeMap[transitionParameters.slideInfo.transitionSubtype];
+		stringToTransitionSubTypeMap[
+			transitionParameters.slideInfo.transitionSubtype
+		];
 	if (transitionSubType == TransitionSubType.FADEOVERCOLOR) {
 		return new SlideShow.CutTransition(transitionParameters);
 	} else {

@@ -90,10 +90,7 @@ class LayerDrawing {
 	private currentCanvasContext: ImageBitmapRenderingContext = null;
 	private onSlideRenderingCompleteCallback: VoidFunction = null;
 
-	constructor(
-		mapObj: any,
-		helper: LayersCompositor
-	) {
+	constructor(mapObj: any, helper: LayersCompositor) {
 		this.map = mapObj;
 		this.helper = helper;
 
@@ -102,9 +99,7 @@ class LayerDrawing {
 			this.canvasHeight,
 		);
 		if (!this.currentCanvas) {
-			window.app.console.log(
-				'LayerDrawing: no canvas element found',
-			);
+			window.app.console.log('LayerDrawing: no canvas element found');
 			return;
 		}
 
@@ -465,8 +460,7 @@ class LayerDrawing {
 		const renderedSlide = this.offscreenCanvas.transferToImageBitmap();
 		this.renderedSlides.set(this.requestedSlideHash, renderedSlide);
 
-		if (this.requestedSlideHash)
-			this.requestedSlideHash = null;
+		if (this.requestedSlideHash) this.requestedSlideHash = null;
 
 		const oldCallback = this.onSlideRenderingCompleteCallback;
 		this.onSlideRenderingCompleteCallback = null;

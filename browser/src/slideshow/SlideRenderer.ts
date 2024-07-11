@@ -75,8 +75,12 @@ class SlideRenderer {
 		this._context = new RenderContext(canvas);
 		this._canvas = canvas;
 
-		const vertexShader = this._context.createVertexShader(this.getVertexShader());
-		const fragmentShader = this._context.createFragmentShader(this.getFragmentShader());
+		const vertexShader = this._context.createVertexShader(
+			this.getVertexShader(),
+		);
+		const fragmentShader = this._context.createFragmentShader(
+			this.getFragmentShader(),
+		);
 
 		this._program = this._context.createProgram(vertexShader, fragmentShader);
 
