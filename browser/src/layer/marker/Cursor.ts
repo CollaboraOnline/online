@@ -4,7 +4,7 @@ declare var L: any;
 
 /*
  * Cursor implements a blinking cursor.
- * This is used as the text-cursor(in and out of document) and view-cursor.
+ * This is used as the text-cursor(in and out of document).
  */
 
 class Cursor {
