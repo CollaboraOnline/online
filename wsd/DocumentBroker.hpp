@@ -1757,13 +1757,16 @@ private:
 class ExtractDocumentStructureBroker final : public ConvertToBroker
 {
 public:
+    const std::string _filter;
     /// Construct DocumentBroker with URI and docKey
     ExtractDocumentStructureBroker(const std::string& uri,
                     const Poco::URI& uriPublic,
                     const std::string& docKey,
-                    const std::string& lang)
+                    const std::string& lang,
+                    const std::string& filter)
                     : ConvertToBroker(uri, uriPublic, docKey, Poco::Path(uri).getExtension(), "",
                                       lang)
+                    , _filter(filter)
                     {}
 
 private:

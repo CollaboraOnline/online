@@ -360,7 +360,7 @@ getConvertToBrokerImplementation(const std::string& requestType, const std::stri
                                  const Poco::URI& uriPublic, const std::string& docKey,
                                  const std::string& format, const std::string& options,
                                  const std::string& lang, const std::string& target,
-                                 const std::string& transformJSON)
+                                 const std::string& filter, const std::string& transformJSON)
 {
     if (requestType == "convert-to")
         return std::make_shared<ConvertToBroker>(fromPath, uriPublic, docKey, format, options,
@@ -368,7 +368,8 @@ getConvertToBrokerImplementation(const std::string& requestType, const std::stri
     else if (requestType == "extract-link-targets")
         return std::make_shared<ExtractLinkTargetsBroker>(fromPath, uriPublic, docKey, lang);
     else if (requestType == "extract-document-structure")
-        return std::make_shared<ExtractDocumentStructureBroker>(fromPath, uriPublic, docKey, lang);
+        return std::make_shared<ExtractDocumentStructureBroker>(fromPath, uriPublic, docKey, lang,
+                                                                filter);
     else if (requestType == "transform-document-structure")
     {
         if (format.empty())
@@ -1481,6 +1482,7 @@ void ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
 
             std::string lang = (form.has("lang") ? form.get("lang") : std::string());
             std::string target = (form.has("target") ? form.get("target") : std::string());
+            std::string filter = (form.has("filter") ? form.get("filter") : std::string());
 
             std::string encodedTransformJSON;
             if (form.has("transform"))
@@ -1496,7 +1498,7 @@ void ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
             LOG_DBG("New DocumentBroker for docKey [" << docKey << "].");
             auto docBroker = getConvertToBrokerImplementation(
                 requestDetails[1], fromPath, uriPublic, docKey, format, options, lang, target,
-                encodedTransformJSON);
+                filter, encodedTransformJSON);
             handler.takeFile();
 
             cleanupDocBrokers();

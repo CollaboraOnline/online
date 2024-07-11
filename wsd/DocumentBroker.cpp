@@ -4256,7 +4256,9 @@ void ExtractDocumentStructureBroker::sendStartMessage(const std::shared_ptr<Clie
 {
     ConvertToBroker::sendStartMessage(clientSession, encodedFrom);
 
-    const auto command = "extractdocumentstructure url=" + encodedFrom;
+    std::string command = "extractdocumentstructure url=" + encodedFrom;
+    if (!_filter.empty())
+        command += " filter=" + _filter;
     forwardToChild(clientSession, command);
 }
 
