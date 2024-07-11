@@ -38,8 +38,8 @@
 void lokit_main(
 #if !MOBILEAPP
     const std::string& childRoot, const std::string& jailId, const std::string& sysTemplate,
-    const std::string& loTemplate, bool noCapabilities, bool noSeccomp, bool queryVersionInfo,
-    bool displayVersion,
+    const std::string& loTemplate, bool noCapabilities, bool noSeccomp, bool useMountNamespaces,
+    bool queryVersionInfo, bool displayVersion,
 #else
     int docBrokerSocket, const std::string& userInterface,
 #endif
@@ -128,7 +128,7 @@ enum class DocumentPasswordType
 
 /// Check the ForkCounter, and if non-zero, fork more of them accordingly.
 void forkLibreOfficeKit(const std::string& childRoot, const std::string& sysTemplate,
-                        const std::string& loTemplate);
+                        const std::string& loTemplate, bool useMountNamespaces);
 
 class Document;
 

@@ -59,21 +59,21 @@ static void mapuser(uid_t origuid, uid_t newuid, gid_t origgid, gid_t newgid)
     }
 }
 
-bool becomeMountingUser(uid_t uid, gid_t gid)
+bool enterMountingNS(uid_t uid, gid_t gid)
 {
 #ifdef __linux__
     // Put this process into its own user and mount namespace.
     if (unshare(CLONE_NEWNS | CLONE_NEWUSER) != 0)
     {
         // having multiple threads is a source of failure f.e.
-        fprintf(stderr, "becomeMountingUser, unshare failed %s\n", strerror(errno));
+        fprintf(stderr, "enterMountingNS, unshare failed %s\n", strerror(errno));
         return false;
     }
 
     // Do not propagate any mounts from this new namespace to the system.
     if (mount("none", "/", nullptr, MS_REC | MS_PRIVATE, nullptr) != 0)
     {
-        fprintf(stderr, "becomeMountingUser, root mount failed %s\n", strerror(errno));
+        fprintf(stderr, "enterMountingNS, root mount failed %s\n", strerror(errno));
         return false;
     }
 
@@ -90,13 +90,13 @@ bool becomeMountingUser(uid_t uid, gid_t gid)
 #endif
 }
 
-bool restorePremountUser(uid_t uid, gid_t gid)
+bool enterUserNS(uid_t uid, gid_t gid)
 {
 #ifdef __linux__
     if (unshare(CLONE_NEWUSER) != 0)
     {
         // having multiple threads is a source of failure f.e.
-        fprintf(stderr, "restorePremountUser, unshare failed %s\n", strerror(errno));
+        fprintf(stderr, "enterUserNS, unshare failed %s\n", strerror(errno));
         return false;
     }
 

@@ -28,13 +28,23 @@ constexpr const char CHILDROOT_TMP_INCOMING_PATH[] = "/tmp/incoming";
 /// The LO installation directory with jail.
 constexpr const char LO_JAIL_SUBPATH[] = "lo";
 
+/** Linux user/mount namespaces
+
+    There cannot be other threads running when calling these namespace
+    functions or they will fail.
+
+    These user namespaces stack, so each call to enter..NS creates another
+    namespace inside the current one. In practice you can't return to a higher
+    user namespace level. man 7 user_namespaces
+ */
+
 /// Try to put this process into its own user and mount namespace and
-/// set as root within that namespace to allow mounting
-/// There cannot be other threads running when calling these or it will
-/// fail.
-bool becomeMountingUser(uid_t uid, gid_t gid);
-/// We could switch back to normal user within the namespace too
-bool restorePremountUser(uid_t uid, gid_t gid);
+/// map uid/gid to root within that namespace to allow mounting
+bool enterMountingNS(uid_t uid, gid_t gid);
+
+/// Try to put this process into its own user namespace and
+/// map root to uid/gid within that namespace.
+bool enterUserNS(uid_t uid, gid_t gid);
 
 /// return the local path to the jailPath under localJailRoot
 /// localJailRoot /chroot/jailId
