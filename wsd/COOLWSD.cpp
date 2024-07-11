@@ -168,6 +168,7 @@ using Poco::Net::PartHandler;
 
 #ifdef __linux__
 #if !MOBILEAPP
+#include <sys/capability.h>
 #include <sys/inotify.h>
 #endif
 #endif
@@ -2574,6 +2575,15 @@ void COOLWSD::innerInitialize(Application& self)
             LOG_ERR("creating usernamespace for orig user failed.");
         assert(origuid == geteuid());
         assert(origgid == getegid());
+
+        // Drop all capabilities, we have the full set in our namespace
+        cap_t caps = cap_init();
+        cap_set_proc(caps);
+        cap_free(caps);
+
+        char *capText = cap_to_text(cap_get_proc(), nullptr);
+        LOG_DBG("Initialized child root, dropped caps. Final caps are: " << capText);
+        cap_free(capText);
     }
 
     LOG_DBG("FileServerRoot before config: " << FileServerRoot);
