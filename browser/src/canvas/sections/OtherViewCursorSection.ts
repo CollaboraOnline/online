@@ -62,8 +62,7 @@ class OtherViewCursorSection extends HTMLObjectSection {
             rectangle = new app.definitions.simpleRectangle(rectangleData[0], rectangleData[1], rectangleData[2], rectangleData[3]);
         }
 
-        if (rectangle.pWidth === 0)
-            rectangle.pWidth = 2 * app.dpiScale; // Width of the cursor.
+        rectangle.pWidth = 2 * app.dpiScale; // Width of the cursor.
 
         const sectionName = OtherViewCursorSection.sectionNamePrefix + viewId;
         let section: OtherViewCursorSection;

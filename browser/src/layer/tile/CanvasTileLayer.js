@@ -2372,21 +2372,22 @@ L.CanvasTileLayer = L.Layer.extend({
 		const username = this._map._viewInfo[viewId].username;
 		const mode = obj.mode ? parseInt(obj.mode): 0;
 
-		const rectangle = obj.rectangle.split(',');
-		for (let i = 0; i < rectangle.length; i++) rectangle[i] = parseInt(rectangle[i]);
-
+		let rectangle;
 		if (obj.refpoint) {
 			let refPoint = obj.refpoint.split(',');
-			refPoint.push(0);
-			refPoint.push(0);
+			refPoint = new app.definitions.simplePoint(parseInt(refPoint[0]), parseInt(refPoint[1]));
 
-			refPoint = this._convertRawTwipsToTileTwips(refPoint);
+			this.sheetGeometry.convertToTileTwips(refPoint);
 
-			rectangle[0] = refPoint[0];
-			rectangle[1] = refPoint[1];
+			rectangle = obj.relrect.split(',');
+			for (let i = 0; i < rectangle.length; i++) rectangle[i] = parseInt(rectangle[i]);
 
-			rectangle[0] += parseInt(obj.relrect.split(',')[0]);
-			rectangle[1] += parseInt(obj.relrect.split(',')[1]);
+			rectangle[0] += refPoint.x;
+			rectangle[1] += refPoint.y;
+		}
+		else {
+			rectangle = obj.rectangle.split(',');
+			for (let i = 0; i < rectangle.length; i++) rectangle[i] = parseInt(rectangle[i]);
 		}
 
 		app.definitions.otherViewCursorSection.addOrUpdateOtherViewCursor(viewId, username, rectangle, parseInt(obj.part), mode);
