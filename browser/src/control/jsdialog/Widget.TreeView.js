@@ -829,6 +829,8 @@ function _treelistboxControl(parentContainer, data, builder) {
 class TreeViewControl {
 	constructor(data, builder) {
 		this._tableContainer = L.DomUtil.create('table', builder.options.cssClass + ' ui-treeview');
+		this._tableContainer._tbody = L.DomUtil.create('tbody', builder.options.cssClass
+							       + ' ui-treeview-body', this._tableContainer);
 
 		if (!data.headers || data.headers.length === 0)
 			this._ulContainer = L.DomUtil.create('ul', builder.options.cssClass + ' ui-treeview');
@@ -837,10 +839,20 @@ class TreeViewControl {
 	fillItems(entries, builder, ulParent, tableParent) {
 		let ulChild, tableChild;
 
+		// only simple table case
+		if (entries && entries.length > 0 &&
+		    this._tableContainer && this._tableContainer._tbody != tableParent) {
+			delete this._tableContainer;
+		}
+
 		for (let index in entries) {
 			if (this._ulContainer && entries[index].columns &&
 			    entries[index].columns.length > 1)
 				delete this._ulContainer;
+
+			if (this._tableContainer &&
+			    (!entries[index].columns || entries[index].columns.length === 1))
+				delete this._tableContainer;
 
 			if (this._ulContainer && ulParent) {
 				ulChild = this.createUlItem(entries[index], builder, ulParent);
@@ -855,7 +867,7 @@ class TreeViewControl {
 	}
 
 	buildTreeView(data, builder, parentContainer) {
-		this.fillItems(data.entries, builder, this._ulContainer, this._tableContainer);
+		this.fillItems(data.entries, builder, this._ulContainer, this._tableContainer._tbody);
 
 		if (this._ulContainer && this._ulContainer.hasChildNodes()) {
 			parentContainer.appendChild(this._ulContainer);
@@ -882,8 +894,18 @@ class TreeViewControl {
 		return li;
 	}
 
-	createTableItem() {
-		return null;
+	createTableItem(entry, builder, parent) {
+		if (this._tableContainer.tbody === parent) {
+			let tr = L.DomUtil.create('tr', builder.options.cssClass, parent);
+			for (let index in entry.columns) {
+				let td = L.DomUtil.create('td', '', tr);
+				let span = L.DomUtil.create('span', builder.options.cssClass +
+							    ' ui-treeview-cell-text', td);
+				span.innerText = entry.columns[index].text;
+			}
+			return tr;
+		} else
+			return null;
 	}
 }
 
