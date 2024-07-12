@@ -1736,6 +1736,69 @@ void ClientSession::postProcessCopyPayload(const std::shared_ptr<Message>& paylo
         });
 }
 
+bool ClientSession::handlePresentationInfo(const std::shared_ptr<Message>& payload, const std::shared_ptr<DocumentBroker>& docBroker)
+{
+    std::string json(payload->data().data(), payload->size());
+
+    const auto iterator = json.find('{');
+    const std::string prefix = json.substr(0, iterator);
+    json.erase(0, iterator); // Remove the prefix to parse the purse JSON part.
+
+    bool bModified = false;
+
+    Poco::JSON::Object::Ptr rootObject;
+    try
+    {
+        if (JsonUtil::parseJSON(json, rootObject))
+        {
+            Poco::JSON::Array::Ptr slides = rootObject->getArray("slides");
+            if (!slides.isNull() && slides->size() > 0)
+            {
+                for (size_t slideIndex = 0; slideIndex < slides->size(); slideIndex++)
+                {
+                    Poco::JSON::Object::Ptr slide = slides->getObject(slideIndex);
+                    Poco::JSON::Array::Ptr videos = slide->getArray("videos");
+
+                    if (!videos.isNull() && videos->size() > 0)
+                    {
+                        for (size_t videoIndex = 0; videoIndex < videos->size(); videoIndex++)
+                        {
+                            Poco::JSON::Object::Ptr video = videos->getObject(videoIndex);
+                            const std::string id = JsonUtil::getJSONValue<std::string>(video, "id");
+                            const std::string url = JsonUtil::getJSONValue<std::string>(video, "url");
+
+                            if (!id.empty() && !url.empty())
+                            {
+                                std::string aOriginal = "{ \"id\" : \"" + id + "\", \"url\" : \"" + url + "\" }";
+                                docBroker->addEmbeddedMedia(id, aOriginal); // Capture the original message with internal URL.
+
+                                const std::string mediaUrl = Util::encodeURIComponent(createPublicURI("media", id, false), "&");
+                                video->set("url", mediaUrl); // Replace the url with the public one.
+                                bModified = true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    catch (const std::exception& exception)
+    {
+        LOG_ERR("unocommandresult parsing failure: " << exception.what());
+    }
+
+    if (bModified)
+    {
+        std::ostringstream mediaStr;
+        rootObject->stringify(mediaStr);
+        const std::string newMessage = prefix + mediaStr.str();
+        forwardToClient(std::make_shared<Message>(newMessage, Message::Dir::Out));
+        return true;
+    }
+
+    return forwardToClient(payload);
+}
+
 bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& payload)
 {
     LOG_TRC("handling kit-to-client [" << payload->abbr() << ']');
@@ -2014,6 +2077,10 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
     {
         postProcessCopyPayload(payload);
         return forwardToClient(payload);
+    }
+    else if (tokens.equals(0, "presentationinfo:"))
+    {
+        return handlePresentationInfo(payload, docBroker);
     }
     else if (tokens.equals(0, "clipboardcontent:"))
     {
