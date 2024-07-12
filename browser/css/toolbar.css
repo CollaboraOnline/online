@@ -365,6 +365,10 @@
 	background: url('images/closedoc.svg') no-repeat center/24px !important;
 }
 
+[data-theme='dark'] #closebutton {
+	filter: invert(1);
+}
+
 .main-nav:not(.hasnotebookbar) ~ #closebuttonwrapper #closebutton {
 	background: url('images/closedoc.svg') no-repeat center/35px !important;
 }
