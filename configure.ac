@@ -84,11 +84,6 @@ fi
 
 AC_LANG_PUSH([C++])
 
-AS_IF([test `uname -s` = Linux -a "$host_os" != "emscripten"],
-      [AC_PATH_PROG([SETCAP], setcap,[],[/bin:/usr/bin:/sbin:/usr/sbin])]
-       AS_IF([test -z "$SETCAP"],
-       [AC_MSG_ERROR([The setcap command is needed. It might be in a package called libcap-progs.])]))
-
 # check for python modules
 for MODULE in lxml polib; do
     AC_MSG_CHECKING([for ${MODULE} for python3])
