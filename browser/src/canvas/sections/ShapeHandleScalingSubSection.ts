@@ -14,38 +14,43 @@
 	Shape is rendered on the core side. Only the handles are drawn here and modification commands are sent to the core side.
 */
 
-// This will be HTMLObjectSection until we remove map element. Because map is catching the events before canvas sections for now - so we need object section's div element.
-// Same goes for the mirrored events.
-class ShapeHandleScalingSubSection extends HTMLObjectSection {
+class ShapeHandleScalingSubSection extends CanvasSectionObject {
     processingOrder: number = L.CSections.DefaultForDocumentObjects.processingOrder;
 	drawingOrder: number = L.CSections.DefaultForDocumentObjects.drawingOrder + 1; // Handle events before the parent section.
 	zIndex: number = L.CSections.DefaultForDocumentObjects.zIndex;
     documentObject: boolean = true;
 
 	constructor (parentHandlerSection: ShapeHandlesSection, sectionName: string, size: number[], documentPosition: cool.SimplePoint, ownInfo: any) {
-        super(sectionName, size[0], size[1], documentPosition, null, true);
-
-		const htmlObject = this.getHTMLObject();
-		htmlObject.style.opacity = 1;
-		htmlObject.style.border = '1px solid black';
-		htmlObject.style.borderRadius = '50%';
-		htmlObject.style.backgroundColor = 'wheat';
-		app.definitions.shapeHandlesSection.moveHTMLObjectToMapElement(this);
-
-		app.definitions.shapeHandlesSection.mirrorEventsFromSourceToCanvasSectionContainer(htmlObject);
+        super();
 
         this.size = size;
+		this.sectionProperties.position = documentPosition.clone();
+		this.name = sectionName;
 
 		this.sectionProperties.parentHandlerSection = parentHandlerSection;
 		this.sectionProperties.ownInfo = ownInfo;
 		this.sectionProperties.mousePointerType = null;
 		this.sectionProperties.previousCursorStyle = null;
 
-		// Set below immediately after initialization so they are not calculated on mouse move.
 		this.sectionProperties.initialAngle = null; // Initial angle of the point (handle) to the center in radians.
 		this.sectionProperties.distanceToCenter = null; // Distance to center.
+		this.sectionProperties.mapPane = (<HTMLElement>(document.querySelectorAll('.leaflet-map-pane')[0]));
 
 		this.setMousePointerType();
+	}
+
+	onInitialize(): void {
+		this.setPosition(this.sectionProperties.position.pX, this.sectionProperties.position.pY);
+	}
+
+	onDraw(frameCount?: number, elapsedTime?: number, subsetBounds?: cool.Bounds): void {
+		this.context.fillStyle = 'wheat';
+		this.context.strokeStyle = 'black';
+		this.context.beginPath();
+		this.context.arc(this.size[0] * 0.5, this.size[1] * 0.5, this.size[0] * 0.5, 0, Math.PI * 2);
+		this.context.closePath();
+		this.context.fill();
+		this.context.stroke();
 	}
 
 	setMousePointerType() {
@@ -68,19 +73,19 @@ class ShapeHandleScalingSubSection extends HTMLObjectSection {
 	}
 
 	onMouseEnter(point: number[], e: MouseEvent) {
+		app.map.dontHandleMouse = true;
 		e.stopPropagation();
 		this.stopPropagating();
-		this.backgroundColor = 'grey';
-		this.sectionProperties.previousCursorStyle = this.getHTMLObject().style.cursor;
-		this.getHTMLObject().style.cursor = this.sectionProperties.mousePointerType;
+		this.sectionProperties.previousCursorStyle = this.sectionProperties.mapPane.style.cursor;
+		this.sectionProperties.mapPane.style.cursor = this.sectionProperties.mousePointerType;
 		this.containerObject.requestReDraw();
 	}
 
 	onMouseLeave(point: number[], e: MouseEvent) {
+		app.map.dontHandleMouse = false;
 		e.stopPropagation();
 		this.stopPropagating();
-		this.backgroundColor = null;
-		this.getHTMLObject().style.cursor = this.sectionProperties.previousCursorStyle;
+		this.sectionProperties.mapPane.style.cursor = this.sectionProperties.previousCursorStyle;
 		this.containerObject.requestReDraw();
 	}
 

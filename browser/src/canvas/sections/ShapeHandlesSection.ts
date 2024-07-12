@@ -30,8 +30,8 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		this.sectionProperties.subSections = [];
 		this.sectionProperties.activeHandleIndex = null;
 		this.sectionProperties.mouseIsInside = false;
-		this.sectionProperties.handleWidth = 10 * app.dpiScale;
-		this.sectionProperties.handleHeight = 10 * app.dpiScale;
+		this.sectionProperties.handleWidth = 12 * app.dpiScale;
+		this.sectionProperties.handleHeight = 12 * app.dpiScale;
 		this.sectionProperties.anchorWidth = 20 * app.dpiScale;
 		this.sectionProperties.anchorHeight = 20 * app.dpiScale;
 		this.sectionProperties.rotationHandleWidth = 15 * app.dpiScale;
@@ -467,7 +467,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 			newSubSection = new app.definitions.shapeHandleScalingSubSection(
 				this,
 				this.sectionProperties.subSectionPrefix + handle.info.id,
-				[this.sectionProperties.handleWidth / app.dpiScale, this.sectionProperties.handleHeight / app.dpiScale],
+				[this.sectionProperties.handleWidth, this.sectionProperties.handleHeight],
 				handle.point.clone(),
 				handle.info
 			);
