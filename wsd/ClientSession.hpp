@@ -228,6 +228,9 @@ public:
     /// Do we recognize this clipboard ?
     bool matchesClipboardKeys(const std::string &viewId, const std::string &tag);
 
+    /// Handle presentation info request
+    bool handlePresentationInfo(const std::shared_ptr<Message>& payload, const std::shared_ptr<DocumentBroker>& docBroker);
+
     /// Handle a clipboard fetch / put request.
     void handleClipboardRequest(DocumentBroker::ClipboardRequest     type,
                                 const std::shared_ptr<StreamSocket> &socket,
