@@ -47,7 +47,6 @@
 #include <Common.hpp>
 #include <Exceptions.hpp>
 #include <Storage.hpp>
-#include <JailUtil.hpp>
 #include <Log.hpp>
 #include <Unit.hpp>
 #include <Util.hpp>
@@ -82,7 +81,7 @@ std::string StorageBase::getLocalRootPath() const
         localPath.erase(0, 1);
     }
 
-    return JailUtil::buildLocalPathToJail(COOLWSD::EnableMountNamespaces, _localStorePath, std::move(localPath));
+    return FileUtil::buildLocalPathToJail(COOLWSD::EnableMountNamespaces, _localStorePath, std::move(localPath));
 }
 #endif
 

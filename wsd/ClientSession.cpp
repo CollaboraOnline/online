@@ -1894,7 +1894,8 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
                 relative = relative.substr(1);
 
             // Rewrite file:// URLs to be visible to the outside world.
-            const Path path(docBroker->getJailRoot(), relative);
+            const Path path(FileUtil::buildLocalPathToJail(COOLWSD::EnableMountNamespaces,
+                                                           docBroker->getJailRoot(), relative));
             if (Poco::File(path).exists())
             {
                 if (!isConvertTo)

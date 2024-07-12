@@ -3343,7 +3343,9 @@ bool DocumentBroker::handleInput(const std::shared_ptr<Message>& message)
 
             std::string decoded;
             Poco::URI::decode(url, decoded);
-            const std::string filePath(COOLWSD::ChildRoot + getJailId() + JAILED_DOCUMENT_ROOT + decoded);
+            const std::string filePath(FileUtil::buildLocalPathToJail(COOLWSD::EnableMountNamespaces,
+                                                                      COOLWSD::ChildRoot + getJailId(),
+                                                                      JAILED_DOCUMENT_ROOT + decoded));
 
             std::ifstream ifs(filePath);
             const std::string svg((std::istreambuf_iterator<char>(ifs)),
