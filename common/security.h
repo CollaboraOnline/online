@@ -109,6 +109,28 @@ inline int hasAnyCapability()
 #endif
 }
 
+/** Drop all capabilities. return zero on success, negative on error. */
+inline int dropAllCapabilities()
+{
+#ifdef __linux__
+    cap_t caps = cap_init();
+    if (caps == nullptr)
+    {
+        fprintf(stderr, "Error: cap_init() failed.\n");
+        return -1;
+    }
+
+    if (cap_set_proc(caps) == -1)
+    {
+        fprintf(stderr, "Error: cap_set_proc() failed.\n");
+        return -1;
+    }
+
+    cap_free(caps);
+#endif
+    return 0;
+}
+
 /*WARNING: PRIVILEGED CODE CHECKING END */
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
