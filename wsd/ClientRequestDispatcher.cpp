@@ -652,6 +652,8 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
         else if (requestDetails.equals(RequestDetails::Field::Type, "browser") ||
                  requestDetails.equals(RequestDetails::Field::Type, "wopi"))
         {
+            bool served = false;
+
             // File server
             assert(socket && "Must have a valid socket");
             constexpr auto ProxyRemote = "/remote/";
@@ -665,6 +667,7 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
                 {
                     ProxyRequestHandler::handleRequest(uri.substr(pos + ProxyRemoteLen), socket,
                                                        ProxyRequestHandler::getProxyRatingServer());
+                    served = true;
                 }
 #if ENABLE_FEATURE_LOCK
                 else
@@ -677,6 +680,7 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
                             unlockImageUri.getScheme() + "://" + unlockImageUri.getAuthority();
                         ProxyRequestHandler::handleRequest(
                             uri.substr(pos + sizeof("/remote/static") - 1), socket, serverUri);
+                        served = true;
                     }
                 }
 #endif
@@ -723,7 +727,11 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
                 }
 
                 socket->shutdown();
+                served = true;
             }
+
+            if (!served)
+                HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, socket);
         }
         else if (requestDetails.equals(RequestDetails::Field::Type, "cool") &&
                  requestDetails.equals(1, "adminws"))
@@ -739,6 +747,8 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
                         Admin::instance().insertNewSocket(moveSocket);
                     });
             }
+            else
+                HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, socket);
         }
         else if (requestDetails.equals(RequestDetails::Field::Type, "cool") &&
                  requestDetails.equals(1, "getMetrics"))
@@ -798,19 +808,20 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
                 handleWopiDiscoveryRequest(requestDetails, socket);
             else if (requestDetails.equals(1, "capabilities"))
                 handleCapabilitiesRequest(request, socket);
+            else
+                HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, socket);
         }
         else if (requestDetails.isGet("/robots.txt"))
             handleRobotsTxtRequest(request, socket);
 
         else if (requestDetails.equals(RequestDetails::Field::Type, "cool") &&
                  requestDetails.equals(1, "media"))
-        {
             handleMediaRequest(request, disposition, socket);
-        }
+
         else if (requestDetails.equals(RequestDetails::Field::Type, "cool") &&
                  requestDetails.equals(1, "clipboard"))
         {
-            //              Util::dumpHex(std::cerr, socket->getInBuffer(), "clipboard:\n"); // lots of data ...
+//          Util::dumpHex(std::cerr, socket->getInBuffer(), "clipboard:\n"); // lots of data ...
             handleClipboardRequest(request, message, disposition, socket);
         }
 
