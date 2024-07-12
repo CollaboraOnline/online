@@ -610,10 +610,41 @@ namespace Log
 
         if (logToFile)
         {
-            channel = static_cast<Poco::Channel*>(new Poco::FileChannel("coolwsd.log"));
-            for (const auto& pair : config)
+            /* For linux namespaces we have a difficulty with "rotateOnOpen".
+               These namespacess cannot be created with another thread running and
+               with "rotateOnOpen" an existing log is moved and then compressed
+               in a thread whose presence then blocks namespace creation.
+
+               So, if there is "rotateOnOpen" then do this twice and force
+               destruction of the initial channel to wait for and join the
+               compression thread on the old log, and then create another which
+               then has no need to do any rotateOnOpen work.
+            */
+            bool logRotateOnOpen = false;
+
+            for (int i = 0; i < 2; ++i)
             {
-                channel->setProperty(pair.first, pair.second);
+                channel = static_cast<Poco::Channel*>(new Poco::FileChannel("coolwsd.log"));
+                for (const auto& pair : config)
+                {
+                    if (pair.first == "rotateOnOpen" && pair.second == "true")
+                        logRotateOnOpen = true;
+                    channel->setProperty(pair.first, pair.second);
+                }
+
+                // no rotation -> no thread, no need to repeat again
+                if (!logRotateOnOpen)
+                    break;
+
+                // or this is the 2nd creation
+                if (i)
+                    break;
+
+                // otherwise, trigger the compression thread and the next loop
+                // at channel = ... will destroy the first and join the
+                // problematic thread
+                channel->open();
+                channel->close();
             }
         }
         else if (withColor)
