@@ -22,7 +22,7 @@ function selectTextShape(i) {
             cy.cGet('body').click(XPos, YPos);
         });
 
-    cy.cGet('#map .html-object-section').should('have.length', 9);
+    cy.cGet('[id^="test-div-shape-handle-"]').should('have.length', 6); // 3 of the handles are not visible because of the side bar.
     cy.cGet('#document-container svg g path').should('exist');
     cy.log('Selecting text shape - end.');
 }
