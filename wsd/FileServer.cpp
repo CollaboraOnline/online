@@ -1263,8 +1263,8 @@ FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::prepro
         SupportKey key(keyString);
         if (!key.verify() || key.validDaysRemaining() <= 0)
         {
-            brandCSS = Poco::format(linkCSS, responseRoot, SUPPORT_KEY_BRANDING_UNSUPPORTED);
-            brandJS = Poco::format(scriptJS, responseRoot, SUPPORT_KEY_BRANDING_UNSUPPORTED);
+            brandCSS = Poco::format(linkCSS, responseRoot, std::string(SUPPORT_KEY_BRANDING_UNSUPPORTED));
+            brandJS = Poco::format(scriptJS, responseRoot, std::string(SUPPORT_KEY_BRANDING_UNSUPPORTED));
         }
     }
 
