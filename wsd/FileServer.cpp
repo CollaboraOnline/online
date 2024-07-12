@@ -1649,7 +1649,7 @@ void FileServerRequestHandler::preprocessAdminFile(const HTTPRequest& request,
 
         if (!key.verify() || key.validDaysRemaining() <= 0)
         {
-            brandJS = Poco::format(scriptJS, SUPPORT_KEY_BRANDING_UNSUPPORTED);
+            brandJS = Poco::format(scriptJS, std::string(SUPPORT_KEY_BRANDING_UNSUPPORTED));
             brandFooter = Poco::format(footerPage, key.data(), Poco::DateTimeFormatter::format(key.expiry(), Poco::DateTimeFormat::RFC822_FORMAT));
         }
     }
