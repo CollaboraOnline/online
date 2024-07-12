@@ -857,14 +857,8 @@ class TreeViewControl {
 		}
 	}
 
-	fillItems(entries, builder, ulParent, tableParent) {
+	fillItems(entries, builder, level, ulParent, tableParent) {
 		let ulChild, tableChild;
-
-		// only simple table case
-		if (entries && entries.length > 0 &&
-		    this._tableContainer && this._tableContainer._tbody != tableParent) {
-			delete this._tableContainer;
-		}
 
 		for (let index in entries) {
 			if (this._ulContainer && entries[index].columns &&
@@ -880,15 +874,15 @@ class TreeViewControl {
 			}
 
 			if (this._tableContainer && tableParent) {
-				tableChild = this.createTableItem(entries[index], builder, tableParent);
+				tableChild = this.createTableItem(entries[index], builder, level, tableParent);
 			}
 
-			this.fillItems(entries.children, builder, ulChild, tableChild);
+			this.fillItems(entries[index].children, builder, level + 1, ulChild, tableChild);
 		}
 	}
 
 	buildTreeView(data, builder, parentContainer) {
-		this.fillItems(data.entries, builder, this._ulContainer, this._tableContainer._tbody);
+		this.fillItems(data.entries, builder, 0, this._ulContainer, this._tableContainer._tbody);
 		this.fillHeaders(data.headers, builder);
 
 		if (this._ulContainer && this._ulContainer.hasChildNodes()) {
@@ -916,18 +910,26 @@ class TreeViewControl {
 		return li;
 	}
 
-	createTableItem(entry, builder, parent) {
-		if (this._tableContainer.tbody === parent) {
-			let tr = L.DomUtil.create('tr', builder.options.cssClass, parent);
-			for (let index in entry.columns) {
-				let td = L.DomUtil.create('td', '', tr);
-				let span = L.DomUtil.create('span', builder.options.cssClass +
-							    ' ui-treeview-cell-text', td);
-				span.innerText = entry.columns[index].text;
-			}
-			return tr;
-		} else
-			return null;
+	createTableItem(entry, builder, level, parent) {
+		let tr = L.DomUtil.create('tr', builder.options.cssClass + ' ui-listview-entry', parent);
+		tr.setAttribute('role', 'row');
+		tr.setAttribute('aria-level', level + 1);
+		if (entry.children && entry.children.length) {
+			tr.setAttribute('aria-expanded', true);
+		}
+
+		this.fillTableCells(entry, builder, tr);
+
+		return parent;
+	}
+
+	fillTableCells(entry, builder, parent) {
+		for (let index in entry.columns) {
+			let td = L.DomUtil.create('td', '', parent);
+			let span = L.DomUtil.create('span', builder.options.cssClass +
+						    ' ui-treeview-cell-text', td);
+			span.innerText = entry.columns[index].text;
+		}
 	}
 }
 
