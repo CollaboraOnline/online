@@ -487,7 +487,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 			newSubSection = new app.definitions.shapeHandleRotationSubSection(
 				this,
 				this.sectionProperties.subSectionPrefix + 'rotation',
-				[this.sectionProperties.rotationHandleWidth / app.dpiScale, this.sectionProperties.rotationHandleHeight / app.dpiScale],
+				[this.sectionProperties.rotationHandleWidth, this.sectionProperties.rotationHandleHeight],
 				handle.point.clone(),
 				handle.info
 			);
