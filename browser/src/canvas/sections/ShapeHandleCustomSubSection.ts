@@ -10,52 +10,63 @@
 */
 
 /*
-	This class is for the sub sections (handles) of ShapeHandlesSection.
-	Shape is rendered on the core side. Only the handles are drawn here and modification commands are sent to the core side.
+	This class is for custom handlers of shapes.
 */
 
-// This will be HTMLObjectSection until we remove map element. Because map is catching the events before canvas sections for now - so we need object section's div element.
-// Same goes for the mirrored events.
-class ShapeHandleCustomSubSection extends HTMLObjectSection {
+class ShapeHandleCustomSubSection extends CanvasSectionObject {
     processingOrder: number = L.CSections.DefaultForDocumentObjects.processingOrder;
 	drawingOrder: number = L.CSections.DefaultForDocumentObjects.drawingOrder + 1; // Handle events before the parent section.
 	zIndex: number = L.CSections.DefaultForDocumentObjects.zIndex;
-    backgroundColor: string = null;
+    documentObject: boolean = true;
 
 	constructor (parentHandlerSection: ShapeHandlesSection, sectionName: string, size: number[], documentPosition: cool.SimplePoint, ownInfo: any) {
-        super(sectionName, size[0], size[1], documentPosition, null, true);
-
-		this.getHTMLObject().style.opacity = 0.5;
-		this.getHTMLObject().style.backgroundColor = 'yellow';
-		this.getHTMLObject().style.borderRadius = '50%';
-		app.definitions.shapeHandlesSection.moveHTMLObjectToMapElement(this);
-
-		app.definitions.shapeHandlesSection.mirrorEventsFromSourceToCanvasSectionContainer(this.getHTMLObject());
+        super();
 
         this.size = size;
+		this.name = sectionName;
 
+		this.sectionProperties.position = documentPosition.clone();
 		this.sectionProperties.parentHandlerSection = parentHandlerSection;
 		this.sectionProperties.ownInfo = ownInfo;
 		this.sectionProperties.previousCursorStyle = null;
 
 		this.sectionProperties.mousePointerType = 'grab';
+		this.sectionProperties.mapPane = (<HTMLElement>(document.querySelectorAll('.leaflet-map-pane')[0]));
+	}
+
+	onDraw(frameCount?: number, elapsedTime?: number, subsetBounds?: cool.Bounds): void {
+		this.context.fillStyle = 'yellow';
+		this.context.strokeStyle = 'black';
+		this.context.beginPath();
+		this.context.arc(this.size[0] * 0.5, this.size[1] * 0.5, this.size[0] * 0.5, 0, Math.PI * 2);
+		this.context.closePath();
+		this.context.fill();
+		this.context.stroke();
+	}
+
+	onInitialize(): void {
+		this.setPosition(this.sectionProperties.position.pX, this.sectionProperties.position.pY);
 	}
 
 	onMouseEnter(point: number[], e: MouseEvent) {
-		this.backgroundColor = 'grey';
-		this.sectionProperties.previousCursorStyle = this.getHTMLObject().style.cursor;
-		this.getHTMLObject().style.cursor = this.sectionProperties.mousePointerType;
+		app.map.dontHandleMouse = true;
+		this.sectionProperties.previousCursorStyle = this.sectionProperties.mapPane.style.cursor;
+		this.sectionProperties.mapPane.style.cursor = this.sectionProperties.mousePointerType;
 		this.stopPropagating();
 		e.stopPropagation();
 		this.containerObject.requestReDraw();
 	}
 
 	onMouseLeave(point: number[], e: MouseEvent) {
-		this.getHTMLObject().style.cursor = this.sectionProperties.previousCursorStyle;
-		this.backgroundColor = null;
+		app.map.dontHandleMouse = false;
+		this.sectionProperties.mapPane.style.cursor = this.sectionProperties.previousCursorStyle;
 		this.stopPropagating();
 		e.stopPropagation();
 		this.containerObject.requestReDraw();
+	}
+
+	onMouseDown(point: Array<number>, e: MouseEvent): void {
+		(window as any).IgnorePanning = true;
 	}
 
 	onMouseUp(point: number[], e: MouseEvent): void {
@@ -71,6 +82,8 @@ class ShapeHandleCustomSubSection extends HTMLObjectSection {
 			this.stopPropagating();
 			e.stopPropagation();
 		}
+
+		(window as any).IgnorePanning = false;
 	}
 
 	onMouseMove(point: Array<number>, dragDistance: Array<number>, e: MouseEvent) {
