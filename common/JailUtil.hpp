@@ -46,16 +46,6 @@ bool enterMountingNS(uid_t uid, gid_t gid);
 /// map root to uid/gid within that namespace.
 bool enterUserNS(uid_t uid, gid_t gid);
 
-/// return the local path to the jailPath under localJailRoot
-/// localJailRoot /chroot/jailId
-/// jailPath /tmp/user/doc/childId
-/// with usingMountNamespaces false then simply return:
-/// -> /chroot/jailId/tmp/user/doc/childId
-/// otherwise replaces jailPath's in /tmp with the tmp dir that is mounted
-/// from, e.g. return:
-/// -> /chroot/tmp/cool-jailId/tmp/user/doc/childId
-std::string buildLocalPathToJail(bool usingMountNamespaces, std::string localJailRoot, std::string jailPath);
-
 /// Bind mount a jail directory.
 bool bind(const std::string& source, const std::string& target);
 

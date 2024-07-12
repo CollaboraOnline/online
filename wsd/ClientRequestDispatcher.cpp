@@ -1521,7 +1521,7 @@ void ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
                 formName.find('/') == std::string::npos)
             {
                 const std::string dirPath =
-                    JailUtil::buildLocalPathToJail(COOLWSD::EnableMountNamespaces, COOLWSD::ChildRoot + formChildid,
+                    FileUtil::buildLocalPathToJail(COOLWSD::EnableMountNamespaces, COOLWSD::ChildRoot + formChildid,
                                                    JAILED_DOCUMENT_ROOT + std::string("insertfile"));
                 const std::string fileName = dirPath + '/' + form.get("name");
                 LOG_INF("Perform insertfile: " << formChildid << ", " << formName
@@ -1573,7 +1573,7 @@ void ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
         std::string decoded;
         Poco::URI::decode(url, decoded);
 
-        const Poco::Path filePath(JailUtil::buildLocalPathToJail(COOLWSD::EnableMountNamespaces, COOLWSD::ChildRoot + jailId,
+        const Poco::Path filePath(FileUtil::buildLocalPathToJail(COOLWSD::EnableMountNamespaces, COOLWSD::ChildRoot + jailId,
                                                                  JAILED_DOCUMENT_ROOT + decoded));
         const std::string filePathAnonym = COOLWSD::anonymizeUrl(filePath.toString());
 

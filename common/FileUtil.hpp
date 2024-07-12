@@ -36,6 +36,16 @@ namespace FileUtil
     /// Create a secure, random directory path.
     std::string createRandomDir(const std::string& path);
 
+    /// return the local path to the jailPath under localJailRoot
+    /// localJailRoot /chroot/jailId
+    /// jailPath /tmp/user/doc/childId
+    /// with usingMountNamespaces false then simply return:
+    /// -> /chroot/jailId/tmp/user/doc/childId
+    /// otherwise replaces jailPath's in /tmp with the tmp dir that is mounted
+    /// from, e.g. return:
+    /// -> /chroot/tmp/cool-jailId/tmp/user/doc/childId
+    std::string buildLocalPathToJail(bool usingMountNamespaces, std::string localJailRoot, std::string jailPath);
+
     // We work around some of the mess of using the same sources both on the server side and in unit
     // tests with conditional compilation based on BUILDING_TESTS.
 
