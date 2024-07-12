@@ -829,11 +829,32 @@ function _treelistboxControl(parentContainer, data, builder) {
 class TreeViewControl {
 	constructor(data, builder) {
 		this._tableContainer = L.DomUtil.create('table', builder.options.cssClass + ' ui-treeview');
-		this._tableContainer._tbody = L.DomUtil.create('tbody', builder.options.cssClass
-							       + ' ui-treeview-body', this._tableContainer);
 
 		if (!data.headers || data.headers.length === 0)
 			this._ulContainer = L.DomUtil.create('ul', builder.options.cssClass + ' ui-treeview');
+		else {
+			this._tableContainer._thead = L.DomUtil.create('thead', builder.options.cssClass,
+								       this._tableContainer);
+			L.DomUtil.create('tr', builder.options.cssClass, this._tableContainer._thead);
+		}
+
+		this._tableContainer._tbody = L.DomUtil.create('tbody', builder.options.cssClass +
+							       ' ui-treeview-body', this._tableContainer);
+	}
+
+	fillHeaders(headers, builder) {
+		if (!this._tableContainer || !headers)
+			return;
+
+		for (let index in headers) {
+			let th = L.DomUtil.create('th', builder.options.cssClass,
+						  this._tableContainer._thead.firstChild);
+			let span = L.DomUtil.create('span', builder.options.cssClass +
+						    ' ui-treeview-header-text', th);
+			L.DomUtil.create('span', builder.options.cssClass +
+					 ' ui-treeview-header-sort-icon', span);
+			span.innerText = headers[index].text;
+		}
 	}
 
 	fillItems(entries, builder, ulParent, tableParent) {
@@ -868,6 +889,7 @@ class TreeViewControl {
 
 	buildTreeView(data, builder, parentContainer) {
 		this.fillItems(data.entries, builder, this._ulContainer, this._tableContainer._tbody);
+		this.fillHeaders(data.headers, builder);
 
 		if (this._ulContainer && this._ulContainer.hasChildNodes()) {
 			parentContainer.appendChild(this._ulContainer);
