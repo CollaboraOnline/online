@@ -39,10 +39,6 @@ When building from a tarball less magic is needed.
 
 Run 'make check' after each commit.
 
-Note that the coolforkit program needs the CAP_SYS_CHROOT capability,
-thus you will be asked the root password when running make as it
-invokes sudo to run /sbin/setcap.
-
 If you have self-built Poco, add the following to ./configure:
 
     --with-poco-includes=<POCOINST>/include --with-poco-libs=<POCOINST>/lib
