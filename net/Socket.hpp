@@ -1387,10 +1387,12 @@ protected:
             catch (const std::exception& exception)
             {
                 LOG_ERR("Error during handleIncomingMessage: " << exception.what());
+                disposition.setClosed();
             }
             catch (...)
             {
                 LOG_ERR("Error during handleIncomingMessage.");
+                disposition.setClosed();
             }
 
             if (disposition.isMove() || disposition.isTransfer())
