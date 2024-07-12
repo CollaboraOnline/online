@@ -1278,8 +1278,9 @@ input[type='number']:hover::-webkit-outer-spin-button {
 }
 
 .arrowbackground {
-	width: 15px;
-	height: 23px;
+	box-sizing: border-box;
+	width: 16px;
+	height: 16px;
 	display: inline-block;
 	border-left: 1px solid transparent;
 	background-color: transparent;
