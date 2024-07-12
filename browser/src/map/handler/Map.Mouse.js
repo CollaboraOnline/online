@@ -39,7 +39,7 @@ L.Map.Mouse = L.Handler.extend({
 	},
 
 	_onMouseEvent: window.touch.mouseOnly(function (e) {
-		if (this._map.uiManager.isUIBlocked())
+		if (this._map.uiManager.isUIBlocked() || app.map.dontHandleMouse)
 			return;
 
 		app.idleHandler.notifyActive();
