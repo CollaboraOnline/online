@@ -84,6 +84,7 @@
 #include <common/Watchdog.hpp>
 
 #if !MOBILEAPP
+#include <common/security.h>
 #include <common/SigUtil.hpp>
 #include <common/Seccomp.hpp>
 #include <utility>
@@ -3223,10 +3224,10 @@ void lokit_main(
 #ifndef __FreeBSD__
             if (usingMountNamespace)
             {
-                // Drop all capabilities, we have the full set in our namespace
-                cap_t caps = cap_init();
-                cap_set_proc(caps);
-                cap_free(caps);
+                // We have a full set of capabilities in the namespace so drop
+                // them all
+                if (dropAllCapabilities() == -1)
+                    LOG_ERR("Failed to drop all capabilities");
             }
             else
             {

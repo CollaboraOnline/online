@@ -168,7 +168,7 @@ using Poco::Net::PartHandler;
 
 #ifdef __linux__
 #if !MOBILEAPP
-#include <sys/capability.h>
+#include <common/security.h>
 #include <sys/inotify.h>
 #endif
 #endif
@@ -2557,6 +2557,8 @@ void COOLWSD::innerInitialize(Application& self)
     const uid_t origgid = getegid();
     if (UseMountNamespaces)
     {
+        // setupChildRoot does a test bind mount + umount to see if that fully works
+        // so we have a mount namespace here just for the purposes of that test
         LOG_DBG("Move into user namespace as uid 0");
         EnableMountNamespaces = JailUtil::enterMountingNS(origuid, origgid);
         if (EnableMountNamespaces)
@@ -2576,10 +2578,9 @@ void COOLWSD::innerInitialize(Application& self)
         assert(origuid == geteuid());
         assert(origgid == getegid());
 
-        // Drop all capabilities, we have the full set in our namespace
-        cap_t caps = cap_init();
-        cap_set_proc(caps);
-        cap_free(caps);
+        // In a new namespace we have a full set of capabilities that we don't need
+        if (dropAllCapabilities() == -1)
+            LOG_ERR("Failed to drop all capabilities");
 
         char *capText = cap_to_text(cap_get_proc(), nullptr);
         LOG_DBG("Initialized child root, dropped caps. Final caps are: " << capText);
