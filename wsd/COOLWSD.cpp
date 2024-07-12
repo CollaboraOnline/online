@@ -2667,6 +2667,14 @@ void COOLWSD::innerInitialize(Application& self)
         setenv("MAX_CONCURRENCY", std::to_string(maxConcurrency).c_str(), 1);
     }
     LOG_INF("MAX_CONCURRENCY set to " << maxConcurrency << '.');
+
+    // It is worth avoiding configuring with a large number of under-weight
+    // containers / VMs - better to have fewer, stronger ones.
+    if (nThreads < 4)
+        LOG_WRN("Fewer threads than recommended. Having at least four threads for "
+                "provides significant parallelism that can be used for burst "
+                "compression of newly visible document pages, giving lower latency.");
+
 #elif defined(__EMSCRIPTEN__)
     // disable threaded image scaling for wasm for now
     setenv("VCL_NO_THREAD_SCALE", "1", 1);
