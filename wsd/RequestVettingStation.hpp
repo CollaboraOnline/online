@@ -61,6 +61,7 @@ public:
     /// Called when cool.html is served, to start the vetting as early as possible.
     void handleRequest(const std::string& id);
 
+    /// Called when the WebSocket is connected (i.e. after cool.html is loaded in the browser).
     void handleRequest(const std::string& id, const RequestDetails& requestDetails,
                        const std::shared_ptr<WebSocketHandler>& ws,
                        const std::shared_ptr<StreamSocket>& socket, unsigned mobileAppDocId,
