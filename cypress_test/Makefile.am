@@ -207,6 +207,7 @@ define start_coolwsd_instance
 			--o:user_interface.mode=$(USER_INTERFACE) \
 			--o:accessibility.enable=$(A11Y_ENABLE) \
 			--o:security.enable_macros_execution=true \
+			--o:mount_namespaces=false \
 			$(if $(SHORT_IDLE),--o:per_view.out_of_focus_timeout_secs=1) \
 			$(if $(SHORT_IDLE),--o:per_view.idle_timeout_secs=7) \
 			--port=$(FREE_PORT) \
