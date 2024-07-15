@@ -173,7 +173,7 @@ class Dispatcher {
 			app.map.zoomOut(1, null, true /* animate? */);
 		};
 		this.actionsMap['zoomreset'] = () => {
-			app.map.setZoom(app.map.options.zoom);
+			app.map.setZoom(app.map.options.zoom, null, true);
 		};
 
 		this.actionsMap['searchprev'] = () => {

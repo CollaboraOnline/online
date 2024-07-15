@@ -212,7 +212,7 @@ class StatusBar extends JSDialog.Toolbar {
 			{ id: 'zoom100', text: '100', scale: 10},
 			{ id: 'zoom120', text: '120', scale: 11},
 			{ id: 'zoom150', text: '150', scale: 12},
-			{ id: 'zoom175', text: '175', scale: 13},
+			{ id: 'zoom170', text: '170', scale: 13},
 			{ id: 'zoom200', text: '200', scale: 14},
 			{ id: 'zoom235', text: '235', scale: 15},
 			{ id: 'zoom280', text: '280', scale: 16},
