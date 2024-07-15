@@ -124,19 +124,21 @@ class UserList extends L.Control {
 	followUser(viewId: number) {
 		const myViewId = this.map._docLayer._viewId;
 		const followingViewId = app.getFollowedViewId();
-
-		const follow = viewId !== followingViewId;
+		const followMyself = viewId === followingViewId;
 
 		app.setFollowingUser(viewId);
 
-		if (!follow) {
+		if (followMyself) {
 			this.map._goToViewId(myViewId);
 			this.map._setFollowing(true, myViewId);
 			this.renderAll();
 			return;
-		} else if (followingViewId !== -1) {
+		} else if (viewId !== -1) {
 			this.map._goToViewId(viewId);
 			this.map._setFollowing(true, viewId);
+		} else {
+			this.unfollowAll();
+			this.map._setFollowing(false, -1);
 		}
 
 		this.selectUser(viewId);
