@@ -2004,10 +2004,15 @@ void COOLWSD::setupChildRoot(const bool UseMountNamespaces)
 
     int status = WEXITSTATUS(wstatus);
     LOG_DBG("setupChildRoot status: " << std::hex << status << std::dec);
-    EnableMountNamespaces = (status & (1 << 0));
-    LOG_INF("Using Mount Namespaces: " << EnableMountNamespaces);
     IsBindMountingEnabled = (status & (1 << 1));
     LOG_INF("Using Bind Mounting: " << IsBindMountingEnabled);
+    EnableMountNamespaces = (status & (1 << 0));
+    if (EnableMountNamespaces && !IsBindMountingEnabled)
+    {
+        LOG_ERR("MountNamespaces possible, but BindMount + MountNamespace fails, disabling");
+        EnableMountNamespaces = false;
+    }
+    LOG_INF("Using Mount Namespaces: " << EnableMountNamespaces);
     if (IsBindMountingEnabled)
         JailUtil::enableBindMounting();
     if (EnableMountNamespaces)
