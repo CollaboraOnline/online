@@ -2681,21 +2681,21 @@ L.CanvasTileLayer = L.Layer.extend({
 			else
 				map_.sendUnoCommand('.uno:JumpToMark?Bookmark:string=' + encodeURIComponent(url.substring(1)));
 		});
+		var params;
+		if (linkPosition) {
+			params = {
+				PositionX: {
+					type: 'long',
+					value: linkPosition.x
+				},
+				PositionY: {
+					type: 'long',
+					value: linkPosition.y
+				}
+			};
+		}
 		this._setupClickFuncForId('hyperlink-pop-up-copy', function () {
 			if (app.file.permission !== 'readonly') {
-				var params;
-				if (linkPosition) {
-					params = {
-						PositionX: {
-							type: 'long',
-							value: linkPosition.x
-						},
-						PositionY: {
-							type: 'long',
-							value: linkPosition.y
-						}
-					};
-				}
 				map_.sendUnoCommand('.uno:CopyHyperlinkLocation', params);
 			}
 			else {
@@ -2706,10 +2706,10 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		if (app.file.permission !== 'readonly') {
 			this._setupClickFuncForId('hyperlink-pop-up-edit', function () {
-				map_.sendUnoCommand('.uno:EditHyperlink');
+				map_.sendUnoCommand('.uno:EditHyperlink', params);
 			});
 			this._setupClickFuncForId('hyperlink-pop-up-remove', function () {
-				map_.sendUnoCommand('.uno:RemoveHyperlink');
+				map_.sendUnoCommand('.uno:RemoveHyperlink', params);
 			});
 		}
 
