@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-07-05 13:52+0200\n"
-"PO-Revision-Date: 2024-05-21 14:10+0000\n"
+"PO-Revision-Date: 2024-07-13 21:09+0000\n"
 "Last-Translator: Ali <alimahwer@yahoo.com>\n"
 "Language-Team: Arabic <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ar/>\n"
-"Language: \n"
+"Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
-"X-Generator: Weblate 5.6-dev\n"
+"X-Generator: Weblate 5.7-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -480,11 +480,11 @@ msgstr "لصقٌ خاصّ"
 
 #: src/control/Control.ContextMenu.js:240
 msgid "Copy Cells"
-msgstr ""
+msgstr "نسخ الخلايا"
 
 #: src/control/Control.ContextMenu.js:248
 msgid "Fill Series"
-msgstr ""
+msgstr "ملء السلسلة"
 
 #: src/control/Control.DocumentNameInput.js:113
 msgid "Path"
@@ -1047,7 +1047,7 @@ msgstr "ارسل رأيك"
 #: src/control/Control.ServerAuditDialog.ts:112
 #: src/control/Control.ServerAuditDialog.ts:113
 msgid "Server audit"
-msgstr ""
+msgstr "سجل حركات الخادوم"
 
 #: src/control/Control.Menubar.js:387 src/control/Control.Menubar.js:548
 #: src/control/Control.Menubar.js:679 src/control/Control.Menubar.js:959
@@ -1082,12 +1082,12 @@ msgstr "حفظ التعليقات"
 #: src/control/Control.Menubar.js:414
 #: src/control/Control.NotebookbarBuilder.js:601
 msgid "Full Page Slides"
-msgstr ""
+msgstr "شرائح ملء الصفحة"
 
 #: src/control/Control.Menubar.js:415
 #: src/control/Control.NotebookbarBuilder.js:605
 msgid "Notes Pages"
-msgstr ""
+msgstr "صفحات الملاحظات"
 
 #: src/control/Control.Menubar.js:449
 #: src/control/Control.NotebookbarImpress.js:470
@@ -1152,44 +1152,43 @@ msgstr "جميع الأوراق"
 #: src/control/Control.Menubar.js:835
 #: src/control/jsdialog/Definitions.Menu.ts:286
 msgid "Highlight cells with..."
-msgstr ""
+msgstr "إبراز الخلايا مع ..."
 
 #: src/control/Control.Menubar.js:836
 #: src/control/jsdialog/Definitions.Menu.ts:289
 msgid "Values greater than..."
-msgstr ""
+msgstr "قيم أكبر من ..."
 
 #: src/control/Control.Menubar.js:837
 #: src/control/jsdialog/Definitions.Menu.ts:293
 msgid "Values less than..."
-msgstr ""
+msgstr "قيم أقل من ..."
 
 #: src/control/Control.Menubar.js:838
 #: src/control/jsdialog/Definitions.Menu.ts:297
 msgid "Values equal to..."
-msgstr ""
+msgstr "قيم تساوي ..."
 
 #: src/control/Control.Menubar.js:839
 #: src/control/jsdialog/Definitions.Menu.ts:301
 msgid "Values between..."
-msgstr ""
+msgstr "قيم بين ..."
 
 #: src/control/Control.Menubar.js:840
 #: src/control/jsdialog/Definitions.Menu.ts:305
 msgid "Values duplicate..."
-msgstr ""
+msgstr "قيم مكررة ..."
 
 #: src/control/Control.Menubar.js:841
 #: src/control/jsdialog/Definitions.Menu.ts:309
-#, fuzzy
 msgid "Containing text..."
-msgstr "يحتوي نصاً ..."
+msgstr "تحتوي نصاً ..."
 
 #: src/control/Control.Menubar.js:843 src/control/Control.Menubar.js:853
 #: src/control/jsdialog/Definitions.Menu.ts:313
 #: src/control/jsdialog/Definitions.Menu.ts:344
 msgid "More highlights..."
-msgstr ""
+msgstr "إبرازات أخرى ..."
 
 #: src/control/Control.Menubar.js:845
 #: src/control/jsdialog/Definitions.Menu.ts:317
@@ -1602,11 +1601,11 @@ msgstr "موجود في النافذة"
 
 #: src/control/Control.NotebookbarImpress.js:455
 msgid "Normal View"
-msgstr ""
+msgstr "العرض المعتاد"
 
 #: src/control/Control.NotebookbarImpress.js:461
 msgid "Notes View"
-msgstr ""
+msgstr "عرض الملاحظات"
 
 #: src/control/Control.NotebookbarWriter.js:79
 msgid "Form"
@@ -1666,42 +1665,43 @@ msgstr "امسح حقل البحث"
 
 #: src/control/Control.ServerAuditDialog.ts:28
 msgid "The IsAdminUser property is not set by integration"
-msgstr ""
+msgstr "لم يتم تعيين الخاصية IsAdminUser بواسطة التكامل"
 
 #: src/control/Control.ServerAuditDialog.ts:34
 msgid ""
 "Used deprecated is_admin field, integration should use IsAdminUser property "
 "instead"
 msgstr ""
+"تم استخدام حقل is_admin المهمل، ويجب أن يستخدم التكامل خاصية IsAdminUser بدلاً"
+" من ذلك"
 
 #: src/control/Control.ServerAuditDialog.ts:39
 msgid "The IsAdminUser user property is set by integration"
-msgstr ""
+msgstr "تمّ تعيين خاصية المستخدم IsAdminUser بواسطة التكامل"
 
 #: src/control/Control.ServerAuditDialog.ts:43
 msgid "Your WOPI server is not secure: SSL verification failed"
-msgstr ""
+msgstr "خادم WOPI الخاص بك غير آمن: فشل التحقق من طبقة المقابس الآمنة (SSL)"
 
 #: src/control/Control.ServerAuditDialog.ts:47
 msgid "No problems with SSL verification detected"
-msgstr ""
+msgstr "لم يتم اكتشاف أي إشكالية عند التحقق من شهائد المصادقة SSL"
 
 #: src/control/Control.ServerAuditDialog.ts:131
 msgid "No issues found"
-msgstr ""
+msgstr "لم يتم اكتشاف أي إشكالية"
 
 #: src/control/Control.ServerAuditDialog.ts:137
-#, fuzzy
 msgid "Status"
-msgstr "الحالة:"
+msgstr "الحالة"
 
 #: src/control/Control.ServerAuditDialog.ts:185
 msgid "Check security warnings of your server"
-msgstr ""
+msgstr "تحقّق من التحذيرات الأمنية لخادومك"
 
 #: src/control/Control.ServerAuditDialog.ts:186
 msgid "OPEN"
-msgstr ""
+msgstr "مفتوح"
 
 #: src/control/Control.SheetsBar.js:48
 msgid "Scroll to the first sheet"
@@ -2101,11 +2101,11 @@ msgstr "حذف علامة وقف التبويب"
 
 #: src/control/VRuler.ts:377
 msgid "Top Margin"
-msgstr ""
+msgstr "الهامش العلوي"
 
 #: src/control/VRuler.ts:378
 msgid "Bottom Margin"
-msgstr ""
+msgstr "الهامش السفلي"
 
 #: src/control/Signing.js:27
 msgid "This document is digitally signed and the signature is valid."
@@ -2258,7 +2258,7 @@ msgstr "حدود الخلية"
 
 #: src/control/jsdialog/Widget.SidebarContainers.ts:72
 msgid "More options for {name}"
-msgstr ""
+msgstr "خيارات أخرى لـ {name}"
 
 #: src/control/jsdialog/Widget.TreeView.js:698
 msgid "Headings and objects that you add to the document will appear here"
@@ -2514,7 +2514,7 @@ msgstr ""
 
 #: src/errormessages.js:29
 msgid "Authorization error was: '{errormessage}'."
-msgstr ""
+msgstr "خطأ في التخويل: '{errormessage}'."
 
 #: src/errormessages.js:30
 msgid "Wrong or missing WOPISrc parameter, please contact support."
@@ -2632,6 +2632,8 @@ msgid ""
 "Document cannot be saved due to expired session, please reopen the document "
 "to continue."
 msgstr ""
+"يتعذّر حفظ المستند بسبب انتهاء صلاحية الجلسة. يُرجى إعادة فتح المستند "
+"للاستمرار."
 
 #: src/errormessages.js:48
 msgid "Document cannot be saved."
@@ -2669,6 +2671,8 @@ msgid ""
 "Document cannot be saved due to expired session, please reload the page to "
 "continue."
 msgstr ""
+"يتعذّر حفظ المستند بسبب انتهاء صلاحية الجلسة. يُرجى إعادة تحميل الصفحة "
+"للاستمرار."
 
 #: src/errormessages.js:57
 msgid "Document cannot be saved, please check your permissions."
@@ -2743,21 +2747,21 @@ msgstr "مؤشر ترابط محلول"
 #: src/canvas/sections/CommentListSection.ts:1260
 #: src/canvas/sections/CommentListSection.ts:2090
 msgid "Comments Updated"
-msgstr ""
+msgstr "تمّ تحديث الملاحظات"
 
 #: src/canvas/sections/CommentListSection.ts:1248
 msgid "Another user has removed this comment."
-msgstr ""
+msgstr "قام مستخدِم آخر بإزالة هذه الملاحظة."
 
 #: src/canvas/sections/CommentListSection.ts:1261
 msgid ""
 "Another user has updated the comment. Would you like to overwrite those "
 "changes?"
-msgstr ""
+msgstr "قام مستخدِم آخر بتعديل الملاحظة. هل ترغب في تجاوز تعديلاته؟"
 
 #: src/canvas/sections/CommentListSection.ts:1263
 msgid "Update"
-msgstr ""
+msgstr "تحديث"
 
 #: src/canvas/sections/CommentListSection.ts:1334
 #: src/canvas/sections/CommentListSection.ts:1396
@@ -2766,7 +2770,7 @@ msgstr "تم الحفظ تلقائيًا"
 
 #: src/canvas/sections/CommentListSection.ts:2091
 msgid "Another user has updated comments. Would you like to proceed updating?"
-msgstr ""
+msgstr "قام مستخدِم آخر بتعديل الملاحظات. هل ترغب بالاستمرار في التعديل؟"
 
 #: src/canvas/sections/CommentSection.ts:300
 msgid "Open menu"
