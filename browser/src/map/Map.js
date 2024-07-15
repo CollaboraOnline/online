@@ -26,7 +26,6 @@ L.Map = L.Evented.extend({
 		maxZoom: 18,
 		maxBounds: L.latLngBounds([0, 0], [-100, 100]),
 		fadeAnimation: false, // Not useful for typing.
-		trackResize: true,
 		markerZoomAnimation: true,
 		// defaultZoom:
 		// The zoom level at which the tile size in twips equals the default size (3840 x 3840).
@@ -73,9 +72,6 @@ L.Map = L.Evented.extend({
 		this._clip = L.clipboard(this);
 		this._initContainer(id);
 		this._initLayout();
-
-		// hack for https://github.com/Leaflet/Leaflet/issues/1980
-		this._onResize = L.bind(this._onResize, this);
 
 		// Start with readonly toolbars on desktop
 		if (window.mode.isDesktop()) {
@@ -195,8 +191,6 @@ L.Map = L.Evented.extend({
 				this._fireInitComplete('doclayerinit');
 			}
 
-			// We need core's knowledge of whether it is a mobile phone
-			// or not to be in sync with the test in _onJSDialogMsg in TileLayer.js.
 			if (window.mode.isMobile())
 			{
 				document.getElementById('document-container').classList.add('mobile');
@@ -1201,14 +1195,6 @@ L.Map = L.Evented.extend({
 			throw new Error('Map container is already initialized.');
 		}
 
-		if (window.mode.isDesktop()) {
-			this._resizeDetector = L.DomUtil.create('iframe', 'resize-detector', container);
-			this._resizeDetector.title = 'Intentionally blank';
-			this._resizeDetector.setAttribute('aria-hidden', 'true');
-			this._resizeDetector.contentWindow.addEventListener('touchstart', L.DomEvent.preventDefault, {passive: false});
-			L.DomEvent.on(this._resizeDetector.contentWindow, 'contextmenu', L.DomEvent.preventDefault);
-		}
-
 		this._fileDownloader = L.DomUtil.create('iframe', '', container);
 		L.DomUtil.setStyle(this._fileDownloader, 'display', 'none');
 
@@ -1339,11 +1325,7 @@ L.Map = L.Evented.extend({
 
 		this._mainEvents(onOff);
 
-		if (this.options.trackResize) {
-			var winTarget = this._resizeDetector && this._resizeDetector.contentWindow ? this._resizeDetector.contentWindow :
-				window;
-			L.DomEvent[onOff](winTarget, 'resize', this._onResize, this);
-		}
+		document.getElementById('document-container').addEventListener('resize', this._onResize.bind(this));
 
 		L.DomEvent[onOff](window, 'blur', this._onLostFocus, this);
 		L.DomEvent[onOff](window, 'focus', this._onGotFocus, this);
