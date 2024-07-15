@@ -145,13 +145,16 @@ class SlideRenderer {
 	public renderSlide(currentSlideTexture: WebGLTexture, slideInfo: SlideInfo, docWidth: number, docHeight: number) {
 		this._slideTexture = currentSlideTexture;
 		this._videos = [];
-		for (var videoInfo of slideInfo.videos) {
-			const video = new VideoRenderInfo;
-			video.videoElement = this.setupVideo(videoInfo.url);
-			video.texture = this.initTexture();
-			video.vao = this.setupVideoPosition(videoInfo.x, videoInfo.y, videoInfo.width, videoInfo.height, docWidth, docHeight);
+		if (slideInfo.videos !== undefined)
+		{
+			for (var videoInfo of slideInfo.videos) {
+				const video = new VideoRenderInfo;
+				video.videoElement = this.setupVideo(videoInfo.url);
+				video.texture = this.initTexture();
+				video.vao = this.setupVideoPosition(videoInfo.x, videoInfo.y, videoInfo.width, videoInfo.height, docWidth, docHeight);
 
-			this._videos.push(video);
+				this._videos.push(video);
+			}
 		}
 		requestAnimationFrame(this.render.bind(this));
 	}
