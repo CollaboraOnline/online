@@ -1230,7 +1230,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_resetDocumentInfo: function () {
-		this._documentInfo = "";
+		this._documentInfo = '';
 	},
 
 	_getViewId: function () {
