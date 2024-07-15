@@ -1067,8 +1067,8 @@ function setupToolbar(e) {
 
 	if (map.options.wopi && L.Params.closeButtonEnabled && !window.mode.isMobile()) {
 		$('#closebuttonwrapper').css('display', 'block');
-		$('#closebuttonwrapper').prop('title', _('Close document'));
-		map.uiManager.enableTooltip($('#closebuttonwrapper'));
+		$('#closebutton').prop('title', _('Close document'));
+		map.uiManager.enableTooltip($('#closebutton'));
 	} else if (!L.Params.closeButtonEnabled) {
 		$('#closebuttonwrapper').hide();
 	} else if (L.Params.closeButtonEnabled && !window.mode.isMobile()) {
