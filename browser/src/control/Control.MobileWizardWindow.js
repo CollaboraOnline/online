@@ -526,6 +526,7 @@ L.Control.MobileWizardWindow = L.Control.extend({
 			if (!alreadyOpen) {
 				history.pushState({context: 'mobile-wizard'}, 'mobile-wizard-opened');
 				history.pushState({context: 'mobile-wizard', level: 0}, 'mobile-wizard-level-0');
+				this.mobileWizard.scrollTop(0);
 			}
 
 			if (!this._builder) {
