@@ -24,7 +24,8 @@
 .hasnotebookbar .ui-content.unotoolbutton.inline,
 .hasnotebookbar .ui-content.unotoolbutton:not(.has-label):not(.inline),
 .sidebar.unotoolbutton,
-.jsdialog.unotoolbutton {
+.jsdialog.unotoolbutton,
+#closebutton {
 	background-color: transparent;
 	border: 1px solid transparent;
 	color: var(--color-main-text);

@@ -350,9 +350,19 @@
 #closebuttonwrapper {
 	order: 99;
 	flex-shrink: 0;
-	width: 37px;
-	height: 32px;
+	width: var(--btn-size);
+	height: var(--btn-size);
 	background-color: transparent;
+	/* same margin as sidebar buttons */
+	margin-inline-end: 5px;
+}
+
+.main-nav.hasnotebookbar #closebuttonwrapperseparator {
+	background: var(--color-background-darker);
+	width: 1px;
+	height: 14px;
+	/* same margin as sidebar buttons */
+	margin-inline-end: 5px;
 }
 
 .main-nav:not(.hasnotebookbar) ~ #closebuttonwrapper {
@@ -374,8 +384,7 @@
 }
 
 #closebutton:hover {
-	border-color: var(--color-border-darker);
-	background-color: var(--color-background-darker);
+	background-color: var(--color-background-darker) !important;
 }
 
 #tb_searchbar_item_left {

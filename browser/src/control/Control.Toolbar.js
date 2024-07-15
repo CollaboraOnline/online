@@ -1071,6 +1071,7 @@ function setupToolbar(e) {
 		map.uiManager.enableTooltip($('#closebutton'));
 	} else if (!L.Params.closeButtonEnabled) {
 		$('#closebuttonwrapper').hide();
+		$('#closebuttonwrapperseparator').hide();
 	} else if (L.Params.closeButtonEnabled && !window.mode.isMobile()) {
 		$('#closebuttonwrapper').css('display', 'block');
 	}
