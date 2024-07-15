@@ -132,6 +132,8 @@ app.isFollowingEditor = function () {
 	return app.following.mode === 'editor';
 };
 
-app.isCalcRTL = function() {
-	return app.map._docLayer._rtlParts.indexOf(app.map._docLayer._selectedPart) >= 0;
+app.isCalcRTL = function () {
+	return (
+		app.map._docLayer._rtlParts.indexOf(app.map._docLayer._selectedPart) >= 0
+	);
 };
