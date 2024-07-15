@@ -406,8 +406,11 @@ void setupChildRoot(bool bindMount, const std::string& childRoot, const std::str
         // as it might not function in some systems.
         const std::string target = Poco::Path(childRoot, CoolTestMountpoint).toString();
 
-        // Make sure that we can both mount and unmount before enabling bind-mounting.
-        if (bind(sysTemplate, target) && unmount(target))
+        // Make sure that we can mount, remount and unmount before enabling bind-mounting.
+        const bool bindWorked = bind(sysTemplate, target);
+        const bool remountWorked = bindWorked && remountReadonly(sysTemplate, target);
+        const bool unmountWorked = bindWorked && unmount(target);
+        if (remountWorked && unmountWorked)
         {
             enableBindMounting();
             safeRemoveDir(target);
