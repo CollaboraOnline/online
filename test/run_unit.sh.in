@@ -90,7 +90,6 @@ if ${trace} \
 				   --o:admin_console.username=admin --o:admin_console.password=admin \
 				   --o:storage.ssl.enable=false \
 				   --o:experimental_features=true \
-				   --o:mount_namespaces=false \
 				   --unattended \
 				   --unitlib="${abs_top_builddir}/test/.libs/$tst.so" 2> "$tst_log" 1>&2; then
 	echo "Test $tst passed. Finished in ${SECONDS}s."
@@ -115,7 +114,6 @@ else
 	echo "         --o:ssl.ca_file_path=\"${abs_top_builddir}/etc/ca-chain.cert.pem\" \\"
 	echo "         --o:admin_console.username=admin --o:admin_console.password=admin \\"
 	echo "         --o:storage.ssl.enable=false \\"
-	echo "         --o:mount_namespaces=false \\"
 	echo "         --unattended \\"
 	echo "         --unitlib=\"${abs_top_builddir}/test/.libs/$tst.so\""
 	echo ""
