@@ -82,6 +82,9 @@ bool isBindMountingEnabled();
 /// Enable namespace-mounting in this process.
 void enableMountNamespaces();
 
+/// Disable namespace-mounting in this process.
+void disableMountNamespaces();
+
 /// Returns true iff namespace-mounting is enabled in this process.
 bool isMountNamespacesEnabled();
 

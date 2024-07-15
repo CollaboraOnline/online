@@ -548,6 +548,7 @@ private:
 
 #if !MOBILEAPP
     void processFetchUpdate();
+    static void setupChildRoot(const bool UseMountNamespaces);
 #endif
     void initializeSSL();
     void displayHelp();
