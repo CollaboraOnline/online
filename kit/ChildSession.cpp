@@ -2114,113 +2114,361 @@ uint64_t hashSubBuffer(unsigned char* pixmap, size_t startX, size_t startY,
 }
 }
 
-bool ChildSession::renderNextSlideLayer(int width, int height, size_t pixmapDataSize, bool& done)
+typedef uint64_t checksum_t;
+typedef uint64_t hash_t;
+constexpr auto InvalidChecksum = std::numeric_limits<checksum_t>::max();
+
+class PresentationHelper
 {
-    std::vector<unsigned char> pixmap(pixmapDataSize);
-    bool bIsBitmapLayer = false;
-    char* msg = nullptr;
-    done = getLOKitDocument()->renderNextSlideLayer(pixmap.data(), &bIsBitmapLayer, &msg);
-    std::string jsonMsg(msg);
-    free(msg);
+    typedef std::vector<char> CompressedBitmapType;
+    typedef std::shared_ptr<CompressedBitmapType> CompressedBitmapPtr;
 
-    if (jsonMsg.empty())
-        return true;
-
-    if (!bIsBitmapLayer)
+    enum class SlideRenderingState
     {
+        COMPLETE,
+        DRAW_PAGE_LAYER,
+        MASTER_PAGE_LAYER,
+        TEXT_FIELD,
+        BACKGROUND_LAYER,
+        INITIAL,
+        LAST_MASTER_PAGE_LAYER = -MASTER_PAGE_LAYER,
+        LAST_TEXT_FIELD = -TEXT_FIELD,
+        LAST_BACKGROUND_LAYER = -BACKGROUND_LAYER
+    };
+
+    enum class ScreenResolution
+    {
+        HD, FHD
+    };
+
+    struct LayerBitmap
+    {
+        checksum_t checksum;
+        CompressedBitmapPtr compressedBitmap;
+    };
+
+    typedef std::vector<LayerBitmap> ChecksumArray;
+    typedef std::unordered_map<ScreenResolution, ChecksumArray> ResolutionLayerArrayMap;
+    typedef std::unordered_map<hash_t, ResolutionLayerArrayMap> LayersCacheType;
+
+public:
+    explicit PresentationHelper(ChildSession& childSession, std::shared_ptr<lok::Document> lokitDocument)
+        : _childSession(childSession)
+        , _lokitDocument(lokitDocument)
+    {
+        LOG_DBG("PresentationHelper::PresentationHelper: this: " << this << ", childSession: " << &childSession );
+    }
+
+    bool renderSlide(const StringVector& tokens)
+    {
+        LOG_DBG("PresentationHelper::renderSlide: parsing argument");
+        // parsing argument
+        int part = -1;
+        std::string partString;
+        if (tokens.size() > 1 && getTokenString(tokens[1], "part", partString))
+        {
+            part = std::stoi(partString);
+        }
+        hash_t slideHash = InvalidChecksum;
+        std::string slideHashString;
+        if (tokens.size() > 2 && getTokenString(tokens[2], "hash", slideHashString))
+        {
+            slideHash = std::stoull(slideHashString);
+        }
+        hash_t masterPageHash = InvalidChecksum;
+        std::string masterPageHashString;
+        if (tokens.size() > 3 && getTokenString(tokens[3], "masterPageHash", masterPageHashString))
+        {
+            masterPageHash = std::stoull(masterPageHashString);
+        }
+        int suggestedWidth = -1;
+        std::string widthString;
+        if (tokens.size() > 4 && getTokenString(tokens[4], "width", widthString))
+        {
+            suggestedWidth = std::stoi(widthString);
+        }
+        int suggestedHeight = -1;
+        std::string heightString;
+        if (tokens.size() > 5 && getTokenString(tokens[5], "height", heightString))
+        {
+            suggestedHeight = std::stoi(heightString);
+        }
+        if (part < 0 || slideHash == InvalidChecksum || masterPageHash == InvalidChecksum ||
+            suggestedWidth < 0 || suggestedHeight < 0)
+            return false;
+
+        ScreenResolution resolution = ScreenResolution::FHD;
+        std::string resString;
+        if (tokens.size() > 6 && getTokenString(tokens[6], "res", resString))
+        {
+            if (resString == "1280×720")
+                resolution = ScreenResolution::HD;
+        }
+        bool renderBackground = true;
+        std::string renderBackgroundString;
+        if (tokens.size() > 7 && getTokenString(tokens[7], "renderBackground", renderBackgroundString))
+        {
+            renderBackground = std::stoi(renderBackgroundString) > 0;
+        }
+        bool renderMasterPage = true;
+        std::string renderMasterPageString;
+        if (tokens.size() > 8 && getTokenString(tokens[8], "renderMasterPage", renderMasterPageString))
+        {
+            renderMasterPage = std::stoi(renderMasterPageString) > 0;
+        }
+        bool isCustomBackground = false;
+        std::string isCustomBackgroundString;
+        if (tokens.size() > 9 && getTokenString(tokens[9], "isCustomBackground", isCustomBackgroundString))
+        {
+            isCustomBackground = std::stoi(isCustomBackgroundString) > 0;
+        }
+
+        LOG_DBG("PresentationHelper::renderSlide: create slide renderer");
+        // create slide renderer
+        unsigned int bufferWidth = suggestedWidth;
+        unsigned int bufferHeight = suggestedHeight;
+        bool success = _lokitDocument->createSlideRenderer(part,
+                                                           &bufferWidth, &bufferHeight,
+                                                           renderBackground, renderMasterPage);
+        if (!success)
+            return false;
+
+        // render layers
+        SlideRenderingState renderingState = SlideRenderingState::INITIAL;
+        const int width = bufferWidth;
+        const int height = bufferHeight;
+        const size_t pixmapDataSize = 4 * bufferWidth * bufferHeight;
+
+        // render background
+        if (renderBackground)
+        {
+            LOG_DBG("PresentationHelper::renderSlide: render background");
+            const hash_t pageHash = isCustomBackground ? slideHash : masterPageHash;
+            retrieveOrRenderSlideLayer(_slideBackgroundCache, pageHash, resolution,
+                                       width, height, pixmapDataSize,
+                                       SlideRenderingState::BACKGROUND_LAYER,
+                                       SlideRenderingState::LAST_BACKGROUND_LAYER,
+                                       renderingState, success);
+        }
+        // render text fields
+        if (success && renderMasterPage && renderingState != SlideRenderingState::COMPLETE)
+        {
+            LOG_DBG("PresentationHelper::renderSlide: render text field");
+            retrieveOrRenderSlideLayer(_slideTextFieldCache, slideHash, resolution,
+                                       width, height, pixmapDataSize,
+                                       SlideRenderingState::TEXT_FIELD,
+                                       SlideRenderingState::LAST_TEXT_FIELD,
+                                       renderingState, success);
+        }
+        // render master page objects
+        if (success && renderMasterPage && renderingState != SlideRenderingState::COMPLETE)
+        {
+            LOG_DBG("PresentationHelper::renderSlide: render master page objects");
+            retrieveOrRenderSlideLayer(_slideMasterPageCache, masterPageHash, resolution,
+                                       width, height, pixmapDataSize,
+                                       SlideRenderingState::MASTER_PAGE_LAYER,
+                                       SlideRenderingState::LAST_MASTER_PAGE_LAYER,
+                                       renderingState, success);
+        }
+        // render draw page
+        if (success && renderingState != SlideRenderingState::COMPLETE)
+        {
+            LOG_DBG("PresentationHelper::renderSlide: draw page");
+            retrieveOrRenderSlideLayer(_slideDrawPageCache, slideHash, resolution,
+                                       width, height, pixmapDataSize,
+                                       SlideRenderingState::DRAW_PAGE_LAYER,
+                                       SlideRenderingState::COMPLETE,
+                                       renderingState, success);
+        }
+
+
+        LOG_DBG("PresentationHelper::renderSlide: cleanup and notify rendering complete");
+        // clean up and notify rendering is complete
+        _lokitDocument->postSlideshowCleanup();
+        _childSession.sendTextFrame("sliderenderingcomplete");
+
+        return success;
+
+    }
+private:
+    void retrieveOrRenderSlideLayer(LayersCacheType& layersCache,
+                                    hash_t pageHash, ScreenResolution resolution,
+                                    int width, int height, size_t pixmapDataSize,
+                                    SlideRenderingState validState, SlideRenderingState exitState,
+                                    SlideRenderingState& renderingState, bool& success)
+    {
+        LOG_DBG("PresentationHelper::retrieveOrRenderSlideLayer: pageHash: " + std::to_string(pageHash) +
+                    ", res: " + (resolution == ScreenResolution::FHD ? "FHD" : "HD"));
+        if (layersCache.contains(pageHash) &&
+            layersCache[pageHash].contains(resolution))
+        {
+            LOG_DBG("retrieveOrRenderSlideLayer: layers for current group cached");
+            ChecksumArray& layers = layersCache[pageHash][resolution];
+            for (auto& [checksum, pCompressedBitmap]: layers)
+            {
+                success = renderNextSlideLayer(width, height, pixmapDataSize, renderingState,
+                                               checksum, pCompressedBitmap);
+                success = success &&
+                          (renderingState == validState ||
+                           renderingState == exitState);
+                if (!success)
+                    break;
+            }
+        }
+        else
+        {
+            LOG_DBG("PresentationHelper::retrieveOrRenderSlideLayer: layers for current group not cached");
+            while (renderingState != exitState && renderingState != SlideRenderingState::COMPLETE)
+            {
+                CompressedBitmapPtr pCompressedBitmap = nullptr;
+                checksum_t checksum = InvalidChecksum;
+                success = renderNextSlideLayer(width, height, pixmapDataSize, renderingState,
+                                               checksum, pCompressedBitmap);
+                success = success &&
+                          (renderingState == validState ||
+                           renderingState == exitState);
+                if (!success)
+                    break;
+                ChecksumArray& layers = layersCache[pageHash][resolution];
+                layers.emplace_back(checksum, pCompressedBitmap);
+            }
+        }
+        LOG_DBG("PresentationHelper::retrieveOrRenderSlideLayer: success: " + std::to_string(success));
+        LOG_DBG("PresentationHelper::retrieveOrRenderSlideLayer: layersCache size: " + std::to_string(layersCache.size()));
+        if (layersCache.contains(pageHash))
+        {
+            LOG_DBG("PresentationHelper::retrieveOrRenderSlideLayer: layersCache[" + std::to_string(pageHash) +
+                    "]: size: " + std::to_string(layersCache[pageHash].size()));
+            if (layersCache[pageHash].contains(resolution))
+            {
+                LOG_DBG("PresentationHelper::retrieveOrRenderSlideLayer: layersCache[" + std::to_string(pageHash) +
+                    "][" + (resolution == ScreenResolution::FHD ? "FHD" : "HD") + "] size: " +
+                        std::to_string(layersCache[pageHash][resolution].size()));
+            }
+        }
+    }
+
+    bool renderNextSlideLayer(
+        int width, int height, size_t pixmapDataSize, SlideRenderingState& state,
+        checksum_t& checksum, CompressedBitmapPtr pCompressedBitmap)
+    {
+        LOG_DBG("PresentationHelper::renderNextSlideLayer: checksum: " + std::to_string(checksum) +
+                ", pCompressedBitmap is null: " + std::to_string(pCompressedBitmap == nullptr));
+        bool isLayerCached = pCompressedBitmap != nullptr;
+        std::vector<unsigned char> pixmap;
+        if (!isLayerCached)
+            pixmap.resize(pixmapDataSize);
+        unsigned char* dataptr = !isLayerCached ? pixmap.data() : nullptr;
+        bool bIsBitmapLayer = false;
+        char* msg = nullptr;
+        int renderState = _lokitDocument->renderNextSlideLayer(dataptr, &bIsBitmapLayer, &msg);
+        state = SlideRenderingState(renderState);
+        std::string jsonMsg(msg);
+        free(msg);
+
+        LOG_DBG("PresentationHelper::renderNextSlideLayer: renderState: " + std::to_string(renderState));
+        LOG_DBG("PresentationHelper::renderNextSlideLayer: message: " + jsonMsg);
+
+        if (jsonMsg.empty())
+            return true;
+
+        if (!bIsBitmapLayer)
+        {
+            std::string response = "slidelayer: " + jsonMsg;
+            _childSession.sendTextFrame(response);
+            return true;
+        }
+
+        checksum_t pixmapHash = checksum;
+        if (!isLayerCached)
+        {
+            pixmapHash = hashSubBuffer(pixmap.data(), 0, 0, width, height, width, height);
+            checksum = pixmapHash;
+        }
+        if (size_t start = jsonMsg.find("%IMAGETYPE%"); start != std::string::npos)
+            jsonMsg.replace(start, 11, "png");
+        if (size_t start = jsonMsg.find("%IMAGECHECKSUM%"); start != std::string::npos)
+            jsonMsg.replace(start, 15, std::to_string(pixmapHash));
+
         std::string response = "slidelayer: " + jsonMsg;
-        sendTextFrame(response);
+        LOG_DBG("PresentationHelper::renderNextSlideLayer: response: " + response);
+        response += "\n";
+
+        std::vector<char> output;
+        output.reserve(response.size() + pixmapDataSize);
+        output.resize(response.size());
+        std::memcpy(output.data(), response.data(), response.size());
+
+        if (isLayerCached)
+        {
+            LOG_DBG("PresentationHelper::renderNextSlideLayer: copy compressed bitmap from cache");
+            // copy compressed bitmap from cache
+            size_t oldSize = output.size();
+            output.resize(oldSize + pCompressedBitmap->size());
+            std::memcpy(output.data() + oldSize, pCompressedBitmap->data(), pCompressedBitmap->size());
+        }
+        else
+        {
+            if (_presentationBitmapCache.contains(checksum))
+            {
+                LOG_DBG("PresentationHelper::renderNextSlideLayer: already cached: checksum: " + std::to_string(checksum));
+                pCompressedBitmap = _presentationBitmapCache[checksum];
+                size_t oldSize = output.size();
+                output.resize(oldSize + pCompressedBitmap->size());
+                std::memcpy(output.data() + oldSize, pCompressedBitmap->data(), pCompressedBitmap->size());
+            }
+            else
+            {
+                const auto tileMode = static_cast<LibreOfficeKitTileMode>(_lokitDocument->getTileMode());
+
+                if (!Png::encodeSubBufferToPNG(pixmap.data(), 0, 0, width, height, width, height, output, tileMode))
+                {
+                    LOG_ERR("Failed to encode into PNG.");
+                    return false;
+                }
+                LOG_DBG("PresentationHelper::renderNextSlideLayer: append layer to cache");
+                // append layer to cache
+                pCompressedBitmap = std::make_shared<CompressedBitmapType>();
+                if (pCompressedBitmap)
+                {
+                    pCompressedBitmap->resize(output.size() - response.size());
+                    std::memcpy(pCompressedBitmap->data(), output.data() + response.size(), pCompressedBitmap->size());
+                    _presentationBitmapCache[checksum] = pCompressedBitmap;
+                }
+            }
+        }
+        LOG_DBG("PresentationHelper::renderNextSlideLayer: _presentationBitmapCache size: " + std::to_string(_presentationBitmapCache.size()));
+
+        LOG_TRC("Sending response (" << output.size() << " bytes) for: " << std::string(output.data(), response.size() - 1));
+        _childSession.sendBinaryFrame(output.data(), output.size());
+
         return true;
     }
 
-    uint64_t pixmapHash = hashSubBuffer(pixmap.data(), 0, 0, width, height, width, height) + getViewId();
-    if (size_t start = jsonMsg.find("%IMAGETYPE%"); start != std::string::npos)
-        jsonMsg.replace(start, 11, "png");
-    if (size_t start = jsonMsg.find("%IMAGECHECKSUM%"); start != std::string::npos)
-        jsonMsg.replace(start, 15, std::to_string(pixmapHash));
+private:
+    ChildSession& _childSession;
+    std::shared_ptr<lok::Document> _lokitDocument;
+    std::vector<hash_t> _cachedSlides;
+    LayersCacheType _slideDrawPageCache;
+    LayersCacheType _slideMasterPageCache;
+    LayersCacheType _slideBackgroundCache;
+    LayersCacheType _slideTextFieldCache;
+    std::unordered_map<checksum_t, CompressedBitmapPtr> _presentationBitmapCache;
+};
 
-    std::string response = "slidelayer: " + jsonMsg;
-
-    response += "\n";
-
-    std::vector<char> output;
-    output.reserve(response.size() + pixmapDataSize);
-    output.resize(response.size());
-    std::memcpy(output.data(), response.data(), response.size());
-
-    const auto tileMode = static_cast<LibreOfficeKitTileMode>(getLOKitDocument()->getTileMode());
-
-    if (!Png::encodeSubBufferToPNG(pixmap.data(), 0, 0, width, height, width, height, output, tileMode))
-    {
-        LOG_ERR("Failed to encode into PNG.");
-        return false;
-    }
-
-    LOG_TRC("Sending response (" << output.size() << " bytes) for: " << std::string(output.data(), response.size() - 1));
-    sendBinaryFrame(output.data(), output.size());
-
-    return true;
+PresentationHelperPtr ChildSession::getPresentationHelper()
+{
+    if (!_pPresentationHelper)
+        _pPresentationHelper = std::make_shared<PresentationHelper>(*this, getLOKitDocument());
+    return _pPresentationHelper;
 }
 
 bool ChildSession::renderSlide(const StringVector& tokens)
 {
-    int part = -1;
-    std::string partString;
-    if (tokens.size() > 1 && getTokenString(tokens[1], "part", partString))
-    {
-        part = std::stoi(partString);
-    }
-    int suggestedWidth = -1;
-    std::string widthString;
-    if (tokens.size() > 2 && getTokenString(tokens[2], "width", widthString))
-    {
-        suggestedWidth = std::stoi(widthString);
-    }
-    int suggestedHeight = -1;
-    std::string heightString;
-    if (tokens.size() > 3 && getTokenString(tokens[3], "height", heightString))
-    {
-        suggestedHeight = std::stoi(heightString);
-    }
-    if (part < 0 || suggestedWidth < 0 || suggestedHeight < 0)
-        return false;
-
-    bool renderBackground = true;
-    std::string renderBackgroundString;
-    if (tokens.size() > 4 && getTokenString(tokens[4], "renderBackground", renderBackgroundString))
-    {
-        renderBackground = std::stoi(renderBackgroundString) > 0;
-    }
-    bool renderMasterPage = true;
-    std::string renderMasterPageString;
-    if (tokens.size() > 5 && getTokenString(tokens[5], "renderMasterPage", renderMasterPageString))
-    {
-        renderMasterPage = std::stoi(renderMasterPageString) > 0;
-    }
-
-    unsigned int bufferWidth = suggestedWidth;
-    unsigned int bufferHeight = suggestedHeight;
-    bool success = getLOKitDocument()->createSlideRenderer(part,
-                                                           &bufferWidth, &bufferHeight,
-                                                           renderBackground, renderMasterPage);
-    if (!success)
-        return false;
-
-    const int width = bufferWidth;
-    const int height = bufferHeight;
-    const size_t pixmapDataSize = 4 * bufferWidth * bufferHeight;
-    bool done = false;
-    while (!done)
-    {
-        success = renderNextSlideLayer(width, height, pixmapDataSize, done);
-        if (!success)
-            break;
-    }
-
-    getLOKitDocument()->postSlideshowCleanup();
-    sendTextFrame("sliderenderingcomplete");
-
-    return success;
+    PresentationHelperPtr pPresentationHelper = getPresentationHelper();
+    if (pPresentationHelper)
+        return pPresentationHelper->renderSlide(tokens);
+    return false;
 }
 
 bool ChildSession::renderWindow(const StringVector& tokens)

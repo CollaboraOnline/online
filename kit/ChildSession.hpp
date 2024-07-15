@@ -34,6 +34,9 @@ enum class LokEventTargetEnum
     Window
 };
 
+class PresentationHelper;
+typedef std::shared_ptr<PresentationHelper> PresentationHelperPtr;
+
 /// Represents a session to the WSD process, in a Kit process. Note that this is not a singleton.
 class ChildSession final : public Session
 {
@@ -154,7 +157,7 @@ private:
     bool unoCommand(const StringVector& tokens);
     bool selectText(const StringVector& tokens, const LokEventTargetEnum target);
     bool selectGraphic(const StringVector& tokens);
-    bool renderNextSlideLayer(int width, int height, size_t pixmapDataSize, bool& done);
+    PresentationHelperPtr getPresentationHelper();
     bool renderSlide(const StringVector& tokens);
     bool renderWindow(const StringVector& tokens);
     bool resizeWindow(const StringVector& tokens);
@@ -296,6 +299,8 @@ private:
     bool _hasURP;
 
     // When state is added - please update dumpState above.
+
+    PresentationHelperPtr _pPresentationHelper;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

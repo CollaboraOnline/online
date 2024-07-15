@@ -203,9 +203,13 @@ class SlideShow {
 			}
 		}
 
+		const resolution = this.resolutionWidth + 'x' + this.resolutionHeight;
+		const isCustomBackground = backgroundRendered ? slideInfo.background.isCustom : false;
 		app.socket.sendMessage(
-			`getslide part=${slideInfo.index} width=${this.canvasWidth} height=${this.canvasHeight} ` +
-			`renderBackground=${backgroundRendered ? 0 : 1} renderMasterPage=${masterPageRendered ? 0 : 1}`);
+			`getslide part=${slideInfo.index} hash=${slideHash} masterPageHash=${slideInfo.masterPage} ` +
+			`width=${this.canvasWidth} height=${this.canvasHeight} res=${resolution} ` +
+			`renderBackground=${backgroundRendered ? 0 : 1} renderMasterPage=${masterPageRendered ? 0 : 1}` +
+			`isCustomBackground=${isCustomBackground ? 1 : 0}`);
 	}
 
 	onSlideLayerMsg(e: any) {
