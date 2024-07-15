@@ -68,7 +68,6 @@ function _menubuttonControl (parentContainer, data, builder) {
 		var options = {hasDropdownArrow: menuEntries.length > 1};
 		var control = builder._unoToolButton(parentContainer, data, builder, options);
 
-		$(control.container).tooltip({disabled: true});
 		$(control.container).addClass('menubutton');
 		control.container.setAttribute('aria-haspopup', true);
 
@@ -142,6 +141,7 @@ function _menubuttonControl (parentContainer, data, builder) {
 	} else if (data.text !== undefined || data.image) {
 		var button = L.DomUtil.create('button', 'menubutton ' + builder.options.cssClass, parentContainer);
 		button.id = data.id;
+		button.title = data.text;
 		button.setAttribute('aria-haspopup', true);
 		if (data.image) {
 			var image = L.DomUtil.create('img', '', button);
