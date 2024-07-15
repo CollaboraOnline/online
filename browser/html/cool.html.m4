@@ -216,7 +216,7 @@ m4_ifelse(MOBILEAPP,[true],
       </div>
      </nav>
 
-     <div id="toolbar-wrapper">
+     <div id="toolbar-wrapper" role="toolbar" aria-orientation="horizontal">
         <div id="toolbar-row" class="toolbar-row">
           <div id="toolbar-logo"></div>
           <div id="toolbar-mobile-back" class="editmode-off"></div>
