@@ -6,7 +6,10 @@
 
 #about-dialog {
 	color: var(--color-main-text);
+	display: none;
+	user-select: text;
 }
+
 #about-dialog hr {
 	border: 1px solid var(--color-border);
 }

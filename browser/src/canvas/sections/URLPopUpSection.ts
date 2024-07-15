@@ -41,7 +41,7 @@ class URLPopUpSection extends HTMLObjectSection {
 		L.LOUtil.setImage(imgCopyBtn, 'lc_copyhyperlinklocation.svg', app.map);
 		imgCopyBtn.setAttribute('width', 18);
 		imgCopyBtn.setAttribute('height', 18);
-		imgCopyBtn.setAttribute('style', 'padding: 4px');
+		imgCopyBtn.style.padding = '4px';
 
 		const editBtn = L.DomUtil.createWithId('div', this.editButtonId, parent);
 		L.DomUtil.addClass(editBtn, 'hyperlink-popup-btn');
@@ -51,7 +51,7 @@ class URLPopUpSection extends HTMLObjectSection {
 		L.LOUtil.setImage(imgEditBtn, 'lc_edithyperlink.svg', app.map);
 		imgEditBtn.setAttribute('width', 18);
 		imgEditBtn.setAttribute('height', 18);
-		imgEditBtn.setAttribute('style', 'padding: 4px');
+		imgEditBtn.style.padding = '4px';
 
 		const removeBtn = L.DomUtil.createWithId('div', this.removeButtonId, parent);
 		L.DomUtil.addClass(removeBtn, 'hyperlink-popup-btn');
@@ -61,7 +61,7 @@ class URLPopUpSection extends HTMLObjectSection {
 		L.LOUtil.setImage(imgRemoveBtn, 'lc_removehyperlink.svg', app.map);
 		imgRemoveBtn.setAttribute('width', 18);
 		imgRemoveBtn.setAttribute('height', 18);
-		imgRemoveBtn.setAttribute('style', 'padding: 4px');
+		imgRemoveBtn.style.padding = '4px';
 	}
 
 	setUpCallbacks(linkPosition?: cool.SimplePoint) {

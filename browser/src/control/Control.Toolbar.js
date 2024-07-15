@@ -120,19 +120,28 @@ function setBorderStyle(num, color) {
 
 global.setBorderStyle = setBorderStyle;
 
-function getBorderStyleMenuHtml(closeCallback) {
+function getBorderStyleMenuElements(closeCallback) {
 	lastClosePopupCallback = closeCallback;
-	return '<table id="setborderstyle-grid"><tr><td class="w2ui-tb-image w2ui-icon frame01" onclick="setBorderStyle(1)"></td>' +
-	'<td class="w2ui-tb-image w2ui-icon frame02" onclick="setBorderStyle(2)"></td><td class="w2ui-tb-image w2ui-icon frame03" onclick="setBorderStyle(3)"></td>' +
-	'<td class="w2ui-tb-image w2ui-icon frame04" onclick="setBorderStyle(4)"></td></tr><tr><td class="w2ui-tb-image w2ui-icon frame05" onclick="setBorderStyle(5)"></td>' +
-	'<td class="w2ui-tb-image w2ui-icon frame06" onclick="setBorderStyle(6)"></td><td class="w2ui-tb-image w2ui-icon frame07" onclick="setBorderStyle(7)"></td>' +
-	'<td class="w2ui-tb-image w2ui-icon frame08" onclick="setBorderStyle(8)"></td></tr><tr><td class="w2ui-tb-image w2ui-icon frame09" onclick="setBorderStyle(9)"></td>' +
-	'<td class="w2ui-tb-image w2ui-icon frame10" onclick="setBorderStyle(10)"></td><td class="w2ui-tb-image w2ui-icon frame11" onclick="setBorderStyle(11)"></td>' +
-	'<td class="w2ui-tb-image w2ui-icon frame12" onclick="setBorderStyle(12)"></td></tr><tr>' +
-	'<td colspan="4" class="w2ui-tb-image w2ui-icon frame13" onclick="setBorderStyle(0)"><div id="div-frame13">' + _('More...') + '</div></td></tr></table>';
+
+	const table = document.createElement('table');
+	table.id = 'setborderstyle-grid';
+
+	for (let i = 0; i < 13; i++) {
+		for (let j = 0; j < 4 && i + j < 13; j++) {
+			let tr = document.createElement('tr');
+			let td = document.createElement('td');
+			table.appendChild(tr);
+			tr.appendChild(td);
+			td.className = 'w2ui-tb-image w2ui-icon ' + (i + j < 9 ? 'frame0' + String(i + j + 1): 'frame' + String(i + j + 1));
+			td.onclick = setBorderStyle.bind(null, (i + j === 12 ? 0: i + j + 1));
+		}
+		i += 3;
+	}
+
+	return table;
 }
 
-global.getBorderStyleMenuHtml = getBorderStyleMenuHtml;
+global.getBorderStyleMenuElements = getBorderStyleMenuElements;
 
 function setConditionalFormat(num, unoCommand, jsdialogDropdown) {
 	var params = {
@@ -161,47 +170,61 @@ function moreConditionalFormat (unoCommand, jsdialogDropdown) {
 
 global.moreConditionalFormat = moreConditionalFormat;
 
-function getConditionalFormatMenuHtmlImpl(more, type, count, unoCommand, jsdialogDropdown) {
-	var table = '<div id="conditionalformatmenu-grid">';
-	for (var i = 0; i < count; i+=3) {
-		for (var j = i; j < i+3; j++) {
-			var number = j;
+function getConditionalFormatMenuElementsImpl(more, type, count, unoCommand, jsdialogDropdown) {
+	const table = document.createElement('table');
+	table.id = 'conditionalformatmenu-grid';
+
+	for (let i = 0; i < count; i += 3) {
+		for (let j = i; j < i + 3; j++) {
+			let number = j;
 
 			// iconset07 deliberately left out, see the .css for the reason
 			if (type === 'iconset' && number >= 7)
 				number++;
 
-			var iconclass = type + (number < 10 ? '0' : '') + number;
-			table += '<button class="w2ui-tb-image w2ui-icon ' + iconclass + '" onclick="setConditionalFormat(' + number + ', \'' + unoCommand + '\', ' + !!jsdialogDropdown + ')"/>';
+			const iconClass = type + (number < 10 ? '0': '') + number;
+			const button = document.createElement('button');
+			button.className = 'w2ui-tb-image w2ui-icon ' + iconClass;
+			button.onclick = function() {
+				setConditionalFormat(number + ', \'' + unoCommand + '\', ' + !!jsdialogDropdown);
+			};
+			table.appendChild(button);
 		}
 	}
+
 	if (more) {
-		table += '<button id="' + more + '" onclick="moreConditionalFormat(\'' + unoCommand + '\', ' + !!jsdialogDropdown + ')">' + _('More...') + '</button>';
+		const button = document.createElement('button');
+		button.id = 'more';
+		button.onclick = function() {
+			moreConditionalFormat('\'' + unoCommand + '\', ' + !!jsdialogDropdown);
+		};
+		button.textContent = _('More...');
+		table.appendChild(button);
 	}
-	table += '</div>';
+
 	return table;
 }
 
 // for icon set conditional formatting
-function getConditionalFormatMenuHtml(more, jsdialogDropdown) {
-	return getConditionalFormatMenuHtmlImpl(more, 'iconset', 21, '.uno:IconSetFormatDialog', jsdialogDropdown);
+function getConditionalFormatMenuElements(more, jsdialogDropdown) {
+	return getConditionalFormatMenuElementsImpl(more, 'iconset', 21, '.uno:IconSetFormatDialog', jsdialogDropdown);
 }
 
-global.getConditionalFormatMenuHtml = getConditionalFormatMenuHtml;
+global.getConditionalFormatMenuElements = getConditionalFormatMenuElements;
 
 // for color scale conditional formatting
-function getConditionalColorScaleMenuHtml(more, jsdialogDropdown) {
-	return getConditionalFormatMenuHtmlImpl(more, 'scaleset', 12, '.uno:ColorScaleFormatDialog', jsdialogDropdown);
+function getConditionalColorScaleMenuElements(more, jsdialogDropdown) {
+	return getConditionalFormatMenuElementsImpl(more, 'scaleset', 12, '.uno:ColorScaleFormatDialog', jsdialogDropdown);
 }
 
-global.getConditionalColorScaleMenuHtml = getConditionalColorScaleMenuHtml;
+global.getConditionalColorScaleMenuElements = getConditionalColorScaleMenuElements;
 
 // for data bar conditional formatting
-function getConditionalDataBarMenuHtml(more, jsdialogDropdown) {
-	return getConditionalFormatMenuHtmlImpl(more, 'databarset', 12, '.uno:DataBarFormatDialog', jsdialogDropdown);
+function getConditionalDataBarMenuElements(more, jsdialogDropdown) {
+	return getConditionalFormatMenuElementsImpl(more, 'databarset', 12, '.uno:DataBarFormatDialog', jsdialogDropdown);
 }
 
-global.getConditionalDataBarMenuHtml = getConditionalDataBarMenuHtml;
+global.getConditionalDataBarMenuElements = getConditionalDataBarMenuElements;
 
 var sendInsertTableFunction = function(event) {
 	var col = $(event.target).index() + 1;
@@ -229,32 +252,60 @@ var highlightTableFunction = function(event) {
 	status.html(col + 'x' + row);
 };
 
-function getInsertTablePopupHtml(closeCallback) {
+function getInsertTablePopupElements(closeCallback) {
 	lastClosePopupCallback = closeCallback;
-	var grid = $('<div><div class="inserttable-grid" onmouseover="highlightTableFunction(event)" \
-		onclick="sendInsertTableFunction(event)"></div>\
-		<div id="inserttable-status" class="cool-font" style="padding: 5px;"><br/></div></div>');
 
-	insertTable(grid.children('.inserttable-grid'));
+	const container = document.createElement('div');
 
-	var wrapper = $('<div><div id="inserttable-wrapper">\
-		<div id="inserttable-popup" class="inserttable-pop ui-widget ui-corner-all" tabIndex=0>\
-		' + grid.html() + '</div></div></div>');
+	const grid = document.createElement('div');
+	grid.className = 'inserttable-grid';
+	grid.onmouseover = highlightTableFunction;
+	grid.onclick = sendInsertTableFunction;
 
-	return wrapper.html();
+	const statusDiv = document.createElement('div');
+	statusDiv.id = 'inserttable-status';
+	statusDiv.className = 'cool-font';
+	statusDiv.style.padding = '5px';
+
+	container.textContent = '\n';
+	container.appendChild(grid);
+	container.appendChild(statusDiv);
+
+	insertTable(container.children[0]);
+
+	const wrapperContainer = document.createElement('div');
+
+	const wrapper = document.createElement('div');
+	wrapper.id = 'inserttable-wrapper';
+
+	const popUp = document.createElement('div');
+	popUp.id = 'inserttable-popup';
+	popUp.className = 'inserttable-pop ui-widget ui-corner-all';
+	popUp.tabIndex = 0;
+
+	wrapperContainer.appendChild(wrapper);
+	wrapperContainer.appendChild(popUp);
+
+	popUp.appendChild(grid);
+
+	return wrapperContainer;
 }
 
-function insertTable($grid = $('.inserttable-grid')) {
+function insertTable(grid = document.getElementsByClassName('inserttable-grid')[0]) {
 	var rows = 10;
 	var cols = 10;
 
 	for (var r = 0; r < rows; r++) {
-		var $row = $('<div/>').addClass('row');
-		$grid.append($row);
+		const row = document.createElement('div');
+		row.className = 'row';
+		grid.appendChild(row);
+
 		for (var c = 0; c < cols; c++) {
-			var $col = $('<button aria-label="' + (1+r) + 'x' + (1+c) + '"\
-				onfocusin="highlightTableFunction(event)"/>').addClass('col');
-			$row.append($col);
+			const col = document.createElement('button');
+			col.setAttribute('aria-label', (1 + r) + 'x' + (1 + c));
+			col.onfocus = highlightTableFunction;
+			col.className = 'col';
+			row.appendChild(col);
 		}
 	}
 }
@@ -424,30 +475,37 @@ var shapes = {
 };
 
 function createShapesPanel(shapeType) {
-	var $grid = $('<div/>').addClass('insertshape-grid');
+	const grid = document.createElement('div');
+	grid.className = 'insertshape-grid';
+
 	var collection = shapes[shapeType];
 
 	for (var s in collection) {
-		var $rowHeader = $('<div/>').addClass('row-header cool-font').append(_(s));
-		$grid.append($rowHeader);
-		var $row = $('<div/>').addClass('row');
-		$grid.append($row);
-		for (var idx = 0; idx < collection[s].length; ++idx) {
-			var shape = collection[s][idx];
-			var $col = $('<div/>').addClass('col w2ui-icon').addClass(shape.img);
-			$col.data('uno', shape.uno);
-			$row.append($col);
+		const rowHeader = document.createElement('div');
+		rowHeader.className = 'row-header cool-fon';
+		rowHeader.textContent = _(s);
+		grid.appendChild(rowHeader);
+
+		const row = document.createElement('div');
+		row.className = 'row';
+		grid.appendChild(row);
+
+		for (let idx = 0; idx < collection[s].length; ++idx) {
+			const shape = collection[s][idx];
+
+			const col = document.createElement('div');
+			col.className = 'col w2ui-icon ' + shape.img;
+			col.dataset.uno = shape.uno;
+			row.appendChild(col);
 		}
 	}
 
-	$grid.on({
-		click: function(e) {
-			map.sendUnoCommand('.uno:' + $(e.target).data().uno);
-			map._docLayer._closeMobileWizard();
-		}
-	});
+	grid.onclick = function(e) {
+		map.sendUnoCommand('.uno:' + e.target.dataset.uno);
+		map._docLayer._closeMobileWizard();
+	}
 
-	return $grid.get(0);
+	return grid.children[0];
 }
 
 var onShapeClickFunction = function(e) {
@@ -472,38 +530,44 @@ var onShapeKeyDownFunction = function(event) {
 	event.stopPropagation();
 };
 
-function insertShapes(shapeType, $grid = $('.insertshape-grid')) {
+function insertShapes(shapeType, grid = document.getElementsByClassName('insertshape-grid')[0]) {
 
 	var width = 10;
-	$grid.addClass(shapeType);
+	grid.classList.add(shapeType);
 
 	if (window.mode.isDesktop() || window.mode.isTablet())
-		$grid.css('margin-botttom', '0px');
+		grid.style.marginBottom = '0px';
 
-	if ($grid.children().length > 0)
+	if (grid.firstChild)
 		return;
 
 	var collection = shapes[shapeType];
 
-	for (var s in collection) {
-		var $rowHeader = $('<div/>').addClass('row-header cool-font').append(_(s));
-		$grid.append($rowHeader);
+	for (let s in collection) {
+		const rowHeader = document.createElement('div');
+		rowHeader.className = 'row-header cool-font';
+		rowHeader.textContent = _(s);
+		grid.appendChild(rowHeader);
 
 		var rows = Math.ceil(collection[s].length / width);
 		var idx = 0;
-		for (var r = 0; r < rows; r++) {
-			var $row = $('<div/>').addClass('row');
-			$grid.append($row);
-			for (var c = 0; c < width; c++) {
+		for (let r = 0; r < rows; r++) {
+			const row = document.createElement('div');
+			row.className = 'row';
+			grid.appendChild(row);
+
+			for (let c = 0; c < width; c++) {
 				if (idx >= collection[s].length) {
 					break;
 				}
-				var shape = collection[s][idx++];
-				var col = document.createElement('div');
+
+				const shape = collection[s][idx++];
+				const col = document.createElement('div');
+
 				col.className = 'col w2ui-icon ' + shape.img;
 				col.dataset.uno = shape.uno;
 				col.tabIndex = 0;
-				$row.append(col);
+				row.appendChild(col);
 			}
 
 			if (idx >= collection[s].length)
@@ -512,39 +576,76 @@ function insertShapes(shapeType, $grid = $('.insertshape-grid')) {
 	}
 }
 
-function getShapesPopupHtml(closeCallback) {
+function getShapesPopupElements(closeCallback) {
 	lastClosePopupCallback = closeCallback;
-	var grid = $('<div><div class="insertshape-grid" onclick="onShapeClickFunction(event)" \
-		onkeyup="onShapeKeyUpFunction(event)" onkeydown="onShapeKeyDownFunction(event)"></div></div>');
 
-	insertShapes('insertshapes', grid.children('.insertshape-grid'));
+	const grid = document.createElement('div');
+	grid.className = 'insertshape-grid';
+	grid.onclick = onShapeClickFunction;
+	grid.onkeyup = onShapeKeyUpFunction;
+	grid.onkeydown = onShapeKeyDownFunction;
 
-	var wrapper = $('<div><div id="insertshape-wrapper">\
-		<div id="insertshape-popup" tabIndex=0 class="insertshape-pop ui-widget ui-corner-all">\
-		' + grid.html() + ' \
-		</div></div></div>');
+	const container = document.createElement('div');
+	container.appendChild(grid);
 
-	return wrapper.html();
+	insertShapes('insertshapes', container.children[0]);
+
+	const wrapperContainer = document.createElement('div');
+
+	const wrapper = document.createElement('div');
+	wrapper.id = 'insertshape-wrapper';
+
+	wrapperContainer.appendChild(wrapper);
+
+	const popUp = document.createElement('div');
+	popUp.id = 'insertshape-popup';
+	popUp.tabIndex = 0;
+	popUp.className = 'insertshape-pop ui-widget ui-corner-all';
+
+	wrapperContainer.appendChild(popUp);
+
+	popUp.appendChild(grid);
+
+	return wrapperContainer;
 }
 
-function getConnectorsPopupHtml(closeCallback) {
+function getConnectorsPopupElements(closeCallback) {
 	lastClosePopupCallback = closeCallback;
-	var grid = $('<div><div class="insertshape-grid" onclick="onShapeClickFunction(event)" \
-		onkeyup="onShapeKeyUpFunction(event)" onkeydown="onShapeKeyDownFunction(event)"></div></div>');
 
-	insertShapes('insertconnectors', grid.children('.insertshape-grid'));
+	const gridContainer = document.createElement('div');
 
-	var wrapper = $('<div><div id="insertshape-wrapper">\
-		<div id="insertshape-popup" tabIndex=0 class="insertshape-pop ui-widget ui-corner-all">\
-		' + grid.html() + ' \
-		</div></div></div>');
+	const grid = document.createElement('div');
+	grid.className = 'insertshape-grid';
+	grid.onclick = onShapeClickFunction;
+	grid.onkeyup = onShapeKeyUpFunction;
+	grid.onkeydown = onShapeKeyDownFunction;
 
-	return wrapper.html();
+	gridContainer.appendChild(grid);
+
+	insertShapes('insertconnectors', gridContainer.children[0]);
+
+
+	const wrapperContainer = document.createElement('div');
+	const wrapper = document.createElement('div');
+
+	wrapper.id = 'insertshape-wrapper';
+
+	const popUp = document.createElement('div');
+	popUp.id = 'insertshape-popup';
+	popUp.tabIndex = 0;
+	popUp.className = 'insertshape-pop ui-widget ui-corner-all';
+
+	wrapperContainer.appendChild(wrapper);
+	wrapperContainer.appendChild(popUp);
+	popUp.appendChild(grid);
+
+	return wrapperContainer;
 }
 
-function getColorPickerHTML(id) {
-	return '<div id="' + id +'-wrapper' + '">\
-			</div>';
+function getColorPickerElements(id) {
+	const div = document.createElement('div');
+	div.id = id + '-wrapper';
+	return div;
 }
 
 function getColorPickerData(type) {
@@ -758,8 +859,6 @@ function processStateChangedCommand(commandName, state) {
 			color = color.toString(16);
 			color = '#' + Array(7 - color.length).join('0') + color;
 		}
-		// $('#fontcolor table.w2ui-button .selected-color-classic').css('background-color', color);
-		// $('#fontcolor .w2ui-tb-caption').css('display', 'none');
 
 		div = L.DomUtil.get('fontcolorindicator');
 		if (div) {
@@ -777,13 +876,6 @@ function processStateChangedCommand(commandName, state) {
 			color = color.toString(16);
 			color = '#' + Array(7 - color.length).join('0') + color;
 		}
-		//writer
-		// $('#tb_editbar_item_backcolor table.w2ui-button .selected-color-classic').css('background-color', color);
-		// $('#tb_editbar_item_backcolor .w2ui-tb-caption').css('display', 'none');
-
-		// //calc?
-		// $('#tb_editbar_item_backgroundcolor table.w2ui-button .selected-color-classic').css('background-color', color);
-		// $('#tb_editbar_item_backgroundcolor .w2ui-tb-caption').css('display', 'none');
 
 		div = L.DomUtil.get('backcolorindicator');
 		if (div) {
@@ -1082,11 +1174,11 @@ function setupToolbar(e) {
 global.onClose = onClose;
 global.setupToolbar = setupToolbar;
 global.insertTable = insertTable;
-global.getInsertTablePopupHtml = getInsertTablePopupHtml;
+global.getInsertTablePopupElements = getInsertTablePopupElements;
 global.sendInsertTableFunction = sendInsertTableFunction;
 global.highlightTableFunction = highlightTableFunction;
-global.getShapesPopupHtml = getShapesPopupHtml;
-global.getConnectorsPopupHtml = getConnectorsPopupHtml;
+global.getShapesPopupElements = getShapesPopupElements;
+global.getConnectorsPopupElements = getConnectorsPopupElements;
 global.onShapeClickFunction = onShapeClickFunction;
 global.onShapeKeyUpFunction = onShapeKeyUpFunction;
 global.onShapeKeyDownFunction = onShapeKeyDownFunction;
@@ -1097,7 +1189,7 @@ global.getUNOCommand = getUNOCommand;
 global.unoCmdToToolbarId = unoCmdToToolbarId;
 global.onCommandStateChanged = onCommandStateChanged;
 global.processStateChangedCommand = processStateChangedCommand;
-global.getColorPickerHTML = getColorPickerHTML;
+global.getColorPickerElements = getColorPickerElements;
 global.onUpdateParts = onUpdateParts;
 global.getColorPickerData = getColorPickerData;
 }(window));

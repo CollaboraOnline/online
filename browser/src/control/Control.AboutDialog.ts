@@ -118,7 +118,7 @@ class AboutDialog {
 		var box = document.getElementById(aboutDialogId + '-box');
 		var innerDiv = L.DomUtil.create('div', '', null);
 		box.insertBefore(innerDiv, box.firstChild);
-		innerDiv.innerHTML = content.outerHTML;
+		innerDiv.appendChild(content);
 
 		var form = document.getElementById('about-dialog-box');
 

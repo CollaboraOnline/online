@@ -43,6 +43,42 @@
 	/* Ruler */
 	--ruler-height: 20px;
 }
+
+html {
+	height: 100%;
+}
+
+body {
+	margin: 0;
+	overflow: hidden;
+	overscroll-behavior-y: none; /* disable the pull to reload gesture */
+	background: var(--color-main-background);
+	touch-action: none;
+	line-height: normal;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	user-select: none;
+}
+
+#insertgraphic {
+	position: fixed;
+	top: -100em;
+}
+
+#selectbackground {
+	position: fixed;
+	top: -100em;
+}
+
+#wopi-host-id, #proxy-prefix-id {
+	display: none;
+}
+
+.about-dialog-info-div {
+	margin-inline-end: auto;
+}
+
 .focus-hidden:focus {
 	outline: none;
 }
@@ -272,15 +308,6 @@
 	cursor: move;
 }
 
-body {
-	margin: 0;
-	overflow: hidden;
-	overscroll-behavior-y: none; /* disable the pull to reload gesture */
-	background: var(--color-main-background);
-	touch-action: none;
-	line-height: normal;
-}
-
 #presentation-controls-wrapper {
 	background: var(--color-main-background);
 	position: relative;
@@ -366,6 +393,7 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	z-index: 1001;
 	transform: scale(1);
 	transition: transform 0.5s;
+	display: none;
 }
 
 #mobile-edit-button.impress.portrait{
@@ -496,6 +524,10 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	border-color: transparent var(--color-background-lighter) transparent transparent;
 }
 
+#mobile-wizard {
+	display: none;
+}
+
 .mobile-wizard-content .cool-annotation {
 	max-width: none;
 }
@@ -578,6 +610,12 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 
 #main-document-content {
 	z-index: 0;
+	display: flex;
+	flex-direction: row;
+	flex: 1;
+	margin: 0;
+	padding: 0;
+	min-height: 0;
 }
 
 .cool-annotation-collapsed-show .cool-annotation-img {
@@ -1020,6 +1058,10 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	text-align: center;
 	justify-content: center;
 	flex-grow: 1;
+}
+
+#about-dialog {
+	display: none;
 }
 
 #about-dialog-container, #about-dialog-header {

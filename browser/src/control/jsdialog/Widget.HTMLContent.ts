@@ -33,118 +33,113 @@ function sanitizeString(text: string): string {
 	return sanitizer.innerHTML;
 }
 
-function getPermissionModeHtml(isReadOnlyMode: boolean, canUserWrite: boolean) {
-	var permissionModeDiv = '<div id="PermissionMode" class="jsdialog ui-badge';
+function getPermissionModeElements(isReadOnlyMode: boolean, canUserWrite: boolean) {
+	const permissionModeDiv = document.createElement('div');
+	permissionModeDiv.className = 'jsdialog ui-badge';
+
 	if (isReadOnlyMode && !canUserWrite) {
-		permissionModeDiv +=
-			' status-readonly-mode" title="' +
-			sanitizeString(_('Permission Mode')) +
-			'"> ' +
-			sanitizeString(_('Read-only')) +
-			' </div>';
-	} else if (isReadOnlyMode && canUserWrite) {
-		permissionModeDiv +=
-			' status-readonly-transient-mode" style="display: none;"></div>';
-	} else {
-		permissionModeDiv +=
-			' status-edit-mode" title="' +
-			sanitizeString(_('Permission Mode')) +
-			'"> ' +
-			sanitizeString(_('Edit')) +
-			' </div>';
+		permissionModeDiv.classList.add('status-readonly-mode');
+		permissionModeDiv.title = _('Permission Mode');
+		permissionModeDiv.textContent = _('Read-only');
 	}
+	else if (isReadOnlyMode && canUserWrite) {
+		permissionModeDiv.classList.add('status-readonly-transient-mode');
+		permissionModeDiv.style.display = 'none';
+	}
+	else {
+		permissionModeDiv.classList.add('status-edit-mode');
+		permissionModeDiv.title = _('Edit');
+	}
+
 	return permissionModeDiv;
 }
 
-function getStatusbarItemHtml(id: string, title: string, text: string) {
-	return (
-		'<div id="' +
-		sanitizeString(id) +
-		'" class="jsdialog ui-badge" title="' +
-		sanitizeString(title) +
-		'">' +
-		sanitizeString(text) +
-		'</div>'
-	);
+function getStatusbarItemElements(id: string, title: string, text: string) {
+	const div = document.createElement('div');
+	div.className = 'jsdialog ui-badge';
+	div.title = title;
+	div.textContent = text;
+
+	return div;
 }
 
-function getPageNumberHtml(text: string) {
-	return getStatusbarItemHtml('StatePageNumber', _('Number of Pages'), text);
+function getPageNumberElements(text: string) {
+	return getStatusbarItemElements('StatePageNumber', _('Number of Pages'), text);
 }
 
-function getWordCountHtml(text: string) {
-	return getStatusbarItemHtml('StateWordCount', _('Word Counter'), text);
+function getWordCountElements(text: string) {
+	return getStatusbarItemElements('StateWordCount', _('Word Counter'), text);
 }
 
-function getStatusDocPosHtml(text: string) {
-	return getStatusbarItemHtml('StatusDocPos', _('Number of Sheets'), text);
+function getStatusDocPosElements(text: string) {
+	return getStatusbarItemElements('StatusDocPos', _('Number of Sheets'), text);
 }
 
-function getInsertModeHtml(text: string) {
-	return getStatusbarItemHtml('InsertMode', _('Entering text mode'), text);
+function getInsertModeElements(text: string) {
+	return getStatusbarItemElements('InsertMode', _('Entering text mode'), text);
 }
 
-function getSelectionModeHtml(text: string) {
-	return getStatusbarItemHtml('StatusSelectionMode', _('Selection Mode'), text);
+function getSelectionModeElements(text: string) {
+	return getStatusbarItemElements('StatusSelectionMode', _('Selection Mode'), text);
 }
 
-function getRowColSelCountHtml(text: string) {
-	return getStatusbarItemHtml(
+function getRowColSelCountElements(text: string) {
+	return getStatusbarItemElements(
 		'RowColSelCount',
 		_('Selected range of cells'),
 		text,
 	);
 }
 
-function getStateTableCellHtml(text: string) {
-	return getStatusbarItemHtml('StateTableCell', _('Choice of functions'), text);
+function getStateTableCellElements(text: string) {
+	return getStatusbarItemElements('StateTableCell', _('Choice of functions'), text);
 }
 
-function getSlideStatusHtml(text: string) {
-	return getStatusbarItemHtml('SlideStatus', _('Number of Slides'), text);
+function getSlideStatusElements(text: string) {
+	return getStatusbarItemElements('SlideStatus', _('Number of Slides'), text);
 }
 
-function getPageStatusHtml(text: string) {
-	return getStatusbarItemHtml('PageStatus', _('Number of Pages'), text);
+function getPageStatusElements(text: string) {
+	return getStatusbarItemElements('PageStatus', _('Number of Pages'), text);
 }
 
-var getHtmlFromId = function (
+var getElementsFromId = function (
 	id: string,
 	closeCallback: EventListenerOrEventListenerObject,
 	data: HtmlContentJson,
 ) {
 	if (id === 'iconset')
-		return (window as any).getConditionalFormatMenuHtml('iconsetoverlay', true);
+		return (window as any).getConditionalFormatMenuElements('iconsetoverlay', true);
 	else if (id === 'scaleset')
-		return (window as any).getConditionalColorScaleMenuHtml(
+		return (window as any).getConditionalColorScaleMenuElements(
 			'iconsetoverlay',
 			true,
 		);
 	else if (id === 'databarset')
-		return (window as any).getConditionalDataBarMenuHtml(
+		return (window as any).getConditionalDataBarMenuElements(
 			'iconsetoverlay',
 			true,
 		);
 	else if (id === 'inserttablepopup')
-		return (window as any).getInsertTablePopupHtml(closeCallback);
+		return (window as any).getInsertTablePopupElements(closeCallback);
 	else if (id === 'borderstylepopup')
-		return (window as any).getBorderStyleMenuHtml(closeCallback);
+		return (window as any).getBorderStyleMenuElements(closeCallback);
 	else if (id === 'insertshapespopup')
-		return (window as any).getShapesPopupHtml(closeCallback);
+		return (window as any).getShapesPopupElements(closeCallback);
 	else if (id === 'insertconnectorspopup')
-		return (window as any).getConnectorsPopupHtml(closeCallback);
+		return (window as any).getConnectorsPopupElements(closeCallback);
 	else if (id === 'userslistpopup') return L.control.createUserListWidget();
 	else if (id === 'permissionmode')
-		return getPermissionModeHtml(data.isReadOnlyMode, data.canUserWrite);
-	else if (id === 'statepagenumber') return getPageNumberHtml(data.text);
-	else if (id === 'statewordcount') return getWordCountHtml(data.text);
-	else if (id === 'statusdocpos') return getStatusDocPosHtml(data.text);
-	else if (id === 'insertmode') return getInsertModeHtml(data.text);
-	else if (id === 'statusselectionmode') return getSelectionModeHtml(data.text);
-	else if (id === 'rowcolselcount') return getRowColSelCountHtml(data.text);
-	else if (id === 'statetablecell') return getStateTableCellHtml(data.text);
-	else if (id === 'slidestatus') return getSlideStatusHtml(data.text);
-	else if (id === 'pagestatus') return getPageStatusHtml(data.text);
+		return getPermissionModeElements(data.isReadOnlyMode, data.canUserWrite);
+	else if (id === 'statepagenumber') return getPageNumberElements(data.text);
+	else if (id === 'statewordcount') return getWordCountElements(data.text);
+	else if (id === 'statusdocpos') return getStatusDocPosElements(data.text);
+	else if (id === 'insertmode') return getInsertModeElements(data.text);
+	else if (id === 'statusselectionmode') return getSelectionModeElements(data.text);
+	else if (id === 'rowcolselcount') return getRowColSelCountElements(data.text);
+	else if (id === 'statetablecell') return getStateTableCellElements(data.text);
+	else if (id === 'slidestatus') return getSlideStatusElements(data.text);
+	else if (id === 'pagestatus') return getPageStatusElements(data.text);
 };
 
 function htmlContent(
@@ -152,11 +147,11 @@ function htmlContent(
 	data: HtmlContentJson,
 	builder: any,
 ) {
-	parentContainer.innerHTML = getHtmlFromId(
-		data.htmlId,
-		data.closeCallback,
-		data,
-	);
+	parentContainer.replaceChildren();
+
+	const elements = getElementsFromId(data.htmlId, data.closeCallback, data);
+
+	parentContainer.appendChild(elements);
 
 	// TODO: remove this and create real widget for userslistpopup
 	if (data.htmlId === 'userslistpopup')

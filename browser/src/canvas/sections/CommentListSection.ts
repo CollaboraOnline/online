@@ -1926,12 +1926,12 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 			const minMaxHeight = Number(getComputedStyle(document.documentElement).getPropertyValue('--annotation-min-size'));
 			for (var i = 0; i < this.sectionProperties.commentList.length;i++) {
 				if (this.sectionProperties.commentList[i].sectionProperties.contentNode.style.display !== 'none')
-					this.sectionProperties.commentList[i].sectionProperties.contentNode.setAttribute('style', 'max-height: '+minMaxHeight+'px');
+					this.sectionProperties.commentList[i].sectionProperties.contentNode.style.maxHeight = minMaxHeight + 'px';
 			}
 			if (this.sectionProperties.selectedComment) {
 				if (this.sectionProperties.selectedComment.sectionProperties.contentNode.style.display !== 'none') {
 					const maxMaxHeight = Number(getComputedStyle(document.documentElement).getPropertyValue('--annotation-max-size'));
-					this.sectionProperties.selectedComment.sectionProperties.contentNode.setAttribute('style', 'max-height: '+maxMaxHeight+'px');
+					this.sectionProperties.selectedComment.sectionProperties.contentNode.style.maxHeight = maxMaxHeight + 'px';
 				}
 			}
 		}
@@ -1999,7 +1999,7 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 							}
 						}
 						if (maxSize > minMaxHeight)
-							this.sectionProperties.commentList[i].sectionProperties.contentNode.setAttribute('style', 'max-height: '+Math.round(maxSize)+'px');
+							this.sectionProperties.commentList[i].sectionProperties.contentNode.style.maxHeight = Math.round(maxSize) + 'px';
 					}
 				}
 			}
