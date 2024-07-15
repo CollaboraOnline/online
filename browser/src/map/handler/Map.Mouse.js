@@ -73,10 +73,6 @@ L.Map.Mouse = L.Handler.extend({
 		if (mouseEnteringLeavingMap && e.type === 'mouseover' && this._mouseDown) {
 			L.DomEvent.off(document, 'mousemove', this._onMouseMoveOutside, this);
 			L.DomEvent.off(document, 'mouseup', this._onMouseUpOutside, this);
-			if (this._map._resizeDetector) {
-				L.DomEvent.off(this._map._resizeDetector.contentWindow, 'mousemove', this._onMouseMoveOutside, this);
-				L.DomEvent.off(this._map._resizeDetector.contentWindow, 'mouseup', this._onMouseUpOutside, this);
-			}
 		}
 		else if (e.type === 'mousedown') {
 			docLayer._resetPreFetching();
@@ -188,10 +184,6 @@ L.Map.Mouse = L.Handler.extend({
 			docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, count, buttons, modifier);
 		}
 		else if (mouseEnteringLeavingMap && e.type === 'mouseout' && this._mouseDown) {
-			if (this._map._resizeDetector) {
-				L.DomEvent.on(this._map._resizeDetector.contentWindow, 'mousemove', this._onMouseMoveOutside, this);
-				L.DomEvent.on(this._map._resizeDetector.contentWindow, 'mouseup', this._onMouseUpOutside, this);
-			}
 			L.DomEvent.on(document, 'mousemove', this._onMouseMoveOutside, this);
 			L.DomEvent.on(document, 'mouseup', this._onMouseUpOutside, this);
 		}
@@ -216,10 +208,6 @@ L.Map.Mouse = L.Handler.extend({
 		this._mouseDown = false;
 		L.DomEvent.off(document, 'mousemove', this._onMouseMoveOutside, this);
 		L.DomEvent.off(document, 'mouseup', this._onMouseUpOutside, this);
-		if (this._map._resizeDetector) {
-			L.DomEvent.off(this._map._resizeDetector.contentWindow, 'mousemove', this._onMouseMoveOutside, this);
-			L.DomEvent.off(this._map._resizeDetector.contentWindow, 'mouseup', this._onMouseUpOutside, this);
-		}
 
 		this._map._handleDOMEvent(e);
 		if (this._map.dragging.enabled()) {
