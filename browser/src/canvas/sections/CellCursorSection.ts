@@ -40,14 +40,21 @@ class CellCursorSection extends app.definitions.canvasSectionObject {
 			this.context.lineWidth = 1;
 
 			this.context.strokeStyle = this.sectionProperties.color;
+
+			let x: number = 0;
+			if (app.isCalcRTL()) {
+				const rightMost = this.containerObject.getDocumentAnchor()[0] + this.containerObject.getDocumentAnchorSection().size[0];
+				x = rightMost - this.myTopLeft[0] * 2 - app.calc.cellCursorRectangle.pWidth;
+			}
+
 			for (let i: number = 0; i < this.sectionProperties.weight; i++)
-				this.context.strokeRect(-0.5 - i, -0.5 - i, app.calc.cellCursorRectangle.pWidth + i * 2, app.calc.cellCursorRectangle.pHeight + i * 2);
+				this.context.strokeRect(x + -0.5 - i, -0.5 - i, app.calc.cellCursorRectangle.pWidth + i * 2, app.calc.cellCursorRectangle.pHeight + i * 2);
 
 			if (window.prefs.getBoolean('darkTheme')) {
 				this.context.strokeStyle = 'white';
 				const diff = 1;
-				this.context.strokeRect(-0.5 + diff, -0.5 + diff, app.calc.cellCursorRectangle.pWidth - 2 * diff, app.calc.cellCursorRectangle.pHeight - 2 * diff);
-				this.context.strokeRect(-0.5 + diff, -0.5 + diff, app.calc.cellCursorRectangle.pWidth - 2 * diff, app.calc.cellCursorRectangle.pHeight - 2 * diff);
+				this.context.strokeRect(x + -0.5 + diff, -0.5 + diff, app.calc.cellCursorRectangle.pWidth - 2 * diff, app.calc.cellCursorRectangle.pHeight - 2 * diff);
+				this.context.strokeRect(x + -0.5 + diff, -0.5 + diff, app.calc.cellCursorRectangle.pWidth - 2 * diff, app.calc.cellCursorRectangle.pHeight - 2 * diff);
 			}
 		}
 	}
