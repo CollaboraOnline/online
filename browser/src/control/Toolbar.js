@@ -563,7 +563,7 @@ L.Map.include({
 		searchInput.addEventListener('input', function () {
 			// Hide all elements within the #online-help-content on first key stroke/at start of filter content
 			if (!startFilter || !isAnyMatchingContent) {
-				helpContentParent.setAttribute('style', 'background-color: var(--color-background-dark) !important');
+				helpContentParent.style.backgroundColor = 'var(--color-background-dark) !important';
 				// Hide all <p> tags within .text, .spreadsheet, or .presentation sections
 				document.querySelectorAll('#online-help-content > *:not(a), .link-section p, .product-header').forEach(function (element) {
 					// Check if the element has class text, spreadsheet, or presentation

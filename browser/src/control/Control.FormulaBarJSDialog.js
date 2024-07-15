@@ -184,7 +184,7 @@ class FormulaBar {
 				}];
 		}
 
-		this.parentContainer.innerHTML = '';
+		this.parentContainer.replaceChildren();
 		this.builder.build(this.parentContainer, data);
 	}
 

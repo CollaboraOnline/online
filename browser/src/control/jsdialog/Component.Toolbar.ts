@@ -53,7 +53,7 @@ class Toolbar {
 		this.parentContainer = L.DomUtil.get(this.toolbarElementId);
 
 		// In case it contains garbage
-		if (this.parentContainer) this.parentContainer.innerHTML = '';
+		if (this.parentContainer) this.parentContainer.replaceChildren();
 
 		L.DomUtil.addClass(this.parentContainer, 'ui-toolbar');
 	}
