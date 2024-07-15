@@ -12,8 +12,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-07-05 13:52+0200\n"
-"PO-Revision-Date: 2024-07-09 13:26+0000\n"
-"Last-Translator: iwonder <iwonder@users.noreply.hosted.weblate.org>\n"
+"PO-Revision-Date: 2024-07-15 13:02+0000\n"
+"Last-Translator: Lily Logua <lily.logua@gmail.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "ui/de/>\n"
 "Language: de\n"
@@ -2282,7 +2282,7 @@ msgstr "Zellumrandung"
 
 #: src/control/jsdialog/Widget.SidebarContainers.ts:72
 msgid "More options for {name}"
-msgstr ""
+msgstr "Weitere Optionen für {Name}"
 
 #: src/control/jsdialog/Widget.TreeView.js:698
 msgid "Headings and objects that you add to the document will appear here"
@@ -2685,6 +2685,8 @@ msgid ""
 "Document cannot be saved due to expired session, please reopen the document "
 "to continue."
 msgstr ""
+"Das Dokument kann aufgrund einer abgelaufenen Sitzung nicht gespeichert "
+"werden. Bitte öffnen Sie das Dokument erneut, um fortzufahren."
 
 #: src/errormessages.js:48
 msgid "Document cannot be saved."
@@ -2726,6 +2728,8 @@ msgid ""
 "Document cannot be saved due to expired session, please reload the page to "
 "continue."
 msgstr ""
+"Das Dokument kann aufgrund einer abgelaufenen Sitzung nicht gespeichert "
+"werden. Bitte laden Sie die Seite neu, um fortzufahren."
 
 #: src/errormessages.js:57
 msgid "Document cannot be saved, please check your permissions."
