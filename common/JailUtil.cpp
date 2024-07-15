@@ -66,14 +66,14 @@ bool enterMountingNS(uid_t uid, gid_t gid)
     if (unshare(CLONE_NEWNS | CLONE_NEWUSER) != 0)
     {
         // having multiple threads is a source of failure f.e.
-        fprintf(stderr, "enterMountingNS, unshare failed %s\n", strerror(errno));
+        LOG_ERR("enterMountingNS, unshare failed: " << strerror(errno));
         return false;
     }
 
     // Do not propagate any mounts from this new namespace to the system.
     if (mount("none", "/", nullptr, MS_REC | MS_PRIVATE, nullptr) != 0)
     {
-        fprintf(stderr, "enterMountingNS, root mount failed %s\n", strerror(errno));
+        LOG_ERR("enterMountingNS, root mount failed: " << strerror(errno));
         return false;
     }
 
@@ -96,7 +96,7 @@ bool enterUserNS(uid_t uid, gid_t gid)
     if (unshare(CLONE_NEWUSER) != 0)
     {
         // having multiple threads is a source of failure f.e.
-        fprintf(stderr, "enterUserNS, unshare failed %s\n", strerror(errno));
+        LOG_ERR("enterMountingNS, unshare failed: " << strerror(errno));
         return false;
     }
 
@@ -450,6 +450,12 @@ void enableMountNamespaces()
 {
     // Set the envar to enable.
     setenv(NAMESPACE_MOUNTING_ENVAR_NAME, "1", 1);
+}
+
+void disableMountNamespaces()
+{
+    // Remove the envar to enable.
+    unsetenv(NAMESPACE_MOUNTING_ENVAR_NAME);
 }
 
 bool isMountNamespacesEnabled()

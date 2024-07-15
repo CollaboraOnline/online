@@ -1940,6 +1940,80 @@ private:
     // The key of this map is the download URI of the font.
     std::map<std::string, FontData> fonts;
 };
+
+void COOLWSD::setupChildRoot(const bool UseMountNamespaces)
+{
+    JailUtil::disableBindMounting(); // Default to assume failure
+    JailUtil::disableMountNamespaces();
+
+    pid_t pid = fork();
+    if (!pid)
+    {
+        // Child
+        Log::postFork();
+
+        int ret = 0;
+
+        // Do the setup in a fork so we have no other threads running which
+        // disrupt creation of linux namespaces
+
+        if (UseMountNamespaces)
+        {
+            // setupChildRoot does a test bind mount + umount to see if that fully works
+            // so we have a mount namespace here just for the purposes of that test
+            LOG_DBG("Move into user namespace as uid 0");
+            if (JailUtil::enterMountingNS(geteuid(), getegid()))
+                JailUtil::enableMountNamespaces();
+            else
+                LOG_ERR("creating usernamespace for mount user failed.");
+        }
+
+        // Setup the jails.
+        JailUtil::cleanupJails(CleanupChildRoot);
+        JailUtil::setupChildRoot(IsBindMountingEnabled, ChildRoot, SysTemplate);
+
+        if (JailUtil::isMountNamespacesEnabled())
+            ret |= (1 << 0);
+        if (JailUtil::isBindMountingEnabled())
+            ret |= (1 << 1);
+
+        _exit(ret);
+    }
+
+    // Parent
+
+    if (pid == -1)
+    {
+        LOG_ERR("setupChildRoot fork failed: " << strerror(errno));
+        return;
+    }
+
+    int wstatus;
+    const int rc = waitpid(pid, &wstatus, 0);
+    if (rc == -1)
+    {
+        LOG_ERR("setupChildRoot waitpid failed: " << strerror(errno));
+        return;
+    }
+
+    if (!WIFEXITED(wstatus))
+    {
+        LOG_ERR("setupChildRoot abnormal termination");
+        return;
+    }
+
+    int status = WEXITSTATUS(wstatus);
+    LOG_DBG("setupChildRoot status: " << std::hex << status << std::dec);
+    EnableMountNamespaces = (status & (1 << 0));
+    LOG_INF("Using Mount Namespaces: " << EnableMountNamespaces);
+    IsBindMountingEnabled = (status & (1 << 1));
+    LOG_INF("Using Bind Mounting: " << IsBindMountingEnabled);
+    if (IsBindMountingEnabled)
+        JailUtil::enableBindMounting();
+    if (EnableMountNamespaces)
+        JailUtil::enableMountNamespaces();
+}
+
 #endif
 
 void COOLWSD::innerInitialize(Application& self)
@@ -2553,39 +2627,7 @@ void COOLWSD::innerInitialize(Application& self)
 
     // Setup the jails.
     const bool UseMountNamespaces = getConfigValue<bool>(conf, "mount_namespaces", false);
-    const uid_t origuid = geteuid();
-    const uid_t origgid = getegid();
-    if (UseMountNamespaces)
-    {
-        // setupChildRoot does a test bind mount + umount to see if that fully works
-        // so we have a mount namespace here just for the purposes of that test
-        LOG_DBG("Move into user namespace as uid 0");
-        EnableMountNamespaces = JailUtil::enterMountingNS(origuid, origgid);
-        if (EnableMountNamespaces)
-            JailUtil::enableMountNamespaces();
-        else
-            LOG_ERR("creating usernamespace for mount user failed.");
-    }
-
-    JailUtil::cleanupJails(CleanupChildRoot);
-    JailUtil::setupChildRoot(IsBindMountingEnabled, ChildRoot, SysTemplate);
-
-    if (UseMountNamespaces)
-    {
-        LOG_DBG("Move into user namespace as uid " << origuid);
-        if (!JailUtil::enterUserNS(origuid, origgid))
-            LOG_ERR("creating usernamespace for orig user failed.");
-        assert(origuid == geteuid());
-        assert(origgid == getegid());
-
-        // In a new namespace we have a full set of capabilities that we don't need
-        if (dropAllCapabilities() == -1)
-            LOG_ERR("Failed to drop all capabilities");
-
-        char *capText = cap_to_text(cap_get_proc(), nullptr);
-        LOG_DBG("Initialized child root, dropped caps. Final caps are: " << capText);
-        cap_free(capText);
-    }
+    setupChildRoot(UseMountNamespaces);
 
     LOG_DBG("FileServerRoot before config: " << FileServerRoot);
     FileServerRoot = getPathFromConfig("file_server_root_path");
