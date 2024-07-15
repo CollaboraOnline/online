@@ -2287,6 +2287,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 			button = L.DomUtil.create('button', 'ui-content unobutton', div);
 			button.id = buttonId;
+
+			if(data.text)
+				button.setAttribute('aria-label', data.text);
+
 			if (!data.accessKey)
 				builder._setAccessKey(button, builder._getAccessKeyFromText(data.text));
 			else
