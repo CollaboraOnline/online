@@ -303,25 +303,19 @@ void RequestVettingStation::checkFileInfo(const Poco::URI& uri, bool isReadOnly,
             const auto docKey = RequestDetails::getDocKey(uriPublic);
             LOG_DBG("WOPI::CheckFileInfo succeeded and will create DocBroker ["
                     << docKey << "] now with URL: [" << url << ']');
-            if (_ws)
+
+            if (createDocBroker(docKey, url, uriPublic))
             {
-                if (createDocBroker(docKey, url, uriPublic))
+                assert(_docBroker && "Must have docBroker");
+                if (_ws)
                 {
-                    assert(_docBroker && "Must have docBroker");
+                    // If we don't have the WebSocket, defer creating the client session.
                     createClientSession(docKey, url, uriPublic, isReadOnly);
                 }
-            }
-            else
-            {
-                LOG_DBG("WOPI::CheckFileInfo succeeded but we don't have the client's "
-                        "WebSocket yet. Creating DocBroker without connection");
-                auto [docBroker, errorMsg] = findOrCreateDocBroker(
-                    DocumentBroker::ChildType::Interactive, url, docKey, _id, uriPublic,
-                    _mobileAppDocId, _checkFileInfo->wopiFileInfo(uriPublic));
-                _docBroker = std::move(docBroker);
-                if (!_docBroker)
+                else
                 {
-                    LOG_DBG("Failed to find document [" << docKey << "]: " << errorMsg);
+                    LOG_DBG("WOPI::CheckFileInfo succeeded but we don't have the client's "
+                            "WebSocket yet. Deferring the ClientSession creation.");
                 }
             }
         }
@@ -383,6 +377,7 @@ void RequestVettingStation::createClientSession(const std::string& docKey, const
                                                 const Poco::URI& uriPublic, const bool isReadOnly)
 {
     assert(_docBroker && "Must have DocBroker");
+    assert(_ws && "Must have WebSocket");
 
     std::shared_ptr<ClientSession> clientSession =
         _docBroker->createNewClientSession(_ws, _id, uriPublic, isReadOnly, _requestDetails);
