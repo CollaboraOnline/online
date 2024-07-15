@@ -395,17 +395,11 @@ bool ChildSession::_handleInput(const char *buffer, int length)
             LOG_TRC("Transformation JSON was not provided.");
             return false;
         }
-
-        std::string transformQueryJSON;
-        Poco::URI::decode(encodedTransformQueryJSON, transformQueryJSON);
-
-        // we put JSON inside JSON - avoid plain quote characters
-        std::string encodedJSON = regex_replace(transformQueryJSON, std::regex("\""), "\\\"");
-
+        // Send encoded string, this way it survive until it arrive at core.
         const std::string arguments = "{"
             "\"DataJson\":{"
                 "\"type\":\"string\","
-                "\"value\":\"" + encodedJSON + "\""
+                "\"value\":\"" + encodedTransformQueryJSON + "\""
             "}}";
 
         getLOKitDocument()->postUnoCommand(command.c_str(), arguments.c_str(), false);
