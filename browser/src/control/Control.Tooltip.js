@@ -43,6 +43,7 @@ class Tooltip {
 	beginHide(elem) {
 		if (this._cancel) return;
 
+		clearTimeout(this._showTimeout);
 		clearTimeout(this._hideTimeout);
 		if (this._current)
 			this._hideTimeout = setTimeout(
