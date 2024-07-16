@@ -13,6 +13,10 @@
 
 declare var JSDialog: any;
 
+interface AuditEntry {
+	code: string;
+	status: string;
+}
 class ServerAuditDialog {
 	map: any;
 	id: string = 'ServerAuditDialog';
@@ -46,13 +50,28 @@ class ServerAuditDialog {
 				],
 				ok: [_('No problems with SSL verification detected'), '', ''],
 			},
+			postmessage: {
+				ok: [_('PostMessage API is initialized'), '', ''],
+				hostnotready: [
+					_('Integrator is not ready for PostMessage calls'),
+					'SDK: post-message-initialization',
+					'https://sdk.collaboraonline.com/docs/postmessage_api.html#initialization',
+				],
+			},
 		};
 	}
 
+	private performClientAudit(): Array<AuditEntry> {
+		const entries = new Array<AuditEntry>();
+		return entries;
+	}
+
 	public open() {
-		const entries = this.getEntries();
+		const serverEntries = this.getEntries(app.serverAudit);
+		const clientEntries = this.getEntries(this.performClientAudit());
+
 		const dialogBuildEvent = {
-			data: this.getJSON(entries),
+			data: this.getJSON(serverEntries.concat(clientEntries)),
 			callback: this.callback.bind(this) as JSDialogCallback,
 		};
 
@@ -62,15 +81,15 @@ class ServerAuditDialog {
 		);
 	}
 
-	private getEntries(): Array<TreeEntryJSON> {
+	private getEntries(source: any): Array<TreeEntryJSON> {
 		const entries = new Array<TreeEntryJSON>();
 
-		if (!app.serverAudit) return entries;
+		if (!source) return entries;
 
 		const errorIcon = { collapsed: 'serverauditerror.svg' };
 		const okIcon = { collapsed: 'serverauditok.svg' };
 
-		app.serverAudit.forEach((entry: any) => {
+		source.forEach((entry: AuditEntry) => {
 			const found = this.errorCodes[entry.code];
 			if (found) {
 				const status = found[entry.status];
@@ -97,13 +116,29 @@ class ServerAuditDialog {
 		return entries;
 	}
 
-	private getJSON(entries: Array<any>): JSDialogJSON {
+	private hasErrors(): boolean {
 		let hasErrors = false;
-		app.serverAudit.forEach((entry: any) => {
-			if (entry.status !== 'ok') {
-				hasErrors = true;
-			}
-		});
+		if (app.serverAudit) {
+			app.serverAudit.forEach((entry: any) => {
+				if (entry.status !== 'ok') {
+					hasErrors = true;
+				}
+			});
+		}
+
+		if (app.clientAudit) {
+			app.clientAudit.forEach((entry: any) => {
+				if (entry.status !== 'ok') {
+					hasErrors = true;
+				}
+			});
+		}
+
+		return hasErrors;
+	}
+
+	private getJSON(entries: Array<any>): JSDialogJSON {
+		const hasErrors = this.hasErrors();
 
 		return {
 			id: this.id,
