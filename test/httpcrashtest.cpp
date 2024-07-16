@@ -98,7 +98,10 @@ public:
     {
         _socketPoll->joinThread();
         resetTestStartTime();
-        waitForKitPidsReady("tearDown");
+        // The default is KIT_PID_TIMEOUT_MS, but we may have to wait for coolforkit to restart, which
+        // may take up to the default CHILD_SPAWN_TIMEOUT_MS which is larger than KIT_PID_TIMEOUT_MS
+        const std::chrono::milliseconds timeoutMs = std::chrono::milliseconds(KIT_PID_TIMEOUT_MS + CHILD_SPAWN_TIMEOUT_MS);
+        waitForKitPidsReady("tearDown", timeoutMs);
         resetTestStartTime();
     }
 };
