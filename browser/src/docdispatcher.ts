@@ -11,7 +11,10 @@
 
 /* global app _ */
 
-// app.dispatcher.dispatch() will be used to call some actions so we can share the code
+/*
+	app.dispatcher.dispatch() will be used to call some actions so we can share the code
+	This is mostly used by keyboard shortcuts etc, which need a base (for simplicity) to call actions.
+*/
 
 class Dispatcher {
 	private actionsMap: any = {};

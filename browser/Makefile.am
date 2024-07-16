@@ -190,6 +190,7 @@ COOL_JS_LST =\
 	src/docstate.js \
 	src/docstatefunctions.js \
 	src/docdispatcher.ts \
+	src/docevents.ts \
 	src/Leaflet.js \
 	src/errormessages.js \
 	src/unocommands.js \
@@ -845,6 +846,7 @@ pot:
 		src/docstate.js \
 		src/docstatefunctions.js \
 		src/docdispatcher.ts \
+		src/docevents.ts \
 		src/errormessages.js \
 		src/layer/tile/CanvasTileLayer.js \
 		src/canvas/sections/CommentListSection.ts \
