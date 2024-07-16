@@ -4650,6 +4650,12 @@ void DocumentBroker::startSwitchingToOnline()
 {
     LOG_DBG("Starting switching to Online mode");
 
+    if (_docState.activity() != DocumentState::Activity::None)
+    {
+        // It's not safe to call startActivity() while executing another.
+        return;
+    }
+
     // Transition.
     if (!startActivity(DocumentState::Activity::SwitchingToOnline))
     {
