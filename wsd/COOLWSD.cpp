@@ -234,7 +234,7 @@ static std::chrono::milliseconds careerSpanMs(std::chrono::milliseconds::zero())
 #endif
 
 /// The timeout for a child to spawn, initially high, then reset to the default.
-int ChildSpawnTimeoutMs = CHILD_TIMEOUT_MS * 4;
+int ChildSpawnTimeoutMs = CHILD_SPAWN_TIMEOUT_MS;
 std::atomic<unsigned> COOLWSD::NumConnections;
 std::unordered_set<std::string> COOLWSD::EditFileExtensions;
 
@@ -3495,7 +3495,7 @@ bool COOLWSD::createForKit()
     LOG_INF("Creating new forkit process.");
 
     // Creating a new forkit is always a slow process.
-    ChildSpawnTimeoutMs = CHILD_TIMEOUT_MS * 4;
+    ChildSpawnTimeoutMs = CHILD_SPAWN_TIMEOUT_MS;
 
     std::unique_lock<std::mutex> newChildrenLock(NewChildrenMutex);
 
