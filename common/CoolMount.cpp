@@ -29,13 +29,11 @@
 
 #define MOUNT mount_wrapper
 #define MS_MGC_VAL 0
-#define MS_SILENT 0
 #define MS_NODEV 0
 #define MS_UNBINDABLE 0
 #define MS_BIND 1
 #define MS_REC 2
 #define MS_REMOUNT 4
-#define MS_NOATIME 8
 #define MS_NOSUID 16
 #define MS_RDONLY 32
 
@@ -81,9 +79,6 @@ int mount_wrapper(const char *source, const char *target,
 
     if(mountflags & MS_REMOUNT)
         freebsd_flags |= MNT_UPDATE;
-
-    if(mountflags & MS_NOATIME)
-        freebsd_flags |= MNT_NOATIME;
 
     if(mountflags & MS_NOSUID)
         freebsd_flags |= MNT_NOSUID;
@@ -147,7 +142,7 @@ void usage(const char* program)
     fprintf(stderr, "       -u to unmount the target.\n");
 }
 
-int domount(bool namespace_mount, int argc, const char* const* argv)
+int domount(int argc, const char* const* argv)
 {
     const char* program = argv[0];
     if (argc < 3)
@@ -300,16 +295,19 @@ int domount(bool namespace_mount, int argc, const char* const* argv)
         else if (strcmp(option, "-r") == 0) // Readonly Mount.
         {
             // Now we need to set read-only and other flags with a remount.
-            unsigned long mountflags = (MS_BIND | MS_REC | MS_REMOUNT | MS_NODEV | MS_NOSUID
-                                        | MS_RDONLY | MS_SILENT);
-            // In the linux namespace mount case, setting MS_NOATIME results in EPERM on remounting
-            // something hosted in a toplevel [rel]atime mount. man 2 mount states 'An attempt was
-            // made to modify (MS_REMOUNT) the MS_RDONLY, MS_NOSUID, or MS_NOEXEC flag, or one of
-            // the "atime" flags (MS_NOATIME, MS_NODIRATIME, MS_RELATIME) of an existing mount, but
-            // the mount is locked'. Presumably we can add flags that drop privs, but not those
-            // that could circumvent original mount policy.
-            if (!namespace_mount)
-                mountflags |= MS_NOATIME;
+            unsigned long mountflags = (MS_BIND | MS_REMOUNT | MS_NODEV | MS_NOSUID | MS_RDONLY);
+
+            /* a) In the linux namespace mount case an additional MS_NOATIME, etc. will result in
+               EPERM on remounting something hosted in a toplevel [rel]atime mount. man 2 mount
+               has 'An attempt was made to modify (MS_REMOUNT) the MS_RDONLY, MS_NOSUID, or
+               MS_NOEXEC flag, or one of the "atime" flags (MS_NOATIME, MS_NODIRATIME, MS_RELATIME)
+               of an existing mount, but the mount is locked'.
+
+               b) lxc has default apparmor rules of
+               https://github.com/lxc/lxc/blob/main/config/apparmor/abstractions/container-base
+               where the closest match is:  "mount options=(ro,remount,bind,nodev,nosuid)"
+               so additional 'MS_SILENT' or 'MS_REC' flags cause the remount to be denied
+            */
             int retval = MOUNT(source, target, nullptr, mountflags, nullptr);
             if (retval)
             {
