@@ -1325,7 +1325,7 @@ L.Map = L.Evented.extend({
 
 		this._mainEvents(onOff);
 
-		document.getElementById('document-container').addEventListener('resize', this._onResize.bind(this));
+		app.events.on('resize', this._onResize.bind(this));
 
 		L.DomEvent[onOff](window, 'blur', this._onLostFocus, this);
 		L.DomEvent[onOff](window, 'focus', this._onGotFocus, this);
