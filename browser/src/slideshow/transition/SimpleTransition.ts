@@ -165,6 +165,7 @@ class SimpleTransition extends SlideShow.Transition3d {
 		this.gl.bindTexture(this.gl.TEXTURE_2D, this.textures[textureNum]);
 		this.gl.uniform1i(this.gl.getUniformLocation(this.program, textureName), 0);
 		for (const primitive of texturePrimitive) {
+			console.log('slideshow: vertex length', primitive.vertices.length);
 			this.setBufferData(primitive.vertices);
 			this.applyLeavingOperations(t, primitive.operations);
 			this.gl.drawArrays(this.gl.TRIANGLE_STRIP, 0, primitive.vertices.length);
