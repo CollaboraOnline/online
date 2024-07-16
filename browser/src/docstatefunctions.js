@@ -137,3 +137,8 @@ app.isCalcRTL = function () {
 		app.map._docLayer._rtlParts.indexOf(app.map._docLayer._selectedPart) >= 0
 	);
 };
+
+app.setServerAuditFromCore = function (entries) {
+	app.serverAudit = entries;
+	app.map.fire('receivedserveraudit');
+};

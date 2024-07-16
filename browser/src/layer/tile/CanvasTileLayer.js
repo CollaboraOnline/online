@@ -1622,8 +1622,7 @@ L.CanvasTileLayer = L.Layer.extend({
 					this._map.serverAuditDialog = JSDialog.serverAuditDialog(this._map);
 
 				var json = JSON.parse(serverAudit);
-				app.serverAudit = json.serverAudit;
-				app.map.fire('receivedserveraudit');
+				app.setServerAuditFromCore(json.serverAudit);
 			}
 		} else if (textMsg.startsWith('adminuser:')) {
 			var value = textMsg.substr(10).trim();
