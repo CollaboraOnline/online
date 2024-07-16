@@ -3052,6 +3052,10 @@ void lokit_main(
             jailLOInstallation.makeDirectory();
             const std::string loJailDestPath = jailLOInstallation.toString();
 
+            const std::string tempRoot = Poco::Path(childRoot, "tmp").toString();
+            const std::string tmpSubDir = Poco::Path(tempRoot, "cool-" + jailId).toString();
+            const std::string jailTmpDir = Poco::Path(jailPath, "tmp").toString();
+
             // The bind-mount implementation: inlined here to mirror
             // the fallback link/copy version bellow.
             const auto mountJail = [&]() -> bool {
@@ -3082,10 +3086,7 @@ void lokit_main(
                 }
 
                 // tmpdir inside the jail for added sercurity.
-                const std::string tempRoot = Poco::Path(childRoot, "tmp").toString();
-                const std::string tmpSubDir = Poco::Path(tempRoot, "cool-" + jailId).toString();
                 Poco::File(tmpSubDir).createDirectories();
-                const std::string jailTmpDir = Poco::Path(jailPath, "tmp").toString();
                 LOG_INF("Mounting random temp dir " << tmpSubDir << " -> " << jailTmpDir);
                 if (!JailUtil::bind(tmpSubDir, jailTmpDir))
                 {
@@ -3099,6 +3100,21 @@ void lokit_main(
 
             bool usingMountNamespace = false;
 
+#ifndef __FreeBSD__
+            const uid_t origuid = geteuid();
+            const gid_t origgid = getegid();
+
+            // create a namespace and map to root uid/gid
+            if (useMountNamespaces)
+            {
+                LOG_DBG("Move into user namespace as uid 0");
+                if (!JailUtil::enterMountingNS(origuid, origgid))
+                    LOG_ERR("Linux mount namespace for kit failed: " << strerror(errno));
+                else
+                    usingMountNamespace = true;
+            }
+#endif
+
             // Copy (link) LO installation and other necessary files into it from the template.
             bool bindMount = JailUtil::isBindMountingEnabled();
             if (bindMount)
@@ -3109,21 +3125,6 @@ void lokit_main(
                 assert(!"Mounting is not compatible with code-coverage.");
 #endif // CODE_COVERAGE
 
-#ifndef __FreeBSD__
-                const uid_t origuid = geteuid();
-                const gid_t origgid = getegid();
-
-                // create a namespace and map to root uid/gid
-                if (useMountNamespaces)
-                {
-                    LOG_DBG("Move into user namespace as uid 0");
-                    if (!JailUtil::enterMountingNS(origuid, origgid))
-                        LOG_ERR("Linux mount namespace for kit failed: " << strerror(errno));
-                    else
-                        usingMountNamespace = true;
-                }
-#endif
-
                 if (!mountJail())
                 {
                     LOG_INF("Cleaning up jail before linking/copying.");
@@ -3132,19 +3133,20 @@ void lokit_main(
                     JailUtil::disableBindMounting();
                 }
 
-#ifndef __FreeBSD__
-                if (usingMountNamespace)
-                {
-                    // create another namespace, map back to original uid/gid after chroot
-                    LOG_DBG("Move into user namespace as uid " << origuid);
-                    if (!JailUtil::enterUserNS(origuid, origgid))
-                        LOG_ERR("Linux user namespace for kit failed: " << strerror(errno));
-                }
-
-                assert(origuid == geteuid());
-                assert(origgid == getegid());
-#endif
             }
+
+#ifndef __FreeBSD__
+            if (usingMountNamespace)
+            {
+                // create another namespace, map back to original uid/gid after chroot
+                LOG_DBG("Move into user namespace as uid " << origuid);
+                if (!JailUtil::enterUserNS(origuid, origgid))
+                    LOG_ERR("Linux user namespace for kit failed: " << strerror(errno));
+            }
+
+            assert(origuid == geteuid());
+            assert(origgid == getegid());
+#endif
 
             if (!bindMount)
             {
@@ -3177,6 +3179,16 @@ void lokit_main(
                         << "]. If the systemplate directory is owned by a superuser or is "
                            "read-only, running the installation scripts with the owner's account "
                            "should update these files. Some functionality may be missing.");
+                }
+
+                if (usingMountNamespace)
+                {
+                    Poco::File(tempRoot).createDirectories();
+                    if (symlink(jailTmpDir.c_str(), tmpSubDir.c_str()) == -1)
+                    {
+                        LOG_SFL("Failed to create symlink [" << tmpSubDir << " -> " << jailTmpDir << "] " << strerror(errno));
+                        Util::forcedExit(EX_SOFTWARE);
+                    }
                 }
             }
 
