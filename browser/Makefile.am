@@ -160,6 +160,7 @@ $(eval $(call file_targets,$(COOL_CSS)))
 
 NODE_MODULES_JS =\
 	$(if $(IS_SEPARATE),node_modules/hammerjs/hammer.js,node_modules/hammerjs/hammer.min.js) \
+	node_modules/gl-matrix/gl-matrix-min.js \
 	node_modules/jquery/dist/jquery.js \
 	node_modules/jquery-mousewheel/jquery.mousewheel.js \
 	node_modules/jquery-contextmenu/dist/jquery.contextMenu.js \
@@ -451,6 +452,21 @@ COOL_JS_LST =\
 	src/slideshow/transition/WipeTransition.ts \
 	src/slideshow/transition/NoTransition.ts \
 	src/slideshow/CanvasLoader.ts \
+	src/slideshow/Transition3d.ts \
+	src/slideshow/Operation.ts \
+	src/slideshow/Primitive.ts \
+	src/slideshow/operation/RotateAndScaleDepthByWidth.ts \
+	src/slideshow/operation/SEllipseTranslate.ts \
+	src/slideshow/operation/SRotate.ts \
+	src/slideshow/operation/SScale.ts \
+	src/slideshow/operation/STranslate.ts \
+	src/slideshow/types.ts \
+	src/slideshow/transition/SimpleTransition.ts \
+	src/slideshow/transition/CubeTransition.ts \
+	src/slideshow/transition/FallTransition.ts \
+	src/slideshow/transition/WipeTransition.ts \
+	src/slideshow/transition/NoTransition.ts \
+	src/slideshow/transition/MicsShapeWipeTransition.ts \
 	src/dom/PosAnimation.js \
 	src/map/anim/Map.PanAnimation.js \
 	src/dom/PosAnimation.Timer.js \
@@ -921,6 +937,19 @@ pot:
 		src/slideshow/transition/CombTransition.ts \
 		src/slideshow/transition/BarWipeTransition.ts \
 		src/slideshow/CanvasLoader.ts \
+		src/slideshow/Transition3d.ts \
+		src/slideshow/Operation.ts \
+		src/slideshow/Primitive.ts \
+		src/slideshow/operation/RotateAndScaleDepthByWidth.ts \
+		src/slideshow/operation/SEllipseTranslate.ts \
+		src/slideshow/operation/SRotate.ts \
+		src/slideshow/operation/SScale.ts \
+		src/slideshow/operation/STranslate.ts \
+		src/slideshow/types.ts \
+		src/slideshow/transition/SimpleTransition.ts \
+		src/slideshow/transition/CubeTransition.ts \
+		src/slideshow/transition/FallTransition.ts \
+		src/slideshow/transition/MicsShapeWipeTransition.ts \
 		src/core/Socket.js \
 		src/core/Debug.js \
 		src/docstate.js \
