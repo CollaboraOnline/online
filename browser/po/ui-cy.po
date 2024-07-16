@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-07-05 13:52+0200\n"
-"PO-Revision-Date: 2024-04-08 22:01+0000\n"
+"PO-Revision-Date: 2024-07-16 05:10+0000\n"
 "Last-Translator: Rhoslyn Prys <rprys@posteo.net>\n"
 "Language-Team: Welsh <https://hosted.weblate.org/projects/collabora-online/"
 "ui/cy/>\n"
-"Language: \n"
+"Language: cy\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=(n==0) ? 0 : (n==1) ? 1 : (n==2) ? 2 : "
 "(n==3) ? 3 :(n==6) ? 4 : 5;\n"
-"X-Generator: Weblate 5.5-dev\n"
+"X-Generator: Weblate 5.7-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -480,11 +480,11 @@ msgstr "Gludo Arbennig"
 
 #: src/control/Control.ContextMenu.js:240
 msgid "Copy Cells"
-msgstr ""
+msgstr "Copïo Celloedd"
 
 #: src/control/Control.ContextMenu.js:248
 msgid "Fill Series"
-msgstr ""
+msgstr "Llanw Cyfres"
 
 #: src/control/Control.DocumentNameInput.js:113
 msgid "Path"
@@ -902,7 +902,7 @@ msgstr "Modd Tywyll"
 #: src/control/Control.NotebookbarImpress.js:485
 #: src/control/Control.NotebookbarWriter.js:1506
 msgid "Invert Background"
-msgstr ""
+msgstr "Gwrthdroi Cefndir"
 
 #: src/control/Control.Menubar.js:154 src/control/Control.Menubar.js:459
 #: src/control/Control.Menubar.js:604 src/control/Control.Menubar.js:750
@@ -1049,7 +1049,7 @@ msgstr "Anfon Adborth"
 #: src/control/Control.ServerAuditDialog.ts:112
 #: src/control/Control.ServerAuditDialog.ts:113
 msgid "Server audit"
-msgstr ""
+msgstr "Archwiliad gweinydd"
 
 #: src/control/Control.Menubar.js:387 src/control/Control.Menubar.js:548
 #: src/control/Control.Menubar.js:679 src/control/Control.Menubar.js:959
@@ -1084,12 +1084,12 @@ msgstr "Cadw Sylwadau"
 #: src/control/Control.Menubar.js:414
 #: src/control/Control.NotebookbarBuilder.js:601
 msgid "Full Page Slides"
-msgstr ""
+msgstr "Sleidiau Tudalen Llawn"
 
 #: src/control/Control.Menubar.js:415
 #: src/control/Control.NotebookbarBuilder.js:605
 msgid "Notes Pages"
-msgstr ""
+msgstr "Tudalennau Nodiadau"
 
 #: src/control/Control.Menubar.js:449
 #: src/control/Control.NotebookbarImpress.js:470
@@ -1154,36 +1154,35 @@ msgstr "Pob dalen"
 #: src/control/Control.Menubar.js:835
 #: src/control/jsdialog/Definitions.Menu.ts:286
 msgid "Highlight cells with..."
-msgstr ""
+msgstr "Amlygwch gelloedd gyda..."
 
 #: src/control/Control.Menubar.js:836
 #: src/control/jsdialog/Definitions.Menu.ts:289
 msgid "Values greater than..."
-msgstr ""
+msgstr "Gwerthoedd sy'n fwy na ..."
 
 #: src/control/Control.Menubar.js:837
 #: src/control/jsdialog/Definitions.Menu.ts:293
 msgid "Values less than..."
-msgstr ""
+msgstr "Gwerthoedd yn llai na..."
 
 #: src/control/Control.Menubar.js:838
 #: src/control/jsdialog/Definitions.Menu.ts:297
 msgid "Values equal to..."
-msgstr ""
+msgstr "Gwerthoedd sy'n gydradd â..."
 
 #: src/control/Control.Menubar.js:839
 #: src/control/jsdialog/Definitions.Menu.ts:301
 msgid "Values between..."
-msgstr ""
+msgstr "Gwerthoedd rhwng..."
 
 #: src/control/Control.Menubar.js:840
 #: src/control/jsdialog/Definitions.Menu.ts:305
 msgid "Values duplicate..."
-msgstr ""
+msgstr "Gwerthoedd yn dyblygu..."
 
 #: src/control/Control.Menubar.js:841
 #: src/control/jsdialog/Definitions.Menu.ts:309
-#, fuzzy
 msgid "Containing text..."
 msgstr "Yn cynnwys testun..."
 
@@ -1191,7 +1190,7 @@ msgstr "Yn cynnwys testun..."
 #: src/control/jsdialog/Definitions.Menu.ts:313
 #: src/control/jsdialog/Definitions.Menu.ts:344
 msgid "More highlights..."
-msgstr ""
+msgstr "Mwy o uchafbwyntiau..."
 
 #: src/control/Control.Menubar.js:845
 #: src/control/jsdialog/Definitions.Menu.ts:317
@@ -1604,11 +1603,11 @@ msgstr "Presennol mewn Ffenest"
 
 #: src/control/Control.NotebookbarImpress.js:455
 msgid "Normal View"
-msgstr ""
+msgstr "Golwg Arferol"
 
 #: src/control/Control.NotebookbarImpress.js:461
 msgid "Notes View"
-msgstr ""
+msgstr "Golwg Nodiadau"
 
 #: src/control/Control.NotebookbarWriter.js:79
 msgid "Form"
@@ -1668,42 +1667,43 @@ msgstr "Clirio'r maes chwilio"
 
 #: src/control/Control.ServerAuditDialog.ts:28
 msgid "The IsAdminUser property is not set by integration"
-msgstr ""
+msgstr "Nid yw'r briodwedd IsAdminUser wedi'i osod trwy integreiddio"
 
 #: src/control/Control.ServerAuditDialog.ts:34
 msgid ""
 "Used deprecated is_admin field, integration should use IsAdminUser property "
 "instead"
 msgstr ""
+"Wedi defnyddio maes is_admin anghymeradwy, dylai integreiddio ddefnyddio "
+"priodwedd IsAdminUser yn lle hynny"
 
 #: src/control/Control.ServerAuditDialog.ts:39
 msgid "The IsAdminUser user property is set by integration"
-msgstr ""
+msgstr "Mae priodwedd defnyddiwr IsAdminUser yn cael ei osod trwy integreiddio"
 
 #: src/control/Control.ServerAuditDialog.ts:43
 msgid "Your WOPI server is not secure: SSL verification failed"
-msgstr ""
+msgstr "Nid yw eich gweinydd WOPI yn ddiogel: Methodd dilysu SSL"
 
 #: src/control/Control.ServerAuditDialog.ts:47
 msgid "No problems with SSL verification detected"
-msgstr ""
+msgstr "Dim problemau gyda dilysu SSL wedi'u canfod"
 
 #: src/control/Control.ServerAuditDialog.ts:131
 msgid "No issues found"
-msgstr ""
+msgstr "Heb ddarganfod unrhyw faterion"
 
 #: src/control/Control.ServerAuditDialog.ts:137
-#, fuzzy
 msgid "Status"
-msgstr "Statws:"
+msgstr "Statws"
 
 #: src/control/Control.ServerAuditDialog.ts:185
 msgid "Check security warnings of your server"
-msgstr ""
+msgstr "Gwiriwch rybuddion diogelwch eich gweinydd"
 
 #: src/control/Control.ServerAuditDialog.ts:186
 msgid "OPEN"
-msgstr ""
+msgstr "AGOR"
 
 #: src/control/Control.SheetsBar.js:48
 msgid "Scroll to the first sheet"
@@ -2107,11 +2107,11 @@ msgstr "Dileu stop tab"
 
 #: src/control/VRuler.ts:377
 msgid "Top Margin"
-msgstr ""
+msgstr "Ymyl Uchaf"
 
 #: src/control/VRuler.ts:378
 msgid "Bottom Margin"
-msgstr ""
+msgstr "Ymyl Gwaelod"
 
 #: src/control/Signing.js:27
 msgid "This document is digitally signed and the signature is valid."
@@ -2266,7 +2266,7 @@ msgstr "Borderi celloedd"
 
 #: src/control/jsdialog/Widget.SidebarContainers.ts:72
 msgid "More options for {name}"
-msgstr ""
+msgstr "Mwy o ddewisiadau ar gyfer {name}"
 
 #: src/control/jsdialog/Widget.TreeView.js:698
 msgid "Headings and objects that you add to the document will appear here"
@@ -2534,7 +2534,7 @@ msgstr ""
 
 #: src/errormessages.js:29
 msgid "Authorization error was: '{errormessage}'."
-msgstr ""
+msgstr "Y gwall awdurdodi oedd: '{errormessage}'."
 
 #: src/errormessages.js:30
 msgid "Wrong or missing WOPISrc parameter, please contact support."
@@ -2655,6 +2655,8 @@ msgid ""
 "Document cannot be saved due to expired session, please reopen the document "
 "to continue."
 msgstr ""
+"Nid oes modd cadw'r ddogfen oherwydd bod y sesiwn wedi dod i ben, ailagorwch "
+"y ddogfen i barhau."
 
 #: src/errormessages.js:48
 msgid "Document cannot be saved."
@@ -2693,6 +2695,8 @@ msgid ""
 "Document cannot be saved due to expired session, please reload the page to "
 "continue."
 msgstr ""
+"Nid oes modd cadw'r ddogfen oherwydd y sesiwn sydd wedi dod i ben, ail-"
+"lwythwch y dudalen i barhau."
 
 #: src/errormessages.js:57
 msgid "Document cannot be saved, please check your permissions."
@@ -2767,21 +2771,23 @@ msgstr "Datrys Trywydd"
 #: src/canvas/sections/CommentListSection.ts:1260
 #: src/canvas/sections/CommentListSection.ts:2090
 msgid "Comments Updated"
-msgstr ""
+msgstr "Sylwadau wedi'u Diweddaru"
 
 #: src/canvas/sections/CommentListSection.ts:1248
 msgid "Another user has removed this comment."
-msgstr ""
+msgstr "Mae defnyddiwr arall wedi dileu'r sylw hwn."
 
 #: src/canvas/sections/CommentListSection.ts:1261
 msgid ""
 "Another user has updated the comment. Would you like to overwrite those "
 "changes?"
 msgstr ""
+"Mae defnyddiwr arall wedi diweddaru'r sylw. Hoffech chi drosysgrifo'r "
+"newidiadau hynny?"
 
 #: src/canvas/sections/CommentListSection.ts:1263
 msgid "Update"
-msgstr ""
+msgstr "Diweddariad"
 
 #: src/canvas/sections/CommentListSection.ts:1334
 #: src/canvas/sections/CommentListSection.ts:1396
@@ -2791,6 +2797,8 @@ msgstr "Wedi'i gadw'n awtomatig"
 #: src/canvas/sections/CommentListSection.ts:2091
 msgid "Another user has updated comments. Would you like to proceed updating?"
 msgstr ""
+"Mae defnyddiwr arall wedi diweddaru sylwadau. Hoffech chi barhau i "
+"ddiweddaru?"
 
 #: src/canvas/sections/CommentSection.ts:300
 msgid "Open menu"
@@ -2925,7 +2933,7 @@ msgstr "Sioe Sleidiau Gwag"
 
 #: src/map/handler/Map.SlideShow.js:161
 msgid "Windowed Presentation: "
-msgstr ""
+msgstr "Cyflwyniad Ffenestredig: "
 
 #: src/map/handler/Map.SlideShow.js:168
 msgid "Windowed Presentation Blocked"
@@ -2967,11 +2975,11 @@ msgstr "Rydych chi eisoes yn cyflwyno'r ddogfen hon"
 
 #: src/map/handler/Map.SlideShow.js:314
 msgid "Presentation disabled"
-msgstr ""
+msgstr "Analluogwyd y cyflwyniad"
 
 #: src/map/handler/Map.SlideShow.js:315
 msgid "Presentation mode has been disabled for this document"
-msgstr ""
+msgstr "Mae'r modd cyflwyno wedi'i analluogi ar gyfer y ddogfen hon"
 
 #: src/map/handler/Map.WOPI.js:152
 msgid "Creating new file from template..."
@@ -3066,6 +3074,10 @@ msgid ""
 "translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
 "translate=\"true\">3</a>"
 msgstr ""
+"<a id=\"slide-1-indicator\" class=\"active\" href=\"#slide-1\" data-"
+"translate=\"true\">1</a> <a id=\"slide-2-indicator\" href=\"#slide-2\" data-"
+"translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
+"translate=\"true\">3</a>"
 
 #~ msgid "Document cannot be saved due to expired or invalid access token."
 #~ msgstr "Nid oes modd cadw'r ddogfen oherwydd tocyn mynediad hen neu annilys."
