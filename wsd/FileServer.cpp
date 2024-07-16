@@ -1204,7 +1204,7 @@ FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::prepro
     }
     if (buyProduct.empty())
         buyProduct = form.get("buy_product", "");
-    LOG_TRC("buy_product=" << buyProduct);
+    LOG_TRC("buy_product=" << buyProduct << " host_session_id=" << form.get("host_session_id", ""));
 
     std::string socketProxy = "false";
     if (requestDetails.isProxy())
