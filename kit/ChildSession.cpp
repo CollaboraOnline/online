@@ -2285,9 +2285,9 @@ bool ChildSession::renderSlide(const StringVector& tokens)
     if (!success)
         return false;
 
-    const int width = bufferWidth;
-    const int height = bufferHeight;
-    const size_t pixmapDataSize = 4 * bufferWidth * bufferHeight;
+    const size_t width = bufferWidth;
+    const size_t height = bufferHeight;
+    const size_t pixmapDataSize = bufferWidth * bufferHeight * 4;
     bool done = false;
     while (!done)
     {
