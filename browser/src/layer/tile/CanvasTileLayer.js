@@ -794,7 +794,6 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._map.on('movestart', this._painter.startUpdates, this._painter);
 			this._map.on('moveend', this._painter.stopUpdates, this._painter);
 		}
-		this._map.on('resize', this._syncTileContainerSize, this);
 		this._map.on('zoomend', this._painter.update, this._painter);
 		this._map.on('splitposchanged', this._painter.update, this._painter);
 		this._map.on('sheetgeometrychanged', this._painter.update, this._painter);
@@ -4388,6 +4387,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			// always true since autoFitWidth is never set
 			map.on('resize', this._fitWidthZoom, this);
 		}
+		this._map.on('resize', this._syncTileContainerSize, this);
 		// Retrieve the initial cell cursor position (as LOK only sends us an
 		// updated cell cursor when the selected cell is changed and not the initial
 		// cell).
