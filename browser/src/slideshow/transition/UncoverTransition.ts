@@ -48,6 +48,7 @@ class UncoverTransition extends Transition2d {
 		);
 	}
 
+	// jscpd:ignore-start
 	public getFragmentShader(): string {
 		return `#version 300 es
 				precision mediump float;
@@ -102,6 +103,7 @@ class UncoverTransition extends Transition2d {
 				}
 				`;
 	}
+	// jscpd:ignore-end
 }
 
 SlideShow.UncoverTransition = UncoverTransition;
