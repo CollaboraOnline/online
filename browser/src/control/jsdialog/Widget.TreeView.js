@@ -841,6 +841,21 @@ class TreeViewControl {
 		this._tableContainer._tbody = L.DomUtil.create('tbody', builder.options.cssClass +
 							       ' ui-treeview-body', this._tableContainer);
 		this._tableContainer.setAttribute('role', 'grid');
+		this._tableContainer.addEventListener('click', L.bind(TreeViewControl.onClick));
+	}
+
+	static onClick(e) {
+		let td = e.target;
+		if (!td || td.localName !== 'td')
+			return;
+
+		let tr = td.parentElement;
+		if (!tr || tr.localName !== 'tr' || !tr.hasAttribute('aria-expanded'))
+			return;
+
+		let expand = td.firstChild;
+		if (expand && e.clientX < expand.getBoundingClientRect().left)
+			console.log('click expand ');
 	}
 
 	fillHeaders(headers, builder) {
