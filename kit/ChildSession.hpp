@@ -154,7 +154,7 @@ private:
     bool unoCommand(const StringVector& tokens);
     bool selectText(const StringVector& tokens, const LokEventTargetEnum target);
     bool selectGraphic(const StringVector& tokens);
-    bool renderNextSlideLayer(int width, int height, size_t pixmapDataSize, bool& done);
+    bool renderNextSlideLayer(const unsigned width, const unsigned height, bool& done);
     bool renderSlide(const StringVector& tokens);
     bool renderWindow(const StringVector& tokens);
     bool resizeWindow(const StringVector& tokens);
