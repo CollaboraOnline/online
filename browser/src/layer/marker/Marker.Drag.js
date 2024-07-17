@@ -60,7 +60,6 @@ L.Handler.MarkerDrag = L.Handler.extend({
 
 	_onDragStart: function (e) {
 		this._marker
-		    .closePopup()
 		    .fire('movestart', e)
 		    .fire('dragstart', e);
 	},
