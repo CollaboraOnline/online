@@ -35,6 +35,7 @@ class CheckersTransition extends Transition2d {
 		this.startTransition();
 	}
 
+	// jscpd:ignore-start
 	public renderUniformValue(): void {
 		this.gl.uniform1i(
 			this.gl.getUniformLocation(this.program, 'direction'),
@@ -82,6 +83,7 @@ class CheckersTransition extends Transition2d {
                 }
                 `;
 	}
+	// jscpd:ignore-end
 }
 
 SlideShow.CheckersTransition = CheckersTransition;

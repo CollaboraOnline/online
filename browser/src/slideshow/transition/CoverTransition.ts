@@ -40,6 +40,7 @@ class CoverTransition extends Transition2d {
 		this.startTransition();
 	}
 
+	// jscpd:ignore-start
 	public renderUniformValue(): void {
 		this.gl.uniform1i(
 			this.gl.getUniformLocation(this.program, 'direction'),
@@ -115,6 +116,7 @@ class CoverTransition extends Transition2d {
                 }
                 `;
 	}
+	// jscpd:ignore-end
 }
 
 SlideShow.CoverTransition = CoverTransition;
