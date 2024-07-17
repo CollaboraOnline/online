@@ -44,9 +44,9 @@ L.Map.Scroll = L.Handler.extend({
 		var mousePos = this._map.mouseEventToLatLng(e);
 
 		var docLayer = this._map._docLayer;
-		if (docLayer.isCalc()) {
+		if (docLayer && docLayer.isCalc()) {
 			this._zoomCenter = mousePos;
-		} else if (docLayer.isWriter()) {
+		} else if (docLayer && docLayer.isWriter()) {
 			// Preserve the y coordinate position of the document where the mouse is.
 			// Also preserve x coordinate if the current view does not have margins.
 			//  If view has margins, we cannot center w.r.t arbitary position in the page because
