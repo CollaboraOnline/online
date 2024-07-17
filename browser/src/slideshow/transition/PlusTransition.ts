@@ -13,24 +13,6 @@ declare var SlideShow: any;
 class PlusTransition extends SlideShow.Transition2d {
 	constructor(transitionParameters: TransitionParameters) {
 		super(transitionParameters);
-		this.prepareTransition();
-	}
-
-	public start(): void {
-		this.startTransition();
-	}
-
-	public getVertexShader(): string {
-		return `#version 300 es
-				in vec4 a_position;
-				in vec2 a_texCoord;
-				out vec2 v_texCoord;
-
-				void main() {
-					gl_Position = a_position;
-					v_texCoord = a_texCoord;
-				}
-				`;
 	}
 
 	public getFragmentShader(): string {

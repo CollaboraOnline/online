@@ -51,6 +51,8 @@ class Transition2d {
 
 		this.time = 0;
 		this.startTime = null;
+
+		this.prepareTransition();
 	}
 
 	public getVertexShader(): string {
@@ -93,6 +95,10 @@ class Transition2d {
 	public startTransition(): void {
 		this.startTime = performance.now();
 		requestAnimationFrame(this.render.bind(this));
+	}
+
+	public start(): void {
+		this.startTransition();
 	}
 
 	public initBuffers(): void {

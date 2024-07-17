@@ -20,14 +20,6 @@ class BoxTransition extends Transition2d {
 
 	constructor(transitionParameters: TransitionParameters) {
 		super(transitionParameters);
-		this.prepareTransition();
-	}
-
-	public renderUniformValue(): void {
-		this.gl.uniform1i(
-			this.gl.getUniformLocation(this.program, 'direction'),
-			this.direction,
-		);
 	}
 
 	public start(): void {
@@ -45,17 +37,11 @@ class BoxTransition extends Transition2d {
 		this.startTransition();
 	}
 
-	public getVertexShader(): string {
-		return `#version 300 es
-				in vec4 a_position;
-				in vec2 a_texCoord;
-				out vec2 v_texCoord;
-
-				void main() {
-					gl_Position = a_position;
-					v_texCoord = a_texCoord;
-				}
-				`;
+	public renderUniformValue(): void {
+		this.gl.uniform1i(
+			this.gl.getUniformLocation(this.program, 'direction'),
+			this.direction,
+		);
 	}
 
 	public getFragmentShader(): string {
