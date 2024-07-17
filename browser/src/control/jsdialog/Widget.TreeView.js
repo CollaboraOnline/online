@@ -912,11 +912,13 @@ class TreeViewControl {
 	}
 
 	createTableItem(entry, builder, level, parent) {
-		let tr = L.DomUtil.create('tr', builder.options.cssClass + ' ui-listview-entry', parent);
+		let tr = L.DomUtil.create('tr', builder.options.cssClass + ' ui-listview-entry',
+					  this._tableContainer._tbody);
 		tr.setAttribute('role', 'row');
 		tr.setAttribute('aria-level', level + 1);
+
 		if (entry.children && entry.children.length) {
-			tr.setAttribute('aria-expanded', true);
+			tr.setAttribute('aria-expanded', 'false');
 		}
 
 		if (level > 0 && this._tableContainer.getAttribute('role') !== 'treegrid')
@@ -924,16 +926,22 @@ class TreeViewControl {
 
 		this.fillTableCells(entry, builder, tr);
 
-		return parent;
+		if (parent.getAttribute('aria-expanded') === 'false') {
+			L.DomUtil.addClass(tr, 'hidden');
+		}
+
+		return tr;
 	}
 
-	fillTableCells(entry, builder, parent) {
+	fillTableCells(entry, builder, tr) {
 		for (let index in entry.columns) {
-			let td = L.DomUtil.create('td', '', parent);
+			let td = L.DomUtil.create('td', '', tr);
 			let span = L.DomUtil.create('span', builder.options.cssClass +
 						    ' ui-treeview-cell-text', td);
 			span.innerText = entry.columns[index].text;
 			td.setAttribute('role', 'gridcell');
+			if (entry.columns[index].expanded)
+				tr.setAttribute('aria-expanded', entry.columns[index].expanded);
 		}
 	}
 }
