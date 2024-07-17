@@ -175,7 +175,12 @@ class SlideShowPresenter {
 			transitionParameters.next = nextTexture;
 			transitionParameters.slideInfo = slideInfo;
 			transitionParameters.callback = () => {
-				this._slideRenderer.renderSlide(nextTexture, slideInfo, this._presentationInfo.docWidth, this._presentationInfo.docHeight);
+				this._slideRenderer.renderSlide(
+					nextTexture,
+					slideInfo,
+					this._presentationInfo.docWidth,
+					this._presentationInfo.docHeight,
+				);
 			};
 
 			SlideShow.PerformTransition(transitionParameters);
@@ -193,7 +198,12 @@ class SlideShowPresenter {
 			const slideImage = this._slideCompositor.getSlide(this._currentSlide);
 			const currentTexture = this._slideRenderer.createTexture(slideImage);
 			const slideInfo = this.getSlideInfo(this._currentSlide);
-			this._slideRenderer.renderSlide(currentTexture, slideInfo, this._presentationInfo.docWidth, this._presentationInfo.docHeight);
+			this._slideRenderer.renderSlide(
+				currentTexture,
+				slideInfo,
+				this._presentationInfo.docWidth,
+				this._presentationInfo.docHeight,
+			);
 		});
 	}
 
