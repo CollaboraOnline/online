@@ -31,7 +31,7 @@ export enum CommentLayoutStatus {
 	HIDDEN
 }
 
-export class Comment extends app.definitions.canvasSectionObject {
+export class Comment extends CanvasSectionObject {
 	name: string = L.CSections.Comment.name;
 	processingOrder: number = L.CSections.Comment.processingOrder;
 	drawingOrder: number = L.CSections.Comment.drawingOrder;
@@ -181,14 +181,14 @@ export class Comment extends app.definitions.canvasSectionObject {
 	}
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-	public onMouseWheel (e: any) : void {
-		if (e.currentTarget.clientHeight === e.currentTarget.scrollHeight)
+	onMouseWheel(point: Array<number>, delta: Array<number>, e: MouseEvent): void {
+		if ((e as any).currentTarget.clientHeight === (e as any).currentTarget.scrollHeight)
 			return;
 
-		var _scrollTop = e.currentTarget.scrollTop;
-		if (e.deltaY < 0 && _scrollTop > 0)
+		var _scrollTop = (e as any).currentTarget.scrollTop;
+		if ((e as any).deltaY < 0 && _scrollTop > 0)
 			e.stopPropagation();
-		else if (e.deltaY > 0 && _scrollTop + $(e.currentTarget).height() < e.target.scrollHeight)
+		else if ((e as any).deltaY > 0 && _scrollTop + $(e.currentTarget).height() < (e as any).target.scrollHeight)
 			e.stopPropagation();
 	}
 
@@ -481,7 +481,7 @@ export class Comment extends app.definitions.canvasSectionObject {
 
 			var x: number = Math.round(this.position[0] / app.dpiScale);
 			var y: number = Math.round(this.position[1] / app.dpiScale);
-			(this.containerObject.getSectionWithName(L.CSections.Scroll.name) as cool.ScrollSection).onScrollTo({x: x, y: y});
+			(this.containerObject.getSectionWithName(L.CSections.Scroll.name) as any as cool.ScrollSection).onScrollTo({x: x, y: y});
 		}
 		else if (this.sectionProperties.docLayer._docType === 'spreadsheet') {
 			this.backgroundColor = '#777777'; //background: rgba(119, 119, 119, 0.25);
@@ -489,12 +489,12 @@ export class Comment extends app.definitions.canvasSectionObject {
 
 			var x: number = Math.round(this.position[0] / app.dpiScale);
 			var y: number = Math.round(this.position[1] / app.dpiScale);
-			(this.containerObject.getSectionWithName(L.CSections.Scroll.name) as cool.ScrollSection).onScrollTo({x: x, y: y});
+			(this.containerObject.getSectionWithName(L.CSections.Scroll.name) as any as cool.ScrollSection).onScrollTo({x: x, y: y});
 		}
 		else if (this.sectionProperties.docLayer._docType === 'presentation' || this.sectionProperties.docLayer._docType === 'drawing') {
 			var x: number = Math.round(this.position[0] / app.dpiScale);
 			var y: number = Math.round(this.position[1] / app.dpiScale);
-			(this.containerObject.getSectionWithName(L.CSections.Scroll.name) as cool.ScrollSection).onScrollTo({x: x, y: y});
+			(this.containerObject.getSectionWithName(L.CSections.Scroll.name) as any as cool.ScrollSection).onScrollTo({x: x, y: y});
 		}
 
 		this.containerObject.requestReDraw();
