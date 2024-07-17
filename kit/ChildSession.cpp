@@ -2193,9 +2193,9 @@ uint64_t hashSubBuffer(unsigned char* pixmap, size_t startX, size_t startY,
 }
 }
 
-bool ChildSession::renderNextSlideLayer(int width, int height, size_t pixmapDataSize, bool& done)
+bool ChildSession::renderNextSlideLayer(const unsigned width, const unsigned height, bool& done)
 {
-    std::vector<unsigned char> pixmap(pixmapDataSize);
+    std::vector<unsigned char> pixmap(static_cast<size_t>(4) * width * height);
     bool bIsBitmapLayer = false;
     char* msg = nullptr;
     done = getLOKitDocument()->renderNextSlideLayer(pixmap.data(), &bIsBitmapLayer, &msg);
@@ -2223,7 +2223,7 @@ bool ChildSession::renderNextSlideLayer(int width, int height, size_t pixmapData
     response += "\n";
 
     std::vector<char> output;
-    output.reserve(response.size() + pixmapDataSize);
+    output.reserve(response.size() + pixmap.size());
     output.resize(response.size());
     std::memcpy(output.data(), response.data(), response.size());
 
@@ -2243,55 +2243,58 @@ bool ChildSession::renderNextSlideLayer(int width, int height, size_t pixmapData
 
 bool ChildSession::renderSlide(const StringVector& tokens)
 {
+    if (tokens.size() <= 3)
+    {
+        sendTextFrameAndLogError("error: cmd=getslide kind=syntax");
+        return false;
+    }
+
     int part = -1;
     std::string partString;
-    if (tokens.size() > 1 && getTokenString(tokens[1], "part", partString))
-    {
+    if (getTokenString(tokens[1], "part", partString))
         part = std::stoi(partString);
-    }
-    int suggestedWidth = -1;
+
+    unsigned suggestedWidth = 0;
     std::string widthString;
-    if (tokens.size() > 2 && getTokenString(tokens[2], "width", widthString))
-    {
+    if (getTokenString(tokens[2], "width", widthString))
         suggestedWidth = std::stoi(widthString);
-    }
-    int suggestedHeight = -1;
+
+    unsigned suggestedHeight = 0;
     std::string heightString;
-    if (tokens.size() > 3 && getTokenString(tokens[3], "height", heightString))
-    {
+    if (getTokenString(tokens[3], "height", heightString))
         suggestedHeight = std::stoi(heightString);
-    }
-    if (part < 0 || suggestedWidth < 0 || suggestedHeight < 0)
+
+    if (part < 0 || suggestedWidth == 0 || suggestedHeight == 0)
+    {
+        sendTextFrameAndLogError("error: cmd=getslide kind=syntax");
         return false;
+    }
 
     bool renderBackground = true;
     std::string renderBackgroundString;
     if (tokens.size() > 4 && getTokenString(tokens[4], "renderBackground", renderBackgroundString))
-    {
         renderBackground = std::stoi(renderBackgroundString) > 0;
-    }
+
     bool renderMasterPage = true;
     std::string renderMasterPageString;
     if (tokens.size() > 5 && getTokenString(tokens[5], "renderMasterPage", renderMasterPageString))
-    {
         renderMasterPage = std::stoi(renderMasterPageString) > 0;
-    }
 
-    unsigned int bufferWidth = suggestedWidth;
-    unsigned int bufferHeight = suggestedHeight;
+    unsigned bufferWidth = suggestedWidth;
+    unsigned bufferHeight = suggestedHeight;
     bool success = getLOKitDocument()->createSlideRenderer(part,
                                                            &bufferWidth, &bufferHeight,
                                                            renderBackground, renderMasterPage);
     if (!success)
         return false;
 
-    const int width = bufferWidth;
-    const int height = bufferHeight;
-    const size_t pixmapDataSize = 4 * bufferWidth * bufferHeight;
+    assert(bufferWidth <= suggestedWidth);
+    assert(bufferHeight <= suggestedHeight);
+
     bool done = false;
     while (!done)
     {
-        success = renderNextSlideLayer(width, height, pixmapDataSize, done);
+        success = renderNextSlideLayer(bufferWidth, bufferHeight, done);
         if (!success)
             break;
     }
