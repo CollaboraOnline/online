@@ -248,10 +248,10 @@ class StatusBar extends JSDialog.Toolbar {
 			{type: 'customtoolitem',  id: 'next', command: 'next', text: _UNO('.uno:PageDown', 'text')},
 			{type: 'separator', id: 'prevnextbreak', orientation: 'vertical'},
 		].concat(window.mode.isTablet() ? [] : [
-			{type: 'customtoolitem',  id: 'zoomreset', command: 'zoomreset', text: _('Reset zoom')},
-			{type: 'customtoolitem',  id: 'zoomout', command: 'zoomout', text: _UNO('.uno:ZoomMinus')},
+			{type: 'customtoolitem',  id: 'zoomreset', command: 'zoomreset', text: _('Reset zoom'), icon: 'zoomreset.svg'},
+			{type: 'customtoolitem',  id: 'zoomout', command: 'zoomout', text: _UNO('.uno:ZoomMinus'), icon: 'minus.svg'},
 			{type: 'menubutton', id: 'zoom', text: '100', selected: 'zoom100', menu: this._generateZoomItems(), image: false},
-			{type: 'customtoolitem',  id: 'zoomin', command: 'zoomin', text: _UNO('.uno:ZoomPlus')}
+			{type: 'customtoolitem',  id: 'zoomin', command: 'zoomin', text: _UNO('.uno:ZoomPlus'), icon: 'plus.svg'}
 		]);
 	}
 
