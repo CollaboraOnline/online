@@ -883,7 +883,7 @@ class TreeViewControl {
 	}
 
 	buildTreeView(data, builder, parentContainer) {
-		this.fillItems(data.entries, builder, 0, this._ulContainer, this._tableContainer._tbody);
+		this.fillItems(data.entries, builder, 1, this._ulContainer, this._tableContainer._tbody);
 		this.fillHeaders(data.headers, builder);
 
 		if (this._ulContainer && this._ulContainer.hasChildNodes()) {
@@ -915,7 +915,7 @@ class TreeViewControl {
 		let tr = L.DomUtil.create('tr', builder.options.cssClass + ' ui-listview-entry',
 					  this._tableContainer._tbody);
 		tr.setAttribute('role', 'row');
-		tr.setAttribute('aria-level', level + 1);
+		tr.setAttribute('aria-level', level);
 
 		if (entry.children && entry.children.length) {
 			tr.setAttribute('aria-expanded', 'false');
