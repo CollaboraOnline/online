@@ -4,6 +4,46 @@ entries:
   - annotations:
       artifacthub.io/images: |
         - name: collabora
+          image: docker.io/collabora/code:24.04.5.2.1
+        - name: nginx
+          image: docker.io/nginx:1.25
+        - name: twostoryrobot/simple-file-upload
+          image: docker.io/twostoryrobot/simple-file-upload@sha256:547fc4360b31d8604b7a26202914e87cd13609cc938fd83f412c77eb44aa1cc4
+    apiVersion: v2
+    appVersion: 24.04.5.2.1
+    created: "2024-07-17T21:19:54.055901251Z"
+    description: Collabora Online helm chart
+    digest: a129acc91b645bff8b10f005df7d4d77505902f7b7d504fcf0cf994d7715580b
+    home: https://www.collaboraoffice.com/code/
+    icon: https://avatars0.githubusercontent.com/u/22418908?s=200&v=4
+    keywords:
+    - collabora-online
+    - collabora
+    - code
+    - nextcloud
+    - office
+    maintainers:
+    - email: k.erber@erber-freelance.de
+      name: Klaus Erber
+      url: https://www.erber-freelance.de/
+    - email: martin.mueller@dataport.de
+      name: Martin Müller
+      url: https://dphoenixsuite.de
+    - email: geno+dev@fireorbit.de
+      name: Geno
+      url: https://fireorbit.de
+    name: collabora-online
+    sources:
+    - https://github.com/CollaboraOnline/online
+    - https://github.com/CollaboraOnline/online/tree/master/docker
+    - https://github.com/CollaboraOnline/online/tree/master/kubernetes/helm/collabora-online
+    type: application
+    urls:
+    - https://github.com/CollaboraOnline/online/releases/download/helm-collabora-online-1.1.20/collabora-online-1.1.20.tgz
+    version: 1.1.20
+  - annotations:
+      artifacthub.io/images: |
+        - name: collabora
           image: docker.io/collabora/code:24.04.5.1.1
         - name: nginx
           image: docker.io/nginx:1.25
@@ -871,4 +911,4 @@ entries:
     urls:
     - https://github.com/CollaboraOnline/online/releases/download/helm-collabora-online-1.0.1/collabora-online-1.0.1.tgz
     version: 1.0.1
-generated: "2024-07-09T08:54:07.138742209Z"
+generated: "2024-07-17T21:19:54.056050411Z"
