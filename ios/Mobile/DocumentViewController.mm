@@ -302,7 +302,7 @@ static IMP standardImpOfInputAccessoryView = nil;
         if (subBody.length < ((NSString*)message.body).length)
             subBody = [subBody stringByAppendingString:@"..."];
 
-        LOG_TRC("To Online: " << [subBody UTF8String]);
+        LOG_DBG("To Online: " << [subBody UTF8String]);
 
 #if 0
         static int n = 0;
