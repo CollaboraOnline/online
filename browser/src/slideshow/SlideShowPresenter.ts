@@ -151,12 +151,19 @@ class SlideShowPresenter {
 		canvas.addEventListener('click', this._onCanvasClick.bind(this));
 		window.addEventListener('keydown', this._onCanvasKeyDown.bind(this));
 
-		this._slideRenderer.setup(canvas);
+		try {
+			this._slideRenderer.setup(canvas);
+		} catch (error) {
+			this._slideRenderer.setup2d(canvas);
+		}
 
 		return canvas;
 	}
 
-	_doTransition(currentTexture: WebGLTexture, nextSlideNumber: number) {
+	_doTransition(
+		currentTexture: WebGLTexture | ImageBitmap,
+		nextSlideNumber: number,
+	) {
 		this._slideCompositor.fetchAndRun(nextSlideNumber, () => {
 			const nextSlide = this._slideCompositor.getSlide(nextSlideNumber);
 			const slideInfo = this.getSlideInfo(nextSlideNumber);
@@ -323,13 +330,21 @@ class SlideShowPresenter {
 		const numberOfSlides = this._getSlidesCount();
 		if (numberOfSlides === 0) return;
 
-		if (!this._slideCompositor)
-			this._slideCompositor = new SlideShow.LayersCompositor(
-				this,
-				this._presentationInfo,
-				this._slideShowCanvas.width,
-				this._slideShowCanvas.height,
-			);
+		if (!this._slideCompositor) {
+			this._slideCompositor = this._slideRenderer._context.is2dGl()
+				? new SlideShow.PreviewsCompositor(
+						this,
+						this._presentationInfo,
+						this._slideShowCanvas.width,
+						this._slideShowCanvas.height,
+					)
+				: new SlideShow.LayersCompositor(
+						this,
+						this._presentationInfo,
+						this._slideShowCanvas.width,
+						this._slideShowCanvas.height,
+					);
+		}
 
 		this._slideCompositor.updatePresentationInfo(this._presentationInfo);
 		this._slideCompositor.fetchAndRun(0, () => {

@@ -10,12 +10,42 @@
 
 declare var SlideShow: any;
 
-class RenderContext {
+abstract class RenderContext {
 	public canvas: HTMLCanvasElement;
-	public gl: WebGL2RenderingContext;
+	protected gl: WebGL2RenderingContext | CanvasRenderingContext2D;
 
 	constructor(canvas: HTMLCanvasElement) {
 		this.canvas = canvas;
+	}
+
+	public getGl(): WebGL2RenderingContext {
+		return this.gl as WebGL2RenderingContext;
+	}
+	public get2dGl(): CanvasRenderingContext2D {
+		return this.gl as CanvasRenderingContext2D;
+	}
+
+	public abstract is2dGl(): boolean;
+
+	public abstract loadTexture(
+		image: HTMLImageElement,
+	): WebGLTexture | ImageBitmap;
+
+	public abstract createVertexShader(source: string): WebGLShader;
+
+	public abstract createFragmentShader(source: string): WebGLShader;
+
+	public abstract createShader(type: number, source: string): WebGLShader;
+
+	public abstract createProgram(
+		vertexShader: WebGLShader,
+		fragmentShader: WebGLShader,
+	): WebGLProgram;
+}
+
+class RenderContextGl extends RenderContext {
+	constructor(canvas: HTMLCanvasElement) {
+		super(canvas);
 		this.gl = this.canvas.getContext('webgl2') as WebGL2RenderingContext;
 		if (!this.gl) {
 			console.error('WebGL2 not supported');
@@ -23,8 +53,12 @@ class RenderContext {
 		}
 	}
 
-	public loadTexture(image: HTMLImageElement): WebGLTexture {
-		const gl = this.gl;
+	public is2dGl(): boolean {
+		return false;
+	}
+
+	public loadTexture(image: HTMLImageElement): WebGLTexture | ImageBitmap {
+		const gl = this.getGl();
 
 		const texture = gl.createTexture();
 		if (!texture) {
@@ -40,28 +74,29 @@ class RenderContext {
 	}
 
 	public createVertexShader(source: string): WebGLShader {
-		return this.createShader(this.gl.VERTEX_SHADER, source);
+		return this.createShader(this.getGl().VERTEX_SHADER, source);
 	}
 
 	public createFragmentShader(source: string): WebGLShader {
-		return this.createShader(this.gl.FRAGMENT_SHADER, source);
+		return this.createShader(this.getGl().FRAGMENT_SHADER, source);
 	}
 
 	public createShader(type: number, source: string): WebGLShader {
-		const shader = this.gl.createShader(type);
+		const gl = this.getGl();
+		const shader = gl.createShader(type);
 		if (!shader) {
 			throw new Error('Failed to create shader');
 		}
-		this.gl.shaderSource(shader, source);
-		this.gl.compileShader(shader);
-		if (!this.gl.getShaderParameter(shader, this.gl.COMPILE_STATUS)) {
-			const info = this.gl.getShaderInfoLog(shader);
-			this.gl.deleteShader(shader);
+		gl.shaderSource(shader, source);
+		gl.compileShader(shader);
+		if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+			const info = gl.getShaderInfoLog(shader);
+			gl.deleteShader(shader);
 			throw new Error(`Could not compile shader: ${info}`);
 		}
 		console.log(
 			'Shader compiled successfully:',
-			type === this.gl.VERTEX_SHADER ? 'VERTEX' : 'FRAGMENT',
+			type === gl.VERTEX_SHADER ? 'VERTEX' : 'FRAGMENT',
 		);
 		return shader;
 	}
@@ -70,19 +105,59 @@ class RenderContext {
 		vertexShader: WebGLShader,
 		fragmentShader: WebGLShader,
 	): WebGLProgram {
-		const program = this.gl.createProgram();
+		const gl = this.getGl();
+		const program = gl.createProgram();
 		if (!program) {
 			throw new Error('Failed to create program');
 		}
-		this.gl.attachShader(program, vertexShader);
-		this.gl.attachShader(program, fragmentShader);
-		this.gl.linkProgram(program);
-		if (!this.gl.getProgramParameter(program, this.gl.LINK_STATUS)) {
-			const info = this.gl.getProgramInfoLog(program);
-			this.gl.deleteProgram(program);
+		gl.attachShader(program, vertexShader);
+		gl.attachShader(program, fragmentShader);
+		gl.linkProgram(program);
+		if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+			const info = gl.getProgramInfoLog(program);
+			gl.deleteProgram(program);
 			throw new Error(`Could not link program: ${info}`);
 		}
 		console.log('Program linked successfully');
 		return program;
+	}
+}
+
+class RenderContext2d extends RenderContext {
+	constructor(canvas: HTMLCanvasElement) {
+		super(canvas);
+
+		this.gl = this.canvas.getContext('2d') as CanvasRenderingContext2D;
+		if (!this.gl) {
+			console.error('Canvas rendering not supported');
+			throw new Error('Canvas rendering not supported');
+		}
+	}
+
+	public is2dGl(): boolean {
+		return true;
+	}
+
+	public loadTexture(image: HTMLImageElement): WebGLTexture | ImageBitmap {
+		return image;
+	}
+
+	public createVertexShader(source: string): WebGLShader {
+		return null;
+	}
+
+	public createFragmentShader(source: string): WebGLShader {
+		return null;
+	}
+
+	public createShader(type: number, source: string): WebGLShader {
+		return null;
+	}
+
+	public createProgram(
+		vertexShader: WebGLShader,
+		fragmentShader: WebGLShader,
+	): WebGLProgram {
+		return null;
 	}
 }
