@@ -27,11 +27,8 @@ class Primitive {
 
 		newPrimitive.vertices = [...oldPrimitive.vertices];
 
-		newPrimitive.operations = oldPrimitive.operations.map((operation) => {
-			const newOperation = new Operation();
-
-			newOperation.interpolate = operation.interpolate.bind(newOperation);
-			return newOperation;
+		newPrimitive.operations = oldPrimitive.operations.map((operation : Operation) => {
+			return operation;
 		});
 
 		return newPrimitive;
