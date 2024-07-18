@@ -27,9 +27,11 @@ class Primitive {
 
 		newPrimitive.vertices = [...oldPrimitive.vertices];
 
-		newPrimitive.operations = oldPrimitive.operations.map((operation : Operation) => {
-			return operation;
-		});
+		newPrimitive.operations = oldPrimitive.operations.map(
+			(operation: Operation) => {
+				return operation;
+			},
+		);
 
 		return newPrimitive;
 	}
