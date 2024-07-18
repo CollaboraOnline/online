@@ -475,14 +475,18 @@ var shapes = {
 };
 
 function createShapesPanel(shapeType) {
+	const wrapper = document.createElement('div');
+	wrapper.className = 'ui-grid-cell';
+	wrapper.id = 'insertshape-wrapper';
+
 	const grid = document.createElement('div');
-	grid.className = 'insertshape-grid';
+	grid.className = 'insertshape-grid insertshapes';
 
 	var collection = shapes[shapeType];
 
 	for (var s in collection) {
 		const rowHeader = document.createElement('div');
-		rowHeader.className = 'row-header cool-fon';
+		rowHeader.className = 'row-header cool-font';
 		rowHeader.textContent = _(s);
 		grid.appendChild(rowHeader);
 
@@ -503,9 +507,11 @@ function createShapesPanel(shapeType) {
 	grid.onclick = function(e) {
 		map.sendUnoCommand('.uno:' + e.target.dataset.uno);
 		map._docLayer._closeMobileWizard();
-	}
+	};
 
-	return grid.children[0];
+	wrapper.appendChild(grid);
+
+	return wrapper;
 }
 
 var onShapeClickFunction = function(e) {
