@@ -255,9 +255,9 @@ class InitializerBase {
 		this.uriPrefix = document.getElementById('init-uri-prefix').value;
 		this.brandingUriPrefix = this.uriPrefix;
 
-		window.welcomeUrl = document.getElementById("init-welcome-url").value ? document.getElementById("init-welcome-url").value: "";
-		window.feedbackUrl = document.getElementById("init-feedback-url").value ? document.getElementById("init-feedback-url").value: "";
-		window.buyProductUrl = document.getElementById("init-buy-product-url").value ? document.getElementById("init-buy-product-url").value: "";
+		window.welcomeUrl = document.getElementById("init-welcome-url") ? document.getElementById("init-welcome-url").value: "";
+		window.feedbackUrl = document.getElementById("init-feedback-url") ? document.getElementById("init-feedback-url").value: "";
+		window.buyProductUrl = document.getElementById("init-buy-product-url") ? document.getElementById("init-buy-product-url").value: "";
 
 		const element = document.getElementById("initial-variables");
 
