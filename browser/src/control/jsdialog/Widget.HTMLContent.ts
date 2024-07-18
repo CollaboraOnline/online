@@ -48,7 +48,8 @@ function getPermissionModeElements(isReadOnlyMode: boolean, canUserWrite: boolea
 	}
 	else {
 		permissionModeDiv.classList.add('status-edit-mode');
-		permissionModeDiv.title = _('Edit');
+		permissionModeDiv.title = _('Permission Mode');
+		permissionModeDiv.textContent = _('Edit');
 	}
 
 	return permissionModeDiv;
