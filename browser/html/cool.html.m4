@@ -36,7 +36,7 @@ m4_ifelse(EMSCRIPTENAPP,[true],[m4_define([MOBILEAPP],[true])])
 m4_ifelse(MOBILEAPP, [true],
 [
   <input type="hidden" id="init-app-type" value="mobile" />
-  <input type="hidden" id="init-help-file" value="m4_syscmd([cat html/cool-help.html])" />
+  <input type="hidden" id="init-help-file" value="m4_syscmd([cat html/cool-help.html | sed 's/"/\&quot;/g'])" />
 ],
 [
   <input type="hidden" id="init-welcome-url" value="%WELCOME_URL%" />
