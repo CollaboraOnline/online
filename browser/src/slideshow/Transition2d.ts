@@ -12,8 +12,8 @@ declare var SlideShow: any;
 
 class TransitionParameters {
 	public context: RenderContext = null;
-	public current: WebGLTexture = null;
-	public next: WebGLTexture = null;
+	public current: WebGLTexture | ImageBitmap = null;
+	public next: WebGLTexture | ImageBitmap = null;
 	public slideInfo: SlideInfo = null;
 	public callback: VoidFunction = null;
 }
@@ -33,7 +33,7 @@ class Transition2d {
 	constructor(transitionParameters: TransitionParameters) {
 		this.transitionParameters = transitionParameters;
 		this.context = transitionParameters.context;
-		this.gl = transitionParameters.context.gl;
+		this.gl = transitionParameters.context.getGl();
 		this.slideInfo = transitionParameters.slideInfo;
 		this.animationTime =
 			this.slideInfo?.transitionDuration > 0
