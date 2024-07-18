@@ -10,17 +10,6 @@
 
 declare var SlideShow: any;
 
-class FallTransitionImp extends SimpleTransition {
-	constructor(transitionParameters: TransitionParameters3D) {
-		super(transitionParameters);
-		this.prepareTransition();
-	}
-
-	public start(): void {
-		this.startTransition();
-	}
-}
-
 function FallTransition(transitionParameters: TransitionParameters) {
 	const slide = new Primitive();
 	slide.pushTriangle([0, 0], [1, 0], [0, 1]);
@@ -46,6 +35,7 @@ function FallTransition(transitionParameters: TransitionParameters) {
 
 	const aOperations: Operation[] = [];
 
+	// TODO: Fix slide direction :)
 	const newTransitionParameters: TransitionParameters3D = {
 		...transitionParameters,
 		leavingPrimitives: aLeavingPrimitives,
@@ -53,7 +43,7 @@ function FallTransition(transitionParameters: TransitionParameters) {
 		allOperations: aOperations,
 	};
 
-	return new FallTransitionImp(newTransitionParameters);
+	return new SimpleTransition(newTransitionParameters);
 }
 
 SlideShow.FallTransition = FallTransition;

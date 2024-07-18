@@ -39,6 +39,8 @@ class SimpleTransition extends SlideShow.Transition3d {
 		// Enable alpha blending
 		this.gl.enable(this.gl.BLEND);
 		this.gl.blendFunc(this.gl.SRC_ALPHA, this.gl.ONE_MINUS_SRC_ALPHA);
+
+		this.prepareTransition();
 	}
 
 	public initBuffers(): void {

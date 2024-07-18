@@ -10,17 +10,6 @@
 
 declare var SlideShow: any;
 
-class CubeTransitionImp extends SimpleTransition {
-	constructor(transitionParameters: TransitionParameters3D) {
-		super(transitionParameters);
-		this.prepareTransition();
-	}
-
-	public start(): void {
-		this.startTransition();
-	}
-}
-
 function CubeTransition(transitionParameters: TransitionParameters) {
 	const slide = new Primitive();
 	slide.pushTriangle([0, 0], [1, 0], [0, 1]);
@@ -64,7 +53,7 @@ function CubeTransition(transitionParameters: TransitionParameters) {
 		allOperations: aOperations,
 	};
 
-	return new CubeTransitionImp(newTransitionParameters);
+	return new SimpleTransition(newTransitionParameters);
 }
 
 SlideShow.CubeTransition = CubeTransition;
