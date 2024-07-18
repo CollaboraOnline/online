@@ -1,3 +1,5 @@
+/** */
+
 /*
  * CRectangle extends CPolygon and creates a rectangle of given bounds.
  */

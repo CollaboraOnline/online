@@ -1,3 +1,5 @@
+/** */
+
 /*
  * CPolygon implements polygon vector layer (closed polyline with a fill inside).
  * This is used to draw overlays like cell-selections (self or views) with multi-selection support.

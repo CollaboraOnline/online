@@ -1,4 +1,5 @@
-/* global Proxy _ */
+/* -*- js-indent-level: 8 -*- */
+
 /*
  * Copyright the Collabora Online contributors.
  *

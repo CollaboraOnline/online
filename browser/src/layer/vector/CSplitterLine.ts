@@ -1,3 +1,5 @@
+/** */
+
 /*
  * CSplitterLine is a CRectangle to be used to show the splits when there are freeze-panes.
  */

@@ -1,3 +1,5 @@
+/** */
+
 
 // Type of the data passed to event handlers.
 interface EventData {

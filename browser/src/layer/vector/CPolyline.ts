@@ -1,3 +1,5 @@
+/** */
+
 /*
  * CPolyline implements polyline vector layer (a set of points connected with lines).
  * This class implements basic line drawing and CPointSet datastructure which is to be used

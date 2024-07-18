@@ -1,3 +1,5 @@
+/** */
+
 var END = {
 	mousedown:     'mouseup',
 	touchstart:    'touchend',

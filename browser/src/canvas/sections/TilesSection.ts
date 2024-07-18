@@ -1,4 +1,5 @@
 /* -*- tab-width: 4 -*- */
+
 /*
  * Copyright the Collabora Online contributors.
  *
