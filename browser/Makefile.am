@@ -470,6 +470,7 @@ COOL_JS_LST =\
 	src/slideshow/transition/ReflectionTransition.ts \
 	src/slideshow/transition/RochadeTransition.ts \
 	src/slideshow/transition/TurnDownTransition.ts \
+	src/slideshow/transition/Venetian3dTransition.ts \
 	src/slideshow/transition/TurnAroundTransition.ts \
 	src/slideshow/transition/MicsShapeWipeTransition.ts \
 	src/dom/PosAnimation.js \
@@ -958,6 +959,7 @@ pot:
 		src/slideshow/transition/ReflectionTransition.ts \
 		src/slideshow/transition/RochadeTransition.ts \
 		src/slideshow/transition/TurnDownTransition.ts \
+		src/slideshow/transition/Venetian3dTransition.ts \
 		src/slideshow/transition/TurnAroundTransition.ts \
 		src/slideshow/transition/MicsShapeWipeTransition.ts \
 		src/core/Socket.js \
