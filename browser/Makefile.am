@@ -463,6 +463,7 @@ COOL_JS_LST =\
 	src/slideshow/types.ts \
 	src/slideshow/transition/SimpleTransition.ts \
 	src/slideshow/transition/CubeTransition.ts \
+	src/slideshow/transition/HelixTransition.ts \
 	src/slideshow/transition/FallTransition.ts \
 	src/slideshow/transition/WipeTransition.ts \
 	src/slideshow/transition/NoTransition.ts \
@@ -948,6 +949,7 @@ pot:
 		src/slideshow/types.ts \
 		src/slideshow/transition/SimpleTransition.ts \
 		src/slideshow/transition/CubeTransition.ts \
+		src/slideshow/transition/HelixTransition.ts \
 		src/slideshow/transition/FallTransition.ts \
 		src/slideshow/transition/MicsShapeWipeTransition.ts \
 		src/core/Socket.js \

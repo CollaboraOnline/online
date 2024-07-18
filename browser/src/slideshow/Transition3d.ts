@@ -167,6 +167,10 @@ class Transition3d {
 		requestAnimationFrame(this.render.bind(this));
 	}
 
+	public start(): void {
+		this.startTransition();
+	}
+
 	public initBuffers(): void {
 		// prettier-ignore
 		const positions = new Float32Array([
