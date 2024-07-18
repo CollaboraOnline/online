@@ -398,6 +398,7 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 }
 
 #search-input {
+	font-size: var(--default-font-size);
 	box-sizing: border-box;
 	min-width: 100px;
 	width: 200px;
