@@ -20,8 +20,6 @@ class URLPopUpSection extends HTMLObjectSection {
 		this.createUIElements(url);
 		this.setUpCallbacks(linkPosition);
 
-		app.map.hyperlinkPopup = this;
-
 		document.getElementById('hyperlink-pop-up').title = url;
 
 		if (app.map['wopi'].EnableRemoteLinkPicker)

@@ -425,10 +425,9 @@ class StatusBar extends JSDialog.Toolbar {
 			$('#InsertMode').removeClass();
 			$('#InsertMode').addClass('jsdialog ui-badge insert-mode-' + state);
 
-			if (!state && this.map.hyperlinkPopup) {
+			if ((state === 'false' || !state) && app.definitions.urlPopUpSection.isOpen()) {
 				this.map.hyperlinkUnderCursor = null;
-				this.map.closePopup(this.map.hyperlinkPopup);
-				this.map.hyperlinkPopup = null;
+				app.definitions.urlPopUpSection.closeURLPopUp();
 			}
 		}
 		else if (commandName === '.uno:StatusSelectionMode' || commandName === '.uno:SelectionMode') {
