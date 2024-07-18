@@ -1,3 +1,5 @@
+/** */
+
 /*
  * Copyright the Collabora Online contributors.
  *
@@ -8,7 +10,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-// This is used for other views' graphic selections.
+// This is used for other views' cell cursors.
 
 class OtherViewCellCursorSection extends CanvasSectionObject {
     documentObject: boolean = true;

@@ -1,3 +1,5 @@
+/** */
+
 /*
  * Copyright the Collabora Online contributors.
  *
@@ -578,12 +580,12 @@ L.Control.JSDialog = L.Control.extend({
 			var rtlPosx = parentAutofilter.left - instance.form.getBoundingClientRect().width;
 			instance.posx = rtlPosx < 0 ? 0 : rtlPosx;
 		}
-		// set posx of instance (submenufilter) based on window width 
+		// set posx of instance (submenufilter) based on window width
 		var width = instance.content.clientWidth;
 		if (instance.posx + width > window.innerWidth)
 			instance.posx -= instance.posx + width - window.innerWidth;
 
-		// submenu filter popup should not go below toolbar element. Adjust height according to window height and bottom toolbar element so it will not overlap with each other 
+		// submenu filter popup should not go below toolbar element. Adjust height according to window height and bottom toolbar element so it will not overlap with each other
 		var height = instance.form.getBoundingClientRect().height;
 		if (instance.posy + height > window.innerHeight)
 			instance.posy = window.innerHeight - height;

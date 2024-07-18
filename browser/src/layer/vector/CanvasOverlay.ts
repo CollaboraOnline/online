@@ -1,3 +1,5 @@
+/** */
+
 // OverlayTransform is used by CanvasOverlay to apply transformations
 // to points/bounds before drawing is done.
 // The reason why we cannot use canvasRenderingContext2D.transform() is it

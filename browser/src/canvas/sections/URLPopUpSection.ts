@@ -1,3 +1,4 @@
+/** */
 
 class URLPopUpSection extends HTMLObjectSection {
     static sectionName = 'URL PopUp';

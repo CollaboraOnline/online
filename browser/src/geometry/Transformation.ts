@@ -1,3 +1,5 @@
+/** */
+
 declare var L: any;
 
 namespace cool {
