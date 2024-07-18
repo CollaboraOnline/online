@@ -4,6 +4,7 @@ apply plugin: 'com.android.application'
 apply from: 'appSettings.gradle'
 
 android {
+    namespace 'org.libreoffice.androidapp'
     compileSdkVersion 33
     buildDir = "${rootProject.getBuildDir()}/app"
     ndkVersion "22.1.7171670"
@@ -31,7 +32,7 @@ android {
         }
     }
 
-    lintOptions {
+    lint {
         disable 'MissingTranslation', 'ExtraTranslation'
     }
 
@@ -67,7 +68,6 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.recyclerview:recyclerview:1.3.1'
     implementation 'com.google.android.material:material:1.6.1'
-    implementation 'com.google.android.play:core:1.10.3'
 
     implementation 'androidx.preference:preference:1.2.1'
     implementation project(path: ':lib')
