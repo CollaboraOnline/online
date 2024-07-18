@@ -278,7 +278,6 @@ COOL_JS_LST =\
 	src/layer/marker/Icon.Default.js \
 	src/layer/marker/Marker.js \
 	src/layer/marker/DivIcon.js \
-	src/layer/Popup.js \
 	src/layer/LayerGroup.js \
 	src/layer/vector/Renderer.js \
 	src/layer/vector/Path.js \
