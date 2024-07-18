@@ -53,7 +53,7 @@
       <EnvironmentVariables>
          <EnvironmentVariable
             key = "COOL_LOGLEVEL"
-            value = "trace"
+            value = "debug"
             isEnabled = "YES">
          </EnvironmentVariable>
       </EnvironmentVariables>
