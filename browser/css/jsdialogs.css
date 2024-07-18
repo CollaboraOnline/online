@@ -1271,6 +1271,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	border-top: 5px solid var(--color-main-text);
 	display: inline-block !important;
 	margin-left: 3px;
+	margin-top: 4px;
 }
 
 .unoarrow:not([disabled]):hover, .menubutton .arrow:not([disabled]):hover {
@@ -1280,8 +1281,9 @@ input[type='number']:hover::-webkit-outer-spin-button {
 .arrowbackground {
 	box-sizing: border-box;
 	width: 16px;
-	height: 16px;
-	display: inline-block;
+	height: 24px;
+	display: flex;
+	align-items: center;
 	border-left: 1px solid transparent;
 	background-color: transparent;
 	grid-column: 3;
