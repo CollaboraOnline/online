@@ -33,7 +33,10 @@ function sanitizeString(text: string): string {
 	return sanitizer.innerHTML;
 }
 
-function getPermissionModeElements(isReadOnlyMode: boolean, canUserWrite: boolean) {
+function getPermissionModeElements(
+	isReadOnlyMode: boolean,
+	canUserWrite: boolean,
+) {
 	const permissionModeDiv = document.createElement('div');
 	permissionModeDiv.className = 'jsdialog ui-badge';
 
@@ -41,12 +44,10 @@ function getPermissionModeElements(isReadOnlyMode: boolean, canUserWrite: boolea
 		permissionModeDiv.classList.add('status-readonly-mode');
 		permissionModeDiv.title = _('Permission Mode');
 		permissionModeDiv.textContent = _('Read-only');
-	}
-	else if (isReadOnlyMode && canUserWrite) {
+	} else if (isReadOnlyMode && canUserWrite) {
 		permissionModeDiv.classList.add('status-readonly-transient-mode');
 		permissionModeDiv.style.display = 'none';
-	}
-	else {
+	} else {
 		permissionModeDiv.classList.add('status-edit-mode');
 		permissionModeDiv.title = _('Permission Mode');
 		permissionModeDiv.textContent = _('Edit');
@@ -65,7 +66,11 @@ function getStatusbarItemElements(id: string, title: string, text: string) {
 }
 
 function getPageNumberElements(text: string) {
-	return getStatusbarItemElements('StatePageNumber', _('Number of Pages'), text);
+	return getStatusbarItemElements(
+		'StatePageNumber',
+		_('Number of Pages'),
+		text,
+	);
 }
 
 function getWordCountElements(text: string) {
@@ -81,7 +86,11 @@ function getInsertModeElements(text: string) {
 }
 
 function getSelectionModeElements(text: string) {
-	return getStatusbarItemElements('StatusSelectionMode', _('Selection Mode'), text);
+	return getStatusbarItemElements(
+		'StatusSelectionMode',
+		_('Selection Mode'),
+		text,
+	);
 }
 
 function getRowColSelCountElements(text: string) {
@@ -93,7 +102,11 @@ function getRowColSelCountElements(text: string) {
 }
 
 function getStateTableCellElements(text: string) {
-	return getStatusbarItemElements('StateTableCell', _('Choice of functions'), text);
+	return getStatusbarItemElements(
+		'StateTableCell',
+		_('Choice of functions'),
+		text,
+	);
 }
 
 function getSlideStatusElements(text: string) {
@@ -110,7 +123,10 @@ var getElementsFromId = function (
 	data: HtmlContentJson,
 ) {
 	if (id === 'iconset')
-		return (window as any).getConditionalFormatMenuElements('iconsetoverlay', true);
+		return (window as any).getConditionalFormatMenuElements(
+			'iconsetoverlay',
+			true,
+		);
 	else if (id === 'scaleset')
 		return (window as any).getConditionalColorScaleMenuElements(
 			'iconsetoverlay',
@@ -136,7 +152,8 @@ var getElementsFromId = function (
 	else if (id === 'statewordcount') return getWordCountElements(data.text);
 	else if (id === 'statusdocpos') return getStatusDocPosElements(data.text);
 	else if (id === 'insertmode') return getInsertModeElements(data.text);
-	else if (id === 'statusselectionmode') return getSelectionModeElements(data.text);
+	else if (id === 'statusselectionmode')
+		return getSelectionModeElements(data.text);
 	else if (id === 'rowcolselcount') return getRowColSelCountElements(data.text);
 	else if (id === 'statetablecell') return getStateTableCellElements(data.text);
 	else if (id === 'slidestatus') return getSlideStatusElements(data.text);
