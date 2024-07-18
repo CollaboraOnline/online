@@ -34,9 +34,6 @@ class CPolyline extends CPath {
 
 		this.pointSet = pointSet;
 		this.updateRingsBounds();
-		if (this.pointSet.empty()) {
-			this.closePopup({});
-		}
 
 		if (this.renderer)
 			this.renderer.setPenOnOverlay();

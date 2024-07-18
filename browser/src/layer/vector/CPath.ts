@@ -277,38 +277,6 @@ abstract class CPath extends CEventsHandler {
 			return this.renderer.getMap();
 		}
 	}
-
-	protected firstPopup(e: EventData) {
-		if (this.popup) {
-			this.openPopup({
-				position: this.getBounds().getCenter()
-			});
-		}
-	}
-
-	protected closePopup(e: EventData) {
-		if (this.popup) {
-			this.popup._close();
-		}
-		return this;
-	}
-
-	protected delayClosePopup(e: EventData) {
-		clearTimeout(this.popupTimer);
-		this.popupTimer = setTimeout(this.closePopup.bind(this), 3000);
-	}
-
-	protected openPopup(e: EventData) {
-		if (!this.getMap().hasLayer(this.popup)) {
-			if (!e.position)
-				e.position = this.getBounds().getCenter();
-			var latlngPos = this.toCompatUnits([e.position.x, e.position.y]);
-			this.popup.setLatLng(latlngPos);
-			this.getMap().openPopup(this.popup);
-			this.delayClosePopup({});
-		}
-	}
-
 }
 
 // This also defines partial rendering order.
