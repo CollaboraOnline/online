@@ -101,7 +101,7 @@ static std::atomic<unsigned> appDocIdCounter(1);
 }
 
 - (void)send2JS:(const char *)buffer length:(int)length {
-    LOG_TRC("To JS: " << COOLProtocol::getAbbreviatedMessage(buffer, length).c_str());
+    LOG_DBG("To JS: " << COOLProtocol::getAbbreviatedMessage(buffer, length).c_str());
 
     const unsigned char *ubufp = (const unsigned char *)buffer;
     std::vector<char> data;
