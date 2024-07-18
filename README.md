@@ -66,14 +66,14 @@ This project has several components:
 ## Further recommended reading with build details
 
 Please consult the README files in the component's directory for more details:
-- **[wsd/README](wsd)**
-- **[browser/README](browser)**
+- **[wsd/README.md](wsd/README.md)**
+- **[browser/README](browser/README)**
 
 ## iOS and Android apps
 
 See the corresponding READMEs:
-* **[ios/README](ios)**
-* **[android/README](android)**
+* **[ios/README](ios/README)**
+* **[android/README](android/README)**
 
 ## GitPod
 
