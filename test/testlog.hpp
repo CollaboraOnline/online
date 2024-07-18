@@ -101,6 +101,10 @@ inline void tstLog(const std::ostringstream& stream) { writeTestLog(stream.str()
 #define TST_LOG_NAME(NAME, X)                                                                      \
     do                                                                                             \
     {                                                                                              \
+        /* silence '-Werror=unused-variable' */                                                    \
+        (void)NAME;                                                                                \
+        std::stringstream dummyStringstream;                                                       \
+        dummyStringstream << X;                                                                    \
     } while (0)
 #endif // !ENABLE_DEBUG
 
