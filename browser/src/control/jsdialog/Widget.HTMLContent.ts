@@ -58,6 +58,7 @@ function getPermissionModeElements(
 
 function getStatusbarItemElements(id: string, title: string, text: string) {
 	const div = document.createElement('div');
+	div.id = id;
 	div.className = 'jsdialog ui-badge';
 	div.title = title;
 	div.textContent = text;
