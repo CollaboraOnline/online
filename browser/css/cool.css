@@ -1123,6 +1123,8 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	z-index: 11;
 	font-family: var(--docs-font);
 	font-size: var(--default-font-size);
+	border-radius: var(--border-radius-large);
+	box-shadow: 0 0 2px 1px var(--color-box-shadow);
 }
 
 .username-pop-up p {
@@ -1138,7 +1140,8 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	transform: rotate(45deg);
 	display: inline-block;
 	position: relative;
-	top: -10px;
+	top: calc(-10px - var(--border-radius));
+	border-radius: var(--border-radius);
 }
 
 #hyperlink-pop-up-preview:not(.no-preview) {
