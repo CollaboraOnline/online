@@ -13,9 +13,9 @@
 class OtherViewCellCursorSection extends CanvasSectionObject {
     documentObject: boolean = true;
     interactable: boolean = false; // We don't bother with events.
-    zIndex: number = L.CSections.DefaultForDocumentObjects.processingOrder;
-    drawingOrder: number = L.CSections.DefaultForDocumentObjects.drawingOrder;
-    processingOrder: number = L.CSections.DefaultForDocumentObjects.processingOrder;
+    zIndex: number = L.CSections.ColumnHeader.zIndex;
+    drawingOrder: number = L.CSections.OtherViewCellCursor.drawingOrder;
+    processingOrder: number = L.CSections.OtherViewCellCursor.processingOrder;
 
     static sectionNamePrefix = 'OtherViewCellCursorSection ';
     static sectionPointers: Array<OtherViewCellCursorSection> = [];
