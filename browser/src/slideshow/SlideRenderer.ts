@@ -17,13 +17,146 @@ class VideoRenderInfo {
 	public pos2d: number[];
 }
 
-class SlideRenderer {
+abstract class SlideRenderer {
 	public _context: RenderContext = null;
+	public _slideTexture: WebGLTexture | ImageBitmap;
+	protected _videos: VideoRenderInfo[];
+	protected _canvas: HTMLCanvasElement;
+
+	public setup(canvas: HTMLCanvasElement) {
+		this._canvas = canvas;
+	}
+
+	protected setupVideo(url: string): HTMLVideoElement {
+		const video = document.createElement('video');
+
+		video.playsInline = true;
+		video.muted = true;
+		video.loop = true;
+
+		video.addEventListener(
+			'playing',
+			() => {
+				// todo
+			},
+			true,
+		);
+
+		video.addEventListener(
+			'timeupdate',
+			() => {
+				// todo
+			},
+			true,
+		);
+
+		video.src = url;
+		video.play();
+		return video;
+	}
+
+	public renderSlide(
+		currentSlideTexture: WebGLTexture | ImageBitmap,
+		slideInfo: SlideInfo,
+		docWidth: number,
+		docHeight: number,
+	) {
+		this._slideTexture = currentSlideTexture;
+		this.prepareVideos(slideInfo, docWidth, docHeight);
+		requestAnimationFrame(this.render.bind(this));
+	}
+
+	protected getDocumentPositions(
+		x: number,
+		y: number,
+		width: number,
+		height: number,
+		docWidth: number,
+		docHeight: number,
+	): number[] {
+		var xMin = x / docWidth;
+		var xMax = (x + width) / docWidth;
+
+		var yMin = y / docHeight;
+		var yMax = (y + height) / docHeight;
+
+		return [xMin, xMax, yMin, yMax];
+	}
+
+	public abstract createTexture(image: ImageBitmap): WebGLTexture | ImageBitmap;
+
+	protected abstract prepareVideos(
+		slideInfo: SlideInfo,
+		docWidth: number,
+		docHeight: number,
+	): void;
+
+	protected abstract render(): void;
+}
+
+class SlideRenderer2d extends SlideRenderer {
+	public setup(canvas: HTMLCanvasElement) {
+		super.setup(canvas);
+		this._context = new RenderContext2d(canvas);
+	}
+
+	public createTexture(image: ImageBitmap) {
+		return image;
+	}
+
+	protected prepareVideos(
+		slideInfo: SlideInfo,
+		docWidth: number,
+		docHeight: number,
+	) {
+		this._videos = [];
+		if (slideInfo.videos !== undefined) {
+			for (var videoInfo of slideInfo.videos) {
+				const video = new VideoRenderInfo();
+				video.videoElement = this.setupVideo(videoInfo.url);
+				video.pos2d = this.getDocumentPositions(
+					videoInfo.x,
+					videoInfo.y,
+					videoInfo.width,
+					videoInfo.height,
+					docWidth,
+					docHeight,
+				);
+				this._videos.push(video);
+			}
+		}
+	}
+
+	protected render() {
+		const gl = this._context.get2dGl();
+		const width = (this._slideTexture as ImageBitmap).width;
+		const height = (this._slideTexture as ImageBitmap).height;
+		const halfWidth = (1.0 * gl.canvas.width - width) / 2.0;
+		const halfHeight = (1.0 * gl.canvas.height - height) / 2.0;
+
+		gl.translate(halfWidth, halfHeight);
+
+		gl.drawImage(this._slideTexture as ImageBitmap, 0, 0);
+
+		for (var video of this._videos) {
+			gl.drawImage(
+				video.videoElement,
+				video.pos2d[0] * width,
+				video.pos2d[2] * height,
+				video.pos2d[1] * width - video.pos2d[0] * width,
+				video.pos2d[3] * height - video.pos2d[2] * height,
+			);
+		}
+
+		gl.setTransform(1, 0, 0, 1, 0, 0);
+
+		requestAnimationFrame(this.render.bind(this));
+	}
+}
+
+class SlideRendererGl extends SlideRenderer {
 	private _program: WebGLProgram = null;
 	private _vao: WebGLVertexArrayObject = null;
-	public _slideTexture: WebGLTexture | ImageBitmap;
-	private _videos: VideoRenderInfo[];
-	private _canvas: HTMLCanvasElement;
 
 	public getVertexShader(): string {
 		return `#version 300 es
@@ -51,6 +184,12 @@ class SlideRenderer {
 					outColor = texture(slideTexture, v_texCoord);
 				}
 				`;
+	}
+
+	private updateTexture(texture: WebGLTexture, video: HTMLVideoElement) {
+		const gl = this._context.getGl();
+		gl.bindTexture(gl.TEXTURE_2D, texture);
+		gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, video);
 	}
 
 	public setupPositions(
@@ -109,8 +248,8 @@ class SlideRenderer {
 	}
 
 	public setup(canvas: HTMLCanvasElement) {
+		super.setup(canvas);
 		this._context = new RenderContextGl(canvas);
-		this._canvas = canvas;
 
 		const vertexShader = this._context.createVertexShader(
 			this.getVertexShader(),
@@ -125,43 +264,8 @@ class SlideRenderer {
 		this._context.getGl().useProgram(this._program);
 	}
 
-	public setup2d(canvas: HTMLCanvasElement) {
-		this._context = new RenderContext2d(canvas);
-		this._canvas = canvas;
-	}
-
 	public createTexture(image: ImageBitmap) {
-		return this._context.is2dGl()
-			? image
-			: this._context.loadTexture(<any>image);
-	}
-
-	private setupVideo(url: string): HTMLVideoElement {
-		const video = document.createElement('video');
-
-		video.playsInline = true;
-		video.muted = true;
-		video.loop = true;
-
-		video.addEventListener(
-			'playing',
-			() => {
-				// todo
-			},
-			true,
-		);
-
-		video.addEventListener(
-			'timeupdate',
-			() => {
-				// todo
-			},
-			true,
-		);
-
-		video.src = url;
-		video.play();
-		return video;
+		return this._context.loadTexture(<any>image);
 	}
 
 	private initTexture() {
@@ -189,69 +293,28 @@ class SlideRenderer {
 		return texture;
 	}
 
-	private updateTexture(
-		texture: WebGLTexture | ImageBitmap,
-		video: HTMLVideoElement,
-	) {
-		const gl = this._context.getGl();
-		gl.bindTexture(gl.TEXTURE_2D, texture);
-		gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, video);
-	}
-
-	public renderSlide(
-		currentSlideTexture: WebGLTexture | ImageBitmap,
+	public prepareVideos(
 		slideInfo: SlideInfo,
 		docWidth: number,
 		docHeight: number,
 	) {
-		this._slideTexture = currentSlideTexture;
 		this._videos = [];
 		if (slideInfo.videos !== undefined) {
 			for (var videoInfo of slideInfo.videos) {
 				const video = new VideoRenderInfo();
 				video.videoElement = this.setupVideo(videoInfo.url);
-				if (this._context.is2dGl()) {
-					video.pos2d = this.getDocumentPositions(
-						videoInfo.x,
-						videoInfo.y,
-						videoInfo.width,
-						videoInfo.height,
-						docWidth,
-						docHeight
-					);
-				} else {
-					video.texture = this.initTexture();
-					video.vao = this.setupRectangleInDocumentPositions(
-						videoInfo.x,
-						videoInfo.y,
-						videoInfo.width,
-						videoInfo.height,
-						docWidth,
-						docHeight,
-					);
-				}
-
+				video.texture = this.initTexture();
+				video.vao = this.setupRectangleInDocumentPositions(
+					videoInfo.x,
+					videoInfo.y,
+					videoInfo.width,
+					videoInfo.height,
+					docWidth,
+					docHeight,
+				);
 				this._videos.push(video);
 			}
 		}
-		requestAnimationFrame(this.render.bind(this));
-	}
-
-	private getDocumentPositions(
-		x: number,
-		y: number,
-		width: number,
-		height: number,
-		docWidth: number,
-		docHeight: number,
-	): number[] {
-		var xMin = (x / docWidth);
-		var xMax = ((x + width) / docWidth);
-
-		var yMin = (y / docHeight);
-		var yMax = ((y + height) / docHeight);
-
-		return [xMin, xMax, yMin, yMax];
 	}
 
 	setupRectangleInDocumentPositions(
@@ -262,39 +325,23 @@ class SlideRenderer {
 		docWidth: number,
 		docHeight: number,
 	): WebGLVertexArrayObject {
-		const positions = this.getDocumentPositions(x, y, width, height, docWidth, docHeight);
+		const positions = this.getDocumentPositions(
+			x,
+			y,
+			width,
+			height,
+			docWidth,
+			docHeight,
+		);
 		return this.setupPositions(
 			positions[0] * 2.0 - 1.0,
 			positions[1] * 2.0 - 1.0,
 			positions[2] * 2.0 - 1.0,
-			positions[3] * 2.0 - 1.0);
+			positions[3] * 2.0 - 1.0,
+		);
 	}
 
-	private render2d() {
-		const gl = this._context.get2dGl();
-		const width = (this._slideTexture as ImageBitmap).width;
-		const height = (this._slideTexture as ImageBitmap).height;
-		const halfWidth = (1.0 * gl.canvas.width - width) / 2.0;
-		const halfHeight = (1.0 * gl.canvas.height - height) / 2.0;
-
-		gl.translate(halfWidth, halfHeight);
-
-		gl.drawImage(this._slideTexture as ImageBitmap, 0, 0);
-
-		for (var video of this._videos) {
-			gl.drawImage(
-				video.videoElement,
-				video.pos2d[0] * width,
-				video.pos2d[2] * height,
-				video.pos2d[1] * width - video.pos2d[0] * width,
-				video.pos2d[3] * height - video.pos2d[2] * height
-			);
-		}
-
-		gl.setTransform(1, 0, 0, 1, 0, 0);
-	}
-
-	private renderGl() {
+	protected render() {
 		const gl = this._context.getGl();
 		gl.viewport(0, 0, this._canvas.width, this._canvas.height);
 		gl.clearColor(0.0, 0.0, 0.0, 1.0);
@@ -315,13 +362,6 @@ class SlideRenderer {
 			this.updateTexture(video.texture, video.videoElement);
 			gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 		}
-	}
-
-	private render() {
-		if (this._context.is2dGl())
-			this.render2d();
-		else
-			this.renderGl();
 
 		requestAnimationFrame(this.render.bind(this));
 	}
