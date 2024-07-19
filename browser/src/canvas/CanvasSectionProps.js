@@ -31,6 +31,7 @@ L.CSections.Debug.TilePixelGrid = 	{ name: 'tile pixel grid'	, zIndex: 5 };
 L.CSections.ColumnHeader = 			{ name: 'column header'		, zIndex: 5 };
 L.CSections.RowHeader = 			{ name: 'row header'		, zIndex: 5 };
 L.CSections.CornerHeader = 			{ name: 'corner header'		, zIndex: 5 };
+L.CSections.OtherViewCellCursor =   { zIndex: 5 };
 
 L.CSections.ColumnGroup = 			{ name: 'column group'		, zIndex: 5 };
 L.CSections.RowGroup = 				{ name: 'row group'			, zIndex: 5 };
@@ -63,9 +64,11 @@ L.CSections.Overlays.processingOrder =				61; // Writer & Impress & Calc. This i
 L.CSections.Debug.TilePixelGrid.processingOrder = 	62; // Writer & Impress & Calc. This is bound to tiles.
 L.CSections.CalcGrid.processingOrder = 				63; // Calc. This is bound to tiles.
 L.CSections.Debug.Splits.processingOrder = 			64; // Calc. This is bound to tiles.
+L.CSections.OtherViewCellCursor.processingOrder =   65; // Calc. Other views' cell cursors.
 
 L.CSections.CalcGrid.drawingOrder = 				40; // Calc.
 L.CSections.Tiles.drawingOrder = 					50; // Writer & Impress & Calc.
+L.CSections.OtherViewCellCursor.drawingOrder =      51; // Calc.
 L.CSections.CommentList.drawingOrder =				55; // Writer & Impress.
 L.CSections.Debug.TilePixelGrid.drawingOrder = 		60; // Writer & Impress & Calc.
 L.CSections.Overlays.drawingOrder =					71; // Writer & Impress & Calc.
