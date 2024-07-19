@@ -1121,6 +1121,8 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	position: absolute;
 	text-align: center;
 	z-index: 11;
+	font-family: var(--docs-font);
+	font-size: var(--default-font-size);
 }
 
 .username-pop-up p {
