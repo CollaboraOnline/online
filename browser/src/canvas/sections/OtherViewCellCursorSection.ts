@@ -65,6 +65,13 @@ class OtherViewCellCursorSection extends CanvasSectionObject {
         this.sectionProperties.popUpContainer.style.top = pos[1] + 'px';
     }
 
+    onNewDocumentTopLeft(size: Array<number>): void {
+        if (this.showSection)
+            this.adjustPopUpPosition();
+        else
+            this.hideUsernamePopUp();
+    }
+
     prepareUsernamePopUp() {
         if (this.sectionProperties.popUpContainer === null) {
             const popUpContainer = document.createElement('div');
@@ -102,6 +109,8 @@ class OtherViewCellCursorSection extends CanvasSectionObject {
 
     showUsernamePopUp() {
         if (this.sectionProperties.popUpContainer) {
+            this.adjustPopUpPosition();
+
             this.sectionProperties.popUpShown = true;
             this.sectionProperties.popUpContainer.style.display = '';
 
