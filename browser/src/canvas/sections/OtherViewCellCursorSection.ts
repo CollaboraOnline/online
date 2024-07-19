@@ -54,22 +54,19 @@ class OtherViewCellCursorSection extends CanvasSectionObject {
     }
 
     adjustPopUpPosition() {
-        if (!this.showSection || !this.sectionProperties.popUpShown)
-            return;
-
         const width = this.sectionProperties.popUpContainer.getBoundingClientRect().width;
         const height = this.sectionProperties.popUpContainer.getBoundingClientRect().height;
 
         const pos = [this.myTopLeft[0] / app.dpiScale + this.size[0] * 0.5 / app.dpiScale - (width * 0.5), (this.myTopLeft[1] / app.dpiScale) - (height + 15)];
         this.sectionProperties.popUpContainer.style.left = pos[0] + 'px';
         this.sectionProperties.popUpContainer.style.top = pos[1] + 'px';
+
+        if (!this.showSection)
+            this.hideUsernamePopUp();
     }
 
     onNewDocumentTopLeft(size: Array<number>): void {
-        if (this.showSection)
-            this.adjustPopUpPosition();
-        else
-            this.hideUsernamePopUp();
+        this.adjustPopUpPosition();
     }
 
     prepareUsernamePopUp() {
@@ -137,6 +134,7 @@ class OtherViewCellCursorSection extends CanvasSectionObject {
 
         const sectionName = OtherViewCellCursorSection.sectionNamePrefix + viewId;
         let section: OtherViewCellCursorSection;
+        let newSection = false;
         if (app.sectionContainer.doesSectionExist(sectionName)) {
             section = app.sectionContainer.getSectionWithName(sectionName);
             section.sectionProperties.part = part;
@@ -148,6 +146,7 @@ class OtherViewCellCursorSection extends CanvasSectionObject {
             section = new OtherViewCellCursorSection(viewId, rectangle, part);
             app.sectionContainer.addSection(section);
             OtherViewCellCursorSection.sectionPointers.push(section);
+            newSection = true;
         }
 
         section.sectionProperties.username = username;
@@ -155,7 +154,7 @@ class OtherViewCellCursorSection extends CanvasSectionObject {
 
         section.setShowSection(section.checkMyVisibility());
 
-        if (section.showSection)
+        if (section.showSection && !newSection)
             section.showUsernamePopUp();
 
         app.sectionContainer.requestReDraw();
