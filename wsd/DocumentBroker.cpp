@@ -3659,16 +3659,18 @@ void DocumentBroker::handleMediaRequest(std::string range,
         {
             // For now, we only support file:// schemes.
             // In the future, we may/should support http.
+            const std::string localPath = url.substr(sizeof("file:///") - 1);
 #if !MOBILEAPP
             // We always extract media files in /tmp. Normally, we are in jail (chroot),
             // and this would need to be accessed from WSD through the JailRoot path.
             // But, when we have NoCapsForKit there is no jail, so the media file ends
             // up in the host (AppImage) /tmp
-            const std::string root = COOLWSD::NoCapsForKit ? "/" : getJailRoot();
+            const std::string path = COOLWSD::NoCapsForKit ? "/" + localPath :
+                FileUtil::buildLocalPathToJail(
+                    COOLWSD::EnableMountNamespaces, COOLWSD::ChildRoot + _jailId, localPath);
 #else
-            const std::string root = getJailRoot();
+            const std::string path = getJailRoot() + "/" + localPath;
 #endif
-            const std::string path = root + url.substr(sizeof("file://") - 1);
 
             auto session = std::make_shared<http::server::Session>();
             session->asyncUpload(path, "video/mp4", std::move(range));
