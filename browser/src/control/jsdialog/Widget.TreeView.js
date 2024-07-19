@@ -827,6 +827,8 @@ function _treelistboxControl(parentContainer, data, builder) {
 }
 
 class TreeViewControl {
+	static Selected = null;
+
 	constructor(data, builder) {
 		this._tableContainer = L.DomUtil.create('table', builder.options.cssClass + ' ui-treeview');
 
@@ -842,6 +844,16 @@ class TreeViewControl {
 							       ' ui-treeview-body', this._tableContainer);
 		this._tableContainer.setAttribute('role', 'grid');
 		this._tableContainer.addEventListener('click', L.bind(TreeViewControl.onClick));
+	}
+
+	static selectEntry(tr, selected) {
+		tr.setAttribute('aria-selected', selected);
+		if (selected)
+			L.DomUtil.addClass(tr, 'selected');
+		else
+			L.DomUtil.removeClass(tr, 'selected');
+
+		return selected ? tr : null;
 	}
 
 	static toggleExpand(tr) {
@@ -868,12 +880,22 @@ class TreeViewControl {
 			return;
 
 		let tr = td.parentElement;
-		if (!tr || tr.localName !== 'tr' || !tr.hasAttribute('aria-expanded'))
+		if (!tr || tr.localName !== 'tr')
 			return;
 
 		let expand = td.firstChild;
-		if (expand && e.clientX < expand.getBoundingClientRect().left)
+		if (expand && tr.hasAttribute('aria-expanded') &&
+		    e.clientX < expand.getBoundingClientRect().left) {
 			TreeViewControl.toggleExpand(tr);
+			return;
+		}
+
+		let selected = tr.getAttribute('aria-selected') === 'true';
+
+		if (TreeViewControl.Selected)
+			TreeViewControl.selectEntry(TreeViewControl.Selected, false);
+
+		TreeViewControl.Selected = TreeViewControl.selectEntry(tr, !selected);
 	}
 
 	fillHeaders(headers, builder) {
@@ -949,6 +971,8 @@ class TreeViewControl {
 					  this._tableContainer._tbody);
 		tr.setAttribute('role', 'row');
 		tr.setAttribute('aria-level', level);
+
+		TreeViewControl.selectEntry(tr, entry.selected);
 
 		if (entry.children && entry.children.length) {
 			tr.setAttribute('aria-expanded', 'false');
