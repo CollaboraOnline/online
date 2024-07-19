@@ -129,17 +129,31 @@ function getBorderStyleMenuElements(closeCallback) {
 	const table = document.createElement('table');
 	table.id = 'setborderstyle-grid';
 
-	for (let i = 0; i < 13; i++) {
-		for (let j = 0; j < 4 && i + j < 13; j++) {
-			let tr = document.createElement('tr');
+	for (let i = 0; i < 12; i++) {
+		let tr = document.createElement('tr');
+		table.appendChild(tr);
+		for (let j = 0; j < 4; j++) {
 			let td = document.createElement('td');
-			table.appendChild(tr);
 			tr.appendChild(td);
+			const num = String(i + j + 1);
 			td.className = 'w2ui-tb-image w2ui-icon ' + (i + j < 9 ? 'frame0' + String(i + j + 1): 'frame' + String(i + j + 1));
-			td.onclick = setBorderStyle.bind(null, (i + j === 12 ? 0: i + j + 1));
+			td.onclick = function() { setBorderStyle(parseInt(num)); };
 		}
 		i += 3;
 	}
+
+	let tr = document.createElement('tr');
+	let td = document.createElement('td');
+	td.setAttribute('colspan', 4);
+	td.onclick = function() { setBorderStyle(0); };
+
+	let div = document.createElement('div');
+	div.id = 'div-frame13';
+	div.textContent = _('More...');
+
+	td.appendChild(div);
+	tr.appendChild(td);
+	table.appendChild(tr);
 
 	return table;
 }
