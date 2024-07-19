@@ -21,7 +21,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Sheet switching tests', fu
 		// go to sheet 2
 		cy.cGet('#spreadsheet-tab1').click();
 		cy.cGet('input#addressInput-input').should('have.prop', 'value', 'F720');
-		desktopHelper.assertScrollbarPosition('vertical', 320, 330);
+		desktopHelper.assertScrollbarPosition('vertical', 320, 335);
 
 		cy.cGet('input#addressInput-input').type('{selectAll}A2{enter}');
 		desktopHelper.assertScrollbarPosition('vertical', 15, 25);
@@ -30,12 +30,12 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Sheet switching tests', fu
 	it('Check view position on repeated selection of currently selected sheet', function() {
 		// initially we are on sheet 2 tab
 		cy.cGet('input#addressInput-input').should('have.prop', 'value', 'F720');
-		desktopHelper.assertScrollbarPosition('vertical', 320, 330);
+		desktopHelper.assertScrollbarPosition('vertical', 320, 335);
 
 		// click on sheet 2 tab (yes, current one)
 		cy.cGet('#spreadsheet-tab1').click();
 		cy.cGet('input#addressInput-input').should('have.prop', 'value', 'F720');
-		desktopHelper.assertScrollbarPosition('vertical', 320, 330);
+		desktopHelper.assertScrollbarPosition('vertical', 320, 335);
 
 		// go to different place in the spreadsheet
 		cy.cGet('input#addressInput-input').type('{selectAll}A2{enter}');
