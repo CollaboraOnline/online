@@ -14,6 +14,7 @@ class VideoRenderInfo {
 	public texture: WebGLTexture | ImageBitmap;
 	public videoElement: HTMLVideoElement;
 	public vao: WebGLVertexArrayObject;
+	public pos2d: number[];
 }
 
 class SlideRenderer {
@@ -209,20 +210,48 @@ class SlideRenderer {
 			for (var videoInfo of slideInfo.videos) {
 				const video = new VideoRenderInfo();
 				video.videoElement = this.setupVideo(videoInfo.url);
-				video.texture = this.initTexture();
-				video.vao = this.setupRectangleInDocumentPositions(
-					videoInfo.x,
-					videoInfo.y,
-					videoInfo.width,
-					videoInfo.height,
-					docWidth,
-					docHeight,
-				);
+				if (this._context.is2dGl()) {
+					video.pos2d = this.getDocumentPositions(
+						videoInfo.x,
+						videoInfo.y,
+						videoInfo.width,
+						videoInfo.height,
+						docWidth,
+						docHeight
+					);
+				} else {
+					video.texture = this.initTexture();
+					video.vao = this.setupRectangleInDocumentPositions(
+						videoInfo.x,
+						videoInfo.y,
+						videoInfo.width,
+						videoInfo.height,
+						docWidth,
+						docHeight,
+					);
+				}
 
 				this._videos.push(video);
 			}
 		}
 		requestAnimationFrame(this.render.bind(this));
+	}
+
+	private getDocumentPositions(
+		x: number,
+		y: number,
+		width: number,
+		height: number,
+		docWidth: number,
+		docHeight: number,
+	): number[] {
+		var xMin = (x / docWidth);
+		var xMax = ((x + width) / docWidth);
+
+		var yMin = (y / docHeight);
+		var yMax = ((y + height) / docHeight);
+
+		return [xMin, xMax, yMin, yMax];
 	}
 
 	setupRectangleInDocumentPositions(
@@ -233,25 +262,39 @@ class SlideRenderer {
 		docWidth: number,
 		docHeight: number,
 	): WebGLVertexArrayObject {
-		const gl = this._context.getGl();
-
-		var xMin = (x / docWidth) * 2.0 - 1.0;
-		var xMax = ((x + width) / docWidth) * 2.0 - 1.0;
-
-		var yMin = (y / docHeight) * 2.0 - 1.0;
-		var yMax = ((y + height) / docHeight) * 2.0 - 1.0;
-
-		return this.setupPositions(xMin, xMax, yMin, yMax);
+		const positions = this.getDocumentPositions(x, y, width, height, docWidth, docHeight);
+		return this.setupPositions(
+			positions[0] * 2.0 - 1.0,
+			positions[1] * 2.0 - 1.0,
+			positions[2] * 2.0 - 1.0,
+			positions[3] * 2.0 - 1.0);
 	}
 
-	private render() {
-		if (this._context.is2dGl()) {
-			this._context
-				.get2dGl()
-				.drawImage(this._slideTexture as ImageBitmap, 0, 0);
-			return;
+	private render2d() {
+		const gl = this._context.get2dGl();
+		const width = (this._slideTexture as ImageBitmap).width;
+		const height = (this._slideTexture as ImageBitmap).height;
+		const halfWidth = (1.0 * gl.canvas.width - width) / 2.0;
+		const halfHeight = (1.0 * gl.canvas.height - height) / 2.0;
+
+		gl.translate(halfWidth, halfHeight);
+
+		gl.drawImage(this._slideTexture as ImageBitmap, 0, 0);
+
+		for (var video of this._videos) {
+			gl.drawImage(
+				video.videoElement,
+				video.pos2d[0] * width,
+				video.pos2d[2] * height,
+				video.pos2d[1] * width - video.pos2d[0] * width,
+				video.pos2d[3] * height - video.pos2d[2] * height
+			);
 		}
 
+		gl.setTransform(1, 0, 0, 1, 0, 0);
+	}
+
+	private renderGl() {
 		const gl = this._context.getGl();
 		gl.viewport(0, 0, this._canvas.width, this._canvas.height);
 		gl.clearColor(0.0, 0.0, 0.0, 1.0);
@@ -272,6 +315,13 @@ class SlideRenderer {
 			this.updateTexture(video.texture, video.videoElement);
 			gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 		}
+	}
+
+	private render() {
+		if (this._context.is2dGl())
+			this.render2d();
+		else
+			this.renderGl();
 
 		requestAnimationFrame(this.render.bind(this));
 	}
