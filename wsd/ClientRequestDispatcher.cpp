@@ -1757,10 +1757,10 @@ void ClientRequestDispatcher::handleClientProxyRequest(const Poco::Net::HTTPRequ
         = findOrCreateDocBroker(DocumentBroker::ChildType::Interactive, url, docKey, _id, uriPublic,
                               /*mobileAppDocId=*/0, /*wopiFileInfo=*/nullptr);
     auto docBroker = pair.first;
-    auto errorMsg = pair.second;
 
     if (!docBroker)
     {
+        const auto& errorMsg = pair.second;
         LOG_ERR("Failed to find document [" << docKey << "]: " << errorMsg);
         // badness occurred:
         auto streamSocket = std::static_pointer_cast<StreamSocket>(disposition.getSocket());
