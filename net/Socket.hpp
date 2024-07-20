@@ -1227,7 +1227,7 @@ public:
                                      " expects a valid SocketHandler instance.");
 
         auto socket = std::make_shared<TSocket>(std::move(hostname), fd, type, isClient, readType);
-        socket->setHandler(handler);
+        socket->setHandler(std::move(handler));
 
         return socket;
     }

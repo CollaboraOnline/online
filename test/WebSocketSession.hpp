@@ -107,7 +107,7 @@ public:
             return nullptr;
         }
 
-        const std::string lowerScheme = Util::toLower(scheme);
+        const std::string lowerScheme = Util::toLower(std::move(scheme));
         if (!lowerScheme.starts_with("http") && !lowerScheme.starts_with("ws"))
         {
             LOG_ERR_S("Unsupported scheme in URI while creating WebSocketSession: " << uri);

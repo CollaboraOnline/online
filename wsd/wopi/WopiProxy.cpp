@@ -102,7 +102,7 @@ void WopiProxy::handleRequest([[maybe_unused]] const std::shared_ptr<Terminating
                             << docKey << "] is for a WOPI document");
             // Remove from the current poll and transfer.
             disposition.setMove(
-                [this, &poll, docKey, url, uriPublic](const std::shared_ptr<Socket>& moveSocket)
+                [this, &poll, docKey, url=std::move(url), uriPublic](const std::shared_ptr<Socket>& moveSocket)
                 {
                     LOG_TRC_S('#' << moveSocket->getFD()
                                   << ": Dissociating client socket from "
@@ -141,7 +141,8 @@ void WopiProxy::checkFileInfo(const std::shared_ptr<TerminatingPoll>& poll, cons
             JsonUtil::findJSONValue(object, "LastModifiedTime", lastModifiedTime);
 
             LocalStorage::FileInfo fileInfo =
-                LocalStorage::FileInfo({ size, filename, ownerId, lastModifiedTime });
+                LocalStorage::FileInfo({ size, std::move(filename), std::move(ownerId),
+                                         std::move(lastModifiedTime) });
 
             // if (COOLWSD::AnonymizeUserData)
             //     Util::mapAnonymized(Util::getFilenameFromURL(filename),

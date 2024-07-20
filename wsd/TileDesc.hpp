@@ -663,27 +663,27 @@ public:
             {
                 if (name == "tileposx")
                 {
-                    tilePositionsX = value;
+                    tilePositionsX = std::move(value);
                 }
                 else if (name == "tileposy")
                 {
-                    tilePositionsY = value;
+                    tilePositionsY = std::move(value);
                 }
                 else if (name == "imgsize")
                 {
-                    imgSizes = value;
+                    imgSizes = std::move(value);
                 }
                 else if (name == "ver")
                 {
-                    versions = value;
+                    versions = std::move(value);
                 }
                 else if (name == "oldwid")
                 {
-                    oldwireIds = value;
+                    oldwireIds = std::move(value);
                 }
                 else if (name == "wid")
                 {
-                    wireIds = value;
+                    wireIds = std::move(value);
                 }
                 else
                 {

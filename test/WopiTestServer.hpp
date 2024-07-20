@@ -438,7 +438,7 @@ protected:
 
                 http::Response httpResponse(http::StatusCode::OK);
                 httpResponse.set("Last-Modified", Util::getHttpTime(getFileLastModifiedTime()));
-                httpResponse.setBody(content, "application/json; charset=utf-8");
+                httpResponse.setBody(std::move(content), "application/json; charset=utf-8");
                 socket->sendAndShutdown(httpResponse);
             }
 

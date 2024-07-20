@@ -1093,7 +1093,7 @@ public:
 
         const std::pair<std::int32_t, bool> portPair = Util::i32FromString(portString);
         if (portPair.second && portPair.first > 0)
-            return create(hostname, protocol, portPair.first);
+            return create(std::move(hostname), protocol, portPair.first);
 
         LOG_ERR_S("Invalid port [" << portString << "] in URI [" << uri
                                    << "] to http::Session::create");
@@ -1394,7 +1394,7 @@ private:
             host.append(":");
             host.append(_port);
         }
-        _request.set("Host", host); // Make sure the host is set.
+        _request.set("Host", std::move(host)); // Make sure the host is set.
         _request.set("Date", Util::getHttpTimeNow());
         _request.set("User-Agent", http::getAgentString());
     }
