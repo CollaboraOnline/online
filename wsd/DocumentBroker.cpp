@@ -3368,7 +3368,7 @@ bool DocumentBroker::handleInput(const std::shared_ptr<Message>& message)
                 ofs << it->second->processSVGContent(svg);
             }
 
-            _registeredDownloadLinks[downloadid] = url;
+            _registeredDownloadLinks[downloadid] = std::move(url);
         }
         else if (message->firstTokenMatches("traceevent:"))
         {

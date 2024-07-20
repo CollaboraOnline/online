@@ -1164,7 +1164,7 @@ void Document::trimAfterInactivity()
             bool isToModify = JsonUtil::getJSONValue<bool>(object, "isToModify");
             document->_isDocPasswordProtected = !password.empty();
             document->_haveDocPassword = document->_isDocPasswordProtected;
-            document->_docPassword = password;
+            document->_docPassword = std::move(password);
             document->_docPasswordType =
                 isToModify ? DocumentPasswordType::ToModify : DocumentPasswordType::ToView;
         }

@@ -763,7 +763,7 @@ void WopiStorage::uploadLocalFileToStorageAsync(const Authorization& auth, LockC
             {
                 // rename file
                 httpHeader.set("X-WOPI-Override", "RENAME_FILE");
-                httpHeader.set("X-WOPI-RequestedName", suggestedTarget);
+                httpHeader.set("X-WOPI-RequestedName", std::move(suggestedTarget));
             }
             else
             {
@@ -771,7 +771,7 @@ void WopiStorage::uploadLocalFileToStorageAsync(const Authorization& auth, LockC
                 httpHeader.set("X-WOPI-Override", "PUT_RELATIVE");
                 httpHeader.set("X-WOPI-Size", std::to_string(size));
                 LOG_TRC("Save as: suggested target is '" << suggestedTarget << "'.");
-                httpHeader.set("X-WOPI-SuggestedTarget", suggestedTarget);
+                httpHeader.set("X-WOPI-SuggestedTarget", std::move(suggestedTarget));
             }
         }
 

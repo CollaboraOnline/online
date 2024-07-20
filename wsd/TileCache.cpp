@@ -471,7 +471,7 @@ bool TileCache::subscribeToTileRendering(const TileDesc& tile, const std::shared
 
         tileBeingRendered = std::make_shared<TileBeingRendered>(tile, now);
         tileBeingRendered->getSubscribers().push_back(subscriber);
-        _tilesBeingRendered[tile] = tileBeingRendered;
+        _tilesBeingRendered[tile] = std::move(tileBeingRendered);
     }
     return true;
 }

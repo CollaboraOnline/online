@@ -203,8 +203,11 @@ CheckFileInfo::wopiFileInfo(const Poco::URI& uriPublic) const
 
         Poco::JSON::Object::Ptr wopiInfo = _wopiInfo;
         wopiFileInfo = std::make_unique<WopiStorage::WOPIFileInfo>(
-            StorageBase::FileInfo(size, filename, ownerId, modifiedTime), wopiInfo, uriPublic);
+            StorageBase::FileInfo(size, std::move(filename), std::move(ownerId),
+                                  std::move(modifiedTime)), wopiInfo, uriPublic);
     }
 
     return wopiFileInfo;
 }
+
+/* vim:set shiftwidth=4 softtabstop=4 expandtab: */

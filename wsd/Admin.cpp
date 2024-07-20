@@ -860,7 +860,7 @@ void Admin::setChannelLogLevel(const std::string& channelName, std::string level
     {
         COOLWSD::setLogLevelsOfKits(level); // For current kits.
         COOLWSD::sendMessageToForKit("setloglevel " + level); // For forkit and future kits.
-        _forkitLogLevel = level; // We will remember this setting rather than asking forkit its loglevel.
+        _forkitLogLevel = std::move(level); // We will remember this setting rather than asking forkit its loglevel.
     }
 }
 
