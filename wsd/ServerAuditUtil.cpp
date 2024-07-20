@@ -25,7 +25,7 @@ std::string ServerAuditUtil::getResultsJSON() const
     std::string result = "{\"serverAudit\": [";
 
     bool isFirst = true;
-    for (auto entry : _entries)
+    for (const auto& entry : _entries)
     {
         if (!isFirst)
             result += ", ";
