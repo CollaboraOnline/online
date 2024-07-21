@@ -10,8 +10,10 @@
 
 declare var SlideShow: any;
 
-function HelixTransition(transitionParameters: TransitionParameters) {
-	const nRows = 5;
+function HelixTransition(
+	transitionParameters: TransitionParameters,
+	nRows: number = 20,
+) {
 	const invN = 1.0 / nRows;
 	let iDn = 0.0;
 	let iPDn = invN;
