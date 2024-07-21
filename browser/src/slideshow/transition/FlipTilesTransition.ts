@@ -18,10 +18,11 @@ function vec(x: number, y: number, nx: number, ny: number): vec2 {
 	return [x / nx, y / ny];
 }
 
-function FlipTilesTransition(transitionParameters: TransitionParameters) {
-	const n = 8;
-	const m = 6;
-
+function FlipTilesTransition(
+	transitionParameters: TransitionParameters,
+	n: number = 8,
+	m: number = 6,
+) {
 	const aLeavingPrimitives: Primitive[] = [];
 	const aEnteringPrimitives: Primitive[] = [];
 
