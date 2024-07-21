@@ -182,6 +182,13 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	grid-gap: 4px;
 }
 
+/* Special Characters dialog */
+#SpecialCharactersDialog #viewgrid,
+#SpecialCharactersDialog #favgrid {
+	grid-gap: 4px;
+	width: fit-content;
+}
+
 /* Find and replace dialog */
 #search_grid, #replace_grid {
 	grid-template-columns: minmax(100px, min-content) auto !important;
