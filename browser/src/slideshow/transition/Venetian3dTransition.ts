@@ -10,9 +10,11 @@
 
 declare var SlideShow: any;
 
-function Venetian3dTransition(transitionParameters: TransitionParameters) {
-	const vertical: boolean = true;
-	const parts: number = 5.0;
+function Venetian3dTransition(
+	transitionParameters: TransitionParameters,
+	vertical: boolean,
+	parts: number,
+) {
 	const t30: number = Math.tan(Math.PI / 6.0);
 	let ln = 0;
 	const p = 1.0 / parts;
