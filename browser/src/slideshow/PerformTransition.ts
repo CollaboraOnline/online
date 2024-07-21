@@ -61,6 +61,17 @@ enum TransitionSubType {
 	HORIZONTALRIGHT,
 	COMBVERTICAL,
 	COMBHORIZONTAL,
+	TOPLEFT,
+	TOPRIGHT,
+	BOTTOMRIGHT,
+	BOTTOMLEFT,
+	TOPCENTER,
+	RIGHTCENTER,
+	BOTTOMCENTER,
+	HEARTCORNERSIN,
+	FANOUTHORIZONTAL,
+	CORNERSIN,
+	HEART,
 }
 
 const stringToTransitionTypeMap: Record<string, TransitionType> = {
@@ -112,6 +123,16 @@ const stringToTransitionSubTypeMap: Record<string, TransitionSubType> = {
 	HorizontalRight: TransitionSubType.HORIZONTALRIGHT,
 	CombVertical: TransitionSubType.COMBVERTICAL,
 	CombHorizontal: TransitionSubType.COMBHORIZONTAL,
+	TopLeft: TransitionSubType.TOPLEFT,
+	TopRight: TransitionSubType.TOPRIGHT,
+	BottomRight: TransitionSubType.BOTTOMRIGHT,
+	BottomLeft: TransitionSubType.BOTTOMLEFT,
+	TopCenter: TransitionSubType.TOPCENTER,
+	RightCenter: TransitionSubType.RIGHTCENTER,
+	BottomCenter: TransitionSubType.BOTTOMCENTER,
+	CornersIn: TransitionSubType.CORNERSIN,
+	FanOutHorizontal: TransitionSubType.FANOUTHORIZONTAL,
+	Heart: TransitionSubType.HEART,
 };
 
 SlideShow.PerformTransition = function (
