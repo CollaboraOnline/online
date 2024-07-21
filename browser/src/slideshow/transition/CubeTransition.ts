@@ -10,7 +10,10 @@
 
 declare var SlideShow: any;
 
-function CubeTransition(transitionParameters: TransitionParameters) {
+function CubeTransition(
+	transitionParameters: TransitionParameters,
+	isOutside: boolean = true,
+) {
 	const slide = new Primitive();
 	slide.pushTriangle([0, 0], [1, 0], [0, 1]);
 	slide.pushTriangle([1, 0], [0, 1], [1, 1]);
@@ -18,33 +21,61 @@ function CubeTransition(transitionParameters: TransitionParameters) {
 	const aLeavingPrimitives: Primitive[] = [];
 	aLeavingPrimitives.push(Primitive.cloneDeep(slide));
 
-	slide.operations.push(
-		makeRotateAndScaleDepthByWidth(
-			vec3.fromValues(0, 1, 0),
-			vec3.fromValues(0, 0, -1),
-			90,
-			false,
-			false,
-			0.0,
-			1.0,
-		),
-	);
+	if (isOutside) {
+		slide.operations.push(
+			makeRotateAndScaleDepthByWidth(
+				vec3.fromValues(0, 1, 0),
+				vec3.fromValues(0, 0, -1),
+				90,
+				false,
+				false,
+				0.0,
+				1.0,
+			),
+		);
+	} else {
+		slide.operations.push(
+			makeRotateAndScaleDepthByWidth(
+				vec3.fromValues(0, 1, 0),
+				vec3.fromValues(0, 0, 1),
+				-90,
+				false,
+				false,
+				0.0,
+				1.0,
+			),
+		);
+	}
 
 	const aEnteringPrimitives: Primitive[] = [];
 	aEnteringPrimitives.push(slide);
 
 	const aOperations: Operation[] = [];
-	aOperations.push(
-		makeRotateAndScaleDepthByWidth(
-			vec3.fromValues(0, 1, 0),
-			vec3.fromValues(0, 0, -1),
-			-90,
-			false,
-			true,
-			0.0,
-			1.0,
-		),
-	);
+	if (isOutside) {
+		aOperations.push(
+			makeRotateAndScaleDepthByWidth(
+				vec3.fromValues(0, 1, 0),
+				vec3.fromValues(0, 0, -1),
+				-90,
+				false,
+				true,
+				0.0,
+				1.0,
+			),
+		);
+	} else {
+		aOperations.push(
+			makeRotateAndScaleDepthByWidth(
+				vec3.fromValues(0, 1, 0),
+				vec3.fromValues(0, 0, 1),
+				90,
+				false,
+				true,
+				0.0,
+				1.0,
+			),
+		);
+	}
 
 	const newTransitionParameters: TransitionParameters3D = {
 		...transitionParameters,
