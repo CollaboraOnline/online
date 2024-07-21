@@ -23,7 +23,7 @@ abstract class SlideRenderer {
 	protected _videos: VideoRenderInfo[];
 	protected _canvas: HTMLCanvasElement;
 
-	public setup(canvas: HTMLCanvasElement) {
+	constructor(canvas: HTMLCanvasElement) {
 		this._canvas = canvas;
 	}
 
@@ -95,8 +95,8 @@ abstract class SlideRenderer {
 }
 
 class SlideRenderer2d extends SlideRenderer {
-	public setup(canvas: HTMLCanvasElement) {
-		super.setup(canvas);
+	constructor(canvas: HTMLCanvasElement) {
+		super(canvas);
 		this._context = new RenderContext2d(canvas);
 	}
 
@@ -247,8 +247,8 @@ class SlideRendererGl extends SlideRenderer {
 		return vao;
 	}
 
-	public setup(canvas: HTMLCanvasElement) {
-		super.setup(canvas);
+	constructor(canvas: HTMLCanvasElement) {
+		super(canvas);
 		this._context = new RenderContextGl(canvas);
 
 		const vertexShader = this._context.createVertexShader(
