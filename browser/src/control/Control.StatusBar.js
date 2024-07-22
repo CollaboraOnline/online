@@ -68,7 +68,7 @@ class StatusBar extends JSDialog.Toolbar {
 	}
 
 	callback(objectType, eventType, object, data, builder) {
-		if (object.id === 'search-input') {
+		if (object.id === 'search-input' || object.id === 'search') {
 			// its handled by window.setupSearchInput
 			return;
 		} else if (object.id === 'zoom') {
