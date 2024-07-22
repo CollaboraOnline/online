@@ -335,9 +335,6 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 .notebookbar.ui-combobox * {
 	line-height: 22px;
 }
-.ui-combobox-content {
-	padding-inline: 5px;
-}
 
 .has-colorpicker.menubutton img {
 	width: var(--btn-size-m) !important;
