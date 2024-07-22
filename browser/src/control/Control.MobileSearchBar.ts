@@ -32,12 +32,14 @@ class MobileSearchBar extends Toolbar {
 				id: 'searchprev',
 				text: _UNO('.uno:UpSearch'),
 				enabled: false,
+				pressAndHold: true,
 			},
 			{
 				type: 'customtoolitem',
 				id: 'searchnext',
 				text: _UNO('.uno:DownSearch'),
 				enabled: false,
+				pressAndHold: true,
 			},
 			{
 				type: 'customtoolitem',
