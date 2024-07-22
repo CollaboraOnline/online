@@ -2949,6 +2949,7 @@ void lokit_main(
                 bool useMountNamespaces,
                 bool queryVersion,
                 bool displayVersion,
+                bool sysTemplateIncomplete,
 #else
                 int docBrokerSocket,
                 const std::string& userInterface,
@@ -3056,6 +3057,22 @@ void lokit_main(
             const std::string tmpSubDir = Poco::Path(tempRoot, "cool-" + jailId).toString();
             const std::string jailTmpDir = Poco::Path(jailPath, "tmp").toString();
 
+            const std::string sysTemplateSubDir = Poco::Path(tempRoot, "systemplate-" + jailId).toString();
+            const std::string jailEtcDir = Poco::Path(jailPath, "etc").toString();
+
+            if (sysTemplateIncomplete && JailUtil::isBindMountingEnabled())
+            {
+                Poco::File(Poco::Path(sysTemplateSubDir, "etc").toString()).createDirectories();
+                if (!JailUtil::SysTemplate::updateDynamicFiles(sysTemplateSubDir))
+                {
+                    LOG_WRN("Failed to update the dynamic files in ["
+                            << sysTemplateSubDir
+                            << "]. Will clone systemplate into the "
+                               "jails, which is more resource intensive.");
+                    JailUtil::disableBindMounting(); // We can't mount from incomplete systemplate.
+                }
+            }
+
             // The bind-mount implementation: inlined here to mirror
             // the fallback link/copy version bellow.
             const auto mountJail = [&]() -> bool {
@@ -3067,6 +3084,20 @@ void lokit_main(
                     LOG_ERR("Failed to mount [" << sysTemplate << "] -> [" << jailPathStr
                                                 << "], will link/copy contents.");
                     return false;
+                }
+
+                // if we know that the etc dir of sysTemplate is out of date, then
+                // ro bind-mount a replacement up-to-date /etc
+                if (sysTemplateIncomplete)
+                {
+                    LOG_INF("Mounting " << sysTemplateSubDir << " -> " << jailEtcDir);
+                    if (!JailUtil::bind(sysTemplateSubDir, jailEtcDir)
+                        || !JailUtil::remountReadonly(sysTemplateSubDir, jailEtcDir))
+                    {
+                        LOG_ERR("Failed to mount [" << sysTemplateSubDir << "] -> [" << jailEtcDir
+                                                    << "], will link/copy contents.");
+                        return false;
+                    }
                 }
 
                 // Mount loTemplate inside it.
