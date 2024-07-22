@@ -898,6 +898,16 @@ class TreeViewControl {
 		TreeViewControl.Selected = TreeViewControl.selectEntry(tr, !selected);
 	}
 
+	createImageColumn(parentContainer, builder, imageUrl) {
+		let colorPreviewButton = L.DomUtil.create('img', builder.options.cssClass + ' ui-treeview-checkbox',
+							  parentContainer);
+		colorPreviewButton.src = imageUrl
+		colorPreviewButton.style.setProperty('outline', '1px solid var(--color-btn-border)');
+		colorPreviewButton.style.setProperty('vertical-align', 'middle');
+
+		return colorPreviewButton;
+	}
+
 	fillHeaders(headers, builder) {
 		if (!this._tableContainer || !headers)
 			return;
@@ -991,11 +1001,19 @@ class TreeViewControl {
 	}
 
 	fillTableCells(entry, builder, tr) {
+		let td, span, text, img;
+
 		for (let index in entry.columns) {
-			let td = L.DomUtil.create('td', '', tr);
-			let span = L.DomUtil.create('span', builder.options.cssClass +
-						    ' ui-treeview-cell-text', td);
-			span.innerText = entry.columns[index].text;
+			td = L.DomUtil.create('td', '', tr);
+			span = L.DomUtil.create('span', builder.options.cssClass + ' ui-treeview-cell', td);
+			text = L.DomUtil.create('span', builder.options.cssClass + ' ui-treeview-cell-text', span);
+			img = entry.columns[index].collapsedimage ? entry.columns[index].collapsedimage :
+				entry.columns[index].expandedimage;
+			if (img)
+				this.createImageColumn(text, builder, img);
+			else
+				text.innerText = entry.columns[index].text;
+
 			td.setAttribute('role', 'gridcell');
 			if (entry.columns[index].expanded)
 				tr.setAttribute('aria-expanded', entry.columns[index].expanded);
