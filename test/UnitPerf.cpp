@@ -32,6 +32,7 @@
 class UnitPerf : public UnitWSD
 {
     void testPerf();
+    void dumpCPUTimeToCSV(long cpuTime);
 
     void configure(Poco::Util::LayeredConfiguration& config) override
     {
@@ -72,6 +73,20 @@ void UnitPerf::testPerf()
     stats->dump();
 }
 
+void UnitPerf::dumpCPUTimeToCSV(long cpuTime)
+{
+    std::ofstream file("CPUUsage.csv", std::ios::out | std::ios::app);
+
+    if(file.tellp() == 0)
+    {
+        file << "CPU Time";
+        file << "\n";
+    }
+
+    file << cpuTime;
+    file << "\n";
+}
+
 UnitPerf::UnitPerf() : UnitWSD("UnitPerf")
 {
     // Double of the default.
@@ -88,7 +103,10 @@ void UnitPerf::invokeWSDTest()
 
     testPerf();
 
-    std::cerr << "test: " << _timer->elapsedTime().count() << "us\n";
+    long cpuTime = _timer->elapsedTime().count();
+    dumpCPUTimeToCSV(cpuTime);
+
+    std::cerr << "test: " << cpuTime << "us\n";
 
     exitTest(TestResult::Ok);
 }

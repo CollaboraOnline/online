@@ -92,21 +92,30 @@ struct Histogram {
 
         if (file.tellp() == 0)
         {
-            file << "Total Items,Too Long";
-            for (size_t i = 0; i < _buckets.size(); ++i) {
-                size_t bucketUpperLimit = (i < 10) ? (incLowMs * (i + 1)) : (maxLowMs + (i + 1 - 10) * incHighMs);
-                file << ",<" << bucketUpperLimit << "ms";
-            }
+            file << "Total Items, <10ms, <100ms, >100ms";
             file << "\n";
         }
 
-        file << _items << ",";
-        file << _tooLong << ",";
+        size_t totalTiles = _items;
+        size_t subTenCount = _buckets[0];
+        size_t subOneHundredCount = 0;
+        size_t overOneHundredCount = _tooLong;
 
-        for(size_t i = 0; i < _buckets.size(); i++)
+        for(size_t i = 1 ; i < _buckets.size(); i++)
         {
-            file << _buckets[i] << ",";
+            if(i < 10)
+            {
+                subOneHundredCount += _buckets[i];
+            }else
+            {
+                overOneHundredCount += _buckets[i];
+            }
         }
+
+        file << totalTiles << ",";
+        file << subTenCount << ",";
+        file << subOneHundredCount << ",";
+        file << overOneHundredCount << ",";
         file << "\n";
     }
 
@@ -120,7 +129,6 @@ struct Stats {
         _tileCount(0),
         _connections(0)
     {
-        initialCPUStat = GetProcessTimes();
         _startUpMemoryUsage = GetMemoryUsage();
         _peakMemoryUsage = 0;
     }
@@ -135,17 +143,6 @@ struct Stats {
     size_t _peakMemoryUsage;
     size_t _startUpMemoryUsage;
 
-    // cpu metrics breakdown
-    struct CPUStat
-    {
-        double userCPUTime;
-        double kernelCPUTime;
-        double elapsedTime;
-    };
-
-    CPUStat initialCPUStat;
-
-
     // message size breakdown
     struct MessageStat {
         size_t size;
@@ -154,66 +151,24 @@ struct Stats {
     std::unordered_map<std::string, MessageStat> _recvd;
     std::unordered_map<std::string, MessageStat> _sent;
 
-    CPUStat GetProcessTimes() {
-
-        std::ifstream fileStat("/proc/" + std::to_string(getpid()) + "/stat");
-        std::ifstream fileUpTime("/proc/uptime");
-
-        std::string statLine, upTimeLine;
-        std::getline(fileStat, statLine);
-        std::getline(fileUpTime, upTimeLine);
-
-        std::stringstream ss(statLine), us(upTimeLine);
-
-        std::vector<std::string> vStat;
-        std::string token;
-        while (ss >> token) {
-            vStat.push_back(token);
-        }
-
-        std::vector<std::string> uStat;
-        while (us >> token) {
-            uStat.push_back(token);
-        }
-
-        size_t userTime = std::stoull(vStat[13]);
-        size_t kernelTime = std::stoull(vStat[14]);
-        double startTime = std::stod(vStat[21]);
-        double upTime = std::stod(uStat[0]);
-
-        long clockTick = sysconf(_SC_CLK_TCK);
-
-        double userProcessTimeInSeconds = userTime / static_cast<double>(clockTick);
-        double kernelProcessTimeInSeconds = kernelTime / static_cast<double>(clockTick);
-        double elaspedTime = upTime - (startTime / clockTick);
-
-        CPUStat cpuStat = {
-            userProcessTimeInSeconds,
-            kernelProcessTimeInSeconds,
-            elaspedTime
-        };
-
-        return cpuStat;
-    }
-
     size_t GetMemoryUsage()
     {
         std::ifstream smapsFile("/proc/" + std::to_string(getpid()) + "/smaps");
 
         std::string line;
-        size_t totalPss = 0;
+        size_t totalDirtyPss = 0;
 
         while (std::getline(smapsFile, line)) {
-            if (line.find("Pss:") == 0) {
+            if (line.find("Pss_Dirty:") == 0) {
                 std::stringstream ss(line);
                 std::string key;
                 size_t value;
                 ss >> key >> value;
-                totalPss += value;
+                totalDirtyPss += value;
             }
         }
 
-        return totalPss;
+        return totalDirtyPss;
     }
 
     void accumulate(std::unordered_map<std::string, MessageStat> &map,
@@ -272,15 +227,7 @@ struct Stats {
         const auto now = std::chrono::steady_clock::now();
         const size_t runMs = std::chrono::duration_cast<std::chrono::milliseconds>(now - _start).count();
 
-        CPUStat finalCPUStat = GetProcessTimes();
-        double userCPUTimeDiff = finalCPUStat.userCPUTime - initialCPUStat.userCPUTime;
-        double kernelCPUTimeDiff = finalCPUStat.kernelCPUTime - initialCPUStat.kernelCPUTime;
-        double elapsedTimeDiff = finalCPUStat.elapsedTime - initialCPUStat.elapsedTime;
-        double cpuUsagePercentage = ((userCPUTimeDiff + kernelCPUTimeDiff) * 100) / elapsedTimeDiff;
-
         std::cout << "Peak memory usage: " << _peakMemoryUsage << "kB";
-
-        std::cout << "Percentage of CPU: " << cpuUsagePercentage << "%\n";
 
         std::cout << "Stress run took " << runMs << " ms\n";
         std::cout << "  tiles: " << _tileCount << " => TPS: " << ((_tileCount * 1000.0)/runMs) << "\n";
@@ -297,10 +244,7 @@ struct Stats {
         _tileLatency.dumpLatencyToCSV("Tile");
 
         dumpStressToCSV(runMs);
-        dumpNetworkStatsToCSV(recvKbps,sentKbps);
-
-        dumpCPUUsageStatsToCSV(userCPUTimeDiff, kernelCPUTimeDiff, elapsedTimeDiff);
-
+        dumpNetworkStatsToCSV(_bytesRecvd,_bytesSent);
         dumpPeakMemoryUsageToCPU(_peakMemoryUsage);
 
         std::cout << "we sent:\n";
@@ -323,32 +267,17 @@ struct Stats {
         file << runMs << "\n";
     }
 
-    void dumpNetworkStatsToCSV(size_t recievedKbs, size_t sentKbs)
+    void dumpNetworkStatsToCSV(size_t recievedKb, size_t sentKb)
     {
         std::ofstream file("Network.csv", std::ios::out | std::ios::app);
 
         if(file.tellp() == 0)
         {
-            file << "Incoming bandwidth (kB/s)" << ",Outgoing bandwidth (kB/s)";
+            file << "Bytes recieved (kB)" << ", Bytes sent(kB)";
             file << "\n";
         }
 
-        file << recievedKbs << "," << sentKbs << ",";
-        file << "\n";
-    }
-    void dumpCPUUsageStatsToCSV(double userTime, double kernelTime, double elapsedTime)
-    {
-        double percentageOfCPU = ((userTime + kernelTime) * 100) / elapsedTime;
-
-        std::ofstream file("CPUUsage.csv", std::ios::out | std::ios::app);
-
-        if(file.tellp() == 0)
-        {
-            file << "User CPU Time" << ",Kernel CPU Time" << ",Percentage Of CPU";
-            file << "\n";
-        }
-
-        file << userTime << "," << kernelTime << "," << percentageOfCPU;
+        file << recievedKb << "," << sentKb << ",";
         file << "\n";
     }
 
