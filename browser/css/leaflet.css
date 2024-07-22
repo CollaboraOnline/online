@@ -265,7 +265,7 @@
 	display: inline-block;
 	margin: 3px;
 	vertical-align: middle;
-	border-bottom: solid 1px var(--color-border);
+	border-bottom: solid 1px var(--color-toolbar-border);
 }
 .leaflet-bar a,
 .leaflet-bar a:hover {
