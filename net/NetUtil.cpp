@@ -34,14 +34,116 @@ namespace net
 
 #if !MOBILEAPP
 
+std::string HostEntry::makeIPAddress(const sockaddr* ai_addr)
+{
+    char addrstr[INET6_ADDRSTRLEN];
+
+    static_assert(INET6_ADDRSTRLEN >= INET_ADDRSTRLEN, "ipv6 addresses are longer than ipv4");
+
+    const void *inAddr = nullptr;
+    switch (ai_addr->sa_family)
+    {
+        case AF_INET:
+        {
+            auto ipv4 = (const sockaddr_in*)ai_addr;
+            inAddr = &(ipv4->sin_addr);
+            break;
+        }
+        case AF_INET6:
+        {
+            auto ipv6 = (const sockaddr_in6*)ai_addr;
+            inAddr = &(ipv6->sin6_addr);
+            break;
+        }
+    }
+
+    if (!inAddr)
+    {
+        LOG_ERR("Unknown sa_family: " << ai_addr->sa_family);
+        return std::string();
+    }
+
+    const char* result = inet_ntop(ai_addr->sa_family, inAddr, addrstr, sizeof(addrstr));
+    if (!result)
+    {
+        _errno = errno;
+        LOG_WRN("inet_ntop failure: " << errorMessage());
+        return std::string();
+    }
+    return std::string(result);
+}
+
+void HostEntry::initFromHostName(const std::string& host, const char* port)
+{
+    assert(!_ainfo);
+
+    addrinfo hints;
+    std::memset(&hints, 0, sizeof(hints));
+    hints.ai_flags = AI_CANONNAME | AI_ADDRCONFIG;
+
+    addrinfo* ainfo = nullptr;
+    int rc = getaddrinfo(host.c_str(), port, &hints, &ainfo);
+    _ainfo.reset(ainfo, freeaddrinfo);
+    if (rc == 0)
+    {
+        for (const addrinfo* ai = _ainfo.get(); ai; ai = ai->ai_next)
+        {
+            if (ai->ai_canonname)
+                _canonicalName.assign(ai->ai_canonname);
+
+            if (!ai->ai_addrlen || !ai->ai_addr)
+                continue;
+
+            std::string address = makeIPAddress(ai->ai_addr);
+            if (!good())
+                break;
+            _ipAddresses.push_back(address);
+        }
+        return;
+    }
+
+    setEAI(rc);
+    LOG_SYS("Failed to lookup host " << errorMessage());
+}
+
+void HostEntry::setEAI(int eaino)
+{
+    _eaino = eaino;
+    // EAI_SYSTEM: Other system error; errno is set to indicate the error.
+    if (_eaino == EAI_SYSTEM)
+        _errno = errno;
+}
+
+std::string HostEntry::errorMessage() const
+{
+    const char* errmsg;
+    if (_eaino && _eaino != EAI_SYSTEM)
+        errmsg = gai_strerror(_eaino);
+    else
+        errmsg = strerror(_errno);
+    return std::string("[" + _requestName + "]: " + errmsg);
+}
+
+HostEntry::HostEntry(const std::string& desc, const char* port)
+    : _requestName(desc)
+    , _errno(0)
+    , _eaino(0)
+{
+    initFromHostName(desc, port);
+}
+
+HostEntry::~HostEntry()
+{
+}
+
 struct DNSCacheEntry
 {
     std::string queryAddress;
-    Poco::Net::HostEntry hostEntry;
+    HostEntry hostEntry;
     std::chrono::steady_clock::time_point lookupTime;
 };
 
-static Poco::Net::HostEntry resolveDNS(const std::string& addressToCheck, std::vector<DNSCacheEntry>& querycache)
+static HostEntry resolveDNS(const std::string& addressToCheck, std::vector<DNSCacheEntry>& querycache)
 {
     const auto now = std::chrono::steady_clock::now();
 
@@ -60,7 +162,7 @@ static Poco::Net::HostEntry resolveDNS(const std::string& addressToCheck, std::v
         return findIt->hostEntry;
 
     // lookup and cache
-    auto hostEntry = Poco::Net::DNS::resolve(addressToCheck);
+    HostEntry hostEntry(addressToCheck);
     querycache.push_back(DNSCacheEntry{addressToCheck, hostEntry, now});
     return hostEntry;
 }
@@ -70,13 +172,13 @@ class DNSResolver
 private:
     std::vector<DNSCacheEntry> _querycache;
 public:
-    Poco::Net::HostEntry resolveDNS(const std::string& addressToCheck)
+    HostEntry resolveDNS(const std::string& addressToCheck)
     {
         return net::resolveDNS(addressToCheck, _querycache);
     }
 };
 
-Poco::Net::HostEntry resolveDNS(const std::string& addressToCheck)
+HostEntry resolveDNS(const std::string& addressToCheck)
 {
     static DNSResolver resolver;
     return resolver.resolveDNS(addressToCheck);
@@ -84,27 +186,22 @@ Poco::Net::HostEntry resolveDNS(const std::string& addressToCheck)
 
 std::string canonicalHostName(const std::string& addressToCheck)
 {
-    return resolveDNS(addressToCheck).name();
+    return resolveDNS(addressToCheck).getCanonicalName();
 }
 
 std::vector<std::string> resolveAddresses(const std::string& addressToCheck)
 {
-    Poco::Net::HostEntry hostEntry = resolveDNS(addressToCheck);
-    const auto& addresses = hostEntry.addresses();
-    std::vector<std::string> ret;
-    ret.reserve(addresses.size());
-    for (const auto& address : addresses)
-        ret.push_back(address.toString());
-    return ret;
+    HostEntry hostEntry = resolveDNS(addressToCheck);
+    return hostEntry.getAddresses();
 }
 
 std::string resolveOneAddress(const std::string& addressToCheck)
 {
-    Poco::Net::HostEntry hostEntry = resolveDNS(addressToCheck);
-    const auto& addresses = hostEntry.addresses();
+    HostEntry hostEntry = resolveDNS(addressToCheck);
+    const auto& addresses = hostEntry.getAddresses();
     if (addresses.empty())
         throw Poco::Net::NoAddressFoundException(addressToCheck);
-    return addresses[0].toString();
+    return addresses[0];
 }
 
 std::string resolveHostAddress(const std::string& targetHost)
@@ -222,7 +319,7 @@ void AsyncDNS::resolveDNS()
 
         try
         {
-            hostToCheck = _resolver->resolveDNS(_activeLookup.query).name();
+            hostToCheck = _resolver->resolveDNS(_activeLookup.query).getCanonicalName();
         }
         catch (const Poco::Exception& exc)
         {
