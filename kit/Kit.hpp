@@ -39,7 +39,7 @@ void lokit_main(
 #if !MOBILEAPP
     const std::string& childRoot, const std::string& jailId, const std::string& sysTemplate,
     const std::string& loTemplate, bool noCapabilities, bool noSeccomp, bool useMountNamespaces,
-    bool queryVersionInfo, bool displayVersion,
+    bool queryVersionInfo, bool displayVersion, bool sysTemplateIncomplete,
 #else
     int docBrokerSocket, const std::string& userInterface,
 #endif

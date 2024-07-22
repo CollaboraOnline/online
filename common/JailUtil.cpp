@@ -490,14 +490,13 @@ void setupDynamicFiles(const std::string& sysTemplate)
     const std::string etcSysTemplatePath = Poco::Path(sysTemplate, "etc").toString();
     LinkDynamicFiles = true; // Prefer linking, unless it fails.
 
-    if (!updateDynamicFilesImpl(sysTemplate))
+    const bool uptodate = updateDynamicFilesImpl(sysTemplate);
+    if (!uptodate)
     {
         // Can't copy!
         LOG_WRN("Failed to update the dynamic files in ["
                 << sysTemplate
-                << "]. Will disable bind-mounting in this run and clone systemplate into the "
-                   "jails, which is more resource intensive.");
-        disableBindMounting(); // We can't mount from incomplete systemplate.
+                << "]. Will clone dynamic elements of systemplate to the jails.");
         LinkDynamicFiles = false;
     }
 
