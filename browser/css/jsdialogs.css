@@ -233,6 +233,7 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	background-color: transparent;
 }
 .jsdialog.ui-separator.vertical {
+	height: 14px;
 	margin: 5px 0px;
 	padding-right: 1px;
 	background-color: var(--color-background-darker);
