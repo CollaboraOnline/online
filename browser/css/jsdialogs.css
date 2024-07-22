@@ -763,7 +763,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	appearance: none;
-	height: 28px;
+	height: 24px;
 	line-height: normal;
 	font-size: var(--default-font-size);
 	font-family: var(--jquery-ui-font);
@@ -795,14 +795,13 @@ input[type='number']:hover::-webkit-outer-spin-button {
 .ui-listbox-arrow {
 	content: '';
 	background: url('images/jquery-ui-lightness/ui-icons_222222_256x240.png') no-repeat transparent;
-	background-position: -67px -18px !important;
+	background-position: -67px -17px !important;
 	display: inline-block;
 	position: relative;
 	width: 11px;
 	height: 11px;
 	cursor: pointer;
 	pointer-events: none;
-	margin-block-start: 8px;
 	margin-inline-start: -16px;
 	margin-inline-end: 4px;
 }
