@@ -34,14 +34,133 @@ namespace net
 
 #if !MOBILEAPP
 
+class HostEntry
+{
+    std::string _canonicalName;
+    std::vector<std::string> _ipAddresses;
+
+    static std::string makeIPAddress(const sockaddr* ai_addr)
+    {
+        char addrstr[INET6_ADDRSTRLEN];
+
+        static_assert(INET6_ADDRSTRLEN >= INET_ADDRSTRLEN, "ipv6 addresses are longer than ipv4");
+
+        const void *inAddr = nullptr;
+        switch (ai_addr->sa_family)
+        {
+            case AF_INET:
+            {
+                auto ipv4 = (const sockaddr_in*)ai_addr;
+                inAddr = &(ipv4->sin_addr);
+                break;
+            }
+            case AF_INET6:
+            {
+                auto ipv6 = (const sockaddr_in6*)ai_addr;
+                inAddr = &(ipv6->sin6_addr);
+                break;
+            }
+        }
+
+        if (!inAddr)
+        {
+            LOG_ERR("Unknown sa_family: " << ai_addr->sa_family);
+            return std::string();
+        }
+
+        const char* result = inet_ntop(ai_addr->sa_family, inAddr, addrstr, sizeof(addrstr));
+        if (!result)
+        {
+            LOG_ERR("inet_ntop failure: " << strerror(errno));
+            return std::string();
+        }
+        return std::string(result);
+    }
+
+    bool resolveIP4(const std::string& addressToCheck, std::string& hostname)
+    {
+        sockaddr_in sa4{};
+        if (inet_pton(AF_INET, addressToCheck.c_str(), &sa4.sin_addr) == 1)
+        {
+            char hbuf[NI_MAXHOST];
+            sa4.sin_family = AF_INET;
+            fprintf(stderr, "4ok hee\n");
+            if (getnameinfo((sockaddr*)(&sa4), sizeof(sa4), hbuf, sizeof(hbuf), nullptr, 0, NI_NAMEREQD) == 0)
+            {
+                // canonicalName = hbuf;
+                fprintf(stderr, "4still ok %s\n", hbuf);
+                hostname.assign(hbuf);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    bool resolveIP6(const std::string& addressToCheck, std::string& hostname)
+    {
+        sockaddr_in6 sa6{};
+        if (inet_pton(AF_INET6, addressToCheck.c_str(), &sa6.sin6_addr) == 1)
+        {
+            char hbuf[NI_MAXHOST];
+            sa6.sin6_family = AF_INET6;
+            fprintf(stderr, "6ok hee\n");
+            if (getnameinfo((sockaddr*)(&sa6), sizeof(sa6), hbuf, sizeof(hbuf), nullptr, 0, NI_NAMEREQD) == 0)
+            {
+                // canonicalName = hbuf;
+                fprintf(stderr, "6still ok as %s\n", hbuf);
+                hostname.assign(hbuf);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    void initFromHostName(const std::string& host)
+    {
+        addrinfo* ainfo = nullptr;
+        addrinfo hints;
+        std::memset(&hints, 0, sizeof(hints));
+        hints.ai_flags = AI_CANONNAME | AI_ADDRCONFIG;
+        const int rc = getaddrinfo(host.c_str(), nullptr, &hints, &ainfo);
+
+        if (!rc && ainfo)
+        {
+            for (const addrinfo* ai = ainfo; ai; ai = ai->ai_next)
+            {
+                if (ai->ai_canonname)
+                    _canonicalName = ai->ai_canonname;
+
+                if (ai->ai_addrlen && ai->ai_addr)
+                    _ipAddresses.push_back(makeIPAddress(ai->ai_addr));
+            }
+
+            freeaddrinfo(ainfo);
+        }
+        else
+            LOG_SYS("Failed to lookup host [" << host << "]. Skipping");
+    }
+
+public:
+    HostEntry(const std::string& desc)
+    {
+        std::string hostname;
+        if (!resolveIP4(desc, hostname) && !resolveIP6(desc, hostname))
+            hostname = desc;
+        initFromHostName(hostname);
+    }
+
+    const std::string& getCanonicalName() const { return  _canonicalName; }
+    const std::vector<std::string>& getAddresses() const { return  _ipAddresses; }
+};
+
 struct DNSCacheEntry
 {
     std::string queryAddress;
-    Poco::Net::HostEntry hostEntry;
+    HostEntry hostEntry;
     std::chrono::steady_clock::time_point lookupTime;
 };
 
-static Poco::Net::HostEntry resolveDNS(const std::string& addressToCheck, std::vector<DNSCacheEntry>& querycache)
+static HostEntry resolveDNS(const std::string& addressToCheck, std::vector<DNSCacheEntry>& querycache)
 {
     const auto now = std::chrono::steady_clock::now();
 
@@ -60,7 +179,7 @@ static Poco::Net::HostEntry resolveDNS(const std::string& addressToCheck, std::v
         return findIt->hostEntry;
 
     // lookup and cache
-    auto hostEntry = Poco::Net::DNS::resolve(addressToCheck);
+    HostEntry hostEntry(addressToCheck);
     querycache.push_back(DNSCacheEntry{addressToCheck, hostEntry, now});
     return hostEntry;
 }
@@ -70,13 +189,13 @@ class DNSResolver
 private:
     std::vector<DNSCacheEntry> _querycache;
 public:
-    Poco::Net::HostEntry resolveDNS(const std::string& addressToCheck)
+    HostEntry resolveDNS(const std::string& addressToCheck)
     {
         return net::resolveDNS(addressToCheck, _querycache);
     }
 };
 
-Poco::Net::HostEntry resolveDNS(const std::string& addressToCheck)
+HostEntry resolveDNS(const std::string& addressToCheck)
 {
     static DNSResolver resolver;
     return resolver.resolveDNS(addressToCheck);
@@ -84,27 +203,22 @@ Poco::Net::HostEntry resolveDNS(const std::string& addressToCheck)
 
 std::string canonicalHostName(const std::string& addressToCheck)
 {
-    return resolveDNS(addressToCheck).name();
+    return resolveDNS(addressToCheck).getCanonicalName();
 }
 
 std::vector<std::string> resolveAddresses(const std::string& addressToCheck)
 {
-    Poco::Net::HostEntry hostEntry = resolveDNS(addressToCheck);
-    const auto& addresses = hostEntry.addresses();
-    std::vector<std::string> ret;
-    ret.reserve(addresses.size());
-    for (const auto& address : addresses)
-        ret.push_back(address.toString());
-    return ret;
+    HostEntry hostEntry = resolveDNS(addressToCheck);
+    return hostEntry.getAddresses();
 }
 
 std::string resolveOneAddress(const std::string& addressToCheck)
 {
-    Poco::Net::HostEntry hostEntry = resolveDNS(addressToCheck);
-    const auto& addresses = hostEntry.addresses();
+    HostEntry hostEntry = resolveDNS(addressToCheck);
+    const auto& addresses = hostEntry.getAddresses();
     if (addresses.empty())
         throw Poco::Net::NoAddressFoundException(addressToCheck);
-    return addresses[0].toString();
+    return addresses[0];
 }
 
 std::string resolveHostAddress(const std::string& targetHost)
@@ -222,7 +336,8 @@ void AsyncDNS::resolveDNS()
 
         try
         {
-            hostToCheck = _resolver->resolveDNS(_activeLookup.query).name();
+            hostToCheck = _resolver->resolveDNS(_activeLookup.query).getCanonicalName();
+            fprintf(stderr, "%d turned %s into %s\n", getpid(), _activeLookup.query.c_str(), hostToCheck.c_str());
         }
         catch (const Poco::Exception& exc)
         {

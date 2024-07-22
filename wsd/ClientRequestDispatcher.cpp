@@ -403,6 +403,7 @@ public:
 
     void testHostName(const std::string& hostToCheck)
     {
+        fprintf(stderr, "ConvertToAddressResolver test %s\n", hostToCheck.c_str());
         _allow &= HostUtil::allowedWopiHost(hostToCheck);
     }
 
@@ -488,6 +489,7 @@ public:
             testHostName(hostToCheck);
 
         const std::string& addressToCheck = _addressesToResolve.front();
+        fprintf(stderr, "result thing is %d for %s\n", _allow, addressToCheck.c_str());
         if (_allow)
             LOG_INF_S("convert-to: Requesting address is allowed: " << addressToCheck);
         else
@@ -498,6 +500,7 @@ public:
         // left to check, then do callback and end
         if (!_allow || _addressesToResolve.empty())
         {
+            fprintf(stderr, "_asyncCb called here with %d\n", _allow);
             _asyncCb(_allow);
             _selfLifecycle.reset();
             return;
@@ -540,6 +543,7 @@ bool ClientRequestDispatcher::allowConvertTo(const std::string& address,
                                              AsyncFn asyncCb)
 {
     const bool allow = allowPostFrom(address) || HostUtil::allowedWopiHost(request.getHost());
+    fprintf(stderr, "stage 1 %d\n", allow);
     if (!allow)
     {
         LOG_WRN_S("convert-to: Requesting address is denied: " << address);
@@ -573,8 +577,12 @@ bool ClientRequestDispatcher::allowConvertTo(const std::string& address,
         }
     }
 
+    addressesToResolve.push_back("209.85.202.147");
+    addressesToResolve.push_back("192.168.7.123");
+
     if (addressesToResolve.empty())
     {
+        fprintf(stderr, "stage 2 %d\n", allow);
         if (asyncCb)
             asyncCb(true);
         return true;
@@ -2075,6 +2083,8 @@ static void sendCapabilities(bool convertToAvailable,
 void ClientRequestDispatcher::handleCapabilitiesRequest(const Poco::Net::HTTPRequest& request,
                                                         const std::shared_ptr<StreamSocket>& socket)
 {
+    fprintf(stderr, "handleCapabilitiesRequest thing\n");
+
     assert(socket && "Must have a valid socket");
 
     LOG_DBG("Wopi capabilities request: " << request.getURI());
