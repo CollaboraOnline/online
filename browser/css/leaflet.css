@@ -882,7 +882,7 @@ input.clipboard {
 	margin: 0px; /*Ruler styling*/
 }
 .cool-ruler {
-	background-color: var(--color-main-background);
+	background-color: transparent;
 	height: var(--ruler-height);
 	width: 100vw;
 	margin: 0px !important;
@@ -1058,13 +1058,18 @@ input.clipboard {
 .leaflet-canvas-container {
 	position: absolute;
 	left: 0;
-	top: 0;
+	top: var(--canvas-container-y);
 	bottom: 0;
 	right: 0;
 	z-index: 9;
 	user-select: none;
 	-webkit-touch-callout: none !important;
 	-webkit-user-select: none !important;
+}
+
+.spreadsheet-doctype #canvas-container {
+	/* For Calc never account for ruler */
+	top: 0;
 }
 
 .leaflet-pane-splitter {
