@@ -21,11 +21,40 @@
 
 class StreamSocket;
 class ProtocolHandlerInterface;
+struct addrinfo;
+struct sockaddr;
 
 namespace net
 {
 
 #if !MOBILEAPP
+
+class HostEntry
+{
+    std::string _requestName;
+    std::string _canonicalName;
+    std::vector<std::string> _ipAddresses;
+    std::shared_ptr<addrinfo> _ainfo;
+    int _errno;
+    int _eaino;
+
+    void setEAI(int eaino);
+
+    void initFromHostName(const std::string& host, const char* port);
+
+    std::string makeIPAddress(const sockaddr* ai_addr);
+
+public:
+    HostEntry(const std::string& desc, const char* port = nullptr);
+    ~HostEntry();
+
+    bool good() const { return _errno == 0 && _eaino == 0; }
+    std::string errorMessage() const;
+
+    const std::string& getCanonicalName() const { return  _canonicalName; }
+    const std::vector<std::string>& getAddresses() const { return  _ipAddresses; }
+    const addrinfo* getAddrInfo() const { return _ainfo.get(); }
+};
 
 /// Resolves the IP of the given hostname. On failure, returns @targetHost.
 std::string resolveHostAddress(const std::string& targetHost);
