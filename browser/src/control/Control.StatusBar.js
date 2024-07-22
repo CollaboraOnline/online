@@ -222,8 +222,8 @@ class StatusBar extends JSDialog.Toolbar {
 	getToolItems() {
 		return [
 			{type: 'edit',  id: 'search', placeholder: _('Search'), text: ''},
-			{type: 'customtoolitem',  id: 'searchprev', command: 'searchprev', text: _UNO('.uno:UpSearch'), enabled: false},
-			{type: 'customtoolitem',  id: 'searchnext', command: 'searchnext', text: _UNO('.uno:DownSearch'), enabled: false},
+			{type: 'customtoolitem',  id: 'searchprev', command: 'searchprev', text: _UNO('.uno:UpSearch'), enabled: false, pressAndHold: true},
+			{type: 'customtoolitem',  id: 'searchnext', command: 'searchnext', text: _UNO('.uno:DownSearch'), enabled: false, pressAndHold: true},
 			{type: 'customtoolitem',  id: 'cancelsearch', command: 'cancelsearch', text: _('Cancel the search'), visible: false},
 			{type: 'separator', id: 'searchbreak', orientation: 'vertical' },
 			this._generateHtmlItem('statusdocpos'), 					// spreadsheet
@@ -242,8 +242,8 @@ class StatusBar extends JSDialog.Toolbar {
 			this._generateHtmlItem('permissionmode'),					// spreadsheet, text, presentation
 			{type: 'toolitem', id: 'signstatus', command: '.uno:Signature', w2icon: '', text: _UNO('.uno:Signature'), visible: false},
 			{type: 'spacer',  id: 'permissionspacer'},
-			{type: 'customtoolitem',  id: 'prev', command: 'prev', text: _UNO('.uno:PageUp', 'text')},
-			{type: 'customtoolitem',  id: 'next', command: 'next', text: _UNO('.uno:PageDown', 'text')},
+			{type: 'customtoolitem',  id: 'prev', command: 'prev', text: _UNO('.uno:PageUp', 'text'), pressAndHold: true},
+			{type: 'customtoolitem',  id: 'next', command: 'next', text: _UNO('.uno:PageDown', 'text'), pressAndHold: true},
 			{type: 'separator', id: 'prevnextbreak', orientation: 'vertical'},
 		].concat(window.mode.isTablet() ? [] : [
 			{type: 'customtoolitem',  id: 'zoomreset', command: 'zoomreset', text: _('Reset zoom'), icon: 'zoomreset.svg'},

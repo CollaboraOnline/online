@@ -2506,6 +2506,33 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		$(control.label).unbind('click');
 
 		if (!builder.map.isLockedItem(data)) {
+			var handlePressAndHold = function(data) {
+				const scrollingInterval = setInterval(function () {
+					app.dispatcher.dispatch(data.command);
+				}, 100);
+	
+				$(document).one('mouseup', function () {
+					clearInterval(scrollingInterval);
+				});
+			};
+
+			// Handle "Press+Hold" Event
+			if (data.pressAndHold) {
+				$(control.container).on('mousedown', (e) => {
+					if (e.button !== 0 // Only handle left mouse button
+						|| control.container.getAttribute('disabled') !== null)
+						return;
+
+					const pressAndHoldTimer = setTimeout(() => {
+						handlePressAndHold(data);
+					}, 500);
+			
+					$(document).one('mouseup', () => {
+						clearTimeout(pressAndHoldTimer);
+					});
+				});
+			}
+
 			$(control.container).click(function () {
 				if (control.container.getAttribute('disabled') === null)
 					app.dispatcher.dispatch(data.command);
