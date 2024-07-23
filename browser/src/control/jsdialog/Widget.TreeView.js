@@ -888,6 +888,12 @@ class TreeViewControl {
 		TreeViewControl.Selected = TreeViewControl.selectEntry(tr, !selected);
 	}
 
+	isSeparator(element) {
+		if (!element.text)
+			return false;
+		return element.text.toLowerCase() === 'separator';
+	}
+
 	getCellIconId(cellData) {
 		let iconId = cellData.collapsed ? cellData.collapsed : cellData.expanded;
 		let newLength = iconId.lastIndexOf('.');
@@ -1001,7 +1007,7 @@ class TreeViewControl {
 	}
 
 	fillTableCells(entry, builder, tr) {
-		let td, span, text, img, icon, iconId, iconName;
+		let td, span, text, img, icon, iconId, iconName, link, innerText;
 
 		for (let index in entry.columns) {
 			td = L.DomUtil.create('td', '', tr);
@@ -1021,6 +1027,12 @@ class TreeViewControl {
 				if (entry.children && entry.children.length > 0) {
 					tr.setAttribute('aria-expanded', Boolean(entry.columns[index].expanded));
 				}
+			} else if (entry.columns[index].link && !this.isSeparator(entry.columns[index])) {
+				innerText = L.DomUtil.create('span', builder.options.cssClass + ' ui-treeview-cell-text',
+							     text);
+				link = L.DomUtil.create('a', '', innerText);
+				link.href = entry.columns[index].link || entry.columns[index].text;
+				link.innerText = entry.columns[index].text || entry.text;
 			} else
 				text.innerText = entry.columns[index].text;
 
