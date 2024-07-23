@@ -898,6 +898,16 @@ class TreeViewControl {
 		TreeViewControl.Selected = TreeViewControl.selectEntry(tr, !selected);
 	}
 
+	getCellIconId(cellData) {
+		let iconId = cellData.collapsed ? cellData.collapsed : cellData.expanded;
+		let newLength = iconId.lastIndexOf('.');
+		if (newLength > 0)
+			iconId = iconId.substr(0, newLength).replaceAll('/', '');
+		else
+			iconId = iconId.replaceAll('/', '');
+		return iconId;
+	}
+
 	createImageColumn(parentContainer, builder, imageUrl) {
 		let colorPreviewButton = L.DomUtil.create('img', builder.options.cssClass + ' ui-treeview-checkbox',
 							  parentContainer);
@@ -1001,7 +1011,7 @@ class TreeViewControl {
 	}
 
 	fillTableCells(entry, builder, tr) {
-		let td, span, text, img;
+		let td, span, text, img, icon, iconId, iconName;
 
 		for (let index in entry.columns) {
 			td = L.DomUtil.create('td', '', tr);
@@ -1009,14 +1019,22 @@ class TreeViewControl {
 			text = L.DomUtil.create('span', builder.options.cssClass + ' ui-treeview-cell-text', span);
 			img = entry.columns[index].collapsedimage ? entry.columns[index].collapsedimage :
 				entry.columns[index].expandedimage;
-			if (img)
+			if (img) {
 				this.createImageColumn(text, builder, img);
-			else
+			} else if (entry.columns[index].collapsed || entry.columns[index].expanded) {
+				icon = L.DomUtil.create('img', 'ui-listview-icon', text);
+				iconId = this.getCellIconId(entry.columns[index]);
+				L.DomUtil.addClass(icon, iconId + 'img');
+				iconName = builder._createIconURL(iconId, true);
+				L.LOUtil.setImage(icon, iconName, builder.map);
+				L.DomUtil.addClass(span, 'ui-listview-expandable-with-icon');
+				if (entry.children && entry.children.length > 0) {
+					tr.setAttribute('aria-expanded', Boolean(entry.columns[index].expanded));
+				}
+			} else
 				text.innerText = entry.columns[index].text;
 
 			td.setAttribute('role', 'gridcell');
-			if (entry.columns[index].expanded)
-				tr.setAttribute('aria-expanded', entry.columns[index].expanded);
 		}
 	}
 }
