@@ -331,19 +331,12 @@ class SlideShowPresenter {
 		if (numberOfSlides === 0) return;
 
 		if (!this._slideCompositor) {
-			this._slideCompositor = this._slideRenderer._context.is2dGl()
-				? new SlideShow.PreviewsCompositor(
-						this,
-						this._presentationInfo,
-						this._slideShowCanvas.width,
-						this._slideShowCanvas.height,
-					)
-				: new SlideShow.LayersCompositor(
-						this,
-						this._presentationInfo,
-						this._slideShowCanvas.width,
-						this._slideShowCanvas.height,
-					);
+			this._slideCompositor = new SlideShow.LayersCompositor(
+				this,
+				this._presentationInfo,
+				this._slideShowCanvas.width,
+				this._slideShowCanvas.height,
+			);
 		}
 
 		this._slideCompositor.updatePresentationInfo(this._presentationInfo);

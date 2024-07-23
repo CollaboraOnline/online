@@ -413,7 +413,6 @@ COOL_JS_LST =\
 	src/slideshow/SlideCompositor.ts \
 	src/slideshow/LayerDrawing.ts \
 	src/slideshow/LayersCompositor.ts \
-	src/slideshow/PreviewsCompositor.ts \
 	src/slideshow/RenderContext.ts \
 	src/slideshow/SlideRenderer.ts \
 	src/slideshow/SlideShowPresenter.ts \
@@ -878,7 +877,6 @@ pot:
 		src/slideshow/SlideCompositor.ts \
 		src/slideshow/LayerDrawing.ts \
 		src/slideshow/LayersCompositor.ts \
-		src/slideshow/PreviewsCompositor.ts \
 		src/slideshow/RenderContext.ts \
 		src/slideshow/SlideRenderer.ts \
 		src/slideshow/SlideShowPresenter.ts \
