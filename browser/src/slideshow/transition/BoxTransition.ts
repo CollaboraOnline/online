@@ -71,8 +71,8 @@ class BoxTransition extends Transition2d {
 
                     mask = min(mask, 1.0);
 
-                    vec4 color1 = texture(leavingSlideTexture, uv);
-                    vec4 color2 = texture(enteringSlideTexture, uv);
+                    vec4 color1 = texture(enteringSlideTexture, uv);
+                    vec4 color2 = texture(leavingSlideTexture, uv);
 
                     outColor = (direction == 0) ? mix(color1, color2, mask) : mix(color2, color1, mask);
                 }
