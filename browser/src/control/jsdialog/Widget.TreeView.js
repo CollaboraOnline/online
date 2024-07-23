@@ -1043,8 +1043,11 @@ class TreeViewControl {
 				link = L.DomUtil.create('a', '', innerText);
 				link.href = entry.columns[index].link || entry.columns[index].text;
 				link.innerText = entry.columns[index].text || entry.text;
-			} else
-				text.innerText = entry.columns[index].text;
+			} else if (entry.columns[index].text && !this.isSeparator(entry.columns[index])) {
+				innerText = L.DomUtil.create('span', builder.options.cssClass + ' ui-treeview-cell-text',
+							     text);
+				innerText.innerText = entry.columns[index].text || entry.text;
+			}
 
 			td.setAttribute('role', 'gridcell');
 		}
