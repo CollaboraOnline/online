@@ -184,6 +184,7 @@
 /src/layer/vector/Polyline.js
 /src/layer/vector/Rectangle.js
 /src/layer/vector/Renderer.js
+/src/slideshow/SlideAnimations.ts
 /src/main.js
 /src/map/anim/Map.PanAnimation.js
 /src/map/Clipboard.js
