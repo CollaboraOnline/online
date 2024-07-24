@@ -1163,7 +1163,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 			{
 				'id': 'zoomreset',
 				'class': 'unozoomreset',
-				'type': 'menubartoolitem',
+				'type': 'bigmenubartoolitem',
 				'text': _('Reset zoom'),
 				'command': _('Reset zoom'),
 				'accessibility': { focusBack: true,	combination: 'J', de: null }
