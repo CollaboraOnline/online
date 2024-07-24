@@ -2,13 +2,14 @@
 	margin: 0;
 	padding: 0;
 	position: relative;
-	height: 39px;
+	height: 38px;
 	overflow: hidden;
 	width: 100%;
 	white-space: nowrap;
 	text-align: start;
 	background-color: transparent;
 	vertical-align: middle;
+	align-content: center;
 }
 
 .spreadsheet-tab-scroll {
@@ -26,7 +27,7 @@
 }
 
 .spreadsheet-tab {
-	margin: 5px 0px 0px !important;
+	margin: 0 !important;
 	padding: 6px 9px 4px !important;
 	text-decoration: none;
 
@@ -287,7 +288,7 @@
 	display: grid;
 	grid-auto-flow: column;
 	align-content: center;
-	height: 39px;
+	height: 38px;
 }
 
 .tab-drop-area {
