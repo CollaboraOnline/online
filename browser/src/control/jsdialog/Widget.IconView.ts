@@ -47,8 +47,14 @@ function _iconViewEntry(
 		builder.options.cssClass + ' ui-iconview-entry',
 		parentContainer,
 	);
-	if (entry.selected && entry.selected === true)
+
+	// By default `aria-presed` should be false
+	entryContainer.setAttribute('aria-pressed', 'false');
+
+	if (entry.selected && entry.selected === true) {
 		$(entryContainer).addClass('selected');
+		entryContainer.setAttribute('aria-pressed', 'true');
+	}
 
 	const icon = L.DomUtil.create(
 		'div',
@@ -65,6 +71,9 @@ function _iconViewEntry(
 		placeholder.innerText = entry.text;
 		if (entry.tooltip) placeholder.title = entry.tooltip;
 		else placeholder.title = entry.text;
+
+		// Add tabindex attribute for accessibility, enabling keyboard navigation in the icon preview
+		entryContainer.setAttribute('tabindex', '0');
 		JSDialog.OnDemandRenderer(
 			builder,
 			parentData.id,
