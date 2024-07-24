@@ -418,6 +418,7 @@ COOL_JS_LST =\
 	src/slideshow/SlideShowPresenter.ts \
 	src/slideshow/Transition2d.ts \
 	src/slideshow/PerformTransition.ts \
+	src/slideshow/SlideAnimations.ts \
 	src/slideshow/transition/FadeTransition.ts \
 	src/slideshow/transition/PlusTransition.ts \
 	src/slideshow/transition/CircleTransition.ts \
@@ -882,6 +883,7 @@ pot:
 		src/slideshow/SlideShowPresenter.ts \
 		src/slideshow/Transition2d.ts \
 		src/slideshow/PerformTransition.ts \
+		src/slideshow/SlideAnimations.ts \
 		src/slideshow/transition/FadeTransition.ts \
 		src/slideshow/transition/PlusTransition.ts \
 		src/slideshow/transition/CircleTransition.ts \
