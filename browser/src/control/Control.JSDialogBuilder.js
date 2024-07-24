@@ -1548,7 +1548,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (data.id && data.id === 'changepass' && builder.map['wopi'].IsOwner === false) {
 			data.enabled = false;
 		}
-		var wrapper = L.DomUtil.create('div', '', parentContainer); // need for locking overlay
+		var wrapper = L.DomUtil.create('div', 'd-flex justify-content-center', parentContainer); // need for locking overlay
 		var pushbutton = L.DomUtil.create('button', 'ui-pushbutton ' + builder.options.cssClass, wrapper);
 		pushbutton.id = data.id;
 		builder._setAccessKey(pushbutton, builder._getAccessKeyFromText(data.text));
