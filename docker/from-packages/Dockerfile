@@ -11,7 +11,7 @@ ARG author
 LABEL author=${author:-"Collabora Productivity Ltd."}
 LABEL description="Collabora Online is a powerful collaborative Office suite that supports all major document, spreadsheet and presentation file formats, which you can integrate into your own infrastructure. Collabora Online provides data security and sovereignty, and is ideally suited to the demands of a modern distributed working environment. Delivering a familiar look and feel, Collabora Online represents a real alternative to other big-brands solutions, giving you control and flexibility."
 ARG releasenotes
-LABEL release.notes=${releasenotes:-"https://www.collaboraoffice.com/code-23-05-release-notes/"}
+LABEL release.notes=${releasenotes:-"https://www.collaboraonline.com/code-23-05-release-notes/"}
 ARG version
 LABEL version=${version:-"23.05.5.4"}
 ARG coretag
@@ -43,7 +43,7 @@ RUN --mount=type=secret,id=secret_key \
 # Install dependencies of installer of Collabora Online
     apt-get -y install cpio tzdata libcap2-bin apt-transport-https gnupg2 ca-certificates curl && \
 # Setup Collabora repo
-    repourl="https://collaboraoffice.com/${repo:-repos}/CollaboraOnline/"; \
+    repourl="https://collaboraonline.com/${repo:-repos}/CollaboraOnline/"; \
     secret_key=$(cat /run/secrets/secret_key); \
     if [ "$type" = "cool" ] && [ -n ${secret_key+set} ]; then \
         echo "Based on the provided build arguments Collabora Online from customer repo will be used."; \
@@ -58,10 +58,10 @@ RUN --mount=type=secret,id=secret_key \
     echo "deb [signed-by=/usr/share/keyrings/collaboraonline-release-keyring.gpg] ${repourl} /" > /etc/apt/sources.list.d/collabora.list && \
 # Download Collabora package signing key
     if [ "$repo" = "repos-snapshot" ]; then \
-        curl https://www.collaboraoffice.com/downloads/gpg/collaboraonline-snapshot-keyring.gpg --output /usr/share/keyrings/collaboraonline-snapshot-keyring.gpg; \
+        curl -L https://www.collaboraonline.com/downloads/gpg/collaboraonline-snapshot-keyring.gpg --output /usr/share/keyrings/collaboraonline-snapshot-keyring.gpg; \
         sed -i "s/collaboraonline-release-keyring/collaboraonline-snapshot-keyring/" /etc/apt/sources.list.d/collabora.list; \
     else \
-        curl https://www.collaboraoffice.com/downloads/gpg/collaboraonline-release-keyring.gpg --output /usr/share/keyrings/collaboraonline-release-keyring.gpg; \
+        curl -L https://www.collaboraonline.com/downloads/gpg/collaboraonline-release-keyring.gpg --output /usr/share/keyrings/collaboraonline-release-keyring.gpg; \
     fi && \
 # Update repos again
     apt-get update && \
