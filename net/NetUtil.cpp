@@ -315,10 +315,6 @@ connect(const std::string& host, const std::string& port, const bool isSSL,
     {
         for (struct addrinfo* ai = ainfo; ai; ai = ai->ai_next)
         {
-            std::string canonicalName;
-            if (ai->ai_canonname)
-                canonicalName = ai->ai_canonname;
-
             if (ai->ai_addrlen && ai->ai_addr)
             {
                 int fd = ::socket(ai->ai_addr->sa_family, SOCK_STREAM | SOCK_NONBLOCK | SOCK_CLOEXEC, 0);
