@@ -1463,18 +1463,6 @@ if test -n "$with_user_id"; then
 fi
 AC_DEFINE_UNQUOTED([COOL_USER_ID],["$COOL_USER_ID"],[The user-name which is allowed to run coolwsd and its tools])
 
-AM_CONDITIONAL([ENABLE_SETCAP], [test "$enable_setcap" != "no" -a `uname -s` = "Linux" -a "$enable_fuzzers" != "yes" -a "$host_os" != "emscripten"])
-
-ENABLE_SETCAP=
-if test "$enable_setcap" != "no" -a `uname -s` = "Linux" -a "$enable_fuzzers" != "yes" -a "$host_os" != "emscripten"; then
-    ENABLE_SETCAP=true
-    setcap_msg="setcap enabled"
-else
-    setcap_msg="setcap disabled"
-fi
-
-AC_SUBST(ENABLE_SETCAP)
-
 AC_CONFIG_LINKS([discovery.xml:discovery.xml])
 AC_CONFIG_LINKS([browser/package.json:browser/package.json])
 AC_CONFIG_LINKS([browser/.eslintrc:browser/.eslintrc])
