@@ -369,7 +369,8 @@ class Dispatcher {
 
 		this.actionsMap['presentinwindow'] = this.actionsMap['present-in-window'] =
 			() => {
-				app.map.fire('presentinwindow');
+				if (app.map._debug.debugOn) app.map.fire('newpresentinwindow');
+				else app.map.fire('presentinwindow');
 			};
 
 		this.actionsMap['fullscreen-drawing'] = () => {
