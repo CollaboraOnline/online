@@ -102,8 +102,6 @@ private:
         {
             sslClientParams.certificateFile = COOLWSD::getPathFromConfigWithFallback(
                 "storage.ssl.cert_file_path", "ssl.cert_file_path");
-            sslClientParams.privateKeyFile = COOLWSD::getPathFromConfigWithFallback(
-                "storage.ssl.key_file_path", "ssl.key_file_path");
             sslClientParams.caLocation = COOLWSD::getPathFromConfigWithFallback(
                 "storage.ssl.ca_file_path", "ssl.ca_file_path");
             sslClientParams.cipherList = COOLWSD::getPathFromConfigWithFallback(
@@ -132,7 +130,7 @@ private:
 
         // Initialize our client SSL context.
         ssl::Manager::initializeClientContext(
-            sslClientParams.certificateFile, sslClientParams.privateKeyFile,
+            sslClientParams.certificateFile,
             sslClientParams.caLocation, sslClientParams.cipherList,
             sslClientParams.caLocation.empty() ? ssl::CertificateVerification::Disabled
                                                : ssl::CertificateVerification::Required);

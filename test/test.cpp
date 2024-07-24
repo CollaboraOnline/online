@@ -119,7 +119,7 @@ int main(int argc, char** argv)
                                               ssl_ca_file_path, ssl_cipher_list,
                                               ssl::CertificateVerification::Disabled);
 
-        ssl::Manager::initializeClientContext(ssl_cert_file_path, ssl_key_file_path,
+        ssl::Manager::initializeClientContext(ssl_cert_file_path,
                                               ssl_ca_file_path, ssl_cipher_list,
                                               ssl::CertificateVerification::Required);
     }

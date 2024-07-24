@@ -2137,7 +2137,6 @@ void COOLWSD::innerInitialize(Application& self)
         { "storage.ssl.ca_file_path", "" },
         { "storage.ssl.cert_file_path", "" },
         { "storage.ssl.cipher_list", "" },
-        { "storage.ssl.key_file_path", "" },
         { "storage.wopi.max_file_size", "0" },
         { "storage.wopi[@allow]", "true" },
         { "storage.wopi.locking.refresh", "900" },

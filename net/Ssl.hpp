@@ -98,14 +98,13 @@ public:
     }
 
     static void initializeClientContext(const std::string& certFilePath,
-                                        const std::string& keyFilePath,
                                         const std::string& caFilePath,
                                         const std::string& cipherList,
                                         ssl::CertificateVerification verification)
     {
         assert(!isClientContextInitialized() &&
                "Cannot initialize the client context more than once");
-        ClientInstance = std::make_unique<SslContext>(certFilePath, keyFilePath, caFilePath,
+        ClientInstance = std::make_unique<SslContext>(certFilePath, std::string(), caFilePath,
                                                       cipherList, verification);
     }
 

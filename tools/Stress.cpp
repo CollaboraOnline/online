@@ -80,7 +80,7 @@ int Stress::main(const std::vector<std::string>& args)
         throw std::runtime_error("Failed to init unit test pieces.");
 
 #if ENABLE_SSL
-    ssl::Manager::initializeClientContext("", "", "", "ALL:!ADH:!LOW:!EXP:!MD5:@STRENGTH",
+    ssl::Manager::initializeClientContext("", "", "ALL:!ADH:!LOW:!EXP:!MD5:@STRENGTH",
                                           ssl::CertificateVerification::Disabled);
     if (!ssl::Manager::isClientContextInitialized())
     {

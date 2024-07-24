@@ -27,7 +27,7 @@ bool DoInitialization()
     std::map<std::string, std::string> logProperties;
     Log::initialize("wsd", logLevel, withColor, logToFile, logProperties);
     ssl::Manager::initializeClientContext(
-            /*certificateFile=*/"", /*privateKeyFile=*/"", /*caLocation=*/"",
+            /*certificateFile=*/"", /*caLocation=*/"",
             /*cipherList=*/"", ssl::CertificateVerification::Required);
     return true;
 }
