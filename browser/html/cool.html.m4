@@ -324,6 +324,7 @@ m4_ifelse(MOBILEAPP,[true],
       window.outOfFocusTimeoutSecs = 1000000;
       window.idleTimeoutSecs = 1000000;
       window.protocolDebug = false;
+      window.enableDebug = false;
       window.frameAncestors = '';
       window.socketProxy = false;
       window.tileSize = 256;
@@ -356,6 +357,7 @@ m4_ifelse(MOBILEAPP,[true],
       window.outOfFocusTimeoutSecs = %OUT_OF_FOCUS_TIMEOUT_SECS%;
       window.idleTimeoutSecs = %IDLE_TIMEOUT_SECS%;
       window.protocolDebug = %PROTOCOL_DEBUG%;
+      window.enableDebug = %ENABLE_DEBUG%;
       window.frameAncestors = decodeURIComponent('%FRAME_ANCESTORS%');
       window.socketProxy = %SOCKET_PROXY%;
       window.tileSize = 256;

@@ -21,6 +21,9 @@ L.Log = {
 
 		// Limit memory usage of log by only keeping the latest entries
 		var maxEntries = 100;
+		if (window.enableDebug)
+			maxEntries = 1000;
+
 		if (time - this.startTime < 60 * 1000 /* ms */)
 			maxEntries = 500; // enough to capture early start.
 		while (this._logs.length > maxEntries)

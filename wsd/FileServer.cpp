@@ -1241,6 +1241,13 @@ FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::prepro
     std::string protocolDebug = stringifyBoolFromConfig(config, "logging.protocol", false);
     Poco::replaceInPlace(preprocess, std::string("%PROTOCOL_DEBUG%"), protocolDebug);
 
+    bool enableDebug = false;
+#if ENABLE_DEBUG
+    enableDebug = true;
+#endif
+    std::string enableDebugStr = stringifyBoolFromConfig(config, "logging.protocol", enableDebug);
+    Poco::replaceInPlace(preprocess, std::string("%ENABLE_DEBUG%"), enableDebugStr);
+
     static const std::string hexifyEmbeddedUrls =
         COOLWSD::getConfigValue<bool>("hexify_embedded_urls", false) ? "true" : "false";
     Poco::replaceInPlace(preprocess, std::string("%HEXIFY_URL%"), hexifyEmbeddedUrls);

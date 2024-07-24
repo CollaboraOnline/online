@@ -417,7 +417,13 @@ app.definitions.Socket = L.Class.extend({
 					{
 						// unpleasant - but stops this one problem event
 						// stopping an unknown number of others.
-						window.app.console.error('Exception ' + e + ' emitting event ' + evt.data, e.stack);
+						let msg = 'Exception ' + e + ' emitting event ' + evt.data + '\n' + e.stack;
+						window.app.console.error(msg);
+
+						// When debugging let QA know something is up.
+						if (window.enableDebug)
+							this._map.uiManager.showInfoModal(
+								'cool_alert', '', msg, '', _('Close'), function() { /* Do nothing. */ }, false);
 					}
 					finally {
 						if (completeEventOneMessage)
