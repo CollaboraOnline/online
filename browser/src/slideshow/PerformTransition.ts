@@ -56,6 +56,8 @@ enum TransitionSubType {
 	FROMTOP,
 	HORIZONTALLEFT,
 	HORIZONTALRIGHT,
+	COMBVERTICAL,
+	COMBHORIZONTAL,
 }
 
 const stringToTransitionTypeMap: Record<string, TransitionType> = {
@@ -104,6 +106,8 @@ const stringToTransitionSubTypeMap: Record<string, TransitionSubType> = {
 	FromTop: TransitionSubType.FROMTOP,
 	HorizontalLeft: TransitionSubType.HORIZONTALLEFT,
 	HorizontalRight: TransitionSubType.HORIZONTALRIGHT,
+	CombVertical: TransitionSubType.COMBVERTICAL,
+	CombHorizontal: TransitionSubType.COMBHORIZONTAL,
 };
 
 SlideShow.PerformTransition = function (
@@ -166,7 +170,7 @@ SlideShow.PerformTransition = function (
 			break;
 
 		case TransitionType.PUSHWIPE:
-			new SlideShow.PushTransition(transitionParameters).start();
+			SlideShow.PushWipeTransition(transitionParameters).start();
 			break;
 
 		case TransitionType.BARNDOORWIPE:
