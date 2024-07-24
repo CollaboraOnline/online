@@ -9,7 +9,6 @@ ESLINT_BINARY = $(abs_builddir)/node_modules/eslint/bin/eslint.js
 WAIT_ON_BINARY = $(abs_builddir)/node_modules/wait-on/bin/wait-on
 GET_PORT_BINARY = $(abs_builddir)/node_modules/get-port-cli/cli.js
 NPM_INSTALLED = $(abs_builddir)/workdir/npm_installed
-CAPABILITIES = $(if @ENABLE_SETCAP@,true,false)
 CYPRESS_CONFIG = $(abs_srcdir)/cypress.config.ts
 SERVER_ARG = $(subst :, ,$(shell basename $(if $(coolwsd),$(coolwsd),http://localhost:9980)))
 COOLWSD_SERVER = $(firstword $(SERVER_ARG))
@@ -196,7 +195,6 @@ define start_coolwsd_instance
 	$(V)mkdir -p $(dir $(COOLWSD_OUTPUT))
 	../coolwsd --o:sys_template_path="@SYSTEMPLATE_PATH@" \
 			--o:child_root_path="@JAILS_PATH@" --o:storage.filesystem[@allow]=true \
-			--o:security.capabilities="$(CAPABILITIES)" \
 			--disable-ssl --forcecaching \
 			--o:ssl.cert_file_path="$(abs_top_srcdir)/etc/cert.pem" \
 			--o:ssl.key_file_path="$(abs_top_srcdir)/etc/key.pem" \
