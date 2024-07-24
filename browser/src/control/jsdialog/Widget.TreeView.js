@@ -898,6 +898,75 @@ class TreeViewControl {
 		TreeViewControl.Selected = TreeViewControl.selectEntry(tr, !selected);
 	}
 
+	static findEntryWithRow(entries, row) {
+		for (let i in entries) {
+			if (i == row)
+				return entries[i];
+			else if (entries[i].children) {
+				var found = TreeViewControl.findEntryWithRow(entries[i].children, row);
+				if (found)
+					return found;
+			}
+		}
+
+		return null;
+	}
+
+	static changeCheckboxStateOnClick(checkbox, treeViewData, builder, entry) {
+		let foundEntry;
+		if (checkbox.checked) {
+			foundEntry = TreeViewControl.findEntryWithRow(treeViewData.entries, entry.row);
+			if (foundEntry)
+				foundEntry.state = true;
+			builder.callback('treeview', 'change', treeViewData, {row: entry.row, value: true}, builder);
+		} else {
+			foundEntry = TreeViewControl.findEntryWithRow(treeViewData.entries, entry.row);
+			if (foundEntry)
+				foundEntry.state = false;
+			builder.callback('treeview', 'change', treeViewData, {row: entry.row, value: false}, builder);
+		}
+	}
+
+	createCheckbox(parent, treeViewData, builder, entry) {
+		let checkbox = L.DomUtil.create('input', builder.options.cssClass + ' ui-treeview-checkbox', parent);
+		checkbox.type = 'checkbox';
+		checkbox.tabIndex = -1;
+
+		if (entry.state === 'true' || entry.state === true)
+			checkbox.checked = true;
+
+		if (treeViewData.enabled !== false && treeViewData.enabled !== 'false') {
+			$(checkbox).change(function() {
+				TreeViewControl.changeCheckboxStateOnClick(this, treeViewData, builder, entry);
+			});
+		}
+
+		return checkbox;
+	}
+
+	createRadioButton(parent, treeViewData, builder, entry) {
+		let radioButton = L.DomUtil.create('input', builder.options.cssClass + ' ui-treeview-checkbox', parent);
+		radioButton.type = 'radio';
+		radioButton.tabIndex = -1;
+
+		if (entry.state === 'true' || entry.state === true)
+			radioButton.checked = true;
+
+		return radioButton;
+	}
+
+	createSelectionElement (parent, treeViewData, entry, builder) {
+		let selectionElement;
+		let checkboxtype = treeViewData.checkboxtype;
+		if (checkboxtype == 'radio') {
+			selectionElement = this.createRadioButton(parent, treeViewData, builder, entry);
+		}
+		else {
+			selectionElement = this.createCheckbox(parent, treeViewData, builder, entry);
+		}
+		return selectionElement;
+	}
+
 	isSeparator(element) {
 		if (!element.text)
 			return false;
