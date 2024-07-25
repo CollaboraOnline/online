@@ -202,6 +202,11 @@ void Session::parseDocOptions(const StringVector& tokens, int& part, std::string
             _darkTheme = value;
             ++offset;
         }
+        else if (name == "darkBackground")
+        {
+            _darkBackground = value;
+            ++offset;
+        }
         else if (name == "batch")
         {
             _batch = value;

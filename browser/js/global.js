@@ -1664,6 +1664,9 @@ function getInitializerClass() {
 				const darkTheme = window.prefs.getBoolean('darkTheme');
 				msg += ' darkTheme=' + darkTheme;
 
+				const darkBackground = window.prefs.getBoolean('darkBackgroundForTheme.' + (darkTheme ? 'dark' : 'light'), darkTheme);
+				msg += ' darkBackground=' + darkBackground;
+
 				msg += ' timezone=' + Intl.DateTimeFormat().resolvedOptions().timeZone;
 
 				global.socket.send(msg);
