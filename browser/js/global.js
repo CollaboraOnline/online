@@ -607,7 +607,7 @@ function getInitializerClass() {
 	};
 
 	global.prefs = {
-		_localStorageChanges: {}, // TODO: change this to new Map() when JS version allows
+		_localStorageCache: {}, // TODO: change this to new Map() when JS version allows
 		canPersist: (function() {
 			var str = 'localstorage_test';
 			try {
@@ -660,8 +660,8 @@ function getInitializerClass() {
 		},
 
 		get: function(key, defaultValue = undefined) {
-			if (key in global.prefs._localStorageChanges) {
-				return global.prefs._localStorageChanges[key];
+			if (key in global.prefs._localStorageCache) {
+				return global.prefs._localStorageCache[key];
 			}
 
 			const uiDefault = global.prefs._getUIDefault(key);
@@ -669,6 +669,7 @@ function getInitializerClass() {
 				!global.savedUIState &&
 				uiDefault !== undefined
 			) {
+				global.prefs._localStorageCache[key] = uiDefault;
 				return uiDefault;
 			}
 
@@ -676,14 +677,17 @@ function getInitializerClass() {
 				const localStorageItem = global.localStorage.getItem(key);
 
 				if (localStorageItem) {
+					global.prefs._localStorageCache[key] = localStorageItem;
 					return localStorageItem;
 				}
 			}
 
 			if (uiDefault !== undefined) {
+				global.prefs._localStorageCache[key] = uiDefault;
 				return uiDefault;
 			}
 
+			global.prefs._localStorageCache[key] = defaultValue;
 			return defaultValue;
 		},
 
@@ -692,14 +696,14 @@ function getInitializerClass() {
 			if (global.prefs.canPersist) {
 				global.localStorage.setItem(key, value);
 			}
-			global.prefs._localStorageChanges[key] = value;
+			global.prefs._localStorageCache[key] = value;
 		},
 
 		remove: function(key) {
 			if (global.prefs.canPersist) {
 				global.localStorage.removeItem(key);
 			}
-			global.prefs._localStorageChanges[key] = undefined;
+			global.prefs._localStorageCache[key] = undefined;
 		},
 
 		getBoolean: function(key, defaultValue = false) {
