@@ -829,21 +829,8 @@ function _treelistboxControl(parentContainer, data, builder) {
 class TreeViewControl {
 	static Selected = null;
 
-	constructor(data, builder) {
-		this._tableContainer = L.DomUtil.create('table', builder.options.cssClass + ' ui-treeview');
-
-		if (!data.headers || data.headers.length === 0)
-			this._ulContainer = L.DomUtil.create('ul', builder.options.cssClass + ' ui-treeview');
-		else {
-			this._tableContainer._thead = L.DomUtil.create('thead', builder.options.cssClass,
-								       this._tableContainer);
-			L.DomUtil.create('tr', builder.options.cssClass, this._tableContainer._thead);
-		}
-
-		this._tableContainer._tbody = L.DomUtil.create('tbody', builder.options.cssClass +
-							       ' ui-treeview-body', this._tableContainer);
-		this._tableContainer.setAttribute('role', 'grid');
-		this._tableContainer.addEventListener('click', L.bind(TreeViewControl.onClick));
+	get Container() {
+		return this._container;
 	}
 
 	static selectEntry(tr, selected) {
@@ -1032,22 +1019,6 @@ class TreeViewControl {
 		}
 	}
 
-	buildTreeView(data, builder, parentContainer) {
-		this.fillItems(data.entries, builder, 1, this._ulContainer, this._tableContainer._tbody);
-		this.fillHeaders(data.headers, builder);
-
-		if (this._ulContainer && this._ulContainer.hasChildNodes()) {
-			parentContainer.appendChild(this._ulContainer);
-			return true;
-		}
-
-		if (this._tableContainer && this._tableContainer.hasChildNodes()) {
-			parentContainer.appendChild(this._tableContainer);
-			return true;
-		}
-
-		return false;
-	}
 
 	createUlItem(entry, builder, parent) {
 		let li = L.DomUtil.create('li', builder.options.cssClass, parent);
@@ -1168,14 +1139,100 @@ class ComplexTableControl extends TreeViewControl {
 	}
 }
 
+class FactoryTreeView {
+	constructor(data, builder) {
+		this._simpleContainer = new SimpleTableControl(data, builder);
+		this._complexContainer = new ComplexTableControl(data, builder);
+
+		if (!data.headers || data.headers.length === 0)
+			this._ulContainer = new UnorderedListControl(data, builder);
+	}
+
+	fillHeaders(headers, builder) {
+		for (let index in headers) {
+			if (this._simpleContainer)
+				this._simpleContainer.fillHeader(headers[index], builder);
+			if (this._complexContainer) {
+				this._complexContainer.fillHeader(headers[index], builder);
+			}
+		}
+	}
+
+	fillEntries(entries, builder, level, ulParent, simpleParent, complexParent) {
+		let ulChild, simpleChild, complexChild;
+
+		for (let index in entries) {
+			if (this._ulContainer && entries[index].columns &&
+			    entries[index].columns.length > 1)
+				delete this._ulContainer;
+
+			if (!entries[index].columns || entries[index].columns.length === 1) {
+				if (this._simpleContainer)
+					delete this._simpleContainer;
+				if (this._complexContainer)
+					delete this._complexContainer;
+			}
+
+			if (this._simpleContainer && level > 1)
+				delete this._simpleContainer;
+
+			if (this._ulContainer && ulParent) {
+				ulChild = this._ulContainer.fillRow(entries[index], builder, ulParent);
+			}
+
+			if (this._simpleContainer && simpleParent) {
+				simpleChild = this._simpleContainer.fillRow(entries[index], builder, level, simpleParent);
+			}
+
+			if (this._complexContainer && complexParent) {
+				if (simpleChild && level === 1) {
+					complexParent.appendChild(simpleChild);
+					complexChild = simpleChild;
+				}
+				else
+					complexChild = this._complexContainer.fillRow(entries[index], builder,
+										      level, complexParent);
+			}
+
+			this.fillEntries(entries[index].children, builder, level + 1, ulChild, simpleChild, complexChild);
+		}
+	}
+
+	build(data, builder, parentContainer) {
+		let ulContainer = this._ulContainer ? this._ulContainer.Container : null;
+		let simpleContainer = this._simpleContainer ? this._simpleContainer.Container._tbody : null;
+		let complexContainer = this._complexContainer ? this._complexContainer.Container._tbody : null;
+
+		this.fillEntries(data.entries, builder, 1, ulContainer, simpleContainer, complexContainer);
+		this.fillHeaders(data.headers, builder);
+
+		if (this._ulContainer && this._ulContainer.Container.hasChildNodes()) {
+			parentContainer.appendChild(this._ulContainer.Container);
+			return true;
+		}
+
+		if (this._simpleContainer && this._simpleContainer.Container.hasChildNodes()) {
+			parentContainer.appendChild(this._simpleContainer.Container);
+			return true;
+		}
+
+		if (this._complexContainer && this._complexContainer.Container.hasChildNodes()) {
+			parentContainer.appendChild(this._complexContainer.Container);
+			return true;
+		}
+
+		return false;
+	}
+}
+
 JSDialog.treeView = function (parentContainer, data, builder) {
 	var id = data.parent ? (data.parent.parent ? (data.parent.parent.parent ? (data.parent.parent.parent.id ? data.parent.parent.parent.id: null): null): null): null;
 
 	if (id && typeof(id) === 'string' && id.startsWith('Navigator'))
 		treeType = 'navigator';
 
-	var treeViewControl = new TreeViewControl(data, builder);
-	var buildInnerData = treeViewControl.buildTreeView(data, builder, parentContainer);
+	var factory = new FactoryTreeView(data, builder);
+	var buildInnerData = factory.build(data, builder, parentContainer);
 	if (!buildInnerData)
 		buildInnerData = _treelistboxControl(parentContainer, data, builder);
 	return buildInnerData;
