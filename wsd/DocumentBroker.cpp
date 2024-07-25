@@ -313,8 +313,26 @@ void DocumentBroker::pollThread()
     // Download and load the document.
     if (_initialWopiFileInfo)
     {
-        downloadAdvance(_childProcess->getJailId(), _uriPublic, std::move(_initialWopiFileInfo));
+        try
+        {
+            downloadAdvance(_childProcess->getJailId(), _uriPublic, std::move(_initialWopiFileInfo));
+        }
+        catch (const std::exception& exc)
+        {
+            LOG_ERR("Failed to advance download [" << _docKey << "]: " << exc.what());
+
+            stop("advance download failed");
+
+            // Stop to mark it done and cleanup.
+            _poll->stop();
+
+            // Async cleanup.
+            COOLWSD::doHousekeeping();
+
+            return;
+        }
     }
+
 
 #if !MOBILEAPP
     static const std::size_t IdleDocTimeoutSecs
