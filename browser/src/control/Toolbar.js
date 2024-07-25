@@ -350,7 +350,7 @@ L.Map.include({
 	},
 
 	sendUnoCommand: function (command, json, force) {
-		if (command.indexOf('.uno:') < 0 || command.indexOf('vnd.sun.star.script') < 0)
+		if (command.indexOf('.uno:') < 0 && command.indexOf('vnd.sun.star.script') < 0)
 			console.error('Trying to send uno command without prefix: "' + command + '"');
 
 		if ((command.startsWith('.uno:Sidebar') && !command.startsWith('.uno:SidebarShow')) ||
