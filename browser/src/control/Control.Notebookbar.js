@@ -451,11 +451,9 @@ L.Control.Notebookbar = L.Control.extend({
 	onRulerChange: function() {
 		if (this.map.uiManager.isRulerVisible()) {
 			$('#showruler').addClass('selected');
-			document.documentElement.style.setProperty("--canvas-container-y", "var(--ruler-height)");
 		}
 		else {
 			$('#showruler').removeClass('selected');
-			document.documentElement.style.setProperty("--canvas-container-y", "0");
 		}
 	},
 

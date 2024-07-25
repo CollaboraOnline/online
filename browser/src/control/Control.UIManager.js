@@ -829,14 +829,10 @@ L.Control.UIManager = L.Control.extend({
 	},
 
 	toggleRuler: function() {
-		if (this.isRulerVisible()){
+		if (this.isRulerVisible())
 			this.hideRuler();
-			document.documentElement.style.setProperty("--canvas-container-y", "0");
-		}
-		else {
+		else
 			this.showRuler();
-			document.documentElement.style.setProperty("--canvas-container-y", "var(--ruler-height)");
-		}
 	},
 
 	isRulerVisible: function() {
