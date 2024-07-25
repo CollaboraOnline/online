@@ -106,7 +106,8 @@ struct Histogram {
             if(i < 10)
             {
                 subOneHundredCount += _buckets[i];
-            }else
+            }
+            else
             {
                 overOneHundredCount += _buckets[i];
             }
@@ -158,8 +159,10 @@ struct Stats {
         std::string line;
         size_t totalDirtyPss = 0;
 
-        while (std::getline(smapsFile, line)) {
-            if (line.find("Pss_Dirty:") == 0) {
+        while (std::getline(smapsFile, line))
+        {
+            if (line.find("Pss_Dirty:") == 0)
+            {
                 std::stringstream ss(line);
                 std::string key;
                 size_t value;
@@ -228,7 +231,6 @@ struct Stats {
         const size_t runMs = std::chrono::duration_cast<std::chrono::milliseconds>(now - _start).count();
 
         std::cout << "Peak memory usage: " << _peakMemoryUsage << "kB";
-
         std::cout << "Stress run took " << runMs << " ms\n";
         std::cout << "  tiles: " << _tileCount << " => TPS: " << ((_tileCount * 1000.0)/runMs) << "\n";
         _pingLatency.dump("ping latency:");

@@ -32,6 +32,7 @@
 class UnitPerf : public UnitWSD
 {
     void testPerf();
+
     void dumpCPUTimeToCSV(long cpuTime);
 
     void configure(Poco::Util::LayeredConfiguration& config) override
