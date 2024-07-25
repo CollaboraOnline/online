@@ -1123,6 +1123,51 @@ class TreeViewControl {
 	}
 }
 
+// ul -> li container, no headers, no columns or columns == 1
+class UnorderedListControl extends TreeViewControl {
+	constructor(data, builder) {
+		super(data, builder);
+
+		this._container = L.DomUtil.create('ul', builder.options.cssClass + ' ui-treeview');
+	}
+}
+
+// table -> tr -> td, simple list (no children), with or no headers, columns > 1
+class SimpleTableControl extends TreeViewControl {
+	constructor(data, builder) {
+		super(data, builder);
+
+		this._container = L.DomUtil.create('table', builder.options.cssClass + ' ui-treeview');
+
+		if (data.headers && data.headers.length > 0) {
+			this._container._thead = L.DomUtil.create('thead', builder.options.cssClass,
+								  this._container);
+		}
+
+		this._container._tbody = L.DomUtil.create('tbody', builder.options.cssClass +
+							  ' ui-treeview-body', this._container);
+		this._container.setAttribute('role', 'grid');
+	}
+}
+
+// complex table treegrid, with children, with or no headers, columns > 1
+class ComplexTableControl extends TreeViewControl {
+	constructor(data, builder) {
+		super(data, builder);
+
+		this._container = L.DomUtil.create('table', builder.options.cssClass + ' ui-treeview');
+
+		if (data.headers && data.headers.length > 0) {
+			this._container._thead = L.DomUtil.create('thead', builder.options.cssClass,
+								  this._container);
+		}
+
+		this._container._tbody = L.DomUtil.create('tbody', builder.options.cssClass +
+							  ' ui-treeview-body', this._container);
+		this._container.setAttribute('role', 'treegrid');
+	}
+}
+
 JSDialog.treeView = function (parentContainer, data, builder) {
 	var id = data.parent ? (data.parent.parent ? (data.parent.parent.parent ? (data.parent.parent.parent.id ? data.parent.parent.parent.id: null): null): null): null;
 
