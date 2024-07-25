@@ -998,8 +998,14 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._move();
 		this._moveInProgress = false;
 
-		if (app.calc.cellCursorVisible || app.file.textCursor.visible) {
-			var cursorPos = this._map._docLayer._twipsToLatLng({ x: app.calc.cellCursorRectangle.x2, y: app.calc.cellCursorRectangle.y2 });
+		var isCellCursorVisible = app.calc.cellCursorVisible;
+		var isTextCursorVisible = app.file.textCursor.visible;
+		if (isCellCursorVisible || isTextCursorVisible) {
+			if (isCellCursorVisible)
+				var cursorPos = this._map._docLayer._twipsToLatLng({ x: app.calc.cellCursorRectangle.x2, y: app.calc.cellCursorRectangle.y2 });
+			else
+				cursorPos = this._map._docLayer._twipsToLatLng({ x: app.file.textCursor.rectangle.x2, y: app.file.textCursor.rectangle.y2 });
+
 			var centerOffset = this._map._getCenterOffset(cursorPos);
 			var viewHalf = this._map.getSize()._divideBy(2);
 			var cursorPositionInView =
