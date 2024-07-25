@@ -108,8 +108,10 @@ L.Control.UIManager = L.Control.extend({
 		}
 	},
 
-	invertBackground: function() {
-		app.socket.sendMessage('uno .uno:InvertBackground');
+	setDarkBackground: function(activate) {
+		var cmd = { 'NewTheme': { 'type': 'string', 'value': '' } };
+		activate ? cmd.NewTheme.value = 'Dark' : cmd.NewTheme.value = 'Light';
+		app.socket.sendMessage('uno .uno:InvertBackground ' + JSON.stringify(cmd));
 		if (this.map.getDocType() == 'spreadsheet') {
 			var lightCanvasColor = window.getComputedStyle(document.documentElement).getPropertyValue('--color-canvas-light');
 			var darkCanvasColor = window.getComputedStyle(document.documentElement).getPropertyValue('--color-canvas-dark');
@@ -117,6 +119,30 @@ L.Control.UIManager = L.Control.extend({
 			// invert canvas color
 			nColor == lightCanvasColor ? nColor = darkCanvasColor : nColor = lightCanvasColor
 			this.setCanvasColorAfterModeChange(nColor);
+		}
+	},
+
+	applyInvert: function() {
+		// get the initial mode
+		var inDarkTheme = window.prefs.getBoolean('darkTheme');
+		var backgroundDark = window.prefs.getBoolean('darkBackgroundForTheme.' + (inDarkTheme ? 'dark' : 'light'), inDarkTheme);
+		this.setDarkBackground(backgroundDark);
+	},
+
+	toggleInvert: function() {
+		// get the initial mode
+		var inDarkTheme = window.prefs.getBoolean('darkTheme');
+		var darkBackgroundPrefName = 'darkBackgroundForTheme.' + (inDarkTheme ? 'dark' : 'light');
+		var backgroundDark = window.prefs.getBoolean(darkBackgroundPrefName, inDarkTheme);
+
+		// swap them by invoking the appropriate load function and saving the state
+		if (backgroundDark) {
+			window.prefs.set(darkBackgroundPrefName, false);
+			this.setDarkBackground(false);
+		}
+		else {
+			window.prefs.set(darkBackgroundPrefName, true);
+			this.setDarkBackground(true);
 		}
 	},
 
@@ -154,6 +180,7 @@ L.Control.UIManager = L.Control.extend({
 		var cmd = { 'NewTheme': { 'type': 'string', 'value': '' } };
 		activate ? cmd.NewTheme.value = 'Dark' : cmd.NewTheme.value = 'Light';
 		app.socket.sendMessage('uno .uno:ChangeTheme ' + JSON.stringify(cmd));
+		this.applyInvert();
 	},
 
 	renameDocument: function() {

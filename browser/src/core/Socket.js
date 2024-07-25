@@ -248,6 +248,9 @@ app.definitions.Socket = L.Class.extend({
 		const darkTheme = window.prefs.getBoolean('darkTheme');
 		msg += ' darkTheme=' + darkTheme;
 
+		const darkBackground = window.prefs.getBoolean('darkBackgroundForTheme.' + (darkTheme ? 'dark' : 'light'), darkTheme);
+		msg += ' darkBackground=' + darkBackground;
+
 		var isCalcTest =
 			window.docURL.includes('data/desktop/calc/') ||
 			window.docURL.includes('data/mobile/calc/') ||
