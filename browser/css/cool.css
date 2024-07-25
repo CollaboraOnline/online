@@ -42,7 +42,6 @@
 
 	/* Ruler */
 	--ruler-height: 20px;
-	--canvas-container-y: var(--ruler-height);
 }
 .focus-hidden:focus {
 	outline: none;
