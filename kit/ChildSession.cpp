@@ -1634,6 +1634,8 @@ bool ChildSession::insertFile(const StringVector& tokens)
 
     SigUtil::addActivity(getId(), "insertFile " + type);
 
+    LOG_TRC("InsertFile with arguments: " << type << ": " << (data.empty() ? name : std::string("binary data")));
+
     if (type == "graphic" || type == "graphicurl" || type == "selectbackground")
     {
         std::string url;
@@ -1661,6 +1663,8 @@ bool ChildSession::insertFile(const StringVector& tokens)
                     return false;
                 }
             }
+            else
+                sendTextFrameAndLogError("error: cmd=insertfile kind=syntax");
         }
         else
         {
