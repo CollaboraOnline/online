@@ -427,7 +427,6 @@ private:
     ThreadPool _deltaPool;
     std::unique_ptr<DeltaGenerator> _deltaGen;
 
-    std::condition_variable _cvLoading;
     int _editorId;
     bool _editorChangeWarning;
     std::map<int, std::unique_ptr<CallbackDescriptor>> _viewIdToCallbackDescr;
