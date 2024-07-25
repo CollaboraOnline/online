@@ -1348,6 +1348,11 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/,
             oss << " darkTheme=" << getDarkTheme();
         }
 
+        if (!getDarkBackground().empty())
+        {
+            oss << " darkBackground=" << getDarkBackground();
+        }
+
         if (!getWatermarkText().empty())
         {
             std::string encodedWatermarkText;

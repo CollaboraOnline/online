@@ -103,7 +103,7 @@ class Dispatcher {
 			app.map.uiManager.toggleDarkMode();
 		};
 		this.actionsMap['invertbackground'] = function () {
-			app.map.uiManager.invertBackground();
+			app.map.uiManager.toggleInvert();
 		};
 		this.actionsMap['home-search'] = function () {
 			app.map.uiManager.focusSearch();
