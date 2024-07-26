@@ -979,48 +979,17 @@ class TreeViewControl {
 
 		return colorPreviewButton;
 	}
+}
 
-	fillHeaders(headers, builder) {
-		if (!this._tableContainer || !headers)
-			return;
+// ul -> li container, no headers, no columns or columns == 1
+class UnorderedListControl extends TreeViewControl {
+	constructor(data, builder) {
+		super(data, builder);
 
-		for (let index in headers) {
-			let th = L.DomUtil.create('th', builder.options.cssClass,
-						  this._tableContainer._thead.firstChild);
-			let span = L.DomUtil.create('span', builder.options.cssClass +
-						    ' ui-treeview-header-text', th);
-			L.DomUtil.create('span', builder.options.cssClass +
-					 ' ui-treeview-header-sort-icon', span);
-			span.innerText = headers[index].text;
-		}
+		this._container = L.DomUtil.create('ul', builder.options.cssClass + ' ui-treeview');
 	}
 
-	fillItems(entries, builder, level, ulParent, tableParent) {
-		let ulChild, tableChild;
-
-		for (let index in entries) {
-			if (this._ulContainer && entries[index].columns &&
-			    entries[index].columns.length > 1)
-				delete this._ulContainer;
-
-			if (this._tableContainer &&
-			    (!entries[index].columns || entries[index].columns.length === 1))
-				delete this._tableContainer;
-
-			if (this._ulContainer && ulParent) {
-				ulChild = this.createUlItem(entries[index], builder, ulParent);
-			}
-
-			if (this._tableContainer && tableParent) {
-				tableChild = this.createTableItem(entries[index], builder, level, tableParent);
-			}
-
-			this.fillItems(entries[index].children, builder, level + 1, ulChild, tableChild);
-		}
-	}
-
-
-	createUlItem(entry, builder, parent) {
+	fillRow(entry, builder, parent) {
 		let li = L.DomUtil.create('li', builder.options.cssClass, parent);
 		let span0 = L.DomUtil.create('span', builder.options.cssClass +
 					     ' ui-treeview-entry ui-treeview-notexpandable', li);
@@ -1031,32 +1000,27 @@ class TreeViewControl {
 		text.innerText = entry.text;
 		return li;
 	}
+}
 
-	createTableItem(entry, builder, level, parent) {
-		let tr = L.DomUtil.create('tr', builder.options.cssClass + ' ui-listview-entry',
-					  this._tableContainer._tbody);
-		tr.setAttribute('role', 'row');
-		tr.setAttribute('aria-level', level);
+// table -> tr -> td, simple list (no children), with or no headers, columns > 1
+class SimpleTableControl extends TreeViewControl {
+	constructor(data, builder) {
+		super(data, builder);
 
-		TreeViewControl.selectEntry(tr, entry.selected);
+		this._container = L.DomUtil.create('table', builder.options.cssClass + ' ui-treeview');
 
-		if (entry.children && entry.children.length) {
-			tr.setAttribute('aria-expanded', 'false');
+		if (data.headers && data.headers.length > 0) {
+			this._container._thead = L.DomUtil.create('thead', builder.options.cssClass,
+								  this._container);
+			L.DomUtil.create('tr', builder.options.cssClass, this._container._thead);
 		}
 
-		if (level > 0 && this._tableContainer.getAttribute('role') !== 'treegrid')
-			this._tableContainer.setAttribute('role', 'treegrid');
-
-		this.fillTableCells(entry, builder, tr);
-
-		if (parent.getAttribute('aria-expanded') === 'false') {
-			L.DomUtil.addClass(tr, 'hidden');
-		}
-
-		return tr;
+		this._container._tbody = L.DomUtil.create('tbody', builder.options.cssClass +
+							  ' ui-treeview-body', this._container);
+		this._container.setAttribute('role', 'grid');
 	}
 
-	fillTableCells(entry, builder, tr) {
+	fillCells(entry, builder, tr) {
 		let td, span, text, img, icon, iconId, iconName, link, innerText;
 
 		for (let index in entry.columns) {
@@ -1092,32 +1056,32 @@ class TreeViewControl {
 			td.setAttribute('role', 'gridcell');
 		}
 	}
-}
 
-// ul -> li container, no headers, no columns or columns == 1
-class UnorderedListControl extends TreeViewControl {
-	constructor(data, builder) {
-		super(data, builder);
-
-		this._container = L.DomUtil.create('ul', builder.options.cssClass + ' ui-treeview');
-	}
-}
-
-// table -> tr -> td, simple list (no children), with or no headers, columns > 1
-class SimpleTableControl extends TreeViewControl {
-	constructor(data, builder) {
-		super(data, builder);
-
-		this._container = L.DomUtil.create('table', builder.options.cssClass + ' ui-treeview');
-
-		if (data.headers && data.headers.length > 0) {
-			this._container._thead = L.DomUtil.create('thead', builder.options.cssClass,
-								  this._container);
+	fillRow(entry, builder, level/*, parent*/) {
+		let tr = L.DomUtil.create('tr', builder.options.cssClass + ' ui-listview-entry',
+					  this._container._tbody);
+		tr.setAttribute('role', 'row');
+		tr.setAttribute('aria-level', level);
+		if (entry.children && entry.children.length) {
+			tr.setAttribute('aria-expanded', 'false');
 		}
 
-		this._container._tbody = L.DomUtil.create('tbody', builder.options.cssClass +
-							  ' ui-treeview-body', this._container);
-		this._container.setAttribute('role', 'grid');
+		this.fillCells(entry, builder, tr);
+
+		return tr;
+	}
+
+	fillHeader(header, builder) {
+		if (!header)
+			return;
+
+		let th = L.DomUtil.create('th', builder.options.cssClass,
+					  this._container._thead.firstChild);
+		let span = L.DomUtil.create('span', builder.options.cssClass +
+					    ' ui-treeview-header-text', th);
+		L.DomUtil.create('span', builder.options.cssClass +
+				 ' ui-treeview-header-sort-icon', span);
+		span.innerText = header.text;
 	}
 }
 
@@ -1131,11 +1095,83 @@ class ComplexTableControl extends TreeViewControl {
 		if (data.headers && data.headers.length > 0) {
 			this._container._thead = L.DomUtil.create('thead', builder.options.cssClass,
 								  this._container);
+			L.DomUtil.create('tr', builder.options.cssClass, this._container._thead);
 		}
 
 		this._container._tbody = L.DomUtil.create('tbody', builder.options.cssClass +
 							  ' ui-treeview-body', this._container);
 		this._container.setAttribute('role', 'treegrid');
+	}
+
+	fillCells(entry, builder, tr) {
+		let td, span, text, img, icon, iconId, iconName, link, innerText;
+
+		for (let index in entry.columns) {
+			td = L.DomUtil.create('td', '', tr);
+			span = L.DomUtil.create('span', builder.options.cssClass + ' ui-treeview-cell', td);
+			text = L.DomUtil.create('span', builder.options.cssClass + ' ui-treeview-cell-text', span);
+			img = entry.columns[index].collapsedimage ? entry.columns[index].collapsedimage :
+				entry.columns[index].expandedimage;
+			if (img) {
+				this.createImageColumn(text, builder, img);
+			} else if (entry.columns[index].collapsed || entry.columns[index].expanded) {
+				icon = L.DomUtil.create('img', 'ui-listview-icon', text);
+				iconId = this.getCellIconId(entry.columns[index]);
+				L.DomUtil.addClass(icon, iconId + 'img');
+				iconName = builder._createIconURL(iconId, true);
+				L.LOUtil.setImage(icon, iconName, builder.map);
+				L.DomUtil.addClass(span, 'ui-listview-expandable-with-icon');
+				if (entry.children && entry.children.length > 0) {
+					tr.setAttribute('aria-expanded', Boolean(entry.columns[index].expanded));
+				}
+			} else if (entry.columns[index].link && !this.isSeparator(entry.columns[index])) {
+				innerText = L.DomUtil.create('span', builder.options.cssClass + ' ui-treeview-cell-text',
+							     text);
+				link = L.DomUtil.create('a', '', innerText);
+				link.href = entry.columns[index].link || entry.columns[index].text;
+				link.innerText = entry.columns[index].text || entry.text;
+			} else if (entry.columns[index].text && !this.isSeparator(entry.columns[index])) {
+				innerText = L.DomUtil.create('span', builder.options.cssClass + ' ui-treeview-cell-text',
+							     text);
+				innerText.innerText = entry.columns[index].text || entry.text;
+			}
+
+			td.setAttribute('role', 'gridcell');
+		}
+	}
+
+	fillRow(entry, builder, level, parent) {
+		let tr = L.DomUtil.create('tr', builder.options.cssClass + ' ui-listview-entry',
+					  this._container._tbody);
+		tr.setAttribute('role', 'row');
+		tr.setAttribute('aria-level', level);
+
+		TreeViewControl.selectEntry(tr, entry.selected);
+
+		if (entry.children && entry.children.length) {
+			tr.setAttribute('aria-expanded', 'false');
+		}
+
+		this.fillCells(entry, builder, tr);
+
+		if (parent.getAttribute('aria-expanded') === 'false') {
+			L.DomUtil.addClass(tr, 'hidden');
+		}
+
+		return tr;
+	}
+
+	fillHeader(header, builder) {
+		if (!header)
+			return;
+
+		let th = L.DomUtil.create('th', builder.options.cssClass,
+					  this._container._thead.firstChild);
+		let span = L.DomUtil.create('span', builder.options.cssClass +
+					    ' ui-treeview-header-text', th);
+		L.DomUtil.create('span', builder.options.cssClass +
+				 ' ui-treeview-header-sort-icon', span);
+		span.innerText = header.text;
 	}
 }
 
