@@ -19,6 +19,22 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 		cy.cGet('input#addressInput-input').should('have.prop', 'value', 'A1:Z1');
 		desktopHelper.assertScrollbarPosition('horizontal', 205, 315);
 	});
+
+	it('Jump on address with not visible cursor', function() {
+		desktopHelper.assertScrollbarPosition('vertical', 0, 30);
+		cy.cGet('input#addressInput-input').should('have.prop', 'value', 'Z11');
+
+		cy.cGet('input#addressInput-input').type('{selectAll}A110{enter}');
+		desktopHelper.assertScrollbarPosition('vertical', 205, 315);
+	});
+
+	it('Jump on search with not visible cursor', function() {
+		desktopHelper.assertScrollbarPosition('horizontal', 205, 315);
+		cy.cGet('input#search-input').clear().type('FIRST{enter}');
+
+		cy.cGet('input#addressInput-input').should('have.prop', 'value', 'A10');
+		desktopHelper.assertScrollbarPosition('horizontal', 40, 60);
+	});
 });
 
 describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell selection with split panes', function() {
