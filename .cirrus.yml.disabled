@@ -23,7 +23,7 @@ task:
         CXXFLAGS="-I/usr/local/include" LDFLAGS=-L/usr/local/lib ./configure
         --with-lo-path=/usr/local/lib/libreoffice/
         --with-lokit-path=./libreoffice-src/include
-        --disable-seccomp --disable-werror --disable-setcap --enable-debug'' '
+        --disable-seccomp --disable-werror --enable-debug'' '
     - su -m cool -c 'env HOME=/tmp/coolhome gmake -j`sysctl -n hw.ncpu`'
     - chown root ./coolmount
     - chmod +s ./coolmount
