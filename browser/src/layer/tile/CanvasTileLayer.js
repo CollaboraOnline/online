@@ -2254,8 +2254,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		var sameAddress = oldCursorAddress.equals(app.calc.cellAddress.toArray());
 
 		var isFollowingOwnCursor = parseInt(app.getFollowedViewId()) === parseInt(this._viewId);
-		var wasSearchRequested = this._searchRequested;
-		var notJump = !wasSearchRequested && (sameAddress || !isFollowingOwnCursor);
+		var notJump = sameAddress || !isFollowingOwnCursor;
 		var scrollToCursor = this._sheetSwitch.tryRestore(notJump, this._selectedPart);
 
 		this._onUpdateCellCursor(scrollToCursor, notJump);
