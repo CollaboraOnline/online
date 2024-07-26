@@ -538,7 +538,6 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 
 .cool-annotation:not(.annotation-active) .cool-annotation-content-wrapper:hover,
 .cool-annotation:not(.annotation-active) .cool-annotation-redline-content-wrapper:hover {
-	background-color: var(--color-background-dark);
 	color: var(--color-text-dark);
 }
 
