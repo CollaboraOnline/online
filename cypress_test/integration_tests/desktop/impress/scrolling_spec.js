@@ -30,7 +30,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Scroll through document', 
 		cy.wait(1000);
 		clickOnTheCenter();
 		desktopHelper.pressKey(9,'uparrow');
-		cy.cGet('#test-div-vertical-scrollbar').should('have.text', '0');
+		desktopHelper.assertScrollbarPosition('vertical', 0, 1);
 		desktopHelper.pressKey(18,'downarrow');
 		desktopHelper.assertScrollbarPosition('vertical', 306, 355);
 	});
@@ -42,7 +42,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Scroll through document', 
 		clickOnTheCenter();
 		cy.wait(500);
 		helper.typeIntoDocument('{home}');
-		cy.cGet('#test-div-horizontal-scrollbar').should('have.text', '0').wait(500);
+		desktopHelper.assertScrollbarPosition('horizontal', 0, 1);
 		helper.typeIntoDocument('{end}');
 		desktopHelper.assertScrollbarPosition('horizontal', 340, 660);
 	});
