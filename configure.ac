@@ -361,10 +361,6 @@ AC_ARG_WITH([compiler-plugins],
                 [Experimental! Unlikely to work for anyone except Noel! Enable compiler plugins that will perform additional checks during
                  building.]))
 
-AC_ARG_ENABLE([setcap],
-            AS_HELP_STRING([--disable-setcap],
-                          [Do not set capabilities on files. For packaging builds]))
-
 AC_ARG_ENABLE([werror],
             AS_HELP_STRING([--disable-werror],
                           [Do not turn warnings into errors.]))
@@ -1820,7 +1816,6 @@ Configuration:
     Test assertion logging    $log_asserts_msg
     Uglification and bundling $bundle_msg
     Anonymization             $anonym_msg
-    Set capabilities          $setcap_msg
     Browsersync               $browsersync_msg
     cypress                   $cypress_msg
     C++ compiler flags        $CXXFLAGS

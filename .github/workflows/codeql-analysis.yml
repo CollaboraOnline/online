@@ -72,7 +72,7 @@ jobs:
         cd .. && wget https://github.com/CollaboraOnline/online/releases/download/for-code-assets/core-co-24.04-assets.tar.gz
         tar xvf core-co-24.04-assets.tar.gz && rm core-co-24.04-assets.tar.gz && export LOCOREPATH=$(pwd)
         cd online && ./autogen.sh
-        ./configure --enable-silent-rules --with-lokit-path=${LOCOREPATH}/include --with-lo-path=${LOCOREPATH}/instdir --enable-debug --disable-setcap
+        ./configure --enable-silent-rules --with-lokit-path=${LOCOREPATH}/include --with-lo-path=${LOCOREPATH}/instdir --enable-debug
         cd browser && npm update
 
     - if: matrix.language == 'cpp'

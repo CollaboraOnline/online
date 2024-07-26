@@ -42,7 +42,7 @@ tasks:
       cd online
     init: |
       ./autogen.sh
-      ./configure --enable-silent-rules --with-lokit-path=/workspace/include --with-lo-path=/workspace/instdir --enable-debug -enable-cypress --disable-setcap
+      ./configure --enable-silent-rules --with-lokit-path=/workspace/include --with-lo-path=/workspace/instdir --enable-debug -enable-cypress
       gp sync-done configuring
       cp .gitpod-files/coolwsd-gitpod.xml coolwsd.xml
       mkdir .vscode
