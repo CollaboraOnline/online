@@ -784,7 +784,10 @@ protected:
                   [[maybe_unused]] unsigned char flags, bool flush = true) const
     {
         if (!socket || data == nullptr || len == 0)
+        {
+            LOG_DBG("Socket or data missing. Cannot send WS frame");
             return -1;
+        }
 
         if (socket->isClosed())
         {
