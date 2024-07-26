@@ -1652,7 +1652,8 @@ L.Map = L.Evented.extend({
 		}
 	},
 
-	_setFollowing: function(followingState, viewId) {
+	/// instantJump = false allows to set the following but waits for a cursor from core to scroll
+	_setFollowing: function(followingState, viewId, instantJump) {
 		var userDefined = viewId !== null && viewId !== undefined;
 		var followDefined = followingState !== null && followingState !== undefined;
 
@@ -1670,13 +1671,13 @@ L.Map = L.Evented.extend({
 		}
 
 		if (followUser) {
-			this._goToViewId(viewId);
+			if (instantJump) this._goToViewId(viewId);
 			app.setFollowingUser(viewId);
 		}
 		else if (followEditor) {
 			var editorId = this._docLayer._editorId;
 			if (editorId !== -1 && editorId !== this._docLayer.viewId) {
-				this._goToViewId(editorId);
+				if (instantJump) this._goToViewId(editorId);
 				app.setFollowingEditor(editorId);
 			}
 		}

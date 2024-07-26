@@ -453,7 +453,7 @@ L.Map.Keyboard = L.Handler.extend({
 		}
 
 		// if any key is pressed, we stop the following other users
-		this._map.userList.followUser(this._map._docLayer._viewId);
+		this._map.userList.followUser(this._map._docLayer._viewId, false);
 
 		if (window.KeyboardShortcuts.processEvent(app.UI.language.fromURL, ev)) {
 			ev.preventDefault();
