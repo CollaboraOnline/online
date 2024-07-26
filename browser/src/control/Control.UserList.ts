@@ -121,7 +121,7 @@ class UserList extends L.Control {
 		app.setFollowingOff();
 	}
 
-	followUser(viewId: number) {
+	followUser(viewId: number, instantJump: boolean = true) {
 		const myViewId = this.map._docLayer._viewId;
 		const followingViewId = app.getFollowedViewId();
 		const followMyself = viewId === followingViewId;
@@ -129,13 +129,11 @@ class UserList extends L.Control {
 		app.setFollowingUser(viewId);
 
 		if (followMyself) {
-			this.map._goToViewId(myViewId);
-			this.map._setFollowing(true, myViewId);
+			this.map._setFollowing(true, myViewId, instantJump);
 			this.renderAll();
 			return;
 		} else if (viewId !== -1) {
-			this.map._goToViewId(viewId);
-			this.map._setFollowing(true, viewId);
+			this.map._setFollowing(true, viewId, instantJump);
 		} else {
 			this.unfollowAll();
 			this.map._setFollowing(false, -1);
