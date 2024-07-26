@@ -10,6 +10,7 @@
 #include <atomic>
 #include <cassert>
 #include <chrono>
+#include <map>
 #include <memory>
 #include <string>
 #include <vector>
@@ -198,6 +199,14 @@ public:
                                    std::shared_ptr<StreamSocket>& /*socket*/)
     {
         return false;
+    }
+
+    virtual std::map<std::string, std::string>
+        parallelizeCheckInfo(const Poco::Net::HTTPRequest& /*request*/,
+                             Poco::MemoryInputStream& /*message*/,
+                             std::shared_ptr<StreamSocket>& /*socket*/)
+    {
+        return {};
     }
 
     /// Called when the document has been loaded,

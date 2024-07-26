@@ -691,7 +691,25 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
         }
 
         // Routing
-        if (UnitWSD::isUnitTesting() && UnitWSD::get().handleHttpRequest(request, message, socket))
+        const bool isUnitTesting = UnitWSD::isUnitTesting();
+        bool handledByUnitTesting = false;
+        if (isUnitTesting)
+        {
+            handledByUnitTesting = UnitWSD::get().handleHttpRequest(request, message, socket);
+            if (!handledByUnitTesting)
+            {
+                auto mapAccessDetails = UnitWSD::get().parallelizeCheckInfo(request, message, socket);
+                if (!mapAccessDetails.empty())
+                {
+                    auto accessDetails = FileServerRequestHandler::ResourceAccessDetails(
+                        mapAccessDetails.at("wopiSrc"),
+                        mapAccessDetails.at("accessToken"),
+                        mapAccessDetails.at("permission"));
+                    launchAsyncCheckFileInfo(_id, accessDetails, RequestVettingStations);
+                }
+            }
+        }
+        if (handledByUnitTesting)
         {
             // Unit testing, nothing to do here
         }
