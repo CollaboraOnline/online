@@ -252,7 +252,6 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 /* Badge */
 .ui-badge {
 	padding: 5px !important;
-	color: var(--color-main-text);
 	background-color: var(--color-background-darker);
 	border-width: 0px;
 	border-radius: var(--border-radius);
@@ -261,6 +260,30 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	font-weight: normal;
 }
 
+#toolbar-down .ui-separator.vertical {
+	background-color: var(--color-status-badge);
+	opacity: 0.2;
+}
+
+#toolbar-down .ui-badge,
+#toolbar-down .unolabel {
+	font-family: var(--cool-font);
+	font-size: var(--default-font-size);
+	color: var(--color-status-badge) !important;
+}
+
+#toolbar-down .ui-badge:hover,
+#toolbar-down .menubutton:hover .unolabel {
+	color: var(--color-main-text) !important;
+}
+
+#toolbar-down .unoarrow {
+	border-top-color: var(--color-status-badge);
+}
+
+#toolbar-down .menubutton:hover .unoarrow {
+	border-top-color: var(--color-main-text);
+}
 /* Tabs */
 
 .ui-tabs-content.jsdialog {
