@@ -13,6 +13,17 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Scroll through document', 
 		cy.cGet('#sidebar').click({force: true});
 	});
 
+	it('Check if we jump the view on new page insertion', function() {
+		desktopHelper.assertScrollbarPosition('vertical', 0, 10);
+		helper.typeIntoDocument('{ctrl+enter}');
+		helper.typeIntoDocument('{ctrl+enter}');
+
+		cy.wait(500);
+		cy.cGet('#StatePageNumber').should('have.text', 'Pages 2 and 3 of 6');
+
+		desktopHelper.assertScrollbarPosition('vertical', 140, 160);
+	});
+
 	it('Scrolling to bottom/top', function() {
 		desktopHelper.selectZoomLevel('40');
 		helper.typeIntoDocument('{ctrl}{home}');
