@@ -14,7 +14,7 @@ html[dir='rtl'] .sub-menu-arrow {
 
 /* Related to cool.css */
 #toolbar-hamburger {
-	width: 36px;
+	width: 36px !important;
 	height: 42px;
 	position: relative;
 	z-index: 1002;
@@ -37,7 +37,7 @@ html[dir='rtl'] .sub-menu-arrow {
 
 /* Related to back button */
 #toolbar-mobile-back {
-	width: 42px;
+	width: 42px !important;
 	position: relative;
 	z-index: 1003;
 }
@@ -75,7 +75,7 @@ html[dir='rtl'] .sub-menu-arrow {
 }
 
 .main-menu-btn {
-	display: inline-block;
+	display: inline-block !important;
 }
 
 .main-nav {
@@ -87,7 +87,7 @@ html[dir='rtl'] .sub-menu-arrow {
 	z-index: 1010;
 	bottom: 34px !important;
 	background-color: #00000050;
-	display: none;
+	display: none !important;
 }
 
 #main-menu {
