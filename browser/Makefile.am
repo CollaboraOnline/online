@@ -397,7 +397,7 @@ COOL_JS_LST =\
 	src/control/Control.NotebookbarDraw.js \
 	src/control/Control.NotebookbarBuilder.js \
 	src/control/Control.Layers.js \
-	src/control/Control.Sidebar.js \
+	src/control/Control.Sidebar.ts \
 	src/control/AutoCompletePopup.ts \
 	src/control/Control.Mention.ts \
 	src/control/Control.FormulaUsagePopup.ts \
@@ -839,6 +839,7 @@ pot:
 		src/control/Control.MobileSearchBar.ts \
 		src/control/Control.ServerAuditDialog.ts \
 		src/control/Control.SheetsBar.js \
+		src/control/Control.Sidebar.ts \
 		src/control/Control.StatusBar.js \
 		src/control/Control.Tabs.js \
 		src/control/Control.Toolbar.js \
