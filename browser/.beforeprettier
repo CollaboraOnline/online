@@ -54,7 +54,6 @@
 /src/control/Control.SearchBar.js
 /src/control/Control.Selection.js
 /src/control/Control.SheetsBar.js
-/src/control/Control.Sidebar.js
 /src/control/Control.StatusBar.js
 /src/control/Control.Tabs.js
 /src/control/Control.Toolbar.js
