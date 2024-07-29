@@ -487,7 +487,6 @@ void setupDynamicFiles(const std::string& sysTemplate)
 {
     LOG_INF("Setting up systemplate dynamic files in [" << sysTemplate << "].");
 
-    const std::string etcSysTemplatePath = Poco::Path(sysTemplate, "etc").toString();
     LinkDynamicFiles = true; // Prefer linking, unless it fails.
 
     if (!updateDynamicFilesImpl(sysTemplate))
