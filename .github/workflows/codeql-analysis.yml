@@ -77,7 +77,7 @@ jobs:
 
     - if: matrix.language == 'cpp'
       name: Build
-      run: make -j `nproc`
+      run: make -j `nproc` build-nocheck
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v2
