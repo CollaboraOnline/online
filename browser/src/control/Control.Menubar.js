@@ -1885,12 +1885,7 @@ L.Control.Menubar = L.Control.extend({
 		} else if (id === 'saveas' && type !== 'menu') { // jsdialog has no type='action'
 			this._map.openSaveAs();
 		} else if (id === 'savecomments') {
-			if (this._map.isPermissionEditForComments()) {
-				this._map.fire('postMessage', {msgId: 'UI_Save'});
-				if (!this._map._disableDefaultAction['UI_Save']) {
-					this._map.save(false, false);
-				}
-			}
+			this._map.dispatch('savecomments');
 		} else if (id === 'shareas' || id === 'ShareAs') {
 			this._map.dispatch('shareas');
 		} else if (id === 'print') {
