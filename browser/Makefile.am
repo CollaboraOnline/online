@@ -395,7 +395,7 @@ COOL_JS_LST =\
 	src/control/Control.NotebookbarDraw.js \
 	src/control/Control.NotebookbarBuilder.js \
 	src/control/Control.Layers.js \
-	src/control/Control.Sidebar.js \
+	src/control/Control.Sidebar.ts \
 	src/control/AutoCompletePopup.ts \
 	src/control/Control.Mention.ts \
 	src/control/Control.FormulaUsagePopup.ts \
