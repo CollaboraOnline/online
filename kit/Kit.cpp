@@ -3607,26 +3607,6 @@ static int sendURPToLO(void* pContext, signed char* pBuffer, int bytesToRead)
     return bytesRead;
 }
 
-// temp workaround of changed signature of startURP. Compile detect
-// old signature and if so return nullptr
-extern "C" int (*ObsoleteStartURPSignature)(LibreOfficeKit*, void*, void**,
-             int (*)(void* pContext, const signed char* pBuffer, int nLen),
-             int (**)(void* pContext, const signed char* pBuffer, int nLen));
-
-template<class T> void* doStartURP(T&, std::true_type)
-{
-    (void)receiveURPFromLO;
-    (void)sendURPToLO;
-    return nullptr;
-}
-
-template<class T> void* doStartURP(T& LOKit, std::false_type)
-{
-    return LOKit->startURP(reinterpret_cast<void*>(URPfromLoFDs[1]),
-                           reinterpret_cast<void*>(URPtoLoFDs[0]),
-                           receiveURPFromLO, sendURPToLO);
-}
-
 bool startURP(std::shared_ptr<lok::Office> LOKit, void** ppURPContext)
 {
     if (!isURPEnabled())
@@ -3641,7 +3621,9 @@ bool startURP(std::shared_ptr<lok::Office> LOKit, void** ppURPContext)
         return false;
     }
 
-    *ppURPContext = doStartURP(LOKit, std::is_same<decltype(LibreOfficeKitClass::startURP), decltype(ObsoleteStartURPSignature)>() );
+    *ppURPContext = LOKit->startURP(reinterpret_cast<void*>(URPfromLoFDs[1]),
+                                    reinterpret_cast<void*>(URPtoLoFDs[0]),
+                                    receiveURPFromLO, sendURPToLO);
 
     if (!*ppURPContext)
     {
