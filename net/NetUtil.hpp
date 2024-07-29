@@ -27,6 +27,23 @@ namespace net
 
 #if !MOBILEAPP
 
+class HostEntry
+{
+    std::string _canonicalName;
+    std::vector<std::string> _ipAddresses;
+
+    bool resolveIP4(const std::string& addressToCheck, std::string& hostname);
+    bool resolveIP6(const std::string& addressToCheck, std::string& hostname);
+    void initFromHostName(const std::string& host);
+
+public:
+    HostEntry(const std::string& desc);
+    HostEntry();
+
+    const std::string& getCanonicalName() const { return  _canonicalName; }
+    const std::vector<std::string>& getAddresses() const { return  _ipAddresses; }
+};
+
 /// Resolves the IP of the given hostname. On failure, returns @targetHost.
 std::string resolveHostAddress(const std::string& targetHost);
 

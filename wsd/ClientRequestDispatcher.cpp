@@ -462,10 +462,10 @@ public:
 
     void dispatchNextLookup()
     {
-        net::AsyncDNS::DNSThreadFn pushHostnameResolvedToPoll = [this](const std::string& hostname,
+        net::AsyncDNS::DNSThreadFn pushHostnameResolvedToPoll = [this](const net::HostEntry& hostEntry,
                                                                        const std::string& exception) {
-            COOLWSD::getWebServerPoll()->addCallback([this, hostname, exception]() {
-                hostnameResolved(hostname, exception);
+            COOLWSD::getWebServerPoll()->addCallback([this, hostEntry, exception]() {
+                hostnameResolved(hostEntry.getCanonicalName(), exception);
             });
         };
 
@@ -474,7 +474,7 @@ public:
         };
 
         const std::string& addressToCheck = _addressesToResolve.front();
-        net::AsyncDNS::canonicalHostName(addressToCheck, pushHostnameResolvedToPoll, dumpState);
+        net::AsyncDNS::lookup(addressToCheck, pushHostnameResolvedToPoll, dumpState);
     }
 
     void hostnameResolved(const std::string& hostToCheck, const std::string& exception)

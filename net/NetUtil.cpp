@@ -34,124 +34,118 @@ namespace net
 
 #if !MOBILEAPP
 
-class HostEntry
+static std::string makeIPAddress(const sockaddr* ai_addr)
 {
-    std::string _canonicalName;
-    std::vector<std::string> _ipAddresses;
+    char addrstr[INET6_ADDRSTRLEN];
 
-    static std::string makeIPAddress(const sockaddr* ai_addr)
+    static_assert(INET6_ADDRSTRLEN >= INET_ADDRSTRLEN, "ipv6 addresses are longer than ipv4");
+
+    const void *inAddr = nullptr;
+    switch (ai_addr->sa_family)
     {
-        char addrstr[INET6_ADDRSTRLEN];
-
-        static_assert(INET6_ADDRSTRLEN >= INET_ADDRSTRLEN, "ipv6 addresses are longer than ipv4");
-
-        const void *inAddr = nullptr;
-        switch (ai_addr->sa_family)
+        case AF_INET:
         {
-            case AF_INET:
-            {
-                auto ipv4 = (const sockaddr_in*)ai_addr;
-                inAddr = &(ipv4->sin_addr);
-                break;
-            }
-            case AF_INET6:
-            {
-                auto ipv6 = (const sockaddr_in6*)ai_addr;
-                inAddr = &(ipv6->sin6_addr);
-                break;
-            }
+            auto ipv4 = (const sockaddr_in*)ai_addr;
+            inAddr = &(ipv4->sin_addr);
+            break;
         }
-
-        if (!inAddr)
+        case AF_INET6:
         {
-            LOG_ERR("Unknown sa_family: " << ai_addr->sa_family);
-            return std::string();
+            auto ipv6 = (const sockaddr_in6*)ai_addr;
+            inAddr = &(ipv6->sin6_addr);
+            break;
         }
-
-        const char* result = inet_ntop(ai_addr->sa_family, inAddr, addrstr, sizeof(addrstr));
-        if (!result)
-        {
-            LOG_ERR("inet_ntop failure: " << strerror(errno));
-            return std::string();
-        }
-        return std::string(result);
     }
 
-    bool resolveIP4(const std::string& addressToCheck, std::string& hostname)
+    if (!inAddr)
     {
-        sockaddr_in sa4{};
-        if (inet_pton(AF_INET, addressToCheck.c_str(), &sa4.sin_addr) == 1)
+        LOG_ERR("Unknown sa_family: " << ai_addr->sa_family);
+        return std::string();
+    }
+
+    const char* result = inet_ntop(ai_addr->sa_family, inAddr, addrstr, sizeof(addrstr));
+    if (!result)
+    {
+        LOG_ERR("inet_ntop failure: " << strerror(errno));
+        return std::string();
+    }
+    return std::string(result);
+}
+
+bool HostEntry::resolveIP4(const std::string& addressToCheck, std::string& hostname)
+{
+    sockaddr_in sa4{};
+    if (inet_pton(AF_INET, addressToCheck.c_str(), &sa4.sin_addr) == 1)
+    {
+        char hbuf[NI_MAXHOST];
+        sa4.sin_family = AF_INET;
+        fprintf(stderr, "4ok hee\n");
+        if (getnameinfo((sockaddr*)(&sa4), sizeof(sa4), hbuf, sizeof(hbuf), nullptr, 0, NI_NAMEREQD) == 0)
         {
-            char hbuf[NI_MAXHOST];
-            sa4.sin_family = AF_INET;
-            fprintf(stderr, "4ok hee\n");
-            if (getnameinfo((sockaddr*)(&sa4), sizeof(sa4), hbuf, sizeof(hbuf), nullptr, 0, NI_NAMEREQD) == 0)
-            {
-                // canonicalName = hbuf;
-                fprintf(stderr, "4still ok %s\n", hbuf);
-                hostname.assign(hbuf);
-                return true;
-            }
+            // canonicalName = hbuf;
+            fprintf(stderr, "4still ok %s\n", hbuf);
+            hostname.assign(hbuf);
+            return true;
         }
-        return false;
     }
+    return false;
+}
 
-    bool resolveIP6(const std::string& addressToCheck, std::string& hostname)
+bool HostEntry::resolveIP6(const std::string& addressToCheck, std::string& hostname)
+{
+    sockaddr_in6 sa6{};
+    if (inet_pton(AF_INET6, addressToCheck.c_str(), &sa6.sin6_addr) == 1)
     {
-        sockaddr_in6 sa6{};
-        if (inet_pton(AF_INET6, addressToCheck.c_str(), &sa6.sin6_addr) == 1)
+        char hbuf[NI_MAXHOST];
+        sa6.sin6_family = AF_INET6;
+        fprintf(stderr, "6ok hee\n");
+        if (getnameinfo((sockaddr*)(&sa6), sizeof(sa6), hbuf, sizeof(hbuf), nullptr, 0, NI_NAMEREQD) == 0)
         {
-            char hbuf[NI_MAXHOST];
-            sa6.sin6_family = AF_INET6;
-            fprintf(stderr, "6ok hee\n");
-            if (getnameinfo((sockaddr*)(&sa6), sizeof(sa6), hbuf, sizeof(hbuf), nullptr, 0, NI_NAMEREQD) == 0)
-            {
-                // canonicalName = hbuf;
-                fprintf(stderr, "6still ok as %s\n", hbuf);
-                hostname.assign(hbuf);
-                return true;
-            }
+            // canonicalName = hbuf;
+            fprintf(stderr, "6still ok as %s\n", hbuf);
+            hostname.assign(hbuf);
+            return true;
         }
-        return false;
     }
+    return false;
+}
 
-    void initFromHostName(const std::string& host)
+void HostEntry::initFromHostName(const std::string& host)
+{
+    addrinfo* ainfo = nullptr;
+    addrinfo hints;
+    std::memset(&hints, 0, sizeof(hints));
+    hints.ai_flags = AI_CANONNAME | AI_ADDRCONFIG;
+    const int rc = getaddrinfo(host.c_str(), nullptr, &hints, &ainfo);
+
+    if (!rc && ainfo)
     {
-        addrinfo* ainfo = nullptr;
-        addrinfo hints;
-        std::memset(&hints, 0, sizeof(hints));
-        hints.ai_flags = AI_CANONNAME | AI_ADDRCONFIG;
-        const int rc = getaddrinfo(host.c_str(), nullptr, &hints, &ainfo);
-
-        if (!rc && ainfo)
+        for (const addrinfo* ai = ainfo; ai; ai = ai->ai_next)
         {
-            for (const addrinfo* ai = ainfo; ai; ai = ai->ai_next)
-            {
-                if (ai->ai_canonname)
-                    _canonicalName = ai->ai_canonname;
+            if (ai->ai_canonname)
+                _canonicalName = ai->ai_canonname;
 
-                if (ai->ai_addrlen && ai->ai_addr)
-                    _ipAddresses.push_back(makeIPAddress(ai->ai_addr));
-            }
-
-            freeaddrinfo(ainfo);
+            if (ai->ai_addrlen && ai->ai_addr)
+                _ipAddresses.push_back(makeIPAddress(ai->ai_addr));
         }
-        else
-            LOG_SYS("Failed to lookup host [" << host << "]. Skipping");
-    }
 
-public:
-    HostEntry(const std::string& desc)
-    {
-        std::string hostname;
-        if (!resolveIP4(desc, hostname) && !resolveIP6(desc, hostname))
-            hostname = desc;
-        initFromHostName(hostname);
+        freeaddrinfo(ainfo);
     }
+    else
+        LOG_SYS("Failed to lookup host [" << host << "]. Skipping");
+}
 
-    const std::string& getCanonicalName() const { return  _canonicalName; }
-    const std::vector<std::string>& getAddresses() const { return  _ipAddresses; }
-};
+HostEntry::HostEntry(const std::string& desc)
+{
+    std::string hostname;
+    if (!resolveIP4(desc, hostname) && !resolveIP6(desc, hostname))
+        hostname = desc;
+    initFromHostName(hostname);
+}
+
+HostEntry::HostEntry()
+{
+}
 
 struct DNSCacheEntry
 {
@@ -332,19 +326,20 @@ void AsyncDNS::resolveDNS()
         // resolving
         _lock.unlock();
 
-        std::string hostToCheck, exception;
+        std::string exception;
+        HostEntry hostEntry;
 
         try
         {
-            hostToCheck = _resolver->resolveDNS(_activeLookup.query).getCanonicalName();
-            fprintf(stderr, "%d turned %s into %s\n", getpid(), _activeLookup.query.c_str(), hostToCheck.c_str());
+            hostEntry = _resolver->resolveDNS(_activeLookup.query);
+            fprintf(stderr, "%d turned %s into %s\n", getpid(), _activeLookup.query.c_str(), hostEntry.getCanonicalName().c_str());
         }
         catch (const Poco::Exception& exc)
         {
             exception = "net::canonicalHostName(\"" + _activeLookup.query + "\") failed: " + exc.displayText();
         }
 
-        _activeLookup.cb(hostToCheck, exception);
+        _activeLookup.cb(hostEntry, exception);
 
         _activeLookup = {};
 
@@ -390,10 +385,10 @@ void AsyncDNS::stopAsyncDNS()
 }
 
 //static
-void AsyncDNS::canonicalHostName(const std::string& addressToCheck, const DNSThreadFn& cb,
-                                 const DNSThreadDumpStateFn& dumpState)
+void AsyncDNS::lookup(const std::string& searchEntry, const DNSThreadFn& cb,
+                      const DNSThreadDumpStateFn& dumpState)
 {
-    AsyncDNSThread->addLookup(addressToCheck, cb, dumpState);
+    AsyncDNSThread->addLookup(searchEntry, cb, dumpState);
 }
 
 #endif //!MOBILEAPP
