@@ -599,6 +599,39 @@ void ClientRequestDispatcher::onConnect(const std::shared_ptr<StreamSocket>& soc
     LOG_TRC("Connected to ClientRequestDispatcher");
 }
 
+void launchAsyncCheckFileInfo(const std::string& id, const FileServerRequestHandler::ResourceAccessDetails& accessDetails,
+                              std::unordered_map<std::string, std::shared_ptr<RequestVettingStation>>& requestVettingStations)
+{
+    const std::string requestKey = RequestDetails::getRequestKey(
+        accessDetails.wopiSrc(), accessDetails.accessToken());
+
+    std::vector<std::string> options = {
+        "access_token=" + accessDetails.accessToken(), "access_token_ttl=0"
+    };
+
+    if (!accessDetails.permission().empty())
+        options.push_back("permission=" + accessDetails.permission());
+
+    const RequestDetails fullRequestDetails =
+        RequestDetails(accessDetails.wopiSrc(), options, /*compat=*/std::string());
+
+    if (requestVettingStations.find(requestKey) != requestVettingStations.end())
+    {
+        LOG_TRC("Found RVS under key: " << requestKey << ", nothing to do");
+    }
+    else
+    {
+        LOG_TRC("Creating RVS with key: " << requestKey << ", for DocumentLoadURI: "
+                                          << fullRequestDetails.getDocumentURI());
+        auto it = requestVettingStations.emplace(
+            requestKey, std::make_shared<RequestVettingStation>(
+                            COOLWSD::getWebServerPoll(), fullRequestDetails));
+
+        it.first->second->handleRequest(id);
+    }
+}
+
+
 void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& disposition)
 {
     std::shared_ptr<StreamSocket> socket = _socket.lock();
@@ -710,33 +743,7 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
                                        Util::decodeURIComponent(accessDetails.wopiSrc()),
                                    "Expected identical WOPISrc in the request as in cool.html");
 
-                    const std::string requestKey = RequestDetails::getRequestKey(
-                        accessDetails.wopiSrc(), accessDetails.accessToken());
-
-                    std::vector<std::string> options = {
-                        "access_token=" + accessDetails.accessToken(), "access_token_ttl=0"
-                    };
-
-                    if (!accessDetails.permission().empty())
-                        options.push_back("permission=" + accessDetails.permission());
-
-                    const RequestDetails fullRequestDetails =
-                        RequestDetails(accessDetails.wopiSrc(), options, /*compat=*/std::string());
-
-                    if (RequestVettingStations.find(requestKey) != RequestVettingStations.end())
-                    {
-                        LOG_TRC("Found RVS under key: " << requestKey << ", nothing to do");
-                    }
-                    else
-                    {
-                        LOG_TRC("Creating RVS with key: " << requestKey << ", for DocumentLoadURI: "
-                                                          << fullRequestDetails.getDocumentURI());
-                        auto it = RequestVettingStations.emplace(
-                            requestKey, std::make_shared<RequestVettingStation>(
-                                            COOLWSD::getWebServerPoll(), fullRequestDetails));
-
-                        it.first->second->handleRequest(_id);
-                    }
+                    launchAsyncCheckFileInfo(_id, accessDetails, RequestVettingStations);
                 }
 
                 socket->shutdown();
