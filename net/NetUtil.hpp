@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <functional>
 #include <string>
 #include <memory>
 #include <vector>
@@ -21,6 +22,7 @@
 
 class StreamSocket;
 class ProtocolHandlerInterface;
+struct addrinfo;
 
 namespace net
 {
@@ -31,6 +33,7 @@ class HostEntry
 {
     std::string _canonicalName;
     std::vector<std::string> _ipAddresses;
+    addrinfo* _ainfo;
 
     bool resolveIP4(const std::string& addressToCheck, std::string& hostname);
     bool resolveIP6(const std::string& addressToCheck, std::string& hostname);
@@ -39,9 +42,11 @@ class HostEntry
 public:
     HostEntry(const std::string& desc);
     HostEntry();
+    ~HostEntry();
 
     const std::string& getCanonicalName() const { return  _canonicalName; }
     const std::vector<std::string>& getAddresses() const { return  _ipAddresses; }
+    const addrinfo* getAddrInfo() const { return _ainfo; }
 };
 
 /// Resolves the IP of the given hostname. On failure, returns @targetHost.
@@ -62,6 +67,13 @@ std::vector<std::string> resolveAddresses(const std::string& addressToCheck);
 std::shared_ptr<StreamSocket>
 connect(const std::string& host, const std::string& port, const bool isSSL,
         const std::shared_ptr<ProtocolHandlerInterface>& protocolHandler);
+
+typedef std::function<void(std::shared_ptr<StreamSocket>)> asyncConnectCB;
+
+void
+asyncConnect(const std::string& host, const std::string& port, const bool isSSL,
+             const std::shared_ptr<ProtocolHandlerInterface>& protocolHandler,
+             const asyncConnectCB& asyncCb);
 
 /// Connect to an end-point at the given @uri and return StreamSocket.
 std::shared_ptr<StreamSocket>

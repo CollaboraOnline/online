@@ -112,30 +112,30 @@ bool HostEntry::resolveIP6(const std::string& addressToCheck, std::string& hostn
 
 void HostEntry::initFromHostName(const std::string& host)
 {
-    addrinfo* ainfo = nullptr;
+    assert(_ainfo == nullptr);
+
     addrinfo hints;
     std::memset(&hints, 0, sizeof(hints));
-    hints.ai_flags = AI_CANONNAME | AI_ADDRCONFIG;
-    const int rc = getaddrinfo(host.c_str(), nullptr, &hints, &ainfo);
+    hints.ai_flags = AI_CANONNAME | AI_ADDRCONFIG; //TODO check
+    const int rc = getaddrinfo(host.c_str(), nullptr, &hints, &_ainfo);
 
-    if (!rc && ainfo)
+    if (!rc && _ainfo)
     {
-        for (const addrinfo* ai = ainfo; ai; ai = ai->ai_next)
+        for (const addrinfo* ai = _ainfo; ai; ai = ai->ai_next)
         {
             if (ai->ai_canonname)
-                _canonicalName = ai->ai_canonname;
+                _canonicalName.assign(ai->ai_canonname);
 
             if (ai->ai_addrlen && ai->ai_addr)
                 _ipAddresses.push_back(makeIPAddress(ai->ai_addr));
         }
-
-        freeaddrinfo(ainfo);
     }
     else
         LOG_SYS("Failed to lookup host [" << host << "]. Skipping");
 }
 
 HostEntry::HostEntry(const std::string& desc)
+    : _ainfo(nullptr)
 {
     std::string hostname;
     if (!resolveIP4(desc, hostname) && !resolveIP6(desc, hostname))
@@ -144,7 +144,14 @@ HostEntry::HostEntry(const std::string& desc)
 }
 
 HostEntry::HostEntry()
+    : _ainfo(nullptr)
 {
+}
+
+HostEntry::~HostEntry()
+{
+    if (_ainfo)
+        freeaddrinfo(_ainfo);
 }
 
 struct DNSCacheEntry
@@ -392,6 +399,87 @@ void AsyncDNS::lookup(const std::string& searchEntry, const DNSThreadFn& cb,
 }
 
 #endif //!MOBILEAPP
+
+typedef std::function<void(std::shared_ptr<StreamSocket>)> asyncConnectCB;
+
+void
+asyncConnect(const std::string& host, const std::string& port, const bool isSSL,
+             const std::shared_ptr<ProtocolHandlerInterface>& protocolHandler,
+             const asyncConnectCB& asyncCb)
+{
+    if (host.empty() || port.empty())
+    {
+        LOG_ERR("Invalid host/port " << host << ':' << port);
+        asyncCb(nullptr);
+        return;
+    }
+
+    LOG_DBG("Connecting to " << host << ':' << port << " (" << (isSSL ? "SSL)" : "Unencrypted)"));
+
+#if !ENABLE_SSL
+    if (isSSL)
+    {
+        LOG_ERR("Error: isSSL socket requested but SSL is not compiled in.");
+        asyncCb(nullptr);
+        return;
+    }
+#endif
+
+    auto callback = [isSSL, host, protocolHandler, asyncCb](const HostEntry& hostEntry, const std::string& /*exception*/) {
+
+            std::shared_ptr<StreamSocket> socket;
+
+            if (const addrinfo* ainfo = hostEntry.getAddrInfo())
+            {
+                for (const addrinfo* ai = ainfo; ai; ai = ai->ai_next)
+                {
+                    if (ai->ai_addrlen && ai->ai_addr)
+                    {
+                        int fd = ::socket(ai->ai_addr->sa_family, SOCK_STREAM | SOCK_NONBLOCK | SOCK_CLOEXEC, 0);
+                        if (fd < 0)
+                        {
+                            LOG_SYS("Failed to create socket");
+                            continue;
+                        }
+
+                        int res = ::connect(fd, ai->ai_addr, ai->ai_addrlen);
+                        if (fd < 0 || (res < 0 && errno != EINPROGRESS))
+                        {
+//TODO                            LOG_SYS("Failed to connect to " << host);
+                            ::close(fd);
+                        }
+                        else
+                        {
+                            Socket::Type type = ai->ai_family == AF_INET ? Socket::Type::IPv4 : Socket::Type::IPv6;
+#if ENABLE_SSL
+                            if (isSSL)
+                                socket = StreamSocket::create<SslStreamSocket>(host, fd, type, true, protocolHandler);
+#endif
+                            if (!socket && !isSSL)
+                                socket = StreamSocket::create<StreamSocket>(host, fd, type, true, protocolHandler);
+
+                            if (socket)
+                            {
+//TODO                                LOG_DBG('#' << fd << " New socket connected to " << host << ':' << port
+//TODO                                            << " (" << (isSSL ? "SSL)" : "Unencrypted)"));
+                                break;
+                            }
+
+//TODO                            LOG_ERR("Failed to allocate socket for client websocket " << host);
+                            ::close(fd);
+                            break;
+                        }
+                    }
+                }
+            }
+            else
+                LOG_SYS("Failed to lookup host [" << host << "]. Skipping");
+
+            asyncCb(socket);
+    };
+
+    AsyncDNS::lookup(host, /*port,*/ callback, nullptr);
+}
 
 std::shared_ptr<StreamSocket>
 connect(const std::string& host, const std::string& port, const bool isSSL,
