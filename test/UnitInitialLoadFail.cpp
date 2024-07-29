@@ -46,14 +46,14 @@ public:
         config.setInt("net.connection_timeout_secs", 3);
     }
 
-    virtual bool handleHttpRequest(const Poco::Net::HTTPRequest& request,
-                                   Poco::MemoryInputStream& message,
-                                   std::shared_ptr<StreamSocket>& socket) override
+    bool handleHttpRequest(const Poco::Net::HTTPRequest& request,
+                           Poco::MemoryInputStream& message,
+                           std::shared_ptr<StreamSocket>& socket) override
     {
         return WopiTestServer::handleHttpRequest(request, message, socket);
     }
 
-    virtual std::map<std::string, std::string>
+    std::map<std::string, std::string>
         parallelizeCheckInfo(const Poco::Net::HTTPRequest& request,
                              Poco::MemoryInputStream& /*message*/,
                              std::shared_ptr<StreamSocket>& /*socket*/) override
@@ -67,8 +67,8 @@ public:
         };
     }
 
-    virtual bool handleGetFileRequest(const Poco::Net::HTTPRequest& request,
-                                      std::shared_ptr<StreamSocket>& socket)
+    bool handleGetFileRequest(const Poco::Net::HTTPRequest& request,
+                              std::shared_ptr<StreamSocket>& socket) override
     {
         if (_getFileCount++ == 0)
         {
