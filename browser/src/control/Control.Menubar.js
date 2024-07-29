@@ -1497,6 +1497,11 @@ L.Control.Menubar = L.Control.extend({
 	},
 
 	_onRefresh: function() {
+		if (!this._initialized) {
+			this._initialized = true;
+			this._onDocLayerInit();
+		}
+
 		// clear initial menu
 		L.DomUtil.removeChildNodes(this._menubarCont);
 
@@ -1532,6 +1537,24 @@ L.Control.Menubar = L.Control.extend({
 		document.getElementById('main-menu').setAttribute('role', 'menubar');
 		this._addTabIndexPropsToMainMenu();
 		this._createFileIcon();
+	},
+
+	// Function to check if an event is already bound
+	_isEventBound: function(element, eventType, namespace) {
+		var events = $._data($(element)[0], 'events');
+		if (events && events[eventType]) {
+			return namespace 
+				? events[eventType].some(event => event.namespace === namespace)
+				: true;
+		}
+		return false;
+	},
+
+	// Function to bind an event if it's not already bound
+	_bindEventIfNotBound: function(element, eventType, namespace, data, handler) {
+		if (!this._isEventBound(element, eventType, namespace)) {
+			$(element).bind(eventType + (namespace ? '.' + namespace : ''), data, handler);
+		}
 	},
 
 	_onStyleMenu: function (e) {
@@ -1577,12 +1600,11 @@ L.Control.Menubar = L.Control.extend({
 	_onDocLayerInit: function() {
 		this._onRefresh();
 
-		$('#main-menu').bind('select.smapi', {self: this}, this._onItemSelected);
-
-		$('#main-menu').bind('beforeshow.smapi', {self: this}, this._beforeShow);
-		$('#main-menu').bind('click.smapi', {self: this}, this._onClicked);
-
-		$('#main-menu').bind('keydown', {self: this}, this._onKeyDown);
+		// Usage
+		this._bindEventIfNotBound('#main-menu', 'select', 'smapi', {self: this}, this._onItemSelected);
+		this._bindEventIfNotBound('#main-menu', 'beforeshow', 'smapi', {self: this}, this._beforeShow);
+		this._bindEventIfNotBound('#main-menu', 'click', 'smapi', {self: this}, this._onClicked);
+		this._bindEventIfNotBound('#main-menu', 'keydown', '', {self: this}, this._onKeyDown);
 
 		if (window.mode.isMobile()) {
 			$('#main-menu').parent().css('height', '0');
