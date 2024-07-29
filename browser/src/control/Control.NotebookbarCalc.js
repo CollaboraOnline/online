@@ -188,7 +188,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 			});
 		}
 
-		if (window.enableMacrosExecution) {
+		if (!(window.enableMacrosExecution  === 'false')) {
 			content.push({
 				'type': 'toolbox',
 				'children': [

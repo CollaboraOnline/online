@@ -147,6 +147,7 @@ window.createWebSocket = function(uri) {
         }
 
         if (global.socketProxy) {
+                window.socketProxy = true;
                 return new global.ProxySocket(uri);
         } else {
 		// FIXME: rejectUnauthorized: false for SSL?

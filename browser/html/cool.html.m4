@@ -19,50 +19,139 @@ m4_ifelse(IOSAPP,[true],
 <meta name="previewImg" content="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAyMDAgMjAwJz4KICAgPGNpcmNsZSB0cmFuc2Zvcm09J3JvdGF0ZSgwKScgdHJhbnNmb3JtLW9yaWdpbj0nY2VudGVyJyBmaWxsPSdub25lJyBzdHJva2U9JyNCNkI2QjYnIHN0cm9rZS13aWR0aD0nMTUnIHN0cm9rZS1saW5lY2FwPSdyb3VuZCcgc3Ryb2tlLWRhc2hhcnJheT0nMjMwIDEwMDAnIHN0cm9rZS1kYXNob2Zmc2V0PScwJyBjeD0nMTAwJyBjeT0nMTAwJyByPSc3MCc+CiAgICAgPGFuaW1hdGVUcmFuc2Zvcm0KICAgICAgICAgYXR0cmlidXRlTmFtZT0ndHJhbnNmb3JtJwogICAgICAgICB0eXBlPSdyb3RhdGUnCiAgICAgICAgIGZyb209JzAnCiAgICAgICAgIHRvPSczNjAnCiAgICAgICAgIGR1cj0nMicKICAgICAgICAgcmVwZWF0Q291bnQ9J2luZGVmaW5pdGUnPgogICAgICA8L2FuaW1hdGVUcmFuc2Zvcm0+CiAgIDwvY2lyY2xlPgo8L3N2Zz4=">
 <meta name="previewSmile" content="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMjRweCIgdmlld0JveD0iMCAtOTYwIDk2MCA5NjAiIHdpZHRoPSIyNHB4IiBmaWxsPSIjNWY2MzY4Ij48cGF0aCBkPSJtNDI0LTI5NiAyODItMjgyLTU2LTU2LTIyNiAyMjYtMTE0LTExNC01NiA1NiAxNzAgMTcwWm01NiAyMTZxLTgzIDAtMTU2LTMxLjVUMTk3LTE5N3EtNTQtNTQtODUuNS0xMjdUODAtNDgwcTAtODMgMzEuNS0xNTZUMTk3LTc2M3E1NC01NCAxMjctODUuNVQ0ODAtODgwcTgzIDAgMTU2IDMxLjVUNzYzLTc2M3E1NCA1NCA4NS41IDEyN1Q4ODAtNDgwcTAgODMtMzEuNSAxNTZUNzYzLTE5N3EtNTQgNTQtMTI3IDg1LjVUNDgwLTgwWm0wLTgwcTEzNCAwIDIyNy05M3Q5My0yMjdxMC0xMzQtOTMtMjI3dC0yMjctOTNxLTEzNCAwLTIyNyA5M3QtOTMgMjI3cTAgMTM0IDkzIDIyN3QyMjcgOTNabTAtMzIwWiIvPjwvc3ZnPg==">
 
+<script>
 m4_dnl# Define MOBILEAPP as true if this is either for the iOS app or for the gtk+ "app" testbed
 m4_define([MOBILEAPP],[])
 m4_ifelse(IOSAPP,[true],[m4_define([MOBILEAPP],[true])])
 m4_ifelse(GTKAPP,[true],[m4_define([MOBILEAPP],[true])])
 m4_ifelse(ANDROIDAPP,[true],[m4_define([MOBILEAPP],[true])])
 
-m4_dnl# FIXME: This is temporary and not what we actually eventually want.
-m4_dnl# What we really want is not a separate HTML file (produced with M4 conditionals on the below
-m4_dnl# EMSCRIPTENAPP) for a "WASM app". What we want is that the same cool.html page adapts on demand to
-m4_dnl# instead run locally using WASM, if the connection to the COOL server breaks. (And then
-m4_dnl# re-connects to the COOL server when possible.)
+// FIXME: This is temporary and not what we actually eventually want.
+
+// What we really want is not a separate HTML file (produced with M4 conditionals on the below
+// EMSCRIPTENAPP) for a "WASM app". What we want is that the same cool.html page adapts on demand to
+// instead run locally using WASM, if the connection to the COOL server breaks. (And then
+// re-connects to the COOL server when possible.)
 
 m4_ifelse(EMSCRIPTENAPP,[true],[m4_define([MOBILEAPP],[true])])
 
-m4_ifelse(MOBILEAPP, [true],
-[
-  <input type="hidden" id="init-app-type" value="mobile" />
-  <input type="hidden" id="init-help-file" value="m4_syscmd([cat html/cool-help.html])" />
-],
-[
-  <input type="hidden" id="init-welcome-url" value="%WELCOME_URL%" />
-  <input type="hidden" id="init-feedback-url" value="%FEEDBACK_URL%" />
-  <input type="hidden" id="init-buy-product-url" value="%BUYPRODUCT_URL%" />
-  <input type="hidden" id="init-app-type" value="browser" />
-]
+m4_ifelse(MOBILEAPP,[],
+  window.welcomeUrl = '%WELCOME_URL%';
+  window.feedbackUrl = '%FEEDBACK_URL%';
+  window.buyProductUrl = '%BUYPRODUCT_URL%';
+
+  // Start listening for Host_PostmessageReady message and save the
+  // result for future
+  window.WOPIpostMessageReady = false;
+  var PostMessageReadyListener = function(e) {
+    if (!(e && e.data))
+        return;
+
+    try {
+        var msg = JSON.parse(e.data);
+    } catch (err) {
+        return;
+    }
+
+    if (msg.MessageId === 'Host_PostmessageReady') {
+      window.WOPIPostmessageReady = true;
+      window.removeEventListener('message', PostMessageReadyListener, false);
+      console.log('Received Host_PostmessageReady.');
+    }
+  };
+  window.addEventListener('message', PostMessageReadyListener, false);
+)m4_dnl
+
+m4_dnl# For use in conditionals in JS: window.ThisIsAMobileApp, window.ThisIsTheiOSApp,
+m4_dnl# and window.ThisIsTheGtkApp
+
+m4_ifelse(MOBILEAPP,[true],
+  [   window.ThisIsAMobileApp = true;
+   // Fix issue #5841 by setting the welcome, feedback, and buy product URLs
+   // to empty for mobile
+   window.welcomeUrl = '';
+   window.feedbackUrl = '';
+   window.buyProductUrl = '';
+   window.HelpFile = String.raw`m4_syscmd([cat html/cool-help.html])`;
+   window.open = function (url, windowName, windowFeatures) {
+     window.postMobileMessage('HYPERLINK ' + url); /* don't call the 'normal' window.open on mobile at all */
+   }
+   window.MobileAppName='MOBILEAPPNAME';
+   brandProductName='MOBILEAPPNAME';],
+  [   window.ThisIsAMobileApp = false;]
+)
+m4_ifelse(IOSAPP,[true],
+  [   window.ThisIsTheiOSApp = true;
+   window.postMobileMessage = function(msg) { window.webkit.messageHandlers.lok.postMessage(msg); };
+   window.postMobileError   = function(msg) { window.webkit.messageHandlers.error.postMessage(msg); };
+   window.postMobileDebug   = function(msg) { window.webkit.messageHandlers.debug.postMessage(msg); };],
+  [   window.ThisIsTheiOSApp = false;]
+)
+m4_ifelse(GTKAPP,[true],
+  [   window.ThisIsTheGtkApp = true;
+   window.postMobileMessage = function(msg) { window.webkit.messageHandlers.cool.postMessage(msg, '*'); };
+   window.postMobileError   = function(msg) { window.webkit.messageHandlers.error.postMessage(msg, '*'); };
+   window.postMobileDebug   = function(msg) { window.webkit.messageHandlers.debug.postMessage(msg, '*'); };],
+  [   window.ThisIsTheGtkApp = false;]
+)
+m4_ifelse(ANDROIDAPP,[true],
+  [   window.ThisIsTheAndroidApp = true;
+   window.postMobileMessage = function(msg) { window.COOLMessageHandler.postMobileMessage(msg); };
+   window.postMobileError   = function(msg) { window.COOLMessageHandler.postMobileError(msg); };
+   window.postMobileDebug   = function(msg) { window.COOLMessageHandler.postMobileDebug(msg); };],
+  [   window.ThisIsTheAndroidApp = false;]
+)
+m4_ifelse(EMSCRIPTENAPP,[true],
+  [   window.ThisIsTheEmscriptenApp = true;
+   window.postMobileMessage = function(msg) { app.HandleCOOLMessage(app.AllocateUTF8(msg)); };
+   window.postMobileError   = function(msg) { console.log('COOL Error: ' + msg); };
+   window.postMobileDebug   = function(msg) { console.log('COOL Debug: ' + msg); };],
+  [   window.ThisIsTheEmscriptenApp = false;]
 )
 
-<input type="hidden" id="init-uri-prefix" value="m4_ifelse(MOBILEAPP, [], [%SERVICE_ROOT%/browser/%VERSION%/])" />
-<input type="hidden" id="init-branding-name" value="%BRANDING_THEME%" />
+// This function may look unused, but it's needed in WASM and Android to send data through the fake websocket. Please
+// don't remove it without first grepping for 'Base64ToArrayBuffer' in the C++ code
+var Base64ToArrayBuffer = function(base64Str) {
+  var binStr = atob(base64Str);
+  var ab = new ArrayBuffer(binStr.length);
+  var bv = new Uint8Array(ab);
+  for (var i = 0, l = binStr.length; i < l; i++) {
+    bv[[i]] = binStr.charCodeAt(i);
+  }
+  return ab;
+}
 
-m4_dnl# For use in conditionals in JS:
-m4_ifelse(IOSAPP, [true], [<input type="hidden" id="init-mobile-app-os-type" value="IOS" />])
-m4_ifelse(GTKAPP, [true], [<input type="hidden" id="init-mobile-app-os-type" value="GTK" />])
-m4_ifelse(ANDROIDAPP, [true], [<input type="hidden" id="init-mobile-app-os-type" value="ANDROID" />])
-m4_ifelse(EMSCRIPTENAPP, [true], [<input type="hidden" id="init-mobile-app-os-type" value="EMSCRIPTEN" />])
+  window.bundlejsLoaded = false;
+  window.fullyLoadedAndReady = false;
+  window.addEventListener('load', function() {
+    window.fullyLoadedAndReady = true;
+  }, false);
 
-m4_ifelse(EMSCRIPTENAPP, [true], [<script type="text/javascript" src="online.js"></script>])
+</script>
+
+m4_ifelse(EMSCRIPTENAPP,[true],[
+  <script>
+    console.log('================ Before including online.js');
+  </script>
+  <script type="text/javascript" src="online.js"></script>
+  <script>
+    console.log('================ After including online.js');
+  </script>
+])
 
 m4_ifelse(BUNDLE,[],
   <!-- Using individual CSS files -->
   m4_foreachq([fileCSS],[COOL_CSS],[<link rel="stylesheet" href="][m4_ifelse(MOBILEAPP,[],[%SERVICE_ROOT%/browser/%VERSION%/])][fileCSS" />
 ]),
-[<link rel="stylesheet" href="][m4_ifelse(MOBILEAPP,[],[%SERVICE_ROOT%/browser/%VERSION%/][bundle.css"])])
-
+  [<!-- Dynamically load the bundle.css -->
+<script>
+var link = document.createElement('link');
+link.setAttribute("rel", "stylesheet");
+link.setAttribute("type", "text/css");
+link.setAttribute("href", '][m4_ifelse(MOBILEAPP,[],[%SERVICE_ROOT%/browser/%VERSION%/])][bundle.css');
+document.getElementsByTagName("head")[[0]].appendChild(link);
+</script>
+])
 <!--%BRANDING_CSS%--> <!-- add your logo here -->
 m4_ifelse(IOSAPP,[true],
   [<link rel="stylesheet" href="Branding/branding.css">])
@@ -209,67 +298,145 @@ m4_ifelse(MOBILEAPP,[true],
       </div>
     </div>
 
-m4_ifelse(MOBILEAPP, [true],
-     [
-      <input type="hidden" id="initial-variables"
-      m4_ifelse(EMSCRIPTENAPP, [true],
-        [
-          data-access-token='%ACCESS_TOKEN%'
-          data-access-token-ttl='%ACCESS_TOKEN_TTL%'
-          data-access-header='%ACCESS_HEADER%'
-        ]
+    <script>
+m4_ifelse(MOBILEAPP,[true],
+     [window.host = '';
+      window.serviceRoot = '';
+      window.hexifyUrl = false;
+      // We can't use %VERSION% here as there is no FileServer.cpp involved in a mobile app that
+      // would expand the %FOO% things. But it seems that window.versionPath is not used in the
+      // mobile apps anyway.
+      // window.versionPath = 'UNKNOWN';
+      m4_ifelse(EMSCRIPTENAPP,[true],
+              [window.accessToken = '%ACCESS_TOKEN%';
+              window.accessTokenTTL = '%ACCESS_TOKEN_TTL%';
+              window.accessHeader = '%ACCESS_HEADER%';],
+              [window.accessToken = '';
+              window.accessTokenTTL = '';
+              window.accessHeader = '';]
       )
-      />
-      ],
-     [
-      <input type="hidden" id="initial-variables"
-      data-host = "%HOST%"
-      data-service-root = "%SERVICE_ROOT%"
-      data-hexify-url = "%HEXIFY_URL%"
-      data-version-path = "%VERSION%"
-      data-access-token = "%ACCESS_TOKEN%"
-      data-access-token-ttl = "%ACCESS_TOKEN_TTL%"
-      data-access-header = "%ACCESS_HEADER%"
-      data-post-message-origin-ext = "%POSTMESSAGE_ORIGIN%"
-      data-cool-logging = "%BROWSER_LOGGING%"
-      data-coolwsd-version = "%COOLWSD_VERSION%"
-      data-enable-welcome-message = "%ENABLE_WELCOME_MSG%"
-      data-auto-show-welcome = "%AUTO_SHOW_WELCOME%"
-      data-auto-show-feedback = "%AUTO_SHOW_FEEDBACK%"
-      data-allow-update-notification = "%ENABLE_UPDATE_NOTIFICATION%"
-      data-user-interface-mode = "%USER_INTERFACE_MODE%"
-      data-use-integration-theme = "%USE_INTEGRATION_THEME%"
-      data-enable-macros-execution = "%ENABLE_MACROS_EXECUTION%"
-      data-enable-accessibility = "%ENABLE_ACCESSIBILITY%"
-      data-out-of-focus-timeout-secs = "%OUT_OF_FOCUS_TIMEOUT_SECS%"
-      data-idle-timeout-secs = "%IDLE_TIMEOUT_SECS%"
-      data-protocol-debug = "%PROTOCOL_DEBUG%"
-      data-enable-debug = "%ENABLE_DEBUG%"
-      data-frame-ancestors = "%FRAME_ANCESTORS%"
-      data-socket-proxy = "%SOCKET_PROXY%"
-      data-ui-defaults = "%UI_DEFAULTS%"
-      data-check-file-info-override = "%CHECK_FILE_INFO_OVERRIDE%"
-      data-deepl-enabled = "%DEEPL_ENABLED%"
-      data-zotero-enabled = "%ZOTERO_ENABLED%"
-      data-saved-ui-state = "%SAVED_UI_STATE%"
-      data-wasm-enabled = "%WASM_ENABLED%"
-      data-indirection-url = "%INDIRECTION_URL%"
-      />
-    ])
+      window.postMessageOriginExt = '';
+      window.coolLogging = 'true';
+      window.enableWelcomeMessage = false;
+      window.autoShowWelcome = false;
+      window.autoShowFeedback = true;
+      window.allowUpdateNotification = false;
+      window.outOfFocusTimeoutSecs = 1000000;
+      window.idleTimeoutSecs = 1000000;
+      window.protocolDebug = false;
+      window.enableDebug = false;
+      window.frameAncestors = '';
+      window.socketProxy = false;
+      window.tileSize = 256;
+      window.uiDefaults = {};
+      window.useIntegrationTheme = 'false';
+      window.checkFileInfoOverride = {};
+      window.deeplEnabled = false;
+      window.zoteroEnabled = false;
+      window.savedUIState = true;
+      window.wasmEnabled = false;
+      window.indirectionUrl='';],
+     [window.host = '%HOST%';
+      window.serviceRoot = '%SERVICE_ROOT%';
+      window.hexifyUrl = %HEXIFY_URL%;
+      window.versionPath = '%VERSION%';
+      window.accessToken = '%ACCESS_TOKEN%';
+      window.accessTokenTTL = '%ACCESS_TOKEN_TTL%';
+      window.accessHeader = '%ACCESS_HEADER%';
+      window.postMessageOriginExt = '%POSTMESSAGE_ORIGIN%';
+      window.coolLogging = '%BROWSER_LOGGING%';
+      window.coolwsdVersion = '%COOLWSD_VERSION%';
+      window.enableWelcomeMessage = %ENABLE_WELCOME_MSG%;
+      window.autoShowWelcome = %AUTO_SHOW_WELCOME%;
+      window.autoShowFeedback = %AUTO_SHOW_FEEDBACK%;
+      window.allowUpdateNotification = %ENABLE_UPDATE_NOTIFICATION%;
+      window.userInterfaceMode = '%USER_INTERFACE_MODE%';
+      window.useIntegrationTheme = '%USE_INTEGRATION_THEME%';
+      window.enableMacrosExecution = '%ENABLE_MACROS_EXECUTION%';
+      window.enableAccessibility = '%ENABLE_ACCESSIBILITY%' === 'true';
+      window.outOfFocusTimeoutSecs = %OUT_OF_FOCUS_TIMEOUT_SECS%;
+      window.idleTimeoutSecs = %IDLE_TIMEOUT_SECS%;
+      window.protocolDebug = %PROTOCOL_DEBUG%;
+      window.enableDebug = %ENABLE_DEBUG%;
+      window.frameAncestors = decodeURIComponent('%FRAME_ANCESTORS%');
+      window.socketProxy = %SOCKET_PROXY%;
+      window.tileSize = 256;
+      window.uiDefaults = %UI_DEFAULTS%;
+      window.checkFileInfoOverride = %CHECK_FILE_INFO_OVERRIDE%;
+      window.deeplEnabled = %DEEPL_ENABLED%;
+      window.zoteroEnabled = %ZOTERO_ENABLED%;
+      window.savedUIState = %SAVED_UI_STATE%;
+      window.wasmEnabled = %WASM_ENABLED%;
+      window.indirectionUrl='%INDIRECTION_URL%';])
 
-m4_dnl This is GLOBAL_JS:
-m4_ifelse(MOBILEAPP, [true],
-  [<script type="text/javascript" src="global.js"></script>],
-  [<script type="text/javascript" src="%SERVICE_ROOT%/browser/%VERSION%/global.js"></script>]
-)
+// This is GLOBAL_JS:
+m4_syscmd([cat ]GLOBAL_JS)m4_dnl
+
+// Related to issue #5841: the iOS app sets the base text direction via the
+// "dir" parameter
+m4_ifelse(IOSAPP,[true],
+     [document.dir = window.coolParams.get('dir');])
+
+m4_ifelse(IOSAPP,[true],
+     [window.userInterfaceMode = window.coolParams.get('userinterfacemode');])
+
+m4_ifelse(ANDROIDAPP,[true],
+     [window.userInterfaceMode = window.coolParams.get('userinterfacemode');])
+
+var darkTheme = window.coolParams.get('darkTheme');
+if (darkTheme) {window.uiDefaults = {'darkTheme': true};}
+
+m4_ifelse(EMSCRIPTENAPP,[true],
+     [window.userInterfaceMode = 'notebookbar';])
+
+// Dynamically load the appropriate *-mobile.css, *-tablet.css or *-desktop.css
+var link = document.createElement('link');
+link.setAttribute("rel", "stylesheet");
+link.setAttribute("type", "text/css");
+var brandingLink = document.createElement('link');
+brandingLink.setAttribute("rel", "stylesheet");
+brandingLink.setAttribute("type", "text/css");
+
+var theme_name = '%BRANDING_THEME%';
+var theme_prefix = '';
+if(window.useIntegrationTheme === 'true' && theme_name !== '') {
+    theme_prefix = theme_name + '/';
+}
+
+if (window.mode.isMobile()) {
+    [link.setAttribute("href", ']m4_ifelse(MOBILEAPP,[],[%SERVICE_ROOT%/browser/%VERSION%/])[device-mobile.css');]
+    [brandingLink.setAttribute("href", ']m4_ifelse(MOBILEAPP,[],[%SERVICE_ROOT%/browser/%VERSION%/])m4_ifelse(IOSAPP,[true],[Branding/])[' + theme_prefix + 'branding-mobile.css');]
+} else if (window.mode.isTablet()) {
+    [link.setAttribute("href", ']m4_ifelse(MOBILEAPP,[],[%SERVICE_ROOT%/browser/%VERSION%/])[device-tablet.css');]
+    [brandingLink.setAttribute("href", ']m4_ifelse(MOBILEAPP,[],[%SERVICE_ROOT%/browser/%VERSION%/])m4_ifelse(IOSAPP,[true],[Branding/])[' + theme_prefix + 'branding-tablet.css');]
+} else {
+    [link.setAttribute("href", ']m4_ifelse(MOBILEAPP,[],[%SERVICE_ROOT%/browser/%VERSION%/])[device-desktop.css');]
+    [brandingLink.setAttribute("href", ']m4_ifelse(MOBILEAPP,[],[%SERVICE_ROOT%/browser/%VERSION%/])[' + theme_prefix + 'branding-desktop.css');]
+}
+document.getElementsByTagName("head")[[0]].appendChild(link);
+document.getElementsByTagName("head")[[0]].appendChild(brandingLink);
+</script>
 
 m4_ifelse(MOBILEAPP,[true],
   <!-- This is for a mobile app so the script files are in the same folder -->
-  m4_ifelse(BUNDLE, [], m4_foreachq([fileJS], [COOL_JS], [<script src="fileJS" defer></script>]), [<script src="bundle.js" defer></script>]),
-  m4_ifelse(BUNDLE, [], m4_foreachq([fileJS], [COOL_JS],
-        [<script src="%SERVICE_ROOT%/browser/%VERSION%/fileJS" defer></script>]), [<script src="%SERVICE_ROOT%/browser/%VERSION%/bundle.js" defer></script>])
+  m4_ifelse(BUNDLE,[],m4_foreachq([fileJS],[COOL_JS],
+  [    <script src="fileJS" defer></script>
+  ]),
+  [    <script src="bundle.js" defer></script>
+  ]),
+  m4_ifelse(BUNDLE,[],
+      <!-- Using indivisual JS files -->
+      m4_foreachq([fileJS],[COOL_JS],
+      [ <script src="%SERVICE_ROOT%/browser/%VERSION%/fileJS" defer></script>
+      ]),
+  [
+       <!-- Using bundled JS files -->
+       <script src="%SERVICE_ROOT%/browser/%VERSION%/bundle.js" defer></script>
+  ])
 )m4_dnl
 
-m4_ifelse(MOBILEAPP, [true], [<script src="m4_ifelse(IOSAPP, [true], [Branding/])branding.js"></script>],
-        [<!--%BRANDING_JS%--> <!-- logo onclick handler --><!--%CSS_VARIABLES%-->])
+    m4_ifelse(MOBILEAPP,[true],
+    [<script src="m4_ifelse(IOSAPP,[true],[Branding/])branding.js"></script>],
+    [<!--%BRANDING_JS%--> <!-- logo onclick handler -->
+    <!--%CSS_VARIABLES%-->])
 </body></html>

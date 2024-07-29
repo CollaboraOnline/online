@@ -11,524 +11,7 @@ window.app = {
 	console: {}
 };
 
-// This function may look unused, but it's needed in WASM and Android to send data through the fake websocket. Please
-// don't remove it without first grepping for 'Base64ToArrayBuffer' in the C++ code
-// eslint-disable-next-line
-var Base64ToArrayBuffer = function(base64Str) {
-	var binStr = atob(base64Str);
-	var ab = new ArrayBuffer(binStr.length);
-	var bv = new Uint8Array(ab);
-	for (var i = 0, l = binStr.length; i < l; i++) {
-		bv[[i]] = binStr.charCodeAt(i);
-	}
-	return ab;
-};
-
-// Put these into a class to separate them better.
-class BrowserProperties {
-	static initiateBrowserProperties(global) {
-		global.L = {};
-
-		var ua = navigator.userAgent.toLowerCase(),
-		uv = navigator.vendor.toLowerCase(),
-		doc = document.documentElement,
-
-		ie = 'ActiveXObject' in global,
-
-		cypressTest = ua.indexOf('cypress') !== -1,
-		// Firefox has undefined navigator.clipboard.read and navigator.clipboard.write,
-		// unsecure contexts (such as http + non-localhost) has the entire navigator.clipboard
-		// undefined.
-		hasNavigatorClipboardRead = navigator.clipboard && navigator.clipboard.read,
-		hasNavigatorClipboardWrite = navigator.clipboard && navigator.clipboard.write,
-		webkit    = ua.indexOf('webkit') !== -1,
-		phantomjs = ua.indexOf('phantom') !== -1,
-		android23 = ua.search('android [23]') !== -1,
-		chrome    = ua.indexOf('chrome') !== -1,
-		gecko     = (ua.indexOf('gecko') !== -1 || (cypressTest && 'MozUserFocus' in doc.style))
-			&& !webkit && !global.opera && !ie,
-		safari    = !chrome && (ua.indexOf('safari') !== -1 || uv.indexOf('apple') == 0),
-
-		win = navigator.platform.indexOf('Win') === 0,
-
-		mobile = typeof orientation !== 'undefined' || ua.indexOf('mobile') !== -1,
-		msPointer = !global.PointerEvent && global.MSPointerEvent,
-		pointer = (global.PointerEvent && navigator.pointerEnabled && navigator.maxTouchPoints) || msPointer,
-
-		ie3d = ie && ('transition' in doc.style),
-		webkit3d = ('WebKitCSSMatrix' in global) && ('m11' in new global.WebKitCSSMatrix()) && !android23,
-		gecko3d = 'MozPerspective' in doc.style,
-		opera12 = 'OTransition' in doc.style;
-
-		var mac = navigator.appVersion.indexOf('Mac') != -1 || navigator.userAgent.indexOf('Mac') != -1;
-		var chromebook = global.ThisIsTheAndroidApp && global.COOLMessageHandler.isChromeOS();
-
-		var isInternetExplorer = (navigator.userAgent.toLowerCase().indexOf('msie') != -1 ||
-				  navigator.userAgent.toLowerCase().indexOf('trident') != -1);
-
-		var navigatorLang = navigator.languages && navigator.languages.length ? navigator.languages[0] :
-		(navigator.language || navigator.userLanguage || navigator.browserLanguage || navigator.systemLanguage);
-
-		function getFirefoxVersion() {
-			var version = '';
-
-			var userAgent = navigator.userAgent.toLowerCase();
-			if (userAgent.indexOf('firefox') !== -1) {
-				var matches = userAgent.match(/firefox\/([0-9]+\.*[0-9]*)/);
-				if (matches) {
-					version = matches[1];
-				}
-			}
-			return version;
-		}
-
-		window.L.Browser = {
-			// @property ie: Boolean
-			// `true` for all Internet Explorer versions (not Edge).
-			ie: ie,
-
-			// @property ielt9: Boolean
-			// `true` for Internet Explorer versions less than 9.
-			ielt9: ie && !document.addEventListener, // TODO remove this after removing leaflet.
-
-			// @property edge: Boolean
-			// `true` for the Edge web browser.
-			edge: 'msLaunchUri' in navigator && !('documentMode' in document),
-
-			// @property webkit: Boolean
-			// `true` for webkit-based browsers like Chrome and Safari (including mobile versions).
-			webkit: webkit,
-
-			// @property gecko: Boolean
-			// `true` for gecko-based browsers like Firefox.
-			gecko: gecko,
-
-			// @property geckoVersion: String
-			// Firefox version: abc.d.
-			geckoVersion: getFirefoxVersion(),
-
-			// @property android: Boolean
-			// `true` for any browser running on an Android platform.
-			android: ua.indexOf('android') !== -1,
-
-			// @property android23: Boolean
-			// `true` for browsers running on Android 2 or Android 3.
-			android23: android23,
-
-			// @property chrome: Boolean
-			// `true` for the Chrome browser.
-			chrome: chrome,
-
-			// @property safari: Boolean
-			// `true` for the Safari browser.
-			safari: safari,
-
-			// @property win: Boolean
-			// `true` when the browser is running in a Windows platform
-			win: win,
-
-			// @property mac: Boolean
-			// `true` when the browser is running in a Mac platform
-			mac: mac,
-
-			// @property ie3d: Boolean
-			// `true` for all Internet Explorer versions supporting CSS transforms.
-			ie3d: ie3d,
-
-			// @property isInternetExplorer: Boolean
-			// `true` for Internet Explorer
-			isInternetExplorer: isInternetExplorer,
-
-			// @property webkit3d: Boolean
-			// `true` for webkit-based browsers supporting CSS transforms.
-			webkit3d: webkit3d,
-
-			// @property gecko3d: Boolean
-			// `true` for gecko-based browsers supporting CSS transforms.
-			gecko3d: gecko3d,
-
-			// @property opera12: Boolean
-			// `true` for the Opera browser supporting CSS transforms (version 12 or later).
-			opera12: opera12,
-
-			// @property any3d: Boolean
-			// `true` for all browsers supporting CSS transforms.
-			any3d: !global.L_DISABLE_3D && (ie3d || webkit3d || gecko3d) && !opera12 && !phantomjs,
-
-
-			// @property mobile: Boolean
-			// `true` for all browsers running in a mobile device.
-			mobile: mobile,
-
-			// @property mobileWebkit: Boolean
-			// `true` for all webkit-based browsers in a mobile device.
-			mobileWebkit: mobile && webkit,
-
-			// @property mobileWebkit3d: Boolean
-			// `true` for all webkit-based browsers in a mobile device supporting CSS transforms.
-			mobileWebkit3d: mobile && webkit3d,
-
-			// @property mobileOpera: Boolean
-			// `true` for the Opera browser in a mobile device.
-			mobileOpera: mobile && global.opera,
-
-			// @property mobileGecko: Boolean
-			// `true` for gecko-based browsers running in a mobile device.
-			mobileGecko: mobile && gecko,
-
-			// @property cypressTest: Boolean
-			// `true` when the browser run by cypress
-			cypressTest: cypressTest,
-
-			// @property hasNavigatorClipboardRead: Boolean
-			// `true` when permission-based clipboard paste is available.
-			hasNavigatorClipboardRead: hasNavigatorClipboardRead,
-
-			// @property hasNavigatorClipboardWrite: Boolean
-			// `true` when permission-based clipboard copy is available.
-			hasNavigatorClipboardWrite: hasNavigatorClipboardWrite,
-
-			// @property msPointer: Boolean
-			// `true` for browsers implementing the Microsoft touch events model (notably IE10).
-			msPointer: !!msPointer,
-
-			// @property pointer: Boolean
-			// `true` for all browsers supporting [pointer events](https://msdn.microsoft.com/en-us/library/dn433244%28v=vs.85%29.aspx).
-			pointer: !!pointer,
-
-			// @property retina: Boolean
-			// `true` for browsers on a high-resolution "retina" screen.
-			retina: (global.devicePixelRatio || (global.screen.deviceXDPI / global.screen.logicalXDPI)) > 1,
-
-			// @property lang: String
-			// browser language locale
-			lang: navigatorLang
-		};
-
-		global.mode = {
-			isChromebook: function() {
-				return chromebook;
-			},
-			// Here "mobile" means "mobile phone" (at least for now). Has to match small screen size
-			// requirement.
-			isMobile: function() {
-				if (global.mode.isChromebook())
-					return false;
-
-				if (global.L.Browser.mobile && global.L.Browser.cypressTest) {
-					return true;
-				}
-
-				return global.L.Browser.mobile && (screen.width < 768 || screen.height < 768);
-			},
-			// Mobile device with big screen size.
-			isTablet: function() {
-				if (global.mode.isChromebook())
-					return false;
-
-				return global.L.Browser.mobile && !global.mode.isMobile();
-			},
-			isDesktop: function() {
-				if (global.mode.isChromebook())
-					return true;
-
-				return !global.L.Browser.mobile;
-			},
-			getDeviceFormFactor: function() {
-				if (global.mode.isMobile())
-					return 'mobile';
-				else if (global.mode.isTablet())
-					return 'tablet';
-				else if (global.mode.isDesktop())
-					return 'desktop';
-				else
-					return null;
-			}
-		};
-	}
-}
-
-class InitializerBase {
-	constructor() {
-		BrowserProperties.initiateBrowserProperties(window);
-
-		this.uriPrefix = document.getElementById('init-uri-prefix').value;
-		this.brandingUriPrefix = this.uriPrefix;
-
-		window.welcomeUrl = document.getElementById("init-welcome-url").value ? document.getElementById("init-welcome-url").value: "";
-		window.feedbackUrl = document.getElementById("init-feedback-url").value ? document.getElementById("init-feedback-url").value: "";
-		window.buyProductUrl = document.getElementById("init-buy-product-url").value ? document.getElementById("init-buy-product-url").value: "";
-
-		const element = document.getElementById("initial-variables");
-
-		window.host = "";
-		window.serviceRoot = "";
-		window.hexifyUrl = false;
-		window.versionPath = "";
-		window.accessToken = element.dataset.accessToken;
-		window.accessTokenTTL = element.dataset.accessTokenTtl;
-		window.accessHeader = element.dataset.accessHeader;
-		window.postMessageOriginExt = "";
-		window.coolwsdVersion = "";
-		window.enableWelcomeMessage = false;
-		window.autoShowWelcome = false;
-		window.autoShowFeedback = true;
-		window.allowUpdateNotification = false;
-		window.useIntegrationTheme = false;
-		window.enableMacrosExecution = false;
-		window.enableAccessibility = false;
-		window.protocolDebug = false;
-		window.enableDebug = false;
-		window.frameAncestors = "";
-		window.socketProxy = false;
-		window.uiDefaults = {};
-		window.checkFileInfoOverride = {};
-		window.deeplEnabled = false;
-		window.zoteroEnabled = false;
-		window.savedUIState = true;
-		window.wasmEnabled = false;
-		window.indirectionUrl = "";
-
-		window.tileSize = 256;
-
-		window.ThisIsAMobileApp = false;
-		window.ThisIsTheiOSApp = false;
-		window.ThisIsTheGtkApp = false;
-		window.ThisIsTheAndroidApp = false;
-		window.ThisIsTheEmscriptenApp = false;
-
-		window.bundlejsLoaded = false;
-		window.fullyLoadedAndReady = false;
-		window.addEventListener('load', function() {
-			window.fullyLoadedAndReady = true;
-		}, false);
-
-		this.initiateCoolParams();
-	}
-
-	initiateCoolParams() {
-		const gls = window.location.search;
-
-		const coolParams = { p: new URLSearchParams(gls.slice(gls.lastIndexOf('?') + 1)) };
-
-		/* We need to return an empty string instead of `null` */
-		coolParams.get = function(name) {
-			const value = this.p.get(name);
-			return value === null ? '' : value;
-		}.bind(coolParams);
-
-		coolParams.set = function(name, value) {
-			this.p.set(name, value);
-		}.bind(coolParams);
-
-		window.coolParams = coolParams;
-	}
-
-	loadCSSFiles() {
-		// Dynamically load the appropriate *-mobile.css, *-tablet.css or *-desktop.css
-		const link = document.createElement('link');
-		link.setAttribute("rel", "stylesheet");
-		link.setAttribute("type", "text/css");
-
-		const brandingLink = document.createElement('link');
-		brandingLink.setAttribute("rel", "stylesheet");
-		brandingLink.setAttribute("type", "text/css");
-
-		const theme_name = document.getElementById('init-branding-name').value;
-		let theme_prefix = '';
-
-		if(window.useIntegrationTheme && theme_name !== '')
-			theme_prefix = theme_name + '/';
-
-		if (window.mode.isMobile()) {
-			link.setAttribute("href", this.uriPrefix + 'device-mobile.css');
-			brandingLink.setAttribute("href", this.brandingUriPrefix + theme_prefix + 'branding-mobile.css');
-		} else if (window.mode.isTablet()) {
-			link.setAttribute("href", this.uriPrefix + 'device-tablet.css');
-			brandingLink.setAttribute("href", this.brandingUriPrefix + theme_prefix + 'branding-tablet.css');
-		} else {
-			link.setAttribute("href", this.uriPrefix + 'device-desktop.css');
-			brandingLink.setAttribute("href", this.brandingUriPrefix + theme_prefix + 'branding-desktop.css');
-		}
-
-		document.getElementsByTagName("head")[[0]].appendChild(link);
-		document.getElementsByTagName("head")[[0]].appendChild(brandingLink);
-	}
-
-	initializeViewMode() {
-		const darkTheme = window.coolParams.get('darkTheme');
-		if (darkTheme) { window.uiDefaults = { 'darkTheme': true }; }
-	}
-
-	afterInitialization() {
-		this.initializeViewMode();
-		this.loadCSSFiles();
-	}
-}
-
-class BrowserInitializer extends InitializerBase {
-	constructor() {
-		super();
-
-		window.WOPIpostMessageReady = false;
-
-		// Start listening for Host_PostmessageReady message and save the result for future
-		window.addEventListener('message', this.postMessageHandler.bind(this), false);
-
-		const element = document.getElementById("initial-variables");
-
-		window.host = element.dataset.host;
-		window.serviceRoot = element.dataset.serviceRoot;
-		window.hexifyUrl = element.dataset.hexifyUrl.toLowerCase().trim() === "true";
-		window.versionPath = element.dataset.versionPath;
-
-		window.postMessageOriginExt = element.dataset.postMessageOriginExt;
-		window.coolLogging = element.dataset.coolLogging;
-		window.coolwsdVersion = element.dataset.coolwsdVersion;
-		window.enableWelcomeMessage = element.dataset.enableWelcomeMessage.toLowerCase().trim() === "true";
-		window.autoShowWelcome = element.dataset.autoShowWelcome.toLowerCase().trim() === "true";
-		window.autoShowFeedback = element.dataset.autoShowFeedback.toLowerCase().trim() === "true";
-		window.allowUpdateNotification = element.dataset.allowUpdateNotification.toLowerCase().trim() === "true";
-		window.userInterfaceMode = element.dataset.userInterfaceMode;
-		window.useIntegrationTheme = element.dataset.useIntegrationTheme.toLowerCase().trim() === "true";
-		window.enableMacrosExecution = element.dataset.enableMacrosExecution.toLowerCase().trim() === "true";
-		window.enableAccessibility = element.dataset.enableAccessibility.toLowerCase().trim() === "true";
-		window.outOfFocusTimeoutSecs = parseInt(element.dataset.outOfFocusTimeoutSecs);
-		window.idleTimeoutSecs = parseInt(element.dataset.idleTimeoutSecs);
-		window.protocolDebug = element.dataset.protocolDebug.toLowerCase().trim() === "true";
-		window.enableDebug = element.dataset.enableDebug.toLowerCase().trim() === "true";
-		window.frameAncestors = decodeURIComponent(element.dataset.frameAncestors);
-		window.socketProxy = element.dataset.socketProxy.toLowerCase().trim() === "true";
-		window.uiDefaults = element.dataset.uiDefaults;
-		window.checkFileInfoOverride = element.dataset.checkFileInfoOverride;
-		window.deeplEnabled = element.dataset.deeplEnabled.toLowerCase().trim() === "true";
-		window.zoteroEnabled = element.dataset.zoteroEnabled.toLowerCase().trim() === "true";
-		window.savedUIState = element.dataset.savedUiState.toLowerCase().trim() === "true";
-		window.wasmEnabled = element.dataset.wasmEnabled.toLowerCase().trim() === "true";
-		window.indirectionUrl = element.dataset.indirectionUrl;
-	}
-
-	postMessageHandler(e) {
-		if (!(e && e.data))
-			return;
-
-		try {
-			var msg = JSON.parse(e.data);
-		} catch (err) {
-			return;
-		}
-
-		if (msg.MessageId === 'Host_PostmessageReady') {
-			window.WOPIPostmessageReady = true;
-			window.removeEventListener('message', this.postMessageHandler, false);
-			console.log('Received Host_PostmessageReady.');
-		}
-	}
-}
-
-class MobileAppInitializer extends InitializerBase {
-	constructor() {
-		super();
-
-		window.ThisIsAMobileApp = true;
-		window.HelpFile = document.getElementById("init-help-file").value;
-
-		// eslint-disable-next-line
-		window.open = function (url, windowName, windowFeatures) {
-		  window.postMobileMessage('HYPERLINK ' + url); /* don't call the 'normal' window.open on mobile at all */
-		};
-
-		window.MobileAppName = 'MOBILEAPPNAME';
-		window.brandProductName = 'MOBILEAPPNAME';
-
-		window.coolLogging = "true";
-		window.outOfFocusTimeoutSecs = 1000000;
-		window.idleTimeoutSecs = 1000000;
-	}
-}
-
-class IOSAppInitializer extends MobileAppInitializer {
-	constructor() {
-		super();
-
-		window.ThisIsTheiOSApp = true;
-		window.postMobileMessage = function(msg) { window.webkit.messageHandlers.lok.postMessage(msg); };
-		window.postMobileError   = function(msg) { window.webkit.messageHandlers.error.postMessage(msg); };
-		window.postMobileDebug   = function(msg) { window.webkit.messageHandlers.debug.postMessage(msg); };
-
-		// Related to issue #5841: the iOS app sets the base text direction via the "dir" parameter
-		document.dir = window.coolParams.get('dir');
-
-		window.userInterfaceMode = window.coolParams.get('userinterfacemode');
-
-		this.brandingUriPrefix = "Branding/" + this.brandingUriPrefix;
-	}
-}
-
-class GTKAppInitializer extends MobileAppInitializer {
-	constructor() {
-		super();
-
-		window.ThisIsTheGtkApp = true;
-		window.postMobileMessage = function(msg) { window.webkit.messageHandlers.cool.postMessage(msg, '*'); };
-		window.postMobileError   = function(msg) { window.webkit.messageHandlers.error.postMessage(msg, '*'); };
-		window.postMobileDebug   = function(msg) { window.webkit.messageHandlers.debug.postMessage(msg, '*'); };
-	}
-}
-
-class AndroidAppInitializer extends MobileAppInitializer {
-	constructor() {
-		super();
-
-		window.ThisIsTheAndroidApp = true;
-		window.postMobileMessage = function(msg) { window.COOLMessageHandler.postMobileMessage(msg); };
-		window.postMobileError   = function(msg) { window.COOLMessageHandler.postMobileError(msg); };
-		window.postMobileDebug   = function(msg) { window.COOLMessageHandler.postMobileDebug(msg); };
-
-		window.userInterfaceMode = window.coolParams.get('userinterfacemode');
-	}
-}
-
-class EMSCRIPTENAppInitializer extends MobileAppInitializer {
-	constructor() {
-		super();
-
-		window.ThisIsTheEmscriptenApp = true;
-		window.postMobileMessage = function(msg) { app.HandleCOOLMessage(app.AllocateUTF8(msg)); };
-		window.postMobileError   = function(msg) { console.log('COOL Error: ' + msg); };
-		window.postMobileDebug   = function(msg) { console.log('COOL Debug: ' + msg); };
-
-		window.userInterfaceMode = 'notebookbar';
-	}
-}
-
-function getInitializerClass() {
-	window.appType = document.getElementById("init-app-type").value;
-
-	if (window.appType === "browser") {
-		return new BrowserInitializer();
-	}
-	else if (window.appType === "mobile") {
-		let osType = document.getElementById("init-mobile-app-os-type");
-
-		if (osType) {
-			osType = osType.value;
-
-			if (osType === "IOS")
-				return new IOSAppInitializer();
-			else if (osType === "GTK")
-				return new GTKAppInitializer();
-			else if (osType === "ANDROID")
-				return new AndroidAppInitializer();
-			else if (osType === "EMSCRIPTEN")
-				return new EMSCRIPTENAppInitializer();
-		}
-	}
-}
-
 (function (global) {
-	const initializer = getInitializerClass();
-	initializer.afterInitialization();
 
 	global.logServer = function (log) {
 		if (global.ThisIsAMobileApp) {
@@ -598,12 +81,205 @@ function getInitializerClass() {
 
 	global.setLogging(global.coolLogging != '');
 
+	var gls = global.location.search;
+	var coolParams = {
+		p: new URLSearchParams(gls.slice(gls.lastIndexOf('?') + 1)),
+	};
+	/* We need to return an empty string instead of `null` */
+	coolParams.get = function(name) {
+		var value = this.p.get(name);
+		return value === null ? '' : value;
+	}.bind(coolParams);
+	coolParams.set = function(name, value) {
+		this.p.set(name, value);
+	}.bind(coolParams);
+	global.coolParams = coolParams;
+
+	var ua = navigator.userAgent.toLowerCase(),
+	    uv = navigator.vendor.toLowerCase(),
+	    doc = document.documentElement,
+
+	    ie = 'ActiveXObject' in global,
+
+	    cypressTest = ua.indexOf('cypress') !== -1,
+	    // Firefox has undefined navigator.clipboard.read and navigator.clipboard.write,
+	    // unsecure contexts (such as http + non-localhost) has the entire navigator.clipboard
+	    // undefined.
+	    hasNavigatorClipboardRead = navigator.clipboard && navigator.clipboard.read,
+	    hasNavigatorClipboardWrite = navigator.clipboard && navigator.clipboard.write,
+	    webkit    = ua.indexOf('webkit') !== -1,
+	    phantomjs = ua.indexOf('phantom') !== -1,
+	    android23 = ua.search('android [23]') !== -1,
+	    chrome    = ua.indexOf('chrome') !== -1,
+	    gecko     = (ua.indexOf('gecko') !== -1 || (cypressTest && 'MozUserFocus' in doc.style))
+			&& !webkit && !global.opera && !ie,
+	    safari    = !chrome && (ua.indexOf('safari') !== -1 || uv.indexOf('apple') == 0),
+
+	    win = navigator.platform.indexOf('Win') === 0,
+
+	    mobile = typeof orientation !== 'undefined' || ua.indexOf('mobile') !== -1,
+	    msPointer = !global.PointerEvent && global.MSPointerEvent,
+	    pointer = (global.PointerEvent && navigator.pointerEnabled && navigator.maxTouchPoints) || msPointer,
+
+	    ie3d = ie && ('transition' in doc.style),
+	    webkit3d = ('WebKitCSSMatrix' in global) && ('m11' in new global.WebKitCSSMatrix()) && !android23,
+	    gecko3d = 'MozPerspective' in doc.style,
+	    opera12 = 'OTransition' in doc.style;
+
+	var mac = navigator.appVersion.indexOf('Mac') != -1 || navigator.userAgent.indexOf('Mac') != -1;
+	var chromebook = global.ThisIsTheAndroidApp && global.COOLMessageHandler.isChromeOS();
+
+	var isInternetExplorer = (navigator.userAgent.toLowerCase().indexOf('msie') != -1 ||
+				  navigator.userAgent.toLowerCase().indexOf('trident') != -1);
+
+	var navigatorLang = navigator.languages && navigator.languages.length ? navigator.languages[0] :
+	    (navigator.language || navigator.userLanguage || navigator.browserLanguage || navigator.systemLanguage);
+
+	function getFirefoxVersion() {
+		var version = '';
+
+		var userAgent = navigator.userAgent.toLowerCase();
+		if (userAgent.indexOf('firefox') !== -1) {
+			var matches = userAgent.match(/firefox\/([0-9]+\.*[0-9]*)/);
+			if (matches) {
+				version = matches[1];
+			}
+		}
+		return version;
+	}
+
+	global.L = {};
+
 	global.L.Params = {
 		/// Shows close button if non-zero value provided
 		closeButtonEnabled: global.coolParams.get('closebutton'),
 
 		/// Shows revision history file menu option
 		revHistoryEnabled: global.coolParams.get('revisionhistory'),
+	};
+
+	global.L.Browser = {
+
+		// @property ie: Boolean
+		// `true` for all Internet Explorer versions (not Edge).
+		ie: ie,
+
+		// @property ielt9: Boolean
+		// `true` for Internet Explorer versions less than 9.
+		ielt9: ie && !document.addEventListener,
+
+		// @property edge: Boolean
+		// `true` for the Edge web browser.
+		edge: 'msLaunchUri' in navigator && !('documentMode' in document),
+
+		// @property webkit: Boolean
+		// `true` for webkit-based browsers like Chrome and Safari (including mobile versions).
+		webkit: webkit,
+
+		// @property gecko: Boolean
+		// `true` for gecko-based browsers like Firefox.
+		gecko: gecko,
+
+		// @property geckoVersion: String
+		// Firefox version: abc.d.
+		geckoVersion: getFirefoxVersion(),
+
+		// @property android: Boolean
+		// `true` for any browser running on an Android platform.
+		android: ua.indexOf('android') !== -1,
+
+		// @property android23: Boolean
+		// `true` for browsers running on Android 2 or Android 3.
+		android23: android23,
+
+		// @property chrome: Boolean
+		// `true` for the Chrome browser.
+		chrome: chrome,
+
+		// @property safari: Boolean
+		// `true` for the Safari browser.
+		safari: safari,
+
+		// @property win: Boolean
+		// `true` when the browser is running in a Windows platform
+		win: win,
+
+		// @property mac: Boolean
+		// `true` when the browser is running in a Mac platform
+		mac: mac,
+
+		// @property ie3d: Boolean
+		// `true` for all Internet Explorer versions supporting CSS transforms.
+		ie3d: ie3d,
+
+		// @property isInternetExplorer: Boolean
+		// `true` for Internet Explorer
+		isInternetExplorer: isInternetExplorer,
+
+		// @property webkit3d: Boolean
+		// `true` for webkit-based browsers supporting CSS transforms.
+		webkit3d: webkit3d,
+
+		// @property gecko3d: Boolean
+		// `true` for gecko-based browsers supporting CSS transforms.
+		gecko3d: gecko3d,
+
+		// @property opera12: Boolean
+		// `true` for the Opera browser supporting CSS transforms (version 12 or later).
+		opera12: opera12,
+
+		// @property any3d: Boolean
+		// `true` for all browsers supporting CSS transforms.
+		any3d: !global.L_DISABLE_3D && (ie3d || webkit3d || gecko3d) && !opera12 && !phantomjs,
+
+
+		// @property mobile: Boolean
+		// `true` for all browsers running in a mobile device.
+		mobile: mobile,
+
+		// @property mobileWebkit: Boolean
+		// `true` for all webkit-based browsers in a mobile device.
+		mobileWebkit: mobile && webkit,
+
+		// @property mobileWebkit3d: Boolean
+		// `true` for all webkit-based browsers in a mobile device supporting CSS transforms.
+		mobileWebkit3d: mobile && webkit3d,
+
+		// @property mobileOpera: Boolean
+		// `true` for the Opera browser in a mobile device.
+		mobileOpera: mobile && global.opera,
+
+		// @property mobileGecko: Boolean
+		// `true` for gecko-based browsers running in a mobile device.
+		mobileGecko: mobile && gecko,
+
+		// @property cypressTest: Boolean
+		// `true` when the browser run by cypress
+		cypressTest: cypressTest,
+
+		// @property hasNavigatorClipboardRead: Boolean
+		// `true` when permission-based clipboard paste is available.
+		hasNavigatorClipboardRead: hasNavigatorClipboardRead,
+
+		// @property hasNavigatorClipboardWrite: Boolean
+		// `true` when permission-based clipboard copy is available.
+		hasNavigatorClipboardWrite: hasNavigatorClipboardWrite,
+
+		// @property msPointer: Boolean
+		// `true` for browsers implementing the Microsoft touch events model (notably IE10).
+		msPointer: !!msPointer,
+
+		// @property pointer: Boolean
+		// `true` for all browsers supporting [pointer events](https://msdn.microsoft.com/en-us/library/dn433244%28v=vs.85%29.aspx).
+		pointer: !!pointer,
+
+		// @property retina: Boolean
+		// `true` for browsers on a high-resolution "retina" screen.
+		retina: (global.devicePixelRatio || (global.screen.deviceXDPI / global.screen.logicalXDPI)) > 1,
+
+		// @property lang: String
+		// browser language locale
+		lang: navigatorLang
 	};
 
 	global.prefs = {
@@ -890,6 +566,47 @@ function getInitializerClass() {
 			return global.matchMedia('(any-pointer: coarse)').matches;
 		},
 
+	};
+
+	global.mode = {
+		isChromebook: function() {
+			return chromebook;
+		},
+		// Here "mobile" means "mobile phone" (at least for now). Has to match small screen size
+		// requirement.
+		isMobile: function() {
+			if (global.mode.isChromebook())
+				return false;
+
+			if (global.L.Browser.mobile && global.L.Browser.cypressTest) {
+				return true;
+			}
+
+			return global.L.Browser.mobile && (screen.width < 768 || screen.height < 768);
+		},
+		// Mobile device with big screen size.
+		isTablet: function() {
+			if (global.mode.isChromebook())
+				return false;
+
+			return global.L.Browser.mobile && !global.mode.isMobile();
+		},
+		isDesktop: function() {
+			if (global.mode.isChromebook())
+				return true;
+
+			return !global.L.Browser.mobile;
+		},
+		getDeviceFormFactor: function() {
+			if (global.mode.isMobile())
+				return 'mobile';
+			else if (global.mode.isTablet())
+				return 'tablet';
+			else if (global.mode.isDesktop())
+				return 'desktop';
+			else
+				return null;
+		}
 	};
 
 	if (!global.prefs.getBoolean('hasNavigatorClipboardWrite', true)) {
@@ -1437,6 +1154,7 @@ function getInitializerClass() {
 		}
 
 		if (global.socketProxy) {
+			global.socketProxy = true;
 			return new global.ProxySocket(uri);
 		} else if (global.indirectionUrl != '' && !global.migrating) {
 			global.indirectSocket = true;
