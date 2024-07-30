@@ -76,7 +76,7 @@ public:
             return source;
         }
 
-        return std::string(&buffer[0], buffer.size() - out_left);
+        return std::string(buffer.data(), buffer.size() - out_left);
     }
 
 private:
