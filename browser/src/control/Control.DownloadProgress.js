@@ -138,7 +138,8 @@ L.Control.DownloadProgress = L.Control.extend({
 				e.preventDefault();
 			}
 		};
-		document.getElementById(eventTargetId).onkeydown = keyDownCallback.bind(this);
+		if (document.getElementById(eventTargetId))
+			document.getElementById(eventTargetId).onkeydown = keyDownCallback.bind(this);
 	},
 
 	setupKeyboardShortcutForDialog: function (modalId) {
