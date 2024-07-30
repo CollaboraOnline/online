@@ -23,18 +23,18 @@ dnf install -y openssh
 dnf install -y curl wget
 
 # Add Collabora repos
-wget https://collaboraoffice.com/${repo:-repos}/CollaboraOnline/CODE-centos8/repodata/repomd.xml.key && rpm --import repomd.xml.key
+wget https://collaboraonline.com/${repo:-repos}/CollaboraOnline/CODE-centos8/repodata/repomd.xml.key && rpm --import repomd.xml.key
 
 if [ "$type" == "cool" ] && [ -n ${secret_key+set} ]; then
     echo "Based on the provided build arguments Collabora Online from customer repo will be used."
-    dnf config-manager --add-repo https://collaboraoffice.com/${repo:-repos}/CollaboraOnline/${version:-22.05}/customer-centos8-${secret_key}
+    dnf config-manager --add-repo https://collaboraonline.com/${repo:-repos}/CollaboraOnline/${version:-22.05}/customer-centos8-${secret_key}
 elif [ "$type" == "key" ]; then
     echo "Based on the provided build arguments license key enabled Collabora Online was selected, but it's available only on Ubuntu. Collabora Online Development Edition will be used."
     type="code"
-    dnf config-manager --add-repo https://collaboraoffice.com/${repo:-repos}/CollaboraOnline/CODE-centos8
+    dnf config-manager --add-repo https://collaboraonline.com/${repo:-repos}/CollaboraOnline/CODE-centos8
 else
     echo "Based on the provided build arguments Collabora Online Development Edition will be used."
-    dnf config-manager --add-repo https://collaboraoffice.com/${repo:-repos}/CollaboraOnline/CODE-centos8
+    dnf config-manager --add-repo https://collaboraonline.com/${repo:-repos}/CollaboraOnline/CODE-centos8
 fi
 
 # Install the Collabora packages
