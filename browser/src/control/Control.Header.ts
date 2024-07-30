@@ -491,7 +491,7 @@ export class Header extends app.definitions.canvasSectionObject {
 		$.contextMenu({
 			selector: '#canvas-container',
 			className: 'cool-font',
-			zIndex: 10,
+			zIndex: 1500,
 			items: this._menuItem,
 			callback: function() { return; }
 		});
