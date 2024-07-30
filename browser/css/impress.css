@@ -9,3 +9,17 @@
 #presentation-controls-wrapper {
 	background: var(--color-main-background) !important;
 }
+.slideshow-vertical-center {
+	margin: 0;
+	position: absolute;
+	width: 100%;
+	top: 50%;
+	transform: translateY(-50%);
+}
+.slideshow-horizontal-center {
+	margin: 0;
+	position: absolute;
+	height: 100%;
+	left: 50%;
+	transform: translateX(-50%);
+}

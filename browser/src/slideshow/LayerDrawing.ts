@@ -133,10 +133,17 @@ class LayerDrawing {
 		return this.renderedSlides.get(startSlideHash);
 	}
 
-	public requestSlide(slideNumber: number, callback: VoidFunction) {
-		this.onSlideRenderingCompleteCallback = callback;
+	public getCanvasSize(): [number, number] {
+		return [this.canvasWidth, this.canvasHeight];
+	}
+
+	public onUpdatePresentationInfo() {
 		this.computeInitialResolution();
 		this.initializeCanvas();
+	}
+
+	public requestSlide(slideNumber: number, callback: VoidFunction) {
+		this.onSlideRenderingCompleteCallback = callback;
 
 		const startSlideHash = this.helper.getSlideHash(slideNumber);
 		this.requestSlideImpl(startSlideHash);

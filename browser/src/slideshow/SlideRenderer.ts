@@ -135,10 +135,6 @@ class SlideRenderer2d extends SlideRenderer {
 
 		const width = (this._slideTexture as ImageBitmap).width;
 		const height = (this._slideTexture as ImageBitmap).height;
-		const halfWidth = (1.0 * gl.canvas.width - width) / 2.0;
-		const halfHeight = (1.0 * gl.canvas.height - height) / 2.0;
-
-		gl.translate(halfWidth, halfHeight);
 
 		gl.drawImage(this._slideTexture as ImageBitmap, 0, 0);
 
