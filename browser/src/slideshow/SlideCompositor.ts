@@ -19,21 +19,15 @@ declare var SlideShow: any;
 abstract class SlideCompositor {
 	_slideShowPresenter: SlideShowPresenter = null;
 	_presentationInfo: PresentationInfo = null;
-	_width: number = 0;
-	_height: number = 0;
 	_initialSlideNumber: number = 0;
 	_onGotSlideCallback: VoidFunction = null;
 
 	constructor(
 		slideShowPresenter: SlideShowPresenter,
 		presentationInfo: PresentationInfo,
-		width: number,
-		height: number,
 	) {
 		this._slideShowPresenter = slideShowPresenter;
 		this._presentationInfo = presentationInfo;
-		this._width = width;
-		this._height = height;
 
 		this._addHooks();
 	}
@@ -55,13 +49,7 @@ abstract class SlideCompositor {
 		return this._presentationInfo ? this._presentationInfo.slides.length : 0;
 	}
 
-	protected _getSlideWidth() {
-		return this._width;
-	}
-
-	protected _getSlideHeight() {
-		return this._height;
-	}
+	public abstract getCanvasSize(): [number, number]; // [width, height]
 
 	public abstract getSlide(slideNumber: number): ImageBitmap;
 }

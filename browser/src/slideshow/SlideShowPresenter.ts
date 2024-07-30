@@ -57,6 +57,7 @@ class SlideShowPresenter {
 	_presentationInfo: PresentationInfo = null;
 	_slideCompositor: SlideCompositor = null;
 	_fullscreen: Element = null;
+	_presenterContainer: HTMLDivElement = null;
 	_slideShowCanvas: HTMLCanvasElement = null;
 	_slideShowWindowProxy: ReturnType<typeof window.open> = null;
 	_windowCloseInterval: ReturnType<typeof setInterval> = null;
@@ -106,7 +107,11 @@ class SlideShowPresenter {
 
 	_onFullScreenChange() {
 		this._fullscreen = document.fullscreenElement;
-		if (!this._fullscreen) this._stopFullScreen();
+		if (!this._fullscreen) {
+			this._stopFullScreen();
+		} else {
+			this.centerCanvas();
+		}
 	}
 
 	_stopFullScreen() {
@@ -114,6 +119,10 @@ class SlideShowPresenter {
 
 		L.DomUtil.remove(this._slideShowCanvas);
 		this._slideShowCanvas = null;
+		if (this._presenterContainer) {
+			L.DomUtil.remove(this._presenterContainer);
+			this._presenterContainer = null;
+		}
 		// #7102 on exit from fullscreen we don't get a 'focus' event
 		// in chome so a later second attempt at launching a presentation
 		// fails
@@ -154,12 +163,54 @@ class SlideShowPresenter {
 		else if (event.code === 'Backspace') this._previoustSlide();
 	}
 
+	private centerCanvas() {
+		if (!this._slideShowCanvas) return;
+		let winWidth = 0;
+		let winHeight = 0;
+		if (this._slideShowWindowProxy && !this._slideShowWindowProxy.closed) {
+			winWidth = this._slideShowWindowProxy.innerWidth;
+			winHeight = this._slideShowWindowProxy.innerHeight;
+		} else if (this.isFullscreen()) {
+			winWidth = window.screen.width;
+			winHeight = window.screen.height;
+		}
+		if (
+			winWidth * this._slideShowCanvas.height <
+			winHeight * this._slideShowCanvas.width
+		) {
+			this._slideShowCanvas.className =
+				'leaflet-slideshow2 slideshow-vertical-center';
+		} else {
+			this._slideShowCanvas.className =
+				'leaflet-slideshow2 slideshow-horizontal-center';
+		}
+	}
+
+	private _createPresenterHTML(parent: Element, width: number, height: number) {
+		const presenterContainer = L.DomUtil.create(
+			'div',
+			'leaflet-slideshow2',
+			parent,
+		);
+		presenterContainer.id = 'presenter-container';
+		const slideshowContainer = L.DomUtil.create(
+			'div',
+			'leaflet-slideshow2',
+			presenterContainer,
+		);
+		slideshowContainer.id = 'slideshow-container';
+		this._slideShowCanvas = this._createCanvas(
+			slideshowContainer,
+			width,
+			height,
+		);
+		return presenterContainer;
+	}
+
 	_createCanvas(parent: Element, width: number, height: number) {
 		const canvas = L.DomUtil.create('canvas', 'leaflet-slideshow2', parent);
 
-		canvas.id = 'fullscreen-canvas';
-		canvas.width = width;
-		canvas.height = height;
+		canvas.id = 'slideshow-canvas';
 
 		canvas.addEventListener('click', this._onCanvasClick.bind(this));
 		window.addEventListener('keydown', this._onCanvasKeyDown.bind(this));
@@ -232,10 +283,19 @@ class SlideShowPresenter {
 						height: 100%;
 						overflow: hidden; /* Prevent scrollbars */
 					}
-					canvas {
+					.slideshow-vertical-center {
+						margin: 0;
+						position: absolute;
 						width: 100%;
+						top: 50%;
+						transform: translateY(-50%);
+					}
+					.slideshow-horizontal-center {
+						margin: 0;
+						position: absolute;
 						height: 100%;
-						border: none;
+						left: 50%;
+						transform: translateX(-50%);
 					}
 				</style>
 			</head>
@@ -292,12 +352,17 @@ class SlideShowPresenter {
 
 		const body =
 			this._slideShowWindowProxy.document.querySelector('#root-in-window');
-		this._slideShowCanvas = this._createCanvas(
+		this._presenterContainer = this._createPresenterHTML(
 			body,
 			window.screen.width,
 			window.screen.height,
 		);
 		this._slideShowCanvas.focus();
+
+		this._slideShowWindowProxy.addEventListener(
+			'resize',
+			this.onSlideWindowResize.bind(this),
+		);
 
 		const slideShowWindow = this._slideShowWindowProxy;
 		this._map.uiManager.showSnackbar(
@@ -317,6 +382,7 @@ class SlideShowPresenter {
 					clearInterval(this._windowCloseInterval);
 					this._map.uiManager.closeSnackbar();
 					this._slideShowCanvas = null;
+					this._presenterContainer = null;
 					this._slideShowWindowProxy = null;
 				}
 			}.bind(this),
@@ -355,13 +421,13 @@ class SlideShowPresenter {
 			}
 
 			// fullscreen
-			this._slideShowCanvas = this._createCanvas(
+			this._presenterContainer = this._createPresenterHTML(
 				this._map._container,
 				window.screen.width,
 				window.screen.height,
 			);
-			if (this._slideShowCanvas.requestFullscreen) {
-				this._slideShowCanvas
+			if (this._presenterContainer.requestFullscreen) {
+				this._presenterContainer
 					.requestFullscreen()
 					.then(() => {
 						// success
@@ -374,6 +440,10 @@ class SlideShowPresenter {
 		}
 
 		this._doFallbackPresentation();
+	}
+
+	onSlideWindowResize() {
+		this.centerCanvas();
 	}
 
 	_checkAlreadyPresenting() {
@@ -452,14 +522,17 @@ class SlideShowPresenter {
 			this._slideCompositor = new SlideShow.LayersCompositor(
 				this,
 				this._presentationInfo,
-				this._slideShowCanvas.width,
-				this._slideShowCanvas.height,
 			);
 		}
 
 		this.createAnimationsHandler();
 
 		this._slideCompositor.updatePresentationInfo(this._presentationInfo);
+		const canvasSize = this._slideCompositor.getCanvasSize();
+		this._slideShowCanvas.width = canvasSize[0];
+		this._slideShowCanvas.height = canvasSize[1];
+		this.centerCanvas();
+
 		this._slideCompositor.fetchAndRun(0, () => {
 			this._doPresentation();
 		});
