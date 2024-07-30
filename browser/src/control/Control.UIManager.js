@@ -112,21 +112,32 @@ L.Control.UIManager = L.Control.extend({
 		var cmd = { 'NewTheme': { 'type': 'string', 'value': '' } };
 		activate ? cmd.NewTheme.value = 'Dark' : cmd.NewTheme.value = 'Light';
 		app.socket.sendMessage('uno .uno:InvertBackground ' + JSON.stringify(cmd));
-		if (this.map.getDocType() == 'spreadsheet') {
-			var lightCanvasColor = window.getComputedStyle(document.documentElement).getPropertyValue('--color-canvas-light');
-			var darkCanvasColor = window.getComputedStyle(document.documentElement).getPropertyValue('--color-canvas-dark');
-			var nColor = app.sectionContainer.getClearColor(); // Current color of the canvas
-			// invert canvas color
-			nColor == lightCanvasColor ? nColor = darkCanvasColor : nColor = lightCanvasColor
-			this.setCanvasColorAfterModeChange(nColor);
-		}
+		this.initDarkBackgroundUI(activate);
 	},
 
-	applyInvert: function() {
+	initDarkBackgroundUI: function(activate) {
+		if (this.map.getDocType() == 'spreadsheet') {
+			var canvasColor;
+			if (activate) {
+				canvasColor = window.getComputedStyle(document.documentElement).getPropertyValue('--color-canvas-dark');
+			} else {
+				canvasColor = window.getComputedStyle(document.documentElement).getPropertyValue('--color-canvas-light');
+			}
+			this.setCanvasColorAfterModeChange(canvasColor);
+		}
+		document.documentElement.setAttribute('data-bg-theme', activate ? 'dark' : 'light');
+	},
+
+	applyInvert: function(skipCore) {
 		// get the initial mode
 		var inDarkTheme = window.prefs.getBoolean('darkTheme');
 		var backgroundDark = window.prefs.getBoolean('darkBackgroundForTheme.' + (inDarkTheme ? 'dark' : 'light'), inDarkTheme);
-		this.setDarkBackground(backgroundDark);
+
+		if (skipCore) {
+			this.initDarkBackgroundUI(backgroundDark);
+		} else {
+			this.setDarkBackground(backgroundDark);
+		}
 	},
 
 	toggleInvert: function() {
@@ -174,6 +185,8 @@ L.Control.UIManager = L.Control.extend({
 		} else {
 			this.loadLightMode();
 		}
+
+		this.applyInvert(true);
 	},
 
 	activateDarkModeInCore: function(activate) {
