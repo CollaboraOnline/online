@@ -51,6 +51,7 @@
  *
  * 'row' property is used in the callback to differentiate entries
  * 'state' property defines if entry has the checkbox (false/true), when is missing - no checkbox
+ * 'enabled' property defines if entry checkbox is enabled
  * 'ondemand' property can be set to provide nodes lazy loading
  * 'collapsed' property means, this entry have childrens, but they are not visible, because
  *             this branch is collapsed.
@@ -82,7 +83,10 @@ function _createCheckbox(parentContainer, treeViewData, builder, entry) {
 	if (entry.state === 'true' || entry.state === true)
 		checkbox.checked = true;
 
-	if (treeViewData.enabled !== false && treeViewData.enabled !== 'false') {
+	if (entry.enabled === false || entry.enabled === "false") {
+		checkbox.disabled = true;
+	}
+	else if (treeViewData.enabled !== false && treeViewData.enabled !== 'false') {
 		$(checkbox).change(function() {
 			_changeCheckboxStateOnClick(this, treeViewData, builder, entry);
 		});
@@ -180,7 +184,7 @@ function _treelistboxEntry(parentContainer, treeViewData, entry, builder, isTree
 
 	treeRoot = treeRoot ? treeRoot : parentContainer;
 
-	var disabled = treeViewData.enabled === 'false' || treeViewData.enabled === false;
+	var disabled = treeViewData.enabled === 'false' || treeViewData.enabled === false || entry.enabled === false || entry.enabled === 'false';
 
 	var li = L.DomUtil.create('li', builder.options.cssClass, parentContainer);
 	if (_isSeparator(entry)) {
@@ -207,6 +211,9 @@ function _treelistboxEntry(parentContainer, treeViewData, entry, builder, isTree
 
 	var span = L.DomUtil.create('span', builder.options.cssClass + ' ui-treeview-entry ' + (entry.children ? ' ui-treeview-expandable' : 'ui-treeview-notexpandable'), li);
 	span.setAttribute('role', isTreeView ? 'treeitem' : 'option');
+	if (entry.enabled === false || entry.enabled === 'false') {
+		L.DomUtil.addClass(span, 'disabled');
+	}
 
 	var expander = L.DomUtil.create('div', builder.options.cssClass + ' ui-treeview-expander ', span);
 

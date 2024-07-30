@@ -118,4 +118,20 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'AutoFilter', function() {
 
 		calcHelper.assertSheetContents(['Cypress Test', 'Status', 'Test 1', 'Pass'], true);
 	});
+
+	it('Disable already filtered', function () {
+		// Filter row with ['Test 4', ''] on the first column
+		calcHelper.openAutoFilterMenu();
+		cy.cGet('#check_list_box > tbody > ul > li:nth-child(4) > span > input').click();
+		cy.cGet('#ok').click();
+		// Wait for autofilter dialog to close
+		cy.cGet('div.autofilter').should('not.exist');
+
+		// Open autofilter menu on the second column
+		calcHelper.openAutoFilterMenu(true);
+		// Check that '(empty)' option is disabled
+		cy.cGet('#check_list_box > tbody > ul > li:nth-child(3) > span').should('contain.text', '(empty)');
+		cy.cGet('#check_list_box > tbody > ul > li:nth-child(3) > span > input').should('be.disabled');
+
+	});
 });
