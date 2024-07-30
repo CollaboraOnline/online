@@ -1364,9 +1364,17 @@ private:
             if (_onFinished)
             {
                 LOG_TRC("onFinished calling client");
+                auto self = shared_from_this();
                 try
                 {
-                    _onFinished(std::static_pointer_cast<Session>(shared_from_this()));
+                    [[maybe_unused]] const auto references = self.use_count();
+                    assert(references > 1 && "Expected more than 1 reference to http::Session.");
+
+                    _onFinished(std::static_pointer_cast<Session>(self));
+
+                    assert(self.use_count() > 1 &&
+                           "Erroneously onFinish reset 'this'. Use 'addCallback()' on the "
+                           "SocketPoll to reset on idle instead.");
                 }
                 catch (const std::exception& exc)
                 {
