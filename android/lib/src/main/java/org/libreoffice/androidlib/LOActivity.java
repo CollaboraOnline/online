@@ -80,6 +80,8 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.libreoffice.androidlib.lok.LokClipboardData;
 import org.libreoffice.androidlib.lok.LokClipboardEntry;
 
@@ -982,31 +984,46 @@ public class LOActivity extends AppCompatActivity {
             });
 
         // update progress bar when loading
-        if (message.startsWith("'progress") || message.startsWith("'error:")) {
+        if (message.startsWith("'progress")) {
             runOnUiThread(new Runnable() {
                 public void run() {
-                    // FIXME: parse properly with JSONObject if starts progress:
+                    JSONObject messageJSON;
+                    String messageID;
 
-                    // update progress bar if it exists
-                    final String statusIndicatorSetValue = "'progress: { \"id\":\"setvalue\", \"value\":";
-                    if (message.startsWith(statusIndicatorSetValue)) {
-                        int start = statusIndicatorSetValue.length();
-                        int end = message.indexOf("}", start);
-
-                        int progress = 0;
-                        try {
-                            progress = Integer.parseInt(message.substring(start, end));
-                        } catch (Exception e) {
-                        }
-
-                        mProgressDialog.determinateProgress(progress);
+                    int jsonStart = message.indexOf("{");
+                    if (jsonStart == -1) {
+                        return;
                     }
-                    else if (message.startsWith("'progress: { \"id\":\"finish\"") ||
-                             message.startsWith("'error:")) {
+
+                    try {
+                        messageJSON = new JSONObject(message.substring(jsonStart));
+                        messageID = messageJSON.getString("id");
+                    } catch (JSONException e) {
+                        return;
+                    }
+
+                    if (messageID.equals("finish")) {
                         mProgressDialog.dismiss();
                         if (BuildConfig.GOOGLE_PLAY_ENABLED && rateAppController != null)
                             rateAppController.askUserForRating();
+                        return;
                     }
+
+                    try {
+                        String text = messageJSON.getString("text");
+                        mProgressDialog.mTextView.setText(text);
+                    } catch (JSONException ignored) {}
+
+                    try {
+                        int progress = messageJSON.getInt("value");
+                        mProgressDialog.determinateProgress(progress);
+                    } catch (JSONException ignored) {}
+                }
+            });
+        } else if (message.startsWith("'error:")) {
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    mProgressDialog.dismiss();
                 }
             });
         }
