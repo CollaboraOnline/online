@@ -246,6 +246,17 @@ void Session::parseDocOptions(const StringVector& tokens, int& part, std::string
                 _docOptions += tokens.cat(' ', offset + 1);
         }
     }
+
+    // Disable spell check if the document is read-only
+    disableSpellCheckIfReadOnly();
+}
+
+void Session::disableSpellCheckIfReadOnly()
+{
+    if (_isReadOnly)
+    {
+        _spellOnline = "false";
+    }
 }
 
 void Session::disconnect()
