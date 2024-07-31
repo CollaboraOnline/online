@@ -1366,6 +1366,11 @@ FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::prepro
     Poco::URI indirectionURI(config.getString("indirection_endpoint.url", ""));
     Poco::replaceInPlace(preprocess, std::string("%INDIRECTION_URL%"), indirectionURI.toString());
 
+    bool geoLocationSetup = config.getBool("indirection_endpoint.geolocation_setup.enable");
+    if (geoLocationSetup)
+        Poco::replaceInPlace(preprocess, std::string("%GEOLOCATION_SETUP%"),
+                             boolToString(geoLocationSetup));
+
     const std::string mimeType = "text/html";
 
     // Document signing: if endpoint URL is configured, whitelist that for
