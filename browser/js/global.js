@@ -240,6 +240,7 @@ class InitializerBase {
 		window.savedUIState = true;
 		window.wasmEnabled = false;
 		window.indirectionUrl = "";
+		window.geolocationSetup = false;
 
 		window.tileSize = 256;
 
@@ -358,6 +359,7 @@ class BrowserInitializer extends InitializerBase {
 		window.savedUIState = element.dataset.savedUiState.toLowerCase().trim() === "true";
 		window.wasmEnabled = element.dataset.wasmEnabled.toLowerCase().trim() === "true";
 		window.indirectionUrl = element.dataset.indirectionUrl;
+		window.geolocationSetup = element.dataset.geolocationSetup.toLowerCase().trim() === "true";
 	}
 
 	postMessageHandler(e) {
@@ -1343,54 +1345,63 @@ function getInitializerClass() {
 			global.parent.postMessage(JSON.stringify(msg), '*');
 		};
 
-		var http = new XMLHttpRequest();
-		let url = global.indirectionUrl + '?Uri=' + encodeURIComponent(that.uri);
-		http.open('GET', url, true);
-		http.responseType = 'json';
-		http.addEventListener('load', function() {
-			if (this.status === 200) {
-				var uriWithRouteToken = http.response.uri;
-				global.expectedServerId = http.response.serverId;
-				var params = (new URL(uriWithRouteToken)).searchParams;
-				global.routeToken = params.get('RouteToken');
-				global.app.console.log('updated routeToken: ' + global.routeToken);
-				that.innerSocket = new WebSocket(uriWithRouteToken);
-				that.innerSocket.binaryType = that.binaryType;
-				that.innerSocket.onerror = function() {
-					that.readyState = that.innerSocket.readyState;
-					that.onerror();
-				};
-				that.innerSocket.onclose = function() {
-					that.readyState = 3;
-					that.onclose();
-					that.innerSocket.onerror = function () {};
-					that.innerSocket.onclose = function () {};
-					that.innerSocket.onmessage = function () {};
-				};
-				that.innerSocket.onopen = function() {
-					that.readyState = 1;
-					that.onopen();
-				};
-				that.innerSocket.onmessage = function(e) {
-					that.readyState = that.innerSocket.readyState;
-					that.onmessage(e);
-				};
-			} else if (this.status === 202) {
-				if (!(window.app && window.app.socket && window.app.socket._reconnecting)) {
+		this.sendRouteTokenRequest = function (requestUri) {
+			var http = new XMLHttpRequest();
+			// let url = global.indirectionUrl + '?Uri=' + encodeURIComponent(that.uri);
+			http.open('GET', requestUri, true);
+			http.responseType = 'json';
+			http.addEventListener('load', function () {
+				if (this.status === 200) {
+					var uriWithRouteToken = http.response.uri;
+					global.expectedServerId = http.response.serverId;
+					var params = (new URL(uriWithRouteToken)).searchParams;
+					global.routeToken = params.get('RouteToken');
+					global.app.console.log('updated routeToken: ' + global.routeToken);
+					that.innerSocket = new WebSocket(uriWithRouteToken);
+					that.innerSocket.binaryType = that.binaryType;
+					that.innerSocket.onerror = function () {
+						that.readyState = that.innerSocket.readyState;
+						that.onerror();
+					};
+					that.innerSocket.onclose = function () {
+						that.readyState = 3;
+						that.onclose();
+						that.innerSocket.onerror = function () { };
+						that.innerSocket.onclose = function () { };
+						that.innerSocket.onmessage = function () { };
+					};
+					that.innerSocket.onopen = function () {
+						that.readyState = 1;
+						that.onopen();
+					};
+					that.innerSocket.onmessage = function (e) {
+						that.readyState = that.innerSocket.readyState;
+						that.onmessage(e);
+					};
+				} else if (this.status === 202) {
+					if (!(window.app && window.app.socket && window.app.socket._reconnecting)) {
 						that.sendPostMsg(http.response.errorCode);
+					}
+					var timeoutFn = function (requestUri) {
+						console.warn('Requesting again for routeToken');
+						this.open('GET', requestUri, true);
+						this.send();
+					}.bind(this);
+					setTimeout(timeoutFn, 3000, requestUri);
+				} else {
+					global.app.console.error('Indirection url: error on incoming response ' + this.status);
+					that.sendPostMsg(-1);
 				}
-				var timeoutFn = function (indirectionUrl, uri) {
-					console.warn('Requesting again for routeToken');
-					this.open('GET', indirectionUrl + '?Uri=' + encodeURIComponent(uri), true);
-					this.send();
-				}.bind(this);
-				setTimeout(timeoutFn, 3000, global.indirectionUrl, that.uri);
-			} else {
-				global.app.console.error('Indirection url: error on incoming response ' + this.status);
-				that.sendPostMsg(-1);
-			}
-		});
-		http.send();
+			});
+			http.send();
+		};
+
+		let requestUri = global.indirectionUrl + '?Uri=' + encodeURIComponent(that.uri);
+		if (global.geolocationSetup) {
+			let timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+			requestUri += "&TimeZone=" + timeZone;
+		}
+		this.sendRouteTokenRequest(requestUri);
 	};
 
 	global.createWebSocket = function(uri) {

@@ -254,6 +254,7 @@ m4_ifelse(MOBILEAPP, [true],
       data-saved-ui-state = "%SAVED_UI_STATE%"
       data-wasm-enabled = "%WASM_ENABLED%"
       data-indirection-url = "%INDIRECTION_URL%"
+      data-geolocation-setup = "%GEOLOCATION_SETUP%"
       />
     ])
 
