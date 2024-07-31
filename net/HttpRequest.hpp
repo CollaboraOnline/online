@@ -12,6 +12,7 @@
 #pragma once
 
 #include <fcntl.h>
+#include <ios>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <sys/stat.h>
@@ -688,6 +689,14 @@ public:
     /// and/or to interrupt transmission.
     int64_t readData(const char* p, int64_t len);
 
+    void dumpState(std::ostream& os, const std::string& indent = "\n  ") const
+    {
+        os << indent << "http::Request: " << _version << ' ' << _verb << ' ' << _url;
+        os << indent << "stage: " << name(_stage);
+        os << indent << "headers: ";
+        _header.serialize(os);
+    }
+
 private:
     Header _header;
     std::string _url; //< The URL to request, without hostname.
@@ -978,6 +987,19 @@ public:
 
     /// Sets the context used by logPrefix.
     void setLogContext(int fd) { _fd = fd; }
+
+    void dumpState(std::ostream& os, const std::string& indent = "\n  ") const
+    {
+        os << indent << "http::Response: #" << _fd;
+        os << indent << "statusLine: " << _statusLine.httpVersion() << ' '
+           << getReasonPhraseForCode(_statusLine.statusCode()) << ' ' << _statusLine.reasonPhrase();
+        os << indent << "state: " << name(_state);
+        os << indent << "parseStage: " << name(_parserStage);
+        os << indent << "recvBodySize: " << _recvBodySize;
+        os << indent << "headers: ";
+        _header.serialize(os);
+        os << indent << "body: " << Util::dumpHex(_body);
+    }
 
 private:
     inline void logPrefix(std::ostream& os) const { os << '#' << _fd << ": "; }
@@ -1300,6 +1322,30 @@ public:
 
     /// Returns the socket FD, for logging/informational purposes.
     int getFD() const { return _fd; }
+
+    void dumpState(std::ostream& os, const std::string& indent = "\n  ") const
+    {
+        const auto now = std::chrono::steady_clock::now();
+        os << indent << "http::Session: #" << _fd;
+        os << indent << "connected: " << std::boolalpha << _connected;
+        os << indent << "timeout: " << _timeout;
+        os << indent << "host: " << _host;
+        os << indent << "port: " << _port;
+        os << indent << "protocol: " << name(_protocol);
+        os << indent << "handshakeSslVerifyFailure: " << _handshakeSslVerifyFailure;
+        os << indent << "startTime: " << Util::getTimeForLog(now, _startTime);
+        _request.dumpState(os, indent);
+        if (_response)
+            _response->dumpState(os, indent);
+        else
+            os << indent << "response: null";
+
+        std::shared_ptr<StreamSocket> socket = _socket.lock();
+        if (socket)
+            socket->dumpState(os);
+        else
+            os << indent << "socket: null";
+    }
 
 private:
     inline void logPrefix(std::ostream& os) const { os << '#' << _fd << ": "; }
@@ -1789,6 +1835,26 @@ public:
         {
             _socket->closeConnection();
         }
+    }
+
+    void dumpState(std::ostream& os, const std::string& indent = "\n  ") const
+    {
+        const auto now = std::chrono::steady_clock::now();
+        os << indent << "http::server::Session: #" << _fd;
+        os << indent << "connected: " << std::boolalpha << _connected;
+        os << indent << "startTime: " << Util::getTimeForLog(now, _startTime);
+        os << indent << "mimeType: " << _mimeType;
+        os << indent << "statusCode: " << getReasonPhraseForCode(_statusCode);
+        os << indent << "size: " << _size;
+        os << indent << "pos: " << _pos;
+        os << indent << "start: " << _start;
+        os << indent << "end: " << _end;
+        os << indent << "startIsSuffix: " << _startIsSuffix;
+        os << indent << "data: " << Util::dumpHex(_data);
+        if (_socket)
+            _socket->dumpState(os);
+        else
+            os << indent << "socket: null";
     }
 
 private:
