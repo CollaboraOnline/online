@@ -282,6 +282,8 @@ public:
 
     bool getAccessibilityState() const { return _accessibilityState; }
 
+    void disableSpellCheckIfReadOnly();
+
 protected:
     Session(const std::shared_ptr<ProtocolHandlerInterface> &handler,
             const std::string& name, const std::string& id, bool readonly);
