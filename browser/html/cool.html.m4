@@ -61,7 +61,7 @@ m4_ifelse(BUNDLE,[],
   <!-- Using individual CSS files -->
   m4_foreachq([fileCSS],[COOL_CSS],[<link rel="stylesheet" href="][m4_ifelse(MOBILEAPP,[],[%SERVICE_ROOT%/browser/%VERSION%/])][fileCSS" />
 ]),
-[<link rel="stylesheet" href="][m4_ifelse(MOBILEAPP,[],[%SERVICE_ROOT%/browser/%VERSION%/][bundle.css"])])
+[<link rel="stylesheet" href="][m4_ifelse(MOBILEAPP,[],[%SERVICE_ROOT%/browser/%VERSION%/][bundle.css" />])])
 
 <!--%BRANDING_CSS%--> <!-- add your logo here -->
 m4_ifelse(IOSAPP,[true],
