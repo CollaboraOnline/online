@@ -107,16 +107,18 @@ class SlideShowPresenter {
 
 	_onFullScreenChange() {
 		this._fullscreen = document.fullscreenElement;
-		if (!this._fullscreen) {
-			this._stopFullScreen();
-		} else {
+		if (this._fullscreen) {
+			window.addEventListener('keydown', this._onCanvasKeyDown.bind(this));
 			this.centerCanvas();
+		} else {
+			this._stopFullScreen();
 		}
 	}
 
 	_stopFullScreen() {
 		if (!this._slideShowCanvas) return;
 
+		window.removeEventListener('keydown', this._onCanvasKeyDown.bind(this));
 		L.DomUtil.remove(this._slideShowCanvas);
 		this._slideShowCanvas = null;
 		if (this._presenterContainer) {
@@ -159,8 +161,10 @@ class SlideShowPresenter {
 	}
 
 	_onCanvasKeyDown(event: KeyboardEvent) {
-		if (event.code === 'Space') this._nextSlide();
-		else if (event.code === 'Backspace') this._previoustSlide();
+		if (event.code === 'Space' || event.code === 'ArrowRight')
+			this._nextSlide();
+		else if (event.code === 'Backspace' || event.code === 'ArrowLeft')
+			this._previoustSlide();
 	}
 
 	private centerCanvas() {
@@ -213,7 +217,6 @@ class SlideShowPresenter {
 		canvas.id = 'slideshow-canvas';
 
 		canvas.addEventListener('click', this._onCanvasClick.bind(this));
-		window.addEventListener('keydown', this._onCanvasKeyDown.bind(this));
 
 		try {
 			this._slideRenderer = new SlideRendererGl(canvas);
@@ -362,6 +365,10 @@ class SlideShowPresenter {
 		this._slideShowWindowProxy.addEventListener(
 			'resize',
 			this.onSlideWindowResize.bind(this),
+		);
+		this._slideShowWindowProxy.addEventListener(
+			'keydown',
+			this._onCanvasKeyDown.bind(this),
 		);
 
 		const slideShowWindow = this._slideShowWindowProxy;
