@@ -967,7 +967,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		var newScrollPos = centerPixel.subtract(this._map.getSize().divideBy(2));
 		var x = Math.round(newScrollPos.x < 0 ? 0 : newScrollPos.x);
 		var y = Math.round(newScrollPos.y < 0 ? 0 : newScrollPos.y);
-		this._map.fire('updatescrolloffset', {x: x, y: y, updateHeaders: true});
+		requestAnimationFrame(() => this._map.fire('updatescrolloffset', {x: x, y: y, updateHeaders: true}));
 	},
 
 	_getTileSize: function () {
