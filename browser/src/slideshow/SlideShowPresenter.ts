@@ -247,12 +247,34 @@ class SlideShowPresenter {
 	}
 
 	_doPresentation() {
-		const blankTexture = this._slideRenderer.createEmptyTexture(
-			this._presentationInfo.docWidth,
-			this._presentationInfo.docHeight,
-		);
+		const slideInfo = this.getSlideInfo(this._currentSlide);
 
-		this._doTransition(blankTexture, this._currentSlide);
+		// To speed up the process, if we have transition info, then only render
+		// a black empty slide as the first slide. otherwise, directly render the first slide.
+		if (
+			slideInfo?.transitionType != undefined &&
+			slideInfo.transitionType != 'NONE'
+		) {
+			// generate empty black slide
+			const blankTexture = this._slideRenderer.createEmptyTexture(
+				this._presentationInfo.docWidth,
+				this._presentationInfo.docHeight,
+			);
+
+			this._doTransition(blankTexture, this._currentSlide);
+		} else {
+			this._slideCompositor.fetchAndRun(this._currentSlide, () => {
+				const slideImage = this._slideCompositor.getSlide(this._currentSlide);
+				const currentTexture = this._slideRenderer.createTexture(slideImage);
+				const slideInfo = this.getSlideInfo(this._currentSlide);
+				this._slideRenderer.renderSlide(
+					currentTexture,
+					slideInfo,
+					this._presentationInfo.docWidth,
+					this._presentationInfo.docHeight,
+				);
+			});
+		}
 	}
 
 	_doFallbackPresentation() {
