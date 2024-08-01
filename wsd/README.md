@@ -216,9 +216,19 @@ or
 so that you have time to attach to the process.
 
 Then run coolwsd, and attach your debugger to the process you are
-interested in. Note that as the coolforkit executable file has
-capabilities set, so when debugging that you need to run the debugger
-with super-user privilege.
+interested in. Note that simply attaching gdb via `gdb -p` is not meant to work, your options are:
+
+- `sudo gdb -p <PID>`, which is easy to remember or
+
+- `gdb -iex "set sysroot /" -p <PID>`, which can run as an unprivileged user, since we switched from
+  capabilities to unpriviliged namespaces.
+
+You can make tha later an alias as well:
+
+```
+alias cool-gdb='gdb -iex "set sysroot /"'
+cool-gdb -p <PID>
+```
 
 Also, note that as the child processes run in a chroot environment,
 they see the LibreOffice shared libraries as being in a directory tree
