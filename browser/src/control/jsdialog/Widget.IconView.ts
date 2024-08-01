@@ -176,13 +176,31 @@ JSDialog.iconView = function (
 		const dropdown = container.querySelectorAll('.ui-iconview-entry');
 		if (dropdown[pos]) {
 			dropdown[pos].innerHTML = '';
-			const img = L.DomUtil.create('img', '', dropdown[pos]);
+
+			const container = L.DomUtil.create(
+				'div',
+				builder.options.cssClass,
+				dropdown[pos],
+			);
+
+			const img = L.DomUtil.create('img', '', container);
 			img.src = builder.rendersCache[data.id].images[pos];
 
 			const entry = data.entries[pos];
 			img.alt = entry.text;
 			if (entry.tooltip) img.title = entry.tooltip;
-			else img.title = entry.text;
+			else { 
+				img.title = entry.text;
+				
+				// Add text below Icon
+				L.DomUtil.addClass(container, 'icon-view-item-container');
+				const placeholder = L.DomUtil.create(
+					'span',
+					".ui-iconview-entry-title",
+					container,
+				);
+				placeholder.innerText = entry.text;
+			}
 		}
 	};
 

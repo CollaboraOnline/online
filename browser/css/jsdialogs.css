@@ -1060,6 +1060,13 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	flex: 0 0 99%;
 }
 
+.icon-view-item-container {
+	max-width: 50px;
+	display: inline-block;
+	margin: 5px;
+	text-align: center;
+}
+
 /* Autofilter dropdown */
 
 .autofilter.row {
