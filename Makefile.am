@@ -488,8 +488,13 @@ endif
 # the systemplate directory, which we can't rm if it's mounted.
 $(SYSTEM_STAMP): ${top_srcdir}/coolwsd-systemplate-setup $(CLEANUP_DEPS)
 	$(CLEANUP_COMMAND)
-	if test "z@SYSTEMPLATE_PATH@" != "z"; then chmod u+w -R --silent "@SYSTEMPLATE_PATH@" ; rm -rf "@SYSTEMPLATE_PATH@" && \
-	${top_srcdir}/coolwsd-systemplate-setup "@SYSTEMPLATE_PATH@" "@LO_PATH@" && touch $@; fi
+	if test "z@SYSTEMPLATE_PATH@" != "z"; then \
+		chmod u+w -R --silent "@SYSTEMPLATE_PATH@"; \
+		(rm -rf "@SYSTEMPLATE_PATH@" || \
+			echo "WARNING: failed to remove the systemplate") && \
+		${top_srcdir}/coolwsd-systemplate-setup "@SYSTEMPLATE_PATH@" "@LO_PATH@" && \
+		touch $@; \
+	fi
 
 @JAILS_PATH@:
 	@$(CLEANUP_COMMAND)
