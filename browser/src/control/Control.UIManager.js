@@ -85,24 +85,24 @@ L.Control.UIManager = L.Control.extend({
 
 	loadLightMode: function() {
 		document.documentElement.setAttribute('data-theme','light');
-		this.setCanvasColorAfterModeChange();
 		this.map.fire('darkmodechanged');
 	},
 
 	loadDarkMode: function() {
 		document.documentElement.setAttribute('data-theme','dark');
-		this.setCanvasColorAfterModeChange();
 		this.map.fire('darkmodechanged');
 	},
 
-	setCanvasColorAfterModeChange: function(nColor) {
+	setCanvasColorAfterModeChange: function() {
 		if (app.sectionContainer) {
 			app.sectionContainer.setBackgroundColorMode(false);
-			if (nColor == undefined ) {
-				const colorCanvasPropety = window.prefs.getBoolean('darkTheme') ? '--color-canvas-dark' : '--color-canvas-light';
-				nColor = window.getComputedStyle(document.documentElement).getPropertyValue(colorCanvasPropety);
+
+			if (this.map.getDocType() == 'spreadsheet') {
+				app.sectionContainer.setClearColor(window.getComputedStyle(document.documentElement).getPropertyValue('--color-background-document'));
+			} else {
+				app.sectionContainer.setClearColor(window.getComputedStyle(document.documentElement).getPropertyValue('--color-canvas'));
 			}
-			app.sectionContainer.setClearColor(nColor);
+
 			//change back to it's default value after setting canvas color
 			app.sectionContainer.setBackgroundColorMode(true);
 		}
@@ -116,16 +116,8 @@ L.Control.UIManager = L.Control.extend({
 	},
 
 	initDarkBackgroundUI: function(activate) {
-		if (this.map.getDocType() == 'spreadsheet') {
-			var canvasColor;
-			if (activate) {
-				canvasColor = window.getComputedStyle(document.documentElement).getPropertyValue('--color-canvas-dark');
-			} else {
-				canvasColor = window.getComputedStyle(document.documentElement).getPropertyValue('--color-canvas-light');
-			}
-			this.setCanvasColorAfterModeChange(canvasColor);
-		}
 		document.documentElement.setAttribute('data-bg-theme', activate ? 'dark' : 'light');
+		this.setCanvasColorAfterModeChange();
 	},
 
 	applyInvert: function(skipCore) {
@@ -171,6 +163,8 @@ L.Control.UIManager = L.Control.extend({
 			this.loadDarkMode();
 			this.activateDarkModeInCore(true);
 		}
+		this.applyInvert();
+		this.setCanvasColorAfterModeChange();
 		if (!window.mode.isMobile())
 			this.refreshAfterThemeChange();
 
@@ -193,7 +187,6 @@ L.Control.UIManager = L.Control.extend({
 		var cmd = { 'NewTheme': { 'type': 'string', 'value': '' } };
 		activate ? cmd.NewTheme.value = 'Dark' : cmd.NewTheme.value = 'Light';
 		app.socket.sendMessage('uno .uno:ChangeTheme ' + JSON.stringify(cmd));
-		this.applyInvert();
 	},
 
 	renameDocument: function() {

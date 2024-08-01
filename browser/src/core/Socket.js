@@ -1506,9 +1506,8 @@ app.definitions.Socket = L.Class.extend({
 
 			var darkTheme = window.prefs.getBoolean('darkTheme');
 			this._map.uiManager.activateDarkModeInCore(darkTheme);
-
-			var darkBackground = window.prefs.getBoolean('darkBackgroundForTheme.' + (darkTheme ? 'dark' : 'light'), darkTheme);
-			this._map.uiManager.setDarkBackground(darkBackground);
+			this._map.uiManager.applyInvert();
+			this._map.uiManager.setCanvasColorAfterModeChange();
 
 			var uiMode = this._map.uiManager.getCurrentMode();
 			if (uiMode === 'notebookbar') {
