@@ -94,6 +94,13 @@ abstract class SlideRenderer {
 	): void;
 
 	protected abstract render(): void;
+
+	public createEmptyTexture(
+		width: number,
+		height: number,
+	): WebGLTexture | ImageBitmap {
+		return null;
+	}
 }
 
 class SlideRenderer2d extends SlideRenderer {
@@ -112,7 +119,7 @@ class SlideRenderer2d extends SlideRenderer {
 		docHeight: number,
 	) {
 		this._videos = [];
-		if (slideInfo.videos !== undefined) {
+		if (slideInfo?.videos !== undefined) {
 			for (var videoInfo of slideInfo.videos) {
 				const video = new VideoRenderInfo();
 				video.videoElement = this.setupVideo(videoInfo.url);
@@ -270,6 +277,13 @@ class SlideRendererGl extends SlideRenderer {
 
 	public createTexture(image: ImageBitmap) {
 		return this._context.loadTexture(<any>image);
+	}
+
+	public createEmptyTexture(
+		width: number,
+		height: number,
+	): WebGLTexture | ImageBitmap {
+		return this._context.createEmptySlide(width, height);
 	}
 
 	private initTexture() {
