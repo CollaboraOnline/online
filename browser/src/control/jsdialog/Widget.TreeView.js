@@ -1004,7 +1004,8 @@ class SimpleTableControl extends TreeViewControl {
 		}
 	}
 
-	fillRow(entry, builder, level/*, parent*/) {
+	fillRow(data, entry, builder, level/*, parent*/) {
+		let td, selectionElement;
 		let tr = L.DomUtil.create('tr', builder.options.cssClass + ' ui-listview-entry',
 					  this._container._tbody);
 		tr.setAttribute('role', 'row');
@@ -1012,6 +1013,13 @@ class SimpleTableControl extends TreeViewControl {
 		if (entry.children && entry.children.length) {
 			tr.setAttribute('aria-expanded', 'false');
 		}
+
+		if (entry.state !== undefined) {
+			td = L.DomUtil.create('td', '', tr);
+			selectionElement = this.createSelectionElement(td, data, entry, builder);
+		}
+
+		ComplexTableControl.selectEntry(tr, entry.selected);
 
 		this.fillCells(entry, builder, tr);
 
@@ -1149,17 +1157,23 @@ class ComplexTableControl extends TreeViewControl {
 		}
 	}
 
-	fillRow(entry, builder, level, parent) {
+	fillRow(data, entry, builder, level, parent) {
+		let td, state, selectionElement;
 		let tr = L.DomUtil.create('tr', builder.options.cssClass + ' ui-listview-entry',
 					  this._container._tbody);
 		tr.setAttribute('role', 'row');
 		tr.setAttribute('aria-level', level);
 
-		ComplexTableControl.selectEntry(tr, entry.selected);
-
 		if (entry.children && entry.children.length) {
 			tr.setAttribute('aria-expanded', 'false');
 		}
+
+		if (entry.state !== undefined) {
+			td = L.DomUtil.create('td', '', tr);
+			selectionElement = this.createSelectionElement(td, data, entry, builder);
+		}
+
+		ComplexTableControl.selectEntry(tr, entry.selected);
 
 		this.fillCells(entry, builder, tr);
 
@@ -1203,7 +1217,7 @@ class FactoryTreeView {
 		}
 	}
 
-	fillEntries(entries, builder, level, ulParent, simpleParent, complexParent) {
+	fillEntries(data, entries, builder, level, ulParent, simpleParent, complexParent) {
 		let ulChild, simpleChild, complexChild;
 
 		for (let index in entries) {
@@ -1226,7 +1240,7 @@ class FactoryTreeView {
 			}
 
 			if (this._simpleContainer && simpleParent) {
-				simpleChild = this._simpleContainer.fillRow(entries[index], builder, level, simpleParent);
+				simpleChild = this._simpleContainer.fillRow(data, entries[index], builder, level, simpleParent);
 			}
 
 			if (this._complexContainer && complexParent) {
@@ -1235,11 +1249,11 @@ class FactoryTreeView {
 					complexChild = simpleChild;
 				}
 				else
-					complexChild = this._complexContainer.fillRow(entries[index], builder,
+					complexChild = this._complexContainer.fillRow(data, entries[index], builder,
 										      level, complexParent);
 			}
 
-			this.fillEntries(entries[index].children, builder, level + 1, ulChild, simpleChild, complexChild);
+			this.fillEntries(data, entries[index].children, builder, level + 1, ulChild, simpleChild, complexChild);
 		}
 	}
 
@@ -1248,7 +1262,7 @@ class FactoryTreeView {
 		let simpleContainer = this._simpleContainer ? this._simpleContainer.Container._tbody : null;
 		let complexContainer = this._complexContainer ? this._complexContainer.Container._tbody : null;
 
-		this.fillEntries(data.entries, builder, 1, ulContainer, simpleContainer, complexContainer);
+		this.fillEntries(data, data.entries, builder, 1, ulContainer, simpleContainer, complexContainer);
 		this.fillHeaders(data.headers, builder);
 
 		if (this._ulContainer && this._ulContainer.Container.hasChildNodes()) {
