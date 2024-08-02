@@ -1,0 +1,13 @@
+# vim:syntax=apparmor
+# AppArmor policy for coolwsd
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+profile coolwsd /usr/bin/coolwsd flags=(unconfined) {
+  userns,
+
+  # Site-specific additions and overrides. See local/README for details.
+  include if exists <local/coolwsd>
+}
