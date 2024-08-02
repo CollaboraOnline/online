@@ -109,8 +109,8 @@ L.Map.TouchGesture = L.Handler.extend({
 		this._hammer.on('pinchend', window.memo.bind(window.touch.touchOnly(this._onPinchEnd), this));
 		this._hammer.on('tripletap', window.memo.bind(window.touch.touchOnly(this._onTripleTap), this));
 		this._hammer.on('swipe', window.memo.bind(window.touch.touchOnly(this._onSwipe), this));
-		this._map.on('updatepermission', this._onPermission, this);
-		this._onPermission({perm: this._map._permission});
+		app.events.on('updatepermission', this._onPermission.bind(this));
+		this._onPermission({ detail: { perm: this._map._permission } });
 	},
 
 	removeHooks: function () {
@@ -126,11 +126,10 @@ L.Map.TouchGesture = L.Handler.extend({
 		this._hammer.off('press', window.memo.bind(window.touch.touchOnly(this._onPress), this));
 		this._hammer.off('tripletap', window.memo.bind(window.touch.touchOnly(this._onTripleTap), this));
 		this._hammer.off('swipe', window.memo.bind(window.touch.touchOnly(this._onSwipe), this));
-		this._map.off('updatepermission', this._onPermission, this);
 	},
 
 	_onPermission: function (e) {
-		if (e.perm == 'edit') {
+		if (e.detail.perm == 'edit') {
 			this._hammer.on('doubletap', window.memo.bind(window.touch.touchOnly(this._onDoubleTap), this));
 			this._hammer.on('press', window.memo.bind(window.touch.touchOnly(this._onPress), this));
 		} else {

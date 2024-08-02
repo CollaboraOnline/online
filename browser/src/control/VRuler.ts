@@ -93,7 +93,7 @@ class VRuler {
 		this._map.on('vrulerupdate', this._updateOptions, this);
 		this._map.on('scrolllimits', this._updatePaintTimer, this);
 		this._map.on('moveend', this._fixOffset, this);
-		this._map.on('updatepermission', this._changeInteractions, this);
+		app.events.on('updatepermission', this._changeInteractions.bind(this));
 		this._map.on(
 			'resettopbottompagespacing',
 			this._resetTopBottomPageSpacing,
@@ -138,7 +138,7 @@ class VRuler {
 
 	_changeInteractions(e: any) {
 		if (this._tMarginDrag) {
-			if (e.perm === 'edit') {
+			if (e.detail.perm === 'edit') {
 				this._tMarginDrag.style.cursor = 'e-resize';
 				this._bMarginDrag.style.cursor = 'w-resize';
 			} else {
@@ -399,9 +399,9 @@ class VRuler {
 		this._updateParagraphIndentations();
 
 		if (this.options.interactive) {
-			this._changeInteractions({ perm: 'edit' });
+			this._changeInteractions({ detail: { perm: 'edit' } });
 		} else {
-			this._changeInteractions({ perm: 'readonly' });
+			this._changeInteractions({ detail: { perm: 'readonly' } });
 		}
 	}
 
