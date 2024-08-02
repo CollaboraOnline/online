@@ -739,6 +739,7 @@ Util::RuntimeConstant<bool> COOLWSD::SSLTermination;
 #endif
 unsigned COOLWSD::MaxConnections;
 unsigned COOLWSD::MaxDocuments;
+std::string COOLWSD::HardwareResourceWarning = "ok";
 std::string COOLWSD::OverrideWatermark;
 std::set<const Poco::Util::AbstractConfiguration*> COOLWSD::PluginConfigurations;
 std::chrono::steady_clock::time_point COOLWSD::StartTime;
@@ -2714,9 +2715,12 @@ void COOLWSD::innerInitialize(Application& self)
     // It is worth avoiding configuring with a large number of under-weight
     // containers / VMs - better to have fewer, stronger ones.
     if (nThreads < 4)
+    {
         LOG_WRN("Fewer threads than recommended. Having at least four threads for "
                 "provides significant parallelism that can be used for burst "
                 "compression of newly visible document pages, giving lower latency.");
+        HardwareResourceWarning = "lowresources";
+    }
 
 #elif defined(__EMSCRIPTEN__)
     // disable threaded image scaling for wasm for now
