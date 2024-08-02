@@ -16,6 +16,7 @@ ServerAuditUtil::ServerAuditUtil()
 {
     set("is_admin", "ok");
     set("certwarning", "ok");
+    set("hardwarewarning", "ok");
 }
 
 std::string ServerAuditUtil::getResultsJSON() const
