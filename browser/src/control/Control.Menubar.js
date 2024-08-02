@@ -1369,7 +1369,7 @@ L.Control.Menubar = L.Control.extend({
 		this._initializeMenu(this.options.initial);
 
 		map.on('doclayerinit', this._onDocLayerInit, this);
-		map.on('updatepermission', this._onRefresh, this);
+		app.events.on('updatepermission', this._onRefresh.bind(this));
 		map.on('addmenu', this._addMenu, this);
 		map.on('languagesupdated', this._onInitLanguagesMenu, this);
 		map.on('updatetoolbarcommandvalues', this._onStyleMenu, this);
@@ -1378,7 +1378,6 @@ L.Control.Menubar = L.Control.extend({
 	onRemove: function() {
 
 		this._map.off('doclayerinit', this._onDocLayerInit, this);
-		this._map.off('updatepermission', this._onRefresh, this);
 		this._map.off('addmenu', this._addMenu, this);
 		this._map.off('languagesupdated', this._onInitLanguagesMenu, this);
 		this._map.off('updatetoolbarcommandvalues', this._onStyleMenu, this);

@@ -37,7 +37,7 @@ L.Control.Ruler = L.Control.extend({
 		map.on('tabstoplistupdate', this._updateTabStops, this);
 		map.on('scrolllimits', this._updatePaintTimer, this);
 		map.on('moveend', this._fixOffset, this);
-		map.on('updatepermission', this._changeInteractions, this);
+		app.events.on('updatepermission', this._changeInteractions.bind(this));
 		L.DomUtil.addClass(map.getContainer(), 'hasruler');
 		this._map = map;
 
@@ -51,7 +51,7 @@ L.Control.Ruler = L.Control.extend({
 
 	_changeInteractions: function(e) {
 		if (this._lMarginDrag) {
-			if (e.perm === 'edit') {
+			if (e.detail.perm === 'edit') {
 				this._lMarginDrag.style.cursor = 'e-resize';
 				this._rMarginDrag.style.cursor = 'w-resize';
 
@@ -393,10 +393,10 @@ L.Control.Ruler = L.Control.extend({
 		this._updateParagraphIndentations();
 
 		if (this.options.interactive) {
-			this._changeInteractions({perm:'edit'});
+			this._changeInteractions({ detail: { perm:'edit'} });
 		}
 		else {
-			this._changeInteractions({perm:'readonly'});
+			this._changeInteractions({ detail: { perm:'readonly'} });
 		}
 	},
 
@@ -490,7 +490,7 @@ L.Control.Ruler = L.Control.extend({
 		unoObj['LRSpace.FirstLineIndent'] = { type: 'long', value: firstLineMargin };
 		unoObj['LRSpace.LeftMargin'] = { type: 'long', value: leftValue };
 		unoObj['LRSpace.RightMargin'] = { type: 'long', value: rightValue };
-	
+
 		// Send the command
 		this._map.sendUnoCommand('.uno:LeftRightParaMargin', unoObj);
 

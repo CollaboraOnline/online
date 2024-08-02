@@ -163,8 +163,8 @@ Edit, view, readOnly:
     - API:
         map.setPermission('edit' | 'view' | 'readonly')
     - events:
-        map.on('updatepermission', function (e) {}) where:
-            + e.perm == 'edit' | 'view' | 'readonly'
+        app.events.on('updatepermission', function (e) {}) where:
+            + e.detail.perm == 'edit' | 'view' | 'readonly'
 
 Buttons like Bold, Italic, Strike through etc.
     - API:

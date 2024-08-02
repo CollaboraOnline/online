@@ -4421,11 +4421,11 @@ L.CanvasTileLayer = L.Layer.extend({
 			},
 			this);
 
-		map.on('updatepermission', function(e) {
-			if (e.perm !== 'edit') {
+		app.events.on('updatepermission', function(e) {
+			if (e.detail.perm !== 'edit') {
 				this._clearSelections();
 			}
-		}, this);
+		}.bind(this));
 
 		map.setPermission(app.file.permission);
 

@@ -40,7 +40,7 @@ L.Control.UIManager = L.Control.extend({
 		this.map.mainMenuTemplate = $('#main-menu')[0].cloneNode(true);
 
 		map.on('infobar', this.showInfoBar, this);
-		map.on('updatepermission', this.onUpdatePermission, this);
+		app.events.on('updatepermission', this.onUpdatePermission.bind(this));
 
 		if (window.mode.isMobile()) {
 			window.addEventListener('popstate', this.onGoBack.bind(this));
@@ -530,7 +530,8 @@ L.Control.UIManager = L.Control.extend({
 	},
 
 	refreshMenubar: function() {
-		this.map.menubar._onRefresh();
+		if (this.map.menubar)
+			this.map.menubar._onRefresh();
 	},
 	refreshSidebar: function(ms) {
 		ms = ms !== undefined ? ms : 400;
@@ -969,7 +970,7 @@ L.Control.UIManager = L.Control.extend({
 
 	onUpdatePermission: function(e) {
 		if (window.mode.isMobile()) {
-			if (e.perm === 'edit') {
+			if (e.detail.perm === 'edit') {
 				history.pushState({context: 'app-started'}, 'edit-mode');
 				$('#toolbar-down').show();
 			}
@@ -981,13 +982,13 @@ L.Control.UIManager = L.Control.extend({
 
 		var enableNotebookbar = this.shouldUseNotebookbarMode();
 		if (enableNotebookbar && !window.mode.isMobile()) {
-			if (e.perm === 'edit') {
+			if (e.detail.perm === 'edit') {
 				if (this.map.menubar) {
 					this.map.removeControl(this.map.menubar);
 					this.map.menubar = null;
 				}
 				this.makeSpaceForNotebookbar();
-			} else if (e.perm === 'readonly') {
+			} else if (e.detail.perm === 'readonly') {
 				if (!this.map.menubar) {
 					var menubar = L.control.menubar();
 					this.map.menubar = menubar;

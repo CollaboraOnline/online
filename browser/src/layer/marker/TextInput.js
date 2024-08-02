@@ -113,7 +113,7 @@ L.TextInput = L.Layer.extend({
 			this._map.on('commandresult', this._onCommandResult, this);
 		}
 
-		this._map.on('updatepermission', this._onPermission, this);
+		app.events.on('updatepermission', this._onPermission.bind(this));
 		L.DomEvent.on(this._textArea, 'focus blur', this._onFocusBlur, this);
 
 		// Do not wait for a 'focus' event to attach events if the
@@ -152,7 +152,6 @@ L.TextInput = L.Layer.extend({
 		if (!this.hasAccessibilitySupport()) {
 			this._map.off('commandresult', this._onCommandResult, this);
 		}
-		this._map.off('updatepermission', this._onPermission, this);
 		L.DomEvent.off(this._textArea, 'focus blur', this._onFocusBlur, this);
 		L.DomEvent.off(this._map.getContainer(), 'mousedown touchstart', this._abortComposition, this);
 
@@ -168,7 +167,7 @@ L.TextInput = L.Layer.extend({
 	},
 
 	_onPermission: function(e) {
-		if (e.perm === 'edit') {
+		if (e.detail.perm === 'edit') {
 			this._textArea.removeAttribute('disabled');
 		} else {
 			this._textArea.setAttribute('disabled', true);

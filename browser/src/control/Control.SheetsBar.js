@@ -12,7 +12,7 @@
  * Control.SheetsBar - toolbar with buttons for scrolling tabs
  */
 
-/* global _ JSDialog */
+/* global _ JSDialog app */
 class SheetsBar {
 
 	constructor(map, showNavigation = true) {
@@ -33,7 +33,7 @@ class SheetsBar {
 		this.create();
 
 		map.on('doclayerinit', this.onDocLayerInit, this);
-		map.on('updatepermission', this.onUpdatePermission, this);
+		app.events.on('updatepermission', this.onUpdatePermission.bind(this));
 	}
 
 	create() {
@@ -96,7 +96,7 @@ class SheetsBar {
 	}
 
 	onUpdatePermission(e) {
-		if (e.perm === 'edit') {
+		if (e.detail.perm === 'edit') {
 			this.enableInsertion(true);
 		} else {
 			this.enableInsertion(false);

@@ -21,7 +21,7 @@ class StatusBar extends JSDialog.Toolbar {
 		map.on('languagesupdated', this.onLanguagesUpdated, this);
 		map.on('commandstatechanged', this.onCommandStateChanged, this);
 		map.on('contextchange', this.onContextChange.bind(this), this);
-		map.on('updatepermission', this.onPermissionChanged, this);
+		app.events.on('updatepermission', this.onPermissionChanged.bind(this));
 		map.on('updatestatepagenumber', this.onPageChange, this);
 		map.on('search', this.onSearch, this);
 		map.on('zoomend', this.onZoomEnd, this);
@@ -370,7 +370,7 @@ class StatusBar extends JSDialog.Toolbar {
 	}
 
 	onPermissionChanged(event) {
-		var isReadOnlyMode = event.perm === 'readonly';
+		var isReadOnlyMode = event.detail.perm === 'readonly';
 		if (isReadOnlyMode) {
 			$('#toolbar-down').addClass('readonly');
 		} else {

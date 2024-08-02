@@ -52,7 +52,7 @@ L.Map.WOPI = L.Handler.extend({
 
 		// init messages
 		this._map.on('docloaded', this._postLoaded, this);
-		this._map.on('updatepermission', this._postLoaded, this);
+		app.events.on('updatepermission', this._postLoaded.bind(this));
 		// This indicates that 'viewinfo' message has already arrived
 		this._map.on('viewinfo', this._postLoaded, this);
 
@@ -89,7 +89,6 @@ L.Map.WOPI = L.Handler.extend({
 
 		// init messages
 		this._map.off('docloaded', this._postLoaded, this);
-		this._map.off('updatepermission', this._postLoaded, this);
 		this._map.off('viewinfo', this._postLoaded, this);
 
 		this._map.off('wopiprops', this._setWopiProps, this);
