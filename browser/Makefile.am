@@ -445,6 +445,7 @@ COOL_JS_LST =\
 	src/slideshow/transition/CombTransition.ts \
 	src/slideshow/transition/WipeTransition.ts \
 	src/slideshow/transition/NoTransition.ts \
+	src/slideshow/CanvasLoader.ts \
 	src/dom/PosAnimation.js \
 	src/map/anim/Map.PanAnimation.js \
 	src/dom/PosAnimation.Timer.js \
@@ -910,6 +911,7 @@ pot:
 		src/slideshow/transition/PushWipeTransition.ts \
 		src/slideshow/transition/CombTransition.ts \
 		src/slideshow/transition/BarWipeTransition.ts \
+		src/slideshow/CanvasLoader.ts \
 		src/core/Socket.js \
 		src/core/Debug.js \
 		src/docstate.js \
