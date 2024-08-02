@@ -1082,15 +1082,11 @@ class ComplexTableControl extends TreeViewControl {
 	}
 
 	static onClick(e) {
-		let td = e.target;
-		if (!td || td.localName !== 'td')
+		let tr = ComplexTableControl.findRow(e.target);
+		if (!tr)
 			return;
 
-		let tr = td.parentElement;
-		if (!tr || tr.localName !== 'tr')
-			return;
-
-		let expand = td.firstChild;
+		let expand = tr.firstChild.firstChild;
 		if (expand && tr.hasAttribute('aria-expanded') &&
 		    e.clientX < expand.getBoundingClientRect().left) {
 			ComplexTableControl.toggleExpand(tr);
@@ -1098,11 +1094,22 @@ class ComplexTableControl extends TreeViewControl {
 		}
 
 		let selected = tr.getAttribute('aria-selected') === 'true';
-
 		if (ComplexTableControl.Selected)
 			ComplexTableControl.selectEntry(ComplexTableControl.Selected, false);
 
 		ComplexTableControl.Selected = ComplexTableControl.selectEntry(tr, !selected);
+	}
+
+	static findRow(elem) {
+		let tr = elem;
+		if (tr && tr.localName === 'tbody')
+			return null;
+
+		while (tr && tr.localName !== 'tr') {
+			tr = tr.parentElement;
+		}
+
+		return tr;
 	}
 
 	fillCells(entry, builder, tr) {
