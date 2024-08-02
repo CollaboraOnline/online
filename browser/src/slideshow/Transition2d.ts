@@ -25,12 +25,12 @@ class Transition2d {
 	public gl: WebGL2RenderingContext;
 	public program: WebGLProgram;
 	public animationTime: number = 1500;
-	private vao!: WebGLVertexArrayObject | null;
-	private time: number;
-	private startTime: number | null;
+	public vao!: WebGLVertexArrayObject | null;
+	public time: number;
+	public startTime: number | null;
+	public context: any;
 	private transitionParameters: TransitionParameters;
 	protected slideInfo: SlideInfo = null;
-	private context: any;
 
 	constructor(transitionParameters: TransitionParameters) {
 		this.transitionParameters = transitionParameters;
