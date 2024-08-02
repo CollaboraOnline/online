@@ -12,19 +12,21 @@
  * L.Control.EditView is used for switching between viewing and editing mode
  */
 
+/* global app */
+
 L.Control.PermissionSwitch = L.Control.extend({
 	options: {
 		position: 'topleft'
 	},
 
-	onAdd: function (map) {
+	onAdd: function () {
 		var partName = 'leaflet-control-editviewswitch',
 		    container = L.DomUtil.create('label', partName + ' leaflet-bar');
 
 		this._checkBox = L.DomUtil.create('input', 'editview-cb', container);
 		this._checkBox.type = 'checkbox';
 		L.DomEvent.on(this._checkBox, 'change', this._onChange, this);
-		map.on('updatepermission', this._onUpdatePermission, this);
+		app.events.on('updatepermission', this._onUpdatePermission.bind(this));
 		container.appendChild(document.createTextNode('Enable editing'));
 		return container;
 	},
@@ -40,15 +42,15 @@ L.Control.PermissionSwitch = L.Control.extend({
 	},
 
 	_onUpdatePermission: function (e) {
-		if (e.perm === 'edit') {
+		if (e.detail.perm === 'edit') {
 			this._checkBox.checked = true;
 			this._checkBox.disabled = false;
 		}
-		else if (e.perm === 'view') {
+		else if (e.detail.perm === 'view') {
 			this._checkBox.checked = false;
 			this._checkBox.disabled = false;
 		}
-		else if (e.perm === 'readonly') {
+		else if (e.detail.perm === 'readonly') {
 			this._checkBox.checked = false;
 			this._checkBox.disabled = true;
 		}

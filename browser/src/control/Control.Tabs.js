@@ -12,10 +12,10 @@
  * L.Control.Tabs is used to switch sheets in Calc
  */
 
-/* global $ _ _UNO Hammer cool */
+/* global $ _ _UNO Hammer cool app */
 L.Control.Tabs = L.Control.extend({
-	onAdd: function(map) {
-		map.on('updatepermission', this._onUpdatePermission, this);
+	onAdd: function() {
+		app.events.on('updatepermission', this._onUpdatePermission.bind(this));
 		this._initialized = false;
 	},
 
@@ -28,7 +28,7 @@ L.Control.Tabs = L.Control.extend({
 			this._initialize();
 		}
 		setTimeout(function() {
-			$('.spreadsheet-tab').contextMenu(e.perm === 'edit');
+			$('.spreadsheet-tab').contextMenu(e.detail.perm === 'edit');
 		}, 100);
 	},
 

@@ -12,7 +12,7 @@
  * JSDialog.PresentationBar - buttons for adding/removing slides
  */
 
-/* global JSDialog _ _UNO */
+/* global JSDialog _ _UNO app */
 
 class PresentationBar {
 
@@ -30,7 +30,7 @@ class PresentationBar {
 
 		map.on('wopiprops', this.onWopiProps, this);
 		map.on('doclayerinit', this.onDocLayerInit, this);
-		map.on('updatepermission', this.onUpdatePermission, this);
+		app.events.on('updatepermission', this.onUpdatePermission.bind(this));
 		map.on('commandstatechanged', this.onCommandStateChanged, this);
 
 		if (this.map.getDocType() === 'presentation') {
@@ -153,7 +153,7 @@ class PresentationBar {
 	onUpdatePermission(e) {
 		var presentationButtons = ['insertpage', 'duplicatepage', 'deletepage'];
 
-		if (e.perm === 'edit') {
+		if (e.detail.perm === 'edit') {
 			presentationButtons.forEach((id) => { this.enableItem(id, true); });
 
 			presentationButtons.forEach((id) => {

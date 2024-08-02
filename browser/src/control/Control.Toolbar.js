@@ -1078,7 +1078,7 @@ function onUpdatePermission(e) {
 			var found = enabledButtons.filter(function(id) { return id === items[idx].id; });
 			var alwaysEnable = found.length !== 0;
 
-			if (e.perm === 'edit') {
+			if (e.detail.perm === 'edit') {
 				var unoCmd = map.getDocType() === 'spreadsheet' ? items[idx].unosheet : getUNOCommand(items[idx].uno);
 				var keepDisabled = map['stateChangeHandler'].getItemValue(unoCmd) === 'disabled';
 				if (!keepDisabled || alwaysEnable)
@@ -1092,7 +1092,7 @@ function onUpdatePermission(e) {
 			}
 		}
 
-		if (e.perm === 'edit') {
+		if (e.detail.perm === 'edit') {
 			$('#toolbar-mobile-back').removeClass('editmode-off');
 			$('#toolbar-mobile-back').addClass('editmode-on');
 			toolbar.updateItem({id: 'closemobile', type: 'customtoolitem', w2icon: 'editmode'});
@@ -1175,7 +1175,7 @@ function setupToolbar(e) {
 		}
 	});
 
-	map.on('updatepermission', onUpdatePermission);
+	app.events.on('updatepermission', onUpdatePermission);
 	map.on('wopiprops', onWopiProps);
 	map.on('commandresult', onCommandResult);
 	map.on('updateparts pagenumberchanged', onUpdateParts);
