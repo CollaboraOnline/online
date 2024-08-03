@@ -95,10 +95,7 @@ abstract class SlideRenderer {
 
 	protected abstract render(): void;
 
-	public createEmptyTexture(
-		width: number,
-		height: number,
-	): WebGLTexture | ImageBitmap {
+	public createEmptyTexture(): WebGLTexture | ImageBitmap {
 		return null;
 	}
 }
@@ -275,11 +272,8 @@ class SlideRendererGl extends SlideRenderer {
 		return this._context.loadTexture(<any>image);
 	}
 
-	public createEmptyTexture(
-		width: number,
-		height: number,
-	): WebGLTexture | ImageBitmap {
-		return this._context.createEmptySlide(width, height);
+	public createEmptyTexture(): WebGLTexture | ImageBitmap {
+		return this._context.createEmptySlide();
 	}
 
 	private initTexture() {

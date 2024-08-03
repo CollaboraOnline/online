@@ -27,10 +27,7 @@ abstract class RenderContext {
 		return this.gl as CanvasRenderingContext2D;
 	}
 
-	public createEmptySlide(
-		width: number,
-		height: number,
-	): WebGLTexture | ImageBitmap {
+	public createEmptySlide(): WebGLTexture | ImageBitmap {
 		return null;
 	}
 
@@ -82,10 +79,7 @@ class RenderContextGl extends RenderContext {
 		return texture;
 	}
 
-	public createEmptySlide(
-		width: number,
-		height: number,
-	): WebGLTexture | ImageBitmap {
+	public createEmptySlide(): WebGLTexture | ImageBitmap {
 		const gl = this.getGl();
 		const texture = gl.createTexture();
 		if (!texture) {
@@ -93,18 +87,18 @@ class RenderContextGl extends RenderContext {
 		}
 		gl.bindTexture(gl.TEXTURE_2D, texture);
 
-		const blackPixels = new Uint8Array(width * height * 4).fill(0);
+		const blackPixel = new Uint8Array([0, 0, 0, 255]);
 
 		gl.texImage2D(
 			gl.TEXTURE_2D,
 			0,
 			gl.RGBA,
-			width,
-			height,
+			1,
+			1,
 			0,
 			gl.RGBA,
 			gl.UNSIGNED_BYTE,
-			blackPixels,
+			blackPixel,
 		);
 
 		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
