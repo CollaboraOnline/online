@@ -652,7 +652,7 @@ private:
     bool updateStorageLockState(ClientSession& session, bool lock, std::string& error);
 
     /// Take the lock before loading the first session, if we know we can edit.
-    bool updateStorageLockState(const Authorization& auth, std::string& error);
+    bool lockDocumentInStorage(const Authorization& auth, std::string& error);
 
     std::size_t getIdleTimeSecs() const
     {

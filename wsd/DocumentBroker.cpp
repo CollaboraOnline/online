@@ -1145,7 +1145,7 @@ void DocumentBroker::lockIfEditing(const std::shared_ptr<ClientSession>& session
         {
             LOG_DBG("Locking docKey [" << _docKey << "], which is editable");
             std::string error;
-            if (!updateStorageLockState(Authorization::create(uriPublic), error))
+            if (!lockDocumentInStorage(Authorization::create(uriPublic), error))
             {
                 LOG_ERR("Failed to lock docKey [" << _docKey << "] in advance: " << error);
             }
@@ -1532,7 +1532,7 @@ void DocumentBroker::endRenameFileCommand()
     endActivity();
 }
 
-bool DocumentBroker::updateStorageLockState(const Authorization& auth, std::string& error)
+bool DocumentBroker::lockDocumentInStorage(const Authorization& auth, std::string& error)
 {
     assert(_lockCtx && "Expected an initialized LockContext");
     assert(_lockCtx->_supportsLocks && "Expected to have lock support");
@@ -1553,12 +1553,10 @@ bool DocumentBroker::updateStorageLockState(const Authorization& auth, std::stri
             return true;
             break;
         case StorageBase::LockUpdateResult::UNAUTHORIZED:
-            LOG_ERR("Failed to " << "Locked docKey [" << _docKey
-                                 << "]. Invalid or expired access token");
+            LOG_ERR("Failed to lock docKey [" << _docKey << "]. Invalid or expired access token");
             break;
         case StorageBase::LockUpdateResult::FAILED:
-            LOG_ERR("Failed to " << "Locked docKey [" << _docKey << "] with reason [" << error
-                                 << ']');
+            LOG_ERR("Failed to lock docKey [" << _docKey << "] with reason: " << error);
             break;
     }
 
