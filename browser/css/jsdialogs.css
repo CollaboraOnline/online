@@ -1061,6 +1061,17 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	flex: 0 0 99%;
 }
 
+.icon-view-item-container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin: 5px;
+	text-align: center;
+	word-wrap: break-word;
+	overflow-wrap: break-word;
+}
+
 /* Autofilter dropdown */
 
 .autofilter.row {
