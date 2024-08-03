@@ -177,12 +177,15 @@ JSDialog.iconView = function (
 		if (dropdown[pos]) {
 			dropdown[pos].innerHTML = '';
 
-			const container = L.DomUtil.create(
-				'div',
-				builder.options.cssClass,
-				dropdown[pos],
-			);
+			let container = dropdown[pos];
 
+			if (!data.entries[pos].tooltip) {
+				container = L.DomUtil.create(
+					'div',
+					builder.options.cssClass,
+					dropdown[pos],
+				);
+			}
 			const img = L.DomUtil.create('img', '', container);
 			img.src = builder.rendersCache[data.id].images[pos];
 
