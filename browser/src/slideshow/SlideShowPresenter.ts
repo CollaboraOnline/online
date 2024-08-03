@@ -325,10 +325,7 @@ class SlideShowPresenter {
 			slideInfo.transitionType != 'NONE'
 		) {
 			// generate empty black slide
-			const blankTexture = this._slideRenderer.createEmptyTexture(
-				this._presentationInfo.docWidth,
-				this._presentationInfo.docHeight,
-			);
+			const blankTexture = this._slideRenderer.createEmptyTexture();
 
 			this._doTransition(blankTexture, this._currentSlide);
 		} else {
