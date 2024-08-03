@@ -1061,10 +1061,14 @@ input[type='number']:hover::-webkit-outer-spin-button {
 }
 
 .icon-view-item-container {
-	max-width: 50px;
-	display: inline-block;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 	margin: 5px;
 	text-align: center;
+	word-wrap: break-word;
+	overflow-wrap: break-word;
 }
 
 /* Autofilter dropdown */

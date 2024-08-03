@@ -189,14 +189,14 @@ JSDialog.iconView = function (
 			const entry = data.entries[pos];
 			img.alt = entry.text;
 			if (entry.tooltip) img.title = entry.tooltip;
-			else { 
+			else {
 				img.title = entry.text;
-				
+
 				// Add text below Icon
 				L.DomUtil.addClass(container, 'icon-view-item-container');
 				const placeholder = L.DomUtil.create(
 					'span',
-					".ui-iconview-entry-title",
+					'.ui-iconview-entry-title',
 					container,
 				);
 				placeholder.innerText = entry.text;
