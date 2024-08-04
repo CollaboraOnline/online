@@ -553,6 +553,9 @@ struct LockContext
     /// one-time setup for supporting locks & create token
     void initSupportsLocks();
 
+    /// Returns true if locks are supported.
+    bool supportsLocks() const { return _supportsLocks; }
+
     /// Returns true if locked.
     bool isLocked() const { return _lockState == StorageBase::LockState::LOCK; }
 

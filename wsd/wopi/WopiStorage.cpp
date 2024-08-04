@@ -327,7 +327,7 @@ StorageBase::LockUpdateResult WopiStorage::updateLockState(const Authorization& 
                                                            const Attributes& attribs)
 {
     lockCtx._lockFailureReason.clear();
-    if (!lockCtx._supportsLocks)
+    if (!lockCtx.supportsLocks())
         return LockUpdateResult::UNSUPPORTED;
 
     Poco::URI uriObject(getUri());
@@ -688,7 +688,7 @@ void WopiStorage::uploadLocalFileToStorageAsync(const Authorization& auth, LockC
         http::Header& httpHeader = httpRequest.header();
 
         // must include this header except for SaveAs
-        if (!isSaveAs && lockCtx._supportsLocks)
+        if (!isSaveAs && lockCtx.supportsLocks())
             httpHeader.set("X-WOPI-Lock", lockCtx._lockToken);
 
         if (!isSaveAs && !isRename)
