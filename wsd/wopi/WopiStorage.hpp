@@ -193,7 +193,8 @@ public:
     void handleWOPIFileInfo(const WOPIFileInfo& wopiFileInfo, LockContext& lockCtx);
 
     /// Update the locking state (check-in/out) of the associated file
-    LockUpdateResult updateLockState(const Authorization& auth, LockContext& lockCtx, bool lock,
+    LockUpdateResult updateLockState(const Authorization& auth, LockContext& lockCtx,
+                                     StorageBase::LockState lock,
                                      const Attributes& attribs) override;
 
     /// uri format: http://server/<...>/wopi*/files/<id>/content
