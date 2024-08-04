@@ -38,45 +38,7 @@ class HTTPClientSession;
 
 } // namespace Poco
 
-/// Represents whether the underlying file is locked
-/// and with what token.
-struct LockContext
-{
-    /// Do we have support for locking for a storage.
-    bool        _supportsLocks;
-    /// Do we own the (leased) lock currently
-    bool        _isLocked;
-    /// Name if we need it to use consistently for locking
-    std::string _lockToken;
-    /// Time of last successful lock (re-)acquisition
-    std::chrono::steady_clock::time_point _lastLockTime;
-    /// Reason for unsuccessful locking request
-    std::string _lockFailureReason;
-
-    LockContext()
-        : _supportsLocks(false)
-        , _isLocked(false)
-        , _refreshSeconds(COOLWSD::getConfigValue<int>("storage.wopi.locking.refresh", 900))
-    {
-    }
-
-    /// one-time setup for supporting locks & create token
-    void initSupportsLocks();
-
-    /// wait another refresh cycle
-    void bumpTimer()
-    {
-        _lastLockTime = std::chrono::steady_clock::now();
-    }
-
-    /// do we need to refresh our lock ?
-    bool needsRefresh(const std::chrono::steady_clock::time_point &now) const;
-
-    void dumpState(std::ostream& os) const;
-
-private:
-    const std::chrono::seconds _refreshSeconds;
-};
+struct LockContext;
 
 /// Base class of all Storage abstractions.
 class StorageBase
@@ -564,6 +526,46 @@ private:
     /// True if the jailed file is not linked but copied.
     bool _isCopy;
     static std::atomic<unsigned> LastLocalStorageId;
+};
+
+/// Represents whether the underlying file is locked
+/// and with what token.
+struct LockContext
+{
+    /// Do we have support for locking for a storage.
+    bool _supportsLocks;
+    /// Do we own the (leased) lock currently
+    StorageBase::LockState _lockState;
+    /// Name if we need it to use consistently for locking
+    std::string _lockToken;
+    /// Time of last successful lock (re-)acquisition
+    std::chrono::steady_clock::time_point _lastLockTime;
+    /// Reason for unsuccessful locking request
+    std::string _lockFailureReason;
+
+    LockContext()
+        : _supportsLocks(false)
+        , _lockState(StorageBase::LockState::UNLOCK)
+        , _refreshSeconds(COOLWSD::getConfigValue<int>("storage.wopi.locking.refresh", 900))
+    {
+    }
+
+    /// one-time setup for supporting locks & create token
+    void initSupportsLocks();
+
+    /// Returns true if locked.
+    bool isLocked() const { return _lockState == StorageBase::LockState::LOCK; }
+
+    /// wait another refresh cycle
+    void bumpTimer() { _lastLockTime = std::chrono::steady_clock::now(); }
+
+    /// do we need to refresh our lock ?
+    bool needsRefresh(const std::chrono::steady_clock::time_point& now) const;
+
+    void dumpState(std::ostream& os) const;
+
+private:
+    const std::chrono::seconds _refreshSeconds;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

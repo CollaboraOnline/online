@@ -1098,7 +1098,7 @@ bool DocumentBroker::download(
 void DocumentBroker::lockIfEditing(const std::shared_ptr<ClientSession>& session,
                                    const Poco::URI& uriPublic, bool userCanWrite)
 {
-    if (_lockCtx == nullptr || !_lockCtx->_supportsLocks || _lockCtx->_isLocked)
+    if (_lockCtx == nullptr || !_lockCtx->_supportsLocks || _lockCtx->isLocked())
     {
         return; // Nothing to do.
     }
@@ -1536,7 +1536,7 @@ bool DocumentBroker::lockDocumentInStorage(const Authorization& auth, std::strin
 {
     assert(_lockCtx && "Expected an initialized LockContext");
     assert(_lockCtx->_supportsLocks && "Expected to have lock support");
-    assert(!_lockCtx->_isLocked && "Expected not to have locked already");
+    assert(!_lockCtx->isLocked() && "Expected not to have locked already");
 
     const StorageBase::LockUpdateResult result = _storage->updateLockState(
         auth, *_lockCtx, StorageBase::LockState::LOCK, _currentStorageAttrs);
@@ -3126,12 +3126,12 @@ void DocumentBroker::disconnectSessionInternal(const std::shared_ptr<ClientSessi
 
         LOG_TRC("Disconnect session internal "
                 << id << ", LastEditableSession: " << lastEditableSession << " destroy? "
-                << _docState.isMarkedToDestroy() << " locked? " << _lockCtx->_isLocked << ", have "
+                << _docState.isMarkedToDestroy() << " locked? " << _lockCtx->isLocked() << ", have "
                 << _sessions.size() << " sessions (inclusive)");
 
         // Unlock the document, if last editable sessions, before we lose a token that can unlock.
         std::string error;
-        if (lastEditableSession && _lockCtx->_isLocked && _storage &&
+        if (lastEditableSession && _lockCtx->isLocked() && _storage &&
             !updateStorageLockState(*session, StorageBase::LockState::UNLOCK, error))
         {
             LOG_ERR("Failed to unlock docKey [" << _docKey
