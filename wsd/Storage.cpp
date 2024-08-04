@@ -466,37 +466,6 @@ void LocalStorage::uploadLocalFileToStorageAsync(const Authorization& /*auth*/,
 
 #if !MOBILEAPP
 
-Poco::Net::HTTPClientSession* StorageBase::getHTTPClientSession(const Poco::URI& uri)
-{
-    bool useSSL = false;
-    if (SSLAsScheme)
-    {
-        // the WOPI URI itself should control whether we use SSL or not
-        // for whether we verify vs. certificates, cf. above
-        useSSL = uri.getScheme() != "http";
-    }
-    else
-    {
-        // We decoupled the Wopi communication from client communication because
-        // the Wopi communication must have an independent policy.
-        // So, we will use here only Storage settings.
-        useSSL = SSLEnabled || COOLWSD::isSSLTermination();
-    }
-    // We decoupled the Wopi communication from client communication because
-    // the Wopi communication must have an independent policy.
-    // So, we will use here only Storage settings.
-    Poco::Net::HTTPClientSession* session = useSSL
-        ? new Poco::Net::HTTPSClientSession(uri.getHost(), uri.getPort(),
-                                            Poco::Net::SSLManager::instance().defaultClientContext())
-        : new Poco::Net::HTTPClientSession(uri.getHost(), uri.getPort());
-
-    // Set the timeout to the configured value.
-    static int timeoutSec = COOLWSD::getConfigValue<int>("net.connection_timeout_secs", 30);
-    session->setTimeout(Poco::Timespan(timeoutSec, 0));
-
-    return session;
-}
-
 std::shared_ptr<http::Session> StorageBase::getHttpSession(const Poco::URI& uri)
 {
     bool useSSL = false;
