@@ -197,6 +197,10 @@ public:
                                      StorageBase::LockState lock,
                                      const Attributes& attribs) override;
 
+    void updateLockStateAsync(const Authorization& auth, LockContext& lockCtx, LockState lock,
+                              const Attributes& attribs,
+                              const AsyncLockStateCallback& asyncLockStateCallback) override;
+
     /// uri format: http://server/<...>/wopi*/files/<id>/content
     std::string downloadStorageFileToLocal(const Authorization& auth, LockContext& lockCtx,
                                            const std::string& templateUri) override;

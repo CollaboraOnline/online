@@ -266,6 +266,46 @@ public:
     /// The state of an asynchronous Upload request.
     using AsyncUpload = AsyncRequest<UploadResult>;
 
+    /// Represents the Lock request result, with a Result code
+    /// and a reason message (typically for errors).
+    /// Note: the reason message may be displayed to the clients.
+    class LockResult final
+    {
+    public:
+        STATE_ENUM(Status,
+                   UNSUPPORTED, //< Locking is not supported on this host.
+                   OK, //< Succeeded to either lock or unlock (see LockContext).
+                   UNAUTHORIZED, //< 401, 403, 404.
+                   FAILED //< Other failures.
+        );
+
+        explicit LockResult(Status status)
+            : _status(status)
+        {
+        }
+
+        LockResult(Status status, std::string reason)
+            : _status(status)
+            , _reason(std::move(reason))
+        {
+        }
+
+        void setState(Status status) { _status = status; }
+
+        Status getStatus() const { return _status; }
+
+        void setReason(const std::string& msg) { _reason = msg; }
+
+        const std::string& getReason() const { return _reason; }
+
+    private:
+        Status _status;
+        std::string _reason;
+    };
+
+    /// The state of an asynchronous lock request.
+    using AsyncLockRequest = AsyncRequest<LockResult>;
+
     enum class COOLStatusCode
     {
         DOC_CHANGED = 1010 // Document changed externally in storage
@@ -349,6 +389,14 @@ public:
     /// Update the locking state (check-in/out) of the associated file synchronously.
     virtual LockUpdateResult updateLockState(const Authorization& auth, LockContext& lockCtx,
                                              LockState lock, const Attributes& attribs) = 0;
+
+    /// The asynchronous upload completion callback function.
+    using AsyncLockStateCallback = std::function<void(const AsyncLockRequest&)>;
+
+    /// Update the locking state (check-in/out) of the associated file asynchronously.
+    virtual void updateLockStateAsync(const Authorization& auth, LockContext& lockCtx,
+                                      LockState lock, const Attributes& attribs,
+                                      const AsyncLockStateCallback& asyncLockStateCallback) = 0;
 
     /// Returns a local file path for the given URI.
     /// If necessary copies the file locally first.
@@ -488,6 +536,11 @@ public:
                                      const Attributes&) override
     {
         return LockUpdateResult::OK;
+    }
+
+    void updateLockStateAsync(const Authorization&, LockContext&, LockState, const Attributes&,
+                              const AsyncLockStateCallback&) override
+    {
     }
 
     std::string downloadStorageFileToLocal(const Authorization& auth, LockContext& lockCtx,
