@@ -201,16 +201,14 @@ public:
     class UploadResult final
     {
     public:
-        enum class Result
-        {
-            OK = 0,
-            DISKFULL,
-            TOO_LARGE, //< 413
-            UNAUTHORIZED, //< 401, 403, 404
-            DOC_CHANGED, /**< Document changed in storage */
-            CONFLICT, //< 409
-            FAILED
-        };
+        STATE_ENUM(Result,
+                   OK = 0, //< Uploaded successfully
+                   DISKFULL, //< Unused.
+                   TOO_LARGE, //< 413
+                   UNAUTHORIZED, //< 401, 403, 404
+                   DOC_CHANGED, /**< Document changed in storage */
+                   CONFLICT, //< 409
+                   FAILED);
 
         explicit UploadResult(Result result)
             : _result(result)
@@ -252,13 +250,13 @@ public:
     template <typename TResult> class AsyncRequest final
     {
     public:
-        enum class State
-        {
+        STATE_ENUM(
+            State,
             None, //< No async upload in progress or isn't supported.
             Running, //< An async upload request is in progress.
             Error, //< Failed to make an async upload request or timed out, no UploadResult.
             Complete //< The last async upload request completed (regardless of the server's response).
-        };
+        );
 
         AsyncRequest(State state, TResult result)
             : _state(state)
