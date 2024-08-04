@@ -1103,7 +1103,7 @@ bool DocumentBroker::download(
 void DocumentBroker::lockIfEditing(const std::shared_ptr<ClientSession>& session,
                                    const Poco::URI& uriPublic, bool userCanWrite)
 {
-    if (_lockCtx == nullptr || !_lockCtx->_supportsLocks || _lockCtx->isLocked())
+    if (_lockCtx == nullptr || !_lockCtx->supportsLocks() || _lockCtx->isLocked())
     {
         return; // Nothing to do.
     }
@@ -1540,7 +1540,7 @@ void DocumentBroker::endRenameFileCommand()
 bool DocumentBroker::lockDocumentInStorage(const Authorization& auth, std::string& error)
 {
     assert(_lockCtx && "Expected an initialized LockContext");
-    assert(_lockCtx->_supportsLocks && "Expected to have lock support");
+    assert(_lockCtx->supportsLocks() && "Expected to have lock support");
     assert(!_lockCtx->isLocked() && "Expected not to have locked already");
 
     const StorageBase::LockUpdateResult result = _storage->updateLockState(
