@@ -383,6 +383,11 @@ public:
 
     std::string getFileExtension() const { return Poco::Path(_fileInfo.getFilename()).getExtension(); }
 
+    STATE_ENUM(LockState,
+               LOCK, //< Lock the document.
+               UNLOCK, //< Unlock the document .
+    );
+
     STATE_ENUM(LockUpdateResult,
                UNSUPPORTED, //< Locking is not supported on this host.
                OK, //< Succeeded to either lock or unlock (see LockContext).
@@ -390,9 +395,9 @@ public:
                FAILED //< Other failures.
     );
 
-    /// Update the locking state (check-in/out) of the associated file
+    /// Update the locking state (check-in/out) of the associated file synchronously.
     virtual LockUpdateResult updateLockState(const Authorization& auth, LockContext& lockCtx,
-                                             bool lock, const Attributes& attribs) = 0;
+                                             LockState lock, const Attributes& attribs) = 0;
 
     /// Returns a local file path for the given URI.
     /// If necessary copies the file locally first.
@@ -535,7 +540,7 @@ public:
     /// obtained using getFileInfo method
     std::unique_ptr<LocalFileInfo> getLocalFileInfo();
 
-    LockUpdateResult updateLockState(const Authorization&, LockContext&, bool,
+    LockUpdateResult updateLockState(const Authorization&, LockContext&, StorageBase::LockState,
                                      const Attributes&) override
     {
         return LockUpdateResult::OK;

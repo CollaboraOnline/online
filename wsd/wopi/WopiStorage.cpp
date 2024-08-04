@@ -322,7 +322,8 @@ WopiStorage::WOPIFileInfo::WOPIFileInfo(const FileInfo& fileInfo, Poco::JSON::Ob
 }
 
 StorageBase::LockUpdateResult WopiStorage::updateLockState(const Authorization& auth,
-                                                           LockContext& lockCtx, bool lock,
+                                                           LockContext& lockCtx,
+                                                           StorageBase::LockState lock,
                                                            const Attributes& attribs)
 {
     lockCtx._lockFailureReason.clear();
@@ -336,7 +337,7 @@ StorageBase::LockUpdateResult WopiStorage::updateLockState(const Authorization& 
     uriObjectAnonym.setPath(COOLWSD::anonymizeUrl(uriObjectAnonym.getPath()));
     const std::string uriAnonym = uriObjectAnonym.toString();
 
-    const std::string wopiLog(lock ? "WOPI::Lock" : "WOPI::Unlock");
+    const auto wopiLog = (lock == StorageBase::LockState::LOCK ? "WOPI::Lock" : "WOPI::Unlock");
     LOG_DBG(wopiLog << " requesting: " << uriAnonym);
 
     try
@@ -348,7 +349,7 @@ StorageBase::LockUpdateResult WopiStorage::updateLockState(const Authorization& 
                                        Poco::Net::HTTPMessage::HTTP_1_1);
         initHttpRequest(request, uriObject, auth);
 
-        request.set("X-WOPI-Override", lock ? "LOCK" : "UNLOCK");
+        request.set("X-WOPI-Override", lock == StorageBase::LockState::LOCK ? "LOCK" : "UNLOCK");
         request.set("X-WOPI-Lock", lockCtx._lockToken);
         if (!attribs.getExtendedData().empty())
         {
@@ -372,7 +373,7 @@ StorageBase::LockUpdateResult WopiStorage::updateLockState(const Authorization& 
 
         if (response.getStatus() == Poco::Net::HTTPResponse::HTTP_OK)
         {
-            lockCtx._isLocked = lock;
+            lockCtx._isLocked = (lock == StorageBase::LockState::LOCK);
             lockCtx.bumpTimer();
             return LockUpdateResult::OK;
         }
