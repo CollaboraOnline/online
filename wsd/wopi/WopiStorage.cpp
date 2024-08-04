@@ -434,6 +434,12 @@ StorageBase::LockUpdateResult WopiStorage::updateLockState(const Authorization& 
     return LockUpdateResult::FAILED;
 }
 
+void WopiStorage::updateLockStateAsync(const Authorization& /*auth*/, LockContext& /*lockCtx*/,
+                                       LockState /*lock*/, const Attributes& /*attribs*/,
+                                       const AsyncLockStateCallback& /*asyncLockStateCallback*/)
+{
+}
+
 /// uri format: http://server/<...>/wopi*/files/<id>/content
 std::string WopiStorage::downloadStorageFileToLocal(const Authorization& auth,
                                                     LockContext& /*lockCtx*/,
