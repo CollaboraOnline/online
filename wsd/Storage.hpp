@@ -248,8 +248,8 @@ public:
         std::string _reason;
     };
 
-    /// The state of an asynchronous upload request.
-    class AsyncUpload final
+    /// The state of an asynchronous request.
+    template <typename TResult> class AsyncRequest final
     {
     public:
         enum class State
@@ -260,7 +260,7 @@ public:
             Complete //< The last async upload request completed (regardless of the server's response).
         };
 
-        AsyncUpload(State state, UploadResult result)
+        AsyncRequest(State state, TResult result)
             : _state(state)
             , _result(std::move(result))
         {
@@ -270,12 +270,15 @@ public:
         State state() const { return _state; }
 
         /// Returns the result of the async upload.
-        const UploadResult& result() const { return _result; }
+        const TResult& result() const { return _result; }
 
     private:
         State _state;
-        UploadResult _result;
+        TResult _result;
     };
+
+    /// The state of an asynchronous Upload request.
+    using AsyncUpload = AsyncRequest<UploadResult>;
 
     enum class COOLStatusCode
     {
