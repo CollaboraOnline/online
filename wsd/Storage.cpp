@@ -545,17 +545,20 @@ void LockContext::initSupportsLocks()
 
 bool LockContext::needsRefresh(const std::chrono::steady_clock::time_point &now) const
 {
-    return _supportsLocks && _isLocked && _refreshSeconds > std::chrono::seconds::zero() &&
+    return _supportsLocks && isLocked() && _refreshSeconds > std::chrono::seconds::zero() &&
            (now - _lastLockTime) >= _refreshSeconds;
 }
 
 void LockContext::dumpState(std::ostream& os) const
 {
     if (!_supportsLocks)
+    {
+        os << "\n  LockContext: Unsupported";
         return;
+    }
 
     os << "\n  LockContext:";
-    os << "\n    locked: " << _isLocked;
+    os << "\n    locked: " << isLocked();
     os << "\n    token: " << _lockToken;
     os << "\n    last locked: " << Util::getSteadyClockAsString(_lastLockTime);
 }
