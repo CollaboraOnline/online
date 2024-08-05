@@ -2948,9 +2948,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._oleCSelections.clear();
 		// hide the selection handles
 		this._onUpdateTextSelection();
-		// hide the graphic selection
-		GraphicSelection.rectangle = null;
-		GraphicSelection.updateGraphicSelection();
+
 		this._onUpdateCellCursor();
 		if (this._map._clip)
 			this._map._clip.clearSelection();
