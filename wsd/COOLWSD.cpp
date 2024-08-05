@@ -142,6 +142,7 @@ using Poco::Net::PartHandler;
 #  include <SslSocket.hpp>
 #endif
 #include "Storage.hpp"
+#include <wsd/wopi/StorageConnectionManager.hpp>
 #include "TraceFile.hpp"
 #include <Unit.hpp>
 #include <Util.hpp>
@@ -1157,7 +1158,7 @@ public:
                 try
                 {
                     std::shared_ptr<http::Session> httpSession(
-                            StorageBase::getHttpSession(remoteServerURI));
+                            StorageConnectionManager::getHttpSession(remoteServerURI));
                     http::Request request(remoteServerURI.getPathAndQuery());
 
                     //we use ETag header to check whether JSON is modified or not
@@ -1805,7 +1806,7 @@ private:
     bool downloadPlain(const std::string& uri)
     {
         const Poco::URI fontUri{uri};
-        std::shared_ptr<http::Session> httpSession(StorageBase::getHttpSession(fontUri));
+        std::shared_ptr<http::Session> httpSession(StorageConnectionManager::getHttpSession(fontUri));
         http::Request request(fontUri.getPathAndQuery());
 
         request.set("User-Agent", http::getAgentString());
@@ -1819,7 +1820,7 @@ private:
     bool eTagUnchanged(const std::string& uri, const std::string& oldETag)
     {
         const Poco::URI fontUri{uri};
-        std::shared_ptr<http::Session> httpSession(StorageBase::getHttpSession(fontUri));
+        std::shared_ptr<http::Session> httpSession(StorageConnectionManager::getHttpSession(fontUri));
         http::Request request(fontUri.getPathAndQuery());
 
         if (!oldETag.empty())
@@ -1844,7 +1845,7 @@ private:
     bool downloadWithETag(const std::string& uri, const std::string& oldETag)
     {
         const Poco::URI fontUri{uri};
-        std::shared_ptr<http::Session> httpSession(StorageBase::getHttpSession(fontUri));
+        std::shared_ptr<http::Session> httpSession(StorageConnectionManager::getHttpSession(fontUri));
         http::Request request(fontUri.getPathAndQuery());
 
         if (!oldETag.empty())
@@ -2939,6 +2940,9 @@ void COOLWSD::innerInitialize(Application& self)
 
 #if !MOBILEAPP
     net::AsyncDNS::startAsyncDNS();
+
+    LOG_TRC("Initialize StorageConnectionManager");
+    StorageConnectionManager::initialize();
 #endif
 
     PrisonerPoll = std::make_unique<PrisonPoll>();
@@ -4255,7 +4259,7 @@ void COOLWSD::processFetchUpdate(SocketPoll& poll)
         uriFetch.addQueryParameter("product", config::getString("product_name", APP_NAME));
         uriFetch.addQueryParameter("version", COOLWSD_VERSION);
         LOG_TRC("Infobar update request from " << uriFetch.toString());
-        FetchHttpSession = StorageBase::getHttpSession(uriFetch);
+        FetchHttpSession = StorageConnectionManager::getHttpSession(uriFetch);
         if (!FetchHttpSession)
             return;
 
