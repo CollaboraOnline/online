@@ -4083,7 +4083,7 @@ public:
         if (FetchHttpSession)
         {
             os << "\nFetchHttpSession:\n";
-            FetchHttpSession->dumpState(os, "\n  ");
+            FetchHttpSession->dumpStateIndent(os, "\n  ");
         }
         else
 #endif // !MOBILEAPP

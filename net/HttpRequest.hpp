@@ -689,7 +689,7 @@ public:
     /// and/or to interrupt transmission.
     int64_t readData(const char* p, int64_t len);
 
-    void dumpState(std::ostream& os, const std::string& indent = "\n  ") const
+    void dumpStateIndent(std::ostream& os, const std::string& indent = "\n  ") const
     {
         os << indent << "http::Request: " << _version << ' ' << _verb << ' ' << _url;
         os << indent << "stage: " << name(_stage);
@@ -988,7 +988,7 @@ public:
     /// Sets the context used by logPrefix.
     void setLogContext(int fd) { _fd = fd; }
 
-    void dumpState(std::ostream& os, const std::string& indent = "\n  ") const
+    void dumpStateIndent(std::ostream& os, const std::string& indent = "\n  ") const
     {
         os << indent << "http::Response: #" << _fd;
         os << indent << "statusLine: " << _statusLine.httpVersion() << ' '
@@ -1323,7 +1323,7 @@ public:
     /// Returns the socket FD, for logging/informational purposes.
     int getFD() const { return _fd; }
 
-    void dumpState(std::ostream& os, const std::string& indent = "\n  ") const
+    void dumpStateIndent(std::ostream& os, const std::string& indent = "\n  ") const
     {
         const auto now = std::chrono::steady_clock::now();
         os << indent << "http::Session: #" << _fd;
@@ -1334,9 +1334,9 @@ public:
         os << indent << "protocol: " << name(_protocol);
         os << indent << "handshakeSslVerifyFailure: " << _handshakeSslVerifyFailure;
         os << indent << "startTime: " << Util::getTimeForLog(now, _startTime);
-        _request.dumpState(os, indent);
+        _request.dumpStateIndent(os, indent);
         if (_response)
-            _response->dumpState(os, indent);
+            _response->dumpStateIndent(os, indent);
         else
             os << indent << "response: null";
 
@@ -1837,7 +1837,7 @@ public:
         }
     }
 
-    void dumpState(std::ostream& os, const std::string& indent = "\n  ") const
+    void dumpStateIndent(std::ostream& os, const std::string& indent = "\n  ") const
     {
         const auto now = std::chrono::steady_clock::now();
         os << indent << "http::server::Session: #" << _fd;
