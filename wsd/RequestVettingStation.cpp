@@ -271,7 +271,7 @@ void RequestVettingStation::handleRequest(const std::string& id,
                     else
                     {
                         // We had a response, but it was empty/error. Meaning the user is unauthorized.
-                        assert(_checkFileInfo && _checkFileInfo->wopiInfo() == nullptr &&
+                        assert(_checkFileInfo && !_checkFileInfo->wopiInfo() &&
                                "Unexpected to have wopiInfo");
 
                         LOG_ERR_S('#'
