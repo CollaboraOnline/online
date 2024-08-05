@@ -269,7 +269,7 @@ public:
     /// Represents the Lock request result, with a Result code
     /// and a reason message (typically for errors).
     /// Note: the reason message may be displayed to the clients.
-    class LockResult final
+    class LockUpdateResult final
     {
     public:
         STATE_ENUM(Status,
@@ -279,12 +279,12 @@ public:
                    FAILED //< Other failures.
         );
 
-        explicit LockResult(Status status)
+        explicit LockUpdateResult(Status status)
             : _status(status)
         {
         }
 
-        LockResult(Status status, std::string reason)
+        LockUpdateResult(Status status, std::string reason)
             : _status(status)
             , _reason(std::move(reason))
         {
@@ -304,7 +304,7 @@ public:
     };
 
     /// The state of an asynchronous lock request.
-    using AsyncLockRequest = AsyncRequest<LockResult>;
+    using AsyncLockUpdate = AsyncRequest<LockUpdateResult>;
 
     enum class COOLStatusCode
     {
@@ -379,19 +379,12 @@ public:
                UNLOCK, //< Unlock the document .
     );
 
-    STATE_ENUM(LockUpdateResult,
-               UNSUPPORTED, //< Locking is not supported on this host.
-               OK, //< Succeeded to either lock or unlock (see LockContext).
-               UNAUTHORIZED, //< 401, 403, 404.
-               FAILED //< Other failures.
-    );
-
     /// Update the locking state (check-in/out) of the associated file synchronously.
     virtual LockUpdateResult updateLockState(const Authorization& auth, LockContext& lockCtx,
                                              LockState lock, const Attributes& attribs) = 0;
 
     /// The asynchronous upload completion callback function.
-    using AsyncLockStateCallback = std::function<void(const AsyncLockRequest&)>;
+    using AsyncLockStateCallback = std::function<void(const AsyncLockUpdate&)>;
 
     /// Update the locking state (check-in/out) of the associated file asynchronously.
     virtual void updateLockStateAsync(const Authorization& auth, LockContext& lockCtx,
@@ -535,7 +528,7 @@ public:
     LockUpdateResult updateLockState(const Authorization&, LockContext&, StorageBase::LockState,
                                      const Attributes&) override
     {
-        return LockUpdateResult::OK;
+        return LockUpdateResult(LockUpdateResult::Status::OK);
     }
 
     void updateLockStateAsync(const Authorization&, LockContext&, LockState, const Attributes&,

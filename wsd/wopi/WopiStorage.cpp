@@ -355,7 +355,7 @@ StorageBase::LockUpdateResult WopiStorage::updateLockState(const Authorization& 
 {
     lockCtx._lockFailureReason.clear();
     if (!lockCtx.supportsLocks())
-        return LockUpdateResult::UNSUPPORTED;
+        return LockUpdateResult(LockUpdateResult::Status::UNSUPPORTED);
 
     Poco::URI uriObject(getUri());
     auth.authorizeURI(uriObject);
@@ -399,7 +399,7 @@ StorageBase::LockUpdateResult WopiStorage::updateLockState(const Authorization& 
         if (httpResponse->statusLine().statusCode() == http::StatusCode::OK)
         {
             lockCtx.setState(lock);
-            return LockUpdateResult::OK;
+            return LockUpdateResult(LockUpdateResult::Status::OK);
         }
 
         std::string failureReason = httpResponse->get("X-WOPI-LockFailureReason", "");
@@ -417,13 +417,13 @@ StorageBase::LockUpdateResult WopiStorage::updateLockState(const Authorization& 
                                      << httpResponse->statusLine().statusCode() << failureReason
                                      << " and response: " << responseString);
 
-            return LockUpdateResult::UNAUTHORIZED;
+            return LockUpdateResult(LockUpdateResult::Status::UNAUTHORIZED);
         }
 
         LOG_ERR("Un-successful " << wopiLog << " with HTTP status "
                                  << httpResponse->statusLine().statusCode() << failureReason
                                  << " and response: " << responseString);
-        return LockUpdateResult::FAILED;
+        return LockUpdateResult(LockUpdateResult::Status::FAILED);
     }
     catch (const BadRequestException& exc)
     {
@@ -431,7 +431,7 @@ StorageBase::LockUpdateResult WopiStorage::updateLockState(const Authorization& 
     }
 
     lockCtx._lockFailureReason = "Request failed";
-    return LockUpdateResult::FAILED;
+    return LockUpdateResult(LockUpdateResult::Status::FAILED);
 }
 
 void WopiStorage::updateLockStateAsync(const Authorization& /*auth*/, LockContext& /*lockCtx*/,
