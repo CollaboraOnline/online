@@ -66,6 +66,7 @@
 #include <Poco/TemporaryFile.h>
 #include <Poco/Util/Application.h>
 #include <Poco/URI.h>
+#include <Poco/Version.h>
 
 #include "Log.hpp"
 #include "JsonUtil.hpp"
@@ -380,10 +381,17 @@ namespace Util
     {
         std::string version, hash;
         Util::getVersionInfo(version, hash);
+
+        std::string pocoVersion;
+        pocoVersion += std::to_string((POCO_VERSION & 0xff000000) >> 24) + ".";
+        pocoVersion += std::to_string((POCO_VERSION & 0x00ff0000) >> 16) + ".";
+        pocoVersion += std::to_string((POCO_VERSION & 0x0000ff00) >> 8);
+
         return
             "{ \"Version\":     \"" + version + "\", "
               "\"Hash\":        \"" + hash + "\", "
               "\"BuildConfig\": \"" + std::string(COOLWSD_BUILDCONFIG) + "\", "
+              "\"PocoVersion\": \"" + pocoVersion + "\", "
               "\"Protocol\":    \"" + COOLProtocol::GetProtocolVersion() + "\", "
               "\"Id\":          \"" + Util::getProcessIdentifier() + "\", "
               "\"Options\":     \"" + std::string(enableExperimental ? " (E)" : "") + "\" }";
