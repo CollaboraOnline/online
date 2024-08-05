@@ -12,7 +12,7 @@
  * L.Socket contains methods for the communication with the server
  */
 
-/* global app JSDialog _ $ errorMessages Uint8Array brandProductName */
+/* global app JSDialog _ $ errorMessages Uint8Array brandProductName GraphicSelection */
 
 app.definitions.Socket = L.Class.extend({
 	ProtocolVersionNumber: '0.1',
@@ -1634,8 +1634,8 @@ app.definitions.Socket = L.Class.extend({
 		if (this._map._docLayer) {
 			this._map._docLayer.removeAllViews();
 			this._map._docLayer._resetClientVisArea();
-			if (this._map._docLayer._graphicSelection) {
-				this._map._docLayer._graphicSelection = null;
+			if (GraphicSelection.hasActiveSelection()) {
+				GraphicSelection.rectangle = null;
 				this._map._docLayer._onUpdateGraphicSelection();
 			}
 			if (this._map._docLayer._docType === 'presentation')

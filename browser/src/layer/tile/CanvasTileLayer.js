@@ -3,7 +3,7 @@
  * L.CanvasTileLayer is a layer with canvas based rendering.
  */
 
-/* global app L JSDialog CanvasSectionContainer CanvasOverlay CDarkOverlay CSplitterLine CursorHeaderSection $ _ CPointSet CPolyUtil CPolygon Cursor CCellSelection PathGroupType UNOKey UNOModifier Uint8ClampedArray Uint8Array Uint32Array */
+/* global app L JSDialog CanvasSectionContainer GraphicSelection CanvasOverlay CDarkOverlay CSplitterLine $ _ CPointSet CPolyUtil CPolygon Cursor CCellSelection PathGroupType UNOKey UNOModifier Uint8ClampedArray Uint8Array Uint32Array */
 
 /*eslint no-extend-native:0*/
 if (typeof String.prototype.startsWith !== 'function') {
@@ -685,10 +685,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		this.lastCursorPos = null;
 		// Are we zooming currently ? - if so, no cursor.
 		this._isZooming = false;
-		// Rectangle graphic selection
-		this._graphicSelection = null;
-		// Rotation angle of selected graphic object
-		this._graphicSelectionAngle = 0;
+
 		app.calc.cellCursorVisible = false;
 		this._prevCellCursorAddress = null;
 		this._shapeGridOffset = new app.definitions.simplePoint(0, 0);
@@ -707,8 +704,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._lastValidPart = -1;
 		// Cursor marker
 		this._cursorMarker = null;
-		// Graphic Selected?
-		this._hasActiveSelection = false;
 
 		this._initializeTableOverlay();
 
@@ -1298,11 +1293,11 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._onGetChildIdMsg(textMsg);
 		}
 		else if (textMsg.startsWith('shapeselectioncontent:')) {
-			this._onShapeSelectionContent(textMsg);
+			GraphicSelection.onShapeSelectionContent(textMsg);
 		}
 		else if (textMsg.startsWith('graphicselection:')) {
 			this._map.fire('resettopbottompagespacing');
-			this._onGraphicSelectionMsg(textMsg);
+			GraphicSelection.onMessage(textMsg);
 		}
 		else if (textMsg.startsWith('graphicinnertextarea:')) {
 			return; // Not used.
@@ -1975,233 +1970,12 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._map.fire('childid', {id: command.id});
 	},
 
-	_isGraphicAngleDivisibleBy90: function() {
-		return (this._graphicSelectionAngle % 9000 === 0);
-	},
-
-	_shouldScaleUniform: function(extraInfo) {
-		return (!this._isGraphicAngleDivisibleBy90() || extraInfo.isWriterGraphic || extraInfo.type === 22);
-	},
-
-	_onShapeSelectionContent: function (textMsg) {
-		textMsg = textMsg.substring('shapeselectioncontent:'.length + 1);
-
-		var extraInfoId = null;
-		if (this._graphicSelection && this._graphicSelection.extraInfo)
-			extraInfoId = this._graphicSelection.extraInfo.id;
-		if (extraInfoId) {
-			this._map._cacheSVG[extraInfoId] = textMsg;
-		}
-
-		// video is handled in _onEmbeddedVideoContent
-		if (this._graphicMarker && this._graphicMarker.sectionProperties.hasVideo) {
-			if (extraInfoId)
-				this._map._cacheSVG[extraInfoId] = undefined;
-		}
-		else if (this._graphicMarker)
-			this._graphicMarker.setSVG(textMsg);
-	},
-
-	// shows the video inside current selection marker
-	_onEmbeddedVideoContent: function (textMsg) {
-		if (!this._graphicMarker)
-			return;
-
-		var videoDesc = JSON.parse(textMsg);
-
-		if (this._graphicSelection) {
-			videoDesc.width = this._graphicSelection.cWidth;
-			videoDesc.height = this._graphicSelection.cHeight;
-		}
-		// proxy cannot identify RouteToken if it is encoded
-		var routeTokenIndex = videoDesc.url.indexOf('%26RouteToken=');
-		if (routeTokenIndex != -1) {
-			videoDesc.url = videoDesc.url.replace('%26RouteToken=', '&amp;RouteToken=');
-		}
-
-		var videoToInsert = '<?xml version="1.0" encoding="UTF-8"?>\
-		<foreignObject xmlns="http://www.w3.org/2000/svg" overflow="visible" width="'
-			+ videoDesc.width + '" height="' + videoDesc.height + '">\
-		    <body xmlns="http://www.w3.org/1999/xhtml">\
-		        <video controls="controls" width="' + videoDesc.width + '" height="'
-					+ videoDesc.height + '">\
-		            <source src="' + videoDesc.url + '" type="' + videoDesc.mimeType + '"/>\
-		        </video>\
-		    </body>\
-		</foreignObject>';
-
-		this._graphicMarker.addEmbeddedVideo(videoToInsert);
-	},
-
-	_resetSelectionRanges: function() {
-		this._graphicSelection = null;
-		this._hasActiveSelection = false;
-		if (this._graphicMarker) {
-			this._graphicMarker.removeSubSections();
-			app.sectionContainer.removeSection(this._graphicMarker.name);
-			this._graphicMarker = null;
-		}
-	},
-
 	_openMobileWizard: function(data) {
 		this._map.fire('mobilewizard', {data: data});
 	},
 
 	_closeMobileWizard: function() {
 		this._map.fire('closemobilewizard');
-	},
-
-	_extractAndSetGraphicSelection: function(messageJSON) {
-		var signX =  this.isCalcRTL() ? -1 : 1;
-		var hasExtraInfo = messageJSON.length > 5;
-		var hasGridOffset = false;
-		var extraInfo = null;
-		if (hasExtraInfo) {
-			extraInfo = messageJSON[5];
-			if (extraInfo.gridOffsetX || extraInfo.gridOffsetY) {
-				this._shapeGridOffset = new app.definitions.simplePoint(signX * extraInfo.gridOffsetX, extraInfo.gridOffsetY);
-				hasGridOffset = true;
-			}
-		}
-
-		// Calc RTL: Negate positive X coordinates from core if grid offset is available.
-		signX = hasGridOffset && this.isCalcRTL() ? -1 : 1;
-		this._graphicSelection = new app.definitions.simpleRectangle(signX * messageJSON[0], messageJSON[1], signX * messageJSON[2], messageJSON[3]);
-
-		if (hasGridOffset)
-			this._graphicSelection.moveBy([this._shapeGridOffset.x, this._shapeGridOffset.y]);
-
-		this._graphicSelection.extraInfo = extraInfo;
-	},
-
-	renderDarkOverlay: function () {
-		var topLeft = new L.Point(this._graphicSelection.pX1, this._graphicSelection.pY1);
-		var bottomRight = new L.Point(this._graphicSelection.pX2, this._graphicSelection.pY2);
-
-		if (this.isCalcRTL()) {
-			// Dark overlays (like any other overlay) need regular document coordinates.
-			// But in calc-rtl mode, charts (like shapes) have negative x document coordinate
-			// internal representation.
-			topLeft.x = Math.abs(topLeft.x);
-			bottomRight.x = Math.abs(bottomRight.x);
-		}
-
-		var bounds = new L.Bounds(topLeft, bottomRight);
-
-		this._oleCSelections.setPointSet(CPointSet.fromBounds(bounds));
-	},
-
-	_onGraphicSelectionMsg: function (textMsg) {
-		app.definitions.urlPopUpSection.closeURLPopUp();
-
-		if (textMsg.match('EMPTY')) {
-			this._resetSelectionRanges();
-		}
-		else if (textMsg.match('INPLACE EXIT')) {
-			this._oleCSelections.clear();
-		}
-		else if (textMsg.match('INPLACE')) {
-			if (this._oleCSelections.empty()) {
-				textMsg = '[' + textMsg.substr('graphicselection:'.length) + ']';
-				try {
-					var msgData = JSON.parse(textMsg);
-					if (msgData.length > 1)
-						this._extractAndSetGraphicSelection(msgData);
-				}
-				catch (error) {
-					window.app.console.warn('cannot parse graphicselection command');
-				}
-				this.renderDarkOverlay();
-
-				this._graphicSelection = null;
-				this._onUpdateGraphicSelection();
-			}
-		}
-		else {
-			textMsg = '[' + textMsg.substr('graphicselection:'.length) + ']';
-			msgData = JSON.parse(textMsg);
-			this._extractAndSetGraphicSelection(msgData);
-
-			// Update the dark overlay on zooming & scrolling
-			if (!this._oleCSelections.empty()) {
-				this._oleCSelections.clear();
-				this.renderDarkOverlay();
-			}
-
-			this._graphicSelectionAngle = (msgData.length > 4) ? msgData[4] : 0;
-
-			if (this._graphicSelection.extraInfo) {
-				var dragInfo = this._graphicSelection.extraInfo.dragInfo;
-				if (dragInfo && dragInfo.dragMethod === 'PieSegmentDragging') {
-					dragInfo.initialOffset /= 100.0;
-					var dragDir = dragInfo.dragDirection;
-					dragInfo.dragDirection = this._twipsToPixels(new L.Point(dragDir[0], dragDir[1]));
-					dragDir = dragInfo.dragDirection;
-					dragInfo.range2 = dragDir.x * dragDir.x + dragDir.y * dragDir.y;
-				}
-			}
-
-			// defaults
-			var extraInfo = this._graphicSelection.extraInfo;
-			if (extraInfo) {
-				if (extraInfo.isDraggable === undefined)
-					extraInfo.isDraggable = true;
-				if (extraInfo.isResizable === undefined)
-					extraInfo.isResizable = true;
-				if (extraInfo.isRotatable === undefined)
-					extraInfo.isRotatable = true;
-			}
-
-			// Workaround for tdf#123874. For some reason the handling of the
-			// shapeselectioncontent messages that we get back causes the WebKit process
-			// to crash on iOS.
-
-			// Note2: scroll to frame in writer would result an error:
-			//   svgexport.cxx:810: ...UnknownPropertyException message: "Background
-			var isFrame = extraInfo.type == 601 && !extraInfo.isWriterGraphic;
-
-			if (!window.ThisIsTheiOSApp && this._graphicSelection.extraInfo.isDraggable && !this._graphicSelection.extraInfo.svg
-				&& !isFrame)
-			{
-				app.socket.sendMessage('rendershapeselection mimetype=image/svg+xml');
-			}
-
-			// scroll to selected graphics, if it has no cursor
-			if (!this.isWriter() && this._graphicSelection
-				&& this._allowViewJump()) {
-
-				if (
-					(
-						!app.isPointVisibleInTheDisplayedArea([this._graphicSelection.x1, this._graphicSelection.y1]) ||
-						!app.isPointVisibleInTheDisplayedArea([this._graphicSelection.x2, this._graphicSelection.y2])
-					)
-					&&
-					!this._selectionHandles.active &&
-					!(app.isFollowingEditor() || app.isFollowingUser()) &&
-					!this._map.calcInputBarHasFocus()) {
-					this.scrollToPos(new app.definitions.simplePoint(this._graphicSelection.x1, this._graphicSelection.y1));
-				}
-			}
-
-		}
-
-		// Graphics are by default complex selections, unless Core tells us otherwise.
-		if (this._map._clip)
-			this._map._clip.onComplexSelection('');
-
-		// Reset text selection - important for textboxes in Impress
-		if (this._selectionContentRequest)
-			clearTimeout(this._selectionContentRequest);
-		this._onMessage('textselectioncontent:');
-
-		this._onUpdateGraphicSelection();
-
-		if (msgData && msgData.length > 5) {
-			var extraInfo = msgData[5];
-			if (extraInfo.url !== undefined) {
-				this._onEmbeddedVideoContent(JSON.stringify(extraInfo));
-			}
-		}
 	},
 
 	_onGraphicViewSelectionMsg: function (textMsg) {
@@ -3175,8 +2949,8 @@ L.CanvasTileLayer = L.Layer.extend({
 		// hide the selection handles
 		this._onUpdateTextSelection();
 		// hide the graphic selection
-		this._graphicSelection = null;
-		this._onUpdateGraphicSelection();
+		GraphicSelection.rectangle = null;
+		GraphicSelection.updateGraphicSelection();
 		this._onUpdateCellCursor();
 		if (this._map._clip)
 			this._map._clip.clearSelection();
@@ -3378,7 +3152,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		if (!zoom
 		&& scroll !== false
-		&& (app.file.textCursor.visible || this._graphicSelection)
+		&& (app.file.textCursor.visible || GraphicSelection.hasActiveSelection())
 		// Do not center view in Calc if no new cursor coordinates have arrived yet.
 		// ie, 'invalidatecursor' has not arrived after 'cursorvisible' yet.
 		&& (!this.isCalc() || (this._lastVisibleCursorRef && !this._lastVisibleCursorRef.equals(app.file.textCursor.rectangle.toArray())))
@@ -3545,51 +3319,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		for (var key in views) {
 			method.call(context, item ? views[key] : key);
 		}
-	},
-
-	// Update group layer selection handler.
-	_onUpdateGraphicSelection: function () {
-		if (this._graphicSelection) {
-			// Hide the keyboard on graphic selection, unless cursor is visible.
-			// Don't interrupt editing in dialogs
-			if (!this._isAnyInputFocused())
-				this._map.focus(app.file.textCursor.visible);
-
-			if (!this._map.isEditMode()) {
-				return;
-			}
-
-			var extraInfo = this._graphicSelection.extraInfo;
-			let addHandlesSection = false;
-
-			if (!this._graphicMarker)
-				addHandlesSection = true;
-			else if (extraInfo.id !== this._graphicMarker.sectionProperties.info.id) { // Another shape is selected.
-				this._graphicMarker.removeSubSections();
-				app.sectionContainer.removeSection(this._graphicMarker.name);
-				this._graphicMarker = null;
-				addHandlesSection = true;
-			}
-
-			if (addHandlesSection) {
-				this._graphicMarker = new app.definitions.shapeHandlesSection({});
-				app.sectionContainer.addSection(this._graphicMarker);
-			}
-
-			this._graphicMarker.setPosition(this._graphicSelection.pX1, this._graphicSelection.pY1);
-			extraInfo.hasTableSelection = this.hasTableSelection(); // scaleSouthAndEastOnly
-			this._graphicMarker.refreshInfo(this._graphicSelection.extraInfo);
-			this._graphicMarker.setShowSection(true);
-			app.sectionContainer.requestReDraw();
-
-			this._hasActiveSelection = true;
-		}
-		else if (this._graphicMarker && app.sectionContainer.doesSectionExist(this._graphicMarker.name)){
-			this._graphicMarker.removeSubSections();
-			app.sectionContainer.removeSection(this._graphicMarker.name);
-			this._graphicMarker = null;
-		}
-		this._updateCursorAndOverlay();
 	},
 
 	// TODO: used only in calc: move to CalcTileLayer
@@ -3765,10 +3494,6 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._selectionHandles.start = this._selectionHandles.end;
 			this._selectionHandles.end = temp;
 		}
-	},
-
-	hasGraphicSelection: function() {
-		return !!this._graphicSelection;
 	},
 
 	_onDragOver: function (e) {
@@ -3971,22 +3696,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 
 		return this.sheetGeometry.getTileTwipsSheetAreaFromPrint(rectangle);
-	},
-
-	_getGraphicSelectionRectangle: function (rectangle) {
-		if (!(rectangle instanceof L.Bounds) || !this.options.printTwipsMsgsEnabled || !this.sheetGeometry) {
-			return rectangle;
-		}
-
-		// Calc
-		var rectSize = rectangle.getSize();
-		var newTopLeft = this.sheetGeometry.getTileTwipsPointFromPrint(rectangle.getTopLeft());
-		if (this.isLayoutRTL()) { // Convert to negative display-twips coordinates.
-			newTopLeft.x = -newTopLeft.x;
-			rectSize.x = -rectSize.x;
-		}
-
-		return new L.Bounds(newTopLeft, newTopLeft.add(rectSize));
 	},
 
 	_convertCalcTileTwips: function (point, offset) {

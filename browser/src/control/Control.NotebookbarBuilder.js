@@ -13,7 +13,7 @@
  * L.Control.NotebookbarBuilder - builder of native HTML widgets for tabbed menu
  */
 
-/* global $ _ JSDialog app */
+/* global $ _ JSDialog app GraphicSelection */
 L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 
 	_customizeOptions: function() {
@@ -667,7 +667,7 @@ $(control.label).unbind('click');
 		$(control.container).click(function (e) {
 			e.preventDefault();
 			var docLayer = builder.map._docLayer;
-			if (!(docLayer._docType === 'spreadsheet' && docLayer._hasActiveSelection)) {
+			if (!(docLayer._docType === 'spreadsheet' && GraphicSelection.hasActiveSelection())) {
 				builder.map.insertComment();
 			}
 		});
