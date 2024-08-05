@@ -102,6 +102,31 @@ std::map<std::string, std::string> GetQueryParams(const Poco::URI& uri)
     return result;
 }
 
+/// A helper class to invoke the callback of an async
+/// request when it exits its scope.
+/// By default it invokes the callback with a failure state.
+template <typename TCallback, typename TArg> class ScopedInvokeAsyncRequestCallback
+{
+public:
+    ScopedInvokeAsyncRequestCallback(TCallback callback, TArg arg)
+        : _callback(std::move(callback))
+        , _arg(std::move(arg))
+    {
+    }
+
+    ~ScopedInvokeAsyncRequestCallback()
+    {
+        if (_callback)
+            _callback(_arg);
+    }
+
+    /// Set a new callback argument.
+    void setArg(TArg arg) { _arg = std::move(arg); }
+
+private:
+    TCallback _callback;
+    TArg _arg;
+};
 } // anonymous namespace
 
 void WopiStorage::initHttpRequest(Poco::Net::HTTPRequest& request, const Poco::URI& uri,
@@ -592,34 +617,6 @@ std::string WopiStorage::downloadDocument(const Poco::URI& uriObject, const std:
         return Poco::Path(getJailPath(), getFileInfo().getFilename()).toString();
 }
 
-/// A helper class to invoke the AsyncUploadCallback
-/// when it exits its scope.
-/// By default it invokes the callback with a failure state.
-class ScopedInvokeAsyncUploadCallback
-{
-public:
-    ScopedInvokeAsyncUploadCallback(StorageBase::AsyncUploadCallback asyncUploadCallback)
-        : _asyncUploadCallback(std::move(asyncUploadCallback))
-        , _arg(StorageBase::AsyncUpload(
-              StorageBase::AsyncUpload::State::Error,
-              StorageBase::UploadResult(StorageBase::UploadResult::Result::FAILED)))
-    {
-    }
-
-    ~ScopedInvokeAsyncUploadCallback()
-    {
-        if (_asyncUploadCallback)
-            _asyncUploadCallback(_arg);
-    }
-
-    /// Set a new callback argument.
-    void setArg(StorageBase::AsyncUpload arg) { _arg = std::move(arg); }
-
-private:
-    StorageBase::AsyncUploadCallback _asyncUploadCallback;
-    StorageBase::AsyncUpload _arg;
-};
-
 void WopiStorage::uploadLocalFileToStorageAsync(const Authorization& auth, LockContext& lockCtx,
                                                 const std::string& saveAsPath,
                                                 const std::string& saveAsFilename,
@@ -634,7 +631,12 @@ void WopiStorage::uploadLocalFileToStorageAsync(const Authorization& auth, LockC
     // TODO: Check if this URI has write permission (canWrite = true)
 
     // Always invoke the callback with the result of the async upload.
-    ScopedInvokeAsyncUploadCallback scopedInvokeCallback(asyncUploadCallback);
+    ScopedInvokeAsyncRequestCallback<AsyncUploadCallback, StorageBase::AsyncUpload>
+        scopedInvokeCallback(
+            asyncUploadCallback,
+            StorageBase::AsyncUpload(
+                StorageBase::AsyncUpload::State::Error,
+                StorageBase::UploadResult(StorageBase::UploadResult::Result::FAILED)));
 
     //TODO: replace with state machine.
     if (_uploadHttpSession)
