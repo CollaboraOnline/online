@@ -12,7 +12,7 @@
  * Control.ContextMenu
  */
 
-/* global $ _ _UNO app */
+/* global $ _ _UNO app GraphicSelection */
 L.Control.ContextMenu = L.Control.extend({
 	options: {
 		SEPARATOR: '---------',
@@ -205,7 +205,7 @@ L.Control.ContextMenu = L.Control.extend({
 
 	_amendContextMenuData: function(obj) {
 		// Add a 'delete' entry  for graphic selection on desktop and mobile device (in browser or app).
-		if (this._map._docLayer.hasGraphicSelection()) {
+		if (GraphicSelection.hasActiveSelection()) {
 			var insertIndex = -1;
 			obj.menu.forEach(function(item, index) {
 				if (item.command === '.uno:Paste') {

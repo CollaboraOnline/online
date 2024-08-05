@@ -147,7 +147,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		let topMiddle = this.sectionProperties.info.handles.kinds.rectangle['2'][0];
 		topMiddle = new cool.SimplePoint(parseInt(topMiddle.point.x), parseInt(topMiddle.point.y));
 
-		const center = app.map._docLayer._graphicSelection.center; // number array in twips.
+		const center = GraphicSelection.rectangle.center; // number array in twips.
 
 		const radians = Math.atan2((center[1] - topMiddle.y), (topMiddle.x - center[0]));
 		return radians - Math.PI * 0.5;
@@ -163,7 +163,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 
 		return {
 			angleRadian: this.getShapeAngleRadians(),
-			center: app.map._docLayer._graphicSelection.pCenter.slice(),
+			center: GraphicSelection.rectangle.pCenter.slice(),
 			height: this.getShapeHeight() * app.twipsToPixels,
 			width: this.getShapeWidth() * app.twipsToPixels
 		};
@@ -202,7 +202,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		if (!this.sectionProperties.info?.handles?.kinds?.rectangle)
 			return;
 
-		let coreAngle = app.map._docLayer._graphicSelectionAngle;
+		let coreAngle = GraphicSelection.selectionAngle;
 		if (this.sectionProperties.svg)
 			coreAngle = this.sectionProperties.svg.innerHTML.includes('class="Group"') ? 0: coreAngle;
 
@@ -314,8 +314,8 @@ class ShapeHandlesSection extends CanvasSectionObject {
 	updateSize() {
 		this.size = [0, 0];
 
-		if (app.map._docLayer._graphicSelection)
-			this.size = [app.map._docLayer._graphicSelection.pWidth, app.map._docLayer._graphicSelection.pHeight];
+		if (GraphicSelection.hasActiveSelection())
+			this.size = [GraphicSelection.rectangle.pWidth, GraphicSelection.rectangle.pHeight];
 	}
 
 	isSVGVisible() {
@@ -650,7 +650,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 	}
 
 	adjustSVGProperties() {
-		if (this.sectionProperties.svg && this.sectionProperties.svg.style.display === '' && app.map._docLayer._graphicSelection) {
+		if (this.sectionProperties.svg && this.sectionProperties.svg.style.display === '' && GraphicSelection.hasActiveSelection()) {
 
 			const clientRect = (this.sectionProperties.svg.children[0] as SVGElement).getBoundingClientRect();
 			let width: number = clientRect.width;

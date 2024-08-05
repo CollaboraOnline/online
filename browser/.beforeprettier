@@ -103,6 +103,7 @@
 /src/core/Util.js
 /src/docstate.js
 /src/app/DocEvents.ts
+/src/app/GraphicSelectionMiddleware.ts
 /src/dom/DomEvent.js
 /src/dom/DomEvent.MultiClick.js
 /src/dom/DomEvent.Pointer.js

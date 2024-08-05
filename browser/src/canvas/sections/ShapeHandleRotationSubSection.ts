@@ -80,7 +80,7 @@ class ShapeHandleRotationSubSection extends CanvasSectionObject {
 		draggedToPoint.pX += this.position[0];
 		draggedToPoint.pY += this.position[1];
 
-		const selectionCenter = new app.definitions.simplePoint(app.map._docLayer._graphicSelection.center[0], app.map._docLayer._graphicSelection.center[1]);
+		const selectionCenter = new app.definitions.simplePoint(GraphicSelection.rectangle.center[0], GraphicSelection.rectangle.center[1]);
 
 		const initialPoint = this.sectionProperties.ownInfo.initialPosition;
 		const initialAngle = this.calculateAngle(selectionCenter, initialPoint);
@@ -96,7 +96,7 @@ class ShapeHandleRotationSubSection extends CanvasSectionObject {
 	onMouseUp(point: number[], e: MouseEvent): void {
 		if (this.containerObject.isDraggingSomething()) {
 			if (this.sectionProperties.lastDraggingDistance) {
-				const center = app.map._docLayer._graphicSelection.center;
+				const center = GraphicSelection.rectangle.center;
 
 				const commandParameters = {
 					'TransformRotationDeltaAngle': {

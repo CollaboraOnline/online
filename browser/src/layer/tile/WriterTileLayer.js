@@ -12,15 +12,15 @@
  * Writer tile layer is used to display a text document
  */
 
-/* global app */
+/* global app GraphicSelection */
 L.WriterTileLayer = L.CanvasTileLayer.extend({
 
 	newAnnotation: function (comment) {
 		if (app.file.textCursor.visible) {
 			comment.anchorPos = [app.file.textCursor.rectangle.x2, app.file.textCursor.rectangle.y1];
-		} else if (this._graphicSelection) {
+		} else if (GraphicSelection.hasActiveSelection()) {
 			// An image is selected, then guess the anchor based on the graphic selection.
-			comment.anchorPos = [this._graphicSelection.x1, this._graphicSelection.y2];
+			comment.anchorPos = [GraphicSelection.rectangle.x1, GraphicSelection.rectangle.y2];
 		}
 
 		var annotation = app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).add(comment);
