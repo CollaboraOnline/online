@@ -404,8 +404,6 @@ public:
     static std::unique_ptr<StorageBase> create(const Poco::URI& uri, const std::string& jailRoot,
                                                const std::string& jailPath, bool takeOwnership);
 
-    static std::shared_ptr<http::Session> getHttpSession(const Poco::URI& uri);
-
 protected:
 
     /// Sanitize a URI by removing authorization tokens.
@@ -447,10 +445,6 @@ private:
     bool _isDownloaded;
 
     static bool FilesystemEnabled;
-    /// If true, use only the WOPI URL for whether to use SSL to talk to storage server
-    static bool SSLAsScheme;
-    /// If true, force SSL communication with storage server
-    static bool SSLEnabled;
 };
 
 /// Trivial implementation of local storage that does not need do anything.
