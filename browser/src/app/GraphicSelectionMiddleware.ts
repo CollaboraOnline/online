@@ -20,6 +20,11 @@ class GraphicSelection {
         return this.rectangle !== null;
     }
 
+	public static onUpdatePermission() {
+		this.rectangle = null;
+		this.updateGraphicSelection();
+	}
+
     static resetSelectionRanges() {
 		this.rectangle = null;
 		this.extraInfo = null;
@@ -272,5 +277,7 @@ class GraphicSelection {
 		}
 	}
 }
+
+app.events.on('updatepermission', GraphicSelection.onUpdatePermission.bind(GraphicSelection));
 
 app.definitions.graphicSelection = GraphicSelection;
