@@ -11,6 +11,10 @@
 
 #include <config.h>
 
+#if MOBILEAPP
+#error "Mobile doesn't need or support WOPI"
+#endif
+
 #include "StorageConnectionManager.hpp"
 
 #include <Common.hpp>
@@ -24,8 +28,6 @@
 #include <common/TraceEvent.hpp>
 #include <NetUtil.hpp>
 #include <CommandControl.hpp>
-
-#if !MOBILEAPP
 
 #include <Auth.hpp>
 #include <HostUtil.hpp>
@@ -45,15 +47,12 @@
 
 #include <cassert>
 
-#endif
-
 #include <Poco/Exception.h>
 #include <Poco/URI.h>
 
 #include <iconv.h>
 #include <string>
 
-bool StorageConnectionManager::FilesystemEnabled;
 bool StorageConnectionManager::SSLAsScheme = true;
 bool StorageConnectionManager::SSLEnabled = false;
 
@@ -149,4 +148,90 @@ StorageConnectionManager::getHttpSession(const Poco::URI& uri, std::chrono::seco
     httpSession->setTimeout(timeout);
 
     return httpSession;
+}
+
+void StorageConnectionManager::initialize()
+{
+#if ENABLE_SSL
+    // FIXME: should use our own SSL socket implementation here.
+    Poco::Crypto::initializeCrypto();
+    Poco::Net::initializeSSL();
+
+    // Init client
+    Poco::Net::Context::Params sslClientParams;
+
+    // false default for upgrade to preserve legacy configuration
+    // in-config-file defaults are true.
+    SSLAsScheme = COOLWSD::getConfigValue<bool>("storage.ssl.as_scheme", false);
+
+    // Fallback to ssl.enable if not set - for back compatibility & simplicity.
+    SSLEnabled = COOLWSD::getConfigValue<bool>("storage.ssl.enable",
+                                               COOLWSD::getConfigValue<bool>("ssl.enable", true));
+
+#if ENABLE_DEBUG
+    char* StorageSSLEnabled = getenv("STORAGE_SSL_ENABLE");
+    if (StorageSSLEnabled != NULL)
+    {
+        if (!strcasecmp(StorageSSLEnabled, "true"))
+            SSLEnabled = true;
+        else if (!strcasecmp(StorageSSLEnabled, "false"))
+            SSLEnabled = false;
+    }
+#endif // ENABLE_DEBUG
+
+    if (SSLEnabled || SSLAsScheme)
+    {
+        if (COOLWSD::isSSLEnabled())
+        {
+            sslClientParams.certificateFile = COOLWSD::getPathFromConfigWithFallback(
+                "storage.ssl.cert_file_path", "ssl.cert_file_path");
+            sslClientParams.privateKeyFile = COOLWSD::getPathFromConfigWithFallback(
+                "storage.ssl.key_file_path", "ssl.key_file_path");
+            sslClientParams.caLocation = COOLWSD::getPathFromConfigWithFallback(
+                "storage.ssl.ca_file_path", "ssl.ca_file_path");
+        }
+        else
+        {
+            sslClientParams.certificateFile =
+                COOLWSD::getPathFromConfig("storage.ssl.cert_file_path");
+            sslClientParams.privateKeyFile =
+                COOLWSD::getPathFromConfig("storage.ssl.key_file_path");
+            sslClientParams.caLocation = COOLWSD::getPathFromConfig("storage.ssl.ca_file_path");
+        }
+        sslClientParams.cipherList =
+            COOLWSD::getPathFromConfigWithFallback("storage.ssl.cipher_list", "ssl.cipher_list");
+        const bool sslVerification = COOLWSD::getConfigValue<bool>("ssl.ssl_verification", true);
+        sslClientParams.verificationMode =
+            !sslVerification ? Poco::Net::Context::VERIFY_NONE : Poco::Net::Context::VERIFY_STRICT;
+        sslClientParams.loadDefaultCAs = true;
+    }
+    else
+        sslClientParams.verificationMode = Poco::Net::Context::VERIFY_NONE;
+
+    Poco::SharedPtr<Poco::Net::PrivateKeyPassphraseHandler> consoleClientHandler =
+        new Poco::Net::KeyConsoleHandler(false);
+    Poco::SharedPtr<Poco::Net::InvalidCertificateHandler> invalidClientCertHandler =
+        new Poco::Net::AcceptCertificateHandler(false);
+
+    Poco::Net::Context::Ptr sslClientContext =
+        new Poco::Net::Context(Poco::Net::Context::CLIENT_USE, sslClientParams);
+    sslClientContext->disableProtocols(Poco::Net::Context::Protocols::PROTO_SSLV2 |
+                                       Poco::Net::Context::Protocols::PROTO_SSLV3 |
+                                       Poco::Net::Context::Protocols::PROTO_TLSV1);
+    Poco::Net::SSLManager::instance().initializeClient(std::move(consoleClientHandler),
+                                                       std::move(invalidClientCertHandler),
+                                                       std::move(sslClientContext));
+
+    // Initialize our client SSL context.
+    ssl::Manager::initializeClientContext(
+        sslClientParams.certificateFile, sslClientParams.privateKeyFile, sslClientParams.caLocation,
+        sslClientParams.cipherList,
+        sslClientParams.verificationMode == Poco::Net::Context::VERIFY_NONE
+            ? ssl::CertificateVerification::Disabled
+            : ssl::CertificateVerification::Required);
+    if (!ssl::Manager::isClientContextInitialized())
+        LOG_ERR("Failed to initialize Client SSL.");
+    else
+        LOG_INF("Initialized Client SSL.");
+#endif // ENABLE_SSL
 }
