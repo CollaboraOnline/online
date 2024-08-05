@@ -1534,20 +1534,20 @@ bool DocumentBroker::lockDocumentInStorage(const Authorization& auth, std::strin
         auth, *_lockCtx, StorageBase::LockState::LOCK, _currentStorageAttrs);
     error = _lockCtx->_lockFailureReason;
 
-    switch (result)
+    switch (result.getStatus())
     {
-        case StorageBase::LockUpdateResult::UNSUPPORTED:
+        case StorageBase::LockUpdateResult::Status::UNSUPPORTED:
             LOG_DBG("Locks on docKey [" << _docKey << "] are unsupported");
             return true; // Not an error.
             break;
-        case StorageBase::LockUpdateResult::OK:
+        case StorageBase::LockUpdateResult::Status::OK:
             LOG_DBG("Locked docKey [" << _docKey << "] successfully");
             return true;
             break;
-        case StorageBase::LockUpdateResult::UNAUTHORIZED:
+        case StorageBase::LockUpdateResult::Status::UNAUTHORIZED:
             LOG_ERR("Failed to lock docKey [" << _docKey << "]. Invalid or expired access token");
             break;
-        case StorageBase::LockUpdateResult::FAILED:
+        case StorageBase::LockUpdateResult::Status::FAILED:
             LOG_ERR("Failed to lock docKey [" << _docKey << "] with reason: " << error);
             break;
     }
@@ -1575,18 +1575,18 @@ bool DocumentBroker::updateStorageLockState(ClientSession& session, StorageBase:
         session.getAuthorization(), *_lockCtx, lock, _currentStorageAttrs);
     error = _lockCtx->_lockFailureReason;
 
-    switch (result)
+    switch (result.getStatus())
     {
-        case StorageBase::LockUpdateResult::UNSUPPORTED:
+        case StorageBase::LockUpdateResult::Status::UNSUPPORTED:
             LOG_DBG("Locks on docKey [" << _docKey << "] are unsupported");
             return true; // Not an error.
             break;
-        case StorageBase::LockUpdateResult::OK:
+        case StorageBase::LockUpdateResult::Status::OK:
             LOG_DBG((lock == StorageBase::LockState::LOCK ? "Locked" : "Unlocked")
                     << " docKey [" << _docKey << "] successfully");
             return true;
             break;
-        case StorageBase::LockUpdateResult::UNAUTHORIZED:
+        case StorageBase::LockUpdateResult::Status::UNAUTHORIZED:
             LOG_ERR("Failed to " << (lock == StorageBase::LockState::LOCK ? "Locked" : "Unlocked")
                                  << " docKey [" << _docKey
                                  << "]. Invalid or expired access token. Notifying client and "
@@ -1599,7 +1599,7 @@ bool DocumentBroker::updateStorageLockState(ClientSession& session, StorageBase:
                 session.setLockFailed(error);
             }
             break;
-        case StorageBase::LockUpdateResult::FAILED:
+        case StorageBase::LockUpdateResult::Status::FAILED:
             LOG_ERR("Failed to " << (lock == StorageBase::LockState::LOCK ? "Locked" : "Unlocked")
                                  << " docKey [" << _docKey << "] with reason [" << error
                                  << "]. Notifying client and making session [" << session.getId()
