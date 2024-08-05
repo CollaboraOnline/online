@@ -1,0 +1,157 @@
+~+4985204~ISu4BKYIKBUvATX2~000~NewSession: https://localhost:9980/wopi/files/home/collaboran/collabora-online/test/data/hello-world.ods?access_token=test&access_token_ttl=0
+~+127770~ISu4BKYIKBUvATX2~067~NewSession: https://localhost:9980/wopi/files/home/collaboran/collabora-online/test/data/hello-world.ods?access_token=test&access_token_ttl=0
+>+15170>ISu4BKYIKBUvATX2>067>coolclient 0.1 1722849577597 168.79999999993015
+>+8962>ISu4BKYIKBUvATX2>067>load url=https%3A%2F%2Flocalhost%3A9980%2Fwopi%2Ffiles%2Fhome%2Fcollaboran%2Fcollabora-online%2Ftest%2Fdata%2Fhello-world.ods accessibilityState=false deviceFormFactor=desktop darkTheme=false timezone=Europe/London
+>+788843>ISu4BKYIKBUvATX2>067>uno .uno:ToolbarMode?Mode:string=notebookbar_online.ui
+>+14676>ISu4BKYIKBUvATX2>067>commandvalues command=.uno:StyleApply
+>+38>ISu4BKYIKBUvATX2>067>commandvalues command=.uno:CharFontName
+>+1645>ISu4BKYIKBUvATX2>067>commandvalues command=.uno:AcceptTrackedChanges
+>+264>ISu4BKYIKBUvATX2>067>commandvalues command=.uno:ViewAnnotationsPosition
+>+12363>ISu4BKYIKBUvATX2>067>commandvalues command=.uno:LanguageStatus
+>+45>ISu4BKYIKBUvATX2>067>commandvalues command=.uno:SheetGeometryData
+>+15>ISu4BKYIKBUvATX2>067>commandvalues command=.uno:ViewAnnotations
+>+215>ISu4BKYIKBUvATX2>067>commandvalues command=.uno:StyleApply
+>+2610>ISu4BKYIKBUvATX2>067>commandvalues command=.uno:CharFontName
+>+376>ISu4BKYIKBUvATX2>067>commandvalues command=.uno:CellCursor?outputHeight=256&outputWidth=256&tileHeight=3840&tileWidth=3840
+>+10570>ISu4BKYIKBUvATX2>067>commandvalues command=.uno:ViewAnnotationsPosition
+>+3116>ISu4BKYIKBUvATX2>067>uno .uno:ToolbarMode?Mode:string=Default
+>+44827>ISu4BKYIKBUvATX2>067>uno .uno:ToolbarMode?Mode:string=notebookbar_online.ui
+>+2355>ISu4BKYIKBUvATX2>067>commandvalues command=.uno:LanguageStatus
+>+36>ISu4BKYIKBUvATX2>067>commandvalues command=.uno:ViewAnnotations
+>+14>ISu4BKYIKBUvATX2>067>commandvalues command=.uno:StyleApply
+>+198>ISu4BKYIKBUvATX2>067>commandvalues command=.uno:CharFontName
+>+96170>ISu4BKYIKBUvATX2>067>clientvisiblearea x=0 y=0 width=28050 height=12255 splitx=0 splity=0
+>+166>ISu4BKYIKBUvATX2>067>clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3840 tiletwipheight=3840
+>+506>ISu4BKYIKBUvATX2>067>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680,11520,15360,19200,23040,0,3840,7680,11520,15360,19200,23040,0,3840,7680,11520,15360,19200,23040,0,3840,7680,11520,15360,19200,23040 tileposy=0,0,0,0,0,0,0,3840,3840,3840,3840,3840,3840,3840,7680,7680,7680,7680,7680,7680,7680,11520,11520,11520,11520,11520,11520,11520 oldwid=0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 tilewidth=3840 tileheight=3840
+>+112958>ISu4BKYIKBUvATX2>067>commandvalues command=.uno:ViewAnnotationsPosition
+>+6149>ISu4BKYIKBUvATX2>067>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680,11520,15360,19200,23040,26880,0,3840,7680,11520,15360,19200,23040,26880,0,3840,7680,11520,15360,19200,23040,26880,0,3840,7680,11520,15360,19200,23040,26880 tileposy=0,0,0,0,0,0,0,0,3840,3840,3840,3840,3840,3840,3840,3840,7680,7680,7680,7680,7680,7680,7680,7680,11520,11520,11520,11520,11520,11520,11520,11520 oldwid=0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 tilewidth=3840 tileheight=3840
+>+185>ISu4BKYIKBUvATX2>067>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680,11520,15360,19200,23040,26880,0,3840,7680,11520,15360,19200,23040,26880,0,3840,7680,11520,15360,19200,23040,26880,0,3840,7680,11520,15360,19200,23040,26880 tileposy=0,0,0,0,0,0,0,0,3840,3840,3840,3840,3840,3840,3840,3840,7680,7680,7680,7680,7680,7680,7680,7680,11520,11520,11520,11520,11520,11520,11520,11520 oldwid=0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 tilewidth=3840 tileheight=3840
+>+46981>ISu4BKYIKBUvATX2>067>commandvalues command=.uno:CellCursor?outputHeight=256&outputWidth=256&tileHeight=3840&tileWidth=3840
+>+75749>ISu4BKYIKBUvATX2>067>uno .uno:SidebarShow
+>+42>ISu4BKYIKBUvATX2>067>uno .uno:SidebarHide
+>+138186>ISu4BKYIKBUvATX2>067>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680,11520,15360,19200,23040,26880,0,3840,7680,11520,15360,19200,23040,26880,0,3840,7680,11520,15360,19200,23040,26880 tileposy=15360,15360,15360,15360,15360,15360,15360,15360,19200,19200,19200,19200,19200,19200,19200,19200,23040,23040,23040,23040,23040,23040,23040,23040 oldwid=0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 tilewidth=3840 tileheight=3840
+>+28317>ISu4BKYIKBUvATX2>067>commandvalues command=.uno:CellCursor?outputHeight=256&outputWidth=256&tileHeight=3840&tileWidth=3840
+>+1874008>ISu4BKYIKBUvATX2>067>mouse type=move x=465 y=2865 count=1 buttons=0 modifier=0
+>+335640>ISu4BKYIKBUvATX2>067>uno .uno:SelectRow  {"Row":{"type":"long","value":12},"Modifier":{"type":"unsigned short","value":0}}
+>+104854>ISu4BKYIKBUvATX2>067>gettextselection mimetype=text/html,text/plain;charset=utf-8
+>+396243>ISu4BKYIKBUvATX2>067>mouse type=move x=1335 y=1860 count=1 buttons=0 modifier=0
+>+39619>ISu4BKYIKBUvATX2>067>mouse type=buttondown x=1335 y=1860 count=1 buttons=1 modifier=0
+>+1551>ISu4BKYIKBUvATX2>067>mouse type=buttonup x=1335 y=1860 count=1 buttons=1 modifier=0
+>+195537>ISu4BKYIKBUvATX2>067>mouse type=buttondown x=1335 y=1860 count=2 buttons=1 modifier=0
+>+1316>ISu4BKYIKBUvATX2>067>mouse type=buttonup x=1335 y=1860 count=2 buttons=1 modifier=0
+>+255614>ISu4BKYIKBUvATX2>067>key type=input char=0 key=20
+>+88102>ISu4BKYIKBUvATX2>067>key type=up char=0 key=20
+>+190670>ISu4BKYIKBUvATX2>067>textinput id=0 text=H
+>+169242>ISu4BKYIKBUvATX2>067>key type=input char=0 key=20
+>+120708>ISu4BKYIKBUvATX2>067>textinput id=0 text=E
+>+34249>ISu4BKYIKBUvATX2>067>key type=up char=0 key=20
+>+96255>ISu4BKYIKBUvATX2>067>textinput id=0 text=l
+>+148864>ISu4BKYIKBUvATX2>067>textinput id=0 text=l
+>+159128>ISu4BKYIKBUvATX2>067>textinput id=0 text=o
+>+75258>ISu4BKYIKBUvATX2>067>key type=input char=32 key=0
+>+42>ISu4BKYIKBUvATX2>067>key type=up char=0 key=1284
+>+61667>ISu4BKYIKBUvATX2>067>textinput id=0 text=w
+>+116227>ISu4BKYIKBUvATX2>067>textinput id=0 text=o
+>+236158>ISu4BKYIKBUvATX2>067>textinput id=0 text=r
+>+113626>ISu4BKYIKBUvATX2>067>textinput id=0 text=l
+>+101066>ISu4BKYIKBUvATX2>067>textinput id=0 text=d
+>+435460>ISu4BKYIKBUvATX2>067>key type=input char=0 key=8704
+>+103509>ISu4BKYIKBUvATX2>067>gettextselection mimetype=text/html,text/plain;charset=utf-8
+>+707557>ISu4BKYIKBUvATX2>067>mouse type=move x=3945 y=240 count=1 buttons=0 modifier=0
+>+629258>ISu4BKYIKBUvATX2>067>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "8;100;100", "type": "combobox"}
+>+111>ISu4BKYIKBUvATX2>067>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "7;100;100", "type": "combobox"}
+>+32>ISu4BKYIKBUvATX2>067>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "4;100;100", "type": "combobox"}
+>+21>ISu4BKYIKBUvATX2>067>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "17;100;100", "type": "combobox"}
+>+24>ISu4BKYIKBUvATX2>067>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "6;100;100", "type": "combobox"}
+>+17>ISu4BKYIKBUvATX2>067>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "2;100;100", "type": "combobox"}
+>+19>ISu4BKYIKBUvATX2>067>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "27;100;100", "type": "combobox"}
+>+18>ISu4BKYIKBUvATX2>067>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "21;100;100", "type": "combobox"}
+>+86>ISu4BKYIKBUvATX2>067>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "9;100;100", "type": "combobox"}
+>+139>ISu4BKYIKBUvATX2>067>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "5;100;100", "type": "combobox"}
+>+45>ISu4BKYIKBUvATX2>067>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "16;100;100", "type": "combobox"}
+>+51>ISu4BKYIKBUvATX2>067>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "20;100;100", "type": "combobox"}
+>+236>ISu4BKYIKBUvATX2>067>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "23;100;100", "type": "combobox"}
+>+32>ISu4BKYIKBUvATX2>067>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "28;100;100", "type": "combobox"}
+>+18>ISu4BKYIKBUvATX2>067>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "19;100;100", "type": "combobox"}
+>+19>ISu4BKYIKBUvATX2>067>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "30;100;100", "type": "combobox"}
+>+33>ISu4BKYIKBUvATX2>067>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "15;100;100", "type": "combobox"}
+>+18>ISu4BKYIKBUvATX2>067>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "22;100;100", "type": "combobox"}
+>+24>ISu4BKYIKBUvATX2>067>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "24;100;100", "type": "combobox"}
+>+83>ISu4BKYIKBUvATX2>067>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "18;100;100", "type": "combobox"}
+>+26>ISu4BKYIKBUvATX2>067>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "3;100;100", "type": "combobox"}
+>+40>ISu4BKYIKBUvATX2>067>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "13;100;100", "type": "combobox"}
+>+52>ISu4BKYIKBUvATX2>067>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "12;100;100", "type": "combobox"}
+>+82>ISu4BKYIKBUvATX2>067>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "10;100;100", "type": "combobox"}
+>+48>ISu4BKYIKBUvATX2>067>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "1;100;100", "type": "combobox"}
+>+40>ISu4BKYIKBUvATX2>067>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "25;100;100", "type": "combobox"}
+>+42>ISu4BKYIKBUvATX2>067>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "14;100;100", "type": "combobox"}
+>+61>ISu4BKYIKBUvATX2>067>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "11;100;100", "type": "combobox"}
+>+61>ISu4BKYIKBUvATX2>067>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "0;100;100", "type": "combobox"}
+>+39>ISu4BKYIKBUvATX2>067>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "26;100;100", "type": "combobox"}
+>+80>ISu4BKYIKBUvATX2>067>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "29;100;100", "type": "combobox"}
+>+88528>ISu4BKYIKBUvATX2>067>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "31;100;100", "type": "combobox"}
+>+89>ISu4BKYIKBUvATX2>067>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "34;100;100", "type": "combobox"}
+>+17>ISu4BKYIKBUvATX2>067>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "32;100;100", "type": "combobox"}
+>+29>ISu4BKYIKBUvATX2>067>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "33;100;100", "type": "combobox"}
+>+34489>ISu4BKYIKBUvATX2>067>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "35;100;100", "type": "combobox"}
+>+423808>ISu4BKYIKBUvATX2>067>dialogevent -2 {"id":"fontnamecombobox", "cmd": "selected", "data": "4;Bacasime Antique", "type": "combobox"}
+>+13485>ISu4BKYIKBUvATX2>067>commandvalues command=.uno:SheetGeometryData?rows=1&sizes=1
+>+106506>ISu4BKYIKBUvATX2>067>gettextselection mimetype=text/html,text/plain;charset=utf-8
+>+172982>ISu4BKYIKBUvATX2>067>mouse type=move x=4470 y=150 count=1 buttons=0 modifier=0
+>+977330>ISu4BKYIKBUvATX2>067>dialogevent -2 {"id":"fontsizecombobox", "cmd": "selected", "data": "7;12 pt", "type": "combobox"}
+>+107850>ISu4BKYIKBUvATX2>067>gettextselection mimetype=text/html,text/plain;charset=utf-8
+>+148175>ISu4BKYIKBUvATX2>067>mouse type=move x=6105 y=690 count=1 buttons=0 modifier=0
+>+542485>ISu4BKYIKBUvATX2>067>uno .uno:Color {"Color.Color":{"type":"long","value":0}}
+>+652865>ISu4BKYIKBUvATX2>067>mouse type=buttondown x=6570 y=2520 count=1 buttons=1 modifier=0
+>+1266>ISu4BKYIKBUvATX2>067>mouse type=buttonup x=6570 y=2520 count=1 buttons=1 modifier=0
+>+4484>ISu4BKYIKBUvATX2>067>mouse type=move x=6570 y=2520 count=1 buttons=0 modifier=0
+>+7061>ISu4BKYIKBUvATX2>067>commandvalues command=.uno:SheetGeometryData?rows=1&sizes=1
+>+33882>ISu4BKYIKBUvATX2>067>commandvalues command=.uno:ViewAnnotationsPosition
+>+902>ISu4BKYIKBUvATX2>067>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680,11520,15360,19200,23040,26880,0,3840,7680,11520,15360,19200,23040,26880,0,3840,7680,11520,15360,19200,23040,26880,0,3840,7680,11520,15360,19200,23040,26880 tileposy=0,0,0,0,0,0,0,0,3840,3840,3840,3840,3840,3840,3840,3840,7680,7680,7680,7680,7680,7680,7680,7680,11520,11520,11520,11520,11520,11520,11520,11520 oldwid=85,75,76,77,78,79,80,81,7,8,9,10,11,12,16,17,19,20,21,22,23,24,31,32,25,26,27,28,29,30,34,35 tilewidth=3840 tileheight=3840
+>+397>ISu4BKYIKBUvATX2>067>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680,11520,15360,19200,23040,26880,0,3840,7680,11520,15360,19200,23040,26880,0,3840,7680,11520,15360,19200,23040,26880,0,3840,7680,11520,15360,19200,23040,26880 tileposy=0,0,0,0,0,0,0,0,3840,3840,3840,3840,3840,3840,3840,3840,7680,7680,7680,7680,7680,7680,7680,7680,11520,11520,11520,11520,11520,11520,11520,11520 oldwid=85,75,76,77,78,79,80,81,7,8,9,10,11,12,16,17,19,20,21,22,23,24,31,32,25,26,27,28,29,30,34,35 tilewidth=3840 tileheight=3840
+>+5674>ISu4BKYIKBUvATX2>067>commandvalues command=.uno:CellCursor?outputHeight=256&outputWidth=256&tileHeight=3840&tileWidth=3840
+>+245107>ISu4BKYIKBUvATX2>067>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680,11520,15360,19200,23040,26880,0,3840,7680,11520,15360,19200,23040,26880 tileposy=19200,19200,19200,19200,19200,19200,19200,19200,23040,23040,23040,23040,23040,23040,23040,23040 oldwid=45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60 tilewidth=3840 tileheight=3840
+>+40274>ISu4BKYIKBUvATX2>067>mouse type=move x=13500 y=7110 count=1 buttons=0 modifier=0
+>+1035423>ISu4BKYIKBUvATX2>067>clientvisiblearea x=1063 y=388 width=23375 height=10213 splitx=0 splity=0
+>+69>ISu4BKYIKBUvATX2>067>clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3200 tiletwipheight=3200
+>+24>ISu4BKYIKBUvATX2>067>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3200,6400,9600,12800,16000,19200,22400,0,3200,6400,9600,12800,16000,19200,22400,0,3200,6400,9600,12800,16000,19200,22400,0,3200,6400,9600,12800,16000,19200,22400 tileposy=0,0,0,0,0,0,0,0,3200,3200,3200,3200,3200,3200,3200,3200,6400,6400,6400,6400,6400,6400,6400,6400,9600,9600,9600,9600,9600,9600,9600,9600 oldwid=0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 tilewidth=3200 tileheight=3200
+>+337>ISu4BKYIKBUvATX2>067>commandvalues command=.uno:ViewAnnotationsPosition
+>+21>ISu4BKYIKBUvATX2>067>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3200,6400,9600,12800,16000,19200,22400,0,3200,6400,9600,12800,16000,19200,22400,0,3200,6400,9600,12800,16000,19200,22400,0,3200,6400,9600,12800,16000,19200,22400 tileposy=0,0,0,0,0,0,0,0,3200,3200,3200,3200,3200,3200,3200,3200,6400,6400,6400,6400,6400,6400,6400,6400,9600,9600,9600,9600,9600,9600,9600,9600 oldwid=0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 tilewidth=3200 tileheight=3200
+>+7698>ISu4BKYIKBUvATX2>067>commandvalues command=.uno:CellCursor?outputHeight=256&outputWidth=256&tileHeight=3200&tileWidth=3200
+>+232>ISu4BKYIKBUvATX2>067>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3200,6400,9600,12800,16000,19200,22400,0,3200,6400,9600,12800,16000,19200,22400,0,3200,6400,9600,12800,16000,19200,22400,0,3200,6400,9600,12800,16000,19200,22400 tileposy=0,0,0,0,0,0,0,0,3200,3200,3200,3200,3200,3200,3200,3200,6400,6400,6400,6400,6400,6400,6400,6400,9600,9600,9600,9600,9600,9600,9600,9600 oldwid=0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 tilewidth=3200 tileheight=3200
+>+69857>ISu4BKYIKBUvATX2>067>commandvalues command=.uno:CellCursor?outputHeight=256&outputWidth=256&tileHeight=3200&tileWidth=3200
+>+181045>ISu4BKYIKBUvATX2>067>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3200,6400,9600,12800,16000,19200,22400,0,3200,6400,9600,12800,16000,19200,22400,0,3200,6400,9600,12800,16000,19200,22400,0,3200,6400,9600,12800,16000,19200,22400,0,3200,6400,9600,12800,16000,19200,22400,0,3200,6400,9600,12800,16000,19200,22400,0,3200,6400,9600,12800,16000,19200,22400 tileposy=12800,12800,12800,12800,12800,12800,12800,12800,16000,16000,16000,16000,16000,16000,16000,16000,19200,19200,19200,19200,19200,19200,19200,19200,22400,22400,22400,22400,22400,22400,22400,22400,25600,25600,25600,25600,25600,25600,25600,25600,28800,28800,28800,28800,28800,28800,28800,28800,32000,32000,32000,32000,32000,32000,32000,32000 oldwid=0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 tilewidth=3200 tileheight=3200
+>+55513>ISu4BKYIKBUvATX2>067>commandvalues command=.uno:CellCursor?outputHeight=256&outputWidth=256&tileHeight=3200&tileWidth=3200
+>+6261>ISu4BKYIKBUvATX2>067>clientvisiblearea x=1948 y=698 width=19482 height=8511 splitx=0 splity=0
+>+55>ISu4BKYIKBUvATX2>067>clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=2667 tiletwipheight=2667
+>+93>ISu4BKYIKBUvATX2>067>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,2667,5334,8001,10668,13335,16002,18669,21336,0,2667,5334,8001,10668,13335,16002,18669,21336,0,2667,5334,8001,10668,13335,16002,18669,21336,0,2667,5334,8001,10668,13335,16002,18669,21336 tileposy=0,0,0,0,0,0,0,0,0,2667,2667,2667,2667,2667,2667,2667,2667,2667,5334,5334,5334,5334,5334,5334,5334,5334,5334,8001,8001,8001,8001,8001,8001,8001,8001,8001 oldwid=0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 tilewidth=2667 tileheight=2667
+>+399>ISu4BKYIKBUvATX2>067>commandvalues command=.uno:ViewAnnotationsPosition
+>+286>ISu4BKYIKBUvATX2>067>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,2667,5334,8001,10668,13335,16002,18669,21336,0,2667,5334,8001,10668,13335,16002,18669,21336,0,2667,5334,8001,10668,13335,16002,18669,21336,0,2667,5334,8001,10668,13335,16002,18669,21336 tileposy=0,0,0,0,0,0,0,0,0,2667,2667,2667,2667,2667,2667,2667,2667,2667,5334,5334,5334,5334,5334,5334,5334,5334,5334,8001,8001,8001,8001,8001,8001,8001,8001,8001 oldwid=0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 tilewidth=2667 tileheight=2667
+>+6920>ISu4BKYIKBUvATX2>067>commandvalues command=.uno:CellCursor?outputHeight=256&outputWidth=256&tileHeight=2667&tileWidth=2667
+>+374>ISu4BKYIKBUvATX2>067>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,2667,5334,8001,10668,13335,16002,18669,21336,0,2667,5334,8001,10668,13335,16002,18669,21336,0,2667,5334,8001,10668,13335,16002,18669,21336,0,2667,5334,8001,10668,13335,16002,18669,21336 tileposy=0,0,0,0,0,0,0,0,0,2667,2667,2667,2667,2667,2667,2667,2667,2667,5334,5334,5334,5334,5334,5334,5334,5334,5334,8001,8001,8001,8001,8001,8001,8001,8001,8001 oldwid=0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 tilewidth=2667 tileheight=2667
+>+66733>ISu4BKYIKBUvATX2>067>commandvalues command=.uno:CellCursor?outputHeight=256&outputWidth=256&tileHeight=2667&tileWidth=2667
+>+183923>ISu4BKYIKBUvATX2>067>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,2667,5334,8001,10668,13335,16002,18669,21336,0,2667,5334,8001,10668,13335,16002,18669,21336,0,2667,5334,8001,10668,13335,16002,18669,21336,0,2667,5334,8001,10668,13335,16002,18669,21336,0,2667,5334,8001,10668,13335,16002,18669,21336,0,2667,5334,8001,10668,13335,16002,18669,21336,0,2667,5334,8001,10668,13335,16002,18669,21336 tileposy=10668,10668,10668,10668,10668,10668,10668,10668,10668,13335,13335,13335,13335,13335,13335,13335,13335,13335,16002,16002,16002,16002,16002,16002,16002,16002,16002,18669,18669,18669,18669,18669,18669,18669,18669,18669,21336,21336,21336,21336,21336,21336,21336,21336,21336,24003,24003,24003,24003,24003,24003,24003,24003,24003,26670,26670,26670,26670,26670,26670,26670,26670,26670 oldwid=0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 tilewidth=2667 tileheight=2667
+>+51222>ISu4BKYIKBUvATX2>067>commandvalues command=.uno:CellCursor?outputHeight=256&outputWidth=256&tileHeight=2667&tileWidth=2667
+>+69324>ISu4BKYIKBUvATX2>067>clientvisiblearea x=2673 y=955 width=16231 height=7091 splitx=0 splity=0
+>+247>ISu4BKYIKBUvATX2>067>clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=2222 tiletwipheight=2222
+>+22>ISu4BKYIKBUvATX2>067>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=2222,4444,6666,8888,11110,13332,15554,17776,2222,4444,6666,8888,11110,13332,15554,17776,2222,4444,6666,8888,11110,13332,15554,17776,2222,4444,6666,8888,11110,13332,15554,17776 tileposy=0,0,0,0,0,0,0,0,2222,2222,2222,2222,2222,2222,2222,2222,4444,4444,4444,4444,4444,4444,4444,4444,6666,6666,6666,6666,6666,6666,6666,6666 oldwid=0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 tilewidth=2222 tileheight=2222
+>+337>ISu4BKYIKBUvATX2>067>commandvalues command=.uno:ViewAnnotationsPosition
+>+137>ISu4BKYIKBUvATX2>067>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=2222,4444,6666,8888,11110,13332,15554,17776,2222,4444,6666,8888,11110,13332,15554,17776,2222,4444,6666,8888,11110,13332,15554,17776,2222,4444,6666,8888,11110,13332,15554,17776 tileposy=0,0,0,0,0,0,0,0,2222,2222,2222,2222,2222,2222,2222,2222,4444,4444,4444,4444,4444,4444,4444,4444,6666,6666,6666,6666,6666,6666,6666,6666 oldwid=0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 tilewidth=2222 tileheight=2222
+>+7144>ISu4BKYIKBUvATX2>067>commandvalues command=.uno:CellCursor?outputHeight=256&outputWidth=256&tileHeight=2222&tileWidth=2222
+>+330>ISu4BKYIKBUvATX2>067>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=2222,4444,6666,8888,11110,13332,15554,17776,2222,4444,6666,8888,11110,13332,15554,17776,2222,4444,6666,8888,11110,13332,15554,17776,2222,4444,6666,8888,11110,13332,15554,17776 tileposy=0,0,0,0,0,0,0,0,2222,2222,2222,2222,2222,2222,2222,2222,4444,4444,4444,4444,4444,4444,4444,4444,6666,6666,6666,6666,6666,6666,6666,6666 oldwid=0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 tilewidth=2222 tileheight=2222
+>+58836>ISu4BKYIKBUvATX2>067>commandvalues command=.uno:CellCursor?outputHeight=256&outputWidth=256&tileHeight=2222&tileWidth=2222
+>+192310>ISu4BKYIKBUvATX2>067>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=2222,4444,6666,8888,11110,13332,15554,17776,2222,4444,6666,8888,11110,13332,15554,17776,2222,4444,6666,8888,11110,13332,15554,17776,2222,4444,6666,8888,11110,13332,15554,17776,2222,4444,6666,8888,11110,13332,15554,17776,2222,4444,6666,8888,11110,13332,15554,17776,2222,4444,6666,8888,11110,13332,15554,17776 tileposy=8888,8888,8888,8888,8888,8888,8888,8888,11110,11110,11110,11110,11110,11110,11110,11110,13332,13332,13332,13332,13332,13332,13332,13332,15554,15554,15554,15554,15554,15554,15554,15554,17776,17776,17776,17776,17776,17776,17776,17776,19998,19998,19998,19998,19998,19998,19998,19998,22220,22220,22220,22220,22220,22220,22220,22220 oldwid=0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 tilewidth=2222 tileheight=2222
+>+35048>ISu4BKYIKBUvATX2>067>clientvisiblearea x=3284 y=1179 width=13528 height=5910 splitx=0 splity=0
+>+236>ISu4BKYIKBUvATX2>067>clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=1852 tiletwipheight=1852
+>+29>ISu4BKYIKBUvATX2>067>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=1852,3704,5556,7408,9260,11112,12964,14816,16668,1852,3704,5556,7408,9260,11112,12964,14816,16668,1852,3704,5556,7408,9260,11112,12964,14816,16668,1852,3704,5556,7408,9260,11112,12964,14816,16668 tileposy=0,0,0,0,0,0,0,0,0,1852,1852,1852,1852,1852,1852,1852,1852,1852,3704,3704,3704,3704,3704,3704,3704,3704,3704,5556,5556,5556,5556,5556,5556,5556,5556,5556 oldwid=0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 tilewidth=1852 tileheight=1852
+>+263>ISu4BKYIKBUvATX2>067>commandvalues command=.uno:ViewAnnotationsPosition
+>+985>ISu4BKYIKBUvATX2>067>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=1852,3704,5556,7408,9260,11112,12964,14816,16668,1852,3704,5556,7408,9260,11112,12964,14816,16668,1852,3704,5556,7408,9260,11112,12964,14816,16668,1852,3704,5556,7408,9260,11112,12964,14816,16668 tileposy=0,0,0,0,0,0,0,0,0,1852,1852,1852,1852,1852,1852,1852,1852,1852,3704,3704,3704,3704,3704,3704,3704,3704,3704,5556,5556,5556,5556,5556,5556,5556,5556,5556 oldwid=0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 tilewidth=1852 tileheight=1852
+>+8249>ISu4BKYIKBUvATX2>067>commandvalues command=.uno:CellCursor?outputHeight=256&outputWidth=256&tileHeight=1852&tileWidth=1852
+>+436>ISu4BKYIKBUvATX2>067>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=1852,3704,5556,7408,9260,11112,12964,14816,16668,1852,3704,5556,7408,9260,11112,12964,14816,16668,1852,3704,5556,7408,9260,11112,12964,14816,16668,1852,3704,5556,7408,9260,11112,12964,14816,16668 tileposy=0,0,0,0,0,0,0,0,0,1852,1852,1852,1852,1852,1852,1852,1852,1852,3704,3704,3704,3704,3704,3704,3704,3704,3704,5556,5556,5556,5556,5556,5556,5556,5556,5556 oldwid=0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 tilewidth=1852 tileheight=1852
+>+85884>ISu4BKYIKBUvATX2>067>commandvalues command=.uno:CellCursor?outputHeight=256&outputWidth=256&tileHeight=1852&tileWidth=1852
+>+124662>ISu4BKYIKBUvATX2>067>key type=input char=0 key=16402
+>+40384>ISu4BKYIKBUvATX2>067>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=1852,3704,5556,7408,9260,11112,12964,14816,16668,1852,3704,5556,7408,9260,11112,12964,14816,16668,1852,3704,5556,7408,9260,11112,12964,14816,16668,1852,3704,5556,7408,9260,11112,12964,14816,16668,1852,3704,5556,7408,9260,11112,12964,14816,16668,1852,3704,5556,7408,9260,11112,12964,14816,16668,1852,3704,5556,7408,9260,11112,12964,14816,16668 tileposy=7408,7408,7408,7408,7408,7408,7408,7408,7408,9260,9260,9260,9260,9260,9260,9260,9260,9260,11112,11112,11112,11112,11112,11112,11112,11112,11112,12964,12964,12964,12964,12964,12964,12964,12964,12964,14816,14816,14816,14816,14816,14816,14816,14816,14816,16668,16668,16668,16668,16668,16668,16668,16668,16668,18520,18520,18520,18520,18520,18520,18520,18520,18520 oldwid=0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 tilewidth=1852 tileheight=1852
+>+57687>ISu4BKYIKBUvATX2>067>commandvalues command=.uno:CellCursor?outputHeight=256&outputWidth=256&tileHeight=1852&tileWidth=1852
+>+35921>ISu4BKYIKBUvATX2>067>mouse type=move x=8883.8125 y=4420.203125 count=1 buttons=0 modifier=16384
+~+34081596~ISu4BKYIKBUvATX2~067~EndSession: https://localhost:9980/wopi/files/home/collaboran/collabora-online/test/data/hello-world.ods?access_token=test&access_token_ttl=0
+~+487~ISu4BKYIKBUvATX2~067~EndSession: https://localhost:9980/wopi/files/home/collaboran/collabora-online/test/data/hello-world.ods?access_token=test&access_token_ttl=0

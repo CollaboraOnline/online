@@ -10,6 +10,7 @@
  */
 
 #include <config.h>
+#include <config_version.h>
 
 #include <Unit.hpp>
 #include <Util.hpp>
@@ -31,9 +32,7 @@
 /// Save torture testcase.
 class UnitPerf : public UnitWSD
 {
-    void testPerf();
-
-    void dumpCPUTimeToCSV(long cpuTime);
+    void testPerf(std::string testType, std::string fileType, std::string tracesStr);
 
     void configure(Poco::Util::LayeredConfiguration& config) override
     {
@@ -47,24 +46,29 @@ class UnitPerf : public UnitWSD
 public:
     UnitPerf();
     void invokeWSDTest() override;
+    void onDocumentLoading() override;
+    void onDocumentLoaded() override;
     std::unique_ptr<Util::SysStopwatch> _timer;
+    std::shared_ptr<Stats> stats;
 };
 
-void UnitPerf::testPerf()
+void UnitPerf::testPerf(std::string testType, std::string fileType, std::string traceStr)
 {
-    auto stats = std::make_shared<Stats>();
+    stats = std::make_shared<Stats>();
+    stats->setTypeOfTest(testType);
 
     TerminatingPoll poll("performance test");
 
-    std::string docName = "empty.odt";
+    std::string docName = "empty." + fileType;
 
     std::string filePath, dummy;
+
     helpers::getDocumentPathAndURL(docName, filePath, dummy, "testPerf");
 
-    const std::string tracePath;
+    const std::string tracePath = TDOC + traceStr;
     StressSocketHandler::addPollFor(
         poll, helpers::getTestServerURI("ws"),
-        filePath, TDOC "/../traces/perf-writer.txt",
+        filePath, tracePath,
         stats);
 
     do {
@@ -74,19 +78,7 @@ void UnitPerf::testPerf()
     stats->dump();
 }
 
-void UnitPerf::dumpCPUTimeToCSV(long cpuTime)
-{
-    std::ofstream file("CPUUsage.csv", std::ios::out | std::ios::app);
 
-    if(file.tellp() == 0)
-    {
-        file << "CPU Time";
-        file << "\n";
-    }
-
-    file << cpuTime;
-    file << "\n";
-}
 
 UnitPerf::UnitPerf() : UnitWSD("UnitPerf")
 {
@@ -102,14 +94,27 @@ void UnitPerf::invokeWSDTest()
     std::cerr << "startup: " << _timer->elapsedTime().count() << "us\n";
     _timer->restart();
 
-    testPerf();
+    testPerf("writer", "odt", "/../traces/perf-writer.txt");
+
+    testPerf("calc", "ods", "/../traces/perf-calc.txt");
 
     long cpuTime = _timer->elapsedTime().count();
-    dumpCPUTimeToCSV(cpuTime);
 
     std::cerr << "test: " << cpuTime << "us\n";
 
     exitTest(TestResult::Ok);
+}
+
+//Called when document loading process starts e.g. setup finishes
+void UnitPerf::onDocumentLoading()
+{
+    stats->perfSetupLoadEditPhases("Setup");
+}
+
+//called when document has been loaded into core
+void UnitPerf::onDocumentLoaded()
+{
+    stats->perfSetupLoadEditPhases("Load");
 }
 
 UnitBase* unit_create_wsd(void) { return new UnitPerf(); }

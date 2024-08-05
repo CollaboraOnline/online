@@ -480,6 +480,13 @@ public:
         return false;
     }
 
+
+    // Called when a document has started loading
+    virtual void onDocumentLoading(){}
+
+    // Called when a document has finished loading
+    virtual void onDocumentLoaded(){}
+
     /// To force the save operation being handled as auto-save from a unit test.
     virtual bool isAutosave()
     {
