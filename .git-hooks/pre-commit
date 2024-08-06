@@ -129,6 +129,17 @@ sub check_author()
     }
 }
 
+sub check_prettier()
+{
+    my $prettier = `make prettier`;
+
+    if ($prettier != 0)
+    {
+        print("Your code is not formatted. Please run 'make prettier-write' before committing.");
+        exit(1);
+    }
+}
+
 # Do the work :-)
 
 # Initial commit: diff against an empty tree object
@@ -195,6 +206,9 @@ check_whitespaces( $against);
 
 # catch missing author info
 check_author();
+
+# check prettier in code
+check_prettier();
 
 # all OK
 exit( 0 );
