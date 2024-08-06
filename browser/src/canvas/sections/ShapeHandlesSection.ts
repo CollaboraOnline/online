@@ -44,6 +44,10 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		this.sectionProperties.shapeRectangleProperties = null; // Not null when there are scaling handles.
 		this.sectionProperties.lastDragDistance = [0, 0];
 
+		// These are for snapping the objects to the same level with others' boundaries.
+		this.sectionProperties.closestX = null;
+		this.sectionProperties.closestY = null;
+
 		this.refreshInfo(info);
 	}
 
@@ -622,6 +626,74 @@ class ShapeHandlesSection extends CanvasSectionObject {
 			this.sendTransformCommand(point);
 	}
 
+	findClosestX(xList: number[]) {
+		let closest = 1000;
+		let pickX = null;
+		if (GraphicSelection.extraInfo.ObjectRectangles) {
+			const ordNum = GraphicSelection.extraInfo.OrdNum;
+			const rectangles = GraphicSelection.extraInfo.ObjectRectangles;
+
+			for (let i = 0; i < rectangles.length; i++) {
+				if (rectangles[i][4] !== ordNum) { // Don't compare it with itself.
+					const distances = [];
+					for (let j = 0; j < xList.length; j++) {
+						distances.unshift(Math.abs(rectangles[i][0] - xList[j]));
+						distances.push(Math.abs(rectangles[i][0] + rectangles[i][2] - xList[j]));
+					}
+
+					const min = Math.min(...distances);
+					const index = distances.indexOf(min);
+					if (min < closest) {
+						closest = min;
+						pickX = index < xList.length ? rectangles[i][0]: rectangles[i][0] + rectangles[i][2];
+					}
+				}
+			}
+		}
+
+		if (closest < 10 * app.dpiScale) this.sectionProperties.closestX = pickX;
+		else this.sectionProperties.closestX = null;
+	}
+
+	findClosestY(yList: number[]) {
+		let closest = 1000;
+		let pickY = null;
+		if (GraphicSelection.extraInfo.ObjectRectangles) {
+			const ordNum = GraphicSelection.extraInfo.OrdNum;
+			const rectangles = GraphicSelection.extraInfo.ObjectRectangles;
+
+			for (let i = 0; i < rectangles.length; i++) {
+				if (rectangles[i][4] !== ordNum) { // Don't compare it with itself.
+					const distances = [];
+					for (let j = 0; j < yList.length; j++) {
+						distances.unshift(Math.abs(rectangles[i][1] - yList[j]));
+						distances.push(Math.abs(rectangles[i][1] + rectangles[i][3] - yList[j]));
+					}
+
+					const min = Math.min(...distances);
+					const index = distances.indexOf(min);
+					if (min < closest) {
+						closest = min;
+						pickY = index < yList.length ? rectangles[i][1]: rectangles[i][1] + rectangles[i][3];
+					}
+				}
+			}
+		}
+
+		if (closest < 10 * app.dpiScale) this.sectionProperties.closestY = pickY;
+		else this.sectionProperties.closestY = null;
+	}
+
+	public checkObjectsBoundaries(xListToCheck: number[], yListToCheck: number[]) {
+		if (app.map._docLayer._docType === 'presentation') {
+			this.findClosestX(xListToCheck);
+			this.findClosestY(yListToCheck);
+
+			if (this.sectionProperties.closestX !== null || this.sectionProperties.closestY !== null)
+				this.containerObject.requestReDraw();
+		}
+	}
+
 	onMouseMove(position: number[], dragDistance: number[]) {
 		if (this.containerObject.isDraggingSomething() && this.sectionProperties.svg) {
 			(window as any).IgnorePanning = true;
@@ -630,6 +702,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 			this.sectionProperties.svg.style.top = String((this.myTopLeft[1] + dragDistance[1]) / app.dpiScale) + 'px';
 			this.sectionProperties.svg.style.opacity = 0.5;
 			this.sectionProperties.lastDragDistance = [dragDistance[0], dragDistance[1]];
+			this.checkObjectsBoundaries([this.position[0] + dragDistance[0], this.position[0] + dragDistance[0] + this.size[0]], [this.position[1] + dragDistance[1], this.position[1] + dragDistance[1] + this.size[1]]);
 			this.showSVG();
 		}
 		else
@@ -703,9 +776,39 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		}
 	}
 
+	drawGuides() {
+		this.context.save();
+		this.context.translate(-this.myTopLeft[0], -this.myTopLeft[1]);
+
+		if (this.sectionProperties.closestX !== null) {
+			const x = this.containerObject.getDocumentAnchor()[0] + this.sectionProperties.closestX - this.documentTopLeft[0];
+			this.context.strokeStyle = 'red';
+			this.context.beginPath();
+			this.context.moveTo(x, 0);
+			this.context.lineTo(x, this.context.canvas.height);
+			this.context.stroke();
+			this.context.closePath();
+		}
+
+		if (this.sectionProperties.closestY !== null) {
+			const y = this.containerObject.getDocumentAnchor()[1] + this.sectionProperties.closestY - this.documentTopLeft[1];
+			this.context.strokeStyle = 'red';
+			this.context.beginPath();
+			this.context.moveTo(0, y);
+			this.context.lineTo(this.context.canvas.width, y);
+			this.context.stroke();
+			this.context.closePath();
+		}
+
+		this.context.restore();
+	}
+
 	public onDraw() {
 		if (!this.showSection || !this.isVisible)
 			this.hideSVG();
+		else if (this.sectionProperties.closestX !== null || this.sectionProperties.closestY !== null) {
+			this.drawGuides();
+		}
 	}
 
 	removeSubSections(): void {

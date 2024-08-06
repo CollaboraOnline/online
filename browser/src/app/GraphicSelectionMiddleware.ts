@@ -85,6 +85,19 @@ class GraphicSelection {
 		app.map._docLayer._oleCSelections.setPointSet(CPointSet.fromBounds(bounds));
 	}
 
+	// When a shape is selected, the rectangles of other shapes are also sent from the core side.
+	// They are in twips units.
+	static convertObjectRectangleTwipsToPixels() {
+		const correction = 0.567; // Correction for impress case.
+
+		if (this.extraInfo && this.extraInfo.ObjectRectangles) {
+			for (let i = 0; i < this.extraInfo.ObjectRectangles.length; i++) {
+				for (let j = 0; j < 4; j++)
+					this.extraInfo.ObjectRectangles[i][j] *= app.twipsToPixels * correction;
+			}
+		}
+	}
+
 	static extractAndSetGraphicSelection(messageJSON: any) {
 		var signX =  app.map._docLayer.isCalcRTL() ? -1 : 1;
 		var hasExtraInfo = messageJSON.length > 5;
@@ -106,6 +119,9 @@ class GraphicSelection {
 			this.rectangle.moveBy([app.map._docLayer._shapeGridOffset.x, app.map._docLayer._shapeGridOffset.y]);
 
 		this.extraInfo = extraInfo;
+
+		if (app.map._docLayer._docType === 'presentation')
+			this.convertObjectRectangleTwipsToPixels();
 	}
 
 	public static updateGraphicSelection() {

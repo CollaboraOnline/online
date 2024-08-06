@@ -202,12 +202,13 @@ class ShapeHandleScalingSubSection extends CanvasSectionObject {
 	}
 
 	onMouseMove(point: Array<number>, dragDistance: Array<number>, e: MouseEvent) {
-		if (this.containerObject.isDraggingSomething() && this.containerObject.targetSection === this.name) {
+		if (this.containerObject.isDraggingSomething()) {
 			(window as any).IgnorePanning = true;
 			this.stopPropagating();
 			e.stopPropagation();
 			this.sectionProperties.parentHandlerSection.sectionProperties.svg.style.opacity = 0.5;
 			this.moveHandlesOnDrag(point);
+			this.sectionProperties.parentHandlerSection.checkObjectsBoundaries([this.position[0]], [this.position[1]]);
 			this.containerObject.requestReDraw();
 			this.sectionProperties.parentHandlerSection.showSVG();
 		}
