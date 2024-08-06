@@ -280,7 +280,6 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 			}
 			this._selectedMode = (command.mode !== undefined) ? command.mode : 0;
 			this._resetPreFetching(true);
-			this._update();
 			var partMatch = textMsg.match(/[^\r\n]+/g);
 			// only get the last matches
 			var newPartHashes = partMatch.slice(partMatch.length - this._parts);
