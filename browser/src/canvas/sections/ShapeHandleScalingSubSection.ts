@@ -94,10 +94,16 @@ class ShapeHandleScalingSubSection extends CanvasSectionObject {
 			this.stopPropagating();
 			e.stopPropagation();
 
+			let x = this.sectionProperties.parentHandlerSection.sectionProperties.closestX;
+			if (!x) x = point[0] + this.position[0];
+
+			let y = this.sectionProperties.parentHandlerSection.sectionProperties.closestY;
+			if (!y) y = point[1] + this.position[1];
+
 			const parameters = {
 				HandleNum: { type: 'long', value: this.sectionProperties.ownInfo.id },
-				NewPosX: { type: 'long', value: Math.round((point[0] + this.position[0]) * app.pixelsToTwips) },
-				NewPosY: { type: 'long', value: Math.round((point[1] + this.position[1]) * app.pixelsToTwips) }
+				NewPosX: { type: 'long', value: Math.round(x * app.pixelsToTwips) },
+				NewPosY: { type: 'long', value: Math.round(y * app.pixelsToTwips) }
 			};
 
 			app.map.sendUnoCommand('.uno:MoveShapeHandle', parameters);
