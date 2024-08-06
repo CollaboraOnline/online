@@ -58,6 +58,12 @@ namespace Log
                Admin,
                Javascript);
 
+    // Types of phases for unit test
+    STATE_ENUM(Phase,
+               Setup,
+               Load,
+               Edit);
+
     /// Initialize the logging system.
     void initialize(const std::string& name,
                     const std::string& logLevel,

@@ -24,6 +24,7 @@
 #include <test/lokassert.hpp>
 #include <Poco/Util/LayeredConfiguration.h>
 #include <tools/Replay.hpp>
+#include <common/Log.hpp>
 
 #include <string>
 #include <thread>
@@ -98,6 +99,10 @@ void UnitPerf::invokeWSDTest()
 
     testPerf("calc", "ods", "/../traces/perf-calc.txt");
 
+    testPerf("impress", "odp", "/../traces/perf-impress.txt");
+
+    testPerf("draw", "odg", "/../traces/perf-draw.txt");
+
     long cpuTime = _timer->elapsedTime().count();
 
     std::cerr << "test: " << cpuTime << "us\n";
@@ -108,13 +113,13 @@ void UnitPerf::invokeWSDTest()
 //Called when document loading process starts e.g. setup finishes
 void UnitPerf::onDocumentLoading()
 {
-    stats->perfSetupLoadEditPhases("Setup");
+    stats->endPhase(Log::Phase::Setup);
 }
 
 //called when document has been loaded into core
 void UnitPerf::onDocumentLoaded()
 {
-    stats->perfSetupLoadEditPhases("Load");
+    stats->endPhase(Log::Phase::Load);
 }
 
 UnitBase* unit_create_wsd(void) { return new UnitPerf(); }
