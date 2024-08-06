@@ -505,8 +505,13 @@ public:
 
     virtual void getIOStats(uint64_t &sent, uint64_t &recv) = 0;
 
+    virtual void dumpState(std::ostream& os) const
+    {
+        dumpState(os, "\n ");
+    }
+
     /// Append pretty printed internal state to a line
-    virtual void dumpState(std::ostream& os, const std::string& indent = "\n") const
+    virtual void dumpState(std::ostream& os, const std::string& indent) const
     {
         os << indent;
     }

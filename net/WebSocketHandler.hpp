@@ -944,7 +944,7 @@ protected:
     }
 
     /// Implementation of the ProtocolHandlerInterface.
-    void dumpState(std::ostream& os, const std::string& indent = "\n  ") const override;
+    void dumpState(std::ostream& os, const std::string& indent) const override;
 
     static std::string generateKey();
     static std::string computeAccept(const std::string &key);
