@@ -1323,6 +1323,7 @@ public:
     /// Returns the socket FD, for logging/informational purposes.
     int getFD() const { return _fd; }
 
+    using ProtocolHandlerInterface::dumpState;
     void dumpState(std::ostream& os, const std::string& indent = "\n  ") const
     {
         const auto now = std::chrono::steady_clock::now();
@@ -1837,6 +1838,7 @@ public:
         }
     }
 
+    using ProtocolHandlerInterface::dumpState;
     void dumpState(std::ostream& os, const std::string& indent = "\n  ") const
     {
         const auto now = std::chrono::steady_clock::now();
