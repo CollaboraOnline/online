@@ -29,7 +29,6 @@
 #include <string>
 #include <thread>
 
-
 /// Save torture testcase.
 class UnitPerf : public UnitWSD
 {

@@ -34,16 +34,12 @@
 #include <Util.hpp>
 #include <common/Log.hpp>
 
-
-
 struct PerfMetricInfo
 {
     std::string phase;
     std::string metric;
     size_t data;
 };
-
-
 
 // store buckets of latency
 struct Histogram {
@@ -120,10 +116,10 @@ struct Histogram {
         }
 
         std::vector<PerfMetricInfo> latencyStatsList;
-        latencyStatsList.push_back(PerfMetricInfo {testPhase,typeOfLatency + " Total tiles", totalTiles});
-        latencyStatsList.push_back(PerfMetricInfo {testPhase,typeOfLatency + " Sub_10ms", subTenCount});
-        latencyStatsList.push_back(PerfMetricInfo {testPhase,typeOfLatency + " Sub_100ms", subOneHundredCount});
-        latencyStatsList.push_back(PerfMetricInfo {testPhase,typeOfLatency + " Over_100ms", overOneHundredCount});
+        latencyStatsList.push_back(PerfMetricInfo {testPhase, typeOfLatency + " Total tiles", totalTiles});
+        latencyStatsList.push_back(PerfMetricInfo {testPhase, typeOfLatency + " Sub_10ms", subTenCount});
+        latencyStatsList.push_back(PerfMetricInfo {testPhase, typeOfLatency + " Sub_100ms", subOneHundredCount});
+        latencyStatsList.push_back(PerfMetricInfo {testPhase, typeOfLatency + " Over_100ms", overOneHundredCount});
 
         return latencyStatsList;
     }
@@ -165,7 +161,7 @@ struct Stats {
     std::unordered_map<std::string, MessageStat> _recvd;
     std::unordered_map<std::string, MessageStat> _sent;
 
-    std::vector<PerfMetricInfo> perfStatsList;
+    std::vector<PerfMetricInfo> _perfStatsList;
 
     size_t GetMemoryUsage()
     {
@@ -259,7 +255,7 @@ struct Stats {
 
 
        endPhase(Log::Phase::Edit);
-       dumpPerfStatsToCSV(perfStatsList);
+       dumpPerfStatsToCSV(_perfStatsList);
 
         std::cout << "we sent:\n";
         dumpMap(_sent);
@@ -280,31 +276,31 @@ struct Stats {
         size_t cpuTime = _timer->elapsedTime().count();
         _timer.reset(new Util::SysStopwatch);
 
-        perfStatsList.push_back(GetStressStats(runMs, phaseAsString));
-        perfStatsList.push_back(GetCPUUSageStats(cpuTime, phaseAsString));
+        _perfStatsList.push_back(GetStressStats(runMs, phaseAsString));
+        _perfStatsList.push_back(GetCPUUSageStats(cpuTime, phaseAsString));
 
         if(phase == Log::Phase::Edit)
         {
             std::vector<PerfMetricInfo> statsList;
 
-            perfStatsList.push_back(GetPeakMemoryUsageStats(_peakMemoryUsage, phaseAsString));
+            _perfStatsList.push_back(GetPeakMemoryUsageStats(_peakMemoryUsage, phaseAsString));
 
             statsList = GetNetworkStats(_bytesRecvd / 1000, _bytesSent / 1000, phaseAsString);
             for(size_t i = 0; i < statsList.size(); i++)
             {
-                perfStatsList.push_back(statsList[i]);
+                _perfStatsList.push_back(statsList[i]);
             }
 
             statsList = _pingLatency.GetLatencyStats("PL", phaseAsString);
             for(size_t i = 0; i < statsList.size(); i++)
             {
-                perfStatsList.push_back(statsList[i]);
+                _perfStatsList.push_back(statsList[i]);
             }
 
             statsList = _tileLatency.GetLatencyStats("TL", phaseAsString);
             for(size_t i = 0; i < statsList.size(); i++)
             {
-                perfStatsList.push_back(statsList[i]);
+                _perfStatsList.push_back(statsList[i]);
             }
         }
     }
@@ -343,7 +339,7 @@ struct Stats {
 
         if(file.tellp() == 0)
         {
-            file << "COMMIT HASH" << "," << "DATE" << "," << "TEST" << "," << "PHASE" << "," << "METRIC" << "," << "value";
+            file << "Commit Hash" << "," << "Date" << "," << "Test" << "," << "Phase" << "," << "Metric" << "," << "Value";
             file << "\n";
         }
 
