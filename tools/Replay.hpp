@@ -32,6 +32,7 @@
 #include <config_version.h>
 #include <ctime>
 #include <Util.hpp>
+#include <common/Log.hpp>
 
 
 
@@ -257,7 +258,7 @@ struct Stats {
             " (" << recvKbps << " kB/s) to " << _connections << " connections.\n";
 
 
-       perfSetupLoadEditPhases("Edit");
+       endPhase(Log::Phase::Edit);
        dumpPerfStatsToCSV(perfStatsList);
 
         std::cout << "we sent:\n";
@@ -268,9 +269,10 @@ struct Stats {
     }
 
 
-    //loading phase will record the set up times and loaded phase records the document loading times
-    void perfSetupLoadEditPhases(std::string phase)
+    void endPhase(Log::Phase phase)
     {
+        std::string phaseAsString = Log::toStringShort(phase);
+
         const auto now = std::chrono::steady_clock::now();
         const size_t runMs = std::chrono::duration_cast<std::chrono::milliseconds>(now - _start).count();
         _start = std::chrono::steady_clock::now();
@@ -278,28 +280,28 @@ struct Stats {
         size_t cpuTime = _timer->elapsedTime().count();
         _timer.reset(new Util::SysStopwatch);
 
-        perfStatsList.push_back(GetStressStats(runMs, phase));
-        perfStatsList.push_back(GetCPUUSageStats(cpuTime, phase));
+        perfStatsList.push_back(GetStressStats(runMs, phaseAsString));
+        perfStatsList.push_back(GetCPUUSageStats(cpuTime, phaseAsString));
 
-        if(phase == "Edit")
+        if(phase == Log::Phase::Edit)
         {
             std::vector<PerfMetricInfo> statsList;
 
-            perfStatsList.push_back(GetPeakMemoryUsageStats(_peakMemoryUsage, phase));
+            perfStatsList.push_back(GetPeakMemoryUsageStats(_peakMemoryUsage, phaseAsString));
 
-            statsList = GetNetworkStats(_bytesRecvd / 1000, _bytesSent / 1000, phase);
+            statsList = GetNetworkStats(_bytesRecvd / 1000, _bytesSent / 1000, phaseAsString);
             for(size_t i = 0; i < statsList.size(); i++)
             {
                 perfStatsList.push_back(statsList[i]);
             }
 
-            statsList = _pingLatency.GetLatencyStats("PL", phase);
+            statsList = _pingLatency.GetLatencyStats("PL", phaseAsString);
             for(size_t i = 0; i < statsList.size(); i++)
             {
                 perfStatsList.push_back(statsList[i]);
             }
 
-            statsList = _tileLatency.GetLatencyStats("TL", phase);
+            statsList = _tileLatency.GetLatencyStats("TL", phaseAsString);
             for(size_t i = 0; i < statsList.size(); i++)
             {
                 perfStatsList.push_back(statsList[i]);
@@ -307,7 +309,7 @@ struct Stats {
         }
     }
 
-    PerfMetricInfo GetStressStats(size_t runMs, std::string testPhase) //need to figure out what phase it is
+    PerfMetricInfo GetStressStats(size_t runMs, std::string testPhase)
     {
         PerfMetricInfo stressStats = {testPhase, "Stress run (ms)", runMs};
         return  stressStats;
@@ -323,15 +325,15 @@ struct Stats {
     {
         std::vector<PerfMetricInfo> networkStatsList;
 
-        networkStatsList.push_back(PerfMetricInfo{testPhase, "Bytes recieved (kB)",  recievedKb});
-        networkStatsList.push_back(PerfMetricInfo{testPhase,"Bytes sent (kB)", sentKb});
+        networkStatsList.push_back(PerfMetricInfo{testPhase, "Bytes recieved (kB)", recievedKb});
+        networkStatsList.push_back(PerfMetricInfo{testPhase, "Bytes sent (kB)", sentKb});
 
         return networkStatsList;
     }
 
     PerfMetricInfo GetPeakMemoryUsageStats(size_t peakMemory, std::string testPhase)
     {
-        PerfMetricInfo peakMemoryStats = {testPhase,"Peak memory usage (kB)", peakMemory};
+        PerfMetricInfo peakMemoryStats = {testPhase, "Peak memory usage (kB)", peakMemory};
         return peakMemoryStats;
     }
 
@@ -341,14 +343,15 @@ struct Stats {
 
         if(file.tellp() == 0)
         {
-            file << "Commit Hash" << "," << "Date" << "," << "Test" << "," << "Phase" << "," << "Metric" << "," << "Value";
+            file << "COMMIT HASH" << "," << "DATE" << "," << "TEST" << "," << "PHASE" << "," << "METRIC" << "," << "value";
             file << "\n";
         }
 
         std::string commitHash = COOLWSD_VERSION_HASH;
 
         time_t now = time(0);
-        struct tm datetime = *localtime(&now);
+        struct tm datetime;
+        localtime_r(&now, &datetime);
 
         char formattedDate[50];
         strftime(formattedDate, 50, "%d/%m/%y", &datetime);

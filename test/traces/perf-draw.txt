@@ -1,0 +1,196 @@
+~+4027685~CAeY2MgSGPItVNJY~063~NewSession: https://localhost:9980/wopi/files/home/collaboran/collabora-online/test/data/hello-world.odg?access_token=test&access_token_ttl=0
+>+12224>CAeY2MgSGPItVNJY>063>coolclient 0.1 1722938374716 164.59999999962747
+>+15254>CAeY2MgSGPItVNJY>063>load url=https%3A%2F%2Flocalhost%3A9980%2Fwopi%2Ffiles%2Fhome%2Fcollaboran%2Fcollabora-online%2Ftest%2Fdata%2Fhello-world.odg accessibilityState=false deviceFormFactor=desktop darkTheme=false darkBackground=false timezone=Europe/London
+>+768511>CAeY2MgSGPItVNJY>063>uno .uno:ToolbarMode?Mode:string=notebookbar_online.ui
+>+20739>CAeY2MgSGPItVNJY>063>commandvalues command=.uno:StyleApply
+>+25>CAeY2MgSGPItVNJY>063>commandvalues command=.uno:CharFontName
+>+1688>CAeY2MgSGPItVNJY>063>commandvalues command=.uno:AcceptTrackedChanges
+>+6353>CAeY2MgSGPItVNJY>063>commandvalues command=.uno:LanguageStatus
+>+17>CAeY2MgSGPItVNJY>063>commandvalues command=.uno:ViewAnnotations
+>+13>CAeY2MgSGPItVNJY>063>commandvalues command=.uno:StyleApply
+>+164>CAeY2MgSGPItVNJY>063>commandvalues command=.uno:CharFontName
+>+8597>CAeY2MgSGPItVNJY>063>clientvisiblearea x=-8445 y=0 width=28785 height=14805 splitx=0 splity=0
+>+24>CAeY2MgSGPItVNJY>063>clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3840 tiletwipheight=3840
+>+340>CAeY2MgSGPItVNJY>063>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680,11520,0,3840,7680,11520,0,3840,7680,11520,0,3840,7680,11520 tileposy=0,0,0,0,3840,3840,3840,3840,7680,7680,7680,7680,11520,11520,11520,11520 oldwid=0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 tilewidth=3840 tileheight=3840
+>+909>CAeY2MgSGPItVNJY>063>uno .uno:ToolbarMode?Mode:string=Default
+>+44452>CAeY2MgSGPItVNJY>063>uno .uno:ToolbarMode?Mode:string=notebookbar_online.ui
+>+2365>CAeY2MgSGPItVNJY>063>commandvalues command=.uno:LanguageStatus
+>+42>CAeY2MgSGPItVNJY>063>commandvalues command=.uno:ViewAnnotations
+>+15>CAeY2MgSGPItVNJY>063>commandvalues command=.uno:StyleApply
+>+43>CAeY2MgSGPItVNJY>063>commandvalues command=.uno:CharFontName
+>+4465>CAeY2MgSGPItVNJY>063>tile nviewid=0 part=0 width=127 height=180 tileposx=0 tileposy=0 tilewidth=11906 tileheight=16838 id=0
+>+349>CAeY2MgSGPItVNJY>063>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680,11520,0,3840,7680,11520,0,3840,7680,11520,0,3840,7680,11520 tileposy=0,0,0,0,3840,3840,3840,3840,7680,7680,7680,7680,11520,11520,11520,11520 oldwid=0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 tilewidth=3840 tileheight=3840
+>+470>CAeY2MgSGPItVNJY>063>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680,11520,0,3840,7680,11520,0,3840,7680,11520,0,3840,7680,11520 tileposy=0,0,0,0,3840,3840,3840,3840,7680,7680,7680,7680,11520,11520,11520,11520 oldwid=0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 tilewidth=3840 tileheight=3840
+>+34454>CAeY2MgSGPItVNJY>063>clientvisiblearea x=-7095 y=0 width=26085 height=13695 splitx=0 splity=0
+>+72>CAeY2MgSGPItVNJY>063>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680,11520,0,3840,7680,11520,0,3840,7680,11520,0,3840,7680,11520 tileposy=0,0,0,0,3840,3840,3840,3840,7680,7680,7680,7680,11520,11520,11520,11520 oldwid=0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 tilewidth=3840 tileheight=3840
+>+10496>CAeY2MgSGPItVNJY>063>tile nviewid=0 part=0 width=127 height=180 tileposx=0 tileposy=0 tilewidth=11906 tileheight=16838 id=0
+>+173800>CAeY2MgSGPItVNJY>063>tilecombine nviewid=0 part=1 width=256 height=256 tileposx=0,3840,7680,11520,0,3840,7680,11520,0,3840,7680,11520,0,3840,7680,11520 tileposy=0,0,0,0,3840,3840,3840,3840,7680,7680,7680,7680,11520,11520,11520,11520 oldwid=0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 tilewidth=3840 tileheight=3840
+>+3976>CAeY2MgSGPItVNJY>063>uno .uno:SidebarShow
+>+145590>CAeY2MgSGPItVNJY>063>clientvisiblearea x=-7020 y=0 width=25935 height=13695 splitx=0 splity=0
+>+8563>CAeY2MgSGPItVNJY>063>clientvisiblearea x=-6960 y=0 width=25830 height=13695 splitx=0 splity=0
+>+7451>CAeY2MgSGPItVNJY>063>clientvisiblearea x=-6885 y=0 width=25680 height=13695 splitx=0 splity=0
+>+15648>CAeY2MgSGPItVNJY>063>clientvisiblearea x=-6705 y=0 width=25320 height=13695 splitx=0 splity=0
+>+15985>CAeY2MgSGPItVNJY>063>clientvisiblearea x=-6450 y=0 width=24795 height=13695 splitx=0 splity=0
+>+17137>CAeY2MgSGPItVNJY>063>clientvisiblearea x=-6150 y=0 width=24195 height=13695 splitx=0 splity=0
+>+15755>CAeY2MgSGPItVNJY>063>clientvisiblearea x=-5850 y=0 width=23595 height=13695 splitx=0 splity=0
+>+17547>CAeY2MgSGPItVNJY>063>clientvisiblearea x=-5505 y=0 width=22920 height=13695 splitx=0 splity=0
+>+15868>CAeY2MgSGPItVNJY>063>clientvisiblearea x=-5235 y=0 width=22380 height=13695 splitx=0 splity=0
+>+16928>CAeY2MgSGPItVNJY>063>clientvisiblearea x=-4995 y=0 width=21885 height=13695 splitx=0 splity=0
+>+16003>CAeY2MgSGPItVNJY>063>clientvisiblearea x=-4815 y=0 width=21540 height=13695 splitx=0 splity=0
+>+17035>CAeY2MgSGPItVNJY>063>clientvisiblearea x=-4710 y=0 width=21315 height=13695 splitx=0 splity=0
+>+18088>CAeY2MgSGPItVNJY>063>clientvisiblearea x=-4680 y=0 width=21270 height=13695 splitx=0 splity=0
+>+388459>CAeY2MgSGPItVNJY>063>tile nviewid=0 part=0 width=127 height=180 tileposx=0 tileposy=0 tilewidth=11906 tileheight=16838 id=0
+>+122829>CAeY2MgSGPItVNJY>063>mouse type=move x=4845 y=4800 count=1 buttons=0 modifier=0
+>+945120>CAeY2MgSGPItVNJY>063>mouse type=buttondown x=5850 y=5880 count=1 buttons=1 modifier=0
+>+81>CAeY2MgSGPItVNJY>063>mouse type=buttonup x=5850 y=5880 count=1 buttons=1 modifier=0
+>+21936>CAeY2MgSGPItVNJY>063>mouse type=move x=5850 y=5880 count=1 buttons=0 modifier=0
+>+44865>CAeY2MgSGPItVNJY>063>rendershapeselection mimetype=image/svg+xml
+>+113743>CAeY2MgSGPItVNJY>063>mouse type=buttondown x=5850 y=5880 count=2 buttons=1 modifier=0
+>+56>CAeY2MgSGPItVNJY>063>mouse type=buttonup x=5850 y=5880 count=2 buttons=1 modifier=0
+>+16406>CAeY2MgSGPItVNJY>063>tile nviewid=0 part=0 width=127 height=180 tileposx=0 tileposy=0 tilewidth=11906 tileheight=16838 id=0
+>+238996>CAeY2MgSGPItVNJY>063>key type=input char=0 key=8704
+>+103573>CAeY2MgSGPItVNJY>063>gettextselection mimetype=text/html,text/plain;charset=utf-8
+>+141472>CAeY2MgSGPItVNJY>063>removetextcontext id=0 before=1 after=0
+>+91506>CAeY2MgSGPItVNJY>063>key type=input char=0 key=20
+>+87039>CAeY2MgSGPItVNJY>063>textinput id=0 text=T
+>+34509>CAeY2MgSGPItVNJY>063>key type=up char=0 key=20
+>+81721>CAeY2MgSGPItVNJY>063>key type=input char=0 key=20
+>+67996>CAeY2MgSGPItVNJY>063>key type=up char=0 key=20
+>+66110>CAeY2MgSGPItVNJY>063>textinput id=0 text=h
+>+118688>CAeY2MgSGPItVNJY>063>textinput id=0 text=i
+>+255471>CAeY2MgSGPItVNJY>063>textinput id=0 text=s
+>+82913>CAeY2MgSGPItVNJY>063>key type=input char=32 key=0
+>+28>CAeY2MgSGPItVNJY>063>key type=up char=0 key=1284
+>+142376>CAeY2MgSGPItVNJY>063>textinput id=0 text=i
+>+90552>CAeY2MgSGPItVNJY>063>textinput id=0 text=s
+>+48839>CAeY2MgSGPItVNJY>063>key type=input char=32 key=0
+>+38>CAeY2MgSGPItVNJY>063>key type=up char=0 key=1284
+>+191577>CAeY2MgSGPItVNJY>063>textinput id=0 text=o
+>+237684>CAeY2MgSGPItVNJY>063>removetextcontext id=0 before=1 after=0
+>+86361>CAeY2MgSGPItVNJY>063>textinput id=0 text=s
+>+73818>CAeY2MgSGPItVNJY>063>textinput id=0 text=o
+>+196686>CAeY2MgSGPItVNJY>063>textinput id=0 text=m
+>+45390>CAeY2MgSGPItVNJY>063>textinput id=0 text=e
+>+93571>CAeY2MgSGPItVNJY>063>key type=input char=32 key=0
+>+340>CAeY2MgSGPItVNJY>063>key type=up char=0 key=1284
+>+242025>CAeY2MgSGPItVNJY>063>textinput id=0 text=n
+>+117726>CAeY2MgSGPItVNJY>063>textinput id=0 text=e
+>+232933>CAeY2MgSGPItVNJY>063>textinput id=0 text=w
+>+188411>CAeY2MgSGPItVNJY>063>key type=input char=32 key=0
+>+40>CAeY2MgSGPItVNJY>063>key type=up char=0 key=1284
+>+77010>CAeY2MgSGPItVNJY>063>textinput id=0 text=e
+>+359846>CAeY2MgSGPItVNJY>063>removetextcontext id=0 before=1 after=0
+>+85598>CAeY2MgSGPItVNJY>063>textinput id=0 text=t
+>+86720>CAeY2MgSGPItVNJY>063>textinput id=0 text=x
+>+115400>CAeY2MgSGPItVNJY>063>textinput id=0 text=t
+>+430131>CAeY2MgSGPItVNJY>063>key type=input char=0 key=8704
+>+103238>CAeY2MgSGPItVNJY>063>gettextselection mimetype=text/html,text/plain;charset=utf-8
+>+468834>CAeY2MgSGPItVNJY>063>tile nviewid=0 part=0 width=127 height=180 tileposx=0 tileposy=0 tilewidth=11906 tileheight=16838 id=0
+>+105699>CAeY2MgSGPItVNJY>063>gettextselection mimetype=text/html,text/plain;charset=utf-8
+>+113073>CAeY2MgSGPItVNJY>063>mouse type=move x=2445 y=2895 count=1 buttons=0 modifier=0
+>+232556>CAeY2MgSGPItVNJY>063>mouse type=move x=465 y=105 count=1 buttons=0 modifier=0
+>+614171>CAeY2MgSGPItVNJY>063>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "11;100;100", "type": "combobox"}
+>+65>CAeY2MgSGPItVNJY>063>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "2;100;100", "type": "combobox"}
+>+23>CAeY2MgSGPItVNJY>063>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "14;100;100", "type": "combobox"}
+>+16>CAeY2MgSGPItVNJY>063>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "24;100;100", "type": "combobox"}
+>+33>CAeY2MgSGPItVNJY>063>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "9;100;100", "type": "combobox"}
+>+97>CAeY2MgSGPItVNJY>063>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "6;100;100", "type": "combobox"}
+>+38>CAeY2MgSGPItVNJY>063>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "26;100;100", "type": "combobox"}
+>+22>CAeY2MgSGPItVNJY>063>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "1;100;100", "type": "combobox"}
+>+101>CAeY2MgSGPItVNJY>063>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "5;100;100", "type": "combobox"}
+>+105>CAeY2MgSGPItVNJY>063>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "7;100;100", "type": "combobox"}
+>+74>CAeY2MgSGPItVNJY>063>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "28;100;100", "type": "combobox"}
+>+26>CAeY2MgSGPItVNJY>063>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "22;100;100", "type": "combobox"}
+>+63>CAeY2MgSGPItVNJY>063>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "13;100;100", "type": "combobox"}
+>+50>CAeY2MgSGPItVNJY>063>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "21;100;100", "type": "combobox"}
+>+34>CAeY2MgSGPItVNJY>063>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "4;100;100", "type": "combobox"}
+>+330>CAeY2MgSGPItVNJY>063>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "19;100;100", "type": "combobox"}
+>+60>CAeY2MgSGPItVNJY>063>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "10;100;100", "type": "combobox"}
+>+20>CAeY2MgSGPItVNJY>063>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "0;100;100", "type": "combobox"}
+>+18>CAeY2MgSGPItVNJY>063>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "3;100;100", "type": "combobox"}
+>+15>CAeY2MgSGPItVNJY>063>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "8;100;100", "type": "combobox"}
+>+19>CAeY2MgSGPItVNJY>063>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "16;100;100", "type": "combobox"}
+>+26>CAeY2MgSGPItVNJY>063>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "29;100;100", "type": "combobox"}
+>+25>CAeY2MgSGPItVNJY>063>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "17;100;100", "type": "combobox"}
+>+40>CAeY2MgSGPItVNJY>063>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "25;100;100", "type": "combobox"}
+>+77>CAeY2MgSGPItVNJY>063>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "12;100;100", "type": "combobox"}
+>+53>CAeY2MgSGPItVNJY>063>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "27;100;100", "type": "combobox"}
+>+37>CAeY2MgSGPItVNJY>063>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "20;100;100", "type": "combobox"}
+>+59>CAeY2MgSGPItVNJY>063>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "23;100;100", "type": "combobox"}
+>+59>CAeY2MgSGPItVNJY>063>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "18;100;100", "type": "combobox"}
+>+37>CAeY2MgSGPItVNJY>063>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "15;100;100", "type": "combobox"}
+>+59>CAeY2MgSGPItVNJY>063>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "30;100;100", "type": "combobox"}
+>+76964>CAeY2MgSGPItVNJY>063>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "34;100;100", "type": "combobox"}
+>+62>CAeY2MgSGPItVNJY>063>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "31;100;100", "type": "combobox"}
+>+31>CAeY2MgSGPItVNJY>063>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "33;100;100", "type": "combobox"}
+>+39>CAeY2MgSGPItVNJY>063>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "32;100;100", "type": "combobox"}
+>+27299>CAeY2MgSGPItVNJY>063>dialogevent -2 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "35;100;100", "type": "combobox"}
+>+349325>CAeY2MgSGPItVNJY>063>dialogevent -2 {"id":"fontnamecombobox", "cmd": "selected", "data": "3;Amiri Quran", "type": "combobox"}
+>+8530>CAeY2MgSGPItVNJY>063>rendershapeselection mimetype=image/svg+xml
+>+198235>CAeY2MgSGPItVNJY>063>gettextselection mimetype=text/html,text/plain;charset=utf-8
+>+25206>CAeY2MgSGPItVNJY>063>mouse type=move x=-1545 y=120 count=1 buttons=0 modifier=0
+>+788798>CAeY2MgSGPItVNJY>063>tile nviewid=0 part=0 width=127 height=180 tileposx=0 tileposy=0 tilewidth=11906 tileheight=16838 id=0
+>+106155>CAeY2MgSGPItVNJY>063>gettextselection mimetype=text/html,text/plain;charset=utf-8
+>+243075>CAeY2MgSGPItVNJY>063>dialogevent -2 {"id":"fontsizecombobox", "cmd": "selected", "data": "7;12 pt", "type": "combobox"}
+>+8849>CAeY2MgSGPItVNJY>063>rendershapeselection mimetype=image/svg+xml
+>+197484>CAeY2MgSGPItVNJY>063>gettextselection mimetype=text/html,text/plain;charset=utf-8
+>+124010>CAeY2MgSGPItVNJY>063>mouse type=move x=-2880 y=30 count=1 buttons=0 modifier=0
+>+691537>CAeY2MgSGPItVNJY>063>tile nviewid=0 part=0 width=127 height=180 tileposx=0 tileposy=0 tilewidth=11906 tileheight=16838 id=0
+>+105420>CAeY2MgSGPItVNJY>063>gettextselection mimetype=text/html,text/plain;charset=utf-8
+>+8173>CAeY2MgSGPItVNJY>063>uno .uno:Underline
+>+3678>CAeY2MgSGPItVNJY>063>rendershapeselection mimetype=image/svg+xml
+>+200879>CAeY2MgSGPItVNJY>063>gettextselection mimetype=text/html,text/plain;charset=utf-8
+>+316099>CAeY2MgSGPItVNJY>063>uno .uno:Italic
+>+4226>CAeY2MgSGPItVNJY>063>rendershapeselection mimetype=image/svg+xml
+>+201523>CAeY2MgSGPItVNJY>063>gettextselection mimetype=text/html,text/plain;charset=utf-8
+>+572627>CAeY2MgSGPItVNJY>063>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680,11520 tileposy=15360,15360,15360,15360 oldwid=0,0,0,0 tilewidth=3840 tileheight=3840
+>+109707>CAeY2MgSGPItVNJY>063>gettextselection mimetype=text/html,text/plain;charset=utf-8
+>+126979>CAeY2MgSGPItVNJY>063>tile nviewid=0 part=0 width=127 height=180 tileposx=0 tileposy=0 tilewidth=11906 tileheight=16838 id=0
+>+106041>CAeY2MgSGPItVNJY>063>gettextselection mimetype=text/html,text/plain;charset=utf-8
+>+399427>CAeY2MgSGPItVNJY>063>uno .uno:InsertPage
+>+33755>CAeY2MgSGPItVNJY>063>tile nviewid=0 part=0 width=127 height=180 tileposx=0 tileposy=0 tilewidth=11906 tileheight=16838 id=0
+>+186>CAeY2MgSGPItVNJY>063>tilecombine nviewid=0 part=1 width=256 height=256 tileposx=0,3840,7680,11520,0,3840,7680,11520,0,3840,7680,11520,0,3840,7680,11520 tileposy=0,0,0,0,3840,3840,3840,3840,7680,7680,7680,7680,11520,11520,11520,11520 oldwid=18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33 tilewidth=3840 tileheight=3840
+>+770>CAeY2MgSGPItVNJY>063>commandvalues command=.uno:ViewAnnotations
+>+167>CAeY2MgSGPItVNJY>063>tilecombine nviewid=0 part=1 width=256 height=256 tileposx=0,3840,7680,11520,0,3840,7680,11520,0,3840,7680,11520,0,3840,7680,11520 tileposy=0,0,0,0,3840,3840,3840,3840,7680,7680,7680,7680,11520,11520,11520,11520 oldwid=18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33 tilewidth=3840 tileheight=3840
+>+103615>CAeY2MgSGPItVNJY>063>tilecombine nviewid=0 part=2 width=256 height=256 tileposx=0,3840,7680,11520,0,3840,7680,11520,0,3840,7680,11520,0,3840,7680,11520 tileposy=0,0,0,0,3840,3840,3840,3840,7680,7680,7680,7680,11520,11520,11520,11520 oldwid=0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 tilewidth=3840 tileheight=3840
+>+541544>CAeY2MgSGPItVNJY>063>mouse type=buttondown x=3915 y=3825 count=1 buttons=1 modifier=0
+>+70>CAeY2MgSGPItVNJY>063>mouse type=buttonup x=3915 y=3825 count=1 buttons=1 modifier=0
+>+25773>CAeY2MgSGPItVNJY>063>mouse type=move x=3915 y=3825 count=1 buttons=0 modifier=0
+>+308448>CAeY2MgSGPItVNJY>063>tile nviewid=0 part=1 width=127 height=180 tileposx=0 tileposy=0 tilewidth=11906 tileheight=16838 id=1
+>+24656>CAeY2MgSGPItVNJY>063>mouse type=move x=6660 y=165 count=1 buttons=0 modifier=0
+>+1095686>CAeY2MgSGPItVNJY>063>uno .uno:BasicShapes.pentagon
+>+24911>CAeY2MgSGPItVNJY>063>tile nviewid=0 part=0 width=127 height=180 tileposx=0 tileposy=0 tilewidth=11906 tileheight=16838 id=0
+>+401>CAeY2MgSGPItVNJY>063>tile nviewid=0 part=1 width=127 height=180 tileposx=0 tileposy=0 tilewidth=11906 tileheight=16838 id=1
+>+7748>CAeY2MgSGPItVNJY>063>rendershapeselection mimetype=image/svg+xml
+>+54005>CAeY2MgSGPItVNJY>063>clientvisiblearea x=-4605 y=0 width=21120 height=13695 splitx=0 splity=0
+>+306735>CAeY2MgSGPItVNJY>063>mouse type=move x=16005 y=1395 count=1 buttons=0 modifier=0
+>+631892>CAeY2MgSGPItVNJY>063>tile nviewid=0 part=1 width=127 height=180 tileposx=0 tileposy=0 tilewidth=11906 tileheight=16838 id=1
+>+380937>CAeY2MgSGPItVNJY>063>dialogevent 0 {"id":"fillstylearea", "cmd": "selected", "data": "3;Hatching", "type": "combobox"}
+>+439886>CAeY2MgSGPItVNJY>063>mouse type=move x=2070 y=255 count=1 buttons=0 modifier=0
+>+215975>CAeY2MgSGPItVNJY>063>mouse type=move x=4455 y=195 count=1 buttons=0 modifier=0
+>+351638>CAeY2MgSGPItVNJY>063>tile nviewid=0 part=1 width=127 height=180 tileposx=0 tileposy=0 tilewidth=11906 tileheight=16838 id=1
+>+370200>CAeY2MgSGPItVNJY>063>uno .uno:FlipVertical
+>+3891>CAeY2MgSGPItVNJY>063>rendershapeselection mimetype=image/svg+xml
+>+999481>CAeY2MgSGPItVNJY>063>tile nviewid=0 part=1 width=127 height=180 tileposx=0 tileposy=0 tilewidth=11906 tileheight=16838 id=1
+>+148268>CAeY2MgSGPItVNJY>063>mouse type=move x=885 y=585 count=1 buttons=0 modifier=0
+>+4803465>CAeY2MgSGPItVNJY>063>mouse type=buttonup x=1410 y=2100 count=1 buttons=1 modifier=0
+>+85958>CAeY2MgSGPItVNJY>063>mouse type=move x=1410 y=2100 count=1 buttons=0 modifier=0
+>+433072>CAeY2MgSGPItVNJY>063>mouse type=move x=3300 y=240 count=1 buttons=0 modifier=0
+>+601465>CAeY2MgSGPItVNJY>063>mouse type=move x=2175 y=75 count=1 buttons=0 modifier=0
+>+1119735>CAeY2MgSGPItVNJY>063>uno .uno:Line
+>+28897>CAeY2MgSGPItVNJY>063>rendershapeselection mimetype=image/svg+xml
+>+62476>CAeY2MgSGPItVNJY>063>clientvisiblearea x=-4680 y=0 width=21270 height=13695 splitx=0 splity=0
+>+929956>CAeY2MgSGPItVNJY>063>tile nviewid=0 part=1 width=127 height=180 tileposx=0 tileposy=0 tilewidth=11906 tileheight=16838 id=1
+>+824>CAeY2MgSGPItVNJY>063>mouse type=move x=5100 y=6480 count=1 buttons=0 modifier=0
+>+383088>CAeY2MgSGPItVNJY>063>mouse type=move x=3525 y=8295 count=1 buttons=0 modifier=0
+>+184178>CAeY2MgSGPItVNJY>063>mouse type=move x=3555 y=8355 count=1 buttons=0 modifier=0
+>+166397>CAeY2MgSGPItVNJY>063>mouse type=move x=3585 y=8370 count=1 buttons=0 modifier=0
+>+116735>CAeY2MgSGPItVNJY>063>mouse type=move x=3600 y=8370 count=1 buttons=0 modifier=0
+>+732768>CAeY2MgSGPItVNJY>063>uno .uno:MoveShapeHandle {"HandleNum":{"type":"long","value":"0"},"NewPosX":{"type":"long","value":4230},"NewPosY":{"type":"long","value":4590}}
+>+2932>CAeY2MgSGPItVNJY>063>rendershapeselection mimetype=image/svg+xml
+>+1000536>CAeY2MgSGPItVNJY>063>tile nviewid=0 part=1 width=127 height=180 tileposx=0 tileposy=0 tilewidth=11906 tileheight=16838 id=1
+>+206267>CAeY2MgSGPItVNJY>063>mouse type=move x=780 y=13545 count=1 buttons=0 modifier=0
+>+199221>CAeY2MgSGPItVNJY>063>mouse type=move x=300 y=13680 count=1 buttons=0 modifier=0
+~+33930424~CAeY2MgSGPItVNJY~063~EndSession: https://localhost:9980/wopi/files/home/collaboran/collabora-online/test/data/hello-world.odg?access_token=test&access_token_ttl=0
+~+307~CAeY2MgSGPItVNJY~063~EndSession: https://localhost:9980/wopi/files/home/collaboran/collabora-online/test/data/hello-world.odg?access_token=test&access_token_ttl=0
+
