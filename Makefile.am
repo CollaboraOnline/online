@@ -477,6 +477,8 @@ if HAVE_LO_PATH
 
 SYSTEM_STAMP = @SYSTEMPLATE_PATH@/system_stamp
 RUN_GDB = $(if $(GDB_FRONTEND),$(GDB_FRONTEND),gdb --tui --args)
+TEST_APPARMOR=$(shell if test 1 -eq `cat /proc/sys/kernel/apparmor_restrict_unprivileged_userns 2> /dev/null`; then echo "enabled"; fi)
+RUN_COOLWSD = $(if $(TEST_APPARMOR),podman unshare ./coolwsd --disable-cool-user-checking,./coolwsd)
 
 if ENABLE_LIBFUZZER
 CLEANUP_DEPS=
@@ -538,7 +540,12 @@ COMMON_PARAMS = \
 	--o:mount_namespaces[@default]=true
 
 run: setup-wsd
-	./coolwsd $(COMMON_PARAMS) \
+	@if test "${TEST_APPARMOR}" = "enabled"; then \
+		echo apparmor_restrict_unprivileged_userns is enabled, which blocks user namespaces; \
+	        (which podman > /dev/null 2>&1 && echo "Using podman unshare to workaround") || \
+		(echo "WARNING: install podman to workaround this" && false); \
+	fi
+	$(RUN_COOLWSD) $(COMMON_PARAMS) \
 			--o:logging.file[@enable]=${OUTPUT_TO_FILE} --o:logging.level=trace \
 			--o:trace_event[@enable]=true
 
