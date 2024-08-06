@@ -131,13 +131,8 @@ sub check_author()
 
 sub check_prettier()
 {
-    my $prettier = `make prettier`;
-
-    if ($prettier != 0)
-    {
-        print("Your code is not formatted. Please run 'make prettier-write' before committing.");
-        exit(1);
-    }
+    system("make prettier >/dev/null 2>&1") == 0
+        or die "Your code is not formatted. Please run 'make prettier-write' before committing.";
 }
 
 # Do the work :-)
