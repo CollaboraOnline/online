@@ -931,7 +931,7 @@ AC_DEFINE_UNQUOTED([WELCOME_URL],["$WELCOME_URL"],[The welcome url of the build.
 # Test for build environment
 
 AS_IF([test "$ENABLE_GTKAPP" != true],
-[CXXFLAGS="$CXXFLAGS -Wall -Wextra -Wshadow -Wundef"])
+      [CXXFLAGS="$CXXFLAGS -Wall -Wextra -Wshadow -Wundef"])
 
 CFLAGS="$CFLAGS -Wall -Wextra"
 
@@ -1124,8 +1124,7 @@ AC_COMPILE_IFELSE([AC_LANG_SOURCE([
 AM_CONDITIONAL([HAVE_CLANG], [test "$HAVE_CLANG" = "true"])
 AC_SUBST(HAVE_CLANG)
 
-AS_IF([test "$ENABLE_GTKAPP" != true],
-[CXXFLAGS="$CXXFLAGS $CXXFLAGS_CXXSTD"])
+CXXFLAGS="$CXXFLAGS $CXXFLAGS_CXXSTD"
 
 AS_IF([test -n "$LOKIT_PATH"],
       [CPPFLAGS="$CPPFLAGS -I${LOKIT_PATH}"])
@@ -1220,8 +1219,9 @@ AS_IF([test `uname -s` = Linux -a "$ENABLE_ANDROIDAPP" != "true" -a "$host_os" !
                       [],
                       [AC_MSG_ERROR([libcap not available?])])])
 
+dnl NB. this is a gtk3 frontend.
 AS_IF([test "$ENABLE_GTKAPP" = true],
-      [PKG_CHECK_MODULES([WEBKIT],[webkit2gtk-4.0])])
+      [PKG_CHECK_MODULES([WEBKIT],[webkit2gtk-4.1])])
 
 AM_CONDITIONAL([ENABLE_DEBUG], [test "$ENABLE_DEBUG" = "true"])
 
