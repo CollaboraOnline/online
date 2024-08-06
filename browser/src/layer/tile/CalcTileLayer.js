@@ -459,7 +459,6 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 				source: 'status'
 			});
 			this._resetPreFetching(true);
-			this._update();
 			if (firstSelectedPart) {
 				this._switchSplitPanesContext();
 			}
