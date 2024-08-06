@@ -1986,14 +1986,18 @@ L.CanvasTileLayer = L.Layer.extend({
 	_onShapeSelectionContent: function (textMsg) {
 		textMsg = textMsg.substring('shapeselectioncontent:'.length + 1);
 
-		var extraInfo = this._graphicSelection.extraInfo;
-		if (extraInfo && extraInfo.id) {
-			this._map._cacheSVG[extraInfo.id] = textMsg;
+		var extraInfoId = null;
+		if (this._graphicSelection && this._graphicSelection.extraInfo)
+			extraInfoId = this._graphicSelection.extraInfo.id;
+		if (extraInfoId) {
+			this._map._cacheSVG[extraInfoId] = textMsg;
 		}
 
 		// video is handled in _onEmbeddedVideoContent
-		if (this._graphicMarker && this._graphicMarker.sectionProperties.hasVideo)
-			this._map._cacheSVG[extraInfo.id] = undefined;
+		if (this._graphicMarker && this._graphicMarker.sectionProperties.hasVideo) {
+			if (extraInfoId)
+				this._map._cacheSVG[extraInfoId] = undefined;
+		}
 		else if (this._graphicMarker)
 			this._graphicMarker.setSVG(textMsg);
 	},
