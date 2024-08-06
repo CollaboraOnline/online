@@ -81,6 +81,9 @@ class UserList extends L.Control {
 			this.options.noUser = _('0 users');
 		}
 
+		const userListElement = document.getElementById('userListSummary');
+		userListElement.setAttribute('aria-label', _('User List Summary'));
+
 		this.registerHeaderAvatarEvents();
 	}
 
