@@ -482,6 +482,8 @@ if HAVE_LO_PATH
 
 SYSTEM_STAMP = @SYSTEMPLATE_PATH@/system_stamp
 RUN_GDB = $(if $(GDB_FRONTEND),$(GDB_FRONTEND),gdb --tui --args)
+TEST_APPARMOR=$(shell if test 1 -eq `cat /proc/sys/kernel/apparmor_restrict_unprivileged_userns 2> /dev/null`; then echo "enabled"; fi)
+ENABLE_NAMESPACE = $(if $(TEST_APPARMOR),podman unshare,)
 
 if ENABLE_LIBFUZZER
 CLEANUP_DEPS=
@@ -539,6 +541,7 @@ setup-wsd: all @JAILS_PATH@
 	@echo
 
 COMMON_PARAMS = \
+	$(if $(TEST_APPARMOR),--disable-cool-user-checking) \
 	--o:sys_template_path="@SYSTEMPLATE_PATH@" \
 	--o:child_root_path="@JAILS_PATH@" --o:storage.filesystem[@allow]=true \
 	--o:ssl.cert_file_path="$(abs_top_srcdir)/etc/cert.pem" \
@@ -548,13 +551,18 @@ COMMON_PARAMS = \
 	--o:mount_namespaces[@default]=true
 
 run: setup-wsd
-	./coolwsd $(COMMON_PARAMS) \
+	@if test "${TEST_APPARMOR}" = "enabled"; then \
+		echo apparmor_restrict_unprivileged_userns is enabled, which blocks user namespaces; \
+	        (which podman > /dev/null 2>&1 && echo "Using podman unshare to workaround") || \
+		(echo "WARNING: install podman to workaround this" && false); \
+	fi
+	$(ENABLE_NAMESPACE) ./coolwsd $(COMMON_PARAMS) \
 			--o:logging.file[@enable]=${OUTPUT_TO_FILE} --o:logging.level=trace \
 			--o:trace_event[@enable]=true
 
 if ENABLE_DEBUG
 run-one: setup-wsd
-	./coolwsd $(COMMON_PARAMS) \
+	$(ENABLE_NAMESPACE) ./coolwsd $(COMMON_PARAMS) \
 			--o:logging.file[@enable]=true --o:logging.level=trace \
 			--singlekit
 
@@ -565,13 +573,13 @@ run-inproc: setup-wsd
 
 run-massif-inproc: setup-wsd
 	@echo "Launching coolwsd under valgrind for single process"
-	valgrind --tool=massif --num-callers=64 --trace-children=no -v \
+	$(ENABLE_NAMESPACE) valgrind --tool=massif --num-callers=64 --trace-children=no -v \
 		./coolwsd-inproc $(COMMON_PARAMS) \
 			--o:logging.file[@enable]=false --o:logging.level=trace
 
 run-heaptrack-inproc: setup-wsd
 	@echo "Launching coolwsd under heaptrack for single process"
-	heaptrack \
+	$(ENABLE_NAMESPACE) heaptrack \
 		./coolwsd-inproc $(COMMON_PARAMS) \
 			--o:logging.file[@enable]=false --o:logging.level=trace
 endif
@@ -586,32 +594,32 @@ sync-impress:
 	browser-sync start --config browsersync-config.js --startPath "browser/96c23f663/cool.html?file_path=file://$(abs_top_srcdir)/test/data/hello-world.odp"
 
 run-trace: setup-wsd
-	./coolwsd $(COMMON_PARAMS) \
+	$(ENABLE_NAMESPACE) ./coolwsd $(COMMON_PARAMS) \
 			--o:logging.file[@enable]=false --o:logging.level=trace \
 			--o:trace[@enable]=true --o:trace.path=${builddir}/trace.txt.gz \
 			--o:trace.outgoing.record=false
 
 run-valgrind: setup-wsd
 	@echo "Launching coolwsd under valgrind (but not forkit/coolkit, yet)"
-	valgrind --tool=memcheck --trace-children=no -v --read-var-info=yes \
+	$(ENABLE_NAMESPACE) valgrind --tool=memcheck --trace-children=no -v --read-var-info=yes \
 		./coolwsd $(COMMON_PARAMS) \
 			--o:logging.file[@enable]=false --o:logging.level=trace
 
 run-gdb: setup-wsd
 	@echo "Launching coolwsd under gdb"
-	$(RUN_GDB) \
+	$(ENABLE_NAMESPACE) $(RUN_GDB) \
 		./coolwsd $(COMMON_PARAMS) \
 			--o:logging.file[@enable]=false --o:logging.level=error
 
 run-callgrind: setup-wsd
 	@echo "Launching coolwsd under valgrind's callgrind"
-	valgrind --tool=callgrind --simulate-cache=yes --dump-instr=yes --num-callers=50 --error-limit=no --trace-children=yes \
+	$(ENABLE_NAMESPACE) valgrind --tool=callgrind --simulate-cache=yes --dump-instr=yes --num-callers=50 --error-limit=no --trace-children=yes \
 		./coolwsd $(COMMON_PARAMS) \
 			--o:logging.file[@enable]=false --o:logging.level=error
 
 run-strace: setup-wsd
 	@echo "Launching coolwsd under strace"
-	strace -o strace.log -f -tt -s 256 \
+	$(ENABLE_NAMESPACE) strace -o strace.log -f -tt -s 256 \
 		./coolwsd $(COMMON_PARAMS) \
 			--o:logging.file[@enable]=false --o:logging.level=error
 
