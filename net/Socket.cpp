@@ -912,7 +912,7 @@ void SocketDisposition::execute()
     }
 }
 
-void WebSocketHandler::dumpState(std::ostream& os) const
+void WebSocketHandler::dumpState(std::ostream& os, const std::string& /*indent*/) const
 {
     os << (_shuttingDown ? "shutd " : "alive ");
 #if !MOBILEAPP

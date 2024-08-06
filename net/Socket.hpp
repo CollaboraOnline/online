@@ -506,7 +506,10 @@ public:
     virtual void getIOStats(uint64_t &sent, uint64_t &recv) = 0;
 
     /// Append pretty printed internal state to a line
-    virtual void dumpState(std::ostream& os) const { os << '\n'; }
+    virtual void dumpState(std::ostream& os, const std::string& indent = "\n") const
+    {
+        os << indent;
+    }
 };
 
 // Forward declare WebSocketHandler, which is inherited from ProtocolHandlerInterface.
