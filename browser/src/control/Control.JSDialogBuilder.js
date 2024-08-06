@@ -2291,6 +2291,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 			if(data.text)
 				button.setAttribute('aria-label', data.text);
+			else if (data.aria)
+				button.setAttribute('aria-label', data.aria.label);
 
 			if (!data.accessKey)
 				builder._setAccessKey(button, builder._getAccessKeyFromText(data.text));
