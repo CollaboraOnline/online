@@ -22,7 +22,7 @@ class VideoRenderInfo {
 abstract class SlideRenderer {
 	public _context: RenderContext = null;
 	public _slideTexture: WebGLTexture | ImageBitmap;
-	protected _videos: VideoRenderInfo[];
+	protected _videos: VideoRenderInfo[] = [];
 	protected _canvas: HTMLCanvasElement;
 
 	constructor(canvas: HTMLCanvasElement) {
@@ -66,6 +66,12 @@ abstract class SlideRenderer {
 		this._slideTexture = currentSlideTexture;
 		this.prepareVideos(slideInfo, docWidth, docHeight);
 		requestAnimationFrame(this.render.bind(this));
+	}
+
+	public pauseVideos() {
+		for (var videoRenderInfo of this._videos) {
+			videoRenderInfo.videoElement.pause();
+		}
 	}
 
 	protected getDocumentPositions(
@@ -115,6 +121,7 @@ class SlideRenderer2d extends SlideRenderer {
 		docWidth: number,
 		docHeight: number,
 	) {
+		this.pauseVideos();
 		this._videos = [];
 		if (slideInfo?.videos !== undefined) {
 			for (var videoInfo of slideInfo.videos) {
@@ -306,6 +313,7 @@ class SlideRendererGl extends SlideRenderer {
 		docWidth: number,
 		docHeight: number,
 	) {
+		this.pauseVideos();
 		this._videos = [];
 		if (slideInfo.videos !== undefined) {
 			for (var videoInfo of slideInfo.videos) {
