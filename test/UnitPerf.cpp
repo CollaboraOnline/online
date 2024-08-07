@@ -46,8 +46,8 @@ class UnitPerf : public UnitWSD
 public:
     UnitPerf();
     void invokeWSDTest() override;
-    void onDocumentLoading() override;
-    void onDocumentLoaded() override;
+    void onPerfDocumentLoading() override;
+    void onPerfDocumentLoaded() override;
     std::unique_ptr<Util::SysStopwatch> _timer;
     std::shared_ptr<Stats> stats;
 };
@@ -110,13 +110,13 @@ void UnitPerf::invokeWSDTest()
 }
 
 //Called when document loading process starts e.g. setup finishes
-void UnitPerf::onDocumentLoading()
+void UnitPerf::onPerfDocumentLoading()
 {
     stats->endPhase(Log::Phase::Setup);
 }
 
 //called when document has been loaded into core
-void UnitPerf::onDocumentLoaded()
+void UnitPerf::onPerfDocumentLoaded()
 {
     stats->endPhase(Log::Phase::Load);
 }
