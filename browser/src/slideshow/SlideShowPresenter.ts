@@ -329,8 +329,8 @@ class SlideShowPresenter {
 	}
 
 	_doPresentation() {
+		this._slideRenderer.pauseVideos();
 		const slideInfo = this.getSlideInfo(this._currentSlide);
-
 		// To speed up the process, if we have transition info, then only render
 		// a black empty slide as the first slide. otherwise, directly render the first slide.
 		if (
