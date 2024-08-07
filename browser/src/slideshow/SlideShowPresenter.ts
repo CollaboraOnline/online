@@ -65,6 +65,7 @@ class SlideShowPresenter {
 	_slideRenderer: SlideRenderer = null;
 	_animationsHandler: SlideAnimations = null;
 	_canvasLoader: CanvasLoader | null = null;
+	_isAnimationPlaying: boolean = false;
 
 	constructor(map: any) {
 		this._map = map;
@@ -74,12 +75,14 @@ class SlideShowPresenter {
 	addHooks() {
 		this._map.on('newfullscreen', this._onStart, this);
 		this._map.on('newpresentinwindow', this._onStartInWindow, this);
+		this._map.on('animationstatechanged', this._onAnimationStateChanged, this);
 		L.DomEvent.on(document, 'fullscreenchange', this._onFullScreenChange, this);
 	}
 
 	removeHooks() {
 		this._map.off('newfullscreen', this._onStart, this);
 		this._map.off('newpresentinwindow', this._onStartInWindow, this);
+		this._map.off('animationstatechanged', this._onAnimationStateChanged, this);
 		L.DomEvent.off(
 			document,
 			'fullscreenchange',
@@ -133,6 +136,11 @@ class SlideShowPresenter {
 	}
 
 	_nextSlide() {
+		if (this._isAnimationPlaying) {
+			this._map.fire('skipanimation');
+			return;
+		}
+
 		if (this._currentSlide + 1 >= this._getSlidesCount()) {
 			this._stopFullScreen();
 			return;
@@ -146,6 +154,11 @@ class SlideShowPresenter {
 	}
 
 	_previoustSlide() {
+		if (this._isAnimationPlaying) {
+			this._map.fire('skipanimation');
+			return;
+		}
+
 		if (this._currentSlide <= 0) {
 			return;
 		}
@@ -539,6 +552,10 @@ class SlideShowPresenter {
 
 		this._currentSlide = 0; // TODO: setup from parameter
 		app.socket.sendMessage('getpresentationinfo');
+	}
+
+	_onAnimationStateChanged(e: any) {
+		this._isAnimationPlaying = !!e.isPlaying;
 	}
 
 	/// called as a response on getpresentationinfo
