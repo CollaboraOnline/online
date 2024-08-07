@@ -720,6 +720,9 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._mentionText = [];
 
 		this._moveInProgress = false;
+		// tile requests issued while _moveInProgress is true,
+		// i.e. issued between moveStart and moveEnd
+		this._moveTileRequests = [];
 		this._canonicalIdInitialized = false;
 		this._nullDeltaUpdate = 0;
 
@@ -972,6 +975,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	_moveStart: function () {
 		this._resetPreFetching();
 		this._moveInProgress = true;
+		this._moveTileRequests = [];
 	},
 
 	_move: function () {
@@ -1001,6 +1005,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	_moveEnd: function () {
 		this._move();
 		this._moveInProgress = false;
+		this._moveTileRequests = [];
 
 		var isCellCursorVisible = app.calc.cellCursorVisible;
 		var isTextCursorVisible = app.file.textCursor.visible;
@@ -4918,6 +4923,16 @@ L.CanvasTileLayer = L.Layer.extend({
 			    || coords.mode !== this._selectedMode) {
 				coordsQueue.splice(0, 1);
 				continue;
+			}
+
+			// While we are actively scrolling, filter out duplicate
+			// (still) missing tiles requests during the scroll.
+			if (this._moveInProgress) {
+				if (this._moveTileRequests.includes(key)) {
+					coordsQueue.splice(0, 1);
+					continue;
+				}
+				this._moveTileRequests.push(key);
 			}
 
 			var rectQueue = [coords];
