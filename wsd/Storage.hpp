@@ -541,6 +541,13 @@ struct LockContext
     /// Returns true if locked.
     bool isLocked() const { return _lockState == StorageBase::LockState::LOCK; }
 
+    /// Sets the new state and bumps the timer.
+    void setState(StorageBase::LockState state)
+    {
+        _lockState = state;
+        bumpTimer();
+    }
+
     /// wait another refresh cycle
     void bumpTimer() { _lastLockTime = std::chrono::steady_clock::now(); }
 

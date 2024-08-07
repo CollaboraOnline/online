@@ -398,8 +398,7 @@ StorageBase::LockUpdateResult WopiStorage::updateLockState(const Authorization& 
 
         if (httpResponse->statusLine().statusCode() == http::StatusCode::OK)
         {
-            lockCtx._lockState = lock;
-            lockCtx.bumpTimer();
+            lockCtx.setState(lock);
             return LockUpdateResult::OK;
         }
 
