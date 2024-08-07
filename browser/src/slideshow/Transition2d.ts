@@ -31,6 +31,7 @@ class Transition2d {
 	public context: any;
 	private transitionParameters: TransitionParameters;
 	protected slideInfo: SlideInfo = null;
+	private skip: boolean = false;
 
 	constructor(transitionParameters: TransitionParameters) {
 		this.transitionParameters = transitionParameters;
@@ -96,6 +97,9 @@ class Transition2d {
 
 	public startTransition(): void {
 		this.startTime = performance.now();
+		this.skip = false;
+		app.map.on('skipanimation', this.onSkipRequest, this);
+		app.map.fire('animationstatechanged', { isPlaying: true });
 		requestAnimationFrame(this.render.bind(this));
 	}
 
@@ -178,14 +182,19 @@ class Transition2d {
 		gl.bindVertexArray(this.vao);
 		gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 
-		if (this.time < 1) {
+		if (!this.skip && this.time < 1) {
 			requestAnimationFrame(this.render.bind(this));
 		} else {
+			app.map.off('skipanimation', this.onSkipRequest, this);
+			app.map.fire('animationstatechanged', { isPlaying: false });
 			this.transitionParameters.callback();
 			console.log('Transition completed');
 		}
 	}
 
+	onSkipRequest() {
+		this.skip = true;
+	}
 	// eslint-disable-next-line @typescript-eslint/no-empty-function
 	public renderUniformValue(): void {}
 }
