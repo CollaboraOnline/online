@@ -55,6 +55,7 @@ test/data/hello-world.odp
 test/data/hello-world.odg
 test/fakesockettest
 test/unithttplib
+test/*.csv
 jsstress
 
 *.o
