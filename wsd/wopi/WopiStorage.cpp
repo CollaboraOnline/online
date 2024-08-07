@@ -406,7 +406,6 @@ StorageBase::LockUpdateResult WopiStorage::updateLockState(const Authorization& 
         if (!failureReason.empty())
         {
             lockCtx._lockFailureReason = failureReason;
-            failureReason = ", failure reason: \"" + failureReason + "\"";
         }
 
         if (httpResponse->statusLine().statusCode() == http::StatusCode::Unauthorized ||
@@ -414,16 +413,17 @@ StorageBase::LockUpdateResult WopiStorage::updateLockState(const Authorization& 
             httpResponse->statusLine().statusCode() == http::StatusCode::NotFound)
         {
             LOG_ERR("Un-successful " << wopiLog << " with expired token, HTTP status "
-                                     << httpResponse->statusLine().statusCode() << failureReason
-                                     << " and response: " << responseString);
+                                     << httpResponse->statusLine().statusCode()
+                                     << ", failure reason: [" << failureReason
+                                     << "] and response: [" << responseString << ']');
 
-            return LockUpdateResult(LockUpdateResult::Status::UNAUTHORIZED);
+            return LockUpdateResult(LockUpdateResult::Status::UNAUTHORIZED, failureReason);
         }
 
         LOG_ERR("Un-successful " << wopiLog << " with HTTP status "
-                                 << httpResponse->statusLine().statusCode() << failureReason
-                                 << " and response: " << responseString);
-        return LockUpdateResult(LockUpdateResult::Status::FAILED);
+                                 << httpResponse->statusLine().statusCode() << ", failure reason: ["
+                                 << failureReason << "] and response: [" << responseString << ']');
+        return LockUpdateResult(LockUpdateResult::Status::FAILED, failureReason);
     }
     catch (const BadRequestException& exc)
     {
@@ -431,7 +431,7 @@ StorageBase::LockUpdateResult WopiStorage::updateLockState(const Authorization& 
     }
 
     lockCtx._lockFailureReason = "Request failed";
-    return LockUpdateResult(LockUpdateResult::Status::FAILED);
+    return LockUpdateResult(LockUpdateResult::Status::FAILED, "Internal error");
 }
 
 void WopiStorage::updateLockStateAsync(const Authorization& /*auth*/, LockContext& /*lockCtx*/,
