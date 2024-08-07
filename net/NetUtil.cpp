@@ -34,7 +34,7 @@ namespace net
 
 #if !MOBILEAPP
 
-static std::string makeIPAddress(const sockaddr* ai_addr)
+std::string HostEntry::makeIPAddress(const sockaddr* ai_addr)
 {
     char addrstr[INET6_ADDRSTRLEN];
 
@@ -66,7 +66,8 @@ static std::string makeIPAddress(const sockaddr* ai_addr)
     const char* result = inet_ntop(ai_addr->sa_family, inAddr, addrstr, sizeof(addrstr));
     if (!result)
     {
-        LOG_ERR("inet_ntop failure: " << strerror(errno));
+        _errno = errno;
+        LOG_WRN("inet_ntop failure: " << errorMessage());
         return std::string();
     }
     return std::string(result);
@@ -75,38 +76,42 @@ static std::string makeIPAddress(const sockaddr* ai_addr)
 bool HostEntry::resolveIP4(const std::string& addressToCheck, std::string& hostname)
 {
     sockaddr_in sa4{};
-    if (inet_pton(AF_INET, addressToCheck.c_str(), &sa4.sin_addr) == 1)
+    if (inet_pton(AF_INET, addressToCheck.c_str(), &sa4.sin_addr) != 1)
+        return false;
+
+    char hbuf[NI_MAXHOST];
+    sa4.sin_family = AF_INET;
+
+    int rc = getnameinfo((sockaddr*)(&sa4), sizeof(sa4), hbuf, sizeof(hbuf), nullptr, 0, NI_NAMEREQD);
+    if (rc == 0)
     {
-        char hbuf[NI_MAXHOST];
-        sa4.sin_family = AF_INET;
-        fprintf(stderr, "4ok hee\n");
-        if (getnameinfo((sockaddr*)(&sa4), sizeof(sa4), hbuf, sizeof(hbuf), nullptr, 0, NI_NAMEREQD) == 0)
-        {
-            // canonicalName = hbuf;
-            fprintf(stderr, "4still ok %s\n", hbuf);
-            hostname.assign(hbuf);
-            return true;
-        }
+        hostname.assign(hbuf);
+        return true;
     }
+
+    setEAI(rc);
+    LOG_SYS("Failed to resolve ip4 address " << errorMessage());
     return false;
 }
 
 bool HostEntry::resolveIP6(const std::string& addressToCheck, std::string& hostname)
 {
     sockaddr_in6 sa6{};
-    if (inet_pton(AF_INET6, addressToCheck.c_str(), &sa6.sin6_addr) == 1)
+    if (inet_pton(AF_INET6, addressToCheck.c_str(), &sa6.sin6_addr) != 1)
+        return false;
+
+    char hbuf[NI_MAXHOST];
+    sa6.sin6_family = AF_INET6;
+
+    int rc = getnameinfo((sockaddr*)(&sa6), sizeof(sa6), hbuf, sizeof(hbuf), nullptr, 0, NI_NAMEREQD);
+    if (rc == 0)
     {
-        char hbuf[NI_MAXHOST];
-        sa6.sin6_family = AF_INET6;
-        fprintf(stderr, "6ok hee\n");
-        if (getnameinfo((sockaddr*)(&sa6), sizeof(sa6), hbuf, sizeof(hbuf), nullptr, 0, NI_NAMEREQD) == 0)
-        {
-            // canonicalName = hbuf;
-            fprintf(stderr, "6still ok as %s\n", hbuf);
-            hostname.assign(hbuf);
-            return true;
-        }
+        hostname.assign(hbuf);
+        return true;
     }
+
+    setEAI(rc);
+    LOG_SYS("Failed to resolve ip6 address " << errorMessage());
     return false;
 }
 
@@ -117,34 +122,78 @@ void HostEntry::initFromHostName(const std::string& host)
     addrinfo hints;
     std::memset(&hints, 0, sizeof(hints));
     hints.ai_flags = AI_CANONNAME | AI_ADDRCONFIG; //TODO check
-    const int rc = getaddrinfo(host.c_str(), nullptr, &hints, &_ainfo);
 
-    if (!rc && _ainfo)
+    int rc = getaddrinfo(host.c_str(), nullptr, &hints, &_ainfo);
+    if (rc == 0)
     {
         for (const addrinfo* ai = _ainfo; ai; ai = ai->ai_next)
         {
             if (ai->ai_canonname)
                 _canonicalName.assign(ai->ai_canonname);
 
-            if (ai->ai_addrlen && ai->ai_addr)
-                _ipAddresses.push_back(makeIPAddress(ai->ai_addr));
+            if (!ai->ai_addrlen || !ai->ai_addr)
+                continue;
+
+            std::string address = makeIPAddress(ai->ai_addr);
+            if (!good())
+                break;
+            _ipAddresses.push_back(address);
         }
+        return;
     }
+
+    setEAI(rc);
+    LOG_SYS("Failed to lookup host " << errorMessage());
+}
+
+void HostEntry::setEAI(int eaino)
+{
+    _eaino = eaino;
+    // EAI_SYSTEM: Other system error; errno is set to indicate the error.
+    if (_eaino == EAI_SYSTEM)
+        _errno = errno;
+}
+
+std::string HostEntry::errorMessage() const
+{
+    const char* errmsg;
+    if (_eaino && _eaino != EAI_SYSTEM)
+        errmsg = gai_strerror(_eaino);
     else
-        LOG_SYS("Failed to lookup host [" << host << "]. Skipping");
+        errmsg = strerror(_errno);
+    return std::string("[" + _canonicalName + "]: " + errmsg);
+}
+
+bool HostEntry::resolveIP(const std::string& addressToCheck, std::string& hostname)
+{
+    if (resolveIP4(addressToCheck, hostname))
+        return true;
+    if (!good())
+        return false;
+    if (resolveIP6(addressToCheck, hostname))
+        return true;
+    return false;
 }
 
 HostEntry::HostEntry(const std::string& desc)
-    : _ainfo(nullptr)
+    : _canonicalName(desc)  // stash as _canonicalName, until we
+                            // know better, for error reporting.
+    , _ainfo(nullptr)
+    , _errno(0)
+    , _eaino(0)
 {
     std::string hostname;
-    if (!resolveIP4(desc, hostname) && !resolveIP6(desc, hostname))
+    if (!resolveIP(desc, hostname))
         hostname = desc;
+    if (!good())
+        return;
     initFromHostName(hostname);
 }
 
 HostEntry::HostEntry()
     : _ainfo(nullptr)
+    , _errno(0)
+    , _eaino(0)
 {
 }
 
@@ -329,24 +378,10 @@ void AsyncDNS::resolveDNS()
         _activeLookup = _lookups.front();
         _lookups.pop();
 
-        // Unlock to allow entries to queue up in _lookups while
-        // resolving
+        // Unlock to allow entries to queue up in _lookups while resolving
         _lock.unlock();
 
-        std::string exception;
-        HostEntry hostEntry;
-
-        try
-        {
-            hostEntry = _resolver->resolveDNS(_activeLookup.query);
-            fprintf(stderr, "%d turned %s into %s\n", getpid(), _activeLookup.query.c_str(), hostEntry.getCanonicalName().c_str());
-        }
-        catch (const Poco::Exception& exc)
-        {
-            exception = "net::canonicalHostName(\"" + _activeLookup.query + "\") failed: " + exc.displayText();
-        }
-
-        _activeLookup.cb(hostEntry, exception);
+        _activeLookup.cb(_resolver->resolveDNS(_activeLookup.query));
 
         _activeLookup = {};
 
@@ -425,7 +460,7 @@ asyncConnect(const std::string& host, const std::string& port, const bool isSSL,
     }
 #endif
 
-    auto callback = [isSSL, host, protocolHandler, asyncCb](const HostEntry& hostEntry, const std::string& /*exception*/) {
+    auto callback = [isSSL, host, protocolHandler, asyncCb](const HostEntry& hostEntry) {
 
             std::shared_ptr<StreamSocket> socket;
 

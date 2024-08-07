@@ -38,7 +38,7 @@ public:
 
     static void dumpState(std::ostream& os);
 
-    typedef std::function<void(const HostEntry& hostEntry, const std::string& exception)> DNSThreadFn;
+    typedef std::function<void(const HostEntry& hostEntry)> DNSThreadFn;
     typedef std::function<std::string()> DNSThreadDumpStateFn;
 
     static void lookup(const std::string& searchEntry, const DNSThreadFn& cb,

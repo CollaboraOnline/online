@@ -23,6 +23,7 @@
 class StreamSocket;
 class ProtocolHandlerInterface;
 struct addrinfo;
+struct sockaddr;
 
 namespace net
 {
@@ -34,15 +35,26 @@ class HostEntry
     std::string _canonicalName;
     std::vector<std::string> _ipAddresses;
     addrinfo* _ainfo;
+    int _errno;
+    int _eaino;
 
+    void setEAI(int eaino);
+
+    bool resolveIP(const std::string& addressToCheck, std::string& hostname);
     bool resolveIP4(const std::string& addressToCheck, std::string& hostname);
     bool resolveIP6(const std::string& addressToCheck, std::string& hostname);
+
     void initFromHostName(const std::string& host);
+
+    std::string makeIPAddress(const sockaddr* ai_addr);
 
 public:
     HostEntry(const std::string& desc);
     HostEntry();
     ~HostEntry();
+
+    bool good() const { return _errno == 0 && _eaino == 0; }
+    std::string errorMessage() const;
 
     const std::string& getCanonicalName() const { return  _canonicalName; }
     const std::vector<std::string>& getAddresses() const { return  _ipAddresses; }
