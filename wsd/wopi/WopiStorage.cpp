@@ -377,7 +377,7 @@ StorageBase::LockUpdateResult WopiStorage::updateLockState(const Authorization& 
         http::Header& httpHeader = httpRequest.header();
 
         httpHeader.set("X-WOPI-Override", lock == StorageBase::LockState::LOCK ? "LOCK" : "UNLOCK");
-        httpHeader.set("X-WOPI-Lock", lockCtx._lockToken);
+        httpHeader.set("X-WOPI-Lock", lockCtx.lockToken());
         if (!attribs.getExtendedData().empty())
         {
             httpHeader.set("X-COOL-WOPI-ExtendedData", attribs.getExtendedData());
@@ -685,7 +685,7 @@ void WopiStorage::uploadLocalFileToStorageAsync(const Authorization& auth, LockC
 
         // must include this header except for SaveAs
         if (!isSaveAs && lockCtx.supportsLocks())
-            httpHeader.set("X-WOPI-Lock", lockCtx._lockToken);
+            httpHeader.set("X-WOPI-Lock", lockCtx.lockToken());
 
         if (!isSaveAs && !isRename)
         {

@@ -26,7 +26,7 @@
 /// Limits number of HTTP redirections to prevent from redirection loops
 static constexpr auto RedirectionLimit = 21;
 
-struct LockContext;
+class LockContext;
 
 /// Base class of all Storage abstractions.
 class StorageBase
@@ -558,7 +558,7 @@ private:
 
 /// Represents whether the underlying file is locked
 /// and with what token.
-struct LockContext
+class LockContext final
 {
     /// Do we have support for locking for a storage.
     bool _supportsLocks;
@@ -569,6 +569,7 @@ struct LockContext
     /// Time of last successful lock (re-)acquisition
     std::chrono::steady_clock::time_point _lastLockTime;
 
+public:
     LockContext()
         : _supportsLocks(false)
         , _lockState(StorageBase::LockState::UNLOCK)
@@ -581,6 +582,10 @@ struct LockContext
 
     /// Returns true if locks are supported.
     bool supportsLocks() const { return _supportsLocks; }
+
+    /// Returns the lock token used identify our lock on the server.
+    /// Meaningful only when supportsLocks is true.
+    const std::string& lockToken() const { return _lockToken; }
 
     /// Returns true if locked.
     bool isLocked() const { return _lockState == StorageBase::LockState::LOCK; }
