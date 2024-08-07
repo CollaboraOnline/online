@@ -1532,7 +1532,7 @@ bool DocumentBroker::lockDocumentInStorage(const Authorization& auth, std::strin
 
     const StorageBase::LockUpdateResult result = _storage->updateLockState(
         auth, *_lockCtx, StorageBase::LockState::LOCK, _currentStorageAttrs);
-    error = _lockCtx->_lockFailureReason;
+    error = result.getReason();
 
     switch (result.getStatus())
     {
@@ -1573,7 +1573,7 @@ bool DocumentBroker::updateStorageLockState(ClientSession& session, StorageBase:
 
     const StorageBase::LockUpdateResult result = _storage->updateLockState(
         session.getAuthorization(), *_lockCtx, lock, _currentStorageAttrs);
-    error = _lockCtx->_lockFailureReason;
+    error = result.getReason();
 
     switch (result.getStatus())
     {
