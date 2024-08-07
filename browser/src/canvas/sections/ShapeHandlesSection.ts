@@ -814,9 +814,11 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		this.context.save();
 		this.context.translate(-this.myTopLeft[0], -this.myTopLeft[1]);
 
+		this.context.setLineDash([12, 3, 3]);
+
 		if (this.sectionProperties.closestX !== null) {
 			const x = this.containerObject.getDocumentAnchor()[0] + this.sectionProperties.closestX - this.documentTopLeft[0];
-			this.context.strokeStyle = 'red';
+			this.context.strokeStyle = 'grey';
 			this.context.beginPath();
 			this.context.moveTo(x, 0);
 			this.context.lineTo(x, this.context.canvas.height);
@@ -826,7 +828,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 
 		if (this.sectionProperties.closestY !== null) {
 			const y = this.containerObject.getDocumentAnchor()[1] + this.sectionProperties.closestY - this.documentTopLeft[1];
-			this.context.strokeStyle = 'red';
+			this.context.strokeStyle = 'grey';
 			this.context.beginPath();
 			this.context.moveTo(0, y);
 			this.context.lineTo(this.context.canvas.width, y);
