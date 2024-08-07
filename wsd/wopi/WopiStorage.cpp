@@ -366,6 +366,7 @@ StorageBase::LockUpdateResult WopiStorage::updateLockState(const Authorization& 
     const auto wopiLog = (lock == StorageBase::LockState::LOCK ? "WOPI::Lock" : "WOPI::Unlock");
     LOG_DBG(wopiLog << " requesting: " << uriAnonym);
 
+    std::string failureReason("Internal error");
     try
     {
         std::shared_ptr<http::Session> httpSession =
@@ -401,31 +402,25 @@ StorageBase::LockUpdateResult WopiStorage::updateLockState(const Authorization& 
             return LockUpdateResult(LockUpdateResult::Status::OK);
         }
 
-        const std::string failureReason = httpResponse->get("X-WOPI-LockFailureReason", "");
+        failureReason = httpResponse->get("X-WOPI-LockFailureReason", "");
 
-        if (httpResponse->statusLine().statusCode() == http::StatusCode::Unauthorized ||
-            httpResponse->statusLine().statusCode() == http::StatusCode::Forbidden ||
-            httpResponse->statusLine().statusCode() == http::StatusCode::NotFound)
-        {
-            LOG_ERR("Un-successful " << wopiLog << " with expired token, HTTP status "
-                                     << httpResponse->statusLine().statusCode()
-                                     << ", failure reason: [" << failureReason
-                                     << "] and response: [" << responseString << ']');
+        const bool unauthorized =
+            (httpResponse->statusLine().statusCode() == http::StatusCode::Unauthorized ||
+             httpResponse->statusLine().statusCode() == http::StatusCode::Forbidden ||
+             httpResponse->statusLine().statusCode() == http::StatusCode::NotFound);
 
-            return LockUpdateResult(LockUpdateResult::Status::UNAUTHORIZED, failureReason);
-        }
-
-        LOG_ERR("Un-successful " << wopiLog << " with HTTP status "
-                                 << httpResponse->statusLine().statusCode() << ", failure reason: ["
-                                 << failureReason << "] and response: [" << responseString << ']');
-        return LockUpdateResult(LockUpdateResult::Status::FAILED, failureReason);
+        LOG_ERR("Un-successful " << wopiLog << " with " << (unauthorized ? "expired token, " : "")
+                                 << "HTTP status " << httpResponse->statusLine().statusCode()
+                                 << ", failure reason: [" << failureReason << "] and response: ["
+                                 << responseString << ']');
     }
-    catch (const BadRequestException& exc)
+    catch (const std::exception& exc)
     {
         LOG_ERR("Cannot " << wopiLog << " uri [" << uriAnonym << "]. Error: " << exc.what());
+        failureReason = std::string("Internal error: ") + exc.what();
     }
 
-    return LockUpdateResult(LockUpdateResult::Status::FAILED, "Internal error");
+    return LockUpdateResult(LockUpdateResult::Status::FAILED, failureReason);
 }
 
 void WopiStorage::updateLockStateAsync(const Authorization& /*auth*/, LockContext& /*lockCtx*/,
