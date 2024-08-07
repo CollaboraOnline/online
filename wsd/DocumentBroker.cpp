@@ -2498,7 +2498,8 @@ void DocumentBroker::refreshLock()
     else
     {
         const std::string savingSessionId = session->getId();
-        LOG_TRC("Refresh lock " << _lockCtx->_lockToken << " with session [" << savingSessionId << ']');
+        LOG_TRC("Refresh lock " << _lockCtx->lockToken() << " with session [" << savingSessionId
+                                << ']');
         std::string error;
         if (!updateStorageLockState(*session, StorageBase::LockState::LOCK, error))
         {
