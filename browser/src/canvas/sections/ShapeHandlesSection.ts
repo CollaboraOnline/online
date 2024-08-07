@@ -43,6 +43,8 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		this.sectionProperties.hasVideo = false; // Don't hide svg when there is video content.
 		this.sectionProperties.shapeRectangleProperties = null; // Not null when there are scaling handles.
 		this.sectionProperties.lastDragDistance = [0, 0];
+		this.sectionProperties.pickedIndexX = 0; // Which corner of shape is closest to snap point when moving the shape.
+		this.sectionProperties.pickedIndexY = 0; // Which corner of shape is closest to snap point when moving the shape.
 
 		// These are for snapping the objects to the same level with others' boundaries.
 		this.sectionProperties.closestX = null;
@@ -598,15 +600,33 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		this.sectionProperties.mouseIsInside = false;
 	}
 
+	adjustSnapTransformCoordinate(x: number, y: number) {
+		// Transform command accepts the difference from top left corner.
+		// If we are snapping to other corners, we need to adjust the coordinate.
+
+		if (x !== null && [0, 3].includes(this.sectionProperties.pickedIndexX)) x -= this.size[0];
+		if (y !== null && [0, 3].includes(this.sectionProperties.pickedIndexY)) y -= this.size[1];
+
+		return x !== null ? x: y;
+	}
+
 	sendTransformCommand(point: number[]) {
+		let x = this.sectionProperties.closestX;
+		if (!x) x = this.sectionProperties.lastDragDistance[0] + this.position[0];
+		else x = this.adjustSnapTransformCoordinate(x, null);
+
+		let y = this.sectionProperties.closestY;
+		if (!y) y = this.sectionProperties.lastDragDistance[1] + this.position[1];
+		else y = this.adjustSnapTransformCoordinate(null, y);
+
 		const parameters = {
 			'TransformPosX': {
 				'type': 'long',
-				'value': Math.round((this.sectionProperties.lastDragDistance[0] + this.position[0]) * app.pixelsToTwips)
+				'value': Math.round(x * app.pixelsToTwips)
 			},
 			'TransformPosY': {
 				'type': 'long',
-				'value': Math.round((this.sectionProperties.lastDragDistance[1] + this.position[1]) * app.pixelsToTwips)
+				'value': Math.round(y * app.pixelsToTwips)
 			}
 		};
 
@@ -621,14 +641,23 @@ class ShapeHandlesSection extends CanvasSectionObject {
 
 		(window as any).IgnorePanning = false;
 
-		// This is for tablet and mobbile but we can use this for also desktop, if we want to avoid sending mouse events for shapes to core side.
-		if (this.containerObject.isDraggingSomething() && ((window as any).mode.isTablet() || (window as any).mode.isMobile()))
-			this.sendTransformCommand(point);
+		if (this.containerObject.isDraggingSomething()) {
+			if ((window as any).mode.isTablet() || (window as any).mode.isMobile())
+				this.sendTransformCommand(point);
+			else if ((window as any).mode.isDesktop() && (this.sectionProperties.closestX || this.sectionProperties.closestY)) {
+				// We need to snap to the guide-lines. So we send a positioning command after the mouse up event (desktop case).
+				// We don't need to do this on mobile because we always send the positioning commands there. No mouse events for mobile.
+				setTimeout(() => {
+					this.sendTransformCommand(point); // Send to back of the process queue so it performs after buttonup event is sent.
+				}, 10);
+			}
+		}
 	}
 
 	findClosestX(xList: number[]) {
 		let closest = 1000;
 		let pickX = null;
+		this.sectionProperties.pickedIndexX = 0;
 		if (GraphicSelection.extraInfo.ObjectRectangles) {
 			const ordNum = GraphicSelection.extraInfo.OrdNum;
 			const rectangles = GraphicSelection.extraInfo.ObjectRectangles;
@@ -646,6 +675,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 					if (min < closest) {
 						closest = min;
 						pickX = index < xList.length ? rectangles[i][0]: rectangles[i][0] + rectangles[i][2];
+						this.sectionProperties.pickedIndexX = index;
 					}
 				}
 			}
@@ -661,6 +691,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		if (GraphicSelection.extraInfo.ObjectRectangles) {
 			const ordNum = GraphicSelection.extraInfo.OrdNum;
 			const rectangles = GraphicSelection.extraInfo.ObjectRectangles;
+			this.sectionProperties.pickedIndexY = 0;
 
 			for (let i = 0; i < rectangles.length; i++) {
 				if (rectangles[i][4] !== ordNum) { // Don't compare it with itself.
@@ -675,6 +706,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 					if (min < closest) {
 						closest = min;
 						pickY = index < yList.length ? rectangles[i][1]: rectangles[i][1] + rectangles[i][3];
+						this.sectionProperties.pickedIndexY = index;
 					}
 				}
 			}
@@ -688,9 +720,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		if (app.map._docLayer._docType === 'presentation') {
 			this.findClosestX(xListToCheck);
 			this.findClosestY(yListToCheck);
-
-			if (this.sectionProperties.closestX !== null || this.sectionProperties.closestY !== null)
-				this.containerObject.requestReDraw();
+			this.containerObject.requestReDraw();
 		}
 	}
 
@@ -702,7 +732,11 @@ class ShapeHandlesSection extends CanvasSectionObject {
 			this.sectionProperties.svg.style.top = String((this.myTopLeft[1] + dragDistance[1]) / app.dpiScale) + 'px';
 			this.sectionProperties.svg.style.opacity = 0.5;
 			this.sectionProperties.lastDragDistance = [dragDistance[0], dragDistance[1]];
-			this.checkObjectsBoundaries([this.position[0] + dragDistance[0], this.position[0] + dragDistance[0] + this.size[0]], [this.position[1] + dragDistance[1], this.position[1] + dragDistance[1] + this.size[1]]);
+			this.checkObjectsBoundaries(
+				[this.position[0] + dragDistance[0], this.position[0] + dragDistance[0] + this.size[0]],
+				[this.position[1] + dragDistance[1], this.position[1] + dragDistance[1] + this.size[1]]
+			);
+
 			this.showSVG();
 		}
 		else
