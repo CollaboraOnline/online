@@ -10,13 +10,38 @@
 
 declare var SlideShow: any;
 
-function FallTransition(transitionParameters: TransitionParameters) {
+class FallTransition extends SimpleTransition {
+	constructor(transitionParameters: TransitionParameters3D) {
+		super(transitionParameters);
+	}
+
+	public displaySlides_(): void {
+		const t = this.time;
+		this.applyAllOperation(t);
+		this.displayPrimitive(
+			t,
+			this.gl.TEXTURE0,
+			1,
+			this.enteringPrimitives,
+			'slideTexture',
+		);
+		this.displayPrimitive(
+			t,
+			this.gl.TEXTURE0,
+			0,
+			this.leavingPrimitives,
+			'slideTexture',
+		);
+	}
+}
+
+function makeFallTransition(transitionParameters: TransitionParameters) {
 	const slide = new Primitive();
 	slide.pushTriangle([0, 0], [1, 0], [0, 1]);
 	slide.pushTriangle([1, 0], [0, 1], [1, 1]);
 
-	const aLeavingPrimitives: Primitive[] = [];
-	aLeavingPrimitives.push(Primitive.cloneDeep(slide));
+	const aEnteringPrimitives: Primitive[] = [];
+	aEnteringPrimitives.push(Primitive.cloneDeep(slide));
 
 	slide.operations.push(
 		makeRotateAndScaleDepthByWidth(
@@ -30,8 +55,8 @@ function FallTransition(transitionParameters: TransitionParameters) {
 		),
 	);
 
-	const aEnteringPrimitives: Primitive[] = [];
-	aEnteringPrimitives.push(slide);
+	const aLeavingPrimitives: Primitive[] = [];
+	aLeavingPrimitives.push(Primitive.cloneDeep(slide));
 
 	const aOperations: Operation[] = [];
 
@@ -43,7 +68,7 @@ function FallTransition(transitionParameters: TransitionParameters) {
 		allOperations: aOperations,
 	};
 
-	return new SimpleTransition(newTransitionParameters);
+	return new FallTransition(newTransitionParameters);
 }
 
-SlideShow.FallTransition = FallTransition;
+SlideShow.makeFallTransition = makeFallTransition;
