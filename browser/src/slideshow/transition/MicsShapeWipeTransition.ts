@@ -18,7 +18,7 @@ function MicsShapeWipeTransition(transitionParameters: TransitionParameters) {
 	if (transitionSubType == TransitionSubType.CORNERSOUT) {
 		return SlideShow.CubeTransition(transitionParameters, true);
 	} else if (transitionSubType == TransitionSubType.LEFTTORIGHT) {
-		return SlideShow.FallTransition(transitionParameters);
+		return SlideShow.makeFallTransition(transitionParameters);
 	} else if (transitionSubType == TransitionSubType.TOPTOBOTTOM) {
 		return SlideShow.TurnAroundTransition(transitionParameters);
 	} else if (transitionSubType == TransitionSubType.TOPLEFT) {
@@ -47,7 +47,7 @@ function MicsShapeWipeTransition(transitionParameters: TransitionParameters) {
 	} else if (transitionSubType == TransitionSubType.FANOUTHORIZONTAL) {
 		return SlideShow.HelixTransition(transitionParameters, 20);
 	} else if (transitionSubType == TransitionSubType.ACROSS) {
-		return SlideShow.FlipTilesTransition(transitionParameters, 8,6);
+		return SlideShow.FlipTilesTransition(transitionParameters, 8, 6);
 	} else if (transitionSubType == TransitionSubType.DIAMOND) {
 		//  todo: glitter transition
 	} else if (transitionSubType == TransitionSubType.HEART) {
