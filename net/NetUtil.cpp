@@ -115,15 +115,15 @@ bool HostEntry::resolveIP6(const std::string& addressToCheck, std::string& hostn
     return false;
 }
 
-void HostEntry::initFromHostName(const std::string& host)
+void HostEntry::initFromHostName(const std::string& host, const char* port)
 {
     assert(_ainfo == nullptr);
 
     addrinfo hints;
     std::memset(&hints, 0, sizeof(hints));
-    hints.ai_flags = AI_CANONNAME | AI_ADDRCONFIG; //TODO check
+    hints.ai_flags = AI_CANONNAME | AI_ADDRCONFIG; //TODO check vs 0 for asyncConnect, etc
 
-    int rc = getaddrinfo(host.c_str(), nullptr, &hints, &_ainfo);
+    int rc = getaddrinfo(host.c_str(), port, &hints, &_ainfo);
     if (rc == 0)
     {
         for (const addrinfo* ai = _ainfo; ai; ai = ai->ai_next)
@@ -175,7 +175,7 @@ bool HostEntry::resolveIP(const std::string& addressToCheck, std::string& hostna
     return false;
 }
 
-HostEntry::HostEntry(const std::string& desc)
+HostEntry::HostEntry(const std::string& desc, const char* port)
     : _canonicalName(desc)  // stash as _canonicalName, until we
                             // know better, for error reporting.
     , _ainfo(nullptr)
@@ -187,7 +187,7 @@ HostEntry::HostEntry(const std::string& desc)
         hostname = desc;
     if (!good())
         return;
-    initFromHostName(hostname);
+    initFromHostName(hostname, port);
 }
 
 HostEntry::HostEntry()
@@ -206,11 +206,14 @@ HostEntry::~HostEntry()
 struct DNSCacheEntry
 {
     std::string queryAddress;
+    std::optional<std::string> queryPort;
     HostEntry hostEntry;
     std::chrono::steady_clock::time_point lookupTime;
 };
 
-static HostEntry resolveDNS(const std::string& addressToCheck, std::vector<DNSCacheEntry>& querycache)
+static HostEntry resolveDNS(const std::string& addressToCheck,
+                            const std::optional<std::string>& port,
+                            std::vector<DNSCacheEntry>& querycache)
 {
     const auto now = std::chrono::steady_clock::now();
 
@@ -222,15 +225,16 @@ static HostEntry resolveDNS(const std::string& addressToCheck, std::vector<DNSCa
 
     // search for hit
     auto findIt = std::find_if(querycache.begin(), querycache.end(),
-                               [&addressToCheck](const auto& entry)->bool {
-                                 return entry.queryAddress == addressToCheck;
+                               [&addressToCheck, &port](const auto& entry)->bool {
+                                 return entry.queryAddress == addressToCheck &&
+                                        entry.queryPort == port;
                                });
     if (findIt != querycache.end())
         return findIt->hostEntry;
 
     // lookup and cache
     HostEntry hostEntry(addressToCheck);
-    querycache.push_back(DNSCacheEntry{addressToCheck, hostEntry, now});
+    querycache.push_back(DNSCacheEntry{addressToCheck, port, hostEntry, now});
     return hostEntry;
 }
 
@@ -239,16 +243,16 @@ class DNSResolver
 private:
     std::vector<DNSCacheEntry> _querycache;
 public:
-    HostEntry resolveDNS(const std::string& addressToCheck)
+    HostEntry resolveDNS(const std::string& addressToCheck, const std::optional<std::string>& port)
     {
-        return net::resolveDNS(addressToCheck, _querycache);
+        return net::resolveDNS(addressToCheck, port, _querycache);
     }
 };
 
 HostEntry resolveDNS(const std::string& addressToCheck)
 {
     static DNSResolver resolver;
-    return resolver.resolveDNS(addressToCheck);
+    return resolver.resolveDNS(addressToCheck, std::nullopt);
 }
 
 std::string canonicalHostName(const std::string& addressToCheck)
@@ -381,7 +385,7 @@ void AsyncDNS::resolveDNS()
         // Unlock to allow entries to queue up in _lookups while resolving
         _lock.unlock();
 
-        _activeLookup.cb(_resolver->resolveDNS(_activeLookup.query));
+        _activeLookup.cb(_resolver->resolveDNS(_activeLookup.query, _activeLookup.port));
 
         _activeLookup = {};
 
@@ -390,10 +394,11 @@ void AsyncDNS::resolveDNS()
 }
 
 void AsyncDNS::addLookup(const std::string& lookup, const DNSThreadFn& cb,
-                         const DNSThreadDumpStateFn& dumpState)
+                         const DNSThreadDumpStateFn& dumpState,
+                         const std::optional<std::string>& port)
 {
     std::unique_lock<std::mutex> guard(_lock);
-    _lookups.emplace(Lookup({lookup, cb, dumpState}));
+    _lookups.emplace(Lookup({lookup, port, cb, dumpState}));
     guard.unlock();
     _condition.notify_one();
 }
@@ -428,9 +433,10 @@ void AsyncDNS::stopAsyncDNS()
 
 //static
 void AsyncDNS::lookup(const std::string& searchEntry, const DNSThreadFn& cb,
-                      const DNSThreadDumpStateFn& dumpState)
+                      const DNSThreadDumpStateFn& dumpState,
+                      const std::optional<std::string>& port)
 {
-    AsyncDNSThread->addLookup(searchEntry, cb, dumpState);
+    AsyncDNSThread->addLookup(searchEntry, cb, dumpState, port);
 }
 
 #endif //!MOBILEAPP
@@ -460,7 +466,7 @@ asyncConnect(const std::string& host, const std::string& port, const bool isSSL,
     }
 #endif
 
-    auto callback = [isSSL, host, protocolHandler, asyncCb](const HostEntry& hostEntry) {
+    auto callback = [isSSL, host, port, protocolHandler, asyncCb](const HostEntry& hostEntry) {
 
             std::shared_ptr<StreamSocket> socket;
 
@@ -480,7 +486,7 @@ asyncConnect(const std::string& host, const std::string& port, const bool isSSL,
                         int res = ::connect(fd, ai->ai_addr, ai->ai_addrlen);
                         if (fd < 0 || (res < 0 && errno != EINPROGRESS))
                         {
-//TODO                            LOG_SYS("Failed to connect to " << host);
+                            LOG_SYS("Failed to connect to " << host);
                             ::close(fd);
                         }
                         else
@@ -495,12 +501,12 @@ asyncConnect(const std::string& host, const std::string& port, const bool isSSL,
 
                             if (socket)
                             {
-//TODO                                LOG_DBG('#' << fd << " New socket connected to " << host << ':' << port
-//TODO                                            << " (" << (isSSL ? "SSL)" : "Unencrypted)"));
+                                LOG_DBG('#' << fd << " New socket connected to " << host << ':' << port
+                                            << " (" << (isSSL ? "SSL)" : "Unencrypted)"));
                                 break;
                             }
 
-//TODO                            LOG_ERR("Failed to allocate socket for client websocket " << host);
+                            LOG_ERR("Failed to allocate socket for client websocket " << host);
                             ::close(fd);
                             break;
                         }
@@ -513,7 +519,7 @@ asyncConnect(const std::string& host, const std::string& port, const bool isSSL,
             asyncCb(socket);
     };
 
-    AsyncDNS::lookup(host, /*port,*/ callback, nullptr);
+    AsyncDNS::lookup(host, callback, nullptr, port);
 }
 
 std::shared_ptr<StreamSocket>

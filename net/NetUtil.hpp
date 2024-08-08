@@ -44,12 +44,12 @@ class HostEntry
     bool resolveIP4(const std::string& addressToCheck, std::string& hostname);
     bool resolveIP6(const std::string& addressToCheck, std::string& hostname);
 
-    void initFromHostName(const std::string& host);
+    void initFromHostName(const std::string& host, const char* port);
 
     std::string makeIPAddress(const sockaddr* ai_addr);
 
 public:
-    HostEntry(const std::string& desc);
+    HostEntry(const std::string& desc, const char* port = nullptr);
     HostEntry();
     ~HostEntry();
 
