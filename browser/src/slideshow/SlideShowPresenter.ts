@@ -241,6 +241,26 @@ class SlideShowPresenter {
 		return canvas;
 	}
 
+	private startLoader(): void {
+		const transitionParameters = new TransitionParameters();
+		transitionParameters.context = this._slideRenderer._context;
+
+		try {
+			this._canvasLoader = new SlideShow.CanvasLoaderGl(transitionParameters);
+		} catch (error) {
+			this._canvasLoader = new SlideShow.CanvasLoader2d(transitionParameters);
+		}
+
+		this._canvasLoader.startLoader();
+	}
+
+	private stopLoader(): void {
+		if (!this._canvasLoader) return;
+
+		this._canvasLoader.stopLoader();
+		this._canvasLoader = null;
+	}
+
 	_doTransition(
 		currentTexture: WebGLTexture | ImageBitmap,
 		nextSlideNumber: number,
@@ -255,10 +275,7 @@ class SlideShowPresenter {
 				slideInfo.transitionType = 'NONE';
 			}
 
-			if (this._canvasLoader != null) {
-				this._canvasLoader.stopLoader();
-				this._canvasLoader = null;
-			}
+			this.stopLoader();
 
 			const nextTexture = this._slideRenderer.createTexture(nextSlide);
 
@@ -352,10 +369,7 @@ class SlideShowPresenter {
 					this._presentationInfo.docWidth,
 					this._presentationInfo.docHeight,
 				);
-				if (this._canvasLoader != null) {
-					this._canvasLoader.stopLoader();
-					this._canvasLoader = null;
-				}
+				this.stopLoader();
 			});
 		}
 	}
@@ -582,10 +596,7 @@ class SlideShowPresenter {
 		this._slideShowCanvas.height = canvasSize[1];
 		this.centerCanvas();
 
-		const transitionParameters = new TransitionParameters();
-		transitionParameters.context = this._slideRenderer._context;
-		this._canvasLoader = new SlideShow.CanvasLoader(transitionParameters);
-		this._canvasLoader.startLoader();
+		this.startLoader();
 
 		this._slideCompositor.fetchAndRun(0, () => {
 			this._doPresentation();

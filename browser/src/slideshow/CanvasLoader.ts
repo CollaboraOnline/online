@@ -11,22 +11,31 @@
  */
 
 /*
- * Loader for slideshow
+ * Loader for slideshow - it shows animation for the user to indicate loading
  */
 
 declare var SlideShow: any;
 
-class CanvasLoader extends Transition2d {
+abstract class CanvasLoader {
+	public abstract startLoader(): void;
+	public abstract stopLoader(): void;
+}
+
+class CanvasLoader2d implements CanvasLoader {
+	constructor(transitionParameters: TransitionParameters) {} // eslint-disable-line
+
+	public startLoader(): void {} // eslint-disable-line
+
+	public stopLoader(): void {} // eslint-disable-line
+}
+
+class CanvasLoaderGl extends Transition2d implements CanvasLoader {
 	private animationId: number | null = null;
 
 	constructor(transitionParameters: TransitionParameters) {
 		super(transitionParameters);
 		this.prepareTransition();
 		this.animationTime = 0; // Continuous animation
-	}
-
-	public initUniforms(): void {
-		this.gl.useProgram(this.program);
 	}
 
 	public renderUniformValue(): void {
@@ -158,4 +167,5 @@ class CanvasLoader extends Transition2d {
 	}
 }
 
-SlideShow.CanvasLoader = CanvasLoader;
+SlideShow.CanvasLoaderGl = CanvasLoaderGl;
+SlideShow.CanvasLoader2d = CanvasLoader2d;
