@@ -784,10 +784,12 @@ void WopiStorage::uploadLocalFileToStorageAsync(const Authorization& auth, LockC
         LOG_DBG(wopiLog << " async upload request: " << httpRequest.header().toString());
 
         // Make the request.
-        _uploadHttpSession->asyncRequest(httpRequest, socketPoll);
+        if (_uploadHttpSession->asyncRequest(httpRequest, socketPoll))
+        {
+            scopedInvokeCallback.setArg(
+                AsyncUpload(AsyncUpload::State::Running, UploadResult(UploadResult::Result::OK)));
+        }
 
-        scopedInvokeCallback.setArg(
-            AsyncUpload(AsyncUpload::State::Running, UploadResult(UploadResult::Result::OK)));
         return;
     }
     catch (const Poco::Exception& ex)
