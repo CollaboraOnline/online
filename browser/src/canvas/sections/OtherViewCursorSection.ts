@@ -86,7 +86,6 @@ class OtherViewCursorSection extends HTMLObjectSection {
             OtherViewCursorSection.sectionPointers.push(section);
         }
 
-        section.sectionProperties.showCursor = true;
         section.setShowSection(section.checkMyVisibility());
         section.onNewDocumentTopLeft();
         section.adjustHTMLObjectPosition();
