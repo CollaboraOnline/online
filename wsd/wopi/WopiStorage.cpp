@@ -423,10 +423,123 @@ StorageBase::LockUpdateResult WopiStorage::updateLockState(const Authorization& 
     return LockUpdateResult(LockUpdateResult::Status::FAILED, failureReason);
 }
 
-void WopiStorage::updateLockStateAsync(const Authorization& /*auth*/, LockContext& /*lockCtx*/,
-                                       LockState /*lock*/, const Attributes& /*attribs*/,
-                                       const AsyncLockStateCallback& /*asyncLockStateCallback*/)
+void WopiStorage::updateLockStateAsync(const Authorization& auth, LockContext& lockCtx,
+                                       LockState lock, const Attributes& attribs,
+                                       SocketPoll& socketPoll,
+                                       const AsyncLockStateCallback& asyncLockStateCallback)
 {
+    auto profileZone = std::make_shared<ProfileZone>(
+        std::string("WopiStorage::uploadLockStateAsync"),
+        std::map<std::string, std::string>({ { "url", getUri().toString() } }));
+
+    // Always invoke the callback with the result of the async locking.
+    ScopedInvokeAsyncRequestCallback<AsyncLockStateCallback, AsyncLockUpdate> scopedInvokeCallback(
+        asyncLockStateCallback,
+        AsyncLockUpdate(AsyncLockUpdate::State::Error,
+                        LockUpdateResult(LockUpdateResult::Status::FAILED, "Internal error")));
+
+    if (!lockCtx.supportsLocks())
+    {
+        scopedInvokeCallback.setArg(
+            AsyncLockUpdate(AsyncLockUpdate::State::Complete,
+                            LockUpdateResult(LockUpdateResult::Status::UNSUPPORTED)));
+        return;
+    }
+
+    if (_lockHttpSession)
+    {
+        LOG_WRN("Locking is already in progress.");
+        return;
+    }
+
+    const auto startTime = std::chrono::steady_clock::now();
+
+    Poco::URI uriObject(getUri());
+    auth.authorizeURI(uriObject);
+
+    Poco::URI uriObjectAnonym(getUri());
+    uriObjectAnonym.setPath(COOLWSD::anonymizeUrl(uriObjectAnonym.getPath()));
+    const std::string uriAnonym = uriObjectAnonym.toString();
+
+    const auto wopiLog = (lock == StorageBase::LockState::LOCK ? "WOPI::Lock" : "WOPI::Unlock");
+    LOG_DBG(wopiLog << " requesting: " << uriAnonym);
+
+    _lockHttpSession = StorageConnectionManager::getHttpSession(uriObject);
+
+    http::Request httpRequest = initHttpRequest(uriObject, auth);
+    httpRequest.setVerb(http::Request::VERB_POST);
+
+    http::Header& httpHeader = httpRequest.header();
+
+    httpHeader.set("X-WOPI-Override", lock == StorageBase::LockState::LOCK ? "LOCK" : "UNLOCK");
+    httpHeader.set("X-WOPI-Lock", lockCtx.lockToken());
+    if (!attribs.getExtendedData().empty())
+    {
+        httpHeader.set("X-COOL-WOPI-ExtendedData", attribs.getExtendedData());
+        if (isLegacyServer())
+            httpHeader.set("X-LOOL-WOPI-ExtendedData", attribs.getExtendedData());
+    }
+
+    // IIS requires content-length for POST requests: see https://forums.iis.net/t/1119456.aspx
+    httpHeader.setContentLength(0);
+
+    http::Session::FinishedCallback finishedCallback =
+        [this, startTime, lockCtx, lock, wopiLog, uriAnonym, asyncLockStateCallback,
+         profileZone =
+             std::move(profileZone)](const std::shared_ptr<http::Session>& httpSession) mutable
+    {
+        profileZone->end();
+
+        // Retire.
+        _lockHttpSession.reset();
+
+        assert(httpSession && "Expected a valid http::Session");
+        const std::shared_ptr<const http::Response> httpResponse = httpSession->response();
+
+        _wopiSaveDuration = std::chrono::duration_cast<std::chrono::milliseconds>(
+            std::chrono::steady_clock::now() - startTime);
+        LOG_TRC(wopiLog << " finished async request in " << _wopiSaveDuration);
+
+        // Handle the response.
+        const std::string responseString = httpResponse->getBody();
+
+        LOG_INF(wopiLog << " response: [" << responseString
+                        << "], status: " << httpResponse->statusLine().statusCode());
+
+        if (httpResponse->statusLine().statusCode() == http::StatusCode::OK)
+        {
+            lockCtx.setState(lock);
+            return asyncLockStateCallback(AsyncLockUpdate(
+                AsyncLockUpdate::State::Complete, LockUpdateResult(LockUpdateResult::Status::OK)));
+        }
+
+        const std::string failureReason = httpResponse->get("X-WOPI-LockFailureReason", "");
+
+        const bool unauthorized =
+            (httpResponse->statusLine().statusCode() == http::StatusCode::Unauthorized ||
+             httpResponse->statusLine().statusCode() == http::StatusCode::Forbidden ||
+             httpResponse->statusLine().statusCode() == http::StatusCode::NotFound);
+
+        LOG_ERR("Un-successful " << wopiLog << " with " << (unauthorized ? "expired token, " : "")
+                                 << "HTTP status " << httpResponse->statusLine().statusCode()
+                                 << ", failure reason: [" << failureReason << "] and response: ["
+                                 << responseString << ']');
+
+        return asyncLockStateCallback(AsyncLockUpdate(
+            AsyncLockUpdate::State::Error,
+            LockUpdateResult(LockUpdateResult::Status::UNAUTHORIZED, failureReason)));
+    };
+
+    _lockHttpSession->setFinishedHandler(finishedCallback);
+
+    LOG_DBG("Async " << wopiLog << " request: " << httpRequest.header().toString());
+
+    // Notify client via callback that the request is in progress...
+    scopedInvokeCallback.setArg(AsyncLockUpdate(AsyncLockUpdate::State::Running,
+                                                LockUpdateResult(LockUpdateResult::Status::OK)));
+
+    // Make the request.
+    _lockHttpSession->asyncRequest(httpRequest, socketPoll);
 }
 
 /// uri format: http://server/<...>/wopi*/files/<id>/content
