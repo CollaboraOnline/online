@@ -117,16 +117,18 @@ bool HostEntry::resolveIP6(const std::string& addressToCheck, std::string& hostn
 
 void HostEntry::initFromHostName(const std::string& host, const char* port)
 {
-    assert(_ainfo == nullptr);
+    assert(!_ainfo);
 
     addrinfo hints;
     std::memset(&hints, 0, sizeof(hints));
     hints.ai_flags = AI_CANONNAME | AI_ADDRCONFIG; //TODO check vs 0 for asyncConnect, etc
 
-    int rc = getaddrinfo(host.c_str(), port, &hints, &_ainfo);
+    addrinfo* ainfo = nullptr;
+    int rc = getaddrinfo(host.c_str(), port, &hints, &ainfo);
+    _ainfo.reset(ainfo, freeaddrinfo);
     if (rc == 0)
     {
-        for (const addrinfo* ai = _ainfo; ai; ai = ai->ai_next)
+        for (const addrinfo* ai = _ainfo.get(); ai; ai = ai->ai_next)
         {
             if (ai->ai_canonname)
                 _canonicalName.assign(ai->ai_canonname);
@@ -178,7 +180,6 @@ bool HostEntry::resolveIP(const std::string& addressToCheck, std::string& hostna
 HostEntry::HostEntry(const std::string& desc, const char* port)
     : _canonicalName(desc)  // stash as _canonicalName, until we
                             // know better, for error reporting.
-    , _ainfo(nullptr)
     , _errno(0)
     , _eaino(0)
 {
@@ -191,16 +192,13 @@ HostEntry::HostEntry(const std::string& desc, const char* port)
 }
 
 HostEntry::HostEntry()
-    : _ainfo(nullptr)
-    , _errno(0)
+    : _errno(0)
     , _eaino(0)
 {
 }
 
 HostEntry::~HostEntry()
 {
-    if (_ainfo)
-        freeaddrinfo(_ainfo);
 }
 
 struct DNSCacheEntry

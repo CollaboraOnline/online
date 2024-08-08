@@ -34,7 +34,7 @@ class HostEntry
 {
     std::string _canonicalName;
     std::vector<std::string> _ipAddresses;
-    addrinfo* _ainfo;
+    std::shared_ptr<addrinfo> _ainfo;
     int _errno;
     int _eaino;
 
@@ -58,7 +58,7 @@ public:
 
     const std::string& getCanonicalName() const { return  _canonicalName; }
     const std::vector<std::string>& getAddresses() const { return  _ipAddresses; }
-    const addrinfo* getAddrInfo() const { return _ainfo; }
+    const addrinfo* getAddrInfo() const { return _ainfo.get(); }
 };
 
 /// Resolves the IP of the given hostname. On failure, returns @targetHost.
