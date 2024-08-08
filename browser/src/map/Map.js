@@ -165,12 +165,12 @@ L.Map = L.Evented.extend({
 		};
 		this.initComplete = false;
 
-		this.on('updatepermission', function(e) {
+		app.events.on('updatepermission', function(e) {
 			if (!this.initComplete) {
 				this._fireInitComplete('updatepermission');
 			}
 
-			if (e.perm === 'readonly') {
+			if (e.detail.perm === 'readonly') {
 				L.DomUtil.addClass(this._container.parentElement, 'readonly');
 				if (window.mode.isDesktop() || window.mode.isTablet()) {
 					L.DomUtil.addClass(L.DomUtil.get('toolbar-wrapper'), 'readonly');
@@ -185,7 +185,8 @@ L.Map = L.Evented.extend({
 				L.DomUtil.removeClass(L.DomUtil.get('main-menu'), 'readonly');
 				L.DomUtil.removeClass(L.DomUtil.get('presentation-controls-wrapper'), 'readonly');
 			}
-		}, this);
+		}.bind(this));
+
 		this.on('doclayerinit', function() {
 			if (!this.initComplete) {
 				this._fireInitComplete('doclayerinit');

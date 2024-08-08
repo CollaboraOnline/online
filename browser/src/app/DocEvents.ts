@@ -36,7 +36,7 @@ class DocEvents {
     }
 
     public fire(eventType: string, details: any) {
-        const newEvent = new CustomEvent(eventType, details);
+        const newEvent = new CustomEvent(eventType, { detail: details });
         this.container.dispatchEvent(newEvent);
     }
 

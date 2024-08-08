@@ -7,7 +7,7 @@ L.Map.mergeOptions({
 	touchGesture: true,
 });
 
-/* global Hammer app $ */
+/* global Hammer app $ GraphicSelection */
 L.Map.TouchGesture = L.Handler.extend({
 	statics: {
 		MAP: 1,
@@ -109,8 +109,8 @@ L.Map.TouchGesture = L.Handler.extend({
 		this._hammer.on('pinchend', window.memo.bind(window.touch.touchOnly(this._onPinchEnd), this));
 		this._hammer.on('tripletap', window.memo.bind(window.touch.touchOnly(this._onTripleTap), this));
 		this._hammer.on('swipe', window.memo.bind(window.touch.touchOnly(this._onSwipe), this));
-		this._map.on('updatepermission', this._onPermission, this);
-		this._onPermission({perm: this._map._permission});
+		app.events.on('updatepermission', this._onPermission.bind(this));
+		this._onPermission({ detail: { perm: this._map._permission } });
 	},
 
 	removeHooks: function () {
@@ -126,11 +126,10 @@ L.Map.TouchGesture = L.Handler.extend({
 		this._hammer.off('press', window.memo.bind(window.touch.touchOnly(this._onPress), this));
 		this._hammer.off('tripletap', window.memo.bind(window.touch.touchOnly(this._onTripleTap), this));
 		this._hammer.off('swipe', window.memo.bind(window.touch.touchOnly(this._onSwipe), this));
-		this._map.off('updatepermission', this._onPermission, this);
 	},
 
 	_onPermission: function (e) {
-		if (e.perm == 'edit') {
+		if (e.detail.perm == 'edit') {
 			this._hammer.on('doubletap', window.memo.bind(window.touch.touchOnly(this._onDoubleTap), this));
 			this._hammer.on('press', window.memo.bind(window.touch.touchOnly(this._onPress), this));
 		} else {
@@ -239,7 +238,7 @@ L.Map.TouchGesture = L.Handler.extend({
 
 		var waitForSelectionMsg = function () {
 			// check new selection if any
-			var graphicSelection = docLayer._graphicSelection;
+			var graphicSelection = GraphicSelection.rectangle;
 			if (!docLayer._cursorAtMispelledWord
 				&& (!graphicSelection || !graphicSelection.containsPoint(posInTwips.toArray()))
 				&& (!app.calc.cellCursorVisible || !app.calc.cellCursorRectangle.containsPoint(posInTwips.toArray()))) {
@@ -261,7 +260,7 @@ L.Map.TouchGesture = L.Handler.extend({
 		// before checking if we received a possible selection message; if no such message is received
 		// we simulate a double click for trying to select text and finally, in any case,
 		// we trigger the context menu by sending a right click
-		var graphicSelection = docLayer._graphicSelection;
+		var graphicSelection = GraphicSelection.rectangle;
 		var bContainsSel = false;
 		if (app.calc.cellCursorVisible)
 			bContainsSel = docLayer.containsSelection(latlng);
@@ -345,7 +344,7 @@ L.Map.TouchGesture = L.Handler.extend({
 		var acceptInput = false; // No keyboard by default.
 		var sendMouseEvents = true; // By default, this is a single-click.
 		if (docLayer) {
-			if (docLayer.hasGraphicSelection()) {
+			if (GraphicSelection.hasActiveSelection()) {
 				// Need keyboard when cursor is visible.
 				acceptInput = app.file.textCursor.visible;
 			} else if (docLayer._docType === 'text') {
@@ -388,7 +387,7 @@ L.Map.TouchGesture = L.Handler.extend({
 
 		var docLayer = this._map._docLayer;
 		if (docLayer) {
-			if (docLayer._docType === 'spreadsheet' && !docLayer.hasGraphicSelection()) {
+			if (docLayer._docType === 'spreadsheet' && !GraphicSelection.hasActiveSelection()) {
 				// Enter cell-edit mode on double-taping a cell.
 				if (this._map.isEditMode()) {
 					docLayer.postKeyboardEvent('input', 0, 769); // F2
@@ -399,7 +398,7 @@ L.Map.TouchGesture = L.Handler.extend({
 			}
 
 			// Show keyboard when no graphic selection, or  cursor is visible.
-			var acceptInput = !docLayer.hasGraphicSelection() || app.file.textCursor.visible;
+			var acceptInput = !GraphicSelection.hasActiveSelection() || app.file.textCursor.visible;
 
 			if (navigator.platform === 'iPhone' && docLayer._docType === 'presentation')
 				acceptInput = true;

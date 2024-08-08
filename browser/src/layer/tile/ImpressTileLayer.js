@@ -92,7 +92,7 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 		this._map = map;
 		map.addControl(this._preview);
 		map.on('updateparts', this.onUpdateParts, this);
-		map.on('updatepermission', this.onUpdatePermission, this);
+		app.events.on('updatepermission', this.onUpdatePermission.bind(this));
 
 		if (!map._docPreviews)
 			map._docPreviews = {};
@@ -144,7 +144,7 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 
 	onUpdatePermission: function (e) {
 		if (window.mode.isMobile()) {
-			if (e.perm === 'edit') {
+			if (e.detail.perm === 'edit') {
 				this._addButton.addTo(this._map);
 			} else {
 				this._addButton.remove();

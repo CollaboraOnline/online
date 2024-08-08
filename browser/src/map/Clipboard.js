@@ -13,7 +13,7 @@
  * local & remote clipboard data.
  */
 
-/* global app _ brandProductName $ ClipboardItem Promise */
+/* global app _ brandProductName $ ClipboardItem Promise GraphicSelection */
 
 // Get all interesting clipboard related events here, and handle
 // download logic in one place ...
@@ -522,8 +522,7 @@ L.Clipboard = L.Class.extend({
 		if ($('.w2ui-input').is(':focus'))
 			return $('.w2ui-input').value();
 
-		if (this._selectionType === 'complex' ||
-		    this._map._docLayer.hasGraphicSelection()) {
+		if (this._selectionType === 'complex' || GraphicSelection.hasActiveSelection()) {
 			window.app.console.log('Copy/Cut with complex/graphical selection');
 			if (this._selectionType === 'text' && this._selectionContent !== '')
 			{ // back here again having downloaded it ...

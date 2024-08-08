@@ -43,6 +43,12 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		this.sectionProperties.hasVideo = false; // Don't hide svg when there is video content.
 		this.sectionProperties.shapeRectangleProperties = null; // Not null when there are scaling handles.
 		this.sectionProperties.lastDragDistance = [0, 0];
+		this.sectionProperties.pickedIndexX = 0; // Which corner of shape is closest to snap point when moving the shape.
+		this.sectionProperties.pickedIndexY = 0; // Which corner of shape is closest to snap point when moving the shape.
+
+		// These are for snapping the objects to the same level with others' boundaries.
+		this.sectionProperties.closestX = null;
+		this.sectionProperties.closestY = null;
 
 		this.refreshInfo(info);
 	}
@@ -147,7 +153,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		let topMiddle = this.sectionProperties.info.handles.kinds.rectangle['2'][0];
 		topMiddle = new cool.SimplePoint(parseInt(topMiddle.point.x), parseInt(topMiddle.point.y));
 
-		const center = app.map._docLayer._graphicSelection.center; // number array in twips.
+		const center = GraphicSelection.rectangle.center; // number array in twips.
 
 		const radians = Math.atan2((center[1] - topMiddle.y), (topMiddle.x - center[0]));
 		return radians - Math.PI * 0.5;
@@ -163,7 +169,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 
 		return {
 			angleRadian: this.getShapeAngleRadians(),
-			center: app.map._docLayer._graphicSelection.pCenter.slice(),
+			center: GraphicSelection.rectangle.pCenter.slice(),
 			height: this.getShapeHeight() * app.twipsToPixels,
 			width: this.getShapeWidth() * app.twipsToPixels
 		};
@@ -202,7 +208,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		if (!this.sectionProperties.info?.handles?.kinds?.rectangle)
 			return;
 
-		let coreAngle = app.map._docLayer._graphicSelectionAngle;
+		let coreAngle = GraphicSelection.selectionAngle;
 		if (this.sectionProperties.svg)
 			coreAngle = this.sectionProperties.svg.innerHTML.includes('class="Group"') ? 0: coreAngle;
 
@@ -314,8 +320,8 @@ class ShapeHandlesSection extends CanvasSectionObject {
 	updateSize() {
 		this.size = [0, 0];
 
-		if (app.map._docLayer._graphicSelection)
-			this.size = [app.map._docLayer._graphicSelection.pWidth, app.map._docLayer._graphicSelection.pHeight];
+		if (GraphicSelection.hasActiveSelection())
+			this.size = [GraphicSelection.rectangle.pWidth, GraphicSelection.rectangle.pHeight];
 	}
 
 	isSVGVisible() {
@@ -594,15 +600,33 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		this.sectionProperties.mouseIsInside = false;
 	}
 
+	adjustSnapTransformCoordinate(x: number, y: number) {
+		// Transform command accepts the difference from top left corner.
+		// If we are snapping to other corners, we need to adjust the coordinate.
+
+		if (x !== null && [0, 3].includes(this.sectionProperties.pickedIndexX)) x -= this.size[0];
+		if (y !== null && [0, 3].includes(this.sectionProperties.pickedIndexY)) y -= this.size[1];
+
+		return x !== null ? x: y;
+	}
+
 	sendTransformCommand(point: number[]) {
+		let x = this.sectionProperties.closestX;
+		if (!x) x = this.sectionProperties.lastDragDistance[0] + this.position[0];
+		else x = this.adjustSnapTransformCoordinate(x, null);
+
+		let y = this.sectionProperties.closestY;
+		if (!y) y = this.sectionProperties.lastDragDistance[1] + this.position[1];
+		else y = this.adjustSnapTransformCoordinate(null, y);
+
 		const parameters = {
 			'TransformPosX': {
 				'type': 'long',
-				'value': Math.round((this.sectionProperties.lastDragDistance[0] + this.position[0]) * app.pixelsToTwips)
+				'value': Math.round(x * app.pixelsToTwips)
 			},
 			'TransformPosY': {
 				'type': 'long',
-				'value': Math.round((this.sectionProperties.lastDragDistance[1] + this.position[1]) * app.pixelsToTwips)
+				'value': Math.round(y * app.pixelsToTwips)
 			}
 		};
 
@@ -617,9 +641,87 @@ class ShapeHandlesSection extends CanvasSectionObject {
 
 		(window as any).IgnorePanning = false;
 
-		// This is for tablet and mobbile but we can use this for also desktop, if we want to avoid sending mouse events for shapes to core side.
-		if (this.containerObject.isDraggingSomething() && ((window as any).mode.isTablet() || (window as any).mode.isMobile()))
-			this.sendTransformCommand(point);
+		if (this.containerObject.isDraggingSomething()) {
+			if ((window as any).mode.isTablet() || (window as any).mode.isMobile())
+				this.sendTransformCommand(point);
+			else if ((window as any).mode.isDesktop() && (this.sectionProperties.closestX || this.sectionProperties.closestY)) {
+				// We need to snap to the guide-lines. So we send a positioning command after the mouse up event (desktop case).
+				// We don't need to do this on mobile because we always send the positioning commands there. No mouse events for mobile.
+				setTimeout(() => {
+					this.sendTransformCommand(point); // Send to back of the process queue so it performs after buttonup event is sent.
+				}, 10);
+			}
+		}
+	}
+
+	findClosestX(xList: number[]) {
+		let closest = 1000;
+		let pickX = null;
+		this.sectionProperties.pickedIndexX = 0;
+		if (GraphicSelection.extraInfo.ObjectRectangles) {
+			const ordNum = GraphicSelection.extraInfo.OrdNum;
+			const rectangles = GraphicSelection.extraInfo.ObjectRectangles;
+
+			for (let i = 0; i < rectangles.length; i++) {
+				if (rectangles[i][4] !== ordNum) { // Don't compare it with itself.
+					const distances = [];
+					for (let j = 0; j < xList.length; j++) {
+						distances.unshift(Math.abs(rectangles[i][0] - xList[j]));
+						distances.push(Math.abs(rectangles[i][0] + rectangles[i][2] - xList[j]));
+					}
+
+					const min = Math.min(...distances);
+					const index = distances.indexOf(min);
+					if (min < closest) {
+						closest = min;
+						pickX = index < xList.length ? rectangles[i][0]: rectangles[i][0] + rectangles[i][2];
+						this.sectionProperties.pickedIndexX = index;
+					}
+				}
+			}
+		}
+
+		if (closest < 10 * app.dpiScale) this.sectionProperties.closestX = pickX;
+		else this.sectionProperties.closestX = null;
+	}
+
+	findClosestY(yList: number[]) {
+		let closest = 1000;
+		let pickY = null;
+		if (GraphicSelection.extraInfo.ObjectRectangles) {
+			const ordNum = GraphicSelection.extraInfo.OrdNum;
+			const rectangles = GraphicSelection.extraInfo.ObjectRectangles;
+			this.sectionProperties.pickedIndexY = 0;
+
+			for (let i = 0; i < rectangles.length; i++) {
+				if (rectangles[i][4] !== ordNum) { // Don't compare it with itself.
+					const distances = [];
+					for (let j = 0; j < yList.length; j++) {
+						distances.unshift(Math.abs(rectangles[i][1] - yList[j]));
+						distances.push(Math.abs(rectangles[i][1] + rectangles[i][3] - yList[j]));
+					}
+
+					const min = Math.min(...distances);
+					const index = distances.indexOf(min);
+					if (min < closest) {
+						closest = min;
+						pickY = index < yList.length ? rectangles[i][1]: rectangles[i][1] + rectangles[i][3];
+						this.sectionProperties.pickedIndexY = index;
+					}
+				}
+			}
+		}
+
+		if (closest < 10 * app.dpiScale) this.sectionProperties.closestY = pickY;
+		else this.sectionProperties.closestY = null;
+	}
+
+	public checkObjectsBoundaries(xListToCheck: number[], yListToCheck: number[]) {
+		if (app.map._docLayer._docType === 'presentation') {
+			this.findClosestX(xListToCheck);
+			this.findClosestY(yListToCheck);
+			this.containerObject.requestReDraw();
+		}
 	}
 
 	onMouseMove(position: number[], dragDistance: number[]) {
@@ -630,6 +732,11 @@ class ShapeHandlesSection extends CanvasSectionObject {
 			this.sectionProperties.svg.style.top = String((this.myTopLeft[1] + dragDistance[1]) / app.dpiScale) + 'px';
 			this.sectionProperties.svg.style.opacity = 0.5;
 			this.sectionProperties.lastDragDistance = [dragDistance[0], dragDistance[1]];
+			this.checkObjectsBoundaries(
+				[this.position[0] + dragDistance[0], this.position[0] + dragDistance[0] + this.size[0]],
+				[this.position[1] + dragDistance[1], this.position[1] + dragDistance[1] + this.size[1]]
+			);
+
 			this.showSVG();
 		}
 		else
@@ -650,7 +757,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 	}
 
 	adjustSVGProperties() {
-		if (this.sectionProperties.svg && this.sectionProperties.svg.style.display === '' && app.map._docLayer._graphicSelection) {
+		if (this.sectionProperties.svg && this.sectionProperties.svg.style.display === '' && GraphicSelection.hasActiveSelection()) {
 
 			const clientRect = (this.sectionProperties.svg.children[0] as SVGElement).getBoundingClientRect();
 			let width: number = clientRect.width;
@@ -703,9 +810,41 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		}
 	}
 
+	drawGuides() {
+		this.context.save();
+		this.context.translate(-this.myTopLeft[0], -this.myTopLeft[1]);
+
+		this.context.setLineDash([12, 3, 3]);
+
+		if (this.sectionProperties.closestX !== null) {
+			const x = this.containerObject.getDocumentAnchor()[0] + this.sectionProperties.closestX - this.documentTopLeft[0];
+			this.context.strokeStyle = 'grey';
+			this.context.beginPath();
+			this.context.moveTo(x, 0);
+			this.context.lineTo(x, this.context.canvas.height);
+			this.context.stroke();
+			this.context.closePath();
+		}
+
+		if (this.sectionProperties.closestY !== null) {
+			const y = this.containerObject.getDocumentAnchor()[1] + this.sectionProperties.closestY - this.documentTopLeft[1];
+			this.context.strokeStyle = 'grey';
+			this.context.beginPath();
+			this.context.moveTo(0, y);
+			this.context.lineTo(this.context.canvas.width, y);
+			this.context.stroke();
+			this.context.closePath();
+		}
+
+		this.context.restore();
+	}
+
 	public onDraw() {
 		if (!this.showSection || !this.isVisible)
 			this.hideSVG();
+		else if (this.sectionProperties.closestX !== null || this.sectionProperties.closestY !== null) {
+			this.drawGuides();
+		}
 	}
 
 	removeSubSections(): void {
