@@ -2196,24 +2196,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (options && options.hasDropdownArrow) {
 			$(button).addClass('dropdown');
 		} else if (data.dropdown === true) {
-			$(div).addClass('has-dropdown');
-			var arrowbackground = L.DomUtil.create('div', 'arrowbackground', div);
-			L.DomUtil.create('i', 'unoarrow', arrowbackground);
-			arrowbackground.tabIndex = '0';
-			controls['arrow'] = arrowbackground;
-
-			// Attach event listeners for both 'click' and 'keydown'
-			arrowbackground.addEventListener('click', function (event) {
-				openToolBoxMenu(event, div);
-			});
-			arrowbackground.addEventListener('keydown', function (event) {
-				switch (event.key) {
-					case 'Enter':
-						openToolBoxMenu(event, div);
-						break;
-				}
-			});
-
+			$(button).addClass('dropdown');
 			div.closeDropdown = function() {
 				builder.callback('toolbox', 'closemenu', parentContainer, data.command, builder);
 			};
@@ -2231,7 +2214,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				builder.refreshSidebar = true;
 				if (data.postmessage)
 					builder.map.fire('postMessage', {msgId: 'Clicked_Button', args: {Id: data.id} });
-				else if (isRealUnoCommand && data.dropdown !== true)
+				else if (data.dropdown === true)
+					builder.callback('toolbox', 'openmenu', parentContainer, data.command, builder);
+				else if (isRealUnoCommand)
 					builder.callback('toolbutton', 'click', button, data.command, builder);
 				else
 					builder.callback('toolbox', 'click', parentContainer, data.command, builder);
