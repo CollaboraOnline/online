@@ -97,7 +97,6 @@ class LayersCompositor extends SlideShow.SlideCompositor {
 	}
 
 	private handleBackgroundLayer(data: any, img: any) {
-		console.error(data);
 		if (data.type === 'bitmap') {
 			if (!img || !img.src) {
 				window.app.console.log(
