@@ -211,6 +211,11 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	border-radius: var(--border-radius);
 }
 
+.unotoolbutton.notebookbar .unobutton.dropdown {
+	display: flex;
+	width: calc(var(--btn-size) + var(--btn-dropdown-size));
+}
+
 .jsdialog .ui-tabs-content {
 	margin-top: 10px;
 }
