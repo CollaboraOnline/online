@@ -25,6 +25,7 @@
 	--btn-size-s: 20px;
 	--btn-img-size-s: calc(var(--btn-size-s) - var(--btn-padding) * 2);
 
+	--btn-dropdown-size: 8px;
 	--border-radius: 4px; /* buttons, widgets */
 	--border-radius-large: 10px; /* dialog */
 

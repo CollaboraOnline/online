@@ -1804,6 +1804,19 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	grid-template-rows: auto 0px;
 }
 
+.unobutton.dropdown::after {
+	content: '';
+	height: 0px;
+	border: 4px solid transparent;
+	border-top: 5px solid var(--color-main-text);
+	display: inline-block;
+	margin: auto;
+}
+
+.unotoolbutton.jsdialog.sidebar.ui-content > .arrowbackground {
+	width: auto;
+}
+
 /* handling show/hide state */
 .hidden {
 	display: none !important;

@@ -2194,10 +2194,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 
 		if (options && options.hasDropdownArrow) {
-			$(div).addClass('has-dropdown');
-			var arrowbackground = L.DomUtil.create('div', 'arrowbackground', div);
-			L.DomUtil.create('i', 'unoarrow', arrowbackground);
-			controls['arrow'] = arrowbackground;
+			$(button).addClass('dropdown');
 		} else if (data.dropdown === true) {
 			$(div).addClass('has-dropdown');
 			var arrowbackground = L.DomUtil.create('div', 'arrowbackground', div);
