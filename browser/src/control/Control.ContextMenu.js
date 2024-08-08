@@ -149,6 +149,12 @@ L.Control.ContextMenu = L.Control.extend({
 		this._amendContextMenuData(obj);
 
 		var contextMenu = this._createContextMenuStructure(obj);
+
+		if (Object.keys(contextMenu).length == 0) {
+			// We can sometimes end up filtering out everything in the menu ... in this case, there's nothing to display
+			return;
+		}
+
 		var spellingContextMenu = false;
 		var autoFillContextMenu = false;
 		for (var menuItem in contextMenu) {
