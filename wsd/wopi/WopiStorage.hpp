@@ -198,7 +198,7 @@ public:
                                      const Attributes& attribs) override;
 
     void updateLockStateAsync(const Authorization& auth, LockContext& lockCtx, LockState lock,
-                              const Attributes& attribs,
+                              const Attributes& attribs, SocketPoll& socketPoll,
                               const AsyncLockStateCallback& asyncLockStateCallback) override;
 
     /// uri format: http://server/<...>/wopi*/files/<id>/content
@@ -261,6 +261,9 @@ private:
 
     /// The http::Session used for uploading asynchronously.
     std::shared_ptr<http::Session> _uploadHttpSession;
+
+    /// The http::Session used for locking asynchronously.
+    std::shared_ptr<http::Session> _lockHttpSession;
 
     /// Filename converter to UTF-7.
     Util::CharacterConverter _utf7Converter;

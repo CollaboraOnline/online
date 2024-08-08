@@ -389,6 +389,7 @@ public:
     /// Update the locking state (check-in/out) of the associated file asynchronously.
     virtual void updateLockStateAsync(const Authorization& auth, LockContext& lockCtx,
                                       LockState lock, const Attributes& attribs,
+                                      SocketPoll& socketPoll,
                                       const AsyncLockStateCallback& asyncLockStateCallback) = 0;
 
     /// Returns a local file path for the given URI.
@@ -532,8 +533,14 @@ public:
     }
 
     void updateLockStateAsync(const Authorization&, LockContext&, LockState, const Attributes&,
-                              const AsyncLockStateCallback&) override
+                              SocketPoll&,
+                              const AsyncLockStateCallback& asyncLockStateCallback) override
     {
+        if (asyncLockStateCallback)
+        {
+            asyncLockStateCallback(AsyncLockUpdate(AsyncLockUpdate::State::Complete,
+                                                   LockUpdateResult(LockUpdateResult::Status::OK)));
+        }
     }
 
     std::string downloadStorageFileToLocal(const Authorization& auth, LockContext& lockCtx,
