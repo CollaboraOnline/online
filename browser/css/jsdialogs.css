@@ -1044,6 +1044,8 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	border: 1px solid transparent;
 	border-radius: var(--border-radius);
 	padding-top: 5px;
+	text-wrap: nowrap;
+	font-family: var(--jquery-ui-font);
 }
 
 .ui-iconview-entry.selected {
