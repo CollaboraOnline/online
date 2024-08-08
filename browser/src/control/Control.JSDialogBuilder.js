@@ -2291,6 +2291,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 			button = L.DomUtil.create('button', 'ui-content unobutton', div);
 			button.id = buttonId;
+			var buttonContainer = options && options.container ? options.container : button;
 
 			if(data.text)
 				button.setAttribute('aria-label', data.text);
@@ -2307,19 +2308,19 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 			if (data.w2icon) {
 				// FIXME: DEPRECATED, this is legacy way to setup icon based on CSS class
-				var buttonImage = L.DomUtil.create('div', 'w2ui-icon ' + data.w2icon, button);
+				var buttonImage = L.DomUtil.create('div', 'w2ui-icon ' + data.w2icon, buttonContainer);
 			}
 			else if (hasImage !== false){
 				if (data.icon) {
-					buttonImage = L.DomUtil.create('img', '', button);
+					buttonImage = L.DomUtil.create('img', '', buttonContainer);
 					this._isStringCloseToURL(data.icon) ? buttonImage.src = data.icon : L.LOUtil.setImage(buttonImage, data.icon, builder.map);
 				}
 				else if (data.image) {
-					buttonImage = L.DomUtil.create('img', '', button);
+					buttonImage = L.DomUtil.create('img', '', buttonContainer);
 					buttonImage.src = data.image;
 				}
 				else {
-					buttonImage = L.DomUtil.create('img', '', button);
+					buttonImage = L.DomUtil.create('img', '', buttonContainer);
 					L.LOUtil.setImage(buttonImage, builder._createIconURL(data.command), builder.map);
 				}
 			} else {
@@ -2328,7 +2329,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 			controls['button'] = button;
 			if (builder.options.noLabelsForUnoButtons !== true) {
-				var label = L.DomUtil.create('label', 'ui-content unolabel', button);
+				var label = L.DomUtil.create('label', 'ui-content unolabel', buttonContainer);
 				label.htmlFor = buttonId;
 				label.textContent = builder._cleanText(data.text);
 				builder._stressAccessKey(label, button.accessKey);
@@ -2748,13 +2749,14 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			// make it a split button
 			data.applyCallback = applyFunction;
 
-			var menubutton = builder._controlHandlers['menubutton'](parentContainer, data, builder);
+			var div = L.DomUtil.create('div', 'container-color-inline');
+			var menubutton = builder._controlHandlers['menubutton'](parentContainer, data, builder, div);
 
 			if (typeof menubutton === 'object') {
 				L.DomUtil.addClass(menubutton.container, data.class ? data.class + ' has-colorpicker': 'has-colorpicker');
-
-				var valueNode = L.DomUtil.create('div', 'selected-color', menubutton.container);
+				var valueNode = L.DomUtil.create('div', 'selected-color', div);
 				valueNode.addEventListener('click', applyFunction);
+				menubutton.container.firstChild.appendChild(div);
 
 				var updateFunction = function () {
 					if (app.colorLastSelection[data.command] !== undefined) {
