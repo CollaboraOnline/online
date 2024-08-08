@@ -369,6 +369,10 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	padding-top: 0px;
 }
 
+#stylesview .icon-view-item-container {
+	margin: unset;
+}
+
 #stylesview .ui-iconview-entry-title {
 	display: none;
 }
