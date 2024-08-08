@@ -328,12 +328,13 @@ class SlideShowPresenter {
 			`;
 	}
 
-	_doPresentation() {
+	_doPresentation(isStarting = false) {
 		this._slideRenderer.pauseVideos();
 		const slideInfo = this.getSlideInfo(this._currentSlide);
 		// To speed up the process, if we have transition info, then only render
 		// a black empty slide as the first slide. otherwise, directly render the first slide.
 		if (
+			isStarting &&
 			slideInfo?.transitionType != undefined &&
 			slideInfo.transitionType != 'NONE'
 		) {
@@ -587,7 +588,7 @@ class SlideShowPresenter {
 		this._canvasLoader.startLoader();
 
 		this._slideCompositor.fetchAndRun(0, () => {
-			this._doPresentation();
+			this._doPresentation(true);
 		});
 	}
 
