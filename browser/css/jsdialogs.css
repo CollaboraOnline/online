@@ -1813,6 +1813,11 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	margin: auto;
 }
 
+.container-color-inline {
+	display: inline-block;
+	pointer-events: none;
+}
+
 .unotoolbutton.jsdialog.sidebar.ui-content > .arrowbackground {
 	width: auto;
 }

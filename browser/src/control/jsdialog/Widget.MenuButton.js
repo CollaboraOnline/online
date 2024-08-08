@@ -25,7 +25,7 @@
 
 /* global JSDialog $ app */
 
-function _menubuttonControl (parentContainer, data, builder) {
+function _menubuttonControl (parentContainer, data, builder, container) {
 	var ids;
 	var menuId = null;
 
@@ -65,7 +65,7 @@ function _menubuttonControl (parentContainer, data, builder) {
 		if (!data.command)
 			data.command = menuId;
 
-		var options = {hasDropdownArrow: menuEntries.length > 1};
+		var options = {hasDropdownArrow: menuEntries.length > 1, container: container};
 		var control = builder._unoToolButton(parentContainer, data, builder, options);
 
 		$(control.container).addClass('menubutton');
@@ -167,7 +167,7 @@ function _menubuttonControl (parentContainer, data, builder) {
 	return false;
 }
 
-JSDialog.menubuttonControl = function (parentContainer, data, builder) {
-	var buildInnerData = _menubuttonControl(parentContainer, data, builder);
+JSDialog.menubuttonControl = function (parentContainer, data, builder, container) {
+	var buildInnerData = _menubuttonControl(parentContainer, data, builder, container);
 	return buildInnerData;
 };
