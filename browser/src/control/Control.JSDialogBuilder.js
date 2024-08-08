@@ -2300,6 +2300,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 			button = L.DomUtil.create('button', 'ui-content unobutton', div);
 			button.id = buttonId;
+			var buttonContainer = options && options.container ? options.container : button;
 
 			JSDialog.SynchronizeDisabledState(div, [button]);
 
@@ -2318,19 +2319,19 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 			if (data.w2icon) {
 				// FIXME: DEPRECATED, this is legacy way to setup icon based on CSS class
-				var buttonImage = L.DomUtil.create('div', 'w2ui-icon ' + data.w2icon, button);
+				var buttonImage = L.DomUtil.create('div', 'w2ui-icon ' + data.w2icon, buttonContainer);
 			}
 			else if (hasImage !== false){
 				if (data.icon) {
-					buttonImage = L.DomUtil.create('img', '', button);
+					buttonImage = L.DomUtil.create('img', '', buttonContainer);
 					this._isStringCloseToURL(data.icon) ? buttonImage.src = data.icon : L.LOUtil.setImage(buttonImage, data.icon, builder.map);
 				}
 				else if (data.image) {
-					buttonImage = L.DomUtil.create('img', '', button);
+					buttonImage = L.DomUtil.create('img', '', buttonContainer);
 					buttonImage.src = data.image;
 				}
 				else {
-					buttonImage = L.DomUtil.create('img', '', button);
+					buttonImage = L.DomUtil.create('img', '', buttonContainer);
 					L.LOUtil.setImage(buttonImage, builder._createIconURL(data.command), builder.map);
 				}
 			} else {
@@ -2339,7 +2340,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 			controls['button'] = button;
 			if (builder.options.noLabelsForUnoButtons !== true) {
-				var label = L.DomUtil.create('label', 'ui-content unolabel', button);
+				var label = L.DomUtil.create('label', 'ui-content unolabel', buttonContainer);
 				label.htmlFor = buttonId;
 				label.textContent = builder._cleanText(data.text);
 				builder._stressAccessKey(label, button.accessKey);
@@ -2503,7 +2504,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 					if (builder.map.tooltip)
 						builder.map.tooltip.show(elem, builder.map.getLastModDateValue()); // Show the tooltip with the correct content
 				});
-	
+
 				$(elem).on('mouseleave', function() {
 					if (builder.map.tooltip)
 						builder.map.tooltip.hide(elem);
