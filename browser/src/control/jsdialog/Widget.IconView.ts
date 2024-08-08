@@ -25,6 +25,31 @@
 
 declare var JSDialog: any;
 
+function _createEntryImage(
+	parent: HTMLElement,
+	builder: any,
+	entryData: IconViewEntry,
+	image: string,
+) {
+	const img = L.DomUtil.create('img', builder.options.cssClass, parent);
+	if (image) img.src = image;
+	img.alt = entryData.text;
+
+	if (entryData.tooltip) img.title = entryData.tooltip;
+	else img.title = entryData.text;
+}
+
+function _createEntryText(parent: HTMLElement, entryData: IconViewEntry) {
+	// Add text below Icon
+	L.DomUtil.addClass(parent, 'icon-view-item-container');
+	const placeholder = L.DomUtil.create(
+		'span',
+		'ui-iconview-entry-title',
+		parent,
+	);
+	placeholder.innerText = entryData.text;
+}
+
 function _iconViewEntry(
 	parentContainer: Element,
 	parentData: IconViewJSON,
@@ -32,6 +57,7 @@ function _iconViewEntry(
 	builder: any,
 ) {
 	const disabled = parentData.enabled === false;
+	const hasText = entry.text && parentData.textWithIconEnabled;
 
 	if (entry.separator && entry.separator === true) {
 		L.DomUtil.create(
@@ -84,11 +110,8 @@ function _iconViewEntry(
 			entry.text,
 		);
 	} else {
-		const img = L.DomUtil.create('img', builder.options.cssClass, icon);
-		if (entry.image) img.src = entry.image;
-		img.alt = entry.text;
-		if (entry.tooltip) img.title = entry.tooltip;
-		else img.title = entry.text;
+		_createEntryImage(icon, builder, entry, entry.image);
+		if (hasText) _createEntryText(icon, entry);
 	}
 
 	if (!disabled) {
@@ -175,34 +198,22 @@ JSDialog.iconView = function (
 	container.updateRenders = (pos: number) => {
 		const dropdown = container.querySelectorAll('.ui-iconview-entry');
 		if (dropdown[pos]) {
-			dropdown[pos].innerHTML = '';
 			let container = dropdown[pos];
+			const entry = data.entries[pos];
+			const image = builder.rendersCache[data.id].images[pos];
+			const hasText = entry.text && data.textWithIconEnabled;
 
-			if (data.entries[pos].text && data.textWithIconEnabled) {
+			container.innerHTML = '';
+			if (hasText) {
 				container = L.DomUtil.create(
 					'div',
 					builder.options.cssClass,
 					dropdown[pos],
 				);
 			}
-			const img = L.DomUtil.create('img', '', container);
-			img.src = builder.rendersCache[data.id].images[pos];
 
-			const entry = data.entries[pos];
-			img.alt = entry.text;
-			if (entry.tooltip) img.title = entry.tooltip;
-			else img.title = entry.text;
-
-			if (data.entries[pos].text && data.textWithIconEnabled) {
-				// Add text below Icon
-				L.DomUtil.addClass(container, 'icon-view-item-container');
-				const placeholder = L.DomUtil.create(
-					'span',
-					'ui-iconview-entry-title',
-					container,
-				);
-				placeholder.innerText = entry.text;
-			}
+			_createEntryImage(container, builder, entry, image);
+			if (hasText) _createEntryText(container, entry);
 		}
 	};
 
