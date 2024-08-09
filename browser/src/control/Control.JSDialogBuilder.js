@@ -2234,7 +2234,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_unoToolButton: function(parentContainer, data, builder, options) {
-		var button = null;
+		var button = null, span, buttonImage, label, container;
 
 		var controls = {};
 
@@ -2304,19 +2304,19 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 			if (data.w2icon) {
 				// FIXME: DEPRECATED, this is legacy way to setup icon based on CSS class
-				var buttonImage = L.DomUtil.create('div', 'w2ui-icon ' + data.w2icon, button);
+				buttonImage = L.DomUtil.create('div', 'w2ui-icon ' + data.w2icon);
 			}
 			else if (hasImage !== false){
 				if (data.icon) {
-					buttonImage = L.DomUtil.create('img', '', button);
+					buttonImage = L.DomUtil.create('img', '');
 					this._isStringCloseToURL(data.icon) ? buttonImage.src = data.icon : L.LOUtil.setImage(buttonImage, data.icon, builder.map);
 				}
 				else if (data.image) {
-					buttonImage = L.DomUtil.create('img', '', button);
+					buttonImage = L.DomUtil.create('img', '');
 					buttonImage.src = data.image;
 				}
 				else {
-					buttonImage = L.DomUtil.create('img', '', button);
+					buttonImage = L.DomUtil.create('img', '');
 					L.LOUtil.setImage(buttonImage, builder._createIconURL(data.command), builder.map);
 				}
 			} else {
@@ -2325,7 +2325,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 			controls['button'] = button;
 			if (builder.options.noLabelsForUnoButtons !== true) {
-				var label = L.DomUtil.create('label', 'ui-content unolabel', button);
+				label = L.DomUtil.create('label', 'ui-content unolabel');
 				label.htmlFor = buttonId;
 				label.textContent = builder._cleanText(data.text);
 				builder._stressAccessKey(label, button.accessKey);
@@ -2350,11 +2350,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 			if (builder.options.useInLineLabelsForUnoButtons === true) {
 				$(div).addClass('inline');
-				label = L.DomUtil.create('span', 'ui-content unolabel', div);
-				label.htmlFor = buttonId;
-				label.textContent = builder._cleanText(data.text);
+				span = L.DomUtil.create('span', 'ui-content unolabel', div);
+				span.htmlFor = buttonId;
+				span.textContent = builder._cleanText(data.text);
 
-				controls['label'] = label;
+				controls['label'] = span;
 			}
 			var disabled = data.enabled === 'false' || data.enabled === false;
 			if (data.command) {
@@ -2416,29 +2416,16 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			if (data.selected === true)
 				selectFn();
 		} else {
-			var label = L.DomUtil.create('label', 'ui-content unolabel', div);
-			label.textContent = builder._cleanText(data.text);
+			span = L.DomUtil.create('label', 'ui-content unolabel', div);
+			span.textContent = builder._cleanText(data.text);
 			controls['button'] = button;
-			controls['label'] = label;
+			controls['label'] = span;
 		}
 
 		if (options && options.hasDropdownArrow) {
-			$(div).addClass('has-dropdown');
-			var arrowbackground = L.DomUtil.create('div', 'arrowbackground', div);
-			L.DomUtil.create('i', 'unoarrow', arrowbackground);
-			controls['arrow'] = arrowbackground;
+			$(button).addClass('dropdown');
 		} else if (data.dropdown === true) {
-			$(div).addClass('has-dropdown');
-			var arrowbackground = L.DomUtil.create('div', 'arrowbackground', div);
-			L.DomUtil.create('i', 'unoarrow', arrowbackground);
-			controls['arrow'] = arrowbackground;
-			$(arrowbackground).click(function (event) {
-				if (!div.hasAttribute('disabled')) {
-					builder.callback('toolbox', 'openmenu', parentContainer, data.command, builder);
-					event.stopPropagation();
-				}
-			});
-
+			$(button).addClass('dropdown');
 			div.closeDropdown = function() {
 				builder.callback('toolbox', 'closemenu', parentContainer, data.command, builder);
 			};
@@ -2449,7 +2436,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				builder.refreshSidebar = true;
 				if (data.postmessage)
 					builder.map.fire('postMessage', {msgId: 'Clicked_Button', args: {Id: data.id} });
-				else if (isRealUnoCommand && data.dropdown !== true)
+				else if (data.dropdown === true)
+					builder.callback('toolbox', 'openmenu', parentContainer, data.command, builder);
+				else if (isRealUnoCommand)
 					builder.callback('toolbutton', 'click', button, data.command, builder);
 				else
 					builder.callback('toolbox', 'click', parentContainer, data.command, builder);
@@ -2488,6 +2477,22 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		builder.map.hideRestrictedItems(data, controls['container'], controls['container']);
 		builder.map.disableLockedItem(data, controls['container'], controls['container']);
+
+		if (options && options.container) {
+			if (buttonImage)
+				options.container.appendChild(buttonImage);
+			if (label)
+				options.container.appendChild(label);
+		} else if (buttonImage && label) {
+			container = L.DomUtil.create('span', 'container-button', button);
+			container.appendChild(buttonImage);
+			container.appendChild(label);
+		} else {
+			if (buttonImage)
+				button.appendChild(buttonImage);
+			if (label)
+				button.appendChild(label);
+		}
 
 		return controls;
 	},
@@ -2756,13 +2761,14 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			// make it a split button
 			data.applyCallback = applyFunction;
 
-			var menubutton = builder._controlHandlers['menubutton'](parentContainer, data, builder);
+			var div = L.DomUtil.create('div', 'container-color-inline');
+			var menubutton = builder._controlHandlers['menubutton'](parentContainer, data, builder, div);
 
 			if (typeof menubutton === 'object') {
 				L.DomUtil.addClass(menubutton.container, data.class ? data.class + ' has-colorpicker': 'has-colorpicker');
-
-				var valueNode = L.DomUtil.create('div', 'selected-color', menubutton.container);
+				var valueNode = L.DomUtil.create('div', 'selected-color', div);
 				valueNode.addEventListener('click', applyFunction);
+				menubutton.container.firstChild.appendChild(div);
 
 				var updateFunction = function () {
 					if (app.colorLastSelection[data.command] !== undefined) {

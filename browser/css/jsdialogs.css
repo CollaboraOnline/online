@@ -1771,11 +1771,31 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	border: none;
 }
 
+.dropdown {
+	display: flex;
+	width: 100%;
+}
+
 .unotoolbutton.has-dropdown {
 	display: grid;
 	align-items: center;
 	grid-auto-flow: column;
 	grid-template-rows: auto 0px;
+}
+
+.unobutton.dropdown::after {
+	content: '';
+	height: 0px;
+	border: 4px solid transparent;
+	border-top: 5px solid var(--color-main-text);
+	display: inline-block;
+	margin: auto;
+}
+
+.container-button,
+.container-color-inline {
+	display: inline-block;
+	pointer-events: none;
 }
 
 .unotoolbutton.jsdialog.sidebar.ui-content > .arrowbackground {
