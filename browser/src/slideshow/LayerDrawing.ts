@@ -72,7 +72,7 @@ class LayerDrawing {
 	private map: any = null;
 	private helper: LayersCompositor;
 
-	private renderedSlides: Map<string, ImageBitmap> = new Map();
+	private slideCache: SlideCache = new SlideCache();
 	private requestedSlideHash: string = null;
 	private prefetchedSlideHash: string = null;
 	private nextRequestedSlideHash: string = null;
@@ -133,7 +133,11 @@ class LayerDrawing {
 
 	public getSlide(slideNumber: number): ImageBitmap {
 		const startSlideHash = this.helper.getSlideHash(slideNumber);
-		return this.renderedSlides.get(startSlideHash);
+		return this.slideCache.get(startSlideHash);
+	}
+
+	public invalidateAll(): void {
+		this.slideCache.invalidateAll();
 	}
 
 	public getCanvasSize(): [number, number] {
@@ -216,7 +220,7 @@ class LayerDrawing {
 			this.prefetchedSlideHash = null;
 		}
 
-		if (this.renderedSlides.has(slideHash)) {
+		if (this.slideCache.has(slideHash)) {
 			this.onSlideRenderingComplete();
 			return;
 		}
@@ -499,7 +503,7 @@ class LayerDrawing {
 
 		this.cacheAndNotify();
 		// fetch next slide and draw it on offscreen canvas
-		if (!this.renderedSlides.has(reqSlideInfo.next)) {
+		if (!this.slideCache.has(reqSlideInfo.next)) {
 			this.requestSlideImpl(reqSlideInfo.next, true);
 		}
 	}
@@ -511,9 +515,9 @@ class LayerDrawing {
 			);
 			return;
 		}
-		if (!this.renderedSlides.has(this.requestedSlideHash)) {
+		if (!this.slideCache.has(this.requestedSlideHash)) {
 			const renderedSlide = this.offscreenCanvas.transferToImageBitmap();
-			this.renderedSlides.set(this.requestedSlideHash, renderedSlide);
+			this.slideCache.set(this.requestedSlideHash, renderedSlide);
 		}
 		this.requestedSlideHash = null;
 
