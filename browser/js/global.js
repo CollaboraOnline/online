@@ -42,8 +42,6 @@ class BrowserProperties {
 		hasNavigatorClipboardRead = navigator.clipboard && navigator.clipboard.read,
 		hasNavigatorClipboardWrite = navigator.clipboard && navigator.clipboard.write,
 		webkit    = ua.indexOf('webkit') !== -1,
-		phantomjs = ua.indexOf('phantom') !== -1,
-		android23 = ua.search('android [23]') !== -1,
 		chrome    = ua.indexOf('chrome') !== -1,
 		gecko     = (ua.indexOf('gecko') !== -1 || (cypressTest && 'MozUserFocus' in doc.style))
 			&& !webkit && !global.opera && !ie,
@@ -55,16 +53,11 @@ class BrowserProperties {
 		msPointer = !global.PointerEvent && global.MSPointerEvent,
 		pointer = (global.PointerEvent && navigator.pointerEnabled && navigator.maxTouchPoints) || msPointer,
 
-		ie3d = ie && ('transition' in doc.style),
-		webkit3d = ('WebKitCSSMatrix' in global) && ('m11' in new global.WebKitCSSMatrix()) && !android23,
-		gecko3d = 'MozPerspective' in doc.style,
-		opera12 = 'OTransition' in doc.style;
+		webkit3d = ('WebKitCSSMatrix' in global) && ('m11' in new global.WebKitCSSMatrix()),
+		gecko3d = 'MozPerspective' in doc.style;
 
 		var mac = navigator.appVersion.indexOf('Mac') != -1 || navigator.userAgent.indexOf('Mac') != -1;
 		var chromebook = global.ThisIsTheAndroidApp && global.COOLMessageHandler.isChromeOS();
-
-		var isInternetExplorer = (navigator.userAgent.toLowerCase().indexOf('msie') != -1 ||
-				  navigator.userAgent.toLowerCase().indexOf('trident') != -1);
 
 		var navigatorLang = navigator.languages && navigator.languages.length ? navigator.languages[0] :
 		(navigator.language || navigator.userLanguage || navigator.browserLanguage || navigator.systemLanguage);
@@ -87,10 +80,6 @@ class BrowserProperties {
 			// `true` for all Internet Explorer versions (not Edge).
 			ie: ie,
 
-			// @property ielt9: Boolean
-			// `true` for Internet Explorer versions less than 9.
-			ielt9: ie && !document.addEventListener, // TODO remove this after removing leaflet.
-
 			// @property edge: Boolean
 			// `true` for the Edge web browser.
 			edge: 'msLaunchUri' in navigator && !('documentMode' in document),
@@ -111,10 +100,6 @@ class BrowserProperties {
 			// `true` for any browser running on an Android platform.
 			android: ua.indexOf('android') !== -1,
 
-			// @property android23: Boolean
-			// `true` for browsers running on Android 2 or Android 3.
-			android23: android23,
-
 			// @property chrome: Boolean
 			// `true` for the Chrome browser.
 			chrome: chrome,
@@ -131,30 +116,9 @@ class BrowserProperties {
 			// `true` when the browser is running in a Mac platform
 			mac: mac,
 
-			// @property ie3d: Boolean
-			// `true` for all Internet Explorer versions supporting CSS transforms.
-			ie3d: ie3d,
-
-			// @property isInternetExplorer: Boolean
-			// `true` for Internet Explorer
-			isInternetExplorer: isInternetExplorer,
-
-			// @property webkit3d: Boolean
-			// `true` for webkit-based browsers supporting CSS transforms.
-			webkit3d: webkit3d,
-
-			// @property gecko3d: Boolean
-			// `true` for gecko-based browsers supporting CSS transforms.
-			gecko3d: gecko3d,
-
-			// @property opera12: Boolean
-			// `true` for the Opera browser supporting CSS transforms (version 12 or later).
-			opera12: opera12,
-
 			// @property any3d: Boolean
 			// `true` for all browsers supporting CSS transforms.
-			any3d: !global.L_DISABLE_3D && (ie3d || webkit3d || gecko3d) && !opera12 && !phantomjs,
-
+			any3d: !global.L_DISABLE_3D && (webkit3d || gecko3d),
 
 			// @property mobile: Boolean
 			// `true` for all browsers running in a mobile device.
@@ -163,18 +127,6 @@ class BrowserProperties {
 			// @property mobileWebkit: Boolean
 			// `true` for all webkit-based browsers in a mobile device.
 			mobileWebkit: mobile && webkit,
-
-			// @property mobileWebkit3d: Boolean
-			// `true` for all webkit-based browsers in a mobile device supporting CSS transforms.
-			mobileWebkit3d: mobile && webkit3d,
-
-			// @property mobileOpera: Boolean
-			// `true` for the Opera browser in a mobile device.
-			mobileOpera: mobile && global.opera,
-
-			// @property mobileGecko: Boolean
-			// `true` for gecko-based browsers running in a mobile device.
-			mobileGecko: mobile && gecko,
 
 			// @property cypressTest: Boolean
 			// `true` when the browser run by cypress
