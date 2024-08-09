@@ -1433,6 +1433,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 .ui-color-picker-palette {
 	display: grid;
 	grid-gap: 4px;
+	margin-top: 3px;
 }
 
 .ui-color-picker-entry {
