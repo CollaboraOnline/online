@@ -63,7 +63,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:contentDescription="@string/file_actions_icon_desc"
-            android:tint="?android:attr/textColorPrimary"
+            app:tint="?android:attr/textColorPrimary"
             app:srcCompat="@drawable/ic_more_vert_black_24dp" />
         <!--TextView
             android:id="@+id/file_item_date"

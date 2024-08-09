@@ -2,7 +2,8 @@ MAKEFLAGS = --no-builtin-rules
 CTAGS = ctags
 BUILT_SOURCES = node_modules
 
-L10N_PO = $(wildcard $(srcdir)/po/*.po)
+L10N_PO = $(if $(filter true,$(ENABLE_ANDROIDAPP)),$(filter-out %-ca-valencia.po,$(wildcard $(srcdir)/po/*.po)),$(wildcard $(srcdir)/po/*.po))
+# See https://issuetracker.google.com/issues/293294923 for why we need to filter out ca-valencian
 IS_BUNDLE = $(if $(filter true,$(ENABLE_BUNDLE)),true,)
 IS_SEPARATE = $(if $(filter false,$(ENABLE_BUNDLE)),true,)
 
