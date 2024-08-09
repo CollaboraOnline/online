@@ -1220,8 +1220,11 @@ AS_IF([test `uname -s` = Linux -a "$ENABLE_ANDROIDAPP" != "true" -a "$host_os" !
                       [AC_MSG_ERROR([libcap not available?])])])
 
 dnl NB. this is a gtk3 frontend.
+webkit_try_older=
 AS_IF([test "$ENABLE_GTKAPP" = true],
-      [PKG_CHECK_MODULES([WEBKIT],[webkit2gtk-4.1])])
+      [PKG_CHECK_MODULES([WEBKIT],[webkit2gtk-4.1],,[webkit_try_older=true])])
+AS_IF([test "$webkit_try_older" = true],
+      [PKG_CHECK_MODULES([WEBKIT],[webkit2gtk-4.0])])
 
 AM_CONDITIONAL([ENABLE_DEBUG], [test "$ENABLE_DEBUG" = "true"])
 
