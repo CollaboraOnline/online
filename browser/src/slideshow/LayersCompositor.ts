@@ -72,6 +72,8 @@ class LayersCompositor extends SlideShow.SlideCompositor {
 		this._presentationInfo = presentationInfo;
 		this.onSlidesInfo(presentationInfo);
 		this.layerDrawing.onUpdatePresentationInfo();
+		// TODO: optimize
+		this.layerDrawing.invalidateAll();
 	}
 
 	private onSlidesInfo(data: any) {
