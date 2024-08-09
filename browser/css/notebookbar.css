@@ -338,7 +338,7 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 }
 
 .unotoolbutton.notebookbar.has-label > *:not(.arrowbackground) { /*so they stay side by side*/
-	display: table-cell;
+	display: flex;
 	width: 100%;
 	height: 100%;
 }
