@@ -399,9 +399,7 @@ class UserList extends L.Control {
 			readonly: e.readonly,
 		});
 
-		if (!you) {
-			this.showJoinLeaveMessage('join', username, color);
-		}
+		this.showJoinLeaveMessage('join', e.viewId, username, color);
 
 		this.renderAll();
 	}
@@ -415,7 +413,7 @@ class UserList extends L.Control {
 		}
 
 		if (user !== undefined) {
-			this.showJoinLeaveMessage('leave', user.username, user.color);
+			this.showJoinLeaveMessage('leave', e.viewId, user.username, user.color);
 		}
 
 		this.renderAll();
@@ -451,10 +449,15 @@ class UserList extends L.Control {
 
 	showJoinLeaveMessage(
 		type: 'join' | 'leave',
-		username: string,
+		viewId: number,
+		username: string, // As the user no longer exists when we are showing a leave message, we can't get this from the viewId
 		_color: string /* TODO: make this display in user colors */,
 	) {
 		let message;
+
+		if (viewId === this.map._docLayer._viewId) {
+			return;
+		}
 
 		if (type === 'join') {
 			message = this.options.userJoinedPopupMessage.replace('{user}', username);
