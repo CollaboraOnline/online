@@ -840,6 +840,11 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 				When insertMode is passive: User is selecting cells.
 			*/
 			this.insertMode = e.state.trim() === '' ? false: true;
+			if (!this.insertMode) {
+				app.file.textCursor.visible = false;
+				if (this._map._docLayer._cursorMarker)
+					this._map._docLayer._cursorMarker.remove();
+			}
 		}
 		else if (e.commandName === '.uno:ToggleSheetGrid') {
 			let trimmedState = e.state.trim();
