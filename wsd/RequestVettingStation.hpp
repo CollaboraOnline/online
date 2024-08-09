@@ -38,7 +38,7 @@
 /// then. Or, it might have timed out. Alternatively, the WebSocket
 /// might never arrive (say, because the user clicked away).
 /// We take these possibilities into account and support them here.
-class RequestVettingStation
+class RequestVettingStation final : public std::enable_shared_from_this<RequestVettingStation>
 {
 public:
     /// Create an instance with a SocketPoll and a RequestDetails instance.

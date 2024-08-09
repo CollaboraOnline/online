@@ -200,7 +200,7 @@ void RequestVettingStation::handleRequest(const std::string& id,
 
             // Remove from the current poll and transfer.
             disposition.setMove(
-                [this, docKey, url, uriPublic,
+                [selfLifecycle = shared_from_this(), this, docKey, url, uriPublic,
                  isReadOnly](const std::shared_ptr<Socket>& moveSocket)
                 {
                     LOG_TRC_S('#' << moveSocket->getFD()
@@ -222,7 +222,7 @@ void RequestVettingStation::handleRequest(const std::string& id,
                             << docKey << "] is for a WOPI document");
             // Remove from the current poll and transfer.
             disposition.setMove(
-                [this, docKey, url, uriPublic,
+                [selfLifecycle = shared_from_this(), this, docKey, url, uriPublic,
                  isReadOnly](const std::shared_ptr<Socket>& moveSocket)
                 {
                     LOG_TRC_S('#' << moveSocket->getFD()
