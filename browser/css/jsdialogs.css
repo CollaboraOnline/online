@@ -1019,10 +1019,10 @@ input[type='number']:hover::-webkit-outer-spin-button {
 
 .ui-iconview {
 	overflow: auto;
-	display: inline-flex;
-	display: -ms-inline-flexbox;
-	flex-wrap: wrap;
 	justify-content: space-between;
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	max-height: 40vh;
 }
 
 .ui-iconview.mobile-wizard {
