@@ -1772,6 +1772,11 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	border: none;
 }
 
+.dropdown {
+	display: flex;
+	width: 100%;
+}
+
 .unotoolbutton.has-dropdown {
 	display: grid;
 	align-items: center;
