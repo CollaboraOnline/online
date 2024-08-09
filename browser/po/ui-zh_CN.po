@@ -8,9 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-07-05 13:52+0200\n"
-"PO-Revision-Date: 2024-08-06 06:19+0000\n"
-"Last-Translator: \"https://medium.com/@porkifiableoinking\" "
-"<erbaotao@outlook.com>\n"
+"PO-Revision-Date: 2024-08-06 06:26+0000\n"
+"Last-Translator: Tron Lee <472734894@qq.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
 "collabora-online/ui/zh_Hans/>\n"
 "Language: zh_CN\n"
@@ -2108,7 +2107,7 @@ msgstr "签名没有问题，但无法验证证书。"
 
 #: src/control/Signing.js:43
 msgid "The signature is OK, but the document is only partially signed."
-msgstr "签名没有问题，但文档仅被部分签名。"
+msgstr "签名正常，但文档仅进行了部分签名。"
 
 #: src/control/Signing.js:47
 msgid ""
@@ -2252,11 +2251,11 @@ msgstr "糟糕，连接到 {productname} 时出现问题： "
 
 #: src/core/Socket.js:653
 msgid "Server is now reachable. We have to refresh the page now."
-msgstr "服务器现在可以访问。页面必须现在刷新。"
+msgstr "服务器现在可以访问。页面必须立即刷新。"
 
 #: src/core/Socket.js:655
 msgid "Server is now reachable..."
-msgstr "服务器现在可以访问……"
+msgstr "服务器现在可以访问…"
 
 #: src/core/Socket.js:659
 msgid "RELOAD"
@@ -2356,7 +2355,7 @@ msgstr "{username} 将此文档保存为 {filename}。 你想要加入吗？"
 
 #: src/core/Socket.js:1192
 msgid "The document is being renamed and will reload shortly"
-msgstr "文档正被重命名，即可将被重载"
+msgstr "文档正被重命名，即刻将被重新加载"
 
 #: src/core/Socket.js:1195
 msgid "The document is switching to Offline mode and will reload shortly"
