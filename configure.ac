@@ -213,8 +213,9 @@ AC_ARG_WITH(android-abi,
                             by colons).  The supported ABIs are: armeabi-v7a, arm64-v8a, x86 and x86_64.
                             Please note that you need to specify the parameters for --with-lo-builddir,
                             --with-poco-includes and --with-poco-libs in the order of armeabi-v7a:arm64-v8a:x86:x86_64.
-                            For example, when you use --with-android-abi=x86_64,
-                            you have to specify --with-lo-builddir=:::/path/to/x86-64/builddir]),
+                            For example, when you use --with-android-abi="x86_64 x86",
+                            you have to specify --with-lo-builddir=::/path/to/x86/builddir:/path/to/x86-64/builddir.
+                            If you are building for only a single ABI you may omit the colons.]),
 ,)
 
 AC_ARG_WITH([app-name],
@@ -264,9 +265,15 @@ AC_ARG_WITH([lo-builddir],
                             file and change the references to "../ios-device" to refer to the corresponding
                             LibreOffice core source directory (which typically would be the same as the build
                             directory you specify with this option).
-                            In case of Android, you can provide 2 builddirs
-                            separated by a colon ':' - the first is for
-                            armeabi-v7a, the second is for arm64-v8a]))
+
+                            For Android, if building for multiple ABIs, you should specify multiple trees in the
+                            format --with-lo-builddir=/path/to/armeabi-v7a/builddir:/path/to/arm64-v8a/builddir:/path/to/x86/builddir:/path/to/x86_64/builddir.
+                            You may omit any ABIs you are not building for, except for armeabi-v7a which must
+                            always be provided.
+
+                            If you are building Android for a single ABI only, you may optionally specify only
+                            the core for your ABI without any colons. In this case, providing an armeabi-v7a core
+                            is not a requirement]))
 
 AC_ARG_WITH([logfile],
             AS_HELP_STRING([--with-logfile=<path>],
@@ -279,26 +286,22 @@ AC_ARG_WITH([trace-event-file],
 AC_ARG_WITH([poco-includes],
             AS_HELP_STRING([--with-poco-includes=<path>],
                            [Path to the "include" directory with the Poco
-                            headers.  If you are building for Android 64bit,
-                            you need two, separated by a colon ':'.]))
+                            headers. For Android, this has the same format as --with-lo-builddir]))
 
 AC_ARG_WITH([zstd-libs],
             AS_HELP_STRING([--with-zstd-libs=<path>],
                            [Path to the directory containing libzstd.a
-                            libraries.  If you are building for Android 64bit,
-                            you need two, separated by a colon ':'.]))
+                            libraries. For Android, this has the same format as --with-lo-builddir]))
 
 AC_ARG_WITH([zstd-includes],
             AS_HELP_STRING([--with-zstd-includes=<path>],
                            [Path to the "include" directory with the zstd
-                            headers.  If you are building for Android 64bit,
-                            you need two, separated by a colon ':'.]))
+                            headers. For Android, this has the same format as --with-lo-builddir]))
 
 AC_ARG_WITH([poco-libs],
             AS_HELP_STRING([--with-poco-libs=<path>],
                            [Path to the "lib" directory with the Poco
-                            libraries.  If you are building for Android 64bit,
-                            you need two, separated by a colon ':'.]))
+                            libraries.  For Android, this has the same format as --with-lo-builddir]))
 
 AC_ARG_WITH([libpng-includes],
             AS_HELP_STRING([--with-libpng-includes=<path>],
@@ -591,6 +594,16 @@ if test \( "$enable_iosapp" = "yes" -a `uname -s` = "Darwin" \) -o \( "$enable_a
          LOBUILDDIR_X86=`echo $with_lo_builddir | cut -d: -f3`
          LOBUILDDIR_X86_64=`echo $with_lo_builddir | cut -d: -f4`
       fi
+
+      if test -z "$LOBUILDDIR_ARM64_V8A" ; then
+         LOBUILDDIR_ARM64_V8A="$LOBUILDDIR"
+      fi
+      if test -z "$LOBUILDDIR_X86" ; then
+         LOBUILDDIR_X86="$LOBUILDDIR"
+      fi
+      if test -z "$LOBUILDDIR_X86_64" ; then
+         LOBUILDDIR_X86_64="$LOBUILDDIR"
+      fi
    fi
 
    # Get the git hash of the core build
@@ -640,6 +653,16 @@ if test \( "$enable_iosapp" = "yes" -a `uname -s` = "Darwin" \) -o \( "$enable_a
          POCOINCLUDE_X86=`echo $with_poco_includes | cut -d: -f3`
          POCOINCLUDE_X86_64=`echo $with_poco_includes | cut -d: -f4`
       fi
+
+      if test -z "$POCOINCLUDE_ARM64_V8A" ; then
+         POCOINCLUDE_ARM64_V8A="$POCOINCLUDE"
+      fi
+      if test -z "$POCOINCLUDE_X86" ; then
+         POCOINCLUDE_X86="$POCOINCLUDE"
+      fi
+      if test -z "$POCOINCLUDE_X86_64" ; then
+         POCOINCLUDE_X86_64="$POCOINCLUDE"
+      fi
    fi
 
    # Sanity checks
@@ -660,6 +683,16 @@ if test \( "$enable_iosapp" = "yes" -a `uname -s` = "Darwin" \) -o \( "$enable_a
          POCOLIB_ARM64_V8A=`echo $with_poco_libs | cut -d: -f2`
          POCOLIB_X86=`echo $with_poco_libs | cut -d: -f3`
          POCOLIB_X86_64=`echo $with_poco_libs | cut -d: -f4`
+      fi
+
+      if test -z "$POCOLIB_ARM64_V8A" ; then
+         POCOLIB_ARM64_V8A="$POCOLIB"
+      fi
+      if test -z "$POCOLIB_X86" ; then
+         POCOLIB_X86="$POCOLIB"
+      fi
+      if test -z "$POCOLIB_X86_64" ; then
+         POCOLIB_X86_64="$POCOLIB"
       fi
    fi
 
@@ -686,6 +719,16 @@ if test \( "$enable_iosapp" = "yes" -a `uname -s` = "Darwin" \) -o \( "$enable_a
          ZSTDINCLUDE_X86=`echo $with_zstd_includes | cut -d: -f3`
          ZSTDINCLUDE_X86_64=`echo $with_zstd_includes | cut -d: -f4`
       fi
+
+      if test -z "$ZSTDINCLUDE_ARM64_V8A" ; then
+         ZSTDINCLUDE_ARM64_V8A="$ZSTDINCLUDE"
+      fi
+      if test -z "$ZSTDINCLUDE_X86" ; then
+         ZSTDINCLUDE_X86="$ZSTDINCLUDE"
+      fi
+      if test -z "$ZSTDINCLUDE_X86_64" ; then
+         ZSTDINCLUDE_X86_64="$ZSTDINCLUDE"
+      fi
    fi
 
    # Sanity checks
@@ -701,6 +744,16 @@ if test \( "$enable_iosapp" = "yes" -a `uname -s` = "Darwin" \) -o \( "$enable_a
          ZSTDLIB_ARM64_V8A=`echo $with_zstd_libs | cut -d: -f2`
          ZSTDLIB_X86=`echo $with_zstd_libs | cut -d: -f3`
          ZSTDLIB_X86_64=`echo $with_zstd_libs | cut -d: -f4`
+      fi
+
+      if test -z "$ZSTDLIB_ARM64_V8A" ; then
+         ZSTDLIB_ARM64_V8A="$ZSTDLIB"
+      fi
+      if test -z "$ZSTDLIB_X86" ; then
+         ZSTDLIB_X86="$ZSTDLIB"
+      fi
+      if test -z "$ZSTDLIB_X86_64" ; then
+         ZSTDLIB_X86_64="$ZSTDLIB"
       fi
    fi
 
