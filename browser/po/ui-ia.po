@@ -8,14 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-07-05 13:52+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
-"Language: \n"
+"PO-Revision-Date: 2024-07-28 01:04+0000\n"
+"Last-Translator: Software In Interlingua <softinterlingua@gmail.com>\n"
+"Language-Team: Interlingua <https://hosted.weblate.org/projects/"
+"collabora-online/ui/ia/>\n"
+"Language: ia\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.7-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -51,11 +53,11 @@ msgstr ""
 
 #: admin/admin.strings.js:23
 msgid "Users online"
-msgstr ""
+msgstr "Usatores in linea"
 
 #: admin/admin.strings.js:24
 msgid "User Name"
-msgstr ""
+msgstr "Nomine del usator"
 
 #: admin/admin.strings.js:25
 msgid "Documents open"
@@ -64,7 +66,7 @@ msgstr ""
 #: admin/admin.strings.js:26 admin/src/AdminSocketOverview.js:82
 #: admin/src/AdminSocketOverview.js:131 admin/src/AdminSocketOverview.js:358
 msgid " user(s)."
-msgstr ""
+msgstr " usator(es)."
 
 #: admin/admin.strings.js:27 admin/src/AdminSocketOverview.js:214
 msgid " document(s) open."
@@ -96,7 +98,7 @@ msgstr ""
 
 #: admin/admin.strings.js:34
 msgid "Views"
-msgstr ""
+msgstr "Visualisationes"
 
 #: admin/admin.strings.js:35
 msgid "Elapsed time"
@@ -108,11 +110,11 @@ msgstr ""
 
 #: admin/admin.strings.js:37
 msgid "Modified"
-msgstr ""
+msgstr "Modificate"
 
 #: admin/admin.strings.js:38
 msgid "Uploaded"
-msgstr ""
+msgstr "Incargate"
 
 #: admin/admin.strings.js:39
 msgid "WOPI host"
@@ -148,7 +150,7 @@ msgstr ""
 #: src/canvas/sections/CommentListSection.ts:441
 #: src/canvas/sections/CommentSection.ts:147
 msgid "Save"
-msgstr ""
+msgstr "Salveguardar"
 
 #: admin/admin.strings.js:46
 msgid "Cache size of memory statistics"
@@ -214,7 +216,7 @@ msgstr ""
 #: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:478
 #: src/control/Control.StatusBar.js:194 src/control/Control.StatusBar.js:197
 msgid "None"
-msgstr ""
+msgstr "Necun"
 
 #: admin/admin.strings.js:62
 msgid "Set Log Levels"
@@ -232,7 +234,7 @@ msgstr ""
 #: src/canvas/sections/CommentListSection.ts:137
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.div:51-7
 msgid "Close"
-msgstr ""
+msgstr "Clauder"
 
 #: admin/admin.strings.js:65
 msgid "Update Log Levels"
@@ -240,11 +242,11 @@ msgstr ""
 
 #: admin/admin.strings.js:66
 msgid "Version Information"
-msgstr ""
+msgstr "Information re le version"
 
 #: admin/admin.strings.js:67
 msgid "License"
-msgstr ""
+msgstr "Licentia"
 
 #: admin/admin.strings.js:68 src/control/Control.Menubar.js:385
 #: src/control/Control.Menubar.js:546 src/control/Control.Menubar.js:677
@@ -253,7 +255,7 @@ msgstr ""
 #: src/control/Control.Menubar.js:1216
 #: src/control/Control.NotebookbarWriter.js:463
 msgid "About"
-msgstr ""
+msgstr "A proposito de"
 
 #: admin/src/AdminSocketAnalytics.js:214
 msgid "Received"
@@ -287,7 +289,7 @@ msgstr ""
 #: src/map/handler/Map.SlideShow.js:170 src/map/handler/Map.SlideShow.js:305
 #: src/map/handler/Map.SlideShow.js:316 src/map/handler/Map.WOPI.js:603
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: admin/src/AdminSocketBase.js:72 admin/src/AdminSocketBase.js:73
 msgid "Connection error"
