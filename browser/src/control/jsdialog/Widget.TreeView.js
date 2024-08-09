@@ -823,13 +823,474 @@ function _treelistboxControl(parentContainer, data, builder) {
 	return false;
 }
 
+class TreeViewControl {
+
+	get Container() {
+		return this._container;
+	}
+
+	static findEntryWithRow(entries, row) {
+		for (let i in entries) {
+			if (i == row)
+				return entries[i];
+			else if (entries[i].children) {
+				var found = TreeViewControl.findEntryWithRow(entries[i].children, row);
+				if (found)
+					return found;
+			}
+		}
+
+		return null;
+	}
+
+	static changeCheckboxStateOnClick(checkbox, treeViewData, builder, entry) {
+		let foundEntry;
+		if (checkbox.checked) {
+			foundEntry = TreeViewControl.findEntryWithRow(treeViewData.entries, entry.row);
+			if (foundEntry)
+				foundEntry.state = true;
+			builder.callback('treeview', 'change', treeViewData, {row: entry.row, value: true}, builder);
+		} else {
+			foundEntry = TreeViewControl.findEntryWithRow(treeViewData.entries, entry.row);
+			if (foundEntry)
+				foundEntry.state = false;
+			builder.callback('treeview', 'change', treeViewData, {row: entry.row, value: false}, builder);
+		}
+	}
+
+	createCheckbox(parent, treeViewData, builder, entry) {
+		let checkbox = L.DomUtil.create('input', builder.options.cssClass + ' ui-treeview-checkbox', parent);
+		checkbox.type = 'checkbox';
+		checkbox.tabIndex = -1;
+
+		if (entry.state === 'true' || entry.state === true)
+			checkbox.checked = true;
+
+		if (treeViewData.enabled !== false && treeViewData.enabled !== 'false') {
+			$(checkbox).change(function() {
+				TreeViewControl.changeCheckboxStateOnClick(this, treeViewData, builder, entry);
+			});
+		}
+
+		return checkbox;
+	}
+
+	createRadioButton(parent, treeViewData, builder, entry) {
+		let radioButton = L.DomUtil.create('input', builder.options.cssClass + ' ui-treeview-checkbox', parent);
+		radioButton.type = 'radio';
+		radioButton.tabIndex = -1;
+
+		if (entry.state === 'true' || entry.state === true)
+			radioButton.checked = true;
+
+		return radioButton;
+	}
+
+	createSelectionElement (parent, treeViewData, entry, builder) {
+		let selectionElement;
+		let checkboxtype = treeViewData.checkboxtype;
+		if (checkboxtype == 'radio') {
+			selectionElement = this.createRadioButton(parent, treeViewData, builder, entry);
+		}
+		else {
+			selectionElement = this.createCheckbox(parent, treeViewData, builder, entry);
+		}
+		return selectionElement;
+	}
+
+	isSeparator(element) {
+		if (!element.text)
+			return false;
+		return element.text.toLowerCase() === 'separator';
+	}
+
+	getCellIconId(cellData) {
+		let iconId = cellData.collapsed ? cellData.collapsed : cellData.expanded;
+		let newLength = iconId.lastIndexOf('.');
+		if (newLength > 0)
+			iconId = iconId.substr(0, newLength).replaceAll('/', '');
+		else
+			iconId = iconId.replaceAll('/', '');
+		return iconId;
+	}
+
+	createImageColumn(parentContainer, builder, imageUrl) {
+		let colorPreviewButton = L.DomUtil.create('img', builder.options.cssClass + ' ui-treeview-checkbox',
+							  parentContainer);
+		colorPreviewButton.src = imageUrl
+		colorPreviewButton.style.setProperty('outline', '1px solid var(--color-btn-border)');
+		colorPreviewButton.style.setProperty('vertical-align', 'middle');
+
+		return colorPreviewButton;
+	}
+}
+
+// ul -> li container, no headers, no columns or columns == 1
+class UnorderedListControl extends TreeViewControl {
+	constructor(data, builder) {
+		super(data, builder);
+
+		this._container = L.DomUtil.create('ul', builder.options.cssClass + ' ui-treeview');
+	}
+
+	fillRow(entry, builder, parent) {
+		let li = L.DomUtil.create('li', builder.options.cssClass, parent);
+		let span0 = L.DomUtil.create('span', builder.options.cssClass +
+					     ' ui-treeview-entry ui-treeview-notexpandable', li);
+		let span1 = L.DomUtil.create('span', builder.options.cssClass +
+					     ' ui-treeview-cell', span0);
+		let text = L.DomUtil.create('span', builder.options.cssClass +
+					    ' ui-treeview-cell-text', span1);
+		text.innerText = entry.text;
+		return li;
+	}
+}
+
+// table -> tr -> td, simple list (no children), with or no headers, columns > 1
+class SimpleTableControl extends TreeViewControl {
+	constructor(data, builder) {
+		super(data, builder);
+
+		this._container = L.DomUtil.create('table', builder.options.cssClass + ' ui-treeview');
+
+		if (data.headers && data.headers.length > 0) {
+			this._container._thead = L.DomUtil.create('thead', builder.options.cssClass,
+								  this._container);
+			L.DomUtil.create('tr', builder.options.cssClass, this._container._thead);
+		}
+
+		this._container._tbody = L.DomUtil.create('tbody', builder.options.cssClass +
+							  ' ui-treeview-body', this._container);
+		this._container.setAttribute('role', 'grid');
+	}
+
+	fillCells(entry, builder, tr) {
+		let td, span, text, img, icon, iconId, iconName, link, innerText;
+
+		for (let index in entry.columns) {
+			td = L.DomUtil.create('td', '', tr);
+			span = L.DomUtil.create('span', builder.options.cssClass + ' ui-treeview-cell', td);
+			text = L.DomUtil.create('span', builder.options.cssClass + ' ui-treeview-cell-text', span);
+			img = entry.columns[index].collapsedimage ? entry.columns[index].collapsedimage :
+				entry.columns[index].expandedimage;
+			if (img) {
+				this.createImageColumn(text, builder, img);
+			} else if (entry.columns[index].collapsed || entry.columns[index].expanded) {
+				icon = L.DomUtil.create('img', 'ui-listview-icon', text);
+				iconId = this.getCellIconId(entry.columns[index]);
+				L.DomUtil.addClass(icon, iconId + 'img');
+				iconName = builder._createIconURL(iconId, true);
+				L.LOUtil.setImage(icon, iconName, builder.map);
+				L.DomUtil.addClass(span, 'ui-listview-expandable-with-icon');
+				if (entry.children && entry.children.length > 0) {
+					tr.setAttribute('aria-expanded', Boolean(entry.columns[index].expanded));
+				}
+			} else if (entry.columns[index].link && !this.isSeparator(entry.columns[index])) {
+				innerText = L.DomUtil.create('span', builder.options.cssClass + ' ui-treeview-cell-text',
+							     text);
+				link = L.DomUtil.create('a', '', innerText);
+				link.href = entry.columns[index].link || entry.columns[index].text;
+				link.innerText = entry.columns[index].text || entry.text;
+			} else if (entry.columns[index].text && !this.isSeparator(entry.columns[index])) {
+				innerText = L.DomUtil.create('span', builder.options.cssClass + ' ui-treeview-cell-text',
+							     text);
+				innerText.innerText = entry.columns[index].text || entry.text;
+			}
+
+			td.setAttribute('role', 'gridcell');
+		}
+	}
+
+	fillRow(data, entry, builder, level/*, parent*/) {
+		let td, selectionElement;
+		let tr = L.DomUtil.create('tr', builder.options.cssClass + ' ui-listview-entry',
+					  this._container._tbody);
+		tr.setAttribute('role', 'row');
+		tr.setAttribute('aria-level', level);
+		if (entry.children && entry.children.length) {
+			tr.setAttribute('aria-expanded', 'false');
+		}
+
+		if (entry.state !== undefined) {
+			td = L.DomUtil.create('td', '', tr);
+			selectionElement = this.createSelectionElement(td, data, entry, builder);
+		}
+
+		ComplexTableControl.selectEntry(tr, entry.selected);
+
+		this.fillCells(entry, builder, tr);
+
+		return tr;
+	}
+
+	fillHeader(header, builder) {
+		if (!header)
+			return;
+
+		let th = L.DomUtil.create('th', builder.options.cssClass,
+					  this._container._thead.firstChild);
+		let span = L.DomUtil.create('span', builder.options.cssClass +
+					    ' ui-treeview-header-text', th);
+		L.DomUtil.create('span', builder.options.cssClass +
+				 ' ui-treeview-header-sort-icon', span);
+		span.innerText = header.text;
+	}
+}
+
+// complex table treegrid, with children, with or no headers, columns > 1
+class ComplexTableControl extends TreeViewControl {
+	static Selected = null;
+
+	constructor(data, builder) {
+		super(data, builder);
+
+		this._container = L.DomUtil.create('table', builder.options.cssClass + ' ui-treeview');
+
+		if (data.headers && data.headers.length > 0) {
+			this._container._thead = L.DomUtil.create('thead', builder.options.cssClass,
+								  this._container);
+			L.DomUtil.create('tr', builder.options.cssClass, this._container._thead);
+		}
+
+		this._container._tbody = L.DomUtil.create('tbody', builder.options.cssClass +
+							  ' ui-treeview-body', this._container);
+		this._container.setAttribute('role', 'treegrid');
+		this._container.addEventListener('click', L.bind(ComplexTableControl.onClick));
+	}
+
+	static selectEntry(tr, selected) {
+		tr.setAttribute('aria-selected', selected);
+		if (selected)
+			L.DomUtil.addClass(tr, 'selected');
+		else
+			L.DomUtil.removeClass(tr, 'selected');
+
+		return selected ? tr : null;
+	}
+
+	static toggleExpand(tr) {
+		let expanded = tr.getAttribute('aria-expanded') === 'true';
+		var level = tr.getAttribute('aria-level');
+
+		tr.setAttribute('aria-expanded', !expanded);
+
+		// show/hide sub entries
+		let sibling = tr.nextSibling;
+		while (sibling && sibling.getAttribute('aria-level') > level) {
+			if (expanded)
+				L.DomUtil.addClass(sibling, 'hidden');
+			else
+				L.DomUtil.removeClass(sibling, 'hidden');
+
+			sibling = sibling.nextSibling;
+		}
+	}
+
+	static onClick(e) {
+		let tr = ComplexTableControl.findRow(e.target);
+		if (!tr)
+			return;
+
+		let expand = tr.firstChild.firstChild;
+		if (expand && tr.hasAttribute('aria-expanded') &&
+		    e.clientX < expand.getBoundingClientRect().left) {
+			ComplexTableControl.toggleExpand(tr);
+			return;
+		}
+
+		let selected = tr.getAttribute('aria-selected') === 'true';
+		if (ComplexTableControl.Selected)
+			ComplexTableControl.selectEntry(ComplexTableControl.Selected, false);
+
+		ComplexTableControl.Selected = ComplexTableControl.selectEntry(tr, !selected);
+	}
+
+	static findRow(elem) {
+		let tr = elem;
+		if (tr && tr.localName === 'tbody')
+			return null;
+
+		while (tr && tr.localName !== 'tr') {
+			tr = tr.parentElement;
+		}
+
+		return tr;
+	}
+
+	fillCells(entry, builder, tr) {
+		let td, span, text, img, icon, iconId, iconName, link, innerText;
+
+		for (let index in entry.columns) {
+			td = L.DomUtil.create('td', '', tr);
+			span = L.DomUtil.create('span', builder.options.cssClass + ' ui-treeview-cell', td);
+			text = L.DomUtil.create('span', builder.options.cssClass + ' ui-treeview-cell-text', span);
+			img = entry.columns[index].collapsedimage ? entry.columns[index].collapsedimage :
+				entry.columns[index].expandedimage;
+			if (img) {
+				this.createImageColumn(text, builder, img);
+			} else if (entry.columns[index].collapsed || entry.columns[index].expanded) {
+				icon = L.DomUtil.create('img', 'ui-listview-icon', text);
+				iconId = this.getCellIconId(entry.columns[index]);
+				L.DomUtil.addClass(icon, iconId + 'img');
+				iconName = builder._createIconURL(iconId, true);
+				L.LOUtil.setImage(icon, iconName, builder.map);
+				L.DomUtil.addClass(span, 'ui-listview-expandable-with-icon');
+				if (entry.children && entry.children.length > 0) {
+					tr.setAttribute('aria-expanded', Boolean(entry.columns[index].expanded));
+				}
+			} else if (entry.columns[index].link && !this.isSeparator(entry.columns[index])) {
+				innerText = L.DomUtil.create('span', builder.options.cssClass + ' ui-treeview-cell-text',
+							     text);
+				link = L.DomUtil.create('a', '', innerText);
+				link.href = entry.columns[index].link || entry.columns[index].text;
+				link.innerText = entry.columns[index].text || entry.text;
+			} else if (entry.columns[index].text && !this.isSeparator(entry.columns[index])) {
+				innerText = L.DomUtil.create('span', builder.options.cssClass + ' ui-treeview-cell-text',
+							     text);
+				innerText.innerText = entry.columns[index].text || entry.text;
+			}
+
+			td.setAttribute('role', 'gridcell');
+		}
+	}
+
+	fillRow(data, entry, builder, level, parent) {
+		let td, state, selectionElement;
+		let tr = L.DomUtil.create('tr', builder.options.cssClass + ' ui-listview-entry',
+					  this._container._tbody);
+		tr.setAttribute('role', 'row');
+		tr.setAttribute('aria-level', level);
+
+		if (entry.children && entry.children.length) {
+			tr.setAttribute('aria-expanded', 'false');
+		}
+
+		if (entry.state !== undefined) {
+			td = L.DomUtil.create('td', '', tr);
+			selectionElement = this.createSelectionElement(td, data, entry, builder);
+		}
+
+		ComplexTableControl.selectEntry(tr, entry.selected);
+
+		this.fillCells(entry, builder, tr);
+
+		if (parent.getAttribute('aria-expanded') === 'false') {
+			L.DomUtil.addClass(tr, 'hidden');
+		}
+
+		return tr;
+	}
+
+	fillHeader(header, builder) {
+		if (!header)
+			return;
+
+		let th = L.DomUtil.create('th', builder.options.cssClass,
+					  this._container._thead.firstChild);
+		let span = L.DomUtil.create('span', builder.options.cssClass +
+					    ' ui-treeview-header-text', th);
+		L.DomUtil.create('span', builder.options.cssClass +
+				 ' ui-treeview-header-sort-icon', span);
+		span.innerText = header.text;
+	}
+}
+
+class FactoryTreeView {
+	constructor(data, builder) {
+		this._simpleContainer = new SimpleTableControl(data, builder);
+		this._complexContainer = new ComplexTableControl(data, builder);
+
+		if (!data.headers || data.headers.length === 0)
+			this._ulContainer = new UnorderedListControl(data, builder);
+	}
+
+	fillHeaders(headers, builder) {
+		for (let index in headers) {
+			if (this._simpleContainer)
+				this._simpleContainer.fillHeader(headers[index], builder);
+			if (this._complexContainer) {
+				this._complexContainer.fillHeader(headers[index], builder);
+			}
+		}
+	}
+
+	fillEntries(data, entries, builder, level, ulParent, simpleParent, complexParent) {
+		let ulChild, simpleChild, complexChild;
+
+		for (let index in entries) {
+			if (this._ulContainer && entries[index].columns &&
+			    entries[index].columns.length > 1)
+				delete this._ulContainer;
+
+			if (!entries[index].columns || entries[index].columns.length === 1) {
+				if (this._simpleContainer)
+					delete this._simpleContainer;
+				if (this._complexContainer)
+					delete this._complexContainer;
+			}
+
+			if (this._simpleContainer && level > 1)
+				delete this._simpleContainer;
+
+			if (this._ulContainer && ulParent) {
+				ulChild = this._ulContainer.fillRow(entries[index], builder, ulParent);
+			}
+
+			if (this._simpleContainer && simpleParent) {
+				simpleChild = this._simpleContainer.fillRow(data, entries[index], builder, level, simpleParent);
+			}
+
+			if (this._complexContainer && complexParent) {
+				if (simpleChild && level === 1) {
+					complexParent.appendChild(simpleChild);
+					complexChild = simpleChild;
+				}
+				else
+					complexChild = this._complexContainer.fillRow(data, entries[index], builder,
+										      level, complexParent);
+			}
+
+			this.fillEntries(data, entries[index].children, builder, level + 1, ulChild, simpleChild, complexChild);
+		}
+	}
+
+	build(data, builder, parentContainer) {
+		let ulContainer = this._ulContainer ? this._ulContainer.Container : null;
+		let simpleContainer = this._simpleContainer ? this._simpleContainer.Container._tbody : null;
+		let complexContainer = this._complexContainer ? this._complexContainer.Container._tbody : null;
+
+		this.fillEntries(data, data.entries, builder, 1, ulContainer, simpleContainer, complexContainer);
+		this.fillHeaders(data.headers, builder);
+
+		if (this._ulContainer && this._ulContainer.Container.hasChildNodes()) {
+			parentContainer.appendChild(this._ulContainer.Container);
+			return true;
+		}
+
+		if (this._simpleContainer && this._simpleContainer.Container.hasChildNodes()) {
+			parentContainer.appendChild(this._simpleContainer.Container);
+			return true;
+		}
+
+		if (this._complexContainer && this._complexContainer.Container.hasChildNodes()) {
+			parentContainer.appendChild(this._complexContainer.Container);
+			return true;
+		}
+
+		return false;
+	}
+}
+
 JSDialog.treeView = function (parentContainer, data, builder) {
 	var id = data.parent ? (data.parent.parent ? (data.parent.parent.parent ? (data.parent.parent.parent.id ? data.parent.parent.parent.id: null): null): null): null;
 
 	if (id && typeof(id) === 'string' && id.startsWith('Navigator'))
 		treeType = 'navigator';
 
-	var buildInnerData = _treelistboxControl(parentContainer, data, builder);
+	var factory = new FactoryTreeView(data, builder);
+	var buildInnerData = factory.build(data, builder, parentContainer);
+	if (!buildInnerData)
+		buildInnerData = _treelistboxControl(parentContainer, data, builder);
 	return buildInnerData;
 };
 
