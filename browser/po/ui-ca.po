@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-07-05 13:52+0200\n"
-"PO-Revision-Date: 2024-02-14 11:39+0000\n"
-"Last-Translator: Joan Montané <jmontane@gmail.com>\n"
+"PO-Revision-Date: 2024-07-19 10:02+0000\n"
+"Last-Translator: Héctor Gonzàlvez Escolano <hector.gie@gcloud.ua.es>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ca/>\n"
-"Language: \n"
+"Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.4-dev\n"
+"X-Generator: Weblate 5.7-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -394,7 +394,7 @@ msgstr ""
 
 #: js/global.js:1080
 msgid "Document is migrating to new server, retrying..."
-msgstr ""
+msgstr "S'està migrant el document a un nou servidor. S'està intentant de nou."
 
 #: js/global.js:1082
 msgid "Failed to get RouteToken from controller"
@@ -430,11 +430,11 @@ msgstr "Obre l'enllaç"
 
 #: src/control/Control.AlertDialog.js:66
 msgid "Copied external sources are not allowed"
-msgstr ""
+msgstr "No es permeten les fonts externes copiades"
 
 #: src/control/Control.AlertDialog.js:67
 msgid "It seems you have copied a selection that includes external images."
-msgstr ""
+msgstr "Sembla que has copiat una selecció que inclou imatges externes."
 
 #: src/control/Control.AlertDialog.js:68
 msgid ""
@@ -442,24 +442,29 @@ msgid ""
 "possible. Please right click in the image, choose \"Copy Image\" and paste "
 "it into the document instead."
 msgstr ""
+"Descarregar recursos externs està prohibit, però sí que pots enganxar "
+"imatges. Fes clic en la imatge, elegeix \"Copia la imatge\" i enganxa-la al "
+"document."
 
 #: src/control/Control.AlertDialog.js:72
 msgid "External data source not allowed"
-msgstr ""
+msgstr "No es permeten fonts de dades externes"
 
 #: src/control/Control.AlertDialog.js:73
 msgid "It seems you have tried to insert external data."
-msgstr ""
+msgstr "Sembla que has provat a inserir dades externes."
 
 #: src/control/Control.AlertDialog.js:74
 msgid ""
 "Selected external data source is forbidden. Please contact the system "
 "administrator."
 msgstr ""
+"No es permet seleccionar fonts de dades externes. Contacta amb "
+"l'administrador de sistemes."
 
 #: src/control/Control.AlertDialog.js:86
 msgid "Don't show this again"
-msgstr ""
+msgstr "No ho mostres més"
 
 #: src/control/Control.AlertDialog.js:105
 msgid "The server encountered a {0} error while parsing the {1} command."
@@ -479,7 +484,7 @@ msgstr "Enganxament especial"
 
 #: src/control/Control.ContextMenu.js:240
 msgid "Copy Cells"
-msgstr ""
+msgstr "Copia les cel·les"
 
 #: src/control/Control.ContextMenu.js:248
 msgid "Fill Series"
@@ -536,6 +541,8 @@ msgid ""
 "If you want to share large elements outside of {productname} it's necessary "
 "to first download them."
 msgstr ""
+"Si vols compartir elements grans fora de {productname}, primer de tot has de "
+"baixar-los."
 
 #: src/control/Control.DownloadProgress.js:60
 #: src/control/Control.NotebookbarCalc.js:212
@@ -546,7 +553,7 @@ msgstr "Baixa"
 
 #: src/control/Control.DownloadProgress.js:79
 msgid "Downloading clipboard content"
-msgstr ""
+msgstr "S'està baixant el contingut del porta-retalls"
 
 #: src/control/Control.DownloadProgress.js:86
 #: src/control/Control.DownloadProgress.js:111
@@ -557,19 +564,22 @@ msgstr "Copia"
 #: src/control/Control.DownloadProgress.js:109
 msgid "Download completed and ready to be copied to clipboard."
 msgstr ""
+"S'ha completat la baixada i ja està llesta per a copiar-se al porta-retalls."
 
 #: src/control/Control.DownloadProgress.js:110
 msgid ""
 "From now on clipboard notifications will discreetly appear at the bottom."
 msgstr ""
+"A partir d'ara, les notificacions del porta-retalls apareixeran a la part "
+"inferior."
 
 #: src/control/Control.DownloadProgress.js:263
 msgid "Content copied to clipboard"
-msgstr ""
+msgstr "S'ha copiat el contingut al porta-retalls"
 
 #: src/control/Control.DownloadProgress.js:305
 msgid "Download failed"
-msgstr ""
+msgstr "La baixada ha fallat"
 
 #: src/control/Control.FormulaBarJSDialog.js:102
 #: src/control/Control.FormulaBarJSDialog.js:162
@@ -899,7 +909,7 @@ msgstr "Mode nocturn"
 #: src/control/Control.NotebookbarImpress.js:485
 #: src/control/Control.NotebookbarWriter.js:1506
 msgid "Invert Background"
-msgstr ""
+msgstr "Inverteix el fons"
 
 #: src/control/Control.Menubar.js:154 src/control/Control.Menubar.js:459
 #: src/control/Control.Menubar.js:604 src/control/Control.Menubar.js:750
@@ -999,7 +1009,7 @@ msgstr "Propietats"
 #: src/control/Control.Menubar.js:365 src/control/Control.Menubar.js:1013
 #: src/control/Control.NotebookbarWriter.js:401
 msgid "Screen Reading"
-msgstr ""
+msgstr "Lectura de pantalla"
 
 #: src/control/Control.Menubar.js:378
 #: src/control/Control.NotebookbarWriter.js:367
@@ -1046,7 +1056,7 @@ msgstr "Envia comentaris"
 #: src/control/Control.ServerAuditDialog.ts:112
 #: src/control/Control.ServerAuditDialog.ts:113
 msgid "Server audit"
-msgstr ""
+msgstr "Auditoria del servidors"
 
 #: src/control/Control.Menubar.js:387 src/control/Control.Menubar.js:548
 #: src/control/Control.Menubar.js:679 src/control/Control.Menubar.js:959
@@ -1081,7 +1091,7 @@ msgstr "Desa els comentaris"
 #: src/control/Control.Menubar.js:414
 #: src/control/Control.NotebookbarBuilder.js:601
 msgid "Full Page Slides"
-msgstr ""
+msgstr "Diapositives a tota pàgina"
 
 #: src/control/Control.Menubar.js:415
 #: src/control/Control.NotebookbarBuilder.js:605
@@ -1151,48 +1161,48 @@ msgstr "Tots els fulls"
 #: src/control/Control.Menubar.js:835
 #: src/control/jsdialog/Definitions.Menu.ts:286
 msgid "Highlight cells with..."
-msgstr ""
+msgstr "Destaca cel·les amb..."
 
 #: src/control/Control.Menubar.js:836
 #: src/control/jsdialog/Definitions.Menu.ts:289
 msgid "Values greater than..."
-msgstr ""
+msgstr "Valors superiors a..."
 
 #: src/control/Control.Menubar.js:837
 #: src/control/jsdialog/Definitions.Menu.ts:293
 msgid "Values less than..."
-msgstr ""
+msgstr "Valors menors que..."
 
 #: src/control/Control.Menubar.js:838
 #: src/control/jsdialog/Definitions.Menu.ts:297
 msgid "Values equal to..."
-msgstr ""
+msgstr "Valors iguals que..."
 
 #: src/control/Control.Menubar.js:839
 #: src/control/jsdialog/Definitions.Menu.ts:301
 msgid "Values between..."
-msgstr ""
+msgstr "Valors entre..."
 
 #: src/control/Control.Menubar.js:840
 #: src/control/jsdialog/Definitions.Menu.ts:305
 msgid "Values duplicate..."
-msgstr ""
+msgstr "Valors el doble que..."
 
 #: src/control/Control.Menubar.js:841
 #: src/control/jsdialog/Definitions.Menu.ts:309
 msgid "Containing text..."
-msgstr ""
+msgstr "Conté text..."
 
 #: src/control/Control.Menubar.js:843 src/control/Control.Menubar.js:853
 #: src/control/jsdialog/Definitions.Menu.ts:313
 #: src/control/jsdialog/Definitions.Menu.ts:344
 msgid "More highlights..."
-msgstr ""
+msgstr "Més destacats..."
 
 #: src/control/Control.Menubar.js:845
 #: src/control/jsdialog/Definitions.Menu.ts:317
 msgid "Top/Bottom Rules..."
-msgstr ""
+msgstr "Regles superior/inferior..."
 
 #: src/control/Control.Menubar.js:846
 #: src/control/jsdialog/Definitions.Menu.ts:320
@@ -1217,12 +1227,12 @@ msgstr ""
 #: src/control/Control.Menubar.js:850
 #: src/control/jsdialog/Definitions.Menu.ts:336
 msgid "Above Average..."
-msgstr ""
+msgstr "Per damunt de la mitjana..."
 
 #: src/control/Control.Menubar.js:851
 #: src/control/jsdialog/Definitions.Menu.ts:340
 msgid "Below Average..."
-msgstr ""
+msgstr "Per davall de la mitjana..."
 
 #: src/control/Control.Menubar.js:963 src/control/Control.Menubar.js:1028
 #: src/control/Control.Menubar.js:1092 src/control/Control.Menubar.js:1146
