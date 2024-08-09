@@ -114,6 +114,8 @@ void RequestVettingStation::handleRequest(const std::string& id)
     }
 }
 
+#if !MOBILEAPP
+
 static std::string base64Encode(std::string& input)
 {
     std::ostringstream oss;
@@ -122,6 +124,8 @@ static std::string base64Encode(std::string& input)
     encoder.close();
     return oss.str();
 }
+
+#endif
 
 void RequestVettingStation::sendUnauthorizedErrorAndShutdown()
 {

@@ -16,7 +16,7 @@ namespace Util
 bool isMobileApp() { return true; }
 
 /// No-op implementation of desktop only functions
-DirectoryCounter::DirectoryCounter(const char* procPath) {}
+DirectoryCounter::DirectoryCounter(const char* procPath) { (void)_tasks; }
 DirectoryCounter::~DirectoryCounter() {}
 int DirectoryCounter::count() { return 0; }
 int spawnProcess(const std::string& cmd, const StringVector& args) { return 0; }

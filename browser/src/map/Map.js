@@ -1216,7 +1216,6 @@ L.Map = L.Evented.extend({
 		L.DomUtil.addClass(container, 'leaflet-container' +
 			(window.touch.hasAnyTouchscreen() ? ' leaflet-touch' : '') +
 			(L.Browser.retina ? ' leaflet-retina' : '') +
-			(L.Browser.ielt9 ? ' leaflet-oldie' : '') +
 			(L.Browser.safari ? ' leaflet-safari' : '') +
 			(this._fadeAnimated ? ' leaflet-fade-anim' : ''));
 
