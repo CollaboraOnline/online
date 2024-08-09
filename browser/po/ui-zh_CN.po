@@ -8,16 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-07-05 13:52+0200\n"
-"PO-Revision-Date: 2024-06-20 08:02+0000\n"
-"Last-Translator: TUCAOEVER5023416dba724da7 <814697582@qq.com>\n"
+"PO-Revision-Date: 2024-08-06 06:19+0000\n"
+"Last-Translator: \"https://medium.com/@porkifiableoinking\" "
+"<erbaotao@outlook.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
 "collabora-online/ui/zh_Hans/>\n"
-"Language: \n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.6-rc\n"
+"X-Generator: Weblate 5.7-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -118,7 +119,7 @@ msgstr "已上传"
 
 #: admin/admin.strings.js:39
 msgid "WOPI host"
-msgstr "WOPI 主机"
+msgstr "WOPI 服务器"
 
 #: admin/admin.strings.js:40
 msgid "Kill"
@@ -227,8 +228,7 @@ msgid "Log Levels"
 msgstr "日志级别"
 
 #: admin/admin.strings.js:64 src/control/Control.AlertDialog.js:32
-#: src/control/Control.AlertDialog.js:38
-#: src/control/Control.AlertDialog.js:101
+#: src/control/Control.AlertDialog.js:38 src/control/Control.AlertDialog.js:101
 #: src/control/Control.AlertDialog.js:108 src/control/Control.Zotero.js:189
 #: src/control/Parts.js:480 src/core/Socket.js:1137 src/core/Socket.js:1142
 #: src/canvas/sections/CommentListSection.ts:137
@@ -275,19 +275,19 @@ msgstr "服务器已关闭，请刷新该页面。"
 #: src/control/Control.AlertDialog.js:54
 #: src/control/Control.DocumentRepair.js:77
 #: src/control/Control.LanguageDialog.js:119
-#: src/control/Control.ServerAuditDialog.ts:148
-#: src/control/Control.Tabs.js:390 src/control/Control.Tabs.js:399
-#: src/control/Control.Zotero.js:335 src/control/Control.Zotero.js:373
-#: src/control/Permission.js:89 src/control/Permission.js:99
-#: src/control/Permission.js:149 src/control/Toolbar.js:703
-#: src/control/Toolbar.js:794 src/core/Socket.js:672 src/core/Socket.js:1107
-#: src/core/Socket.js:1177 src/core/Socket.js:1324 src/core/Socket.js:1328
-#: src/docdispatcher.ts:389 src/canvas/sections/CommentListSection.ts:1249
-#: src/canvas/sections/CommentListSection.ts:2092 src/main.js:79
-#: src/main.js:82 src/main.js:131 src/map/Clipboard.js:1185
-#: src/map/handler/Map.Feedback.js:82 src/map/handler/Map.SlideShow.js:56
-#: src/map/handler/Map.SlideShow.js:170 src/map/handler/Map.SlideShow.js:305
-#: src/map/handler/Map.SlideShow.js:316 src/map/handler/Map.WOPI.js:603
+#: src/control/Control.ServerAuditDialog.ts:148 src/control/Control.Tabs.js:390
+#: src/control/Control.Tabs.js:399 src/control/Control.Zotero.js:335
+#: src/control/Control.Zotero.js:373 src/control/Permission.js:89
+#: src/control/Permission.js:99 src/control/Permission.js:149
+#: src/control/Toolbar.js:703 src/control/Toolbar.js:794 src/core/Socket.js:672
+#: src/core/Socket.js:1107 src/core/Socket.js:1177 src/core/Socket.js:1324
+#: src/core/Socket.js:1328 src/docdispatcher.ts:389
+#: src/canvas/sections/CommentListSection.ts:1249
+#: src/canvas/sections/CommentListSection.ts:2092 src/main.js:79 src/main.js:82
+#: src/main.js:131 src/map/Clipboard.js:1185 src/map/handler/Map.Feedback.js:82
+#: src/map/handler/Map.SlideShow.js:56 src/map/handler/Map.SlideShow.js:170
+#: src/map/handler/Map.SlideShow.js:305 src/map/handler/Map.SlideShow.js:316
+#: src/map/handler/Map.WOPI.js:603
 msgid "OK"
 msgstr "确定"
 
@@ -304,15 +304,14 @@ msgid "Are you sure you want to terminate this session?"
 msgstr "您确定要停止此次会话吗？"
 
 #: admin/src/AdminSocketOverview.js:109 admin/src/AdminSocketOverview.js:432
-#: admin/src/AdminSocketSettings.js:48
-#: src/control/Control.DocumentRepair.js:71
+#: admin/src/AdminSocketSettings.js:48 src/control/Control.DocumentRepair.js:71
 #: src/control/Control.DownloadProgress.js:80
 #: src/control/Control.LanguageDialog.js:113
-#: src/control/Control.MobileTopBar.ts:43
-#: src/control/Control.UIManager.js:1248 src/control/Control.UIManager.js:1315
-#: src/control/Control.UIManager.js:1450 src/control/Control.UIManager.js:1592
-#: src/control/Control.Zotero.js:330 src/control/Toolbar.js:789
-#: src/core/Socket.js:1349 src/canvas/sections/CommentListSection.ts:436
+#: src/control/Control.MobileTopBar.ts:43 src/control/Control.UIManager.js:1248
+#: src/control/Control.UIManager.js:1315 src/control/Control.UIManager.js:1450
+#: src/control/Control.UIManager.js:1592 src/control/Control.Zotero.js:330
+#: src/control/Toolbar.js:789 src/core/Socket.js:1349
+#: src/canvas/sections/CommentListSection.ts:436
 #: src/canvas/sections/CommentSection.ts:146
 #: src/canvas/sections/CommentSection.ts:149
 msgid "Cancel"
@@ -435,7 +434,8 @@ msgid ""
 "Downloading external resources is forbidden but pasting images is still "
 "possible. Please right click in the image, choose \"Copy Image\" and paste "
 "it into the document instead."
-msgstr "禁止下载外部源文件，但您仍可粘贴图像。请右键点击图像，选择“复制图像”，然后将"
+msgstr ""
+"禁止下载外部源文件，但您仍可粘贴图像。请右键点击图像，选择“复制图像”，然后将"
 "其粘贴到文档中。"
 
 #: src/control/Control.AlertDialog.js:72
@@ -1144,36 +1144,35 @@ msgstr "所有工作表"
 #: src/control/Control.Menubar.js:835
 #: src/control/jsdialog/Definitions.Menu.ts:286
 msgid "Highlight cells with..."
-msgstr ""
+msgstr "高亮单元格条件…"
 
 #: src/control/Control.Menubar.js:836
 #: src/control/jsdialog/Definitions.Menu.ts:289
 msgid "Values greater than..."
-msgstr ""
+msgstr "值大于…"
 
 #: src/control/Control.Menubar.js:837
 #: src/control/jsdialog/Definitions.Menu.ts:293
 msgid "Values less than..."
-msgstr ""
+msgstr "值小于…"
 
 #: src/control/Control.Menubar.js:838
 #: src/control/jsdialog/Definitions.Menu.ts:297
 msgid "Values equal to..."
-msgstr ""
+msgstr "值等于…"
 
 #: src/control/Control.Menubar.js:839
 #: src/control/jsdialog/Definitions.Menu.ts:301
 msgid "Values between..."
-msgstr ""
+msgstr "值介于…"
 
 #: src/control/Control.Menubar.js:840
 #: src/control/jsdialog/Definitions.Menu.ts:305
 msgid "Values duplicate..."
-msgstr ""
+msgstr "值重复…"
 
 #: src/control/Control.Menubar.js:841
 #: src/control/jsdialog/Definitions.Menu.ts:309
-#, fuzzy
 msgid "Containing text..."
 msgstr "包含文本..."
 
@@ -1181,7 +1180,7 @@ msgstr "包含文本..."
 #: src/control/jsdialog/Definitions.Menu.ts:313
 #: src/control/jsdialog/Definitions.Menu.ts:344
 msgid "More highlights..."
-msgstr ""
+msgstr "更多高亮条件…"
 
 #: src/control/Control.Menubar.js:845
 #: src/control/jsdialog/Definitions.Menu.ts:317
@@ -1473,11 +1472,11 @@ msgstr "好"
 
 #: src/control/Control.NotebookbarCalc.js:800
 msgid "Neutral"
-msgstr "中立"
+msgstr "一般"
 
 #: src/control/Control.NotebookbarCalc.js:807
 msgid "Bad"
-msgstr "不好"
+msgstr "坏"
 
 #: src/control/Control.NotebookbarCalc.js:913
 msgid "Row Height"
@@ -1594,11 +1593,11 @@ msgstr "显示在窗口中"
 
 #: src/control/Control.NotebookbarImpress.js:455
 msgid "Normal View"
-msgstr ""
+msgstr "普通视图"
 
 #: src/control/Control.NotebookbarImpress.js:461
 msgid "Notes View"
-msgstr ""
+msgstr "笔记视图"
 
 #: src/control/Control.NotebookbarWriter.js:79
 msgid "Form"
@@ -1807,8 +1806,7 @@ msgstr "输入新的工作表名"
 
 #: src/control/Control.Toolbar.js:932
 msgid ""
-"Conflict Undo/Redo with multiple users. Please use document repair to "
-"resolve"
+"Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr "多个用户之间的「撤销」「恢复」操作发生冲突。请使用文档修复功能解决问题"
 
 #: src/control/Control.TopToolbar.js:108
@@ -1903,8 +1901,9 @@ msgstr "Zotero 警告"
 msgid ""
 "The document contains some citations which may be unreachable through web "
 "API. It may cause some problems while editing citations or bibliography."
-msgstr "该文档包含一些可能无法通过 Web API 访问的引用。 "
-"编辑引文或参考书目时可能会导致一些问题。"
+msgstr ""
+"该文档包含一些可能无法通过 Web API 访问的引用。 编辑引文或参考书目时可能会导"
+"致一些问题。"
 
 #: src/control/Control.Zotero.js:244 src/core/Socket.js:1276
 msgid "Loading..."
@@ -1992,8 +1991,7 @@ msgstr "引文警告"
 
 #: src/control/Control.Zotero.js:1143
 msgid ""
-"Once citations are entered their storage and display type can not be "
-"changed."
+"Once citations are entered their storage and display type can not be changed."
 msgstr "一旦输入引文，其存储以及显示方式便无法更改。"
 
 #: src/control/Control.Zotero.js:1144 src/control/Control.Zotero.js:1446
@@ -2052,7 +2050,7 @@ msgstr "输入文件名"
 
 #: src/control/Permission.js:168
 msgid "Save as ODF format"
-msgstr "以 ODF 格式保存"
+msgstr "保存为 ODF 格式"
 
 #: src/control/Permission.js:169
 msgid "Continue editing"
@@ -2066,7 +2064,7 @@ msgstr "继续只读"
 msgid ""
 "This document may contain formatting or content that cannot be saved in the "
 "current file format."
-msgstr "该文档可能包含以当前文件无法保存的格式或内容。"
+msgstr "此文档可能包含无法以当前文件格式保存的格式或内容。"
 
 #: src/control/Ruler.js:377
 msgid "Left Margin"
@@ -2242,7 +2240,7 @@ msgstr "单元格边框"
 
 #: src/control/jsdialog/Widget.SidebarContainers.ts:72
 msgid "More options for {name}"
-msgstr ""
+msgstr "用于 {name}的更多选项"
 
 #: src/control/jsdialog/Widget.TreeView.js:698
 msgid "Headings and objects that you add to the document will appear here"
@@ -2254,15 +2252,15 @@ msgstr "糟糕，连接到 {productname} 时出现问题： "
 
 #: src/core/Socket.js:653
 msgid "Server is now reachable. We have to refresh the page now."
-msgstr "服务器已恢复。我们现在需要刷新你的页面。"
+msgstr "服务器现在可以访问。页面必须现在刷新。"
 
 #: src/core/Socket.js:655
 msgid "Server is now reachable..."
-msgstr "服务器已上线..."
+msgstr "服务器现在可以访问……"
 
 #: src/core/Socket.js:659
 msgid "RELOAD"
-msgstr "重载"
+msgstr "重新加载"
 
 #: src/core/Socket.js:672
 msgid "Cluster configuration warning"
@@ -2410,11 +2408,11 @@ msgstr "很抱歉，无法连接到您的文档。请重试。"
 
 #: src/core/Socket.js:1645
 msgid "Reconnecting..."
-msgstr "正在重连…"
+msgstr "正在重新连接..."
 
 #: src/core/Socket.js:1655
 msgid "The server has been disconnected."
-msgstr "服务器连接中断。"
+msgstr "服务器连接已中断。"
 
 #: src/core/Debug.js:54
 msgid "Debug Tools"
@@ -2457,12 +2455,12 @@ msgstr "主机URL为空。coolwsd服务器的配置可能不正确，请联系�
 #: src/errormessages.js:24
 msgid ""
 "This is an unsupported version of {productname}. To avoid the impression "
-"that it is suitable for deployment in enterprises, this message appears "
-"when more than {docs} documents or {connections} connections are in use "
+"that it is suitable for deployment in enterprises, this message appears when "
+"more than {docs} documents or {connections} connections are in use "
 "concurrently."
 msgstr ""
-"这是不受支持的 {productname} 版本。为了避免让人觉得它适合在企业中部署，"
-"当同时使用超过 {docs} 个文档或超过 {connections} 个连接时，就会出现这则消息。"
+"这是不受支持的 {productname} 版本。为了避免让人觉得它适合在企业中部署，当同时"
+"使用超过 {docs} 个文档或超过 {connections} 个连接时，就会出现这则消息。"
 
 #: src/errormessages.js:25
 msgid "More information and support"
@@ -2472,7 +2470,8 @@ msgstr "更多信息和支持"
 msgid ""
 "This service is limited to {0} documents, and {1} connections total by the "
 "admin. This limit has been reached. Please try again later."
-msgstr "本服务经管理员限制为 {0} 份文档、%1 个连接。目前已经到达上限，请稍后重试。"
+msgstr ""
+"本服务经管理员限制为 {0} 份文档、%1 个连接。目前已经到达上限，请稍后重试。"
 
 #: src/errormessages.js:27
 msgid ""
@@ -2498,15 +2497,17 @@ msgstr "错误或缺少WOPISrc参数，请联系支持。"
 msgid ""
 "Your session will expire in {time}. Please save your work and refresh the "
 "session (or webpage) to continue. You might need to login again."
-msgstr "您的会话将在 {time} "
-"内过期，请保存您的工作并刷新会话（或页面）以继续。您可能并不需要重新登录。"
+msgstr ""
+"您的会话将在 {time} 内过期，请保存您的工作并刷新会话（或页面）以继续。您可能"
+"并不需要重新登录。"
 
 #: src/errormessages.js:32
 msgid ""
 "Your session has expired. Further changes to the document might not be "
 "saved. Please refresh the session (or webpage) to continue. You might need "
 "to login again."
-msgstr "您的会话已过期，文档后续变更可能无法保存，请刷新会话（或页面）以继续。您可能"
+msgstr ""
+"您的会话已过期，文档后续变更可能无法保存，请刷新会话（或页面）以继续。您可能"
 "并不需要重新登录。"
 
 #: src/errormessages.js:33
@@ -2521,20 +2522,20 @@ msgstr "无效链接: 「{url}」"
 
 #: src/errormessages.js:35
 msgid ""
-"You are leaving the document. The following web page will open in a new "
-"tab: "
+"You are leaving the document. The following web page will open in a new tab: "
 msgstr "您正要离开该文档。接下来的页面将在新的标签页打开： "
 
 #: src/errormessages.js:36
 msgid ""
 "Failed to load the document. This document is either malformed or is taking "
 "more resources than allowed. Please contact the administrator."
-msgstr "载入文档失败。可能是文档格式损坏，也可能是文档需要的资源超过限制。请联系系统"
+msgstr ""
+"载入文档失败。可能是文档格式损坏，也可能是文档需要的资源超过限制。请联系系统"
 "管理员。"
 
 #: src/errormessages.js:37
 msgid "Cleaning up the document from the last session."
-msgstr "清理上一会话的文档。"
+msgstr "清理上次会话中的文档。"
 
 #: src/errormessages.js:38
 msgid ""
@@ -2545,14 +2546,14 @@ msgstr "我们正在清理上一会话的文档，请稍后重试。"
 #: src/errormessages.js:39
 msgid ""
 "Your {productname} cluster appear to be mis-configured or scaling rapidly - "
-"please contact your system administrator. Continuing with editing may "
-"result in multiple users not seeing each other, conflicts in the document "
-"storage and/or copy/paste problems. Expected serverId {0} for routeToken "
-"{1} but connected to serverId {2}"
+"please contact your system administrator. Continuing with editing may result "
+"in multiple users not seeing each other, conflicts in the document storage "
+"and/or copy/paste problems. Expected serverId {0} for routeToken {1} but "
+"connected to serverId {2}"
 msgstr ""
-"您的 {productname} 集群似乎配置错误或扩展迅速 - 请联系您的系统管理员。 "
-"继续编辑可能会导致多个用户看不到对方、文档存储冲突和/或复制/粘贴问题。 "
-"RouteToken {1} 预期为 serverId {0}，但已连接到 serverId {2}"
+"您的 {productname} 集群似乎配置错误或扩展迅速 - 请联系您的系统管理员。 继续编"
+"辑可能会导致多个用户看不到对方、文档存储冲突和/或复制/粘贴问题。 RouteToken "
+"{1} 预期为 serverId {0}，但已连接到 serverId {2}"
 
 #: src/errormessages.js:40
 msgid ""
@@ -2589,7 +2590,7 @@ msgstr "文档过大或服务器空间不足以保存该文档。文档将只读
 msgid ""
 "Document cannot be saved due to expired session, please reopen the document "
 "to continue."
-msgstr ""
+msgstr "由于会话过期致使文档无法保存，请重新打开文档以便继续。"
 
 #: src/errormessages.js:48
 msgid "Document cannot be saved."
@@ -2608,22 +2609,24 @@ msgstr "无法从存储中读取该文档，请尝试重新加载该文档。"
 msgid ""
 "Save failed due to no storage space left. Document will now be read-only. "
 "Please make sure enough disk space is available and try to save again."
-msgstr "无法保存该文档，服务器空间不足。文档将只读。请确保有足够的存储空间并重新尝试"
+msgstr ""
+"无法保存该文档，服务器空间不足。文档将只读。请确保有足够的存储空间并重新尝试"
 "保存。"
 
 #: src/errormessages.js:55
 msgid ""
 "Save failed because the document is too large or exceeds the remaining "
-"storage space. The document will now be read-only but you may still "
-"download it now to preserve a copy locally."
-msgstr "无法保存该文档或该文档超出剩余存储空间。文档将只读，但是你可能仍可以下载它以"
+"storage space. The document will now be read-only but you may still download "
+"it now to preserve a copy locally."
+msgstr ""
+"无法保存该文档或该文档超出剩余存储空间。文档将只读，但是你可能仍可以下载它以"
 "保留一份拷贝。"
 
 #: src/errormessages.js:56
 msgid ""
 "Document cannot be saved due to expired session, please reload the page to "
 "continue."
-msgstr ""
+msgstr "由于会话过期致使文档无法保存，请重新加载页面以便继续。"
 
 #: src/errormessages.js:57
 msgid "Document cannot be saved, please check your permissions."
@@ -2775,19 +2778,19 @@ msgid ""
 "kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd></td></tr><tr><td>Copy</"
 "td><td>Cut</td><td>Paste</td></tr></table>"
 msgstr ""
-"<p>剪贴板访问受限，请使用以下键盘快捷键：</p><table class=\"warn-copy-paste\""
-"><tr><td><kbd>Ctrl</kbd><span class=\"kbd--plus\""
-">+</span><kbd>C</kbd></td><td><kbd>Ctrl</kbd><span class=\"kbd--plus\">+ "
-"</span><kbd>X</kbd></td><td><kbd>Ctrl</kbd><span class=\"kbd--plus\""
-">+</span><kbd>V</kbd "
-"></td></tr><tr><td>复制</td><td>剪切</td><td>粘贴</td></tr></table>"
+"<p>剪贴板访问受限，请使用以下键盘快捷键：</p><table class=\"warn-copy-"
+"paste\"><tr><td><kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>C</"
+"kbd></td><td><kbd>Ctrl</kbd><span class=\"kbd--plus\">+ </span><kbd>X</kbd></"
+"td><td><kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd ></td></"
+"tr><tr><td>复制</td><td>剪切</td><td>粘贴</td></tr></table>"
 
 #: src/map/Clipboard.js:1199
 msgid ""
 "<p>A download due to a large copy/paste operation has already started. "
 "Please, wait for the current download or cancel it before starting a new "
 "one</p>"
-msgstr "<p>大型复制／粘贴操作所需的下载已经开始。请等待下载完成之后或将其取消后，再开"
+msgstr ""
+"<p>大型复制／粘贴操作所需的下载已经开始。请等待下载完成之后或将其取消后，再开"
 "始新的下载</p>"
 
 #: src/map/Clipboard.js:1217
@@ -2796,9 +2799,9 @@ msgid ""
 "press</b> <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to "
 "see more options</p><p>Close popup to ignore paste special</p>"
 msgstr ""
-"<p>浏览器剪贴板访问受限</p><p><b>请按下：</b><kbd>Ctrl</kbd><span class=\"kbd"
-"--plus\""
-">+</span><kbd>V</kbd>查看更多选项</p><p>关闭弹出窗口以忽略特殊粘贴</p>"
+"<p>浏览器剪贴板访问受限</p><p><b>请按下：</b><kbd>Ctrl</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>V</kbd>查看更多选项</p><p>关闭弹出窗口以忽略"
+"特殊粘贴</p>"
 
 #: src/map/Clipboard.js:1224
 msgid "Paste from this document"
@@ -2823,8 +2826,7 @@ msgstr "向我们提供您的反馈意见"
 #: src/map/handler/Map.FileInserter.js:105
 #, javascript-format
 msgid ""
-"The file of type: {0} cannot be uploaded to server since the file has no "
-"name"
+"The file of type: {0} cannot be uploaded to server since the file has no name"
 msgstr "无法将类型为 {0} 的文件上传到服务器，因为该文件没有文件名"
 
 #: src/map/handler/Map.FileInserter.js:107
@@ -2858,7 +2860,8 @@ msgid ""
 "Presentation was blocked. Please allow pop-ups in your browser. This lets "
 "slide shows to be displayed in separated windows, allowing for easy screen "
 "sharing."
-msgstr "演示被阻止。请在浏览器中允许弹出窗口。这让幻灯片演示显示在单独窗口中，便于屏"
+msgstr ""
+"演示被阻止。请在浏览器中允许弹出窗口。这让幻灯片演示显示在单独窗口中，便于屏"
 "幕分享。"
 
 #: src/map/handler/Map.SlideShow.js:183
@@ -2926,8 +2929,8 @@ msgstr "Collabora Online 开发版本"
 msgid ""
 "Enjoy the latest developments in online productivity, free for you to use, "
 "to explore and to use with others in the browser. Various <a "
-"target=\"_blank\" href=\"https://www.collaboraoffice.com/solutions/"
-"collabora-office-android-ios/\">apps</a> are also available for mobile."
+"target=\"_blank\" href=\"https://www.collaboraoffice.com/solutions/collabora-"
+"office-android-ios/\">apps</a> are also available for mobile."
 msgstr ""
 "享受在线生产力的最新发展，您可以在浏览器中免费使用、探索并与其他人一起使用。 "
 "各种<a target=\"_blank\" href=\"https://www.collaboraoffice.com/solutions/"
@@ -2944,9 +2947,9 @@ msgid ""
 "latest Collabora Online Development Edition, aimed at home users and small "
 "teams."
 msgstr ""
-"请查阅<a target=\"_blank\" href=\"https://www.collaboraoffice.com/"
-"code-24-04-release-notes/\">发布说明</a>，了解有关最新的Collabora Online "
-"开发版本（针对家庭用户和小团队）的所有信息。"
+"请查阅<a target=\"_blank\" href=\"https://www.collaboraoffice.com/code-24-04-"
+"release-notes/\">发布说明</a>，了解有关最新的Collabora Online 开发版本（针对"
+"家庭用户和小团队）的所有信息。"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:48-7
 msgid "Get Involved"
@@ -2960,19 +2963,18 @@ msgstr "https://collaboraonline.github.io/"
 msgid ""
 "Are you interested in contributing but don’t know where to start? Head over "
 "to the <a target=\"_blank\" href=\"https://collaboraonline.github.io/post/"
-"build-code/\">step-by-step instructions</a> and build CODE from scratch. "
-"You can also help out with <a target=\"_blank\" href=\"https://"
-"collaboraonline.github.io/post/translate/\">translations</a> or by <a "
-"target=\"_blank\" href=\"https://collaboraonline.github.io/post/filebugs/"
-"\">filing a bug report</a> with all the essential steps on how to reproduce "
-"it."
+"build-code/\">step-by-step instructions</a> and build CODE from scratch. You "
+"can also help out with <a target=\"_blank\" href=\"https://collaboraonline."
+"github.io/post/translate/\">translations</a> or by <a target=\"_blank\" "
+"href=\"https://collaboraonline.github.io/post/filebugs/\">filing a bug "
+"report</a> with all the essential steps on how to reproduce it."
 msgstr ""
-"如果您有兴趣参与项目但不知道从何开始，请查看<a target=\"_blank\" href=\"https"
-"://collaboraonline.github.io/post/build-code/\""
-">逐步说明</a>，从头开始构建CODE。您也可以通过参与<a target=\"_blank\" href="
-"\"https://collaboraonline.github.io/post/translate/\">翻译</a>或通过<a "
-"target=\"_blank\" href=\"https://collaboraonline.github.io/post/filebugs/\""
-">提交错误报告</a>（报告中应包含问题如何重现的关键步骤）来加入到项目中来。"
+"如果您有兴趣参与项目但不知道从何开始，请查看<a target=\"_blank\" "
+"href=\"https://collaboraonline.github.io/post/build-code/\">逐步说明</a>，从"
+"头开始构建CODE。您也可以通过参与<a target=\"_blank\" href=\"https://"
+"collaboraonline.github.io/post/translate/\">翻译</a>或通过<a "
+"target=\"_blank\" href=\"https://collaboraonline.github.io/post/filebugs/\">"
+"提交错误报告</a>（报告中应包含问题如何重现的关键步骤）来加入到项目中来。"
 
 #: welcome/welcome.html%2Bhtml.body.div.div:55-5
 msgid ""
@@ -3027,9 +3029,9 @@ msgstr ""
 #~ "id=\"slide-2-indicator\" href=\"#slide-2\">2</a> <a id=\"slide-3-"
 #~ "indicator\" href=\"#slide-3\">3</a>"
 #~ msgstr ""
-#~ "<a id=\"slide-1-indicator\" class=\"active\" href=\"#slide-1\">1</a> <a id="
-#~ "\"slide-2-indicator\" href=\"#slide-2\">2</a> <a id=\"slide-3-indicator\" "
-#~ "href=\"#slide-3\">3</a>"
+#~ "<a id=\"slide-1-indicator\" class=\"active\" href=\"#slide-1\">1</a> <a "
+#~ "id=\"slide-2-indicator\" href=\"#slide-2\">2</a> <a id=\"slide-3-"
+#~ "indicator\" href=\"#slide-3\">3</a>"
 
 #~ msgid "ODF Spreadsheet (.ods)"
 #~ msgstr "ODF 电子表格 （.ods）"
@@ -3069,13 +3071,15 @@ msgstr ""
 
 #~ msgid ""
 #~ "<p>If you would like to share larger elements of your document with other "
-#~ "applications it is necessary to first download them onto your device. To do "
-#~ "that press the \"Start download\" button below, and when complete click "
-#~ "\"Confirm copy to clipboard\".</p><p>If you are copy and pasting between "
-#~ "documents inside {productname}, there is no need to download.</p>"
+#~ "applications it is necessary to first download them onto your device. To "
+#~ "do that press the \"Start download\" button below, and when complete "
+#~ "click \"Confirm copy to clipboard\".</p><p>If you are copy and pasting "
+#~ "between documents inside {productname}, there is no need to download.</p>"
 #~ msgstr ""
-#~ "<p>若要将文档中的较大元素与其他应用程序共享，必须先将其下载到您的设备上。要进行该操作，请点击下方的“开始下载”按钮，并在下载完成之后点击“确认复制到剪"
-#~ "贴板”。</p><p>若是在 {productname} 之内的文档间复制和粘贴，则无需下载。</p>"
+#~ "<p>若要将文档中的较大元素与其他应用程序共享，必须先将其下载到您的设备上。"
+#~ "要进行该操作，请点击下方的“开始下载”按钮，并在下载完成之后点击“确认复制到"
+#~ "剪贴板”。</p><p>若是在 {productname} 之内的文档间复制和粘贴，则无需下载。"
+#~ "</p>"
 
 #~ msgid "Reference~s"
 #~ msgstr "引用(~S)"
@@ -3089,7 +3093,8 @@ msgstr ""
 #~ msgid ""
 #~ "Failed to read document from storage. Please contact your storage server "
 #~ "(%storageserver) administrator."
-#~ msgstr "从存储位置读取文件错误。请联系存储服务器 (%storageserver) 的管理员。"
+#~ msgstr ""
+#~ "从存储位置读取文件错误。请联系存储服务器 (%storageserver) 的管理员。"
 
 #~ msgid ""
 #~ "Document cannot be saved. Check your permissions or contact the storage "
@@ -3106,10 +3111,12 @@ msgstr ""
 
 #, javascript-format
 #~ msgid ""
-#~ "Save failed due to no disk space left on storage server. Document will now "
-#~ "be read-only. Please contact the server (%storageserver) administrator to "
-#~ "continue editing."
-#~ msgstr "存储服务器上的磁盘空间不足，保存失败。文档现将是只读模式。要继续编辑，请联系服务器(%storageserver) 管理员。"
+#~ "Save failed due to no disk space left on storage server. Document will "
+#~ "now be read-only. Please contact the server (%storageserver) "
+#~ "administrator to continue editing."
+#~ msgstr ""
+#~ "存储服务器上的磁盘空间不足，保存失败。文档现将是只读模式。要继续编辑，请联"
+#~ "系服务器(%storageserver) 管理员。"
 
 #~ msgid "Show Selected Sheets"
 #~ msgstr "显示选定的工作表"
@@ -3243,14 +3250,15 @@ msgstr ""
 #~ msgstr "%d 分钟前"
 
 #~ msgid ""
-#~ "IE11 has reached its maximum number of connections. Please see this document "
-#~ "to increase this limit if needed: https://docs.microsoft.com/en-us/previous-"
-#~ "versions/windows/internet-explorer/ie-developer/general-info/"
+#~ "IE11 has reached its maximum number of connections. Please see this "
+#~ "document to increase this limit if needed: https://docs.microsoft.com/en-"
+#~ "us/previous-versions/windows/internet-explorer/ie-developer/general-info/"
 #~ "ee330736(v=vs.85)#websocket-maximum-server-connections"
 #~ msgstr ""
-#~ "IE11 已超过了其最大连接数限制。若需要增加连接数限制，请参考这个文档: https://docs.microsoft.com/en-us/"
-#~ "previous-versions/windows/internet-explorer/ie-developer/general-info/"
-#~ "ee330736(v=vs.85)#websocket-maximum-server-connections"
+#~ "IE11 已超过了其最大连接数限制。若需要增加连接数限制，请参考这个文档: "
+#~ "https://docs.microsoft.com/en-us/previous-versions/windows/internet-"
+#~ "explorer/ie-developer/general-info/ee330736(v=vs.85)#websocket-maximum-"
+#~ "server-connections"
 
 #~ msgid "Start upload"
 #~ msgstr "开始上传"
@@ -3281,12 +3289,13 @@ msgstr ""
 #~ "keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For copying.</li><li><b>Ctrl+X</"
 #~ "b>: For cutting.</li><li><b>Ctrl+V</b>: For pasting.</li></ul></p>"
 #~ msgstr ""
-#~ "<p>您的浏览器对剪贴板的访问受到限制，所以请使用下列快捷键：<ul><li><b>Ctrl+C</b>：用于复制。</li><li><b>Ctrl+X<"
-#~ "/b>：用于剪切。</li><li><b>Ctrl+V</b>用于粘贴。</li></ul></p>"
+#~ "<p>您的浏览器对剪贴板的访问受到限制，所以请使用下列快捷键："
+#~ "<ul><li><b>Ctrl+C</b>：用于复制。</li><li><b>Ctrl+X</b>：用于剪切。</"
+#~ "li><li><b>Ctrl+V</b>用于粘贴。</li></ul></p>"
 
 #~ msgid ""
-#~ "The Personal edition is supported by volunteers and intended for individual "
-#~ "use."
+#~ "The Personal edition is supported by volunteers and intended for "
+#~ "individual use."
 #~ msgstr "个人版由志愿者提供支持，且预期目标仅供个人使用。"
 
 #~ msgid "Server is recycling and will be available shortly"
@@ -3323,6 +3332,5 @@ msgstr ""
 #~ msgstr "图案"
 
 #, fuzzy
-#~| msgid "Text orientation"
 #~ msgid "Toggle Page Orientation"
 #~ msgstr "文字方向"
