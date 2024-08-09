@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-07-05 13:52+0200\n"
-"PO-Revision-Date: 2024-06-14 16:47+0000\n"
+"PO-Revision-Date: 2024-08-01 02:30+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: Croatian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/hr/>\n"
-"Language: \n"
+"Language: hr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Weblate 5.6-dev\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Weblate 5.7-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -1160,36 +1160,35 @@ msgstr "Svi listovi"
 #: src/control/Control.Menubar.js:835
 #: src/control/jsdialog/Definitions.Menu.ts:286
 msgid "Highlight cells with..."
-msgstr ""
+msgstr "Istakni polja sa …"
 
 #: src/control/Control.Menubar.js:836
 #: src/control/jsdialog/Definitions.Menu.ts:289
 msgid "Values greater than..."
-msgstr ""
+msgstr "Vrijednosti veća od …"
 
 #: src/control/Control.Menubar.js:837
 #: src/control/jsdialog/Definitions.Menu.ts:293
 msgid "Values less than..."
-msgstr ""
+msgstr "Vrijednosti manja od …"
 
 #: src/control/Control.Menubar.js:838
 #: src/control/jsdialog/Definitions.Menu.ts:297
 msgid "Values equal to..."
-msgstr ""
+msgstr "Vrijednosti jednaka …"
 
 #: src/control/Control.Menubar.js:839
 #: src/control/jsdialog/Definitions.Menu.ts:301
 msgid "Values between..."
-msgstr ""
+msgstr "Vrijednosti između …"
 
 #: src/control/Control.Menubar.js:840
 #: src/control/jsdialog/Definitions.Menu.ts:305
 msgid "Values duplicate..."
-msgstr ""
+msgstr "Duple vrijednosti …"
 
 #: src/control/Control.Menubar.js:841
 #: src/control/jsdialog/Definitions.Menu.ts:309
-#, fuzzy
 msgid "Containing text..."
 msgstr "Sadrži tekst …"
 
@@ -1197,7 +1196,7 @@ msgstr "Sadrži tekst …"
 #: src/control/jsdialog/Definitions.Menu.ts:313
 #: src/control/jsdialog/Definitions.Menu.ts:344
 msgid "More highlights..."
-msgstr ""
+msgstr "Još više isticanja …"
 
 #: src/control/Control.Menubar.js:845
 #: src/control/jsdialog/Definitions.Menu.ts:317
@@ -1610,11 +1609,11 @@ msgstr "Prikaži u prozoru"
 
 #: src/control/Control.NotebookbarImpress.js:455
 msgid "Normal View"
-msgstr ""
+msgstr "Normalni prikaz"
 
 #: src/control/Control.NotebookbarImpress.js:461
 msgid "Notes View"
-msgstr ""
+msgstr "Prikaz napomena"
 
 #: src/control/Control.NotebookbarWriter.js:79
 msgid "Form"
@@ -2271,7 +2270,7 @@ msgstr "Rubovi polja"
 
 #: src/control/jsdialog/Widget.SidebarContainers.ts:72
 msgid "More options for {name}"
-msgstr ""
+msgstr "Još više opcija za {name}"
 
 #: src/control/jsdialog/Widget.TreeView.js:698
 msgid "Headings and objects that you add to the document will appear here"
@@ -2658,6 +2657,8 @@ msgid ""
 "Document cannot be saved due to expired session, please reopen the document "
 "to continue."
 msgstr ""
+"Dokument se ne može spremiti zbog istekle sesije. Za nastavljanje ponovo "
+"otvori dokument."
 
 #: src/errormessages.js:48
 msgid "Document cannot be saved."
@@ -2696,6 +2697,8 @@ msgid ""
 "Document cannot be saved due to expired session, please reload the page to "
 "continue."
 msgstr ""
+"Dokument se ne može spremiti zbog istekle sesije. Za nastavljanje ponovo "
+"učitaj stranicu."
 
 #: src/errormessages.js:57
 msgid "Document cannot be saved, please check your permissions."
