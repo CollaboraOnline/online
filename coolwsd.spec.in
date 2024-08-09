@@ -15,11 +15,18 @@ License:        EULA
 Source0:        coolwsd-@PACKAGE_VERSION@.tar.gz
 BuildRequires:  libcap-devel pam-devel rsync
 Requires:       collaboraoffice collaboraoffice-ure collaboraofficebasis-core collaboraofficebasis-writer collaboraofficebasis-impress collaboraofficebasis-graphicfilter collaboraofficebasis-en-US collaboraofficebasis-calc collaboraofficebasis-ooofonts collaboraofficebasis-images collaboraofficebasis-draw collaboraofficebasis-extension-pdf-import collaboraofficebasis-ooolinguistic collaboraofficebasis-math
-Requires(post): coreutils grep sed cpio /usr/sbin/setcap
+Requires(post): coreutils grep sed cpio
 Provides: loolwsd
 Obsoletes: loolwsd collaboraoffice-dict-br collaboraoffice-dict-et collaboraoffice-dict-gd collaboraoffice-dict-gu collaboraoffice-dict-hi collaboraoffice-dict-lt collaboraoffice-dict-lv collaboraoffice-dict-ro collaboraoffice-dict-sr collaboraoffice-dict-te collaboraofficebasis-as collaboraofficebasis-bn-IN collaboraofficebasis-ast collaboraofficebasis-br collaboraofficebasis-ca-valencia collaboraofficebasis-cy collaboraofficebasis-et collaboraofficebasis-ga collaboraofficebasis-gd collaboraofficebasis-gu collaboraofficebasis-hi collaboraofficebasis-km collaboraofficebasis-kn collaboraofficebasis-lt collaboraofficebasis-lv collaboraofficebasis-ml collaboraofficebasis-mr collaboraofficebasis-nn collaboraofficebasis-or collaboraofficebasis-pa-IN collaboraofficebasis-ro collaboraofficebasis-sr collaboraofficebasis-sr-Latn collaboraofficebasis-ta collaboraofficebasis-te
 
 %description
+
+%package deprecated
+Summary: Collabora Online WebSocket Daemon Deprecated Utilities
+Requires: %{name} = %{version}-%{release}
+Requires(post): /usr/sbin/setcap
+
+%description deprecated
 
 %prep
 %setup -n coolwsd-@PACKAGE_VERSION@
@@ -55,13 +62,11 @@ echo "account    required     pam_unix.so" >>  %{buildroot}/etc/pam.d/coolwsd
 /usr/bin/loolwsd
 /usr/bin/coolwsd-systemplate-setup
 /usr/bin/loolwsd-systemplate-setup
-/usr/bin/coolforkit
 /usr/bin/coolforkitns
 /usr/bin/coolconvert
 /usr/bin/coolconfig
 /usr/bin/loolconfig
 /usr/bin/coolstress
-/usr/bin/coolmount
 /usr/share/coolwsd/discovery.xml
 /usr/share/coolwsd/favicon.ico
 /usr/share/coolwsd/browser
@@ -89,13 +94,16 @@ echo "account    required     pam_unix.so" >>  %{buildroot}/etc/pam.d/coolwsd
 
 %doc README.md
 
+%files deprecated
+%defattr(-,root,root,-)
+/usr/bin/coolforkit
+/usr/bin/coolmount
+
 %pre
 getent group cool >/dev/null || groupadd -r cool
 getent passwd cool >/dev/null || useradd -g cool -r cool -d /opt/cool -s /bin/bash
 
 %post
-setcap cap_fowner,cap_chown,cap_sys_chroot=ep /usr/bin/coolforkit
-setcap cap_sys_admin=ep /usr/bin/coolmount
 if [ -f /etc/loolwsd/loolwsd.xml ]; then /usr/bin/coolconfig migrateconfig --write; fi
 # compatibility with older systemd versions
 SYSTEMD_VERSION=$(busctl --system get-property org.freedesktop.systemd1 /org/freedesktop/systemd1 org.freedesktop.systemd1.Manager Version | grep -Eo [0-9]{3} | head -n 1)
@@ -133,6 +141,9 @@ coolconfig generate-proof-key >/dev/null 2>&1
 
 if [ $COOLWSD_IS_ACTIVE == "1" ]; then systemctl start coolwsd; fi
 
+%post deprecated
+setcap cap_fowner,cap_chown,cap_sys_chroot=ep /usr/bin/coolforkit
+setcap cap_sys_admin=ep /usr/bin/coolmount
 
 %preun
 if [ $1 -eq 0 ]; then
@@ -146,6 +157,8 @@ if [ $1 -eq 0 ]; then
 fi
 
 %changelog
+* Mon Aug 12 2024 Caolán McNamara
+- split out a deprecated subpackage of the helpers not needed with namespaces
 * Mon Aug 03 2015 Mihai Varga
 - added the cronjob
 * Tue May 19 2015 Tor Lillqvist
