@@ -487,7 +487,7 @@ export class Header extends app.definitions.canvasSectionObject {
 	}
 
 	_bindContextMenu(): void {
-		if ((window as any).mode.isMobile()) {
+		if ((window as any).mode.isMobile() || this._map.isReadOnlyMode()) {
 			// On mobile, we use the mobile wizard rather than the context menu
 			return;
 		}
