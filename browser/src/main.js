@@ -132,8 +132,12 @@ window.bundlejsLoaded = true;
 
 ////// Unsupported Browser Warning /////
 
-if (L.Browser.isInternetExplorer) {
-	map.uiManager.showInfoModal('browser-not-supported-modal', '', _('Warning! The browser you are using is not supported.'), '', _('OK'), null, false);
+var uaLowerCase = navigator.userAgent.toLowerCase();
+if (uaLowerCase.indexOf('msie') != -1 || uaLowerCase.indexOf('trident') != -1) {
+	map.uiManager.showInfoModal(
+		'browser-not-supported-modal', '',
+		_('Warning! The browser you are using is not supported.'),
+		'', _('OK'), null, false);
 }
 
 }(window));
