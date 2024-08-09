@@ -2237,7 +2237,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_unoToolButton: function(parentContainer, data, builder, options) {
-		var button = null;
+		var button = null, span, buttonImage, label, container;
 
 		var controls = {};
 
@@ -2291,7 +2291,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 			button = L.DomUtil.create('button', 'ui-content unobutton', div);
 			button.id = buttonId;
-			var buttonContainer = options && options.container ? options.container : button;
 
 			if(data.text)
 				button.setAttribute('aria-label', data.text);
@@ -2308,19 +2307,19 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 			if (data.w2icon) {
 				// FIXME: DEPRECATED, this is legacy way to setup icon based on CSS class
-				var buttonImage = L.DomUtil.create('div', 'w2ui-icon ' + data.w2icon, buttonContainer);
+				buttonImage = L.DomUtil.create('div', 'w2ui-icon ' + data.w2icon);
 			}
 			else if (hasImage !== false){
 				if (data.icon) {
-					buttonImage = L.DomUtil.create('img', '', buttonContainer);
+					buttonImage = L.DomUtil.create('img', '');
 					this._isStringCloseToURL(data.icon) ? buttonImage.src = data.icon : L.LOUtil.setImage(buttonImage, data.icon, builder.map);
 				}
 				else if (data.image) {
-					buttonImage = L.DomUtil.create('img', '', buttonContainer);
+					buttonImage = L.DomUtil.create('img', '');
 					buttonImage.src = data.image;
 				}
 				else {
-					buttonImage = L.DomUtil.create('img', '', buttonContainer);
+					buttonImage = L.DomUtil.create('img', '');
 					L.LOUtil.setImage(buttonImage, builder._createIconURL(data.command), builder.map);
 				}
 			} else {
@@ -2329,7 +2328,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 			controls['button'] = button;
 			if (builder.options.noLabelsForUnoButtons !== true) {
-				var label = L.DomUtil.create('label', 'ui-content unolabel', buttonContainer);
+				label = L.DomUtil.create('label', 'ui-content unolabel');
 				label.htmlFor = buttonId;
 				label.textContent = builder._cleanText(data.text);
 				builder._stressAccessKey(label, button.accessKey);
@@ -2354,11 +2353,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 			if (builder.options.useInLineLabelsForUnoButtons === true) {
 				$(div).addClass('inline');
-				label = L.DomUtil.create('span', 'ui-content unolabel', div);
-				label.htmlFor = buttonId;
-				label.textContent = builder._cleanText(data.text);
+				span = L.DomUtil.create('span', 'ui-content unolabel', div);
+				span.htmlFor = buttonId;
+				span.textContent = builder._cleanText(data.text);
 
-				controls['label'] = label;
+				controls['label'] = span;
 			}
 			var disabled = data.enabled === 'false' || data.enabled === false;
 			if (data.command) {
@@ -2420,10 +2419,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			if (data.selected === true)
 				selectFn();
 		} else {
-			var label = L.DomUtil.create('label', 'ui-content unolabel', div);
-			label.textContent = builder._cleanText(data.text);
+			span = L.DomUtil.create('label', 'ui-content unolabel', div);
+			span.textContent = builder._cleanText(data.text);
 			controls['button'] = button;
-			controls['label'] = label;
+			controls['label'] = span;
 		}
 
 		if (options && options.hasDropdownArrow) {
@@ -2481,6 +2480,22 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		builder.map.hideRestrictedItems(data, controls['container'], controls['container']);
 		builder.map.disableLockedItem(data, controls['container'], controls['container']);
+
+		if (options && options.container) {
+			if (buttonImage)
+				options.container.appendChild(buttonImage);
+			if (label)
+				options.container.appendChild(label);
+		} else if (buttonImage && label) {
+			container = L.DomUtil.create('span', 'container-button', button);
+			container.appendChild(buttonImage);
+			container.appendChild(label);
+		} else {
+			if (buttonImage)
+				button.appendChild(buttonImage);
+			if (label)
+				button.appendChild(label);
+		}
 
 		return controls;
 	},
