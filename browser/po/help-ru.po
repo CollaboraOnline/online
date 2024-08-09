@@ -4,7 +4,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-07-05 13:52+0200\n"
 "PO-Revision-Date: 2024-07-24 22:44+0000\n"
-"Last-Translator: Mike Kaganski <mikekaganski@hotmail.com>\n"
+"Last-Translator: Влад <integration.into.society@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/collabora-online/"
 "help/ru/>\n"
 "Language: ru\n"
@@ -132,7 +132,7 @@ msgstr "Формат текста"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:266-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:331-38
 msgid "Bold"
-msgstr "Полужирный"
+msgstr "Жирный"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:104-69
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:239-69
