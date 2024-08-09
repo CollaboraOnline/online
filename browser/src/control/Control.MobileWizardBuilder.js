@@ -37,6 +37,7 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 		this._controlHandlers['paneltabs'] = JSDialog.mobilePanelControl;
 		this._controlHandlers['radiobutton'] = this._radiobuttonControl;
 		this._controlHandlers['scrollwindow'] = undefined;
+		this._controlHandlers['submenutabs'] = JSDialog.mobileSubmenuTabControl;
 		this._controlHandlers['tabcontrol'] = JSDialog.mobileTabControl;
 		this._controlHandlers['borderstyle'] = JSDialog.mobileBorderSelector;
 
@@ -781,6 +782,11 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 			} else if (childData.children && this._countVisiblePanels(childData.children) == 2) {
 				handler = this._controlHandlers['paneltabs'];
 				processChildren = handler(childObject, childData.children, this);
+			} else if (childType == 'tabcontrol' && childData.children.length > 3) {
+				handler = this._controlHandlers['submenutabs'];
+				handler(childObject, childData, this);
+				this.postProcess(childObject, childData);
+				this.build(childObject, childData.children);
 			} else {
 				if (handler) {
 					if (this.requiresOverwriting(this, childData))

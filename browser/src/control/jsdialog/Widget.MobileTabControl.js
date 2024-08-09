@@ -142,6 +142,33 @@ function _tabsToPanelConverter(parentContainer, data, builder, tabTooltip) {
 	return false;
 }
 
+// if the tabs list is too long, it ends up being pretty messy. We should switch to submenus in that case
+function _tabsToSubmenuConverter(parentContainer, data, builder) {
+    const submenuChildren = [];
+
+    for (const [index, tab] of Object.entries(data.children)) {
+        if (tab.type !== 'tabpage') {
+            continue
+        }
+
+        submenuChildren.push({
+            children: tab.children,
+            command: tab.command,
+            enabled: true,
+            executionType: 'menu',
+            id: tab.id,
+            parent: parentContainer,
+            text: data.tabs[index].text,
+            type: 'submenu',
+        });
+    }
+
+    data.children = submenuChildren;
+
+    return JSDialog.container(parentContainer, data, builder);
+}
+
+
 JSDialog.mobileTabControl = function (parentContainer, data, builder) {
 	var buildInnerData = _tabsToPanelConverter(parentContainer, data, builder);
 	return buildInnerData;
@@ -149,5 +176,10 @@ JSDialog.mobileTabControl = function (parentContainer, data, builder) {
 
 JSDialog.mobilePanelControl = function (parentContainer, data, builder) {
 	var buildInnerData = _panelTabsHandler(parentContainer, data, builder);
+	return buildInnerData;
+};
+
+JSDialog.mobileSubmenuTabControl = function (parentContainer, data, builder) {
+	var buildInnerData = _tabsToSubmenuConverter(parentContainer, data, builder);
 	return buildInnerData;
 };
