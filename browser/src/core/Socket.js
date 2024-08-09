@@ -428,6 +428,11 @@ app.definitions.Socket = L.Class.extend({
 						if (window.enableDebug)
 							this._map.uiManager.showInfoModal(
 								'cool_alert', '', msg, '', _('Close'), function() { /* Do nothing. */ }, false);
+
+						// If we're cypress testing, fail the run. Cypress will fail anyway, but this way we may get
+						// a nice error in the logs rather than guessing that the run failed from our popup blocking input...
+						if (L.Browser.cypressTest)
+							throw e;
 					}
 					finally {
 						if (completeEventOneMessage)
@@ -1516,7 +1521,7 @@ app.definitions.Socket = L.Class.extend({
 			var darkTheme = window.prefs.getBoolean('darkTheme');
 			this._map.uiManager.activateDarkModeInCore(darkTheme);
 			this._map.uiManager.applyInvert();
-			this._map.uiManager.setCanvasColorAfterModeChange();
+			this.setCanvasColorAfterModeChange();
 
 			var uiMode = this._map.uiManager.getCurrentMode();
 			if (uiMode === 'notebookbar') {
