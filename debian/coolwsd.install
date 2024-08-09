@@ -1,0 +1,11 @@
+etc/
+usr/bin/coolconfig
+usr/bin/coolconvert
+usr/bin/coolforkitns
+usr/bin/coolstress
+usr/bin/coolwsd
+usr/bin/coolwsd-systemplate-setup
+usr/bin/loolconfig
+usr/bin/loolwsd
+usr/bin/loolwsd-systemplate-setup
+usr/share/
