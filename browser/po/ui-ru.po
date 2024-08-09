@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-07-05 13:52+0200\n"
-"PO-Revision-Date: 2024-06-12 08:13+0000\n"
+"PO-Revision-Date: 2024-07-23 17:59+0000\n"
 "Last-Translator: Mike Kaganski <mikekaganski@hotmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ru/>\n"
-"Language: \n"
+"Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Weblate 5.6-dev\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Weblate 5.7-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -1162,36 +1162,35 @@ msgstr "Все листы"
 #: src/control/Control.Menubar.js:835
 #: src/control/jsdialog/Definitions.Menu.ts:286
 msgid "Highlight cells with..."
-msgstr ""
+msgstr "Выделить ячейки с..."
 
 #: src/control/Control.Menubar.js:836
 #: src/control/jsdialog/Definitions.Menu.ts:289
 msgid "Values greater than..."
-msgstr ""
+msgstr "Значения больше чем..."
 
 #: src/control/Control.Menubar.js:837
 #: src/control/jsdialog/Definitions.Menu.ts:293
 msgid "Values less than..."
-msgstr ""
+msgstr "Значения меньше чем..."
 
 #: src/control/Control.Menubar.js:838
 #: src/control/jsdialog/Definitions.Menu.ts:297
 msgid "Values equal to..."
-msgstr ""
+msgstr "Значения, равные..."
 
 #: src/control/Control.Menubar.js:839
 #: src/control/jsdialog/Definitions.Menu.ts:301
 msgid "Values between..."
-msgstr ""
+msgstr "Значения между..."
 
 #: src/control/Control.Menubar.js:840
 #: src/control/jsdialog/Definitions.Menu.ts:305
 msgid "Values duplicate..."
-msgstr ""
+msgstr "Дублирующиеся значения..."
 
 #: src/control/Control.Menubar.js:841
 #: src/control/jsdialog/Definitions.Menu.ts:309
-#, fuzzy
 msgid "Containing text..."
 msgstr "Содержит текст..."
 
@@ -1199,7 +1198,7 @@ msgstr "Содержит текст..."
 #: src/control/jsdialog/Definitions.Menu.ts:313
 #: src/control/jsdialog/Definitions.Menu.ts:344
 msgid "More highlights..."
-msgstr ""
+msgstr "Другие варианты выделения..."
 
 #: src/control/Control.Menubar.js:845
 #: src/control/jsdialog/Definitions.Menu.ts:317
@@ -1612,11 +1611,11 @@ msgstr "Презентация в окне"
 
 #: src/control/Control.NotebookbarImpress.js:455
 msgid "Normal View"
-msgstr ""
+msgstr "Обычный вид"
 
 #: src/control/Control.NotebookbarImpress.js:461
 msgid "Notes View"
-msgstr ""
+msgstr "Примечания"
 
 #: src/control/Control.NotebookbarWriter.js:79
 msgid "Form"
@@ -1676,25 +1675,27 @@ msgstr "Очистить поле поиска"
 
 #: src/control/Control.ServerAuditDialog.ts:28
 msgid "The IsAdminUser property is not set by integration"
-msgstr ""
+msgstr "Свойство IsAdminUser не установлено в интеграции"
 
 #: src/control/Control.ServerAuditDialog.ts:34
 msgid ""
 "Used deprecated is_admin field, integration should use IsAdminUser property "
 "instead"
 msgstr ""
+"Используется устаревшее поле is_admin, вместо этого в интеграции следует "
+"использовать свойство IsAdminUser"
 
 #: src/control/Control.ServerAuditDialog.ts:39
 msgid "The IsAdminUser user property is set by integration"
-msgstr ""
+msgstr "Свойство пользователя IsAdminUser установлено в интеграции"
 
 #: src/control/Control.ServerAuditDialog.ts:43
 msgid "Your WOPI server is not secure: SSL verification failed"
-msgstr ""
+msgstr "Безопасность вашего сервера WOPI нарушена: верификация SSL не пройдена"
 
 #: src/control/Control.ServerAuditDialog.ts:47
 msgid "No problems with SSL verification detected"
-msgstr ""
+msgstr "Не обнаружено проблем верификации SSL"
 
 #: src/control/Control.ServerAuditDialog.ts:131
 msgid "No issues found"
@@ -2271,7 +2272,7 @@ msgstr "Обрамление ячеек"
 
 #: src/control/jsdialog/Widget.SidebarContainers.ts:72
 msgid "More options for {name}"
-msgstr ""
+msgstr "Больше настроек для {name}"
 
 #: src/control/jsdialog/Widget.TreeView.js:698
 msgid "Headings and objects that you add to the document will appear here"
@@ -2536,7 +2537,7 @@ msgstr ""
 
 #: src/errormessages.js:29
 msgid "Authorization error was: '{errormessage}'."
-msgstr ""
+msgstr "Ошибка авторизации: '{errormessage}'."
 
 #: src/errormessages.js:30
 msgid "Wrong or missing WOPISrc parameter, please contact support."
@@ -2655,6 +2656,8 @@ msgid ""
 "Document cannot be saved due to expired session, please reopen the document "
 "to continue."
 msgstr ""
+"Документ не может быть сохранён из-за истёкшей сессии; чтобы продолжить, "
+"откройте документ заново."
 
 #: src/errormessages.js:48
 msgid "Document cannot be saved."
@@ -2695,6 +2698,8 @@ msgid ""
 "Document cannot be saved due to expired session, please reload the page to "
 "continue."
 msgstr ""
+"Документ не может быть сохранён из-за истёкшей сессии; чтобы продолжить, "
+"перезагрузите страницу."
 
 #: src/errormessages.js:57
 msgid "Document cannot be saved, please check your permissions."
@@ -2770,21 +2775,23 @@ msgstr "Обсуждение решено"
 #: src/canvas/sections/CommentListSection.ts:1260
 #: src/canvas/sections/CommentListSection.ts:2090
 msgid "Comments Updated"
-msgstr ""
+msgstr "Комментарии обновлены"
 
 #: src/canvas/sections/CommentListSection.ts:1248
 msgid "Another user has removed this comment."
-msgstr ""
+msgstr "Другой пользователь удалил этот комментарий."
 
 #: src/canvas/sections/CommentListSection.ts:1261
 msgid ""
 "Another user has updated the comment. Would you like to overwrite those "
 "changes?"
 msgstr ""
+"Другой пользователь обновил этот комментарий. Вы хотите перезаписать его "
+"изменения?"
 
 #: src/canvas/sections/CommentListSection.ts:1263
 msgid "Update"
-msgstr ""
+msgstr "Обновить"
 
 #: src/canvas/sections/CommentListSection.ts:1334
 #: src/canvas/sections/CommentListSection.ts:1396
@@ -2794,6 +2801,7 @@ msgstr "Автоматически сохранён"
 #: src/canvas/sections/CommentListSection.ts:2091
 msgid "Another user has updated comments. Would you like to proceed updating?"
 msgstr ""
+"Другой пользователь обновил комментарии. Вы хотите продолжить обновление?"
 
 #: src/canvas/sections/CommentSection.ts:300
 msgid "Open menu"
@@ -3063,6 +3071,10 @@ msgid ""
 "translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
 "translate=\"true\">3</a>"
 msgstr ""
+"<a id=\"slide-1-indicator\" class=\"active\" href=\"#slide-1\" data-"
+"translate=\"true\">1</a> <a id=\"slide-2-indicator\" href=\"#slide-2\" data-"
+"translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
+"translate=\"true\">3</a>"
 
 #~ msgid "Document cannot be saved due to expired or invalid access token."
 #~ msgstr ""
