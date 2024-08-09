@@ -774,11 +774,15 @@ function updateSearchButtons() {
 	// conditionally disabling until, we find a solution for tdf#108577
 	if (L.DomUtil.get('search-input').value === '') {
 		toolbar.enableItem('searchprev', false);
+		toolbar.enableItem('searchprev-button', false);
 		toolbar.enableItem('searchnext', false);
+		toolbar.enableItem('searchnext-button', false);
 		toolbar.showItem('cancelsearch', false);
 	} else {
 		toolbar.enableItem('searchprev', true);
+		toolbar.enableItem('searchprev-button', true);
 		toolbar.enableItem('searchnext', true);
+		toolbar.enableItem('searchnext-button', true);
 		toolbar.showItem('cancelsearch', true);
 	}
 }
@@ -1145,7 +1149,9 @@ function setupToolbar(e) {
 		}
 		if (e.count === 0) {
 			toolbar.enableItem('searchprev', false);
+			toolbar.enableItem('searchprev-button', false);
 			toolbar.enableItem('searchnext', false);
+			toolbar.enableItem('searchnext-button', false);
 			toolbar.showItem('cancelsearch', false);
 			L.DomUtil.addClass(searchInput, 'search-not-found');
 			$('#findthis').addClass('search-not-found');

@@ -874,7 +874,9 @@ L.Map.include({
 		if (toolbar) {
 			toolbar.showItem('cancelsearch', false);
 			toolbar.enableItem('searchprev', false);
+			toolbar.enableItem('searchprev-button', false);
 			toolbar.enableItem('searchnext', false);
+			toolbar.enableItem('searchnext-button', false);
 		}
 		searchInput.value = '';
 		if (window.mode.isMobile()) {
