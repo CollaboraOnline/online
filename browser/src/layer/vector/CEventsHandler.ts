@@ -1,4 +1,4 @@
-/** */
+/* -*- js-indent-level: 8 -*- */
 
 
 // Type of the data passed to event handlers.

@@ -1,4 +1,4 @@
-/** */
+/* -*- js-indent-level: 8 -*- */
 
 /*
  * CPolygon implements polygon vector layer (closed polyline with a fill inside).

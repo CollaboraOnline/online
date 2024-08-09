@@ -1,4 +1,4 @@
-/** */
+/* -*- js-indent-level: 8 -*- */
 
 var END = {
 	mousedown:     'mouseup',

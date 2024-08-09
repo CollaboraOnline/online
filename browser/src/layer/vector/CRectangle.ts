@@ -1,4 +1,4 @@
-/** */
+/* -*- js-indent-level: 8 -*- */
 
 /*
  * CRectangle extends CPolygon and creates a rectangle of given bounds.

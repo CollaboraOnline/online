@@ -1,4 +1,4 @@
-/** */
+/* -*- js-indent-level: 8 -*- */
 
 // OverlayTransform is used by CanvasOverlay to apply transformations
 // to points/bounds before drawing is done.

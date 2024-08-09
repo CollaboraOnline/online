@@ -1,4 +1,4 @@
-/** */
+/* -*- js-indent-level: 8 -*- */
 
 class URLPopUpSection extends HTMLObjectSection {
     static sectionName = 'URL PopUp';
