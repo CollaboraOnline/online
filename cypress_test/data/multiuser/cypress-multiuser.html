@@ -39,6 +39,29 @@
        var form2 = document.getElementById("form2");
        form2.action = wopiUrl
        form2.submit();
+
+        window.addEventListener(
+            'message',
+            (event) => {
+                if (event.origin !== window.origin) {
+                    return;
+                }
+
+                if (typeof event.data !== 'object' || event.data === null) {
+                    return;
+                }
+
+                if (typeof event.data.name !== 'string') {
+                    return;
+                }
+
+                if (!event.data.name.endsWith("Error")) {
+                    return;
+                }
+
+                throw event.data;
+            }
+        );
     </script>
 </body>
 </html>

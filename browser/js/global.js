@@ -591,6 +591,12 @@ function getInitializerClass() {
 				var desc = err ? err.message || '(no message)': '(no err)', stack = err ? err.stack || '(no stack)': '(no err)';
 				var log = 'jserror ' + JSON.stringify(data, null, 2) + '\n' + desc + '\n' + stack + '\n';
 				global.logServer(log);
+
+				if (L.Browser.cypressTest && window.parent !== window && err !== null) {
+					console.log("Sending global error to Cypress...:", err);
+					window.parent.postMessage(err);
+				}
+
 				return false;
 			};
 		}
