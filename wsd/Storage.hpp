@@ -29,54 +29,7 @@
 /// Limits number of HTTP redirections to prevent from redirection loops
 static constexpr auto RedirectionLimit = 21;
 
-namespace Poco
-{
-namespace Net
-{
-class HTTPClientSession;
-}
-
-} // namespace Poco
-
-/// Represents whether the underlying file is locked
-/// and with what token.
-struct LockContext
-{
-    /// Do we have support for locking for a storage.
-    bool        _supportsLocks;
-    /// Do we own the (leased) lock currently
-    bool        _isLocked;
-    /// Name if we need it to use consistently for locking
-    std::string _lockToken;
-    /// Time of last successful lock (re-)acquisition
-    std::chrono::steady_clock::time_point _lastLockTime;
-    /// Reason for unsuccessful locking request
-    std::string _lockFailureReason;
-
-    LockContext()
-        : _supportsLocks(false)
-        , _isLocked(false)
-        , _refreshSeconds(COOLWSD::getConfigValue<int>("storage.wopi.locking.refresh", 900))
-    {
-    }
-
-    /// one-time setup for supporting locks & create token
-    void initSupportsLocks();
-
-    /// wait another refresh cycle
-    void bumpTimer()
-    {
-        _lastLockTime = std::chrono::steady_clock::now();
-    }
-
-    /// do we need to refresh our lock ?
-    bool needsRefresh(const std::chrono::steady_clock::time_point &now) const;
-
-    void dumpState(std::ostream& os) const;
-
-private:
-    const std::chrono::seconds _refreshSeconds;
-};
+struct LockContext;
 
 /// Base class of all Storage abstractions.
 class StorageBase
@@ -239,16 +192,14 @@ public:
     class UploadResult final
     {
     public:
-        enum class Result
-        {
-            OK = 0,
-            DISKFULL,
-            TOO_LARGE, //< 413
-            UNAUTHORIZED, //< 401, 403, 404
-            DOC_CHANGED, /**< Document changed in storage */
-            CONFLICT, //< 409
-            FAILED
-        };
+        STATE_ENUM(Result,
+                   OK = 0, //< Uploaded successfully
+                   DISKFULL, //< Unused.
+                   TOO_LARGE, //< 413
+                   UNAUTHORIZED, //< 401, 403, 404
+                   DOC_CHANGED, /**< Document changed in storage */
+                   CONFLICT, //< 409
+                   FAILED);
 
         explicit UploadResult(Result result)
             : _result(result)
@@ -286,19 +237,19 @@ public:
         std::string _reason;
     };
 
-    /// The state of an asynchronous upload request.
-    class AsyncUpload final
+    /// The state of an asynchronous request.
+    template <typename TResult> class AsyncRequest final
     {
     public:
-        enum class State
-        {
+        STATE_ENUM(
+            State,
             None, //< No async upload in progress or isn't supported.
             Running, //< An async upload request is in progress.
             Error, //< Failed to make an async upload request or timed out, no UploadResult.
             Complete //< The last async upload request completed (regardless of the server's response).
-        };
+        );
 
-        AsyncUpload(State state, UploadResult result)
+        AsyncRequest(State state, TResult result)
             : _state(state)
             , _result(std::move(result))
         {
@@ -308,12 +259,15 @@ public:
         State state() const { return _state; }
 
         /// Returns the result of the async upload.
-        const UploadResult& result() const { return _result; }
+        const TResult& result() const { return _result; }
 
     private:
         State _state;
-        UploadResult _result;
+        TResult _result;
     };
+
+    /// The state of an asynchronous Upload request.
+    using AsyncUpload = AsyncRequest<UploadResult>;
 
     enum class COOLStatusCode
     {
@@ -383,6 +337,11 @@ public:
 
     std::string getFileExtension() const { return Poco::Path(_fileInfo.getFilename()).getExtension(); }
 
+    STATE_ENUM(LockState,
+               LOCK, //< Lock the document.
+               UNLOCK, //< Unlock the document .
+    );
+
     STATE_ENUM(LockUpdateResult,
                UNSUPPORTED, //< Locking is not supported on this host.
                OK, //< Succeeded to either lock or unlock (see LockContext).
@@ -390,9 +349,9 @@ public:
                FAILED //< Other failures.
     );
 
-    /// Update the locking state (check-in/out) of the associated file
+    /// Update the locking state (check-in/out) of the associated file synchronously.
     virtual LockUpdateResult updateLockState(const Authorization& auth, LockContext& lockCtx,
-                                             bool lock, const Attributes& attribs) = 0;
+                                             LockState lock, const Attributes& attribs) = 0;
 
     /// Returns a local file path for the given URI.
     /// If necessary copies the file locally first.
@@ -445,9 +404,6 @@ public:
     static std::unique_ptr<StorageBase> create(const Poco::URI& uri, const std::string& jailRoot,
                                                const std::string& jailPath, bool takeOwnership);
 
-    static Poco::Net::HTTPClientSession* getHTTPClientSession(const Poco::URI& uri);
-    static std::shared_ptr<http::Session> getHttpSession(const Poco::URI& uri);
-
 protected:
 
     /// Sanitize a URI by removing authorization tokens.
@@ -489,10 +445,6 @@ private:
     bool _isDownloaded;
 
     static bool FilesystemEnabled;
-    /// If true, use only the WOPI URL for whether to use SSL to talk to storage server
-    static bool SSLAsScheme;
-    /// If true, force SSL communication with storage server
-    static bool SSLEnabled;
 };
 
 /// Trivial implementation of local storage that does not need do anything.
@@ -535,7 +487,7 @@ public:
     /// obtained using getFileInfo method
     std::unique_ptr<LocalFileInfo> getLocalFileInfo();
 
-    LockUpdateResult updateLockState(const Authorization&, LockContext&, bool,
+    LockUpdateResult updateLockState(const Authorization&, LockContext&, StorageBase::LockState,
                                      const Attributes&) override
     {
         return LockUpdateResult::OK;
@@ -559,6 +511,49 @@ private:
     /// True if the jailed file is not linked but copied.
     bool _isCopy;
     static std::atomic<unsigned> LastLocalStorageId;
+};
+
+/// Represents whether the underlying file is locked
+/// and with what token.
+struct LockContext
+{
+    /// Do we have support for locking for a storage.
+    bool _supportsLocks;
+    /// Do we own the (leased) lock currently
+    StorageBase::LockState _lockState;
+    /// Name if we need it to use consistently for locking
+    std::string _lockToken;
+    /// Time of last successful lock (re-)acquisition
+    std::chrono::steady_clock::time_point _lastLockTime;
+    /// Reason for unsuccessful locking request
+    std::string _lockFailureReason;
+
+    LockContext()
+        : _supportsLocks(false)
+        , _lockState(StorageBase::LockState::UNLOCK)
+        , _refreshSeconds(COOLWSD::getConfigValue<int>("storage.wopi.locking.refresh", 900))
+    {
+    }
+
+    /// one-time setup for supporting locks & create token
+    void initSupportsLocks();
+
+    /// Returns true if locks are supported.
+    bool supportsLocks() const { return _supportsLocks; }
+
+    /// Returns true if locked.
+    bool isLocked() const { return _lockState == StorageBase::LockState::LOCK; }
+
+    /// wait another refresh cycle
+    void bumpTimer() { _lastLockTime = std::chrono::steady_clock::now(); }
+
+    /// do we need to refresh our lock ?
+    bool needsRefresh(const std::chrono::steady_clock::time_point& now) const;
+
+    void dumpState(std::ostream& os) const;
+
+private:
+    const std::chrono::seconds _refreshSeconds;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

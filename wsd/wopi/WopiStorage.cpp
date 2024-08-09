@@ -12,6 +12,7 @@
 #include <config.h>
 
 #include "WopiStorage.hpp"
+#include "wopi/StorageConnectionManager.hpp"
 
 #include <Auth.hpp>
 #include <CommandControl.hpp>
@@ -322,11 +323,12 @@ WopiStorage::WOPIFileInfo::WOPIFileInfo(const FileInfo& fileInfo, Poco::JSON::Ob
 }
 
 StorageBase::LockUpdateResult WopiStorage::updateLockState(const Authorization& auth,
-                                                           LockContext& lockCtx, bool lock,
+                                                           LockContext& lockCtx,
+                                                           StorageBase::LockState lock,
                                                            const Attributes& attribs)
 {
     lockCtx._lockFailureReason.clear();
-    if (!lockCtx._supportsLocks)
+    if (!lockCtx.supportsLocks())
         return LockUpdateResult::UNSUPPORTED;
 
     Poco::URI uriObject(getUri());
@@ -336,75 +338,67 @@ StorageBase::LockUpdateResult WopiStorage::updateLockState(const Authorization& 
     uriObjectAnonym.setPath(COOLWSD::anonymizeUrl(uriObjectAnonym.getPath()));
     const std::string uriAnonym = uriObjectAnonym.toString();
 
-    const std::string wopiLog(lock ? "WOPI::Lock" : "WOPI::Unlock");
+    const auto wopiLog = (lock == StorageBase::LockState::LOCK ? "WOPI::Lock" : "WOPI::Unlock");
     LOG_DBG(wopiLog << " requesting: " << uriAnonym);
 
     try
     {
-        std::unique_ptr<Poco::Net::HTTPClientSession> psession(getHTTPClientSession(uriObject));
+        std::shared_ptr<http::Session> httpSession =
+            StorageConnectionManager::getHttpSession(uriObject);
 
-        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST,
-                                       uriObject.getPathAndQuery(),
-                                       Poco::Net::HTTPMessage::HTTP_1_1);
-        initHttpRequest(request, uriObject, auth);
+        http::Request httpRequest = initHttpRequest(uriObject, auth);
+        httpRequest.setVerb(http::Request::VERB_POST);
 
-        request.set("X-WOPI-Override", lock ? "LOCK" : "UNLOCK");
-        request.set("X-WOPI-Lock", lockCtx._lockToken);
+        http::Header& httpHeader = httpRequest.header();
+
+        httpHeader.set("X-WOPI-Override", lock == StorageBase::LockState::LOCK ? "LOCK" : "UNLOCK");
+        httpHeader.set("X-WOPI-Lock", lockCtx._lockToken);
         if (!attribs.getExtendedData().empty())
         {
-            request.set("X-COOL-WOPI-ExtendedData", attribs.getExtendedData());
+            httpHeader.set("X-COOL-WOPI-ExtendedData", attribs.getExtendedData());
             if (isLegacyServer())
-                request.set("X-LOOL-WOPI-ExtendedData", attribs.getExtendedData());
+                httpHeader.set("X-LOOL-WOPI-ExtendedData", attribs.getExtendedData());
         }
 
         // IIS requires content-length for POST requests: see https://forums.iis.net/t/1119456.aspx
-        request.setContentLength(0);
+        httpHeader.setContentLength(0);
 
-        psession->sendRequest(request);
-        Poco::Net::HTTPResponse response;
-        std::istream& rs = psession->receiveResponse(response);
+        const std::shared_ptr<const http::Response> httpResponse =
+            httpSession->syncRequest(httpRequest);
+        const std::string responseString = httpResponse->getBody();
 
-        std::ostringstream oss;
-        Poco::StreamCopier::copyStream(rs, oss);
-        std::string responseString = oss.str();
+        LOG_INF(wopiLog << " response: [" << responseString
+                        << "], status: " << httpResponse->statusLine().statusCode());
 
-        LOG_INF(wopiLog << " response: " << responseString << " status " << response.getStatus());
-
-        if (response.getStatus() == Poco::Net::HTTPResponse::HTTP_OK)
+        if (httpResponse->statusLine().statusCode() == http::StatusCode::OK)
         {
-            lockCtx._isLocked = lock;
+            lockCtx._lockState = lock;
             lockCtx.bumpTimer();
             return LockUpdateResult::OK;
         }
-        else
+
+        std::string failureReason = httpResponse->get("X-WOPI-LockFailureReason", "");
+        if (!failureReason.empty())
         {
-            std::string sMoreInfo = response.get("X-WOPI-LockFailureReason", "");
-            if (!sMoreInfo.empty())
-            {
-                lockCtx._lockFailureReason = sMoreInfo;
-                sMoreInfo = ", failure reason: \"" + sMoreInfo + "\"";
-            }
-
-            if (response.getStatus() == Poco::Net::HTTPResponse::HTTP_UNAUTHORIZED ||
-                response.getStatus() == Poco::Net::HTTPResponse::HTTP_FORBIDDEN ||
-                response.getStatus() == Poco::Net::HTTPResponse::HTTP_NOT_FOUND)
-            {
-                LOG_ERR("Un-successful " << wopiLog << " with expired token, HTTP status "
-                                         << response.getStatus() << sMoreInfo
-                                         << " and response: " << responseString);
-
-                return LockUpdateResult::UNAUTHORIZED;
-            }
-
-            LOG_ERR("Un-successful " << wopiLog << " with HTTP status " << response.getStatus()
-                                     << sMoreInfo << " and response: " << responseString);
-            return LockUpdateResult::FAILED;
+            lockCtx._lockFailureReason = failureReason;
+            failureReason = ", failure reason: \"" + failureReason + "\"";
         }
-    }
-    catch (const Poco::Exception& pexc)
-    {
-        LOG_ERR("Cannot " << wopiLog << " uri [" << uriAnonym << "]. Error: " << pexc.displayText()
-                          << (pexc.nested() ? " (" + pexc.nested()->displayText() + ')' : ""));
+
+        if (httpResponse->statusLine().statusCode() == http::StatusCode::Unauthorized ||
+            httpResponse->statusLine().statusCode() == http::StatusCode::Forbidden ||
+            httpResponse->statusLine().statusCode() == http::StatusCode::NotFound)
+        {
+            LOG_ERR("Un-successful " << wopiLog << " with expired token, HTTP status "
+                                     << httpResponse->statusLine().statusCode() << failureReason
+                                     << " and response: " << responseString);
+
+            return LockUpdateResult::UNAUTHORIZED;
+        }
+
+        LOG_ERR("Un-successful " << wopiLog << " with HTTP status "
+                                 << httpResponse->statusLine().statusCode() << failureReason
+                                 << " and response: " << responseString);
+        return LockUpdateResult::FAILED;
     }
     catch (const BadRequestException& exc)
     {
@@ -490,7 +484,8 @@ std::string WopiStorage::downloadDocument(const Poco::URI& uriObject, const std:
                                           const Authorization& auth, unsigned redirectLimit)
 {
     const auto startTime = std::chrono::steady_clock::now();
-    std::shared_ptr<http::Session> httpSession = getHttpSession(uriObject);
+    std::shared_ptr<http::Session> httpSession =
+        StorageConnectionManager::getHttpSession(uriObject);
 
     http::Request httpRequest = initHttpRequest(uriObject, auth);
 
@@ -679,7 +674,7 @@ void WopiStorage::uploadLocalFileToStorageAsync(const Authorization& auth, LockC
     try
     {
         assert(!_uploadHttpSession && "Unexpected to have an upload http::session");
-        _uploadHttpSession = getHttpSession(uriObject);
+        _uploadHttpSession = StorageConnectionManager::getHttpSession(uriObject);
 
         http::Request httpRequest = initHttpRequest(uriObject, auth);
         httpRequest.setVerb(http::Request::VERB_POST);
@@ -687,7 +682,7 @@ void WopiStorage::uploadLocalFileToStorageAsync(const Authorization& auth, LockC
         http::Header& httpHeader = httpRequest.header();
 
         // must include this header except for SaveAs
-        if (!isSaveAs && lockCtx._supportsLocks)
+        if (!isSaveAs && lockCtx.supportsLocks())
             httpHeader.set("X-WOPI-Lock", lockCtx._lockToken);
 
         if (!isSaveAs && !isRename)

@@ -649,10 +649,11 @@ private:
 
     /// Updates the document's lock in storage to either locked or unlocked.
     /// Returns true iff the operation was successful.
-    bool updateStorageLockState(ClientSession& session, bool lock, std::string& error);
+    bool updateStorageLockState(ClientSession& session, StorageBase::LockState lock,
+                                std::string& error);
 
     /// Take the lock before loading the first session, if we know we can edit.
-    bool updateStorageLockState(const Authorization& auth, std::string& error);
+    bool lockDocumentInStorage(const Authorization& auth, std::string& error);
 
     std::size_t getIdleTimeSecs() const
     {
