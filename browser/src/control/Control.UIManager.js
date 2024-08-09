@@ -85,38 +85,67 @@ L.Control.UIManager = L.Control.extend({
 
 	loadLightMode: function() {
 		document.documentElement.setAttribute('data-theme','light');
-		this.setCanvasColorAfterModeChange();
 		this.map.fire('darkmodechanged');
 	},
 
 	loadDarkMode: function() {
 		document.documentElement.setAttribute('data-theme','dark');
-		this.setCanvasColorAfterModeChange();
 		this.map.fire('darkmodechanged');
 	},
 
-	setCanvasColorAfterModeChange: function(nColor) {
+	setCanvasColorAfterModeChange: function() {
 		if (app.sectionContainer) {
 			app.sectionContainer.setBackgroundColorMode(false);
-			if (nColor == undefined ) {
-				const colorCanvasPropety = window.prefs.getBoolean('darkTheme') ? '--color-canvas-dark' : '--color-canvas-light';
-				nColor = window.getComputedStyle(document.documentElement).getPropertyValue(colorCanvasPropety);
+
+			if (this.map.getDocType() == 'spreadsheet') {
+				app.sectionContainer.setClearColor(window.getComputedStyle(document.documentElement).getPropertyValue('--color-background-document'));
+			} else {
+				app.sectionContainer.setClearColor(window.getComputedStyle(document.documentElement).getPropertyValue('--color-canvas'));
 			}
-			app.sectionContainer.setClearColor(nColor);
+
 			//change back to it's default value after setting canvas color
 			app.sectionContainer.setBackgroundColorMode(true);
 		}
 	},
 
-	invertBackground: function() {
-		app.socket.sendMessage('uno .uno:InvertBackground');
-		if (this.map.getDocType() == 'spreadsheet') {
-			var lightCanvasColor = window.getComputedStyle(document.documentElement).getPropertyValue('--color-canvas-light');
-			var darkCanvasColor = window.getComputedStyle(document.documentElement).getPropertyValue('--color-canvas-dark');
-			var nColor = app.sectionContainer.getClearColor(); // Current color of the canvas
-			// invert canvas color
-			nColor == lightCanvasColor ? nColor = darkCanvasColor : nColor = lightCanvasColor
-			this.setCanvasColorAfterModeChange(nColor);
+	setDarkBackground: function(activate) {
+		var cmd = { 'NewTheme': { 'type': 'string', 'value': '' } };
+		activate ? cmd.NewTheme.value = 'Dark' : cmd.NewTheme.value = 'Light';
+		app.socket.sendMessage('uno .uno:InvertBackground ' + JSON.stringify(cmd));
+		this.initDarkBackgroundUI(activate);
+	},
+
+	initDarkBackgroundUI: function(activate) {
+		document.documentElement.setAttribute('data-bg-theme', activate ? 'dark' : 'light');
+		this.setCanvasColorAfterModeChange();
+	},
+
+	applyInvert: function(skipCore) {
+		// get the initial mode
+		var inDarkTheme = window.prefs.getBoolean('darkTheme');
+		var backgroundDark = window.prefs.getBoolean('darkBackgroundForTheme.' + (inDarkTheme ? 'dark' : 'light'), inDarkTheme);
+
+		if (skipCore) {
+			this.initDarkBackgroundUI(backgroundDark);
+		} else {
+			this.setDarkBackground(backgroundDark);
+		}
+	},
+
+	toggleInvert: function() {
+		// get the initial mode
+		var inDarkTheme = window.prefs.getBoolean('darkTheme');
+		var darkBackgroundPrefName = 'darkBackgroundForTheme.' + (inDarkTheme ? 'dark' : 'light');
+		var backgroundDark = window.prefs.getBoolean(darkBackgroundPrefName, inDarkTheme);
+
+		// swap them by invoking the appropriate load function and saving the state
+		if (backgroundDark) {
+			window.prefs.set(darkBackgroundPrefName, false);
+			this.setDarkBackground(false);
+		}
+		else {
+			window.prefs.set(darkBackgroundPrefName, true);
+			this.setDarkBackground(true);
 		}
 	},
 
@@ -134,6 +163,8 @@ L.Control.UIManager = L.Control.extend({
 			this.loadDarkMode();
 			this.activateDarkModeInCore(true);
 		}
+		this.applyInvert();
+		this.setCanvasColorAfterModeChange();
 		if (!window.mode.isMobile())
 			this.refreshAfterThemeChange();
 
@@ -148,6 +179,8 @@ L.Control.UIManager = L.Control.extend({
 		} else {
 			this.loadLightMode();
 		}
+
+		this.applyInvert(true);
 	},
 
 	activateDarkModeInCore: function(activate) {

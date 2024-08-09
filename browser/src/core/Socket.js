@@ -248,6 +248,10 @@ app.definitions.Socket = L.Class.extend({
 		const darkTheme = window.prefs.getBoolean('darkTheme');
 		msg += ' darkTheme=' + darkTheme;
 
+		const darkBackground = window.prefs.getBoolean('darkBackgroundForTheme.' + (darkTheme ? 'dark' : 'light'), darkTheme);
+		msg += ' darkBackground=' + darkBackground;
+		this._map.uiManager.initDarkBackgroundUI(darkBackground);
+
 		var isCalcTest =
 			window.docURL.includes('data/desktop/calc/') ||
 			window.docURL.includes('data/mobile/calc/') ||
@@ -1500,8 +1504,10 @@ app.definitions.Socket = L.Class.extend({
 			this._map._docLayer._refreshTilesInBackground();
 			this._map.fire('statusindicator', { statusType: 'reconnected' });
 
-			var selectedMode = window.prefs.getBoolean('darkTheme');
-			this._map.uiManager.activateDarkModeInCore(selectedMode);
+			var darkTheme = window.prefs.getBoolean('darkTheme');
+			this._map.uiManager.activateDarkModeInCore(darkTheme);
+			this._map.uiManager.applyInvert();
+			this._map.uiManager.setCanvasColorAfterModeChange();
 
 			var uiMode = this._map.uiManager.getCurrentMode();
 			if (uiMode === 'notebookbar') {

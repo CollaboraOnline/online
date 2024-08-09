@@ -12,8 +12,6 @@
 	--color-text-lighter: #fff; /* secondard text, disabled */
 	--color-status-badge: #d6d6d6;
 
-	--color-canvas-dark: #141414;
-	--color-background-document: #121212;
 	--color-main-background: #121212;
 	--color-background-dark: #1E1E1E;  /* select */
 	--color-background-darker: #000;  /* todo: apply to pressed (active), li:hover(top menu on classic mode)*/
@@ -45,7 +43,11 @@
 	--color-warning: #eca700;
 	--color-success: #46ba61;
 
-	--color-cursor-blink-background: #fff;
-
 	--color-box-shadow: rgba(0, 0, 0, 0.5);
+}
+
+[data-bg-theme='dark'] {
+	--color-cursor-blink-background: #fff;
+	--color-canvas: #141414;
+	--color-background-document: #121212;
 }
