@@ -1,4 +1,4 @@
-/** */
+/* -*- js-indent-level: 8 -*- */
 
 /**
  * Leaflet vector features drag functionality
