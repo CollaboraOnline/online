@@ -247,6 +247,7 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 
 .ui-toolbar .ui-separator.vertical {
 	height: 14px;
+	align-self: center;
 }
 
 .jsdialog.ui-separator.horizontal {
