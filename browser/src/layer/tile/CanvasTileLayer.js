@@ -3,7 +3,7 @@
  * L.CanvasTileLayer is a layer with canvas based rendering.
  */
 
-/* global app L JSDialog CanvasSectionContainer CanvasOverlay CDarkOverlay CSplitterLine $ _ CPointSet CPolyUtil CPolygon Cursor CCellSelection PathGroupType UNOKey UNOModifier Uint8ClampedArray Uint8Array Uint32Array */
+/* global app L JSDialog CanvasSectionContainer CanvasOverlay CDarkOverlay CSplitterLine CursorHeaderSection $ _ CPointSet CPolyUtil CPolygon Cursor CCellSelection PathGroupType UNOKey UNOModifier Uint8ClampedArray Uint8Array Uint32Array */
 
 /*eslint no-extend-native:0*/
 if (typeof String.prototype.startsWith !== 'function') {
@@ -2449,6 +2449,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			strTwips = this._convertRawTwipsToTileTwips(strTwips);
 
 			app.definitions.otherViewCellCursorSection.addOrUpdateOtherViewCellCursor(viewId, this._map.getViewName(viewId), strTwips, parseInt(obj.part));
+			CursorHeaderSection.deletePopUpNow(viewId);
 		}
 
 		if (this.isCalc()) {
