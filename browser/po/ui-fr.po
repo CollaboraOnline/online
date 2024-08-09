@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-07-05 13:52+0200\n"
-"PO-Revision-Date: 2024-06-12 08:13+0000\n"
-"Last-Translator: Hubert Figuière <hub@figuiere.net>\n"
+"PO-Revision-Date: 2024-08-09 13:28+0000\n"
+"Last-Translator: Hugo B <landru@cock.li>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/collabora-online/"
 "ui/fr/>\n"
-"Language: \n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.6-dev\n"
+"X-Generator: Weblate 5.7-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -1168,23 +1168,26 @@ msgstr ""
 
 #: src/control/Control.Menubar.js:836
 #: src/control/jsdialog/Definitions.Menu.ts:289
+#, fuzzy
 msgid "Values greater than..."
-msgstr ""
+msgstr "Valeurs plus grands que …"
 
 #: src/control/Control.Menubar.js:837
 #: src/control/jsdialog/Definitions.Menu.ts:293
+#, fuzzy
 msgid "Values less than..."
-msgstr ""
+msgstr "Valeurs plus petits que …"
 
 #: src/control/Control.Menubar.js:838
 #: src/control/jsdialog/Definitions.Menu.ts:297
+#, fuzzy
 msgid "Values equal to..."
-msgstr ""
+msgstr "Valeurs pareils que …"
 
 #: src/control/Control.Menubar.js:839
 #: src/control/jsdialog/Definitions.Menu.ts:301
 msgid "Values between..."
-msgstr ""
+msgstr "Valeurs entre …"
 
 #: src/control/Control.Menubar.js:840
 #: src/control/jsdialog/Definitions.Menu.ts:305
@@ -1695,12 +1698,14 @@ msgid "Your WOPI server is not secure: SSL verification failed"
 msgstr ""
 
 #: src/control/Control.ServerAuditDialog.ts:47
+#, fuzzy
 msgid "No problems with SSL verification detected"
-msgstr ""
+msgstr "Pas de problèmes détectés avec la vérification SSL"
 
 #: src/control/Control.ServerAuditDialog.ts:131
+#, fuzzy
 msgid "No issues found"
-msgstr ""
+msgstr "Pas de problèmes rencontrés"
 
 #: src/control/Control.ServerAuditDialog.ts:137
 msgid "Status"
@@ -1712,7 +1717,7 @@ msgstr ""
 
 #: src/control/Control.ServerAuditDialog.ts:186
 msgid "OPEN"
-msgstr ""
+msgstr "OUVERT"
 
 #: src/control/Control.SheetsBar.js:48
 msgid "Scroll to the first sheet"
@@ -2275,8 +2280,9 @@ msgid "Cell borders"
 msgstr "Bordures de cellule"
 
 #: src/control/jsdialog/Widget.SidebarContainers.ts:72
+#, fuzzy
 msgid "More options for {name}"
-msgstr ""
+msgstr "Plus d’options pour {name}"
 
 #: src/control/jsdialog/Widget.TreeView.js:698
 msgid "Headings and objects that you add to the document will appear here"
@@ -2666,10 +2672,13 @@ msgstr ""
 "pour l'enregistrer. Le document sera désormais en lecture seule."
 
 #: src/errormessages.js:47
+#, fuzzy
 msgid ""
 "Document cannot be saved due to expired session, please reopen the document "
 "to continue."
 msgstr ""
+"Le document ne pouvait pas être sauvegardé du a que votre session à expiré, "
+"s’il vous plaît, réouvrez le document pour continuer"
 
 #: src/errormessages.js:48
 msgid "Document cannot be saved."
@@ -2706,10 +2715,13 @@ msgstr ""
 "pouvez toujours le télécharger pour en conserver une copie locale."
 
 #: src/errormessages.js:56
+#, fuzzy
 msgid ""
 "Document cannot be saved due to expired session, please reload the page to "
 "continue."
 msgstr ""
+"Le fichier ne peut pas être sauvegardé du a que votre session a expiré, "
+"rafraîchissez ma page s’il vous plaît"
 
 #: src/errormessages.js:57
 msgid "Document cannot be saved, please check your permissions."
@@ -2791,7 +2803,7 @@ msgstr ""
 
 #: src/canvas/sections/CommentListSection.ts:1248
 msgid "Another user has removed this comment."
-msgstr ""
+msgstr "Un autre utilisateur a éliminé votre commentaire."
 
 #: src/canvas/sections/CommentListSection.ts:1261
 msgid ""
