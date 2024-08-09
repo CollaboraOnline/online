@@ -1,4 +1,4 @@
-/** */
+/* -*- js-indent-level: 8 -*- */
 
 /*
  * Copyright the Collabora Online contributors.
@@ -148,20 +148,20 @@ class CanvasLoaderGl extends Transition2d implements CanvasLoader {
                     vec2 position = (gl_FragCoord.xy / u_resolution - center) * aspect;
                     float radius = length(position);
                     float angle = atan(position.y, position.x) + u_time * ROTATION_SPEED;
-                    
+
                     float outerRadius = LOADER_SIZE;
                     float innerRadius = outerRadius - LOADER_SIZE * LOADER_THICKNESS;
-                    
+
                     if (radius > outerRadius || radius < innerRadius) {
                         discard;
                     }
-                    
+
                     float segmentAngle = 3.14159 * 0.5; // Quarter circle
-                    
+
                     if (mod(angle, 6.28318) > segmentAngle) {
                         discard;
                     }
-                    
+
                     outColor = vec4(LOADER_COLOR, 1.0);
                 }`;
 	}

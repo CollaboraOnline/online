@@ -1,4 +1,4 @@
-/** */
+/* -*- js-indent-level: 8 -*- */
 
 /*
  * Copyright the Collabora Online contributors.
@@ -58,21 +58,21 @@ class CombTransition extends Transition2d {
 
                 void main() {
                     const float numTeeth = 20.0;
-                    
+
                     float progress = smoothstep(0.0, 1.0, time);
-                    
+
                     float coord = direction == 1 ? v_texCoord.x : v_texCoord.y;
-                    
+
                     float toothIndex = floor(coord * numTeeth);
-                    
+
                     float moveDirection = mod(toothIndex, 2.0) == 0.0 ? 1.0 : -1.0;
-                    
+
                     float offset = moveDirection * (1.0 - progress);
-                    
-                    float threshold = moveDirection > 0.0 ? 
-                        (direction == 1 ? v_texCoord.y : v_texCoord.x) : 
+
+                    float threshold = moveDirection > 0.0 ?
+                        (direction == 1 ? v_texCoord.y : v_texCoord.x) :
                         (direction == 1 ? 1.0 - v_texCoord.y : 1.0 - v_texCoord.x);
-                    
+
                     if (threshold < progress) {
                         outColor = texture(enteringSlideTexture, v_texCoord);
                     } else {
