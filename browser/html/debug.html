@@ -43,6 +43,29 @@
        var form = document.getElementById("form");
        form.action = constructWopiUrl();
        form.submit();
+
+        window.addEventListener(
+            'message',
+            (event) => {
+                if (event.origin !== window.origin) {
+                    return;
+                }
+
+                if (typeof event.data !== 'object' || event.data === null) {
+                    return;
+                }
+
+                if (typeof event.data.name !== 'string') {
+                    return;
+                }
+
+                if (!event.data.name.endsWith("Error")) {
+                    return;
+                }
+
+                throw event.data;
+            }
+        );
     </script>
 </body>
 </html>
