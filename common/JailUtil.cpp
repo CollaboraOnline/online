@@ -70,14 +70,16 @@ bool enterMountingNS(uid_t uid, gid_t gid)
         return false;
     }
 
+    setdeny();
+
     // Do not propagate any mounts from this new namespace to the system.
     if (mount("none", "/", nullptr, MS_REC | MS_PRIVATE, nullptr) != 0)
     {
         LOG_ERR("enterMountingNS, root mount failed: " << strerror(errno));
+        // set to original uid so coolmount check isn't surprised by 'nobody'
+        mapuser(uid, uid, gid, gid);
         return false;
     }
-
-    setdeny();
 
     // Map this user as the root user of the new namespace
     mapuser(uid, 0, gid, 0);
