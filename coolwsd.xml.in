@@ -322,6 +322,9 @@
     <indirection_endpoint>
       <url desc="URL endpoint to server which servers routeToken in json format" default=""></url>
       <migration_timeout_secs desc="The maximum number of seconds waiting for shutdown migration message from indirection server before unloading an document. Defaults to 180 second." type="uint" default="180"></migration_timeout_secs>
+      <geolocation_setup>
+        <enable desc="Enable geolocation_setup when using indirection server with geolocation configuration" type="bool" default="false">false</enable>
+      </geolocation_setup>
     </indirection_endpoint>
 
     @LOCK_CONFIGURATION@

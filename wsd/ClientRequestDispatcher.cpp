@@ -2002,6 +2002,27 @@ std::string ClientRequestDispatcher::getDiscoveryXML()
 
 #if !MOBILEAPP
 
+/// Get IANA timezone name
+static std::string getIANATimezone()
+{
+    const char* tzfile = "/etc/localtime";
+    char buf[PATH_MAX];
+
+    ssize_t len = readlink(tzfile, buf, sizeof(buf) - 1);
+    if (len != -1)
+    {
+        buf[len] = '\0';
+        std::string fullPath(buf);
+
+        std::string prefix = "../usr/share/zoneinfo/";
+        if (fullPath.substr(0, prefix.size()) == prefix)
+        {
+            return fullPath.substr(prefix.size());
+        }
+    }
+    return std::string();
+}
+
 /// Create the /hosting/capabilities JSON and return as string.
 static std::string getCapabilitiesJson(bool convertToAvailable)
 {
@@ -2053,6 +2074,15 @@ static std::string getCapabilitiesJson(bool convertToAvailable)
 
     if (const char* podName = std::getenv("POD_NAME"))
         capabilities->set("podName", podName);
+
+    bool geoLocationSetup =
+        config::getBool(std::string("indirection_endpoint.geolocation_setup.enable"), false);
+    if (geoLocationSetup)
+    {
+        std::string timezoneName = getIANATimezone();
+        if (!timezoneName.empty())
+            capabilities->set("timezone", std::string(timezoneName));
+    }
 
     std::ostringstream ostrJSON;
     capabilities->stringify(ostrJSON);
