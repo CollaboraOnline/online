@@ -1753,6 +1753,12 @@ std::string Document::getDefaultTheme(const std::shared_ptr<ChildSession>& sessi
     return darkTheme ? "Dark" : "Light";
 }
 
+std::string Document::getDefaultBackgroundTheme(const std::shared_ptr<ChildSession>& session) const
+{
+    bool darkTheme = session->getDarkBackground() == "true";
+    return darkTheme ? "Dark" : "Light";
+}
+
 std::shared_ptr<lok::Document> Document::load(const std::shared_ptr<ChildSession>& session,
                                               const std::string& renderOpts)
 {
@@ -1935,12 +1941,14 @@ std::shared_ptr<lok::Document> Document::load(const std::shared_ptr<ChildSession
     }
     std::string theme = getDefaultTheme(session);
 
+    std::string backgroundTheme = getDefaultBackgroundTheme(session);
+
     LOG_INF("Initializing for rendering session [" << sessionId << "] on document url [" <<
-            anonymizeUrl(_url) << "] with: [" << makeRenderParams(_renderOpts, userNameAnonym, spellOnline, theme) << "].");
+            anonymizeUrl(_url) << "] with: [" << makeRenderParams(_renderOpts, userNameAnonym, spellOnline, theme, backgroundTheme) << "].");
 
     // initializeForRendering() should be called before
     // registerCallback(), as the previous creates a new view in Impress.
-    const std::string renderParams = makeRenderParams(_renderOpts, userName, spellOnline, theme);
+    const std::string renderParams = makeRenderParams(_renderOpts, userName, spellOnline, theme, backgroundTheme);
 
     _loKitDocument->initializeForRendering(renderParams.c_str());
 
@@ -2083,7 +2091,8 @@ Object::Ptr makePropertyValue(const std::string& type, const T& val)
 }
 
 /* static */ std::string Document::makeRenderParams(const std::string& renderOpts, const std::string& userName,
-                                                    const std::string& spellOnline, const std::string& theme)
+                                                    const std::string& spellOnline, const std::string& theme,
+                                                    const std::string& backgroundTheme)
 {
     Object::Ptr renderOptsObj;
 
@@ -2115,6 +2124,9 @@ Object::Ptr makePropertyValue(const std::string& type, const T& val)
 
     if (!theme.empty())
         renderOptsObj->set(".uno:ChangeTheme", makePropertyValue("string", theme));
+
+    if (!backgroundTheme.empty())
+        renderOptsObj->set(".uno:InvertBackground", makePropertyValue("string", backgroundTheme));
 
     if (renderOptsObj)
     {

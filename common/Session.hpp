@@ -263,6 +263,8 @@ public:
 
     const std::string& getDarkTheme() const { return _darkTheme; }
 
+    const std::string& getDarkBackground() const { return _darkBackground; }
+
     const std::string& getBatchMode() const { return _batch; }
 
     const std::string& getEnableMacrosExecution() const { return _enableMacrosExecution; }
@@ -384,6 +386,9 @@ private:
 
     /// The start value for Dark Theme whether it is active or not on start.
     std::string _darkTheme;
+    ///
+    /// The start value for Dark Background whether it is active or not on start.
+    std::string _darkBackground;
 
     /// Disable dialogs interactivity.
     std::string _batch;
