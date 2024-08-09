@@ -9,8 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-07-05 13:52+0200\n"
 "PO-Revision-Date: 2024-08-06 06:27+0000\n"
-"Last-Translator: \"https://medium.com/@porkifiableoinking\" <erbaotao@outlook"
-".com>\n"
+"Last-Translator: Tron Lee <472734894@qq.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
 "collabora-online/ui/zh_Hans/>\n"
 "Language: zh_CN\n"
@@ -2356,7 +2355,7 @@ msgstr "{username} 将此文档保存为 {filename}。 你想要加入吗？"
 
 #: src/core/Socket.js:1192
 msgid "The document is being renamed and will reload shortly"
-msgstr "文件正在重命名，很快就会重新加载"
+msgstr "文档正被重命名，即将重新加载"
 
 #: src/core/Socket.js:1195
 msgid "The document is switching to Offline mode and will reload shortly"
