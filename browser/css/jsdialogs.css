@@ -1797,6 +1797,11 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	background-color: var(--color-background-darker);
 }
 
+.dropdown {
+	display: flex;
+	width: 100%;
+}
+
 .unotoolbutton.has-dropdown {
 	display: grid;
 	align-items: center;
