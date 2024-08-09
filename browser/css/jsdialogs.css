@@ -1818,6 +1818,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	margin: auto;
 }
 
+.container-button,
 .container-color-inline {
 	display: inline-block;
 	pointer-events: none;
