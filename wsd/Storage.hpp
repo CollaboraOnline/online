@@ -266,6 +266,11 @@ public:
     /// The state of an asynchronous Upload request.
     using AsyncUpload = AsyncRequest<UploadResult>;
 
+    STATE_ENUM(LockState,
+               LOCK, //< Lock the document.
+               UNLOCK, //< Unlock the document .
+    );
+
     /// Represents the Lock request result, with a Result code
     /// and a reason message (typically for errors).
     /// Note: the reason message may be displayed to the clients.
@@ -279,14 +284,17 @@ public:
                    FAILED //< Other failures.
         );
 
-        explicit LockUpdateResult(Status status)
-            : _status(status)
+        /// Construct a LockUpdateResult without a failure reason.
+        LockUpdateResult(Status status, LockState requestedLockState)
+            : LockUpdateResult(status, requestedLockState, /*reason=*/std::string())
         {
         }
 
-        LockUpdateResult(Status status, std::string reason)
+        /// Construct a LockUpdateResult with a failure reason.
+        LockUpdateResult(Status status, LockState requestedLockState, std::string reason)
             : _status(status)
             , _reason(std::move(reason))
+            , _requestedLockState(requestedLockState)
         {
         }
 
@@ -298,9 +306,12 @@ public:
 
         const std::string& getReason() const { return _reason; }
 
+        LockState requestedLockState() const { return _requestedLockState; }
+
     private:
         Status _status;
         std::string _reason;
+        LockState _requestedLockState;
     };
 
     /// The state of an asynchronous lock request.
@@ -373,11 +384,6 @@ public:
     void setLastModifiedTimeUnSafe() { _fileInfo.setLastModifiedTimeUnSafe(); }
 
     std::string getFileExtension() const { return Poco::Path(_fileInfo.getFilename()).getExtension(); }
-
-    STATE_ENUM(LockState,
-               LOCK, //< Lock the document.
-               UNLOCK, //< Unlock the document .
-    );
 
     /// Update the locking state (check-in/out) of the associated file synchronously.
     virtual LockUpdateResult updateLockState(const Authorization& auth, LockContext& lockCtx,
@@ -526,20 +532,22 @@ public:
     /// obtained using getFileInfo method
     std::unique_ptr<LocalFileInfo> getLocalFileInfo();
 
-    LockUpdateResult updateLockState(const Authorization&, LockContext&, StorageBase::LockState,
+    LockUpdateResult updateLockState(const Authorization&, LockContext&,
+                                     StorageBase::LockState requestedLockState,
                                      const Attributes&) override
     {
-        return LockUpdateResult(LockUpdateResult::Status::OK);
+        return LockUpdateResult(LockUpdateResult::Status::OK, requestedLockState);
     }
 
-    void updateLockStateAsync(const Authorization&, LockContext&, LockState, const Attributes&,
-                              SocketPoll&,
+    void updateLockStateAsync(const Authorization&, LockContext&, LockState requestedLockState,
+                              const Attributes&, SocketPoll&,
                               const AsyncLockStateCallback& asyncLockStateCallback) override
     {
         if (asyncLockStateCallback)
         {
-            asyncLockStateCallback(AsyncLockUpdate(AsyncLockUpdate::State::Complete,
-                                                   LockUpdateResult(LockUpdateResult::Status::OK)));
+            asyncLockStateCallback(AsyncLockUpdate(
+                AsyncLockUpdate::State::Complete,
+                LockUpdateResult(LockUpdateResult::Status::OK, requestedLockState)));
         }
     }
 
