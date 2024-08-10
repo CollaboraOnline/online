@@ -354,7 +354,7 @@ StorageBase::LockUpdateResult WopiStorage::updateLockState(const Authorization& 
                                                            const Attributes& attribs)
 {
     if (!lockCtx.supportsLocks())
-        return LockUpdateResult(LockUpdateResult::Status::UNSUPPORTED);
+        return LockUpdateResult(LockUpdateResult::Status::UNSUPPORTED, lock);
 
     Poco::URI uriObject(getUri());
     auth.authorizeURI(uriObject);
@@ -399,7 +399,7 @@ StorageBase::LockUpdateResult WopiStorage::updateLockState(const Authorization& 
         if (httpResponse->statusLine().statusCode() == http::StatusCode::OK)
         {
             lockCtx.setState(lock);
-            return LockUpdateResult(LockUpdateResult::Status::OK);
+            return LockUpdateResult(LockUpdateResult::Status::OK, lock);
         }
 
         failureReason = httpResponse->get("X-WOPI-LockFailureReason", "");
@@ -420,7 +420,7 @@ StorageBase::LockUpdateResult WopiStorage::updateLockState(const Authorization& 
         failureReason = std::string("Internal error: ") + exc.what();
     }
 
-    return LockUpdateResult(LockUpdateResult::Status::FAILED, failureReason);
+    return LockUpdateResult(LockUpdateResult::Status::FAILED, lock, failureReason);
 }
 
 void WopiStorage::updateLockStateAsync(const Authorization& auth, LockContext& lockCtx,
@@ -434,15 +434,15 @@ void WopiStorage::updateLockStateAsync(const Authorization& auth, LockContext& l
 
     // Always invoke the callback with the result of the async locking.
     ScopedInvokeAsyncRequestCallback<AsyncLockStateCallback, AsyncLockUpdate> scopedInvokeCallback(
-        asyncLockStateCallback,
-        AsyncLockUpdate(AsyncLockUpdate::State::Error,
-                        LockUpdateResult(LockUpdateResult::Status::FAILED, "Internal error")));
+        asyncLockStateCallback, AsyncLockUpdate(AsyncLockUpdate::State::Error,
+                                                LockUpdateResult(LockUpdateResult::Status::FAILED,
+                                                                 lock, "Internal error")));
 
     if (!lockCtx.supportsLocks())
     {
         scopedInvokeCallback.setArg(
             AsyncLockUpdate(AsyncLockUpdate::State::Complete,
-                            LockUpdateResult(LockUpdateResult::Status::UNSUPPORTED)));
+                            LockUpdateResult(LockUpdateResult::Status::UNSUPPORTED, lock)));
         return;
     }
 
@@ -509,8 +509,9 @@ void WopiStorage::updateLockStateAsync(const Authorization& auth, LockContext& l
         if (httpResponse->statusLine().statusCode() == http::StatusCode::OK)
         {
             lockCtx.setState(lock);
-            return asyncLockStateCallback(AsyncLockUpdate(
-                AsyncLockUpdate::State::Complete, LockUpdateResult(LockUpdateResult::Status::OK)));
+            return asyncLockStateCallback(
+                AsyncLockUpdate(AsyncLockUpdate::State::Complete,
+                                LockUpdateResult(LockUpdateResult::Status::OK, lock)));
         }
 
         const std::string failureReason = httpResponse->get("X-WOPI-LockFailureReason", "");
@@ -527,7 +528,7 @@ void WopiStorage::updateLockStateAsync(const Authorization& auth, LockContext& l
 
         return asyncLockStateCallback(AsyncLockUpdate(
             AsyncLockUpdate::State::Error,
-            LockUpdateResult(LockUpdateResult::Status::UNAUTHORIZED, failureReason)));
+            LockUpdateResult(LockUpdateResult::Status::UNAUTHORIZED, lock, failureReason)));
     };
 
     _lockHttpSession->setFinishedHandler(finishedCallback);
@@ -535,8 +536,8 @@ void WopiStorage::updateLockStateAsync(const Authorization& auth, LockContext& l
     LOG_DBG("Async " << wopiLog << " request: " << httpRequest.header().toString());
 
     // Notify client via callback that the request is in progress...
-    scopedInvokeCallback.setArg(AsyncLockUpdate(AsyncLockUpdate::State::Running,
-                                                LockUpdateResult(LockUpdateResult::Status::OK)));
+    scopedInvokeCallback.setArg(AsyncLockUpdate(
+        AsyncLockUpdate::State::Running, LockUpdateResult(LockUpdateResult::Status::OK, lock)));
 
     // Make the request.
     _lockHttpSession->asyncRequest(httpRequest, socketPoll);
