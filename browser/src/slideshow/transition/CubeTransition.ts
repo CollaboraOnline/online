@@ -51,6 +51,24 @@ function CubeTransition(
 	aEnteringPrimitives.push(slide);
 
 	const aOperations: Operation[] = [];
+	aOperations.push(
+		makeSScale(
+			vec3.fromValues(0.9, 0.9, 0.9),
+			vec3.fromValues(0, 0, 0),
+			true,
+			0.0,
+			0.5,
+		),
+	);
+	aOperations.push(
+		makeSScale(
+			vec3.fromValues(1.1, 1.1, 1.1),
+			vec3.fromValues(0, 0, 0),
+			true,
+			0.5,
+			1.0,
+		),
+	);
 	if (isOutside) {
 		aOperations.push(
 			makeRotateAndScaleDepthByWidth(
