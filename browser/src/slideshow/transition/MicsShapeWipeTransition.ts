@@ -45,7 +45,7 @@ function MicsShapeWipeTransition(transitionParameters: TransitionParameters) {
 	} else if (transitionSubType == TransitionSubType.CIRCLE) {
 		//  todo: 3d circle transition (8,128)
 	} else if (transitionSubType == TransitionSubType.FANOUTHORIZONTAL) {
-		return SlideShow.HelixTransition(transitionParameters, 20);
+		return SlideShow.makeHelixTransition(transitionParameters, 20);
 	} else if (transitionSubType == TransitionSubType.ACROSS) {
 		return SlideShow.FlipTilesTransition(transitionParameters, 8, 6);
 	} else if (transitionSubType == TransitionSubType.DIAMOND) {
