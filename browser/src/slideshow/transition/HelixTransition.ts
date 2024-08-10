@@ -10,11 +10,39 @@
 
 declare var SlideShow: any;
 
-function HelixTransition(
+class HelixTransition extends SimpleTransition {
+	constructor(transitionParameters: TransitionParameters3D) {
+		super(transitionParameters);
+	}
+
+	public displaySlides_(): void {
+		const t = this.time;
+		this.applyAllOperation(t);
+		if (t < 0.5)
+			this.displayPrimitive(
+				t,
+				this.gl.TEXTURE0,
+				0,
+				this.leavingPrimitives,
+				'slideTexture',
+			);
+		else
+			this.displayPrimitive(
+				t,
+				this.gl.TEXTURE0,
+				1,
+				this.enteringPrimitives,
+				'slideTexture',
+			);
+	}
+}
+
+function makeHelixTransition(
 	transitionParameters: TransitionParameters,
 	nRows: number = 20,
 ) {
 	const invN = 1.0 / nRows;
+	const delayFactor = 0.2; // Adjust this to control the delay between the leaving and entering operations
 	let iDn = 0.0;
 	let iPDn = invN;
 	const aLeavingPrimitives: Primitive[] = [];
@@ -25,27 +53,39 @@ function HelixTransition(
 
 		Tile.pushTriangle([1.0, iDn], [0.0, iDn], [0.0, iPDn]);
 		Tile.pushTriangle([1.0, iPDn], [1.0, iDn], [0.0, iPDn]);
-		// TODO: Fix Leaving slide operation is not visible :)
+
+		const leaveStartTime = Math.min(
+			Math.max(((i - nRows / 2.0) * invN) / 2.0, 0.0),
+			1.0,
+		);
+		const leaveEndTime = Math.min(
+			Math.max(((i + nRows / 2.0) * invN) / 2.0, 0.0),
+			1.0,
+		);
+
 		Tile.operations.push(
 			makeSRotate(
 				vec3.fromValues(0, 1, 0),
 				vec3.fromValues(0, 1, 0),
 				180,
 				true,
-				Math.min(Math.max(((i - nRows / 2.0) * invN) / 2.0, 0.0), 1.0),
-				Math.min(Math.max(((i + nRows / 2.0) * invN) / 2.0, 0.0), 1.0),
+				leaveStartTime,
+				leaveEndTime,
 			),
 		);
 		aLeavingPrimitives.push(Primitive.cloneDeep(Tile));
+
+		const enterStartTime = leaveEndTime + delayFactor * invN;
+		const enterEndTime = enterStartTime + (1.0 - leaveEndTime);
 
 		Tile.operations.push(
 			makeSRotate(
 				vec3.fromValues(0, 1, 0),
 				vec3.fromValues(0, 1, 0),
 				-180,
-				false,
-				0.0,
-				1.0,
+				true,
+				enterStartTime,
+				enterEndTime,
 			),
 		);
 		aEnteringPrimitives.push(Tile);
@@ -60,7 +100,7 @@ function HelixTransition(
 		allOperations: aOperations,
 	};
 
-	return new SimpleTransition(newTransitionParameters);
+	return new HelixTransition(newTransitionParameters);
 }
 
-SlideShow.HelixTransition = HelixTransition;
+SlideShow.makeHelixTransition = makeHelixTransition;
