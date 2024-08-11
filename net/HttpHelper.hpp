@@ -11,11 +11,11 @@
 
 #pragma once
 
-#include "Util.hpp"
+#include <common/Uri.hpp>
+#include <HttpRequest.hpp>
+
 #include <memory>
 #include <string>
-
-#include <HttpRequest.hpp>
 
 class StreamSocket;
 
@@ -46,7 +46,7 @@ inline bool verifyWOPISrc(const std::string& uri, const std::string& wopiSrc,
     // getQueryParameters(), which is used to extract wopiSrc, decodes the values.
     // Compare with the URI. WopiSrc is complex enough to require encoding.
     // But, if it matches, check if the WOPISrc actually needed encoding.
-    if (uri.find(wopiSrc) != std::string::npos && Util::needsURIEncoding(wopiSrc))
+    if (uri.find(wopiSrc) != std::string::npos && Uri::needsEncoding(wopiSrc))
     {
 #if !ENABLE_DEBUG
         (void)socket;

@@ -25,4 +25,20 @@ std::string Uri::decode(const std::string& uri)
     return decoded;
 }
 
+bool Uri::needsEncoding(const std::string& uri, const std::string& reserved)
+{
+    const std::string decoded = decode(uri);
+    if (decoded != uri)
+    {
+        // We could decode it; must have been encoded already.
+        return false;
+    }
+
+    // Identical when decoded, might need encoding.
+    const std::string encoded = encode(uri, reserved);
+
+    // If identical, then doesn't need encoding.
+    return encoded != uri;
+}
+
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

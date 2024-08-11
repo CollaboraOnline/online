@@ -43,6 +43,13 @@ public:
     /// URI-decode and return the URI.
     std::string decoded() const { return decode(_uri); }
 
+    /// Checks whether or not the given string is encoded.
+    /// That is, a string that is identical when encoded will return false.
+    /// Similarly, a string that is already encoded will return false.
+    /// Optionally takes a string of reserved characters to escape while encoding.
+    /// Return true if the URI needs encoding. Used for warning about unencoded URIs.
+    static bool needsEncoding(const std::string& uri, const std::string& reserved = ",/?:@&=+$#");
+
 private:
     std::string _uri;
 };
