@@ -223,8 +223,7 @@ public:
                             const Poco::URI wopiURL(helpers::getTestServerURI() + wopiPath +
                                                     "&testname=" + getTestname());
 
-                            const std::string wopiSrc =
-                                Util::encodeURIComponent(wopiURL.toString());
+                            const std::string wopiSrc = Uri::encode(wopiURL.toString());
                             const std::string documentURL = "/cool/" + wopiSrc + "/ws";
 
                             // This is just a client connection that is used from the tests.

@@ -46,7 +46,7 @@ std::size_t Quarantine::MaxVersions;
 
 Quarantine::Quarantine(DocumentBroker& docBroker, const std::string& docName)
     : _docKey(docBroker.getDocKey())
-    , _docName(Util::encodeURIComponent(docName, std::string(",/?:@&=+$#") + Delimiter))
+    , _docName(Uri::encode(docName, std::string(",/?:@&=+$#") + Delimiter))
     , _quarantinedFilename(Delimiter + std::to_string(docBroker.getPid()) + Delimiter + _docName)
 {
     LOG_DBG("Quarantine ctor for [" << _docKey << "], filename: [" << _quarantinedFilename << ']');

@@ -117,8 +117,8 @@ RequestDetails::RequestDetails(const std::string& wopiSrc, const std::vector<std
     // create a valid URI and let it parse and set the various
     // members, as necessary.
     std::ostringstream oss;
-    oss << "/cool/" << Util::encodeURIComponent(wopiSrcWithOptions);
-    oss << "/ws?WOPISrc=" << Util::encodeURIComponent(decodedWopiSrc);
+    oss << "/cool/" << Uri::encode(wopiSrcWithOptions);
+    oss << "/ws?WOPISrc=" << Uri::encode(decodedWopiSrc);
     oss << "&compat=/ws" << compat;
     _uriString = oss.str();
 
@@ -310,7 +310,7 @@ std::string RequestDetails::getDocKey(const Poco::URI& uri)
     const std::string& newUri = uri.getPath();
 #endif
 
-    std::string docKey = Util::encodeURIComponent(newUri);
+    std::string docKey = Uri::encode(newUri);
     LOG_INF("DocKey from URI [" << uri.toString() << "] => [" << docKey << ']');
     return docKey;
 }
