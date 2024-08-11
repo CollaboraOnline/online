@@ -909,7 +909,7 @@ bool DocumentBroker::download(
         catch (...)
         {
             if (session)
-                session->sendMessage("loadstorage: failed");
+                session->sendTextFrame("loadstorage: failed");
             throw;
         }
 
@@ -1353,7 +1353,7 @@ DocumentBroker::updateSessionWithWopiInfo(const std::shared_ptr<ClientSession>& 
     // Contains PostMessageOrigin property which is necessary to post messages to parent
     // frame. Important to send this message immediately and not enqueue it so that in case
     // document load fails, cool is able to tell its parent frame via PostMessage API.
-    session->sendMessage("wopi: " + wopiInfoString);
+    session->sendTextFrame("wopi: " + wopiInfoString);
 
     if (config::getBool("logging.userstats", false))
     {

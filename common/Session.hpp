@@ -130,12 +130,6 @@ public:
     }
 
     /// Sends a WebSocket Text message.
-    int sendMessage(const std::string& msg)
-    {
-        return sendTextFrame(msg.data(), msg.size());
-    }
-
-    // FIXME: remove synonym - and clean from WebSocketHandler too ... (?)
     bool sendTextFrame(const std::string& text)
     {
         return sendTextFrame(text.data(), text.size());
