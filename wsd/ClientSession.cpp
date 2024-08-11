@@ -1604,8 +1604,9 @@ bool ClientSession::filterMessage(const std::string& message) const
 void ClientSession::setReadOnly(bool bVal)
 {
     Session::setReadOnly(bVal);
-    // Also inform the client
-    const std::string sPerm = bVal ? "readonly" : "edit";
+
+    // Also inform the client.
+    const std::string sPerm = isReadOnly() ? "readonly" : "edit";
     sendTextFrame("perm: " + sPerm);
 }
 
