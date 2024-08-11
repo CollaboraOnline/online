@@ -81,6 +81,11 @@ public:
     const std::string& getName() const { return _name; }
     bool isDisconnected() const { return _disconnected; }
 
+    /// Sets the permission to write to storage (for a given document).
+    void setWritePermission(bool write) { _writePermission = write; }
+    /// Gets the permission to write to storage (for a given document).
+    bool getWritePermission() const { return _writePermission; }
+
     /// Controls whether writing in the Storage is enabled in this session.
     /// If set to false, will setReadOnly(true) and setAllowChangeComments(false).
     void setWritable(bool writable)
@@ -100,7 +105,7 @@ public:
     virtual void setReadOnly(bool readonly) { _isReadOnly = readonly; }
     bool isReadOnly() const { return _isReadOnly; }
 
-    /// Controls whether commenting is enabled in this session
+    /// Controls whether commenting is enabled in this session.
     void setAllowChangeComments(bool allow) { _isAllowChangeComments = allow; }
     bool isAllowChangeComments() const { return _isAllowChangeComments; }
 
@@ -308,10 +313,15 @@ private:
     // Whether websocket received close frame.  Closing Handshake
     std::atomic<bool> _isCloseFrame;
 
-    /// Whether the session can write in storage.
+    /// Whether the session has write permission in storage, as received from WOPI or URL parameters.
+    /// This doesn't change once set.
+    bool _writePermission;
+
+    /// Whether the session can write in storage. May be disabled on error (e.g. low storage).
+    /// Note: A read-only document may still be writable (if _isAllowChangeComments is true), f.e. PDF.
     bool _isWritable;
 
-    /// Whether the session can edit the document.
+    /// Whether the session can edit the document. Disabled when we fail to lock, for example.
     bool _isReadOnly;
 
     /// Whether the session can add/change comments.
