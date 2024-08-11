@@ -43,9 +43,9 @@ void sendLoadResult(const std::shared_ptr<ClientSession>& clientSession, bool su
     // Replace reserved characters
     std::string errorMsgFormatted = COOLProtocol::getAbbreviatedMessage(errorMsg);
     errorMsgFormatted = Poco::translate(errorMsg, "\"", "'");
-    clientSession->sendMessage("commandresult: { \"command\": \"load\", \"success\": " + resultstr +
-                               ", \"result\": \"" + result + "\", \"errorMsg\": \"" +
-                               errorMsgFormatted + "\"}");
+    clientSession->sendTextFrame(
+        "commandresult: { \"command\": \"load\", \"success\": " + resultstr + ", \"result\": \"" +
+        result + "\", \"errorMsg\": \"" + errorMsgFormatted + "\"}");
 }
 
 } // anonymous namespace

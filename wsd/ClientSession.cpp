@@ -2702,7 +2702,7 @@ void ClientSession::onDisconnect()
         LOG_ERR("Error in client request handler: " << exc.toString());
         const std::string status = "error: cmd=internal kind=unauthorized";
         LOG_TRC("Sending to Client [" << status << ']');
-        sendMessage(status);
+        sendTextFrame(status);
         // We are disconnecting, no need to close the socket here.
     }
     catch (const std::exception& exc)
