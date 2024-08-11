@@ -215,27 +215,11 @@ class SlideRendererGl extends SlideRenderer {
 
 		// 5 numbers -> 3 x vertex X,Y,Z and 2x texture X,Y
 		const positions = new Float32Array([
-			//    vX     vX   vZ   tX   tY
-			xMin,
-			-yMin,
-			0.0,
-			0.0,
-			1.0,
-			xMax,
-			-yMin,
-			0.0,
-			1.0,
-			1.0,
-			xMin,
-			-yMax,
-			0.0,
-			0.0,
-			0.0,
-			xMax,
-			-yMax,
-			0.0,
-			1.0,
-			0.0,
+			//    vX    vY   vZ   tX   tY
+			...[xMin, -yMin, 0.0, 0.0, 1.0],
+			...[xMax, -yMin, 0.0, 1.0, 1.0],
+			...[xMin, -yMax, 0.0, 0.0, 0.0],
+			...[xMax, -yMax, 0.0, 1.0, 0.0],
 		]);
 
 		const buffer = gl.createBuffer();
