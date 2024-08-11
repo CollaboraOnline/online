@@ -9,6 +9,7 @@
 
 #include "Uri.hpp"
 #include <common/Util.hpp>
+#include <common/Log.hpp>
 
 #include <Poco/URI.h>
 
@@ -48,6 +49,21 @@ std::string Uri::getFilenameFromURL(const std::string& url)
 {
     const auto [base, filename, ext, params] = Util::splitUrl(url);
     return filename;
+}
+
+bool Uri::hasReadonlyPermission(const std::string& url)
+{
+    //FIXME: Replace with our own implementation.
+    for (const auto& param : Poco::URI(url).getQueryParameters())
+    {
+        LOG_TRC("Query param: " << param.first << ", value: " << param.second);
+        if (param.first == "permission" && param.second == "readonly")
+        {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
