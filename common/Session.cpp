@@ -27,24 +27,25 @@ using namespace COOLProtocol;
 
 using Poco::Exception;
 
-Session::Session(const std::shared_ptr<ProtocolHandlerInterface> &protocol,
-                 const std::string& name, const std::string& id, bool readOnly) :
-    MessageHandlerInterface(protocol),
-    _id(id),
-    _name(name),
-    _disconnected(false),
-    _isActive(true),
-    _lastActivityTime(std::chrono::steady_clock::now()),
-    _isCloseFrame(false),
-    _isWritable(!readOnly),
-    _isReadOnly(readOnly),
-    _isAllowChangeComments(false),
-    _haveDocPassword(false),
-    _isDocPasswordProtected(false),
-    _isAdminUser(std::nullopt),
-    _watermarkOpacity(0.2),
-    _accessibilityState(false),
-    _disableVerifyHost(false)
+Session::Session(const std::shared_ptr<ProtocolHandlerInterface>& protocol, const std::string& name,
+                 const std::string& id, bool readOnly)
+    : MessageHandlerInterface(protocol)
+    , _id(id)
+    , _name(name)
+    , _disconnected(false)
+    , _isActive(true)
+    , _lastActivityTime(std::chrono::steady_clock::now())
+    , _isCloseFrame(false)
+    , _writePermission(!readOnly)
+    , _isWritable(!readOnly)
+    , _isReadOnly(readOnly)
+    , _isAllowChangeComments(false)
+    , _haveDocPassword(false)
+    , _isDocPasswordProtected(false)
+    , _isAdminUser(std::nullopt)
+    , _watermarkOpacity(0.2)
+    , _accessibilityState(false)
+    , _disableVerifyHost(false)
 {
 }
 
@@ -318,11 +319,13 @@ void Session::getIOStats(uint64_t &sent, uint64_t &recv)
 
 void Session::dumpState(std::ostream& os)
 {
-    os << "\n\t\tid: " << _id
+    os << std::boolalpha
+       << "\n\t\tid: " << _id
        << "\n\t\tname: " << _name
        << "\n\t\tdisconnected: " << _disconnected
        << "\n\t\tisActive: " << _isActive
        << "\n\t\tisCloseFrame: " << _isCloseFrame
+       << "\n\t\twritePermission: " << _writePermission
        << "\n\t\tisWritable: " << _isWritable
        << "\n\t\tisReadOnly: " << _isReadOnly
        << "\n\t\tisAllowChangeComments: " << _isAllowChangeComments
