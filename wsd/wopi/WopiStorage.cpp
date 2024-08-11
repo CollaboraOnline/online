@@ -28,6 +28,7 @@
 #include <common/FileUtil.hpp>
 #include <common/JsonUtil.hpp>
 #include <common/TraceEvent.hpp>
+#include <common/Uri.hpp>
 
 #include <Poco/Exception.h>
 #include <Poco/Net/AcceptCertificateHandler.h>
@@ -840,7 +841,7 @@ WopiStorage::handleUploadToStorageResponse(const WopiUploadDetails& details,
                         JsonUtil::findJSONValue(object, "Name", filename))
                     {
                         // Get the FileId form the URL, which we use as the anonymized filename.
-                        const std::string decodedUrl = Util::decodeURIComponent(url);
+                        const std::string decodedUrl = Uri::decode(url);
                         const std::string obfuscatedFileId = Util::getFilenameFromURL(decodedUrl);
                         Util::mapAnonymized(obfuscatedFileId,
                                             obfuscatedFileId); // Identity, to avoid re-anonymizing.

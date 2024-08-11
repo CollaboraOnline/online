@@ -1091,9 +1091,6 @@ int main(int argc, char**argv)
     /// For now just a basic sanity check, can be extended if necessary.
     bool isValidURIHost(const std::string& host);
 
-    /// Decode a URI encoded with encodeURIComponent.
-    std::string decodeURIComponent(const std::string& uri);
-
     /// Remove all but scheme://hostname:port/ from a URI.
     std::string trimURI(const std::string& uri);
 

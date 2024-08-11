@@ -160,7 +160,7 @@ public:
     /// they will have the same request-key and we won't differentiate between them.
     static std::string getRequestKey(const std::string& wopiSrc, const std::string& accessToken)
     {
-        const std::string decodedWopiSrc = Util::decodeURIComponent(wopiSrc);
+        const std::string decodedWopiSrc = Uri::decode(wopiSrc);
         const Poco::URI wopiSrcSanitized = RequestDetails::sanitizeURI(decodedWopiSrc);
 
         std::string requestKey = RequestDetails::getDocKey(wopiSrcSanitized);

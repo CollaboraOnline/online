@@ -18,7 +18,7 @@
 #include <Poco/String.h>
 #include <Poco/URI.h>
 
-#include "Common.hpp"
+#include <common/Uri.hpp>
 #include "Protocol.hpp"
 #include "Log.hpp"
 #include "Util.hpp"
@@ -115,32 +115,32 @@ void Session::parseDocOptions(const StringVector& tokens, int& part, std::string
         }
         else if (name == "authorid")
         {
-            _userId = Util::decodeURIComponent(value);
+            _userId = Uri::decode(value);
             ++offset;
         }
         else if (name == "xauthorid")
         {
-            _userIdAnonym = Util::decodeURIComponent(value);
+            _userIdAnonym = Uri::decode(value);
             ++offset;
         }
         else if (name == "author")
         {
-            _userName = Util::decodeURIComponent(value);
+            _userName = Uri::decode(value);
             ++offset;
         }
         else if (name == "xauthor")
         {
-            _userNameAnonym = Util::decodeURIComponent(value);
+            _userNameAnonym = Uri::decode(value);
             ++offset;
         }
         else if (name == "authorextrainfo")
         {
-            _userExtraInfo = Util::decodeURIComponent(value);
+            _userExtraInfo = Uri::decode(value);
             ++offset;
         }
         else if (name == "authorprivateinfo")
         {
-            _userPrivateInfo = Util::decodeURIComponent(value);
+            _userPrivateInfo = Uri::decode(value);
             ++offset;
         }
         else if (name == "readonly")
@@ -169,7 +169,7 @@ void Session::parseDocOptions(const StringVector& tokens, int& part, std::string
         }
         else if (name == "watermarkText")
         {
-            _watermarkText = Util::decodeURIComponent(value);
+            _watermarkText = Uri::decode(value);
             ++offset;
         }
         else if (name == "watermarkOpacity")

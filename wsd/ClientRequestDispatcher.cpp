@@ -756,10 +756,10 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
                                                            accessDetails);
                 if (accessDetails.isValid())
                 {
-                    LOG_ASSERT_MSG(Util::decodeURIComponent(
-                                       requestDetails.getField(RequestDetails::Field::WOPISrc)) ==
-                                       Util::decodeURIComponent(accessDetails.wopiSrc()),
-                                   "Expected identical WOPISrc in the request as in cool.html");
+                    LOG_ASSERT_MSG(
+                        Uri::decode(requestDetails.getField(RequestDetails::Field::WOPISrc)) ==
+                            Uri::decode(accessDetails.wopiSrc()),
+                        "Expected identical WOPISrc in the request as in cool.html");
 
                     launchAsyncCheckFileInfo(_id, accessDetails, RequestVettingStations);
                 }
@@ -1191,7 +1191,7 @@ void ClientRequestDispatcher::handleMediaRequest(const Poco::Net::HTTPRequest& r
 
     LOG_DBG_S("Media request: " << request.getURI());
 
-    const std::string decoded = Util::decodeURIComponent(request.getURI());
+    const std::string decoded = Uri::decode(request.getURI());
     Poco::URI requestUri(decoded);
     Poco::URI::QueryParameters params = requestUri.getQueryParameters();
     std::string WOPISrc, serverId, viewId, tag, mime;
@@ -1630,7 +1630,7 @@ void ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
 
         bool foundDownloadId = !url.empty();
 
-        const std::string decoded = Util::decodeURIComponent(url);
+        const std::string decoded = Uri::decode(url);
 
         const Poco::Path filePath(FileUtil::buildLocalPathToJail(COOLWSD::EnableMountNamespaces, COOLWSD::ChildRoot + jailId,
                                                                  JAILED_DOCUMENT_ROOT + decoded));

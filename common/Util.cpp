@@ -452,13 +452,6 @@ namespace Util
         return true;
     }
 
-    std::string decodeURIComponent(const std::string& uri)
-    {
-        std::string decoded;
-        Poco::URI::decode(uri, decoded);
-        return decoded;
-    }
-
     std::string trimURI(const std::string &uriStr)
     {
         Poco::URI uri(uriStr);

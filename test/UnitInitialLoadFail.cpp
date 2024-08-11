@@ -58,7 +58,7 @@ public:
                              Poco::MemoryInputStream& /*message*/,
                              std::shared_ptr<StreamSocket>& /*socket*/) override
     {
-        std::string uri = Util::decodeURIComponent(request.getURI());
+        std::string uri = Uri::decode(request.getURI());
         LOG_TST("parallelizeCheckInfo requested: " << uri);
         return std::map<std::string, std::string>{
             {"wopiSrc", "/wopi/files/0"},
