@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-08-09 16:44+0200\n"
-"PO-Revision-Date: 2024-07-12 11:09+0000\n"
+"PO-Revision-Date: 2024-08-10 13:23+0000\n"
 "Last-Translator: Leif-Jöran Olsson <info@friprogramvarusyndikatet.se>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/sv/>\n"
-"Language: \n"
+"Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1697,21 +1697,23 @@ msgstr "Inga problem med SSL-verifiering upptäcktes"
 
 #: src/control/Control.ServerAuditDialog.ts:72
 msgid "PostMessage API is initialized"
-msgstr ""
+msgstr "PostMessage-API är initialiserat"
 
 #: src/control/Control.ServerAuditDialog.ts:74
 msgid "Integrator is not ready for PostMessage calls"
-msgstr ""
+msgstr "Integrator är inte redo för PostMessage-anrop"
 
 #: src/control/Control.ServerAuditDialog.ts:82
 msgid ""
 "Your server is configured with insufficient hardware resources, which may "
 "lead to poor performance."
 msgstr ""
+"Din server saknar troligen hårdvaruresurser för uppgiften vilket kan leda "
+"till dålig prestanda."
 
 #: src/control/Control.ServerAuditDialog.ts:88
 msgid "Hardware resources are sufficient for optimal performance"
-msgstr ""
+msgstr "Hårdvaruresurserna är tillräckliga för god prestanda"
 
 #: src/control/Control.ServerAuditDialog.ts:193
 msgid "No issues found"
@@ -1918,7 +1920,7 @@ msgstr "Inga användare"
 
 #: src/control/Control.UserList.ts:85
 msgid "User List Summary"
-msgstr ""
+msgstr "Användarlistesammanfattning"
 
 #: src/control/Control.UserList.ts:490
 msgid "Following"
@@ -2916,10 +2918,9 @@ msgid "Failed to download clipboard, please re-copy"
 msgstr "Kunde inte ladda ner urklippet, försök igen"
 
 #: src/map/Clipboard.js:1195
-#, fuzzy
 msgid "<p>Please use the paste buttons on your on-screen keyboard.</p>"
 msgstr ""
-"<p>Använd knapparna för kopiering och klistring på skärmens tangentbord.2</p>"
+"<p>Använd knapparna för kopiera och klistra in på skärmens tangentbord.</p>"
 
 #: src/map/Clipboard.js:1197
 msgid ""
