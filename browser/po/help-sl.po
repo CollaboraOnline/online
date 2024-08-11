@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Collabora Online - Help\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-08-09 16:44+0200\n"
-"PO-Revision-Date: 2024-02-27 05:11+0000\n"
+"PO-Revision-Date: 2024-08-11 17:33+0000\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <https://hosted.weblate.org/projects/"
 "collabora-online/help/sl/>\n"
@@ -13,10 +13,10 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
-"%100==4 ? 2 : 3;\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3;\n"
 "X-Accelerator-Marker: ~\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.7-dev\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #: html/cool-help.html%2Bdiv.h1:84-5
@@ -2031,13 +2031,12 @@ msgstr ""
 "tudi predmete, kot so slike, če jih kopirate iz dokumenta, ki ga urejate."
 
 #: html/cool-help.html%2Bdiv.div.div.p:515-5
-#, fuzzy
 msgid ""
 "When you paste text from outside of the document (another browser window or "
 "a desktop application), it will be pasted as rich text."
 msgstr ""
-"Ko v dokument prilepite besedilo iz zunanjega vira (iz drugega okna "
-"brskalnika ali namiznega programja), bo prilepljeno kot obogateno besedilo."
+"Ko v dokument prilepite besedilo izven dokumenta (iz drugega okna brskalnika "
+"ali namiznega programa), bo prilepljeno kot obogateno besedilo."
 
 #: html/cool-help.html%2Bdiv.div.div.p:516-5
 msgid ""
