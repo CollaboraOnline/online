@@ -28,6 +28,7 @@
 #include "Util.hpp"
 #include "StringVector.hpp"
 #include "FileUtil.hpp"
+#include <common/Uri.hpp>
 
 /// Dumps commands and notification trace.
 class TraceFileRecord
@@ -134,7 +135,7 @@ public:
 
         if (_takeSnapshot)
         {
-            const std::string url = Poco::URI(Util::decodeURIComponent(uri)).getPath();
+            const std::string url = Poco::URI(Uri::decode(uri)).getPath();
             const auto it = _urlToSnapshot.find(url);
             if (it != _urlToSnapshot.end())
             {
@@ -213,7 +214,7 @@ public:
                     std::string url;
                     if (COOLProtocol::getTokenString(tokens[1], "url", url))
                     {
-                        Poco::URI uriPublic = Poco::URI(Util::decodeURIComponent(url));
+                        Poco::URI uriPublic = Poco::URI(Uri::decode(url));
                         if (uriPublic.isRelative() || uriPublic.getScheme() == "file")
                         {
                             uriPublic.normalize();

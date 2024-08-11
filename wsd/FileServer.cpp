@@ -1376,7 +1376,7 @@ FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::prepro
     csp.appendDirective("frame-src", "'self'");
     csp.appendDirectiveUrl("frame-src", WELCOME_URL);
     csp.appendDirectiveUrl("frame-src", FEEDBACK_URL);
-    csp.appendDirectiveUrl("frame-src", Util::decodeURIComponent(urv[BUYPRODUCT_URL]));
+    csp.appendDirectiveUrl("frame-src", Uri::decode(urv[BUYPRODUCT_URL]));
     csp.appendDirective("frame-src", "blob:"); // Equivalent to unsafe-eval!
     csp.appendDirective("connect-src", "'self'");
     csp.appendDirectiveUrl("connect-src", "https://www.zotero.org");
@@ -1427,7 +1427,7 @@ FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::prepro
                 return ResourceAccessDetails();
             }
 
-            const Poco::URI uriWopiFrameAncestor(Util::decodeURIComponent(param.second));
+            const Poco::URI uriWopiFrameAncestor(Uri::decode(param.second));
             wopiSrc = uriWopiFrameAncestor.toString();
 
             // Remove parameters from URL

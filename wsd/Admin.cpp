@@ -29,6 +29,7 @@
 #include <Unit.hpp>
 #include <Util.hpp>
 #include <common/JsonUtil.hpp>
+#include <common/Uri.hpp>
 
 #include <net/Socket.hpp>
 #if ENABLE_SSL
@@ -78,7 +79,7 @@ void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
         bool decoded = true;
         try
         {
-            jwtToken = Util::decodeURIComponent(jwtToken);
+            jwtToken = Uri::decode(jwtToken);
         }
         catch (const Poco::URISyntaxException&)
         {
@@ -390,7 +391,7 @@ void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
 
         try
         {
-            jwtToken = Util::decodeURIComponent(jwtToken);
+            jwtToken = Uri::decode(jwtToken);
         }
         catch (const Poco::URISyntaxException& exception)
         {
