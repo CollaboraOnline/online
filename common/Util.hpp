@@ -1101,14 +1101,6 @@ int main(int argc, char**argv)
     /// Remove all but scheme://hostname:port/ from a URI.
     std::string trimURI(const std::string& uri);
 
-    /// Checks whether or not the given string is encoded.
-    /// That is, a string that is identical when encoded
-    /// will return false. Similarly, a string that is
-    /// already encoded will return false.
-    /// Optionally takes a string of reserved characters
-    /// to escape while encoding.
-    bool needsURIEncoding(const std::string& uri, const std::string& reserved = ",/?:@&=+$#");
-
     /// Cleanup a filename replacing anything potentially problematic
     /// either for a URL or for a file path
     std::string cleanupFilename(const std::string &filename);

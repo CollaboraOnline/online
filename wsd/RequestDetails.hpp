@@ -15,6 +15,7 @@
 #include <Poco/URI.h>
 
 #include <common/StringVector.hpp>
+#include <common/Uri.hpp>
 #include <common/Util.hpp>
 #include <common/Log.hpp>
 
@@ -152,7 +153,7 @@ public:
     static std::string getDocKey(const std::string& uri) { return getDocKey(sanitizeURI(uri)); }
 
     /// Returns false if the WOPISrc is not encoded correctly.
-    static bool validateWOPISrc(const std::string& uri) { return !Util::needsURIEncoding(uri); }
+    static bool validateWOPISrc(const std::string& uri) { return !Uri::needsEncoding(uri); }
 
     /// This is a per-document, per-user request key.
     /// If a user makes two requests on the same document at the same time,
