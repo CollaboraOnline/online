@@ -61,16 +61,8 @@ void RequestVettingStation::handleRequest(const std::string& id)
     const std::string fileId = Uri::getFilenameFromURL(docKey);
     Util::mapAnonymized(fileId, fileId); // Identity mapping, since fileId is already obfuscated
 
-    // Check if readonly session is required
-    bool isReadOnly = false;
-    for (const auto& param : uriPublic.getQueryParameters())
-    {
-        LOG_TRC("Query param: " << param.first << ", value: " << param.second);
-        if (param.first == "permission" && param.second == "readonly")
-        {
-            isReadOnly = true;
-        }
-    }
+    // Check if readonly session is required.
+    const bool isReadOnly = Uri::hasReadonlyPermission(uriPublic.toString());
 
     LOG_INF("URL [" << COOLWSD::anonymizeUrl(url)
                     << "] will be proactively vetted. Sanitized uriPublic: ["
@@ -162,16 +154,8 @@ void RequestVettingStation::handleRequest(const std::string& id,
     const std::string fileId = Uri::getFilenameFromURL(docKey);
     Util::mapAnonymized(fileId, fileId); // Identity mapping, since fileId is already obfuscated
 
-    // Check if readonly session is required
-    bool isReadOnly = false;
-    for (const auto& param : uriPublic.getQueryParameters())
-    {
-        LOG_TRC("Query param: " << param.first << ", value: " << param.second);
-        if (param.first == "permission" && param.second == "readonly")
-        {
-            isReadOnly = true;
-        }
-    }
+    // Check if readonly session is required.
+    const bool isReadOnly = Uri::hasReadonlyPermission(uriPublic.toString());
 
     LOG_INF("URL [" << COOLWSD::anonymizeUrl(url) << "] for WS Request. Sanitized uriPublic: ["
                     << COOLWSD::anonymizeUrl(uriPublic.toString()) << "], docKey: [" << docKey

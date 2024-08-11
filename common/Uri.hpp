@@ -56,6 +56,8 @@ public:
     /// Extract and return the filename given a url or path.
     static std::string getFilenameFromURL(const std::string& url);
 
+    static bool hasReadonlyPermission(const std::string& url);
+
 private:
     std::string _uri;
 };

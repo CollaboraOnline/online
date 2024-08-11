@@ -1131,30 +1131,16 @@ void DocumentBroker::lockIfEditing(const std::shared_ptr<ClientSession>& session
 
     // No Session yet, we need to rely on the URI and
     // the WOPI Info we got above, explicitly.
-    bool isReadOnly = _isViewFileExtension || !userCanWrite;
-    if (!isReadOnly)
+    // See if we have permission-override from the UI.
+    // Primarily used by mobile, which starts in read-only
+    // mode until the user clicks on the "edit" button.
+    if (userCanWrite && !_isViewFileExtension && !Uri::hasReadonlyPermission(uriPublic.toString()))
     {
-        // See if we have permission override from the UI.
-        // Primarily used by mobile, which starts in read-only
-        // mode until the user clicks on the "edit" button.
-        for (const auto& param : uriPublic.getQueryParameters())
+        LOG_DBG("Locking docKey [" << _docKey << "], which is editable");
+        std::string error;
+        if (!lockDocumentInStorage(Authorization::create(uriPublic), error))
         {
-            LOG_TRC("Query param: " << param.first << ", value: " << param.second);
-            if (param.first == "permission" && param.second == "readonly")
-            {
-                isReadOnly = true;
-                break;
-            }
-        }
-
-        if (!isReadOnly)
-        {
-            LOG_DBG("Locking docKey [" << _docKey << "], which is editable");
-            std::string error;
-            if (!lockDocumentInStorage(Authorization::create(uriPublic), error))
-            {
-                LOG_ERR("Failed to lock docKey [" << _docKey << "] in advance: " << error);
-            }
+            LOG_ERR("Failed to lock docKey [" << _docKey << "] in advance: " << error);
         }
     }
 }

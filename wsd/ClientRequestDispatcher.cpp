@@ -1758,16 +1758,8 @@ void ClientRequestDispatcher::handleClientProxyRequest(const Poco::Net::HTTPRequ
     LOG_INF("Starting Proxy request handler for session [" << _id << "] on url ["
                                                            << COOLWSD::anonymizeUrl(url) << "].");
 
-    // Check if readonly session is required
-    bool isReadOnly = false;
-    for (const auto& param : uriPublic.getQueryParameters())
-    {
-        LOG_DBG("Query param: " << param.first << ", value: " << param.second);
-        if (param.first == "permission" && param.second == "readonly")
-        {
-            isReadOnly = true;
-        }
-    }
+    // Check if readonly session is required.
+    const bool isReadOnly = Uri::hasReadonlyPermission(uriPublic.toString());
 
     LOG_INF("URL [" << COOLWSD::anonymizeUrl(url) << "] is "
                     << (isReadOnly ? "readonly" : "writable") << '.');
