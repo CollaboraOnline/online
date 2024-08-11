@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-08-09 16:44+0200\n"
-"PO-Revision-Date: 2024-07-05 22:41+0000\n"
+"PO-Revision-Date: 2024-08-09 18:17+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/hu/>\n"
-"Language: \n"
+"Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1702,21 +1702,23 @@ msgstr "Az SSL-ellenőrzés során nem volt probléma"
 
 #: src/control/Control.ServerAuditDialog.ts:72
 msgid "PostMessage API is initialized"
-msgstr ""
+msgstr "A PostMessage API inicializálva van"
 
 #: src/control/Control.ServerAuditDialog.ts:74
 msgid "Integrator is not ready for PostMessage calls"
-msgstr ""
+msgstr "Az integrátor nem áll készen a PostMessage hívásokra"
 
 #: src/control/Control.ServerAuditDialog.ts:82
 msgid ""
 "Your server is configured with insufficient hardware resources, which may "
 "lead to poor performance."
 msgstr ""
+"A kiszolgáló nem felel meg a minimális hardverkövetelményeknek, ezért gyenge "
+"teljesítmény várható."
 
 #: src/control/Control.ServerAuditDialog.ts:88
 msgid "Hardware resources are sufficient for optimal performance"
-msgstr ""
+msgstr "A hardvererőforrások elégségesek az optimális teljesítményhez"
 
 #: src/control/Control.ServerAuditDialog.ts:193
 msgid "No issues found"
@@ -1923,7 +1925,7 @@ msgstr "Nincsenek felhasználók"
 
 #: src/control/Control.UserList.ts:85
 msgid "User List Summary"
-msgstr ""
+msgstr "Felhasználólista"
 
 #: src/control/Control.UserList.ts:490
 msgid "Following"
@@ -2932,11 +2934,10 @@ msgid "Failed to download clipboard, please re-copy"
 msgstr "Nem sikerült letölteni a vágólapot, másolja ki újra."
 
 #: src/map/Clipboard.js:1195
-#, fuzzy
 msgid "<p>Please use the paste buttons on your on-screen keyboard.</p>"
 msgstr ""
-"<p>Használja a képernyőn megjelenő billentyűzeten lévő másolás és "
-"beillesztés gombokat.</p>"
+"<p>Használja a képernyőn megjelenő billentyűzeten lévő beillesztés "
+"gombokat.</p>"
 
 #: src/map/Clipboard.js:1197
 msgid ""
