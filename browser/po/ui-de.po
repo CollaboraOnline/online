@@ -12,11 +12,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-08-09 16:44+0200\n"
-"PO-Revision-Date: 2024-07-15 13:02+0000\n"
-"Last-Translator: Lily Logua <lily.logua@gmail.com>\n"
+"PO-Revision-Date: 2024-08-10 00:51+0000\n"
+"Last-Translator: HB9HIL <mail@hb9hil.org>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "ui/de/>\n"
-"Language: \n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1712,21 +1712,23 @@ msgstr "Keine Probleme bei der SSL Verifizierung festgestellt"
 
 #: src/control/Control.ServerAuditDialog.ts:72
 msgid "PostMessage API is initialized"
-msgstr ""
+msgstr "PostMessage API ist initialisiert"
 
 #: src/control/Control.ServerAuditDialog.ts:74
 msgid "Integrator is not ready for PostMessage calls"
-msgstr ""
+msgstr "Integrator ist nicht bereit für PostMessage Aufrufe"
 
 #: src/control/Control.ServerAuditDialog.ts:82
 msgid ""
 "Your server is configured with insufficient hardware resources, which may "
 "lead to poor performance."
 msgstr ""
+"Dein Server verfügt über unzureichende Hardware-Ressourcen, was zu einer "
+"schlechten Leistung führen kann."
 
 #: src/control/Control.ServerAuditDialog.ts:88
 msgid "Hardware resources are sufficient for optimal performance"
-msgstr ""
+msgstr "Hardware-Ressourcen sind ausreichend für eine optimale Leistung"
 
 #: src/control/Control.ServerAuditDialog.ts:193
 msgid "No issues found"
@@ -1933,7 +1935,7 @@ msgstr "0 Benutzer"
 
 #: src/control/Control.UserList.ts:85
 msgid "User List Summary"
-msgstr ""
+msgstr "Benutzerliste Zusammenfassung"
 
 #: src/control/Control.UserList.ts:490
 msgid "Following"
@@ -2968,7 +2970,6 @@ msgid "Failed to download clipboard, please re-copy"
 msgstr "Fehler beim Herunterladen der Zwischenablage, bitte kopieren Sie erneut"
 
 #: src/map/Clipboard.js:1195
-#, fuzzy
 msgid "<p>Please use the paste buttons on your on-screen keyboard.</p>"
 msgstr ""
 "<p>Bitte verwenden Sie die Schaltflächen Kopieren/ Einfügen auf Ihrer "
