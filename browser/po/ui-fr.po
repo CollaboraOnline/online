@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-08-09 16:44+0200\n"
-"PO-Revision-Date: 2024-08-09 13:28+0000\n"
+"PO-Revision-Date: 2024-08-10 13:23+0000\n"
 "Last-Translator: Hugo B <landru@cock.li>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/collabora-online/"
 "ui/fr/>\n"
-"Language: \n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -491,12 +491,14 @@ msgid "Paste Special"
 msgstr "Collage spécial"
 
 #: src/control/Control.ContextMenu.js:246
+#, fuzzy
 msgid "Copy Cells"
-msgstr ""
+msgstr "Copier Cellules"
 
 #: src/control/Control.ContextMenu.js:254
+#, fuzzy
 msgid "Fill Series"
-msgstr ""
+msgstr "Remplir serie"
 
 #: src/control/Control.DocumentNameInput.js:113
 msgid "Path"
@@ -1174,13 +1176,11 @@ msgstr ""
 
 #: src/control/Control.Menubar.js:836
 #: src/control/jsdialog/Definitions.Menu.ts:289
-#, fuzzy
 msgid "Values greater than..."
 msgstr "Valeurs plus grands que …"
 
 #: src/control/Control.Menubar.js:837
 #: src/control/jsdialog/Definitions.Menu.ts:293
-#, fuzzy
 msgid "Values less than..."
 msgstr "Valeurs plus petits que …"
 
@@ -1623,11 +1623,11 @@ msgstr "Présenter dans une fenêtre"
 
 #: src/control/Control.NotebookbarImpress.js:455
 msgid "Normal View"
-msgstr ""
+msgstr "Vue normale"
 
 #: src/control/Control.NotebookbarImpress.js:461
 msgid "Notes View"
-msgstr ""
+msgstr "Vue de notes"
 
 #: src/control/Control.NotebookbarWriter.js:79
 msgid "Form"
@@ -1700,8 +1700,9 @@ msgid "The IsAdminUser user property is set by integration"
 msgstr ""
 
 #: src/control/Control.ServerAuditDialog.ts:65
+#, fuzzy
 msgid "Your WOPI server is not secure: SSL verification failed"
-msgstr ""
+msgstr "Votre serveur WOPI n’est pas sécurisé ; vérification SSL a échoué"
 
 #: src/control/Control.ServerAuditDialog.ts:69
 #, fuzzy
@@ -1717,14 +1718,18 @@ msgid "Integrator is not ready for PostMessage calls"
 msgstr ""
 
 #: src/control/Control.ServerAuditDialog.ts:82
+#, fuzzy
 msgid ""
 "Your server is configured with insufficient hardware resources, which may "
 "lead to poor performance."
 msgstr ""
+"Votre serveur est configuré avec des resources de hardware insuffisants, ce "
+"qui peut résulter dans une mauvaise performance"
 
 #: src/control/Control.ServerAuditDialog.ts:88
 msgid "Hardware resources are sufficient for optimal performance"
 msgstr ""
+"Les resources du hardware sont suffisantes pour une performance optimale"
 
 #: src/control/Control.ServerAuditDialog.ts:193
 #, fuzzy
@@ -1737,7 +1742,7 @@ msgstr "État"
 
 #: src/control/Control.ServerAuditDialog.ts:247
 msgid "Check security warnings of your server"
-msgstr ""
+msgstr "Vérifiez les avertissements de sécurité de votre serveur"
 
 #: src/control/Control.ServerAuditDialog.ts:248
 msgid "OPEN"
@@ -1932,7 +1937,7 @@ msgstr "0 utilisateur"
 
 #: src/control/Control.UserList.ts:85
 msgid "User List Summary"
-msgstr ""
+msgstr "Résumé de la liste d’utilisateurs"
 
 #: src/control/Control.UserList.ts:490
 msgid "Following"
@@ -2635,8 +2640,9 @@ msgstr ""
 "part à votre administrateur si le problème persiste."
 
 #: src/errormessages.js:29
+#, fuzzy
 msgid "Authorization error was: '{errormessage}'."
-msgstr ""
+msgstr "Erreur d’autorisation était : ‘{errormessage}’."
 
 #: src/errormessages.js:30
 msgid "Wrong or missing WOPISrc parameter, please contact support."
@@ -2882,7 +2888,7 @@ msgstr "Résoudre le fil"
 #: src/canvas/sections/CommentListSection.ts:1263
 #: src/canvas/sections/CommentListSection.ts:2100
 msgid "Comments Updated"
-msgstr ""
+msgstr "Commentaires actualisés"
 
 #: src/canvas/sections/CommentListSection.ts:1251
 msgid "Another user has removed this comment."
