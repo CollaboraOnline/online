@@ -115,6 +115,7 @@ shared_sources = common/FileUtil.cpp \
                  common/SigUtil.cpp \
                  common/SpookyV2.cpp \
                  common/Unit.cpp \
+                 common/Uri.cpp \
                  common/Util.cpp \
                  common/Util-desktop.cpp \
                  common/ConfigUtil.cpp \
@@ -363,6 +364,7 @@ shared_headers = common/Common.hpp \
                  common/Seccomp.hpp \
                  common/Session.hpp \
                  common/Unit.hpp \
+                 common/Uri.hpp \
                  common/Util.hpp \
                  common/ConfigUtil.hpp \
                  common/Authorization.hpp \
