@@ -64,4 +64,7 @@
     <string name="enter_filename">Insere le nomine de file:</string>
     <string name="action_create">Crear</string>
     <string name="directory_not_saved">Directorio non salveguardate.</string>
+    <string name="about_moreinfo">Plus de information</string>
+    <string name="bad_directory">Percurso de directorio non valide</string>
+    <string name="current_dir">Directorio actual: %1$s</string>
 </resources>
