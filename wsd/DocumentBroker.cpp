@@ -1120,9 +1120,10 @@ void DocumentBroker::lockIfEditing(const std::shared_ptr<ClientSession>& session
             std::string error;
             if (!updateStorageLockState(*session, StorageBase::LockState::LOCK, error))
             {
-                LOG_ERR("Failed to lock docKey [" << _docKey << "] with session ["
-                                                  << session->getId()
-                                                  << "] after downloading: " << error);
+                LOG_ERR("Failed to lock docKey ["
+                        << _docKey << "] with session [" << session->getId()
+                        << "] before downloading. Session will be read-only: " << error);
+                session->setWritable(false);
             }
         }
 
