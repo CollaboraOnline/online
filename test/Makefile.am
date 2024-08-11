@@ -120,15 +120,13 @@ endif
 AM_CPPFLAGS = -pthread -I$(top_srcdir) -DBUILDING_TESTS -DLOK_ABORT_ON_ASSERTION
 
 wsd_sources = \
-            ../common/Authorization.cpp \
-            ../common/SpookyV2.cpp \
-            ../kit/Kit.cpp \
-            ../kit/KitWebSocket.cpp \
-            ../kit/TestStubs.cpp \
-            ../wsd/FileServerUtil.cpp \
-            ../wsd/RequestDetails.cpp \
-            ../wsd/TileCache.cpp \
-            ../wsd/ProofKey.cpp
+	../kit/Kit.cpp \
+	../kit/KitWebSocket.cpp \
+	../kit/TestStubs.cpp \
+	../wsd/FileServerUtil.cpp \
+	../wsd/ProofKey.cpp \
+	../wsd/RequestDetails.cpp \
+	../wsd/TileCache.cpp
 
 test_base_sources = \
 	KitQueueTests.cpp \
@@ -140,22 +138,26 @@ test_base_sources = \
 	DeltaTests.cpp \
 	UtilTests.cpp \
 	WopiProofTests.cpp \
+	UriTests.cpp \
 	$(wsd_sources)
 
 common_sources = \
-	../common/Protocol.cpp \
+	../common/Authorization.cpp \
 	../common/ConfigUtil.cpp \
 	../common/DummyTraceEventEmitter.cpp \
+	../common/FileUtil.cpp \
 	../common/Log.cpp \
+	../common/Protocol.cpp \
 	../common/Session.cpp \
 	../common/SigUtil.cpp \
-	../common/Unit.cpp \
-	../common/FileUtil.cpp \
-	../common/Util.cpp \
-	../common/Util-desktop.cpp \
+	../common/Simd.cpp \
+	../common/SpookyV2.cpp \
 	../common/StringVector.cpp \
 	../common/TraceEvent.cpp \
-	../common/Simd.cpp \
+	../common/Unit.cpp \
+	../common/Uri.cpp \
+	../common/Util-desktop.cpp \
+	../common/Util.cpp \
 	../kit/KitQueue.cpp \
 	../wsd/Exceptions.cpp \
 	../net/HttpRequest.cpp \
