@@ -452,13 +452,6 @@ namespace Util
         return true;
     }
 
-    std::string encodeURIComponent(const std::string& uri, const std::string& reserved)
-    {
-        std::string encoded;
-        Poco::URI::encode(uri, reserved, encoded);
-        return encoded;
-    }
-
     std::string decodeURIComponent(const std::string& uri)
     {
         std::string decoded;

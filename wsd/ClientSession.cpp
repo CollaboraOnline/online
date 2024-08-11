@@ -220,7 +220,7 @@ std::string ClientSession::createPublicURI(const std::string& subPath, const std
     Poco::URI wopiSrc = getDocumentBroker()->getPublicUri();
     wopiSrc.setQueryParameters(Poco::URI::QueryParameters());
 
-    const std::string encodedFrom = Util::encodeURIComponent(wopiSrc.toString());
+    const std::string encodedFrom = Uri::encode(wopiSrc.toString());
 
     std::string meta = _serverURL.getSubURLForEndpoint(
         "/cool/" + subPath + "?WOPISrc=" + encodedFrom +
@@ -236,7 +236,7 @@ std::string ClientSession::createPublicURI(const std::string& subPath, const std
     if (!encode)
         return meta;
 
-    return Util::encodeURIComponent(meta);
+    return Uri::encode(meta);
 }
 
 bool ClientSession::matchesClipboardKeys(const std::string &/*viewId*/, const std::string &tag)
@@ -1774,7 +1774,8 @@ bool ClientSession::handlePresentationInfo(const std::shared_ptr<Message>& paylo
                                 std::string aOriginal = "{ \"id\" : \"" + id + "\", \"url\" : \"" + url + "\" }";
                                 docBroker->addEmbeddedMedia(id, aOriginal); // Capture the original message with internal URL.
 
-                                const std::string mediaUrl = Util::encodeURIComponent(createPublicURI("media", id, false), "&");
+                                const std::string mediaUrl =
+                                    Uri::encode(createPublicURI("media", id, false), "&");
                                 video->set("url", mediaUrl); // Replace the url with the public one.
                                 bModified = true;
                             }
@@ -2182,8 +2183,8 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
                         docBroker->addEmbeddedMedia(
                             id, json); // Capture the original message with internal URL.
 
-                        const std::string mediaUrl = Util::encodeURIComponent(
-                            createPublicURI("media", id, /*encode=*/false), "&");
+                        const std::string mediaUrl =
+                            Uri::encode(createPublicURI("media", id, /*encode=*/false), "&");
                         object->set("url", mediaUrl); // Replace the url with the public one.
                         object->set("mimeType", "video/mp4"); //FIXME: get this from the source json
 
@@ -3061,7 +3062,7 @@ std::string ClientSession::processSVGContent(const std::string& svg)
                                             fileUrl + "\"}");
 
         const std::string mediaUrl =
-            Util::encodeURIComponent(createPublicURI("media", id, /*encode=*/false), "&");
+            Uri::encode(createPublicURI("media", id, /*encode=*/false), "&");
         oss << "src=\"" << mediaUrl << '"';
         pos = end + 1;
     }

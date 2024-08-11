@@ -1091,10 +1091,6 @@ int main(int argc, char**argv)
     /// For now just a basic sanity check, can be extended if necessary.
     bool isValidURIHost(const std::string& host);
 
-    /// Encode a URI with the JS-compatible reserved characters.
-    std::string encodeURIComponent(const std::string& uri,
-                                   const std::string& reserved = ",/?:@&=+$#");
-
     /// Decode a URI encoded with encodeURIComponent.
     std::string decodeURIComponent(const std::string& uri);
 

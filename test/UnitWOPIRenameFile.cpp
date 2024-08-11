@@ -48,7 +48,7 @@ public:
     {
         const std::string message(data, len);
 
-        const std::string expected("renamefile filename=" + Util::encodeURIComponent(FilenameUtf8));
+        const std::string expected("renamefile filename=" + Uri::encode(FilenameUtf8));
 
         LOG_TST("Got [" << message << "], expect: [" << expected << ']');
         if (message.find(expected) == 0)
@@ -80,7 +80,7 @@ public:
             {
                 TRANSITION_STATE(_phase, Phase::WaitRenameNotification);
 
-                WSD_CMD("renamefile filename=" + Util::encodeURIComponent(FilenameUtf8));
+                WSD_CMD("renamefile filename=" + Uri::encode(FilenameUtf8));
                 break;
             }
             case Phase::WaitRenameNotification:
