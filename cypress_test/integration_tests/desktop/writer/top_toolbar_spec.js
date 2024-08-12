@@ -26,20 +26,20 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 	it('Apply highlight color.', function() {
 		helper.setDummyClipboardForCopy();
 		desktopHelper.actionOnSelector('backColor', (selector) => { cy.cGet(selector).click(); });
-		desktopHelper.selectColorFromPalette('FFF2CC');
+		desktopHelper.selectColorFromPalette('FFB66C');
 		writerHelper.selectAllTextOfDoc();
 		helper.copy();
 		cy.cGet('#copy-paste-container p font span')
-			.should('have.attr', 'style', 'background: #fff2cc');
+			.should('have.attr', 'style', 'background: #ffb66c');
 	});
 
 	it('Apply font color.', function() {
 		helper.setDummyClipboardForCopy();
 		desktopHelper.actionOnSelector('fontColor', (selector) => { cy.cGet(selector).click(); });
-		desktopHelper.selectColorFromPalette('8E7CC3');
+		desktopHelper.selectColorFromPalette('3FAF46');
 		writerHelper.selectAllTextOfDoc();
 		helper.copy();
-		cy.cGet('#copy-paste-container p font').should('have.attr', 'color', '#8e7cc3');
+		cy.cGet('#copy-paste-container p font').should('have.attr', 'color', '#3faf46');
 	});
 
 	it('Apply style.', function() {

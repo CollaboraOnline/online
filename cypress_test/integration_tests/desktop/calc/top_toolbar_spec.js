@@ -183,19 +183,19 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 	it('Apply highlight color.', function() {
 		helper.setDummyClipboardForCopy();
 		cy.cGet('#backgroundcolor .arrowbackground').click();
-		desktopHelper.selectColorFromPalette('8E7CC3');
+		desktopHelper.selectColorFromPalette('3FAF46');
 		calcHelper.selectEntireSheet();
 		helper.copy();
-		cy.cGet('#copy-paste-container table td').should('have.attr', 'bgcolor', '#8E7CC3');
+		cy.cGet('#copy-paste-container table td').should('have.attr', 'bgcolor', '#3FAF46');
 	});
 
 	it('Apply font color.', function() {
 		helper.setDummyClipboardForCopy();
 		cy.cGet('#fontcolor .arrowbackground').click();
-		desktopHelper.selectColorFromPalette('FFF2CC');
+		desktopHelper.selectColorFromPalette('FFB66C');
 		calcHelper.selectEntireSheet();
 		helper.copy();
-		cy.cGet('#copy-paste-container table td font').should('have.attr', 'color', '#FFF2CC');
+		cy.cGet('#copy-paste-container table td font').should('have.attr', 'color', '#FFB66C');
 	});
 
 	it('Add/Delete decimal places', function() {

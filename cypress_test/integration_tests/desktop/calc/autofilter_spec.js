@@ -95,7 +95,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'AutoFilter', function() {
 		// apply background color to some cells
 		calcHelper.selectCellsInRange('A2:A2');
 		cy.cGet('#backgroundcolor .arrowbackground').click();
-		desktopHelper.selectColorFromPalette('8E7CC3');
+		desktopHelper.selectColorFromPalette('3FAF46');
 
 		calcHelper.openAutoFilterMenu();
 		
