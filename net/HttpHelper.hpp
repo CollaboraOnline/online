@@ -34,7 +34,12 @@ void sendErrorAndShutdown(http::StatusCode errorCode, const std::shared_ptr<Stre
 /// Sends file as HTTP response and shutdown the socket.
 void sendFileAndShutdown(const std::shared_ptr<StreamSocket>& socket, const std::string& path,
                          http::Response& response,
-                         bool noCache = false, bool deflate = false, const bool headerOnly = false);
+                         const bool noCache = false, const bool deflate = false, const bool headerOnly = false);
+
+/// Sends file as HTTP response.
+void sendFile(const std::shared_ptr<StreamSocket>& socket, const std::string& path,
+              http::Response& response,
+              const bool noCache = false, const bool deflate = false, const bool headerOnly = false);
 
 /// Verifies that the given WOPISrc is properly URI-encoded.
 /// Warns if it isn't and, in debug builds, closes the socket (if given) and returns false.

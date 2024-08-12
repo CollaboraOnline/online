@@ -691,7 +691,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
                     response.set("Content-Encoding", "br");
                 }
 
-                HttpHelper::sendFileAndShutdown(socket, filePath, response, noCache);
+                HttpHelper::sendFile(socket, filePath, response, noCache); // shutdown by caller
                 return;
             }
 #endif

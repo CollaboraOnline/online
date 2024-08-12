@@ -58,6 +58,7 @@ class UnitSession : public UnitWSD
     TestResult testBadRequest();
     TestResult testHandshake();
     TestResult testSlideShow();
+    TestResult testSlideShowMultiDL();
 
 public:
     UnitSession()
@@ -232,6 +233,122 @@ UnitBase::TestResult UnitSession::testSlideShow()
     return TestResult::Ok;
 }
 
+/// Load a document on server and download it multiple to this client using 2 reused channels:
+/// - wsd-session for commands (websocket)
+/// - http-session to download it, as well as to load the favicon
+UnitBase::TestResult UnitSession::testSlideShowMultiDL()
+{
+    setTestname(__func__);
+    TST_LOG("Starting Test: " << testname);
+    const int dlCount = 10;
+    int dlIter = -1;
+    try
+    {
+        std::string documentPath, documentURL;
+        std::string response;
+        helpers::getDocumentPathAndURL("setclientpart.odp", documentPath, documentURL, testname);
+
+        // Reused http wsd session + socket-poll to send commands to server
+        std::shared_ptr<SocketPoll> wsdSocketPoll = std::make_shared<SocketPoll>(testname);
+        wsdSocketPoll->startThread();
+        std::shared_ptr<http::WebSocketSession> wsdSession = helpers::loadDocAndGetSession(
+            wsdSocketPoll, Poco::URI(helpers::getTestServerURI()), documentURL, testname);
+
+        // Reused http download-session for document and favicon download from server
+        std::unique_ptr<Poco::Net::HTTPClientSession> dlSession(
+            helpers::createSession(Poco::URI(helpers::getTestServerURI())));
+        dlSession->setKeepAlive(true);
+
+        for( dlIter=0; dlIter < dlCount; ++dlIter ) {
+            // Still connected on sub-sequent commands and downloads?
+            if( dlIter > 0 ) {
+                LOK_ASSERT_EQUAL(true, wsdSession->isConnected());
+                LOK_ASSERT_EQUAL(true, dlSession->connected());
+            }
+
+            // download favicon
+            {
+                const std::string path = "/favicon.ico";
+                Poco::Net::HTTPRequest requestICO(Poco::Net::HTTPRequest::HTTP_GET, path);
+                TST_LOG("Favicon requesting from " << path);
+                dlSession->sendRequest(requestICO);
+
+                Poco::Net::HTTPResponse responseICO;
+                std::istream& rs = dlSession->receiveResponse(responseICO);
+                LOK_ASSERT_EQUAL(Poco::Net::HTTPResponse::HTTP_OK /* 200 */, responseICO.getStatus());
+                LOK_ASSERT_EQUAL(std::string("image/vnd.microsoft.icon"), responseICO.getContentType());
+                TST_LOG("Favicon file size: " << responseICO.getContentLength());
+                std::ofstream ofs("/tmp/favicon.ico");
+                Poco::StreamCopier::copyStream(rs, ofs);
+                ofs.close();
+            }
+            // request downloading document as SVG
+            std::string id_req="slideshow"+std::to_string(dlIter);
+            TST_LOG(testname << ": Download Request: " << id_req << ": count " << dlIter << "/" << dlCount);
+            helpers::sendTextFrame(
+                wsdSession, "downloadas name="+id_req+".svg id="+id_req+" format=svg options=", testname);
+            response = helpers::getResponseString(wsdSession, "downloadas:", testname);
+            LOK_ASSERT_MESSAGE("did not receive a downloadas: message as expected",
+                                !response.empty());
+
+            StringVector tokens(StringVector::tokenize(response.substr(11), ' '));
+            // "downloadas: downloadId= port= id=slideshow"
+            const std::string downloadId = tokens[0].substr(std::string("downloadId=").size());
+            const int port = std::stoi(tokens[1].substr(std::string("port=").size()));
+            const std::string id_has = tokens[2].substr(std::string("id=").size());
+            LOK_ASSERT(!downloadId.empty());
+            LOK_ASSERT_EQUAL(static_cast<int>(Poco::URI(helpers::getTestServerURI()).getPort()),
+                                port);
+            LOK_ASSERT_EQUAL(id_req, id_has);
+            TST_LOG(testname << ": Download Response: " << id_has << ": count " << dlIter << "/" << dlCount << ": "+downloadId);
+            {
+                std::string encodedDoc;
+                Poco::URI::encode(documentPath, ":/?", encodedDoc);
+                const std::string ignoredSuffix = "%3FWOPISRC=madness"; // cf. iPhone.
+                const std::string path = "/cool/" + encodedDoc + "/download/" + downloadId + '/' + ignoredSuffix;
+                Poco::Net::HTTPRequest requestSVG(Poco::Net::HTTPRequest::HTTP_GET, path);
+                TST_LOG("Requesting SVG from " << path);
+                dlSession->sendRequest(requestSVG);
+
+                Poco::Net::HTTPResponse responseSVG;
+                std::istream& rs = dlSession->receiveResponse(responseSVG);
+                LOK_ASSERT_EQUAL(Poco::Net::HTTPResponse::HTTP_OK /* 200 */, responseSVG.getStatus());
+                LOK_ASSERT_EQUAL(std::string("image/svg+xml"), responseSVG.getContentType());
+                TST_LOG("SVG file size: " << responseSVG.getContentLength());
+
+                //        std::ofstream ofs("/tmp/slide.svg");
+                //        Poco::StreamCopier::copyStream(rs, ofs);
+                //        ofs.close();
+
+                // Asserting on the size of the stream is really unhelpful;
+                // lets checkout the contents instead ...
+                Poco::XML::DOMParser parser;
+                Poco::XML::InputSource svgSrc(rs);
+                Poco::AutoPtr<Poco::XML::Document> doc = parser.parse(&svgSrc);
+
+                // Do we have our automation / scripting
+                LOK_ASSERT(
+                    findInDOM(doc, "jessyinkstart", false, Poco::XML::NodeFilter::SHOW_CDATA_SECTION));
+                LOK_ASSERT(
+                    findInDOM(doc, "jessyinkend", false, Poco::XML::NodeFilter::SHOW_CDATA_SECTION));
+                LOK_ASSERT(
+                    findInDOM(doc, "libreofficestart", false, Poco::XML::NodeFilter::SHOW_CDATA_SECTION));
+                LOK_ASSERT(
+                    findInDOM(doc, "libreofficeend", false, Poco::XML::NodeFilter::SHOW_CDATA_SECTION));
+
+                // Do we have plausible content ?
+                int countText = findInDOM(doc, "text", true, Poco::XML::NodeFilter::SHOW_ELEMENT);
+                LOK_ASSERT_EQUAL(countText, 93);
+            }
+        }
+    }
+    catch (const Poco::Exception& exc)
+    {
+        LOK_ASSERT_FAIL(exc.displayText());
+    }
+    return TestResult::Ok;
+}
+
 void UnitSession::invokeWSDTest()
 {
     UnitBase::TestResult result = testBadRequest();
@@ -243,6 +360,10 @@ void UnitSession::invokeWSDTest()
         exitTest(result);
 
     result = testSlideShow();
+    if (result != TestResult::Ok)
+        exitTest(result);
+
+    result = testSlideShowMultiDL();
     if (result != TestResult::Ok)
         exitTest(result);
 
