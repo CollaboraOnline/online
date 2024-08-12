@@ -2004,7 +2004,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_unoToolButton: function(parentContainer, data, builder, options) {
-		var button = null, span, buttonImage, label, container;
+		var button = null, span, buttonImage, label, container, inline;
 
 		var controls = {};
 
@@ -2122,11 +2122,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 			if (builder.options.useInLineLabelsForUnoButtons === true) {
 				$(div).addClass('inline');
-				span = L.DomUtil.create('span', 'ui-content unolabel', div);
-				span.htmlFor = buttonId;
-				span.textContent = builder._cleanText(data.text);
+				inline = L.DomUtil.create('span', 'ui-content unolabel');
+				inline.htmlFor = buttonId;
+				inline.textContent = builder._cleanText(data.text);
 
-				controls['label'] = span;
+				controls['label'] = inline;
 			}
 			var disabled = data.enabled === 'false' || data.enabled === false;
 			if (data.command) {
@@ -2262,20 +2262,22 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		builder.map.hideRestrictedItems(data, controls['container'], controls['container']);
 		builder.map.disableLockedItem(data, controls['container'], controls['container']);
 
-		if (options && options.container) {
+		var insertChilds = function (container) {
 			if (buttonImage)
-				options.container.appendChild(buttonImage);
+				container.appendChild(buttonImage);
 			if (label)
-				options.container.appendChild(label);
+				container.appendChild(label);
+			if (inline)
+				container.appendChild(inline);
+		}
+
+		if (options && options.container) {
+			insertChilds(options.container);
 		} else if (buttonImage && label) {
 			container = L.DomUtil.create('span', 'container-button', button);
-			container.appendChild(buttonImage);
-			container.appendChild(label);
+			insertChilds(container);
 		} else {
-			if (buttonImage)
-				button.appendChild(buttonImage);
-			if (label)
-				button.appendChild(label);
+			insertChilds(button);
 		}
 
 		return controls;
