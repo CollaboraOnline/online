@@ -32,7 +32,6 @@
 #include "KitWebSocket.hpp"
 
 using Poco::Exception;
-using Poco::URI;
 
 void KitWebSocketHandler::handleMessage(const std::vector<char>& data)
 {
@@ -71,8 +70,7 @@ void KitWebSocketHandler::handleMessage(const std::vector<char>& data)
         const std::string fileId = Uri::getFilenameFromURL(_docKey);
         Util::mapAnonymized(fileId, fileId); // Identity mapping, since fileId is already obfuscated
 
-        std::string url;
-        URI::decode(_docKey, url);
+        const std::string url = Uri::decode(_docKey);
 #ifndef IOS
         Util::setThreadName("kit" SHARED_DOC_THREADNAME_SUFFIX + docId);
 #endif
