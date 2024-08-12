@@ -92,9 +92,9 @@ void sendDeflatedFileContent(const std::shared_ptr<StreamSocket>& socket, const 
     }
 }
 
-void sendFileAndShutdown(const std::shared_ptr<StreamSocket>& socket, const std::string& path,
-                         http::Response& response, const bool noCache,
-                         const bool deflate, const bool headerOnly)
+void sendFile(const std::shared_ptr<StreamSocket>& socket, const std::string& path,
+              http::Response& response, const bool noCache,
+              const bool deflate, const bool headerOnly)
 {
     FileUtil::Stat st(path);
     if (st.bad())
@@ -151,6 +151,13 @@ void sendFileAndShutdown(const std::shared_ptr<StreamSocket>& socket, const std:
         if (!headerOnly)
             sendDeflatedFileContent(socket, path, st.size());
     }
+}
+
+void sendFileAndShutdown(const std::shared_ptr<StreamSocket>& socket, const std::string& path,
+                         http::Response& response, const bool noCache,
+                         const bool deflate, const bool headerOnly)
+{
+    sendFile(socket, path, response, noCache, deflate, headerOnly);
     socket->shutdown();
 }
 
