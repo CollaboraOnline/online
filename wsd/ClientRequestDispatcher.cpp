@@ -1752,7 +1752,7 @@ void ClientRequestDispatcher::handleClientProxyRequest(const Poco::Net::HTTPRequ
     LOG_INF("URL [" << url << "] for Proxy request.");
     const auto uriPublic = RequestDetails::sanitizeURI(url);
     const auto docKey = RequestDetails::getDocKey(uriPublic);
-    const std::string fileId = Util::getFilenameFromURL(docKey);
+    const std::string fileId = Uri::getFilenameFromURL(docKey);
     Util::mapAnonymized(fileId, fileId); // Identity mapping, since fileId is already obfuscated
 
     LOG_INF("Starting Proxy request handler for session [" << _id << "] on url ["

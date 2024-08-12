@@ -24,6 +24,7 @@
 #include <common/Seccomp.hpp>
 #include <common/JsonUtil.hpp>
 #include <common/TraceEvent.hpp>
+#include <common/Uri.hpp>
 
 #include "Kit.hpp"
 #include "KitQueue.hpp"
@@ -67,7 +68,7 @@ void KitWebSocketHandler::handleMessage(const std::vector<char>& data)
         const std::string& sessionId = tokens[1];
         _docKey = tokens[2];
         const std::string& docId = tokens[3];
-        const std::string fileId = Util::getFilenameFromURL(_docKey);
+        const std::string fileId = Uri::getFilenameFromURL(_docKey);
         Util::mapAnonymized(fileId, fileId); // Identity mapping, since fileId is already obfuscated
 
         std::string url;

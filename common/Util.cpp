@@ -560,16 +560,6 @@ namespace Util
         AnonymizedStrings.clear();
     }
 
-    std::string getFilenameFromURL(const std::string& url)
-    {
-        std::string base;
-        std::string filename;
-        std::string ext;
-        std::string params;
-        std::tie(base, filename, ext, params) = Util::splitUrl(url);
-        return filename;
-    }
-
     std::string anonymizeUrl(const std::string& url, const std::uint64_t nAnonymizationSalt)
     {
         std::string base;
