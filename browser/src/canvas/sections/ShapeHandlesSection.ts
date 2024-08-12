@@ -649,7 +649,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 				// We don't need to do this on mobile because we always send the positioning commands there. No mouse events for mobile.
 				setTimeout(() => {
 					this.sendTransformCommand(point); // Send to back of the process queue so it performs after buttonup event is sent.
-				}, 10);
+				}, 1);
 			}
 		}
 	}
