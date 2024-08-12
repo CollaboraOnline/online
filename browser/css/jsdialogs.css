@@ -1760,11 +1760,11 @@ input[type='number']:hover::-webkit-outer-spin-button {
 
 /* toolbuttons */
 
-.jsdialog:not(.menubutton) > .ui-content.unobutton {
+.jsdialog:not(.menubutton)..jsdialog:not(.dropdown) {
 	width: var(--btn-size);
 }
 
-.jsdialog .ui-content.unobutton {
+.jsdialog .ui-content.unobutton:not(.dropdown) {
 	height: var(--btn-size);
 	padding: 0px;
 	vertical-align: middle;
@@ -1774,7 +1774,6 @@ input[type='number']:hover::-webkit-outer-spin-button {
 
 .dropdown {
 	display: flex;
-	width: 100%;
 }
 
 .unotoolbutton.has-dropdown {
