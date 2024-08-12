@@ -117,7 +117,7 @@ export class Comment extends CanvasSectionObject {
 
 		if (this.sectionProperties.docLayer._docType === 'presentation' || this.sectionProperties.docLayer._docType === 'drawing') {
 			this.sectionProperties.parthash = this.sectionProperties.data.parthash;
-			this.sectionProperties.partIndex = this.sectionProperties.docLayer._partHashes.indexOf(String(this.sectionProperties.parthash));
+			this.sectionProperties.partIndex = app.impress.partHashes.indexOf(String(this.sectionProperties.parthash));
 		}
 
 		this.sectionProperties.isHighlighted = false;
@@ -645,7 +645,7 @@ export class Comment extends CanvasSectionObject {
 				}),
 				draggable: true
 			});
-			if (this.sectionProperties.docLayer._partHashes[this.sectionProperties.docLayer._selectedPart] === this.sectionProperties.data.parthash || app.file.fileBasedView)
+			if (app.impress.partHashes[this.sectionProperties.docLayer._selectedPart] === this.sectionProperties.data.parthash || app.file.fileBasedView)
 				this.map.addLayer(this.sectionProperties.annotationMarker);
 		}
 		if (this.sectionProperties.data.rectangle != null) {

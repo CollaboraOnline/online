@@ -29,6 +29,9 @@ window.app = {
 		otherCellCursors: {},
 		splitCoordinate: null, // SimplePoint.
 	},
+	impress: {
+		partHashes: null, // hashes used to distinguish parts
+	},
 	map: null, // Make map object a part of this.
 	dispatcher: null, // A Dispatcher class instance is assigned to this.
 	twipsToPixels: 0, // Twips to pixels multiplier.
