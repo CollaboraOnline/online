@@ -1866,10 +1866,7 @@ L.Control.Menubar = L.Control.extend({
 					if (id === 'insertcomment' && (self._map.getDocType() !== 'drawing' && !app.isCommentEditingAllowed()))
 						found = false;
 					if (!found) {
-						$(aItem).addClass('disabled');
-						aItem.title = _('Read-only mode');
-					} else {
-						$(aItem).removeClass('disabled');
+						$(aItem).hide();
 					}
 				}
 			}
