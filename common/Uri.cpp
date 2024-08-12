@@ -8,6 +8,7 @@
 #include <config.h>
 
 #include "Uri.hpp"
+#include <common/Util.hpp>
 
 #include <Poco/URI.h>
 
@@ -39,6 +40,12 @@ bool Uri::needsEncoding(const std::string& uri, const std::string& reserved)
 
     // If identical, then doesn't need encoding.
     return encoded != uri;
+}
+
+std::string Uri::getFilenameFromURL(const std::string& url)
+{
+    const auto [base, filename, ext, params] = Util::splitUrl(url);
+    return filename;
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

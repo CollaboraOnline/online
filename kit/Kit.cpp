@@ -685,34 +685,31 @@ namespace
 #endif // BUILDING_TESTS
 } // namespace
 
-Document::Document(const std::shared_ptr<lok::Office>& loKit,
-                   const std::string& jailId,
-                   const std::string& docKey,
-                   const std::string& docId,
-                   const std::string& url,
+Document::Document(const std::shared_ptr<lok::Office>& loKit, const std::string& jailId,
+                   const std::string& docKey, const std::string& docId, const std::string& url,
                    const std::shared_ptr<WebSocketHandler>& websocketHandler,
                    unsigned mobileAppDocId)
-    : _loKit(loKit),
-      _jailId(jailId),
-      _docKey(docKey),
-      _docId(docId),
-      _url(url),
-      _obfuscatedFileId(Util::getFilenameFromURL(docKey)),
-      _queue(std::make_shared<KitQueue>()),
-      _websocketHandler(websocketHandler),
-      _modified(ModifiedState::UnModified),
-      _isBgSaveProcess(false),
-      _isBgSaveDisabled(false),
-      _haveDocPassword(false),
-      _isDocPasswordProtected(false),
-      _docPasswordType(DocumentPasswordType::ToView),
-      _stop(false),
-      _deltaGen(new DeltaGenerator()),
-      _editorId(-1),
-      _editorChangeWarning(false),
-      _lastMemTrimTime(std::chrono::steady_clock::now()),
-      _mobileAppDocId(mobileAppDocId),
-      _duringLoad(0)
+    : _loKit(loKit)
+    , _jailId(jailId)
+    , _docKey(docKey)
+    , _docId(docId)
+    , _url(url)
+    , _obfuscatedFileId(Uri::getFilenameFromURL(docKey))
+    , _queue(std::make_shared<KitQueue>())
+    , _websocketHandler(websocketHandler)
+    , _modified(ModifiedState::UnModified)
+    , _isBgSaveProcess(false)
+    , _isBgSaveDisabled(false)
+    , _haveDocPassword(false)
+    , _isDocPasswordProtected(false)
+    , _docPasswordType(DocumentPasswordType::ToView)
+    , _stop(false)
+    , _deltaGen(new DeltaGenerator())
+    , _editorId(-1)
+    , _editorChangeWarning(false)
+    , _lastMemTrimTime(std::chrono::steady_clock::now())
+    , _mobileAppDocId(mobileAppDocId)
+    , _duringLoad(0)
 {
     LOG_INF("Document ctor for [" << _docKey <<
             "] url [" << anonymizeUrl(_url) << "] on child [" << _jailId <<

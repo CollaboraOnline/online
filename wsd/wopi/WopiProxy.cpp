@@ -36,7 +36,7 @@ void WopiProxy::handleRequest([[maybe_unused]] const std::shared_ptr<Terminating
     LOG_INF("URL [" << url << "] for WS Request.");
     const auto uriPublic = RequestDetails::sanitizeURI(url);
     const auto docKey = RequestDetails::getDocKey(uriPublic);
-    const std::string fileId = Util::getFilenameFromURL(docKey);
+    const std::string fileId = Uri::getFilenameFromURL(docKey);
     Util::mapAnonymized(fileId, fileId); // Identity mapping, since fileId is already obfuscated
 
     LOG_INF("Starting GET request handler for session [" << _id << "] on url ["
@@ -145,8 +145,8 @@ void WopiProxy::checkFileInfo(const std::shared_ptr<TerminatingPoll>& poll, cons
                                          std::move(lastModifiedTime) });
 
             // if (COOLWSD::AnonymizeUserData)
-            //     Util::mapAnonymized(Util::getFilenameFromURL(filename),
-            //                         Util::getFilenameFromURL(getUri().toString()));
+            //     Util::mapAnonymized(Uri::getFilenameFromURL(filename),
+            //                         Uri::getFilenameFromURL(getUri().toString()));
 
             auto wopiInfo = std::make_unique<WopiStorage::WOPIFileInfo>(fileInfo, object, uri);
             // if (wopiInfo->getSupportsLocks())

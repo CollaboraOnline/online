@@ -1112,9 +1112,6 @@ int main(int argc, char**argv)
     /// Anonymize the basename of filenames only, preserving the path and extension.
     std::string anonymizeUrl(const std::string& url, const std::uint64_t nAnonymizationSalt);
 
-    /// Extract and return the filename given a url or path.
-    std::string getFilenameFromURL(const std::string& url);
-
     /// Return true if the subject matches in given set. It uses regex
     /// Mainly used to match WOPI hosts patterns
     bool matchRegex(const std::set<std::string>& set, const std::string& subject);

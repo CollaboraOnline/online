@@ -52,6 +52,7 @@
 #include <common/Protocol.hpp>
 #include <common/Unit.hpp>
 #include <common/FileUtil.hpp>
+#include <common/Uri.hpp>
 #include <CommandControl.hpp>
 
 #if !MOBILEAPP
@@ -1990,8 +1991,8 @@ void DocumentBroker::uploadToStorageInternal(const std::shared_ptr<ClientSession
     const std::string uri = isSaveAs ? saveAsPath : session->getPublicUri().toString();
 
     // Map the FileId from the docKey to the new filename to anonymize the new filename as the FileId.
-    const std::string newFilename = Util::getFilenameFromURL(uri);
-    const std::string fileId = Util::getFilenameFromURL(_docKey);
+    const std::string newFilename = Uri::getFilenameFromURL(uri);
+    const std::string fileId = Uri::getFilenameFromURL(_docKey);
     if (COOLWSD::AnonymizeUserData)
     {
         LOG_DBG("New filename [" << COOLWSD::anonymizeUrl(newFilename)
