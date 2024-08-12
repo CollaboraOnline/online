@@ -16,10 +16,10 @@ describe(['tagdesktop'], 'Change cell appearance.', function() {
 		calcHelper.clickOnFirstCell();
 		cy.cGet('#Home').click();
 		cy.cGet('#Home-container .unoBackgroundColor .arrowbackground').click();
-		desktopHelper.selectColorFromPalette('006CE7');
+		desktopHelper.selectColorFromPalette('BF0041');
 		calcHelper.selectEntireSheet();
 		helper.copy();
-		cy.cGet('#copy-paste-container table td').should('have.attr', 'bgcolor', '#006CE7');
+		cy.cGet('#copy-paste-container table td').should('have.attr', 'bgcolor', '#BF0041');
 	});
 
 	it('Apply left border', function() {
@@ -200,11 +200,11 @@ describe(['tagdesktop'], 'Change cell appearance.', function() {
 
 		// Then apply border color
 		cy.cGet('#FrameLineColor .arrowbackground').click();
-		desktopHelper.selectColorFromPalette('006CE7');
+		desktopHelper.selectColorFromPalette('BF0041');
 		helper.copy();
 		calcHelper.selectEntireSheet();
 
 		cy.cGet('#copy-paste-container table td')
-			.should('have.attr', 'style', 'border-left: 1px solid #006ce7');
+			.should('have.attr', 'style', 'border-left: 1px solid #bf0041');
 	});
 });

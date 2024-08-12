@@ -56,17 +56,17 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 	it('Apply font color on text shape.', function() {
 		impressHelper.selectTextShapeInTheCenter();
 		cy.cGet('#fontcolor .arrowbackground').click();
-		desktopHelper.selectColorFromPalette('FF011B');
+		desktopHelper.selectColorFromPalette('FFFF00');
 
 		impressHelper.triggerNewSVGForShapeInTheCenter();
 
-		cy.cGet('text tspan.TextPosition tspan').should('have.attr', 'fill', 'rgb(255,1,27)');
+		cy.cGet('text tspan.TextPosition tspan').should('have.attr', 'fill', 'rgb(255,255,0)');
 	});
 
 	it('Apply highlight color on text shape.', function() {
 		impressHelper.selectTextShapeInTheCenter();
 		cy.cGet('#backcolor .arrowbackground').click();
-		desktopHelper.selectColorFromPalette('FF9838');
+		desktopHelper.selectColorFromPalette('FFBF00');
 
 		impressHelper.triggerNewSVGForShapeInTheCenter();
 
