@@ -331,9 +331,6 @@ namespace Util
     /// Return a string that is unique across processes and calls.
     std::string UniqueId();
 
-    // Extract all json entries into a map.
-    std::map<std::string, std::string> JsonToMap(const std::string& jsonString);
-
     inline unsigned short hexFromByte(unsigned char byte)
     {
         constexpr auto hex = "0123456789ABCDEF";

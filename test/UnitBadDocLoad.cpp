@@ -72,7 +72,7 @@ UnitBase::TestResult UnitBadDocLoad::testBadDocLoadFail()
         LOK_ASSERT_EQUAL(true, dialog.size() > 0);
 
         // Extract all json entries into a map.
-        items = Util::JsonToMap(dialog.substr(sizeof("jsdialog:")));
+        items = JsonUtil::jsonToMap(dialog.substr(sizeof("jsdialog:")));
         auto firstId = items["id"];
 
         // Click "Yes" in a dialog
@@ -83,7 +83,7 @@ UnitBase::TestResult UnitBadDocLoad::testBadDocLoadFail()
         do {
             dialog2 = helpers::getResponseString(socket, "jsdialog:", testname);
             LOK_ASSERT_EQUAL(true, dialog2.size() > 0);
-            items = Util::JsonToMap(dialog2.substr(sizeof("jsdialog:")));
+            items = JsonUtil::jsonToMap(dialog2.substr(sizeof("jsdialog:")));
         } while(items["id"] == firstId); // a duplicate update of existing dialog
 
         // Now we received jsdialog with warning that repair failed
