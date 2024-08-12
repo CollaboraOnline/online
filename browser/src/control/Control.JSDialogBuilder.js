@@ -2004,7 +2004,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_unoToolButton: function(parentContainer, data, builder, options) {
-		var button = null, span, buttonImage, label, container, inline;
+		var button = null, buttonImage, label, container, inline;
 
 		var controls = {};
 
@@ -2187,10 +2187,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			if (data.selected === true)
 				selectFn();
 		} else {
-			span = L.DomUtil.create('label', 'ui-content unolabel', div);
-			span.textContent = builder._cleanText(data.text);
+			inline = L.DomUtil.create('label', 'ui-content unolabel', button);
+			inline.textContent = builder._cleanText(data.text);
 			controls['button'] = button;
-			controls['label'] = span;
+			controls['label'] = inline;
 		}
 
 		if (options && options.hasDropdownArrow) {
