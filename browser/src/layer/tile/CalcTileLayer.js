@@ -425,7 +425,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 				this._map.fire('scrolllimits', {x: width, y: height});
 			}
 			else {
-				this._updateMaxBounds(true);
+				this._updateMaxBounds();
 			}
 			this._hiddenParts = command.hiddenparts || [];
 
