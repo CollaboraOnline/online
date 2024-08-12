@@ -24,7 +24,7 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 		}
 
 		this._preview = L.control.partsPreview();
-		this._partHashes = null;
+		app.impress.partHashes = null;
 		if (window.mode.isMobile()) {
 			this._addButton = L.control.mobileSlide();
 			L.DomUtil.addClass(L.DomUtil.get('mobile-edit-button'), 'impress');
@@ -83,7 +83,7 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 		comment.anchorPos = [docTopLeft[0], docTopLeft[1]];
 		comment.rectangle = [docTopLeft[0], docTopLeft[1], 566, 566];
 
-		comment.parthash = this._partHashes[this._selectedPart];
+		comment.parthash = app.impress.partHashes[this._selectedPart];
 		var annotation = app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).add(comment);
 		app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).modify(annotation);
 	},
@@ -284,15 +284,15 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 			var partMatch = textMsg.match(/[^\r\n]+/g);
 			// only get the last matches
 			var newPartHashes = partMatch.slice(partMatch.length - this._parts);
-			var refreshAnnotation = this._partHashes && (this._partHashes.length !== newPartHashes.length || !this._partHashes.every(function(element,i) { return element === newPartHashes[i]; }));
-			this._partHashes = newPartHashes;
+			var refreshAnnotation = app.impress.partHashes && (app.impress.partHashes.length !== newPartHashes.length || !app.impress.partHashes.every(function(element,i) { return element === newPartHashes[i]; }));
+			app.impress.partHashes = newPartHashes;
 			this._hiddenSlides = new Set(command.hiddenparts);
 			this._map.fire('updateparts', {
 				selectedPart: this._selectedPart,
 				selectedParts: this._selectedParts,
 				parts: this._parts,
 				docType: this._docType,
-				partNames: this._partHashes
+				partNames: app.impress.partHashes
 			});
 			if (refreshAnnotation)
 				app.socket.sendMessage('commandvalues command=.uno:ViewAnnotations');
