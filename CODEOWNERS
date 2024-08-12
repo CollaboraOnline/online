@@ -1,0 +1,3 @@
+# Automatically mention people if .beforeprettier is being changed, as this
+# should be rare but sometimes people mistakenly add new stuff...
+/browser/.beforeprettier    @minion3665 @eszkadev
