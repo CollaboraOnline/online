@@ -1,3 +1,13 @@
+#===========================================================================#
+#                    PLEASE DON'T ADD STUFF TO THIS FILE                    #
+#                                                                           #
+# It's here as a way to stop files that were unformatted when we added      #
+# prettier from needing to be formatted. It shouldn't be used on new files, #
+# especially files which are newly-converted from JavaScript to Typescript. #
+#                                                                           #
+# Please instead format new files by running `make prettier-write`          #
+#===========================================================================#
+
 /src/control/ColorPicker.js
 /src/control/Control.AlertDialog.js
 /src/control/Control.Attribution.js
