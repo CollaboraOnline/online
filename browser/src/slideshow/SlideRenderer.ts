@@ -17,6 +17,7 @@ class VideoRenderInfo {
 	public videoElement: HTMLVideoElement;
 	public vao: WebGLVertexArrayObject;
 	public pos2d: number[];
+	public playing: boolean;
 }
 
 abstract class SlideRenderer {
@@ -29,25 +30,27 @@ abstract class SlideRenderer {
 		this._canvas = canvas;
 	}
 
-	protected setupVideo(url: string): HTMLVideoElement {
+	protected setupVideo(
+		videoRenderInfo: VideoRenderInfo,
+		url: string,
+	): HTMLVideoElement {
 		const video = document.createElement('video');
 
 		video.playsInline = true;
-		video.muted = true;
 		video.loop = true;
 
 		video.addEventListener(
 			'playing',
 			() => {
-				// todo
+				videoRenderInfo.playing = true;
 			},
 			true,
 		);
 
 		video.addEventListener(
-			'timeupdate',
+			'pause',
 			() => {
-				// todo
+				videoRenderInfo.playing = false;
 			},
 			true,
 		);
@@ -126,7 +129,7 @@ class SlideRenderer2d extends SlideRenderer {
 		if (slideInfo?.videos !== undefined) {
 			for (var videoInfo of slideInfo.videos) {
 				const video = new VideoRenderInfo();
-				video.videoElement = this.setupVideo(videoInfo.url);
+				video.videoElement = this.setupVideo(video, videoInfo.url);
 				video.pos2d = this.getDocumentPositions(
 					videoInfo.x,
 					videoInfo.y,
@@ -302,7 +305,7 @@ class SlideRendererGl extends SlideRenderer {
 		if (slideInfo.videos !== undefined) {
 			for (var videoInfo of slideInfo.videos) {
 				const video = new VideoRenderInfo();
-				video.videoElement = this.setupVideo(videoInfo.url);
+				video.videoElement = this.setupVideo(video, videoInfo.url);
 				video.texture = this.initTexture();
 				video.vao = this.setupRectangleInDocumentPositions(
 					videoInfo.x,
@@ -357,10 +360,12 @@ class SlideRendererGl extends SlideRenderer {
 		gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 
 		for (var video of this._videos) {
-			gl.bindVertexArray(video.vao);
-			gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
-			this.updateTexture(video.texture, video.videoElement);
-			gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+			if (video.playing && video.videoElement.currentTime > 0) {
+				gl.bindVertexArray(video.vao);
+				gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+				this.updateTexture(video.texture, video.videoElement);
+				gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+			}
 		}
 
 		requestAnimationFrame(this.render.bind(this));

@@ -121,6 +121,7 @@ class SlideShowPresenter {
 
 	_stopFullScreen() {
 		if (!this._slideShowCanvas) return;
+		this._slideRenderer.pauseVideos();
 
 		window.removeEventListener('keydown', this._onCanvasKeyDown.bind(this));
 		L.DomUtil.remove(this._slideShowCanvas);
