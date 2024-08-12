@@ -1799,7 +1799,6 @@ input[type='number']:hover::-webkit-outer-spin-button {
 
 .dropdown {
 	display: flex;
-	width: 100%;
 }
 
 .unotoolbutton.has-dropdown {

@@ -220,7 +220,8 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	padding: 0px !important;
 }
 
-.unotoolbutton.notebookbar .unobutton {
+.unotoolbutton.notebookbar.unobutton {
+	cursor: pointer;
 	box-sizing: border-box;
 	padding: var(--btn-padding);
 	width: var(--btn-size);
@@ -338,12 +339,6 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 
 .unotoolbutton.notebookbar {
 	text-align: center;
-}
-
-.unotoolbutton.notebookbar.has-label > *:not(.arrowbackground) { /*so they stay side by side*/
-	display: flex;
-	width: 100%;
-	height: 100%;
 }
 
 .unotoolbutton.notebookbar.has-label {
