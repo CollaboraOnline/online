@@ -28,6 +28,7 @@ window.app = {
 		cellCursorRectangle: null, // To be assigned SimpleRectangle.
 		otherCellCursors: {},
 		splitCoordinate: null, // SimplePoint.
+		partHashes: null, // hashes used to distinguish parts (we use sheet name)
 	},
 	impress: {
 		partHashes: null, // hashes used to distinguish parts

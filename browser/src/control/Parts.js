@@ -15,6 +15,11 @@
 /* global app _ cool */
 
 L.Map.include({
+	/*
+		@param {number} part - Target part
+		@param {boolean} external - Do we need to inform a core
+		@param {boolean} calledFromSetPartHandler - Requests a scroll to the cursor
+	*/
 	setPart: function (part, external, calledFromSetPartHandler) {
 		if (cool.Comment.isAnyEdit()) {
 			cool.CommentSection.showCommentEditingWarning();
@@ -22,8 +27,21 @@ L.Map.include({
 		}
 
 		var docLayer = this._docLayer;
+		var docType = docLayer._docType;
+		var isTheSamePart = true;
 
-		if (docLayer._selectedPart === part) {
+		// check hashes, when we add/delete/move parts they can have the same part number as before
+		if (docType === 'spreadsheet') {
+			isTheSamePart =
+				app.calc.partHashes[docLayer._prevSelectedPart] === app.calc.partHashes[part];
+		} else if (docType === 'presentation' || docType === 'drawing') {
+			isTheSamePart =
+				app.impress.partHashes[docLayer._prevSelectedPart] === app.impress.partHashes[part];
+		} else if (docType !== 'text') {
+			console.error('Unknown docType: ' + docType);
+		}
+
+		if (docLayer._selectedPart === part && isTheSamePart) {
 			return;
 		}
 
