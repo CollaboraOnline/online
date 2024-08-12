@@ -1313,7 +1313,12 @@ L.Map = L.Evented.extend({
 			this.fire('zoomlevelschange');
 		}
 
+		// don't allow to turn off the following when moving to other sheet
+		var backupFollowed = app.getFollowedViewId();
+
 		this.fire('moveend', {hard: !preserveMapOffset});
+
+		app.setFollowingUser(backupFollowed);
 	},
 
 	_rawPanBy: function (offset) {
