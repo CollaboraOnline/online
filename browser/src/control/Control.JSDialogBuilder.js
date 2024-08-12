@@ -2250,18 +2250,19 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		var controls = {};
 
-		var div;
 		if (data.command === '.uno:Paste' || data.command === '.uno:Cut' || data.command === '.uno:Copy') {
 			var hyperlink = L.DomUtil.create('a', '', parentContainer);
-			div = this._createIdentifiable('div', 'unotoolbutton ' + builder.options.cssClass + ' ui-content unospan', hyperlink, data);
+			button = this._createIdentifiable('button', 'unotoolbutton ' + builder.options.cssClass
+							  + ' ui-content unobutton unospan', hyperlink, data);
 		} else {
-			div = this._createIdentifiable('div', 'unotoolbutton ' + builder.options.cssClass + ' ui-content unospan', parentContainer, data);
+			button = this._createIdentifiable('button', 'unotoolbutton ' + builder.options.cssClass
+							  + ' ui-content unobutton unospan', parentContainer, data);
 		}
 
-		controls['container'] = div;
-		div.tabIndex = -1;
+		controls['container'] = button;
+		button.tabIndex = -1;
 		if (data.class)
-			div.classList.add(data.class);
+			button.classList.add(data.class);
 
 		var isRealUnoCommand = true;
 		var hasPopUp = false;
@@ -2288,12 +2289,12 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				console.warn('_unoToolButton: no id provided');
 
 			if (data.command)
-				L.DomUtil.addClass(div, data.command.replace(':', '').replace('.', ''));
+				L.DomUtil.addClass(button, data.command.replace(':', '').replace('.', ''));
 
 			if (isRealUnoCommand)
 				id = builder._makeIdUnique(id);
 
-			div.id = id;
+			button.id = id;
 			data.id = id; // change in input data for postprocess
 
 			var buttonId = id + '-button';
@@ -2344,12 +2345,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				label.textContent = builder._cleanText(data.text);
 				builder._stressAccessKey(label, button.accessKey);
 				controls['label'] = label;
-				$(div).addClass('has-label');
+				$(button).addClass('has-label');
 			} else if (builder.options.useInLineLabelsForUnoButtons === true) {
-				$(div).addClass('no-label');
+				$(button).addClass('no-label');
 			} else {
-				builder.map.uiManager.enableTooltip(div);
-				$(div).addClass('no-label');
+				$(button).addClass('no-label');
 			}
 
 			if (buttonImage !== false) {
@@ -2360,10 +2360,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				}
 			}
 
-			div.setAttribute('data-cooltip', builder._cleanText(data.text));
+			button.setAttribute('data-cooltip', builder._cleanText(data.text));
 
 			if (builder.options.useInLineLabelsForUnoButtons === true) {
-				$(div).addClass('inline');
+				$(button).addClass('inline');
 				inline = L.DomUtil.create('span', 'ui-content unolabel');
 				inline.htmlFor = buttonId;
 				inline.textContent = builder._cleanText(data.text);
@@ -2378,11 +2378,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 					if (state && state === 'true') {
 						$(button).addClass('selected');
-						$(div).addClass('selected');
 					}
 					else {
 						$(button).removeClass('selected');
-						$(div).removeClass('selected');
 					}
 
 					if (disabled)
@@ -2411,16 +2409,14 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 			var selectFn = function() {
 				L.DomUtil.addClass(button, 'selected');
-				L.DomUtil.addClass(div, 'selected');
 			};
 
 			var unSelectFn = function() {
 				L.DomUtil.removeClass(button, 'selected');
-				L.DomUtil.removeClass(div, 'selected');
 			};
 
-			div.onSelect = selectFn;
-			div.onUnSelect = unSelectFn;
+			button.onSelect = selectFn;
+			button.onUnSelect = unSelectFn;
 
 			if (data.selected === true)
 				selectFn();
@@ -2435,13 +2431,13 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			$(button).addClass('dropdown');
 		} else if (data.dropdown === true) {
 			$(button).addClass('dropdown');
-			div.closeDropdown = function() {
+			button.closeDropdown = function() {
 				builder.callback('toolbox', 'closemenu', parentContainer, data.command, builder);
 			};
 		}
 
 		var clickFunction = function (e) {
-			if (!div.hasAttribute('disabled')) {
+			if (!button.hasAttribute('disabled')) {
 				builder.refreshSidebar = true;
 				if (data.postmessage)
 					builder.map.fire('postMessage', {msgId: 'Clicked_Button', args: {Id: data.id} });
@@ -2458,12 +2454,12 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		var mouseEnterFunction = function () {
 			if (builder.map.tooltip)
-				builder.map.tooltip.beginShow(div);
+				builder.map.tooltip.beginShow(button);
 		};
 
 		var mouseLeaveFunction = function () {
 			if (builder.map.tooltip)
-				builder.map.tooltip.beginHide(div);
+				builder.map.tooltip.beginHide(button);
 		};
 
 		$(controls.button).on('click', clickFunction);
@@ -2477,7 +2473,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			$(div).on('mouseleave', mouseLeaveFunction);
 		}
 
-		div.addEventListener('keydown', function(e) {
+		button.addEventListener('keydown', function(e) {
 			switch (e.key) {
 			case 'Escape':
 				builder.map.focus();
@@ -2485,10 +2481,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			}
 		});
 
-		builder._preventDocumentLosingFocusOnClick(div);
+		builder._preventDocumentLosingFocusOnClick(button);
 
 		if (data.enabled === 'false' || data.enabled === false)
-			div.setAttribute('disabled', '');
+			button.setAttribute('disabled', '');
 
 		builder.map.hideRestrictedItems(data, controls['container'], controls['container']);
 		builder.map.disableLockedItem(data, controls['container'], controls['container']);
