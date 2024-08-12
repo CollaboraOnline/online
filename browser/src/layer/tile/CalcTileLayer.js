@@ -444,6 +444,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			// only get the last matches
 			var oldPartNames = this._partNames;
 			this._partNames = partNames.slice(partNames.length - this._parts);
+			app.calc.partHashes = this._partNames; // TODO: generate unique hash on the core side
 			// if the number of parts, or order has changed then refresh comment positions
 			if (oldPartNames !== this._partNames) {
 				app.socket.sendMessage('commandvalues command=.uno:ViewAnnotationsPosition');
