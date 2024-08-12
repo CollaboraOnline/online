@@ -46,7 +46,6 @@
 #include <cstdlib>
 #include <cstring>
 #include <ctime>
-#include <fstream>
 #include <iomanip>
 #include <iostream>
 #include <mutex>
@@ -69,7 +68,6 @@
 #include <Poco/Version.h>
 
 #include "Log.hpp"
-#include "JsonUtil.hpp"
 #include "Protocol.hpp"
 #include "TraceEvent.hpp"
 
@@ -401,27 +399,6 @@ namespace Util
     {
         static std::atomic_int counter(0);
         return std::to_string(getpid()) + '/' + std::to_string(counter++);
-    }
-
-    std::map<std::string, std::string> JsonToMap(const std::string& jsonString)
-    {
-        std::map<std::string, std::string> map;
-        if (jsonString.empty())
-            return map;
-
-        Poco::JSON::Parser parser;
-        const Poco::Dynamic::Var result = parser.parse(jsonString);
-        const auto& json = result.extract<Poco::JSON::Object::Ptr>();
-
-        std::vector<std::string> names;
-        json->getNames(names);
-
-        for (const auto& name : names)
-        {
-            map[name] = json->get(name).toString();
-        }
-
-        return map;
     }
 
     bool isValidURIScheme(const std::string& scheme)

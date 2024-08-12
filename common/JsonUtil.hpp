@@ -245,6 +245,28 @@ inline std::string escapeJSONValue(std::string val)
     return std::string(buf.data(), buf.size());
 }
 
+/// Extract all json entries into a map.
+inline std::map<std::string, std::string> jsonToMap(const std::string& jsonString)
+{
+    std::map<std::string, std::string> map;
+    if (jsonString.empty())
+        return map;
+
+    Poco::JSON::Parser parser;
+    const Poco::Dynamic::Var result = parser.parse(jsonString);
+    const auto& json = result.extract<Poco::JSON::Object::Ptr>();
+
+    std::vector<std::string> names;
+    json->getNames(names);
+
+    for (const auto& name : names)
+    {
+        map[name] = json->get(name).toString();
+    }
+
+    return map;
+}
+
 } // end namespace JsonUtil
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
