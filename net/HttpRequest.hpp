@@ -1320,25 +1320,7 @@ public:
 
         if (!isConnected())
         {
-            auto callback = [this, &poll](std::shared_ptr<StreamSocket> socket) {
-                if (!socket)
-                {
-                    LOG_ERR("Failed to connect to " << _host << ':' << _port);
-
-                    if (_onConnectFail)
-                        _onConnectFail();
-
-                    return;
-                }
-
-                LOG_ASSERT_MSG(_socket.lock(), "Connect must set the _socket member.");
-                LOG_ASSERT_MSG(_socket.lock()->getFD() == socket->getFD(),
-                               "Socket FD's mismatch after connect().");
-                LOG_TRC("Inserting in poller after connecting");
-                poll.insertNewSocket(socket);
-            };
-
-            asyncConnect(callback);
+            asyncConnect(poll);
         }
         else
         {
@@ -1675,18 +1657,33 @@ private:
         return socket; // Return the shared pointer.
     }
 
-    void asyncConnect(const net::asyncConnectCB& asyncCb)
+    void asyncConnect(SocketPoll& poll)
     {
         _socket.reset(); // Reset to make sure we are disconnected.
 
-        auto callback = [this, asyncCb](std::shared_ptr<StreamSocket> socket) {
+        auto callback = [this, &poll](std::shared_ptr<StreamSocket> socket) {
             assert((!socket || _fd == socket->getFD()) &&
                    "The socket FD must have been set in onConnect");
 
             // When used with proxy.php we may indeed get nullptr here.
             // assert(socket && "Unexpected nullptr returned from net::connect");
             _socket = socket; // Hold a weak pointer to it.
-            asyncCb(socket); // exec callback with the shared pointer.
+
+            if (!socket)
+            {
+                LOG_ERR("Failed to connect to " << _host << ':' << _port);
+
+                if (_onConnectFail)
+                    _onConnectFail();
+
+                return;
+            }
+
+            LOG_ASSERT_MSG(_socket.lock(), "Connect must set the _socket member.");
+            LOG_ASSERT_MSG(_socket.lock()->getFD() == socket->getFD(),
+                           "Socket FD's mismatch after connect().");
+            LOG_TRC("Inserting in poller after connecting");
+            poll.insertNewSocket(socket);
         };
 
         net::asyncConnect(_host, _port, isSecure(), shared_from_this(), callback);
