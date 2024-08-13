@@ -969,7 +969,7 @@ bool StreamSocket::send(http::Request& request)
 
 bool StreamSocket::sendAndShutdown(http::Response& response)
 {
-    response.set("Connection", "close");
+    response.header().setConnectionToken(http::Header::ConnectionToken::Close);
     if (send(response))
     {
         shutdown();
