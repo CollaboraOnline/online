@@ -3143,8 +3143,13 @@ L.CanvasTileLayer = L.Layer.extend({
 	// Update cursor layer (blinking cursor).
 	_onUpdateCursor: function (scroll, zoom, keepCaretPositionRelativeToScreen) {
 
-		if (!app.file.textCursor.visible ||
-			this._map.ignoreCursorUpdate()) {
+		if (this._map.ignoreCursorUpdate()) {
+			return;
+		}
+
+		if (!app.file.textCursor.visible) {
+			this._updateCursorAndOverlay();
+			app.definitions.otherViewCursorSection.updateVisibilities(true);
 			return;
 		}
 
