@@ -1687,11 +1687,13 @@ private:
     {
         _socket.reset(); // Reset to make sure we are disconnected.
 
-        auto callback = [this, &poll](std::shared_ptr<StreamSocket> socket) {
-            asyncConnectCompleted(poll, socket);
+        auto pushConnectCompleteToPoll = [this, &poll](std::shared_ptr<StreamSocket> socket) {
+            poll.addCallback([selfLifecycle = shared_from_this(), this, &poll, socket=std::move(socket)]() {
+                asyncConnectCompleted(poll, socket);
+            });
         };
 
-        net::asyncConnect(_host, _port, isSecure(), shared_from_this(), callback);
+        net::asyncConnect(_host, _port, isSecure(), shared_from_this(), pushConnectCompleteToPoll);
     }
 
     void checkTimeout(std::chrono::steady_clock::time_point now) override
