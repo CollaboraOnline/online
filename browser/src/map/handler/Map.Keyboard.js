@@ -635,6 +635,11 @@ L.Map.Keyboard = L.Handler.extend({
 			return true;
 		}
 
+		// Control + INSERT
+		if (this._isCtrlKey(e) && e.keyCode === this.keyCodes.INSERT) {
+			return true;
+		}
+
 		if (e.keyCode !== this.keyCodes.C[DEFAULT] && e.keyCode !== this.keyCodes.V[DEFAULT] && e.keyCode !== this.keyCodes.X[DEFAULT] &&
 		/* Safari */ e.keyCode !== this.keyCodes.C[MAC] && e.keyCode !== this.keyCodes.V[MAC] && e.keyCode !== this.keyCodes.X[MAC]) {
 			// not copy or paste
