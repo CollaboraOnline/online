@@ -451,7 +451,13 @@ asyncConnect(const std::string& host, const std::string& port, const bool isSSL,
         asyncCb(std::move(socket));
     };
 
-    AsyncDNS::lookup(host, port, callback, nullptr);
+    net::AsyncDNS::DNSThreadDumpStateFn dumpState = [host, port]() -> std::string
+    {
+        std::string state = "asyncConnect: [" + host + ":" + port + "]";
+        return state;
+    };
+
+    AsyncDNS::lookup(host, port, callback, dumpState);
 }
 
 #endif //!MOBILEAPP
