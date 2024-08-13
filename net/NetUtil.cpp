@@ -504,7 +504,7 @@ connect(const std::string& host, const std::string& port, const bool isSSL,
                 }
 
                 int res = ::connect(fd, ai->ai_addr, ai->ai_addrlen);
-                if (fd < 0 || (res < 0 && errno != EINPROGRESS))
+                if (res < 0 && errno != EINPROGRESS)
                 {
                     LOG_SYS("Failed to connect to " << host);
                     ::close(fd);
