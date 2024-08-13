@@ -12,6 +12,8 @@
 
 #include <Poco/URI.h>
 
+const std::string Uri::Reserved = ",/?:@&=+$#";
+
 std::string Uri::encode(const std::string& uri, const std::string& reserved)
 {
     std::string encoded;

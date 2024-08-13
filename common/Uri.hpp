@@ -18,6 +18,9 @@
 /// Intended to encapsulate, and then replace, Poco::URI.
 class Uri
 {
+    /// Default reserved characters.
+    static const std::string Reserved;
+
 public:
     template <typename T>
     explicit Uri(T&& uri)
@@ -29,10 +32,10 @@ public:
     const std::string& uri() const { return _uri; }
 
     /// URI-encode the given URI with the given reserved characters (that need encoding).
-    static std::string encode(const std::string& uri, const std::string& reserved = ",/?:@&=+$#");
+    static std::string encode(const std::string& uri, const std::string& reserved = Reserved);
 
     /// URI-encode and return the URI with the given reserved characters (that need encoding).
-    std::string encoded(const std::string& reserved = ",/?:@&=+$#") const
+    std::string encoded(const std::string& reserved = Reserved) const
     {
         return encode(_uri, reserved);
     }
@@ -48,7 +51,7 @@ public:
     /// Similarly, a string that is already encoded will return false.
     /// Optionally takes a string of reserved characters to escape while encoding.
     /// Return true if the URI needs encoding. Used for warning about unencoded URIs.
-    static bool needsEncoding(const std::string& uri, const std::string& reserved = ",/?:@&=+$#");
+    static bool needsEncoding(const std::string& uri, const std::string& reserved = Reserved);
 
     /// Extract and return the filename given a url or path.
     static std::string getFilenameFromURL(const std::string& url);
