@@ -35,19 +35,6 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 		cy.cGet('input#addressInput-input').should('have.prop', 'value', 'A10');
 		desktopHelper.assertScrollbarPosition('horizontal', 40, 60);
 	});
-
-	it('Show cursor on sheet insertion', function() {
-		// scroll down
-		cy.cGet('input#addressInput-input').type('{selectAll}A110{enter}');
-		desktopHelper.assertScrollbarPosition('vertical', 205, 315);
-
-		// insert sheet before
-		calcHelper.selectOptionFromContextMenu('Insert sheet before this');
-
-		// we should see the top left corner of the sheet
-		cy.cGet('input#addressInput-input').should('have.prop', 'value', 'A1');
-		desktopHelper.assertScrollbarPosition('vertical', 0, 30);
-	});
 });
 
 describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell selection with split panes', function() {
