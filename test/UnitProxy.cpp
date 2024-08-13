@@ -51,13 +51,19 @@ public:
         TST_LOG("Attempt proxy URL fetch");
 
         _req = http::Request("/browser/a90f83c/foo/remote/static/lokit-extra-img.svg");
-        LOK_ASSERT_EQUAL(true, httpSession->asyncRequest(_req, _poll));
+
+        httpSession->setConnectFailHandler([this]() {
+            LOK_ASSERT(false);
+        });
 
         httpSession->setFinishedHandler([&](const std::shared_ptr<http::Session>&) {
             TST_LOG("Got a valid response from the proxy");
             // any result short of server choking is fine - we may be off-line
             exitTest(TestResult::Ok);
         });
+
+        httpSession->asyncRequest(_req, _poll);
+
         _poll.startThread();
     }
 };

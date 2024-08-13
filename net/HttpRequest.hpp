@@ -1168,6 +1168,11 @@ public:
     /// regardless of the reason (error, timeout, completion).
     void setFinishedHandler(FinishedCallback onFinished) { _onFinished = std::move(onFinished); }
 
+    /// The onConnectFail callback handler signature.
+    using ConnectFailCallback = std::function<void()>;
+
+    void setConnectFailHandler(ConnectFailCallback onConnectFail) { _onConnectFail = std::move(onConnectFail); }
+
     /// Make a synchronous request to download a file to the given path.
     /// Note: when the server returns an error, the response body,
     /// if any, will be stored in memory and can be read via getBody().
@@ -1240,7 +1245,7 @@ public:
     /// Note: when reusing this Session, it is assumed that the socket
     /// is already added to the SocketPoll on a previous call (do not
     /// use multiple SocketPoll instances on the same Session).
-    bool asyncRequest(const Request& req, SocketPoll& poll)
+    void asyncRequest(const Request& req, SocketPoll& poll)
     {
         LOG_TRC("new asyncRequest: " << req.getVerb() << ' ' << host() << ':' << port() << ' '
                                      << req.getUrl());
@@ -1249,18 +1254,25 @@ public:
 
         if (!isConnected())
         {
-            std::shared_ptr<StreamSocket> socket = connect();
-            if (!socket)
-            {
-                LOG_ERR("Failed to connect to " << _host << ':' << _port);
-                return false;
-            }
+            auto callback = [this, &poll](std::shared_ptr<StreamSocket> socket) {
+                if (!socket)
+                {
+                    LOG_ERR("Failed to connect to " << _host << ':' << _port);
 
-            LOG_ASSERT_MSG(_socket.lock(), "Connect must set the _socket member.");
-            LOG_ASSERT_MSG(_socket.lock()->getFD() == socket->getFD(),
-                           "Socket FD's mismatch after connect().");
-            LOG_TRC("Inserting in poller after connecting");
-            poll.insertNewSocket(socket);
+                    if (_onConnectFail)
+                        _onConnectFail();
+
+                    return;
+                }
+
+                LOG_ASSERT_MSG(_socket.lock(), "Connect must set the _socket member.");
+                LOG_ASSERT_MSG(_socket.lock()->getFD() == socket->getFD(),
+                               "Socket FD's mismatch after connect().");
+                LOG_TRC("Inserting in poller after connecting");
+                poll.insertNewSocket(socket);
+            };
+
+            asyncConnect(callback);
         }
         else
         {
@@ -1273,7 +1285,6 @@ public:
         LOG_DBG("starting asyncRequest: " << req.getVerb() << ' ' << host() << ':' << port() << ' '
                                           << req.getUrl());
 
-        return true;
     }
 
     void asyncShutdown()
@@ -1598,6 +1609,23 @@ private:
         return socket; // Return the shared pointer.
     }
 
+    void asyncConnect(const net::asyncConnectCB& asyncCb)
+    {
+        _socket.reset(); // Reset to make sure we are disconnected.
+
+        auto callback = [this, asyncCb](std::shared_ptr<StreamSocket> socket) {
+            assert((!socket || _fd == socket->getFD()) &&
+                   "The socket FD must have been set in onConnect");
+
+            // When used with proxy.php we may indeed get nullptr here.
+            // assert(socket && "Unexpected nullptr returned from net::connect");
+            _socket = socket; // Hold a weak pointer to it.
+            asyncCb(socket); // exec callback with the shared pointer.
+        };
+
+        net::asyncConnect(_host, _port, isSecure(), shared_from_this(), callback);
+    }
+
     void checkTimeout(std::chrono::steady_clock::time_point now) override
     {
         if (!_response || _response->done())
@@ -1635,6 +1663,7 @@ private:
     bool _connected;
     Request _request;
     FinishedCallback _onFinished;
+    ConnectFailCallback _onConnectFail;
     std::shared_ptr<Response> _response;
     std::weak_ptr<StreamSocket> _socket; //< Must be the last member.
 };

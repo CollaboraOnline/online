@@ -24,7 +24,7 @@
 #include <common/JsonUtil.hpp>
 #include <Util.hpp>
 
-bool CheckFileInfo::checkFileInfo(int redirectLimit)
+void CheckFileInfo::checkFileInfo(int redirectLimit)
 {
     const std::string uriAnonym = COOLWSD::anonymizeUrl(_url.toString());
 
@@ -141,8 +141,8 @@ bool CheckFileInfo::checkFileInfo(int redirectLimit)
 
     _httpSession->setFinishedHandler(std::move(finishedCallback));
 
-    // Run the CheckFileInfo request on the WebServer Poll.
-    if (!_httpSession->asyncRequest(httpRequest, *_poll))
+    http::Session::ConnectFailCallback connectFailCallback =
+        [this]()
     {
         _state = State::Fail;
         LOG_ERR("Failed to start an async CheckFileInfo request");
@@ -151,35 +151,36 @@ bool CheckFileInfo::checkFileInfo(int redirectLimit)
         {
             _onFinishCallback(*this);
         }
+    };
 
-        return false;
-    }
+    _httpSession->setConnectFailHandler(std::move(connectFailCallback));
 
     // We're in business.
     _state = State::Active;
-    return true;
+
+    // Run the CheckFileInfo request on the WebServer Poll.
+    _httpSession->asyncRequest(httpRequest, *_poll);
 }
 
 void CheckFileInfo::checkFileInfoSync(int redirectionLimit)
 {
-    if (checkFileInfo(redirectionLimit))
-    {
-        assert(_poll);
+    checkFileInfo(redirectionLimit);
 
-        std::chrono::steady_clock::time_point deadline =
-            std::chrono::steady_clock::now() +
-            std::chrono::seconds(30); // hmm ?
-        while (!completed())
+    assert(_poll);
+
+    std::chrono::steady_clock::time_point deadline =
+        std::chrono::steady_clock::now() +
+        std::chrono::seconds(30); // hmm ?
+    while (!completed())
+    {
+        const auto now = std::chrono::steady_clock::now();
+        if (now > deadline)
         {
-            const auto now = std::chrono::steady_clock::now();
-            if (now > deadline)
-            {
-                LOG_WRN("timed out waiting for CheckFileInfo");
-                break;
-            }
-            _poll->poll(std::chrono::duration_cast<
-                        std::chrono::microseconds>(deadline - now));
+            LOG_WRN("timed out waiting for CheckFileInfo");
+            break;
         }
+        _poll->poll(std::chrono::duration_cast<
+                    std::chrono::microseconds>(deadline - now));
     }
 }
 

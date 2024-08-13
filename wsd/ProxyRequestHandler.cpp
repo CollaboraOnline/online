@@ -88,10 +88,14 @@ void ProxyRequestHandler::handleRequest(const std::string& relPath,
             };
 
     sessionProxy->setFinishedHandler(std::move(proxyCallback));
-    if (!sessionProxy->asyncRequest(requestProxy, *COOLWSD::getWebServerPoll()))
-    {
-        HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, socket);
-    }
+
+    http::Session::ConnectFailCallback connectFailCallback =
+        [socket]() {
+            HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, socket);
+    };
+    sessionProxy->setConnectFailHandler(std::move(connectFailCallback));
+
+    sessionProxy->asyncRequest(requestProxy, *COOLWSD::getWebServerPoll());
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
