@@ -15,6 +15,8 @@
 
 L.Map.include({
 	insertComment: function() {
+		if (this.stateChangeHandler.getItemValue('InsertAnnotation') === 'disabled')
+			return;
 		if (cool.Comment.isAnyEdit()) {
 			cool.CommentSection.showCommentEditingWarning();
 			return;
