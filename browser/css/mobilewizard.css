@@ -672,8 +672,8 @@ a.leaflet-control-zoom-in {
 	background-color: var(--color-background);
 }
 .unotoolbutton.mobile-wizard {
-	padding: 4% !important;
-	margin: 0px !important;
+	padding: 0px !important;
+	margin: 8px !important;
 	float: left;
 }
 #selectcolor.mobile-wizard.toolbox.level-1 {
@@ -943,7 +943,7 @@ input[type='checkbox']#UseBandingColumnStyle, input[type='checkbox']#UseLastColu
 #mobile-wizard #FontworkSameLetterHeights > img {
 	filter: brightness(3);
 }
-#mobile-wizard .unotoolbutton.no-label button {
+#mobile-wizard .unotoolbutton.no-label {
 	background-color: transparent;
 	border: 1px solid transparent;
 }
