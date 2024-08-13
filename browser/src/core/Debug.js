@@ -20,7 +20,7 @@
  * - &randomUser=true URL parameter (global.js)
  */
 
-/* global app L _ */
+/* global app L _ InvalidationRectangleSection */
 
 L.DebugManager = L.Class.extend({
 	initialize: function(map) {
@@ -955,7 +955,7 @@ L.DebugManager = L.Class.extend({
 		const y = absTopLeftTwips.y * app.twipsToPixels;
 		const w = (absBottomRightTwips.x - absTopLeftTwips.x) * app.twipsToPixels;
 		const h = (absBottomRightTwips.y - absTopLeftTwips.y) * app.twipsToPixels;
-		app.definitions.invalidationRectangleSection.setRectangle(x, y, w, h);
+		InvalidationRectangleSection.setRectangle(x, y, w, h);
 
 		// There is not always an invalidation for every keypress.
 		// Keypresses at the front of the queue that are older than 1s

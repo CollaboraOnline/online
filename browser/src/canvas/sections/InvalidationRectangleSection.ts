@@ -70,5 +70,3 @@ class InvalidationRectangleSection extends CanvasSectionObject {
 		section.setPosition(x, y);
 	}
 }
-
-app.definitions.invalidationRectangleSection = InvalidationRectangleSection;
