@@ -653,6 +653,11 @@ private:
     bool updateStorageLockState(ClientSession& session, StorageBase::LockState lock,
                                 std::string& error);
 
+    /// Updates the document's lock in storage asynchronously to either locked or unlocked.
+    /// Returns false if an error prevented issuing the asynchronous request.
+    bool updateStorageLockStateAsync(const std::shared_ptr<ClientSession>& session,
+                                     StorageBase::LockState lock, std::string& error);
+
     /// Take the lock before loading the first session, if we know we can edit.
     bool lockDocumentInStorage(const Authorization& auth, std::string& error);
 
@@ -1385,6 +1390,37 @@ private:
         std::string _lastModifiedTime;
     };
 
+    /// Represents a lock-state update request.
+    class LockStateUpdateRequest final
+    {
+    public:
+        LockStateUpdateRequest(StorageBase::LockState requestedLockState,
+                               const std::shared_ptr<class ClientSession>& session)
+            : _startTime(std::chrono::steady_clock::now())
+            , _requestedLockState(requestedLockState)
+            , _session(session)
+        {
+        }
+
+        const std::chrono::milliseconds timeSinceRequest() const
+        {
+            return std::chrono::duration_cast<std::chrono::milliseconds>(
+                std::chrono::steady_clock::now() - _startTime);
+        }
+
+        /// The requested new lock state.
+        StorageBase::LockState requestedLockState() const { return _requestedLockState; }
+
+        /// The ClientSession that requested this lock-state update, if any.
+        /// Might be issued before a client is connected, or the client might have left later.
+        std::shared_ptr<class ClientSession> session() const { return _session.lock(); }
+
+    private:
+        const std::chrono::steady_clock::time_point _startTime; //< The time we made the request.
+        const StorageBase::LockState _requestedLockState;
+        const std::weak_ptr<class ClientSession> _session; //< Allows for cleanup, if it's closed.
+    };
+
 protected:
     /// Seconds to live for, or 0 forever
     std::chrono::seconds _limitLifeSeconds;
@@ -1589,6 +1625,9 @@ private:
 
     /// Manage uploading to Storage.
     StorageManager _storageManager;
+
+    /// The current lock-state update request, if any.
+    std::unique_ptr<LockStateUpdateRequest> _lockStateUpdateRequest;
 
     /// All session of this DocBroker by ID.
     SessionMap<ClientSession> _sessions;

@@ -471,8 +471,10 @@ void DocumentBroker::pollThread()
             _admin.addBytes(getDocKey(), deltaSent, deltaRecv);
         }
 
-        if (_storage && _lockCtx->needsRefresh(now))
+        if (_storage && !_lockStateUpdateRequest && _lockCtx->needsRefresh(now))
+        {
             refreshLock();
+        }
 #endif
 
         LOG_TRC("Poll: current activity: " << DocumentState::name(_docState.activity()));
@@ -1618,6 +1620,111 @@ bool DocumentBroker::updateStorageLockState(ClientSession& session, StorageBase:
     return false;
 }
 
+bool DocumentBroker::updateStorageLockStateAsync(const std::shared_ptr<ClientSession>& session,
+                                                 StorageBase::LockState lock, std::string& error)
+{
+    LOG_TRC("Requesting async " << (lock == StorageBase::LockState::LOCK ? "Locking" : "Unlocking")
+                                << " of [" << _docKey << "] by session #" << session->getId());
+
+    if (session->getAuthorization().isExpired())
+    {
+        error = "Expired authorization token";
+        return false;
+    }
+
+    if (lock == StorageBase::LockState::LOCK && session->isReadOnly())
+    {
+        // Readonly sessions cannot lock, only editors can.
+        error = "Readonly session";
+        return false;
+    }
+
+    if (_lockStateUpdateRequest)
+    {
+        error = "A lock-update request is already in progress";
+        return false;
+    }
+
+    // Do *not* capture the session shared_ptr, to let it close if necessary.
+    // Instead, we capture a weak_ptr, which allows for graceful cleanup of closed sesssions.
+    StorageBase::AsyncLockStateCallback asyncLockCallback =
+        [this](const StorageBase::AsyncLockUpdate& asyncLock)
+    {
+        if (!_lockStateUpdateRequest)
+        {
+            LOG_ERR("There is no asynchronous lock-state update request to process callback");
+            return;
+        }
+
+        if (asyncLock.state() == StorageBase::AsyncLockUpdate::State::Running)
+        {
+            LOG_TRC("Async locking of [" << _docKey << "] is in progress during "
+                                         << DocumentState::name(_docState.activity()));
+            return;
+        }
+
+        const std::shared_ptr<ClientSession> requestingSession = _lockStateUpdateRequest->session();
+        _lockStateUpdateRequest.reset(); // No longer needed.
+
+        // We have some result, look at the result status.
+        const StorageBase::LockState requestedLock = asyncLock.result().requestedLockState();
+        switch (asyncLock.result().getStatus())
+        {
+            case StorageBase::LockUpdateResult::Status::UNSUPPORTED:
+                LOG_DBG("Locks on docKey [" << _docKey << "] are unsupported while trying to "
+                                            << StorageBase::name(requestedLock));
+                return; // Not an error.
+                break;
+
+            case StorageBase::LockUpdateResult::Status::OK:
+                LOG_DBG((requestedLock == StorageBase::LockState::LOCK ? "Locked" : "Unlocked")
+                        << " docKey [" << _docKey << "] successfully");
+                return;
+                break;
+
+            case StorageBase::LockUpdateResult::Status::UNAUTHORIZED:
+            {
+                LOG_ERR("Failed to "
+                        << (requestedLock == StorageBase::LockState::LOCK ? "Locked" : "Unlocked")
+                        << " docKey [" << _docKey
+                        << "]. Invalid or expired access token. Notifying client and "
+                           "invalidating the authorization token of session ["
+                        << requestingSession->getId() << "]. This session will now be read-only");
+                requestingSession->invalidateAuthorizationToken();
+                if (requestedLock == StorageBase::LockState::LOCK)
+                {
+                    // If we can't unlock, we don't want to set the document to read-only mode.
+                    requestingSession->setLockFailed(asyncLock.result().getReason());
+                }
+            }
+            break;
+
+            case StorageBase::LockUpdateResult::Status::FAILED:
+            {
+                LOG_ERR("Failed to "
+                        << (requestedLock == StorageBase::LockState::LOCK ? "Locked" : "Unlocked")
+                        << " docKey [" << _docKey << "] with reason ["
+                        << asyncLock.result().getReason()
+                        << "]. Notifying client and making session [" << requestingSession->getId()
+                        << "] read-only");
+
+                if (requestedLock == StorageBase::LockState::LOCK)
+                {
+                    // If we can't unlock, we don't want to set the document to read-only mode.
+                    requestingSession->setLockFailed(asyncLock.result().getReason());
+                }
+            }
+            break;
+        }
+    };
+
+    _lockStateUpdateRequest = std::make_unique<LockStateUpdateRequest>(lock, session);
+
+    _storage->updateLockStateAsync(session->getAuthorization(), *_lockCtx, lock,
+                                   _currentStorageAttrs, *_poll, asyncLockCallback);
+    return true;
+}
+
 bool DocumentBroker::attemptLock(ClientSession& session, std::string& failReason)
 {
     return updateStorageLockState(session, StorageBase::LockState::LOCK, failReason);
@@ -2503,7 +2610,7 @@ void DocumentBroker::refreshLock()
         LOG_TRC("Refresh lock " << _lockCtx->lockToken() << " with session [" << savingSessionId
                                 << ']');
         std::string error;
-        if (!updateStorageLockState(*session, StorageBase::LockState::LOCK, error))
+        if (!updateStorageLockStateAsync(session, StorageBase::LockState::LOCK, error))
         {
             LOG_ERR("Failed to refresh lock of docKey [" << _docKey << "] with session ["
                                                          << savingSessionId << "]: " << error);
