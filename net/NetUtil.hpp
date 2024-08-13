@@ -45,7 +45,7 @@ class HostEntry
     std::string makeIPAddress(const sockaddr* ai_addr);
 
 public:
-    HostEntry(const std::string& desc, const char* port = nullptr);
+    HostEntry(const std::string& desc, const char* port);
     ~HostEntry();
 
     bool good() const { return _errno == 0 && _eaino == 0; }
