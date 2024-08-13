@@ -268,7 +268,7 @@ void HTTPServerTest::testCoolPost()
     LOK_ASSERT(html.find("data-access-header = \"\"") != std::string::npos);
     LOK_ASSERT(html.find("data-post-message-origin-ext = \"https://www.example.com:8080\"") != std::string::npos);
     LOK_ASSERT(html.find("data-frame-ancestors = \"%20127.0.0.1:%2A%20localhost:%2A\"") != std::string::npos);
-    LOK_ASSERT(html.find("data-ui-defaults = \"{\"presentation\":{\"ShowSidebar\":\"false\",\"ShowStatusbar\":\"false\"},\"spreadsheet\":{\"ShowSidebar\":\"false\",\"ShowStatusbar\":\"false\"},\"text\":{\"ShowRuler\":\"false\",\"ShowSidebar\":\"false\",\"ShowStatusbar\":\"false\"},\"uiMode\":\"classic\"}\"") != std::string::npos);
+    LOK_ASSERT(html.find("data-ui-defaults = \"eyJwcmVzZW50YXRpb24iOnsiU2hvd1NpZGViYXIiOiJmYWxzZSIsIlNob3dTdGF0dXNiYXIiOiJmYWxzZSJ9LCJzcHJlYWRzaGVldCI6eyJTaG93U2lkZWJhciI6ImZhbHNlIiwiU2hvd1N0YXR1c2JhciI6ImZhbHNlIn0sInRleHQiOnsiU2hvd1J1bGVyIjoiZmFsc2UiLCJTaG93U2lkZWJhciI6ImZhbHNlIiwiU2hvd1N0YXR1c2JhciI6ImZhbHNlIn0sInVpTW9kZSI6ImNsYXNzaWMifQ==\"") != std::string::npos);
     LOK_ASSERT(html.find(R"xx(<style>:root {--co-primary-text:#ffffff;--co-primary-element:#0082c9;--co-text-accent:#0082c9;--co-primary-light:#e6f3fa;--co-primary-element-light:#17adff;--co-color-error:#e9322d;--co-color-warning:#eca700;--co-color-success:#46ba61;--co-border-radius:3px;--co-border-radius-large:10px;--co-loading-light:#ccc;--co-loading-dark:#444;--co-box-shadow:rgba(77, 77, 77, 0.5);--co-border:#ededed;--co-border-dark:#dbdbdb;--co-border-radius-pill:100px;}</style>)xx") != std::string::npos);
 }
 
