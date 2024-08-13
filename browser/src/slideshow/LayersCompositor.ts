@@ -189,11 +189,16 @@ class LayersCompositor extends SlideShow.SlideCompositor {
 	public computeLayerResolution(width: number, height: number) {
 		width *= 1.2;
 		height *= 1.2;
-
 		let resolutionWidth = 960;
 		let resolutionHeight = 540;
 
-		if (width > 1920 || height > 1080) {
+		if (width > 3840 || height > 2160) {
+			resolutionWidth = 3840;
+			resolutionHeight = 2160;
+		} else if (width > 2560 || height > 1440) {
+			resolutionWidth = 2560;
+			resolutionHeight = 1440;
+		} else if (width > 1920 || height > 1080) {
 			resolutionWidth = 1920;
 			resolutionHeight = 1080;
 		} else if (width > 1280 || height > 720) {
