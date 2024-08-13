@@ -351,7 +351,7 @@ class BrowserInitializer extends InitializerBase {
 		window.enableDebug = element.dataset.enableDebug.toLowerCase().trim() === "true";
 		window.frameAncestors = decodeURIComponent(element.dataset.frameAncestors);
 		window.socketProxy = element.dataset.socketProxy.toLowerCase().trim() === "true";
-		window.uiDefaults = element.dataset.uiDefaults;
+		window.uiDefaults = JSON.parse(atob(element.dataset.uiDefaults));
 		window.checkFileInfoOverride = element.dataset.checkFileInfoOverride;
 		window.deeplEnabled = element.dataset.deeplEnabled.toLowerCase().trim() === "true";
 		window.zoteroEnabled = element.dataset.zoteroEnabled.toLowerCase().trim() === "true";
