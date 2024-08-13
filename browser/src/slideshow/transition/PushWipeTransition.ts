@@ -17,10 +17,13 @@ function PushWipeTransition(transitionParameters: TransitionParameters) {
 		stringToTransitionSubTypeMap[
 			transitionParameters.slideInfo.transitionSubtype
 		];
-	if (transitionSubType == TransitionSubType.FROMTOP) {
-		return new SlideShow.PushTransition(transitionParameters);
-	} else {
+	if (
+		transitionSubType == TransitionSubType.COMBHORIZONTAL ||
+		transitionSubType == TransitionSubType.COMBVERTICAL
+	) {
 		return new SlideShow.CombTransition(transitionParameters);
+	} else {
+		return new SlideShow.PushTransition(transitionParameters);
 	}
 }
 
