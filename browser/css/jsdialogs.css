@@ -1777,8 +1777,22 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	align-items: center;
 }
 
-#toolbar-wrapper:not(.mobile) ~ #toolbar-down .has-dropdown > .ui-content.unobutton {
-	width: max-content;
+.jsdialog:not(.menubutton)..jsdialog:not(.dropdown) {
+	width: var(--btn-size);
+}
+
+.jsdialog .ui-content.unobutton.no-label.dropdown {
+	width: calc(var(--btn-size) + var(--btn-dropdown-size))
+}
+
+.jsdialog .ui-content.unobutton:not(.dropdown) {
+	height: var(--btn-size);
+	min-width: var(--btn-size);
+	padding: 0px;
+}
+
+.has-dropdown > .ui-content.unobutton {
+	width: auto;
 }
 
 .unoarrow::after,

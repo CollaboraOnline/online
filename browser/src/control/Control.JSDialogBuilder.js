@@ -2190,10 +2190,14 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			controls['label'] = inline;
 		}
 
-		if (options && options.hasDropdownArrow) {
+		if (builder.wizard && window.mode.isMobile()) {
+			controls['arrow'] = false;
+		} else if (options && options.hasDropdownArrow) {
 			$(button).addClass('dropdown');
+			controls['arrow'] = true;
 		} else if (data.dropdown === true) {
 			$(button).addClass('dropdown');
+			controls['arrow'] = true;
 			button.closeDropdown = function() {
 				builder.callback('toolbox', 'closemenu', parentContainer, data.command, builder);
 			};
@@ -2211,7 +2215,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				builder.refreshSidebar = true;
 				if (data.postmessage)
 					builder.map.fire('postMessage', {msgId: 'Clicked_Button', args: {Id: data.id} });
-				else if (data.dropdown === true)
+				else if (button.closeDropdown)
 					builder.callback('toolbox', 'openmenu', parentContainer, data.command, builder);
 				else if (isRealUnoCommand)
 					builder.callback('toolbutton', 'click', button, data.command, builder);
@@ -2266,7 +2270,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				container.appendChild(label);
 			if (inline)
 				container.appendChild(inline);
-		}
+		};
 
 		if (options && options.container) {
 			insertChilds(options.container);
