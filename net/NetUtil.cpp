@@ -311,22 +311,10 @@ void AsyncDNS::resolveDNS()
         _activeLookup = _lookups.front();
         _lookups.pop();
 
-        // Unlock to allow entries to queue up in _lookups while
-        // resolving
+        // Unlock to allow entries to queue up in _lookups while resolving
         _lock.unlock();
 
-        std::string hostToCheck, exception;
-
-        try
-        {
-            hostToCheck = _resolver->resolveDNS(_activeLookup.query).getCanonicalName();
-        }
-        catch (const Poco::Exception& exc)
-        {
-            exception = "net::canonicalHostName(\"" + _activeLookup.query + "\") failed: " + exc.displayText();
-        }
-
-        _activeLookup.cb(hostToCheck, exception);
+        _activeLookup.cb(_resolver->resolveDNS(_activeLookup.query));
 
         _activeLookup = {};
 
@@ -372,10 +360,10 @@ void AsyncDNS::stopAsyncDNS()
 }
 
 //static
-void AsyncDNS::canonicalHostName(const std::string& addressToCheck, const DNSThreadFn& cb,
-                                 const DNSThreadDumpStateFn& dumpState)
+void AsyncDNS::lookup(const std::string& searchEntry, const DNSThreadFn& cb,
+                      const DNSThreadDumpStateFn& dumpState)
 {
-    AsyncDNSThread->addLookup(addressToCheck, cb, dumpState);
+    AsyncDNSThread->addLookup(searchEntry, cb, dumpState);
 }
 
 #endif //!MOBILEAPP

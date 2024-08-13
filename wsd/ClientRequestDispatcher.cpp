@@ -461,10 +461,9 @@ public:
 
     void dispatchNextLookup()
     {
-        net::AsyncDNS::DNSThreadFn pushHostnameResolvedToPoll = [this](const std::string& hostname,
-                                                                       const std::string& exception) {
-            COOLWSD::getWebServerPoll()->addCallback([this, hostname, exception]() {
-                hostnameResolved(hostname, exception);
+        net::AsyncDNS::DNSThreadFn pushHostnameResolvedToPoll = [this](const net::HostEntry& hostEntry) {
+            COOLWSD::getWebServerPoll()->addCallback([this, hostEntry]() {
+                hostnameResolved(hostEntry);
             });
         };
 
@@ -473,19 +472,19 @@ public:
         };
 
         const std::string& addressToCheck = _addressesToResolve.front();
-        net::AsyncDNS::canonicalHostName(addressToCheck, pushHostnameResolvedToPoll, dumpState);
+        net::AsyncDNS::lookup(addressToCheck, pushHostnameResolvedToPoll, dumpState);
     }
 
-    void hostnameResolved(const std::string& hostToCheck, const std::string& exception)
+    void hostnameResolved(const net::HostEntry& hostEntry)
     {
-        if (!exception.empty())
+        if (hostEntry.good())
+            testHostName(hostEntry.getCanonicalName());
+        else
         {
-            LOG_ERR_S(exception);
-                // We can't find out the hostname, and it already failed the IP check
+            LOG_ERR_S("canonicalHostName failed: " << hostEntry.errorMessage());
+            // We can't find out the hostname, and it already failed the IP check
             _allow = false;
         }
-        else
-            testHostName(hostToCheck);
 
         const std::string& addressToCheck = _addressesToResolve.front();
         if (_allow)
