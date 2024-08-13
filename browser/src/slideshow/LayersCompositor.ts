@@ -15,8 +15,7 @@
  */
 
 declare var app: any;
-// declare var SlideShow: any;
-declare namespace SlideShow {}
+declare var SlideShow: any;
 
 class LayersCompositor extends SlideShow.SlideCompositor {
 	private firstSlideHash: string = null;
