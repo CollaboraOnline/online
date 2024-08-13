@@ -65,6 +65,8 @@
 #include <zlib.h>
 #include <security/pam_appl.h>
 
+#include <wasm/base64.hpp>
+
 #include <openssl/evp.h>
 
 using Poco::Net::HTMLForm;
@@ -1224,8 +1226,8 @@ FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::prepro
     Poco::replaceInPlace(preprocess, std::string("%VERSION%"), std::string(COOLWSD_VERSION_HASH));
     Poco::replaceInPlace(preprocess, std::string("%COOLWSD_VERSION%"), std::string(COOLWSD_VERSION));
     Poco::replaceInPlace(preprocess, std::string("%SERVICE_ROOT%"), responseRoot);
-    Poco::replaceInPlace(preprocess, UI_DEFAULTS,
-                         uiDefaultsToJSON(urv[UI_DEFAULTS], userInterfaceMode, userInterfaceTheme, savedUIState));
+    Poco::replaceInPlace(preprocess, UI_DEFAULTS, macaron::Base64::Encode(
+                         uiDefaultsToJSON(urv[UI_DEFAULTS], userInterfaceMode, userInterfaceTheme, savedUIState)));
     Poco::replaceInPlace(preprocess, std::string("%UI_THEME%"), userInterfaceTheme); // UI_THEME refers to light or dark theme
     Poco::replaceInPlace(preprocess, BRANDING_THEME, urv[BRANDING_THEME]);
     Poco::replaceInPlace(preprocess, std::string("%SAVED_UI_STATE%"), savedUIState);
