@@ -13,6 +13,7 @@
 #include <config_version.h>
 
 #include "HttpHelper.hpp"
+#include "HttpRequest.hpp"
 
 #include <algorithm>
 #include <string>
@@ -92,9 +93,9 @@ void sendDeflatedFileContent(const std::shared_ptr<StreamSocket>& socket, const 
     }
 }
 
-void sendFile(const std::shared_ptr<StreamSocket>& socket, const std::string& path,
-              http::Response& response, const bool noCache,
-              const bool deflate, const bool headerOnly)
+static void sendFileImpl(const std::shared_ptr<StreamSocket>& socket, const std::string& path,
+                         http::Response& response, const bool noCache,
+                         const bool deflate, const bool headerOnly, const bool closeSocket)
 {
     FileUtil::Stat st(path);
     if (st.bad())
@@ -117,9 +118,9 @@ void sendFile(const std::shared_ptr<StreamSocket>& socket, const std::string& pa
 
     response.add("X-Content-Type-Options", "nosniff");
 
-    //Should we add the header anyway ?
-    if (headerOnly)
-        response.add("Connection", "close");
+    if ( closeSocket ) {
+        response.header().setConnectionToken(http::Header::ConnectionToken::Close);
+    }
 
     int bufferSize = std::min<std::size_t>(st.size(), Socket::MaximumSendBufferSize);
     if (static_cast<long>(st.size()) >= socket->getSendBufferSize())
@@ -151,14 +152,23 @@ void sendFile(const std::shared_ptr<StreamSocket>& socket, const std::string& pa
         if (!headerOnly)
             sendDeflatedFileContent(socket, path, st.size());
     }
+    if(closeSocket) {
+        socket->shutdown();
+    }
+}
+
+void sendFile(const std::shared_ptr<StreamSocket>& socket, const std::string& path,
+              http::Response& response, const bool noCache,
+              const bool deflate, const bool headerOnly)
+{
+    sendFileImpl(socket, path, response, noCache, deflate, headerOnly, false);
 }
 
 void sendFileAndShutdown(const std::shared_ptr<StreamSocket>& socket, const std::string& path,
                          http::Response& response, const bool noCache,
                          const bool deflate, const bool headerOnly)
 {
-    sendFile(socket, path, response, noCache, deflate, headerOnly);
-    socket->shutdown();
+    sendFileImpl(socket, path, response, noCache, deflate, headerOnly, true);
 }
 
 } // namespace HttpHelper
