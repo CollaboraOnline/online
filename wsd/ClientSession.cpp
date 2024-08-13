@@ -373,13 +373,17 @@ void ClientSession::handleClipboardRequest(DocumentBroker::ClipboardRequest     
                         if (httpSession)
                         {
                             httpSession->setFinishedHandler(std::move(finishedCallback));
-                            http::Request httpRequest(Poco::URI(url).getPathAndQuery());
-                            if (!httpSession->asyncRequest(httpRequest, docBroker->getPoll()))
+
+                            http::Session::ConnectFailCallback connectFailCallback = [this, url]()
                             {
                                 LOG_ERR(
                                     "Failed to start an async clipboard download request with URL ["
                                     << url << ']');
-                            }
+                            };
+                            httpSession->setConnectFailHandler(std::move(connectFailCallback));
+
+                            http::Request httpRequest(Poco::URI(url).getPathAndQuery());
+                            httpSession->asyncRequest(httpRequest, docBroker->getPoll());
                         }
                         else
                         {

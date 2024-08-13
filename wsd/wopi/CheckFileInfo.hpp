@@ -69,7 +69,7 @@ public:
     std::unique_ptr<WopiStorage::WOPIFileInfo> wopiFileInfo(const Poco::URI& uriPublic) const;
 
     /// Start the actual request.
-    bool checkFileInfo(int redirectionLimit);
+    void checkFileInfo(int redirectionLimit);
 
     /// Start the request and wait for the response.
     /// In some scenarios we can't proceed without CheckFileInfo results.

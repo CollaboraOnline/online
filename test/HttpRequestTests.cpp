@@ -32,6 +32,7 @@
 #include "Ssl.hpp"
 #include <net/SslSocket.hpp>
 #endif
+#include <net/AsyncDNS.hpp>
 #include <net/ServerSocket.hpp>
 #include <net/DelaySocket.hpp>
 #include <net/HttpRequest.hpp>
@@ -97,6 +98,7 @@ public:
         : _pollServerThread("HttpServerPoll")
         , _port(0)
     {
+        net::AsyncDNS::startAsyncDNS();
 #if ENABLE_SSL
         Poco::Net::initializeSSL();
         // Just accept the certificate anyway for testing purposes
@@ -114,6 +116,7 @@ public:
 #if ENABLE_SSL
         Poco::Net::uninitializeSSL();
 #endif
+        net::AsyncDNS::stopAsyncDNS();
     }
 
     class ServerSocketFactory final : public SocketFactory
@@ -307,7 +310,11 @@ void HttpRequestTests::testSimpleGet()
 
         std::unique_lock<std::mutex> lock(mutex);
 
-        LOK_ASSERT(httpSession->asyncRequest(httpRequest, pollThread));
+        httpSession->setConnectFailHandler([this]() {
+            LOK_ASSERT(false);
+        });
+
+        httpSession->asyncRequest(httpRequest, pollThread);
 
         // Use Poco to get the same URL in parallel.
         const auto pocoResponse = helpers::pocoGetRetry(Poco::URI(_localUri + URL));
@@ -527,7 +534,11 @@ void HttpRequestTests::test500GetStatuses()
         std::unique_lock<std::mutex> lock(mutex);
         timedout = true; // Assume we timed out until we prove otherwise.
 
-        LOK_ASSERT(httpSession->asyncRequest(httpRequest, pollThread));
+        httpSession->setConnectFailHandler([this]() {
+            LOK_ASSERT(false);
+        });
+
+        httpSession->asyncRequest(httpRequest, pollThread);
 
         // Get via Poco in parallel.
         std::pair<std::shared_ptr<Poco::Net::HTTPResponse>, std::string> pocoResponse;
@@ -616,7 +627,11 @@ void HttpRequestTests::testSimplePost_External()
 
     std::unique_lock<std::mutex> lock(mutex);
 
-    LOK_ASSERT(httpSession->asyncRequest(httpRequest, pollThread));
+    httpSession->setConnectFailHandler([this]() {
+        LOK_ASSERT(false);
+    });
+
+    httpSession->asyncRequest(httpRequest, pollThread);
 
     cv.wait_for(lock, DefTimeoutSeconds);
 
