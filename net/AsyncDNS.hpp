@@ -16,6 +16,7 @@
 #include <functional>
 #include <memory>
 #include <mutex>
+#include <optional>
 #include <queue>
 #include <string>
 #include <thread>
@@ -42,7 +43,9 @@ public:
     typedef std::function<void(const HostEntry& hostEntry)> DNSThreadFn;
     typedef std::function<std::string()> DNSThreadDumpStateFn;
 
-    static void lookup(const std::string& searchEntry, const DNSThreadFn& cb,
+    static void lookup(const std::string& searchEntry,
+                       const std::optional<std::string>& port,
+                       const DNSThreadFn& cb,
                        const DNSThreadDumpStateFn& dumpState);
 
 private:
@@ -54,6 +57,7 @@ private:
     struct Lookup
     {
         std::string query;
+        std::optional<std::string> port;
         AsyncDNS::DNSThreadFn cb;
         AsyncDNS::DNSThreadDumpStateFn dumpState;
     };
@@ -61,7 +65,9 @@ private:
     Lookup _activeLookup;
 
     void resolveDNS();
-    void addLookup(const std::string& lookup, const DNSThreadFn& cb,
+    void addLookup(const std::string& lookup,
+                   const std::optional<std::string>& port,
+                   const DNSThreadFn& cb,
                    const DNSThreadDumpStateFn& dumpState);
 
     void startThread();

@@ -139,11 +139,14 @@ HostEntry::~HostEntry()
 struct DNSCacheEntry
 {
     std::string queryAddress;
+    std::optional<std::string> queryPort;
     HostEntry hostEntry;
     std::chrono::steady_clock::time_point lookupTime;
 };
 
-static HostEntry resolveDNS(const std::string& addressToCheck, std::vector<DNSCacheEntry>& querycache)
+static HostEntry resolveDNS(const std::string& addressToCheck,
+                            const std::optional<std::string>& port,
+                            std::vector<DNSCacheEntry>& querycache)
 {
     const auto now = std::chrono::steady_clock::now();
 
@@ -155,15 +158,16 @@ static HostEntry resolveDNS(const std::string& addressToCheck, std::vector<DNSCa
 
     // search for hit
     auto findIt = std::find_if(querycache.begin(), querycache.end(),
-                               [&addressToCheck](const auto& entry)->bool {
-                                 return entry.queryAddress == addressToCheck;
+                               [&addressToCheck, &port](const auto& entry)->bool {
+                                 return entry.queryAddress == addressToCheck &&
+                                        entry.queryPort == port;
                                });
     if (findIt != querycache.end())
         return findIt->hostEntry;
 
     // lookup and cache
-    HostEntry hostEntry(addressToCheck);
-    querycache.push_back(DNSCacheEntry{addressToCheck, hostEntry, now});
+    HostEntry hostEntry(addressToCheck, port ? port->c_str() : nullptr);
+    querycache.push_back(DNSCacheEntry{addressToCheck, port, hostEntry, now});
     return hostEntry;
 }
 
@@ -172,16 +176,16 @@ class DNSResolver
 private:
     std::vector<DNSCacheEntry> _querycache;
 public:
-    HostEntry resolveDNS(const std::string& addressToCheck)
+    HostEntry resolveDNS(const std::string& addressToCheck, const std::optional<std::string>& port)
     {
-        return net::resolveDNS(addressToCheck, _querycache);
+        return net::resolveDNS(addressToCheck, port, _querycache);
     }
 };
 
 HostEntry resolveDNS(const std::string& addressToCheck)
 {
     static DNSResolver resolver;
-    return resolver.resolveDNS(addressToCheck);
+    return resolver.resolveDNS(addressToCheck, std::nullopt);
 }
 
 std::string canonicalHostName(const std::string& addressToCheck)
@@ -314,7 +318,7 @@ void AsyncDNS::resolveDNS()
         // Unlock to allow entries to queue up in _lookups while resolving
         _lock.unlock();
 
-        _activeLookup.cb(_resolver->resolveDNS(_activeLookup.query));
+        _activeLookup.cb(_resolver->resolveDNS(_activeLookup.query, _activeLookup.port));
 
         _activeLookup = {};
 
@@ -322,11 +326,13 @@ void AsyncDNS::resolveDNS()
     }
 }
 
-void AsyncDNS::addLookup(const std::string& lookup, const DNSThreadFn& cb,
+void AsyncDNS::addLookup(const std::string& lookup,
+                         const std::optional<std::string>& port,
+                         const DNSThreadFn& cb,
                          const DNSThreadDumpStateFn& dumpState)
 {
     std::unique_lock<std::mutex> guard(_lock);
-    _lookups.emplace(Lookup({lookup, cb, dumpState}));
+    _lookups.emplace(Lookup({lookup, port, cb, dumpState}));
     guard.unlock();
     _condition.notify_one();
 }
@@ -360,10 +366,12 @@ void AsyncDNS::stopAsyncDNS()
 }
 
 //static
-void AsyncDNS::lookup(const std::string& searchEntry, const DNSThreadFn& cb,
+void AsyncDNS::lookup(const std::string& searchEntry,
+                      const std::optional<std::string>& port,
+                      const DNSThreadFn& cb,
                       const DNSThreadDumpStateFn& dumpState)
 {
-    AsyncDNSThread->addLookup(searchEntry, cb, dumpState);
+    AsyncDNSThread->addLookup(searchEntry, port, cb, dumpState);
 }
 
 #endif //!MOBILEAPP
