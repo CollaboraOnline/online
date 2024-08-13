@@ -20,10 +20,13 @@
 #include <string>
 #include <thread>
 
+#include <NetUtil.hpp>
+
 namespace net
 {
 
 class DNSResolver;
+class HostEntry;
 
 class AsyncDNS
 {
@@ -36,11 +39,11 @@ public:
 
     static void dumpState(std::ostream& os);
 
-    typedef std::function<void(const std::string& hostName, const std::string& exception)> DNSThreadFn;
+    typedef std::function<void(const HostEntry& hostEntry)> DNSThreadFn;
     typedef std::function<std::string()> DNSThreadDumpStateFn;
 
-    static void canonicalHostName(const std::string& addressToCheck, const DNSThreadFn& cb,
-                                  const DNSThreadDumpStateFn& dumpState);
+    static void lookup(const std::string& searchEntry, const DNSThreadFn& cb,
+                       const DNSThreadDumpStateFn& dumpState);
 
 private:
     std::atomic<bool> _exit;
@@ -53,7 +56,6 @@ private:
         std::string query;
         AsyncDNS::DNSThreadFn cb;
         AsyncDNS::DNSThreadDumpStateFn dumpState;
-        // for now just canonicalHostName lookups
     };
     std::queue<Lookup> _lookups;
     Lookup _activeLookup;
