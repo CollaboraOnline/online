@@ -50,6 +50,44 @@ enum TransitionMode {
 	in
 }
 
+class SourceEventElement {
+	constructor(sId: string, aEventBaseElem: any, aEventMultiplexer: any) {
+		app.window.console.log('SourceEventElement: ' + sId + aEventBaseElem + aEventMultiplexer)
+	}
+}
+
+class NodeContext {
+	aContext: any = null;
+	aAnimationNodeMap: any = null;
+	aAnimatedElementMap: any = null;
+	aSourceEventElementMap: any = null;
+	nStartDelay = 0.0;
+	bFirstRun: boolean | undefined = undefined;
+	bIsInvalid = false;
+	aSlideHeight: number;
+	aSlideWidth: number;
+
+	constructor(aSlideShowContext: any) {
+		this.aContext = aSlideShowContext;
+	}
+
+	makeSourceEventElement(sId: string, aEventBaseElem: any) {
+		if (!aEventBaseElem) {
+			app.window.console.log('NodeContext.makeSourceEventElement: event base element is not valid');
+			return null;
+		}
+
+		if (!this.aContext.aEventMultiplexer) {
+			app.window.console.log('NodeContext.makeSourceEventElement: event multiplexer not initialized');
+			return null;
+		}
+
+		if (!this.aSourceEventElementMap[sId]) {
+			this.aSourceEventElementMap[sId] = new SourceEventElement(sId, aEventBaseElem, this.aContext.aEventMultiplexer);
+		}
+		return this.aSourceEventElementMap[sId];
+	}
+}
 
 function getAnimationNodeType(aNode:any) {
 	const typeStr = aNode.nodeName as keyof typeof AnimationNodeType;
