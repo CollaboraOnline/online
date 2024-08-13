@@ -864,7 +864,8 @@ L.Map.Keyboard = L.Handler.extend({
 		if (e.altKey || e.shiftKey) {
 
 			// need to handle Ctrl + Alt + C separately for Firefox
-			if (this.keyCodes.C.includes(e.keyCode) && e.altKey) {
+			// Adding also CTRL + Alt + R combination for Safari users. R_MOD1_MOD2 combination is empty on the core side. So this should be safe.
+			if ((this.keyCodes.C.includes(e.keyCode) || e.keyCode === this.keyCodes.R) && e.altKey) {
 				this._map.insertComment();
 				return true;
 			}
