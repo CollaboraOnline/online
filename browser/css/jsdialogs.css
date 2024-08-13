@@ -1764,8 +1764,13 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	width: var(--btn-size);
 }
 
+.jsdialog .ui-content.unobutton.no-label.dropdown {
+	width: calc(var(--btn-size) + var(--btn-dropdown-size))
+}
+
 .jsdialog .ui-content.unobutton:not(.dropdown) {
 	height: var(--btn-size);
+	min-width: var(--btn-size);
 	padding: 0px;
 	vertical-align: middle;
 	background-color: transparent;
