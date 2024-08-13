@@ -14,6 +14,9 @@
 #include <memory>
 #include <string>
 
+#include <HttpRequest.hpp>
+#include <Socket.hpp>
+
 #include <Poco/DOM/DOMParser.h>
 #include <Poco/DOM/Document.h>
 #include <Poco/DOM/Node.h>
@@ -72,27 +75,27 @@ public:
 UnitBase::TestResult UnitSession::testBadRequest()
 {
     setTestname(__func__);
+    TerminatingPoll socketPoller(testname);
+    socketPoller.runOnClientThread();
+
     TST_LOG("Starting Test: " << testname);
     try
     {
         // Try to load a bogus url.
         const std::string documentURL = "/lol/file%3A%2F%2F%2Ffake.doc";
-
-        Poco::Net::HTTPResponse response;
-        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-        std::unique_ptr<Poco::Net::HTTPClientSession> session(
-            helpers::createSession(Poco::URI(helpers::getTestServerURI())));
-
+        std::shared_ptr<http::Session> session = helpers::createHTTPSession( Poco::URI( helpers::getTestServerURI() ) );
+        http::Request request(documentURL, http::Request::VERB_GET);
         request.set("Connection", "Upgrade");
         request.set("Upgrade", "websocket");
         request.set("Sec-WebSocket-Version", "13");
         request.set("Sec-WebSocket-Key", "");
-        request.setChunkedTransferEncoding(false);
-        session->setKeepAlive(true);
-        session->sendRequest(request);
-        session->receiveResponse(response);
-        LOK_ASSERT_EQUAL(Poco::Net::HTTPResponse::HTTPResponse::HTTP_BAD_REQUEST,
-                             response.getStatus());
+        // request.header().setChunkedTransferEncoding(false);
+        request.header().setConnectionToken(http::Header::ConnectionToken::KeepAlive);
+        const std::shared_ptr<const http::Response> response = session->syncRequest(request, socketPoller);
+        LOK_ASSERT_EQUAL(http::StatusCode::BadRequest, response->statusCode());
+        LOK_ASSERT_EQUAL(false, session->isConnected());
+        // LOK_ASSERT(http::Header::ConnectionToken::Close == response->header().getConnectionToken());
+
     }
     catch (const Poco::Exception& exc)
     {
@@ -160,23 +163,23 @@ UnitBase::TestResult UnitSession::testSlideShow()
     {
         // Load a document
         std::string documentPath, documentURL;
-        std::string response;
+        std::string docResponse;
         helpers::getDocumentPathAndURL("setclientpart.odp", documentPath, documentURL, testname);
 
-        std::shared_ptr<SocketPoll> socketPoll = std::make_shared<SocketPoll>(testname);
-        socketPoll->startThread();
+        std::shared_ptr<SocketPoll> wsdSocketPoll = std::make_shared<SocketPoll>(testname+"-wsd");
+        wsdSocketPoll->startThread();
 
-        std::shared_ptr<http::WebSocketSession> socket = helpers::loadDocAndGetSession(
-            socketPoll, Poco::URI(helpers::getTestServerURI()), documentURL, testname);
+        std::shared_ptr<http::WebSocketSession> wsdSession = helpers::loadDocAndGetSession(
+            wsdSocketPoll, Poco::URI(helpers::getTestServerURI()), documentURL, testname);
 
         // request slide show
         helpers::sendTextFrame(
-            socket, "downloadas name=slideshow.svg id=slideshow format=svg options=", testname);
-        response = helpers::getResponseString(socket, "downloadas:", testname);
+            wsdSession, "downloadas name=slideshow.svg id=slideshow format=svg options=", testname);
+        docResponse = helpers::getResponseString(wsdSession, "downloadas:", testname);
         LOK_ASSERT_MESSAGE("did not receive a downloadas: message as expected",
-                               !response.empty());
+                               !docResponse.empty());
 
-        StringVector tokens(StringVector::tokenize(response.substr(11), ' '));
+        StringVector tokens(StringVector::tokenize(docResponse.substr(11), ' '));
         // "downloadas: downloadId= port= id=slideshow"
         const std::string downloadId = tokens[0].substr(std::string("downloadId=").size());
         const int port = std::stoi(tokens[1].substr(std::string("port=").size()));
@@ -190,17 +193,20 @@ UnitBase::TestResult UnitSession::testSlideShow()
         Poco::URI::encode(documentPath, ":/?", encodedDoc);
         const std::string ignoredSuffix = "%3FWOPISRC=madness"; // cf. iPhone.
         const std::string path = "/cool/" + encodedDoc + "/download/" + downloadId + '/' + ignoredSuffix;
-        std::unique_ptr<Poco::Net::HTTPClientSession> session(
-            helpers::createSession(Poco::URI(helpers::getTestServerURI())));
-        Poco::Net::HTTPRequest requestSVG(Poco::Net::HTTPRequest::HTTP_GET, path);
-        TST_LOG("Requesting SVG from " << path);
-        session->sendRequest(requestSVG);
 
-        Poco::Net::HTTPResponse responseSVG;
-        std::istream& rs = session->receiveResponse(responseSVG);
-        LOK_ASSERT_EQUAL(Poco::Net::HTTPResponse::HTTP_OK /* 200 */, responseSVG.getStatus());
-        LOK_ASSERT_EQUAL(std::string("image/svg+xml"), responseSVG.getContentType());
-        TST_LOG("SVG file size: " << responseSVG.getContentLength());
+        TerminatingPoll dlSocketPoller(testname+"-dl");
+        dlSocketPoller.runOnClientThread();
+        std::shared_ptr<http::Session> dlSession = helpers::createHTTPSession( Poco::URI( helpers::getTestServerURI() ) );
+        http::Request requestSVG(path, http::Request::VERB_GET);
+        TST_LOG("Requesting SVG from " << path);
+        const std::shared_ptr<const http::Response> responseSVG = dlSession->syncRequest(requestSVG, dlSocketPoller);
+        LOK_ASSERT_EQUAL(http::StatusCode::OK, responseSVG->statusCode());
+        LOK_ASSERT_EQUAL(true, dlSession->isConnected());
+        LOK_ASSERT(http::Header::ConnectionToken::None == responseSVG->header().getConnectionToken());
+
+        LOK_ASSERT_EQUAL(std::string("image/svg+xml"), responseSVG->header().getContentType());
+        LOK_ASSERT(0 < responseSVG->header().getContentLength());
+        TST_LOG("SVG file size: " << responseSVG->header().getContentLength());
 
         //        std::ofstream ofs("/tmp/slide.svg");
         //        Poco::StreamCopier::copyStream(rs, ofs);
@@ -208,9 +214,12 @@ UnitBase::TestResult UnitSession::testSlideShow()
 
         // Asserting on the size of the stream is really unhelpful;
         // lets checkout the contents instead ...
+        // (TODO: Use an async dlSession request w/ async parsing chunks?)
         Poco::XML::DOMParser parser;
-        Poco::XML::InputSource svgSrc(rs);
-        Poco::AutoPtr<Poco::XML::Document> doc = parser.parse(&svgSrc);
+        // std::istream& rs = session->receiveResponse(responseSVG);
+        // Poco::XML::InputSource svgSrc(rs);
+        // Poco::AutoPtr<Poco::XML::Document> doc = parser.parse(&svgSrc);
+        Poco::AutoPtr<Poco::XML::Document> doc = parser.parseString(responseSVG->getBody());
 
         // Do we have our automation / scripting
         LOK_ASSERT(
@@ -255,32 +264,31 @@ UnitBase::TestResult UnitSession::testSlideShowMultiDL()
             wsdSocketPoll, Poco::URI(helpers::getTestServerURI()), documentURL, testname);
 
         // Reused http download-session for document and favicon download from server
-        std::unique_ptr<Poco::Net::HTTPClientSession> dlSession(
-            helpers::createSession(Poco::URI(helpers::getTestServerURI())));
-        dlSession->setKeepAlive(true);
+        TerminatingPoll dlSocketPoller(testname+"-dl");
+        dlSocketPoller.runOnClientThread();
+        std::shared_ptr<http::Session> dlSession = helpers::createHTTPSession( Poco::URI( helpers::getTestServerURI() ) );
+        // dlSession->setKeepAlive(true);
 
         for( dlIter=0; dlIter < dlCount; ++dlIter ) {
             // Still connected on sub-sequent commands and downloads?
             if( dlIter > 0 ) {
                 LOK_ASSERT_EQUAL(true, wsdSession->isConnected());
-                LOK_ASSERT_EQUAL(true, dlSession->connected());
+                LOK_ASSERT_EQUAL(true, dlSession->isConnected());
             }
 
             // download favicon
             {
                 const std::string path = "/favicon.ico";
-                Poco::Net::HTTPRequest requestICO(Poco::Net::HTTPRequest::HTTP_GET, path);
+                http::Request requestICO(path, http::Request::VERB_GET);
                 TST_LOG("Favicon requesting from " << path);
-                dlSession->sendRequest(requestICO);
+                std::shared_ptr<const http::Response> responseICO = dlSession->syncDownload(requestICO, "/tmp/favicon.ico", dlSocketPoller);
+                LOK_ASSERT_EQUAL(http::StatusCode::OK, responseICO->statusCode());
+                LOK_ASSERT_EQUAL(true, dlSession->isConnected());
+                LOK_ASSERT(http::Header::ConnectionToken::None == responseICO->header().getConnectionToken());
 
-                Poco::Net::HTTPResponse responseICO;
-                std::istream& rs = dlSession->receiveResponse(responseICO);
-                LOK_ASSERT_EQUAL(Poco::Net::HTTPResponse::HTTP_OK /* 200 */, responseICO.getStatus());
-                LOK_ASSERT_EQUAL(std::string("image/vnd.microsoft.icon"), responseICO.getContentType());
-                TST_LOG("Favicon file size: " << responseICO.getContentLength());
-                std::ofstream ofs("/tmp/favicon.ico");
-                Poco::StreamCopier::copyStream(rs, ofs);
-                ofs.close();
+                LOK_ASSERT_EQUAL(std::string("image/vnd.microsoft.icon"), responseICO->header().getContentType());
+                LOK_ASSERT(0 < responseICO->header().getContentLength());
+                TST_LOG("Favicon file size: " << responseICO->header().getContentLength());
             }
             // request downloading document as SVG
             std::string id_req="slideshow"+std::to_string(dlIter);
@@ -306,15 +314,16 @@ UnitBase::TestResult UnitSession::testSlideShowMultiDL()
                 Poco::URI::encode(documentPath, ":/?", encodedDoc);
                 const std::string ignoredSuffix = "%3FWOPISRC=madness"; // cf. iPhone.
                 const std::string path = "/cool/" + encodedDoc + "/download/" + downloadId + '/' + ignoredSuffix;
-                Poco::Net::HTTPRequest requestSVG(Poco::Net::HTTPRequest::HTTP_GET, path);
+                http::Request requestSVG(path, http::Request::VERB_GET);
                 TST_LOG("Requesting SVG from " << path);
-                dlSession->sendRequest(requestSVG);
+                const std::shared_ptr<const http::Response> responseSVG = dlSession->syncRequest(requestSVG, dlSocketPoller);
+                LOK_ASSERT_EQUAL(http::StatusCode::OK, responseSVG->statusCode());
+                LOK_ASSERT_EQUAL(true, dlSession->isConnected());
+                LOK_ASSERT(http::Header::ConnectionToken::None == responseSVG->header().getConnectionToken());
 
-                Poco::Net::HTTPResponse responseSVG;
-                std::istream& rs = dlSession->receiveResponse(responseSVG);
-                LOK_ASSERT_EQUAL(Poco::Net::HTTPResponse::HTTP_OK /* 200 */, responseSVG.getStatus());
-                LOK_ASSERT_EQUAL(std::string("image/svg+xml"), responseSVG.getContentType());
-                TST_LOG("SVG file size: " << responseSVG.getContentLength());
+                LOK_ASSERT_EQUAL(std::string("image/svg+xml"), responseSVG->header().getContentType());
+                LOK_ASSERT(0 < responseSVG->header().getContentLength());
+                TST_LOG("SVG file size: " << responseSVG->header().getContentLength());
 
                 //        std::ofstream ofs("/tmp/slide.svg");
                 //        Poco::StreamCopier::copyStream(rs, ofs);
@@ -322,9 +331,12 @@ UnitBase::TestResult UnitSession::testSlideShowMultiDL()
 
                 // Asserting on the size of the stream is really unhelpful;
                 // lets checkout the contents instead ...
+                // (TODO: Use an async dlSession request w/ async parsing chunks?)
                 Poco::XML::DOMParser parser;
-                Poco::XML::InputSource svgSrc(rs);
-                Poco::AutoPtr<Poco::XML::Document> doc = parser.parse(&svgSrc);
+                // std::istream& rs = session->receiveResponse(responseSVG);
+                // Poco::XML::InputSource svgSrc(rs);
+                // Poco::AutoPtr<Poco::XML::Document> doc = parser.parse(&svgSrc);
+                Poco::AutoPtr<Poco::XML::Document> doc = parser.parseString(responseSVG->getBody());
 
                 // Do we have our automation / scripting
                 LOK_ASSERT(

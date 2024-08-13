@@ -31,6 +31,7 @@
 #include <NetUtil.hpp>
 #include <net/Socket.hpp>
 #include <utility>
+#include <algorithm>
 #if ENABLE_SSL
 #include <net/SslSocket.hpp>
 #endif
@@ -356,6 +357,15 @@ public:
     static constexpr int64_t MaxFieldLen = MaxNameLen + MaxValueLen;
     static constexpr int64_t MaxHeaderLen = MaxNumberFields * MaxFieldLen; // ~1.18 MB.
 
+    static constexpr const char* CONNECTION = "Connection";
+
+    /// Describes the `Connection` header token value
+    STATE_ENUM(ConnectionToken,
+               None,        //< No `Connection` header token set
+               Close,       //< `Connection: close` [RFC2616 14.10](https://www.rfc-editor.org/rfc/rfc2616#section-14.10)
+               KeepAlive    //< `Connection: Keep-Alive` Obsolete [RFC2068 19.7.1](https://www.rfc-editor.org/rfc/rfc2068#section-19.7.1)
+    );
+
     /// Describes the header state during parsing.
     STATE_ENUM(State, New,
                Incomplete, //< Haven't reached the end yet.
@@ -364,8 +374,10 @@ public:
                Complete //< Header is complete and valid.
     );
 
-    using Container = std::vector<std::pair<std::string, std::string>>;
-    using ConstIterator = std::vector<std::pair<std::string, std::string>>::const_iterator;
+    using Pair = std::pair<std::string, std::string>;
+    using Container = std::vector<Pair>;
+    using Iterator = std::vector<Pair>::iterator;
+    using ConstIterator = std::vector<Pair>::const_iterator;
 
     ConstIterator begin() const { return _headers.begin(); }
     ConstIterator end() const { return _headers.end(); }
@@ -380,29 +392,37 @@ public:
         _headers.emplace_back(std::move(key), std::move(value));
     }
 
-    /// Set an HTTP header field, replacing an earlier value, if exists.
+    /// Set an HTTP header field, replacing an earlier value, if exists (case insensitive).
     void set(const std::string& key, std::string value)
     {
-        for (auto& pair : _headers)
-        {
-            if (pair.first == key)
-            {
-                pair.second.swap(value);
-                return;
-            }
+        const Iterator e = _headers.end();
+        const Iterator it = std::find_if(_headers.begin(), e,
+                                    [&key](const Pair &pair) -> bool { return Util::iequal(pair.first, key); });
+        if( e != it ) {
+            it->second.swap(value);
+        } else {
+            _headers.emplace_back(key, std::move(value));
         }
-
-        _headers.emplace_back(key, std::move(value));
     }
 
+    // Returns true if the HTTP header field exists (case insensitive)
     bool has(const std::string& key) const
     {
-        for (const auto& pair : _headers)
-        {
-            if (Util::iequal(pair.first, key))
-                return true;
-        }
+        const ConstIterator e = end();
+        return e != std::find_if(begin(), e,
+                            [&key](const Pair &pair) -> bool { return Util::iequal(pair.first, key); });
+    }
 
+    /// Remove the first matching HTTP header field (case insensitive), returning true if found and removed.
+    bool remove(const std::string& key)
+    {
+        const ConstIterator e = end();
+        const ConstIterator it = std::find_if(begin(), e,
+                                    [&key](const Pair &pair) -> bool { return Util::iequal(pair.first, key); });
+        if( e != it ) {
+            _headers.erase(it);
+            return true;
+        }
         return false;
     }
 
@@ -412,13 +432,14 @@ public:
         // There are typically half a dozen header
         // entries, rarely much more. A map would
         // probably not be faster but would add complexity.
-        for (const auto& pair : _headers)
-        {
-            if (Util::iequal(pair.first, key))
-                return pair.second;
+        const ConstIterator e = end();
+        const ConstIterator it = std::find_if(begin(), e,
+                                    [&key](const Pair &pair) -> bool { return Util::iequal(pair.first, key); });
+        if( e != it ) {
+            return it->second;
+        } else {
+            return def;
         }
-
-        return def;
     }
 
     /// Set the Content-Type header.
@@ -440,6 +461,27 @@ public:
 
     /// Return true iff Transfer-Encoding is set to chunked (the last entry).
     bool getChunkedTransferEncoding() const { return _chunked; }
+
+    bool hasConnectionToken() const { return has(CONNECTION); }
+    ConnectionToken getConnectionToken() const {
+        const std::string token = get(CONTENT_LENGTH);
+        if( Util::iequal("close", token) ) {
+            return ConnectionToken::Close;
+        } else if( Util::iequal("keep-alive", token) ) {
+            return ConnectionToken::KeepAlive;
+        } else {
+            return ConnectionToken::None;
+        }
+    }
+    void setConnectionToken(ConnectionToken token) {
+        if( ConnectionToken::Close == token ) {
+            set(CONNECTION, "close");
+        } else if( ConnectionToken::KeepAlive == token ) {
+            set(CONNECTION, "Keep-Alive");
+        } else {
+            remove(CONNECTION);
+        }
+    }
 
     /// Adds a new "Cookie" header entry with the given content.
     void addCookie(const std::string& cookie) { add(COOKIE, cookie); }
@@ -866,6 +908,7 @@ public:
     }
 
     const StatusLine& statusLine() const { return _statusLine; }
+    StatusCode statusCode() const { return _statusLine.statusCode(); }
 
     Header& header() { return _header; }
     const Header& header() const { return _header; }
