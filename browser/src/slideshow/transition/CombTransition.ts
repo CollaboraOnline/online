@@ -13,8 +13,8 @@
 declare var SlideShow: any;
 
 enum CombSubType {
-	COMBVERTICAL,
 	COMBHORIZONTAL,
+	COMBVERTICAL,
 }
 
 class CombTransition extends Transition2d {
