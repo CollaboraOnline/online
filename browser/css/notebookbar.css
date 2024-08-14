@@ -197,7 +197,6 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 }
 
 .unotoolbutton.notebookbar .unobutton {
-	cursor: pointer;
 	box-sizing: border-box;
 	padding: 0;
 	width: var(--btn-size);
@@ -280,6 +279,7 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 }
 
 .unotoolbutton.notebookbar {
+	cursor: pointer;
 	margin-inline-end: 5px !important;
 	text-align: center;
 }
