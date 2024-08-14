@@ -332,8 +332,8 @@ void ClientSession::handleClipboardRequest(DocumentBroker::ClipboardRequest     
                     std::string commandName;
                     JsonUtil::findJSONValue(json, "commandName", commandName);
                     http::Session::FinishedCallback finishedCallback =
-                        [this, docBroker,
-                         commandName](const std::shared_ptr<http::Session>& session)
+                        [this, commandName=std::move(commandName),
+                         docBroker](const std::shared_ptr<http::Session>& session)
                     {
                         const std::shared_ptr<const http::Response> httpResponse =
                             session->response();

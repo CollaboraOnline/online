@@ -259,7 +259,7 @@ namespace Util
             r = s.substr(0, n-1);
         else
             r = s;
-        return replace(r, "\n", " / ");
+        return replace(std::move(r), "\n", " / ");
     }
 
 #if defined __linux__

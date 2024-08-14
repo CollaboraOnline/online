@@ -2774,7 +2774,7 @@ bool ChildSession::exportAs(const StringVector& tokens)
         std::string encodedWopiFilename;
         Poco::URI::encode(wopiFilename, "", encodedWopiFilename);
 
-        _exportAsWopiUrl = encodedWopiFilename;
+        _exportAsWopiUrl = std::move(encodedWopiFilename);
 
         const std::string arguments = "{"
             "\"SynchronMode\":{"

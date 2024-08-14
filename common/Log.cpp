@@ -634,7 +634,7 @@ namespace Log
 
         try
         {
-            auto& logger = GenericLogger::create(Static.getName(), channel, Poco::Message::PRIO_TRACE);
+            auto& logger = GenericLogger::create(Static.getName(), std::move(channel), Poco::Message::PRIO_TRACE);
             Static.setLogger(&logger);
         }
         catch (ExistsException&)

@@ -96,7 +96,7 @@ struct Histogram {
         }
     }
 
-    std::vector<PerfMetricInfo> GetLatencyStats(std::string typeOfLatency, std::string testPhase)
+    std::vector<PerfMetricInfo> GetLatencyStats(std::string typeOfLatency, const std::string& testPhase)
     {
         size_t totalTiles = _items;
         size_t subTenCount = _buckets[0];
@@ -305,19 +305,19 @@ struct Stats {
         }
     }
 
-    PerfMetricInfo GetStressStats(size_t runMs, std::string testPhase)
+    PerfMetricInfo GetStressStats(size_t runMs, const std::string& testPhase)
     {
         PerfMetricInfo stressStats = {testPhase, "Stress run (ms)", runMs};
         return  stressStats;
     }
 
-    PerfMetricInfo GetCPUUSageStats(size_t cpuUsage, std::string testPhase)
+    PerfMetricInfo GetCPUUSageStats(size_t cpuUsage, const std::string testPhase)
     {
         PerfMetricInfo cpuStats = {testPhase, "CPU Usage (us)", cpuUsage};
         return cpuStats;
     }
 
-    std::vector<PerfMetricInfo> GetNetworkStats(size_t recievedKb, size_t sentKb, std::string testPhase)
+    std::vector<PerfMetricInfo> GetNetworkStats(size_t recievedKb, size_t sentKb, const std::string& testPhase)
     {
         std::vector<PerfMetricInfo> networkStatsList;
 
@@ -327,7 +327,7 @@ struct Stats {
         return networkStatsList;
     }
 
-    PerfMetricInfo GetPeakMemoryUsageStats(size_t peakMemory, std::string testPhase)
+    PerfMetricInfo GetPeakMemoryUsageStats(size_t peakMemory, const std::string& testPhase)
     {
         PerfMetricInfo peakMemoryStats = {testPhase, "Peak memory usage (kB)", peakMemory};
         return peakMemoryStats;
@@ -359,7 +359,7 @@ struct Stats {
         }
     }
 
-    void setTypeOfTest(std::string testType)
+    void setTypeOfTest(const std::string& testType)
     {
         _testType = testType;
     }

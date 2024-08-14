@@ -645,7 +645,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
             else
                 mimeType = "text/plain";
 
-            response.setContentType(mimeType);
+            response.setContentType(std::move(mimeType));
 
             auto it = request.find("If-None-Match");
             if (it != request.end())
