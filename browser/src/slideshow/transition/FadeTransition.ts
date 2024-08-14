@@ -36,11 +36,10 @@ class FadeTransition extends SlideShow.Transition2d {
 			this.effectTransition = FadeSubType.SMOOTHLY;
 		} else if (
 			transitionSubType == TransitionSubType.FADEOVERCOLOR &&
-			this.slideInfo.transitionDirection
+			this.slideInfo.transitionFadeColor &&
+			this.slideInfo.transitionFadeColor.toUpperCase() === '#FFFFFF'
 		) {
 			this.effectTransition = FadeSubType.FADEOVERWHITE;
-		} else {
-			this.effectTransition = FadeSubType.FADEOVERBLACK;
 		}
 
 		this.startTransition();
