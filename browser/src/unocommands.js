@@ -524,6 +524,9 @@ window._UNO = function(string, component, isContext) {
 	if (entry === undefined) {
 		return command;
 	}
+	if (component == 'drawing') {
+		component = 'presentation';
+	}
 	var componentEntry = entry[component];
 	if (componentEntry === undefined) {
 		componentEntry = entry['global'];
