@@ -12,11 +12,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-08-09 16:44+0200\n"
-"PO-Revision-Date: 2024-07-21 14:21+0000\n"
+"PO-Revision-Date: 2024-08-13 18:12+0000\n"
 "Last-Translator: Stanislav Horáček <stanislav.horacek@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/collabora-online/"
 "ui/cs/>\n"
-"Language: \n"
+"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1706,21 +1706,23 @@ msgstr "Nezaznamenány žádné problémy s ověřením SSL"
 
 #: src/control/Control.ServerAuditDialog.ts:72
 msgid "PostMessage API is initialized"
-msgstr ""
+msgstr "PostMessage API bylo inicializováno"
 
 #: src/control/Control.ServerAuditDialog.ts:74
 msgid "Integrator is not ready for PostMessage calls"
-msgstr ""
+msgstr "Integrátor není připraven na volání PostMessage"
 
 #: src/control/Control.ServerAuditDialog.ts:82
 msgid ""
 "Your server is configured with insufficient hardware resources, which may "
 "lead to poor performance."
 msgstr ""
+"Server je nakonfigurován s nedostatečnými hardwarovými zdroji, což může "
+"způsobovat pomalý běh."
 
 #: src/control/Control.ServerAuditDialog.ts:88
 msgid "Hardware resources are sufficient for optimal performance"
-msgstr ""
+msgstr "Hardwarové zdroje nejsou dostatečné pro optimální běh"
 
 #: src/control/Control.ServerAuditDialog.ts:193
 msgid "No issues found"
@@ -1927,7 +1929,7 @@ msgstr "Žádný uživatel"
 
 #: src/control/Control.UserList.ts:85
 msgid "User List Summary"
-msgstr ""
+msgstr "Shrnutí seznamu uživatelů"
 
 #: src/control/Control.UserList.ts:490
 msgid "Following"
@@ -2924,9 +2926,8 @@ msgid "Failed to download clipboard, please re-copy"
 msgstr "Nepodařilo se stáhnout schránku, zkuste zkopírovat znovu"
 
 #: src/map/Clipboard.js:1195
-#, fuzzy
 msgid "<p>Please use the paste buttons on your on-screen keyboard.</p>"
-msgstr "<p>Použijte tlačítka kopírovat/vložit na klávesnici na obrazovce.</p>"
+msgstr "<p>Použijte tlačítko vložit na klávesnici na obrazovce.</p>"
 
 #: src/map/Clipboard.js:1197
 msgid ""
