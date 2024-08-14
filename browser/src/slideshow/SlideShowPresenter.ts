@@ -37,6 +37,7 @@ interface SlideInfo {
 	transitionDirection: boolean;
 	transitionType: string | undefined;
 	transitionSubtype: string | undefined;
+	transitionFadeColor: string | undefined;
 	background: {
 		isCustom: boolean;
 		fillColor: string;
