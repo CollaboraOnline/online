@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-08-09 16:44+0200\n"
-"PO-Revision-Date: 2024-08-10 13:23+0000\n"
+"PO-Revision-Date: 2024-08-13 00:50+0000\n"
 "Last-Translator: Hugo B <landru@cock.li>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/collabora-online/"
 "ui/fr/>\n"
@@ -491,12 +491,10 @@ msgid "Paste Special"
 msgstr "Collage spécial"
 
 #: src/control/Control.ContextMenu.js:246
-#, fuzzy
 msgid "Copy Cells"
 msgstr "Copier Cellules"
 
 #: src/control/Control.ContextMenu.js:254
-#, fuzzy
 msgid "Fill Series"
 msgstr "Remplir serie"
 
@@ -1186,7 +1184,6 @@ msgstr "Valeurs plus petits que …"
 
 #: src/control/Control.Menubar.js:838
 #: src/control/jsdialog/Definitions.Menu.ts:297
-#, fuzzy
 msgid "Values equal to..."
 msgstr "Valeurs pareils que …"
 
@@ -1202,7 +1199,6 @@ msgstr ""
 
 #: src/control/Control.Menubar.js:841
 #: src/control/jsdialog/Definitions.Menu.ts:309
-#, fuzzy
 msgid "Containing text..."
 msgstr "Contient le texte..."
 
@@ -1700,12 +1696,10 @@ msgid "The IsAdminUser user property is set by integration"
 msgstr ""
 
 #: src/control/Control.ServerAuditDialog.ts:65
-#, fuzzy
 msgid "Your WOPI server is not secure: SSL verification failed"
 msgstr "Votre serveur WOPI n’est pas sécurisé ; vérification SSL a échoué"
 
 #: src/control/Control.ServerAuditDialog.ts:69
-#, fuzzy
 msgid "No problems with SSL verification detected"
 msgstr "Pas de problèmes détectés avec la vérification SSL"
 
@@ -1732,7 +1726,6 @@ msgstr ""
 "Les resources du hardware sont suffisantes pour une performance optimale"
 
 #: src/control/Control.ServerAuditDialog.ts:193
-#, fuzzy
 msgid "No issues found"
 msgstr "Pas de problèmes rencontrés"
 
@@ -2313,7 +2306,6 @@ msgid "Cell borders"
 msgstr "Bordures de cellule"
 
 #: src/control/jsdialog/Widget.SidebarContainers.ts:72
-#, fuzzy
 msgid "More options for {name}"
 msgstr "Plus d’options pour {name}"
 
@@ -2640,7 +2632,6 @@ msgstr ""
 "part à votre administrateur si le problème persiste."
 
 #: src/errormessages.js:29
-#, fuzzy
 msgid "Authorization error was: '{errormessage}'."
 msgstr "Erreur d’autorisation était : ‘{errormessage}’."
 
@@ -2761,7 +2752,6 @@ msgstr ""
 "pour l'enregistrer. Le document sera désormais en lecture seule."
 
 #: src/errormessages.js:47
-#, fuzzy
 msgid ""
 "Document cannot be saved due to expired session, please reopen the document "
 "to continue."
@@ -2804,13 +2794,12 @@ msgstr ""
 "pouvez toujours le télécharger pour en conserver une copie locale."
 
 #: src/errormessages.js:56
-#, fuzzy
 msgid ""
 "Document cannot be saved due to expired session, please reload the page to "
 "continue."
 msgstr ""
 "Le fichier ne peut pas être sauvegardé du a que votre session a expiré, "
-"rafraîchissez ma page s’il vous plaît"
+"rafraîchissez la page s’il vous plaît"
 
 #: src/errormessages.js:57
 msgid "Document cannot be saved, please check your permissions."
