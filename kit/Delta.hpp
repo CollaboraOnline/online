@@ -495,6 +495,8 @@ class DeltaGenerator {
 
     void rebalanceDeltasT(bool bDropAll = false)
     {
+        assert(!_deltaGuard.try_lock() && "Expected to have _deltaGuard lock taken");
+
         if (_deltaEntries.size() > _maxEntries || bDropAll)
         {
             size_t toRemove = _deltaEntries.size();
@@ -675,7 +677,7 @@ class DeltaGenerator {
     {
         oss << "\tdelta generator with " << _deltaEntries.size() << " entries vs. max " << _maxEntries << "\n";
         size_t totalSize = 0;
-        for (auto &it : _deltaEntries)
+        for (const auto& it : _deltaEntries)
         {
             size_t size = it->sizeBytes();
             oss << "\t\t" << it->_loc._size << "," << it->_loc._part << "," << it->_loc._left << "," << it->_loc._top << " wid: " << it->getWid() << " size: " << size << "\n";
@@ -717,10 +719,8 @@ class DeltaGenerator {
         // FIXME: why duplicate this ? we could overwrite
         // as we make the delta into an existing cache entry,
         // and just do this as/when there is no entry.
-        std::shared_ptr<DeltaData> update(
-            new DeltaData(
-                wid, pixmap, startX, startY, width, height,
-                loc, bufferWidth, bufferHeight));
+        std::shared_ptr<DeltaData> update(std::make_shared<DeltaData>(
+            wid, pixmap, startX, startY, width, height, loc, bufferWidth, bufferHeight));
         std::shared_ptr<DeltaData> cacheEntry;
 
         {
