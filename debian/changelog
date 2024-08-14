@@ -1,3 +1,9 @@
+coolwsd (24.04.6.2-1) unstable; urgency=medium
+
+  * https://github.com/CollaboraOnline/online/releases/tag/cp-24.04.6-2
+
+ -- Aron Budea <aron.budea@collabora.com>  Wed, 14 Aug 2024 04:15:00 +0200
+
 coolwsd (24.04.6.1-1) unstable; urgency=medium
 
   * https://github.com/CollaboraOnline/online/releases/tag/cp-24.04.6-1
