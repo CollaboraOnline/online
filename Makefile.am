@@ -302,7 +302,8 @@ coolbench_LDADD = libsimd.a
 
 coolconvert_SOURCES = tools/Tool.cpp
 
-coolstress_CPPFLAGS = -DTDOC=\"$(abs_top_srcdir)/test/data\" ${include_paths}
+coolstress_TDOC_CPPFLAGS = -DTDOC=\"$(abs_top_srcdir)/test/data\"
+coolstress_CPPFLAGS = ${coolstress_TDOC_CPPFLAGS} ${include_paths}
 coolstress_SOURCES = tools/Stress.cpp \
                      common/DummyTraceEventEmitter.cpp \
                      $(shared_sources)
@@ -659,7 +660,7 @@ endef
 CLANGXX_COMPILE_FLAGS=clang++ $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
 
-JSON_COMPILE_FLAGS=$(subst ",\",$(subst \,\\,$(CLANGXX_COMPILE_FLAGS)))
+JSON_COMPILE_FLAGS=$(subst ",\",$(subst \,\\,$(CLANGXX_COMPILE_FLAGS) $(coolstress_TDOC_CPPFLAGS)))
 
 JSON_COMPILE_SRC = $(patsubst %.cpp,%.cmd,$(wildcard **/*.cpp))
 
@@ -668,7 +669,7 @@ $(eval $(call file_targets,$(JSON_COMPILE_SRC)))
 .cpp.cmd:
 	@echo -n "{\"directory\":\"$(abs_builddir)\",\"command\":\"" > $@
 	@echo -n $(JSON_COMPILE_FLAGS) >> $@
-	@echo -n "\",\"file\":\"$<\"}" >> $@
+	@echo -n " -o $(patsubst %.cpp,%.o,$<) -c $<\",\"file\":\"$<\"}" >> $@
 
 $(abs_srcdir)/compile_commands.json: $(JSON_COMPILE_SRC)
 	@echo -n "[" > $@
