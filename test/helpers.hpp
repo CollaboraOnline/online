@@ -208,18 +208,6 @@ inline void sendTextFrame(const std::shared_ptr<http::WebSocketSession>& ws,
     ws->sendMessage(string);
 }
 
-inline std::shared_ptr<http::Session> createHTTPSession(const Poco::URI& uri, const int timeoutSec=30) {
-    auto protocol = http::Session::Protocol::HttpUnencrypted;
-#if ENABLE_SSL
-    if (uri.getScheme() == "https" || uri.getScheme() == "wss") {
-        protocol = http::Session::Protocol::HttpSsl;
-    }
-#endif
-    auto httpSession = http::Session::create(uri.getHost(), protocol, uri.getPort());
-    httpSession->setTimeout(std::chrono::seconds(timeoutSec));
-    return httpSession;
-}
-
 inline std::unique_ptr<Poco::Net::HTTPClientSession> createSession(const Poco::URI& uri)
 {
 #if ENABLE_SSL

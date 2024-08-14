@@ -83,7 +83,7 @@ UnitBase::TestResult UnitSession::testBadRequest()
     {
         // Try to load a bogus url.
         const std::string documentURL = "/lol/file%3A%2F%2F%2Ffake.doc";
-        std::shared_ptr<http::Session> session = helpers::createHTTPSession( Poco::URI( helpers::getTestServerURI() ) );
+        std::shared_ptr<http::Session> session = http::Session::create(helpers::getTestServerURI());
         http::Request request(documentURL, http::Request::VERB_GET);
         request.set("Connection", "Upgrade");
         request.set("Upgrade", "websocket");
@@ -196,7 +196,8 @@ UnitBase::TestResult UnitSession::testSlideShow()
 
         TerminatingPoll dlSocketPoller(testname+"-dl");
         dlSocketPoller.runOnClientThread();
-        std::shared_ptr<http::Session> dlSession = helpers::createHTTPSession( Poco::URI( helpers::getTestServerURI() ) );
+        std::shared_ptr<http::Session> dlSession =
+            http::Session::create(helpers::getTestServerURI());
         http::Request requestSVG(path, http::Request::VERB_GET);
         TST_LOG("Requesting SVG from " << path);
         const std::shared_ptr<const http::Response> responseSVG = dlSession->syncRequest(requestSVG, dlSocketPoller);
@@ -266,7 +267,8 @@ UnitBase::TestResult UnitSession::testSlideShowMultiDL()
         // Reused http download-session for document and favicon download from server
         TerminatingPoll dlSocketPoller(testname+"-dl");
         dlSocketPoller.runOnClientThread();
-        std::shared_ptr<http::Session> dlSession = helpers::createHTTPSession( Poco::URI( helpers::getTestServerURI() ) );
+        std::shared_ptr<http::Session> dlSession =
+            http::Session::create(helpers::getTestServerURI());
         // dlSession->setKeepAlive(true);
 
         for( dlIter=0; dlIter < dlCount; ++dlIter ) {
