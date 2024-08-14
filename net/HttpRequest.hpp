@@ -360,10 +360,11 @@ public:
     static constexpr const char* CONNECTION = "Connection";
 
     /// Describes the `Connection` header token value
-    STATE_ENUM(ConnectionToken,
-               None,        //< No `Connection` header token set
-               Close,       //< `Connection: close` [RFC2616 14.10](https://www.rfc-editor.org/rfc/rfc2616#section-14.10)
-               KeepAlive    //< `Connection: Keep-Alive` Obsolete [RFC2068 19.7.1](https://www.rfc-editor.org/rfc/rfc2068#section-19.7.1)
+    STATE_ENUM(
+        ConnectionToken,
+        None, //< No `Connection` header token set
+        Close, //< `Connection: close` [RFC2616 14.10](https://www.rfc-editor.org/rfc/rfc2616#section-14.10)
+        KeepAlive //< `Connection: Keep-Alive` Obsolete [RFC2068 19.7.1](https://www.rfc-editor.org/rfc/rfc2068#section-19.7.1)
     );
 
     /// Describes the header state during parsing.
@@ -464,7 +465,7 @@ public:
 
     bool hasConnectionToken() const { return has(CONNECTION); }
     ConnectionToken getConnectionToken() const {
-        const std::string token = get(CONTENT_LENGTH);
+        const std::string token = get(CONNECTION);
         if( Util::iequal("close", token) ) {
             return ConnectionToken::Close;
         } else if( Util::iequal("keep-alive", token) ) {
