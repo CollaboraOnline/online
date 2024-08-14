@@ -4,7 +4,7 @@ set -e
 
 case "$1" in
     configure)
-	setcap cap_fowner,cap_chown,cap_sys_chroot=ep /usr/bin/coolforkit || true
+	setcap cap_fowner,cap_chown,cap_sys_chroot=ep /usr/bin/coolforkit-caps || true
 	setcap cap_sys_admin=ep /usr/bin/coolmount || true
 	;;
 

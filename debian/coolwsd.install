@@ -1,7 +1,7 @@
 etc/
 usr/bin/coolconfig
 usr/bin/coolconvert
-usr/bin/coolforkitns
+usr/bin/coolforkit-ns
 usr/bin/coolstress
 usr/bin/coolwsd
 usr/bin/coolwsd-systemplate-setup

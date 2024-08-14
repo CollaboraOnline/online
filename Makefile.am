@@ -19,8 +19,8 @@ SUBDIRS = . browser test cypress_test
 export ENABLE_DEBUG
 
 bin_PROGRAMS = \
-	coolforkit \
-	coolforkitns \
+	coolforkit-caps \
+	coolforkit-ns \
 	coolmount \
         coolstress \
 	coolconvert coolconfig
@@ -36,7 +36,7 @@ endif
 dist_bin_SCRIPTS = coolwsd-systemplate-setup
 
 man_MANS = man/coolwsd.1 \
-           man/coolforkit.1 \
+           man/coolforkit-ns.1 \
            man/coolconvert.1 \
            man/coolconfig.1 \
            man/coolstress.1 \
@@ -206,17 +206,19 @@ coolforkit_sources = kit/ChildSession.cpp \
                      kit/Kit.cpp \
                      kit/KitWebSocket.cpp
 
-coolforkit_SOURCES = $(coolforkit_sources) \
-                     $(shared_sources) \
-                     kit/forkit-main.cpp
+coolforkit_ldadd = libsimd.a
 
-coolforkit_LDADD = libsimd.a
+coolforkit_caps_SOURCES = $(coolforkit_sources) \
+                          $(shared_sources) \
+                          kit/forkit-main.cpp
 
-coolforkitns_SOURCES = $(coolforkit_sources) \
-                       $(shared_sources) \
-                       kit/forkit-main.cpp
+coolforkit_caps_LDADD = ${coolforkit_ldadd}
 
-coolforkitns_LDADD = libsimd.a
+coolforkit_ns_SOURCES = $(coolforkit_sources) \
+                        $(shared_sources) \
+                        kit/forkit-main.cpp
+
+coolforkit_ns_LDADD = ${coolforkit_ldadd}
 
 if ENABLE_DEBUG
 coolwsd_inproc_SOURCES = $(coolwsd_sources) \
@@ -225,13 +227,13 @@ coolwsd_inproc_SOURCES = $(coolwsd_sources) \
                          wsd/coolwsd-inproc.cpp
 
 coolwsd_inproc_LDADD = ${coolwsd_LDADD} \
-                       ${coolforkit_LDADD}
+                       ${coolforkit_ldadd}
 endif
 
 if ENABLE_LIBFUZZER
-coolforkit_SOURCES += \
+coolforkit_caps_SOURCES += \
 		       common/DummyTraceEventEmitter.cpp
-coolforkitns_SOURCES += \
+coolforkit_ns_SOURCES += \
 		       common/DummyTraceEventEmitter.cpp
 
 common_fuzzer_sources = \
@@ -484,7 +486,7 @@ RUN_GDB = $(if $(GDB_FRONTEND),$(GDB_FRONTEND),gdb --tui --args)
 if ENABLE_LIBFUZZER
 CLEANUP_DEPS=
 else
-CLEANUP_DEPS=coolwsd coolmount coolforkit coolforkitns
+CLEANUP_DEPS=coolwsd coolmount coolforkit-caps coolforkit-ns
 endif
 
 # Build coolwsd and coolmount first, so we can cleanup before updating
