@@ -41,6 +41,7 @@
 #include <LibreOfficeKit/LibreOfficeKitEnums.h>
 
 #include <StringVector.hpp>
+#include "config.h"
 
 #define STRINGIFY(X) #X
 

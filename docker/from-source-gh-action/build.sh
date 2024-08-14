@@ -74,7 +74,7 @@ fi
 
 # Clone online repo
 if test ! -d online ; then
-  git clone --depth=1 "$COLLABORA_ONLINE_REPO" online || exit 1
+  git clone "$COLLABORA_ONLINE_REPO" online || exit 1
 fi
 
 ( cd online && git fetch --all && git checkout -f $COLLABORA_ONLINE_BRANCH && git clean -f -d && git pull -r ) || exit 1

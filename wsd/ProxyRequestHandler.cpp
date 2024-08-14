@@ -9,6 +9,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#include <Poco/MemoryStream.h>
 #include <config.h>
 
 #include <Poco/URI.h>
@@ -17,13 +18,16 @@
 #include "ProxyRequestHandler.hpp"
 #include <net/HttpRequest.hpp>
 #include <net/HttpHelper.hpp>
+#include <string>
 
 std::unordered_map<std::string, std::shared_ptr<http::Response>> ProxyRequestHandler::CacheFileHash;
 std::chrono::system_clock::time_point ProxyRequestHandler::MaxAge;
 
 void ProxyRequestHandler::handleRequest(const std::string& relPath,
                                         const std::shared_ptr<StreamSocket>& socket,
-                                        const std::string& serverUri)
+                                        const std::string& serverUri,
+                                        Poco::MemoryInputStream& message,
+                                        const std::string& verb = http::Request::VERB_GET)
 {
 
     Poco::URI uriProxy(serverUri);
@@ -36,19 +40,28 @@ void ProxyRequestHandler::handleRequest(const std::string& relPath,
         MaxAge = zero;
     }
 
-    const auto cacheEntry = CacheFileHash.find(relPath);
-    if (cacheEntry != CacheFileHash.end())
-    {
-        socket->sendAndShutdown(*cacheEntry->second);
-        return;
-    }
+    // const auto cacheEntry = CacheFileHash.find(relPath);
+    // if (cacheEntry != CacheFileHash.end())
+    // {
+    //     socket->sendAndShutdown(*cacheEntry->second);
+    //     return;
+    // }
 
-    uriProxy.setPath(relPath);
-    auto sessionProxy = http::Session::create(uriProxy.getHost(),
-                                              http::Session::Protocol::HttpSsl,
+    uriProxy.setPathEtc(relPath);
+    LOG_DBG("uriProxy[" << uriProxy.getPathAndQuery() << ']');
+    auto protocol = uriProxy.getScheme() == "https" ? http::Session::Protocol::HttpSsl
+                                                    : http::Session::Protocol::HttpUnencrypted;
+
+    auto sessionProxy = http::Session::create(uriProxy.getHost(), protocol,
                                               uriProxy.getPort());
     sessionProxy->setTimeout(std::chrono::seconds(10));
     http::Request requestProxy(uriProxy.getPathAndQuery());
+    requestProxy.setVerb(verb);
+    if (verb == http::Request::VERB_POST)
+    {
+        LOG_DBG("Setting body of proxy request");
+        requestProxy.setBody(message);
+    }
     http::Session::FinishedCallback proxyCallback =
         [socket, zero](const std::shared_ptr<http::Session>& httpSession)
             {
