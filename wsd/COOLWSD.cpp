@@ -3516,7 +3516,7 @@ bool COOLWSD::createForKit()
     args.push_back("-tt");
     args.push_back("-s");
     args.push_back("256");
-    args.push_back(parentPath + "coolforkit");
+    args.push_back(parentPath + "coolforkit-caps");
 #elif VALGRIND_COOLFORKIT
     NoCapsForKit = true;
     NoSeccomp = true;
@@ -3533,7 +3533,7 @@ bool COOLWSD::createForKit()
     args.push_back("--error-limit=no");
     args.push_back("--num-callers=128");
     std::string nocapsCopy = parentPath + "coolforkit-nocaps";
-    FileUtil::copy(parentPath + "coolforkit", nocapsCopy, true, true);
+    FileUtil::copy(parentPath + "coolforkit-caps", nocapsCopy, true, true);
     args.push_back(nocapsCopy);
 #endif
     args.push_back("--systemplate=" + SysTemplate);
@@ -3582,12 +3582,12 @@ bool COOLWSD::createForKit()
     std::string forKitPath = std::move(parentPath);
     if (EnableMountNamespaces)
     {
-        forKitPath += "coolforkitns";
+        forKitPath += "coolforkit-ns";
         args.push_back("--namespace");
     }
     else
     {
-        forKitPath += "coolforkit";
+        forKitPath += "coolforkit-caps";
     }
 #endif
 

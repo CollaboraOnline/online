@@ -83,11 +83,15 @@ browser/dist
 browser/compilets
 browser/typescript_js
 
+coolforkit
+coolforkitns
+coolforkit-caps
+coolforkit-nocaps
+coolforkit-ns
 connect
 lokitclient
 coolwsd
 loolwsd
-coolforkit
 coolmount
 coolmap
 coolconvert
@@ -95,14 +99,12 @@ coolsocketdump
 coolstress
 coolconfig
 loolconfig
-coolforkit-nocaps
 loadtest
 unittest
 clientnb
 libsimd.a
 coolwsd-inproc
 coolbench
-coolforkitns
 
 # Fuzzer
 *_fuzzer

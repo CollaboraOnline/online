@@ -62,7 +62,7 @@ echo "account    required     pam_unix.so" >>  %{buildroot}/etc/pam.d/coolwsd
 /usr/bin/loolwsd
 /usr/bin/coolwsd-systemplate-setup
 /usr/bin/loolwsd-systemplate-setup
-/usr/bin/coolforkitns
+/usr/bin/coolforkit-ns
 /usr/bin/coolconvert
 /usr/bin/coolconfig
 /usr/bin/loolconfig
@@ -77,7 +77,7 @@ echo "account    required     pam_unix.so" >>  %{buildroot}/etc/pam.d/coolwsd
 /usr/share/doc/coolwsd/reference.md
 /usr/share/doc/coolwsd/THIRDPARTYLICENSES
 /usr/share/man/man1/coolwsd.1.gz
-/usr/share/man/man1/coolforkit.1.gz
+/usr/share/man/man1/coolforkit-ns.1.gz
 /usr/share/man/man1/coolconvert.1.gz
 /usr/share/man/man1/coolconfig.1.gz
 /usr/share/man/man1/coolstress.1.gz
@@ -96,7 +96,7 @@ echo "account    required     pam_unix.so" >>  %{buildroot}/etc/pam.d/coolwsd
 
 %files deprecated
 %defattr(-,root,root,-)
-/usr/bin/coolforkit
+/usr/bin/coolforkit-caps
 /usr/bin/coolmount
 
 %pre
@@ -142,7 +142,7 @@ coolconfig generate-proof-key >/dev/null 2>&1
 if [ $COOLWSD_IS_ACTIVE == "1" ]; then systemctl start coolwsd; fi
 
 %post deprecated
-setcap cap_fowner,cap_chown,cap_sys_chroot=ep /usr/bin/coolforkit
+setcap cap_fowner,cap_chown,cap_sys_chroot=ep /usr/bin/coolforkit-caps
 setcap cap_sys_admin=ep /usr/bin/coolmount
 
 %preun
