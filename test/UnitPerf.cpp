@@ -55,7 +55,7 @@ public:
 void UnitPerf::testPerf(std::string testType, std::string fileType, std::string traceStr)
 {
     stats = std::make_shared<Stats>();
-    stats->setTypeOfTest(testType);
+    stats->setTypeOfTest(std::move(testType));
 
     TerminatingPoll poll("performance test");
 

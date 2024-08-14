@@ -414,7 +414,7 @@ bool parseUri(std::string uri, std::string& scheme, std::string& host, std::stri
     else
     {
         // No port, just hostname.
-        host = uri;
+        host = std::move(uri);
         port.clear();
     }
 

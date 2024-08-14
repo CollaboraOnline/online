@@ -827,7 +827,7 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
             response->add("X-Content-Type-Options", "nosniff");
 
             disposition.setTransfer(Admin::instance(),
-                                    [response](const std::shared_ptr<Socket>& moveSocket)
+                                    [response=std::move(response)](const std::shared_ptr<Socket>& moveSocket)
                                     {
                                         const std::shared_ptr<StreamSocket> streamSocket =
                                             std::static_pointer_cast<StreamSocket>(moveSocket);

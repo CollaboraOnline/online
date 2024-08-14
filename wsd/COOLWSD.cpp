@@ -3210,7 +3210,7 @@ void COOLWSD::handleOption(const std::string& optionName,
         std::string optName;
         std::string optValue;
         COOLProtocol::parseNameValuePair(value, optName, optValue);
-        _overrideSettings[optName] = optValue;
+        _overrideSettings[optName] = std::move(optValue);
     }
     else if (optionName == "config-file")
         ConfigFile = value;

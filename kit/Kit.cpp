@@ -2803,12 +2803,12 @@ bool KitSocketPoll::pushToMainThread(LibreOfficeKitCallback callback, int type,
     if (mainPoll && mainPoll->getThreadOwner() != std::this_thread::get_id())
     {
         LOG_TRC("Unusual push callback to main thread");
-        std::shared_ptr<std::string> pCopy;
+        std::shared_ptr<std::string> copy;
         if (p)
-            pCopy = std::make_shared<std::string>(p, strlen(p));
-        mainPoll->addCallback([=] {
+            copy = std::make_shared<std::string>(p, strlen(p));
+        mainPoll->addCallback([callback, type, data, copy = std::move(copy)] {
             LOG_TRC("Unusual process callback in main thread");
-            callback(type, pCopy ? pCopy->c_str() : nullptr, data);
+            callback(type, copy ? copy->c_str() : nullptr, data);
         });
         return true;
     }

@@ -632,7 +632,7 @@ void TileCache::saveDataToStreamCache(StreamType type, const std::string &fileNa
 
     Blob blob = std::make_shared<BlobData>(size);
     std::memcpy(blob->data(), data, size);
-    _streamCache[type][fileName] = blob;
+    _streamCache[type][fileName] = std::move(blob);
 }
 
 void TileCache::TileBeingRendered::dumpState(std::ostream& os)

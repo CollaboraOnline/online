@@ -149,7 +149,7 @@ void RequestDetails::dehexify()
 
         res += _uriString.substr(end); // Concatinate the remainder.
 
-        _uriString = res; // Replace the original uri with the decoded one.
+        _uriString = std::move(res); // Replace the original uri with the decoded one.
     }
 }
 
