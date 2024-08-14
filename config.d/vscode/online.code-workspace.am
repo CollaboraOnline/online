@@ -1,0 +1,84 @@
+//
+// DO NOT EDIT - this file is generated from config.d/vscode/online.code-workspace.am
+//
+{
+  "folders": [
+    {
+      "name": "COOL",
+      "path": "@COOL_DIR@"
+    }
+  ],
+  "settings": {
+    // "security.workspace.trust.untrustedFiles": "open",
+    // "window.openFilesInNewWindow": "on",
+    // "window.zoomLevel": 0.5,
+    // "editor.fontSize": 11.5,
+    // "editor.lineHeight": 1.22,
+    // "editor.fontWeight": "normal",
+    // "editor.fontFamily": "'DejaVu Sans Mono', 'monospace', monospace",
+    // "editor.guides.indentation": false,
+    // "editor.renderWhitespace": "none",
+    // "editor.cursorStyle": "line",
+    // "editor.semanticTokenColorCustomizations": {
+    // },
+    // "editor.tokenColorCustomizations": {
+    //     "[Visual Studio Light]": {}
+    // },
+    // "workbench.colorTheme": "Visual Studio Light",
+    "workbench.editor.labelFormat": "medium",
+    "java.jdt.ls.java.home": "/usr/lib/jvm/java-17-openjdk-amd64",
+    "java.codeGeneration.useBlocks": true,
+    "java.inlayHints.parameterNames.enabled": "literals",
+    "java.configuration.runtimes": [    
+      { 
+        "name": "JavaSE-17",
+        "path": "/usr/lib/jvm/java-17-openjdk-amd64",
+        "default": true
+      },
+      { 
+        "name": "JavaSE-21",
+        "path": "/opt-linux-x86_64/jdk21",
+        "default": true
+      }
+    ],
+    "[cpp]": {
+      "breadcrumbs.showKeys": true,
+      "breadcrumbs.showArrays": true,
+      "editor.hover.enabled": true,
+      "breadcrumbs.showFunctions": true,
+      "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd"
+    },
+    "clangd.onConfigChanged": "restart",
+    "clangd.checkUpdates": true,
+    "clangd.arguments": [ // "-log=verbose",
+                         "-pretty"
+                         , "--background-index"
+                         , "--compile-commands-dir=${workspaceFolder}"
+                         // , "--project-root=${workspaceFolder}"
+                         // , "--query-driver=/bin/arm-buildroot-linux-gnueabihf-g++" //for cross compile usage
+                         ],
+    "files.associations": {
+        "*.hpp": "cpp",
+        "*.cpp": "cpp",
+        "*.cxx": "cpp"
+    },
+    "ShortcutMenuBar.compareWithSaved": false,
+    "ShortcutMenuBar.openFilesList": false,
+    "ShortcutMenuBar.saveAll": true,
+    "ShortcutMenuBar.toggleTerminal": false,
+    "ShortcutMenuBar.userButton01Command": "clangd.inlayHints.toggle",
+    "ShortcutMenuBar.userButton02Command": "clangd.memoryUsage",
+    "ShortcutMenuBar.userButton03Command": "workbench.action.reloadWindow",
+    "ShortcutMenuBar.userButton04Command": "clangd.restart",
+    // "clang-tidy.buildPath": "${workspaceFolder}",
+  },
+  "extensions": {
+    "recommendations": [
+        "llvm-vs-code-extensions.vscode-clangd",
+        "notskm.clang-tidy",
+        "cschlosser.doxdocgen",
+        "jerrygoyal.shortcut-menu-bar"
+    ]
+  }
+}
+

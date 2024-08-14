@@ -1,0 +1,27 @@
+#
+# DO NOT EDIT - this file is generated from config.d/clangd.am
+#
+
+Index:
+  Background: Build
+  StandardLibrary: No
+
+CompileFlags:
+  CompilationDatabase: @COOL_DIR@
+  Add: [-Wall, -Wextra, -Wshadow, -Wundef, -Werror, -DENABLE_SSL=0, -DENABLE_DEBUG=1, -DDEBUG, -DMOBILEAPP=0, -DAPP_NAME="App", -DTDOC="test/data", -std=c++20, -isystem, @COOL_DIR@, -isystem, @COOL_DIR@/common, -isystem, @COOL_DIR@/net, -isystem, @COOL_DIR@/wsd, -isystem, @COOL_DIR@/kit, -isystem, @COOL_DIR@/test, -isystem, /usr/include/libpng16, -isystem, @LOKIT_DIR@]
+
+Diagnostics:
+  UnusedIncludes: Strict
+  ClangTidy:
+    FastCheckFilter: Loose
+
+InlayHints:
+  Enabled: No
+  BlockEnd: Yes
+  Designators: No
+  ParameterNames: Yes
+  DeducedTypes: Yes
+  TypeNameLimit: 24
+
+Hover:
+  ShowAKA: Yes
