@@ -92,10 +92,10 @@ UnitBase::TestResult UnitSession::testBadRequest()
         // request.header().setChunkedTransferEncoding(false);
         request.header().setConnectionToken(http::Header::ConnectionToken::KeepAlive);
         const std::shared_ptr<const http::Response> response = session->syncRequest(request, socketPoller);
+        // TST_LOG("Response: " << response->header().toString());
         LOK_ASSERT_EQUAL(http::StatusCode::BadRequest, response->statusCode());
         LOK_ASSERT_EQUAL(false, session->isConnected());
-        // LOK_ASSERT(http::Header::ConnectionToken::Close == response->header().getConnectionToken());
-
+        LOK_ASSERT(http::Header::ConnectionToken::Close == response->header().getConnectionToken());
     }
     catch (const Poco::Exception& exc)
     {
