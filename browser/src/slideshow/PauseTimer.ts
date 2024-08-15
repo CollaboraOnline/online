@@ -16,7 +16,26 @@
 
 declare var SlideShow: any;
 
-class PauseTimer extends Transition2d {
+abstract class PauseTimer {
+	public abstract startTimer(): void;
+}
+
+class PauseTimer2d implements PauseTimer {
+	private onComplete: () => void;
+	constructor(
+		transitionParameters: TransitionParameters,
+		pauseDuration: number,
+		onComplete: () => void,
+	) {
+		this.onComplete = onComplete;
+	}
+
+	public startTimer(): void {
+		this.onComplete();
+	}
+}
+
+class PauseTimerGl extends Transition2d implements PauseTimer {
 	private pauseTimeRemaining: number;
 	private pauseDuration: number;
 	private textTexture: WebGLTexture;
@@ -36,7 +55,6 @@ class PauseTimer extends Transition2d {
 			Math.ceil(this.pauseTimeRemaining),
 		);
 		this.prepareTransition();
-		this.startTimer();
 	}
 
 	public startTimer(): void {
@@ -169,3 +187,5 @@ class PauseTimer extends Transition2d {
 }
 
 SlideShow.PauseTimer = PauseTimer;
+SlideShow.PauseTimer2d = PauseTimer2d;
+SlideShow.PauseTimerGl = PauseTimerGl;
