@@ -30,6 +30,7 @@
 #include <UserMessages.hpp>
 #include <Util.hpp>
 #include <helpers.hpp>
+#include <vector>
 
 namespace
 {
@@ -60,6 +61,8 @@ class UnitSession : public UnitWSD
 {
     TestResult testBadRequest();
     TestResult testHandshake();
+    TestResult testFiles();
+    TestResult testFileServer();
     TestResult testSlideShow();
     TestResult testSlideShowMultiDL();
 
@@ -151,6 +154,105 @@ UnitBase::TestResult UnitSession::testHandshake()
     assertMessage("connect");
     assertMessage("ready");
 
+    return TestResult::Ok;
+}
+
+UnitBase::TestResult UnitSession::testFiles()
+{
+    setTestname(__func__);
+
+    const std::vector<std::string> documentURLs = {
+        // "/cool/getMetrics", // < Requires Admin
+        "/", // <
+        "/favicon.ico",
+        "/hosting/discovery",
+        "/hosting/capabilities",
+        "/robots.txt",
+        // "/cool/media",
+        // "/cool/clipboard",
+        // "/cool/file:\/\/.../ws",
+    };
+    // Reused http session, keep-alive
+    std::shared_ptr<http::Session> session = http::Session::create(helpers::getTestServerURI());
+
+    // Keep alive socket, avoid forced socket disconnect via dtor
+    TerminatingPoll socketPoller(testname);
+    socketPoller.runOnClientThread();
+
+    int docIdx = 0;
+    try
+    {
+        for (const std::string& documentURL : documentURLs)
+        {
+            if (docIdx > 0)
+            {
+                LOK_ASSERT_EQUAL(true, session->isConnected());
+            }
+            TST_LOG("Test: " << testname << "[" << docIdx << "]: `" << documentURL << "`");
+            http::Request request(documentURL, http::Request::VERB_GET);
+            const std::shared_ptr<const http::Response> response =
+                session->syncRequest(request, socketPoller);
+            TST_LOG("Response: " << response->header().toString());
+            TST_LOG("Response size: " << testname << "[" << docIdx << "]: `" << documentURL << "`: " << response->header().getContentLength());
+            LOK_ASSERT_EQUAL(http::StatusCode::OK, response->statusCode());
+            LOK_ASSERT_EQUAL(true, session->isConnected());
+            LOK_ASSERT(http::Header::ConnectionToken::None ==
+                       response->header().getConnectionToken());
+            LOK_ASSERT(0 < response->header().getContentLength());
+            ++docIdx;
+        }
+    }
+    catch (const Poco::Exception& exc)
+    {
+        LOK_ASSERT_FAIL(exc.displayText());
+    }
+    return TestResult::Ok;
+}
+
+UnitBase::TestResult UnitSession::testFileServer()
+{
+    setTestname(__func__);
+
+    const std::vector<std::string> documentURLs = {
+        // "/browser/welcome/welcome.html", // < '/browser/welcome/` not in FileServer's FileHash(!)
+        "/browser/dist/cool.html", // < special preprocessFile(..)
+        "/browser/dist/cool.css", // < fall-through general case
+        // "/browser/dist/admin/admin.html", // < Requires Admin
+    };
+    // Reused http session, keep-alive
+    std::shared_ptr<http::Session> session = http::Session::create(helpers::getTestServerURI());
+
+    // Keep alive socket, avoid forced socket disconnect via dtor
+    TerminatingPoll socketPoller(testname);
+    socketPoller.runOnClientThread();
+
+    int docIdx = 0;
+    try
+    {
+        for (const std::string& documentURL : documentURLs)
+        {
+            if (docIdx > 0)
+            {
+                LOK_ASSERT_EQUAL(true, session->isConnected());
+            }
+            TST_LOG("Test: " << testname << "[" << docIdx << "]: `" << documentURL << "`");
+            http::Request request(documentURL, http::Request::VERB_GET);
+            const std::shared_ptr<const http::Response> response =
+                session->syncRequest(request, socketPoller);
+            TST_LOG("Response: " << response->header().toString());
+            TST_LOG("Response size: " << testname << "[" << docIdx << "]: " << documentURL << ": " << response->header().getContentLength());
+            LOK_ASSERT_EQUAL(http::StatusCode::OK, response->statusCode());
+            LOK_ASSERT_EQUAL(true, session->isConnected());
+            LOK_ASSERT(http::Header::ConnectionToken::None ==
+                       response->header().getConnectionToken());
+            LOK_ASSERT(0 < response->header().getContentLength());
+            ++docIdx;
+        }
+    }
+    catch (const Poco::Exception& exc)
+    {
+        LOK_ASSERT_FAIL(exc.displayText());
+    }
     return TestResult::Ok;
 }
 
@@ -384,6 +486,16 @@ void UnitSession::invokeWSDTest()
     result = testHandshake();
     if (result != TestResult::Ok)
         exitTest(result);
+
+    result = testFiles();
+    if (result != TestResult::Ok)
+        exitTest(result);
+
+    result = testFileServer();
+    if (result != TestResult::Ok)
+    {
+        exitTest(result);
+    }
 
     result = testSlideShow();
     if (result != TestResult::Ok)
