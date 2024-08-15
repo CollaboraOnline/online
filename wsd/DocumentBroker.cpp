@@ -1713,7 +1713,7 @@ void DocumentBroker::handleSaveResponse(const std::shared_ptr<ClientSession>& se
     // wasModified is only set when LOKit saves the document.
     // If the document was modified before saving, it would
     // be true. Otherwise, it's false. Meaningful when forced
-    // saving (i.e. dontSaveIfUnmodified=false), otherwise
+    // saving (i.e. dontSaveIfUnmodified=0), otherwise
     // result is blank in that case and we can't know if
     // the document saved was modified or not.
     if (json->has("wasModified"))

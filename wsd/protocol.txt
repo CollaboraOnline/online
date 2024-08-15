@@ -249,9 +249,9 @@ uno <command> [arguments]
 
 save dontTerminateEdit=<value> dontSaveIfUnmodified=<value>
 
-    A wrapper over UNO save command. A non-zero <value> is considered true.
-    'dontTerminateEdit' means not terminating the edit session in
-    spreadsheets when saving the document. In most cases, you should set it to
+    A wrapper over UNO save command. A non-zero integer <value> is considered true (non-integer
+    values such as 'true' are not allowed). 'dontTerminateEdit' means not terminating the edit
+    session in spreadsheets when saving the document. In most cases, you should set it to
     non-zero. 'dontSaveIfUnmodified' when set to non-zero skips saving the document when it is
     unmodified.
 
