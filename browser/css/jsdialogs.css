@@ -632,6 +632,9 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 }
 
 /* context menu */
+.context-menu-root:focus {
+	outline: none;
+}
 .context-menu-list {
 	background: var(--color-background-lighter);
 	border: 1px solid var(--color-border-dark);
