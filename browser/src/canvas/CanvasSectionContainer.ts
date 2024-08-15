@@ -1261,9 +1261,11 @@ class CanvasSectionContainer {
 		this.stopLongPress();
 		if (!this.multiTouch) {
 			this.mousePosition = this.convertPositionToCanvasLocale(e);
-			this.draggingSomething = true;
 
 			this.dragDistance = [this.mousePosition[0] - this.positionOnMouseDown[0], this.mousePosition[1] - this.positionOnMouseDown[1]];
+
+			if (this.dragDistance[0] ** 2 + this.dragDistance[1] ** 2 > 0.1)
+				this.draggingSomething = true;
 
 			var section: CanvasSectionObject = this.getSectionWithName(this.sectionOnMouseDown);
 			if (section) {
