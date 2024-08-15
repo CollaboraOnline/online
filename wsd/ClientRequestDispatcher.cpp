@@ -763,8 +763,6 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
 
                     launchAsyncCheckFileInfo(_id, accessDetails, RequestVettingStations);
                 }
-
-                socket->shutdown();
                 served = true;
             }
 
@@ -983,12 +981,10 @@ void ClientRequestDispatcher::handleRootRequest(const RequestDetails& requestDet
     httpResponse.set("Content-Length", std::to_string(responseString.size()));
     httpResponse.set("Content-Type", mimeType);
     httpResponse.set("Last-Modified", Util::getHttpTimeNow());
-    httpResponse.set("Connection", "close");
     httpResponse.writeData(socket->getOutBuffer());
     if (requestDetails.isGet())
         socket->send(responseString);
     socket->flush();
-    socket->shutdown();
     LOG_INF("Sent / response successfully.");
 }
 
@@ -1036,7 +1032,7 @@ void ClientRequestDispatcher::handleWopiDiscoveryRequest(
     httpResponse.set("Last-Modified", Util::getHttpTimeNow());
     httpResponse.set("X-Content-Type-Options", "nosniff");
     LOG_TRC("Sending back discovery.xml: " << xml);
-    socket->sendAndShutdown(httpResponse);
+    socket->send(httpResponse);
     LOG_INF("Sent discovery.xml successfully.");
 }
 
@@ -1171,15 +1167,12 @@ void ClientRequestDispatcher::handleRobotsTxtRequest(const Poco::Net::HTTPReques
     httpResponse.set("Last-Modified", Util::getHttpTimeNow());
     httpResponse.set("Content-Length", std::to_string(responseString.size()));
     httpResponse.set("Content-Type", "text/plain");
-    httpResponse.set("Connection", "close");
     httpResponse.writeData(socket->getOutBuffer());
 
     if (request.getMethod() == Poco::Net::HTTPRequest::HTTP_GET)
     {
         socket->send(responseString);
     }
-
-    socket->shutdown();
     LOG_INF_S("Sent robots.txt response successfully");
 }
 
@@ -2060,7 +2053,7 @@ static void sendCapabilities(bool convertToAvailable,
     httpResponse.set("Last-Modified", Util::getHttpTimeNow());
     httpResponse.setBody(getCapabilitiesJson(convertToAvailable), "application/json");
     httpResponse.set("X-Content-Type-Options", "nosniff");
-    socket->sendAndShutdown(httpResponse);
+    socket->send(httpResponse);
     LOG_INF("Sent capabilities.json successfully.");
 }
 

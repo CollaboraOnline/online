@@ -702,9 +702,10 @@ void WopiStorage::uploadLocalFileToStorageAsync(const Authorization& auth, LockC
                 httpHeader.set("X-LOOL-WOPI-IsExitSave", attribs.isExitSave() ? "true" : "false");
             }
 
-            if (attribs.isExitSave())
-                httpHeader.set("Connection",
-                               "close"); // Don't maintain the socket if we are exiting.
+            if (attribs.isExitSave()) {
+                // Don't maintain the socket if we are exiting.
+                httpHeader.setConnectionToken(http::Header::ConnectionToken::Close);
+            }
             if (!attribs.getExtendedData().empty())
             {
                 httpHeader.set("X-COOL-WOPI-ExtendedData", attribs.getExtendedData());

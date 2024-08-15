@@ -4448,7 +4448,7 @@ bool RenderSearchResultBroker::handleInput(const std::shared_ptr<Message>& messa
                 FileServerRequestHandler::hstsHeaders(httpResponse);
                 // really not ideal that the response works only with std::string
                 httpResponse.setBody(std::string(_aResposeData.data(), _aResposeData.size()), "image/png");
-                httpResponse.set("Connection", "close");
+                httpResponse.header().setConnectionToken(http::Header::ConnectionToken::Close);
                 _socket->sendAndShutdown(httpResponse);
 
                 removeSession(_clientSession);

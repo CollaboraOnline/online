@@ -572,8 +572,9 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
 
         // Is this a file we read at startup - if not; it's not for serving.
         if (FileHash.find(relPath) == FileHash.end() &&
-            FileHash.find(relPath + ".br") == FileHash.end())
-            throw Poco::FileNotFoundException("Invalid URI request: [" + requestUri.toString() + "].");
+            FileHash.find(relPath + ".br") == FileHash.end()) {
+            throw Poco::FileNotFoundException("Invalid URI request (hash): [" + requestUri.toString() + "].");
+        }
 
         if (endPoint == "welcome.html")
         {
@@ -714,7 +715,6 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
                 content = getUncompressedFile(relPath);
 
             response.add("Content-Length", std::to_string(content->size()));
-            response.add("Connection", "close");
 
             if (!noCache)
             {
@@ -729,7 +729,6 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
 
             socket->send(response);
             socket->send(*content);
-            // shutdown by caller
         }
     }
     catch (const Poco::Net::NotAuthenticatedException& exc)
@@ -1424,6 +1423,7 @@ FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::prepro
         {
             if (!HttpHelper::verifyWOPISrc(request.getURI(), param.second, socket))
             {
+                httpResponse.header().setConnectionToken(http::Header::ConnectionToken::Close);
                 return ResourceAccessDetails();
             }
 
@@ -1551,7 +1551,6 @@ FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::prepro
         }
     }
 
-    httpResponse.add("Connection", "close");
     httpResponse.setBody(preprocess, mimeType);
 
     socket->send(httpResponse);
