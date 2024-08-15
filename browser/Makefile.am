@@ -927,6 +927,7 @@ pot:
 		src/layer/tile/CanvasTileLayer.js \
 		src/canvas/sections/CommentListSection.ts \
 		src/canvas/sections/CommentSection.ts \
+		src/canvas/sections/URLPopUpSection.ts \
 		src/main.js \
 		src/map/Clipboard.js \
 		src/map/Map.js \
