@@ -1340,12 +1340,13 @@ L.Control.Menubar = L.Control.extend({
 		allowedReadonlyMenus: ['file', 'downloadas', 'view', 'insert', 'slide', 'help'],
 
 		allowedViewModeActions: [
-			'savecomments', 'shareas', 'print', // file menu
+			() => app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).hasAnyComments() ? 'savecomments' : undefined,
+			'shareas', 'print', // file menu
 			'downloadas-odt', 'downloadas-doc', 'downloadas-docx', 'downloadas-rtf', // file menu
 			'downloadas-odp', 'downloadas-ppt', 'downloadas-pptx', 'downloadas-odg', 'exportpdf' , // file menu
 			!window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-pdf', !window.ThisIsAMobileApp ? 'exportepub' : 'downloadas-epub', // file menu
 			'downloadas-ods', 'downloadas-xls', 'downloadas-xlsx', 'downloadas-csv', 'closedocument', // file menu
-			'fullscreen', 'zoomin', 'zoomout', 'zoomreset', 'showstatusbar', 'showresolved', 'toggledarktheme', // view menu
+			!(L.Browser.ie || L.Browser.edge) ? 'fullscreen' : undefined, 'zoomin', 'zoomout', 'zoomreset', 'showstatusbar', 'showresolved', 'toggledarktheme', // view menu
 			'about', 'keyboard-shortcuts', 'latestupdates', 'feedback', 'serveraudit', 'online-help', 'report-an-issue', // help menu
 			'insertcomment'
 		]
@@ -1744,10 +1745,6 @@ L.Control.Menubar = L.Control.extend({
 					if (id === 'fullscreen') { // Full screen works weirdly on IE 11 and on Edge
 						if (L.Browser.ie || L.Browser.edge) {
 							$(aItem).addClass('disabled');
-							var index = self.options.allowedViewModeActions.indexOf('fullscreen');
-							if (index > 0) {
-								self.options.allowedViewModeActions.splice(index, 1);
-							}
 						} else if (self._map.uiManager.isFullscreen()) {
 							$(aItem).addClass(constChecked);
 						} else {
@@ -1849,7 +1846,11 @@ L.Control.Menubar = L.Control.extend({
 				} else if (type === 'action') { // disable all except allowedViewModeActions
 					var found = false;
 					for (var i in self.options.allowedViewModeActions) {
-						if (self.options.allowedViewModeActions[i] === id) {
+						let action = self.options.allowedViewModeActions[i];
+						if (typeof action === "string" && action === id) {
+							found = true;
+							break;
+						} else if (typeof action === "function" && action() === id) {
 							found = true;
 							break;
 						}
