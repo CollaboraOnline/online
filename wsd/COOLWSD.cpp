@@ -3580,14 +3580,17 @@ bool COOLWSD::createForKit()
     std::string forKitPath = "/usr/bin/valgrind";
 #else
     std::string forKitPath = std::move(parentPath);
-    if (EnableMountNamespaces)
+    if (EnableMountNamespaces || NoCapsForKit)
     {
         forKitPath += "coolforkit-ns";
-        args.push_back("--namespace");
+        if (EnableMountNamespaces)
+            args.push_back("--namespace");
     }
     else
     {
         forKitPath += "coolforkit-caps";
+        if (!FileUtil::Stat(forKitPath).exists())
+            LOG_FTL("coolforkit-caps does not exist, install coolwsd-deprecated package");
     }
 #endif
 
