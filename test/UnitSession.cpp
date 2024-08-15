@@ -90,12 +90,11 @@ UnitBase::TestResult UnitSession::testBadRequest()
         const std::string documentURL = "/lol/file%3A%2F%2F%2Ffake.doc";
         std::shared_ptr<http::Session> session = http::Session::create(helpers::getTestServerURI());
         http::Request request(documentURL, http::Request::VERB_GET);
-        request.set("Connection", "Upgrade");
+        request.header().setConnectionToken(http::Header::ConnectionToken::Upgrade);
         request.set("Upgrade", "websocket");
         request.set("Sec-WebSocket-Version", "13");
         request.set("Sec-WebSocket-Key", "");
         // request.header().setChunkedTransferEncoding(false);
-        request.header().setConnectionToken(http::Header::ConnectionToken::KeepAlive);
         const std::shared_ptr<const http::Response> response =
             session->syncRequest(request, socketPoller);
         // TST_LOG("Response: " << response->header().toString());

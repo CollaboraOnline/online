@@ -364,7 +364,8 @@ public:
         ConnectionToken,
         None, //< No `Connection` header token set
         Close, //< `Connection: close` [RFC2616 14.10](https://www.rfc-editor.org/rfc/rfc2616#section-14.10)
-        KeepAlive //< `Connection: Keep-Alive` Obsolete [RFC2068 19.7.1](https://www.rfc-editor.org/rfc/rfc2068#section-19.7.1)
+        KeepAlive, //< `Connection: Keep-Alive` Obsolete [RFC2068 19.7.1](https://www.rfc-editor.org/rfc/rfc2068#section-19.7.1)
+        Upgrade //< `Connection: Upgrade` HTTP/1.1 only [RFC2817](https://www.rfc-editor.org/rfc/rfc2817)
     );
 
     /// Describes the header state during parsing.
@@ -470,18 +471,21 @@ public:
             return ConnectionToken::Close;
         } else if( Util::iequal("keep-alive", token) ) {
             return ConnectionToken::KeepAlive;
+        } else if( Util::iequal("upgrade", token) ) {
+            return ConnectionToken::Upgrade;
         } else {
             return ConnectionToken::None;
         }
     }
     void setConnectionToken(ConnectionToken token) {
-        if( ConnectionToken::Close == token ) {
-            set(CONNECTION, "close");
-        } else if( ConnectionToken::KeepAlive == token ) {
-            set(CONNECTION, "Keep-Alive");
-        } else {
-            remove(CONNECTION);
+        std::string value;
+        switch( token ) {
+            case ConnectionToken::Close: value = "close"; break;
+            case ConnectionToken::KeepAlive: value = "Keep-Alive"; break;
+            case ConnectionToken::Upgrade: value = "Upgrade"; break;
+            default: remove(CONNECTION); return;
         }
+        set(CONNECTION, value);
     }
 
     /// Adds a new "Cookie" header entry with the given content.
