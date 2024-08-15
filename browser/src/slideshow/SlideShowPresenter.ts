@@ -38,6 +38,8 @@ interface SlideInfo {
 	transitionType: string | undefined;
 	transitionSubtype: string | undefined;
 	transitionFadeColor: string | undefined;
+	isEndless: boolean;
+	loopAndRepeatDuration: number | undefined;
 	background: {
 		isCustom: boolean;
 		fillColor: string;
@@ -144,7 +146,24 @@ class SlideShowPresenter {
 		}
 
 		if (this._currentSlide + 1 >= this._getSlidesCount()) {
-			this._stopFullScreen();
+			const currSlideInfo = this.getSlideInfo(this._currentSlide);
+			if (!currSlideInfo.isEndless) {
+				this._stopFullScreen();
+				return;
+			}
+
+			const transitionParameters = new TransitionParameters();
+			transitionParameters.context = this._slideRenderer._context;
+
+			const pauseTimer = new SlideShow.PauseTimer(
+				transitionParameters,
+				currSlideInfo.loopAndRepeatDuration,
+				() => {
+					this._doTransition(this._slideRenderer._slideTexture, 0);
+				},
+			);
+			console.log('slideshow :', { pauseTimer });
+
 			return;
 		}
 
