@@ -152,7 +152,7 @@ public:
         req.set("Date", Util::getHttpTimeNow());
         req.set("User-Agent", http::getAgentString());
 
-        req.set("Connection", "Upgrade");
+        req.header().setConnectionToken(http::Header::ConnectionToken::Upgrade);
         req.set("Upgrade", "websocket");
         req.set("Sec-WebSocket-Version", "13");
         req.set("Sec-WebSocket-Key", getWebSocketKey());
@@ -984,7 +984,7 @@ protected:
 
         http::Response httpResponse(http::StatusCode::SwitchingProtocols, socket->getFD());
         httpResponse.set("Upgrade", "websocket");
-        httpResponse.set("Connection", "Upgrade");
+        httpResponse.header().setConnectionToken(http::Header::ConnectionToken::Upgrade);
         httpResponse.set("Sec-WebSocket-Accept", computeAccept(wsKey));
         LOGA_TRC(WebSocket, "Sending WS Upgrade response: " << httpResponse.header().toString());
         socket->send(httpResponse);
@@ -1010,7 +1010,7 @@ protected:
             {
                 if (response.statusLine().statusCode() == http::StatusCode::SwitchingProtocols &&
                     Util::iequal(response.get("Upgrade"), "websocket") &&
-                    Util::iequal(response.get("Connection", ""), "Upgrade") &&
+                    response.header().getConnectionToken() == http::Header::ConnectionToken::Upgrade &&
                     response.get("Sec-WebSocket-Accept", "") == computeAccept(_key))
                 {
                     LOGA_TRC(WebSocket, "Accepted incoming websocket response");
