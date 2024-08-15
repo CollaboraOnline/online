@@ -418,7 +418,7 @@ public class LOActivity extends AppCompatActivity {
         Log.i(TAG, "onNewIntent");
 
         if (documentLoaded) {
-            postMobileMessageNative("save dontTerminateEdit=true dontSaveIfUnmodified=true");
+            postMobileMessageNative("save dontTerminateEdit=1 dontSaveIfUnmodified=1");
         }
 
         final Intent finalIntent = intent;
@@ -610,7 +610,7 @@ public class LOActivity extends AppCompatActivity {
     protected void onPause() {
         // A Save similar to an autosave
         if (documentLoaded)
-            postMobileMessageNative("save dontTerminateEdit=true dontSaveIfUnmodified=true");
+            postMobileMessageNative("save dontTerminateEdit=1 dontSaveIfUnmodified=1");
 
         super.onPause();
         Log.d(TAG, "onPause() - hinting to save, we might need to return to the doc");
