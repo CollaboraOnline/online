@@ -443,6 +443,7 @@ EXTRA_DIST = discovery.xml \
              coolwsd.spec \
              coolwsd.xml.in \
              coolwsd.service \
+             debian/apparmor-profile \
              debian/compat \
              debian/copyright \
              debian/coolwsd.preinst \
