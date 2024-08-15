@@ -257,12 +257,18 @@ class SlideShowPresenter {
 
 		let pauseTimer: PauseTimer;
 
+		// reset current slide to first slide
+		this._currentSlide = 0;
+
 		if (this._slideRenderer._context instanceof RenderContextGl) {
 			pauseTimer = new SlideShow.PauseTimerGl(
 				transitionParameters,
 				loopAndRepeatDuration,
 				() => {
-					this._doTransition(this._slideRenderer._slideTexture, 0);
+					this._doTransition(
+						this._slideRenderer._slideTexture,
+						this._currentSlide,
+					);
 				},
 			);
 		} else {
@@ -270,7 +276,11 @@ class SlideShowPresenter {
 				transitionParameters,
 				loopAndRepeatDuration,
 				() => {
-					this._doTransition(this._slideRenderer._slideTexture, 0);
+					this._doTransition(
+						this._slideRenderer._slideTexture,
+						this._currentSlide,
+					);
+					// TODO: May be add alert for user: Repeat slideshow not supported on your device.
 				},
 			);
 		}
