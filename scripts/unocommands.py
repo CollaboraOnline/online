@@ -328,6 +328,9 @@ window._UNO = function(string, component, isContext) {
 \tif (entry === undefined) {
 \t\treturn command;
 \t}
+\tif (component == 'drawing') {
+\t\tcomponent = 'presentation';
+\t}
 \tvar componentEntry = entry[component];
 \tif (componentEntry === undefined) {
 \t\tcomponentEntry = entry['global'];
