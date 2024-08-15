@@ -152,18 +152,7 @@ class SlideShowPresenter {
 				return;
 			}
 
-			const transitionParameters = new TransitionParameters();
-			transitionParameters.context = this._slideRenderer._context;
-
-			const pauseTimer = new SlideShow.PauseTimer(
-				transitionParameters,
-				currSlideInfo.loopAndRepeatDuration,
-				() => {
-					this._doTransition(this._slideRenderer._slideTexture, 0);
-				},
-			);
-			console.log('slideshow :', { pauseTimer });
-
+			this.startTimer(currSlideInfo.loopAndRepeatDuration);
 			return;
 		}
 
@@ -260,6 +249,33 @@ class SlideShowPresenter {
 		}
 
 		return canvas;
+	}
+
+	private startTimer(loopAndRepeatDuration: number) {
+		const transitionParameters = new TransitionParameters();
+		transitionParameters.context = this._slideRenderer._context;
+
+		let pauseTimer: PauseTimer;
+
+		if (this._slideRenderer._context instanceof RenderContextGl) {
+			pauseTimer = new SlideShow.PauseTimerGl(
+				transitionParameters,
+				loopAndRepeatDuration,
+				() => {
+					this._doTransition(this._slideRenderer._slideTexture, 0);
+				},
+			);
+		} else {
+			pauseTimer = new SlideShow.PauseTimer2d(
+				transitionParameters,
+				loopAndRepeatDuration,
+				() => {
+					this._doTransition(this._slideRenderer._slideTexture, 0);
+				},
+			);
+		}
+
+		pauseTimer.startTimer();
 	}
 
 	private startLoader(): void {
