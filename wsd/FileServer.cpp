@@ -572,8 +572,10 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
 
         // Is this a file we read at startup - if not; it's not for serving.
         if (FileHash.find(relPath) == FileHash.end() &&
-            FileHash.find(relPath + ".br") == FileHash.end()) {
-            throw Poco::FileNotFoundException("Invalid URI request (hash): [" + requestUri.toString() + "].");
+            FileHash.find(relPath + ".br") == FileHash.end())
+        {
+            throw Poco::FileNotFoundException("Invalid URI request (hash): [" +
+                                              requestUri.toString() + "].");
         }
 
         if (endPoint == "welcome.html")
