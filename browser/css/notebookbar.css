@@ -278,8 +278,11 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	filter: grayscale(100%) brightness(100%);
 }
 
-.unotoolbutton.notebookbar {
+.unotoolbutton:not(.disabled) * {
 	cursor: pointer;
+}
+
+.unotoolbutton.notebookbar {
 	margin-inline-end: 5px !important;
 	text-align: center;
 }
