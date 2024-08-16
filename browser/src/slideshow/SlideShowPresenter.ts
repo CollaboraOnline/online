@@ -557,18 +557,16 @@ class SlideShowPresenter {
 	}
 
 	/// called when user triggers the presentation using UI
-	_onStart() {
+	_onStart(that: any) {
 		this._onPrepareScreen(false); // opens full screen, has to be on user interaction
-
-		this._currentSlide = 0; // TODO: setup from parameter
+		this._currentSlide = that?.startSlideNumber ?? 0;
 		app.socket.sendMessage('getpresentationinfo');
 	}
 
 	/// called when user triggers the in-window presentation using UI
 	_onStartInWindow() {
 		this._onPrepareScreen(true); // opens full screen, has to be on user interaction
-
-		this._currentSlide = 0; // TODO: setup from parameter
+		this._currentSlide = 0;
 		app.socket.sendMessage('getpresentationinfo');
 	}
 
