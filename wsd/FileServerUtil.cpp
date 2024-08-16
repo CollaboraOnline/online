@@ -11,6 +11,8 @@
 
 #include <config.h>
 
+#include <wasm/base64.hpp>
+
 #include "FileServer.hpp"
 #include "StringVector.hpp"
 
@@ -393,7 +395,7 @@ std::string FileServerRequestHandler::cssVarsToStyle(const std::string& cssVars)
         return previousStyle;
 
     std::ostringstream styleOSS;
-    styleOSS << "<style>:root {";
+    styleOSS << ":root {";
     StringVector tokens(StringVector::tokenize(cssVars, ';'));
     for (const auto& token : tokens)
     {
@@ -417,10 +419,10 @@ std::string FileServerRequestHandler::cssVarsToStyle(const std::string& cssVars)
 
         styleOSS << keyValue[0] << ':' << keyValue[1] << ';';
     }
-    styleOSS << "}</style>";
+    styleOSS << "}";
 
     previousVars = cssVars;
-    previousStyle = styleOSS.str();
+    previousStyle = macaron::Base64::Encode(styleOSS.str());
 
     return previousStyle;
 }

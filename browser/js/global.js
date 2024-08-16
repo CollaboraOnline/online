@@ -210,6 +210,12 @@ class InitializerBase {
 		window.welcomeUrl = document.getElementById("init-welcome-url") ? document.getElementById("init-welcome-url").value: "";
 		window.feedbackUrl = document.getElementById("init-feedback-url") ? document.getElementById("init-feedback-url").value: "";
 		window.buyProductUrl = document.getElementById("init-buy-product-url") ? document.getElementById("init-buy-product-url").value: "";
+		let initCSSVars = document.getElementById("init-css-vars") ? document.getElementById("init-css-vars").value: "";
+
+		if (initCSSVars) {
+			let rootRule = this.getRule(':root');
+			if (rootRule) rootRule.insertRule(atob(initCSSVars));
+		}
 
 		const element = document.getElementById("initial-variables");
 
@@ -257,6 +263,19 @@ class InitializerBase {
 		}, false);
 
 		this.initiateCoolParams();
+	}
+
+	getRule(rule) {
+		for (let i = 0; i < document.styleSheets.length; i++) {
+			for (let j = 0; j < document.styleSheets[i].cssRules.length; j++) {
+				const currentRule = document.styleSheets[i].cssRules[j];
+				if (currentRule && currentRule.selectorText && currentRule.selectorText === rule) {
+					return currentRule;
+				}
+			}
+		}
+
+		return null;
 	}
 
 	initiateCoolParams() {

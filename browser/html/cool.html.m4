@@ -43,6 +43,7 @@ m4_ifelse(MOBILEAPP, [true],
   <input type="hidden" id="init-feedback-url" value="%FEEDBACK_URL%" />
   <input type="hidden" id="init-buy-product-url" value="%BUYPRODUCT_URL%" />
   <input type="hidden" id="init-app-type" value="browser" />
+  <input type="hidden" id="init-css-vars" value="<!--%CSS_VARIABLES%-->" />
 ]
 )
 
@@ -273,5 +274,5 @@ m4_ifelse(MOBILEAPP,[true],
 )m4_dnl
 
 m4_ifelse(MOBILEAPP, [true], [<script src="m4_ifelse(IOSAPP, [true], [Branding/])branding.js"></script>],
-        [<!--%BRANDING_JS%--> <!-- logo onclick handler --><!--%CSS_VARIABLES%-->])
+        [<!--%BRANDING_JS%--> <!-- logo onclick handler -->])
 </body></html>
