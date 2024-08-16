@@ -1223,6 +1223,14 @@ function assertImageSize(expectedWidth, expectedHeight) {
 	cy.log('<< assertImageSize - end');
 }
 
+function listenProtocol(protocol) {
+	cy.getFrameWindow()
+		.its('L')
+		.then(function(L) {
+			L.Util.listenProtocol(protocol);
+		});
+}
+
 module.exports.setupDocument = setupDocument;
 module.exports.loadDocument = loadDocument;
 module.exports.setupAndLoadDocument = setupAndLoadDocument;
@@ -1272,3 +1280,4 @@ module.exports.getFileName = getFileName;
 module.exports.getSubFolder = getSubFolder;
 module.exports.addressInputSelector = "#addressInput input";
 module.exports.assertImageSize = assertImageSize;
+module.exports.listenProtocol = listenProtocol;

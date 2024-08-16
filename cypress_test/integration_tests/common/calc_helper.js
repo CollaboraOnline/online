@@ -38,6 +38,8 @@ function clickOnFirstCell(firstClick = true, dblClick = false, isA1 = true) {
 	cy.log('Param - firstClick: ' + firstClick);
 	cy.log('Param - dblClick: ' + dblClick);
 
+	helper.listenProtocol('celladdress:');
+
 	// Use the tile's edge to find the first cell's position
 	cy.cGet('#map').should('exist');
 	cy.cGet('#map').should('be.visible');
@@ -59,10 +61,11 @@ function clickOnFirstCell(firstClick = true, dblClick = false, isA1 = true) {
 	}
 
 	if (isA1) {
-		cy.waitUntil(() => {
-			return cy.cGet(helper.addressInputSelector)
-				.should('have.prop', 'value', 'A1');
-		});
+		cy.cGet(helper.addressInputSelector).then(function(input) {
+			if (input.val() !== 'A1') {
+				cy.cGet('#listener-protocol').should('exist');
+				cy.cGet(helper.addressInputSelector).should('have.prop', 'value', 'A1');
+			}});
 	}
 
 	cy.log('<< clickOnFirstCell - end');
