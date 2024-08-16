@@ -16,10 +16,12 @@
 #include "TraceEvent.hpp"
 #include "Util.hpp"
 
+#include <chrono>
 #include <cstring>
 #include <ctype.h>
 #include <iomanip>
 #include <memory>
+#include <ratio>
 #include <sstream>
 #include <stdio.h>
 #include <string>
@@ -34,6 +36,7 @@
 #include <Poco/MemoryStream.h>
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPResponse.h>
+#include <Poco/Net/NetException.h>
 #include <Poco/Net/WebSocket.h> // computeAccept
 #include <Poco/URI.h>
 #if ENABLE_SSL
@@ -1303,13 +1306,18 @@ bool StreamSocket::parseHeader(const char *clientName,
 {
     assert(map._headerSize == 0 && map._messageSize == 0);
 
+    constexpr std::chrono::duration<float, std::milli> delayMax =
+        std::chrono::duration_cast<std::chrono::milliseconds>(SocketPoll::DefaultPollTimeoutMicroS);
+
+    std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
+    std::chrono::duration<float, std::milli> delayMs = now - _lastSeenHTTPHeader;
+
     // Find the end of the header, if any.
     static const std::string marker("\r\n\r\n");
-    auto itBody = std::search(_inBuffer.begin(), _inBuffer.end(),
-                              marker.begin(), marker.end());
+    auto itBody = std::search(_inBuffer.begin(), _inBuffer.end(), marker.begin(), marker.end());
     if (itBody == _inBuffer.end())
     {
-        LOG_TRC(clientName << " doesn't have enough data for the header yet.");
+        LOG_TRC("parseHeader: " << clientName << " doesn't have enough data for the header yet. delay " << delayMs.count() << "ms");
         return false;
     }
 
@@ -1322,7 +1330,7 @@ bool StreamSocket::parseHeader(const char *clientName,
     {
         request.read(message);
 
-        LOG_INF(clientName << " HTTP Request: " << request.getMethod() << ' ' << request.getURI()
+        LOG_INF("parseHeader: " << clientName << " HTTP Request: " << request.getMethod() << ' ' << request.getURI()
                            << ' ' << request.getVersion() << ' '
                            << [&](auto& log) { Util::joinPair(log, request, " / "); });
 
@@ -1332,8 +1340,8 @@ bool StreamSocket::parseHeader(const char *clientName,
 
         if (contentLength != Poco::Net::HTTPMessage::UNKNOWN_CONTENT_LENGTH && available < contentLength)
         {
-            LOG_DBG("Not enough content yet: ContentLength: " << contentLength
-                                                              << ", available: " << available);
+            LOG_DBG("parseHeader: Not enough content yet: ContentLength: " << contentLength
+                                                              << ", available: " << available << ", delay " << delayMs.count() << "ms");
             return false;
         }
         map._messageSize += contentLength;
@@ -1342,7 +1350,7 @@ bool StreamSocket::parseHeader(const char *clientName,
         const bool getExpectContinue = Util::iequal(expect, "100-continue");
         if (getExpectContinue && !_sentHTTPContinue)
         {
-            LOG_TRC("Got Expect: 100-continue, sending Continue");
+            LOG_TRC("parseHeader: Got Expect: 100-continue, sending Continue");
             // FIXME: should validate authentication headers early too.
             send("HTTP/1.1 100 Continue\r\n\r\n",
                  sizeof("HTTP/1.1 100 Continue\r\n\r\n") - 1);
@@ -1374,7 +1382,7 @@ bool StreamSocket::parseHeader(const char *clientName,
                         break;
                 }
 
-                LOG_CHUNK("Chunk of length " << chunkLen);
+                LOG_CHUNK("parseHeader: Chunk of length " << chunkLen);
 
                 for (; itBody != _inBuffer.end() && *itBody != '\n'; ++itBody)
                     ; // skip to end of line
@@ -1389,14 +1397,15 @@ bool StreamSocket::parseHeader(const char *clientName,
                 if (chunkLen == 0) // we're complete.
                 {
                     map._messageSize = chunkOffset;
+                    _lastSeenHTTPHeader = now;
                     return true;
                 }
 
                 if (chunkLen > chunkAvailable + 2)
                 {
-                    LOG_DBG("Not enough content yet in chunk " << chunk <<
+                    LOG_DBG("parseHeader: Not enough content yet in chunk " << chunk <<
                             " starting at offset " << (chunkStart - _inBuffer.begin()) <<
-                            " chunk len: " << chunkLen << ", available: " << chunkAvailable);
+                            " chunk len: " << chunkLen << ", available: " << chunkAvailable << ", delay " << delayMs.count() << "ms");
                     return false;
                 }
                 itBody += chunkLen;
@@ -1405,39 +1414,83 @@ bool StreamSocket::parseHeader(const char *clientName,
 
                 if (*itBody != '\r' || *(itBody + 1) != '\n')
                 {
-                    LOG_ERR("Missing \\r\\n at end of chunk " << chunk << " of length " << chunkLen);
+                    LOG_ERR("parseHeader: Missing \\r\\n at end of chunk " << chunk << " of length " << chunkLen << ", delay " << delayMs.count() << "ms");
                     LOG_CHUNK("Chunk " << chunk << " is: \n" << Util::dumpHex("", "", chunkStart, itBody + 1, false));
+                    shutdown();
                     return false; // TODO: throw something sensible in this case
                 }
                 else
                 {
-                    LOG_CHUNK("Chunk " << chunk << " is: \n" << Util::dumpHex("", "", chunkStart, itBody + 1, false));
+                    LOG_CHUNK("parseHeader: Chunk " << chunk << " is: \n" << Util::dumpHex("", "", chunkStart, itBody + 1, false));
                 }
 
                 itBody+=2;
                 chunk++;
             }
-            LOG_TRC("Not enough chunks yet, so far " << chunk << " chunks of total length " << (itBody - _inBuffer.begin()));
+            LOG_TRC("parseHeader: Not enough chunks yet, so far " << chunk << " chunks of total length " << (itBody - _inBuffer.begin()) << ", delay " << delayMs.count() << "ms");
             return false;
         }
     }
+    catch (const Poco::Net::NotAuthenticatedException& exc)
+    {
+        LOG_DBG("parseHeader: Exception caught with "
+                << _inBuffer.size() << " bytes, shutdown: " << exc.displayText() << ", delay "
+                << delayMs.count() << "ms");
+        shutdown();
+        return false;
+    }
+    catch (const Poco::Net::UnsupportedRedirectException& exc)
+    {
+        LOG_DBG("parseHeader: Exception caught with "
+                << _inBuffer.size() << " bytes, shutdown: " << exc.displayText() << ", delay "
+                << delayMs.count() << "ms");
+        shutdown();
+        return false;
+    }
+    catch (const Poco::Net::HTTPException& exc)
+    {
+        LOG_DBG("parseHeader: Exception caught with "
+                << _inBuffer.size() << " bytes, shutdown: " << exc.displayText() << ", delay "
+                << delayMs.count() << "ms");
+        shutdown();
+        return false;
+    }
     catch (const Poco::Exception& exc)
     {
-        LOG_DBG("parseHeader exception caught with " << _inBuffer.size()
-                                                     << " bytes: " << exc.displayText());
-        // Probably don't have enough data just yet.
-        // TODO: timeout if we never get enough.
+        if (delayMs > delayMax)
+        {
+            LOG_DBG("parseHeader: Exception caught with "
+                    << _inBuffer.size() << " bytes, shutdown: " << exc.displayText() << ", delay "
+                    << delayMs.count() << "ms");
+            shutdown();
+        }
+        else
+        {
+            LOG_DBG("parseHeader: Exception caught with "
+                    << _inBuffer.size() << " bytes, continue: " << exc.displayText() << ", delay "
+                    << delayMs.count() << "ms");
+        }
         return false;
     }
     catch (const std::exception& exc)
     {
-        LOG_DBG("parseHeader std::exception caught with " << _inBuffer.size()
-                                                          << " bytes: " << exc.what());
-        // Probably don't have enough data just yet.
-        // TODO: timeout if we never get enough.
+        if (delayMs > delayMax)
+        {
+            LOG_DBG("parseHeader: Exception caught with "
+                    << _inBuffer.size() << " bytes, shutdown: " << exc.what() << ", delay "
+                    << delayMs.count() << "ms");
+            shutdown();
+        }
+        else
+        {
+            LOG_DBG("parseHeader: Exception caught with "
+                    << _inBuffer.size() << " bytes, continue: " << exc.what() << ", delay "
+                    << delayMs.count() << "ms");
+        }
         return false;
     }
 
+    _lastSeenHTTPHeader = now;
     return true;
 }
 
