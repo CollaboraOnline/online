@@ -1184,6 +1184,14 @@ function getSubFolder(filePath) {
 	return subFolder;
 }
 
+function listenProtocol(protocol) {
+	cy.getFrameWindow()
+		.its('L')
+		.then(function(L) {
+			L.Util.listenProtocol(protocol);
+		});
+}
+
 module.exports.setupDocument = setupDocument;
 module.exports.loadDocument = loadDocument;
 module.exports.setupAndLoadDocument = setupAndLoadDocument;
@@ -1232,3 +1240,4 @@ module.exports.copy = copy;
 module.exports.getFileName = getFileName;
 module.exports.getSubFolder = getSubFolder;
 module.exports.addressInputSelector = "#addressInput input";
+module.exports.listenProtocol = listenProtocol;
