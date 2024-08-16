@@ -368,6 +368,19 @@ class Dispatcher {
 			else app.map.fire('fullscreen');
 		};
 
+		this.actionsMap['presentation-currentslide'] = this.actionsMap[
+			'presentation-currentslide'
+		] = () => {
+			if (app.map._debug.debugOn)
+				app.map.fire('newfullscreen', {
+					startSlideNumber: app.map.getCurrentPartNumber(),
+				});
+			else
+				app.map.fire('fullscreen', {
+					startSlideNumber: app.map.getCurrentPartNumber(),
+				});
+		};
+
 		this.actionsMap['presentinwindow'] = this.actionsMap['present-in-window'] =
 			() => {
 				if (app.map._debug.debugOn) app.map.fire('newpresentinwindow');
