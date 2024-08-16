@@ -1975,9 +1975,9 @@ L.Control.Menubar = L.Control.extend({
 		} else if (id === 'collapsenotebookbar') {
 			this._map.uiManager.collapseNotebookbar();
 		} else if (id === 'fullscreen-presentation' && this._map.getDocType() === 'presentation') {
-			this._map.fire('fullscreen');
+			app.dispatcher.dispatch('fullscreen-presentation');
 		} else if (id === 'presentation-currentslide' && this._map.getDocType() === 'presentation') {
-			this._map.fire('fullscreen', {startSlideNumber: this._map.getCurrentPartNumber()});
+			app.dispatcher.dispatch('presentation-currentslide');
 		} else if (id === 'present-in-window' && this._map.getDocType() === 'presentation') {
 			app.dispatcher.dispatch('present-in-window');
 		} else if (id === 'insertpage') {
