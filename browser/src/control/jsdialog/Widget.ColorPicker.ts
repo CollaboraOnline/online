@@ -103,7 +103,7 @@ function createColor(
 		builder.options.cssClass + ' ui-color-picker-entry',
 		parentContainer,
 	);
-	color.style = 'background-color: #' + colorItem;
+	color.style.backgroundColor = '#' + colorItem;
 	color.setAttribute('name', colorItem);
 	color.setAttribute('index', index);
 	color.tabIndex = 0;
@@ -111,41 +111,258 @@ function createColor(
 
 	color.innerHTML = isCurrent ? '&#149;' : '&#160;';
 
-	color.addEventListener('click', (event: MouseEvent) => {
-		const target = event.target as Element;
-		const colorCode = target.getAttribute('name');
-		const themeData = target.getAttribute('theme');
+	color.addEventListener('click', (event: MouseEvent) =>
+		handleColorSelection(
+			event.target as HTMLElement,
+			builder,
+			widgetData,
+			palette,
+		),
+	);
 
-		if (colorCode != null) {
-			if (colorCode) {
-				builder._sendColorCommand(builder, widgetData, colorCode, themeData);
-				builder.callback(
-					'colorpicker',
-					'hidedropdown',
-					widgetData,
-					themeData ? themeData : colorCode,
+	// Handle keyboard navigation and selection
+	color.addEventListener('keydown', (event: KeyboardEvent) => {
+		switch (event.key) {
+			case 'Enter':
+			case ' ':
+				// Space or Enter key selects the color
+				handleColorSelection(
+					event.target as HTMLElement,
 					builder,
-				);
-			} else {
-				builder._sendColorCommand(builder, widgetData, 'transparent');
-				builder.callback(
-					'colorpicker',
-					'hidedropdown',
 					widgetData,
-					'transparent',
-					builder,
+					palette,
 				);
-			}
+				event.preventDefault();
+				break;
+			case 'ArrowRight':
+				moveFocus(color, 'next', 'horizontal');
+				event.preventDefault();
+				break;
+			case 'ArrowLeft':
+				moveFocus(color, 'previous', 'horizontal');
+				event.preventDefault();
+				break;
+			case 'ArrowDown':
+				moveFocus(
+					color,
+					'next',
+					'vertical',
+					parentContainer.nextElementSibling,
+				);
+				event.preventDefault();
+				break;
+			case 'ArrowUp':
+				moveFocus(
+					color,
+					'previous',
+					'vertical',
+					parentContainer.previousElementSibling,
+				);
+				event.preventDefault();
+				break;
+			default:
+				break;
 		}
-
-		const recentRow = palette[palette.length - 1];
-		if (recentRow.indexOf(colorItem) !== -1)
-			recentRow.splice(recentRow.indexOf(colorItem), 1);
-		recentRow.unshift(colorItem);
-		window.prefs.set('recentColor', JSON.stringify(recentRow));
 	});
 
 	return color;
+}
+
+function handleColorSelection(
+	target: HTMLElement,
+	builder: any,
+	widgetData: ColorPaletteWidgetData,
+	palette: ColorPalette,
+) {
+	const colorCode = target.getAttribute('name');
+	const themeData = target.getAttribute('theme');
+
+	if (colorCode != null) {
+		builder._sendColorCommand(builder, widgetData, colorCode, themeData);
+		builder.callback(
+			'colorpicker',
+			'hidedropdown',
+			widgetData,
+			themeData ? themeData : colorCode,
+			builder,
+		);
+	} else {
+		builder._sendColorCommand(builder, widgetData, 'transparent');
+		builder.callback(
+			'colorpicker',
+			'hidedropdown',
+			widgetData,
+			'transparent',
+			builder,
+		);
+	}
+	// Update the recent colors list
+	const recentRow = palette[palette.length - 1];
+	if (recentRow.indexOf(colorCode) !== -1)
+		recentRow.splice(recentRow.indexOf(colorCode), 1);
+	recentRow.unshift(colorCode);
+	window.prefs.set('recentColor', JSON.stringify(recentRow));
+}
+
+function moveFocus(
+	currentElement: HTMLElement,
+	direction: 'next' | 'previous',
+	axis: 'horizontal' | 'vertical',
+	nextElement?: Element,
+) {
+	const focusableElements = Array.from(
+		currentElement.parentElement?.querySelectorAll('.ui-color-picker-entry'),
+	) as HTMLElement[];
+
+	const [currentRow, currentColumn] = getRowColumn(currentElement);
+
+	let targetRow = currentRow;
+	let targetColumn = currentColumn;
+
+	if (axis === 'horizontal') {
+		if (direction === 'next') {
+			targetColumn++;
+			// If it's the last element in the row, cycle back to the first in the same row
+			if (
+				!focusableElements.find((el) => {
+					const [row, column] = getRowColumn(el);
+					return row === currentRow && column === targetColumn;
+				})
+			) {
+				targetColumn = 0; // Start from the first column
+			}
+		} else {
+			targetColumn--;
+			// If it's the first element in the row and trying to move previous, cycle to the last in the same row
+			if (targetColumn < 0) {
+				targetColumn =
+					focusableElements.filter((el) => {
+						const [row] = getRowColumn(el);
+						return row === currentRow;
+					}).length - 1; // Move to the last column in the same row
+			}
+		}
+	} else if (axis === 'vertical') {
+		if (direction === 'next') {
+			targetRow++;
+		} else {
+			targetRow--;
+		}
+	}
+
+	// Find the target element based on the calculated row and column
+	const targetElement = focusableElements.find((el) => {
+		const [row, column] = getRowColumn(el);
+		return row === targetRow && column === targetColumn;
+	});
+
+	if (!targetElement && axis === 'vertical') {
+		if (direction === 'next') {
+			// Start from the next sibling of the parent container
+			const nextFocusableElement = findFocusableElement(
+				nextElement as HTMLElement,
+				'next',
+				isFocusable,
+			);
+			if (nextFocusableElement) {
+				nextFocusableElement.focus();
+			}
+		} else if (direction === 'previous') {
+			// Start from the previous sibling of the parent container
+			const previousFocusableElement = findFocusableElement(
+				nextElement as HTMLElement,
+				'previous',
+				isFocusable,
+			);
+			if (previousFocusableElement) {
+				previousFocusableElement.focus();
+			}
+		}
+	}
+
+	if (targetElement) {
+		targetElement.focus();
+	}
+}
+
+function findFocusableElement(
+	element: HTMLElement,
+	direction: 'next' | 'previous',
+	isFocusable: (el: HTMLElement) => boolean,
+): HTMLElement | null {
+	if (!element) {
+		const mainColorContainer = document.querySelector('.ui-color-picker');
+		const focusableElements = Array.from(
+			mainColorContainer.querySelectorAll('*'),
+		);
+		const firstFocusableElement =
+			direction === 'next'
+				? (focusableElements.find(isFocusable) as HTMLElement)
+				: (focusableElements.reverse().find(isFocusable) as HTMLElement);
+		if (firstFocusableElement) {
+			return firstFocusableElement;
+		}
+	}
+
+	// Check the current element if it is focusable
+	if (isFocusable(element)) return element;
+
+	// Check if sibling is focusable or contains focusable elements
+	const focusableInSibling = findFocusableWithin(
+		element as HTMLElement,
+		direction,
+	);
+	if (focusableInSibling) return focusableInSibling;
+
+	// Depending on the direction, find the next or previous sibling
+	const sibling: Element =
+		direction === 'next'
+			? element.nextElementSibling
+			: element.previousElementSibling;
+
+	if (sibling) {
+		// Recursively check the next or previous sibling of the current sibling
+		return findFocusableElement(sibling as HTMLElement, direction, isFocusable);
+	}
+
+	return null;
+}
+
+// Helper function to find the first focusable element within an element
+function findFocusableWithin(
+	element: HTMLElement,
+	direction: string,
+): HTMLElement | null {
+	const focusableElements = Array.from(element.querySelectorAll('*'));
+	return direction === 'next'
+		? (focusableElements.find(isFocusable) as HTMLElement | null)
+		: (focusableElements.reverse().find(isFocusable) as HTMLElement | null);
+}
+
+// Utility function to check if an element is focusable
+function isFocusable(element: HTMLElement) {
+	if (!element) return false;
+
+	// Check if element is focusable (e.g., input, button, link, etc.)
+	const focusableElements = [
+		'a[href]',
+		'button',
+		'textarea',
+		'input[type="text"]',
+		'input[type="radio"]',
+		'input[type="checkbox"]',
+		'select',
+		'[tabindex]:not([tabindex="-1"])',
+	];
+
+	return focusableElements.some((selector) => element.matches(selector));
+}
+
+function getRowColumn(element: HTMLElement): [number, number] {
+	const index = element.getAttribute('index');
+	if (!index) return [-1, -1]; // we will never have this kind of index this is why we are pssing nagative values here
+	const [row, column] = index.split(':').map(Number);
+	return [row, column];
 }
 
 function createAutoColorButton(
@@ -174,6 +391,21 @@ function createAutoColorButton(
 
 		builder.map.sendUnoCommand(data.command, parameters);
 		builder.callback('colorpicker', 'hidedropdown', data, '-1', builder);
+	});
+	autoButton.addEventListener('keydown', (event: KeyboardEvent) => {
+		if (event.key === 'ArrowDown') {
+			moveFocus(autoButton, 'next', 'vertical', autoButton.nextElementSibling);
+			event.preventDefault();
+		}
+		if (event.key === 'ArrowUp') {
+			moveFocus(
+				autoButton,
+				'previous',
+				'vertical',
+				autoButton.previousElementSibling,
+			);
+			event.preventDefault();
+		}
 	});
 }
 
@@ -207,6 +439,28 @@ function createPaletteSwitch(
 		builder.options.cssClass + ' ui-listbox-arrow',
 		paletteListbox,
 	);
+	// Add keydown event listener to handle ArrowDown key
+	listbox.addEventListener('keydown', (event: KeyboardEvent) => {
+		if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
+			event.preventDefault(); // Prevent default behavior
+		} else if (event.key === 'ArrowUp') {
+			moveFocus(
+				paletteListbox,
+				'previous',
+				'vertical',
+				paletteListbox.previousElementSibling,
+			);
+			event.preventDefault();
+		} else if (event.key === 'ArrowDown') {
+			moveFocus(
+				paletteListbox,
+				'next',
+				'vertical',
+				paletteListbox.nextElementSibling,
+			);
+			event.preventDefault();
+		}
+	});
 
 	return listbox;
 }
@@ -255,6 +509,7 @@ function updatePalette(
 	const customInput = L.DomUtil.create('input', '', customContainer);
 	customInput.placeholder = '#FFF000';
 	customInput.maxlength = 7;
+	customInput.type = 'text';
 
 	customInput.addEventListener('change', () => {
 		let color = customInput.value;
@@ -280,6 +535,23 @@ function updatePalette(
 			recentContainer,
 		);
 	});
+	//update here
+	customInput.addEventListener('keydown', (event: KeyboardEvent) => {
+		if (event.key === 'ArrowRight') {
+			const nextElement = customInput.nextElementSibling as HTMLElement;
+			if (nextElement) {
+				nextElement.focus();
+				event.preventDefault();
+			}
+		} else if (event.key === 'ArrowUp') {
+			// Focus on the last element of the ui-color-picker-palette div
+			moveFocus(customContainer, 'previous', 'vertical', paletteContainer);
+			event.preventDefault();
+		} else if (event.key === 'ArrowDown') {
+			moveFocus(customContainer, 'next', 'vertical', recentContainer);
+			event.preventDefault();
+		}
+	});
 
 	const customColors = palette[palette.length - 2];
 	for (let i = 0; i < customColors.length && i < 4; i++) {
@@ -288,7 +560,7 @@ function updatePalette(
 			builder,
 			palette,
 			customColors[i],
-			'8:0',
+			'8:' + i,
 			undefined,
 			data,
 			currentColor == customColors[i],
@@ -303,7 +575,7 @@ function updatePalette(
 			builder,
 			palette,
 			recentColors[i],
-			'8:0',
+			'8:' + i,
 			undefined,
 			data,
 			currentColor == recentColors[i],
