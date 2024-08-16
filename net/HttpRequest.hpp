@@ -465,25 +465,43 @@ public:
     bool getChunkedTransferEncoding() const { return _chunked; }
 
     bool hasConnectionToken() const { return has(CONNECTION); }
-    ConnectionToken getConnectionToken() const {
+    ConnectionToken getConnectionToken() const
+    {
         const std::string token = get(CONNECTION);
-        if( Util::iequal("close", token) ) {
+        if (Util::iequal("close", token))
+        {
             return ConnectionToken::Close;
-        } else if( Util::iequal("keep-alive", token) ) {
+        }
+        else if (Util::iequal("keep-alive", token))
+        {
             return ConnectionToken::KeepAlive;
-        } else if( Util::iequal("upgrade", token) ) {
+        }
+        else if (Util::iequal("upgrade", token))
+        {
             return ConnectionToken::Upgrade;
-        } else {
+        }
+        else
+        {
             return ConnectionToken::None;
         }
     }
-    void setConnectionToken(ConnectionToken token) {
+    void setConnectionToken(ConnectionToken token)
+    {
         std::string value;
-        switch( token ) {
-            case ConnectionToken::Close: value = "close"; break;
-            case ConnectionToken::KeepAlive: value = "Keep-Alive"; break;
-            case ConnectionToken::Upgrade: value = "Upgrade"; break;
-            default: remove(CONNECTION); return;
+        switch (token)
+        {
+            case ConnectionToken::Close:
+                value = "close";
+                break;
+            case ConnectionToken::KeepAlive:
+                value = "Keep-Alive";
+                break;
+            case ConnectionToken::Upgrade:
+                value = "Upgrade";
+                break;
+            default:
+                remove(CONNECTION);
+                return;
         }
         set(CONNECTION, value);
     }
@@ -1476,7 +1494,7 @@ private:
                 }
             }
 
-            if( _response->header().getConnectionToken() == Header::ConnectionToken::Close )
+            if (_response->header().getConnectionToken() == Header::ConnectionToken::Close)
             {
                 LOG_TRC("Our peer has sent the 'Connection: close' token. Disconnecting.");
                 onDisconnect();
