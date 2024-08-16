@@ -1529,6 +1529,13 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'vertical': 'true'
 			},
 			{
+				'id': 'layout-interaction',
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:AnimationEffects', 'presentation'),
+				'command': '.uno:AnimationEffects',
+				'accessibility': { focusBack: true, combination: 'IA', de: null }
+			},
+			{
 				'id': 'layout-navigator',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:Navigator'),
