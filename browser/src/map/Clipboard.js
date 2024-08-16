@@ -86,17 +86,49 @@ L.Clipboard = L.Class.extend({
 	},
 
 	// Attempt to cleanup unwanted elements
-	stripStyle: function(domNode) {
-		var styles = domNode.querySelectorAll('style');
-		for (var i = 0; i < styles.length; i++) {
-			styles[i].parentNode.removeChild(styles[i]);
+	stripStyle: function(htmlString) {
+		let startIndex = 1;
+
+		while (startIndex !== -1) {
+			startIndex = htmlString.indexOf('<style ');
+			if (startIndex !== -1) {
+				let endIndex = htmlString.indexOf('</style>');
+				let subString = htmlString.substr(startIndex, endIndex - startIndex + '</style>'.length);
+				htmlString = htmlString.replace(subString, '');
+			}
 		}
+
+		// Remove also inline styles.
+
+		// For double quotes.
+		startIndex = 1;
+		while (startIndex !== -1) {
+			startIndex = htmlString.indexOf('style="');
+			if (startIndex !== -1) {
+				let endIndex = htmlString.indexOf('"', startIndex + 'style="'.length + 1);
+				let subString = htmlString.substr(startIndex, endIndex - startIndex + 1);
+				htmlString = htmlString.replace(subString, "");
+			}
+		}
+
+		// For single quotes.
+		startIndex = 1;
+		while (startIndex !== -1) {
+			startIndex = htmlString.indexOf("style='");
+			if (startIndex !== -1) {
+				let endIndex = htmlString.indexOf("'", startIndex + "style='".length + 1);
+				let subString = htmlString.substr(startIndex, endIndex - startIndex + 1);
+				htmlString = htmlString.replace(subString, "");
+			}
+		}
+
+		return htmlString;
 	},
 
 	// We can do a much better job when we fetch text/plain too.
 	stripHTML: function(html) {
+		html = this.stripStyle(html);
 		var tmp = new DOMParser().parseFromString(html, 'text/html').body;
-		this.stripStyle(tmp);
 		return tmp.textContent.trim() || tmp.innerText.trim() || '';
 	},
 
