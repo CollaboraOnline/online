@@ -627,13 +627,6 @@ L.Control.UIManager = L.Control.extend({
 				}
 			];
 
-			// add the css rule for the image
-			var style = $('html > head > style');
-			if (style.length == 0)
-				$('html > head').append('<style/>');
-			$('html > head > style').append('.w2ui-icon.' + encodeURIComponent(button.id) +
-				'{background: url("' + encodeURI(button.imgurl) + '") no-repeat center !important; }');
-
 			// TODO: other
 			var topToolbar = window.app.map.topToolbar;
 			if (topToolbar && !topToolbar.hasItem(button.id)) {
@@ -643,6 +636,14 @@ L.Control.UIManager = L.Control.extend({
 				newButton[0].w2icon = newButton[0].img;
 				newButton[0].text = newButton[0].hint;
 				topToolbar.insertItem(insertBefore, newButton);
+
+				// add the css rule for the image
+				const item = document.querySelector(".w2ui-icon." + encodeURIComponent(button.id));
+				if (item) {
+					item.style.background = 'url("' + encodeURI(button.imgurl) + '")';
+					item.style.backgroundRepeat = 'no-repeat';
+					item.style.backgroundPosition = 'center';
+				}
 			}
 		}
 
