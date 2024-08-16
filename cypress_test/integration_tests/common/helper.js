@@ -1180,6 +1180,14 @@ function getSubFolder(filePath) {
 	return subFolder;
 }
 
+function listenProtocol(protocol) {
+	cy.getFrameWindow()
+		.its('L')
+		.then(function(L) {
+			L.Util.listenProtocol(protocol);
+		});
+}
+
 module.exports.setupDocument = setupDocument;
 module.exports.loadDocument = loadDocument;
 module.exports.setupAndLoadDocument = setupAndLoadDocument;
@@ -1227,3 +1235,4 @@ module.exports.setDummyClipboardForCopy = setDummyClipboardForCopy;
 module.exports.copy = copy;
 module.exports.getFileName = getFileName;
 module.exports.getSubFolder = getSubFolder;
+module.exports.listenProtocol = listenProtocol;
