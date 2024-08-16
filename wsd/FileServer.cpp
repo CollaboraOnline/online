@@ -1406,13 +1406,9 @@ FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::prepro
     csp.appendDirectiveUrl("connect-src", cnxDetails.getWebServerUrl());
     csp.appendDirectiveUrl("connect-src", indirectionURI.getAuthority());
     csp.appendDirective("script-src", "'self'");
-    csp.appendDirective("script-src", "'unsafe-inline'");
     csp.appendDirective("style-src", "'self'");
-    csp.appendDirective("style-src", "'unsafe-inline'");
     csp.appendDirective("font-src", "'self'");
-    csp.appendDirective("font-src", "data:"); // Equivalent to unsafe-inline!
     csp.appendDirective("object-src", "'self'");
-    csp.appendDirective("object-src", "blob:"); // Equivalent to unsafe-eval!
     csp.appendDirective("media-src", "'self'");
     csp.appendDirectiveUrl("media-src", cnxDetails.getWebServerUrl());
     csp.appendDirective("img-src", "'self'");
