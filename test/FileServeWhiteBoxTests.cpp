@@ -88,21 +88,21 @@ void FileServeTests::testCSSVars()
     constexpr auto testname = __func__;
 
     LOK_ASSERT_EQUAL(
-        std::string("<style>:root {--co-somestyle-text:#123456;--co-somestyle-size:15px;}</style>"),
+        std::string("OnJvb3Qgey0tY28tc29tZXN0eWxlLXRleHQ6IzEyMzQ1NjstLWNvLXNvbWVzdHlsZS1zaXplOjE1cHg7fQ=="),
         FileServerRequestHandler::cssVarsToStyle(
             "--co-somestyle-text=#123456;--co-somestyle-size=15px;"));
 
     LOK_ASSERT_EQUAL(
-        std::string("<style>:root {--co-somestyle-text:#123456;--co-somestyle-size:15px;}</style>"),
+        std::string("OnJvb3Qgey0tY28tc29tZXN0eWxlLXRleHQ6IzEyMzQ1NjstLWNvLXNvbWVzdHlsZS1zaXplOjE1cHg7fQ=="),
         FileServerRequestHandler::cssVarsToStyle(
             ";;--co-somestyle-text=#123456;;--co-somestyle-size=15px;;;"));
 
     LOK_ASSERT_EQUAL(
-        std::string("<style>:root {--co-somestyle-text:#123456;--co-somestyle-size:15px;}</style>"),
+        std::string("OnJvb3Qgey0tY28tc29tZXN0eWxlLXRleHQ6IzEyMzQ1NjstLWNvLXNvbWVzdHlsZS1zaXplOjE1cHg7fQ=="),
         FileServerRequestHandler::cssVarsToStyle(
             "--co-somestyle-text=#123456;;--co-somestyle-size=15px;--co-sometext#324;;"));
 
-    LOK_ASSERT_EQUAL(std::string("<style>:root {--co-somestyle-text:#123456;}</style>"),
+    LOK_ASSERT_EQUAL(std::string("OnJvb3Qgey0tY28tc29tZXN0eWxlLXRleHQ6IzEyMzQ1Njt9"),
                      FileServerRequestHandler::cssVarsToStyle(
                          "--co-somestyle-text=#123456;;--some-val=3453--some-other-val=4536;;"));
 }
