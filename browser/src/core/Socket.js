@@ -252,17 +252,7 @@ app.definitions.Socket = L.Class.extend({
 		msg += ' darkBackground=' + darkBackground;
 		this._map.uiManager.initDarkBackgroundUI(darkBackground);
 
-		var isCalcTest =
-			window.docURL.includes('data/desktop/calc/') ||
-			window.docURL.includes('data/mobile/calc/') ||
-			window.docURL.includes('data/idle/calc/') ||
-			window.docURL.includes('data/multiuser/calc/');
-
-		if (L.Browser.cypressTest && isCalcTest)
-			window.enableAccessibility = false;
-
-		var accessibilityState = window.prefs.getBoolean('accessibilityState');
-		accessibilityState = accessibilityState || (L.Browser.cypressTest && !isCalcTest);
+		var accessibilityState = window.getAccessibilityState();
 		msg += ' accessibilityState=' + accessibilityState;
 
 		this._doSend(msg);
