@@ -4287,7 +4287,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	_viewReset: function (e) {
 		this._reset(e && e.hard);
-		if (this._docType === 'spreadsheet' && this._annotations !== 'undefined') {
+		if (this._docType === 'spreadsheet' && this._annotations !== undefined) {
 			app.socket.sendMessage('commandvalues command=.uno:ViewAnnotationsPosition');
 		}
 	},
