@@ -54,7 +54,8 @@ function _scrolledWindowControl(parentContainer, data, builder) {
 		scrollwindow.id = data.id;
 
 	// drawing areas inside scrollwindows should be not cropped so we add special class
-	if (_hasDrawingAreaInside(data.children))
+	let drawingArea = _hasDrawingAreaInside(data.children);
+	if (drawingArea)
 		L.DomUtil.addClass(scrollwindow, 'has-ui-drawing-area');
 
 	var content = L.DomUtil.create('div', builder.options.cssClass + ' ui-scrollwindow-content', scrollwindow);
@@ -70,7 +71,7 @@ function _scrolledWindowControl(parentContainer, data, builder) {
 	if (data.vertical.policy === 'always')
 		scrollwindow.style.overflowY = 'scroll';
 
-	var noHorizontal = data.horizontal.policy === 'never';
+	var noHorizontal = data.horizontal.policy === 'never' || data.horizontal.page_size == 0;
 	if (noHorizontal)
 		scrollwindow.style.overflowX = 'hidden';
 	if (data.horizontal.policy === 'always')
@@ -99,24 +100,42 @@ function _scrolledWindowControl(parentContainer, data, builder) {
 			return;
 		}
 
-		if (!noVertical) {
-			content.style.height = (realContentHeight + verticalSteps) + 'px';
-			scrollwindow.style.height = (realContentHeight + margin) + 'px';
+
+		if (!noVertical && data.vertical.upper > 0) {
+			if (rowHeight == 0) {
+				// determine the height a row
+				let height = drawingArea ? scrollwindow.scrollHeight : realContentHeight;
+				if (data.vertical.upper >= data.vertical.page_size) {
+					rowHeight = height / data.vertical.page_size;
+				} else {
+					rowHeight = height / data.vertical.upper;
+				}
+			}
+			var totalContentHeight = data.vertical.upper * rowHeight;
+			let marginTop = data.vertical.value * rowHeight;
+
+			if (totalContentHeight != scrollwindow.scrollHeight) {
+				// only if view has changed
+				content.style.marginBlockStart = marginTop + 'px';
+				content.style.marginBlockEnd = (totalContentHeight - marginTop - realContentHeight) + 'px';
+			}
+			scrollwindow.scrollTop = marginTop;
 		}
 		if (!noHorizontal) {
 			content.style.width = (realContentWidth + horizontalSteps) + 'px';
-			scrollwindow.style.width = (realContentWidth + margin) + 'px';
+			content.scrollLeft = data.horizontal.value * 10;
+			content.style.marginInlineEnd = margin + 'px';
+			content.style.marginInlineStart = content.scrollLeft + 'px';
 		}
-
-		content.scrollTop = data.vertical.value * 10;
-		content.scrollLeft = data.horizontal.value * 10;
-
-		content.style.margin = content.scrollTop + 'px ' + margin + 'px ' + margin + 'px ' + content.scrollLeft + 'px';
 	};
 
 	if (data.user_managed_scrolling !== false)
 		setTimeout(updateSize, 0);
 
+	}
+
+	var lastScrollV = null;
+	var lastScrollH = null;
 	var sendTimer = null;
 
 	if ((!noVertical && verticalSteps) || (!noHorizontal && horizontalSteps)) {
@@ -131,11 +150,41 @@ function _scrolledWindowControl(parentContainer, data, builder) {
 				content.style.width = (realContentWidth - scrollLeft + horizontalSteps) + 'px';
 			}
 
+
 			if (sendTimer)
 				clearTimeout(sendTimer);
 			sendTimer = setTimeout(function () {
-				builder.callback('scrolledwindow', 'scrollv', scrollwindow, Math.round(scrollTop / 10), builder);
-				builder.callback('scrolledwindow', 'scrollh', scrollwindow, Math.round(scrollLeft / 10), builder); }, 50);
+
+
+				if (data.user_managed_scrolling !== false) {
+
+					if (!noVertical) {
+						let newScrollV = Math.round(scrollwindow.scrollTop / rowHeight);
+						let totalContentHeight = scrollwindow.scrollHeight;
+						let offset = newScrollV * rowHeight;
+						let marginTop = offset;
+						content.style.marginBlockStart = marginTop + 'px';
+						content.style.marginBlockEnd = (totalContentHeight - marginTop - scrollwindow.clientHeight) + 'px';
+					}
+					if (!noHorizontal) {
+						realContentWidth = scrollwindow.scrollWidth;
+						content.style.width = (realContentWidth - scrollwindow.scrollLeft + horizontalSteps) + 'px';
+						content.style.marginInlineStart = scrollwindow.scrollLeft + 'px';
+					}
+				}
+
+				var newScrollV = Math.round(scrollwindow.scrollTop / rowHeight);
+				if (lastScrollV !== newScrollV) {
+					lastScrollV = newScrollV;
+					builder.callback('scrolledwindow', 'scrollv', scrollwindow, newScrollV, builder);
+				}
+
+				var newScrollH = Math.round(scrollwindow.scrollLeft / 10);
+				if (lastScrollH !== newScrollH) {
+					lastScrollH = newScrollH;
+					builder.callback('scrolledwindow', 'scrollh', scrollwindow, newScrollH, builder);
+				}
+			}, 50);
 		});
 	}
 

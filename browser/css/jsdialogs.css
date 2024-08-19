@@ -188,6 +188,12 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	grid-gap: 4px;
 	width: fit-content;
 }
+#SpecialCharactersDialog .jsdialog.ui-scrollwindow.has-ui-drawing-area {
+	height: 279px;
+}
+#SpecialCharactersDialog .jsdialog.ui-scrollwindow.has-ui-drawing-area #showcharset.ui-drawing-area-container {
+	height: 279px;
+}
 
 /* Find and replace dialog */
 #search_grid, #replace_grid {
@@ -2036,6 +2042,11 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	flex-direction: column;
 }
 
+#FormulaDialog #ParameterPage > #paramgrid .ui-scrollwindow {
+	width: 400px;
+	max-height: 200px;
+}
+
 #FormulaDialog > [id^='dialog-vbox'] > [id^='box'] > [id^='box'] {
 	grid-auto-columns: max-content;
 	grid-column-gap: 8px;
@@ -2205,8 +2216,9 @@ kbd,
 	margin: 0;
 }
 
-#DocumentPropertiesDialog #customprops .jsdialog.ui-scrollwindow {
-	max-height: min-content;
+#DocumentPropertiesDialog #customprops #CustomInfoPage > .jsdialog.ui-scrollwindow:not(.formulabar) {
+	height: 540px;
+	max-height: none;
 }
 
 #ServerAuditDialog #ServerAuditDialog-mainbox {
