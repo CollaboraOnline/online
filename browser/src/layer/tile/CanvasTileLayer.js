@@ -1552,50 +1552,55 @@ L.CanvasTileLayer = L.Layer.extend({
 			obj = JSON.parse(textMsg.substring('versionbar:'.length + 1));
 			this._map.fire('versionbar', obj);
 		}
-		else if (textMsg.startsWith('a11yfocuschanged:')) {
-			obj = JSON.parse(textMsg.substring('a11yfocuschanged:'.length + 1));
-			var listPrefixLength = obj.listPrefixLength !== undefined ? parseInt(obj.listPrefixLength) : 0;
-			this._map._textInput.onAccessibilityFocusChanged(
-				obj.content, parseInt(obj.position), parseInt(obj.start), parseInt(obj.end),
-				listPrefixLength, parseInt(obj.force) > 0);
-		}
-		else if (textMsg.startsWith('a11ycaretchanged:')) {
-			obj = JSON.parse(textMsg.substring('a11yfocuschanged:'.length + 1));
-			this._map._textInput.onAccessibilityCaretChanged(parseInt(obj.position));
-		}
-		else if (textMsg.startsWith('a11ytextselectionchanged:')) {
-			obj = JSON.parse(textMsg.substring('a11ytextselectionchanged:'.length + 1));
-			this._map._textInput.onAccessibilityTextSelectionChanged(parseInt(obj.start), parseInt(obj.end));
-		}
-		else if (textMsg.startsWith('a11yfocusedcellchanged:')) {
-			obj = JSON.parse(textMsg.substring('a11yfocusedcellchanged:'.length + 1));
-			var outCount = obj.outCount !== undefined ? parseInt(obj.outCount) : 0;
-			var inList = obj.inList !== undefined ? obj.inList : [];
-			var row = parseInt(obj.row);
-			var col = parseInt(obj.col);
-			var rowSpan = obj.rowSpan !== undefined ? parseInt(obj.rowSpan) : 1;
-			var colSpan = obj.colSpan !== undefined ? parseInt(obj.colSpan) : 1;
-			this._map._textInput.onAccessibilityFocusedCellChanged(
-				outCount, inList, row, col, rowSpan, colSpan, obj.paragraph);
-		}
-		else if (textMsg.startsWith('a11yeditinginselectionstate:')) {
-			obj = JSON.parse(textMsg.substring('a11yeditinginselectionstate:'.length + 1));
-			this._map._textInput.onAccessibilityEditingInSelectionState(
-				parseInt(obj.cell) > 0, parseInt(obj.enabled) > 0, obj.selection, obj.paragraph);
-		}
-		else if (textMsg.startsWith('a11yselectionchanged:')) {
-			obj = JSON.parse(textMsg.substring('a11yselectionchanged:'.length + 1));
-			this._map._textInput.onAccessibilitySelectionChanged(
-				parseInt(obj.cell) > 0, obj.action, obj.name, obj.text);
-		}
-		else if (textMsg.startsWith('a11yfocusedparagraph:')) {
-			obj = JSON.parse(textMsg.substring('a11yfocusedparagraph:'.length + 1));
-			this._map._textInput.setA11yFocusedParagraph(
-				obj.content, parseInt(obj.position), parseInt(obj.start), parseInt(obj.end));
-		}
-		else if (textMsg.startsWith('a11ycaretposition:')) {
-			var pos = textMsg.substring('a11ycaretposition:'.length + 1);
-			this._map._textInput.setA11yCaretPosition(parseInt(pos));
+		else if (textMsg.startsWith('a11y')) {
+			if (!app.map || !app.map._accessibilityState)
+				throw 'A11y events come from the core while it is disabled in the client session.';
+
+			if (textMsg.startsWith('a11yfocuschanged:')) {
+				obj = JSON.parse(textMsg.substring('a11yfocuschanged:'.length + 1));
+				var listPrefixLength = obj.listPrefixLength !== undefined ? parseInt(obj.listPrefixLength) : 0;
+				this._map._textInput.onAccessibilityFocusChanged(
+					obj.content, parseInt(obj.position), parseInt(obj.start), parseInt(obj.end),
+					listPrefixLength, parseInt(obj.force) > 0);
+			}
+			else if (textMsg.startsWith('a11ycaretchanged:')) {
+				obj = JSON.parse(textMsg.substring('a11yfocuschanged:'.length + 1));
+				this._map._textInput.onAccessibilityCaretChanged(parseInt(obj.position));
+			}
+			else if (textMsg.startsWith('a11ytextselectionchanged:')) {
+				obj = JSON.parse(textMsg.substring('a11ytextselectionchanged:'.length + 1));
+				this._map._textInput.onAccessibilityTextSelectionChanged(parseInt(obj.start), parseInt(obj.end));
+			}
+			else if (textMsg.startsWith('a11yfocusedcellchanged:')) {
+				obj = JSON.parse(textMsg.substring('a11yfocusedcellchanged:'.length + 1));
+				var outCount = obj.outCount !== undefined ? parseInt(obj.outCount) : 0;
+				var inList = obj.inList !== undefined ? obj.inList : [];
+				var row = parseInt(obj.row);
+				var col = parseInt(obj.col);
+				var rowSpan = obj.rowSpan !== undefined ? parseInt(obj.rowSpan) : 1;
+				var colSpan = obj.colSpan !== undefined ? parseInt(obj.colSpan) : 1;
+				this._map._textInput.onAccessibilityFocusedCellChanged(
+					outCount, inList, row, col, rowSpan, colSpan, obj.paragraph);
+			}
+			else if (textMsg.startsWith('a11yeditinginselectionstate:')) {
+				obj = JSON.parse(textMsg.substring('a11yeditinginselectionstate:'.length + 1));
+				this._map._textInput.onAccessibilityEditingInSelectionState(
+					parseInt(obj.cell) > 0, parseInt(obj.enabled) > 0, obj.selection, obj.paragraph);
+			}
+			else if (textMsg.startsWith('a11yselectionchanged:')) {
+				obj = JSON.parse(textMsg.substring('a11yselectionchanged:'.length + 1));
+				this._map._textInput.onAccessibilitySelectionChanged(
+					parseInt(obj.cell) > 0, obj.action, obj.name, obj.text);
+			}
+			else if (textMsg.startsWith('a11yfocusedparagraph:')) {
+				obj = JSON.parse(textMsg.substring('a11yfocusedparagraph:'.length + 1));
+				this._map._textInput.setA11yFocusedParagraph(
+					obj.content, parseInt(obj.position), parseInt(obj.start), parseInt(obj.end));
+			}
+			else if (textMsg.startsWith('a11ycaretposition:')) {
+				var pos = textMsg.substring('a11ycaretposition:'.length + 1);
+				this._map._textInput.setA11yCaretPosition(parseInt(pos));
+			}
 		}
 		else if (textMsg.startsWith('colorpalettes:')) {
 			var json = JSON.parse(textMsg.substring('colorpalettes:'.length + 1));
