@@ -132,9 +132,7 @@ HostEntry::HostEntry(const std::string& desc, const char* port)
     initFromHostName(desc, port);
 }
 
-HostEntry::~HostEntry()
-{
-}
+HostEntry::~HostEntry() = default;
 
 struct DNSCacheEntry
 {
