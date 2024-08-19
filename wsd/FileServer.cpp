@@ -694,7 +694,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
                     response.set("Content-Encoding", "br");
                 }
 
-                HttpHelper::sendFile(socket, filePath, response, noCache); // shutdown by caller
+                HttpHelper::sendFile(socket, filePath, response, noCache);
                 return;
             }
 #endif
@@ -779,7 +779,7 @@ void FileServerRequestHandler::sendError(http::StatusCode errorCode,
             longMessage + ' ' + pathSanitized + '\n' +
             "Please contact your system administrator.";
     }
-    HttpHelper::sendError(errorCode, socket, body, headers);
+    HttpHelper::sendErrorAndShutdown(errorCode, socket, body, headers);
 }
 
 void FileServerRequestHandler::readDirToHash(const std::string &basePath, const std::string &path, const std::string &prefix)
