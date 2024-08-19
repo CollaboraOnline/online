@@ -221,7 +221,7 @@ L.Control.UIManager = L.Control.extend({
 		var enableNotebookbar = this.shouldUseNotebookbarMode();
 		var that = this;
 
-		this.map._accessibilityState = window.prefs.getBoolean('accessibilityState');
+		app.accessibilityState = window.prefs.getBoolean('accessibilityState');
 
 		if (window.mode.isMobile() || !enableNotebookbar) {
 			var menubar = L.control.menubar();

@@ -121,13 +121,6 @@ L.Map = L.Evented.extend({
 		// True only when searching within the doc, as we need to use winId==0.
 		this._isSearching = false;
 
-		this._accessibilityState = false;
-
-		if (L.Browser.cypressTest && window.enableAccessibility) {
-			this._accessibilityState = true;
-			window.prefs.set('accessibilityState', true);
-		}
-
 		this.callInitHooks();
 
 		this.addHandler('keyboard', L.Map.Keyboard);
@@ -316,13 +309,41 @@ L.Map = L.Evented.extend({
 		});
 	},
 
+	// A11y
+
 	initTextInput: function(docType) {
-		var hasAccessibilitySupport = window.enableAccessibility && this._accessibilityState;
+		var hasAccessibilitySupport = window.enableAccessibility && app.accessibilityState;
 		hasAccessibilitySupport = hasAccessibilitySupport &&
 			(docType === 'text' || docType === 'presentation'|| docType === 'spreadsheet');
-		this._textInput = hasAccessibilitySupport ? L.a11yTextInput() : L.textInput();
+
+		this.setupCoreAccessibility(hasAccessibilitySupport);
+		this.createTextInput(hasAccessibilitySupport);
+	},
+
+	createTextInput: function(enableA11y) {
+		this._textInput = enableA11y ? L.a11yTextInput() : L.textInput();
 		this.addLayer(this._textInput);
 	},
+
+	setupCoreAccessibility: function(enableA11y) {
+		app.accessibilityState = enableA11y;
+		app.socket.sendMessage('a11ystate ' + enableA11y);
+	},
+
+	setAccessibilityState: function(enable) {
+		if (app.accessibilityState === enable)
+			return;
+
+		this.setupCoreAccessibility(enable);
+		this.removeLayer(this._textInput);
+		this.createTextInput(enable);
+
+		if (enable)
+			this._textInput._requestFocusedParagraph();
+		this._textInput.showCursor();
+	},
+
+	// end of A11y
 
 	loadDocument: function(socket) {
 		app.socket.connect(socket);

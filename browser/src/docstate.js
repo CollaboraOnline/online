@@ -33,6 +33,7 @@ window.app = {
 	dispatcher: null, // A Dispatcher class instance is assigned to this.
 	twipsToPixels: 0, // Twips to pixels multiplier.
 	pixelsToTwips: 0, // Pixels to twips multiplier.
+	accessibilityState: false, // If accessibility was enabled by user
 	UI: {
 		language: {
 			fromURL: window.langParam, // This is set in global.js.

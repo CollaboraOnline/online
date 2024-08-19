@@ -693,6 +693,27 @@ function getInitializerClass() {
 		},
 	};
 
+	global.getAccessibilityState = function () {
+		var isCalcTest =
+			global.docURL.includes('data/desktop/calc/') ||
+			global.docURL.includes('data/mobile/calc/') ||
+			global.docURL.includes('data/idle/calc/') ||
+			global.docURL.includes('data/multiuser/calc/');
+
+		// FIXME: a11y doesn't work in calc under cypress
+		if (L.Browser.cypressTest && isCalcTest)
+			global.enableAccessibility = false;
+
+		if (L.Browser.cypressTest) {
+			global.prefs.set('accessibilityState', global.enableAccessibility);
+			global.app.accessibilityState = global.enableAccessibility;
+		}
+
+		var accessibilityState = global.prefs.getBoolean('accessibilityState');
+		global.app.accessibilityState = accessibilityState;
+		return accessibilityState;
+	};
+
 	// Renamed in 24.04.4.1
 	const prefDocTypes = ['text', 'spreadsheet', 'presentation', 'drawing'];
 	for (const docType of prefDocTypes) {
@@ -1600,17 +1621,7 @@ function getInitializerClass() {
 				var now2 = Date.now();
 				global.socket.send('coolclient ' + ProtocolVersionNumber + ' ' + ((now0 + now2) / 2) + ' ' + now1);
 
-				var isCalcTest =
-					global.docURL.includes('data/desktop/calc/') ||
-					global.docURL.includes('data/mobile/calc/') ||
-					global.docURL.includes('data/idle/calc/') ||
-					global.docURL.includes('data/multiuser/calc/');
-
-				if (L.Browser.cypressTest && isCalcTest)
-					global.enableAccessibility = false;
-
-				var accessibilityState = global.prefs.getBoolean('accessibilityState');
-				accessibilityState = accessibilityState || (L.Browser.cypressTest && !isCalcTest);
+				var accessibilityState = global.getAccessibilityState();
 				msg += ' accessibilityState=' + accessibilityState;
 
 				if (global.ThisIsAMobileApp) {

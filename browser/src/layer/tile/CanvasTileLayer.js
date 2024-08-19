@@ -1553,7 +1553,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._map.fire('versionbar', obj);
 		}
 		else if (textMsg.startsWith('a11y')) {
-			if (!app.map || !app.map._accessibilityState)
+			if (!app.accessibilityState)
 				throw 'A11y events come from the core while it is disabled in the client session.';
 
 			if (textMsg.startsWith('a11yfocuschanged:')) {
