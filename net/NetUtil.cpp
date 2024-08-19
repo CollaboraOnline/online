@@ -102,27 +102,26 @@ HostEntry::HostEntry(const std::string& desc, const char* port)
 
     addrinfo* ainfo = nullptr;
     int rc = getaddrinfo(desc.c_str(), port, &hints, &ainfo);
-    _ainfo.reset(ainfo, freeaddrinfo);
-    if (rc == 0)
+    if (rc != 0)
     {
-        for (const addrinfo* ai = _ainfo.get(); ai; ai = ai->ai_next)
-        {
-            if (ai->ai_canonname)
-                _canonicalName.assign(ai->ai_canonname);
-
-            if (!ai->ai_addrlen || !ai->ai_addr)
-                continue;
-
-            std::string address = makeIPAddress(ai->ai_addr);
-            if (!good())
-                break;
-            _ipAddresses.push_back(address);
-        }
+        setEAI(rc);
+        LOG_SYS("Failed to lookup host " << errorMessage());
         return;
     }
+    _ainfo.reset(ainfo, freeaddrinfo);
+    for (const addrinfo* ai = _ainfo.get(); ai; ai = ai->ai_next)
+    {
+        if (ai->ai_canonname)
+            _canonicalName.assign(ai->ai_canonname);
 
-    setEAI(rc);
-    LOG_SYS("Failed to lookup host " << errorMessage());
+        if (!ai->ai_addrlen || !ai->ai_addr)
+            continue;
+
+        std::string address = makeIPAddress(ai->ai_addr);
+        if (!good())
+            break;
+        _ipAddresses.push_back(address);
+    }
 }
 
 HostEntry::~HostEntry() = default;
