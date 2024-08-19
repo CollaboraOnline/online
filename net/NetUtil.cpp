@@ -130,13 +130,13 @@ HostEntry::~HostEntry() = default;
 struct DNSCacheEntry
 {
     std::string queryAddress;
-    std::optional<std::string> queryPort;
+    std::string queryPort;
     HostEntry hostEntry;
     std::chrono::steady_clock::time_point lookupTime;
 };
 
 static HostEntry resolveDNS(const std::string& addressToCheck,
-                            const std::optional<std::string>& port,
+                            const std::string& port,
                             std::vector<DNSCacheEntry>& querycache)
 {
     const auto now = std::chrono::steady_clock::now();
@@ -157,7 +157,7 @@ static HostEntry resolveDNS(const std::string& addressToCheck,
         return findIt->hostEntry;
 
     // lookup and cache
-    HostEntry hostEntry(addressToCheck, port ? port->c_str() : nullptr);
+    HostEntry hostEntry(addressToCheck, !port.empty() ? port.c_str() : nullptr);
     querycache.push_back(DNSCacheEntry{addressToCheck, port, hostEntry, now});
     return hostEntry;
 }
@@ -167,7 +167,7 @@ class DNSResolver
 private:
     std::vector<DNSCacheEntry> _querycache;
 public:
-    HostEntry resolveDNS(const std::string& addressToCheck, const std::optional<std::string>& port)
+    HostEntry resolveDNS(const std::string& addressToCheck, const std::string& port)
     {
         return net::resolveDNS(addressToCheck, port, _querycache);
     }
@@ -176,7 +176,7 @@ public:
 HostEntry resolveDNS(const std::string& addressToCheck)
 {
     static DNSResolver resolver;
-    return resolver.resolveDNS(addressToCheck, std::nullopt);
+    return resolver.resolveDNS(addressToCheck, std::string());
 }
 
 std::string canonicalHostName(const std::string& addressToCheck)
@@ -318,7 +318,7 @@ void AsyncDNS::resolveDNS()
 }
 
 void AsyncDNS::addLookup(const std::string& lookup,
-                         const std::optional<std::string>& port,
+                         const std::string& port,
                          const DNSThreadFn& cb,
                          const DNSThreadDumpStateFn& dumpState)
 {
@@ -358,7 +358,7 @@ void AsyncDNS::stopAsyncDNS()
 
 //static
 void AsyncDNS::lookup(const std::string& searchEntry,
-                      const std::optional<std::string>& port,
+                      const std::string& port,
                       const DNSThreadFn& cb,
                       const DNSThreadDumpStateFn& dumpState)
 {
