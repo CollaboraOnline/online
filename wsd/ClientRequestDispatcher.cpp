@@ -763,10 +763,6 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
 
                     launchAsyncCheckFileInfo(_id, accessDetails, RequestVettingStations);
                 }
-                if (request.getMethod() == Poco::Net::HTTPRequest::HTTP_POST)
-                {
-                    socket->shutdown();
-                }
                 served = true;
             }
 
@@ -930,9 +926,9 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
         return;
     }
 
-    // if we succeeded - remove the request from our input buffer
-    // we expect one request per socket
-    socket->eraseFirstInputBytes(map);
+    // If we succeeded - remove the complete request message from our input buffer
+    // We expect multiple requests per socket
+    socket->eraseFirstInputBytes(map._messageSize);
 #else // !MOBILEAPP
     Poco::Net::HTTPRequest request;
 

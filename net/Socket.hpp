@@ -1256,12 +1256,6 @@ public:
     }
 
     /// Remove the first @count bytes from input buffer
-    void eraseFirstInputBytes(const MessageMap &map)
-    {
-        eraseFirstInputBytes(map._headerSize);
-    }
-
-    /// Remove the first @count bytes from input buffer
     void eraseFirstInputBytes(const std::size_t count)
     {
         size_t toErase = std::min(count, _inBuffer.size());
