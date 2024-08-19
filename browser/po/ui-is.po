@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-09 16:44+0200\n"
+"POT-Creation-Date: 2024-08-19 10:15+0200\n"
 "PO-Revision-Date: 2024-01-02 19:06+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <https://hosted.weblate.org/projects/"
@@ -140,14 +140,14 @@ msgstr "Graf fyrir örgjörva"
 msgid "Network Graph"
 msgstr "Graf fyrir netkerfi"
 
-#: admin/admin.strings.js:45 src/control/Control.Notebookbar.js:266
+#: admin/admin.strings.js:45 src/control/Control.Notebookbar.js:265
 #: src/control/Control.NotebookbarCalc.js:112
 #: src/control/Control.NotebookbarDraw.js:29
 #: src/control/Control.NotebookbarDraw.js:153
 #: src/control/Control.NotebookbarImpress.js:29
 #: src/control/Control.NotebookbarImpress.js:176
 #: src/control/Control.NotebookbarWriter.js:155
-#: src/canvas/sections/CommentListSection.ts:444
+#: src/canvas/sections/CommentListSection.ts:446
 #: src/canvas/sections/CommentSection.ts:149
 msgid "Save"
 msgstr "Vista"
@@ -214,7 +214,7 @@ msgstr "Endurlesa atvikaskrá"
 msgid "Channel Filter:"
 msgstr "Rásasía:"
 
-#: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:478
+#: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:487
 #: src/control/Control.StatusBar.js:192 src/control/Control.StatusBar.js:195
 msgid "None"
 msgstr "Ekkert"
@@ -231,8 +231,8 @@ msgstr "Stig atvikaskráningar"
 #: src/control/Control.AlertDialog.js:38
 #: src/control/Control.AlertDialog.js:101
 #: src/control/Control.AlertDialog.js:108 src/control/Control.Zotero.js:189
-#: src/control/Parts.js:482 src/core/Socket.js:430 src/core/Socket.js:1149
-#: src/core/Socket.js:1154 src/canvas/sections/CommentListSection.ts:140
+#: src/control/Parts.js:482 src/core/Socket.js:430 src/core/Socket.js:1157
+#: src/core/Socket.js:1162 src/canvas/sections/CommentListSection.ts:142
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.div:51-7
 msgid "Close"
 msgstr "Loka"
@@ -251,9 +251,9 @@ msgstr ""
 
 #: admin/admin.strings.js:68 src/control/Control.Menubar.js:385
 #: src/control/Control.Menubar.js:546 src/control/Control.Menubar.js:677
-#: src/control/Control.Menubar.js:957 src/control/Control.Menubar.js:1025
-#: src/control/Control.Menubar.js:1090 src/control/Control.Menubar.js:1145
-#: src/control/Control.Menubar.js:1220
+#: src/control/Control.Menubar.js:958 src/control/Control.Menubar.js:1026
+#: src/control/Control.Menubar.js:1091 src/control/Control.Menubar.js:1146
+#: src/control/Control.Menubar.js:1221
 #: src/control/Control.NotebookbarWriter.js:463
 msgid "About"
 msgstr "Um hugbúnaðinn"
@@ -281,18 +281,18 @@ msgstr "Slökkt hefur verið á netþjóninum, þú ættir að hlaða síðunni 
 #: src/control/Control.Zotero.js:335 src/control/Control.Zotero.js:373
 #: src/control/Permission.js:89 src/control/Permission.js:99
 #: src/control/Permission.js:149 src/control/Toolbar.js:707
-#: src/control/Toolbar.js:798 src/slideshow/SlideShowPresenter.ts:398
-#: src/slideshow/SlideShowPresenter.ts:520
-#: src/slideshow/SlideShowPresenter.ts:535
-#: src/slideshow/SlideShowPresenter.ts:551 src/core/Socket.js:684
-#: src/core/Socket.js:1119 src/core/Socket.js:1189 src/core/Socket.js:1337
-#: src/core/Socket.js:1341 src/docdispatcher.ts:394
-#: src/canvas/sections/CommentListSection.ts:1252
-#: src/canvas/sections/CommentListSection.ts:2102 src/main.js:84
-#: src/main.js:87 src/main.js:136 src/map/Clipboard.js:1202
+#: src/control/Toolbar.js:798 src/slideshow/SlideShowPresenter.ts:445
+#: src/slideshow/SlideShowPresenter.ts:567
+#: src/slideshow/SlideShowPresenter.ts:582
+#: src/slideshow/SlideShowPresenter.ts:598 src/core/Socket.js:692
+#: src/core/Socket.js:1127 src/core/Socket.js:1197 src/core/Socket.js:1345
+#: src/core/Socket.js:1349 src/docdispatcher.ts:407
+#: src/canvas/sections/CommentListSection.ts:1254
+#: src/canvas/sections/CommentListSection.ts:2104 src/main.js:84
+#: src/main.js:87 src/main.js:140 src/map/Clipboard.js:1201
 #: src/map/handler/Map.Feedback.js:82 src/map/handler/Map.SlideShow.js:56
 #: src/map/handler/Map.SlideShow.js:170 src/map/handler/Map.SlideShow.js:305
-#: src/map/handler/Map.SlideShow.js:316 src/map/handler/Map.WOPI.js:605
+#: src/map/handler/Map.SlideShow.js:316 src/map/handler/Map.WOPI.js:604
 msgid "OK"
 msgstr "Í lagi"
 
@@ -314,10 +314,10 @@ msgstr "Ertu viss um að þú viljir ljúka þessari setu?"
 #: src/control/Control.DownloadProgress.js:80
 #: src/control/Control.LanguageDialog.js:113
 #: src/control/Control.MobileTopBar.ts:43
-#: src/control/Control.UIManager.js:1284 src/control/Control.UIManager.js:1351
-#: src/control/Control.UIManager.js:1486 src/control/Control.UIManager.js:1645
+#: src/control/Control.UIManager.js:1285 src/control/Control.UIManager.js:1352
+#: src/control/Control.UIManager.js:1487 src/control/Control.UIManager.js:1646
 #: src/control/Control.Zotero.js:330 src/control/Toolbar.js:793
-#: src/core/Socket.js:1362 src/canvas/sections/CommentListSection.ts:439
+#: src/core/Socket.js:1370 src/canvas/sections/CommentListSection.ts:441
 #: src/canvas/sections/CommentSection.ts:148
 #: src/canvas/sections/CommentSection.ts:151
 msgid "Cancel"
@@ -387,15 +387,15 @@ msgstr " mín"
 msgid " s"
 msgstr " sek"
 
-#: js/global.js:1370
+#: js/global.js:1328
 msgid "Cluster is scaling, retrying..."
 msgstr ""
 
-#: js/global.js:1372
+#: js/global.js:1330
 msgid "Document is migrating to new server, retrying..."
 msgstr ""
 
-#: js/global.js:1374
+#: js/global.js:1332
 msgid "Failed to get RouteToken from controller"
 msgstr ""
 
@@ -468,19 +468,19 @@ msgstr "Þjónninn rakst á {0} villu við að þátta {1} skipunina."
 msgid "Unlock"
 msgstr "Aflæsa"
 
-#: src/control/Control.ContextMenu.js:218 src/docdispatcher.ts:391
+#: src/control/Control.ContextMenu.js:220 src/docdispatcher.ts:404
 msgid "Delete"
 msgstr "Eyða"
 
-#: src/control/Control.ContextMenu.js:238
+#: src/control/Control.ContextMenu.js:240
 msgid "Paste Special"
 msgstr "Sérstök líming"
 
-#: src/control/Control.ContextMenu.js:246
+#: src/control/Control.ContextMenu.js:248
 msgid "Copy Cells"
 msgstr ""
 
-#: src/control/Control.ContextMenu.js:254
+#: src/control/Control.ContextMenu.js:256
 msgid "Fill Series"
 msgstr ""
 
@@ -574,21 +574,21 @@ msgstr "Efni afritað á klippispjald"
 msgid "Download failed"
 msgstr "Niðurhal mistókst"
 
-#: src/control/Control.FormulaBarJSDialog.js:102
-#: src/control/Control.FormulaBarJSDialog.js:162
+#: src/control/Control.FormulaBarJSDialog.js:101
+#: src/control/Control.FormulaBarJSDialog.js:161
 msgid "cell address"
 msgstr "vistfang reits"
 
-#: src/control/Control.FormulaBarJSDialog.js:112
-#: src/control/Control.FormulaBarJSDialog.js:171
+#: src/control/Control.FormulaBarJSDialog.js:111
+#: src/control/Control.FormulaBarJSDialog.js:170
 msgid "Function Wizard"
 msgstr "Fallagerðarpúki"
 
-#: src/control/Control.FormulaBarJSDialog.js:124
+#: src/control/Control.FormulaBarJSDialog.js:123
 msgid "Formula"
 msgstr "Formúla"
 
-#: src/control/Control.FormulaBarJSDialog.js:130
+#: src/control/Control.FormulaBarJSDialog.js:129
 #: src/control/Control.MobileTopBar.ts:42
 msgid "Accept"
 msgstr "Samþykkja"
@@ -601,105 +601,105 @@ msgstr "Óvirkt skjal - smelltu til að endurhlaða og halda áfram með breytin
 msgid "Idle document - please tap to reload and resume editing"
 msgstr "Óvirkt skjal - ýttu til að endurhlaða og halda áfram með breytingar"
 
-#: src/control/Control.JSDialogBuilder.js:481
+#: src/control/Control.JSDialogBuilder.js:490
 msgid "Solid"
 msgstr "Einlitt"
 
-#: src/control/Control.JSDialogBuilder.js:484
+#: src/control/Control.JSDialogBuilder.js:493
 msgid "Linear"
 msgstr "Línulegt"
 
-#: src/control/Control.JSDialogBuilder.js:487
+#: src/control/Control.JSDialogBuilder.js:496
 msgid "Axial"
 msgstr "Áslægt"
 
-#: src/control/Control.JSDialogBuilder.js:490
+#: src/control/Control.JSDialogBuilder.js:499
 msgid "Radial"
 msgstr "Geisla"
 
-#: src/control/Control.JSDialogBuilder.js:493
+#: src/control/Control.JSDialogBuilder.js:502
 msgid "Ellipsoid"
 msgstr "Sporbaugs"
 
-#: src/control/Control.JSDialogBuilder.js:497
+#: src/control/Control.JSDialogBuilder.js:506
 msgid "Quadratic"
 msgstr "Ferningslaga"
 
-#: src/control/Control.JSDialogBuilder.js:500
+#: src/control/Control.JSDialogBuilder.js:509
 msgid "Square"
 msgstr "Ferningur"
 
-#: src/control/Control.JSDialogBuilder.js:503
+#: src/control/Control.JSDialogBuilder.js:512
 msgid "Fixed size"
 msgstr "Föst stærð"
 
-#: src/control/Control.JSDialogBuilder.js:1413
+#: src/control/Control.JSDialogBuilder.js:1422
 msgid "From"
 msgstr "Frá"
 
-#: src/control/Control.JSDialogBuilder.js:1416
+#: src/control/Control.JSDialogBuilder.js:1425
 msgid "To"
 msgstr "Til"
 
-#: src/control/Control.JSDialogBuilder.js:1419
+#: src/control/Control.JSDialogBuilder.js:1428
 msgid "Color"
 msgstr "Litur"
 
-#: src/control/Control.JSDialogBuilder.js:1542
+#: src/control/Control.JSDialogBuilder.js:1551
 msgid "Select range"
 msgstr "Velja svið"
 
-#: src/control/Control.JSDialogBuilder.js:1642
+#: src/control/Control.JSDialogBuilder.js:1651
 #: src/control/Control.NotebookbarBuilder.js:160
 msgid "Font Name"
 msgstr "Heiti leturgerðar"
 
-#: src/control/Control.JSDialogBuilder.js:1644 src/control/Toolbar.js:132
+#: src/control/Control.JSDialogBuilder.js:1653 src/control/Toolbar.js:132
 msgid "Font Size"
 msgstr "Leturstærð"
 
-#: src/control/Control.JSDialogBuilder.js:1646
-#: src/control/Control.TopToolbar.js:454
+#: src/control/Control.JSDialogBuilder.js:1655
+#: src/control/Control.TopToolbar.js:455
 msgid "Style"
 msgstr "Stíll"
 
-#: src/control/Control.JSDialogBuilder.js:1910
+#: src/control/Control.JSDialogBuilder.js:1919
 msgid "reply"
 msgstr "svar"
 
-#: src/control/Control.JSDialogBuilder.js:1913
+#: src/control/Control.JSDialogBuilder.js:1922
 msgid "replies"
 msgstr "svör"
 
-#: src/control/Control.JSDialogBuilder.js:1924
-#: src/layer/tile/CanvasTileLayer.js:4031
-#: src/layer/tile/CanvasTileLayer.js:4042
-#: src/canvas/sections/CommentListSection.ts:1038
+#: src/control/Control.JSDialogBuilder.js:1933
+#: src/layer/tile/CanvasTileLayer.js:3744
+#: src/layer/tile/CanvasTileLayer.js:3755
+#: src/canvas/sections/CommentListSection.ts:1040
 msgid "Comment"
 msgstr "Athugasemd"
 
-#: src/control/Control.JSDialogBuilder.js:1988
+#: src/control/Control.JSDialogBuilder.js:1997
 msgid "Insert Comment"
 msgstr "Settu inn athugasemd"
 
-#: src/control/Control.JSDialogBuilder.js:2893
+#: src/control/Control.JSDialogBuilder.js:2902
 #: src/control/Control.Menubar.js:863
 msgid "Rows"
 msgstr "Raðir"
 
-#: src/control/Control.JSDialogBuilder.js:2894
+#: src/control/Control.JSDialogBuilder.js:2903
 #: src/control/Control.Menubar.js:866
 msgid "Columns"
 msgstr "Dálkar"
 
-#: src/control/Control.JSDialogBuilder.js:2914
+#: src/control/Control.JSDialogBuilder.js:2923
 msgid "Insert Table"
 msgstr "Setja inn töflu"
 
 #: src/control/Control.LanguageDialog.js:64 src/control/Control.Menubar.js:357
 #: src/control/Control.Menubar.js:359 src/control/Control.Menubar.js:361
 #: src/control/Control.Menubar.js:534 src/control/Control.Menubar.js:668
-#: src/control/Control.Menubar.js:944 src/control/Control.StatusBar.js:474
+#: src/control/Control.Menubar.js:945 src/control/Control.StatusBar.js:474
 msgid "None (Do not check spelling)"
 msgstr "Ekkert (ekki yfirfara stafsetningu)"
 
@@ -712,28 +712,28 @@ msgid "Language"
 msgstr "Tungumál"
 
 #: src/control/Control.Menubar.js:76 src/control/Control.Menubar.js:91
-#: src/control/Control.Menubar.js:979
+#: src/control/Control.Menubar.js:980
 #: src/control/Control.NotebookbarBuilder.js:389
 #: src/control/Control.NotebookbarBuilder.js:496
 msgid "ODF text document (.odt)"
 msgstr "ODF-textaskjal (.odt)"
 
 #: src/control/Control.Menubar.js:77 src/control/Control.Menubar.js:92
-#: src/control/Control.Menubar.js:980
+#: src/control/Control.Menubar.js:981
 #: src/control/Control.NotebookbarBuilder.js:401
 #: src/control/Control.NotebookbarBuilder.js:508
 msgid "Word 2003 Document (.doc)"
 msgstr "Word 2003 skjal (.doc)"
 
 #: src/control/Control.Menubar.js:78 src/control/Control.Menubar.js:93
-#: src/control/Control.Menubar.js:981
+#: src/control/Control.Menubar.js:982
 #: src/control/Control.NotebookbarBuilder.js:397
 #: src/control/Control.NotebookbarBuilder.js:504
 msgid "Word Document (.docx)"
 msgstr "Word skjal (.docx)"
 
 #: src/control/Control.Menubar.js:79 src/control/Control.Menubar.js:94
-#: src/control/Control.Menubar.js:982
+#: src/control/Control.Menubar.js:983
 #: src/control/Control.NotebookbarBuilder.js:393
 #: src/control/Control.NotebookbarBuilder.js:500
 msgid "Rich Text (.rtf)"
@@ -743,10 +743,10 @@ msgstr "RTF sniðinn texti (.rtf)"
 #: src/control/Control.Menubar.js:398 src/control/Control.Menubar.js:404
 #: src/control/Control.Menubar.js:555 src/control/Control.Menubar.js:562
 #: src/control/Control.Menubar.js:690 src/control/Control.Menubar.js:695
-#: src/control/Control.Menubar.js:967 src/control/Control.Menubar.js:976
-#: src/control/Control.Menubar.js:1033 src/control/Control.Menubar.js:1041
-#: src/control/Control.Menubar.js:1098 src/control/Control.Menubar.js:1105
-#: src/control/Control.Menubar.js:1153 src/control/Control.Menubar.js:1163
+#: src/control/Control.Menubar.js:968 src/control/Control.Menubar.js:977
+#: src/control/Control.Menubar.js:1034 src/control/Control.Menubar.js:1042
+#: src/control/Control.Menubar.js:1099 src/control/Control.Menubar.js:1106
+#: src/control/Control.Menubar.js:1154 src/control/Control.Menubar.js:1164
 msgid "Export as"
 msgstr "Flytja út sem"
 
@@ -754,10 +754,10 @@ msgstr "Flytja út sem"
 #: src/control/Control.Menubar.js:399 src/control/Control.Menubar.js:405
 #: src/control/Control.Menubar.js:556 src/control/Control.Menubar.js:563
 #: src/control/Control.Menubar.js:691 src/control/Control.Menubar.js:696
-#: src/control/Control.Menubar.js:968 src/control/Control.Menubar.js:977
-#: src/control/Control.Menubar.js:1034 src/control/Control.Menubar.js:1042
-#: src/control/Control.Menubar.js:1099 src/control/Control.Menubar.js:1106
-#: src/control/Control.Menubar.js:1154 src/control/Control.Menubar.js:1164
+#: src/control/Control.Menubar.js:969 src/control/Control.Menubar.js:978
+#: src/control/Control.Menubar.js:1035 src/control/Control.Menubar.js:1043
+#: src/control/Control.Menubar.js:1100 src/control/Control.Menubar.js:1107
+#: src/control/Control.Menubar.js:1155 src/control/Control.Menubar.js:1165
 #: src/control/Control.NotebookbarBuilder.js:410
 #: src/control/Control.NotebookbarBuilder.js:440
 #: src/control/Control.NotebookbarBuilder.js:470
@@ -770,7 +770,7 @@ msgid "PDF Document (.pdf)"
 msgstr "PDF-skjal (.pdf)"
 
 #: src/control/Control.Menubar.js:83 src/control/Control.Menubar.js:95
-#: src/control/Control.Menubar.js:969 src/control/Control.Menubar.js:983
+#: src/control/Control.Menubar.js:970 src/control/Control.Menubar.js:984
 #: src/control/Control.NotebookbarBuilder.js:405
 #: src/control/Control.NotebookbarBuilder.js:561
 msgid "EPUB (.epub)"
@@ -782,29 +782,29 @@ msgstr "Endurnefna skjal"
 
 #: src/control/Control.Menubar.js:86 src/control/Control.Menubar.js:402
 #: src/control/Control.Menubar.js:559 src/control/Control.Menubar.js:693
-#: src/control/Control.Menubar.js:971 src/control/Control.Menubar.js:1036
-#: src/control/Control.Menubar.js:1101 src/control/Control.Menubar.js:1156
+#: src/control/Control.Menubar.js:972 src/control/Control.Menubar.js:1037
+#: src/control/Control.Menubar.js:1102 src/control/Control.Menubar.js:1157
 msgid "Share..."
 msgstr "Deila..."
 
 #: src/control/Control.Menubar.js:87 src/control/Control.Menubar.js:403
 #: src/control/Control.Menubar.js:561 src/control/Control.Menubar.js:694
-#: src/control/Control.Menubar.js:972 src/control/Control.Menubar.js:1037
-#: src/control/Control.Menubar.js:1103 src/control/Control.Menubar.js:1157
+#: src/control/Control.Menubar.js:973 src/control/Control.Menubar.js:1038
+#: src/control/Control.Menubar.js:1104 src/control/Control.Menubar.js:1158
 msgid "See revision history"
 msgstr "Skoða breytingaskrá"
 
 #: src/control/Control.Menubar.js:88 src/control/Control.Menubar.js:404
 #: src/control/Control.Menubar.js:562 src/control/Control.Menubar.js:695
-#: src/control/Control.Menubar.js:976 src/control/Control.Menubar.js:1041
-#: src/control/Control.Menubar.js:1105 src/control/Control.Menubar.js:1163
+#: src/control/Control.Menubar.js:977 src/control/Control.Menubar.js:1042
+#: src/control/Control.Menubar.js:1106 src/control/Control.Menubar.js:1164
 msgid "Download as"
 msgstr "Hlaða niður sem"
 
 #: src/control/Control.Menubar.js:90 src/control/Control.Menubar.js:406
 #: src/control/Control.Menubar.js:564 src/control/Control.Menubar.js:697
-#: src/control/Control.Menubar.js:978 src/control/Control.Menubar.js:1043
-#: src/control/Control.Menubar.js:1107 src/control/Control.Menubar.js:1165
+#: src/control/Control.Menubar.js:979 src/control/Control.Menubar.js:1044
+#: src/control/Control.Menubar.js:1108 src/control/Control.Menubar.js:1166
 #: src/control/Control.NotebookbarBuilder.js:416
 #: src/control/Control.NotebookbarBuilder.js:446
 #: src/control/Control.NotebookbarBuilder.js:476
@@ -819,8 +819,8 @@ msgstr "Loka skjali"
 
 #: src/control/Control.Menubar.js:104 src/control/Control.Menubar.js:422
 #: src/control/Control.Menubar.js:574 src/control/Control.Menubar.js:713
-#: src/control/Control.Menubar.js:988 src/control/Control.Menubar.js:1052
-#: src/control/Control.Menubar.js:1113 src/control/Control.Menubar.js:1173
+#: src/control/Control.Menubar.js:989 src/control/Control.Menubar.js:1053
+#: src/control/Control.Menubar.js:1114 src/control/Control.Menubar.js:1174
 #: src/control/Control.NotebookbarCalc.js:225
 #: src/control/Control.NotebookbarCalc.js:226
 #: src/control/Control.NotebookbarDraw.js:292
@@ -884,8 +884,8 @@ msgstr "Fela valmyndastiku"
 
 #: src/control/Control.Menubar.js:145 src/control/Control.Menubar.js:447
 #: src/control/Control.Menubar.js:596 src/control/Control.Menubar.js:737
-#: src/control/Control.Menubar.js:1009 src/control/Control.Menubar.js:1062
-#: src/control/Control.Menubar.js:1123 src/control/Control.Menubar.js:1183
+#: src/control/Control.Menubar.js:1010 src/control/Control.Menubar.js:1063
+#: src/control/Control.Menubar.js:1124 src/control/Control.Menubar.js:1184
 #: src/control/Control.NotebookbarCalc.js:1246
 #: src/control/Control.NotebookbarDraw.js:435
 #: src/control/Control.NotebookbarImpress.js:478
@@ -895,8 +895,8 @@ msgstr "Dökkur hamur"
 
 #: src/control/Control.Menubar.js:146 src/control/Control.Menubar.js:448
 #: src/control/Control.Menubar.js:597 src/control/Control.Menubar.js:738
-#: src/control/Control.Menubar.js:1010 src/control/Control.Menubar.js:1063
-#: src/control/Control.Menubar.js:1124 src/control/Control.Menubar.js:1184
+#: src/control/Control.Menubar.js:1011 src/control/Control.Menubar.js:1064
+#: src/control/Control.Menubar.js:1125 src/control/Control.Menubar.js:1185
 #: src/control/Control.NotebookbarCalc.js:1253
 #: src/control/Control.NotebookbarDraw.js:442
 #: src/control/Control.NotebookbarImpress.js:485
@@ -906,13 +906,13 @@ msgstr ""
 
 #: src/control/Control.Menubar.js:154 src/control/Control.Menubar.js:459
 #: src/control/Control.Menubar.js:604 src/control/Control.Menubar.js:750
-#: src/control/Control.Menubar.js:1226 src/control/Control.Menubar.js:1276
-#: src/control/Control.Menubar.js:1290 src/control/Control.Menubar.js:1313
+#: src/control/Control.Menubar.js:1227 src/control/Control.Menubar.js:1277
+#: src/control/Control.Menubar.js:1291 src/control/Control.Menubar.js:1314
 msgid "Local Image..."
 msgstr "Staðbundin mynd..."
 
 #: src/control/Control.Menubar.js:178 src/control/Control.Menubar.js:180
-#: src/control/Control.Menubar.js:1243 src/control/Control.Menubar.js:1245
+#: src/control/Control.Menubar.js:1244 src/control/Control.Menubar.js:1246
 msgid "All"
 msgstr "Allt"
 
@@ -970,27 +970,27 @@ msgstr "Aftengja tilvitnanir"
 msgid "Citation Preferences"
 msgstr "Kjörstillingar tilvitnana"
 
-#: src/control/Control.Menubar.js:340 src/control/Control.Menubar.js:1265
+#: src/control/Control.Menubar.js:340 src/control/Control.Menubar.js:1266
 msgid "Insert Rich Text"
 msgstr "Setja inn sniðinn texta"
 
-#: src/control/Control.Menubar.js:341 src/control/Control.Menubar.js:1266
+#: src/control/Control.Menubar.js:341 src/control/Control.Menubar.js:1267
 msgid "Insert Checkbox"
 msgstr "Setja inn gátreit"
 
-#: src/control/Control.Menubar.js:342 src/control/Control.Menubar.js:1267
+#: src/control/Control.Menubar.js:342 src/control/Control.Menubar.js:1268
 msgid "Insert Dropdown"
 msgstr "Setja inn fellilista"
 
-#: src/control/Control.Menubar.js:343 src/control/Control.Menubar.js:1268
+#: src/control/Control.Menubar.js:343 src/control/Control.Menubar.js:1269
 msgid "Insert Picture"
 msgstr "Setja inn mynd"
 
-#: src/control/Control.Menubar.js:344 src/control/Control.Menubar.js:1269
+#: src/control/Control.Menubar.js:344 src/control/Control.Menubar.js:1270
 msgid "Insert Date"
 msgstr "Setja inn dagsetningu"
 
-#: src/control/Control.Menubar.js:345 src/control/Control.Menubar.js:1270
+#: src/control/Control.Menubar.js:345 src/control/Control.Menubar.js:1271
 #: src/control/Control.NotebookbarCalc.js:241
 #: src/control/Control.NotebookbarDraw.js:307
 #: src/control/Control.NotebookbarImpress.js:309
@@ -999,7 +999,7 @@ msgstr "Setja inn dagsetningu"
 msgid "Properties"
 msgstr "Eiginleikar"
 
-#: src/control/Control.Menubar.js:365 src/control/Control.Menubar.js:1014
+#: src/control/Control.Menubar.js:365 src/control/Control.Menubar.js:1015
 #: src/control/Control.NotebookbarWriter.js:401
 msgid "Screen Reading"
 msgstr "Tal yfir"
@@ -1010,41 +1010,41 @@ msgid "Forum"
 msgstr "Spjallsvæði"
 
 #: src/control/Control.Menubar.js:379 src/control/Control.Menubar.js:540
-#: src/control/Control.Menubar.js:671 src/control/Control.Menubar.js:951
+#: src/control/Control.Menubar.js:671 src/control/Control.Menubar.js:952
 #: src/control/Control.NotebookbarWriter.js:379
 msgid "Online Help"
 msgstr "Hjálp á netinu"
 
 #: src/control/Control.Menubar.js:380 src/control/Control.Menubar.js:541
-#: src/control/Control.Menubar.js:672 src/control/Control.Menubar.js:952
+#: src/control/Control.Menubar.js:672 src/control/Control.Menubar.js:953
 #: src/control/Control.NotebookbarWriter.js:391
 msgid "Keyboard shortcuts"
 msgstr "Flýtileiðir á lyklaborði"
 
 #: src/control/Control.Menubar.js:381 src/control/Control.Menubar.js:542
-#: src/control/Control.Menubar.js:673 src/control/Control.Menubar.js:953
+#: src/control/Control.Menubar.js:673 src/control/Control.Menubar.js:954
 #: src/control/Control.NotebookbarWriter.js:426
 msgid "Report an issue"
 msgstr "Tilkynntu um vandamál"
 
 #: src/control/Control.Menubar.js:382 src/control/Control.Menubar.js:543
-#: src/control/Control.Menubar.js:674 src/control/Control.Menubar.js:954
-#: src/control/Control.Menubar.js:1023 src/control/Control.Menubar.js:1088
-#: src/control/Control.Menubar.js:1143 src/control/Control.Menubar.js:1218
+#: src/control/Control.Menubar.js:674 src/control/Control.Menubar.js:955
+#: src/control/Control.Menubar.js:1024 src/control/Control.Menubar.js:1089
+#: src/control/Control.Menubar.js:1144 src/control/Control.Menubar.js:1219
 #: src/control/Control.NotebookbarWriter.js:439
 msgid "Latest Updates"
 msgstr "Nýjustu uppfærslur"
 
 #: src/control/Control.Menubar.js:383 src/control/Control.Menubar.js:544
-#: src/control/Control.Menubar.js:675 src/control/Control.Menubar.js:955
-#: src/control/Control.Menubar.js:1024 src/control/Control.Menubar.js:1089
-#: src/control/Control.Menubar.js:1144 src/control/Control.Menubar.js:1219
+#: src/control/Control.Menubar.js:675 src/control/Control.Menubar.js:956
+#: src/control/Control.Menubar.js:1025 src/control/Control.Menubar.js:1090
+#: src/control/Control.Menubar.js:1145 src/control/Control.Menubar.js:1220
 #: src/control/Control.NotebookbarWriter.js:451
 msgid "Send Feedback"
 msgstr "Senda umsögn"
 
 #: src/control/Control.Menubar.js:384 src/control/Control.Menubar.js:545
-#: src/control/Control.Menubar.js:676 src/control/Control.Menubar.js:956
+#: src/control/Control.Menubar.js:676 src/control/Control.Menubar.js:957
 #: src/control/Control.NotebookbarWriter.js:416
 #: src/control/Control.ServerAuditDialog.ts:174
 #: src/control/Control.ServerAuditDialog.ts:175
@@ -1052,26 +1052,26 @@ msgid "Server audit"
 msgstr ""
 
 #: src/control/Control.Menubar.js:387 src/control/Control.Menubar.js:548
-#: src/control/Control.Menubar.js:679 src/control/Control.Menubar.js:959
+#: src/control/Control.Menubar.js:679 src/control/Control.Menubar.js:960
 msgid "Last modification"
 msgstr "Síðasta breyting"
 
 #: src/control/Control.Menubar.js:394 src/control/Control.Menubar.js:407
-#: src/control/Control.Menubar.js:1044
+#: src/control/Control.Menubar.js:1045
 #: src/control/Control.NotebookbarBuilder.js:454
 #: src/control/Control.NotebookbarBuilder.js:530
 msgid "ODF presentation (.odp)"
 msgstr "ODF-kynning (.odp)"
 
 #: src/control/Control.Menubar.js:395 src/control/Control.Menubar.js:408
-#: src/control/Control.Menubar.js:1045
+#: src/control/Control.Menubar.js:1046
 #: src/control/Control.NotebookbarBuilder.js:466
 #: src/control/Control.NotebookbarBuilder.js:538
 msgid "PowerPoint 2003 Presentation (.ppt)"
 msgstr "PowerPoint 2003 kynning (.ppt)"
 
 #: src/control/Control.Menubar.js:396 src/control/Control.Menubar.js:409
-#: src/control/Control.Menubar.js:1046
+#: src/control/Control.Menubar.js:1047
 #: src/control/Control.NotebookbarBuilder.js:462
 #: src/control/Control.NotebookbarBuilder.js:534
 msgid "PowerPoint Presentation (.pptx)"
@@ -1096,7 +1096,7 @@ msgstr ""
 msgid "Master View"
 msgstr "Yfirsýn"
 
-#: src/control/Control.Menubar.js:526 src/control/Control.Menubar.js:1087
+#: src/control/Control.Menubar.js:526 src/control/Control.Menubar.js:1088
 #: src/control/Control.PresentationBar.js:127
 msgid "Fullscreen presentation"
 msgstr "Kynning í skjáfylli"
@@ -1109,29 +1109,29 @@ msgstr "Birta núverandi skyggnu"
 msgid "Present in new window"
 msgstr ""
 
-#: src/control/Control.Menubar.js:565 src/control/Control.Menubar.js:1047
-#: src/control/Control.Menubar.js:1108
+#: src/control/Control.Menubar.js:565 src/control/Control.Menubar.js:1048
+#: src/control/Control.Menubar.js:1109
 #: src/control/Control.NotebookbarBuilder.js:458
 #: src/control/Control.NotebookbarDraw.js:238
 msgid "ODF Drawing (.odg)"
 msgstr "ODF-teikning (.odg)"
 
 #: src/control/Control.Menubar.js:686 src/control/Control.Menubar.js:698
-#: src/control/Control.Menubar.js:1166
+#: src/control/Control.Menubar.js:1167
 #: src/control/Control.NotebookbarBuilder.js:424
 #: src/control/Control.NotebookbarBuilder.js:515
 msgid "ODF spreadsheet (.ods)"
 msgstr "ODF-töflureikniskjal (.ods)"
 
 #: src/control/Control.Menubar.js:687 src/control/Control.Menubar.js:699
-#: src/control/Control.Menubar.js:1167
+#: src/control/Control.Menubar.js:1168
 #: src/control/Control.NotebookbarBuilder.js:432
 #: src/control/Control.NotebookbarBuilder.js:523
 msgid "Excel 2003 Spreadsheet (.xls)"
 msgstr "Excel 2003 töflureiknir (.xls)"
 
 #: src/control/Control.Menubar.js:688 src/control/Control.Menubar.js:700
-#: src/control/Control.Menubar.js:1168
+#: src/control/Control.Menubar.js:1169
 #: src/control/Control.NotebookbarBuilder.js:428
 #: src/control/Control.NotebookbarBuilder.js:519
 msgid "Excel Spreadsheet (.xlsx)"
@@ -1146,7 +1146,7 @@ msgstr "CSV-skrá (.csv)"
 msgid "Active sheet"
 msgstr "Virkt blað"
 
-#: src/control/Control.Menubar.js:706 src/control/Control.TopToolbar.js:109
+#: src/control/Control.Menubar.js:706 src/control/Control.TopToolbar.js:110
 #: src/control/jsdialog/Definitions.Menu.ts:112
 msgid "All Sheets"
 msgstr "Öll blöð"
@@ -1227,8 +1227,8 @@ msgstr ""
 msgid "Below Average..."
 msgstr ""
 
-#: src/control/Control.Menubar.js:963 src/control/Control.Menubar.js:1029
-#: src/control/Control.Menubar.js:1094 src/control/Control.Menubar.js:1149
+#: src/control/Control.Menubar.js:964 src/control/Control.Menubar.js:1030
+#: src/control/Control.Menubar.js:1095 src/control/Control.Menubar.js:1150
 #: src/control/Control.NotebookbarCalc.js:826
 #: src/control/Control.NotebookbarDraw.js:975
 #: src/control/Control.NotebookbarImpress.js:1027
@@ -1239,15 +1239,15 @@ msgstr ""
 msgid "Search"
 msgstr "Leita"
 
-#: src/control/Control.Menubar.js:1016
+#: src/control/Control.Menubar.js:1017
 msgid "Page Setup"
 msgstr "Uppsetning síðu"
 
-#: src/control/Control.Menubar.js:1160
+#: src/control/Control.Menubar.js:1161
 msgid "Define print area"
 msgstr "Skilgreindu prentsvæði"
 
-#: src/control/Control.Menubar.js:1161
+#: src/control/Control.Menubar.js:1162
 msgid "Remove print area"
 msgstr "Fjarlægja prentsvæði"
 
@@ -1288,7 +1288,7 @@ msgid "Show the search bar"
 msgstr "Birta leitarstikuna"
 
 #: src/control/Control.MobileBottomBar.js:37
-#: src/control/Control.TopToolbar.js:139
+#: src/control/Control.TopToolbar.js:140
 msgid "Borders"
 msgstr "Jaðrar"
 
@@ -1553,7 +1553,7 @@ msgid "Sparkline"
 msgstr "Línurit í reit (sparkline)"
 
 #: src/control/Control.NotebookbarCalc.js:1461
-#: src/control/Control.NotebookbarCalc.js:2263
+#: src/control/Control.NotebookbarCalc.js:2286
 #: src/control/Control.NotebookbarDraw.js:855
 #: src/control/Control.NotebookbarDraw.js:1351
 #: src/control/Control.NotebookbarImpress.js:899
@@ -1842,27 +1842,27 @@ msgstr ""
 "Árekstur vegna Afturkalla/Endurtaka við aðra notendur. Notaðu viðgerð á "
 "skjali til að leysa þetta"
 
-#: src/control/Control.TopToolbar.js:108
+#: src/control/Control.TopToolbar.js:109
 msgid "Active Sheet"
 msgstr "Virkt blað"
 
-#: src/control/Control.TopToolbar.js:120
+#: src/control/Control.TopToolbar.js:121
 msgid "Default Style"
 msgstr "Sjálfgefinn stíll"
 
-#: src/control/Control.TopToolbar.js:180
+#: src/control/Control.TopToolbar.js:181
 msgid "Insert table"
 msgstr "Setja inn töflu"
 
-#: src/control/Control.TopToolbar.js:183
+#: src/control/Control.TopToolbar.js:184
 msgid "Insert shapes"
 msgstr "Setja inn form"
 
-#: src/control/Control.TopToolbar.js:185
+#: src/control/Control.TopToolbar.js:186
 msgid "Insert connectors"
 msgstr "Setja inn tengilínur"
 
-#: src/control/Control.TopToolbar.js:199 src/control/Control.UIManager.js:810
+#: src/control/Control.TopToolbar.js:200 src/control/Control.UIManager.js:811
 msgid "Hide Menu"
 msgstr "Fela valmynd"
 
@@ -1870,7 +1870,7 @@ msgstr "Fela valmynd"
 msgid "Enter new name"
 msgstr ""
 
-#: src/control/Control.UIManager.js:834
+#: src/control/Control.UIManager.js:835
 msgid "Show Menu"
 msgstr ""
 
@@ -1914,11 +1914,11 @@ msgstr "0 notendur"
 msgid "User List Summary"
 msgstr ""
 
-#: src/control/Control.UserList.ts:490
+#: src/control/Control.UserList.ts:493
 msgid "Following"
 msgstr "Fylgir"
 
-#: src/control/Control.UserList.ts:546
+#: src/control/Control.UserList.ts:549
 msgid "Always follow the editor"
 msgstr "Alltaf fylgja ritlinum"
 
@@ -1943,7 +1943,7 @@ msgstr ""
 "API-kerfisviðmót vefsvæðisins. Þetta gæti valdið vandræðum við meðhöndlun "
 "tilvitnana eða heimildaskrár."
 
-#: src/control/Control.Zotero.js:244 src/core/Socket.js:1289
+#: src/control/Control.Zotero.js:244 src/core/Socket.js:1297
 msgid "Loading..."
 msgstr "Hleð inn..."
 
@@ -2293,17 +2293,17 @@ msgstr ""
 msgid "Headings and objects that you add to the document will appear here"
 msgstr "Fyrirsagnir og hlutir sem þú bætir í skjalið munu birtast hér"
 
-#: src/slideshow/SlideShowPresenter.ts:385
+#: src/slideshow/SlideShowPresenter.ts:432
 #: src/map/handler/Map.SlideShow.js:161
 msgid "Windowed Presentation: "
 msgstr ""
 
-#: src/slideshow/SlideShowPresenter.ts:393
+#: src/slideshow/SlideShowPresenter.ts:440
 #: src/map/handler/Map.SlideShow.js:168
 msgid "Windowed Presentation Blocked"
 msgstr ""
 
-#: src/slideshow/SlideShowPresenter.ts:395
+#: src/slideshow/SlideShowPresenter.ts:442
 #: src/map/handler/Map.SlideShow.js:169
 msgid ""
 "Presentation was blocked. Please allow pop-ups in your browser. This lets "
@@ -2311,36 +2311,36 @@ msgid ""
 "sharing."
 msgstr ""
 
-#: src/slideshow/SlideShowPresenter.ts:429
+#: src/slideshow/SlideShowPresenter.ts:476
 #: src/map/handler/Map.SlideShow.js:183
 msgid "Presenting in window"
 msgstr ""
 
-#: src/slideshow/SlideShowPresenter.ts:430
+#: src/slideshow/SlideShowPresenter.ts:477
 #: src/map/handler/Map.SlideShow.js:184
 msgid "Close Presentation"
 msgstr ""
 
-#: src/slideshow/SlideShowPresenter.ts:517 src/map/handler/Map.SlideShow.js:55
+#: src/slideshow/SlideShowPresenter.ts:564 src/map/handler/Map.SlideShow.js:55
 msgid "Empty Slide Show"
 msgstr ""
 
-#: src/slideshow/SlideShowPresenter.ts:532
+#: src/slideshow/SlideShowPresenter.ts:579
 #: src/map/handler/Map.SlideShow.js:303
 msgid "Already presenting"
 msgstr ""
 
-#: src/slideshow/SlideShowPresenter.ts:533
+#: src/slideshow/SlideShowPresenter.ts:580
 #: src/map/handler/Map.SlideShow.js:304
 msgid "You are already presenting this document"
 msgstr ""
 
-#: src/slideshow/SlideShowPresenter.ts:548
+#: src/slideshow/SlideShowPresenter.ts:595
 #: src/map/handler/Map.SlideShow.js:314
 msgid "Presentation disabled"
 msgstr ""
 
-#: src/slideshow/SlideShowPresenter.ts:549
+#: src/slideshow/SlideShowPresenter.ts:596
 #: src/map/handler/Map.SlideShow.js:315
 msgid "Presentation mode has been disabled for this document"
 msgstr ""
@@ -2349,63 +2349,63 @@ msgstr ""
 msgid "Oops, there is a problem connecting to {productname}: "
 msgstr "Úbbs, það kom upp villa við að tengjast {productname}: "
 
-#: src/core/Socket.js:665
+#: src/core/Socket.js:673
 msgid "Server is now reachable. We have to refresh the page now."
 msgstr "Netþjónninn er núna tiltækur. Við þurfum að hlaða síðunni aftur inn."
 
-#: src/core/Socket.js:667
+#: src/core/Socket.js:675
 msgid "Server is now reachable..."
 msgstr "Netþjónninn er núna tiltækur..."
 
-#: src/core/Socket.js:671
+#: src/core/Socket.js:679
 msgid "RELOAD"
 msgstr "ENDURLESA"
 
-#: src/core/Socket.js:684
+#: src/core/Socket.js:692
 msgid "Cluster configuration warning"
 msgstr "Aðvörun varðandi uppsetningu klasa"
 
-#: src/core/Socket.js:687
+#: src/core/Socket.js:695
 msgid "Wrong server, reconnecting..."
 msgstr "Rangur netþjónn, endurtengist..."
 
-#: src/core/Socket.js:696
+#: src/core/Socket.js:704
 msgid "COOLWSD version:"
 msgstr "COOLWSD útgáfa:"
 
-#: src/core/Socket.js:708
+#: src/core/Socket.js:716
 msgid "Served by:"
 msgstr "Miðlað af:"
 
-#: src/core/Socket.js:714
+#: src/core/Socket.js:722
 msgid "Unsupported server version."
 msgstr "Óstudd útgáfa vefþjóns."
 
-#: src/core/Socket.js:718
+#: src/core/Socket.js:726
 msgid "LOKit version:"
 msgstr "LOKit útgáfa:"
 
-#: src/core/Socket.js:826
+#: src/core/Socket.js:834
 msgid "Document is getting migrated"
 msgstr "Verið er að yfirfæra skjal"
 
-#: src/core/Socket.js:853
+#: src/core/Socket.js:861
 msgid "Session terminated by document owner"
 msgstr "Setu er lokað af eiganda skjals"
 
-#: src/core/Socket.js:864
+#: src/core/Socket.js:872
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "Slökkt verður á kerfi vegna viðhalds (sjálfvirk vistun)"
 
-#: src/core/Socket.js:870
+#: src/core/Socket.js:878
 msgid "Oops, there is a problem connecting the document"
 msgstr "Úbbs, það kom upp villa við að tengjast skjalinu"
 
-#: src/core/Socket.js:874
+#: src/core/Socket.js:882
 msgid "Server is down, restarting automatically. Please wait."
 msgstr "Netþjónninn liggur niðri, endurræsi sjálfvirkt. Bíddu aðeins."
 
-#: src/core/Socket.js:901
+#: src/core/Socket.js:909
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
@@ -2413,7 +2413,7 @@ msgstr ""
 "Skjali hefur verið breytt í geymslu. Hleð inn nýja skjalinu. Útgáfan þín er "
 "tiltæk sem sérstök skráarútgáfa."
 
-#: src/core/Socket.js:907
+#: src/core/Socket.js:915
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
@@ -2421,84 +2421,84 @@ msgstr ""
 "Endurheimti eldri útgáfu. Allar óvistaðar breytingar verða tiltækar í "
 "vinnsluferilskrá"
 
-#: src/core/Socket.js:913
+#: src/core/Socket.js:921
 msgid "Reloading the document after rename"
 msgstr "Endurhleð skjalinu eftir endurnefningu"
 
-#: src/core/Socket.js:1071
+#: src/core/Socket.js:1079
 msgid "Document requires password to view."
 msgstr "Krafist er lykilorðs til að hægt sé að skoða skjalið."
 
-#: src/core/Socket.js:1074
+#: src/core/Socket.js:1082
 msgid "Document requires password to modify."
 msgstr "Krafist er lykilorðs til að hægt sé að breyta skjalinu."
 
-#: src/core/Socket.js:1076
+#: src/core/Socket.js:1084
 msgid "Hit Cancel to open in view-only mode."
 msgstr ""
 "Ýttu á \"Hætta við\" til að opna þetta skjal einungis lesanlegt (skrifvarið)."
 
-#: src/core/Socket.js:1080
+#: src/core/Socket.js:1088
 msgid "Wrong password provided. Please try again."
 msgstr "Rangt lykilorð, reyndu aftur."
 
-#: src/core/Socket.js:1118
+#: src/core/Socket.js:1126
 msgid "Only the document owner can change the password."
 msgstr "Aðeins eigandi skjalsins getur breytt lykilorðinu."
 
-#: src/core/Socket.js:1149 src/core/Socket.js:1154
+#: src/core/Socket.js:1157 src/core/Socket.js:1162
 msgid "Missing Fonts"
 msgstr "Letur sem vantar"
 
-#: src/core/Socket.js:1186
+#: src/core/Socket.js:1194
 msgid "Someone"
 msgstr "Einhver"
 
-#: src/core/Socket.js:1187
+#: src/core/Socket.js:1195
 msgid "{username} saved this document as {filename}. Do you want to join?"
 msgstr "{username} vistaði þetta skjal sem {filename}. Vilt þú taka þátt?"
 
-#: src/core/Socket.js:1204
+#: src/core/Socket.js:1212
 msgid "The document is being renamed and will reload shortly"
 msgstr "Verið er að endurnefna skjalið og það verður bráðum lesið aftur inn"
 
-#: src/core/Socket.js:1207
+#: src/core/Socket.js:1215
 msgid "The document is switching to Offline mode and will reload shortly"
 msgstr ""
 
-#: src/core/Socket.js:1289
+#: src/core/Socket.js:1297
 msgid "Connecting..."
 msgstr "Tengist..."
 
-#: src/core/Socket.js:1304
+#: src/core/Socket.js:1312
 msgid "Server is shutting down"
 msgstr ""
 
-#: src/core/Socket.js:1337
+#: src/core/Socket.js:1345
 msgid "Exported to storage"
 msgstr "Flutt út í geymslu"
 
-#: src/core/Socket.js:1337
+#: src/core/Socket.js:1345
 msgid "Successfully exported: "
 msgstr "Tókst að flytja út: "
 
-#: src/core/Socket.js:1365
+#: src/core/Socket.js:1373
 msgid "Discard"
 msgstr "Henda"
 
-#: src/core/Socket.js:1366 src/canvas/sections/CommentListSection.ts:1265
+#: src/core/Socket.js:1374 src/canvas/sections/CommentListSection.ts:1267
 msgid "Overwrite"
 msgstr "Skrifa yfir"
 
-#: src/core/Socket.js:1377
+#: src/core/Socket.js:1385
 msgid "Save to new file"
 msgstr "Vista í nýja skrá"
 
-#: src/core/Socket.js:1387
+#: src/core/Socket.js:1395
 msgid "Document has been changed"
 msgstr "Skjalinu hefur verið breytt"
 
-#: src/core/Socket.js:1388
+#: src/core/Socket.js:1396
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
@@ -2506,7 +2506,7 @@ msgstr ""
 "Skjali hefur verið breytt í gagnageymslu. Hvað viltu gera við óvistaðar "
 "breytingar?"
 
-#: src/core/Socket.js:1643
+#: src/core/Socket.js:1651
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -2514,11 +2514,11 @@ msgstr ""
 "Jæja, þetta er vandræðalegt; við náum ekki að tengjast skjalinu þínu. Reyndu "
 "aftur síðar."
 
-#: src/core/Socket.js:1660
+#: src/core/Socket.js:1668
 msgid "Reconnecting..."
 msgstr "Endurtengist..."
 
-#: src/core/Socket.js:1670
+#: src/core/Socket.js:1678
 msgid "The server has been disconnected."
 msgstr "Netþjónninn hefur verið aftengdur."
 
@@ -2542,11 +2542,11 @@ msgstr "Litir í þema"
 msgid "Document colors"
 msgstr ""
 
-#: src/docdispatcher.ts:384
+#: src/docdispatcher.ts:397
 msgid "Are you sure you want to delete this slide?"
 msgstr "Ertu viss um að þú viljir eyða þessari skyggnu?"
 
-#: src/docdispatcher.ts:387
+#: src/docdispatcher.ts:400
 msgid "Are you sure you want to delete this page?"
 msgstr "Ertu viss um að þú viljir eyða þessari síðu?"
 
@@ -2775,81 +2775,81 @@ msgstr "Sending á skrá til þjónsins mistókst, skráin fannst ekki."
 msgid "Uploading file to server failed, the file is too large."
 msgstr "Sending á skrá til þjónsins mistókst, skráin er of stór."
 
-#: src/layer/tile/CanvasTileLayer.js:1814
+#: src/layer/tile/CanvasTileLayer.js:1809
 msgid "Functions"
 msgstr "Föll"
 
-#: src/layer/tile/CanvasTileLayer.js:4059
+#: src/layer/tile/CanvasTileLayer.js:3772
 msgid "No Comments"
 msgstr "Engar athugasemdir"
 
-#: src/canvas/sections/CommentListSection.ts:139
+#: src/canvas/sections/CommentListSection.ts:141
 msgid "A comment is being edited"
 msgstr "Verið er að breyta athugasemd"
 
-#: src/canvas/sections/CommentListSection.ts:140
+#: src/canvas/sections/CommentListSection.ts:142
 msgid "Please save or discard the comment currently being edited."
 msgstr ""
 
-#: src/canvas/sections/CommentListSection.ts:980
+#: src/canvas/sections/CommentListSection.ts:982
 msgid "Modify"
 msgstr "Breyta"
 
-#: src/canvas/sections/CommentListSection.ts:986
+#: src/canvas/sections/CommentListSection.ts:988
 #: src/canvas/sections/CommentSection.ts:152
 msgid "Reply"
 msgstr "Svara"
 
-#: src/canvas/sections/CommentListSection.ts:992
+#: src/canvas/sections/CommentListSection.ts:994
 msgid "Remove"
 msgstr "Fjarlægja"
 
-#: src/canvas/sections/CommentListSection.ts:998
+#: src/canvas/sections/CommentListSection.ts:1000
 msgid "Remove Thread"
 msgstr "Fjarlægja athugasemdarunu"
 
-#: src/canvas/sections/CommentListSection.ts:1004
+#: src/canvas/sections/CommentListSection.ts:1006
 msgid "Resolve"
 msgstr "Leysa"
 
-#: src/canvas/sections/CommentListSection.ts:1004
+#: src/canvas/sections/CommentListSection.ts:1006
 msgid "Unresolve"
 msgstr "Taka til baka lausn"
 
-#: src/canvas/sections/CommentListSection.ts:1010
+#: src/canvas/sections/CommentListSection.ts:1012
 msgid "Unresolve Thread"
 msgstr "Taka til baka lausn á athugasemdarunu"
 
-#: src/canvas/sections/CommentListSection.ts:1010
+#: src/canvas/sections/CommentListSection.ts:1012
 msgid "Resolve Thread"
 msgstr "Leysa athugasemdarunu"
 
-#: src/canvas/sections/CommentListSection.ts:1250
-#: src/canvas/sections/CommentListSection.ts:1263
-#: src/canvas/sections/CommentListSection.ts:2100
+#: src/canvas/sections/CommentListSection.ts:1252
+#: src/canvas/sections/CommentListSection.ts:1265
+#: src/canvas/sections/CommentListSection.ts:2102
 msgid "Comments Updated"
 msgstr ""
 
-#: src/canvas/sections/CommentListSection.ts:1251
+#: src/canvas/sections/CommentListSection.ts:1253
 msgid "Another user has removed this comment."
 msgstr ""
 
-#: src/canvas/sections/CommentListSection.ts:1264
+#: src/canvas/sections/CommentListSection.ts:1266
 msgid ""
 "Another user has updated the comment. Would you like to overwrite those "
 "changes?"
 msgstr ""
 
-#: src/canvas/sections/CommentListSection.ts:1266
+#: src/canvas/sections/CommentListSection.ts:1268
 msgid "Update"
 msgstr ""
 
-#: src/canvas/sections/CommentListSection.ts:1337
-#: src/canvas/sections/CommentListSection.ts:1399
+#: src/canvas/sections/CommentListSection.ts:1339
+#: src/canvas/sections/CommentListSection.ts:1401
 msgid "Autosaved"
 msgstr "Vistað sjálfvirkt"
 
-#: src/canvas/sections/CommentListSection.ts:2101
+#: src/canvas/sections/CommentListSection.ts:2103
 msgid "Another user has updated comments. Would you like to proceed updating?"
 msgstr ""
 
@@ -2871,7 +2871,19 @@ msgstr "Hafna breytingu"
 msgid "Resolved"
 msgstr "Leyst"
 
-#: src/main.js:136
+#: src/canvas/sections/URLPopUpSection.ts:39
+msgid "Copy link location"
+msgstr "Afrita staðsetningu tengils"
+
+#: src/canvas/sections/URLPopUpSection.ts:49
+msgid "Edit link"
+msgstr "Breyta tengli"
+
+#: src/canvas/sections/URLPopUpSection.ts:59
+msgid "Remove link"
+msgstr "Fjarlægja tengil"
+
+#: src/main.js:139
 msgid "Warning! The browser you are using is not supported."
 msgstr "Aðvörun! Vafrinn sem þú ert að nota er ekki studdur."
 
@@ -2892,12 +2904,12 @@ msgstr "aðvörun: afrita/líma beiðni rann út á tíma"
 msgid "Failed to download clipboard, please re-copy"
 msgstr "Tókst ekki að sækja klippispjald, afritaðu aftur"
 
-#: src/map/Clipboard.js:1195
+#: src/map/Clipboard.js:1194
 #, fuzzy
 msgid "<p>Please use the paste buttons on your on-screen keyboard.</p>"
 msgstr "<p>Notaðu afrita/líma hnappana á skjályklaborðinu þínu.</p>"
 
-#: src/map/Clipboard.js:1197
+#: src/map/Clipboard.js:1196
 msgid ""
 "<p>Your browser has very limited access to the clipboard, so use these "
 "keyboard shortcuts:</p><table class=\"warn-copy-paste\"><tr><td><kbd>Ctrl</"
@@ -2914,7 +2926,7 @@ msgstr ""
 "n><kbd>V</kbd></td></tr><tr><td>Afrita</td><td>Klippa</td><td>Líma</td></tr><"
 "/table>"
 
-#: src/map/Clipboard.js:1216
+#: src/map/Clipboard.js:1215
 msgid ""
 "<p>A download due to a large copy/paste operation has already started. "
 "Please, wait for the current download or cancel it before starting a new "
@@ -2924,7 +2936,7 @@ msgstr ""
 "bíða eftir að því sé lokið eða hætta við aðgerðina áður en þú hefur nýja "
 "slíka aðgerð</p>"
 
-#: src/map/Clipboard.js:1234
+#: src/map/Clipboard.js:1233
 #, fuzzy
 msgid ""
 "<p>Your browser has very limited access to the clipboard</p><p><b>Please "
@@ -2936,19 +2948,19 @@ msgstr ""
 "fleiri valkosti</p><p>Lokaðu sprettglugganum til að hunsa sérstaka "
 "límingu</p>"
 
-#: src/map/Clipboard.js:1241
+#: src/map/Clipboard.js:1240
 msgid "Paste from this document"
 msgstr ""
 
-#: src/map/Clipboard.js:1241
+#: src/map/Clipboard.js:1240
 msgid "Cancel paste special"
 msgstr ""
 
-#: src/map/Map.js:218
+#: src/map/Map.js:219
 msgid "Initializing..."
 msgstr "Frumstilli..."
 
-#: src/map/Map.js:444 src/map/Map.js:447 src/map/Map.js:450 src/map/Map.js:453
+#: src/map/Map.js:445 src/map/Map.js:448 src/map/Map.js:451 src/map/Map.js:454
 msgid "Last saved:"
 msgstr "Síðast vistað:"
 
@@ -2990,19 +3002,19 @@ msgstr ""
 msgid "End Presentation"
 msgstr "Kynning"
 
-#: src/map/handler/Map.WOPI.js:152
+#: src/map/handler/Map.WOPI.js:151
 msgid "Creating new file from template..."
 msgstr "Bý til nýja skrá út frá sniðmáti..."
 
-#: src/map/handler/Map.WOPI.js:605
+#: src/map/handler/Map.WOPI.js:604
 msgid "Error"
 msgstr "Villa"
 
-#: src/map/handler/Map.WOPI.js:605
+#: src/map/handler/Map.WOPI.js:604
 msgid "File name should contain an extension."
 msgstr "Skráarheiti ætti að vera með skráarendingu."
 
-#: src/map/handler/Map.WOPI.js:613
+#: src/map/handler/Map.WOPI.js:612
 msgid "Creating copy..."
 msgstr "Bý til afrit..."
 
@@ -3086,15 +3098,6 @@ msgstr ""
 
 #~ msgid "Document cannot be saved due to expired or invalid access token."
 #~ msgstr "Ekki er hægt að vista skjal vegna útrunnins eða ógilds aðgangsteikns."
-
-#~ msgid "Copy link location"
-#~ msgstr "Afrita staðsetningu tengils"
-
-#~ msgid "Edit link"
-#~ msgstr "Breyta tengli"
-
-#~ msgid "Remove link"
-#~ msgstr "Fjarlægja tengil"
 
 #~ msgid "Condition..."
 #~ msgstr "Skilyrði..."
