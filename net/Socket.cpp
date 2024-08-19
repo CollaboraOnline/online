@@ -1330,21 +1330,28 @@ bool StreamSocket::parseHeader(const char *clientName,
     {
         request.read(message);
 
-        LOG_INF("parseHeader: " << clientName << " HTTP Request: " << request.getMethod() << ' ' << request.getURI()
-                           << ' ' << request.getVersion() << ' '
-                           << [&](auto& log) { Util::joinPair(log, request, " / "); });
-
         const std::streamsize contentLength = request.getContentLength();
         const auto offset = itBody - _inBuffer.begin();
         const std::streamsize available = _inBuffer.size() - offset;
 
-        if (contentLength != Poco::Net::HTTPMessage::UNKNOWN_CONTENT_LENGTH && available < contentLength)
+        LOG_INF("parseHeader: " << clientName << " HTTP Request: " << request.getMethod()
+                                << ", uri `" << request.getURI() << "` " << request.getVersion()
+                                << ", sz[header " << map._headerSize << ", content "
+                                << contentLength << "], offset " << offset << ", chunked "
+                                << request.getChunkedTransferEncoding() << ", "
+                                << [&](auto& log) { Util::joinPair(log, request, " / "); });
+
+        if (contentLength != Poco::Net::HTTPMessage::UNKNOWN_CONTENT_LENGTH)
         {
-            LOG_DBG("parseHeader: Not enough content yet: ContentLength: " << contentLength
-                                                              << ", available: " << available << ", delay " << delayMs.count() << "ms");
-            return false;
+            if (available < contentLength)
+            {
+                LOG_DBG("parseHeader: Not enough content yet: ContentLength: "
+                        << contentLength << ", available: " << available << ", delay "
+                        << delayMs.count() << "ms");
+                return false;
+            }
+            map._messageSize += contentLength;
         }
-        map._messageSize += contentLength;
 
         const std::string expect = request.get("Expect", "");
         const bool getExpectContinue = Util::iequal(expect, "100-continue");
