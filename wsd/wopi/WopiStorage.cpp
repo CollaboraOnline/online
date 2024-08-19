@@ -624,18 +624,13 @@ void WopiStorage::uploadLocalFileToStorageAsync(const Authorization& auth, LockC
 
     // TODO: Check if this URI has write permission (canWrite = true)
 
-    // Always invoke the callback with the result of the async upload.
-    ScopedInvokeAsyncRequestCallback<AsyncUploadCallback, StorageBase::AsyncUpload>
-        scopedInvokeCallback(
-            asyncUploadCallback,
-            StorageBase::AsyncUpload(
-                StorageBase::AsyncUpload::State::Error,
-                StorageBase::UploadResult(StorageBase::UploadResult::Result::FAILED)));
-
     //TODO: replace with state machine.
     if (_uploadHttpSession)
     {
         LOG_WRN("Upload is already in progress.");
+        asyncUploadCallback(
+            AsyncUpload(AsyncUpload::State::Error,
+                UploadResult(UploadResult::Result::FAILED, "Already in progress.")));
         return;
     }
 
@@ -647,9 +642,9 @@ void WopiStorage::uploadLocalFileToStorageAsync(const Authorization& auth, LockC
     if (!fileStat.good())
     {
         LOG_ERR("Cannot access file [" << filePathAnonym << "] to upload to wopi storage.");
-        scopedInvokeCallback.setArg(
+        asyncUploadCallback(
             AsyncUpload(AsyncUpload::State::Error,
-                        UploadResult(UploadResult::Result::FAILED, "File not found.")));
+                UploadResult(UploadResult::Result::FAILED, "File not found.")));
         return;
     }
 
@@ -784,12 +779,14 @@ void WopiStorage::uploadLocalFileToStorageAsync(const Authorization& auth, LockC
 
         LOG_DBG(wopiLog << " async upload request: " << httpRequest.header().toString());
 
+        _uploadHttpSession->setConnectFailHandler([asyncUploadCallback]() {
+            LOG_ERR("Cannot connect for uploading to wopi storage.");
+            asyncUploadCallback(AsyncUpload(AsyncUpload::State::Error,
+                            UploadResult(UploadResult::Result::FAILED, "Connection failed.")));
+        });
+
         // Make the request.
-        if (_uploadHttpSession->asyncRequest(httpRequest, socketPoll))
-        {
-            scopedInvokeCallback.setArg(
-                AsyncUpload(AsyncUpload::State::Running, UploadResult(UploadResult::Result::OK)));
-        }
+        _uploadHttpSession->asyncRequest(httpRequest, socketPoll);
 
         return;
     }
@@ -807,7 +804,7 @@ void WopiStorage::uploadLocalFileToStorageAsync(const Authorization& auth, LockC
         _uploadHttpSession.reset();
     }
 
-    scopedInvokeCallback.setArg(AsyncUpload(
+    asyncUploadCallback(AsyncUpload(
         AsyncUpload::State::Error, UploadResult(UploadResult::Result::FAILED, "Internal error.")));
 }
 
