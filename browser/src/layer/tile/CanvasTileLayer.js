@@ -1031,7 +1031,24 @@ L.CanvasTileLayer = L.Layer.extend({
 		return new L.Bounds(topLeftTwips, bottomRightTwips);
 	},
 
+	_listenProtocol: function(textMsg) {
+		if (!L._protocol)
+			return;
+
+		if (textMsg.startsWith(L._protocol)) {
+			var element = L.DomUtil.create('input');
+			element.id = 'listener-protocol';
+			element.type = 'hidden';
+			element.value = L._protocol;
+			document.body.appendChild(element);
+			delete L._protocol;
+		}
+	},
+
 	_onMessage: function (textMsg, img) {
+		if (L.Browser.cypressTest)
+			this._listenProtocol(textMsg);
+
 		this._saveMessageForReplay(textMsg);
 		// 'tile:' is the most common message type; keep this the first.
 		if (textMsg.startsWith('tile:') || textMsg.startsWith('delta:')) {
