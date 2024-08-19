@@ -41,8 +41,6 @@ class HostEntry
 
     void setEAI(int eaino);
 
-    void initFromHostName(const std::string& host, const char* port);
-
     std::string makeIPAddress(const sockaddr* ai_addr);
 
 public:

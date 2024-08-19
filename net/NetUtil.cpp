@@ -73,39 +73,6 @@ std::string HostEntry::makeIPAddress(const sockaddr* ai_addr)
     return std::string(result);
 }
 
-void HostEntry::initFromHostName(const std::string& host, const char* port)
-{
-    assert(!_ainfo);
-
-    addrinfo hints;
-    std::memset(&hints, 0, sizeof(hints));
-    hints.ai_flags = AI_CANONNAME | AI_ADDRCONFIG;
-
-    addrinfo* ainfo = nullptr;
-    int rc = getaddrinfo(host.c_str(), port, &hints, &ainfo);
-    _ainfo.reset(ainfo, freeaddrinfo);
-    if (rc == 0)
-    {
-        for (const addrinfo* ai = _ainfo.get(); ai; ai = ai->ai_next)
-        {
-            if (ai->ai_canonname)
-                _canonicalName.assign(ai->ai_canonname);
-
-            if (!ai->ai_addrlen || !ai->ai_addr)
-                continue;
-
-            std::string address = makeIPAddress(ai->ai_addr);
-            if (!good())
-                break;
-            _ipAddresses.push_back(address);
-        }
-        return;
-    }
-
-    setEAI(rc);
-    LOG_SYS("Failed to lookup host " << errorMessage());
-}
-
 void HostEntry::setEAI(int eaino)
 {
     _eaino = eaino;
@@ -129,7 +96,33 @@ HostEntry::HostEntry(const std::string& desc, const char* port)
     , _errno(0)
     , _eaino(0)
 {
-    initFromHostName(desc, port);
+    addrinfo hints;
+    std::memset(&hints, 0, sizeof(hints));
+    hints.ai_flags = AI_CANONNAME | AI_ADDRCONFIG;
+
+    addrinfo* ainfo = nullptr;
+    int rc = getaddrinfo(desc.c_str(), port, &hints, &ainfo);
+    _ainfo.reset(ainfo, freeaddrinfo);
+    if (rc == 0)
+    {
+        for (const addrinfo* ai = _ainfo.get(); ai; ai = ai->ai_next)
+        {
+            if (ai->ai_canonname)
+                _canonicalName.assign(ai->ai_canonname);
+
+            if (!ai->ai_addrlen || !ai->ai_addr)
+                continue;
+
+            std::string address = makeIPAddress(ai->ai_addr);
+            if (!good())
+                break;
+            _ipAddresses.push_back(address);
+        }
+        return;
+    }
+
+    setEAI(rc);
+    LOG_SYS("Failed to lookup host " << errorMessage());
 }
 
 HostEntry::~HostEntry() = default;
