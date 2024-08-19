@@ -53,7 +53,7 @@ public:
         _req = http::Request("/browser/a90f83c/foo/remote/static/lokit-extra-img.svg");
 
         httpSession->setConnectFailHandler([this]() {
-            LOK_ASSERT(false);
+            LOK_ASSERT_FAIL("Unexpected connection failure");
         });
 
         httpSession->setFinishedHandler([&](const std::shared_ptr<http::Session>&) {
