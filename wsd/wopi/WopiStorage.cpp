@@ -785,6 +785,10 @@ void WopiStorage::uploadLocalFileToStorageAsync(const Authorization& auth, LockC
                             UploadResult(UploadResult::Result::FAILED, "Connection failed.")));
         });
 
+        // Notify client via callback that the request is in progress...
+        asyncUploadCallback(
+            AsyncUpload(AsyncUpload::State::Running, UploadResult(UploadResult::Result::OK)));
+
         // Make the request.
         _uploadHttpSession->asyncRequest(httpRequest, socketPoll);
 
