@@ -265,6 +265,18 @@ class SlideShowPresenter {
 				transitionParameters,
 				loopAndRepeatDuration,
 				() => {
+					const currSlideInfo = this.getSlideInfo(this._currentSlide);
+
+					if (
+						currSlideInfo?.transitionType == undefined ||
+						currSlideInfo.transitionType == 'NONE'
+					) {
+						this._slideCompositor.fetchAndRun(this._currentSlide, () => {
+							this._doPresentation();
+						});
+						return;
+					}
+
 					this._doTransition(
 						this._slideRenderer._slideTexture,
 						this._currentSlide,

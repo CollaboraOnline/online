@@ -71,14 +71,14 @@ class PauseTimerGl extends Transition2d implements PauseTimer {
 			Math.ceil(this.pauseTimeRemaining),
 		);
 
+		this.render();
+		requestAnimationFrame(this.animate.bind(this));
+
 		if (this.pauseTimeRemaining <= 0) {
 			console.log('Timer finished');
 			this.onComplete();
 			return;
 		}
-
-		this.render();
-		requestAnimationFrame(this.animate.bind(this));
 	}
 
 	private createTextTexture(remainingCount: number): WebGLTexture {
