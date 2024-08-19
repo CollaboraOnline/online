@@ -54,6 +54,14 @@ class IdleHandler {
 		return (Date.now() - this._lastActivity) / 1000;
 	}
 
+	refreshAnnotations() {
+		var docLayer = this.map._docLayer;
+		if (docLayer.isCalc() && docLayer.options.sheetGeometryDataEnabled) {
+			docLayer.requestSheetGeometryData();
+		}
+		app.socket.sendMessage('commandvalues command=.uno:ViewAnnotations');
+	}
+
 	_activate() {
 		window.app.console.debug('IdleHandler: _activate()');
 
@@ -69,11 +77,20 @@ class IdleHandler {
 			if (app.socket.connected()) {
 				app.socket.sendMessage('useractive');
 				this._active = true;
-				var docLayer = this.map._docLayer;
-				if (docLayer && docLayer.isCalc() && docLayer.options.sheetGeometryDataEnabled) {
-					docLayer.requestSheetGeometryData();
+
+				/*
+				  If we have the docLayer then refresh annotations now. If not then
+				  postpone until we do have the docLayer so we know if this is calc
+				  or not, because for calc we have to ensure we have the sheet
+				  geometry before requesting annotations otherwise we will lack the
+				  requirements to position them.
+				*/
+				if (this.map._docLayer) {
+					this.refreshAnnotations();
 				}
-				app.socket.sendMessage('commandvalues command=.uno:ViewAnnotations');
+				else {
+					this.map.once('doclayerinit', this.refreshAnnotations, this);
+				}
 
 				if (this.isDimActive()) {
 					this.map.jsdialog.closeDialog(this.dimId, false);
