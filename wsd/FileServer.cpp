@@ -1368,7 +1368,7 @@ FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::prepro
     Poco::URI indirectionURI(config.getString("indirection_endpoint.url", ""));
     Poco::replaceInPlace(preprocess, std::string("%INDIRECTION_URL%"), indirectionURI.toString());
 
-    bool geoLocationSetup = config.getBool("indirection_endpoint.geolocation_setup.enable");
+    bool geoLocationSetup = config.getBool("indirection_endpoint.geolocation_setup.enable", false);
     if (geoLocationSetup)
         Poco::replaceInPlace(preprocess, std::string("%GEOLOCATION_SETUP%"),
                              boolToString(geoLocationSetup));
