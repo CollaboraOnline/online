@@ -303,8 +303,12 @@ class InitializerBase {
 			brandingLink.setAttribute("href", this.brandingUriPrefix + theme_prefix + 'branding-desktop.css');
 		}
 
-		document.getElementsByTagName("head")[[0]].appendChild(link);
-		document.getElementsByTagName("head")[[0]].appendChild(brandingLink);
+		const otherStylesheets = document.querySelectorAll('link[rel="stylesheet"]');
+		const lastOtherStylesheet = otherStylesheets[otherStylesheets.length - 1];
+
+		lastOtherStylesheet
+			.insertAdjacentElement('afterend', link)
+			.insertAdjacentElement('afterend', brandingLink);
 	}
 
 	initializeViewMode() {
