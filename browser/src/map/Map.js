@@ -312,7 +312,8 @@ L.Map = L.Evented.extend({
 	// A11y
 
 	initTextInput: function(docType) {
-		var hasAccessibilitySupport = window.enableAccessibility && app.accessibilityState;
+		var hasAccessibilitySupport =
+			window.enableAccessibility && window.prefs.getBoolean('accessibilityState');
 		hasAccessibilitySupport = hasAccessibilitySupport &&
 			(docType === 'text' || docType === 'presentation'|| docType === 'spreadsheet');
 
@@ -326,17 +327,18 @@ L.Map = L.Evented.extend({
 	},
 
 	setupCoreAccessibility: function(enableA11y) {
-		app.accessibilityState = enableA11y;
 		app.socket.sendMessage('a11ystate ' + enableA11y);
 	},
 
 	setAccessibilityState: function(enable) {
-		if (app.accessibilityState === enable)
+		if (window.prefs.getBoolean('accessibilityState') === enable)
 			return;
 
+		window.prefs.set('accessibilityState', enable);
 		this.setupCoreAccessibility(enable);
 		this.removeLayer(this._textInput);
 		this.createTextInput(enable);
+		this.fire('a11ystatechanged');
 
 		if (enable)
 			this._textInput._requestFocusedParagraph();

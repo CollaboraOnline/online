@@ -704,14 +704,10 @@ function getInitializerClass() {
 		if (L.Browser.cypressTest && isCalcTest)
 			global.enableAccessibility = false;
 
-		if (L.Browser.cypressTest) {
+		if (L.Browser.cypressTest)
 			global.prefs.set('accessibilityState', global.enableAccessibility);
-			global.app.accessibilityState = global.enableAccessibility;
-		}
 
-		var accessibilityState = global.prefs.getBoolean('accessibilityState');
-		global.app.accessibilityState = accessibilityState;
-		return accessibilityState;
+		return global.prefs.getBoolean('accessibilityState');
 	};
 
 	// Renamed in 24.04.4.1
@@ -1621,8 +1617,7 @@ function getInitializerClass() {
 				var now2 = Date.now();
 				global.socket.send('coolclient ' + ProtocolVersionNumber + ' ' + ((now0 + now2) / 2) + ' ' + now1);
 
-				var accessibilityState = global.getAccessibilityState();
-				msg += ' accessibilityState=' + accessibilityState;
+				msg += ' accessibilityState=' + global.getAccessibilityState();
 
 				if (global.ThisIsAMobileApp) {
 					msg += ' lang=' + global.LANG;

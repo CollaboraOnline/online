@@ -230,6 +230,12 @@ class Dispatcher {
 		this.actionsMap['serveraudit'] = () => {
 			app.map.serverAuditDialog.open();
 		};
+
+		this.actionsMap['togglea11ystate'] = () => {
+			var prevAccessibilityState =
+				window.prefs.getBoolean('accessibilityState');
+			app.map.setAccessibilityState(!prevAccessibilityState);
+		};
 	}
 
 	private addExportCommands() {

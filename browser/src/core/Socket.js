@@ -252,8 +252,7 @@ app.definitions.Socket = L.Class.extend({
 		msg += ' darkBackground=' + darkBackground;
 		this._map.uiManager.initDarkBackgroundUI(darkBackground);
 
-		var accessibilityState = window.getAccessibilityState();
-		msg += ' accessibilityState=' + accessibilityState;
+		msg += ' accessibilityState=' + window.getAccessibilityState();
 
 		this._doSend(msg);
 		for (var i = 0; i < this._msgQueue.length; i++) {
