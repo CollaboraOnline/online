@@ -152,6 +152,8 @@ function selectEntireSheet() {
 
 	removeTextSelection();
 
+	helper.listenProtocol('celladdress:');
+
 	cy.cGet('[id="test-div-corner header"]')
 		.then(function(items) {
 			expect(items).to.have.lengthOf(1);
@@ -164,6 +166,8 @@ function selectEntireSheet() {
 	helper.doIfOnMobile(function() {
 		cy.cGet('#test-div-cell_selection_handle_start').should('exist');
 	});
+
+	cy.cGet('#listener-protocol').should('exist');
 
 	var regex = /^A1:(AMJ|XFD)1048576$/;
 	cy.cGet(helper.addressInputSelector)

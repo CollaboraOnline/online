@@ -1171,6 +1171,7 @@ function setDummyClipboardForCopy(type) {
 // Clicks the Copy button on the UI.
 function copy() {
 	cy.log('helper.copy()');
+
 	cy.window({log: false}).then(win => {
 		const app = win['0'].app;
 		const clipboard = app.map._clip;
