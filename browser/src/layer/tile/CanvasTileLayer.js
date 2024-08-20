@@ -989,6 +989,15 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._onCurrentPageUpdate();
 	},
 
+	_isLatLngInView: function (position) {
+		var centerOffset = this._map._getCenterOffset(position);
+		var viewHalf = this._map._getCenterLayerPoint();
+		var positionInView =
+			centerOffset.x > -viewHalf.x && centerOffset.x < viewHalf.x &&
+			centerOffset.y > -viewHalf.y && centerOffset.y < viewHalf.y;
+		return positionInView;
+	},
+
 	_moveEnd: function () {
 		this._move();
 		this._moveInProgress = false;
@@ -1000,12 +1009,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				var cursorPos = this._map._docLayer._twipsToLatLng({ x: app.calc.cellCursorRectangle.x2, y: app.calc.cellCursorRectangle.y2 });
 			else
 				cursorPos = this._map._docLayer._twipsToLatLng({ x: app.file.textCursor.rectangle.x2, y: app.file.textCursor.rectangle.y2 });
-
-			var centerOffset = this._map._getCenterOffset(cursorPos);
-			var viewHalf = this._map.getSize()._divideBy(2);
-			var cursorPositionInView =
-				centerOffset.x > -viewHalf.x && centerOffset.x < viewHalf.x &&
-				centerOffset.y > -viewHalf.y && centerOffset.y < viewHalf.y;
+			var cursorPositionInView = this._isLatLngInView(cursorPos);
 			if (parseInt(app.getFollowedViewId()) === parseInt(this._viewId) && !cursorPositionInView) {
 				app.setFollowingOff();
 			} else if (parseInt(app.getFollowedViewId()) === -1 && cursorPositionInView) {
@@ -4022,11 +4026,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				&& this._map._docLayer._cursorMarker && this._map._docLayer._cursorMarker.isDomAttached();
 			if (!heightIncreased && isTabletOrMobile && this._map._docLoaded && hasVisibleCursor) {
 				var cursorPos = this._map._docLayer._twipsToLatLng({ x: app.file.textCursor.rectangle.x1, y: app.file.textCursor.rectangle.y2 });
-				var centerOffset = this._map._getCenterOffset(cursorPos);
-				var viewHalf = this._map.getSize()._divideBy(2);
-				var cursorPositionInView =
-					centerOffset.x > -viewHalf.x && centerOffset.x < viewHalf.x &&
-					centerOffset.y > -viewHalf.y && centerOffset.y < viewHalf.y;
+				var cursorPositionInView = this._isLatLngInView(cursorPos);
 				if (!cursorPositionInView)
 					this._map.panTo(cursorPos);
 			}
