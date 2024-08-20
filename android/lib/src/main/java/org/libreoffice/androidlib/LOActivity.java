@@ -69,6 +69,7 @@ import java.nio.channels.Channels;
 import java.nio.channels.FileChannel;
 import java.nio.channels.ReadableByteChannel;
 import java.nio.charset.Charset;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -739,7 +740,7 @@ public class LOActivity extends AppCompatActivity {
                         // This will actually change the doc permission to write
                         // It's a toggle for blue edit button, but also changes permission
                         // Toggle is achieved by calling setPermission('edit') in javascript
-                        callFakeWebsocketOnMessage("'mobile: readonlymode'");
+                        callFakeWebsocketOnMessage("mobile: readonlymode");
                         isDocEditable = true;
                     }
                     return;
@@ -812,10 +813,10 @@ public class LOActivity extends AppCompatActivity {
 
         if (mMobileWizardVisible) {
             // just return one level up in the mobile-wizard (or close it)
-            callFakeWebsocketOnMessage("'mobile: mobilewizardback'");
+            callFakeWebsocketOnMessage("mobile: mobilewizardback");
             return;
         } else if (mIsEditModeActive) {
-            callFakeWebsocketOnMessage("'mobile: readonlymode'");
+            callFakeWebsocketOnMessage("mobile: readonlymode");
             return;
         }
 
@@ -959,6 +960,17 @@ public class LOActivity extends AppCompatActivity {
      * Passing message the other way around - from Java to the FakeWebSocket in JS.
      */
     void callFakeWebsocketOnMessage(final String message) {
+        String base64Message = Base64.getEncoder().encodeToString(message.getBytes());
+
+        rawCallFakeWebsocketOnMessage("window.atob('" + base64Message + "')");
+    }
+
+    /**
+     * Similar to callFakeWebsocketOnMessage but 'message' is instead any expression evaluable as
+     * JavaScript. For example, you should use this to pass Base64ToArrayBuffer invocations to
+     * the fake websocket
+     */
+    void rawCallFakeWebsocketOnMessage(final String message) {
         // call from the UI thread
         if (mWebView != null)
             mWebView.post(new Runnable() {
