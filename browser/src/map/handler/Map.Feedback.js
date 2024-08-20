@@ -27,6 +27,11 @@ L.Map.Feedback = L.Handler.extend({
 		L.DomEvent.off(window, 'message', this.onMessage, this);
 	},
 
+	removeIframe: function () {
+		if (this._iframeDialog)
+			this._iframeDialog.remove()
+	},
+
 	onUpdateList: function () {
 		var docLayer = this._map._docLayer || {};
 
@@ -85,7 +90,7 @@ L.Map.Feedback = L.Handler.extend({
 
 	showFeedbackDialog: function () {
 		if (this._iframeDialog && this._iframeDialog.hasLoaded())
-			this._iframeDialog.remove();
+			this.removeIframe();
 
 		var lokitHash = document.querySelector('#lokit-version a') || {};
 		lokitHash = lokitHash ? lokitHash.innerText : '';
@@ -112,7 +117,7 @@ L.Map.Feedback = L.Handler.extend({
 
 	onError: function () {
 		window.prefs.remove('WSDFeedbackEnabled');
-		this._iframeDialog.remove();
+		this.removeIframe();
 	},
 
 	onMessage: function (e) {
@@ -131,10 +136,10 @@ L.Map.Feedback = L.Handler.extend({
 		else if (data == 'feedback-never') {
 			window.prefs.set('WSDFeedbackEnabled', false);
 			window.prefs.remove('WSDFeedbackCount');
-			this._iframeDialog.remove();
+			this.removeIframe();
 		} else if (data == 'feedback-later') {
 			var currentDate = new Date();
-			this._iframeDialog.remove();
+			this.removeIframe();
 			window.prefs.set('WSDFeedbackLaterDate', currentDate.getTime());
 			window.prefs.remove('WSDFeedbackCount');
 		} else if (data == 'feedback-submit') {
@@ -146,10 +151,10 @@ L.Map.Feedback = L.Handler.extend({
 			}, 400);
 
 		} else if (data == 'iframe-feedback-load' && !this._iframeDialog.isVisible()) {
-			this._iframeDialog.remove();
+			this.removeIframe();
 			setTimeout(L.bind(this.onFeedback, this), this._map.options.feedbackTimeout);
 		} else if (data.endsWith('close')) {
-			this._iframeDialog.remove();
+			this.removeIframe();
 		}
 	}
 });
