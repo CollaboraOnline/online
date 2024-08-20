@@ -199,9 +199,9 @@ protected:
 #ifndef __FreeBSD__
 static bool haveCapability(cap_value_t capability)
 {
-    cap_t caps = cap_get_proc();
-
-    if (caps == nullptr)
+    using ScopedCaps = std::unique_ptr<std::remove_pointer<cap_t>::type, int (*)(void*)>;
+    ScopedCaps caps(cap_get_proc(), cap_free);
+    if (!caps)
     {
         LOG_SFL("cap_get_proc() failed");
         return false;
@@ -210,7 +210,7 @@ static bool haveCapability(cap_value_t capability)
     char *cap_name = cap_to_name(capability);
     cap_flag_value_t value;
 
-    if (cap_get_flag(caps, capability, CAP_EFFECTIVE, &value) == -1)
+    if (cap_get_flag(caps.get(), capability, CAP_EFFECTIVE, &value) == -1)
     {
         if (cap_name)
         {
