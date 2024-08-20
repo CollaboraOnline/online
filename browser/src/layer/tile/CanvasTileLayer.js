@@ -3154,7 +3154,6 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		if (!app.file.textCursor.visible) {
 			this._updateCursorAndOverlay();
-			app.definitions.otherViewCursorSection.updateVisibilities(true);
 			return;
 		}
 
