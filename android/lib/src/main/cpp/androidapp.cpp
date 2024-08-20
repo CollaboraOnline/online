@@ -127,25 +127,17 @@ static void send2JS(const JNIThreadContext &jctx, const std::vector<char>& buffe
     else
     {
         const unsigned char *ubufp = (const unsigned char *)buffer.data();
-        std::vector<char> data;
-        data.push_back('\'');
-        for (int i = 0; i < buffer.size(); i++)
-        {
-            if (ubufp[i] < ' ' || ubufp[i] == '\'' || ubufp[i] == '\\')
-            {
-                data.push_back('\\');
-                data.push_back('x');
-                data.push_back("0123456789abcdef"[(ubufp[i] >> 4) & 0x0F]);
-                data.push_back("0123456789abcdef"[ubufp[i] & 0x0F]);
-            }
-            else
-            {
-                data.push_back(ubufp[i]);
-            }
-        }
-        data.push_back('\'');
+        std::stringstream ss;
+        ss << "atob('";
 
-        js = std::string(data.data(), data.size());
+        Poco::Base64Encoder encoder(ss);
+        encoder.rdbuf()->setLineLength(0); // unlimited
+        encoder << std::string(buffer.data(), buffer.size());
+        encoder.close();
+        
+        ss << "')";
+
+        js = ss.str();
     }
 
     std::string subjs = js.substr(0, std::min(std::string::size_type(SHOW_JS_MAXLEN), js.length()));
@@ -156,7 +148,7 @@ static void send2JS(const JNIThreadContext &jctx, const std::vector<char>& buffe
 
     JNIEnv *env = jctx.getEnv();
     jstring jstr = env->NewStringUTF(js.c_str());
-    jmethodID callFakeWebsocket = env->GetMethodID(g_loActivityClz, "callFakeWebsocketOnMessage", "(Ljava/lang/String;)V");
+    jmethodID callFakeWebsocket = env->GetMethodID(g_loActivityClz, "rawCallFakeWebsocketOnMessage", "(Ljava/lang/String;)V");
     env->CallVoidMethod(g_loActivityObj, callFakeWebsocket, jstr);
     env->DeleteLocalRef(jstr);
 
