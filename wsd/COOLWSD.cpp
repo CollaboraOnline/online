@@ -2192,6 +2192,7 @@ void COOLWSD::innerInitialize(Application& self)
         { "deepl.auth_key", "" },
         { "deepl.enabled", "false" },
         { "zotero.enable", "true" },
+        { "indirection_endpoint.geolocation_setup.enable", "false" },
         { "indirection_endpoint.url", "" },
 #if !MOBILEAPP
         { "help_url", HELP_URL },
