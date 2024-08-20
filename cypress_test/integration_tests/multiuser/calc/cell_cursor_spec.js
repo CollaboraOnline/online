@@ -1,6 +1,7 @@
 /* global describe it cy beforeEach require */
 
 var helper = require('../../common/helper');
+var calcHelper = require('../../common/calc_helper');
 var desktopHelper = require('../../common/desktop_helper');
 
 describe(['tagmultiuser'], 'Check cell cursor and view behavior', function() {
@@ -45,5 +46,43 @@ describe(['tagmultiuser'], 'Check cell cursor and view behavior', function() {
 
 		// second view should still have cursor at the previous cell: A588+1
 		cy.cGet('input#addressInput-input').should('have.prop', 'value', 'A589');
+	});
+
+	it('Jump to the other sheet', function() {
+		// second view follow the first one
+		cy.cSetActiveFrame('#iframe2');
+		cy.cGet('#userListHeader').click();
+		cy.cGet('.user-list-item').eq(1).click();
+		cy.cGet('.jsdialog-overlay').click({force: true});
+
+		// first view goes somewhere in the middle of a sheet
+		cy.cSetActiveFrame('#iframe1');
+
+		cy.cGet('input#addressInput-input').type('{selectAll}A400{enter}');
+		desktopHelper.assertScrollbarPosition('vertical', 210, 240);
+		calcHelper.clickOnFirstCell(true, true, false);
+		cy.cGet('body').type('abc{enter}');
+
+		// second view should jump there
+		cy.cSetActiveFrame('#iframe2');
+		desktopHelper.assertScrollbarPosition('vertical', 210, 240);
+
+		// first view inserts sheet before current one
+		cy.cSetActiveFrame('#iframe1');
+		calcHelper.selectOptionFromContextMenu('Insert sheet before this');
+		cy.cGet('#map').focus();
+
+		// we should see A1
+		cy.cGet('input#addressInput-input').should('have.prop', 'value', 'A1');
+		desktopHelper.assertScrollbarPosition('vertical', 0, 30);
+
+		// verify that second view followed the first one
+		cy.cSetActiveFrame('#iframe2');
+		desktopHelper.assertScrollbarPosition('vertical', 0, 30);
+
+		// first goes to second sheet and we should see A388
+		cy.cSetActiveFrame('#iframe1');
+		cy.cGet('#spreadsheet-tab1').click();
+		desktopHelper.assertScrollbarPosition('vertical', 210, 240);
 	});
 });
