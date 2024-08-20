@@ -2076,9 +2076,16 @@ L.CanvasTileLayer = L.Layer.extend({
 		var suggestionArray = JSON.parse(textMsg);
 		for (var i = 0; i < suggestionArray.length; i++) {
 			var signature = suggestionArray[i].signature;
-			var name = signature.substring(0,signature.indexOf('('));
-			var description = suggestionArray[i].description;
-			resultList.push({'name': name, 'description': description});
+			var namedRange = suggestionArray[i].namedRange;
+			var name, description;
+			if (namedRange) {
+				name = signature;
+				description = _('Named Range');
+			} else {
+				name = signature.substring(0,signature.indexOf('('));
+				description = suggestionArray[i].description;
+			}
+			resultList.push({'name': name, 'description': description, 'namedRange': namedRange});
 		}
 		return resultList;
 	},

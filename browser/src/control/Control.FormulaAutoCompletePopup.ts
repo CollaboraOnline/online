@@ -67,8 +67,10 @@ class FormulaAutoCompletePopup extends L.Control.AutoCompletePopup {
 			var currentText = this.map._docLayer._lastFormula;
 			var chIndex = currentText.length - 1;
 			var functionName = this.functionList[index].name;
+			var namedRange = this.functionList[index].namedRange;
 			functionName = functionName.substring(chIndex);
-			this.map._textInput._sendText(functionName + '(');
+			if (namedRange) this.map._textInput._sendText(functionName);
+			else this.map._textInput._sendText(functionName + '(');
 			this.closePopup();
 		} else if (eventType === 'keydown') {
 			if (object.key !== 'Tab' && object.key !== 'Shift') {

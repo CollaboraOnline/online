@@ -90,6 +90,7 @@ var unoCommandsArray = {
 	'DecrementSubLevels':{text:{menu:_('Demote Outline Level with Subpoints'),},},
 	'DefaultBullet':{global:{context:_('Toggle Unordered List'),menu:_('~Unordered List'),},},
 	'DefaultNumbering':{global:{context:_('Toggle Ordered List'),menu:_('~Ordered List'),},},
+	'DefineDBName':{spreadsheet:{menu:_('~Define Range...'),},},
 	'DefineName':{spreadsheet:{menu:_('~Manage...'),},},
 	'DefinePrintArea':{spreadsheet:{menu:_('~Define'),},},
 	'Delete':{global:{menu:_('Delete C~ontents...'),},spreadsheet:{context:_('Cl~ear Contents...'),menu:_('Cle~ar Cells...'),},},
