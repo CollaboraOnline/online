@@ -36,7 +36,7 @@ function hideSidebarImpress() {
 
 	cy.cGet('#modifypage').should('have.class', 'selected');
 	cy.cGet('#sidebar-dock-wrapper').should('be.visible');
-	cy.cGet('#modifypage button').click({force: true});
+	cy.cGet('#modifypage').click({force: true});
 	cy.cGet('#modifypage').should('not.have.class', 'selected');
 	cy.cGet('#sidebar-dock-wrapper').should('not.be.visible');
 

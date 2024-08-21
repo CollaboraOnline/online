@@ -76,7 +76,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Apply bold font.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('.notebookbar > .unoBold > button').click();
+		cy.cGet('.notebookbar > .unoBold').click();
 		writerHelper.selectAllTextOfDoc();
 		helper.copy();
 		cy.cGet('#copy-paste-container p b').should('exist');
@@ -84,7 +84,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Apply italic font.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('.notebookbar > .unoItalic > button').click();
+		cy.cGet('.notebookbar > .unoItalic').click();
 		writerHelper.selectAllTextOfDoc();
 		helper.copy();
 		cy.cGet('#copy-paste-container p i').should('exist');
@@ -92,7 +92,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Apply underline.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('.notebookbar > .unoUnderline > button').click();
+		cy.cGet('.notebookbar > .unoUnderline').click();
 		writerHelper.selectAllTextOfDoc();
 		helper.copy();
 		cy.cGet('#copy-paste-container p u').should('exist');
@@ -100,7 +100,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Apply strikethrough.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('.notebookbar > .unoStrikeout > button').click();
+		cy.cGet('.notebookbar > .unoStrikeout').click();
 		writerHelper.selectAllTextOfDoc();
 		helper.copy();
 		cy.cGet('#copy-paste-container p strike').should('exist');
@@ -117,7 +117,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Clear direct formatting', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('.notebookbar > .unoBold > button').click();
+		cy.cGet('.notebookbar > .unoBold').click();
 		writerHelper.selectAllTextOfDoc();
 		helper.copy();
 		cy.cGet('#copy-paste-container p b').should('exist');
@@ -128,7 +128,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 	});
 
 	it('Apply left/right alignment.', function() {
-		cy.cGet('#Home .notebookbar > .unoBold > button').click();
+		cy.cGet('#Home .notebookbar > .unoBold').click();
 		writerHelper.selectAllTextOfDoc();
 		//cy.cGet('#copy-paste-container p').should('have.attr', 'align', 'right');
 		cy.cGet('#Home .notebookbar > .unoRightPara').click();
@@ -144,7 +144,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Apply justified.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#Home .notebookbar > div.unoJustifyPara > button.unobutton').click();
+		cy.cGet('#Home .notebookbar.unoJustifyPara').click();
 		writerHelper.selectAllTextOfDoc();
 		helper.copy();
 		cy.cGet('#copy-paste-container p').should('have.attr', 'align', 'justify');
@@ -152,12 +152,12 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Apply Line spacing: 1 and 1.5', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#Home .notebookbar .unoLineSpacing button').click();
+		cy.cGet('#Home .notebookbar .unoLineSpacing').click();
 		cy.cGet('[id$=home-line-spacing-entries]').contains('.ui-combobox-entry', 'Line Spacing: 1.5').click();
 		writerHelper.selectAllTextOfDoc();
 		helper.copy();
 		cy.cGet('#copy-paste-container p').should('have.attr', 'style').should('contain', 'line-height: 150%');
-		cy.cGet('#Home .notebookbar .unoLineSpacing button').click();
+		cy.cGet('#Home .notebookbar .unoLineSpacing').click();
 		cy.cGet('[id$=home-line-spacing-entries]').contains('.ui-combobox-entry', 'Line Spacing: 1').click();
 		writerHelper.selectAllTextOfDoc();
 		helper.copy();
@@ -166,7 +166,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Apply Line spacing: 2', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#Home .notebookbar .unoLineSpacing button').click();
+		cy.cGet('#Home .notebookbar .unoLineSpacing').click();
 		cy.cGet('[id$=home-line-spacing-entries]').contains('.ui-combobox-entry', 'Line Spacing: 2').click();
 		writerHelper.selectAllTextOfDoc();
 		helper.copy();
@@ -175,7 +175,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Increase/Decrease Paragraph spacing', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('.notebookbar .unoLineSpacing button').click();
+		cy.cGet('.notebookbar .unoLineSpacing').click();
 		cy.cGet('[id$=home-line-spacing-entries]').contains('.ui-combobox-entry', 'Increase Paragraph Spacing').click();
 
 		writerHelper.selectAllTextOfDoc();
@@ -186,7 +186,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 		writerHelper.selectAllTextOfDoc();
 
-		cy.cGet('.notebookbar .unoLineSpacing button').click();
+		cy.cGet('.notebookbar .unoLineSpacing').click();
 		cy.cGet('[id$=home-line-spacing-entries]').contains('.ui-combobox-entry', 'Decrease Paragraph Spacing').click();
 
 		writerHelper.selectAllTextOfDoc();
@@ -234,7 +234,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Insert/delete table.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#Home-container .unoInsertTable button').click({force: true});
+		cy.cGet('#Home-container .unoInsertTable').click({force: true});
 		cy.cGet('.inserttable-grid > .row > .col').eq(3).click();
 		helper.typeIntoDocument('{ctrl}a');
 		helper.copy();
@@ -257,7 +257,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		helper.expectTextForClipboard('text text1');
 		cy.wait(500);
 		cy.cGet('#Insert-tab-label').click();
-		cy.cGet('#Insert-container .hyperlinkdialog button').click();
+		cy.cGet('#Insert-container .hyperlinkdialog').click();
 		cy.cGet('#hyperlink-link-box-input').should('exist');
 		cy.cGet('#hyperlink-text-box').type('link');
 		cy.cGet('#hyperlink-link-box-input').type('www.something.com');
@@ -269,7 +269,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Insert/delete shape.', function() {
 		cy.cGet('#Insert-tab-label').click();
-		cy.cGet('#Insert-container .unoBasicShapes button').click();
+		cy.cGet('#Insert-container .unoBasicShapes').click();
 		cy.cGet('.col.w2ui-icon.basicshapes_octagon').click();
 		cy.cGet('#document-container svg g').should('exist');
 
@@ -282,7 +282,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Insert/delete chart.', function() {
 		cy.cGet('#Insert-tab-label').click();
-		cy.cGet('#Insert-container .unoInsertObjectChart button').click();
+		cy.cGet('#Insert-container .unoInsertObjectChart').click();
 
 		cy.cGet('#test-div-shapeHandlesSection').should('exist');
 
@@ -293,7 +293,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 	});
 
 	it('Save.', function() {
-		cy.cGet('.notebookbar > .unoBold > button').click();
+		cy.cGet('.notebookbar > .unoBold').click();
 		cy.cGet('.notebookbar-shortcuts-bar .unoSave').click();
 		helper.reloadDocument(newFilePath);
 		helper.setDummyClipboardForCopy();
@@ -310,7 +310,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 			});
 
 		cy.cGet('#File-tab-label').click();
-		cy.cGet('#File-container .unoPrint button').click();
+		cy.cGet('#File-container .unoPrint').click();
 
 		cy.get('@windowOpen').should('be.called');
 	});
@@ -318,14 +318,14 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 	it('Apply Undo/Redo.', function() {
 		helper.setDummyClipboardForCopy();
 		//Do
-		cy.cGet('.notebookbar .unoItalic button').click();
+		cy.cGet('.notebookbar .unoItalic').click();
 		helper.copy();
 		cy.wait(500); // wait for new clipboard
 		cy.cGet('#copy-paste-container p i').should('exist');
 
 		//Undo
 		cy.cGet('#Home-container .unoUndo').should('not.have.attr','disabled');
-		cy.cGet('#Home-container .unoUndo button').click({force: true});
+		cy.cGet('#Home-container .unoUndo').click({force: true});
 		helper.copy();
 		cy.wait(500); // wait for new clipboard
 		cy.cGet('#copy-paste-container p i').should('not.exist');
@@ -337,7 +337,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 		//Redo
 		cy.cGet('#Home-container .unoRedo').should('not.have.attr','disabled');
-		cy.cGet('#Home-container .unoRedo button').click({force: true});
+		cy.cGet('#Home-container .unoRedo').click({force: true});
 		helper.copy();
 		cy.wait(500); // wait for new clipboard
 		cy.cGet('#copy-paste-container p i').should('exist');
@@ -402,8 +402,8 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		helper.textSelectionShouldExist();
 
 		// Apply bold and try to clone it to the whole word.
-		cy.cGet('.notebookbar > .unoBold > button').click();
-		cy.cGet('.notebookbar > .unoFormatPaintbrush').click();
+		cy.cGet('.notebookbar.unobutton.unoBold').click();
+		cy.cGet('.notebookbar.unobutton.unoFormatPaintbrush').click();
 
 		// Click at the blinking cursor position.
 		cy.cGet('.leaflet-cursor.blinking-cursor')
