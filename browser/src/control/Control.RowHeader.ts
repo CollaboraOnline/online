@@ -177,15 +177,6 @@ export class RowHeader extends cool.Header {
 		return {left: left, right: right, top: top, bottom: bottom};
 	}
 
-	onDraw(): void {
-		this._headerInfo.forEachElement(function(elemData: HeaderEntryData): boolean {
-			this.drawHeaderEntry(elemData);
-			return false; // continue till last.
-		}.bind(this));
-
-		this.drawResizeLineIfNeeded();
-	}
-
 	onClick (point: number[], e: MouseEvent): void {
 		if (!this._mouseOverEntry)
 			return;
