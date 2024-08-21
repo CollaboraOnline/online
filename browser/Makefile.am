@@ -420,6 +420,7 @@ COOL_JS_LST =\
 	src/slideshow/SlideRenderer.ts \
 	src/slideshow/SlideShowPresenter.ts \
 	src/slideshow/Transition2d.ts \
+	src/slideshow/StaticTextRenderer.ts \
 	src/slideshow/PauseTimer.ts \
 	src/slideshow/PerformTransition.ts \
 	src/slideshow/SlideAnimations.ts \
@@ -891,6 +892,7 @@ pot:
 		src/slideshow/SlideRenderer.ts \
 		src/slideshow/SlideShowPresenter.ts \
 		src/slideshow/Transition2d.ts \
+		src/slideshow/StaticTextRenderer.ts \
 		src/slideshow/PauseTimer.ts \
 		src/slideshow/PerformTransition.ts \
 		src/slideshow/SlideAnimations.ts \

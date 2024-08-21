@@ -69,6 +69,7 @@ class SlideShowPresenter {
 	_animationsHandler: SlideAnimations = null;
 	_canvasLoader: CanvasLoader | null = null;
 	_isAnimationPlaying: boolean = false;
+	_isPresentInWindow: boolean = false;
 
 	constructor(map: any) {
 		this._map = map;
@@ -147,9 +148,14 @@ class SlideShowPresenter {
 
 		if (this._currentSlide + 1 >= this._getSlidesCount()) {
 			const currSlideInfo = this.getSlideInfo(this._currentSlide);
-			if (!currSlideInfo.isEndless) {
-				this._stopFullScreen();
+			if (currSlideInfo?.isEndless == undefined || !currSlideInfo.isEndless) {
+				if (this._currentSlide + 1 === this._getSlidesCount()) {
+					this._currentSlide++;
+					this.exitSlideshowWithWarning();
+					return;
+				}
 				this._closeSlideShowWindow();
+				this._stopFullScreen();
 				return;
 			}
 
@@ -171,6 +177,15 @@ class SlideShowPresenter {
 		}
 
 		if (this._currentSlide <= 0) {
+			return;
+		}
+
+		// if we are at exit text slide, we have to go back....
+		if (this._currentSlide === this._getSlidesCount()) {
+			this._currentSlide--;
+			this._slideCompositor.fetchAndRun(this._currentSlide, () => {
+				this._doPresentation();
+			});
 			return;
 		}
 
@@ -250,6 +265,15 @@ class SlideShowPresenter {
 		}
 
 		return canvas;
+	}
+
+	private exitSlideshowWithWarning() {
+		const transitionParameters = new TransitionParameters();
+		transitionParameters.context = this._slideRenderer._context;
+
+		new SlideShow.StaticTextRenderer(transitionParameters).display(
+			'Click to exit presentation...',
+		);
 	}
 
 	private startTimer(loopAndRepeatDuration: number) {
@@ -406,6 +430,7 @@ class SlideShowPresenter {
 	}
 
 	_closeSlideShowWindow() {
+		if (this._slideShowWindowProxy == null) return;
 		this._slideShowWindowProxy.opener.focus();
 		this._slideShowWindowProxy.close();
 		this._map.uiManager.closeSnackbar();
