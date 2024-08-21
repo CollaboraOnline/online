@@ -398,9 +398,8 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 			{
 				'id': 'toggleuimode',
 				'class': 'unotoggleuimode',
-				'type': 'bigmenubartoolitem',
+				'type': 'bigcustomtoolitem',
 				'text': _('Compact view'),
-				'command': _('Toggle UI Mode'),
 				'accessibility': { focusBack: true, combination: 'TU', de: null }
 			},
 			{
