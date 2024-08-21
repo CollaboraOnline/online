@@ -1964,11 +1964,7 @@ L.Control.Menubar = L.Control.extend({
 		} else if (id === 'togglea11ystate') {
 			app.dispatcher.dispatch('togglea11ystate');
 		} else if (id === 'toggleuimode') {
-			if (this._map.uiManager.shouldUseNotebookbarMode()) {
-				this._map.uiManager.onChangeUIMode({mode: 'classic', force: true});
-			} else {
-				this._map.uiManager.onChangeUIMode({mode: 'notebookbar', force: true});
-			}
+			app.dispatcher.dispatch('toggleuimode');
 		} else if (id === 'showstatusbar') {
 			this._map.uiManager.toggleStatusBar();
 		} else if (id === 'togglemenubar') {

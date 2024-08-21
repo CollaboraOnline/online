@@ -236,6 +236,14 @@ class Dispatcher {
 				window.prefs.getBoolean('accessibilityState');
 			app.map.setAccessibilityState(!prevAccessibilityState);
 		};
+
+		this.actionsMap['toggleuimode'] = () => {
+			if (app.map.uiManager.shouldUseNotebookbarMode()) {
+				app.map.uiManager.onChangeUIMode({ mode: 'classic', force: true });
+			} else {
+				app.map.uiManager.onChangeUIMode({ mode: 'notebookbar', force: true });
+			}
+		};
 	}
 
 	private addExportCommands() {
