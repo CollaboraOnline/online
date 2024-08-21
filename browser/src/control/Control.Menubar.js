@@ -1953,7 +1953,7 @@ L.Control.Menubar = L.Control.extend({
 		} else if (id === 'showresolved') {
 			app.dispatcher.dispatch('.uno:ShowResolvedAnnotations');
 		} else if (id === 'zoomout' && this._map.getZoom() > this._map.getMinZoom()) {
-			this._map.zoomOut(1, null, true /* animate? */);
+			app.dispatcher.dispatch('zoomout');
 		} else if (id === 'zoomreset') {
 			app.dispatcher.dispatch('zoomreset');
 		} else if (id === 'fullscreen') {
