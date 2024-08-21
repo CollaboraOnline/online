@@ -248,6 +248,10 @@ class Dispatcher {
 		this.actionsMap['showruler'] = () => {
 			app.map.uiManager.toggleRuler();
 		};
+
+		this.actionsMap['showstatusbar'] = () => {
+			app.map.uiManager.toggleStatusBar();
+		};
 	}
 
 	private addExportCommands() {
