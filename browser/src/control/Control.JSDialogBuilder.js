@@ -1478,12 +1478,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		value = parseFloat(data.value);
 
-		// time formatter or empty field
-		if (data.unit === ':' || (!data.unit && !data.text)) {
-			controls.spinfield.type = undefined;
-			value = data.text;
-		}
-
 		$(controls.spinfield).val(value);
 
 		return false;
