@@ -1947,7 +1947,7 @@ L.Control.Menubar = L.Control.extend({
 		} else if (id === 'insertgraphicremote') {
 			this._map.fire('postMessage', {msgId: 'UI_InsertGraphic'});
 		} else if (id === 'selectbackground') {
-			L.DomUtil.get('selectbackground').click();
+			app.dispatcher.dispatch('selectbackground');
 		} else if (id === 'zoomin' && this._map.getZoom() < this._map.getMaxZoom()) {
 			app.dispatcher.dispatch('zoomin');
 		} else if (id === 'showresolved') {
