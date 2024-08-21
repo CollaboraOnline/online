@@ -1021,9 +1021,8 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 								{
 									'id': 'home-search',
 									'class': 'unoSearch',
-									'type': 'menubartoolitem',
+									'type': 'customtoolitem',
 									'text': _('Search'),
-									'command': _('Show Status Bar'),
 									'accessibility': { focusBack: false,	combination: 'SS',	de: 'SS' }
 								}
 							]
