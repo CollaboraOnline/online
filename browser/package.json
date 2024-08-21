@@ -56,6 +56,6 @@
   "scripts": {
     "test": "mocha 'mocha_tests/**/*.js'",
     "test-single": "mocha",
-    "duplication": "jscpd ./src/ --exitCode 1 --min-lines 18"
+    "duplication": "jscpd ./src/ --exitCode 1 --min-lines 17"
   }
 }
