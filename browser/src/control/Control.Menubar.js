@@ -1970,7 +1970,7 @@ L.Control.Menubar = L.Control.extend({
 		} else if (id === 'togglemenubar') {
 			this._map.uiManager.toggleMenubar();
 		} else if (id === 'collapsenotebookbar') {
-			this._map.uiManager.collapseNotebookbar();
+			app.dispatcher.dispatch('collapsenotebookbar');
 		} else if (id === 'fullscreen-presentation' && this._map.getDocType() === 'presentation') {
 			app.dispatcher.dispatch('fullscreen-presentation');
 		} else if (id === 'presentation-currentslide' && this._map.getDocType() === 'presentation') {

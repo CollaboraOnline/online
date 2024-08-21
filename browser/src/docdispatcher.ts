@@ -252,6 +252,10 @@ class Dispatcher {
 		this.actionsMap['showstatusbar'] = () => {
 			app.map.uiManager.toggleStatusBar();
 		};
+
+		this.actionsMap['collapsenotebookbar'] = () => {
+			app.map.uiManager.collapseNotebookbar();
+		};
 	}
 
 	private addExportCommands() {
