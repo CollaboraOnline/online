@@ -26,7 +26,7 @@ describe(['tagnextcloud'], 'Nextcloud specific tests.', function() {
 		nextcloudHelper.saveFileAs('1' + newFileName);
 
 		// Close the document
-		cy.cGet('#mobile-edit-button')
+		cy.cGet('#mobile-edit')
 			.should('be.visible');
 
 		cy.cGet('#toolbar-mobile-back')

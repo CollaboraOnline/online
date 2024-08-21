@@ -81,7 +81,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', fu
 		// When pasting C1 to D1:
 		helper.typeIntoInputField(helper.addressInputSelector, 'D1');
 		cy.cGet(helper.addressInputSelector).should('have.prop', 'value', 'D1');
-		cy.cGet('#home-paste-button').click();
+		cy.cGet('#home-paste').click();
 		cy.cGet('#home-paste-entries .ui-combobox-entry').contains('Paste').click();
 
 		// Then make sure the formula gets rewritten as expected:
@@ -101,7 +101,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', fu
 		setDummyClipboard('text/html', html);
 
 		// When pasting the clipboard to A1:
-		cy.cGet('#home-paste-button').click();
+		cy.cGet('#home-paste').click();
 		cy.cGet('#home-paste-entries .ui-combobox-entry').contains('Paste').click();
 
 		// Then make sure we actually consider the content of the HTML:
@@ -113,7 +113,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', fu
 		setDummyClipboard('text/plain', text);
 
 		// When pasting the clipboard to A1:
-		cy.cGet('#home-paste-button').click();
+		cy.cGet('#home-paste').click();
 		cy.cGet('#home-paste-entries .ui-combobox-entry').contains('Paste').click();
 
 		// Then make the paste happened:
@@ -127,7 +127,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', fu
 		setDummyClipboard('image/png', blob, /*image=*/true);
 
 		// When pasting the clipboard:
-		cy.cGet('#home-paste-button').click();
+		cy.cGet('#home-paste').click();
 		cy.cGet('#home-paste-entries .ui-combobox-entry').contains('Paste').click();
 
 		// Then make sure the paste happened:
@@ -142,7 +142,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', fu
 		setDummyClipboard('image/png', blob, /*image=*/true, /*fail=*/false, imageHtml);
 
 		// When pasting the clipboard:
-		cy.cGet('#home-paste-button').click();
+		cy.cGet('#home-paste').click();
 		cy.cGet('#home-paste-entries .ui-combobox-entry').contains('Paste').click();
 
 		// Then make sure the paste happened:
@@ -162,7 +162,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', fu
 
 		// When pasting the clipboard to B1, which fails:
 		helper.typeIntoInputField(helper.addressInputSelector, 'B1');
-		cy.cGet('#home-paste-button').click();
+		cy.cGet('#home-paste').click();
 		cy.cGet('#home-paste-entries .ui-combobox-entry').contains('Paste').click();
 
 		// Then make sure a warning popup is shown:

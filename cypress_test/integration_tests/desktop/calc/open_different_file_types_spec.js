@@ -44,7 +44,7 @@ describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Open different file t
 		//check doc is loaded
 		helper.documentChecks();
 
-		cy.cGet('#mobile-edit-button')
+		cy.cGet('#mobile-edit')
 			.should('be.visible')
 			.click();
 
@@ -56,7 +56,7 @@ describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Open different file t
 	it('Open xlsb file', { defaultCommandTimeout: 60000 }, function() {
 		desktopHelper.openReadOnlyFile('calc/testfile.xlsb');
 
-		cy.cGet('#mobile-edit-button').should('be.visible').click();
+		cy.cGet('#mobile-edit').should('be.visible').click();
 		cy.cGet('#modal-dialog-switch-to-edit-mode-modal-overlay').should('be.visible');
 		cy.cGet('#modal-dialog-switch-to-edit-mode-modal-label')
 			.should('have.text', 'This document may contain formatting or content that cannot be saved in the current file format.');
@@ -76,13 +76,13 @@ describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Open different file t
 	it('Open xltm file', { defaultCommandTimeout: 60000 }, function() {
 		desktopHelper.openReadOnlyFile('calc/testfile.xltm');
 
-		cy.cGet('#mobile-edit-button').should('not.be.visible');
+		cy.cGet('#mobile-edit').should('not.be.visible');
 	});
 
 	it('Open xltx file', { defaultCommandTimeout: 60000 }, function() {
 		desktopHelper.openReadOnlyFile('calc/testfile.xltm');
 
-		cy.cGet('#mobile-edit-button').should('not.be.visible');
+		cy.cGet('#mobile-edit').should('not.be.visible');
 	});
 
 	it('Open fods file', { defaultCommandTimeout: 60000 }, function() {

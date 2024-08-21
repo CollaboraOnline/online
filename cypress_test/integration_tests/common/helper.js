@@ -540,7 +540,7 @@ function closeDocument(filePath) {
 			// Close the document, with the close button.
 			doIfOnMobile(function() {
 				cy.cGet('#toolbar-mobile-back').click();
-				cy.cGet('#mobile-edit-button').should('be.visible');
+				cy.cGet('#mobile-edit').should('be.visible');
 				cy.cGet('#toolbar-mobile-back').then(function(item) {
 						cy.wrap(item).click();
 						Cypress.env('IFRAME_LEVEL', '');
