@@ -2022,7 +2022,7 @@ L.Control.Menubar = L.Control.extend({
 		} else if (id === 'showslide') {
 			app.dispatcher.dispatch('showslide');
 		} else if (id === 'hideslide') {
-			this._map.hideSlide();
+			app.dispatcher.dispatch('hideslide');
 		} else if (id.indexOf('morelanguages-') != -1) {
 			this._map.fire('morelanguages', { applyto: id.substr('morelanguages-'.length) });
 		} else if (id === 'acceptalltrackedchanges') {
