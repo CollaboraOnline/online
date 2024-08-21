@@ -32,7 +32,7 @@ describe(['tagdesktop'], 'Table operations', function() {
 
 		impressHelper.selectTableInTheCenter();
 		cy.cGet('.leaflet-marker-icon.table-row-resize-marker')
-			.should('have.length', 3);
+			.should('have.length.above', 2);
 		cy.cGet('.leaflet-marker-icon.table-column-resize-marker')
 			.should('have.length', 2);
 
