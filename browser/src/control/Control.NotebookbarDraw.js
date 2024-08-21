@@ -345,9 +345,8 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 			{
 				'id': 'zoomreset',
 				'class': 'unozoomreset',
-				'type': 'bigmenubartoolitem',
+				'type': 'bigcustomtoolitem',
 				'text': _('Reset zoom'),
-				'command': _('Reset zoom'),
 				'accessibility': { focusBack: true, combination: 'RZ', de: null }
 			},
 			{

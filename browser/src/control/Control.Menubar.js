@@ -1955,7 +1955,7 @@ L.Control.Menubar = L.Control.extend({
 		} else if (id === 'zoomout' && this._map.getZoom() > this._map.getMinZoom()) {
 			this._map.zoomOut(1, null, true /* animate? */);
 		} else if (id === 'zoomreset') {
-			this._map.setZoom(this._map.options.zoom);
+			app.dispatcher.dispatch('zoomreset');
 		} else if (id === 'fullscreen') {
 			L.toggleFullScreen();
 		} else if (id === 'showruler') {
