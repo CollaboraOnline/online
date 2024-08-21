@@ -2019,7 +2019,7 @@ L.Control.Menubar = L.Control.extend({
 			this._map.fire('showwizardsidebar', {noRefresh: true});
 			window.pageMobileWizard = true;
 		} else if (id === 'showslide') {
-			this._map.showSlide();
+			app.dispatcher.dispatch('showslide');
 		} else if (id === 'hideslide') {
 			this._map.hideSlide();
 		} else if (id.indexOf('morelanguages-') != -1) {
