@@ -45,7 +45,10 @@ describe(['tagdesktop'], 'Table operations', function() {
 	it('Insert Row Before', function() {
 		desktopHelper.switchUIToNotebookbar();
 		selectFullTable();
+		helper.listenProtocol('shapeselectioncontent:');
 		selectOptionNotebookbar('#table-insert-rows-before');
+		cy.cGet('#listener-protocol').should('exist');
+
 		cy.cGet('.leaflet-marker-icon.table-row-resize-marker').should('have.length', 4);
 		retriggerNewSvgForTableInTheCenter();
 		cy.cGet('#document-container g.Page g').should('have.class', 'com.sun.star.drawing.TableShape');
@@ -65,7 +68,9 @@ describe(['tagdesktop'], 'Table operations', function() {
 	it('Insert Row After', function() {
 		desktopHelper.switchUIToNotebookbar();
 		selectFullTable();
+		helper.listenProtocol('shapeselectioncontent:');
 		selectOptionNotebookbar('#table-insert-rows-after');
+		cy.cGet('#listener-protocol').should('exist');
 
 		cy.cGet('.leaflet-marker-icon.table-row-resize-marker').should('have.length', 4);
 		retriggerNewSvgForTableInTheCenter();
@@ -89,7 +94,9 @@ describe(['tagdesktop'], 'Table operations', function() {
 	it('Insert column before.', function() {
 		desktopHelper.switchUIToNotebookbar();
 		selectFullTable();
+		helper.listenProtocol('shapeselectioncontent:');
 		selectOptionNotebookbar('#table-insert-columns-before');
+		cy.cGet('#listener-protocol').should('exist');
 
 		cy.cGet('.leaflet-marker-icon.table-column-resize-marker')
 			.should('have.length', 3);
@@ -115,7 +122,9 @@ describe(['tagdesktop'], 'Table operations', function() {
 	it('Insert column after.', function() {
 		desktopHelper.switchUIToNotebookbar();
 		selectFullTable();
+		helper.listenProtocol('shapeselectioncontent:');
 		selectOptionNotebookbar('#table-insert-columns-after');
+		cy.cGet('#listener-protocol').should('exist');
 
 		cy.cGet('.leaflet-marker-icon.table-column-resize-marker')
 			.should('have.length', 3);
@@ -141,7 +150,9 @@ describe(['tagdesktop'], 'Table operations', function() {
 	it('Delete row.', function() {
 		desktopHelper.switchUIToNotebookbar();
 		selectFullTable();
+		helper.listenProtocol('shapeselectioncontent:');
 		selectOptionNotebookbar('#table-delete-rows');
+		cy.cGet('#listener-protocol').should('exist');
 
 		cy.cGet('.leaflet-marker-icon.table-row-resize-marker')
 			.should('have.length', 2);
@@ -163,7 +174,9 @@ describe(['tagdesktop'], 'Table operations', function() {
 	it('Delete Column.', function() {
 		desktopHelper.switchUIToNotebookbar();
 		selectFullTable();
+		helper.listenProtocol('shapeselectioncontent:');
 		selectOptionNotebookbar('#table-insert-columns-before');
+		cy.cGet('#listener-protocol').should('exist');
 
 		cy.cGet('.leaflet-marker-icon.table-column-resize-marker')
 			.should('have.length', 3);
