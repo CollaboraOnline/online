@@ -467,7 +467,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 			{
 				'id':'toggledarktheme',
 				'class': 'unotoggledarktheme',
-				'type': 'bigmenubartoolitem',
+				'type': 'bigcustomtoolitem',
 				'text': _('Dark Mode'),
 				'accessibility': { focusBack: true, combination: 'TT', de: null }
 			},
