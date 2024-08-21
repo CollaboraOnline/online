@@ -244,6 +244,10 @@ class Dispatcher {
 				app.map.uiManager.onChangeUIMode({ mode: 'notebookbar', force: true });
 			}
 		};
+
+		this.actionsMap['showruler'] = () => {
+			app.map.uiManager.toggleRuler();
+		};
 	}
 
 	private addExportCommands() {

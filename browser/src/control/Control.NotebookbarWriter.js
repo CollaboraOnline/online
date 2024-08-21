@@ -1457,9 +1457,8 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 							{
 								'id': 'showruler',
 								'class': 'unoshowruler',
-								'type': 'menubartoolitem',
+								'type': 'customtoolitem',
 								'text': _('Ruler'),
-								'command': _('Show Ruler'),
 								'accessibility': { focusBack: true, combination: 'R', de: 'L' }
 							}
 						]
