@@ -1960,7 +1960,7 @@ L.Control.Menubar = L.Control.extend({
 		} else if (id === 'fullscreen') {
 			L.toggleFullScreen();
 		} else if (id === 'showruler') {
-			this._map.uiManager.toggleRuler();
+			app.dispatcher.dispatch('showruler');
 		} else if (id === 'togglea11ystate') {
 			app.dispatcher.dispatch('togglea11ystate');
 		} else if (id === 'toggleuimode') {

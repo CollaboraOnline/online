@@ -394,9 +394,8 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 							{
 								'id': 'showruler',
 								'class': 'unoshowruler',
-								'type': 'menubartoolitem',
+								'type': 'customtoolitem',
 								'text': _('Ruler'),
-								'command': _('Show Ruler'),
 								'accessibility': { focusBack: true, combination: 'R', de: 'L' }
 							}
 						]
