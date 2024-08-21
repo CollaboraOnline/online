@@ -1,6 +1,6 @@
 /* -*- js-indent-level: 8 -*- */
 module.exports.list = {
-	fontColor: ['#Home #home-color .unoarrow', '#toolbar-up [id^="fontcolor"]'],
+	fontColor: ['#Home #home-color', '#toolbar-up [id^="fontcolor"]'],
 	fontName: ['#fontnamecombobox.notebookbar > .ui-combobox-button', '#toolbar-up #fontnamecombobox'],
 	bold: ['#Bold', '#toolbar-up #bold'],
 	italic: ['#Italic', '#toolbar-up #italic'],
@@ -30,9 +30,9 @@ module.exports.list = {
 	insertSymbol: ['#CharmapControl', '#toolbar-up #insertsymbol'],
 	formatBrush: ['#FormatPaintbrush', '#toolbar-up #formatpaintbrush'],
 	sidebar: ['.unospan-optionstoolboxdown.unoSidebar', '#toolbar-up #sidebar'],
-	backColor: ['#Home #home-back-color .unoarrow', '#toolbar-up #backcolor'],
+	backColor: ['#Home #home-back-color', '#toolbar-up #backcolor'],
 	borderStyle: ['#SetBorderStyle', '#toolbar-up #setborderstyle'],
-	backgroundColor: ['#Home #home-background-color .unoarrow','#toolbar-up #backgroundcolor'],
+	backgroundColor: ['#Home #home-background-color','#toolbar-up #backgroundcolor'],
 	fileTab: ['#File-tab-label', '#menu-file'],
 	documentProperties: ['#SetDocumentProperties', '#menu-properties'],
 };
