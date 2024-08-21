@@ -23,10 +23,8 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 	},
 
 	_overrideHandlers: function() {
-		this._controlHandlers['bigmenubartoolitem'] = this._bigMenubarToolItemHandler;
 		this._controlHandlers['bigtoolitem'] = this._bigtoolitemHandler;
 		this._controlHandlers['combobox'] = this._comboboxControl;
-		this._controlHandlers['menubartoolitem'] = this._inlineMenubarToolItemHandler;
 		this._controlHandlers['exportmenubutton'] = this._exportMenuButton;
 		this._controlHandlers['tabcontrol'] = this._overriddenTabsControlHandler;
 		this._controlHandlers['tabpage'] = this._overriddenTabPageHandler;
@@ -322,45 +320,6 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 				app.registerExportFormat(text, format);
 			}
 		}
-
-		return false;
-	},
-
-	_menubarToolItemHandler: function(parentContainer, data, builder) {
-		data.command = data.id;
-
-		var control = builder._unoToolButton(parentContainer, data, builder);
-
-		$(control.button).unbind('click');
-		$(control.label).unbind('click');
-		if (!builder.map.isLockedItem(data)) {
-			$(control.container).click(function (e) {
-				e.preventDefault();
-				L.control.menubar()._executeAction.bind({_map: builder.options.map})(undefined, {id: data.id});
-			});
-		}
-
-		return false;
-	},
-
-	_inlineMenubarToolItemHandler: function(parentContainer, data, builder) {
-		var originalInLineState = builder.options.useInLineLabelsForUnoButtons;
-		builder.options.useInLineLabelsForUnoButtons = true;
-
-		builder._menubarToolItemHandler(parentContainer, data, builder);
-
-		builder.options.useInLineLabelsForUnoButtons = originalInLineState;
-
-		return false;
-	},
-
-	_bigMenubarToolItemHandler: function(parentContainer, data, builder) {
-		var noLabels = builder.options.noLabelsForUnoButtons;
-		builder.options.noLabelsForUnoButtons = false;
-
-		builder._menubarToolItemHandler(parentContainer, data, builder);
-
-		builder.options.noLabelsForUnoButtons = noLabels;
 
 		return false;
 	},
