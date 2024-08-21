@@ -406,9 +406,8 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 							{
 								'id': 'showstatusbar',
 								'class': 'unoshowstatusbar',
-								'type': 'menubartoolitem',
+								'type': 'customtoolitem',
 								'text': _('Status Bar'),
-								'command': _('Show Status Bar'),
 								'accessibility': { focusBack: true, combination: 'SB', de: null }
 							}
 						]
