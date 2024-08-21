@@ -91,7 +91,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Invalidation tests.', func
 
 		// Add some main body text of X and bullet
 		ceHelper.type('XX');
-		cy.cGet('.notebookbar > .unoDefaultBullet > button').click();
+		cy.cGet('.notebookbar > .unoDefaultBullet').click();
 		cy.cGet('#toolbar-down #StateWordCount').should('have.text', '2 words, 3 characters');
 
 		cy.cGet('.empty-deltas').then(($before) => {

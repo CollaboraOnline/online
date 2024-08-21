@@ -106,7 +106,7 @@ describe(['tagdesktop'], 'JSDialog unit test', function() {
 
 	it('JSDialog check enable edit input', function() {
 		cy.cGet('#File-tab-label').click();
-		cy.cGet('#File-container .unodownloadas button').click();
+		cy.cGet('#File-container .unodownloadas').click();
 
 		// open "PDF options JsDialog"
 		cy.cGet('.exportpdf-submenu-icon').click();

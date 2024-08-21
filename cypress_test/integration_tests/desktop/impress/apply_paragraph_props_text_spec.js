@@ -11,7 +11,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties
 		desktopHelper.switchUIToCompact();
 
 		cy.cGet('#toolbar-up .ui-scroll-right').click();
-		cy.cGet('#modifypage button').click({force: true});
+		cy.cGet('#modifypage').click({force: true});
 		cy.cGet('#sidebar-panel').should('not.be.visible');
 	});
 
