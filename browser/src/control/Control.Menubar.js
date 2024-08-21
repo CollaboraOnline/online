@@ -1950,7 +1950,7 @@ L.Control.Menubar = L.Control.extend({
 		} else if (id === 'selectbackground') {
 			L.DomUtil.get('selectbackground').click();
 		} else if (id === 'zoomin' && this._map.getZoom() < this._map.getMaxZoom()) {
-			this._map.zoomIn(1, null, true /* animate? */);
+			app.dispatcher.dispatch('zoomin');
 		} else if (id === 'showresolved') {
 			app.dispatcher.dispatch('.uno:ShowResolvedAnnotations');
 		} else if (id === 'zoomout' && this._map.getZoom() > this._map.getMinZoom()) {
