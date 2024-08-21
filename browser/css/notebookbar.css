@@ -593,3 +593,7 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 [class*='as-pptx-submenu-icon'] {
 	background: url('images/lc_downloadas-pptx.svg') center;
 }
+
+[class*='as-html-submenu-icon'] {
+	background: url('images/lc_downloadas-html.svg') center;
+}
