@@ -9,25 +9,30 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 /*
- * Control.Sidebar
+ * JSDialog.Sidebar
  */
 
 /* global app */
 interface SidebarOptions {
 	animSpeed: number;
 }
-class Sidebar extends L.Control {
+class Sidebar {
 	options: SidebarOptions;
+
+	map: any;
 
 	container: HTMLDivElement;
 	builder: any;
 	targetDeckCommand: string;
 
-	constructor(options: SidebarOptions) {
-		if (options.animSpeed === null)
-			options.animSpeed = 1000; /* Default speed: to be used on load */
-
-		super(options);
+	constructor(
+		map: any,
+		options: SidebarOptions = {
+			animSpeed: 1000,
+		} /* Default speed: to be used on load */,
+	) {
+		this.options = options;
+		this.onAdd(map);
 	}
 
 	onAdd(map: ReturnType<typeof L.map>) {
@@ -225,6 +230,6 @@ class Sidebar extends L.Control {
 	}
 }
 
-L.control.sidebar = function (options: SidebarOptions) {
-	return new Sidebar(options);
+JSDialog.Sidebar = function (map: any, options: SidebarOptions) {
+	return new Sidebar(map, options);
 };

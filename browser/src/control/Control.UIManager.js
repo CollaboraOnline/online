@@ -232,8 +232,7 @@ L.Control.UIManager = L.Control.extend({
 
 			this.map.statusBar = JSDialog.StatusBar(this.map);
 
-			this.map.sidebar = L.control.sidebar({animSpeed: 200});
-			this.map.addControl(this.map.sidebar);
+			this.map.sidebar = JSDialog.Sidebar(this.map, {animSpeed: 200});
 
 			this.map.mention = L.control.mention(this.map);
 			this.map.formulaautocomplete = L.control.formulaautocomplete(this.map);
