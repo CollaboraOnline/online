@@ -395,6 +395,10 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 					'text': _('CSV File (.csv)')
 				},
 				{
+					'action': 'downloadas-html',
+					'text': _('HTML File (.html)')
+				},
+				{
 					'action': !window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-pdf',
 					'text': _('PDF Document (.pdf)'),
 					'command': !window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-pdf'
