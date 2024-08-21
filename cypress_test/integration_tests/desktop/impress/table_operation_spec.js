@@ -15,10 +15,8 @@ describe(['tagdesktop'], 'Table operations', function() {
 		var optionButton = cy.cGet(optionId);
 		// It takes time for the ui to enable the various table toolbar buttons after
 		// the table gets focus, but we can continue as soon as:
-		// a) the parent container is enabled
-		optionButton.parent().should('not.have.class', 'disabled');
-		// b) the specific button is enabled
-		optionButton.should('not.have.class', 'disabled').click();
+		optionButton.should('not.have.class', 'disabled');
+		optionButton.click();
 	}
 
 	function retriggerNewSvgForTableInTheCenter() {
