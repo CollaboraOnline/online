@@ -2629,8 +2629,20 @@ void COOLWSD::innerInitialize(Application& self)
 #endif // CODE_COVERAGE
 
     // Setup the jails.
-    const bool capsDisabled = !getConfigValue<bool>(conf, "security.capabilities", true);
-    const bool UseMountNamespaces = capsDisabled || getConfigValue<bool>(conf, "mount_namespaces", false);
+    bool UseMountNamespaces = getConfigValue<bool>(conf, "mount_namespaces", false);
+
+    NoCapsForKit =
+        Util::isKitInProcess() || !getConfigValue<bool>(conf, "security.capabilities", true);
+    if (NoCapsForKit && UseMountNamespaces)
+    {
+        // With NoCapsForKit we don't chroot. If Linux namespaces are available, we could
+        // chroot without capabilities, but the richdocumentscode AppImage layout isn't
+        // compatible with the systemplate expectations for setting up the chroot so
+        // disable MountNamespaces in NoCapsForKit mode for now.
+        LOG_WRN("MountNamespaces is not compatible with NoCapsForKit. Disabling.");
+        UseMountNamespaces = false;
+    }
+
     setupChildRoot(UseMountNamespaces);
 
     LOG_DBG("FileServerRoot before config: " << FileServerRoot);
@@ -2767,10 +2779,6 @@ void COOLWSD::innerInitialize(Application& self)
 
 #if !MOBILEAPP
     NoSeccomp = Util::isKitInProcess() || !getConfigValue<bool>(conf, "security.seccomp", true);
-    // Take "NoCaps" as a goal considered achieved if EnableMountNamespaces is possible
-    NoCapsForKit = Util::isKitInProcess() || (capsDisabled && !EnableMountNamespaces);
-    if (capsDisabled && !EnableMountNamespaces)
-        LOG_WRN("MountNamespaces not possible to achieve running without capabilities.");
     AdminEnabled = getConfigValue<bool>(conf, "admin_console.enable", true);
     IndirectionServerEnabled = !getConfigValue<std::string>(conf, "indirection_endpoint.url", "").empty();
 #if ENABLE_DEBUG
