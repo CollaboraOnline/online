@@ -393,8 +393,8 @@ StorageBase::LockUpdateResult WopiStorage::updateLockState(const Authorization& 
             httpSession->syncRequest(httpRequest);
         const std::string responseString = httpResponse->getBody();
 
-        LOG_INF(wopiLog << " response: [" << responseString
-                        << "], status: " << httpResponse->statusLine().statusCode());
+        LOG_INF(wopiLog << " status: " << httpResponse->statusLine().statusCode()
+                        << ", response: " << responseString);
 
         if (httpResponse->statusLine().statusCode() == http::StatusCode::OK)
         {
@@ -503,8 +503,8 @@ void WopiStorage::updateLockStateAsync(const Authorization& auth, LockContext& l
         // Handle the response.
         const std::string responseString = httpResponse->getBody();
 
-        LOG_INF(wopiLog << " response: [" << responseString
-                        << "], status: " << httpResponse->statusLine().statusCode());
+        LOG_INF(wopiLog << " status: " << httpResponse->statusLine().statusCode()
+                        << ", response: " << responseString);
 
         if (httpResponse->statusLine().statusCode() == http::StatusCode::OK)
         {
