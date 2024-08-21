@@ -38,7 +38,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Sidebar Tests', function()
 		impressHelper.selectTextShapeInTheCenter();
 		impressHelper.selectTextOfShape();
 		cy.cGet('#layoutvalueset').should('not.be.visible');
-		cy.cGet('#Underline .arrowbackground').click();
+		cy.cGet('#Underline').click();
 		cy.cGet('.modalpopup .jsdialog-container').should('be.visible');
 		cy.cGet('#single').click();
 		impressHelper.triggerNewSVGForShapeInTheCenter();
