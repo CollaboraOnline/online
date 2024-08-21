@@ -105,12 +105,17 @@ L.LatLngBounds.prototype = {
 		return Math.abs(this.getNorth() - this.getSouth());
 	},
 
-	contains: function (obj) { // (LatLngBounds) or (LatLng) -> Boolean
+	_getAsLatLngOrBounds (obj) {
 		if (typeof obj[0] === 'number' || obj instanceof L.LatLng) {
 			obj = L.latLng(obj);
 		} else {
 			obj = L.latLngBounds(obj);
 		}
+		return obj;
+	},
+
+	contains: function (obj) { // (LatLngBounds) or (LatLng) -> Boolean
+		obj = this._getAsLatLngOrBounds(obj);
 
 		var sw = this._southWest,
 		    ne = this._northEast,
@@ -134,11 +139,7 @@ L.LatLngBounds.prototype = {
 	// don't capture the area of text selections, only
 	// the first and last points.
 	inBand: function (obj) {
-		if (typeof obj[0] === 'number' || obj instanceof L.LatLng) {
-			obj = L.latLng(obj);
-		} else {
-			obj = L.latLngBounds(obj);
-		}
+		obj = this._getAsLatLngOrBounds(obj);
 
 		var sw = this._southWest,
 		    ne = this._northEast,
