@@ -226,29 +226,13 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 		}
 
 		if (!this._map['wopi'].HideExportOption) {
-			content.push(
-			{
-				'id': 'file-downloadas-odg-downloadas-png',
-				'type': 'container',
-				'children': [
-					{
-						'id': 'downloadas-odg',
-						'class': 'unodownloadas-odg',
-						'type': 'menubartoolitem',
-						'text': _('ODF Drawing (.odg)'),
-						'command': '',
-						'accessibility': { focusBack: true, combination: 'DO', de: null }
-					},
-					{
-						'id': 'downloadas-png',
-						'class': 'unodownloadas-png',
-						'type': 'menubartoolitem',
-						'text': _('Image (.png)'),
-						'command': '',
-						'accessibility': { focusBack: true, combination: 'DP', de: null }
-					},
-				],
-				'vertical': 'true'
+			content.push({
+				'id': 'downloadas:DownloadAsMenu',
+				'command': 'downloadas',
+				'class': 'unodownloadas',
+				'type': 'exportmenubutton',
+				'text': _('Download'),
+				'accessibility': { focusBack: true, combination: 'DA', de: null }
 			});
 		}
 
