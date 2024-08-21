@@ -288,9 +288,8 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 					{
 						'id': 'repair',
 						'class': 'unorepair',
-						'type': 'bigtoolitem',
+						'type': 'bigcustomtoolitem',
 						'text': _('Repair'),
-						'command': _('Repair'),
 						'accessibility': { focusBack: true, combination: 'RF', de: null }
 					}
 				]

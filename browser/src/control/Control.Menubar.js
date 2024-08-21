@@ -2005,7 +2005,7 @@ L.Control.Menubar = L.Control.extend({
 		} else if (id === 'closedocument') {
 			window.onClose();
 		} else if (id === 'repair') {
-			app.socket.sendMessage('commandvalues command=.uno:DocumentRepair');
+			app.dispatcher.dispatch('repair');
 		} else if (id === 'searchdialog') {
 			if (this._map.isReadOnlyMode()) {
 				$('#toolbar-down').hide();

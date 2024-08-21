@@ -290,9 +290,8 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 					{
 						'id': 'repair',
 						'class': 'unorepair',
-						'type': 'bigmenubartoolitem',
+						'type': 'bigcustomtoolitem',
 						'text': _('Repair'),
-						'command': _('Repair'),
 						'accessibility': { focusBack: true,	combination: 'RF', de: null }
 					}
 				],
