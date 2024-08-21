@@ -10,9 +10,9 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'JSDialog Tests', function(
 
 	it('Check disabled state in animation sidebar', function() {
 		// open animation deck
-		cy.cGet('#options-custom-animation-button').should('not.have.class', 'selected');
-		cy.cGet('#options-custom-animation-button').click();
-		cy.cGet('#options-custom-animation-button').should('have.class', 'selected');
+		cy.cGet('#options-custom-animation').should('not.have.class', 'selected');
+		cy.cGet('#options-custom-animation').click();
+		cy.cGet('#options-custom-animation').should('have.class', 'selected');
 
 		// all options are disabled
 		cy.cGet('#start_effect_list-input').should('be.disabled');
