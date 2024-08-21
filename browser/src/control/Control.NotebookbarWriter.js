@@ -1937,7 +1937,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				{
 					'id': 'zoteroaddeditbibliography',
 					'class': 'unozoteroaddeditbibliography',
-					'type': 'bigmenubartoolitem',
+					'type': 'bigcustomtoolitem',
 					'text': _('Add Bibliography'),
 					'command': 'zoteroeditbibliography'
 				},
