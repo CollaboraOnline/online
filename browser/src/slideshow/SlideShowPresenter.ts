@@ -149,6 +149,7 @@ class SlideShowPresenter {
 			const currSlideInfo = this.getSlideInfo(this._currentSlide);
 			if (!currSlideInfo.isEndless) {
 				this._stopFullScreen();
+				this._closeSlideShowWindow();
 				return;
 			}
 
@@ -402,6 +403,12 @@ class SlideShowPresenter {
 			</body>
 			</html>
 			`;
+	}
+
+	_closeSlideShowWindow() {
+		this._slideShowWindowProxy.opener.focus();
+		this._slideShowWindowProxy.close();
+		this._map.uiManager.closeSnackbar();
 	}
 
 	_doPresentation(isStarting = false) {
