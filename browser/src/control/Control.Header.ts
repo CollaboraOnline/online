@@ -460,6 +460,15 @@ export class Header extends app.definitions.canvasSectionObject {
 		return;
 	}
 
+	onDraw(): void {
+		this._headerInfo.forEachElement(function(elemData: HeaderEntryData): boolean {
+			this.drawHeaderEntry(elemData);
+			return false; // continue till last.
+		}.bind(this));
+
+		this.drawResizeLineIfNeeded();
+	}
+
 	onDragEnd (dragDistance: number[]): void {
 		return;
 	}
