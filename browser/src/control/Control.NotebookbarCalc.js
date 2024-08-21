@@ -1186,9 +1186,8 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 							{
 								'id': 'zoomin',
 								'class': 'unozoomin',
-								'type': 'menubartoolitem',
+								'type': 'customtoolitem',
 								'text': _UNO('.uno:ZoomPlus'),
-								'command': '.uno:ZoomPlus',
 								'accessibility': { focusBack: true,	combination: 'ZI', de: null }
 							}
 						]
