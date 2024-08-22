@@ -1377,6 +1377,11 @@ L.CanvasTileLayer = L.Layer.extend({
 				// widget.
 				const extracted = this._map.extractContent(textMsgHtml);
 				hyperlinkTextBox.value = extracted.trim();
+
+				const hyperlinkLinkBoxInput = document.getElementById('hyperlink-link-box-input')
+				if (extracted !== '' && hyperlinkLinkBoxInput) {
+					hyperlinkLinkBoxInput.focus();
+				}
 			} else if (this._map._clip) {
 				this._map._clip.setTextSelectionHTML(textMsgHtml, textMsgPlainText);
 			} else
