@@ -272,7 +272,7 @@ class SlideShowPresenter {
 		transitionParameters.context = this._slideRenderer._context;
 
 		new SlideShow.StaticTextRenderer(transitionParameters).display(
-			'Click to exit presentation...',
+			_('Click to exit presentation...'),
 		);
 	}
 
