@@ -261,6 +261,7 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 .ui-badge {
 	padding: 5px !important;
 	background-color: var(--color-background-darker);
+	color: var(--color-text-darker);
 	border-width: 0px;
 	border-radius: var(--border-radius);
 	font-family: var(--cool-font);
