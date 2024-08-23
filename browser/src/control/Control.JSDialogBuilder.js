@@ -2100,11 +2100,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				label.textContent = builder._cleanText(data.text);
 				builder._stressAccessKey(label, button.accessKey);
 				controls['label'] = label;
-				$(button).addClass('has-label');
+				L.DomUtil.addClass(button, 'has-label');
 			} else if (builder.options.useInLineLabelsForUnoButtons === true) {
-				$(button).addClass('no-label');
+				L.DomUtil.addClass(button, 'no-label');
 			} else {
-				$(button).addClass('no-label');
+				L.DomUtil.addClass(button, 'no-label');
 			}
 
 			// for Accessibility : graphic elements are located within buttons, the img should receive an empty alt
@@ -2122,7 +2122,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			button.setAttribute('data-cooltip', builder._cleanText(data.text));
 
 			if (builder.options.useInLineLabelsForUnoButtons === true) {
-				$(button).addClass('inline');
+				L.DomUtil.addClass(button, 'inline');
 				inline = L.DomUtil.create('span', 'ui-content unolabel');
 				inline.htmlFor = buttonId;
 				inline.textContent = builder._cleanText(data.text);
@@ -2136,11 +2136,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 					var state = items.getItemValue(data.command);
 
 					if (state && state === 'true') {
-						$(button).addClass('selected');
+						L.DomUtil.addClass(button, 'selected');
 						button.setAttribute('aria-pressed', true);
 					}
 					else {
-						$(button).removeClass('selected');
+						L.DomUtil.removeClass(button, 'selected');
 						button.setAttribute('aria-pressed', false);
 					}
 
@@ -2193,10 +2193,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (builder.wizard && window.mode.isMobile()) {
 			controls['arrow'] = false;
 		} else if (options && options.hasDropdownArrow) {
-			$(button).addClass('dropdown');
+			L.DomUtil.addClass(button, 'dropdown');
 			controls['arrow'] = true;
 		} else if (data.dropdown === true) {
-			$(button).addClass('dropdown');
+			L.DomUtil.addClass(button, 'dropdown');
 			controls['arrow'] = true;
 			button.closeDropdown = function() {
 				builder.callback('toolbox', 'closemenu', parentContainer, data.command, builder);
