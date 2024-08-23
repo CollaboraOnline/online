@@ -3306,7 +3306,9 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		if (section && section.showSection) {
 			const point = new app.definitions.simplePoint(section.position[0] * app.pixelsToTwips, section.position[1] * app.pixelsToTwips);
-			this.scrollToPos(point);
+			var isNewCursorVisible = app.isPointVisibleInTheDisplayedArea(point.toArray());
+			if (!isNewCursorVisible)
+				this.scrollToPos(point);
 			app.definitions.cursorHeaderSection.showCursorHeader(viewId);
 		}
 	},
