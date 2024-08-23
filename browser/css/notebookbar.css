@@ -550,6 +550,10 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	background: url('images/lc_downloadas-odg.svg') center;
 }
 
+[class*='as-png-submenu-icon'] {
+	background: url('images/lc_insertgraphic.svg') center;
+}
+
 [class*='as-rtf-submenu-icon'] {
 	background: url('images/lc_downloadas-rtf.svg') center;
 }
