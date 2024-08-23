@@ -63,5 +63,59 @@ function makeFocusCycle(container, failedToFindFocusFunc) {
 	});
 }
 
+function findFocusableElement(element, direction) {
+	// Check the current element if it is focusable
+	if (isFocusable(element)) return element;
+
+	// Check if sibling is focusable or contains focusable elements
+	const focusableInSibling = findFocusableWithin(
+		element,
+		direction,
+	);
+	if (focusableInSibling) return focusableInSibling;
+
+	// Depending on the direction, find the next or previous sibling
+	const sibling =
+		direction === 'next'
+			? element.nextElementSibling
+			: element.previousElementSibling;
+
+	if (sibling) {
+		// Recursively check the next or previous sibling of the current sibling
+		return findFocusableElement(sibling, direction);
+	}
+
+	return null;
+}
+
+// Utility function to check if an element is focusable
+// This function diffrent from getFocusableElements. This only checkes the current element is focusable or not.
+function isFocusable(element) {
+	if (!element) return false;
+
+	// Check if element is focusable (e.g., input, button, link, etc.)
+	const focusableElements = [
+		'a[href]',
+		'button',
+		'textarea',
+		'input[type="text"]',
+		'input[type="radio"]',
+		'input[type="checkbox"]',
+		'select',
+		'[tabindex]:not([tabindex="-1"])',
+	];
+
+	return focusableElements.some((selector) => element.matches(selector));
+}
+
+// Helper function to find the first focusable element within an element
+function findFocusableWithin(element, direction){
+	const focusableElements = Array.from(element.querySelectorAll('*'));
+	return direction === 'next'
+		? (focusableElements.find(isFocusable))
+		: (focusableElements.reverse().find(isFocusable));
+}
+
 JSDialog.GetFocusableElements = getFocusableElements;
 JSDialog.MakeFocusCycle = makeFocusCycle;
+JSDialog.FindFocusableElement = findFocusableElement;
