@@ -325,6 +325,7 @@
       <geolocation_setup>
         <enable desc="Enable geolocation_setup when using indirection server with geolocation configuration" type="bool" default="false">false</enable>
       </geolocation_setup>
+      <server_name desc="server name to show in cluster overview admin panel"></server_name>
     </indirection_endpoint>
 
     @LOCK_CONFIGURATION@
