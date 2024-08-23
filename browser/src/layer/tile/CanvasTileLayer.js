@@ -1382,7 +1382,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				const extracted = this._map.extractContent(textMsgHtml);
 				hyperlinkTextBox.value = extracted.trim();
 
-				const hyperlinkLinkBoxInput = document.getElementById('hyperlink-link-box-input')
+				const hyperlinkLinkBoxInput = document.getElementById('hyperlink-link-box-input');
 				if (extracted !== '' && hyperlinkLinkBoxInput) {
 					hyperlinkLinkBoxInput.focus();
 				}
