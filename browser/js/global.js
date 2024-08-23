@@ -303,8 +303,12 @@ class InitializerBase {
 			brandingLink.setAttribute("href", this.brandingUriPrefix + theme_prefix + 'branding-desktop.css');
 		}
 
-		document.getElementsByTagName("head")[[0]].appendChild(link);
-		document.getElementsByTagName("head")[[0]].appendChild(brandingLink);
+		const otherStylesheets = document.querySelectorAll('link[rel="stylesheet"]');
+		const lastOtherStylesheet = otherStylesheets[otherStylesheets.length - 1];
+
+		lastOtherStylesheet
+			.insertAdjacentElement('afterend', link)
+			.insertAdjacentElement('afterend', brandingLink);
 	}
 
 	initializeViewMode() {
@@ -390,8 +394,10 @@ class MobileAppInitializer extends InitializerBase {
 		  window.postMobileMessage('HYPERLINK ' + url); /* don't call the 'normal' window.open on mobile at all */
 		};
 
-		window.MobileAppName = 'MOBILEAPPNAME';
-		window.brandProductName = 'MOBILEAPPNAME';
+		const element = document.getElementById("initial-variables");
+
+		window.MobileAppName = element.dataset.mobileAppName;
+		window.brandProductName = element.dataset.mobileAppName;
 
 		window.coolLogging = "true";
 		window.outOfFocusTimeoutSecs = 1000000;
