@@ -2058,8 +2058,11 @@ static std::string getCapabilitiesJson(bool convertToAvailable)
     capabilities->set("hasWASMSupport",
                       COOLWSD::WASMState != COOLWSD::WASMActivationState::Disabled);
 
+    const std::string serverName = config::getString("indirection_endpoint.server_name", "");
     if (const char* podName = std::getenv("POD_NAME"))
         capabilities->set("podName", podName);
+    else if (!serverName.empty())
+        capabilities->set("podName", serverName);
 
     bool geoLocationSetup =
         config::getBool(std::string("indirection_endpoint.geolocation_setup.enable"), false);
