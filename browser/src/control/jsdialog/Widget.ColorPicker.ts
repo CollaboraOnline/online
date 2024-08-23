@@ -89,7 +89,7 @@ function generatePalette(paletteName: string) {
 }
 
 function createColor(
-	parentContainer: Element,
+	parentContainer: HTMLElement,
 	builder: any,
 	palette: ColorPalette,
 	colorItem: ColorItem,
@@ -122,47 +122,15 @@ function createColor(
 
 	// Handle keyboard navigation and selection
 	color.addEventListener('keydown', (event: KeyboardEvent) => {
-		switch (event.key) {
-			case 'Enter':
-			case ' ':
-				// Space or Enter key selects the color
-				handleColorSelection(
-					event.target as HTMLElement,
-					builder,
-					widgetData,
-					palette,
-				);
-				event.preventDefault();
-				break;
-			case 'ArrowRight':
-				moveFocus(color, 'next', 'horizontal');
-				event.preventDefault();
-				break;
-			case 'ArrowLeft':
-				moveFocus(color, 'previous', 'horizontal');
-				event.preventDefault();
-				break;
-			case 'ArrowDown':
-				moveFocus(
-					color,
-					'next',
-					'vertical',
-					parentContainer.nextElementSibling,
-				);
-				event.preventDefault();
-				break;
-			case 'ArrowUp':
-				moveFocus(
-					color,
-					'previous',
-					'vertical',
-					parentContainer.previousElementSibling,
-				);
-				event.preventDefault();
-				break;
-			default:
-				break;
-		}
+		handleKeyboardNavigation(
+			event,
+			color,
+			parentContainer,
+			handleColorSelection,
+			builder,
+			widgetData,
+			palette,
+		);
 	});
 
 	return color;
@@ -204,169 +172,8 @@ function handleColorSelection(
 	window.prefs.set('recentColor', JSON.stringify(recentRow));
 }
 
-function moveFocus(
-	currentElement: HTMLElement,
-	direction: 'next' | 'previous',
-	axis: 'horizontal' | 'vertical',
-	nextElement?: Element,
-) {
-	const focusableElements = Array.from(
-		currentElement.parentElement?.querySelectorAll('.ui-color-picker-entry'),
-	) as HTMLElement[];
-
-	const [currentRow, currentColumn] = getRowColumn(currentElement);
-
-	let targetRow = currentRow;
-	let targetColumn = currentColumn;
-
-	if (axis === 'horizontal') {
-		if (direction === 'next') {
-			targetColumn++;
-			// If it's the last element in the row, cycle back to the first in the same row
-			if (
-				!focusableElements.find((el) => {
-					const [row, column] = getRowColumn(el);
-					return row === currentRow && column === targetColumn;
-				})
-			) {
-				targetColumn = 0; // Start from the first column
-			}
-		} else {
-			targetColumn--;
-			// If it's the first element in the row and trying to move previous, cycle to the last in the same row
-			if (targetColumn < 0) {
-				targetColumn =
-					focusableElements.filter((el) => {
-						const [row] = getRowColumn(el);
-						return row === currentRow;
-					}).length - 1; // Move to the last column in the same row
-			}
-		}
-	} else if (axis === 'vertical') {
-		if (direction === 'next') {
-			targetRow++;
-		} else {
-			targetRow--;
-		}
-	}
-
-	// Find the target element based on the calculated row and column
-	const targetElement = focusableElements.find((el) => {
-		const [row, column] = getRowColumn(el);
-		return row === targetRow && column === targetColumn;
-	});
-
-	if (!targetElement && axis === 'vertical') {
-		if (direction === 'next') {
-			// Start from the next sibling of the parent container
-			const nextFocusableElement = findFocusableElement(
-				nextElement as HTMLElement,
-				'next',
-				isFocusable,
-			);
-			if (nextFocusableElement) {
-				nextFocusableElement.focus();
-			}
-		} else if (direction === 'previous') {
-			// Start from the previous sibling of the parent container
-			const previousFocusableElement = findFocusableElement(
-				nextElement as HTMLElement,
-				'previous',
-				isFocusable,
-			);
-			if (previousFocusableElement) {
-				previousFocusableElement.focus();
-			}
-		}
-	}
-
-	if (targetElement) {
-		targetElement.focus();
-	}
-}
-
-function findFocusableElement(
-	element: HTMLElement,
-	direction: 'next' | 'previous',
-	isFocusable: (el: HTMLElement) => boolean,
-): HTMLElement | null {
-	if (!element) {
-		const mainColorContainer = document.querySelector('.ui-color-picker');
-		const focusableElements = Array.from(
-			mainColorContainer.querySelectorAll('*'),
-		);
-		const firstFocusableElement =
-			direction === 'next'
-				? (focusableElements.find(isFocusable) as HTMLElement)
-				: (focusableElements.reverse().find(isFocusable) as HTMLElement);
-		if (firstFocusableElement) {
-			return firstFocusableElement;
-		}
-	}
-
-	// Check the current element if it is focusable
-	if (isFocusable(element)) return element;
-
-	// Check if sibling is focusable or contains focusable elements
-	const focusableInSibling = findFocusableWithin(
-		element as HTMLElement,
-		direction,
-	);
-	if (focusableInSibling) return focusableInSibling;
-
-	// Depending on the direction, find the next or previous sibling
-	const sibling: Element =
-		direction === 'next'
-			? element.nextElementSibling
-			: element.previousElementSibling;
-
-	if (sibling) {
-		// Recursively check the next or previous sibling of the current sibling
-		return findFocusableElement(sibling as HTMLElement, direction, isFocusable);
-	}
-
-	return null;
-}
-
-// Helper function to find the first focusable element within an element
-function findFocusableWithin(
-	element: HTMLElement,
-	direction: string,
-): HTMLElement | null {
-	const focusableElements = Array.from(element.querySelectorAll('*'));
-	return direction === 'next'
-		? (focusableElements.find(isFocusable) as HTMLElement | null)
-		: (focusableElements.reverse().find(isFocusable) as HTMLElement | null);
-}
-
-// Utility function to check if an element is focusable
-function isFocusable(element: HTMLElement) {
-	if (!element) return false;
-
-	// Check if element is focusable (e.g., input, button, link, etc.)
-	const focusableElements = [
-		'a[href]',
-		'button',
-		'textarea',
-		'input[type="text"]',
-		'input[type="radio"]',
-		'input[type="checkbox"]',
-		'select',
-		'[tabindex]:not([tabindex="-1"])',
-	];
-
-	return focusableElements.some((selector) => element.matches(selector));
-}
-
-function getRowColumn(element: HTMLElement): [number, number] {
-	const index = element.getAttribute('index');
-	if (!index) return [-1, -1]; // we will never have this kind of index this is why we are pssing nagative values here
-	const [row, column] = index.split(':').map(Number);
-	return [row, column];
-}
-
 function createAutoColorButton(
-	parentContainer: Element,
+	parentContainer: HTMLElement,
 	data: ColorPaletteWidgetData,
 	builder: any,
 ) {
@@ -380,6 +187,8 @@ function createAutoColorButton(
 	);
 	autoButton.id = 'transparent-color-button';
 	autoButton.innerText = buttonText;
+	autoButton.tabIndex = '0';
+	autoButton.focus();
 
 	autoButton.addEventListener('click', () => {
 		builder.map['stateChangeHandler'].setItemValue(data.command, -1);
@@ -394,11 +203,18 @@ function createAutoColorButton(
 	});
 	autoButton.addEventListener('keydown', (event: KeyboardEvent) => {
 		if (event.key === 'ArrowDown') {
-			moveFocus(autoButton, 'next', 'vertical', autoButton.nextElementSibling);
+			moveFocus(
+				parentContainer,
+				autoButton,
+				'next',
+				'vertical',
+				autoButton.nextElementSibling,
+			);
 			event.preventDefault();
 		}
 		if (event.key === 'ArrowUp') {
 			moveFocus(
+				parentContainer,
 				autoButton,
 				'previous',
 				'vertical',
@@ -410,7 +226,7 @@ function createAutoColorButton(
 }
 
 function createPaletteSwitch(
-	parentContainer: Element,
+	parentContainer: HTMLElement,
 	builder: any,
 ): HTMLSelectElement {
 	const paletteListbox = L.DomUtil.create(
@@ -425,6 +241,7 @@ function createPaletteSwitch(
 	);
 
 	listbox.setAttribute('aria-labelledby', 'color-palette');
+	listbox.setAttribute('tabindex', '0');
 
 	for (const i in window.app.colorPalettes) {
 		const paletteOption = L.DomUtil.create('option', '', listbox);
@@ -441,25 +258,7 @@ function createPaletteSwitch(
 	);
 	// Add keydown event listener to handle ArrowDown key
 	listbox.addEventListener('keydown', (event: KeyboardEvent) => {
-		if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
-			event.preventDefault(); // Prevent default behavior
-		} else if (event.key === 'ArrowUp') {
-			moveFocus(
-				paletteListbox,
-				'previous',
-				'vertical',
-				paletteListbox.previousElementSibling,
-			);
-			event.preventDefault();
-		} else if (event.key === 'ArrowDown') {
-			moveFocus(
-				paletteListbox,
-				'next',
-				'vertical',
-				paletteListbox.nextElementSibling,
-			);
-			event.preventDefault();
-		}
+		handleKeyboardNavigation(event, paletteListbox, paletteListbox);
 	});
 
 	return listbox;
@@ -537,20 +336,7 @@ function updatePalette(
 	});
 	//update here
 	customInput.addEventListener('keydown', (event: KeyboardEvent) => {
-		if (event.key === 'ArrowRight') {
-			const nextElement = customInput.nextElementSibling as HTMLElement;
-			if (nextElement) {
-				nextElement.focus();
-				event.preventDefault();
-			}
-		} else if (event.key === 'ArrowUp') {
-			// Focus on the last element of the ui-color-picker-palette div
-			moveFocus(customContainer, 'previous', 'vertical', paletteContainer);
-			event.preventDefault();
-		} else if (event.key === 'ArrowDown') {
-			moveFocus(customContainer, 'next', 'vertical', recentContainer);
-			event.preventDefault();
-		}
+		handleKeyboardNavigation(event, customInput, customContainer);
 	});
 
 	const customColors = palette[palette.length - 2];
@@ -590,6 +376,7 @@ JSDialog.colorPicker = function (
 ) {
 	const container = L.DomUtil.create('div', 'ui-color-picker', parentContainer);
 	container.id = data.id;
+	container.tabIndex = '-1'; // focus should be on first element in grid for color picker
 
 	createAutoColorButton(container, data, builder);
 
@@ -638,6 +425,8 @@ JSDialog.colorPicker = function (
 			recentContainer,
 		);
 	});
+
+	JSDialog.MakeFocusCycle(container);
 
 	return false;
 };
