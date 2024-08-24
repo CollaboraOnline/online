@@ -10,7 +10,6 @@
  */
 
 #include <config.h>
-#include <config_version.h>
 
 #include "HttpHelper.hpp"
 #include "HttpRequest.hpp"
@@ -109,7 +108,7 @@ static void sendFileImpl(const std::shared_ptr<StreamSocket>& socket, const std:
     {
         // 60 * 60 * 24 * 128 (days) = 11059200
         response.set("Cache-Control", "max-age=11059200");
-        response.set("ETag", "\"" COOLWSD_VERSION_HASH "\"");
+        response.set("ETag", '"' + Util::getCoolVersionHash() + '"');
     }
     else
     {
