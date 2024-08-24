@@ -11,18 +11,19 @@
 
 #pragma once
 
-#include "common/Protocol.hpp"
+#include "Socket.hpp"
 #include "common/Common.hpp"
 #include "common/Log.hpp"
+#include "common/Protocol.hpp"
 #include "common/Unit.hpp"
 #include "common/Util.hpp"
-#include "Socket.hpp"
 #include <net/HttpRequest.hpp>
 
 #include <Poco/Net/HTTPResponse.h>
 
 #include <chrono>
 #include <memory>
+#include <string>
 #include <vector>
 
 class WebSocketHandler : public ProtocolHandlerInterface
