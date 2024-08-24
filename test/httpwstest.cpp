@@ -9,13 +9,9 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include <chrono>
 #include <config.h>
 
 #include "WebSocketSession.hpp"
-
-#include <algorithm>
-#include <vector>
 
 #include <Poco/Net/AcceptCertificateHandler.h>
 #include <Poco/Net/HTTPRequest.h>
@@ -33,6 +29,8 @@
 #include <lokassert.hpp>
 #include <helpers.hpp>
 #include <KitPidHelpers.hpp>
+
+#include <chrono>
 
 using namespace helpers;
 

@@ -9,16 +9,15 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include <chrono>
-#include <string>
+#include <config.h>
+
 #define TST_LOG_REDIRECT
 #include <test.hpp>
 
-#include <config.h>
-
+#include <chrono>
 #include <cstdlib>
 #include <iostream>
-#include <memory>
+#include <string>
 
 #include <cppunit/BriefTestProgressListener.h>
 #include <cppunit/CompilerOutputter.h>
@@ -42,10 +41,6 @@
 #include <SslSocket.hpp>
 #endif
 #include <Log.hpp>
-
-#include "common/Protocol.hpp"
-
-class HTTPGetTest;
 
 bool filterTests(CPPUNIT_NS::TestRunner& runner, CPPUNIT_NS::Test* testRegistry, const std::string& testName)
 {

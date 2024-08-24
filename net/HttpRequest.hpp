@@ -38,10 +38,6 @@
 #include "Log.hpp"
 #include "Util.hpp"
 
-#ifndef APP_NAME
-static_assert(false, "config.h must be included in the .cpp being compiled");
-#endif
-
 // This is a partial implementation of RFC 7230
 // and its related RFCs, with focus on the core
 // HTTP/1.1 messaging of GET and POST requests.

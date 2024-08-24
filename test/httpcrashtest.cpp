@@ -9,14 +9,12 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include <chrono>
 #include <config.h>
 
-#include <errno.h>
-#include <signal.h>
 #include <sys/types.h>
 
 #include <cstring>
+#include <chrono>
 
 #include <Poco/Dynamic/Var.h>
 #include <Poco/Net/AcceptCertificateHandler.h>

@@ -18,9 +18,6 @@
 
 #include <test/lokassert.hpp>
 
-#include <chrono>
-#include <fstream>
-
 #include <cppunit/extensions/HelperMacros.h>
 
 /// HTTP WhiteBox unit-tests.

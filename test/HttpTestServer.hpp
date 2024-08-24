@@ -19,10 +19,6 @@
 #include <chrono>
 #include <string>
 
-#ifndef APP_NAME
-static_assert(false, "config.h must be included in the .cpp being compiled");
-#endif
-
 /// Handles incoming connections and dispatches to the appropriate handler.
 class ServerRequestHandler final : public SimpleSocketHandler
 {
