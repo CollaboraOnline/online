@@ -10,7 +10,6 @@
  */
 
 #include "config.h"
-#include "config_version.h"
 
 #include "Socket.hpp"
 #include "TraceEvent.hpp"
@@ -1582,15 +1581,9 @@ std::string WebSocketHandler::generateKey()
 // Required by Android and iOS apps.
 namespace http
 {
-    std::string getAgentString()
-    {
-        return "COOLWSD HTTP Agent " COOLWSD_VERSION;
-    }
+std::string getAgentString() { return "COOLWSD HTTP Agent " + Util::getCoolVersion(); }
 
-    std::string getServerString()
-    {
-        return "COOLWSD HTTP Server " COOLWSD_VERSION;
-    }
+std::string getServerString() { return "COOLWSD HTTP Server " + Util::getCoolVersion(); }
 }
 
 extern "C" {

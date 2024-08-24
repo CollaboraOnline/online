@@ -9,9 +9,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include <Poco/Net/HTTPRequest.h>
 #include <config.h>
-#include <config_version.h>
 
 #include <ClientRequestDispatcher.hpp>
 
@@ -49,6 +47,7 @@
 #include <Poco/File.h>
 #include <Poco/MemoryStream.h>
 #include <Poco/Net/HTMLForm.h>
+#include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/NetException.h>
 #include <Poco/Net/PartHandler.h>
 #include <Poco/SAX/InputSource.h>
@@ -1919,7 +1918,7 @@ std::string ClientRequestDispatcher::getDiscoveryXML()
     const std::string urlsrc = "urlsrc";
 
     const std::string rootUriValue = "%SRV_URI%";
-    const std::string uriBaseValue = rootUriValue + "/browser/" COOLWSD_VERSION_HASH "/";
+    const std::string uriBaseValue = rootUriValue + "/browser/" + Util::getCoolVersionHash() + '/';
     const std::string uriValue = uriBaseValue + "cool.html?";
 
     LOG_DBG_S("Processing discovery.xml from " << discoveryPath);

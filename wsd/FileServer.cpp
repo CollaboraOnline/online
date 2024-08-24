@@ -1238,8 +1238,8 @@ FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::prepro
     Poco::replaceInPlace(preprocess, ACCESS_TOKEN_TTL, urv[ACCESS_TOKEN_TTL]);
     Poco::replaceInPlace(preprocess, ACCESS_HEADER, urv[ACCESS_HEADER]);
     Poco::replaceInPlace(preprocess, std::string("%HOST%"), cnxDetails.getWebSocketUrl());
-    Poco::replaceInPlace(preprocess, std::string("%VERSION%"), std::string(COOLWSD_VERSION_HASH));
-    Poco::replaceInPlace(preprocess, std::string("%COOLWSD_VERSION%"), std::string(COOLWSD_VERSION));
+    Poco::replaceInPlace(preprocess, std::string("%VERSION%"), Util::getCoolVersionHash());
+    Poco::replaceInPlace(preprocess, std::string("%COOLWSD_VERSION%"), Util::getCoolVersion());
     Poco::replaceInPlace(preprocess, std::string("%SERVICE_ROOT%"), responseRoot);
     Poco::replaceInPlace(preprocess, UI_DEFAULTS, macaron::Base64::Encode(
                          uiDefaultsToJSON(urv[UI_DEFAULTS], userInterfaceMode, userInterfaceTheme, savedUIState)));

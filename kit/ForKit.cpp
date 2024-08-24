@@ -14,7 +14,6 @@
  */
 
 #include <config.h>
-#include <config_version.h>
 
 #ifndef __FreeBSD__
 #include <sys/capability.h>
@@ -614,7 +613,8 @@ int forkit_main(int argc, char** argv)
     if (!Util::isKitInProcess())
     {
         // Already set by COOLWSD.cpp in kit in process
-        SigUtil::setFatalSignals("forkit startup of " COOLWSD_VERSION " " COOLWSD_VERSION_HASH);
+        SigUtil::setFatalSignals("forkit startup of " + Util::getCoolVersion() + ' ' +
+                                 Util::getCoolVersionHash());
     }
     else
     {

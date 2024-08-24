@@ -14,7 +14,6 @@
  */
 
 #include <config.h>
-#include <config_version.h>
 
 #include <dlfcn.h>
 #include <limits>
@@ -2989,7 +2988,8 @@ void lokit_main(
     if (!Util::isKitInProcess())
     {
         // Already set by COOLWSD.cpp
-        SigUtil::setFatalSignals("kit startup of " COOLWSD_VERSION " " COOLWSD_VERSION_HASH);
+        SigUtil::setFatalSignals("kit startup of " + Util::getCoolVersion() + ' ' +
+                                 Util::getCoolVersionHash());
         SigUtil::setUserSignals();
     }
 
