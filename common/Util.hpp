@@ -320,7 +320,13 @@ namespace Util
 
     void killThreadById(int tid, int signal);
 
-    /// Get version information
+    /// Returns the COOL Version number string.
+    std::string getCoolVersion();
+
+    /// Returns the COOL Version Hash string.
+    std::string getCoolVersionHash();
+
+    /// Get version information, that is, both version and hash.
     void getVersionInfo(std::string& version, std::string& hash);
 
     ///< A random hex string that identifies the current process.

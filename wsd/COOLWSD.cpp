@@ -3199,9 +3199,7 @@ void COOLWSD::handleOption(const std::string& optionName,
     }
     else if (optionName == "version-hash")
     {
-        std::string version, hash;
-        Util::getVersionInfo(version, hash);
-        std::cout << hash << std::endl;
+        std::cout << Util::getCoolVersionHash() << std::endl;
         Util::forcedExit(EX_OK);
     }
     else if (optionName == "version")
@@ -4269,7 +4267,7 @@ void COOLWSD::processFetchUpdate(SocketPoll& poll)
 
         Poco::URI uriFetch(url);
         uriFetch.addQueryParameter("product", config::getString("product_name", APP_NAME));
-        uriFetch.addQueryParameter("version", COOLWSD_VERSION);
+        uriFetch.addQueryParameter("version", Util::getCoolVersion());
         LOG_TRC("Infobar update request from " << uriFetch.toString());
         FetchHttpSession = StorageConnectionManager::getHttpSession(uriFetch);
         if (!FetchHttpSession)
@@ -4974,7 +4972,7 @@ void forwardSigUsr2()
 int main(int argc, char** argv)
 {
     SigUtil::setUserSignals();
-    SigUtil::setFatalSignals("wsd " COOLWSD_VERSION " " COOLWSD_VERSION_HASH);
+    SigUtil::setFatalSignals("wsd " + Util::getCoolVersion() + ' ' + Util::getCoolVersionHash());
     setKitInProcess();
 
     try
