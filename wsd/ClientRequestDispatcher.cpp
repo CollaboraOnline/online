@@ -2039,14 +2039,11 @@ static std::string getCapabilitiesJson(bool convertToAvailable)
     // Set the Server ID
     capabilities->set("serverId", Util::getProcessIdentifier());
 
-    std::string version, hash;
-    Util::getVersionInfo(version, hash);
-
     // Set the product version
-    capabilities->set("productVersion", version);
+    capabilities->set("productVersion", Util::getCoolVersion());
 
     // Set the product version hash
-    capabilities->set("productVersionHash", hash);
+    capabilities->set("productVersionHash", Util::getCoolVersionHash());
 
     // Set that this is a proxy.php-enabled instance
     capabilities->set("hasProxyPrefix", COOLWSD::IsProxyPrefixEnabled);

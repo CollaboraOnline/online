@@ -361,11 +361,19 @@ namespace Util
         return ThreadName;
     }
 
+    std::string getCoolVersion() { return std::string(COOLWSD_VERSION); }
+
+    std::string getCoolVersionHash()
+    {
+        std::string hash(COOLWSD_VERSION_HASH);
+        hash.resize(std::min(8, (int)hash.length()));
+        return hash;
+    }
+
     void getVersionInfo(std::string& version, std::string& hash)
     {
-        version = std::string(COOLWSD_VERSION);
-        hash = std::string(COOLWSD_VERSION_HASH);
-        hash.resize(std::min(8, (int)hash.length()));
+        version = getCoolVersion();
+        hash = getCoolVersionHash();
     }
 
     const std::string& getProcessIdentifier()
