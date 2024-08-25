@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-08-19 10:15+0200\n"
-"PO-Revision-Date: 2024-06-14 16:47+0000\n"
+"PO-Revision-Date: 2024-08-25 08:26+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: Croatian <https://hosted.weblate.org/projects/"
 "collabora-online/help/hr/>\n"
@@ -11,9 +11,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Weblate 5.7.1-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:84-5
 msgid "Keyboard Shortcuts"
@@ -2020,13 +2020,12 @@ msgstr ""
 "slika, možeš također umetnuti ako su kopirani iz dokumenta u kojem radiš."
 
 #: html/cool-help.html%2Bdiv.div.div.p:516-5
-#, fuzzy
 msgid ""
 "When you paste text from outside of the document (another browser window or "
 "a desktop application), it will be pasted as rich text."
 msgstr ""
 "Kad umetneš tekst iz jednog drugog dokumenta (jednog drugog prozora "
-"preglednika ili desktop programa, tekst će se umetnuti kao formatirani tekst."
+"preglednika ili desktop programa), on će se umetnuti kao formatirani tekst."
 
 #: html/cool-help.html%2Bdiv.div.div.p:517-5
 msgid ""

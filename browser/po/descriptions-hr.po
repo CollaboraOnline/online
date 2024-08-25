@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-08-19 11:23+0200\n"
-"PO-Revision-Date: 2024-08-20 05:32+0000\n"
+"PO-Revision-Date: 2024-08-25 08:26+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: Croatian <https://hosted.weblate.org/projects/"
 "collabora-online/app-store-descriptions/hr/>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Weblate 5.7\n"
+"X-Generator: Weblate 5.7.1-dev\n"
 
 #. App name - 50 chars limit
 #: descriptions/google-play.html%2Bhtml.body.h3:5-1
@@ -39,6 +39,10 @@ msgid ""
 "and now it's on Android, enhancing your possibilities to work on mobile and "
 "for collaboration."
 msgstr ""
+"Collabora Office je program za uređivanje teksta, proračunskih tablica i "
+"prezentacije temeljen na LibreOfficeu, najpopularnijem uredskom paketu "
+"otvorenog koda na svijetu – sada i za Android, povećavajući mogućnosti rada "
+"na mobilnom uređaju i suradnje."
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:17-1
@@ -81,6 +85,9 @@ msgid ""
 "\"https://col.la/android\"> https://col.la/android</a>. Please note that "
 "anything you enter in the bugtracker will be public."
 msgstr ""
+"Koristi sustav za praćenje problema i priloži sve datoteke koje su "
+"prouzročile probleme na <a href=\"https://col.la/android\"> https://col.la/"
+"android</a>. Sve što upišeš u sustav za praćenje problema će biti javno."
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:40-1
@@ -94,6 +101,10 @@ msgid ""
 "Windows, Mac, and Linux. This, combined with a new front-end based on "
 "Collabora Online, reads and saves documents similarly to LibreOffice desktop."
 msgstr ""
+"Collabora Office za Android koristi isti mehanizam kao LibreOffice za "
+"Windows, Mac i Linux. To, u kombinaciji s novim sučeljem temeljenim na "
+"Collabora Online, čita i sprema dokumente slično desktop verziji "
+"LibreOfficea."
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:48-1
@@ -103,6 +114,10 @@ msgid ""
 "developing Android support since 2012, with the help of Google Summer of "
 "Code students Andrzej Hunt, Iain Billet and Kaishu Sahu."
 msgstr ""
+"Collabora inženjeri Tor Lillqvist, Tomaž Vajngerl, Michael Meeks, Miklos "
+"Vajna, Jan Holešovský, Mert Tümer, Rashesh Padia i Skyler Gray razvijaju "
+"podršku za Android od 2012. uz pomoć studenata programa „Google Summer of "
+"Code” Andrzej Hunt, Iain Billet and Kaishu Sahu."
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:52-1
