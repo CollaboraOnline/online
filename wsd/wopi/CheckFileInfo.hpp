@@ -11,8 +11,6 @@
 
 #pragma once
 
-#include <chrono>
-#include <condition_variable>
 #if MOBILEAPP
 #error This file should be excluded from Mobile App builds
 #endif // MOBILEAPP
