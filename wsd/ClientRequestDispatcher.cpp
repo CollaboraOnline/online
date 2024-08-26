@@ -21,7 +21,7 @@
 #include <COOLWSD.hpp>
 #include <ClientSession.hpp>
 #include <ConfigUtil.hpp>
-#include <DocumentBroker.hpp>
+#include <wsd/DocumentBroker.hpp>
 #include <Exceptions.hpp>
 #include <FileServer.hpp>
 #include <HttpRequest.hpp>
@@ -35,6 +35,7 @@
 #include <net/AsyncDNS.hpp>
 #include <net/HttpHelper.hpp>
 #if !MOBILEAPP
+#include <wsd/SpecialBrokers.hpp>
 #include <HostUtil.hpp>
 #endif // !MOBILEAPP
 
