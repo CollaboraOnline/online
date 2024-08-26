@@ -60,15 +60,90 @@ class FormulaAutoCompletePopup extends L.Control.AutoCompletePopup {
 		return entries;
 	}
 
+	getAutocompleteText(
+		currentCellFormula: string,
+		functionName: string,
+		endIndex: number,
+	): string {
+		// Step-1: Find indexes of all the '(', ';', '-', '+', '*', '/'
+		const openBracketIndex: number[] = [];
+		const semicolonIndex: number[] = [];
+		const plusIndex: number[] = [];
+		const multiplyIndex: number[] = [];
+		const divideIndex: number[] = [];
+		const minusIndex: number[] = [];
+		const equalIndex: number = 0;
+
+		for (let i = 0; i < currentCellFormula.length; i++) {
+			const char = currentCellFormula.charAt(i);
+			if (char === '(') openBracketIndex.push(i);
+			else if (char === ';') semicolonIndex.push(i);
+			else if (char === '+') plusIndex.push(i);
+			else if (char === '*') multiplyIndex.push(i);
+			else if (char === '/') divideIndex.push(i);
+			else if (char === '-') minusIndex.push(i);
+		}
+
+		// Step-2: Find smallest difference between endIndex and indexes of all the '(', ';'
+		// that will give us the startIndex
+		let minDiff: number = Number.MAX_VALUE;
+		let startIndex: number;
+
+		const updateMinDiff = (index: number) => {
+			const tmp = endIndex - index;
+			if (tmp >= 0 && tmp < minDiff) {
+				minDiff = tmp;
+				startIndex = index + 1;
+			}
+		};
+
+		updateMinDiff(equalIndex);
+		openBracketIndex.forEach(updateMinDiff);
+		semicolonIndex.forEach(updateMinDiff);
+		plusIndex.forEach(updateMinDiff);
+		minusIndex.forEach(updateMinDiff);
+		multiplyIndex.forEach(updateMinDiff);
+		divideIndex.forEach(updateMinDiff);
+
+		// Step-3: extract the text we want to complete using startIndex and endIndex
+		const partialText: string = currentCellFormula
+			.substring(startIndex, endIndex + 1)
+			.trim();
+
+		// Step-4: compare partialText and functionName to find remaining text need to autocomplete
+		let autoCompleteFunctionName: string = '';
+		for (
+			let i = 0;
+			i < Math.max(partialText.length, functionName.length);
+			i++
+		) {
+			if (
+				partialText.charAt(i).toLowerCase() !=
+				functionName.charAt(i).toLowerCase()
+			) {
+				autoCompleteFunctionName = functionName.substring(i);
+				break;
+			}
+		}
+
+		return autoCompleteFunctionName;
+	}
+
 	callback(objectType: any, eventType: any, object: any, index: number) {
 		if (eventType === 'close') {
 			this.closePopup();
 		} else if (eventType === 'select' || eventType === 'activate') {
-			var currentText = this.map._docLayer._lastFormula;
-			var chIndex = currentText.length - 1;
-			var functionName = this.functionList[index].name;
-			var namedRange = this.functionList[index].namedRange;
-			functionName = functionName.substring(chIndex);
+			const namedRange: string = this.functionList[index].namedRange;
+			const currentText: string = this.map._docLayer._lastFormula;
+			const addedCharacterIndex: number =
+				this.map._docLayer._newFormulaDiffIndex;
+
+			const functionName: string = this.getAutocompleteText(
+				currentText,
+				this.functionList[index].name,
+				addedCharacterIndex,
+			);
+
 			if (namedRange) this.map._textInput._sendText(functionName);
 			else this.map._textInput._sendText(functionName + '(');
 			this.closePopup();

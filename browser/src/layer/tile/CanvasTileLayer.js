@@ -1794,9 +1794,26 @@ L.CanvasTileLayer = L.Layer.extend({
 		// This is done because coolwsd will send several 'cellformula'
 		// messages during text composition, and resetting the contents
 		// of the clipboard container mid-composition will easily break it.
-		var formula = textMsg.substring(13);
-		this._lastFormula = formula;
-		this._map.fire('cellformula', {formula: formula});
+
+		let newFormula = textMsg.substring(13);
+		if (this._lastFormula) {
+			let minLength = Math.min(newFormula.length, this._lastFormula.length);
+			let index = -1;
+			for (let i = 0; i < minLength; i++) {
+				if (newFormula.charAt(i) !== this._lastFormula.charAt(i)) {
+					index = i;
+					break;
+				}
+			}
+			if (index === -1)
+				index = minLength;
+
+			// newFormulaDiffIndex have index of last added character in formula
+			// It is used during Formula Autocomplete to find partial remaining text
+			this._newFormulaDiffIndex = index;
+		}
+		this._lastFormula = newFormula;
+		this._map.fire('cellformula', {formula: newFormula});
 	},
 
 	_onCalcFunctionUsageMsg: function (textMsg) {
