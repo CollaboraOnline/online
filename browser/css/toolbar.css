@@ -1016,7 +1016,7 @@ button.leaflet-control-search-next
 .w2ui-icon.link{ background: url('images/lc_inserthyperlink.svg') no-repeat center; }
 .w2ui-icon.insertsymbol{ background: url('images/lc_insertsymbol.svg') no-repeat center; }
 .w2ui-icon.edit{ background: url('images/lc_editdoc.svg') no-repeat center; }
-.w2ui-icon.fold{ background: url('images/fold.svg') no-repeat center center / 19px; opacity: 0.8; filter: alpha(opacity=80);}
+.w2ui-icon.fold{ background: url('images/lc_fold.svg') no-repeat center center / 19px; opacity: 0.8; filter: alpha(opacity=80);}
 .w2ui-icon.unfold{ background: url('images/unfold.svg') no-repeat center center/ 19px; opacity: 0.8; filter: alpha(opacity=80);}
 .w2ui-icon.hamburger{ background: url('images/hamburger.svg') no-repeat center; }
 .w2ui-icon.setborderstyle{ background: url('images/lc_setborderstyle.svg') no-repeat center; }
@@ -1305,7 +1305,7 @@ button.leaflet-control-search-next
 [data-theme='dark'] .w2ui-icon.link{ background: url('images/dark/lc_inserthyperlink.svg') no-repeat center; }
 [data-theme='dark'] .w2ui-icon.insertsymbol{ background: url('images/dark/lc_insertsymbol.svg') no-repeat center; }
 [data-theme='dark'] .w2ui-icon.edit{ background: url('images/dark/lc_editdoc.svg') no-repeat center; }
-[data-theme='dark'] .w2ui-icon.fold{ background: url('images/dark/fold.svg') no-repeat center center / 19px; opacity: 0.8; filter: alpha(opacity=80);}
+[data-theme='dark'] .w2ui-icon.fold{ background: url('images/dark/lc_fold.svg') no-repeat center center / 19px; opacity: 0.8; filter: alpha(opacity=80);}
 [data-theme='dark'] .w2ui-icon.unfold{ background: url('images/dark/unfold.svg') no-repeat center center/ 19px; opacity: 0.8; filter: alpha(opacity=80);}
 [data-theme='dark'] .w2ui-icon.hamburger{ background: url('images/dark/hamburger.svg') no-repeat center; }
 [data-theme='dark'] .w2ui-icon.setborderstyle{ background: url('images/dark/lc_setborderstyle.svg') no-repeat center; }

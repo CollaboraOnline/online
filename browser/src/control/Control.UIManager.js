@@ -794,10 +794,9 @@ L.Control.UIManager = L.Control.extend({
 			$('#closebuttonwrapper').show();
 			$('#closebuttonwrapperseparator').show();
 		}
+		const obj = document.getElementById('fold-button');
+		obj.style.transform = 'rotate(0deg)';
 
-		var obj = $('.unfold');
-		obj.removeClass('w2ui-icon unfold');
-		obj.addClass('w2ui-icon fold');
 		$('#fold').prop('title', _('Hide Menu'));
 
 		if (this._notebookbarShouldBeCollapsed)
@@ -818,10 +817,9 @@ L.Control.UIManager = L.Control.extend({
 			$('#closebuttonwrapper').hide();
 			$('#closebuttonwrapperseparator').hide();
 		}
+		const obj = document.getElementById('fold-button');
+		obj.style.transform = 'rotate(180deg)';
 
-		var obj = $('.fold');
-		obj.removeClass('w2ui-icon fold');
-		obj.addClass('w2ui-icon unfold');
 		$('#fold').prop('title', _('Show Menu'));
 	},
 
