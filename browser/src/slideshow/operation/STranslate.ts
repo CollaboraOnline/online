@@ -16,7 +16,7 @@ declare var SlideShow: any;
 var { vec3, mat4 } = glMatrix;
 
 class STranslate extends Operation {
-	private vector: vec3 = vec3.create();
+	private vector: vec3;
 	private mbInterpolate: boolean = false;
 	private mnT0: number = 0.0;
 	private mnT1: number = 0.0;
