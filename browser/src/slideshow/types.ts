@@ -1,3 +1,5 @@
+/* -*- js-indent-level: 8 -*- */
+
 // Credit: https://github.com/toji/gl-matrix/blob/master/src/types.d.ts
 
 interface IndexedCollection extends Iterable<number> {
