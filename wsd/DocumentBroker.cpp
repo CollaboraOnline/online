@@ -2625,6 +2625,22 @@ void DocumentBroker::onViewLoaded(const std::shared_ptr<ClientSession>& session)
     //TODO: Take the WOPI lock, if necessary.
 }
 
+std::shared_ptr<ClientSession> DocumentBroker::getFirstAuthorizedSession() const
+{
+    ASSERT_CORRECT_THREAD();
+
+    for (const auto& sessionIt : _sessions)
+    {
+        const auto& session = sessionIt.second;
+        if (!session->getAuthorization().isExpired())
+        {
+            return session;
+        }
+    }
+
+    return std::shared_ptr<ClientSession>();
+}
+
 std::shared_ptr<ClientSession> DocumentBroker::getWriteableSession() const
 {
     ASSERT_CORRECT_THREAD();
