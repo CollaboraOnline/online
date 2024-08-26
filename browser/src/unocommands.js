@@ -691,6 +691,9 @@ var unoCommandsArray = {
 	'ZTestDialog':{spreadsheet:{menu:_('~Z-test...'),},},
 	'ZoomMinus':{global:{menu:_('Zoom Out'),},},
 	'ZoomPlus':{global:{menu:_('Zoom In'),},},
+	'CharFontName':{label:{context:_('Font'),},},
+	'FontHeight':{label:{context:_('Size'),},},
+	'StyleApply':{label:{context:_('Style'),},},
 };
 
 window._UNO = function(string, component, isContext) {
