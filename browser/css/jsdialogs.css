@@ -1207,7 +1207,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 }
 
 .ui-listbox,
-.ui-combobox,
+.ui-combobox-wrapper,
 .ui-timefield {
 	box-sizing: border-box;
 	-webkit-appearance: none;
@@ -1220,6 +1220,12 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	border-radius: var(--border-radius);
 	background-color: var(--color-background-dark);
 	color: var(--color-text-dark);
+	display: flex;
+}
+
+.ui-combobox label {
+	font-size: var(--default-font-size);
+	font-family: var(--jquery-ui-font);
 }
 
 .jsdialog-window .ui-listbox,
@@ -1276,7 +1282,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 }
 
 /* ui-combobox */
-.ui-combobox,
+.ui-combobox-wrapper,
 .ui-timefield {
 	border: 1px solid var(--color-border);
 }
