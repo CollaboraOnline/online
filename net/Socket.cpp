@@ -930,7 +930,10 @@ void WebSocketHandler::dumpState(std::ostream& os, const std::string& /*indent*/
         Util::dumpHex(os, _wsPayload, "\t\tws queued payload:\n", "\t\t");
     os << '\n';
     if (_msgHandler)
+    {
+        os << "msgHandler:\n";
         _msgHandler->dumpState(os);
+    }
 }
 
 void StreamSocket::dumpState(std::ostream& os)
@@ -992,16 +995,16 @@ void SocketPoll::dumpState(std::ostream& os) const
     // FIXME: NOT thread-safe! _pollSockets is modified from the polling thread!
     const auto pollSockets = _pollSockets;
 
-    os << "\n  SocketPoll:";
-    os << "\n    Poll [" << name() << "] with " << pollSockets.size() << " socket"
+    os << "\n  SocketPoll [" << name() << "] with " << pollSockets.size() << " socket"
        << (pollSockets.size() == 1 ? "" : "s") << " - wakeup rfd: " << _wakeup[0]
        << " wfd: " << _wakeup[1] << '\n';
     const auto callbacks = _newCallbacks.size();
     if (callbacks > 0)
         os << "\tcallbacks: " << callbacks << '\n';
     os << "\t    fd\tevents\trbuffered\twbuffered\trtotal\twtotal\tclientaddress\n";
-    for (const auto& i : pollSockets)
-        i->dumpState(os);
+    for (const std::shared_ptr<Socket>& socket : pollSockets)
+        socket->dumpState(os);
+    os << "\n  Done [" << name() << ']';
 }
 
 /// Returns true on success only.
