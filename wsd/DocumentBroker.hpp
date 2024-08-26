@@ -616,6 +616,9 @@ private:
     /// Note that if there is no loaded and writable session, the first will be returned.
     std::shared_ptr<ClientSession> getWriteableSession() const;
 
+    /// Get the first session that has a valid authorization.
+    std::shared_ptr<ClientSession> getFirstAuthorizedSession() const;
+
     void refreshLock();
 
     /// Downloads the document ahead-of-time.
