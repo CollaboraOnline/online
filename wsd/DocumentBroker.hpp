@@ -45,6 +45,7 @@
 
 // Forwards.
 class PrisonerRequestDispatcher;
+class CheckFileInfo;
 class DocumentBroker;
 class LockContext;
 class TileCache;
@@ -649,7 +650,11 @@ private:
 
     /// Process the configured plugins, if any, after downloading the document file.
     bool processPlugins(std::string& localPath);
-#endif //!MOBILEAPP
+
+    /// Start an asynchronous CheckFileInfo request.
+    void checkFileInfo(const Poco::URI& uri, int redirectLimit);
+
+#endif // !MOBILEAPP
 
     bool isLoaded() const { return _docState.hadLoaded(); }
     bool isInteractive() const { return _docState.isInteractive(); }
@@ -1664,6 +1669,9 @@ private:
     /// The current upload request, if any.
     /// For now we can only have one at a time.
     std::unique_ptr<UploadRequest> _uploadRequest;
+
+    /// The current CheckFileInfo request, if any.
+    std::unique_ptr<CheckFileInfo> _checkFileInfo;
 
     /// Manage uploading to Storage.
     StorageManager _storageManager;

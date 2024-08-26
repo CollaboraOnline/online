@@ -4368,6 +4368,48 @@ void DocumentBroker::getIOStats(uint64_t &sent, uint64_t &recv)
     }
 }
 
+void DocumentBroker::checkFileInfo(const Poco::URI& uri, int redirectLimit)
+{
+    auto cfiContinuation = [this, uri]([[maybe_unused]] CheckFileInfo& checkFileInfo)
+    {
+        const std::string uriAnonym = COOLWSD::anonymizeUrl(uri.toString());
+
+        assert(&checkFileInfo == _checkFileInfo.get() && "Unknown CheckFileInfo instance");
+        if (_checkFileInfo && _checkFileInfo->state() == CheckFileInfo::State::Pass &&
+            _checkFileInfo->wopiInfo())
+        {
+            Poco::JSON::Object::Ptr object = _checkFileInfo->wopiInfo();
+
+            std::size_t size = 0;
+            std::string filename, ownerId, lastModifiedTime;
+            JsonUtil::findJSONValue(object, "Size", size);
+            JsonUtil::findJSONValue(object, "OwnerId", ownerId);
+            JsonUtil::findJSONValue(object, "BaseFileName", filename);
+            JsonUtil::findJSONValue(object, "LastModifiedTime", lastModifiedTime);
+
+            LocalStorage::FileInfo fileInfo = LocalStorage::FileInfo(
+                { size, std::move(filename), std::move(ownerId), std::move(lastModifiedTime) });
+
+            // if (COOLWSD::AnonymizeUserData)
+            //     Util::mapAnonymized(Uri::getFilenameFromURL(filename),
+            //                         Uri::getFilenameFromURL(getUri().toString()));
+
+            auto wopiInfo = std::make_unique<WopiStorage::WOPIFileInfo>(fileInfo, object, uri);
+            // if (wopiInfo->getSupportsLocks())
+            //     lockCtx.initSupportsLocks();
+
+
+        }
+
+        LOG_ERR("Invalid URI or access denied to [" << uriAnonym << ']');
+        // HttpHelper::sendErrorAndShutdown(http::StatusCode::Unauthorized, _socket);
+    };
+
+    // CheckFileInfo asynchronously.
+    _checkFileInfo = std::make_unique<CheckFileInfo>(_poll, uri, std::move(cfiContinuation));
+    _checkFileInfo->checkFileInfo(redirectLimit);
+}
+
 std::vector<std::shared_ptr<ClientSession>> DocumentBroker::getSessionsTestOnlyUnsafe()
 {
     std::vector<std::shared_ptr<ClientSession>> result;
