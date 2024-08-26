@@ -2216,3 +2216,15 @@ kbd,
 #ServerAuditDialog .ui-treeview {
 	border-color: transparent;
 }
+#ServerAuditDialog .ui-treeview td[role='gridcell'] {
+	padding-inline-start: 0;
+}
+#ServerAuditDialog tr:first-child th:first-child .ui-treeview-header-sort-icon:after {
+	display: none;
+}
+#ServerAuditDialog tr:first-child th:first-child .ui-treeview-header-sort-icon {
+	background: url('images/lc_serverauditheader.svg') no-repeat center;
+	width: 16px;
+	display: table-caption;
+	height: 16px;
+}
