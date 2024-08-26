@@ -425,6 +425,11 @@ COOL_JS_LST =\
 	src/slideshow/PauseTimer.ts \
 	src/slideshow/PerformTransition.ts \
 	src/slideshow/SlideAnimations.ts \
+	src/slideshow/CanvasLoader.ts \
+	src/slideshow/Transition3d.ts \
+	src/slideshow/Operation.ts \
+	src/slideshow/Primitive.ts \
+	src/slideshow/types.ts \
 	src/slideshow/transition/FadeTransition.ts \
 	src/slideshow/transition/PlusTransition.ts \
 	src/slideshow/transition/CircleTransition.ts \
@@ -442,6 +447,7 @@ COOL_JS_LST =\
 	src/slideshow/transition/UncoverTransition.ts \
 	src/slideshow/transition/CoverTransition.ts \
 	src/slideshow/transition/SplitTransition.ts \
+	src/slideshow/transition/WipeTransition.ts \
 	src/slideshow/transition/IrisWipeTransition.ts \
 	src/slideshow/transition/EllipseWipeTransition.ts \
 	src/slideshow/transition/SlideWipeTransition.ts \
@@ -449,36 +455,28 @@ COOL_JS_LST =\
 	src/slideshow/transition/DiagonalTransition.ts \
 	src/slideshow/transition/PushWipeTransition.ts \
 	src/slideshow/transition/CombTransition.ts \
-	src/slideshow/transition/WipeTransition.ts \
 	src/slideshow/transition/NoTransition.ts \
-	src/slideshow/CanvasLoader.ts \
-	src/slideshow/Transition3d.ts \
-	src/slideshow/Operation.ts \
-	src/slideshow/Primitive.ts \
-	src/slideshow/operation/RotateAndScaleDepthByWidth.ts \
-	src/slideshow/operation/SEllipseTranslate.ts \
-	src/slideshow/operation/SRotate.ts \
-	src/slideshow/operation/SScale.ts \
-	src/slideshow/operation/STranslate.ts \
-	src/slideshow/types.ts \
 	src/slideshow/transition/SimpleTransition.ts \
 	src/slideshow/transition/CubeTransition.ts \
 	src/slideshow/transition/HelixTransition.ts \
 	src/slideshow/transition/FallTransition.ts \
-	src/slideshow/transition/WipeTransition.ts \
-	src/slideshow/transition/NoTransition.ts \
 	src/slideshow/transition/ReflectionTransition.ts \
 	src/slideshow/transition/RochadeTransition.ts \
 	src/slideshow/transition/TurnDownTransition.ts \
 	src/slideshow/transition/Venetian3dTransition.ts \
 	src/slideshow/transition/TurnAroundTransition.ts \
 	src/slideshow/transition/PermTextureTransition.ts \
-	src/slideshow/transition/RippleTransition.ts \   
-	src/slideshow/transition/NewsFlashTransition.ts \   
-	src/slideshow/transition/DissolveTransition3d.ts \ 
-	src/slideshow/transition/FlipTilesTransition.ts \  
+	src/slideshow/transition/RippleTransition.ts \
+	src/slideshow/transition/NewsFlashTransition.ts \
+	src/slideshow/transition/DissolveTransition3d.ts \
+	src/slideshow/transition/FlipTilesTransition.ts \
 	src/slideshow/transition/StaticNoiseTransition.ts \
 	src/slideshow/transition/MicsShapeWipeTransition.ts \
+	src/slideshow/operation/RotateAndScaleDepthByWidth.ts \
+	src/slideshow/operation/SEllipseTranslate.ts \
+	src/slideshow/operation/SRotate.ts \
+	src/slideshow/operation/SScale.ts \
+	src/slideshow/operation/STranslate.ts \
 	src/dom/PosAnimation.js \
 	src/map/anim/Map.PanAnimation.js \
 	src/dom/PosAnimation.Timer.js \
@@ -925,6 +923,11 @@ pot:
 		src/slideshow/PerformTransition.ts \
 		src/slideshow/SlideAnimations.ts \
 		src/slideshow/transition/FadeTransition.ts \
+		src/slideshow/CanvasLoader.ts \
+		src/slideshow/Transition3d.ts \
+		src/slideshow/Operation.ts \
+		src/slideshow/Primitive.ts \
+		src/slideshow/types.ts \
 		src/slideshow/transition/PlusTransition.ts \
 		src/slideshow/transition/CircleTransition.ts \
 		src/slideshow/transition/VenetianTransition.ts \
@@ -941,6 +944,7 @@ pot:
 		src/slideshow/transition/UncoverTransition.ts \
 		src/slideshow/transition/CoverTransition.ts \
 		src/slideshow/transition/SplitTransition.ts \
+		src/slideshow/transition/WipeTransition.ts \
 		src/slideshow/transition/IrisWipeTransition.ts \
 		src/slideshow/transition/EllipseWipeTransition.ts \
 		src/slideshow/transition/SlideWipeTransition.ts \
@@ -948,16 +952,7 @@ pot:
 		src/slideshow/transition/PushWipeTransition.ts \
 		src/slideshow/transition/CombTransition.ts \
 		src/slideshow/transition/BarWipeTransition.ts \
-		src/slideshow/CanvasLoader.ts \
-		src/slideshow/Transition3d.ts \
-		src/slideshow/Operation.ts \
-		src/slideshow/Primitive.ts \
-		src/slideshow/operation/RotateAndScaleDepthByWidth.ts \
-		src/slideshow/operation/SEllipseTranslate.ts \
-		src/slideshow/operation/SRotate.ts \
-		src/slideshow/operation/SScale.ts \
-		src/slideshow/operation/STranslate.ts \
-		src/slideshow/types.ts \
+		src/slideshow/transition/NoTransition.ts \
 		src/slideshow/transition/SimpleTransition.ts \
 		src/slideshow/transition/CubeTransition.ts \
 		src/slideshow/transition/HelixTransition.ts \
@@ -969,11 +964,16 @@ pot:
 		src/slideshow/transition/TurnAroundTransition.ts \
 		src/slideshow/transition/PermTextureTransition.ts \
 		src/slideshow/transition/StaticNoiseTransition.ts \
-		src/slideshow/transition/RippleTransition.ts \   
-		src/slideshow/transition/NewsFlashTransition.ts \  
-		src/slideshow/transition/DissolveTransition3d.ts \ 
-		src/slideshow/transition/FlipTilesTransition.ts \ 
+		src/slideshow/transition/RippleTransition.ts \
+		src/slideshow/transition/NewsFlashTransition.ts \
+		src/slideshow/transition/DissolveTransition3d.ts \
+		src/slideshow/transition/FlipTilesTransition.ts \
 		src/slideshow/transition/MicsShapeWipeTransition.ts \
+		src/slideshow/operation/RotateAndScaleDepthByWidth.ts \
+		src/slideshow/operation/SEllipseTranslate.ts \
+		src/slideshow/operation/SRotate.ts \
+		src/slideshow/operation/SScale.ts \
+		src/slideshow/operation/STranslate.ts \
 		src/core/Socket.js \
 		src/core/Debug.js \
 		src/docstate.js \
