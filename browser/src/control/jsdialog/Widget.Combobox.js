@@ -24,7 +24,7 @@
  * customEntryRenderer - specifies if entries have custom content which is rendered by the core
  */
 
-/* global JSDialog app _ $ */
+/* global JSDialog app _ $ _UNO */
 
 JSDialog.comboboxEntry = function (parentContainer, data, builder) {
 	var entry = window.L.DomUtil.create('div', 'ui-combobox-entry ' + builder.options.cssClass, parentContainer);
@@ -203,9 +203,21 @@ function _extractText(selectCommandData) {
 JSDialog.combobox = function (parentContainer, data, builder) {
 	var container = window.L.DomUtil.create('div', 'ui-combobox ' + builder.options.cssClass, parentContainer);
 	container.id = data.id;
+	var inputId = data.id + '-input-' + builder.options.suffix;
 
-	var content = window.L.DomUtil.create('input', 'ui-combobox-content ' + builder.options.cssClass, container);
-	content.id = data.id + '-input-' + builder.options.suffix;
+	if (data.command) {
+		// TODO replace with data.label, changing ui file
+		var labelText = _UNO(data.command, 'label', true);
+		if (labelText) {
+			var label = L.DomUtil.create('label', '', container);
+			label.textContent = labelText + ':';
+			label.htmlFor = inputId;
+		}
+	}
+
+	var wrapper = window.L.DomUtil.create('div', 'ui-combobox-wrapper ' + builder.options.cssClass, container);
+	var content = window.L.DomUtil.create('input', 'ui-combobox-content ' + builder.options.cssClass, wrapper);
+	content.id = inputId;
 	content.value = data.text;
 	content.role = 'combobox';
 	content.setAttribute('autocomplete', 'off');
@@ -216,7 +228,7 @@ JSDialog.combobox = function (parentContainer, data, builder) {
 	var dropDownId = JSDialog.CreateDropdownEntriesId(data.id);
 	content.setAttribute('aria-expanded', false);
 
-	var button = window.L.DomUtil.create('button', 'ui-combobox-button ' + builder.options.cssClass, container);
+	var button = window.L.DomUtil.create('button', 'ui-combobox-button ' + builder.options.cssClass, wrapper);
 	button.setAttribute('aria-expanded', false);
 
 	const dataAriaLabel = data.aria && data.aria.label ? data.aria.label : '';
