@@ -19,6 +19,7 @@
 	--border-radius: 4px; /* buttons, widgets */
 	--border-radius-large: 10px; /* dialog */
 
+	--tooltip-font-size: 14px;
 	--default-font-size: 12px;
 	--header-font-size: 16px;
 	/* tab min font-size */
