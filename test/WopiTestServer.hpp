@@ -483,40 +483,40 @@ protected:
             LOG_TST("FakeWOPIHost: Forced document upload");
         }
 
-            std::unique_ptr<http::Response> response = assertPutFileRequest(request);
-            if (!response || response->statusLine().statusCategory() ==
-                                 http::StatusLine::StatusCodeClass::Successful)
-            {
-                const std::streamsize size = request.getContentLength();
-                LOG_TST("FakeWOPIHost: Writing document contents in storage (" << size << "bytes)");
-                std::vector<char> buffer(size);
-                message.read(buffer.data(), size);
-                setFileContent(Util::toString(buffer));
-            }
-
-            const Poco::URI uriReq(request.getURI());
-            if (response)
-            {
-                LOG_TST("FakeWOPIHost: Response to POST "
-                        << uriReq.getPath() << ": " << response->statusLine().statusCode() << ' '
-                        << response->statusLine().reasonPhrase());
-                socket->sendAndShutdown(*response);
-            }
-            else
-            {
-                // By default we return success.
-                const std::string body = "{\"LastModifiedTime\": \"" +
-                                         Util::getIso8601FracformatTime(getFileLastModifiedTime()) +
-                                         "\" }";
-                LOG_TST("FakeWOPIHost: Response (default) to POST " << uriReq.getPath()
-                                                                    << ": 200 OK " << body);
-                http::Response httpResponse(http::StatusCode::OK);
-                httpResponse.setBody(body, "application/json; charset=utf-8");
-                socket->sendAndShutdown(httpResponse);
-            }
-
-            return true;
+        std::unique_ptr<http::Response> response = assertPutFileRequest(request);
+        if (!response || response->statusLine().statusCategory() ==
+                             http::StatusLine::StatusCodeClass::Successful)
+        {
+            const std::streamsize size = request.getContentLength();
+            LOG_TST("FakeWOPIHost: Writing document contents in storage (" << size << "bytes)");
+            std::vector<char> buffer(size);
+            message.read(buffer.data(), size);
+            setFileContent(Util::toString(buffer));
         }
+
+        const Poco::URI uriReq(request.getURI());
+        if (response)
+        {
+            LOG_TST("FakeWOPIHost: Response to POST " << uriReq.getPath() << ": "
+                                                      << response->statusLine().statusCode() << ' '
+                                                      << response->statusLine().reasonPhrase());
+            socket->sendAndShutdown(*response);
+        }
+        else
+        {
+            // By default we return success.
+            const std::string body = "{\"LastModifiedTime\": \"" +
+                                     Util::getIso8601FracformatTime(getFileLastModifiedTime()) +
+                                     "\" }";
+            LOG_TST("FakeWOPIHost: Response (default) to POST " << uriReq.getPath() << ": 200 OK "
+                                                                << body);
+            http::Response httpResponse(http::StatusCode::OK);
+            httpResponse.setBody(body, "application/json; charset=utf-8");
+            socket->sendAndShutdown(httpResponse);
+        }
+
+        return true;
+    }
 
     /// In some very rare cases we may get requests from other tests.
     /// This asserts that the URI in question is for our test.
