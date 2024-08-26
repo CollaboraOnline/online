@@ -15,7 +15,6 @@
 
 declare var JSDialog: any;
 
-// Utility function to handle keyboard navigation
 function handleKeyboardNavigation(
 	event: KeyboardEvent,
 	currentElement: HTMLElement,
@@ -23,54 +22,29 @@ function handleKeyboardNavigation(
 	handleSelection?: any,
 	builder?: any,
 	widgetData?: any,
-	palette?: any,
 ) {
 	switch (event.key) {
 		case 'Enter':
 		case ' ':
-			if (handleSelection) {
-				handleSelection(currentElement, builder, widgetData, palette);
+			if (handleSelection && !(currentElement instanceof HTMLSelectElement)) {
+				handleSelection(currentElement, builder, widgetData);
 				event.preventDefault();
 			}
 			break;
 		case 'ArrowRight':
-			moveFocus(
-				parentContainer,
-				currentElement,
-				'next',
-				'horizontal',
-				currentElement.nextElementSibling,
-			);
+			moveFocus(parentContainer, currentElement, 'next', 'horizontal');
 			event.preventDefault();
 			break;
 		case 'ArrowLeft':
-			moveFocus(
-				parentContainer,
-				currentElement,
-				'previous',
-				'horizontal',
-				currentElement.previousElementSibling,
-			);
+			moveFocus(parentContainer, currentElement, 'previous', 'horizontal');
 			event.preventDefault();
 			break;
 		case 'ArrowDown':
-			moveFocus(
-				parentContainer,
-				currentElement,
-				'next',
-				'vertical',
-				parentContainer.nextElementSibling,
-			);
+			moveFocus(parentContainer, currentElement, 'next', 'vertical');
 			event.preventDefault();
 			break;
 		case 'ArrowUp':
-			moveFocus(
-				parentContainer,
-				currentElement,
-				'previous',
-				'vertical',
-				parentContainer.previousElementSibling,
-			);
+			moveFocus(parentContainer, currentElement, 'previous', 'vertical');
 			event.preventDefault();
 			break;
 		default:
@@ -83,7 +57,6 @@ function moveFocus(
 	currentElement: HTMLElement,
 	direction: 'next' | 'previous',
 	axis: 'horizontal' | 'vertical',
-	nextElement?: Element,
 ) {
 	const focusableElements = Array.from(
 		JSDialog.GetFocusableElements(parentContainer),
@@ -97,24 +70,21 @@ function moveFocus(
 	if (axis === 'horizontal') {
 		if (direction === 'next') {
 			targetColumn++;
-			// If it's the last element in the row, cycle back to the first in the same row
 			if (
-				!focusableElements.find((el) => {
-					const [row, column] = getRowColumn(el);
-					return row === currentRow && column === targetColumn;
-				})
+				!focusableElements.find(
+					(el) =>
+						getRowColumn(el)[0] === currentRow &&
+						getRowColumn(el)[1] === targetColumn,
+				)
 			) {
-				targetColumn = 0; // Start from the first column
+				targetColumn = 0;
 			}
 		} else {
 			targetColumn--;
-			// If it's the first element in the row and trying to move previous, cycle to the last in the same row
 			if (targetColumn < 0) {
 				targetColumn =
-					focusableElements.filter((el) => {
-						const [row] = getRowColumn(el);
-						return row === currentRow;
-					}).length - 1; // Move to the last column in the same row
+					focusableElements.filter((el) => getRowColumn(el)[0] === currentRow)
+						.length - 1;
 			}
 		}
 	} else if (axis === 'vertical') {
@@ -125,36 +95,32 @@ function moveFocus(
 		}
 	}
 
-	// Find the target element based on the calculated row and column
-	const targetElement = focusableElements.find((el) => {
-		const [row, column] = getRowColumn(el);
-		return row === targetRow && column === targetColumn;
-	});
+	const targetElement = focusableElements.find(
+		(el) =>
+			getRowColumn(el)[0] === targetRow && getRowColumn(el)[1] === targetColumn,
+	);
 
-	if (!targetElement) {
-		if (direction === 'next') {
-			// Start from the next sibling of the parent container
-			const nextFocusableElement = JSDialog.FindFocusableElement(
-				nextElement as HTMLElement,
-				'next',
-			);
-			if (nextFocusableElement) {
-				nextFocusableElement.focus();
-			}
-		} else if (direction === 'previous') {
-			// Start from the previous sibling of the parent container
-			const previousFocusableElement = JSDialog.FindFocusableElement(
-				nextElement as HTMLElement,
-				'previous',
-			);
-			if (previousFocusableElement) {
-				previousFocusableElement.focus();
-			}
+	if (targetElement) {
+		targetElement.focus();
+	} else {
+		// Determine the element to pass to FindFocusableElement based on axis and direction
+		const potentialCurrentElement =
+			axis === 'vertical' ? parentContainer : currentElement;
+		// if vertical or
+		const nextElement =
+			direction === 'next'
+				? JSDialog.FindFocusableElement(
+						potentialCurrentElement.nextElementSibling,
+						'next',
+					)
+				: JSDialog.FindFocusableElement(
+						potentialCurrentElement.previousElementSibling,
+						'previous',
+					);
+		if (nextElement) {
+			nextElement.focus();
 		}
-		return;
 	}
-
-	targetElement.focus();
 }
 
 function getRowColumn(element: HTMLElement): [number, number] {
@@ -164,4 +130,21 @@ function getRowColumn(element: HTMLElement): [number, number] {
 	return [row, column];
 }
 
-JSDialog.MoveFocus = moveFocus;
+JSDialog.KeyboardGridNavigation = function (
+	container: HTMLElement,
+	selectionHandler?: any,
+	builder?: any,
+	widgetData?: any,
+) {
+	container.addEventListener('keydown', (event: KeyboardEvent) => {
+		const activeElement = document.activeElement as HTMLElement;
+		handleKeyboardNavigation(
+			event,
+			activeElement,
+			activeElement.parentElement,
+			selectionHandler,
+			builder,
+			widgetData,
+		);
+	});
+};
