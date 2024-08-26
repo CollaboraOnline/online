@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-08-19 10:15+0200\n"
-"PO-Revision-Date: 2024-08-11 17:33+0000\n"
+"PO-Revision-Date: 2024-08-27 04:38+0000\n"
 "Last-Translator: Matthaiks <kitynska@gmail.com>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/collabora-online/"
 "help/pl/>\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.7.1-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:84-5
 msgid "Keyboard Shortcuts"
@@ -49,16 +49,15 @@ msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>X</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:91-38
 msgid "Copy"
-msgstr ""
+msgstr "Kopiuj"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:91-69
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd>, <kbd>Ctrl</"
 "kbd><span class=\"kbd--plus\">+</span><kbd>Insert</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Enter</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd>, <kbd>Ctrl</"
+"kbd><span class=\"kbd--plus\">+</span><kbd>Insert</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:92-38
 msgid "Paste as unformatted text"
