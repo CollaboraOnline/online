@@ -138,22 +138,23 @@ coolwsd_sources = common/Crypto.cpp \
                   wsd/Admin.cpp \
                   wsd/AdminModel.cpp \
                   wsd/Auth.cpp \
-                  wsd/DocumentBroker.cpp \
-                  wsd/ProxyProtocol.cpp \
                   wsd/COOLWSD.cpp \
                   wsd/ClientRequestDispatcher.cpp \
                   wsd/ClientSession.cpp \
+                  wsd/DocumentBroker.cpp \
                   wsd/FileServer.cpp \
-                  wsd/ProxyRequestHandler.cpp \
                   wsd/FileServerUtil.cpp \
+                  wsd/HostUtil.cpp \
+                  wsd/ProofKey.cpp \
+                  wsd/ProxyProtocol.cpp \
+                  wsd/ProxyRequestHandler.cpp \
+                  wsd/QuarantineUtil.cpp \
                   wsd/RequestDetails.cpp \
                   wsd/RequestVettingStation.cpp \
-                  wsd/Storage.cpp \
-                  wsd/HostUtil.cpp \
-                  wsd/TileCache.cpp \
-                  wsd/ProofKey.cpp \
-                  wsd/QuarantineUtil.cpp \
                   wsd/ServerAuditUtil.cpp \
+                  wsd/SpecialBrokers.cpp \
+                  wsd/Storage.cpp \
+                  wsd/TileCache.cpp \
                   wsd/wopi/CheckFileInfo.cpp \
                   wsd/wopi/StorageConnectionManager.cpp \
                   wsd/wopi/WopiProxy.cpp \
@@ -325,28 +326,29 @@ coolsocketdump_SOURCES = tools/WebSocketDump.cpp \
 wsd_headers = wsd/Admin.hpp \
               wsd/AdminModel.hpp \
               wsd/Auth.hpp \
+              wsd/COOLWSD.hpp \
+              wsd/ClientRequestDispatcher.hpp \
               wsd/ClientSession.hpp \
               wsd/ContentSecurityPolicy.hpp \
               wsd/DocumentBroker.hpp \
-              wsd/ProxyProtocol.hpp \
               wsd/Exceptions.hpp \
               wsd/FileServer.hpp \
-              wsd/ProxyRequestHandler.hpp \
-              wsd/COOLWSD.hpp \
-              wsd/ClientRequestDispatcher.hpp \
+              wsd/HostUtil.hpp \
               wsd/ProofKey.hpp \
+              wsd/ProxyProtocol.hpp \
+              wsd/ProxyRequestHandler.hpp \
+              wsd/QuarantineUtil.hpp \
               wsd/RequestDetails.hpp \
               wsd/RequestVettingStation.hpp \
               wsd/SenderQueue.hpp \
+              wsd/ServerAuditUtil.hpp \
               wsd/ServerURL.hpp \
+              wsd/SpecialBrokers.hpp \
               wsd/Storage.hpp \
               wsd/TileCache.hpp \
               wsd/TileDesc.hpp \
               wsd/TraceFile.hpp \
               wsd/UserMessages.hpp \
-              wsd/QuarantineUtil.hpp \
-              wsd/HostUtil.hpp \
-              wsd/ServerAuditUtil.hpp \
               wsd/wopi/CheckFileInfo.hpp \
               wsd/wopi/StorageConnectionManager.hpp \
               wsd/wopi/WopiProxy.hpp \
