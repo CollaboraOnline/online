@@ -14,13 +14,12 @@
 #include "RequestDetails.hpp"
 #include <Storage.hpp>
 #include "WebSocketHandler.hpp"
-#if !MOBILEAPP
-#include <wopi/CheckFileInfo.hpp>
-#endif // !MOBILEAPP
 
 #include <Poco/URI.h>
 
 #include <string>
+
+class CheckFileInfo;
 
 /// RequestVettingStation is used to vet the request in the background.
 /// Vetting for a WOPI request is performed through CheckFileInfo.
