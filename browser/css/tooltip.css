@@ -8,4 +8,6 @@
 	border-radius: 6px;
 	white-space: nowrap;
 	padding: 7px 9px;
+	font-family: var(--cool-font);
+	font-size: var(--tooltip-font-size);
 }
