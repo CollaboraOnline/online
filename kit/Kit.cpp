@@ -2873,6 +2873,24 @@ int pollCallback(void* pData, int timeoutUs)
 #endif
 }
 
+bool anyInputCallback(void* data)
+{
+    auto kitSocketPoll = reinterpret_cast<KitSocketPoll*>(data);
+    int ret = kitSocketPoll->poll(std::chrono::microseconds(0));
+    std::shared_ptr<Document> document = kitSocketPoll->getDocument();
+    if (document)
+    {
+        std::shared_ptr<KitQueue> queue = document->getQueue();
+        if (!document->hasCallbacks() && queue && queue->getTileQueueSize() == 0)
+        {
+            // Have no pending callbacks and the tile queue is also empty, report that we have no
+            // pending input events.
+            ret = 0;
+        }
+    }
+    return ret > 0;
+}
+
 /// Called by LOK main-loop
 void wakeCallback(void* pData)
 {
@@ -3498,6 +3516,8 @@ void lokit_main(
             std::cout << "Fatal: out of date LibreOfficeKit - no Unipoll API\n";
             Util::forcedExit(EX_SOFTWARE);
         }
+
+        loKit->registerAnyInputCallback(anyInputCallback, mainKit.get());
 
         LOG_INF("Kit unipoll loop run");
 
