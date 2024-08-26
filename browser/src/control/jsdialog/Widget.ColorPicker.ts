@@ -91,7 +91,6 @@ function generatePalette(paletteName: string) {
 function createColor(
 	parentContainer: HTMLElement,
 	builder: any,
-	palette: ColorPalette,
 	colorItem: ColorItem,
 	index: string,
 	themeData: any,
@@ -110,29 +109,14 @@ function createColor(
 	if (themeData) color.setAttribute('theme', themeData);
 
 	color.innerHTML = isCurrent ? '&#149;' : '&#160;';
-
-	color.addEventListener('click', (event: MouseEvent) =>
+	// Assuming 'color' is your target HTMLElement
+	color.addEventListener('click', (event: MouseEvent) => {
 		handleColorSelection(
-			event.target as HTMLElement,
-			builder,
-			widgetData,
-			palette,
-		),
-	);
-
-	// Handle keyboard navigation and selection
-	color.addEventListener('keydown', (event: KeyboardEvent) => {
-		handleKeyboardNavigation(
-			event,
-			color,
-			parentContainer,
-			handleColorSelection,
-			builder,
-			widgetData,
-			palette,
+			event.target as HTMLElement, // The clicked element
+			builder, // Pass the builder object
+			widgetData, // Pass the widget data
 		);
 	});
-
 	return color;
 }
 
@@ -140,8 +124,8 @@ function handleColorSelection(
 	target: HTMLElement,
 	builder: any,
 	widgetData: ColorPaletteWidgetData,
-	palette: ColorPalette,
 ) {
+	const palette = generatePalette(getCurrentPaletteName());
 	const colorCode = target.getAttribute('name');
 	const themeData = target.getAttribute('theme');
 
@@ -177,13 +161,20 @@ function createAutoColorButton(
 	data: ColorPaletteWidgetData,
 	builder: any,
 ) {
+	// Create a div container for the button
+	const buttonContainer = L.DomUtil.create(
+		'div',
+		'auto-color-button-container',
+		parentContainer,
+	);
+
 	const hasTransparent =
 		data.command !== '.uno:FontColor' && data.command !== '.uno:Color';
 	const buttonText = hasTransparent ? _('No fill') : _('Automatic');
 	const autoButton = L.DomUtil.create(
 		'button',
 		builder.options.cssClass + ' ui-pushbutton auto-color-button',
-		parentContainer,
+		buttonContainer, // Append button to the newly created div
 	);
 	autoButton.id = 'transparent-color-button';
 	autoButton.innerText = buttonText;
@@ -200,28 +191,6 @@ function createAutoColorButton(
 
 		builder.map.sendUnoCommand(data.command, parameters);
 		builder.callback('colorpicker', 'hidedropdown', data, '-1', builder);
-	});
-	autoButton.addEventListener('keydown', (event: KeyboardEvent) => {
-		if (event.key === 'ArrowDown') {
-			moveFocus(
-				parentContainer,
-				autoButton,
-				'next',
-				'vertical',
-				autoButton.nextElementSibling,
-			);
-			event.preventDefault();
-		}
-		if (event.key === 'ArrowUp') {
-			moveFocus(
-				parentContainer,
-				autoButton,
-				'previous',
-				'vertical',
-				autoButton.previousElementSibling,
-			);
-			event.preventDefault();
-		}
 	});
 }
 
@@ -256,10 +225,6 @@ function createPaletteSwitch(
 		builder.options.cssClass + ' ui-listbox-arrow',
 		paletteListbox,
 	);
-	// Add keydown event listener to handle ArrowDown key
-	listbox.addEventListener('keydown', (event: KeyboardEvent) => {
-		handleKeyboardNavigation(event, paletteListbox, paletteListbox);
-	});
 
 	return listbox;
 }
@@ -293,7 +258,6 @@ function updatePalette(
 			createColor(
 				paletteContainer,
 				builder,
-				palette,
 				palette[i][j],
 				i + ':' + j,
 				themeData,
@@ -334,17 +298,12 @@ function updatePalette(
 			recentContainer,
 		);
 	});
-	//update here
-	customInput.addEventListener('keydown', (event: KeyboardEvent) => {
-		handleKeyboardNavigation(event, customInput, customContainer);
-	});
 
 	const customColors = palette[palette.length - 2];
 	for (let i = 0; i < customColors.length && i < 4; i++) {
 		createColor(
 			customContainer,
 			builder,
-			palette,
 			customColors[i],
 			'8:' + i,
 			undefined,
@@ -359,9 +318,8 @@ function updatePalette(
 		createColor(
 			recentContainer,
 			builder,
-			palette,
 			recentColors[i],
-			'8:' + i,
+			'9:' + i,
 			undefined,
 			data,
 			currentColor == recentColors[i],
@@ -425,6 +383,14 @@ JSDialog.colorPicker = function (
 			recentContainer,
 		);
 	});
+
+	// Apply keyboard navigation to the color picker widget
+	JSDialog.KeyboardGridNavigation(
+		container,
+		handleColorSelection,
+		builder,
+		data,
+	);
 
 	JSDialog.MakeFocusCycle(container);
 
