@@ -2211,3 +2211,7 @@ kbd,
 #ServerAuditDialog #ServerAuditDialog-mainbox {
 	min-width: calc(min(800px, 80vw));
 }
+
+#ServerAuditDialog .ui-treeview {
+	border-color: transparent;
+}
