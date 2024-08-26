@@ -25,6 +25,10 @@
 #include <Util.hpp>
 #include <ServerAuditUtil.hpp>
 
+#if !MOBILEAPP
+#include <wopi/CheckFileInfo.hpp>
+#endif // !MOBILEAPP
+
 extern std::pair<std::shared_ptr<DocumentBroker>, std::string>
 findOrCreateDocBroker(DocumentBroker::ChildType type, const std::string& uri,
                       const std::string& docKey, const std::string& id, const Poco::URI& uriPublic,
