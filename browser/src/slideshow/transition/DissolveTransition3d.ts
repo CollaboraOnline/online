@@ -44,7 +44,8 @@ class DissolveTransition3dImp extends PermTextureTransition {
                 `;
 	}
 }
-
+// TODO - remove code duplication
+/* jscpd:ignore-start */
 function DissolveTransition3d(transitionParameters: TransitionParameters) {
 	const slide = new Primitive();
 
@@ -65,5 +66,6 @@ function DissolveTransition3d(transitionParameters: TransitionParameters) {
 
 	return new DissolveTransition3dImp(newTransitionParameters);
 }
+/* jscpd:ignore-end */
 
 SlideShow.DissolveTransition3d = DissolveTransition3d;

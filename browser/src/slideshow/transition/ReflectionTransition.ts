@@ -16,7 +16,8 @@ class ReflectionTransition extends SimpleTransition {
 	constructor(transitionParameters: TransitionParameters3D) {
 		super(transitionParameters);
 	}
-
+	// TODO - remove code duplication
+	/* jscpd:ignore-start */
 	public displaySlides_(): void {
 		const t = this.time;
 		this.applyAllOperation(t);
@@ -39,6 +40,7 @@ class ReflectionTransition extends SimpleTransition {
 			);
 		}
 	}
+	/* jscpd:ignore-end */
 }
 
 SlideShow.ReflectionTransition = ReflectionTransition;

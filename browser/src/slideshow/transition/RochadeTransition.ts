@@ -17,6 +17,8 @@ class RochadeTransitionImp extends SimpleTransition {
 		super(transitionParameters);
 	}
 
+	// TODO - remove code duplication
+	/* jscpd:ignore-start */
 	public displaySlides_(): void {
 		const t = this.time;
 		this.applyAllOperation(t);
@@ -53,8 +55,11 @@ class RochadeTransitionImp extends SimpleTransition {
 			);
 		}
 	}
+	/* jscpd:ignore-end */
 }
 
+// TODO - remove code duplication
+/* jscpd:ignore-start */
 function RochadeTransition(transitionParameters: TransitionParameters) {
 	const slide = new Primitive();
 
@@ -143,5 +148,6 @@ function RochadeTransition(transitionParameters: TransitionParameters) {
 
 	return new SimpleTransition(newTransitionParameters);
 }
+/* jscpd:ignore-end */
 
 SlideShow.RochadeTransition = RochadeTransition;

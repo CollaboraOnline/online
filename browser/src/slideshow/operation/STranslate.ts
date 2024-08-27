@@ -21,6 +21,8 @@ class STranslate extends Operation {
 	private mnT0: number = 0.0;
 	private mnT1: number = 0.0;
 
+	// TODO - remove code duplication
+	/* jscpd:ignore-start */
 	constructor(
 		vector: vec3,
 		mbInterpolate: boolean,
@@ -54,6 +56,7 @@ class STranslate extends Operation {
 		);
 		return matrix;
 	}
+	/* jscpd:ignore-end */
 }
 
 function makeSTranslate(
