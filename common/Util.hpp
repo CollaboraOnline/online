@@ -326,7 +326,7 @@ namespace Util
     ///< A random hex string that identifies the current process.
     const std::string& getProcessIdentifier();
 
-    std::string getVersionJSON(bool enableExperimental);
+    std::string getVersionJSON(bool enableExperimental, bool geolocationSetup);
 
     /// Return a string that is unique across processes and calls.
     std::string UniqueId();
@@ -1495,6 +1495,9 @@ int main(int argc, char**argv)
         joinPair(oss, container, delimiter);
         return oss.str();
     }
+
+    /// Get IANA timezone name
+    std::string getIANATimezone();
 
     /// Asserts in the debug builds, otherwise just logs.
     void assertCorrectThread(std::thread::id owner, const char* fileName, int lineNo);

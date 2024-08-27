@@ -375,7 +375,7 @@ namespace Util
         return id;
     }
 
-    std::string getVersionJSON(bool enableExperimental)
+    std::string getVersionJSON(bool enableExperimental, bool geolocationSetup)
     {
         std::string version, hash;
         Util::getVersionInfo(version, hash);
@@ -385,14 +385,31 @@ namespace Util
         pocoVersion += std::to_string((POCO_VERSION & 0x00ff0000) >> 16) + ".";
         pocoVersion += std::to_string((POCO_VERSION & 0x0000ff00) >> 8);
 
-        return
-            "{ \"Version\":     \"" + version + "\", "
-              "\"Hash\":        \"" + hash + "\", "
-              "\"BuildConfig\": \"" + std::string(COOLWSD_BUILDCONFIG) + "\", "
-              "\"PocoVersion\": \"" + pocoVersion + "\", "
-              "\"Protocol\":    \"" + COOLProtocol::GetProtocolVersion() + "\", "
-              "\"Id\":          \"" + Util::getProcessIdentifier() + "\", "
-              "\"Options\":     \"" + std::string(enableExperimental ? " (E)" : "") + "\" }";
+        std::string json = "{ \"Version\":     \"" + version +
+                           "\", "
+                           "\"Hash\":        \"" +
+                           hash +
+                           "\", "
+                           "\"BuildConfig\": \"" +
+                           std::string(COOLWSD_BUILDCONFIG) +
+                           "\", "
+                           "\"PocoVersion\": \"" +
+                           pocoVersion +
+                           "\", "
+                           "\"Protocol\":    \"" +
+                           COOLProtocol::GetProtocolVersion() +
+                           "\", "
+                           "\"Id\":          \"" +
+                           Util::getProcessIdentifier() + "\", ";
+
+        if (geolocationSetup)
+            json += "\"TimeZone\":     \"" + getIANATimezone() +
+                    "\", "
+                    "\"Options\":     \"" +
+                    std::string(enableExperimental ? " (E)" : "") + "\" }";
+        else
+            json += "\"Options\":     \"" + std::string(enableExperimental ? " (E)" : "") + "\" }";
+        return json;
     }
 
     std::string UniqueId()
@@ -927,6 +944,26 @@ namespace Util
                 std::this_thread::sleep_for(std::chrono::seconds(delaySecs));
             }
         }
+    }
+
+    std::string getIANATimezone()
+    {
+        const char* tzfile = "/etc/localtime";
+        char buf[PATH_MAX];
+
+        ssize_t len = readlink(tzfile, buf, sizeof(buf) - 1);
+        if (len != -1)
+        {
+            buf[len] = '\0';
+            std::string fullPath(buf);
+
+            std::string prefix = "../usr/share/zoneinfo/";
+            if (fullPath.substr(0, prefix.size()) == prefix)
+            {
+                return fullPath.substr(prefix.size());
+            }
+        }
+        return std::string();
     }
 
 } // namespace Util
