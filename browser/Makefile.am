@@ -160,14 +160,14 @@ $(eval $(call file_targets,$(COOL_CSS)))
 
 NODE_MODULES_JS =\
 	$(if $(IS_SEPARATE),node_modules/hammerjs/hammer.js,node_modules/hammerjs/hammer.min.js) \
-	node_modules/gl-matrix/gl-matrix-min.js \
 	node_modules/jquery/dist/jquery.js \
 	node_modules/jquery-mousewheel/jquery.mousewheel.js \
 	node_modules/jquery-contextmenu/dist/jquery.contextMenu.js \
 	node_modules/jquery-ui/dist/jquery-ui.js \
 	$(shell find node_modules/jquery-ui/ui/i18n -name '*.js') \
 	node_modules/smartmenus/dist/jquery.smartmenus.js \
-	node_modules/fzstd/umd/index.js
+	node_modules/fzstd/umd/index.js \
+	node_modules/gl-matrix/gl-matrix-min.js
 
 COOL_LIBS_JS =\
 	ResizeObserverPolyfill.js \
