@@ -20,6 +20,10 @@
 
 #include <poll.h>
 
+#if !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
+#  include <execinfo.h>
+#  include <cxxabi.h>
+#endif
 #ifdef __linux__
 #  include <sys/prctl.h>
 #  include <sys/syscall.h>
@@ -727,6 +731,44 @@ namespace Util
 #endif
     }
 
+    std::string vformatString(const char* format, va_list ap) noexcept
+    {
+        size_t nchars;
+        std::string str;
+        {
+            const size_t bsz = 1024; // including EOS
+            str.reserve(bsz); // incl. EOS
+            str.resize(bsz - 1); // excl. EOS
+
+            nchars = ::vsnprintf(&str[0], bsz, format,
+                                 ap); // NOLINT(clang-analyzer-valist.Uninitialized): clang-tidy bug
+            if (nchars < bsz)
+            {
+                str.resize(nchars);
+                str.shrink_to_fit();
+                return str;
+            }
+        }
+        {
+            const size_t bsz = std::min<size_t>(nchars + 1, str.max_size() + 1); // limit incl. EOS
+            str.reserve(bsz); // incl. EOS
+            str.resize(bsz - 1); // excl. EOS
+            nchars = ::vsnprintf(&str[0], bsz, format,
+                                 ap); // NOLINT(clang-analyzer-valist.Uninitialized): clang-tidy bug
+            str.resize(nchars);
+            return str;
+        }
+    }
+
+    std::string formatString(const char* format, ...) noexcept
+    {
+        va_list args;
+        ::va_start(args, format);
+        std::string str = vformatString(format, args);
+        ::va_end(args);
+        return str;
+    }
+
     std::map<std::string, std::string> stringVectorToMap(const std::vector<std::string>& strvector, const char delimiter)
     {
         std::map<std::string, std::string> result;
@@ -972,6 +1014,142 @@ namespace Util
             }
         }
         return std::string();
+    }
+
+    std::string Backtrace::Symbol::toString() const
+    {
+        std::string s;
+        if (isDemangled())
+        {
+            s.append(demangled);
+            s.append(" <= ");
+        }
+        s.append(mangled);
+        if (!offset.empty())
+        {
+            s.append("+").append(offset);
+        }
+        if (!blob.empty())
+        {
+            s.append(" @ ").append(blob);
+        }
+        return s;
+    }
+    std::string Backtrace::Symbol::toMangledString() const
+    {
+        std::string s;
+        s.append(mangled);
+        if (!offset.empty())
+        {
+            s.append("+").append(offset);
+        }
+        if (!blob.empty())
+        {
+            s.append(" @ ").append(blob);
+        }
+        return s;
+    }
+    bool Backtrace::separateRawSymbol(const std::string& raw, Symbol& s)
+    {
+        auto idx0 = raw.find('(');
+        if (idx0 != std::string::npos)
+        {
+            auto idx2 = raw.find(')', idx0 + 1);
+            if (idx2 != std::string::npos && idx2 > idx0)
+            {
+                auto idx1 = raw.find('+', idx0 + 1);
+                if (idx1 != std::string::npos && idx1 > idx0 && idx1 < idx2)
+                {
+                    //  0123456789abcd
+                    // "abc(def+0x123)"
+                    s.blob = raw.substr(0, idx0);
+                    s.mangled = raw.substr(idx0 + 1, idx1 - idx0 - 1);
+                    s.offset = raw.substr(idx1 + 1, idx2 - idx1 - 1);
+                    return true;
+                }
+            }
+        }
+        s.mangled = raw;
+        return false;
+    }
+
+    Backtrace::Backtrace(const int maxFrames, const int skip)
+        : skipFrames(skip)
+    {
+#if !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
+        std::vector<void*> backtraceBuffer(maxFrames + skip, nullptr);
+
+        const int numSlots = ::backtrace(backtraceBuffer.data(), backtraceBuffer.size());
+        if (numSlots > 0)
+        {
+            char** rawSymbols = backtrace_symbols(backtraceBuffer.data(), numSlots);
+            if (rawSymbols)
+            {
+                for (int i = skip; i < numSlots; ++i)
+                {
+                    Symbol symbol;
+                    separateRawSymbol(rawSymbols[i], symbol);
+                    int status;
+                    char* demangled;
+                    std::string s("`");
+                    if ((demangled = abi::__cxa_demangle(symbol.mangled.c_str(), nullptr, nullptr,
+                                                         &status)) != nullptr)
+                    {
+                        symbol.demangled = demangled;
+                        free(demangled);
+                    }
+                    _frames.emplace_back(backtraceBuffer[i], symbol);
+                }
+                free(rawSymbols);
+            }
+        }
+#endif
+        if (0 == _frames.size())
+        {
+            _frames.emplace_back(nullptr, "empty");
+        }
+    }
+
+    std::ostream& Backtrace::send(std::ostream& os) const
+    {
+        os << "Backtrace:\n";
+        int fidx = skipFrames;
+        for (const auto& p : _frames)
+        {
+            const Symbol& sym = p.second;
+            if (sym.isDemangled())
+            {
+                os << fidx++ << ": " << sym.demangled << "\n";
+                os << "\t" << sym.toMangledString() << '\n';
+            }
+            else
+            {
+                os << fidx++ << ": " << sym.toMangledString() << '\n';
+            }
+        }
+        return os;
+    }
+    constexpr std::string Backtrace::toString() const noexcept
+    {
+        std::string s = "Backtrace:\n";
+        int fidx = skipFrames;
+        for (const auto& p : _frames)
+        {
+            const Symbol& sym = p.second;
+            if (sym.isDemangled())
+            {
+                s.append(std::to_string(fidx++)).append(": ").append(sym.demangled).append("\n");
+                s.append("\t").append(sym.toMangledString()).append("\n");
+            }
+            else
+            {
+                s.append(std::to_string(fidx++))
+                    .append(": ")
+                    .append(sym.toMangledString())
+                    .append("\n");
+            }
+        }
+        return s;
     }
 
 } // namespace Util

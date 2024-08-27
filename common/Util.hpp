@@ -15,6 +15,7 @@
 #include <cerrno>
 #include <chrono>
 #include <cinttypes>
+#include <cstdarg>
 #include <cstddef>
 #include <cstdint>
 #include <cstring>
@@ -541,6 +542,17 @@ namespace Util
         dumpHex(oss, data, legend, prefix, skipDup, width);
         return oss.str();
     }
+
+    /// Returns a string according to `vprintf()` formatting rules
+    /// using `va_list` instead of a variable number of arguments.
+    /// @param format `printf()` compliant format string
+    /// @param ap `va_list` arguments
+    std::string vformatString(const char* format, va_list ap) noexcept;
+
+    /// Returns a string according to `printf()` formatting rules
+    /// and variable number of arguments following the `format` argument.
+    /// @param format `printf()` compliant format string
+    std::string formatString(const char* format, ...) noexcept;
 
     size_t findInVector(const std::vector<char>& tokens, const char *cstring, std::size_t offset = 0);
 
@@ -1238,6 +1250,52 @@ int main(int argc, char**argv)
         }
     };
 
+    /// Simple backtrace capture
+    class Backtrace
+    {
+    public:
+        struct Symbol
+        {
+            std::string blob;
+            std::string mangled;
+            std::string offset;
+            std::string demangled;
+            std::string toString() const;
+            std::string toMangledString() const;
+            bool isDemangled() const { return !demangled.empty(); }
+        };
+
+    private:
+        int skipFrames;
+        /// Stack frames {address, symbol}
+        std::vector<std::pair<void*, Symbol>> _frames;
+
+        static bool separateRawSymbol(const std::string& raw, Symbol& s);
+
+    public:
+        /// Produces a backtrace instance from current stack position
+        Backtrace(const int maxFrames = 50, const int skip = 1);
+
+        /// Produces a backtrace instance from current stack position
+        static Backtrace get(const int maxFrames = 50, const int skip = 2)
+        {
+            Backtrace bt(maxFrames, skip);
+            return bt;
+        }
+
+        /// Sends captured backtrace to given ostream
+        std::ostream& send(std::ostream& os) const;
+
+        /// Produces a string representation, one line per frame
+        constexpr std::string toString() const noexcept;
+
+        constexpr size_t size() const noexcept { return _frames.size(); }
+        constexpr const Symbol& operator[](size_t idx) const noexcept
+        {
+            return _frames[idx].second;
+        }
+    };
+
     //// Return current time in HTTP format.
     std::string getHttpTimeNow();
 
@@ -1544,5 +1602,7 @@ inline std::ostream& operator<<(std::ostream& os, const std::chrono::system_cloc
     os << Util::getIso8601FracformatTime(ts);
     return os;
 }
+
+inline std::ostream& operator<<(std::ostream& os, const Util::Backtrace& bt) { return bt.send(os); }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
