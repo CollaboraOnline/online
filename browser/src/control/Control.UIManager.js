@@ -122,14 +122,21 @@ L.Control.UIManager = L.Control.extend({
 
 	applyInvert: function(skipCore) {
 		// get the initial mode
-		var inDarkTheme = window.prefs.getBoolean('darkTheme');
-		var backgroundDark = window.prefs.getBoolean('darkBackgroundForTheme.' + (inDarkTheme ? 'dark' : 'light'), inDarkTheme);
+		var backgroundDark = this.isBackgroundDark();
 
 		if (skipCore) {
 			this.initDarkBackgroundUI(backgroundDark);
 		} else {
 			this.setDarkBackground(backgroundDark);
 		}
+	},
+
+	isBackgroundDark: function() {
+		// get the initial mode If document background is inverted or not
+		var inDarkTheme = window.prefs.getBoolean('darkTheme');
+		var darkBackgroundPrefName = 'darkBackgroundForTheme.' + (inDarkTheme ? 'dark' : 'light');
+		var backgroundDark = window.prefs.getBoolean(darkBackgroundPrefName, inDarkTheme);
+		return backgroundDark;
 	},
 
 	toggleInvert: function() {
