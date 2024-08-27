@@ -77,7 +77,7 @@ function _scrolledWindowControl(parentContainer, data, builder) {
 		scrollwindow.style.overflowX = 'scroll';
 
 	var realContentHeight = scrollwindow.scrollHeight;
-	var realContentWidth = scrollwindow.scrollWidth;
+	var realContentWidth = scrollwindow.scrollwidth;
 
 	var margin = 15;
 
@@ -94,7 +94,7 @@ function _scrolledWindowControl(parentContainer, data, builder) {
 	var timeoutLimit = 2;
 	var updateSize = function () {
 		realContentHeight = scrollwindow.scrollHeight;
-		realContentWidth = scrollwindow.scrollWidth;
+		realContentWidth = scrollwindow.scrollwidth;
 		if (realContentHeight === 0 || realContentWidth === 0) {
 			if (timeoutLimit--)
 				setTimeout(updateSize, 100);
