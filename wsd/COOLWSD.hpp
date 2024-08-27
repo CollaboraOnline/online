@@ -293,6 +293,7 @@ public:
     static std::atomic<unsigned> NumConnections;
     static std::unique_ptr<TraceFileWriter> TraceDumper;
     static bool IndirectionServerEnabled;
+    static bool GeolocationSetup;
 #if !MOBILEAPP
     static std::unique_ptr<ClipboardCache> SavedClipboards;
 

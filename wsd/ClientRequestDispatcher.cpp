@@ -1987,27 +1987,6 @@ std::string ClientRequestDispatcher::getDiscoveryXML()
 
 #if !MOBILEAPP
 
-/// Get IANA timezone name
-static std::string getIANATimezone()
-{
-    const char* tzfile = "/etc/localtime";
-    char buf[PATH_MAX];
-
-    ssize_t len = readlink(tzfile, buf, sizeof(buf) - 1);
-    if (len != -1)
-    {
-        buf[len] = '\0';
-        std::string fullPath(buf);
-
-        std::string prefix = "../usr/share/zoneinfo/";
-        if (fullPath.substr(0, prefix.size()) == prefix)
-        {
-            return fullPath.substr(prefix.size());
-        }
-    }
-    return std::string();
-}
-
 /// Create the /hosting/capabilities JSON and return as string.
 static std::string getCapabilitiesJson(bool convertToAvailable)
 {
@@ -2060,11 +2039,9 @@ static std::string getCapabilitiesJson(bool convertToAvailable)
     else if (!serverName.empty())
         capabilities->set("podName", serverName);
 
-    bool geoLocationSetup =
-        config::getBool(std::string("indirection_endpoint.geolocation_setup.enable"), false);
-    if (geoLocationSetup)
+    if (COOLWSD::IndirectionServerEnabled && COOLWSD::GeolocationSetup)
     {
-        std::string timezoneName = getIANATimezone();
+        std::string timezoneName = Util::getIANATimezone();
         if (!timezoneName.empty())
             capabilities->set("timezone", std::string(timezoneName));
     }
