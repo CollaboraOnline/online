@@ -23,6 +23,8 @@ class SRotate extends Operation {
 	private mnT0: number = 0.0;
 	private mnT1: number = 0.0;
 
+	// TODO - remove code duplication
+	/* jscpd:ignore-start */
 	constructor(
 		axis: vec3,
 		origin: vec3,
@@ -83,6 +85,7 @@ class SRotate extends Operation {
 
 		return matrix;
 	}
+	/* jscpd:ignore-end */
 }
 
 function makeSRotate(

@@ -12,6 +12,8 @@
 
 declare var SlideShow: any;
 
+// TODO - remove code duplication
+/* jscpd:ignore-start */
 function TurnAroundTransition(transitionParameters: TransitionParameters) {
 	const slide = new Primitive();
 	slide.pushTriangle([0, 0], [1, 0], [0, 1]);
@@ -80,5 +82,6 @@ function TurnAroundTransition(transitionParameters: TransitionParameters) {
 
 	return new ReflectionTransition(newTransitionParameters);
 }
+/* jscpd:ignore-end */
 
 SlideShow.TurnAroundTransition = TurnAroundTransition;

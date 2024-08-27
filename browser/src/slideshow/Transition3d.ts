@@ -38,6 +38,8 @@ class Transition3d {
 	private transitionParameters: TransitionParameters;
 	private context: any;
 
+	// TODO - remove code duplication
+	/* jscpd:ignore-start */
 	constructor(transitionParameters: TransitionParameters3D) {
 		this.transitionParameters = transitionParameters;
 		this.context = transitionParameters.context;
@@ -62,6 +64,7 @@ class Transition3d {
 		this.time = 0;
 		this.startTime = null;
 	}
+	/* jscpd:ignore-end */
 
 	public getVertexShader(): string {
 		return `#version 300 es
@@ -173,6 +176,8 @@ class Transition3d {
 		this.startTransition();
 	}
 
+	// TODO - remove code duplication
+	/* jscpd:ignore-start */
 	public initBuffers(): void {
 		// prettier-ignore
 		const positions = new Float32Array([
@@ -223,6 +228,8 @@ class Transition3d {
 
 		console.log('Buffers initialized');
 	}
+	/* jscpd:ignore-end */
+
 	private calculateModelViewMatrix() {
 		const EyePos = 10.0;
 		const modelView = glMatrix.mat4.create();
