@@ -2491,6 +2491,8 @@ L.Control.Menubar = L.Control.extend({
 				menuStructure['checked'] = true;
 		} else if (item.id === 'toggledarktheme' && window.prefs.getBoolean('darkTheme')) {
 			menuStructure['checked'] = true;
+		} else if (item.id === 'invertbackground' && window.prefs.getBoolean('darkTheme')) {
+			menuStructure['checked'] = !this._map.uiManager.isBackgroundDark();
 		}
 
 		if (item.menu)
