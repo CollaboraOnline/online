@@ -266,9 +266,11 @@ m4_ifelse(MOBILEAPP, [true],
 
 m4_ifelse(MOBILEAPP,[true],
   <!-- This is for a mobile app so the script files are in the same folder -->
-  m4_ifelse(BUNDLE, [], m4_foreachq([fileJS], [COOL_JS], [<script src="fileJS" defer></script>]), [<script src="bundle.js" defer></script>]),
-  m4_ifelse(BUNDLE, [], m4_foreachq([fileJS], [COOL_JS],
-        [<script src="%SERVICE_ROOT%/browser/%VERSION%/fileJS" defer></script>]), [<script src="%SERVICE_ROOT%/browser/%VERSION%/bundle.js" defer></script>])
+  m4_ifelse(BUNDLE, [], m4_foreachq([fileJS], [m4_include(COOL_JS.m4)], [<script src="fileJS" defer></script>]), [<script src="bundle.js" defer></script>]),
+  m4_ifelse(BUNDLE, [], m4_foreachq([fileJS], [m4_include(COOL_JS.m4)],
+        [<script src="%SERVICE_ROOT%/browser/%VERSION%/fileJS" defer></script>
+        ]), [<script src="%SERVICE_ROOT%/browser/%VERSION%/bundle.js" defer></script>
+        ])
 )m4_dnl
 
 m4_ifelse(MOBILEAPP, [true], [<script src="m4_ifelse(IOSAPP, [true], [Branding/])branding.js"></script>],

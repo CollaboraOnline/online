@@ -675,14 +675,23 @@ $(DIST_FOLDER)/global.js: $(srcdir)/js/global.js
 	@mkdir -p $(dir $@)
 	$(call global_file)
 
+$(INTERMEDIATE_DIR)/COOL_JS.m4:
+	@rm -f COOL_JS.m4
+	$(foreach file,$(NODE_MODULES_JS) $(COOL_LIBS_JS) $(patsubst %.ts,%.js,$(COOL_JS_WEBORDER)), $(shell echo -n $(file), >> $(INTERMEDIATE_DIR)/COOL_JS.m4))
+# remove last ","
+	@truncate -s -1 $(INTERMEDIATE_DIR)/COOL_JS.m4
+
 $(DIST_FOLDER)/cool.html: $(srcdir)/html/cool.html.m4 \
 	$(COOL_HTML_DST) \
 	$(COOL_WELCOME_DST) \
 	$(DIST_FOLDER)/bundle.css \
 	$(DIST_FOLDER)/global.js \
-	$(DIST_FOLDER)/bundle.js
+	$(DIST_FOLDER)/bundle.js \
+	$(INTERMEDIATE_DIR)/COOL_JS.m4
+
 	@echo "Generating cool.html..."
-	m4 -PE -DBUNDLE=$(IS_BUNDLE) \
+	m4 -PE -I $(INTERMEDIATE_DIR) \
+	    -DBUNDLE=$(IS_BUNDLE) \
 		-DIOSAPP=$(ENABLE_IOSAPP) \
 		-DGTKAPP=$(ENABLE_GTKAPP) \
 		-DDEBUG=$(ENABLE_DEBUG) \
@@ -691,9 +700,6 @@ $(DIST_FOLDER)/cool.html: $(srcdir)/html/cool.html.m4 \
 		-DMOBILEAPPNAME="$(APP_NAME)" \
 		-DCOOL_CSS="$(subst $(SPACE),$(COMMA),$(COOL_CSS_M4))" \
 		-DGLOBAL_JS="$(DIST_FOLDER)/global.js" \
-		-DCOOL_JS="$(subst $(SPACE),$(COMMA),$(NODE_MODULES_JS) \
-		$(COOL_LIBS_JS) \
-		$(patsubst %.ts,%.js,$(COOL_JS_WEBORDER)))" \
 		-DVENDOR="$(VENDOR)" \
 		$(srcdir)/html/cool.html.m4 > $@
 
