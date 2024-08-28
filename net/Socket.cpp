@@ -718,7 +718,8 @@ void SocketPoll::closeAllSockets()
         ::close(it->getFD());
 
         // avoid the socketHandler' getting an onDisconnect
-        auto stream = dynamic_cast<StreamSocket *>(it.get());
+        // StreamSocket *stream = dynamic_cast<StreamSocket *>(it.get());
+        StreamSocket *stream = static_cast<StreamSocket *>(it.get());
         if (stream)
             stream->resetHandler();
     }
