@@ -562,7 +562,7 @@ private:
 
 protected:
     /// Implementation of the ProtocolHandlerInterface.
-    virtual void handleIncomingMessage(SocketDisposition&) override
+    void handleIncomingMessage(SocketDisposition&) override
     {
         std::shared_ptr<StreamSocket> socket = _socket.lock();
 
@@ -765,7 +765,7 @@ public:
         return sendFrame(socket, data, len, WSFrameMask::Fin | static_cast<unsigned char>(code), flush);
     }
 
-    virtual bool processInputEnabled() const override
+    bool processInputEnabled() const override
     {
         std::shared_ptr<StreamSocket> socket = _socket.lock();
         if (socket)
@@ -1125,7 +1125,7 @@ protected:
 #endif
     }
 
-    virtual void enableProcessInput(bool enable = true) override
+    void enableProcessInput(bool enable = true) override
     {
         std::shared_ptr<StreamSocket> socket = _socket.lock();
         if (socket)

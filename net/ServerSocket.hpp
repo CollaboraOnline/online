@@ -134,10 +134,10 @@ public:
         ServerSocket(Socket::Type::Unix, clientPoller, std::move(sockFactory))
     {
     }
-    ~LocalServerSocket();
+    ~LocalServerSocket() override;
 
-    virtual bool bind(Type, int) override { assert(false); return false; }
-    virtual std::shared_ptr<Socket> accept() override;
+    bool bind(Type, int) override { assert(false); return false; }
+    std::shared_ptr<Socket> accept() override;
     std::string bind();
 #ifndef HAVE_ABSTRACT_UNIX_SOCKETS
     bool link(std::string to);

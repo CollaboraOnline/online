@@ -45,8 +45,7 @@ class DelaySocket : public Socket {
         bool isError() const { return _data.empty(); }
         std::chrono::steady_clock::time_point getSendTime() const { return _sendTime; }
         std::vector<char>& getData() { return _data; }
-    private:
-        WriteChunk();
+        WriteChunk() = delete;
     };
 
     std::vector<std::shared_ptr<WriteChunk>> _chunks;
