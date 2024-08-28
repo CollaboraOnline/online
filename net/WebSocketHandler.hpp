@@ -428,7 +428,7 @@ private:
                     gotPing(code, _pingTimeUs);
                 }
                 break;
-                case WSOpCode::Ping:
+            case WSOpCode::Ping:
                 {
                     if (!_isClient)
                         LOG_DBG("Clients should not send pings, only servers");
@@ -624,7 +624,7 @@ private:
         _lastPingRcvdTime = now;
     }
 
-    /// Send a ping message
+    /// Sends a native control-frame ping or pong message
     void sendPingOrPong(std::chrono::steady_clock::time_point now,
                         const char* data, const size_t len,
                         const WSOpCode code,
@@ -655,17 +655,37 @@ private:
     }
 
 public:
+    /// Sends a native control-frame ping message
     void sendPing(std::chrono::steady_clock::time_point now,
                   const std::shared_ptr<StreamSocket>& socket)
     {
-//        assert(!_isClient);
+        if (_isClient)
+            LOG_DBG("Clients should not send pings, only servers");
+//        assert(_isClient);
         sendPingOrPong(now, "", 1, WSOpCode::Ping, socket);
     }
+    #if 0
+        /// Sends a native control-frame ping message
+        /// Only for debugging purposes. NOT WORKING (SOCKET THREAD AFFINITY)
+        void sendPing(std::chrono::steady_clock::time_point now)
+        {
+            std::shared_ptr<StreamSocket> socket = getSocket().lock();
+            if (socket) {
+                sendPing(now, socket);
+            } else {
+                LOG_DBG("sendPing: Socket n/a yet");
+            }
+        }
+    #endif
 
+    /// Sends a native control-frame pong message
     void sendPong(std::chrono::steady_clock::time_point now,
                   const char* data, const size_t len,
                   const std::shared_ptr<StreamSocket>& socket)
     {
+        if (!_isClient)
+            LOG_WRN("Servers should not send pongs, only clients");
+//        assert(!_isClient);
         sendPingOrPong(now, data, len, WSOpCode::Pong, socket);
     }
 #endif
