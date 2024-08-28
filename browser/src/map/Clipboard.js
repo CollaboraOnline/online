@@ -85,6 +85,19 @@ L.Clipboard = L.Class.extend({
 		document.onbeforepaste = beforeSelect;
 	},
 
+	inlineStyleHelper: function(text, toBeReplaced, quotes) {
+		let startIndex = 1;
+		while (startIndex !== -1) {
+			startIndex = text.indexOf(toBeReplaced);
+			if (startIndex !== -1) {
+				let endIndex = text.indexOf(quotes, startIndex + toBeReplaced.length + 1);
+				let subString = text.substr(startIndex, endIndex - startIndex + 1);
+				text = text.replace(subString, "");
+			}
+		}
+		return text;
+	},
+
 	// Attempt to cleanup unwanted elements
 	stripStyle: function(htmlString) {
 		let startIndex = 1;
@@ -99,28 +112,8 @@ L.Clipboard = L.Class.extend({
 		}
 
 		// Remove also inline styles.
-
-		// For double quotes.
-		startIndex = 1;
-		while (startIndex !== -1) {
-			startIndex = htmlString.indexOf('style="');
-			if (startIndex !== -1) {
-				let endIndex = htmlString.indexOf('"', startIndex + 'style="'.length + 1);
-				let subString = htmlString.substr(startIndex, endIndex - startIndex + 1);
-				htmlString = htmlString.replace(subString, "");
-			}
-		}
-
-		// For single quotes.
-		startIndex = 1;
-		while (startIndex !== -1) {
-			startIndex = htmlString.indexOf("style='");
-			if (startIndex !== -1) {
-				let endIndex = htmlString.indexOf("'", startIndex + "style='".length + 1);
-				let subString = htmlString.substr(startIndex, endIndex - startIndex + 1);
-				htmlString = htmlString.replace(subString, "");
-			}
-		}
+		htmlString = this.inlineStyleHelper(htmlString, 'style="', '"'); // For double quotes.
+		htmlString = this.inlineStyleHelper(htmlString, "style='", "'"); // For single quotes.
 
 		return htmlString;
 	},
