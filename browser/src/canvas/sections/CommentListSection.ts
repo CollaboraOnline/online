@@ -708,7 +708,10 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 	}
 
 	public select (annotation: Comment, force: boolean = false): void {
-		if (force || (annotation && !annotation.pendingInit && annotation !== this.sectionProperties.selectedComment)) {
+		if (force
+			|| (annotation && !annotation.pendingInit && annotation !== this.sectionProperties.selectedComment
+			&& (annotation.sectionProperties.data.resolved !== 'true' || this.sectionProperties.showResolved)
+			)) {
 			// Select the root comment
 			var idx = this.getRootIndexOf(annotation.sectionProperties.data.id);
 

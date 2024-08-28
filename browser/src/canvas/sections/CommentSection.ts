@@ -688,13 +688,14 @@ export class Comment extends CanvasSectionObject {
 			this.sectionProperties.container.style.visibility = '';
 			this.sectionProperties.container.style.display = '';
 		}
-		if (this.sectionProperties.data.resolved === 'false' || this.sectionProperties.commentListSection.sectionProperties.showResolved)
+		if (this.sectionProperties.data.resolved !== 'true' || this.sectionProperties.commentListSection.sectionProperties.showResolved) {
 			L.DomUtil.addClass(this.sectionProperties.container, 'cool-annotation-collapsed-show');
+			this.sectionProperties.showSelectedCoordinate = true;
+		}
 		this.sectionProperties.contentNode.style.display = '';
 		this.sectionProperties.nodeModify.style.display = 'none';
 		this.sectionProperties.nodeReply.style.display = 'none';
 		this.sectionProperties.collapsedInfoNode.style.visibility = '';
-		this.sectionProperties.showSelectedCoordinate = true;
 	}
 
 	private showCalc() {
