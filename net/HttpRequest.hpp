@@ -1656,7 +1656,7 @@ private:
         return socket; // Return the shared pointer.
     }
 
-    void asyncConnectCompleted(SocketPoll& poll, std::shared_ptr<StreamSocket> socket)
+    void asyncConnectCompleted(SocketPoll& poll, std::shared_ptr<StreamSocket> socket) // NOLINT
     {
         assert((!socket || _fd == socket->getFD()) &&
                "The socket FD must have been set in onConnect");
@@ -1859,7 +1859,7 @@ public:
     }
 
     /// Start a partial asynchronous upload from a file based on the contents of a "Range" header
-    bool asyncUpload(std::string fromFile, std::string mimeType, std::string rangeHeader)
+    bool asyncUpload(std::string fromFile, std::string mimeType, std::string rangeHeader) // NOLINT
     {
         size_t equalsPos = rangeHeader.find("=");
         if (equalsPos == std::string::npos) return asyncUpload(fromFile, mimeType);
@@ -2030,7 +2030,7 @@ private:
         return events;
     }
 
-    virtual void handleIncomingMessage(SocketDisposition& /*disposition*/) override
+     void handleIncomingMessage(SocketDisposition& /*disposition*/) override
     {
         if (!isConnected())
         {

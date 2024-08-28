@@ -525,7 +525,7 @@ public:
     // ------------------------------------------------------------------
     // Interface for implementing low level socket goodness from streams.
     // ------------------------------------------------------------------
-    virtual ~ProtocolHandlerInterface() { }
+    virtual ~ProtocolHandlerInterface() = default;
 
     /// Called when the socket is newly created to
     /// set the socket associated with this ResponseClient.
@@ -610,7 +610,7 @@ class WebSocketHandler;
 class SimpleSocketHandler : public ProtocolHandlerInterface
 {
 public:
-    SimpleSocketHandler() {}
+    SimpleSocketHandler() = default;
     int sendTextMessage(const char*, const size_t, bool) const override { return 0; }
     int sendBinaryMessage(const char*, const size_t, bool) const override { return 0; }
     void shutdown(bool, const std::string &) override {}
@@ -628,7 +628,7 @@ protected:
     {
     }
 
-    virtual ~MessageHandlerInterface() {}
+    virtual ~MessageHandlerInterface() = default;
 
 public:
     /// Setup, after construction for shared_from_this
@@ -1052,7 +1052,7 @@ public:
         LOG_TRC("StreamSocket ctor");
     }
 
-    ~StreamSocket()
+    ~StreamSocket() override
     {
         LOG_TRC("StreamSocket dtor called with pending write: " << _outBuffer.size()
                                                                 << ", read: " << _inBuffer.size());
@@ -1087,7 +1087,7 @@ public:
         LOG_TRC("Async shutdown requested.");
     }
 
-    virtual void ignoreInput() override
+    void ignoreInput() override
     {
         Socket::ignoreInput();
         _inBuffer.clear();
@@ -1110,7 +1110,7 @@ public:
         return events;
     }
 
-    virtual bool hasBuffered() const override
+    bool hasBuffered() const override
     {
         return !_outBuffer.empty() || !_inBuffer.empty();
     }

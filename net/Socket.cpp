@@ -17,12 +17,12 @@
 
 #include <chrono>
 #include <cstring>
-#include <ctype.h>
+#include <cctype>
 #include <iomanip>
 #include <memory>
 #include <ratio>
 #include <sstream>
-#include <stdio.h>
+#include <cstdio>
 #include <string>
 #include <unistd.h>
 #include <sys/stat.h>
@@ -162,10 +162,10 @@ bool StreamSocket::socketpair(std::shared_ptr<StreamSocket>& parent,
     if (rc != 0)
         return false;
 
-    child = std::shared_ptr<StreamSocket>(new StreamSocket("save-child", pair[0], Socket::Type::Unix, true));
+    child = std::make_shared<StreamSocket>("save-child", pair[0], Socket::Type::Unix, true);
     child->setNoShutdown();
     child->setClientAddress("save-child");
-    parent = std::shared_ptr<StreamSocket>(new StreamSocket("save-kit-parent", pair[1], Socket::Type::Unix, true));
+    parent = std::make_shared<StreamSocket>("save-kit-parent", pair[1], Socket::Type::Unix, true);
     parent->setNoShutdown();
     parent->setClientAddress("save-parent");
 
@@ -298,7 +298,7 @@ SocketPoll::SocketPoll(std::string threadName)
 
     static bool watchDogProfile = !!getenv("COOL_WATCHDOG");
     if (watchDogProfile && !PollWatchdog)
-        PollWatchdog.reset(new Watchdog());
+        PollWatchdog = std::make_unique<Watchdog>();
 
     _wakeup[0] = -1;
     _wakeup[1] = -1;
@@ -738,7 +738,7 @@ void SocketPoll::takeSocket(const std::shared_ptr<SocketPoll> &fromPoll,
     ASSERT_CORRECT_THREAD();
 
     // hold a reference during transfer
-    std::shared_ptr<Socket> socket = inSocket;
+    std::shared_ptr<Socket> socket = inSocket; // NOLINT
 
     SocketPoll *toPoll = this;
     fromPoll->addCallback([fromPoll,socket,&mut,&cond,&transferred,toPoll](){
@@ -1499,7 +1499,7 @@ bool StreamSocket::parseHeader(const char *clientName,
         if (request.getChunkedTransferEncoding())
         {
             // keep the header
-            map._spans.push_back(std::pair<size_t, size_t>(0, itBody - _inBuffer.begin()));
+            map._spans.emplace_back(0, itBody - _inBuffer.begin());
 
             int chunk = 0;
             while (itBody != _inBuffer.end())
@@ -1549,7 +1549,7 @@ bool StreamSocket::parseHeader(const char *clientName,
                 }
                 itBody += chunkLen;
 
-                map._spans.push_back(std::pair<size_t,size_t>(chunkOffset, chunkLen));
+                map._spans.emplace_back(chunkOffset, chunkLen);
 
                 if (*itBody != '\r' || *(itBody + 1) != '\n')
                 {
