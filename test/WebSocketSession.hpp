@@ -56,9 +56,9 @@ private:
         return result;
     }
 
-    WebSocketSession(const std::string& hostname, Protocol protocolType, int portNumber)
+    WebSocketSession(std::string && hostname, Protocol protocolType, int portNumber)
         : WebSocketHandler(/* isClient = */ true, /* isMasking = */ true)
-        , _host(hostname)
+        , _host(std::move(hostname))
         , _port(std::to_string(portNumber))
         , _protocol(protocolType)
         , _disconnected(true)
@@ -83,15 +83,15 @@ private:
 public:
     /// Destroy WebSocketSession.
     /// Note: must never be called with the owning poll thread still active.
-    ~WebSocketSession() { shutdown(); }
+    ~WebSocketSession() override { shutdown(); }
 
     /// Create a new HTTP WebSocketSession to the given host.
     /// The port defaults to the protocol's default port.
-    static std::shared_ptr<WebSocketSession> create(const std::string& host, Protocol protocol,
+    static std::shared_ptr<WebSocketSession> create(std::string host, Protocol protocol,
                                                     int port = 0)
     {
         port = (port > 0 ? port : getDefaultPort(protocol));
-        return std::shared_ptr<WebSocketSession>(new WebSocketSession(host, protocol, port));
+        return std::shared_ptr<WebSocketSession>(new WebSocketSession(std::move(host), protocol, port));
     }
 
     /// Create a new HTTP WebSocketSession to the given URI.
@@ -257,6 +257,18 @@ public:
         {
             std::unique_lock<std::mutex> lock(_outMutex);
             _outQueue.emplace_back(msg.data(), msg.data() + msg.size());
+        }
+
+        const auto pollPtr = _socketPoll.lock();
+        if (pollPtr)
+            pollPtr->wakeup();
+    }
+
+    template <std::size_t N> void sendMessage(const char (&msg)[N])
+    {
+        {
+            std::unique_lock<std::mutex> lock(_outMutex);
+            _outQueue.emplace_back(msg, msg + N - 1); // Minus the null-terminator.
         }
 
         const auto pollPtr = _socketPoll.lock();
