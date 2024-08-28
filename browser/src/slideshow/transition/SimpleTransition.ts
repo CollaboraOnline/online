@@ -25,12 +25,6 @@ class SimpleTransition extends SlideShow.Transition3d {
 		this.enteringPrimitives = transitionParameters.enteringPrimitives;
 		this.allOperations = transitionParameters.allOperations;
 
-		console.debug('Initialized SimpleTransition with primitives:', {
-			leaving: transitionParameters.leavingPrimitives,
-			entering: transitionParameters.enteringPrimitives,
-			operations: transitionParameters.allOperations,
-		});
-
 		this.animationTime =
 			transitionParameters.slideInfo?.transitionDuration > 0
 				? this.slideInfo.transitionDuration
@@ -112,7 +106,7 @@ class SimpleTransition extends SlideShow.Transition3d {
 		this.gl.bindBuffer(this.gl.ARRAY_BUFFER, null);
 		this.gl.bindVertexArray(null);
 
-		console.debug('Buffers initialized with default values.');
+		console.debug('Simple Transition buffer initialized.');
 	}
 
 	public applyAllOperation(t: number): void {
@@ -126,8 +120,6 @@ class SimpleTransition extends SlideShow.Transition3d {
 			false,
 			matrix,
 		);
-
-		console.debug('Applied all operations at time:', t);
 	}
 
 	public applyLeavingOperations(t: number, operations: Operation[]): void {
@@ -140,8 +132,6 @@ class SimpleTransition extends SlideShow.Transition3d {
 			false,
 			matrix,
 		);
-
-		// console.debug('Applied leaving operations at time:', t, operations);
 	}
 
 	public applyEnteringOperations(t: number, operations: Operation[]): void {
@@ -154,8 +144,6 @@ class SimpleTransition extends SlideShow.Transition3d {
 			false,
 			matrix,
 		);
-
-		// console.debug('Applied entering operations at time:', t, operations);
 	}
 
 	public displayPrimitive(
@@ -169,7 +157,6 @@ class SimpleTransition extends SlideShow.Transition3d {
 		this.gl.bindTexture(this.gl.TEXTURE_2D, this.textures[textureNum]);
 		this.gl.uniform1i(this.gl.getUniformLocation(this.program, textureName), 0);
 		for (const primitive of texturePrimitive) {
-			console.log('slideshow: vertex length', primitive.vertices.length);
 			this.setBufferData(primitive.vertices);
 			this.applyLeavingOperations(t, primitive.operations);
 			this.gl.drawArrays(this.gl.TRIANGLE_STRIP, 0, primitive.vertices.length);

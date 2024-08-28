@@ -62,7 +62,6 @@ function makeFallTransition(transitionParameters: TransitionParameters) {
 
 	const aOperations: Operation[] = [];
 
-	// TODO: Fix slide direction :)
 	const newTransitionParameters: TransitionParameters3D = {
 		...transitionParameters,
 		leavingPrimitives: aLeavingPrimitives,
