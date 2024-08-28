@@ -24,7 +24,7 @@ function MicsShapeWipeTransition(transitionParameters: TransitionParameters) {
 	} else if (transitionSubType == TransitionSubType.TOPTOBOTTOM) {
 		return SlideShow.TurnAroundTransition(transitionParameters);
 	} else if (transitionSubType == TransitionSubType.TOPLEFT) {
-		// todo : iris transition
+		return new SlideShow.NoTransition(transitionParameters); // todo : iris transition
 	} else if (transitionSubType == TransitionSubType.TOPRIGHT) {
 		return SlideShow.TurnDownTransition(transitionParameters);
 	} else if (transitionSubType == TransitionSubType.BOTTOMRIGHT) {
@@ -32,8 +32,7 @@ function MicsShapeWipeTransition(transitionParameters: TransitionParameters) {
 	} else if (transitionSubType == TransitionSubType.BOTTOMLEFT) {
 		return SlideShow.Venetian3dTransition(transitionParameters, true, 8);
 	} else if (transitionSubType == TransitionSubType.TOPCENTER) {
-		// todo : fix horizontal 3d
-		return SlideShow.Venetian3dTransition(transitionParameters, false, 6);
+		return SlideShow.Venetian3dTransition(transitionParameters, false, 6); // todo : fix horizontal 3d
 	} else if (transitionSubType == TransitionSubType.RIGHTCENTER) {
 		return SlideShow.StaticNoiseTransition(transitionParameters);
 	} else if (transitionSubType == TransitionSubType.BOTTOMCENTER) {
@@ -41,19 +40,19 @@ function MicsShapeWipeTransition(transitionParameters: TransitionParameters) {
 	} else if (transitionSubType == TransitionSubType.CORNERSIN) {
 		return SlideShow.CubeTransition(transitionParameters, false);
 	} else if (transitionSubType == TransitionSubType.VERTICAL) {
-		//  todo : Vortex transition
+		return new SlideShow.NoTransition(transitionParameters); //  todo : Vortex transition
 	} else if (transitionSubType == TransitionSubType.HORIZONTAL) {
 		return SlideShow.RippleTransition(transitionParameters, false);
 	} else if (transitionSubType == TransitionSubType.CIRCLE) {
-		//  todo: 3d circle transition (8,128)
+		return new SlideShow.NoTransition(transitionParameters); //  todo: 3d circle transition (8,128)
 	} else if (transitionSubType == TransitionSubType.FANOUTHORIZONTAL) {
 		return SlideShow.makeHelixTransition(transitionParameters, 20);
 	} else if (transitionSubType == TransitionSubType.ACROSS) {
 		return SlideShow.FlipTilesTransition(transitionParameters, 8, 6);
 	} else if (transitionSubType == TransitionSubType.DIAMOND) {
-		//  todo: glitter transition
+		return new SlideShow.NoTransition(transitionParameters); //  todo: glitter transition
 	} else if (transitionSubType == TransitionSubType.HEART) {
-		//  todo: honeycomb transition
+		return new SlideShow.NoTransition(transitionParameters); //  todo: honeycomb transition
 	}
 }
 
