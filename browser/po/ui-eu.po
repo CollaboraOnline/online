@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-08-19 10:15+0200\n"
-"PO-Revision-Date: 2024-05-09 00:50+0000\n"
-"Last-Translator: Alexander Gabilondo <alexgabi@openmailbox.org>\n"
+"PO-Revision-Date: 2024-08-28 13:45+0000\n"
+"Last-Translator: Alex Gabilondo <alexgabi@disroot.org>\n"
 "Language-Team: Basque <https://hosted.weblate.org/projects/collabora-online/"
 "ui/eu/>\n"
-"Language: \n"
+"Language: eu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.5.4-rc\n"
+"X-Generator: Weblate 5.7.1-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -487,11 +487,11 @@ msgstr "Itsatsi berezia"
 
 #: src/control/Control.ContextMenu.js:248
 msgid "Copy Cells"
-msgstr ""
+msgstr "Kopiatu gelaxkak"
 
 #: src/control/Control.ContextMenu.js:256
 msgid "Fill Series"
-msgstr ""
+msgstr "Bete seriea"
 
 #: src/control/Control.DocumentNameInput.js:113
 msgid "Path"
@@ -911,7 +911,7 @@ msgstr "Modu iluna"
 #: src/control/Control.NotebookbarImpress.js:485
 #: src/control/Control.NotebookbarWriter.js:1506
 msgid "Invert Background"
-msgstr ""
+msgstr "Alderantzikatu atzeko planoa"
 
 #: src/control/Control.Menubar.js:154 src/control/Control.Menubar.js:459
 #: src/control/Control.Menubar.js:604 src/control/Control.Menubar.js:750
@@ -1058,7 +1058,7 @@ msgstr "Bidali iruzkinak"
 #: src/control/Control.ServerAuditDialog.ts:174
 #: src/control/Control.ServerAuditDialog.ts:175
 msgid "Server audit"
-msgstr ""
+msgstr "Zerbitzariaren auditoria"
 
 #: src/control/Control.Menubar.js:387 src/control/Control.Menubar.js:548
 #: src/control/Control.Menubar.js:679 src/control/Control.Menubar.js:960
@@ -1093,12 +1093,12 @@ msgstr "Gorde iruzkinak"
 #: src/control/Control.Menubar.js:414
 #: src/control/Control.NotebookbarBuilder.js:601
 msgid "Full Page Slides"
-msgstr ""
+msgstr "Orrialde osoko diapositibak"
 
 #: src/control/Control.Menubar.js:415
 #: src/control/Control.NotebookbarBuilder.js:605
 msgid "Notes Pages"
-msgstr ""
+msgstr "Oharren orria"
 
 #: src/control/Control.Menubar.js:449
 #: src/control/Control.NotebookbarImpress.js:470
@@ -1163,36 +1163,35 @@ msgstr "Orri guztiak"
 #: src/control/Control.Menubar.js:835
 #: src/control/jsdialog/Definitions.Menu.ts:286
 msgid "Highlight cells with..."
-msgstr ""
+msgstr "Nabarmendu gelaxkak honekin..."
 
 #: src/control/Control.Menubar.js:836
 #: src/control/jsdialog/Definitions.Menu.ts:289
 msgid "Values greater than..."
-msgstr ""
+msgstr "Hau baino balio handiagoak..."
 
 #: src/control/Control.Menubar.js:837
 #: src/control/jsdialog/Definitions.Menu.ts:293
 msgid "Values less than..."
-msgstr ""
+msgstr "Hau baino balio txikiagoak..."
 
 #: src/control/Control.Menubar.js:838
 #: src/control/jsdialog/Definitions.Menu.ts:297
 msgid "Values equal to..."
-msgstr ""
+msgstr "Honen balio berdinak..."
 
 #: src/control/Control.Menubar.js:839
 #: src/control/jsdialog/Definitions.Menu.ts:301
 msgid "Values between..."
-msgstr ""
+msgstr "Hauen arteko balioak..."
 
 #: src/control/Control.Menubar.js:840
 #: src/control/jsdialog/Definitions.Menu.ts:305
 msgid "Values duplicate..."
-msgstr ""
+msgstr "Balio bikoiztuak..."
 
 #: src/control/Control.Menubar.js:841
 #: src/control/jsdialog/Definitions.Menu.ts:309
-#, fuzzy
 msgid "Containing text..."
 msgstr "Testua dauka..."
 
@@ -1200,7 +1199,7 @@ msgstr "Testua dauka..."
 #: src/control/jsdialog/Definitions.Menu.ts:314
 #: src/control/jsdialog/Definitions.Menu.ts:348
 msgid "More highlights..."
-msgstr ""
+msgstr "Nabarmen gehiago..."
 
 #: src/control/Control.Menubar.js:845
 #: src/control/jsdialog/Definitions.Menu.ts:320
@@ -1215,7 +1214,7 @@ msgstr "N elementu nagusiak..."
 #: src/control/Control.Menubar.js:847
 #: src/control/jsdialog/Definitions.Menu.ts:327
 msgid "Top N percent..."
-msgstr ""
+msgstr "Ehuneko Nren gainetik..."
 
 #: src/control/Control.Menubar.js:848
 #: src/control/jsdialog/Definitions.Menu.ts:331
@@ -1224,9 +1223,8 @@ msgstr "Beheko N elementuak..."
 
 #: src/control/Control.Menubar.js:849
 #: src/control/jsdialog/Definitions.Menu.ts:335
-#, fuzzy
 msgid "Bottom N percent..."
-msgstr "Beheko N elementuak..."
+msgstr "Ehuneko Nren azpitik..."
 
 #: src/control/Control.Menubar.js:850
 #: src/control/jsdialog/Definitions.Menu.ts:339
@@ -1614,11 +1612,11 @@ msgstr "Aurkeztu leihoan"
 
 #: src/control/Control.NotebookbarImpress.js:455
 msgid "Normal View"
-msgstr ""
+msgstr "ikuspegi arrunta"
 
 #: src/control/Control.NotebookbarImpress.js:461
 msgid "Notes View"
-msgstr ""
+msgstr "Oharren ikuspegia"
 
 #: src/control/Control.NotebookbarWriter.js:79
 msgid "Form"
@@ -1678,60 +1676,64 @@ msgstr "Garbitu bilaketa-eremua"
 
 #: src/control/Control.ServerAuditDialog.ts:50
 msgid "The IsAdminUser property is not set by integration"
-msgstr ""
+msgstr "Integrazioak ez du IsAdminUser-en propietatea ezartzen"
 
 #: src/control/Control.ServerAuditDialog.ts:56
 msgid ""
 "Used deprecated is_admin field, integration should use IsAdminUser property "
 "instead"
 msgstr ""
+"Is_admin eremu zaharkitua erabiltzen da, integrazioak IsAdminUser "
+"propietatea erabili behar du haren ordez"
 
 #: src/control/Control.ServerAuditDialog.ts:61
 msgid "The IsAdminUser user property is set by integration"
 msgstr ""
+"IsAdminUser erabiltzailearen propietatea integrazioaren arabera ezartzen da"
 
 #: src/control/Control.ServerAuditDialog.ts:65
 msgid "Your WOPI server is not secure: SSL verification failed"
-msgstr ""
+msgstr "Zure WOPI zerbitzaria ez da segurua: SSL egiaztapenak huts egin du"
 
 #: src/control/Control.ServerAuditDialog.ts:69
 msgid "No problems with SSL verification detected"
-msgstr ""
+msgstr "Ez da arazorik detektatu SSL egiaztapenarekin"
 
 #: src/control/Control.ServerAuditDialog.ts:72
 msgid "PostMessage API is initialized"
-msgstr ""
+msgstr "PostMessage APIa hasieratu da"
 
 #: src/control/Control.ServerAuditDialog.ts:74
 msgid "Integrator is not ready for PostMessage calls"
-msgstr ""
+msgstr "Integratzailea ez dago prest PostMessage deietarako"
 
 #: src/control/Control.ServerAuditDialog.ts:82
 msgid ""
 "Your server is configured with insufficient hardware resources, which may "
 "lead to poor performance."
 msgstr ""
+"Zure zerbitzaria hardware baliabide nahikorik gabe konfiguratuta dago, eta "
+"horrek errendimendu eskasa ekar dezake."
 
 #: src/control/Control.ServerAuditDialog.ts:88
 msgid "Hardware resources are sufficient for optimal performance"
-msgstr ""
+msgstr "Hardware baliabideak nahikoak dira errendimendu optimorako"
 
 #: src/control/Control.ServerAuditDialog.ts:193
 msgid "No issues found"
-msgstr ""
+msgstr "Ez da arazorik aurkitu"
 
 #: src/control/Control.ServerAuditDialog.ts:199
-#, fuzzy
 msgid "Status"
-msgstr "Egoera:"
+msgstr "Egoera"
 
 #: src/control/Control.ServerAuditDialog.ts:247
 msgid "Check security warnings of your server"
-msgstr ""
+msgstr "Egiaztatu zure zerbitzariaren segurtasun-abisuak"
 
 #: src/control/Control.ServerAuditDialog.ts:248
 msgid "OPEN"
-msgstr ""
+msgstr "IREKI"
 
 #: src/control/Control.SheetsBar.js:48
 msgid "Scroll to the first sheet"
@@ -1902,7 +1904,7 @@ msgstr "Editoreari jarraitzen"
 
 #: src/control/Control.UserList.ts:58
 msgid "Stop following"
-msgstr ""
+msgstr "Utzi jarraitzeari"
 
 #: src/control/Control.UserList.ts:59
 msgid "Avatar for {user}"
@@ -1922,7 +1924,7 @@ msgstr "0 erabiltzaile"
 
 #: src/control/Control.UserList.ts:85
 msgid "User List Summary"
-msgstr ""
+msgstr "Erabiltzaile zerrendaren laburpena"
 
 #: src/control/Control.UserList.ts:493
 msgid "Following"
@@ -2139,11 +2141,11 @@ msgstr "Ezabatu tabulazioa"
 
 #: src/control/VRuler.ts:377
 msgid "Top Margin"
-msgstr ""
+msgstr "Goiko marjina"
 
 #: src/control/VRuler.ts:378
 msgid "Bottom Margin"
-msgstr ""
+msgstr "Beheko marjina"
 
 #: src/control/Signing.js:27
 msgid "This document is digitally signed and the signature is valid."
@@ -2297,7 +2299,7 @@ msgstr "Gelaxka-ertzak"
 
 #: src/control/jsdialog/Widget.SidebarContainers.ts:72
 msgid "More options for {name}"
-msgstr ""
+msgstr "{name}(r)entzat aukera gehiago"
 
 #: src/control/jsdialog/Widget.TreeView.js:705
 msgid "Headings and objects that you add to the document will appear here"
@@ -2307,7 +2309,7 @@ msgstr ""
 #: src/slideshow/SlideShowPresenter.ts:432
 #: src/map/handler/Map.SlideShow.js:161
 msgid "Windowed Presentation: "
-msgstr ""
+msgstr "Leihoko aurkezpena: "
 
 #: src/slideshow/SlideShowPresenter.ts:440
 #: src/map/handler/Map.SlideShow.js:168
@@ -2353,12 +2355,12 @@ msgstr "Dagoeneko dokumentu hau aurkezten ari zara"
 #: src/slideshow/SlideShowPresenter.ts:595
 #: src/map/handler/Map.SlideShow.js:314
 msgid "Presentation disabled"
-msgstr ""
+msgstr "Aurkezpena desgaituta dago"
 
 #: src/slideshow/SlideShowPresenter.ts:596
 #: src/map/handler/Map.SlideShow.js:315
 msgid "Presentation mode has been disabled for this document"
-msgstr ""
+msgstr "Aurkezpen modua desgaitu da dokumentu honetarako"
 
 #: src/core/Socket.js:65
 msgid "Oops, there is a problem connecting to {productname}: "
@@ -2488,7 +2490,7 @@ msgstr "Konektatzen..."
 
 #: src/core/Socket.js:1312
 msgid "Server is shutting down"
-msgstr ""
+msgstr "Zerbitzaria itzaltzen ari da"
 
 #: src/core/Socket.js:1345
 msgid "Exported to storage"
@@ -2619,7 +2621,7 @@ msgstr ""
 
 #: src/errormessages.js:29
 msgid "Authorization error was: '{errormessage}'."
-msgstr ""
+msgstr "Baimen errorea hau izan da: '{errormessage}'."
 
 #: src/errormessages.js:30
 msgid "Wrong or missing WOPISrc parameter, please contact support."
@@ -2741,6 +2743,8 @@ msgid ""
 "Document cannot be saved due to expired session, please reopen the document "
 "to continue."
 msgstr ""
+"Ezin da dokumentua gorde saioa iraungi delako. Mesedez, ireki dokumentua "
+"berriro jarraitzeko."
 
 #: src/errormessages.js:48
 msgid "Document cannot be saved."
@@ -2781,6 +2785,8 @@ msgid ""
 "Document cannot be saved due to expired session, please reload the page to "
 "continue."
 msgstr ""
+"Ezin da dokumentua gorde saioa iraungi delako. Mesedez, berriro kargatu "
+"orria jarraitzeko."
 
 #: src/errormessages.js:57
 msgid "Document cannot be saved, please check your permissions."
@@ -2856,21 +2862,23 @@ msgstr "Konpondu haria"
 #: src/canvas/sections/CommentListSection.ts:1265
 #: src/canvas/sections/CommentListSection.ts:2102
 msgid "Comments Updated"
-msgstr ""
+msgstr "Iruzkinak eguneratuta"
 
 #: src/canvas/sections/CommentListSection.ts:1253
 msgid "Another user has removed this comment."
-msgstr ""
+msgstr "Beste erabiltzaile batek iruzkin hau kendu du."
 
 #: src/canvas/sections/CommentListSection.ts:1266
 msgid ""
 "Another user has updated the comment. Would you like to overwrite those "
 "changes?"
 msgstr ""
+"Beste erabiltzaile batek iruzkina eguneratu du. Aldaketa horiek gainidatzi "
+"nahi dituzu?"
 
 #: src/canvas/sections/CommentListSection.ts:1268
 msgid "Update"
-msgstr ""
+msgstr "Eguneratu"
 
 #: src/canvas/sections/CommentListSection.ts:1339
 #: src/canvas/sections/CommentListSection.ts:1401
@@ -2880,6 +2888,8 @@ msgstr "Automatikoki gordeta"
 #: src/canvas/sections/CommentListSection.ts:2103
 msgid "Another user has updated comments. Would you like to proceed updating?"
 msgstr ""
+"Beste erabiltzaile batek iruzkinak eguneratu ditu. Eguneratzen jarraitu nahi "
+"duzu?"
 
 #: src/canvas/sections/CommentSection.ts:302
 msgid "Open menu"
@@ -2933,10 +2943,8 @@ msgid "Failed to download clipboard, please re-copy"
 msgstr "Ezin izan da arbela deskargatu, mesedez kopiatu berriro"
 
 #: src/map/Clipboard.js:1194
-#, fuzzy
 msgid "<p>Please use the paste buttons on your on-screen keyboard.</p>"
-msgstr ""
-"<p>Erabili zure pantailako teklatuaren kopiatzeko/itsasteko botoiak.</p>"
+msgstr "<p>Erabili zure pantailako teklatuaren itsasteko botoiak.</p>"
 
 #: src/map/Clipboard.js:1196
 msgid ""
@@ -2966,13 +2974,12 @@ msgstr ""
 "ekin nahi badiozu</p>"
 
 #: src/map/Clipboard.js:1233
-#, fuzzy
 msgid ""
 "<p>Your browser has very limited access to the clipboard</p><p><b>Please "
 "press</b> <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to "
 "see more options</p><p>Close popup to ignore paste special</p>"
 msgstr ""
-"<p>Zure nabigatzaileak arbelerako sarbide oso mugatua du</p><p>Sakatu orain: "
+"<p>Zure nabigatzaileak arbelerako sarbide oso mugatua du</p><p><b>Sakatu</b> "
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd> V</kbd> aukera "
 "gehiago ikusteko</p><p> Itxi pop-up leihoa Itsatsi Berezia ez ikusteko</p>"
 
@@ -3117,6 +3124,10 @@ msgid ""
 "translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
 "translate=\"true\">3</a>"
 msgstr ""
+"<a id=\"slide-1-indicator\" class=\"active\" href=\"#slide-1\" data-"
+"translate=\"true\">1</a> <a id=\"slide-2-indicator\" href= \"#slide-2\" data-"
+"translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
+"translate=\"true\">3</a >"
 
 #~ msgid "Document cannot be saved due to expired or invalid access token."
 #~ msgstr ""
