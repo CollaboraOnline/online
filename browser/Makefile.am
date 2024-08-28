@@ -500,7 +500,9 @@ SPACE := $(EMPTY) $(EMPTY)
 COOL_VERSION = $(shell cd $(srcdir) && git log -1 --pretty=format:"%h")
 INTERMEDIATE_DIR ?= $(if $(IS_SEPARATE),$(abs_builddir)/debug,$(abs_builddir)/release)
 
-EXTRA_DIST = $(shell find . -type f -not -path './.git/*' -not -path './node_modules/*' | sed 's/.\///')
+EXTRA_DIST = $(shell find . -type f -not -path './.git/*' -not -path './node_modules/*' -not -path './l10n/*' | sed 's/.\///')
+
+SUBDIRS = . l10n
 
 COOL_JS_BUNDLE = $(patsubst %.ts,%.js,$(COOL_JS_WEBORDER))
 
