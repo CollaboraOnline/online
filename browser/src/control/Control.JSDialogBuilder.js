@@ -2486,8 +2486,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				container.appendChild(inline);
 		};
 
-		if (options && options.container) {
-			insertChilds(options.container);
+		if (data.container) {
+			insertChilds(data.container);
 		} else if (buttonImage && label) {
 			container = L.DomUtil.create('span', 'container-button', button);
 			insertChilds(container);
@@ -2762,14 +2762,14 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			// make it a split button
 			data.applyCallback = applyFunction;
 
-			var div = L.DomUtil.create('div', 'container-color-inline');
-			var menubutton = builder._controlHandlers['menubutton'](parentContainer, data, builder, div);
+			data.container = L.DomUtil.create('div', 'container-color-inline');
+			var menubutton = builder._controlHandlers['menubutton'](parentContainer, data, builder);
 
 			if (typeof menubutton === 'object') {
 				L.DomUtil.addClass(menubutton.container, data.class ? data.class + ' has-colorpicker': 'has-colorpicker');
-				var valueNode = L.DomUtil.create('div', 'selected-color', div);
+				var valueNode = L.DomUtil.create('div', 'selected-color', data.container);
 				valueNode.addEventListener('click', applyFunction);
-				menubutton.container.appendChild(div);
+				menubutton.container.appendChild(data.container);
 
 				var updateFunction = function () {
 					if (app.colorLastSelection[data.command] !== undefined) {
