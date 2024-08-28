@@ -64,6 +64,7 @@ all_la_unit_tests = \
 	unit-http.la \
 	unit-wopi-temp.la \
 	unit-session.la \
+	unit-socket_lifecycle.la \
 	unit-render-shape.la \
 	unit-wopi-ownertermination.la \
 	unit-wopi-httpheaders.la \
@@ -297,6 +298,8 @@ unit_each_view_la_SOURCES = UnitEachView.cpp
 unit_each_view_la_LIBADD = $(CPPUNIT_LIBS)
 unit_session_la_SOURCES = UnitSession.cpp
 unit_session_la_LIBADD = $(CPPUNIT_LIBS)
+unit_socket_lifecycle_la_SOURCES = UnitSocketLifecycle.cpp
+unit_socket_lifecycle_la_LIBADD = $(CPPUNIT_LIBS)
 unit_uno_command_la_SOURCES = UnitUNOCommand.cpp
 unit_uno_command_la_LIBADD = $(CPPUNIT_LIBS)
 unit_load_la_SOURCES = UnitLoad.cpp

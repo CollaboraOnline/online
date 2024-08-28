@@ -34,6 +34,8 @@ private:
 
 #if !MOBILEAPP
     std::chrono::steady_clock::time_point _lastPingSentTime;
+    std::chrono::steady_clock::time_point _lastPingRcvdTime;
+    size_t _openPingCount;
     int _pingTimeUs;
     bool _isMasking;
     bool _inFragmentBlock;
@@ -61,6 +63,7 @@ protected:
 
     static constexpr std::chrono::microseconds InitialPingDelayMicroS = std::chrono::milliseconds(25);
     static constexpr std::chrono::microseconds PingFrequencyMicroS = std::chrono::seconds(18);
+    static constexpr std::chrono::microseconds PingTimeoutMicroS = SocketPoll::DefaultPollTimeoutMicroS; // FIXME?
 
 public:
     /// Perform upgrade ourselves, or select a client web socket.
@@ -74,6 +77,8 @@ public:
         _lastPingSentTime(std::chrono::steady_clock::now() -
                           std::chrono::microseconds(PingFrequencyMicroS) +
                           std::chrono::microseconds(InitialPingDelayMicroS))
+        , _lastPingRcvdTime(_lastPingSentTime)
+        , _openPingCount(0)
         , _pingTimeUs(0)
         , _isMasking(isClient && isMasking)
         , _inFragmentBlock(false)
@@ -221,8 +226,8 @@ protected:
 
     void shutdown(bool goingAway, const std::string &statusMessage) override
     {
-        shutdown(goingAway ? WebSocketHandler::StatusCodes::ENDPOINT_GOING_AWAY :
-                 WebSocketHandler::StatusCodes::NORMAL_CLOSE, statusMessage);
+        shutdownImpl(goingAway ? WebSocketHandler::StatusCodes::ENDPOINT_GOING_AWAY :
+                     WebSocketHandler::StatusCodes::NORMAL_CLOSE, statusMessage, false, false);
     }
 
     void getIOStats(uint64_t &sent, uint64_t &recv) override
@@ -242,34 +247,14 @@ public:
                   const std::string& statusMessage = std::string(),
                   bool hardShutdown = false)
     {
-        std::shared_ptr<StreamSocket> socket = _socket.lock();
-        if (socket)
-        {
-            LOGA_TRC(WebSocket, "Shutdown: Closing Connection");
-            if (!_shuttingDown)
-                sendCloseFrame(statusCode, statusMessage);
-            socket->closeConnection();
-            socket->ignoreInput();
-            assert(socket->getInBuffer().empty() &&
-                   "Socket buffer must be empty after ignoreInput");
-
-            // force close after writing this message
-            if (hardShutdown)
-                socket->shutdown();
-        }
-
-        _wsPayload.clear();
-#if !MOBILEAPP
-        _inFragmentBlock = false;
-#endif
-        _shuttingDown = false;
+        shutdownImpl(statusCode, statusMessage, hardShutdown, false);
     }
 
     /// Don't wait for the remote Websocket to handshake with us; go down fast.
     void shutdownAfterWriting()
     {
-        shutdown(WebSocketHandler::StatusCodes::NORMAL_CLOSE, std::string(),
-                 true /* hard async shutdown & close */);
+        shutdownImpl(WebSocketHandler::StatusCodes::NORMAL_CLOSE, std::string(),
+                     true /* hard async shutdown & close */, false);
     }
 
     /// Returns true if the underlying socket is connected.
@@ -279,6 +264,42 @@ public:
     }
 
 private:
+    void shutdownSilent() {
+        shutdownImpl(WebSocketHandler::StatusCodes::POLICY_VIOLATION /* ignored */,
+                     std::string(), true /* hard async shutdown & close */, true);
+    }
+    void shutdownImpl(const StatusCodes statusCode,
+                      const std::string& statusMessage,
+                      bool hardShutdown,
+                      bool silentShutdown)
+    {
+        std::shared_ptr<StreamSocket> socket = _socket.lock();
+        if (socket)
+        {
+            const bool silent = _shuttingDown || silentShutdown;
+            LOGA_TRC(WebSocket, "Shutdown: Closing Connection " << (silent ? "(silent)" : "(coop)"));
+            if (!silent)
+            {
+                sendCloseFrame(statusCode, statusMessage);
+            }
+            socket->shutdown();
+            socket->ignoreInput();
+            assert(socket->getInBuffer().empty() &&
+                   "Socket buffer must be empty after ignoreInput");
+
+            // force close after writing this message (real shutdown)
+            if (hardShutdown)
+            {
+                socket->closeConnection();
+            }
+        }
+
+        _wsPayload.clear();
+#if !MOBILEAPP
+        _inFragmentBlock = false;
+#endif
+        _shuttingDown = false;
+    }
     bool handleTCPStream(const std::shared_ptr<StreamSocket>& socket)
     {
         assert(socket && "Expected a valid socket instance.");
@@ -393,18 +414,27 @@ private:
                     if (_isClient)
                         LOG_WRN("Servers should not send pongs, only clients");
 
+                    const auto now = std::chrono::steady_clock::now();
+                    _lastPingRcvdTime = now;
                     _pingTimeUs = std::chrono::duration_cast<std::chrono::microseconds>
-                        (std::chrono::steady_clock::now() - _lastPingSentTime).count();
-                    LOGA_TRC(WebSocket, "Pong received: " << _pingTimeUs << " microseconds");
+                        (now - _lastPingSentTime).count();
+                    if (_openPingCount > 0)
+                    {
+                        --_openPingCount;
+                    }
+                    LOGA_TRC(WebSocket, "Pong received: " << _pingTimeUs
+                                                          << " us, open pings left "
+                                                          << _openPingCount);
                     gotPing(code, _pingTimeUs);
                 }
                 break;
-            case WSOpCode::Ping:
+                case WSOpCode::Ping:
                 {
                     if (!_isClient)
                         LOG_DBG("Clients should not send pings, only servers");
 
                     const auto now = std::chrono::steady_clock::now();
+                    _lastPingRcvdTime = now;
                     _pingTimeUs = std::chrono::duration_cast<std::chrono::microseconds>
                                             (now - _lastPingSentTime).count();
                     sendPong(now, &ctrlPayload[0], payloadLen, socket);
@@ -587,6 +617,13 @@ protected:
 
 #if !MOBILEAPP
 private:
+    /// Sets last ping sent and received time, avoiding a timout
+    void setPingPongTime(std::chrono::steady_clock::time_point now) noexcept
+    {
+        _lastPingSentTime = now;
+        _lastPingRcvdTime = now;
+    }
+
     /// Send a ping message
     void sendPingOrPong(std::chrono::steady_clock::time_point now,
                         const char* data, const size_t len,
@@ -599,11 +636,19 @@ private:
         if (!socket->isWebSocket())
         {
             LOG_WRN("Attempted ping on non-upgraded websocket! #" << socket->getFD());
-            _lastPingSentTime = now; // Pretend we sent it to avoid timing out immediately.
+            setPingPongTime(now); // Pretend we sent it to avoid timing out immediately.
             return;
         }
 
-        LOGA_TRC(WebSocket, "Sending " << (const char*)(code == WSOpCode::Ping ? " ping" : "pong"));
+        if (code == WSOpCode::Ping)
+        {
+            ++_openPingCount;
+            LOGA_TRC(WebSocket, "Sending ping, open pings left " << _openPingCount);
+        }
+        else
+        {
+            LOGA_TRC(WebSocket, "Sending pong");
+        }
         // FIXME: allow an empty payload.
         sendMessage(data, len, code, false);
         _lastPingSentTime = now;
@@ -626,21 +671,44 @@ public:
 #endif
 
     /// Do we need to handle a timeout ?
-    void checkTimeout([[maybe_unused]] std::chrono::steady_clock::time_point now) override
+    bool checkTimeout([[maybe_unused]] std::chrono::steady_clock::time_point now) override
     {
 #if !MOBILEAPP
         if (_isClient)
-            return;
+        {
+            return false;
+        }
 
-        const auto timeSincePingMicroS
-            = std::chrono::duration_cast<std::chrono::microseconds>(now - _lastPingSentTime);
-        if (timeSincePingMicroS >= PingFrequencyMicroS)
+        const auto timeSincePongRcvdMicroS =
+            std::chrono::duration_cast<std::chrono::microseconds>(now - _lastPingRcvdTime);
+        const auto timeSincePingSentMicroS =
+            std::chrono::duration_cast<std::chrono::microseconds>(now - _lastPingSentTime);
+
+        if (_openPingCount > 0 && timeSincePongRcvdMicroS >= PingTimeoutMicroS)
+        {
+            LOGA_TRC(WebSocket, "Timed out websocket: openPingCount " << _openPingCount
+               << ", since-ping-sent " << std::chrono::duration_cast<std::chrono::seconds>(timeSincePingSentMicroS)
+               << ", since-pong-rcvd " << std::chrono::duration_cast<std::chrono::seconds>(timeSincePongRcvdMicroS)
+            );
+            shutdownSilent();
+            return true;
+        } else {
+            // FIXME: Remove!
+            LOGA_TRC(WebSocket, "Timeout check websocket: openPingCount " << _openPingCount
+               << ", since-ping-sent " << std::chrono::duration_cast<std::chrono::seconds>(timeSincePingSentMicroS)
+               << ", since-pong-rcvd " << std::chrono::duration_cast<std::chrono::seconds>(timeSincePongRcvdMicroS)
+            );
+        }
+        if (timeSincePingSentMicroS >= PingFrequencyMicroS)
         {
             const std::shared_ptr<StreamSocket> socket = _socket.lock();
             if (socket)
+            {
                 sendPing(now, socket);
+            }
         }
 #endif
+        return false;
     }
 
 public:
@@ -1053,7 +1121,7 @@ protected:
 #if !MOBILEAPP
         // No need to ping right upon connection/upgrade,
         // but do reset the time to avoid pinging immediately after.
-        _lastPingSentTime = std::chrono::steady_clock::now();
+        setPingPongTime(std::chrono::steady_clock::now());
 #endif
     }
 
