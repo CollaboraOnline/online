@@ -67,6 +67,22 @@ std::unique_ptr<Watchdog> SocketPoll::PollWatchdog;
 
 #define SOCKET_ABSTRACT_UNIX_NAME "0coolwsd-"
 
+std::string Socket::toString(Type t) noexcept
+{
+    switch (t)
+    {
+        case Type::IPv4:
+            return "IPv4";
+        case Type::IPv6:
+            return "IPv6";
+        case Type::All:
+            return "All";
+        case Type::Unix:
+            return "Unix";
+    }
+    return "Unknown";
+}
+
 int Socket::createSocket([[maybe_unused]] Socket::Type type)
 {
 #if !MOBILEAPP
@@ -86,9 +102,57 @@ int Socket::createSocket([[maybe_unused]] Socket::Type type)
 #endif
 }
 
+const std::string Socket::getClientAddressAndPort() const noexcept
+{
+    std::string s;
+    if (Type::IPv6 == type())
+    {
+        s.append("[").append(clientAddress()).append("]:").append(std::to_string(clientPort()));
+    }
+    else
+    {
+        s.append(clientAddress()).append(":").append(std::to_string(clientPort()));
+    }
+    return s;
+}
 
-bool StreamSocket::socketpair(std::shared_ptr<StreamSocket> &parent,
-                              std::shared_ptr<StreamSocket> &child)
+std::string Socket::getStatsString(std::chrono::steady_clock::time_point now) const noexcept
+{
+    const auto durTotal = std::chrono::duration_cast<std::chrono::milliseconds>(now - _creationTime);
+    const auto durLast = std::chrono::duration_cast<std::chrono::milliseconds>(now - _lastSeenTime);
+
+    float kBpsIn, kBpsOut;
+    if (durTotal.count() > 0)
+    {
+        kBpsIn = (float)_bytesRcvd / (float)durTotal.count();
+        kBpsOut = (float)_bytesSent / (float)durTotal.count();
+    }
+    else
+    {
+        kBpsIn = (float)_bytesRcvd / 1000.0f;
+        kBpsOut = (float)_bytesSent / 1000.0f;
+    }
+    return Util::formatString("Socket[#%d, dur[total %" PRIi64 "ms, last %" PRIi64
+                              "ms], kBps[in %.1f, out %.1f], %s @ %s]",
+                              getFD(), durTotal.count(), durLast.count(), kBpsIn, kBpsOut,
+                              toString(type()).c_str(),
+                              getClientAddressAndPort().c_str());
+}
+
+std::string Socket::toString() const noexcept
+{
+    std::string s("Socket[#");
+    s.append(std::to_string(getFD()))
+        .append(", ")
+        .append(toString(type()))
+        .append(" @ ")
+        .append(getClientAddressAndPort())
+        .append("]");
+    return s;
+}
+
+bool StreamSocket::socketpair(std::shared_ptr<StreamSocket>& parent,
+                              std::shared_ptr<StreamSocket>& child)
 {
 #if MOBILEAPP
     return false;
@@ -412,7 +476,7 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
     socketErrorCount++;
 #endif
 
-    std::chrono::steady_clock::time_point now =
+    const std::chrono::steady_clock::time_point now =
         std::chrono::steady_clock::now();
 
     // The events to poll on change each spin of the loop.
@@ -528,7 +592,7 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
         assert(!_pollSockets.empty() && "All existing sockets disappeared from the SocketPoll");
 
         // Fire the poll callbacks and remove dead fds.
-        std::chrono::steady_clock::time_point newNow = std::chrono::steady_clock::now();
+        const std::chrono::steady_clock::time_point newNow = std::chrono::steady_clock::now();
 
         // We use the _pollStartIndex to start the polling at a different index each time. Do some
         // sanity check first to handle the case where we removed one or several sockets last time.
@@ -548,7 +612,23 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
             else if (!_pollSockets[i])
             {
                 // removed in a callback
-                itemsErased++;
+                ++itemsErased;
+            }
+            else if (!_pollSockets[i]->isOpen())
+            {
+                // closed socket ..
+                ++itemsErased;
+                LOGA_TRC(Socket, '#' << _pollFds[i].fd << ": Removing socket (at " << i
+                         << " of " << _pollSockets.size() << ") from " << _name);
+                _pollSockets[i] = nullptr;
+            }
+            else if( _pollSockets[i]->checkForcedRemoval(newNow) )
+            {
+                // timed out socket ..
+                ++itemsErased;
+                LOGA_TRC(Socket, '#' << _pollFds[i].fd << ": Removing socket (at " << i
+                         << " of " << _pollSockets.size() << ") from " << _name);
+                _pollSockets[i] = nullptr;
             }
             else if (_pollFds[i].fd == _pollSockets[i]->getFD())
             {
@@ -569,9 +649,16 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
                     rc = -1;
                 }
 
-                if (!disposition.isContinue())
+                if (!_pollSockets[i]->isOpen() || !disposition.isContinue())
                 {
-                    itemsErased++;
+                    // Potentially via ProtocolHandlerInterface::handlePoll()'s
+                    // - ProtocolHandlerInterface::checkTimeout()
+                    //   - ProtocolHandlerInterface::onDisconnect())
+                    //   - disposition.setClosed()
+                    // ProtocolHandlerInterface
+                    // - http::Session::handlePoll() OK
+                    // - WebSocketHandler::handlePoll() OK
+                    ++itemsErased;
                     LOGA_TRC(Socket, '#' << _pollFds[i].fd << ": Removing socket (at " << i
                              << " of " << _pollSockets.size() << ") from " << _name);
                     _pollSockets[i] = nullptr;
@@ -933,8 +1020,8 @@ void StreamSocket::dumpState(std::ostream& os)
     const int events = getPollEvents(std::chrono::steady_clock::now(), timeoutMaxMicroS);
     os << '\t' << std::setw(6) << getFD() << "\t0x" << std::hex << events << std::dec << '\t'
        << (ignoringInput() ? "ignore\t" : "process\t") << std::setw(6) << _inBuffer.size() << '\t'
-       << std::setw(6) << _outBuffer.size() << '\t' << " r: " << std::setw(6) << _bytesRecvd
-       << "\t w: " << std::setw(6) << _bytesSent << '\t' << clientAddress() << '\t';
+       << std::setw(6) << _outBuffer.size() << '\t' << " r: " << std::setw(6) << getBytesRcvd()
+       << "\t w: " << std::setw(6) << getBytesSent() << '\t' << clientAddress() << '\t';
     _socketHandler->dumpState(os);
     if (_inBuffer.size() > 0)
         Util::dumpHex(os, _inBuffer, "\t\tinBuffer:\n", "\t\t");
@@ -1097,7 +1184,7 @@ std::shared_ptr<Socket> ServerSocket::accept()
             std::shared_ptr<Socket> _socket = createSocketFromAccept(rc, type);
 
             inet_ntop(clientInfo.sin6_family, inAddr, addrstr, sizeof(addrstr));
-            _socket->setClientAddress(addrstr);
+            _socket->setClientAddress(addrstr, clientInfo.sin6_port);
 
             LOG_TRC("Accepted socket #" << _socket->getFD() << " has family "
                                         << clientInfo.sin6_family << " address "
@@ -1297,6 +1384,52 @@ LocalServerSocket::~LocalServerSocket()
 #else
 #  define LOG_CHUNK(X)
 #endif
+
+bool StreamSocket::checkForcedRemoval(std::chrono::steady_clock::time_point now) noexcept
+{
+    if ( !isIPType() ) // forced removal on IPv[46] network connections only
+    {
+        return false;
+    }
+    const std::chrono::microseconds timeoutMax = DefaultMaxConnectionTimMicroS; // FIXME?
+    const std::chrono::microseconds timeoutLast = SocketPoll::DefaultPollTimeoutMicroS; // FIXME?
+    const float minBytesPerSec = DefaultMinBytesPerSec; // FIXME?
+
+    const auto durTotal =
+        std::chrono::duration_cast<std::chrono::milliseconds>(now - getCreationTime());
+    const auto durLast =
+        std::chrono::duration_cast<std::chrono::milliseconds>(now - getLastSeenTime());
+    const float bytesPerSecIn = durTotal.count() > 0 ? (float)getBytesRcvd() / ((float)durTotal.count() / 1000.0f) : (float)getBytesRcvd();
+    if (now < getCreationTime() || durTotal > timeoutMax || durLast > timeoutLast ||
+        (bytesPerSecIn > 0.0f && bytesPerSecIn < minBytesPerSec) || SigUtil::getTerminationFlag())
+    {
+        LOG_WRN("Timed out socket after " << durTotal << ", " << getStatsString(now));
+
+        if (_socketHandler)
+        {
+            _socketHandler->onDisconnect();
+            if( isOpen() ) {
+                // FIXME: Ensure proper semantics of onDisconnect()
+                LOG_WRN("Socket still open post onDisconnect(), forced shutdown.");
+                shutdown(); // signal
+                closeConnection(); // real -> setClosed()
+                assert(isOpen() == false); // should have issued shutdown
+            }
+        }
+        else
+        {
+            shutdown(); // signal
+            closeConnection(); // real -> setClosed()
+            assert(isOpen() == false); // should have issued shutdown
+        }
+        return true;
+    }
+    else
+    {
+        LOG_WRN("Timeout check socket after " << durTotal << ", " << getStatsString(now));
+    }
+    return false;
+}
 
 bool StreamSocket::parseHeader(const char *clientName,
                                Poco::MemoryInputStream &message,
@@ -1539,7 +1672,7 @@ bool StreamSocket::compactChunks(MessageMap& map)
 bool StreamSocket::sniffSSL() const
 {
     // Only sniffing the first bytes of a socket.
-    if (_bytesSent > 0 || _bytesRecvd != _inBuffer.size() || _bytesRecvd < 6)
+    if (getBytesSent() > 0 || getBytesRcvd() != _inBuffer.size() || getBytesRcvd() < 6)
         return false;
 
     // 0x0000  16 03 01 02 00 01 00 01

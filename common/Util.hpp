@@ -1287,7 +1287,7 @@ int main(int argc, char**argv)
         std::ostream& send(std::ostream& os) const;
 
         /// Produces a string representation, one line per frame
-        constexpr std::string toString() const noexcept;
+        std::string toString() const noexcept;
 
         constexpr size_t size() const noexcept { return _frames.size(); }
         constexpr const Symbol& operator[](size_t idx) const noexcept

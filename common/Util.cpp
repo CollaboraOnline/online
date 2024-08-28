@@ -1106,7 +1106,7 @@ namespace Util
 #endif
         if (0 == _frames.size())
         {
-            _frames.emplace_back(nullptr, "empty");
+            _frames.emplace_back(nullptr, Symbol{"n/a", "empty", "0x00", ""});
         }
     }
 
@@ -1129,7 +1129,7 @@ namespace Util
         }
         return os;
     }
-    constexpr std::string Backtrace::toString() const noexcept
+    std::string Backtrace::toString() const noexcept
     {
         std::string s = "Backtrace:\n";
         int fidx = skipFrames;
