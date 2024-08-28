@@ -562,7 +562,7 @@ public:
     // -----------------------------------------------------------------
     //            Interface for external MessageHandlers
     // -----------------------------------------------------------------
-public:
+
     void setMessageHandler(const std::shared_ptr<MessageHandlerInterface> &msgHandler)
     {
         _msgHandler = msgHandler;
@@ -1401,15 +1401,11 @@ public:
         return std::string();
     }
 
-protected:
-
-    std::vector<std::pair<size_t, size_t>> findChunks(Poco::Net::HTTPRequest &request);
-
     /// Called when a polling event is received.
     /// @events is the mask of events that triggered the wake.
     void handlePoll(SocketDisposition &disposition,
                     std::chrono::steady_clock::time_point now,
-                    const int events) override
+                    int events) override
     {
         ASSERT_CORRECT_SOCKET_THREAD(this);
 
@@ -1537,13 +1533,6 @@ protected:
         }
     }
 
-    void handshakeFail()
-    {
-        if (_socketHandler)
-            _socketHandler->onHandshakeFail();
-    }
-
-public:
     /// Override to write data out to socket.
     /// Returns the last return from writeData.
     virtual int writeOutgoingData()
@@ -1608,6 +1597,12 @@ public:
     void dumpState(std::ostream& os) override;
 
 protected:
+    void handshakeFail()
+    {
+        if (_socketHandler)
+            _socketHandler->onHandshakeFail();
+    }
+
     /// Reads data with file descriptors as control data if received.
     /// Can be used only with Unix sockets.
     int readFDs(char* buf, int len, std::vector<int>& fds)
@@ -1701,7 +1696,6 @@ protected:
         return _shutdownSignalled;
     }
 
-protected:
 #if ENABLE_DEBUG
     /// Return true and set errno to simulate an error
     bool simulateSocketError(bool read);

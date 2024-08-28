@@ -712,10 +712,10 @@ void SocketPoll::closeAllSockets()
     checkAndReThread();
 
     removeFromWakeupArray();
-    for (auto &it : _pollSockets)
+    for (std::shared_ptr<Socket> &it : _pollSockets)
     {
         // first close the underlying socket
-        close(it->getFD());
+        ::close(it->getFD());
 
         // avoid the socketHandler' getting an onDisconnect
         auto stream = dynamic_cast<StreamSocket *>(it.get());
