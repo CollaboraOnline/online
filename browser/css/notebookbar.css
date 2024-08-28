@@ -225,10 +225,6 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	height: var(--btn-size);
 }
 
-.has-dropdown--color.notebookbar {
-	height: var(--btn-size) !important;
-}
-
 .unotoolbutton.notebookbar .unolabel {
 	font-size: var(--header-font-size);
 	font-family: var(--cool-font);
@@ -302,10 +298,6 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	width: 24px !important;
 	margin: auto !important;
 	display: block;
-}
-.has-label.has-dropdown:not(.inline) .unolabel{
-	display: inline-block;
-	clear: both;
 }
 
 /* adding focus to tab in notebookbar */
