@@ -1337,26 +1337,6 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	border-top: 5px solid var(--color-text-darker);
 }
 
-.arrowbackground {
-	box-sizing: border-box;
-	width: 16px;
-	height: 24px;
-	display: flex;
-	align-items: center;
-	border-left: 1px solid transparent;
-	background-color: transparent;
-	grid-column: 3;
-}
-
-.arrowbackground:hover {
-	border-left-color: transparent;
-	background-color: transparent;
-}
-
-.unoarrow:not([disabled]):hover, .arrowbackground:not([disabled]):hover .unoarrow {
-	border-top-color: var(--color-text-darker);
-}
-
 /* menu button */
 .jsdialog.menubutton {
 	box-sizing: border-box;
@@ -1801,10 +1781,6 @@ input[type='number']:hover::-webkit-outer-spin-button {
 .container-color-inline {
 	display: inline-block;
 	pointer-events: none;
-}
-
-.unotoolbutton.jsdialog.sidebar.ui-content > .arrowbackground {
-	width: auto;
 }
 
 /* handling show/hide state */
