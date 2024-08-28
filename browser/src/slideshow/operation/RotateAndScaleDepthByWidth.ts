@@ -50,7 +50,6 @@ class RotateAndScaleDepthByWidth extends Operation {
 		SlideHeightScale: number,
 	): mat4 {
 		if (t <= this.mnT0) {
-			console.log('t <= this.mnT0');
 			return matrix;
 		}
 		if (!this.mbInterpolate || t > this.mnT1) {
