@@ -125,7 +125,8 @@ class SlideShowPresenter {
 
 	_stopFullScreen() {
 		if (!this._slideShowCanvas) return;
-		this._slideRenderer.pauseVideos();
+
+		this._slideRenderer.deleteResources();
 
 		window.removeEventListener('keydown', this._onCanvasKeyDown.bind(this));
 		L.DomUtil.remove(this._slideShowCanvas);
@@ -166,7 +167,10 @@ class SlideShowPresenter {
 		this._slideCompositor.fetchAndRun(this._currentSlide, () => {
 			this._currentSlide++;
 			this.createAnimationsHandler();
-			this._doTransition(this._slideRenderer._slideTexture, this._currentSlide);
+			this._doTransition(
+				this._slideRenderer.getSlideTexture(),
+				this._currentSlide,
+			);
 		});
 	}
 
@@ -303,7 +307,7 @@ class SlideShowPresenter {
 					}
 
 					this._doTransition(
-						this._slideRenderer._slideTexture,
+						this._slideRenderer.getSlideTexture(),
 						this._currentSlide,
 					);
 				},
@@ -314,7 +318,7 @@ class SlideShowPresenter {
 				loopAndRepeatDuration,
 				() => {
 					this._doTransition(
-						this._slideRenderer._slideTexture,
+						this._slideRenderer.getSlideTexture(),
 						this._currentSlide,
 					);
 					// TODO: May be add alert for user: Repeat slideshow not supported on your device.
@@ -350,7 +354,6 @@ class SlideShowPresenter {
 		nextSlideNumber: number,
 	) {
 		this._slideCompositor.fetchAndRun(nextSlideNumber, () => {
-			const nextSlide = this._slideCompositor.getSlide(nextSlideNumber);
 			const slideInfo = this.getSlideInfo(nextSlideNumber);
 			if (
 				slideInfo.transitionType == undefined ||
@@ -361,6 +364,7 @@ class SlideShowPresenter {
 
 			this.stopLoader();
 
+			const nextSlide = this._slideCompositor.getSlide(nextSlideNumber);
 			const nextTexture = this._slideRenderer.createTexture(nextSlide);
 
 			const transitionParameters = new TransitionParameters();
@@ -452,9 +456,9 @@ class SlideShowPresenter {
 			this._doTransition(blankTexture, this._currentSlide);
 		} else {
 			this._slideCompositor.fetchAndRun(this._currentSlide, () => {
+				const slideInfo = this.getSlideInfo(this._currentSlide);
 				const slideImage = this._slideCompositor.getSlide(this._currentSlide);
 				const currentTexture = this._slideRenderer.createTexture(slideImage);
-				const slideInfo = this.getSlideInfo(this._currentSlide);
 				this._slideRenderer.renderSlide(
 					currentTexture,
 					slideInfo,

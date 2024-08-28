@@ -37,6 +37,10 @@ abstract class RenderContext {
 		image: HTMLImageElement,
 	): WebGLTexture | ImageBitmap;
 
+	public abstract deleteTexture(texture: WebGLTexture | ImageBitmap): void;
+
+	public abstract deleteVertexArray(vao: WebGLVertexArrayObject): void;
+
 	public abstract createVertexShader(source: string): WebGLShader;
 
 	public abstract createFragmentShader(source: string): WebGLShader;
@@ -77,6 +81,16 @@ class RenderContextGl extends RenderContext {
 		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
 		console.log(`Texture loaded:`, image.src);
 		return texture;
+	}
+
+	public deleteTexture(texture: WebGLTexture | ImageBitmap): void {
+		const gl = this.getGl();
+		gl.deleteTexture(texture);
+	}
+
+	public deleteVertexArray(vao: WebGLVertexArrayObject): void {
+		const gl = this.getGl();
+		gl.deleteTexture(vao);
 	}
 
 	public createEmptySlide(): WebGLTexture | ImageBitmap {
@@ -188,6 +202,14 @@ class RenderContext2d extends RenderContext {
 
 	public createShader(type: number, source: string): WebGLShader {
 		return null;
+	}
+
+	public deleteTexture(texture: WebGLTexture | ImageBitmap): void {
+		return;
+	}
+
+	public deleteVertexArray(vao: WebGLVertexArrayObject): void {
+		return;
 	}
 
 	public createProgram(
