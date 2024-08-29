@@ -20,13 +20,30 @@ class TransitionParameters {
 	public callback: VoidFunction = null;
 }
 
-class Transition2d extends SlideChangeGl {
+abstract class TransitionBase extends SlideChangeGl {
 	protected slideInfo: SlideInfo = null;
 
-	constructor(transitionParameters: TransitionParameters) {
+	protected constructor(transitionParameters: TransitionParameters) {
 		super(transitionParameters);
 		this.slideInfo = transitionParameters.slideInfo;
 		this.prepareTransition();
+	}
+
+	public startTransition(): void {
+		requestAnimationFrame(this.render.bind(this, 0));
+	}
+
+	public start(): void {
+		this.startTransition();
+	}
+
+	// eslint-disable-next-line @typescript-eslint/no-empty-function
+	public renderUniformValue(): void {}
+}
+
+class Transition2d extends TransitionBase {
+	constructor(transitionParameters: TransitionParameters) {
+		super(transitionParameters);
 	}
 
 	protected getFragmentShader(): string {
@@ -46,14 +63,6 @@ class Transition2d extends SlideChangeGl {
 					outColor = mix(color0, color1, time);
 				}
 				`;
-	}
-
-	public startTransition(): void {
-		requestAnimationFrame(this.render.bind(this, 0));
-	}
-
-	public start(): void {
-		this.startTransition();
 	}
 
 	public render(nT: number) {
@@ -82,9 +91,6 @@ class Transition2d extends SlideChangeGl {
 		gl.bindVertexArray(this.vao);
 		gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 	}
-
-	// eslint-disable-next-line @typescript-eslint/no-empty-function
-	public renderUniformValue(): void {}
 }
 
 SlideShow.Transition2d = Transition2d;
