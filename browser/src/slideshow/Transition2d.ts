@@ -12,49 +12,24 @@
 
 declare var SlideShow: any;
 
-class Transition2d extends SlideChangeBase {
-	public canvas: HTMLCanvasElement;
-	public gl: WebGL2RenderingContext;
-	public program: WebGLProgram;
-	public vao!: WebGLVertexArrayObject | null;
-	public context: any;
+class TransitionParameters {
+	public context: RenderContext = null;
+	public current: WebGLTexture | ImageBitmap = null;
+	public next: WebGLTexture | ImageBitmap = null;
+	public slideInfo: SlideInfo = null;
+	public callback: VoidFunction = null;
+}
+
+class Transition2d extends SlideChangeGl {
 	protected slideInfo: SlideInfo = null;
 
-	// TODO - remove code duplication
-	/* jscpd:ignore-start */
 	constructor(transitionParameters: TransitionParameters) {
 		super(transitionParameters);
-		this.context = transitionParameters.context;
-		this.gl = transitionParameters.context.getGl();
 		this.slideInfo = transitionParameters.slideInfo;
-
-		const vertexShaderSource = this.getVertexShader();
-		const fragmentShaderSource = this.getFragmentShader();
-
-		const vertexShader = this.context.createVertexShader(vertexShaderSource);
-		const fragmentShader =
-			this.context.createFragmentShader(fragmentShaderSource);
-
-		this.program = this.context.createProgram(vertexShader, fragmentShader);
-
 		this.prepareTransition();
 	}
-	/* jscpd:ignore-end */
 
-	public getVertexShader(): string {
-		return `#version 300 es
-				in vec4 a_position;
-				in vec2 a_texCoord;
-				out vec2 v_texCoord;
-
-				void main() {
-					gl_Position = a_position;
-					v_texCoord = a_texCoord;
-				}
-				`;
-	}
-
-	public getFragmentShader(): string {
+	protected getFragmentShader(): string {
 		return `#version 300 es
 				precision mediump float;
 
@@ -73,11 +48,6 @@ class Transition2d extends SlideChangeBase {
 				`;
 	}
 
-	public prepareTransition(): void {
-		this.initBuffers();
-		this.gl.useProgram(this.program);
-	}
-
 	public startTransition(): void {
 		requestAnimationFrame(this.render.bind(this, 0));
 	}
@@ -85,54 +55,6 @@ class Transition2d extends SlideChangeBase {
 	public start(): void {
 		this.startTransition();
 	}
-
-	// TODO - remove code duplication
-	/* jscpd:ignore-start */
-	public initBuffers(): void {
-		const positions = new Float32Array([
-			...[-1.0, -1.0, 0, 0, 1],
-			...[1.0, -1.0, 0, 1, 1],
-			...[-1.0, 1.0, 0, 0, 0],
-			...[1.0, 1.0, 0, 1, 0],
-		]);
-
-		const buffer = this.gl.createBuffer();
-		this.gl.bindBuffer(this.gl.ARRAY_BUFFER, buffer);
-		this.gl.bufferData(this.gl.ARRAY_BUFFER, positions, this.gl.STATIC_DRAW);
-
-		this.vao = this.gl.createVertexArray();
-		this.gl.bindVertexArray(this.vao);
-
-		const positionLocation = this.gl.getAttribLocation(
-			this.program,
-			'a_position',
-		);
-		const texCoordLocation = this.gl.getAttribLocation(
-			this.program,
-			'a_texCoord',
-		);
-
-		this.gl.enableVertexAttribArray(positionLocation);
-		this.gl.vertexAttribPointer(
-			positionLocation,
-			3,
-			this.gl.FLOAT,
-			false,
-			5 * 4,
-			0,
-		);
-
-		this.gl.enableVertexAttribArray(texCoordLocation);
-		this.gl.vertexAttribPointer(
-			texCoordLocation,
-			2,
-			this.gl.FLOAT,
-			false,
-			5 * 4,
-			3 * 4,
-		);
-	}
-	/* jscpd:ignore-end */
 
 	public render(nT: number) {
 		const gl = this.gl;

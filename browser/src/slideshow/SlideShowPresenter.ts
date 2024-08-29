@@ -291,17 +291,14 @@ class SlideShowPresenter {
 	//  use this.slideShowNavigator.currentSlideIndex in place of this._currentSlide
 	private startTimer(loopAndRepeatDuration: number) {
 		window.app.console.log('SlideShowPresenter.startTimer');
-		const transitionParameters = new TransitionParameters();
-		transitionParameters.context = this._slideRenderer._context;
-
 		let pauseTimer: PauseTimer;
 
 		// reset current slide to first slide
 		this._currentSlide = 0;
 
 		if (this._slideRenderer._context instanceof RenderContextGl) {
-			pauseTimer = new SlideShow.PauseTimerGl(
-				transitionParameters,
+			pauseTimer = new PauseTimerGl(
+				this._slideRenderer._context,
 				loopAndRepeatDuration,
 				() => {
 					const currSlideInfo = this.getSlideInfo(this._currentSlide);
@@ -323,8 +320,8 @@ class SlideShowPresenter {
 				},
 			);
 		} else {
-			pauseTimer = new SlideShow.PauseTimer2d(
-				transitionParameters,
+			pauseTimer = new PauseTimer2d(
+				this._slideRenderer._context,
 				loopAndRepeatDuration,
 				() => {
 					this._doTransition(
@@ -342,13 +339,11 @@ class SlideShowPresenter {
 	// TODO make it works with SlideShowNavigator/SlideShowHandler
 	private startLoader(): void {
 		window.app.console.log('SlideShowPresenter.startLoader');
-		const transitionParameters = new TransitionParameters();
-		transitionParameters.context = this._slideRenderer._context;
 
 		try {
-			this._canvasLoader = new SlideShow.CanvasLoaderGl(transitionParameters);
+			this._canvasLoader = new CanvasLoaderGl(this._slideRenderer._context);
 		} catch (error) {
-			this._canvasLoader = new SlideShow.CanvasLoader2d(transitionParameters);
+			this._canvasLoader = new CanvasLoader2d(this._slideRenderer._context);
 		}
 
 		this._canvasLoader.startLoader();

@@ -17,11 +17,11 @@
 
 declare var SlideShow: any;
 
-class StaticTextRenderer extends RendererBase {
+class StaticTextRenderer extends TextureAnimationBase {
 	public textTexture: WebGLTexture;
 
-	constructor(transitionParameters: TransitionParameters) {
-		super(transitionParameters);
+	constructor(canvasContext: RenderContextGl) {
+		super(canvasContext);
 	}
 
 	public display(displayText: string) {

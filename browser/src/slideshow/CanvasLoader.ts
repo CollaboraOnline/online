@@ -22,18 +22,18 @@ abstract class CanvasLoader {
 }
 
 class CanvasLoader2d implements CanvasLoader {
-	constructor(transitionParameters: TransitionParameters) {} // eslint-disable-line
+	constructor(canvasContext: RenderContext2d) {} // eslint-disable-line
 
 	public startLoader(): void {} // eslint-disable-line
 
 	public stopLoader(): void {} // eslint-disable-line
 }
 
-class CanvasLoaderGl extends RendererBase implements CanvasLoader {
+class CanvasLoaderGl extends TextureAnimationBase implements CanvasLoader {
 	private animationId: number | null = null;
 
-	constructor(transitionParameters: TransitionParameters) {
-		super(transitionParameters);
+	constructor(canvasContext: RenderContextGl) {
+		super(canvasContext);
 		this.prepareTransition();
 	}
 
