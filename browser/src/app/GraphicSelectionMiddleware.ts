@@ -296,7 +296,7 @@ class GraphicSelection {
 						])) &&
 					!app.map._docLayer._selectionHandles.active &&
 					!(app.isFollowingEditor() || app.isFollowingUser()) &&
-					!app.map._docLayer.calcInputBarHasFocus()
+					!app.map.calcInputBarHasFocus()
 				) {
 					app.map._docLayer.scrollToPos(
 						new app.definitions.simplePoint(
