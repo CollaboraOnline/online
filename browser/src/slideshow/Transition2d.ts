@@ -20,7 +20,7 @@ class TransitionParameters {
 	public callback: VoidFunction = null;
 }
 
-class Transition2d {
+abstract class TransitionBase {
 	public canvas: HTMLCanvasElement;
 	public gl: WebGL2RenderingContext;
 	public program: WebGLProgram;
@@ -29,12 +29,11 @@ class Transition2d {
 	public time: number;
 	public startTime: number | null;
 	public context: any;
-	private transitionParameters: TransitionParameters;
-	protected slideInfo: SlideInfo = null;
-	private skip: boolean = false;
+	public slideInfo: SlideInfo = null;
 
-	// TODO - remove code duplication
-	/* jscpd:ignore-start */
+	protected transitionParameters: TransitionParameters;
+	protected skip: boolean = false;
+
 	constructor(transitionParameters: TransitionParameters) {
 		this.transitionParameters = transitionParameters;
 		this.context = transitionParameters.context;
@@ -45,6 +44,18 @@ class Transition2d {
 				? this.slideInfo.transitionDuration
 				: 2000;
 
+		this.time = 0;
+		this.startTime = null;
+
+		this.prepareProgram();
+		this.prepareTransition();
+	}
+
+	abstract getVertexShader(): string;
+	abstract getFragmentShader(): string;
+	abstract render(): void;
+
+	public prepareProgram() {
 		const vertexShaderSource = this.getVertexShader();
 		const fragmentShaderSource = this.getFragmentShader();
 
@@ -53,65 +64,18 @@ class Transition2d {
 			this.context.createFragmentShader(fragmentShaderSource);
 
 		this.program = this.context.createProgram(vertexShader, fragmentShader);
-
-		this.time = 0;
-		this.startTime = null;
-
-		this.prepareTransition();
-	}
-	/* jscpd:ignore-end */
-
-	public getVertexShader(): string {
-		return `#version 300 es
-				in vec4 a_position;
-				in vec2 a_texCoord;
-				out vec2 v_texCoord;
-
-				void main() {
-					gl_Position = a_position;
-					v_texCoord = a_texCoord;
-				}
-				`;
-	}
-
-	public getFragmentShader(): string {
-		return `#version 300 es
-				precision mediump float;
-
-				uniform sampler2D leavingSlideTexture;
-				uniform sampler2D enteringSlideTexture;
-				uniform float time;
-
-				in vec2 v_texCoord;
-				out vec4 outColor;
-
-				void main() {
-					vec4 color0 = texture(leavingSlideTexture, v_texCoord);
-					vec4 color1 = texture(enteringSlideTexture, v_texCoord);
-					outColor = mix(color0, color1, time);
-				}
-				`;
 	}
 
 	public prepareTransition(): void {
 		this.initBuffers();
+		this.initUniforms();
+	}
+
+	public initUniforms(): void {
 		this.gl.useProgram(this.program);
+		// Add more uniform here if needed.
 	}
 
-	public startTransition(): void {
-		this.startTime = performance.now();
-		this.skip = false;
-		app.map.on('skipanimation', this.onSkipRequest, this);
-		app.map.fire('animationstatechanged', { isPlaying: true });
-		requestAnimationFrame(this.render.bind(this));
-	}
-
-	public start(): void {
-		this.startTransition();
-	}
-
-	// TODO - remove code duplication
-	/* jscpd:ignore-start */
 	public initBuffers(): void {
 		const positions = new Float32Array([
 			...[-1.0, -1.0, 0, 0, 1],
@@ -156,7 +120,70 @@ class Transition2d {
 			3 * 4,
 		);
 	}
-	/* jscpd:ignore-end */
+
+	public startTransition(): void {
+		this.startTime = performance.now();
+		this.skip = false;
+		app.map.on('skipanimation', this.onSkipRequest, this);
+		app.map.fire('animationstatechanged', { isPlaying: true });
+		requestAnimationFrame(this.render.bind(this));
+	}
+
+	public start(): void {
+		this.startTransition();
+	}
+
+	public finishTransition(): void {
+		app.map.off('skipanimation', this.onSkipRequest, this);
+		app.map.fire('animationstatechanged', { isPlaying: false });
+		this.transitionParameters.callback();
+		console.debug('Transition completed');
+	}
+
+	public onSkipRequest() {
+		this.skip = true;
+	}
+
+	// eslint-disable-next-line @typescript-eslint/no-empty-function
+	public renderUniformValue(): void {}
+}
+
+class Transition2d extends TransitionBase {
+	constructor(transitionParameters: TransitionParameters) {
+		super(transitionParameters);
+	}
+
+	public getVertexShader(): string {
+		return `#version 300 es
+				in vec4 a_position;
+				in vec2 a_texCoord;
+				out vec2 v_texCoord;
+
+				void main() {
+					gl_Position = a_position;
+					v_texCoord = a_texCoord;
+				}
+				`;
+	}
+
+	public getFragmentShader(): string {
+		return `#version 300 es
+				precision mediump float;
+
+				uniform sampler2D leavingSlideTexture;
+				uniform sampler2D enteringSlideTexture;
+				uniform float time;
+
+				in vec2 v_texCoord;
+				out vec4 outColor;
+
+				void main() {
+					vec4 color0 = texture(leavingSlideTexture, v_texCoord);
+					vec4 color1 = texture(enteringSlideTexture, v_texCoord);
+					outColor = mix(color0, color1, time);
+				}
+				`;
+	}
 
 	public render() {
 		if (!this.startTime) this.startTime = performance.now();
@@ -193,18 +220,10 @@ class Transition2d {
 		if (!this.skip && this.time < 1) {
 			requestAnimationFrame(this.render.bind(this));
 		} else {
-			app.map.off('skipanimation', this.onSkipRequest, this);
-			app.map.fire('animationstatechanged', { isPlaying: false });
-			this.transitionParameters.callback();
-			console.log('Transition completed');
+			this.finishTransition();
 		}
 	}
-
-	onSkipRequest() {
-		this.skip = true;
-	}
-	// eslint-disable-next-line @typescript-eslint/no-empty-function
-	public renderUniformValue(): void {}
 }
 
+SlideShow.TransitionBase = TransitionBase;
 SlideShow.Transition2d = Transition2d;
