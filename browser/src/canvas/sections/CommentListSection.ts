@@ -978,10 +978,11 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 			zIndex: 1500,
 			className: 'cool-font',
 			build: function ($trigger: any) {
+				const blockChangeFromDifferentAuthor = this.map.isReadOnlyMode() && docLayer._docType === 'text' && this.map.getViewName(docLayer._viewId) !== $trigger[0].annotation.sectionProperties.data.author;
 				return {
 					autoHide: true,
 					items: {
-						modify: {
+						modify: blockChangeFromDifferentAuthor ? undefined : {
 							name: _('Modify'),
 							callback: function (key: any, options: any) {
 								this.modify.call(this, options.$trigger[0].annotation);
@@ -993,13 +994,13 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 								this.reply.call(this, options.$trigger[0].annotation);
 							}.bind(this)
 						},
-						remove: {
+						remove: blockChangeFromDifferentAuthor ? undefined : {
 							name: _('Remove'),
 							callback: function (key: any, options: any) {
 								this.remove.call(this, options.$trigger[0].annotation.sectionProperties.data.id);
 							}.bind(this)
 						},
-						removeThread: docLayer._docType !== 'text' || !$trigger[0].annotation.isRootComment() ? undefined : {
+						removeThread: docLayer._docType !== 'text' || !$trigger[0].annotation.isRootComment() || blockChangeFromDifferentAuthor ? undefined : {
 							name: _('Remove Thread'),
 							callback: function (key: any, options: any) {
 								this.removeThread.call(this, options.$trigger[0].annotation.sectionProperties.data.id);
