@@ -454,6 +454,8 @@ EXTRA_DIST = discovery.xml \
              debian/source/format \
              debian/changelog \
              debian/control \
+             debian/coolwsd.install \
+             debian/coolwsd-deprecated.install \
              debian/coolwsd.postinst \
              debian/coolwsd.postrm \
              etc/key.pem \
