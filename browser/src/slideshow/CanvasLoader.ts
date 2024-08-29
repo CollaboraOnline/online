@@ -29,13 +29,12 @@ class CanvasLoader2d implements CanvasLoader {
 	public stopLoader(): void {} // eslint-disable-line
 }
 
-class CanvasLoaderGl extends Transition2d implements CanvasLoader {
+class CanvasLoaderGl extends RendererBase implements CanvasLoader {
 	private animationId: number | null = null;
 
 	constructor(transitionParameters: TransitionParameters) {
 		super(transitionParameters);
 		this.prepareTransition();
-		this.animationTime = 0; // Continuous animation
 	}
 
 	public renderUniformValue(): void {

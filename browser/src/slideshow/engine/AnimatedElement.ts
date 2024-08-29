@@ -34,11 +34,9 @@ namespace PropertyOperators {
 			return a === b;
 		},
 		add: (a: any, b: any) => {
-			b;
 			return a;
 		},
 		scale: (k: any, v: any) => {
-			k;
 			return v;
 		},
 	};
@@ -255,6 +253,9 @@ class AnimatedElement {
 			window.app.console.log(
 				'AnimatedElement constructor: bounding box argument not valid',
 			);
+
+			// TODO: remove this dummy bounding box once core sends a real one
+			aBBox = new DOMRect(0, 0, 1000, 1000);
 		}
 
 		this.sId = sId;
@@ -270,7 +271,7 @@ class AnimatedElement {
 	}
 
 	private createBaseElement(): AnimatedObjectType {
-		// TODO crop the layer to the bbox and return it as a bitmap or canvas.
+		// TODO maybe crop the layer to the bbox and return it as a bitmap or canvas.
 		return null;
 	}
 

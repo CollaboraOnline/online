@@ -24,6 +24,8 @@ class SlideShowContext {
 	public aInteractiveAnimationSequenceMap: InteractiveAnimationSequenceMap;
 	public aActivityQueue: ActivityQueue;
 	public bIsSkipping: boolean;
+	public nSlideWidth: number;
+	public nSlideHeight: number;
 
 	constructor(
 		aSlideShowHandler: SlideShowHandler,
@@ -54,6 +56,8 @@ class SlideShowHandler {
 		1.0 / SlideShowHandler.PREFERRED_FRAMES_PER_SECONDS;
 
 	private theMetaPres: MetaPresentation;
+	private slideShowNavigator: SlideShowNavigator;
+	private presenter: SlideShowPresenter;
 	private aTimer: ElapsedTime;
 	private aFrameSynchronization: FrameSynchronization;
 	private aTimerEventQueue: TimerEventQueue;
@@ -75,6 +79,8 @@ class SlideShowHandler {
 	private aStartedEffectList: Effect[];
 	private aStartedEffectIndexMap: Map<number, number | undefined>;
 	private automaticAdvanceTimeout: number | { rewindedEffect: number };
+	private enteringSlideTexture: WebGLTexture | ImageBitmap;
+	public isStarting: boolean;
 
 	constructor() {
 		this.aTimer = new ElapsedTime();
@@ -122,6 +128,14 @@ class SlideShowHandler {
 
 	setMetaPresentation(metaPres: MetaPresentation) {
 		this.theMetaPres = metaPres;
+	}
+
+	setPresenter(presenter: SlideShowPresenter) {
+		this.presenter = presenter;
+	}
+
+	setNavigator(slideShowNavigator: SlideShowNavigator) {
+		this.slideShowNavigator = slideShowNavigator;
 	}
 
 	setSlideEvents(
@@ -222,8 +236,10 @@ class SlideShowHandler {
 	notifyNextEffectStart() {
 		assert(
 			!this.bIsNextEffectRunning,
-			'SlideShow.notifyNextEffectStart: an effect is already started.',
+			'SlideShowHandler.notifyNextEffectStart: an effect is already started.',
 		);
+
+		ANIMDBG.print('SlideShowHandler.notifyNextEffectStart invoked.');
 		this.bIsNextEffectRunning = true;
 		this.aEventMultiplexer.registerNextEffectEndHandler(
 			this.notifyNextEffectEnd.bind(this),
@@ -234,11 +250,14 @@ class SlideShowHandler {
 		this.aStartedEffectList.push(aEffect);
 
 		const sCurSlideHash = this.theMetaPres.getCurrentSlideHash();
-		const aAnimatedElementMap = this.theMetaPres
-			.getMetaSlide(sCurSlideHash)
-			.animationsHandler.getAnimatedElementMap();
-		for (const sId in aAnimatedElementMap)
-			aAnimatedElementMap.get(sId).notifyNextEffectStart(this.nCurrentEffect);
+		const curMetaSlide = this.theMetaPres.getMetaSlide(sCurSlideHash);
+		if (curMetaSlide.animationsHandler) {
+			const aAnimatedElementMap =
+				curMetaSlide.animationsHandler.getAnimatedElementMap();
+			aAnimatedElementMap.forEach((aAnimatedElement: AnimatedElement) => {
+				aAnimatedElement.notifyNextEffectStart(this.nCurrentEffect);
+			});
+		}
 	}
 
 	notifyNextEffectEnd() {
@@ -246,6 +265,8 @@ class SlideShowHandler {
 			this.bIsNextEffectRunning,
 			'SlideShow.notifyNextEffectEnd: effect already ended.',
 		);
+
+		ANIMDBG.print('SlideShowHandler.notifyNextEffectEnd invoked.');
 		this.bIsNextEffectRunning = false;
 
 		this.aStartedEffectList[this.aStartedEffectIndexMap.get(-1)].end();
@@ -258,6 +279,10 @@ class SlideShowHandler {
 	}
 
 	notifyAnimationsEnd() {
+		ANIMDBG.print(
+			'SlideShowHandler.notifyAnimationsEnd: current slide index: ' +
+				this.slideShowNavigator.currentSlideIndex,
+		);
 		const sCurrSlideHash = this.theMetaPres.getCurrentSlideHash();
 
 		if (this.theMetaPres.isLastSlide(sCurrSlideHash)) return;
@@ -268,13 +293,17 @@ class SlideShowHandler {
 		);
 
 		const slideInfo = this.theMetaPres.getSlideInfo(sCurrSlideHash);
-		const nTimeout = Math.ceil(slideInfo.nextSlideDuration * 1000);
-		if (nTimeout < 0) return;
 
-		this.automaticAdvanceTimeout = window.setTimeout(
-			'switchSlide(1, false)',
-			nTimeout,
-		);
+		if (slideInfo?.nextSlideDuration && slideInfo.nextSlideDuration > 0) {
+			this.automaticAdvanceTimeout = window.setTimeout(
+				this.slideShowNavigator.switchSlide.bind(
+					this.slideShowNavigator,
+					1,
+					false,
+				),
+				slideInfo.nextSlideDuration,
+			);
+		}
 	}
 
 	notifySlideStart(nNewSlideIndex: number, nOldSlideIndex: number) {
@@ -289,39 +318,59 @@ class SlideShowHandler {
 
 		if (nOldSlideIndex !== undefined) {
 			const metaOldSlide = this.theMetaPres.getMetaSlideByIndex(nOldSlideIndex);
-			const aAnimatedElementMap =
-				metaOldSlide.animationsHandler.getAnimatedElementMap();
-			for (const sId in aAnimatedElementMap)
-				aAnimatedElementMap.get(sId).notifySlideEnd();
+			if (metaOldSlide.animationsHandler) {
+				const aAnimatedElementMap =
+					metaOldSlide.animationsHandler.getAnimatedElementMap();
+
+				aAnimatedElementMap.forEach((aAnimatedElement: AnimatedElement) => {
+					aAnimatedElement.notifySlideEnd();
+				});
+			}
 		}
 		const metaNewSlide = this.theMetaPres.getMetaSlideByIndex(nNewSlideIndex);
-		const aAnimatedElementMap =
-			metaNewSlide.animationsHandler.getAnimatedElementMap();
-		for (const sId in aAnimatedElementMap)
-			aAnimatedElementMap.get(sId).notifySlideStart(this.aContext);
+		if (metaNewSlide.animationsHandler) {
+			const aAnimatedElementMap =
+				metaNewSlide.animationsHandler.getAnimatedElementMap();
+
+			aAnimatedElementMap.forEach((aAnimatedElement: AnimatedElement) => {
+				aAnimatedElement.notifySlideStart(this.aContext);
+			});
+		}
 	}
 
-	notifyTransitionEnd(nSlideIndex: number) {
-		const nCurSlide = this.theMetaPres.getCurrentSlideIndex();
+	notifyTransitionEnd(nNewSlide: number, nOldSlide: number | undefined) {
+		NAVDBG.print(
+			'SlideShowHandler.notifyTransitionEnd: nNewSlide: ' +
+				nNewSlide +
+				', nOldSlide: ' +
+				nOldSlide +
+				', this.bIsRewinding: ' +
+				this.bIsRewinding,
+		);
 		this.bIsTransitionRunning = false;
 		if (this.bIsRewinding) {
-			this.theMetaPres.getMetaSlideByIndex(nSlideIndex).hide();
-			const nIndex = nCurSlide !== undefined ? nCurSlide : -1;
-			this.displaySlide(nIndex, true);
+			this.theMetaPres.getMetaSlideByIndex(nNewSlide).hide();
+			this.slideShowNavigator.displaySlide(nOldSlide, true);
 			this.skipAllEffects();
 			this.bIsRewinding = false;
 			return;
 		}
 
-		this.theMetaPres.setCurrentSlide(nSlideIndex);
+		// this.theMetaPres.setCurrentSlide(nNewSlide);
+		this.presentSlide(nNewSlide);
+		this.enteringSlideTexture = null;
+		this.isStarting = false;
 
 		if (this.isEnabled()) {
 			// clear all queues
 			this.dispose();
 
 			const sCurSlideHash = this.theMetaPres.getCurrentSlideHash();
-			var aCurrentSlide = this.theMetaPres.getMetaSlide(sCurSlideHash);
-			if (aCurrentSlide.animationsHandler.elementsParsed()) {
+			const aCurrentSlide = this.theMetaPres.getMetaSlide(sCurSlideHash);
+			if (
+				aCurrentSlide.animationsHandler &&
+				aCurrentSlide.animationsHandler.elementsParsed()
+			) {
 				aCurrentSlide.animationsHandler.start();
 				this.aEventMultiplexer.registerAnimationsEndHandler(
 					this.notifyAnimationsEnd.bind(this),
@@ -474,10 +523,10 @@ class SlideShowHandler {
 	 *  playing effects on the current slide.
 	 *
 	 *  @return {Boolean}
-	 *      True if it already skipping or when it has ended skipping,
+	 *      True if it is already skipping or when it has ended skipping,
 	 *      false if the next slide needs to be displayed.
 	 */
-	skipAllEffects() {
+	skipAllEffects(): boolean {
 		if (this.bIsSkippingAll) return true;
 
 		this.bIsSkippingAll = true;
@@ -619,15 +668,14 @@ class SlideShowHandler {
 	 *
 	 */
 	rewindToPreviousSlide() {
+		NAVDBG.print('SlideShowHandler.rewindToPreviousSlide');
 		if (this.isTransitionPlaying()) {
 			this.rewindTransition();
 			return;
 		}
 		if (this.isAnyEffectPlaying()) return;
 
-		const nCurSlide = this.theMetaPres.getCurrentSlideIndex();
-		const nNewSlide = nCurSlide - 1;
-		this.displaySlide(nNewSlide, true);
+		this.slideShowNavigator.switchSlide(-1, true);
 		this.skipAllEffects();
 	}
 
@@ -646,7 +694,17 @@ class SlideShowHandler {
 		}
 	}
 
-	displaySlide(nNewSlide: number, bSkipSlideTransition: boolean) {
+	displaySlide(
+		nNewSlide: number,
+		nOldSlide: number | undefined,
+		bSkipSlideTransition: boolean,
+	) {
+		NAVDBG.print(
+			'SlideShowHandler.displaySlide: nNewSlide: ' +
+				nNewSlide +
+				', nOldSlide: ' +
+				nOldSlide,
+		);
 		const aMetaDoc = this.theMetaPres;
 		if (nNewSlide >= aMetaDoc.numberOfSlides) {
 			this.exitSlideShow();
@@ -657,11 +715,13 @@ class SlideShowHandler {
 		}
 
 		// handle current slide
-		const nOldSlide = aMetaDoc.getCurrentSlideIndex();
 		if (nOldSlide !== undefined) {
-			var oldMetaSlide = aMetaDoc.getMetaSlideByIndex(nOldSlide);
+			const oldMetaSlide = aMetaDoc.getMetaSlideByIndex(nOldSlide);
 			if (this.isEnabled()) {
-				if (oldMetaSlide.animationsHandler.isAnimated()) {
+				if (
+					oldMetaSlide.animationsHandler &&
+					oldMetaSlide.animationsHandler.isAnimated()
+				) {
 					// force end animations
 					oldMetaSlide.animationsHandler.end(bSkipSlideTransition);
 
@@ -671,7 +731,7 @@ class SlideShowHandler {
 			}
 
 			if (this.automaticAdvanceTimeout !== null) {
-				window.clearTimeout(this.automaticAdvanceTimeout as number);
+				clearTimeout(this.automaticAdvanceTimeout as number);
 				this.automaticAdvanceTimeout = null;
 			}
 		}
@@ -680,27 +740,31 @@ class SlideShowHandler {
 
 		if (this.isEnabled() && !bSkipSlideTransition) {
 			// create slide transition and add to activity queue
-			if (nOldSlide === undefined || nNewSlide > nOldSlide) {
-				let aOldMetaSlide;
-				if (nOldSlide === undefined) {
-					// for transition on start slide
-					aOldMetaSlide = null; // aMetaDoc.getDummyMetaSlide()
-				} else {
-					aOldMetaSlide = aMetaDoc.getMetaSlideByIndex(nOldSlide);
-				}
+			if (
+				(nOldSlide === undefined && this.isStarting) ||
+				(nOldSlide !== undefined && nNewSlide > nOldSlide)
+			) {
+				// let aOldMetaSlide;
+				// if (nOldSlide === undefined) {
+				// 	// for transition on start slide
+				// 	aOldMetaSlide = null; // aMetaDoc.getDummyMetaSlide()
+				// } else {
+				// 	aOldMetaSlide = aMetaDoc.getMetaSlideByIndex(nOldSlide);
+				// }
 				const aNewMetaSlide = aMetaDoc.getMetaSlideByIndex(nNewSlide);
 
-				var aSlideTransitionHandler = aNewMetaSlide.transitionHandler;
+				const aSlideTransitionHandler = aNewMetaSlide.transitionHandler;
 				if (aSlideTransitionHandler && aSlideTransitionHandler.isValid()) {
-					const aLeavingSlide = aOldMetaSlide;
-					const aEnteringSlide = aNewMetaSlide;
 					const aTransitionEndEvent = makeEvent(
-						this.notifyTransitionEnd.bind(this, nNewSlide),
+						this.notifyTransitionEnd.bind(this, nNewSlide, nOldSlide),
 					);
 
+					const transitionParameters: TransitionParameters =
+						this.createTransitionParameters(nNewSlide, nOldSlide);
+					this.enteringSlideTexture = transitionParameters.next;
 					const aTransitionActivity = this.createSlideTransition(
 						aSlideTransitionHandler,
-						null, // transitionParameters,
+						transitionParameters,
 						aTransitionEndEvent,
 					);
 
@@ -709,16 +773,16 @@ class SlideShowHandler {
 						this.aActivityQueue.addActivity(aTransitionActivity);
 						this.update();
 					} else {
-						this.notifyTransitionEnd(nNewSlide);
+						this.notifyTransitionEnd(nNewSlide, nOldSlide);
 					}
 				} else {
-					this.notifyTransitionEnd(nNewSlide);
+					this.notifyTransitionEnd(nNewSlide, nOldSlide);
 				}
 			} else {
-				this.notifyTransitionEnd(nNewSlide);
+				this.notifyTransitionEnd(nNewSlide, nOldSlide);
 			}
 		} else {
-			this.notifyTransitionEnd(nNewSlide);
+			this.notifyTransitionEnd(nNewSlide, nOldSlide);
 		}
 	}
 
@@ -739,12 +803,12 @@ class SlideShowHandler {
 
 		this.aTimer.releaseTimer();
 
-		var bActivitiesLeft = !this.aActivityQueue.isEmpty();
-		var bTimerEventsLeft = !this.aTimerEventQueue.isEmpty();
-		var bEventsLeft = bActivitiesLeft || bTimerEventsLeft;
+		const bActivitiesLeft = !this.aActivityQueue.isEmpty();
+		const bTimerEventsLeft = !this.aTimerEventQueue.isEmpty();
+		const bEventsLeft = bActivitiesLeft || bTimerEventsLeft;
 
 		if (bEventsLeft) {
-			var nNextTimeout;
+			let nNextTimeout;
 			if (bActivitiesLeft) {
 				nNextTimeout = SlideShowHandler.MINIMUM_TIMEOUT;
 				this.aFrameSynchronization.activate();
@@ -758,7 +822,7 @@ class SlideShowHandler {
 			}
 
 			this.bIsIdle = false;
-			window.setTimeout('aSlideShow.update()', nNextTimeout * 1000);
+			setTimeout(this.update.bind(this), nNextTimeout * 1000);
 		} else {
 			this.bIsIdle = true;
 		}
@@ -774,5 +838,56 @@ class SlideShowHandler {
 
 	getContext() {
 		return this.aContext;
+	}
+
+	private get slideRenderer(): SlideRenderer {
+		return this.presenter._slideRenderer;
+	}
+	private get slideCompositor(): SlideCompositor {
+		return this.presenter._slideCompositor;
+	}
+
+	getSlideInfo(nSlideIndex: number): SlideInfo {
+		return this.theMetaPres.getSlideInfoByIndex(nSlideIndex);
+	}
+
+	private getTexture(nSlideIndex: number): WebGLTexture | ImageBitmap {
+		const slideImage = this.slideCompositor.getSlide(nSlideIndex);
+		return this.slideRenderer.createTexture(slideImage);
+	}
+
+	private presentSlide(nSlideIndex: number) {
+		let slideTexture = this.enteringSlideTexture;
+		if (!slideTexture) slideTexture = this.getTexture(nSlideIndex);
+		this.slideRenderer.renderSlide(
+			slideTexture,
+			this.getSlideInfo(nSlideIndex),
+			this.theMetaPres.slideWidth,
+			this.theMetaPres.slideHeight,
+		);
+	}
+
+	private createTransitionParameters(
+		nNewSlide: number,
+		nOldSlide: number,
+	): TransitionParameters {
+		let leavingSlideTexture = null;
+		if (this.isStarting) {
+			leavingSlideTexture = this.slideRenderer.createEmptyTexture();
+		} else {
+			leavingSlideTexture =
+				nOldSlide !== undefined &&
+				this.slideRenderer.lastRenderedSlideIndex === nOldSlide
+					? this.slideRenderer.getSlideTexture()
+					: this.getTexture(nOldSlide);
+		}
+		const enteringSlideTexture = this.getTexture(nNewSlide);
+		const transitionParameters = new TransitionParameters();
+		transitionParameters.context = this.slideRenderer._context;
+		transitionParameters.current = leavingSlideTexture;
+		transitionParameters.next = enteringSlideTexture;
+		transitionParameters.slideInfo = this.getSlideInfo(nNewSlide);
+
+		return transitionParameters;
 	}
 }

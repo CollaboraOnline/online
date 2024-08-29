@@ -37,8 +37,11 @@ function getNodeChildren(aNode: ContainerNodeInfo): Array<AnimationNodeInfo> {
 	return aNode.children || [];
 }
 
-function createAnimationTree(aAnimationRoot: AnimationNodeInfo): BaseNode {
-	return createAnimationNode(aAnimationRoot, null, null);
+function createAnimationTree(
+	aAnimationRoot: AnimationNodeInfo,
+	aNodeContext: NodeContext,
+): BaseNode {
+	return createAnimationNode(aAnimationRoot, null, aNodeContext);
 }
 
 function createAnimationNode(
@@ -178,17 +181,12 @@ class SlideAnimations {
 		this.aContext.aAnimationNodeMap = this.aAnimationNodeMap;
 		this.aContext.aAnimatedElementMap = this.aAnimatedElementMap;
 		this.aContext.aSourceEventElementMap = this.aSourceEventElementMap;
-
-		// We set up a low priority for the invocation of document.handleClick
-		// in order to make clicks on shapes, that start interactive animation
-		// sequence (on click), have an higher priority.
-		// this.aEventMultiplexer.registerMouseClickHandler(document, 100);
 	}
 
 	public importAnimations(aAnimationRoot: AnimationNodeInfo): boolean {
 		if (!aAnimationRoot) return false;
 
-		this.aRootNode = createAnimationTree(aAnimationRoot);
+		this.aRootNode = createAnimationTree(aAnimationRoot, this.aContext);
 		return !!this.aRootNode;
 	}
 
@@ -259,6 +257,9 @@ class SlideAnimations {
 		if (this.aRootNode) {
 			this.aRootNode.dispose();
 		}
+		if (this.aEventMultiplexer) {
+			this.aEventMultiplexer.clear();
+		}
 	}
 
 	clearNextEffectEvents() {
@@ -287,5 +288,9 @@ class SlideAnimations {
 
 	public getAnimatedElementMap(): Map<string, AnimatedElement> {
 		return this.aAnimatedElementMap;
+	}
+
+	public get eventMultiplexer(): EventMultiplexer {
+		return this.aEventMultiplexer;
 	}
 }

@@ -20,8 +20,6 @@ class NodeContext {
 	public nStartDelay = 0.0;
 	public bFirstRun: boolean | undefined = undefined;
 	public bIsInvalid = false;
-	public aSlideHeight: number;
-	public aSlideWidth: number;
 
 	constructor(aSlideShowContext: any) {
 		this.aContext = aSlideShowContext;

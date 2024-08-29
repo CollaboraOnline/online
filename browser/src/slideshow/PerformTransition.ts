@@ -12,6 +12,8 @@
 
 declare var SlideShow: any;
 
+// TODO TransitionType, TransitionSubType to be moved to a separate file: engine/TransitionType.ts
+
 enum TransitionType {
 	BARWIPE,
 	PINWHEELWIPE,
@@ -139,6 +141,11 @@ const stringToTransitionSubTypeMap: Record<string, TransitionSubType> = {
 	RotateIn: TransitionSubType.ROTATEIN,
 };
 
+// TODO SlideShow.PerformTransition (don't hack it, no more used)
+//  look at SlideTransition.createSlideTransition
+//  3d transition still to be integrated in SlideTransition
+//  to be tested 2d context case with ported engine
+//  to be removed
 SlideShow.PerformTransition = function (
 	transitionParameters: TransitionParameters,
 ) {
@@ -209,7 +216,7 @@ SlideShow.PerformTransition = function (
 		case TransitionType.WATERFALLWIPE:
 			new SlideShow.DiagonalTransition(transitionParameters).start();
 			break;
-
+		// TODO: move also MISCSHAPEWIPE to SlideTransition
 		case TransitionType.MISCSHAPEWIPE:
 			SlideShow.MicsShapeWipeTransition(transitionParameters).start();
 			break;

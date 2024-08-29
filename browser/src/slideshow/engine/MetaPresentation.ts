@@ -22,10 +22,34 @@ class MetaPresentation {
 	private metaSlides: Map<string, MetaSlide>;
 	private partHashes: Map<number, string>;
 	private aSlideShowHandler: SlideShowHandler;
+	private slideShowNavigator: SlideShowNavigator;
 
-	constructor(info: PresentationInfo, aSlideShowHandler: SlideShowHandler) {
+	constructor(
+		info: PresentationInfo,
+		aSlideShowHandler: SlideShowHandler,
+		aSlideShowNavigator: SlideShowNavigator,
+	) {
 		this.aSlideShowHandler = aSlideShowHandler;
 		this.update(info);
+		this.setNavigator(aSlideShowNavigator);
+	}
+
+	setNavigator(nav: SlideShowNavigator) {
+		this.slideShowNavigator = nav;
+
+		// We set up a low priority for the invocation of canvas handleClick
+		// in order to make clicks on shapes, that start interactive animation
+		// sequence (on click), have a higher priority.
+		this.metaSlides.forEach((metaSlide) => {
+			if (metaSlide.animationsHandler) {
+				const eventMultiplexer = metaSlide.animationsHandler.eventMultiplexer;
+				if (eventMultiplexer)
+					eventMultiplexer.registerMouseClickHandler(
+						this.slideShowNavigator.canvasClickHandler,
+						100,
+					);
+			}
+		});
 	}
 
 	public get slideShowHandler(): SlideShowHandler {
@@ -40,6 +64,10 @@ class MetaPresentation {
 		this.docWidth = info.docWidth;
 		this.docHeight = info.docHeight;
 
+		const aContext = this.aSlideShowHandler.getContext();
+		aContext.nSlideWidth = this.docWidth;
+		aContext.nSlideHeight = this.docHeight;
+
 		this._numberOfSlides = info.slides.length;
 		if (this._numberOfSlides === 0) return;
 
@@ -47,6 +75,7 @@ class MetaPresentation {
 		this.lastSlideHash = info.slides[this._numberOfSlides - 1].hash;
 
 		this.metaSlides = new Map();
+		this.partHashes = new Map();
 		let prevSlideHash = null;
 		for (let i = 0; i < this._numberOfSlides; ++i) {
 			const slide = info.slides[i];
@@ -77,11 +106,7 @@ class MetaPresentation {
 	}
 
 	public getCurrentSlideIndex(): number {
-		return 0;
-	}
-
-	public setCurrentSlideIndex(nSlideIndex: number) {
-		// TODO implement it ?
+		return this.slideShowNavigator.currentSlideIndex;
 	}
 
 	public getCurrentSlideHash(): string {
@@ -112,12 +137,15 @@ class MetaPresentation {
 		return this.metaSlides.get(slideHash).info;
 	}
 
+	public getSlideInfoByIndex(slideIndex: number): SlideInfo {
+		return this.metaSlides.get(this.getSlideHash(slideIndex)).info;
+	}
+
 	public setCurrentSlide(nSlideIndex: number) {
 		if (nSlideIndex >= 0 && nSlideIndex < this.numberOfSlides) {
 			const nCurSlide = this.getCurrentSlideIndex();
 			if (nCurSlide !== undefined) this.getMetaSlideByIndex(nCurSlide).hide();
 			this.getMetaSlideByIndex(nCurSlide).show();
-			this.setCurrentSlideIndex(nSlideIndex);
 		} else {
 			window.app.console.log(
 				'MetaPresentation.setCurrentSlide: slide index out of range: ' +

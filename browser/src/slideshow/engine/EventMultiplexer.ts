@@ -10,8 +10,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-abstract class MouseClickHandler {
-	abstract handleClick(aMouseEvent?: any): boolean;
+interface MouseClickHandler {
+	handleClick: (aMouseEvent?: any) => boolean;
 }
 
 class EventMultiplexer {
@@ -45,6 +45,24 @@ class EventMultiplexer {
 		return EventMultiplexer.CURR_UNIQUE_ID;
 	}
 
+	clear() {
+		this.aEventMap.clear();
+		this.aEventMap = null;
+		this.aSkipEffectEndHandlerSet = null;
+		this.aMouseClickHandlerSet.clear();
+		this.aMouseClickHandlerSet = null;
+		this.aSkipInteractiveEffectEventSet.clear();
+		this.aSkipInteractiveEffectEventSet = null;
+		this.aRewindRunningInteractiveEffectEventSet.clear();
+		this.aRewindRunningInteractiveEffectEventSet = null;
+		this.aRewindEndedInteractiveEffectEventSet.clear();
+		this.aRewindEndedInteractiveEffectEventSet = null;
+		this.aRewindedEffectHandlerSet.clear();
+		this.aRewindedEffectHandlerSet = null;
+		this.aElementChangedHandlerSet.clear();
+		this.aElementChangedHandlerSet = null;
+	}
+
 	getId() {
 		return this.nId;
 	}
@@ -58,13 +76,14 @@ class EventMultiplexer {
 		this.aMouseClickHandlerSet.push(aHandlerEntry);
 	}
 
-	// TODO: look where this method is used
 	notifyMouseClick(aMouseEvent: any) {
 		const aMouseClickHandlerSet = this.aMouseClickHandlerSet.clone();
 		while (!aMouseClickHandlerSet.isEmpty()) {
 			const aHandlerEntry = aMouseClickHandlerSet.top();
 			aMouseClickHandlerSet.pop();
-			if (aHandlerEntry.aValue.handleClick(aMouseEvent)) break;
+			if (aHandlerEntry.aValue && aHandlerEntry.aValue.handleClick) {
+				if (aHandlerEntry.aValue.handleClick(aMouseEvent)) break;
+			}
 		}
 	}
 
