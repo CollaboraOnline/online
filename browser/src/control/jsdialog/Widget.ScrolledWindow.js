@@ -90,7 +90,9 @@ function _scrolledWindowControl(parentContainer, data, builder) {
 	if (horizontalSteps < 0 || noHorizontal)
 		horizontalSteps = 0;
 
+	var rowHeight = 0;
 	var timeoutLimit = 2;
+
 	var updateSize = function () {
 		realContentHeight = scrollwindow.scrollHeight;
 		realContentWidth = scrollwindow.scrollwidth;
@@ -99,7 +101,6 @@ function _scrolledWindowControl(parentContainer, data, builder) {
 				setTimeout(updateSize, 100);
 			return;
 		}
-
 
 		if (!noVertical && data.vertical.upper > 0) {
 			if (rowHeight == 0) {
@@ -129,32 +130,51 @@ function _scrolledWindowControl(parentContainer, data, builder) {
 		}
 	};
 
-	if (data.user_managed_scrolling !== false)
+	if (data.user_managed_scrolling !== false) {
 		setTimeout(updateSize, 0);
-
 	}
 
-	var lastScrollV = null;
-	var lastScrollH = null;
-	var sendTimer = null;
-
 	if ((!noVertical && verticalSteps) || (!noHorizontal && horizontalSteps)) {
-		scrollwindow.addEventListener('scroll', function () {
-			// keep content at the same place on the screen
-			var scrollTop = scrollwindow.scrollTop;
-			var scrollLeft = scrollwindow.scrollLeft;
 
-			if (data.user_managed_scrolling !== false) {
-				content.style.margin = scrollTop + 'px ' + margin + 'px ' + margin + 'px ' + scrollLeft + 'px';
-				content.style.height = (realContentHeight - scrollTop + verticalSteps) + 'px';
-				content.style.width = (realContentWidth - scrollLeft + horizontalSteps) + 'px';
-			}
+		var mutating = false;
+		var restoreScrollV = null;
+		var lastScrollV = null;
 
+		if (drawingArea) {
+			// With drawing area after each scroll event the content is removed
+			// this creates spurrious events to the top of the list
+			// this detect those and allows to ignore them
+			var noMutation = function (mutationsList) {
+				for (var mutation of mutationsList) {
+					if (mutation.type == "childList") {
+						if (mutation.removedNodes.length != 0) {
+							// some nodes were removed, consider we are mutating
+							// and next scroll event will be spurrious
+							mutating = true;
+							restoreScrollV = lastScrollV;
+						}
+					}
+				}
+			};
 
+			var observer = new MutationObserver(noMutation);
+			observer.observe(content, {childList: true });
+		}
+
+		var lastScrollH = null;
+		var sendTimer = null;
+
+		scrollwindow.addEventListener('scroll', function() {
 			if (sendTimer)
 				clearTimeout(sendTimer);
 			sendTimer = setTimeout(function () {
 
+				if (mutating) {
+					// ignore spurious event
+					mutating = false;
+					scrollwindow.scrollTop = restoreScrollV * rowHeight;
+					return;
+				}
 
 				if (data.user_managed_scrolling !== false) {
 

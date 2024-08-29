@@ -2047,6 +2047,10 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	max-height: 200px;
 }
 
+#FormulaDialog #ParameterPage > #paramgrid .ui-scrollwindow .ui-edit-container {
+	display: flex;
+}
+
 #FormulaDialog > [id^='dialog-vbox'] > [id^='box'] > [id^='box'] {
 	grid-auto-columns: max-content;
 	grid-column-gap: 8px;
