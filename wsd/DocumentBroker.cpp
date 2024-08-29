@@ -944,7 +944,7 @@ bool DocumentBroker::download(
             auto poller = std::make_shared<TerminatingPoll>("CFISynReqPoll");
             poller->runOnClientThread();
             CheckFileInfo checkFileInfo(poller, session->getPublicUri(), [](CheckFileInfo&) {});
-            checkFileInfo.checkFileInfoSync(RedirectionLimit);
+            checkFileInfo.checkFileInfoSync(HTTP_REDIRECTION_LIMIT);
             wopiFileInfo = checkFileInfo.wopiFileInfo(session->getPublicUri());
             if (!wopiFileInfo)
             {

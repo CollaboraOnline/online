@@ -112,7 +112,7 @@ void WopiProxy::handleRequest([[maybe_unused]] const std::shared_ptr<Terminating
                     poll->insertNewSocket(moveSocket);
 
                     // CheckFileInfo and only when it's good create DocBroker.
-                    checkFileInfo(poll, uriPublic, RedirectionLimit);
+                    checkFileInfo(poll, uriPublic, HTTP_REDIRECTION_LIMIT);
                 });
             break;
 #endif //!MOBILEAPP
@@ -165,7 +165,7 @@ void WopiProxy::checkFileInfo(const std::shared_ptr<TerminatingPoll>& poll, cons
                 try
                 {
                     LOG_INF("WOPI::GetFile using FileUrl: " << fileUrlAnonym);
-                    return download(poll, url, Poco::URI(fileUrl), RedirectionLimit);
+                    return download(poll, url, Poco::URI(fileUrl), HTTP_REDIRECTION_LIMIT);
                 }
                 catch (const std::exception& ex)
                 {
@@ -186,7 +186,7 @@ void WopiProxy::checkFileInfo(const std::shared_ptr<TerminatingPoll>& poll, cons
             try
             {
                 LOG_INF("WOPI::GetFile using default URI: " << uriAnonym);
-                return download(poll, url, uriObject, RedirectionLimit);
+                return download(poll, url, uriObject, HTTP_REDIRECTION_LIMIT);
             }
             catch (const std::exception& ex)
             {

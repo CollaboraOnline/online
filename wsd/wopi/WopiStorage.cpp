@@ -559,7 +559,7 @@ std::string WopiStorage::downloadStorageFileToLocal(const Authorization& auth,
         {
             LOG_INF("WOPI::GetFile template source: " << templateUriAnonym);
             return downloadDocument(Poco::URI(templateUri), templateUriAnonym, auth,
-                                    RedirectionLimit);
+                                    HTTP_REDIRECTION_LIMIT);
         }
         catch (const std::exception& ex)
         {
@@ -576,7 +576,8 @@ std::string WopiStorage::downloadStorageFileToLocal(const Authorization& auth,
         try
         {
             LOG_INF("WOPI::GetFile using FileUrl: " << fileUrlAnonym);
-            return downloadDocument(Poco::URI(_fileUrl), fileUrlAnonym, auth, RedirectionLimit);
+            return downloadDocument(Poco::URI(_fileUrl), fileUrlAnonym, auth,
+                                    HTTP_REDIRECTION_LIMIT);
         }
         catch (const StorageSpaceLowException&)
         {
@@ -604,7 +605,7 @@ std::string WopiStorage::downloadStorageFileToLocal(const Authorization& auth,
     try
     {
         LOG_INF("WOPI::GetFile using default URI: " << uriAnonym);
-        return downloadDocument(uriObject, uriAnonym, auth, RedirectionLimit);
+        return downloadDocument(uriObject, uriAnonym, auth, HTTP_REDIRECTION_LIMIT);
     }
     catch (const std::exception& ex)
     {

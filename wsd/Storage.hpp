@@ -23,9 +23,6 @@
 #include <string>
 #include <chrono>
 
-/// Limits number of HTTP redirections to prevent from redirection loops
-static constexpr auto RedirectionLimit = 21;
-
 class LockContext;
 
 /// Base class of all Storage abstractions.
