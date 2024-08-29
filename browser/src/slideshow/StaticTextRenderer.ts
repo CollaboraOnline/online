@@ -17,7 +17,7 @@
 
 declare var SlideShow: any;
 
-class StaticTextRenderer extends Transition2d {
+class StaticTextRenderer extends RendererBase {
 	public textTexture: WebGLTexture;
 
 	constructor(transitionParameters: TransitionParameters) {

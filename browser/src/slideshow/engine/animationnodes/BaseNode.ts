@@ -332,8 +332,11 @@ abstract class BaseNode {
 		this.aBegin = new Timing(this, this.aNodeInfo.begin);
 		this.aBegin.parse();
 
-		this.aEnd = new Timing(this, this.aNodeInfo.end);
-		this.aEnd.parse();
+		this.aEnd = null;
+		if (this.aNodeInfo.end) {
+			this.aEnd = new Timing(this, this.aNodeInfo.end);
+			this.aEnd.parse();
+		}
 
 		this.aDuration = new Duration(this.aNodeInfo.dur);
 		if (!this.aDuration.isSet()) {

@@ -75,8 +75,8 @@ class AnimationColorNode extends AnimationBaseNode3 {
 		const aAnimation = createPropertyAnimation(
 			this.getAttributeName(),
 			this.getAnimatedElement(),
-			this.aNodeContext.aSlideWidth,
-			this.aNodeContext.aSlideHeight );
+			this.aNodeContext.aContext.nSlideWidth,
+			this.aNodeContext.aContext.nSlideHeight );
 
 		let aColorAnimation;
 		let aInterpolator;

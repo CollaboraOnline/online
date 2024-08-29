@@ -45,7 +45,7 @@ class ActivityQueue {
 			nLag = Math.max(nLag, this.aCurrentActivityWaitingSet[i].calcTimeLag());
 		}
 
-		if (nLag > 0.0) this.aTimer.adjustTimer(-nLag, true);
+		if (nLag > 0.0) this.aTimer.adjustTimer(-nLag);
 
 		while (this.aCurrentActivityWaitingSet.length != 0) {
 			const aActivity = this.aCurrentActivityWaitingSet.shift();

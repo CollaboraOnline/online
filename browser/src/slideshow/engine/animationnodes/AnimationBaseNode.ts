@@ -151,8 +151,8 @@ abstract class AnimationBaseNode extends BaseNode {
 		aActivityParamSet.nRepeatCount = this.getRepeatCount();
 		aActivityParamSet.nAccelerationFraction = this.getAccelerateValue();
 		aActivityParamSet.nDecelerationFraction = this.getDecelerateValue();
-		aActivityParamSet.nSlideWidth = this.aNodeContext.aSlideWidth;
-		aActivityParamSet.nSlideHeight = this.aNodeContext.aSlideHeight;
+		aActivityParamSet.nSlideWidth = this.aNodeContext.aContext.nSlideWidth;
+		aActivityParamSet.nSlideHeight = this.aNodeContext.aContext.nSlideHeight;
 
 		return aActivityParamSet;
 	}
@@ -236,6 +236,8 @@ abstract class AnimationBaseNode2 extends AnimationBaseNode {
 				'AnimationBaseNode2.parseElement: target attribute name not found: ' +
 					this.attributeName,
 			);
+		} else {
+			this.attributeName = this.attributeName.toLowerCase();
 		}
 		this.aToValue = aNodeInfo.to;
 	}
