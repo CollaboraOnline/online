@@ -47,7 +47,12 @@ abstract class SimpleTextureRenderer {
 
 	protected prepareTransition(): void {
 		this.initBuffers();
+		this.initUniforms();
+	}
+
+	protected initUniforms(): void {
 		this.gl.useProgram(this.program);
+		// Add more uniform here if needed.
 	}
 
 	private initBuffers(): void {
