@@ -115,17 +115,7 @@ function _menubuttonControl (parentContainer, data, builder) {
 			}
 		};
 
-		var isSplitButton = data.applyCallback;
-
-		if (control.arrow) {
-			JSDialog.AddOnClick(control.button, clickFunction);
-		}
-		// make it possible to setup separate callbacks for split button
-		else if (isSplitButton) {
-			JSDialog.AddOnClick(control.button, data.applyCallback);
-		} else {
-			JSDialog.AddOnClick(control.button, clickFunction);
-		}
+		JSDialog.AddOnClick(control.button, clickFunction);
 
 		builder._preventDocumentLosingFocusOnClick(control.container);
 
