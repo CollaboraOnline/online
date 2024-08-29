@@ -471,13 +471,9 @@ L.Control.UIManager = L.Control.extend({
 					this.map.sidebar.setupTargetDeck('.uno:MasterSlidesPanel');
 				} else if (this.getBooleanDocTypePref('NavigatorDeck', false)) {
 					app.socket.sendMessage('uno .uno:SidebarShow');
-					app.socket.sendMessage('uno .uno:Navigator');
-					this.map.sidebar.setupTargetDeck('.uno:Navigator');
 				}
 			} else if (this.getBooleanDocTypePref('NavigatorDeck', false)) {
 				app.socket.sendMessage('uno .uno:SidebarShow');
-				app.socket.sendMessage('uno .uno:Navigator');
-				this.map.sidebar.setupTargetDeck('.uno:Navigator');
 			} else if (this.getBooleanDocTypePref('StyleListDeck', false)) {
 				app.socket.sendMessage('uno .uno:SidebarShow');
 				app.socket.sendMessage('uno .uno:SidebarDeck.StyleListDeck');
