@@ -1,3 +1,4 @@
+etc/apparmor.d/usr.bin.coolwsd
 etc/coolwsd/coolwsd.xml
 etc/coolwsd/coolkitconfig.xcu
 etc/nginx/snippets/coolwsd.conf
