@@ -23,7 +23,7 @@ abstract class PauseTimer {
 class PauseTimer2d implements PauseTimer {
 	private onComplete: () => void;
 	constructor(
-		transitionParameters: TransitionParameters,
+		canvasContext: RenderContext2d,
 		pauseDuration: number,
 		onComplete: () => void,
 	) {
@@ -43,11 +43,11 @@ class PauseTimerGl extends StaticTextRenderer implements PauseTimer {
 	private ctx: CanvasRenderingContext2D;
 
 	constructor(
-		transitionParameters: TransitionParameters,
+		canvasContext: RenderContextGl,
 		pauseDuration: number,
 		onComplete: () => void,
 	) {
-		super(transitionParameters);
+		super(canvasContext);
 		this.pauseDuration = pauseDuration;
 		this.pauseTimeRemaining = pauseDuration;
 		this.onComplete = onComplete;
