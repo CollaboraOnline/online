@@ -426,7 +426,6 @@ COOL_JS_LST =\
 	src/slideshow/PauseTimer.ts \
 	src/slideshow/PerformTransition.ts \
 	src/slideshow/CanvasLoader.ts \
-	src/slideshow/Transition3d.ts \
 	src/slideshow/Operation.ts \
 	src/slideshow/Primitive.ts \
 	src/slideshow/types.ts \
@@ -474,6 +473,7 @@ COOL_JS_LST =\
     src/slideshow/engine/animationnodes/PropertyAnimationNode.ts \
     src/slideshow/engine/AnimatedElement.ts \
     src/slideshow/Transition2d.ts \
+    src/slideshow/Transition3d.ts \
 	src/slideshow/transition/FadeTransition.ts \
 	src/slideshow/transition/PlusTransition.ts \
 	src/slideshow/transition/CircleTransition.ts \
