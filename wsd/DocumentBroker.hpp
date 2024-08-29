@@ -1696,7 +1696,7 @@ private:
     int _cursorPosY;
     int _cursorWidth;
     int _cursorHeight;
-    std::unique_ptr<DocumentBrokerPoll> _poll;
+    std::shared_ptr<DocumentBrokerPoll> _poll;
     std::atomic<bool> _stop;
     std::string _closeReason;
     std::unique_ptr<LockContext> _lockCtx;
