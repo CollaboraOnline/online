@@ -1802,6 +1802,36 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				'command': '.uno:DefineDBName',
 				'accessibility': { focusBack: true,	combination: 'DR', de: null }
 			},
+			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'data-select-range',
+								'type': 'toolitem',
+								'text': _UNO('.uno:SelectDB', 'spreadsheet'),
+								'command': '.uno:SelectDB',
+								'accessibility': { focusBack: true, combination: 'SR', de: null }
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'data-refresh-range',
+								'type': 'toolitem',
+								'text': _UNO('.uno:DataAreaRefresh', 'spreadsheet'),
+								'command': '.uno:DataAreaRefresh',
+								'accessibility': { focusBack: true, combination: 'DE', de: null }
+							},
+						]
+					},
+				],
+				'vertical': 'true'
+			},
 		];
 
 		return this.getTabPage('Data', content);
