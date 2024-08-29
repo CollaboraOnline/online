@@ -49,7 +49,7 @@ class LayersCompositor extends SlideShow.SlideCompositor {
 		this.layerDrawing.requestSlide(this._initialSlideNumber, () => {
 			const oldCallback = this._onGotSlideCallback;
 			this._onGotSlideCallback = null;
-			oldCallback.call(this._slideShowPresenter);
+			oldCallback();
 		});
 	}
 

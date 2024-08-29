@@ -27,11 +27,13 @@ class MetaSlide {
 		if (this.hasTransition())
 			this._transitionHandler = new SlideTransition(slideInfo);
 
-		this._animationsHandler = new SlideAnimations(
-			this._slideShowHandler.getContext(),
-		);
-		this._animationsHandler.importAnimations(slideInfo.animations.root);
-		this._animationsHandler.parseInfo();
+		if (slideInfo.animations) {
+			this._animationsHandler = new SlideAnimations(
+				this._slideShowHandler.getContext(),
+			);
+			this._animationsHandler.importAnimations(slideInfo.animations.root);
+			this._animationsHandler.parseInfo();
+		}
 	}
 
 	public hasTransition(): boolean {

@@ -43,7 +43,15 @@ function ValueListActivityTemplate<T extends AGConstructor<ActivityBase>>(
 				'ValueListActivity constructor: invalid animation object',
 			);
 			assert(aValueList.length != 0, 'ValueListActivity: value list is empty');
-			super(aActivityParamSet);
+
+			super(
+				aValueList,
+				aActivityParamSet,
+				aAnimation,
+				aInterpolator,
+				aOperatorSet,
+				bAccumulate,
+			);
 
 			this.aValueList = aValueList;
 			this.aAnimation = aAnimation;

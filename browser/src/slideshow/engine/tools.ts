@@ -171,23 +171,26 @@ class DebugPrinter {
 const aGenericDebugPrinter = new DebugPrinter();
 aGenericDebugPrinter.on();
 
+const NAVDBG = new DebugPrinter();
+NAVDBG.on();
+
 const ANIMDBG = new DebugPrinter();
-ANIMDBG.off();
+ANIMDBG.on();
 
 const aRegisterEventDebugPrinter = new DebugPrinter();
-aRegisterEventDebugPrinter.off();
+aRegisterEventDebugPrinter.on();
 
 const aTimerEventQueueDebugPrinter = new DebugPrinter();
-aTimerEventQueueDebugPrinter.off();
+aTimerEventQueueDebugPrinter.on();
 
 const aEventMultiplexerDebugPrinter = new DebugPrinter();
-aEventMultiplexerDebugPrinter.off();
+aEventMultiplexerDebugPrinter.on();
 
 const aNextEffectEventArrayDebugPrinter = new DebugPrinter();
-aNextEffectEventArrayDebugPrinter.off();
+aNextEffectEventArrayDebugPrinter.on();
 
 const aActivityQueueDebugPrinter = new DebugPrinter();
-aActivityQueueDebugPrinter.off();
+aActivityQueueDebugPrinter.on();
 
 const aAnimatedElementDebugPrinter = new DebugPrinter();
-aAnimatedElementDebugPrinter.off();
+aAnimatedElementDebugPrinter.on();

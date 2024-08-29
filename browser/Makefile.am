@@ -421,11 +421,10 @@ COOL_JS_LST =\
 	src/slideshow/RenderContext.ts \
 	src/slideshow/SlideRenderer.ts \
 	src/slideshow/SlideShowPresenter.ts \
-	src/slideshow/Transition2d.ts \
+	src/slideshow/RendererBase.ts \
 	src/slideshow/StaticTextRenderer.ts \
 	src/slideshow/PauseTimer.ts \
 	src/slideshow/PerformTransition.ts \
-	src/slideshow/SlideAnimations.ts \
 	src/slideshow/CanvasLoader.ts \
 	src/slideshow/Transition3d.ts \
 	src/slideshow/Operation.ts \
@@ -433,7 +432,6 @@ COOL_JS_LST =\
 	src/slideshow/types.ts \
 	src/slideshow/engine/ActivityFactory.ts \
     src/slideshow/engine/ActivityQueue.ts \
-    src/slideshow/engine/AnimatedElement.ts \
     src/slideshow/engine/AnimationFactory.ts \
     src/slideshow/engine/Duration.ts \
     src/slideshow/engine/Effect.ts \
@@ -448,21 +446,23 @@ COOL_JS_LST =\
     src/slideshow/engine/SlideAnimations.ts \
     src/slideshow/engine/SlideChangeBase.ts \
     src/slideshow/engine/SlideShowHandler.ts \
+    src/slideshow/engine/SlideShowNavigator.ts \
     src/slideshow/engine/SlideTransition.ts \
     src/slideshow/engine/SourceEventElement.ts \
     src/slideshow/engine/TimerEventQueue.ts \
     src/slideshow/engine/Timing.ts \
     src/slideshow/engine/tools.ts \
-    src/slideshow/engine/activities/ActivityBase.ts \
     src/slideshow/engine/activities/AnimationActivity.ts \
+    src/slideshow/engine/activities/ActivityBase.ts \
+    src/slideshow/engine/activities/SimpleContinuousActivityBase.ts \
     src/slideshow/engine/activities/ContinuousActivityBase.ts \
     src/slideshow/engine/activities/ContinuousKeyTimeActivityBase.ts \
     src/slideshow/engine/activities/DiscreteActivityBase.ts \
     src/slideshow/engine/activities/FromToByActivity.ts \
     src/slideshow/engine/activities/SetActivity.ts \
     src/slideshow/engine/activities/SimpleActivity.ts \
-    src/slideshow/engine/activities/SimpleContinuousActivityBase.ts \
     src/slideshow/engine/activities/ValueListActivity.ts \
+    src/slideshow/engine/animationnodes/BaseNode.ts \
     src/slideshow/engine/animationnodes/AnimationBaseNode.ts \
     src/slideshow/engine/animationnodes/AnimationColorNode.ts \
     src/slideshow/engine/animationnodes/AnimationNodeInfo.ts \
@@ -470,10 +470,10 @@ COOL_JS_LST =\
     src/slideshow/engine/animationnodes/AnimationTransformNode.ts \
     src/slideshow/engine/animationnodes/AnimationTransitionFilterNode.ts \
     src/slideshow/engine/animationnodes/BaseContainerNode.ts \
-    src/slideshow/engine/animationnodes/BaseNode.ts \
     src/slideshow/engine/animationnodes/NodeContext.ts \
     src/slideshow/engine/animationnodes/PropertyAnimationNode.ts \
->>>>>>> 4a1df2faca (SlideShow Rework: initial porting of js animation engine to typescript)
+    src/slideshow/engine/AnimatedElement.ts \
+    src/slideshow/Transition2d.ts \
 	src/slideshow/transition/FadeTransition.ts \
 	src/slideshow/transition/PlusTransition.ts \
 	src/slideshow/transition/CircleTransition.ts \
@@ -970,13 +970,12 @@ pot:
 		src/slideshow/RenderContext.ts \
 		src/slideshow/SlideRenderer.ts \
 		src/slideshow/SlideShowPresenter.ts \
-		src/slideshow/Transition2d.ts \
+		src/slideshow/RendererBase.ts \
 		src/slideshow/StaticTextRenderer.ts \
 		src/slideshow/PauseTimer.ts \
 		src/slideshow/PerformTransition.ts \
         src/slideshow/engine/ActivityFactory.ts \
         src/slideshow/engine/ActivityQueue.ts \
-        src/slideshow/engine/AnimatedElement.ts \
         src/slideshow/engine/AnimationFactory.ts \
         src/slideshow/engine/Duration.ts \
         src/slideshow/engine/Effect.ts \
@@ -991,21 +990,23 @@ pot:
         src/slideshow/engine/SlideAnimations.ts \
         src/slideshow/engine/SlideChangeBase.ts \
         src/slideshow/engine/SlideShowHandler.ts \
+        src/slideshow/engine/SlideShowNavigator.ts \
         src/slideshow/engine/SlideTransition.ts \
         src/slideshow/engine/SourceEventElement.ts \
         src/slideshow/engine/TimerEventQueue.ts \
         src/slideshow/engine/Timing.ts \
         src/slideshow/engine/tools.ts \
-        src/slideshow/engine/activities/ActivityBase.ts \
         src/slideshow/engine/activities/AnimationActivity.ts \
+        src/slideshow/engine/activities/ActivityBase.ts \
+        src/slideshow/engine/activities/SimpleContinuousActivityBase.ts \
         src/slideshow/engine/activities/ContinuousActivityBase.ts \
         src/slideshow/engine/activities/ContinuousKeyTimeActivityBase.ts \
         src/slideshow/engine/activities/DiscreteActivityBase.ts \
         src/slideshow/engine/activities/FromToByActivity.ts \
         src/slideshow/engine/activities/SetActivity.ts \
         src/slideshow/engine/activities/SimpleActivity.ts \
-        src/slideshow/engine/activities/SimpleContinuousActivityBase.ts \
         src/slideshow/engine/activities/ValueListActivity.ts \
+        src/slideshow/engine/animationnodes/BaseNode.ts \
         src/slideshow/engine/animationnodes/AnimationBaseNode.ts \
         src/slideshow/engine/animationnodes/AnimationColorNode.ts \
         src/slideshow/engine/animationnodes/AnimationNodeInfo.ts \
@@ -1013,9 +1014,10 @@ pot:
         src/slideshow/engine/animationnodes/AnimationTransformNode.ts \
         src/slideshow/engine/animationnodes/AnimationTransitionFilterNode.ts \
         src/slideshow/engine/animationnodes/BaseContainerNode.ts \
-        src/slideshow/engine/animationnodes/BaseNode.ts \
         src/slideshow/engine/animationnodes/NodeContext.ts \
         src/slideshow/engine/animationnodes/PropertyAnimationNode.ts \
+        src/slideshow/engine/AnimatedElement.ts \
+        src/slideshow/Transition2d.ts \
 		src/slideshow/transition/FadeTransition.ts \
 		src/slideshow/CanvasLoader.ts \
 		src/slideshow/Transition3d.ts \

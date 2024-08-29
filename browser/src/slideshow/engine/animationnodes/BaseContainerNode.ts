@@ -225,7 +225,7 @@ abstract class BaseContainerNode extends BaseNode {
 		for (const childNode of this.aChildrenArray) {
 			if (eNodeStateMask != -1 && (childNode.getState() & eNodeStateMask) == 0)
 				continue;
-			aFunction(childNode);
+			aFunction.call(childNode);
 		}
 	}
 

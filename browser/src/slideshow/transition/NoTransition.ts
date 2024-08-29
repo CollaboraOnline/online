@@ -15,7 +15,7 @@ declare var SlideShow: any;
 class NoTransition extends Transition2d {
 	constructor(transitionParameters: TransitionParameters) {
 		super(transitionParameters);
-		this.animationTime = 10;
+		// this.animationTime = 10;
 	}
 }
 

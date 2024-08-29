@@ -22,25 +22,25 @@ enum TimingType {
 
 enum EventTrigger {
 	Unknown,
-	OnSlideBegin,
-	OnSlideEnd,
+	OnBegin, // on slide begin
+	OnEnd, // on slide end
 	BeginEvent,
 	EndEvent,
 	OnClick,
 	OnDblClick,
 	OnMouseEnter,
 	OnMouseLeave,
-	OnNextEffect,
-	OnPrevEffect,
+	OnNext, // on next effect
+	OnPrev, // on previous effect
 	Repeat,
 }
 
 function getEventTriggerType(sEventTrigger: string): EventTrigger {
-	if (sEventTrigger == 'begin') return EventTrigger.BeginEvent;
-	else if (sEventTrigger == 'end') return EventTrigger.EndEvent;
-	else if (sEventTrigger == 'next') return EventTrigger.OnNextEffect;
-	else if (sEventTrigger == 'prev') return EventTrigger.OnPrevEffect;
-	else if (sEventTrigger == 'click') return EventTrigger.OnClick;
+	if (sEventTrigger == 'BeginEvent') return EventTrigger.BeginEvent;
+	else if (sEventTrigger == 'EndEvent') return EventTrigger.EndEvent;
+	else if (sEventTrigger == 'OnNext') return EventTrigger.OnNext;
+	else if (sEventTrigger == 'OnPrev') return EventTrigger.OnPrev;
+	else if (sEventTrigger == 'OnClick') return EventTrigger.OnClick;
 	else return EventTrigger.Unknown;
 }
 

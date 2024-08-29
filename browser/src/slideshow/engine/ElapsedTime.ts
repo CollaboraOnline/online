@@ -57,9 +57,7 @@ class ElapsedTime {
 		this.nStartTime += nPauseDuration;
 	}
 
-	adjustTimer(nOffset: number, bLimitToLastQueriedTime: boolean) {
-		if (bLimitToLastQueriedTime == undefined) bLimitToLastQueriedTime = true;
-
+	adjustTimer(nOffset: number) {
 		// to make getElapsedTime() become _larger_, have to reduce nStartTime.
 		this.nStartTime -= nOffset;
 

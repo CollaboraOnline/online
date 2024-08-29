@@ -143,7 +143,9 @@ function createPropertyAnimation(
 ): AnimationBase {
 	const sPropNameAsKey = sAttrName as PropertyGetterSetterMapKeyType;
 	if (!aPropertyGetterSetterMap[sPropNameAsKey]) {
-		window.app.console.log('createPropertyAnimation: attribute is unknown');
+		window.app.console.log(
+			'createPropertyAnimation: attribute is unknown: ' + sAttrName,
+		);
 		return null;
 	}
 

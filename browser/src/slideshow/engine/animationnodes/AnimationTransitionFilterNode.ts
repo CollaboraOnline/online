@@ -24,6 +24,7 @@ class AnimationTransitionFilterNode extends AnimationBaseNode {
 		aNodeContext: NodeContext,
 	) {
 		super(aNodeInfo, aParentNode, aNodeContext);
+		this.sClassName = 'AnimationTransitionFilterNode';
 	}
 
 	public parseNodeInfo() {
@@ -94,8 +95,8 @@ class AnimationTransitionFilterNode extends AnimationBaseNode {
 		return createShapeTransition(
 			aActivityParamSet,
 			this.getAnimatedElement(),
-			this.aNodeContext.aSlideWidth,
-			this.aNodeContext.aSlideHeight,
+			this.aNodeContext.aContext.nSlideWidth,
+			this.aNodeContext.aContext.nSlideHeight,
 			this,
 		);
 	}

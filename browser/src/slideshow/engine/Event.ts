@@ -12,7 +12,7 @@
 
 abstract class EventBase {
 	private static CURR_UNIQUE_ID = 0;
-	private nId: number;
+	private readonly nId: number;
 
 	constructor() {
 		this.nId = EventBase.getUniqueId();
@@ -148,7 +148,7 @@ function registerEvent(
 	const eTimingType = aTiming.getType();
 
 	aRegisterEventDebugPrinter.print(
-		'registerEvent( timing: ' + aTiming.info() + ' )',
+		'registerEvent( node id: ' + nNodeId + ', timing: ' + aTiming.info() + ' )',
 	);
 
 	if (eTimingType == TimingType.Offset) {
@@ -254,7 +254,7 @@ function registerEvent(
 					} // no base event element present
 					else {
 						switch (eEventType) {
-							case EventTrigger.OnNextEffect:
+							case EventTrigger.OnNext:
 								aNextEffectEventArray.appendEvent(aEvent);
 								break;
 							default:

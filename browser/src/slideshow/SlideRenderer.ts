@@ -48,9 +48,14 @@ abstract class SlideRenderer {
 	protected _slideTexture: WebGLTexture | ImageBitmap;
 	protected _videos: VideoRenderInfo[] = [];
 	protected _canvas: HTMLCanvasElement;
+	protected _renderedSlideIndex: number = undefined;
 
 	constructor(canvas: HTMLCanvasElement) {
 		this._canvas = canvas;
+	}
+
+	public get lastRenderedSlideIndex() {
+		return this._renderedSlideIndex;
 	}
 
 	public getSlideTexture(): WebGLTexture {
@@ -100,6 +105,7 @@ abstract class SlideRenderer {
 		docHeight: number,
 	) {
 		this.deleteCurrentSlideTexture();
+		this._renderedSlideIndex = slideInfo.index;
 		this._slideTexture = currentSlideTexture;
 		this.prepareVideos(slideInfo, docWidth, docHeight);
 		requestAnimationFrame(this.render.bind(this));

@@ -1406,6 +1406,7 @@ FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::prepro
     csp.appendDirectiveUrl("connect-src", cnxDetails.getWebServerUrl());
     csp.appendDirectiveUrl("connect-src", indirectionURI.getAuthority());
     csp.appendDirective("script-src", "'self'");
+    csp.appendDirective("script-src", "'unsafe-eval'");
     csp.appendDirective("style-src", "'self'");
     csp.appendDirective("font-src", "'self'");
     csp.appendDirective("object-src", "'self'");

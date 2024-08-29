@@ -28,10 +28,16 @@ class PropertyAnimationNode extends AnimationBaseNode3 {
 		const aAnimation = createPropertyAnimation(
 			this.getAttributeName(),
 			this.getAnimatedElement(),
-			this.aNodeContext.aSlideWidth,
-			this.aNodeContext.aSlideHeight,
+			this.aNodeContext.aContext.nSlideWidth,
+			this.aNodeContext.aContext.nSlideHeight,
 		);
 
+		if (!aAnimation) {
+			window.app.console.log(
+				'PropertyAnimationNode.createActivity: failed to create animation.',
+			);
+			return null;
+		}
 		// TODO Interpolator = null ?
 		const aInterpolator: PropertyInterpolatorType = null; // createActivity will compute it;
 		return createActivity(aActivityParamSet, this, aAnimation, aInterpolator);
