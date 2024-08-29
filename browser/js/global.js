@@ -425,6 +425,8 @@ class MobileAppInitializer extends InitializerBase {
 		window.brandProductName = element.dataset.mobileAppName;
 
 		window.coolLogging = "true";
+        window.protocolDebug = true;
+
 		window.outOfFocusTimeoutSecs = 1000000;
 		window.idleTimeoutSecs = 1000000;
 	}
