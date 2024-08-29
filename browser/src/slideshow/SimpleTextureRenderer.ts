@@ -10,35 +10,15 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-declare var SlideShow: any;
+abstract class SimpleTextureRenderer {
+	protected gl: WebGL2RenderingContext;
+	protected program: WebGLProgram;
+	protected vao!: WebGLVertexArrayObject | null;
+	protected context: RenderContextGl;
 
-// TODO TransitionParameters should be moved to new Transition2d
-class TransitionParameters {
-	public context: RenderContext = null;
-	public current: WebGLTexture | ImageBitmap = null;
-	public next: WebGLTexture | ImageBitmap = null;
-	public slideInfo: SlideInfo = null;
-	public callback: VoidFunction = null;
-}
-
-// TODO old Transition2d refactored to a more minimal class: it's still used by
-//  CanvasLoader, StaticTextRenderer, PauseTimer, anyhow it should make a bit cleaner
-abstract class RendererBase {
-	public canvas: HTMLCanvasElement;
-	public gl: WebGL2RenderingContext;
-	public program: WebGLProgram;
-	public vao!: WebGLVertexArrayObject | null;
-	public context: any;
-	private transitionParameters: TransitionParameters;
-	protected slideInfo: SlideInfo = null;
-	protected time: number = 0;
-	protected startTime: number | null = null;
-
-	constructor(transitionParameters: TransitionParameters) {
-		this.transitionParameters = transitionParameters;
-		this.context = transitionParameters.context;
-		this.gl = transitionParameters.context.getGl();
-		this.slideInfo = transitionParameters.slideInfo;
+	constructor(canvasContext: RenderContextGl) {
+		this.context = canvasContext;
+		this.gl = this.context.getGl();
 
 		const vertexShaderSource = this.getVertexShader();
 		const fragmentShaderSource = this.getFragmentShader();
@@ -50,7 +30,7 @@ abstract class RendererBase {
 		this.program = this.context.createProgram(vertexShader, fragmentShader);
 	}
 
-	public getVertexShader(): string {
+	protected getVertexShader(): string {
 		return `#version 300 es
 				in vec4 a_position;
 				in vec2 a_texCoord;
@@ -63,14 +43,14 @@ abstract class RendererBase {
 				`;
 	}
 
-	public abstract getFragmentShader(): string;
+	protected abstract getFragmentShader(): string;
 
-	public prepareTransition(): void {
+	protected prepareTransition(): void {
 		this.initBuffers();
 		this.gl.useProgram(this.program);
 	}
 
-	public initBuffers(): void {
+	private initBuffers(): void {
 		const positions = new Float32Array([
 			...[-1.0, -1.0, 0, 0, 1],
 			...[1.0, -1.0, 0, 1, 1],
@@ -115,7 +95,17 @@ abstract class RendererBase {
 		);
 	}
 
-	public abstract render(): void;
+	public abstract render(nT: number): void;
 }
 
-SlideShow.RendererBase = RendererBase;
+// handle animation timing too
+abstract class TextureAnimationBase extends SimpleTextureRenderer {
+	protected time: number = 0;
+	protected startTime: number | null = null;
+
+	constructor(canvasContext: RenderContextGl) {
+		super(canvasContext);
+	}
+
+	public abstract render(): void;
+}
