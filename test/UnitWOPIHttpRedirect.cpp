@@ -185,13 +185,13 @@ public:
             assertCheckFileInfoRequest(request);
 
             std::string sExpectedMessage = "It is expected to stop requesting after " +
-                                           std::to_string(RedirectionLimit) + " redirections";
-            LOK_ASSERT_MESSAGE(sExpectedMessage, redirectionCount <= RedirectionLimit);
+                                           std::to_string(HTTP_REDIRECTION_LIMIT) + " redirections";
+            LOK_ASSERT_MESSAGE(sExpectedMessage, redirectionCount <= HTTP_REDIRECTION_LIMIT);
 
             LOK_ASSERT_MESSAGE("Expected to be in Phase::Load or Phase::Redirected",
                                _phase == Phase::Load || _phase == Phase::Redirected);
 
-            if (redirectionCount == RedirectionLimit)
+            if (redirectionCount == HTTP_REDIRECTION_LIMIT)
             {
                 exitTest(TestResult::Ok);
                 return true;

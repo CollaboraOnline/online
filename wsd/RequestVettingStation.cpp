@@ -100,7 +100,7 @@ void RequestVettingStation::handleRequest(const std::string& id)
                             << docKey << "] is for a WOPI document");
 
             // CheckFileInfo asynchronously.
-            checkFileInfo(uriPublic, isReadOnly, RedirectionLimit);
+            checkFileInfo(uriPublic, isReadOnly, HTTP_REDIRECTION_LIMIT);
             break;
 #endif //!MOBILEAPP
     }
@@ -254,7 +254,7 @@ void RequestVettingStation::handleRequest(const std::string& id,
                     {
                         // We haven't tried or we timed-out. Retry.
                         _checkFileInfo.reset();
-                        checkFileInfo(uriPublic, isReadOnly, RedirectionLimit);
+                        checkFileInfo(uriPublic, isReadOnly, HTTP_REDIRECTION_LIMIT);
                     }
                     else
                     {
