@@ -200,7 +200,7 @@ m4_ifelse(MOBILEAPP,[true],
             <div class="about-dialog-info-div"><div id="lokit-version" dir="ltr"></div></div>
             m4_ifelse(MOBILEAPP,[],[<div id="served-by"><span id="served-by-label"></span>&nbsp;<span id="os-info"></span>&nbsp;<wbr><span id="coolwsd-id"></span></div>],[<p></p>])
             <div id="slow-proxy"></div>
-            m4_ifelse(DEBUG,[true],[<div id="js-dialog">JSDialogs: <a href="javascript:void(function() { app.socket.sendMessage('uno .uno:WidgetTestDialog') }() )">View widgets</a></div>])
+            m4_ifelse(DEBUG,[true],[<div id="js-dialog">JSDialogs: <a href="#">View widgets</a></div>])
             <div id="routeToken"></div>
             <div id="timeZone"></div>
             m4_ifelse(MOBILEAPP,[],[<div id="wopi-host-id">%WOPI_HOST_ID%</div><div id="proxy-prefix-id">%PROXY_PREFIX_ENABLED%</div>],[<p></p>])
