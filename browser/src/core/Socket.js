@@ -690,14 +690,27 @@ app.definitions.Socket = L.Class.extend({
 				}
 			}
 
-			$('#coolwsd-version-label').text(_('COOLWSD version:'));
+			document.getElementById('coolwsd-version-label').textContent = _('COOLWSD version:');
 			var h = this.WSDServer.Hash;
 			if (parseInt(h,16).toString(16) === h.toLowerCase().replace(/^0+/, '')) {
-				h = '<a href="javascript:void(window.open(\'https://github.com/CollaboraOnline/online/commits/' + h + '\'));">' + h + '</a>';
-				$('#coolwsd-version').html(this.WSDServer.Version + ' <span>git hash:&nbsp;' + h + this.WSDServer.Options + '</span>');
+				const anchor = document.createElement('a');
+				anchor.setAttribute('href', 'https://github.com/CollaboraOnline/online/commits/' + h);
+				anchor.setAttribute('target', '_blank');
+				anchor.textContent = h;
+
+				const versionContainer = document.getElementById('coolwsd-version');
+				versionContainer.replaceChildren();
+
+				versionContainer.appendChild(document.createTextNode(this.WSDServer.Version));
+
+				let span = document.createElement('span');
+				span.appendChild(document.createTextNode('git hash:\xA0'));
+				span.appendChild(anchor);
+				span.appendChild(document.createTextNode(this.WSDServer.Options));
+				versionContainer.appendChild(span);
 			}
 			else {
-				$('#coolwsd-version').text(this.WSDServer.Version);
+				document.getElementById('coolwsd-version').textContent = this.WSDServer.Version;
 			}
 
 			if (!window.ThisIsAMobileApp) {
@@ -712,15 +725,31 @@ app.definitions.Socket = L.Class.extend({
 			}
 		}
 		else if (textMsg.startsWith('lokitversion ')) {
-			$('#lokit-version-label').text(_('LOKit version:'));
-			var lokitVersionObj = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
+			document.getElementById('lokit-version-label').textContent = _('LOKit version:');
+
+			const lokitVersionObj = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
+
+			const versionContainer = document.getElementById('lokit-version');
+			versionContainer.replaceChildren();
+			versionContainer.appendChild(document.createTextNode(lokitVersionObj.ProductName + '\xA0' + lokitVersionObj.ProductVersion + lokitVersionObj.ProductExtension));
+
 			h = lokitVersionObj.BuildId.substring(0, 7);
 			if (parseInt(h,16).toString(16) === h.toLowerCase().replace(/^0+/, '')) {
-				h = '<a href="javascript:void(window.open(\'https://hub.libreoffice.org/git-core/' + h + '\'));">' + h + '</a>';
+				const anchor = document.createElement('a');
+				anchor.setAttribute('target', '_blank');
+				anchor.setAttribute('href', 'https://hub.libreoffice.org/git-core/' + h);
+				anchor.textContent = 'git hash: ' + h;
+
+				const span = document.createElement('span');
+				span.appendChild(anchor);
+				versionContainer.appendChild(span);
 			}
-			$('#lokit-version').html(lokitVersionObj.ProductName + ' ' +
-			                         lokitVersionObj.ProductVersion + lokitVersionObj.ProductExtension +
-			                         '<span> git hash:&nbsp;' + h + '<span>');
+			else {
+				const span = document.createElement('span');
+				span.textContent = 'git hash:\xA0' + h;
+				versionContainer.appendChild(span);
+			}
+
 			this.TunnelledDialogImageCacheSize = lokitVersionObj.tunnelled_dialog_image_cache_size;
 		}
 		else if (textMsg.startsWith('enabletraceeventlogging ')) {
