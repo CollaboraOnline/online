@@ -336,9 +336,9 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 					'command': 'closetablet'
 				} : {},
 			{
-				'id': 'view-presentation',
+				'id': 'view-presentation:Presentation',
 				'class': 'unoPresentation',
-				'type': 'bigcustomtoolitem',
+				'type': 'menubutton',
 				'text': _('Presentation'),
 				'command': 'presentation',
 				'accessibility': { focusBack: true, combination: 'PR', de: null }
