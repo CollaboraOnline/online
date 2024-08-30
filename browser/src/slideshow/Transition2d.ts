@@ -37,6 +37,37 @@ abstract class TransitionBase extends SlideChangeGl {
 		this.startTransition();
 	}
 
+	public endTransition(): void {
+		this.releaseResources();
+		console.debug('Transition completed');
+	}
+
+	private releaseResources(): void {
+		// Clean up vertex array
+		this.gl.bindVertexArray(null);
+		if (this.vao) {
+			this.gl.deleteVertexArray(this.vao);
+			this.vao = null;
+		}
+
+		// Unbind
+		this.gl.activeTexture(this.gl.TEXTURE0);
+		this.gl.bindTexture(this.gl.TEXTURE_2D, null);
+
+		// Detach and delete shaders from the program
+		const attachedShaders = this.gl.getAttachedShaders(this.program);
+		if (attachedShaders) {
+			attachedShaders.forEach((shader) => {
+				this.gl.detachShader(this.program, shader);
+				this.gl.deleteShader(shader);
+			});
+		}
+
+		// Delete the program
+		this.gl.deleteProgram(this.program);
+		this.program = null;
+	}
+
 	// eslint-disable-next-line @typescript-eslint/no-empty-function
 	public renderUniformValue(): void {}
 }
