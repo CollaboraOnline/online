@@ -996,7 +996,7 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 								this.remove.call(this, options.$trigger[0].annotation.sectionProperties.data.id);
 							}.bind(this)
 						},
-						removeThread: docLayer._docType !== 'text' || $trigger[0].isRoot === true ? undefined : {
+						removeThread: docLayer._docType !== 'text' || !$trigger[0].annotation.isRootComment() ? undefined : {
 							name: _('Remove Thread'),
 							callback: function (key: any, options: any) {
 								this.removeThread.call(this, options.$trigger[0].annotation.sectionProperties.data.id);
@@ -1008,7 +1008,7 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 								this.resolve.call(this, options.$trigger[0].annotation);
 							}.bind(this)
 						},
-						resolveThread: docLayer._docType !== 'text' || $trigger[0].isRoot === true ? undefined : {
+						resolveThread: docLayer._docType !== 'text' || !$trigger[0].annotation.isRootComment() ? undefined : {
 							name: this.isThreadResolved($trigger[0].annotation) ? _('Unresolve Thread') : _('Resolve Thread'),
 							callback: function (key: any, options: any) {
 								this.resolveThread.call(this, options.$trigger[0].annotation);
