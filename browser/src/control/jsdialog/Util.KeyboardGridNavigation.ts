@@ -10,7 +10,7 @@
  */
 
 /*
- * JSDialog.ScrollableBar - helper for creating toolbars with scrolling left/right
+ * JSDialog.KeyboardGridNavigation - handles keyboard-based focus and selection in grid-based UI components
  */
 
 declare var JSDialog: any;
@@ -138,13 +138,21 @@ JSDialog.KeyboardGridNavigation = function (
 ) {
 	container.addEventListener('keydown', (event: KeyboardEvent) => {
 		const activeElement = document.activeElement as HTMLElement;
-		handleKeyboardNavigation(
-			event,
-			activeElement,
-			activeElement.parentElement,
-			selectionHandler,
-			builder,
-			widgetData,
-		);
+		if (
+			!(
+				(activeElement.tagName === 'INPUT' &&
+					(activeElement as HTMLInputElement).type === 'text') ||
+				activeElement.tagName === 'TEXTAREA'
+			)
+		) {
+			handleKeyboardNavigation(
+				event,
+				activeElement,
+				activeElement.parentElement,
+				selectionHandler,
+				builder,
+				widgetData,
+			);
+		}
 	});
 };
