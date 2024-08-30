@@ -664,7 +664,7 @@ public:
             size);
     }
 
-    void setBody(const std::string& body, std::string contentType = "text/html charset=UTF-8")
+    void setBody(const std::string& body, std::string contentType = "text/html;charset=utf-8")
     {
         if (!body.empty()) // Type is only meaningful if there is a body.
             _header.setContentType(std::move(contentType));
@@ -987,7 +987,7 @@ public:
 
     /// Set the body to be sent to the client.
     /// Also sets Content-Length and Content-Type.
-    void setBody(std::string body, std::string contentType = "text/html charset=UTF-8")
+    void setBody(std::string body, std::string contentType = "text/html;charset=utf-8")
     {
         _body = std::move(body);
         _header.setContentLength(_body.size()); // Always set it, even if 0.
