@@ -21,7 +21,8 @@ abstract class ISlideChangeBase {
 function SlideChangeTemplate<T extends AGConstructor<any>>(BaseType: T) {
 	abstract class SlideChangeBase extends BaseType implements ISlideChangeBase {
 		private isFinished: boolean;
-		private transitionParameters: TransitionParameters;
+		private requestAnimationFrameId: number;
+		protected transitionParameters: TransitionParameters;
 		protected leavingSlide: WebGLTexture | ImageBitmap;
 		protected enteringSlide: WebGLTexture | ImageBitmap;
 
@@ -37,18 +38,31 @@ function SlideChangeTemplate<T extends AGConstructor<any>>(BaseType: T) {
 			this.leavingSlide = transitionParameters.current;
 			this.enteringSlide = transitionParameters.next;
 			this.isFinished = false;
+			this.requestAnimationFrameId = null;
 		}
 
 		public abstract start(): void;
 
 		public end(): void {
 			if (this.isFinished) return;
+			// end() can be invoked before last render() execution
+			if (this.requestAnimationFrameId !== null) {
+				console.debug('SlideChangeBase.end: render() not yet executed');
+				this.requestAnimationFrameId = null;
+				setTimeout(this.end.bind(this), 100);
+				return;
+			}
 			this.isFinished = true;
+			this.endTransition();
 		}
+
+		protected abstract endTransition(): void;
 
 		public perform(nT: number): boolean {
 			if (this.isFinished) return false;
-			requestAnimationFrame(this.render.bind(this, nT));
+			this.requestAnimationFrameId = requestAnimationFrame(
+				this.render.bind(this, nT),
+			);
 		}
 
 		protected abstract render(nT: number): void;
@@ -69,4 +83,6 @@ abstract class TextureRendererCtorForSlideChangeBase extends SimpleTextureRender
 }
 
 // SlideChangeGl extends SlideChangeBase, SimpleTextureRenderer
-const SlideChangeGl = SlideChangeTemplate(TextureRendererCtorForSlideChangeBase);
+const SlideChangeGl = SlideChangeTemplate(
+	TextureRendererCtorForSlideChangeBase,
+);
