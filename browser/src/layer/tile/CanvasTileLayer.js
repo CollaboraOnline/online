@@ -2190,13 +2190,15 @@ L.CanvasTileLayer = L.Layer.extend({
 			let refPoint = obj.refpoint.split(',');
 			refPoint = new app.definitions.simplePoint(parseInt(refPoint[0]), parseInt(refPoint[1]));
 
-			this.sheetGeometry.convertToTileTwips(refPoint);
+			if (this.sheetGeometry) {
+				this.sheetGeometry.convertToTileTwips(refPoint);
 
-			rectangle = obj.relrect.split(',');
-			for (let i = 0; i < rectangle.length; i++) rectangle[i] = parseInt(rectangle[i]);
+				rectangle = obj.relrect.split(',');
+				for (let i = 0; i < rectangle.length; i++) rectangle[i] = parseInt(rectangle[i]);
 
-			rectangle[0] += refPoint.x;
-			rectangle[1] += refPoint.y;
+				rectangle[0] += refPoint.x;
+				rectangle[1] += refPoint.y;
+			}
 		}
 		else {
 			rectangle = obj.rectangle.split(',');
