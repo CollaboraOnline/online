@@ -79,25 +79,28 @@ abstract class SimpleTextureRenderer {
 			'a_texCoord',
 		);
 
-		this.gl.enableVertexAttribArray(positionLocation);
-		this.gl.vertexAttribPointer(
-			positionLocation,
-			3,
-			this.gl.FLOAT,
-			false,
-			5 * 4,
-			0,
-		);
-
-		this.gl.enableVertexAttribArray(texCoordLocation);
-		this.gl.vertexAttribPointer(
-			texCoordLocation,
-			2,
-			this.gl.FLOAT,
-			false,
-			5 * 4,
-			3 * 4,
-		);
+		if (positionLocation !== -1) {
+			this.gl.enableVertexAttribArray(positionLocation);
+			this.gl.vertexAttribPointer(
+				positionLocation,
+				3,
+				this.gl.FLOAT,
+				false,
+				5 * 4,
+				0,
+			);
+		}
+		if (texCoordLocation !== -1) {
+			this.gl.enableVertexAttribArray(texCoordLocation);
+			this.gl.vertexAttribPointer(
+				texCoordLocation,
+				2,
+				this.gl.FLOAT,
+				false,
+				5 * 4,
+				3 * 4,
+			);
+		}
 	}
 
 	public abstract render(nT: number): void;
