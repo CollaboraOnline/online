@@ -13,7 +13,8 @@ RUN apt-get update && \
     apt-get -y install libpng16-16 fontconfig adduser cpio \
                findutils nano libcap2-bin openssl inotify-tools \
                procps libubsan1 openssh-client fonts-wqy-zenhei \
-               fonts-wqy-microhei fonts-droid-fallback fonts-noto-cjk
+               fonts-wqy-microhei fonts-droid-fallback fonts-noto-cjk\
+               ca-certificates
 
 
 # copy freshly built LOKit and Collabora Online
@@ -38,6 +39,6 @@ RUN setcap cap_fowner,cap_chown,cap_sys_chroot=ep /usr/bin/coolforkit-caps && \
 EXPOSE 9980
 
 # switch to cool user (use numeric user id to be compatible with Kubernetes Pod Security Policies)
-USER 101
+USER 100
 
 CMD ["/start-collabora-online.sh"]
